@@ -1,0 +1,101 @@
+Journal of Artiﬁcial Intelligence Research 61 (2018) 363-405
+Submitted 10/2017; published 02/2018
+Actively Estimating Crowd Annotation Consensus
+Yunus Emre Kara
+yunus.kara@boun.edu.tr
+Department of Computer Engineering, Bogazici University
+TR-34342, Bebek, Istanbul, Turkey
+Gaye Genc
+gaye.genc@boun.edu.tr
+Department of Computer Engineering, Bogazici University
+TR-34342, Bebek, Istanbul, Turkey
+Oya Aran
+aranoya@gmail.com
+Independent Researcher
+Lale Akarun
+akarun@boun.edu.tr
+Department of Computer Engineering, Bogazici University
+TR-34342, Bebek, Istanbul, Turkey
+Abstract
+The rapid growth of storage capacity and processing power has caused machine learning
+applications to increasingly rely on using immense amounts of labeled data. It has become
+more important than ever to have fast and inexpensive ways to annotate vast amounts
+of data. With the emergence of crowdsourcing services, the research direction has gravi-
+tated toward putting the wisdom of crowds to better use. Unfortunately, spammers and
+inattentive annotators pose a threat to the quality and trustworthiness of the consensus.
+Thus, high quality consensus estimation from crowd annotated data requires a meticulous
+choice of the candidate annotator and the sample in need of a new annotation. Due to
+time and budget limitations, it is of utmost importance that this choice is carried out while
+the annotation collection is in progress. We call this process active crowd-labeling. To this
+end, we propose an active crowd-labeling approach for actively estimating consensus from
+continuous-valued crowd annotations. Our method is based on annotator models with un-
+known parameters, and Bayesian inference is employed to reach a consensus in the form
+of ordinal, binary, or continuous values. We introduce ranking functions for choosing the
+candidate annotator and sample pair for requesting an annotation. In addition, we propose
+a penalizing method for preventing annotator domination, investigate the explore-exploit
+trade-oﬀfor incorporating new annotators into the system, and study the eﬀects of induc-
+ing a stopping criterion based on consensus quality. We also introduce the crowd-labeled
+Head Pose Annotations datasets. Experimental results on the benchmark datasets used
+in the literature and the Head Pose Annotations datasets suggest that our method pro-
+vides high-quality consensus by using as few as one ﬁfth of the annotations (∼80% cost
+reduction), thereby providing a budget and time-sensitive solution to the crowd-labeling
+problem.
+1. Introduction
+In the machine learning domain, labeled datasets are valuable commodities. Computing
+resources have increased exponentially for two decades, driving machine learning toward
+big data applications. The introduction of the ImageNet database (Deng, Dong, Socher, Li,
+Li, & Fei-Fei, 2009), a large crowd-labeled dataset, and the success of deep neural network
+©2018 AI Access Foundation. All rights reserved.
+
+---PAGE---
+
+Kara, Genc, Aran, & Akarun
+methods have further pushed the research direction toward the use of large datasets. This
+popularity has resulted in the introduction of many large crowd-labeled datasets such as
+the recently introduced Open Images dataset (Krasin et al., 2017).
+Providing ground truth labels for large datasets often proves to be excessively time
+consuming.
+Thus, researchers tend to outsource the labeling process, especially for the
+aforementioned large datasets. However, employing expert labelers is expensive. Crowd-
+sourcing the labeling process is a cost-eﬀective and fast method to solve this problem,
+especially when expertise is not necessarily required.
+Crowd-labeling is the process of collecting annotations from crowds and using them
+for estimating consensus values to be used as labels. However, inattentive annotators and
+spammers reduce the quality of consensuses.
+Although there are numerous methods in
+the literature that deal with the low quality annotations, most are eﬀective only after
+the annotation process is completed. At this point, valuable time and money are already
+spent. Therefore, it is of utmost importance to observe and understand the behavior of the
+annotators early on in the annotation process and improve the quality of consensuses.
+The classical use of crowd-labeling is analogous to a careless shopper who buys exces-
+sively without proper planning and ends up throwing away their purchase when the product
+is of low quality or unneeded. In contrast, imagine that the researcher is a meticulous shop-
+per with limited time and money. The most important questions on their mind would be:
+What am I in need of purchasing and which vendor should I purchase it from? Applying
+this reasoning to the crowd-labeling problem calls for a smarter solution and active learning
+is the remedy to this problem. The general idea of active learning can be applied to the
+crowd-labeling problem in terms of choosing which annotation to incorporate into the an-
+notation pool. In this work, the process of smart annotation collection using crowdsourcing
+is called active crowd-labeling.
+Many crowd-labeling problems target to obtain continuous or ordinal labels, such as the
+position of an object, age of a person, or air temperature. Surprisingly, active crowd-labeling
+for continuous-valued annotations is a rather sidelined open issue. Related literature on ac-
+tive crowd-labeling mainly focuses on binary annotation problems due to several reasons.
+First of all, formulating the active crowd-labeling problem in a binary setting is often more
+tractable with provable mathematical guarantees. Due to the nature of the continuous do-
+main, providing mathematical guarantees in active crowd-labeling solutions proves to be
+hard, if not impossible. This has pushed the researchers to work with well-studied algo-
+rithms by binarizing existing continuous or ordinal annotations. Additionally, presenting
+the annotation tasks in the form of yes/no or positive/negative reduces task intricacy for
+the annotators. Although working with binary annotations has several advantages, valu-
+able information is often lost during binarization. Moreover, binary active crowd-labeling
+approaches are simply impractical when continuous labels are sought. In this work, we esti-
+mate the crowd consensus to be used as sample labels from continuous-valued annotations
+while reducing the cost of the annotation process by employing active crowd-labeling.
+We introduce an eﬀective mechanism that decides which sample needs a new annotation
+and who should annotate it.
+The method we propose is based on annotator modeling
+and consensus estimation by Bayesian inference, which is used for producing ordinal and
+binary labels in addition to continuous labels. One advantage of the method is that it is
+unsupervised: the gold standard label is not needed for any sample. The proposed method
+364

@@ -1,0 +1,153 @@
+﻿\section{实验设置}
+
+实验旨在同时验证三个研究问题：半自动初始化的效率收益（RQ1）、对质量与可靠性分布的影响（RQ2）、以及场景感知路由的收益（RQ3）。以下依次介绍数据组织、评估协议与统计检验方案。
+\subsection{IID 与 non-IID 应激测试}\label{sec:exp-iid-stress}
+
+为检验审计与路由机制在分布偏移下的价值，本文在同一套标注预算与评估协议下同时覆盖两类部署情景。
+IID baseline：训练、校准、验证来自近似同分布的数据抽样，采用常规随机抽样与分层控制。
+
+non-IID stress test：通过数据切分显式制造难度与失效模式的分布偏移，用于检验审计与路由机制在偏移下是否更有价值。
+
+构造方式：
+为避免用标注后才产生的元标签反向决定数据切分，本文以标注前可得的代理信号构造应激情景：在验证集中提高高风险代理任务的占比，其中高风险由 $I_t^{\mathrm{OOD}}=1$ 与 $g_t$ 的触发共同定义。这里 $I_t^{\mathrm{OOD}}=\mathbf{1}[d_t>\tau_d]$，且 $\tau_d$ 仅由校准集 leave-one-out 分数的预注册分位数估计，不使用验证集结果调参。
+
+同时，为保证 non-IID 的语义可解释性，在标注后再用 difficulty/\texttt{model\_issue} 的共识标签作审计性验证：定义困难高风险集合 $S_{hard}$（如 occlusion、low\_texture、corner\_duplicate、corner\_drift、overextend\_adjacent 等 tag），并报告其在 IID 与 non-IID 切分中的占比差异；该验证用于解释性披露，而非用于切分本身。
+
+\texttt{Validation\_OOD} 定义：可复现、避免硬门控，在验证集中取满足 $I_t^{\mathrm{OOD}}=1$ 的子集，等价于 $d_t>\tau_d$；主实现锁定为校准集 leave-one-out 分数的 $q=90\%$ 分位阈值。该阈值在 IID 近似条件下对应约 10\% 的预期高风险比例，但在真实 validation 或 non-IID 条件下其实际占比允许偏离 10\%。附录做 $q\in\{85,90,95\}$、$K\in\{5,10,20\}$ 与“前 $K$ 个近邻平均距离”替代打分的敏感性分析。
+
+Hard 子集 H 与 \texttt{Validation\_OOD} 采用不同的构造口径：\texttt{Validation\_OOD} 仅由 $I_t^{\mathrm{OOD}}=1$ 定义；H 允许由 $g_t$ 触发纳入，因此 H 与 \texttt{Validation\_OOD} 通常为部分重叠关系。本文在结果中分别报告二者的规模与重叠比例，并在对应子集上重复主要对比，以避免将两者混作同一集合。
+
+IID：保证训练与验证中由 $I_t^{\mathrm{OOD}}$/$g_t$ 定义的高风险代理占比接近，或在预先声明的误差范围内；并报告事后审计得到的 $S_{hard}$ 占比作为一致性检查。
+
+non-IID：在验证集中人为提高高风险代理任务（$I_t^{\mathrm{OOD}}=1$ 或 $g_t$ 触发）的比例，使其在该验证集内占比显著偏高；训练集与校准集则保持较低的高风险代理占比。随后用标注后的 $S_{hard}$ 占比与失败模式分布作审计性验证，说明该切分确实带来更高的困难/失效暴露。
+核心比较：
+\begin{itemize}
+    \item OOD-aware 审计任务：报告 $d_t$ 的分布、$I_t^{\mathrm{OOD}}$ 的触发比例，并给出 $d_t$ 与门控失败、反例率、$\mathrm{IAA}_t$ 的相关性（相关而非因果），用于说明分布偏移的存在，以及偏移条件下系统更容易失效。
+    \item 防选择偏差：无论 $d_t$ 高低，样本仍进入口径 T/I/M 的透明披露；$I_t^{\mathrm{OOD}}$ 仅用于分层报告与策略触发，不用于静默过滤。
+\end{itemize}
+\subsection{条件分组与数据组织（$\mathbf{N}_{\mathrm{pool}}=458$）}\label{sec:exp-data-org}
+
+记号：$N_{img}$ 为唯一图像数，$N_{task}$ 为任务实例数，k 为每图标注份数，$\left|U\right|$ 为 PreScreen 候选工人数。
+\noindent 序贯派单口径：$k_0$ 为起始冗余，$k_{\max}$ 为最大冗余，$k_{\mathrm{used}}$ 为每任务实际使用标注份数。
+
+主方案分组：
+\begin{itemize}
+    \item Stage 0 Pilot：$N_{img}=15$，$k=2$；用于流程验证、\texttt{model\_issue} 归档与协议锁定，不进入主结论。Pilot 阶段锁定的不是最终 admission 数值，而是不可变协议边界：manual/semi/OOS 三池边界、同一 \texttt{base\_task\_id} 不跨池复用、manual anchor 选择规则、semi trap schema、扰动算子集合与强度档位、候选权重网格与 split 协议、审计字段与随机种子策略。
+    \item Stage 1 PreScreen：\texttt{PreScreen\_manual} 与 \texttt{PreScreen\_semi} 使用两套互不重叠的图像池。\texttt{PreScreen\_manual} 固定为 $N_{img}=30$，其中 20--22 张为带专家参考标准的 manual anchors，用于估计 $r_u^{\left(0\right)}$、锁定 admission 与 $w_{\max}$；其余 8--10 张为随机 non-anchor 样本，用于保留 base-rate 并避免全由 showcase 题构成。对专家可高一致判定为 OOS/证据不足但无法给出稳定几何参考的样本，仅允许以固定小配额进入 manual 的 scope-gate 子集，按 scope 判定正确性计分，而不作为几何 GT anchor。\texttt{PreScreen\_semi} 固定为约 $N_{img}=18$，用于测量纠错能力与盲信风险；其结构为“正常初始化对照子集 + 误导性初始化 trap 子集”，误导性初始化采用双来源但主次分明：主来源为规则化扰动算子并冻结清单与随机种子，补充来源为固定小配额的自然失败 trap bank，仅进入 semi 盲信子集；此外仅允许更小配额的可判定 OOS stress 子集用于盲信审计，并与主几何 trap 分开报告。若某类自然失败样本不足，则下调其实际配额，并由同类型规则化扰动补足 semi trap 配额；计划配额与实际配额一并披露。对专家之间本身高歧义的 OOS 样本，仅进入附录审计库，不作为 hard trap。
+    \item Stage 2 Calibration：\texttt{Calibration\_manual} 固定校准池 $N_{img}=100$，每图冗余 $k=4$，用于估计 $r_u$ 与 $r_u^{\left(s\right)}$（见第~\ref{sec:method-global-reliability}节与第~\ref{sec:method-scene-reliability}节）。该阶段不要求每位 worker 标注每张图，而是采用平衡任务分配使每位通过 PreScreen 的 worker 至少获得 $N_{cal,\min}=25$ 个 manual 校准任务，并与 CI 精度停机准则结合按需从 \texttt{Calibration\_reserve} 追加。
+    \\
+    为提高 worker 间可比性并稳定 LOO 共识，\texttt{Calibration\_manual} 在唯一图像池 100 内进一步划分为三块：
+    \begin{itemize}
+        \item \texttt{Calibration\_anchor}：$N_{img}=12$，所有通过 PreScreen 的 worker 均完成。
+        \item \texttt{Calibration\_core}：$N_{img}=75$，每图 $k=4$，采用平衡分配，不要求全员覆盖。
+        \item \texttt{Calibration\_reserve}：$N_{img}=13$，仅用于追加任务。
+    \end{itemize}
+    \texttt{Calibration\_reserve} 的用途预注册写死为两类：其一为 CI 半宽未达标时追加；其二为核心场景启用率不足时的覆盖补齐。不得以提升路由收益为目标使用 reserve。
+    \\
+    \texttt{Calibration\_semi} 仅在从上述 100 张中预注册抽取的配对子集 $N_{img}=25$ 上收集，且每图冗余 $k=4$，用于 RQ2 的条件对照。为避免混杂，\texttt{Calibration\_semi} 不用于估计 $r_u$ 或 $r_u^{\left(s\right)}$。manual/semi 的顺序随机化。
+    \item Stage 3 Main：
+    \begin{itemize}
+        \item RQ1 Test：\texttt{Manual\_Test} 与 \texttt{SemiAuto\_Test} 同图 $N_{img}=100$，$k=1$。
+        \item RQ3 Validation：$Validation_{semi}$，$N_{img}=60$，起始冗余 $k_0=3$，最大冗余 $k_{\max}=5$，采用序贯追加与停止；$Gold_{manual}$，$N_{img}=20$，$k=3$ 用于稳健性对照。
+    \end{itemize}
+\end{itemize}
+预注册约束：
+\begin{itemize}
+    \item 带专家参考标准的样本与 Main 物理隔离；Calibration/Validation/Test 图像不重叠；Pilot/PreScreen 不进入 Main 对比。
+    \item Hard 子集 H 从 Validation 构造，要求$\left|H\right|\geq30$；入选依据为 $I_t^{\mathrm{OOD}}=1$ 或高 $g_t$，并在标注后验证 $S_{hard}$ 占比$\geq70$。
+    \item OOD 仅用于分层与触发，不用于静默过滤；全部样本进入 T/I/M 披露。
+    \item 规模说明：核心主分析唯一图像约 260（Calibration\_manual 100 + Validation 60 + Test 100），其余用于前置锚点、流程验证与稳健性。
+\end{itemize}
+数据与评测口径锁定：
+\begin{itemize}
+    \item test 与 \texttt{test\_no\_occ} 的 img 集合一致，差异仅在 \texttt{label\_cor} 修正。
+    \item 标准 benchmark 主报告使用 test/\texttt{label\_cor}；\texttt{test\_no\_occ}/\texttt{label\_cor} 作为附录敏感性分析。
+\end{itemize}
+\subsection{参与者与 worker mix 控制}
+
+培训内容包括 Label Studio 基础操作、仅标注相机所在房间的规则、以及 OOS 分流规则。
+\\ 分配与记录：统一培训后不再引入新手与熟手分层。为控制 worker mix 与能力差异混杂，采用 worker 级别的平衡分配：每位通过 PreScreen 的 worker 在 Manual 与 Semi 两种条件下分配到近似相同数量的任务，并随机化任务顺序。同时记录每个 worker 的任务数、完成时间与返工率，并报告每批 worker 组成以供 worker mix 控制。
+新工人准入按第~\ref{sec:method-prescreen}节执行。
+
+\subsection{元标签采集协议与提交时硬校验（Type 4 预防）}
+
+本文将元标签（\texttt{scope}/difficulty/\texttt{model\_issue}）定位为实验协议的一部分，而非事后清洗时的自由度。目的在于避免 ``空值=无困难'' 与 ``漏填'' 不可区分，从而提升采集系统的可控性与可审计性。
+
+我们采用\textbf{两层防线}：
+\begin{itemize}
+    \item \textbf{前端提交时硬阻断（UI-level hard validation）}：Label Studio 视图配置中对关键字段启用 \texttt{required="true"}（至少选 1 项），从而使 ``空选'' 在交互层面无法提交；同时对多选字段加入互斥规则（difficulty 的 \texttt{trivial} 与其他困难标签；\texttt{model\_issue} 的 \texttt{acceptable} 与其他失败模式），在用户点击 Submit/Update 时由前端脚本即时阻断提交并提示冲突。
+    \item \textbf{导出/落盘前兜底校验（backend guard for audit）}：对导出的 Label Studio JSON 再次执行同一组规则校验，将不合规记录写入拒收清单并从主分析输入中剔除，同时保留拒收原因分布作为审计披露。这一层用于覆盖 ``前端不可控''（版本差异、脚本未加载、导出缺损等）导致的残余风险。
+\end{itemize}
+
+现实边界：上述机制可将 ``空选/互斥冲突'' 的发生率压到接近 0，但无法保证 Type 4 绝对为 0——系统侧仍可能出现 NA（字段未传输、导出损坏、版本不一致）。因此本文仍将 NA 与残余不合规事件作为口径 T 的审计项披露，并在结果中给出明确分母与示例任务，而非将其 ``从论文中消失''。
+\subsection{预注册协议}
+
+\subsubsection{RQ1 主终点：效率}
+\begin{itemize}
+    \item 指标：\texttt{active\_time} 中位数差异（Manual vs Semi）
+    \item 统计：Mann--Whitney $U$ 检验（非参数）
+    \item 效应量：Hodges–Lehmann 中位数差
+    \item CI：95\% CI，优先 BCa bootstrap，重采样次数预注册固定
+    \item worker mix 控制：通过前文参与者与 worker mix 控制中的 worker 级别平衡分配，减少条件间能力差异带来的混杂；结果中报告两条件下 worker 构成与任务覆盖的平衡性。
+    \item 风险控制：回归分析 $time \sim \mathrm{IoU}_\mathrm{edit}$，检验时间缩短并非源于随意修改
+    \item 一致性校验：开展自定义计时与原生计时的一致性校验，计算自定义统计的 \texttt{active\_time} 与 Label Studio 原生 \texttt{lead\_time} 的 Spearman 相关系数，同时分析二者比值的中位数及四分位距（IQR），以此验证自定义活跃标注时间的采集逻辑无系统性偏离。该校验成本较低，可排除计时采集环节的系统性实现误差。
+\end{itemize}
+
+\subsubsection{RQ2 主终点：可靠性}
+\begin{itemize}
+    \item 指标：在预注册的同图配对子集（$N_{img}=25$）上比较 $\mathrm{IAA}_t$ 的差异：\texttt{Calibration\_manual} vs \texttt{Calibration\_semi}
+    \item 统计：同图配对置换检验。对每张配对图像定义 $\Delta_t=\mathrm{IAA}_t^{semi}-\mathrm{IAA}_t^{manual}$，在零假设下随机翻转 $\Delta_t$ 的符号，得到 $\Delta_t$ 的和或中位数差的置换分布。
+    \item 效应量：$\mathrm{median}(\Delta_t)$，并用配对 bootstrap 给出 95\% CI。
+    \item 反例数量：在同一配对子集上比较三类反例分布差异（$\chi^2$ 检验）
+    \item RQ2b：加权共识增益，口径见第~\ref{sec:method-weighted-consensus}节。
+    \item 评估集合：\texttt{PreScreen\_manual} 的专家参考子集及其扩展复核子集。$w_{max}$ 的锁定与性能评估采用预注册的方案 A，样本不足时使用降级方案 B；在每个验证折上，$r_u^{(0)}$ 与 $w_u$ 的估计均不使用该验证折的标签，保证评估独立性。
+    \item 主终点：加权与未加权共识对专家参考标准的一致性提升，如 per-tag accuracy 或 Cohen's $\kappa$ 的提升。
+    \item 统计：按任务重采样的 BCa bootstrap 得到 $\Delta\kappa$ 或 $\Delta\,\mathrm{acc}$ 的 95\% CI；若 CI 不跨 0 且效应量 $\geq MDE_\kappa$（默认 0.05），则判为工程上有意义的提升。
+    \item 反例检出：对第~\ref{sec:method-counterexample}节的反例规则产生的候选集，比较加权与未加权的检出率差异，使用 McNemar's test 或 bootstrap CI。
+    \item 补充报告：在附录中补充 Kolmogorov--Smirnov 检验作为分布形状差异的敏感性分析，不作为主终点。
+\end{itemize}
+\subsubsection{RQ3 主终点：路由}
+\noindent 数据来源与可比性说明（解决只实际跑策略 3 时，策略 1/2 从哪来）：
+\begin{itemize}
+    \item \textbf{主对比数据（离线回放 / shadow policy evaluation）}：三策略的可比性主依赖 \texttt{Calibration\_manual} 的多标注任务（\texttt{Calibration\_core} 每图 $k=4$，并含 \texttt{Calibration\_anchor} 全员覆盖）。该阶段的任务分配为预注册的平衡分配，与策略 1/2/3 无关，因此可将每图实际获得的标注者集合视为该任务的候选池 $U_t$，并在 \emph{不做反事实插补} 的前提下回放三种策略在 $U_t$ 内的选择与序贯停止，从而得到同任务、同候选池下的可审计对比。
+    \item \textbf{部署数据（单一 Validation）}：$Validation_{semi}$ 用于报告策略 3 的实际运行表现与 non-IID/OOD 应激收益（安全性事件比例：门控失败/字段缺失等；反例拦截率；预算效率等）。若部署时仅执行策略 3，则策略 1/2 在该集合上不作为主对比；如需补充影子策略结果，仅在策略 1/2 的决策落在已观测标注者集合的支持集上报告，并同时披露支持率（不可支持部分不得以任何模型插补补齐）。
+\end{itemize}
+\begin{itemize}
+    \item 指标 1 主：一致性代理提升（离线回放）：对每任务在候选池 $U_t$ 内按策略选择标注者 $u$，计算 $\mathrm{IoU}\left(A_{t,u},\ C_t^{(-u)}\right)$（以同任务其余标注构造的 LOO 共识 $C_t^{(-u)}$ 为参考）。
+    \item 统计 1：同任务配对比较（优先配对置换或配对 bootstrap CI；t-test 仅作为附录敏感性分析），仅在 $\left|U_t\right|\geq3$ 的任务上计算。
+    \item 效应量：Cohen's d 标准化的均值差效应量
+    \item 指标 1b：预算效率，序贯停止，平均每任务使用标注份数 $\bar{k}_{\mathrm{used}}$ 或在固定预算下可覆盖的任务数
+    \item 安全性/数据可用性审计（非主终点）：门控失败率与失败原因分布、关键字段缺失率；用于证明不静默过滤与口径 T/I/M 的可追溯性。原则上不将“失败率降低”作为路由收益主证据，也不将其纳入主检验集合。
+    \item 应激测试报告（non-IID）：在前文定义的 \texttt{Validation\_OOD} 子集上重复上述对比；主证据仍以一致性代理与预算效率为核心，并单独披露安全性事件分布（门控失败/字段缺失等）作为风险信号。
+\end{itemize}
+\subsection{多重检验处理}
+
+策略：预先限制检验集合，避免 FDR 复杂度。
+\begin{itemize}
+    \item RQ1：1 个主检验 Manual vs Semi = 1 个
+    \item RQ2：1 个主检验（$\mathrm{IAA}_t$ 配对置换） + 1 个反例分布检验（$\chi^2$） + 2 个 RQ2b 检验（加权共识增益、反例检出差异） = 4 个
+    \item RQ3：2 个主检验 一致性代理 / 预算效率 = 2 个
+    \item 总计：7 个计划检验
+    \item 校正：Bonferroni $\alpha = 0.05/7 \approx 0.0071$（保守）
+\end{itemize}
+\subsection{效应量门槛与 MDE}
+
+最小可解释差异（MDE，示例阈值，以试运行与先验为准）：
+\begin{itemize}
+    \item Time：$\geq8\%$ 相对改进
+    \item 一致性代理：$\geq0.05$
+    \item 预算效率：预注册的最小可解释改进（例如平均 $\bar{k}_{\mathrm{used}}$ 的相对减少或等价覆盖提升）
+\end{itemize}
+
+报告原则：只有同时满足 $p<0.05/7$（计划检验 Bonferroni 校正后）且效应量超过 MDE 时，才声称显著改进。
+
+MDE 的确定采用分级锁定流程：
+\begin{enumerate}
+    \item Stage 0 Pilot：预研，$N_{img}=15$，估计工具可用性与噪声底线，并锁定协议骨架而非最终 admission 数值：manual/semi/OOS 三池边界、anchor/trap 抽样框架、\texttt{PreScreen\_semi} 的算子集合与强度范围、候选阈值网格、A/B 或 2-fold split 协议、审计字段与随机种子策略。
+    \item Stage 1 PreScreen：在独立锚点与 non-anchor 样本上估计工人表现方差与可达上限，并将候选 $\tau_0$ 调整并锁定为 admission 相关阈值与最终 $w_{max}$。主锁定对象包括：通过工人名单、$w_{max}$、$\tau_{fail}$、$\tau_{scope}$、$\tau_r$、$\tau_{trust}$，以及是否启用加权共识主实现或降级为未加权审计。
+    \item Stage 2 Main Experiment：Calibration 第一轮后，才最终冻结依赖场景覆盖与频率的 scene-routing 参数，例如核心场景集合 $\mathcal{S}_{core}$、$N_{u,s,\min}$、场景启用/退化规则与高风险桶阈值；PreScreen 与测试样本不得进入 RQ3 的路由效果评估集合，防数据泄漏。
+\end{enumerate}
+
+实施说明：三段式流程允许软件未完全自动化；可通过人工分发不同任务包完成阶段切换，但必须保证不手动修改标注内容，且阶段边界与样本隔离可审计。
+
+

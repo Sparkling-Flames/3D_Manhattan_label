@@ -1,0 +1,93 @@
+<View>
+  <View style="display: flex; height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <!-- 左侧：2D 标注与分类 -->
+    <View style="flex: 60%; margin-right: 12px; display: flex; flex-direction: column; background: #fafafa; border-right: 1px solid #ddd; height: 100%;">
+      
+      <!-- 图像区：自适应紧凑布局 (约占 40% 比例的核心部分) -->
+      <View style="flex: 0 0 40%; min-height: 250px; max-height: 42vh; display: flex; flex-direction: column; padding: 8px; background: #fff; overflow: hidden;">
+        <Header value="2D Panorama Annotation" size="6" style="margin-top: 0; margin-bottom: 2px; font-weight: 600; color: #333;"/>
+        <Image name="img" value="$image" zoom="true" zoomControl="true" style="flex: 1; border-radius: 4px; border: 1px solid #eee;"/>
+      </View>
+
+      <!-- 标签工具栏：紧凑并排，放在图像区下方以确保显示（不要放在 image 容器内） -->
+      <View style="flex: 0 0 auto; display: flex; gap: 8px; padding: 6px 12px; background: #fff; border-top: 1px solid #f0f0f0; align-items: center;">
+        <View style="flex: 0 0 auto; color: #666; font-size: 11px;">Tools:</View>
+        <KeyPointLabels name="kp" toName="img" strokeWidth="3">
+          <Label value="Corner" background="#FF4D4F"/>
+        </KeyPointLabels>
+        <PolygonLabels name="poly" toName="img" strokeWidth="3">
+          <Label value="Wall" background="#52C41A"/>
+        </PolygonLabels>
+      </View>
+
+      <!-- 可滚动的反馈区：占据剩余约 60% 空间 -->
+      <View style="flex: 1; overflow-y: auto; padding: 12px 16px; background: #fff; border-top: 1px solid #eee; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+        <Header value="标注反馈与分层 (Feedback &amp; Stratification)" size="5" style="margin-bottom: 12px; padding-bottom: 4px; border-bottom: 2px solid #1890ff; display: inline-block;"/>
+
+        <!-- 选项卡片化设计 -->
+        <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <Header value="1. 范围判定 (Scope)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
+          <Choices name="scope" toName="img" showInLine="true" choice="single" required="true" requiredMessage="Scope 必须选择 1 项">
+          <Choice value="In-scope：只标相机房间 (Normal / Camera room only)" alias="normal" hint="主指标纳入。
+规则：只标相机所在主房间（camera room）。
+门后/开口处理：若门框/墙垛清晰，则边界止于门框处，不跨门洞——即使门后还有明显相邻空间，也仍然属于 In-scope。
+当你能在不‘猜’的情况下稳定闭合包络，就选本项。
+判据（与评测假设对齐）：墙-天花与墙-地面的外边界在全景上可形成唯一、可复现的包络（可视为存在稳定的 y_ceil(x), y_floor(x)）。
+说明：天花内部的“向上凹/藻井/格栅/梁架”等细节通常不改变墙-天花外边界；若外边界清晰，仍可选 In-scope。"/>
+            <Choice value="OOS：几何假设不成立 (Out-of-scope / Non-Manhattan)" alias="oos_geometry" hint="主指标剔除。
+          弧形墙、连续曲面玻璃、明显斜墙、非 Manhattan 连接等：不满足单个 cuboid/Manhattan 包络假设。
+          若“camera room 包络”本身无法用单个 Manhattan/cuboid 结构稳定表示（即使勉强画也只是用多折线近似、主观性很强），选本项。"/>
+          <Choice value="OOS：边界不可判定 (Open Boundary / Ambiguous camera-room boundary)" alias="oos_open_boundary" hint="主指标剔除。
+你无法仅凭现有几何线索确定 camera room 应在何处闭合/停止：
+- 没有清晰门框/墙垛/转角可作为停止点
+- 两种及以上闭合方式都合理，必须靠语义去猜边界
+若主要问题是“证据看不见/缺失”，而不是“存在多个合理闭合”，优先选 oos_insufficient。"/>
+          <Choice value="OOS：错层/多平面 (Split-level / Multi-level)" alias="oos_split_level" hint="主指标剔除。
+      存在下沉/楼梯井/多层地面，或天花/墙交界出现多个竞争平面（例如典型“向下下吊/分层天花”导致墙-天花外边界在不同区域出现不一致/不可唯一确定），违反‘单一地面+单一天花’包络假设。
+      注意区分：若天花是“向上凹/藻井”但墙-天花外边界仍唯一清晰，通常仍可 In-scope。"/>
+          <Choice value="OOS：证据不足 (Insufficient evidence)" alias="oos_insufficient" hint="主指标剔除。
+大面积遮挡/遮罩、严重曝光、模糊、贴图缺失等导致关键几何证据本身缺失，无法给出可复现的闭合包络。
+若你大致知道房间结构，但关键停止点/角点必须靠补想或猜测，选本项；若证据仍在、只是存在多个合理闭合方案，优先选 oos_open_boundary。"/>
+        </Choices>
+        </View>
+
+        <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <Header value="2. 困难因素 (Difficulty)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
+          <Text name="difficulty_rule_text" value="填写规则：必须至少选择 1 项。若选择 &quot;trivial&quot;（非常简单），则不得同时选择其它困难标签；若存在任意困难因素，请不要选 trivial。" style="display:block; margin: 0 0 6px 0; color:#666; font-size:12px;" />
+          <Choices name="difficulty" toName="img" showInLine="true" choice="multiple" required="true" requiredMessage="Difficulty 必须至少选择 1 项">
+            <Choice value="非常简单 (Trivial)" alias="trivial" hint="场景简单、几何清晰、无遮挡无干扰，标注几乎无困难"/>
+            <Choice value="遮挡明显 (Occlusion)" alias="occlusion" hint="家具/植物/物体遮挡墙角、门框停止点或地面/天花交界线索，使局部关键几何证据缺失或弱化。说明：即使只影响某一个角点附近、整体边界仍可稳定判定，也仍归入本项；不要因为‘还能修’就误选 low_quality。"/>
+            <Choice value="纹理弱/纯色墙 (Low texture)" alias="low_texture" hint="墙面纯色/光照均匀，边界线索弱"/>
+            <Choice value="拼接缝/拉伸明显 (Seam/Stretch)" alias="seam" hint="全景拼接/重投影导致直线断裂、错位或局部强拉伸/几何扭曲，使真实角点难以定位；它常表现为局部看似 corner drift 或墙线弯折，但根因仍是 seam/stretch（不一定只发生在一条明显拼接缝上）。"/>
+            <Choice value="反光/玻璃干扰 (Reflection/Glass)" alias="reflection" hint="镜面/玻璃反射造成伪边界"/>
+            <Choice value="画质差/被遮罩严重影响 (Blur/Masked/Low quality)" alias="low_quality" hint="模糊/噪声/压缩或大面积遮罩/黑边使关键几何证据（墙-地/墙-顶交界、门框停止点等）整体上无法可靠判定、对齐显著受损。说明：若只是局部遮挡、拼接或单个角点附近难定位，优先选 occlusion 或 seam，而不是本项。"/>
+          </Choices>
+        </View>
+
+        <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <Header value="3. 模型初始化问题 (Model Issue)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
+          <Text name="model_issue_rule_text" value="填写规则：必须至少选择 1 项。若选择 &quot;acceptable&quot;（模型质量好），则不得同时选择其它 issue；若存在任意 issue，请不要选 acceptable。" style="display:block; margin: 0 0 6px 0; color:#666; font-size:12px;" />
+          <Choices name="model_issue" toName="img" showInLine="true" choice="multiple" required="true" requiredMessage="Model Issue 必须至少选择 1 项">
+            <Choice value="模型标注质量好 (Model quality acceptable)" alias="acceptable" hint="预测结果质量高，无需显著修改或仅需微调"/>
+            <Choice value="跨门扩张：包含相邻空间 (Over-extend to adjacent room)" alias="overextend_adjacent" hint="模型把门后或开口后的相邻空间当作同一 camera room 的一部分；人工按门框/墙垛停止后可修正。"/>
+            <Choice value="漏标：只标了局部 (Under-extend / missing parts)" alias="underextend" hint="模型没有覆盖完整 camera room（漏掉部分墙角/边界）"/>
+            <Choice value="过度解析：非结构细节误判 (Over-parsing / ghost geometry)" alias="over_parsing" hint="模型把柱体、墙面凸起、家具边缘或装饰凹凸等非布局结构误判为真实拐角/边界，导致角点冗余、需要人工做‘减法’。注意：若只是同一物理拐角附近一团点，请优先选 corner_duplicate。"/>
+            <Choice value="角点错位/漂移 (Corner drift)" alias="corner_drift" hint="一个或少量角点/局部边界没有正好落在真实墙角上，但仍靠近正确位置、拓扑基本正确，通常通过小幅拖拽即可修正。"/>
+            <Choice value="角点重复/一角多点 (Duplicate corner points)" alias="corner_duplicate" hint="同一物理拐角附近被标了多个点（例如某个拐角出现 3 个点/一团点）。这会导致配对与闭合不稳定；人工应删掉多余点，仅保留最符合几何证据的一个角点位置。"/>
+            <Choice value="拓扑崩溃：配对/闭合失败 (Topological failure)" alias="topology_failure" hint="上下角点无法成对、闭合失败、出现自交或其他非法拓扑。注意：若虽然整体很错但仍更像‘需要从零重画的错误包络’，优先选 fail；若主要问题是点数偏多/偏少，优先选 over_parsing 或 underextend。"/>
+            <Choice value="模型预标注失效 (Prediction Failure)" alias="fail" hint="初始化结果整体严重误导、几乎需要从零重画，且无法由跨门扩张、漏标、过度解析、局部漂移、重复点或拓扑崩溃更准确概括时选本项。"/>
+          </Choices>
+        </View>
+
+      </View>
+      <!-- ================================================== -->
+
+    </View>
+
+    <!-- 右侧：3D 预览 -->
+    <View style="flex: 40%; border-left: 1px solid #ccc; padding-left: 10px;">
+      <Header value="3D Layout Preview"/>
+      <HyperText name="vis_3d" value="$vis_3d" valueType="url" inline="false"/>
+    </View>
+  </View>
+</View>

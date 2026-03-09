@@ -1,0 +1,211 @@
+\section{System Design}
+\label{sec:system-design}
+
+This section specifies the operational components that instantiate the pre-registered protocol
+$(\pi,\mathcal{C},\mathcal{A})$ (Section~\ref{sec:problem-formulation}). The emphasis is
+\emph{controllability and auditability}: all decision rules, thresholds, denominators, and edge-case
+behaviors are explicitly specified and frozen by a staged protocol, with Pilot locking the skeleton,
+PreScreen locking admission-related values, and Calibration locking scene-routing values that require
+coverage evidence.
+
+\subsection{Meta-label collection and auditable missingness}
+
+For each assignment $(w,t)$, the annotation UI requires a complete meta-label record $\mathbf{m}_{w,t}$
+(cf.~\eqref{eq:meta}). In the actual Label Studio implementation, \texttt{difficulty} and \texttt{model\_issue}
+are collected as required multi-select fields with UI-level mutual-exclusion rules (rather than separate
+yes/no widgets for each tag). Any system-side missing field is recorded as NA and
+reported as a process/format disclosure (not as a performance improvement).
+
+To improve \emph{controllability} of Type~4 failures, we treat the meta-label requirements as part of the
+collection protocol (not post-hoc cleaning freedom) and implement a two-layer ``hard validation'' defense.
+First, the UI enforces ``at least one'' selection via required fields (e.g., \texttt{difficulty} is required;
+\texttt{model\_issue} is required when collected). Second, we enforce mutual exclusion at submission time
+to prevent ambiguous co-selection between a ``none/OK'' tag and any specific issue tag (\texttt{trivial} vs.
+other difficulty factors; \texttt{acceptable} vs. other model failure modes): violating submissions are
+blocked and recorded as auditable rejection events.
+
+Because NA can still occur due to system/export issues (e.g., a field not transmitted, corrupted records, or
+version mismatch), we do \emph{not} claim Type~4 is strictly zero. Instead, we disclose (i) NA rates with
+explicit denominators and example tasks, and (ii) rejection counts and reasons (e.g., empty vs.
+mutual-exclusion conflicts) as process evidence.
+
+\subsection{PreScreen misleading initializations: source hierarchy and non-overlap}
+
+\texttt{PreScreen\_manual} and \texttt{PreScreen\_semi} use disjoint image pools. The role of
+\texttt{PreScreen\_manual} is to estimate baseline annotation ability without model initialization; hence its
+expert-anchor subset should cover the major difficulty strata, but it does not need to mirror the failure-mode
+composition of semi-automatic traps.
+
+By contrast, \texttt{PreScreen\_semi} is designed to probe correction ability and blind trust under misleading
+initialization. Its misleading initializations follow an asymmetric dual-source design: the primary source is a
+pre-registered library of synthetic perturbation operators, while a small, fixed supplement may come from a
+natural-failure trap bank curated from frozen model outputs on an independent candidate pool. The same
+\texttt{base\_task\_id} must not be reused across manual and semi pools. If natural failures are insufficient for
+some failure family, the realized quota for that family is reduced and the remaining semi-trap budget is filled
+by the corresponding synthetic operator family; planned and realized source quotas are disclosed.
+
+Clearly judgeable OOS or insufficient-evidence tasks that do not admit a stable geometric reference layout are
+not used as main geometric traps. In \texttt{PreScreen\_manual}, such tasks may appear only as a fixed small
+scope-gate subset scored on scope decisions rather than geometric IoU. In \texttt{PreScreen\_semi}, only an even
+smaller OOS stress subset is allowed for blind-trust audit, and it is reported separately from the main geometric
+trap pool. OOS cases whose scope boundary itself remains highly ambiguous are kept only in an ambiguity audit bank
+rather than promoted to hard traps.
+
+\subsection{Multi-label tag consensus (basic and weighted)}
+\label{sec:tag-consensus}
+
+We compute consensus separately for each binary tag $k$. Let $z_{t,w,k}\in\{0,1,\text{NA}\}$ denote worker
+$w$'s response on task $t$. The operator outputs per-tag consensus and diagnostic uncertainty. The
+consensus threshold $\tau_c$ and all edge-case rules are pre-registered.
+
+\begin{algorithm}[t]
+\caption{Per-tag (unweighted) consensus for multi-select meta-labels}
+\label{alg:tag-consensus}
+\KwRequire{Responses \ensuremath{\{z_{t,w,k}\}}, where \ensuremath{z_{t,w,k}\in\{0,1,\mathrm{NA}\}}; pre-registered threshold \ensuremath{\tau_c\in(0,1)}}
+\KwEnsure{\ensuremath{c_{t,k}}, \ensuremath{\mathrm{conf}_{t,k}}, \ensuremath{\mathrm{disagree}_{t,k}} for each tag \ensuremath{k}; task-level set \ensuremath{C_t^{\mathrm{tag}}}; auditable NA rates}
+
+\ForEach{$k\in\mathcal{K}$}{
+	$n_{\mathrm{sel}}\leftarrow\sum_{w\in\mathcal{W}_t}\mathbb{I}[z_{t,w,k}=1]$\tcp{selected count}
+	$n_{\mathrm{tot}}\leftarrow\sum_{w\in\mathcal{W}_t}\mathbb{I}[z_{t,w,k}\in\{0,1\}]$\tcp{valid count; NA excluded}
+	\eIf{$n_{\mathrm{tot}}=0$}{
+		$c_{t,k}\leftarrow\text{NA}$; $\mathrm{conf}_{t,k}\leftarrow\text{NA}$; $\mathrm{disagree}_{t,k}\leftarrow\text{NA}$\tcp{undefined; disclose}
+	}{
+		$p_{t,k}\leftarrow n_{\mathrm{sel}}/n_{\mathrm{tot}}$\tcp{vote rate}
+		$c_{t,k}\leftarrow \mathbb{I}[p_{t,k}\ge\tau_c]$\tcp{tie handled by $\ge$}
+		$\mathrm{conf}_{t,k}\leftarrow \max(p_{t,k},1-p_{t,k})$\tcp{margin confidence}
+		$\mathrm{disagree}_{t,k}\leftarrow 1-\mathrm{conf}_{t,k}$\;
+	}
+}
+$C_t^{\mathrm{tag}}\leftarrow\{k: c_{t,k}=1\}$\tcp{task-level tag set}
+\Return all outputs and NA counts for audit reporting\;
+\end{algorithm}
+
+\paragraph{Weighted variant (controlled intervention).}
+We additionally support a reliability-weighted consensus. To avoid circularity, weights must be computed
+from PreScreen/Calibration only and must exclude the evaluated task (leave-one-task-out).
+The main implementation records the event $\sum\omega_w=0$ as NA and reports its frequency; it does not
+silently fall back to an unweighted vote in the main analysis.
+
+The weighting cap is selected on the manual-anchor subset of \texttt{PreScreen\_manual}, which contains
+20--22 expert-referenced anchors inside a 30-image pool. The main lock-in scheme is a repeated balanced
+two-fold cross-fitting protocol; a three-fold stratified split is reported only as a sensitivity analysis.
+Given the current anchor budget, five-fold cross-validation is not used in the main analysis because each
+validation fold would be too thin to support stable family coverage.
+
+\begin{algorithm}[t]
+\caption{Per-tag (weighted) consensus (pre-registered edge-case behavior)}
+\label{alg:weighted-tag-consensus}
+\KwRequire{Responses \ensuremath{\{z_{t,w,k}\}}; weights \ensuremath{\{\omega_w\}} with \ensuremath{\omega_w\in[0,1]}; threshold \ensuremath{\tau_c}}
+\KwEnsure{\ensuremath{c^{(\omega)}_{t,k}}, \ensuremath{\mathrm{conf}^{(\omega)}_{t,k}}, \ensuremath{\mathrm{disagree}^{(\omega)}_{t,k}}; auditable \ensuremath{W_{\mathrm{tot}}=0} rate}
+
+\ForEach{$k\in\mathcal{K}$}{
+	$W_{\mathrm{sel}}\leftarrow\sum_{w\in\mathcal{W}_t}\omega_w\,\mathbb{I}[z_{t,w,k}=1]$\tcp{weighted selected}
+	$W_{\mathrm{tot}}\leftarrow\sum_{w\in\mathcal{W}_t}\omega_w\,\mathbb{I}[z_{t,w,k}\in\{0,1\}]$\tcp{weighted valid; NA excluded}
+	\eIf{$W_{\mathrm{tot}}=0$}{
+		$c^{(\omega)}_{t,k}\leftarrow\text{NA}$; $\mathrm{conf}^{(\omega)}_{t,k}\leftarrow\text{NA}$; $\mathrm{disagree}^{(\omega)}_{t,k}\leftarrow\text{NA}$\tcp{disclose; no silent fallback}
+	}{
+		$p^{(\omega)}_{t,k}\leftarrow W_{\mathrm{sel}}/W_{\mathrm{tot}}$\tcp{weighted vote rate}
+		$c^{(\omega)}_{t,k}\leftarrow \mathbb{I}[p^{(\omega)}_{t,k}\ge\tau_c]$\;
+		$\mathrm{conf}^{(\omega)}_{t,k}\leftarrow \max(p^{(\omega)}_{t,k},1-p^{(\omega)}_{t,k})$\;
+		$\mathrm{disagree}^{(\omega)}_{t,k}\leftarrow 1-\mathrm{conf}^{(\omega)}_{t,k}$\;
+	}
+}
+\Return all outputs and the frequency of $W_{\mathrm{tot}}=0$\;
+\end{algorithm}
+
+\subsection{Quality and reliability estimation (leave-one-out protocol)}
+\label{sec:loo-reliability}
+
+We separate \emph{quality} (task-level agreement) from \emph{reliability} (worker-level robustness).
+To avoid self-inflation, worker evaluation follows a leave-one-out (LOO) protocol.
+
+\begin{algorithm}[t]
+\caption{LOO reliability estimation on multi-annotated tasks}
+\label{alg:loo-reliability}
+\KwRequire{A set of tasks \ensuremath{\mathcal{T}_{\mathrm{cal}}} with redundancy \ensuremath{k\ge k_{\min}}; submissions \ensuremath{\{A_{t,w}\}}; IoU metric; pre-registered \ensuremath{k_{\min}} and reporting policy for \ensuremath{k=3} tasks}
+\KwEnsure{Task agreement proxy \ensuremath{\mathrm{IAA}_t}; LOO proxy \ensuremath{\mathrm{IoU}_{\mathrm{LOO}}(t,w)}; worker reliability \ensuremath{r_w}; disclosed rates of degeneracy/missingness}
+
+\ForEach{$t\in\mathcal{T}_{\mathrm{cal}}$}{
+	\If{$k(t)<k_{\min}$}{
+		Mark task $t$ as \texttt{degenerate}; disclose its frequency\tcp{no silent pruning}
+		\textbf{continue}\;
+	}
+	$\mathrm{IAA}_t\leftarrow \mathrm{median}_{w\ne w'}\;\mathrm{IoU}(A_{t,w},A_{t,w'})$\tcp{task agreement}
+	$C_t\leftarrow \arg\max_{w}\ \mathrm{median}_{w'\ne w}\ \mathrm{IoU}(A_{t,w},A_{t,w'})$\tcp{consensus representative}
+	\ForEach{$w\in\mathcal{W}_t$}{
+		$C_t^{(-w)}\leftarrow \arg\max_{u\in\mathcal{W}_t\setminus\{w\}}\ \mathrm{median}_{v\in\mathcal{W}_t\setminus\{w,u\}}\ \mathrm{IoU}(A_{t,u},A_{t,v})$\tcp{LOO representative}
+		$\mathrm{IoU}_{\mathrm{LOO}}(t,w)\leftarrow \mathrm{IoU}(A_{t,w},C_t^{(-w)})$\tcp{worker-on-task proxy}
+	}
+}
+\ForEach{$w\in\mathcal{W}$}{
+	$r_w\leftarrow \mathrm{median}_{t\in\mathcal{T}_w}\ \mathrm{IoU}_{\mathrm{LOO}}(t,w)$\tcp{global reliability}
+	Compute a pre-registered bootstrap CI and record its half-width\tcp{stopping criterion}
+}
+\Return all estimates and disclosure rates\;
+\end{algorithm}
+
+\subsection{Worker profiling: reliability axis and discrete risk tiers}
+
+The main analysis does not use a single continuous ``spammer score.'' Instead, worker profiling follows a
+\emph{reliability axis + discrete risk tier} design that is easier to audit under limited sample size.
+The vertical axis is $\mathrm{LCB}(r_w)$, while the horizontal axis is a discrete risk tier
+$R_w^{\mathrm{tier}}\in\{R0,R1,R2,R3\}$.
+
+The tier is determined by auditable process evidence rather than a weighted sum of heterogeneous proxies.
+We use three core risk signatures: blind-trust risk $T_w$ from misleading-initialization semi tasks,
+condition fragility $C_w$ from high-risk bucket degradation, and gate-failure tendency $G_w$ from
+computable engineering failures. Low-effort proxies and NA/missingness are retained only as auxiliary audit
+fields rather than primary profile axes.
+
+The tiers are assigned in a fixed order: $R3$ (unusable/noisy) if reliability is below the conservative
+floor or gate-failure tendency is too high; $R2$ (condition-fragile) if high-risk buckets fail despite an
+acceptable global level; $R1$ (trust-vulnerable) if blind trust remains high without bucket failure; and
+$R0$ (stable) otherwise. This priority rule is exported together with a machine-readable reason code so that
+the profile remains reproducible.
+
+\subsection{Risk-aware task distribution (stress mode and sequential redundancy)}
+\label{sec:routing-policy}
+
+Routing is treated as a budgeted quality-control policy: higher-risk tasks are prioritized to more stable
+workers, and redundancy is spent where it reduces disagreement. We distinguish (i) pre-annotation risk
+proxies $(d_t,g_t)$ available before labels, and (ii) post-submission diagnostics such as tag disagreement.
+
+In operational terms, high-risk tasks reserve the primary pool for $R0$ workers whose
+$\mathrm{LCB}(r_w)$ exceeds the conservative threshold. $R2$ workers are excluded from the strata where they
+have already failed, $R1$ workers are not used as the primary pool for misleading-initialization-heavy semi
+tasks, and $R3$ workers are excluded from the main routing pool and from weighted consensus.
+
+\begin{algorithm}[t]
+\caption{Risk-aware routing with stress mode and stopping rule}
+\label{alg:routing}
+\KwRequire{Tasks \ensuremath{\mathcal{T}} with risk proxies \ensuremath{d_t,g_t}; worker pool with reliability lower bounds \ensuremath{\mathrm{LCB}(r_w)} (and optional strata LCBs); budget \ensuremath{B}; pre-registered thresholds; max redundancy \ensuremath{k_{\max}}}
+\KwEnsure{Assignments \ensuremath{\pi(t)} and auditable routing decisions under a fixed budget}
+
+\ForEach{$t\in\mathcal{T}$}{
+	Determine risk level using $(d_t,g_t)$ and pre-registered triggers\tcp{cold-start proxies}
+	\eIf{stress mode is triggered (e.g., $d_t\ge\tau_{\mathrm{stress}}$ or $g_t$ flagged)}{
+		Candidate workers $\mathcal{W}_t\leftarrow\{w: \mathrm{LCB}(r_w)\ge\tau_{\mathrm{high}}\}$\tcp{conservative pool}
+		Initialize redundancy $k\leftarrow 3$\tcp{pre-registered}
+	}{
+		Candidate workers $\mathcal{W}_t\leftarrow\{w: \mathrm{LCB}(r_w)\ge\tau_{\mathrm{low}}\}$\tcp{default pool}
+		Initialize redundancy $k\leftarrow k_0(t)$\tcp{risk-stratified start}
+	}
+
+	Assign $k$ workers from $\mathcal{W}_t$ under a load constraint and remaining budget\tcp{no domination}
+	Collect submissions and meta-labels; compute tag disagreement via Algorithm~\ref{alg:tag-consensus}\;
+
+	\While{disagreement is above threshold \textbf{and} $k<k_{\max}$ \textbf{and} budget remains}{
+		Assign one additional worker from $\mathcal{W}_t$\tcp{sequential add-1}
+		Update disagreement and audit records\;
+		$k\leftarrow k+1$\;
+	}
+
+	\If{$k=k_{\max}$ and disagreement remains high}{
+		Mark task $t$ for expert review and disclose its rate\tcp{auditable fallback}
+	}
+}
+\Return $\pi(\cdot)$, redundancy used per task, and all disclosure rates\;
+\end{algorithm}
+
+Sensitivity checks (e.g., varying $\tau_c$, $k_{\max}$, or the weight mapping cap) are reported as
+pre-registered grids and are not used for post-hoc selection.

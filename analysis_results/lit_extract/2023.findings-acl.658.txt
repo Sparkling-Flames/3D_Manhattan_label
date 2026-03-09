@@ -1,0 +1,1047 @@
+Findings of the Association for Computational Linguistics: ACL 2023, pages 10352–10371
+July 9-14, 2023 ©2023 Association for Computational Linguistics
+Which Examples Should be Multiply Annotated?
+Active Learning When Annotators May Disagree
+Connor Baumler∗
+University of Maryland
+baumler@cs.umd.edu
+Anna Sotnikova∗
+University of Maryland
+asotniko@umd.edu
+Hal Daumé III
+University of Maryland
+Microsoft Research
+me@hal3.name
+Abstract
+Linguistic annotations, especially for controver-
+sial topics like hate speech detection, are fre-
+quently contested due to annotator backgrounds
+and positionalities.
+In such situations, pre-
+serving this disagreement through the machine
+learning pipeline can be important for down-
+stream use cases. However, capturing disagree-
+ment can increase annotation time and expense.
+Fortunately, for many tasks, not all examples
+are equally controversial; we develop an ac-
+tive learning approach, Disagreement Aware
+Active Learning (DAAL) that concentrates an-
+notations on examples where model entropy
+and annotator entropy are the most different.
+Because we cannot know the true entropy of an-
+notations on unlabeled examples, we estimate
+a model that predicts annotator entropy trained
+using very few multiply-labeled examples. We
+find that traditional uncertainty-based active
+learning underperforms simple passive learn-
+ing on tasks with high levels of disagreement,
+but that our active learning approach is able to
+successfully improve on passive learning, re-
+ducing the number of annotations required by
+at least 24% on average across several datasets.
+1
+Introduction
+Disagreement in annotations is natural for humans,
+often depending on one’s background, identity, and
+positionality. This is especially salient when build-
+ing classifiers for hate speech, toxicity, stereotypes,
+and offensiveness, where recent work has shown
+the importance of modeling annotator diversity
+and accounting for the full distribution of annota-
+tions rather than just a “majority vote” label (Plank,
+2022; Sap et al., 2022; Uma et al., 2021a; Zhang
+et al., 2021b). However, collecting annotations in
+high-disagreement scenarios is expensive in time,
+effort, and money, because modeling annotator un-
+certainty may require collecting many labels for
+each example.
+∗Equal contribution.
+Very
+Respectful
+Very
+Disrespectful
+Low Model
+Uncertainty
+High Model
+Uncertainty
+High Annotator
+Uncertainty
+"...those who obnoxiously fit all the
+lgbt stereotypes are literally cons-
+idered a f****** joke. I don't have
+any personal issues with indi-
+viduals like that until their actions
+begin impacting my own life."
+Low Annotator
+Uncertainty
+"Mind your business f******
+[SLUR]"
+(Traditional Active Learning)
+Model underconfidence
+is warranted
+Ask no more people
+Model is
+underconfident
+(early in training)
+Ask one more person
+Model is overconfident
+Ask many more
+people
+Model confidence is
+warranted
+Ask no more people
+Very
+Respectful
+Very
+Disrespectful
+Very
+Disrespectful
+Very
+Respectful
+Ĥ(  ) < H(  )
+Very
+Disrespectful
+Very
+Respectful
+Ĥ(  ) > H(  )
+Very
+Disrespectful
+Very
+Respectful
+Ĥ(  ) ≈ H(  )
+Very
+Disrespectful
+Very
+Respectful
+Ĥ(  ) ≈ H(  )
+Figure 1: Utility of annotations when annotators dis-
+agree/agree (rows) and when the model is unconfi-
+dent/confident (columns). When model uncertainty is
+well-calibrated with annotator uncertainty, no more an-
+notations are needed. However, additional annotation(s)
+can be advantageous when the model is underconfident
+(e.g., uncertain on high agreement examples early in
+training) or overconfident (i.e., overly certain on high
+disagreement examples). Examples are edited to remove
+swears and slurs, and the high annotator uncertainty ex-
+ample is lightly paraphrased for anonymity.
+To decrease labeling costs, we turn to active
+learning, a machine learning framework that selec-
+tively elicits annotations on examples that are most
+likely to improve a model’s performance while min-
+imizing annotation costs (Hanneke, 2014; Settles,
+2009, i.a.). Many active learning approaches select
+examples to label based on some measure of model
+uncertainty, with the aim of driving down model
+uncertainty as quickly as possible.
+10352
+
+---PAGE---
+
+However, in the case of potential annotator dis-
+agreement, uncertainty-based sampling is not ob-
+viously a good strategy. Intuitively, an algorithm
+should collect annotations on examples for which
+the model uncertainty is significantly different from
+the annotator uncertainty, so these new annotations
+are able to help calibrate the model. Similarly, an
+active learning algorithm might plausibly request
+new labels on already labeled samples to better
+model the full distribution of possible annotations.
+This raises a “Goldilocks problem”: on examples
+with complete annotator agreement, we do not need
+more than one annotation, while on examples with
+complete disagreement, no annotations are needed;
+it is precisely those examples in the middle—some,
+but not perfect agreement—on which multiple an-
+notations are potentially useful.
+In this paper, we develop DAAL (Disagreement
+Aware Active Learning),1 an active learning al-
+gorithm for training classifiers to predict full la-
+bel distributions on tasks with likely disagreement.
+DAAL first builds an entropy predictor that esti-
+mates, for a given example, how much annotator
+disagreement there is likely to be on that example.
+Then, using this entropy predictor, DAAL trains a
+task predictor that queries examples for which the
+current task predictor’s current entropy is most dif-
+ferent from its estimated human entropy (Figure 1).
+We evaluate DAAL on several text classification
+problems related to English hate speech and toxic-
+ity detection, finding that:
+1. Traditional uncertainty-based active learning
+algorithms under-perform pure random sam-
+pling, especially on tasks with high annotator
+disagreement, and especially when the goal is
+to estimate the full label distribution (rather
+than just the majority vote label);
+2. It is possible to estimate a high quality en-
+tropy predictor using a much smaller number
+of samples than is needed to learn the task
+predictor, making DAAL a feasible approach.
+3. DAAL can effectively reduce the number of
+needed annotations by at least 24% on average
+to achieve the same predictive performance,
+in comparison to the strongest competitor.
+4. DAAL automatically selectively re-annotates
+the same example multiple times, and also
+sometimes re-annotates examples specifically
+to increase the task predictor’s uncertainty,
+both typically during later phases of learning.
+1https://github.com/ctbaumler/daal
+2
+Related Work
+Data collection has always been a challenge in NLP,
+especially for subjective and ambiguous topics such
+as stereotypes, biases, hate speech, and toxicity.
+It has been shown that examples annotators dis-
+agree on can be valuable inputs to classifiers, and
+that disagreement is more than just noise (Basile
+et al., 2021; Leonardelli et al., 2021; Larimore et al.,
+2021; Pavlick and Kwiatkowski, 2019; Palomaki
+et al., 2018). Moreover, having a diverse annotator
+pool can be crucial to performance (Almanea and
+Poesio, 2022; Akhtar et al., 2021; Sotnikova et al.,
+2021). Baan et al. (2022) and Plank (2022) demon-
+strate that, when the goal is to produce full label dis-
+tributions, evaluating classifiers against the major-
+ity vote can give misleading results. Both argue that
+dataset developers should release un-aggregated la-
+bels with datasets. Recent approaches to learning
+to predict full-label distributions—rather than just
+majority vote labels—often train on “soft labels,”
+treating each annotation as a separate example, in-
+stead of majority vote labels (Davani et al., 2022;
+Fornaciari et al., 2021; Uma et al., 2021b; Klenner
+et al., 2020; Aroyo and Welty, 2013).
+One of the most commonly deployed approaches
+to minimize the number of collected annotations to
+train a model is active learning, where the main idea
+is to collect only those annotations that might be
+helpful for improving model performance. Active
+learning algorithms operate iteratively, where in
+each round a small number (often one) of examples
+are requested to be annotated. These annotated
+examples are added to a training set, a model is
+trained on that dataset, and then the process repeats.
+One popular strategy for selecting which exam-
+ples to have annotated in each round is uncertainty
+sampling, where the model queries on examples
+on which it is the least certain (Ramirez-Loaiza
+et al., 2017; Culotta and McCallum, 2005; Lewis,
+1995), with uncertainty often measured by the cur-
+rent entropy of the label distribution produced by
+the model at the current round.
+3
+Learning with Annotator Disagreement
+In this section, we motivate and formalize the prob-
+lem we aim to solve, describe passive and active
+learning baselines, and introduce our algorithm,
+DAAL (Disagreement Aware Active Learning).
+10353
+
+---PAGE---
+
+3.1
+Motivation
+When considering a task and dataset with (poten-
+tial) annotator disagreement, we aim to capture
+this disagreement by training a classifier that pre-
+dicts a full-label distribution, rather than a single
+label. When classifiers are part of a larger system,
+predicting full-label distributions enables classifier
+uncertainty to be used directly in that system, for
+instance to trade-off false positives and false nega-
+tives under deployment-specific cost models.
+Beyond simply learning a classifier that can pre-
+dict label distributions, we also aim to minimize the
+number of samples annotated. There are standard
+reasons for doing so, namely that annotation costs
+time and money. Beyond that, however, annotation
+of data related to hate speech, toxic language, and
+related tasks, comes with an additional burden to
+annotator mental health. And so we also wish to
+minimize the burden on annotators.
+3.2
+Task Definition
+To formalize the task at hand, let X be an input
+space (e.g., over social media posts), Y be an out-
+put space (e.g., over levels of toxicity), and let
+∆(Y ) be the space of distributions over Y (i.e., dis-
+tribution over toxicity levels, possibly obtained by
+querying multiple annotators).
+The learning problem is defined by a fixed but un-
+known distribution PX(x) over X—representing
+the sampling distribution of inputs—and an ora-
+cle labeling distribution PY |X(y|x) over labels y
+given an input x, where the distribution reflects the
+fact that different annotators may provide different
+labels. In general, the learning goal is to learn a
+task predictor fθ : X →∆(Y ) that minimizes an
+expected loss over xs drawn from PX and labels
+drawn from PY |X given that x. Because we are in-
+terested in predicting a soft label distribution, and
+not a single label, we measure loss using a distribu-
+tion measure: Jensen-Shannon divergence between
+PY |X and fθ on each x:
+L(fθ) = Ex∼PXJS
+ PY |X(·|x), fθ(x)
+
+(1)
+JS(p1, p2) = 1
+2
+ KL(p1||¯p) + KL(p2||¯p)
+
+(2)
+where ¯p(z) = 1
+2
+ p1(z) + p2(z)
+
+The active learning variant of this problem sup-
+poses that we have access to a pool of unlabeled
+data U ⊂X sampled from PX, a query budget
+B, as well as query access to PY |X: given an x,
+we can draw a single label y ∼PY |X(·|x), at a
+cost. The task is: given U, B, and sample access to
+PY |X, learn a soft classifier fθ : X →∆(Y ) that
+minimizes Eq 1 using at most B queries to PY |X.
+3.3
+Passive Learning Baseline
+The simplest approach to learning a classifier in the
+framework described in the previous subsection is
+passive learning: pick a random subset of examples
+from U, label them all, and train a classifier on the
+resulting dataset. There is, however, a subtlety in
+the disagreement case even for passive learning: is
+it better to select B examples and to query PY |X
+once for each one, or is it better to select B/N ex-
+amples and to query PY |X N times for each?2 We
+consider both modes, which we refer to as “single”
+(one at a time) and “batched” (N at a time).
+Formally, passive learning first selects a pool
+DX ⊂U uniformly at random of size B/N, and,
+for each x ∈D, queries PY |X(·|x) independently
+N times to obtain labels y(x)
+1 , . . . , y(x)
+N . Following
+standard practice (see § 2), we then construct a
+labeled dataset D = {(x, y(x)
+n ) : x ∈DX, 1 ≤
+n ≤N} and train a classifier fθ on D.
+3.4
+Entropy-Based Active Learning Baseline
+Entropy-based active learning repeatedly queries
+the oracle PY |X each round, selecting an example
+for annotation based on the entropy of the current
+classifier. This is formally specified in Alg. 1. At
+each of B rounds, a single example xb is selected
+as the one on which the current classifier has
+maximum uncertainty. This example is then given
+to the oracle PY |X and a label yb is sampled. This
+labeled example is added to the dataset D and
+the process repeats. Similar to passive learning,
+entropy-based active learning can be run either
+in “single” mode (one annotation at a time) or
+“batched” (N at a time).
+In practice, entropy-based active learning can be
+computationally infeasible: training a new clas-
+sifier after every new sample is costly, and re-
+evaluating the entropy of all of U after every new
+sample is also costly. To reduce this computational
+cost—at the price of some loss in performance—we
+only retrain the classifier and re-evaluate entropy
+every 10 rounds. (This is equivalent to selecting
+the 10 examples with the highest entropy in each
+round.)
+2This conundrum applies even in the setting without dis-
+agreement because of label noise and has been studied theo-
+retically (Khetan et al., 2018) and empirically (Zhang et al.,
+2021a; Dong et al., 2021).
+10354
+
+---PAGE---
+
+Algorithm 1: Entropy-Based AL
+Input: Unlabeled data U, budget size B
+1 D1 ←{}
+2 for b = 1 . . . B do
+3
+fθ ←task classifier trained on Db
+4
+xb ←arg maxx∈U H( fθ(x) )
+5
+yb ∼PY |X(·|xb) – query oracle
+6
+Db+1 ←Db ∪{(xb, yb)}
+7 return fθ
+3.5
+Our Approach:
+Disagreement Aware Active Learning
+The intuition behind entropy-based active learning
+is that driving down the entropy of fθ is a good
+idea and that the most effective way to drive down
+that entropy is to elicit labels on samples on which
+fθ currently has high entropy.
+Unfortunately,
+while entropy-based active learning has been
+incredibly effective at reducing labeling cost on
+relatively unambiguous labels, we find that it often
+performs worse than passive learning on tasks
+where annotators disagree (§ 5.1).
+This likely
+happens because when the goal is to predict a label
+distribution, and the ground truth entropy of that
+distribution is non-zero, then attempting to drive
+the entropy of fθ to zero is potentially misguided.
+Consequently, we need a new approach that
+treats annotator uncertainty as a first-class citizen.
+To gain an intuition of what such an algorithm
+should do, consider an example where annotators
+agree. Here, new labels will be the same as ex-
+isting labels and thus only reinforce the model’s
+predictions when added to training data. For an ex-
+ample where annotators disagree, new labels will
+potentially be quite different. When a newly sam-
+pled label is surprising given the model’s current
+predicted label distribution, this will increase the
+model’s belief in the new label and decrease the
+model’s certainty.
+Querying based on different levels of annotator
+uncertainty can affect model confidence, but this
+is only necessary when the model’s level of con-
+fidence is incorrect. If the model is certain on an
+example that annotators agree on, then this is a war-
+ranted level of confidence, and there is no need to
+reinforce the correct distribution with more labels.
+In the opposite case, the model’s uncertainty on
+an example where humans disagree is justified, so
+even if collecting more annotations could help in-
+crease model certainty, this would be undesirable.
+Therefore, the useful examples to query on are
+those with a mismatch between the level of annota-
+tor uncertainty and model uncertainty, rather than
+Algorithm 2: DAAL
+Input: Unlabeled data U, budget size B,
+entropy-predictor budget Bent and number of
+entropy annotations N
+1 DX ←Bent random samples from U
+2 for x ∈DX, n = 1 . . . N, sample y(x)
+n
+∼PY |X(·|x)
+3 DH ←{(x, H({y(x)
+n }N
+n=1) : x ∈X}
+4 fent ←entropy predictor trained on DH
+5 D1 ←{(x, y(x)
+n ) : x ∈X, n = 1 . . . N}
+6 for b = 1 . . . B −Bent × N do
+7
+fθ ←task classifier trained on Db
+8
+xb ←arg maxx∈U |H(fθ(x)) −fent(x)|
+9
+yb ∼PY |X(·|xb)
+10
+Db+1 ←Db ∪{(xb, yb)}
+11 return fθ
+just high model uncertainty. This suggests a vari-
+ation of entropy-based active learning (Alg. 1) in
+which xb is selected not to maximize model un-
+certainty, H(fθ(x)) but to maximize the difference
+between model uncertainty and human uncertainty:
+arg max
+x∈U
+|H
+ fθ(x)
+
+−H
+ PY |X(·|x)
+
+|
+(3)
+Task model’s predicted label dist. on x
+Ground truth label distribution on x
+Unfortunately, we cannot compute Eq 3 because
+we do not know H(PY |X(·|x)) and to estimate
+it would require querying PY |X multiple times—
+exactly what we are trying to avoid. To address this,
+DAAL trains an entropy predictor that estimates
+H(PY |X(·|x)) for any x, and uses this estimated
+entropy in place of the true entropy in Eq 3. For-
+tunately, we find that this entropy predictor can be
+trained with a sufficiently small number of samples
+so as not to overshadow the benefits of using active
+learning (see §5.3).
+Our proposed algorithm is detailed in Alg. 2. In
+the beginning, DAAL builds an initial dataset for
+estimating an entropy predictor by querying N an-
+notations for Bent random samples, similar to pas-
+sive learning. This entropy predictor is a regressor
+trained to predict the observed empirical entropy of
+those N annotations given an input x. The remain-
+der of DAAL is parallel to entropy-based active
+learning (Alg. 1). In each round, an example is
+selected based on the absolute difference between
+model entropy and estimated human entropy:
+xb = arg max
+x
+|H
+ fθ(x)
+
+−fent(x) |
+(4)
+Task model’s predicted label dist. on x
+Predicted annotator entropy on x
+Every time DAAL queries for more annotations,
+a new fθ is trained from scratch, and the proce-
+dure is repeated until the annotation budget is ex-
+hausted. If needed, DAAL may query the same
+10355
+
+---PAGE---
+
+Measuring Hate Speech
+Wikipedia
+Characteristics
+Respect
+Dehumanize
+Genocide
+Toxicity
+Toxicity-5
+Number of Total Examples
+17, 282
+17, 282
+17, 282
+20, 000
+20, 000
+Avg Number of Annotations per Example
+3.35
+3.35
+3.35
+10.0
+5.0
+Number of Examples Test Set
+1, 778
+1, 778
+1, 778
+2, 000
+2, 000
+Probability Two Annotators Disagree
+0.520
+0.689
+0.371
+0.524
+0.522
+Table 1: Dataset statistics for MHS and Wikipedia tasks.
+examples multiple times, but it is not required to
+waste the annotation budget on examples where all
+useful information is learned after one annotation
+(or zero). When the annotator entropy is zero (i.e.,
+all annotators agree on a single label), DAAL re-
+duces to simple uncertainty sampling. As in the
+case of entropy-based active learning, retraining fθ
+and recomputing model entropy after every sample
+is computationally expensive, so in practice, we
+retrain and re-evaluate only after every 10 rounds.
+4
+Experimental Setup
+In this section, we introduce the datasets we use
+and experimental details.
+4.1
+Datasets
+We conduct experiments in simulation by start-
+ing with datasets with multiple annotations per
+example and returning one of these at random
+when the oracle is called. We choose two datasets
+with multiple labels for each attribute: Measuring
+Hate Speech (MHS) (Sachdeva et al., 2022) and
+Wikipedia Talk (Wulczyn et al., 2017); basic data
+statistics are summarized in Table 1.
+The MHS dataset was collected from YouTube,
+Twitter, and Reddit examples. It has nine scale
+attributes that contribute to their definition of hate
+speech, from which we select three for our experi-
+ments: Dehumanize (which has high levels of hu-
+man disagreement), Respect (which has medium
+levels), and Genocide (which has low levels).
+Each attribute is labeled for every example on a
+five-point Likert scale from strongly disagree to
+strongly agree. There are 50k examples, each of
+which is annotated between 1 and 6 times in the
+main dataset (see Figure 17); for our simulated
+experiments we only consider those with 3 −6 an-
+notations, resulting in around 20k total examples.
+The Wikipedia dataset was created as a result
+of the Wikipedia Detox Project.3 It has three at-
+3https://meta.wikimedia.org/wiki/Research:
+Detox/Data_Release
+tributes of which we select one for experiments—
+Toxicity—which is also rated on a five-point Lik-
+ert scale from very toxic to very healthy. This data
+consists of 100k examples with 10 annotations per
+example in almost all cases; we randomly downse-
+lect to 20k examples for congruity with MHS.
+4.2
+Experimental Details
+We measure the classifier’s performance accord-
+ing to Jensen-Shannon divergence (JS), defined
+in Eq 2.4 We introduce an oracle trained on the
+full dataset for each task to calibrate model perfor-
+mance against the best possible.
+For each method, we finetune RoBERTa-base
+(Liu et al., 2020). We finetune the task model each
+round from scratch, which worked better than con-
+tinuing training in preliminary experiments. We
+use early stopping with a tolerance of 1 based
+on the KL divergence between the model’s pre-
+dicted distribution and the distribution of annotator
+votes on a held-out set, training for a maximum
+of 50 epochs. For DAAL’s entropy predictor, we
+also finetune a RoBERTa-base model and use early
+stopping with a tolerance of 5 based on the mean
+squared error on the held-out set.
+Each experiment’s result is averaged over 5 runs,
+and we present 95% confidence intervals based on
+these runs. For all algorithms, we disallow query-
+ing on examples where all available annotations
+are already in the training set.5
+5
+Results and Analysis
+In this section, we present results for baseline meth-
+ods (§5.1) and DAAL (§5.2). We also investigate
+how the budget size and the number of annotations
+per example affect the entropy predictor’s perfor-
+mance (§5.3). In addition, we discuss in which sit-
+4We additionally report total variational distance as well
+as Macro F1 and accuracy in the Appendix.
+5This issue only arises in simulation: in a real condition,
+one could always query more. In practice, we found that re-
+annotation queries were not frequent enough to raise concerns.
+10356
+
+---PAGE---
+
+Dehumanize (High Disagreement)
+Genocide (Low Disagreement)
+Jensen-Shannon
+0
+1000
+2000
+3000
+4000
+Average Number of Annotations
+0.19
+0.20
+0.21
+0.22
+0.23
+0.24
+0.25
+0.26
+0
+1000
+2000
+3000
+4000
+5000
+6000
+Average Number of Annotations
+0.10
+0.12
+0.14
+0.16
+0.18
+0.20
+0.22
+Passive, Batched 3
+Passive, Single 3
+AL H(f ), Batched 3
+AL H(f ), Single 3
+Oracle (full data)
+Figure 2: JS divergence scores for two attributes from the MHS dataset for passive learning baselines and entropy-
+based active learning (AL) baselines. For these experiments, we define N ≈3, which means that there are
+approximately 3 annotations per example available in the data pool.6 Both baselines have two variations when
+querying: “Batched” receives all 3 annotations per example while “Single” receives only one.
+uations the models request additional annotations
+for already-seen examples over new ones (§5.4).
+5.1
+How Do Levels of Disagreement Impact
+Baselines?
+To start, we seek to understand how levels of dis-
+agreement impact the efficacy of passive and active
+learner baselines. To do this, we compare high
+and low disagreement attributes (Dehumanize and
+Genocide). Learning curves on these tasks are
+shown in Figure 2. First, we see that the level of
+disagreement affects which approach is more ef-
+fective. When annotators generally agree—as in
+Genocide—the active learner works well, outper-
+forming passive learning for a distribution measure,
+JS divergence (Figure 2, right). Second, we see that
+on the high disagreement attribute (Dehumanize),
+active learning is worse than passive learning by a
+significant gap (Figure 2, left). We find a similar
+but weaker effect on accuracy-based measures in
+§A.1. We also show that using hard labels signif-
+icantly hurts baseline performance on our task in
+§A.2.
+In Figure 2, we can also compare the “batched”
+mode (when the model queries examples with
+N = 3 annotations simultaneously) and the “single”
+mode (when the model queries annotations individ-
+ually). We can see that, for the low disagreement
+attribute, “single” active learning achieves compa-
+rable JS to “batched”, but on average requires fewer
+annotations to reach the minimum. For the high
+Passive
+Active H(fθ)
+Dataset
+Batch
+Single
+Batch
+Single
+Dehumanize
+2.05
+1.80
+> 7.60
+> 2.32
+Respect
+1.44
+1.25
+3.52
+> 1.47
+Genocide
+> 4.20
+> 1.25
+> 2.80
+> 1.28
+Toxicity
+1.46
+> 1.20
+0.97
+> 1.32
+Toxicity-5
+> 4.18
+> 1.25
+0.90
+> 1.36
+Average
+> 2.67
+> 1.35
+> 3.16
+> 1.55
+Table 2: How many times more annotations the base-
+lines require to achieve the same JS as DAAL.
+disagreement attribute, the trend is less clear, but
+in the next section, we show that indeed querying
+a single annotation at a time is more effective for
+DAAL.
+5.2
+Is DAAL Effective at Learning
+Distributions?
+To compare results with the baselines, for each
+task we select the single strongest baseline from
+passive learning and entropy-based active learning
+to compare against.7 We measure improvement in
+terms of the number of annotations needed for the
+model to achieve within 5% of its best possible JS
+divergence. Results are in Figure 3 and Table 2.
+As we can see in Figure 3, DAAL achieves
+competitive JS on fewer annotations on aver-
+6As discussed in §4.1, we use a portion of the MHS dataset
+that does not have a consistent number of annotations per
+example. For simplicity, we report results on this dataset as
+N = 3 as nearly 2
+3 of examples had 3 annotations.
+10357
+
+---PAGE---
+
+0
+200
+400
+600
+800
+1000
+1200
+1400
+1600
+Average Number of Annotations
+0.19
+0.20
+0.21
+0.22
+0.23
+0.24
+0.25
+0.26
+(a) Dehumanize
+0
+200
+400
+600
+800
+1000
+1200
+1400
+1600
+Average Number of Annotations
+0.150
+0.175
+0.200
+0.225
+0.250
+0.275
+0.300
+0.325
+(b) Respect
+0
+250
+500
+750
+1000
+1250
+1500
+1750
+2000
+Average Number of Annotations
+0.10
+0.12
+0.14
+0.16
+0.18
+0.20
+0.22
+(c) Genocide
+0
+1000
+2000
+3000
+4000
+5000
+6000
+Average Number of Annotations
+0.04
+0.06
+0.08
+0.10
+0.12
+0.14
+(d) Toxicity
+0
+500
+1000
+1500
+2000
+2500
+3000
+Average Number of Annotations
+0.04
+0.06
+0.08
+0.10
+0.12
+(e) Toxicity-5
+Oracle (full data)
+Passive, Single 3
+AL H(f ), Single 3
+AL H(f ), Batched 5
+AL H(f ), Batched 10
+AL |H(f )
+fent|, Single 3, 300
+AL |H(f )
+fent|, Single 5, 200
+AL |H(f )
+fent|, Single 10, 1000
+Figure 3: Jensen-Shannon divergence vs the number of required annotations. The lines in red show DAAL’s
+improvement in the number of annotations. They connect the first measurement where DAAL was within 5%
+of its best JS to the point where the baseline achieves the same performance (if available). We compare DAAL
+with the empirically determined best budget size (See §5.3) and best performing baseline. We show in the legend
+labels whether the task model receives single or batched annotations for queried examples, the number of available
+annotations per example, and (for DAAL) the size of the entropy predictor’s budget in annotations. The x-axis
+includes the annotations in the entropy predictor’s budget.
+age than all baselines. Other approaches might
+achieve the same performance but require at least
+26% more annotations on average. For instance,
+DAAL achieves 0.225 JS divergence for the
+Dehumanize attribute after approximately 566 an-
+notations, while the best baseline needs 1022 an-
+notations to achieve the same performance (80%
+more).
+The one exception is on the Toxicity
+dataset, which we explore in §5.3.
+In some cases, as with the Genocide attribute,
+the baseline models never get to the same perfor-
+mance as DAAL. We observe no strong pattern
+for DAAL working better or worse for high ver-
+sus low disagreement attributes, suggesting that
+it’s a “safe” option that can also be used in more
+7Beyond the two simple active and passive learning base-
+lines discussed in §3.3 and §3.4, we also considered BADGE
+(Ash et al., 2020), an active learning method that samples a
+diverse set of uncertain examples to annotate based on the
+magnitude of the gradient in the final hidden layer. Using
+BADGE’s default hyperparameters and with 200 epochs per
+round (vs a limit of 50 for DAAL and the other baselines),
+we found that with both BERT and RoBERTa BADGE never
+outperformed our other baselines on datasets with annotator
+disagreement. For example, the final JS divergence of BADGE
+was 28% worse that the strongest baseline on MHS Respect,
+and 7% worse on MHS Dehumanize.
+traditional learning settings where there may not
+be much disagreement.
+5.3
+Size of the Entropy Budget, Bent
+We explore different budgets for the annotator en-
+tropy predictor described in §3.5. We experiment
+with budgets of 25, 100, and 200 examples on
+MHS Respect. Since the entropy predictor must
+be trained on multiply-annotated examples, our
+goal is to ensure it can be trained with a very small
+budget. The comparison of performances is shown
+in Figure 4. In general, we see that the entropy
+predictor can, indeed, be learned with relatively
+few examples and that a budget of 100 examples is
+near optimal. We confirm that this finding extends
+to the Toxicity dataset in §A.4.
+In §5.2, we noted a situation on the Toxicity
+dataset when DAAL performs slightly worse (re-
+quires about 4% to 11% more annotations) than
+entropy-based active learning (Table 2).
+This
+dataset has markedly more annotations per exam-
+ple (Table 1), which is an artifact of the simulation
+used for the experiment. For a direct comparison,
+we repeat this experiment where we fix the total
+number of annotations to smaller values. Results
+10358
+
+---PAGE---
+
+0
+250
+500
+750
+1000
+1250
+1500
+1750
+Average Number of Annotations
+0.150
+0.175
+0.200
+0.225
+0.250
+0.275
+0.300
+0.325
+Oracle (full data)
+Passive, Single 3
+AL H(f ), Single 3
+AL |H(f )
+fent|, Single 3, 75
+AL |H(f )
+fent|, Single 3, 300
+AL |H(f )
+fent|, Single 3, 600
+Figure 4: Comparison of JS Divergence when using
+different budgets for annotator entropy predictors de-
+scribed in § 3.5 on the MHS Respect attribute. We
+compare budgets of 25, 100, and 200 examples with
+pre-collected annotations. For MHS (N = 3), this
+translates to budget sizes of 75, 300, and 600 annota-
+tions
+are shown in Figure 5. We see that having more an-
+notations per example gives better performance on
+the entropy predictor. (We show task model results
+on 3, 5, and 10 annotation per example DAAL in
+§A.4.) We notice that the optimal number of anno-
+tations is 5 per example, which suggests 5 might be
+a reasonable cap for the maximum number of times
+a single example could be queried in a real-world
+deployment.
+5.4
+fent vs H(fθ) and Re-annotation Strategy
+DAAL chooses examples to query based on the
+absolute difference between model and annotator
+entropy (See §3.5). This means that the model can
+select two kinds of examples depending on which
+term is larger. When H(fθ) > fent, the model is
+unsure of the correct label but predicts that annota-
+tors will agree on the label. When fent > H(fθ),
+the model is overconfident in its label prediction
+given its prediction of annotator agreement levels.
+In Figure 6, we consider which of these two
+kinds of examples the model is querying on at dif-
+ferent points in learning. We find that our model
+begins by querying overwhelmingly on cases with
+H(fθ) > fent but that the reverse is true later
+in training. This can be interpreted as beginning
+with “easy” examples where annotators are likely
+to agree and then choosing examples with higher
+disagreement later to correct overconfidence.
+We also consider how often DAAL re-annotates
+an already annotated example. In Figure 7, we
+see that early in training, DAAL mostly chooses
+2
+3
+4
+5
+6
+7
+8
+9
+10
+Annotations per Example
+0.05
+0.10
+0.15
+0.20
+0.25
+0.30
+MSE
+Annotation Budget
+max
+100
+200
+300
+1000
+Figure 5: Entropy predictor performance on Toxicity
+on varying the total annotation budget and the number
+of annotations per example. We find that decreasing the
+annotations per example to 5 and the budget to 200 is
+generally sufficient.
+to query on new examples, but in the second half,
+about 2/3 of annotations are re-annotations.
+Combining this change in re-annotation rate with
+the change in which term dominates the query func-
+tion, we can see a more clear strategy. Early in
+training, when the model is focusing on examples
+with low fent, there is no need to query for multi-
+ple labels. Once the model starts considering more
+examples with high fent, re-annotations become
+necessary to better capture the annotator distribu-
+tion. These re-annotations are largely not given to
+examples with low fent, as these are not likely to
+require more than one annotation.
+6
+Conclusion
+In this paper, we emphasize the importance of ac-
+counting for disagreement present in data. We pro-
+pose DAAL, an active learning approach, which
+incorporates both annotator and model uncertain-
+ties, aiming to reduce the cost of annotation. This
+cost includes both time and money, but also an
+often overlooked cost related to the repeated ex-
+posure of annotators to toxic and harmful content.
+When the annotation is performed on crowdsourc-
+ing platforms, where workers are often from vul-
+nerable populations who may require more flexible
+employment options—such as those with disabili-
+ties or who have caregiver roles (Berg, 2016)—this
+mental health cost compounds existing marginal-
+ization.
+In our experiments on training classifiers for
+hate speech and toxicity detection, we show that
+DAAL achieves comparable Jensen-Shannon di-
+10359

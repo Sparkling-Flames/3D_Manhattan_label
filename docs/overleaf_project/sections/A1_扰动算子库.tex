@@ -1,0 +1,44 @@
+\section{附录：扰动算子库与误导性初始化冻结清单}\label{app:perturbation-library}
+
+本附录给出 \texttt{PreScreen\_semi} 中误导性初始化的扰动算子库。算子库以现有 \texttt{model\_issue} 标签体系为索引，目标是生成可修复且可审计的结构性错误。Pilot 的作用是归档高频失效模式并锁定算子集合、强度范围与抽样配额。
+
+为避免工程实现与论文披露的类型集合发生漂移，\texttt{model\_issue} 的取值集合与命名（alias）以 Label Studio 标注界面配置（\texttt{tools/label\_studio\_view\_config.xml}）为唯一真源；扰动算子实现与冻结清单中的 \texttt{operator\_id} 必须与该 alias 完全一致。
+
+误导性初始化来源采取“双来源但主次分明”设计：主来源为规则化扰动算子，补充来源为固定小配额的自然失败 trap bank。自然失败来源仅允许进入 \texttt{PreScreen\_semi} 的盲信子集，不得与 \texttt{PreScreen\_manual} 复用同一 \texttt{base\_task\_id}。若某类型自然失败样本稀缺，则下调该来源的实际配额，并用同类型规则化扰动补足总 trap 配额；计划配额与实际配额需同时披露。
+
+\subsection{扰动算子与 \texttt{model\_issue} 对应表}\label{app:perturbation-operators}
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabular}{p{0.18\linewidth} p{0.34\linewidth} p{0.18\linewidth} p{0.16\linewidth}}
+\toprule
+\textbf{\texttt{model\_issue}} & \textbf{扰动目标与算子示例} & \textbf{强度锁定} & \textbf{Pilot 观测}\\
+\midrule
+\texttt{acceptable} & 纠错子集使用高质量初始化 $P_t$，不施加强扰动，仅保留轻微扰动用于检验细调能力。 & 轻微 & 较多\\
+\texttt{overextend\_adjacent} & 跨门扩张算子 $\mathcal{T}_{\mathrm{overextend}}$：将边界沿门洞方向外推并跨越门框停止点，制造可修复的跨门错误。 & 弱/中/强 & 中等\\
+\texttt{corner\_drift} & 角点漂移算子 $\mathcal{T}_{\mathrm{drift}}$：对局部角点施加受限平移，保留拓扑结构但造成对齐偏差。 & 弱/中 & 较多\\
+\texttt{corner\_duplicate} & 角点重复算子 $\mathcal{T}_{\mathrm{duplicate}}$：在同一物理拐角附近插入冗余角点，诱发配对不稳但仍可修复。 & 中/强 & 较多\\
+\texttt{underextend} & 漏标算子 $\mathcal{T}_{\mathrm{underextend}}$：裁剪部分边界段或删除局部角点，使初始化覆盖不完整。 & 弱/中 & 极少\\
+\texttt{over\_parsing} & 过度解析算子 $\mathcal{T}_{\mathrm{overparse}}$：插入伪角点或伪折线段，模拟把非结构细节误判为布局拐角的情形。 & 弱 & 极少\\
+\texttt{topology\_failure} & 拓扑崩溃算子 $\mathcal{T}_{\mathrm{topology}}$：制造配对或闭合不稳定的拓扑错误。该模式在 Pilot 中罕见，因此不作为主流程的高占比来源，仅保留小配额用于稳健性披露。 & 固定小配额 & 罕见\\
+\texttt{fail} & 预标注失效算子 $\mathcal{T}_{\mathrm{fail}}$：生成明显不可用但仍可从零重画的初始化。该模式在 Pilot 中极少，默认不进入盲信主指标集合，仅用于附录真实性检查。 & 固定小配额 & 极少\\
+\bottomrule
+\end{tabular}
+\caption{扰动算子库与 \texttt{model\_issue} 的对应关系。强度为预注册锁定的离散档位，用于保证可复现并支持敏感性分析。Pilot 观测为 Pilot 样本内的相对频次描述，用于锁定抽样配额而非事后调整。}
+\label{tab:perturbation-operator-library}
+\end{table}
+
+\subsection{冻结清单与可审计字段}\label{app:perturbation-freeze-list}
+
+对每个误导性初始化任务，主实现冻结并记录以下字段，以保证从 $P_t$ 到 $\tilde{P}_t$ 的证据链完整。
+\begin{itemize}
+    \item \texttt{image\_id} 与任务唯一标识。
+    \item \texttt{source\_type}（\texttt{synthetic\_operator} / \texttt{natural\_failure}）、\texttt{base\_task\_id} 与所属池标识，用于验证跨池不重叠。
+    \item 模型版本标识与生成 $P_t$ 的配置摘要。
+    \item 扰动算子标识 \texttt{operator\_id} 与强度档位 \texttt{lambda\_level}。
+    \item 随机种子 \texttt{seed}。
+    \item 由 $P_t$ 生成 $\tilde{P}_t$ 的脚本版本号与哈希。
+\end{itemize}
+
+自然失败初始化若被纳入补充来源，同样在固定候选池上运行冻结模型得到 $P_t$，再由专家按锁定的 \texttt{model\_issue} 归档表进行标签化，并按类型分层随机抽样进入盲信子集。该来源的图像清单、专家复核记录、抽样随机种子与计划/实际配额一并冻结。

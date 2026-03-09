@@ -1,0 +1,94 @@
+﻿\section{报告与可审计输出}
+
+本文的报告体系以可审计性为核心，通过三级口径、分层矩阵与反例库构成完整的证据链。
+\subsection{三级口径 T/I/M}
+
+为避免因指标不可计算而静默丢弃样本，本文采用三级口径透明披露所有数据：
+\begin{itemize}
+    \item 口径 T（Total）——透明披露：包含所有收集到的标注，不因指标无法计算而静默丢弃。报告 OOS 比例、门控失败原因分布、缺失率。
+    \item 口径 I（In-scope）：仅包含 \texttt{scope}=\texttt{in-scope} 且 \texttt{scope} 非缺失的样本，用于主指标分析（效率、IAA、$r_{u}$）。OOS 样本单独报告比例与子类。
+    \item 口径 M（Model-usable）：在口径 I 基础上排除可计算型门控失败，用于标准 layout 指标（2D/3D IoU）。可比型门控失败仅影响对应指标。
+\end{itemize}
+
+\texttt{active\_time} 数据质量审计：在口径 T 中以审计表形式报告 \texttt{active\_time} 日志的异常记录比例，包括 \texttt{task\_id} = unknown、\texttt{annotator\_id} = unknown、\texttt{project\_id} = unknown、\texttt{script\_version} 缺失、以及多 session（task, annotator）对的占比，使数据质量可追溯而非仅口头声称。
+
+\paragraph{Type 4（流程/格式失败）的前移控制与披露。}
+对于可由 UI 约束的 Type 4 子类（多选元标签的空选与互斥冲突），本文采用提交时硬校验使其 ``尽量不可发生''，从而将问题从事后清洗前移为采集协议的一部分。为避免 ``挡在门外就当没发生'' 的粉饰风险，我们额外披露过程指标：被拦截/拒收的次数与原因分布（例如 \texttt{n\_rejected\_empty}、\texttt{n\_rejected\_conflict}、按 worker 的拒收率与重试次数分布）。
+\emph{注意}：系统侧 NA（字段漏传、导出缺损、版本不一致）无法完全由 UI 消除，因此仍作为 Type 4/NA 的审计项在口径 T 中报告其发生率与分母。
+\subsection{分层报告表}
+
+本文通过四张分层表多角度展示结果：
+\begin{itemize}
+    \item 表 A：按 $\Delta n_{pairs}$ 分层——覆盖率、门控失败原因、改动幅度统计。
+    \item 表 B：按 difficulty/\texttt{model\_issue} 分层——承认标签的主观性（每人主观感受不同），并报告 Fleiss' Kappa 验证一致性。
+    \item 表 B2：混淆/冲突矩阵（低成本审计项）
+Scope 冲突矩阵：In-scope vs OOS 及 OOS 子类冲突率
+Tag 冲突统计：高频 difficulty/\texttt{model\_issue} 的共现与冲突比例；并强制披露两类\textbf{互斥冲突}与\textbf{空选}比例：
+\begin{itemize}
+    \item difficulty：\texttt{trivial} 与任意其他困难标签共存的比例；difficulty 空选/缺失比例；
+    \item model\_issue（仅 semi）：\texttt{acceptable} 与任意其他 issue 共存的比例；model\_issue 空选/缺失比例。
+\end{itemize}
+用途：一方面作为分层解释与不确定性来源定位；另一方面作为\textbf{采集协议的可审计证据}：在提交时硬校验已启用的前提下，最终数据中的空选/互斥冲突应接近 0，同时应与 ``被拦截次数'' 的过程日志相互一致；若仍出现残余事件，则按任务列出示例并追溯原因（NA/导出缺损/版本不一致等）。
+    \item 
+表 C：Worker $\times$ Scene 可靠度矩阵
+\\ 行：\texttt{worker\_id}
+\\ 列：核心场景 $\mathcal{S}_{\mathrm{core}}$ 与 other。主文报告不超过 $S_{\mathrm{core,max}}=4$ 个核心场景，其余合并为 other 并单独披露频率与反例分布。
+\\ 单元格：$r_{u}^{(s)}$ $\pm$ 95\% CI
+\\ 标注：$N_{u,s}<N_{u,s,\min}$ 的格子标记为 --。本文保留 $N_{u,s,\min}\in\{5,6\}$ 两档备选，最终取值在 PreScreen 后冻结，并在附录~\ref{app:activation-threshold} 同时给出两档的保守启用率估计表。
+\\ 覆盖率披露：报告各场景的有效样本分布、以及路由中 $r_u^{(s)}$ 实际启用比例（其余为退化到全局 $r_u$），以审计方式回答“场景分层是否在运行中退化为全局”的质疑。固定系数收缩版本仅在附录作为敏感性分析报告，不作为主实现。
+\\ 补齐披露：报告 \texttt{Calibration\_reserve} 的实际使用量，并按用途拆分为 CI 追加与核心场景覆盖补齐两类。
+\\ 降级披露：若总体启用率低于 $\tau_{act}$，则在主结论中不将场景路由作为强主张，仅将其作为可审计机制展示，并在结果中明确采用的降级口径。
+\\ 类型标注：在每个 worker 行给出风险层级类型（$R0/R1/R2/R3$）及两轴坐标 $\mathrm{LCB}(r_u)$ 与离散风险层级位置，并在矩阵中标注其在不同场景与风险桶下的局部失效；同时附带主风险签名（blind-trust / condition-fragile / gate-failure）。
+\\ 局部失效操作定义：预注册，满足以下任一条件即标记为 $failure_{u,s}=1$：
+\begin{enumerate}
+    \item 绝对阈值：$r_{u}^{(s)}<0.70$；
+    \item 相对下降：$r_{u}^{(s)}<r_{u}-0.10$；
+    \item 保守显著性：$r_{u}^{(s)}$ 的 95\% CI 上界 $<$ $r_{u}$ 的 95\% CI 下界。
+\end{enumerate}
+
+    \item 图 D：工人画像图
+横轴：离散风险层级 $R_u^{\mathrm{tier}}\in\{R0,R1,R2,R3\}$
+纵轴：可靠度 $\mathrm{LCB}(r_u)$
+    \newline 说明：二维画像图是离散风险层级与连续可靠度主轴的\emph{可视化载体}，分组定义以方法章节中的顺序判定规则为准。
+    \newline 颜色：4 类风险层级（Stable / Trust-vulnerable / Condition-fragile / Unusable-Noise）。
+    \newline 形状：编码首要风险签名（blind-trust、condition-fragile、gate-failure、default stable），并与导出字段 \texttt{worker\_group\_reason} 保持一致。
+    \newline 参考线：标注 $\tau_{r,low}$、$\tau_{r,high}$ 等可靠度阈值位置；横轴不再绘制连续异常度参考线，避免暗示伪精确的连续风险分数。
+    \newline 可追溯性：报告侧对每位 worker 同时输出 \texttt{group\_rule\_version} 与 \texttt{worker\_group\_reason}，以支持复现实验与逐个核对。
+\end{itemize}
+
+
+\subsection{反例案例库}
+输出内容：
+\begin{itemize}
+    \item 反例清单 CSV：task\_id, type, $\mathrm{IAA}_{t}$, $\mathrm{IoU}_{\mathrm{edit}}$, consensus\_tags, 原因
+    \item  可视化：每个反例的标注对比图 3-4 个 worker 叠加
+    \item 统计：三类反例的频率分布
+    \item 人工复核笔记：专家确认的真正原因
+
+\end{itemize}
+
+ 作用：必须说明其因果与证据链地位
+ \begin{enumerate}
+     \item 可审计筛选：依据第~\ref{sec:method-counterexample}节的可复现规则产生候选集，不依赖专家直觉选取样本。
+     \item 专家复核：逐条确认是否为真正异常，并记录可解释原因与归类标签。
+     \item 典型失败模式总结：形成可检索的失败模式词表，如跨门扩张、拓扑崩溃、配对失败、角点漂移等，并统计其在 IID 与 non-IID/OOD 分层下的频率变化。
+     \item 反馈闭环：不等同于重训练闭环，将失败模式反馈到标注指南、培训素材、路由规则，例如在某类失败高发场景提高冗余或限制工人池。
+     \item 过程性证据：在反例库中固定输出同一任务、不同功能组工人的对比可视化，用来解释为何预筛选与分组是必要的。
+ \end{enumerate}
+
+\subsection{过程性证据与归因链验证}\label{sec:report-process-evidence}
+目的：将工人画像坐标、风险层级、Worker×Scene 矩阵、反例库与路由收益串联为可审计的证据链，而非仅报告最终 $p$ 值。
+\\ 输出：
+\begin{itemize}
+    \item 同任务不同风险层级对比：选取若干典型任务，包含 OOD 与高风险，展示 $R0$ 与 $R1/R2$ 等不同风险层级的标注差异。
+    \item 案例抽样规则：预注册，避免选择性展示，固定抽取 15 个任务用于正文展示，5 个高 $\mathrm{IAA}_{t}$ 共识明确，5 个低 $\mathrm{IAA}_{t}$ 分歧严重，5 个高 $d_{t}$ OOD 风险高；每个任务展示 3--4 名来自不同风险层级的标注叠加对比。
+    \\ 与反例库关系：反例库候选集由第~\ref{sec:method-counterexample}节的可复现规则产生，其中低 $\mathrm{IAA}_{t}$ 组通常与 Type 1（低一致性）高度重叠；高 $d_t$ 组用于展示偏移下的典型行为，可能与 Type 2/3 重叠但不要求全部为反例。为保持可复现性，15 个任务的最终选取在进入 Main 前冻结排序规则与随机种子：各组先按对应指标排序，若并列则用固定随机种子打破并列；并在候选集中优先选择被反例规则标记的任务，否则从该组剩余任务中按固定随机种子等概率抽取。
+    \item 失败模式溯源：对高频反例类型，回溯到对应场景与功能组，解释为何会发生、如何被预筛选或路由缓解。
+    \item 路由收益归因：证明 stratified routing 的收益主要来自高风险任务分配给更稳定工人与 stress mode 增冗余或复核，而不是静默过滤。
+\end{itemize}
+
+
+
+
+
+
