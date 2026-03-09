@@ -154,6 +154,22 @@ jupyter lab
 python tools/save_quality_figures.py analysis_results/quality_report_20260116.csv --out-dir analysis_results/figures --tag pilot_20260116 --metric iou
 ```
 
+**方式 C：pooled QA 图包（先做审计，不直接产出论文主图）**
+
+```bash
+python tools/pooled_qa_plots.py \
+  --merged-csv analysis_results/registry_20260308/merged_all_v0.csv \
+  --out-dir analysis_results/pooled_qa \
+  --tag registry_20260308
+```
+
+该入口会强制遵守以下口径：
+
+- 所有图先按 `schema_version` 分层。
+- active time 相关图额外按 `active_time_source` 分层。
+- 如果做 `dataset_group` 汇总，会先用 `dataset_group_source` 可信来源白名单过滤。
+- 输出定位为 pooled QA / provenance audit，而不是论文主图。
+
 生成的图表包括：
 
 - `scope_distribution.png`: Scope 分布（in-scope vs OOS）
