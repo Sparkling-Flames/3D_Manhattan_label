@@ -157,3 +157,36 @@ dmypy.json
 # Pyre type checker
 .pyre/
 \.stfolder/
+ 
+# Ignore specific top-level files that should not be uploaded
+/clamp_occ_corners.py
+/compare_checkpoints.py
+/convert_checkpoint.py
+/count_params_flops.py
+/eval_layout.py
+/fix_visibility.py
+/hohonet_env.example
+/infer_depth.ipynb
+/infer_depth.py
+/infer_layout.ipynb
+/infer_layout.py
+/infer_sem.ipynb
+/prepare_S2D3D_d.py
+/prepare_S2D3D_sem.py
+/quality_report.csv
+/QUICK_START.md
+/README.md
+/README_reproduction.md
+/CODE_REVIEW_FIG_D2.md
+/LICENCE
+/nginx.conf.backup
+/nginx_fixed.conf
+/test_depth.py
+/test_layout.py
+/test_sem.py
+/train.py
+/verify_splits.py
+/vis_depth.py
+/vis_layout.py
+/vis_layout_2d.py
+/vis_layout_combined.py
