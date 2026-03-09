@@ -19,7 +19,10 @@
 3.  输入以下代码并回车：
     ```javascript
     localStorage.setItem("HOHONET_LOG_TOKEN", "hoho-20260228-zjw200408250904!");
-    localStorage.setItem("HOHONET_HELPER_BASE_URL", "http://175.178.71.217:8000");
+    localStorage.setItem(
+      "HOHONET_HELPER_BASE_URL",
+      "http://175.178.71.217:8000",
+    );
     ```
 4.  如果管理员已把 `/tools/vis_3d.html` 反代到 Label Studio 同源，再额外执行：
     ```javascript
@@ -48,7 +51,6 @@
 1.  **微调角点 (Corner)**: 拖动红色的点，使其精确对齐天花板与墙壁、地板与墙壁的交界处（以主房间为准）。
 2.  **垂直对齐**: 确保同一面墙的上下两个角点在垂直方向上是对齐的。
 3.  **3D 预览**:
-
     - 点击下方的 **"🔄 刷新 3D 视图"** 按钮。
     - 在右侧 3D 窗口检查房间形状是否正确。
     - **操作**: 左键旋转，右键平移，滚轮缩放。

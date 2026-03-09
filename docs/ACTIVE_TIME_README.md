@@ -24,41 +24,40 @@
 
 1. 浏览器端（Tampermonkey）
 
-  - 正式标注员：安装 `tools/official/ls_userscript_annotator.js`。
-  - 调试/巡检人员：安装 `tools/official/ls_userscript_debug.js`。
-   - **（重要）在浏览器控制台一次性设置两个参数**（会保存在 `localStorage`，除非你手动清理浏览器数据，否则长期有效）：
+- 正式标注员：安装 `tools/official/ls_userscript_annotator.js`。
+- 调试/巡检人员：安装 `tools/official/ls_userscript_debug.js`。
+- **（重要）在浏览器控制台一次性设置两个参数**（会保存在 `localStorage`，除非你手动清理浏览器数据，否则长期有效）：
 
-     ```js
-     // 1) HoHoNet Helper 基址（你的 Nginx 对外端口）
-     localStorage.setItem("HOHONET_HELPER_BASE_URL", "http://<server>:8000");
+  ```js
+  // 1) HoHoNet Helper 基址（你的 Nginx 对外端口）
+  localStorage.setItem("HOHONET_HELPER_BASE_URL", "http://<server>:8000");
 
-     // 2) /log_time 鉴权 token（可选，但推荐；与服务器端 HOHONET_LOG_TOKEN 保持一致）
-     localStorage.setItem("HOHONET_LOG_TOKEN", "<your-secret>");
-     ```
+  // 2) /log_time 鉴权 token（可选，但推荐；与服务器端 HOHONET_LOG_TOKEN 保持一致）
+  localStorage.setItem("HOHONET_LOG_TOKEN", "<your-secret>");
+  ```
 
-    - 如果你已把 `/tools/vis_3d.html` 反代到 Label Studio 同源，建议额外设置：
+- 如果你已把 `/tools/vis_3d.html` 反代到 Label Studio 同源，建议额外设置：
 
-     ```js
-     localStorage.setItem("HOHONET_VIEWER_BASE_URL", location.origin);
-     ```
+  ```js
+  localStorage.setItem("HOHONET_VIEWER_BASE_URL", location.origin);
+  ```
 
-     这样 3D viewer 走同源 iframe，可减少浏览器扩展里常见的 report-only CSP 提示。
+  这样 3D viewer 走同源 iframe，可减少浏览器扩展里常见的 report-only CSP 提示。
 
-   - 如果 3D 视图“几何有但图片纹理没有”，通常是 **WebGL 纹理加载的 CORS 限制**。推荐按下面的 Nginx 配置开启 `/ls/` 同源代理，脚本会自动把 Label Studio(8080) 的图片 URL 改写为 `http://<server>:8000/ls/...`，从而 **不需要** 在云服务器放 `assets/` 目录。
-   - debug 脚本默认不计时。如需在 debug 脚本下临时开启计时：
+- 如果 3D 视图“几何有但图片纹理没有”，通常是 **WebGL 纹理加载的 CORS 限制**。推荐按下面的 Nginx 配置开启 `/ls/` 同源代理，脚本会自动把 Label Studio(8080) 的图片 URL 改写为 `http://<server>:8000/ls/...`，从而 **不需要** 在云服务器放 `assets/` 目录。
+- debug 脚本默认不计时。如需在 debug 脚本下临时开启计时：
 
-     ```js
-     localStorage.setItem("HOHONET_ENABLE_DEBUG_ACTIVE_TIME", "1");
-     ```
+  ```js
+  localStorage.setItem("HOHONET_ENABLE_DEBUG_ACTIVE_TIME", "1");
+  ```
 
-   - 若要强制关闭 debug 计时：
+- 若要强制关闭 debug 计时：
 
-     ```js
-     localStorage.setItem("HOHONET_DISABLE_ACTIVE_TIME", "1");
-     ```
+  ```js
+  localStorage.setItem("HOHONET_DISABLE_ACTIVE_TIME", "1");
+  ```
 
 2. 服务器端：运行日志接收服务
-
    - 默认行为：脚本会写入 `<repo_root>/active_logs/active_times_YYYY-MM-DD.jsonl`。
    - 如果服务器环境文件中已设置：
      ```bash
@@ -78,18 +77,20 @@
      export ACTIVE_LOG_DIR=logs
      nohup python3 tools/cors_server.py > server.log 2>&1 &
      ```
-  - 双服务器推荐（防混淆）：给每台服务器设置不同目录。
-     ```bash
-     # 旧服务器 106.53.106.49
-     export ACTIVE_LOG_DIR=active_logs/old_server
 
-     # 新服务器 175.178.71.217
-     export ACTIVE_LOG_DIR=active_logs/new_server
-     ```
-    说明：当前主要依赖目录分流区分新旧服务器；如果后续需要把服务器标识写入每条日志，需要再单独扩展字段。
+- 双服务器推荐（防混淆）：给每台服务器设置不同目录。
+
+  ```bash
+  # 旧服务器 106.53.106.49
+  export ACTIVE_LOG_DIR=active_logs/old_server
+
+  # 新服务器 175.178.71.217
+  export ACTIVE_LOG_DIR=active_logs/new_server
+  ```
+
+  说明：当前主要依赖目录分流区分新旧服务器；如果后续需要把服务器标识写入每条日志，需要再单独扩展字段。
 
 3. Nginx（Docker 中）
-
    - 在 Nginx 配置里添加代理段（容器内代理到宿主 172.17.0.1:8001）：
 
      ```nginx
@@ -123,23 +124,24 @@
    - 把修改过的宿主机 `nginx.conf` 挂载到容器中（或修改对应绑定的文件），并 `nginx -s reload`。确保 `curl -I -X OPTIONS http://localhost:8000/log_time` 返回 `204` 且包含 `Access-Control-Allow-Origin`。
 
 4. 验证
-  - 正式标注员脚本：在 Label Studio 的任务页面随便活动（鼠标、键盘），等待约 10 秒。
-  - debug 脚本：默认不应出现 `log_time` 请求；只有显式开启 `HOHONET_ENABLE_DEBUG_ACTIVE_TIME=1` 后才应上报。
-   - 在服务器上检查：
-     ```bash
-    ls -lh active_logs/new_server
-    tail -n 5 active_logs/new_server/active_times_$(date +%F).jsonl
-     ```
-   - 日志行示例：
-     ```json
-     {
-       "task_id": "463",
-       "project_id": "15",
-       "project_name": "manual_test",
-       "active_seconds": 12,
-       "timestamp": 1700000000000
-     }
-     ```
+
+- 正式标注员脚本：在 Label Studio 的任务页面随便活动（鼠标、键盘），等待约 10 秒。
+- debug 脚本：默认不应出现 `log_time` 请求；只有显式开启 `HOHONET_ENABLE_DEBUG_ACTIVE_TIME=1` 后才应上报。
+- 在服务器上检查：
+  ```bash
+  ls -lh active_logs/new_server
+  tail -n 5 active_logs/new_server/active_times_$(date +%F).jsonl
+  ```
+- 日志行示例：
+  ```json
+  {
+    "task_id": "463",
+    "project_id": "15",
+    "project_name": "manual_test",
+    "active_seconds": 12,
+    "timestamp": 1700000000000
+  }
+  ```
 
 **把日志搬到本地（若需要）**
 

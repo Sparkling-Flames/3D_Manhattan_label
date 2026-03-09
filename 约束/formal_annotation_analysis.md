@@ -5,6 +5,7 @@
 本文档用于正式实验开始后的主分析链。
 
 它与兼容性文件的关系是：
+
 - [约束/merged_all.md](约束/merged_all.md)：发布层 schema 真源，允许说明旧字段兼容。
 - [约束/visualize_output_v2.md](约束/visualize_output_v2.md)：当前下游绘图契约，仍保留少量兼容说明。
 - 本文件：正式实验专用契约，不再为旧服务器旧导出字段保留主路径兼容。
@@ -24,6 +25,7 @@
 ## 2. 正式实验主字段
 
 ### 2.1 必须直接消费的字段
+
 - task_id
 - base_task_id
 - image_id
@@ -85,7 +87,9 @@
 - type4_flag
 
 ### 2.2 兼容字段的正式地位
+
 以下字段允许存在于 CSV 中，但正式分析主链不应再把它们当作主输入：
+
 - scope_missing
 - difficulty_missing
 - model_issue_missing
@@ -95,10 +99,12 @@
 - is_normal
 
 这些字段只能作为：
+
 1. 历史对账辅助。
 2. 旧分析脚本迁移期的临时桥接。
 
 不得作为：
+
 1. 新图表的主过滤条件。
 2. 新统计表的真源。
 3. 新论文图注中的定义依据。
@@ -108,7 +114,9 @@
 ## 3. 正式实验值域冻结
 
 ### 3.1 scope
+
 正式实验中，scope 原字段保留 XML raw alias：
+
 - normal
 - oos_geometry
 - oos_open_boundary
@@ -117,16 +125,21 @@
 - missing
 
 论文/图注映射固定为：
+
 - normal -> in_scope
 - oos_split_level -> oos_multi_plane
 
 ### 3.2 condition
+
 仅允许：
+
 - manual
 - semi
 
 ### 3.3 model_issue
+
 仅允许：
+
 - acceptable
 - overextend_adjacent
 - underextend

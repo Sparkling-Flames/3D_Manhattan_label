@@ -4,6 +4,7 @@
 它不是 C1/C2/C3/可视化详细稿的替代品，而是 Dev A 在提交前必须逐项核对的 release gate。
 
 上游真源与优先级：
+
 1. 论文方法与报告：`01_研究问题.tex`、`02_方法.tex`、`03_实验设置.tex`、`04_报告与可审计输出.tex`
 2. 附录：`A1_扰动算子库.tex`
 3. 详细约束：`merged_all.md`、`visualize_output_v2.md`、`C1`、`C2`
@@ -14,6 +15,7 @@
 ## 1. Dev A 交付的最低字段集合
 
 ### 1.1 主键与基础标识
+
 - `task_id`
 - `image_id`
 - `annotator_id`
@@ -22,6 +24,7 @@
 - `subset`
 
 ### 1.2 元标签与合规审计字段
+
 - `scope`
 - `is_oos`
 - `difficulty`
@@ -37,6 +40,7 @@
 - `source_type`
 
 ### 1.3 质量与可靠度字段
+
 - `iou`
 - `iou_edit`
 - `IAA_t`
@@ -52,6 +56,7 @@
 - `r_u_s_lcb`
 
 ### 1.4 路由与画像字段
+
 - `S_u`
 - `worker_group`
 - `worker_group_reason`
@@ -70,6 +75,7 @@
 - `g_t_status`
 
 ### 1.5 反例与审计输出字段
+
 - `type1_flag`
 - `type2_flag`
 - `type3_flag`
@@ -82,6 +88,7 @@
 - `script_version`
 
 说明：
+
 - `annotator_id` 是统一字段名；本项目发布层不再使用 `worker_id` 作为主字段名。
 - `worker_group_reason` 与 `group_rule_version` 为论文正文已锁定的可追溯字段，不能省略。
 - `d_t*` 状态字段必须与 C2 详细稿一致，不能只留一个裸 `d_t` 数值。
@@ -118,6 +125,7 @@
 ## 5. Dev A 必做的一致性检查
 
 ### 5.1 与 `merged_all.md` 对齐
+
 - `merged_all.csv` 中的字段集合、类型、缺失规则必须与 `merged_all.md` 一致。
 - `condition` 统一使用项目锁定值（当前为 `manual` / `semi`），不得在同一主表中混入 `Manual` / `Semi` 大小写变体。
 - `scope` 必须明确是原始 alias 还是发布层 canonical 值；若做了 canonical 映射，必须在 README/manifest 中写明映射规则。
@@ -126,20 +134,24 @@
 - 当前 `tools/analyze_quality.py` 仍可能保留 `scope_missing`、`model_issue_types` 等兼容字段；允许保留，但不得让这些兼容字段替代 `scope_filled`、`model_issue_primary` 等主字段口径。
 
 ### 5.2 与 C1 / 扰动清单对齐
+
 - `model_issue` 的 alias 集必须与 XML 和附录 A1 一致。
 - `perturbation_operator_id`（若写回）必须等于 C1 锁定 alias，不得出现工程内部别名。
 - L3 intentional invalid 样本若进入中间表，必须标明 `na_intentional`，不得在主质量指标上伪装成正常样本。
 
 ### 5.3 与 C2 / `d_t` 约束对齐
+
 - `d_t_status`、`d_t_ref_hash`、`d_t_model_ver`、`d_t_failure_reason` 必须来自 C2 输出，不得由 Dev A 自行猜填。
 - 若 `d_t` 不可用，降级策略只能体现在下游使用逻辑与审计披露，不得在主表里回填默认值。
 
 ### 5.4 与 `visualize_output_v2.md` 对齐
+
 - 主表必须足以支持 T/I/M、IAA 分布、Type1–4、active_time、图 D、表 C 的全部输入。
 - 若某图表还依赖表外中间文件，则必须在提交时明确写入依赖，不得默认“notebook 自己再算”。
 - 若图表层需要按粗粒度阶段聚合，必须由 `dataset_group` 映射得到，映射表需冻结并公开。
 
 ## 6. 可验收测试（Dev A 侧最小集合）
+
 - `tests/test_fields.py`
   - 验证主键、元标签、审计字段、可靠度字段、`d_t*` 状态字段、反例字段是否齐全。
   - 验证 `dataset_group`、`condition`、`scope` 值域是否落在冻结集合内。
@@ -153,6 +165,7 @@
   - 验证 `merged_all.csv`、`perturbation_plan_frozen.json`、reference pool manifest 的版本/哈希在 release 说明中能互相对上。
 
 ## 7. 提交流程（Dev A 执行版）
+
 1. 先生成 `merged_all.csv` 与 `validation_report.json`。
 2. 再核对上游 frozen artifacts：
    - `perturbation_plan_frozen.json`
@@ -166,6 +179,7 @@
    - Type 4 过程证据来源（userscript / guard / 系统侧 NA）
 
 ## 8. 最小 manifest 样例（发布层要求）
+
 ```json
 {
   "schema_version": "merged-all-v1",
@@ -178,4 +192,3 @@
   "notes": "主表字段与论文 1-4 章及附录 A1 对齐"
 }
 ```
-

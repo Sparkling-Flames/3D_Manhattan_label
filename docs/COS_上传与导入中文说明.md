@@ -62,17 +62,17 @@ d:/Work/HOHONET/.venv/Scripts/python.exe tools/prepare_labelstudio_docker.py --i
 在浏览器控制台执行一次：
 
 ```javascript
-localStorage.setItem('HOHONET_HELPER_BASE_URL', 'http://175.178.71.217:8000')
+localStorage.setItem("HOHONET_HELPER_BASE_URL", "http://175.178.71.217:8000");
 ```
 
 如果你做了同源反代，也可以：
 
 ```javascript
-localStorage.setItem('HOHONET_HELPER_BASE_URL', location.origin)
+localStorage.setItem("HOHONET_HELPER_BASE_URL", location.origin);
 ```
 
 如果只想让 3D viewer 走同源，而保留 `/log_time` 继续走独立 helper，也可以：
 
 ```javascript
-localStorage.setItem('HOHONET_VIEWER_BASE_URL', location.origin)
+localStorage.setItem("HOHONET_VIEWER_BASE_URL", location.origin);
 ```
