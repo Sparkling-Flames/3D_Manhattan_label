@@ -114,6 +114,21 @@ ENV/
 env.bak/
 venv.bak/
 
+# Project-specific rules: only include top-level docs markdown, exclude docs subfolders
+docs/*
+!docs/*.md
+
+# Ignore legacy folders anywhere
+**/legacy/
+legacy/
+
+# Do not upload ZIP or TXT files (repo-wide)
+*.zip
+*.txt
+
+# Syncthing folder
+.stfolder/
+
 # Spyder project settings
 .spyderproject
 .spyproject
