@@ -1,0 +1,73 @@
+\section{附录：数据集分组与工作量汇总}\label{app:dataset-summary}
+
+\subsection{各数据集分组信息}\label{app:dataset-table}
+
+表~\ref{tab:dataset-summary} 汇总了实验方案中所有数据集的唯一图像数、冗余设置、图像重叠关系与主要用途。
+$N_{\mathrm{pool}}=458$，已分配唯一图像 355 张，保留 103 张用于补充与稳健性分析。
+
+\begin{table}[H]
+\centering
+\caption{各阶段数据集分组汇总（$N_{\mathrm{pool}}=458$，已用唯一图像 355 张）}
+\label{tab:dataset-summary}
+\footnotesize
+\resizebox{1.0\textwidth}{!}{%
+\begin{tabular}{p{0.12\linewidth} p{0.18\linewidth} p{0.08\linewidth} p{0.06\linewidth} p{0.14\linewidth} p{0.36\linewidth}}
+\toprule
+\textbf{阶段} & \textbf{集合名称} & \textbf{条件} & \textbf{$N_{img}$} & \textbf{$k$ 配置} & \textbf{主要用途} \\
+\midrule
+Stage 0 & \texttt{Pilot} & manual & 15 & $k=2$ & 流程验证；归档 \texttt{model\_issue}；锁定扰动算子与强度范围 \\[3pt]
+Stage 1 & \texttt{PreScreen\_manual} & manual & 30 & 全员 & 估计 $r_u^{(0)}$；其中 $n_{anchor}=12$ 为专家参考锚点；锁定 $w_{\max}$ \\[3pt]
+Stage 1 & \texttt{PreScreen\_semi} & semi & 30 & 全员 & 测量纠错能力与盲信风险；与 \texttt{PreScreen\_manual} 图像池不重叠 \\[3pt]
+Stage 2 & \texttt{Calibration\_manual} & manual & 100 & $k=4$ & 估计 $r_u$ 与 $r_u^{(s)}$（仅 manual）。内部划分为 \texttt{Calibration\_anchor} 12 张全员完成、\texttt{Calibration\_core} 75 张平衡分配、\texttt{Calibration\_reserve} 13 张用于追加 \\ [3pt]
+Stage 2 & \texttt{Calibration\_semi} & semi & $(25)^{\dag}$ & $k=4$ & RQ2 配对对照（IAA/反例等）；从 \texttt{Calibration\_manual} 中预注册抽取子集；不用于估计 $r_u$ 或 $r_u^{(s)}$ \\ [3pt]
+Stage 3 & \texttt{Manual\_Test} & manual & 100 & $k=1$ & RQ1 效率对比（手工侧） \\[3pt]
+Stage 3 & \texttt{SemiAuto\_Test} & semi & $(100)^{\dag}$ & $k=1$ & RQ1 效率对比（半自动侧）；与 \texttt{Manual\_Test} 同图 \\[3pt]
+Stage 3 & \texttt{Validation\_semi} & semi & 60 & $k_0=3,k_{\max}=5$ & RQ3 路由效果；OOD 分层；序贯停止 \\[3pt]
+Stage 3 & \texttt{Gold\_manual} & manual & 20 & $k=3$ & RQ3 路由稳健性对照 \\
+\midrule
+\multicolumn{3}{l}{\textbf{合计（唯一图像，不重复计数）}} & \textbf{355} & & 余 103 张作为预留缓冲 \\
+\bottomrule
+\end{tabular}
+}
+
+\smallskip
+\noindent\textit{注：括号内数值 $(n)^{\dag}$ 表示与同阶段另一集合共享同一批唯一图像，不另计入总数。}
+\end{table}
+\FloatBarrier
+
+% \subsection{每位工人标注工作量估算}\label{app:workload-estimate}
+
+% 以下估算假设 PreScreen 阶段全员完成两套图像池（各 30 张），Main 阶段按 per-image 冗余 $k$ 均匀分配。
+% $\bar{k}_{\mathrm{Validation}}$ 取 $k_0=3$ 与 $k_{\max}=5$ 的均值 3.5 作为保守估计。
+
+% \begin{table}[ht]
+% \centering
+% \caption{每位通过工人的预计标注任务数（上下界，$N=15$ 与 $N=20$）}
+% \label{tab:workload-per-worker}
+% \small
+% \begin{tabular}{p{0.14\linewidth} p{0.22\linewidth} p{0.07\linewidth} p{0.07\linewidth} p{0.14\linewidth} p{0.14\linewidth}}
+% \toprule
+% \textbf{阶段} & \textbf{集合} & \textbf{$N_{img}$} & \textbf{$k$} & \textbf{$N=15$（每人）} & \textbf{$N=20$（每人）} \\
+% \midrule
+% Stage 1 & \texttt{PreScreen\_manual} & 30 & 全员 & 30 & 30 \\
+% Stage 1 & \texttt{PreScreen\_semi}   & 30 & 全员 & 30 & 30 \\
+% Stage 2 & \texttt{Calibration\_manual} & 30 & 4 & 8 & 6 \\
+% Stage 2 & \texttt{Calibration\_semi}   & 30 & 4 & 8 & 6 \\
+% Stage 3 & \texttt{Manual\_Test}        & 100 & 1 & 7 & 5 \\
+% Stage 3 & \texttt{SemiAuto\_Test}      & 100 & 1 & 7 & 5 \\
+% Stage 3 & \texttt{Validation\_semi}    & 60  & 3.5（均值）& 14 & 11 \\
+% Stage 3 & \texttt{Gold\_manual}        & 20  & 3 & 4 & 3 \\
+% \midrule
+% \multicolumn{3}{l}{\textbf{手工小计（manual）}} & & \textbf{49} & \textbf{44} \\
+% \multicolumn{3}{l}{\textbf{半自动小计（semi）}} & & \textbf{59} & \textbf{52} \\
+% \multicolumn{3}{l}{\textbf{合计}} & & \textbf{108} & \textbf{96} \\
+% \midrule
+% \multicolumn{3}{l}{其中 PreScreen 占比} & & 60/108 $\approx$ 56\% & 60/96 $\approx$ 63\% \\
+% \bottomrule
+% \end{tabular}
+
+% \smallskip
+% \noindent\textit{注：PreScreen 由候选工人（约 25--30 人）完成，Main 仅由通过筛选的工人参与。
+% 每个 PreScreen 图像池 30 张，其中 \texttt{PreScreen\_manual} 含 12 张专家参考锚点；每人 PreScreen 工作量总计 60（两个池），
+% 使得总工作量降至约 108（$N=15$）或 96（$N=20$），PreScreen 占比降至约 56--63\%，实质性降低候选工人退出风险。}
+% \end{table}

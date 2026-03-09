@@ -1,0 +1,102 @@
+{
+  "task_registry": {
+    "import_dir": "D:\\Work\\HOHONET\\import_json\\outline_v2_seed20260228",
+    "seed": 20260228,
+    "row_count": 592,
+    "unique_base_task_ids": 355,
+    "counts_by_planned_stage": {
+      "calibration_manual": 200,
+      "calibration_semi": 25,
+      "gold_manual": 20,
+      "manual_test": 100,
+      "pilot_manual": 15,
+      "prescreen_manual": 42,
+      "prescreen_semi": 30,
+      "semiauto_test": 100,
+      "validation_semi": 60
+    },
+    "counts_by_dataset_group": {
+      "Calibration_anchor": 12,
+      "Calibration_core": 75,
+      "Calibration_manual": 100,
+      "Calibration_reserve": 13,
+      "Calibration_semi": 25,
+      "Gold_manual": 20,
+      "Manual_Test": 100,
+      "Pilot": 15,
+      "PreScreen_manual": 42,
+      "PreScreen_semi": 30,
+      "SemiAuto_Test": 100,
+      "Validation_semi": 60
+    },
+    "counts_by_condition": {
+      "manual": 377,
+      "semi": 215
+    },
+    "anchor_row_count": 36,
+    "expert_ref_row_count": 24,
+    "prediction_row_count": 215,
+    "overlap_constraints": {
+      "semiauto_test_same_as_manual_test": true,
+      "calibration_semi_subset_of_calibration_manual": true,
+      "major_pools_disjoint": true
+    },
+    "notes": [
+      "task_registry is a planned split registry keyed by split manifests.",
+      "runtime Label Studio task_id is not available until export-side join."
+    ]
+  },
+  "registry_suite": {
+    "task_count": 2,
+    "annotation_count": 2,
+    "counts_by_schema_version": {
+      "v2_structured": 2
+    },
+    "counts_by_task_join_status": {
+      "matched_by_title": 1,
+      "ambiguous": 1
+    },
+    "legacy_quality_annotation_count": 0
+  },
+  "export_sources": [
+    {
+      "export_source_file": "project-11-at-2026-03-07-17-05-1b4f93f3.json",
+      "export_source_path": "D:\\Work\\HOHONET\\export_label\\project-11-at-2026-03-07-17-05-1b4f93f3.json",
+      "task_count": 1,
+      "annotation_count": 1,
+      "project_ids": [
+        "11"
+      ],
+      "dataset_groups": [
+        "PreScreen_semi"
+      ],
+      "init_types": [
+        "clean"
+      ],
+      "max_task_updated_at": "2026-03-07T17:04:07.823962Z",
+      "max_annotation_updated_at": "2026-03-07T17:04:07.770227Z",
+      "duplicate_task_count_skipped": 0
+    },
+    {
+      "export_source_file": "project-12-at-2026-03-07-17-05-72d96094.json",
+      "export_source_path": "D:\\Work\\HOHONET\\export_label\\project-12-at-2026-03-07-17-05-72d96094.json",
+      "task_count": 1,
+      "annotation_count": 1,
+      "project_ids": [
+        "12"
+      ],
+      "dataset_groups": [
+        "PreScreen_manual"
+      ],
+      "init_types": [],
+      "max_task_updated_at": "2026-03-07T17:04:41.123252Z",
+      "max_annotation_updated_at": "2026-03-07T17:04:41.070298Z",
+      "duplicate_task_count_skipped": 0
+    }
+  ],
+  "notes": [
+    "task_registry_v2 remains a planned split registry; runtime task_id is only available on export-side tables.",
+    "ambiguous export-to-plan joins are preserved as explicit task_join_status values instead of forced matches.",
+    "runtime_condition is a derived export-side field based on prediction presence, not split-side planned truth."
+  ]
+}

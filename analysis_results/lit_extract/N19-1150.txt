@@ -1,0 +1,927 @@
+Proceedings of NAACL-HLT 2019, pages 1471–1480
+Minneapolis, Minnesota, June 2 - June 7, 2019. c⃝2019 Association for Computational Linguistics
+1471
+Predicting Annotation Difﬁculty to Improve Task Routing and Model
+Performance for Biomedical Information Extraction
+Yinfei Yang
+Google AI
+yinfeiy@google.com
+Oshin Agarwal
+University of Pennsylvania
+oagarwal@seas.upenn.edu
+Chris Tar
+Google AI
+ctar@google.com
+Byron C. Wallace
+Northeastern University
+b.wallace@northeastern.edu
+Ani Nenkova
+University of Pennsylvania
+nenkova@seas.upenn.edu
+Abstract
+Modern NLP systems require high-quality an-
+notated data. In specialized domains, expert
+annotations may be prohibitively expensive.
+An alternative is to rely on crowdsourcing to
+reduce costs at the risk of introducing noise. In
+this paper we demonstrate that directly model-
+ing instance difﬁculty can be used to improve
+model performance, and to route instances to
+appropriate annotators. Our difﬁculty predic-
+tion model combines two learned representa-
+tions: a ‘universal’ encoder trained on out-of-
+domain data, and a task-speciﬁc encoder. Ex-
+periments on a complex biomedical informa-
+tion extraction task using expert and lay anno-
+tators show that: (i) simply excluding from the
+training data instances predicted to be difﬁcult
+yields a small boost in performance; (ii) us-
+ing difﬁculty scores to weight instances during
+training provides further, consistent gains; (iii)
+assigning instances predicted to be difﬁcult to
+domain experts is an effective strategy for task
+routing. Our experiments conﬁrm the expec-
+tation that for specialized tasks expert annota-
+tions are higher quality than crowd labels, and
+hence preferable to obtain if practical. More-
+over, augmenting small amounts of expert data
+with a larger set of lay annotations leads to fur-
+ther improvements in model performance.
+1
+Introduction
+Assembling training corpora of annotated natural
+language examples in specialized domains such
+as biomedicine poses considerable challenges. Ex-
+perts with the requisite domain knowledge to per-
+form high-quality annotation tend to be expen-
+sive, while lay annotators may not have the nec-
+essary knowledge to provide high-quality annota-
+tions. A practical approach for collecting a suf-
+ﬁciently large corpus would be to use crowd-
+sourcing platforms like Amazon Mechanical Turk
+(MTurk). However, crowd workers in general are
+likely to provide noisy annotations
+(Abad and
+Moschitti, 2016; Plank et al., 2014; Alonso et al.,
+2015), an issue exacerbated by the technical na-
+ture of specialized content. Some of this noise may
+reﬂect worker quality and can be modeled (Abad
+and Moschitti, 2016; Plank et al., 2014; Cohn and
+Specia, 2013; Nguyen et al., 2017), but for some
+instances lay people may simply lack the domain
+knowledge to provide useful annotation.
+In this paper we report experiments on the
+EBM-NLP corpus comprising crowdsourced an-
+notations of medical literature (Nye et al., 2018).
+We operationalize the concept of annotation dif-
+ﬁculty and show how it can be exploited during
+training to improve information extraction mod-
+els. We then obtain expert annotations for the ab-
+stracts predicted to be most difﬁcult, as well as for
+a similar number of randomly selected abstracts.
+The annotation of highly specialized data and the
+use of lay and expert annotators allow us to exam-
+ine the following key questions related to lay and
+expert annotations in specialized domains:
+Can we predict item difﬁculty? We deﬁne a
+training instance as difﬁcult if a lay annotator or
+an automated model disagree on its labeling. We
+show that difﬁculty can be predicted, and that it
+is distinct from inter-annotator agreement. Further,
+such predictions can be used during training to im-
+prove information extraction models.
+Are there systematic differences between expert
+and lay annotations? We observe decidedly lower
+agreement between lay workers as compared to
+domain experts. Lay annotations have high preci-
+sion but low recall with respect to expert annota-
+
+---PAGE---
+
+1472
+tions in the new data that we collected. More gen-
+erally, we expect lay annotations to be lower qual-
+ity, which may translate to lower precision, recall,
+or both, compared to expert annotations.
+Can one rely solely on lay annotations? Rea-
+sonable models can be trained using lay anno-
+tations alone, but similar performance can be
+achieved using markedly less expert data. This
+suggests that the optimal ratio of expert to crowd
+annotations for specialized tasks will depend on
+the cost and availability of domain experts. Expert
+annotations are preferable whenever its collection
+is practical. But in real-world settings, a combi-
+nation of expert and lay annotations is better than
+using lay data alone.
+Does it matter what data is annotated by ex-
+perts? We demonstrate that a system trained on
+combined data achieves better predictive perfor-
+mance when experts annotate difﬁcult examples
+rather than instances selected at i.i.d. random.
+Our contributions in this work are summarized
+as follows. We deﬁne a task difﬁculty prediction
+task and show how this is related to, but distinct
+from, inter-worker agreement. We introduce a new
+model for difﬁculty prediction combining learned
+representations induced via a pre-trained ‘univer-
+sal’ sentence encoder (Cer et al., 2018), and a sen-
+tence encoder learned from scratch for this task.
+We show that predicting annotation difﬁculty can
+be used to improve the task routing and model per-
+formance for a biomedical information extraction
+task. Our results open up a new direction for en-
+suring corpus quality. We believe that item difﬁ-
+culty prediction will likely be useful in other, non-
+specialized tasks as well, and that the most ef-
+fective data collection in specialized domains re-
+quires research addressing the fundamental ques-
+tions we examine here.
+2
+Related Work
+Crowdsourcing annotation is now a well-studied
+problem (Snow et al., 2008; Abad and Moschitti,
+2016; Plank et al., 2014; Alonso et al., 2015). Due
+to the noise inherent in such annotations, there
+have also been considerable efforts to develop ag-
+gregation models that minimize noise (Abad and
+Moschitti, 2016; Plank et al., 2014; Cohn and Spe-
+cia, 2013; Nguyen et al., 2017).
+There are also several surveys of crowdsourcing
+in biomedicine speciﬁcally (Good and Su, 2013;
+Khare et al., 2015; Lee et al., 2017). Some work
+in this space has contrasted model performance
+achieved using expert vs. crowd annotated training
+data (Zhai et al., 2013; Cocos et al., 2017; Dumi-
+trache et al., 2018). Dumitrache et al. (2018) con-
+cluded that performance is similar under these su-
+pervision types, ﬁnding no clear advantage from
+using expert annotators. This differs from our ﬁnd-
+ings, perhaps owing to differences in design. The
+experts we used already hold advanced medical
+degrees, for instance, while those in prior work
+were medical students. Furthermore, the task con-
+sidered here would appear to be of greater difﬁ-
+culty: even a system trained on ∼5k instances per-
+forms reasonably, but far from perfect. By con-
+trast, in some of the prior work where experts and
+crowd annotations were deemed equivalent, a clas-
+siﬁer trained on 300 examples can achieve very
+high accuracy (Cocos et al., 2017).
+More relevant to this paper, prior work has in-
+vestigated methods for ‘task routing’ in active
+learning scenarios in which supervision is pro-
+vided by heterogeneous labelers with varying lev-
+els of expertise (Yan et al., 2011; Donmez and Car-
+bonell, 2008; Nguyen et al., 2015; Wallace et al.,
+2011; Yan et al., 2011). The related question of
+whether effort is better spent collecting additional
+annotations for already labeled (but potentially
+noisily so) examples or novel instances has also
+been addressed (Sheng et al., 2008). What distin-
+guishes the work here is our focus on providing an
+operational deﬁnition of instance difﬁculty, show-
+ing that this can be predicted, and then using this
+to inform task routing.
+3
+Application Domain
+Our speciﬁc application concerns annotating ab-
+stracts of articles that describe the conduct and re-
+sults of randomized controlled trials (RCTs). Ex-
+perimentation in this domain has become easy
+with the recent release of the EBM-NLP (Nye
+et al., 2018) corpus, which includes a reasonably
+large training dataset annotated via crowdsourc-
+ing, and a modest test set labeled by individuals
+with advanced medical training. More speciﬁcally,
+the training set comprises 4,741 medical article
+abstracts with crowdsourced annotations indicat-
+ing snippets (sequences) that describe the Partic-
+ipants (P), Interventions (I), and Outcome (O) el-
+ements of the respective RCT, and the test set is
+composed of 191 abstracts with P, I, O sequence
+annotations from three medical experts.
+
+---PAGE---
+
+1473
+Difﬁcult Sentences
+[Population]
+1. Primary RP were screened and assigned to either the nifedipine SR group (Group N) or the Ginkgo biloba extract group
+(Group G) in the ratio of 2:1 .
+2. A positive correlation was found for all methods in the controls (r=0.83-0.94) and RA patients (r=0.51-0.69).
+[Interventions/Comparators]
+1. They were all enrolled in mainstream compulsory education.
+2. RA patients reported that they were less sedentary and engaged in more higher intensity PA than what was objectively
+assessed.
+[Outcomes]
+1. To develop a cycle - based risk prediction model for neutropenic complications (NC) during chemotherapy with doxoru-
+bicin (DOX) or a pegy lated liposomal formulation (PLD) for patients with metastatic breast cancer (MBC).
+2. The purpose of this study was to evaluate the long-term safety and efﬁcacy of risperidone.
+Easy Sentences
+[Population]
+1. A prospective study in 80 patients was carried out.
+2. We studied 200 women aged 35 years and older who had a family history of breast cancer in a ﬁrst-degree relative.
+[Interventions/Comparators]
+1. Hormonal contraceptives are used widely but their effects on HIV-1 risk are unclear.
+2. In the second group, custom - ﬁt MRI - based pin guides were used.
+[Outcomes]
+1. Extrapyramidal AEs were reported in 6(8%) patients.
+2. The overall progression - free survival rates were similar between the two arms (P=.095).
+Table 1: Example sentences are difﬁcult or easy to annotate for crowd workers. The underlined text are reference
+annotations from domain experts.
+Table 1 shows an example of difﬁcult and easy
+examples according to our deﬁnition of difﬁculty.
+The underlined text demarcates the (consensus)
+reference label provided by domain experts. In the
+difﬁcult examples, crowd workers marked text dis-
+tinct from these reference annotations; whereas in
+the easy cases they reproduced them with reason-
+able ﬁdelity. The difﬁcult sentences usually exhibit
+complicated structure and feature jargon.
+An abstract may contain some ‘easy’ and some
+‘difﬁcult’ sentences. We thus perform our analysis
+at the sentence level. We split abstracts into sen-
+tences using spaCy.1 We excluded sentences that
+comprise fewer than two tokens, as these are likely
+an artifact of errors in sentence splitting. In total,
+this resulted in 57,505 and 2,428 sentences in the
+train and test set abstracts, respectively.
+4
+Quantifying Task Difﬁculty
+The test set includes annotations from both crowd
+workers and domain experts. We treat the latter as
+ground truth and then deﬁne the difﬁculty of sen-
+tences in terms of the observed agreement between
+expert and lay annotators. Formally, for annotation
+1https://spacy.io/
+task t and instance i:
+Difﬁcultyti =
+Pn
+j=1 f(labelij, yi)
+n
+(1)
+where f is a scoring function that measures the
+quality of the label from worker j for sentence i,
+as compared to a ground truth annotation, yi. The
+difﬁculty score of sentence i is taken as an average
+over the scores for all n layworkers. We use Spear-
+mans’ correlation coefﬁcient as a scoring function.
+Speciﬁcally, for each sentence we create two vec-
+tors comprising counts of how many times each
+token was annotated by crowd and expert workers,
+respectively, and calculate the correlation between
+these. Sentences with no labels are treated as max-
+imally easy; those with only either crowd worker
+or expert label(s) are assumed maximally difﬁcult.
+The training set contains only crowdsourced an-
+notations. To label the training data, we use a 10-
+fold validation like setting. We iteratively retrain
+the LSTM-CRF-Pattern sequence tagger of Patel
+et al. (2018) on 9 folds of the training data and
+use that trained model to predict labels for the
+10th. In this way we obtain predictions on the full
+training set. We then use predicted spans as proxy
+‘ground truth’ annotations to calculate the difﬁ-
+
+---PAGE---
+
+1474
+0
+1
+2
+3
+4
+Probability Density of Difficulty Scores
+Participants Mean: 0.500; Std: 0.296
+0
+1
+2
+3
+4
+Intervention Mean: 0.562; Std: 0.279
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+Scores
+0
+1
+2
+3
+4
+Outcome Mean: 0.576; Std: 0.279
+Figure 1: Distributions of difﬁculty scores over all sen-
+tences that contain any span annotations
+culty score of sentences as described above; we
+normalize these to the [0, 1] interval. We validate
+this approximation by comparing the proxy scores
+against reference scores over the test set, the Pear-
+son’s correlation coefﬁcients are 0.57 for Popula-
+tion, 0.71 for Intervention and 0.68 for Outcome.
+There exist many sentences that contain nei-
+ther manual nor predicted annotations. We treat
+these as maximally easy sentences (with difﬁculty
+scores of 0). Such sentences comprise 51%, 42%
+and 36% for Population, Interventions and Out-
+comes data respectively, indicating that it is eas-
+ier to identify sentences that have no Population
+spans, but harder to identify sentences that have no
+Interventions or Outcomes spans. This is intuitive
+as descriptions of the latter two tend to be more
+technical and dense with medical jargon.
+We show the distribution of the automatically
+labeled scores for sentences that do contain spans
+in Figure 1. The mean of the Population (P) sen-
+tence scores is signiﬁcantly lower than that for
+other types of sentences (I and O), again indicat-
+ing that they are easier on average to annotate.
+This aligns with a previous ﬁnding that annotat-
+ing Interventions and Outcomes is more difﬁcult
+than annotating Participants (Nye et al., 2018).
+Many sentences contain spans tagged by the
+LSTM-CRF-Pattern model, but missed by all
+crowd workers, resulting in a maximally difﬁcult
+score (1). Inspection of such sentences revealed
+that some are truly difﬁcult examples, but others
+are tagging model errors. In either case, such sen-
+tences have confused workers and/or the model,
+and so we retain them all as ‘difﬁcult’ sentences.
+Content describing the P, I and O, respectively,
+is quite different. As such, one sentence usually
+contains (at most) only one of these three content
+types. We thus treat difﬁculty prediction for the re-
+Workers
+P
+I
+O
+crowd workers
+0.52
+0.43
+0.41
+domain experts
+0.74
+0.68
+0.57
+Table 2: Average inter-worker agreement.
+spective label types as separate tasks.
+5
+Difﬁculty is not Worker Agreement
+Our deﬁnition of difﬁculty is derived from agree-
+ment between expert and crowd annotations for
+the test data, and agreement between a predictive
+model and crowd annotations in the training data.
+It is reasonable to ask if these measures are re-
+lated to inter-annotator agreement, a metric often
+used in language technology research to identify
+ambiguous or difﬁcult items. Here we explicitly
+verify that our deﬁnition of difﬁculty only weakly
+correlates with inter-annotator agreement.
+We calculate inter-worker agreement between
+crowd and expert annotators using Spearman’s
+correlation coefﬁcient. As shown in Table 2, av-
+erage agreement between domain experts are con-
+siderably higher than agreements between crowd
+workers for all three label types. This is a clear in-
+dication that the crowd annotations are noisier.
+Furthermore, we compare the correlation be-
+tween inter-annotator agreement and difﬁculty
+scores in the training data. Given that the major-
+ity of sentences do not contain a PICO span, we
+only include in these calculations those that con-
+tain a reference label. Pearson’s r are 0.34, 0.30
+and 0.31 for P, I and O, respectively, conﬁrming
+that inter-worker agreement and our proposed dif-
+ﬁculty score are quite distinct.
+6
+Predicting Annotation Difﬁculty
+We treat difﬁculty prediction as a regression prob-
+lem, and propose and evaluate neural model vari-
+ants for the task. We ﬁrst train RNN (Chung et al.,
+2014) and CNN (Kim, 2014) models.
+We also use the universal sentence encoder
+(USE) (Cer et al., 2018) to induce sentence rep-
+resentations, and train a model using these as fea-
+tures. Following (Cer et al., 2018), we then ex-
+periment with an ensemble model that combines
+the ‘universal’ and task-speciﬁc representations to
+predict annotation difﬁculty. We expect these uni-
+versal embeddings to capture general, high-level
+semantics, and the task speciﬁc representations to
+capture more granular information. Figure 2 de-
+
+---PAGE---
+
+1475
+Figure 2: Model architecture.
+picts the model architecture. Sentences are fed
+into both the universal sentence encoder and, sepa-
+rately, a task speciﬁc neural encoder, yielding two
+representations. We concatenate these and pass the
+combined vector to the regression layer.
+6.1
+Experimental Setup and Results
+We trained models for each label type separately.
+Word embeddings were initialized to 300d GloVe
+vectors (Pennington et al., 2014) trained on com-
+mon crawl data;2 these are ﬁne-tuned during train-
+ing. We used the Adam optimizer (Kingma and
+Ba, 2014) with learning rate and decay set to 0.001
+and 0.99, respectively. We used batch sizes of 16.
+We used the large version of the universal sen-
+tence encoder3 with a transformer (Vaswani et al.,
+2017). We did not update the pretrained sentence
+encoder parameters during training. All hyper-
+paramaters for all models (including hidden lay-
+ers, hidden sizes, and dropout) were tuned using
+Vizier (Golovin et al., 2017) via 10-fold cross val-
+idation on the training set maximizing for F1.4
+As a baseline, we also trained a linear Support-
+Vector Regression (Fan et al., 2008) model on n-
+gram features (n ranges from 1 to 3).5
+Table 3 reports Pearson correlation coefﬁcients
+between the predictions with each of the neu-
+ral models and the ground truth difﬁculty scores.
+Rows 1-4 correspond to individual models, and
+row 5 reports the ensemble performance. Columns
+correspond to label type. Results from all mod-
+els outperform the baseline SVR model: Pearson’s
+2http://nlp.stanford.edu/data/glove.
+840B.300d.zip
+3https://tfhub.dev/google/
+universal-sentence-encoder-large/3
+4This performs random search over the number of hidden
+layers (1-5), hidden sizes (128-1024), and dropout (0.1- 0.5).
+5We perform gridsearch over the hyperparameter C.
+P
+I
+O
+NGRAM+SVR
+0.455
+0.311
+0.541
+RNN
+0.521
+0.555
+0.601
+CNN
+0.470
+0.522
+0.550
+USE
+0.492
+0.518
+0.580
+USE+RNN
+0.550
+0.604
+0.622
+Table 3: Pearson correlation coefﬁcients of sentence
+difﬁculty predictions.
+correlation coefﬁcients range from 0.550 to 0.622.
+The regression correlations are the lowest.
+The RNN model realizes the strongest per-
+formance among the stand-alone (non-ensemble)
+models, outperforming variants that exploit CNN
+and USE representations. Combining the RNN
+and USE further improves results. We hypothesize
+that this is due to complementary sentence infor-
+mation encoded in universal representations.
+For all models, correlations for Intervention and
+Outcomes are higher than for Population, which is
+expected given the difﬁculty distributions in Fig-
+ure 1. In these, the sentences are more uniformly
+distributed, with a fair number of difﬁcult and eas-
+ier sentences. By contrast, in Population there are
+a greater number of easy sentences and consid-
+erably fewer difﬁcult sentences, which makes the
+difﬁculty ranking task particularly challenging.
+7
+Better IE with Difﬁculty Prediction
+We next present experiments in which we attempt
+to use the predicted difﬁculty during training to
+improve models for information extraction of de-
+scriptions of Population, Interventions and Out-
+comes from medical article abstracts. We investi-
+gate two uses: (1) simply removing the most dif-
+ﬁcult sentences from the training set, and, (2) re-
+weighting the most difﬁcult sentences.
+We again use LSTM-CRF-Pattern as the base
+model and experimenting on the EBM-NLP cor-
+pus (Nye et al., 2018). This is trained on either (1)
+the training set with difﬁcult sentences removed,
+or (2) the full training set but with instances re-
+weighted in proportion to their predicted difﬁculty
+score. Following (Nye et al., 2018), we use the
+Adam optimizer with learning rate of 0.001, de-
+cay 0.9, batch size 20 and dropout 0.5. We use
+pretrained 200d GloVe vectors (Pennington et al.,
+2014)6 to initialize word embeddings, and use
+6http://nlp.stanford.edu/data/glove.
+6B.zip
+
+---PAGE---
+
+1476
+Model
+Precision
+Recall
+F1
+P
+I
+O
+P
+I
+O
+P
+I
+O
+Base model
+81.54
+81.99
+78.01
+64.22
+54.19
+54.84
+71.85
+65.25
+64.40
+Re-weight by agreement
+78.63
+82.24
+82.19
+66.47
+54.45
+55.22
+72.04
+65.53
+66.06
+Re-weight by difﬁculty
+79.57
+74.69
+73.92
+70.31
+63.71
+64.96
+74.65
+68.76
+69.15
+Table 4: Medical IE performance by re-weighting sentences according to predicted agreement or difﬁculty scores.
+100d hidden char representations. Each word is
+thus represented with 300 dimensions in total. The
+hidden size is 100 for the LSTM in the character
+representation component, and 200 for the LSTM
+in the information extraction component. We train
+for 15 epochs, saving parameters that achieve the
+best F1 score on a nested development set.
+7.1
+Removing Difﬁcult Examples
+We ﬁrst evaluate changes in performance induced
+by training the sequence labeling model using less
+data by removing difﬁcult sentences prior to train-
+ing. The hypothesis here is that these difﬁcult in-
+stances are likely to introduce more noise than
+signal. We used a cross-fold approach to predict
+sentence difﬁculties, training on 9/10ths of the
+data and scoring the remaining 1/10th at a time.
+We then sorted sentences by predicted difﬁculty
+scores, and experimented with removing increas-
+ing numbers of these (in order of difﬁculty) prior
+to training the LSTM-CRF-Pattern model.
+Figure 3 shows the results achieved by the
+LSTM-CRF-Pattern model after discarding in-
+creasing amounts of the training data: the x and
+y axes correspond to the the percentage of data
+removed and F1 scores, respectively. We contrast
+removing sentences predicted to be difﬁcult with
+removing them (a) randomly (i.i.d.), and, (b) in
+inverse order of predicted inter-annotator agree-
+ment. The agreement prediction model is trained
+exactly the same like difﬁcult prediction model,
+with simply changing the difﬁcult score to an-
+notation agreement. F1 scores actually improve
+(marginally) when we remove the most difﬁcult
+sentences, up until we drop 4% of the data for Pop-
+ulation and Interventions, and 6% for Outcomes.
+Removing training points at i.i.d. random degrades
+performance, as expected. Removing sentences in
+order of disagreement seems to have similar effect
+as removing them by difﬁculty score when remov-
+ing small amount of the data, but the F1 scores
+drop much faster when removing more data. These
+ﬁndings indicate that sentences predicted to be dif-
+70.0
+70.5
+71.0
+71.5
+72.0
+72.5
+73.0
+73.5
+74.0
+0
+2
+4
+6
+8
+10
+62.0
+62.5
+63.0
+63.5
+64.0
+64.5
+65.0
+65.5
+Percent of data dropped
+F1 score
+Biomedical IE performance (F1)
+P Difficulty
+P Agreement
+P Random
+I Difficulty
+I Agreement
+I Random
+O Difficulty
+O Agreement
+O Random
+Figure 3: F1 scores achieved when removing increas-
+ingly large fractions of the training data.
+ﬁcult are indeed noisy, to the extent that they do
+not seem to provide the model useful signal.
+7.2
+Re-weighting by Difﬁculty
+We showed above that removing a small number
+of the most difﬁcult sentences does not harm, and
+in fact modestly improves, medical IE model per-
+formance. However, using the available data we
+are unable to test if this will be useful in practice,
+as we would need additional data to determine
+how many difﬁcult sentences should be dropped.
+We instead explore an alternative, practical
+means of exploiting difﬁculty predictions: we re-
+weight sentences during training inversely to their
+predicted difﬁculty. Formally, we weight sentence
+i with difﬁculty scores above τ according to: 1−a·
+(di−τ)/(1−τ), where di is the difﬁculty score for
+sentence i, and a is a parameter codifying the min-
+imum weight value. We set τ to 0.8 so as to only
+re-weight sentences with difﬁculty in the top 20th
+percentile, and we set a to 0.5. The re-weighting
+is equivalent to down-sampling the difﬁcult sen-
+tences. LSTM-CRF-Pattern is our base model.
+Table 4 reports the precision, recall and F1
+achieved both with and without sentence re-
+weighting. Re-weighting improves all metrics
+
+---PAGE---
+
+1477
+modestly but consistently. All F1 differences are
+statistically signiﬁcant under a sign test (p <
+0.01). The model with best precision is differ-
+ent for Patient, Intervention and Outcome labels.
+However re-weighting by difﬁculty does consis-
+tently yield the best recall for all three extraction
+types, with the most notable improvement for I
+and O, where recall improved by 10 percentage
+points. This performance increase translated to im-
+provements in F1 across all types, as compared to
+the base model and to re-weighting by agreement.
+8
+Involving Expert Annotators
+The preceding experiments demonstrate that re-
+weighting difﬁcult sentences annotated by the
+crowd generally improves the extraction models.
+Presumably the performance is inﬂuenced by the
+annotation quality.
+We now examine the possibility that the higher
+quality and more consistent annotations of do-
+main experts on the difﬁcult instances will bene-
+ﬁt the extraction model. This simulates an annota-
+tion strategy in which we route difﬁcult instances
+to domain experts and easier ones to crowd anno-
+tators. We also contrast the value of difﬁcult data
+to that of an i.i.d. random sample of the same size,
+both annotated by experts.
+8.1
+Expert annotations of Random and
+Difﬁcult Instances
+We re-annotate by experts a subset of most dif-
+ﬁcult instances and the same number of random
+instances. As collecting annotations from experts
+is slow and expensive, we only re-annotate the
+difﬁcult instances for the interventions extraction
+task. We re-annotate the abstracts which cover
+the sentences with predicted difﬁculty scores in
+the top 5 percentile. We rank the abstracts from
+the training set by the count of difﬁcult sen-
+tences, and re-annotate the abstracts that con-
+tain the most difﬁcult sentences. Constrained
+by time and budget, we select only 2000 ab-
+stracts for re-annotation; 1000 of these are top-
+ranked, and 1000 are randomly sampled. This re-
+annotation cost $3,000. We have released the new
+annotation data at: https://github.com/
+bepnye/EBM-NLP.
+Following (Nye et al., 2018), we recruited ﬁve
+medical experts via Up-work7 with advanced med-
+ical training and strong technical reading/writing
+7https://www.upwork.com
+skills. The expert annotator were asked to read
+the entire abstract and highlight, using the BRAT
+toolkit (Stenetorp et al., 2012), all spans describ-
+ing medical Interventions. Each abstract is only
+annotated by one expert. We examined 30 re-
+annotated abstracts to ensure the annotation qual-
+ity before hiring the annotator.
+Table 5 presents the results of LSTM-CRF-
+Pattern model trained on the reannotated difﬁcult
+subset and the random subset. The ﬁrst two rows
+show the results for models trained with expert an-
+notations. The model trained on random data has
+a slightly better F1 than that trained on the same
+amount of difﬁcult data. The model trained on ran-
+dom data has higher precision but lower recall.
+Rows 3 and 4 list the results for models trained
+on the same data but with crowd annotation. Mod-
+els trained with expert-annotated data are clearly
+superior to those trained with crowd labels with
+respect to F1, indicating that the experts produced
+higher quality annotations. For crowdsourced an-
+notations, training the model with data sampled at
+i.i.d. random achieves 2% higher F1 than when
+difﬁcult instances are used. When expert annota-
+tions are used, this difference is less than 1%. This
+trend in performance may be explained by differ-
+ences in annotation quality: the randomly sampled
+set was more consistently annotated by both ex-
+perts and crowd because the difﬁcult set is harder.
+However, in both cases expert annotations are bet-
+ter, with a bigger difference between the expert
+and crowd models on the difﬁcult set.
+The last row is the model trained on all 5k
+abstracts with crowd annotations. Its F1 score is
+lower than either expert model trained on only
+20% of data, suggesting that expert annotations
+should be collected whenever possible. Again the
+crowd model on complete data has higher pre-
+cision than expert models but its recall is much
+lower.
+8.2
+Routing To Experts or Crowd
+So far a system was trained on one type of data, ei-
+ther labeled by crowd or experts. We now examine
+the performance of a system trained on data that
+was routed to either experts or crowd annotators
+depending on their predicted difﬁcult. Given the
+results presented so far mixing annotators may be
+beneﬁcial given their respective trade-offs of pre-
+cision and recall. We use the annotations from ex-
+perts for an abstract if it exists otherwise use crowd
+
+---PAGE---
+
+1478
+Precision
+Recall
+F1
+Difﬁcult-Expert
+68.46
+65.06
+66.72
+Random-Expert
+70.84
+63.46
+67.04
+Difﬁcult-Crowd
+83.68
+44.63
+58.45
+Random-Crowd
+78.55
+49.23
+60.52
+Base (All-Crowd)
+81.99
+54.19
+65.25
+Table 5: Interventions IE model performance trained
+crowd or expert. The ﬁrst four models are trained with
+a subset of 1k abstracts and the base model is trained
+with all 5k abstracts.
+Precision
+Recall
+F1
+(D)ifﬁcult-Expert
+68.46
+65.06
+66.72
+(R)andom-Expert
+70.84
+63.46
+67.04
+D+R
+68.57
+67.54
+69.62
+D+Other
+83.55
+60.73
+70.33
+R+Other
+85.10
+57.08
+68.34
+D+R+Other
+82.19
+61.88
+70.60
+Table 6: Interventions IE model performance trained by
+mixing annotations from experts and crowd workers.
+[D]: Difﬁcult-Expert; [R]: Random-Expert; [Other]:
+the rest of the abstracts with crowd annotation only.
+annotations. The results are presented in Table 6.
+Rows 1 and 2 repeat the performance of the
+models trained on difﬁcult subset and random sub-
+set with expert annotations only respectively. The
+third row is the model trained by combining difﬁ-
+cult and random subsets with expert annotations.
+There are around 250 abstracts in the overlap of
+these two sets, so there are total 1.75k abstracts
+used for training the D+R model. Rows 4 to 6 are
+the models trained on all 5k abstracts with mixed
+annotations, where Other means the rest of the ab-
+stracts with crowd annotation only.
+The results show adding more training data with
+crowd annotation still improves at least 1 point F1
+score in all three extraction tasks. The improve-
+ment when the difﬁcult subset with expert anno-
+tations is mixed with the remaining crowd anno-
+tation is 3.5 F1 score, much larger than when a
+random set of expert annotations are added. The
+model trained with re-annotating the difﬁcult sub-
+set (D+Other) also outperforms the model with
+re-annotating the random subset (R+Other) by 2
+points in F1. The model trained with re-annotating
+both of difﬁcult and random subsets (D+R+Other),
+however, achieves only marginally higher F1 than
+the model trained with the re-annotated difﬁcult
+subset (D+Other).
+0
+200
+400
+600
+800
+1000
+Number of most difficult articles reannotated by expert
+50
+60
+70
+80
+90
+100
+Metrics
+Biomedical IE performance for Intervention
+Precision
+Recall
+F1
+Figure 4: Precision/Recall/F1 as a function of the num-
+ber of articles re-annotated by expert, in decreasing or-
+der of difﬁculty.
+In sum, the results clearly indicate that mixing
+expert and crowd annotations leads to better mod-
+els than using solely crowd data, and better than
+using expert data alone. More importantly, there
+is greater gain in performance when instances are
+routed according to difﬁculty, as compared to ran-
+domly selecting the data for expert annotators.
+These ﬁndings align with our motivating hypothe-
+sis that annotation quality for difﬁcult instances is
+important for ﬁnal model performance. They also
+indicate that mixing annotations from expert and
+crowd could be an effective way to achieve accept-
+able model performance given a limited budget.
+8.3
+How Many Expert Annotations?
+We established that crowd annotation are still use-
+ful in supplementing expert annotations for med-
+ical IE. Obtaining expert annotations for the one
+thousand most difﬁcult instances greatly improved
+the model performance. However the choice of
+how many difﬁcult instances to annotate was an
+uninformed choice. Here we check if less ex-
+pert data would have yielded similar gains. Future
+work will need to address how best to choose this
+parameter for a routing system.
+We simulate a routing scenario in which we
+send consecutive batches of the most difﬁcult ex-
+amples to the experts for annotation. We track
+changes in performance as we increase the num-
+ber of most-difﬁcult-articles sent to domain ex-
+perts. As shown in Figure 4, adding expert anno-
+tations for difﬁcult articles consistently increases
+F1 scores. The performance gain is mostly from
+increased recall; the precision changes only a bit

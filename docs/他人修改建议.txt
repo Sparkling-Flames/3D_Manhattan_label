@@ -1,0 +1,164 @@
+我先独立复核“第二点”的关键判断，不直接站任何一边。重点会查三件事：kNN-OOD 原文到底要求什么预处理、HoHoNet 的共享特征是否适合直接池化、以及 360 全景的水平平移问题在这个场景下到底该不该认真处理。
+
+
+
+
+
+
+
+
+
+读取 [](file:///d%3A/Work/HOHONET/docs/%E4%BB%96%E4%BA%BA%E4%BF%AE%E6%94%B9%E5%BB%BA%E8%AE%AE.txt#120-120)，行 120 到 260
+
+搜索正则表达式 `wrap_lr_pad|lr_pad|PanoUpsampleW|rotate|rotation|roll` (`**/lib/model/**/*.py`)，29 个结果
+
+Fetched https://proceedings.mlr.press/v162/sun22d.pdf
+
+Fetched https://papers.nips.cc/paper_files/paper/2018/file/abdeb6f575ac5c6676b747bca8d09cc2-Paper.pdf
+
+Fetched https://arxiv.org/pdf/2011.11498.pdf
+
+Fetched https://arxiv.org/pdf/1610.02136.pdf
+
+我要补两条关键反证和正证：一是 kNN-OOD 实现细节不能靠转述，要看原始代码或官方实现；二是 HoHoNet 的 wrap padding 不能被误读成“天然旋转不敏感”。这两点会直接影响你该不该采纳别人第二点里的简化方案。
+
+
+
+
+
+
+
+Fetched https://proceedings.mlr.press/v162/sun22d.html
+
+Fetched https://papers.nips.cc/paper_files/paper/2018/hash/abdeb6f575ac5c6676b747bca8d09cc2-Abstract.html
+
+Fetched https://openreview.net/forum?id=H5TEDxg6rTf
+
+读取 [](file:///d%3A/Work/HOHONET/lib/model/utils.py#1-1)，行 1 到 110
+
+已在 deeplearning-wisc/knn-ood 中搜索 "normalize feature unit norm nearest neighbor implementation feature extraction cosine l2"、64 结果
+
+我看了“他人修改建议”里的第二点，结论是：
+
+这份评价里有两处批评是对的，而且你应该采纳；也有两处建议偏过度设计，不应直接照搬。更严格、更顶刊友好的主实现，不是“原始共享 1D latent 直接做 L2 kNN”，也不是“PCA 白化 + mean/std + 循环对齐”那套重工程版本，而是介于两者之间的更标准方案。
+
+先说我独立复核后的核心判断。
+
+**一、第二点里哪些是对的**
+第一，术语纠偏是对的。你现在方法里 02_方法.tex 写“HoHoNet 冻结编码器的倒数第二层特征”，这个表述不严谨。按 HoHoNet 实际代码，hohonet.py 的 `extract_feat()` 输出，先后经过 encoder、horizon compression、transformer refinement、upsample/channel reduction，最后得到的是共享的 `feat["1D"]`，然后才送到 layout head layout.py。所以它不是“编码器倒数第二层”，而是“layout head 之前的共享 latent horizontal feature”。
+
+第二，要补 feature normalization，这点也是对的，而且不是可选项。kNN-OOD 官方实现就是先对特征做 L2 归一化，再用 L2 距离建索引。这个不是转述，而是代码层面就这么干的：在 `deeplearning-wisc/knn-ood` 的 [run_imagenet.py](https://github.com/deeplearning-wisc/knn-ood/tree/main/run_imagenet.py#L29-L40) 和 [run_cifar.py](https://github.com/deeplearning-wisc/knn-ood/tree/main/run_cifar.py#L28-L49) 里，都显式对特征做了 unit-norm normalization，再做 `IndexFlatL2` 搜索。也就是说，如果你主文里还写“裸特征 + 裸 L2”，审稿人完全可以说你没有对齐 canonical kNN-OOD setup。
+
+**二、第二点里哪些我认为不该直接采纳**
+第一，不建议把 PCA 白化作为主实现。原因不是它一定错，而是它会额外引入新的选择自由度，比如主成分数、是否 whiten、是否先标准化再 PCA。这些在你当前论文里不是必须，也会增加“后验调参”的攻击面。更关键的是，kNN-OOD 这条权威线的主优势恰恰是少假设；你一上 PCA whitening，方法论上就开始偏离“non-parametric nearest neighbor”这条最干净的 defend 路线。
+
+第二，不建议把“完整 1D latent 的循环对齐距离”作为主实现。这里我要和那份建议拉开一点距离。它指出“全景水平移位可能导致直接序列 L2 失真”，这个担心在理论上成立；而且 HoHoNet 代码里 utils.py 明确有 rotate augmentation 和 roll undo，这恰好说明模型对水平旋转是要显式处理的，不是天然不变的。再加上 utils.py 的 wrap padding，本质只是循环边界处理，不等于“特征距离天然 yaw-invariant”。
+
+但问题在于，解决这个问题的最优方式，不是主文里上一个
+$\min_{\Delta}\|z_t-\mathrm{roll}(z_i,\Delta)\|$
+的复杂距离。那样会显著增加实现复杂度、计算成本和方法叙事负担，而且你很难解释为什么 shift-search 范围、步长、距离聚合方式不是另一种超参数。
+
+**三、我认为更严谨的主实现应该是什么**
+如果站在顶刊审稿人的角度，我会建议你把主实现锁成下面这一版：
+
+1. 特征来源：
+使用 HoHoNet 冻结 `extract_feat()` 输出中的共享 pre-head latent，即 `feat["1D"]`，而不是写“编码器倒数第二层”。代码语义依据见 hohonet.py 和 layout.py。
+
+2. 图像级向量化：
+不要直接把 `C×W` flatten 成超高维向量，也不要主文里上 mean+std/PCA。主实现采用对 `feat["1D"]` 沿宽度维做 global average pooling，得到
+$\bar e_t\in\mathbb{R}^C$。
+
+这一步非常关键，因为它同时解决了两个问题：
+一是和 canonical OOD literature 对齐。无论是 kNN-OOD 还是 Mahalanobis 经典实现，本质上都先把 spatial feature 做 pooling 成图像级向量，再计算分布距离。你从 `deeplearning-wisc/knn-ood` 的 [feat_extract.py](https://github.com/deeplearning-wisc/knn-ood/tree/main/feat_extract.py#L36-L57) 和 Mahalanobis 库的 [mahalanobis_lib.py](https://github.com/deeplearning-wisc/knn-ood/tree/main/util/mahalanobis_lib.py#L172-L192) 都能看到这一点。
+二是它天然对 panorama 的循环平移更稳。只要你做的是 width average pooling，整体水平 roll 不会像原始序列 L2 那样严重扰动距离。
+
+3. 特征归一化：
+对 pooled feature 做 L2 normalization：
+$$
+\tilde e_t=\frac{\bar e_t}{\|\bar e_t\|_2+\epsilon}
+$$
+
+4. 距离定义：
+在预注册锁定的 calibration reference pool 上做 kNN 距离：
+$$
+d_t=\frac{1}{K}\sum_{i\in \mathrm{NN}_K(t)}\|\tilde e_t-\tilde e_i\|_2
+$$
+
+5. 参考集边界：
+reference pool 必须是冻结模型、冻结预处理、冻结 checkpoint 下提取出的 calibration-only in-scope reference set，不能混入 validation/test，更不能事后改。
+
+这套实现，比你原始版本严谨，也比“他人建议”里的 PCA+mean/std+循环对齐更克制、更正统。
+
+**四、为什么我认为这个版本比那份建议更强**
+因为它同时满足三条最重要的 defend 逻辑。
+
+1. 它对齐 HoHoNet 的模型语义。
+你用的是 HoHoNet 真正的共享 latent，而不是误称某个 encoder 层。
+
+2. 它对齐权威 OOD literature。
+kNN-OOD 主线就是 pooled feature + normalization + nearest-neighbor distance。Mahalanobis 主线也是 pooled feature 后做类条件高斯分布。你这个任务虽然不是分类，但“先把结构特征池化成图像级向量”这一步是完全合理的。
+
+3. 它最小化额外自由度。
+不引入 PCA 分量数，不引入循环对齐搜索，不引入 mean/std 摘要选择争议。顶刊审稿人最喜欢抓的不是“你方法不够花”，而是“你方法自由度太多却没锁死”。
+
+**五、Mahalanobis 要不要上**
+我的判断维持不变，而且现在比之前更明确：
+
+主实现不要用 Mahalanobis。
+原因不是 Mahalanobis 差，而是它在你这个 setting 下不够自然。
+
+Lee 2018 的 Mahalanobis方法本质是“类条件 Gaussian + 多层特征 ensemble”。这个设定在标准分类模型里很顺；但你这里不是分类头，不存在天然 class-conditional mean。你如果硬上，只能做单总体 Gaussian 或人为分桶 Gaussian，那都会引入额外建模假设。对你当前这篇论文来说，这种复杂度没有必要。
+
+所以最稳妥的写法是：
+
+主实现：normalized pooled shared latent + kNN distance  
+附录敏感性：global Mahalanobis on the same pooled feature
+
+这样既显得你考虑过 parametric baseline，又不会让主线叙事被 Gaussian 假设绑死。
+
+**六、如果要做到“顶刊挑不出大毛病”，你还要补哪几条**
+除了实现本身，还要补四条审稿防线。
+
+1. 冻结声明
+必须明确冻结：
+模型 checkpoint、配置文件、输入分辨率、预处理、reference pool、K 值、阈值分位数。
+
+2. 不泄漏声明
+必须明确：
+$d_t$ 的 reference distribution 仅由 calibration reference set 构造，validation/test 只拿来算分，不参与任何 fit。
+
+3. 角色边界声明
+必须明确：
+$d_t$ 不是 correctness score，不用于静默过滤样本，只用于
+风险分层、stress mode 触发、审计性关联分析。
+
+4. 稳健性附录
+至少给两类 sensitivity：
+K in {5,10,20}
+kNN vs global Mahalanobis
+如果你还有余力，再给一个 pooled mean vs pooled mean+std 的一致性附录，但不要把它抬成主实现。
+
+**七、我对“他人修改建议第二点”的最终裁决**
+如果只看客观性，我的裁决是：
+
+1. “倒数第二层”必须改，这条完全正确。
+2. “要加 normalization，不能裸 L2”，这条完全正确。
+3. “PCA whitening 该上主实现”，我不同意。
+4. “循环对齐距离该上主实现”，我不同意。
+5. “主实现应该从 raw sequence L2 改成更稳健的 pooled image-level vector kNN”，我同意，而且这是我现在最推荐的版本。
+
+所以你不该简单采纳那份建议，也不该简单否掉它。正确做法是吸收其中真正有证据支撑的两点，把它收束成一个更克制、更 canonical 的实现方案。
+
+**我建议你最终在论文里落成的主实现**
+可以写成这个意思：
+
+“Pre-registered main implementation of $d_t$ uses the frozen HoHoNet shared pre-head latent horizontal feature extracted before the task-specific layout head. The 1D latent is globally averaged along the horizontal dimension to form an image-level embedding, L2-normalized using a calibration-only protocol, and scored by the average Euclidean distance to its K nearest neighbors in the calibration reference pool. Mahalanobis distance is reported only as an appendix sensitivity analysis.”
+
+如果写中文版本，可以近似写成：
+
+“预注册主实现中，图像级分布风险代理 $d_t$ 基于冻结 HoHoNet 在 layout head 之前的共享 latent horizontal feature 构造。主实现先沿水平维对该共享 1D latent 做全局平均池化得到图像级向量，再以 calibration-only 协议做 L2 归一化，并计算其在 calibration reference pool 上的 kNN 平均距离。Mahalanobis 距离仅作为附录敏感性分析，不进入主实现。”
+
+如果你要，我下一步可以直接做两件实事之一：
+
+1. 把 02_方法.tex 这段 d_t 小节改成可投稿版本。
+2. 直接给你一版可执行的 d_t 提取方案，明确从 hohonet.py 的哪个对象取特征、怎么池化、怎么归一化、怎么存 reference manifest。

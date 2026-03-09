@@ -1,0 +1,514 @@
+﻿\section{方法}
+
+本章建立改动幅度、质量、可靠性三类指标体系，并明确各指标的适用范围与边界。核心原则如下：
+\begin{enumerate}
+    \item 改动幅度反映工作量而非正确性；
+    \item 质量与可靠性分开统计；
+    \item 所有剔除与失败均记录原因以保证可追溯性。
+\end{enumerate}
+
+\subsection{总体框架：预筛选、画像、审计、路由}
+
+本研究采用可复现的预筛选与工人画像框架。考虑到小样本条件下边做边收敛的强化学习闭环缺乏可审计性，本文转而强调过程性证据与规程透明性。具体采用 Pilot→PreScreen→Main Experiment 的三段式流程，但锁定并非一次性完成，而是按证据强度分阶段进行：Pilot 阶段锁定协议骨架与不可变边界，PreScreen 阶段锁定 admission 与加权相关阈值，Calibration 第一轮后再锁定依赖场景覆盖的 scene-routing 参数，从而避免在尚无 Calibration 证据时提前决定场景阈值。
+
+整体流程分为四个阶段：
+\begin{enumerate}
+    \item 预筛选（PreScreen）：用小规模盲测任务集建立工人基线，剔除明显不合格或不稳定的工人，形成可用工人池。
+    \item 校准（Calibration）：在 \texttt{Calibration\_manual} 上估计全局可靠度 $r_u$ 与场景特异可靠度 $r_u^{\left(s\right)}$，并输出置信区间。
+    \item 在线路由（Routing）：结合标注前可得代理信号（如 $d_t$ 与 $g_t$）与标注后场景信号（meta-label 共识），在预算约束下将高风险任务优先分配给更稳定的工人，并采用序贯冗余与停止准则。
+    \item 审计输出（Audit）：输出工人画像图（可靠度主轴 vs 离散风险层级）与类型分布、Worker×Scene 矩阵、门控失败原因分布、反例案例库，形成可追溯证据链。
+\end{enumerate}
+
+
+
+
+\subsection{标注对象与元信息}
+
+标注以角点为主，不强制要求画墙面。每次提交时需同步记录三类信息：Scope、Difficulty 与 Model Issue，这三类元标签作为标注决策的副产品，同时服务于后续的场景分层、工人画像与路由策略。
+\subsubsection{Scope 单选，必填，决定是否进入主指标}
+\begin{itemize}
+    \item In-scope：仅标注相机所在房间
+    \item 规则：门框与墙垛清晰时，边界止于门框与墙垛处，不跨门洞
+    \item 包含：天花内凹与格栅不影响外边界
+\end{itemize}
+Out-of-scope（共 4 类）：
+\begin{itemize}
+    \item 几何假设不成立：非 Manhattan 或弧形墙
+    \item 边界不可判定：开放式或无可靠停止点
+    \item 错层或多平面：楼梯井或分层天花
+    \item 证据不足：遮挡或画质差导致无法判断
+\end{itemize}
+    
+统计处理：标记为 In-scope 的样本进入主指标口径 I；标记为 OOS 的样本单独报告其比例、子类分布与判定一致性；当同一图像存在标注者分别选择 In-scope 与 OOS 的混合判定时，进行人工复核。
+混合判定的操作流程与裁决规则见第~\ref{sec:method-oos}节。
+\subsubsection{Difficulty 多选}
+用户界面要求：Difficulty 为多选列表。为避免“空值既可能表示无困难、也可能表示漏填”的不可区分性，界面要求每次提交\textbf{至少选择 1 项}，并施加互斥约束：
+\begin{itemize}
+    \item 若选择 \texttt{trivial}（表示无明显困难），则\textbf{不得}同时选择任何其他困难标签；
+    \item 若存在任意具体困难因素（如 occlusion/seam 等），则\textbf{不得}选择 \texttt{trivial}。
+\end{itemize}
+若出现空选、或出现 \texttt{trivial} 与其他困难标签共存的冲突选择，均视为\textbf{不合规元标签}并记为 Type~4（流程/字段问题）候选，必须在口径 T 中单独统计、列出比例与示例任务，且不得静默丢弃。若出现整字段缺失（系统错误/字段漏传/导出缺损）则记为 NA，并必须单独统计与报告以供审计。
+
+数学建模：对每个 difficulty tag $k$ 定义二元变量 $z_{t,u,k}\in\left\{0,1\right\}$：若该 tag 被勾选则为 1，否则为 0。\textbf{注意：}在多选界面中，“未被勾选”被操作性定义为 0（该困难未被标注者主张存在），并不要求显式记录每个 tag 的否定项。NA 仅用于整字段缺失（系统错误、字段漏传或提交缺失），必须单独统计与报告以供审计。
+
+Tag 集合（共 6 个）：
+\begin{itemize}
+    \item 非常简单（trivial）：无明显困难，快速完成
+    \item 遮挡明显（occlusion）：家具或人遮挡墙角
+    \item 纹理弱（low\_texture）：纯色墙或光照均匀
+    \item 拼接缝（seam）：全景拼接缝导致错位
+    \item 反光与玻璃（reflection）：镜面伪边界
+    \item 画质差或遮罩（low\_quality）：模糊或黑边影响对齐
+\end{itemize}
+
+作用：上述 difficulty 标签用于场景分层、路由信号与分布监控。
+\subsubsection{Model Issue 多选，仅在半自动条件下收集}
+用户界面要求：\texttt{model\_issue} 为多选列表，仅在半自动条件下采集。为避免“空值既可能表示可接受、也可能表示漏填”的不可区分性，界面要求每次提交\textbf{至少选择 1 项}，并施加互斥约束：
+\begin{itemize}
+    \item 若选择 \texttt{acceptable}（表示初始化质量可接受），则\textbf{不得}同时选择任何其他失效模式；
+    \item 若存在任意具体失效模式（如 topology\_failure 等），则\textbf{不得}选择 \texttt{acceptable}。
+\end{itemize}
+若出现空选、或出现 \texttt{acceptable} 与其他失效模式共存的冲突选择，均视为\textbf{不合规元标签}并记为 Type~4 候选，必须在口径 T 中单独统计、列出比例与示例任务，且不得静默丢弃。若出现整字段缺失（系统错误/字段漏传/导出缺损）则记为 NA，并必须单独统计与报告以供审计。
+
+数学建模：对每个 \texttt{model\_issue} tag $k$ 定义二元变量 $z_{t,u,k}\in\left\{0,1\right\}$：若该 tag 被勾选则为 1，否则为 0。\textbf{注意：}多选界面仅记录被勾选的正例；未被勾选被操作性定义为 0。NA 仅用于整字段缺失（系统错误、字段漏传或提交缺失），必须单独统计与报告以供审计。
+
+Tag 集合（共 8 个）：
+\begin{itemize}
+    \item 模型标注质量好（acceptable）：无需显著修改
+    \item 跨门扩张（overextend\_adjacent）：包含相邻空间
+    \item 漏标（underextend）：只标了局部
+    \item 过度解析（over\_parsing）：将柱体、墙面凸起、家具边缘等非布局结构误判为真实拐角或边界折点
+    \item 角点错位（corner\_drift）：一个或少量角点/局部边界未精确落在真实墙角附近，但拓扑关系仍基本正确
+    \item 角点重复（corner\_duplicate）：同一拐角多个点
+    \item 拓扑崩溃（topology\_failure）：出现配对失败、闭合失败、自交或其他非法拓扑
+    \item 预测失效（fail）：整体严重误导、几乎需从零重画，且无法由上述更具体类型优先概括
+\end{itemize}
+
+\subsubsection{改动幅度：$\mathrm{IoU}_{\mathrm{edit}}$}\label{sec:method-iou-edit}
+$\mathrm{IoU}_{\mathrm{edit}}$ 用于度量半自动条件下从模型初始化到人工提交的改动幅度（工作量代理），不用于判定正确性。
+该指标仅在展示初始化的任务上定义（如 \texttt{PreScreen\_semi}、\texttt{Calibration\_semi} 与 \texttt{SemiAuto\_Test}）；对纯手动条件可记为 NA 并在口径 T 中单独披露缺失率。
+
+\[\mathrm{IoU}_{\mathrm{edit}}\left(t,u\right)=\mathrm{IoU}\left(P_t,A_{t,u}\right)\]
+$\mathrm{IoU}_{\mathrm{edit}}$ 越低通常表示改动越大，但不代表改动必然正确，仅用于衡量工作量或改动幅度。
+\subsubsection{边界 RMSE}
+当角点数量不一致或者配对不稳定时，点对点 RMSE 易失真。为此采用角点生成的上/下边界曲线 $y_{\mathrm{ceil}}\left(x\right)$、$y_{\mathrm{floor}}\left(x\right)$ 在离散网格上的误差作为几何改动幅度指标。
+\[\mathrm{BoundaryRMSE}\left(X,Y\right)=\sqrt{\frac{1}{N}\sum_{i=1}^{N}\left[\left(\Delta y_{\mathrm{ceil}}\left(x_i\right)\right)^2+\left(\Delta y_{\mathrm{floor}}\left(x_i\right)\right)^2\right]}\]
+
+\subsubsection{角点匹配 RMSE 辅助指标}
+该指标仅在角点配对成功且配对覆盖率足够高的情况下启用。
+
+预测角点的集合为 $\{p_1,p_2,\ldots,p_n\}$，标注角点集合为 $\{g_1,g_2,\ldots,g_m\}$，两点间欧式距离为
+\[d\left(p,g\right)=\sqrt{\left(x_p-x_g\right)^2+\left(y_p-y_g\right)^2}\]
+用匈牙利算法在两集合间求最小总代价的匹配 $\pi$，匹配对上计算：
+\[\mathrm{RMSE}_{\mathrm{match}}\left(t,u\right)=\sqrt{\frac{1}{N}\sum_{i=1}^{N}{d\left(p_i,g_{\pi\left(i\right)}\right)^2}}\]
+其中 $N=\min\left(n,m\right)$，取预测角点与标注角点中数量较少的那个。
+\subsubsection{活跃标注时间定义}\label{sec:method-active-time}
+
+为明确 RQ1 的主终点度量，特此界定活跃标注时间之操作定义与聚合方式。
+\\ 定义与采集条件：
+\texttt{active\_time} 指标注者在标注任务页面上的交互活跃时间，而非页面打开挂钟时间。计时器每秒递增 1，当且仅当
+\begin{enumerate}
+    \item 页面处于可见状态；
+    \item 距最近用户交互（鼠标、键盘、滚轮）不超过 \texttt{IDLE\_THRESHOLD} 秒。
+\end{enumerate}
+当页面不可见超过 \texttt{PAGE\_HIDDEN\_THRESHOLD} 秒应视为中断，需新的交互事件方可恢复计时。阈值在预注册中锁定为 \texttt{IDLE\_THRESHOLD} = 15 s、\texttt{PAGE\_HIDDEN\_THRESHOLD} = 6 s，实验期间不做事后调整。
+\\ 聚合协议：
+按 session 层级分段记录，其中 session 定义为同一浏览器标签页内的连续交互窗口，以 sessionStorage 的唯一标识追踪。
+\begin{itemize}
+    \item Per-(task, annotator, session)：取该 session 内的最大累积值，用于消除同一 session 内的重复上报。
+    \item Per-(task, annotator)：对跨 session 的多个分段累加，覆盖标注者在不同时段或标签页对同一任务的重复访问。
+    \item Per-task：取参与标注的各标注者中的最大值，用于任务级度量。
+\end{itemize}
+
+\subsection{多选标签的共识计算}\label{sec:method-tags-consensus}
+
+由于 Difficulty 与 Model Issue 均为多选标签，不存在单一多数类，因此需要专门的共识计算机制。
+
+\subsubsection{基本方案}
+采用 Per-tag 二元共识作为主口径；加权共识作为可选干预，见第~\ref{sec:method-weighted-consensus}节，通过预筛选真值锚点与预注册协议规避循环依赖。
+
+共识计算 对每个 tag k 独立：
+
+记号约定：为简洁起见，下述 $c_{t,k}$、$\mathrm{conf}_{t,k}$、$\mathrm{disagree}_{t,k}$ 中任务下标 t 有时省略；实际实现均以任务 t 与 tag k 为索引。
+
+输入：任务 $t$ 的 $m$ 个 worker 标注 $z_{t,1,k},z_{t,2,k},\ldots,z_{t,m,k}$
+
+输出：共识 $c_k$，置信度 $\mathrm{conf}_k$，分歧度 $\mathrm{disagree}_k$
+
+统计勾选人数：$n_{selected}=\sum_{u=1}^{m}\mathbb{I}\left[z_{t,u,k}=1\right]$
+
+统计有效人数：$n_{total}=\sum_{u=1}^{m}\mathbb{I}\left[z_{t,u,k}\in\{0,1\}\right]$（理想情况下$n_{total}=m$；NA 仅用于系统错误、字段漏传或提交缺失，并需单独披露）
+
+若 $n_{total}=0$：$c_k=NA,\ \mathrm{conf}_k=NA,\ \mathrm{disagree}_k=NA$
+
+否则：
+$c_k=1$ 若 $\left(n_{selected}/n_{total}\right)\geq0.5$ 否则 0
+\[\mathrm{conf}_k=\frac{\max\left(n_{selected},n_{total}-n_{selected}\right)}{n_{total}}\]
+\[\mathrm{disagree}_k=1-\mathrm{conf}_k\]
+
+任务级聚合：
+
+共识标签集合 $C_t^{\mathrm{tag}}=\{k:c_k=1\}$
+
+整体分歧度 $\mathrm{disagree}_t=1-\min\{\mathrm{conf}_k: k\in K_t\}$，取最不确定 tag 的不确定性作为保守代理
+其中 $K_t=\{k:\mathrm{conf}_k\neq NA,\ n_{total,k}\ge n_{min}\}$，默认 $n_{min}=2$。
+若 $K_t$ 为空：令 $\mathrm{disagree}_t=NA$，并单独报告缺失率。
+
+一致性指标 Fleiss' Kappa：
+\\ 对每个 tag 独立计算 κ，报告：median κ (across tags)
+\\ 期望：κ > 0.5，中等一致性左右（moderate agreement）
+
+若某 tag 的 $\kappa<0.4$：采取预注册处理流程，避免随意切换：
+\begin{enumerate}
+    \item 频率检查：若该 tag 在 Calibration 中出现频率 < 5\%，按 per-tag 共识 $c_k=1$ 计，则并入其他低频场景，仅用于审计不用于路由分层。
+    \item 若频率 $\geq5\%$：不直接用该 tag 作为单独场景做细粒度路由，而是与相近 tag 合并为粗粒度场景，例如 occlusion + low\_texture 合并为低可见性，并在附录中公开合并映射表。
+    \item 报告与使用：该 tag 仍在 $Worker\times$ Scene 矩阵与分层表中单独报告，但标注低一致性警告；路由若引用该场景的 $r_u^{\left(s\right)}$，强制使用其置信下界 LCB 而非点估计，避免噪声场景误导。
+\end{enumerate}
+
+\subsubsection{可靠度加权共识：核心干预手段}\label{sec:method-weighted-consensus}
+动机：结合 Kara 的共识估计与 Liu 的工人分型思想，将可靠与不可靠工人的贡献区分开，以提升标签共识的稳健性与审计可解释性。
+
+适用前提：默认不包含恶意标注者；通过 PreScreen 尽可能滤除随意/不稳定标注者，并在 Discussion 中承认该前提的局限。若 PreScreen 结果显示存在明显恶意或无法稳定区分可靠度，则加权共识不作为主流程决策依据，仅报告未加权多数票与一致性指标用于审计。
+
+关键约束：
+权重 $w_u$ 的来源必须独立于当前任务的标签与共识计算。
+优先采用预筛选测试样本与专家参考标准得到的初始可靠度 $r_u^{\left(0\right)}$（其构建与专家参考标准见第~\ref{sec:method-prescreen}节），并以此映射到权重 $w_u$；其次采用校准集的 leave-one-task-out 估计。
+加权共识用于决策、审计、路由的算法输出，不作为唯一主结论的评价目标；主评价保持独立的参考标准或未加权一致性指标。
+
+加权规则（对每个 tag k 独立）：
+令 $z_{t,u,k}\in\{0,1\}$表示 worker u 是否勾选 tag k；权重 $w_u\in\left[0,1\right]$
+
+加权投票率：$p_{t,k}^{\left(w\right)}=\frac{\sum_{u=1}^{m}{w_uz_{t,u,k}}}{\sum_{u=1}^{m}w_u}$
+
+边界条件以避免除零且可审计：若 $\sum_{u=1}^{m}w_u=0$，则该任务在加权共识上记为 NA 并单独报告其发生率；主实现不采用静默 fallback 到未加权多数票，以避免混合 estimand。
+
+加权共识：$c_{t,k}^{\left(w\right)}=\mathbb{I}\left[p_{t,k}^{\left(w\right)}\geq0.5\right]$
+
+权重映射与裁剪：预注册锁定，避免事后调参
+\begin{enumerate}
+    \item 基础映射：以 PreScreen 测试样本上的初始可靠度 $r_u^{\left(0\right)}$ 为主锚点，映射到 $w_u\in\left[0,1\right]$：
+\[w_u=\min\left\{1,\,\max\left\{0,\,\frac{r_u^{(0)}-0.5}{0.5}\right\}\right\}\]
+其中$r_u^{\left(0\right)}<0.5$ 视为极端不可靠，设 $w_u=0$。
+    \item 上界裁剪：$w_{max}$ 由 Stage 1 PreScreen 的专家参考样本按预注册规则锁定，避免固定常数带来的任意性与事后调参空间。
+
+候选集合：$\mathcal{W}=\{0.80,0.85,0.90,0.95,1.00\}$。
+\begin{itemize}
+    \item 方案 A（默认，优先）：在 PreScreen 的 20--22 个 manual anchors 上执行重复平衡二折交叉拟合（2-fold repeated balanced split）作为主锁定方案。每次切分均按难度层与主 failure family 保持尽量平衡；在每一折中仅用训练折估计 $r_u^{\left(0\right)}$ 与 $w_u$，再在验证折上评估加权共识与专家参考的一致性增益（$\Delta$ acc 或 $\Delta\kappa$）。3 折分层切分仅作为附录敏感性分析；由于当前 anchor 规模无法稳定支撑每折覆盖，主分析不采用 5 折。
+
+选择规则：取跨折均值最优的 $w_{max}$；若多个候选落在最优的 1-SE 范围内，取其中最小的 $w_{max}$。
+    \item 方案 B：若 manual anchors 的覆盖或完成率不足以稳定执行方案 A，则一次性随机拆分 A/B：A 半仅用于估计$r_u^{\left(0\right)}$，B 半仅用于在 $\mathcal{W}$ 上选择 $w_{max}$；拆分随机种子、平衡规则与清单写入预注册并公开。
+锁定：最终 $w_{max}$ 在进入 Calibration/Main 前冻结，后续不再调整。
+\end{itemize}
+
+
+    \item 敏感性分析：附录报告 $w_{max}\in\mathcal{W}$ 全网格下结果一致性，用于稳健性披露，不再用于二次选择。
+报告方式：同时报告未加权与加权的差异；并在独立参考子集上比较两者与参考标准的一致性与稳定性。
+\end{enumerate}
+
+\subsection{质量与可靠度评估：LOO 原则}
+
+可靠度评估遵循两项核心原则：其一，排除自身影响,共识计算不包含被评估者，避免 $r_u$ 系统性偏高；其二，仅用手动标注集估计,避免工具将所有人拉到同一起点。
+\subsubsection{任务级一致性 $\mathrm{IAA}$}
+对任务 t，收集所有标注者的提交结果$A_{t,u}$ 需要任务标注者数量$\geq2$，定义任务内一致性为两两 IoU 的中位数：
+\[\mathrm{IAA}_t=\mathrm{median}_{u\neq v}\,\mathrm{IoU}\left(A_{t,u},A_{t,v}\right)\]
+采用中位数而非均值，旨在降低极端标注的影响。$\mathrm{IAA}_t$ 高意味着任务上存在稳定共识，可用于识别专家标注者或建立参考标准。
+\subsubsection{共识标注和去除自身后的共识 LOO Consensus}
+在任务 t 上，定义共识代表为：
+\[C_t=\arg\max_{u}\ \mathrm{median}_{v\neq u}\,\mathrm{IoU}\left(A_{t,u},A_{t,v}\right)\]
+为了避免自我参与导致共识虚高，对每个标注者采用去除自身后的共识：
+\[C_t^{\left(-u\right)}=\arg\max_{w\in U_t\setminus\{u\}}\ \mathrm{median}_{\substack{v\neq w\\ v\in U_t\setminus\{u\}}}\,\mathrm{IoU}\left(A_{t,w},A_{t,v}\right)\]
+并计算：$\mathrm{IoU}_{\mathrm{LOO}}\left(t,u\right)=\mathrm{IoU}\left(A_{t,u},C_t^{\left(-u\right)}\right)$
+直接与其他标注者比较：
+\[\mathrm{IoU}_{\mathrm{others-med}}\left(t,u\right)=\mathrm{median}_{v\neq u}\,\mathrm{IoU}\left(A_{t,u},A_{t,v}\right)\]
+
+$k=3$ 退化披露：当任务标注者数 $k=3$ 时，LOO 后仅剩 2 人参与共识代表选择，$\mathrm{IoU}_{\mathrm{LOO}}$ 的方差偏大且共识代表退化为二选一。为此，在 $k=3$ 的任务上同时报告 $\mathrm{IoU}_{\mathrm{others-med}}$ 与两两一致性分布作为替代一致性代理；在附录中以该替代代理重复主结论的敏感性分析，预注册锁定为一次，不引入新自由度。
+\subsubsection{标注者全局可靠度}\label{sec:method-global-reliability}
+标注者 u 在校准集合上的任务集合为 $T_u$
+\[r_u=\mathrm{median}_{t\in T_u}\,\mathrm{IoU}\left(A_{t,u},C_t^{\left(-u\right)}\right)\]
+
+估计条件：
+\begin{itemize}
+    \item 仅在 \texttt{Calibration\_manual} 集合估计
+    \item 仅 in-scope 样本
+    \item Bootstrap 置信区间：优先采用 BCa bootstrap，重采样次数在预注册中固定为 $B=10,000$；场景分层时采用 stratified bootstrap 保证各场景覆盖。
+\end{itemize}
+\noindent 说明：本文在实验设计中额外收集 \texttt{Calibration\_semi}（与 \texttt{Calibration\_manual} 同图配对），用于 RQ2 的条件对照（例如 $\mathrm{IAA}_t$ 与反例分布差异）。为避免人的能力估计与初始化质量混杂，$r_u$ 的主估计不使用 \texttt{Calibration\_semi}。
+\\ 估计精度停机准则：除最小任务数阈值外，进一步以可靠度估计的置信区间精度作为 Calibration 是否追加任务的客观标准。
+\\ 定义：对每个 worker u，计算 $r_u$ 的 95\% CI 半宽
+\[h_u=\left(\mathrm{UCB}\left(r_u\right)-\mathrm{LCB}\left(r_u\right)\right)/2\]
+其中 $\mathrm{LCB}(r_u)$ 与 $\mathrm{UCB}(r_u)$ 分别表示 $r_u$ 的 95\% 置信区间下界与上界（由本节所述 bootstrap 方案计算）；$\epsilon_r>0$ 为预注册锁定的精度阈值，表示允许的 95\% CI 半宽上限。
+\\ 停机规则：若 $h_u\le\epsilon_r$，则该 worker 在 Calibration 阶段不再追加任务；否则仅从预注册的 \texttt{Calibration\_reserve} 任务池中追加小批量任务，并在每次追加后重新计算 CI。\texttt{Calibration\_reserve} 是从预先固定的 \texttt{Calibration\_pool} 中划分出的保留子集，用于避免靠扩大唯一图像池来达标。
+\\ 实际执行协议：
+\begin{enumerate}
+    \item 预先固定 \texttt{Calibration\_pool}（唯一图像集合），并在进入 Calibration 前按预注册随机种子划分为 \texttt{Calibration\_anchor}、\texttt{Calibration\_core} 与 \texttt{Calibration\_reserve}。
+    \item 首先发放 \texttt{Calibration\_anchor}，所有通过 PreScreen 的 worker 均完成该集合。
+    \item 随后发放 \texttt{Calibration\_core}，采用平衡分配，不要求全员覆盖。收集足够多的多标注数据后，为每个 worker 计算 $r_u$、95\% CI 与 $h_u$。
+    \item 对于 $h_u>\epsilon_r$ 的 worker，按预注册批量大小 $\Delta N_{cal}$ 从 \texttt{Calibration\_reserve} 中抽取其尚未完成且可用于 LOO 的任务进行追加，并在每次追加后更新 CI；重复直到满足 $h_u\le\epsilon_r$ 或触达预算上限 $N_{cal,max}$。
+    \item 为保证追加任务可用于 LOO 且避免 $k=3$ 退化，追加时优先选择除目标 worker 外已具有至少 3 份其他标注的 reserve 任务（目标 worker 补标后该任务总冗余 $k\ge4$）。若 reserve 内任务尚未满足该条件，则需先按预注册规则补齐其余标注份数，再将该任务用于追加。
+\end{enumerate}
+
+\noindent 核心场景覆盖补齐：在完成 \texttt{Calibration\_anchor}+\texttt{Calibration\_core} 的第一轮采集并形成 meta-label 共识后，先按频率与一致性冻结 $\mathcal{S}_{\mathrm{core}}$。对每个 $(u,s)$ 计算缺口
+\[\Delta_{u,s}=\max\left(0,\ N_{u,s,\min}-N_{u,s}\right).\]
+仅对 $s\in\mathcal{S}_{\mathrm{core}}$ 且 $\Delta_{u,s}>0$ 的对进行覆盖补齐，从 \texttt{Calibration\_reserve} 中选择已形成共识且属于场景 $s$ 的任务补派给缺口较大的 worker。覆盖补齐的目标是启用率与覆盖率达标，不以路由收益为目标。
+预算上限：为避免靠无限增加数据才能达标，预注册固定每个 worker 的最大 Calibration 任务数 $N_{cal,max}$（含 reserve）。若达到 $N_{cal,max}$ 仍不达标，则停止追加并标记为 low-precision；后续路由仅使用其 LCB 或直接降级为仅分配低风险任务，并在口径 T 中披露该比例。
+\\ 冗余下限：为降低 $k=3$ 下 LOO 的退化与高方差风险，$r_u$ 与 $r_u^{\left(s\right)}$ 的主估计仅使用每任务标注者数 $k\geq4$ 的 \texttt{Calibration\_manual} 任务；$k=3$ 任务仅用于诊断性报告或附录敏感性分析，不作为主估计依据。
+\\ 最小任务数阈值：$N_{r,\min}\geq 15$（用于计算 $r_u$ 的最少 \texttt{Calibration\_manual} 任务数；主实现通过 Calibration 任务分配保证该下限可达）。
+\\ 独立性补充：初始可靠度锚点 $r_u^{\left(0\right)}$ 由 \texttt{PreScreen\_manual} 的专家参考样本得到（见第~\ref{sec:method-prescreen}节）；后续的 $r_u$ 与 $w_u$ 可视为在此基础上的校准估计，从而打破可靠度与共识的循环依赖。
+\\ 说明：为保证 $r_u$ 的估计稳定性与 CI 精度停机准则可执行，主实现通过 \texttt{Calibration\_manual} 的任务分配确保每位通过 PreScreen 的 worker 至少获得约 $N_{cal,\min}$ 个 manual 校准任务（主实现 $N_{cal,\min}=25$）；若因退出或缺失导致不足，则该 worker 标记为 low-precision，并仅以 LCB 或降级路由处理。
+\subsubsection{标准 Layout 指标与门控}
+为与 HoHoNet、HorizonNet、Dula-Net 等前人研究的常用指标对齐，在满足in-scope 的样本上额外报告以下标准 layout 指标：
+\begin{itemize}
+    \item 2D IoU 与 3D IoU：HoHoNet 风格的地面投影重合度 2D 与考虑高度体积的重合度 3D
+    \item 由布局几何渲染的深度图 RMSE 与 $\delta$：将 layout 按几何关系渲染为全景视角下的每像素深度图，再对两份 layout 的深度图做像素级 RMSE 与阈值准确率
+    \item 门控分为两类分别展示：
+    \begin{itemize}
+        \item 可计算型门控：几何归一化失败、多边形无法构造、layout rendered RMSE 生成失败等
+        \item 可比型门控：点对点 RMSE 需要稳定匹配时
+    \end{itemize}
+\end{itemize}
+同时 \texttt{n\_pairs\_mismatch} 不再作为标准 layout 的门控条件，不要求预测和标注角点对数一致，以避免将人工进行显著修正或工作量较大的样本排除。
+结构差异相关的信息 $\Delta n_{pairs}$、是否存在奇数个数的点、配对失败等用作分层或诊断的变量，用于报告和反例筛选。
+
+\subsection{结构差异信号}
+
+定义角点对数差：
+\[\Delta n_{pairs}\left(t,u\right)=n_{pairs}\left(A_{t,u}\right)-n_{pairs}\left(P_t\right)\]
+这是难度与纠错的参考信号，用于分层报告和反例筛选。
+
+结构诊断代理 $g_t$：
+为避免未标注前无法获知 difficulty/scene 的情况，本文在任何人工标注之前，仅基于模型初始化/预测结果 $P_t$ 构造结构诊断信号 $g_t$，用于首轮风险分层与触发应激模式。$g_t$ 不刻画正确性，而刻画结构性高风险，典型触发包括：多边形无法构造或自交、拓扑闭合失败、角点重复/异常、以及由 $P_t$ 导出的可计算型门控失败（如几何归一化或渲染失败）。
+$g_t$ 的实现以可复现规则为主，阈值与触发集合在进入 Calibration/Main 前预注册锁定；若 $g_t$ 不可计算（如字段缺失），则记为 NA 并在口径 T 中单独报告缺失率。
+\subsection{预筛选与工人画像}\label{sec:method-prescreen}
+
+在小样本条件下，少数低质量工人可能显著影响全局结论。因此本文在可靠度估计与路由之前，先通过预筛选识别并剔除不合格或不稳定的工人。
+预筛选协议：
+\begin{itemize}
+    \item 盲测任务池 \texttt{PreScreen\_manual}：从 In-scope 且代表性强的样本中抽取 30 张唯一图像，候选工人完成同一批任务。该任务池不展示模型初始化，其中 20--22 张为带专家参考标准的 manual anchors，用于估计初始可靠度锚点 $r_u^{\left(0\right)}$；其余 8--10 张为随机 non-anchor 样本，用于保留较真实的 base-rate，避免 prescreen 退化为纯 showcase。
+    \item 半自动盲测任务池 \texttt{PreScreen\_semi}：从与 \texttt{PreScreen\_manual} 互不重叠的图像集合中抽取约 18 张任务，展示模型初始化作为起点。该任务池由“正常初始化对照子集”与“误导性初始化 trap 子集”构成，用于测量纠错能力与盲信风险，并避免同一图像的重复暴露导致思维惯性。
+    \item 锚点样本：\texttt{PreScreen\_manual} 中 20--22 张 manual anchors 用于估计 $r_u^{\left(0\right)}$，但不要求镜像 \texttt{PreScreen\_semi} 的 failure-family 配额结构。
+    \item $w_{max}$ 锁定协议：在 \texttt{PreScreen\_manual} 的专家参考样本上按预注册规则锁定并在进入 Calibration/Main 前冻结，具体方案 A/B 与候选集合见第~\ref{sec:method-weighted-consensus}节。
+\end{itemize}
+\noindent 设计边界：\texttt{PreScreen\_manual} 的目标是测量不依赖初始化的基础标注能力，因此其专家锚点应尽量覆盖主要 difficulty strata，而不要求镜像 \texttt{PreScreen\_semi} 中各类 \texttt{model\_issue} trap 的配额结构。相应的 natural-failure 配额控制仅适用于 semi 盲信子集，而不适用于 manual 锚点池。
+\noindent OOS 样本处理边界：若某任务可由专家高一致地判定为 OOS/证据不足，但无法给出稳定的几何参考布局，则其不得进入主几何 GT trap，也不得计入 manual anchors。对此类样本，\texttt{PreScreen\_manual} 仅允许纳入一个固定小配额的 scope-gate 子集，用于检验工人能否识别“不应按正常 in-scope 几何继续标注”的情形；其评分以 scope 判定与拒答/转人工规则是否正确为主，而非几何 IoU。\texttt{PreScreen\_semi} 仅允许纳入更小配额的 OOS stress 子集，用于审计工人面对误导性初始化时是否出现盲信；该子集单独报告，不并入主几何可靠度估计。若专家之间对 OOS 边界本身无法形成高一致判定，则该样本仅进入 ambiguity audit bank，用于附录披露而不作为 hard trap。
+测试样本与初始化设计策略：
+\begin{enumerate}
+    \item \texttt{PreScreen\_manual}：基础能力子集与证据不足子集，用于检验基础操作、稳定性与是否随意猜测。
+    \item \texttt{PreScreen\_semi}（纠错子集）：提供约 6 张较高质量的初始化对照样本，检验工人能否在少量修改后得到合理结果。
+    \item \texttt{PreScreen\_semi}（盲信子集）：提供约 12 张误导性初始化，优先覆盖跨门扩张、过度解析、局部角点漂移、角点重复等高频失效模式；\texttt{topology\_failure} 与整体 \texttt{fail} 仅保留为小配额稳健性/审计来源，而不作为 prescreen 主 family 配额。
+\end{enumerate}
+\noindent 误导性初始化的可复现生成：本文以规则化扰动算子为主来源生成误导性初始化。扰动算子集合与强度范围由 Pilot 阶段对常见 \texttt{model\_issue} 的归档抽象得到，并在进入 PreScreen 前冻结。对预先固定的图像子集，先得到模型初始化 $P_t$，再按预注册锁定的算子集合与强度参数将其变换为 $\tilde{P}_t$。每个任务的 \texttt{image\_id}、算子名、强度参数与随机种子均写入清单，并在进入 Main 前冻结与公开，保证可复现与可审计。算子设计以复现常见 \texttt{model\_issue} 为目标，以 \texttt{overextend\_adjacent}、\texttt{corner\_drift}、\texttt{corner\_duplicate} 等在 Pilot 中较多的模式为主；对 \texttt{topology\_failure} 与 \texttt{fail} 等稀有模式仅预注册固定小配额用于稳健性披露。
+算子库与冻结字段见附录第~\ref{app:perturbation-library}节。
+\begin{itemize}
+    \item 输入：固定的图像集合与对应的 $P_t$。
+    \item 变换：$\tilde{P}_t=\mathcal{T}_{o,\lambda,\xi}\!\left(P_t\right)$，其中 $o$ 为扰动算子，$\lambda$ 为强度，$\xi$ 为随机种子。
+    \item 验收：专家仅对生成结果做验收与记录，剔除明显不可修复或与目标失效模式不一致的样本，专家不参与基于表现的挑选。
+\end{itemize}
+
+\noindent 自然失败初始化的补充来源：为提高生态效度，允许在预注册中锁定一小部分 \texttt{PreScreen\_semi} 盲信子集任务来自模型在同分布样本上的自然失败，形成固定的 natural-failure trap bank。该子集与 \texttt{PreScreen\_manual} 图像池严格不重叠，同一 \texttt{base\_task\_id} 不得跨池复用。具体做法是先在固定候选池上运行冻结模型得到 $P_t$，再由专家按锁定的 \texttt{model\_issue} 归档表进行标签化，最后按类型分层随机抽样进入 semi 盲信子集。若某类型自然失败样本不足，则下调该类型 natural-failure 实现配额，并由同类型规则化扰动补足 semi trap 配额；计划配额与实际配额均需披露。该补充来源可用于盲信识别与附录真实性检查，但不得用于设定 manual 锚点、调整扰动算子集合/强度或基于 worker 表现事后挑样，以避免自由度膨胀。
+\\ 专家参考标准构建：由 2 名高级标注员独立精标；若两者 $\mathrm{IoU}\geq0.9$ 则取其一致结果作为参考；若 <0.9 则由第 3 人裁决，并将该样本标注为高歧义，用于审计工人在歧义场景下的行为而非作为硬性淘汰依据。
+\\ 初始可靠度定义：记 \texttt{PreScreen\_manual} 中带专家参考的任务集合为 $T_u^{(0)}$，其专家参考为 $G_t$，则
+\[r_u^{\left(0\right)}=\mathrm{median}_{t\in T_u^{(0)}}\,\mathrm{IoU}\left(A_{t,u},G_t\right)\]
+防泄漏原则：PreScreen 与 Calibration 只用校准阶段数据设门槛与估计可靠度，不使用 Validation 或 Test 的任何信息来设阈值或选取样本。
+最小门槛为：
+\begin{itemize}
+    \item 可计算型门控失败率 $\le\tau_{fail}$（可计算性/安全性门槛，不作为 RQ3 主收益主张来源）
+    \item Scope 判定一致性 $\geq\tau_{scope}$
+    \item 一致性代理 $\geq\tau_r$
+    \item 盲信初始化事件比例 $\le\tau_{trust}$
+    \item 最小有效任务数 $\geq N_{pre}$
+\end{itemize}
+\noindent 盲信初始化事件的统计口径：在 \texttt{PreScreen\_semi} 的盲信子集与专家参考子集上，若工人提交与初始化几乎一致且与专家参考明显不一致，则记为一次盲信事件。$\tau_{trust}$ 在 PreScreen 阶段预注册锁定。
+\\ 新工人准入：新工人须完成 \texttt{PreScreen\_manual} 与 \texttt{PreScreen\_semi} 并通过门槛，方可进入路由池；该流程写入预注册，以避免事后选择性纳入。
+\\ 工人画像 ：
+\\ 基本假设与边界：本文默认部署于受控组织环境，主要面对噪声与不稳定标注者。该假设及相应让步见第~\ref{sec:disc-assumptions}节。本文将 spammer 理解为可观测的行为模式，如低质量、随意、系统性偏差或盲信初始化等；若 PreScreen/Calibration 显示异常模式显著，则加权共识与画像在路由中的使用按预注册规则降级，例如仅用于审计或仅用 LCB。
+
+主分析采用“可靠度主轴 + 离散风险轴”的工人画像，而不再把所有过程异常压缩为单一连续分数 $S_u$。该调整的原因是：当前样本规模下，连续异常度对权重与阈值过于敏感，且会混合不同性质的过程量。两轴及其辅助签名均仅使用 PreScreen/Calibration 数据估计，遵循 leave-one-task-out 与时间窗协议，避免循环依赖。
+\begin{enumerate}
+    \item 可靠度轴（Reliability）：采用全局可靠度的置信下界 $\mathrm{LCB}\left(r_u\right)$ 作为保守排序依据；$r_u$ 的估计、CI 与停机准则见第~\ref{sec:method-global-reliability}节。
+    \item 风险轴（Risk tier axis）：定义 worker 的离散风险层级 $R_u^{\mathrm{tier}}\in\{R0,R1,R2,R3\}$，分别对应 Stable、Trust-vulnerable、Condition-fragile、Unusable/Noise。风险层级不由单一加权总分决定，而由三项核心风险指标与两项辅助审计指标共同支撑：
+\begin{itemize}
+    \item $T_u$：盲信初始化风险。定义来源为 \texttt{PreScreen\_semi}；若工人面对误导性初始化时“几乎不改就提交”，且与专家参考明显不一致，则记为一次 blind-trust 事件。$T_u$ 为该事件在有效 semi 任务中的比例。
+    \item $C_u$：条件性脆弱风险。其核心不是全局波动，而是工人在高风险桶上的可靠度显著低于低风险桶或全局水平。形式上以 $\Delta_u=\max_b r_u^{(b)}-\min_b r_u^{(b)}$ 及高风险桶的 $\mathrm{LCB}(r_u^{(b)})$ 共同判断。
+    \item $G_u$：可计算失败倾向，即提交导致几何归一化失败、多边形不可构造、渲染失败等工程不可用事件的比例。该量被解释为工程可用性风险，而非恶意风险。
+    \item $E_u$：低努力代理，仅作辅助审计，不进入主风险层级的核心判定。定义方式与旧版低努力代理一致，可在图注或 worker card 中披露。
+    \item $M_u$：字段缺失/NA 代理，仅作辅助审计，不进入主风险层级的核心判定。定义方式与旧版字段缺失率一致，用于过程质量审计而非主画像轴。
+\end{itemize}
+上述分量均为过程可观测指标，不依赖主实验的后验性能，因此可用于审计与路由而不构成信息泄露。
+\end{enumerate}
+
+
+
+功能分组（4 类）：
+考虑到本研究的标注者规模上限约 15--20 人，主分析不再使用连续 $S_u$ 与伪精确的四象限式切分，而采用 4 类离散风险层级。这一分组仅依赖 PreScreen/Calibration 的可审计过程指标，并按固定优先级顺序判定。
+
+高风险任务桶 b 的定义仅使用标注前可得代理：$b\in\{g_t\ \mathrm{triggered/not}\}\times\{I_t^{\mathrm{OOD}}=0/1\}$。其中 $d_t$ 与 $I_t^{\mathrm{OOD}}$ 的定义见第~\ref{sec:method-dt}节，$I_t^{\mathrm{OOD}}=1$ 当且仅当 $d_t>\tau_d$，而 $\tau_d$ 由校准集 leave-one-out 分数的预注册分位数锁定。
+
+对每个 b 估计 $r_u^{(b)}$ 及其 LCB。定义与第~\ref{sec:method-global-reliability}节的 $r_u$ 同形式，仅将统计任务集合限制为桶内任务。令 $T_u^{(b)}$ 为 worker u 在桶 b 中的任务集合，则
+\[r_u^{(b)}=\mathrm{median}_{t\in T_u^{(b)}}\,\mathrm{IoU}\left(A_{t,u},C_t^{\left(-u\right)}\right)\]
+并定义 $\Delta_u=\max_b r_u^{(b)}-\min_b r_u^{(b)}$。为避免小样本下的误判，仅在 $\left|T_u^{(b)}\right|\ge N_{bucket}$ 时使用桶内估计，$N_{bucket}$ 在 PreScreen 阶段预注册锁定。
+
+阈值：$\tau_{r,high},\tau_{r,low},\tau_{trust},\tau_{gap}$ 与高风险桶失效阈值均按分阶段规则锁定：Pilot 锁候选网格与估计协议，PreScreen 锁 admission 与 blind-trust 阈值，Calibration 第一轮后锁依赖场景覆盖的高风险桶启用阈值。
+
+四类风险层级按以下顺序映射：
+\begin{itemize}
+    \item $R3$（Unusable/Noise）：$\mathrm{LCB}(r_u)\le\tau_{r,low}$，或 $G_u$ 明显偏高，或在 manual anchors 上已无法通过最低 admission。
+    \item $R2$（Condition-fragile）：不属于 $R3$，但满足 $\Delta_u\ge\tau_{gap}$，或存在高风险桶使得 $\mathrm{LCB}(r_u^{(b)})\le\tau_{r,low}$。
+    \item $R1$（Trust-vulnerable）：不属于 $R3/R2$，且 $T_u\ge\tau_{trust}$。
+    \item $R0$（Stable）：不触发上述条件的其余 worker。
+\end{itemize}
+更细粒度的 6 类画像分型作为未来工作讨论。
+
+\noindent \textbf{顺序判定与可追溯字段。}
+为避免多条件重叠导致的歧义，本文采用固定优先级顺序判定：先判定 $R3$；若否，再判定 $R2$；若否，再判定 $R1$；否则归入 $R0$。二维画像图仅用于可视化展示风险层级在“离散横轴 + 连续纵轴”上的分布，不作为分组本体定义。
+为保证分组可复现、可审计，在导出与报告侧对每位 worker 记录两个字段：
+\begin{itemize}
+    \item \texttt{group\_rule\_version}：分组规则版本号（与预注册锁定阈值与触发集合绑定），用于复现实验时精确定位采用的规则；
+    \item \texttt{worker\_group\_reason}：导致其进入该组的首要触发原因（与上述顺序判定一致），例如 \texttt{noise\_low\_lcb}、\texttt{noise\_high\_gatefail}、\texttt{fragile\_gap}、\texttt{fragile\_bucket\_fail}、\texttt{trust\_blind}、\texttt{stable\_default}。
+\end{itemize}
+
+与路由/共识的接口：
+\begin{itemize}
+    \item 高风险任务（$I_t^{\mathrm{OOD}}=1$ 或 $g_t$ 触发）：候选池限制为 $R0$，并进一步要求 $\mathrm{LCB}(r_u)\ge\tau_{r,high}$。$R2$ 不进入其已判定失效的高风险桶。
+    \item 依赖人工纠错的 semi 任务：默认优先 $R0$，谨慎使用 $R2$，并避免将高 blind-trust 的 $R1$ 作为主力候选池。
+    \item 低风险任务：允许 $R0$ 与部分 $R1/R2$ 参与，但需记录其风险签名，并可对高 $E_u$ 或高 $M_u$ 者提高抽检冗余。
+    \item $R3$：默认不进入主路由池；若保留则仅用于审计对照，并在共识与加权中按预注册规则置 $w_u=0$。
+    \item 过程性证据：在第~\ref{sec:report-process-evidence}节固定抽样的同任务不同功能组对比可视化中，对比不同组 worker 的标注差异，验证分组与路由收益的归因链。
+\end{itemize}
+\subsection{场景特异可靠度}\label{sec:method-scene-reliability}
+
+工人能力并非全局常数，不同场景类型下同一工人的可靠度可能存在显著差异。因此本文引入场景特异可靠度 $r_u^{\left(s\right)}$，以支持更精细的路由策略。
+
+场景定义：以 difficulty/\texttt{model\_issue} 的共识标签作为场景代理，保留多场景分层作为本文的重要创新点之一（用于异质性审计、路由解释与反例溯源）。为避免小样本下场景过细导致的数据稀疏，本文采用\textbf{预注册的场景选择与合并规则}构造有限场景集合 $\mathcal{S}$：
+\begin{itemize}
+    \item 候选场景：由 high-level difficulty 与 \texttt{model\_issue} tag 组成。
+    \item 不使用 embedding 聚类构造场景；embedding 仅用于 $d_t$ 的 OOD 风险代理与验证集分层。
+    \item 两层场景制：主分析仅使用核心场景集合 $\mathcal{S}_{\mathrm{core}}$；其余场景并入 other 作为审计场景集合 $\mathcal{S}_{\mathrm{audit}}$。
+    \item 核心场景上限：$\left|\mathcal{S}_{\mathrm{core}}\right|\le S_{\mathrm{core,max}}$，主实现锁定为 $S_{\mathrm{core,max}}=4$。
+    \item 核心场景选择规则：仅允许使用频率与一致性，不允许使用任何性能收益或路由收益。具体做法为在完成 \texttt{Calibration\_anchor}+\texttt{Calibration\_core} 的第一轮采集后，统计每个候选场景在 \texttt{Calibration\_manual} 中的出现频率与一致性指标。仅当场景满足 $n_s\ge n_{\min}$ 且 $\kappa_s\ge \tau_\kappa$ 时才进入候选集合，再从中按频率从高到低选择不超过 4 个作为 $\mathcal{S}_{\mathrm{core}}$，其余进入 other。
+    \item 罕见但重要场景：如 \texttt{topology\_failure} 与 \texttt{fail}，主分析中仅进入 $\mathcal{S}_{\mathrm{audit}}$，用于频率披露与案例库，不承诺进入 $\mathcal{S}_{\mathrm{core}}$。
+\end{itemize}
+主实现阈值：$n_{\min}=8$，$\tau_\kappa=0.20$，$\tau_{act}=0.50$，并在进入 Stage 2 前冻结。
+估计公式：
+\[r_u^{\left(s\right)}=\mathrm{median}_{t\in T_s}\,\mathrm{IoU}\left(A_{t,u},C_t^{\left(-u\right)}\right)\]
+其中 $T_s$ 为场景 s 的任务集合。
+估计条件：
+\begin{itemize}
+    \item 只在 \texttt{Calibration\_manual} 估计，保持与全局 $r_u$ 一致。
+    \item 使用前置门槛：当 worker 在场景 $s$ 下的有效任务数 $N_{u,s}<N_{u,s,\min}$ 时，不直接使用点估计 $r_u^{(s)}$ 做路由决策。本文保留 $N_{u,s,\min}\in\{5,6\}$ 两档备选，并在 PreScreen 结束后结合观测到的场景频率冻结最终取值。两档门槛下的保守启用率估计表见附录~\ref{app:activation-threshold}。
+    \item 置信区间：对满足门槛的 $(u,s)$ 计算 bootstrap 95\% CI，并优先使用其 LCB 作为保守排序依据。
+\end{itemize}
+\noindent 固定系数收缩（附录敏感性分析，非主实现）：为检验主结论对“跨场景共享先验信息”的鲁棒性，附录额外报告一种不依赖数据驱动调参的固定系数收缩版本。
+\[\tilde{r}_u^{\left(s\right)}=\frac{N_{u,s}\cdot r_u^{\left(s\right)}+N_{prior}\cdot r_u}{N_{u,s}+N_{prior}}\]
+其中 $N_{prior}$ 在预注册中固定（例如 $N_{prior}=5$），不在实验过程中调参或网格选择。
+
+\noindent 鲁棒性保护（主实现）：若 $N_{u,s}<N_{u,s,\min}$ 或 CI 过宽，则该场景下的路由退化为使用全局 $r_u$（或其 LCB）；若满足门槛，则主实现路由使用 $r_u^{(s)}$ 的 LCB 作为保守排序依据。无论是否退化，均在报告中披露各场景的启用比例与退化比例，避免场景分层在运行中静默失效。收缩版本仅在附录作为敏感性分析报告，且不用于选择或调参。
+
+\noindent 降级声明：若在主报告中观测到总体启用率低于预注册阈值 $\tau_{act}$，则将 $r_u^{(s)}$ 的作用降级为审计与解释性机制，RQ3 的主要收益归因转为全局 $\mathrm{LCB}(r_u)$ 分层与应激模式下的序贯增冗余策略，并继续完整报告 $\mathcal{S}_{\mathrm{audit}}$ 的多场景审计与反例库。
+
+主分析不引入收缩平滑超参数（如 $N_0$），不拟合 $r_u\left(d_t\right)$ 连续函数，也不使用基于 tag 相关性的层级回退。
+这些扩展仅放在 讨论板块和未来工作：现有样本规模与周期不足以稳定估计，且会增加调参空间。
+
+\subsection{任务路由策略}
+
+本文不将自演化收敛作为主贡献，而是将路由视为固定预算下的质量控制策略：在固定预算内，将更高风险的任务优先交由更稳定的工人，并用序贯追加与停止准则把冗余花在刀刃上。核心要求是可审计、可离线模拟，且在 non-IID 与 OOD 条件下保持稳健。
+
+为打破冷启动困境，本文将路由信号区分为标注前可得与标注后可得两类，并将二者的使用时点写入预注册：
+\begin{enumerate}
+    \item 标注前可得的风险代理（cold-start proxies）：
+    \begin{itemize}
+        \item 分布风险 $d_t$：由 HoHoNet 共享 pre-head latent 经宽度方向全局平均池化与 L2 归一化后，相对于校准参考库的 kNN 距离得到；连续分数 $d_t$ 用于审计与排序，二值指示 $I_t^{\mathrm{OOD}}$ 用作触发器与分层变量。
+        \item 结构诊断 $g_t$：由模型初始化/预测结果 $P_t$ 的结构合法性与失败模式构造，用于识别结构性高风险。
+    \end{itemize}
+    \item 标注后可得的人的诊断信号（post-submission diagnostics）：
+    $C_t^{\mathrm{tag}}$：difficulty 与 \texttt{model\_issue} 的共识标签集合；以及基于 per-tag $\mathrm{conf}_k$ 的任务级分歧度 $\mathrm{disagree}_t$。
+    这些信号仅在任务已获得至少 2 份有效元标签后启用，用于序贯追加与解释性分层，不作为首轮派单的前置条件。
+    \item 系统失败信号：门控失败类型、字段缺失率（NA 缺失单独审计）。
+\end{enumerate}
+
+预注册主实现（$d_t$）：\label{sec:method-dt}
+embedding 来源：固定采用 HoHoNet 共享 pre-head 1D latent $h_t$（即 layout head 之前的共享水平特征），不在本文中微调；将其沿水平宽度 $W$ 做全局平均池化得到图像级向量 $z_t=\mathrm{GAP}_{W}(h_t)$，再做 L2 归一化 $\tilde z_t=z_t/(\|z_t\|_2+\varepsilon)$。若因环境原因主特征不可用，仅在附录给出替代 embedding 并报告其与主实现 $d_t$ 的一致性。
+\\ 参考库：固定用 \texttt{Calibration\_manual} 构造校准参考库 $\mathcal{B}_{\mathrm{cal}}=\{\tilde z_i\}_{i\in \mathcal{C}}$，不混入 validation/test；校准阶段样本自身的分数一律采用 leave-one-out 方式计算，避免自邻近导致阈值偏乐观。
+\\ $d_t$ 定义：主实现遵循 KNN-OOD 的主分数形式，采用归一化特征到校准参考库的第 $K$ 个近邻欧氏距离
+\[d_t = D_K\!\left(\tilde z_t,\mathcal{B}_{\mathrm{cal}}\right)=\left\|\tilde z_t-\tilde z_{(K)}\right\|_2\]
+其中 $\tilde z_{(K)}$ 表示 $\tilde z_t$ 在参考库中的第 $K$ 个最近邻。主实现固定 $K=10$；附录做 $K\in\{5,10,20\}$ 的敏感性分析。
+\\ 阈值与触发器：记校准集样本的 leave-one-out 分数为 $\{d_i^{\mathrm{cal,LOO}}\}$，主实现固定 $q=90\%$，并定义
+\[\tau_d = Q_q\!\left(\{d_i^{\mathrm{cal,LOO}}\}\right),\qquad I_t^{\mathrm{OOD}}=\mathbf{1}[d_t>\tau_d]\]
+其中 $d_t$ 为连续偏移风险分数，$I_t^{\mathrm{OOD}}$ 为预注册的高风险触发器。附录额外报告分位数 $q\in\{85,90,95\}$ 与“前 $K$ 个近邻平均距离”替代打分的敏感性分析，但二者均不作为主实现。
+\\ 敏感性分析：Mahalanobis 距离仅作为附录替代度量，并在与主实现相同的 pooled、归一化特征上计算；主分析不引入 Lee 等人原始 OOD detector 中额外的逻辑回归检测器，以避免超出本文的主要 estimand。
+\\ 严谨定位：$d_t$ 与 $I_t^{\mathrm{OOD}}$ 不直接判对错，不作为硬门控过滤样本；它们仅用于审计偏移是否存在、触发应激模式、以及在第~\ref{sec:exp-iid-stress}节中做分层对比。
+
+策略设计遵循以下原则：
+\begin{itemize}
+    \item 预筛选约束：仅在通过 PreScreen 的工人池中路由；未通过者只分配低风险任务或剔除。
+    \item 保守选择：用 $r_u^{\left(s\right)}$ 的置信下界进行排序，避免小样本场景下点估计误导。
+    \item 反 domination：引入负载惩罚或连续派单上限，避免少数工人被过度使用。
+    \item 应激模式（stress mode）：当 $I_t^{\mathrm{OOD}}=1$、$g_t$ 触发或系统失败信号异常时进入应激模式，收紧候选工人至高置信下界子集，并提高冗余上限或触发专家复核队列。
+\end{itemize}
+序贯冗余与停止准则：
+\begin{itemize}
+    \item 首轮派单：按风险分层设置起始冗余 $k_0\left(t\right)$。低风险任务默认 $k_0=1$。高风险任务默认 $k_0=2$，高风险由 $I_t^{\mathrm{OOD}}=1$ 或 $g_t$ 触发定义。应激模式下将 $k_0$ 提升为 3，并收紧候选池至更高 $\mathrm{LCB}(r_u)$ 的子集。
+    \item 追加触发：当任务累计获得至少 2 份有效元标签后，计算 $\mathrm{disagree}_t$。若 $\mathrm{disagree}_t$ 高于阈值、出现门控失败或字段缺失异常、或有效人数不足，则每次追加 1 份标注。
+    \item 停止条件：当 $\mathrm{disagree}_t$ 低于阈值，或等价地最不确定 tag 的 $\mathrm{conf}_k$ 达标，且字段缺失不触发审计异常时停止追加。
+    \item 硬上限与降级：预注册固定最大冗余 $k_{\max}$，主实现锁定为 $k_{\max}=5$。若达到 $k_{\max}$ 仍未达标，则不再追加，进入专家复核与单独审计队列，并在口径 T 中披露该类任务比例。
+\end{itemize}
+本文对比以下三种策略：
+\begin{itemize}
+    \item 策略 1：Random baseline，不使用画像、场景、OOD。
+    \item 策略 2：Global routing，仅用全局 $r_u$。
+    \item 策略 3：PreScreen + Stratified + OOD-aware routing，路线 A 主体。
+\end{itemize}
+
+离线模拟评估协议：
+\begin{itemize}
+    \item 数据：三策略主对比使用 \texttt{Calibration\_manual} 的多标注任务（每图 $k=4$；含 \texttt{Calibration\_anchor} 全员覆盖），以保证在不做反事实插补的前提下可回放策略 1/2/3 在同任务、同候选池下的选择与序贯停止。$Validation_{semi}$ 若部署仅执行策略 3，则用于报告策略 3 的实际运行表现与 non-IID/OOD 应激收益；策略 1/2 在该集合上不作为主对比。
+    \item 方法：模拟预筛选→序贯分配→停止，并取真实提交作为输出，不做事后挑选。
+    \item 影子策略（可选补充披露）：若在 $Validation_{semi}$ 上额外报告策略 1/2 的“离线回放”结果，仅在其决策落入已观测标注者集合的支持集上计算指标，并同时披露支持率；不可支持部分不得以任何模型插补补齐。
+    \item 防后见之明协议：
+    \begin{itemize}
+        \item Leave-one-task-out：对每个任务 t，估计 $w_u$ 与 $r_u^{\left(s\right)}$ 时不使用 t 的任何信息。
+        \item 时间顺序：在数据采集阶段记录每次提交的时间戳；离线模拟时按时间构造历史窗口，仅用 t 之前的历史任务估计 $w_u$ 与 $r_u^{\left(s\right)}$ 再对 t 进行路由。
+        \item 时间戳缺失处理：若时间戳字段缺失，记录为 NA 并在口径 T 中单独报告；该任务不进入时间窗口敏感性分析，但仍可进入 LOO 协议下的主分析。
+        \item 冷启动：当某 worker 的历史有效任务数 <$N_{hist,\min}=5$ 时，其 $r_u$ 与 $r_u^{\left(s\right)}$ 不启用，路由退化为在通过 PreScreen 的池内随机或仅按 $r_u^{\left(0\right)}$ 粗排；当历史 $\geq$ $N_{hist,\min}$ 后再启用基于 $r_u$ 与 $r_u^{\left(s\right)}$ 的分层路由。$N_{hist,\min}$ 存在离散跳变效应，即阈值附近的标注者路由策略会发生突变；为证明结论不依赖该特定阈值，预注册固定比较 $N_{hist,\min}\in\{3,5,7\}$ 三档的敏感性分析（仅影响路由启用门槛，不改变 $r_u$ 的估计口径）。
+    \end{itemize}
+    \item 指标（主）：一致性代理、预算效率 $\bar{k}_{\mathrm{used}}$（或等价预算-覆盖关系）。
+    \item 安全性/数据可用性审计（非主终点）：门控失败率与失败原因分布、关键字段缺失率；用于证明不静默过滤与口径 T/I/M 的可追溯性，不作为“路由收益”的主证据。
+\end{itemize}
+\subsection{OOS（Out-of-Scope）统计与混合判定}\label{sec:method-oos}
+
+对于标记为 OOS 的样本，主指标分析中予以剔除，但单独报告其比例、子类分布与判定一致性。
+混合判定：
+\begin{itemize}
+    \item 当存在 u 选 In-scope 且 v 选 OOS 时，标记为 \texttt{scope\_conflict}
+    \item 人工复核协议：由两名独立高级标注员盲法复核；若分歧则由第三人裁决，并报告需要第三方裁决的比例。
+    \item 报告混合判定比例
+\end{itemize}
+
+\subsection{反例筛选规则}\label{sec:method-counterexample}
+
+本文定义三类反例，各类均有明确的可复现条件：
+\begin{enumerate}
+    \item \textbf{Type 1：低一致性}
+    \begin{itemize}
+        \item 条件：$\mathrm{IAA}_t<0.7$ 且 $n_{annotations}\geq3$
+        \item 可能原因：任务歧义或标注错误
+    \end{itemize}
+    \item \textbf{Type 2：异常编辑模式}
+    \begin{itemize}
+        \item 2a 改动极大但 $\mathrm{IAA}$ 未提升：$\mathrm{IoU}_{\mathrm{edit}}<0.5$ 且 $\mathrm{IAA}_t<\mathrm{median}(\mathrm{IAA})$
+        \item 2b 改动极小但与他人严重不一致：$\mathrm{IoU}_{\mathrm{edit}}>0.95$ 且 $\mathrm{IoU}_{\mathrm{LOO}}<0.7$
+    \end{itemize}
+    \item \textbf{Type 3：几何合法性失败}
+    \begin{itemize}
+        \item 条件：提交结果出现自交、多边形无法构造、拓扑闭合失败，或其他预注册的几何合法性违规
+        \item 说明：该类反例针对结构非法本身，而不是一般性的 metric gate/导出缺失；后者另作安全性与数据可用性审计披露
+    \end{itemize}
+\end{enumerate}
+人工复核流程分为四个步骤：
+\begin{enumerate}
+    \item 自动筛选符合规则的候选；
+    \item 专家逐一复核；
+    \item 确认反例类型；
+    \item 导出案例库并附带可视化。
+\end{enumerate}
+
+

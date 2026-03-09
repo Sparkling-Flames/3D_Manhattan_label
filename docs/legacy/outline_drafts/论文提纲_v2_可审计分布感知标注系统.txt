@@ -1,0 +1,553 @@
+论文提纲 v2：可审计的分布感知标注系统
+
+核心立意：在无法全量精审的真实约束下，构建可审计、可分层归因、场景感知的半自动标注系统。
+主要贡献：不是“堆一个模型”，而是让标注过程中的偏差、失败与任务分配（路由）可量化、可复现、可优化。
+
+核心主张（审稿人友好表达）：
+（1）可审计性：所有剔除/失败/OOS 都可追溯，并纳入统计口径（T/I/M 三级报告）。
+（2）场景感知：不假设 worker 能力是全局常数，而是在单任务、多场景/多难度中估计场景特异能力 r_u^(s)，并验证路由在预算约束下的收益。
+（3）决策副产品：Meta-label（difficulty/model_issue/scope）来自标注过程的自然决策副产品，额外成本接近 0，但可提供分布监控与路由信号。
+
+1 研究问题
+本研究聚焦于全景室内角点半自动标注的真实落地问题：当无法对所有样本逐一精标审核时，如何在控制偏差与失败“可见”的前提下，量化半自动流程的效率收益与可靠性变化，并进一步利用“场景特异能力 + 路由”在相同预算下改善系统输出。
+
+1.1 研究问题（RQ）
+RQ1：半自动初始化是否降低真实活跃标注时间？下降幅度是多少？
+  - 主终点：Manual vs Semi-Auto 的 active time 中位数差异（秒）+ 95% CI。
+  - 分层：新手 vs 熟手。
+  - 风险控制：分析 time 与 edit 幅度关系，排除“省时=瞎改”。
+
+RQ2：在部分复核约束下，半自动流程是否改变标注一致性/可靠性分布，并能否系统性暴露反例类型？
+  - 主终点：Calibration_manual vs Calibration_semi 的 IAA_t 分布差异（KS test）。
+  - 反例类型：异常编辑、结构性错误（跨门扩张/配对失败/角点漂移）、门控失败。
+  - 可复现筛选规则：低 IAA_t（如 <0.7） + 改动模式异常 + 门控失败；最终反例需专家复核确认。
+
+RQ3：能否估计 worker 的场景特异可靠度 r_u^(s)，并用场景感知路由在相同预算下提升一致性/降低失败率？
+  - 场景定义：用 difficulty/model_issue 的共识标签组合定义场景 s（例如“遮挡明显”“纹理弱”“跨门扩张”）。
+  - 场景特异可靠度：r_u^(s) = median_{t in T_s} IoU(A_{t,u}, C_t^{(-u)})。
+  - 路由策略：Random / Global（按全局 r_u）/ Stratified（按 r_u^(s)）。
+  - 评估协议（离线模拟，避免 oracle）：在每任务已有的 k 份真实标注中，模拟策略会把任务分给哪位 worker（由校准集估计的 r_u 或 r_u^(s) 决定），并取该 worker 实际提交的标注作为该策略输出。
+  - 指标（与“单人输出”兼容）：一致性代理 IoU(A_{t,\hat{u}}, C_t^{(-\hat{u})}) 的提升（仅在 k≥3 任务上可算）、active time、门控失败率（含原因分布）。
+
+2 方法
+本节从“指标说明”升级为“可审计协议”：定义口径、缺失处理、门控失败记录、OOS 分流与一致性/可靠度估计规则，保证结果可复现。
+
+2.1 问题设定与部署约束（Real-World Constraints）
+
+真实场景约束：
+1) 无法全量精审：只有 30 张图像可多人重复标注（calibration set），其余只能单次标注。
+2) Worker 能力异质：新手/熟手混合，且擅长场景不同。
+3) 场景难度分化：遮挡/纹理弱/反光干扰等导致标注难度差异显著。
+4) OOS 混入风险：非 Manhattan 假设、边界不可判定等样本混入会污染主指标。
+
+需要对抗的威胁（不是模型精度问题，而是系统偏差）：
+ - Selection bias：门控失败样本被静默丢弃 → 指标虚高。
+ - OOS contamination：Out-of-scope 样本混入 in-scope 统计 → 指标失真。
+ - Worker mix shift：换一批人被误判为分布 shift → 误报警。
+ - Dominance effect：高产 worker 垄断共识 → r_u 系统性偏高。
+
+解决方案（可审计体系）：
+ - 三级报告口径（T/I/M）：总体/In-scope/可计算，透明披露剔除原因。
+ - 所有失败可追溯：门控失败原因、OOS 子类分布、反例案例库。
+ - Meta-label 作为审计信号：difficulty/model_issue/scope 记录标注决策过程。
+
+2.2 标注对象与元信息（Meta-Label as Decision Byproduct）
+
+标注输入：角点为主，不强制画墙面。
+
+三类元信息（随标注自然产生，非事后判别）：
+
+2.2.1 scope（单选，必填，决定主指标口径）
+- In-scope：仅标注相机所在房间  
+  - 规则：门框/墙垛清晰 → 边界止于门框，不跨门洞  
+  - 包含：天花内凹/格栅（不影响外边界）  
+- Out-of-scope（4类）：
+  1. 几何假设不成立（非Manhattan/弧形墙）
+  2. 边界不可判定（开放式/无可靠停止点）
+  3. 错层/多平面（楼梯井/分层天花）
+  4. 证据不足（遮挡/画质差导致无法判断）
+
+统计处理：
+- In-scope → 进入主指标（口径I）
+- OOS → 单独报告比例、子类分布、判定一致性
+- 混合判定（有人选In有人选OOS） → 人工复核
+
+2.2.2 difficulty（多选，标注困难时勾选）
+数学建模：
+- 定义：每个difficulty tag $k$对应二元变量$z_{t,u,k} \in \{0, 1, \text{NA}\}$
+  - 0: 未勾选（该困难不存在）
+  - 1: 勾选（遇到该困难）
+  - NA: 字段缺失（例如该字段未提交/未记录）；与“空列表=全部不勾选(0)”区分
+
+Tag 集合（共 6 个）：
+1) 非常简单（trivial）：无明显困难，快速完成。
+2) 遮挡明显（occlusion）：家具/人遮挡墙角。
+3) 纹理弱（low_texture）：纯色墙/光照均匀。
+4) 拼接缝（seam）：全景拼接缝导致错位。
+5) 反光/玻璃（reflection）：镜面伪边界。
+6) 画质差/遮罩（low_quality）：模糊/黑边影响对齐。
+
+成本分析：
+- 勾选时间：~5秒（在遇到困难时自然勾选）
+- 决策副产品：不是"事后人工判别"
+- 作用：场景分层、路由信号、分布监控
+
+2.2.3 model_issue（多选，仅半自动条件）
+数学建模：同 difficulty，$z_{t,u,k} \in \{0, 1, \text{NA}\}$
+
+注：空列表视为“该worker认为无该失效模式”（0）；NA仅用于字段缺失（审计时单独统计缺失率）。
+
+Tag 集合（共 8 个）：
+1) 模型标注质量好（acceptable）：无需显著修改。
+2) 跨门扩张（overextend_adjacent）：包含相邻空间。
+3) 漏标（underextend）：只标了局部。
+4) 过度解析（over_parsing）：误判柱子/家具为拐角。
+5) 角点错位（corner_drift）：整体偏移。
+6) 角点重复（corner_duplicate）：同一拐角多个点。
+7) 拓扑崩溃（topology_failure）：配对/闭合失败。
+8) 预测失效（fail）：需从零重画。
+
+与 difficulty 的区别：
+- Difficulty: 场景客观特征（人也难标）
+- Model_issue: 模型失效模式（人能纠正）
+
+2.3 多选标签的共识计算（Per-Tag Binary Consensus）
+
+问题：多选标签不存在单一“多数类”。
+解决方案：Per-tag 二元共识。
+
+共识计算（对每个 tag k 独立）：
+输入：任务 t 的 m 个 worker 标注 {z_{t,1,k}, z_{t,2,k}, ..., z_{t,m,k}}
+输出：共识 c_k，置信度 conf_k，分歧度 disagree_k
+  1) 统计勾选人数 n_selected = Σ I[z_{t,u,k}=1]
+  2) 统计有效人数 n_total = Σ I[z_{t,u,k}∈{0,1}]（忽略 NA）
+  3) 若 n_total=0：c_k=NA，conf_k=NA，disagree_k=NA
+  4) 否则：
+     - c_k = 1 若 (n_selected/n_total)≥0.5 否则 0
+     - conf_k = max(n_selected, n_total-n_selected)/n_total
+     - disagree_k = 1 - conf_k
+
+任务级聚合：
+  - 共识标签集合 C_t = {k : c_k=1}
+  - 整体分歧度 disagree_t = 1 - min_{k∈K_t} conf_k（取“最不确定 tag”的不确定性作为保守代理）
+    其中 K_t = {k : conf_k≠NA 且 n_total(k)≥n_min}，默认 n_min=2。
+    若 K_t 为空：令 disagree_t=NA，并单独报告缺失率（避免把“未填写”误当成“一致”）。
+
+一致性指标（Fleiss' Kappa）：
+- 对每个tag独立计算κ
+- 报告：median κ across tags
+- 期望：κ > 0.5（moderate agreement）
+
+可选扩展：可靠度加权共识（Reliability-aware Weighted Consensus，次要分析）
+
+动机：呼应导师语音中“Kara + Liu”关于worker分型/降权spammer的思想，但避免引入几何共识聚合的高复杂度。
+
+关键约束（避免循环依赖）：
+- 权重$w_u$只来自独立的校准集合（例如 Calibration_manual 上估计的全局 $r_u$，或经最小样本数约束后的 $r_u^{(s)}$），不使用当前任务自身的标签来反推权重。
+
+加权规则（对每个tag $k$独立）：
+- 令$z_{t,u,k}\in\{0,1\}$表示worker u是否勾选tag k；权重$w_u\in[0,1]$。
+- 加权投票率：$p_{t,k}=\frac{\sum_u w_u z_{t,u,k}}{\sum_u w_u}$
+- 加权共识：$c_k=\mathbb{I}[p_{t,k}\ge 0.5]$
+
+稳定性保护（Kara式“dominance suppression”的工程化近似）：
+- 权重裁剪：$w_u\leftarrow\min(w_u, w_{max})$，防止单个高权重worker在k很小时“一票定生死”。
+- 仅在$k$（标注者数）达到阈值时启用加权（例如$k\ge3$），并将“加权 vs 非加权”的差异作为敏感性分析报告，而不作为唯一主结论来源。
+
+2.4 编辑幅度指标（工作量代理，非质量）
+
+核心原则：编辑幅度衡量“改了多少”，不保证“改的对不对”。
+
+2.4.1 Layout Polygon IoU（改动幅度）
+$$\text{IoU}_{\text{edit}}(t, u) = \frac{|P_t \cap A_{t,u}|}{|P_t \cup A_{t,u}|}$$
+
+其中$P_t$=模型初始化，$A_{t,u}$=标注者u修订结果
+
+注意：
+- 多边形用凸包构造（convex hull）
+- 局限性：凸包会外包凹形，降低对跨门扩张的敏感度。
+- 定位：辅助证据，主结论依赖 BoundaryRMSE 与标准 layout 指标。
+
+2.4.2 边界 RMSE（几何改动幅度）
+$$\text{BoundaryRMSE}(X, Y) = \sqrt{\frac{1}{N}\sum_{i=1}^{N}[(\Delta y_{\text{ceil}}(x_i))^2 + (\Delta y_{\text{floor}}(x_i))^2]}$$
+
+优势：不受角点配对影响
+
+2.4.3 角点匹配 RMSE（辅助指标）
+仅在配对成功且覆盖率高时启用
+
+2.5 质量与可靠度（LOO原则）
+
+核心原则：
+1) 排除自身：共识计算不包含被评估者，避免 r_u 系统性偏高。
+2) Only Manual：r_u 只在 manual 标注集估计（避免工具把所有人拉到同一起点）。
+
+2.5.1 任务级一致性（IAA）
+$$\text{IAA}_t = \text{median}_{u \neq v} \text{IoU}(A_{t,u}, A_{t,v})$$
+
+用中位数降低极端标注影响
+
+2.5.2 去除自身后的共识（LOO Consensus）
+$$C_t^{(-u)} = \arg\max_{A_{t,w}, w \in U_t \setminus \{u\}} \text{median}_{v \neq w} \text{IoU}(A_{t,w}, A_{t,v})$$
+
+2.5.3 标注者全局可靠度
+$$r_u = \text{median}_{t \in T_u} \text{IoU}(A_{t,u}, C_t^{(-u)})$$
+
+估计条件：
+- 仅在Calibration_manual集合估计
+- 仅in-scope样本
+- Bootstrap置信区间（1000次）
+- 最小任务数阈值：N ≥ 5
+
+2.6 场景特异可靠度（Scene-Specific Reliability）
+
+动机：不假设 worker 能力是全局常数。
+场景定义：用 consensus difficulty/model_issue 标签组合。
+估计公式：
+$$r_u^{(s)} = \text{median}_{t \in T_s} \text{IoU}(A_{t,u}, C_t^{(-u)})$$
+
+其中$T_s$为场景$s$的任务集合
+
+估计条件：
+- 每个场景至少5个任务
+- Bootstrap 95% CI
+- 只在Calibration_manual估计（保持与全局$r_u$一致）
+
+场景示例：
+- $s_1$: 遮挡明显（difficulty含"occlusion"）
+- $s_2$: 纹理弱（difficulty含"low_texture"）
+- $s_3$: 跨门扩张（model_issue含"overextend_adjacent"）
+
+2.7 任务路由策略（Scene-Aware Routing）
+
+路由触发信号（输入）：
+1) 事中/人（诊断共识）：任务级分歧度 disagree_t 与共识标签 C_t（difficulty/model_issue），用于识别“当前任务场景类型”和“人群诊断是否一致”。
+2) 事前/AI（可选探索性审计）：Frozen embedding 相似度/距离作为潜在 OOD 风险信号（仅作辅助证据，不作为主结论或硬门控）。
+
+三种策略对比：
+
+策略1：Random baseline
+随机分配任务给worker
+
+策略2：Global routing
+按全局$r_u$分配：
+- 高难度任务（例如$\text{disagree}_t$高）→ 高$r_u$ worker
+- 简单任务 → 低$r_u$ worker
+
+策略3：Stratified routing（我们的方法）
+按场景特异$r_u^{(s)}$分配：
+1. 识别任务场景$s$（从consensus difficulty/model_issue）
+2. 查找该场景下$r_u^{(s)}$最高的worker
+3. 分配任务给该worker
+
+评估协议（离线模拟）：
+ - 数据：Calibration_manual/semi（每任务 k≥3 标注）。
+ - 方法：在每个任务已有的 k 份真实标注中，模拟策略会把该任务分配给哪位 worker（由校准集估计的 r_u 或 r_u^(s) 决定），并取该 worker 实际提交的标注结果作为该策略输出（不做事后挑选，避免 oracle 偏差）。
+ - 指标：
+   - 一致性代理提升：IoU(A_{t,\hat{u}}, C_t^{(-\hat{u})})（paired t-test；仅在 k≥3 任务上计算）。
+   - Active time 变化（若有时间记录）。
+   - 门控失败率变化（含失败原因分布）。
+ - 效应量：Cohen's d。
+ - 预注册：在 Results 前的 Method 中定义所有阈值/指标。
+
+2.8 标准 Layout 指标与门控（HoHoNet 对齐）
+
+标准指标（仅 in-scope 样本）：
+ - 2D IoU / 3D IoU：地面投影/体积重合度。
+ - Layout rendered depth RMSE / δ：几何渲染深度图误差。
+
+门控类型：
+1) 可计算型门控：几何归一化失败、多边形构造失败。
+2) 可比型门控：角点配对不稳定（仅影响点对点 RMSE）。
+
+关键决策：
+ - Δn_pairs 不作硬门控（避免把“高工作量纠错样本”排除掉）。
+ - 结构差异用于分层报告/反例筛选。
+
+2.9 OOS 统计与混合判定
+
+OOS 处理：
+ - 主指标剔除（口径 I）。
+ - 单独报告：比例、子类分布、判定一致性。
+
+混合判定：
+当存在 u 选 In-scope 且 v 选 OOS 时：
+ - 标记为 scope_conflict。
+ - 人工复核。
+ - 报告混合判定比例。
+
+2.10 反例筛选规则（可复现）
+
+三类反例：
+Type 1 低一致性：
+ - 条件：IAA_t < 0.7 且 n_annotations≥3。
+ - 可能原因：任务歧义/标注错误。
+
+Type 2 异常编辑模式：
+ - 2a 改动极大但 IAA 未提升：IoU_edit < 0.5 且 IAA_t < median(IAA)。
+ - 2b 改动极小但与他人严重不一致：IoU_edit > 0.95 且 IoU_LOO < 0.7。
+
+Type 3 门控失败：
+ - 标准 layout 指标不可计算。
+ - 但图像质量正常（非“证据不足”）。
+
+人工复核流程：
+1) 自动筛选符合规则的候选。
+2) 专家逐一复核。
+3) 确认反例类型。
+4) 导出案例库（带可视化）。
+
+3 实验设置（预注册风格）
+
+3.0 IID 与 non-IID 应激测试（导师要求的“模拟”主线）
+
+目标：在同一套标注预算与评估协议下，同时覆盖两类部署情景。
+1) IID baseline（主线）：训练/校准/验证来自近似同分布的数据抽样（常规随机抽样与分层控制）。
+2) non-IID stress test（应激测试，证明必要性）：通过数据切分显式制造“难度/失效模式”的分布漂移，用于检验审计+路由机制在偏移下是否更有价值。
+
+构造方式（不引入额外标注任务）：
+ - 以 difficulty/model_issue 的共识标签 C_t 作为场景代理，定义“困难/高风险”集合 S_hard（例如包含 occlusion、low_texture、topology_failure、overextend_adjacent 等 tag）。
+ - IID：保证训练/验证中 S_hard 占比接近（或在预先声明的误差范围内）。
+ - non-IID：让验证集（或 Validation_OOD 子集）中 S_hard 占比显著提高（例如 ≥70%），同时训练/校准集保持低风险占比，用以制造“训练大规律在验证中变小众”的偏移。
+
+核心比较：
+在 IID 与 non-IID 两种情景下，分别比较 Random / Global / Stratified 三种路由策略对一致性代理（见 3.3 RQ3）、失败率、反例拦截率的影响；强调“分布偏移越强，审计与路由越必要”。
+
+3.1 条件分组与数据组织（六组）
+
+六组数据划分（数据分组 / 规模 / 用途 / 标注条件）：
+ - Manual_Test / 100 / RQ1 效率对照 / 纯人工。
+ - SemiAuto_Test / 100（同图）/ RQ1 效率实验 / 半自动初始化。
+ - Calibration_manual / 30（k≥3 标注）/ 估计 r_u、r_u^(s) / 纯人工。
+ - Calibration_semi / 30（k≥3 标注）/ RQ2 一致性对照 / 半自动初始化。
+ - Validation_manual / 60 / RQ3 路由验证 / 纯人工。
+ - Validation_semi / 60（同图）/ RQ3 路由验证 / 半自动初始化。
+
+关键设计：
+ - Manual_Test 与 SemiAuto_Test 使用同一批图像（更接近因果对照）。
+ - Calibration 集合每任务 k≥3，保证多标注可用于共识与可靠度估计。
+ - 任务按 difficulty 信号分层后随机抽样，降低组间不可比。
+
+3.2 参与者与 worker mix 控制
+
+培训：
+ - Label Studio 基础。
+ - “只标相机房间”规则。
+ - OOS 分流规则。
+
+分配与记录：
+ - 新手/熟手按比例分配到 Manual/Semi 两组。
+ - 记录每个 worker 的任务数、完成时间、返工率。
+ - 报告每批 worker 组成（用于 worker mix 控制）。
+
+3.3 预注册协议（Primary Endpoints）
+
+3.3.1 RQ1 主终点（效率）
+ - 指标：active time 中位数差异（Manual vs Semi）。
+ - 统计：Mann-Whitney U test（非参）。
+ - 效应量：Hodges–Lehmann（中位数差）。
+ - CI：95% bootstrap CI。
+ - 分层：新手 vs 熟手。
+ - 风险控制：回归分析 time ~ IoU_edit，检验“省时≠瞎改”。
+
+3.3.2 RQ2 主终点（可靠性）
+ - 指标：IAA_t 分布差异（Calibration_manual vs Calibration_semi）。
+ - 统计：Kolmogorov–Smirnov test。
+ - 效应量：Δ median(IAA)。
+ - 反例数量：三类反例比例差异（Chi-square test）。
+
+3.3.3 RQ3 主终点（路由）
+ - 指标1（主）：一致性代理提升（Stratified vs Random）：IoU(A_{t,\hat{u}}, C_t^{(-\hat{u})})。
+ - 统计1：Paired t-test（每任务配对；仅在 k≥3 任务上计算）。
+ - 效应量：Cohen's d。
+ - 指标2：门控失败率降低。
+ - 统计2：McNemar's test（配对二元）。
+ - 指标3：Active time 变化（若有时间数据）。
+
+应激测试报告（non-IID）：
+在 3.0 定义的 Validation_OOD 子集上重复上述对比，主张以“失败率/反例拦截率”作为更直接的系统收益证据（而非追求所有指标都显著）。
+
+3.4 多重检验处理
+
+策略：预先限制检验集合（避免 FDR 复杂度）。
+
+RQ1：1 个主检验（Manual vs Semi） + 2 个分层检验（新手/熟手） = 3 个。
+RQ2：1 个主检验（IAA 分布） + 3 个反例类型检验 = 4 个。
+RQ3：3 个主检验（一致性代理/Failure/Time） = 3 个。
+
+总计：10 个计划检验。
+校正：Bonferroni α = 0.05/10 = 0.005（保守）。
+或：只报告主检验 p<0.05，分层检验作为探索性。
+
+3.5 效应量门槛（工程化，MCID）
+
+最小可解释差异（MCID，示例阈值，以试运行/先验为准）：
+ - Time：≥8%（相对改进）。
+ - 一致性代理：≥0.03–0.05。
+ - Failure rate：≥5%（绝对下降）。
+
+报告原则：同时满足 p<0.05 且效应量 > MCID，才声称“显著改进”。
+
+4 报告（可审计输出）
+
+4.1 三级口径（T/I/M）
+
+口径 T（Total，透明披露）：
+ - 所有收集到的标注，不因指标不可算而静默丢弃。
+ - 报告：OOS 比例、门控失败原因分布、缺失率。
+
+口径 I（In-scope）：
+ - scope=in-scope 且 scope 非缺失。
+ - 用于主指标（效率/IAA/r_u）。
+ - OOS 单独报告比例/子类。
+
+口径 M（Model-usable）：
+ - 在口径 I 基础上，排除“可计算型门控失败”。
+ - 用于标准 layout 指标（2D/3D IoU）。
+ - 可比型门控失败只影响该指标。
+
+4.2 分层表
+
+表A：按 Δn_pairs 分层
+ - 覆盖率、门控失败原因、改动幅度统计。
+
+表B：按 difficulty/model_issue 分层
+ - 承认主观性：可能不太准确（每人主观感受不同）。
+ - 报告 Fleiss' Kappa 验证一致性。
+
+表C：Worker × Scene 可靠度矩阵
+  1) 行：worker_id
+  2) 列：场景（occlusion, low_texture, ...）
+  3) 单元格：$r_u^{(s)}$ ± 95% CI
+  4) 标注：N<5 的格子标记为 "--"
+
+4.3 反例案例库（Anomaly Case Library）
+
+输出内容：
+  1) 反例清单 CSV：task_id, type, IAA_t, IoU_edit, consensus_tags, 原因
+  2) 可视化：每个反例的标注对比图（3-4 个 worker 叠加）
+  3) 统计：三类反例的频率分布
+  4) 人工复核笔记：专家确认的真正原因
+
+作用：
+  1) 训练数据筛选信号（用于后续重训练）
+  2) 标注指南改进依据
+  3) worker 培训案例
+
+5 标注数据重训练（降级为探索性/未来工作）
+
+定位：不作为主贡献，放到 Discussion/Appendix。
+
+5.1 目标（如果做）
+  1) 用反例案例库筛选训练数据。
+  2) 降低结构性错误（跨门扩张/配对失败）。
+  3) 降低门控失败率。
+
+5.2 评估方式
+  1) 固定 Test set 评估（避免 leakage）。
+  2) 对比：旧模型 M_0 vs 新模型 M_1。
+  3) 指标：model_issue 比例、IoU_edit、门控失败率。
+
+5.3 当前不做的原因
+  1) 样本量有限（174 样本切分后训练集太小）。
+  2) 评估协议复杂（触发策略/leakage 风险高）。
+  3) 时间线紧张（3 周内完成 RQ1-3 更重要）。
+
+未来工作：扩展到 500+ 样本后，实现真实的自适应重训练闭环。
+
+6 讨论与局限性（提前自我审查）
+
+6.1 Meta-Label 的主观性
+局限：difficulty/model_issue 依赖标注者主观判断。
+
+缓解：
+  1) Fleiss' Kappa 验证一致性（期望 κ > 0.5）。
+  2) 统一培训 + 案例示范。
+  3) Per-tag 共识（降低个体偏差）。
+
+立场：即使有噪音，作为 "风险信号/场景代理" 仍有价值。
+
+6.2 样本量限制
+当前：174 样本，其中 30 张重复标注。
+
+影响：
+  1) $r_u^{(s)}$ 估计的置信区间较宽（部分场景 N<5 无法估计）。
+  2) 无法做真实重训练实验。
+
+透明披露：在 Results 中报告每个场景的样本量 + CI 宽度。
+
+6.3 离线路由模拟的局限
+方法：在多标注数据上做“模拟分配 → 取该 worker 真实标注”的离线路由评估。
+
+局限：不是真实在线路由（worker 行为可能因任务分配而改变）。
+
+辩护：
+  1) 离线模拟是路由研究的标准方法（参考 Kara et al., Liu et al.）。
+  2) 避免重新标注的巨大成本。
+  3) 为未来在线实验提供先验。
+
+6.4 Convex Hull 的局限性
+问题：凸包外包凹形，降低对跨门扩张的敏感度。
+
+解决：
+  1) 明确定位 IoU_edit 为辅助指标。
+  2) 主结论依赖 BoundaryRMSE 与标准 layout 指标。
+  3) 在反例筛选中用多指标组合（不只看 IoU）。
+
+7 与审稿员预期批评的预设回答
+
+Q1: "Meta-label 是额外工作量吗？"
+A: 不是。这些是标注决策的副产品（decision byproduct）：
+  1) Scope 必填（决策本身需要）。
+  2) Difficulty 在遇到困难时自然勾选（~5 秒）。
+  3) Model_issue 在修改模型结果时记录（~3 秒）。
+  4) 总额外成本 <10 秒 vs 平均标注时间 120 秒（<8%）。
+
+Q2: "多选标签的共识如何定义？"
+A: Per-tag 二元共识：
+  1) 每个 tag 独立计算是否达成多数（≥50%）。
+  2) 报告 per-tag Fleiss' Kappa。
+  3) NA 不计入有效人数（n_total 只统计 {0,1}），并报告缺失率。
+  4) 整体分歧度 = 最低置信度 tag（保守估计；若全为 NA 则分歧度记 NA）。
+
+Q3: "样本量太小（174），结论可靠吗？"
+A: 用以下方式保证可靠性：
+  1) Bootstrap CI（1000 次）。
+  2) 预注册主终点（避免 p-hacking）。
+  3) 效应量 + MCID（不只看 p-value）。
+  4) 透明披露每个场景的 N 和 CI 宽度。
+  5) Main claim 是 proof-of-concept，不是最终生产系统。
+
+Q4: "离线路由模拟不是真实实验？"
+A: 这是路由研究的标准方法：
+  1) 参考文献：Kara et al. (JAIR 2018), Liu et al. (InfoVis 2018)。
+  2) 避免重新标注的成本。
+  3) 为未来在线实验提供先验。
+
+Q5: "你的改进幅度太小？"
+A: 用 MCID（最小可解释差异）定义 "值得的改进"：
+  1) 一致性代理达到预注册 MCID（以试运行/先验设定）才声称“工程上值得”。
+  2) 时间与失败率同理：不只看 p-value，优先看效应量是否跨过 MCID。
+  3) 改进幅度以最终实证结果为准；主张是“低额外成本的可审计收益”，不承诺固定数值。
+
+8 预期贡献总结（Contribution Statement）
+
+贡献1（系统设计）：提出可审计的半自动标注体系。
+  1) 三级报告口径（T/I/M）避免 selection bias。
+  2) 所有门控失败/OOS 可追溯。
+  3) Meta-label 作为决策副产品提供分布监控信号。
+
+贡献2（方法学）：场景特异可靠度估计与路由验证。
+  1) $r_u^{(s)}$ 在单任务、多场景下的估计协议。
+  2) 三种路由策略的离线评估框架。
+  3) Per-tag 共识与分歧度计算。
+
+贡献3（实证发现）：在全景布局标注任务上验证（以最终实证结果为准）。
+  1) 半自动初始化在相同图像对照下可降低 active time。
+  2) 场景感知路由在相同预算下可提升“一致性代理”并降低失败率。
+  3) 反例案例库揭示三类主要失效模式，并可复现地产出审计证据。
+
+对标文献：
+  1) Kara et al. (JAIR 2018)：主动学习 + 共识估计 → 我们加上场景分层。
+  2) Liu et al. (InfoVis 2018)：worker 分型 + 交互验证 → 我们做离线路由模拟。
+  3) 创新点：将可审计性、场景感知、元标签共识系统性整合。

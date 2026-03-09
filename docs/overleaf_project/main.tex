@@ -1,0 +1,72 @@
+% !TeX program = xelatex
+\documentclass[journal,onecolumn]{IEEEtran}
+\usepackage{iftex}
+\ifPDFTeX
+  \errmessage{This project requires XeLaTeX. In Overleaf: Menu -> Compiler -> XeLaTeX}
+\fi
+
+\usepackage{geometry}
+\geometry{margin=2.3cm}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage[strings]{underscore}
+\usepackage{booktabs}
+\usepackage{longtable}
+\usepackage{graphicx}
+\graphicspath{{figures/}}
+\usepackage{titlesec}
+\usepackage{hyperref}
+\hypersetup{hidelinks}
+\usepackage{placeins}
+\usepackage{float} % provides [H] float placement
+
+\usepackage{fontspec}
+\usepackage{xeCJK}
+\setmainfont{Times New Roman}
+\setCJKmainfont{FandolSong-Regular}
+\linespread{1.2}
+\renewcommand{\thesection}{\arabic{section}}
+\renewcommand{\thesubsection}{\thesection.\arabic{subsection}}
+\renewcommand{\thesubsubsection}{\thesubsection.\arabic{subsubsection}}
+\titleformat{\section}{\normalfont\Large\bfseries}{\thesection}{0.6em}{}
+\titleformat{\subsection}{\normalfont\large\bfseries}{\thesubsection}{0.6em}{}
+\titleformat{\subsubsection}{\normalfont\normalsize\bfseries}{\thesubsubsection}{0.6em}{}
+
+\title{论文提纲v2}
+\author{匿名作者}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+本文为论文提纲，面向可审计半自动全景布局标注流程，覆盖研究问题、方法、实验设置、报告口径与预期贡献。
+\end{abstract}
+
+\begin{IEEEkeywords}
+%Semi-automatic annotation, Reliability, Routing, OOD, Auditable protocol
+\end{IEEEkeywords}
+
+\tableofcontents
+
+\input{sections/01_研究问题}
+\input{sections/02_方法}
+\input{sections/03_实验设置}
+\input{sections/04_报告与可审计输出}
+\input{sections/05_标注数据重训练}
+\input{sections/06_讨论与局限性}
+% 主线收敛到讨论与局限性；审稿问答与贡献总结暂不纳入主文。
+% \input{sections/07_与审稿员预期批评的预设回答}
+% \input{sections/08_预期贡献总结}
+
+\appendix
+\input{sections/A1_扰动算子库}
+\input{sections/A2_数据集汇总表}
+\input{sections/A3_启用门槛保守估计表}
+\input{sections/A4_测度与统计方法速查}
+% Ensure all appendix floats (tables/figures) are flushed before bibliography
+\clearpage
+\nocite{kara2018,liu2018}
+\bibliographystyle{IEEEtran}
+\bibliography{refs/references}
+
+\end{document}

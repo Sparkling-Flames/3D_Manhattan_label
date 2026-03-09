@@ -1,0 +1,1011 @@
+Obtaining High-Quality Label by Distinguishing between
+Easy and Hard Items in Crowdsourcing
+Wei Wang, Xiang-Yu Guo, Shao-Yuan Li, Yuan Jiang, and Zhi-Hua Zhou
+National Key Laboratory for Novel Software Technology
+Nanjing University, Nanjing 210023, China
+{wangw,guoxy,lisy,jiangy,zhouzh}@lamda.nju.edu.cn
+Abstract
+Crowdsourcing systems make it possible to hire
+voluntary workers to label large-scale data by of-
+fering them small monetary payments. Usually, the
+taskmaster requires to collect high-quality labels,
+while the quality of labels obtained from the crowd
+may not satisfy this requirement. In this paper, we
+study the problem of obtaining high-quality labels
+from the crowd and present an approach of learning
+the difﬁculty of items in crowdsourcing, in which
+we construct a small training set of items with es-
+timated difﬁculty and then learn a model to predic-
+t the difﬁculty of future items. With the predict-
+ed difﬁculty, we can distinguish between easy and
+hard items to obtain high-quality labels. For easy
+items, the quality of their labels inferred from the
+crowd could be high enough to satisfy the require-
+ment; while for hard items, the crowd could not
+provide high-quality labels, it is better to choose
+a more knowledgable crowd or employ specialized
+workers to label them. The experimental results
+demonstrate that the proposed approach by learn-
+ing to distinguish between easy and hard items can
+signiﬁcantly improve the label quality.
+1
+Introduction
+In recent years, unlabeled data can often be obtained abun-
+dantly and cheaply, e.g., one can write a crawler in a few
+lines of code and automatically download hundreds of thou-
+sands of images from the internet.
+Generally, these unla-
+beled data cannot be directly used in machine learning, since
+learning algorithms need data with labels to train a model
+for making predictions, e.g., the complex deep neural net-
+work requires large amounts of labeled data in the training
+process. Providing labels for large amounts of unlabeled da-
+ta has always been a challenge because labeling the data is
+expensive and time-consuming.
+An effective and efﬁcient
+paradigm for label collection is crowdsourcing [Howe, 2006;
+2008], e.g., in the famous crowdsourcing system Amazon
+Mechanical Turk (AMT), the taskmaster submits the task that
+can be completed by voluntary workers in exchange for small
+monetary payments. This task is usually called Human Intel-
+ligence Task (HIT), which computers are currently unable to
+perform while humans can complete easily, e.g., annotating
+images of trees versus images of non-trees.
+Crowdsourcing makes it possible for many independent
+and relatively inexpensive workers to provide labels for large-
+scale unlabeled data together. These workers usually come
+from a large society and each of them is presented with mul-
+tiple items of the crowdsourcing task. Each worker has to
+answer the question about the item presented to her/him and
+provides a label based on her/his own knowledge. Crowd-
+sourcing can collect large-scale labels with small monetary
+payments in a short period of time, unfortunately, these label-
+s collected via crowdsourcing are typically highly erroneous
+[Kazai et al., 2011; Vuurens et al., 2011] due to the fact that
+most workers in the crowd are non-experts. In machine learn-
+ing, label quality is crucial to the performance of learning
+algorithm and higher-quality labels will bring better predic-
+tions. How to obtain high-quality labels via crowdsourcing is
+an important issue to address.
+For improving the label quality, the common wisdom is
+to add redundancy into the labels, i.e., each item is present-
+ed with multiple workers. In this way, multiple labels are
+collected for each item and the ﬁnal solution is determined
+by aggregating these crowded labels [Sheng et al., 2008;
+Snow et al., 2008; Sorokin and Forsyth, 2008]. In the past
+few years, researchers have developed many methods for in-
+ferring good labels from the crowd, most of which build prob-
+abilistic models for the crowdsourcing process and derive
+the labels using algorithms based on Expectation Maximiza-
+tion (EM) and other inference tools. Raykar et al. [2009;
+2010] used a two-coin model to measure the sensitivity and
+speciﬁcity of each worker and iteratively estimated the t-
+wo terms by an EM algorithm.
+Whitehill et al.
+[2009;
+2010] formulated a probabilistic model of worker quality and
+applied an EM algorithm to infer the most probable label.
+Raykar and Yu [2012] developed an empirical Bayesian al-
+gorithm based on EM to iteratively estimate the ground-truth
+label and eliminate the spammers. Liu et al. [2012] trans-
+formed the crowdsourcing problem into a variational infer-
+ence problem in graphical models and inferred the labels with
+variational inference tools including Belief Propagation and
+Mean Field. Tian and Zhu [2015] inferred the ground-truth
+label based on the max-margin principle by maximizing the
+margin between the aggregated score of potential true label
+and other alternatives. The minimax entropy principle has al-
+Proceedings of the Twenty-Sixth International Joint Conference on Artiﬁcial Intelligence (IJCAI-17)
+2964
+
+---PAGE---
+
+so been introduced into crowdsourcing. Zhou et al. [2012;
+2014] proposed a minimax entropy method to infer the
+ground-truth label by minimizing the entropy of the proba-
+bilistic distribution. Wauthier and Jordan [2011] proposed a
+Bayesian framework named the Bayesian Bias Mitigation to
+unify the process of inferring the labels and learning from
+the inferred labels. Wang and Zhou [2016] presented a PAC
+bound on the number of labels collected via crowdsourcing
+for learning a good model.
+Some other works focused on how to choose which items
+are assigned to each worker. Yan et al. [2011] employed a
+probabilistic model to select the worker from which to query
+the label. Karger et al. [2011; 2014] proposed an item assign-
+ment algorithm based on a random regular bipartite graph.
+Ho and Vaughan [2012] developed an algorithm for assign-
+ing heterogeneous items to workers with different qualities
+based on the online primal-dual technique [Buchbinder and
+Naor, 2005]. Later, Ho and Vaughan [2013] utilized items
+with true labels to estimate workers’ performance and pro-
+posed a provably near-optimal assignment algorithm for het-
+erogeneous items.
+Liu et al.
+[2013] also exploited items
+with known answers to evaluate workers’ performance for
+item assignment.
+Chen et al.
+[2013; 2015] formulated a
+ﬁnite horizon Markov Decision Process in a Bayesian set-
+ting and characterized the optimality using dynamic program-
+ming. Raykar and Agrawal [2014] modeled the item assign-
+ment problem as a Markov decision process and deﬁned an
+Bayesian decision theoretic utility function to jointly consid-
+er the cost for acquiring additional labels and the possible ac-
+curacy improvement. There are also some interesting work-
+s on developing payment mechanisms to encourage workers
+to provide high-quality labels for items [Shah et al., 2015;
+Shah and Zhou, 2015; 2016]. In this situation, the task is
+posted together with the labeling guidelines and payment in-
+structions, and it is demanded that the worker label each item
+according to her/his own belief of the answer being correct.
+They also assumed that the threshold of this belief is known to
+the payment mechanism designer and that the worker’s pay-
+ment is based on her/his performance on the gold standard
+items (a set of items whose true labels are known). However,
+it is difﬁcult to get this threshold in real-world applications
+and the gold standard items will increase the labeling cost.
+1.1
+Our Focus and Contribution
+In crowdsourcing, thousands of workers have internet ac-
+cess to the posted task. These voluntary workers have dif-
+ferent abilities, since they may come from different region-
+s, receive different educations and have different knowledge.
+Usually, the items of the crowdsourcing task also have dif-
+ferent difﬁculties for different workers. For easy items, most
+workers could provide correct labels with high probability,
+aggregating several labels from the crowd could infer the
+high-quality labels; while for hard items which need specif-
+ic domain knowledge for correct labeling, only a portion of
+the crowd could provide correct labels with high probability,
+aggregating several labels from the crowd without knowing
+who these knowledgable workers are may not infer the high-
+quality labels. An optimistic idea is to identify these knowl-
+edgable workers and let them provide labels to hard items.
+However, it is difﬁcult to identify the knowledgable work-
+ers without prior knowledge about the crowd. Furthermore,
+in many crowdsourcing systems, the voluntary workers are
+anonymous and transient, the taskmaster cannot assign par-
+ticular items to an identiﬁed worker, nor could she/he expect
+some worker to show up again in the future.
+This motivates us to propose a novel crowdsourcing ap-
+proach, in which we learn to distinguish between easy and
+hard items for the crowd. For easy items, it is feasible to
+derive high-quality labels from the current crowd; while for
+hard items, it is difﬁcult to derive high-quality labels from
+the current crowd without prior knowledge. Choosing a more
+knowledgable crowd or employing specialized workers for
+these hard items will be a good strategy for obtaining high-
+quality labels. Following this direction, we propose a two-
+stage efﬁcient algorithm: in the ﬁrst stage, we let the crowd
+label a small portion of items to estimate their difﬁculty; then
+in the second stage we train a model with this training set to
+predict the difﬁculty of future items. Similar items should
+have similar labels and the worker would provide similar la-
+bels to similar items. Thus, similar items should have similar
+labeling difﬁculty with respect to the same crowd. This could
+explain why the process of learning the difﬁculty is reason-
+able. The experimental results demonstrate that learning to
+distinguish between easy and hard items with the proposed
+algorithm can signiﬁcantly improve the label quality.
+The rest of this paper is organized as follows. After intro-
+ducing some preliminaries in Section 2, we present our ap-
+proach in Section 3 and discuss how to choose the parameter
+in Section 4. Finally, we conduct experiments in Section 5
+and make a conclusion in Section 6.
+2
+Preliminaries
+In this paper, we consider the task involving binary-choice
+items. The task has a set of m items {x1, . . . , xm} over X,
+each item corresponds to a binary-choice example xi with an
+unobserved true label yi ∈{0, 1}, 1 ≤i ≤m (e.g., annotat-
+ing whether an image contains trees or not). These items will
+be labeled by a crowd, where W denotes the set of all work-
+ers in the crowd. To improve label quality and reliability, an
+example xi is generally presented to N workers denoted by
+{w1, . . . , wN}, wj ∈W, 1 ≤j ≤N. For any item xi ∈X,
+a worker wj provides a label yj
+i = wj(xi) ∈{0, 1} on xi
+and a ﬁnal label is then inferred for xi based on the multiple
+labels.
+The item may have different difﬁculties for different work-
+ers and the difﬁculty depends on many factors, e.g., the time
+it takes for labeling, the knowledge required for correct label-
+ing, the worker’s honesty, the payment mechanism, and the
+item itself. In fact, the difﬁculty of an item can be evaluated
+from the output of the worker, i.e., if worker wj provides a
+correct label to item xi with great probability, it is regarded
+that xi is an easy item for wj; if wj provides an incorrect label
+to xi with great probability, it is regarded that xi is a hard item
+for wj. The posterior probability dxi(wj) = P(yj
+i ̸= yi|xi)
+denotes the probability that wj provides an incorrect label for
+xi and can be thought of as the difﬁculty of xi for wj. For any
+item x, we deﬁne the following difﬁculty of x for the crowd
+Proceedings of the Twenty-Sixth International Joint Conference on Artiﬁcial Intelligence (IJCAI-17)
+2965
+
+---PAGE---
+
+W:
+Deﬁnition 1 (Difﬁculty) Let DW denote the underlying dis-
+tribution over the workers in the crowd W, the difﬁculty of
+the item (x, y) with respect to the crowd W is deﬁned as
+dx(W) =
+Z
+w∈DW
+P
+ w(x) ̸= y|x
+
+p(w)dw.
+For the sake of convenience, we will write dx(W) as dx
+for the ﬁxed crowd W. In particular, one frequently pro-
+vides nearly random labels to the items that are too dif-
+ﬁcult to answer [Shah and Zhou, 2015], and the empiri-
+cal observations also show that the workers in crowdsourc-
+ing systems, as opposed to being adversarial in nature, at
+worst provide random labels to items [Yuen et al., 2011;
+Gadiraju et al., 2015]. Although the crowd may contain few
+adversaries who give wrong answers deliberately, it is reason-
+able to assume that dx ≤1/2, i.e., the crowd is not dominated
+by the adversaries. When dx is small, x is an easy item; while
+dx is large, x is an hard item. For hard items, there may exist
+some knowledgable workers wj with small dx(wj). Howev-
+er, it is not feasible to identify these knowledgable workers
+for hard items without prior knowledge about the crowd.
+3
+Our Method
+When no prior knowledge about the crowd is known, random-
+ly selecting N workers from the crowd and using the majority
+voting to infer the ﬁnal label by for x is a good error-pruning
+strategy, i.e.,
+by =
+
+
+
+
+
+1
+if
+1
+N
+PN
+j=1 yj > 1
+2
+random guess
+if
+1
+N
+PN
+j=1 yj = 1
+2
+0
+if
+1
+N
+PN
+j=1 yj < 1
+2
+For the item x, we can give the upper bound on the label
+quality for majority voting with respect to the difﬁculty of the
+item in the following proposition.
+Proposition 1 For the item (x, y) and the crowd W, let by
+denote the inferred label of x with majority voting from N
+workers, the following inequality holds.
+P(by ̸= y) ≤exp
+
+−2N(1/2 −dx)2
+.
+(1)
+Proof. Proposition 1 can be proved with Hoeffding [1963]
+bound.
+□
+Proposition 1 states that small dx will bring high-quality
+label while large dx will lead to low-quality label.
+If the
+taskmaster requires that a minimum quality of the labels ob-
+tained from the crowd should be achieved, the maximum dif-
+ﬁculty dx can be derived according to Equation 1. This max-
+imum difﬁculty dx can be thought of as a threshold η, the
+easy items whose dx is no larger than η could be labeled by
+the crowd and the label quality of them could satisfy the re-
+quirement; while the hard items whose dx is larger than η
+should not be labeled by the current crowd since the crowd
+may provide low-quality labels for them with great risk.
+Now an important issue arises: how to estimate the difﬁcul-
+ty efﬁciently? A straight-forward way is that we let the crowd
+label all items and then estimate dx with these crowded label-
+s. The item x ∈X is labeled by N workers {w1, . . . , wN},
+we give the deﬁnition of empirical difﬁculty bdx of x:
+bdx = 1
+N
+N
+X
+j=1
+I(yj ̸= by).
+(2)
+With this empirical difﬁculty bdx, we give the following
+proposition:
+Proposition 2 For the item (x, y) and any ϵ ∈(0, 1), the
+following inequality on bdx and dx holds.
+P
+
+bdx −dx
+≥ϵ
+
+≤2 exp
+ −2Nϵ2
+.
+(3)
+Proof.
+For the item (x, y), if by
+=
+y, it is easy
+to prove that P(|dx −bdx|
+≥
+ϵ)
+≤
+2 exp(−2Nϵ2)
+with Hoeffding [1963] bound; if by
+̸=
+y, it is easy to
+prove that P(|(1 −dx) −bdx| ≥ϵ) ≤2 exp(−2Nϵ2)
+with
+Hoeffding
+[1963]
+bound.
+So
+we
+get
+that
+P
+ 
+|1/2 −dx| −|1/2 −bdx|
+≥ϵ
+
+≤2 exp(−2Nϵ2).
+Since the label by is inferred by majority voting, we get that
+bdx ≤1/2 with Equation 2. Considering that dx ≤1/2, we
+have that P
+ 
+bdx −dx
+≥ϵ
+
+≤2 exp(−2Nϵ2).
+□
+Proposition 2 states that bdx is a good approximation of dx
+when we can not reach the true label of the item. After the
+crowd has labeled all items, we get the estimation bdx of the
+true difﬁculty dx for each item. If bdx ≤η, it implies that x is
+an easy item; if bdx > η, it implies that x is a hard item. For
+the requirement of high label quality, we should not accept
+the inferred labels for hard items. In this situation, the crowd
+has provided labels to these hard items, but we could not ac-
+cept their labels in order to avoid the risk. This wastes too
+much labeling cost and motivates us to develop an approach
+for estimating the difﬁculty before labeling all items.
+In order to address this problem we propose a two-stage
+algorithm. In the ﬁrst stage, we select a small portion of
+items T ⊂X randomly from the whole set X and let the
+crowd provide labels to them. With these crowded labels we
+estimate the empirical difﬁculty bdx of the item x ∈T and
+construct a training set L with the estimated difﬁculty, i.e.,
+L =
+
+(x1, bdx1), . . . , (x|T |, bdx|T |)
+. Then in the second stage
+we learn a model with L to predict the difﬁculty of the item in
+X −T . With the predicted difﬁculty, we set a threshold η to
+distinguish between easy and hard items (please see Section 4
+for how to choose η).
+Let Φ : X →RM denote the kernel mapping from the
+input space X to RM, considering the linear hypothesis space
+H = {x →h · Φ(x) + b : h ∈RM, b ∈R},
+we assume that the difﬁculty is determined by the function
+that
+f(x) =
+1
+1 + exp
+
+−
+ h · Φ(x) + b
+
+Proceedings of the Twenty-Sixth International Joint Conference on Artiﬁcial Intelligence (IJCAI-17)
+2966
+
+---PAGE---
+
+with h∗and b∗, i.e., for any item x,
+dx =
+1
+1 + exp
+
+−
+ h∗· Φ(x) + b∗.
+(4)
+With the training set L, we try to ﬁnd the optimal (h∗, b∗)
+with Kernel Ridge Regression by minimizing the following
+loss function:
+min
+h,b Loss(h, b) =
+m
+X
+i=1
+ f(xi) −bdxi
+2 + α∥h∥2.
+(5)
+For this learning problem, our aim is to predict whether the
+item x should be labeled by the crowd to achieve high-quality
+label with small risk, i.e., bdx ≤η or not. For a good model
+f(·), the easy items in the training set L should also be pre-
+dicted as the easy ones by f(·), i.e., if bdxi ≤η, f(xi) ≤η;
+otherwise, f(xi) > η. So we introduce the constraints into
+the optimization and Equation 5 is transformed into:
+min
+h,b Loss(h, b) =
+m
+X
+i=1
+ f(xi) −bdxi
+2 + α∥h∥2,
+s.t., (bdxi −η)
+ f(xi) −η
+
+≥0.
+(6)
+After introducing the parameter β, the optimization problem
+with constraints can be formalized as
+min
+h,b Loss(h, b) =
+m
+X
+i=1
+ f(xi) −bdxi
+2 + α∥h∥2
++β
+m
+X
+i=1
+I
+ ( bdxi −η)(f(xi) −η) ≤0
+
+.
+(7)
+The optimization problem in Equation 7 can not be solved
+efﬁciently, since the last term I(t ≤0) is not differentiable.
+We replace it with its surrogate loss function log2(1 + e−t)
+and get the optimization problem shown as
+min
+h,b Loss(h, b) =
+m
+X
+i=1
+ f(xi) −bdxi
+2 + α∥h∥2
++β
+m
+X
+i=1
+log2
+
+1 + exp
+ −(bdxi −η)(f(xi) −η
+
+.
+(8)
+Thus, by solving the optimization problem in Equation 8 with
+the training set L, we can ﬁnd the optimal solution (h∗, b∗)
+to predict the difﬁculty of the item in X −T . The process is
+described in Algorithm 1.
+With the predicted difﬁculty dx =
+1
+1+exp(−(h∗·Φ(x)+b∗))
+and the threshold η, we can determine whether an item should
+be labeled by the crowd, i.e., if dx ≤η, x should be labeled
+by the crowd; otherwise, x should not be labeled by the crowd
+due to high risk. In the following section, we will discuss how
+to choose the parameter η.
+4
+The Parameter η
+η is a parameter in the process, smaller η will bring less easy
+items and higher label quality, while larger η will lead to more
+easy items but lower label quality. η depends on the required
+label quality or the ratio of items that need to be labeled by
+the crowd, we will discuss how to choose it in this section.
+Algorithm 1 Difﬁculty Learning
+Input:
+Unlabeled items X, the crowd W, the threshold η, the pa-
+rameter γ and the kernel Φ.
+Process:
+1. Select number of γ|X| items randomly from X as T ;
+2. Each item xi ∈T is presented to N workers from the
+crowd W and its label byi is inferred by majority voting;
+3. Calculate the estimated difﬁculty bdxi for each item xi ∈
+T according to Equation 2 and get the training set L =
+
+(x1, bdx1), . . . , (x|T |, bdx|T |)
+;
+4. Solve the optimization problem to get (h∗, b∗) with the
+training set L according to Equation 8.
+Output:
+The difﬁculty dx =
+1
+1+exp(−(h∗·Φ(x)+b∗)) for each item
+x ∈X −T .
+• Label Quality. Choose η with respect to the required
+label quality.
+Proposition 1 indicates that the upper bound on the error
+rate of labels depends on the difﬁculty of the item. We
+can derive the maximum difﬁculty dx max according to
+the required label accuracy and set the threshold η =
+dx max.
+• Item Ratio. Choose η with respect to the required item
+ratio.
+In some applications, the volume of unlabeled item-
+s is huge.
+The taskmaster must set a minimum ra-
+tio R of these unlabeled items that need to be labeled
+by the crowd to save labeling cost, since employing
+the crowd costs less than employing specialized work-
+ers.
+Thus, R is the ratio of easy items whose difﬁ-
+culty is no larger than η. With the training set L =
+{(x1, bdx1), . . . , (x|T |, bdx|T |)}, we set η according to the
+following Equation 9, i.e., we use the ratio of easy items
+in the training set L as an estimation of R.
+η = min
+n
+η ∈[0, 1] :
+{x ∈L : dx ≤η}
+L
+≥R
+o
+.
+(9)
+• Label Information.
+In other applications, the taskmaster may require that
+both the ratio of items that need to be labeled by the
+crowd and the label accuracy on these labeled items
+should be as high as possible. Let A denote the label
+accuracy on the easy items that need to be labeled by the
+crowd, A can be denoted as
+A =
+{x ∈X −T : by = y ∧dx ≤η}
+{x ∈X −T : dx ≤η}
+.
+The ratio of easy items can be denoted as
+R =
+{x ∈X −T : dx ≤η}
+{x ∈X −T
+.
+Proceedings of the Twenty-Sixth International Joint Conference on Artiﬁcial Intelligence (IJCAI-17)
+2967
+
+---PAGE---
+
+We deﬁne Label Information I in Equation 10, i.e., the
+probability that the item in X −T can be labeled cor-
+rectly by the crowd.
+I = A · R =
+{x ∈X −T : by = y ∧dx ≤η}
+{x ∈X −T
+. (10)
+If the taskmaster requires that both the ratio of labeled
+items and the label accuracy on these labeled items are
+as high as possible, it implies that the threshold η should
+be the one that maximizes the label information I.
+In real-world crowdsourcing, most items can be labeled
+correctly by the crowd, the number of hard items is
+much less than that of easy ones and the probability dis-
+tribution of item’s difﬁculty can be estimated from the
+training set L. In the following part of this section, we
+give an example for choosing the parameter η. From the
+training set L constructed in Section 5, we get the cu-
+mulative distribution function of item’s difﬁculty, which
+is depicted as the black dashed line in Figure 1. Con-
+sidering the truncated Beta distribution whose probabil-
+ity density function is shown in Equation 11 with pa-
+rameters s and t, Z is the normalization term such that
+R 1
+2
+0
+1
+Z
+xs−1(1−x)t−1
+B(s,t)
+= 1, we get its cumulative distribu-
+tion function with s = 0.231 and t = 0.774, which is
+depicted as the blue solid line in Figure 1.
+1
+Z
+xs−1(1 −x)t−1
+B(s, t)
+, where B(s, t) = Γ(s)Γ(t)
+Γ(s + t)
+(11)
+It can be found that the cumulative distribution function
+of item’s difﬁculty in the training set L is very close to
+the cumulative distribution function of the truncated Be-
+ta distribution with s = 0.231 and t = 0.774. So we
+assume that the probability distribution of item’s difﬁ-
+culty follows the truncated Beta distribution to facilitate
+the calculation. For easy items, with Proposition 1 we
+get that A ≥1 −exp
+ −2N(1/2 −η)2
+since dx ≤η;
+with the truncated Beta distribution, we get that the ratio
+of easy items is
+R =
+Z η
+0
+1
+Z
+xs−1(1 −x)t−1
+B(s, t)
+.
+So we get that
+I = A · R
+≥1
+Z
+ 1 −exp(−2N(1/2 −η)2)
+ Z η
+0
+xs−1(1 −x)t−1
+B(s, t)
+.
+Thus, the optimal η∗can be denoted as
+η∗= arg max
+ 1 −exp(−2N(1/2 −η)2)
+
+·
+Z η
+0
+xs−1(1 −x)t−1
+B(s, t)
+.
+With the parameters s = 0.231, t = 0.774 and N = 9,
+the optimal η∗≈0.16.
+0.0
+0.1
+0.2
+0.3
+0.4
+0.5
+The diﬃculty d
+0.0
+0.2
+0.4
+0.6
+0.8
+1.0
+empirical data
+truncated Beta
+Figure 1: Cumulative distribution function.
+5
+Experiments
+In order to study whether we can obtain high-quality labels
+by learning to distinguish between easy and hard items we
+conduct experiments in this section.
+We perform experiments on the real data. In the task, there
+are 1499 different images and the workers are required to la-
+bel whether tree appears in the image or not. The crowd that
+labels the data consists of 38 graduate students. Each image is
+labeled by several workers selected randomly from the crowd.
+Due to various reasons, some workers did not return their la-
+bels for some images. Finally, we drop those images labeled
+by less than 5 workers and get 1495 images. The number of
+labels provided by workers for each image ranges from 5 to
+16. We use ﬁsher vector of each image as its feature, which
+is a 1248-dimension vector.
+We randomly select 20% images to generate the training
+set L and the difﬁculty of these images are estimated accord-
+ing to Equation 2. The optimization problem in Equation 8 is
+solved to predict the difﬁculty of the images in X −L, where
+the kernel function Φ is set to be the linear kernel, α = 10−4
+and β = 3. The parameter η is set between 0.1 and 0.3. Each
+experiment is repeated for 50 runs and the average perfor-
+mance is depicted in Figure 2.
+Figure 2(a) presents the ratio of images that are predicted
+as the easy ones and the accuracy of the labels inferred from
+the crowd on easy items with respect to different choices of
+η. The line Ratio of Easy denotes the ratio of images that are
+predicted as the easy ones; the line MV ACC-Easy denotes the
+accuracy of labels on easy items; the line MV ACC-Overall
+denotes the accuracy of labels inferred by majority voting
+when all items are labeled by the crowd; the line OptKG
+ACC-Overall denotes the accuracy of labels inferred by the
+state-of-art crowdsourcing method OptKG [Chen et al., 2013;
+2015] when all items are labeled by the crowd. From Fig-
+ure 2(a) we ﬁnd that the label accuracy of easy items is much
+higher than that of MV ACC-Overall and that of OptKG ACC-
+Overall. For example, when η = 0.2 the ratio of easy items
+is 0.773 and the label accuracy of easy items is 95.5%, while
+the accuracy of MV ACC-Overall is 92.0% and the accuracy
+of OptKG ACC-Overall is 92.3%.
+We also present the results on hard items in Figure 2(b),
+which shows the ratio of items that are predicted as the hard
+ones and the accuracy of the labels inferred on these hard
+items with respect to different choices of η. From Figure
+Proceedings of the Twenty-Sixth International Joint Conference on Artiﬁcial Intelligence (IJCAI-17)
+2968
+
+---PAGE---
+
+0.10
+0.15
+0.20
+0.25
+0.30
+Threshold
+0.6
+0.7
+0.8
+0.9
+1.0
+Accuracy
+0.6
+0.7
+0.8
+0.9
+1.0
+Ratio of Easy
+MV ACC - Easy
+MV ACC - Overall
+OptKG ACC - Overall
+Ratio of Easy
+(a) Accuracy and ratio w.r.t. easy items.
+0.10
+0.15
+0.20
+0.25
+0.30
+Threshold
+0.6
+0.7
+0.8
+0.9
+1.0
+Accuracy
+0.0
+0.1
+0.2
+0.3
+0.4
+Ratio of hard
+MV ACC - Hard
+MV ACC - Overall
+OptKG ACC - Overall
+Ratio of Hard
+(b) Accuracy and ratio w.r.t. hard items.
+Figure 2: Results on the data.
+2(b) we ﬁnd that the label accuracy of hard items is much
+lower than that of MV ACC-Overall and that of OptKG ACC-
+Overall. For example, when η = 0.2, the ratio of hard items
+is 0.227 and the label accuracy of these hard items is only
+80.1%. The current crowd could not provide high-quality la-
+bels to these hard items, we should ﬁnd a more knowledgable
+crowd or employ specialized workers to label them.
+Figure 2 validates that we could obtain high-quality label-
+s by learning to distinguish between easy and hard items.
+When the taskmaster requires high label quality, we should
+choose a small η; when the taskmaster requires both high la-
+bel quality and large ratio of items that need to be labeled by
+the crowd, we should choose a medium η.
+In order to show whether the size of training set L inﬂu-
+ences the label accuracy, we run experiments with different
+sizes of L, i.e., from 10% to 40% with an interval 5%, and
+the results for a ﬁxed η = 0.2 are depicted in Figure 3. From
+Figure 3 we can ﬁnd that the label accuracy on easy items
+varies from 95.0% to 95.9% increasingly with the size of L
+varying from 10% to 40%. It indicates that the label quality
+is not very sensitive to the size of L.
+6
+Conclusion
+In this paper, we propose an approach for obtaining high-
+quality labels from the crowd by learning to distinguish be-
+tween easy and hard items before they are sent out to work-
+ers, which is complementary to the line of work that tries to
+obtain reliable labels via crowdsourcing for machine learning
+10%
+15%
+20%
+25%
+30%
+35%
+40%
+Size of training set
+0.7
+0.8
+0.9
+1.0
+Accuracy
+MV ACC - Easy
+MV ACC - Hard
+MV ACC - Overall
+Figure 3: Accuracy with different sizes of L for η = 0.2.
+or other applications. It allows for better post-processing of
+hard items, i.e., we should ﬁnd a more knowledgable crowd
+or employ specialized workers to label them, and provides
+a possibility that the items could be completed by different
+crowds with respect to their difﬁculty. We regard this work as
+preliminary and expect that more researches will follow this
+direction.
+Acknowledgments
+This
+work
+was
+supported
+by
+the
+NSFC
+(61673202,
+61673201), 973 Program (2014CB340501), and the Collabo-
+rative Innovation Center of Novel Software Technology and
+Industrialization.
+References
+[Buchbinder and Naor, 2005] Niv Buchbinder and Joseph
+Naor.
+Online primal-dual algorithms for covering and
+packing problems. In ESA, pages 689–701, Palma de Mal-
+lorca, Spain, 2005.
+[Chen et al., 2013] Xi Chen, Qihang Lin, and Dengyong
+Zhou. Optimistic knowledge gradient policy for optimal
+budget allocation in crowdsourcing. In ICML, pages 64–
+72, Atlanta, GA, 2013.
+[Chen et al., 2015] Xi Chen, Qihang Lin, and Dengyong
+Zhou. Statistical decision making for optimal budget al-
+location in crowd labeling. Journal of Machine Learning
+Research, 16:1–46, 2015.
+[Gadiraju et al., 2015] Ujwal Gadiraju,
+Ricardo Kawase,
+Stefan Dietze, and Gianluca Demartini.
+Understanding
+malicious behavior in crowdsourcing platforms: The case
+of online surveys. In ACM CHI, pages 1631–1640, Seoul,
+Republic of Korea, 2015.
+[Ho and Vaughan, 2012] Chien-Ju
+Ho
+and
+Jennifer
+W.
+Vaughan. Online task assignment in crowdsourcing mar-
+kets. In AAAI, Toronto, Canada, 2012.
+[Ho et al., 2013] Chien-Ju Ho, Shahin Jabbari, and Jen-
+nifer W. Vaughan. Adaptive task assignment for crowd-
+sourced classiﬁcation. In ICML, pages 534–542, Atlanta,
+GA, 2013.
+Proceedings of the Twenty-Sixth International Joint Conference on Artiﬁcial Intelligence (IJCAI-17)
+2969
+
+---PAGE---
+
+[Hoeffding, 1963] Wassily Hoeffding. Probability inequali-
+ties for sums of bounded random variables. Journal of the
+American Statistical Association, 58:13–30, 1963.
+[Howe, 2006] Jeff Howe. The rise of crowdsourcing. Wired,
+2006.
+[Howe, 2008] Jeff Howe. Why the power of the crowd is
+driving the future of business. Crown Business, 2008.
+[Karger et al., 2011] David R. Karger, Sewoong Oh, and De-
+vavrat Shah. Iterative learning for reliable crowdsourcing
+systems.
+In NIPS, pages 1953–1961. MIT Press, Cam-
+bridge, MA, 2011.
+[Karger et al., 2014] David R. Karger, Sewoong Oh, and De-
+vavrat Shah. Budget-optimal task allocation for reliable
+crowdsourcing systems.
+Operations Research, 62(1):1–
+24, 2014.
+[Kazai et al., 2011] Gabriella Kazai, Jaap Kamps, Marijn
+Koolen, and Natasa Milic-Frayling.
+Crowdsourcing for
+book search evaluation: impact of hit design on compara-
+tive system ranking. In ACM SIGIR, pages 205–214, Bei-
+jing, China, 2011.
+[Liu et al., 2012] Qiang Liu, Jian Peng, and Alexander T. Ih-
+ler.
+Variational inference for crowdsourcing.
+In NIPS,
+pages 701–709. MIT Press, Cambridge, MA, 2012.
+[Liu et al., 2013] Qiang Liu, Alexander T. Ihler, and Mark
+Steyvers. Scoring workers in crowdsourcing: How many
+control questions are enough? In NIPS, pages 1914–1922.
+MIT Press, Cambridge, MA, 2013.
+[Raykar and Agrawal, 2014] Vikas C. Raykar and Priyanka
+Agrawal. Sequential crowdsourced labeling as an epsilon-
+greedy exploration in a markov decision process. In AIS-
+TATS, pages 832–840, Reykjavik, Iceland, 2014.
+[Raykar and Yu, 2012] Vikas C. Raykar and Shipeng Yu. E-
+liminating spammers and ranking annotators for crowd-
+sourced labeling tasks. Journal of Machine Learning Re-
+search, 13:491–518, 2012.
+[Raykar et al., 2009] Vikas C. Raykar, Shipeng Yu, Linda H.
+Zhao, Anna K. Jerebko, Charles Florin, Gerardo Her-
+mosillo Valadez, Luca Bogoni, and Linda Moy. Super-
+vised learning from multiple experts: whom to trust when
+everyone lies a bit. In ICML, Quebec, Canada, 2009.
+[Raykar et al., 2010] Vikas C. Raykar, Shipeng Yu, Linda H.
+Zhao, Gerardo Hermosillo Valadez, Charles Florin, Luca
+Bogoni, and Linda Moy. Learning from crowds. Journal
+of Machine Learning Research, 11:1297–1322, 2010.
+[Shah and Zhou, 2015] Nihar B. Shah and Dengyong Zhou.
+Double or nothing: Multiplicative incentive mechanisms
+for crowdsourcing. In NIPS, pages 1–9. MIT Press, Cam-
+bridge, MA, 2015.
+[Shah and Zhou, 2016] Nihar B. Shah and Dengyong Zhou.
+No oops, you won’t do it again: Mechanisms for self-
+correction in crowdsourcing. In ICML, pages 1–10, New
+York, NY, 2016.
+[Shah et al., 2015] Nihar B. Shah, Dengyong Zhou, and Yu-
+val Peres. Approval voting and incentives in crowdsourc-
+ing. In ICML, pages 10–19, Lille, France, 2015.
+[Sheng et al., 2008] Victor S. Sheng, Foster J. Provost, and
+Panagiotis G. Ipeirotis. Get another label? improving data
+quality and data mining using multiple, noisy labelers. In
+ACM SIGKDD, pages 614–622, Las Vegas, NV, 2008.
+[Snow et al., 2008] Rion Snow, Brendan O’Connor, Daniel
+Jurafsky, and Andrew Y. Ng. Cheap and fast - but is it
+good? evaluating non-expert annotations for natural lan-
+guage tasks. In EMNLP, pages 254–263, Honolulu, HI,
+2008.
+[Sorokin and Forsyth, 2008] Alexander
+Sorokin
+and
+David A. Forsyth.
+Utility data annotation with ama-
+zon mechanical turk.
+In CVPR Workshop on Internet
+Vision, pages 1–8, Anchorage, AK, 2008.
+[Tian and Zhu, 2015] Tian Tian and Jun Zhu. Max-margin
+majority voting for learning from crowds. In NIPS, pages
+1612–1620. MIT Press, Cambridge, MA, 2015.
+[Vuurens et al., 2011] Jeroen Vuurens, Arjen P. de Vries, and
+Carsten Eickhoff. How much spam can you take? an anal-
+ysis of crowdsourcing results to increase accuracy. In ACM
+SIGIR Workshop on Crowdsourcing for Information Re-
+trieval, pages 21–26, Beijing, China, 2011.
+[Wang and Zhou, 2016] Lu Wang and Zhi-Hua Zhou. Cost-
+saving effect of crowdsourcing learning. In IJCAI, pages
+2111–2117, New York, NY, 2016.
+[Wauthier and Jordan, 2011] Fabian
+L.
+Wauthier
+and
+Michael I. Jordan. Bayesian bias mitigation for crowd-
+sourcing.
+In NIPS, pages 1800–1808. MIT Press,
+Cambridge, MA, 2011.
+[Welinder et al., 2010] Peter
+Welinder,
+Steve
+Branson,
+Serge J. Belongie, and Pietro Perona. The multidimen-
+sional wisdom of crowds.
+In NIPS, pages 2424–2432.
+MIT Press, Cambridge, MA, 2010.
+[Whitehill et al., 2009] Jacob Whitehill, Paul Ruvolo, T-
+ingfan Wu, Jacob Bergsma, and Javier R. Movellan.
+Whose vote should count more: Optimal integration of la-
+bels from labelers of unknown expertise. In NIPS, pages
+2035–2043. MIT Press, Cambridge, MA, 2009.
+[Yan et al., 2011] Yan Yan, R´oomer Rosales, Glenn Fung,
+and Jennifer G. Dy. Active learning from crowds. In ICM-
+L, pages 1161–1168, Bellevue, WA, 2011.
+[Yuen et al., 2011] Man-Ching
+Yuen,
+Irwin
+King,
+and
+Kwong-Sak Leung. A survey of crowdsourcing system-
+s. In SocialCom, pages 766–773, Boston, MA, 2011.
+[Zhou et al., 2012] Dengyong Zhou, John C. Platt, Sumit
+Basu, and Yi Mao. Learning from the wisdom of crowd-
+s by minimax entropy. In NIPS, pages 2204–2212. MIT
+Press, Cambridge, MA, 2012.
+[Zhou et al., 2014] Dengyong Zhou, Qiang Liu, John C.
+Platt, and Christopher Meek. Aggregating ordinal labels
+from crowds by minimax conditional entropy. In ICML,
+pages 262–270, Beijing, China, 2014.
+Proceedings of the Twenty-Sixth International Joint Conference on Artiﬁcial Intelligence (IJCAI-17)
+2970
