@@ -73,19 +73,23 @@ chmod +x start_log_server.sh
 ### 3.2 质量分析工作流（单数据集 → 汇总）
 
 **阶段 1：试运行（单数据集，3-5 人）**
+
 ```bash
 # 从 Label Studio 导出 JSON
 python tools/analyze_quality.py export_pilot.json --output_dir analysis_results_pilot
 ```
+
 输出：`quality_report_YYYYMMDD.csv`（包含 per-annotation 指标、IAA、r_u）
 
 **阶段 2：正式标注（5 个数据集并行）**
+
 - `main_manual`：100 样本，纯人工
 - `main_semi`：100 样本，半自动
 - `calibration_manual`：30 样本，多人标注（用于 Scheme A 的 r_u 估计）
 - `validation_manual/semi`：各 60 样本（用于分配策略验证）
 
 分别分析：
+
 ```bash
 python tools/analyze_quality.py export_main_manual.json --output_dir analysis_results
 python tools/analyze_quality.py export_main_semi.json --output_dir analysis_results
@@ -93,11 +97,13 @@ python tools/analyze_quality.py export_main_semi.json --output_dir analysis_resu
 ```
 
 **阶段 3：汇总分析（跨数据集对比）**
+
 ```bash
 python tools/aggregate_analysis.py --csv main_manual:analysis_results/quality_report_manual.csv main_semi:analysis_results/quality_report_semi.csv calibration_manual:analysis_results/quality_report_calib.csv validation_manual:analysis_results/quality_report_valman.csv validation_semi:analysis_results/quality_report_valsemi.csv --output-dir analysis_results --output-prefix aggregate_final
 ```
 
 输出：
+
 - 合并 CSV（带 dataset/condition/subset 列）
 - 汇总统计 JSON（分组 mean/std/median）
 - 对比表格 Markdown（Manual vs Semi）

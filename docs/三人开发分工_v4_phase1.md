@@ -9,17 +9,17 @@
 
 > **前提澄清**：`tools/legacy/` 下全部脚本均已废弃，不计入基础。
 
-| 脚本 / Notebook | 状态 | 实际功能 |
-|---|---|---|
-| `analyze_quality.py` | ✅ 活跃主力（1828 行） | v2 结构化字段解析、OOS/NA/scope/difficulty/model_issue、IoU 计算、gate 检测 |
-| `visualize_output_v2.ipynb` | ✅ 主可视化 notebook（最近有执行记录） | 门控失败分布图、指标直方图、按标注员通过率表 |
-| `visualize_output.ipynb` | ✅ **v1 内部全量诊断版**（与 v2 配套，输出目录独立）| 与 v2 配套分工：**v1 = Internal 全量（调参/排障/质控）**，输出 `internal_figures_v1/`；**v2 = Paper Slim（论文精简输出）**，输出 `paper_figures_v2/`；v1 含 Figure Registry 表（`paper_core`/`paper_appendix`/`internal_only` 三档分级）|
-| `aggregate_analysis.py` | ✅ 多数据集合并 API（无 CLI） | 跨 CSV 合并 + 分组统计，有配置 schema |
-| `create_labelstudio_split_by_outline.py` | ✅ 最新数据分组（N=458） | Pilot→PreScreen→Main 全分组，含 anchor/core/reserve |
-| `split_active_logs.py` | ✅ 活跃日志切分 | `active_time` 按 session 切分 |
-| `diagnose_gating_bias.py` | ✅ gate selection-bias 诊断 | OOS/scope_missing 过滤分析 |
-| `save_quality_figures.py` | ❌ **实际不可运行** | `from viz_quality_utils import ...` → `viz_quality_utils.py` **文件不存在** |
-| `viz_quality_report.py` | ⚠️ 转发 wrapper | `from tools.legacy.viz_quality_report import main` → 指向 legacy，功能受限 |
+| 脚本 / Notebook                          | 状态                                                 | 实际功能                                                                                                                                                                                                                                 |
+| ---------------------------------------- | ---------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `analyze_quality.py`                     | ✅ 活跃主力（1828 行）                               | v2 结构化字段解析、OOS/NA/scope/difficulty/model_issue、IoU 计算、gate 检测                                                                                                                                                              |
+| `visualize_output_v2.ipynb`              | ✅ 主可视化 notebook（最近有执行记录）               | 门控失败分布图、指标直方图、按标注员通过率表                                                                                                                                                                                             |
+| `visualize_output.ipynb`                 | ✅ **v1 内部全量诊断版**（与 v2 配套，输出目录独立） | 与 v2 配套分工：**v1 = Internal 全量（调参/排障/质控）**，输出 `internal_figures_v1/`；**v2 = Paper Slim（论文精简输出）**，输出 `paper_figures_v2/`；v1 含 Figure Registry 表（`paper_core`/`paper_appendix`/`internal_only` 三档分级） |
+| `aggregate_analysis.py`                  | ✅ 多数据集合并 API（无 CLI）                        | 跨 CSV 合并 + 分组统计，有配置 schema                                                                                                                                                                                                    |
+| `create_labelstudio_split_by_outline.py` | ✅ 最新数据分组（N=458）                             | Pilot→PreScreen→Main 全分组，含 anchor/core/reserve                                                                                                                                                                                      |
+| `split_active_logs.py`                   | ✅ 活跃日志切分                                      | `active_time` 按 session 切分                                                                                                                                                                                                            |
+| `diagnose_gating_bias.py`                | ✅ gate selection-bias 诊断                          | OOS/scope_missing 过滤分析                                                                                                                                                                                                               |
+| `save_quality_figures.py`                | ❌ **实际不可运行**                                  | `from viz_quality_utils import ...` → `viz_quality_utils.py` **文件不存在**                                                                                                                                                              |
+| `viz_quality_report.py`                  | ⚠️ 转发 wrapper                                      | `from tools.legacy.viz_quality_report import main` → 指向 legacy，功能受限                                                                                                                                                               |
 
 **结论**：v1 + v2 是配套设计（v1 顶部 markdown 明文说明分工：v1=Internal，v2=Paper Slim），两者均不废弃；v2 有 2 个 cell 有执行记录，v1 零执行但功能更完整（63 cells）；`save_quality_figures.py` 是死代码，留 Phase 2 修复。
 
@@ -31,12 +31,12 @@
 
 > "第一阶段：数据清洗 + 可视化，以及其扰动算子这个算法实现出来。"
 
-| 子任务 | 现有基础 | 缺口 | 可行性判断 |
-|---|---|---|---|
-| **数据清洗** | `analyze_quality.py` 90% 就绪 | 跨数据集合并无 CLI 入口；`active_time` 字段输出格式待规范 | ✅ **高可行** |
-| **可视化** | `visualize_output_v2.ipynb` 已有门控/指标分布/按标注员通过率 | 缺：Worker×Scene 矩阵（表 C）、工人画像二维散点图（图 D，3 类功能组）、`active_time` 审计展示 | ⚠️ **中等**，2 个核心新模块需从头写 |
-| **扰动算子** | tools/ 中无相关代码；`model_issue` 归档结构已知 | 定义明确（详见 §1.2） | ✅ **可行**，角点级扰动生成器，实现量适中 |
-| **$d_t$ OOD 风险代理** | `infer_layout.py` 已有 HOHONet 加载 + 推理管线 | 需注册 `horizon_refinement` 输出 hook 提取 $e_t$；构建 kNN 索引 | ✅ **可行**，依赖现有推理基础设施（详见 §1.3） |
+| 子任务                 | 现有基础                                                     | 缺口                                                                                          | 可行性判断                                     |
+| ---------------------- | ------------------------------------------------------------ | --------------------------------------------------------------------------------------------- | ---------------------------------------------- |
+| **数据清洗**           | `analyze_quality.py` 90% 就绪                                | 跨数据集合并无 CLI 入口；`active_time` 字段输出格式待规范                                     | ✅ **高可行**                                  |
+| **可视化**             | `visualize_output_v2.ipynb` 已有门控/指标分布/按标注员通过率 | 缺：Worker×Scene 矩阵（表 C）、工人画像二维散点图（图 D，3 类功能组）、`active_time` 审计展示 | ⚠️ **中等**，2 个核心新模块需从头写            |
+| **扰动算子**           | tools/ 中无相关代码；`model_issue` 归档结构已知              | 定义明确（详见 §1.2）                                                                         | ✅ **可行**，角点级扰动生成器，实现量适中      |
+| **$d_t$ OOD 风险代理** | `infer_layout.py` 已有 HOHONet 加载 + 推理管线               | 需注册 `horizon_refinement` 输出 hook 提取 $e_t$；构建 kNN 索引                               | ✅ **可行**，依赖现有推理基础设施（详见 §1.3） |
 
 ### 1.2 「扰动算子」的真实含义——来自论文 §3.1/PreScreen（已修正，非导师语音）
 
@@ -45,8 +45,8 @@
 **扰动算子（Perturbation Operator）= 可复现地生成「误导性初始化」**，用于 `PreScreen_semi`：
 
 - **来源**：Pilot 阶段 `model_issue` 归档——如 `corner_drift`、`corner_duplicate`、`overextend_adjacent` 等
-- **对齐约束（必须补齐）**：扰动类型集合必须与 Label Studio 标注界面中的 `model_issue` 别名集合一致（见 `tools/label_studio_view_config.xml`），并与论文附录 [A1_扰动算子库.tex](docs/overleaf_project/sections/A1_扰动算子库.tex) 的 
-   `model_issue`→算子映射表一致。否则会出现“工程实现可生成的误导类型”与“论文披露/标注体系中的类型”不一致，属于审稿中会被直接指出的可复现性缺陷。
+- **对齐约束（必须补齐）**：扰动类型集合必须与 Label Studio 标注界面中的 `model_issue` 别名集合一致（见 `tools/label_studio_view_config.xml`），并与论文附录 [A1\_扰动算子库.tex](docs/overleaf_project/sections/A1_扰动算子库.tex) 的
+  `model_issue`→算子映射表一致。否则会出现“工程实现可生成的误导类型”与“论文披露/标注体系中的类型”不一致，属于审稿中会被直接指出的可复现性缺陷。
 - **操作**：给定真实角点标注（模型预测结果），施加扰动类型，输出扰动后角点坐标作为"误导性初始化"
 - **冻结机制**：Pilot 后锁定扰动清单 + 随机种子，生成 `perturbation_plan_frozen.json`，之后只读
 - **目的**：测量候选标注员的**纠错能力**（能否识别并修正误导初始化）与**盲信风险**（直接提交半自动输出）
@@ -54,32 +54,30 @@
 
 **IID/non-IID 应激切分（`difficulty_split.py`）是完全独立的机制：**
 
-| 维度 | 扰动算子 | IID/non-IID 应激切分 |
-|---|---|---|
-| 论文位置 | §3.1 PreScreen；MDE §3.4 | §3.1 第一段 IID Stress Test |
-| 作用阶段 | Stage 1 PreScreen（筛工人） | Stage 3 Validation（评策略鲁棒性）|
-| 操作对象 | **角点坐标**（施加几何扰动） | **数据子集切分**（按 difficulty 分层）|
-| 目的 | 生成可复现误导样本 | 模拟分布偏移（non-closed-world）|
-| 与导师语音的关系 | 导师语音 §5 提到的半自动误导 | 导师语音提到的难度分层 OOD 场景 |
-
-
+| 维度             | 扰动算子                     | IID/non-IID 应激切分                   |
+| ---------------- | ---------------------------- | -------------------------------------- |
+| 论文位置         | §3.1 PreScreen；MDE §3.4     | §3.1 第一段 IID Stress Test            |
+| 作用阶段         | Stage 1 PreScreen（筛工人）  | Stage 3 Validation（评策略鲁棒性）     |
+| 操作对象         | **角点坐标**（施加几何扰动） | **数据子集切分**（按 difficulty 分层） |
+| 目的             | 生成可复现误导样本           | 模拟分布偏移（non-closed-world）       |
+| 与导师语音的关系 | 导师语音 §5 提到的半自动误导 | 导师语音提到的难度分层 OOD 场景        |
 
 ### 1.3 Phase 1 工作量客观估计（三人 × 约 4 周）
 
-| 模块 | 工时估计 | 负责 | 依赖 |
-|---|---|---|---|
-| 数据清洗 pipeline CLI 封装 + 跨数据集合并 | 3–4 人天 | Dev A | `analyze_quality.py` + `aggregate_analysis.py` 已有 API |
-| `active_time` 字段规范化输出（`split_active_logs.py` 已有，补 spec 对齐） | 1–2 人天 | Dev A | 现有脚本扩展，不重写解析逻辑 |
-| LOO 可靠度 `r_u` + BCa bootstrap CI + Type 1–4 flag | 3–4 人天 | Dev A | 新增函数扩展 `analyze_quality.py` |
-| `visualize_output_v2.ipynb` 补全 Cell 组（T/I/M、IAA、IoU_edit、反例频次） | 2–3 人天 | Dev B | notebook 已有骨架 |
-| `active_time` 审计展示 Cell + `active_time` 异常摘要表 | 1–2 人天 | Dev B | 依赖 Dev A 规范化输出的字段 |
-| Worker×Scene 矩阵（表 C，含 LCB 排序 + 局部失效标注） | 3–4 人天 | Dev B | 依赖 Dev A 的 `r_u_s`（Week 3 后才可用，前期用 mock）|
-| 工人画像二维散点图（图 D，3 类功能组） | 2–3 人天 | Dev B | 依赖 Dev C 的 `S_u` 回写 |
-| **扰动算子（PreScreen_semi 硬前置）**：`perturbation_operators.py`（角点级误导生成 + 冻结引擎） | 4–5 人天 | Dev C | 依赖 Pilot `model_issue` 归档；类型集合需与 XML + 附录 A1 对齐 |
-| **$d_t$ OOD 代理**：提取 HoHoNet 共享 pre-head latent，经宽度池化与 L2 归一化后计算 kNN 距离 | 2–3 人天 | Dev C | `infer_layout.py` 加载模式可复用；参考集建议用 `Calibration_manual` 固定池（N=100）以获得稳定尺度（anchor=12 仅作 sanity check）|
-| IID/non-IID 应激切分（`difficulty_split.py` + KL 验证） | 1–2 人天 | Dev C | 基于 `d_t` 分位数 + difficulty 标签 |
-| 离线 Replay 框架（三策略：子集选取 + IAA 调用） | 2–3 人天 | Dev C | 实质为子集选取 + `compute_iaa` 调用，已有 mock 接口 |
-| **合计** | **~23–32 人天** | — | — |
+| 模块                                                                                            | 工时估计        | 负责  | 依赖                                                                                                                             |
+| ----------------------------------------------------------------------------------------------- | --------------- | ----- | -------------------------------------------------------------------------------------------------------------------------------- |
+| 数据清洗 pipeline CLI 封装 + 跨数据集合并                                                       | 3–4 人天        | Dev A | `analyze_quality.py` + `aggregate_analysis.py` 已有 API                                                                          |
+| `active_time` 字段规范化输出（`split_active_logs.py` 已有，补 spec 对齐）                       | 1–2 人天        | Dev A | 现有脚本扩展，不重写解析逻辑                                                                                                     |
+| LOO 可靠度 `r_u` + BCa bootstrap CI + Type 1–4 flag                                             | 3–4 人天        | Dev A | 新增函数扩展 `analyze_quality.py`                                                                                                |
+| `visualize_output_v2.ipynb` 补全 Cell 组（T/I/M、IAA、IoU_edit、反例频次）                      | 2–3 人天        | Dev B | notebook 已有骨架                                                                                                                |
+| `active_time` 审计展示 Cell + `active_time` 异常摘要表                                          | 1–2 人天        | Dev B | 依赖 Dev A 规范化输出的字段                                                                                                      |
+| Worker×Scene 矩阵（表 C，含 LCB 排序 + 局部失效标注）                                           | 3–4 人天        | Dev B | 依赖 Dev A 的 `r_u_s`（Week 3 后才可用，前期用 mock）                                                                            |
+| 工人画像二维散点图（图 D，3 类功能组）                                                          | 2–3 人天        | Dev B | 依赖 Dev C 的 `S_u` 回写                                                                                                         |
+| **扰动算子（PreScreen_semi 硬前置）**：`perturbation_operators.py`（角点级误导生成 + 冻结引擎） | 4–5 人天        | Dev C | 依赖 Pilot `model_issue` 归档；类型集合需与 XML + 附录 A1 对齐                                                                   |
+| **$d_t$ OOD 代理**：提取 HoHoNet 共享 pre-head latent，经宽度池化与 L2 归一化后计算 kNN 距离    | 2–3 人天        | Dev C | `infer_layout.py` 加载模式可复用；参考集建议用 `Calibration_manual` 固定池（N=100）以获得稳定尺度（anchor=12 仅作 sanity check） |
+| IID/non-IID 应激切分（`difficulty_split.py` + KL 验证）                                         | 1–2 人天        | Dev C | 基于 `d_t` 分位数 + difficulty 标签                                                                                              |
+| 离线 Replay 框架（三策略：子集选取 + IAA 调用）                                                 | 2–3 人天        | Dev C | 实质为子集选取 + `compute_iaa` 调用，已有 mock 接口                                                                              |
+| **合计**                                                                                        | **~23–32 人天** | —     | —                                                                                                                                |
 
 三人并行 4 周（每人约 5 人天/周 × 4 = 20 人天）基本可行；其中 **扰动算子 + 冻结清单**是 `PreScreen_semi` 的硬前置，应在 Week 1 优先闭环。$d_t$ 模块需 Week 1 先确认推理环境（`ckpt/` 权重 + GPU/CPU 可用），若环境不可用则降级为仅用 $g_t$ 触发进行分层（附录披露）。
 
@@ -87,21 +85,22 @@
 
 ## 2. 分工原则——v3 → v4 提纲变化摘要
 
-| 变化点 | 对分工的影响 |
-|---|---|
-| **「扰动算子」有了明确含义（论文 §3.1/PreScreen）** | = 可复现角点级误导生成（非数据切分），Dev C 实现 `perturbation_operators.py`；IID 切分是独立的 `difficulty_split.py` |
-| **新增 $d_t$ OOD 代理（论文 §2.8，HoHoNet shared latent kNN）** | Dev C 新增 `compute_dt_score.py`；字段 `d_t` 与 `I_t^{OOD}` 写入 `merged_all.csv`，供 IID 应激切分与路由触发使用 |
-| **Worker 功能分组采用 3 类（Stable/Vulnerable/Noise）** | Dev B 的「图 D」按二维坐标（$\mathrm{LCB}(r_u),S_u$）展示 3 类功能组；分组规则由预注册阈值与风险桶失效条件决定 |
-| **新增 Type 4 反例（字段缺失/NA + 元标签不合规）** | Type 4 拆成两类：①可由采集协议前移控制的“空选/互斥冲突”（提交时硬校验，记录被拦截次数作为过程证据）；②系统侧 NA/导出缺损（仍需在清洗输出中审计并披露）。|
-| **`viz_quality_utils.py` 不存在，`save_quality_figures.py` 不可运行** | Dev B **主战场改为 notebook（`visualize_output_v2.ipynb`）而非补写 utils 模块** |
-| **导师语音强调「process evidence + 中间结果」** | 每位 Dev 交付物必须能直接产出图（存 PNG，可引用进论文） |
-| **`active_time` 日志审计表是口径 T 必报项** | Dev A 规范化字段输出（复用 `split_active_logs.py`）；Dev B 负责审计展示 Cell |
+| 变化点                                                                | 对分工的影响                                                                                                                                             |
+| --------------------------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **「扰动算子」有了明确含义（论文 §3.1/PreScreen）**                   | = 可复现角点级误导生成（非数据切分），Dev C 实现 `perturbation_operators.py`；IID 切分是独立的 `difficulty_split.py`                                     |
+| **新增 $d_t$ OOD 代理（论文 §2.8，HoHoNet shared latent kNN）**       | Dev C 新增 `compute_dt_score.py`；字段 `d_t` 与 `I_t^{OOD}` 写入 `merged_all.csv`，供 IID 应激切分与路由触发使用                                         |
+| **Worker 功能分组采用 3 类（Stable/Vulnerable/Noise）**               | Dev B 的「图 D」按二维坐标（$\mathrm{LCB}(r_u),S_u$）展示 3 类功能组；分组规则由预注册阈值与风险桶失效条件决定                                           |
+| **新增 Type 4 反例（字段缺失/NA + 元标签不合规）**                    | Type 4 拆成两类：①可由采集协议前移控制的“空选/互斥冲突”（提交时硬校验，记录被拦截次数作为过程证据）；②系统侧 NA/导出缺损（仍需在清洗输出中审计并披露）。 |
+| **`viz_quality_utils.py` 不存在，`save_quality_figures.py` 不可运行** | Dev B **主战场改为 notebook（`visualize_output_v2.ipynb`）而非补写 utils 模块**                                                                          |
+| **导师语音强调「process evidence + 中间结果」**                       | 每位 Dev 交付物必须能直接产出图（存 PNG，可引用进论文）                                                                                                  |
+| **`active_time` 日志审计表是口径 T 必报项**                           | Dev A 规范化字段输出（复用 `split_active_logs.py`）；Dev B 负责审计展示 Cell                                                                             |
 
 ---
 
 ## 3. 三人分工（Phase 1）
 
 ### 人员角色假设
+
 - **Dev A**（你）：熟悉 `analyze_quality.py`，负责数据清洗与核心指标计算
 - **Dev B**：负责可视化，**主战场为 `visualize_output_v2.ipynb`**（向该 notebook 追加新 cell 组）
 - **Dev C**：负责**扰动算子**（`perturbation_operators.py`，角点级可复现误导生成，PreScreen_semi 用）+ **IID 应激切分**（`difficulty_split.py`）+ 离线 replay 框架
@@ -133,11 +132,11 @@
 
 **3 类 Worker 功能分组（与论文提纲一致）：**
 
-| 分组 | 条件（预注册阈值） | 可视化符号 |
-|---|---|---|
-| Noise | `LCB(r_u) ≤ τ_{r,low}` 或 `S_u ≥ τ_{S,high}` | 灰色方块 |
-| Vulnerable | `LCB(r_u) > τ_{r,low}` 且 `S_u < τ_{S,high}`，并满足 `Δ_u ≥ τ_{gap}` 或存在高风险桶使 `LCB(r_u^{(b)}) ≤ τ_{r,low}` | 橙色三角 |
-| Stable | 不属于 Noise 与 Vulnerable 的其余 worker | 蓝色实心圆 |
+| 分组       | 条件（预注册阈值）                                                                                                 | 可视化符号 |
+| ---------- | ------------------------------------------------------------------------------------------------------------------ | ---------- |
+| Noise      | `LCB(r_u) ≤ τ_{r,low}` 或 `S_u ≥ τ_{S,high}`                                                                       | 灰色方块   |
+| Vulnerable | `LCB(r_u) > τ_{r,low}` 且 `S_u < τ_{S,high}`，并满足 `Δ_u ≥ τ_{gap}` 或存在高风险桶使 `LCB(r_u^{(b)}) ≤ τ_{r,low}` | 橙色三角   |
+| Stable     | 不属于 Noise 与 Vulnerable 的其余 worker                                                                           | 蓝色实心圆 |
 
 **接口约定（供 Dev B / C 使用）：**
 
@@ -231,9 +230,8 @@
    - 导出兜底校验：`tools/meta_label_guard.py`（对导出 JSON 生成 accepted/rejected 清单与原因统计；主分析输入默认只用 accepted，同时披露 reject rate）
 
 1. **`tools/perturbation_operators.py`**（新建，扰动算子实现；PreScreen_semi 硬前置）
-
    - **算子集合必须覆盖附录 A1 与 XML 的 `model_issue`：**
-    `acceptable`（No-op/轻微扰动）、`overextend_adjacent`、`corner_drift`、`corner_duplicate`、`underextend`、`over_parsing`、`topology_failure`、`fail`。
+     `acceptable`（No-op/轻微扰动）、`overextend_adjacent`、`corner_drift`、`corner_duplicate`、`underextend`、`over_parsing`、`topology_failure`、`fail`。
    - **冻结清单字段对齐附录 A1：**至少包含 `operator_id`、`lambda_level`、`seed`，并写入脚本版本哈希（可用 git commit hash 或文件 hash）。
 
    ```python
@@ -365,60 +363,61 @@
 
 **接口约定优先级（必须在 Week 1 对齐）：**
 
-| 字段 | 说明 | 由谁产出 |
-|---|---|---|
-| `r_u`, `r_u_lcb`, `r_u_ucb` | 全局可靠度 + BCa CI | Dev A |
-| `h_u` | 95% CI 半宽（`(r_u_ucb-r_u_lcb)/2`） | Dev A |
-| `S_u` | spammer score | Dev C → 回写给 Dev A 合并 |
-| `d_t` | OOD 风险代理（HOHONet kNN 均値距离） | Dev C → 写入 `merged_all.csv` |
-| `worker_group` | 3 类功能组标签（Stable/Vulnerable/Noise） | Dev A（阈值三人商定后预注册） |
-| `core_scene` | 最多4个核心场景标签 | Dev A（由 meta-label 共识频率确定） |
-| `r_u_s` | 场景特异可靠度 | Dev A（供 Dev B 画矩阵） |
+| 字段                        | 说明                                      | 由谁产出                            |
+| --------------------------- | ----------------------------------------- | ----------------------------------- |
+| `r_u`, `r_u_lcb`, `r_u_ucb` | 全局可靠度 + BCa CI                       | Dev A                               |
+| `h_u`                       | 95% CI 半宽（`(r_u_ucb-r_u_lcb)/2`）      | Dev A                               |
+| `S_u`                       | spammer score                             | Dev C → 回写给 Dev A 合并           |
+| `d_t`                       | OOD 风险代理（HOHONet kNN 均値距离）      | Dev C → 写入 `merged_all.csv`       |
+| `worker_group`              | 3 类功能组标签（Stable/Vulnerable/Noise） | Dev A（阈值三人商定后预注册）       |
+| `core_scene`                | 最多4个核心场景标签                       | Dev A（由 meta-label 共识频率确定） |
+| `r_u_s`                     | 场景特异可靠度                            | Dev A（供 Dev B 画矩阵）            |
 
 ---
 
 ## 5. Phase 1 里程碑
 
-| 周次 | Dev A | Dev B | Dev C |
-|---|---|---|---|
-| Week 1 | `clean_pipeline.py` 跫通，`merged_all.csv` 格式锁定（29 列） | 用 mock CSV 搞好 notebook 新 Cell 组 1–2 骨架 | **扰动算子 Week 1 闭环**：`perturbation_operators.py` 核心算子（`overextend_adjacent`/`corner_drift`/`corner_duplicate`）+ `freeze_plan` 输出字段对齐附录 A1；`PerturbationEngine.generate_batch` 在小样本上可复现；配合 WS‑P（Owner: Dev B）完成采集协议自动化 gate 的集成测试（XML/userscript/meta_label_guard） |
-| Week 2 | `compute_iaa`、LOO `r_u`（BCa bootstrap）函数通过单元测试 | Cell 组 3–4（IoU_edit 散点图、Type1–4 反例条形图）完成 | 低频算子（`underextend`/`over_parsing`/`topology_failure`/`fail`）小配额补齐；`compute_dt_score.py` 批量计算完成，`merged_all.csv` 中 `d_t` 字段可用；`difficulty_split.py` 跫通 |
-| Week 3 | Type1–4 flag 写入 CSV；`classify_worker_group`（3类）完成 | `plot_worker_scene_matrix.py`（表 C，局部失效标红）完成 | `PerturbationEngine.generate_batch` 批量生成验证；`offline_replay.py` 三策略跑通 |
-| Week 4 | `active_time` 审计表完成；测试覆盖率 >80% | Cell 组 5（审计表）+ `plot_worker_profile.py`（图 D）完成 | `compute_spammer_score.py` 输出 `S_u`；replay 对齐真实标注；集成测试通过 |
+| 周次   | Dev A                                                        | Dev B                                                     | Dev C                                                                                                                                                                                                                                                                                                              |
+| ------ | ------------------------------------------------------------ | --------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Week 1 | `clean_pipeline.py` 跫通，`merged_all.csv` 格式锁定（29 列） | 用 mock CSV 搞好 notebook 新 Cell 组 1–2 骨架             | **扰动算子 Week 1 闭环**：`perturbation_operators.py` 核心算子（`overextend_adjacent`/`corner_drift`/`corner_duplicate`）+ `freeze_plan` 输出字段对齐附录 A1；`PerturbationEngine.generate_batch` 在小样本上可复现；配合 WS‑P（Owner: Dev B）完成采集协议自动化 gate 的集成测试（XML/userscript/meta_label_guard） |
+| Week 2 | `compute_iaa`、LOO `r_u`（BCa bootstrap）函数通过单元测试    | Cell 组 3–4（IoU_edit 散点图、Type1–4 反例条形图）完成    | 低频算子（`underextend`/`over_parsing`/`topology_failure`/`fail`）小配额补齐；`compute_dt_score.py` 批量计算完成，`merged_all.csv` 中 `d_t` 字段可用；`difficulty_split.py` 跫通                                                                                                                                   |
+| Week 3 | Type1–4 flag 写入 CSV；`classify_worker_group`（3类）完成    | `plot_worker_scene_matrix.py`（表 C，局部失效标红）完成   | `PerturbationEngine.generate_batch` 批量生成验证；`offline_replay.py` 三策略跑通                                                                                                                                                                                                                                   |
+| Week 4 | `active_time` 审计表完成；测试覆盖率 >80%                    | Cell 组 5（审计表）+ `plot_worker_profile.py`（图 D）完成 | `compute_spammer_score.py` 输出 `S_u`；replay 对齐真实标注；集成测试通过                                                                                                                                                                                                                                           |
 
 ---
 
 ## 6. Phase 1 不做的事（留 Phase 2）
 
-| 功能 | 原因 | Phase 2 接口 |
-|---|---|---|
-| 插件化（Label Studio plugin / REST API 接口） | 导师明确列为 Phase 2 | 基于 Phase 1 `offline_replay.py` 协议扩展 |
-| 自动化检测（CI 触发的实时质量报警） | 需要部署环境，Phase 1 无实时数据流 | 利用 Phase 1 图表模块 + GitHub Actions |
+| 功能                                                                            | 原因                                                                                                                                      | Phase 2 接口                                              |
+| ------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------- | --------------------------------------------------------- |
+| 插件化（Label Studio plugin / REST API 接口）                                   | 导师明确列为 Phase 2                                                                                                                      | 基于 Phase 1 `offline_replay.py` 协议扩展                 |
+| 自动化检测（CI 触发的实时质量报警）                                             | 需要部署环境，Phase 1 无实时数据流                                                                                                        | 利用 Phase 1 图表模块 + GitHub Actions                    |
 | 扰动算子扩展（新增/改名的 `model_issue` 类型，如 `corner_flip` / `gap_insert`） | Phase 1 已按附录 A1 + Label Studio XML 的 alias 集合对齐实现；Phase 2 仅在 Pilot 新证据支持下新增类型或调整强度档位，并同步更新附录与 XML | 扩展 `perturbation_operators.py` + 更新附录 A1 + 同步 XML |
-| 加权共识 $w_u$ 裁剪优化（$w_{\max}$ K 折选择） | 需要 PreScreen 专家参考数据（尚未收集） | Phase 2 `calibration_pipeline.py` |
-| 反例库人工复核流程 | 需标注员参与，Phase 1 仅自动检测候选 | Phase 2 Label Studio 工单流 |
-| `save_quality_figures.py` 修复（`viz_quality_utils` 补写） | Phase 1 notebook 已满足绘图需求；修复成本高 | Phase 2 重构为独立 CLI 工具 |
+| 加权共识 $w_u$ 裁剪优化（$w_{\max}$ K 折选择）                                  | 需要 PreScreen 专家参考数据（尚未收集）                                                                                                   | Phase 2 `calibration_pipeline.py`                         |
+| 反例库人工复核流程                                                              | 需标注员参与，Phase 1 仅自动检测候选                                                                                                      | Phase 2 Label Studio 工单流                               |
+| `save_quality_figures.py` 修复（`viz_quality_utils` 补写）                      | Phase 1 notebook 已满足绘图需求；修复成本高                                                                                               | Phase 2 重构为独立 CLI 工具                               |
 
-
-
-*如需进一步细化某一模块的接口设计（例如 `PerturbationEngine` 的角点坐标格式约定、`difficulty_split.py` 的分位数阈值预注册方案、Worker×Scene 矩阵的图表样式），在本文档对应章节补充即可。三人须在 Week 1 结束前对齐：① `merged_all.csv` 的 29 列字段定义（之后锁定不变）；② `perturbation_plan_frozen.json` 的角点坐标格式（供扰动算子与 Label Studio 导入共用）。*
+_如需进一步细化某一模块的接口设计（例如 `PerturbationEngine` 的角点坐标格式约定、`difficulty_split.py` 的分位数阈值预注册方案、Worker×Scene 矩阵的图表样式），在本文档对应章节补充即可。三人须在 Week 1 结束前对齐：① `merged_all.csv` 的 29 列字段定义（之后锁定不变）；② `perturbation_plan_frozen.json` 的角点坐标格式（供扰动算子与 Label Studio 导入共用）。_
 
 ## 7. 交付导向的分工重构（补充说明）
 
 ### 核心目标
+
 - **目标 1**：Week 1 避免 Dev C 任务过载，将“采集协议硬校验/审计链路”独立成可验收入口。
 - **目标 2**：把 `ls_userscript.js` 的 meta-guard 与 `HOHONET_META_GUARD_*` schema 冻结成稳定接口，降低 1855 行文件耦合风险。
 - **目标 3**：将“算子 alias 与 XML choices”对齐从口头变成自动化硬门（`; operator name` 与 `label_studio_view_config.xml` 的 alias 集合一致）。
 - **目标 4**：每条工作流都需自带 gate checklist（文档 + 自动化测试 + 过程证据），防止“挡在门外就当没发生”。
 
 ### Workstream 划分与交付
-| Workstream | Owner | 核心交付 | 验收 gate |
-|---|---|---|---|
-| WS-P（Protocol & Audit） | Dev B | P1：审计日志与规则文档（`tools/README.md`）；P2：本地审计导出/聚合脚本；P3：`meta_label_guard.py` 与 `ls_userscript.js` 对齐测试；P4：聚合后的 reject stats 报告 | Gate：JSON schema 与 README 同步；`meta_label_guard.py --fail-on-reject` 在示例出口绿灯；每周边界报告附带 reject rate + reason distribution |
-| WS-E（Engine） | Dev C | E1：`perturbation_operators.py` + `perturbation_plan_frozen.json`；E2：`compute_dt_score.py` + `difficulty_split.py`；E3：`offline_replay.py` / `compute_spammer_score.py` | Gate：算子 alias 集合与 XML & 附录 A1 完全一致；`tests/test_perturbation_operators.py` 强制 seed 重现；`compute_dt_score` 在 Calibration_manual 上跑通；replay 策略输出带 hash log |
-| WS-R（Release & Verification） | Dev A | R1：字段冻结文档；R2：验收清单与 gate checklist；R3：三人对齐报告（risk log + status） | Gate：每次合并前必须有 gate checklist；`merged_all.csv` 字段变更需写入 README；审计报告附 process evidence（reject counts + gate status），WS-R 签字后才能合入 |
+
+| Workstream                     | Owner | 核心交付                                                                                                                                                                   | 验收 gate                                                                                                                                                                          |
+| ------------------------------ | ----- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| WS-P（Protocol & Audit）       | Dev B | P1：审计日志与规则文档（`tools/README.md`）；P2：本地审计导出/聚合脚本；P3：`meta_label_guard.py` 与 `ls_userscript.js` 对齐测试；P4：聚合后的 reject stats 报告           | Gate：JSON schema 与 README 同步；`meta_label_guard.py --fail-on-reject` 在示例出口绿灯；每周边界报告附带 reject rate + reason distribution                                        |
+| WS-E（Engine）                 | Dev C | E1：`perturbation_operators.py` + `perturbation_plan_frozen.json`；E2：`compute_dt_score.py` + `difficulty_split.py`；E3：`offline_replay.py` / `compute_spammer_score.py` | Gate：算子 alias 集合与 XML & 附录 A1 完全一致；`tests/test_perturbation_operators.py` 强制 seed 重现；`compute_dt_score` 在 Calibration_manual 上跑通；replay 策略输出带 hash log |
+| WS-R（Release & Verification） | Dev A | R1：字段冻结文档；R2：验收清单与 gate checklist；R3：三人对齐报告（risk log + status）                                                                                     | Gate：每次合并前必须有 gate checklist；`merged_all.csv` 字段变更需写入 README；审计报告附 process evidence（reject counts + gate status），WS-R 签字后才能合入                     |
 
 ### 协作与周节奏调整
+
 - `merged_all.csv` 继续作为 Single Source of Truth，字段定义必须在 Week 1 freeze，任何改动需登记 gate checklist。\
 - `HOHONET_META_GUARD_REJECTIONS / STATS` 结构写入 `tools/README.md` 并在 P1 中说明版本号与变更策略；聚合脚本读取该 JSON 并输出团队级审计。\
 - `perturbation_plan_frozen.json` 与 `perturbation_operators.py` 的 operator name ↔ alias 对齐由 WS-R 通过 `tests/test_operator_alias_alignment.py` 自动化检查。\

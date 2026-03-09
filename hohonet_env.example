@@ -1,0 +1,9 @@
+# HoHoNet log server environment (copy to /home/ubuntu/hohonet_env.sh)
+# 1. 密钥要与用户脚本 localStorage 中的 HOHONET_LOG_TOKEN 保持一致。
+export HOHONET_LOG_TOKEN="your-token-here"
+# 2. 选择要写入的目录，分服务器可以采用不同子文件夹。
+export ACTIVE_LOG_DIR="active_logs/new_server"
+# 3. 可选：调整端口、绑定 host
+export CORS_SERVER_PORT=8001
+# 如果你在多服务器部署，还可以宣告 identity（非必须）
+export HOHONET_SERVER_ID="175.178.71.217"

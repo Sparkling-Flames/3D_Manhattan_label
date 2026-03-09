@@ -220,19 +220,19 @@ ru_values[u] = [
 当前 `analyze_quality.py` 的 CSV 已额外输出以下 provenance 字段，供 stage-aware 审计使用：
 
 - `dataset_group_source`
-    - 当前值通常为 `cli_argument`，表示该列仍主要来自运行参数而非 export 原文。
+  - 当前值通常为 `cli_argument`，表示该列仍主要来自运行参数而非 export 原文。
 - `export_dataset_group`
-    - 若 export 的 `task.data.dataset_group` 存在，则原样保留。
+  - 若 export 的 `task.data.dataset_group` 存在，则原样保留。
 - `export_source_file` / `export_source_path`
-    - 标明该行来自哪份 export JSON。
+  - 标明该行来自哪份 export JSON。
 - `runtime_condition_source`
-    - 当前固定为 `derived_from_prediction_presence`。
+  - 当前固定为 `derived_from_prediction_presence`。
 - `active_time_source`
-    - `log / lead_time_fallback / missing`
+  - `log / lead_time_fallback / missing`
 - `active_time_match_status`
-    - 当前至少区分 direct log 与 fallback。
+  - 当前至少区分 direct log 与 fallback。
 - `lead_time_seconds`
-    - 明确保留 fallback 原值，避免与 log active time 混淆。
+  - 明确保留 fallback 原值，避免与 log active time 混淆。
 
 ### 2026-03-09 export inventory 补充
 
@@ -241,11 +241,11 @@ ru_values[u] = [
 新增输出目录：
 
 - `analysis_results/export_inventory_20260309/export_inventory_v1.csv`
-    - 每份 export 的 task/annotation 规模、schema 概况、run class、formal relevance、recommended_use。
+  - 每份 export 的 task/annotation 规模、schema 概况、run class、formal relevance、recommended_use。
 - `analysis_results/export_inventory_20260309/export_inventory_summary_v1.json`
-    - 汇总 counts 与文件级说明。
+  - 汇总 counts 与文件级说明。
 - `analysis_results/export_inventory_20260309/legacy_annotation_audit_v1.csv`
-    - 专门列出 `legacy_quality_only / mixed / malformed` annotation，供 exclusion / compat 审计。
+  - 专门列出 `legacy_quality_only / mixed / malformed` annotation，供 exclusion / compat 审计。
 
 这一步的含义不是“这些 export 可以直接拿去做正式主分析”，而是把当前 pilot 导出在 A 线中的用途固定下来：
 

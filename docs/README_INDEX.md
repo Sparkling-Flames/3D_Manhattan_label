@@ -32,7 +32,7 @@
 - [ANALYSIS_DATA_FLOW.md](ANALYSIS_DATA_FLOW.md)
   - 上游解析→门控→CSV 输出的字段与数据流。
 - [PROJECT_MAP_CLEAN_20260308.md](PROJECT_MAP_CLEAN_20260308.md)
-   - 当前主链的纯净入口地图。
+  - 当前主链的纯净入口地图。
 - [GATING_LOGIC_FINAL_SOLUTION.md](GATING_LOGIC_FINAL_SOLUTION.md)
   - 门控逻辑与选择偏差修正依据。
 - [TEST_PLAN_AND_REVIEW.md](TEST_PLAN_AND_REVIEW.md)
