@@ -1,0 +1,1227 @@
+Online crowdsourcing: rating annotators and obtaining cost-effective labels
+Peter Welinder
+Pietro Perona
+California Institute of Technology
+{welinder,perona}@caltech.edu
+Abstract
+Labeling large datasets has become faster, cheaper, and
+easier with the advent of crowdsourcing services like Ama-
+zon Mechanical Turk. How can one trust the labels ob-
+tained from such services? We propose a model of the la-
+beling process which includes label uncertainty, as well a
+multi-dimensional measure of the annotators’ ability. From
+the model we derive an online algorithm that estimates the
+most likely value of the labels and the annotator abilities.
+It ﬁnds and prioritizes experts when requesting labels, and
+actively excludes unreliable annotators. Based on labels
+already obtained, it dynamically chooses which images will
+be labeled next, and how many labels to request in order
+to achieve a desired level of conﬁdence. Our algorithm is
+general and can handle binary, multi-valued, and continu-
+ous annotations (e.g. bounding boxes). Experiments on a
+dataset containing more than 50,000 labels show that our
+algorithm reduces the number of labels required, and thus
+the total cost of labeling, by a large factor while keeping
+error rates low on a variety of datasets.
+1. Introduction
+Crowdsourcing, the act of outsourcing work to a large
+crowd of workers, is rapidly changing the way datasets are
+created. Not long ago, labeling large datasets could take
+weeks, if not months. It was necessary to train annotators
+on custom-built interfaces, often in person, and to ensure
+they were motivated enough to do high quality work. Today,
+with services such as Amazon Mechanical Turk (MTurk), it
+is possible to assign annotation jobs to hundreds, even thou-
+sands, of computer-literate workers and get results back in
+a matter of hours. This opens the door to labeling huge
+datasets with millions of images, which in turn provides
+great possibilities for training computer vision algorithms.
+The quality of the labels obtained from annotators varies.
+Some annotators provide random or bad quality labels in the
+hope that they will go unnoticed and still be paid, and yet
+others may have good intentions but completely misunder-
+stand the task at hand. The standard solution to the problem
+of “noisy” labels is to assign the same labeling task to many
+2
+25
+22
+26
+2
+25
+22
+26
+2
+25
+22
+26
+2
+25
+22
+26
+2
+25
+22
+26
+2
+25
+22
+26
+Figure 1. Examples of binary labels obtained from Amazon Me-
+chanical Turk, (see Figure 2 for an example of continuous labels).
+The boxes show the labels provided by four workers (identiﬁed by
+the number in each box); green indicates that the worker selected
+the image, red means that he or she did not. The task for each an-
+notator was to select only images that he or she thought contained
+a Black-chinned Hummingbird. Figure 5 shows the expertise and
+bias of the workers. Worker 25 has a high false positive rate, and
+22 has a high false negative rate. Worker 26 provides inconsistent
+labels, and 2 is the annotator with the highest accuracy. Photos
+in the top row were classiﬁed to contain a Black-chinned Hum-
+mingbird by our algorithm, while the ones in the bottom row were
+not.
+different annotators, in the hope that at least a few of them
+will provide high quality labels or that a consensus emerges
+from a great number of labels. In either case, a large number
+of labels is necessary, and although a single label is cheap,
+the costs can accumulate quickly.
+If one is aiming for a given label quality for the minimum
+time and money, it makes more sense to dynamically decide
+on the number of labelers needed. If an expert annotator
+provides a label, we can probably rely on it being of high
+quality, and we may not need more labels for that particular
+task. On the other hand, if an unreliable annotator provides
+a label, we should probably ask for more labels until we ﬁnd
+an expert or until we have enough labels from non-experts
+to let the majority decide the label.
+1
+brought to you by
+CORE
+View metadata, citation and similar papers at core.ac.uk
+provided by Caltech Authors - Main
+
+---PAGE---
+
+We present an online algorithm to estimate the reliability
+or expertise of the annotators, and to decide how many la-
+bels to request per image based on who has labeled it. The
+model is general enough to handle many different types of
+annotations, and we show results on binary, multi-valued,
+and continuous-valued annotations collected from MTurk.
+The general annotator model is presented in Section 3
+and the online version in Section 4.
+Adaptations of the
+model to discrete and continuous annotations are discussed
+in Section 5. The datasets are described in Section 6, the
+experiments in Section 7, and we conclude in Section 8.
+2. Related Work
+The quality of crowdsourced labels (also called annotations
+or tags) has been studied before in different domains. In
+computer vision, the quality of annotations provided by
+MTurk workers and by volunteers has been explored for a
+wide range of annotation types [8, 4]. In natural language
+processing, Snow et al. [7] gathered labels from MTurk and
+compared the quality to ground truth.
+The most common method for obtaining ground truth an-
+notations from crowdsourced labels is by applying a major-
+ity consensus heuristic. This has been taken one step further
+by looking at the consistency between labelers. For multi-
+valued annotations, Dawid and Skene [1] modeled the in-
+dividual annotator accuracy by a confusion matrix. Sheng
+et al. [5] also modeled annotator quality, and showed how
+repeated and selective labeling increased the overall label-
+ing quality on synthetic data. Smyth et al. [6] integrated
+the opinions of many experts to determine a gold standard,
+and Spain and Perona [9] developed a method for combin-
+ing prioritized lists obtained from different annotators. Us-
+ing annotator consistency to obtain ground truth has also
+been used in the context of paired games and CAPTCHAs
+[11, 12]. Whitehill et al. [14] consider the difﬁculty of the
+task and the ability of the annotators. Annotator models
+have also been used to train classiﬁers with noisy labels [3].
+Vijayanarasimhan and Grauman [10] proposed a system
+which actively asks for image labels that are the most infor-
+mative and cost effective. To our knowledge, the problem
+of online estimation of annotator reliabilities has not been
+studied before.
+3. Modeling Annotators and Labels
+We assume that each image i has an unknown “target value”
+which we denote by zi. This may be a continuous or dis-
+crete scalar or vector. The set of all N images, indexed
+by image number, is I = {1, . . . , N}, and the set of corre-
+sponding target values is abbreviated z = {zi}N
+i=1. The reli-
+ability or expertise of annotator j is described by a vector of
+parameters, aj. For example, it can be scalar, aj = aj, such
+as the probability that the annotator provides a correct label;
+Figure 2. Examples of bounding boxes (10 per image) obtained
+from MTurk workers who were instructed to provide a snug ﬁt.
+Per our model, the green boxes are correct and the red boxes in-
+correct. Most workers provide consistent labels, but two unreliable
+workers stand out: no. 53 and 58 (they provided two of the incor-
+rect boxes in each image). As can be seen from Figure 6c, most of
+the labels provided by these two workers were of low quality.
+speciﬁc annotator parameterizations are discussed in Sec-
+tion 5. There are M annotators in total, A = {1, . . . , M},
+and the set of their parameter vectors is a = {aj}M
+j=1. Each
+annotator j provides labels Lj = {lij}i∈Ij for all or a sub-
+set of the images, Ij ⊆I. Likewise, each image i has la-
+bels Li = {lij}j∈Ai provided by a subset of the annotators
+Ai ⊆A. The set of all labels is denoted L. For simplicity,
+we will assume that the labels lij belong to the same set as
+the underlying target values zi; this assumption could, in
+principle, be relaxed.
+Our causal model of the labeling process is shown
+schematically in Figure 3.
+The image target values and
+annotator parameters are assumed to be generated inde-
+pendently. To ensure that the estimation process degrades
+gracefully with little available label data, we take the
+Bayesian point of view with priors on zi and aj parameter-
+ized by ζ and α respectively. The priors encode our prior
+belief of how skilled the annotators are (e.g. that half will be
+experts and the rest unskilled), and what kind of target val-
+ues we expect. The joint probability distribution can thus
+be factorized as
+p(L, z, a) =
+N
+Y
+i=1
+p(zi | ζ)
+M
+Y
+j=1
+p(aj | α)
+Y
+lij∈L
+p(lij | zi, aj).
+(1)
+Inference:
+Given the observed variables, that is, the la-
+bels L, we would like to infer the hidden variables, i.e. the
+target values z, as well as the annotator parameters a. This
+
+---PAGE---
+
+lij
+zi
+aj
+α
+ζ
+i, j
+M
+N
+|L|
+Figure 3. Plate representation of the general model. The i, j pair
+in the middle plate, indicating which images each annotator labels,
+is determined by some process that depends on the algorithm (see
+Sections 3–4).
+can be done using a Bayesian treatment of the Expectation-
+Maximization (EM) algorithm [2].
+E-step: Assuming that we have a current estimate ˆa of
+the annotator parameters, we compute the posterior on the
+target values:
+ˆp(z) = p(z | L, ˆa) ∝p(z) p(L | z, ˆa) =
+N
+Y
+i=1
+ˆp(zi),
+(2)
+where
+ˆp(zi) = p(zi | ζ)
+Y
+j∈Ai
+p(lij | zi, ˆaj).
+(3)
+M-step: To estimate the annotator parameters a, we
+maximize the expectation of the logarithm of the posterior
+on a with respect to ˆp(zi) from the E-step. We call the aux-
+iliary function being maximized Q(a, ˆa). Thus the optimal
+a⋆is found from
+a⋆= arg max
+a
+Q(a, ˆa),
+(4)
+where ˆa is the estimate from the previous iteration, and
+Q(a, ˆa) = Ez [log p(L | z, a) + log p(a | α)]
+(5)
+=
+M
+X
+j=1
+Qj(aj, ˆaj),
+(6)
+where Ez[·] is the expectation with respect to ˆp(z) and
+Qj(aj, ˆaj) is deﬁned as
+Qj(aj, ˆaj) = log p(aj | α) +
+X
+i∈Ij
+Ezi [log p(lij | zi, aj)] . (7)
+Hence, the optimization can be carried out separately for
+each annotator, and relies only on the labels that the anno-
+tator provided. It is clear from the form of (3) and (7) that
+any given annotator is not required to label every image.
+Input: Set of images U to be labeled
+1: Initialize I, L, E, B = {∅}
+2: while |I| < |U| do
+3:
+Add n images {i : i ∈(U \ I)} to I
+4:
+for i ∈I do
+5:
+Compute ˆp(zi) from Li and a
+6:
+while maxzi ˆp(zi) < τ and |Li| < m do
+7:
+Ask expert annotators j ∈E to provide a label lij
+8:
+if no label lij is provided within time T then
+9:
+Obtain label lij from some annotator j ∈(A′ \ B)
+10:
+Li ←{Li ∪lij}, A ←{A ∪{j}}
+11:
+Recompute ˆp(zi) from updated Li and a
+12:
+Set E, B = {∅}
+13:
+for j ∈A do
+14:
+Estimate aj from ˆp(zi) by maxaj Qj(aj, ˆaj)
+15:
+if var(aj) < θv then
+16:
+if aj satisﬁes an expert criterion then
+17:
+E ←{E ∪{j}}
+18:
+else
+19:
+B ←{B ∪{j}}
+20: Output ˆp(z) and a
+Figure 4. Online algorithm for estimating annotator parameters
+and actively choosing which images to label. The label collec-
+tion step is outlined on lines 3–11, and the annotator evaluation
+step on lines 12–19. See Section 4 for details.
+4. Online Estimation
+The factorized form of the general model in (1) allows for
+an online implementation of the EM-algorithm. Instead of
+asking for a ﬁxed number of labels per image, the online
+algorithm actively asks for labels only for images where the
+target value is still uncertain. Furthermore, it ﬁnds and pri-
+oritizes expert annotators and blocks sloppy annotators on-
+line. The algorithm is outlined in Figure 4 and discussed in
+detail in the following paragraphs.
+Initially, we are faced with a set of images U with un-
+known target values z. The set I ⊆U denotes the set of im-
+ages for which at least one label has been collected and L is
+the set of all labels provided so far. Initially I and the set of
+all labels L are empty. We assume that there is a large pool
+of annotators A′, of different and unknown ability, available
+to provide labels. The set of annotators that have provided
+labels so far is denoted A ⊆A′ and is initially empty. We
+keep two lists of annotators: the expert-list, E ⊆A, is a
+set of annotators who we trust to provide good labels, and
+the bot-list, B ⊆A, are annotators that we know provide
+low quality labels and would like to exclude from further
+labeling. We call the latter list “bot”-list because the labels
+could as well have been provided by a robot choosing la-
+bels at random. The algorithm proceeds by iterating two
+steps until all the images have been labeled: (1) the label
+collection step, and (2) the annotator evaluation step.
+Label collection step: I is expanded with n new images
+from U. Next, the algorithm asks annotators to label the
+images in I. First annotators in E are asked. If no annotator
+from E is willing to provide a label within a ﬁxed amount
+
+---PAGE---
+
+of time T, the label is instead collected from an annotator in
+(A′ \B). For each image i ∈I, new labels lij are requested
+until either the posterior on the target value zi is above a
+conﬁdence threshold τ,
+max
+zi
+ˆp(zi) > τ,
+(8)
+or the number of labels |Li| has reached a maximum cutoff
+m. It is also possible to set different thresholds for different
+zi’s, in which case we can trade off the costs of different
+kinds of target value misclassiﬁcations. The algorithm pro-
+ceeds to the annotator evaluation step.
+Annotator evaluation step: Since posteriors on the im-
+age target values ˆp(zi) are computed in the label collection
+step, the annotator parameters can be estimated in the same
+manner as in the M-step in the EM-algorithm, by maximiz-
+ing Qj(aj, ˆaj) in (7). Annotator j is put in either E or B if
+a measure of the variance of aj is below a threshold,
+var(aj) < θv,
+(9)
+where θv is the threshold on the variance. If the variance is
+above the threshold we do not have enough evidence to con-
+sider the annotator to be an expert or a bot (unreliable anno-
+tator). If the variance is below the threshold, we place the
+annotator in E if aj satisﬁes some expert criterion based on
+the annotation type, otherwise the annotator will be placed
+in B and excluded labeling in the next iteration.
+On MTurk the expert- and bot-lists can be implemented
+by using “qualiﬁcations”. A qualiﬁcation is simply a pair of
+two numbers, a unique qualiﬁcation id number and a scalar
+qualiﬁcation score, that can be applied to any worker. The
+qualiﬁcations can then be used to restrict (by inclusion or
+exclusion) which workers are allowed to work on a particu-
+lar task.
+5. Annotation Types
+Binary annotations
+are often used for classiﬁcation, such
+as “Does the image contain an object from the visual class
+X or not?”. In this case, both the target value zi and the la-
+bel lij are binary (dichotomous) scalars that can take values
+zi, lij ∈{0, 1}. A natural parameterization of the annota-
+tors is in terms of true negative and true positive rates. That
+is, let aj = (a0
+j, a1
+j)T be the vector of annotator parameters,
+where
+p(lij = 1 | zi = 1, aj) = a1
+j,
+p(lij = 0 | zi = 0, aj) = a0
+j.
+(10)
+As a prior for aj we chose a mixture of beta distributions,
+p(a0
+j, a1
+j) =
+K
+X
+k=1
+πa
+k Beta(α0
+k,0, α1
+k,0) Beta(α0
+k,1, α1
+k,1).
+(11)
+Our prior belief of the number of different types of anno-
+tators is encoded in the number of components K. For ex-
+ample, we can assume K = 2 kinds of annotators: hon-
+est annotators of different grades (unreliable to experts) are
+modeled by Beta densities that are increasingly peaked to-
+wards one, and adversarial annotators who provide labels
+that are opposite of the target value are modeled by Beta
+distributions that are peaked towards zero (we have actually
+observed such annotators). The prior also acts as a regu-
+larizer in the EM-algorithm to ensure we do not classify an
+annotator as an expert until we have enough evidence.
+The parameterization of true positive and true negative
+rates allows us to cast the model in a signal detection the-
+oretic framework [15], which provides a more natural sep-
+aration of annotator bias and accuracy. Assume a signal xi
+is generated in the head of the annotator as a result of some
+neural processing when the annotator is looking at image i.
+If the signal xi is above a threshold tj, the annotator chooses
+lij = 1, otherwise picking lij = 0. If we assume that the
+signal xi is a random variable generated from one of two
+distributions, p(xi | zi = k) ∼N(µk
+j , σ2), we can com-
+pute the annotator’s sensitivity index d′
+j, deﬁned as [15],
+d′
+j = |µ1
+j −µ0
+j|
+σ
+.
+(12)
+Notice that d′
+j is a quantity representing the annotator’s
+ability to discriminate images belonging to the two classes,
+while tj is a quantity representing the annotator’s propen-
+sity towards label 1 (low tj) or label 0 (high tj). By varying
+tj and recording the false positive and false negative rates,
+we get the receiver operating characteristic (ROC curve) of
+the annotator. When tj = 0 then the annotator is unbiased
+and will produce equal false positive and negative error rates
+of 50%, 31%, 15% and 6% for d′
+j = {0, 1, 2, 3} respec-
+tively. It is possible go between the two parameterizations
+if we assume that σ is the same for all annotators. For ex-
+ample, by assuming σ = 1, µ0
+j = −d′
+j/2 and µ1
+j = d′
+j/2,
+we can convert between the two representations using,
+1
+1
+2
+1
+−1
+2
+ tj
+d′
+j
+
+=
+
+Φ−1(a0
+j)
+Φ−1(1 −a1
+j)
+
+,
+(13)
+where Φ−1(·) is the inverse of the standard normal cumula-
+tive probability density function.
+For binary labels, the stopping criterion in (8) has a very
+simple form. Consider the logarithm of the ratio of the pos-
+teriors,
+Ri = log p(zi = 1 | Li, a)
+p(zi = 0 | Li, a) = log p(zi = 1)
+p(zi = 0)+
+X
+lij∈Li
+Rij, (14)
+where Rij = log p(lij|zi=1,aj)
+p(lij|zi=0,aj). Thus, every label lij pro-
+vided for image i by some annotator j adds another positive
+or negative term Rij to the sum in (14). The magnitude
+
+---PAGE---
+
+|Rij| increases with d′
+j, so that the opinions of expert anno-
+tators are valued more than unreliable ones. The criterion in
+(8) is equivalent to a criterion on the magnitude on the log
+ratio,
+|Ri| > τ ′ where τ ′ = log
+τ
+1 −τ .
+(15)
+Observe that τ ′ could be different for positive and negative
+Ri. One would wish to have different thresholds if one had
+different costs for false alarm and false reject errors. In this
+case, the stopping criterion is equivalent to Wald’s stopping
+rule for accepting or rejecting the null hypothesis in the Se-
+quential Probability Ratio Test (SPRT) [13].
+To decide when we are conﬁdent in an estimate of aj, in
+the online algorithm, we estimate the variance var(aj) by
+ﬁtting a multivariate Gaussian to the peak of p(aj | L, z).
+As a criterion for expertise, i.e. whether to add annotator j
+to E, we use d′
+j > 2 corresponding to a 15% error rate.
+Multi-valued annotations
+where zi, lij ∈{1, . . . , D},
+can be modeled in almost the same way as binary anno-
+tations. A general method is presented in [1] for a full con-
+fusion matrix. However, we used a simpler model where a
+single aj parameterizes the ability of the annotator,
+p(lij = zi | aj) = aj,
+(16)
+p(lij ̸= zi | aj) = 1 −aj
+D −1 .
+Thus, the annotator is assumed to provide the correct value
+with probability aj and an incorrect value with probabil-
+ity (1 −aj). Using this parameterization, the methods de-
+scribed above can be applied to the multi-valued (polychto-
+mous) case.
+Continuous-valued annotations
+are also possible.
+To
+make this section concrete, and for simplicity of notation,
+we will use bounding boxes, see Figure 2. However, the
+techniques used here can be extended to other types of an-
+notations, such as object locations, segmentations, ratings,
+etc.
+The image labels and target values are the locations of
+the upper left (x1, y1) and lower right (x2, y2) corners of
+the bounding box, and thus zi and lij are 4-dimensional
+vectors of continuous variables (x1, y1, x2, y2)T. The anno-
+tator behavior is assumed to be governed by a single param-
+eter aj ∈[0, 1], which is the probability that the annotator
+attempts to provide an honest label. The annotator provides
+a “random” bounding box with probability (1 −aj). An
+honest label is assumed to be normally distributed from the
+target value
+p(lij | zi) = N(lij | zi, Σ),
+(17)
+where Σ = σ2I is assumed to be a diagonal. One can take
+the Bayesian approach and have a prior on σ, and let it vary
+for different images. However, for simplicity we choose
+to keep σ ﬁxed at 4 pixels (in screen coordinates). If the
+annotator decides not to provide an honest label, the label is
+assumed to be drawn from a uniform distribution,
+p(lij | zi) = λ−2
+i ,
+(18)
+where λi is the area of image i (other variants, such as a
+very broad Gaussian, are also possible). The posterior on
+the label, used in the E-step in (2), can thus be written as a
+mixture,
+p(lij | zi, aj) = ajN(lij | zi, Σ) + (1 −aj) 1
+λ2 .
+(19)
+The prior on zi is modeled by a uniform distribution over
+the image area, p(zi) = λ−2
+i , implying that we expect
+bounding boxes anywhere in the image. Similarly to the
+binary case, the prior on aj is modeled as a Beta mixture,
+p(aj) =
+K
+X
+k=1
+πa
+kBeta(α0
+k, α1
+k),
+(20)
+to account for at different groups of annotators of different
+skills. We used two components, one for experts (peaked at
+high aj) and another for unreliable annotators (broader, and
+peaked at a lower aj).
+In the EM-algorithm we approximate the posterior on zi
+by a delta function,
+ˆp(zi) = p(zi | Li, ˆaj) = δ(ˆzi),
+(21)
+where ˆzi is the best estimate of zi, to avoid slow sampling to
+compute the expectation in the E-step. This approach works
+well in practice since ˆp(zi) is usually very peaked around a
+single value of zi.
+6. Datasets
+Object Presence: To test the general model applied to bi-
+nary annotations, we asked workers on MTurk to select im-
+ages if they thought the image contained a bird of a certain
+species, see Figure 1. The workers were shown a few ex-
+ample illustrations of birds of the species in different poses.
+We collected labels for two different bird species, Presence-
+1 (Black-chinned Hummingbird) and Presence-2 (Reddish
+Egret), summarized in Table 1.
+Attributes: As an example of a multi-valued annotation,
+we asked workers to pick one out of D mutually exclu-
+sive choices for the shape of a bird shown in a photograph
+(Attributes-1, D = 14) and for the color pattern of its tail
+(Attributes-2, D = 4). We obtained 5 labels per image for
+a total of 6,033 images, see Table 1.
+Bounding Boxes: The workers were asked to draw a
+tightly ﬁtting bounding box around the bird in each image
+(details in Table 1). Although it is possible to extend the
+model to multiple boxes per image, we ensured that there
+was exactly one bird in each image to keep things simple.
+See Figure 2 for some examples.
+
+---PAGE---
+
+0
+0.2
+0.4
+0.6
+0.8
+1
+0
+0.2
+0.4
+0.6
+0.8
+1
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+aj
+0 (prob of true reject)
+aj
+1 (prob of true accept)
+(a) false positive/negative rates
+−2
+−1
+0
+1
+2
+0.5
+1
+1.5
+2
+2.5
+3
+3.5
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+tj
+d’j
+(b) accuracy and bias
+10
+2
+10
+3
+10
+−4
+10
+−3
+10
+−2
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+no. of images labeled
+variance of aj estimate
+(c) variance in dj’ estimate
+Figure 5. Estimates of expertise and bias in annotators providing binary labels. Annotators are plotted with different symbols and numbers
+to make them easier to locate across the plots. (a) Estimated true negative and positive rates (a0
+j, a1
+j). The dotted curves show the ROC
+curves for d′
+j = {0, 1, 2, 3}. (b) Estimated tj and d′
+j from the data in (a). The accuracy of the annotator increases with d′
+j and the bias is
+reﬂected in tj. For example, if tj is positive, the annotator has a high correct rejection rate at the cost of some false rejections, see Figure 1
+for some speciﬁc examples. The outlier annotator, no. 47 in (a), with negative d′
+j, indicating adversarial labels, was excluded from the
+plot. (c) The variance of the (a0
+j, a1
+j) decreases quickly with the number of images labeled. These diagrams show the estimates for the
+Presence-1 workers; Presence-2 gave very similar results.
+0
+5
+10
+0.5
+1
+1.5
+2
+2.5
+3
+3.5
+no. of workers
+10
+2
+10
+3
+0.5
+1
+1.5
+2
+2.5
+3
+3.5
+1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+no. of images labeled
+d’j
+(a) Binary: Object Presence
+0
+50
+100
+0
+0.2
+0.4
+0.6
+0.8
+1
+no. of workers
+10
+1
+10
+2
+10
+3
+0
+0.2
+0.4
+0.6
+0.8
+1
+no. of images labeled
+aj
+(b) Multi−valued: Attributes
+0
+20
+40
+0
+0.2
+0.4
+0.6
+0.8
+1
+no. of workers
+10
+0
+10
+1
+10
+2
+10
+3
+0
+0.2
+0.4
+0.6
+0.8
+1
+53
+58
+no. of images labeled
+aj
+(c) Continuous: Bounding Box
+Figure 6. Quality index for each annotator vs. number of labeled images across the three annotation types. Annotators are plotted with
+different symbols and colors for easier visual separation. The bar chart to the right of each scatter plot is a histogram of the number of
+workers with a particular accuracy. (a) Object Presence: Shows results for Presence-1, Presence-2 is very similar. The minimum number
+of images a worker can label is 36, which explains the group of workers near the left edge. The adversarial annotator, no. 47, provided 36
+labels and is not shown. (b) Attributes: results on Attributes-1. The corresponding plot for Attributes-2 is very similar. (c) Bounding box:
+Note that only two annotators, 53 and 58, labeled all 911 images. They also provided consistently worse labels than the other annotators.
+Figure 2 shows examples of the bounding boxes they provided.
+7. Experiments and Discussion
+To establish the skills of annotators on MTurk, we applied
+the general annotator model to the datasets described in Sec-
+tion 6 and Table 1. We ﬁrst estimated aj on the full datasets
+(which we call batch). We then estimated both the aj and
+zi using the online algorithm, as described in the last part
+of this section.
+Annotator bias: The results of the batch algorithm ap-
+plied to the Presence-1 dataset is shown in Figure 5. Dif-
+ferent annotators fall on different ROC curves, with a bias
+towards either more false positives or false negatives. This
+is even more explicit in Figure 5b, where d′
+j is a measure of
+expertise and tj of the bias. What is clear from these ﬁgures
+is that most annotators, no matter their expertise, have some
+bias. Examples of bias for a few representative annotators
+and images are shown in Figure 1. Bias is something to keep
+in mind when designing annotation tasks, as the wording of
+a question presumably inﬂuences workers. In our experi-
+ments most the annotators seemed to prefer false negatives
+to false positives.
+Annotator accuracy: Figure 6 shows how the accu-
+racy of MTurk annotators varies with the number of images
+they label for different annotation types. For the Presence-1
+dataset, the few annotators that labeled most of the avail-
+able images had very different d′
+j. For Attributes-1, on the
+other hand, the annotators that labeled most images have
+very similar aj. In the case of the bounding box annota-
+
+---PAGE---
+
+Dataset
+Images
+Assignments
+Workers
+Presence-1
+1,514
+15
+47
+Presence-2
+2,401
+15
+54
+Attributes-1
+6,033
+5
+507
+Attributes-2
+6,033
+5
+460
+Bounding Boxes
+911
+10
+85
+Table 1. Summary of the datasets collected from Amazon Mechan-
+ical Turk showing the number of images per dataset, the number of
+labels per image (assignments), and total number of workers that
+provided labels. Presence-1/2 are binary labels, and Attributes-1/2
+are multi-valued labels.
+0
+2
+4
+6
+8
+10
+10
+−3
+10
+−2
+10
+−1
+no. of assignments per image
+error rate
+majority
+GLAD
+ours (batch)
+Figure 7. Comparison between the majority rule, GLAD [14], and
+our algorithm on synthetic data as the number of assignments per
+image is increased. The synthetic data is generated by the model
+in Section 5 from the worker parameters estimated in Figure 5a.
+tions, most annotators provided good labels, except for no.
+53 and 58. These two annotators were also the only ones to
+label all available images. In all three subplots of Figure 6,
+most workers provide only a few labels, and only some very
+active annotators label more than 100 images. Our ﬁndings
+in this ﬁgure are very similar to the results presented in Fig-
+ure 6 of [7].
+Importance of discrimination: The results in Figure 6
+point out the importance of online estimation of aj and the
+use of expert- and bot-lists for obtaining labels on MTurk.
+The expert-list is needed to reduce the number of labels per
+image, as we can be more sure of the quality of the labels re-
+ceived from experts. Furthermore, without the expert-list to
+prioritize which annotators to ask ﬁrst, the image will likely
+be labeled by a new worker, and thus the estimate of aj for
+that worker will be very uncertain. The bot-list is needed to
+discriminate against sloppy annotators that will otherwise
+annotate most of the dataset in hope to make easy money,
+as shown by the outliers (no. 53 and 58) in Figure 6c.
+Performance of binary model: We compared the per-
+formance of the annotator model applied to binary data, de-
+scribed in Section 5, to two other models of binary data, as
+the number of available labels per image, m, varied. The
+ﬁrst method was a simple majority decision rule and the
+second method was the GLAD-algorithm presented in [14].
+Since we did not have access to the ground truth labels of
+2
+4
+6
+8
+10
+12
+14
+0
+0.02
+0.04
+0.06
+0.08
+0.1
+0.12
+error rate
+labels per image
+Presence−1
+batch
+online
+2
+4
+6
+8
+10
+12
+14
+labels per image
+Presence−2
+batch
+online
+Figure 8. Error rates vs. the number of labels used per image on
+the Presence datasets for the online algorithm and the batch ver-
+sion. The ground truth was the estimates when running the batch
+algorithm with all 15 labels per image available (thus batch will
+have zero error at 15 labels per image).
+the datasets, we generated synthetic data, where we knew
+the ground truth, as follows: (1) We used our model to es-
+timate aj for all 47 annotators in the Presence-1 dataset.
+(2) For each of 2000 target values (half with zi = 1), we
+sampled labels from m randomly chosen workers, where
+the labels were generated according to the estimated aj and
+Equation 10. As can be seen from Figure 7, our model
+achieves a consistently lower error rate on synthetic data.
+Online algorithm: We simulated running the online al-
+gorithm on the Presence datasets obtained using MTurk and
+used the result from the batch algorithm as ground truth.
+When the algorithm requested labels for an image, it was
+given labels from the dataset (along with an identiﬁer for
+the worker that provided it) randomly sampled without re-
+placement. If it requested labels from the expert-list for a
+particular image, it only received such a label if a worker
+in the expert-list had provided a label for that image, other-
+wise it was randomly sampled from non bot-listed workers.
+A typical run of the algorithm on the Presence-1 dataset is
+shown in Figure 9. In the ﬁrst few iterations, the algorithm
+is pessimistic about the quality of the annotators, and re-
+quests up to m = 15 labels per image. As the evidence
+accumulates, more workers are put in the expert- and bot-
+lists, and the number of labels requested by the algorithm
+decreases. Notice in the ﬁgure that towards the ﬁnal itera-
+tions, the algorithm samples only 2–3 labels for some im-
+ages.
+To get an idea of the performance of the online algo-
+rithm, we compared it to running the batch version from
+Section 3 with limited number of labels per image. For the
+Presence-1 dataset, the error rate of the online algorithm is
+almost three times lower than the general algorithm when
+using the same number of labels per image, see Figure 8.
+For the Presence-2 dataset, twice as many labels per image
+are needed for the batch algorithm to achieve the same per-
+formance as the online version.
+
+---PAGE---
+
+images (sorted by iteration)
+0
+1500
+requested labels
+Figure 9. Progress of the online algorithm on a random permuta-
+tion of the Presence-1 dataset. See Section 7 for details.
+It is worth noting that most of the errors made by the on-
+line algorithm are on images where the intrinsic uncertainty
+of the ground truth label is high, i.e. |Ri| as estimated by
+the full model using all 15 labels per image is large. In-
+deed, counting errors only for images where |Ri| > 2 (us-
+ing log base 10), which includes 92% of the dataset, makes
+the error of the online algorithm drop to 0.75% ± 0.04% on
+Presence-1. Thus, the performance clearly depends on the
+task at hand. If the task is easy, and most annotators agree,
+it will require few labels per image. If the task is difﬁcult,
+such that even experts disagree, it will request many labels.
+The tradeoff between the number of labels requested and
+the error rate depends on the parameters used. Through-
+out our experiments, we used m = 15, n = 20, τ ′ = 2,
+θv = 8 × 10−3.
+8. Conclusions
+We have proposed an online algorithm to determine the
+“ground truth value” of some property in an image from
+multiple noisy annotations. As a by-product it produces an
+estimate of annotator expertise and reliability. It actively se-
+lects which images to label based on the uncertainty of their
+estimated ground truth values, and the desired level of conﬁ-
+dence. We have shown how the algorithm can be applied to
+different types of annotations commonly used in computer
+vision: binary yes/no annotations, multi-valued attributes,
+and continuous-valued annotations (e.g. bounding boxes).
+Our experiments on MTurk show that the quality of an-
+notators varies widely in a continuum from highly skilled to
+almost random. We also ﬁnd that equally skilled annotators
+differ in the relative cost they attribute to false alarm errors
+and to false reject errors. Our algorithm can estimate this
+quantity as well.
+Our algorithm minimizes the labeling cost by assigning
+the labeling tasks preferentially to the best annotators. By
+combining just the right number of (possibly noisy) labels
+it deﬁnes an optimal ‘virtual annotator’ that integrates the
+real annotators without wasting resources. Thresholds in
+this virtual annotator may be designed optimally to trade
+off the cost of obtaining one more annotation with the cost
+of false alarms and the cost of false rejects. Future work
+includes dynamic adjustment of the price paid per annota-
+tion to reward high quality annotations and to inﬂuence the
+internal thresholds of the annotators.
+Acknowledgments
+We thank Catherine Wah, Florian Schroff, Steve Branson, and Serge
+Belongie for motivation, discussions and help with the data collection.
+We also thank Piotr Doll´ar, Merrielle Spain, Michael Maire, and Kris-
+ten Grauman for helpful discussions and feedback. This work was sup-
+ported by ONR MURI Grant #N00014-06-1-0734 and ONR/Evolution
+Grant #N00173-09-C-4005.
+References
+[1] A. P. Dawid and A. M. Skene. Maximum likelihood estimation of ob-
+server error-rates using the em algorithm. J. Roy. Statistical Society,
+Series C, 28(1):20–28, 1979. 2, 5
+[2] A. Dempster, N. Laird, D. Rubin, et al. Maximum likelihood from
+incomplete data via the EM algorithm. J. Roy. Statistical Society,
+Series B, 39(1):1–38, 1977. 3
+[3] V. Raykar, S. Yu, L. Zhao, A. Jerebko, C. Florin, G. Valadez, L. Bo-
+goni, and L. Moy.
+Supervised Learning from Multiple Experts:
+Whom to trust when everyone lies a bit. In ICML, 2009. 2
+[4] B. C. Russell, A. Torralba, K. P. Murphy, and W. T. Freeman. La-
+belme: A database and web-based tool for image annotation. Int. J.
+Comput. Vis., 77(1–3):157–173, 2008. 2
+[5] V. S. Sheng, F. Provost, and P. G. Ipeirotis. Get another label? im-
+proving data quality and data mining using multiple, noisy labelers.
+In KDD, 2008. 2
+[6] P. Smyth, U. Fayyad, M. Burl, P. Perona, and P. Baldi. Inferring
+ground truth from subjective labelling of Venus images. NIPS, 1995.
+2
+[7] R. Snow, B. O’Connor, D. Jurafsky, and A. Y. Ng. Cheap and fast -
+but is it good? evaluating non-expert annotations for natural language
+tasks. In EMNLP, 2008. 2, 7
+[8] A. Sorokin and D. Forsyth.
+Utility data annotation with amazon
+mechanical turk.
+In First IEEE Workshop on Internet Vision at
+CVPR’08, 2008. 2
+[9] M. Spain and P. Perona. Some objects are more equal than others:
+measuring and predicting importance. In ECCV, 2008. 2
+[10] S. Vijayanarasimhan and K. Grauman. What’s it going to cost you?:
+Predicting effort vs. informativeness for multi-label image annota-
+tions. In CVPR, pages 2262–2269, 2009. 2
+[11] L. von Ahn and L. Dabbish.
+Labeling images with a computer
+game. In SIGCHI conference on Human factors in computing sys-
+tems, pages 319–326, 2004. 2
+[12] L. von Ahn, B. Maurer, C. McMillen, D. Abraham, and M. Blum.
+reCAPTCHA: Human-based character recognition via web security
+measures. Science, 321(5895):1465–1468, 2008. 2
+[13] A. Wald.
+Sequential tests of statistical hypotheses.
+Ann. Math.
+Statist., 16(2):117–186, 1945. 5
+[14] J. Whitehill, P. Ruvolo, T. Wu, J. Bergsma, and J. Movellan. Whose
+vote should count more: Optimal integration of labels from labelers
+of unknown expertise. In NIPS, 2009. 2, 7
+[15] T. D. Wickens. Elementary signal detection theory. Oxford Univer-
+sity Press, United States, 2002. 4
