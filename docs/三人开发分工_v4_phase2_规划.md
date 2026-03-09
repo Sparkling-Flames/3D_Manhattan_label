@@ -1,251 +1,392 @@
-# 三人开发分工 v4 — Phase 2 粗略规划（系统演进阶段）
+# 三人开发分工 v4 — Phase 2 修订规划（按当前提纲对齐版）
 
-> 生成日期：2026-03-01  
-> 前置依赖：Phase 1 全部交付物完成（`merged_all.csv` + `perturbation_operators.py` + `visualize_output_v2.ipynb` 补全 + `offline_replay.py`）  
-> 外部阻塞点：**PreScreen 专家参考数据收集完毕**（`PreScreen_manual` 锚点子集，$n_{anchor}=12$）有助于独立 sanity check，但\textbf{不应作为权重校准的唯一数据源}（样本过小会导致不稳定/过拟合争议）。模块 A 的主校准推荐基于 `Calibration_manual` 固定池（N≈100），PreScreen 锚点仅用于独立验证与事后不可更改的对照披露。
-
-> 口径锁定：Label Studio 标注界面的 `difficulty`/`model_issue`（见 `tools/label_studio_view_config.xml`）作为**唯一真源**；论文附录算子库（`A1_扰动算子库.tex`）与工程实现（`perturbation_operators.py`、`analyze_quality.py` 的解析/统计）必须使用同一组 alias 命名，Phase 2 不再引入新命名。
+> 修订日期：2026-03-09  
+> 依据：当前中文提纲 `01_研究问题.tex`、`02_方法.tex`、`03_实验设置.tex`、`04_报告与可审计输出.tex`、附录 A1/A4，以及 2026-03-09 A 线 registry/provenance 冻结现状。
 
 ---
 
-## Phase 2 定位
+## 0. Phase 2 的真实目标
 
-导师语音原意：将 Phase 1 的**静态离线分析系统**演进为「**自演化人机交互系统**」——动态识别可靠标注员共识、实时路由任务、闭环更新工人可信度。
+Phase 2 不是把 Phase 1 的离线脚本简单“服务化”，也不是追求一个自发进化的黑箱系统。
 
-对应论文 RQ3 从"离线回放验证"升级为"在线部署证据"。
+当前提纲下，Phase 2 的目标应当是：
 
-**责任澄清（与 Phase 1 Workstream 对齐）**：
-按 WS‑P / WS‑E / WS‑R 的划分，**WS‑P（Protocol & Audit）Owner 为 Dev B**，负责采集协议、审计链路与自动化 gate 的实现与验收；**Dev C 仅负责 Engine / 路由（Module B）实现并配合集成测试，不承担采集协议的主导实现**；**Dev A 负责 Module A（Calibration / Release & Verification）并持有最终验收签字**。此澄清与 Phase 1 的 Workstream 划分保持一致，避免责任重叠。
+1. 把 Phase 1 的可审计离线分析链升级为“可部署、可退化、可审计”的在线路由与证据系统。
+2. 为 RQ3 提供在线部署或准在线 shadow deployment 证据，而不是只停留在离线 replay。
+3. 在任何场景分层、风险分层、序贯增冗余失效时，都能显式退化并留下审计证据，而不是静默失效。
 
-## Phase 2 团队化分工（按六大设计维度）
+一句话：
 
-> 目的：将“按脚本分工”升级为“按设计维度 + RACI + 验收门槛”的工程化协作方式，保证模块并行开发时接口稳定、职责清晰、证据可审计。
-
-### 2.6 六大核心设计维度与责任矩阵
-
-| 设计维度       | 主要职责                                                                     | Owner | Reviewer     | 核心交付物                                                           |
-| -------------- | ---------------------------------------------------------------------------- | ----- | ------------ | -------------------------------------------------------------------- |
-| 架构设计       | 定义在线路由系统边界、运行拓扑、故障退化策略（离线回放兜底）                 | Dev A | Dev B, Dev C | `docs/phase2_architecture.md`（C4 Context/Container + 时序图）       |
-| 模块与组件设计 | 拆分 `routing_service`/`audit_pipeline`/`counterexample_flow` 内部组件与依赖 | Dev C | Dev A        | `tools/routing_service/*.py` 组件图与模块 README                     |
-| 接口设计       | 统一 `POST /assign`、`POST /stop_check`、webhook payload、错误码、幂等键     | Dev B | Dev C        | `docs/phase2_api_contract.yaml`（OpenAPI + webhook schema）          |
-| 数据设计       | 冻结 `merged_all.csv` 下游只读口径、在线状态库 schema、审计报表字段          | Dev A | Dev B        | `docs/phase2_data_contract.md` + `db.py` migration 说明              |
-| 算法设计       | 路由策略、权重校准、序贯停止判定与 OOD 触发逻辑                              | Dev C | Dev A        | `strategies.py` + `calibration_pipeline.py` + 策略评估报告           |
-| UI 设计        | Label Studio 交互入口、审计报告可视化、反例复核配置可用性                    | Dev B | Dev A        | `audit_report_template.html.j2` + `counterexample_review_config.xml` |
-
-### 2.7 统一工程约束（Definition of Done）
-
-| Gate        | 必须满足的门槛                                                                               | 失败处理                              |
-| ----------- | -------------------------------------------------------------------------------------------- | ------------------------------------- |
-| G0 合约冻结 | `phase2_api_contract.yaml`、`phase2_data_contract.md`、alias 映射三方一致（XML/附录A1/代码） | 未通过不得进入实现分支                |
-| G1 单测门槛 | 新增核心模块单测覆盖率 ≥ 80%，关键策略路径必须有回归测试                                     | 阻断合并                              |
-| G2 集成门槛 | 本地 docker 联调通过：Label Studio webhook → routing_service → DB 写入 → 审计输出            | 保留在 `integration/*` 分支，不进主线 |
-| G3 审计门槛 | `meta_label_guard.py --fail-on-reject` 通过；审计报告含 reject rate 与 reason distribution   | 自动生成阻断报告                      |
-| G4 发布门槛 | 端到端演练完成且产出 RQ3 证据包（日志、配置、指标图）                                        | 延后发布，进入风险清单                |
-
-### 2.8 迭代节奏与协作机制（软件团队实践）
-
-- 迭代节奏：1 周 1 Sprint，周一计划会（30min）+ 周三风险同步（15min）+ 周五评审（30min）。
-- 需求入口：只接受 issue 模板（背景/输入输出/验收标准/回滚方案）。
-- 分支策略：`main`（稳定）/`develop`（集成）/`feature/*`（模块开发）/`hotfix/*`（紧急修复）。
-- 评审规则：跨维度至少 1 名 reviewer（例如“算法改动”必须含“数据或接口 reviewer”）。
-- 变更审计：任何字段与接口变更必须同步更新 contract 文档与变更日志，否则 CI 失败。
-
-### 2.9 Phase 2 角色映射（执行层）
-
-- Dev A：架构与数据 Owner（Architecture + Data + Release Gate）。
-- Dev B：接口与 UI/审计 Owner（API Contract + Audit/UI + Protocol continuity）。
-- Dev C：算法与服务实现 Owner（Routing Engine + Strategy + Runtime Integration）。
-- 该映射不改变你已确认的 Phase 1 分工，只用于 Phase 2 工程化落地。
-
-## 模块 A：加权共识精化（Weighted Consensus Calibration）
-
-**论文依据**：§3.3 RQ2b，方案 A（交叉拟合/交叉验证选 $w_{\max}$）；`03_实验设置.tex` PreScreen 锚点子集（独立验证）。
-
-**目标**：将 Phase 1 的 3 类功能组（Stable/Vulnerable/Noise）与 `r_u_lcb`、`S_u`、风险桶失效信息转化为可信共识加权与路由约束，实现 $\Delta\kappa \geq 0.05$ 的工程有意义提升。
-
-### 交付物
-
-| 模块         | 文件                                                     | 核心内容                                                           |
-| ------------ | -------------------------------------------------------- | ------------------------------------------------------------------ |
-| 权重校准     | `tools/calibration_pipeline.py`                          | K 折交叉验证选 $w_{\max}$；防数据泄露（每折不含验证折标签）        |
-| 加权共识计算 | `analyze_quality.py` 扩展 `compute_weighted_consensus()` | 输入 `r_u_lcb` + `S_u`，输出加权 tag/corner 共识                   |
-| 对比实验     | `tools/consensus_comparison.py`                          | uniform 共识 vs. weighted 共识 $\Delta$IoU；Wilcoxon 检验 + BCa CI |
-| 预注册输出   | `data/prescreen/w_max_locked.json`                       | 冻结 $w_{\max}$ 阈值映射，Main 阶段只读                            |
-
-### 技术方案
-
-```
-Calibration_manual 固定池（N≈100）
-         │
-         ├── LOO 可靠度 r_u（避免自我影响）
-         ├── 交叉拟合/交叉验证（默认 K=5；样本不足时降级 K=2）
-         │    └── 枚举 w_max ∈ [1.0, 1.5, 2.0, 3.0, 5.0]
-         └── 选最佳 w_max → freeze → w_max_locked.json
-
-PreScreen_manual 锚点（n_anchor=12）
-         └── 独立 sanity check：冻结后仅做对照披露，不再用于选择/调参
-```
-
-**统计**：`scipy.stats.wilcoxon`（非参数配对检验）+ `numpy` BCa bootstrap（按任务重采样）  
-**效应量门槛**：$\Delta\kappa \geq 0.05$（论文预注册 MDE）  
-**框架**：`scikit-learn` KFold；`pandas` 数据流  
-**工时估计**：5–7 人天
+Phase 2 的主任务是“把当前已经冻结的规则真正跑起来，并把失败、退化、边界条件都留痕”。
 
 ---
 
-## 模块 B：实时路由服务（Live Routing Plugin）
+## 1. Phase 2 的前置条件
 
-**论文依据**：§3.1 RQ3，策略 3（场景感知路由）在线部署。
+进入 Phase 2 前，至少应满足以下条件：
 
-**目标**：将 Phase 1 `offline_replay.py` 的三种策略上线为 Label Studio 可调用的实时接口，实现序贯派单与停止。
+1. A 线的 planned/runtime/compat/active-time registry 已稳定。
+2. export inventory exclusion 规则已能接入 registry suite 或 formal wrapper，而不只是停留在 CSV/JSON 审计层。
+3. `condition` 与 `dataset_group` 的 frozen truth 已尽量回写进分析分组逻辑，避免继续依赖 export-side 派生值。
+4. C 线的 `d_t`、trap manifest、risk-proxy split 与 replay 契约已与当前提纲对齐。
+5. B 线已有 pooled QA、mixed scope、schema_version、active_time_source 的基础审计产物，证明数据链是可用的。
 
-### 交付物
-
-| 模块              | 文件                                  | 核心内容                                                                                   |
-| ----------------- | ------------------------------------- | ------------------------------------------------------------------------------------------ |
-| REST API          | `tools/routing_service/app.py`        | FastAPI + Uvicorn；接口：`POST /assign`，`POST /stop_check`，`GET /worker_state`           |
-| Label Studio 集成 | `tools/routing_service/ls_backend.py` | Label Studio ML Backend 协议（`/predict` endpoint）；webhook callback 处理                 |
-| 策略热插拔        | `tools/routing_service/strategies.py` | 沿用 Phase 1 `offline_replay.py` 算子接口；JSON 配置注入策略参数                           |
-| 状态持久化        | `tools/routing_service/db.py`         | SQLite 存 `worker_state`（`r_u_lcb`、`S_u`、`k_used_cumulative`）；后期可升 PostgreSQL     |
-| 部署配置          | `docker-compose.routing.yml`          | 基于现有 `nginx.conf` 草稿扩展；服务：`routing_service` + `nginx` + `label_studio`（可选） |
-
-### 技术方案
-
-```
-Label Studio (webhook: task_submitted)
-         │
-         ▼
-FastAPI /predict  ──→  策略选择器（JSON 配置）
-         │                   ├── Random（baseline）
-         │                   ├── GlobalReliability（r_u_lcb 排序）
-         │                   └── Stratified（场景感知 + OOD 触发，k←3）
-         ▼
-SQLite worker_state（r_u, S_u, 历史分配记录）
-         │
-         ▼
-返回 worker_list + stop_flag（序贯停止判断）
-```
-
-**框架**：`FastAPI`（异步）、`Uvicorn`、`Pydantic`（request/response schema）  
-**部署**：`Docker` + `docker-compose`；CI 用 GitHub Actions 做健康检查  
-**序贯停止**：复用 Phase 1 `compute_iaa` 判断是否达到 `IAA_t ≥ τ`  
-**工时估计**：8–10 人天
+若以上条件不满足，Phase 2 应视为“预备阶段”，先补齐 contract，而不是直接开服务。
 
 ---
 
-## 模块 C：自动质量监控（Auto Audit CI）
+## 2. 当前提纲对 Phase 2 的关键约束
 
-**论文依据**：口径 T/I/M 可审计输出，导师语音"process evidence 全链路"。
+### 2.1 路由主线
 
-**目标**：每次新批次数据入库时，自动检测异常并输出 HTML 报告，不再依赖人工逐次运行 notebook。
+当前 RQ3 主线不是连续 `S_u` 二维散点式路由，而是：
 
-### 交付物
+- 全局可靠度主轴：`LCB(r_u)`
+- 离散风险层级：`R0/R1/R2/R3`
+- 风险签名：`T_u`、`C_u`、`G_u`
+- 标注前风险代理：`d_t`、`I_t_OOD`、`g_t`
+- 场景特异可靠度：`r_u^(s)` 与显式 activation / degeneration
 
-| 模块                           | 文件                                            | 核心内容                                                                                                                                                                        |
-| ------------------------------ | ----------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| 审计 CLI                       | `tools/auto_audit.py`                           | `python tools/auto_audit.py --batch-id <id> --out reports/`                                                                                                                     |
-| 检测规则引擎                   | 复用 Phase 1 `analyze_quality.py` Type 1–4 flag | 新增：`active_time` P99 阈值报警；门控失败率突增检测（滑动窗口）                                                                                                                |
-| 元标签合规兜底                 | `tools/meta_label_guard.py`（集成到 audit）     | 对导出 JSON 执行与 UI 一致的 hard rules（空选/互斥/条件必填），输出 `meta_guard_accepted.csv`/`meta_guard_rejected.csv` 与原因分布；审计报告中披露 reject rate 与示例任务       |
-| 过程证据汇总                   | （读取 userscript 审计导出）                    | 汇总提交时被拦截次数与原因分布（`n_rejected_empty` / `n_rejected_conflict` / per-worker reject rate / retries），与最终数据中的残余 Type4/NA 交叉核对，避免“挡在门外就当没发生” |
-| HTML 报告生成                  | `tools/audit_report_template.html.j2`           | `Jinja2` 模板；含图表、字段审计表、异常摘要                                                                                                                                     |
-| CI/CD                          | `.github/workflows/audit.yml`                   | `push to data/` → 触发审计 → 报告上传 artifact                                                                                                                                  |
-| `save_quality_figures.py` 重构 | `tools/save_quality_figures_v2.py`              | 重写为 CLI 工具，依赖 v1/v2 notebook 已验证函数，彻底去除对不存在模块的依赖                                                                                                     |
+### 2.2 在线系统的关键要求
 
-**框架**：`Jinja2`（报告）、GitHub Actions、`argparse`（CLI）  
-**工时估计**：4–6 人天
+在线系统必须满足：
 
----
+1. 所有路由决策都可追溯到固定版本的规则、阈值、manifest 与输入状态。
+2. 当 scene-specific 路由不可用时，必须显式退化到 global `LCB(r_u)`，并记录退化比例。
+3. 当任务高风险时，必须记录其来自 `I_t_OOD`、`g_t` 还是两者共同触发。
+4. 门控失败、字段缺失、拒收、被拦截提交、`k_max` 达到但未停止等事件全部视为安全性审计证据，而不是噪声。
 
-## 模块 D：反例库人工复核工作流
+### 2.3 不能再沿用的旧思路
 
-**论文依据**：§4.3 反例库（Table A1）；Type 1–4 候选集的最终人工确认。
+以下思路不应继续作为 Phase 2 主线：
 
-**目标**：将 Phase 1 自动检测到的反例候选（`type4_process_failures.csv` 等）流转为 Label Studio 人工复核工单，形成高质量标注闭环。
-
-### 交付物
-
-| 模块         | 文件                                                | 核心内容                                                                                             |
-| ------------ | --------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| 工单导入     | `tools/import_counterexample_tasks.py`              | `label-studio-sdk`：将 `counterexample_candidates.csv` → Label Studio 任务                           |
-| 复核界面模板 | `import_json/counterexample_review_config.xml`      | Label Studio XML 标注配置：`is_valid_counterexample`（Y/N）+ `correction_note`（文本）+ 原始图像预览 |
-| 结果回写     | `analyze_quality.py` 扩展 `ingest_review_results()` | 将复核结果写入 `merged_all.csv` 的 `counterexample_confirmed` / `correction` 列                      |
-| 统计报告     | `tools/counterexample_summary.py`                   | 输出每类（Type 1–4）的确认率、打回率、修正说明词云（可选）                                           |
-
-**框架**：`label-studio-sdk`（Python SDK）  
-**工时估计**：3–5 人天
+- 用连续 `S_u` 做主画像横轴
+- 用 difficulty 主导 IID/non-IID split
+- 用旧版 `GlobalReliability / Stratified` 口径直接代替当前 `Random / Global / Full`
+- 让路由服务依赖未冻结的 notebook 私有中间表
 
 ---
 
-## 技术栈汇总
+## 3. Phase 2 推荐工作流
 
-| 方向              | 主要库 / 框架                                         | Phase 1 中的前驱                         |
-| ----------------- | ----------------------------------------------------- | ---------------------------------------- |
-| API 服务          | `FastAPI`、`Uvicorn`、`Pydantic`                      | `offline_replay.py`（策略接口）          |
-| Label Studio 集成 | `label-studio-sdk`、webhook                           | `create_labelstudio_split_by_outline.py` |
-| 统计              | `scipy`（Wilcoxon/BCa）、`scikit-learn`（KFold）      | `analyze_quality.py` LOO 统计            |
-| 部署              | `Docker`、`docker-compose`、`nginx`（已有 conf 草稿） | `nginx.conf`（已有）                     |
-| 自动化报告        | `Jinja2` HTML 模板                                    | v1/v2 notebook 图表函数                  |
-| CI                | GitHub Actions                                        | —                                        |
-| 持久化            | `SQLite` → 可升 `PostgreSQL`                          | `merged_all.csv`（离线版）               |
+建议把 Phase 2 拆成 6 个工作流，而不是按“一个人一个脚本”拆。
+
+### 工作流 A：Contract 与 State 冻结
+
+目标：先冻结在线系统要读什么、写什么、如何退化。
+
+最小交付：
+
+- `docs/phase2_data_contract.md`
+- `docs/phase2_api_contract.yaml`
+- `docs/phase2_rule_registry.md`
+- `data/contracts/route_rule_manifest.json`
+
+必须明确：
+
+- worker 状态最小字段
+- task 风险状态最小字段
+- assignment 事件日志 schema
+- stop-check 事件日志 schema
+- activation / degeneration / fallback 事件码
+
+### 工作流 B：Weighted Consensus Calibration
+
+目标：完成 RQ2b 与 Phase 2 共用的加权共识校准链，但不引入额外自由度。
+
+最小交付：
+
+- `tools/calibration_pipeline.py`
+- `data/prescreen/w_max_locked.json`
+- `analysis_results/weighted_consensus_calibration/`
+
+要求：
+
+- 严格沿用当前提纲里的 repeated balanced 2-fold 主方案
+- 3-fold 只做附录敏感性
+- `w_max` 一旦冻结，不得在部署阶段重调
+
+### 工作流 C：Worker Risk Tier Builder
+
+目标：把 `LCB(r_u)`、`T_u`、`C_u`、`G_u`、`R_u^{tier}` 做成稳定的状态构建器，而不是散落在 notebook 里。
+
+最小交付：
+
+- `tools/build_worker_state.py`
+- `data/worker/worker_state_snapshot.csv`
+- `data/worker/worker_state_manifest.json`
+
+要求：
+
+- 显式输出 `group_rule_version`
+- 显式输出 `worker_group_reason`
+- 连续 `S_u` 只作为 auxiliary 字段
+- 若 bucket 内样本不足，必须输出 `insufficient_support` 而不是猜值
+
+### 工作流 D：Routing Service 与 Shadow Deployment
+
+目标：把离线 replay 升级成可部署的在线服务，同时保留 shadow mode。
+
+最小交付：
+
+- `tools/routing_service/app.py`
+- `tools/routing_service/strategies.py`
+- `tools/routing_service/db.py`
+- `tools/routing_service/replay_bridge.py`
+- `docker-compose.routing.yml`
+
+策略只保留：
+
+- `Random`
+- `Global`
+- `Full`
+
+要求：
+
+- `Full` 必须能记录 scene-specific activated 还是 degenerated
+- 高风险任务必须记录触发来源
+- `R3` 默认不进主候选池
+- shadow deployment 必须能在不影响真实派单的情况下记录策略差异
+
+### 工作流 E：Audit Pipeline 与 Process Evidence
+
+目标：把当前论文第 4 章要求的证据链自动化。
+
+最小交付：
+
+- `tools/auto_audit.py`
+- `tools/audit_report_template.html.j2`
+- `tools/meta_label_guard.py` 的在线对齐报告
+- `analysis_results/online_audit/`
+
+至少覆盖：
+
+- reject rate 与 reason distribution
+- Type 4 残余事件
+- active_time 数据质量
+- activation / degeneration rate
+- `k_max` 命中率
+- 高风险任务的路由支持率
+
+### 工作流 F：Counterexample 与 OOS Review
+
+目标：把反例与 OOS 复核从“分析后查看”变成“可重复的工单流”。
+
+最小交付：
+
+- `tools/import_counterexample_tasks.py`
+- `import_json/counterexample_review_config.xml`
+- `tools/counterexample_summary.py`
+- `analysis_results/counterexample_review/`
+
+要求：
+
+- 反例候选必须来自冻结规则
+- OOS ambiguity 只进入 audit bank，不回流污染主可靠度估计
 
 ---
 
-## Phase 2 里程碑（以 PreScreen 数据到位为时间轴）
+## 4. 4 人开发时的推荐结构
 
-```
-PreScreen 专家参考数据到位（n_anchor=12，w_max 可计算）
-     │
-     W1–W2: 模块 A — K折校准跑通，w_max_locked.json 生成，对比实验输出 Δκ
-     │
-     W3–W4: 模块 B — FastAPI skeleton + /assign 接口本地联调成功
-     │
-     W5:    模块 C — auto_audit CLI + Jinja2 HTML 报告可运行
-     │
-     W6:    模块 D — Label Studio 工单导入 + 复核结果回写通过测试
-     │
-     W7:    集成测试 — routing_service + Label Studio webhook 端到端联调
-     │
-     W8:    论文 RQ3 证据固化 — 部署日志导出 replay_results + 路由收益图
-```
+如果到时是 4 人开发，不必把职责细到“每个人写哪个函数”，但建议按下面 4 条主线拆：
+
+1. Contract / Data / Release Gate
+2. Calibration / Worker State / Weighted Consensus
+3. Routing Service / Deployment / Replay Bridge
+4. Audit / Review / Reporting
+
+这样比“一个人同时做算法和审计”更稳，因为：
+
+- contract 和 release gate 需要持续把控字段漂移
+- calibration 和 worker state 需要统计一致性
+- routing service 需要工程实现与在线退化逻辑
+- audit/review 需要保证证据链完整
 
 ---
 
-## 各模块阻塞点与风险
+## 5. 建议交付顺序
 
-| 模块       | 关键阻塞点                                                 | 风险缓解                                                        |
-| ---------- | ---------------------------------------------------------- | --------------------------------------------------------------- |
-| **模块 A** | PreScreen 锚点数据（$n_{anchor}=12$）必须先收集            | 用 Calibration_manual 已有数据做预演，正式锁定等 PreScreen 完成 |
-| **模块 B** | Label Studio webhook 部署环境（需服务器或 ngrok 内网穿透） | 本地 Docker 先跑通逻辑，webhook 环境配置独立                    |
-| **模块 C** | GitHub Actions 触发依赖 data/ 推送权限配置                 | 先用本地 CLI 验证逻辑，Actions 为可选加速                       |
-| **模块 D** | 反例库候选质量依赖 Phase 1 Type 1–4 检测精度               | Phase 1 `detect_type4_failures` 测试覆盖率需 >80%               |
+### 阶段 P2-0：Contract Freeze
+
+先做：
+
+1. phase2 data contract
+2. phase2 api contract
+3. route rule manifest
+4. worker state snapshot schema
+
+完成标准：
+
+- 不再争论字段命名
+- 不再争论 fallback 规则
+- 不再争论 shadow mode 记录什么
+
+### 阶段 P2-1：Offline-to-Online Bridge
+
+先把离线结果桥接成可服务化输入：
+
+1. worker state builder
+2. replay bridge
+3. risk-proxy split manifest reader
+4. route event logger
+
+完成标准：
+
+- routing service 不再直接读 notebook 中间表
+- 所有输入都来自 manifest 或 snapshot
+
+### 阶段 P2-2：Service Skeleton
+
+实现：
+
+1. `/assign`
+2. `/stop_check`
+3. `/worker_state`
+4. 本地 SQLite 状态持久化
+
+完成标准：
+
+- 本地 docker 联调跑通
+- 可记录 assignment / stop / degeneration 事件
+
+### 阶段 P2-3：Shadow Deployment
+
+实现：
+
+1. Random / Global / Full 三策略并行 shadow
+2. 不影响真实生产派单
+3. 可导出 shadow evaluation 结果
+
+完成标准：
+
+- 能形成 RQ3 的部署级证据草稿
+- 能比较支持率、退化率、预算效率与失败率
+
+### 阶段 P2-4：Audit & Review Closure
+
+实现：
+
+1. 在线审计报告
+2. counterexample review 工单流
+3. OOS / ambiguity audit bank
+
+完成标准：
+
+- 第 4 章要求的过程证据可自动产出
+- 失败与退化不再靠手工补记
 
 ---
 
-## 与 Phase 1 的接口依赖关系
+## 6. 推荐里程碑
 
-```
-Phase 1 输出                        Phase 2 使用
-─────────────────────────────────────────────────────────
-merged_all.csv (r_u, r_u_lcb, S_u) → 模块A: K折选w_max
-                                     → 模块B: /worker_state 初始化
-offline_replay.py (三策略接口)      → 模块B: routing_service/strategies.py
-perturbation_plan_frozen.json       → 模块A/B: PreScreen_semi 误导初始化复现
-counterexample_candidates.csv       → 模块D: 工单导入
-visualize_output_v1.ipynb（诊断图） → 模块C: save_quality_figures_v2 重构基础
-```
+### Milestone 1：规则冻结
+
+时间建议：1 周
+
+完成物：
+
+- API contract
+- data contract
+- rule manifest
+- worker state schema
+
+### Milestone 2：状态构建与离线桥接
+
+时间建议：1 到 2 周
+
+完成物：
+
+- worker state builder
+- replay bridge
+- risk split reader
+- calibration outputs 可直接接入服务
+
+### Milestone 3：本地服务闭环
+
+时间建议：2 周
+
+完成物：
+
+- FastAPI skeleton
+- SQLite state
+- Random / Global / Full 可调用
+- 本地联调通过
+
+### Milestone 4：Shadow Deployment
+
+时间建议：1 到 2 周
+
+完成物：
+
+- shadow mode 运行日志
+- deployment audit report
+- replay vs online 行为对比
+
+### Milestone 5：论文证据固化
+
+时间建议：1 周
+
+完成物：
+
+- RQ3 deployment evidence pack
+- activation / degeneration tables
+- budget efficiency summary
+- safety audit appendix pack
 
 ---
 
-_Phase 2 各模块可**并行**开发（A + C + D 不依赖部署环境；B 依赖 Docker 但可本地先跑）。推荐 Dev A 负责模块 A，Dev B 负责模块 C + D，Dev C 负责模块 B。_
+## 7. 关键风险与应对
 
-_（工作量更均衡的分配备选）Dev A：模块 A；Dev B：模块 B；Dev C：模块 C + 模块 D。_
+### 7.1 场景分层静默失效
 
-## 9. Phase 2 风险导向的协作补充说明
+风险：`r_u^(s)` 支持不足，系统表面上在做场景路由，实际上退化成全局。
 
-为配合 Phase 1 的“交付导向-接口冻结”调整，Phase 2 保持风险管理视角，建议在当前架构基础上补充下列协作要点：
+应对：
 
-1. **审计/协议链路延续**：WS-P 的审计链路（UI 拦截、本地 schema、导出拒收）要以 pipeline 方式挂在 Phase 2 的 `auto_audit.py`、`meta_label_guard.py` 与 `audit_report_template.html.j2` 上，保证任何新模块（A/B/C/D）都能拿到相同的审计 evidence（reject counts、reason categories、per-worker rates）。
-2. **Workstream 责任保持**：Phase 2 确认 Dev B 同时负责模块 C/D 以保持审计与反例收敛；Dev A 主驱模块 A（加权共识）；Dev C 承担模块 B（路由服务）并与 Dev B 协调 webhook 接入。这样 Phase 1 的 WS-P/WS-E/WS-R 易于自然过渡为 Phase 2 的 A/B/C 分工。
-3. **Gate checklist 延伸**：Phase 2 的每个模块也需借鉴 WS-R 的 gate checklist（字段冻结、alias 对齐、审计报告），并在 `module_*` 的 README 或 `docs/README_INDEX.md` 中登记当前状态，避免 Phase 2 产生的 alias/weight/route 配置漂移。
+- 强制记录 activation / degeneration
+- 若总体 activation rate 低于阈值，主结论降级为 global + stress redundancy
 
-此补充说明可作为 Phase 2 文档末尾的“风险闭环”段落，供三人对齐与项目审查参考。
+### 7.2 连续 `S_u` 重新污染主线
+
+风险：工程上图省事，又把 `S_u` 当主轴。
+
+应对：
+
+- worker state contract 中明确 `S_u_role=auxiliary_only`
+- routing service 不允许 `S_u` 成为唯一主排序字段
+
+### 7.3 风险 split 真源回漂到 difficulty
+
+风险：为了“更好看”，又回到 difficulty 主导 split。
+
+应对：
+
+- split manifest 强制记录 proxy mode
+- 若不是 `dt_plus_gt`，必须标记 provisional
+
+### 7.4 在线服务与审计脱节
+
+风险：服务跑了，但没有 reject / degeneration / fallback 证据。
+
+应对：
+
+- 所有关键端点必须写 event log
+- audit pipeline 以 event log 为第一输入，而不是事后猜
+
+---
+
+## 8. Phase 2 的完成判据
+
+Phase 2 不应以“服务上线”作为唯一完成标准，而应同时满足：
+
+1. 规则与 contract 已冻结。
+2. Random / Global / Full 三策略都能在 shadow mode 下复现。
+3. activation / degeneration / fallback / reject / stop 事件都有日志与汇总。
+4. 能形成可直接支持 RQ3 的部署级证据包。
+5. 当场景分层或高风险路由失效时，系统能显式降级而不是静默失败。
+
+---
+
+## 9. 一句话总结
+
+Phase 2 的正确方向不是“更复杂”，而是“把当前提纲里已经冻结的规则真正工程化，并让每一次退化、失败和边界条件都有证据链”。

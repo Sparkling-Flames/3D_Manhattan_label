@@ -24,6 +24,8 @@
    - 当前仓库地图、正式/历史入口、A 线真源层、对 B/C 的交接口径。
 8. [PROJECT_MAP_CLEAN_20260308.md](PROJECT_MAP_CLEAN_20260308.md)
    - 纯净仓库地图，只保留当前服务器标注/分析主链相关目录与入口。
+9. [HANDOVER_CONTEXT_20260309.md](HANDOVER_CONTEXT_20260309.md)
+   - 详细交接说明，包含项目目标、近期工作、dry run 与字段分析结论、pilot/formal 边界和当前后续动作建议。
 
 ---
 
