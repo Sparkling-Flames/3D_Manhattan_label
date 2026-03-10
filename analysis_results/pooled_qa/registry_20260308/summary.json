@@ -1,0 +1,59 @@
+{
+  "mode": "pooled_qa",
+  "is_paper_figure_pack": false,
+  "input_files": {
+    "merged_csv": "analysis_results/registry_20260308/merged_all_v0.csv",
+    "annotation_registry": "analysis_results/registry_20260308/annotation_registry_v1.csv",
+    "active_time_registry": "analysis_results/registry_20260308/active_time_registry_v1.csv"
+  },
+  "n_rows": 189,
+  "n_tasks": 156,
+  "n_annotators": 4,
+  "schema_version_counts": [
+    {
+      "schema_version": "v2_structured",
+      "rows": 182
+    },
+    {
+      "schema_version": "legacy_quality_only",
+      "rows": 7
+    }
+  ],
+  "active_time_source_by_schema": [
+    {
+      "schema_version": "legacy_quality_only",
+      "active_time_source": "log",
+      "rows": 7,
+      "non_null_active_time": 7
+    },
+    {
+      "schema_version": "v2_structured",
+      "active_time_source": "lead_time_fallback",
+      "rows": 133,
+      "non_null_active_time": 133
+    },
+    {
+      "schema_version": "v2_structured",
+      "active_time_source": "log",
+      "rows": 49,
+      "non_null_active_time": 49
+    }
+  ],
+  "dataset_group_source_by_schema": [],
+  "trusted_dataset_group_sources": [
+    "planned_registry_match",
+    "export_task_data"
+  ],
+  "trusted_dataset_group_rows": 0,
+  "saved_files": [
+    "01_rows_by_schema_version.png",
+    "02_join_status_by_schema_version.png",
+    "03_active_time_hist_by_schema_and_source.png",
+    "04_active_time_box_by_schema_and_source.png",
+    "05_annotator_profile_by_schema_version.png"
+  ],
+  "skipped_files": {
+    "06_dataset_group_source_by_schema_version.png": "missing required columns or no eligible rows",
+    "07_dataset_group_counts_trusted.png": "missing required columns or no eligible rows"
+  }
+}
