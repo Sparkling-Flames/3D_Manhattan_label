@@ -4,10 +4,7 @@
   "status": "frozen_rule",
   "join_contract": {
     "primary_join_key": "base_task_id",
-    "secondary_join_keys": [
-      "target_registry_uid",
-      "normalized_title"
-    ],
+    "secondary_join_keys": ["target_registry_uid", "normalized_title"],
     "source_of_truth": "analysis_results/registry_20260308/task_registry_v2.csv"
   },
   "current_target": {
@@ -33,46 +30,24 @@
     "planned_quota",
     "realized_quota"
   ],
-  "recommended_fields": [
-    "source_bank_id",
-    "selection_rule",
-    "notes"
-  ],
+  "recommended_fields": ["source_bank_id", "selection_rule", "notes"],
   "status_values": [
     "planned",
     "frozen_rule",
     "realized",
     "blocked_by_dependency"
   ],
-  "source_type_values": [
-    "natural_failure",
-    "synthetic_operator"
-  ],
-  "lambda_level_values": [
-    "weak",
-    "medium",
-    "strong",
-    "fixed"
-  ],
+  "source_type_values": ["natural_failure", "synthetic_operator"],
+  "lambda_level_values": ["weak", "medium", "strong", "fixed"],
   "quota_contract": {
     "planned_quota": "pre-registered target count for this row or family slot",
     "realized_quota": "count already materialized as a reviewed exemplar or generated artifact",
     "rule": "planned_quota and realized_quota must be kept separate"
   },
   "family_strategy": {
-    "synthetic_first": [
-      "underextend",
-      "corner_drift",
-      "corner_duplicate"
-    ],
-    "exemplar_first": [
-      "overextend_adjacent",
-      "over_parsing"
-    ],
-    "intentional_invalid_small_quota": [
-      "topology_failure",
-      "fail"
-    ]
+    "synthetic_first": ["underextend", "corner_drift", "corner_duplicate"],
+    "exemplar_first": ["overextend_adjacent", "over_parsing"],
+    "intentional_invalid_small_quota": ["topology_failure", "fail"]
   },
   "draft_selection_rule": {
     "natural_priority": "use expert-reviewed natural exemplars that already fall in the PreScreen_semi planned pool",
