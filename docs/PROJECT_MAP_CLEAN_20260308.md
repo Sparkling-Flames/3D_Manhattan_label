@@ -102,6 +102,7 @@
 
 - `analysis_results/`
   - 所有分析 CSV、registry、图表、manifest 的输出目录。
+  - 当前新增 `analysis_results/c_manifests_20260310/`，用于存放 C 线可 join 的 trap / embedding manifest 交付。
 
 - `tests/`
   - 当前仍有效的自动化测试目录。
@@ -376,6 +377,17 @@
 2. `merged_all` 属于 join 产物，不等于底层 planned/runtime 真源本身。
 3. registry、manifest、summary 需要与输入源一并解释。
 
+### 当前新增的 C 线 manifest 包
+
+- `analysis_results/c_manifests_20260310/trap_manifest_schema_v1.json`
+  - C 线当前 semi trap manifest 的 schema contract。
+- `analysis_results/c_manifests_20260310/natural_failure_bank_index_v1.csv`
+  - 基于人工复核总表和 A 线 task registry 整理出的自然案例 bank index。
+- `analysis_results/c_manifests_20260310/embedding_ood_protocol_v1.json`
+  - 当前 `d_t` / `I_t_OOD` procedure 的冻结 manifest。
+- `analysis_results/c_manifests_20260310/trap_manifest_draft_v1.csv`
+  - `PreScreen_semi` trap 草案，显式区分 natural realized rows 与 synthetic frozen-rule rows。
+
 ---
 
 ## 九、`trap集/` 目录纯净地图
@@ -399,6 +411,7 @@
 
 - `trap集/复核总表_20260307.md`
   - trap 复核汇总记录（人工复核追踪）。
+  - 当前已被整理为 `analysis_results/c_manifests_20260310/natural_failure_bank_index_v1.csv` 的上游人工依据之一。
 
 ---
 

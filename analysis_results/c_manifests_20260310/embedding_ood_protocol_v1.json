@@ -1,0 +1,77 @@
+{
+  "protocol_name": "embedding_ood_protocol_v1",
+  "rule_version": "c-embedding-ood-v1",
+  "status": "frozen_rule",
+  "purpose": "Freeze the procedure for d_t and I_t_OOD before realized score materialization.",
+  "join_contract": {
+    "primary_join_key": "base_task_id",
+    "planned_registry": "analysis_results/registry_20260308/task_registry_v2.csv",
+    "runtime_bridge_required": true
+  },
+  "embedding_backend": {
+    "model_family": "HoHoNet",
+    "feature_layer": "shared_pre_head_1d_latent",
+    "image_level_pooling": "width_global_average_pooling",
+    "normalization": "l2",
+    "backend_id": "hohonet.shared_pre_head_gapw_l2"
+  },
+  "primary_score": {
+    "name": "d_t",
+    "definition": "Kth-nearest-neighbor euclidean distance on calibration-only reference pool",
+    "K": 10,
+    "metric": "euclidean",
+    "algorithm": "brute"
+  },
+  "threshold_rule": {
+    "name": "I_t_OOD",
+    "calibration_procedure": "leave_one_out_on_reference_pool",
+    "quantile_q": 0.9,
+    "indicator": "1[d_t > tau_d]"
+  },
+  "reference_pool": {
+    "planned_selector": {
+      "dataset_group": "Calibration_manual",
+      "condition": "manual",
+      "source_pool": "calibration_manual_pool"
+    },
+    "expected_unique_base_task_ids": 100,
+    "dedup_key": "base_task_id",
+    "materialization_status": "blocked_by_runtime_bridge",
+    "note": "Realized reference_pool_manifest.json is emitted only after export-side/runtime bridge is available."
+  },
+  "anti_leakage_blacklist": [
+    "layout_corners",
+    "manual_labels",
+    "annotated_polygons",
+    "iou",
+    "iou_edit",
+    "IAA_t",
+    "r_u",
+    "r_u_lcb",
+    "worker_group",
+    "difficulty",
+    "model_issue",
+    "annotator_id"
+  ],
+  "fallback_policy": {
+    "if_dt_unavailable": "allow_g_only_provisional_split_only",
+    "forbidden": [
+      "hard_filter_without_disclosure",
+      "default_value_fill",
+      "average_knn_as_primary"
+    ]
+  },
+  "expected_outputs": [
+    "d_t",
+    "d_t_status",
+    "d_t_k",
+    "d_t_ref_hash",
+    "d_t_model_ver",
+    "d_t_metric",
+    "d_t_pool_size",
+    "d_t_failure_reason",
+    "d_t_compute_ts",
+    "tau_d",
+    "I_t_OOD"
+  ]
+}

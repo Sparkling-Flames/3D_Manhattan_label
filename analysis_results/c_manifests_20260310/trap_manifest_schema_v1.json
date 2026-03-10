@@ -1,0 +1,85 @@
+{
+  "schema_name": "trap_manifest_schema_v1",
+  "rule_version": "c-trap-manifest-v1",
+  "status": "frozen_rule",
+  "join_contract": {
+    "primary_join_key": "base_task_id",
+    "secondary_join_keys": [
+      "target_registry_uid",
+      "normalized_title"
+    ],
+    "source_of_truth": "analysis_results/registry_20260308/task_registry_v2.csv"
+  },
+  "current_target": {
+    "planned_stage": "prescreen_semi",
+    "dataset_group": "PreScreen_semi",
+    "pool_size": 30,
+    "trap_target": 15,
+    "expansion_target": 15,
+    "based_on": "docs/实验设置执行细则_20260213.md"
+  },
+  "required_fields": [
+    "manifest_row_id",
+    "manifest_status",
+    "target_stage",
+    "target_dataset_group",
+    "target_registry_uid",
+    "base_task_id",
+    "title",
+    "source_type",
+    "operator_id",
+    "lambda_level",
+    "seed",
+    "planned_quota",
+    "realized_quota"
+  ],
+  "recommended_fields": [
+    "source_bank_id",
+    "selection_rule",
+    "notes"
+  ],
+  "status_values": [
+    "planned",
+    "frozen_rule",
+    "realized",
+    "blocked_by_dependency"
+  ],
+  "source_type_values": [
+    "natural_failure",
+    "synthetic_operator"
+  ],
+  "lambda_level_values": [
+    "weak",
+    "medium",
+    "strong",
+    "fixed"
+  ],
+  "quota_contract": {
+    "planned_quota": "pre-registered target count for this row or family slot",
+    "realized_quota": "count already materialized as a reviewed exemplar or generated artifact",
+    "rule": "planned_quota and realized_quota must be kept separate"
+  },
+  "family_strategy": {
+    "synthetic_first": [
+      "underextend",
+      "corner_drift",
+      "corner_duplicate"
+    ],
+    "exemplar_first": [
+      "overextend_adjacent",
+      "over_parsing"
+    ],
+    "intentional_invalid_small_quota": [
+      "topology_failure",
+      "fail"
+    ]
+  },
+  "draft_selection_rule": {
+    "natural_priority": "use expert-reviewed natural exemplars that already fall in the PreScreen_semi planned pool",
+    "synthetic_fill": "fill remaining slots by ascending target_registry_uid from unused PreScreen_semi pool rows",
+    "current_bundle_result": {
+      "natural_rows": 2,
+      "synthetic_rows": 13
+    }
+  }
+}
