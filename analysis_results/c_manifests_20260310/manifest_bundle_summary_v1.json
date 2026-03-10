@@ -1,0 +1,31 @@
+{
+  "bundle_version": "c-manifests-v1",
+  "generated_at": "2026-03-10T00:00:00Z",
+  "inputs": {
+    "task_registry": "analysis_results/registry_20260308/task_registry_v2.csv",
+    "split_report": "import_json/outline_v2_seed20260228/label_studio_split_report_v2.json",
+    "trap_review_table": "trap集/复核总表_20260307.md"
+  },
+  "outputs": {
+    "trap_manifest_schema": "analysis_results/c_manifests_20260310/trap_manifest_schema_v1.json",
+    "natural_failure_bank_index": "analysis_results/c_manifests_20260310/natural_failure_bank_index_v1.csv",
+    "embedding_ood_protocol": "analysis_results/c_manifests_20260310/embedding_ood_protocol_v1.json",
+    "trap_manifest_draft": "analysis_results/c_manifests_20260310/trap_manifest_draft_v1.csv"
+  },
+  "summary": {
+    "natural_failure_bank_rows": 15,
+    "natural_failure_main_trap_rows": 8,
+    "natural_failure_oos_gate_rows": 7,
+    "trap_manifest_draft_rows": 15,
+    "trap_manifest_natural_rows": 2,
+    "trap_manifest_synthetic_rows": 13,
+    "trap_manifest_realized_rows": 2,
+    "trap_manifest_frozen_rule_rows": 13
+  },
+  "status": {
+    "trap_manifest_schema": "frozen_rule",
+    "natural_failure_bank_index": "realized",
+    "embedding_ood_protocol": "frozen_rule",
+    "trap_manifest_draft": "mixed_realized_and_frozen_rule"
+  }
+}

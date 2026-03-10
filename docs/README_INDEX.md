@@ -26,6 +26,8 @@
    - 纯净仓库地图，只保留当前服务器标注/分析主链相关目录与入口。
 9. [HANDOVER_CONTEXT_20260309.md](HANDOVER_CONTEXT_20260309.md)
    - 详细交接说明，包含项目目标、近期工作、dry run 与字段分析结论、pilot/formal 边界和当前后续动作建议。
+10. [C_MANIFEST_STATUS_20260310.md](C_MANIFEST_STATUS_20260310.md)
+   - 当前 C 线 manifest 交付状态说明，指向 trap schema、natural bank、embedding protocol 与 trap draft 的结构化产物。
 
 ---
 
