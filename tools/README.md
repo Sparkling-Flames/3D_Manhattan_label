@@ -169,6 +169,8 @@ python tools/pooled_qa_plots.py \
 - active time 相关图额外按 `active_time_source` 分层。
 - 如果做 `dataset_group` 汇总，会先用 `dataset_group_source` 可信来源白名单过滤。
 - 输出定位为 pooled QA / provenance audit，而不是论文主图。
+- 该入口不替代 formal analysis，也不输出 paper main figures。
+- 同时产出最小审计表：`table_schema_version_counts.csv`、`table_active_time_source_by_schema.csv`、`table_mixed_scope_audit.csv`（若存在 mixed scope 任务）。
 
 生成的图表包括：
 
