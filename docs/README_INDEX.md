@@ -29,11 +29,16 @@
 10. [C_MANIFEST_STATUS_20260310.md](C_MANIFEST_STATUS_20260310.md)
     - 当前 C 线 manifest 交付状态说明，指向 trap schema、natural bank、embedding protocol 与 trap draft 的结构化产物。
 11. [PHASE1_PROGRESS_AUDIT_20260311.md](PHASE1_PROGRESS_AUDIT_20260311.md)
-   - 当前论文流程口径、他人修改建议与仓库真实进度之间的交叉审查。
+
+- 当前论文流程口径、他人修改建议与仓库真实进度之间的交叉审查。
+
 12. [B_NEXT_STEPS_20260311.md](B_NEXT_STEPS_20260311.md)
-   - B 线在旧 split 失效、人工补选未完成前的当前推进清单。
+
+- B 线在旧 split 失效、人工补选未完成前的当前推进清单。
+
 13. [C_TRAP_EXECUTION_STATUS_20260311.md](C_TRAP_EXECUTION_STATUS_20260311.md)
-   - C 线从 manifest 层推进到 operator engine、frozen plan 与 materialized bundle 的当前状态说明。
+
+- C 线从 manifest 层推进到 operator engine、frozen plan 与 materialized bundle 的当前状态说明。
 
 ---
 

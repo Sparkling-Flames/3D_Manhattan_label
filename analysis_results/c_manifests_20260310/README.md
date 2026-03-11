@@ -22,7 +22,7 @@ Files in this bundle:
    - current draft for `PreScreen_semi` trap rows
 5. `manual_anchor_bank_index_v1.csv`
    - unique base-task index for manual anchor coverage, collapsed from A-line anchor rows
-5. `manifest_bundle_summary_v1.json`
+6. `manifest_bundle_summary_v1.json`
    - high-level counts and status summary
 
 Current status:
