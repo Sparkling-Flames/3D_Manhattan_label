@@ -1,10 +1,12 @@
 {
   "mode": "pooled_qa",
   "is_paper_figure_pack": false,
+  "coverage_scope": "主 registry 可用范围：仅完成 `schema_version` 和 `active_time_source` 分层 QA。",
   "input_files": {
     "merged_csv": "analysis_results/registry_20260308/merged_all_v0.csv",
     "annotation_registry": "analysis_results/registry_20260308/annotation_registry_v1.csv",
-    "active_time_registry": "analysis_results/registry_20260308/active_time_registry_v1.csv"
+    "active_time_registry": "analysis_results/registry_20260308/active_time_registry_v1.csv",
+    "registry_suite_summary": "analysis_results/registry_20260308/registry_suite_summary_v1.json"
   },
   "n_rows": 189,
   "n_tasks": 156,
@@ -40,17 +42,22 @@
     }
   ],
   "dataset_group_source_by_schema": [],
+  "mixed_scope_task_count": 3,
+  "mixed_scope_multi_annotator_task_count": 3,
   "trusted_dataset_group_sources": [
     "planned_registry_match",
     "export_task_data"
   ],
   "trusted_dataset_group_rows": 0,
+  "join_status_note": "`task_join_status` 反映 planned/runtime bridge 状态，不能直接解释为标注员行为问题；`ambiguous` / `unmatched` 是为了避免静默强配而显式保留的 join 状态。 registry_suite_summary 当前计数：{'unmatched': 33, 'matched_by_title': 50, 'matched_by_title_condition': 41, 'ambiguous': 32}。",
+  "active_time_note": "`active_time_source=log` 表示 direct active log 命中；`lead_time_fallback` 只是回退到 Label Studio `lead_time`，不是 active log。",
   "saved_files": [
     "01_rows_by_schema_version.png",
     "02_join_status_by_schema_version.png",
     "03_active_time_hist_by_schema_and_source.png",
     "04_active_time_box_by_schema_and_source.png",
-    "05_annotator_profile_by_schema_version.png"
+    "05_annotator_profile_by_schema_version.png",
+    "08_mixed_scope_tasks_by_schema_version.png"
   ],
   "skipped_files": {
     "06_dataset_group_source_by_schema_version.png": "missing required columns or no eligible rows",

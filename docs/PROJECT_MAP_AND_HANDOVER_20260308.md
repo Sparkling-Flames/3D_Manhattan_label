@@ -63,6 +63,7 @@
 - [tools/pooled_qa_plots.py](../tools/pooled_qa_plots.py)
   - B 线 pooled QA 图包入口。
   - 强制把图表定位在 QA / provenance audit，而不是论文主图。
+  - 不替代 formal analysis。
   - 当前默认按 `schema_version` 分层，并对 active time 图继续按 `active_time_source` 分层；组汇总时先按 `dataset_group_source` 可信来源过滤。
 - [tools/official/README.md](../tools/official/README.md)
   - 正式入口说明。
