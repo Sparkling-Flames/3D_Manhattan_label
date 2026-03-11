@@ -185,6 +185,15 @@ def prepare_frame(df: pd.DataFrame) -> pd.DataFrame:
             .str.lower()
             .map({"true": True, "false": False})
         )
+    for column in ["scope_missing", "difficulty_missing", "model_issue_missing"]:
+        if column in result.columns:
+            result[column] = (
+                result[column]
+                .astype(str)
+                .str.strip()
+                .str.lower()
+                .map({"true": True, "false": False})
+            )
 
     return result
 
@@ -377,6 +386,59 @@ def plot_dataset_group_counts_trusted(df: pd.DataFrame, trusted_sources: list[st
     return fig, counts
 
 
+def build_scope_bucket_counts(df: pd.DataFrame) -> pd.DataFrame:
+    if "schema_version" not in df.columns or "is_oos" not in df.columns:
+        return pd.DataFrame()
+
+    scope_bucket = df["is_oos"].map({True: "oos", False: "in_scope"}).fillna("unknown")
+    counts = (
+        df.assign(scope_bucket=scope_bucket)
+        .groupby(["schema_version", "scope_bucket"], dropna=False)
+        .size()
+        .reset_index(name="rows")
+        .sort_values(["schema_version", "rows", "scope_bucket"], ascending=[True, False, True])
+    )
+    return counts
+
+
+def plot_scope_bucket_by_schema(scope_bucket_counts: pd.DataFrame) -> plt.Figure | None:
+    if scope_bucket_counts.empty:
+        return None
+
+    fig, ax = plt.subplots(figsize=(10, 4))
+    sns.barplot(data=scope_bucket_counts, x="schema_version", y="rows", hue="scope_bucket", ax=ax)
+    ax.set_title("Scope bucket by schema_version")
+    ax.set_xlabel("schema_version")
+    ax.set_ylabel("annotations (rows)")
+    ax.tick_params(axis="x", rotation=20)
+    fig.tight_layout()
+    return fig
+
+
+def build_meta_missing_audit(df: pd.DataFrame) -> pd.DataFrame:
+    missing_columns = [column for column in ["scope_missing", "difficulty_missing", "model_issue_missing"] if column in df.columns]
+    if "schema_version" not in df.columns or not missing_columns:
+        return pd.DataFrame()
+
+    audit = (
+        df.groupby("schema_version", dropna=False)
+        .agg(
+            rows=("schema_version", "size"),
+            scope_missing_rows=("scope_missing", lambda s: int(s.fillna(False).sum())) if "scope_missing" in missing_columns else ("schema_version", lambda s: 0),
+            difficulty_missing_rows=("difficulty_missing", lambda s: int(s.fillna(False).sum())) if "difficulty_missing" in missing_columns else ("schema_version", lambda s: 0),
+            model_issue_missing_rows=("model_issue_missing", lambda s: int(s.fillna(False).sum())) if "model_issue_missing" in missing_columns else ("schema_version", lambda s: 0),
+        )
+        .reset_index()
+    )
+
+    for prefix in ["scope", "difficulty", "model_issue"]:
+        count_column = f"{prefix}_missing_rows"
+        if count_column in audit.columns:
+            audit[f"{prefix}_missing_rate"] = (audit[count_column] / audit["rows"]).round(4)
+
+    return audit.sort_values("schema_version")
+
+
 def join_unique_values(series: pd.Series) -> str:
     values = sorted({str(value).strip() for value in series.dropna() if str(value).strip()})
     return "; ".join(values)
@@ -453,7 +515,10 @@ def plot_mixed_scope_counts_by_schema(mixed_scope_df: pd.DataFrame) -> plt.Figur
 def dataframe_to_markdown(df: pd.DataFrame) -> str:
     if df.empty:
         return "(empty)"
-    return df.to_markdown(index=False)
+    try:
+        return df.to_markdown(index=False)
+    except ImportError:
+        return df.to_csv(index=False).strip()
 
 
 def determine_pack_scope(merged_csv: Path | None, df: pd.DataFrame) -> tuple[str, list[str]]:
@@ -522,6 +587,9 @@ def main() -> int:
                 "dataset_group_source",
                 "task_join_status",
                 "normalized_scope",
+                "scope_missing",
+                "difficulty_missing",
+                "model_issue_missing",
                 "is_oos",
             ],
         )
@@ -542,6 +610,8 @@ def main() -> int:
     join_status_note = build_join_status_note(registry_suite_summary)
     active_time_note = build_active_time_note()
     mixed_scope_audit = build_mixed_scope_audit(df)
+    scope_bucket_counts = build_scope_bucket_counts(df)
+    meta_missing_audit = build_meta_missing_audit(df)
 
     plot_specs = [
         ("01_rows_by_schema_version.png", plot_rows_by_schema(df)),
@@ -558,6 +628,7 @@ def main() -> int:
     )
     plot_specs.append(("07_dataset_group_counts_trusted.png", trusted_group_fig))
     plot_specs.append(("08_mixed_scope_tasks_by_schema_version.png", plot_mixed_scope_counts_by_schema(mixed_scope_audit)))
+    plot_specs.append(("09_scope_bucket_by_schema_version.png", plot_scope_bucket_by_schema(scope_bucket_counts)))
 
     saved_files: list[str] = []
     skipped_files: dict[str, str] = {}
@@ -583,6 +654,9 @@ def main() -> int:
     )
     active_time_source_counts.to_csv(output_dir / "table_active_time_source_by_schema.csv", index=False)
 
+    if not scope_bucket_counts.empty:
+        scope_bucket_counts.to_csv(output_dir / "table_scope_bucket_by_schema.csv", index=False)
+
     dataset_group_source_counts = pd.DataFrame()
     if "dataset_group_source" in df.columns:
         dataset_group_source_counts = (
@@ -597,6 +671,9 @@ def main() -> int:
 
     if not mixed_scope_audit.empty:
         mixed_scope_audit.to_csv(output_dir / "table_mixed_scope_audit.csv", index=False)
+
+    if not meta_missing_audit.empty:
+        meta_missing_audit.to_csv(output_dir / "table_meta_missing_by_schema.csv", index=False)
 
     summary_payload = {
         "mode": "pooled_qa",
@@ -613,7 +690,9 @@ def main() -> int:
         "n_annotators": int(df["annotator_id"].nunique()) if "annotator_id" in df.columns else None,
         "schema_version_counts": schema_counts.to_dict(orient="records"),
         "active_time_source_by_schema": active_time_source_counts.to_dict(orient="records"),
+        "scope_bucket_by_schema": scope_bucket_counts.to_dict(orient="records"),
         "dataset_group_source_by_schema": dataset_group_source_counts.to_dict(orient="records"),
+        "meta_missing_by_schema": meta_missing_audit.to_dict(orient="records"),
         "mixed_scope_task_count": int(len(mixed_scope_audit)),
         "mixed_scope_multi_annotator_task_count": int(mixed_scope_audit.loc[mixed_scope_audit["is_multi_annotator"]].shape[0]) if not mixed_scope_audit.empty else 0,
         "trusted_dataset_group_sources": list(args.trusted_dataset_group_sources),
@@ -664,6 +743,9 @@ def main() -> int:
         "## active_time_source by schema_version",
         dataframe_to_markdown(active_time_source_counts),
         "",
+        "## scope bucket by schema_version",
+        dataframe_to_markdown(scope_bucket_counts),
+        "",
         "## dataset_group_source by schema_version",
         dataframe_to_markdown(dataset_group_source_counts),
         "",
@@ -684,6 +766,13 @@ def main() -> int:
             "",
             "## Trusted dataset_group counts",
             dataframe_to_markdown(trusted_group_counts),
+        ])
+    if not meta_missing_audit.empty:
+        summary_lines.extend([
+            "",
+            "## Meta-label missing audit",
+            "- These counts are residual missingness from the current registry export, not UI rejection logs.",
+            dataframe_to_markdown(meta_missing_audit),
         ])
     summary_lines.extend([
         "",

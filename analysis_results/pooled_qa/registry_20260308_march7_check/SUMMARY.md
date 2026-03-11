@@ -18,10 +18,10 @@
 - `active_time_source=log` 表示 direct active log 命中；`lead_time_fallback` 只是回退到 Label Studio `lead_time`，不是 active log。
 
 ## Inputs
-- merged_csv: analysis_results/registry_20260308_march7_check/merged_all_v0.csv
-- annotation_registry: analysis_results/registry_20260308_march7_check/annotation_registry_v1.csv
-- active_time_registry: analysis_results/registry_20260308_march7_check/active_time_registry_v1.csv
-- registry_suite_summary: analysis_results/registry_20260308/registry_suite_summary_v1.json
+- merged_csv: d:\Work\HOHONET\analysis_results\registry_20260308_march7_check\merged_all_v0.csv
+- annotation_registry: d:\Work\HOHONET\analysis_results\registry_20260308_march7_check\annotation_registry_v1.csv
+- active_time_registry: d:\Work\HOHONET\analysis_results\registry_20260308_march7_check\active_time_registry_v1.csv
+- registry_suite_summary: d:\Work\HOHONET\analysis_results\registry_20260308\registry_suite_summary_v1.json
 
 ## High-level counts
 - rows: 2
@@ -31,20 +31,21 @@
 - mixed scope multi-annotator tasks: 0
 
 ## schema_version counts
-| schema_version   |   rows |
-|:-----------------|-------:|
-| v2_structured    |      2 |
+schema_version,rows
+v2_structured,2
 
 ## active_time_source by schema_version
-| schema_version   | active_time_source   |   rows |   non_null_active_time |
-|:-----------------|:---------------------|-------:|-----------------------:|
-| v2_structured    | lead_time_fallback   |      2 |                      2 |
+schema_version,active_time_source,rows,non_null_active_time
+v2_structured,lead_time_fallback,2,2
+
+## scope bucket by schema_version
+schema_version,scope_bucket,rows
+v2_structured,in_scope,2
 
 ## dataset_group_source by schema_version
-| schema_version   | dataset_group_source   |   rows |
-|:-----------------|:-----------------------|-------:|
-| v2_structured    | export_task_data       |      1 |
-| v2_structured    | planned_registry_match |      1 |
+schema_version,dataset_group_source,rows
+v2_structured,export_task_data,1
+v2_structured,planned_registry_match,1
 
 ## trusted dataset_group sources
 planned_registry_match, export_task_data
@@ -57,15 +58,20 @@ planned_registry_match, export_task_data
 - 05_annotator_profile_by_schema_version.png
 - 06_dataset_group_source_by_schema_version.png
 - 07_dataset_group_counts_trusted.png
+- 09_scope_bucket_by_schema_version.png
 
 ## Skipped figures
 - 08_mixed_scope_tasks_by_schema_version.png: missing required columns or no eligible rows
 
 ## Trusted dataset_group counts
-| schema_version   | dataset_group    | dataset_group_source   |   rows |
-|:-----------------|:-----------------|:-----------------------|-------:|
-| v2_structured    | PreScreen_manual | export_task_data       |      1 |
-| v2_structured    | PreScreen_semi   | planned_registry_match |      1 |
+schema_version,dataset_group,dataset_group_source,rows
+v2_structured,PreScreen_manual,export_task_data,1
+v2_structured,PreScreen_semi,planned_registry_match,1
+
+## Meta-label missing audit
+- These counts are residual missingness from the current registry export, not UI rejection logs.
+schema_version,rows,scope_missing_rows,difficulty_missing_rows,model_issue_missing_rows,scope_missing_rate,difficulty_missing_rate,model_issue_missing_rate
+v2_structured,2,0,0,1,0.0,0.0,0.5
 
 ## Mixed scope audit
 - Mixed scope means the same task has both in-scope and OOS votes across annotations.

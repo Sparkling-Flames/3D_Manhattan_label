@@ -12,6 +12,7 @@
 2. `natural_failure_bank_index_v1.csv`
 3. `embedding_ood_protocol_v1.json`
 4. `trap_manifest_draft_v1.csv`
+5. `manual_anchor_bank_index_v1.csv`
 
 当前状态分层：
 
@@ -19,6 +20,7 @@
 - `natural_failure_bank_index_v1.csv`：`realized`
 - `embedding_ood_protocol_v1.json`：`frozen_rule`
 - `trap_manifest_draft_v1.csv`：`2 realized natural rows + 13 frozen_rule synthetic rows`
+- `manual_anchor_bank_index_v1.csv`：`24 realized anchor rows (12 prescreen + 12 calibration)`
 
 与 A 线的 join 方式：
 
@@ -31,7 +33,8 @@
 1. 本次补的是 manifest 层，不是最终几何生成层。
 2. synthetic rows 当前锁定的是 family、seed、lambda、配额与 planned target，不是最终 corners 输出。
 3. `d_t` / `I_t_OOD` 当前冻结的是 procedure，不是 realized score 名单。
+4. manual anchor 已有 joinable bank index，但尚未继续扩展成 weighted-consensus / service contract 输入。
 
 一句话总结：
 
-当前 C 线已经从“说明文档层”推进到“可 join 的结构化 manifest 层”，但还没有完成最终生成与回写阶段。
+当前 C 线已经从“说明文档层”推进到“可 join 的结构化 manifest 层”，并补上了 manual anchor bank，但还没有完成最终生成与回写阶段。

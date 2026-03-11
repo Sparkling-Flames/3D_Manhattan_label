@@ -1,0 +1,20 @@
+{
+  "bundle_version": "c-materialized-v1",
+  "source_manifest": "analysis_results/c_manifests_20260310/trap_manifest_draft_v1.csv",
+  "source_import_json": "import_json/outline_v2_seed20260228/stage1_prescreen_semi_import.json",
+  "n_rows": 15,
+  "n_realized_rows": 13,
+  "n_generated_synthetic_rows": 11,
+  "status_counts": {
+    "realized": 13,
+    "reject": 2
+  },
+  "family_counts": {
+    "over_parsing": 2,
+    "overextend_adjacent": 2,
+    "underextend": 4,
+    "corner_drift": 4,
+    "corner_duplicate": 3
+  },
+  "important_note": "This bundle no longer stops at frozen_rule for synthetic rows. It materializes operator outputs from current PreScreen_semi import predictions, but it still depends on the current import JSON and does not claim that the revised thesis Stage 1 target quotas are already fulfilled."
+}

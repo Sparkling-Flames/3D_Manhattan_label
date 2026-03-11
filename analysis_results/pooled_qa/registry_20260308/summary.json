@@ -3,10 +3,10 @@
   "is_paper_figure_pack": false,
   "coverage_scope": "主 registry 可用范围：仅完成 `schema_version` 和 `active_time_source` 分层 QA。",
   "input_files": {
-    "merged_csv": "analysis_results/registry_20260308/merged_all_v0.csv",
-    "annotation_registry": "analysis_results/registry_20260308/annotation_registry_v1.csv",
-    "active_time_registry": "analysis_results/registry_20260308/active_time_registry_v1.csv",
-    "registry_suite_summary": "analysis_results/registry_20260308/registry_suite_summary_v1.json"
+    "merged_csv": "d:\\Work\\HOHONET\\analysis_results\\registry_20260308\\merged_all_v0.csv",
+    "annotation_registry": "d:\\Work\\HOHONET\\analysis_results\\registry_20260308\\annotation_registry_v1.csv",
+    "active_time_registry": "d:\\Work\\HOHONET\\analysis_results\\registry_20260308\\active_time_registry_v1.csv",
+    "registry_suite_summary": "d:\\Work\\HOHONET\\analysis_results\\registry_20260308\\registry_suite_summary_v1.json"
   },
   "n_rows": 189,
   "n_tasks": 156,
@@ -41,7 +41,56 @@
       "non_null_active_time": 49
     }
   ],
+  "scope_bucket_by_schema": [
+    {
+      "schema_version": "legacy_quality_only",
+      "scope_bucket": "in_scope",
+      "rows": 5
+    },
+    {
+      "schema_version": "legacy_quality_only",
+      "scope_bucket": "oos",
+      "rows": 1
+    },
+    {
+      "schema_version": "legacy_quality_only",
+      "scope_bucket": "unknown",
+      "rows": 1
+    },
+    {
+      "schema_version": "v2_structured",
+      "scope_bucket": "in_scope",
+      "rows": 157
+    },
+    {
+      "schema_version": "v2_structured",
+      "scope_bucket": "oos",
+      "rows": 25
+    }
+  ],
   "dataset_group_source_by_schema": [],
+  "meta_missing_by_schema": [
+    {
+      "schema_version": "legacy_quality_only",
+      "rows": 7,
+      "scope_missing_rows": 7,
+      "difficulty_missing_rows": 7,
+      "model_issue_missing_rows": 7,
+      "scope_missing_rate": 1.0,
+      "difficulty_missing_rate": 1.0,
+      "model_issue_missing_rate": 1.0
+    },
+    {
+      "schema_version": "v2_structured",
+      "rows": 182,
+      "scope_missing_rows": 0,
+      "difficulty_missing_rows": 11,
+      "model_issue_missing_rows": 9,
+      "scope_missing_rate": 0.0,
+      "difficulty_missing_rate": 0.0604,
+      "model_issue_missing_rate": 0.0495
+    }
+  ],
   "mixed_scope_task_count": 3,
   "mixed_scope_multi_annotator_task_count": 3,
   "trusted_dataset_group_sources": [
@@ -57,7 +106,8 @@
     "03_active_time_hist_by_schema_and_source.png",
     "04_active_time_box_by_schema_and_source.png",
     "05_annotator_profile_by_schema_version.png",
-    "08_mixed_scope_tasks_by_schema_version.png"
+    "08_mixed_scope_tasks_by_schema_version.png",
+    "09_scope_bucket_by_schema_version.png"
   ],
   "skipped_files": {
     "06_dataset_group_source_by_schema_version.png": "missing required columns or no eligible rows",

@@ -86,6 +86,9 @@
 - `analysis_results/c_manifests_20260310/trap_manifest_draft_v1.csv`
   - 当前 `PreScreen_semi` trap 草案。
   - 采用 `2` 条 reviewed natural exemplars + `13` 条 frozen-rule synthetic rows 的结构，主 join key 为 `base_task_id`，并保留 `target_registry_uid`。
+- `analysis_results/c_manifests_20260310/manual_anchor_bank_index_v1.csv`
+  - 当前 manual anchor bank 的唯一 base-task 索引。
+  - 将 A 线 `is_anchor=True` 行按 `base_task_id` 去重后整理成 `12` 条 prescreen + `12` 条 calibration 的 joinable bank。
 
 ## 二、A 线已经冻结的真源关系
 

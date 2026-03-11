@@ -3,10 +3,10 @@
   "is_paper_figure_pack": false,
   "coverage_scope": "March 7 enriched registry 验证范围：额外验证 `dataset_group_source` 审计与 trusted `dataset_group` 汇总。",
   "input_files": {
-    "merged_csv": "analysis_results/registry_20260308_march7_check/merged_all_v0.csv",
-    "annotation_registry": "analysis_results/registry_20260308_march7_check/annotation_registry_v1.csv",
-    "active_time_registry": "analysis_results/registry_20260308_march7_check/active_time_registry_v1.csv",
-    "registry_suite_summary": "analysis_results/registry_20260308/registry_suite_summary_v1.json"
+    "merged_csv": "d:\\Work\\HOHONET\\analysis_results\\registry_20260308_march7_check\\merged_all_v0.csv",
+    "annotation_registry": "d:\\Work\\HOHONET\\analysis_results\\registry_20260308_march7_check\\annotation_registry_v1.csv",
+    "active_time_registry": "d:\\Work\\HOHONET\\analysis_results\\registry_20260308_march7_check\\active_time_registry_v1.csv",
+    "registry_suite_summary": "d:\\Work\\HOHONET\\analysis_results\\registry_20260308\\registry_suite_summary_v1.json"
   },
   "n_rows": 2,
   "n_tasks": 2,
@@ -25,6 +25,13 @@
       "non_null_active_time": 2
     }
   ],
+  "scope_bucket_by_schema": [
+    {
+      "schema_version": "v2_structured",
+      "scope_bucket": "in_scope",
+      "rows": 2
+    }
+  ],
   "dataset_group_source_by_schema": [
     {
       "schema_version": "v2_structured",
@@ -35,6 +42,18 @@
       "schema_version": "v2_structured",
       "dataset_group_source": "planned_registry_match",
       "rows": 1
+    }
+  ],
+  "meta_missing_by_schema": [
+    {
+      "schema_version": "v2_structured",
+      "rows": 2,
+      "scope_missing_rows": 0,
+      "difficulty_missing_rows": 0,
+      "model_issue_missing_rows": 1,
+      "scope_missing_rate": 0.0,
+      "difficulty_missing_rate": 0.0,
+      "model_issue_missing_rate": 0.5
     }
   ],
   "mixed_scope_task_count": 0,
@@ -53,7 +72,8 @@
     "04_active_time_box_by_schema_and_source.png",
     "05_annotator_profile_by_schema_version.png",
     "06_dataset_group_source_by_schema_version.png",
-    "07_dataset_group_counts_trusted.png"
+    "07_dataset_group_counts_trusted.png",
+    "09_scope_bucket_by_schema_version.png"
   ],
   "skipped_files": {
     "08_mixed_scope_tasks_by_schema_version.png": "missing required columns or no eligible rows"

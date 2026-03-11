@@ -1,6 +1,6 @@
 # HoHoNet 文档索引（当前版）
 
-> 最后更新：2026-03-09
+> 最后更新：2026-03-11
 
 本索引仅保留“当前实验必须文档”；历史草稿与阶段性方案已归档到 `docs/legacy/`。
 
@@ -27,8 +27,13 @@
 9. [HANDOVER_CONTEXT_20260309.md](HANDOVER_CONTEXT_20260309.md)
    - 详细交接说明，包含项目目标、近期工作、dry run 与字段分析结论、pilot/formal 边界和当前后续动作建议。
 10. [C_MANIFEST_STATUS_20260310.md](C_MANIFEST_STATUS_20260310.md)
-
-- 当前 C 线 manifest 交付状态说明，指向 trap schema、natural bank、embedding protocol 与 trap draft 的结构化产物。
+    - 当前 C 线 manifest 交付状态说明，指向 trap schema、natural bank、embedding protocol 与 trap draft 的结构化产物。
+11. [PHASE1_PROGRESS_AUDIT_20260311.md](PHASE1_PROGRESS_AUDIT_20260311.md)
+   - 当前论文流程口径、他人修改建议与仓库真实进度之间的交叉审查。
+12. [B_NEXT_STEPS_20260311.md](B_NEXT_STEPS_20260311.md)
+   - B 线在旧 split 失效、人工补选未完成前的当前推进清单。
+13. [C_TRAP_EXECUTION_STATUS_20260311.md](C_TRAP_EXECUTION_STATUS_20260311.md)
+   - C 线从 manifest 层推进到 operator engine、frozen plan 与 materialized bundle 的当前状态说明。
 
 ---
 
