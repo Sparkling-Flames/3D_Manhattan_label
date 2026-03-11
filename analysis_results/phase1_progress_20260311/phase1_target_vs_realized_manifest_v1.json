@@ -1,0 +1,128 @@
+{
+  "manifest_version": "phase1-target-vs-realized-v1",
+  "generated_at": "2026-03-11T00:00:00Z",
+  "purpose": "Separate thesis-level target counts from current repository planned split counts and currently materialized joinable artifacts.",
+  "sources": {
+    "thesis_execution_doc": "docs/实验集设定与用途.md",
+    "thesis_experiment_section": "docs/overleaf_project/sections/03_实验设置.tex",
+    "split_report": "import_json/outline_v2_seed20260228/label_studio_split_report_v2.json",
+    "task_registry": "analysis_results/registry_20260308/task_registry_v2.csv",
+    "c_manifest_summary": "analysis_results/c_manifests_20260310/manifest_bundle_summary_v1.json",
+    "manual_anchor_bank": "analysis_results/c_manifests_20260310/manual_anchor_bank_index_v1.csv",
+    "trap_manifest_draft": "analysis_results/c_manifests_20260310/trap_manifest_draft_v1.csv",
+    "natural_failure_bank": "analysis_results/c_manifests_20260310/natural_failure_bank_index_v1.csv"
+  },
+  "items": [
+    {
+      "item_id": "stage1_prescreen_manual_total",
+      "role": "stage1_manual_pool",
+      "thesis_target": {
+        "type": "exact",
+        "value": 30
+      },
+      "current_repo": {
+        "split_report_planned": 30,
+        "task_registry_planned_unique": 30,
+        "joinable_materialized": 30
+      },
+      "status": "aligned",
+      "notes": "The revised thesis-level target and the current split report agree on PreScreen_manual total pool size."
+    },
+    {
+      "item_id": "stage1_prescreen_manual_expert_anchor",
+      "role": "stage1_manual_anchor_subset",
+      "thesis_target": {
+        "type": "range",
+        "min": 20,
+        "max": 22
+      },
+      "current_repo": {
+        "split_report_planned": 12,
+        "task_registry_anchor_unique": 12,
+        "manual_anchor_bank_joinable": 12
+      },
+      "status": "under_target_and_not_aligned",
+      "notes": "Current repository still instantiates only 12 PreScreen_manual anchors. This matches the current split report and task registry, but it does not satisfy the revised thesis-level target of 20-22 expert-reference manual anchors."
+    },
+    {
+      "item_id": "stage1_prescreen_manual_non_anchor",
+      "role": "stage1_manual_non_anchor_subset",
+      "thesis_target": {
+        "type": "range",
+        "min": 8,
+        "max": 10
+      },
+      "current_repo": {
+        "derived_from_split_report": 18
+      },
+      "status": "not_aligned",
+      "notes": "Because the current split report keeps only 12 manual anchors inside a 30-image PreScreen_manual pool, the residual non-anchor count is 18 rather than the revised thesis-level 8-10 design."
+    },
+    {
+      "item_id": "stage1_prescreen_semi_total",
+      "role": "stage1_semi_pool",
+      "thesis_target": {
+        "type": "approx",
+        "value": 18
+      },
+      "current_repo": {
+        "split_report_planned": 30,
+        "task_registry_planned_unique": 30,
+        "trap_manifest_draft_rows": 15,
+        "trap_manifest_realized_rows": 2,
+        "trap_manifest_frozen_rule_rows": 13,
+        "direct_prescreen_natural_failure_rows": 2
+      },
+      "status": "not_aligned_and_not_materialized",
+      "notes": "The current split report still plans 30 PreScreen_semi images, while the revised thesis-facing design now describes about 18. In addition, the current C-line trap manifest is only partially materialized: 15 draft rows exist, but only 2 are realized natural exemplars and 13 remain frozen-rule synthetic placeholders."
+    },
+    {
+      "item_id": "stage1_oos_gate_pool",
+      "role": "stage1_oos_gate_subset",
+      "thesis_target": {
+        "type": "qualitative",
+        "value": "independent small pool"
+      },
+      "current_repo": {
+        "natural_failure_oos_gate_rows": 7
+      },
+      "status": "partially_structured",
+      "notes": "An independent OOS gate bank is already structured in the natural-failure bank, but no separate frozen target quota is yet declared in the current repository artifacts."
+    },
+    {
+      "item_id": "stage2_calibration_anchor_common_item",
+      "role": "stage2_common_item_subset",
+      "thesis_target": {
+        "type": "exact",
+        "value": 12
+      },
+      "current_repo": {
+        "split_report_planned": 12,
+        "task_registry_anchor_unique": 12,
+        "manual_anchor_bank_joinable": 12
+      },
+      "status": "aligned",
+      "notes": "Calibration common-item anchors are consistent across thesis text, split report, task registry, and manual anchor bank. They should be interpreted as common-item anchors rather than expert-reference anchors."
+    },
+    {
+      "item_id": "stage2_calibration_manual_pool",
+      "role": "stage2_manual_calibration_pool",
+      "thesis_target": {
+        "type": "exact",
+        "value": 100
+      },
+      "current_repo": {
+        "split_report_planned": 100,
+        "task_registry_planned_unique": 100
+      },
+      "status": "aligned",
+      "notes": "Calibration_manual pool remains aligned at 100 images."
+    }
+  ],
+  "high_level_findings": [
+    "The revised thesis-level design and the current repository are aligned on Calibration_anchor=12 and Calibration_manual_pool=100.",
+    "They are not yet aligned on Stage 1 manual anchor and semi pool counts: the thesis-facing docs now state PreScreen_manual anchors=20-22 and PreScreen_semi about 18, while the current split report still instantiates PreScreen_manual_anchor=12 and PreScreen_semi=30.",
+    "manual_anchor_bank_index_v1.csv is a current joinable snapshot, not proof that the revised thesis Stage 1 target counts have already been realized.",
+    "The current C-line semi trap layer is still partly contractual rather than fully materialized."
+  ]
+}

@@ -20,6 +20,8 @@ Files in this bundle:
    - frozen procedure for the `d_t` / `I_t_OOD` pipeline
 4. `trap_manifest_draft_v1.csv`
    - current draft for `PreScreen_semi` trap rows
+5. `manual_anchor_bank_index_v1.csv`
+   - unique base-task index for manual anchor coverage, collapsed from A-line anchor rows
 5. `manifest_bundle_summary_v1.json`
    - high-level counts and status summary
 
@@ -29,9 +31,10 @@ Current status:
 - natural failure bank: reviewed exemplars are `realized` as bank entries
 - embedding OOD protocol: `frozen_rule`
 - trap manifest draft: `2 realized natural exemplars + 13 frozen_rule synthetic rows`
+- manual anchor bank: `realized`
 
 Important boundary:
 
 - This bundle does not yet materialize perturbation geometry outputs.
 - Synthetic rows are frozen at the rule/selection layer, not yet at generated-corners layer.
-- Manual anchor bank is not expanded here; this week focuses on the C-line outputs requested in `ABC_NEXT_STEPS_20260308.md`.
+- Manual anchors are now expanded into a dedicated joinable bank index, but not yet wired into downstream routing/service contracts.

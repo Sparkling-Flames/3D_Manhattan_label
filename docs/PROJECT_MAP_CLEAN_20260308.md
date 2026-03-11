@@ -103,6 +103,7 @@
 - `analysis_results/`
   - 所有分析 CSV、registry、图表、manifest 的输出目录。
   - 当前新增 `analysis_results/c_manifests_20260310/`，用于存放 C 线可 join 的 trap / embedding manifest 交付。
+  - 当前新增 `analysis_results/pooled_qa/`，用于存放 B 线 pooled QA / provenance audit 图包与最小审计表。
 
 - `tests/`
   - 当前仍有效的自动化测试目录。
@@ -168,6 +169,19 @@
 - `tools/lead_time_stats.py`
   - 对比 Label Studio `lead_time` 与 active log 的统计脚本。
   - 用于检查耗时口径，不是主分析入口。
+
+- `tools/pooled_qa_plots.py`
+  - B 线 pooled QA 图包入口。
+  - 只做 QA / provenance audit，不替代 formal analysis，也不是论文主图入口。
+  - 当前已固定按 `schema_version` 分层，并将 active time 继续按 `active_time_source` 分层；同时输出 mixed scope、scope bucket 与 meta-label missing 的最小审计表。
+
+- `tools/perturbation_operators.py`
+  - C 线扰动算子主入口。
+  - 实现 canonical freeze 表示、`x wrap / y clamp`、seed 可复现与 intentional-invalid 语义。
+
+- `tools/materialize_c_traps.py`
+  - C 线 trap materialization 脚本。
+  - 从当前 `stage1_prescreen_semi_import.json` 的 predictions 读取初始角点，并把 synthetic trap rows 生成到新的 C bundle。
 
 ### B. 正在用的辅助脚本
 
@@ -371,6 +385,22 @@
   - export 真源审计输出目录。
   - 包含 `export_inventory_v1.csv`、`export_inventory_summary_v1.json` 与 `legacy_annotation_audit_v1.csv`。
 
+- `analysis_results/pooled_qa/registry_20260308/`
+  - B 线主 registry pooled QA 图包。
+  - 当前包含 `schema_version` / `active_time_source` / `scope_bucket` 分层图表，以及 mixed-scope 和 meta-missing 审计表。
+
+- `analysis_results/pooled_qa/registry_20260308_march7_check/`
+  - 3 月 7 日 enriched registry 的 pooled QA 图包。
+  - 额外覆盖 `dataset_group_source` 与 trusted `dataset_group` 汇总的 QA 审计。
+
+- `analysis_results/phase1_progress_20260311/`
+  - 当前 Phase 1 的 target-vs-realized 进度审计目录。
+  - 用来分开记录“论文提纲目标数量”“当前 split 计划数量”“当前已结构化/可 join 现状”。
+
+- `analysis_results/c_manifests_20260311/`
+  - 当前 C 线生成层 bundle。
+  - 存放 perturbation frozen plan、materialized trap manifest、synthetic trap bank 与 materialization summary。
+
 ### 目录职责边界
 
 1. 这里是输出，不是唯一真源。
@@ -387,6 +417,9 @@
   - 当前 `d_t` / `I_t_OOD` procedure 的冻结 manifest。
 - `analysis_results/c_manifests_20260310/trap_manifest_draft_v1.csv`
   - `PreScreen_semi` trap 草案，显式区分 natural realized rows 与 synthetic frozen-rule rows。
+- `analysis_results/c_manifests_20260310/manual_anchor_bank_index_v1.csv`
+  - 当前已结构化的 manual anchor bank 索引。
+  - 这是从 A 线 `is_anchor=True` 行 collapse 出来的“当前可 join 现状”，不是论文 Stage 1 `PreScreen_manual` 20--22 张 manual anchors 目标已经全部实现的证明。
 
 ---
 
@@ -412,6 +445,9 @@
 - `trap集/复核总表_20260307.md`
   - trap 复核汇总记录（人工复核追踪）。
   - 当前已被整理为 `analysis_results/c_manifests_20260310/natural_failure_bank_index_v1.csv` 的上游人工依据之一。
+
+说明：`trap集/` 目前仍是“部分已收集、部分待补齐”的人工资产目录。
+`analysis_results/c_manifests_20260310/manual_anchor_bank_index_v1.csv` 只能说明当前仓库里哪些 manual anchor 已经被结构化并可 join，不能反向证明论文提纲中的 Stage 1 anchor 配额已经收齐。
 
 ---
 
@@ -512,23 +548,31 @@
 - `docs/实验集设定与用途.md`
   - 实验集定义与用途说明。
 
-- `docs/三人开发分工_v4_phase1.md`
-  - Phase1 分工文档。
-
-- `docs/三人开发分工_v4_phase2_规划.md`
-  - Phase2 规划文档。
-
 - `docs/约束审查意见_20260306.md`
   - 约束文件审查记录。
-
-- `docs/PRESCREEN_PROFILE_FREEZE_REVIEW_20260308.md`
-  - 预筛选画像冻结审查记录。
 
 - `docs/DRY_RUN_REVIEW_20260308.md`
   - dry run 审查记录。
 
-- `docs/ABC_NEXT_STEPS_20260308.md`
-  - A/B/C 后续事项记录。
+- `docs/DRY_RUN_REVIEW_20260308.md`
+  - dry run 复盘与字段检查文档。
+  - 说明 pilot 混合导出、legacy 行、mixed scope、`lead_time` fallback 与新服务器单图导出的字段边界。
+
+- `docs/C_MANIFEST_STATUS_20260310.md`
+  - 当前 C 线 manifest 交付状态说明。
+  - 用来区分“已结构化可 join”与“最终几何/服务接线尚未完成”的边界。
+
+- `docs/PHASE1_PROGRESS_AUDIT_20260311.md`
+  - 当前论文流程口径、他人修改建议、以及仓库实际进度的交叉审查文档。
+  - 明确区分 revised thesis target、current split plan 与 current joinable snapshot。
+
+- `docs/B_NEXT_STEPS_20260311.md`
+  - B 线当前推进清单。
+  - 明确在旧 split 失效、人工补选未完成时，B 线不能继续把旧 split 当正式实验图真源。
+
+- `docs/C_TRAP_EXECUTION_STATUS_20260311.md`
+  - 当前 C 线从 manifest 层推进到生成层的状态文档。
+  - 明确新的 operator engine、frozen plan 与 materialized bundle 边界。
 
 - `docs/COS_上传与导入中文说明.md`
   - COS 上传与导入说明。
@@ -581,6 +625,10 @@
 - `docs/legacy/`
   - 历史文档归档目录。
 
+- `docs/legacy/plans/`
+  - 当前已归档的阶段性计划与冻结审查文档目录。
+  - 包含已从现役入口移出的 `ABC_NEXT_STEPS_20260308.md`、`PRESCREEN_PROFILE_FREEZE_REVIEW_20260308.md`、`三人开发分工_v4_phase1.md` 与 `三人开发分工_v4_phase2_规划.md`。
+
 说明：`docs/` 里既有正式入口文档，也有讨论与归档文本。纯净地图默认优先把 `README_INDEX/SOP/README_* /ANALYSIS_* /ACTIVE_TIME_* /PROJECT_MAP_CLEAN_*` 作为执行入口。
 
 ---
@@ -590,6 +638,10 @@
 - `tests/test_analyze_quality.py`
   - 当前最重要、实际有效的自动化测试文件。
   - 主要覆盖 `analyze_quality.py` 的解析、几何、门控、可靠性核心逻辑。
+
+- `tests/test_perturbation_operators.py`
+  - C 线扰动算子与 frozen plan replay 的单测文件。
+  - 覆盖 alias contract、seed 可复现、`x wrap / y clamp` 与 intentional-invalid 语义。
 
 - `tests/conftest.py`
   - pytest 公共配置与 fixtures 注入。

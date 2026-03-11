@@ -10,9 +10,13 @@
     "trap_manifest_schema": "analysis_results/c_manifests_20260310/trap_manifest_schema_v1.json",
     "natural_failure_bank_index": "analysis_results/c_manifests_20260310/natural_failure_bank_index_v1.csv",
     "embedding_ood_protocol": "analysis_results/c_manifests_20260310/embedding_ood_protocol_v1.json",
-    "trap_manifest_draft": "analysis_results/c_manifests_20260310/trap_manifest_draft_v1.csv"
+    "trap_manifest_draft": "analysis_results/c_manifests_20260310/trap_manifest_draft_v1.csv",
+    "manual_anchor_bank_index": "analysis_results/c_manifests_20260310/manual_anchor_bank_index_v1.csv"
   },
   "summary": {
+    "manual_anchor_bank_rows": 24,
+    "manual_anchor_prescreen_rows": 12,
+    "manual_anchor_calibration_rows": 12,
     "natural_failure_bank_rows": 15,
     "natural_failure_main_trap_rows": 8,
     "natural_failure_oos_gate_rows": 7,
@@ -26,6 +30,7 @@
     "trap_manifest_schema": "frozen_rule",
     "natural_failure_bank_index": "realized",
     "embedding_ood_protocol": "frozen_rule",
-    "trap_manifest_draft": "mixed_realized_and_frozen_rule"
+    "trap_manifest_draft": "mixed_realized_and_frozen_rule",
+    "manual_anchor_bank_index": "realized"
   }
 }
