@@ -10,7 +10,7 @@
 
 ## 2. 当前应固定的主线口径
 
-按 [docs/overleaf_project/sections/02_方法.tex](overleaf_project/sections/02_方法.tex)、[docs/overleaf_project/sections/03_实验设置.tex](overleaf_project/sections/03_实验设置.tex)、[docs/实验集设定与用途.md](实验集设定与用途.md) 当前写法，主线应固定为：
+按 [docs/overleaf*project/sections/02*方法.tex](overleaf_project/sections/02_方法.tex)、[docs/overleaf*project/sections/03*实验设置.tex](overleaf_project/sections/03_实验设置.tex)、[docs/实验集设定与用途.md](实验集设定与用途.md) 当前写法，主线应固定为：
 
 1. `Pilot`
    - 流程验证与协议边界冻结。
