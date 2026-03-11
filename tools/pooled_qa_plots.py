@@ -206,7 +206,7 @@ def plot_rows_by_schema(df: pd.DataFrame) -> plt.Figure:
     sns.barplot(data=counts, x="schema_version", y="rows", ax=ax)
     ax.set_title("Pooled QA rows by schema_version")
     ax.set_xlabel("schema_version")
-    ax.set_ylabel("rows")
+    ax.set_ylabel("annotations (rows)")
     ax.tick_params(axis="x", rotation=20)
     fig.tight_layout()
     return fig
@@ -226,7 +226,7 @@ def plot_join_status_by_schema(df: pd.DataFrame) -> plt.Figure | None:
     sns.barplot(data=counts, x="schema_version", y="rows", hue="task_join_status", ax=ax)
     ax.set_title("Join status by schema_version")
     ax.set_xlabel("schema_version")
-    ax.set_ylabel("rows")
+    ax.set_ylabel("annotations (rows)")
     ax.tick_params(axis="x", rotation=20)
     fig.tight_layout()
     return fig
@@ -238,7 +238,15 @@ def plot_active_time_histogram(df: pd.DataFrame) -> plt.Figure | None:
         return None
 
     schema_values = sorted(plot_df["schema_version"].unique().tolist())
-    fig, axes = plt.subplots(1, len(schema_values), figsize=(6 * len(schema_values), 4), squeeze=False)
+    fig, axes = plt.subplots(
+        1,
+        len(schema_values),
+        figsize=(6 * len(schema_values), 4),
+        squeeze=False,
+        sharey=True,
+    )
+    legend_handles = None
+    legend_labels = None
     for ax, schema_value in zip(axes.flat, schema_values):
         subset = plot_df.loc[plot_df["schema_version"] == schema_value]
         sns.histplot(
@@ -252,12 +260,19 @@ def plot_active_time_histogram(df: pd.DataFrame) -> plt.Figure | None:
             log_scale=True,
             ax=ax,
         )
-        ax.set_title(f"schema_version = {schema_value}")
-        ax.set_xlabel("active_time")
-        ax.set_ylabel("rows")
+        if legend_handles is None:
+            legend_handles, legend_labels = ax.get_legend_handles_labels()
+        legend = ax.get_legend()
+        if legend is not None:
+            legend.remove()
+        ax.set_title(f"{schema_value}\n(n={len(subset)})")
+        ax.set_xlabel("active time (seconds, log scale)")
+        ax.set_ylabel("annotations (rows)")
 
-    fig.suptitle("Active time distribution by schema_version and active_time_source", y=1.02)
-    fig.tight_layout()
+    if legend_handles and legend_labels:
+        fig.legend(legend_handles, legend_labels, title="active_time_source", loc="upper center", ncol=max(1, len(legend_labels)))
+    fig.suptitle("Active time distribution by schema_version", y=1.08)
+    fig.tight_layout(rect=(0, 0, 1, 0.94))
     return fig
 
 
@@ -267,20 +282,26 @@ def plot_active_time_box(df: pd.DataFrame) -> plt.Figure | None:
         return None
 
     schema_values = sorted(plot_df["schema_version"].unique().tolist())
-    fig, axes = plt.subplots(1, len(schema_values), figsize=(6 * len(schema_values), 4.5), squeeze=False)
+    fig, axes = plt.subplots(
+        1,
+        len(schema_values),
+        figsize=(6 * len(schema_values), 4.5),
+        squeeze=False,
+        sharey=True,
+    )
 
-    for ax, schema_value in zip(axes.flat, schema_values):
+    for idx, (ax, schema_value) in enumerate(zip(axes.flat, schema_values)):
         subset = plot_df.loc[plot_df["schema_version"] == schema_value]
         sns.boxplot(data=subset, x="active_time_source", y="active_time_plot", ax=ax)
         sns.stripplot(data=subset, x="active_time_source", y="active_time_plot", color="black", alpha=0.5, size=3, ax=ax)
         ax.set_yscale("log")
-        ax.set_title(f"schema_version = {schema_value}")
+        ax.set_title(f"{schema_value}\n(n={len(subset)})")
         ax.set_xlabel("active_time_source")
-        ax.set_ylabel("active_time")
+        ax.set_ylabel("active time (seconds, log scale)" if idx == 0 else "")
         ax.tick_params(axis="x", rotation=20)
 
     fig.suptitle("Active time by source within each schema_version", y=1.03)
-    fig.tight_layout()
+    fig.tight_layout(rect=(0, 0, 1, 0.96))
     return fig
 
 
@@ -300,7 +321,7 @@ def plot_annotator_profile(df: pd.DataFrame) -> plt.Figure | None:
     sns.barplot(data=counts, x="annotator_id", y="rows", hue="schema_version", ax=ax)
     ax.set_title("Annotator profile (rows), stratified by schema_version")
     ax.set_xlabel("annotator_id")
-    ax.set_ylabel("rows")
+    ax.set_ylabel("annotations (rows)")
     fig.tight_layout()
     return fig
 
@@ -320,7 +341,7 @@ def plot_dataset_group_source_counts(df: pd.DataFrame) -> plt.Figure | None:
     sns.barplot(data=counts, x="schema_version", y="rows", hue="dataset_group_source", ax=ax)
     ax.set_title("dataset_group_source by schema_version")
     ax.set_xlabel("schema_version")
-    ax.set_ylabel("rows")
+    ax.set_ylabel("annotations (rows)")
     ax.tick_params(axis="x", rotation=20)
     fig.tight_layout()
     return fig
@@ -350,7 +371,7 @@ def plot_dataset_group_counts_trusted(df: pd.DataFrame, trusted_sources: list[st
     sns.barplot(data=counts, x="dataset_group", y="rows", hue="schema_version", ax=ax)
     ax.set_title("Trusted dataset_group counts (filtered by dataset_group_source)")
     ax.set_xlabel("dataset_group")
-    ax.set_ylabel("rows")
+    ax.set_ylabel("annotations (rows)")
     ax.tick_params(axis="x", rotation=25)
     fig.tight_layout()
     return fig, counts
@@ -423,7 +444,7 @@ def plot_mixed_scope_counts_by_schema(mixed_scope_df: pd.DataFrame) -> plt.Figur
     sns.barplot(data=counts, x="schema_version", y="mixed_tasks", ax=ax)
     ax.set_title("Mixed-scope task audit by schema_version")
     ax.set_xlabel("schema_version")
-    ax.set_ylabel("mixed tasks")
+    ax.set_ylabel("mixed-scope tasks (task count)")
     ax.tick_params(axis="x", rotation=20)
     fig.tight_layout()
     return fig
