@@ -1,0 +1,61 @@
+{
+  "mode": "pooled_qa",
+  "is_paper_figure_pack": false,
+  "coverage_scope": "March 7 enriched registry 验证范围：额外验证 `dataset_group_source` 审计与 trusted `dataset_group` 汇总。",
+  "input_files": {
+    "merged_csv": "analysis_results/registry_20260308_march7_check/merged_all_v0.csv",
+    "annotation_registry": "analysis_results/registry_20260308_march7_check/annotation_registry_v1.csv",
+    "active_time_registry": "analysis_results/registry_20260308_march7_check/active_time_registry_v1.csv",
+    "registry_suite_summary": "analysis_results/registry_20260308/registry_suite_summary_v1.json"
+  },
+  "n_rows": 2,
+  "n_tasks": 2,
+  "n_annotators": 1,
+  "schema_version_counts": [
+    {
+      "schema_version": "v2_structured",
+      "rows": 2
+    }
+  ],
+  "active_time_source_by_schema": [
+    {
+      "schema_version": "v2_structured",
+      "active_time_source": "lead_time_fallback",
+      "rows": 2,
+      "non_null_active_time": 2
+    }
+  ],
+  "dataset_group_source_by_schema": [
+    {
+      "schema_version": "v2_structured",
+      "dataset_group_source": "export_task_data",
+      "rows": 1
+    },
+    {
+      "schema_version": "v2_structured",
+      "dataset_group_source": "planned_registry_match",
+      "rows": 1
+    }
+  ],
+  "mixed_scope_task_count": 0,
+  "mixed_scope_multi_annotator_task_count": 0,
+  "trusted_dataset_group_sources": [
+    "planned_registry_match",
+    "export_task_data"
+  ],
+  "trusted_dataset_group_rows": 2,
+  "join_status_note": "`task_join_status` 反映 planned/runtime bridge 状态，不能直接解释为标注员行为问题；`ambiguous` / `unmatched` 是为了避免静默强配而显式保留的 join 状态。 registry_suite_summary 当前计数：{'unmatched': 33, 'matched_by_title': 50, 'matched_by_title_condition': 41, 'ambiguous': 32}。",
+  "active_time_note": "`active_time_source=log` 表示 direct active log 命中；`lead_time_fallback` 只是回退到 Label Studio `lead_time`，不是 active log。",
+  "saved_files": [
+    "01_rows_by_schema_version.png",
+    "02_join_status_by_schema_version.png",
+    "03_active_time_hist_by_schema_and_source.png",
+    "04_active_time_box_by_schema_and_source.png",
+    "05_annotator_profile_by_schema_version.png",
+    "06_dataset_group_source_by_schema_version.png",
+    "07_dataset_group_counts_trusted.png"
+  ],
+  "skipped_files": {
+    "08_mixed_scope_tasks_by_schema_version.png": "missing required columns or no eligible rows"
+  }
+}
