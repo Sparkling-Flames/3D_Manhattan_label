@@ -1,57 +1,66 @@
-# ANCHOR SET GAP ANALYSIS & SUPPLEMENTATION PLAN (2026-03-15)
+# Anchor Gap Analysis and Supplement Notes (2026-03-15)
 
-## 1. Overview
-User requires:
-- **Manual Anchor Set**: 20-22 images, covering difficulty options and glass interference.
-- **Semi Anchor Set**: 18 images, covering typical errors (natural failures) and potentially synthetic errors (future).
+## Purpose
 
-## 2. Manual Anchor Set Analysis
-Current bank (`manual_anchor_bank_index_v1.csv`) has 24 unique base tasks.
-However, it **misses** key difficulty types mentioned in the user's `trap集` audit.
+This note is a gap-analysis memo for B/C-line planning. It is not proof that the
+thesis-facing Stage 1 target counts are already realized.
 
-### Missing Critical Cases (To Be Added):
-| Task ID | Type | Basename | Justification |
-| :--- | :--- | :--- | :--- |
-| **task497** | Occlusion (遮挡明显) | `uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384` | User requirement: "cover all options". GT=4, stable closure despite occlusion. |
-| **task462** | Seam/Stretch (拼接缝) | `UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596` | User requirement: "cover all options". GT=4, difficult manual case. |
-| **task509** | Glass (玻璃) | `wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e` | User requirement: "glass interference". Critical for checking reflection handling. |
-| **task510** | Seam/Stretch (拼接缝) | `B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993` | Additional coverage for distortion/seam issues. |
+Two counts must stay separate:
 
-### Proposed Manual Set Structure (Target: ~24):
-We will add these 4 tasks to the existing 24. Total = 28.
-We can label the new ones as `prescreen_manual` (since they are difficult cases suitable for screening expert capability).
-*Action*: Append these 4 rows to `manual_anchor_bank_index_v1.csv`.
+- `joinable bank rows`: what currently exists in the anchor/trap bank files
+- `thesis-facing realized anchors`: what the Stage 1 split/selection path can
+  legitimately claim for the paper
 
-**Note**: Since these tasks are not in the current `merged_all_v0.csv` (based on grep check), we will mark their `registry_uids` as `manual_supplement` or leave blank if they are purely from the `trap集` file system.
+Bank growth can improve coverage, but it does not by itself resolve split
+alignment.
 
-## 3. Semi Anchor Set Analysis
-Current bank (`natural_failure_bank_index_v1.csv`) has 15 entries.
-Target: 18.
-Gap: 3 images.
+## Current state
 
-### Strategy:
-- **Keep existing 15**: They cover typical natural failures well (Good Model, Model Fail, Over Parsing, Drift, Duplicate, Overextend, OOS).
-- **Reserve 3 slots for Synthetic Traps**: User mentioned "wait for script to generate error corners".
-- **Conclusion**: The current set of 15 is sufficient for *Natural Failures*. The remaining 3 to reach 18 will be filled by *Synthetic Failures* later. No need to force-add manual cases as semi traps now unless we find specifically "semi-initialized but wrong" cases in the `trap集`.
+- `manual_anchor_bank_index_v1.csv` currently contains a joinable bank snapshot
+  that mixes:
+  - `PreScreen_manual` anchor rows
+  - `Calibration_anchor` common-item rows
+- The thesis-facing Stage 1 target remains:
+  - `PreScreen_manual` total = `30`
+  - `PreScreen_manual` expert anchors = `20-22`
+  - `PreScreen_semi` total ~= `18`
+- Current repository planning is still misaligned with that target. See
+  [phase1_target_vs_realized_manifest_v1.json](/d:/Work/HOHONET/analysis_results/phase1_progress_20260311/phase1_target_vs_realized_manifest_v1.json).
 
-### Verification of Semi Candidates in `trap集`:
-- `task474`, `task477`, `task493`, `task499`, `task505`, `task475` are already in the bank.
-- `task492`, `task501` are already in the bank.
-- `task526`, `task529`, `task533`, `task459`, `task476`, `task495`, `task496` are in the bank (mostly as OOS gates).
-- **Result**: We have utilized the `trap集` well for Semi/Natural Failures.
+## Coverage gap candidates
 
-## 4. Action Items
-1.  **Update `manual_anchor_bank_index_v1.csv`**: Add `task497`, `task462`, `task509`, `task510`.
-    -   Role: `prescreen_manual` (likely).
-    -   Source: `trap_collection`.
-2.  **Report**: Confirm to user that Manual set is expanded to cover all difficulty options (including Glass), and Semi set stands at 15 natural failures + 3 pending synthetic slots.
+The following base tasks are reasonable manual-bank supplements because they
+cover difficulty families that are important for expert-anchor review:
 
-## 5. CSV Update Content (Draft)
-```csv
-base_task_id,planned_stage,dataset_group,condition,source_pools,registry_uids,registry_row_count,has_expert_ref,init_type
-...[existing 24 rows]...
-uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384,prescreen_manual,PreScreen_manual,manual,trap_collection,,0,True,
-UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596,prescreen_manual,PreScreen_manual,manual,trap_collection,,0,True,
-wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e,prescreen_manual,PreScreen_manual,manual,trap_collection,,0,True,
-B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993,prescreen_manual,PreScreen_manual,manual,trap_collection,,0,True,
-```
+| Task ID | Base task ID | Candidate value |
+| :--- | :--- | :--- |
+| `task497` | `uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384` | occlusion-heavy manual case |
+| `task462` | `UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596` | seam/stretch manual case |
+| `task509` | `wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e` | glass/reflection manual case |
+| `task510` | `B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993` | additional seam/distortion case |
+
+These rows are useful as `bank supplements`.
+
+They are not automatically equivalent to:
+
+- thesis-facing `PreScreen_manual` realized expert anchors
+- split-aligned Stage 1 counts
+- registry-joinable expert-reference anchors
+
+## Semi pool note
+
+- `natural_failure_bank_index_v1.csv` remains a bank-level asset.
+- Reaching the thesis-facing `PreScreen_semi ~= 18` still requires a separate
+  selection/materialization decision.
+- Natural-failure bank size must not be used as a substitute for the formal
+  thesis-facing semi count.
+
+## Operational conclusion
+
+- Appending the four manual-bank supplement rows is acceptable as a bank
+  coverage improvement.
+- The paper path must still treat split alignment separately.
+- The correct claim is:
+  - "manual bank coverage improved"
+- The incorrect claim is:
+  - "Stage 1 expert-anchor target is now satisfied"

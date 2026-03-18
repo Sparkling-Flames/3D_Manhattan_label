@@ -175,6 +175,14 @@
   - 只做 QA / provenance audit，不替代 formal analysis，也不是论文主图入口。
   - 当前已固定按 `schema_version` 分层，并将 active time 继续按 `active_time_source` 分层；同时输出 mixed scope、scope bucket 与 meta-label missing 的最小审计表。
 
+- `tools/analyze_stage_aware.py`
+  - B 线 stage-aware 原型分析入口。
+  - 当前版本会先经过 thesis-facing 默认门禁，再接入可替换的 `selection manifest`，并用 quality rerun 的 `difficulty + model_issue` 共识生成 scene proxy。
+  - 当前已支持 `formal-prep freeze v2.1` 产物层：`core_scene_contract_v2`、`worker_portrait_minimal_v2`、`tim_mapping_spec_v2_1`、`tim_rule_summary_v2_1`、`type4_evidence_v2_1`、`route_candidates_v1`、`route_attribution_v1`、`formal_prep_freeze_v2_1_manifest`、`freeze_v2_1_consistency_audit`、`stage1_alignment_audit_v2_1`、`selection_main_facing_audit_v2_1`、`selection_provenance_audit_v2_1`、`active_time_estimand_audit_v2_1`。
+  - 同时保留 `tim_mapping_spec_v1/v2`、`tim_rule_summary_v1/v2`、`type4_evidence_v2` 作为 legacy alias，不作为 v2.1 canonical 断言依据。
+  - manifest 会显式写出 `thesis_readiness_status` 和 `thesis_readiness_blockers`（当前常见为 selection provenance 未独立 + stage1 protocol not aligned）。
+  - 它现在是“可解释的原型入口”，不是 formal analysis 最终主入口。
+
 - `tools/perturbation_operators.py`
   - C 线扰动算子主入口。
   - 实现 canonical freeze 表示、`x wrap / y clamp`、seed 可复现与 intentional-invalid 语义。
@@ -182,6 +190,14 @@
 - `tools/materialize_c_traps.py`
   - C 线 trap materialization 脚本。
   - 从当前 `stage1_prescreen_semi_import.json` 的 predictions 读取初始角点，并把 synthetic trap rows 生成到新的 C bundle。
+
+- `tools/freeze_prescreen_readiness.py`
+  - PreScreen readiness freeze 脚本。
+  - 从 phase1 target-vs-realized manifest、manual anchor bank、natural failure bank、task registry 与当前 C bundle 生成 manual/semi/OOS 三池的 readiness 审计文件。
+
+- `tools/freeze_prescreen_selection.py`
+  - PreScreen blocked selection freeze 脚本。
+  - 在 readiness 审计之上，继续冻结 manual final selection、manual non-anchor selection、semi final selection 与 OOS target freeze 的当前 blocked 边界。
 
 ### B. 正在用的辅助脚本
 
@@ -396,10 +412,25 @@
 - `analysis_results/phase1_progress_20260311/`
   - 当前 Phase 1 的 target-vs-realized 进度审计目录。
   - 用来分开记录“论文提纲目标数量”“当前 split 计划数量”“当前已结构化/可 join 现状”。
+  - 当前新增 `prescreen_readiness_audit_v1.json`、`prescreen_manual_anchor_inventory_v1.csv` 与 `oos_gate_pool_freeze_v1.json`，用于冻结 PreScreen manual / semi / OOS 三池的 readiness 边界与 blocked reasons。
+  - 当前进一步新增 `prescreen_manual_final_selection_v1.json`、`prescreen_manual_non_anchor_selection_v1.json` 与 `oos_gate_target_freeze_v2.json`，用于冻结 thesis-facing selection / target freeze 仍 blocked 的当前状态。
+
+- `analysis_results/selection_freeze_20260317/`
+  - B 线显式 selection freeze 目录。
+  - 存放 `thesis_selection_manifest_v1_20260317.json` 与 `thesis_selection_main_facing_v1_20260317.json`。
+  - 当前 second-level main-facing manifest 仍可追溯到 autogen default gate，尚未形成独立 thesis selection 源。
+
+- `analysis_results/stage_aware_analysis_freeze_v2_1_selection_v1_20260317/`
+  - 基于显式 thesis selection manifest 的 stage-aware freeze 重跑目录。
+  - 该目录用于核验 selection mode/stage1 alignment/thesis blockers/active_time estimand/consistency gate 五类 machine-readable 状态。
+
+- `analysis_results/stage_aware_analysis_freeze_v2_1_main_facing_v1_20260317/`
+  - 基于 main-facing selection manifest 的 v2.1 重跑目录。
+  - 当前 machine-readable 状态：`selection_main_facing_passed=true`，但 `selection_source_independent_from_autogen=false`，因此 thesis readiness 仍 blocked。
 
 - `analysis_results/c_manifests_20260311/`
   - 当前 C 线生成层 bundle。
-  - 存放 perturbation frozen plan、materialized trap manifest、synthetic trap bank 与 materialization summary。
+  - 存放 perturbation frozen plan、materialized trap manifest、synthetic trap bank、materialization summary，以及 reject lifecycle、fallback registry、family coverage matrix、consistency audit、family appendix note、manual resolution queue、XML alias/operator crosswalk、prescreen semi target、current-bundle-vs-target gap，以及 `prescreen_semi_selection_freeze_v1.json`、`prescreen_semi_final_selection_v1.json` 审计文件。
 
 ### 目录职责边界
 
@@ -562,17 +593,44 @@
   - 当前 C 线 manifest 交付状态说明。
   - 用来区分“已结构化可 join”与“最终几何/服务接线尚未完成”的边界。
 
+- `docs/ANCHOR_GAP_ANALYSIS_20260315.md`
+  - manual anchor bank 的覆盖缺口说明。
+  - 只说明 bank coverage supplement，不代表 thesis-facing Stage 1 anchor count 已对齐。
+
 - `docs/PHASE1_PROGRESS_AUDIT_20260311.md`
   - 当前论文流程口径、他人修改建议、以及仓库实际进度的交叉审查文档。
   - 明确区分 revised thesis target、current split plan 与 current joinable snapshot。
+
+- `docs/HANDOVER_CONTEXT_20260313.md`
+  - 最新交接文档。
+  - 覆盖项目定位、当前进度、风险边界与下一阶段执行清单。
 
 - `docs/B_NEXT_STEPS_20260311.md`
   - B 线当前推进清单。
   - 明确在旧 split 失效、人工补选未完成时，B 线不能继续把旧 split 当正式实验图真源。
 
+- `docs/B_FREEZE_V2_CONTRACT_AUDIT_20260317.md`
+  - B 线 freeze v2 的对照审计文档。
+  - 用于明确本轮可支持/不可支持表述，并固定 `partial / formal-prep-freeze-v2` 口径边界。
+- `docs/B_FREEZE_V2_1_CONTRACT_AUDIT_20260317.md`
+  - B 线 freeze v2.1 的增量对照审计文档。
+  - 当前版本聚焦四项修正：`selection_manifest_path` 非空化、Type4 不进入 M-tier、`TIM <-> Type4 evidence` 一致性门禁、以及 Stage1 protocol/active_time estimand 阻塞状态显式化。
+- `docs/B_SELECTION_FREEZE_RERUN_20260317.md`
+  - B 线显式 selection manifest 绑定重跑记录文档。
+  - 用于固定“selection_mode=provided + main-facing + provenance gate”后的 freeze 状态。
+  - 当前结论：main-facing 通过，但 selection provenance 仍是 autogen 派生，且 Stage1 protocol 未对齐，仍 blocked。
+
 - `docs/C_TRAP_EXECUTION_STATUS_20260311.md`
   - 当前 C 线从 manifest 层推进到生成层的状态文档。
   - 明确新的 operator engine、frozen plan 与 materialized bundle 边界。
+
+- `docs/appendix_a_operator_freeze_note_v1.md`
+  - C 线 Appendix A 冻结说明。
+  - 只固定 XML `model_issue` alias、operator family、current bundle status 与当前允许/不允许的论文表述，不宣称 thesis-facing complete。
+
+- `docs/prescreen_freeze_note_v1.md`
+  - PreScreen readiness freeze 说明。
+  - 明确 manual / semi / OOS 三池当前已冻结的 readiness 状态、旧 export 与 2026-03-07 新导出的证据层级边界，以及当前仍阻塞正式 Stage 1 启动的原因。
 
 - `docs/COS_上传与导入中文说明.md`
   - COS 上传与导入说明。
@@ -642,6 +700,18 @@
 - `tests/test_perturbation_operators.py`
   - C 线扰动算子与 frozen plan replay 的单测文件。
   - 覆盖 alias contract、seed 可复现、`x wrap / y clamp` 与 intentional-invalid 语义。
+
+- `tests/test_analyze_stage_aware.py`
+  - B 线 stage-aware 原型分析的回归测试。
+  - 当前覆盖 `selection manifest` 生效、默认 thesis gate、生成功能的 scene proxy、C manifest membership、route attribution 可重算输出，以及 freeze v2.1 的 TIM/Type4 一致性门禁、Stage1 alignment 审计、active_time estimand 审计与 canonical 工件产物。
+
+- `tests/test_freeze_prescreen_readiness.py`
+  - PreScreen readiness freeze 的回归测试。
+  - 覆盖 manual joinable anchor counting、semi selection freeze 不 ready、OOS candidate-bank freeze 与 readiness 总审计不越界。
+
+- `tests/test_freeze_prescreen_selection.py`
+  - PreScreen blocked selection freeze 的回归测试。
+  - 覆盖 manual 已知池上限仍低于 thesis target、manual non-anchor keep/drop 未冻结、semi `0/6 + 11/12` 仍 blocked，与 OOS `quota=null + Stage1 binding=0` 的 target freeze 边界。
 
 - `tests/conftest.py`
   - pytest 公共配置与 fixtures 注入。

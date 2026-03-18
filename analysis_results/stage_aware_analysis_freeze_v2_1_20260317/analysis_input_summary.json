@@ -1,0 +1,63 @@
+{
+  "raw_rows": 189,
+  "rows_after_default_gate": 114,
+  "rows_after_selection": 114,
+  "unique_tasks_after_selection": 91,
+  "selection_manifest_path": "analysis_results\\stage_aware_analysis_freeze_v2_1_20260317\\selection_manifest_autogen_default_gate_v1.csv",
+  "selection_manifest_rows": 114,
+  "selection_manifest_mode": "autogen_default_gate",
+  "thesis_selection_ready": false,
+  "thesis_readiness_status": "blocked_autogen_default_gate_selection_and_stage1_protocol_not_aligned",
+  "thesis_readiness_blockers": [
+    "autogen_default_gate_selection",
+    "stage1_protocol_not_aligned"
+  ],
+  "selection_rule_version": "selection_manifest_resolved_v2_1",
+  "stage1_gate_version": "stage1_protocol_alignment_v2_1",
+  "stage1_alignment_passed": false,
+  "stage1_alignment_file": "stage1_alignment_audit_v2_1.json",
+  "active_time_endpoint_status": "mixed_estimand_log_plus_fallback",
+  "active_time_primary_endpoint_ready": false,
+  "active_time_estimand_file": "active_time_estimand_audit_v2_1.json",
+  "active_time_source_counts": {
+    "lead_time_fallback": 75,
+    "log": 39
+  },
+  "meta_guard_status_counts": {
+    "accepted": 91,
+    "rejected": 23
+  },
+  "dataset_group_counts": {
+    "SemiAuto_Test": 41,
+    "Validation_semi": 23,
+    "PreScreen_semi": 13,
+    "PreScreen_manual": 11,
+    "Calibration_semi": 11,
+    "Gold_manual": 9,
+    "Pilot": 6
+  },
+  "scope_bucket_counts": {
+    "in_scope": 99,
+    "oos": 14,
+    "missing": 1
+  },
+  "core_scene_counts": {
+    "occlusion|acceptable": 51,
+    "other": 22,
+    "occlusion|corner_drift": 11,
+    "reflection|acceptable": 8,
+    "oos::oos_split_level": 7,
+    "occlusion|over_parsing": 7,
+    "oos::oos_geometry": 5,
+    "low_quality|corner_duplicate": 1,
+    "low_texture|overextend_adjacent": 1,
+    "oos::oos_open_boundary": 1
+  },
+  "source_bank_membership_counts": {
+    "registry_only": 104,
+    "trap_only": 8,
+    "anchor_only": 2
+  },
+  "manual_anchor_bank_rows": 28,
+  "trap_manifest_rows": 15
+}

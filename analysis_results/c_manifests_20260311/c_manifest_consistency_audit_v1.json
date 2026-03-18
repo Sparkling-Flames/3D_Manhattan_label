@@ -1,0 +1,42 @@
+{
+  "audit_name": "c_manifest_consistency_audit_v1",
+  "audit_version": "c-manifest-consistency-audit-v1",
+  "consistency_gate_passed": true,
+  "checks": {
+    "reject_lifecycle_matches_materialized_reject_count": {
+      "passed": true,
+      "materialized_reject_count": 2,
+      "reject_lifecycle_count": 2,
+      "mismatch_examples": []
+    },
+    "fallback_registry_linkage_resolves_in_bundle": {
+      "passed": true,
+      "mismatch_examples": []
+    },
+    "family_coverage_matches_bundle_and_schema": {
+      "passed": true,
+      "expected_status_by_family": {
+        "acceptable": "appendix_only",
+        "overextend_adjacent": "realized",
+        "underextend": "reject",
+        "over_parsing": "realized",
+        "corner_drift": "realized",
+        "corner_duplicate": "realized",
+        "topology_failure": "planned",
+        "fail": "planned"
+      },
+      "observed_status_by_family": {
+        "acceptable": "appendix_only",
+        "overextend_adjacent": "realized",
+        "underextend": "reject",
+        "over_parsing": "realized",
+        "corner_drift": "realized",
+        "corner_duplicate": "realized",
+        "topology_failure": "planned",
+        "fail": "planned"
+      },
+      "mismatch_examples": []
+    }
+  },
+  "mismatch_examples": []
+}

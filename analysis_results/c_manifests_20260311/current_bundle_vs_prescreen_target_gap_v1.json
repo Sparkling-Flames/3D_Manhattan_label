@@ -1,0 +1,146 @@
+{
+  "gap_name": "current_bundle_vs_prescreen_target_gap_v1",
+  "current_bundle_row_count": 15,
+  "current_realized_count": 13,
+  "current_reject_count": 2,
+  "family_status_counts": {
+    "status_bucket_counts": {
+      "appendix_only": 1,
+      "realized": 4,
+      "reject": 1,
+      "planned": 2
+    },
+    "status_by_family": {
+      "acceptable": "appendix_only",
+      "overextend_adjacent": "realized",
+      "underextend": "reject",
+      "over_parsing": "realized",
+      "corner_drift": "realized",
+      "corner_duplicate": "realized",
+      "topology_failure": "planned",
+      "fail": "planned"
+    }
+  },
+  "target_family_counts": {
+    "acceptable": 6,
+    "overextend_adjacent": 3,
+    "underextend": 0,
+    "over_parsing": 3,
+    "corner_drift": 3,
+    "corner_duplicate": 3,
+    "topology_failure": 0,
+    "fail": 0
+  },
+  "gap_by_family": {
+    "acceptable": {
+      "current_row_count": 0,
+      "current_realized_count": 0,
+      "current_reject_count": 0,
+      "current_bundle_status": "appendix_only",
+      "target_count": 6,
+      "target_role": "normal_control",
+      "realized_gap_to_target": 6,
+      "notes": "family exists in appendix/operator library but is absent from current bundle and planned quota"
+    },
+    "overextend_adjacent": {
+      "current_row_count": 2,
+      "current_realized_count": 2,
+      "current_reject_count": 0,
+      "current_bundle_status": "realized",
+      "target_count": 3,
+      "target_role": "misleading_trap_default_family",
+      "realized_gap_to_target": 1,
+      "notes": "family has realized rows in current materialized bundle"
+    },
+    "underextend": {
+      "current_row_count": 4,
+      "current_realized_count": 2,
+      "current_reject_count": 2,
+      "current_bundle_status": "reject",
+      "target_count": 0,
+      "target_role": "misleading_trap_extension_family_not_required",
+      "realized_gap_to_target": -2,
+      "notes": "family has unresolved reject rows in current materialized bundle"
+    },
+    "over_parsing": {
+      "current_row_count": 2,
+      "current_realized_count": 2,
+      "current_reject_count": 0,
+      "current_bundle_status": "realized",
+      "target_count": 3,
+      "target_role": "misleading_trap_default_family",
+      "realized_gap_to_target": 1,
+      "notes": "family has realized rows in current materialized bundle"
+    },
+    "corner_drift": {
+      "current_row_count": 4,
+      "current_realized_count": 4,
+      "current_reject_count": 0,
+      "current_bundle_status": "realized",
+      "target_count": 3,
+      "target_role": "misleading_trap_default_family",
+      "realized_gap_to_target": -1,
+      "notes": "family has realized rows in current materialized bundle"
+    },
+    "corner_duplicate": {
+      "current_row_count": 3,
+      "current_realized_count": 3,
+      "current_reject_count": 0,
+      "current_bundle_status": "realized",
+      "target_count": 3,
+      "target_role": "misleading_trap_default_family",
+      "realized_gap_to_target": 0,
+      "notes": "family has realized rows in current materialized bundle"
+    },
+    "topology_failure": {
+      "current_row_count": 0,
+      "current_realized_count": 0,
+      "current_reject_count": 0,
+      "current_bundle_status": "planned",
+      "target_count": 0,
+      "target_role": "misleading_trap_extension_family_not_required",
+      "realized_gap_to_target": 0,
+      "notes": "family is frozen under intentional_invalid_small_quota but not selected in current bundle"
+    },
+    "fail": {
+      "current_row_count": 0,
+      "current_realized_count": 0,
+      "current_reject_count": 0,
+      "current_bundle_status": "planned",
+      "target_count": 0,
+      "target_role": "misleading_trap_priority_overflow_family",
+      "realized_gap_to_target": 0,
+      "notes": "family is frozen under intentional_invalid_small_quota but not selected in current bundle"
+    }
+  },
+  "open_subedges": [
+    {
+      "subedge_id": "underextend+medium+4-corner+transform_degenerate",
+      "family": "underextend",
+      "lambda_level": "medium",
+      "source_corner_count": 4,
+      "failure_code": "transform_degenerate",
+      "manifest_row_id": "ctrap_006",
+      "task_id": "stage1_prescreen_semi:5",
+      "resolution_status": "pending_manual_resolution"
+    },
+    {
+      "subedge_id": "underextend+medium+4-corner+transform_degenerate",
+      "family": "underextend",
+      "lambda_level": "medium",
+      "source_corner_count": 4,
+      "failure_code": "transform_degenerate",
+      "manifest_row_id": "ctrap_012",
+      "task_id": "stage1_prescreen_semi:11",
+      "resolution_status": "pending_manual_resolution"
+    }
+  ],
+  "thesis_ready_for_prescreen_semi": false,
+  "blocked_reasons": [
+    "current_bundle_row_count remains 15, below the thesis-facing PreScreen_semi target of about 18",
+    "acceptable normal-control rows are still absent from the current bundle while the target requires 6",
+    "current bundle family mix does not match the default 4-family x 3 misleading-trap allocation",
+    "underextend medium 4-corner transform_degenerate remains an open manual-resolution subedge",
+    "topology_failure and fail remain planned in the bundle, so appendix/operator freeze does not imply bundle-level realization"
+  ]
+}

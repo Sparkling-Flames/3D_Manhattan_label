@@ -1,0 +1,41 @@
+{
+  "bundle_version": "c-materialized-v2-audit-summary",
+  "source_manifest": "analysis_results/c_manifests_20260310/trap_manifest_draft_v1.csv",
+  "source_import_json": "import_json/outline_v2_seed20260228/stage1_prescreen_semi_import.json",
+  "n_rows": 15,
+  "n_realized_rows": 13,
+  "n_reject_rows": 2,
+  "n_open_reject_rows": 2,
+  "n_manual_resolution_required": 2,
+  "n_active_fallback_rules": 1,
+  "status_counts": {
+    "realized": 13,
+    "reject": 2
+  },
+  "family_status_counts": {
+    "appendix_only": 1,
+    "realized": 4,
+    "reject": 1,
+    "planned": 2
+  },
+  "resolution_status_counts": {
+    "pending_manual_resolution": 2
+  },
+  "thesis_family_impact_counts": {
+    "underextend_family_partially_realized_but_medium_4corner_subedge_unresolved": 2
+  },
+  "appendix_family_coverage_status": {
+    "acceptable": "appendix_only",
+    "overextend_adjacent": "realized",
+    "underextend": "reject",
+    "over_parsing": "realized",
+    "corner_drift": "realized",
+    "corner_duplicate": "realized",
+    "topology_failure": "planned",
+    "fail": "planned"
+  },
+  "active_fallback_rule_ids": [
+    "fb_001"
+  ],
+  "important_note": "This v2 summary is appendix-facing aggregation over lifecycle/fallback/coverage outputs. It does not change the existing bundle contract and does not claim thesis-facing completion."
+}

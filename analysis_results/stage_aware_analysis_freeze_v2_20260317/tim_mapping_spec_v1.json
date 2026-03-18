@@ -1,0 +1,43 @@
+{
+  "tim_mapping_rule_version": "tim_row_audit_v1",
+  "tim_mapping_spec_version": "tim_mapping_spec_v1",
+  "tier_order_high_to_low": [
+    "M",
+    "I",
+    "T",
+    "outside_T"
+  ],
+  "rules": [
+    {
+      "id": "gate_excluded",
+      "if": "default_gate_pass == False",
+      "then_tier": "outside_T",
+      "notes": "Rows blocked by thesis-facing default gate are outside T."
+    },
+    {
+      "id": "m_tier_layout_usable",
+      "if": "default_gate_pass == True AND m_included == True",
+      "then_tier": "M",
+      "notes": "Model-usable rows enter M regardless of type4 flag (flag carried in downgrade reason)."
+    },
+    {
+      "id": "i_tier_in_scope_layout_filtered",
+      "if": "default_gate_pass == True AND i_included == True AND m_included == False",
+      "then_tier": "I",
+      "notes": "In-scope rows blocked by layout gate stay in I."
+    },
+    {
+      "id": "t_tier_scope_filtered",
+      "if": "default_gate_pass == True AND i_included == False",
+      "then_tier": "T",
+      "notes": "Scope-filtered rows stay in T."
+    }
+  ],
+  "downgrade_reason_components": [
+    "scope:*",
+    "layout:*",
+    "type4:*",
+    "meta_guard:*",
+    "active_time:lead_time_fallback"
+  ]
+}

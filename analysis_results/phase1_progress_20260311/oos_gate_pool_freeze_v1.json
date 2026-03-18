@@ -1,0 +1,43 @@
+{
+  "freeze_name": "oos_gate_pool_freeze_v1",
+  "target_role": "candidate_bank_for_scope_gate_not_geometry_gt",
+  "candidate_pool_exists": true,
+  "target_quota_declared": false,
+  "current_candidate_ids": [
+    "459",
+    "526",
+    "476",
+    "495",
+    "496",
+    "529",
+    "533"
+  ],
+  "candidate_bank_ids": [
+    "nf_009",
+    "nf_010",
+    "nf_011",
+    "nf_012",
+    "nf_013",
+    "nf_014",
+    "nf_015"
+  ],
+  "oos_family_counts": {
+    "oos_open_boundary": 1,
+    "oos_geometry": 1,
+    "oos_split_level": 3,
+    "oos_insufficient": 2
+  },
+  "manual_anchor_overlap_count": 0,
+  "semi_pool_overlap_count": 0,
+  "scoring_mode": "scope_gate_scored_separately_from_geometry_gt",
+  "ready_for_prescreen": false,
+  "blocked_reasons": [
+    "current repository artifacts do not declare a frozen Stage 1 OOS target quota",
+    "current OOS rows remain a candidate bank rather than a final frozen PreScreen OOS pool",
+    "some OOS candidate rows are not bound to a dedicated Stage 1 registry uid in current artifacts"
+  ],
+  "notes": [
+    "current_candidate_ids list current candidate rows only; they do not imply a final frozen OOS quota.",
+    "This artifact treats the OOS layer as a candidate bank for scope/gate evaluation, not as geometry ground truth."
+  ]
+}

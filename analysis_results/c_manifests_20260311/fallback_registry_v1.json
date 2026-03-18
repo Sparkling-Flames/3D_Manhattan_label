@@ -1,0 +1,91 @@
+{
+  "registry_name": "fallback_registry_v1",
+  "rule_version": "c-fallback-registry-v1",
+  "status": "partial_explicitized",
+  "source_artifacts": {
+    "trap_manifest_draft": "analysis_results/c_manifests_20260310/trap_manifest_draft_v1.csv",
+    "trap_manifest_materialized": "analysis_results/c_manifests_20260311/trap_manifest_materialized_v2.csv",
+    "appendix_reference": "app:perturbation-operators"
+  },
+  "fallback_rules": [
+    {
+      "fallback_id": "fb_001",
+      "fallback_type": "natural_failure_shortfall_to_synthetic_operator_fill",
+      "rule_status": "active_applied_in_current_bundle",
+      "trigger_condition": {
+        "all": [
+          {
+            "field": "operator_id",
+            "op": "in",
+            "value": [
+              "overextend_adjacent",
+              "over_parsing"
+            ]
+          },
+          {
+            "field": "source_type",
+            "op": "==",
+            "value": "synthetic_operator"
+          },
+          {
+            "field": "selection_rule",
+            "op": "==",
+            "value": "ascending_registry_uid_fill"
+          }
+        ]
+      },
+      "applied_scope": {
+        "target_stage": "prescreen_semi",
+        "target_dataset_group": "PreScreen_semi",
+        "family_strategy": "exemplar_first"
+      },
+      "linkage_to_tasks": [
+        "ctrap_014",
+        "ctrap_015"
+      ]
+    },
+    {
+      "fallback_id": "fb_002",
+      "fallback_type": "operator_reject_to_manual_resolution",
+      "rule_status": "registered_for_open_rejects_not_auto_applied",
+      "trigger_condition": {
+        "all": [
+          {
+            "field": "materialization_status",
+            "op": "==",
+            "value": "reject"
+          },
+          {
+            "field": "operator_id",
+            "op": "==",
+            "value": "underextend"
+          },
+          {
+            "field": "lambda_level",
+            "op": "==",
+            "value": "medium"
+          },
+          {
+            "field": "source_corner_count",
+            "op": "==",
+            "value": 4
+          },
+          {
+            "field": "failure_code",
+            "op": "==",
+            "value": "transform_degenerate"
+          }
+        ]
+      },
+      "applied_scope": {
+        "target_stage": "prescreen_semi",
+        "target_dataset_group": "PreScreen_semi",
+        "resolution_channel": "manual_resolution_required"
+      },
+      "linkage_to_tasks": [
+        "ctrap_006",
+        "ctrap_012"
+      ]
+    }
+  ]
+}

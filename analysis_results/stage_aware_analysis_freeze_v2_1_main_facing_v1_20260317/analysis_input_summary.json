@@ -1,0 +1,62 @@
+{
+  "raw_rows": 189,
+  "rows_after_default_gate": 114,
+  "rows_after_selection": 73,
+  "unique_tasks_after_selection": 59,
+  "selection_manifest_path": "analysis_results\\selection_freeze_20260317\\thesis_selection_main_facing_v1_20260317.json",
+  "selection_manifest_rows": 73,
+  "selection_manifest_mode": "provided",
+  "thesis_selection_ready": false,
+  "thesis_readiness_status": "blocked_selection_not_independent_from_autogen_and_stage1_protocol_not_aligned",
+  "thesis_readiness_blockers": [
+    "selection_not_independent_from_autogen",
+    "stage1_protocol_not_aligned"
+  ],
+  "selection_rule_version": "selection_manifest_resolved_v2_1",
+  "stage1_gate_version": "stage1_protocol_alignment_v2_1",
+  "stage1_alignment_passed": false,
+  "stage1_alignment_file": "stage1_alignment_audit_v2_1.json",
+  "selection_main_facing_gate_version": "selection_main_facing_v2_1",
+  "selection_main_facing_passed": true,
+  "selection_main_facing_file": "selection_main_facing_audit_v2_1.json",
+  "selection_provenance_gate_version": "selection_provenance_v2_1",
+  "selection_derived_from_autogen_default_gate": true,
+  "selection_source_independent_from_autogen": false,
+  "selection_provenance_file": "selection_provenance_audit_v2_1.json",
+  "active_time_endpoint_status": "mixed_estimand_log_plus_fallback",
+  "active_time_primary_endpoint_ready": false,
+  "active_time_estimand_file": "active_time_estimand_audit_v2_1.json",
+  "active_time_source_counts": {
+    "lead_time_fallback": 50,
+    "log": 23
+  },
+  "meta_guard_status_counts": {
+    "accepted": 57,
+    "rejected": 16
+  },
+  "dataset_group_counts": {
+    "SemiAuto_Test": 41,
+    "Validation_semi": 23,
+    "Gold_manual": 9
+  },
+  "scope_bucket_counts": {
+    "in_scope": 64,
+    "oos": 9
+  },
+  "core_scene_counts": {
+    "occlusion|acceptable": 36,
+    "other": 11,
+    "occlusion|corner_drift": 8,
+    "reflection|acceptable": 5,
+    "oos::oos_split_level": 4,
+    "oos::oos_geometry": 4,
+    "occlusion|over_parsing": 4,
+    "low_texture|overextend_adjacent": 1
+  },
+  "source_bank_membership_counts": {
+    "registry_only": 71,
+    "anchor_only": 2
+  },
+  "manual_anchor_bank_rows": 28,
+  "trap_manifest_rows": 15
+}

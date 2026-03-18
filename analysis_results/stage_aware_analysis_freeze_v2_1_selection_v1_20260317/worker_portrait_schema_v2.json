@@ -1,0 +1,65 @@
+{
+  "freeze_version": "b_formal_prep_freeze_v2_20260317",
+  "fields": [
+    {
+      "name": "annotator_id",
+      "type": "string",
+      "meaning": "worker identifier"
+    },
+    {
+      "name": "r_u",
+      "type": "float_or_na",
+      "meaning": "global reliability proxy on M-tier rows"
+    },
+    {
+      "name": "r_u_lcb",
+      "type": "float_or_na",
+      "meaning": "global lower-bound proxy on M-tier rows"
+    },
+    {
+      "name": "T_u",
+      "type": "float_or_na",
+      "meaning": "PreScreen_semi trust-risk proxy"
+    },
+    {
+      "name": "C_u",
+      "type": "float_or_na",
+      "meaning": "cross-scene reliability gap proxy"
+    },
+    {
+      "name": "n_model_usable",
+      "type": "int",
+      "meaning": "count of M-tier rows"
+    },
+    {
+      "name": "n_prescreen_semi",
+      "type": "int",
+      "meaning": "count of PreScreen_semi rows"
+    },
+    {
+      "name": "n_scene_eligible",
+      "type": "int",
+      "meaning": "core scenes with >=2 M-tier rows"
+    },
+    {
+      "name": "worker_group_v2",
+      "type": "string",
+      "meaning": "stabilized worker group label"
+    },
+    {
+      "name": "worker_group_reason_v2",
+      "type": "string",
+      "meaning": "stabilized reason code"
+    },
+    {
+      "name": "worker_group_reason_chain_v2",
+      "type": "string",
+      "meaning": "metric-backed decision chain for worker_group_v2"
+    },
+    {
+      "name": "group_rule_version_v2",
+      "type": "string",
+      "meaning": "version of stabilized worker grouping rule"
+    }
+  ]
+}

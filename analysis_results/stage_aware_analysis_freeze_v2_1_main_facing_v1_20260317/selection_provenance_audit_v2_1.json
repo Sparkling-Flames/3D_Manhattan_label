@@ -1,0 +1,31 @@
+{
+  "selection_provenance_gate_version": "selection_provenance_v2_1",
+  "selection_mode": "provided",
+  "selection_manifest_path": "analysis_results\\selection_freeze_20260317\\thesis_selection_main_facing_v1_20260317.json",
+  "source_chain_depth": 3,
+  "source_chain_resolved_complete": true,
+  "source_chain": [
+    {
+      "path": "analysis_results\\selection_freeze_20260317\\thesis_selection_main_facing_v1_20260317.json",
+      "format": "json",
+      "manifest_version": "thesis_selection_main_facing_v1_20260317",
+      "selection_mode": "thesis_facing_main_execution_manifest",
+      "source": "selection_freeze_20260317/thesis_selection_manifest_v1_20260317.json",
+      "row_count": 73
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\selection_freeze_20260317\\thesis_selection_manifest_v1_20260317.json",
+      "format": "json",
+      "manifest_version": "thesis_selection_manifest_v1_20260317",
+      "selection_mode": "thesis_facing_explicit_manifest",
+      "source": "stage_aware_analysis_freeze_v2_1_20260317/selection_manifest_autogen_default_gate_v1.csv",
+      "row_count": 114
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\stage_aware_analysis_freeze_v2_1_20260317\\selection_manifest_autogen_default_gate_v1.csv",
+      "format": "csv"
+    }
+  ],
+  "selection_derived_from_autogen_default_gate": true,
+  "selection_source_independent_from_autogen": false
+}

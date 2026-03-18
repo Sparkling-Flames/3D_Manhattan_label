@@ -1,0 +1,247 @@
+{
+  "freeze_name": "prescreen_semi_selection_freeze_v1",
+  "target_total": 18,
+  "control_target": 6,
+  "misleading_trap_target": 12,
+  "current_bundle_rows": 15,
+  "current_realized_rows": 13,
+  "current_reject_rows": 2,
+  "selected_control_rows": [],
+  "selected_trap_rows": [
+    {
+      "manifest_row_id": "ctrap_001",
+      "target_registry_uid": "stage1_prescreen_semi:4",
+      "base_task_id": "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+      "family": "over_parsing",
+      "source_type": "natural_failure",
+      "materialization_status": "realized",
+      "selection_status": "current_bundle_realized_candidate"
+    },
+    {
+      "manifest_row_id": "ctrap_002",
+      "target_registry_uid": "stage1_prescreen_semi:21",
+      "base_task_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+      "family": "overextend_adjacent",
+      "source_type": "natural_failure",
+      "materialization_status": "realized",
+      "selection_status": "current_bundle_realized_candidate"
+    },
+    {
+      "manifest_row_id": "ctrap_004",
+      "target_registry_uid": "stage1_prescreen_semi:2",
+      "base_task_id": "q9vSo1VnCiC_2a8ef249ec0e4ad5bfe138a65f50964e",
+      "family": "corner_drift",
+      "source_type": "synthetic_operator",
+      "materialization_status": "realized",
+      "selection_status": "current_bundle_realized_candidate"
+    },
+    {
+      "manifest_row_id": "ctrap_005",
+      "target_registry_uid": "stage1_prescreen_semi:3",
+      "base_task_id": "uNb9QFRL6hY_dcbe971afee14c57beb3c76980ead77a",
+      "family": "corner_duplicate",
+      "source_type": "synthetic_operator",
+      "materialization_status": "realized",
+      "selection_status": "current_bundle_realized_candidate"
+    },
+    {
+      "manifest_row_id": "ctrap_007",
+      "target_registry_uid": "stage1_prescreen_semi:6",
+      "base_task_id": "q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103",
+      "family": "corner_drift",
+      "source_type": "synthetic_operator",
+      "materialization_status": "realized",
+      "selection_status": "current_bundle_realized_candidate"
+    },
+    {
+      "manifest_row_id": "ctrap_008",
+      "target_registry_uid": "stage1_prescreen_semi:7",
+      "base_task_id": "X7HyMhZNoso_215ab480f5084ac992c0d0e6b3e82268",
+      "family": "corner_duplicate",
+      "source_type": "synthetic_operator",
+      "materialization_status": "realized",
+      "selection_status": "current_bundle_realized_candidate"
+    },
+    {
+      "manifest_row_id": "ctrap_010",
+      "target_registry_uid": "stage1_prescreen_semi:9",
+      "base_task_id": "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12",
+      "family": "corner_drift",
+      "source_type": "synthetic_operator",
+      "materialization_status": "realized",
+      "selection_status": "current_bundle_realized_candidate"
+    },
+    {
+      "manifest_row_id": "ctrap_011",
+      "target_registry_uid": "stage1_prescreen_semi:10",
+      "base_task_id": "e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a",
+      "family": "corner_duplicate",
+      "source_type": "synthetic_operator",
+      "materialization_status": "realized",
+      "selection_status": "current_bundle_realized_candidate"
+    },
+    {
+      "manifest_row_id": "ctrap_013",
+      "target_registry_uid": "stage1_prescreen_semi:12",
+      "base_task_id": "uNb9QFRL6hY_9ec5ebcf3edc44e1ba6dd02e8423e5ed",
+      "family": "corner_drift",
+      "source_type": "synthetic_operator",
+      "materialization_status": "realized",
+      "selection_status": "current_bundle_realized_candidate"
+    },
+    {
+      "manifest_row_id": "ctrap_014",
+      "target_registry_uid": "stage1_prescreen_semi:13",
+      "base_task_id": "uNb9QFRL6hY_6a99c723d40b429e96a29c8ce7532d1d",
+      "family": "overextend_adjacent",
+      "source_type": "synthetic_operator",
+      "materialization_status": "realized",
+      "selection_status": "current_bundle_realized_candidate"
+    },
+    {
+      "manifest_row_id": "ctrap_015",
+      "target_registry_uid": "stage1_prescreen_semi:14",
+      "base_task_id": "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+      "family": "over_parsing",
+      "source_type": "synthetic_operator",
+      "materialization_status": "realized",
+      "selection_status": "current_bundle_realized_candidate"
+    }
+  ],
+  "current_control_candidate_rows": [
+    {
+      "bank_id": "nf_001",
+      "task_id": "492",
+      "base_task_id": "e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76",
+      "preferred_registry_uid": "stage3_semiauto_test:21",
+      "selection_status": "candidate_only_not_frozen_for_prescreen_semi"
+    },
+    {
+      "bank_id": "nf_002",
+      "task_id": "501",
+      "base_task_id": "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+      "preferred_registry_uid": "stage3_validation_semi:31",
+      "selection_status": "candidate_only_not_frozen_for_prescreen_semi"
+    }
+  ],
+  "family_allocations": [
+    {
+      "family": "acceptable",
+      "target_count": 6,
+      "target_role": "normal_control",
+      "current_bundle_row_count": 0,
+      "current_bundle_realized_count": 0,
+      "current_bundle_reject_count": 0,
+      "current_selected_count": 0,
+      "current_candidate_bank_count": 2
+    },
+    {
+      "family": "overextend_adjacent",
+      "target_count": 3,
+      "target_role": "misleading_trap_default_family",
+      "current_bundle_row_count": 2,
+      "current_bundle_realized_count": 2,
+      "current_bundle_reject_count": 0,
+      "current_selected_count": 2,
+      "current_candidate_bank_count": 0
+    },
+    {
+      "family": "underextend",
+      "target_count": 0,
+      "target_role": "misleading_trap_extension_family_not_required",
+      "current_bundle_row_count": 4,
+      "current_bundle_realized_count": 2,
+      "current_bundle_reject_count": 2,
+      "current_selected_count": 0,
+      "current_candidate_bank_count": 0
+    },
+    {
+      "family": "over_parsing",
+      "target_count": 3,
+      "target_role": "misleading_trap_default_family",
+      "current_bundle_row_count": 2,
+      "current_bundle_realized_count": 2,
+      "current_bundle_reject_count": 0,
+      "current_selected_count": 2,
+      "current_candidate_bank_count": 0
+    },
+    {
+      "family": "corner_drift",
+      "target_count": 3,
+      "target_role": "misleading_trap_default_family",
+      "current_bundle_row_count": 4,
+      "current_bundle_realized_count": 4,
+      "current_bundle_reject_count": 0,
+      "current_selected_count": 4,
+      "current_candidate_bank_count": 0
+    },
+    {
+      "family": "corner_duplicate",
+      "target_count": 3,
+      "target_role": "misleading_trap_default_family",
+      "current_bundle_row_count": 3,
+      "current_bundle_realized_count": 3,
+      "current_bundle_reject_count": 0,
+      "current_selected_count": 3,
+      "current_candidate_bank_count": 0
+    },
+    {
+      "family": "topology_failure",
+      "target_count": 0,
+      "target_role": "misleading_trap_extension_family_not_required",
+      "current_bundle_row_count": 0,
+      "current_bundle_realized_count": 0,
+      "current_bundle_reject_count": 0,
+      "current_selected_count": 0,
+      "current_candidate_bank_count": 0
+    },
+    {
+      "family": "fail",
+      "target_count": 0,
+      "target_role": "misleading_trap_priority_overflow_family",
+      "current_bundle_row_count": 0,
+      "current_bundle_realized_count": 0,
+      "current_bundle_reject_count": 0,
+      "current_selected_count": 0,
+      "current_candidate_bank_count": 0
+    }
+  ],
+  "open_subedges": [
+    {
+      "subedge_id": "underextend+medium+4-corner+transform_degenerate",
+      "family": "underextend",
+      "lambda_level": "medium",
+      "source_corner_count": 4,
+      "failure_code": "transform_degenerate",
+      "manifest_row_id": "ctrap_006",
+      "task_id": "stage1_prescreen_semi:5",
+      "resolution_status": "pending_manual_resolution"
+    },
+    {
+      "subedge_id": "underextend+medium+4-corner+transform_degenerate",
+      "family": "underextend",
+      "lambda_level": "medium",
+      "source_corner_count": 4,
+      "failure_code": "transform_degenerate",
+      "manifest_row_id": "ctrap_012",
+      "task_id": "stage1_prescreen_semi:11",
+      "resolution_status": "pending_manual_resolution"
+    }
+  ],
+  "control_gap": 6,
+  "selection_ready": false,
+  "blocked_reasons": [
+    "current C materialization bundle does not by itself freeze the thesis-facing PreScreen_semi pool",
+    "acceptable control subset is still unfrozen in the current bundle and current selected control rows remain zero",
+    "current default misleading-trap realized selection count is 11 while the target is 12",
+    "current_bundle_row_count remains 15, below the thesis-facing PreScreen_semi target of about 18",
+    "acceptable normal-control rows are still absent from the current bundle while the target requires 6",
+    "current bundle family mix does not match the default 4-family x 3 misleading-trap allocation",
+    "underextend medium 4-corner transform_degenerate remains an open manual-resolution subedge",
+    "topology_failure and fail remain planned in the bundle, so appendix/operator freeze does not imply bundle-level realization"
+  ],
+  "notes": [
+    "This artifact freezes current readiness state and blocker structure. It does not promote the current C bundle to a thesis-facing PreScreen_semi final pool.",
+    "Current control candidates come from the reviewed natural-failure bank and remain candidate-only in this freeze artifact."
+  ]
+}

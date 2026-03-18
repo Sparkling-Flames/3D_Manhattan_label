@@ -1,0 +1,53 @@
+{
+  "freeze_name": "oos_gate_target_freeze_v2",
+  "target_role": "candidate_bank_for_scope_gate_not_geometry_gt",
+  "target_quota": null,
+  "target_quota_declared": false,
+  "current_candidate_ids": [
+    "459",
+    "526",
+    "476",
+    "495",
+    "496",
+    "529",
+    "533"
+  ],
+  "candidate_bank_ids": [
+    "nf_009",
+    "nf_010",
+    "nf_011",
+    "nf_012",
+    "nf_013",
+    "nf_014",
+    "nf_015"
+  ],
+  "oos_family_counts": {
+    "oos_open_boundary": 1,
+    "oos_geometry": 1,
+    "oos_split_level": 3,
+    "oos_insufficient": 2
+  },
+  "preferred_registry_stage_counts": {
+    "validation_semi": 1,
+    "calibration_manual": 2,
+    "manual_test;semiauto_test": 2,
+    "calibration_manual;calibration_semi": 1,
+    "gold_manual": 1
+  },
+  "dedicated_stage1_registry_bound_candidate_count": 0,
+  "manual_anchor_overlap_count": 0,
+  "semi_pool_overlap_count": 0,
+  "target_freeze_ready": false,
+  "blocked_reasons": [
+    "stage1 OOS target quota remains undeclared in current repository artifacts",
+    "dedicated Stage 1 registry bound OOS candidate count is 0",
+    "current OOS candidate bank still maps to non-Stage1 preferred registry contexts",
+    "current repository artifacts do not declare a frozen Stage 1 OOS target quota",
+    "current OOS rows remain a candidate bank rather than a final frozen PreScreen OOS pool",
+    "some OOS candidate rows are not bound to a dedicated Stage 1 registry uid in current artifacts"
+  ],
+  "notes": [
+    "current_candidate_ids remain candidate-bank identifiers only; they do not imply that a final Stage 1 OOS quota already exists.",
+    "This artifact is a target-freeze attempt that remains blocked until quota and dedicated Stage 1 binding are declared."
+  ]
+}
