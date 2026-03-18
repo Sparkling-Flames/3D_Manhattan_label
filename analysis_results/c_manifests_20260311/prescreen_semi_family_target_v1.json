@@ -1,0 +1,103 @@
+{
+  "target_name": "prescreen_semi_family_target_v1",
+  "target_total_tasks": 18,
+  "normal_control_target": {
+    "target_count": 6,
+    "xml_alias": "acceptable",
+    "role": "normal_initialization_control"
+  },
+  "misleading_trap_target": {
+    "target_count": 12,
+    "default_target_family_count": 4,
+    "target_per_family": 3,
+    "default_target_families": [
+      "over_parsing",
+      "corner_drift",
+      "corner_duplicate",
+      "overextend_adjacent"
+    ],
+    "notes": "This encodes the current thesis-facing default target. It does not assert that the current bundle already matches the target one-to-one."
+  },
+  "family_target_allocations": [
+    {
+      "family": "acceptable",
+      "target_count": 6,
+      "target_role": "normal_control",
+      "allocation_status": "required_default_target",
+      "notes": "Recommended control subset for normal initialization samples."
+    },
+    {
+      "family": "overextend_adjacent",
+      "target_count": 3,
+      "target_role": "misleading_trap_default_family",
+      "allocation_status": "required_default_target",
+      "notes": "Part of the current default 12-task misleading-trap allocation."
+    },
+    {
+      "family": "underextend",
+      "target_count": 0,
+      "target_role": "misleading_trap_extension_family_not_required",
+      "allocation_status": "extension_only_not_required",
+      "notes": "Current docs explicitly say this family should not be mandatory prescreen coverage before stable cases exist."
+    },
+    {
+      "family": "over_parsing",
+      "target_count": 3,
+      "target_role": "misleading_trap_default_family",
+      "allocation_status": "required_default_target",
+      "notes": "Part of the current default 12-task misleading-trap allocation."
+    },
+    {
+      "family": "corner_drift",
+      "target_count": 3,
+      "target_role": "misleading_trap_default_family",
+      "allocation_status": "required_default_target",
+      "notes": "Part of the current default 12-task misleading-trap allocation."
+    },
+    {
+      "family": "corner_duplicate",
+      "target_count": 3,
+      "target_role": "misleading_trap_default_family",
+      "allocation_status": "required_default_target",
+      "notes": "Part of the current default 12-task misleading-trap allocation."
+    },
+    {
+      "family": "topology_failure",
+      "target_count": 0,
+      "target_role": "misleading_trap_extension_family_not_required",
+      "allocation_status": "extension_only_not_required",
+      "notes": "Current docs explicitly say this family should not be mandatory prescreen coverage before stable cases exist."
+    },
+    {
+      "family": "fail",
+      "target_count": 0,
+      "target_role": "misleading_trap_priority_overflow_family",
+      "allocation_status": "priority_pool_not_in_default_12",
+      "notes": "Listed as a current natural-failure priority family, but not assigned a default quota inside the 4-family x 3 target."
+    }
+  ],
+  "natural_failure_priority": {
+    "priority_families": [
+      "over_parsing",
+      "corner_drift",
+      "corner_duplicate",
+      "overextend_adjacent",
+      "fail"
+    ],
+    "notes": "These families are currently prioritized when natural failures are available."
+  },
+  "operator_fill_policy": {
+    "fill_trigger": "natural_failure_shortfall",
+    "fill_action": "rule_based_perturbation_operator_fill",
+    "notes": "If natural failures are insufficient for the default misleading-trap families, rule-based perturbation fills the gap."
+  },
+  "oos_stress_policy": {
+    "included_in_prescreen_semi_target": false,
+    "role": "separate_oos_gate_pool",
+    "notes": "OOS stress remains a separate pool and is not counted toward the current PreScreen_semi target."
+  },
+  "source_of_truth_docs": [
+    "docs/实验集设定与用途.md",
+    "docs/实验设置执行细则_20260213.md"
+  ]
+}

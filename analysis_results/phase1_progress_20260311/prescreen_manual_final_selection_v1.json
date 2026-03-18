@@ -1,0 +1,55 @@
+{
+  "selection_name": "prescreen_manual_final_selection_v1",
+  "selection_scope": "stage1_prescreen_manual_expert_anchor",
+  "target_anchor_min": 20,
+  "target_anchor_max": 22,
+  "current_core_selected_anchor_ids": [
+    "stage1_prescreen_manual_anchor:8",
+    "stage1_prescreen_manual_anchor:3",
+    "stage1_prescreen_manual_anchor:7",
+    "stage1_prescreen_manual_anchor:1",
+    "stage1_prescreen_manual_anchor:2",
+    "stage1_prescreen_manual_anchor:6",
+    "stage1_prescreen_manual_anchor:11",
+    "stage1_prescreen_manual_anchor:9",
+    "stage1_prescreen_manual_anchor:12",
+    "stage1_prescreen_manual_anchor:5",
+    "stage1_prescreen_manual_anchor:10",
+    "stage1_prescreen_manual_anchor:4"
+  ],
+  "current_core_selected_base_task_ids": [
+    "7y3sRwLe3Va_5c39473b25b74307858764d1a2045b9e",
+    "B6ByNegPMKs_0f8e559bf8d4427ba275e63aba46e3e5",
+    "B6ByNegPMKs_59cbdf96b19c4cc4a576e6658c5f67d6",
+    "B6ByNegPMKs_9c62e22ac161400e969f5962b748c3e8",
+    "B6ByNegPMKs_d7ade8d217fe4d068fc3629dd2510898",
+    "B6ByNegPMKs_e52609aae11f42a79f6cf50360180fd5",
+    "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+    "rPc6DW4iMge_1b4824ffdfc44d08aa648e90241289e4",
+    "UwV83HsGsw3_16af52545aff47afb4d7b330a49091a2",
+    "wc2JMjhGNzB_36f4749077674307bce31998171e96ef",
+    "yqstnuAEVhm_559e923d612748dd8dce2557c3b4b675",
+    "yqstnuAEVhm_6f4d197078d14d6e944ed6533598a6f9"
+  ],
+  "current_supplement_candidate_base_task_ids": [
+    "uNb9QFRL6hY_d02f87bbb0414146a7a15070110a0384",
+    "UwV83HsGsw3_8e9c912f525744eeaea21083a20a1596",
+    "wc2JMjhGNzB_dc4a9f470b834de1983c7e605ff06b2e",
+    "B6ByNegPMKs_b8e1ecf1bd044e7292581a66683e7993"
+  ],
+  "current_joinable_anchor_count": 12,
+  "current_known_anchor_candidate_count": 16,
+  "max_possible_anchor_count_from_current_known_pool": 16,
+  "anchor_gap_to_target_min": 4,
+  "anchor_gap_to_target_max": 6,
+  "selection_ready": false,
+  "blocked_reasons": [
+    "current known manual anchor pool supports at most 16 rows, still below thesis target 20-22",
+    "supplement candidates are collected but not yet joinable in the current Stage 1 registry",
+    "manual expert annotation remains in progress, so a thesis-facing final expert-anchor set cannot yet be frozen"
+  ],
+  "notes": [
+    "This artifact freezes the current selection boundary. It does not claim that the thesis-facing manual expert-anchor set is already complete.",
+    "The current core 12 anchors remain the only joinable expert anchors in the repository."
+  ]
+}

@@ -1,0 +1,9 @@
+family,status,count_tasks,linked_appendix_section,realized_count,reject_count,planned_count,status_reason
+acceptable,appendix_only,0,app:perturbation-operators,0,0,0,family exists in appendix/operator library but is absent from current bundle and planned quota
+overextend_adjacent,realized,2,app:perturbation-operators,2,0,0,family has realized rows in current materialized bundle
+underextend,reject,4,app:perturbation-operators,2,2,0,family has unresolved reject rows in current materialized bundle
+over_parsing,realized,2,app:perturbation-operators,2,0,0,family has realized rows in current materialized bundle
+corner_drift,realized,4,app:perturbation-operators,4,0,0,family has realized rows in current materialized bundle
+corner_duplicate,realized,3,app:perturbation-operators,3,0,0,family has realized rows in current materialized bundle
+topology_failure,planned,0,app:perturbation-operators,0,0,1,family is frozen under intentional_invalid_small_quota but not selected in current bundle
+fail,planned,0,app:perturbation-operators,0,0,1,family is frozen under intentional_invalid_small_quota but not selected in current bundle

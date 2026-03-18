@@ -1,0 +1,64 @@
+{
+  "audit_name": "prescreen_readiness_audit_v1",
+  "manual_anchor_target_min": 20,
+  "manual_anchor_target_max": 22,
+  "manual_anchor_current_joinable_count": 12,
+  "manual_anchor_scope": "current joinable PreScreen expert anchors only",
+  "manual_anchor_range_collected": true,
+  "manual_anchor_expert_annotation_status": "range_collected_annotation_in_progress",
+  "manual_anchor_status_field_source": "current_status_annotation",
+  "manual_anchor_ready": false,
+  "manual_blocked_reasons": [
+    "current joinable PreScreen expert anchors = 12, below thesis target 20-22",
+    "manual anchor range is collected, but expert annotation remains in progress"
+  ],
+  "manual_non_anchor_target_min": 8,
+  "manual_non_anchor_target_max": 10,
+  "manual_non_anchor_current_count": 18,
+  "manual_non_anchor_ready": false,
+  "semi_target_total": 18,
+  "semi_control_target": 6,
+  "semi_trap_target": 12,
+  "semi_current_bundle_rows": 15,
+  "semi_current_realized_rows": 13,
+  "semi_selection_ready": false,
+  "semi_blocked_reasons": [
+    "current C materialization bundle does not by itself freeze the thesis-facing PreScreen_semi pool",
+    "acceptable control subset is still unfrozen in the current bundle and current selected control rows remain zero",
+    "current default misleading-trap realized selection count is 11 while the target is 12",
+    "current_bundle_row_count remains 15, below the thesis-facing PreScreen_semi target of about 18",
+    "acceptable normal-control rows are still absent from the current bundle while the target requires 6",
+    "current bundle family mix does not match the default 4-family x 3 misleading-trap allocation",
+    "underextend medium 4-corner transform_degenerate remains an open manual-resolution subedge",
+    "topology_failure and fail remain planned in the bundle, so appendix/operator freeze does not imply bundle-level realization"
+  ],
+  "oos_gate_candidate_count": 7,
+  "oos_gate_target_declared": false,
+  "oos_gate_ready": false,
+  "oos_gate_blocked_reasons": [
+    "current repository artifacts do not declare a frozen Stage 1 OOS target quota",
+    "current OOS rows remain a candidate bank rather than a final frozen PreScreen OOS pool",
+    "some OOS candidate rows are not bound to a dedicated Stage 1 registry uid in current artifacts"
+  ],
+  "prescreen_overall_ready": false,
+  "blocked_reasons": [
+    "current joinable PreScreen expert anchors = 12, below thesis target 20-22",
+    "manual anchor range is collected, but expert annotation remains in progress",
+    "current PreScreen manual non-anchor count = 18, outside thesis target 8-10",
+    "current C materialization bundle does not by itself freeze the thesis-facing PreScreen_semi pool",
+    "acceptable control subset is still unfrozen in the current bundle and current selected control rows remain zero",
+    "current default misleading-trap realized selection count is 11 while the target is 12",
+    "current_bundle_row_count remains 15, below the thesis-facing PreScreen_semi target of about 18",
+    "acceptable normal-control rows are still absent from the current bundle while the target requires 6",
+    "current bundle family mix does not match the default 4-family x 3 misleading-trap allocation",
+    "underextend medium 4-corner transform_degenerate remains an open manual-resolution subedge",
+    "topology_failure and fail remain planned in the bundle, so appendix/operator freeze does not imply bundle-level realization",
+    "current repository artifacts do not declare a frozen Stage 1 OOS target quota",
+    "current OOS rows remain a candidate bank rather than a final frozen PreScreen OOS pool",
+    "some OOS candidate rows are not bound to a dedicated Stage 1 registry uid in current artifacts"
+  ],
+  "notes": [
+    "This readiness audit freezes current blocked reasons and current joinable assets. It does not claim PreScreen completion.",
+    "manual_anchor_range_collected and manual_anchor_expert_annotation_status are current status annotation fields, not export/registry auto-derived fields."
+  ]
+}

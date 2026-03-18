@@ -1,0 +1,62 @@
+{
+  "note_name": "family_appendix_note_v1",
+  "appendix_section": "app:perturbation-operators",
+  "family_notes": [
+    {
+      "family": "acceptable",
+      "appendix_role": "appendix_operator_reference_only",
+      "current_bundle_status": "appendix_only",
+      "thesis_facing_status": "appendix_only_not_in_current_bundle",
+      "why_not_fully_closed": "acceptable is defined in Appendix A/operator library, but the current PreScreen_semi bundle carries no acceptable rows and no current planned quota."
+    },
+    {
+      "family": "overextend_adjacent",
+      "appendix_role": "materialized_bundle_family",
+      "current_bundle_status": "realized",
+      "thesis_facing_status": "bundle_realized_but_not_thesis_complete",
+      "why_not_fully_closed": "family is realized in the current bundle, but C-line family coverage remains bundle-local and does not by itself close the thesis-facing PreScreen_semi target."
+    },
+    {
+      "family": "underextend",
+      "appendix_role": "materialized_bundle_family",
+      "current_bundle_status": "reject",
+      "thesis_facing_status": "partial_realized_with_unresolved_subedge",
+      "why_not_fully_closed": "underextend has realized weak rows, but the 4-corner + medium subedge remains open reject and still requires manual resolution."
+    },
+    {
+      "family": "over_parsing",
+      "appendix_role": "materialized_bundle_family",
+      "current_bundle_status": "realized",
+      "thesis_facing_status": "bundle_realized_but_not_thesis_complete",
+      "why_not_fully_closed": "family is realized in the current bundle, but C-line family coverage remains bundle-local and does not by itself close the thesis-facing PreScreen_semi target."
+    },
+    {
+      "family": "corner_drift",
+      "appendix_role": "materialized_bundle_family",
+      "current_bundle_status": "realized",
+      "thesis_facing_status": "bundle_realized_but_not_thesis_complete",
+      "why_not_fully_closed": "family is realized in the current bundle, but C-line family coverage remains bundle-local and does not by itself close the thesis-facing PreScreen_semi target."
+    },
+    {
+      "family": "corner_duplicate",
+      "appendix_role": "materialized_bundle_family",
+      "current_bundle_status": "realized",
+      "thesis_facing_status": "bundle_realized_but_not_thesis_complete",
+      "why_not_fully_closed": "family is realized in the current bundle, but C-line family coverage remains bundle-local and does not by itself close the thesis-facing PreScreen_semi target."
+    },
+    {
+      "family": "topology_failure",
+      "appendix_role": "intentional_invalid_small_quota",
+      "current_bundle_status": "planned",
+      "thesis_facing_status": "planned_not_materialized",
+      "why_not_fully_closed": "family remains locked as intentional_invalid_small_quota in the schema, but the current bundle has not materialized rows for it."
+    },
+    {
+      "family": "fail",
+      "appendix_role": "intentional_invalid_small_quota",
+      "current_bundle_status": "planned",
+      "thesis_facing_status": "planned_not_materialized",
+      "why_not_fully_closed": "family remains locked as intentional_invalid_small_quota in the schema, but the current bundle has not materialized rows for it."
+    }
+  ]
+}

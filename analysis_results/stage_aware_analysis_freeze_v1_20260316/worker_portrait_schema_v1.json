@@ -1,0 +1,45 @@
+{
+  "freeze_version": "b_formal_prep_freeze_v1_20260316",
+  "fields": [
+    {
+      "name": "annotator_id",
+      "type": "string",
+      "meaning": "worker identifier"
+    },
+    {
+      "name": "r_u",
+      "type": "float_or_na",
+      "meaning": "global reliability proxy on M-tier rows"
+    },
+    {
+      "name": "r_u_lcb",
+      "type": "float_or_na",
+      "meaning": "prototype lower-bound proxy using 0.10 quantile on M-tier IOU"
+    },
+    {
+      "name": "T_u",
+      "type": "float_or_na",
+      "meaning": "prototype blind-trust risk proxy from PreScreen_semi or semi rows"
+    },
+    {
+      "name": "C_u",
+      "type": "float_or_na",
+      "meaning": "prototype scene-gap risk proxy across eligible core scenes"
+    },
+    {
+      "name": "worker_group",
+      "type": "string_or_na",
+      "meaning": "prototype group label derived from r_u_lcb, T_u, C_u"
+    },
+    {
+      "name": "worker_group_reason",
+      "type": "string_or_na",
+      "meaning": "rule code explaining worker_group assignment"
+    },
+    {
+      "name": "group_rule_version",
+      "type": "string_or_na",
+      "meaning": "version of worker grouping prototype rule"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "stage1_gate_version": "stage1_protocol_alignment_v2_1",
+  "source_manifest_path": "analysis_results\\phase1_progress_20260311\\phase1_target_vs_realized_manifest_v1.json",
+  "source_manifest_found": true,
+  "stage1_alignment_passed": false,
+  "blockers": [
+    "stage1_manual_anchor_not_aligned",
+    "stage1_prescreen_semi_not_aligned"
+  ],
+  "manual_anchor_alignment_status": "under_target_and_not_aligned",
+  "manual_anchor_target": {
+    "type": "range",
+    "min": 20,
+    "max": 22
+  },
+  "manual_anchor_current_repo": {
+    "split_report_planned": 12,
+    "task_registry_anchor_unique": 12,
+    "manual_anchor_bank_joinable": 12
+  },
+  "prescreen_semi_alignment_status": "not_aligned_and_not_materialized",
+  "prescreen_semi_target": {
+    "type": "approx",
+    "value": 18
+  },
+  "prescreen_semi_current_repo": {
+    "split_report_planned": 30,
+    "task_registry_planned_unique": 30,
+    "trap_manifest_draft_rows": 15,
+    "trap_manifest_realized_rows": 2,
+    "trap_manifest_frozen_rule_rows": 13,
+    "direct_prescreen_natural_failure_rows": 2
+  }
+}

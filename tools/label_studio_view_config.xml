@@ -56,7 +56,7 @@
           <Text name="difficulty_rule_text" value="填写规则：必须至少选择 1 项。若选择 &quot;trivial&quot;（非常简单），则不得同时选择其它困难标签；若存在任意困难因素，请不要选 trivial。" style="display:block; margin: 0 0 6px 0; color:#666; font-size:12px;" />
           <Choices name="difficulty" toName="img" showInLine="true" choice="multiple" required="true" requiredMessage="Difficulty 必须至少选择 1 项">
             <Choice value="非常简单 (Trivial)" alias="trivial" hint="场景简单、几何清晰、无遮挡无干扰，标注几乎无困难"/>
-            <Choice value="遮挡明显 (Occlusion)" alias="occlusion" hint="家具/植物/物体遮挡墙角、门框停止点或地面/天花交界线索，使局部关键几何证据缺失或弱化。说明：即使只影响某一个角点附近、整体边界仍可稳定判定，也仍归入本项；不要因为‘还能修’就误选 low_quality。"/>
+            <Choice value="遮挡明显 (Occlusion)" alias="occlusion" hint="家具/植物/物体/遮罩遮挡墙角、门框停止点或地面/天花交界线索，使局部关键几何证据缺失或弱化。说明：即使只影响某一个角点附近、整体边界仍可稳定判定，也仍归入本项；不要因为‘还能修’就误选 low_quality。"/>
             <Choice value="纹理弱/纯色墙 (Low texture)" alias="low_texture" hint="墙面纯色/光照均匀，边界线索弱"/>
             <Choice value="拼接缝/拉伸明显 (Seam/Stretch)" alias="seam" hint="全景拼接/重投影导致直线断裂、错位或局部强拉伸/几何扭曲，使真实角点难以定位；它常表现为局部看似 corner drift 或墙线弯折，但根因仍是 seam/stretch（不一定只发生在一条明显拼接缝上）。"/>
             <Choice value="反光/玻璃干扰 (Reflection/Glass)" alias="reflection" hint="镜面/玻璃反射造成伪边界"/>

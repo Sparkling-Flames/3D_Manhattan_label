@@ -1,0 +1,33 @@
+{
+  "freeze_version": "b_formal_prep_freeze_v1_20260316",
+  "core_scene_rule_version": "scene_proxy_top4_v1",
+  "worker_group_rule_version": "prototype_worker_group_v1",
+  "r_u_lcb_rule_version": "quantile10_m_tier_v1",
+  "tim_mapping_rule_version": "tim_row_audit_v2_1",
+  "type4_link_rule_version": "meta_guard_bridge_v1",
+  "selection_rule_version": "selection_manifest_resolved_v2_1",
+  "selection_manifest_path": "analysis_results\\selection_freeze_20260317\\thesis_selection_main_facing_v1_20260317.json",
+  "selection_manifest_mode": "provided",
+  "thesis_selection_ready": false,
+  "thesis_readiness_status": "blocked_selection_not_independent_from_autogen_and_stage1_protocol_not_aligned",
+  "thesis_readiness_blockers": [
+    "selection_not_independent_from_autogen",
+    "stage1_protocol_not_aligned"
+  ],
+  "stage1_gate_version": "stage1_protocol_alignment_v2_1",
+  "stage1_alignment_passed": false,
+  "stage1_alignment_file": "stage1_alignment_audit_v2_1.json",
+  "selection_main_facing_gate_version": "selection_main_facing_v2_1",
+  "selection_main_facing_passed": true,
+  "selection_main_facing_file": "selection_main_facing_audit_v2_1.json",
+  "selection_provenance_gate_version": "selection_provenance_v2_1",
+  "selection_derived_from_autogen_default_gate": true,
+  "selection_source_independent_from_autogen": false,
+  "selection_provenance_file": "selection_provenance_audit_v2_1.json",
+  "active_time_endpoint_status": "mixed_estimand_log_plus_fallback",
+  "active_time_primary_endpoint_ready": false,
+  "active_time_estimand_file": "active_time_estimand_audit_v2_1.json",
+  "n_rows": 73,
+  "n_tasks": 59,
+  "n_workers": 4
+}
