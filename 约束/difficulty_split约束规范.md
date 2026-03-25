@@ -11,6 +11,7 @@
 核心原则：
 
 - 主切分不得由标注后 difficulty 直接驱动。
+- 不定义全局固定的 `difficulty tag -> low/medium/high` 对照表；除 `trivial` 作为低难度基准外，其余 difficulty 保持 tag-level、多选共现表示。
 - difficulty 与 model_issue 只用于解释性审计，不得反向定义主 split。
 
 ---

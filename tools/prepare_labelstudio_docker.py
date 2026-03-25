@@ -3,6 +3,7 @@ import os
 import glob
 import numpy as np
 import argparse
+from pathlib import Path
 
 # 配置（支持两种模式）
 # 1) 旧模式（本地/云主机静态服务）:
@@ -10,15 +11,18 @@ import argparse
 #    vis_3d = {HOHONET_VIS_BASE_URL}/tools/vis_3d.html?... 
 # 2) COS 模式（推荐）:
 #    设置 HOHONET_IMAGE_BASE_URL，例如:
-#    https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/test/img
+#    https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v
 #    此时 image 直接走 COS，不占用旧服务器带宽。
 # 新服务器默认值（可被环境变量覆盖）
 DEFAULT_BASE_URL = os.environ.get("HOHONET_BASE_URL", "http://175.178.71.217:8000")
 DEFAULT_VIS_BASE_URL = os.environ.get("HOHONET_VIS_BASE_URL", DEFAULT_BASE_URL)
-DEFAULT_IMAGE_BASE_URL = os.environ.get("HOHONET_IMAGE_BASE_URL", "")
+DEFAULT_IMAGE_BASE_URL = os.environ.get(
+    "HOHONET_IMAGE_BASE_URL",
+    "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v",
+)
 OUTPUT_JSON = "label_studio_import_docker.json"
-LAYOUT_TXT_DIR = "output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34"
-IMAGE_DIR_REL = "data/mp3d_layout/test/img"
+LAYOUT_TXT_DIR = "data/mp3d_layout/test/label_cor"
+IMAGE_DIR_REL = "data/mp3d_layout/img_v"
 
 # 图像尺寸 (HoHoNet 默认)
 W, H = 1024, 512
@@ -116,6 +120,69 @@ def _join_url(base_url, suffix):
     return f"{base_url.rstrip('/')}/{suffix.lstrip('/')}"
 
 
+def _make_prediction(result):
+    return {
+        "model_version": "HoHoNet_v1",
+        "score": 0.99,
+        "result": result,
+    }
+
+
+def _make_annotation(result, completed_by=None):
+    annotation = {
+        "result": result,
+        "ground_truth": False,
+        "was_cancelled": False,
+    }
+    if completed_by is not None:
+        annotation["completed_by"] = completed_by
+    return annotation
+
+
+def _load_title_order(export_json_path):
+    if not export_json_path:
+        return []
+    with open(export_json_path, "r", encoding="utf-8") as f:
+        payload = json.load(f)
+    if isinstance(payload, dict):
+        payload = payload.get("tasks") or payload.get("data") or []
+    if not isinstance(payload, list):
+        return []
+    titles = []
+    for item in payload:
+        if not isinstance(item, dict):
+            continue
+        data = item.get("data") or {}
+        title = data.get("title")
+        if title:
+            titles.append(Path(str(title)).stem)
+    return titles
+
+
+def _order_tasks_by_titles(tasks, title_order):
+    if not title_order:
+        return tasks
+    by_title = {}
+    for task in tasks:
+        title = (task.get("data") or {}).get("title")
+        if title is not None:
+            by_title[str(title)] = task
+            by_title[Path(str(title)).stem] = task
+    ordered = []
+    missing = []
+    for title in title_order:
+        task = by_title.get(str(title))
+        if task is None:
+            missing.append(str(title))
+            continue
+        ordered.append(task)
+    if missing:
+        print(f"[Warn] {len(missing)} titles from export order were not found in current tasks.")
+    seen = {id(t) for t in ordered}
+    ordered.extend([t for t in tasks if id(t) not in seen])
+    return ordered
+
+
 def create_import_json(
     output_json,
     layout_txt_dir,
@@ -125,8 +192,14 @@ def create_import_json(
     image_base_url,
     vis_base_url,
     disable_vis3d=False,
+    import_kind="annotations",
+    annotation_completed_by=None,
+    order_from_export=None,
 ):
     tasks = []
+    import_kind = str(import_kind or "predictions").strip().lower()
+    if import_kind not in {"predictions", "annotations", "both"}:
+        raise ValueError("import_kind must be one of: predictions, annotations, both")
     
     # 1. 查找 output/mp3d_layout/... 下的所有 txt 文件
     txt_pattern = os.path.join(layout_txt_dir, "*.txt")
@@ -150,7 +223,6 @@ def create_import_json(
                 coords.append((float(l[0]), float(l[1])))
             
             # 构造 Label Studio Predictions
-            predictions = []
             result = []
             
             # 1. KeyPoints (所有角点)
@@ -312,11 +384,8 @@ def create_import_json(
                 }
             })
 
-            predictions.append({
-                "model_version": "HoHoNet_v1",
-                "score": 0.99,
-                "result": result
-            })
+            prediction = _make_prediction(result)
+            annotation = _make_annotation(result, completed_by=annotation_completed_by)
 
             # 构造 3D View URL 数据
             # 需要传递给 vis_3d.html 的格式: [{x, y_ceiling, y_floor}, ...]
@@ -330,9 +399,12 @@ def create_import_json(
             
             corners_json = json.dumps(vis_corners)
             encoded_data = urllib.parse.quote(corners_json)
-            iframe_url = ""
-            if not disable_vis3d and vis_base_url:
+            if vis_base_url:
                 iframe_url = _join_url(vis_base_url, f"tools/vis_3d.html?w={W}&h={H}&data={encoded_data}")
+                if disable_vis3d:
+                    iframe_url = _join_url(vis_base_url, "tools/vis_3d.html")
+            else:
+                iframe_url = ""
 
             # 获取图片文件名
             # txt 文件名: ID_hash.txt -> 图片文件名: ID_hash.<ext>
@@ -347,13 +419,20 @@ def create_import_json(
                     "image": img_url,
                     "vis_3d": iframe_url,
                     "title": basename
-                },
-                "predictions": predictions
+                }
             }
+            if import_kind in {"predictions", "both"}:
+                task["predictions"] = [prediction]
+            if import_kind in {"annotations", "both"}:
+                task["annotations"] = [annotation]
             tasks.append(task)
             
         except Exception as e:
             print(f"Error processing {txt_file}: {e}")
+
+    if order_from_export:
+        title_order = _load_title_order(order_from_export)
+        tasks = _order_tasks_by_titles(tasks, title_order)
 
     with open(output_json, 'w', encoding='utf-8') as f:
         json.dump(tasks, f, indent=2)
@@ -366,13 +445,30 @@ def create_import_json(
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Generate Label Studio import JSON for MP3D layout tasks.")
     parser.add_argument("--output-json", default=OUTPUT_JSON, help="Output JSON file path.")
-    parser.add_argument("--layout-txt-dir", default=LAYOUT_TXT_DIR, help="Directory with HoHoNet .txt predictions.")
+    parser.add_argument("--layout-txt-dir", default=LAYOUT_TXT_DIR, help="Directory with label_cor .txt ground-truth layouts.")
     parser.add_argument("--image-dir-rel", default=IMAGE_DIR_REL, help="Relative image path for legacy base URL mode.")
-    parser.add_argument("--image-ext", default=".png", help="Image extension used to build image filename, e.g. .png or .jpg")
+    parser.add_argument("--image-ext", default=".jpg", help="Image extension used to build image filename, e.g. .png or .jpg")
     parser.add_argument("--legacy-base-url", default=DEFAULT_BASE_URL, help="Legacy static server base URL.")
     parser.add_argument("--image-base-url", default=DEFAULT_IMAGE_BASE_URL, help="COS/CDN image prefix URL ending at image directory.")
     parser.add_argument("--vis-base-url", default=DEFAULT_VIS_BASE_URL, help="Base URL serving tools/vis_3d.html.")
     parser.add_argument("--disable-vis3d", action="store_true", help="Do not generate vis_3d URL field.")
+    parser.add_argument(
+        "--import-kind",
+        choices=["predictions", "annotations", "both"],
+        default="annotations",
+        help="Write Label Studio predictions, annotations, or both."
+    )
+    parser.add_argument(
+        "--annotation-completed-by",
+        type=int,
+        default=None,
+        help="Optional completed_by user id to attach when import-kind includes annotations."
+    )
+    parser.add_argument(
+        "--order-from-export",
+        default="export_label/project-2-at-2026-02-22-11-22-ee6c4607.json",
+        help="Optional Label Studio export JSON whose task title order should be reused."
+    )
     args = parser.parse_args()
 
     print("[Config]")
@@ -391,4 +487,7 @@ if __name__ == "__main__":
         image_base_url=args.image_base_url,
         vis_base_url=args.vis_base_url,
         disable_vis3d=args.disable_vis3d,
+        import_kind=args.import_kind,
+        annotation_completed_by=args.annotation_completed_by,
+        order_from_export=args.order_from_export,
     )

@@ -1,0 +1,94 @@
+{
+  "policy_name": "prescreen_semi_family_policy_v1",
+  "policy_basis": [
+    "docs/overleaf_project/sections/02_方法.tex",
+    "docs/overleaf_project/sections/03_实验设置.tex",
+    "analysis_results/c_manifests_20260311/prescreen_semi_family_target_v1.json"
+  ],
+  "families": [
+    {
+      "family": "acceptable",
+      "role": "control",
+      "is_prescreen_core_family": false,
+      "natural_required_min": 0,
+      "synthetic_allowed": false,
+      "synthetic_only_if_absent": false,
+      "default_target_count": 6,
+      "notes": "Control family only; not part of the misleading-trap family allocation."
+    },
+    {
+      "family": "overextend_adjacent",
+      "role": "trap_core",
+      "is_prescreen_core_family": true,
+      "natural_required_min": 1,
+      "synthetic_allowed": true,
+      "synthetic_only_if_absent": false,
+      "default_target_count": 3,
+      "notes": "Current thesis-facing core family: keep at least one natural case when available, then backfill with synthetic candidates."
+    },
+    {
+      "family": "underextend",
+      "role": "trap_extension",
+      "is_prescreen_core_family": false,
+      "natural_required_min": 0,
+      "synthetic_allowed": true,
+      "synthetic_only_if_absent": false,
+      "default_target_count": 0,
+      "notes": "Extension family only in the current thesis-facing protocol; natural exemplars may be retained for audit or overflow, but it is not part of the default 4-family x 3 trap target."
+    },
+    {
+      "family": "over_parsing",
+      "role": "trap_core",
+      "is_prescreen_core_family": true,
+      "natural_required_min": 1,
+      "synthetic_allowed": true,
+      "synthetic_only_if_absent": false,
+      "default_target_count": 3,
+      "notes": "Current thesis-facing core family: keep at least one natural case when available, then backfill with synthetic candidates."
+    },
+    {
+      "family": "corner_drift",
+      "role": "trap_core",
+      "is_prescreen_core_family": true,
+      "natural_required_min": 1,
+      "synthetic_allowed": true,
+      "synthetic_only_if_absent": false,
+      "default_target_count": 3,
+      "notes": "Current thesis-facing core family: keep at least one natural case when available, then backfill with synthetic candidates."
+    },
+    {
+      "family": "corner_duplicate",
+      "role": "trap_core",
+      "is_prescreen_core_family": true,
+      "natural_required_min": 1,
+      "synthetic_allowed": true,
+      "synthetic_only_if_absent": false,
+      "default_target_count": 3,
+      "notes": "Current thesis-facing core family: keep at least one natural case when available, then backfill with synthetic candidates."
+    },
+    {
+      "family": "topology_failure",
+      "role": "audit_small_quota",
+      "is_prescreen_core_family": false,
+      "natural_required_min": 0,
+      "synthetic_allowed": true,
+      "synthetic_only_if_absent": true,
+      "default_target_count": 0,
+      "notes": "Optional audit-small-quota family; current protocol allows synthetic-only backfill when natural cases are absent."
+    },
+    {
+      "family": "fail",
+      "role": "optional_small_quota",
+      "is_prescreen_core_family": false,
+      "natural_required_min": 0,
+      "synthetic_allowed": true,
+      "synthetic_only_if_absent": false,
+      "default_target_count": 0,
+      "notes": "Optional / small-quota family, not a default prescreen core family."
+    }
+  ],
+  "notes": [
+    "Natural-first applies to currently thesis-facing core trap families only.",
+    "This policy does not promote underextend to a default prescreen core family, because the current thesis-facing text still prioritizes the 4-family x 3 trap structure."
+  ]
+}

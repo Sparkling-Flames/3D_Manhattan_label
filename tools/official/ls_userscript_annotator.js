@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator
 // @namespace    http://tampermonkey.net/
-// @version      0.23-official
+// @version      0.24-official
 // @description  正式标注版：连接 Label Studio 与 HoHoNet 3D 查看器，并强制记录 active_time
 // @author       HoHoNet
 // @match        http://175.178.71.217:8080/*
@@ -69,6 +69,27 @@
   const OVERLAY_ID = "hohonet-overlay";
   const TOGGLE_BTN_ID = "hohonet-toggle-labels-btn";
   const LABELS_VISIBLE_KEY = "hohonet_labels_visible"; // sessionStorage
+  const PREVIEW_ORDER_OVERRIDES_KEY = "hohonet_preview_order_overrides_v1";
+  const PREVIEW_ORDER_ROUND_DIGITS = 1;
+  const PREVIEW_PANEL_ID = "hohonet-preview-order-panel";
+  const PREVIEW_PANEL_STYLE_ID = "hohonet-preview-order-panel-style";
+  const PREVIEW_PANEL_HEADER_ID = "hohonet-preview-order-header";
+  const PREVIEW_PANEL_BODY_ID = "hohonet-preview-order-body";
+  const PREVIEW_PANEL_TOGGLE_ID = "hohonet-preview-order-toggle";
+  const PREVIEW_PANEL_STATUS_ID = "hohonet-preview-order-status";
+  const PREVIEW_PANEL_SLOT_ID = "hohonet-preview-order-slot";
+  const PREVIEW_PANEL_PAIR_INPUT_ID = "hohonet-preview-pair-input";
+  const PREVIEW_PANEL_PAIR_PREV_ID = "hohonet-preview-pair-prev";
+  const PREVIEW_PANEL_PAIR_NEXT_ID = "hohonet-preview-pair-next";
+  const PREVIEW_PANEL_SWAP_INPUT_ID = "hohonet-preview-swap-input";
+  const PREVIEW_PANEL_SWAP_RUN_ID = "hohonet-preview-swap-run";
+  const PREVIEW_PANEL_SWAP_PREV_ID = "hohonet-preview-swap-prev";
+  const PREVIEW_PANEL_SWAP_NEXT_ID = "hohonet-preview-swap-next";
+  const PREVIEW_PANEL_SAVE_ID = "hohonet-preview-save";
+  const PREVIEW_PANEL_RESET_ID = "hohonet-preview-reset";
+  const PREVIEW_PANEL_DELETE_ID = "hohonet-preview-delete";
+  const PREVIEW_PANEL_POSITION_KEY = "hohonet_preview_panel_parent_position_v4";
+  const PREVIEW_PANEL_COLLAPSED_KEY = "hohonet_preview_panel_parent_collapsed_v4";
 
   // ---- 部署配置（中文）----
   // 推荐在浏览器控制台设置（一次即可）：
@@ -142,12 +163,125 @@
   if (existingDebug) existingDebug.remove();
   const existingOverlay = document.getElementById(OVERLAY_ID);
   if (existingOverlay) existingOverlay.remove();
+  const existingPreviewPanel = document.getElementById(PREVIEW_PANEL_ID);
+  if (existingPreviewPanel) existingPreviewPanel.remove();
+  const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
+  if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "0.23-official";
+  const SCRIPT_VERSION = "0.24-official";
   console.log(`HoHoNet Helper: 已加载 (v${SCRIPT_VERSION})`);
   console.log(
     "HoHoNet viewer base: set localStorage.HOHONET_VIEWER_BASE_URL = location.origin when /tools is reverse-proxied on LS origin",
   );
+  const DEFAULT_PREVIEW_STATUS_TEXT = "请先刷新 3D 视图";
+
+  function createPreviewInputDraft() {
+    return {
+      pairDirty: false,
+      swapDirty: false,
+      swapInitialized: false,
+    };
+  }
+
+  function createPreviewUiState(statusText = DEFAULT_PREVIEW_STATUS_TEXT) {
+    return {
+      hasData: false,
+      pairCount: 0,
+      selectedPairIndex: 0,
+      savedOverrideActive: false,
+      statusText,
+    };
+  }
+
+  function createPreviewUiStateFromMessage(data) {
+    return {
+      hasData: !!data?.hasData,
+      pairCount: Number(data?.pairCount) || 0,
+      selectedPairIndex: Number(data?.selectedPairIndex) || 0,
+      savedOverrideActive: !!data?.savedOverrideActive,
+      statusText: String(data?.statusText || DEFAULT_PREVIEW_STATUS_TEXT),
+    };
+  }
+
+  function getPreviewControlPanelElements() {
+    return {
+      panel: document.getElementById(PREVIEW_PANEL_ID),
+      slotNode: document.getElementById(PREVIEW_PANEL_SLOT_ID),
+      statusNode: document.getElementById(PREVIEW_PANEL_STATUS_ID),
+      pairInput: document.getElementById(PREVIEW_PANEL_PAIR_INPUT_ID),
+      swapInput: document.getElementById(PREVIEW_PANEL_SWAP_INPUT_ID),
+      prevBtn: document.getElementById(PREVIEW_PANEL_PAIR_PREV_ID),
+      nextBtn: document.getElementById(PREVIEW_PANEL_PAIR_NEXT_ID),
+      swapRunBtn: document.getElementById(PREVIEW_PANEL_SWAP_RUN_ID),
+      swapPrevBtn: document.getElementById(PREVIEW_PANEL_SWAP_PREV_ID),
+      swapNextBtn: document.getElementById(PREVIEW_PANEL_SWAP_NEXT_ID),
+      saveBtn: document.getElementById(PREVIEW_PANEL_SAVE_ID),
+      resetBtn: document.getElementById(PREVIEW_PANEL_RESET_ID),
+      deleteBtn: document.getElementById(PREVIEW_PANEL_DELETE_ID),
+    };
+  }
+
+  function getPreviewSelectionSnapshot(uiState = currentPreviewUiState) {
+    const hasData = !!uiState?.hasData;
+    const pairCount = Number(uiState?.pairCount) || 0;
+    const safeCount = Number.isInteger(pairCount) && pairCount > 0 ? pairCount : 0;
+    const safeIndex =
+      safeCount > 0
+        ? Math.max(
+            0,
+            Math.min(Number(uiState?.selectedPairIndex) || 0, safeCount - 1),
+          )
+        : 0;
+    return {
+      hasData,
+      savedOverrideActive: !!uiState?.savedOverrideActive,
+      statusText: String(uiState?.statusText || DEFAULT_PREVIEW_STATUS_TEXT),
+      safeCount,
+      safeIndex,
+      currentPairNumber: safeCount > 0 ? safeIndex + 1 : 1,
+    };
+  }
+
+  function getCurrentPreviewStorageTaskKey() {
+    return currentPreviewTaskKey || getPreviewOverrideTaskKey();
+  }
+
+  function postPreviewOrderAck(iframe, action, ok = true, reason = "") {
+    if (!iframe?.contentWindow) return;
+    iframe.contentWindow.postMessage(
+      {
+        type: "hohonet_preview_order_ack",
+        ok,
+        action,
+        ...(reason ? { reason } : {}),
+      },
+      "*",
+    );
+  }
+
+  function resetPreviewRuntimeState(statusText = DEFAULT_PREVIEW_STATUS_TEXT) {
+    currentPreviewTaskKey = null;
+    currentPreviewSignature = null;
+    currentPreviewDefaultCount = 0;
+    currentPreviewBaseCorners = [];
+    currentPreviewInputDraft = createPreviewInputDraft();
+    currentPreviewUiState = createPreviewUiState(statusText);
+  }
+
+  function applyPreviewRuntimeFromLayout(taskKey, signature, pairedDefault) {
+    currentPreviewTaskKey = taskKey || null;
+    currentPreviewSignature = signature || "";
+    currentPreviewDefaultCount = Array.isArray(pairedDefault) ? pairedDefault.length : 0;
+    currentPreviewBaseCorners = clonePreviewCornerPairs(pairedDefault);
+    currentPreviewInputDraft = createPreviewInputDraft();
+  }
+
+  let currentPreviewTaskKey = null;
+  let currentPreviewSignature = null;
+  let currentPreviewDefaultCount = 0;
+  let currentPreviewBaseCorners = [];
+  let currentPreviewInputDraft = createPreviewInputDraft();
+  let currentPreviewUiState = createPreviewUiState();
 
   // --- 调试面板 ---
   function updateDebug(msg) {
@@ -687,6 +821,721 @@
     } catch (e) {}
   }
 
+  function getCurrentAnnotationId() {
+    try {
+      const store = getStore();
+      const annId = store?.annotationStore?.selected?.id;
+      if (annId !== undefined && annId !== null && String(annId).trim()) {
+        return String(annId).trim();
+      }
+    } catch (e) {}
+    return "unknown_annotation";
+  }
+
+  function getLegacyPreviewOverrideTaskKey() {
+    return `${getProjectId()}::${getTaskId()}::${getAnnotatorId()}`;
+  }
+
+  function getPreviewOverrideTaskKey() {
+    return `${getLegacyPreviewOverrideTaskKey()}::${getCurrentAnnotationId()}`;
+  }
+
+  function getIdentityOrder(length) {
+    return Array.from({ length }, (_, idx) => idx);
+  }
+
+  function roundForPreviewSignature(value) {
+    const factor = 10 ** PREVIEW_ORDER_ROUND_DIGITS;
+    return Math.round(Number(value || 0) * factor) / factor;
+  }
+
+  function buildPreviewSignature(pairedCorners) {
+    if (!Array.isArray(pairedCorners) || pairedCorners.length === 0) return "";
+    return pairedCorners
+      .map((corner) =>
+        [
+          roundForPreviewSignature(corner.x),
+          roundForPreviewSignature(corner.y_ceiling),
+          roundForPreviewSignature(corner.y_floor),
+        ].join(","),
+      )
+      .join("|");
+  }
+
+  function normalizePreviewOrder(order, length) {
+    if (!Array.isArray(order) || order.length !== length) return null;
+    const seen = new Set();
+    const normalized = [];
+    for (const rawIdx of order) {
+      const idx = Number(rawIdx);
+      if (!Number.isInteger(idx) || idx < 0 || idx >= length || seen.has(idx)) {
+        return null;
+      }
+      seen.add(idx);
+      normalized.push(idx);
+    }
+    return normalized;
+  }
+
+  function applyPreviewOrder(pairedCorners, order) {
+    const normalized = normalizePreviewOrder(
+      order,
+      Array.isArray(pairedCorners) ? pairedCorners.length : 0,
+    );
+    if (!normalized) {
+      return {
+        corners: Array.isArray(pairedCorners) ? pairedCorners.slice() : [],
+        order: null,
+      };
+    }
+    return {
+      corners: normalized.map((idx) => pairedCorners[idx]),
+      order: normalized,
+    };
+  }
+
+  function clonePreviewCornerPoint(point) {
+    return {
+      x: Number(point?.x || 0),
+      y: Number(point?.y || 0),
+      pctX: point?.pctX === undefined ? undefined : Number(point.pctX),
+      pctY: point?.pctY === undefined ? undefined : Number(point.pctY),
+    };
+  }
+
+  function clonePreviewCornerPair(pair) {
+    return {
+      x: Number(pair?.x || 0),
+      y_ceiling: Number(pair?.y_ceiling || 0),
+      y_floor: Number(pair?.y_floor || 0),
+      originalPoints: Array.isArray(pair?.originalPoints)
+        ? pair.originalPoints.map(clonePreviewCornerPoint)
+        : [],
+    };
+  }
+
+  function clonePreviewCornerPairs(pairs) {
+    return Array.isArray(pairs) ? pairs.map(clonePreviewCornerPair) : [];
+  }
+
+  function renderPreviewOverlayPairs(pairedCorners) {
+    try {
+      const img = findMainImage();
+      if (!img) return;
+
+      const overlay = ensureOverlay(img);
+      overlay.innerHTML = "";
+
+      const visible = getLabelsVisible();
+      overlay.style.display = visible ? "block" : "none";
+
+      const toggleBtn = document.getElementById(TOGGLE_BTN_ID);
+      if (toggleBtn) applyToggleBtnState(toggleBtn, visible);
+
+      const rect = positionOverlayToImage(img, overlay);
+      (Array.isArray(pairedCorners) ? pairedCorners : []).forEach((pair, idx) => {
+        const label = String(idx + 1);
+        (Array.isArray(pair?.originalPoints) ? pair.originalPoints : []).forEach((p) => {
+          if (p?.pctX === undefined || p?.pctY === undefined) return;
+          const badge = document.createElement("div");
+          badge.innerText = label;
+          badge.dataset.pctx = String(p.pctX);
+          badge.dataset.pcty = String(p.pctY);
+          badge.style.cssText = `
+            position: absolute;
+            transform: translate(-50%, -150%);
+            background: rgba(255, 255, 0, 0.9);
+            color: black;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 12px;
+            border: 1px solid black;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.5);
+          `;
+          overlay.appendChild(badge);
+        });
+      });
+
+      positionOverlayBadges(overlay, rect);
+    } catch (e) {
+      console.error("HoHoNet: 覆盖层错误", e);
+    }
+  }
+
+  function syncPreviewOverlayWithOrder(order, signature = "") {
+    if (!currentPreviewBaseCorners.length) return;
+    if (signature && currentPreviewSignature && signature !== currentPreviewSignature) {
+      return;
+    }
+    const applied = applyPreviewOrder(currentPreviewBaseCorners, order);
+    const orderedCorners = applied.order ? applied.corners : currentPreviewBaseCorners;
+    renderPreviewOverlayPairs(orderedCorners);
+  }
+
+  function loadPreviewOrderOverride(taskKey) {
+    const all = loadJsonFromLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, {});
+    if (!all || typeof all !== "object" || Array.isArray(all)) return null;
+    const value = all[taskKey];
+    if (!value || typeof value !== "object" || Array.isArray(value)) return null;
+    return value;
+  }
+
+  function savePreviewOrderOverride(taskKey, payload) {
+    const all = loadJsonFromLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, {});
+    const next =
+      all && typeof all === "object" && !Array.isArray(all) ? all : {};
+    next[taskKey] = payload;
+    saveJsonToLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, next);
+  }
+
+  function clearPreviewOrderOverride(taskKey) {
+    const all = loadJsonFromLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, {});
+    if (!all || typeof all !== "object" || Array.isArray(all)) return;
+    if (!(taskKey in all)) return;
+    delete all[taskKey];
+    saveJsonToLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, all);
+  }
+
+  function ensurePreviewControlPanelStyle() {
+    if (document.getElementById(PREVIEW_PANEL_STYLE_ID)) return;
+    const style = document.createElement("style");
+    style.id = PREVIEW_PANEL_STYLE_ID;
+    style.textContent = `
+#${PREVIEW_PANEL_ID} {
+  position: fixed;
+  z-index: 9998;
+  width: 282px;
+  color: #f4f7fb;
+  background: rgba(40, 44, 50, 0.8);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 10px;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  backdrop-filter: blur(14px);
+}
+#${PREVIEW_PANEL_ID}[data-collapsed="1"] #${PREVIEW_PANEL_BODY_ID} {
+  display: none;
+}
+#${PREVIEW_PANEL_HEADER_ID} {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 8px 10px;
+  cursor: move;
+  user-select: none;
+  background: linear-gradient(180deg, rgba(255,255,255,0.07), rgba(255,255,255,0.025));
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+#${PREVIEW_PANEL_BODY_ID} {
+  padding: 9px 10px 10px;
+}
+#${PREVIEW_PANEL_ID} .hp-title {
+  font-size: 13px;
+  font-weight: 800;
+}
+#${PREVIEW_PANEL_ID} .hp-slot {
+  font-size: 11px;
+  color: #d9e2ec;
+}
+#${PREVIEW_PANEL_ID} .hp-toggle {
+  border: none;
+  border-radius: 7px;
+  padding: 4px 7px;
+  background: rgba(255,255,255,0.12);
+  color: white;
+  cursor: pointer;
+  font-size: 11px;
+  font-weight: 700;
+}
+#${PREVIEW_PANEL_ID} .hp-note,
+#${PREVIEW_PANEL_ID} .hp-status,
+#${PREVIEW_PANEL_ID} .hp-subnote {
+  font-size: 11px;
+  line-height: 1.38;
+}
+#${PREVIEW_PANEL_ID} .hp-note {
+  color: #d6deea;
+  margin-bottom: 5px;
+}
+#${PREVIEW_PANEL_ID} .hp-status {
+  color: #9fd0ff;
+  margin-bottom: 7px;
+}
+#${PREVIEW_PANEL_ID} .hp-subnote {
+  color: #9aa8b8;
+  margin-top: 5px;
+}
+#${PREVIEW_PANEL_ID} .hp-section {
+  margin-top: 7px;
+}
+#${PREVIEW_PANEL_ID} .hp-label {
+  margin-bottom: 4px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: #9aa8b8;
+  text-transform: uppercase;
+}
+#${PREVIEW_PANEL_ID} .hp-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 5px;
+}
+#${PREVIEW_PANEL_ID} .hp-row + .hp-row {
+  margin-top: 5px;
+}
+#${PREVIEW_PANEL_ID} input[type="number"] {
+  width: 54px;
+  padding: 4px 6px;
+  border-radius: 7px;
+  border: 1px solid #415067;
+  background: rgba(11, 17, 24, 0.85);
+  color: white;
+  font-size: 12px;
+}
+#${PREVIEW_PANEL_ID} button {
+  border: none;
+  border-radius: 7px;
+  padding: 5px 8px;
+  color: white;
+  background: #5e6a7a;
+  cursor: pointer;
+  font-weight: 700;
+  font-size: 12px;
+}
+#${PREVIEW_PANEL_ID} button.hp-primary {
+  background: #2f5cff;
+}
+#${PREVIEW_PANEL_ID} button.hp-warn {
+  background: #c84f4f;
+}
+#${PREVIEW_PANEL_ID} button:disabled,
+#${PREVIEW_PANEL_ID} input:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+`;
+    document.head.appendChild(style);
+  }
+
+  function loadPreviewPanelPosition() {
+    try {
+      const raw = window.localStorage.getItem(PREVIEW_PANEL_POSITION_KEY);
+      if (!raw) return null;
+      const parsed = JSON.parse(raw);
+      if (
+        !parsed ||
+        typeof parsed !== "object" ||
+        !Number.isFinite(parsed.left) ||
+        !Number.isFinite(parsed.top)
+      ) {
+        return null;
+      }
+      return parsed;
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function savePreviewPanelPosition(left, top) {
+    try {
+      window.localStorage.setItem(
+        PREVIEW_PANEL_POSITION_KEY,
+        JSON.stringify({ left, top }),
+      );
+    } catch (e) {}
+  }
+
+  function clampPreviewPanelPosition(left, top) {
+    const panel = document.getElementById(PREVIEW_PANEL_ID);
+    const width = panel ? panel.offsetWidth || 320 : 320;
+    const height = panel ? panel.offsetHeight || 260 : 260;
+    return {
+      left: Math.min(Math.max(12, left), Math.max(12, window.innerWidth - width - 12)),
+      top: Math.min(Math.max(12, top), Math.max(12, window.innerHeight - height - 12)),
+    };
+  }
+
+  function applyPreviewPanelPosition(left, top, persist = false) {
+    const panel = document.getElementById(PREVIEW_PANEL_ID);
+    if (!panel) return;
+    const next = clampPreviewPanelPosition(left, top);
+    panel.style.left = `${next.left}px`;
+    panel.style.top = `${next.top}px`;
+    if (persist) savePreviewPanelPosition(next.left, next.top);
+  }
+
+  function initializePreviewPanelPosition(anchorEl = null) {
+    const stored = loadPreviewPanelPosition();
+    if (stored) {
+      applyPreviewPanelPosition(stored.left, stored.top, false);
+      return;
+    }
+
+    let left = Math.max(12, window.innerWidth - 304);
+    let top = 96;
+    if (anchorEl) {
+      const rect = anchorEl.getBoundingClientRect();
+      if (rect && rect.width > 0 && rect.height > 0) {
+        left = rect.right + 16;
+        top = Math.max(12, rect.top);
+      }
+    }
+    applyPreviewPanelPosition(left, top, false);
+  }
+
+  function setPreviewPanelCollapsed(collapsed, persist = true) {
+    const panel = document.getElementById(PREVIEW_PANEL_ID);
+    const toggleBtn = document.getElementById(PREVIEW_PANEL_TOGGLE_ID);
+    if (!panel || !toggleBtn) return;
+    panel.dataset.collapsed = collapsed ? "1" : "0";
+    toggleBtn.innerText = collapsed ? "展开" : "收起";
+    if (persist) {
+      try {
+        window.localStorage.setItem(
+          PREVIEW_PANEL_COLLAPSED_KEY,
+          collapsed ? "1" : "0",
+        );
+      } catch (e) {}
+    }
+  }
+
+  function initializePreviewPanelCollapsed() {
+    let collapsed = true;
+    try {
+      const stored = window.localStorage.getItem(PREVIEW_PANEL_COLLAPSED_KEY);
+      collapsed = stored === null ? true : stored === "1";
+    } catch (e) {}
+    setPreviewPanelCollapsed(collapsed, false);
+  }
+
+  function initializePreviewPanelDrag() {
+    const panel = document.getElementById(PREVIEW_PANEL_ID);
+    const header = document.getElementById(PREVIEW_PANEL_HEADER_ID);
+    if (!panel || !header || header.dataset.dragBound === "1") return;
+    header.dataset.dragBound = "1";
+
+    let dragging = false;
+    let offsetX = 0;
+    let offsetY = 0;
+
+    header.addEventListener("pointerdown", (event) => {
+      if (event.target.closest("button")) return;
+      const rect = panel.getBoundingClientRect();
+      dragging = true;
+      offsetX = event.clientX - rect.left;
+      offsetY = event.clientY - rect.top;
+      header.setPointerCapture(event.pointerId);
+      event.preventDefault();
+    });
+
+    header.addEventListener("pointermove", (event) => {
+      if (!dragging) return;
+      applyPreviewPanelPosition(event.clientX - offsetX, event.clientY - offsetY, false);
+    });
+
+    const stopDragging = (event) => {
+      if (!dragging) return;
+      dragging = false;
+      const rect = panel.getBoundingClientRect();
+      savePreviewPanelPosition(rect.left, rect.top);
+      if (event && header.hasPointerCapture(event.pointerId)) {
+        header.releasePointerCapture(event.pointerId);
+      }
+    };
+
+    header.addEventListener("pointerup", stopDragging);
+    header.addEventListener("pointercancel", stopDragging);
+  }
+
+  function updatePreviewControlPanelUi() {
+    const controls = getPreviewControlPanelElements();
+    if (!controls.panel) return;
+
+    const {
+      hasData,
+      savedOverrideActive,
+      statusText,
+      safeCount,
+      safeIndex,
+      currentPairNumber,
+    } = getPreviewSelectionSnapshot();
+
+    if (controls.slotNode) {
+      controls.slotNode.innerText = hasData
+        ? `当前第 ${currentPairNumber} / ${safeCount} 对`
+        : "当前第 -- / -- 对";
+    }
+    if (controls.statusNode) {
+      controls.statusNode.innerText =
+        statusText || (savedOverrideActive ? "本地缓存：有" : "本地缓存：无");
+    }
+    if (
+      controls.pairInput &&
+      document.activeElement !== controls.pairInput &&
+      !currentPreviewInputDraft.pairDirty
+    ) {
+      controls.pairInput.value = String(currentPairNumber);
+    }
+    if (
+      controls.swapInput &&
+      document.activeElement !== controls.swapInput &&
+      !currentPreviewInputDraft.swapDirty &&
+      !currentPreviewInputDraft.swapInitialized
+    ) {
+      const suggestedTarget =
+        safeCount > 1 ? Math.min(safeCount, currentPairNumber + 1) : 1;
+      controls.swapInput.value = String(suggestedTarget);
+      currentPreviewInputDraft.swapInitialized = true;
+    }
+
+    if (controls.pairInput) controls.pairInput.disabled = !hasData;
+    if (controls.swapInput) controls.swapInput.disabled = !hasData;
+    if (controls.prevBtn) controls.prevBtn.disabled = !hasData || safeIndex === 0;
+    if (controls.nextBtn) {
+      controls.nextBtn.disabled = !hasData || safeIndex >= safeCount - 1;
+    }
+    if (controls.swapRunBtn) controls.swapRunBtn.disabled = !hasData;
+    if (controls.swapPrevBtn) {
+      controls.swapPrevBtn.disabled = !hasData || safeIndex === 0;
+    }
+    if (controls.swapNextBtn) {
+      controls.swapNextBtn.disabled = !hasData || safeIndex >= safeCount - 1;
+    }
+    if (controls.saveBtn) controls.saveBtn.disabled = !hasData;
+    if (controls.resetBtn) controls.resetBtn.disabled = !hasData;
+    if (controls.deleteBtn) {
+      controls.deleteBtn.disabled = !hasData || !savedOverrideActive;
+    }
+  }
+
+  function resetPreviewControlPanelState(statusText = DEFAULT_PREVIEW_STATUS_TEXT) {
+    resetPreviewRuntimeState(statusText);
+    updatePreviewControlPanelUi();
+  }
+
+  function handlePreviewOrderStateMessage(data) {
+    currentPreviewUiState = createPreviewUiStateFromMessage(data);
+    const previewOrder = normalizePreviewOrder(
+      data.previewOrder,
+      currentPreviewDefaultCount,
+    );
+    const previewSignature = String(data.previewSignature || "");
+    if (previewOrder) {
+      syncPreviewOverlayWithOrder(previewOrder, previewSignature);
+    }
+    updatePreviewControlPanelUi();
+  }
+
+  function handlePreviewOrderSaveMessage(iframe, data) {
+    const taskKey = getCurrentPreviewStorageTaskKey();
+    const signature = String(data.previewSignature || currentPreviewSignature || "");
+    const normalizedOrder = normalizePreviewOrder(
+      data.previewOrder,
+      currentPreviewDefaultCount,
+    );
+    if (!taskKey || !signature || !normalizedOrder) {
+      postPreviewOrderAck(iframe, "save", false, "invalid_payload");
+      return;
+    }
+
+    savePreviewOrderOverride(taskKey, {
+      signature,
+      order: normalizedOrder,
+      updated_at: Date.now(),
+    });
+    currentPreviewSignature = signature;
+    postPreviewOrderAck(iframe, "save", true);
+  }
+
+  function handlePreviewOrderDeleteMessage(iframe, action) {
+    const taskKey = getCurrentPreviewStorageTaskKey();
+    if (taskKey) clearPreviewOrderOverride(taskKey);
+    postPreviewOrderAck(iframe, action, true);
+  }
+
+  function postPreviewOrderCommand(action, extra = {}) {
+    const iframe = document.getElementById(IFRAME_ID);
+    if (!iframe || !iframe.contentWindow) {
+      alert("3D 视图未就绪，请先点击“刷新 3D 视图”。");
+      return;
+    }
+    iframe.contentWindow.postMessage(
+      {
+        type: "hohonet_preview_order_command",
+        action,
+        ...extra,
+      },
+      "*",
+    );
+  }
+
+  function ensurePreviewControlPanel(anchorEl = null) {
+    ensurePreviewControlPanelStyle();
+    let panel = document.getElementById(PREVIEW_PANEL_ID);
+    if (panel) {
+      panel.style.display = "block";
+      return panel;
+    }
+
+    panel = document.createElement("div");
+    panel.id = PREVIEW_PANEL_ID;
+    panel.innerHTML = `
+      <div id="${PREVIEW_PANEL_HEADER_ID}">
+        <div>
+          <div class="hp-title">预览顺序</div>
+          <div id="${PREVIEW_PANEL_SLOT_ID}" class="hp-slot">当前第 -- / -- 对</div>
+        </div>
+        <button id="${PREVIEW_PANEL_TOGGLE_ID}" class="hp-toggle" type="button">展开</button>
+      </div>
+      <div id="${PREVIEW_PANEL_BODY_ID}">
+        <div class="hp-note">只影响 3D 预览，不改主标注数据。</div>
+        <div id="${PREVIEW_PANEL_STATUS_ID}" class="hp-status">${DEFAULT_PREVIEW_STATUS_TEXT}</div>
+        <div class="hp-section">
+          <div class="hp-label">定位当前对</div>
+          <div class="hp-row">
+            <span>跳到第</span>
+            <input id="${PREVIEW_PANEL_PAIR_INPUT_ID}" type="number" min="1" step="1" value="1" />
+            <span>对</span>
+          </div>
+          <div class="hp-row">
+            <button id="${PREVIEW_PANEL_PAIR_PREV_ID}" type="button">上一对</button>
+            <button id="${PREVIEW_PANEL_PAIR_NEXT_ID}" type="button">下一对</button>
+          </div>
+        </div>
+        <div class="hp-section">
+          <div class="hp-label">交换当前对</div>
+          <div class="hp-row">
+            <button id="${PREVIEW_PANEL_SWAP_PREV_ID}" type="button">与前对交换</button>
+            <button id="${PREVIEW_PANEL_SWAP_NEXT_ID}" type="button">与后对交换</button>
+          </div>
+          <div class="hp-row">
+            <span>与第</span>
+            <input id="${PREVIEW_PANEL_SWAP_INPUT_ID}" type="number" min="1" step="1" value="1" />
+            <span>对交换</span>
+            <button id="${PREVIEW_PANEL_SWAP_RUN_ID}" type="button">执行</button>
+          </div>
+        </div>
+        <div class="hp-section">
+          <div class="hp-label">保存与重置</div>
+          <div class="hp-row">
+            <button id="${PREVIEW_PANEL_SAVE_ID}" type="button" class="hp-primary">保存</button>
+            <button id="${PREVIEW_PANEL_RESET_ID}" type="button">恢复默认</button>
+          </div>
+          <div class="hp-row">
+            <button id="${PREVIEW_PANEL_DELETE_ID}" type="button" class="hp-warn">删除当前缓存</button>
+          </div>
+          <div class="hp-subnote">“恢复默认”只改当前预览；“删除当前缓存”会删这一条并恢复默认顺序。</div>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(panel);
+
+    const pairInput = document.getElementById(PREVIEW_PANEL_PAIR_INPUT_ID);
+    const swapInput = document.getElementById(PREVIEW_PANEL_SWAP_INPUT_ID);
+    const applyPairSelectionFromInput = () => {
+      currentPreviewInputDraft.pairDirty = false;
+      postPreviewOrderCommand("set_pair", {
+        index: Number(pairInput?.value),
+      });
+    };
+    const syncSelectionFromPairInput = () => {
+      if (!currentPreviewUiState.hasData || !pairInput) return;
+      const desired = Number(pairInput.value);
+      if (!Number.isInteger(desired)) return;
+      const { currentPairNumber } = getPreviewSelectionSnapshot();
+      const current = currentPairNumber;
+      if (desired !== current) {
+        currentPreviewInputDraft.pairDirty = false;
+        applyPairSelectionFromInput();
+      }
+    };
+    const runSwapTargetFromInput = () => {
+      const targetIndex = Number(swapInput?.value);
+      currentPreviewInputDraft.swapDirty = false;
+      currentPreviewInputDraft.swapInitialized = true;
+      syncSelectionFromPairInput();
+      postPreviewOrderCommand("swap_target", {
+        index: targetIndex,
+      });
+    };
+    pairInput?.addEventListener("input", () => {
+      currentPreviewInputDraft.pairDirty = true;
+    });
+    swapInput?.addEventListener("input", () => {
+      currentPreviewInputDraft.swapDirty = true;
+      currentPreviewInputDraft.swapInitialized = true;
+    });
+
+    pairInput?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        applyPairSelectionFromInput();
+      }
+    });
+    pairInput?.addEventListener("change", applyPairSelectionFromInput);
+    document
+      .getElementById(PREVIEW_PANEL_PAIR_PREV_ID)
+      .addEventListener("click", () => {
+        syncSelectionFromPairInput();
+        postPreviewOrderCommand("prev_pair");
+      });
+    document
+      .getElementById(PREVIEW_PANEL_PAIR_NEXT_ID)
+      .addEventListener("click", () => {
+        syncSelectionFromPairInput();
+        postPreviewOrderCommand("next_pair");
+      });
+    document
+      .getElementById(PREVIEW_PANEL_SWAP_RUN_ID)
+      .addEventListener("click", runSwapTargetFromInput);
+    swapInput?.addEventListener("keydown", (event) => {
+      if (event.key === "Enter") {
+        runSwapTargetFromInput();
+      }
+    });
+    document
+      .getElementById(PREVIEW_PANEL_SWAP_PREV_ID)
+      .addEventListener("click", () => {
+        syncSelectionFromPairInput();
+        postPreviewOrderCommand("swap_prev");
+      });
+    document
+      .getElementById(PREVIEW_PANEL_SWAP_NEXT_ID)
+      .addEventListener("click", () => {
+        syncSelectionFromPairInput();
+        postPreviewOrderCommand("swap_next");
+      });
+    document
+      .getElementById(PREVIEW_PANEL_SAVE_ID)
+      .addEventListener("click", () => postPreviewOrderCommand("save"));
+    document
+      .getElementById(PREVIEW_PANEL_RESET_ID)
+      .addEventListener("click", () =>
+        postPreviewOrderCommand("reset_default_order"),
+      );
+    document
+      .getElementById(PREVIEW_PANEL_DELETE_ID)
+      .addEventListener("click", () =>
+        postPreviewOrderCommand("delete_saved_override"),
+      );
+    document
+      .getElementById(PREVIEW_PANEL_TOGGLE_ID)
+      .addEventListener("click", () => {
+        const collapsed =
+          document.getElementById(PREVIEW_PANEL_ID)?.dataset.collapsed === "1";
+        setPreviewPanelCollapsed(!collapsed, true);
+      });
+
+    initializePreviewPanelCollapsed();
+    initializePreviewPanelPosition(anchorEl);
+    initializePreviewPanelDrag();
+    updatePreviewControlPanelUi();
+    return panel;
+  }
+
   function recordMetaGuardRejection({ store, errs, difficulty, modelIssue }) {
     try {
       const now = Date.now();
@@ -1044,24 +1893,38 @@
     // v0.20 修复: 每次 tick 都检查是否在标注页面
     // 这样可以应对 SPA 导航和延迟加载
     if (!isLikelyLabelStudioPage()) {
+      if (wasOnAnnotationPageForActiveTime) {
+        closeActiveTimeSegment("PAGE_EXIT");
+      }
       // 非 LS 页面：清理UI但继续运行（以便后续页面切换时能恢复）
       const wrapper = document.getElementById(WRAPPER_ID);
       if (wrapper) wrapper.style.display = "none";
+      const panel = document.getElementById(PREVIEW_PANEL_ID);
+      if (panel) panel.style.display = "none";
       return;
     }
 
     if (!isLikelyAnnotationPage()) {
+      if (wasOnAnnotationPageForActiveTime) {
+        closeActiveTimeSegment("ANNOTATION_EXIT");
+      }
       // 在 LS 网站内，但不是标注页面：隐藏UI
       const wrapper = document.getElementById(WRAPPER_ID);
       if (wrapper) wrapper.style.display = "none";
+      const panel = document.getElementById(PREVIEW_PANEL_ID);
+      if (panel) panel.style.display = "none";
       status += "页面类型: 非标注页面\n";
       updateDebug(status);
       return;
     }
 
+    wasOnAnnotationPageForActiveTime = true;
+
     // 确保wrapper可见（可能之前被隐藏了）
     const existingWrapper = document.getElementById(WRAPPER_ID);
     if (existingWrapper) existingWrapper.style.display = "block";
+    const existingPanel = document.getElementById(PREVIEW_PANEL_ID);
+    if (existingPanel) existingPanel.style.display = "block";
 
     // v0.11 修复: 延迟 store 查找直到交互，以避免 React 干扰
     // let store = getStore(); // 从 tick 中移除
@@ -1078,6 +1941,7 @@
       lastTaskIdForOverlay = stateNow.taskId;
       lastAnnotationIdForOverlay = stateNow.annId;
       clearOverlay();
+      resetPreviewControlPanelState("任务已切换，请重新刷新 3D 视图");
     }
 
     const img = findMainImage();
@@ -1139,6 +2003,8 @@
           "width: 100%; height: 400px; border: none; background: #000;";
         wrapper.appendChild(iframe);
       }
+
+      ensurePreviewControlPanel(iframe);
 
       // 更新 URL
       if (url && iframe.dataset.src !== url) {
@@ -1203,8 +2069,6 @@
 
           // v0.15 修复: 分离关键点和多边形
           const keypoints = [];
-          const polyPoints = [];
-
           results.forEach((r, idx) => {
             // v0.10 修复: 优先检查 r.area
             let source = r;
@@ -1237,81 +2101,21 @@
                 keypoints.push({ x: px, y: py, pctX: x, pctY: y });
               }
             }
-            // 2. 多边形 (墙面/表面)
-            // 兼容: polygonlabels, polygonregion
-            else if (type === "polygonlabels" || type === "polygonregion") {
-              let pts = [];
-              if (val.points) pts = val.points;
-              else if (val.value && val.value.points) pts = val.value.points;
-
-              if (pts && pts.length > 0) {
-                // 解析点
-                const parsedPts = pts
-                  .map((pt) => {
-                    if (Array.isArray(pt)) return { x: pt[0], y: pt[1] };
-                    if (typeof pt === "object" && pt !== null)
-                      return { x: pt.x, y: pt.y };
-                    return null;
-                  })
-                  .filter((p) => p);
-
-                // 将所有点添加到 polyPoints (转换为像素)
-                parsedPts.forEach((p) => {
-                  polyPoints.push({ x: (p.x * W) / 100, y: (p.y * H) / 100 });
-                });
-              }
-            }
-            // 3. 矩形
-            // 兼容: rectanglelabels, rectangleregion
-            else if (type === "rectanglelabels" || type === "rectangleregion") {
-              let x, y, w, h;
-              const src = val.value || val;
-              x = src.x;
-              y = src.y;
-              w = src.width;
-              h = src.height;
-
-              if ([x, y, w, h].every((v) => typeof v === "number")) {
-                const corners = [
-                  { x: x, y: y },
-                  { x: x + w, y: y },
-                  { x: x + w, y: y + h },
-                  { x: x, y: y + h },
-                ];
-                corners.forEach((pt) => {
-                  keypoints.push({
-                    x: (pt.x * W) / 100,
-                    y: (pt.y * H) / 100,
-                    pctX: pt.x,
-                    pctY: pt.y,
-                  });
-                });
-              }
-            }
           });
 
           // 决策: 优先使用关键点
           if (keypoints.length > 0) {
             console.log("HoHoNet: 使用关键点进行 3D 几何构建");
             points.push(...keypoints);
-          } else if (polyPoints.length > 0) {
-            console.log("HoHoNet: 未找到关键点，回退到多边形");
-            // v0.16 修复: 如果回退到密集多边形则警告用户
-            if (polyPoints.length > 20) {
-              alert(
-                "警告: 未找到 'Corner' (角点)！正在使用密集的墙面线条进行 3D 视图，这可能会导致显示变形。\n\n请确保您的标注中存在 'Corner' 点。",
-              );
-            }
-            points.push(...polyPoints);
           } else {
-            alert("未找到点！请绘制关键点、多边形或矩形。");
+            alert("未找到 Corner 点！请绘制关键点。");
             return;
           }
 
           console.log("HoHoNet: 原始点:", points);
 
           points.sort((a, b) => a.x - b.x);
-          const paired = [];
+          const pairedDefault = [];
           const used = new Array(points.length).fill(false);
           const threshold = W * 0.05;
 
@@ -1333,7 +2137,7 @@
             if (bestJ !== -1) {
               used[i] = true;
               used[bestJ] = true;
-              paired.push({
+              pairedDefault.push({
                 x: (points[i].x + points[bestJ].x) / 2,
                 y_ceiling: Math.min(points[i].y, points[bestJ].y),
                 y_floor: Math.max(points[i].y, points[bestJ].y),
@@ -1342,58 +2146,51 @@
             }
           }
 
-          console.log("HoHoNet: 配对角点:", paired);
+          const previewTaskKey = getPreviewOverrideTaskKey();
+          const legacyPreviewTaskKey = getLegacyPreviewOverrideTaskKey();
+          const previewSignature = buildPreviewSignature(pairedDefault);
+          const identityOrder = getIdentityOrder(pairedDefault.length);
+          const storedOverride =
+            loadPreviewOrderOverride(previewTaskKey) ||
+            loadPreviewOrderOverride(legacyPreviewTaskKey);
+          let previewOrderActive = false;
+          let previewOrder = identityOrder;
+          let pairedForPreview = pairedDefault.slice();
 
-          // --- 2D 覆盖层逻辑 (修复: 缩放/平移后不偏移 + 隐藏状态持久) ---
-          try {
-            const img = findMainImage();
-            if (img) {
-              const overlay = ensureOverlay(img);
-              // 清空旧标签
-              overlay.innerHTML = "";
-
-              const visible = getLabelsVisible();
-              overlay.style.display = visible ? "block" : "none";
-
-              // 同步按钮状态（不要在刷新时强制显示）
-              const tBtn = document.getElementById(TOGGLE_BTN_ID);
-              if (tBtn) applyToggleBtnState(tBtn, visible);
-
-              const rect = positionOverlayToImage(img, overlay);
-
-              paired.forEach((pair, idx) => {
-                const label = (idx + 1).toString();
-                pair.originalPoints.forEach((p) => {
-                  if (p.pctX !== undefined && p.pctY !== undefined) {
-                    const badge = document.createElement("div");
-                    badge.innerText = label;
-                    badge.dataset.pctx = String(p.pctX);
-                    badge.dataset.pcty = String(p.pctY);
-                    badge.style.cssText = `
-                      position: absolute;
-                      transform: translate(-50%, -150%);
-                      background: rgba(255, 255, 0, 0.9);
-                      color: black;
-                      font-weight: bold;
-                      padding: 2px 6px;
-                      border-radius: 4px;
-                      font-size: 12px;
-                      border: 1px solid black;
-                      box-shadow: 0 2px 4px rgba(0,0,0,0.5);
-                    `;
-                    overlay.appendChild(badge);
-                  }
-                });
-              });
-
-              // 初次定位一次
-              positionOverlayBadges(overlay, rect);
+          if (
+            storedOverride &&
+            storedOverride.signature === previewSignature &&
+            storedOverride.order
+          ) {
+            const applied = applyPreviewOrder(pairedDefault, storedOverride.order);
+            if (applied.order) {
+              previewOrderActive = true;
+              previewOrder = applied.order;
+              pairedForPreview = applied.corners;
             }
-          } catch (e) {
-            console.error("HoHoNet: 覆盖层错误", e);
           }
 
-          if (paired.length === 0) {
+          applyPreviewRuntimeFromLayout(
+            previewTaskKey,
+            previewSignature,
+            pairedDefault,
+          );
+
+          console.log("HoHoNet: paired default:", pairedDefault);
+          console.log("HoHoNet: preview order state:", {
+            previewTaskKey,
+            previewSignature,
+            previewOrderActive,
+            previewOrder,
+          });
+          const paired = pairedForPreview;
+
+          console.log("HoHoNet: 配对角点:", paired);
+
+          // --- 2D 覆盖层逻辑：按当前预览顺序重绘标签 ---
+          renderPreviewOverlayPairs(pairedForPreview);
+
+          if (pairedDefault.length === 0) {
             alert(
               `找到 ${points.length} 个点，但无法配对任何垂直边！请尝试绘制更直的垂直线。`,
             );
@@ -1418,10 +2215,15 @@
           iframe.contentWindow.postMessage(
             {
               type: "update_layout",
-              corners: paired,
+              corners: pairedForPreview,
+              baseCorners: pairedDefault,
               width: W,
               height: H,
               imageUrl: textureUrlFinal,
+              preserveOrder: true,
+              previewOrderActive,
+              previewOrder,
+              previewSignature,
             },
             "*",
           );
@@ -1468,10 +2270,203 @@
 
   // v0.21: cumulative seconds per task within same session (fix A->B->A undercount)
   const taskCumulativeSeconds = new Map();
+  const ACTIVE_TIME_METADATA_KEYS = [
+    "taskId",
+    "projectId",
+    "projectName",
+    "annotatorId",
+  ];
+  const lastKnownActiveTimeMetadata = {
+    taskId: null,
+    projectId: null,
+    projectName: null,
+    annotatorId: null,
+    updatedAt: 0,
+  };
 
   let isPageVisible = true;
   let pageHiddenTime = null;
   const PAGE_HIDDEN_THRESHOLD = 6 * 1000; // 页面被切出超过6秒后才停止计时（可调整此参数）
+  let wasOnAnnotationPageForActiveTime = false;
+
+  function resetCurrentActiveTimeSegment() {
+    activeSeconds = 0;
+    lastActivityTime = 0;
+  }
+
+  function hasActiveTimeSegmentToReport(
+    taskId = currentTaskId,
+    fragmentSeconds = activeSeconds,
+  ) {
+    return (
+      Number(fragmentSeconds) > 0 &&
+      taskId !== undefined &&
+      taskId !== null &&
+      String(taskId) !== "unknown" &&
+      String(taskId).length > 0
+    );
+  }
+
+  function isKnownActiveTimeMetadataValue(value) {
+    const normalized = String(value ?? "").trim();
+    return normalized.length > 0 && normalized !== "unknown";
+  }
+
+  function cacheLastKnownActiveTimeMetadata(partial = {}) {
+    let changed = false;
+    for (const key of ACTIVE_TIME_METADATA_KEYS) {
+      if (!isKnownActiveTimeMetadataValue(partial[key])) continue;
+      const normalized = String(partial[key]).trim();
+      if (lastKnownActiveTimeMetadata[key] !== normalized) {
+        lastKnownActiveTimeMetadata[key] = normalized;
+        changed = true;
+      }
+    }
+    if (changed) {
+      lastKnownActiveTimeMetadata.updatedAt = Date.now();
+    }
+    return lastKnownActiveTimeMetadata;
+  }
+
+  function captureCurrentActiveTimeMetadata(preferredTaskId = null) {
+    const taskId =
+      preferredTaskId !== null && preferredTaskId !== undefined
+        ? preferredTaskId
+        : currentTaskId || getTaskId();
+    return {
+      taskId,
+      projectId: getProjectId(),
+      projectName: getProjectName(),
+      annotatorId: getAnnotatorId(),
+    };
+  }
+
+  function resolveActiveTimeMetadata(preferredTaskId = null) {
+    const live = captureCurrentActiveTimeMetadata(preferredTaskId);
+    cacheLastKnownActiveTimeMetadata(live);
+
+    const resolvedProjectId = isKnownActiveTimeMetadataValue(live.projectId)
+      ? String(live.projectId).trim()
+      : lastKnownActiveTimeMetadata.projectId || "unknown";
+
+    return {
+      taskId: isKnownActiveTimeMetadataValue(live.taskId)
+        ? String(live.taskId).trim()
+        : lastKnownActiveTimeMetadata.taskId || "unknown",
+      projectId: resolvedProjectId,
+      projectName: isKnownActiveTimeMetadataValue(live.projectName)
+        ? String(live.projectName).trim()
+        : resolvedProjectId !== "unknown" &&
+            lastKnownActiveTimeMetadata.projectId === resolvedProjectId &&
+            isKnownActiveTimeMetadataValue(lastKnownActiveTimeMetadata.projectName)
+          ? lastKnownActiveTimeMetadata.projectName
+          : "unknown",
+      annotatorId: isKnownActiveTimeMetadataValue(live.annotatorId)
+        ? String(live.annotatorId).trim()
+        : lastKnownActiveTimeMetadata.annotatorId || "unknown",
+    };
+  }
+
+  function buildActiveTimeReport(
+    forceTaskId = null,
+    forcedActiveSeconds = null,
+  ) {
+    // fragment 表示“当前连续活动片段”，不是“自上次网络上报以来的增量”。
+    const metadata = resolveActiveTimeMetadata(forceTaskId);
+    const reportTaskId = metadata.taskId;
+    const currentFragment =
+      forcedActiveSeconds !== null ? forcedActiveSeconds : activeSeconds;
+
+    if (!hasActiveTimeSegmentToReport(reportTaskId, currentFragment)) {
+      return null;
+    }
+
+    const previousCumulative = taskCumulativeSeconds.get(reportTaskId) || 0;
+    const reportSeconds = previousCumulative + currentFragment;
+    if (reportSeconds <= 0) return null;
+
+    return {
+      reportTaskId,
+      projectId: metadata.projectId,
+      projectName: metadata.projectName,
+      annotatorId: metadata.annotatorId,
+      currentFragment,
+      reportSeconds,
+      pageType:
+        wasOnAnnotationPageForActiveTime || isLikelyAnnotationPage()
+          ? "annotation"
+          : "other",
+    };
+  }
+
+  async function postActiveTimeReport(
+    report,
+    { manualFlush = false, keepalive = false, logPrefix = "LOG" } = {},
+  ) {
+    if (!report) return null;
+
+    const tokenNow = getLogToken();
+    try {
+      const response = await fetch(HOHONET_LOG_TIME_URL(), {
+        method: "POST",
+        keepalive,
+        headers: {
+          "Content-Type": "application/json",
+          ...(tokenNow ? { "X-HOHONET-TOKEN": tokenNow } : {}),
+        },
+        body: JSON.stringify({
+          task_id: report.reportTaskId,
+          project_id: report.projectId,
+          project_name: report.projectName,
+          annotator_id: report.annotatorId,
+          session_id: sessionId,
+          active_seconds: report.reportSeconds,
+          active_seconds_fragment: report.currentFragment,
+          timestamp: Date.now(),
+          is_manual_flush: manualFlush,
+          script_version: SCRIPT_VERSION,
+          page_type: report.pageType,
+        }),
+      });
+      if (!response.ok) {
+        console.warn(
+          `[${logPrefix}] 上报异常: ${response.status} ${response.statusText}`,
+        );
+        if (response.status === 403) {
+          console.warn(
+            `[${logPrefix}] 403 Forbidden. helperBase=${getHelperBaseUrl()} token=${maskToken(tokenNow)} (len=${String(tokenNow || "").length})`,
+          );
+        }
+      } else if (manualFlush) {
+        console.log(
+          `[${logPrefix}] 已上报任务 ${report.reportTaskId} 的 ${report.reportSeconds}s 活动时间`,
+        );
+      }
+      return response;
+    } catch (e) {
+      console.warn(`[${logPrefix}] 上报失败:`, e);
+      return null;
+    }
+  }
+
+  function closeActiveTimeSegment(
+    reason = "PAGE_EXIT",
+    { keepalive = false } = {},
+  ) {
+    const report = buildActiveTimeReport(currentTaskId || getTaskId(), activeSeconds);
+    resetCurrentActiveTimeSegment();
+    currentTaskId = null;
+    wasOnAnnotationPageForActiveTime = false;
+
+    if (!report) return;
+
+    taskCumulativeSeconds.set(report.reportTaskId, report.reportSeconds);
+    void postActiveTimeReport(report, {
+      manualFlush: true,
+      keepalive,
+      logPrefix: reason,
+    });
+  }
 
   // 检测页面可见性（仅在隐藏超过阈值时停止计时，允许短暂切换）
   document.addEventListener("visibilitychange", () => {
@@ -1615,6 +2610,38 @@
 
   // 【关键修复】立即上报（flush）当前任务的累积时间
   // v0.21: 支持累积秒数 (taskCumulativeSeconds + 当前片段)
+  window.addEventListener("message", (event) => {
+    const iframe = document.getElementById(IFRAME_ID);
+    if (!iframe || event.source !== iframe.contentWindow) return;
+
+    const data = event.data;
+    if (!data || typeof data !== "object") return;
+
+    if (data.type === "hohonet_preview_order_state") {
+      handlePreviewOrderStateMessage(data);
+      return;
+    }
+
+    if (data.type === "hohonet_preview_order_save") {
+      handlePreviewOrderSaveMessage(iframe, data);
+      return;
+    }
+
+    if (data.type === "hohonet_preview_order_delete_saved") {
+      handlePreviewOrderDeleteMessage(iframe, "delete_saved");
+      return;
+    }
+
+    if (data.type === "hohonet_preview_order_clear") {
+      // Backward-compatible alias kept for older iframe builds.
+      handlePreviewOrderDeleteMessage(iframe, "clear");
+    }
+  });
+
+  window.addEventListener("pagehide", () => {
+    closeActiveTimeSegment("PAGEHIDE", { keepalive: true });
+  });
+
   async function flushActiveTime(
     forceTaskId = null,
     forcedActiveSeconds = null,
@@ -1623,65 +2650,16 @@
       return;
     }
 
-    const reportTaskId = forceTaskId || getTaskId();
-    const projectId = getProjectId();
-    const projectName = getProjectName();
-    const annotatorId = getAnnotatorId();
-
-    // 当前片段的活跃秒数
-    const currentFragment =
-      forcedActiveSeconds !== null ? forcedActiveSeconds : activeSeconds;
-
-    // v0.21: 累积秒数 = 之前已 flush 的片段总和 + 当前片段
-    const previousCumulative = taskCumulativeSeconds.get(reportTaskId) || 0;
-    const reportSeconds = previousCumulative + currentFragment;
-
-    if (reportSeconds <= 0 || reportTaskId === "unknown") {
+    const report = buildActiveTimeReport(forceTaskId, forcedActiveSeconds);
+    if (!report) {
       return;
     }
 
-    // 更新累积记录
-    taskCumulativeSeconds.set(reportTaskId, reportSeconds);
-
-    try {
-      const tokenNow = getLogToken();
-      const response = await fetch(HOHONET_LOG_TIME_URL(), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(tokenNow ? { "X-HOHONET-TOKEN": tokenNow } : {}),
-        },
-        body: JSON.stringify({
-          task_id: reportTaskId,
-          project_id: projectId,
-          project_name: projectName,
-          annotator_id: annotatorId,
-          session_id: sessionId,
-          active_seconds: reportSeconds,
-          active_seconds_fragment: currentFragment, // v0.21: 仅当前片段
-          timestamp: Date.now(),
-          is_manual_flush: true,
-          script_version: SCRIPT_VERSION, // v0.21: 审计追溯
-          page_type: isLikelyAnnotationPage() ? "annotation" : "other", // v0.21
-        }),
-      });
-      if (!response.ok) {
-        console.warn(
-          `[FLUSH] 上报异常: ${response.status} ${response.statusText}`,
-        );
-        if (response.status === 403) {
-          console.warn(
-            `[FLUSH] 403 Forbidden. helperBase=${getHelperBaseUrl()} token=${maskToken(tokenNow)} (len=${String(tokenNow || "").length})`,
-          );
-        }
-      } else {
-        console.log(
-          `[FLUSH] 已立即上报任务 ${reportTaskId} 的 ${reportSeconds}s 活动时间`,
-        );
-      }
-    } catch (e) {
-      console.warn(`[FLUSH] 上报失败:`, e);
-    }
+    taskCumulativeSeconds.set(report.reportTaskId, report.reportSeconds);
+    await postActiveTimeReport(report, {
+      manualFlush: true,
+      logPrefix: "FLUSH",
+    });
   }
 
   // 会话 ID (每个标签页) 用于区分并发客户端
@@ -1715,6 +2693,8 @@
     if (taskId === "unknown") {
       return;
     }
+
+    cacheLastKnownActiveTimeMetadata(captureCurrentActiveTimeMetadata(taskId));
 
     // 检测到任务切换：立即flush前一个任务
     if (
@@ -1750,8 +2730,6 @@
 
     const taskId = getTaskId();
     const projectId = getProjectId();
-    const projectName = getProjectName();
-    const annotatorId = getAnnotatorId();
 
     // 配置:
     // - ENABLE_LOGGING: 总开关。为 false 时，脚本不会发送日志。
@@ -1776,41 +2754,12 @@
     // 周期性上报当前任务的累积时间
     // v0.21: active_seconds 改为累积值 (之前片段 + 当前片段)
     if (activeSeconds > 0 && taskId !== "unknown") {
-      const previousCumulative = taskCumulativeSeconds.get(taskId) || 0;
-      const totalSeconds = previousCumulative + activeSeconds;
-      const tokenNow = getLogToken();
-      fetch(HOHONET_LOG_TIME_URL(), {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          ...(tokenNow ? { "X-HOHONET-TOKEN": tokenNow } : {}),
-        },
-        body: JSON.stringify({
-          task_id: taskId,
-          project_id: projectId,
-          project_name: projectName,
-          annotator_id: annotatorId,
-          session_id: sessionId,
-          active_seconds: totalSeconds,
-          active_seconds_fragment: activeSeconds, // v0.21: 仅当前片段
-          timestamp: Date.now(),
-          is_manual_flush: false,
-          script_version: SCRIPT_VERSION, // v0.21: 审计追溯
-          page_type: "annotation", // v0.21: 走到这里一定是标注页
-        }),
-      })
-        .then((r) => {
-          if (!r.ok) {
-            console.warn(`[LOG] 上报异常: ${r.status} ${r.statusText}`);
-            if (r.status === 403) {
-              console.warn(
-                `[LOG] 403 Forbidden. helperBase=${getHelperBaseUrl()} token=${maskToken(tokenNow)} (len=${String(tokenNow || "").length})`,
-              );
-            }
-          }
-          return r;
-        })
-        .catch((e) => console.warn("Log failed", e));
+      const report = buildActiveTimeReport(taskId, activeSeconds);
+      if (!report) return;
+      void postActiveTimeReport(report, {
+        manualFlush: false,
+        logPrefix: "LOG",
+      });
     }
   }, 30000);
 
@@ -1848,6 +2797,13 @@
     subtree: true,
   });
 
+  window.addEventListener("resize", () => {
+    const panel = document.getElementById(PREVIEW_PANEL_ID);
+    if (!panel || panel.style.display === "none") return;
+    const rect = panel.getBoundingClientRect();
+    applyPreviewPanelPosition(rect.left, rect.top, false);
+  });
+
   // 提交前元标签合规拦截（best-effort）：阻止空选/互斥冲突进入后端。
   installMetaSubmitGuard();
 
@@ -1862,6 +2818,7 @@
       lastTaskIdForOverlay = null;
       lastAnnotationIdForOverlay = null;
       clearOverlay();
+      resetPreviewControlPanelState("URL 已变化，请重新刷新 3D 视图");
       // 延迟执行以确保新页面DOM已加载
       setTimeout(tick, 500);
     }

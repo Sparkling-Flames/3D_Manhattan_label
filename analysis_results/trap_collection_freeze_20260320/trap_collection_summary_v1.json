@@ -1,0 +1,39 @@
+{
+  "freeze_name": "trap_collection_candidate_freeze_v1",
+  "source_root": "trap集",
+  "layout_coord_contract": "hohonet_layout_txt_pixel_coords_point_pairs_or_x_yceil_yfloor@1024x512",
+  "manual": {
+    "collected_candidate_count": 26,
+    "target_anchor_min": 20,
+    "target_anchor_max": 22,
+    "collection_count_satisfies_anchor_target": true,
+    "subclass_counts": {
+      "拼接缝及拉伸": 4,
+      "玻璃": 6,
+      "纹理弱 纯色墙": 2,
+      "遮挡明显": 7,
+      "遮罩": 2,
+      "非常简单": 5
+    },
+    "priority_annotated_count": 8,
+    "notes": [
+      "This reflects the currently collected manual candidate pool in trap集/manual.",
+      "Collection count satisfying the thesis target does not imply that expert annotation or Stage 1 joinable binding is already complete."
+    ]
+  },
+  "semi": {
+    "acceptable_seed_count": 6,
+    "control_target": 6,
+    "acceptable_seed_count_satisfies_control_target": true,
+    "default_synthetic_family_count": 4,
+    "synthetic_candidate_count": 24,
+    "synthetic_status_counts": {
+      "success": 24
+    },
+    "notes": [
+      "The acceptable seed pool is candidate-only and not yet a thesis-facing final control freeze.",
+      "The layout txt parser supports the current trap collection's pixel-coordinate point pairs and the older x y_ceil y_floor format under the same 1024x512 contract.",
+      "The synthetic bank is generated from acceptable seeds as a candidate bank, not a final Stage 1 semi selection freeze."
+    ]
+  }
+}

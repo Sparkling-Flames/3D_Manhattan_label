@@ -1,0 +1,28 @@
+{
+  "summary_name": "final_gold_summary_v1",
+  "source_truth_layer_dir": "truth_layer_extraction_20260324",
+  "source_truth_layer_status": "working_consensus_extraction_ready_not_final_gold",
+  "export_snapshot": "project-20-at-2026-03-25-01-17-926f4b7f.json",
+  "final_gold_source": "user_verified_project20_export",
+  "adjudication_status": "final_adjudicated_gold",
+  "n_records_total": 58,
+  "n_in_scope": 48,
+  "n_oos": 10,
+  "n_geometry_gold_ready": 48,
+  "n_scope_gold_ready": 58,
+  "n_low_priority": 8,
+  "n_special_review": 8,
+  "n_poly_residue": 4,
+  "n_missing_scope": 0,
+  "n_missing_corners_for_in_scope": 0,
+  "difficulty_model_issue_promoted_to_final_gold": false,
+  "legacy_txt_authoritative": false,
+  "poly_authoritative": false,
+  "ls_canonical_geometry_authoritative": true,
+  "summary_status": "final_gold_materialized_from_verified_project20_export",
+  "notes": [
+    "This layer upgrades the verified latest project-20 trap export into final adjudicated gold for Stage 1 rebinding.",
+    "Only scope and LS canonical corner geometry are promoted into the final-gold contract.",
+    "Difficulty and model_issue remain available in the underlying export/truth layer, but are not treated as final-gold adjudication fields here."
+  ]
+}

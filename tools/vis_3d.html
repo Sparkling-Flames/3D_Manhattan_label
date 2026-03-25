@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <title>3D Layout Visualization</title>
+    <title>3D 布局预览</title>
     <style>
       body {
         margin: 0;
@@ -11,29 +11,179 @@
         color: white;
         font-family: sans-serif;
       }
+
       #info {
         position: absolute;
         top: 10px;
         left: 10px;
         pointer-events: none;
-        background: rgba(0, 0, 0, 0.5);
-        padding: 5px;
+        background: rgba(0, 0, 0, 0.55);
+        padding: 6px 10px;
         border-radius: 4px;
+        z-index: 20;
+      }
+
+      #controls {
+        position: absolute;
+        top: 12px;
+        left: 12px;
+        z-index: 30;
+        display: none !important;
+        flex-direction: column;
+        gap: 0;
+        width: 248px;
+        background: rgba(0, 0, 0, 0.62);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 8px;
+        overflow: hidden;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28);
+      }
+
+      #controls.collapsed #controls-body {
+        display: none;
+      }
+
+      #controls-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 8px;
+        padding: 8px 10px;
+        background: rgba(255, 255, 255, 0.06);
+        cursor: move;
+        user-select: none;
+      }
+
+      #controls-title {
+        font-size: 12px;
+        font-weight: 700;
+        color: #f4f4f4;
+      }
+
+      #controls-header .mini-btn {
+        appearance: none;
+        border: 0;
+        border-radius: 6px;
+        padding: 4px 8px;
+        color: white;
+        background: rgba(255, 255, 255, 0.14);
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      #controls-body {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        padding: 8px;
+      }
+
+      #controls .row {
+        display: flex;
+        gap: 5px;
+        align-items: center;
+        flex-wrap: wrap;
+      }
+
+      #controls .status {
+        font-size: 11px;
+        color: #ddd;
+        line-height: 1.35;
+      }
+
+      #controls .hint {
+        color: #c8d5ff;
+      }
+
+      #controls .field-label {
+        font-size: 11px;
+        color: #ddd;
+      }
+
+      #controls input[type="number"] {
+        width: 58px;
+        padding: 4px 6px;
+        border-radius: 6px;
+        border: 1px solid rgba(255, 255, 255, 0.14);
+        background: rgba(255, 255, 255, 0.08);
+        color: white;
+        font-size: 11px;
+      }
+
+      #controls button {
+        appearance: none;
+        border: 0;
+        border-radius: 6px;
+        padding: 5px 9px;
+        color: white;
+        background: #2f5cff;
+        cursor: pointer;
+        font-size: 11px;
+        font-weight: 600;
+      }
+
+      #controls button.secondary {
+        background: #555;
+      }
+
+      #controls button.warn {
+        background: #bd3e3e;
+      }
+
+      #controls button:disabled {
+        opacity: 0.45;
+        cursor: not-allowed;
       }
     </style>
-    <!-- Load Three.js from local file -->
     <script src="three.min.js"></script>
     <script src="OrbitControls.js"></script>
   </head>
   <body>
-    <div id="info">Status: Ready (Drag to Rotate, Scroll to Zoom)</div>
+    <div id="info">状态：就绪（拖动旋转，滚轮缩放）</div>
+    <div id="controls">
+      <div id="controls-header">
+        <div id="controls-title">高级</div>
+        <button id="toggle-panel" class="mini-btn" type="button">收起</button>
+      </div>
+      <div id="controls-body">
+        <div class="status hint">只影响右侧 3D 预览，不会修改主标注数据。</div>
+        <div class="status hint">先定位当前对，再用“交换到第 N 对”直接调整顺序。</div>
+        <div class="status" id="pair-status">当前对：-- / --</div>
+        <div class="row">
+          <span class="field-label">定位到</span>
+          <input id="pair-input" type="number" min="1" step="1" value="1" />
+          <span class="field-label">/ <span id="pair-total">--</span></span>
+        </div>
+        <div class="row">
+          <span class="field-label">交换到</span>
+          <input id="swap-target-input" type="number" min="1" step="1" value="1" />
+          <span class="field-label">对</span>
+          <button id="swap-target-run" class="secondary">执行交换</button>
+        </div>
+        <div class="row">
+          <button id="pair-prev" class="secondary">上一对</button>
+          <button id="pair-next" class="secondary">下一对</button>
+        </div>
+        <div class="row">
+          <button id="swap-prev" class="secondary">与前交换</button>
+          <button id="swap-next" class="secondary">与后交换</button>
+        </div>
+        <div class="row">
+          <button id="save-order">保存</button>
+          <button id="clear-order" class="warn">清除</button>
+        </div>
+        <div class="status" id="override-status">预览顺序覆盖：未启用</div>
+      </div>
+    </div>
     <script>
-      // --- Three.js Setup ---
+      const PANEL_POSITION_KEY = "hohonet_preview_panel_position_v1";
+      const PANEL_COLLAPSED_KEY = "hohonet_preview_panel_collapsed_v1";
       const scene = new THREE.Scene();
       scene.background = new THREE.Color(0x111111);
 
       const camera = new THREE.PerspectiveCamera(
-        60, // FOV
+        60,
         window.innerWidth / window.innerHeight,
         0.1,
         1000
@@ -43,7 +193,6 @@
       renderer.setSize(window.innerWidth, window.innerHeight);
       document.body.appendChild(renderer.domElement);
 
-      // Add OrbitControls
       const controls = new THREE.OrbitControls(camera, renderer.domElement);
       controls.enableDamping = true;
       controls.dampingFactor = 0.05;
@@ -51,12 +200,11 @@
       controls.minDistance = 0.1;
       controls.maxDistance = 50;
 
-      // Helpers
-      // Grid and axes helpers (hidden by default). Use URL param `show_axes=1` to enable.
       const gridHelper = new THREE.GridHelper(20, 20, 0x444444, 0x222222);
-      gridHelper.position.y = -1.6; // Align grid with floor (y=-1.6)
+      gridHelper.position.y = -1.6;
       gridHelper.visible = false;
       scene.add(gridHelper);
+
       const axesHelper = new THREE.AxesHelper(2);
       axesHelper.visible = false;
       scene.add(axesHelper);
@@ -65,11 +213,30 @@
       let W = 1024;
       let H = 512;
       let currentTexture = null;
+      let currentTextureUrl = null;
       const textureLoader = new THREE.TextureLoader();
 
-      // --- Shader Material for Equirectangular Projection ---
-      // This ensures the texture is projected correctly onto the floor/ceiling/walls
-      // regardless of the geometry shape.
+      const previewState = {
+        baseCorners: [],
+        currentOrder: [],
+        savedOrder: null,
+        currentSignature: "",
+        selectedPairIndex: 0,
+        imageUrl: null,
+        savedOverrideActive: false,
+      };
+      const previewInputState = {
+        pairDirty: false,
+        swapDirty: false,
+        swapInitialized: false,
+      };
+
+      function resetPreviewInputState() {
+        previewInputState.pairDirty = false;
+        previewInputState.swapDirty = false;
+        previewInputState.swapInitialized = false;
+      }
+
       const panoMaterial = new THREE.ShaderMaterial({
         uniforms: {
           map: { value: null },
@@ -88,11 +255,8 @@
 
           void main() {
             vec3 dir = normalize(vWorldPosition);
-            // Convert to spherical coordinates
-            // atan(x, -z) matches the standard pano orientation
             float u = atan(dir.x, -dir.z) / (2.0 * PI) + 0.5;
             float v = asin(dir.y) / PI + 0.5;
-            
             gl_FragColor = texture2D(map, vec2(u, v));
           }
         `,
@@ -100,7 +264,156 @@
       });
 
       function updateStatus(msg) {
-        document.getElementById("info").innerText = "Status: " + msg;
+        document.getElementById("info").innerText = "状态：" + msg;
+      }
+
+      function updateControlPanelStatus(msg) {
+        const node = document.getElementById("override-status");
+        if (node) {
+          node.innerText = msg;
+        }
+      }
+
+      function postPreviewState(statusText) {
+        const length = previewState.baseCorners.length;
+        window.parent.postMessage(
+          {
+            type: "hohonet_preview_order_state",
+            hasData: length > 0,
+            pairCount: length,
+            selectedPairIndex: length > 0 ? previewState.selectedPairIndex : 0,
+            selectedPairNumber:
+              length > 0 ? previewState.selectedPairIndex + 1 : 0,
+            savedOverrideActive: !!previewState.savedOverrideActive,
+            previewOrder: Array.isArray(previewState.currentOrder)
+              ? previewState.currentOrder.slice()
+              : [],
+            previewSignature: previewState.currentSignature || "",
+            statusText: statusText || "",
+          },
+          "*"
+        );
+      }
+
+      function loadPanelPosition() {
+        try {
+          const raw = window.localStorage.getItem(PANEL_POSITION_KEY);
+          if (!raw) return null;
+          const parsed = JSON.parse(raw);
+          if (
+            !parsed ||
+            typeof parsed !== "object" ||
+            !Number.isFinite(parsed.left) ||
+            !Number.isFinite(parsed.top)
+          ) {
+            return null;
+          }
+          return parsed;
+        } catch (error) {
+          return null;
+        }
+      }
+
+      function savePanelPosition(left, top) {
+        try {
+          window.localStorage.setItem(
+            PANEL_POSITION_KEY,
+            JSON.stringify({ left, top })
+          );
+        } catch (error) {}
+      }
+
+      function clampPanelPosition(left, top) {
+        const panel = document.getElementById("controls");
+        const panelWidth = panel ? panel.offsetWidth || 248 : 248;
+        const panelHeight = panel ? panel.offsetHeight || 180 : 180;
+        const maxLeft = Math.max(8, window.innerWidth - panelWidth - 8);
+        const maxTop = Math.max(8, window.innerHeight - panelHeight - 8);
+        return {
+          left: Math.min(Math.max(8, left), maxLeft),
+          top: Math.min(Math.max(8, top), maxTop),
+        };
+      }
+
+      function applyPanelPosition(left, top, persist = false) {
+        const panel = document.getElementById("controls");
+        if (!panel) return;
+        const clamped = clampPanelPosition(left, top);
+        panel.style.left = `${clamped.left}px`;
+        panel.style.top = `${clamped.top}px`;
+        if (persist) savePanelPosition(clamped.left, clamped.top);
+      }
+
+      function initializePanelPosition() {
+        const stored = loadPanelPosition();
+        if (stored) {
+          applyPanelPosition(stored.left, stored.top, false);
+          return;
+        }
+        const panel = document.getElementById("controls");
+        const defaultLeft = Math.max(12, window.innerWidth - (panel.offsetWidth || 248) - 12);
+        const defaultTop = 12;
+        applyPanelPosition(defaultLeft, defaultTop, false);
+      }
+
+      function setPanelCollapsed(collapsed, persist = true) {
+        const panel = document.getElementById("controls");
+        const toggleBtn = document.getElementById("toggle-panel");
+        if (!panel || !toggleBtn) return;
+        panel.classList.toggle("collapsed", collapsed);
+        toggleBtn.innerText = collapsed ? "展开" : "收起";
+        if (persist) {
+          try {
+            window.localStorage.setItem(PANEL_COLLAPSED_KEY, collapsed ? "1" : "0");
+          } catch (error) {}
+        }
+      }
+
+      function initializePanelCollapseState() {
+        let collapsed = true;
+        try {
+          const stored = window.localStorage.getItem(PANEL_COLLAPSED_KEY);
+          collapsed = stored === null ? true : stored === "1";
+        } catch (error) {}
+        setPanelCollapsed(collapsed, false);
+      }
+
+      function initializePanelDrag() {
+        const panel = document.getElementById("controls");
+        const header = document.getElementById("controls-header");
+        if (!panel || !header) return;
+
+        let dragging = false;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        header.addEventListener("pointerdown", (event) => {
+          if (event.target.closest("button")) return;
+          dragging = true;
+          const rect = panel.getBoundingClientRect();
+          offsetX = event.clientX - rect.left;
+          offsetY = event.clientY - rect.top;
+          header.setPointerCapture(event.pointerId);
+          event.preventDefault();
+        });
+
+        header.addEventListener("pointermove", (event) => {
+          if (!dragging) return;
+          applyPanelPosition(event.clientX - offsetX, event.clientY - offsetY, false);
+        });
+
+        const stopDragging = (event) => {
+          if (!dragging) return;
+          dragging = false;
+          const rect = panel.getBoundingClientRect();
+          savePanelPosition(rect.left, rect.top);
+          if (event && header.hasPointerCapture(event.pointerId)) {
+            header.releasePointerCapture(event.pointerId);
+          }
+        };
+
+        header.addEventListener("pointerup", stopDragging);
+        header.addEventListener("pointercancel", stopDragging);
       }
 
       function makeTextSprite(message) {
@@ -110,16 +423,14 @@
         canvas.height = size;
         const context = canvas.getContext("2d");
 
-        // Circle background
         context.beginPath();
         context.arc(size / 2, size / 2, size / 2 - 2, 0, 2 * Math.PI, false);
-        context.fillStyle = "rgba(255, 255, 0, 1)"; // Yellow
+        context.fillStyle = "rgba(255, 255, 0, 1)";
         context.fill();
         context.lineWidth = 4;
         context.strokeStyle = "black";
         context.stroke();
 
-        // Text
         context.font = "bold 32px Arial";
         context.fillStyle = "black";
         context.textAlign = "center";
@@ -133,114 +444,549 @@
           depthTest: false,
         });
         const sprite = new THREE.Sprite(spriteMaterial);
-        sprite.scale.set(0.5, 0.5, 0.5); // 0.5m size
-        sprite.renderOrder = 999; // Ensure it renders on top
+        sprite.scale.set(0.5, 0.5, 0.5);
+        sprite.renderOrder = 999;
         return sprite;
       }
 
-      function drawLayout(corners, imageUrl) {
-        console.log("Drawing layout with corners:", corners);
-        meshObjects.forEach((o) => scene.remove(o));
-        meshObjects = [];
+      function cloneCorner(corner) {
+        return {
+          x: Number(corner.x),
+          y_ceiling: Number(corner.y_ceiling),
+          y_floor: Number(corner.y_floor),
+          originalPoints: Array.isArray(corner.originalPoints)
+            ? corner.originalPoints.map((point) => ({
+                x: Number(point.x),
+                y: Number(point.y),
+                pctX:
+                  point.pctX === undefined ? undefined : Number(point.pctX),
+                pctY:
+                  point.pctY === undefined ? undefined : Number(point.pctY),
+              }))
+            : [],
+        };
+      }
 
-        if (!corners || corners.length === 0) {
-          updateStatus("No corners to render");
+      function cloneCorners(corners) {
+        return Array.isArray(corners) ? corners.map(cloneCorner) : [];
+      }
+
+      function getIdentityOrder(length) {
+        return Array.from({ length }, (_, idx) => idx);
+      }
+
+      function normalizeOrder(order, length) {
+        if (!Array.isArray(order) || order.length !== length) return null;
+        const seen = new Set();
+        const normalized = [];
+        for (const rawIdx of order) {
+          const idx = Number(rawIdx);
+          if (!Number.isInteger(idx) || idx < 0 || idx >= length || seen.has(idx)) {
+            return null;
+          }
+          seen.add(idx);
+          normalized.push(idx);
+        }
+        return normalized;
+      }
+
+      function ordersEqual(a, b) {
+        if (!Array.isArray(a) || !Array.isArray(b) || a.length !== b.length) {
+          return false;
+        }
+        for (let i = 0; i < a.length; i += 1) {
+          if (Number(a[i]) !== Number(b[i])) return false;
+        }
+        return true;
+      }
+
+      function applyOrderToCorners(baseCorners, order) {
+        const normalized = normalizeOrder(order, baseCorners.length);
+        if (!normalized) return cloneCorners(baseCorners);
+        return normalized.map((idx) => cloneCorner(baseCorners[idx]));
+      }
+
+      function clampSelectedPairIndex() {
+        const length = previewState.baseCorners.length;
+        if (!length) {
+          previewState.selectedPairIndex = 0;
           return;
         }
+        previewState.selectedPairIndex = Math.max(
+          0,
+          Math.min(previewState.selectedPairIndex, length - 1)
+        );
+      }
 
-        // Load texture if provided
-        if (imageUrl) {
-          console.log("Loading texture from URL:", imageUrl);
-          textureLoader.load(
-            imageUrl,
-            (texture) => {
-              console.log("Texture loaded successfully");
-              currentTexture = texture;
-              currentTexture.minFilter = THREE.LinearFilter;
-              currentTexture.magFilter = THREE.LinearFilter;
+      function applyPreviewStateSnapshot({
+        baseCorners = [],
+        currentOrder = [],
+        savedOrder = null,
+        currentSignature = "",
+        imageUrl = null,
+        savedOverrideActive = false,
+        selectedPairIndex = 0,
+      } = {}) {
+        previewState.baseCorners = cloneCorners(baseCorners);
+        previewState.currentOrder = Array.isArray(currentOrder)
+          ? currentOrder.slice()
+          : [];
+        previewState.savedOrder = Array.isArray(savedOrder)
+          ? savedOrder.slice()
+          : null;
+        previewState.currentSignature = String(currentSignature || "");
+        previewState.imageUrl = imageUrl || null;
+        previewState.savedOverrideActive = !!savedOverrideActive;
+        previewState.selectedPairIndex = Number(selectedPairIndex) || 0;
+        resetPreviewInputState();
+      }
 
-              // Update shader uniform
-              panoMaterial.uniforms.map.value = currentTexture;
-              panoMaterial.needsUpdate = true;
+      function moveSelection(delta) {
+        const length = previewState.baseCorners.length;
+        if (!length || !Number.isFinite(delta) || delta === 0) {
+          updateControlState();
+          return;
+        }
+        previewState.selectedPairIndex = Math.max(
+          0,
+          Math.min(previewState.selectedPairIndex + delta, length - 1)
+        );
+        updateControlState();
+      }
 
-              renderGeometry(corners, true);
-            },
-            undefined,
-            (err) => {
-              console.error("Error loading texture:", err);
-              updateStatus("Error loading texture (CORS?): " + imageUrl);
-              renderGeometry(corners, false);
-            }
-          );
-        } else {
-          console.log("No texture URL provided");
-          renderGeometry(corners, false);
+      function renderCurrentPreview(message, options = {}) {
+        clampSelectedPairIndex();
+        const corners = applyOrderToCorners(
+          previewState.baseCorners,
+          previewState.currentOrder
+        );
+        drawLayout(corners, previewState.imageUrl, {
+          preserveOrder: true,
+          resetView: !!options.resetView,
+        });
+        updateControlState(message);
+      }
+
+      function updateControlState(message) {
+        const length = previewState.baseCorners.length;
+        clampSelectedPairIndex();
+        const identityOrder = getIdentityOrder(length);
+        const isDefaultPreview = ordersEqual(previewState.currentOrder, identityOrder);
+        const isSavedPreview =
+          previewState.savedOverrideActive &&
+          Array.isArray(previewState.savedOrder) &&
+          ordersEqual(previewState.currentOrder, previewState.savedOrder);
+
+        const pairStatus =
+          length > 0
+            ? `当前第 ${previewState.selectedPairIndex + 1} / ${length} 对`
+            : "当前第 -- / -- 对";
+        const pairStatusNode = document.getElementById("pair-status");
+        const pairTotalNode = document.getElementById("pair-total");
+        const pairInputNode = document.getElementById("pair-input");
+        if (pairStatusNode) pairStatusNode.innerText = pairStatus;
+        if (pairTotalNode) {
+          pairTotalNode.innerText = length > 0 ? String(length) : "--";
+        }
+        if (
+          pairInputNode &&
+          document.activeElement !== pairInputNode &&
+          !previewInputState.pairDirty
+        ) {
+          pairInputNode.value =
+            length > 0 ? String(previewState.selectedPairIndex + 1) : "1";
+        }
+
+        const hasData = length > 0;
+        const swapTargetInput = document.getElementById("swap-target-input");
+        const swapTargetRunNode = document.getElementById("swap-target-run");
+        const pairPrevNode = document.getElementById("pair-prev");
+        const pairNextNode = document.getElementById("pair-next");
+        const swapPrevNode = document.getElementById("swap-prev");
+        const swapNextNode = document.getElementById("swap-next");
+        const saveOrderNode = document.getElementById("save-order");
+        const clearOrderNode = document.getElementById("clear-order");
+
+        if (pairInputNode) pairInputNode.disabled = !hasData;
+        if (swapTargetInput) swapTargetInput.disabled = !hasData;
+        if (swapTargetRunNode) swapTargetRunNode.disabled = !hasData;
+        if (pairPrevNode) {
+          pairPrevNode.disabled = !hasData || previewState.selectedPairIndex === 0;
+        }
+        if (pairNextNode) {
+          pairNextNode.disabled =
+            !hasData || previewState.selectedPairIndex >= length - 1;
+        }
+        if (swapPrevNode) {
+          swapPrevNode.disabled = !hasData || previewState.selectedPairIndex === 0;
+        }
+        if (swapNextNode) {
+          swapNextNode.disabled =
+            !hasData || previewState.selectedPairIndex >= length - 1;
+        }
+        if (saveOrderNode) saveOrderNode.disabled = !hasData;
+        if (clearOrderNode) clearOrderNode.disabled = !hasData;
+
+        if (
+          swapTargetInput &&
+          !swapTargetInput.matches(":focus") &&
+          !previewInputState.swapDirty &&
+          !previewInputState.swapInitialized
+        ) {
+          const suggestedTarget =
+            length > 1 ? Math.min(length, previewState.selectedPairIndex + 2) : 1;
+          swapTargetInput.value = String(suggestedTarget);
+          previewInputState.swapInitialized = true;
+        }
+
+        const cacheStatus = previewState.savedOverrideActive
+          ? "本地缓存：有"
+          : "本地缓存：无";
+        const previewStatus = isSavedPreview
+          ? "当前预览：已保存顺序"
+          : isDefaultPreview
+            ? "当前预览：默认顺序"
+            : "当前预览：临时调整";
+        let overrideStatus = `${cacheStatus} | ${previewStatus}`;
+        if (message) {
+          overrideStatus += ` | ${message}`;
+        }
+        updateControlPanelStatus(overrideStatus);
+        postPreviewState(overrideStatus);
+      }
+
+      function swapWithPrevious() {
+        if (previewState.selectedPairIndex <= 0) return;
+        const order = previewState.currentOrder.slice();
+        const idx = previewState.selectedPairIndex;
+        [order[idx - 1], order[idx]] = [order[idx], order[idx - 1]];
+        previewState.currentOrder = order;
+        previewState.selectedPairIndex = idx - 1;
+        renderCurrentPreview(`已将第 ${idx + 1} 对与第 ${idx} 对交换`);
+      }
+
+      function swapWithNext() {
+        const length = previewState.currentOrder.length;
+        const idx = previewState.selectedPairIndex;
+        if (!length || idx >= length - 1) return;
+        const order = previewState.currentOrder.slice();
+        [order[idx], order[idx + 1]] = [order[idx + 1], order[idx]];
+        previewState.currentOrder = order;
+        previewState.selectedPairIndex = idx + 1;
+        renderCurrentPreview(`已将第 ${idx + 1} 对与第 ${idx + 2} 对交换`);
+      }
+
+      function saveCurrentOverride() {
+        if (!previewState.baseCorners.length) return;
+        previewState.savedOverrideActive = true;
+        previewState.savedOrder = previewState.currentOrder.slice();
+        updateControlState("已保存到本地缓存");
+        window.parent.postMessage(
+          {
+            type: "hohonet_preview_order_save",
+            previewOrder: previewState.currentOrder.slice(),
+            previewSignature: previewState.currentSignature,
+          },
+          "*"
+        );
+      }
+
+      function resetPreviewToDefault() {
+        if (!previewState.baseCorners.length) return;
+        previewState.currentOrder = getIdentityOrder(previewState.baseCorners.length);
+        renderCurrentPreview("已恢复当前预览到默认顺序");
+      }
+
+      function deleteSavedOverride() {
+        if (!previewState.baseCorners.length) return;
+        previewState.savedOrder = null;
+        previewState.savedOverrideActive = false;
+        previewState.currentOrder = getIdentityOrder(previewState.baseCorners.length);
+        renderCurrentPreview("已删除当前缓存并恢复默认顺序");
+        window.parent.postMessage(
+          {
+            type: "hohonet_preview_order_delete_saved",
+            previewSignature: previewState.currentSignature,
+          },
+          "*"
+        );
+      }
+
+      function clearCurrentOverride() {
+        deleteSavedOverride();
+      }
+
+      function setSelectedPairIndex(rawValue = null) {
+        const input = document.getElementById("pair-input");
+        const length = previewState.baseCorners.length;
+        if (!length) return;
+        const nextValue =
+          rawValue === null || rawValue === undefined
+            ? Number(input ? input.value : NaN)
+            : Number(rawValue);
+        if (!Number.isInteger(nextValue)) {
+          if (input) {
+            input.value = String(previewState.selectedPairIndex + 1);
+          }
+          return;
+        }
+        const nextIndex = Math.max(1, Math.min(length, nextValue)) - 1;
+        previewState.selectedPairIndex = nextIndex;
+        updateControlState(`已定位到第 ${nextIndex + 1} 对`);
+      }
+
+      function swapWithTargetIndex(rawValue = null) {
+        const input = document.getElementById("swap-target-input");
+        const length = previewState.currentOrder.length;
+        if (!length) return;
+        const nextValue =
+          rawValue === null || rawValue === undefined
+            ? Number(input ? input.value : NaN)
+            : Number(rawValue);
+        if (!Number.isInteger(nextValue)) {
+          updateControlState("目标编号无效");
+          return;
+        }
+        const targetIndex = Math.max(1, Math.min(length, nextValue)) - 1;
+        const currentIndex = previewState.selectedPairIndex;
+        if (targetIndex === currentIndex) {
+          updateControlState(`当前已是第 ${targetIndex + 1} 对`);
+          return;
+        }
+        const order = previewState.currentOrder.slice();
+        [order[currentIndex], order[targetIndex]] = [order[targetIndex], order[currentIndex]];
+        previewState.currentOrder = order;
+        previewState.selectedPairIndex = targetIndex;
+        renderCurrentPreview(
+          `已将第 ${currentIndex + 1} 对与第 ${targetIndex + 1} 对交换`
+        );
+      }
+
+      function applyPreviewOrderCommand(action, data = {}) {
+        action = String(action || "");
+        if (!action) return;
+
+        if (action === "set_pair") {
+          setSelectedPairIndex(data.index);
+          return;
+        }
+        if (action === "prev_pair") {
+          moveSelection(-1);
+          return;
+        }
+        if (action === "next_pair") {
+          moveSelection(1);
+          return;
+        }
+        if (action === "swap_prev") {
+          swapWithPrevious();
+          return;
+        }
+        if (action === "swap_next") {
+          swapWithNext();
+          return;
+        }
+        if (action === "swap_target") {
+          swapWithTargetIndex(data.index);
+          return;
+        }
+        if (action === "save") {
+          saveCurrentOverride();
+          return;
+        }
+        if (action === "reset_default_order") {
+          resetPreviewToDefault();
+          return;
+        }
+        if (action === "delete_saved_override") {
+          deleteSavedOverride();
+          return;
+        }
+        if (action === "clear") {
+          clearCurrentOverride();
         }
       }
 
-      function renderGeometry(corners, hasTexture) {
-        // Clear again just in case
-        meshObjects.forEach((o) => scene.remove(o));
+      function handlePreviewOrderCommand(data) {
+        applyPreviewOrderCommand(data.action, data);
+      }
+
+      function handlePreviewOrderAck(data) {
+        if (data.ok) {
+          if (data.action === "save") {
+            previewState.savedOrder = previewState.currentOrder.slice();
+            previewState.savedOverrideActive = true;
+            updateControlState("宸蹭繚瀛樺埌鏈湴缂撳瓨");
+          } else if (
+            data.action === "clear" ||
+            data.action === "delete_saved"
+          ) {
+            previewState.savedOrder = null;
+            previewState.savedOverrideActive = false;
+            updateControlState("宸插垹闄ゆ湰鍦板凡淇濆瓨椤哄簭");
+          }
+        } else {
+          updateControlState("鏈湴缂撳瓨鎿嶄綔澶辫触");
+        }
+      }
+
+      function applyPairSelectionFromInput() {
+        previewInputState.pairDirty = false;
+        applyPreviewOrderCommand("set_pair");
+      }
+
+      function syncSelectionFromPairInput() {
+        const input = document.getElementById("pair-input");
+        if (!input || !previewState.baseCorners.length) return;
+        const desired = Number(input.value);
+        if (!Number.isInteger(desired)) return;
+        const current = previewState.selectedPairIndex + 1;
+        if (desired !== current) {
+          previewInputState.pairDirty = false;
+          setSelectedPairIndex(desired);
+        }
+      }
+
+      function runLocalSwapTarget() {
+        const input = document.getElementById("swap-target-input");
+        const targetValue = Number(input ? input.value : NaN);
+        previewInputState.swapDirty = false;
+        previewInputState.swapInitialized = true;
+        syncSelectionFromPairInput();
+        applyPreviewOrderCommand("swap_target", { index: targetValue });
+      }
+
+      document.getElementById("pair-input").addEventListener("input", () => {
+        previewInputState.pairDirty = true;
+      });
+      document.getElementById("swap-target-input").addEventListener("input", () => {
+        previewInputState.swapDirty = true;
+        previewInputState.swapInitialized = true;
+      });
+
+      document.getElementById("pair-prev").addEventListener("click", () => {
+        syncSelectionFromPairInput();
+        previewInputState.pairDirty = false;
+        applyPreviewOrderCommand("prev_pair");
+      });
+
+      document.getElementById("pair-next").addEventListener("click", () => {
+        syncSelectionFromPairInput();
+        previewInputState.pairDirty = false;
+        applyPreviewOrderCommand("next_pair");
+      });
+
+      document.getElementById("pair-input").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          applyPairSelectionFromInput();
+        }
+      });
+      document.getElementById("pair-input").addEventListener("change", applyPairSelectionFromInput);
+      document.getElementById("swap-target-run").addEventListener("click", runLocalSwapTarget);
+      document.getElementById("swap-target-input").addEventListener("keydown", (event) => {
+        if (event.key === "Enter") {
+          runLocalSwapTarget();
+        }
+      });
+
+      document.getElementById("swap-prev").addEventListener("click", () => {
+        syncSelectionFromPairInput();
+        previewInputState.swapDirty = false;
+        applyPreviewOrderCommand("swap_prev");
+      });
+      document.getElementById("swap-next").addEventListener("click", () => {
+        syncSelectionFromPairInput();
+        previewInputState.swapDirty = false;
+        applyPreviewOrderCommand("swap_next");
+      });
+      document.getElementById("save-order").addEventListener("click", saveCurrentOverride);
+      document.getElementById("clear-order").addEventListener("click", clearCurrentOverride);
+      document.getElementById("toggle-panel").addEventListener("click", (event) => {
+        event.stopPropagation();
+        const panel = document.getElementById("controls");
+        setPanelCollapsed(!panel.classList.contains("collapsed"), true);
+      });
+
+      function drawLayout(corners, imageUrl, options = {}) {
+        meshObjects.forEach((object) => scene.remove(object));
         meshObjects = [];
 
-        corners.sort((a, b) => a.x - b.x);
+        if (!corners || corners.length === 0) {
+          updateStatus("没有可渲染的角点");
+          updateControlState();
+          return;
+        }
+
+        if (imageUrl && currentTexture && currentTextureUrl === imageUrl) {
+          panoMaterial.uniforms.map.value = currentTexture;
+          panoMaterial.needsUpdate = true;
+          renderGeometry(corners, true, options);
+          return;
+        }
+
+        if (imageUrl) {
+          textureLoader.load(
+            imageUrl,
+            (texture) => {
+              currentTexture = texture;
+              currentTextureUrl = imageUrl;
+              currentTexture.minFilter = THREE.LinearFilter;
+              currentTexture.magFilter = THREE.LinearFilter;
+              panoMaterial.uniforms.map.value = currentTexture;
+              panoMaterial.needsUpdate = true;
+              renderGeometry(corners, true, options);
+            },
+            undefined,
+            () => {
+              currentTexture = null;
+              currentTextureUrl = null;
+              updateStatus("纹理加载失败（可能是 CORS）");
+              renderGeometry(corners, false, options);
+            }
+          );
+        } else {
+          currentTexture = null;
+          currentTextureUrl = null;
+          renderGeometry(corners, false, options);
+        }
+      }
+
+      function renderGeometry(corners, hasTexture, options = {}) {
+        meshObjects.forEach((object) => scene.remove(object));
+        meshObjects = [];
+
+        const preserveOrder = !!options.preserveOrder;
+        const orderedCorners = preserveOrder
+          ? cloneCorners(corners)
+          : cloneCorners(corners).sort((a, b) => a.x - b.x);
 
         const ceilPoints = [];
         const floorPoints = [];
-
-        // --- 1. Reconstruct 3D Geometry ---
-        // We assume camera height is 1.6m (standard for HoHoNet/Layout estimation)
         const CAM_H = 1.6;
 
-        corners.forEach((c) => {
-          // Convert image coordinates to angles
-          // u: 0..W -> -PI..PI
-          const u = (c.x / W) * 2 * Math.PI - Math.PI;
-          // v: 0..H -> -PI/2..PI/2 (0 is top, H is bottom)
-          // Formula: phi = (y / H - 0.5) * PI
-          const v_floor_img = (c.y_floor / H - 0.5) * Math.PI;
-          const v_ceil_img = (c.y_ceiling / H - 0.5) * Math.PI;
+        orderedCorners.forEach((corner) => {
+          const u = (corner.x / W) * 2 * Math.PI - Math.PI;
+          const vFloor = (corner.y_floor / H - 0.5) * Math.PI;
+          const vCeil = (corner.y_ceiling / H - 0.5) * Math.PI;
 
-          // Calculate radial distance to the wall at the floor level
-          // tan(pitch) = y / dist. Here y = -CAM_H (floor is below camera)
-          // pitch is v_floor_img.
-          // Note: v_floor_img is positive (looking down) or negative?
-          // In image coords: 0 is top (-PI/2), H is bottom (PI/2).
-          // So floor (bottom of image) has positive angle.
-          // dist = CAM_H / tan(v_floor_img)
+          const safeFloor = Math.max(0.01, Math.min(1.5, vFloor));
+          const dist = CAM_H / Math.tan(safeFloor);
 
-          // Clamp angle to avoid infinity
-          const safe_v_floor = Math.max(0.01, Math.min(1.5, v_floor_img));
-          const dist = CAM_H / Math.tan(safe_v_floor);
-
-          // Calculate 3D coordinates
-          // x = dist * sin(u)
-          // z = -dist * cos(u)
           const x = dist * Math.sin(u);
           const z = -dist * Math.cos(u);
+          const yFloor = -CAM_H;
+          const safeCeil = Math.max(-1.5, Math.min(-0.01, vCeil));
+          const yCeil = -dist * Math.tan(safeCeil);
 
-          // Floor y is fixed at -CAM_H
-          const y_floor = -CAM_H;
-
-          // Ceiling y
-          // y_ceil = -dist * tan(v_ceil_img)
-          // We clamp v_ceil_img to avoid infinity if it's exactly -PI/2
-          const safe_v_ceil = Math.max(-1.5, Math.min(-0.01, v_ceil_img));
-          const y_ceil = -dist * Math.tan(safe_v_ceil);
-
-          ceilPoints.push(new THREE.Vector3(x, y_ceil, z));
-          floorPoints.push(new THREE.Vector3(x, y_floor, z));
+          ceilPoints.push(new THREE.Vector3(x, yCeil, z));
+          floorPoints.push(new THREE.Vector3(x, yFloor, z));
         });
 
-        // Close the loop
         if (ceilPoints.length > 0) {
-          ceilPoints.push(ceilPoints[0]);
-          floorPoints.push(floorPoints[0]);
+          ceilPoints.push(ceilPoints[0].clone());
+          floorPoints.push(floorPoints[0].clone());
         }
 
-        // --- 2. Create Meshes ---
-
-        // Material to use
         const material = hasTexture
           ? panoMaterial
           : new THREE.MeshBasicMaterial({
@@ -251,23 +997,18 @@
               side: THREE.DoubleSide,
             });
 
-        // A. Walls
-        // We build a strip of quads
         const wallGeo = new THREE.BufferGeometry();
         const wallVertices = [];
-
         for (let i = 0; i < ceilPoints.length - 1; i++) {
           const p1 = ceilPoints[i];
           const p2 = floorPoints[i];
           const p3 = ceilPoints[i + 1];
           const p4 = floorPoints[i + 1];
 
-          // Triangle 1: p1, p2, p3
           wallVertices.push(p1.x, p1.y, p1.z);
           wallVertices.push(p2.x, p2.y, p2.z);
           wallVertices.push(p3.x, p3.y, p3.z);
 
-          // Triangle 2: p2, p4, p3
           wallVertices.push(p2.x, p2.y, p2.z);
           wallVertices.push(p4.x, p4.y, p4.z);
           wallVertices.push(p3.x, p3.y, p3.z);
@@ -280,16 +1021,12 @@
         scene.add(wallMesh);
         meshObjects.push(wallMesh);
 
-        // B. Floor (Fan from center)
         const floorGeo = new THREE.BufferGeometry();
         const floorVertices = [];
         const floorCenter = new THREE.Vector3(0, -CAM_H, 0);
-
         for (let i = 0; i < floorPoints.length - 1; i++) {
           const p1 = floorPoints[i];
           const p2 = floorPoints[i + 1];
-
-          // Triangle: Center, p1, p2
           floorVertices.push(floorCenter.x, floorCenter.y, floorCenter.z);
           floorVertices.push(p1.x, p1.y, p1.z);
           floorVertices.push(p2.x, p2.y, p2.z);
@@ -302,26 +1039,18 @@
         scene.add(floorMesh);
         meshObjects.push(floorMesh);
 
-        // C. Ceiling - REMOVED for open top view
-
-        // D. Wireframe (Edges)
         const lineMat = new THREE.LineBasicMaterial({
           color: 0x00ff00,
           depthTest: false,
         });
         const edges = [];
         for (let i = 0; i < ceilPoints.length - 1; i++) {
-          // Vertical
           edges.push(ceilPoints[i].x, ceilPoints[i].y, ceilPoints[i].z);
           edges.push(floorPoints[i].x, floorPoints[i].y, floorPoints[i].z);
-          // Ceiling
+
           edges.push(ceilPoints[i].x, ceilPoints[i].y, ceilPoints[i].z);
-          edges.push(
-            ceilPoints[i + 1].x,
-            ceilPoints[i + 1].y,
-            ceilPoints[i + 1].z
-          );
-          // Floor
+          edges.push(ceilPoints[i + 1].x, ceilPoints[i + 1].y, ceilPoints[i + 1].z);
+
           edges.push(floorPoints[i].x, floorPoints[i].y, floorPoints[i].z);
           edges.push(
             floorPoints[i + 1].x,
@@ -338,42 +1067,35 @@
         scene.add(lineMesh);
         meshObjects.push(lineMesh);
 
-        // Add spheres for corners
         const sphereGeo = new THREE.SphereGeometry(0.1, 16, 16);
         const sphereMat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-        [...ceilPoints, ...floorPoints].forEach((p) => {
-          const s = new THREE.Mesh(sphereGeo, sphereMat);
-          s.position.copy(p);
-          scene.add(s);
-          meshObjects.push(s);
+        [...ceilPoints, ...floorPoints].forEach((point) => {
+          const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+          sphere.position.copy(point);
+          scene.add(sphere);
+          meshObjects.push(sphere);
         });
 
-        // Add Labels (Indices)
-        floorPoints.forEach((p, idx) => {
-          // Skip the last duplicated point if loop is closed
-          if (idx >= corners.length) return;
-
-          const sprite = makeTextSprite((idx + 1).toString());
-          // Position slightly above the floor point
-          sprite.position.copy(p).add(new THREE.Vector3(0, 0.5, 0));
+        floorPoints.forEach((point, idx) => {
+          if (idx >= orderedCorners.length) return;
+          const sprite = makeTextSprite(String(idx + 1));
+          sprite.position.copy(point).add(new THREE.Vector3(0, 0.5, 0));
           scene.add(sprite);
           meshObjects.push(sprite);
         });
 
         updateStatus(
-          `Rendered ${corners.length} walls with ${
-            hasTexture ? "Texture" : "Color"
-          }`
+          `已渲染 ${orderedCorners.length} 面墙（${hasTexture ? "带纹理" : "纯色"}）`
         );
 
-        // Update Camera to Bird's Eye View
-        camera.position.set(0, 8, 0);
-        camera.lookAt(0, -CAM_H, 0);
-        controls.target.set(0, -CAM_H, 0);
-        controls.update();
+        if (options.resetView) {
+          camera.position.set(0, 8, 0);
+          camera.lookAt(0, -CAM_H, 0);
+          controls.target.set(0, -CAM_H, 0);
+          controls.update();
+        }
       }
 
-      // Initial Camera Position (Bird's Eye View)
       camera.position.set(0, 8, 0);
       controls.target.set(0, -1.6, 0);
       controls.update();
@@ -385,46 +1107,102 @@
       }
       animate();
 
+      initializePanelCollapseState();
+      initializePanelPosition();
+      initializePanelDrag();
+
       window.addEventListener("resize", () => {
         camera.aspect = window.innerWidth / window.innerHeight;
         camera.updateProjectionMatrix();
         renderer.setSize(window.innerWidth, window.innerHeight);
+        const panel = document.getElementById("controls");
+        if (panel) {
+          const rect = panel.getBoundingClientRect();
+          applyPanelPosition(rect.left, rect.top, false);
+        }
       });
 
-      // --- Data Handling ---
-      // 1. Initial data from URL
+      function loadPreviewFromMessage(data) {
+        if (data.width) W = data.width;
+        if (data.height) H = data.height;
+
+        const baseCorners =
+          Array.isArray(data.baseCorners) && data.baseCorners.length
+            ? cloneCorners(data.baseCorners)
+            : cloneCorners(data.corners || []);
+
+        const identityOrder = getIdentityOrder(baseCorners.length);
+        const normalized = normalizeOrder(data.previewOrder, baseCorners.length);
+        applyPreviewStateSnapshot({
+          baseCorners,
+          currentOrder: normalized || identityOrder,
+          savedOrder:
+            data.previewOrderActive && normalized ? normalized.slice() : null,
+          currentSignature: data.previewSignature || "",
+          imageUrl: data.imageUrl || null,
+          savedOverrideActive: !!data.previewOrderActive,
+          selectedPairIndex: 0,
+        });
+
+        renderCurrentPreview(
+          previewState.savedOverrideActive
+            ? "已载入已保存顺序"
+            : "已载入默认顺序",
+          { resetView: true }
+        );
+      }
+
       try {
         const params = new URLSearchParams(window.location.search);
         const dataStr = params.get("data");
         const wStr = params.get("w");
         const hStr = params.get("h");
 
-        if (wStr) W = parseInt(wStr);
-        if (hStr) H = parseInt(hStr);
+        if (wStr) W = parseInt(wStr, 10);
+        if (hStr) H = parseInt(hStr, 10);
 
         if (dataStr) {
           const corners = JSON.parse(decodeURIComponent(dataStr));
-          drawLayout(corners);
+          applyPreviewStateSnapshot({
+            baseCorners: corners,
+            currentOrder: getIdentityOrder(corners.length),
+            savedOrder: null,
+            currentSignature: "",
+            imageUrl: null,
+            savedOverrideActive: false,
+            selectedPairIndex: 0,
+          });
+          renderCurrentPreview("已从 URL 载入", { resetView: true });
+        } else {
+          updateControlState();
         }
 
-        // Allow toggling grid/axes via URL param `show_axes=1`
         const showAxesParam = params.get("show_axes");
         if (showAxesParam === "1" || showAxesParam === "true") {
           gridHelper.visible = true;
           axesHelper.visible = true;
         }
-      } catch (e) {
-        console.error("Error parsing URL data", e);
-        updateStatus("Error parsing data");
+      } catch (error) {
+        console.error("Error parsing URL data", error);
+        updateStatus("数据解析失败");
       }
 
-      // 2. Listen for messages from Parent
       window.addEventListener("message", (event) => {
-        console.log("Received message", event.data);
-        if (event.data && event.data.type === "update_layout") {
-          if (event.data.width) W = event.data.width;
-          if (event.data.height) H = event.data.height;
-          drawLayout(event.data.corners, event.data.imageUrl);
+        const data = event.data;
+        if (!data || typeof data !== "object") return;
+
+        if (data.type === "update_layout") {
+          loadPreviewFromMessage(data);
+          return;
+        }
+
+        if (data.type === "hohonet_preview_order_command") {
+          handlePreviewOrderCommand(data);
+          return;
+        }
+
+        if (data.type === "hohonet_preview_order_ack") {
+          handlePreviewOrderAck(data);
         }
       });
     </script>

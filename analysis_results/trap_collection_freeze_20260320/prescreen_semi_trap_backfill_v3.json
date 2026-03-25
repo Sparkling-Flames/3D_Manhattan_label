@@ -1,0 +1,21 @@
+{
+  "selection_name": "prescreen_semi_trap_backfill_v3",
+  "selected_synthetic_backfill": [],
+  "remaining_gap_after_backfill": {
+    "overextend_adjacent": 2,
+    "over_parsing": 2,
+    "corner_drift": 2,
+    "corner_duplicate": 2
+  },
+  "blocked_reasons": [
+    "family overextend_adjacent has no synthetic backfill candidates disjoint from the tentative control freeze",
+    "family over_parsing has no synthetic backfill candidates disjoint from the tentative control freeze",
+    "family corner_drift has no synthetic backfill candidates disjoint from the tentative control freeze",
+    "family corner_duplicate has no synthetic backfill candidates disjoint from the tentative control freeze",
+    "current synthetic candidate bank reuses the same base_task_ids tentatively selected for control, so backfill cannot be finalized until source/control overlap is resolved"
+  ],
+  "notes": [
+    "Synthetic backfill is only allowed to fill the current core-family gap after natural-first preselection.",
+    "This artifact does not produce a final trap freeze when the available synthetic source pool overlaps the tentative control freeze."
+  ]
+}

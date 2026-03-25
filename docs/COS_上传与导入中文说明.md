@@ -14,7 +14,7 @@
 ## 推荐流程（先 COS，暂不 CDN）
 
 1. 批量上传图片到 COS（保持原命名格式）
-2. 用 `prepare_labelstudio_docker.py` 生成导入 JSON（`data.image` 指向 COS URL）
+2. 用 `prepare_labelstudio_docker.py` 生成导入 JSON（人工精标用 `data/mp3d_layout/test/label_cor`，并写入 `annotations`；`data.image` 指向 COS URL）
 3. 在 Label Studio 项目里导入 JSON
 
 ---
@@ -33,7 +33,7 @@ d:/Work/HOHONET/.venv/Scripts/python.exe tools/upload_mp3d_test_to_cos.py --buck
 ### B. 生成 Label Studio 导入 JSON（图片 URL 指向 COS）
 
 ```bash
-d:/Work/HOHONET/.venv/Scripts/python.exe tools/prepare_labelstudio_docker.py --image-base-url https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/test/img --disable-vis3d --output-json label_studio_import_docker.json
+d:/Work/HOHONET/.venv/Scripts/python.exe tools/prepare_labelstudio_docker.py --layout-txt-dir data/mp3d_layout/test/label_cor --import-kind annotations --order-from-export export_label/project-2-at-2026-02-22-11-22-ee6c4607.json --image-base-url https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v --image-ext .jpg --disable-vis3d --output-json label_studio_import_docker.json
 ```
 
 > 如果需要保留 3D 预览，不要加 `--disable-vis3d`，并确保 `--vis-base-url` 对应你的 3D 服务地址。

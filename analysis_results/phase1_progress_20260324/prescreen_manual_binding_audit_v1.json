@@ -1,0 +1,35 @@
+{
+  "audit_name": "prescreen_manual_binding_audit_v1",
+  "truth_layer_dir": "truth_layer_extraction_20260324",
+  "reference_binding_status": "working_consensus_reference_bound_not_final_gold",
+  "adjudication_status": "working_consensus_not_final_gold",
+  "manual_total_pool_count": 30,
+  "manual_total_selected": 30,
+  "expert_anchor_count": 22,
+  "non_anchor_count": 8,
+  "promoted_anchor_count": 0,
+  "promoted_anchor_task_ids": [],
+  "demoted_anchor_candidate_count": 1,
+  "demoted_anchor_candidate_task_ids": [
+    "509"
+  ],
+  "low_priority_selected_count": 5,
+  "special_review_selected_count": 7,
+  "review_note_selected_count": 13,
+  "anchor_with_review_note_count": 5,
+  "selected_with_poly_residue_count": 2,
+  "selected_anchor_with_poly_residue_count": 2,
+  "manual_vs_semi_base_task_overlap_count": 0,
+  "manual_vs_oos_base_task_overlap_count": 0,
+  "manual_selection_frozen": true,
+  "anchor_target_met": true,
+  "non_anchor_target_met": true,
+  "manual_binding_ready": false,
+  "blocked_reasons": [
+    "reference layer remains working_consensus_not_final_gold, so thesis-grade final binding is not yet complete"
+  ],
+  "notes": [
+    "Selection is complete on the current working-consensus layer.",
+    "Binding remains below thesis-grade final gold because the reference layer is not yet adjudicated as final gold."
+  ]
+}

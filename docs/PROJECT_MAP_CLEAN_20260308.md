@@ -1,5 +1,88 @@
 # HoHoNet 纯净仓库地图（2026-03-08）
 
+## 2026-03-25 增量补充
+
+- `tools/materialize_final_gold_records.py`
+  - 基于 latest `project-20` 已核验 trap 精标导出，把当前 truth-layer extraction 正式升格为
+    `final_adjudicated_gold` 记录层。
+  - 只提升 `scope + LS canonical corner geometry`；`poly` 仍只作 residue，`.txt` 仍只作
+    `legacy_mp3d_reference`，`difficulty/model_issue` 不进入 final-gold 合同。
+- `tests/test_materialize_final_gold_records.py`
+  - final gold 物化脚本的最小回归测试。
+- `analysis_results/final_gold_layer_20260325/`
+  - 当前 Stage 1 的 final gold 物化输出目录。
+  - 包含 `final_gold_records_v1.jsonl`、`final_gold_records_v1.csv` 与 `final_gold_summary_v1.json`。
+- `analysis_results/phase1_progress_20260324/manual_binding_audit_v2.json`
+  - manual freeze 在 final gold 下的 rebinding 审计结果。
+- `analysis_results/phase1_progress_20260324/prescreen_semi_final_selection_v6.json`
+  - semi freeze 在 final gold 下的 rebinding 结果；control 与 natural trap 重绑，
+    synthetic trap 按 frozen asset carry-forward。
+- `analysis_results/phase1_progress_20260324/oos_final_quota_binding_v2.json`
+  - OOS gate 在 final gold scope 下的 rebinding 结果。
+- `analysis_results/phase1_progress_20260324/stage1_final_binding_audit_v2.json`
+  - Stage 1 final binding 总审计。
+  - 当前 machine-readable 状态已为 `prescreen_ready=true`，说明 selection freeze 已在 final gold 下完成重绑。
+- `tools/build_final_gold_preflight.py`
+  - 基于 latest `project-20` working-consensus truth layer，把 `trap` 精标导出拆成
+    `trap_corner_records_v1.jsonl` 与 `trap_scope_records_v1.csv`，并生成 `final_gold_preflight_check_v1.json`。
+  - 这一层只做 final gold 接入前的字段兼容与映射预检查，不生成任何 v2 正式 rebinding 结果。
+- `tests/test_build_final_gold_preflight.py`
+  - `corner/scope` 拆分与 final-gold preflight 的最小回归测试。
+- `analysis_results/truth_layer_extraction_20260324/trap_corner_records_v1.jsonl`
+  - 当前 `trap` 精标导出的 corner 抽取层；每个 task 一行，包含 `canonical_corners_norm`
+    与 `runtime_pairs_1024x512`，用于后续 geometry join 与 final-gold 对照。
+- `analysis_results/truth_layer_extraction_20260324/trap_scope_records_v1.csv`
+  - 当前 `trap` 精标导出的 scope 抽取层；每个 task 一行，包含 `scope`、`priority_flag`、
+    `recommended_role` 与 `default_eligible`，用于 manual / semi / OOS 三池分流与 scope 重绑。
+- `analysis_results/phase1_progress_20260324/final_gold_preflight_check_v1.json`
+  - final gold 到位前的 preflight 审计输出。
+  - 明确 manual / semi / OOS 三池各自需要重绑的字段、synthetic carry-forward 清单、
+    task_id/base_task_id 对齐状态，以及 final gold 到位后是否可以直接跑 rebinding。
+- `tools/freeze_stage1_final_prep.py`
+  - 基于当前 `truth_layer_extraction_20260324/`、manual freeze 与既有 semi synthetic freeze，
+    继续冻结 `prescreen_semi_control_keepdrop_resolution_v1`、`prescreen_semi_final_selection_v5`、
+    `oos_final_quota_binding_v1` 与 `stage1_final_binding_audit_v1`。
+  - 这一层只推进 Stage 1 的 working-consensus selection/binding prep，
+    不把 reference layer 写成 final gold。
+- `tools/rebind_stage1_to_final_gold.py`
+  - 为 future final gold 到位后的 Stage 1 rebinding 预留正式入口。
+  - 该脚本复用既有 selection manifest，只重绑 `manual / semi / OOS` 到 final gold，
+    并输出 `manual_binding_audit_v2`、`prescreen_semi_final_selection_v6`、
+    `oos_final_quota_binding_v2` 与 `stage1_final_binding_audit_v2`。
+- `tests/test_freeze_stage1_final_prep.py`
+  - Stage 1 final-prep 冻结脚本的最小回归测试。
+  - 覆盖 semi control 旧 blocker 清除、OOS low-priority -> audit_only、
+    以及 stage1 audit 在 non-final-gold 下继续 blocked 的边界。
+- `tests/test_rebind_stage1_to_final_gold.py`
+  - final-gold rebinding 入口的最小回归测试。
+  - 覆盖“全部 selected row 在 final gold 中通过 -> prescreen_ready=true”
+    与“manual gold 缺失 -> rebinding blocked”两条主边界。
+- `docs/final_gold_rebinding_contract_v1.md`
+  - future final gold 输入契约与 rebinding 边界说明。
+  - 明确 synthetic trap 在 v6 中按 frozen asset carry-forward，而不是去 latest export 里重新查人工 annotation。
+- `analysis_results/phase1_progress_20260324/`
+  - 当前继续承载 Stage 1 的 thesis-facing 冻结输出。
+  - 本轮新增：
+    `prescreen_semi_control_keepdrop_resolution_v1.json`、
+    `prescreen_semi_final_selection_v5.json`、
+    `oos_final_quota_binding_v1.json`、
+    `oos_final_quota_binding_v1.csv`、
+    `stage1_final_binding_audit_v1.json`。
+
+## 2026-03-24 增量补充
+
+- `tools/extract_truth_layer.py`
+  - 基于 latest `project-20` export 与当前 `trap集/` 目录抽取 working-consensus truth layer。
+  - `kp` 是当前 geometry 主抽取源，`poly` 只作 residue flag，`.txt` 只作 legacy reference。
+
+- `analysis_results/truth_layer_extraction_20260324/`
+  - latest `project-20` working-consensus snapshot 的 truth-layer extraction 输出目录。
+  - 包含 `trap_task_registry_v1.csv`、`manual_annotation_records_v1.jsonl`、`oos_scope_reconciliation_case_v1.json` 与 `truth_layer_extraction_summary_v1.json`。
+
+- `tests/test_extract_truth_layer.py`
+  - truth-layer extraction 的最小回归测试。
+  - 覆盖 priority flag 分类、OOS reconciliation 无活动 mismatch 语义，以及 registry / annotation record / summary 的端到端抽取。
+
 ## 文档目标
 
 这份文档只回答一件事：当前仓库里，和你现在这条服务器标注/分析链真正相关的目录、文件，各自是干什么的。
@@ -104,6 +187,7 @@
   - 所有分析 CSV、registry、图表、manifest 的输出目录。
   - 当前新增 `analysis_results/c_manifests_20260310/`，用于存放 C 线可 join 的 trap / embedding manifest 交付。
   - 当前新增 `analysis_results/pooled_qa/`，用于存放 B 线 pooled QA / provenance audit 图包与最小审计表。
+  - 当前新增 `analysis_results/trap_collection_freeze_20260320/`，用于冻结 `trap集/` 当前 manual 候选池、acceptable seed 池与 synthetic semi candidate bank。
 
 - `tests/`
   - 当前仍有效的自动化测试目录。
@@ -432,6 +516,12 @@
   - 当前 C 线生成层 bundle。
   - 存放 perturbation frozen plan、materialized trap manifest、synthetic trap bank、materialization summary，以及 reject lifecycle、fallback registry、family coverage matrix、consistency audit、family appendix note、manual resolution queue、XML alias/operator crosswalk、prescreen semi target、current-bundle-vs-target gap，以及 `prescreen_semi_selection_freeze_v1.json`、`prescreen_semi_final_selection_v1.json` 审计文件。
 
+- `analysis_results/trap_collection_freeze_20260320/`
+  - 当前 `trap集/` 增量冻结目录。
+  - 存放 `manual_candidate_pool_v1.csv`、`semi_acceptable_seed_pool_v1.csv`、`semi_synthetic_candidate_bank_v1.csv/.jsonl`、`prescreen_semi_family_policy_v1.json`、`prescreen_semi_candidate_registry_v2.csv`、`prescreen_semi_control_freeze_v3.json`、`prescreen_semi_trap_natural_preselection_v3.json`、`prescreen_semi_trap_backfill_v3.json`、`prescreen_semi_source_pool_freeze_v1.json`、`semi_synthetic_disjoint_candidate_bank_v2.csv/.jsonl`、`prescreen_semi_trap_backfill_v4.json`、`prescreen_semi_final_selection_v4.json` 与 `trap_collection_summary_v1.json`。
+  - 目录语义是 staged freeze：先证明 manual 收集池已超过 20–22、acceptable seed 已达到 6、并且可程序化生成 synthetic semi 候选；再通过 disjoint source pool 重跑 semi backfill 与 `final_selection_v4`。
+  - 截至当前版本，trap-side backfill 已去除 source/control overlap 且不再重复使用同一 synthetic `base_task_id`；但 control 池仍含 folder-level priority flag，因此整体仍不是 thesis-facing executable freeze。
+
 ### 目录职责边界
 
 1. 这里是输出，不是唯一真源。
@@ -632,6 +722,10 @@
   - PreScreen readiness freeze 说明。
   - 明确 manual / semi / OOS 三池当前已冻结的 readiness 状态、旧 export 与 2026-03-07 新导出的证据层级边界，以及当前仍阻塞正式 Stage 1 启动的原因。
 
+- `docs/prescreen_oos_scoring_note_v1.md`
+  - Stage 1 OOS scoring semantics 说明。
+  - 明确 OOS 在 PreScreen 中以 `scope` 为主评分信号，`difficulty` 仅作辅助审计，`model_issue` 不作为 OOS correctness 依据，也不进入主几何可靠度链。
+
 - `docs/COS_上传与导入中文说明.md`
   - COS 上传与导入说明。
 
@@ -760,3 +854,18 @@
 `tools/` + `tools/official/` + `export_label/` + `import_json/` + `active_logs/` + `analysis_results/` + `trap集/` + `tests/` + `data/` + `output/`。
 
 其余原始 HoHoNet 深度/布局训练推理文件，可以暂时视为背景资产，不应混进当前纯净仓库地图主干。
+## 2026-03-24 Manual Freeze 增量补充
+
+- `tools/freeze_prescreen_manual.py`
+  - 基于 `truth_layer_extraction_20260324/` 的 registry / annotation record，
+    冻结当前 `manual=30` working-consensus pool 的 `20 expert anchors + 10 non-anchor`。
+  - 明确保留 `working_consensus_not_final_gold` 边界，不把当前 reference layer 写成 final gold。
+- `analysis_results/phase1_progress_20260324/`
+  - manual final freeze 的输出目录。
+  - 包含 `prescreen_manual_final_selection_v1.json`、
+    `prescreen_manual_final_selection_v1.csv`、
+    `prescreen_manual_binding_audit_v1.json`。
+- `tests/test_freeze_prescreen_manual.py`
+  - manual final freeze 的最小回归测试。
+  - 覆盖 `20 anchors + 10 non-anchor` 计数、promoted anchors 选择与
+    `manual_binding_ready=false` 的边界断言。

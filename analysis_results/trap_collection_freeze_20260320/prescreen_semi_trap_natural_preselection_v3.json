@@ -1,0 +1,95 @@
+{
+  "selection_name": "prescreen_semi_trap_natural_preselection_v3",
+  "selected_natural_cases": [
+    {
+      "candidate_id": "natural_overextend_adjacent_493",
+      "task_id": "493",
+      "base_task_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+      "family": "overextend_adjacent",
+      "priority_annotation": ""
+    },
+    {
+      "candidate_id": "natural_over_parsing_505",
+      "task_id": "505",
+      "base_task_id": "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+      "family": "over_parsing",
+      "priority_annotation": ""
+    },
+    {
+      "candidate_id": "natural_corner_drift_474",
+      "task_id": "474",
+      "base_task_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+      "family": "corner_drift",
+      "priority_annotation": ""
+    },
+    {
+      "candidate_id": "natural_corner_duplicate_477",
+      "task_id": "477",
+      "base_task_id": "uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359",
+      "family": "corner_duplicate",
+      "priority_annotation": ""
+    }
+  ],
+  "family_natural_coverage": [
+    {
+      "family": "overextend_adjacent",
+      "default_target_count": 3,
+      "available_natural_count": 4,
+      "selected_natural_count": 1,
+      "natural_required_min": 1
+    },
+    {
+      "family": "over_parsing",
+      "default_target_count": 3,
+      "available_natural_count": 3,
+      "selected_natural_count": 1,
+      "natural_required_min": 1
+    },
+    {
+      "family": "corner_drift",
+      "default_target_count": 3,
+      "available_natural_count": 3,
+      "selected_natural_count": 1,
+      "natural_required_min": 1
+    },
+    {
+      "family": "corner_duplicate",
+      "default_target_count": 3,
+      "available_natural_count": 1,
+      "selected_natural_count": 1,
+      "natural_required_min": 1
+    }
+  ],
+  "family_gap_after_natural_selection": {
+    "overextend_adjacent": 2,
+    "over_parsing": 2,
+    "corner_drift": 2,
+    "corner_duplicate": 2
+  },
+  "extension_family_notes": [
+    {
+      "family": "underextend",
+      "available_natural_count": 2,
+      "role": "trap_extension",
+      "notes": "Extension family only in the current thesis-facing protocol; natural exemplars may be retained for audit or overflow, but it is not part of the default 4-family x 3 trap target."
+    },
+    {
+      "family": "fail",
+      "available_natural_count": 1,
+      "role": "optional_small_quota",
+      "notes": "Optional / small-quota family, not a default prescreen core family."
+    },
+    {
+      "family": "topology_failure",
+      "available_natural_count": 0,
+      "role": "audit_small_quota",
+      "notes": "Optional audit-small-quota family; current protocol allows synthetic-only backfill when natural cases are absent."
+    }
+  ],
+  "excluded_for_ambiguity": [],
+  "excluded_for_not_repairable": [],
+  "notes": [
+    "This natural-first preselection only fills the existence slot for current core trap families.",
+    "Extension or optional-small-quota families are recorded separately and are not promoted to core by this artifact."
+  ]
+}
