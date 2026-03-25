@@ -1,0 +1,65 @@
+{
+  "freeze_name": "prescreen_semi_control_freeze_v3",
+  "target_count": 6,
+  "selected_control_rows": [
+    {
+      "candidate_id": "control_492",
+      "task_id": "492",
+      "base_task_id": "e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76",
+      "priority_annotation": ""
+    },
+    {
+      "candidate_id": "control_501",
+      "task_id": "501",
+      "base_task_id": "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+      "priority_annotation": ""
+    },
+    {
+      "candidate_id": "control_568",
+      "task_id": "568",
+      "base_task_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+      "priority_annotation": ""
+    },
+    {
+      "candidate_id": "control_572",
+      "task_id": "572",
+      "base_task_id": "wc2JMjhGNzB_77962388887942148ee65c2892600e02",
+      "priority_annotation": ""
+    },
+    {
+      "candidate_id": "control_573",
+      "task_id": "573",
+      "base_task_id": "wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c",
+      "priority_annotation": ""
+    },
+    {
+      "candidate_id": "control_576",
+      "task_id": "576",
+      "base_task_id": "wc2JMjhGNzB_3848b1ba65fa49308c3d0a79f63782b3",
+      "priority_annotation": "低优先"
+    }
+  ],
+  "selected_control_count": 6,
+  "manual_pool_overlap_count": 0,
+  "manual_pool_overlap_base_task_ids": [],
+  "oos_pool_overlap_count": 0,
+  "oos_pool_overlap_base_task_ids": [],
+  "synthetic_source_overlap_count": 6,
+  "synthetic_source_overlap_base_task_ids": [
+    "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+    "e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76",
+    "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+    "wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c",
+    "wc2JMjhGNzB_3848b1ba65fa49308c3d0a79f63782b3",
+    "wc2JMjhGNzB_77962388887942148ee65c2892600e02"
+  ],
+  "selection_ready": false,
+  "blocked_reasons": [
+    "selected control pool still contains folder-level priority flags, so final keep/drop freeze remains pending",
+    "current synthetic candidate bank is generated from the same base_task_ids tentatively selected as controls"
+  ],
+  "notes": [
+    "This artifact freezes the current control-first default selection from the acceptable seed pool.",
+    "It remains separate from the final trap freeze."
+  ]
+}

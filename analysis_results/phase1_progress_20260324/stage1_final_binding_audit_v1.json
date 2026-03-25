@@ -1,0 +1,35 @@
+{
+  "audit_name": "stage1_final_binding_audit_v1",
+  "truth_layer_dir": "truth_layer_extraction_20260324",
+  "reference_binding_status": "working_consensus_reference_bound_not_final_gold",
+  "adjudication_status": "working_consensus_not_final_gold",
+  "manual_total_selected": 30,
+  "manual_expert_anchor_count": 22,
+  "manual_non_anchor_count": 8,
+  "semi_control_count": 6,
+  "semi_trap_count": 12,
+  "oos_final_gate_count": 9,
+  "manual_vs_semi_overlap_count": 0,
+  "manual_vs_semi_overlap_base_task_ids": [],
+  "manual_vs_oos_overlap_count": 0,
+  "manual_vs_oos_overlap_base_task_ids": [],
+  "semi_vs_oos_overlap_count": 0,
+  "semi_vs_oos_overlap_base_task_ids": [],
+  "semi_control_vs_source_overlap_count": 0,
+  "semi_control_vs_source_overlap_base_task_ids": [],
+  "manual_binding_ready": false,
+  "semi_selection_ready": true,
+  "semi_binding_ready": false,
+  "oos_selection_ready": true,
+  "oos_binding_ready": false,
+  "selection_freeze_complete": true,
+  "stage1_binding_ready": false,
+  "prescreen_ready": false,
+  "blocked_reasons": [
+    "current reference layer remains working_consensus_not_final_gold rather than final adjudicated gold"
+  ],
+  "notes": [
+    "Stage 1 selection freeze is complete on the current working-consensus layer.",
+    "Executable thesis-grade readiness remains blocked until the reference layer is upgraded from working consensus to final adjudicated gold."
+  ]
+}

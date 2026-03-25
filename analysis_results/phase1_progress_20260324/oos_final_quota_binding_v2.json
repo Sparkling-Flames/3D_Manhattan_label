@@ -1,0 +1,122 @@
+{
+  "binding_name": "oos_final_quota_binding_v2",
+  "rebind_source": "d:\\Work\\HOHONET\\analysis_results\\final_gold_layer_20260325\\final_gold_records_v1.jsonl",
+  "truth_layer_dir": "truth_layer_extraction_20260324",
+  "reference_binding_status": "final_adjudicated_gold_rebound",
+  "adjudication_status": "final_adjudicated_gold",
+  "oos_total_pool_count": 10,
+  "final_oos_gate_count": 9,
+  "audit_only_count": 1,
+  "selected_oos_gate_rows": [
+    {
+      "task_id": "459",
+      "base_task_id": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+      "scope": "oos_open_boundary",
+      "priority_flag": "default",
+      "final_role": "oos_gate",
+      "gold_scope_alias": "oos_open_boundary",
+      "rebind_status": "ready",
+      "rebind_reason": ""
+    },
+    {
+      "task_id": "476",
+      "base_task_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+      "scope": "oos_split_level",
+      "priority_flag": "default",
+      "final_role": "oos_gate",
+      "gold_scope_alias": "oos_split_level",
+      "rebind_status": "ready",
+      "rebind_reason": ""
+    },
+    {
+      "task_id": "495",
+      "base_task_id": "yqstnuAEVhm_66ecc07f3cda4d8ebaf84288325669f5",
+      "scope": "oos_split_level",
+      "priority_flag": "special_review",
+      "final_role": "oos_gate",
+      "gold_scope_alias": "oos_split_level",
+      "rebind_status": "ready",
+      "rebind_reason": ""
+    },
+    {
+      "task_id": "496",
+      "base_task_id": "7y3sRwLe3Va_6376b741b50a4418b3dc3fde791c3c09",
+      "scope": "oos_split_level",
+      "priority_flag": "default",
+      "final_role": "oos_gate",
+      "gold_scope_alias": "oos_split_level",
+      "rebind_status": "ready",
+      "rebind_reason": ""
+    },
+    {
+      "task_id": "526",
+      "base_task_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+      "scope": "oos_geometry",
+      "priority_flag": "default",
+      "final_role": "oos_gate",
+      "gold_scope_alias": "oos_geometry",
+      "rebind_status": "ready",
+      "rebind_reason": ""
+    },
+    {
+      "task_id": "529",
+      "base_task_id": "UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407",
+      "scope": "oos_insufficient",
+      "priority_flag": "default",
+      "final_role": "oos_gate",
+      "gold_scope_alias": "oos_insufficient",
+      "rebind_status": "ready",
+      "rebind_reason": ""
+    },
+    {
+      "task_id": "575",
+      "base_task_id": "7y3sRwLe3Va_4291cbfde1024467b1548934653f07ce",
+      "scope": "oos_split_level",
+      "priority_flag": "default",
+      "final_role": "oos_gate",
+      "gold_scope_alias": "oos_split_level",
+      "rebind_status": "ready",
+      "rebind_reason": ""
+    },
+    {
+      "task_id": "609",
+      "base_task_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+      "scope": "oos_open_boundary",
+      "priority_flag": "default",
+      "final_role": "oos_gate",
+      "gold_scope_alias": "oos_open_boundary",
+      "rebind_status": "ready",
+      "rebind_reason": ""
+    },
+    {
+      "task_id": "661",
+      "base_task_id": "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb",
+      "scope": "oos_split_level",
+      "priority_flag": "default",
+      "final_role": "oos_gate",
+      "gold_scope_alias": "oos_split_level",
+      "rebind_status": "ready",
+      "rebind_reason": ""
+    }
+  ],
+  "low_priority_audit_only_task_ids": [
+    "560"
+  ],
+  "scope_breakdown_in_final_gate": {
+    "oos_open_boundary": 2,
+    "oos_split_level": 5,
+    "oos_geometry": 1,
+    "oos_insufficient": 1
+  },
+  "oos_selection_frozen": true,
+  "oos_selection_ready": true,
+  "oos_binding_ready": true,
+  "missing_gold_task_ids": [],
+  "scope_mismatch_task_ids": [],
+  "scope_not_ready_task_ids": [],
+  "blocked_reasons": [],
+  "notes": [
+    "This artifact rebinds the existing OOS gate freeze to final adjudicated scope truth.",
+    "Low-priority audit-only OOS rows remain outside the executable gate unless manually promoted later."
+  ]
+}

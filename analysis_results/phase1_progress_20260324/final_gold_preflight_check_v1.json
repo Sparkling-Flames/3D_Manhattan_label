@@ -1,0 +1,200 @@
+{
+  "check_name": "final_gold_preflight_check_v1",
+  "truth_layer_dir": "truth_layer_extraction_20260324",
+  "reference_binding_status": "working_consensus_extraction_ready_not_final_gold",
+  "export_snapshot": "project-20-at-2026-03-25-01-17-926f4b7f.json",
+  "n_trap_records_total": 58,
+  "n_manual_records": 30,
+  "n_semi_records": 18,
+  "n_oos_records": 10,
+  "expected_final_gold_fields": [
+    "task_id",
+    "base_task_id",
+    "final_scope_alias",
+    "final_scope_binary",
+    "geometry_gold_ready",
+    "scope_gold_ready",
+    "adjudication_status",
+    "notes"
+  ],
+  "derived_split_outputs": {
+    "trap_corner_records_v1": "analysis_results\\truth_layer_extraction_20260324\\trap_corner_records_v1.jsonl",
+    "trap_scope_records_v1": "analysis_results\\truth_layer_extraction_20260324\\trap_scope_records_v1.csv"
+  },
+  "rebind_field_requirements": {
+    "manual": [
+      "task_id",
+      "final_scope_alias",
+      "final_scope_binary=in_scope",
+      "geometry_gold_ready=true",
+      "adjudication_status=final_adjudicated_gold"
+    ],
+    "semi_control": [
+      "task_id",
+      "final_scope_alias",
+      "final_scope_binary=in_scope",
+      "geometry_gold_ready=true",
+      "adjudication_status=final_adjudicated_gold"
+    ],
+    "semi_natural_trap": [
+      "task_id",
+      "final_scope_alias",
+      "final_scope_binary=in_scope",
+      "geometry_gold_ready=true",
+      "adjudication_status=final_adjudicated_gold"
+    ],
+    "oos_gate": [
+      "task_id",
+      "final_scope_alias",
+      "final_scope_binary=oos",
+      "scope_gold_ready=true",
+      "adjudication_status=final_adjudicated_gold"
+    ],
+    "semi_synthetic_carry_forward": [
+      "candidate_id",
+      "base_task_id",
+      "family",
+      "source_type"
+    ]
+  },
+  "manual_selection_snapshot": {
+    "manual_total_selected": 30,
+    "expert_anchor_count": 22,
+    "non_anchor_count": 8,
+    "manual_binding_ready": false,
+    "selected_task_ids": [
+      "462",
+      "470",
+      "497",
+      "509",
+      "510",
+      "533",
+      "550",
+      "554",
+      "555",
+      "556",
+      "559",
+      "562",
+      "564",
+      "567",
+      "569",
+      "570",
+      "578",
+      "614",
+      "630",
+      "635",
+      "670",
+      "676",
+      "677",
+      "687",
+      "696",
+      "697",
+      "707",
+      "711",
+      "714",
+      "717"
+    ]
+  },
+  "semi_selection_snapshot": {
+    "control_count": 6,
+    "trap_count": 12,
+    "control_task_ids": [
+      "492",
+      "501",
+      "568",
+      "572",
+      "573",
+      "576"
+    ],
+    "natural_trap_task_ids": [
+      "474",
+      "477",
+      "493",
+      "505"
+    ],
+    "synthetic_carry_forward_rows": [
+      {
+        "candidate_id": "legacy_disjoint_source_011_corner_drift",
+        "base_task_id": "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+        "family": "corner_drift",
+        "source_type": "trap_synthetic_disjoint_source"
+      },
+      {
+        "candidate_id": "legacy_disjoint_source_003_corner_drift",
+        "base_task_id": "B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+        "family": "corner_drift",
+        "source_type": "trap_synthetic_disjoint_source"
+      },
+      {
+        "candidate_id": "legacy_disjoint_source_006_corner_duplicate",
+        "base_task_id": "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12",
+        "family": "corner_duplicate",
+        "source_type": "trap_synthetic_disjoint_source"
+      },
+      {
+        "candidate_id": "legacy_disjoint_source_008_corner_duplicate",
+        "base_task_id": "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8",
+        "family": "corner_duplicate",
+        "source_type": "trap_synthetic_disjoint_source"
+      },
+      {
+        "candidate_id": "legacy_disjoint_source_007_over_parsing",
+        "base_task_id": "e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a",
+        "family": "over_parsing",
+        "source_type": "trap_synthetic_disjoint_source"
+      },
+      {
+        "candidate_id": "legacy_disjoint_source_004_over_parsing",
+        "base_task_id": "q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103",
+        "family": "over_parsing",
+        "source_type": "trap_synthetic_disjoint_source"
+      },
+      {
+        "candidate_id": "legacy_disjoint_source_010_overextend_adjacent",
+        "base_task_id": "uNb9QFRL6hY_6a99c723d40b429e96a29c8ce7532d1d",
+        "family": "overextend_adjacent",
+        "source_type": "trap_synthetic_disjoint_source"
+      },
+      {
+        "candidate_id": "legacy_disjoint_source_009_overextend_adjacent",
+        "base_task_id": "uNb9QFRL6hY_9ec5ebcf3edc44e1ba6dd02e8423e5ed",
+        "family": "overextend_adjacent",
+        "source_type": "trap_synthetic_disjoint_source"
+      }
+    ]
+  },
+  "oos_selection_snapshot": {
+    "final_oos_gate_count": 9,
+    "oos_gate_task_ids": [
+      "459",
+      "476",
+      "495",
+      "496",
+      "526",
+      "529",
+      "575",
+      "609",
+      "661"
+    ],
+    "low_priority_audit_only_task_ids": [
+      "560"
+    ]
+  },
+  "task_alignment": {
+    "selected_task_count_requiring_gold_rows": 49,
+    "missing_selected_task_ids_in_current_truth_layer": [],
+    "current_scope_missing_task_ids": [],
+    "current_corner_missing_task_ids": []
+  },
+  "status": {
+    "stage1_selection_freeze_complete": true,
+    "prescreen_ready_currently": false,
+    "can_directly_run_rebinding_if_final_gold_matches_contract": true,
+    "preflight_status": "schema_ready_waiting_for_final_gold"
+  },
+  "risk_items": [],
+  "notes": [
+    "Current trap fine-annotation export has already been split into task-level corner and scope records.",
+    "This preflight does not generate any v2 formal result; it only checks whether a future final-gold file can plug directly into the rebinding entrypoint."
+  ]
+}

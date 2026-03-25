@@ -1,0 +1,95 @@
+{
+  "binding_name": "oos_final_quota_binding_v1",
+  "selection_scope": "stage1_prescreen_oos_gate",
+  "truth_layer_dir": "truth_layer_extraction_20260324",
+  "reference_binding_status": "working_consensus_reference_bound_not_final_gold",
+  "adjudication_status": "working_consensus_not_final_gold",
+  "oos_total_pool_count": 10,
+  "final_oos_gate_count": 9,
+  "audit_only_count": 1,
+  "selected_oos_gate_rows": [
+    {
+      "task_id": "459",
+      "base_task_id": "b8cTxDM8gDG_f63819c407e64c2897b703080766cb60",
+      "scope": "oos_open_boundary",
+      "priority_flag": "default",
+      "final_role": "oos_gate"
+    },
+    {
+      "task_id": "476",
+      "base_task_id": "uNb9QFRL6hY_a38a8c6dced34d8bb18fb67165c099f2",
+      "scope": "oos_split_level",
+      "priority_flag": "default",
+      "final_role": "oos_gate"
+    },
+    {
+      "task_id": "495",
+      "base_task_id": "yqstnuAEVhm_66ecc07f3cda4d8ebaf84288325669f5",
+      "scope": "oos_split_level",
+      "priority_flag": "special_review",
+      "final_role": "oos_gate"
+    },
+    {
+      "task_id": "496",
+      "base_task_id": "7y3sRwLe3Va_6376b741b50a4418b3dc3fde791c3c09",
+      "scope": "oos_split_level",
+      "priority_flag": "default",
+      "final_role": "oos_gate"
+    },
+    {
+      "task_id": "526",
+      "base_task_id": "UwV83HsGsw3_71ada030981d4468b76dcebc1b6fb940",
+      "scope": "oos_geometry",
+      "priority_flag": "default",
+      "final_role": "oos_gate"
+    },
+    {
+      "task_id": "529",
+      "base_task_id": "UwV83HsGsw3_fcd79f4b6a6642e99227caffb51bf407",
+      "scope": "oos_insufficient",
+      "priority_flag": "default",
+      "final_role": "oos_gate"
+    },
+    {
+      "task_id": "575",
+      "base_task_id": "7y3sRwLe3Va_4291cbfde1024467b1548934653f07ce",
+      "scope": "oos_split_level",
+      "priority_flag": "default",
+      "final_role": "oos_gate"
+    },
+    {
+      "task_id": "609",
+      "base_task_id": "UwV83HsGsw3_528d342bf5494b3b94983545d6a1a282",
+      "scope": "oos_open_boundary",
+      "priority_flag": "default",
+      "final_role": "oos_gate"
+    },
+    {
+      "task_id": "661",
+      "base_task_id": "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb",
+      "scope": "oos_split_level",
+      "priority_flag": "default",
+      "final_role": "oos_gate"
+    }
+  ],
+  "low_priority_audit_only_task_ids": [
+    "560"
+  ],
+  "scope_breakdown_in_final_gate": {
+    "oos_open_boundary": 2,
+    "oos_split_level": 5,
+    "oos_geometry": 1,
+    "oos_insufficient": 1
+  },
+  "oos_selection_frozen": true,
+  "oos_selection_ready": true,
+  "oos_binding_ready": false,
+  "selection_blocked_reasons": [],
+  "binding_blocked_reasons": [
+    "current reference layer remains working_consensus_not_final_gold rather than final adjudicated gold"
+  ],
+  "notes": [
+    "Low-priority OOS rows are interpreted as comparatively uncertain OOS cases, not as unannotatable samples.",
+    "These rows remain in the registry, but do not auto-enter the default executable OOS gate."
+  ]
+}

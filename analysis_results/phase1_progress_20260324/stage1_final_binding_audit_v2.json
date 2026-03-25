@@ -1,0 +1,22 @@
+{
+  "audit_name": "stage1_final_binding_audit_v2",
+  "truth_layer_dir": "truth_layer_extraction_20260324",
+  "reference_binding_status": "final_adjudicated_gold_rebound",
+  "adjudication_status": "final_adjudicated_gold",
+  "manual_binding_ready": true,
+  "semi_binding_ready": true,
+  "oos_binding_ready": true,
+  "manual_expert_anchor_count": 22,
+  "manual_non_anchor_count": 8,
+  "semi_control_count": 6,
+  "semi_trap_count": 12,
+  "oos_final_gate_count": 9,
+  "selection_freeze_reused": true,
+  "rebind_only_no_reselection": true,
+  "prescreen_ready": true,
+  "blocked_reasons": [],
+  "notes": [
+    "This audit only rebinds the existing frozen selection manifests to final gold.",
+    "If any selected rows fail final-gold rebinding, the next step is minimal replacement rather than redesign."
+  ]
+}

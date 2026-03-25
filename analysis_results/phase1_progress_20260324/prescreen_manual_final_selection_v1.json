@@ -1,0 +1,80 @@
+{
+  "selection_name": "prescreen_manual_final_selection_v1",
+  "selection_scope": "stage1_prescreen_manual_pool",
+  "truth_layer_dir": "truth_layer_extraction_20260324",
+  "reference_binding_status": "working_consensus_reference_bound_not_final_gold",
+  "adjudication_status": "working_consensus_not_final_gold",
+  "manual_total_pool_count": 30,
+  "manual_total_selected": 30,
+  "expert_anchor_target_min": 20,
+  "expert_anchor_target_max": 22,
+  "expert_anchor_count": 22,
+  "non_anchor_target_min": 8,
+  "non_anchor_target_max": 10,
+  "non_anchor_count": 8,
+  "selected_expert_anchor_task_ids": [
+    "470",
+    "497",
+    "510",
+    "550",
+    "554",
+    "555",
+    "556",
+    "559",
+    "562",
+    "564",
+    "569",
+    "570",
+    "578",
+    "614",
+    "630",
+    "670",
+    "677",
+    "687",
+    "697",
+    "707",
+    "714",
+    "717"
+  ],
+  "selected_non_anchor_task_ids": [
+    "462",
+    "509",
+    "533",
+    "567",
+    "635",
+    "676",
+    "696",
+    "711"
+  ],
+  "promoted_anchor_task_ids": [],
+  "demoted_anchor_candidate_task_ids": [
+    "509"
+  ],
+  "retained_low_priority_non_anchor_task_ids": [
+    "533",
+    "567",
+    "635",
+    "676",
+    "696"
+  ],
+  "retained_audit_note_non_anchor_task_ids": [
+    "462",
+    "533"
+  ],
+  "anchor_difficulty_coverage": {
+    "low_texture": 3,
+    "occlusion": 11,
+    "reflection": 4,
+    "seam": 5,
+    "trivial": 5
+  },
+  "selection_frozen": true,
+  "manual_binding_ready": false,
+  "blocked_reasons": [
+    "current reference layer remains working_consensus_not_final_gold rather than final adjudicated gold"
+  ],
+  "notes": [
+    "This file freezes the current manual pool into a thesis-facing anchor/non-anchor split on top of the working-consensus truth layer.",
+    "Only explicit low-priority rows are automatically excluded from the expert-anchor core; other review notes are kept unless manually demoted for quota balancing or note-based instability."
+  ]
+}

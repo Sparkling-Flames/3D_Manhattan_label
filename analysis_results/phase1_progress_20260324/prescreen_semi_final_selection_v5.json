@@ -1,0 +1,284 @@
+{
+  "selection_name": "prescreen_semi_final_selection_v5",
+  "selection_scope": "stage1_prescreen_semi",
+  "truth_layer_dir": "truth_layer_extraction_20260324",
+  "reference_binding_status": "working_consensus_reference_bound_not_final_gold",
+  "adjudication_status": "working_consensus_not_final_gold",
+  "target_total": 18,
+  "control_target": 6,
+  "trap_target": 12,
+  "selected_control_rows": [
+    {
+      "task_id": "492",
+      "base_task_id": "e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76",
+      "keep": true,
+      "final_role": "control",
+      "priority_flag": "default",
+      "review_note_flag": false,
+      "default_eligible": true,
+      "keep_reason": "Retained as an acceptable control on the current working-consensus layer.",
+      "drop_reason": "",
+      "notes": "poly_residue_present_in_raw_export"
+    },
+    {
+      "task_id": "501",
+      "base_task_id": "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+      "keep": true,
+      "final_role": "control",
+      "priority_flag": "default",
+      "review_note_flag": false,
+      "default_eligible": true,
+      "keep_reason": "Retained as an acceptable control on the current working-consensus layer.",
+      "drop_reason": "",
+      "notes": ""
+    },
+    {
+      "task_id": "568",
+      "base_task_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+      "keep": true,
+      "final_role": "control",
+      "priority_flag": "default",
+      "review_note_flag": false,
+      "default_eligible": true,
+      "keep_reason": "Retained as an acceptable control on the current working-consensus layer.",
+      "drop_reason": "",
+      "notes": ""
+    },
+    {
+      "task_id": "572",
+      "base_task_id": "wc2JMjhGNzB_77962388887942148ee65c2892600e02",
+      "keep": true,
+      "final_role": "control",
+      "priority_flag": "default",
+      "review_note_flag": false,
+      "default_eligible": true,
+      "keep_reason": "Retained as an acceptable control on the current working-consensus layer.",
+      "drop_reason": "",
+      "notes": ""
+    },
+    {
+      "task_id": "573",
+      "base_task_id": "wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c",
+      "keep": true,
+      "final_role": "control",
+      "priority_flag": "default",
+      "review_note_flag": false,
+      "default_eligible": true,
+      "keep_reason": "Retained as an acceptable control on the current working-consensus layer.",
+      "drop_reason": "",
+      "notes": ""
+    },
+    {
+      "task_id": "576",
+      "base_task_id": "wc2JMjhGNzB_3848b1ba65fa49308c3d0a79f63782b3",
+      "keep": true,
+      "final_role": "control",
+      "priority_flag": "default",
+      "review_note_flag": false,
+      "default_eligible": true,
+      "keep_reason": "Retained as an acceptable control. The stale v4 folder-level priority blocker has been cleared by the latest truth-layer registry.",
+      "drop_reason": "",
+      "notes": ""
+    }
+  ],
+  "selected_trap_rows": [
+    {
+      "candidate_id": "natural_overextend_adjacent_493",
+      "task_id": "493",
+      "base_task_id": "e9zR4mvMWw7_f7ab5b3ece274b48be57eb65bb6d4814",
+      "family": "overextend_adjacent",
+      "source_type": "trap_natural",
+      "selection_status": "natural_first_selected"
+    },
+    {
+      "candidate_id": "natural_over_parsing_505",
+      "task_id": "505",
+      "base_task_id": "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+      "family": "over_parsing",
+      "source_type": "trap_natural",
+      "selection_status": "natural_first_selected"
+    },
+    {
+      "candidate_id": "natural_corner_drift_474",
+      "task_id": "474",
+      "base_task_id": "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+      "family": "corner_drift",
+      "source_type": "trap_natural",
+      "selection_status": "natural_first_selected"
+    },
+    {
+      "candidate_id": "natural_corner_duplicate_477",
+      "task_id": "477",
+      "base_task_id": "uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359",
+      "family": "corner_duplicate",
+      "source_type": "trap_natural",
+      "selection_status": "natural_first_selected"
+    },
+    {
+      "candidate_id": "legacy_disjoint_source_011_corner_drift",
+      "base_task_id": "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+      "family": "corner_drift",
+      "source_type": "trap_synthetic_disjoint_source",
+      "selection_status": "synthetic_backfill_selected"
+    },
+    {
+      "candidate_id": "legacy_disjoint_source_003_corner_drift",
+      "base_task_id": "B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+      "family": "corner_drift",
+      "source_type": "trap_synthetic_disjoint_source",
+      "selection_status": "synthetic_backfill_selected"
+    },
+    {
+      "candidate_id": "legacy_disjoint_source_006_corner_duplicate",
+      "base_task_id": "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12",
+      "family": "corner_duplicate",
+      "source_type": "trap_synthetic_disjoint_source",
+      "selection_status": "synthetic_backfill_selected"
+    },
+    {
+      "candidate_id": "legacy_disjoint_source_008_corner_duplicate",
+      "base_task_id": "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8",
+      "family": "corner_duplicate",
+      "source_type": "trap_synthetic_disjoint_source",
+      "selection_status": "synthetic_backfill_selected"
+    },
+    {
+      "candidate_id": "legacy_disjoint_source_007_over_parsing",
+      "base_task_id": "e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a",
+      "family": "over_parsing",
+      "source_type": "trap_synthetic_disjoint_source",
+      "selection_status": "synthetic_backfill_selected"
+    },
+    {
+      "candidate_id": "legacy_disjoint_source_004_over_parsing",
+      "base_task_id": "q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103",
+      "family": "over_parsing",
+      "source_type": "trap_synthetic_disjoint_source",
+      "selection_status": "synthetic_backfill_selected"
+    },
+    {
+      "candidate_id": "legacy_disjoint_source_010_overextend_adjacent",
+      "base_task_id": "uNb9QFRL6hY_6a99c723d40b429e96a29c8ce7532d1d",
+      "family": "overextend_adjacent",
+      "source_type": "trap_synthetic_disjoint_source",
+      "selection_status": "synthetic_backfill_selected"
+    },
+    {
+      "candidate_id": "legacy_disjoint_source_009_overextend_adjacent",
+      "base_task_id": "uNb9QFRL6hY_9ec5ebcf3edc44e1ba6dd02e8423e5ed",
+      "family": "overextend_adjacent",
+      "source_type": "trap_synthetic_disjoint_source",
+      "selection_status": "synthetic_backfill_selected"
+    }
+  ],
+  "current_selected_control_count": 6,
+  "current_selected_trap_count": 12,
+  "family_allocations": [
+    {
+      "family": "acceptable",
+      "target_count": 6,
+      "current_selected_count": 6,
+      "current_natural_count": 6,
+      "current_synthetic_count": 0,
+      "role": "control"
+    },
+    {
+      "family": "overextend_adjacent",
+      "target_count": 3,
+      "current_selected_count": 3,
+      "current_natural_count": 1,
+      "current_synthetic_count": 2,
+      "role": "trap_core"
+    },
+    {
+      "family": "over_parsing",
+      "target_count": 3,
+      "current_selected_count": 3,
+      "current_natural_count": 1,
+      "current_synthetic_count": 2,
+      "role": "trap_core"
+    },
+    {
+      "family": "corner_drift",
+      "target_count": 3,
+      "current_selected_count": 3,
+      "current_natural_count": 1,
+      "current_synthetic_count": 2,
+      "role": "trap_core"
+    },
+    {
+      "family": "corner_duplicate",
+      "target_count": 3,
+      "current_selected_count": 3,
+      "current_natural_count": 1,
+      "current_synthetic_count": 2,
+      "role": "trap_core"
+    }
+  ],
+  "extension_family_notes": [
+    {
+      "family": "underextend",
+      "available_natural_count": 2,
+      "default_eligible_count": 0,
+      "low_priority_count": 1,
+      "available_task_ids": [
+        "579",
+        "712"
+      ],
+      "role": "formal_extension_family",
+      "notes": "漏标当前不进入默认主 12 张 trap 配额，但作为正式 extension family 在 appendix operator library / natural-failure bank / lifecycle audit 中保留。"
+    },
+    {
+      "family": "fail",
+      "available_natural_count": 1,
+      "available_task_ids": [
+        "475"
+      ],
+      "role": "optional_small_quota",
+      "notes": "模型预标注失败只保留为 low-priority / optional / audit case。"
+    },
+    {
+      "family": "topology_failure",
+      "available_natural_count": 0,
+      "available_task_ids": [],
+      "role": "audit_small_quota",
+      "notes": "拓扑崩溃仍只保留固定小配额稳健性 / 审计地位，不进入默认主 trap 配额。"
+    }
+  ],
+  "selected_source_base_task_ids": [
+    "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456",
+    "B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+    "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12",
+    "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8",
+    "e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a",
+    "q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103",
+    "uNb9QFRL6hY_6a99c723d40b429e96a29c8ce7532d1d",
+    "uNb9QFRL6hY_9ec5ebcf3edc44e1ba6dd02e8423e5ed"
+  ],
+  "control_priority_flag_rows": [],
+  "control_trap_overlap_count": 0,
+  "control_trap_overlap_base_task_ids": [],
+  "trap_manual_overlap_count": 0,
+  "trap_manual_overlap_base_task_ids": [],
+  "trap_oos_overlap_count": 0,
+  "trap_oos_overlap_base_task_ids": [],
+  "natural_synthetic_overlap_count": 0,
+  "natural_synthetic_overlap_base_task_ids": [],
+  "control_source_overlap_count": 0,
+  "control_source_overlap_base_task_ids": [],
+  "duplicate_trap_base_task_id_count": 0,
+  "duplicate_trap_base_task_ids": [],
+  "control_binding_ready": true,
+  "trap_binding_ready": true,
+  "selection_ready": true,
+  "semi_binding_ready": false,
+  "selection_blocked_reasons": [],
+  "binding_blocked_reasons": [
+    "current reference layer remains working_consensus_not_final_gold rather than final adjudicated gold"
+  ],
+  "notes": [
+    "Default main trap quota remains organized around four core families.",
+    "Underextend is retained as a formal extension family rather than promoted into the default 12-trap core.",
+    "Synthetic trap rows remain freeze-layer assets rather than latest-export manual annotations."
+  ]
+}

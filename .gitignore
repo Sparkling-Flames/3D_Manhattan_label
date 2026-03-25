@@ -136,6 +136,21 @@ legacy/
 !analysis_results/**
 !paper_figures/**
 
+# Local generated preview artifacts under analysis_results
+analysis_results/*.ply
+analysis_results/item*_layout_preview*.png
+analysis_results/item*_layout_sorted.txt
+
+# Keep tool/test source tracked, but still ignore local Python caches inside them
+tools/__pycache__/
+tools/**/*.pyc
+tests/__pycache__/
+tests/**/*.pyc
+
+# Keep only the latest verified project-20 fine-annotation snapshot tracked
+export_label/人工精标/project-20-at-2026-03-24-16-24-a7e7c114.json
+export_label/人工精标/project-20-at-2026-03-25-01-07-637e1c60.json
+
 # Syncthing folder
 .stfolder/
 

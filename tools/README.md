@@ -655,7 +655,11 @@ python tools/upload_mp3d_test_to_cos.py \
 
 ```bash
 python tools/prepare_labelstudio_docker.py \
-  --image-base-url https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/test/img \
+  --layout-txt-dir data/mp3d_layout/test/label_cor \
+  --import-kind annotations \
+  --order-from-export export_label/project-2-at-2026-02-22-11-22-ee6c4607.json \
+  --image-base-url https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v \
+  --image-ext .jpg \
   --vis-base-url http://175.178.71.217:8000 \
   --output-json label_studio_import_docker.json
 ```

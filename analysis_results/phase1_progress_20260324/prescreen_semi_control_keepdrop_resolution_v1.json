@@ -1,0 +1,108 @@
+{
+  "resolution_name": "prescreen_semi_control_keepdrop_resolution_v1",
+  "selection_scope": "stage1_prescreen_semi_control",
+  "truth_layer_dir": "truth_layer_extraction_20260324",
+  "source_artifacts": [
+    "trap_collection_freeze_20260320/prescreen_semi_final_selection_v4.json",
+    "trap_collection_freeze_20260320/prescreen_semi_source_pool_freeze_v1.json"
+  ],
+  "target_count": 6,
+  "selected_control_rows": [
+    {
+      "task_id": "492",
+      "base_task_id": "e9zR4mvMWw7_1daae4b7becc43949516096170ce2a76",
+      "keep": true,
+      "final_role": "control",
+      "priority_flag": "default",
+      "review_note_flag": false,
+      "default_eligible": true,
+      "keep_reason": "Retained as an acceptable control on the current working-consensus layer.",
+      "drop_reason": "",
+      "notes": "poly_residue_present_in_raw_export"
+    },
+    {
+      "task_id": "501",
+      "base_task_id": "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+      "keep": true,
+      "final_role": "control",
+      "priority_flag": "default",
+      "review_note_flag": false,
+      "default_eligible": true,
+      "keep_reason": "Retained as an acceptable control on the current working-consensus layer.",
+      "drop_reason": "",
+      "notes": ""
+    },
+    {
+      "task_id": "568",
+      "base_task_id": "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+      "keep": true,
+      "final_role": "control",
+      "priority_flag": "default",
+      "review_note_flag": false,
+      "default_eligible": true,
+      "keep_reason": "Retained as an acceptable control on the current working-consensus layer.",
+      "drop_reason": "",
+      "notes": ""
+    },
+    {
+      "task_id": "572",
+      "base_task_id": "wc2JMjhGNzB_77962388887942148ee65c2892600e02",
+      "keep": true,
+      "final_role": "control",
+      "priority_flag": "default",
+      "review_note_flag": false,
+      "default_eligible": true,
+      "keep_reason": "Retained as an acceptable control on the current working-consensus layer.",
+      "drop_reason": "",
+      "notes": ""
+    },
+    {
+      "task_id": "573",
+      "base_task_id": "wc2JMjhGNzB_3504ff17bcae4d6c85bdc61fc3a5bf0c",
+      "keep": true,
+      "final_role": "control",
+      "priority_flag": "default",
+      "review_note_flag": false,
+      "default_eligible": true,
+      "keep_reason": "Retained as an acceptable control on the current working-consensus layer.",
+      "drop_reason": "",
+      "notes": ""
+    },
+    {
+      "task_id": "576",
+      "base_task_id": "wc2JMjhGNzB_3848b1ba65fa49308c3d0a79f63782b3",
+      "keep": true,
+      "final_role": "control",
+      "priority_flag": "default",
+      "review_note_flag": false,
+      "default_eligible": true,
+      "keep_reason": "Retained as an acceptable control. The stale v4 folder-level priority blocker has been cleared by the latest truth-layer registry.",
+      "drop_reason": "",
+      "notes": ""
+    }
+  ],
+  "selected_control_count": 6,
+  "resolved_stale_priority_rows": [
+    {
+      "task_id": "576",
+      "base_task_id": "wc2JMjhGNzB_3848b1ba65fa49308c3d0a79f63782b3",
+      "old_v4_status": "tentative_control_selected_with_stale_priority_blocker",
+      "current_priority_flag": "default",
+      "resolution": "keep_as_control"
+    }
+  ],
+  "current_priority_flag_rows": [],
+  "manual_pool_overlap_count": 0,
+  "manual_pool_overlap_base_task_ids": [],
+  "oos_pool_overlap_count": 0,
+  "oos_pool_overlap_base_task_ids": [],
+  "synthetic_source_overlap_count": 0,
+  "synthetic_source_overlap_base_task_ids": [],
+  "control_binding_ready": true,
+  "selection_ready": true,
+  "blocked_reasons": [],
+  "notes": [
+    "This resolution only closes the stale control-side blocker from v4.",
+    "It does not change the semi trap family policy or the trap-side synthetic backfill."
+  ]
+}
