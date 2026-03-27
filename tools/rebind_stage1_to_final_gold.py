@@ -61,6 +61,8 @@ def _load_gold_rows(path: Path) -> list[dict[str, Any]]:
 def _normalize_gold_record(row: dict[str, Any]) -> dict[str, Any]:
     task_id = str(row.get("task_id", "")).strip()
     base_task_id = str(row.get("base_task_id", "")).strip()
+    family_dir = str(row.get("family_dir", "")).strip()
+    priority_flag = str(row.get("priority_flag", "")).strip()
     final_scope_alias = str(row.get("final_scope_alias", row.get("scope", ""))).strip()
     final_scope_binary = str(row.get("final_scope_binary", "")).strip()
     adjudication_status = str(row.get("adjudication_status", "")).strip()
@@ -84,6 +86,8 @@ def _normalize_gold_record(row: dict[str, Any]) -> dict[str, Any]:
     return {
         "task_id": task_id,
         "base_task_id": base_task_id,
+        "family_dir": family_dir,
+        "priority_flag": priority_flag,
         "final_scope_alias": final_scope_alias,
         "final_scope_binary": final_scope_binary,
         "geometry_gold_ready": geometry_gold_ready,
@@ -319,6 +323,7 @@ def build_oos_binding_v2(
     final_gold_path: Path,
 ) -> dict[str, Any]:
     rebound_rows: list[dict[str, Any]] = []
+    audit_only_rows: list[dict[str, Any]] = []
     missing_gold_task_ids: list[str] = []
     scope_mismatch_task_ids: list[str] = []
     scope_not_ready_task_ids: list[str] = []
@@ -343,9 +348,25 @@ def build_oos_binding_v2(
         rebound_rows.append(
             {
                 **row,
+                "directory_family": gold["family_dir"] if gold else "",
                 "gold_scope_alias": gold["final_scope_alias"] if gold else "",
                 "rebind_status": rebind_status,
                 "rebind_reason": reason,
+            }
+        )
+
+    for task_id in oos_binding_v1["low_priority_audit_only_task_ids"]:
+        task_id = str(task_id)
+        gold = gold_by_task.get(task_id)
+        audit_only_rows.append(
+            {
+                "task_id": task_id,
+                "base_task_id": gold["base_task_id"] if gold else "",
+                "directory_family": gold["family_dir"] if gold else "",
+                "gold_scope_alias": gold["final_scope_alias"] if gold else "",
+                "priority_flag": gold["priority_flag"] if gold else "unknown",
+                "final_role": "audit_only",
+                "rebind_status": "ready" if gold and gold["final_scope_binary"] == "oos" else "scope_mismatch",
             }
         )
 
@@ -364,6 +385,7 @@ def build_oos_binding_v2(
         "audit_only_count": oos_binding_v1["audit_only_count"],
         "selected_oos_gate_rows": rebound_rows,
         "low_priority_audit_only_task_ids": oos_binding_v1["low_priority_audit_only_task_ids"],
+        "low_priority_audit_only_rows": audit_only_rows,
         "scope_breakdown_in_final_gate": oos_binding_v1["scope_breakdown_in_final_gate"],
         "oos_selection_frozen": True,
         "oos_selection_ready": True,
@@ -376,7 +398,8 @@ def build_oos_binding_v2(
         else ["some selected OOS gate rows are missing from final gold, no longer OOS, or not scope-ready"],
         "notes": [
             "This artifact rebinds the existing OOS gate freeze to final adjudicated scope truth.",
-            "Low-priority audit-only OOS rows remain outside the executable gate unless manually promoted later."
+            "Low-priority audit-only OOS rows remain outside the executable gate unless manually promoted later.",
+            "Directory family and final adjudicated OOS subtype may diverge for isolated rows such as task560; executable imports follow final gold scope rather than folder name.",
         ],
     }
 

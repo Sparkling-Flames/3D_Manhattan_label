@@ -44,7 +44,7 @@
       "candidate_id": "control_576",
       "task_id": "576",
       "base_task_id": "wc2JMjhGNzB_3848b1ba65fa49308c3d0a79f63782b3",
-      "priority_annotation": "低优先",
+      "priority_annotation": "",
       "selection_status": "tentative_control_selected"
     }
   ],
@@ -178,9 +178,7 @@
       "role": "trap_core"
     }
   ],
-  "control_priority_flag_rows": [
-    "wc2JMjhGNzB_3848b1ba65fa49308c3d0a79f63782b3"
-  ],
+  "control_priority_flag_rows": [],
   "control_trap_overlap_count": 0,
   "control_trap_overlap_base_task_ids": [],
   "trap_manual_overlap_count": 0,
@@ -191,12 +189,10 @@
   "natural_synthetic_overlap_base_task_ids": [],
   "duplicate_trap_base_task_id_count": 0,
   "duplicate_trap_base_task_ids": [],
-  "control_binding_ready": false,
+  "control_binding_ready": true,
   "trap_binding_ready": true,
-  "selection_ready": false,
-  "blocked_reasons": [
-    "selected control pool still contains folder-level priority flags, so the control keep/drop freeze remains pending"
-  ],
+  "selection_ready": true,
+  "blocked_reasons": [],
   "notes": [
     "Trap-side family coverage is now selected through natural-first plus disjoint synthetic backfill.",
     "This artifact still does not claim Stage 1 executable readiness when the control keep/drop freeze remains pending."

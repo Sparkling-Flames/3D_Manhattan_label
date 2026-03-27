@@ -1,0 +1,156 @@
+[
+  {
+    "data": {
+      "image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c.jpg",
+      "vis_3d": "http://175.178.71.217:8000/tools/vis_3d.html?w=1024&h=512&data=%5B%7B%22x%22%3A%20271.0%2C%20%22y_ceiling%22%3A%20207.0%2C%20%22y_floor%22%3A%20331.0%7D%2C%20%7B%22x%22%3A%20316.0%2C%20%22y_ceiling%22%3A%20210.0%2C%20%22y_floor%22%3A%20327.0%7D%2C%20%7B%22x%22%3A%20548.0%2C%20%22y_ceiling%22%3A%20148.0%2C%20%22y_floor%22%3A%20403.0%7D%2C%20%7B%22x%22%3A%20633.0%2C%20%22y_ceiling%22%3A%2065.0%2C%20%22y_floor%22%3A%20470.0%7D%5D",
+      "title": "wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c.jpg",
+      "dataset_group": "PreScreen_semi_audit_holdout",
+      "condition": "semi_audit_holdout",
+      "task_id": "475",
+      "base_task_id": "wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c",
+      "semi_role": "holdout",
+      "trap_family": "fail",
+      "init_type": "misleading",
+      "source_type": "trap_natural_holdout",
+      "proposal_source_kind": "model_output_txt",
+      "proposal_source_path": "output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34\\wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c.txt",
+      "proposal_coord_contract": "hohonet_model_output_layout_txt@1024x512"
+    },
+    "predictions": [
+      {
+        "model_version": "HoHoNet_stage1_prescreen_holdout_v2",
+        "score": 0.99,
+        "result": [
+          {
+            "id": "kp_0",
+            "from_name": "kp",
+            "to_name": "img",
+            "type": "keypointlabels",
+            "original_width": 1024,
+            "original_height": 512,
+            "value": {
+              "x": 26.46484375,
+              "y": 40.4296875,
+              "width": 0.5,
+              "keypointlabels": [
+                "Corner"
+              ]
+            }
+          },
+          {
+            "id": "kp_1",
+            "from_name": "kp",
+            "to_name": "img",
+            "type": "keypointlabels",
+            "original_width": 1024,
+            "original_height": 512,
+            "value": {
+              "x": 26.46484375,
+              "y": 64.6484375,
+              "width": 0.5,
+              "keypointlabels": [
+                "Corner"
+              ]
+            }
+          },
+          {
+            "id": "kp_2",
+            "from_name": "kp",
+            "to_name": "img",
+            "type": "keypointlabels",
+            "original_width": 1024,
+            "original_height": 512,
+            "value": {
+              "x": 30.859375,
+              "y": 41.015625,
+              "width": 0.5,
+              "keypointlabels": [
+                "Corner"
+              ]
+            }
+          },
+          {
+            "id": "kp_3",
+            "from_name": "kp",
+            "to_name": "img",
+            "type": "keypointlabels",
+            "original_width": 1024,
+            "original_height": 512,
+            "value": {
+              "x": 30.859375,
+              "y": 63.8671875,
+              "width": 0.5,
+              "keypointlabels": [
+                "Corner"
+              ]
+            }
+          },
+          {
+            "id": "kp_4",
+            "from_name": "kp",
+            "to_name": "img",
+            "type": "keypointlabels",
+            "original_width": 1024,
+            "original_height": 512,
+            "value": {
+              "x": 53.515625,
+              "y": 28.90625,
+              "width": 0.5,
+              "keypointlabels": [
+                "Corner"
+              ]
+            }
+          },
+          {
+            "id": "kp_5",
+            "from_name": "kp",
+            "to_name": "img",
+            "type": "keypointlabels",
+            "original_width": 1024,
+            "original_height": 512,
+            "value": {
+              "x": 53.515625,
+              "y": 78.7109375,
+              "width": 0.5,
+              "keypointlabels": [
+                "Corner"
+              ]
+            }
+          },
+          {
+            "id": "kp_6",
+            "from_name": "kp",
+            "to_name": "img",
+            "type": "keypointlabels",
+            "original_width": 1024,
+            "original_height": 512,
+            "value": {
+              "x": 61.81640625,
+              "y": 12.6953125,
+              "width": 0.5,
+              "keypointlabels": [
+                "Corner"
+              ]
+            }
+          },
+          {
+            "id": "kp_7",
+            "from_name": "kp",
+            "to_name": "img",
+            "type": "keypointlabels",
+            "original_width": 1024,
+            "original_height": 512,
+            "value": {
+              "x": 61.81640625,
+              "y": 91.796875,
+              "width": 0.5,
+              "keypointlabels": [
+                "Corner"
+              ]
+            }
+          }
+        ]
+      }
+    ]
+  }
+]
