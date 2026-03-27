@@ -10,11 +10,18 @@ from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
 
-from perturbation_operators import (
-    OPERATOR_REGISTRY,
-    canonical_corners_to_runtime_pairs,
-    ls_keypoints_to_canonical_corners,
-)
+try:
+    from perturbation_operators import (
+        OPERATOR_REGISTRY,
+        canonical_corners_to_runtime_pairs,
+        ls_keypoints_to_canonical_corners,
+    )
+except ModuleNotFoundError:  # pragma: no cover
+    from tools.perturbation_operators import (
+        OPERATOR_REGISTRY,
+        canonical_corners_to_runtime_pairs,
+        ls_keypoints_to_canonical_corners,
+    )
 
 
 CLASS_ACCEPTABLE = "\u6a21\u578b\u6807\u6ce8\u8d28\u91cf\u597d"

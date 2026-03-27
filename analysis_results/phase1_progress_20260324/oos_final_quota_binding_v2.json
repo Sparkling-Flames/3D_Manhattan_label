@@ -14,6 +14,7 @@
       "scope": "oos_open_boundary",
       "priority_flag": "default",
       "final_role": "oos_gate",
+      "directory_family": "边界不可判定",
       "gold_scope_alias": "oos_open_boundary",
       "rebind_status": "ready",
       "rebind_reason": ""
@@ -24,6 +25,7 @@
       "scope": "oos_split_level",
       "priority_flag": "default",
       "final_role": "oos_gate",
+      "directory_family": "错层,天花板下凸",
       "gold_scope_alias": "oos_split_level",
       "rebind_status": "ready",
       "rebind_reason": ""
@@ -34,6 +36,7 @@
       "scope": "oos_split_level",
       "priority_flag": "special_review",
       "final_role": "oos_gate",
+      "directory_family": "错层,天花板下凸",
       "gold_scope_alias": "oos_split_level",
       "rebind_status": "ready",
       "rebind_reason": ""
@@ -44,6 +47,7 @@
       "scope": "oos_split_level",
       "priority_flag": "default",
       "final_role": "oos_gate",
+      "directory_family": "错层,天花板下凸",
       "gold_scope_alias": "oos_split_level",
       "rebind_status": "ready",
       "rebind_reason": ""
@@ -54,6 +58,7 @@
       "scope": "oos_geometry",
       "priority_flag": "default",
       "final_role": "oos_gate",
+      "directory_family": "几何假设不成立(弧形墙)",
       "gold_scope_alias": "oos_geometry",
       "rebind_status": "ready",
       "rebind_reason": ""
@@ -64,6 +69,7 @@
       "scope": "oos_insufficient",
       "priority_flag": "default",
       "final_role": "oos_gate",
+      "directory_family": "证据不足",
       "gold_scope_alias": "oos_insufficient",
       "rebind_status": "ready",
       "rebind_reason": ""
@@ -74,6 +80,7 @@
       "scope": "oos_split_level",
       "priority_flag": "default",
       "final_role": "oos_gate",
+      "directory_family": "错层,天花板下凸",
       "gold_scope_alias": "oos_split_level",
       "rebind_status": "ready",
       "rebind_reason": ""
@@ -84,6 +91,7 @@
       "scope": "oos_open_boundary",
       "priority_flag": "default",
       "final_role": "oos_gate",
+      "directory_family": "边界不可判定",
       "gold_scope_alias": "oos_open_boundary",
       "rebind_status": "ready",
       "rebind_reason": ""
@@ -94,6 +102,7 @@
       "scope": "oos_split_level",
       "priority_flag": "default",
       "final_role": "oos_gate",
+      "directory_family": "错层,天花板下凸",
       "gold_scope_alias": "oos_split_level",
       "rebind_status": "ready",
       "rebind_reason": ""
@@ -101,6 +110,17 @@
   ],
   "low_priority_audit_only_task_ids": [
     "560"
+  ],
+  "low_priority_audit_only_rows": [
+    {
+      "task_id": "560",
+      "base_task_id": "X7HyMhZNoso_215ab480f5084ac992c0d0e6b3e82268",
+      "directory_family": "边界不可判定",
+      "gold_scope_alias": "oos_geometry",
+      "priority_flag": "low_priority",
+      "final_role": "audit_only",
+      "rebind_status": "ready"
+    }
   ],
   "scope_breakdown_in_final_gate": {
     "oos_open_boundary": 2,
@@ -117,6 +137,7 @@
   "blocked_reasons": [],
   "notes": [
     "This artifact rebinds the existing OOS gate freeze to final adjudicated scope truth.",
-    "Low-priority audit-only OOS rows remain outside the executable gate unless manually promoted later."
+    "Low-priority audit-only OOS rows remain outside the executable gate unless manually promoted later.",
+    "Directory family and final adjudicated OOS subtype may diverge for isolated rows such as task560; executable imports follow final gold scope rather than folder name."
   ]
 }

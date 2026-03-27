@@ -46,6 +46,7 @@ REGISTRY_FIELDNAMES = [
     "needs_manual_review",
     "default_eligible",
     "directory_scope_mismatch",
+    "directory_scope_subtype_mismatch",
     "notes",
 ]
 
@@ -58,6 +59,13 @@ MANUAL_ROLE_OVERRIDES = {
     "676": "manual_non_anchor_candidate",
     "696": "manual_non_anchor_candidate",
     "711": "manual_non_anchor_candidate",
+}
+
+OOS_FAMILY_TO_SCOPE_ALIAS = {
+    "边界不可判定": "oos_open_boundary",
+    "几何假设不成立(弧形墙)": "oos_geometry",
+    "错层,天花板下凸": "oos_split_level",
+    "证据不足": "oos_insufficient",
 }
 
 
@@ -253,6 +261,19 @@ def _directory_scope_mismatch(bucket_dir: str, current_scope_binary: str) -> boo
     return False
 
 
+def _directory_scope_subtype_mismatch(
+    bucket_dir: str,
+    family_name: str,
+    current_scope_alias: str,
+) -> bool:
+    if bucket_dir != "OOS":
+        return False
+    expected_scope_alias = OOS_FAMILY_TO_SCOPE_ALIAS.get(family_name, "")
+    if not expected_scope_alias or not current_scope_alias:
+        return False
+    return expected_scope_alias != current_scope_alias
+
+
 def recommend_role(
     *,
     task_id: str,
@@ -280,8 +301,15 @@ def recommend_role(
     return "audit_only"
 
 
-def _default_eligible(recommended_role: str, priority_flag: str, directory_scope_mismatch: bool) -> bool:
+def _default_eligible(
+    recommended_role: str,
+    priority_flag: str,
+    directory_scope_mismatch: bool,
+    current_scope_binary: str,
+) -> bool:
     if directory_scope_mismatch:
+        return False
+    if current_scope_binary == "unknown":
         return False
     if recommended_role == "audit_only":
         return False
@@ -303,6 +331,7 @@ def build_trap_registry_rows(root: Path, export_path: Path) -> tuple[list[dict[s
     registry_rows: list[dict[str, Any]] = []
     annotation_rows: list[dict[str, Any]] = []
     mismatches: list[dict[str, Any]] = []
+    subtype_mismatches: list[dict[str, Any]] = []
 
     for task_dir in _iter_task_dirs(trap_root):
         task_id = _task_id_from_dir_name(task_dir.name)
@@ -330,6 +359,11 @@ def build_trap_registry_rows(root: Path, export_path: Path) -> tuple[list[dict[s
         result_flags = _annotation_result_flags(annotation)
         folder_note_present = bool(note_paths)
         directory_scope_mismatch = _directory_scope_mismatch(bucket_dir, current_scope_binary)
+        directory_scope_subtype_mismatch = _directory_scope_subtype_mismatch(
+            bucket_dir,
+            family_name,
+            current_scope_alias,
+        )
         recommended_role_value = recommend_role(
             task_id=task_id,
             bucket_dir=bucket_dir,
@@ -340,10 +374,17 @@ def build_trap_registry_rows(root: Path, export_path: Path) -> tuple[list[dict[s
         needs_manual_review = (
             review_note_flag
             or directory_scope_mismatch
+            or directory_scope_subtype_mismatch
+            or current_scope_binary == "unknown"
             or result_flags["has_poly"]
             or recommended_role_value == "audit_only"
         )
-        default_eligible = _default_eligible(recommended_role_value, priority_flag, directory_scope_mismatch)
+        default_eligible = _default_eligible(
+            recommended_role_value,
+            priority_flag,
+            directory_scope_mismatch,
+            current_scope_binary,
+        )
 
         notes: list[str] = []
         if priority_annotation:
@@ -352,8 +393,12 @@ def build_trap_registry_rows(root: Path, export_path: Path) -> tuple[list[dict[s
             notes.append(f"note_files={','.join(path.name for path in note_paths)}")
         if result_flags["has_poly"]:
             notes.append("poly_residue_present_in_raw_export")
+        if current_scope_binary == "unknown":
+            notes.append("scope_missing_in_latest_verified_export")
         if directory_scope_mismatch:
             notes.append("directory_scope_mismatch")
+        if directory_scope_subtype_mismatch:
+            notes.append("directory_scope_subtype_mismatch")
         if note_excerpt:
             notes.append(note_excerpt)
 
@@ -380,6 +425,7 @@ def build_trap_registry_rows(root: Path, export_path: Path) -> tuple[list[dict[s
                 "needs_manual_review": _bool_text(needs_manual_review),
                 "default_eligible": _bool_text(default_eligible),
                 "directory_scope_mismatch": _bool_text(directory_scope_mismatch),
+                "directory_scope_subtype_mismatch": _bool_text(directory_scope_subtype_mismatch),
                 "notes": " | ".join(notes),
             }
         )
@@ -441,6 +487,20 @@ def build_trap_registry_rows(root: Path, export_path: Path) -> tuple[list[dict[s
                     "note_excerpt": note_excerpt,
                 }
             )
+        if directory_scope_subtype_mismatch:
+            subtype_mismatches.append(
+                {
+                    "task_id": task_id,
+                    "base_task_id": base_task_id,
+                    "bucket_dir": bucket_dir,
+                    "family_dir": family_name,
+                    "expected_scope_alias": OOS_FAMILY_TO_SCOPE_ALIAS.get(family_name, ""),
+                    "current_scope_alias": current_scope_alias,
+                    "priority_flag": priority_flag,
+                    "recommended_role": recommended_role_value,
+                    "note_excerpt": note_excerpt,
+                }
+            )
 
     registry_rows.sort(key=lambda row: (row["bucket_dir"], int(row["task_id"])))
     annotation_rows.sort(key=lambda row: (row["bucket_dir"], int(row["task_id"])))
@@ -448,6 +508,7 @@ def build_trap_registry_rows(root: Path, export_path: Path) -> tuple[list[dict[s
     return registry_rows, annotation_rows, {
         "summary": summary,
         "mismatches": mismatches,
+        "subtype_mismatches": subtype_mismatches,
     }
 
 
@@ -476,6 +537,9 @@ def build_summary(
         "n_with_poly_residue": sum(1 for row in annotation_rows if row["poly_residue_flag"]),
         "n_review_note_flag": sum(1 for row in annotation_rows if row["review_note_flag"]),
         "n_directory_scope_mismatch": count_where(lambda row: row["directory_scope_mismatch"] == "True"),
+        "n_oos_directory_scope_subtype_mismatch": count_where(
+            lambda row: row["directory_scope_subtype_mismatch"] == "True"
+        ),
         "n_tasks_needing_followup": count_where(lambda row: row["needs_manual_review"] == "True"),
         "summary_status": "working_consensus_extraction_ready_not_final_gold",
         "notes": [
@@ -488,9 +552,10 @@ def build_summary(
 
 def build_oos_reconciliation_case(
     mismatches: list[dict[str, Any]],
+    subtype_mismatches: list[dict[str, Any]],
     export_path: Path,
 ) -> dict[str, Any]:
-    if not mismatches:
+    if not mismatches and not subtype_mismatches:
         return {
             "case_status": "no_active_mismatch_after_directory_update",
             "export_snapshot": export_path.name,
@@ -508,6 +573,21 @@ def build_oos_reconciliation_case(
             "notes": [
                 "Earlier discussion assumed one OOS-to-in-scope case remained active.",
                 "After the latest directory and export updates, that active mismatch no longer exists in the working tree.",
+            ],
+        }
+
+    if not mismatches and subtype_mismatches:
+        return {
+            "case_status": "no_active_bucket_scope_binary_mismatch_but_oos_subtype_reconciliation_present",
+            "export_snapshot": export_path.name,
+            "active_bucket_scope_binary_mismatch_count": 0,
+            "active_oos_subtype_reconciliation_count": len(subtype_mismatches),
+            "subtype_reconciled_cases": subtype_mismatches,
+            "directory_sync_needed": False,
+            "needs_followup": False,
+            "notes": [
+                "There is no active bucket-level in_scope/OOS mismatch in the current working tree.",
+                "At least one OOS task keeps its directory family for candidate bookkeeping while the final adjudicated scope subtype differs.",
             ],
         }
 
@@ -537,7 +617,11 @@ def run(output_dir: Path | None = None, root: Path | None = None) -> dict[str, P
 
     registry_rows, annotation_rows, aux = build_trap_registry_rows(repo_root, export_path)
     summary = aux["summary"]
-    reconciliation = build_oos_reconciliation_case(aux["mismatches"], export_path)
+    reconciliation = build_oos_reconciliation_case(
+        aux["mismatches"],
+        aux["subtype_mismatches"],
+        export_path,
+    )
 
     registry_path = target_dir / "trap_task_registry_v1.csv"
     annotation_path = target_dir / "manual_annotation_records_v1.jsonl"

@@ -869,3 +869,99 @@
   - manual final freeze 的最小回归测试。
   - 覆盖 `20 anchors + 10 non-anchor` 计数、promoted anchors 选择与
     `manual_binding_ready=false` 的边界断言。
+## 2026-03-25 Stage1 Prescreen Import 增量补充
+
+- `tools/build_stage1_prescreen_imports.py`
+  - 基于当前 `manual_binding_audit_v2`、`prescreen_semi_final_selection_v6`、`oos_final_quota_binding_v2`
+    与 `final_gold_records_v1` / `semi_synthetic_disjoint_candidate_bank_v2`，物化新的 Stage 1 prescreen
+    Label Studio 导入文件。
+  - `semi` natural 行继续使用各自任务目录 `.txt` 作为初始 proposal；`semi` synthetic 行继续沿用
+    frozen synthetic asset；不拿 final gold 冒充初始 predictions。
+- `tests/test_build_stage1_prescreen_imports.py`
+  - Stage 1 prescreen import 生成脚本的最小回归测试。
+- `import_json/stage1_prescreen_final_20260325/`
+  - 当前 thesis-facing Stage 1 prescreen 导入文件目录。
+  - 包含 `manual / semi / oos` 三份主导入文件，以及 `oos audit-only` 单独导入文件和 summary。
+
+## 2026-03-25 Semi Trap 语义收紧补充
+
+- `tools/revise_semi_selection_v7.py`
+  - 在 `prescreen_semi_final_selection_v6` 基础上做最小语义修订：
+    将 natural `corner_drift` 从 `task474` 替换为 `task625`，
+    并将主 trap 中的两条 synthetic `overextend_adjacent` 移出，改为 natural-only 口径。
+  - 若当前 natural `overextend_adjacent` 池不足以补齐 3 张，则显式落盘 gap / blocker，
+    不再用语义不干净的样本硬补。
+- `tests/test_revise_semi_selection_v7.py`
+  - 覆盖 `625` 替换 `474`、synthetic `overextend_adjacent` 退出主 trap、
+    以及 `semi_trap_count = 11`、`prescreen_ready = false` 的新边界。
+- `analysis_results/phase1_progress_20260324/prescreen_semi_final_selection_v7.json`
+  - 当前最新的 `semi` 主样本结果。
+  - 反映 `625 > 474` 的语义对齐修正，以及 `overextend_adjacent` 改为 natural-only 后留下的 1-row gap。
+- `analysis_results/phase1_progress_20260324/stage1_final_binding_audit_v3.json`
+  - 基于 `semi v7` 的 Stage 1 审计结果。
+  - 当前结论：manual / OOS 仍为 ready，但 `semi_binding_ready = false`，
+    `prescreen_ready = false`，唯一直接 blocker 是 natural-only `overextend_adjacent` 仍缺 1 条干净自然样本。
+
+## 2026-03-27 Semi v10 与导入链收口补充
+
+- `tools/revise_semi_selection_v10.py`
+  - 在 `v9` 基础上做最新一轮 `semi` 收口。
+  - 将第三条 natural `overextend_adjacent` 从 `task580` 换成更干净的 `task668`。
+  - 将 `task580` 降为 `special_review reserve`。
+  - 将 `task665` 记录为新增 `underextend extension-family candidate`。
+
+- `tests/test_revise_semi_selection_v10.py`
+  - 覆盖 `493 / 577 / 668` 作为当前主包 natural overextend。
+  - 覆盖 `prescreen_ready` 在 `v10` 下仍保持为 `true`。
+
+- `tools/build_stage1_prescreen_imports.py`
+  - 当前已切换为读取 `prescreen_semi_final_selection_v10.json`。
+  - `semi` 的 control 与 natural trap 初始化 proposal 明确来自 `output/.../*.txt`。
+  - `trap` 目录中的 `.txt` 继续只作 `legacy_mp3d_reference`。
+
+- `tools/analyze_semi_label_overlap.py`
+  - 当前改为自动发现最新 verified `project-20` export。
+  - 用于核查 `semi` 自然样本的多标签共现情况。
+
+- `analysis_results/phase1_progress_20260324/prescreen_semi_final_selection_v10.json`
+  - 当前正式 `semi` freeze 结果。
+  - `6 control + 12 traps` 维持不变。
+  - `task625` 是 natural `corner_drift`，`task668` 是更干净的第三条 natural `overextend`。
+
+- `analysis_results/phase1_progress_20260324/stage1_final_binding_audit_v6.json`
+  - 基于 `v10` 的最新 Stage 1 审计文件。
+  - 当前仍为 `prescreen_ready = true`。
+
+- `analysis_results/phase1_progress_20260324/semi_label_overlap_audit_v1.csv`
+  - `semi` 任务的逐条多标签审计清单。
+
+- `analysis_results/phase1_progress_20260324/semi_label_overlap_summary_v1.json`
+  - 当前摘要显示：latest verified export 下，多标签主包样本仍主要是 `task580`。
+
+- `import_json/stage1_prescreen_final_20260325/stage1_prescreen_semi_import_v5.json`
+  - 当前应使用的主 `semi` Label Studio 导入文件。
+
+- `import_json/stage1_prescreen_final_20260325/stage1_prescreen_import_summary_v4.json`
+  - 当前 `manual / semi / OOS / holdout` 导入摘要。
+
+- `trap集/semi/漏标/task665(较为困难)/`
+  - 新增 underextend 自然候选目录与对应图片 / legacy txt。
+
+- `trap集/semi/跨门扩张/task668/`
+  - 新增更干净的 natural `overextend_adjacent` 目录与对应图片 / legacy txt。
+
+- `analysis_results/truth_layer_extraction_20260324/oos_scope_reconciliation_case_v1.json`
+  - 当前明确记录：没有活动中的 `bucket_dir` 与 `scope_binary` 冲突。
+  - 但 `task560` 存在 `family_dir=边界不可判定` 与 `final_scope_alias=oos_geometry` 的 OOS 子类型重协调。
+
+- `analysis_results/phase1_progress_20260324/oos_final_quota_binding_v2.json`
+  - 当前 `task560` 继续保留为 `audit_only`。
+  - 执行层按 final gold 的 `oos_geometry` 走，不按目录名强行覆盖。
+
+- `import_json/stage1_prescreen_final_20260325/stage1_prescreen_oos_audit_only_import_v1.json`
+  - 当前显式保留 `family_dir` 与 `scope_target_source=final_gold_scope`。
+  - 用于把 `task560` 的目录 family / 最终 scope subtype 差异写进导入层。
+
+- `import_json/stage1_prescreen_final_20260325/legacy/`
+  - 归档已被当前导入链替代的旧版 `semi import / audit import / import summary`。
+  - 当前正式导入仍以 `manual_import_v2 / semi_import_v5 / oos_import_v2 / import_summary_v4` 为准。

@@ -1,0 +1,25 @@
+{
+  "audit_name": "stage1_final_binding_audit_v3",
+  "truth_layer_dir": "truth_layer_extraction_20260324",
+  "reference_binding_status": "final_adjudicated_gold_rebound",
+  "adjudication_status": "final_adjudicated_gold",
+  "manual_binding_ready": true,
+  "semi_binding_ready": false,
+  "oos_binding_ready": true,
+  "manual_expert_anchor_count": 22,
+  "manual_non_anchor_count": 8,
+  "semi_control_count": 6,
+  "semi_trap_count": 11,
+  "oos_final_gate_count": 9,
+  "selection_freeze_complete": false,
+  "selection_freeze_reused": false,
+  "rebind_only_no_reselection": false,
+  "prescreen_ready": false,
+  "blocked_reasons": [
+    "natural-only overextend_adjacent policy leaves the main semi trap set short by 1 clean natural candidate under the current pool"
+  ],
+  "notes": [
+    "This audit reflects a targeted semantic revision on the semi main-trap layer.",
+    "manual and OOS remain unchanged from the v2 final-gold rebinding state."
+  ]
+}

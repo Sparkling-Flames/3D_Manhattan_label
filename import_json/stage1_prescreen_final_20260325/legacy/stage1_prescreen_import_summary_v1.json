@@ -1,0 +1,24 @@
+{
+  "summary_name": "stage1_prescreen_import_summary_v1",
+  "manual_count": 30,
+  "semi_count": 18,
+  "semi_control_count": 6,
+  "semi_natural_trap_count": 4,
+  "semi_synthetic_trap_count": 8,
+  "oos_gate_count": 9,
+  "oos_audit_only_count": 1,
+  "manual_has_predictions": false,
+  "semi_all_have_predictions": true,
+  "oos_has_predictions": false,
+  "source_contract": {
+    "manual": "final_gold_records_v1.jsonl + manual_binding_audit_v2.json",
+    "semi_natural_and_control": "output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34/*.txt as model proposal + prescreen_semi_final_selection_v6.json",
+    "semi_synthetic": "semi_synthetic_disjoint_candidate_bank_v2.jsonl carry-forward assets + prescreen_semi_final_selection_v6.json",
+    "oos": "final_gold_records_v1.jsonl + oos_final_quota_binding_v2.json"
+  },
+  "notes": [
+    "manual 和 OOS 不附带 predictions。",
+    "semi 的 control 与 natural trap 初始化来自 output 目录下的模型 proposal txt，而不是 trap 任务目录 txt。",
+    "semi synthetic trap 直接沿用 frozen synthetic asset。"
+  ]
+}
