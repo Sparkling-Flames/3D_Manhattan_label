@@ -1,215 +1,310 @@
-# Label Studio 实验 SOP（按你已创建的 5 个项目）
+# Label Studio 标注 SOP（Pilot / PreScreen）
 
-适用项目：
+这份 SOP 只覆盖当前要跑的两段：`Pilot` 和 `PreScreen / P1`。  
+`Calibration` 和 `Main` 以后另有 SOP，这里不再沿用旧的 5 项目写法。
 
-- `Manual_Test`（主对照：纯人工，100）
-- `SemiAuto_Test`（主对照：半自动初始化，100）
-- `calibration_manual`（方案 A 校准：纯人工，多标注，30）
-- `validation_manual`（验证集：纯人工，60）
-- `validation_semi`（验证集：半自动初始化，60）
+## 0. 先认清当前主线
 
-目标：在不混淆数据集/条件的前提下，完成“导入 → 多人重叠标注 → 导出 → 质量/效率/可靠度分析 →（可选）分配策略对照”。
+当前 thesis-facing 主线是：
 
----
+`Pilot -> PreScreen -> Calibration -> Main(Test + Validation)`
 
-## 0. 前置核对（只做一次）
+这份文档目前只管前两段。
 
-- 界面 XML：确保每个项目都使用同一份 [label_studio_view_config.xml](label_studio_view_config.xml)（新版 choices，无 `complex`）。
-- 质量解析模式：后续分析统一使用 `--quality_mode v2`。
-- 日志（可选但建议）：如果你需要 active time（推荐），确保浏览器助手（Tampermonkey userscript）已启用且 `/log_time` 可写入 `active_logs/`。
+如果你手头还看到旧项目名：
 
-> 核对点：随便打开一张任务，能看到 choices：
->
-> - `范围判定 (scope, 单选)`：In-scope（camera room only）+ 多个 OOS 子类
-> - `困难因素 (difficulty, 多选)`：遮挡/低纹理/拼接缝/反光/低质/尽力调整但 3D 仍不佳
-> - `模型初始化问题 (model_issue, 仅半自动，多选)`：跨门扩张/漏标/漂移/角点重复/配对异常/预标注失效（OOS 时可不选）
+- `Manual_Test`
+- `SemiAuto_Test`
+- `calibration_manual`
+- `validation_manual`
+- `validation_semi`
 
----
+就把它们当成 legacy 记法，不要再拿来当当前主 SOP。
 
-## 1. 导入任务（一次性完成）
+## 1. 进入 Label Studio 前先核对
 
-你已经有 split 脚本输出到 `import_json/`（默认）。假设目录是 `import_json/seed42/`，对应文件应为：
+- 界面 XML：使用同一份 [label_studio_view_config.xml](label_studio_view_config.xml)。
+- 分析模式：后续正式分析统一用 `--quality_mode v2`。
+- 如果这轮需要 active log，就先把浏览器脚本装好，并确认能写入 `active_logs/`。
 
-- 主对照：
-  - `label_studio_manual_import.json`
-  - `label_studio_semiauto_import.json`
-- 校准（方案 A）：
-  - `label_studio_manual_calibration_import.json`
-- 验证：
-  - `label_studio_manual_validation_import.json`
-  - `label_studio_semiauto_validation_import.json`
-- 报告（必留）：
-  - `label_studio_split_report.json`
+当前页面里应能看到的核心字段是：
 
-### 1.1 各项目导入对应 JSON
+- `scope`：必填，决定是否进主指标
+- `difficulty`：多选，解释这张图为什么难
+- `model_issue`：只在 `semi` 任务里填
 
-- `Manual_Test`：导入 `label_studio_manual_import.json`
-- `SemiAuto_Test`：导入 `label_studio_semiauto_import.json`
-- `calibration_manual`：导入 `label_studio_manual_calibration_import.json`
-- `validation_manual`：导入 `label_studio_manual_validation_import.json`
-- `validation_semi`：导入 `label_studio_semiauto_validation_import.json`
+## 2. 这一轮会看到哪些任务
 
-> 核对点：
->
-> - `SemiAuto_Test`/`validation_semi` 打开任务后，应该能看到预测初始标注（prediction）。
-> - `Manual_Test`/`calibration_manual`/`validation_manual` 不应该有 prediction。
+### 2.1 Pilot
 
----
+Pilot 只做流程验证，不做最终结论。
 
-## 2. 人员与标注策略（最关键：避免“难度混淆”和“ru 污染”）
+你要看的是：
 
-假设参与者 N≈10。
+- 导入/导出有没有 schema 问题
+- `quality_report` 能不能正常生成
+- 3D 视图和审计包能不能正常落地
 
-### 2.1 主对照（100/100）
+### 2.2 PreScreen / P1
 
-- `Manual_Test`：每张图 **只需 1 人**标注（用于效率/最终质量对照）。
-- `SemiAuto_Test`：每张图 **只需 1 人**标注。
-- 分配原则：两组内“有经验/新手比例”尽量一致；每人任务量相近。
+PreScreen 是正式 Stage 1 的第一轮。
 
-> 产出：用于 RQ1/RQ2（效率与质量对照）。
+这一轮固定分三池：
 
-### 2.2 校准集（方案 A，必须多标注）
+- `PreScreen_manual`
+- `PreScreen_semi`
+- `PreScreen_oos`
 
-- `calibration_manual`：30 张图，每张至少 **k≥3 人**独立标注。
-- 这是计算专家评分 $r_u$ 的唯一来源（方案 A 统一基准条件）。
+当前冻结对照值是：
 
-> 重点：不要在 semi 条件下算 $r_u$，否则工具效应会污染专家识别。
+- `PreScreen_manual = 30`
+- `PreScreen_semi = 18`
+- `PreScreen_oos = 9`
 
-**可行分配（N=10, k=3）**：共 30×3=90 份标注，人均约 9 份。
+这几个数是对照值，不是让你临时改规则。
 
-### 2.3 验证集（用于分配策略对照，建议至少部分多标注）
+## 3. 导入任务
 
-- `validation_manual` / `validation_semi`：60 张。
+### 3.1 Pilot
 
-两种选择（二选一）：
+Pilot 直接用你这次试跑的导出 JSON。
 
-- **A（更硬）**：每张至少 2 人标注 → 可以直接比较 $IAA_t$ 的变化。
-- **B（省成本）**：只抽 20 张做 2–3 人复核，其余 1 人标；用“复核子集”评估一致性。
+常见形式是：
 
----
+- `export_label/pilot_YYYYMMDD.json`
 
-## 3. 标注规范（建议写给标注者的最短口径）
+如果这轮有日志，就把 `active_logs/` 一起准备好。
 
-- **标注对象定义（最重要）**：只标 **相机所在的主房间（camera room）** 的包络布局。
+### 3.2 PreScreen
 
-  - 门洞后/走廊/相邻房间等“连通空间”默认不纳入当前房间布局。
-  - 不要以“3D 看起来更方正”为依据去扩张房间范围；以“主房间边界是否可合理闭合”为准。
+PreScreen 这一轮，导入要和当前冻结文件对齐：
 
-- 先标 `Corner`（角点）。`Wall` polygon **可选**（用于辅助对齐/复核；当前主评估不依赖墙线时可不画）。
+- `import_json/stage1_prescreen_final_20260325/stage1_prescreen_manual_import_v2.json`
+- `import_json/stage1_prescreen_final_20260325/stage1_prescreen_semi_import_v5.json`
+- `import_json/stage1_prescreen_final_20260325/stage1_prescreen_oos_import_v2.json`
+- `import_json/stage1_prescreen_final_20260325/stage1_prescreen_import_summary_v4.json`
 
-- choices（新版为 3 组字段）：`scope` 必填；`difficulty/model_issue` 仅在适用时填写（否则留空）。
+如果你之后跑的是新一轮，就把文件名替换成这次实际导出的版本。
 
-  1. **范围判定 `scope`（单选，决定是否进入主指标；必填）**
+导入后先核对：
 
-  - `In-scope：只标相机房间 (Normal / Camera room only)`：主指标纳入。能在不"猜"的情况下稳定闭合包络；判据为墙-天花与墙-地面外边界可形成唯一、可复现的包络（存在稳定的 y_ceil(x), y_floor(x)）。
-  - `OOS：几何假设不成立 (Out-of-scope / Non-Manhattan)`：主指标剔除。
-  - `OOS：边界不可判定 (Open Boundary / Ambiguous camera-room boundary)`：主指标剔除。
-  - `OOS：错层/多平面 (Split-level / Multi-level)`：主指标剔除。
-  - `OOS：证据不足 (Insufficient evidence)`：主指标剔除。
+- `manual` 里不要有 prediction
+- `semi` 里应该有 prediction
+- `oos` 先看 `scope`，不要把它硬塞进几何主指标
 
-  2. **困难因素 `difficulty`（多选，用于解释耗时/误差来源；无明显困难可留空）**
+## 4. 标注规则
 
-  - 遮挡/低纹理/拼接缝/反光/`画质差/被遮罩影响 (Blur/Masked/Low quality)`（例如上下被 mask/黑边导致证据缺失）
-  - `尽力调整但 3D 仍不佳 (Hard to align / residual)`：遵守规则并充分调整后，3D 包络仍不稳定或畸形（不等同于 OOS）。
+### 4.1 只标主房间
 
-  3. **模型初始化问题 `model_issue`（仅半自动项目可选，多选；初始化很好无需修改可留空；OOS 时允许留空）**
+只标相机所在的主房间，不跨门洞，不并房。
 
-  - `跨门扩张 (Over-extend)`：模型包含了门后相邻空间
-  - `漏标 (Under-extend)`：模型漏掉了部分墙角/边界
-  - `角点漂移 (Corner drift)`：角点位置有偏移，但总体拓扑合理
-  - `角点重复/一角多点 (Duplicate corners)`**（新）**：同一拐角附近出现多个点（如某处 3 个点）；人工应删掉多余点，仅保留最准确的一个
-  - `配对异常 (Odd/mismatch)`：predict 与 annotation 角点总数差异大、无法配对，或配对严重错乱（区别于 corner_duplicate，强调整体数量/拓扑问题）
-  - `预标注失效 (Prediction Failure)`：大范围错误需从零重画；仅当其他类型都无法概括时选此项
+### 4.2 `scope`
 
-> 约束：若选了 `scope=OOS`，`model_issue` 通常不必填（因为该样本不在评价范围）。
+`scope` 必填，先判断它。
 
-**门洞/相邻空间的处理（规则化）**
+- `In-scope`：能稳定闭合当前主房间
+- `OOS`：几何假设不成立、边界不可判定、错层/多平面、证据不足
 
-- 如果门框/墙垛清晰：边界 **止于门框/墙垛处**，不跨门洞；仍为 `scope=In-scope`。
-- 如果没有任何清晰停止点、必须靠语义“猜”才能闭合：选 `scope=OOS：边界不可判定`，不要硬凑 cuboid。
+门洞规则很简单：
 
-**错层/下沉楼梯的处理（规则化）**
+- 门框和墙垛清楚，就停在门框处
+- 真的没有停止点、必须靠猜才闭合，就选 OOS
 
-- 若存在下沉区域/楼梯井/多层地面或分层天花：选 `scope=OOS：错层/多平面`（按 OOS 处理）。
-- 允许模型/人给出“单层近似”仍然看起来方正，但不要把它当作主指标样本；应在 OOS 子类中单列案例。
+### 4.3 `difficulty`
 
----
+`difficulty` 用来说明为什么难标，不是用来决定是否 OOS。
 
-## 4. 导出（每个项目单独导出一次）
+常见情况：
 
-当某个项目完成标注后：
+- 遮挡
+- 低纹理
+- 拼接缝
+- 反光
+- 画质差或被遮罩影响
+- 调整后 3D 仍不佳
 
-- 在该项目里导出 JSON（包含 annotations + predictions）。
-- 文件命名建议包含项目名与日期，例如：
-  - `export_label/manual_test_YYYYMMDD.json`
-  - `export_label/semiauto_test_YYYYMMDD.json`
-  - `export_label/calibration_manual_YYYYMMDD.json`
-  - `export_label/validation_manual_YYYYMMDD.json`
-  - `export_label/validation_semi_YYYYMMDD.json`
+### 4.4 `model_issue`
 
-> 核对点：导出里能看到 `annotations` 数量与项目任务数一致。
+`model_issue` 只在 `semi` 任务里填。
 
----
+如果初始化还不错，只改真正有问题的地方就行，不用整张重画。
 
-## 5. 跑分析（命令模板）
+常见问题包括：
 
-**重要更新 (2026-01-25)**：为了支持下游 Notebook 的自动化纵向对比，运行分析时**必须**传入 `--dataset_group` 参数。
+- 跨门扩张
+- 漏标
+- 角点漂移
+- 角点重复
+- 配对异常
+- 预标注失效
 
-### 5.1 主对照：效率/质量对照 (RQ1/RQ2)
+## 5. 导出
 
-分别对 Manual 与 Semi 导出跑一次：
+每个项目完成后都单独导出一次 JSON。
+
+文件名建议带项目名和日期，例如：
+
+- `export_label/pilot_YYYYMMDD.json`
+- `export_label/prescreen_manual_YYYYMMDD.json`
+- `export_label/prescreen_semi_YYYYMMDD.json`
+- `export_label/prescreen_oos_YYYYMMDD.json`
+
+导出时要确认：
+
+- 任务数对得上
+- `annotations` 没少
+- `predictions` 的保留情况和项目类型一致
+
+## 6. 分析、查看和保存
+
+这部分按 [analysis_results/README.md](../analysis_results/README.md) 的口径来。
+
+### 6.1 怎么存
+
+- 原始导出放 `export_label/`
+- 日志放 `active_logs/`
+- 分析输出放 `analysis_results/<round_tag>/`
+- 可视化审计包放 `analysis_results/experiment_visual_audit/<round_tag>/`
+- 旧结果、示例结果、试跑结果放 `analysis_results/legacy/<tag>/`
+
+不要把新结果散到根目录。
+
+### 6.2 怎么看
+
+先看正式分析，再看审计包：
+
+- `quality_report_*.csv`
+- `reliability_report_*.csv`
+- `active_log_audit_summary.json`
+- `active_log_audit_per_file.csv`
+- `SUMMARY.md`
+- `summary.json`
+- `table_schema_alignment.csv`
+- `table_field_audit.csv`
+- `table_active_time_row_audit.csv`
+
+Pilot 先看：
+
+- 导入量是不是对得上
+- `quality_report` 能不能落地
+- 图表和审计包有没有缺文件
+
+PreScreen 再看：
+
+- `PreScreen_manual / PreScreen_semi / PreScreen_oos` 的行数是不是对得上
+- 合规字段有没有按正式口径落到 `quality_report`
+- active log 里有没有大量缺失、unknown 或 multi-session 问题
+
+### 6.3 正式分析入口
+
+Pilot 示例：
 
 ```bash
-# Manual Test 分析
-python tools/analyze_quality.py manual_test_export.json --dataset_group Manual_Test --project_version v1.0 --active-logs active_logs --output_dir analysis_results --metric corner --quality_mode v2
-
-# SemiAuto Test 分析
-python tools/analyze_quality.py semi_test_export.json --dataset_group SemiAuto_Test --project_version v1.0 --active-logs active_logs --output_dir analysis_results --metric corner --quality_mode v2
+python tools/analyze_quality.py export_label/pilot_YYYYMMDD.json \
+  --dataset_group Pilot_Manual \
+  --project_version pilot_YYYYMMDD \
+  --output_dir analysis_results/pilot_YYYYMMDD \
+  --output analysis_results/pilot_YYYYMMDD/quality_report_YYYYMMDD.csv \
+  --metric corner \
+  --quality_mode v2
 ```
 
-### 5.2 方案 A：专家评分 $r_u$ (仅用 calibration_manual)
+PreScreen 示例：
 
 ```bash
-python tools/analyze_quality.py calib_man_export.json --dataset_group Calibration_manual --project_version v1.0 --active-logs active_logs --output_dir analysis_results --metric corner --quality_mode v2 --ru_min_tasks 5
+python tools/analyze_quality.py export_label/stage1_prescreen_manual_YYYYMMDD.json \
+  --dataset_group PreScreen_manual \
+  --project_version stage1_YYYYMMDD \
+  --output_dir analysis_results/prescreen_YYYYMMDD \
+  --output analysis_results/prescreen_YYYYMMDD/quality_report_YYYYMMDD.csv \
+  --metric corner \
+  --quality_mode v2
+
+python tools/analyze_quality.py export_label/stage1_prescreen_semi_YYYYMMDD.json \
+  --dataset_group PreScreen_semi \
+  --project_version stage1_YYYYMMDD \
+  --output_dir analysis_results/prescreen_YYYYMMDD \
+  --output analysis_results/prescreen_YYYYMMDD/quality_report_YYYYMMDD.csv \
+  --append \
+  --metric corner \
+  --quality_mode v2
+
+python tools/analyze_quality.py export_label/stage1_prescreen_oos_YYYYMMDD.json \
+  --dataset_group PreScreen_oos \
+  --project_version stage1_YYYYMMDD \
+  --output_dir analysis_results/prescreen_YYYYMMDD \
+  --output analysis_results/prescreen_YYYYMMDD/quality_report_YYYYMMDD.csv \
+  --append \
+  --metric corner \
+  --quality_mode v2
 ```
 
-### 5.3 验证集分析
+如果这轮有日志，就在命令里加上：
 
 ```bash
-# Validation Manual
-python tools/analyze_quality.py val_man_export.json --dataset_group Validation_manual --project_version v1.0 --active-logs active_logs --output_dir analysis_results
+--active-logs active_logs
 ```
 
----
+## 7. active log 审计
 
-## 6. 在 Notebook 中进行统一分析
+如果这批数据有 active logs，就单独跑一次：
 
-不要手动合并 Excel。直接打开 `tools/visualize_output.ipynb`：
+```bash
+python tools/audit_active_log_quality.py active_logs \
+  --summary-json analysis_results/prescreen_YYYYMMDD/active_log_audit_summary.json \
+  --per-file-csv analysis_results/prescreen_YYYYMMDD/active_log_audit_per_file.csv
+```
 
-1.  **更新清单 (MANIFEST)**：在 Section 0 中确认文件名与 `dataset_group` 的对应关系。
-2.  **一键加载**：运行加载单元格，它会自动扫描所有 CSV，注入语义标签（`analysis_group`, `analysis_role`），并进行一致性校验。
-3.  **多口径过滤**：使用内置的 `df_main` (正式性能) 和 `df_rel` (可靠性分析) 掩码，确保统计口径符合科研严谨性。
+重点看这些：
 
----
+- `parse_error_count`
+- `unknown_task_count`
+- `unknown_annotator_count`
+- `unknown_project_count`
+- `unknown_session_count`
+- `missing_script_version_count`
+- `multi_session_pair_count`
 
-## 6. 论文/报告必须保留的复现材料
+## 8. 可视化审计包
 
-- `import_json/<seed>/label_studio_split_report.json`（记录 seed 与每个 split 的 title 列表）
-- 每个项目的导出 JSON（原始数据）
-- `analysis_results/quality_report_*.csv` 与 `reliability_report_*.csv`
-- 若使用了旧版导出（含废弃 choice），必须在写作中声明其仅用于探索性分析，并与主实验（v2）分开。
+如果你想每次都保留一份实验级图表包，就再跑：
 
----
+```bash
+python tools/build_experiment_visual_audit.py \
+  --quality-csv analysis_results/prescreen_YYYYMMDD/quality_report_YYYYMMDD.csv \
+  --out-dir analysis_results/experiment_visual_audit \
+  --tag prescreen_YYYYMMDD \
+  --active-log-summary-json analysis_results/prescreen_YYYYMMDD/active_log_audit_summary.json \
+  --active-log-per-file-csv analysis_results/prescreen_YYYYMMDD/active_log_audit_per_file.csv
+```
 
-## 7. 常见踩坑与快速自检
+这一步主要看：
 
-- **导错项目**：Semi 项目导入了 manual JSON → 打开任务看不到 prediction（立刻能发现）。
-- **ru 没算出来**：校准集每张只有 1 人标 → 必须保证每张至少 2（建议 3）人。
-- **OOS 混进主指标**：分析时确保 `--quality_mode v2` 且标注者确实勾选了 OOS；脚本会对 OOS 关掉标准 layout 指标并记录 gate reason。
-- **active time 全是 0**：没跑用户脚本/日志服务没写入；可以先用 `lead_time` 兜底，但论文里要说明来源差异。
+- `SUMMARY.md`
+- `summary.json`
+- `table_schema_alignment.csv`
+- `table_field_audit.csv`
+- `table_active_time_row_audit.csv`
 
----
+## 9. 常见问题
 
-## 8. Pilot（强烈建议先做）
+- 看不到 3D 窗口：先检查浏览器脚本，再刷新页面。
+- `semi` 里没有 prediction：先检查导入文件是不是导错了。
+- `OOS` 混进主指标：先停，别继续往后堆结果。
+- active time 全是 0：说明日志链路没通，先查脚本和服务。
 
-正式招募 10+ 标注员前，建议先按 [docs/pilot_plan.md](docs/pilot_plan.md) 跑一轮 2–3 人的小规模试运行，优先验证：字段填写率、门洞规则一致性、active time 覆盖率、以及 OOS 门控是否符合预期。
+## 10. 什么时候跑测试
+
+如果你改了分析脚本，就跑：
+
+```bash
+pytest tests/test_audit_active_log_quality.py tests/test_build_experiment_visual_audit.py -q
+```
+
+如果你改了更靠后的分析逻辑，再补：
+
+```bash
+pytest tests/test_analyze_stage_aware.py -q
+```
+
+如果只是跑数据、没改代码，这组测试不是每次都必须跑。

@@ -1,78 +1,112 @@
-# HoHoNet 文档索引（当前版）
+# HoHoNet 文档索引（当前执行版）
 
-> 最后更新：2026-03-14
+> 最后更新：2026-03-28
 
-本索引仅保留“当前实验必须文档”；历史草稿与阶段性方案已归档到 `docs/legacy/`。
+本索引只保留当前仍应视为正式入口或正式参考的文档。  
+临时转交、讨论稿、旧阶段说明，统一归档到 `docs/legacy/`。
 
----
+## 1. 当前最优先阅读
 
-## 当前必读（按执行顺序）
+1. [ROUND_BASED_EXECUTION_PROTOCOL_v1.md](ROUND_BASED_EXECUTION_PROTOCOL_v1.md)
+   - 当前 thesis-facing 的正式阶段/轮次合同。
+   - 明确 `P1 / C1 / C2 / T1 / V1` 各轮允许更新、禁止更改与必须落盘的工件。
 
-1. [论文提纲*v2*初版风格.txt](论文提纲_v2_初版风格.txt)
-   - 当前论文唯一主线（RQ、协议、样本口径、评测口径）。
-2. [开发路线与三人分工\_20260213.md](开发路线与三人分工_20260213.md)
-   - 与提纲对齐的项目执行路线与 A/B/C 分工。
-3. [实验设置执行细则\_20260213.md](实验设置执行细则_20260213.md)
-   - 3.1 抽离出的执行规则（抽样、隔离、补抽样、口径日志）。
-4. [SOP_labelstudio_experiment.md](SOP_labelstudio_experiment.md)
-   - 实验实操总流程（导入→标注→导出→分析）。
-5. [README_ANNOTATOR.md](README_ANNOTATOR.md)
-   - 标注员操作规范与字段填写规则。
-6. [README_DEVELOPER.md](README_DEVELOPER.md)
-   - 部署、日志、安全、运行维护。
-7. [PROJECT_MAP_AND_HANDOVER_20260308.md](PROJECT_MAP_AND_HANDOVER_20260308.md)
-   - 当前仓库地图、正式/历史入口、A 线真源层、对 B/C 的交接口径。
+2. [ROUND_BASED_ASSIGNMENT_SOP_v1.md](ROUND_BASED_ASSIGNMENT_SOP_v1.md)
+   - 当前按轮次执行的分发 SOP。
+   - 用来把 round contract 落到实际导入、分配、补派与导出动作上。
+
+3. [LS_CE_ONLY_OPERATION_SOP_v1.md](LS_CE_ONLY_OPERATION_SOP_v1.md)
+   - 当前单实例、Community Edition、无代码改动前提下的 Label Studio 运营 SOP。
+   - 明确 `P1 / C1 / C2 / T1 / V1` 应如何按项目切分运行，以及 GT 共实例但非共路径的边界。
+
+4. [PRESCREEN_STAGE1_OPERATIONAL_GUIDE_20260327.md](PRESCREEN_STAGE1_OPERATIONAL_GUIDE_20260327.md)
+   - 当前 prescreen 正式运行手册。
+   - 包含：正式文件清单、工具链边界、小型测试建议、运行流程。
+
+5. [P1_PRESCREEN_LAUNCH_CHECKLIST_v1.md](P1_PRESCREEN_LAUNCH_CHECKLIST_v1.md)
+   - 当前 `P1` 启动前最直接的执行清单。
+   - 用于导入 smoke test、active-log 检查、`tools/audit_active_log_quality.py` 审计、导出解析检查与正式启动判据。
+
+6. [C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md](C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md)
+   - 当前 line B 的 `C1/C2` 工件字段合同。
+   - 把 `worker_state_snapshot_C1`、`scene_coverage_gap_C1`、`task_risk_rule_manifest_v1` 等文件收口为可直接填充的 schema。
+
+7. [RQ3_MINIMAL_EVIDENCE_CHAIN_CONTRACT_v1.md](RQ3_MINIMAL_EVIDENCE_CHAIN_CONTRACT_v1.md)
+   - 当前 `RQ3` 主证据链的最小数据合同。
+   - 收口 `dt` 参考库摘要、meta-label consensus sidecar、offline replay config 与 task-risk manifest。
+
 8. [PROJECT_MAP_CLEAN_20260308.md](PROJECT_MAP_CLEAN_20260308.md)
-   - 纯净仓库地图，只保留当前服务器标注/分析主链相关目录与入口。
-9. [HANDOVER_CONTEXT_20260309.md](HANDOVER_CONTEXT_20260309.md)
-   - 详细交接说明，包含项目目标、近期工作、dry run 与字段分析结论、pilot/formal 边界和当前后续动作建议。
-10. [HANDOVER_CONTEXT_20260313.md](HANDOVER_CONTEXT_20260313.md)
-   - 最新交接说明，覆盖项目定位、当前进度、风险边界与下一阶段执行清单。
-11. [C_MANIFEST_STATUS_20260310.md](C_MANIFEST_STATUS_20260310.md)
-    - 当前 C 线 manifest 交付状态说明，指向 trap schema、natural bank、embedding protocol 与 trap draft 的结构化产物。
-12. [PHASE1_PROGRESS_AUDIT_20260311.md](PHASE1_PROGRESS_AUDIT_20260311.md)
-   - 当前论文流程口径、他人修改建议与仓库真实进度之间的交叉审查。
-13. [B_NEXT_STEPS_20260311.md](B_NEXT_STEPS_20260311.md)
-   - B 线在旧 split 失效、人工补选未完成前的当前推进清单。
-14. [C_TRAP_EXECUTION_STATUS_20260311.md](C_TRAP_EXECUTION_STATUS_20260311.md)
-   - C 线从 manifest 层推进到 operator engine、frozen plan 与 materialized bundle 的当前状态说明。
-15. [ANCHOR_GAP_ANALYSIS_20260315.md](ANCHOR_GAP_ANALYSIS_20260315.md)
-   - manual anchor bank 覆盖缺口与补充说明；只描述 bank coverage，不等于 Stage 1 thesis-facing count 已对齐。
+   - 当前纯净仓库地图。
+   - 用来确认哪些目录、脚本、结果仍属于主链。
 
----
+9. [../analysis_results/README.md](../analysis_results/README.md)
+   - `analysis_results/` 根目录整理说明。
+   - 用于快速区分当前主链结果目录、历史保留目录与 `legacy/` 归档区。
 
-## 分析与质量控制文档
+10. [SOP_labelstudio_experiment.md](SOP_labelstudio_experiment.md)
+   - Label Studio 导入、标注、导出的一般操作 SOP。
+   - 使用时应以当前 Stage 1 正式导入文件和冻结结果为准，不要反向覆盖最新 freeze。
 
-- [ANALYSIS_DATA_FLOW.md](ANALYSIS_DATA_FLOW.md)
-  - 上游解析→门控→CSV 输出的字段与数据流。
-- [PROJECT_MAP_CLEAN_20260308.md](PROJECT_MAP_CLEAN_20260308.md)
-  - 当前主链的纯净入口地图。
-- [GATING_LOGIC_FINAL_SOLUTION.md](GATING_LOGIC_FINAL_SOLUTION.md)
-  - 门控逻辑与选择偏差修正依据。
+11. [README_DEVELOPER.md](README_DEVELOPER.md)
+   - 部署、日志、服务、分析工具链的开发者入口。
+
+12. [ANALYSIS_DATA_FLOW.md](ANALYSIS_DATA_FLOW.md)
+   - 上游导出、active log、quality CSV、reliability 输出之间的数据流说明。
+
+13. [手动分析流程.md](手动分析流程.md)
+   - 你自己拿到一批数据后，手动跑 Pilot / PreScreen 的分析、审计、可视化和测试的流程说明。
+
+## 2. Prescreen / Stage 1 正式参考
+
+- [label studio注意事项.md](label studio注意事项.md)
+- [prescreen_freeze_note_v1.md](prescreen_freeze_note_v1.md)
+- [prescreen_oos_scoring_note_v1.md](prescreen_oos_scoring_note_v1.md)
+- [final_gold_rebinding_contract_v1.md](final_gold_rebinding_contract_v1.md)
+- [appendix_a_operator_freeze_note_v1.md](appendix_a_operator_freeze_note_v1.md)
+- [实验集设定与用途.md](实验集设定与用途.md)
+
+## 3. 提纲与一致性审计
+
+- `docs/overleaf_project/sections/01_研究问题.tex`
+- `docs/overleaf_project/sections/02_方法.tex`
+- `docs/overleaf_project/sections/03_实验设置.tex`
+- `docs/overleaf_project/sections/04_报告与可审计输出.tex`
+- `docs/overleaf_project/sections/A1_扰动算子库.tex`
+- `docs/overleaf_project/sections/A2_数据集汇总表.tex`
+- [提纲一致性审计_20260313.md](提纲一致性审计_20260313.md)
+
+## 4. 约束与工具实现边界
+
+- `约束/README.md`
+- `约束/A_约束清单.md`
+- `约束/merged_all.md`
+- `约束/visualize_output_v2.md`
+- `约束/perturbation_operators.md`
+- `约束/compute_dt_score约束规范.md`
+- `约束/compute_spammer_score约束规范.md`
+- `约束/difficulty_split约束规范.md`
+- `约束/offline_replay约束规范.md`
+
+说明：
+
+- 这些约束是正式协议来源之一。
+- 但其中部分工具在当前仓库里仍未 materialize 为正式脚本，必须结合当前实现状态使用。
+- 对导入分池类旧脚本也应做同样处理：若 `tools/create_labelstudio_split_by_outline.py` 与当前 freeze/import 口径冲突，以已冻结导入文件和 round-based 文档为准。
+
+## 5. 测试与审计
+
 - [TEST_PLAN_AND_REVIEW.md](TEST_PLAN_AND_REVIEW.md)
-  - 测试边界、用例、回归与变更控制。
-- [../tools/README.md](../tools/README.md)
-  - 工具脚本入口与参数说明。
-- [../tools/analyze_stage_aware.py](../tools/analyze_stage_aware.py)
-  - B 线 stage-aware 原型分析入口，现已接入默认 thesis gate、selection manifest 和 scene proxy 汇总。
+- [B_FREEZE_V2_1_CONTRACT_AUDIT_20260317.md](B_FREEZE_V2_1_CONTRACT_AUDIT_20260317.md)
+- [B_SELECTION_FREEZE_RERUN_20260317.md](B_SELECTION_FREEZE_RERUN_20260317.md)
+- [PHASE1_PROGRESS_AUDIT_20260311.md](PHASE1_PROGRESS_AUDIT_20260311.md)
 
----
+## 6. Legacy 归档
 
-## 根目录参考文档
+以下类型内容已或应归档到 `docs/legacy/`：
 
-- [../README.md](../README.md)
-- [../README_reproduction.md](../README_reproduction.md)
-- [../QUICK_START.md](../QUICK_START.md)
+- 临时转交文件
+- 暂存文本
+- 已过时阶段草案
+- 不再承担当前执行入口职责的旧说明
 
----
-
-## Legacy 归档说明
-
-以下内容已迁移到 `docs/legacy/`，不再作为当前执行入口：
-
-- `legacy/handover_2026Q1/`：历史交接文档与 AI 交接。
-- `legacy/plans/`：阶段性执行计划与旧索引。
-- `legacy/outline_drafts/`：旧提纲、草稿、暂存文本。
-- `legacy/reviews/`：历史审稿反馈稿。
-
-需要追溯历史决策时再查阅 legacy；当前执行以“当前必读”列表为准。
+如需追溯历史判断，再进入 `docs/legacy/` 查看。

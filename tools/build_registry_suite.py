@@ -6,6 +6,7 @@ from datetime import datetime
 from pathlib import Path
 import xml.etree.ElementTree as ET
 
+from active_log_utils import resolve_active_log_files
 from build_task_registry import DEFAULT_IMPORT_DIR, build_registry
 
 
@@ -288,7 +289,8 @@ def load_active_logs(log_dir: Path) -> tuple[dict[tuple[str, str], dict], dict[s
     session_max: dict[tuple[str, str, str], float] = {}
     session_files: defaultdict[tuple[str, str, str], set[str]] = defaultdict(set)
     session_events: Counter = Counter()
-    for path in sorted(log_dir.glob("active_times_*.jsonl")):
+    _, log_files = resolve_active_log_files(log_dir)
+    for path in log_files:
         with path.open("r", encoding="utf-8") as handle:
             for line in handle:
                 text = line.strip()

@@ -21,6 +21,7 @@ _project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 if _project_root not in sys.path:
     sys.path.insert(0, _project_root)
 
+from tools.active_log_utils import resolve_active_log_files
 from lib.misc import panostretch
 
 
@@ -847,8 +848,9 @@ def load_active_logs(log_dir):
     if not log_dir or not os.path.exists(log_dir):
         return {}
 
-    files = glob.glob(os.path.join(log_dir, "active_times_*.jsonl"))
-    print(f"Found {len(files)} log files in {log_dir}")
+    resolved_dir, resolved_files = resolve_active_log_files(log_dir)
+    files = [str(path) for path in resolved_files]
+    print(f"Found {len(files)} log files in {resolved_dir or log_dir}")
 
     for fpath in files:
         with open(fpath, 'r', encoding='utf-8') as f:
