@@ -1,0 +1,27 @@
+formal_field,status,source_column,note
+task_id,aligned,task_id,
+annotator_id,aligned,annotator_id,
+dataset_group,aligned,dataset_group,
+condition,aligned,condition,
+scope,aligned,scope,
+is_oos,aligned,is_oos,
+scope_filled,aligned,scope_filled,
+difficulty,aligned,difficulty,
+difficulty_filled,aligned,difficulty_filled,
+difficulty_conflict,aligned,difficulty_conflict,
+model_issue,aligned,model_issue,
+model_issue_primary,aligned,model_issue_primary,
+model_issue_required,aligned,model_issue_required,
+model_issue_missing_required,aligned,model_issue_missing_required,
+model_issue_conflict,aligned,model_issue_conflict,
+type3_flag,missing,,not found in quality_report
+type4_flag,compat_fallback,scope_filled,uses explicit compatibility bridge
+active_time,aligned,active_time,
+session_count,compat_fallback,active_time_session_count,uses explicit compatibility bridge
+has_short_time_flag,compat_fallback,active_time,uses explicit compatibility bridge
+has_long_time_flag,compat_fallback,active_time,uses explicit compatibility bridge
+has_unknown_id_flag,compat_fallback,export_project_id,uses explicit compatibility bridge
+project_id,compat_fallback,export_project_id,uses explicit compatibility bridge
+script_version,missing,,not found in quality_report
+layout_used,aligned,layout_used,
+layout_gate_reason,aligned,layout_gate_reason,

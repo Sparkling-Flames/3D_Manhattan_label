@@ -1,0 +1,244 @@
+{
+  "quality_csv": "analysis_results\\mp3d_txt_smoke_test_20260328\\legacy\\analysis\\quality_report_20260328.csv",
+  "output_dir": "analysis_results\\experiment_visual_audit\\generated_demo_recheck",
+  "n_rows": 5,
+  "n_tasks": 5,
+  "quality_metric_column": "iou",
+  "reliability_metric_column": null,
+  "session_count_column": "active_time_session_count",
+  "project_id_column": "export_project_id",
+  "type4_source": "derived_fallback",
+  "tier_counts": [
+    {
+      "tier": "T",
+      "n_rows": 5,
+      "n_tasks": 5,
+      "n_annotators": 1
+    },
+    {
+      "tier": "I",
+      "n_rows": 5,
+      "n_tasks": 5,
+      "n_annotators": 1
+    },
+    {
+      "tier": "M",
+      "n_rows": 5,
+      "n_tasks": 5,
+      "n_annotators": 1
+    }
+  ],
+  "field_audit": {
+    "n_rows": 5,
+    "n_tasks": 5,
+    "n_annotators": 1,
+    "n_t_rows": 5,
+    "n_i_rows": 5,
+    "n_m_rows": 5,
+    "n_oos_rows": 0,
+    "n_scope_missing_rows": 0,
+    "n_type3_rows": 0,
+    "n_layout_gate_fail_rows": 0,
+    "n_layout_usable_rows": 5,
+    "n_difficulty_missing_rows": 5,
+    "n_difficulty_conflict_rows": 0,
+    "n_model_issue_required_rows": 5,
+    "n_model_issue_missing_required_rows": 5,
+    "n_model_issue_conflict_rows": 0,
+    "n_type4_rows": 5,
+    "n_active_time_missing_rows": 0,
+    "n_active_time_zero_rows": 5,
+    "n_short_time_rows": 5,
+    "n_long_time_rows": 0,
+    "n_unknown_id_rows": 0,
+    "n_multi_session_rows": 0,
+    "n_missing_script_version_rows": 5,
+    "n_mixed_scope_tasks": 0,
+    "quality_metric_column": "iou",
+    "reliability_metric_column": "",
+    "session_count_column": "active_time_session_count",
+    "project_id_column": "export_project_id",
+    "type4_source": "derived_fallback"
+  },
+  "schema_alignment": [
+    {
+      "formal_field": "task_id",
+      "status": "aligned",
+      "source_column": "task_id",
+      "note": ""
+    },
+    {
+      "formal_field": "annotator_id",
+      "status": "aligned",
+      "source_column": "annotator_id",
+      "note": ""
+    },
+    {
+      "formal_field": "dataset_group",
+      "status": "aligned",
+      "source_column": "dataset_group",
+      "note": ""
+    },
+    {
+      "formal_field": "condition",
+      "status": "aligned",
+      "source_column": "condition",
+      "note": ""
+    },
+    {
+      "formal_field": "scope",
+      "status": "aligned",
+      "source_column": "scope",
+      "note": ""
+    },
+    {
+      "formal_field": "is_oos",
+      "status": "aligned",
+      "source_column": "is_oos",
+      "note": ""
+    },
+    {
+      "formal_field": "scope_filled",
+      "status": "aligned",
+      "source_column": "scope_filled",
+      "note": ""
+    },
+    {
+      "formal_field": "difficulty",
+      "status": "aligned",
+      "source_column": "difficulty",
+      "note": ""
+    },
+    {
+      "formal_field": "difficulty_filled",
+      "status": "aligned",
+      "source_column": "difficulty_filled",
+      "note": ""
+    },
+    {
+      "formal_field": "difficulty_conflict",
+      "status": "aligned",
+      "source_column": "difficulty_conflict",
+      "note": ""
+    },
+    {
+      "formal_field": "model_issue",
+      "status": "aligned",
+      "source_column": "model_issue",
+      "note": ""
+    },
+    {
+      "formal_field": "model_issue_primary",
+      "status": "aligned",
+      "source_column": "model_issue_primary",
+      "note": ""
+    },
+    {
+      "formal_field": "model_issue_required",
+      "status": "aligned",
+      "source_column": "model_issue_required",
+      "note": ""
+    },
+    {
+      "formal_field": "model_issue_missing_required",
+      "status": "aligned",
+      "source_column": "model_issue_missing_required",
+      "note": ""
+    },
+    {
+      "formal_field": "model_issue_conflict",
+      "status": "aligned",
+      "source_column": "model_issue_conflict",
+      "note": ""
+    },
+    {
+      "formal_field": "type3_flag",
+      "status": "missing",
+      "source_column": "",
+      "note": "not found in quality_report"
+    },
+    {
+      "formal_field": "type4_flag",
+      "status": "compat_fallback",
+      "source_column": "scope_filled",
+      "note": "uses explicit compatibility bridge"
+    },
+    {
+      "formal_field": "active_time",
+      "status": "aligned",
+      "source_column": "active_time",
+      "note": ""
+    },
+    {
+      "formal_field": "session_count",
+      "status": "compat_fallback",
+      "source_column": "active_time_session_count",
+      "note": "uses explicit compatibility bridge"
+    },
+    {
+      "formal_field": "has_short_time_flag",
+      "status": "compat_fallback",
+      "source_column": "active_time",
+      "note": "uses explicit compatibility bridge"
+    },
+    {
+      "formal_field": "has_long_time_flag",
+      "status": "compat_fallback",
+      "source_column": "active_time",
+      "note": "uses explicit compatibility bridge"
+    },
+    {
+      "formal_field": "has_unknown_id_flag",
+      "status": "compat_fallback",
+      "source_column": "export_project_id",
+      "note": "uses explicit compatibility bridge"
+    },
+    {
+      "formal_field": "project_id",
+      "status": "compat_fallback",
+      "source_column": "export_project_id",
+      "note": "uses explicit compatibility bridge"
+    },
+    {
+      "formal_field": "script_version",
+      "status": "missing",
+      "source_column": "",
+      "note": "not found in quality_report"
+    },
+    {
+      "formal_field": "layout_used",
+      "status": "aligned",
+      "source_column": "layout_used",
+      "note": ""
+    },
+    {
+      "formal_field": "layout_gate_reason",
+      "status": "aligned",
+      "source_column": "layout_gate_reason",
+      "note": ""
+    }
+  ],
+  "active_log_summary_path": "",
+  "active_log_per_file_path": "",
+  "generated_tables": {
+    "table_tier_counts": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_tier_counts.csv",
+    "table_field_audit": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_field_audit.csv",
+    "table_schema_alignment": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_schema_alignment.csv",
+    "table_a_delta_n_pairs": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_a_delta_n_pairs.csv",
+    "table_b1_difficulty": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_b1_difficulty.csv",
+    "table_b2_model_issue": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_b2_model_issue.csv",
+    "table_b2_scope_conflict": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_b2_scope_conflict.csv",
+    "table_a1_anomaly_audit": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_a1_anomaly_audit.csv",
+    "table_active_time_row_audit": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_active_time_row_audit.csv",
+    "table_active_time_by_annotator": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_active_time_by_annotator.csv",
+    "table_active_time_source": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_active_time_source.csv",
+    "table_active_log_summary": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_active_log_summary.csv",
+    "table_active_log_per_file": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\table_active_log_per_file.csv"
+  },
+  "generated_figures": {
+    "01_tier_funnel": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\01_tier_funnel.png",
+    "02_scope_distribution": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\02_scope_distribution.png",
+    "06_delta_n_pairs": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\06_delta_n_pairs.png",
+    "09_active_log_quality": "analysis_results\\experiment_visual_audit\\generated_demo_recheck\\09_active_log_quality.png"
+  }
+}

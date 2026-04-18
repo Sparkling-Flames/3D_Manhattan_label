@@ -17,6 +17,8 @@ from pathlib import Path
 from typing import Iterable, List
 from collections import defaultdict
 
+from active_log_utils import resolve_active_log_files
+
 
 def _iter_json_files(paths: Iterable[Path]) -> Iterable[Path]:
     """Expand the provided paths into a list of JSON files.
@@ -97,7 +99,7 @@ def avg_lead_time(path: Path):
     }
 
 
-def parse_active_log(paths: List[Path], filter_project: str = None):
+def parse_active_log(paths, filter_project: str = None):
     """Parse newline-delimited JSON log files and return task_id -> active_seconds.
 
     Aggregation logic (consistent with analyze_quality.py:load_active_logs):
@@ -114,7 +116,15 @@ def parse_active_log(paths: List[Path], filter_project: str = None):
     # Step 1: (task_id, annotator_id, session_id) -> max seconds
     session_maxes = defaultdict(int)
 
-    for path in paths:
+    if isinstance(paths, Path):
+        _, iter_paths = resolve_active_log_files(paths)
+    else:
+        iter_paths = []
+        for path in paths:
+            _, resolved = resolve_active_log_files(path)
+            iter_paths.extend(resolved)
+
+    for path in iter_paths:
         if not path.exists():
             continue
         with path.open('r', encoding='utf-8') as f:

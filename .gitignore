@@ -136,6 +136,11 @@ legacy/
 !analysis_results/**
 !paper_figures/**
 
+# Re-ignore legacy subfolders inside the tracked project trees above
+active_logs/**/legacy/**
+analysis_results/**/legacy/**
+export_label/**/legacy/**
+
 # Local generated preview artifacts under analysis_results
 analysis_results/*.ply
 analysis_results/item*_layout_preview*.png

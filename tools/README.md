@@ -185,6 +185,36 @@ python tools/pooled_qa_plots.py \
 
 同时生成 `SUMMARY.md` 和 3 个 CSV 表格（低 IoU 样本、高边界误差、高分歧任务）。
 
+**方式 D：experiment visual audit 包（推荐给每次实验/round 导出后先看）**
+
+```bash
+python tools/build_experiment_visual_audit.py \
+  --quality-csv analysis_results/quality_report_20260328.csv \
+  --out-dir analysis_results/experiment_visual_audit \
+  --tag p1_generated_demo \
+  --active-log-summary-json analysis_results/p1_active_log_smoke_audit_summary.json \
+  --active-log-per-file-csv analysis_results/p1_active_log_smoke_audit.csv
+```
+
+该入口的定位是：
+
+- 面向“每次实验收集后先做分析”，不是旧 notebook 的临时展示。
+- 严格以 `tools/analyze_quality.py` 产出的 `quality_report_*.csv` 为正式入口；兼容字段只做显式桥接，不作为新的真源。
+- 先按新版口径给出最小审计包，再看细节图。
+- 输入以 `quality_report_*.csv` 为主，可选拼接 `audit_active_log_quality.py` 的输出。
+
+当前稳定输出包括：
+
+- 图：`01_tier_funnel.png`、`02_scope_distribution.png`、`03_layout_gate_reasons.png`、`04_active_time_vs_quality.png`、`05_active_time_by_scope.png`、`06_delta_n_pairs.png`，以及可用时的 `07_difficulty_tags.png`、`08_model_issue_tags.png`、`09_active_log_quality.png`
+- 表：`table_tier_counts.csv`、`table_field_audit.csv`、`table_schema_alignment.csv`、`table_a_delta_n_pairs.csv`、`table_b1_difficulty.csv`、`table_b2_model_issue.csv`、`table_b2_scope_conflict.csv`、`table_a1_anomaly_audit.csv`、`table_active_time_row_audit.csv`、`table_active_time_by_annotator.csv`、`table_active_time_source.csv`
+- 摘要：`summary.json`、`SUMMARY.md`
+
+补充说明：
+
+- `T / I / M` 口径遵循 `约束/visualize_output_v2.md`：`T=全部记录`，`I=is_oos=False`，`M=is_oos=False 且 type3_flag=False`。
+- active-time 行级审计优先读正式字段 `session_count / has_short_time_flag / has_long_time_flag / has_unknown_id_flag / project_id / script_version`；若 `quality_report` 仍处于过渡期，则会显式记录是否桥接到了 `active_time_session_count` / `export_project_id`。
+- 该入口仍然是 experiment-side visual audit，不等于最终论文主图生成器。
+
 **Python 函数库（用于自定义分析）**
 
 ```python

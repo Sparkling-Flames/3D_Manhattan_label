@@ -1,0 +1,68 @@
+{
+  "quality_csv": "analysis_results\\mp3d_txt_smoke_test_20260328\\legacy\\analysis\\quality_report_20260328.csv",
+  "output_dir": "analysis_results\\experiment_visual_audit\\smoke_demo",
+  "n_rows": 5,
+  "n_tasks": 5,
+  "quality_metric_column": "iou",
+  "reliability_metric_column": null,
+  "tier_counts": [
+    {
+      "tier": "T",
+      "n_rows": 5,
+      "n_tasks": 5,
+      "n_annotators": 1
+    },
+    {
+      "tier": "I",
+      "n_rows": 5,
+      "n_tasks": 5,
+      "n_annotators": 1
+    },
+    {
+      "tier": "M",
+      "n_rows": 5,
+      "n_tasks": 5,
+      "n_annotators": 1
+    }
+  ],
+  "field_audit": {
+    "n_rows": 5,
+    "n_tasks": 5,
+    "n_annotators": 1,
+    "n_t_rows": 5,
+    "n_i_rows": 5,
+    "n_m_rows": 5,
+    "n_oos_rows": 0,
+    "n_scope_missing_rows": 0,
+    "n_layout_gate_fail_rows": 0,
+    "n_difficulty_missing_rows": 5,
+    "n_difficulty_conflict_rows": 0,
+    "n_model_issue_required_rows": 5,
+    "n_model_issue_missing_required_rows": 5,
+    "n_model_issue_conflict_rows": 0,
+    "n_type4_issue_rows": 5,
+    "n_active_time_missing_rows": 0,
+    "n_active_time_zero_rows": 5,
+    "n_mixed_scope_tasks": 0,
+    "quality_metric_column": "iou",
+    "reliability_metric_column": ""
+  },
+  "active_log_summary_path": "",
+  "active_log_per_file_path": "",
+  "generated_tables": {
+    "table_tier_counts": "analysis_results\\experiment_visual_audit\\smoke_demo\\table_tier_counts.csv",
+    "table_field_audit": "analysis_results\\experiment_visual_audit\\smoke_demo\\table_field_audit.csv",
+    "table_a_delta_n_pairs": "analysis_results\\experiment_visual_audit\\smoke_demo\\table_a_delta_n_pairs.csv",
+    "table_b1_difficulty": "analysis_results\\experiment_visual_audit\\smoke_demo\\table_b1_difficulty.csv",
+    "table_b2_model_issue": "analysis_results\\experiment_visual_audit\\smoke_demo\\table_b2_model_issue.csv",
+    "table_b2_scope_conflict": "analysis_results\\experiment_visual_audit\\smoke_demo\\table_b2_scope_conflict.csv",
+    "table_a1_anomaly_audit": "analysis_results\\experiment_visual_audit\\smoke_demo\\table_a1_anomaly_audit.csv",
+    "table_active_log_summary": "analysis_results\\experiment_visual_audit\\smoke_demo\\table_active_log_summary.csv",
+    "table_active_log_per_file": "analysis_results\\experiment_visual_audit\\smoke_demo\\table_active_log_per_file.csv"
+  },
+  "generated_figures": {
+    "01_tier_funnel": "analysis_results\\experiment_visual_audit\\smoke_demo\\01_tier_funnel.png",
+    "02_scope_distribution": "analysis_results\\experiment_visual_audit\\smoke_demo\\02_scope_distribution.png",
+    "06_delta_n_pairs": "analysis_results\\experiment_visual_audit\\smoke_demo\\06_delta_n_pairs.png"
+  }
+}
