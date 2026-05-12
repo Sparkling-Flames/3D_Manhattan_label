@@ -146,6 +146,8 @@
   - 物化 meta-label 共识摘要
 - `tools/compute_dt_score.py`
   - `d_t` 最小正式实现
+- `tools/compute_g_t_diagnostics.py`
+  - `g_t` 标注前结构诊断 dry-run 工具；只用于 exploratory contact sheet 与人工 sanity check 准备，不是正式 routing 入口
 
 ### 日志与运行时链路
 
@@ -353,6 +355,7 @@
 - `tests/test_init_task_risk_rule_manifest.py`
 - `tests/test_materialize_meta_label_consensus_summary.py`
 - `tests/test_compute_dt_score.py`
+- `tests/test_compute_g_t_diagnostics.py`
 - `tests/test_extract_truth_layer.py`
 - `tests/test_materialize_final_gold_records.py`
 - `tests/test_build_final_gold_preflight.py`
