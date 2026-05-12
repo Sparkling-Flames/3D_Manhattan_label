@@ -148,7 +148,12 @@ def main() -> None:
     parser.add_argument("--calibration-manifest", required=True, type=Path)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--round-id", default="C1")
-    parser.add_argument("--core-redundancy", default=4, type=int)
+    parser.add_argument(
+        "--core-redundancy",
+        default=4,
+        type=int,
+        help="Operational target k for Calibration_core assignments; use 5 for the C1 over-assignment run.",
+    )
     parser.add_argument("--manifest-version", default="v1")
     args = parser.parse_args()
 

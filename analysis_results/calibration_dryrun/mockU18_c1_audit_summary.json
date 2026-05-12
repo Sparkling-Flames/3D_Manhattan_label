@@ -1,0 +1,32 @@
+﻿{
+    "meta":  {
+                 "core_target_k":  5,
+                 "core_min_accepted_k":  4,
+                 "reserve_policy":  "unchanged_C2_only",
+                 "c1_status":  "provisional_only",
+                 "dry_run_only":  true,
+                 "no_prescreen_results_yet":  true,
+                 "not_thesis_facing_artifact":  true,
+                 "formal_C1_requires":  "prescreen_worker_admission.csv",
+                 "mock_worker_count":  18,
+                 "output_manifest":  "analysis_results/calibration_dryrun/mockU18_c1_assignment_manifest.csv"
+             },
+    "passed":  true,
+    "errors":  [
+
+               ],
+    "warnings":  [
+
+                 ],
+    "counts":  {
+                   "workers":  18,
+                   "anchor_tasks":  12,
+                   "core_tasks":  75,
+                   "anchor_assignments":  216,
+                   "core_assignments":  375,
+                   "reserve_assignments":  0,
+                   "total_assignments":  591,
+                   "min_worker_assignments":  32,
+                   "max_worker_assignments":  33
+               }
+}
