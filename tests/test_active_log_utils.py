@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 from tools.active_log_utils import resolve_active_log_files
-from tools.analyze_quality import load_active_logs
+from tools.analyze_quality import load_active_logs, lookup_active_log_entry
 
 
 def test_resolve_active_log_files_prefers_new_server_and_ignores_legacy(tmp_path: Path):
@@ -61,6 +61,96 @@ def test_load_active_logs_does_not_read_new_server_legacy(tmp_path: Path):
     )
 
     logs = load_active_logs(str(active_logs))
+    assert ("15", "100", "2") in logs
     assert ("100", "2") in logs
+    assert logs[("15", "100", "2")]["active_time_value"] == 33.0
     assert logs[("100", "2")]["active_time_value"] == 33.0
     assert logs[("100", "2")]["active_time_source_file"] == current.name
+
+
+def test_load_active_logs_keeps_reused_task_ids_project_scoped(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+
+    log_file = active_logs / "active_times_2026-03-29.jsonl"
+    log_file.write_text(
+        "\n".join(
+            [
+                json.dumps(
+                    {
+                        "project_id": "15",
+                        "task_id": "100",
+                        "annotator_id": "2",
+                        "session_id": "p15",
+                        "active_seconds": 10,
+                    }
+                ),
+                json.dumps(
+                    {
+                        "project_id": "16",
+                        "task_id": "100",
+                        "annotator_id": "2",
+                        "session_id": "p16",
+                        "active_seconds": 20,
+                    }
+                ),
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    logs = load_active_logs(str(active_logs))
+
+    assert logs[("15", "100", "2")]["active_time_value"] == 10.0
+    assert logs[("16", "100", "2")]["active_time_value"] == 20.0
+    assert ("100", "2") not in logs
+    assert logs[("__ambiguous__", "100", "2")]["active_time_project_ids"] == "15;16"
+
+    entry, status = lookup_active_log_entry(logs, "16", "100", "2")
+    assert status == "project+task+annotator"
+    assert entry["active_time_value"] == 20.0
+
+    entry, status = lookup_active_log_entry(logs, "17", "100", "2")
+    assert entry is None
+    assert status == "project_mismatch_ambiguous_active_log"
+
+
+def test_load_active_logs_can_filter_by_server_received_date(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+
+    log_file = active_logs / "active_times_2026-03-30.jsonl"
+    log_file.write_text(
+        "\n".join(
+            [
+                json.dumps(
+                    {
+                        "project_id": "23",
+                        "task_id": "200",
+                        "annotator_id": "7",
+                        "session_id": "old",
+                        "active_seconds": 99,
+                        "server_received_at": "2026-03-29T23:59:00",
+                    }
+                ),
+                json.dumps(
+                    {
+                        "project_id": "23",
+                        "task_id": "200",
+                        "annotator_id": "7",
+                        "session_id": "current",
+                        "active_seconds": 12,
+                        "server_received_at": "2026-03-30T00:01:00",
+                    }
+                ),
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    logs = load_active_logs(str(active_logs), start_time="2026-03-30", end_time="2026-03-30")
+
+    assert logs[("23", "200", "7")]["active_time_value"] == 12.0
+    assert logs[("23", "200", "7")]["active_time_session_count"] == 1

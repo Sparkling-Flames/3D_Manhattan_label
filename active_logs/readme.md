@@ -16,7 +16,13 @@
 
 scp -r ubuntu@106.53.106.49:/home/ubuntu/workspace/HoHoNet/active_logs "D:\Work\HOHONET\active_logs\old_server"
 
-scp -r ubuntu@175.178.71.217:/home/ubuntu/workspace/HoHoNet/active_logs "D:\Work\HOHONET\active_logs\new_server"
+scp -r ubuntu@175.178.71.217:/home/ubuntu/workspace/HoHoNet/active_logs/new_server/. "D:\Work\HOHONET\active_logs\new_server"
+
+如果要先清空本地旧内容再覆盖：
+
+Remove-Item -Recurse -Force "D:\Work\HOHONET\active_logs\new_server\*"
+
+然后再执行上面的 scp 命令。
 
 如果需要让新服务器直接写入独立目录，例如 active_logs/new_server，需要在服务器环境变量中设置：
 

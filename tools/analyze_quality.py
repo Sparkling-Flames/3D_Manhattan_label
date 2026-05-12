@@ -28,6 +28,36 @@ from lib.misc import panostretch
 _LABEL_STUDIO_CONFIG_PATH = Path(_project_root) / "tools" / "label_studio_view_config.xml"
 
 
+def _parse_cli_datetime(value, *, is_end=False):
+    """Parse an ISO date/datetime CLI bound for active-log filtering."""
+    if value is None or str(value).strip() == "":
+        return None
+    text = str(value).strip()
+    if len(text) == 10 and text[4] == "-" and text[7] == "-":
+        suffix = "T23:59:59.999999" if is_end else "T00:00:00"
+        text = f"{text}{suffix}"
+    text = text.replace("Z", "+00:00")
+    parsed = datetime.fromisoformat(text)
+    if parsed.tzinfo is not None:
+        parsed = parsed.replace(tzinfo=None)
+    return parsed
+
+
+def _parse_active_log_event_time(data):
+    """Return the server-side event time when available."""
+    server_received_at = data.get("server_received_at")
+    if server_received_at:
+        try:
+            text = str(server_received_at).strip().replace("Z", "+00:00")
+            parsed = datetime.fromisoformat(text)
+            if parsed.tzinfo is not None:
+                parsed = parsed.replace(tzinfo=None)
+            return parsed
+        except Exception:
+            return None
+    return None
+
+
 def _load_label_studio_choice_alias_map(xml_path: Path) -> dict[str, dict[str, str]]:
     """Load Choice value->alias mappings per field name from Label Studio view config.
 
@@ -828,22 +858,30 @@ def compute_boundary_mse_rmse(
     meta["pairing_failure_reason"] = ""
     return mse, rmse, meta
 
-def load_active_logs(log_dir):
+def load_active_logs(log_dir, start_time=None, end_time=None):
     """
     Load active time logs from a directory of JSONL files.
     Logic: max within a session, sum across sessions.
 
     Returns:
-      dict[(task_id, annotator_id)] -> {
+      dict[(project_id, task_id, annotator_id)] -> {
         active_time_value,
         active_time_source_file,
         active_time_session_count,
         active_time_event_count,
       }
+
+      For backward compatibility, a legacy (task_id, annotator_id) key is also
+      emitted only when the pair maps to exactly one project_id. If the same
+      pair appears under multiple projects, the legacy key is deliberately
+      omitted and an ("__ambiguous__", task_id, annotator_id) audit marker is
+      emitted instead.
     """
     session_maxes = defaultdict(float)
     session_files = defaultdict(set)
     session_events = defaultdict(int)
+    start_dt = _parse_cli_datetime(start_time) if start_time else None
+    end_dt = _parse_cli_datetime(end_time, is_end=True) if end_time else None
 
     if not log_dir or not os.path.exists(log_dir):
         return {}
@@ -859,12 +897,22 @@ def load_active_logs(log_dir):
                     continue
                 try:
                     data = json.loads(line)
+                    if start_dt or end_dt:
+                        event_dt = _parse_active_log_event_time(data)
+                        if event_dt is None:
+                            continue
+                        if start_dt and event_dt < start_dt:
+                            continue
+                        if end_dt and event_dt > end_dt:
+                            continue
+
                     t_id = str(data.get('task_id'))
                     a_id = str(data.get('annotator_id', 'unknown'))
                     s_id = str(data.get('session_id', 'default'))
+                    p_id = str(data.get('project_id', '') or '').strip()
                     sec = float(data.get('active_seconds', 0))
 
-                    key = (t_id, a_id, s_id)
+                    key = (p_id, t_id, a_id, s_id)
                     if sec > session_maxes[key]:
                         session_maxes[key] = sec
                     session_files[key].add(os.path.basename(fpath))
@@ -877,13 +925,16 @@ def load_active_logs(log_dir):
         'active_time_source_file': set(),
         'active_time_session_count': 0,
         'active_time_event_count': 0,
+        'active_time_project_ids': set(),
     })
-    for (t_id, a_id, _s_id), max_sec in session_maxes.items():
-        bucket = final_logs[(t_id, a_id)]
+    for (p_id, t_id, a_id, _s_id), max_sec in session_maxes.items():
+        bucket = final_logs[(p_id, t_id, a_id)]
         bucket['active_time_value'] += max_sec
-        bucket['active_time_source_file'].update(session_files[(t_id, a_id, _s_id)])
+        bucket['active_time_source_file'].update(session_files[(p_id, t_id, a_id, _s_id)])
         bucket['active_time_session_count'] += 1
-        bucket['active_time_event_count'] += session_events[(t_id, a_id, _s_id)]
+        bucket['active_time_event_count'] += session_events[(p_id, t_id, a_id, _s_id)]
+        if p_id:
+            bucket['active_time_project_ids'].add(p_id)
 
     serialized = {}
     for key, value in final_logs.items():
@@ -892,8 +943,58 @@ def load_active_logs(log_dir):
             'active_time_source_file': ";".join(sorted(value['active_time_source_file'])),
             'active_time_session_count': int(value['active_time_session_count']),
             'active_time_event_count': int(value['active_time_event_count']),
+            'active_time_project_ids': ";".join(sorted(value['active_time_project_ids'])),
         }
+
+    by_legacy_pair = defaultdict(list)
+    for (p_id, t_id, a_id), value in final_logs.items():
+        by_legacy_pair[(t_id, a_id)].append((p_id, value))
+
+    for (t_id, a_id), project_values in by_legacy_pair.items():
+        project_ids = sorted({p_id for p_id, _value in project_values if p_id})
+        if len(project_ids) <= 1:
+            p_id, _value = project_values[0]
+            serialized[(t_id, a_id)] = serialized[(p_id, t_id, a_id)]
+        else:
+            serialized[("__ambiguous__", t_id, a_id)] = {
+                'active_time_project_ids': ";".join(project_ids),
+                'active_time_value': 0.0,
+                'active_time_source_file': "",
+                'active_time_session_count': 0,
+                'active_time_event_count': 0,
+            }
     return serialized
+
+
+def lookup_active_log_entry(active_times, project_id, task_id, annotator_id):
+    """Return a project-safe active log match and its match status."""
+    p_id = str(project_id or '').strip()
+    t_id = str(task_id)
+    a_id = str(annotator_id)
+
+    if p_id:
+        exact = active_times.get((p_id, t_id, a_id))
+        if exact:
+            return exact, 'project+task+annotator'
+
+        ambiguous = active_times.get(("__ambiguous__", t_id, a_id))
+        if ambiguous:
+            return None, 'project_mismatch_ambiguous_active_log'
+
+        legacy = active_times.get((t_id, a_id))
+        legacy_projects = str((legacy or {}).get('active_time_project_ids', '') or '').strip()
+        if legacy and not legacy_projects:
+            return legacy, 'task+annotator_legacy_no_project'
+        if legacy:
+            return None, 'project_mismatch_no_direct_log'
+        return None, 'missing'
+
+    legacy = active_times.get((t_id, a_id))
+    if legacy:
+        return legacy, 'task+annotator_unique_project_fallback'
+    if active_times.get(("__ambiguous__", t_id, a_id)):
+        return None, 'ambiguous_project_log_no_match'
+    return None, 'missing'
 
 def extract_data(results, width=1024, height=512):
     """Extract geometry and choice fields from Label Studio results.
@@ -1132,6 +1233,14 @@ def main():
     parser = argparse.ArgumentParser(description="Analyze annotation quality and efficiency")
     parser.add_argument('export_json', help="Path to Label Studio export JSON file")
     parser.add_argument('--active-logs', help="Path to active_logs directory", default="active_logs")
+    parser.add_argument(
+        '--active-log-start',
+        help="Inclusive server_received_at lower bound for active logs, e.g. 2026-05-06 or 2026-05-06T09:00:00",
+    )
+    parser.add_argument(
+        '--active-log-end',
+        help="Inclusive server_received_at upper bound for active logs, e.g. 2026-05-06 or 2026-05-06T18:00:00",
+    )
     parser.add_argument('--output_dir', help="Directory to save output files", default="analysis_results")
     parser.add_argument('--metric', choices=['auto', 'manual', 'corner'], default='corner', 
                         help="Primary metric for 'iou' column (recommended: corner; auto: prefer manual if exists)")
@@ -1171,7 +1280,13 @@ def main():
 
     # 1. Load Active Logs
     print("Loading active logs...")
-    active_times = load_active_logs(args.active_logs)
+    active_times = load_active_logs(
+        args.active_logs,
+        start_time=args.active_log_start,
+        end_time=args.active_log_end,
+    )
+    if args.active_log_start or args.active_log_end:
+        print(f"Active log time window: start={args.active_log_start or '(none)'} end={args.active_log_end or '(none)'}")
     
     # 2. Process Tasks
     rows = []
@@ -1288,25 +1403,33 @@ def main():
                         u_id = str(ann['completed_by'])
                 
                 # Get active time from logs, fallback to lead_time
-                active_log_entry = active_times.get((t_id, u_id))
+                active_log_entry, active_time_match_status = lookup_active_log_entry(
+                    active_times,
+                    export_project_id,
+                    t_id,
+                    u_id,
+                )
                 active_time = 0
                 active_time_source = 'missing'
                 active_time_source_file = ''
+                active_time_project_ids = ''
                 active_time_session_count = 0
                 active_time_event_count = 0
-                active_time_match_status = 'missing'
                 lead_time_seconds = float(ann.get('lead_time', 0) or 0)
                 if active_log_entry:
                     active_time = float(active_log_entry.get('active_time_value', 0.0))
                     active_time_source = 'log'
                     active_time_source_file = str(active_log_entry.get('active_time_source_file', ''))
+                    active_time_project_ids = str(active_log_entry.get('active_time_project_ids', ''))
                     active_time_session_count = int(active_log_entry.get('active_time_session_count', 0))
                     active_time_event_count = int(active_log_entry.get('active_time_event_count', 0))
-                    active_time_match_status = 'task+annotator'
                 elif lead_time_seconds > 0:
                     active_time = lead_time_seconds
                     active_time_source = 'lead_time_fallback'
-                    active_time_match_status = 'fallback_no_direct_log'
+                    if active_time_match_status == 'missing':
+                        active_time_match_status = 'fallback_no_direct_log'
+                    else:
+                        active_time_match_status = f'fallback_{active_time_match_status}'
                 
                 ann_corners, ann_poly, ann_choice_map, quality = extract_data(ann.get('result', []))
                 # Prefer deterministic v2 parsing from structured fields (scope/difficulty/model_issue).
@@ -1492,6 +1615,7 @@ def main():
                     'active_time': active_time,
                     'active_time_source': active_time_source,
                     'active_time_source_file': active_time_source_file,
+                    'active_time_project_ids': active_time_project_ids,
                     'active_time_match_status': active_time_match_status,
                     'active_time_session_count': active_time_session_count,
                     'active_time_event_count': active_time_event_count,
@@ -1816,15 +1940,16 @@ def main():
             if show:
                 print("Example mixed-scope task_ids:", ", ".join(show))
 
-        # Data hygiene: in OOS, model_issue is allowed to be empty.
-        # But if many OOS rows still mark model_issue, it's likely the UI rule isn't followed.
+        # Data hygiene: OOS rows may still contain model_issue because the LS UI
+        # requires the field for semi-auto tasks. Report it for transparency, but
+        # do not treat model_issue as an OOS scoring/adjudication signal.
         oos_rows = [r for r in rows if r.get('is_oos') is True]
         if oos_rows:
             oos_with_model_issue = [r for r in oos_rows if str(r.get('model_issue') or '').strip()]
             rate = float(len(oos_with_model_issue)) / float(len(oos_rows))
             print(f"OOS rows: {len(oos_rows)} | OOS rows with model_issue filled: {len(oos_with_model_issue)} ({rate*100:.1f}%)")
             if rate > 0.3:
-                print("[WARN] Many OOS rows still set model_issue. Recommended: scope=OOS 时 model_issue 留空（除非明确存在额外初始化错误）。")
+                print("[INFO] OOS rows include model_issue values. This is expected when the semi-auto UI requires model_issue; these values are not used for OOS scoring.")
 
         # If you want to 'exclude but report': show separate primary IoU means.
         non_oos_rows = [r for r in rows if (r.get('is_oos') is False) and (not r.get('scope_missing'))]
@@ -1914,12 +2039,12 @@ def main():
                                and int(r.get('task_scope_n_total', 0)) == 2))
             
             print("\n--- Annotator Reliability (r_u) from Multi-Annotator Tasks (Leave-One-Out) ---")
-            print(f"Total tasks with LOO: {n_tasks_total} (n≥3: {n_tasks_3plus}, n=2: {n_tasks_2})")
+            print(f"Total tasks with LOO: {n_tasks_total} (n>=3: {n_tasks_3plus}, n=2: {n_tasks_2})")
             if n_tasks_2 > 0:
                 pct_2 = 100.0 * n_tasks_2 / n_tasks_total if n_tasks_total > 0 else 0.0
-                print(f"⚠️  Warning: {n_tasks_2} tasks ({pct_2:.1f}%) have n=2 annotators.")
+                print(f"Warning: {n_tasks_2} tasks ({pct_2:.1f}%) have n=2 annotators.")
                 print(f"   LOO reliability for n=2 degenerates to pairwise IoU (not true consensus).")
-                print(f"   For paper-level rigor, consider reporting n≥3 subset separately.\n")
+                print(f"   For paper-level rigor, consider reporting n>=3 subset separately.\n")
             
             print(
                 f"{'User':<10} | {'n_tasks':<6} | {'r_u(median)':<11} | {'CI':<25} | {'mean IoU':<10}"
@@ -1942,15 +2067,15 @@ def main():
                 for uid, n, med, lo, hi, mean in items:
                     print(f"{uid:<10} | {n:<6d} | {med:<11.4f} | [{lo:.4f}, {hi:.4f}] (p{int(ci_level*100)}) | {mean:<10.4f}")
 
-                # --- Stratified report: n≥3 vs n=2 ---
+                # --- Stratified report: n>=3 vs n=2 ---
                 if ru_values_3plus and ru_values_2:
-                    print("\n--- Stratified LOO Reliability: n≥3 (true consensus) vs n=2 (pairwise) ---")
+                    print("\n--- Stratified LOO Reliability: n>=3 (true consensus) vs n=2 (pairwise) ---")
                     for uid in sorted(set(ru_values_3plus.keys()) | set(ru_values_2.keys())):
                         vals_3plus = ru_values_3plus.get(uid, [])
                         vals_2 = ru_values_2.get(uid, [])
                         r_3plus = f"{np.median(vals_3plus):.3f}" if vals_3plus else "N/A"
                         r_2 = f"{np.median(vals_2):.3f}" if vals_2 else "N/A"
-                        print(f"{uid:<10} | n≥3: {len(vals_3plus):<3d} r_u={r_3plus:<6s} | n=2: {len(vals_2):<3d} r_u={r_2:<6s}")
+                        print(f"{uid:<10} | n>=3: {len(vals_3plus):<3d} r_u={r_3plus:<6s} | n=2: {len(vals_2):<3d} r_u={r_2:<6s}")
 
                 # Also save a per-user reliability report
                 reliability_csv = os.path.join(args.output_dir, f"reliability_report_{date_str}.csv")

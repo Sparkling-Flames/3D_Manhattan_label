@@ -36,6 +36,10 @@
 
 GT 项目可与 worker-facing 项目共实例存在，但只允许作为管理员维护项目，不进入 worker 日常路径。
 
+Expected path assumes pass count `>= 18` and full participation through `P1 / C1 / C2 / T1 / V1`.
+
+The downgrade rules below are contingency rules for attrition, unexpected admission failure, or coverage failure. They do not alter the planned protocol.
+
 每轮结束后，除本 SOP 原有工件外，还必须核对：
 
 - 实际导入项目名
@@ -44,6 +48,12 @@ GT 项目可与 worker-facing 项目共实例存在，但只允许作为管理�
 - manifest 预期 worker/task 映射
 
 ## 1. P1 — PreScreen
+
+### pass-count contingency
+
+- `pass >= 16`：完整执行 `RQ1 / RQ2 / RQ3` 计划
+- `12 <= pass <= 15`：保留 `RQ1 / RQ2`；`RQ3` 的 scene-specific 结果只在 activation support 达标场景中报告，不作全局强主张
+- `pass < 12`：`RQ3` 降级为 global / stress audit，不做稳定 worker subtype 或 scene-specific 主张
 
 ### 输入
 
@@ -211,8 +221,12 @@ CE-only 执行视图默认采用短时项目：
 
 ### 分发规则
 
-- `Manual_Test` 与 `SemiAuto_Test` 按预注册条件分配
+- `Manual_Test` 与 `SemiAuto_Test` 采用同图双条件设计
+- `Nimg = 100` 个唯一 base image，每个 base image 形成一个 `Manual` task instance 和一个 `SemiAuto` task instance
+- 同一 worker 不得同时看到同一 base image 的两个条件
 - 保持 worker mix 审计与条件平衡
+- 每位 worker 的 Manual / Semi 任务数尽量平衡
+- 任务顺序随机化
 - CE-only 执行视图默认对应 `T1_manual` 与 `T1_semi`
 
 ### 允许更新

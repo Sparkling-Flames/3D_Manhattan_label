@@ -136,6 +136,10 @@
   - planned / runtime / log 多层 registry 总装
 - `tools/build_c1_assignment_manifest.py`
   - `C1` assignment manifest 生成
+- `tools/build_calibration_round_input_manifest.py`
+  - 将 planned Stage 2 import JSON 收口为 Calibration round input manifest
+- `tools/audit_c1_assignment_manifest.py`
+  - 审计 `C1` assignment manifest 的 target/min k、worker 负载与 reserve 排除
 - `tools/init_task_risk_rule_manifest.py`
   - 初始化 `task_risk_rule_manifest`
 - `tools/materialize_meta_label_consensus_summary.py`
@@ -382,6 +386,8 @@
   - `C1/C2` 工件字段合同
 - `docs/RQ3_MINIMAL_EVIDENCE_CHAIN_CONTRACT_v1.md`
   - `RQ3` 最小证据链合同
+- `docs/STAGE3_OOD_PREPARATION_PLAN_v1.md`
+  - Stage 3 / Main-Validation / OOD-aware routing 准备计划
 - `docs/SOP_labelstudio_experiment.md`
   - Label Studio 运行 SOP
 - `docs/README_ANNOTATOR.md`
@@ -449,3 +455,11 @@
 2. `tools/official/`
 3. `import_json/` 与 `export_label/`
 4. `analysis_results/`
+## Agent-ready 入口
+
+- `AGENTS.md`
+  - Codex 仓库级常驻上下文入口。
+- `docs/AGENT_CONTEXT_INDEX.md`
+  - Codex 上下文路由表。
+- `docs/agent_playbooks/`
+  - Codex 狭义工作流 playbook，覆盖验证、文档同步、协议/统计护栏、CE-only 护栏与交付摘要。
