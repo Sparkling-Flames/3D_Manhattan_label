@@ -1,0 +1,37 @@
+{
+  "status": "dry_run_visual_comparison",
+  "generated_batches": [
+    {
+      "batch_name": "hard_prediction_failure",
+      "input_count": 30,
+      "rendered_count": 30,
+      "contact_sheet": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_vs_hohonet_20260514\\contact_sheet_hard_prediction_failure_hohonet_vs_bilayout_relabel.png",
+      "manifest": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_vs_hohonet_20260514\\hard_prediction_failure_hohonet_vs_bilayout_manifest.csv"
+    },
+    {
+      "batch_name": "nominal_prediction_structure",
+      "input_count": 30,
+      "rendered_count": 30,
+      "contact_sheet": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_vs_hohonet_20260514\\contact_sheet_nominal_prediction_structure_hohonet_vs_bilayout_relabel.png",
+      "manifest": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_vs_hohonet_20260514\\nominal_prediction_structure_hohonet_vs_bilayout_manifest.csv"
+    },
+    {
+      "batch_name": "highest_g_score",
+      "input_count": 30,
+      "rendered_count": 30,
+      "contact_sheet": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_vs_hohonet_20260514\\contact_sheet_highest_g_score_hohonet_vs_bilayout_relabel.png",
+      "manifest": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_vs_hohonet_20260514\\highest_g_score_hohonet_vs_bilayout_manifest.csv"
+    }
+  ],
+  "source_manifest": "D:\\Work\\HOHONET\\analysis_results\\g_t_diagnostic_dryrun_20260512\\g_t_diagnostic_sample_manifest.csv",
+  "hohonet_export_source": "C:\\Users\\ASUS\\Downloads\\project-2-at-2026-05-11-16-44-2daa004c.json",
+  "bi_layout_relabel_source_dir": "D:\\Work\\Manhattan_3D\\Bi_layout\\src\\dataset\\mp3d\\all_mix_labels_in_uv_v2",
+  "max_items_per_sheet": 30,
+  "legend": {
+    "hohonet_polygon": "orange line",
+    "hohonet_keypoints": "red points",
+    "bi_layout_ceiling": "cyan line/points",
+    "bi_layout_floor": "green line/points"
+  },
+  "interpretation_note": "These are visual overlays, not formal overextension metrics."
+}
