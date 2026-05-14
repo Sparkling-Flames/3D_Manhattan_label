@@ -1,0 +1,95 @@
+{
+  "manifest_name": "b0_relabel_audit_manifest_v1",
+  "status": "Paper B / non-thesis-facing audit planning",
+  "scope": "documentation and manually fillable audit templates only",
+  "created_for": "Ambiguity-aware enclosed HoHoNet Paper B B0 relabel audit",
+  "a_line_effect": "none",
+  "source_contact_sheet_package": {
+    "root": "analysis_results/bi_layout_vs_hohonet_20260514",
+    "summary": "analysis_results/bi_layout_vs_hohonet_20260514/hohonet_txt_vs_bilayout_relabel_summary.json",
+    "groups": [
+      {
+        "source_group": "hard_prediction_failure",
+        "manifest": "analysis_results/bi_layout_vs_hohonet_20260514/hard_prediction_failure_hohonet_txt_vs_bilayout_manifest.csv",
+        "contact_sheet": "analysis_results/bi_layout_vs_hohonet_20260514/images/contact_sheet_hard_prediction_failure_hohonet_txt_vs_bilayout_relabel.png",
+        "inventory_rows": 30
+      },
+      {
+        "source_group": "highest_g_score",
+        "manifest": "analysis_results/bi_layout_vs_hohonet_20260514/highest_g_score_hohonet_txt_vs_bilayout_manifest.csv",
+        "contact_sheet": "analysis_results/bi_layout_vs_hohonet_20260514/images/contact_sheet_highest_g_score_hohonet_txt_vs_bilayout_relabel.png",
+        "inventory_rows": 30
+      },
+      {
+        "source_group": "nominal_prediction_structure",
+        "manifest": "analysis_results/bi_layout_vs_hohonet_20260514/nominal_prediction_structure_hohonet_txt_vs_bilayout_manifest.csv",
+        "contact_sheet": "analysis_results/bi_layout_vs_hohonet_20260514/images/contact_sheet_nominal_prediction_structure_hohonet_txt_vs_bilayout_relabel.png",
+        "inventory_rows": 30
+      },
+      {
+        "source_group": "soft_prediction_complexity",
+        "manifest": "analysis_results/bi_layout_vs_hohonet_20260514/soft_prediction_complexity_hohonet_txt_vs_bilayout_manifest.csv",
+        "contact_sheet": "analysis_results/bi_layout_vs_hohonet_20260514/images/contact_sheet_soft_prediction_complexity_hohonet_txt_vs_bilayout_relabel.png",
+        "inventory_rows": 30
+      }
+    ],
+    "total_inventory_rows": 120
+  },
+  "outputs": {
+    "contact_sheet_inventory": "analysis_results/bilayout_relabel_audit/b0_contact_sheet_inventory_template.csv",
+    "manual_audit_template": "analysis_results/bilayout_relabel_audit/b0_relabel_audit_template_v1.csv",
+    "readme": "analysis_results/bilayout_relabel_audit/b0_relabel_audit_readme_v1.md"
+  },
+  "manual_audit_template_schema": [
+    "task_id",
+    "image_id",
+    "scene_id",
+    "source_group",
+    "hohonet_corner_count",
+    "bilayout_corner_count",
+    "hohonet_crossdoor_score",
+    "bilayout_crossdoor_score",
+    "overextend_reduced",
+    "overparse_reduced",
+    "bilayout_undercoverage",
+    "bilayout_new_error",
+    "both_wrong",
+    "oos_suspect",
+    "open_boundary_ambiguity",
+    "expert_verdict",
+    "usable_for_B1",
+    "audit_notes"
+  ],
+  "allowed_source_group_values": [
+    "hard_prediction_failure",
+    "highest_g_score",
+    "nominal_prediction_structure",
+    "soft_prediction_complexity"
+  ],
+  "allowed_expert_verdict_values": [
+    "accept_bilayout_enclosed",
+    "accept_with_minor_fix",
+    "reject_undercoverage",
+    "reject_ambiguous_or_oos"
+  ],
+  "audit_rules": {
+    "no_automatic_visual_judgment": true,
+    "manual_review_required": true,
+    "deduplicate_before_group_statistics": [
+      "task_id",
+      "image_id",
+      "scene_id"
+    ],
+    "bi_layout_relabel_not_automatically_correct": true,
+    "bi_layout_cue_not_oos_classifier": true,
+    "undercoverage_and_new_errors_must_be_reported": true
+  },
+  "forbidden_uses": [
+    "Do not train models from these templates directly.",
+    "Do not use B0 outputs to modify A-line P1/C1/C2/T1/V1.",
+    "Do not merge Bi-Layout cue into formal A-line g_t.",
+    "Do not modify A-line d_t, routing, admission, w_max, tau_d, Score, worker tier, k0/kmax, or stop rules.",
+    "Do not treat any cue or audit field as an automatic OOS classifier.",
+    "Do not replace GT automatically with Bi-Layout relabels."
+  ]
+}
