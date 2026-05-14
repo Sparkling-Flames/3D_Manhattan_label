@@ -393,6 +393,8 @@
   - Stage 3 / Main-Validation / OOD-aware routing 准备计划
 - `docs/MANHATTAN_GEOMETRY_DIAGNOSTIC_PLAN_v1.md`
   - A-line post-hoc Manhattan 几何一致性诊断计划；仅作 audit-only / sensitivity-only 过程证据，不改变 `g_t`、OOS、routing、worker tier 或 Label Studio 生产界面
+- `docs/AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md`
+  - B-line / Paper B 的 Ambiguity-aware enclosed HoHoNet 研究计划；属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面
 - `docs/SOP_labelstudio_experiment.md`
   - Label Studio 运行 SOP
 - `docs/README_ANNOTATOR.md`
