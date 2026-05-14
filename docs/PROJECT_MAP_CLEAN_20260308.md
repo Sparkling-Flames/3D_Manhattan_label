@@ -99,6 +99,8 @@
   - active-log 质量审计
 - `tools/aggregate_analysis.py`
   - 多份分析结果汇总
+- `tools/compute_mgeo_diagnostic.py`
+  - Paper A / A-line 的 offline audit-only Manhattan geometry diagnostic MVP。读取 JSONL layout geometry，输出可选 `M_geo` sidecar 与 worker-level `J_u` summary；不接入 routing、Label Studio UI、import/export 或正式轮次 artifact contract。
 
 ### 导入与分池主链
 
@@ -356,6 +358,7 @@
 - `tests/test_materialize_meta_label_consensus_summary.py`
 - `tests/test_compute_dt_score.py`
 - `tests/test_compute_g_t_diagnostics.py`
+- `tests/test_compute_mgeo_diagnostic.py`
 - `tests/test_extract_truth_layer.py`
 - `tests/test_materialize_final_gold_records.py`
 - `tests/test_build_final_gold_preflight.py`
@@ -393,6 +396,8 @@
   - Stage 3 / Main-Validation / OOD-aware routing 准备计划
 - `docs/MANHATTAN_GEOMETRY_DIAGNOSTIC_PLAN_v1.md`
   - A-line post-hoc Manhattan 几何一致性诊断计划；仅作 audit-only / sensitivity-only 过程证据，不改变 `g_t`、OOS、routing、worker tier 或 Label Studio 生产界面
+- `docs/MANHATTAN_GEOMETRY_DIAGNOSTIC_IMPLEMENTATION_SPEC_v1.md`
+  - A-line `M_geo(t,u)` / `J_u` offline audit-only CLI 实现边界；定义 sidecar/report schema、exclusion reason 与 MVP component behavior，不进入正式 `P1 / C1 / C2 / T1 / V1` required artifact
 - `docs/AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md`
   - B-line / Paper B 的 Ambiguity-aware enclosed HoHoNet 研究计划；属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面
 - `docs/SOP_labelstudio_experiment.md`
