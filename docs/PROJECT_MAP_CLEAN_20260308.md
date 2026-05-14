@@ -391,6 +391,8 @@
   - `RQ3` 最小证据链合同
 - `docs/STAGE3_OOD_PREPARATION_PLAN_v1.md`
   - Stage 3 / Main-Validation / OOD-aware routing 准备计划
+- `docs/MANHATTAN_GEOMETRY_DIAGNOSTIC_PLAN_v1.md`
+  - A-line post-hoc Manhattan 几何一致性诊断计划；仅作 audit-only / sensitivity-only 过程证据，不改变 `g_t`、OOS、routing、worker tier 或 Label Studio 生产界面
 - `docs/SOP_labelstudio_experiment.md`
   - Label Studio 运行 SOP
 - `docs/README_ANNOTATOR.md`
