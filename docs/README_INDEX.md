@@ -50,6 +50,7 @@
 11. [AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md](AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md)
    - Paper B / B-line 的 Ambiguity-aware enclosed HoHoNet 研究计划。
    - 属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面。
+   - 关联规格：[PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md](PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md) 与 [ZIND_MAPPING_AUDIT_PROTOCOL_v1.md](ZIND_MAPPING_AUDIT_PROTOCOL_v1.md)，仅作为 Paper B / non-thesis-facing 架构与数据审计规划。
 
 12. [PROJECT_MAP_CLEAN_20260308.md](PROJECT_MAP_CLEAN_20260308.md)
    - 当前纯净仓库地图。
