@@ -19,6 +19,24 @@ from typing import Any, Iterable
 
 GEOMETRY_DIAG_VERSION = "mgeo_mvp_v1"
 EPS = 1e-9
+VALID_SCOPE_ALIASES = {
+    "normal",
+    "oos_geometry",
+    "oos_open_boundary",
+    "oos_split_level",
+    "oos_insufficient",
+}
+INELIGIBLE_REASONS = {
+    "oos_geometry",
+    "oos_open_boundary",
+    "oos_split_level",
+    "oos_insufficient",
+    "scope_unknown_or_missing",
+    "missing_manhattan_assumable",
+    "not_manhattan_assumable",
+}
+INVALID_RENDER_REASONS = {"invalid_polygon"}
+MISSING_OR_UNPARSEABLE_REASONS = {"missing_geometry", "unparseable_geometry"}
 
 
 def _as_bool(value: Any) -> bool:
@@ -43,11 +61,13 @@ def _as_float(value: Any) -> float | None:
     return out
 
 
-def _scope_is_in_scope(value: Any) -> bool:
+def _normalize_scope(value: Any) -> str:
     if value is None:
-        return False
-    norm = str(value).strip().lower().replace("-", "_").replace(" ", "_")
-    return norm in {"in_scope", "inscope"}
+        return "scope_unknown_or_missing"
+    norm = str(value).strip().lower()
+    if norm in VALID_SCOPE_ALIASES:
+        return norm
+    return "scope_unknown_or_missing"
 
 
 def _base_output(row: dict[str, Any]) -> dict[str, Any]:
@@ -88,12 +108,6 @@ def _parse_corners(raw: Any) -> tuple[list[tuple[float, float]], float | None, s
 
     for item in raw:
         if isinstance(item, dict):
-            x = _as_float(item.get("x"))
-            y = _as_float(item.get("y"))
-            if x is not None and y is not None:
-                points.append((x, y))
-                continue
-
             x_floor = _as_float(item.get("x_floor", item.get("floor_x", item.get("x"))))
             y_floor = _as_float(item.get("y_floor", item.get("floor_y")))
             x_ceil = _as_float(item.get("x_ceiling", item.get("ceiling_x", item.get("x"))))
@@ -102,6 +116,12 @@ def _parse_corners(raw: Any) -> tuple[list[tuple[float, float]], float | None, s
                 points.append((x_floor, y_floor))
                 if x_ceil is not None and y_ceil is not None:
                     vertical_offsets.append(abs(x_floor - x_ceil))
+                continue
+
+            x = _as_float(item.get("x"))
+            y = _as_float(item.get("y"))
+            if x is not None and y is not None:
+                points.append((x, y))
                 continue
             return [], None, "unparseable_geometry"
 
@@ -264,8 +284,11 @@ def _composite_residual(
 
 def diagnose_submission(row: dict[str, Any]) -> dict[str, Any]:
     """Compute one audit-only M_geo sidecar row."""
-    if not _scope_is_in_scope(row.get("scope")):
-        return _exclude(row, "scope_not_in_scope")
+    scope = _normalize_scope(row.get("scope"))
+    if scope != "normal":
+        return _exclude(row, scope)
+    if "manhattan_assumable" not in row:
+        return _exclude(row, "missing_manhattan_assumable")
     if not _as_bool(row.get("manhattan_assumable")):
         return _exclude(row, "not_manhattan_assumable")
 
@@ -333,6 +356,17 @@ def summarize_workers(sidecar_rows: Iterable[dict[str, Any]]) -> list[dict[str, 
                 "n_total_submissions": len(rows),
                 "n_geometry_diag_valid": len(valid_rows),
                 "n_geometry_diag_excluded": len(rows) - len(valid_rows),
+                "n_geometry_diag_ineligible": sum(
+                    row.get("geometry_diag_exclusion_reason") in INELIGIBLE_REASONS for row in rows
+                ),
+                "n_geometry_diag_invalid_render": sum(
+                    row.get("geometry_diag_exclusion_reason") in INVALID_RENDER_REASONS
+                    or row.get("mgeo_renderability_flag") is False
+                    for row in rows
+                ),
+                "n_geometry_diag_missing_or_unparseable": sum(
+                    row.get("geometry_diag_exclusion_reason") in MISSING_OR_UNPARSEABLE_REASONS for row in rows
+                ),
                 "mgeo_median": median(composite_values) if composite_values else None,
                 "mgeo_p90": _percentile(composite_values, 0.9),
                 "mgeo_invalid_render_count": sum(row.get("mgeo_renderability_flag") is False for row in rows),
@@ -396,4 +430,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

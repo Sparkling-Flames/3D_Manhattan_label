@@ -400,6 +400,10 @@
   - A-line `M_geo(t,u)` / `J_u` offline audit-only CLI 实现边界；定义 sidecar/report schema、exclusion reason 与 MVP component behavior，不进入正式 `P1 / C1 / C2 / T1 / V1` required artifact
 - `docs/AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md`
   - B-line / Paper B 的 Ambiguity-aware enclosed HoHoNet 研究计划；属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面
+- `docs/PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md`
+  - Paper B / non-thesis-facing 的 HoHoNet-AE 架构规划；定义 `P_enc`、`A_amb(x)`、`r_over`、训练目标与禁止输出，不进入 A-line `P1 / C1 / C2 / T1 / V1`
+- `docs/ZIND_MAPPING_AUDIT_PROTOCOL_v1.md`
+  - Paper B / non-thesis-facing 的 ZInD raw / visible mapping audit 规划；用于判断 `Y_enc`、`Y_ext_ref`、`usable_for_B1Z` 与 `usable_for_B2_aux`，不替代 MP3D / MatterportLayout B0 审计
 - `docs/SOP_labelstudio_experiment.md`
   - Label Studio 运行 SOP
 - `docs/README_ANNOTATOR.md`

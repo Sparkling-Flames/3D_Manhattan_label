@@ -23,19 +23,31 @@ MVP 工具定位为 offline audit-only CLI，用于在人工提交、专家复�
 
 MVP 只对同时满足以下条件的提交计算 diagnostic：
 
-- `scope=in-scope`
+- `scope=normal`
 - `manhattan_assumable=true`
 - geometry 字段存在、可解析，并能形成基础 BEV polygon/layout representation
 
+`scope` 只支持真实 export 中的以下 alias，不做中文完整 choice value 或 fuzzy matching：
+
+- `normal`
+- `oos_geometry`
+- `oos_open_boundary`
+- `oos_split_level`
+- `oos_insufficient`
+
+缺失或未知 `scope` 统一输出 `scope_unknown_or_missing`。
+
 以下样本必须输出 exclusion reason，不能静默计为 geometry failure：
 
-- OOS 或非 in-scope 样本；
-- `manhattan_assumable=false`；
-- split-level / multi-plane；
-- open-boundary ambiguity；
-- insufficient evidence；
-- missing geometry；
-- unparseable geometry。
+- `oos_geometry`；
+- `oos_open_boundary`；
+- `oos_split_level`；
+- `oos_insufficient`；
+- `scope_unknown_or_missing`；
+- `missing_manhattan_assumable`；
+- `not_manhattan_assumable`；
+- `missing_geometry`；
+- `unparseable_geometry`。
 
 ## 3. 输出合同
 
@@ -62,10 +74,19 @@ Worker summary 建议字段：
 - `n_total_submissions`
 - `n_geometry_diag_valid`
 - `n_geometry_diag_excluded`
+- `n_geometry_diag_ineligible`
+- `n_geometry_diag_invalid_render`
+- `n_geometry_diag_missing_or_unparseable`
 - `mgeo_median`
 - `mgeo_p90`
 - `mgeo_invalid_render_count`
 - `geometry_diag_version`
+
+其中 `n_geometry_diag_excluded` 是 umbrella count，等于所有非 valid 行数，不代表单一原因类别。更细的分类为：
+
+- `n_geometry_diag_ineligible`：`oos_geometry`、`oos_open_boundary`、`oos_split_level`、`oos_insufficient`、`scope_unknown_or_missing`、`missing_manhattan_assumable`、`not_manhattan_assumable`。
+- `n_geometry_diag_invalid_render`：`invalid_polygon` 或 `mgeo_renderability_flag=false`。
+- `n_geometry_diag_missing_or_unparseable`：`missing_geometry`、`unparseable_geometry`。
 
 ## 4. MVP component behavior
 
@@ -110,4 +131,3 @@ Component-wise 输出优先于 composite score。各 component 的解释边界�
 - counterexamples：low residual but semantically wrong，high residual but scope/semantic boundary correct。
 
 所有分析必须保持 post-hoc、audit-only，不能回流修改 A-line protocol、routing、worker-facing guidance 或正式 artifact contract。
-
