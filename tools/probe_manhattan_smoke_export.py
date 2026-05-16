@@ -27,6 +27,7 @@ from tools.manhattan_preview_compat import (
     FAILURE_WRAPAROUND,
     check_preview_compatibility,
 )
+from tools.manhattan_geometry_residual import compute_m1_residual
 
 
 PROBE_VERSION = "manhattan_smoke_export_probe_v1"
@@ -38,6 +39,13 @@ VALID_SCOPE_ALIASES = {
     "oos_insufficient",
 }
 MAX_EXAMPLES = 10
+RESIDUAL_NUMERIC_FIELDS = (
+    "x_spacing_cv",
+    "ceiling_y_range",
+    "floor_y_range",
+    "wall_height_range",
+    "vertical_pair_x_residual",
+)
 
 
 def _as_list(value: Any) -> list[Any]:
@@ -117,7 +125,49 @@ def extract_scope_aliases(annotation: Mapping[str, Any]) -> list[str]:
     return aliases
 
 
-def _empty_summary(source_export: str, legacy_keypoint_only: bool) -> dict[str, Any]:
+def _empty_residual_numeric_summary() -> dict[str, dict[str, float | int | None]]:
+    return {
+        field: {"count": 0, "median": None, "p90": None, "max": None}
+        for field in RESIDUAL_NUMERIC_FIELDS
+    }
+
+
+def _percentile(values: list[float], q: float) -> float | None:
+    if not values:
+        return None
+    sorted_values = sorted(values)
+    if len(sorted_values) == 1:
+        return sorted_values[0]
+    position = (len(sorted_values) - 1) * q
+    lower = int(position)
+    upper = min(lower + 1, len(sorted_values) - 1)
+    if lower == upper:
+        return sorted_values[lower]
+    fraction = position - lower
+    return sorted_values[lower] * (1.0 - fraction) + sorted_values[upper] * fraction
+
+
+def _summarize_numeric_residuals(
+    residual_values: Mapping[str, list[float]],
+) -> dict[str, dict[str, float | int | None]]:
+    summary = _empty_residual_numeric_summary()
+    for field, values in residual_values.items():
+        if not values:
+            continue
+        summary[field] = {
+            "count": len(values),
+            "median": _percentile(values, 0.5),
+            "p90": _percentile(values, 0.9),
+            "max": max(values),
+        }
+    return summary
+
+
+def _empty_summary(
+    source_export: str,
+    legacy_keypoint_only: bool,
+    include_residuals: bool,
+) -> dict[str, Any]:
     meta_labels_trusted = not legacy_keypoint_only
     return {
         "source_export": source_export,
@@ -145,6 +195,11 @@ def _empty_summary(source_export: str, legacy_keypoint_only: bool) -> dict[str, 
         "wraparound_candidate_count": 0,
         "compatibility_status_counts": {},
         "parse_error_count": 0,
+        "residual_enabled": include_residuals,
+        "n_residual_valid": 0,
+        "n_residual_excluded": 0,
+        "residual_exclusion_counts": {},
+        "residual_numeric_summary": _empty_residual_numeric_summary(),
         "audit_warnings": [],
         "candidate_task_examples": [],
     }
@@ -168,13 +223,18 @@ def probe_tasks(
     tasks: Iterable[Mapping[str, Any]],
     source_export: str = "<memory>",
     legacy_keypoint_only: bool = False,
+    include_residuals: bool = False,
 ) -> dict[str, Any]:
     """Build a smoke/probe summary from Label Studio export tasks."""
 
-    summary = _empty_summary(source_export, legacy_keypoint_only)
+    summary = _empty_summary(source_export, legacy_keypoint_only, include_residuals)
     scope_counts: Counter[str] = Counter()
     unknown_scope_counts: Counter[str] = Counter()
     compatibility_counts: Counter[str] = Counter()
+    residual_exclusion_counts: Counter[str] = Counter()
+    residual_values: dict[str, list[float]] = {
+        field: [] for field in RESIDUAL_NUMERIC_FIELDS
+    }
     audit_warnings: set[str] = set()
 
     task_list = list(tasks)
@@ -243,6 +303,9 @@ def probe_tasks(
 
             if not points:
                 summary["missing_keypoint_count"] += 1
+                if include_residuals:
+                    summary["n_residual_excluded"] += 1
+                    residual_exclusion_counts["missing_keypoints"] += 1
                 _add_example(
                     summary,
                     {
@@ -264,6 +327,9 @@ def probe_tasks(
                 summary["wraparound_candidate_count"] += 1
 
             if result.status != "compatible":
+                if include_residuals:
+                    summary["n_residual_excluded"] += 1
+                    residual_exclusion_counts[result.status] += 1
                 _add_example(
                     summary,
                     {
@@ -277,20 +343,40 @@ def probe_tasks(
                         "n_unpaired_points": len(result.unpaired_points),
                     },
                 )
+            elif include_residuals:
+                residual = compute_m1_residual(result)
+                if residual.get("diagnostic_valid") is True:
+                    summary["n_residual_valid"] += 1
+                    for field in RESIDUAL_NUMERIC_FIELDS:
+                        value = residual.get(field)
+                        if isinstance(value, (int, float)):
+                            residual_values[field].append(float(value))
+                else:
+                    summary["n_residual_excluded"] += 1
+                    reason = str(residual.get("exclusion_reason") or "residual_invalid")
+                    residual_exclusion_counts[reason] += 1
 
     if not legacy_keypoint_only:
         summary["scope_alias_counts"] = dict(sorted(scope_counts.items()))
         summary["unknown_scope_alias_counts"] = dict(sorted(unknown_scope_counts.items()))
     summary["compatibility_status_counts"] = dict(sorted(compatibility_counts.items()))
+    if include_residuals:
+        summary["residual_exclusion_counts"] = dict(sorted(residual_exclusion_counts.items()))
+        summary["residual_numeric_summary"] = _summarize_numeric_residuals(residual_values)
     summary["audit_warnings"] = sorted(audit_warnings)
     return summary
 
 
-def probe_export(input_path: Path, legacy_keypoint_only: bool = False) -> dict[str, Any]:
+def probe_export(
+    input_path: Path,
+    legacy_keypoint_only: bool = False,
+    include_residuals: bool = False,
+) -> dict[str, Any]:
     return probe_tasks(
         _load_tasks(input_path),
         source_export=str(input_path),
         legacy_keypoint_only=legacy_keypoint_only,
+        include_residuals=include_residuals,
     )
 
 
@@ -318,12 +404,25 @@ def build_arg_parser() -> argparse.ArgumentParser:
             "and model_issue are not counted as current-schema conclusions."
         ),
     )
+    parser.add_argument(
+        "--include-residuals",
+        action="store_true",
+        help=(
+            "Include M1 residual summaries for preview-compatible annotations only. "
+            "Residuals are preview geometry stability diagnostics, not correctness, "
+            "routing, formal g_t, or round artifacts."
+        ),
+    )
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
     args = build_arg_parser().parse_args(argv)
-    summary = probe_export(args.input, legacy_keypoint_only=args.legacy_keypoint_only)
+    summary = probe_export(
+        args.input,
+        legacy_keypoint_only=args.legacy_keypoint_only,
+        include_residuals=args.include_residuals,
+    )
     if args.output:
         write_summary(args.output, summary)
     else:

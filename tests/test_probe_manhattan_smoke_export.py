@@ -1,3 +1,5 @@
+import pytest
+
 from tools.probe_manhattan_smoke_export import probe_tasks
 
 
@@ -109,6 +111,9 @@ def test_current_smoke_fixture_counts_scope_and_keypoints():
     }
     assert summary["unknown_scope_alias_counts"] == {"legacy_scope_text": 1}
     assert summary["audit_warnings"] == ["unknown_scope_alias:legacy_scope_text"]
+    assert summary["residual_enabled"] is False
+    assert summary["n_residual_valid"] == 0
+    assert summary["n_residual_excluded"] == 0
 
 
 def test_missing_scope_and_missing_keypoints_are_counted_separately():
@@ -155,3 +160,70 @@ def test_legacy_keypoint_only_mode_does_not_trust_meta_labels():
         "compatibility_failure_duplicate": 1,
         "compatibility_failure_odd_keypoint": 1,
     }
+
+
+def test_include_residuals_summarizes_compatible_rows_only():
+    summary = probe_tasks(_current_fixture(), include_residuals=True)
+
+    assert summary["residual_enabled"] is True
+    assert summary["n_residual_valid"] == 2
+    assert summary["n_residual_excluded"] == 4
+    assert summary["residual_exclusion_counts"] == {
+        "compatibility_failure_duplicate": 1,
+        "compatibility_failure_odd_keypoint": 1,
+        "insufficient_compatible_corners": 1,
+        "missing_keypoints": 1,
+    }
+
+
+def test_include_residuals_numeric_summary_is_reproducible():
+    summary = probe_tasks(_current_fixture(), include_residuals=True)
+    numeric = summary["residual_numeric_summary"]
+
+    assert numeric["x_spacing_cv"]["count"] == 2
+    assert numeric["x_spacing_cv"]["median"] == pytest.approx(0.0, abs=1e-12)
+    assert numeric["x_spacing_cv"]["p90"] == pytest.approx(0.0, abs=1e-12)
+    assert numeric["x_spacing_cv"]["max"] == pytest.approx(0.0, abs=1e-12)
+
+    assert numeric["ceiling_y_range"]["count"] == 2
+    assert numeric["ceiling_y_range"]["median"] == pytest.approx(15.36)
+    assert numeric["ceiling_y_range"]["p90"] == pytest.approx(15.36)
+    assert numeric["ceiling_y_range"]["max"] == pytest.approx(15.36)
+
+    assert numeric["floor_y_range"]["count"] == 2
+    assert numeric["floor_y_range"]["median"] == pytest.approx(10.24)
+    assert numeric["floor_y_range"]["p90"] == pytest.approx(10.24)
+    assert numeric["floor_y_range"]["max"] == pytest.approx(10.24)
+
+    assert numeric["wall_height_range"]["count"] == 2
+    assert numeric["wall_height_range"]["median"] == pytest.approx(25.6)
+    assert numeric["wall_height_range"]["p90"] == pytest.approx(25.6)
+    assert numeric["wall_height_range"]["max"] == pytest.approx(25.6)
+
+    assert numeric["vertical_pair_x_residual"]["count"] == 2
+    assert numeric["vertical_pair_x_residual"]["median"] == pytest.approx(0.0)
+    assert numeric["vertical_pair_x_residual"]["p90"] == pytest.approx(0.0)
+    assert numeric["vertical_pair_x_residual"]["max"] == pytest.approx(0.0)
+
+
+def test_legacy_keypoint_only_with_residuals_keeps_meta_labels_untrusted():
+    summary = probe_tasks(_current_fixture(), legacy_keypoint_only=True, include_residuals=True)
+
+    assert summary["meta_labels_trusted"] is False
+    assert summary["scope_alias_counts"] is None
+    assert summary["unknown_scope_alias_counts"] is None
+    assert summary["residual_enabled"] is True
+    assert summary["n_residual_valid"] == 2
+
+
+def test_probe_summary_has_no_snap_or_adjustment_fields_when_residuals_enabled():
+    summary = probe_tasks(_current_fixture(), include_residuals=True)
+    keys = set(summary)
+    numeric_keys = set(summary["residual_numeric_summary"])
+
+    assert "snap" not in keys
+    assert "snap_to_axis" not in keys
+    assert "adjustment" not in keys
+    assert "adjustment_vector" not in keys
+    assert "snap" not in numeric_keys
+    assert "adjustment" not in numeric_keys
