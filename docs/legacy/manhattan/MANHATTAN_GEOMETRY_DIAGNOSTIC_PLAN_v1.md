@@ -1,6 +1,10 @@
 # Manhattan-aware Geometry Diagnostic Plan v1
 
-> Status note (2026-05-15): `MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md` is the current Manhattan tool entry point. This v1 document remains the original Paper A / A-line audit-only planning spec and is retained as supporting context.
+> Status: legacy.
+>
+> Superseded by: `docs/MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md`.
+>
+> Retained only for historical context / implementation provenance. This file is not current protocol, not a current implementation authority, and not the current Manhattan tool entry point.
 
 > Status: Paper A / A-line audit-side planning.
 >

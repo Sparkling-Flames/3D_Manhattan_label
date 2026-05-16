@@ -1,6 +1,10 @@
 # Manhattan Geometry Diagnostic Export Adapter Spec v1
 
-> Status note (2026-05-15): `MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md` is the current Manhattan tool entry point. This v1 document remains the export adapter preflight contract and is retained as supporting context.
+> Status: legacy.
+>
+> Superseded by: `docs/MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md`.
+>
+> Retained only for historical context / implementation provenance. This file is not current protocol, not a current implementation authority, and not the current Manhattan tool entry point.
 
 本文档定义 Paper A / A-line `M_geo` 工具在真实 Label Studio export 之前的 adapter contract / preflight 边界。它只说明如何把真实 export 的副本或后处理文件转换成 `tools/compute_mgeo_diagnostic.py` 所需的最小 JSONL 输入，不实现 adapter 代码，不修改正式分析链。
 
