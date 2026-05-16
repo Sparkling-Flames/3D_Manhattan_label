@@ -1,5 +1,7 @@
 # Manhattan-aware Geometry Diagnostic Plan v1
 
+> Status note (2026-05-15): `MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md` is the current Manhattan tool entry point. This v1 document remains the original Paper A / A-line audit-only planning spec and is retained as supporting context.
+
 > Status: Paper A / A-line audit-side planning.
 >
 > Scope: documentation only. This file does not implement a tool, change the Label Studio UI, create an annotation condition, change routing, or add any required `P1 / C1 / C2 / T1 / V1` artifact.

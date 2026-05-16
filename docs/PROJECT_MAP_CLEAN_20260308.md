@@ -394,6 +394,10 @@
   - `RQ3` 最小证据链合同
 - `docs/STAGE3_OOD_PREPARATION_PLAN_v1.md`
   - Stage 3 / Main-Validation / OOD-aware routing 准备计划
+- `docs/MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md`
+  - 当前 Manhattan 工具入口。统一区分 A-line post-hoc audit-only `M_geo` worker-profile diagnostic 与实验外 realtime Manhattan / 3D preview assistant prototype；不写成 protocol core。
+- `docs/VIS_3D_GEOMETRY_COMPATIBILITY_SPEC_v1.md`
+  - 实验外 realtime Manhattan assistant 的 3D preview 几何兼容性说明。记录 current `vis_3d.html` / `ls_3d_logic.js` / official userscript 的 keypoint、pairing、坐标转换、closure 与 compatibility failure 边界；不修改 worker-facing UI。
 - `docs/MANHATTAN_GEOMETRY_DIAGNOSTIC_PLAN_v1.md`
   - A-line post-hoc Manhattan 几何一致性诊断计划；仅作 audit-only / sensitivity-only 过程证据，不改变 `g_t`、OOS、routing、worker tier 或 Label Studio 生产界面
 - `docs/MANHATTAN_GEOMETRY_DIAGNOSTIC_IMPLEMENTATION_SPEC_v1.md`
