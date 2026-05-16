@@ -480,6 +480,14 @@
 2. `tools/official/`
 3. `import_json/` 与 `export_label/`
 4. `analysis_results/`
+
+## Manhattan smoke probe support
+
+- `tools/probe_manhattan_smoke_export.py`
+  - Read-only smoke export probe for the experiment-outside Manhattan toolchain. It summarizes keypoint / scope structure and preview compatibility for 5.6 / 5.7 smoke Label Studio exports; it does not modify export files, connect to `analyze_quality.py`, routing, formal `g_t`, Label Studio UI, or formal `P1/C1/C2/T1/V1` artifact contracts.
+- `tests/test_probe_manhattan_smoke_export.py`
+  - Synthetic tests for the smoke export probe. The tests do not read real export files and do not validate correctness, routing, UI behavior, or formal round artifacts.
+
 ## Agent-ready 入口
 
 - `AGENTS.md`

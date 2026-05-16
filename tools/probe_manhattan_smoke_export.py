@@ -1,0 +1,335 @@
+"""Read-only smoke export probe for the experiment-outside Manhattan toolchain.
+
+This utility inspects Label Studio smoke exports and summarizes whether their
+keypoints can be parsed by the current 3D preview compatibility parser. It is a
+read-only probe: no UI integration, no Label Studio integration, no export
+modification, no write back, no routing, no formal g_t, no correctness claim,
+and no worker-facing guidance. Its output is a smoke/probe summary only and is
+not a P1/C1/C2/T1/V1 artifact.
+"""
+
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from collections import Counter
+from pathlib import Path
+from typing import Any, Iterable, Mapping
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+from tools.manhattan_preview_compat import (
+    FAILURE_DUPLICATE,
+    FAILURE_ODD_KEYPOINT,
+    FAILURE_WRAPAROUND,
+    check_preview_compatibility,
+)
+
+
+PROBE_VERSION = "manhattan_smoke_export_probe_v1"
+VALID_SCOPE_ALIASES = {
+    "normal",
+    "oos_geometry",
+    "oos_open_boundary",
+    "oos_split_level",
+    "oos_insufficient",
+}
+MAX_EXAMPLES = 10
+
+
+def _as_list(value: Any) -> list[Any]:
+    if isinstance(value, list):
+        return value
+    return []
+
+
+def _as_mapping(value: Any) -> Mapping[str, Any]:
+    return value if isinstance(value, Mapping) else {}
+
+
+def _load_tasks(path: Path) -> list[Mapping[str, Any]]:
+    with path.open("r", encoding="utf-8") as handle:
+        payload = json.load(handle)
+    if isinstance(payload, list):
+        return [task for task in payload if isinstance(task, Mapping)]
+    if isinstance(payload, Mapping):
+        for key in ("tasks", "items", "data"):
+            maybe_tasks = payload.get(key)
+            if isinstance(maybe_tasks, list):
+                return [task for task in maybe_tasks if isinstance(task, Mapping)]
+    raise ValueError(f"{path}: expected a Label Studio export list or a dict containing tasks")
+
+
+def _result_value(result: Mapping[str, Any]) -> Mapping[str, Any]:
+    return _as_mapping(result.get("value"))
+
+
+def _extract_xy(value: Mapping[str, Any]) -> tuple[float, float, bool] | None:
+    if "x" in value and "y" in value:
+        return float(value["x"]), float(value["y"]), False
+    wrapped = _as_mapping(value.get("value"))
+    if "x" in wrapped and "y" in wrapped:
+        return float(wrapped["x"]), float(wrapped["y"]), True
+    return None
+
+
+def extract_keypoints(annotation: Mapping[str, Any]) -> tuple[list[dict[str, Any]], int, int]:
+    """Extract current smoke keypoints from one annotation.
+
+    Returns (points, keypoint_result_count, wrapped_value_count).
+    """
+
+    points: list[dict[str, Any]] = []
+    keypoint_result_count = 0
+    wrapped_value_count = 0
+    for idx, result in enumerate(_as_list(annotation.get("result"))):
+        if not isinstance(result, Mapping):
+            continue
+        if result.get("type") != "keypointlabels" or result.get("from_name") != "kp":
+            continue
+        keypoint_result_count += 1
+        xy = _extract_xy(_result_value(result))
+        if xy is None:
+            continue
+        x, y, used_wrapped_value = xy
+        if used_wrapped_value:
+            wrapped_value_count += 1
+        points.append({"x": x, "y": y, "original_index": idx})
+    return points, keypoint_result_count, wrapped_value_count
+
+
+def extract_scope_aliases(annotation: Mapping[str, Any]) -> list[str]:
+    aliases: list[str] = []
+    for result in _as_list(annotation.get("result")):
+        if not isinstance(result, Mapping):
+            continue
+        if result.get("type") != "choices" or result.get("from_name") != "scope":
+            continue
+        value = _result_value(result)
+        choices = value.get("choices")
+        if isinstance(choices, list):
+            aliases.extend(str(choice).strip() for choice in choices if str(choice).strip())
+        elif isinstance(choices, str) and choices.strip():
+            aliases.append(choices.strip())
+    return aliases
+
+
+def _empty_summary(source_export: str, legacy_keypoint_only: bool) -> dict[str, Any]:
+    meta_labels_trusted = not legacy_keypoint_only
+    return {
+        "source_export": source_export,
+        "probe_version": PROBE_VERSION,
+        "legacy_keypoint_only": legacy_keypoint_only,
+        "meta_labels_trusted": meta_labels_trusted,
+        "legacy_mode_note": (
+            "legacy-keypoint-only mode: only keypoints are trusted; scope, "
+            "difficulty, and model_issue are not current-schema conclusions"
+            if legacy_keypoint_only
+            else None
+        ),
+        "n_tasks": 0,
+        "n_annotations": 0,
+        "n_results": 0,
+        "n_keypoint_results": 0,
+        "n_scope_results": 0,
+        "wrapped_value_keypoint_count": 0,
+        "scope_alias_counts": {} if meta_labels_trusted else None,
+        "unknown_scope_alias_counts": {} if meta_labels_trusted else None,
+        "missing_scope_count": 0 if meta_labels_trusted else None,
+        "missing_keypoint_count": 0,
+        "odd_keypoint_annotation_count": 0,
+        "near_duplicate_annotation_count": 0,
+        "wraparound_candidate_count": 0,
+        "compatibility_status_counts": {},
+        "parse_error_count": 0,
+        "audit_warnings": [],
+        "candidate_task_examples": [],
+    }
+
+
+def _add_example(summary: dict[str, Any], example: dict[str, Any]) -> None:
+    if len(summary["candidate_task_examples"]) < MAX_EXAMPLES:
+        summary["candidate_task_examples"].append(example)
+
+
+def _task_id(task: Mapping[str, Any]) -> Any:
+    data = _as_mapping(task.get("data"))
+    return task.get("id", data.get("task_id", data.get("base_task_id")))
+
+
+def _annotation_id(annotation: Mapping[str, Any]) -> Any:
+    return annotation.get("id", annotation.get("pk"))
+
+
+def probe_tasks(
+    tasks: Iterable[Mapping[str, Any]],
+    source_export: str = "<memory>",
+    legacy_keypoint_only: bool = False,
+) -> dict[str, Any]:
+    """Build a smoke/probe summary from Label Studio export tasks."""
+
+    summary = _empty_summary(source_export, legacy_keypoint_only)
+    scope_counts: Counter[str] = Counter()
+    unknown_scope_counts: Counter[str] = Counter()
+    compatibility_counts: Counter[str] = Counter()
+    audit_warnings: set[str] = set()
+
+    task_list = list(tasks)
+    summary["n_tasks"] = len(task_list)
+
+    for task in task_list:
+        annotations = _as_list(task.get("annotations"))
+        task_id = _task_id(task)
+        for annotation in annotations:
+            if not isinstance(annotation, Mapping):
+                summary["parse_error_count"] += 1
+                continue
+
+            results = _as_list(annotation.get("result"))
+            summary["n_annotations"] += 1
+            summary["n_results"] += len(results)
+
+            scope_aliases = extract_scope_aliases(annotation)
+            if not legacy_keypoint_only:
+                summary["n_scope_results"] += len(scope_aliases)
+                if not scope_aliases:
+                    summary["missing_scope_count"] += 1
+                    _add_example(
+                        summary,
+                        {
+                            "issue": "missing_scope",
+                            "task_id": task_id,
+                            "annotation_id": _annotation_id(annotation),
+                            "completed_by": annotation.get("completed_by"),
+                        },
+                    )
+                for alias in scope_aliases:
+                    if alias in VALID_SCOPE_ALIASES:
+                        scope_counts[alias] += 1
+                    else:
+                        unknown_scope_counts[alias] += 1
+                        audit_warnings.add(f"unknown_scope_alias:{alias}")
+                        _add_example(
+                            summary,
+                            {
+                                "issue": "unknown_scope_alias",
+                                "scope": alias,
+                                "task_id": task_id,
+                                "annotation_id": _annotation_id(annotation),
+                                "completed_by": annotation.get("completed_by"),
+                            },
+                        )
+
+            try:
+                points, keypoint_count, wrapped_count = extract_keypoints(annotation)
+            except (TypeError, ValueError):
+                summary["parse_error_count"] += 1
+                _add_example(
+                    summary,
+                    {
+                        "issue": "unparseable_keypoint",
+                        "task_id": task_id,
+                        "annotation_id": _annotation_id(annotation),
+                        "completed_by": annotation.get("completed_by"),
+                    },
+                )
+                continue
+
+            summary["n_keypoint_results"] += keypoint_count
+            summary["wrapped_value_keypoint_count"] += wrapped_count
+
+            if not points:
+                summary["missing_keypoint_count"] += 1
+                _add_example(
+                    summary,
+                    {
+                        "issue": "missing_keypoints",
+                        "task_id": task_id,
+                        "annotation_id": _annotation_id(annotation),
+                        "completed_by": annotation.get("completed_by"),
+                    },
+                )
+                continue
+
+            result = check_preview_compatibility(points)
+            compatibility_counts[result.status] += 1
+            if result.status == FAILURE_ODD_KEYPOINT:
+                summary["odd_keypoint_annotation_count"] += 1
+            elif result.status == FAILURE_DUPLICATE:
+                summary["near_duplicate_annotation_count"] += 1
+            elif result.status == FAILURE_WRAPAROUND:
+                summary["wraparound_candidate_count"] += 1
+
+            if result.status != "compatible":
+                _add_example(
+                    summary,
+                    {
+                        "issue": "compatibility_failure",
+                        "compatibility_status": result.status,
+                        "task_id": task_id,
+                        "annotation_id": _annotation_id(annotation),
+                        "completed_by": annotation.get("completed_by"),
+                        "n_keypoints": len(points),
+                        "n_pairs": len(result.pairs),
+                        "n_unpaired_points": len(result.unpaired_points),
+                    },
+                )
+
+    if not legacy_keypoint_only:
+        summary["scope_alias_counts"] = dict(sorted(scope_counts.items()))
+        summary["unknown_scope_alias_counts"] = dict(sorted(unknown_scope_counts.items()))
+    summary["compatibility_status_counts"] = dict(sorted(compatibility_counts.items()))
+    summary["audit_warnings"] = sorted(audit_warnings)
+    return summary
+
+
+def probe_export(input_path: Path, legacy_keypoint_only: bool = False) -> dict[str, Any]:
+    return probe_tasks(
+        _load_tasks(input_path),
+        source_export=str(input_path),
+        legacy_keypoint_only=legacy_keypoint_only,
+    )
+
+
+def write_summary(path: Path, summary: Mapping[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(
+        json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n",
+        encoding="utf-8",
+    )
+
+
+def build_arg_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--input", required=True, type=Path, help="Read-only Label Studio export JSON.")
+    parser.add_argument(
+        "--output",
+        type=Path,
+        help="Optional smoke/probe summary JSON path. This is not a formal round artifact.",
+    )
+    parser.add_argument(
+        "--legacy-keypoint-only",
+        action="store_true",
+        help=(
+            "Only trust keypoints for legacy server exports. Scope, difficulty, "
+            "and model_issue are not counted as current-schema conclusions."
+        ),
+    )
+    return parser
+
+
+def main(argv: list[str] | None = None) -> int:
+    args = build_arg_parser().parse_args(argv)
+    summary = probe_export(args.input, legacy_keypoint_only=args.legacy_keypoint_only)
+    if args.output:
+        write_summary(args.output, summary)
+    else:
+        print(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())
