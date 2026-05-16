@@ -21,6 +21,9 @@ All items must be checked before enabling the M8 dev-only panel:
 
 - M6 validation output exists.
 - M6 validation output has no errors.
+- The sandbox import uses copied 2026-05-07 smoke tasks or a dedicated sandbox import.
+- The sandbox import is stored under `import_json/sandbox/`, not under formal `P1/C1/C2/T1/V1` import directories.
+- The sandbox import tasks include `sandbox_only=true` and `manhattan_m8_sandbox=true`.
 - The sandbox project exists and is clearly named as sandbox / developer-only.
 - Sandbox tasks are copied tasks or dedicated sandbox import tasks, not production tasks.
 - The tester understands that panel output is preview-only.
@@ -35,7 +38,33 @@ All items must be checked before enabling the M8 dev-only panel:
 - The dev-only script path is separate from the official userscript path.
 - The rollback path is known: disable the dev-only script and delete the sandbox project if needed.
 
-## 3. During-Test Checklist
+## 3. Script Variant Test Order
+
+Run the sandbox test in this order:
+
+1. Install only `tools/dev_only/manhattan_ls_sandbox_panel_debug.user.js`.
+2. Open one sandbox task and confirm the panel appears.
+3. Confirm `keypoint_read_status` and `keypoint_count`.
+4. Disable the debug script.
+5. Install only `tools/dev_only/manhattan_ls_sandbox_panel_timed.user.js`.
+6. Run 1-2 short sandbox tasks.
+7. Confirm `/log_time` receives sandbox active_time payloads with exclusion tags:
+   - `log_context="manhattan_ls_sandbox"`
+   - `tool_stage="M8"`
+   - `script_variant="timed"`
+   - `is_sandbox=true`
+   - `sandbox_project=true`
+   - `exclude_from_primary_active_time=true`
+   - `exclude_from_thesis_evidence=true`
+   - `not_worker_facing=true`
+   - `not_p1_c1_c2_t1_v1_artifact=true`
+   - `manhattan_panel_version`
+
+Do not run the debug and timed scripts at the same time. Both use `window.__HOHONET_M8_SANDBOX_PANEL_ACTIVE__` as a runtime guard.
+
+Do not install either script in a formal Label Studio project.
+
+## 4. During-Test Checklist
 
 - Open one sandbox task.
 - Confirm the panel appears only in the sandbox browser profile.
@@ -50,7 +79,7 @@ All items must be checked before enabling the M8 dev-only panel:
 - Do not use panel output as formal `g_t`.
 - Do not use panel output as a `P1/C1/C2/T1/V1` artifact.
 
-## 4. Hard Prohibitions
+## 5. Hard Prohibitions
 
 - No worker-facing deployment.
 - No official userscript modification.
@@ -67,7 +96,7 @@ All items must be checked before enabling the M8 dev-only panel:
 - No correctness label.
 - No thesis active_time / behavior evidence.
 
-## 5. Post-Test Checklist
+## 6. Post-Test Checklist
 
 - Confirm no annotation was modified by the panel.
 - Confirm no annotation was submitted by the panel.
@@ -76,7 +105,7 @@ All items must be checked before enabling the M8 dev-only panel:
 - Record tester, sandbox project name, smoke task source, and panel version.
 - If any unexpected behavior appears, disable the dev-only script and delete the sandbox project.
 
-## 6. M8 Acceptance
+## 7. M8 Acceptance
 
 M8 is ready only for limited sandbox operation testing if:
 

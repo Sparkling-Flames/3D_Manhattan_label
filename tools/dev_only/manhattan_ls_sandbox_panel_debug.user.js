@@ -1,47 +1,49 @@
 // ==UserScript==
-// @name         HOHONET Manhattan LS Sandbox Panel
+// @name         HOHONET Manhattan LS Sandbox Panel Debug
 // @namespace    hohonet-dev-only
 // @version      0.1.0
-// @description  dev-only sandbox-only Manhattan preview panel for expert/developer tester use only.
+// @description  dev-only sandbox-only read-only Manhattan panel; debug variant with no active_time upload.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
 // @grant        none
 // ==/UserScript==
 
 /*
- * HOHONET Manhattan LS Sandbox Panel
+ * HOHONET Manhattan LS Sandbox Panel Debug
  *
  * dev-only
  * sandbox-only
  * expert/developer tester only
  * not official userscript
  * not worker-facing
- * no writeback
+ * no annotation writeback
  * no submit
  * no routing
  * no formal g_t
  * no P1/C1/C2/T1/V1 artifact
  *
- * This prototype injects a read-only panel for a separate Label Studio
- * sandbox project. It is not part of the current Manual/Semi-Auto
- * worker-facing experiment and must not be installed in formal projects.
- *
- * M8.1 operation should use the explicit debug/timed variants in this
- * directory. This original prototype is also server-scoped to prevent broad
- * installation by accident.
+ * This script is server-scoped to the current Label Studio host. Localhost
+ * testing may be enabled manually during development, but it is not enabled
+ * by default in this file.
  */
 
 (function () {
   "use strict";
 
+  const WINDOW_GUARD = "__HOHONET_M8_SANDBOX_PANEL_ACTIVE__";
+  if (window[WINDOW_GUARD]) {
+    return;
+  }
+  window[WINDOW_GUARD] = { script_variant: "debug" };
+
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const VERSION = "m8-dev-only-0.1.0";
+  const PANEL_VERSION = "m8-dev-only-debug-0.1.0";
   const GUARDRAILS = [
     "dev-only sandbox-only panel",
     "expert/developer tester only",
     "not official userscript",
     "not worker-facing",
-    "no writeback",
+    "no annotation writeback",
     "no submit",
     "no routing",
     "no formal g_t",
@@ -51,6 +53,7 @@
     "no snap coordinates",
     "no adjustment vector",
     "no auto-correction",
+    "debug variant: no active_time upload",
   ];
 
   function text(value) {
@@ -120,52 +123,6 @@
     };
   }
 
-  function renderPanel(state) {
-    let panel = document.getElementById(PANEL_ID);
-    if (!panel) {
-      panel = document.createElement("aside");
-      panel.id = PANEL_ID;
-      panel.setAttribute("aria-label", "HOHONET Manhattan sandbox panel");
-      document.body.appendChild(panel);
-    }
-
-    panel.innerHTML = "";
-
-    const title = document.createElement("h2");
-    title.appendChild(text("Manhattan Sandbox Panel"));
-    panel.appendChild(title);
-
-    panel.appendChild(makeRow("version", VERSION));
-    panel.appendChild(makeRow("keypoint_read_status", state.keypoint_read_status));
-    panel.appendChild(makeRow("keypoint_count", state.keypoints.length));
-
-    const compatibility = document.createElement("section");
-    compatibility.appendChild(document.createElement("h3")).appendChild(text("Compatibility"));
-    compatibility.appendChild(text("placeholder only; Python parity logic is not ported in M8"));
-    panel.appendChild(compatibility);
-
-    const residual = document.createElement("section");
-    residual.appendChild(document.createElement("h3")).appendChild(text("Residual"));
-    residual.appendChild(text("placeholder only; no residual calculator is embedded in M8"));
-    panel.appendChild(residual);
-
-    const suggestion = document.createElement("section");
-    suggestion.appendChild(document.createElement("h3")).appendChild(text("Preview-only suggestion"));
-    suggestion.appendChild(text("placeholder only; no automated review prompt is computed in M8"));
-    panel.appendChild(suggestion);
-
-    const guards = document.createElement("section");
-    guards.appendChild(document.createElement("h3")).appendChild(text("Guardrails"));
-    const list = document.createElement("ul");
-    for (const guard of GUARDRAILS) {
-      const item = document.createElement("li");
-      item.appendChild(text(guard));
-      list.appendChild(item);
-    }
-    guards.appendChild(list);
-    panel.appendChild(guards);
-  }
-
   function installStyles() {
     if (document.getElementById(`${PANEL_ID}-style`)) {
       return;
@@ -219,6 +176,51 @@
       }
     `;
     document.head.appendChild(style);
+  }
+
+  function renderPanel(state) {
+    let panel = document.getElementById(PANEL_ID);
+    if (!panel) {
+      panel = document.createElement("aside");
+      panel.id = PANEL_ID;
+      panel.setAttribute("aria-label", "HOHONET Manhattan sandbox panel debug");
+      document.body.appendChild(panel);
+    }
+
+    panel.innerHTML = "";
+    const title = document.createElement("h2");
+    title.appendChild(text("Manhattan Sandbox Panel"));
+    panel.appendChild(title);
+    panel.appendChild(makeRow("script_variant", "debug"));
+    panel.appendChild(makeRow("manhattan_panel_version", PANEL_VERSION));
+    panel.appendChild(makeRow("keypoint_read_status", state.keypoint_read_status));
+    panel.appendChild(makeRow("keypoint_count", state.keypoints.length));
+
+    const compatibility = document.createElement("section");
+    compatibility.appendChild(document.createElement("h3")).appendChild(text("Compatibility"));
+    compatibility.appendChild(text("placeholder only; no Python logic is ported in M8.1"));
+    panel.appendChild(compatibility);
+
+    const residual = document.createElement("section");
+    residual.appendChild(document.createElement("h3")).appendChild(text("Residual"));
+    residual.appendChild(text("placeholder only; no residual calculator is embedded"));
+    panel.appendChild(residual);
+
+    const suggestion = document.createElement("section");
+    suggestion.appendChild(document.createElement("h3")).appendChild(text("Preview-only suggestion"));
+    suggestion.appendChild(text("placeholder only; no automated review prompt is computed"));
+    panel.appendChild(suggestion);
+
+    const guards = document.createElement("section");
+    guards.appendChild(document.createElement("h3")).appendChild(text("Guardrails"));
+    const list = document.createElement("ul");
+    for (const guard of GUARDRAILS) {
+      const item = document.createElement("li");
+      item.appendChild(text(guard));
+      list.appendChild(item);
+    }
+    guards.appendChild(list);
+    panel.appendChild(guards);
   }
 
   function refresh() {

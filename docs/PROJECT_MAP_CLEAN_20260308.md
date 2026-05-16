@@ -117,8 +117,10 @@
   - M4 standalone HTML contact sheet renderer. It consumes probe summary JSON only, does not load real panorama images, and does not read `export_label/` directly.
 - `tools/validate_manhattan_probe_summary.py`
   - M6 JSON validator for Manhattan probe summary sidecars. It checks required fields, count invariants, and forbidden payload terms without opening `source_export` or reading `export_label/`.
-- `tools/dev_only/manhattan_ls_sandbox_panel.user.js`
-  - M8 dev-only sandbox-only Label Studio panel prototype. It injects a read-only panel for developer / expert sandbox testing only; not an official userscript, not worker-facing, no writeback, no submit, no routing, and no formal artifact integration.
+- `tools/dev_only/manhattan_ls_sandbox_panel_debug.user.js`
+  - M8.1 server-scoped dev-only sandbox panel debug variant for `175.178.71.217:8080`; read-only panel only, no active_time upload, not an official userscript, not worker-facing, no writeback, no submit, no routing, and no formal artifact integration.
+- `tools/dev_only/manhattan_ls_sandbox_panel_timed.user.js`
+  - M8.1 server-scoped dev-only sandbox panel timed variant for `175.178.71.217:8080`; may POST only sandbox telemetry to `/log_time` with exclusion tags, not an official userscript, not worker-facing, no annotation writeback, no submit, no routing, and no formal artifact integration.
 - Boundary: experiment-outside / post-hoc only; not formal protocol core; no UI / worker-facing experiment; no formal `g_t`; no routing; no `P1/C1/C2/T1/V1` artifacts.
 
 ### 导入与分池主链
@@ -255,6 +257,8 @@
   - outline / seed 固定后的导入集合
 - `import_json/mp3d_txt_smoke_test_20260328/`
   - smoke test 导入包
+- `import_json/sandbox/manhattan_m8/`
+  - M8.1 sandbox-only import package generated from copied 2026-05-07 smoke tasks. This is not a formal import directory, not `P1/C1/C2/T1/V1`, not thesis active_time evidence, and sandbox exports must remain separate from formal `export_label/` data.
 
 ### 当前关键文件类型
 
