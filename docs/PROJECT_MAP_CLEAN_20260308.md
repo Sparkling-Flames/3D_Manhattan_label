@@ -398,6 +398,8 @@
   - A-line post-hoc Manhattan 几何一致性诊断计划；仅作 audit-only / sensitivity-only 过程证据，不改变 `g_t`、OOS、routing、worker tier 或 Label Studio 生产界面
 - `docs/MANHATTAN_GEOMETRY_DIAGNOSTIC_IMPLEMENTATION_SPEC_v1.md`
   - A-line `M_geo(t,u)` / `J_u` offline audit-only CLI 实现边界；定义 sidecar/report schema、exclusion reason 与 MVP component behavior，不进入正式 `P1 / C1 / C2 / T1 / V1` required artifact
+- `docs/MANHATTAN_GEOMETRY_DIAGNOSTIC_EXPORT_ADAPTER_SPEC_v1.md`
+  - A-line 真实 Label Studio export 到 `M_geo` MVP JSONL 的 adapter contract / preflight 说明。只定义只读转换、字段映射、输入真源和 smoke test；不实现 adapter，不接入正式分析链或 routing。
 - `docs/AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md`
   - B-line / Paper B 的 Ambiguity-aware enclosed HoHoNet 研究计划；属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面
 - `docs/PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md`
