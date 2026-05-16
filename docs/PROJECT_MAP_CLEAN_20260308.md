@@ -101,6 +101,8 @@
   - 多份分析结果汇总
 - `tools/compute_mgeo_diagnostic.py`
   - Paper A / A-line 的 offline audit-only Manhattan geometry diagnostic MVP。读取 JSONL layout geometry，输出可选 `M_geo` sidecar 与 worker-level `J_u` summary；不接入 routing、Label Studio UI、import/export 或正式轮次 artifact contract。
+- `tools/manhattan_preview_compat.py`
+  - 实验外 realtime Manhattan assistant 的 deterministic 3D preview compatibility 纯函数原型。复刻 current preview 的 percent-to-pixel、`W * 0.05` greedy pairing 与 compatibility failure 判定；不接 Label Studio UI、userscript、routing、formal `g_t` 或 worker-facing experiment。
 
 ### 导入与分池主链
 
@@ -359,6 +361,7 @@
 - `tests/test_compute_dt_score.py`
 - `tests/test_compute_g_t_diagnostics.py`
 - `tests/test_compute_mgeo_diagnostic.py`
+- `tests/test_manhattan_preview_compat.py`
 - `tests/test_extract_truth_layer.py`
 - `tests/test_materialize_final_gold_records.py`
 - `tests/test_build_final_gold_preflight.py`
