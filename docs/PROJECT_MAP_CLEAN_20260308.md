@@ -101,15 +101,19 @@
   - 多份分析结果汇总
 - `tools/compute_mgeo_diagnostic.py`
   - Paper A / A-line 的 offline audit-only Manhattan geometry diagnostic MVP。读取 JSONL layout geometry，输出可选 `M_geo` sidecar 与 worker-level `J_u` summary；不接入 routing、Label Studio UI、import/export 或正式轮次 artifact contract。
-- Experiment-outside / post-hoc Manhattan toolchain:
-  - `tools/manhattan_preview_compat.py`
-  - `tools/probe_manhattan_smoke_export.py`
-  - `tools/manhattan_geometry_residual.py`
-  - `tools/manhattan_preview_suggestions.py`
-  - `tools/render_manhattan_probe_report.py`
-  - è¾¹ç•Œï¼šä¸å±žäºŽ formal protocol coreï¼Œä¸æŽ¥ UI / worker-facing experimentï¼Œä¸è¿›å…¥ formal `g_t` / routing / `P1/C1/C2/T1/V1` artifactsã€‚`tools/render_manhattan_probe_report.py` åªæ¶ˆè´¹ probe summary JSONï¼Œä¸ç›´æŽ¥è¯»å– `export_label/`ã€‚
+### Experiment-outside / post-hoc Manhattan toolchain
+
 - `tools/manhattan_preview_compat.py`
-  - 实验外 realtime Manhattan assistant 的 deterministic 3D preview compatibility 纯函数原型。复刻 current preview 的 percent-to-pixel、`W * 0.05` greedy pairing 与 compatibility failure 判定；不接 Label Studio UI、userscript、routing、formal `g_t` 或 worker-facing experiment。
+  - Deterministic 3D preview compatibility parser for experiment-outside Manhattan assistant prototyping.
+- `tools/probe_manhattan_smoke_export.py`
+  - Read-only smoke export probe for keypoint / scope / preview compatibility / residual / preview-only suggestion summaries.
+- `tools/manhattan_geometry_residual.py`
+  - M1 residual calculator for preview-compatible keypoints; reports preview geometry stability only.
+- `tools/manhattan_preview_suggestions.py`
+  - M2 preview-only suggestion summary helper; emits review prompt type counts only.
+- `tools/render_manhattan_probe_report.py`
+  - M3 read-only Markdown report renderer. It consumes probe summary JSON only and does not read `export_label/` directly.
+- Boundary: experiment-outside / post-hoc only; not formal protocol core; no UI / worker-facing experiment; no formal `g_t`; no routing; no `P1/C1/C2/T1/V1` artifacts.
 
 ### 导入与分池主链
 
@@ -368,14 +372,15 @@
 - `tests/test_compute_dt_score.py`
 - `tests/test_compute_g_t_diagnostics.py`
 - `tests/test_compute_mgeo_diagnostic.py`
-- Experiment-outside / post-hoc Manhattan toolchain tests:
-  - `tests/test_manhattan_preview_compat.py`
-  - `tests/test_probe_manhattan_smoke_export.py`
-  - `tests/test_manhattan_geometry_residual.py`
-  - `tests/test_manhattan_preview_suggestions.py`
-  - `tests/test_render_manhattan_probe_report.py`
-  - è¿™ç»„æµ‹è¯•åªéªŒè¯ experiment-outside / post-hoc Manhattan å·¥å…·é“¾ï¼›ä¸éªŒè¯ UIã€worker-facing experimentã€formal `g_t`ã€routing æˆ– `P1/C1/C2/T1/V1` artifactsã€‚
+### Experiment-outside / post-hoc Manhattan toolchain tests
+
 - `tests/test_manhattan_preview_compat.py`
+- `tests/test_probe_manhattan_smoke_export.py`
+- `tests/test_manhattan_geometry_residual.py`
+- `tests/test_manhattan_preview_suggestions.py`
+- `tests/test_render_manhattan_probe_report.py`
+- Boundary: these tests cover the experiment-outside / post-hoc Manhattan toolchain only; they are not formal protocol core tests and do not validate UI, worker-facing experiment behavior, formal `g_t`, routing, or `P1/C1/C2/T1/V1` artifacts.
+
 - `tests/test_extract_truth_layer.py`
 - `tests/test_materialize_final_gold_records.py`
 - `tests/test_build_final_gold_preflight.py`
@@ -495,24 +500,6 @@
 3. `import_json/` 与 `export_label/`
 4. `analysis_results/`
 
-## Manhattan smoke probe support
-
-- `tools/manhattan_geometry_residual.py`
-  - M1 offline residual calculator for preview-compatible Manhattan keypoints. It computes preview geometry stability fields only after current preview compatibility passes; it does not implement snap suggestions, adjustment vectors, UI hooks, routing, formal `g_t`, correctness, or formal `P1/C1/C2/T1/V1` artifact behavior.
-- `tests/test_manhattan_geometry_residual.py`
-  - Synthetic tests for the M1 residual calculator. The tests verify compatible-only residual computation and exclusion behavior for compatibility failures.
-- `tools/manhattan_preview_suggestions.py`
-  - M2 preview-only suggestion candidate prototype for experiment-outside Manhattan automation. It emits conservative review prompts from M1 residuals only; it does not emit snap coordinates, adjustment vectors, UI hooks, writeback payloads, routing inputs, formal `g_t`, correctness, or worker-facing hints.
-- `tests/test_manhattan_preview_suggestions.py`
-  - Synthetic tests for M2 preview-only suggestion candidates and guard fields.
-- `tools/probe_manhattan_smoke_export.py`
-  - Read-only smoke export probe for the experiment-outside Manhattan toolchain. It summarizes keypoint / scope structure and preview compatibility for 5.6 / 5.7 smoke Label Studio exports; it does not modify export files, connect to `analyze_quality.py`, routing, formal `g_t`, Label Studio UI, or formal `P1/C1/C2/T1/V1` artifact contracts.
-- `tests/test_probe_manhattan_smoke_export.py`
-  - Synthetic tests for the smoke export probe. The tests do not read real export files and do not validate correctness, routing, UI behavior, or formal round artifacts.
-- `tools/render_manhattan_probe_report.py`
-  - M3 read-only Markdown report renderer for Manhattan smoke/probe summary JSON. It consumes probe summaries rather than Label Studio exports; output reports are optional smoke/probe sidecars, not formal `P1/C1/C2/T1/V1` artifacts, and do not connect to UI, routing, formal `g_t`, correctness, worker quality, or export modification.
-- `tests/test_render_manhattan_probe_report.py`
-  - Synthetic tests for the M3 report renderer. The tests use temporary summary JSON and verify guardrail text, residual/audit/suggestion sections, and absence of disallowed report payloads.
 
 ## Agent-ready 入口
 
