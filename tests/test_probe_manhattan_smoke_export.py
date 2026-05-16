@@ -174,6 +174,9 @@ def test_include_residuals_summarizes_compatible_rows_only():
         "insufficient_compatible_corners": 1,
         "missing_keypoints": 1,
     }
+    assert summary["audit_eligibility_enabled"] is True
+    assert summary["n_audit_eligible"] == 2
+    assert summary["n_audit_ineligible"] == 4
 
 
 def test_include_residuals_numeric_summary_is_reproducible():
@@ -206,14 +209,68 @@ def test_include_residuals_numeric_summary_is_reproducible():
     assert numeric["vertical_pair_x_residual"]["max"] == pytest.approx(0.0)
 
 
+def test_audit_residual_only_includes_normal_scope():
+    summary = probe_tasks(_current_fixture(), include_residuals=True)
+    audit_numeric = summary["audit_residual_numeric_summary"]
+
+    assert summary["audit_ineligibility_counts"] == {
+        "oos_geometry": 1,
+        "oos_split_level": 1,
+        "scope_missing": 1,
+        "scope_unknown": 1,
+    }
+    assert audit_numeric["x_spacing_cv"]["count"] == 1
+    assert audit_numeric["ceiling_y_range"]["count"] == 1
+    assert audit_numeric["floor_y_range"]["count"] == 1
+    assert audit_numeric["wall_height_range"]["count"] == 1
+    assert audit_numeric["vertical_pair_x_residual"]["count"] == 1
+
+
+def test_manhattan_assumable_field_controls_audit_eligibility_when_present():
+    tasks = [
+        {
+            "id": 201,
+            "annotations": [
+                _annotation(2001, [_scope("normal"), *_clean_points()]),
+                {
+                    "id": 2002,
+                    "completed_by": 7,
+                    "manhattan_assumable": True,
+                    "result": [_scope("normal"), *_clean_points()],
+                },
+                {
+                    "id": 2003,
+                    "completed_by": 7,
+                    "manhattan_assumable": False,
+                    "result": [_scope("normal"), *_clean_points()],
+                },
+            ],
+        }
+    ]
+
+    summary = probe_tasks(tasks, include_residuals=True)
+
+    assert summary["n_audit_eligible"] == 1
+    assert summary["n_audit_ineligible"] == 2
+    assert summary["audit_ineligibility_counts"] == {
+        "missing_manhattan_assumable": 1,
+        "not_manhattan_assumable": 1,
+    }
+    assert summary["audit_residual_numeric_summary"]["x_spacing_cv"]["count"] == 1
+
+
 def test_legacy_keypoint_only_with_residuals_keeps_meta_labels_untrusted():
     summary = probe_tasks(_current_fixture(), legacy_keypoint_only=True, include_residuals=True)
 
     assert summary["meta_labels_trusted"] is False
     assert summary["scope_alias_counts"] is None
     assert summary["unknown_scope_alias_counts"] is None
+    assert summary["audit_eligibility_enabled"] is False
     assert summary["residual_enabled"] is True
     assert summary["n_residual_valid"] == 2
+    assert summary["n_audit_eligible"] == 0
+    assert summary["n_audit_ineligible"] == 6
+    assert summary["audit_ineligibility_counts"] == {"meta_labels_untrusted": 6}
 
 
 def test_probe_summary_has_no_snap_or_adjustment_fields_when_residuals_enabled():

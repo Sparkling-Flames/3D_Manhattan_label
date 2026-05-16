@@ -48,6 +48,20 @@ RESIDUAL_NUMERIC_FIELDS = (
 )
 
 
+def _as_bool(value: Any) -> bool | None:
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, (int, float)):
+        return bool(value)
+    if isinstance(value, str):
+        normalized = value.strip().lower()
+        if normalized in {"1", "true", "yes", "y"}:
+            return True
+        if normalized in {"0", "false", "no", "n"}:
+            return False
+    return None
+
+
 def _as_list(value: Any) -> list[Any]:
     if isinstance(value, list):
         return value
@@ -125,6 +139,64 @@ def extract_scope_aliases(annotation: Mapping[str, Any]) -> list[str]:
     return aliases
 
 
+def extract_manhattan_assumable(
+    task: Mapping[str, Any],
+    annotation: Mapping[str, Any],
+) -> tuple[bool, bool | None]:
+    """Return whether manhattan_assumable is present and its parsed value."""
+
+    for source in (annotation, _as_mapping(task.get("data"))):
+        if "manhattan_assumable" in source:
+            return True, _as_bool(source.get("manhattan_assumable"))
+
+    for result in _as_list(annotation.get("result")):
+        if not isinstance(result, Mapping):
+            continue
+        if result.get("from_name") != "manhattan_assumable":
+            continue
+        value = _result_value(result)
+        for key in ("value", "text"):
+            if key in value:
+                return True, _as_bool(value.get(key))
+        choices = value.get("choices")
+        if isinstance(choices, list) and choices:
+            return True, _as_bool(choices[0])
+        if isinstance(choices, str):
+            return True, _as_bool(choices)
+    return False, None
+
+
+def _primary_scope_reason(scope_aliases: list[str]) -> str:
+    if not scope_aliases:
+        return "scope_missing"
+    if len(scope_aliases) != 1:
+        return "scope_ambiguous"
+    scope = scope_aliases[0]
+    if scope not in VALID_SCOPE_ALIASES:
+        return "scope_unknown"
+    return scope
+
+
+def _audit_eligibility(
+    scope_aliases: list[str],
+    legacy_keypoint_only: bool,
+    manhattan_assumable_field_present: bool,
+    manhattan_present: bool,
+    manhattan_assumable: bool | None,
+) -> tuple[bool, str | None]:
+    if legacy_keypoint_only:
+        return False, "meta_labels_untrusted"
+    scope_reason = _primary_scope_reason(scope_aliases)
+    if scope_reason != "normal":
+        return False, scope_reason
+    if manhattan_assumable_field_present:
+        if not manhattan_present:
+            return False, "missing_manhattan_assumable"
+        if manhattan_assumable is not True:
+            return False, "not_manhattan_assumable"
+    return True, None
+
+
 def _empty_residual_numeric_summary() -> dict[str, dict[str, float | int | None]]:
     return {
         field: {"count": 0, "median": None, "p90": None, "max": None}
@@ -200,6 +272,11 @@ def _empty_summary(
         "n_residual_excluded": 0,
         "residual_exclusion_counts": {},
         "residual_numeric_summary": _empty_residual_numeric_summary(),
+        "audit_eligibility_enabled": include_residuals and meta_labels_trusted,
+        "n_audit_eligible": 0,
+        "n_audit_ineligible": 0,
+        "audit_ineligibility_counts": {},
+        "audit_residual_numeric_summary": _empty_residual_numeric_summary(),
         "audit_warnings": [],
         "candidate_task_examples": [],
     }
@@ -235,9 +312,19 @@ def probe_tasks(
     residual_values: dict[str, list[float]] = {
         field: [] for field in RESIDUAL_NUMERIC_FIELDS
     }
+    audit_ineligibility_counts: Counter[str] = Counter()
+    audit_residual_values: dict[str, list[float]] = {
+        field: [] for field in RESIDUAL_NUMERIC_FIELDS
+    }
     audit_warnings: set[str] = set()
 
     task_list = list(tasks)
+    manhattan_assumable_field_present = any(
+        extract_manhattan_assumable(task, annotation)[0]
+        for task in task_list
+        for annotation in _as_list(task.get("annotations"))
+        if isinstance(annotation, Mapping)
+    )
     summary["n_tasks"] = len(task_list)
 
     for task in task_list:
@@ -253,6 +340,8 @@ def probe_tasks(
             summary["n_results"] += len(results)
 
             scope_aliases = extract_scope_aliases(annotation)
+            manhattan_present, manhattan_assumable = extract_manhattan_assumable(task, annotation)
+            audit_candidate = False
             if not legacy_keypoint_only:
                 summary["n_scope_results"] += len(scope_aliases)
                 if not scope_aliases:
@@ -282,6 +371,20 @@ def probe_tasks(
                                 "completed_by": annotation.get("completed_by"),
                             },
                         )
+
+            if include_residuals:
+                audit_candidate, audit_ineligible_reason = _audit_eligibility(
+                    scope_aliases=scope_aliases,
+                    legacy_keypoint_only=legacy_keypoint_only,
+                    manhattan_assumable_field_present=manhattan_assumable_field_present,
+                    manhattan_present=manhattan_present,
+                    manhattan_assumable=manhattan_assumable,
+                )
+                if audit_candidate:
+                    summary["n_audit_eligible"] += 1
+                else:
+                    summary["n_audit_ineligible"] += 1
+                    audit_ineligibility_counts[str(audit_ineligible_reason)] += 1
 
             try:
                 points, keypoint_count, wrapped_count = extract_keypoints(annotation)
@@ -356,6 +459,12 @@ def probe_tasks(
                     reason = str(residual.get("exclusion_reason") or "residual_invalid")
                     residual_exclusion_counts[reason] += 1
 
+                if audit_candidate and residual.get("diagnostic_valid") is True:
+                    for field in RESIDUAL_NUMERIC_FIELDS:
+                        value = residual.get(field)
+                        if isinstance(value, (int, float)):
+                            audit_residual_values[field].append(float(value))
+
     if not legacy_keypoint_only:
         summary["scope_alias_counts"] = dict(sorted(scope_counts.items()))
         summary["unknown_scope_alias_counts"] = dict(sorted(unknown_scope_counts.items()))
@@ -363,6 +472,10 @@ def probe_tasks(
     if include_residuals:
         summary["residual_exclusion_counts"] = dict(sorted(residual_exclusion_counts.items()))
         summary["residual_numeric_summary"] = _summarize_numeric_residuals(residual_values)
+        summary["audit_ineligibility_counts"] = dict(sorted(audit_ineligibility_counts.items()))
+        summary["audit_residual_numeric_summary"] = _summarize_numeric_residuals(
+            audit_residual_values
+        )
     summary["audit_warnings"] = sorted(audit_warnings)
     return summary
 
