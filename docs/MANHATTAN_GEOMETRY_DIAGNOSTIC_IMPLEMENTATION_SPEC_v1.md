@@ -1,5 +1,7 @@
 # Manhattan Geometry Diagnostic Implementation Spec v1
 
+> Status note (2026-05-15): `MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md` is the current Manhattan tool entry point. This v1 document remains the offline `M_geo` CLI MVP contract and is retained as supporting context.
+
 本文档定义 Paper A / A-line 的 Manhattan-aware geometry diagnostic 的最小实现边界。该能力只用于离线 audit-side post-hoc 诊断，不是新干预条件，不是 worker-facing guidance，不进入正式 routing policy，也不改变任何既有协议合同。
 
 ## 1. 定位

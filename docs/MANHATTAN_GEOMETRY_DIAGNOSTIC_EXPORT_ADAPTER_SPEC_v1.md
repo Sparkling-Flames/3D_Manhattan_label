@@ -1,5 +1,7 @@
 # Manhattan Geometry Diagnostic Export Adapter Spec v1
 
+> Status note (2026-05-15): `MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md` is the current Manhattan tool entry point. This v1 document remains the export adapter preflight contract and is retained as supporting context.
+
 本文档定义 Paper A / A-line `M_geo` 工具在真实 Label Studio export 之前的 adapter contract / preflight 边界。它只说明如何把真实 export 的副本或后处理文件转换成 `tools/compute_mgeo_diagnostic.py` 所需的最小 JSONL 输入，不实现 adapter 代码，不修改正式分析链。
 
 ## 1. Adapter 定位
@@ -112,4 +114,3 @@ Adapter 不做中文完整 choice value 兼容，不做 fuzzy matching。若真�
 - 不用 Main-Test / Main-Validation outcome 调阈值或 component weight。
 - 不修改 worker-facing UI。
 - 不修改 import JSON、assignment manifest、routing artifact 或任何 `P1 / C1 / C2 / T1 / V1` schema。
-
