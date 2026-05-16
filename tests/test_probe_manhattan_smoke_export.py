@@ -1,6 +1,6 @@
 import pytest
 
-from tools.probe_manhattan_smoke_export import probe_tasks
+from tools.probe_manhattan_smoke_export import main, probe_tasks
 
 
 """Synthetic tests for the read-only smoke export probe.
@@ -65,6 +65,19 @@ def _duplicate_points():
     ]
 
 
+def _irregular_points():
+    return [
+        _keypoint(20.0, 10.0),
+        _keypoint(20.0, 90.0),
+        _keypoint(40.0, 50.0),
+        _keypoint(40.0, 95.0),
+        _keypoint(60.0, 12.0),
+        _keypoint(60.0, 70.0),
+        _keypoint(80.0, 55.0),
+        _keypoint(80.0, 92.0),
+    ]
+
+
 def _current_fixture():
     return [
         {
@@ -114,6 +127,9 @@ def test_current_smoke_fixture_counts_scope_and_keypoints():
     assert summary["residual_enabled"] is False
     assert summary["n_residual_valid"] == 0
     assert summary["n_residual_excluded"] == 0
+    assert summary["suggestions_enabled"] is False
+    assert summary["n_suggestion_annotations"] == 0
+    assert summary["suggestion_type_counts"] == {}
 
 
 def test_missing_scope_and_missing_keypoints_are_counted_separately():
@@ -177,6 +193,9 @@ def test_include_residuals_summarizes_compatible_rows_only():
     assert summary["audit_eligibility_enabled"] is True
     assert summary["n_audit_eligible"] == 2
     assert summary["n_audit_ineligible"] == 4
+    assert summary["n_audit_residual_valid"] == 1
+    assert summary["n_audit_residual_excluded"] == 1
+    assert summary["audit_residual_exclusion_counts"] == {"missing_keypoints": 1}
 
 
 def test_include_residuals_numeric_summary_is_reproducible():
@@ -256,7 +275,10 @@ def test_manhattan_assumable_field_controls_audit_eligibility_when_present():
         "missing_manhattan_assumable": 1,
         "not_manhattan_assumable": 1,
     }
+    assert summary["n_audit_residual_valid"] == 1
+    assert summary["n_audit_residual_excluded"] == 0
     assert summary["audit_residual_numeric_summary"]["x_spacing_cv"]["count"] == 1
+    assert "schema_level_manhattan_assumable_gate_active" in summary["audit_warnings"]
 
 
 def test_legacy_keypoint_only_with_residuals_keeps_meta_labels_untrusted():
@@ -271,6 +293,8 @@ def test_legacy_keypoint_only_with_residuals_keeps_meta_labels_untrusted():
     assert summary["n_audit_eligible"] == 0
     assert summary["n_audit_ineligible"] == 6
     assert summary["audit_ineligibility_counts"] == {"meta_labels_untrusted": 6}
+    assert summary["n_audit_residual_valid"] == 0
+    assert summary["n_audit_residual_excluded"] == 0
 
 
 def test_probe_summary_has_no_snap_or_adjustment_fields_when_residuals_enabled():
@@ -284,3 +308,87 @@ def test_probe_summary_has_no_snap_or_adjustment_fields_when_residuals_enabled()
     assert "adjustment_vector" not in keys
     assert "snap" not in numeric_keys
     assert "adjustment" not in numeric_keys
+
+
+def test_include_suggestions_requires_include_residuals(capsys):
+    with pytest.raises(SystemExit) as excinfo:
+        main(["--input", "synthetic.json", "--include-suggestions"])
+
+    assert excinfo.value.code == 2
+    assert "--include-suggestions requires --include-residuals" in capsys.readouterr().err
+
+
+def test_include_suggestions_counts_only_audit_residual_valid_rows():
+    summary = probe_tasks(
+        _current_fixture(),
+        include_residuals=True,
+        include_suggestions=True,
+    )
+
+    assert summary["suggestions_enabled"] is True
+    assert summary["n_suggestion_annotations"] == 1
+    assert summary["suggestion_type_counts"] == {"no_action": 1}
+    assert summary["suggestion_severity_counts"] == {"low": 1}
+    assert summary["suggestion_source_field_counts"] == {"none": 1}
+
+
+def test_suggestion_counts_exclude_oos_missing_and_unknown_scope_rows():
+    tasks = [
+        {
+            "id": 301,
+            "annotations": [
+                _annotation(3001, [_scope("normal"), *_irregular_points()]),
+                _annotation(3002, [_scope("oos_geometry"), *_irregular_points()]),
+                _annotation(3003, _irregular_points()),
+                _annotation(3004, [_scope("unknown_scope"), *_irregular_points()]),
+            ],
+        }
+    ]
+
+    summary = probe_tasks(tasks, include_residuals=True, include_suggestions=True)
+
+    assert summary["n_audit_eligible"] == 1
+    assert summary["n_audit_ineligible"] == 3
+    assert summary["n_audit_residual_valid"] == 1
+    assert summary["n_suggestion_annotations"] == 1
+    assert summary["suggestion_type_counts"] == {
+        "review_ceiling_alignment": 1,
+        "review_floor_alignment": 1,
+        "review_wall_height_inconsistency": 1,
+    }
+    assert summary["suggestion_severity_counts"] == {"high": 3}
+    assert summary["suggestion_source_field_counts"] == {
+        "ceiling_y_range": 1,
+        "floor_y_range": 1,
+        "wall_height_range": 1,
+    }
+
+
+def test_legacy_keypoint_only_does_not_generate_suggestions():
+    summary = probe_tasks(
+        _current_fixture(),
+        legacy_keypoint_only=True,
+        include_residuals=True,
+        include_suggestions=True,
+    )
+
+    assert summary["meta_labels_trusted"] is False
+    assert summary["suggestions_enabled"] is True
+    assert summary["n_suggestion_annotations"] == 0
+    assert summary["suggestion_type_counts"] == {}
+    assert summary["suggestion_severity_counts"] == {}
+    assert summary["suggestion_source_field_counts"] == {}
+
+
+def test_suggestion_summary_has_no_snap_coordinates_adjustment_or_writeback_fields():
+    summary = probe_tasks(
+        _current_fixture(),
+        include_residuals=True,
+        include_suggestions=True,
+    )
+    serialized_keys = " ".join(str(key) for key in summary)
+
+    assert "snap" not in serialized_keys
+    assert "coordinates" not in serialized_keys
+    assert "adjustment" not in serialized_keys
+    assert "writeback" not in serialized_keys

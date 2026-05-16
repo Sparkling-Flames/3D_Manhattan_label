@@ -28,6 +28,7 @@ from tools.manhattan_preview_compat import (
     check_preview_compatibility,
 )
 from tools.manhattan_geometry_residual import compute_m1_residual
+from tools.manhattan_preview_suggestions import build_preview_suggestion_candidates
 
 
 PROBE_VERSION = "manhattan_smoke_export_probe_v1"
@@ -239,6 +240,7 @@ def _empty_summary(
     source_export: str,
     legacy_keypoint_only: bool,
     include_residuals: bool,
+    include_suggestions: bool,
 ) -> dict[str, Any]:
     meta_labels_trusted = not legacy_keypoint_only
     return {
@@ -276,7 +278,15 @@ def _empty_summary(
         "n_audit_eligible": 0,
         "n_audit_ineligible": 0,
         "audit_ineligibility_counts": {},
+        "n_audit_residual_valid": 0,
+        "n_audit_residual_excluded": 0,
+        "audit_residual_exclusion_counts": {},
         "audit_residual_numeric_summary": _empty_residual_numeric_summary(),
+        "suggestions_enabled": include_suggestions,
+        "n_suggestion_annotations": 0,
+        "suggestion_type_counts": {},
+        "suggestion_severity_counts": {},
+        "suggestion_source_field_counts": {},
         "audit_warnings": [],
         "candidate_task_examples": [],
     }
@@ -301,10 +311,19 @@ def probe_tasks(
     source_export: str = "<memory>",
     legacy_keypoint_only: bool = False,
     include_residuals: bool = False,
+    include_suggestions: bool = False,
 ) -> dict[str, Any]:
     """Build a smoke/probe summary from Label Studio export tasks."""
 
-    summary = _empty_summary(source_export, legacy_keypoint_only, include_residuals)
+    if include_suggestions and not include_residuals:
+        raise ValueError("include_suggestions requires include_residuals")
+
+    summary = _empty_summary(
+        source_export,
+        legacy_keypoint_only,
+        include_residuals,
+        include_suggestions,
+    )
     scope_counts: Counter[str] = Counter()
     unknown_scope_counts: Counter[str] = Counter()
     compatibility_counts: Counter[str] = Counter()
@@ -316,6 +335,10 @@ def probe_tasks(
     audit_residual_values: dict[str, list[float]] = {
         field: [] for field in RESIDUAL_NUMERIC_FIELDS
     }
+    audit_residual_exclusion_counts: Counter[str] = Counter()
+    suggestion_type_counts: Counter[str] = Counter()
+    suggestion_severity_counts: Counter[str] = Counter()
+    suggestion_source_field_counts: Counter[str] = Counter()
     audit_warnings: set[str] = set()
 
     task_list = list(tasks)
@@ -325,6 +348,8 @@ def probe_tasks(
         for annotation in _as_list(task.get("annotations"))
         if isinstance(annotation, Mapping)
     )
+    if include_residuals and manhattan_assumable_field_present:
+        audit_warnings.add("schema_level_manhattan_assumable_gate_active")
     summary["n_tasks"] = len(task_list)
 
     for task in task_list:
@@ -409,6 +434,9 @@ def probe_tasks(
                 if include_residuals:
                     summary["n_residual_excluded"] += 1
                     residual_exclusion_counts["missing_keypoints"] += 1
+                    if audit_candidate:
+                        summary["n_audit_residual_excluded"] += 1
+                        audit_residual_exclusion_counts["missing_keypoints"] += 1
                 _add_example(
                     summary,
                     {
@@ -433,6 +461,9 @@ def probe_tasks(
                 if include_residuals:
                     summary["n_residual_excluded"] += 1
                     residual_exclusion_counts[result.status] += 1
+                    if audit_candidate:
+                        summary["n_audit_residual_excluded"] += 1
+                        audit_residual_exclusion_counts[result.status] += 1
                 _add_example(
                     summary,
                     {
@@ -460,10 +491,23 @@ def probe_tasks(
                     residual_exclusion_counts[reason] += 1
 
                 if audit_candidate and residual.get("diagnostic_valid") is True:
+                    summary["n_audit_residual_valid"] += 1
                     for field in RESIDUAL_NUMERIC_FIELDS:
                         value = residual.get(field)
                         if isinstance(value, (int, float)):
                             audit_residual_values[field].append(float(value))
+                    if include_suggestions:
+                        suggestions = build_preview_suggestion_candidates(residual)
+                        summary["n_suggestion_annotations"] += 1
+                        for suggestion in suggestions:
+                            suggestion_type_counts[str(suggestion.get("suggestion_type"))] += 1
+                            suggestion_severity_counts[str(suggestion.get("severity"))] += 1
+                            source_field = suggestion.get("source_residual_field") or "none"
+                            suggestion_source_field_counts[str(source_field)] += 1
+                elif audit_candidate:
+                    summary["n_audit_residual_excluded"] += 1
+                    reason = str(residual.get("exclusion_reason") or "residual_invalid")
+                    audit_residual_exclusion_counts[reason] += 1
 
     if not legacy_keypoint_only:
         summary["scope_alias_counts"] = dict(sorted(scope_counts.items()))
@@ -473,8 +517,17 @@ def probe_tasks(
         summary["residual_exclusion_counts"] = dict(sorted(residual_exclusion_counts.items()))
         summary["residual_numeric_summary"] = _summarize_numeric_residuals(residual_values)
         summary["audit_ineligibility_counts"] = dict(sorted(audit_ineligibility_counts.items()))
+        summary["audit_residual_exclusion_counts"] = dict(
+            sorted(audit_residual_exclusion_counts.items())
+        )
         summary["audit_residual_numeric_summary"] = _summarize_numeric_residuals(
             audit_residual_values
+        )
+    if include_suggestions:
+        summary["suggestion_type_counts"] = dict(sorted(suggestion_type_counts.items()))
+        summary["suggestion_severity_counts"] = dict(sorted(suggestion_severity_counts.items()))
+        summary["suggestion_source_field_counts"] = dict(
+            sorted(suggestion_source_field_counts.items())
         )
     summary["audit_warnings"] = sorted(audit_warnings)
     return summary
@@ -484,12 +537,14 @@ def probe_export(
     input_path: Path,
     legacy_keypoint_only: bool = False,
     include_residuals: bool = False,
+    include_suggestions: bool = False,
 ) -> dict[str, Any]:
     return probe_tasks(
         _load_tasks(input_path),
         source_export=str(input_path),
         legacy_keypoint_only=legacy_keypoint_only,
         include_residuals=include_residuals,
+        include_suggestions=include_suggestions,
     )
 
 
@@ -526,15 +581,29 @@ def build_arg_parser() -> argparse.ArgumentParser:
             "routing, formal g_t, or round artifacts."
         ),
     )
+    parser.add_argument(
+        "--include-suggestions",
+        action="store_true",
+        help=(
+            "Include preview-only suggestion type counts for audit-eligible, "
+            "residual-valid annotations. Requires --include-residuals and does "
+            "not produce snap coordinates, adjustment vectors, writeback payloads, "
+            "correctness labels, or routing decisions."
+        ),
+    )
     return parser
 
 
 def main(argv: list[str] | None = None) -> int:
-    args = build_arg_parser().parse_args(argv)
+    parser = build_arg_parser()
+    args = parser.parse_args(argv)
+    if args.include_suggestions and not args.include_residuals:
+        parser.error("--include-suggestions requires --include-residuals")
     summary = probe_export(
         args.input,
         legacy_keypoint_only=args.legacy_keypoint_only,
         include_residuals=args.include_residuals,
+        include_suggestions=args.include_suggestions,
     )
     if args.output:
         write_summary(args.output, summary)
