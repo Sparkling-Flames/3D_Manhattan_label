@@ -47,45 +47,49 @@
    - Paper A / A-line 的 `M_geo(t,u)` / `J_u` offline audit-only CLI 实现边界。
    - 定义 sidecar/report schema、exclusion reason 与 MVP component behavior；不进入正式 `P1 / C1 / C2 / T1 / V1` artifact contract。
 
-11. [AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md](AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md)
+11. [MANHATTAN_GEOMETRY_DIAGNOSTIC_EXPORT_ADAPTER_SPEC_v1.md](MANHATTAN_GEOMETRY_DIAGNOSTIC_EXPORT_ADAPTER_SPEC_v1.md)
+   - Paper A / A-line 的真实 Label Studio export 到 `M_geo` MVP JSONL 的 adapter contract / preflight 说明。
+   - 只定义只读转换、字段映射、输入真源和 smoke test；不实现 adapter，不接入正式分析链或 routing。
+
+12. [AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md](AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md)
    - Paper B / B-line 的 Ambiguity-aware enclosed HoHoNet 研究计划。
    - 属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面。
    - 关联规格：[PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md](PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md) 与 [ZIND_MAPPING_AUDIT_PROTOCOL_v1.md](ZIND_MAPPING_AUDIT_PROTOCOL_v1.md)，仅作为 Paper B / non-thesis-facing 架构与数据审计规划。
 
-12. [PROJECT_MAP_CLEAN_20260308.md](PROJECT_MAP_CLEAN_20260308.md)
+13. [PROJECT_MAP_CLEAN_20260308.md](PROJECT_MAP_CLEAN_20260308.md)
    - 当前纯净仓库地图。
    - 用来确认哪些目录、脚本、结果仍属于主链。
 
-13. [../analysis_results/README.md](../analysis_results/README.md)
+14. [../analysis_results/README.md](../analysis_results/README.md)
    - `analysis_results/` 根目录整理说明。
    - 用于快速区分当前主链结果目录、历史保留目录与 `legacy/` 归档区。
 
-14. [SOP_labelstudio_experiment.md](SOP_labelstudio_experiment.md)
+15. [SOP_labelstudio_experiment.md](SOP_labelstudio_experiment.md)
    - Label Studio 导入、标注、导出的一般操作 SOP。
    - 使用时应以当前 Stage 1 正式导入文件和冻结结果为准，不要反向覆盖最新 freeze。
 
-15. [README_DEVELOPER.md](README_DEVELOPER.md)
+16. [README_DEVELOPER.md](README_DEVELOPER.md)
    - 部署、日志、服务、分析工具链的开发者入口。
 
-16. [ANALYSIS_DATA_FLOW.md](ANALYSIS_DATA_FLOW.md)
+17. [ANALYSIS_DATA_FLOW.md](ANALYSIS_DATA_FLOW.md)
    - 上游导出、active log、quality CSV、reliability 输出之间的数据流说明。
 
-17. [手动分析流程.md](手动分析流程.md)
+18. [手动分析流程.md](手动分析流程.md)
    - 你自己拿到一批数据后，手动跑 Pilot / PreScreen 的分析、审计、可视化和测试的流程说明。
 
-18. [STATISTICAL_ANALYSIS_PLAN_v1.md](STATISTICAL_ANALYSIS_PLAN_v1.md)
+19. [STATISTICAL_ANALYSIS_PLAN_v1.md](STATISTICAL_ANALYSIS_PLAN_v1.md)
    - 当前与论文提纲、round-based protocol 对齐的统计计划。
    - 只收口 `RQ1 / RQ2 / RQ3` 的统计口径、downgrade 规则与解释合同，不改主协议边界。
 
-19. [../AGENTS.md](../AGENTS.md)
+20. [../AGENTS.md](../AGENTS.md)
    - Codex 仓库级常驻上下文入口。
    - 只记录 source-of-truth、CE-only 边界、workflow rules 与验证入口。
 
-20. [AGENT_CONTEXT_INDEX.md](AGENT_CONTEXT_INDEX.md)
+21. [AGENT_CONTEXT_INDEX.md](AGENT_CONTEXT_INDEX.md)
    - Codex 上下文路由表。
    - 按 `P1 / C1-C2 / RQ1 / RQ2 / RQ3 / Label Studio / repo map` 指向先读文件。
 
-21. [agent_playbooks/](agent_playbooks/)
+22. [agent_playbooks/](agent_playbooks/)
    - Codex 狭义工作流 playbook。
    - 覆盖代码验证、文档同步、协议保护、统计计划保护、Label Studio CE 保护与 handoff。
 

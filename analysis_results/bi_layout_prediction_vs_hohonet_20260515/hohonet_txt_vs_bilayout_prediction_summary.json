@@ -1,0 +1,78 @@
+{
+  "status": "visual_comparison_using_actual_bilayout_model_predictions",
+  "source_correction": "Bi-Layout geometry comes from exports/mp3d_test_best_predictions, not all_mix_labels_in_uv_v2 dataset labels.",
+  "hohonet_output_txt_dir": "D:\\Work\\HOHONET\\output\\mp3d_layout\\HOHO_layout_aug_efficienthc_Transen1_resnet34",
+  "bilayout_prediction_export_root": "D:\\Work\\Manhattan_3D\\Bi_layout\\exports\\mp3d_test_best_predictions",
+  "gt_manifest": "D:\\Work\\HOHONET\\analysis_results\\g_t_diagnostic_dryrun_20260512\\g_t_diagnostic_sample_manifest.csv",
+  "generated_batches": [
+    {
+      "batch_name": "hard_prediction_failure",
+      "head": "origin",
+      "input_count": 30,
+      "rendered_count": 30,
+      "contact_sheet": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\images\\contact_sheet_hard_prediction_failure_hohonet_txt_vs_bilayout_origin_head_prediction.png",
+      "manifest": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\hard_prediction_failure_hohonet_txt_vs_bilayout_origin_head_prediction_manifest.csv"
+    },
+    {
+      "batch_name": "hard_prediction_failure",
+      "head": "new",
+      "input_count": 30,
+      "rendered_count": 30,
+      "contact_sheet": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\images\\contact_sheet_hard_prediction_failure_hohonet_txt_vs_bilayout_new_head_prediction.png",
+      "manifest": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\hard_prediction_failure_hohonet_txt_vs_bilayout_new_head_prediction_manifest.csv"
+    },
+    {
+      "batch_name": "soft_prediction_complexity",
+      "head": "origin",
+      "input_count": 30,
+      "rendered_count": 30,
+      "contact_sheet": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\images\\contact_sheet_soft_prediction_complexity_hohonet_txt_vs_bilayout_origin_head_prediction.png",
+      "manifest": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\soft_prediction_complexity_hohonet_txt_vs_bilayout_origin_head_prediction_manifest.csv"
+    },
+    {
+      "batch_name": "soft_prediction_complexity",
+      "head": "new",
+      "input_count": 30,
+      "rendered_count": 30,
+      "contact_sheet": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\images\\contact_sheet_soft_prediction_complexity_hohonet_txt_vs_bilayout_new_head_prediction.png",
+      "manifest": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\soft_prediction_complexity_hohonet_txt_vs_bilayout_new_head_prediction_manifest.csv"
+    },
+    {
+      "batch_name": "nominal_prediction_structure",
+      "head": "origin",
+      "input_count": 30,
+      "rendered_count": 30,
+      "contact_sheet": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\images\\contact_sheet_nominal_prediction_structure_hohonet_txt_vs_bilayout_origin_head_prediction.png",
+      "manifest": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\nominal_prediction_structure_hohonet_txt_vs_bilayout_origin_head_prediction_manifest.csv"
+    },
+    {
+      "batch_name": "nominal_prediction_structure",
+      "head": "new",
+      "input_count": 30,
+      "rendered_count": 30,
+      "contact_sheet": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\images\\contact_sheet_nominal_prediction_structure_hohonet_txt_vs_bilayout_new_head_prediction.png",
+      "manifest": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\nominal_prediction_structure_hohonet_txt_vs_bilayout_new_head_prediction_manifest.csv"
+    },
+    {
+      "batch_name": "highest_g_score",
+      "head": "origin",
+      "input_count": 30,
+      "rendered_count": 30,
+      "contact_sheet": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\images\\contact_sheet_highest_g_score_hohonet_txt_vs_bilayout_origin_head_prediction.png",
+      "manifest": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\highest_g_score_hohonet_txt_vs_bilayout_origin_head_prediction_manifest.csv"
+    },
+    {
+      "batch_name": "highest_g_score",
+      "head": "new",
+      "input_count": 30,
+      "rendered_count": 30,
+      "contact_sheet": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\images\\contact_sheet_highest_g_score_hohonet_txt_vs_bilayout_new_head_prediction.png",
+      "manifest": "D:\\Work\\HOHONET\\analysis_results\\bi_layout_prediction_vs_hohonet_20260515\\highest_g_score_hohonet_txt_vs_bilayout_new_head_prediction_manifest.csv"
+    }
+  ],
+  "legend": {
+    "hohonet_output_txt": "orange/red ceiling/floor/verticals and points",
+    "bi_layout_prediction": "cyan/green predicted ceiling/floor/verticals and points"
+  },
+  "note": "Origin and new Bi-Layout heads are rendered as separate sheets."
+}
