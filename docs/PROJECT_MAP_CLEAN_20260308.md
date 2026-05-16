@@ -483,6 +483,10 @@
 
 ## Manhattan smoke probe support
 
+- `tools/manhattan_geometry_residual.py`
+  - M1 offline residual calculator for preview-compatible Manhattan keypoints. It computes preview geometry stability fields only after current preview compatibility passes; it does not implement snap suggestions, adjustment vectors, UI hooks, routing, formal `g_t`, correctness, or formal `P1/C1/C2/T1/V1` artifact behavior.
+- `tests/test_manhattan_geometry_residual.py`
+  - Synthetic tests for the M1 residual calculator. The tests verify compatible-only residual computation and exclusion behavior for compatibility failures.
 - `tools/probe_manhattan_smoke_export.py`
   - Read-only smoke export probe for the experiment-outside Manhattan toolchain. It summarizes keypoint / scope structure and preview compatibility for 5.6 / 5.7 smoke Label Studio exports; it does not modify export files, connect to `analyze_quality.py`, routing, formal `g_t`, Label Studio UI, or formal `P1/C1/C2/T1/V1` artifact contracts.
 - `tests/test_probe_manhattan_smoke_export.py`
