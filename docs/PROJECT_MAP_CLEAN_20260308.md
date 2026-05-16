@@ -117,6 +117,8 @@
   - M4 standalone HTML contact sheet renderer. It consumes probe summary JSON only, does not load real panorama images, and does not read `export_label/` directly.
 - `tools/validate_manhattan_probe_summary.py`
   - M6 JSON validator for Manhattan probe summary sidecars. It checks required fields, count invariants, and forbidden payload terms without opening `source_export` or reading `export_label/`.
+- `tools/dev_only/manhattan_ls_sandbox_panel.user.js`
+  - M8 dev-only sandbox-only Label Studio panel prototype. It injects a read-only panel for developer / expert sandbox testing only; not an official userscript, not worker-facing, no writeback, no submit, no routing, and no formal artifact integration.
 - Boundary: experiment-outside / post-hoc only; not formal protocol core; no UI / worker-facing experiment; no formal `g_t`; no routing; no `P1/C1/C2/T1/V1` artifacts.
 
 ### 导入与分池主链
@@ -387,6 +389,7 @@
 - `tests/test_render_manhattan_probe_report.py`
 - `tests/test_render_manhattan_contact_sheet.py`
 - `tests/test_validate_manhattan_probe_summary.py`
+- `tests/test_manhattan_ls_sandbox_panel_static.py`
 - Boundary: these tests cover the experiment-outside / post-hoc Manhattan toolchain only; they are not formal protocol core tests and do not validate UI, worker-facing experiment behavior, formal `g_t`, routing, or `P1/C1/C2/T1/V1` artifacts.
 
 - `tests/test_extract_truth_layer.py`
@@ -432,6 +435,8 @@
   - 实验外 realtime Manhattan assistant 的 synthetic fixture 设计。覆盖 clean rectangle、wraparound seam、duplicate / near-duplicate、odd keypoint 与 wrong-order / self-intersection；只服务后续 deterministic compatibility tests，不写 UI，不接正式 routing，不进入 worker-facing experiment。
 - `docs/MANHATTAN_LS_SANDBOX_READINESS_SPEC_v1.md`
   - M7 readiness spec for future Label Studio sandbox testing of the experiment-outside Manhattan toolchain. It is a design/checklist document only: no UI changes, no official userscript changes, no formal project integration, and actual LS operation testing starts only after an M8 dev-only sandbox prototype.
+- `docs/MANHATTAN_LS_SANDBOX_OPERATION_CHECKLIST_v1.md`
+  - M8 operation checklist for limited dev-only Label Studio sandbox testing. Requires copied smoke tasks or dedicated sandbox import, developer / expert tester only, no ordinary worker access, no official userscript changes, no writeback, and no formal experiment evidence use.
 - `docs/AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md`
   - B-line / Paper B 的 Ambiguity-aware enclosed HoHoNet 研究计划；属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面
 - `docs/PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md`
