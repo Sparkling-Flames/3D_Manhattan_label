@@ -10,6 +10,7 @@ Generated source:
 Generated files:
 
 - `smoke_probe_summary_2026-05-07.json`
+- `smoke_probe_summary_validation_2026-05-07.json`
 - `smoke_probe_report_2026-05-07.md`
 - `smoke_probe_contact_sheet_2026-05-07.html`
 
@@ -24,3 +25,9 @@ Boundary:
 - They are not current worker-facing experiment material.
 - They were generated from the 2026-05-07 smoke export only.
 - The 2026-05-06 smoke export is the same smoke batch with one fewer annotator, so the 2026-05-07 export is preferred for this probe.
+
+Validation:
+
+- `smoke_probe_summary_validation_2026-05-07.json` is a smoke/probe validation report for the summary JSON.
+- The validator checks summary fields and count invariants only.
+- The validator does not open `source_export` and does not read `export_label/` directly.

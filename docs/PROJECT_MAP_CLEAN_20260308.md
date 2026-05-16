@@ -115,6 +115,8 @@
   - M3 read-only Markdown report renderer. It consumes probe summary JSON only and does not read `export_label/` directly.
 - `tools/render_manhattan_contact_sheet.py`
   - M4 standalone HTML contact sheet renderer. It consumes probe summary JSON only, does not load real panorama images, and does not read `export_label/` directly.
+- `tools/validate_manhattan_probe_summary.py`
+  - M6 JSON validator for Manhattan probe summary sidecars. It checks required fields, count invariants, and forbidden payload terms without opening `source_export` or reading `export_label/`.
 - Boundary: experiment-outside / post-hoc only; not formal protocol core; no UI / worker-facing experiment; no formal `g_t`; no routing; no `P1/C1/C2/T1/V1` artifacts.
 
 ### 导入与分池主链
@@ -384,6 +386,7 @@
 - `tests/test_manhattan_preview_suggestions.py`
 - `tests/test_render_manhattan_probe_report.py`
 - `tests/test_render_manhattan_contact_sheet.py`
+- `tests/test_validate_manhattan_probe_summary.py`
 - Boundary: these tests cover the experiment-outside / post-hoc Manhattan toolchain only; they are not formal protocol core tests and do not validate UI, worker-facing experiment behavior, formal `g_t`, routing, or `P1/C1/C2/T1/V1` artifacts.
 
 - `tests/test_extract_truth_layer.py`
