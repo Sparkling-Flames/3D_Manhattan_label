@@ -83,13 +83,22 @@ Track C-lite 是 Paper A 当前实验外的工具迭代方向。
 - 模型不得自动改写 annotation；
 - 模型不得在当前实验 worker-facing UI 中提供实时提示。
 
-## 5. Relationship to existing docs
+## 5. Relationship to legacy references and current specs
 
-- `MANHATTAN_GEOMETRY_DIAGNOSTIC_PLAN_v1.md` 是原始 audit-only plan。
-- `MANHATTAN_GEOMETRY_DIAGNOSTIC_IMPLEMENTATION_SPEC_v1.md` 是 offline CLI MVP contract。
-- `MANHATTAN_GEOMETRY_DIAGNOSTIC_EXPORT_ADAPTER_SPEC_v1.md` 是 export adapter preflight contract。
-- `VIS_3D_GEOMETRY_COMPATIBILITY_SPEC_v1.md` 是 Track C-lite 的 3D preview compatibility contract。
-- 本 v2 roadmap 是当前 Manhattan 工具入口文档；旧文档保留为 supporting specs，不删除、不重写为 protocol core。
+当前 Manhattan 工具入口只包括：
+
+- `docs/MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md`
+- `docs/VIS_3D_GEOMETRY_COMPATIBILITY_SPEC_v1.md`
+
+Legacy references：
+
+- `docs/legacy/manhattan/MANHATTAN_GEOMETRY_DIAGNOSTIC_PLAN_v1.md` 是原始 audit-only plan。
+- `docs/legacy/manhattan/MANHATTAN_GEOMETRY_DIAGNOSTIC_IMPLEMENTATION_SPEC_v1.md` 是 offline CLI MVP contract 的历史版本。
+- `docs/legacy/manhattan/MANHATTAN_GEOMETRY_DIAGNOSTIC_EXPORT_ADAPTER_SPEC_v1.md` 是 export adapter preflight contract 的历史版本。
+
+本 v2 roadmap 是当前唯一 Manhattan tool entry point，用于收口当前边界、优先级和后续实现方向。Legacy v1 文档仅保留为历史上下文和 implementation provenance，不再作为当前 implementation authority；若 legacy v1 与本 v2 roadmap 冲突，以本 v2 roadmap 为准。
+
+`docs/VIS_3D_GEOMETRY_COMPATIBILITY_SPEC_v1.md` 是当前 Track C-lite / realtime assistant 的 3D preview compatibility contract，但该 Track 仍是实验外 expert-side / lab-side prototype，不是 protocol core，也不是当前 worker-facing main experiment condition。
 
 ## 6. Explicit non-goals
 
@@ -101,4 +110,3 @@ Track C-lite 是 Paper A 当前实验外的工具迭代方向。
 - 不修改 routing artifact。
 - 不修改 `P1 / C1 / C2 / T1 / V1` schema。
 - 不修改正式 protocol / SOP。
-
