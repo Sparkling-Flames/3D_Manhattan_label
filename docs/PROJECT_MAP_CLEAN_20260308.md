@@ -430,6 +430,8 @@
   - 实验外 realtime Manhattan assistant 的 3D preview 几何兼容性说明。记录 current `vis_3d.html` / `ls_3d_logic.js` / official userscript 的 keypoint、pairing、坐标转换、closure 与 compatibility failure 边界；不修改 worker-facing UI。
 - `docs/VIS_3D_GEOMETRY_FIXTURE_PLAN_v1.md`
   - 实验外 realtime Manhattan assistant 的 synthetic fixture 设计。覆盖 clean rectangle、wraparound seam、duplicate / near-duplicate、odd keypoint 与 wrong-order / self-intersection；只服务后续 deterministic compatibility tests，不写 UI，不接正式 routing，不进入 worker-facing experiment。
+- `docs/MANHATTAN_LS_SANDBOX_READINESS_SPEC_v1.md`
+  - M7 readiness spec for future Label Studio sandbox testing of the experiment-outside Manhattan toolchain. It is a design/checklist document only: no UI changes, no official userscript changes, no formal project integration, and actual LS operation testing starts only after an M8 dev-only sandbox prototype.
 - `docs/AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md`
   - B-line / Paper B 的 Ambiguity-aware enclosed HoHoNet 研究计划；属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面
 - `docs/PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md`
