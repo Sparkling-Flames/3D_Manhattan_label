@@ -24,7 +24,7 @@ Realtime Manhattan assistant 的几何逻辑必须与当前 3D preview 逻辑兼
    - `py = y * H / 100`
    - 默认 `W=1024`、`H=512`，也可从 iframe query 读取。
 6. Keypoints 按像素 `x` 排序。
-7. Userscript 用 `threshold = W * 0.05` 做 greedy nearest-x pairing。
+7. Userscript 用 `threshold = W * 0.05` 做 x-sort 后的 nearest-x greedy pairing：对每个未使用点，扫描其右侧所有未使用点，选择满足 `diff < threshold` 且 `diff` 最小的候选。阈值边界是严格小于，不包含 `diff == threshold`。
 8. 每个 pair 形成：
    - `x = mean(p1.x, p2.x)`
    - `y_ceiling = min(p1.y, p2.y)`
@@ -32,7 +32,7 @@ Realtime Manhattan assistant 的几何逻辑必须与当前 3D preview 逻辑兼
    - `originalPoints = [p1, p2]`
 9. Userscript 发送 `postMessage({ type: "update_layout", corners, baseCorners, width, height, imageUrl, preserveOrder, previewOrder, previewSignature })` 到 `tools/vis_3d.html`。
 
-`tools/ls_3d_logic.js` 也包含早期 preview 逻辑：从 `keypointlabels` 读取百分比点、转像素、按 `x` 排序、用 `W*0.05` 配对，并把 pair 渲染为 ceiling / floor lines。未来 compatibility work 应优先以 official userscript + `vis_3d.html` 为准，同时记录与 `ls_3d_logic.js` 的差异。
+`tools/ls_3d_logic.js` 也包含早期 preview 逻辑：从 `keypointlabels` 读取百分比点、转像素、按 `x` 排序、用 `W*0.05` 配对，并把 pair 渲染为 ceiling / floor lines。该旧逻辑使用 first-match greedy；当前 official userscript 使用 nearest-x greedy。未来 compatibility work 应优先以 official userscript + `vis_3d.html` 为准，同时记录与 `ls_3d_logic.js` 的差异。
 
 ## 3. `vis_3d.html` corner order 假设
 
@@ -121,4 +121,3 @@ Future assistant 必须先判断是否与 current preview geometry compatible。
 - 不自动覆盖标注结果。
 - 不把 preview-only snapped candidate 写回 Label Studio annotation。
 - 不把 compatibility check 写成 correctness metric、formal `g_t` 或 routing input。
-

@@ -22,6 +22,7 @@ FAILURE_WRAPAROUND = "compatibility_failure_wraparound_unresolved"
 DEFAULT_WIDTH = 1024
 DEFAULT_HEIGHT = 512
 PAIRING_THRESHOLD_RATIO = 0.05
+PAIRING_RULE_VERSION = "official_userscript_nearest_x_strict_lt_v1"
 DUPLICATE_CORNER_THRESHOLD_RATIO = 0.01
 SEAM_EDGE_RATIO = 0.05
 SEAM_GAP_RATIO = 0.5
@@ -61,6 +62,8 @@ class PreviewCompatibilityResult:
     unpaired_points: tuple[PreviewPoint, ...]
     suggestion_allowed: bool
     allowed_adjustment_type: str
+    compatibility_reason: str
+    pairing_rule_version: str = PAIRING_RULE_VERSION
 
 
 def _point_value(point: Mapping[str, object] | object, key: str) -> object:
@@ -140,10 +143,7 @@ def pair_keypoints_like_current_preview(
     """
 
     preview_points = _normalize_points(points, width=width, height=height)
-    sorted_points = sorted(
-        preview_points,
-        key=lambda p: (p.x, p.y, -1 if p.original_index is None else p.original_index),
-    )
+    sorted_points = sorted(preview_points, key=lambda p: p.x)
     threshold = width * threshold_ratio
     used = [False] * len(sorted_points)
     pairs: list[PreviewPair] = []
@@ -152,12 +152,14 @@ def pair_keypoints_like_current_preview(
         if used[i]:
             continue
         best_j = -1
+        min_diff = float("inf")
         for j in range(i + 1, len(sorted_points)):
             if used[j]:
                 continue
-            if abs(sorted_points[j].x - point.x) < threshold:
+            diff = abs(sorted_points[j].x - point.x)
+            if diff < threshold and diff < min_diff:
+                min_diff = diff
                 best_j = j
-                break
         if best_j == -1:
             continue
 
@@ -263,6 +265,7 @@ def check_preview_compatibility(
             unpaired_points=unpaired,
             suggestion_allowed=False,
             allowed_adjustment_type="none",
+            compatibility_reason="odd_keypoint_count_or_unpaired_points",
         )
 
     if _has_near_duplicate_corner(pairs, width=width):
@@ -273,6 +276,7 @@ def check_preview_compatibility(
             unpaired_points=unpaired,
             suggestion_allowed=False,
             allowed_adjustment_type="none",
+            compatibility_reason="near_duplicate_corner_pair",
         )
 
     if preserve_order and _has_preserve_order_conflict(pairs):
@@ -283,6 +287,7 @@ def check_preview_compatibility(
             unpaired_points=unpaired,
             suggestion_allowed=False,
             allowed_adjustment_type="none",
+            compatibility_reason="preserve_order_conflicts_with_x_sorted_preview_order",
         )
 
     if _has_unresolved_wraparound(pairs, width=width):
@@ -293,6 +298,7 @@ def check_preview_compatibility(
             unpaired_points=unpaired,
             suggestion_allowed=False,
             allowed_adjustment_type="none",
+            compatibility_reason="seam_adjacent_x_sort_order_unresolved",
         )
 
     return PreviewCompatibilityResult(
@@ -302,4 +308,5 @@ def check_preview_compatibility(
         unpaired_points=unpaired,
         suggestion_allowed=True,
         allowed_adjustment_type="closure_check_only",
+        compatibility_reason="current_preview_pairing_and_order_compatible",
     )
