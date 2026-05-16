@@ -327,6 +327,8 @@
   - trap freeze 输出
 - `analysis_results/mp3d_txt_smoke_test_20260328/`
   - smoke test 输出
+- `analysis_results/manhattan_geometry_diagnostic/`
+  - Smoke/probe sidecar outputs for the experiment-outside / post-hoc Manhattan toolchain. Contains the 2026-05-07 probe summary, Markdown report, standalone HTML contact sheet, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, and not `P1/C1/C2/T1/V1` artifacts.
 - `analysis_results/pooled_qa/`
   - pooled QA 图包与审计表
 - `analysis_results/c_manifests_20260310/`
