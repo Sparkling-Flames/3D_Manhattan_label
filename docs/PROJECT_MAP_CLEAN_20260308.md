@@ -495,6 +495,10 @@
   - Read-only smoke export probe for the experiment-outside Manhattan toolchain. It summarizes keypoint / scope structure and preview compatibility for 5.6 / 5.7 smoke Label Studio exports; it does not modify export files, connect to `analyze_quality.py`, routing, formal `g_t`, Label Studio UI, or formal `P1/C1/C2/T1/V1` artifact contracts.
 - `tests/test_probe_manhattan_smoke_export.py`
   - Synthetic tests for the smoke export probe. The tests do not read real export files and do not validate correctness, routing, UI behavior, or formal round artifacts.
+- `tools/render_manhattan_probe_report.py`
+  - M3 read-only Markdown report renderer for Manhattan smoke/probe summary JSON. It consumes probe summaries rather than Label Studio exports; output reports are optional smoke/probe sidecars, not formal `P1/C1/C2/T1/V1` artifacts, and do not connect to UI, routing, formal `g_t`, correctness, worker quality, or export modification.
+- `tests/test_render_manhattan_probe_report.py`
+  - Synthetic tests for the M3 report renderer. The tests use temporary summary JSON and verify guardrail text, residual/audit/suggestion sections, and absence of disallowed report payloads.
 
 ## Agent-ready 入口
 
