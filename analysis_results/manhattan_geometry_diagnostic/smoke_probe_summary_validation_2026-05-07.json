@@ -1,0 +1,32 @@
+{
+  "checked_fields": [
+    "audit_eligibility_enabled",
+    "audit_residual_numeric_summary",
+    "compatibility_status_counts",
+    "n_annotations",
+    "n_audit_eligible",
+    "n_audit_ineligible",
+    "n_audit_residual_excluded",
+    "n_audit_residual_valid",
+    "n_keypoint_results",
+    "n_residual_excluded",
+    "n_residual_valid",
+    "n_suggestion_annotations",
+    "n_tasks",
+    "probe_version",
+    "residual_enabled",
+    "residual_numeric_summary",
+    "source_export",
+    "suggestion_type_counts",
+    "suggestions_enabled",
+    "sum(suggestion_type_counts)"
+  ],
+  "errors": [],
+  "probe_version": "manhattan_smoke_export_probe_v1",
+  "source_export": "export_label\\project-23-at-2026-05-07-06-06-980da9dc.json",
+  "summary_path": "analysis_results\\manhattan_geometry_diagnostic\\smoke_probe_summary_2026-05-07.json",
+  "validation_status": "warning",
+  "warnings": [
+    "sum(suggestion_type_counts) exceeds n_suggestion_annotations; multiple suggestion events per annotation are allowed"
+  ]
+}
