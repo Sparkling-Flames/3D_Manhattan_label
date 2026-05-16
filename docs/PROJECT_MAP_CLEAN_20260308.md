@@ -101,6 +101,13 @@
   - 多份分析结果汇总
 - `tools/compute_mgeo_diagnostic.py`
   - Paper A / A-line 的 offline audit-only Manhattan geometry diagnostic MVP。读取 JSONL layout geometry，输出可选 `M_geo` sidecar 与 worker-level `J_u` summary；不接入 routing、Label Studio UI、import/export 或正式轮次 artifact contract。
+- Experiment-outside / post-hoc Manhattan toolchain:
+  - `tools/manhattan_preview_compat.py`
+  - `tools/probe_manhattan_smoke_export.py`
+  - `tools/manhattan_geometry_residual.py`
+  - `tools/manhattan_preview_suggestions.py`
+  - `tools/render_manhattan_probe_report.py`
+  - è¾¹ç•Œï¼šä¸å±žäºŽ formal protocol coreï¼Œä¸æŽ¥ UI / worker-facing experimentï¼Œä¸è¿›å…¥ formal `g_t` / routing / `P1/C1/C2/T1/V1` artifactsã€‚`tools/render_manhattan_probe_report.py` åªæ¶ˆè´¹ probe summary JSONï¼Œä¸ç›´æŽ¥è¯»å– `export_label/`ã€‚
 - `tools/manhattan_preview_compat.py`
   - 实验外 realtime Manhattan assistant 的 deterministic 3D preview compatibility 纯函数原型。复刻 current preview 的 percent-to-pixel、`W * 0.05` greedy pairing 与 compatibility failure 判定；不接 Label Studio UI、userscript、routing、formal `g_t` 或 worker-facing experiment。
 
@@ -361,6 +368,13 @@
 - `tests/test_compute_dt_score.py`
 - `tests/test_compute_g_t_diagnostics.py`
 - `tests/test_compute_mgeo_diagnostic.py`
+- Experiment-outside / post-hoc Manhattan toolchain tests:
+  - `tests/test_manhattan_preview_compat.py`
+  - `tests/test_probe_manhattan_smoke_export.py`
+  - `tests/test_manhattan_geometry_residual.py`
+  - `tests/test_manhattan_preview_suggestions.py`
+  - `tests/test_render_manhattan_probe_report.py`
+  - è¿™ç»„æµ‹è¯•åªéªŒè¯ experiment-outside / post-hoc Manhattan å·¥å…·é“¾ï¼›ä¸éªŒè¯ UIã€worker-facing experimentã€formal `g_t`ã€routing æˆ– `P1/C1/C2/T1/V1` artifactsã€‚
 - `tests/test_manhattan_preview_compat.py`
 - `tests/test_extract_truth_layer.py`
 - `tests/test_materialize_final_gold_records.py`
