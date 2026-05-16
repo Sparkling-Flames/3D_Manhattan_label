@@ -57,7 +57,8 @@
 
 13. [MANHATTAN_LS_SANDBOX_OPERATION_CHECKLIST_v1.md](MANHATTAN_LS_SANDBOX_OPERATION_CHECKLIST_v1.md)
    - M8 dev-only Label Studio sandbox operation checklist for the experiment-outside Manhattan panel prototype.
-   - Requires an independent sandbox project, developer / expert tester only, no official userscript changes, no writeback, no routing, and no current worker-facing deployment.
+   - Requires an independent sandbox project, developer / expert tester only, server-scoped debug/timed dev-only scripts, sandbox-only active_time exclusion tags, no official userscript changes, no writeback, no routing, and no current worker-facing deployment.
+
 14. [AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md](AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md)
    - Paper B / B-line 的 Ambiguity-aware enclosed HoHoNet 研究计划。
    - 属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面。

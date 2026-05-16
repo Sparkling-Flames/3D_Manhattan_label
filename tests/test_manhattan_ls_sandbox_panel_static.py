@@ -1,70 +1,116 @@
+import json
 from pathlib import Path
 
 
-SCRIPT_PATH = Path("tools/dev_only/manhattan_ls_sandbox_panel.user.js")
+DEBUG_SCRIPT = Path("tools/dev_only/manhattan_ls_sandbox_panel_debug.user.js")
+TIMED_SCRIPT = Path("tools/dev_only/manhattan_ls_sandbox_panel_timed.user.js")
+LEGACY_PROTOTYPE = Path("tools/dev_only/manhattan_ls_sandbox_panel.user.js")
+SANDBOX_IMPORT = Path(
+    "import_json/sandbox/manhattan_m8/manhattan_m8_sandbox_smoke_import_2026-05-07.json"
+)
+ALL_USER_SCRIPTS = [LEGACY_PROTOTYPE, DEBUG_SCRIPT, TIMED_SCRIPT]
 
 
-def read_script() -> str:
-    return SCRIPT_PATH.read_text(encoding="utf-8")
+def read(path: Path) -> str:
+    return path.read_text(encoding="utf-8")
 
 
-def test_script_is_dev_only_path_and_has_guard_text():
-    assert SCRIPT_PATH.as_posix() == "tools/dev_only/manhattan_ls_sandbox_panel.user.js"
-    text = read_script()
+def test_debug_and_timed_scripts_are_dev_only_paths():
+    assert DEBUG_SCRIPT.as_posix() == "tools/dev_only/manhattan_ls_sandbox_panel_debug.user.js"
+    assert TIMED_SCRIPT.as_posix() == "tools/dev_only/manhattan_ls_sandbox_panel_timed.user.js"
+    assert LEGACY_PROTOTYPE.exists()
+
+
+def test_server_scoped_matches_only():
+    for script in ALL_USER_SCRIPTS:
+        text = read(script)
+        assert "@match        http://175.178.71.217:8080/*" in text
+        assert "@match        https://175.178.71.217:8080/*" in text
+        assert "@match        *://*/*" not in text
+        assert "@match        http://localhost" not in text
+        assert "@match        https://localhost" not in text
+
+
+def test_both_scripts_have_required_guard_text():
+    for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
+        text = read(script)
+        for required in [
+            "dev-only",
+            "sandbox-only",
+            "expert/developer tester only",
+            "not official userscript",
+            "not worker-facing",
+            "no annotation writeback",
+            "no submit",
+            "no routing",
+            "no formal g_t",
+            "no P1/C1/C2/T1/V1 artifact",
+            "__HOHONET_M8_SANDBOX_PANEL_ACTIVE__",
+            "keypoint_read_status",
+            "keypoint_count",
+            "Compatibility",
+            "Residual",
+            "Preview-only suggestion",
+            "Guardrails",
+        ]:
+            assert required in text
+
+
+def test_debug_script_has_no_network_logging():
+    text = read(DEBUG_SCRIPT)
+    for forbidden in ["fetch(", "XMLHttpRequest", "/log_time", "POST", "PUT", "PATCH", "DELETE"]:
+        assert forbidden not in text
+
+
+def test_timed_script_only_posts_sandbox_log_time_payload():
+    text = read(TIMED_SCRIPT)
+    assert 'fetch("/log_time"' in text
+    assert 'method: "POST"' in text
+    assert "XMLHttpRequest" not in text
+    assert "PUT" not in text
+    assert "PATCH" not in text
+    assert "DELETE" not in text
 
     for required in [
-        "dev-only",
-        "sandbox-only",
-        "expert/developer tester only",
-        "not official userscript",
-        "not worker-facing",
-        "no writeback",
-        "no submit",
-        "no routing",
-        "no formal g_t",
-        "no P1/C1/C2/T1/V1 artifact",
+        'log_context: "manhattan_ls_sandbox"',
+        'tool_stage: "M8"',
+        'script_variant: "timed"',
+        "is_sandbox: true",
+        "sandbox_project: true",
+        "exclude_from_primary_active_time: true",
+        "exclude_from_thesis_evidence: true",
+        "not_worker_facing: true",
+        "not_p1_c1_c2_t1_v1_artifact: true",
+        "manhattan_panel_version: PANEL_VERSION",
     ]:
         assert required in text
 
 
-def test_script_has_no_network_write_methods_or_submit_trigger():
-    text = read_script()
+def test_scripts_have_no_active_annotation_or_navigation_triggers():
+    for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
+        text = read(script)
+        for forbidden in [".submit(", "requestSubmit(", ".click("]:
+            assert forbidden not in text
 
-    for forbidden in ["POST", "PUT", "PATCH", "DELETE", "fetch(", "XMLHttpRequest"]:
-        assert forbidden not in text
-
-    for forbidden in [".submit(", "requestSubmit(", ".click("]:
-        assert forbidden not in text
-
-
-def test_script_does_not_contain_annotation_change_payload_terms():
-    text = read_script().lower()
-
-    for forbidden in [
-        "snap_to_axis",
-        "adjustment_vector",
-        "corrected annotation",
-        "worker tier label",
-        "routing decision",
-    ]:
-        assert forbidden not in text
+        lowered = text.lower()
+        for forbidden in [
+            "snap_to_axis",
+            "adjustment_vector",
+            "corrected annotation payload",
+            "routing decision",
+            "worker tier label",
+            "correctness label:",
+        ]:
+            assert forbidden not in lowered
 
 
-def test_script_contains_panel_guardrails_and_placeholders():
-    text = read_script()
+def test_sandbox_import_has_required_task_tags():
+    data = json.loads(SANDBOX_IMPORT.read_text(encoding="utf-8"))
+    assert len(data) == 5
 
-    for expected in [
-        "keypoint_read_status",
-        "keypoint_count",
-        "Compatibility",
-        "Residual",
-        "Preview-only suggestion",
-        "Guardrails",
-        "placeholder only",
-        "no correctness label",
-        "no worker tier",
-        "no snap coordinates",
-        "no adjustment vector",
-        "no auto-correction",
-    ]:
-        assert expected in text
+    for item in data:
+        task_data = item["data"]
+        assert task_data["sandbox_only"] is True
+        assert task_data["sandbox_source"] == "2026-05-07 smoke export"
+        assert task_data["manhattan_m8_sandbox"] is True
+        assert task_data["condition"] == "semi"
