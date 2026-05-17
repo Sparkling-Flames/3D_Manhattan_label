@@ -47,6 +47,15 @@
   const DEFAULT_WIDTH = 1024;
   const DEFAULT_HEIGHT = 512;
   const START_TIME_MS = Date.now();
+  const HEARTBEAT_INTERVAL_MS = 15000;
+  const SESSION_STORAGE_KEY = "hohonet_m8_sandbox_session_id";
+  let lastTelemetryMs = START_TIME_MS;
+  const telemetryState = {
+    status: "not_sent",
+    lastEvent: "none",
+    lastHttpStatus: "none",
+    lastError: "none",
+  };
   const GUARDRAILS = [
     "dev-only sandbox-only panel",
     "expert/developer tester only",
@@ -143,6 +152,19 @@
     return `${getHelperBaseUrl()}/log_time`;
   }
 
+  const sessionId = (() => {
+    try {
+      let sid = window.sessionStorage.getItem(SESSION_STORAGE_KEY);
+      if (!sid) {
+        sid = `m8-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+        window.sessionStorage.setItem(SESSION_STORAGE_KEY, sid);
+      }
+      return sid;
+    } catch (e) {
+      return `m8-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
+    }
+  })();
+
   function getStore() {
     if (
       window.LabelStudio &&
@@ -177,6 +199,99 @@
       }
     }
     return null;
+  }
+
+  function knownText(value) {
+    if (value === undefined || value === null) return "unknown";
+    const textValue = String(value).trim();
+    return textValue || "unknown";
+  }
+
+  function getTaskId() {
+    try {
+      const storeTaskId = getStore()?.task?.id;
+      if (storeTaskId !== undefined && storeTaskId !== null) {
+        return knownText(storeTaskId);
+      }
+      const params = new URLSearchParams(window.location.search);
+      const queryTaskId = params.get("task") || params.get("task_id");
+      if (queryTaskId) return knownText(queryTaskId);
+      const match = window.location.pathname.match(/\/tasks\/(\d+)/);
+      if (match) return match[1];
+    } catch (e) {}
+    return "unknown";
+  }
+
+  function getProjectId() {
+    try {
+      const store = getStore();
+      const candidates = [
+        store?.project?.id,
+        store?.task?.project,
+        store?.task?.projectId,
+        store?.task?.data?.project_id,
+      ];
+      for (const candidate of candidates) {
+        if (candidate !== undefined && candidate !== null && String(candidate).trim()) {
+          return knownText(candidate);
+        }
+      }
+      const match = window.location.pathname.match(/\/projects\/(\d+)/);
+      if (match) return match[1];
+    } catch (e) {}
+    return "unknown";
+  }
+
+  function getProjectName() {
+    try {
+      const store = getStore();
+      const candidates = [
+        store?.project?.title,
+        store?.project?.name,
+        store?.task?.data?.project_name,
+      ];
+      for (const candidate of candidates) {
+        if (candidate !== undefined && candidate !== null && String(candidate).trim()) {
+          return knownText(candidate);
+        }
+      }
+      const crumbs = Array.from(document.querySelectorAll("a, span, div"))
+        .map((node) => node.textContent?.trim())
+        .filter(Boolean);
+      const projectsIndex = crumbs.findIndex((value) => value === "Projects");
+      if (projectsIndex >= 0 && crumbs[projectsIndex + 1]) {
+        return knownText(crumbs[projectsIndex + 1]);
+      }
+      if (document.title) return knownText(document.title);
+    } catch (e) {}
+    return "unknown";
+  }
+
+  function getAnnotatorId() {
+    try {
+      const store = getStore();
+      const candidates = [
+        store?.user?.id,
+        store?.user?.pk,
+        store?.currentUser?.id,
+        store?.task?.data?.annotator_id,
+      ];
+      for (const candidate of candidates) {
+        if (candidate !== undefined && candidate !== null && String(candidate).trim()) {
+          return knownText(candidate);
+        }
+      }
+      const profileText = document.querySelector("[data-testid*='user'], [class*='user']")?.textContent;
+      if (profileText) return knownText(profileText);
+    } catch (e) {}
+    return "unknown";
+  }
+
+  function getPageType() {
+    return /\/labeling\/?/.test(window.location.pathname) ||
+      Boolean(document.querySelector(".lsf-main-view, .ls-main-view"))
+      ? "annotation"
+      : "other";
   }
 
   function toArrayFromMaybeObservable(value) {
@@ -598,10 +713,37 @@
     return "native_preview_update_sent";
   }
 
-  function sandboxTelemetryPayload(eventName) {
+  function secondsSinceStart() {
+    return Math.max(0, Math.round((Date.now() - START_TIME_MS) / 1000));
+  }
+
+  function secondsSinceLastTelemetry(nowMs) {
+    return Math.max(0, Math.round((nowMs - lastTelemetryMs) / 1000));
+  }
+
+  function updateTelemetryPanel() {
+    setText(`${PANEL_ID}-telemetry-status`, telemetryState.status);
+    setText(`${PANEL_ID}-last-telemetry-event`, telemetryState.lastEvent);
+    setText(`${PANEL_ID}-last-telemetry-http-status`, telemetryState.lastHttpStatus);
+    setText(`${PANEL_ID}-last-telemetry-error`, telemetryState.lastError);
+  }
+
+  function sandboxTelemetryPayload(eventName, nowMs = Date.now()) {
+    const activeSeconds = secondsSinceStart();
+    const fragmentSeconds = secondsSinceLastTelemetry(nowMs);
     return {
+      task_id: getTaskId(),
+      project_id: getProjectId(),
+      project_name: getProjectName(),
+      annotator_id: getAnnotatorId(),
+      session_id: sessionId,
+      page_type: getPageType(),
+      active_seconds: activeSeconds,
+      active_seconds_fragment: fragmentSeconds,
+      timestamp: nowMs,
       event: eventName,
-      elapsed_ms: Date.now() - START_TIME_MS,
+      telemetry_elapsed_seconds: activeSeconds,
+      elapsed_ms: nowMs - START_TIME_MS,
       page_url: window.location.href,
       log_context: "manhattan_ls_sandbox",
       tool_stage: "M8",
@@ -618,17 +760,37 @@
 
   function sendSandboxTelemetry(eventName) {
     const token = getLogToken();
+    const nowMs = Date.now();
+    const payload = sandboxTelemetryPayload(eventName, nowMs);
+    telemetryState.status = "sending";
+    telemetryState.lastEvent = eventName;
+    telemetryState.lastHttpStatus = "pending";
+    telemetryState.lastError = "none";
+    updateTelemetryPanel();
     fetch(logTimeUrl(), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         ...(token ? { "X-HOHONET-TOKEN": token } : {}),
       },
-      body: JSON.stringify(sandboxTelemetryPayload(eventName)),
+      body: JSON.stringify(payload),
       keepalive: true,
-    }).catch(function () {
+    })
+      .then(function (response) {
+        telemetryState.status = response.ok ? "sent" : "http_error";
+        telemetryState.lastHttpStatus = String(response.status);
+        telemetryState.lastError = response.ok ? "none" : response.statusText || "non_2xx_response";
+        lastTelemetryMs = nowMs;
+        updateTelemetryPanel();
+      })
+      .catch(function (error) {
+        telemetryState.status = "network_error";
+        telemetryState.lastHttpStatus = "network_error";
+        telemetryState.lastError = error?.message || "unknown_error";
+        lastTelemetryMs = nowMs;
+        updateTelemetryPanel();
       // Sandbox telemetry failure must not interrupt annotation or panel display.
-    });
+      });
   }
 
   function installStyles() {
@@ -699,6 +861,7 @@
       setText(`${PANEL_ID}-preview-update-status`, state.preview_update_status);
       setText(`${PANEL_ID}-viewer-base-url`, getViewerBaseUrl());
       setText(`${PANEL_ID}-log-time-url`, logTimeUrl());
+      updateTelemetryPanel();
       return;
     }
 
@@ -723,6 +886,11 @@
     panel.appendChild(makeRow("log_context", "manhattan_ls_sandbox"));
     panel.appendChild(makeMutableRow("viewer_base_url", getViewerBaseUrl(), `${PANEL_ID}-viewer-base-url`));
     panel.appendChild(makeMutableRow("log_time_url", logTimeUrl(), `${PANEL_ID}-log-time-url`));
+    panel.appendChild(makeMutableRow("telemetry_status", telemetryState.status, `${PANEL_ID}-telemetry-status`));
+    panel.appendChild(makeMutableRow("last_telemetry_event", telemetryState.lastEvent, `${PANEL_ID}-last-telemetry-event`));
+    panel.appendChild(makeMutableRow("last_telemetry_http_status", telemetryState.lastHttpStatus, `${PANEL_ID}-last-telemetry-http-status`));
+    panel.appendChild(makeMutableRow("last_telemetry_error", telemetryState.lastError, `${PANEL_ID}-last-telemetry-error`));
+    panel.appendChild(makeRow("heartbeat_interval_ms", HEARTBEAT_INTERVAL_MS));
 
     const controls = document.createElement("section");
     controls.appendChild(document.createElement("h3")).appendChild(text("Controls"));
@@ -791,6 +959,17 @@
   }, 1500);
 
   sendSandboxTelemetry("panel_loaded");
+  window.setInterval(function () {
+    sendSandboxTelemetry("heartbeat");
+  }, HEARTBEAT_INTERVAL_MS);
+  document.addEventListener("visibilitychange", function () {
+    if (document.visibilityState === "hidden") {
+      sendSandboxTelemetry("visibility_hidden");
+    }
+  });
+  window.addEventListener("pagehide", function () {
+    sendSandboxTelemetry("pagehide");
+  });
   window.addEventListener("beforeunload", function () {
     sendSandboxTelemetry("panel_unloaded");
   });
