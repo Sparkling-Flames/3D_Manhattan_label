@@ -121,6 +121,8 @@
   - M8.1 server-scoped dev-only sandbox panel debug variant for `175.178.71.217:8080`; read-only panel only, no active_time upload, not an official userscript, not worker-facing, no writeback, no submit, no routing, and no formal artifact integration.
 - `tools/dev_only/manhattan_ls_sandbox_panel_timed.user.js`
   - M8.1 server-scoped dev-only sandbox panel timed variant for `175.178.71.217:8080`; may POST only sandbox telemetry to `/log_time` with exclusion tags, not an official userscript, not worker-facing, no annotation writeback, no submit, no routing, and no formal artifact integration.
+- `tools/audit_m8_sandbox_active_log.py`
+  - M8.2 read-only active-log audit for M8 sandbox telemetry. It checks sandbox exclusion tags, required fields, and heartbeat intervals from active log JSONL; it does not validate RQ1 primary active_time, does not read or modify `export_label/`, and is not routing / formal `g_t` / `P1/C1/C2/T1/V1` artifact logic.
 - Boundary: experiment-outside / post-hoc only; not formal protocol core; no UI / worker-facing experiment; no formal `g_t`; no routing; no `P1/C1/C2/T1/V1` artifacts.
 
 ### 导入与分池主链
@@ -336,7 +338,7 @@
 - `analysis_results/mp3d_txt_smoke_test_20260328/`
   - smoke test 输出
 - `analysis_results/manhattan_geometry_diagnostic/`
-  - Smoke/probe sidecar outputs for the experiment-outside / post-hoc Manhattan toolchain. Contains the 2026-05-07 probe summary, Markdown report, standalone HTML contact sheet, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, and not `P1/C1/C2/T1/V1` artifacts.
+  - Smoke/probe sidecar outputs for the experiment-outside / post-hoc Manhattan toolchain. Contains the 2026-05-07 probe summary, Markdown report, standalone HTML contact sheet, optional M8.2 sandbox active-log audit JSON, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, not RQ1 primary active_time evidence, and not `P1/C1/C2/T1/V1` artifacts.
 - `analysis_results/pooled_qa/`
   - pooled QA 图包与审计表
 - `analysis_results/c_manifests_20260310/`
@@ -394,6 +396,7 @@
 - `tests/test_render_manhattan_contact_sheet.py`
 - `tests/test_validate_manhattan_probe_summary.py`
 - `tests/test_manhattan_ls_sandbox_panel_static.py`
+- `tests/test_audit_m8_sandbox_active_log.py`
 - Boundary: these tests cover the experiment-outside / post-hoc Manhattan toolchain only; they are not formal protocol core tests and do not validate UI, worker-facing experiment behavior, formal `g_t`, routing, or `P1/C1/C2/T1/V1` artifacts.
 
 - `tests/test_extract_truth_layer.py`
@@ -440,7 +443,7 @@
 - `docs/MANHATTAN_LS_SANDBOX_READINESS_SPEC_v1.md`
   - M7 readiness spec for future Label Studio sandbox testing of the experiment-outside Manhattan toolchain. It is a design/checklist document only: no UI changes, no official userscript changes, no formal project integration, and actual LS operation testing starts only after an M8 dev-only sandbox prototype.
 - `docs/MANHATTAN_LS_SANDBOX_OPERATION_CHECKLIST_v1.md`
-  - M8 operation checklist for limited dev-only Label Studio sandbox testing. Requires copied smoke tasks or dedicated sandbox import, developer / expert tester only, no ordinary worker access, no official userscript changes, no writeback, and no formal experiment evidence use.
+  - M8 operation checklist for limited dev-only Label Studio sandbox testing and M8.2 read-only active-log audit. Requires copied smoke tasks or dedicated sandbox import, developer / expert tester only, no ordinary worker access, no official userscript changes, no writeback, no formal experiment evidence use, and sandbox telemetry exclusion from primary active_time.
 - `docs/AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md`
   - B-line / Paper B 的 Ambiguity-aware enclosed HoHoNet 研究计划；属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面
 - `docs/PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md`
