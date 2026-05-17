@@ -30,6 +30,10 @@
 (function () {
   "use strict";
 
+  if (window.top !== window.self) {
+    return;
+  }
+
   const WINDOW_GUARD = "__HOHONET_M8_SANDBOX_PANEL_ACTIVE__";
   if (window[WINDOW_GUARD]) {
     return;
@@ -38,6 +42,11 @@
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
   const PANEL_VERSION = "m8-dev-only-debug-0.1.0";
+  const OFFICIAL_IFRAME_ID = "hohonet-iframe";
+  const OFFICIAL_WRAPPER_ID = "hohonet-wrapper";
+  const OFFICIAL_BUTTON_ID = "hohonet-refresh-btn";
+  const DEFAULT_WIDTH = 1024;
+  const DEFAULT_HEIGHT = 512;
   const GUARDRAILS = [
     "dev-only sandbox-only panel",
     "expert/developer tester only",
@@ -74,6 +83,18 @@
     return row;
   }
 
+  function makeMutableRow(label, value, id) {
+    const row = makeRow(label, value);
+    const val = row.querySelector(".hohonet-m8-value");
+    if (val) val.id = id;
+    return row;
+  }
+
+  function setText(id, value) {
+    const node = document.getElementById(id);
+    if (node) node.textContent = String(value);
+  }
+
   function numericAttr(element, names) {
     for (const name of names) {
       const raw = element.getAttribute(name);
@@ -88,8 +109,410 @@
     return null;
   }
 
+  function getHelperBaseUrl() {
+    try {
+      return (
+        window.localStorage.getItem("HOHONET_HELPER_BASE_URL") ||
+        "http://175.178.71.217:8000"
+      );
+    } catch (e) {
+      return "http://175.178.71.217:8000";
+    }
+  }
+
+  function getViewerBaseUrl() {
+    try {
+      return (
+        window.localStorage.getItem("HOHONET_VIEWER_BASE_URL") ||
+        getHelperBaseUrl()
+      );
+    } catch (e) {
+      return getHelperBaseUrl();
+    }
+  }
+
+  function getStore() {
+    if (
+      window.LabelStudio &&
+      window.LabelStudio.instances &&
+      window.LabelStudio.instances.length > 0
+    ) {
+      return window.LabelStudio.instances[0].store;
+    }
+    if (window.H) return window.H;
+    const roots = [
+      document.querySelector(".ls-room"),
+      document.querySelector("#label-studio"),
+      document.querySelector(".lsf-main-view"),
+      document.querySelector(".ls-main-view"),
+      document.body,
+    ].filter(Boolean);
+    const scoped = Array.from(
+      document.querySelectorAll(
+        "#label-studio, .ls-room, .lsf-main-view, .ls-main-view, [class*='lsf'], [class*='label']",
+      ),
+    );
+    for (const root of roots.concat(scoped)) {
+      for (const key in root) {
+        if (!key.startsWith("__reactFiber") && !key.startsWith("__reactProps")) continue;
+        let fiber = root[key];
+        while (fiber) {
+          if (fiber.stateNode?.props?.store) return fiber.stateNode.props.store;
+          if (fiber.memoizedProps?.store) return fiber.memoizedProps.store;
+          if (fiber.pendingProps?.store) return fiber.pendingProps.store;
+          fiber = fiber.return;
+        }
+      }
+    }
+    return null;
+  }
+
+  function toArrayFromMaybeObservable(value) {
+    try {
+      if (!value) return [];
+      if (Array.isArray(value)) return value;
+      if (typeof value.toJSON === "function") {
+        const json = value.toJSON();
+        if (Array.isArray(json)) return json;
+      }
+      if (typeof value[Symbol.iterator] === "function") {
+        return Array.from(value);
+      }
+      if (typeof value.forEach === "function") {
+        const out = [];
+        value.forEach((item) => out.push(item));
+        return out;
+      }
+    } catch (e) {}
+    return [];
+  }
+
+  function collectSelectedResults(store) {
+    const out = [];
+    try {
+      const selected = store?.annotationStore?.selected;
+      if (!selected) return out;
+      if (typeof selected.serializeCompletion === "function") {
+        const serialized = selected.serializeCompletion();
+        out.push(...toArrayFromMaybeObservable(serialized?.result));
+      }
+      if (typeof selected.toJSON === "function") {
+        const json = selected.toJSON();
+        out.push(...toArrayFromMaybeObservable(json?.result || json?.results));
+      }
+      out.push(...toArrayFromMaybeObservable(selected?.results));
+    } catch (e) {}
+    return out;
+  }
+
+  function cleanResult(value) {
+    try {
+      return JSON.parse(JSON.stringify(value));
+    } catch (e) {
+      return value;
+    }
+  }
+
+  function readPercentPoint(result) {
+    const source = result?.area || result;
+    const cleaned = cleanResult(source);
+    const type = result?.type || cleaned?.type;
+    if (type !== "keypointlabels" && type !== "keypointregion") {
+      return null;
+    }
+    const candidates = [cleaned?.value, cleaned, result?.value, result];
+    for (const candidate of candidates) {
+      const x = candidate?.x;
+      const y = candidate?.y;
+      if (typeof x === "number" && typeof y === "number") {
+        return { pctX: x, pctY: y };
+      }
+    }
+    return null;
+  }
+
+  function extractKeypointsFromStore(store, width, height) {
+    const results = collectSelectedResults(store);
+    const keypoints = [];
+    for (const result of results) {
+      const point = readPercentPoint(result);
+      if (!point) continue;
+      keypoints.push({
+        x: (point.pctX * width) / 100,
+        y: (point.pctY * height) / 100,
+        pctX: point.pctX,
+        pctY: point.pctY,
+        source: "label-studio-store",
+      });
+    }
+    return { keypoints, result_count: results.length };
+  }
+
+  function getImageUrlFromStore() {
+    try {
+      const data = getStore()?.task?.data;
+      if (!data || typeof data !== "object") return null;
+      for (const key of ["image", "img", "pano", "pano_url", "panoUrl", "url", "src", "file"]) {
+        const value = data[key];
+        if (typeof value === "string" && value) return value;
+      }
+    } catch (e) {}
+    return null;
+  }
+
+  function findMainImage() {
+    const mainView =
+      document.querySelector(".lsf-main-view") ||
+      document.querySelector(".ls-main-view") ||
+      document;
+    const images = Array.from(mainView.querySelectorAll("img")).filter(
+      (img) => img.naturalWidth > 200 || img.width > 200,
+    );
+    if (!images.length) return null;
+    return images.reduce((a, b) =>
+      (a.naturalWidth || a.width || 0) * (a.naturalHeight || a.height || 0) >
+      (b.naturalWidth || b.width || 0) * (b.naturalHeight || b.height || 0)
+        ? a
+        : b,
+    );
+  }
+
+  function rewriteTextureUrlForViewer(originalUrl) {
+    if (!originalUrl) return originalUrl;
+    try {
+      const helperBase = new URL(getHelperBaseUrl(), window.location.href);
+      const url = new URL(originalUrl, window.location.href);
+      if (url.origin === helperBase.origin) return url.toString();
+      if (url.hostname === helperBase.hostname) {
+        return `${helperBase.origin}/ls${url.pathname}${url.search}`;
+      }
+      return url.toString();
+    } catch (e) {
+      return originalUrl;
+    }
+  }
+
+  function withCacheBust(url) {
+    if (!url) return url;
+    try {
+      const parsed = new URL(url, window.location.href);
+      parsed.searchParams.set("_hohonet_ts", String(Date.now()));
+      return parsed.toString();
+    } catch (e) {
+      return url;
+    }
+  }
+
+  function buildPreviewPairs(points, width) {
+    const sorted = points.slice().sort((a, b) => a.x - b.x);
+    const used = new Array(sorted.length).fill(false);
+    const threshold = width * 0.05;
+    const pairs = [];
+    for (let i = 0; i < sorted.length; i += 1) {
+      if (used[i]) continue;
+      let bestJ = -1;
+      let minDiff = Infinity;
+      for (let j = i + 1; j < sorted.length; j += 1) {
+        if (used[j]) continue;
+        const diff = Math.abs(sorted[j].x - sorted[i].x);
+        if (diff < threshold && diff < minDiff) {
+          minDiff = diff;
+          bestJ = j;
+        }
+      }
+      if (bestJ !== -1) {
+        used[i] = true;
+        used[bestJ] = true;
+        pairs.push({
+          x: (sorted[i].x + sorted[bestJ].x) / 2,
+          y_ceiling: Math.min(sorted[i].y, sorted[bestJ].y),
+          y_floor: Math.max(sorted[i].y, sorted[bestJ].y),
+        });
+      }
+    }
+    return pairs;
+  }
+
+  function normalizePreviewUrl(rawUrl) {
+    if (!rawUrl) return null;
+    try {
+      const url = new URL(rawUrl, window.location.href);
+      if (!url.href.includes("vis_3d.html")) return null;
+      return url.toString();
+    } catch (e) {
+      return null;
+    }
+  }
+
+  function findExistingPreviewUrl() {
+    const selectors = [
+      "iframe[src*='vis_3d.html']",
+      "a[href*='vis_3d.html']",
+      "[src*='vis_3d.html']",
+      "[href*='vis_3d.html']",
+    ];
+    for (const selector of selectors) {
+      for (const element of document.querySelectorAll(selector)) {
+        if (element.closest(`#${PANEL_ID}`)) continue;
+        const raw = element.getAttribute("src") || element.getAttribute("href");
+        const url = normalizePreviewUrl(raw);
+        if (url && url.includes("data=")) return url;
+      }
+    }
+    return null;
+  }
+
+  function findSectionContainer() {
+    const headers = Array.from(document.querySelectorAll("h3"));
+    const header = headers.find(
+      (node) => node.textContent && node.textContent.includes("3D Layout Preview"),
+    );
+    if (!header) return null;
+    const sibling = header.nextElementSibling;
+    if (
+      sibling &&
+      (sibling.classList.contains("lsf-object") ||
+        sibling.classList.contains("lsf-richtext") ||
+        sibling.querySelector("iframe, a, [src], [href]"))
+    ) {
+      return sibling;
+    }
+    return header.parentElement || null;
+  }
+
+  function findNativePreviewIframe() {
+    const byId = document.getElementById(OFFICIAL_IFRAME_ID);
+    if (byId && !byId.closest(`#${PANEL_ID}`)) return byId;
+    const frames = Array.from(document.querySelectorAll("iframe[src*='vis_3d.html']")).filter(
+      (iframe) => !iframe.closest(`#${PANEL_ID}`),
+    );
+    return frames[0] || null;
+  }
+
+  function getNativePreviewUrl() {
+    const image = findMainImage();
+    const url = new URL(`${getViewerBaseUrl()}/tools/vis_3d.html`, window.location.href);
+    url.searchParams.set("v", String(Date.now()));
+    if (image) {
+      const width = image.naturalWidth || DEFAULT_WIDTH;
+      const height = image.naturalHeight || DEFAULT_HEIGHT;
+      url.searchParams.set("w", String(width));
+      url.searchParams.set("h", String(height));
+    }
+    return url.toString();
+  }
+
+  function ensureNativePreviewArea() {
+    const container = findSectionContainer();
+    if (!container) return null;
+    Array.from(container.children).forEach((child) => {
+      if (child.id !== OFFICIAL_WRAPPER_ID) {
+        child.style.display = "none";
+      }
+    });
+    let wrapper = document.getElementById(OFFICIAL_WRAPPER_ID);
+    if (!wrapper) {
+      wrapper = document.createElement("div");
+      wrapper.id = OFFICIAL_WRAPPER_ID;
+      container.appendChild(wrapper);
+    }
+    let iframe = document.getElementById(OFFICIAL_IFRAME_ID);
+    if (!iframe) {
+      iframe = document.createElement("iframe");
+      iframe.id = OFFICIAL_IFRAME_ID;
+      iframe.style.cssText = "width: 100%; height: 400px; border: none; background: #000;";
+      wrapper.appendChild(iframe);
+    }
+    const url = getNativePreviewUrl();
+    if (!iframe.dataset.src || !iframe.src) {
+      iframe.dataset.src = url;
+      iframe.src = url;
+    }
+    let button = document.getElementById(OFFICIAL_BUTTON_ID);
+    if (!button) {
+      button = document.createElement("button");
+      button.id = OFFICIAL_BUTTON_ID;
+      button.type = "button";
+      button.textContent = "Refresh 3D Preview";
+      button.style.cssText =
+        "margin-top: 10px; padding: 8px 16px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; font-weight: bold;";
+      button.addEventListener("click", function () {
+        const state = extractKeypointsFromDom();
+        state.preview_update_status = updatePreviewIframe(state);
+        renderPanel(state);
+      });
+      wrapper.appendChild(button);
+    }
+    return iframe;
+  }
+
+  function extractPairsFromPreviewUrl(previewUrl) {
+    try {
+      const url = new URL(previewUrl, window.location.href);
+      const rawData = url.searchParams.get("data");
+      if (!rawData) return [];
+      const parsed = JSON.parse(rawData);
+      if (!Array.isArray(parsed)) return [];
+      return parsed
+        .map((corner) => ({
+          x: Number(corner.x),
+          y_ceiling: Number(corner.y_ceiling),
+          y_floor: Number(corner.y_floor),
+        }))
+        .filter(
+          (corner) =>
+            Number.isFinite(corner.x) &&
+            Number.isFinite(corner.y_ceiling) &&
+            Number.isFinite(corner.y_floor),
+        );
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function getPreviewUrl(state) {
+    return state?.preview_url || `${getViewerBaseUrl()}/tools/vis_3d.html?v=${Date.now()}`;
+  }
+
+  function extractOverlayKeypoints(points) {
+    const mainImage = findMainImage();
+    if (!mainImage) return;
+    const imageRect = mainImage.getBoundingClientRect();
+    if (!imageRect.width || !imageRect.height) return;
+    const candidates = Array.from(
+      document.querySelectorAll(
+        "[class*='keypoint'], [class*='Keypoint'], [class*='point'], [class*='Point'], [aria-label*='Corner'], [title*='Corner']",
+      ),
+    );
+    for (const element of candidates) {
+      if (element.closest(`#${PANEL_ID}`)) continue;
+      const rect = element.getBoundingClientRect();
+      if (!rect.width || !rect.height) continue;
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top + rect.height / 2;
+      if (
+        centerX < imageRect.left ||
+        centerX > imageRect.right ||
+        centerY < imageRect.top ||
+        centerY > imageRect.bottom
+      ) {
+        continue;
+      }
+      points.push({
+        x: ((centerX - imageRect.left) / imageRect.width) * DEFAULT_WIDTH,
+        y: ((centerY - imageRect.top) / imageRect.height) * DEFAULT_HEIGHT,
+        source: "dom-keypoint-overlay",
+      });
+    }
+  }
+
   function extractKeypointsFromDom() {
-    const points = [];
+    const store = getStore();
+    const storeStatus = store ? "available" : "unavailable";
+    const storeExtraction = extractKeypointsFromStore(store, DEFAULT_WIDTH, DEFAULT_HEIGHT);
+    const points = storeExtraction.keypoints;
+    const previewUrl = findExistingPreviewUrl();
+    const previewPairs = extractPairsFromPreviewUrl(previewUrl);
 
     for (const circle of document.querySelectorAll("svg circle")) {
       const x = numericAttr(circle, ["cx"]);
@@ -107,6 +530,8 @@
       }
     }
 
+    extractOverlayKeypoints(points);
+
     const unique = [];
     const seen = new Set();
     for (const point of points) {
@@ -120,7 +545,45 @@
     return {
       keypoint_read_status: unique.length > 0 ? "available" : "unavailable",
       keypoints: unique,
+      store_status: storeStatus,
+      result_count: storeExtraction.result_count,
+      keypoint_sources: Array.from(new Set(unique.map((point) => point.source))).join(",") || "none",
+      preview_url_status: previewUrl ? "available" : "unavailable",
+      preview_url: previewUrl,
+      preview_pairs: previewPairs,
+      native_preview_status: findNativePreviewIframe() ? "available" : "unavailable",
+      preview_update_status: "not_run",
     };
+  }
+
+  function updatePreviewIframe(state) {
+    const iframe = findNativePreviewIframe() || ensureNativePreviewArea();
+    if (!iframe) return "native_preview_unavailable";
+    const pairs = state.preview_pairs?.length
+      ? state.preview_pairs
+      : buildPreviewPairs(state.keypoints, DEFAULT_WIDTH);
+    if (state.preview_url && state.preview_pairs?.length) {
+      return "native_preview_already_loaded";
+    }
+    if (!pairs.length) return "no_preview_pairs";
+    const imageUrl = findMainImage()?.src || getImageUrlFromStore();
+    const textureUrl = withCacheBust(rewriteTextureUrlForViewer(imageUrl));
+    iframe.contentWindow?.postMessage(
+      {
+        type: "update_layout",
+        corners: pairs,
+        baseCorners: pairs,
+        width: DEFAULT_WIDTH,
+        height: DEFAULT_HEIGHT,
+        imageUrl: textureUrl,
+        preserveOrder: true,
+        previewOrderActive: false,
+        previewOrder: pairs.map((_, index) => index),
+        previewSignature: String(Date.now()),
+      },
+      "*",
+    );
+    return "native_preview_update_sent";
   }
 
   function installStyles() {
@@ -180,21 +643,56 @@
 
   function renderPanel(state) {
     let panel = document.getElementById(PANEL_ID);
-    if (!panel) {
-      panel = document.createElement("aside");
-      panel.id = PANEL_ID;
-      panel.setAttribute("aria-label", "HOHONET Manhattan sandbox panel debug");
-      document.body.appendChild(panel);
+    if (panel) {
+      setText(`${PANEL_ID}-read-status`, state.keypoint_read_status);
+      setText(`${PANEL_ID}-keypoint-count`, state.keypoints.length);
+      setText(`${PANEL_ID}-store-status`, state.store_status);
+      setText(`${PANEL_ID}-result-count`, state.result_count);
+      setText(`${PANEL_ID}-keypoint-sources`, state.keypoint_sources);
+      setText(`${PANEL_ID}-preview-url-status`, state.preview_url_status);
+      setText(`${PANEL_ID}-native-preview-status`, state.native_preview_status);
+      setText(`${PANEL_ID}-preview-update-status`, state.preview_update_status);
+      setText(`${PANEL_ID}-viewer-base-url`, getViewerBaseUrl());
+      return;
     }
 
-    panel.innerHTML = "";
+    panel = document.createElement("aside");
+    panel.id = PANEL_ID;
+    panel.setAttribute("aria-label", "HOHONET Manhattan sandbox panel debug");
+    document.body.appendChild(panel);
+
     const title = document.createElement("h2");
     title.appendChild(text("Manhattan Sandbox Panel"));
     panel.appendChild(title);
     panel.appendChild(makeRow("script_variant", "debug"));
     panel.appendChild(makeRow("manhattan_panel_version", PANEL_VERSION));
-    panel.appendChild(makeRow("keypoint_read_status", state.keypoint_read_status));
-    panel.appendChild(makeRow("keypoint_count", state.keypoints.length));
+    panel.appendChild(makeMutableRow("keypoint_read_status", state.keypoint_read_status, `${PANEL_ID}-read-status`));
+    panel.appendChild(makeMutableRow("keypoint_count", state.keypoints.length, `${PANEL_ID}-keypoint-count`));
+    panel.appendChild(makeMutableRow("store_status", state.store_status, `${PANEL_ID}-store-status`));
+    panel.appendChild(makeMutableRow("result_count", state.result_count, `${PANEL_ID}-result-count`));
+    panel.appendChild(makeMutableRow("keypoint_sources", state.keypoint_sources, `${PANEL_ID}-keypoint-sources`));
+    panel.appendChild(makeMutableRow("preview_url_status", state.preview_url_status, `${PANEL_ID}-preview-url-status`));
+    panel.appendChild(makeMutableRow("native_preview_status", state.native_preview_status, `${PANEL_ID}-native-preview-status`));
+    panel.appendChild(makeMutableRow("preview_update_status", state.preview_update_status, `${PANEL_ID}-preview-update-status`));
+    panel.appendChild(makeMutableRow("viewer_base_url", getViewerBaseUrl(), `${PANEL_ID}-viewer-base-url`));
+
+    const controls = document.createElement("section");
+    controls.appendChild(document.createElement("h3")).appendChild(text("Controls"));
+    const refreshButton = document.createElement("button");
+    refreshButton.type = "button";
+    refreshButton.textContent = "Refresh 3D Preview";
+    refreshButton.addEventListener("click", function () {
+      const nextState = extractKeypointsFromDom();
+      nextState.preview_update_status = updatePreviewIframe(nextState);
+      renderPanel(nextState);
+    });
+    controls.appendChild(refreshButton);
+    panel.appendChild(controls);
+
+    const preview = document.createElement("section");
+    preview.appendChild(document.createElement("h3")).appendChild(text("3D Preview"));
+    preview.appendChild(text("Uses the existing page 3D Layout Preview only; no sandbox iframe is embedded."));
+    panel.appendChild(preview);
 
     const compatibility = document.createElement("section");
     compatibility.appendChild(document.createElement("h3")).appendChild(text("Compatibility"));
@@ -225,7 +723,13 @@
 
   function refresh() {
     installStyles();
-    renderPanel(extractKeypointsFromDom());
+    ensureNativePreviewArea();
+    const state = extractKeypointsFromDom();
+    renderPanel(state);
+    window.setTimeout(function () {
+      state.preview_update_status = updatePreviewIframe(state);
+      renderPanel(state);
+    }, 500);
   }
 
   if (document.readyState === "loading") {
@@ -233,4 +737,8 @@
   } else {
     refresh();
   }
+
+  window.setInterval(function () {
+    ensureNativePreviewArea();
+  }, 1500);
 })();
