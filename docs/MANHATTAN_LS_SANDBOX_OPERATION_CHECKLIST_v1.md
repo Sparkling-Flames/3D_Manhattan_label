@@ -117,3 +117,24 @@ M8 is ready only for limited sandbox operation testing if:
 - No annotation is modified.
 - No annotation is submitted.
 - No official userscript, view config, `vis_3d.html`, or `ls_3d_logic.js` file is changed.
+
+## 8. M8.2 Active-Log Audit
+
+After timed sandbox testing, run the read-only M8.2 active-log audit before using any sandbox telemetry for debugging notes:
+
+```bash
+python tools/audit_m8_sandbox_active_log.py --input active_logs/<active_time_log>.jsonl
+```
+
+Use `--output analysis_results/manhattan_geometry_diagnostic/m8_sandbox_active_log_audit_<date>.json` only when a saved smoke/probe audit sidecar is needed.
+
+The audit checks only whether M8 sandbox telemetry is correctly isolated from primary active_time. It does not validate the RQ1 primary estimand, does not modify logs, and does not read or modify `export_label/`.
+
+Treat any exclusion-tag failure as a blocker:
+
+- `exclude_from_primary_active_time=true`
+- `exclude_from_thesis_evidence=true`
+- `not_worker_facing=true`
+- `not_p1_c1_c2_t1_v1_artifact=true`
+
+Warnings such as missing legacy `session_id`, unknown identity fields, or heartbeat interval drift should be investigated, but they do not by themselves make sandbox telemetry part of thesis evidence.
