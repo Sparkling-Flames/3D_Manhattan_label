@@ -55,6 +55,7 @@ def test_both_scripts_have_required_guard_text():
             "preview_url_status",
             "native_preview_status",
             "preview_update_status",
+            "telemetry_status" if script == TIMED_SCRIPT else "keypoint_read_status",
             "Compatibility",
             "Residual",
             "Preview-only suggestion",
@@ -85,6 +86,12 @@ def test_timed_script_only_posts_sandbox_log_time_payload():
     assert 'method: "POST"' in text
     assert "}/log_time`" in text
     assert "X-HOHONET-TOKEN" in text
+    assert "HEARTBEAT_INTERVAL_MS = 15000" in text
+    assert "sendSandboxTelemetry(\"heartbeat\")" in text
+    assert "visibilitychange" in text
+    assert "visibility_hidden" in text
+    assert "pagehide" in text
+    assert "panel_unloaded" in text
     assert "XMLHttpRequest" not in text
     assert "PUT" not in text
     assert "PATCH" not in text
@@ -101,6 +108,34 @@ def test_timed_script_only_posts_sandbox_log_time_payload():
         "not_worker_facing: true",
         "not_p1_c1_c2_t1_v1_artifact: true",
         "manhattan_panel_version: PANEL_VERSION",
+        "task_id: getTaskId()",
+        "project_id: getProjectId()",
+        "project_name: getProjectName()",
+        "annotator_id: getAnnotatorId()",
+        "session_id: sessionId",
+        "page_type: getPageType()",
+        "active_seconds: activeSeconds",
+        "active_seconds_fragment: fragmentSeconds",
+        "telemetry_elapsed_seconds: activeSeconds",
+        "timestamp: nowMs",
+        'event: eventName',
+    ]:
+        assert required in text
+
+
+def test_timed_script_has_sandbox_telemetry_panel_diagnostics():
+    text = read(TIMED_SCRIPT)
+    for required in [
+        "telemetry_status",
+        "last_telemetry_event",
+        "last_telemetry_http_status",
+        "last_telemetry_error",
+        "heartbeat_interval_ms",
+        "telemetryState.status",
+        "telemetryState.lastHttpStatus",
+        "non_2xx_response",
+        "network_error",
+        "hohonet_m8_sandbox_session_id",
     ]:
         assert required in text
 
