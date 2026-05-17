@@ -46,12 +46,27 @@ def test_both_scripts_have_required_guard_text():
             "no formal g_t",
             "no P1/C1/C2/T1/V1 artifact",
             "__HOHONET_M8_SANDBOX_PANEL_ACTIVE__",
+            "window.top !== window.self",
             "keypoint_read_status",
             "keypoint_count",
+            "store_status",
+            "result_count",
+            "keypoint_sources",
+            "preview_url_status",
+            "native_preview_status",
+            "preview_update_status",
             "Compatibility",
             "Residual",
             "Preview-only suggestion",
             "Guardrails",
+            "Refresh 3D Preview",
+            "hohonet-iframe",
+            "hohonet-wrapper",
+            "hohonet-refresh-btn",
+            "update_layout",
+            "label-studio-store",
+            "findSectionContainer",
+            "ensureNativePreviewArea",
         ]:
             assert required in text
 
@@ -64,8 +79,12 @@ def test_debug_script_has_no_network_logging():
 
 def test_timed_script_only_posts_sandbox_log_time_payload():
     text = read(TIMED_SCRIPT)
-    assert 'fetch("/log_time"' in text
+    assert "http://175.178.71.217:8000" in text
+    assert "function logTimeUrl()" in text
+    assert "fetch(logTimeUrl()" in text
     assert 'method: "POST"' in text
+    assert "}/log_time`" in text
+    assert "X-HOHONET-TOKEN" in text
     assert "XMLHttpRequest" not in text
     assert "PUT" not in text
     assert "PATCH" not in text
@@ -102,6 +121,32 @@ def test_scripts_have_no_active_annotation_or_navigation_triggers():
             "correctness label:",
         ]:
             assert forbidden not in lowered
+
+
+def test_scripts_include_preview_refresh_without_porting_residual_logic():
+    for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
+        text = read(script)
+        assert "Refresh 3D Preview" in text
+        assert "panel.innerHTML" not in text
+        assert "hohonet-manhattan-sandbox-preview" not in text
+        assert "makeMutableRow" in text
+        assert "setText" in text
+        assert "getStore()" in text
+        assert "collectSelectedResults" in text
+        assert "buildPreviewPairs" in text
+        assert "getViewerBaseUrl()" in text
+        assert "tools/vis_3d.html" in text
+        assert "findExistingPreviewUrl" in text
+        assert "findNativePreviewIframe" in text
+        assert "ensureNativePreviewArea" in text
+        assert "hohonet-refresh-btn" in text
+        assert "hohonet-wrapper" in text
+        assert "extractPairsFromPreviewUrl" in text
+        assert "native_preview_update_sent" in text
+        assert "Uses the existing page 3D Layout Preview only" in text
+        assert "placeholder only; no residual calculator is embedded" in text
+        assert "snap_to_axis" not in text
+        assert "adjustment_vector" not in text
 
 
 def test_sandbox_import_has_required_task_tags():
