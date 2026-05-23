@@ -48,8 +48,16 @@
   const DEFAULT_HEIGHT = 512;
   const START_TIME_MS = Date.now();
   const HEARTBEAT_INTERVAL_MS = 15000;
+  const IDLE_THRESHOLD_MS = 15000;
+  const PAGE_HIDDEN_THRESHOLD_MS = 6000;
   const SESSION_STORAGE_KEY = "hohonet_m8_sandbox_session_id";
   let lastTelemetryMs = START_TIME_MS;
+  let activeSeconds = 0;
+  let lastTelemetryActiveSeconds = 0;
+  let lastActivityTime = 0;
+  let isPageVisible = !document.hidden;
+  let pageHiddenTime = null;
+  let lastHiddenDurationMs = 0;
   const telemetryState = {
     status: "not_sent",
     lastEvent: "none",
@@ -292,6 +300,10 @@
       Boolean(document.querySelector(".lsf-main-view, .ls-main-view"))
       ? "annotation"
       : "other";
+  }
+
+  function isLikelyAnnotationPage() {
+    return getPageType() === "annotation";
   }
 
   function toArrayFromMaybeObservable(value) {
@@ -721,16 +733,43 @@
     return Math.max(0, Math.round((nowMs - lastTelemetryMs) / 1000));
   }
 
+  function activeSecondsSinceLastTelemetry() {
+    return Math.max(0, activeSeconds - lastTelemetryActiveSeconds);
+  }
+
+  function lastActivityAgeMs(nowMs = Date.now()) {
+    return lastActivityTime > 0 ? Math.max(0, nowMs - lastActivityTime) : -1;
+  }
+
+  function activeTimerStatus(nowMs = Date.now()) {
+    if (!isPageVisible) return "hidden";
+    if (!isLikelyAnnotationPage()) return "non_annotation_page";
+    if (lastActivityTime <= 0) return "waiting_for_interaction";
+    if (nowMs - lastActivityTime >= IDLE_THRESHOLD_MS) return "idle";
+    return "active";
+  }
+
+  function updateActivityTimerPanel() {
+    const nowMs = Date.now();
+    setText(`${PANEL_ID}-active-timer-status`, activeTimerStatus(nowMs));
+    setText(`${PANEL_ID}-active-seconds`, activeSeconds);
+    setText(`${PANEL_ID}-active-seconds-fragment`, activeSecondsSinceLastTelemetry());
+    setText(`${PANEL_ID}-last-activity-age-ms`, lastActivityAgeMs(nowMs));
+    setText(`${PANEL_ID}-page-visible-status`, isPageVisible ? "visible" : "hidden");
+    setText(`${PANEL_ID}-last-hidden-duration-ms`, lastHiddenDurationMs);
+  }
+
   function updateTelemetryPanel() {
     setText(`${PANEL_ID}-telemetry-status`, telemetryState.status);
     setText(`${PANEL_ID}-last-telemetry-event`, telemetryState.lastEvent);
     setText(`${PANEL_ID}-last-telemetry-http-status`, telemetryState.lastHttpStatus);
     setText(`${PANEL_ID}-last-telemetry-error`, telemetryState.lastError);
+    updateActivityTimerPanel();
   }
 
   function sandboxTelemetryPayload(eventName, nowMs = Date.now()) {
-    const activeSeconds = secondsSinceStart();
-    const fragmentSeconds = secondsSinceLastTelemetry(nowMs);
+    const activeSecondsFragment = activeSecondsSinceLastTelemetry();
+    const telemetryElapsedSeconds = secondsSinceStart();
     return {
       task_id: getTaskId(),
       project_id: getProjectId(),
@@ -739,10 +778,10 @@
       session_id: sessionId,
       page_type: getPageType(),
       active_seconds: activeSeconds,
-      active_seconds_fragment: fragmentSeconds,
+      active_seconds_fragment: activeSecondsFragment,
       timestamp: nowMs,
       event: eventName,
-      telemetry_elapsed_seconds: activeSeconds,
+      telemetry_elapsed_seconds: telemetryElapsedSeconds,
       elapsed_ms: nowMs - START_TIME_MS,
       page_url: window.location.href,
       log_context: "manhattan_ls_sandbox",
@@ -762,6 +801,7 @@
     const token = getLogToken();
     const nowMs = Date.now();
     const payload = sandboxTelemetryPayload(eventName, nowMs);
+    lastTelemetryActiveSeconds = activeSeconds;
     telemetryState.status = "sending";
     telemetryState.lastEvent = eventName;
     telemetryState.lastHttpStatus = "pending";
@@ -791,6 +831,31 @@
         updateTelemetryPanel();
       // Sandbox telemetry failure must not interrupt annotation or panel display.
       });
+  }
+
+  function recordUserActivity() {
+    if (isPageVisible) {
+      lastActivityTime = Date.now();
+      updateActivityTimerPanel();
+    }
+  }
+
+  function installActiveStateTracking() {
+    ["mousemove", "keydown", "click", "scroll", "wheel"].forEach(function (eventName) {
+      window.addEventListener(eventName, recordUserActivity, true);
+    });
+    window.setInterval(function () {
+      const nowMs = Date.now();
+      if (
+        isPageVisible &&
+        isLikelyAnnotationPage() &&
+        lastActivityTime > 0 &&
+        nowMs - lastActivityTime < IDLE_THRESHOLD_MS
+      ) {
+        activeSeconds += 1;
+      }
+      updateActivityTimerPanel();
+    }, 1000);
   }
 
   function installStyles() {
@@ -862,6 +927,7 @@
       setText(`${PANEL_ID}-viewer-base-url`, getViewerBaseUrl());
       setText(`${PANEL_ID}-log-time-url`, logTimeUrl());
       updateTelemetryPanel();
+      updateActivityTimerPanel();
       return;
     }
 
@@ -891,6 +957,12 @@
     panel.appendChild(makeMutableRow("last_telemetry_http_status", telemetryState.lastHttpStatus, `${PANEL_ID}-last-telemetry-http-status`));
     panel.appendChild(makeMutableRow("last_telemetry_error", telemetryState.lastError, `${PANEL_ID}-last-telemetry-error`));
     panel.appendChild(makeRow("heartbeat_interval_ms", HEARTBEAT_INTERVAL_MS));
+    panel.appendChild(makeMutableRow("active_timer_status", activeTimerStatus(), `${PANEL_ID}-active-timer-status`));
+    panel.appendChild(makeMutableRow("active_seconds", activeSeconds, `${PANEL_ID}-active-seconds`));
+    panel.appendChild(makeMutableRow("active_seconds_fragment", activeSecondsSinceLastTelemetry(), `${PANEL_ID}-active-seconds-fragment`));
+    panel.appendChild(makeMutableRow("last_activity_age_ms", lastActivityAgeMs(), `${PANEL_ID}-last-activity-age-ms`));
+    panel.appendChild(makeMutableRow("page_visible_status", isPageVisible ? "visible" : "hidden", `${PANEL_ID}-page-visible-status`));
+    panel.appendChild(makeMutableRow("last_hidden_duration_ms", lastHiddenDurationMs, `${PANEL_ID}-last-hidden-duration-ms`));
 
     const controls = document.createElement("section");
     controls.appendChild(document.createElement("h3")).appendChild(text("Controls"));
@@ -958,13 +1030,27 @@
     ensureNativePreviewArea();
   }, 1500);
 
+  installActiveStateTracking();
   sendSandboxTelemetry("panel_loaded");
   window.setInterval(function () {
     sendSandboxTelemetry("heartbeat");
   }, HEARTBEAT_INTERVAL_MS);
   document.addEventListener("visibilitychange", function () {
     if (document.visibilityState === "hidden") {
+      pageHiddenTime = Date.now();
+      isPageVisible = false;
       sendSandboxTelemetry("visibility_hidden");
+      updateActivityTimerPanel();
+    } else {
+      if (pageHiddenTime !== null) {
+        lastHiddenDurationMs = Date.now() - pageHiddenTime;
+        if (lastHiddenDurationMs >= PAGE_HIDDEN_THRESHOLD_MS) {
+          lastActivityTime = 0;
+        }
+      }
+      pageHiddenTime = null;
+      isPageVisible = true;
+      updateActivityTimerPanel();
     }
   });
   window.addEventListener("pagehide", function () {

@@ -115,12 +115,33 @@ def test_timed_script_only_posts_sandbox_log_time_payload():
         "session_id: sessionId",
         "page_type: getPageType()",
         "active_seconds: activeSeconds",
-        "active_seconds_fragment: fragmentSeconds",
-        "telemetry_elapsed_seconds: activeSeconds",
+        "active_seconds_fragment: activeSecondsFragment",
+        "telemetry_elapsed_seconds: telemetryElapsedSeconds",
         "timestamp: nowMs",
         'event: eventName',
     ]:
         assert required in text
+
+
+def test_timed_script_uses_official_active_state_rules():
+    text = read(TIMED_SCRIPT)
+    for required in [
+        "IDLE_THRESHOLD_MS = 15000",
+        "PAGE_HIDDEN_THRESHOLD_MS = 6000",
+        "let lastActivityTime = 0",
+        "let isPageVisible = !document.hidden",
+        "let pageHiddenTime = null",
+        "nowMs - lastActivityTime < IDLE_THRESHOLD_MS",
+        "isLikelyAnnotationPage()",
+        "lastActivityTime > 0",
+        "isPageVisible &&",
+        "activeSeconds += 1",
+        "lastActivityTime = 0",
+    ]:
+        assert required in text
+
+    for event_name in ["mousemove", "keydown", "click", "scroll", "wheel"]:
+        assert f'"{event_name}"' in text
 
 
 def test_timed_script_has_sandbox_telemetry_panel_diagnostics():
@@ -136,6 +157,14 @@ def test_timed_script_has_sandbox_telemetry_panel_diagnostics():
         "non_2xx_response",
         "network_error",
         "hohonet_m8_sandbox_session_id",
+        "active_timer_status",
+        "active_seconds",
+        "active_seconds_fragment",
+        "last_activity_age_ms",
+        "page_visible_status",
+        "last_hidden_duration_ms",
+        "activeTimerStatus",
+        "updateActivityTimerPanel",
     ]:
         assert required in text
 

@@ -27,7 +27,7 @@
         <!-- 选项卡片化设计 -->
         <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
           <Header value="1. 范围判定 (Scope)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
-          <Text name="scope_rule_text" value="总规则：先判断相机所在主房间的外包络，能否在不猜测的情况下形成唯一、可复现的闭合；若不能，再判断属于哪一类 OOS。" style="display:block; margin: 0 0 6px 0; color:#666; font-size:12px;"/>
+          <Text name="scope_rule_text" value="总规则：先判断相机所在主房间的外包络，能否在不猜测的情况下形成唯一、可复现的闭合；若不能，再判断属于哪一类 OOS。 / General rule: first decide whether the camera room has a unique and reproducible enclosed boundary. If it cannot be closed without guessing, choose the best OOS reason. Even for OOS cases, complete any required geometry fields and use Scope as the authoritative OOS signal." style="display:block; margin: 0 0 6px 0; color:#666; font-size:12px;"/>
           <Choices name="scope" toName="img" showInLine="true" choice="single" required="true" requiredMessage="Scope 必须选择 1 项">
           <Choice value="In-scope：只标相机房间 (Normal / Camera room only)" alias="normal" hint="主指标纳入。
 只标相机所在主房间，不跨门洞或相邻空间。
@@ -53,7 +53,7 @@
 
         <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
           <Header value="2. 困难因素 (Difficulty)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
-          <Text name="difficulty_rule_text" value="填写规则：必须至少选择 1 项。若选择 &quot;trivial&quot;（非常简单），则不得同时选择其它困难标签；若存在任意困难因素，请不要选 trivial。" style="display:block; margin: 0 0 6px 0; color:#666; font-size:12px;" />
+          <Text name="difficulty_rule_text" value="填写规则：必须至少选择 1 项。若选择 &quot;trivial&quot;（非常简单），则不得同时选择其它困难标签；若存在任意困难因素，请不要选 trivial。 / Rule: select at least one option. If you choose &quot;trivial&quot;, do not select any other difficulty label; if any real difficulty exists, do not choose trivial." style="display:block; margin: 0 0 6px 0; color:#666; font-size:12px;" />
           <Choices name="difficulty" toName="img" showInLine="true" choice="multiple" required="true" requiredMessage="Difficulty 必须至少选择 1 项">
             <Choice value="非常简单 (Trivial)" alias="trivial" hint="场景简单、几何清晰、无遮挡无干扰，标注几乎无困难"/>
             <Choice value="遮挡明显 (Occlusion)" alias="occlusion" hint="局部关键几何证据被挡住。家具、门扇、墙垛、前景墙体或其他结构都可造成遮挡。若只是局部被挡、但主房间外包络仍唯一闭合，归入本项；只有当主包络本身无法可复现闭合时，才考虑 oos_insufficient。"/>

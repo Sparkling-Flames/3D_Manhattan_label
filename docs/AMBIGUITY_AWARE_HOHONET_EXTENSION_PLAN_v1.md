@@ -722,14 +722,14 @@ L = L_layout_enc
 
 ### 5.4 标签可用性矩阵
 
-| 样本类型 | `L_layout_enc` | `L_amb` | `L_over` | 备注 |
-|---|---:|---:|---:|---|
-| 人工裁决的 enclosed-only | yes | no，除非已有 mask | 若复核过，可作为可选负样本 | 干净的 enclosed 监督 |
-| enclosed + extended 配对标签 | yes | yes | yes | 最强的辅助监督 |
-| 只有原始 extended | no | 只有在 proposal 被复核时才弱用 | 弱 / 可选 | 不是干净的 enclosed 监督 |
-| 经过审计 proposal 的 Bi-Layout 风格 relabeled enclosed | yes | 若保留 extended 参考则 yes | 若已裁决风险则 yes | 对 opening ambiguity 有用 |
-| 只有 proposal、无人批准的候选 | no 或弱用 | 仅弱用 | 仅弱用 | 不应驱动主目标 |
-| A 线 P1/C1/C2/T1/V1 的正式数据 | no | no | no | 不得用 A 线结果训练或调 Paper B |
+| 样本类型                                               | `L_layout_enc` |                        `L_amb` |                   `L_over` | 备注                            |
+| ------------------------------------------------------ | -------------: | -----------------------------: | -------------------------: | ------------------------------- |
+| 人工裁决的 enclosed-only                               |            yes |              no，除非已有 mask | 若复核过，可作为可选负样本 | 干净的 enclosed 监督            |
+| enclosed + extended 配对标签                           |            yes |                            yes |                        yes | 最强的辅助监督                  |
+| 只有原始 extended                                      |             no | 只有在 proposal 被复核时才弱用 |                  弱 / 可选 | 不是干净的 enclosed 监督        |
+| 经过审计 proposal 的 Bi-Layout 风格 relabeled enclosed |            yes |     若保留 extended 参考则 yes |         若已裁决风险则 yes | 对 opening ambiguity 有用       |
+| 只有 proposal、无人批准的候选                          |      no 或弱用 |                         仅弱用 |                     仅弱用 | 不应驱动主目标                  |
+| A 线 P1/C1/C2/T1/V1 的正式数据                         |             no |                             no |                         no | 不得用 A 线结果训练或调 Paper B |
 
 ## 6. Paper B 的评估指标
 

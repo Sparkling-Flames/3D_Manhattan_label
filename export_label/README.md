@@ -1,3 +1,7 @@
+Ground Truth个别task有两个版本的export label,一般是一个原作者的标注,一个是我修改后的标注.出现这种情况一般是:
+1.我修改标注后,也没有觉得特别好,但是原作者标的也不好的情况
+2.原作者是标了一种情况(一般是extended),但是我又标了enclosed的,两者呈现的效果都很好
+
 # `export_label/` README
 
 This directory stores Label Studio export JSON snapshots.
