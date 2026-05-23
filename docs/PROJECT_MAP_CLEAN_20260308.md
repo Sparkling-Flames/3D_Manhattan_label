@@ -59,6 +59,8 @@
   - 正式运行入口
 - `docs/`
   - 正式说明文档
+- `foreign_recruitment/`
+  - 外国招募人员专用 HTTPS / 英文 Stage 1 标注包；隔离于当前中文 P1 入口，不修改 frozen import JSON 或正式协议边界
 - `import_json/`
   - 导入 JSON 与 planned split
 - `export_label/`
@@ -186,25 +188,28 @@
   - `lead_time` / `active_time` 对照
 - `tools/meta_label_guard.py`
   - 导出字段合规兜底
-
-### Label Studio 前端链路
+### Label Studio frontend chain
 
 - `tools/official/ls_userscript_annotator.js`
-  - 正式标注员脚本
+  - Official Chinese annotator helper.
+- `foreign_recruitment/ls_userscript_annotator_https_en.user.js`
+  - Foreign HTTPS English helper. Matches only `https://label.sparkle0825.top/*`, defaults helper/viewer/log URLs to same-origin, and captures optional CloudResearch / worker IDs; it does not replace or modify the official Chinese helper.
+- `foreign_recruitment/ls_userscript_annotator_https_en_debug.user.js`
+  - Foreign HTTPS English debug helper. Same target path and payload contract as the normal foreign helper, but the debug panel is enabled by default; do not enable both foreign helper scripts at once.
 - `tools/official/ls_userscript_debug.js`
-  - 调试脚本
+  - Official debug helper.
 - `tools/label_studio_view_config.xml`
-  - 主用 LS 界面配置
+  - Main Label Studio view config.
 - `tools/label_studio_view_config_manual.xml`
-  - 手工条件变体
+  - Manual-condition Label Studio view config.
 - `tools/vis_3d.html`
-  - 3D 预览页面
+  - 3D preview page.
 - `tools/ls_3d_logic.js`
-  - 3D 逻辑辅助文件
+  - 3D logic helper.
 - `tools/three.min.js`
-  - 3D 依赖
+  - 3D dependency.
 - `tools/OrbitControls.js`
-  - 3D 交互依赖
+  - 3D interaction dependency.
 
 ### 辅助但仍在用
 
@@ -386,6 +391,8 @@
 - `tests/test_compute_dt_score.py`
 - `tests/test_compute_g_t_diagnostics.py`
 - `tests/test_compute_mgeo_diagnostic.py`
+- `tests/test_foreign_recruitment_userscript_static.py`
+  - 外国 HTTPS 标注包的静态护栏测试：检查域名匹配、同源 HTTPS 默认地址、CloudResearch id 捕获、英文文档 active-time / project-scope 提醒。
 ### Experiment-outside / post-hoc Manhattan toolchain tests
 
 - `tests/test_manhattan_preview_compat.py`

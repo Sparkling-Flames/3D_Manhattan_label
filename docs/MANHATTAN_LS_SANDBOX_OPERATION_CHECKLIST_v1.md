@@ -138,3 +138,17 @@ Treat any exclusion-tag failure as a blocker:
 - `not_p1_c1_c2_t1_v1_artifact=true`
 
 Warnings such as missing legacy `session_id`, unknown identity fields, or heartbeat interval drift should be investigated, but they do not by themselves make sandbox telemetry part of thesis evidence.
+
+## 9. M8.3 Timed Sandbox Active-State Parity
+
+The timed sandbox script must keep sandbox telemetry excluded from primary active_time while matching the official active-state counting rule as closely as possible:
+
+- Count sandbox `active_seconds` only when the page is visible.
+- Count only on an annotation page.
+- Require a real interaction within the last 15 seconds: `mousemove`, `keydown`, `click`, `scroll`, or `wheel`.
+- Stop counting while the page is hidden.
+- If the page is hidden for at least 6 seconds, require a new real interaction before counting resumes.
+- Continue sending heartbeat telemetry every 15 seconds, but report activity-gated `active_seconds` and `active_seconds_fragment`, not wall-clock page time.
+- Keep `telemetry_elapsed_seconds` as a separate wall-clock diagnostic field for sandbox telemetry only.
+
+M8.3 still does not authorize meta-label guard behavior, draggable corner-order UI, snap coordinates, adjustment vectors, auto-correction, correctness labels, worker-tier labels, routing decisions, formal `g_t`, or `P1/C1/C2/T1/V1` artifacts.
