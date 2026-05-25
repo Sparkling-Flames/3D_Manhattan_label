@@ -227,3 +227,22 @@ M11 keeps the same sandbox-only behavior and improves only readability / usabili
 - Highlight the active pair row.
 - Keep previous / next, swap, reset, and show / hide overlay controls visible and legible.
 - Do not add geometry algorithms, coordinate suggestions, next-corner prediction, snap, auto-correction, annotation writeback, routing, worker-tier labels, correctness labels, formal `g_t`, or `P1/C1/C2/T1/V1` artifacts.
+
+## 15. M12 Direction-Only Hint
+
+M12 adds a compact `Direction-only hint` section to the dev-only sandbox panel. It reuses the M10 diagnosis and residuals; it does not introduce a new geometry model.
+
+Allowed M12 fields:
+
+- `hint_status`
+- `hint_component`
+- `affected_pair_index`
+- `direction_hint`
+- `alternative_anchor_hint`
+- `hint_guardrail`
+
+The hint may say which direction would reduce the dominant residual using conservative wording such as "inspect", "would reduce this residual", and "choose by visual evidence". It may highlight the affected pair in the preview-order panel and the visible 2D order overlay label. This highlight is preview-only: it must not reorder pairs, move points, write annotations, submit annotations, or change Label Studio data.
+
+Timed sandbox telemetry may include only coarse hint fields: `preview_only_hint_component`, `preview_only_affected_pair_index`, and `preview_only_direction_hint_type`. It must not send keypoint coordinates, target coordinates, adjustment vectors, or corrected annotations.
+
+M12 remains dev-only and sandbox-only. It is not worker-facing, not correctness, not worker quality, not routing, not formal `g_t`, and not a `P1/C1/C2/T1/V1` artifact.
