@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HOHONET Manhattan LS Sandbox Panel Timed
 // @namespace    hohonet-dev-only
-// @version      0.1.0
+// @version      m10.1-dev-only-timed-0.1.0
 // @description  dev-only sandbox-only read-only Manhattan panel; timed variant with sandbox-excluded active_time telemetry.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
@@ -40,7 +40,7 @@
   window[WINDOW_GUARD] = { script_variant: "timed" };
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const PANEL_VERSION = "m8-dev-only-timed-0.1.0";
+  const PANEL_VERSION = "m10.1-dev-only-timed-0.1.0";
   const OFFICIAL_IFRAME_ID = "hohonet-iframe";
   const OFFICIAL_WRAPPER_ID = "hohonet-wrapper";
   const OFFICIAL_BUTTON_ID = "hohonet-refresh-btn";
@@ -1330,6 +1330,10 @@
   function updatePreviewOrderPanelUi() {
     setText(`${PREVIEW_PANEL_ID}-slot`, currentPreviewBasePairs.length ? `${currentPreviewSelectedPairIndex + 1} / ${currentPreviewBasePairs.length}` : "-- / --");
     setText(`${PREVIEW_PANEL_STATUS_ID}`, currentPreviewBasePairs.length ? "sandbox preview-order override active; preview-only, no annotation writeback" : "no preview pairs available");
+    setText(
+      `${PREVIEW_PANEL_ID}-order`,
+      currentPreviewOrder.length ? currentPreviewOrder.map((index) => index + 1).join(" -> ") : "none",
+    );
     const pairInput = document.getElementById(PREVIEW_PANEL_PAIR_INPUT_ID);
     if (pairInput && document.activeElement !== pairInput) pairInput.value = String(currentPreviewSelectedPairIndex + 1);
     const swapInput = document.getElementById(PREVIEW_PANEL_SWAP_INPUT_ID);
@@ -1374,7 +1378,7 @@
     panel = document.createElement("div");
     panel.id = PREVIEW_PANEL_ID;
     panel.style.cssText =
-      "position:fixed;z-index:2147483646;right:370px;bottom:12px;width:282px;color:#f4f7fb;background:rgba(40,44,50,0.92);border:1px solid rgba(255,255,255,0.16);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,0.24);font:12px/1.4 system-ui,sans-serif;overflow:hidden;";
+      "position:fixed;z-index:2147483646;right:370px;bottom:12px;width:282px;color:#f4f7fb;background:rgba(40,44,50,0.86);border:1px solid rgba(255,255,255,0.10);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,0.22);font:12px/1.4 system-ui,sans-serif;overflow:hidden;backdrop-filter:blur(14px);";
     try {
       const saved = JSON.parse(window.localStorage.getItem(PREVIEW_PANEL_POSITION_KEY) || "null");
       if (saved?.left && saved?.top) {
@@ -1386,16 +1390,19 @@
     } catch (e) {}
     const header = document.createElement("div");
     header.id = PREVIEW_PANEL_HEADER_ID;
-    header.style.cssText = "display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;cursor:move;background:rgba(255,255,255,0.08);";
+    header.style.cssText = "display:flex;align-items:center;justify-content:space-between;gap:8px;padding:8px 10px;cursor:move;user-select:none;background:linear-gradient(180deg,rgba(255,255,255,0.07),rgba(255,255,255,0.025));border-bottom:1px solid rgba(255,255,255,0.08);";
     const title = document.createElement("div");
-    title.innerHTML = `<strong>Preview order</strong><br><span id="${PREVIEW_PANEL_ID}-slot">-- / --</span>`;
+    title.innerHTML = `<div class="hp-title" style="font-size:13px;font-weight:800;">Preview order</div><div id="${PREVIEW_PANEL_ID}-slot" class="hp-slot" style="font-size:11px;color:#d9e2ec;">-- / --</div>`;
     const collapse = document.createElement("button");
     collapse.type = "button";
     collapse.textContent = "Hide";
+    collapse.className = "hp-toggle";
+    collapse.style.cssText = "border:none;border-radius:7px;padding:4px 7px;background:rgba(255,255,255,0.12);color:white;cursor:pointer;font-size:11px;font-weight:700;";
     collapse.addEventListener("click", () => {
       const body = document.getElementById(`${PREVIEW_PANEL_ID}-body`);
       const collapsed = body.style.display !== "none";
       body.style.display = collapsed ? "none" : "block";
+      panel.dataset.collapsed = collapsed ? "1" : "0";
       panel.style.width = collapsed ? "174px" : "282px";
       panel.style.maxHeight = collapsed ? "44px" : "";
       collapse.textContent = collapsed ? "Show" : "Hide";
@@ -1405,14 +1412,28 @@
     const body = document.createElement("div");
     body.id = `${PREVIEW_PANEL_ID}-body`;
     body.style.cssText = "padding:9px 10px 10px;";
-    body.appendChild(makeMutableRow("status", "no preview pairs available", PREVIEW_PANEL_STATUS_ID));
-    body.appendChild(text("Preview-only order controls. No annotation writeback."));
+    const note = document.createElement("div");
+    note.className = "hp-note";
+    note.style.cssText = "color:#d6deea;margin-bottom:5px;font-size:11px;line-height:1.38;";
+    note.textContent = "Preview-only order controls. No annotation writeback.";
+    const status = document.createElement("div");
+    status.id = PREVIEW_PANEL_STATUS_ID;
+    status.className = "hp-status";
+    status.style.cssText = "color:#9fd0ff;margin-bottom:7px;font-size:11px;line-height:1.38;";
+    status.textContent = "no preview pairs available";
+    body.appendChild(note);
+    body.appendChild(status);
+    const orderSection = document.createElement("div");
+    orderSection.className = "hp-section";
+    orderSection.style.cssText = "margin-top:7px;";
+    orderSection.innerHTML = `<div class="hp-label" style="margin-bottom:4px;font-size:10px;font-weight:700;letter-spacing:0.04em;color:#9aa8b8;text-transform:uppercase;">Current order</div><div id="${PREVIEW_PANEL_ID}-order" class="hp-row" style="display:flex;flex-wrap:wrap;align-items:center;gap:5px;color:#f4f7fb;">none</div>`;
+    body.appendChild(orderSection);
     const pairInput = document.createElement("input");
     pairInput.id = PREVIEW_PANEL_PAIR_INPUT_ID;
     pairInput.type = "number";
     pairInput.min = "1";
     pairInput.step = "1";
-    pairInput.style.width = "52px";
+    pairInput.style.cssText = "width:54px;padding:4px 6px;border-radius:7px;border:1px solid #415067;background:rgba(11,17,24,0.85);color:white;font-size:12px;";
     pairInput.addEventListener("change", () => {
       const next = Number(pairInput.value) - 1;
       if (Number.isInteger(next) && next >= 0 && next < currentPreviewBasePairs.length) {
@@ -1423,6 +1444,7 @@
     const prev = document.createElement("button");
     prev.type = "button";
     prev.textContent = "Prev pair";
+    prev.style.cssText = "border:none;border-radius:7px;padding:5px 8px;color:white;background:#5e6a7a;cursor:pointer;font-weight:700;font-size:12px;";
     prev.addEventListener("click", () => {
       currentPreviewSelectedPairIndex = Math.max(0, currentPreviewSelectedPairIndex - 1);
       updatePreviewOrderPanelUi();
@@ -1430,6 +1452,7 @@
     const next = document.createElement("button");
     next.type = "button";
     next.textContent = "Next pair";
+    next.style.cssText = "border:none;border-radius:7px;padding:5px 8px;color:white;background:#5e6a7a;cursor:pointer;font-weight:700;font-size:12px;";
     next.addEventListener("click", () => {
       currentPreviewSelectedPairIndex = Math.min(currentPreviewBasePairs.length - 1, currentPreviewSelectedPairIndex + 1);
       updatePreviewOrderPanelUi();
@@ -1439,10 +1462,11 @@
     swapInput.type = "number";
     swapInput.min = "1";
     swapInput.step = "1";
-    swapInput.style.width = "52px";
+    swapInput.style.cssText = "width:54px;padding:4px 6px;border-radius:7px;border:1px solid #415067;background:rgba(11,17,24,0.85);color:white;font-size:12px;";
     const swap = document.createElement("button");
     swap.type = "button";
     swap.textContent = "Swap";
+    swap.style.cssText = "border:none;border-radius:7px;padding:5px 8px;color:white;background:#5e6a7a;cursor:pointer;font-weight:700;font-size:12px;";
     swap.addEventListener("click", () => {
       const target = Number(swapInput.value) - 1;
       if (Number.isInteger(target)) swapPreviewPairs(currentPreviewSelectedPairIndex, target);
@@ -1450,14 +1474,42 @@
     const reset = document.createElement("button");
     reset.type = "button";
     reset.textContent = "Reset preview order";
+    reset.style.cssText = "border:none;border-radius:7px;padding:5px 8px;color:white;background:#5e6a7a;cursor:pointer;font-weight:700;font-size:12px;";
     reset.addEventListener("click", () => {
       currentPreviewOrder = currentPreviewBasePairs.map((_, index) => index);
       currentPreviewSelectedPairIndex = 0;
       sendPreviewOrderToIframe();
     });
-    for (const node of [document.createElement("br"), text("Jump to pair "), pairInput, text(" "), prev, next, document.createElement("br"), text("Swap with pair "), swapInput, text(" "), swap, document.createElement("br"), reset]) {
-      body.appendChild(node);
-    }
+    const locateSection = document.createElement("div");
+    locateSection.className = "hp-section";
+    locateSection.style.cssText = "margin-top:7px;";
+    locateSection.innerHTML = `<div class="hp-label" style="margin-bottom:4px;font-size:10px;font-weight:700;letter-spacing:0.04em;color:#9aa8b8;text-transform:uppercase;">Active pair</div>`;
+    const locateRow = document.createElement("div");
+    locateRow.className = "hp-row";
+    locateRow.style.cssText = "display:flex;flex-wrap:wrap;align-items:center;gap:5px;";
+    locateRow.appendChild(text("Pair "));
+    locateRow.appendChild(pairInput);
+    locateRow.appendChild(prev);
+    locateRow.appendChild(next);
+    locateSection.appendChild(locateRow);
+    const swapSection = document.createElement("div");
+    swapSection.className = "hp-section";
+    swapSection.style.cssText = "margin-top:7px;";
+    swapSection.innerHTML = `<div class="hp-label" style="margin-bottom:4px;font-size:10px;font-weight:700;letter-spacing:0.04em;color:#9aa8b8;text-transform:uppercase;">Swap order</div>`;
+    const swapRow = document.createElement("div");
+    swapRow.className = "hp-row";
+    swapRow.style.cssText = "display:flex;flex-wrap:wrap;align-items:center;gap:5px;";
+    swapRow.appendChild(text("With "));
+    swapRow.appendChild(swapInput);
+    swapRow.appendChild(swap);
+    swapSection.appendChild(swapRow);
+    const resetSection = document.createElement("div");
+    resetSection.className = "hp-section";
+    resetSection.style.cssText = "margin-top:7px;";
+    resetSection.appendChild(reset);
+    body.appendChild(locateSection);
+    body.appendChild(swapSection);
+    body.appendChild(resetSection);
     panel.appendChild(header);
     panel.appendChild(body);
     document.body.appendChild(panel);
@@ -1562,6 +1614,7 @@
       preview_only_manhattan_compatibility_status: deviation.compatibility_status,
       preview_only_primary_issue_type: deviation.primary_issue_type,
       preview_only_primary_issue_severity: deviation.primary_issue_severity,
+      preview_order_visible: getLabelsVisible(),
       not_correctness: true,
       no_writeback: true,
       elapsed_ms: nowMs - START_TIME_MS,
@@ -1771,12 +1824,12 @@
 
     const compatibility = document.createElement("section");
     compatibility.appendChild(document.createElement("h3")).appendChild(text("Compatibility"));
-    compatibility.appendChild(text("placeholder only; no Python logic is ported in M8.1"));
+    compatibility.appendChild(text("Python parity checker is not embedded; sandbox JS preview compatibility is used for the deviation section below."));
     panel.appendChild(compatibility);
 
     const residual = document.createElement("section");
     residual.appendChild(document.createElement("h3")).appendChild(text("Residual"));
-    residual.appendChild(text("placeholder only; no residual calculator is embedded"));
+    residual.appendChild(text("Python residual calculator is not embedded; sandbox JS residuals are shown in the Manhattan deviation section below."));
     panel.appendChild(residual);
 
     const meta = document.createElement("section");
