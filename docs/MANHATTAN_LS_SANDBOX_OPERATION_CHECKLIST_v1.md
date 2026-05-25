@@ -151,7 +151,7 @@ The timed sandbox script must keep sandbox telemetry excluded from primary activ
 - Continue sending heartbeat telemetry every 15 seconds, but report activity-gated `active_seconds` and `active_seconds_fragment`, not wall-clock page time.
 - Keep `telemetry_elapsed_seconds` as a separate wall-clock diagnostic field for sandbox telemetry only.
 
-M8.3 still does not authorize meta-label guard behavior, draggable corner-order UI, snap coordinates, adjustment vectors, auto-correction, correctness labels, worker-tier labels, routing decisions, formal `g_t`, or `P1/C1/C2/T1/V1` artifacts.
+M8.3 still does not authorize snap coordinates, adjustment vectors, auto-correction, correctness labels, worker-tier labels, routing decisions, formal `g_t`, or `P1/C1/C2/T1/V1` artifacts.
 
 ## 10. M9 Manhattan Deviation Display
 
@@ -171,3 +171,40 @@ Allowed M9 fields:
 - explicit unavailable / exclusion reason
 
 M9 scores are preview-only geometry diagnostics. They are not correctness labels, not worker quality labels, not snap coordinates, not next corner prediction, not annotation writeback, not routing inputs, not formal `g_t`, and not `P1/C1/C2/T1/V1` artifacts.
+
+## 11. M10 Direction-Only Manhattan Diagnosis
+
+The dev-only sandbox panel may display a `Manhattan diagnosis` section for expert / developer testing only.
+
+Allowed M10 fields:
+
+- `primary_issue_type`
+- `primary_issue_severity`
+- `primary_issue_explanation`
+- `affected_pair_index`
+- `affected_wall_index`
+- `pair_x_alignment_summary`
+- `ceiling_alignment_summary`
+- `floor_alignment_summary`
+- `wall_height_summary`
+
+`primary_issue_type` is selected from the largest normalized preview residual component:
+
+- `pair_x_alignment = vertical_pair_x_residual / width`
+- `ceiling_alignment = ceiling_y_range / height`
+- `floor_alignment = floor_y_range / height`
+- `wall_height_consistency = wall_height_range / height`
+
+The explanation must be direction-only. It may say which pair or wall is most likely responsible for visible preview distortion and may use words such as left/right, above/below, or larger/smaller. It must not output target coordinates, delta-x / delta-y adjustment instructions, snap coordinates, next-corner prediction, automatic correction, annotation writeback, correctness labels, worker-tier labels, routing decisions, formal `g_t`, or `P1/C1/C2/T1/V1` artifacts.
+
+Timed sandbox telemetry may include only `preview_only_primary_issue_type` and `preview_only_primary_issue_severity` for M10 diagnosis. It must not send keypoint coordinates, target coordinates, or adjustment vectors.
+
+## 12. Sandbox-Only Meta Guard And Preview-Order Controls
+
+For sandbox operation only, the dev-only scripts may mirror the official helper's operational ergonomics:
+
+- A best-effort sandbox meta-label guard checks the same mutually exclusive rules: `trivial` must not coexist with non-trivial difficulty labels, and `acceptable` must not coexist with other `model_issue` labels.
+- The guard may block an invalid sandbox submit/update attempt, but it must not submit anything itself and must not write annotation payloads.
+- A draggable preview-order panel may reorder only the current 3D preview and corner-order overlay.
+- A show/hide corner-order button may toggle the overlay labels only.
+- Preview-order controls are local sandbox UI aids. They are not annotation edits, not saved formal artifacts, not routing inputs, not formal `g_t`, and not `P1/C1/C2/T1/V1` artifacts.

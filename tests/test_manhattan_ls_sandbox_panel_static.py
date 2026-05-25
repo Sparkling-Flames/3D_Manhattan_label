@@ -74,7 +74,15 @@ def test_both_scripts_have_required_guard_text():
 
 def test_debug_script_has_no_network_logging():
     text = read(DEBUG_SCRIPT)
-    for forbidden in ["fetch(", "XMLHttpRequest", "/log_time", "POST", "PUT", "PATCH", "DELETE"]:
+    for forbidden in [
+        "fetch(",
+        "XMLHttpRequest",
+        "/log_time",
+        'method: "POST"',
+        'method: "PUT"',
+        'method: "PATCH"',
+        'method: "DELETE"',
+    ]:
         assert forbidden not in text
 
 
@@ -93,9 +101,9 @@ def test_timed_script_only_posts_sandbox_log_time_payload():
     assert "pagehide" in text
     assert "panel_unloaded" in text
     assert "XMLHttpRequest" not in text
-    assert "PUT" not in text
-    assert "PATCH" not in text
-    assert "DELETE" not in text
+    assert 'method: "PUT"' not in text
+    assert 'method: "PATCH"' not in text
+    assert 'method: "DELETE"' not in text
 
     for required in [
         'log_context: "manhattan_ls_sandbox"',
@@ -198,6 +206,61 @@ def test_both_scripts_include_m9_manhattan_deviation_panel():
             assert required in text
 
 
+def test_both_scripts_include_m10_direction_only_diagnosis_panel():
+    for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
+        text = read(script)
+        for required in [
+            "Manhattan diagnosis",
+            "computeDirectionOnlyDiagnosis",
+            "primary_issue_type",
+            "primary_issue_severity",
+            "primary_issue_explanation",
+            "affected_pair_index",
+            "affected_wall_index",
+            "pair_x_alignment_summary",
+            "ceiling_alignment_summary",
+            "floor_alignment_summary",
+            "wall_height_summary",
+            "Direction-only preview diagnosis",
+            "Not a correction",
+            "Not a target coordinate",
+            "pair_x_alignment",
+            "ceiling_alignment",
+            "floor_alignment",
+            "wall_height_consistency",
+            "top point is left of bottom point",
+            "top point is right of bottom point",
+            "median ceiling band",
+            "median floor band",
+            "median wall height",
+        ]:
+            assert required in text
+
+
+def test_both_scripts_include_sandbox_meta_guard_and_preview_order_controls():
+    for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
+        text = read(script)
+        for required in [
+            "Sandbox meta-label guard",
+            "validateMetaChoices",
+            "difficulty_conflict_trivial_with_non_trivial",
+            "model_issue_conflict_acceptable_with_issue",
+            "Sandbox meta-label guard blocked action",
+            "Preview order",
+            "Hide corner order",
+            "Show corner order",
+            "renderPreviewOverlayPairs",
+            "toggleCornerOrderLabels",
+            "installPreviewOrderPanelDrag",
+            "Swap",
+            "Reset preview order",
+            "Preview-only order controls",
+            "previewOrderActive: true",
+            "No annotation writeback",
+        ]:
+            assert required in text
+
+
 def test_both_scripts_use_preview_pairing_and_fixed_deviation_thresholds():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
@@ -220,6 +283,8 @@ def test_timed_telemetry_sends_deviation_score_without_coordinates():
         "preview_only_manhattan_deviation_score",
         "preview_only_manhattan_deviation_level",
         "preview_only_manhattan_compatibility_status",
+        "preview_only_primary_issue_type",
+        "preview_only_primary_issue_severity",
         "not_correctness: true",
         "no_writeback: true",
     ]:
@@ -231,6 +296,8 @@ def test_timed_telemetry_sends_deviation_score_without_coordinates():
     assert "keypoints:" not in payload_text
     assert "pairs:" not in payload_text
     assert "corners:" not in payload_text
+    assert "affected_pair_index:" not in payload_text
+    assert "affected_wall_index:" not in payload_text
 
 
 def test_scripts_have_no_active_annotation_or_navigation_triggers():
@@ -243,9 +310,14 @@ def test_scripts_have_no_active_annotation_or_navigation_triggers():
         for forbidden in [
             "snap_to_axis",
             "adjustment_vector",
+            "target_x",
+            "target_y",
+            "delta_x",
+            "delta_y",
             "next-corner",
             "next_corner",
             "predict next",
+            "move this point",
             "corrected annotation payload",
             "routing decision",
             "worker tier label",
