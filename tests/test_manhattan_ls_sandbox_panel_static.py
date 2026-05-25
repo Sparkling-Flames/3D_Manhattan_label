@@ -35,7 +35,7 @@ def test_both_scripts_have_required_guard_text():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
         for required in [
-            "m11-dev-only",
+            "m12-dev-only",
             "dev-only",
             "sandbox-only",
             "expert/developer tester only",
@@ -200,9 +200,9 @@ def test_both_scripts_include_m9_manhattan_deviation_panel():
             "compatibility_failure_unpaired_keypoints",
             "Preview-only geometry diagnostic",
             "Not correctness",
-            "Not snap",
-            "Not next corner prediction",
-            "Not writeback",
+            "No axis snapping",
+            "No corner prediction",
+            "No writeback",
         ]:
             assert required in text
 
@@ -224,7 +224,7 @@ def test_both_scripts_include_m10_direction_only_diagnosis_panel():
             "wall_height_summary",
             "Direction-only preview diagnosis",
             "Not a correction",
-            "Not a target coordinate",
+            "No target x/y",
             "pair_x_alignment",
             "ceiling_alignment",
             "floor_alignment",
@@ -234,6 +234,30 @@ def test_both_scripts_include_m10_direction_only_diagnosis_panel():
             "median ceiling band",
             "median floor band",
             "median wall height",
+        ]:
+            assert required in text
+
+
+def test_both_scripts_include_m12_direction_only_hint_panel():
+    for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
+        text = read(script)
+        for required in [
+            "Direction-only hint",
+            "hint_status",
+            "hint_component",
+            "affected_pair_index",
+            "direction_hint",
+            "alternative_anchor_hint",
+            "hint_guardrail",
+            "Highlight affected pair",
+            "diagnosis-affected-pair",
+            "directionOnlyHint",
+            "would reduce this residual",
+            "Choose by visual evidence",
+            "Inspect top point",
+            "Inspect ceiling",
+            "Floor point is",
+            "Direction-only hint. Inspect visually",
         ]:
             assert required in text
 
@@ -253,7 +277,9 @@ def test_both_scripts_include_sandbox_meta_guard_and_preview_order_controls():
             "Swap order",
             "Pair rows",
             "active-pair",
+            "diagnosis-affected-pair",
             "dataset.activePair",
+            "dataset.diagnosisAffectedPair",
             "Hide corner order",
             "Show corner order",
             "hp-title",
@@ -295,6 +321,9 @@ def test_timed_telemetry_sends_deviation_score_without_coordinates():
         "preview_only_manhattan_compatibility_status",
         "preview_only_primary_issue_type",
         "preview_only_primary_issue_severity",
+        "preview_only_hint_component",
+        "preview_only_affected_pair_index",
+        "preview_only_direction_hint_type",
         "preview_order_visible",
         "not_correctness: true",
         "no_writeback: true",
@@ -307,7 +336,7 @@ def test_timed_telemetry_sends_deviation_score_without_coordinates():
     assert "keypoints:" not in payload_text
     assert "pairs:" not in payload_text
     assert "corners:" not in payload_text
-    assert "affected_pair_index:" not in payload_text
+    assert "\n      affected_pair_index:" not in payload_text
     assert "affected_wall_index:" not in payload_text
 
 
@@ -320,7 +349,9 @@ def test_scripts_have_no_active_annotation_or_navigation_triggers():
         lowered = text.lower()
         for forbidden in [
             "snap_to_axis",
+            "snap coordinate",
             "adjustment_vector",
+            "target coordinate",
             "target_x",
             "target_y",
             "delta_x",
@@ -329,6 +360,7 @@ def test_scripts_have_no_active_annotation_or_navigation_triggers():
             "next_corner",
             "predict next",
             "move this point",
+            "automatic correction",
             "corrected annotation payload",
             "routing decision",
             "worker tier label",

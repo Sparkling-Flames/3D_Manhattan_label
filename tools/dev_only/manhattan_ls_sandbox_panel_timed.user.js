@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HOHONET Manhattan LS Sandbox Panel Timed
 // @namespace    hohonet-dev-only
-// @version      m11-dev-only-timed-0.1.0
+// @version      m12-dev-only-timed-0.1.0
 // @description  dev-only sandbox-only read-only Manhattan panel; timed variant with sandbox-excluded active_time telemetry.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
@@ -40,7 +40,7 @@
   window[WINDOW_GUARD] = { script_variant: "timed" };
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const PANEL_VERSION = "m11-dev-only-timed-0.1.0";
+  const PANEL_VERSION = "m12-dev-only-timed-0.1.0";
   const OFFICIAL_IFRAME_ID = "hohonet-iframe";
   const OFFICIAL_WRAPPER_ID = "hohonet-wrapper";
   const OFFICIAL_BUTTON_ID = "hohonet-refresh-btn";
@@ -71,6 +71,7 @@
   let currentPreviewBasePairs = [];
   let currentPreviewOrder = [];
   let currentPreviewSelectedPairIndex = 0;
+  let currentDiagnosisAffectedPairIndex = null;
   let currentSandboxState = null;
   const telemetryState = {
     status: "not_sent",
@@ -90,9 +91,9 @@
     "no P1/C1/C2/T1/V1 artifact",
     "no correctness label",
     "no worker tier",
-    "no snap coordinates",
+    "no axis snapping",
     "no adjustment vector",
-    "no auto-correction",
+    "no automated edits",
     "timed variant: sandbox telemetry only",
   ];
 
@@ -797,6 +798,12 @@
       ceiling_alignment_summary: "Unavailable because layout is not preview-compatible.",
       floor_alignment_summary: "Unavailable because layout is not preview-compatible.",
       wall_height_summary: "Unavailable because layout is not preview-compatible.",
+      hint_status: "unavailable",
+      hint_component: "unavailable",
+      direction_hint: "Unavailable because layout is not preview-compatible.",
+      alternative_anchor_hint: "Unavailable because layout is not preview-compatible.",
+      hint_guardrail: "Direction-only hint. Inspect visually; no target x/y, no point movement, no annotation writeback.",
+      hint_direction_type: "unavailable",
     };
   }
 
@@ -818,6 +825,72 @@
       }
     });
     return { index: bestIndex, value: values[bestIndex] };
+  }
+
+  function directionOnlyHint(primaryIssueType, xLargest, ceilingLargest, floorLargest, wallLargest) {
+    const base = {
+      hint_status: primaryIssueType === "none" ? "no_action" : "available",
+      hint_component: primaryIssueType,
+      direction_hint: "No dominant residual needs a direction-only hint.",
+      alternative_anchor_hint: "No inspection anchor is suggested.",
+      hint_guardrail: "Direction-only hint. Inspect visually; no target x/y, no point movement, no annotation writeback.",
+      hint_direction_type: "none",
+    };
+    if (primaryIssueType === "pair_x_alignment") {
+      if (xLargest.value < 0) {
+        return {
+          ...base,
+          direction_hint: "Top point is left of bottom point; aligning left/right would reduce this residual.",
+          alternative_anchor_hint: "Inspect top point to the right, or inspect bottom point to the left. Choose by visual evidence.",
+          hint_direction_type: "top_right_or_bottom_left",
+        };
+      }
+      return {
+        ...base,
+        direction_hint: "Top point is right of bottom point; aligning left/right would reduce this residual.",
+        alternative_anchor_hint: "Inspect top point to the left, or inspect bottom point to the right. Choose by visual evidence.",
+        hint_direction_type: "top_left_or_bottom_right",
+      };
+    }
+    if (primaryIssueType === "ceiling_alignment") {
+      return {
+        ...base,
+        direction_hint:
+          ceilingLargest.value < 0
+            ? "Ceiling point is above the median band; inspecting it downward would reduce this residual."
+            : "Ceiling point is below the median band; inspecting it upward would reduce this residual.",
+        alternative_anchor_hint: "Choose by visual evidence before changing any annotation.",
+        hint_direction_type: ceilingLargest.value < 0 ? "ceiling_down" : "ceiling_up",
+      };
+    }
+    if (primaryIssueType === "floor_alignment") {
+      return {
+        ...base,
+        direction_hint:
+          floorLargest.value < 0
+            ? "Floor point is above the median band; inspecting it downward would reduce this residual."
+            : "Floor point is below the median band; inspecting it upward would reduce this residual.",
+        alternative_anchor_hint: "Choose by visual evidence before changing any annotation.",
+        hint_direction_type: floorLargest.value < 0 ? "floor_down" : "floor_up",
+      };
+    }
+    if (primaryIssueType === "wall_height_consistency") {
+      if (wallLargest.value > 0) {
+        return {
+          ...base,
+          direction_hint: "Wall height is larger than the median wall height; reducing the height would reduce this residual.",
+          alternative_anchor_hint: "Inspect ceiling downward or floor upward. Choose by visual evidence.",
+          hint_direction_type: "height_reduce",
+        };
+      }
+      return {
+        ...base,
+        direction_hint: "Wall height is smaller than the median wall height; increasing the height would reduce this residual.",
+        alternative_anchor_hint: "Inspect ceiling upward or floor downward. Choose by visual evidence.",
+        hint_direction_type: "height_increase",
+      };
+    }
+    return base;
   }
 
   function computeDirectionOnlyDiagnosis(pairs, width, height, residuals) {
@@ -882,6 +955,7 @@
       },
     };
     const selected = issueMap[primaryIssueType];
+    const hint = directionOnlyHint(primaryIssueType, xLargest, ceilingLargest, floorLargest, wallLargest);
     return {
       primary_issue_type: primaryIssueType,
       primary_issue_severity: severityFromNormalized(primaryValue),
@@ -892,6 +966,7 @@
       ceiling_alignment_summary: ceilingSummary,
       floor_alignment_summary: floorSummary,
       wall_height_summary: wallSummary,
+      ...hint,
     };
   }
 
@@ -969,6 +1044,16 @@
     setText(`${PANEL_ID}-ceiling-alignment-summary`, deviation.ceiling_alignment_summary);
     setText(`${PANEL_ID}-floor-alignment-summary`, deviation.floor_alignment_summary);
     setText(`${PANEL_ID}-wall-height-summary`, deviation.wall_height_summary);
+    updateDirectionOnlyHintPanel(deviation);
+  }
+
+  function updateDirectionOnlyHintPanel(deviation) {
+    setText(`${PANEL_ID}-hint-status`, deviation.hint_status);
+    setText(`${PANEL_ID}-hint-component`, deviation.hint_component);
+    setText(`${PANEL_ID}-hint-affected-pair-index`, deviation.affected_pair_index);
+    setText(`${PANEL_ID}-direction-hint`, deviation.direction_hint);
+    setText(`${PANEL_ID}-alternative-anchor-hint`, deviation.alternative_anchor_hint);
+    setText(`${PANEL_ID}-hint-guardrail`, deviation.hint_guardrail);
   }
 
   function updateMetaGuardPanel(meta) {
@@ -1263,9 +1348,15 @@
         const pctX = Number.isFinite(point.pctX) ? point.pctX : (point.x / DEFAULT_WIDTH) * 100;
         const pctY = Number.isFinite(point.pctY) ? point.pctY : (point.y / DEFAULT_HEIGHT) * 100;
         const badge = document.createElement("div");
+        const isAffected = index === currentDiagnosisAffectedPairIndex;
+        badge.className = isAffected ? "diagnosis-affected-pair" : "";
         badge.textContent = String(index + 1);
         badge.style.cssText =
           "position:absolute;transform:translate(-50%,-150%);background:rgba(255,255,0,0.9);color:#000;font-weight:700;padding:2px 6px;border-radius:4px;font-size:12px;border:1px solid #111;";
+        if (isAffected) {
+          badge.style.outline = "3px solid #ff7a00";
+          badge.style.boxShadow = "0 0 0 3px rgba(255,122,0,0.35)";
+        }
         badge.style.left = `${(pctX / 100) * rect.width}px`;
         badge.style.top = `${(pctY / 100) * rect.height}px`;
         overlay.appendChild(badge);
@@ -1302,6 +1393,7 @@
     currentPreviewBasePairs = Array.isArray(pairs) ? pairs.slice() : [];
     currentPreviewOrder = currentPreviewBasePairs.map((_, index) => index);
     currentPreviewSelectedPairIndex = 0;
+    currentDiagnosisAffectedPairIndex = null;
     renderPreviewOverlayPairs(orderedPreviewPairs());
     ensurePreviewOrderPanel();
     updatePreviewOrderPanelUi();
@@ -1311,6 +1403,18 @@
     const visible = !getLabelsVisible();
     setLabelsVisible(visible);
     applyToggleBtnState(document.getElementById(TOGGLE_LABELS_BUTTON_ID), visible);
+    renderPreviewOverlayPairs(orderedPreviewPairs());
+  }
+
+  function highlightAffectedPair(deviation = currentSandboxState?.manhattan_deviation) {
+    const rawIndex = Number(deviation?.affected_pair_index);
+    if (!Number.isInteger(rawIndex) || rawIndex < 1 || rawIndex > currentPreviewBasePairs.length) {
+      setText(`${PANEL_ID}-hint-status`, "unavailable");
+      return;
+    }
+    currentDiagnosisAffectedPairIndex = rawIndex - 1;
+    currentPreviewSelectedPairIndex = currentDiagnosisAffectedPairIndex;
+    updatePreviewOrderPanelUi();
     renderPreviewOverlayPairs(orderedPreviewPairs());
   }
 
@@ -1353,15 +1457,22 @@
     ordered.forEach((pair, displayIndex) => {
       const row = document.createElement("button");
       row.type = "button";
-      row.className = displayIndex === currentPreviewSelectedPairIndex ? "hp-pair-row active-pair" : "hp-pair-row";
+      const isActive = displayIndex === currentPreviewSelectedPairIndex;
+      const isAffected = displayIndex === currentDiagnosisAffectedPairIndex;
+      row.className = `hp-pair-row${isActive ? " active-pair" : ""}${isAffected ? " diagnosis-affected-pair" : ""}`;
       row.dataset.activePair = displayIndex === currentPreviewSelectedPairIndex ? "true" : "false";
+      row.dataset.diagnosisAffectedPair = isAffected ? "true" : "false";
       row.style.cssText =
         "width:100%;display:grid;grid-template-columns:36px 1fr 46px;align-items:center;gap:6px;margin-top:4px;padding:5px 6px;border:1px solid rgba(255,255,255,0.08);border-radius:7px;background:rgba(255,255,255,0.055);color:#f4f7fb;text-align:left;cursor:pointer;font-size:11px;";
-      if (displayIndex === currentPreviewSelectedPairIndex) {
+      if (isActive) {
         row.style.background = "rgba(47,92,255,0.32)";
         row.style.borderColor = "rgba(111,153,255,0.72)";
       }
-      row.innerHTML = `<strong>Pair ${displayIndex + 1}</strong><span>x=${formatMetric(pair.x)} c=${formatMetric(pair.y_ceiling)} f=${formatMetric(pair.y_floor)}</span><span>${displayIndex === currentPreviewSelectedPairIndex ? "active" : ""}</span>`;
+      if (isAffected) {
+        row.style.outline = "2px solid #ffb020";
+        row.style.boxShadow = "0 0 0 2px rgba(255,176,32,0.16)";
+      }
+      row.innerHTML = `<strong>Pair ${displayIndex + 1}</strong><span>x=${formatMetric(pair.x)} c=${formatMetric(pair.y_ceiling)} f=${formatMetric(pair.y_floor)}</span><span>${isAffected ? "affected" : isActive ? "active" : ""}</span>`;
       row.addEventListener("click", () => {
         currentPreviewSelectedPairIndex = displayIndex;
         updatePreviewOrderPanelUi();
@@ -1649,6 +1760,9 @@
       preview_only_manhattan_compatibility_status: deviation.compatibility_status,
       preview_only_primary_issue_type: deviation.primary_issue_type,
       preview_only_primary_issue_severity: deviation.primary_issue_severity,
+      preview_only_hint_component: deviation.hint_component,
+      preview_only_affected_pair_index: deviation.affected_pair_index,
+      preview_only_direction_hint_type: deviation.hint_direction_type,
       preview_order_visible: getLabelsVisible(),
       not_correctness: true,
       no_writeback: true,
@@ -1888,7 +2002,7 @@
     deviation.appendChild(makeMutableRow("manhattan_deviation_score", formatMetric(state.manhattan_deviation.manhattan_deviation_score), `${PANEL_ID}-manhattan-deviation-score`));
     deviation.appendChild(makeMutableRow("deviation_level", state.manhattan_deviation.deviation_level, `${PANEL_ID}-deviation-level`));
     deviation.appendChild(makeMutableRow("reason", state.manhattan_deviation.exclusion_reason, `${PANEL_ID}-deviation-reason`));
-    deviation.appendChild(text("Preview-only geometry diagnostic. Not correctness. Not snap. Not next corner prediction. Not writeback."));
+    deviation.appendChild(text("Preview-only geometry diagnostic. Not correctness. No axis snapping. No corner prediction. No writeback."));
     panel.appendChild(deviation);
 
     const diagnosis = document.createElement("section");
@@ -1902,8 +2016,24 @@
     diagnosis.appendChild(makeMutableRow("ceiling_alignment_summary", state.manhattan_deviation.ceiling_alignment_summary, `${PANEL_ID}-ceiling-alignment-summary`));
     diagnosis.appendChild(makeMutableRow("floor_alignment_summary", state.manhattan_deviation.floor_alignment_summary, `${PANEL_ID}-floor-alignment-summary`));
     diagnosis.appendChild(makeMutableRow("wall_height_summary", state.manhattan_deviation.wall_height_summary, `${PANEL_ID}-wall-height-summary`));
-    diagnosis.appendChild(text("Direction-only preview diagnosis. Not a correction. Not a target coordinate. Not correctness."));
+    diagnosis.appendChild(text("Direction-only preview diagnosis. Not a correction. No target x/y. Not correctness."));
     panel.appendChild(diagnosis);
+
+    const hint = document.createElement("section");
+    hint.appendChild(document.createElement("h3")).appendChild(text("Direction-only hint"));
+    hint.appendChild(makeMutableRow("hint_status", state.manhattan_deviation.hint_status, `${PANEL_ID}-hint-status`));
+    hint.appendChild(makeMutableRow("hint_component", state.manhattan_deviation.hint_component, `${PANEL_ID}-hint-component`));
+    hint.appendChild(makeMutableRow("affected_pair_index", state.manhattan_deviation.affected_pair_index, `${PANEL_ID}-hint-affected-pair-index`));
+    hint.appendChild(makeMutableRow("direction_hint", state.manhattan_deviation.direction_hint, `${PANEL_ID}-direction-hint`));
+    hint.appendChild(makeMutableRow("alternative_anchor_hint", state.manhattan_deviation.alternative_anchor_hint, `${PANEL_ID}-alternative-anchor-hint`));
+    hint.appendChild(makeMutableRow("hint_guardrail", state.manhattan_deviation.hint_guardrail, `${PANEL_ID}-hint-guardrail`));
+    const highlightButton = document.createElement("button");
+    highlightButton.type = "button";
+    highlightButton.textContent = "Highlight affected pair";
+    highlightButton.style.cssText = "margin-top:8px;padding:6px 10px;border:1px solid rgba(255,255,255,0.18);border-radius:6px;background:#2f5cff;color:#fff;cursor:pointer;font-size:12px;";
+    highlightButton.addEventListener("click", () => highlightAffectedPair(state.manhattan_deviation));
+    hint.appendChild(highlightButton);
+    panel.appendChild(hint);
 
     const suggestion = document.createElement("section");
     suggestion.appendChild(document.createElement("h3")).appendChild(text("Preview-only suggestion"));
