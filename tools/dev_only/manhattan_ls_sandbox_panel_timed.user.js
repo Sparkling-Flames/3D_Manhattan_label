@@ -50,6 +50,7 @@
   const HEARTBEAT_INTERVAL_MS = 15000;
   const IDLE_THRESHOLD_MS = 15000;
   const PAGE_HIDDEN_THRESHOLD_MS = 6000;
+  const DUPLICATE_KEYPOINT_THRESHOLD_RATIO = 0.01;
   const SESSION_STORAGE_KEY = "hohonet_m8_sandbox_session_id";
   let lastTelemetryMs = START_TIME_MS;
   let activeSeconds = 0;
@@ -472,6 +473,143 @@
     return pairs;
   }
 
+  function clamp(value, minValue, maxValue) {
+    return Math.min(maxValue, Math.max(minValue, value));
+  }
+
+  function formatMetric(value) {
+    return Number.isFinite(value) ? value.toFixed(3) : "unavailable";
+  }
+
+  function hasNearDuplicateKeypoint(points, width, height) {
+    const threshold = Math.max(width, height) * DUPLICATE_KEYPOINT_THRESHOLD_RATIO;
+    for (let i = 0; i < points.length; i += 1) {
+      for (let j = i + 1; j < points.length; j += 1) {
+        const dx = points[i].x - points[j].x;
+        const dy = points[i].y - points[j].y;
+        if (Math.sqrt(dx * dx + dy * dy) < threshold) {
+          return true;
+        }
+      }
+    }
+    return false;
+  }
+
+  function buildPreviewPairDiagnostics(points, width) {
+    const sorted = points.slice().sort((a, b) => a.x - b.x);
+    const used = new Array(sorted.length).fill(false);
+    const threshold = width * 0.05;
+    const pairs = [];
+    for (let i = 0; i < sorted.length; i += 1) {
+      if (used[i]) continue;
+      let bestJ = -1;
+      let minDiff = Infinity;
+      for (let j = i + 1; j < sorted.length; j += 1) {
+        if (used[j]) continue;
+        const diff = Math.abs(sorted[j].x - sorted[i].x);
+        if (diff < threshold && diff < minDiff) {
+          minDiff = diff;
+          bestJ = j;
+        }
+      }
+      if (bestJ === -1) continue;
+      used[i] = true;
+      used[bestJ] = true;
+      pairs.push({
+        x: (sorted[i].x + sorted[bestJ].x) / 2,
+        y_ceiling: Math.min(sorted[i].y, sorted[bestJ].y),
+        y_floor: Math.max(sorted[i].y, sorted[bestJ].y),
+        vertical_x_delta: Math.abs(sorted[i].x - sorted[bestJ].x),
+      });
+    }
+    return {
+      pairs,
+      unpaired: sorted.filter((_, index) => !used[index]),
+    };
+  }
+
+  function range(values) {
+    if (!values.length) return null;
+    return Math.max(...values) - Math.min(...values);
+  }
+
+  function deviationLevel(score) {
+    if (!Number.isFinite(score)) return "unavailable";
+    if (score < 5) return "low";
+    if (score < 15) return "medium";
+    return "high";
+  }
+
+  function unavailableDeviation(nKeypoints, reason, nPairs = 0) {
+    return {
+      compatibility_status: "incompatible",
+      exclusion_reason: reason,
+      n_keypoints: nKeypoints,
+      n_pairs: nPairs,
+      vertical_pair_x_residual: null,
+      ceiling_y_range: null,
+      floor_y_range: null,
+      wall_height_range: null,
+      manhattan_deviation_score: null,
+      deviation_level: "unavailable",
+    };
+  }
+
+  function computeManhattanDeviation(points, width = DEFAULT_WIDTH, height = DEFAULT_HEIGHT) {
+    if (!points.length) return unavailableDeviation(0, "missing_keypoints");
+    if (points.length % 2 === 1) {
+      return unavailableDeviation(points.length, "compatibility_failure_odd_keypoint");
+    }
+    if (hasNearDuplicateKeypoint(points, width, height)) {
+      return unavailableDeviation(points.length, "compatibility_failure_duplicate");
+    }
+    const pairing = buildPreviewPairDiagnostics(points, width);
+    if (!pairing.pairs.length) {
+      return unavailableDeviation(points.length, "compatibility_failure_no_valid_vertical_pairs");
+    }
+    if (pairing.unpaired.length) {
+      return unavailableDeviation(points.length, "compatibility_failure_unpaired_keypoints", pairing.pairs.length);
+    }
+
+    const vertical_pair_x_residual =
+      pairing.pairs.reduce((acc, pair) => acc + pair.vertical_x_delta, 0) / pairing.pairs.length;
+    const ceiling_y_range = range(pairing.pairs.map((pair) => pair.y_ceiling));
+    const floor_y_range = range(pairing.pairs.map((pair) => pair.y_floor));
+    const wall_height_range = range(pairing.pairs.map((pair) => pair.y_floor - pair.y_ceiling));
+    const normalized = [
+      vertical_pair_x_residual / Math.max(width, 1),
+      ceiling_y_range / Math.max(height, 1),
+      floor_y_range / Math.max(height, 1),
+      wall_height_range / Math.max(height, 1),
+    ];
+    const score = clamp((normalized.reduce((acc, value) => acc + value, 0) / normalized.length) * 100, 0, 100);
+    return {
+      compatibility_status: "compatible",
+      exclusion_reason: "none",
+      n_keypoints: points.length,
+      n_pairs: pairing.pairs.length,
+      vertical_pair_x_residual,
+      ceiling_y_range,
+      floor_y_range,
+      wall_height_range,
+      manhattan_deviation_score: score,
+      deviation_level: deviationLevel(score),
+    };
+  }
+
+  function updateManhattanDeviationPanel(deviation) {
+    setText(`${PANEL_ID}-compatibility-status`, deviation.compatibility_status);
+    setText(`${PANEL_ID}-deviation-n-keypoints`, deviation.n_keypoints);
+    setText(`${PANEL_ID}-deviation-n-pairs`, deviation.n_pairs);
+    setText(`${PANEL_ID}-vertical-pair-x-residual`, formatMetric(deviation.vertical_pair_x_residual));
+    setText(`${PANEL_ID}-ceiling-y-range`, formatMetric(deviation.ceiling_y_range));
+    setText(`${PANEL_ID}-floor-y-range`, formatMetric(deviation.floor_y_range));
+    setText(`${PANEL_ID}-wall-height-range`, formatMetric(deviation.wall_height_range));
+    setText(`${PANEL_ID}-manhattan-deviation-score`, formatMetric(deviation.manhattan_deviation_score));
+    setText(`${PANEL_ID}-deviation-level`, deviation.deviation_level);
+    setText(`${PANEL_ID}-deviation-reason`, deviation.exclusion_reason);
+  }
+
   function normalizePreviewUrl(rawUrl) {
     if (!rawUrl) return null;
     try {
@@ -684,6 +822,7 @@
     return {
       keypoint_read_status: unique.length > 0 ? "available" : "unavailable",
       keypoints: unique,
+      manhattan_deviation: computeManhattanDeviation(unique, DEFAULT_WIDTH, DEFAULT_HEIGHT),
       store_status: storeStatus,
       result_count: storeExtraction.result_count,
       keypoint_sources: Array.from(new Set(unique.map((point) => point.source))).join(",") || "none",
@@ -770,6 +909,7 @@
   function sandboxTelemetryPayload(eventName, nowMs = Date.now()) {
     const activeSecondsFragment = activeSecondsSinceLastTelemetry();
     const telemetryElapsedSeconds = secondsSinceStart();
+    const deviation = computeManhattanDeviation(extractKeypointsFromDom().keypoints, DEFAULT_WIDTH, DEFAULT_HEIGHT);
     return {
       task_id: getTaskId(),
       project_id: getProjectId(),
@@ -782,6 +922,11 @@
       timestamp: nowMs,
       event: eventName,
       telemetry_elapsed_seconds: telemetryElapsedSeconds,
+      preview_only_manhattan_deviation_score: deviation.manhattan_deviation_score,
+      preview_only_manhattan_deviation_level: deviation.deviation_level,
+      preview_only_manhattan_compatibility_status: deviation.compatibility_status,
+      not_correctness: true,
+      no_writeback: true,
       elapsed_ms: nowMs - START_TIME_MS,
       page_url: window.location.href,
       log_context: "manhattan_ls_sandbox",
@@ -928,6 +1073,7 @@
       setText(`${PANEL_ID}-log-time-url`, logTimeUrl());
       updateTelemetryPanel();
       updateActivityTimerPanel();
+      updateManhattanDeviationPanel(state.manhattan_deviation);
       return;
     }
 
@@ -991,6 +1137,21 @@
     residual.appendChild(document.createElement("h3")).appendChild(text("Residual"));
     residual.appendChild(text("placeholder only; no residual calculator is embedded"));
     panel.appendChild(residual);
+
+    const deviation = document.createElement("section");
+    deviation.appendChild(document.createElement("h3")).appendChild(text("Manhattan deviation"));
+    deviation.appendChild(makeMutableRow("compatibility_status", state.manhattan_deviation.compatibility_status, `${PANEL_ID}-compatibility-status`));
+    deviation.appendChild(makeMutableRow("n_keypoints", state.manhattan_deviation.n_keypoints, `${PANEL_ID}-deviation-n-keypoints`));
+    deviation.appendChild(makeMutableRow("n_pairs", state.manhattan_deviation.n_pairs, `${PANEL_ID}-deviation-n-pairs`));
+    deviation.appendChild(makeMutableRow("vertical_pair_x_residual", formatMetric(state.manhattan_deviation.vertical_pair_x_residual), `${PANEL_ID}-vertical-pair-x-residual`));
+    deviation.appendChild(makeMutableRow("ceiling_y_range", formatMetric(state.manhattan_deviation.ceiling_y_range), `${PANEL_ID}-ceiling-y-range`));
+    deviation.appendChild(makeMutableRow("floor_y_range", formatMetric(state.manhattan_deviation.floor_y_range), `${PANEL_ID}-floor-y-range`));
+    deviation.appendChild(makeMutableRow("wall_height_range", formatMetric(state.manhattan_deviation.wall_height_range), `${PANEL_ID}-wall-height-range`));
+    deviation.appendChild(makeMutableRow("manhattan_deviation_score", formatMetric(state.manhattan_deviation.manhattan_deviation_score), `${PANEL_ID}-manhattan-deviation-score`));
+    deviation.appendChild(makeMutableRow("deviation_level", state.manhattan_deviation.deviation_level, `${PANEL_ID}-deviation-level`));
+    deviation.appendChild(makeMutableRow("reason", state.manhattan_deviation.exclusion_reason, `${PANEL_ID}-deviation-reason`));
+    deviation.appendChild(text("Preview-only geometry diagnostic. Not correctness. Not snap. Not next corner prediction. Not writeback."));
+    panel.appendChild(deviation);
 
     const suggestion = document.createElement("section");
     suggestion.appendChild(document.createElement("h3")).appendChild(text("Preview-only suggestion"));

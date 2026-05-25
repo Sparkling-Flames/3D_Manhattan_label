@@ -152,3 +152,22 @@ The timed sandbox script must keep sandbox telemetry excluded from primary activ
 - Keep `telemetry_elapsed_seconds` as a separate wall-clock diagnostic field for sandbox telemetry only.
 
 M8.3 still does not authorize meta-label guard behavior, draggable corner-order UI, snap coordinates, adjustment vectors, auto-correction, correctness labels, worker-tier labels, routing decisions, formal `g_t`, or `P1/C1/C2/T1/V1` artifacts.
+
+## 10. M9 Manhattan Deviation Display
+
+The dev-only sandbox panel may display a conservative Manhattan deviation section for expert / developer testing only.
+
+Allowed M9 fields:
+
+- `compatibility_status`
+- `n_keypoints`
+- `n_pairs`
+- `vertical_pair_x_residual`
+- `ceiling_y_range`
+- `floor_y_range`
+- `wall_height_range`
+- `manhattan_deviation_score`
+- `deviation_level`
+- explicit unavailable / exclusion reason
+
+M9 scores are preview-only geometry diagnostics. They are not correctness labels, not worker quality labels, not snap coordinates, not next corner prediction, not annotation writeback, not routing inputs, not formal `g_t`, and not `P1/C1/C2/T1/V1` artifacts.
