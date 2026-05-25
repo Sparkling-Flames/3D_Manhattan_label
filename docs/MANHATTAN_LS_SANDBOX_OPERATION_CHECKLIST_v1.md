@@ -218,3 +218,12 @@ M10.1 aligns the sandbox preview-order panel visually with the official userscri
 - Keep the show / hide order overlay button next to the 3D preview controls rather than inside the diagnostic panel.
 - The panel may reorder only the sandbox 3D preview and local corner-order overlay.
 - The panel must not write annotations, submit tasks, modify official userscripts, modify view config, emit target coordinates, emit snap coordinates, or create any routing / formal `g_t` / `P1/C1/C2/T1/V1` artifact.
+
+## 14. M11 Preview-Order Usability Pass
+
+M11 keeps the same sandbox-only behavior and improves only readability / usability of the preview-order panel:
+
+- Show compact pair rows with pair index and coarse preview values.
+- Highlight the active pair row.
+- Keep previous / next, swap, reset, and show / hide overlay controls visible and legible.
+- Do not add geometry algorithms, coordinate suggestions, next-corner prediction, snap, auto-correction, annotation writeback, routing, worker-tier labels, correctness labels, formal `g_t`, or `P1/C1/C2/T1/V1` artifacts.

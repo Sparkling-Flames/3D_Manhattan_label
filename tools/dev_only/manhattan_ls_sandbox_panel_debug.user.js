@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HOHONET Manhattan LS Sandbox Panel Debug
 // @namespace    hohonet-dev-only
-// @version      m10.1-dev-only-debug-0.1.0
+// @version      m11-dev-only-debug-0.1.0
 // @description  dev-only sandbox-only read-only Manhattan panel; debug variant with no active_time upload.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
@@ -41,7 +41,7 @@
   window[WINDOW_GUARD] = { script_variant: "debug" };
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const PANEL_VERSION = "m10.1-dev-only-debug-0.1.0";
+  const PANEL_VERSION = "m11-dev-only-debug-0.1.0";
   const OFFICIAL_IFRAME_ID = "hohonet-iframe";
   const OFFICIAL_WRAPPER_ID = "hohonet-wrapper";
   const OFFICIAL_BUTTON_ID = "hohonet-refresh-btn";
@@ -1195,10 +1195,40 @@
       `${PREVIEW_PANEL_ID}-order`,
       currentPreviewOrder.length ? currentPreviewOrder.map((index) => index + 1).join(" -> ") : "none",
     );
+    renderPreviewPairRows();
     const pairInput = document.getElementById(PREVIEW_PANEL_PAIR_INPUT_ID);
     if (pairInput && document.activeElement !== pairInput) pairInput.value = String(currentPreviewSelectedPairIndex + 1);
     const swapInput = document.getElementById(PREVIEW_PANEL_SWAP_INPUT_ID);
     if (swapInput && document.activeElement !== swapInput) swapInput.value = String(Math.min(currentPreviewBasePairs.length, currentPreviewSelectedPairIndex + 2 || 1));
+  }
+
+  function renderPreviewPairRows() {
+    const container = document.getElementById(`${PREVIEW_PANEL_ID}-pair-rows`);
+    if (!container) return;
+    container.innerHTML = "";
+    const ordered = orderedPreviewPairs();
+    if (!ordered.length) {
+      container.textContent = "No pairs available";
+      return;
+    }
+    ordered.forEach((pair, displayIndex) => {
+      const row = document.createElement("button");
+      row.type = "button";
+      row.className = displayIndex === currentPreviewSelectedPairIndex ? "hp-pair-row active-pair" : "hp-pair-row";
+      row.dataset.activePair = displayIndex === currentPreviewSelectedPairIndex ? "true" : "false";
+      row.style.cssText =
+        "width:100%;display:grid;grid-template-columns:36px 1fr 46px;align-items:center;gap:6px;margin-top:4px;padding:5px 6px;border:1px solid rgba(255,255,255,0.08);border-radius:7px;background:rgba(255,255,255,0.055);color:#f4f7fb;text-align:left;cursor:pointer;font-size:11px;";
+      if (displayIndex === currentPreviewSelectedPairIndex) {
+        row.style.background = "rgba(47,92,255,0.32)";
+        row.style.borderColor = "rgba(111,153,255,0.72)";
+      }
+      row.innerHTML = `<strong>Pair ${displayIndex + 1}</strong><span>x=${formatMetric(pair.x)} c=${formatMetric(pair.y_ceiling)} f=${formatMetric(pair.y_floor)}</span><span>${displayIndex === currentPreviewSelectedPairIndex ? "active" : ""}</span>`;
+      row.addEventListener("click", () => {
+        currentPreviewSelectedPairIndex = displayIndex;
+        updatePreviewOrderPanelUi();
+      });
+      container.appendChild(row);
+    });
   }
 
   function installPreviewOrderPanelDrag(panel, header) {
@@ -1289,6 +1319,11 @@
     orderSection.style.cssText = "margin-top:7px;";
     orderSection.innerHTML = `<div class="hp-label" style="margin-bottom:4px;font-size:10px;font-weight:700;letter-spacing:0.04em;color:#9aa8b8;text-transform:uppercase;">Current order</div><div id="${PREVIEW_PANEL_ID}-order" class="hp-row" style="display:flex;flex-wrap:wrap;align-items:center;gap:5px;color:#f4f7fb;">none</div>`;
     body.appendChild(orderSection);
+    const pairRowsSection = document.createElement("div");
+    pairRowsSection.className = "hp-section";
+    pairRowsSection.style.cssText = "margin-top:7px;";
+    pairRowsSection.innerHTML = `<div class="hp-label" style="margin-bottom:4px;font-size:10px;font-weight:700;letter-spacing:0.04em;color:#9aa8b8;text-transform:uppercase;">Pair rows</div><div id="${PREVIEW_PANEL_ID}-pair-rows" class="hp-pair-rows" style="max-height:120px;overflow:auto;">No pairs available</div>`;
+    body.appendChild(pairRowsSection);
     const pairInput = document.createElement("input");
     pairInput.id = PREVIEW_PANEL_PAIR_INPUT_ID;
     pairInput.type = "number";
