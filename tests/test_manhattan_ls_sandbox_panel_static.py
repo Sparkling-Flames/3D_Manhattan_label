@@ -169,6 +169,70 @@ def test_timed_script_has_sandbox_telemetry_panel_diagnostics():
         assert required in text
 
 
+def test_both_scripts_include_m9_manhattan_deviation_panel():
+    for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
+        text = read(script)
+        for required in [
+            "Manhattan deviation",
+            "computeManhattanDeviation",
+            "buildPreviewPairDiagnostics",
+            "manhattan_deviation_score",
+            "vertical_pair_x_residual",
+            "ceiling_y_range",
+            "floor_y_range",
+            "wall_height_range",
+            "compatibility_status",
+            "deviation_level",
+            "exclusion_reason",
+            "missing_keypoints",
+            "compatibility_failure_odd_keypoint",
+            "compatibility_failure_duplicate",
+            "compatibility_failure_no_valid_vertical_pairs",
+            "compatibility_failure_unpaired_keypoints",
+            "Preview-only geometry diagnostic",
+            "Not correctness",
+            "Not snap",
+            "Not next corner prediction",
+            "Not writeback",
+        ]:
+            assert required in text
+
+
+def test_both_scripts_use_preview_pairing_and_fixed_deviation_thresholds():
+    for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
+        text = read(script)
+        for required in [
+            "points.slice().sort((a, b) => a.x - b.x)",
+            "const threshold = width * 0.05",
+            "diff < threshold && diff < minDiff",
+            "bestJ",
+            "score < 5",
+            "score < 15",
+            "clamp(",
+            "DUPLICATE_KEYPOINT_THRESHOLD_RATIO = 0.01",
+        ]:
+            assert required in text
+
+
+def test_timed_telemetry_sends_deviation_score_without_coordinates():
+    text = read(TIMED_SCRIPT)
+    for required in [
+        "preview_only_manhattan_deviation_score",
+        "preview_only_manhattan_deviation_level",
+        "preview_only_manhattan_compatibility_status",
+        "not_correctness: true",
+        "no_writeback: true",
+    ]:
+        assert required in text
+
+    payload_start = text.index("function sandboxTelemetryPayload")
+    payload_end = text.index("function sendSandboxTelemetry")
+    payload_text = text[payload_start:payload_end]
+    assert "keypoints:" not in payload_text
+    assert "pairs:" not in payload_text
+    assert "corners:" not in payload_text
+
+
 def test_scripts_have_no_active_annotation_or_navigation_triggers():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
@@ -179,6 +243,9 @@ def test_scripts_have_no_active_annotation_or_navigation_triggers():
         for forbidden in [
             "snap_to_axis",
             "adjustment_vector",
+            "next-corner",
+            "next_corner",
+            "predict next",
             "corrected annotation payload",
             "routing decision",
             "worker tier label",
