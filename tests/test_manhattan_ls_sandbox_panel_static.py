@@ -35,7 +35,7 @@ def test_both_scripts_have_required_guard_text():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
         for required in [
-            "m10.1-dev-only",
+            "m11-dev-only",
             "dev-only",
             "sandbox-only",
             "expert/developer tester only",
@@ -251,6 +251,9 @@ def test_both_scripts_include_sandbox_meta_guard_and_preview_order_controls():
             "Current order",
             "Active pair",
             "Swap order",
+            "Pair rows",
+            "active-pair",
+            "dataset.activePair",
             "Hide corner order",
             "Show corner order",
             "hp-title",
