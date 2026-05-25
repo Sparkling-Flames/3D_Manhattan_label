@@ -70,7 +70,7 @@ Do not install either script in a formal Label Studio project.
 - Confirm the panel appears only in the sandbox browser profile.
 - Confirm the panel reads current page keypoints or reports `keypoint_read_status=unavailable`.
 - Confirm the panel displays keypoint count.
-- Confirm compatibility, residual, and preview-only suggestion sections are placeholder-only in M8.
+- Confirm compatibility and residual sections explain that Python parity/residual code is not embedded while sandbox JS preview compatibility/residuals feed the Manhattan deviation section.
 - Confirm the panel displays guardrails.
 - Do not move points because of the panel.
 - Do not treat any panel text as correctness.
@@ -112,7 +112,7 @@ M8 is ready only for limited sandbox operation testing if:
 - A sandbox task can be opened.
 - The panel appears in the sandbox context.
 - The panel reports keypoint read status and keypoint count.
-- The panel shows compatibility / residual / preview-only suggestion placeholder sections.
+- The panel shows compatibility / residual notes plus preview-only suggestion placeholder sections.
 - The panel displays guardrails.
 - No annotation is modified.
 - No annotation is submitted.
@@ -208,3 +208,13 @@ For sandbox operation only, the dev-only scripts may mirror the official helper'
 - A draggable preview-order panel may reorder only the current 3D preview and corner-order overlay.
 - A show/hide corner-order button may toggle the overlay labels only.
 - Preview-order controls are local sandbox UI aids. They are not annotation edits, not saved formal artifacts, not routing inputs, not formal `g_t`, and not `P1/C1/C2/T1/V1` artifacts.
+
+## 13. M10.1 Official-Style Preview-Order Panel
+
+M10.1 aligns the sandbox preview-order panel visually with the official userscript preview-order panel while keeping sandbox-only behavior:
+
+- Use an official-style compact floating panel with a draggable header, high-contrast dark background, `Preview order` title, active pair slot, status line, compact rows, and consistent button styling.
+- Show current pair order, selected / active pair index, previous / next pair controls, swap control, and reset preview order control.
+- Keep the show / hide order overlay button next to the 3D preview controls rather than inside the diagnostic panel.
+- The panel may reorder only the sandbox 3D preview and local corner-order overlay.
+- The panel must not write annotations, submit tasks, modify official userscripts, modify view config, emit target coordinates, emit snap coordinates, or create any routing / formal `g_t` / `P1/C1/C2/T1/V1` artifact.

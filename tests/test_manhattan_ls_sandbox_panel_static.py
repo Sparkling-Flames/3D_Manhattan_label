@@ -35,6 +35,7 @@ def test_both_scripts_have_required_guard_text():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
         for required in [
+            "m10.1-dev-only",
             "dev-only",
             "sandbox-only",
             "expert/developer tester only",
@@ -247,8 +248,14 @@ def test_both_scripts_include_sandbox_meta_guard_and_preview_order_controls():
             "model_issue_conflict_acceptable_with_issue",
             "Sandbox meta-label guard blocked action",
             "Preview order",
+            "Current order",
+            "Active pair",
+            "Swap order",
             "Hide corner order",
             "Show corner order",
+            "hp-title",
+            "hp-slot",
+            "hp-toggle",
             "renderPreviewOverlayPairs",
             "toggleCornerOrderLabels",
             "installPreviewOrderPanelDrag",
@@ -285,6 +292,7 @@ def test_timed_telemetry_sends_deviation_score_without_coordinates():
         "preview_only_manhattan_compatibility_status",
         "preview_only_primary_issue_type",
         "preview_only_primary_issue_severity",
+        "preview_order_visible",
         "not_correctness: true",
         "no_writeback: true",
     ]:
@@ -347,7 +355,12 @@ def test_scripts_include_preview_refresh_without_porting_residual_logic():
         assert "extractPairsFromPreviewUrl" in text
         assert "native_preview_update_sent" in text
         assert "Uses the existing page 3D Layout Preview only" in text
-        assert "placeholder only; no residual calculator is embedded" in text
+        assert "Python parity checker is not embedded" in text
+        assert "Python residual calculator is not embedded" in text
+        assert "Compatibility placeholder only" not in text
+        assert "Residual placeholder only" not in text
+        assert "placeholder only; no residual calculator is embedded" not in text
+        assert "placeholder only; no Python logic is ported" not in text
         assert "snap_to_axis" not in text
         assert "adjustment_vector" not in text
 
