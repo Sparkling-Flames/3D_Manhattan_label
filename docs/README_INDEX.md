@@ -67,7 +67,7 @@
 15. [MANHATTAN_CONSTRAINED_FIT_PLAN_v1.md](MANHATTAN_CONSTRAINED_FIT_PLAN_v1.md)
    - M14.1/M14.2 dev-only Manhattan constrained fitting plan for replacing misleading global median ceiling/floor guide logic with a yaw-aware, height-aware no-writeback constrained-candidate core.
    - Documents equirectangular / `atan2` / `pano_connect_points` boundary assumptions, `manhattan_yaw` search, `layout_height_candidate` reprojection, and keeps the work outside UI, routing, formal `g_t`, correctness, and `P1/C1/C2/T1/V1` artifacts.
-   - M15 smoke audit outputs live under `analysis_results/manhattan_constrained_fit_smoke/`; they are dev-only sidecars, not formal round artifacts.
+   - M15/M15.3 smoke audit and geometry-debug review outputs live under `analysis_results/manhattan_constrained_fit_smoke/`; they are dev-only sidecars, not formal round artifacts.
 
 16. [OOS_SCOPE_POLICY_AUDIT_v1.md](OOS_SCOPE_POLICY_AUDIT_v1.md)
    - M15.2 audit policy note: scope vote is not adjudicated OOS; task-level OOS requires expert adjudication or an explicit adjudication artifact.

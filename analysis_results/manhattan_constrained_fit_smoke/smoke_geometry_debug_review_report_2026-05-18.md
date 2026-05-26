@@ -1,11 +1,18 @@
-# Manhattan constrained fit geometry debug report
+# Manhattan geometry-debug review report
 
-This report is smoke-only / dev-only. A scope vote is not adjudicated OOS. Majority OOS is scope_distribution / disagreement evidence only. Geometry debug runs on parseable keypoints regardless of scope. Candidate deltas are not correction instructions; no writeback, no formal g_t, no routing, and no P1/C1/C2/T1/V1 artifact role.
+This review package is smoke-only / dev-only. OOS vote is not final OOS adjudication. Candidate deltas are not correction instructions; no writeback, no formal g_t, no routing, and no P1/C1/C2/T1/V1 artifact role.
 
 - source_export: `export_label\project-23-at-2026-05-18-02-56-ac500410.json`
+- n_review_candidates: 16
+- n_review_candidates_with_problem_reason: 7
+- scope_vote_distribution: `{'normal': 32, 'oos_geometry': 1, 'oos_split_level': 4}`
 - audit_ineligibility_counts: `{'oos_geometry': 1, 'oos_split_level': 4}`
 - preview_incompatibility_counts: `{'compatibility_failure_duplicate': 2, 'compatibility_failure_odd_keypoint': 1}`
 - fit_failure_counts: `{}`
+
+## Review candidate policy
+
+Rows are included when geometry_debug has a problem flag, max_abs_delta >= 5, self_crossing_candidate, preview incompatibility, or task_id is 2948/2949. Scope vote and geometry problem are separate columns.
 
 ## Focus: task 2948
 
