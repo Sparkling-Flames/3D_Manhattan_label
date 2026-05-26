@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HOHONET Manhattan LS Sandbox Panel Debug
 // @namespace    hohonet-dev-only
-// @version      m12.4-dev-only-debug-0.1.0
+// @version      m13-dev-only-debug-0.1.0
 // @description  dev-only sandbox-only read-only Manhattan panel; debug variant with no active_time upload.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
@@ -41,13 +41,15 @@
   window[WINDOW_GUARD] = { script_variant: "debug" };
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const PANEL_VERSION = "m12.4-dev-only-debug-0.1.0";
+  const PANEL_VERSION = "m13-dev-only-debug-0.1.0";
   const OFFICIAL_IFRAME_ID = "hohonet-iframe";
   const OFFICIAL_WRAPPER_ID = "hohonet-wrapper";
   const OFFICIAL_BUTTON_ID = "hohonet-refresh-btn";
   const TOGGLE_LABELS_BUTTON_ID = "hohonet-m8-toggle-labels-btn";
+  const GUIDE_BANDS_BUTTON_ID = "hohonet-m13-guide-bands-btn";
   const OVERLAY_ID = "hohonet-m8-preview-order-overlay";
   const LABELS_VISIBLE_KEY = "hohonet_m8_preview_labels_visible";
+  const GUIDE_BANDS_VISIBLE_KEY = "hohonet_m13_guide_bands_visible";
   const PREVIEW_PANEL_ID = "hohonet-m8-preview-order-panel";
   const PREVIEW_PANEL_HEADER_ID = "hohonet-m8-preview-order-panel-header";
   const PREVIEW_PANEL_STATUS_ID = "hohonet-m8-preview-order-status";
@@ -68,6 +70,13 @@
     affectedPairIndex: "none",
     rowFound: false,
     overlayLabelsFound: 0,
+  };
+  const guideState = {
+    status: "hidden",
+    component: "unavailable",
+    affectedPairIndex: "unavailable",
+    scope: "2D panorama overlay only",
+    guardrail: "Guide bands are visual references only. No target x/y, no point movement, no annotation writeback.",
   };
   const GUARDRAILS = [
     "dev-only sandbox-only panel",
@@ -132,9 +141,29 @@
     } catch (e) {}
   }
 
+  function getGuideBandsVisible() {
+    try {
+      return window.sessionStorage.getItem(GUIDE_BANDS_VISIBLE_KEY) === "1";
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function setGuideBandsVisible(visible) {
+    try {
+      window.sessionStorage.setItem(GUIDE_BANDS_VISIBLE_KEY, visible ? "1" : "0");
+    } catch (e) {}
+  }
+
   function applyToggleBtnState(button, visible) {
     if (!button) return;
     button.textContent = visible ? "Hide corner order" : "Show corner order";
+    button.style.background = visible ? "#6c757d" : "#28a745";
+  }
+
+  function applyGuideBtnState(button, visible) {
+    if (!button) return;
+    button.textContent = visible ? "Hide guide bands" : "Show guide bands";
     button.style.background = visible ? "#6c757d" : "#28a745";
   }
 
@@ -707,6 +736,11 @@
       alternative_anchor_hint: "Unavailable because layout is not preview-compatible.",
       hint_guardrail: "Direction-only hint. Inspect visually; no target x/y, no point movement, no annotation writeback.",
       hint_direction_type: "unavailable",
+      guide_status: "unavailable",
+      guide_component: "unavailable",
+      guide_affected_pair_index: "unavailable",
+      guide_scope: "2D panorama overlay only",
+      guide_guardrail: "Guide bands are visual references only. No target x/y, no point movement, no annotation writeback.",
     };
   }
 
@@ -859,6 +893,7 @@
     };
     const selected = issueMap[primaryIssueType];
     const hint = directionOnlyHint(primaryIssueType, xLargest, ceilingLargest, floorLargest, wallLargest);
+    const guideAffectedPairIndex = Number.isInteger(Number(selected.index)) ? selected.index : "unavailable";
     return {
       primary_issue_type: primaryIssueType,
       primary_issue_severity: severityFromNormalized(primaryValue),
@@ -869,6 +904,11 @@
       ceiling_alignment_summary: ceilingSummary,
       floor_alignment_summary: floorSummary,
       wall_height_summary: wallSummary,
+      guide_status: primaryIssueType === "none" ? "no_action" : "available",
+      guide_component: primaryIssueType,
+      guide_affected_pair_index: guideAffectedPairIndex,
+      guide_scope: "2D panorama overlay only",
+      guide_guardrail: "Guide bands are visual references only. No target x/y, no point movement, no annotation writeback.",
       ...hint,
     };
   }
@@ -957,6 +997,19 @@
     setText(`${PANEL_ID}-direction-hint`, deviation.direction_hint);
     setText(`${PANEL_ID}-alternative-anchor-hint`, deviation.alternative_anchor_hint);
     setText(`${PANEL_ID}-hint-guardrail`, deviation.hint_guardrail);
+    updateGuideBandPanel(deviation);
+  }
+
+  function updateGuideBandPanel(deviation) {
+    const visible = getGuideBandsVisible();
+    guideState.status = visible ? deviation.guide_status || "unavailable" : "hidden";
+    guideState.component = visible ? deviation.guide_component || "unavailable" : "hidden";
+    guideState.affectedPairIndex = visible ? deviation.guide_affected_pair_index || "unavailable" : "hidden";
+    setText(`${PANEL_ID}-guide-status`, guideState.status);
+    setText(`${PANEL_ID}-guide-component`, guideState.component);
+    setText(`${PANEL_ID}-guide-affected-pair-index`, guideState.affectedPairIndex);
+    setText(`${PANEL_ID}-guide-scope`, guideState.scope);
+    setText(`${PANEL_ID}-guide-guardrail`, guideState.guardrail);
   }
 
   function updateHighlightPanel() {
@@ -1301,6 +1354,47 @@
     return rect;
   }
 
+  function drawGuideLine(overlay, styleText, labelText) {
+    const line = document.createElement("div");
+    line.className = "hohonet-m13-guide-band";
+    line.style.cssText = styleText;
+    line.setAttribute("aria-label", labelText);
+    overlay.appendChild(line);
+  }
+
+  function renderGuideBands(overlay, rect, pairs) {
+    if (!getGuideBandsVisible()) return;
+    const orderedPairs = Array.isArray(pairs) ? pairs : [];
+    if (!orderedPairs.length) return;
+    const ceilingMedian = median(orderedPairs.map((pair) => pair.y_ceiling));
+    const floorMedian = median(orderedPairs.map((pair) => pair.y_floor));
+    const affectedBaseIndex = currentDiagnosisAffectedPairIndex;
+    const affectedPair = Number.isInteger(affectedBaseIndex)
+      ? orderedPairs.find((pair) => Number(pair?.base_pair_index) === affectedBaseIndex)
+      : null;
+    if (!Number.isFinite(ceilingMedian) || !Number.isFinite(floorMedian)) return;
+    const ceilingTop = (ceilingMedian / DEFAULT_HEIGHT) * rect.height;
+    const floorTop = (floorMedian / DEFAULT_HEIGHT) * rect.height;
+    drawGuideLine(
+      overlay,
+      `position:absolute;left:0;right:0;top:${ceilingTop - 1}px;height:3px;background:rgba(56,189,248,0.34);box-shadow:0 0 0 1px rgba(14,116,144,0.38);pointer-events:none;`,
+      "median ceiling band",
+    );
+    drawGuideLine(
+      overlay,
+      `position:absolute;left:0;right:0;top:${floorTop - 1}px;height:3px;background:rgba(34,197,94,0.30);box-shadow:0 0 0 1px rgba(21,128,61,0.34);pointer-events:none;`,
+      "median floor band",
+    );
+    if (affectedPair && Number.isFinite(affectedPair.x)) {
+      const left = (affectedPair.x / DEFAULT_WIDTH) * rect.width;
+      drawGuideLine(
+        overlay,
+        `position:absolute;top:0;bottom:0;left:${left - 1}px;width:3px;background:rgba(255,138,0,0.36);box-shadow:0 0 0 1px rgba(154,52,18,0.42);pointer-events:none;`,
+        "affected pair guide",
+      );
+    }
+  }
+
   function renderPreviewOverlayPairs(pairs) {
     const image = findMainImage();
     if (!image) return;
@@ -1315,6 +1409,7 @@
     overlay.style.display = getLabelsVisible() ? "block" : "none";
     const rect = positionOverlay();
     if (!rect) return;
+    renderGuideBands(overlay, rect, pairs);
     let affectedOverlayCount = 0;
     (Array.isArray(pairs) ? pairs : []).forEach((pair, index) => {
       for (const point of Array.isArray(pair?.originalPoints) ? pair.originalPoints : []) {
@@ -1332,27 +1427,27 @@
         badge.dataset.displayPairIndex = String(index + 1);
         badge.textContent = String(index + 1);
         badge.style.cssText =
-          "position:absolute;transform:translate(-50%,-150%);background:rgba(255,255,0,0.9);color:#000;font-weight:700;padding:2px 6px;border-radius:4px;font-size:12px;border:1px solid #111;";
+          "position:absolute;transform:translate(-50%,-150%);background:rgba(255,255,255,0.56);color:#111827;font-weight:800;padding:2px 6px;border-radius:4px;font-size:12px;border:1px solid rgba(17,24,39,0.55);box-shadow:0 1px 4px rgba(0,0,0,0.22);";
         if (isManualSelected) {
-          badge.style.background = "#2f5cff";
+          badge.style.background = "rgba(47,92,255,0.58)";
           badge.style.color = "#fff";
-          badge.style.outline = "3px solid #2f5cff";
-          badge.style.boxShadow = "0 0 0 3px rgba(47,92,255,0.35)";
+          badge.style.outline = "3px solid rgba(47,92,255,0.78)";
+          badge.style.boxShadow = "0 0 0 3px rgba(47,92,255,0.28)";
         }
         if (isAffected) {
           affectedOverlayCount += 1;
-          badge.style.background = "#ff8a00";
+          badge.style.background = "rgba(255,138,0,0.62)";
           badge.style.color = "#111827";
-          badge.style.border = "2px solid #7c2d12";
-          badge.style.outline = "4px solid #ff7a00";
-          badge.style.boxShadow = "0 0 0 4px rgba(255,122,0,0.38)";
+          badge.style.border = "2px solid rgba(124,45,18,0.9)";
+          badge.style.outline = "4px solid rgba(255,122,0,0.86)";
+          badge.style.boxShadow = "0 0 0 4px rgba(255,122,0,0.32)";
         }
         if (isManualSelected && isAffected) {
-          badge.style.background = "#a855f7";
+          badge.style.background = "rgba(168,85,247,0.62)";
           badge.style.color = "#fff";
-          badge.style.border = "2px solid #581c87";
-          badge.style.outline = "4px solid #a855f7";
-          badge.style.boxShadow = "0 0 0 4px rgba(168,85,247,0.38)";
+          badge.style.border = "2px solid rgba(88,28,135,0.92)";
+          badge.style.outline = "4px solid rgba(168,85,247,0.84)";
+          badge.style.boxShadow = "0 0 0 4px rgba(168,85,247,0.30)";
         }
         badge.style.left = `${(pctX / 100) * rect.width}px`;
         badge.style.top = `${(pctY / 100) * rect.height}px`;
@@ -1418,6 +1513,14 @@
     setLabelsVisible(visible);
     applyToggleBtnState(document.getElementById(TOGGLE_LABELS_BUTTON_ID), visible);
     renderPreviewOverlayPairs(orderedPreviewPairs());
+  }
+
+  function toggleGuideBands() {
+    const visible = !getGuideBandsVisible();
+    setGuideBandsVisible(visible);
+    applyGuideBtnState(document.getElementById(GUIDE_BANDS_BUTTON_ID), visible);
+    renderPreviewOverlayPairs(orderedPreviewPairs());
+    updateGuideBandPanel(currentSandboxState?.manhattan_deviation || unavailableDeviation(0, "missing_keypoints"));
   }
 
   function highlightAffectedPair() {
@@ -1827,6 +1930,7 @@
       updateManhattanDeviationPanel(state.manhattan_deviation);
       updateMetaGuardPanel(metaGuard);
       applyToggleBtnState(document.getElementById(TOGGLE_LABELS_BUTTON_ID), getLabelsVisible());
+      applyGuideBtnState(document.getElementById(GUIDE_BANDS_BUTTON_ID), getGuideBandsVisible());
       return;
     }
 
@@ -1861,6 +1965,14 @@
       renderPanel(nextState);
     });
     controls.appendChild(refreshButton);
+    const guideButton = document.createElement("button");
+    guideButton.id = GUIDE_BANDS_BUTTON_ID;
+    guideButton.type = "button";
+    guideButton.textContent = "Show guide bands";
+    guideButton.style.cssText = "margin-left:8px;padding:6px 10px;border:1px solid rgba(255,255,255,0.18);border-radius:6px;background:#28a745;color:#fff;cursor:pointer;font-size:12px;";
+    guideButton.addEventListener("click", toggleGuideBands);
+    controls.appendChild(guideButton);
+    applyGuideBtnState(guideButton, getGuideBandsVisible());
     panel.appendChild(controls);
 
     const preview = document.createElement("section");
@@ -1947,6 +2059,16 @@
     scrollButton.addEventListener("click", () => scrollToAffectedPair());
     hint.appendChild(scrollButton);
     panel.appendChild(hint);
+
+    const guides = document.createElement("section");
+    guides.appendChild(document.createElement("h3")).appendChild(text("2D guide bands"));
+    guides.appendChild(makeMutableRow("guide_status", getGuideBandsVisible() ? state.manhattan_deviation.guide_status : "hidden", `${PANEL_ID}-guide-status`));
+    guides.appendChild(makeMutableRow("guide_component", getGuideBandsVisible() ? state.manhattan_deviation.guide_component : "hidden", `${PANEL_ID}-guide-component`));
+    guides.appendChild(makeMutableRow("guide_affected_pair_index", getGuideBandsVisible() ? state.manhattan_deviation.guide_affected_pair_index : "hidden", `${PANEL_ID}-guide-affected-pair-index`));
+    guides.appendChild(makeMutableRow("guide_scope", guideState.scope, `${PANEL_ID}-guide-scope`));
+    guides.appendChild(makeMutableRow("guide_guardrail", guideState.guardrail, `${PANEL_ID}-guide-guardrail`));
+    guides.appendChild(text("Legend: median ceiling band, median floor band, affected pair guide. Guide bands are visual references only. No target x/y, no point movement, no annotation writeback."));
+    panel.appendChild(guides);
 
     const suggestion = document.createElement("section");
     suggestion.appendChild(document.createElement("h3")).appendChild(text("Preview-only suggestion"));
