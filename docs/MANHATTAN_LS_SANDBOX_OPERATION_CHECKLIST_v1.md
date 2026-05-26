@@ -287,3 +287,22 @@ M12.4 keeps the M12.3 state model but simplifies the visual language:
 - `highlight_mode` should distinguish `dual_state_visible` from `manual_and_diagnosis_same_pair`.
 
 The dev-only panel also clears stale Preview order overlays and local preview-order state when the task / annotation / main image signature changes. This cleanup mirrors the official helper's overlay lifecycle boundary at a simpler sandbox level. It does not write annotations, submit, modify Label Studio data, add 3D-side highlighting, emit target coordinates, emit snap coordinates, or create routing / formal `g_t` / `P1/C1/C2/T1/V1` artifacts.
+
+## 20. M12.5 / M13 Transparent Badges And 2D Guide Bands
+
+M12.5 keeps overlay badge numbers but reduces badge opacity so the panorama remains inspectable:
+
+- Manual selected labels remain blue.
+- Diagnosis affected labels remain orange.
+- Labels that are both manual selected and diagnosis affected remain purple.
+- Overlay badge text must remain pair numbers only; no `S`, `A`, or `SA` suffixes.
+
+M13 adds optional 2D guide bands for the dev-only sandbox diagnosis:
+
+- `Show guide bands` / `Hide guide bands` toggles the visual references.
+- The 2D overlay may draw a median ceiling band, a median floor band, and an affected pair guide line.
+- Guide values use Label Studio 0-100 / preview-pair geometry internally and convert to image overlay position only for drawing.
+- Guide diagnostics may show `guide_status`, `guide_component`, `guide_affected_pair_index`, `guide_scope`, and `guide_guardrail`.
+- Guide bands are visual references only. No target x/y, no point movement, no annotation writeback.
+
+The timed sandbox script must keep activity-gated active-time semantics. Periodic heartbeat telemetry should be skipped when there are no newly accumulated active seconds; sandbox exclusion tags remain mandatory for any telemetry that is sent.

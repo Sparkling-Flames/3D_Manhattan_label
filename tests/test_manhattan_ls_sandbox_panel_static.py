@@ -35,7 +35,7 @@ def test_both_scripts_have_required_guard_text():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
         for required in [
-            "m12.4-dev-only",
+            "m13-dev-only",
             "dev-only",
             "sandbox-only",
             "expert/developer tester only",
@@ -96,7 +96,8 @@ def test_timed_script_only_posts_sandbox_log_time_payload():
     assert "}/log_time`" in text
     assert "X-HOHONET-TOKEN" in text
     assert "HEARTBEAT_INTERVAL_MS = 15000" in text
-    assert "sendSandboxTelemetry(\"heartbeat\")" in text
+    assert "sendSandboxTelemetryIfActive(\"heartbeat\")" in text
+    assert "skipped_no_active_seconds" in text
     assert "visibilitychange" in text
     assert "visibility_hidden" in text
     assert "pagehide" in text
@@ -295,9 +296,9 @@ def test_both_scripts_include_m12_direction_only_hint_panel():
         assert '${index + 1}${isManualSelected ? "S" : ""}${isAffected ? "A" : ""}' not in text
         assert "badge.textContent = String(index + 1)" in text
         assert 'return "manual_and_diagnosis"' not in text
-        assert 'badge.style.background = "#ff8a00"' in text
-        assert 'badge.style.background = "#2f5cff"' in text
-        assert 'badge.style.background = "#a855f7"' in text
+        assert 'badge.style.background = "rgba(255,138,0,0.62)"' in text
+        assert 'badge.style.background = "rgba(47,92,255,0.58)"' in text
+        assert 'badge.style.background = "rgba(168,85,247,0.62)"' in text
 
         scroll_start = text.index("function scrollToAffectedPair")
         scroll_end = text.index("function swapPreviewPairs")
@@ -359,6 +360,38 @@ def test_both_scripts_include_sandbox_meta_guard_and_preview_order_controls():
             assert required in text
 
 
+def test_both_scripts_include_m13_guide_bands_and_transparent_badges():
+    for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
+        text = read(script)
+        for required in [
+            "m13-dev-only",
+            "Show guide bands",
+            "Hide guide bands",
+            "2D guide bands",
+            "guide_status",
+            "guide_component",
+            "guide_affected_pair_index",
+            "guide_scope",
+            "guide_guardrail",
+            "Guide bands are visual references only",
+            "median ceiling band",
+            "median floor band",
+            "affected pair guide",
+            "renderGuideBands",
+            "getGuideBandsVisible",
+            "setGuideBandsVisible",
+            "GUIDE_BANDS_VISIBLE_KEY",
+            "rgba(255,255,255,0.56)",
+            "rgba(255,138,0,0.62)",
+            "rgba(47,92,255,0.58)",
+            "rgba(168,85,247,0.62)",
+        ]:
+            assert required in text
+
+        assert '${index + 1}${isManualSelected ? "S" : ""}${isAffected ? "A" : ""}' not in text
+        assert "badge.textContent = String(index + 1)" in text
+
+
 def test_both_scripts_use_preview_pairing_and_fixed_deviation_thresholds():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
@@ -407,6 +440,9 @@ def test_timed_telemetry_sends_deviation_score_without_coordinates():
         "preview_only_diagnosis_affected_pair_index",
         "preview_only_manual_selected_pair_index",
         "preview_only_highlight_mode",
+        "preview_only_guide_visible",
+        "preview_only_guide_component",
+        "preview_only_guide_affected_pair_index",
         "preview_order_visible",
         "not_correctness: true",
         "no_writeback: true",
