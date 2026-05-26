@@ -113,6 +113,8 @@
   - M1 residual calculator for preview-compatible keypoints; reports preview geometry stability only.
 - `tools/manhattan_constrained_fit.py`
   - M14.1/M14.2 pure Python Manhattan constrained fitting prototype for ordered paired corners in Label Studio 0-100 coordinates. It converts to panorama angular coordinates, searches deterministic Manhattan yaw candidates, estimates a height-aware closed Manhattan candidate with `atan2` reprojection, reports `fit_status`, `fit_residual`, `manhattan_yaw_*`, `layout_height_candidate`, `per_point_delta`, and warnings, and remains dev-only / sandbox-only with no writeback, no UI integration, no routing, and no formal artifact role.
+- `tools/audit_manhattan_constrained_fit_smoke.py`
+  - M15 read-only smoke export audit for the M14.2 Manhattan constrained fitting core. It consumes a copied/local Label Studio export JSON, builds current-preview paired corners, writes smoke sidecars under `analysis_results/manhattan_constrained_fit_smoke/`, and remains dev-only / smoke-only with no export modification, no annotation writeback, no formal `g_t`, no routing, no worker tier, and no `P1/C1/C2/T1/V1` artifact role.
 - `tools/manhattan_preview_suggestions.py`
   - M2 preview-only suggestion summary helper; emits review prompt type counts only.
 - `tools/render_manhattan_probe_report.py`
@@ -346,6 +348,8 @@
   - smoke test 输出
 - `analysis_results/manhattan_geometry_diagnostic/`
   - Smoke/probe sidecar outputs for the experiment-outside / post-hoc Manhattan toolchain. Contains the 2026-05-07 probe summary, Markdown report, standalone HTML contact sheet, optional M8.2 sandbox active-log audit JSON, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, not RQ1 primary active_time evidence, and not `P1/C1/C2/T1/V1` artifacts.
+- `analysis_results/manhattan_constrained_fit_smoke/`
+  - M15 smoke-only sidecar outputs for the M14.2 Manhattan constrained fit audit on the 2026-05-18 Label Studio export. Contains records JSONL, summary JSON, candidate CSV, Markdown report, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, and not `P1/C1/C2/T1/V1` artifacts.
 - `analysis_results/pooled_qa/`
   - pooled QA 图包与审计表
 - `analysis_results/c_manifests_20260310/`
@@ -401,6 +405,7 @@
 - `tests/test_probe_manhattan_smoke_export.py`
 - `tests/test_manhattan_geometry_residual.py`
 - `tests/test_manhattan_constrained_fit.py`
+- `tests/test_audit_manhattan_constrained_fit_smoke.py`
 - `tests/test_manhattan_preview_suggestions.py`
 - `tests/test_render_manhattan_probe_report.py`
 - `tests/test_render_manhattan_contact_sheet.py`
