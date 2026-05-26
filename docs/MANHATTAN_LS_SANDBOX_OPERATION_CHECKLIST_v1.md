@@ -253,5 +253,13 @@ M12.1 fixes only the dev-only sandbox panel linking between the `Direction-only 
 
 - `Highlight affected pair` must use stable base-pair identity rather than only display order after local reordering.
 - Highlight failures must update separate diagnostics (`highlight_status`, `highlight_affected_pair_index`, `highlight_row_found`, `highlight_overlay_labels_found`) and must not overwrite `hint_status`.
-- Preview-order rows must display Label Studio percentage coordinate summaries (`x%`, `c%`, `f%`) rather than pixel coordinate values.
+- Preview-order rows must display Label Studio 0-100 coordinate summaries (`top: x=..., y=...`, `bottom: x=..., y=...`) rather than pixel coordinate values or percent-suffixed labels.
 - The highlight may select and outline the affected preview-order row and visible 2D order overlay labels, but it must not move points, reorder pairs, submit, write annotations, emit target coordinates, emit snap coordinates, or create routing / formal `g_t` / `P1/C1/C2/T1/V1` artifacts.
+
+## 17. M12.2 Highlight Scope and LS Coordinate Display
+
+M12.2 clarifies that affected-pair highlighting is limited to the Preview order panel pair row and 2D panorama corner-order overlay labels. It does not add 3D preview wall or point highlighting and does not modify `vis_3d.html`.
+
+- Pair row coordinates use the Label Studio 0-100 scale without a percent suffix.
+- Residual display labels must make pixel units explicit, for example `vertical_pair_x_residual_px`, `ceiling_y_range_px`, `floor_y_range_px`, and `wall_height_range_px`.
+- The highlight remains preview-only and local to the sandbox UI: no point movement, no annotation writeback, no submit, no target coordinates, no snap coordinates, no routing, no formal `g_t`, and no `P1/C1/C2/T1/V1` artifacts.

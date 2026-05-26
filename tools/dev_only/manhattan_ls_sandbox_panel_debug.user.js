@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HOHONET Manhattan LS Sandbox Panel Debug
 // @namespace    hohonet-dev-only
-// @version      m12.1-dev-only-debug-0.1.0
+// @version      m12.2-dev-only-debug-0.1.0
 // @description  dev-only sandbox-only read-only Manhattan panel; debug variant with no active_time upload.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
@@ -41,7 +41,7 @@
   window[WINDOW_GUARD] = { script_variant: "debug" };
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const PANEL_VERSION = "m12.1-dev-only-debug-0.1.0";
+  const PANEL_VERSION = "m12.2-dev-only-debug-0.1.0";
   const OFFICIAL_IFRAME_ID = "hohonet-iframe";
   const OFFICIAL_WRAPPER_ID = "hohonet-wrapper";
   const OFFICIAL_BUTTON_ID = "hohonet-refresh-btn";
@@ -576,7 +576,7 @@
     return Number.isFinite(value) ? value.toFixed(3) : "unavailable";
   }
 
-  function formatPercent(value) {
+  function formatLsCoord(value) {
     return Number.isFinite(value) ? value.toFixed(2) : "unavailable";
   }
 
@@ -588,26 +588,27 @@
     return Number.isFinite(point?.pctY) ? point.pctY : (Number(point?.y) / DEFAULT_HEIGHT) * 100;
   }
 
-  function pairPercentSummary(pair) {
+  function pairLsCoordSummary(pair) {
     const points = Array.isArray(pair?.originalPoints) ? pair.originalPoints : [];
-    const pctXs = points.map(pointPctX).filter(Number.isFinite);
-    const pctYs = points.map(pointPctY).filter(Number.isFinite);
-    const xPercent = Number.isFinite(pair?.x_percent)
-      ? pair.x_percent
-      : pctXs.length
-        ? pctXs.reduce((acc, value) => acc + value, 0) / pctXs.length
-        : (Number(pair?.x) / DEFAULT_WIDTH) * 100;
-    const ceilingPercent = Number.isFinite(pair?.ceiling_y_percent)
-      ? pair.ceiling_y_percent
-      : pctYs.length
-        ? Math.min(...pctYs)
-        : (Number(pair?.y_ceiling) / DEFAULT_HEIGHT) * 100;
-    const floorPercent = Number.isFinite(pair?.floor_y_percent)
-      ? pair.floor_y_percent
-      : pctYs.length
-        ? Math.max(...pctYs)
-        : (Number(pair?.y_floor) / DEFAULT_HEIGHT) * 100;
-    return { xPercent, ceilingPercent, floorPercent };
+    if (points.length >= 2) {
+      const sortedByY = points.slice().sort((a, b) => a.y - b.y);
+      return {
+        top: { x: pointPctX(sortedByY[0]), y: pointPctY(sortedByY[0]) },
+        bottom: { x: pointPctX(sortedByY[sortedByY.length - 1]), y: pointPctY(sortedByY[sortedByY.length - 1]) },
+        derived: false,
+      };
+    }
+    return {
+      top: {
+        x: Number.isFinite(pair?.x_ls) ? pair.x_ls : (Number(pair?.x) / DEFAULT_WIDTH) * 100,
+        y: Number.isFinite(pair?.ceiling_y_ls) ? pair.ceiling_y_ls : (Number(pair?.y_ceiling) / DEFAULT_HEIGHT) * 100,
+      },
+      bottom: {
+        x: Number.isFinite(pair?.x_ls) ? pair.x_ls : (Number(pair?.x) / DEFAULT_WIDTH) * 100,
+        y: Number.isFinite(pair?.floor_y_ls) ? pair.floor_y_ls : (Number(pair?.y_floor) / DEFAULT_HEIGHT) * 100,
+      },
+      derived: true,
+    };
   }
 
   function hasNearDuplicateKeypoint(points, width, height) {
@@ -1314,14 +1315,14 @@
 
   function setPreviewBasePairs(pairs) {
     currentPreviewBasePairs = (Array.isArray(pairs) ? pairs : []).map((pair, index) => {
-      const percent = pairPercentSummary(pair);
+      const lsCoord = pairLsCoordSummary(pair);
       return {
         ...pair,
         base_pair_index: index,
         display_pair_index: index + 1,
-        x_percent: percent.xPercent,
-        ceiling_y_percent: percent.ceilingPercent,
-        floor_y_percent: percent.floorPercent,
+        x_ls: lsCoord.derived ? lsCoord.top.x : (lsCoord.top.x + lsCoord.bottom.x) / 2,
+        ceiling_y_ls: lsCoord.top.y,
+        floor_y_ls: lsCoord.bottom.y,
       };
     });
     currentPreviewOrder = currentPreviewBasePairs.map((_, index) => index);
@@ -1426,8 +1427,9 @@
         row.style.borderColor = "#ffb020";
         row.style.background = "rgba(255,176,32,0.24)";
       }
-      const percent = pairPercentSummary(pair);
-      row.innerHTML = `<strong>Pair ${displayIndex + 1}</strong><span>x%=${formatPercent(percent.xPercent)} c%=${formatPercent(percent.ceilingPercent)} f%=${formatPercent(percent.floorPercent)}</span><span>${isAffected ? "affected" : isActive ? "active" : ""}</span>`;
+      const lsCoord = pairLsCoordSummary(pair);
+      const prefix = lsCoord.derived ? "derived " : "";
+      row.innerHTML = `<strong>Pair ${displayIndex + 1}</strong><span>${prefix}top: x=${formatLsCoord(lsCoord.top.x)}, y=${formatLsCoord(lsCoord.top.y)}<br>${prefix}bottom: x=${formatLsCoord(lsCoord.bottom.x)}, y=${formatLsCoord(lsCoord.bottom.y)}</span><span>${isAffected ? "affected" : isActive ? "active" : ""}</span>`;
       row.addEventListener("click", () => {
         currentPreviewSelectedPairIndex = displayIndex;
         updatePreviewOrderPanelUi();
@@ -1789,10 +1791,10 @@
     deviation.appendChild(makeMutableRow("compatibility_status", state.manhattan_deviation.compatibility_status, `${PANEL_ID}-compatibility-status`));
     deviation.appendChild(makeMutableRow("n_keypoints", state.manhattan_deviation.n_keypoints, `${PANEL_ID}-deviation-n-keypoints`));
     deviation.appendChild(makeMutableRow("n_pairs", state.manhattan_deviation.n_pairs, `${PANEL_ID}-deviation-n-pairs`));
-    deviation.appendChild(makeMutableRow("vertical_pair_x_residual", formatMetric(state.manhattan_deviation.vertical_pair_x_residual), `${PANEL_ID}-vertical-pair-x-residual`));
-    deviation.appendChild(makeMutableRow("ceiling_y_range", formatMetric(state.manhattan_deviation.ceiling_y_range), `${PANEL_ID}-ceiling-y-range`));
-    deviation.appendChild(makeMutableRow("floor_y_range", formatMetric(state.manhattan_deviation.floor_y_range), `${PANEL_ID}-floor-y-range`));
-    deviation.appendChild(makeMutableRow("wall_height_range", formatMetric(state.manhattan_deviation.wall_height_range), `${PANEL_ID}-wall-height-range`));
+    deviation.appendChild(makeMutableRow("vertical_pair_x_residual_px", formatMetric(state.manhattan_deviation.vertical_pair_x_residual), `${PANEL_ID}-vertical-pair-x-residual`));
+    deviation.appendChild(makeMutableRow("ceiling_y_range_px", formatMetric(state.manhattan_deviation.ceiling_y_range), `${PANEL_ID}-ceiling-y-range`));
+    deviation.appendChild(makeMutableRow("floor_y_range_px", formatMetric(state.manhattan_deviation.floor_y_range), `${PANEL_ID}-floor-y-range`));
+    deviation.appendChild(makeMutableRow("wall_height_range_px", formatMetric(state.manhattan_deviation.wall_height_range), `${PANEL_ID}-wall-height-range`));
     deviation.appendChild(makeMutableRow("manhattan_deviation_score", formatMetric(state.manhattan_deviation.manhattan_deviation_score), `${PANEL_ID}-manhattan-deviation-score`));
     deviation.appendChild(makeMutableRow("deviation_level", state.manhattan_deviation.deviation_level, `${PANEL_ID}-deviation-level`));
     deviation.appendChild(makeMutableRow("reason", state.manhattan_deviation.exclusion_reason, `${PANEL_ID}-deviation-reason`));
@@ -1825,6 +1827,7 @@
     hint.appendChild(makeMutableRow("highlight_affected_pair_index", highlightState.affectedPairIndex, `${PANEL_ID}-highlight-affected-pair-index`));
     hint.appendChild(makeMutableRow("highlight_row_found", highlightState.rowFound ? "true" : "false", `${PANEL_ID}-highlight-row-found`));
     hint.appendChild(makeMutableRow("highlight_overlay_labels_found", highlightState.overlayLabelsFound, `${PANEL_ID}-highlight-overlay-labels-found`));
+    hint.appendChild(text("Highlight scope: Preview order pair row and 2D panorama order labels only. No wall or point highlighting inside the 3D preview in this step."));
     const highlightButton = document.createElement("button");
     highlightButton.type = "button";
     highlightButton.textContent = "Highlight affected pair";
@@ -1847,6 +1850,7 @@
       list.appendChild(item);
     }
     guards.appendChild(list);
+    guards.appendChild(text("Coordinates use Label Studio 0-100 scale."));
     panel.appendChild(guards);
   }
 
