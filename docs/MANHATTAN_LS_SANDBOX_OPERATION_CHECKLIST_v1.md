@@ -274,3 +274,16 @@ M12.3 keeps two independent preview-only highlight states:
 Clicking a Preview order row updates only the manual selected pair and must not clear the diagnosis affected pair. Clicking `Highlight affected pair` updates only the diagnosis highlight and must not overwrite the manual selected pair or scroll the panel. The optional `Scroll to affected pair` button is the only M12.3 control that may scroll the Preview order panel.
 
 If both states refer to the same pair, the sandbox UI may use a combined style. Both states remain local visual aids for the Preview order panel and 2D panorama order labels only: no 3D-side highlighting, no point movement, no annotation writeback, no submit, no target coordinates, no snap coordinates, no routing, no formal `g_t`, and no `P1/C1/C2/T1/V1` artifacts.
+
+## 19. M12.4 Highlight Visual Polish And Task-Switch Cleanup
+
+M12.4 keeps the M12.3 state model but simplifies the visual language:
+
+- 2D overlay badges show only the pair number; suffixes such as `S`, `A`, or `SA` must not be appended.
+- Manual selected pairs use blue styling.
+- Diagnosis affected pairs use stronger orange styling.
+- Pairs that are both manual selected and diagnosis affected use purple / combined styling.
+- The Preview order panel includes a compact legend: blue = manual selected, orange = diagnosis affected, purple = both.
+- `highlight_mode` should distinguish `dual_state_visible` from `manual_and_diagnosis_same_pair`.
+
+The dev-only panel also clears stale Preview order overlays and local preview-order state when the task / annotation / main image signature changes. This cleanup mirrors the official helper's overlay lifecycle boundary at a simpler sandbox level. It does not write annotations, submit, modify Label Studio data, add 3D-side highlighting, emit target coordinates, emit snap coordinates, or create routing / formal `g_t` / `P1/C1/C2/T1/V1` artifacts.
