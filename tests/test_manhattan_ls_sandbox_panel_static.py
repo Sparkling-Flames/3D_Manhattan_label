@@ -35,7 +35,7 @@ def test_both_scripts_have_required_guard_text():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
         for required in [
-            "m12.2-dev-only",
+            "m12.3-dev-only",
             "dev-only",
             "sandbox-only",
             "expert/developer tester only",
@@ -251,13 +251,23 @@ def test_both_scripts_include_m12_direction_only_hint_panel():
             "hint_guardrail",
             "highlight_status",
             "highlight_affected_pair_index",
+            "diagnosis_affected_pair_index",
+            "manual_selected_pair_index",
+            "highlight_mode",
+            "diagnosis_highlight_status",
+            "manual_highlight_status",
             "highlight_row_found",
             "highlight_overlay_labels_found",
             "Highlight scope: Preview order pair row and 2D panorama order labels only",
             "Highlight affected pair",
+            "Scroll to affected pair",
             'highlightButton.addEventListener("click", () => highlightAffectedPair())',
+            'scrollButton.addEventListener("click", () => scrollToAffectedPair())',
+            "manual-selected-pair",
             "diagnosis-affected-pair",
+            "manual-and-diagnosis-pair",
             "setHighlightState",
+            "diagnosis_highlight_applied",
             "directionOnlyHint",
             "would reduce this residual",
             "Choose by visual evidence",
@@ -269,7 +279,7 @@ def test_both_scripts_include_m12_direction_only_hint_panel():
             assert required in text
 
         highlight_start = text.index("function highlightAffectedPair")
-        highlight_end = text.index("function swapPreviewPairs")
+        highlight_end = text.index("function scrollToAffectedPair")
         highlight_text = text[highlight_start:highlight_end]
         assert "hint-status" not in highlight_text
         assert "unavailable_no_valid_pair" in highlight_text
@@ -277,6 +287,12 @@ def test_both_scripts_include_m12_direction_only_hint_panel():
         assert "currentPreviewSelectedPairIndex = displayIndex" not in highlight_text
         assert "scrollIntoView" not in highlight_text
         assert "state.manhattan_deviation" not in highlight_text
+
+        scroll_start = text.index("function scrollToAffectedPair")
+        scroll_end = text.index("function swapPreviewPairs")
+        scroll_text = text[scroll_start:scroll_end]
+        assert "scrollIntoView" in scroll_text
+        assert "currentPreviewSelectedPairIndex" not in scroll_text
 
 
 def test_both_scripts_include_sandbox_meta_guard_and_preview_order_controls():
@@ -294,8 +310,11 @@ def test_both_scripts_include_sandbox_meta_guard_and_preview_order_controls():
             "Swap order",
             "Pair rows",
             "active-pair",
+            "manual-selected-pair",
             "diagnosis-affected-pair",
+            "manual-and-diagnosis-pair",
             "dataset.activePair",
+            "dataset.manualSelectedPair",
             "dataset.diagnosisAffectedPair",
             "base_pair_index",
             "display_pair_index",
@@ -368,6 +387,9 @@ def test_timed_telemetry_sends_deviation_score_without_coordinates():
         "preview_only_hint_component",
         "preview_only_affected_pair_index",
         "preview_only_direction_hint_type",
+        "preview_only_diagnosis_affected_pair_index",
+        "preview_only_manual_selected_pair_index",
+        "preview_only_highlight_mode",
         "preview_order_visible",
         "not_correctness: true",
         "no_writeback: true",
