@@ -246,3 +246,12 @@ The hint may say which direction would reduce the dominant residual using conser
 Timed sandbox telemetry may include only coarse hint fields: `preview_only_hint_component`, `preview_only_affected_pair_index`, and `preview_only_direction_hint_type`. It must not send keypoint coordinates, target coordinates, adjustment vectors, or corrected annotations.
 
 M12 remains dev-only and sandbox-only. It is not worker-facing, not correctness, not worker quality, not routing, not formal `g_t`, and not a `P1/C1/C2/T1/V1` artifact.
+
+## 16. M12.1 Highlight and Coordinate Display Bugfix
+
+M12.1 fixes only the dev-only sandbox panel linking between the `Direction-only hint` affected pair and the preview-order UI.
+
+- `Highlight affected pair` must use stable base-pair identity rather than only display order after local reordering.
+- Highlight failures must update separate diagnostics (`highlight_status`, `highlight_affected_pair_index`, `highlight_row_found`, `highlight_overlay_labels_found`) and must not overwrite `hint_status`.
+- Preview-order rows must display Label Studio percentage coordinate summaries (`x%`, `c%`, `f%`) rather than pixel coordinate values.
+- The highlight may select and outline the affected preview-order row and visible 2D order overlay labels, but it must not move points, reorder pairs, submit, write annotations, emit target coordinates, emit snap coordinates, or create routing / formal `g_t` / `P1/C1/C2/T1/V1` artifacts.

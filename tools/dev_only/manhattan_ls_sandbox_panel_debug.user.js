@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HOHONET Manhattan LS Sandbox Panel Debug
 // @namespace    hohonet-dev-only
-// @version      m12-dev-only-debug-0.1.0
+// @version      m12.1-dev-only-debug-0.1.0
 // @description  dev-only sandbox-only read-only Manhattan panel; debug variant with no active_time upload.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
@@ -41,7 +41,7 @@
   window[WINDOW_GUARD] = { script_variant: "debug" };
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const PANEL_VERSION = "m12-dev-only-debug-0.1.0";
+  const PANEL_VERSION = "m12.1-dev-only-debug-0.1.0";
   const OFFICIAL_IFRAME_ID = "hohonet-iframe";
   const OFFICIAL_WRAPPER_ID = "hohonet-wrapper";
   const OFFICIAL_BUTTON_ID = "hohonet-refresh-btn";
@@ -62,6 +62,12 @@
   let currentPreviewSelectedPairIndex = 0;
   let currentDiagnosisAffectedPairIndex = null;
   let currentSandboxState = null;
+  const highlightState = {
+    status: "not_applied",
+    affectedPairIndex: "none",
+    rowFound: false,
+    overlayLabelsFound: 0,
+  };
   const GUARDRAILS = [
     "dev-only sandbox-only panel",
     "expert/developer tester only",
@@ -570,6 +576,40 @@
     return Number.isFinite(value) ? value.toFixed(3) : "unavailable";
   }
 
+  function formatPercent(value) {
+    return Number.isFinite(value) ? value.toFixed(2) : "unavailable";
+  }
+
+  function pointPctX(point) {
+    return Number.isFinite(point?.pctX) ? point.pctX : (Number(point?.x) / DEFAULT_WIDTH) * 100;
+  }
+
+  function pointPctY(point) {
+    return Number.isFinite(point?.pctY) ? point.pctY : (Number(point?.y) / DEFAULT_HEIGHT) * 100;
+  }
+
+  function pairPercentSummary(pair) {
+    const points = Array.isArray(pair?.originalPoints) ? pair.originalPoints : [];
+    const pctXs = points.map(pointPctX).filter(Number.isFinite);
+    const pctYs = points.map(pointPctY).filter(Number.isFinite);
+    const xPercent = Number.isFinite(pair?.x_percent)
+      ? pair.x_percent
+      : pctXs.length
+        ? pctXs.reduce((acc, value) => acc + value, 0) / pctXs.length
+        : (Number(pair?.x) / DEFAULT_WIDTH) * 100;
+    const ceilingPercent = Number.isFinite(pair?.ceiling_y_percent)
+      ? pair.ceiling_y_percent
+      : pctYs.length
+        ? Math.min(...pctYs)
+        : (Number(pair?.y_ceiling) / DEFAULT_HEIGHT) * 100;
+    const floorPercent = Number.isFinite(pair?.floor_y_percent)
+      ? pair.floor_y_percent
+      : pctYs.length
+        ? Math.max(...pctYs)
+        : (Number(pair?.y_floor) / DEFAULT_HEIGHT) * 100;
+    return { xPercent, ceilingPercent, floorPercent };
+  }
+
   function hasNearDuplicateKeypoint(points, width, height) {
     const threshold = Math.max(width, height) * DUPLICATE_KEYPOINT_THRESHOLD_RATIO;
     for (let i = 0; i < points.length; i += 1) {
@@ -917,6 +957,21 @@
     setText(`${PANEL_ID}-hint-guardrail`, deviation.hint_guardrail);
   }
 
+  function updateHighlightPanel() {
+    setText(`${PANEL_ID}-highlight-status`, highlightState.status);
+    setText(`${PANEL_ID}-highlight-affected-pair-index`, highlightState.affectedPairIndex);
+    setText(`${PANEL_ID}-highlight-row-found`, highlightState.rowFound ? "true" : "false");
+    setText(`${PANEL_ID}-highlight-overlay-labels-found`, highlightState.overlayLabelsFound);
+  }
+
+  function setHighlightState(status, affectedPairIndex, rowFound = false, overlayLabelsFound = 0) {
+    highlightState.status = status;
+    highlightState.affectedPairIndex = affectedPairIndex;
+    highlightState.rowFound = rowFound;
+    highlightState.overlayLabelsFound = overlayLabelsFound;
+    updateHighlightPanel();
+  }
+
   function updateMetaGuardPanel(meta) {
     if (!meta) return;
     setText(`${PANEL_ID}-meta-guard-status`, meta.status);
@@ -1204,17 +1259,21 @@
     overlay.style.display = getLabelsVisible() ? "block" : "none";
     const rect = positionOverlay();
     if (!rect) return;
+    let affectedOverlayCount = 0;
     (Array.isArray(pairs) ? pairs : []).forEach((pair, index) => {
       for (const point of Array.isArray(pair?.originalPoints) ? pair.originalPoints : []) {
         const pctX = Number.isFinite(point.pctX) ? point.pctX : (point.x / DEFAULT_WIDTH) * 100;
         const pctY = Number.isFinite(point.pctY) ? point.pctY : (point.y / DEFAULT_HEIGHT) * 100;
         const badge = document.createElement("div");
-        const isAffected = index === currentDiagnosisAffectedPairIndex;
+        const isAffected = Number(pair?.base_pair_index) === currentDiagnosisAffectedPairIndex;
         badge.className = isAffected ? "diagnosis-affected-pair" : "";
+        badge.dataset.basePairIndex = Number.isFinite(Number(pair?.base_pair_index)) ? String(Number(pair.base_pair_index) + 1) : String(index + 1);
+        badge.dataset.displayPairIndex = String(index + 1);
         badge.textContent = String(index + 1);
         badge.style.cssText =
           "position:absolute;transform:translate(-50%,-150%);background:rgba(255,255,0,0.9);color:#000;font-weight:700;padding:2px 6px;border-radius:4px;font-size:12px;border:1px solid #111;";
         if (isAffected) {
+          affectedOverlayCount += 1;
           badge.style.outline = "3px solid #ff7a00";
           badge.style.boxShadow = "0 0 0 3px rgba(255,122,0,0.35)";
         }
@@ -1223,6 +1282,9 @@
         overlay.appendChild(badge);
       }
     });
+    if (currentDiagnosisAffectedPairIndex !== null) {
+      setHighlightState(highlightState.status, highlightState.affectedPairIndex, highlightState.rowFound, affectedOverlayCount);
+    }
   }
 
   function sendPreviewOrderToIframe() {
@@ -1251,10 +1313,24 @@
   }
 
   function setPreviewBasePairs(pairs) {
-    currentPreviewBasePairs = Array.isArray(pairs) ? pairs.slice() : [];
+    currentPreviewBasePairs = (Array.isArray(pairs) ? pairs : []).map((pair, index) => {
+      const percent = pairPercentSummary(pair);
+      return {
+        ...pair,
+        base_pair_index: index,
+        display_pair_index: index + 1,
+        x_percent: percent.xPercent,
+        ceiling_y_percent: percent.ceilingPercent,
+        floor_y_percent: percent.floorPercent,
+      };
+    });
     currentPreviewOrder = currentPreviewBasePairs.map((_, index) => index);
     currentPreviewSelectedPairIndex = 0;
     currentDiagnosisAffectedPairIndex = null;
+    highlightState.status = "not_applied";
+    highlightState.affectedPairIndex = "none";
+    highlightState.rowFound = false;
+    highlightState.overlayLabelsFound = 0;
     renderPreviewOverlayPairs(orderedPreviewPairs());
     ensurePreviewOrderPanel();
     updatePreviewOrderPanelUi();
@@ -1267,16 +1343,29 @@
     renderPreviewOverlayPairs(orderedPreviewPairs());
   }
 
-  function highlightAffectedPair(deviation = currentSandboxState?.manhattan_deviation) {
+  function highlightAffectedPair() {
+    const deviation = currentSandboxState?.manhattan_deviation;
     const rawIndex = Number(deviation?.affected_pair_index);
     if (!Number.isInteger(rawIndex) || rawIndex < 1 || rawIndex > currentPreviewBasePairs.length) {
-      setText(`${PANEL_ID}-hint-status`, "unavailable");
+      setHighlightState("unavailable_no_valid_pair", "unavailable");
       return;
     }
-    currentDiagnosisAffectedPairIndex = rawIndex - 1;
-    currentPreviewSelectedPairIndex = currentDiagnosisAffectedPairIndex;
+    const affectedBaseIndex = rawIndex - 1;
+    const displayIndex = currentPreviewOrder.indexOf(affectedBaseIndex);
+    if (displayIndex < 0) {
+      setHighlightState("unavailable_pair_not_in_order", rawIndex);
+      return;
+    }
+    currentDiagnosisAffectedPairIndex = affectedBaseIndex;
+    currentPreviewSelectedPairIndex = displayIndex;
     updatePreviewOrderPanelUi();
     renderPreviewOverlayPairs(orderedPreviewPairs());
+    const row = document.querySelector(`#${PREVIEW_PANEL_ID}-pair-rows [data-base-pair-index="${rawIndex}"]`);
+    const overlayCount = document.querySelectorAll(`#${OVERLAY_ID} .diagnosis-affected-pair`).length;
+    if (row && typeof row.scrollIntoView === "function") {
+      row.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+    setHighlightState(row || overlayCount ? "applied" : "unavailable_pair_not_found", rawIndex, Boolean(row), overlayCount);
   }
 
   function swapPreviewPairs(fromIndex, toIndex) {
@@ -1319,10 +1408,12 @@
       const row = document.createElement("button");
       row.type = "button";
       const isActive = displayIndex === currentPreviewSelectedPairIndex;
-      const isAffected = displayIndex === currentDiagnosisAffectedPairIndex;
+      const isAffected = Number(pair?.base_pair_index) === currentDiagnosisAffectedPairIndex;
       row.className = `hp-pair-row${isActive ? " active-pair" : ""}${isAffected ? " diagnosis-affected-pair" : ""}`;
       row.dataset.activePair = displayIndex === currentPreviewSelectedPairIndex ? "true" : "false";
       row.dataset.diagnosisAffectedPair = isAffected ? "true" : "false";
+      row.dataset.basePairIndex = Number.isFinite(Number(pair?.base_pair_index)) ? String(Number(pair.base_pair_index) + 1) : String(displayIndex + 1);
+      row.dataset.displayPairIndex = String(displayIndex + 1);
       row.style.cssText =
         "width:100%;display:grid;grid-template-columns:36px 1fr 46px;align-items:center;gap:6px;margin-top:4px;padding:5px 6px;border:1px solid rgba(255,255,255,0.08);border-radius:7px;background:rgba(255,255,255,0.055);color:#f4f7fb;text-align:left;cursor:pointer;font-size:11px;";
       if (isActive) {
@@ -1332,8 +1423,11 @@
       if (isAffected) {
         row.style.outline = "2px solid #ffb020";
         row.style.boxShadow = "0 0 0 2px rgba(255,176,32,0.16)";
+        row.style.borderColor = "#ffb020";
+        row.style.background = "rgba(255,176,32,0.24)";
       }
-      row.innerHTML = `<strong>Pair ${displayIndex + 1}</strong><span>x=${formatMetric(pair.x)} c=${formatMetric(pair.y_ceiling)} f=${formatMetric(pair.y_floor)}</span><span>${isAffected ? "affected" : isActive ? "active" : ""}</span>`;
+      const percent = pairPercentSummary(pair);
+      row.innerHTML = `<strong>Pair ${displayIndex + 1}</strong><span>x%=${formatPercent(percent.xPercent)} c%=${formatPercent(percent.ceilingPercent)} f%=${formatPercent(percent.floorPercent)}</span><span>${isAffected ? "affected" : isActive ? "active" : ""}</span>`;
       row.addEventListener("click", () => {
         currentPreviewSelectedPairIndex = displayIndex;
         updatePreviewOrderPanelUi();
@@ -1727,11 +1821,15 @@
     hint.appendChild(makeMutableRow("direction_hint", state.manhattan_deviation.direction_hint, `${PANEL_ID}-direction-hint`));
     hint.appendChild(makeMutableRow("alternative_anchor_hint", state.manhattan_deviation.alternative_anchor_hint, `${PANEL_ID}-alternative-anchor-hint`));
     hint.appendChild(makeMutableRow("hint_guardrail", state.manhattan_deviation.hint_guardrail, `${PANEL_ID}-hint-guardrail`));
+    hint.appendChild(makeMutableRow("highlight_status", highlightState.status, `${PANEL_ID}-highlight-status`));
+    hint.appendChild(makeMutableRow("highlight_affected_pair_index", highlightState.affectedPairIndex, `${PANEL_ID}-highlight-affected-pair-index`));
+    hint.appendChild(makeMutableRow("highlight_row_found", highlightState.rowFound ? "true" : "false", `${PANEL_ID}-highlight-row-found`));
+    hint.appendChild(makeMutableRow("highlight_overlay_labels_found", highlightState.overlayLabelsFound, `${PANEL_ID}-highlight-overlay-labels-found`));
     const highlightButton = document.createElement("button");
     highlightButton.type = "button";
     highlightButton.textContent = "Highlight affected pair";
     highlightButton.style.cssText = "margin-top:8px;padding:6px 10px;border:1px solid rgba(255,255,255,0.18);border-radius:6px;background:#2f5cff;color:#fff;cursor:pointer;font-size:12px;";
-    highlightButton.addEventListener("click", () => highlightAffectedPair(state.manhattan_deviation));
+    highlightButton.addEventListener("click", () => highlightAffectedPair());
     hint.appendChild(highlightButton);
     panel.appendChild(hint);
 

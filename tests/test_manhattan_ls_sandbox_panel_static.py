@@ -35,7 +35,7 @@ def test_both_scripts_have_required_guard_text():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
         for required in [
-            "m12-dev-only",
+            "m12.1-dev-only",
             "dev-only",
             "sandbox-only",
             "expert/developer tester only",
@@ -249,8 +249,14 @@ def test_both_scripts_include_m12_direction_only_hint_panel():
             "direction_hint",
             "alternative_anchor_hint",
             "hint_guardrail",
+            "highlight_status",
+            "highlight_affected_pair_index",
+            "highlight_row_found",
+            "highlight_overlay_labels_found",
             "Highlight affected pair",
+            'highlightButton.addEventListener("click", () => highlightAffectedPair())',
             "diagnosis-affected-pair",
+            "setHighlightState",
             "directionOnlyHint",
             "would reduce this residual",
             "Choose by visual evidence",
@@ -260,6 +266,15 @@ def test_both_scripts_include_m12_direction_only_hint_panel():
             "Direction-only hint. Inspect visually",
         ]:
             assert required in text
+
+        highlight_start = text.index("function highlightAffectedPair")
+        highlight_end = text.index("function swapPreviewPairs")
+        highlight_text = text[highlight_start:highlight_end]
+        assert "hint-status" not in highlight_text
+        assert "unavailable_no_valid_pair" in highlight_text
+        assert "unavailable_pair_not_in_order" in highlight_text
+        assert "scrollIntoView" in highlight_text
+        assert "state.manhattan_deviation" not in highlight_text
 
 
 def test_both_scripts_include_sandbox_meta_guard_and_preview_order_controls():
@@ -280,6 +295,15 @@ def test_both_scripts_include_sandbox_meta_guard_and_preview_order_controls():
             "diagnosis-affected-pair",
             "dataset.activePair",
             "dataset.diagnosisAffectedPair",
+            "base_pair_index",
+            "display_pair_index",
+            "dataset.basePairIndex",
+            "dataset.displayPairIndex",
+            "x%=",
+            "c%=",
+            "f%=",
+            "formatPercent",
+            "pairPercentSummary",
             "Hide corner order",
             "Show corner order",
             "hp-title",
