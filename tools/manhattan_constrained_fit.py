@@ -12,10 +12,10 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 import math
-from typing import Any, Dict, Iterable, List, Mapping, Optional, Sequence, Tuple
+from typing import Any, Dict, List, Mapping, Optional, Sequence, Tuple
 
 
-FIT_VERSION = "manhattan_constrained_fit_m14_v1"
+FIT_VERSION = "manhattan_constrained_fit_m14_2_v1"
 CAMERA_HEIGHT = 1.6
 MIN_PAIR_COUNT = 4
 VERTICAL_X_WARN_THRESHOLD = 1.0
@@ -24,6 +24,11 @@ DUPLICATE_PAIR_X_THRESHOLD = 0.25
 SEAM_EDGE_THRESHOLD = 5.0
 FIT_RESIDUAL_FAIL_THRESHOLD = 0.18
 MAX_POINT_MOVE_FAIL_THRESHOLD = 12.0
+MIN_LAYOUT_HEIGHT = 2.0
+MAX_LAYOUT_HEIGHT = 4.5
+HEIGHT_SPREAD_WARN_THRESHOLD = 0.5
+HEIGHT_SPREAD_FAIL_THRESHOLD = 1.2
+YAW_GRID_DEGREES = 5
 
 
 @dataclass(frozen=True)
@@ -122,6 +127,15 @@ def _fail(reason: str, warnings: Optional[List[str]] = None) -> Dict[str, Any]:
         "per_point_delta": [],
         "direction_label": reason,
         "warnings": list(warnings or [reason]),
+        "manhattan_yaw_rad": None,
+        "manhattan_yaw_deg": None,
+        "yaw_search_count": 0,
+        "yaw_fit_residual": None,
+        "selected_orientation_pattern": None,
+        "layout_height_candidate": None,
+        "layout_height_spread": None,
+        "y_projection_model": "camera_height_layout_height_atan2_v1",
+        "camera_height": CAMERA_HEIGHT,
         "fit_version": FIT_VERSION,
     }
 
@@ -221,6 +235,63 @@ def _fit_axis_aligned_closed_polygon(points: Sequence[BevPoint], start_horizonta
     ]
 
 
+def _rotate_point(point: BevPoint, angle_rad: float) -> BevPoint:
+    cos_a = math.cos(angle_rad)
+    sin_a = math.sin(angle_rad)
+    return BevPoint(
+        point.x * cos_a - point.y * sin_a,
+        point.x * sin_a + point.y * cos_a,
+    )
+
+
+def _normalize_yaw(yaw: float) -> float:
+    half_pi = math.pi / 2.0
+    yaw = yaw % half_pi
+    if abs(yaw - half_pi) < 1e-12:
+        return 0.0
+    return yaw
+
+
+def _candidate_yaws(points: Sequence[BevPoint]) -> List[float]:
+    yaws = {0.0}
+    half_pi = math.pi / 2.0
+    for i, point in enumerate(points):
+        nxt = points[(i + 1) % len(points)]
+        dx = nxt.x - point.x
+        dy = nxt.y - point.y
+        if math.hypot(dx, dy) > 1e-9:
+            yaws.add(_normalize_yaw(math.atan2(dy, dx)))
+    for degree in range(0, 90, YAW_GRID_DEGREES):
+        yaws.add(_normalize_yaw(math.radians(degree)))
+    return sorted(yaws)
+
+
+def _fit_with_yaw_search(points: Sequence[BevPoint]) -> Dict[str, Any]:
+    best: Optional[Dict[str, Any]] = None
+    search_count = 0
+    for yaw in _candidate_yaws(points):
+        rotated = [_rotate_point(point, -yaw) for point in points]
+        for start_horizontal, pattern in (
+            (True, "start_horizontal"),
+            (False, "start_vertical"),
+        ):
+            fitted_rotated = _fit_axis_aligned_closed_polygon(rotated, start_horizontal)
+            fitted = [_rotate_point(point, yaw) for point in fitted_rotated]
+            residual = _polygon_residual(points, fitted)
+            search_count += 1
+            candidate = {
+                "yaw": yaw,
+                "pattern": pattern,
+                "fitted": fitted,
+                "residual": residual,
+            }
+            if best is None or residual < best["residual"]:
+                best = candidate
+    assert best is not None
+    best["search_count"] = search_count
+    return best
+
+
 def _polygon_residual(original: Sequence[BevPoint], fitted: Sequence[BevPoint]) -> float:
     if not original:
         return 0.0
@@ -283,34 +354,75 @@ def _confidence(fit_residual: float, max_move: float) -> str:
     return "low"
 
 
+def _median(values: Sequence[float]) -> float:
+    ordered = sorted(values)
+    mid = len(ordered) // 2
+    if len(ordered) % 2:
+        return ordered[mid]
+    return (ordered[mid - 1] + ordered[mid]) / 2.0
+
+
+def _percentile_nearest(values: Sequence[float], fraction: float) -> float:
+    ordered = sorted(values)
+    index = round((len(ordered) - 1) * fraction)
+    return ordered[index]
+
+
+def _height_candidate(
+    pairs: Sequence[CornerPair],
+    fitted_bev: Sequence[BevPoint],
+) -> Tuple[float, float]:
+    heights: List[float] = []
+    for pair, point in zip(pairs, fitted_bev):
+        distance = max(math.hypot(point.x, point.y), 1e-6)
+        ceiling_v = ls_y_to_v(pair.top.y)
+        heights.append(CAMERA_HEIGHT + distance * math.tan(ceiling_v))
+    layout_height = _median(heights)
+    if len(heights) == 1:
+        spread = 0.0
+    else:
+        spread = _percentile_nearest(heights, 0.75) - _percentile_nearest(heights, 0.25)
+    return layout_height, spread
+
+
+def _v_to_ls_y(v: float) -> float:
+    return (0.5 - v / math.pi) * 100.0
+
+
 def _fitted_pairs_and_deltas(
     pairs: Sequence[CornerPair],
     fitted_bev: Sequence[BevPoint],
+    layout_height: float,
 ) -> Tuple[List[Dict[str, Any]], List[Dict[str, Any]], float]:
     fitted_points: List[Dict[str, Any]] = []
     deltas: List[Dict[str, Any]] = []
     max_move = 0.0
     for pair, point in zip(pairs, fitted_bev):
         fitted_x = u_to_ls_x(math.atan2(point.y, point.x))
+        distance = max(math.hypot(point.x, point.y), 1e-6)
+        fitted_floor_y = _v_to_ls_y(math.atan2(-CAMERA_HEIGHT, distance))
+        fitted_ceiling_y = _v_to_ls_y(math.atan2(layout_height - CAMERA_HEIGHT, distance))
         top_dx = fitted_x - pair.top.x
         bottom_dx = fitted_x - pair.bottom.x
-        top_delta = math.hypot(top_dx, 0.0)
-        bottom_delta = math.hypot(bottom_dx, 0.0)
+        top_dy = fitted_ceiling_y - pair.top.y
+        bottom_dy = fitted_floor_y - pair.bottom.y
+        top_delta = math.hypot(top_dx, top_dy)
+        bottom_delta = math.hypot(bottom_dx, bottom_dy)
         max_move = max(max_move, top_delta, bottom_delta)
         fitted_points.append(
             {
                 "pair_index": pair.pair_index,
-                "top": {"x": fitted_x, "y": pair.top.y},
-                "bottom": {"x": fitted_x, "y": pair.bottom.y},
+                "top": {"x": fitted_x, "y": fitted_ceiling_y},
+                "bottom": {"x": fitted_x, "y": fitted_floor_y},
             }
         )
         deltas.append(
             {
                 "pair_index": pair.pair_index,
                 "top_dx": top_dx,
-                "top_dy": 0.0,
+                "top_dy": top_dy,
                 "bottom_dx": bottom_dx,
-                "bottom_dy": 0.0,
+                "bottom_dy": bottom_dy,
             }
         )
     return fitted_points, deltas, max_move
@@ -354,16 +466,33 @@ def fit_manhattan_layout(
     if _self_crossing(bev_points):
         return _fail("self_crossing_input", warnings + ["self_crossing_input"])
 
-    candidates = [
-        _fit_axis_aligned_closed_polygon(bev_points, start_horizontal=True),
-        _fit_axis_aligned_closed_polygon(bev_points, start_horizontal=False),
-    ]
-    fitted_bev = min(candidates, key=lambda candidate: _polygon_residual(bev_points, candidate))
+    axis_baseline = min(
+        (
+            _fit_axis_aligned_closed_polygon(bev_points, start_horizontal=True),
+            _fit_axis_aligned_closed_polygon(bev_points, start_horizontal=False),
+        ),
+        key=lambda candidate: _polygon_residual(bev_points, candidate),
+    )
+    axis_aligned_baseline_residual = _polygon_residual(bev_points, axis_baseline)
+    yaw_fit = _fit_with_yaw_search(bev_points)
+    fitted_bev = yaw_fit["fitted"]
     if _self_crossing(fitted_bev):
         return _fail("self_crossing_candidate", warnings + ["self_crossing_candidate"])
 
-    fit_residual = _polygon_residual(bev_points, fitted_bev)
-    fitted_points, per_point_delta, max_move = _fitted_pairs_and_deltas(pairs, fitted_bev)
+    fit_residual = yaw_fit["residual"]
+    layout_height_candidate, layout_height_spread = _height_candidate(pairs, fitted_bev)
+    if not (MIN_LAYOUT_HEIGHT <= layout_height_candidate <= MAX_LAYOUT_HEIGHT):
+        return _fail("implausible_layout_height", warnings + ["implausible_layout_height"])
+    if layout_height_spread > HEIGHT_SPREAD_FAIL_THRESHOLD:
+        return _fail("layout_height_unstable", warnings + ["layout_height_unstable"])
+    if layout_height_spread > HEIGHT_SPREAD_WARN_THRESHOLD:
+        warnings.append("layout_height_spread_high")
+
+    fitted_points, per_point_delta, max_move = _fitted_pairs_and_deltas(
+        pairs,
+        fitted_bev,
+        layout_height_candidate,
+    )
     if fit_residual > FIT_RESIDUAL_FAIL_THRESHOLD:
         return _fail("fit_residual_too_high", warnings + ["fit_residual_too_high"])
     if max_move > MAX_POINT_MOVE_FAIL_THRESHOLD:
@@ -386,6 +515,16 @@ def fit_manhattan_layout(
         "per_point_delta": per_point_delta,
         "direction_label": direction_label,
         "warnings": warnings,
+        "manhattan_yaw_rad": yaw_fit["yaw"],
+        "manhattan_yaw_deg": math.degrees(yaw_fit["yaw"]),
+        "yaw_search_count": yaw_fit["search_count"],
+        "yaw_fit_residual": yaw_fit["residual"],
+        "selected_orientation_pattern": yaw_fit["pattern"],
+        "axis_aligned_baseline_residual": axis_aligned_baseline_residual,
+        "layout_height_candidate": layout_height_candidate,
+        "layout_height_spread": layout_height_spread,
+        "y_projection_model": "camera_height_layout_height_atan2_v1",
+        "camera_height": CAMERA_HEIGHT,
         "fit_version": FIT_VERSION,
     }
 
