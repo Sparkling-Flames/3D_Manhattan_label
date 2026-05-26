@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HOHONET Manhattan LS Sandbox Panel Debug
 // @namespace    hohonet-dev-only
-// @version      m13-dev-only-debug-0.1.0
+// @version      m13.2-dev-only-debug-0.1.0
 // @description  dev-only sandbox-only read-only Manhattan panel; debug variant with no active_time upload.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
@@ -41,7 +41,10 @@
   window[WINDOW_GUARD] = { script_variant: "debug" };
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const PANEL_VERSION = "m13-dev-only-debug-0.1.0";
+  const PANEL_VERSION = "m13.2-dev-only-debug-0.1.0";
+  const TOOLBAR_ID = "hohonet-m13-primary-toolbar";
+  const TOOLBAR_BODY_ID = "hohonet-m13-primary-toolbar-body";
+  const DEBUG_DRAWER_TOGGLE_ID = "hohonet-m13-debug-drawer-toggle";
   const OFFICIAL_IFRAME_ID = "hohonet-iframe";
   const OFFICIAL_WRAPPER_ID = "hohonet-wrapper";
   const OFFICIAL_BUTTON_ID = "hohonet-refresh-btn";
@@ -50,6 +53,7 @@
   const OVERLAY_ID = "hohonet-m8-preview-order-overlay";
   const LABELS_VISIBLE_KEY = "hohonet_m8_preview_labels_visible";
   const GUIDE_BANDS_VISIBLE_KEY = "hohonet_m13_guide_bands_visible";
+  const GUIDE_MODE = "issue_only";
   const PREVIEW_PANEL_ID = "hohonet-m8-preview-order-panel";
   const PREVIEW_PANEL_HEADER_ID = "hohonet-m8-preview-order-panel-header";
   const PREVIEW_PANEL_STATUS_ID = "hohonet-m8-preview-order-status";
@@ -73,8 +77,11 @@
   };
   const guideState = {
     status: "hidden",
+    mode: GUIDE_MODE,
     component: "unavailable",
     affectedPairIndex: "unavailable",
+    visibleItems: "none",
+    explanation: "Visual reference lines are hidden.",
     scope: "2D panorama overlay only",
     guardrail: "Guide bands are visual references only. No target x/y, no point movement, no annotation writeback.",
   };
@@ -737,8 +744,11 @@
       hint_guardrail: "Direction-only hint. Inspect visually; no target x/y, no point movement, no annotation writeback.",
       hint_direction_type: "unavailable",
       guide_status: "unavailable",
+      guide_mode: GUIDE_MODE,
       guide_component: "unavailable",
       guide_affected_pair_index: "unavailable",
+      guide_visible_items: "none",
+      guide_explanation: "No visual reference lines are shown because the layout is not preview-compatible.",
       guide_scope: "2D panorama overlay only",
       guide_guardrail: "Guide bands are visual references only. No target x/y, no point movement, no annotation writeback.",
     };
@@ -830,6 +840,22 @@
     return base;
   }
 
+  function guideVisibleItems(component) {
+    if (component === "pair_x_alignment") return "affected_pair_axis";
+    if (component === "ceiling_alignment") return "ceiling_reference_band,affected_ceiling_point";
+    if (component === "floor_alignment") return "floor_reference_band,affected_floor_point";
+    if (component === "wall_height_consistency") return "height_check_bracket,affected_pair_axis,low_opacity_context_bands";
+    return "none";
+  }
+
+  function guideExplanation(component) {
+    if (component === "pair_x_alignment") return "Issue-only mode shows only the affected pair vertical axis.";
+    if (component === "ceiling_alignment") return "Issue-only mode shows the ceiling reference band and affected ceiling point.";
+    if (component === "floor_alignment") return "Issue-only mode shows the floor reference band and affected floor point.";
+    if (component === "wall_height_consistency") return "Issue-only mode shows the affected wall-height bracket with low-opacity ceiling and floor context.";
+    return "No issue-specific visual reference lines are shown.";
+  }
+
   function computeDirectionOnlyDiagnosis(pairs, width, height, residuals) {
     if (!pairs.length) {
       return unavailableDeviation(0, "missing_pairs");
@@ -905,8 +931,11 @@
       floor_alignment_summary: floorSummary,
       wall_height_summary: wallSummary,
       guide_status: primaryIssueType === "none" ? "no_action" : "available",
+      guide_mode: GUIDE_MODE,
       guide_component: primaryIssueType,
       guide_affected_pair_index: guideAffectedPairIndex,
+      guide_visible_items: guideVisibleItems(primaryIssueType),
+      guide_explanation: guideExplanation(primaryIssueType),
       guide_scope: "2D panorama overlay only",
       guide_guardrail: "Guide bands are visual references only. No target x/y, no point movement, no annotation writeback.",
       ...hint,
@@ -1003,11 +1032,17 @@
   function updateGuideBandPanel(deviation) {
     const visible = getGuideBandsVisible();
     guideState.status = visible ? deviation.guide_status || "unavailable" : "hidden";
+    guideState.mode = GUIDE_MODE;
     guideState.component = visible ? deviation.guide_component || "unavailable" : "hidden";
     guideState.affectedPairIndex = visible ? deviation.guide_affected_pair_index || "unavailable" : "hidden";
+    guideState.visibleItems = visible ? deviation.guide_visible_items || "none" : "none";
+    guideState.explanation = visible ? deviation.guide_explanation || "No issue-specific visual reference lines are shown." : "Visual reference lines are hidden.";
     setText(`${PANEL_ID}-guide-status`, guideState.status);
+    setText(`${PANEL_ID}-guide-mode`, guideState.mode);
     setText(`${PANEL_ID}-guide-component`, guideState.component);
     setText(`${PANEL_ID}-guide-affected-pair-index`, guideState.affectedPairIndex);
+    setText(`${PANEL_ID}-guide-visible-items`, guideState.visibleItems);
+    setText(`${PANEL_ID}-guide-explanation`, guideState.explanation);
     setText(`${PANEL_ID}-guide-scope`, guideState.scope);
     setText(`${PANEL_ID}-guide-guardrail`, guideState.guardrail);
   }
@@ -1362,36 +1397,106 @@
     overlay.appendChild(line);
   }
 
+  function drawGuideLegend(overlay) {
+    const legend = document.createElement("div");
+    legend.className = "hohonet-m13-guide-legend";
+    legend.style.cssText =
+      "position:absolute;left:8px;top:8px;z-index:3;padding:5px 7px;border-radius:6px;background:rgba(17,24,39,0.66);color:#f9fafb;font:11px/1.35 system-ui,sans-serif;box-shadow:0 2px 8px rgba(0,0,0,0.22);pointer-events:none;";
+    legend.innerHTML =
+      '<div><span style="display:inline-block;width:14px;height:3px;background:rgba(56,189,248,0.72);margin-right:5px;vertical-align:middle;"></span>Ceiling reference</div>' +
+      '<div><span style="display:inline-block;width:14px;height:3px;background:rgba(34,197,94,0.64);margin-right:5px;vertical-align:middle;"></span>Floor reference</div>' +
+      '<div><span style="display:inline-block;width:3px;height:12px;background:rgba(255,138,0,0.78);margin:0 10px 0 5px;vertical-align:middle;"></span>Affected pair axis</div>' +
+      '<div><span style="display:inline-block;width:14px;height:8px;border-left:3px solid rgba(168,85,247,0.86);border-top:2px solid rgba(168,85,247,0.62);border-bottom:2px solid rgba(168,85,247,0.62);margin-right:5px;vertical-align:middle;"></span>Height check</div>';
+    overlay.appendChild(legend);
+  }
+
+  function pairPointForGuide(pair, kind) {
+    const points = Array.isArray(pair?.originalPoints) ? pair.originalPoints : [];
+    const point = points.reduce((best, current) => {
+      if (!best) return current;
+      return kind === "ceiling"
+        ? (current.y < best.y ? current : best)
+        : (current.y > best.y ? current : best);
+    }, null);
+    if (!point) return null;
+    const pctX = Number.isFinite(point.pctX) ? point.pctX : (point.x / DEFAULT_WIDTH) * 100;
+    const pctY = Number.isFinite(point.pctY) ? point.pctY : (point.y / DEFAULT_HEIGHT) * 100;
+    return { pctX, pctY };
+  }
+
+  function drawPointEmphasis(overlay, rect, point, color, labelText) {
+    if (!point) return;
+    const marker = document.createElement("div");
+    marker.className = "hohonet-m13-guide-point";
+    marker.setAttribute("aria-label", labelText);
+    marker.style.cssText =
+      `position:absolute;left:${(point.pctX / 100) * rect.width}px;top:${(point.pctY / 100) * rect.height}px;` +
+      `width:18px;height:18px;border-radius:50%;transform:translate(-50%,-50%);border:3px solid ${color};background:rgba(255,255,255,0.20);box-shadow:0 0 0 3px rgba(17,24,39,0.30);pointer-events:none;`;
+    overlay.appendChild(marker);
+  }
+
+  function drawHorizontalGuide(overlay, top, color, alpha, labelText) {
+    drawGuideLine(
+      overlay,
+      `position:absolute;left:0;right:0;top:${top - 1}px;height:3px;background:${color.replace("__ALPHA__", alpha)};box-shadow:0 0 0 1px rgba(17,24,39,0.18);pointer-events:none;`,
+      labelText,
+    );
+  }
+
+  function drawAffectedPairAxis(overlay, rect, pair, alpha, labelText) {
+    if (!pair || !Number.isFinite(pair.x)) return;
+    const left = (pair.x / DEFAULT_WIDTH) * rect.width;
+    const top = (pair.y_ceiling / DEFAULT_HEIGHT) * rect.height;
+    const bottom = (pair.y_floor / DEFAULT_HEIGHT) * rect.height;
+    drawGuideLine(
+      overlay,
+      `position:absolute;top:${top}px;height:${Math.max(4, bottom - top)}px;left:${left - 1}px;width:3px;background:rgba(255,138,0,${alpha});box-shadow:0 0 0 1px rgba(154,52,18,0.42);pointer-events:none;`,
+      labelText,
+    );
+  }
+
+  function drawHeightBracket(overlay, rect, pair) {
+    if (!pair || !Number.isFinite(pair.x)) return;
+    const left = (pair.x / DEFAULT_WIDTH) * rect.width;
+    const top = (pair.y_ceiling / DEFAULT_HEIGHT) * rect.height;
+    const bottom = (pair.y_floor / DEFAULT_HEIGHT) * rect.height;
+    drawGuideLine(
+      overlay,
+      `position:absolute;top:${top}px;height:${Math.max(4, bottom - top)}px;left:${left + 7}px;width:12px;border-left:4px solid rgba(168,85,247,0.86);border-top:3px solid rgba(168,85,247,0.70);border-bottom:3px solid rgba(168,85,247,0.70);background:transparent;pointer-events:none;`,
+      "height check bracket",
+    );
+  }
+
   function renderGuideBands(overlay, rect, pairs) {
     if (!getGuideBandsVisible()) return;
     const orderedPairs = Array.isArray(pairs) ? pairs : [];
     if (!orderedPairs.length) return;
+    const deviation = currentSandboxState?.manhattan_deviation || {};
+    const component = deviation.guide_component || deviation.primary_issue_type || "unavailable";
+    const affectedIndex = Number(deviation.guide_affected_pair_index || deviation.affected_pair_index) - 1;
     const ceilingMedian = median(orderedPairs.map((pair) => pair.y_ceiling));
     const floorMedian = median(orderedPairs.map((pair) => pair.y_floor));
-    const affectedBaseIndex = currentDiagnosisAffectedPairIndex;
+    const affectedBaseIndex = currentDiagnosisAffectedPairIndex !== null ? currentDiagnosisAffectedPairIndex : affectedIndex;
     const affectedPair = Number.isInteger(affectedBaseIndex)
       ? orderedPairs.find((pair) => Number(pair?.base_pair_index) === affectedBaseIndex)
       : null;
-    if (!Number.isFinite(ceilingMedian) || !Number.isFinite(floorMedian)) return;
+    if (!Number.isFinite(ceilingMedian) || !Number.isFinite(floorMedian) || !affectedPair) return;
     const ceilingTop = (ceilingMedian / DEFAULT_HEIGHT) * rect.height;
     const floorTop = (floorMedian / DEFAULT_HEIGHT) * rect.height;
-    drawGuideLine(
-      overlay,
-      `position:absolute;left:0;right:0;top:${ceilingTop - 1}px;height:3px;background:rgba(56,189,248,0.34);box-shadow:0 0 0 1px rgba(14,116,144,0.38);pointer-events:none;`,
-      "median ceiling band",
-    );
-    drawGuideLine(
-      overlay,
-      `position:absolute;left:0;right:0;top:${floorTop - 1}px;height:3px;background:rgba(34,197,94,0.30);box-shadow:0 0 0 1px rgba(21,128,61,0.34);pointer-events:none;`,
-      "median floor band",
-    );
-    if (affectedPair && Number.isFinite(affectedPair.x)) {
-      const left = (affectedPair.x / DEFAULT_WIDTH) * rect.width;
-      drawGuideLine(
-        overlay,
-        `position:absolute;top:0;bottom:0;left:${left - 1}px;width:3px;background:rgba(255,138,0,0.36);box-shadow:0 0 0 1px rgba(154,52,18,0.42);pointer-events:none;`,
-        "affected pair guide",
-      );
+    drawGuideLegend(overlay);
+    if (component === "pair_x_alignment") {
+      drawAffectedPairAxis(overlay, rect, affectedPair, "0.78", "affected pair guide");
+    } else if (component === "ceiling_alignment") {
+      drawHorizontalGuide(overlay, ceilingTop, "rgba(56,189,248,__ALPHA__)", "0.72", "median ceiling band");
+      drawPointEmphasis(overlay, rect, pairPointForGuide(affectedPair, "ceiling"), "rgba(56,189,248,0.94)", "affected ceiling point");
+    } else if (component === "floor_alignment") {
+      drawHorizontalGuide(overlay, floorTop, "rgba(34,197,94,__ALPHA__)", "0.64", "median floor band");
+      drawPointEmphasis(overlay, rect, pairPointForGuide(affectedPair, "floor"), "rgba(34,197,94,0.92)", "affected floor point");
+    } else if (component === "wall_height_consistency") {
+      drawHorizontalGuide(overlay, ceilingTop, "rgba(56,189,248,__ALPHA__)", "0.18", "median ceiling band context");
+      drawHorizontalGuide(overlay, floorTop, "rgba(34,197,94,__ALPHA__)", "0.16", "median floor band context");
+      drawAffectedPairAxis(overlay, rect, affectedPair, "0.42", "affected pair guide context");
+      drawHeightBracket(overlay, rect, affectedPair);
     }
   }
 
@@ -1406,12 +1511,13 @@
       document.body.appendChild(overlay);
     }
     overlay.innerHTML = "";
-    overlay.style.display = getLabelsVisible() ? "block" : "none";
+    const labelsVisible = getLabelsVisible();
+    overlay.style.display = labelsVisible || getGuideBandsVisible() ? "block" : "none";
     const rect = positionOverlay();
     if (!rect) return;
     renderGuideBands(overlay, rect, pairs);
     let affectedOverlayCount = 0;
-    (Array.isArray(pairs) ? pairs : []).forEach((pair, index) => {
+    if (labelsVisible) (Array.isArray(pairs) ? pairs : []).forEach((pair, index) => {
       for (const point of Array.isArray(pair?.originalPoints) ? pair.originalPoints : []) {
         const pctX = Number.isFinite(point.pctX) ? point.pctX : (point.x / DEFAULT_WIDTH) * 100;
         const pctY = Number.isFinite(point.pctY) ? point.pctY : (point.y / DEFAULT_HEIGHT) * 100;
@@ -1857,6 +1963,120 @@
     return "native_preview_update_sent";
   }
 
+  function performRefresh3DPreview() {
+    const nextState = extractKeypointsFromDom();
+    nextState.preview_update_status = updatePreviewIframe(nextState);
+    renderPanel(nextState);
+  }
+
+  function resetPreviewOrderFromToolbar() {
+    if (!currentPreviewBasePairs.length) return;
+    currentPreviewOrder = currentPreviewBasePairs.map((_, index) => index);
+    currentPreviewSelectedPairIndex = 0;
+    sendPreviewOrderToIframe();
+  }
+
+  function toolbarButton(label, onClick) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = label;
+    button.style.cssText = "border:none;border-radius:7px;padding:5px 8px;background:#334155;color:#f8fafc;font-size:12px;font-weight:700;cursor:pointer;white-space:nowrap;";
+    button.addEventListener("click", onClick);
+    return button;
+  }
+
+  function installToolbarDrag(toolbar, header) {
+    let dragState = null;
+    header.addEventListener("pointerdown", (event) => {
+      if (event.target?.tagName === "BUTTON") return;
+      const rect = toolbar.getBoundingClientRect();
+      dragState = { dx: event.clientX - rect.left, dy: event.clientY - rect.top };
+      header.setPointerCapture?.(event.pointerId);
+    });
+    header.addEventListener("pointermove", (event) => {
+      if (!dragState) return;
+      toolbar.style.left = `${Math.max(4, event.clientX - dragState.dx)}px`;
+      toolbar.style.top = `${Math.max(4, event.clientY - dragState.dy)}px`;
+      toolbar.style.right = "auto";
+    });
+    const stop = (event) => {
+      dragState = null;
+      try {
+        if (event && header.hasPointerCapture(event.pointerId)) header.releasePointerCapture(event.pointerId);
+      } catch (e) {}
+    };
+    header.addEventListener("pointerup", stop);
+    header.addEventListener("pointercancel", stop);
+  }
+
+  function syncPrimaryToolbar() {
+    const cornerButton = document.getElementById(`${TOOLBAR_ID}-corner`);
+    if (cornerButton) cornerButton.textContent = getLabelsVisible() ? "Hide corner order" : "Corner order";
+    const guideButton = document.getElementById(`${TOOLBAR_ID}-guide`);
+    if (guideButton) guideButton.textContent = getGuideBandsVisible() ? "Hide guide lines" : "Guide lines";
+  }
+
+  function ensurePrimaryToolbar() {
+    let toolbar = document.getElementById(TOOLBAR_ID);
+    if (toolbar) {
+      syncPrimaryToolbar();
+      return toolbar;
+    }
+    toolbar = document.createElement("div");
+    toolbar.id = TOOLBAR_ID;
+    toolbar.style.cssText =
+      "position:fixed;right:430px;top:96px;z-index:2147483647;width:292px;color:#f8fafc;background:rgba(15,23,42,0.88);border:1px solid rgba(148,163,184,0.35);border-radius:10px;box-shadow:0 10px 24px rgba(0,0,0,0.24);font:12px/1.35 system-ui,sans-serif;overflow:hidden;backdrop-filter:blur(10px);";
+    const header = document.createElement("div");
+    header.style.cssText = "display:flex;align-items:center;justify-content:space-between;gap:8px;padding:7px 9px;cursor:move;background:rgba(255,255,255,0.07);";
+    header.appendChild(text("Manhattan tools"));
+    const collapse = toolbarButton("Hide", () => {
+      const body = document.getElementById(TOOLBAR_BODY_ID);
+      const hidden = body.style.display !== "none";
+      body.style.display = hidden ? "none" : "flex";
+      collapse.textContent = hidden ? "Show" : "Hide";
+    });
+    header.appendChild(collapse);
+    const body = document.createElement("div");
+    body.id = TOOLBAR_BODY_ID;
+    body.style.cssText = "display:flex;flex-wrap:wrap;gap:6px;padding:8px;";
+    body.appendChild(toolbarButton("Refresh 3D", performRefresh3DPreview));
+    const cornerButton = toolbarButton("Corner order", () => {
+      toggleCornerOrderLabels();
+      syncPrimaryToolbar();
+    });
+    cornerButton.id = `${TOOLBAR_ID}-corner`;
+    body.appendChild(cornerButton);
+    const guideButton = toolbarButton("Guide lines", () => {
+      toggleGuideBands();
+      syncPrimaryToolbar();
+    });
+    guideButton.id = `${TOOLBAR_ID}-guide`;
+    body.appendChild(guideButton);
+    body.appendChild(toolbarButton("Highlight affected", highlightAffectedPair));
+    body.appendChild(toolbarButton("Scroll affected", scrollToAffectedPair));
+    body.appendChild(toolbarButton("Reset preview order", resetPreviewOrderFromToolbar));
+    toolbar.appendChild(header);
+    toolbar.appendChild(body);
+    document.body.appendChild(toolbar);
+    installToolbarDrag(toolbar, header);
+    syncPrimaryToolbar();
+    return toolbar;
+  }
+
+  function updateDebugDrawerButton() {
+    const panel = document.getElementById(PANEL_ID);
+    const button = document.getElementById(DEBUG_DRAWER_TOGGLE_ID);
+    if (!panel || !button) return;
+    button.textContent = panel.dataset.collapsed === "1" ? "Show debug details" : "Hide debug details";
+  }
+
+  function toggleDebugDrawer() {
+    const panel = document.getElementById(PANEL_ID);
+    if (!panel) return;
+    panel.dataset.collapsed = panel.dataset.collapsed === "1" ? "0" : "1";
+    updateDebugDrawerButton();
+  }
+
   function installStyles() {
     if (document.getElementById(`${PANEL_ID}-style`)) {
       return;
@@ -1879,6 +2099,15 @@
         color: #f9fafb;
         font: 12px/1.4 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+      }
+      #${PANEL_ID}[data-collapsed="1"] {
+        width: 190px;
+        max-height: 92px;
+        overflow: hidden;
+      }
+      #${PANEL_ID}[data-collapsed="1"] section,
+      #${PANEL_ID}[data-collapsed="1"] .hohonet-m8-row {
+        display: none;
       }
       #${PANEL_ID} h2,
       #${PANEL_ID} h3 {
@@ -1915,6 +2144,7 @@
   function renderPanel(state) {
     clearPreviewOrderOnTaskChange(state.page_signature || currentTaskSignature());
     currentSandboxState = state;
+    ensurePrimaryToolbar();
     const metaGuard = validateMetaChoices(getStore());
     let panel = document.getElementById(PANEL_ID);
     if (panel) {
@@ -1931,17 +2161,27 @@
       updateMetaGuardPanel(metaGuard);
       applyToggleBtnState(document.getElementById(TOGGLE_LABELS_BUTTON_ID), getLabelsVisible());
       applyGuideBtnState(document.getElementById(GUIDE_BANDS_BUTTON_ID), getGuideBandsVisible());
+      syncPrimaryToolbar();
+      updateDebugDrawerButton();
       return;
     }
 
     panel = document.createElement("aside");
     panel.id = PANEL_ID;
+    panel.dataset.collapsed = "1";
     panel.setAttribute("aria-label", "HOHONET Manhattan sandbox panel debug");
     document.body.appendChild(panel);
 
     const title = document.createElement("h2");
-    title.appendChild(text("Manhattan Sandbox Panel"));
+    title.appendChild(text("Debug drawer"));
     panel.appendChild(title);
+    const debugToggle = document.createElement("button");
+    debugToggle.id = DEBUG_DRAWER_TOGGLE_ID;
+    debugToggle.type = "button";
+    debugToggle.textContent = "Show debug details";
+    debugToggle.style.cssText = "width:100%;margin:0 0 6px;padding:6px 8px;border:none;border-radius:7px;background:#334155;color:#fff;font-weight:800;cursor:pointer;";
+    debugToggle.addEventListener("click", toggleDebugDrawer);
+    panel.appendChild(debugToggle);
     panel.appendChild(makeRow("script_variant", "debug"));
     panel.appendChild(makeRow("manhattan_panel_version", PANEL_VERSION));
     panel.appendChild(makeMutableRow("keypoint_read_status", state.keypoint_read_status, `${PANEL_ID}-read-status`));
@@ -1953,27 +2193,6 @@
     panel.appendChild(makeMutableRow("native_preview_status", state.native_preview_status, `${PANEL_ID}-native-preview-status`));
     panel.appendChild(makeMutableRow("preview_update_status", state.preview_update_status, `${PANEL_ID}-preview-update-status`));
     panel.appendChild(makeMutableRow("viewer_base_url", getViewerBaseUrl(), `${PANEL_ID}-viewer-base-url`));
-
-    const controls = document.createElement("section");
-    controls.appendChild(document.createElement("h3")).appendChild(text("Controls"));
-    const refreshButton = document.createElement("button");
-    refreshButton.type = "button";
-    refreshButton.textContent = "Refresh 3D Preview";
-    refreshButton.addEventListener("click", function () {
-      const nextState = extractKeypointsFromDom();
-      nextState.preview_update_status = updatePreviewIframe(nextState);
-      renderPanel(nextState);
-    });
-    controls.appendChild(refreshButton);
-    const guideButton = document.createElement("button");
-    guideButton.id = GUIDE_BANDS_BUTTON_ID;
-    guideButton.type = "button";
-    guideButton.textContent = "Show guide bands";
-    guideButton.style.cssText = "margin-left:8px;padding:6px 10px;border:1px solid rgba(255,255,255,0.18);border-radius:6px;background:#28a745;color:#fff;cursor:pointer;font-size:12px;";
-    guideButton.addEventListener("click", toggleGuideBands);
-    controls.appendChild(guideButton);
-    applyGuideBtnState(guideButton, getGuideBandsVisible());
-    panel.appendChild(controls);
 
     const preview = document.createElement("section");
     preview.appendChild(document.createElement("h3")).appendChild(text("3D Preview"));
@@ -2063,11 +2282,14 @@
     const guides = document.createElement("section");
     guides.appendChild(document.createElement("h3")).appendChild(text("2D guide bands"));
     guides.appendChild(makeMutableRow("guide_status", getGuideBandsVisible() ? state.manhattan_deviation.guide_status : "hidden", `${PANEL_ID}-guide-status`));
+    guides.appendChild(makeMutableRow("guide_mode", GUIDE_MODE, `${PANEL_ID}-guide-mode`));
     guides.appendChild(makeMutableRow("guide_component", getGuideBandsVisible() ? state.manhattan_deviation.guide_component : "hidden", `${PANEL_ID}-guide-component`));
     guides.appendChild(makeMutableRow("guide_affected_pair_index", getGuideBandsVisible() ? state.manhattan_deviation.guide_affected_pair_index : "hidden", `${PANEL_ID}-guide-affected-pair-index`));
+    guides.appendChild(makeMutableRow("guide_visible_items", getGuideBandsVisible() ? state.manhattan_deviation.guide_visible_items : "none", `${PANEL_ID}-guide-visible-items`));
+    guides.appendChild(makeMutableRow("guide_explanation", getGuideBandsVisible() ? state.manhattan_deviation.guide_explanation : "Visual reference lines are hidden.", `${PANEL_ID}-guide-explanation`));
     guides.appendChild(makeMutableRow("guide_scope", guideState.scope, `${PANEL_ID}-guide-scope`));
     guides.appendChild(makeMutableRow("guide_guardrail", guideState.guardrail, `${PANEL_ID}-guide-guardrail`));
-    guides.appendChild(text("Legend: median ceiling band, median floor band, affected pair guide. Guide bands are visual references only. No target x/y, no point movement, no annotation writeback."));
+    guides.appendChild(text("Issue-only visual reference lines: Ceiling reference, Floor reference, Affected pair axis, Height check. Guide bands are visual references only. No target x/y, no point movement, no annotation writeback."));
     panel.appendChild(guides);
 
     const suggestion = document.createElement("section");

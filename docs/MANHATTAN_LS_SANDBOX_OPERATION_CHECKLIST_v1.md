@@ -306,3 +306,26 @@ M13 adds optional 2D guide bands for the dev-only sandbox diagnosis:
 - Guide bands are visual references only. No target x/y, no point movement, no annotation writeback.
 
 The timed sandbox script must keep activity-gated active-time semantics. Periodic heartbeat telemetry should be skipped when there are no newly accumulated active seconds; sandbox exclusion tags remain mandatory for any telemetry that is sent.
+
+## 21. M13.1 Issue-Aware Visual Reference Lines
+
+M13.1 keeps `Show guide bands` / `Hide guide bands`, but the default guide mode is `issue_only` rather than drawing all references together.
+
+- `pair_x_alignment`: show only the affected pair axis.
+- `ceiling_alignment`: show the ceiling reference band and affected ceiling point.
+- `floor_alignment`: show the floor reference band and affected floor point.
+- `wall_height_consistency`: show the affected wall-height bracket and affected pair axis; ceiling / floor bands may appear only as low-opacity context.
+- The on-canvas legend explains: Ceiling reference, Floor reference, Affected pair axis, and Height check.
+- The panel may show `guide_mode`, `guide_visible_items`, `guide_component`, and `guide_explanation`.
+
+These visual reference lines are for sandbox inspection only. They do not provide target x/y values, snap coordinates, adjustment vectors, automatic correction, annotation writeback, routing decisions, worker-tier labels, correctness labels, formal `g_t`, or `P1/C1/C2/T1/V1` artifacts.
+
+## 22. M13.2 UI Architecture Split
+
+M13.2 separates the dev-only sandbox tool UI into three surfaces:
+
+- `hohonet-m13-primary-toolbar`: a compact movable/collapsible primary toolbar near the 2D / 3D preview area. It holds user-facing actions such as Refresh 3D, Corner order, Guide lines, Highlight affected, Scroll affected, and Reset preview order.
+- Preview order panel: remains a separate movable/collapsible panel for local preview pair order and Label Studio 0-100 coordinate summaries.
+- Debug drawer: the previous bottom-right sandbox panel becomes a default-collapsed `Debug drawer`; `Show debug details` exposes telemetry, active_time diagnostics, store status, residual values, guardrails, and meta-label details.
+
+Guide display remains `issue_only` by default. The on-canvas guide legend remains compact and explains Affected pair guide, Ceiling reference, Floor reference, and Height check. M13.2 is still dev-only and sandbox-only: no official userscript changes, no point movement, no annotation writeback, no target x/y, no snap coordinates, no routing, no formal `g_t`, and no `P1/C1/C2/T1/V1` artifacts.
