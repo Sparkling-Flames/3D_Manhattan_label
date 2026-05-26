@@ -35,7 +35,7 @@ def test_both_scripts_have_required_guard_text():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
         for required in [
-            "m12.1-dev-only",
+            "m12.2-dev-only",
             "dev-only",
             "sandbox-only",
             "expert/developer tester only",
@@ -253,6 +253,7 @@ def test_both_scripts_include_m12_direction_only_hint_panel():
             "highlight_affected_pair_index",
             "highlight_row_found",
             "highlight_overlay_labels_found",
+            "Highlight scope: Preview order pair row and 2D panorama order labels only",
             "Highlight affected pair",
             'highlightButton.addEventListener("click", () => highlightAffectedPair())',
             "diagnosis-affected-pair",
@@ -299,11 +300,11 @@ def test_both_scripts_include_sandbox_meta_guard_and_preview_order_controls():
             "display_pair_index",
             "dataset.basePairIndex",
             "dataset.displayPairIndex",
-            "x%=",
-            "c%=",
-            "f%=",
-            "formatPercent",
-            "pairPercentSummary",
+            "top: x=",
+            "bottom: x=",
+            "formatLsCoord",
+            "pairLsCoordSummary",
+            "Label Studio 0-100 scale",
             "Hide corner order",
             "Show corner order",
             "hp-title",
@@ -335,6 +336,24 @@ def test_both_scripts_use_preview_pairing_and_fixed_deviation_thresholds():
             "DUPLICATE_KEYPOINT_THRESHOLD_RATIO = 0.01",
         ]:
             assert required in text
+
+
+def test_pair_rows_use_label_studio_scale_without_percent_suffix():
+    for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
+        text = read(script)
+        assert "x%=" not in text
+        assert "c%=" not in text
+        assert "f%=" not in text
+        assert "formatPercent" not in text
+        assert "pairPercentSummary" not in text
+        assert "top: x=" in text
+        assert "bottom: x=" in text
+        assert "Label Studio 0-100 scale" in text
+        assert "vertical_pair_x_residual_px" in text
+        assert "ceiling_y_range_px" in text
+        assert "floor_y_range_px" in text
+        assert "wall_height_range_px" in text
+        assert "3D highlight" not in text
 
 
 def test_timed_telemetry_sends_deviation_score_without_coordinates():
