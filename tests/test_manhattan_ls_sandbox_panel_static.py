@@ -274,7 +274,8 @@ def test_both_scripts_include_m12_direction_only_hint_panel():
         assert "hint-status" not in highlight_text
         assert "unavailable_no_valid_pair" in highlight_text
         assert "unavailable_pair_not_in_order" in highlight_text
-        assert "scrollIntoView" in highlight_text
+        assert "currentPreviewSelectedPairIndex = displayIndex" not in highlight_text
+        assert "scrollIntoView" not in highlight_text
         assert "state.manhattan_deviation" not in highlight_text
 
 
