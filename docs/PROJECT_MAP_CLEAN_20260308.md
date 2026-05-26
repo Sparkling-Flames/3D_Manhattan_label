@@ -112,7 +112,7 @@
 - `tools/manhattan_geometry_residual.py`
   - M1 residual calculator for preview-compatible keypoints; reports preview geometry stability only.
 - `tools/manhattan_constrained_fit.py`
-  - M14 pure Python Manhattan constrained fitting prototype for ordered paired corners in Label Studio 0-100 coordinates. It converts to panorama angular coordinates, estimates a closed Manhattan candidate, reports `fit_status`, `fit_residual`, `per_point_delta`, and warnings, and remains dev-only / sandbox-only with no writeback, no UI integration, no routing, and no formal artifact role.
+  - M14.1/M14.2 pure Python Manhattan constrained fitting prototype for ordered paired corners in Label Studio 0-100 coordinates. It converts to panorama angular coordinates, searches deterministic Manhattan yaw candidates, estimates a height-aware closed Manhattan candidate with `atan2` reprojection, reports `fit_status`, `fit_residual`, `manhattan_yaw_*`, `layout_height_candidate`, `per_point_delta`, and warnings, and remains dev-only / sandbox-only with no writeback, no UI integration, no routing, and no formal artifact role.
 - `tools/manhattan_preview_suggestions.py`
   - M2 preview-only suggestion summary helper; emits review prompt type counts only.
 - `tools/render_manhattan_probe_report.py`
@@ -455,7 +455,7 @@
 - `docs/MANHATTAN_LS_SANDBOX_OPERATION_CHECKLIST_v1.md`
   - M8 operation checklist for limited dev-only Label Studio sandbox testing and M8.2 read-only active-log audit. Requires copied smoke tasks or dedicated sandbox import, developer / expert tester only, no ordinary worker access, no official userscript changes, no writeback, no formal experiment evidence use, and sandbox telemetry exclusion from primary active_time.
 - `docs/MANHATTAN_CONSTRAINED_FIT_PLAN_v1.md`
-  - M14 design note for the dev-only Manhattan constrained fitting core. Explains why global median ceiling/floor guide bands are invalid for equirectangular panoramas, records the no-writeback constrained-candidate boundary, and does not change protocol, routing, Label Studio UI, or formal artifacts.
+  - M14.1/M14.2 design note for the dev-only Manhattan constrained fitting core. Explains why global median ceiling/floor guide bands are invalid for equirectangular panoramas, documents yaw-aware Manhattan fitting and height-aware `atan2` reprojection, records the no-writeback constrained-candidate boundary, and does not change protocol, routing, Label Studio UI, or formal artifacts.
 - `docs/AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md`
   - B-line / Paper B 的 Ambiguity-aware enclosed HoHoNet 研究计划；属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面
 - `docs/PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md`
