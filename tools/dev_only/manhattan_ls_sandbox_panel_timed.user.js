@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HOHONET Manhattan LS Sandbox Panel Timed
 // @namespace    hohonet-dev-only
-// @version      m12.2-dev-only-timed-0.1.0
+// @version      m12.3-dev-only-timed-0.1.0
 // @description  dev-only sandbox-only read-only Manhattan panel; timed variant with sandbox-excluded active_time telemetry.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
@@ -40,7 +40,7 @@
   window[WINDOW_GUARD] = { script_variant: "timed" };
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const PANEL_VERSION = "m12.2-dev-only-timed-0.1.0";
+  const PANEL_VERSION = "m12.3-dev-only-timed-0.1.0";
   const OFFICIAL_IFRAME_ID = "hohonet-iframe";
   const OFFICIAL_WRAPPER_ID = "hohonet-wrapper";
   const OFFICIAL_BUTTON_ID = "hohonet-refresh-btn";
@@ -1102,6 +1102,11 @@
     setText(`${PANEL_ID}-highlight-affected-pair-index`, highlightState.affectedPairIndex);
     setText(`${PANEL_ID}-highlight-row-found`, highlightState.rowFound ? "true" : "false");
     setText(`${PANEL_ID}-highlight-overlay-labels-found`, highlightState.overlayLabelsFound);
+    setText(`${PANEL_ID}-diagnosis-affected-pair-index`, currentDiagnosisAffectedPairIndex === null ? "none" : currentDiagnosisAffectedPairIndex + 1);
+    setText(`${PANEL_ID}-manual-selected-pair-index`, currentPreviewBasePairs.length ? currentPreviewSelectedPairIndex + 1 : "none");
+    setText(`${PANEL_ID}-highlight-mode`, highlightMode());
+    setText(`${PANEL_ID}-diagnosis-highlight-status`, highlightState.status);
+    setText(`${PANEL_ID}-manual-highlight-status`, currentPreviewBasePairs.length ? "manual_selected_pair_active" : "manual_selected_pair_unavailable");
   }
 
   function setHighlightState(status, affectedPairIndex, rowFound = false, overlayLabelsFound = 0) {
@@ -1110,6 +1115,15 @@
     highlightState.rowFound = rowFound;
     highlightState.overlayLabelsFound = overlayLabelsFound;
     updateHighlightPanel();
+  }
+
+  function highlightMode() {
+    const hasManual = currentPreviewBasePairs.length > 0;
+    const hasDiagnosis = currentDiagnosisAffectedPairIndex !== null;
+    if (hasManual && hasDiagnosis) return "manual_and_diagnosis";
+    if (hasDiagnosis) return "diagnosis_only";
+    if (hasManual) return "manual_only";
+    return "none";
   }
 
   function updateMetaGuardPanel(meta) {
@@ -1406,16 +1420,29 @@
         const pctY = Number.isFinite(point.pctY) ? point.pctY : (point.y / DEFAULT_HEIGHT) * 100;
         const badge = document.createElement("div");
         const isAffected = Number(pair?.base_pair_index) === currentDiagnosisAffectedPairIndex;
-        badge.className = isAffected ? "diagnosis-affected-pair" : "";
+        const isManualSelected = index === currentPreviewSelectedPairIndex;
+        const classes = [];
+        if (isManualSelected) classes.push("manual-selected-pair");
+        if (isAffected) classes.push("diagnosis-affected-pair");
+        if (isManualSelected && isAffected) classes.push("manual-and-diagnosis-pair");
+        badge.className = classes.join(" ");
         badge.dataset.basePairIndex = Number.isFinite(Number(pair?.base_pair_index)) ? String(Number(pair.base_pair_index) + 1) : String(index + 1);
         badge.dataset.displayPairIndex = String(index + 1);
-        badge.textContent = String(index + 1);
+        badge.textContent = `${index + 1}${isManualSelected ? "S" : ""}${isAffected ? "A" : ""}`;
         badge.style.cssText =
           "position:absolute;transform:translate(-50%,-150%);background:rgba(255,255,0,0.9);color:#000;font-weight:700;padding:2px 6px;border-radius:4px;font-size:12px;border:1px solid #111;";
+        if (isManualSelected) {
+          badge.style.outline = "3px solid #2f5cff";
+          badge.style.boxShadow = "0 0 0 3px rgba(47,92,255,0.35)";
+        }
         if (isAffected) {
           affectedOverlayCount += 1;
           badge.style.outline = "3px solid #ff7a00";
           badge.style.boxShadow = "0 0 0 3px rgba(255,122,0,0.35)";
+        }
+        if (isManualSelected && isAffected) {
+          badge.style.outline = "3px solid #a855f7";
+          badge.style.boxShadow = "0 0 0 3px rgba(168,85,247,0.38)";
         }
         badge.style.left = `${(pctX / 100) * rect.width}px`;
         badge.style.top = `${(pctY / 100) * rect.height}px`;
@@ -1501,7 +1528,21 @@
     renderPreviewOverlayPairs(orderedPreviewPairs());
     const row = document.querySelector(`#${PREVIEW_PANEL_ID}-pair-rows [data-base-pair-index="${rawIndex}"]`);
     const overlayCount = document.querySelectorAll(`#${OVERLAY_ID} .diagnosis-affected-pair`).length;
-    setHighlightState(row || overlayCount ? "applied" : "unavailable_pair_not_found", rawIndex, Boolean(row), overlayCount);
+    setHighlightState(row || overlayCount ? "diagnosis_highlight_applied" : "unavailable_pair_not_found", rawIndex, Boolean(row), overlayCount);
+  }
+
+  function scrollToAffectedPair() {
+    if (currentDiagnosisAffectedPairIndex === null) {
+      setHighlightState("unavailable_no_diagnosis_highlight", "unavailable");
+      return;
+    }
+    const row = document.querySelector(`#${PREVIEW_PANEL_ID}-pair-rows [data-base-pair-index="${currentDiagnosisAffectedPairIndex + 1}"]`);
+    if (!row || typeof row.scrollIntoView !== "function") {
+      setHighlightState("unavailable_pair_not_found", currentDiagnosisAffectedPairIndex + 1);
+      return;
+    }
+    row.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    setHighlightState("diagnosis_highlight_scrolled", currentDiagnosisAffectedPairIndex + 1, true, highlightState.overlayLabelsFound);
   }
 
   function swapPreviewPairs(fromIndex, toIndex) {
@@ -1529,6 +1570,7 @@
     if (pairInput && document.activeElement !== pairInput) pairInput.value = String(currentPreviewSelectedPairIndex + 1);
     const swapInput = document.getElementById(PREVIEW_PANEL_SWAP_INPUT_ID);
     if (swapInput && document.activeElement !== swapInput) swapInput.value = String(Math.min(currentPreviewBasePairs.length, currentPreviewSelectedPairIndex + 2 || 1));
+    updateHighlightPanel();
   }
 
   function renderPreviewPairRows() {
@@ -1545,8 +1587,9 @@
       row.type = "button";
       const isActive = displayIndex === currentPreviewSelectedPairIndex;
       const isAffected = Number(pair?.base_pair_index) === currentDiagnosisAffectedPairIndex;
-      row.className = `hp-pair-row${isActive ? " active-pair" : ""}${isAffected ? " diagnosis-affected-pair" : ""}`;
+      row.className = `hp-pair-row${isActive ? " active-pair manual-selected-pair" : ""}${isAffected ? " diagnosis-affected-pair" : ""}${isActive && isAffected ? " manual-and-diagnosis-pair" : ""}`;
       row.dataset.activePair = displayIndex === currentPreviewSelectedPairIndex ? "true" : "false";
+      row.dataset.manualSelectedPair = isActive ? "true" : "false";
       row.dataset.diagnosisAffectedPair = isAffected ? "true" : "false";
       row.dataset.basePairIndex = Number.isFinite(Number(pair?.base_pair_index)) ? String(Number(pair.base_pair_index) + 1) : String(displayIndex + 1);
       row.dataset.displayPairIndex = String(displayIndex + 1);
@@ -1562,12 +1605,19 @@
         row.style.borderColor = "#ffb020";
         row.style.background = "rgba(255,176,32,0.24)";
       }
+      if (isActive && isAffected) {
+        row.style.outline = "2px solid #a855f7";
+        row.style.boxShadow = "0 0 0 2px rgba(168,85,247,0.22)";
+        row.style.borderColor = "#a855f7";
+        row.style.background = "rgba(168,85,247,0.26)";
+      }
       const lsCoord = pairLsCoordSummary(pair);
       const prefix = lsCoord.derived ? "derived " : "";
-      row.innerHTML = `<strong>Pair ${displayIndex + 1}</strong><span>${prefix}top: x=${formatLsCoord(lsCoord.top.x)}, y=${formatLsCoord(lsCoord.top.y)}<br>${prefix}bottom: x=${formatLsCoord(lsCoord.bottom.x)}, y=${formatLsCoord(lsCoord.bottom.y)}</span><span>${isAffected ? "affected" : isActive ? "active" : ""}</span>`;
+      row.innerHTML = `<strong>Pair ${displayIndex + 1}</strong><span>${prefix}top: x=${formatLsCoord(lsCoord.top.x)}, y=${formatLsCoord(lsCoord.top.y)}<br>${prefix}bottom: x=${formatLsCoord(lsCoord.bottom.x)}, y=${formatLsCoord(lsCoord.bottom.y)}</span><span>${isActive && isAffected ? "selected+affected" : isAffected ? "affected" : isActive ? "selected" : ""}</span>`;
       row.addEventListener("click", () => {
         currentPreviewSelectedPairIndex = displayIndex;
         updatePreviewOrderPanelUi();
+        renderPreviewOverlayPairs(orderedPreviewPairs());
       });
       container.appendChild(row);
     });
@@ -1855,6 +1905,9 @@
       preview_only_hint_component: deviation.hint_component,
       preview_only_affected_pair_index: deviation.affected_pair_index,
       preview_only_direction_hint_type: deviation.hint_direction_type,
+      preview_only_diagnosis_affected_pair_index: currentDiagnosisAffectedPairIndex === null ? "none" : currentDiagnosisAffectedPairIndex + 1,
+      preview_only_manual_selected_pair_index: currentPreviewBasePairs.length ? currentPreviewSelectedPairIndex + 1 : "none",
+      preview_only_highlight_mode: highlightMode(),
       preview_order_visible: getLabelsVisible(),
       not_correctness: true,
       no_writeback: true,
@@ -2121,6 +2174,11 @@
     hint.appendChild(makeMutableRow("hint_guardrail", state.manhattan_deviation.hint_guardrail, `${PANEL_ID}-hint-guardrail`));
     hint.appendChild(makeMutableRow("highlight_status", highlightState.status, `${PANEL_ID}-highlight-status`));
     hint.appendChild(makeMutableRow("highlight_affected_pair_index", highlightState.affectedPairIndex, `${PANEL_ID}-highlight-affected-pair-index`));
+    hint.appendChild(makeMutableRow("diagnosis_affected_pair_index", currentDiagnosisAffectedPairIndex === null ? "none" : currentDiagnosisAffectedPairIndex + 1, `${PANEL_ID}-diagnosis-affected-pair-index`));
+    hint.appendChild(makeMutableRow("manual_selected_pair_index", currentPreviewBasePairs.length ? currentPreviewSelectedPairIndex + 1 : "none", `${PANEL_ID}-manual-selected-pair-index`));
+    hint.appendChild(makeMutableRow("highlight_mode", highlightMode(), `${PANEL_ID}-highlight-mode`));
+    hint.appendChild(makeMutableRow("diagnosis_highlight_status", highlightState.status, `${PANEL_ID}-diagnosis-highlight-status`));
+    hint.appendChild(makeMutableRow("manual_highlight_status", currentPreviewBasePairs.length ? "manual_selected_pair_active" : "manual_selected_pair_unavailable", `${PANEL_ID}-manual-highlight-status`));
     hint.appendChild(makeMutableRow("highlight_row_found", highlightState.rowFound ? "true" : "false", `${PANEL_ID}-highlight-row-found`));
     hint.appendChild(makeMutableRow("highlight_overlay_labels_found", highlightState.overlayLabelsFound, `${PANEL_ID}-highlight-overlay-labels-found`));
     hint.appendChild(text("Highlight scope: Preview order pair row and 2D panorama order labels only. No wall or point highlighting inside the 3D preview in this step."));
@@ -2130,6 +2188,12 @@
     highlightButton.style.cssText = "margin-top:8px;padding:6px 10px;border:1px solid rgba(255,255,255,0.18);border-radius:6px;background:#2f5cff;color:#fff;cursor:pointer;font-size:12px;";
     highlightButton.addEventListener("click", () => highlightAffectedPair());
     hint.appendChild(highlightButton);
+    const scrollButton = document.createElement("button");
+    scrollButton.type = "button";
+    scrollButton.textContent = "Scroll to affected pair";
+    scrollButton.style.cssText = "margin-top:8px;margin-left:6px;padding:6px 10px;border:1px solid rgba(255,255,255,0.18);border-radius:6px;background:#64748b;color:#fff;cursor:pointer;font-size:12px;";
+    scrollButton.addEventListener("click", () => scrollToAffectedPair());
+    hint.appendChild(scrollButton);
     panel.appendChild(hint);
 
     const suggestion = document.createElement("section");

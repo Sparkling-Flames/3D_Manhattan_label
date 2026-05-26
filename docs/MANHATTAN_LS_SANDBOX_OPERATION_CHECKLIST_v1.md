@@ -263,3 +263,14 @@ M12.2 clarifies that affected-pair highlighting is limited to the Preview order 
 - Pair row coordinates use the Label Studio 0-100 scale without a percent suffix.
 - Residual display labels must make pixel units explicit, for example `vertical_pair_x_residual_px`, `ceiling_y_range_px`, `floor_y_range_px`, and `wall_height_range_px`.
 - The highlight remains preview-only and local to the sandbox UI: no point movement, no annotation writeback, no submit, no target coordinates, no snap coordinates, no routing, no formal `g_t`, and no `P1/C1/C2/T1/V1` artifacts.
+
+## 18. M12.3 Manual Selection vs Diagnosis Highlight
+
+M12.3 keeps two independent preview-only highlight states:
+
+- `manual_selected_pair_index`: the pair currently selected by the expert tester in the Preview order panel, shown with blue styling.
+- `diagnosis_affected_pair_index`: the pair identified by the direction-only Manhattan diagnosis, shown with orange styling.
+
+Clicking a Preview order row updates only the manual selected pair and must not clear the diagnosis affected pair. Clicking `Highlight affected pair` updates only the diagnosis highlight and must not overwrite the manual selected pair or scroll the panel. The optional `Scroll to affected pair` button is the only M12.3 control that may scroll the Preview order panel.
+
+If both states refer to the same pair, the sandbox UI may use a combined style. Both states remain local visual aids for the Preview order panel and 2D panorama order labels only: no 3D-side highlighting, no point movement, no annotation writeback, no submit, no target coordinates, no snap coordinates, no routing, no formal `g_t`, and no `P1/C1/C2/T1/V1` artifacts.
