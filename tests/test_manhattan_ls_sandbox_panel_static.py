@@ -35,7 +35,7 @@ def test_both_scripts_have_required_guard_text():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
         for required in [
-            "m13-dev-only",
+            "m13.2-dev-only",
             "dev-only",
             "sandbox-only",
             "expert/developer tester only",
@@ -364,20 +364,50 @@ def test_both_scripts_include_m13_guide_bands_and_transparent_badges():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
         for required in [
-            "m13-dev-only",
+            "m13.2-dev-only",
+            "hohonet-m13-primary-toolbar",
+            "Manhattan tools",
+            "Refresh 3D",
+            "Corner order",
+            "Guide lines",
+            "Highlight affected",
+            "Scroll affected",
+            "Reset preview order",
+            "Debug drawer",
+            "Show debug details",
+            'panel.dataset.collapsed = "1"',
             "Show guide bands",
             "Hide guide bands",
             "2D guide bands",
+            "GUIDE_MODE = \"issue_only\"",
             "guide_status",
+            "guide_mode",
             "guide_component",
             "guide_affected_pair_index",
+            "guide_visible_items",
+            "guide_explanation",
             "guide_scope",
             "guide_guardrail",
             "Guide bands are visual references only",
+            "visual reference lines",
+            "Ceiling reference",
+            "Floor reference",
+            "Affected pair axis",
+            "Height check",
             "median ceiling band",
             "median floor band",
             "affected pair guide",
+            "height check bracket",
             "renderGuideBands",
+            "drawGuideLegend",
+            "drawHeightBracket",
+            "pair_x_alignment",
+            "ceiling_alignment",
+            "floor_alignment",
+            "wall_height_consistency",
+            "affected_ceiling_point",
+            "affected_floor_point",
+            "low_opacity_context_bands",
             "getGuideBandsVisible",
             "setGuideBandsVisible",
             "GUIDE_BANDS_VISIBLE_KEY",
@@ -388,6 +418,8 @@ def test_both_scripts_include_m13_guide_bands_and_transparent_badges():
         ]:
             assert required in text
 
+        assert 'const GUIDE_MODE = "issue_only"' in text
+        assert "all_references" not in text
         assert '${index + 1}${isManualSelected ? "S" : ""}${isAffected ? "A" : ""}' not in text
         assert "badge.textContent = String(index + 1)" in text
 
