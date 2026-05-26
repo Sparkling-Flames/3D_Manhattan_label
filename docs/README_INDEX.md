@@ -69,7 +69,11 @@
    - Documents equirectangular / `atan2` / `pano_connect_points` boundary assumptions, `manhattan_yaw` search, `layout_height_candidate` reprojection, and keeps the work outside UI, routing, formal `g_t`, correctness, and `P1/C1/C2/T1/V1` artifacts.
    - M15 smoke audit outputs live under `analysis_results/manhattan_constrained_fit_smoke/`; they are dev-only sidecars, not formal round artifacts.
 
-16. [AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md](AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md)
+16. [OOS_SCOPE_POLICY_AUDIT_v1.md](OOS_SCOPE_POLICY_AUDIT_v1.md)
+   - M15.2 audit policy note: scope vote is not adjudicated OOS; task-level OOS requires expert adjudication or an explicit adjudication artifact.
+   - Separates normal-only audit eligibility from scope-independent `geometry_debug`; neither feeds formal `g_t`, routing, worker tier, or `P1/C1/C2/T1/V1` artifacts.
+
+17. [AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md](AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md)
    - Paper B / B-line 的 Ambiguity-aware enclosed HoHoNet 研究计划。
    - 属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面。
    - 关联规格：[PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md](PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md) 与 [ZIND_MAPPING_AUDIT_PROTOCOL_v1.md](ZIND_MAPPING_AUDIT_PROTOCOL_v1.md)，仅作为 Paper B / non-thesis-facing 架构与数据审计规划。
