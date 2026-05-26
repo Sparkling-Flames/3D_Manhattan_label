@@ -267,6 +267,7 @@ def _base_record(
         "annotation_id": _annotation_id(annotation),
         "annotator_id": _annotator_id(annotation),
         "scope": scope,
+        "scope_vote": scope,
     }
 
 
@@ -284,6 +285,9 @@ def _apply_geometry_debug(record: dict[str, Any], points: Sequence[Mapping[str, 
             "geometry_debug_problem_reason": None,
             "geometry_debug_scope_vote": record.get("scope"),
             "geometry_debug_not_oos_adjudication": True,
+            "geometry_debug_direction_label": None,
+            "geometry_debug_fitted_points": [],
+            "geometry_debug_per_point_delta": [],
         }
     )
     if not points:
@@ -309,6 +313,9 @@ def _apply_geometry_debug(record: dict[str, Any], points: Sequence[Mapping[str, 
             "geometry_debug_fit_residual": fit.get("fit_residual"),
             "geometry_debug_max_abs_delta": max_abs_delta,
             "geometry_debug_layout_height_spread": fit.get("layout_height_spread"),
+            "geometry_debug_direction_label": fit.get("direction_label"),
+            "geometry_debug_fitted_points": fit.get("fitted_points", []),
+            "geometry_debug_per_point_delta": fit.get("per_point_delta", []),
         }
     )
     if fit.get("fit_status") != "ok":
@@ -364,6 +371,10 @@ def audit_tasks(tasks: Iterable[Mapping[str, Any]], source_export: str) -> tuple
             points, keypoint_results, parse_errors = extract_keypoints(annotation)
             record.update(
                 {
+                    "original_points": [
+                        {"x": point.get("x"), "y": point.get("y"), "original_index": point.get("original_index")}
+                        for point in points
+                    ],
                     "n_keypoints": len(points),
                     "n_keypoint_results": keypoint_results,
                     "parse_error_count": parse_errors,
@@ -507,6 +518,9 @@ def audit_tasks(tasks: Iterable[Mapping[str, Any]], source_export: str) -> tuple
         "source_export": source_export,
         "n_tasks": len(task_list),
         "n_annotations": n_annotations,
+        "n_scope_vote_normal": n_scope_normal,
+        "n_scope_vote_oos": n_scope_oos,
+        "scope_vote_distribution": dict(sorted(scope_counts.items())),
         "n_scope_normal": n_scope_normal,
         "n_scope_oos": n_scope_oos,
         "scope_alias_counts": dict(sorted(scope_counts.items())),
@@ -626,6 +640,7 @@ def _geometry_debug_task_rows(records: Sequence[Mapping[str, Any]]) -> list[dict
             {
                 "task_id": task_id,
                 "n_annotations": len(task_records),
+                "scope_vote_distribution": json.dumps(dict(sorted(scope_distribution.items())), ensure_ascii=False),
                 "scope_distribution": json.dumps(dict(sorted(scope_distribution.items())), ensure_ascii=False),
                 "n_geometry_debug_problem": sum(
                     bool(record.get("geometry_debug_problem_flag")) for record in task_records
@@ -645,6 +660,7 @@ def _write_geometry_debug_task_csv(path: Path, records: Sequence[Mapping[str, An
     fields = [
         "task_id",
         "n_annotations",
+        "scope_vote_distribution",
         "scope_distribution",
         "n_geometry_debug_problem",
         "geometry_debug_problem_distribution",
@@ -654,6 +670,128 @@ def _write_geometry_debug_task_csv(path: Path, records: Sequence[Mapping[str, An
         writer = csv.DictWriter(handle, fieldnames=fields)
         writer.writeheader()
         writer.writerows(rows)
+
+
+def _json_cell(value: Any) -> str:
+    if value in (None, [], {}):
+        return ""
+    return json.dumps(value, ensure_ascii=False, sort_keys=True)
+
+
+def _review_question(record: Mapping[str, Any]) -> str:
+    reason = record.get("geometry_debug_problem_reason")
+    preview_status = record.get("geometry_debug_preview_status")
+    max_abs_delta = record.get("geometry_debug_max_abs_delta")
+    if preview_status and preview_status != COMPATIBLE:
+        return "Inspect whether current keypoint geometry is parseable by the preview-compatible pairing rule."
+    if reason == "self_crossing_candidate":
+        return "Inspect whether the fitted Manhattan candidate crosses itself; this is geometry debug, not OOS adjudication."
+    if isinstance(max_abs_delta, (int, float)) and max_abs_delta >= LARGE_MOVE_THRESHOLD:
+        return "Inspect whether the large candidate delta indicates unstable Manhattan fit; deltas are not correction instructions."
+    if str(record.get("task_id")) in FOCUS_TASK_IDS:
+        return "Focused task-level Manhattan stability inspection row; compare scope vote and geometry debug separately."
+    return "Geometry debug review candidate."
+
+
+def _is_geometry_review_candidate(record: Mapping[str, Any]) -> bool:
+    max_abs_delta = record.get("geometry_debug_max_abs_delta")
+    return (
+        bool(record.get("geometry_debug_problem_flag"))
+        or (isinstance(max_abs_delta, (int, float)) and max_abs_delta >= LARGE_MOVE_THRESHOLD)
+        or record.get("geometry_debug_problem_reason") == "self_crossing_candidate"
+        or record.get("geometry_debug_preview_status") not in {None, COMPATIBLE}
+        or str(record.get("task_id")) in FOCUS_TASK_IDS
+    )
+
+
+def _review_candidate_record(record: Mapping[str, Any]) -> dict[str, Any]:
+    return {
+        "task_id": record.get("task_id"),
+        "annotation_id": record.get("annotation_id"),
+        "annotator_id": record.get("annotator_id"),
+        "scope_vote": record.get("scope_vote"),
+        "n_keypoints": record.get("n_keypoints"),
+        "preview_status": record.get("geometry_debug_preview_status"),
+        "fit_status": record.get("geometry_debug_fit_status"),
+        "fit_confidence": record.get("geometry_debug_fit_confidence"),
+        "max_abs_delta": record.get("geometry_debug_max_abs_delta"),
+        "layout_height_spread": record.get("geometry_debug_layout_height_spread"),
+        "problem_reason": record.get("geometry_debug_problem_reason"),
+        "original_points": record.get("original_points", []),
+        "fitted_points": record.get("geometry_debug_fitted_points", []),
+        "per_point_delta": record.get("geometry_debug_per_point_delta", []),
+        "review_question": _review_question(record),
+        "not_oos_adjudication": True,
+    }
+
+
+def _geometry_review_candidates(records: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
+    return [_review_candidate_record(record) for record in records if _is_geometry_review_candidate(record)]
+
+
+def _write_geometry_review_candidates_csv(path: Path, rows: Sequence[Mapping[str, Any]]) -> None:
+    fields = [
+        "task_id",
+        "annotation_id",
+        "annotator_id",
+        "scope_vote",
+        "n_keypoints",
+        "preview_status",
+        "fit_status",
+        "fit_confidence",
+        "max_abs_delta",
+        "layout_height_spread",
+        "problem_reason",
+        "original_points",
+        "fitted_points",
+        "per_point_delta",
+        "review_question",
+        "not_oos_adjudication",
+    ]
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        for row in rows:
+            csv_row = {field: row.get(field) for field in fields}
+            for field in ("original_points", "fitted_points", "per_point_delta"):
+                csv_row[field] = _json_cell(csv_row[field])
+            writer.writerow(csv_row)
+
+
+def _render_geometry_review_report(
+    rows: Sequence[Mapping[str, Any]],
+    records: Sequence[Mapping[str, Any]],
+    summary: Mapping[str, Any],
+) -> str:
+    problem_count = sum(1 for row in rows if row.get("problem_reason"))
+    lines = [
+        "# Manhattan geometry-debug review report",
+        "",
+        "This review package is smoke-only / dev-only. OOS vote is not final OOS adjudication. "
+        "Candidate deltas are not correction instructions; no writeback, no formal g_t, no routing, "
+        "and no P1/C1/C2/T1/V1 artifact role.",
+        "",
+        f"- source_export: `{summary.get('source_export')}`",
+        f"- n_review_candidates: {len(rows)}",
+        f"- n_review_candidates_with_problem_reason: {problem_count}",
+        f"- scope_vote_distribution: `{summary.get('scope_vote_distribution')}`",
+        f"- audit_ineligibility_counts: `{summary.get('audit_ineligibility_counts')}`",
+        f"- preview_incompatibility_counts: `{summary.get('preview_incompatibility_counts')}`",
+        f"- fit_failure_counts: `{summary.get('fit_failure_counts')}`",
+        "",
+        "## Review candidate policy",
+        "",
+        "Rows are included when geometry_debug has a problem flag, max_abs_delta >= 5, "
+        "self_crossing_candidate, preview incompatibility, or task_id is 2948/2949. "
+        "Scope vote and geometry problem are separate columns.",
+        "",
+        "## Focus: task 2948",
+        "",
+    ]
+    lines.extend(_focus_task_lines(records, "2948"))
+    lines.extend(["", "## Focus: task 2949", ""])
+    lines.extend(_focus_task_lines(records, "2949"))
+    return "\n".join(lines) + "\n"
 
 
 def _render_report(summary: Mapping[str, Any]) -> str:
@@ -667,8 +805,9 @@ def _render_report(summary: Mapping[str, Any]) -> str:
         f"- source_export: `{summary.get('source_export')}`",
         f"- n_tasks: {summary.get('n_tasks')}",
         f"- n_annotations: {summary.get('n_annotations')}",
-        f"- n_scope_normal: {summary.get('n_scope_normal')}",
-        f"- n_scope_oos: {summary.get('n_scope_oos')}",
+        f"- n_scope_vote_normal: {summary.get('n_scope_vote_normal')}",
+        f"- n_scope_vote_oos: {summary.get('n_scope_vote_oos')}",
+        f"- scope_vote_distribution: `{summary.get('scope_vote_distribution')}`",
         f"- n_preview_compatible: {summary.get('n_preview_compatible')}",
         f"- n_preview_excluded: {summary.get('n_preview_excluded')}",
         f"- n_fit_ok: {summary.get('n_fit_ok')}",
@@ -728,18 +867,19 @@ def _focus_task_lines(records: Sequence[Mapping[str, Any]], task_id: str) -> lis
     if not rows:
         return [f"- task {task_id}: no rows present in this smoke export."]
     out = [
-        "| annotator_id | annotation_id | scope vote | preview status | geometry_debug fit status | max delta | problem reason |",
-        "| --- | --- | --- | --- | --- | ---: | --- |",
+        "| annotator_id | annotation_id | scope vote | preview status | geometry_debug fit status | max delta | geometry problem | problem reason |",
+        "| --- | --- | --- | --- | --- | ---: | --- | --- |",
     ]
     for record in rows:
         out.append(
-            "| {annotator} | {annotation} | {scope} | {preview} | {fit} | {delta} | {reason} |".format(
+            "| {annotator} | {annotation} | {scope} | {preview} | {fit} | {delta} | {problem} | {reason} |".format(
                 annotator=record.get("annotator_id"),
                 annotation=record.get("annotation_id"),
                 scope=record.get("geometry_debug_scope_vote"),
                 preview=record.get("geometry_debug_preview_status"),
                 fit=record.get("geometry_debug_fit_status"),
                 delta=record.get("geometry_debug_max_abs_delta"),
+                problem="problem" if record.get("geometry_debug_problem_flag") else "non-problem",
                 reason=record.get("geometry_debug_problem_reason"),
             )
         )
@@ -759,6 +899,7 @@ def _write_readme(path: Path, date: str, source_export: str) -> None:
                 "These files are smoke/probe sidecar outputs only.",
                 "Scope vote is not adjudicated OOS; task-level OOS requires expert adjudication or an explicit adjudication artifact.",
                 "Geometry debug rows run on parseable keypoints regardless of scope vote.",
+                "Geometry debug review candidates are task-level Manhattan stability inspection aids, not adjudication.",
                 "Candidate deltas are not correction instructions.",
                 "No annotation writeback was performed.",
                 "This directory is not formal `g_t`, not routing input, not a worker quality metric,",
@@ -772,6 +913,7 @@ def _write_readme(path: Path, date: str, source_export: str) -> None:
 
 def write_outputs(records: Sequence[Mapping[str, Any]], summary: Mapping[str, Any], output_dir: Path, date: str) -> dict[str, str]:
     output_dir.mkdir(parents=True, exist_ok=True)
+    review_candidates = _geometry_review_candidates(records)
     paths = {
         "records": output_dir / f"smoke_fit_records_{date}.jsonl",
         "summary": output_dir / f"smoke_fit_summary_{date}.json",
@@ -780,6 +922,9 @@ def write_outputs(records: Sequence[Mapping[str, Any]], summary: Mapping[str, An
         "geometry_debug_by_annotation": output_dir / f"smoke_geometry_debug_by_annotation_{date}.csv",
         "geometry_debug_by_task": output_dir / f"smoke_geometry_debug_by_task_{date}.csv",
         "geometry_debug_report": output_dir / f"smoke_geometry_debug_report_{date}.md",
+        "geometry_debug_review_candidates_csv": output_dir / f"smoke_geometry_debug_review_candidates_{date}.csv",
+        "geometry_debug_review_candidates_jsonl": output_dir / f"smoke_geometry_debug_review_candidates_{date}.jsonl",
+        "geometry_debug_review_report": output_dir / f"smoke_geometry_debug_review_report_{date}.md",
         "readme": output_dir / "README.md",
     }
     _write_jsonl(paths["records"], records)
@@ -790,6 +935,12 @@ def write_outputs(records: Sequence[Mapping[str, Any]], summary: Mapping[str, An
     _write_geometry_debug_task_csv(paths["geometry_debug_by_task"], records)
     paths["geometry_debug_report"].write_text(
         _render_geometry_debug_report(records, summary),
+        encoding="utf-8",
+    )
+    _write_geometry_review_candidates_csv(paths["geometry_debug_review_candidates_csv"], review_candidates)
+    _write_jsonl(paths["geometry_debug_review_candidates_jsonl"], review_candidates)
+    paths["geometry_debug_review_report"].write_text(
+        _render_geometry_review_report(review_candidates, records, summary),
         encoding="utf-8",
     )
     _write_readme(paths["readme"], date, str(summary.get("source_export")))

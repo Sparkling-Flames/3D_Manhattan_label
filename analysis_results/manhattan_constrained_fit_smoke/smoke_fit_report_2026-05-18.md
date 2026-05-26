@@ -5,8 +5,9 @@ This is smoke-only / dev-only. Candidate deltas are not correction instructions.
 - source_export: `export_label\project-23-at-2026-05-18-02-56-ac500410.json`
 - n_tasks: 5
 - n_annotations: 37
-- n_scope_normal: 32
-- n_scope_oos: 5
+- n_scope_vote_normal: 32
+- n_scope_vote_oos: 5
+- scope_vote_distribution: `{'normal': 32, 'oos_geometry': 1, 'oos_split_level': 4}`
 - n_preview_compatible: 29
 - n_preview_excluded: 3
 - n_fit_ok: 29

@@ -74,6 +74,8 @@ def test_normal_compatible_annotation_produces_fit_ok_record():
     records, summary = audit_tasks([_task(1, [_annotation(101)])], source_export="<memory>")
 
     assert summary["n_annotations"] == 1
+    assert summary["n_scope_vote_normal"] == 1
+    assert summary["scope_vote_distribution"]["normal"] == 1
     assert summary["n_scope_normal"] == 1
     assert summary["n_preview_compatible"] == 1
     assert summary["n_fit_ok"] == 1
@@ -166,6 +168,9 @@ def test_cli_writes_summary_records_csv_report_to_temp_output_dir(tmp_path):
     assert (output_dir / "smoke_geometry_debug_by_annotation_2026-05-18.csv").exists()
     assert (output_dir / "smoke_geometry_debug_by_task_2026-05-18.csv").exists()
     assert (output_dir / "smoke_geometry_debug_report_2026-05-18.md").exists()
+    assert (output_dir / "smoke_geometry_debug_review_candidates_2026-05-18.csv").exists()
+    assert (output_dir / "smoke_geometry_debug_review_candidates_2026-05-18.jsonl").exists()
+    assert (output_dir / "smoke_geometry_debug_review_report_2026-05-18.md").exists()
     assert (output_dir / "README.md").exists()
     with (output_dir / "smoke_fit_candidates_2026-05-18.csv").open(encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
@@ -214,6 +219,7 @@ def test_mixed_scope_task_summary_preserves_distribution_not_final_truth(tmp_pat
     )
 
     assert summary["scope_alias_counts"]["normal"] == 1
+    assert summary["scope_vote_distribution"]["normal"] == 1
     assert summary["scope_alias_counts"]["oos_geometry"] == 1
     assert summary["scope_alias_counts"]["oos_split_level"] == 1
     assert summary["audit_ineligibility_counts"]["oos_geometry"] == 1
@@ -235,6 +241,7 @@ def test_missing_scope_is_not_counted_as_oos():
     )
 
     assert summary["scope_alias_counts"]["scope_missing_or_unknown"] == 1
+    assert summary["scope_vote_distribution"]["scope_missing_or_unknown"] == 1
     assert summary["audit_ineligibility_counts"]["scope_missing_or_unknown"] == 1
     assert "oos_geometry" not in summary["audit_ineligibility_counts"]
     assert records[0]["geometry_debug_fit_status"] == "ok"
@@ -257,3 +264,47 @@ def test_task_2948_2949_focused_sections_are_generated_when_present(tmp_path):
     assert "## Focus: task 2948" in report
     assert "## Focus: task 2949" in report
     assert "not OOS adjudication" in report
+
+    review_report = (output_dir / "smoke_geometry_debug_review_report_2026-05-18.md").read_text(
+        encoding="utf-8"
+    )
+    assert "## Focus: task 2948" in review_report
+    assert "## Focus: task 2949" in review_report
+    assert "OOS vote is not final OOS adjudication" in review_report
+
+
+def test_oos_vote_rows_can_appear_in_geometry_review_candidates(tmp_path):
+    export_path = tmp_path / "synthetic_export.json"
+    output_dir = tmp_path / "out"
+    task = _task(
+        2949,
+        [
+            _annotation(101, scope="oos_split_level"),
+            _annotation(102, scope="normal"),
+        ],
+    )
+
+    _, _, _ = audit_export(_write_synthetic_export(export_path, [task]), output_dir, "2026-05-18")
+
+    with (output_dir / "smoke_geometry_debug_review_candidates_2026-05-18.csv").open(
+        encoding="utf-8"
+    ) as handle:
+        rows = list(csv.DictReader(handle))
+    assert any(row["scope_vote"] == "oos_split_level" for row in rows)
+    assert all(row["not_oos_adjudication"] == "True" for row in rows)
+
+
+def test_review_rows_include_geometry_payloads_when_fit_exists(tmp_path):
+    export_path = tmp_path / "synthetic_export.json"
+    output_dir = tmp_path / "out"
+    task = _task(2949, [_annotation(101, scope="normal")])
+
+    audit_export(_write_synthetic_export(export_path, [task]), output_dir, "2026-05-18")
+
+    jsonl_path = output_dir / "smoke_geometry_debug_review_candidates_2026-05-18.jsonl"
+    rows = [json.loads(line) for line in jsonl_path.read_text(encoding="utf-8").splitlines()]
+    assert rows
+    assert rows[0]["original_points"]
+    assert rows[0]["fitted_points"]
+    assert rows[0]["per_point_delta"]
+    assert rows[0]["not_oos_adjudication"] is True
