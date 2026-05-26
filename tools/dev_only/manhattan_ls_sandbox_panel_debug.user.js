@@ -1358,14 +1358,10 @@
       return;
     }
     currentDiagnosisAffectedPairIndex = affectedBaseIndex;
-    currentPreviewSelectedPairIndex = displayIndex;
     updatePreviewOrderPanelUi();
     renderPreviewOverlayPairs(orderedPreviewPairs());
     const row = document.querySelector(`#${PREVIEW_PANEL_ID}-pair-rows [data-base-pair-index="${rawIndex}"]`);
     const overlayCount = document.querySelectorAll(`#${OVERLAY_ID} .diagnosis-affected-pair`).length;
-    if (row && typeof row.scrollIntoView === "function") {
-      row.scrollIntoView({ block: "nearest", behavior: "smooth" });
-    }
     setHighlightState(row || overlayCount ? "applied" : "unavailable_pair_not_found", rawIndex, Boolean(row), overlayCount);
   }
 
