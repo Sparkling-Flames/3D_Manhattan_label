@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HOHONET Manhattan LS Sandbox Panel Debug
 // @namespace    hohonet-dev-only
-// @version      m12.3-dev-only-debug-0.1.0
+// @version      m12.4-dev-only-debug-0.1.0
 // @description  dev-only sandbox-only read-only Manhattan panel; debug variant with no active_time upload.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
@@ -41,7 +41,7 @@
   window[WINDOW_GUARD] = { script_variant: "debug" };
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const PANEL_VERSION = "m12.3-dev-only-debug-0.1.0";
+  const PANEL_VERSION = "m12.4-dev-only-debug-0.1.0";
   const OFFICIAL_IFRAME_ID = "hohonet-iframe";
   const OFFICIAL_WRAPPER_ID = "hohonet-wrapper";
   const OFFICIAL_BUTTON_ID = "hohonet-refresh-btn";
@@ -62,6 +62,7 @@
   let currentPreviewSelectedPairIndex = 0;
   let currentDiagnosisAffectedPairIndex = null;
   let currentSandboxState = null;
+  let currentPageSignature = null;
   const highlightState = {
     status: "not_applied",
     affectedPairIndex: "none",
@@ -981,7 +982,11 @@
   function highlightMode() {
     const hasManual = currentPreviewBasePairs.length > 0;
     const hasDiagnosis = currentDiagnosisAffectedPairIndex !== null;
-    if (hasManual && hasDiagnosis) return "manual_and_diagnosis";
+    if (hasManual && hasDiagnosis) {
+      return currentPreviewOrder[currentPreviewSelectedPairIndex] === currentDiagnosisAffectedPairIndex
+        ? "manual_and_diagnosis_same_pair"
+        : "dual_state_visible";
+    }
     if (hasDiagnosis) return "diagnosis_only";
     if (hasManual) return "manual_only";
     return "none";
@@ -1222,6 +1227,7 @@
       store_status: storeStatus,
       result_count: storeExtraction.result_count,
       keypoint_sources: Array.from(new Set(unique.map((point) => point.source))).join(",") || "none",
+      page_signature: currentTaskSignature(),
       preview_url_status: previewUrl ? "available" : "unavailable",
       preview_url: previewUrl,
       preview_pairs: previewPairs,
@@ -1246,6 +1252,41 @@
   function orderedPreviewPairs() {
     const order = normalizePreviewOrder(currentPreviewOrder, currentPreviewBasePairs.length);
     return order ? order.map((index) => currentPreviewBasePairs[index]) : currentPreviewBasePairs.slice();
+  }
+
+  function currentTaskSignature() {
+    const store = getStore();
+    const taskId = store?.task?.id || store?.taskStore?.selected?.id || new URLSearchParams(window.location.search).get("task") || "unknown_task";
+    const annotationId = store?.annotationStore?.selected?.id || "unknown_annotation";
+    const imageUrl = findMainImage()?.src || getImageUrlFromStore() || window.location.href;
+    return `${taskId}|${annotationId}|${imageUrl}`;
+  }
+
+  function clearPreviewOrderRuntime() {
+    currentPreviewBasePairs = [];
+    currentPreviewOrder = [];
+    currentPreviewSelectedPairIndex = 0;
+    currentDiagnosisAffectedPairIndex = null;
+    highlightState.status = "not_applied";
+    highlightState.affectedPairIndex = "none";
+    highlightState.rowFound = false;
+    highlightState.overlayLabelsFound = 0;
+    const overlay = document.getElementById(OVERLAY_ID);
+    if (overlay) overlay.remove();
+    updatePreviewOrderPanelUi();
+    updateHighlightPanel();
+  }
+
+  function clearPreviewOrderOnTaskChange(signature) {
+    if (!signature) return;
+    if (currentPageSignature === null) {
+      currentPageSignature = signature;
+      return;
+    }
+    if (signature !== currentPageSignature) {
+      currentPageSignature = signature;
+      clearPreviewOrderRuntime();
+    }
   }
 
   function positionOverlay() {
@@ -1289,21 +1330,29 @@
         badge.className = classes.join(" ");
         badge.dataset.basePairIndex = Number.isFinite(Number(pair?.base_pair_index)) ? String(Number(pair.base_pair_index) + 1) : String(index + 1);
         badge.dataset.displayPairIndex = String(index + 1);
-        badge.textContent = `${index + 1}${isManualSelected ? "S" : ""}${isAffected ? "A" : ""}`;
+        badge.textContent = String(index + 1);
         badge.style.cssText =
           "position:absolute;transform:translate(-50%,-150%);background:rgba(255,255,0,0.9);color:#000;font-weight:700;padding:2px 6px;border-radius:4px;font-size:12px;border:1px solid #111;";
         if (isManualSelected) {
+          badge.style.background = "#2f5cff";
+          badge.style.color = "#fff";
           badge.style.outline = "3px solid #2f5cff";
           badge.style.boxShadow = "0 0 0 3px rgba(47,92,255,0.35)";
         }
         if (isAffected) {
           affectedOverlayCount += 1;
-          badge.style.outline = "3px solid #ff7a00";
-          badge.style.boxShadow = "0 0 0 3px rgba(255,122,0,0.35)";
+          badge.style.background = "#ff8a00";
+          badge.style.color = "#111827";
+          badge.style.border = "2px solid #7c2d12";
+          badge.style.outline = "4px solid #ff7a00";
+          badge.style.boxShadow = "0 0 0 4px rgba(255,122,0,0.38)";
         }
         if (isManualSelected && isAffected) {
-          badge.style.outline = "3px solid #a855f7";
-          badge.style.boxShadow = "0 0 0 3px rgba(168,85,247,0.38)";
+          badge.style.background = "#a855f7";
+          badge.style.color = "#fff";
+          badge.style.border = "2px solid #581c87";
+          badge.style.outline = "4px solid #a855f7";
+          badge.style.boxShadow = "0 0 0 4px rgba(168,85,247,0.38)";
         }
         badge.style.left = `${(pctX / 100) * rect.width}px`;
         badge.style.top = `${(pctY / 100) * rect.height}px`;
@@ -1461,14 +1510,14 @@
         row.style.borderColor = "rgba(111,153,255,0.72)";
       }
       if (isAffected) {
-        row.style.outline = "2px solid #ffb020";
-        row.style.boxShadow = "0 0 0 2px rgba(255,176,32,0.16)";
-        row.style.borderColor = "#ffb020";
-        row.style.background = "rgba(255,176,32,0.24)";
+        row.style.outline = "3px solid #ff8a00";
+        row.style.boxShadow = "inset 5px 0 0 #ff8a00, 0 0 0 2px rgba(255,138,0,0.22)";
+        row.style.borderColor = "#ff8a00";
+        row.style.background = "rgba(255,138,0,0.34)";
       }
       if (isActive && isAffected) {
         row.style.outline = "2px solid #a855f7";
-        row.style.boxShadow = "0 0 0 2px rgba(168,85,247,0.22)";
+        row.style.boxShadow = "inset 5px 0 0 #a855f7, 0 0 0 2px rgba(168,85,247,0.22)";
         row.style.borderColor = "#a855f7";
         row.style.background = "rgba(168,85,247,0.26)";
       }
@@ -1567,6 +1616,11 @@
     status.textContent = "no preview pairs available";
     body.appendChild(note);
     body.appendChild(status);
+    const legend = document.createElement("div");
+    legend.className = "hp-legend";
+    legend.style.cssText = "display:grid;grid-template-columns:1fr;gap:2px;margin:6px 0 7px;color:#d6deea;font-size:11px;line-height:1.35;";
+    legend.innerHTML = '<div><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#2f5cff;margin-right:5px;"></span>Blue: manual selected</div><div><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#ff8a00;margin-right:5px;"></span>Orange: diagnosis affected</div><div><span style="display:inline-block;width:9px;height:9px;border-radius:2px;background:#a855f7;margin-right:5px;"></span>Purple: both</div>';
+    body.appendChild(legend);
     const orderSection = document.createElement("div");
     orderSection.className = "hp-section";
     orderSection.style.cssText = "margin-top:7px;";
@@ -1756,6 +1810,7 @@
   }
 
   function renderPanel(state) {
+    clearPreviewOrderOnTaskChange(state.page_signature || currentTaskSignature());
     currentSandboxState = state;
     const metaGuard = validateMetaChoices(getStore());
     let panel = document.getElementById(PANEL_ID);
@@ -1931,6 +1986,7 @@
 
   window.setInterval(function () {
     ensureNativePreviewArea();
+    clearPreviewOrderOnTaskChange(currentTaskSignature());
   }, 1500);
   window.addEventListener("resize", () => renderPreviewOverlayPairs(orderedPreviewPairs()));
   window.addEventListener("scroll", () => renderPreviewOverlayPairs(orderedPreviewPairs()), true);

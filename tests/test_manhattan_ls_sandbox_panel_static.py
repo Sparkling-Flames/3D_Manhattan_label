@@ -35,7 +35,7 @@ def test_both_scripts_have_required_guard_text():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
         for required in [
-            "m12.3-dev-only",
+            "m12.4-dev-only",
             "dev-only",
             "sandbox-only",
             "expert/developer tester only",
@@ -266,6 +266,11 @@ def test_both_scripts_include_m12_direction_only_hint_panel():
             "manual-selected-pair",
             "diagnosis-affected-pair",
             "manual-and-diagnosis-pair",
+            "dual_state_visible",
+            "manual_and_diagnosis_same_pair",
+            "Blue: manual selected",
+            "Orange: diagnosis affected",
+            "Purple: both",
             "setHighlightState",
             "diagnosis_highlight_applied",
             "directionOnlyHint",
@@ -287,6 +292,12 @@ def test_both_scripts_include_m12_direction_only_hint_panel():
         assert "currentPreviewSelectedPairIndex = displayIndex" not in highlight_text
         assert "scrollIntoView" not in highlight_text
         assert "state.manhattan_deviation" not in highlight_text
+        assert '${index + 1}${isManualSelected ? "S" : ""}${isAffected ? "A" : ""}' not in text
+        assert "badge.textContent = String(index + 1)" in text
+        assert 'return "manual_and_diagnosis"' not in text
+        assert 'badge.style.background = "#ff8a00"' in text
+        assert 'badge.style.background = "#2f5cff"' in text
+        assert 'badge.style.background = "#a855f7"' in text
 
         scroll_start = text.index("function scrollToAffectedPair")
         scroll_end = text.index("function swapPreviewPairs")
@@ -313,6 +324,12 @@ def test_both_scripts_include_sandbox_meta_guard_and_preview_order_controls():
             "manual-selected-pair",
             "diagnosis-affected-pair",
             "manual-and-diagnosis-pair",
+            "Blue: manual selected",
+            "Orange: diagnosis affected",
+            "Purple: both",
+            "clearPreviewOrderOnTaskChange",
+            "clearPreviewOrderRuntime",
+            "page_signature",
             "dataset.activePair",
             "dataset.manualSelectedPair",
             "dataset.diagnosisAffectedPair",
