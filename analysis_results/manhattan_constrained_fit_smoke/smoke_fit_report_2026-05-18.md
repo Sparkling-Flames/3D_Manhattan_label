@@ -8,15 +8,16 @@ This is smoke-only / dev-only. Candidate deltas are not correction instructions.
 - n_scope_normal: 32
 - n_scope_oos: 5
 - n_preview_compatible: 29
-- n_preview_excluded: 8
+- n_preview_excluded: 3
 - n_fit_ok: 29
 - n_fit_failed: 0
 - n_large_move_candidates: 2
 
 ## Main counts
 
-- preview_exclusion_counts: `{'compatibility_failure_duplicate': 2, 'compatibility_failure_odd_keypoint': 1, 'oos_geometry': 1, 'oos_split_level': 4}`
-- failure_reason_counts: `{}`
+- audit_ineligibility_counts: `{'oos_geometry': 1, 'oos_split_level': 4}`
+- preview_incompatibility_counts: `{'compatibility_failure_duplicate': 2, 'compatibility_failure_odd_keypoint': 1}`
+- fit_failure_counts: `{}`
 - direction_label_counts: `{'no_action': 26, 'review_manhattan_wall_directions': 3}`
 - fit_confidence_counts: `{'high': 25, 'low': 2, 'medium': 2}`
 

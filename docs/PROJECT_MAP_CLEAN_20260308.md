@@ -114,7 +114,7 @@
 - `tools/manhattan_constrained_fit.py`
   - M14.1/M14.2 pure Python Manhattan constrained fitting prototype for ordered paired corners in Label Studio 0-100 coordinates. It converts to panorama angular coordinates, searches deterministic Manhattan yaw candidates, estimates a height-aware closed Manhattan candidate with `atan2` reprojection, reports `fit_status`, `fit_residual`, `manhattan_yaw_*`, `layout_height_candidate`, `per_point_delta`, and warnings, and remains dev-only / sandbox-only with no writeback, no UI integration, no routing, and no formal artifact role.
 - `tools/audit_manhattan_constrained_fit_smoke.py`
-  - M15 read-only smoke export audit for the M14.2 Manhattan constrained fitting core. It consumes a copied/local Label Studio export JSON, builds current-preview paired corners, writes smoke sidecars under `analysis_results/manhattan_constrained_fit_smoke/`, and remains dev-only / smoke-only with no export modification, no annotation writeback, no formal `g_t`, no routing, no worker tier, and no `P1/C1/C2/T1/V1` artifact role.
+  - M15/M15.2 read-only smoke export audit for the M14.2 Manhattan constrained fitting core. It consumes a copied/local Label Studio export JSON, builds current-preview paired corners, writes smoke sidecars under `analysis_results/manhattan_constrained_fit_smoke/`, separates normal-only audit eligibility from scope-independent `geometry_debug`, and remains dev-only / smoke-only with no export modification, no annotation writeback, no formal `g_t`, no routing, no worker tier, and no `P1/C1/C2/T1/V1` artifact role.
 - `tools/manhattan_preview_suggestions.py`
   - M2 preview-only suggestion summary helper; emits review prompt type counts only.
 - `tools/render_manhattan_probe_report.py`
@@ -349,7 +349,7 @@
 - `analysis_results/manhattan_geometry_diagnostic/`
   - Smoke/probe sidecar outputs for the experiment-outside / post-hoc Manhattan toolchain. Contains the 2026-05-07 probe summary, Markdown report, standalone HTML contact sheet, optional M8.2 sandbox active-log audit JSON, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, not RQ1 primary active_time evidence, and not `P1/C1/C2/T1/V1` artifacts.
 - `analysis_results/manhattan_constrained_fit_smoke/`
-  - M15 smoke-only sidecar outputs for the M14.2 Manhattan constrained fit audit on the 2026-05-18 Label Studio export. Contains records JSONL, summary JSON, candidate CSV, Markdown report, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, and not `P1/C1/C2/T1/V1` artifacts.
+  - M15/M15.2 smoke-only sidecar outputs for the M14.2 Manhattan constrained fit audit on the 2026-05-18 Label Studio export. Contains records JSONL, summary JSON, candidate CSV, geometry_debug by-annotation/by-task CSVs, Markdown reports, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, not OOS adjudication, and not `P1/C1/C2/T1/V1` artifacts.
 - `analysis_results/pooled_qa/`
   - pooled QA 图包与审计表
 - `analysis_results/c_manifests_20260310/`
@@ -461,6 +461,8 @@
   - M8 operation checklist for limited dev-only Label Studio sandbox testing and M8.2 read-only active-log audit. Requires copied smoke tasks or dedicated sandbox import, developer / expert tester only, no ordinary worker access, no official userscript changes, no writeback, no formal experiment evidence use, and sandbox telemetry exclusion from primary active_time.
 - `docs/MANHATTAN_CONSTRAINED_FIT_PLAN_v1.md`
   - M14.1/M14.2 design note for the dev-only Manhattan constrained fitting core. Explains why global median ceiling/floor guide bands are invalid for equirectangular panoramas, documents yaw-aware Manhattan fitting and height-aware `atan2` reprojection, records the no-writeback constrained-candidate boundary, and does not change protocol, routing, Label Studio UI, or formal artifacts.
+- `docs/OOS_SCOPE_POLICY_AUDIT_v1.md`
+  - M15.2 audit policy note clarifying that a scope vote is not adjudicated OOS, majority OOS is only scope_distribution / disagreement evidence, task-level OOS requires expert adjudication or an explicit artifact, and scope-independent geometry_debug is allowed for parseable keypoints without changing protocol, routing, or formal artifacts.
 - `docs/AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md`
   - B-line / Paper B 的 Ambiguity-aware enclosed HoHoNet 研究计划；属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面
 - `docs/PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md`

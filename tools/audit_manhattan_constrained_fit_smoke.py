@@ -1,10 +1,12 @@
 """Read-only smoke audit for the M14 Manhattan constrained fitting core.
 
 This utility consumes a Label Studio export JSON, builds current-preview paired
-corners, and runs the dev-only M14.2 Manhattan constrained fit on eligible
-normal annotations. Outputs are smoke/probe sidecars only: candidate deltas are
-not correction instructions, there is no writeback, no formal g_t, no routing,
-no worker quality metric, and no P1/C1/C2/T1/V1 artifact role.
+corners, runs a normal-only audit candidate pass, and also runs a
+scope-independent geometry_debug pass on every annotation with parseable
+keypoints. Scope vote is not adjudicated OOS. Outputs are smoke/probe sidecars
+only: candidate deltas are not correction instructions, there is no writeback,
+no formal g_t, no routing, no worker quality metric, and no P1/C1/C2/T1/V1
+artifact role.
 """
 
 from __future__ import annotations
@@ -43,6 +45,7 @@ NUMERIC_SUMMARY_FIELDS = (
     "layout_height_spread",
     "max_abs_delta",
 )
+FOCUS_TASK_IDS = {"2948", "2949"}
 
 
 def _as_list(value: Any) -> list[Any]:
@@ -237,6 +240,16 @@ def _review_priority(record: Mapping[str, Any]) -> str:
     return "low"
 
 
+def _scope_ineligibility_reason(scope: str | None) -> str:
+    if scope is None:
+        return "scope_missing_or_unknown"
+    if scope == "normal":
+        return "audit_eligible"
+    if scope in VALID_SCOPE_ALIASES:
+        return scope
+    return "scope_missing_or_unknown"
+
+
 def _base_record(
     source_export: str,
     task: Mapping[str, Any],
@@ -257,13 +270,63 @@ def _base_record(
     }
 
 
+def _apply_geometry_debug(record: dict[str, Any], points: Sequence[Mapping[str, Any]]) -> None:
+    record.update(
+        {
+            "geometry_debug_preview_status": None,
+            "geometry_debug_n_pairs": 0,
+            "geometry_debug_fit_status": None,
+            "geometry_debug_fit_confidence": None,
+            "geometry_debug_fit_residual": None,
+            "geometry_debug_max_abs_delta": None,
+            "geometry_debug_layout_height_spread": None,
+            "geometry_debug_problem_flag": False,
+            "geometry_debug_problem_reason": None,
+            "geometry_debug_scope_vote": record.get("scope"),
+            "geometry_debug_not_oos_adjudication": True,
+        }
+    )
+    if not points:
+        record["geometry_debug_preview_status"] = "missing_keypoints"
+        record["geometry_debug_problem_flag"] = True
+        record["geometry_debug_problem_reason"] = "missing_keypoints"
+        return
+
+    preview = check_preview_compatibility(points)
+    record["geometry_debug_preview_status"] = preview.status
+    record["geometry_debug_n_pairs"] = len(preview.ordered_corners)
+    if preview.status != COMPATIBLE:
+        record["geometry_debug_problem_flag"] = True
+        record["geometry_debug_problem_reason"] = preview.status
+        return
+
+    fit = fit_manhattan_layout(preview_result_to_ordered_pairs(preview))
+    max_abs_delta = _max_abs_delta(fit.get("per_point_delta", []))
+    record.update(
+        {
+            "geometry_debug_fit_status": fit.get("fit_status"),
+            "geometry_debug_fit_confidence": fit.get("fit_confidence"),
+            "geometry_debug_fit_residual": fit.get("fit_residual"),
+            "geometry_debug_max_abs_delta": max_abs_delta,
+            "geometry_debug_layout_height_spread": fit.get("layout_height_spread"),
+        }
+    )
+    if fit.get("fit_status") != "ok":
+        record["geometry_debug_problem_flag"] = True
+        record["geometry_debug_problem_reason"] = str(fit.get("direction_label") or "fit_failed")
+    elif isinstance(max_abs_delta, (int, float)) and max_abs_delta >= LARGE_MOVE_THRESHOLD:
+        record["geometry_debug_problem_flag"] = True
+        record["geometry_debug_problem_reason"] = "large_candidate_delta"
+
+
 def audit_tasks(tasks: Iterable[Mapping[str, Any]], source_export: str) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     task_list = list(tasks)
     records: list[dict[str, Any]] = []
     scope_counts: Counter[str] = Counter()
-    preview_exclusion_counts: Counter[str] = Counter()
+    audit_ineligibility_counts: Counter[str] = Counter()
+    preview_incompatibility_counts: Counter[str] = Counter()
     fit_status_counts: Counter[str] = Counter()
-    failure_reason_counts: Counter[str] = Counter()
+    fit_failure_counts: Counter[str] = Counter()
     direction_label_counts: Counter[str] = Counter()
     fit_confidence_counts: Counter[str] = Counter()
 
@@ -279,6 +342,8 @@ def audit_tasks(tasks: Iterable[Mapping[str, Any]], source_export: str) -> tuple
     n_scope_oos = 0
     n_preview_compatible = 0
     n_preview_excluded = 0
+    n_audit_eligible = 0
+    n_audit_ineligible = 0
     n_fit_ok = 0
     n_fit_failed = 0
     n_large_move_candidates = 0
@@ -316,12 +381,25 @@ def audit_tasks(tasks: Iterable[Mapping[str, Any]], source_export: str) -> tuple
                     "review_priority": "excluded",
                 }
             )
+            record.update(
+                {
+                    "audit_eligible": False,
+                    "audit_ineligibility_reason": None,
+                }
+            )
+
+            if parse_errors:
+                _apply_geometry_debug(record, [])
+                record["geometry_debug_preview_status"] = "unparseable_keypoints"
+                record["geometry_debug_problem_reason"] = "unparseable_keypoints"
+            else:
+                _apply_geometry_debug(record, points)
 
             eligible = True
             exclusion_reason = None
             if scope != "normal":
                 eligible = False
-                exclusion_reason = scope or "scope_missing_or_unknown"
+                exclusion_reason = _scope_ineligibility_reason(scope)
                 n_scope_oos += 1
             else:
                 n_scope_normal += 1
@@ -340,17 +418,20 @@ def audit_tasks(tasks: Iterable[Mapping[str, Any]], source_export: str) -> tuple
                 exclusion_reason = exclusion_reason or "missing_keypoints"
 
             if not eligible:
+                record["audit_ineligibility_reason"] = exclusion_reason
+                audit_ineligibility_counts[str(exclusion_reason)] += 1
+                n_audit_ineligible += 1
                 record["preview_status"] = exclusion_reason
-                preview_exclusion_counts[str(exclusion_reason)] += 1
-                n_preview_excluded += 1
                 records.append(record)
                 continue
+            record["audit_eligible"] = True
+            n_audit_eligible += 1
 
             preview = check_preview_compatibility(points)
             record["preview_status"] = preview.status
             record["n_pairs"] = len(preview.ordered_corners)
             if preview.status != COMPATIBLE:
-                preview_exclusion_counts[preview.status] += 1
+                preview_incompatibility_counts[preview.status] += 1
                 n_preview_excluded += 1
                 records.append(record)
                 continue
@@ -385,7 +466,7 @@ def audit_tasks(tasks: Iterable[Mapping[str, Any]], source_export: str) -> tuple
                     n_large_move_candidates += 1
             else:
                 n_fit_failed += 1
-                failure_reason_counts[str(fit.get("direction_label") or "fit_failed")] += 1
+                fit_failure_counts[str(fit.get("direction_label") or "fit_failed")] += 1
             fit_status_counts[str(fit.get("fit_status"))] += 1
             direction_label_counts[str(fit.get("direction_label"))] += 1
             fit_confidence_counts[str(fit.get("fit_confidence"))] += 1
@@ -429,13 +510,18 @@ def audit_tasks(tasks: Iterable[Mapping[str, Any]], source_export: str) -> tuple
         "n_scope_normal": n_scope_normal,
         "n_scope_oos": n_scope_oos,
         "scope_alias_counts": dict(sorted(scope_counts.items())),
+        "n_audit_eligible": n_audit_eligible,
+        "n_audit_ineligible": n_audit_ineligible,
+        "audit_ineligibility_counts": dict(sorted(audit_ineligibility_counts.items())),
         "n_preview_compatible": n_preview_compatible,
         "n_preview_excluded": n_preview_excluded,
-        "preview_exclusion_counts": dict(sorted(preview_exclusion_counts.items())),
+        "preview_incompatibility_counts": dict(sorted(preview_incompatibility_counts.items())),
+        "preview_exclusion_counts": dict(sorted(preview_incompatibility_counts.items())),
         "n_fit_ok": n_fit_ok,
         "n_fit_failed": n_fit_failed,
         "fit_status_counts": dict(sorted(fit_status_counts.items())),
-        "failure_reason_counts": dict(sorted(failure_reason_counts.items())),
+        "fit_failure_counts": dict(sorted(fit_failure_counts.items())),
+        "failure_reason_counts": dict(sorted(fit_failure_counts.items())),
         "direction_label_counts": dict(sorted(direction_label_counts.items())),
         "fit_confidence_counts": dict(sorted(fit_confidence_counts.items())),
         "fit_residual_summary": _numeric_summary(numeric_values["fit_residual"]),
@@ -447,6 +533,8 @@ def audit_tasks(tasks: Iterable[Mapping[str, Any]], source_export: str) -> tuple
         "top_candidate_examples": examples,
         "audit_notes": [
             "smoke-only / dev-only audit",
+            "scope vote is not adjudicated OOS",
+            "geometry_debug_not_oos_adjudication=true",
             "candidate deltas are not correction instructions",
             "no writeback",
             "no formal g_t",
@@ -495,6 +583,79 @@ def _write_candidates_csv(path: Path, records: Sequence[Mapping[str, Any]]) -> N
             writer.writerow(row)
 
 
+def _write_geometry_debug_annotation_csv(path: Path, records: Sequence[Mapping[str, Any]]) -> None:
+    fields = [
+        "task_id",
+        "annotation_id",
+        "annotator_id",
+        "scope",
+        "geometry_debug_scope_vote",
+        "geometry_debug_not_oos_adjudication",
+        "geometry_debug_preview_status",
+        "geometry_debug_n_pairs",
+        "geometry_debug_fit_status",
+        "geometry_debug_fit_confidence",
+        "geometry_debug_fit_residual",
+        "geometry_debug_max_abs_delta",
+        "geometry_debug_layout_height_spread",
+        "geometry_debug_problem_flag",
+        "geometry_debug_problem_reason",
+        "audit_eligible",
+        "audit_ineligibility_reason",
+    ]
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        for record in records:
+            writer.writerow({field: record.get(field) for field in fields})
+
+
+def _geometry_debug_task_rows(records: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
+    grouped: dict[str, list[Mapping[str, Any]]] = {}
+    for record in records:
+        grouped.setdefault(str(record.get("task_id")), []).append(record)
+
+    rows: list[dict[str, Any]] = []
+    for task_id in sorted(grouped):
+        task_records = grouped[task_id]
+        scope_distribution = Counter(str(record.get("scope") or "scope_missing_or_unknown") for record in task_records)
+        problem_distribution = Counter(
+            str(record.get("geometry_debug_problem_reason") or "none") for record in task_records
+        )
+        rows.append(
+            {
+                "task_id": task_id,
+                "n_annotations": len(task_records),
+                "scope_distribution": json.dumps(dict(sorted(scope_distribution.items())), ensure_ascii=False),
+                "n_geometry_debug_problem": sum(
+                    bool(record.get("geometry_debug_problem_flag")) for record in task_records
+                ),
+                "geometry_debug_problem_distribution": json.dumps(
+                    dict(sorted(problem_distribution.items())),
+                    ensure_ascii=False,
+                ),
+                "not_oos_adjudication": True,
+            }
+        )
+    return rows
+
+
+def _write_geometry_debug_task_csv(path: Path, records: Sequence[Mapping[str, Any]]) -> None:
+    rows = _geometry_debug_task_rows(records)
+    fields = [
+        "task_id",
+        "n_annotations",
+        "scope_distribution",
+        "n_geometry_debug_problem",
+        "geometry_debug_problem_distribution",
+        "not_oos_adjudication",
+    ]
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
 def _render_report(summary: Mapping[str, Any]) -> str:
     lines = [
         "# Manhattan constrained fit smoke report",
@@ -516,8 +677,9 @@ def _render_report(summary: Mapping[str, Any]) -> str:
         "",
         "## Main counts",
         "",
-        f"- preview_exclusion_counts: `{summary.get('preview_exclusion_counts')}`",
-        f"- failure_reason_counts: `{summary.get('failure_reason_counts')}`",
+        f"- audit_ineligibility_counts: `{summary.get('audit_ineligibility_counts')}`",
+        f"- preview_incompatibility_counts: `{summary.get('preview_incompatibility_counts')}`",
+        f"- fit_failure_counts: `{summary.get('fit_failure_counts')}`",
         f"- direction_label_counts: `{summary.get('direction_label_counts')}`",
         f"- fit_confidence_counts: `{summary.get('fit_confidence_counts')}`",
         "",
@@ -537,6 +699,55 @@ def _render_report(summary: Mapping[str, Any]) -> str:
     return "\n".join(lines) + "\n"
 
 
+def _render_geometry_debug_report(records: Sequence[Mapping[str, Any]], summary: Mapping[str, Any]) -> str:
+    lines = [
+        "# Manhattan constrained fit geometry debug report",
+        "",
+        "This report is smoke-only / dev-only. A scope vote is not adjudicated OOS. "
+        "Majority OOS is scope_distribution / disagreement evidence only. Geometry "
+        "debug runs on parseable keypoints regardless of scope. Candidate deltas are "
+        "not correction instructions; no writeback, no formal g_t, no routing, and "
+        "no P1/C1/C2/T1/V1 artifact role.",
+        "",
+        f"- source_export: `{summary.get('source_export')}`",
+        f"- audit_ineligibility_counts: `{summary.get('audit_ineligibility_counts')}`",
+        f"- preview_incompatibility_counts: `{summary.get('preview_incompatibility_counts')}`",
+        f"- fit_failure_counts: `{summary.get('fit_failure_counts')}`",
+        "",
+        "## Focus: task 2948",
+        "",
+    ]
+    lines.extend(_focus_task_lines(records, "2948"))
+    lines.extend(["", "## Focus: task 2949", ""])
+    lines.extend(_focus_task_lines(records, "2949"))
+    return "\n".join(lines) + "\n"
+
+
+def _focus_task_lines(records: Sequence[Mapping[str, Any]], task_id: str) -> list[str]:
+    rows = [record for record in records if str(record.get("task_id")) == task_id]
+    if not rows:
+        return [f"- task {task_id}: no rows present in this smoke export."]
+    out = [
+        "| annotator_id | annotation_id | scope vote | preview status | geometry_debug fit status | max delta | problem reason |",
+        "| --- | --- | --- | --- | --- | ---: | --- |",
+    ]
+    for record in rows:
+        out.append(
+            "| {annotator} | {annotation} | {scope} | {preview} | {fit} | {delta} | {reason} |".format(
+                annotator=record.get("annotator_id"),
+                annotation=record.get("annotation_id"),
+                scope=record.get("geometry_debug_scope_vote"),
+                preview=record.get("geometry_debug_preview_status"),
+                fit=record.get("geometry_debug_fit_status"),
+                delta=record.get("geometry_debug_max_abs_delta"),
+                reason=record.get("geometry_debug_problem_reason"),
+            )
+        )
+    out.append("")
+    out.append("Note: task-level scope votes here are not OOS adjudication.")
+    return out
+
+
 def _write_readme(path: Path, date: str, source_export: str) -> None:
     path.write_text(
         "\n".join(
@@ -546,6 +757,8 @@ def _write_readme(path: Path, date: str, source_export: str) -> None:
                 f"Generated from `{source_export}` for smoke date `{date}`.",
                 "",
                 "These files are smoke/probe sidecar outputs only.",
+                "Scope vote is not adjudicated OOS; task-level OOS requires expert adjudication or an explicit adjudication artifact.",
+                "Geometry debug rows run on parseable keypoints regardless of scope vote.",
                 "Candidate deltas are not correction instructions.",
                 "No annotation writeback was performed.",
                 "This directory is not formal `g_t`, not routing input, not a worker quality metric,",
@@ -564,12 +777,21 @@ def write_outputs(records: Sequence[Mapping[str, Any]], summary: Mapping[str, An
         "summary": output_dir / f"smoke_fit_summary_{date}.json",
         "candidates": output_dir / f"smoke_fit_candidates_{date}.csv",
         "report": output_dir / f"smoke_fit_report_{date}.md",
+        "geometry_debug_by_annotation": output_dir / f"smoke_geometry_debug_by_annotation_{date}.csv",
+        "geometry_debug_by_task": output_dir / f"smoke_geometry_debug_by_task_{date}.csv",
+        "geometry_debug_report": output_dir / f"smoke_geometry_debug_report_{date}.md",
         "readme": output_dir / "README.md",
     }
     _write_jsonl(paths["records"], records)
     _write_json(paths["summary"], summary)
     _write_candidates_csv(paths["candidates"], records)
     paths["report"].write_text(_render_report(summary), encoding="utf-8")
+    _write_geometry_debug_annotation_csv(paths["geometry_debug_by_annotation"], records)
+    _write_geometry_debug_task_csv(paths["geometry_debug_by_task"], records)
+    paths["geometry_debug_report"].write_text(
+        _render_geometry_debug_report(records, summary),
+        encoding="utf-8",
+    )
     _write_readme(paths["readme"], date, str(summary.get("source_export")))
     return {key: str(path) for key, path in paths.items()}
 

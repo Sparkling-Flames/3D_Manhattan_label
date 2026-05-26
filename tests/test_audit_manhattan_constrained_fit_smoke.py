@@ -88,9 +88,12 @@ def test_oos_scope_is_excluded():
     )
 
     assert summary["n_fit_ok"] == 0
-    assert summary["n_preview_excluded"] == 1
-    assert summary["preview_exclusion_counts"]["oos_geometry"] == 1
+    assert summary["n_audit_ineligible"] == 1
+    assert summary["audit_ineligibility_counts"]["oos_geometry"] == 1
+    assert summary["n_preview_excluded"] == 0
     assert records[0]["fit_status"] == "ineligible"
+    assert records[0]["geometry_debug_fit_status"] == "ok"
+    assert records[0]["geometry_debug_not_oos_adjudication"] is True
 
 
 def test_odd_keypoints_are_excluded():
@@ -98,7 +101,7 @@ def test_odd_keypoints_are_excluded():
     _, summary = audit_tasks([_task(1, [_annotation(101, points=points)])], source_export="<memory>")
 
     assert summary["n_preview_excluded"] == 1
-    assert summary["preview_exclusion_counts"]["compatibility_failure_odd_keypoint"] == 1
+    assert summary["preview_incompatibility_counts"]["compatibility_failure_odd_keypoint"] == 1
 
 
 def test_duplicate_keypoints_are_excluded():
@@ -108,7 +111,8 @@ def test_duplicate_keypoints_are_excluded():
     _, summary = audit_tasks([_task(1, [_annotation(101, points=points)])], source_export="<memory>")
 
     assert summary["n_preview_excluded"] == 1
-    assert summary["preview_exclusion_counts"]["compatibility_failure_duplicate"] == 1
+    assert summary["preview_incompatibility_counts"]["compatibility_failure_duplicate"] == 1
+    assert summary["fit_failure_counts"] == {}
 
 
 def test_unparseable_keypoints_are_counted():
@@ -117,7 +121,8 @@ def test_unparseable_keypoints_are_counted():
     records, summary = audit_tasks([_task(1, [annotation])], source_export="<memory>")
 
     assert records[0]["parse_error_count"] == 1
-    assert summary["preview_exclusion_counts"]["unparseable_keypoints"] == 1
+    assert summary["audit_ineligibility_counts"]["unparseable_keypoints"] == 1
+    assert records[0]["geometry_debug_problem_reason"] == "unparseable_keypoints"
 
 
 def test_large_movement_candidate_appears_in_candidate_summary():
@@ -158,6 +163,9 @@ def test_cli_writes_summary_records_csv_report_to_temp_output_dir(tmp_path):
     assert (output_dir / "smoke_fit_summary_2026-05-18.json").exists()
     assert (output_dir / "smoke_fit_candidates_2026-05-18.csv").exists()
     assert (output_dir / "smoke_fit_report_2026-05-18.md").exists()
+    assert (output_dir / "smoke_geometry_debug_by_annotation_2026-05-18.csv").exists()
+    assert (output_dir / "smoke_geometry_debug_by_task_2026-05-18.csv").exists()
+    assert (output_dir / "smoke_geometry_debug_report_2026-05-18.md").exists()
     assert (output_dir / "README.md").exists()
     with (output_dir / "smoke_fit_candidates_2026-05-18.csv").open(encoding="utf-8") as handle:
         rows = list(csv.DictReader(handle))
@@ -186,3 +194,66 @@ def test_no_test_modifies_export_label(tmp_path):
     audit_export(export_path, output_dir, "2026-05-18")
 
     assert export_path.read_text(encoding="utf-8") == before
+
+
+def test_mixed_scope_task_summary_preserves_distribution_not_final_truth(tmp_path):
+    export_path = tmp_path / "synthetic_export.json"
+    output_dir = tmp_path / "out"
+    task = _task(
+        2948,
+        [
+            _annotation(101, scope="normal"),
+            _annotation(102, scope="oos_split_level"),
+            _annotation(103, scope="oos_geometry"),
+        ],
+    )
+    records, summary, _ = audit_export(
+        _write_synthetic_export(export_path, [task]),
+        output_dir,
+        "2026-05-18",
+    )
+
+    assert summary["scope_alias_counts"]["normal"] == 1
+    assert summary["scope_alias_counts"]["oos_geometry"] == 1
+    assert summary["scope_alias_counts"]["oos_split_level"] == 1
+    assert summary["audit_ineligibility_counts"]["oos_geometry"] == 1
+    assert summary["audit_ineligibility_counts"]["oos_split_level"] == 1
+    assert all(record["geometry_debug_not_oos_adjudication"] is True for record in records)
+    task_csv = output_dir / "smoke_geometry_debug_by_task_2026-05-18.csv"
+    assert "scope_distribution" in task_csv.read_text(encoding="utf-8")
+
+
+def _write_synthetic_export(path: Path, tasks):
+    path.write_text(json.dumps(tasks, ensure_ascii=False), encoding="utf-8")
+    return path
+
+
+def test_missing_scope_is_not_counted_as_oos():
+    records, summary = audit_tasks(
+        [_task(1, [_annotation(101, scope=None)])],
+        source_export="<memory>",
+    )
+
+    assert summary["scope_alias_counts"]["scope_missing_or_unknown"] == 1
+    assert summary["audit_ineligibility_counts"]["scope_missing_or_unknown"] == 1
+    assert "oos_geometry" not in summary["audit_ineligibility_counts"]
+    assert records[0]["geometry_debug_fit_status"] == "ok"
+
+
+def test_task_2948_2949_focused_sections_are_generated_when_present(tmp_path):
+    export_path = tmp_path / "synthetic_export.json"
+    output_dir = tmp_path / "out"
+    _write_synthetic_export(
+        export_path,
+        [
+            _task(2948, [_annotation(101, scope="normal")]),
+            _task(2949, [_annotation(102, scope="oos_geometry")]),
+        ],
+    )
+
+    audit_export(export_path, output_dir, "2026-05-18")
+
+    report = (output_dir / "smoke_geometry_debug_report_2026-05-18.md").read_text(encoding="utf-8")
+    assert "## Focus: task 2948" in report
+    assert "## Focus: task 2949" in report
+    assert "not OOS adjudication" in report

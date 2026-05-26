@@ -3,6 +3,8 @@
 Generated from `export_label\project-23-at-2026-05-18-02-56-ac500410.json` for smoke date `2026-05-18`.
 
 These files are smoke/probe sidecar outputs only.
+Scope vote is not adjudicated OOS; task-level OOS requires expert adjudication or an explicit adjudication artifact.
+Geometry debug rows run on parseable keypoints regardless of scope vote.
 Candidate deltas are not correction instructions.
 No annotation writeback was performed.
 This directory is not formal `g_t`, not routing input, not a worker quality metric,

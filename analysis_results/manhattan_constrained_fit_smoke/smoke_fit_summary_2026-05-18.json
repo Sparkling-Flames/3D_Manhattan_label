@@ -5,8 +5,14 @@
     "median": 0.1059687221955592,
     "p90": 1.7977471258590767
   },
+  "audit_ineligibility_counts": {
+    "oos_geometry": 1,
+    "oos_split_level": 4
+  },
   "audit_notes": [
     "smoke-only / dev-only audit",
+    "scope vote is not adjudicated OOS",
+    "geometry_debug_not_oos_adjudication=true",
     "candidate deltas are not correction instructions",
     "no writeback",
     "no formal g_t",
@@ -25,6 +31,7 @@
     "low": 2,
     "medium": 2
   },
+  "fit_failure_counts": {},
   "fit_residual_summary": {
     "count": 29,
     "max": 0.09410975256952664,
@@ -47,19 +54,23 @@
     "p90": 0.07241087706604668
   },
   "n_annotations": 37,
+  "n_audit_eligible": 32,
+  "n_audit_ineligible": 5,
   "n_fit_failed": 0,
   "n_fit_ok": 29,
   "n_large_move_candidates": 2,
   "n_preview_compatible": 29,
-  "n_preview_excluded": 8,
+  "n_preview_excluded": 3,
   "n_scope_normal": 32,
   "n_scope_oos": 5,
   "n_tasks": 5,
   "preview_exclusion_counts": {
     "compatibility_failure_duplicate": 2,
-    "compatibility_failure_odd_keypoint": 1,
-    "oos_geometry": 1,
-    "oos_split_level": 4
+    "compatibility_failure_odd_keypoint": 1
+  },
+  "preview_incompatibility_counts": {
+    "compatibility_failure_duplicate": 2,
+    "compatibility_failure_odd_keypoint": 1
   },
   "scope_alias_counts": {
     "normal": 32,
