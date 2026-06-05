@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HOHONET Manhattan LS Sandbox Panel Timed
 // @namespace    hohonet-dev-only
-// @version      m13.2-dev-only-timed-0.1.0
+// @version      m13.2-dev-only-timed-0.1.1
 // @description  dev-only sandbox-only read-only Manhattan panel; timed variant with sandbox-excluded active_time telemetry.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
@@ -40,7 +40,7 @@
   window[WINDOW_GUARD] = { script_variant: "timed" };
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const PANEL_VERSION = "m13.2-dev-only-timed-0.1.0";
+  const PANEL_VERSION = "m13.2-dev-only-timed-0.1.1";
   const TOOLBAR_ID = "hohonet-m13-primary-toolbar";
   const TOOLBAR_BODY_ID = "hohonet-m13-primary-toolbar-body";
   const DEBUG_DRAWER_TOGGLE_ID = "hohonet-m13-debug-drawer-toggle";
@@ -72,6 +72,7 @@
   let lastTelemetryActiveSeconds = 0;
   let lastActivityTime = 0;
   let isPageVisible = !document.hidden;
+  let isWindowFocused = document.hasFocus();
   let pageHiddenTime = null;
   let lastHiddenDurationMs = 0;
   let currentPreviewBasePairs = [];
@@ -2234,10 +2235,15 @@
 
   function activeTimerStatus(nowMs = Date.now()) {
     if (!isPageVisible) return "hidden";
+    if (!isWindowFocused) return "blurred";
     if (!isLikelyAnnotationPage()) return "non_annotation_page";
     if (lastActivityTime <= 0) return "waiting_for_interaction";
     if (nowMs - lastActivityTime >= IDLE_THRESHOLD_MS) return "idle";
     return "active";
+  }
+
+  function isActiveTimeCountingPage() {
+    return isPageVisible && isWindowFocused && isLikelyAnnotationPage();
   }
 
   function updateActivityTimerPanel() {
@@ -2247,6 +2253,7 @@
     setText(`${PANEL_ID}-active-seconds-fragment`, activeSecondsSinceLastTelemetry());
     setText(`${PANEL_ID}-last-activity-age-ms`, lastActivityAgeMs(nowMs));
     setText(`${PANEL_ID}-page-visible-status`, isPageVisible ? "visible" : "hidden");
+    setText(`${PANEL_ID}-window-focus-status`, isWindowFocused ? "focused" : "blurred");
     setText(`${PANEL_ID}-last-hidden-duration-ms`, lastHiddenDurationMs);
   }
 
@@ -2356,7 +2363,7 @@
   }
 
   function recordUserActivity() {
-    if (isPageVisible) {
+    if (isActiveTimeCountingPage()) {
       lastActivityTime = Date.now();
       updateActivityTimerPanel();
     }
@@ -2369,12 +2376,13 @@
     window.setInterval(function () {
       const nowMs = Date.now();
       if (
-        isPageVisible &&
-        isLikelyAnnotationPage() &&
+        isActiveTimeCountingPage() &&
         lastActivityTime > 0 &&
         nowMs - lastActivityTime < IDLE_THRESHOLD_MS
       ) {
         activeSeconds += 1;
+      } else if (!isActiveTimeCountingPage()) {
+        lastActivityTime = 0;
       }
       updateActivityTimerPanel();
     }, 1000);
@@ -2511,6 +2519,7 @@
     panel.appendChild(makeMutableRow("active_seconds_fragment", activeSecondsSinceLastTelemetry(), `${PANEL_ID}-active-seconds-fragment`));
     panel.appendChild(makeMutableRow("last_activity_age_ms", lastActivityAgeMs(), `${PANEL_ID}-last-activity-age-ms`));
     panel.appendChild(makeMutableRow("page_visible_status", isPageVisible ? "visible" : "hidden", `${PANEL_ID}-page-visible-status`));
+    panel.appendChild(makeMutableRow("window_focus_status", isWindowFocused ? "focused" : "blurred", `${PANEL_ID}-window-focus-status`));
     panel.appendChild(makeMutableRow("last_hidden_duration_ms", lastHiddenDurationMs, `${PANEL_ID}-last-hidden-duration-ms`));
 
     const preview = document.createElement("section");
@@ -2674,8 +2683,20 @@
       }
       pageHiddenTime = null;
       isPageVisible = true;
+      isWindowFocused = document.hasFocus();
       updateActivityTimerPanel();
     }
+  });
+  window.addEventListener("blur", function () {
+    isWindowFocused = false;
+    sendSandboxTelemetryIfActive("window_blur");
+    lastActivityTime = 0;
+    updateActivityTimerPanel();
+  });
+  window.addEventListener("focus", function () {
+    isWindowFocused = document.hasFocus();
+    lastActivityTime = 0;
+    updateActivityTimerPanel();
   });
   window.addEventListener("pagehide", function () {
     sendSandboxTelemetryIfActive("pagehide");

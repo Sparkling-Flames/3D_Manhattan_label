@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator HTTPS EN DEBUG
 // @namespace    https://label.sparkle0825.top/
-// @version      0.26-foreign-https-en-debug
+// @version      0.28-foreign-https-en-debug
 // @description  Self-contained HTTPS helper for foreign HoHoNet Stage 1 annotators. Based on the official annotator helper; adds same-origin HTTPS defaults and optional CloudResearch worker-id metadata.
 // @author       HoHoNet
 // @match        https://label.sparkle0825.top/*
@@ -244,7 +244,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "0.26-foreign-https-en-debug";
+  const SCRIPT_VERSION = "0.28-foreign-https-en-debug";
   window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;
   window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en_debug";
   console.log(`HoHoNet Helper: loaded (v${SCRIPT_VERSION})`);
@@ -2373,6 +2373,7 @@
 
   // v0.21: cumulative seconds per task within same session (fix A->B->A undercount)
   const taskCumulativeSeconds = new Map();
+  const lastPostedSecondsByTask = new Map();
   const ACTIVE_TIME_METADATA_KEYS = [
     "taskId",
     "projectId",
@@ -2388,6 +2389,7 @@
   };
 
   let isPageVisible = true;
+  let isWindowFocused = document.hasFocus();
   let pageHiddenTime = null;
   const PAGE_HIDDEN_THRESHOLD = 6 * 1000; // 页面被切出超过6秒后才停止计时（可调整此参数）
   let wasOnAnnotationPageForActiveTime = false;
@@ -2508,6 +2510,11 @@
   ) {
     if (!report) return null;
 
+    const lastPostedSeconds = lastPostedSecondsByTask.get(report.reportTaskId) || 0;
+    if (report.reportSeconds <= lastPostedSeconds) {
+      return null;
+    }
+
     const tokenNow = getLogToken();
     if (!tokenNow) {
       console.warn(
@@ -2546,7 +2553,10 @@
             `[${logPrefix}] 403 Forbidden. helperBase=${getHelperBaseUrl()} token=${maskToken(tokenNow)} (len=${String(tokenNow || "").length})`,
           );
         }
-      } else if (manualFlush) {
+      } else {
+        lastPostedSecondsByTask.set(report.reportTaskId, report.reportSeconds);
+      }
+      if (response.ok && manualFlush) {
           console.log(
             `[${logPrefix}] uploaded ${report.reportSeconds}s active time for task ${report.reportTaskId}`,
           );
@@ -2583,6 +2593,9 @@
       // 页面被隐藏，记录隐藏开始时间
       pageHiddenTime = Date.now();
       isPageVisible = false;
+      if (wasOnAnnotationPageForActiveTime && activeSeconds > 0) {
+        closeActiveTimeSegment("VISIBILITY_HIDDEN");
+      }
     } else {
       // 页面重新显示
       if (pageHiddenTime !== null) {
@@ -2601,11 +2614,15 @@
   });
 
   // 监听用户活动（只在页面可见时更新）
+  function isActiveTimeCountingPage() {
+    return isPageVisible && isWindowFocused && isLikelyAnnotationPage();
+  }
+
   ["mousemove", "keydown", "click", "scroll", "wheel"].forEach((evt) => {
     window.addEventListener(
       evt,
       () => {
-        if (isPageVisible) {
+        if (isActiveTimeCountingPage()) {
           lastActivityTime = Date.now();
         }
       },
@@ -2616,13 +2633,22 @@
   // 累积活动时间的计时器
   // v0.21 修复: 仅在「页面可见 + 标注任务页面 + 有近期交互」时累积
   setInterval(() => {
+    const onCountingPage = isActiveTimeCountingPage();
+    if (!onCountingPage) {
+      if (wasOnAnnotationPageForActiveTime && activeSeconds > 0) {
+        closeActiveTimeSegment("LEAVE_ANNOTATION_PAGE");
+      }
+      lastActivityTime = 0;
+      wasOnAnnotationPageForActiveTime = false;
+    }
+
     if (
-      isPageVisible &&
-      isLikelyAnnotationPage() &&
+      onCountingPage &&
       lastActivityTime > 0 &&
       Date.now() - lastActivityTime < IDLE_THRESHOLD
     ) {
       activeSeconds += 1;
+      wasOnAnnotationPageForActiveTime = true;
     }
 
     // 更新 UI
@@ -2747,6 +2773,20 @@
     }
   });
 
+
+  window.addEventListener("blur", () => {
+    isWindowFocused = false;
+    if (wasOnAnnotationPageForActiveTime && activeSeconds > 0) {
+      closeActiveTimeSegment("BLUR");
+    }
+    lastActivityTime = 0;
+  });
+
+  window.addEventListener("focus", () => {
+    isWindowFocused = document.hasFocus();
+    lastActivityTime = 0;
+  });
+
   window.addEventListener("pagehide", () => {
     closeActiveTimeSegment("PAGEHIDE", { keepalive: true });
   });
@@ -2793,7 +2833,7 @@
   // 【独立的任务切换检测器】每秒检测一次任务ID变化，立即上报
   // 这是一个独立的机制，不依赖30秒周期，保证任务切换时立即上报
   setInterval(() => {
-    if (!isLikelyAnnotationPage()) {
+    if (!isActiveTimeCountingPage()) {
       return;
     }
 
@@ -2833,7 +2873,7 @@
   // 每 30 秒发送一次日志 (从 10 秒修改以减少流量)
   setInterval(() => {
     // 只在“标注页面”尝试记日志，避免在项目列表/首页等页面误计时/误上报。
-    if (!isLikelyAnnotationPage()) {
+    if (!isActiveTimeCountingPage()) {
       return;
     }
 
