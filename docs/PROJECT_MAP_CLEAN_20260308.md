@@ -190,6 +190,8 @@
   - active-log 拆分
 - `tools/lead_time_stats.py`
   - `lead_time` / `active_time` 对照
+- `tools/audit_p1_exact_copy_low_time.py`
+  - P1 process-integrity sidecar audit；只检测 exact corner-geometry duplicate + low primary active_time 的 worker-level 大量发生风险，不自动排除 worker，不改变 P1 评分或 admission 公式
 - `tools/meta_label_guard.py`
   - 导出字段合规兜底
 ### Label Studio frontend chain
@@ -390,6 +392,7 @@
 ### 主链关键测试
 
 - `tests/test_audit_active_log_quality.py`
+- `tests/test_audit_p1_exact_copy_low_time.py`
 - `tests/test_build_experiment_visual_audit.py`
 - `tests/test_build_c1_assignment_manifest.py`
 - `tests/test_init_task_risk_rule_manifest.py`
