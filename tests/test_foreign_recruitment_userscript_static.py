@@ -4,6 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 SCRIPT = ROOT / "foreign_recruitment" / "ls_userscript_annotator_https_en.user.js"
 DEBUG_SCRIPT = ROOT / "foreign_recruitment" / "ls_userscript_annotator_https_en_debug.user.js"
+OFFICIAL_SCRIPT = ROOT / "tools" / "official" / "ls_userscript_annotator.js"
 GUIDE = ROOT / "foreign_recruitment" / "ANNOTATOR_GUIDE_EN.md"
 INSTALL = ROOT / "foreign_recruitment" / "INSTALL_USERSCRIPT_HTTPS_EN.md"
 CLOUDRESEARCH = ROOT / "foreign_recruitment" / "CLOUDRESEARCH_CONNECT_SETUP_GUIDE.md"
@@ -28,9 +29,10 @@ def test_https_foreign_debug_userscript_uses_same_https_path_and_debug_flavor():
     text = read(DEBUG_SCRIPT)
 
     assert "HoHoNet Helper Official Annotator HTTPS EN DEBUG" in text
+    assert "@version      0.28-foreign-https-en-debug" in text
     assert "@match        https://label.sparkle0825.top/*" in text
     assert "http://175.178.71.217:8000" not in text
-    assert 'const SCRIPT_VERSION = "0.26-foreign-https-en-debug";' in text
+    assert 'const SCRIPT_VERSION = "0.28-foreign-https-en-debug";' in text
     assert 'window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en_debug";' in text
     assert 'window.localStorage.getItem("HOHONET_DEBUG_PANEL") !== "0"' in text
 
@@ -65,7 +67,8 @@ def test_https_foreign_userscript_is_self_contained_not_remote_loader():
     assert "fetchFirstAvailableHelper" not in text
     assert "/tools/official/ls_userscript_annotator.js" not in text
     assert "/tools/ls_userscript.js?foreign_https_en" not in text
-    assert 'const SCRIPT_VERSION = "0.26-foreign-https-en-standalone";' in text
+    assert "@version      0.28-foreign-https-en-standalone" in text
+    assert 'const SCRIPT_VERSION = "0.28-foreign-https-en-standalone";' in text
     assert "...getForeignRecruitmentMetadataForPayload()," in text
     assert "Missing HOHONET_LOG_TOKEN" in text
     assert "window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;" in text
@@ -82,6 +85,51 @@ def test_https_foreign_userscript_is_self_contained_not_remote_loader():
     assert "Local saved order: no" in text
     assert "Current preview: default order" in text
     assert "HoHoNet Debug" in text
+
+
+def test_https_foreign_active_time_requires_visible_annotation_page():
+    text = read(SCRIPT)
+
+    assert "function isActiveTimeCountingPage()" in text
+    assert "return isPageVisible && isWindowFocused && isLikelyAnnotationPage();" in text
+    assert "let isWindowFocused = document.hasFocus();" in text
+    assert 'window.addEventListener("blur"' in text
+    assert 'window.addEventListener("focus"' in text
+    assert "if (isActiveTimeCountingPage())" in text
+    assert "lastPostedSecondsByTask" in text
+    assert "report.reportSeconds <= lastPostedSeconds" in text
+    assert 'closeActiveTimeSegment("BLUR")' in text
+    assert 'closeActiveTimeSegment("LEAVE_ANNOTATION_PAGE")' in text
+    assert 'closeActiveTimeSegment("VISIBILITY_HIDDEN")' in text
+    assert text.count("if (!isActiveTimeCountingPage())") >= 2
+
+
+def test_https_foreign_debug_active_time_matches_focus_and_delta_gates():
+    text = read(DEBUG_SCRIPT)
+
+    assert "function isActiveTimeCountingPage()" in text
+    assert "return isPageVisible && isWindowFocused && isLikelyAnnotationPage();" in text
+    assert "let isWindowFocused = document.hasFocus();" in text
+    assert 'window.addEventListener("blur"' in text
+    assert 'window.addEventListener("focus"' in text
+    assert "lastPostedSecondsByTask" in text
+    assert "report.reportSeconds <= lastPostedSeconds" in text
+    assert 'closeActiveTimeSegment("BLUR")' in text
+
+
+def test_official_active_time_uses_focus_and_delta_gates():
+    text = read(OFFICIAL_SCRIPT)
+
+    assert "@version      0.25-official" in text
+    assert 'const SCRIPT_VERSION = "0.25-official";' in text
+    assert "function isActiveTimeCountingPage()" in text
+    assert "return isPageVisible && isWindowFocused && isLikelyAnnotationPage();" in text
+    assert "let isWindowFocused = document.hasFocus();" in text
+    assert 'window.addEventListener("blur"' in text
+    assert 'window.addEventListener("focus"' in text
+    assert "lastPostedSecondsByTask" in text
+    assert "report.reportSeconds <= lastPostedSeconds" in text
+    assert 'closeActiveTimeSegment("BLUR")' in text
 
 
 def test_foreign_worker_docs_include_required_timing_and_scope_warnings():
