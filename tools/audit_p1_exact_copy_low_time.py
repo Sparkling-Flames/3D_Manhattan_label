@@ -28,6 +28,9 @@ DEFAULT_OUTPUT_DIR = "analysis_results/p1_exact_copy_low_time_audit"
 @dataclass(frozen=True)
 class AuditConfig:
     stage_filter: str = "P1"
+    assume_p1_export: bool = False
+    active_log_start: str | None = None
+    active_log_end: str | None = None
     geometry_round_px: float = 0.5
     min_valid_tasks_for_worker: int = 10
     event_active_time_ratio: float = 0.25
@@ -60,7 +63,11 @@ def _safe_str(value: Any, default: str = "") -> str:
 def _get_worker_id(annotation: dict[str, Any]) -> str:
     completed_by = annotation.get("completed_by")
     if isinstance(completed_by, dict):
-        return _safe_str(completed_by.get("id"), "unknown")
+        for key in ("id", "email", "username", "pk"):
+            value = _safe_str(completed_by.get(key))
+            if value:
+                return value
+        return "unknown"
     return _safe_str(completed_by, "unknown")
 
 
@@ -101,7 +108,6 @@ def _stage_tokens(task: dict[str, Any]) -> str:
         "task_role",
         "round_id",
         "source_split",
-        "title",
     ):
         value = data.get(key)
         if value is not None:
@@ -109,29 +115,31 @@ def _stage_tokens(task: dict[str, Any]) -> str:
     return " ".join(values).lower()
 
 
-def _matches_stage_filter(task: dict[str, Any], stage_filter: str) -> bool:
+def _stage_filter_bucket(task: dict[str, Any], stage_filter: str, assume_p1_export: bool = False) -> tuple[bool, str]:
     filt = (stage_filter or "P1").strip().lower()
     if filt == "all":
-        return True
+        return True, "all"
 
     tokens = _stage_tokens(task)
     if filt in {"manual", "semi", "oos"}:
-        return filt in tokens
+        return (filt in tokens), f"{filt}_token_only" if filt in tokens else "filtered_out"
 
     if filt in {"p1", "stage1", "prescreen"}:
-        # P1 exports may be one-project-per-pool and not carry explicit round_id.
-        # Include unlabeled rows rather than silently dropping formal P1 exports.
-        return (
-            not tokens
-            or "p1" in tokens
-            or "stage1" in tokens
-            or "prescreen" in tokens
-            or "manual" in tokens
-            or "semi" in tokens
-            or "oos" in tokens
-        )
+        if "p1" in tokens or "stage1" in tokens or "prescreen" in tokens:
+            return True, "explicit_p1"
+        if "manual" in tokens:
+            return True, "manual_token_only"
+        if "semi" in tokens:
+            return True, "semi_token_only"
+        if "oos" in tokens:
+            return True, "oos_token_only"
+        if not tokens and assume_p1_export:
+            return True, "unlabeled_included_assume_p1_export"
+        if not tokens:
+            return False, "unlabeled_excluded_requires_assume_p1_export"
+        return False, "filtered_out"
 
-    return filt in tokens
+    return (filt in tokens), f"{filt}_token" if filt in tokens else "filtered_out"
 
 
 def canonical_geometry_hash(corners, round_px: float = 0.5) -> tuple[str, str, int]:
@@ -216,18 +224,28 @@ def build_audit_rows(
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     export_path = Path(export_json)
     tasks = _load_export(export_path)
-    active_times = load_active_logs(active_log_path) if active_log_path else {}
+    active_times = (
+        load_active_logs(active_log_path, start_time=config.active_log_start, end_time=config.active_log_end)
+        if active_log_path
+        else {}
+    )
 
     rows: list[dict[str, Any]] = []
     parse_error_count = 0
     filtered_task_count = 0
+    stage_filter_breakdown: dict[str, int] = defaultdict(int)
+    included_task_ids: set[str] = set()
+    unknown_worker_count = 0
 
     for task_index, task in enumerate(tasks, start=1):
-        if not _matches_stage_filter(task, config.stage_filter):
+        include_task, stage_bucket = _stage_filter_bucket(task, config.stage_filter, config.assume_p1_export)
+        stage_filter_breakdown[stage_bucket] += 1
+        if not include_task:
             filtered_task_count += 1
             continue
 
         task_id = _task_id(task, task_index)
+        included_task_ids.add(task_id)
         project_id = _get_project_id(task)
         data = _data(task)
         dataset_group = _safe_str(data.get("dataset_group"))
@@ -242,6 +260,8 @@ def build_audit_rows(
                 continue
             annotation_id = _get_annotation_id(ann, ann_index)
             worker_id = _get_worker_id(ann)
+            if worker_id == "unknown":
+                unknown_worker_count += 1
             lead_time_seconds = float(ann.get("lead_time", 0) or 0)
             active_time, active_time_source, match_status, source_file, session_count, event_count = _active_entry_for_annotation(
                 active_times,
@@ -274,6 +294,7 @@ def build_audit_rows(
                     "task_label": task_label,
                     "dataset_group": dataset_group,
                     "condition": condition,
+                    "stage_filter_bucket": stage_bucket,
                     "annotation_id": annotation_id,
                     "worker_id": worker_id,
                     "is_valid_geometry": is_valid_geometry,
@@ -294,11 +315,18 @@ def build_audit_rows(
     metadata = {
         "export_json": str(export_path),
         "n_tasks_in_export": len(tasks),
+        "n_tasks_included": len(included_task_ids),
         "n_tasks_filtered_out": filtered_task_count,
         "n_annotation_rows": len(rows),
         "parse_error_count": parse_error_count,
         "active_log_path": active_log_path or "",
+        "active_log_start": config.active_log_start or "",
+        "active_log_end": config.active_log_end or "",
         "active_log_loaded": bool(active_times),
+        "stage_filter": config.stage_filter,
+        "assume_p1_export": config.assume_p1_export,
+        "stage_filter_task_breakdown": dict(sorted(stage_filter_breakdown.items())),
+        "unknown_worker_count": unknown_worker_count,
     }
     return rows, metadata
 
@@ -313,7 +341,10 @@ def apply_exact_copy_low_time_rules(
         row["task_median_active_time"] = ""
         row["low_time_threshold"] = ""
         row["same_hash_cluster_size"] = 0
+        row["same_hash_annotation_count"] = 0
+        row["same_hash_worker_count"] = 0
         row["is_exact_duplicate_geometry"] = False
+        row["same_worker_duplicate_annotation_anomaly"] = False
         row["exact_copy_low_time_event"] = False
         row["fallback_low_time_duplicate_audit"] = False
         row["event_basis"] = ""
@@ -342,16 +373,23 @@ def apply_exact_copy_low_time_rules(
         )
 
         for cluster in hash_clusters.values():
-            cluster_size = len(cluster)
-            is_duplicate_cluster = cluster_size >= 2 and len(valid_rows) >= 2
+            annotation_count = len(cluster)
+            worker_count = len({str(row.get("worker_id")) for row in cluster})
+            is_same_worker_duplicate = annotation_count >= 2 and worker_count == 1
+            is_duplicate_cluster = annotation_count >= 2 and worker_count >= 2 and len(valid_rows) >= 2
             for row in cluster:
                 row["task_valid_annotation_count"] = len(valid_rows)
-                row["same_hash_cluster_size"] = cluster_size
+                row["same_hash_cluster_size"] = annotation_count
+                row["same_hash_annotation_count"] = annotation_count
+                row["same_hash_worker_count"] = worker_count
                 row["task_median_active_time"] = "" if task_median is None else round(task_median, 6)
                 row["low_time_threshold"] = "" if threshold is None else round(threshold, 6)
                 row["is_exact_duplicate_geometry"] = bool(is_duplicate_cluster)
+                row["same_worker_duplicate_annotation_anomaly"] = bool(is_same_worker_duplicate)
 
                 if not is_duplicate_cluster:
+                    if is_same_worker_duplicate:
+                        row["event_basis"] = "same_worker_duplicate_annotation_export_anomaly"
                     continue
                 exact_duplicate_annotation_count += 1
 
@@ -420,9 +458,12 @@ def apply_exact_copy_low_time_rules(
                 recommended_action = "fail_recommended"
             elif manual_review:
                 recommended_action = "manual_review"
-            else:
+            elif n_events > 0:
                 recommended_action = "warning"
-                reasons.append("no_worker_level_threshold_met")
+                reasons.append("exact_copy_low_time_events_below_review_threshold")
+            else:
+                recommended_action = "no_action"
+                reasons.append("no_exact_copy_low_time_events")
 
         summaries.append(
             {
@@ -480,6 +521,7 @@ def _write_report(path: Path, summary: dict[str, Any], config: AuditConfig) -> N
         "- `active_time` from active logs is the primary timing source.",
         "- Label Studio `lead_time` is reported only as fallback/audit by default and is not mixed into the primary event rule.",
         "- `lead_time` can enter primary events only if the CLI explicitly enables it.",
+        "- Active-log start/end bounds are recorded to prevent cross-round active_time accumulation.",
         "",
         "## Conservative Worker-Level Rule",
         "",
@@ -497,11 +539,19 @@ def _write_report(path: Path, summary: dict[str, Any], config: AuditConfig) -> N
         f"- `fail_recommended_rate`: {config.fail_recommended_rate}",
         f"- `fail_if_all_valid`: {config.fail_if_all_valid}",
         f"- `geometry_round_px`: {config.geometry_round_px}",
+        f"- `assume_p1_export`: {config.assume_p1_export}",
+        f"- `active_log_start`: {config.active_log_start or ''}",
+        f"- `active_log_end`: {config.active_log_end or ''}",
         "",
         "## Run Summary",
         "",
+        f"- `n_tasks_in_export`: {summary.get('n_tasks_in_export')}",
+        f"- `n_tasks_included`: {summary.get('n_tasks_included')}",
+        f"- `n_tasks_filtered_out`: {summary.get('n_tasks_filtered_out')}",
         f"- `n_annotation_rows`: {summary.get('n_annotation_rows')}",
         f"- `parse_error_count`: {summary.get('parse_error_count')}",
+        f"- `unknown_worker_count`: {summary.get('unknown_worker_count')}",
+        f"- `stage_filter_task_breakdown`: `{json.dumps(summary.get('stage_filter_task_breakdown', {}), ensure_ascii=False)}`",
         f"- `n_primary_exact_copy_low_time_events`: {summary.get('n_primary_exact_copy_low_time_events')}",
         f"- `n_fallback_low_time_duplicate_audit`: {summary.get('n_fallback_low_time_duplicate_audit')}",
         f"- `n_workers_manual_review`: {summary.get('n_workers_manual_review')}",
@@ -515,6 +565,15 @@ def _write_report(path: Path, summary: dict[str, Any], config: AuditConfig) -> N
         "- Final exclusion decisions must be made by manual review or downstream admission summary logic.",
         "",
     ]
+    if int(summary.get("unknown_worker_count") or 0) > 0:
+        lines.extend(
+            [
+                "## Warnings",
+                "",
+                "- Unknown worker IDs were found. Review `completed_by` export fields before using worker-level recommendations.",
+                "",
+            ]
+        )
     path.write_text("\n".join(lines), encoding="utf-8")
 
 
@@ -564,7 +623,14 @@ def main() -> None:
     parser.add_argument("--export-json", required=True, help="Label Studio export JSON.")
     parser.add_argument("--active-log-dir", default=None, help="Directory containing active_times_*.jsonl.")
     parser.add_argument("--active-log-file", default=None, help="Concrete active_times_*.jsonl file.")
+    parser.add_argument("--active-log-start", default=None, help="Inclusive server_received_at lower bound.")
+    parser.add_argument("--active-log-end", default=None, help="Inclusive server_received_at upper bound.")
     parser.add_argument("--stage-filter", default="P1", help="P1/manual/semi/oos/all; default P1.")
+    parser.add_argument(
+        "--assume-p1-export",
+        action="store_true",
+        help="Allow unlabeled tasks to pass stage-filter=P1. Use only for known single-purpose P1 exports.",
+    )
     parser.add_argument("--output-dir", default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--geometry-round-px", type=float, default=0.5)
     parser.add_argument("--min-valid-tasks-for-worker", type=int, default=10)
@@ -583,6 +649,9 @@ def main() -> None:
 
     cfg = AuditConfig(
         stage_filter=args.stage_filter,
+        assume_p1_export=args.assume_p1_export,
+        active_log_start=args.active_log_start,
+        active_log_end=args.active_log_end,
         geometry_round_px=args.geometry_round_px,
         min_valid_tasks_for_worker=args.min_valid_tasks_for_worker,
         event_active_time_ratio=args.event_active_time_ratio,
