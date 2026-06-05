@@ -28,10 +28,10 @@ def _kp(x: float, y: float) -> dict:
     }
 
 
-def _annotation(worker_id: str, points=BASE_POINTS, *, annotation_id: str = "1", lead_time: float = 0.0) -> dict:
+def _annotation(worker_id: str, points=BASE_POINTS, *, annotation_id: str = "1", lead_time: float = 0.0, completed_by=None) -> dict:
     return {
         "id": annotation_id,
-        "completed_by": {"id": worker_id},
+        "completed_by": {"id": worker_id} if completed_by is None else completed_by,
         "lead_time": lead_time,
         "result": [_kp(x, y) for x, y in points],
     }
@@ -46,14 +46,14 @@ def _bad_annotation(worker_id: str, *, annotation_id: str = "bad") -> dict:
     }
 
 
-def _task(task_id: int, annotations: list[dict], *, dataset_group: str = "P1_manual") -> dict:
+def _task(task_id: int, annotations: list[dict], *, dataset_group: str | None = "P1_manual") -> dict:
+    data = {"title": f"task_{task_id}.jpg"}
+    if dataset_group is not None:
+        data["dataset_group"] = dataset_group
     return {
         "id": task_id,
         "project": 23,
-        "data": {
-            "dataset_group": dataset_group,
-            "title": f"task_{task_id}.jpg",
-        },
+        "data": data,
         "annotations": annotations,
     }
 
@@ -64,10 +64,12 @@ def _write_export(tmp_path: Path, tasks: list[dict]) -> Path:
     return path
 
 
-def _write_active_log(tmp_path: Path, events: list[tuple[int, str, float]]) -> Path:
+def _write_active_log(tmp_path: Path, events: list[tuple]) -> Path:
     path = tmp_path / "active_times_test.jsonl"
     with path.open("w", encoding="utf-8") as f:
-        for task_id, worker_id, seconds in events:
+        for event in events:
+            task_id, worker_id, seconds = event[:3]
+            event_time = event[3] if len(event) > 3 else "2026-06-05T10:00:00"
             f.write(
                 json.dumps(
                     {
@@ -76,7 +78,7 @@ def _write_active_log(tmp_path: Path, events: list[tuple[int, str, float]]) -> P
                         "annotator_id": worker_id,
                         "session_id": f"s-{task_id}-{worker_id}",
                         "active_seconds": seconds,
-                        "server_received_at": "2026-06-05T10:00:00",
+                        "server_received_at": event_time,
                     }
                 )
                 + "\n"
@@ -101,7 +103,7 @@ def test_same_geometry_normal_active_time_does_not_trigger_event(tmp_path):
     )
 
     assert all(not row["exact_copy_low_time_event"] for row in rows)
-    assert {row["recommended_action"] for row in worker_summary} == {"warning"}
+    assert {row["recommended_action"] for row in worker_summary} == {"no_action"}
 
 
 def test_low_active_time_with_different_geometry_does_not_trigger_event(tmp_path):
@@ -114,6 +116,7 @@ def test_low_active_time_with_different_geometry_does_not_trigger_event(tmp_path
 
     w1 = next(row for row in rows if row["worker_id"] == "w1")
     assert w1["same_hash_cluster_size"] == 1
+    assert w1["same_hash_worker_count"] == 1
     assert not w1["exact_copy_low_time_event"]
 
 
@@ -151,6 +154,8 @@ def test_few_events_only_warning_not_fail_when_worker_support_is_sufficient(tmp_
     assert w1["n_exact_copy_low_time_events"] == 1
     assert w1["recommended_action"] == "warning"
     assert w1["fail_recommended"] is False
+    w2 = next(row for row in worker_summary if row["worker_id"] == "w2")
+    assert w2["recommended_action"] == "no_action"
 
 
 def test_many_events_trigger_manual_review_without_fail_below_fail_rate(tmp_path):
@@ -238,6 +243,108 @@ def test_missing_active_time_lead_time_fallback_does_not_enter_primary_event(tmp
     assert rule_summary["n_fallback_low_time_duplicate_audit"] == 1
 
 
+def test_same_worker_duplicate_annotation_does_not_trigger_peer_copy_event(tmp_path):
+    tasks = [
+        _task(
+            1,
+            [
+                _annotation("w1", annotation_id="a1"),
+                _annotation("w1", annotation_id="a2"),
+            ],
+        )
+    ]
+    rows, worker_summary, rule_summary = _rows_and_summary(
+        tmp_path,
+        tasks,
+        [(1, "w1", 5)],
+        AuditConfig(min_valid_tasks_for_worker=1),
+    )
+
+    assert all(row["same_hash_annotation_count"] == 2 for row in rows)
+    assert all(row["same_hash_worker_count"] == 1 for row in rows)
+    assert all(row["same_worker_duplicate_annotation_anomaly"] for row in rows)
+    assert all(not row["is_exact_duplicate_geometry"] for row in rows)
+    assert rule_summary["n_primary_exact_copy_low_time_events"] == 0
+    assert worker_summary[0]["recommended_action"] == "no_action"
+
+
+def test_two_distinct_workers_required_for_duplicate_geometry(tmp_path):
+    tasks = [_task(1, [_annotation("w1", annotation_id="a1"), _annotation("w2", annotation_id="a2")])]
+    rows, _worker_summary, _rule_summary = _rows_and_summary(
+        tmp_path,
+        tasks,
+        [(1, "w1", 100), (1, "w2", 100)],
+    )
+
+    assert all(row["same_hash_annotation_count"] == 2 for row in rows)
+    assert all(row["same_hash_worker_count"] == 2 for row in rows)
+    assert all(row["is_exact_duplicate_geometry"] for row in rows)
+
+
+def test_active_log_start_end_are_applied_and_recorded(tmp_path):
+    tasks = [_task(1, [_annotation("w1", annotation_id="a1"), _annotation("w2", annotation_id="a2")])]
+    export_path = _write_export(tmp_path, tasks)
+    active_path = _write_active_log(
+        tmp_path,
+        [
+            (1, "w1", 5, "2026-06-04T10:00:00"),
+            (1, "w1", 100, "2026-06-05T10:00:00"),
+            (1, "w2", 100, "2026-06-05T10:00:00"),
+        ],
+    )
+    cfg = AuditConfig(
+        min_valid_tasks_for_worker=1,
+        active_log_start="2026-06-05T00:00:00",
+        active_log_end="2026-06-05T23:59:59",
+    )
+
+    rows, metadata = build_audit_rows(export_path, str(active_path), cfg)
+    rows, _worker_summary, rule_summary = apply_exact_copy_low_time_rules(rows, cfg)
+
+    w1 = next(row for row in rows if row["worker_id"] == "w1")
+    assert w1["active_time"] == 100.0
+    assert rule_summary["n_primary_exact_copy_low_time_events"] == 0
+    assert metadata["active_log_start"] == "2026-06-05T00:00:00"
+    assert metadata["active_log_end"] == "2026-06-05T23:59:59"
+
+
+def test_worker_id_falls_back_to_email_then_username(tmp_path):
+    tasks = [
+        _task(
+            1,
+            [
+                _annotation("", annotation_id="a1", completed_by={"email": "worker@example.com"}),
+                _annotation("", annotation_id="a2", completed_by={"username": "user_b"}),
+            ],
+        )
+    ]
+    export_path = _write_export(tmp_path, tasks)
+    rows, metadata = build_audit_rows(export_path, None, AuditConfig())
+
+    assert {row["worker_id"] for row in rows} == {"worker@example.com", "user_b"}
+    assert metadata["unknown_worker_count"] == 0
+
+
+def test_p1_stage_filter_excludes_unlabeled_unless_assumed(tmp_path):
+    tasks = [
+        _task(1, [_annotation("w1")], dataset_group=None),
+        _task(2, [_annotation("w2")], dataset_group="P1_manual"),
+    ]
+    export_path = _write_export(tmp_path, tasks)
+
+    rows, metadata = build_audit_rows(export_path, None, AuditConfig(stage_filter="P1"))
+    assert {row["task_id"] for row in rows} == {"2"}
+    assert metadata["stage_filter_task_breakdown"]["unlabeled_excluded_requires_assume_p1_export"] == 1
+
+    rows_assumed, metadata_assumed = build_audit_rows(
+        export_path,
+        None,
+        AuditConfig(stage_filter="P1", assume_p1_export=True),
+    )
+    assert {row["task_id"] for row in rows_assumed} == {"1", "2"}
+    assert metadata_assumed["stage_filter_task_breakdown"]["unlabeled_included_assume_p1_export"] == 1
+
+
 def test_corner_order_differs_but_geometry_hash_is_same():
     h1, _payload1, _n1 = canonical_geometry_hash(BASE_POINTS, round_px=0.5)
     h2, _payload2, _n2 = canonical_geometry_hash(list(reversed(BASE_POINTS)), round_px=0.5)
@@ -286,3 +393,4 @@ def test_run_audit_writes_expected_artifacts_and_schema(tmp_path):
         "exact_copy_low_time_rate",
         "recommended_action",
     }.issubset(first.keys())
+    assert summary["stage_filter_task_breakdown"]["explicit_p1"] == 1
