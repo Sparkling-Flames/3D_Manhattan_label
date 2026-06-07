@@ -4,13 +4,13 @@
     <View style="flex: 60%; margin-right: 12px; display: flex; flex-direction: column; background: #fafafa; border-right: 1px solid #ddd; height: 100%;">
       
       <!-- 图像区：自适应紧凑布局 (约占 40% 比例的核心部分) -->
-      <View style="flex: 0 0 40%; min-height: 250px; max-height: 42vh; display: flex; flex-direction: column; padding: 8px; background: #fff; overflow: hidden;">
+      <View style="flex: 0 0 40%; min-height: 330px; max-height: 42vh; display: flex; flex-direction: column; padding: 8px; background: #fff; overflow: visible; position: relative; z-index: 2;">
         <Header value="2D Panorama Annotation" size="6" style="margin-top: 0; margin-bottom: 2px; font-weight: 600; color: #333;"/>
         <Image name="img" value="$image" zoom="true" zoomControl="true" style="flex: 1; border-radius: 4px; border: 1px solid #eee;"/>
       </View>
 
       <!-- 标签工具栏：紧凑并排，放在图像区下方以确保显示（不要放在 image 容器内） -->
-      <View style="flex: 0 0 auto; display: flex; gap: 8px; padding: 6px 12px; background: #fff; border-top: 1px solid #f0f0f0; align-items: center;">
+      <View style="flex: 0 0 auto; display: flex; gap: 8px; margin-top: 8px; padding: 6px 12px; background: #fff; border-top: 1px solid #f0f0f0; align-items: center;">
         <View style="flex: 0 0 auto; color: #666; font-size: 11px;">Tools:</View>
         <KeyPointLabels name="kp" toName="img" strokeWidth="2">
           <Label value="Corner" background="#FF4D4F"/>

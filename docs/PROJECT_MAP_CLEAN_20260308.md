@@ -115,6 +115,8 @@
   - M14.1/M14.2 pure Python Manhattan constrained fitting prototype for ordered paired corners in Label Studio 0-100 coordinates. It converts to panorama angular coordinates, searches deterministic Manhattan yaw candidates, estimates a height-aware closed Manhattan candidate with `atan2` reprojection, reports `fit_status`, `fit_residual`, `manhattan_yaw_*`, `layout_height_candidate`, `per_point_delta`, and warnings, and remains dev-only / sandbox-only with no writeback, no UI integration, no routing, and no formal artifact role.
 - `tools/audit_manhattan_constrained_fit_smoke.py`
   - M15/M15.2/M15.3 read-only smoke export audit for the M14.2 Manhattan constrained fitting core. It consumes a copied/local Label Studio export JSON, builds current-preview paired corners, writes smoke sidecars under `analysis_results/manhattan_constrained_fit_smoke/`, separates normal-only audit eligibility from scope-independent `geometry_debug`, uses explicit `scope_vote_*` naming so scope votes are not read as adjudicated OOS truth, emits annotation-level geometry-debug review candidates for task-level Manhattan stability inspection, and remains dev-only / smoke-only with no export modification, no annotation writeback, no formal `g_t`, no routing, no worker tier, and no `P1/C1/C2/T1/V1` artifact role.
+- `tools/render_manhattan_geometry_review_sheet.py`
+  - M15.4 standalone offline HTML review sheet renderer for Manhattan geometry-debug review candidates. It consumes `smoke_geometry_debug_review_candidates_*.jsonl`, renders red original points, hollow blue fitted candidate points, optional delta arrows, and local-only manual review fields plus a CSV template under `analysis_results/manhattan_constrained_fit_smoke/`; visual review only, no Label Studio UI integration, no annotation writeback, no formal `g_t`, no routing, no worker quality metric, and no `P1/C1/C2/T1/V1` artifact role.
 - `tools/manhattan_preview_suggestions.py`
   - M2 preview-only suggestion summary helper; emits review prompt type counts only.
 - `tools/render_manhattan_probe_report.py`
@@ -202,6 +204,10 @@
   - Foreign HTTPS English helper. Matches only `https://label.sparkle0825.top/*`, defaults helper/viewer/log URLs to same-origin, and captures optional CloudResearch / worker IDs; it does not replace or modify the official Chinese helper.
 - `foreign_recruitment/ls_userscript_annotator_https_en_debug.user.js`
   - Foreign HTTPS English debug helper. Same target path and payload contract as the normal foreign helper, but the debug panel is enabled by default; do not enable both foreign helper scripts at once.
+- `foreign_recruitment/label_studio_view_config_en.xml`
+  - English Label Studio view config for foreign HTTPS main/semi-style Stage 1 projects. It keeps the same export field names and aliases as `tools/label_studio_view_config.xml`; use only for newly created foreign-facing projects, not to mutate already-running Stage 1 projects.
+- `foreign_recruitment/label_studio_view_config_manual_en.xml`
+  - English Label Studio view config for foreign HTTPS manual-style Stage 1 projects. It keeps the same export field names and aliases as `tools/label_studio_view_config_manual.xml`; use only for newly created foreign-facing projects.
 - `tools/official/ls_userscript_debug.js`
   - Official debug helper.
 - `tools/label_studio_view_config.xml`
@@ -409,6 +415,7 @@
 - `tests/test_manhattan_geometry_residual.py`
 - `tests/test_manhattan_constrained_fit.py`
 - `tests/test_audit_manhattan_constrained_fit_smoke.py`
+- `tests/test_render_manhattan_geometry_review_sheet.py`
 - `tests/test_manhattan_preview_suggestions.py`
 - `tests/test_render_manhattan_probe_report.py`
 - `tests/test_render_manhattan_contact_sheet.py`

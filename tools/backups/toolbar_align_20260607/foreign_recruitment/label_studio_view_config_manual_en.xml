@@ -1,0 +1,54 @@
+<View>
+  <View style="display: flex; height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <View style="flex: 60%; margin-right: 12px; display: flex; flex-direction: column; background: #fafafa; border-right: 1px solid #ddd; height: 100%;">
+      <View style="flex: 0 0 40%; min-height: 250px; max-height: 42vh; display: flex; flex-direction: column; padding: 8px; background: #fff; overflow: hidden;">
+        <Header value="2D Panorama Annotation" size="6" style="margin-top: 0; margin-bottom: 2px; font-weight: 600; color: #333;"/>
+        <Image name="img" value="$image" zoom="true" zoomControl="true" style="flex: 1; border-radius: 4px; border: 1px solid #eee;"/>
+      </View>
+
+      <View style="flex: 0 0 auto; display: flex; gap: 8px; padding: 6px 12px; background: #fff; border-top: 1px solid #f0f0f0; align-items: center;">
+        <View style="flex: 0 0 auto; color: #666; font-size: 11px;">Tools:</View>
+        <KeyPointLabels name="kp" toName="img" strokeWidth="2">
+          <Label value="Corner" background="#FF4D4F"/>
+        </KeyPointLabels>
+        <BrushLabels name="wall_brush" toName="img">
+          <Label value="Wall" background="#52C41A"/>
+        </BrushLabels>
+      </View>
+
+      <View style="flex: 1; overflow-y: auto; padding: 12px 16px; background: #fff; border-top: 1px solid #eee; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+        <Header value="Annotation Feedback and Stratification" size="5" style="margin-bottom: 12px; padding-bottom: 4px; border-bottom: 2px solid #1890ff; display: inline-block;"/>
+
+        <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <Header value="1. Scope" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
+          <Text name="scope_rule_text" value="General rule: first decide whether the camera room has a unique and reproducible enclosed boundary. If it cannot be closed without guessing, choose the best OOS reason. Even for OOS cases, complete any required geometry fields and use Scope as the authoritative OOS signal." style="display:block; margin: 0 0 6px 0; color:#666; font-size:12px;"/>
+          <Choices name="scope" toName="img" showInLine="true" choice="single" required="true" requiredMessage="Scope is required. Select exactly one option.">
+            <Choice value="In-scope: camera room only" alias="normal" hint="Include only the room where the camera is located. Do not cross doorways or extend into adjacent rooms. Choose this when the current camera room still has a unique and reproducible wall-ceiling-floor enclosure."/>
+            <Choice value="OOS: geometric assumption invalid / non-Manhattan" alias="oos_geometry" hint="Use when the current camera room itself cannot be stably represented by a single Manhattan/cuboid-style enclosure."/>
+            <Choice value="OOS: open or ambiguous camera-room boundary" alias="oos_open_boundary" hint="Use when the space is visible but the camera room cannot be closed at a reproducible boundary. If the main problem is missing or invisible evidence, prefer insufficient evidence."/>
+            <Choice value="OOS: split-level or multi-level layout" alias="oos_split_level" hint="Use when the main room enclosure no longer satisfies a single-floor and single-ceiling assumption."/>
+            <Choice value="OOS: insufficient geometric evidence" alias="oos_insufficient" hint="Use when key geometric evidence is missing and a reproducible enclosure cannot be determined. Do not use this for minor local occlusions when the main enclosure is still stable."/>
+          </Choices>
+        </View>
+
+        <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <Header value="2. Difficulty" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
+          <Text name="difficulty_rule_text" value="Rule: select at least one option. If you choose &quot;trivial&quot;, do not select any other difficulty label; if any real difficulty exists, do not choose trivial." style="display:block; margin: 0 0 6px 0; color:#666; font-size:12px;"/>
+          <Choices name="difficulty" toName="img" showInLine="true" choice="multiple" required="true" requiredMessage="Difficulty is required. Select at least one option.">
+            <Choice value="Trivial / very easy" alias="trivial" hint="The scene is simple, geometry is clear, and there is no meaningful occlusion or distortion. Corner annotation should be almost effortless."/>
+            <Choice value="Occlusion" alias="occlusion" hint="Important geometric evidence is locally blocked. Choose this when the main enclosure is still reproducibly closed despite local blockage."/>
+            <Choice value="Low texture or plain walls" alias="low_texture" hint="Local texture or color contrast is weak, so boundaries or corners rely mainly on subtle geometric cues."/>
+            <Choice value="Panorama seam or stretch distortion" alias="seam" hint="Panorama stitching, reprojection, stretching, or local geometric distortion makes true corners hard to locate."/>
+            <Choice value="Reflection or glass interference" alias="reflection" hint="Mirrors, glass, or reflective surfaces create false boundaries or visually confusing room structure."/>
+            <Choice value="Blur, mask, or low image quality" alias="low_quality" hint="Blur, noise, compression artifacts, large masks, black borders, or missing areas make key geometric evidence unreliable."/>
+          </Choices>
+        </View>
+      </View>
+    </View>
+
+    <View style="flex: 40%; border-left: 1px solid #ccc; padding-left: 10px;">
+      <Header value="3D Layout Preview"/>
+      <HyperText name="vis_3d" value="$vis_3d" valueType="url" inline="false"/>
+    </View>
+  </View>
+</View>
