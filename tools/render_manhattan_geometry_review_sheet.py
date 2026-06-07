@@ -56,6 +56,51 @@ def load_review_rows(path: Path) -> list[dict[str, Any]]:
     return rows
 
 
+def infer_source_records_path(review_jsonl: Path) -> Path | None:
+    name = review_jsonl.name
+    prefix = "smoke_geometry_debug_review_candidates_"
+    suffix = ".jsonl"
+    if not name.startswith(prefix) or not name.endswith(suffix):
+        return None
+    date = name[len(prefix) : -len(suffix)]
+    candidate = review_jsonl.with_name(f"smoke_fit_records_{date}.jsonl")
+    return candidate if candidate.exists() else None
+
+
+def _row_key(row: Mapping[str, Any]) -> tuple[str, str]:
+    return str(row.get("task_id")), str(row.get("annotation_id"))
+
+
+def enrich_rows_from_source_records(
+    review_rows: Sequence[Mapping[str, Any]],
+    source_records_path: Path | None,
+) -> list[dict[str, Any]]:
+    rows = [dict(row) for row in review_rows]
+    if source_records_path is None:
+        return rows
+
+    source_rows = load_review_rows(source_records_path)
+    by_annotation = {_row_key(row): row for row in source_rows}
+
+    for row in rows:
+        if _image_url(row):
+            row.setdefault("image_source", "review_row")
+            continue
+        source = by_annotation.get(_row_key(row))
+        if source:
+            image = _image_url(source)
+            if image:
+                row["image"] = image
+                row["image_source"] = "source_records_exact_task_annotation_match"
+            for field in ("title", "base_task_id", "source_export"):
+                if field not in row and source.get(field) is not None:
+                    row[field] = source.get(field)
+            row["source_records_path"] = str(source_records_path)
+        else:
+            row["image_source"] = "missing_exact_task_annotation_match"
+    return rows
+
+
 def _scalar(value: Any) -> str:
     if value is None:
         return ""
@@ -117,10 +162,6 @@ def _image_url(row: Mapping[str, Any]) -> str | None:
     return None
 
 
-def _circle(cx: float, cy: float, *, class_name: str, radius: float) -> str:
-    return f'<circle class="{class_name}" cx="{cx:.4f}" cy="{cy:.4f}" r="{radius:.3f}" />'
-
-
 def _arrow(x1: float, y1: float, x2: float, y2: float) -> str:
     return (
         f'<line class="delta-arrow" x1="{x1:.4f}" y1="{y1:.4f}" '
@@ -128,7 +169,24 @@ def _arrow(x1: float, y1: float, x2: float, y2: float) -> str:
     )
 
 
-def _overlay_svg(row: Mapping[str, Any]) -> str:
+def _point_dot(x: float, y: float, class_name: str, label: str) -> str:
+    return (
+        f'<span class="point-dot {class_name}" style="left:{x:.4f}%; top:{y:.4f}%;" '
+        f'aria-label="{escape(label, quote=True)}"></span>'
+    )
+
+
+def _fit_absence_note(row: Mapping[str, Any], fitted_count: int) -> str:
+    if fitted_count:
+        return ""
+    reason = row.get("problem_reason") or row.get("fit_status") or row.get("preview_status") or "unavailable"
+    return (
+        '<div class="fit-note">no fitted_points in candidate payload: '
+        f"{escape(_scalar(reason))}</div>"
+    )
+
+
+def _overlay_markup(row: Mapping[str, Any]) -> str:
     original_points = [
         xy
         for point in _as_list(row.get("original_points"))
@@ -139,27 +197,32 @@ def _overlay_svg(row: Mapping[str, Any]) -> str:
     fitted_points = _flatten_fitted_points(row.get("fitted_points"))
     can_draw_arrows = bool(fitted_points) and bool(_as_list(row.get("per_point_delta")))
 
-    parts = [
-        '<svg class="overlay" viewBox="0 0 100 100" role="img" '
-        'aria-label="Coordinate overlay: red original points, hollow blue fitted candidate points.">',
+    arrow_parts = [
+        '<svg class="delta-overlay" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">',
         "<defs>",
         '<marker id="arrowhead" viewBox="0 0 10 10" refX="8" refY="5" '
         'markerWidth="4" markerHeight="4" orient="auto-start-reverse">',
         '<path d="M 0 0 L 10 5 L 0 10 z" class="delta-arrow-head" />',
         "</marker>",
         "</defs>",
-        '<rect class="canvas-bg" x="0" y="0" width="100" height="100" />',
-        '<path class="grid-line" d="M 25 0 V 100 M 50 0 V 100 M 75 0 V 100 M 0 25 H 100 M 0 50 H 100 M 0 75 H 100" />',
     ]
     if can_draw_arrows:
         for original, fitted in zip(original_points, fitted_points):
-            parts.append(_arrow(original[0], original[1], fitted["x"], fitted["y"]))
+            arrow_parts.append(_arrow(original[0], original[1], fitted["x"], fitted["y"]))
+    arrow_parts.append("</svg>")
+
+    point_parts = [
+        '<div class="overlay-grid" role="img" '
+        'aria-label="Coordinate overlay: red original points, hollow blue fitted candidate points.">',
+        "".join(arrow_parts),
+    ]
     for x, y in original_points:
-        parts.append(_circle(x, y, class_name="original-dot", radius=1.1))
+        point_parts.append(_point_dot(x, y, "original-dot", "original point"))
     for fitted in fitted_points:
-        parts.append(_circle(fitted["x"], fitted["y"], class_name="fitted-dot", radius=1.35))
-    parts.append("</svg>")
-    return "".join(parts)
+        point_parts.append(_point_dot(fitted["x"], fitted["y"], "fitted-dot", "fitted candidate point"))
+    point_parts.append(_fit_absence_note(row, len(fitted_points)))
+    point_parts.append("</div>")
+    return "".join(point_parts)
 
 
 def _visual_panel(row: Mapping[str, Any]) -> str:
@@ -168,11 +231,11 @@ def _visual_panel(row: Mapping[str, Any]) -> str:
     if image:
         image_tag = f'<img class="source-image" src="{escape(image, quote=True)}" alt="" />'
     else:
-        image_tag = '<div class="no-image">coordinate canvas only: no image URL in review row</div>'
+        image_tag = '<div class="no-image">coordinate canvas only: no image URL in review row or source records</div>'
     return (
         '<div class="visual-panel">'
         f"{image_tag}"
-        f"{_overlay_svg(row)}"
+        f"{_overlay_markup(row)}"
         '<div class="legend"><span class="legend-red"></span> original_points '
         '<span class="legend-blue"></span> fitted_points candidate '
         '<span class="legend-arrow"></span> delta arrows when available</div>'
@@ -194,6 +257,10 @@ def _field_grid(row: Mapping[str, Any]) -> str:
         "problem_reason",
         "review_question",
         "not_oos_adjudication",
+        "title",
+        "base_task_id",
+        "image_source",
+        "source_records_path",
     )
     items = []
     for field in fields:
@@ -250,6 +317,52 @@ def _card(row: Mapping[str, Any], index: int) -> str:
     """
 
 
+def _unique_values(rows: Sequence[Mapping[str, Any]], field: str) -> list[str]:
+    values = sorted({_scalar(row.get(field)) for row in rows if _scalar(row.get(field))})
+    return values
+
+
+def _task_summary(task_id: str, rows: Sequence[Mapping[str, Any]]) -> str:
+    images = _unique_values(rows, "image")
+    titles = _unique_values(rows, "title")
+    base_task_ids = _unique_values(rows, "base_task_id")
+    image_sources = _unique_values(rows, "image_source")
+
+    def values_line(label: str, values: Sequence[str]) -> str:
+        if not values:
+            return ""
+        rendered = ", ".join(f"<code>{escape(value)}</code>" for value in values[:3])
+        if len(values) > 3:
+            rendered += f", ... +{len(values) - 3}"
+        return f'<div class="task-meta-item"><span>{escape(label)}</span>{rendered}</div>'
+
+    shared_note = ""
+    if len(images) == 1 and len(rows) > 1:
+        shared_note = (
+            '<p class="task-note">This task has multiple annotation review cards sharing one source image; '
+            "the repeated image is intentional for this task, while overlays and diagnostics are annotation-specific.</p>"
+        )
+    elif not images:
+        shared_note = (
+            '<p class="task-note warning">No image URL was resolved for this task; cards use coordinate canvas only.</p>'
+        )
+    elif len(images) > 1:
+        shared_note = (
+            '<p class="task-note warning">Multiple image URLs were resolved inside this task; inspect provenance before review.</p>'
+        )
+
+    return (
+        '<div class="task-summary">'
+        f'<div class="task-meta-item"><span>review_cards</span><code>{len(rows)}</code></div>'
+        f'<div class="task-meta-item"><span>unique_images_in_task</span><code>{len(images)}</code></div>'
+        f"{values_line('title', titles)}"
+        f"{values_line('base_task_id', base_task_ids)}"
+        f"{values_line('image_source', image_sources)}"
+        f"{shared_note}"
+        "</div>"
+    )
+
+
 def _ordered_groups(rows: Sequence[Mapping[str, Any]]) -> list[tuple[str, list[Mapping[str, Any]]]]:
     grouped: dict[str, list[Mapping[str, Any]]] = defaultdict(list)
     for row in rows:
@@ -282,6 +395,7 @@ def render_html_review_sheet(rows: Sequence[Mapping[str, Any]], *, source_path: 
         sections.append(
             f'<section class="task-section{focus_label}" id="task-{escape(task_id)}">'
             f"<h2>Task {escape(task_id)}</h2>"
+            f"{_task_summary(task_id, group_rows)}"
             f"{''.join(section_cards)}"
             "</section>"
         )
@@ -302,18 +416,32 @@ def render_html_review_sheet(rows: Sequence[Mapping[str, Any]], *, source_path: 
     code {{ background: #eef2f7; padding: 1px 4px; border-radius: 4px; }}
     .guardrails {{ border: 1px solid #a9b8c9; background: #f4f8fb; padding: 12px; margin: 14px 0; }}
     .summary {{ color: #526173; margin-bottom: 18px; }}
+    .task-summary {{ border: 1px solid #cbd5e1; background: #f8fafc; padding: 10px; margin: 10px 0 14px; }}
+    .task-meta-item {{ display: inline-block; margin: 4px 14px 4px 0; }}
+    .task-meta-item span {{ color: #66768a; margin-right: 5px; }}
+    .task-note {{ margin: 8px 0 0; color: #344255; }}
+    .task-note.warning {{ color: #8a4b00; }}
     .review-card {{ background: white; border: 1px solid #d8e0ea; border-radius: 6px; padding: 14px; margin: 12px 0; }}
     .focus-task .review-card {{ border-left: 4px solid #2f6db3; }}
     .visual-panel {{ position: relative; width: min(100%, 820px); aspect-ratio: 2 / 1; border: 1px solid #cbd5e1; background: #eef3f8; overflow: hidden; margin: 10px 0; }}
     .source-image {{ position: absolute; inset: 0; width: 100%; height: 100%; object-fit: fill; opacity: 0.86; }}
     .no-image {{ position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; color: #66768a; font-size: 14px; }}
-    .overlay {{ position: absolute; inset: 0; width: 100%; height: 100%; }}
-    .canvas-bg {{ fill: rgba(255,255,255,0.18); }}
-    .grid-line {{ stroke: rgba(70, 85, 105, 0.26); stroke-width: 0.18; fill: none; }}
-    .original-dot {{ fill: #d22f27; stroke: white; stroke-width: 0.28; }}
-    .fitted-dot {{ fill: transparent; stroke: #1f6fc2; stroke-width: 0.45; }}
-    .delta-arrow {{ stroke: #58687b; stroke-width: 0.22; fill: none; }}
+    .overlay-grid {{ position: absolute; inset: 0; width: 100%; height: 100%;
+      background-image:
+        linear-gradient(to right, transparent 24.9%, rgba(70, 85, 105, 0.28) 25%, transparent 25.1%),
+        linear-gradient(to right, transparent 49.9%, rgba(70, 85, 105, 0.28) 50%, transparent 50.1%),
+        linear-gradient(to right, transparent 74.9%, rgba(70, 85, 105, 0.28) 75%, transparent 75.1%),
+        linear-gradient(to bottom, transparent 24.9%, rgba(70, 85, 105, 0.28) 25%, transparent 25.1%),
+        linear-gradient(to bottom, transparent 49.9%, rgba(70, 85, 105, 0.28) 50%, transparent 50.1%),
+        linear-gradient(to bottom, transparent 74.9%, rgba(70, 85, 105, 0.28) 75%, transparent 75.1%);
+    }}
+    .delta-overlay {{ position: absolute; inset: 0; width: 100%; height: 100%; }}
+    .point-dot {{ position: absolute; transform: translate(-50%, -50%); border-radius: 50%; box-sizing: border-box; pointer-events: none; }}
+    .original-dot {{ width: 7px; height: 7px; background: #d22f27; border: 1px solid white; }}
+    .fitted-dot {{ width: 10px; height: 10px; background: transparent; border: 2px solid #1f6fc2; }}
+    .delta-arrow {{ stroke: #58687b; stroke-width: 0.16; fill: none; }}
     .delta-arrow-head {{ fill: #58687b; }}
+    .fit-note {{ position: absolute; right: 8px; top: 8px; background: rgba(255,255,255,0.9); border: 1px solid #d8e0ea; padding: 3px 6px; font-size: 12px; color: #4d5f73; }}
     .legend {{ position: absolute; left: 8px; bottom: 6px; background: rgba(255,255,255,0.86); padding: 4px 6px; font-size: 12px; }}
     .legend-red, .legend-blue, .legend-arrow {{ display: inline-block; width: 10px; height: 10px; margin-left: 8px; vertical-align: -1px; }}
     .legend-red {{ background: #d22f27; border-radius: 50%; margin-left: 0; }}
@@ -381,6 +509,11 @@ def build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--review-jsonl", required=True, type=Path, help="Geometry-debug review candidate JSONL.")
     parser.add_argument("--output", required=True, type=Path, help="Standalone offline HTML output path.")
     parser.add_argument(
+        "--source-records",
+        type=Path,
+        help="Optional smoke_fit_records JSONL used to add image URLs. Defaults to same-date sibling if present.",
+    )
+    parser.add_argument(
         "--manual-review-template",
         type=Path,
         help="Optional CSV template output path. Defaults to output name with review_sheet replaced.",
@@ -390,7 +523,8 @@ def build_arg_parser() -> argparse.ArgumentParser:
 
 def main(argv: list[str] | None = None) -> int:
     args = build_arg_parser().parse_args(argv)
-    rows = load_review_rows(args.review_jsonl)
+    source_records = args.source_records if args.source_records is not None else infer_source_records_path(args.review_jsonl)
+    rows = enrich_rows_from_source_records(load_review_rows(args.review_jsonl), source_records)
     html = render_html_review_sheet(rows, source_path=str(args.review_jsonl))
     write_html(args.output, html)
     template = args.manual_review_template or manual_review_template_path(args.output)
@@ -402,6 +536,7 @@ def main(argv: list[str] | None = None) -> int:
                 "focus_tasks_appear_first": focus_tasks_appear_first(rows),
                 "html": str(args.output),
                 "manual_review_template": str(template),
+                "source_records": str(source_records) if source_records else None,
             },
             ensure_ascii=False,
             sort_keys=True,

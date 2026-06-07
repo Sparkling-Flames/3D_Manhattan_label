@@ -11,7 +11,9 @@ import csv
 import json
 
 from tools.render_manhattan_geometry_review_sheet import (
+    enrich_rows_from_source_records,
     focus_tasks_appear_first,
+    infer_source_records_path,
     main,
     render_html_review_sheet,
 )
@@ -78,10 +80,14 @@ def test_renderer_creates_html_from_synthetic_review_jsonl(tmp_path):
 def test_html_contains_original_fitted_point_overlays():
     html = render_html_review_sheet([_review_row()])
 
-    assert 'class="original-dot"' in html
-    assert 'class="fitted-dot"' in html
+    assert 'preserveAspectRatio="none"' in html
+    assert 'class="overlay-grid"' in html
+    assert 'class="point-dot original-dot"' in html
+    assert 'class="point-dot fitted-dot"' in html
     assert 'class="delta-arrow"' in html
     assert "red original points, hollow blue fitted candidate points" in html
+    assert "width: 7px" in html
+    assert "width: 10px" in html
 
 
 def test_html_contains_manual_review_fields():
@@ -129,15 +135,63 @@ def test_csv_template_is_generated(tmp_path):
 def test_missing_image_url_still_renders_coordinate_canvas():
     html = render_html_review_sheet([_review_row(image=None)])
 
-    assert "coordinate canvas only: no image URL in review row" in html
-    assert '<svg class="overlay"' in html
+    assert "coordinate canvas only: no image URL in review row or source records" in html
+    assert '<div class="overlay-grid"' in html
 
 
 def test_image_url_is_rendered_when_available():
     html = render_html_review_sheet([_review_row(image="http://example.test/pano.jpg")])
 
     assert 'src="http://example.test/pano.jpg"' in html
-    assert '<svg class="overlay"' in html
+    assert '<div class="overlay-grid"' in html
+
+
+def test_missing_fitted_points_are_explained_on_overlay():
+    row = _review_row(fitted=False)
+    row["problem_reason"] = "compatibility_failure_duplicate"
+
+    html = render_html_review_sheet([row])
+
+    assert "no fitted_points in candidate payload" in html
+    assert "compatibility_failure_duplicate" in html
+
+
+def test_source_records_can_supply_image_url(tmp_path):
+    review_path = tmp_path / "smoke_geometry_debug_review_candidates_2026-05-18.jsonl"
+    source_path = tmp_path / "smoke_fit_records_2026-05-18.jsonl"
+    review_row = _review_row(image=None)
+    source_row = {
+        "task_id": review_row["task_id"],
+        "annotation_id": review_row["annotation_id"],
+        "image": "http://example.test/source-record.jpg",
+    }
+    review_path.write_text(json.dumps(review_row, ensure_ascii=False) + "\n", encoding="utf-8")
+    source_path.write_text(json.dumps(source_row, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    assert infer_source_records_path(review_path) == source_path
+    rows = enrich_rows_from_source_records([review_row], source_path)
+    html = render_html_review_sheet(rows)
+
+    assert 'src="http://example.test/source-record.jpg"' in html
+    assert "source_records_exact_task_annotation_match" in html
+
+
+def test_source_records_do_not_fallback_to_task_only_match(tmp_path):
+    source_path = tmp_path / "smoke_fit_records_2026-05-18.jsonl"
+    review_row = _review_row(image=None)
+    source_row = {
+        "task_id": review_row["task_id"],
+        "annotation_id": 999999,
+        "image": "http://example.test/wrong-task-fallback.jpg",
+    }
+    source_path.write_text(json.dumps(source_row, ensure_ascii=False) + "\n", encoding="utf-8")
+
+    rows = enrich_rows_from_source_records([review_row], source_path)
+    html = render_html_review_sheet(rows)
+
+    assert "wrong-task-fallback.jpg" not in html
+    assert "missing_exact_task_annotation_match" in html
+    assert "coordinate canvas only: no image URL in review row or source records" in html
 
 
 def test_focused_tasks_are_ordered_first():
@@ -146,3 +200,28 @@ def test_focused_tasks_are_ordered_first():
 
     assert focus_tasks_appear_first(rows) is True
     assert html.index("Task 2948") < html.index("Task 2949") < html.index("Task 3100")
+
+
+def test_task_summary_explains_shared_source_image_for_multiple_annotations():
+    row_a = _review_row(2948, image="http://example.test/task-2948.jpg")
+    row_b = _review_row(2948, image="http://example.test/task-2948.jpg")
+    row_b["annotation_id"] = 2624
+    row_a["title"] = "task-2948.jpg"
+    row_b["title"] = "task-2948.jpg"
+
+    html = render_html_review_sheet([row_a, row_b])
+
+    assert "unique_images_in_task" in html
+    assert "review_cards" in html
+    assert "multiple annotation review cards sharing one source image" in html
+    assert "overlays and diagnostics are annotation-specific" in html
+
+
+def test_task_summary_warns_when_one_task_has_multiple_images():
+    row_a = _review_row(2948, image="http://example.test/a.jpg")
+    row_b = _review_row(2948, image="http://example.test/b.jpg")
+    row_b["annotation_id"] = 2624
+
+    html = render_html_review_sheet([row_a, row_b])
+
+    assert "Multiple image URLs were resolved inside this task" in html

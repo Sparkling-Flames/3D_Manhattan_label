@@ -117,6 +117,8 @@
   - M15/M15.2/M15.3 read-only smoke export audit for the M14.2 Manhattan constrained fitting core. It consumes a copied/local Label Studio export JSON, builds current-preview paired corners, writes smoke sidecars under `analysis_results/manhattan_constrained_fit_smoke/`, separates normal-only audit eligibility from scope-independent `geometry_debug`, uses explicit `scope_vote_*` naming so scope votes are not read as adjudicated OOS truth, emits annotation-level geometry-debug review candidates for task-level Manhattan stability inspection, and remains dev-only / smoke-only with no export modification, no annotation writeback, no formal `g_t`, no routing, no worker tier, and no `P1/C1/C2/T1/V1` artifact role.
 - `tools/render_manhattan_geometry_review_sheet.py`
   - M15.4 standalone offline HTML review sheet renderer for Manhattan geometry-debug review candidates. It consumes `smoke_geometry_debug_review_candidates_*.jsonl`, renders red original points, hollow blue fitted candidate points, optional delta arrows, and local-only manual review fields plus a CSV template under `analysis_results/manhattan_constrained_fit_smoke/`; visual review only, no Label Studio UI integration, no annotation writeback, no formal `g_t`, no routing, no worker quality metric, and no `P1/C1/C2/T1/V1` artifact role.
+- `tools/summarize_manhattan_geometry_manual_review.py`
+  - M15.5 manual review aggregation CLI for offline Manhattan geometry-debug visual review. It consumes the completed manual review CSV, validates `plausible_candidate` and `likely_issue`, writes summary JSON and Markdown report sidecars under `analysis_results/manhattan_constrained_fit_smoke/`, and keeps M16 ghost candidate UI blocked when high-risk / large-delta rows show `algorithm_overfit` with `unsure` or `no`; no Label Studio UI integration, no annotation writeback, no formal `g_t`, no routing, no worker quality metric, and no `P1/C1/C2/T1/V1` artifact role.
 - `tools/manhattan_preview_suggestions.py`
   - M2 preview-only suggestion summary helper; emits review prompt type counts only.
 - `tools/render_manhattan_probe_report.py`
@@ -357,7 +359,7 @@
 - `analysis_results/manhattan_geometry_diagnostic/`
   - Smoke/probe sidecar outputs for the experiment-outside / post-hoc Manhattan toolchain. Contains the 2026-05-07 probe summary, Markdown report, standalone HTML contact sheet, optional M8.2 sandbox active-log audit JSON, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, not RQ1 primary active_time evidence, and not `P1/C1/C2/T1/V1` artifacts.
 - `analysis_results/manhattan_constrained_fit_smoke/`
-  - M15/M15.2/M15.3 smoke-only sidecar outputs for the M14.2 Manhattan constrained fit audit on the 2026-05-18 Label Studio export. Contains records JSONL, summary JSON, candidate CSV, geometry_debug by-annotation/by-task CSVs, geometry-debug review candidate CSV/JSONL, Markdown reports, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, not OOS adjudication, and not `P1/C1/C2/T1/V1` artifacts.
+  - M15/M15.2/M15.3/M15.4/M15.5 smoke-only sidecar outputs for the M14.2 Manhattan constrained fit audit on the 2026-05-18 Label Studio export. Contains records JSONL, summary JSON, candidate CSV, geometry_debug by-annotation/by-task CSVs, geometry-debug review candidate CSV/JSONL, visual review HTML, manual review CSV template/completed fields, manual review aggregation JSON/Markdown reports, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, not OOS adjudication, and not `P1/C1/C2/T1/V1` artifacts.
 - `analysis_results/pooled_qa/`
   - pooled QA 图包与审计表
 - `analysis_results/c_manifests_20260310/`
@@ -416,6 +418,7 @@
 - `tests/test_manhattan_constrained_fit.py`
 - `tests/test_audit_manhattan_constrained_fit_smoke.py`
 - `tests/test_render_manhattan_geometry_review_sheet.py`
+- `tests/test_summarize_manhattan_geometry_manual_review.py`
 - `tests/test_manhattan_preview_suggestions.py`
 - `tests/test_render_manhattan_probe_report.py`
 - `tests/test_render_manhattan_contact_sheet.py`
