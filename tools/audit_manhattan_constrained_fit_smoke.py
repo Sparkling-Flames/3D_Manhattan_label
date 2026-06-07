@@ -36,6 +36,7 @@ VALID_SCOPE_ALIASES = {
     "oos_split_level",
     "oos_insufficient",
 }
+VALID_OOS_SCOPE_ALIASES = VALID_SCOPE_ALIASES - {"normal"}
 MAX_EXAMPLES = 12
 LARGE_MOVE_THRESHOLD = 5.0
 NUMERIC_SUMMARY_FIELDS = (
@@ -347,6 +348,7 @@ def audit_tasks(tasks: Iterable[Mapping[str, Any]], source_export: str) -> tuple
     n_annotations = 0
     n_scope_normal = 0
     n_scope_oos = 0
+    n_scope_missing_or_unknown = 0
     n_preview_compatible = 0
     n_preview_excluded = 0
     n_audit_eligible = 0
@@ -408,12 +410,15 @@ def audit_tasks(tasks: Iterable[Mapping[str, Any]], source_export: str) -> tuple
 
             eligible = True
             exclusion_reason = None
-            if scope != "normal":
+            if scope == "normal":
+                n_scope_normal += 1
+            else:
                 eligible = False
                 exclusion_reason = _scope_ineligibility_reason(scope)
-                n_scope_oos += 1
-            else:
-                n_scope_normal += 1
+                if scope in VALID_OOS_SCOPE_ALIASES:
+                    n_scope_oos += 1
+                else:
+                    n_scope_missing_or_unknown += 1
             if eligible and manhattan_field_present:
                 if not manhattan_present:
                     eligible = False
@@ -520,9 +525,11 @@ def audit_tasks(tasks: Iterable[Mapping[str, Any]], source_export: str) -> tuple
         "n_annotations": n_annotations,
         "n_scope_vote_normal": n_scope_normal,
         "n_scope_vote_oos": n_scope_oos,
+        "n_scope_vote_missing_or_unknown": n_scope_missing_or_unknown,
         "scope_vote_distribution": dict(sorted(scope_counts.items())),
         "n_scope_normal": n_scope_normal,
         "n_scope_oos": n_scope_oos,
+        "n_scope_missing_or_unknown": n_scope_missing_or_unknown,
         "scope_alias_counts": dict(sorted(scope_counts.items())),
         "n_audit_eligible": n_audit_eligible,
         "n_audit_ineligible": n_audit_ineligible,
@@ -807,6 +814,7 @@ def _render_report(summary: Mapping[str, Any]) -> str:
         f"- n_annotations: {summary.get('n_annotations')}",
         f"- n_scope_vote_normal: {summary.get('n_scope_vote_normal')}",
         f"- n_scope_vote_oos: {summary.get('n_scope_vote_oos')}",
+        f"- n_scope_vote_missing_or_unknown: {summary.get('n_scope_vote_missing_or_unknown')}",
         f"- scope_vote_distribution: `{summary.get('scope_vote_distribution')}`",
         f"- n_preview_compatible: {summary.get('n_preview_compatible')}",
         f"- n_preview_excluded: {summary.get('n_preview_excluded')}",

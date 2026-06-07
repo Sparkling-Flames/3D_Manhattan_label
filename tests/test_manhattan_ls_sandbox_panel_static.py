@@ -95,8 +95,8 @@ def test_timed_script_only_posts_sandbox_log_time_payload():
     assert 'method: "POST"' in text
     assert "}/log_time`" in text
     assert "X-HOHONET-TOKEN" in text
-    assert "@version      m13.2-dev-only-timed-0.1.1" in text
-    assert 'const PANEL_VERSION = "m13.2-dev-only-timed-0.1.1";' in text
+    assert "@version      m13.2-dev-only-timed-0.1.2" in text
+    assert 'const PANEL_VERSION = "m13.2-dev-only-timed-0.1.2";' in text
     assert "HEARTBEAT_INTERVAL_MS = 15000" in text
     assert "sendSandboxTelemetryIfActive(\"heartbeat\")" in text
     assert "skipped_no_active_seconds" in text
@@ -155,7 +155,7 @@ def test_timed_script_uses_official_active_state_rules():
         "lastActivityTime = 0",
         'window.addEventListener("blur"',
         'window.addEventListener("focus"',
-        'sendSandboxTelemetryIfActive("window_blur")',
+        "Keep blur network-free",
         "window_focus_status",
     ]:
         assert required in text

@@ -1,15 +1,15 @@
 // ==UserScript==
-// @name         HOHONET Manhattan LS Sandbox Panel Timed
+// @name         HOHONET Manhattan LS Sandbox Panel Debug
 // @namespace    hohonet-dev-only
-// @version      m13.2-dev-only-timed-0.1.2
-// @description  dev-only sandbox-only read-only Manhattan panel; timed variant with sandbox-excluded active_time telemetry.
+// @version      m13.2-dev-only-debug-0.1.0
+// @description  dev-only sandbox-only read-only Manhattan panel; debug variant with no active_time upload.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
 // @grant        none
 // ==/UserScript==
 
 /*
- * HOHONET Manhattan LS Sandbox Panel Timed
+ * HOHONET Manhattan LS Sandbox Panel Debug
  *
  * dev-only
  * sandbox-only
@@ -22,8 +22,9 @@
  * no formal g_t
  * no P1/C1/C2/T1/V1 artifact
  *
- * This timed variant may POST sandbox telemetry to /log_time. Every payload
- * is tagged for exclusion from primary active_time and thesis evidence.
+ * This script is server-scoped to the current Label Studio host. Localhost
+ * testing may be enabled manually during development, but it is not enabled
+ * by default in this file.
  */
 
 (function () {
@@ -37,10 +38,10 @@
   if (window[WINDOW_GUARD]) {
     return;
   }
-  window[WINDOW_GUARD] = { script_variant: "timed" };
+  window[WINDOW_GUARD] = { script_variant: "debug" };
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const PANEL_VERSION = "m13.2-dev-only-timed-0.1.2";
+  const PANEL_VERSION = "m13.2-dev-only-debug-0.1.0";
   const TOOLBAR_ID = "hohonet-m13-primary-toolbar";
   const TOOLBAR_BODY_ID = "hohonet-m13-primary-toolbar-body";
   const DEBUG_DRAWER_TOGGLE_ID = "hohonet-m13-debug-drawer-toggle";
@@ -61,20 +62,7 @@
   const PREVIEW_PANEL_POSITION_KEY = "hohonet_m8_preview_order_panel_position";
   const DEFAULT_WIDTH = 1024;
   const DEFAULT_HEIGHT = 512;
-  const START_TIME_MS = Date.now();
-  const HEARTBEAT_INTERVAL_MS = 15000;
-  const IDLE_THRESHOLD_MS = 15000;
-  const PAGE_HIDDEN_THRESHOLD_MS = 6000;
   const DUPLICATE_KEYPOINT_THRESHOLD_RATIO = 0.01;
-  const SESSION_STORAGE_KEY = "hohonet_m8_sandbox_session_id";
-  let lastTelemetryMs = START_TIME_MS;
-  let activeSeconds = 0;
-  let lastTelemetryActiveSeconds = 0;
-  let lastActivityTime = 0;
-  let isPageVisible = !document.hidden;
-  let isWindowFocused = document.hasFocus();
-  let pageHiddenTime = null;
-  let lastHiddenDurationMs = 0;
   let currentPreviewBasePairs = [];
   let currentPreviewOrder = [];
   let currentPreviewSelectedPairIndex = 0;
@@ -97,12 +85,6 @@
     scope: "2D panorama overlay only",
     guardrail: "Guide bands are visual references only. No target x/y, no point movement, no annotation writeback.",
   };
-  const telemetryState = {
-    status: "not_sent",
-    lastEvent: "none",
-    lastHttpStatus: "none",
-    lastError: "none",
-  };
   const GUARDRAILS = [
     "dev-only sandbox-only panel",
     "expert/developer tester only",
@@ -118,7 +100,7 @@
     "no axis snapping",
     "no adjustment vector",
     "no automated edits",
-    "timed variant: sandbox telemetry only",
+    "debug variant: no active_time upload",
   ];
 
   function text(value) {
@@ -258,31 +240,6 @@
     }
   }
 
-  function getLogToken() {
-    try {
-      return window.localStorage.getItem("HOHONET_LOG_TOKEN") || "";
-    } catch (e) {
-      return "";
-    }
-  }
-
-  function logTimeUrl() {
-    return `${getHelperBaseUrl()}/log_time`;
-  }
-
-  const sessionId = (() => {
-    try {
-      let sid = window.sessionStorage.getItem(SESSION_STORAGE_KEY);
-      if (!sid) {
-        sid = `m8-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-        window.sessionStorage.setItem(SESSION_STORAGE_KEY, sid);
-      }
-      return sid;
-    } catch (e) {
-      return `m8-${Date.now()}-${Math.random().toString(36).slice(2, 10)}`;
-    }
-  })();
-
   function getStore() {
     if (
       window.LabelStudio &&
@@ -317,103 +274,6 @@
       }
     }
     return null;
-  }
-
-  function knownText(value) {
-    if (value === undefined || value === null) return "unknown";
-    const textValue = String(value).trim();
-    return textValue || "unknown";
-  }
-
-  function getTaskId() {
-    try {
-      const storeTaskId = getStore()?.task?.id;
-      if (storeTaskId !== undefined && storeTaskId !== null) {
-        return knownText(storeTaskId);
-      }
-      const params = new URLSearchParams(window.location.search);
-      const queryTaskId = params.get("task") || params.get("task_id");
-      if (queryTaskId) return knownText(queryTaskId);
-      const match = window.location.pathname.match(/\/tasks\/(\d+)/);
-      if (match) return match[1];
-    } catch (e) {}
-    return "unknown";
-  }
-
-  function getProjectId() {
-    try {
-      const store = getStore();
-      const candidates = [
-        store?.project?.id,
-        store?.task?.project,
-        store?.task?.projectId,
-        store?.task?.data?.project_id,
-      ];
-      for (const candidate of candidates) {
-        if (candidate !== undefined && candidate !== null && String(candidate).trim()) {
-          return knownText(candidate);
-        }
-      }
-      const match = window.location.pathname.match(/\/projects\/(\d+)/);
-      if (match) return match[1];
-    } catch (e) {}
-    return "unknown";
-  }
-
-  function getProjectName() {
-    try {
-      const store = getStore();
-      const candidates = [
-        store?.project?.title,
-        store?.project?.name,
-        store?.task?.data?.project_name,
-      ];
-      for (const candidate of candidates) {
-        if (candidate !== undefined && candidate !== null && String(candidate).trim()) {
-          return knownText(candidate);
-        }
-      }
-      const crumbs = Array.from(document.querySelectorAll("a, span, div"))
-        .map((node) => node.textContent?.trim())
-        .filter(Boolean);
-      const projectsIndex = crumbs.findIndex((value) => value === "Projects");
-      if (projectsIndex >= 0 && crumbs[projectsIndex + 1]) {
-        return knownText(crumbs[projectsIndex + 1]);
-      }
-      if (document.title) return knownText(document.title);
-    } catch (e) {}
-    return "unknown";
-  }
-
-  function getAnnotatorId() {
-    try {
-      const store = getStore();
-      const candidates = [
-        store?.user?.id,
-        store?.user?.pk,
-        store?.currentUser?.id,
-        store?.task?.data?.annotator_id,
-      ];
-      for (const candidate of candidates) {
-        if (candidate !== undefined && candidate !== null && String(candidate).trim()) {
-          return knownText(candidate);
-        }
-      }
-      const profileText = document.querySelector("[data-testid*='user'], [class*='user']")?.textContent;
-      if (profileText) return knownText(profileText);
-    } catch (e) {}
-    return "unknown";
-  }
-
-  function getPageType() {
-    return /\/labeling\/?/.test(window.location.pathname) ||
-      Boolean(document.querySelector(".lsf-main-view, .ls-main-view"))
-      ? "annotation"
-      : "other";
-  }
-
-  function isLikelyAnnotationPage() {
-    return getPageType() === "annotation";
   }
 
   function toArrayFromMaybeObservable(value) {
@@ -2217,177 +2077,6 @@
     updateDebugDrawerButton();
   }
 
-  function secondsSinceStart() {
-    return Math.max(0, Math.round((Date.now() - START_TIME_MS) / 1000));
-  }
-
-  function secondsSinceLastTelemetry(nowMs) {
-    return Math.max(0, Math.round((nowMs - lastTelemetryMs) / 1000));
-  }
-
-  function activeSecondsSinceLastTelemetry() {
-    return Math.max(0, activeSeconds - lastTelemetryActiveSeconds);
-  }
-
-  function lastActivityAgeMs(nowMs = Date.now()) {
-    return lastActivityTime > 0 ? Math.max(0, nowMs - lastActivityTime) : -1;
-  }
-
-  function activeTimerStatus(nowMs = Date.now()) {
-    if (!isPageVisible) return "hidden";
-    if (!isWindowFocused) return "blurred";
-    if (!isLikelyAnnotationPage()) return "non_annotation_page";
-    if (lastActivityTime <= 0) return "waiting_for_interaction";
-    if (nowMs - lastActivityTime >= IDLE_THRESHOLD_MS) return "idle";
-    return "active";
-  }
-
-  function isActiveTimeCountingPage() {
-    return isPageVisible && isWindowFocused && isLikelyAnnotationPage();
-  }
-
-  function updateActivityTimerPanel() {
-    const nowMs = Date.now();
-    setText(`${PANEL_ID}-active-timer-status`, activeTimerStatus(nowMs));
-    setText(`${PANEL_ID}-active-seconds`, activeSeconds);
-    setText(`${PANEL_ID}-active-seconds-fragment`, activeSecondsSinceLastTelemetry());
-    setText(`${PANEL_ID}-last-activity-age-ms`, lastActivityAgeMs(nowMs));
-    setText(`${PANEL_ID}-page-visible-status`, isPageVisible ? "visible" : "hidden");
-    setText(`${PANEL_ID}-window-focus-status`, isWindowFocused ? "focused" : "blurred");
-    setText(`${PANEL_ID}-last-hidden-duration-ms`, lastHiddenDurationMs);
-  }
-
-  function updateTelemetryPanel() {
-    setText(`${PANEL_ID}-telemetry-status`, telemetryState.status);
-    setText(`${PANEL_ID}-last-telemetry-event`, telemetryState.lastEvent);
-    setText(`${PANEL_ID}-last-telemetry-http-status`, telemetryState.lastHttpStatus);
-    setText(`${PANEL_ID}-last-telemetry-error`, telemetryState.lastError);
-    updateActivityTimerPanel();
-  }
-
-  function sandboxTelemetryPayload(eventName, nowMs = Date.now()) {
-    const activeSecondsFragment = activeSecondsSinceLastTelemetry();
-    const telemetryElapsedSeconds = secondsSinceStart();
-    const deviation = computeManhattanDeviation(extractKeypointsFromDom().keypoints, DEFAULT_WIDTH, DEFAULT_HEIGHT);
-    return {
-      task_id: getTaskId(),
-      project_id: getProjectId(),
-      project_name: getProjectName(),
-      annotator_id: getAnnotatorId(),
-      session_id: sessionId,
-      page_type: getPageType(),
-      active_seconds: activeSeconds,
-      active_seconds_fragment: activeSecondsFragment,
-      timestamp: nowMs,
-      event: eventName,
-      telemetry_elapsed_seconds: telemetryElapsedSeconds,
-      preview_only_manhattan_deviation_score: deviation.manhattan_deviation_score,
-      preview_only_manhattan_deviation_level: deviation.deviation_level,
-      preview_only_manhattan_compatibility_status: deviation.compatibility_status,
-      preview_only_primary_issue_type: deviation.primary_issue_type,
-      preview_only_primary_issue_severity: deviation.primary_issue_severity,
-      preview_only_hint_component: deviation.hint_component,
-      preview_only_affected_pair_index: deviation.affected_pair_index,
-      preview_only_direction_hint_type: deviation.hint_direction_type,
-      preview_only_diagnosis_affected_pair_index: currentDiagnosisAffectedPairIndex === null ? "none" : currentDiagnosisAffectedPairIndex + 1,
-      preview_only_manual_selected_pair_index: currentPreviewBasePairs.length ? currentPreviewSelectedPairIndex + 1 : "none",
-      preview_only_highlight_mode: highlightMode(),
-      preview_only_guide_visible: getGuideBandsVisible(),
-      preview_only_guide_component: deviation.guide_component,
-      preview_only_guide_affected_pair_index: deviation.guide_affected_pair_index,
-      preview_order_visible: getLabelsVisible(),
-      not_correctness: true,
-      no_writeback: true,
-      elapsed_ms: nowMs - START_TIME_MS,
-      page_url: window.location.href,
-      log_context: "manhattan_ls_sandbox",
-      tool_stage: "M8",
-      script_variant: "timed",
-      is_sandbox: true,
-      sandbox_project: true,
-      exclude_from_primary_active_time: true,
-      exclude_from_thesis_evidence: true,
-      not_worker_facing: true,
-      not_p1_c1_c2_t1_v1_artifact: true,
-      manhattan_panel_version: PANEL_VERSION,
-    };
-  }
-
-  function sendSandboxTelemetry(eventName) {
-    const token = getLogToken();
-    const nowMs = Date.now();
-    const payload = sandboxTelemetryPayload(eventName, nowMs);
-    lastTelemetryActiveSeconds = activeSeconds;
-    telemetryState.status = "sending";
-    telemetryState.lastEvent = eventName;
-    telemetryState.lastHttpStatus = "pending";
-    telemetryState.lastError = "none";
-    updateTelemetryPanel();
-    fetch(logTimeUrl(), {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        ...(token ? { "X-HOHONET-TOKEN": token } : {}),
-      },
-      body: JSON.stringify(payload),
-      keepalive: true,
-    })
-      .then(function (response) {
-        telemetryState.status = response.ok ? "sent" : "http_error";
-        telemetryState.lastHttpStatus = String(response.status);
-        telemetryState.lastError = response.ok ? "none" : response.statusText || "non_2xx_response";
-        lastTelemetryMs = nowMs;
-        updateTelemetryPanel();
-      })
-      .catch(function (error) {
-        telemetryState.status = "network_error";
-        telemetryState.lastHttpStatus = "network_error";
-        telemetryState.lastError = error?.message || "unknown_error";
-        lastTelemetryMs = nowMs;
-        updateTelemetryPanel();
-      // Sandbox telemetry failure must not interrupt annotation or panel display.
-      });
-  }
-
-  function sendSandboxTelemetryIfActive(eventName) {
-    if (activeSecondsSinceLastTelemetry() <= 0) {
-      telemetryState.status = "skipped_no_active_seconds";
-      telemetryState.lastEvent = `${eventName}_skipped`;
-      telemetryState.lastHttpStatus = "not_sent";
-      telemetryState.lastError = "none";
-      updateTelemetryPanel();
-      return false;
-    }
-    sendSandboxTelemetry(eventName);
-    return true;
-  }
-
-  function recordUserActivity() {
-    if (isActiveTimeCountingPage()) {
-      lastActivityTime = Date.now();
-      updateActivityTimerPanel();
-    }
-  }
-
-  function installActiveStateTracking() {
-    ["mousemove", "keydown", "click", "scroll", "wheel"].forEach(function (eventName) {
-      window.addEventListener(eventName, recordUserActivity, true);
-    });
-    window.setInterval(function () {
-      const nowMs = Date.now();
-      if (
-        isActiveTimeCountingPage() &&
-        lastActivityTime > 0 &&
-        nowMs - lastActivityTime < IDLE_THRESHOLD_MS
-      ) {
-        activeSeconds += 1;
-      } else if (!isActiveTimeCountingPage()) {
-        lastActivityTime = 0;
-      }
-      updateActivityTimerPanel();
-    }, 1000);
-  }
-
   function installStyles() {
     if (document.getElementById(`${PANEL_ID}-style`)) {
       return;
@@ -2410,6 +2099,15 @@
         color: #f9fafb;
         font: 12px/1.4 system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
         box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+      }
+      #${PANEL_ID}[data-collapsed="1"] {
+        width: 190px;
+        max-height: 92px;
+        overflow: hidden;
+      }
+      #${PANEL_ID}[data-collapsed="1"] section,
+      #${PANEL_ID}[data-collapsed="1"] .hohonet-m8-row {
+        display: none;
       }
       #${PANEL_ID} h2,
       #${PANEL_ID} h3 {
@@ -2439,15 +2137,6 @@
         color: #ffffff;
         font-weight: 600;
       }
-      #${PANEL_ID}[data-collapsed="1"] {
-        width: 190px;
-        max-height: 92px;
-        overflow: hidden;
-      }
-      #${PANEL_ID}[data-collapsed="1"] section,
-      #${PANEL_ID}[data-collapsed="1"] .hohonet-m8-row {
-        display: none;
-      }
     `;
     document.head.appendChild(style);
   }
@@ -2468,9 +2157,6 @@
       setText(`${PANEL_ID}-native-preview-status`, state.native_preview_status);
       setText(`${PANEL_ID}-preview-update-status`, state.preview_update_status);
       setText(`${PANEL_ID}-viewer-base-url`, getViewerBaseUrl());
-      setText(`${PANEL_ID}-log-time-url`, logTimeUrl());
-      updateTelemetryPanel();
-      updateActivityTimerPanel();
       updateManhattanDeviationPanel(state.manhattan_deviation);
       updateMetaGuardPanel(metaGuard);
       applyToggleBtnState(document.getElementById(TOGGLE_LABELS_BUTTON_ID), getLabelsVisible());
@@ -2483,7 +2169,7 @@
     panel = document.createElement("aside");
     panel.id = PANEL_ID;
     panel.dataset.collapsed = "1";
-    panel.setAttribute("aria-label", "HOHONET Manhattan sandbox panel timed");
+    panel.setAttribute("aria-label", "HOHONET Manhattan sandbox panel debug");
     document.body.appendChild(panel);
 
     const title = document.createElement("h2");
@@ -2496,7 +2182,7 @@
     debugToggle.style.cssText = "width:100%;margin:0 0 6px;padding:6px 8px;border:none;border-radius:7px;background:#334155;color:#fff;font-weight:800;cursor:pointer;";
     debugToggle.addEventListener("click", toggleDebugDrawer);
     panel.appendChild(debugToggle);
-    panel.appendChild(makeRow("script_variant", "timed"));
+    panel.appendChild(makeRow("script_variant", "debug"));
     panel.appendChild(makeRow("manhattan_panel_version", PANEL_VERSION));
     panel.appendChild(makeMutableRow("keypoint_read_status", state.keypoint_read_status, `${PANEL_ID}-read-status`));
     panel.appendChild(makeMutableRow("keypoint_count", state.keypoints.length, `${PANEL_ID}-keypoint-count`));
@@ -2506,21 +2192,7 @@
     panel.appendChild(makeMutableRow("preview_url_status", state.preview_url_status, `${PANEL_ID}-preview-url-status`));
     panel.appendChild(makeMutableRow("native_preview_status", state.native_preview_status, `${PANEL_ID}-native-preview-status`));
     panel.appendChild(makeMutableRow("preview_update_status", state.preview_update_status, `${PANEL_ID}-preview-update-status`));
-    panel.appendChild(makeRow("log_context", "manhattan_ls_sandbox"));
     panel.appendChild(makeMutableRow("viewer_base_url", getViewerBaseUrl(), `${PANEL_ID}-viewer-base-url`));
-    panel.appendChild(makeMutableRow("log_time_url", logTimeUrl(), `${PANEL_ID}-log-time-url`));
-    panel.appendChild(makeMutableRow("telemetry_status", telemetryState.status, `${PANEL_ID}-telemetry-status`));
-    panel.appendChild(makeMutableRow("last_telemetry_event", telemetryState.lastEvent, `${PANEL_ID}-last-telemetry-event`));
-    panel.appendChild(makeMutableRow("last_telemetry_http_status", telemetryState.lastHttpStatus, `${PANEL_ID}-last-telemetry-http-status`));
-    panel.appendChild(makeMutableRow("last_telemetry_error", telemetryState.lastError, `${PANEL_ID}-last-telemetry-error`));
-    panel.appendChild(makeRow("heartbeat_interval_ms", HEARTBEAT_INTERVAL_MS));
-    panel.appendChild(makeMutableRow("active_timer_status", activeTimerStatus(), `${PANEL_ID}-active-timer-status`));
-    panel.appendChild(makeMutableRow("active_seconds", activeSeconds, `${PANEL_ID}-active-seconds`));
-    panel.appendChild(makeMutableRow("active_seconds_fragment", activeSecondsSinceLastTelemetry(), `${PANEL_ID}-active-seconds-fragment`));
-    panel.appendChild(makeMutableRow("last_activity_age_ms", lastActivityAgeMs(), `${PANEL_ID}-last-activity-age-ms`));
-    panel.appendChild(makeMutableRow("page_visible_status", isPageVisible ? "visible" : "hidden", `${PANEL_ID}-page-visible-status`));
-    panel.appendChild(makeMutableRow("window_focus_status", isWindowFocused ? "focused" : "blurred", `${PANEL_ID}-window-focus-status`));
-    panel.appendChild(makeMutableRow("last_hidden_duration_ms", lastHiddenDurationMs, `${PANEL_ID}-last-hidden-duration-ms`));
 
     const preview = document.createElement("section");
     preview.appendChild(document.createElement("h3")).appendChild(text("3D Preview"));
@@ -2662,48 +2334,4 @@
   }, 1500);
   window.addEventListener("resize", () => renderPreviewOverlayPairs(orderedPreviewPairs()));
   window.addEventListener("scroll", () => renderPreviewOverlayPairs(orderedPreviewPairs()), true);
-
-  installActiveStateTracking();
-  sendSandboxTelemetry("panel_loaded");
-  window.setInterval(function () {
-    sendSandboxTelemetryIfActive("heartbeat");
-  }, HEARTBEAT_INTERVAL_MS);
-  document.addEventListener("visibilitychange", function () {
-    if (document.visibilityState === "hidden") {
-      pageHiddenTime = Date.now();
-      isPageVisible = false;
-      sendSandboxTelemetryIfActive("visibility_hidden");
-      updateActivityTimerPanel();
-    } else {
-      if (pageHiddenTime !== null) {
-        lastHiddenDurationMs = Date.now() - pageHiddenTime;
-        if (lastHiddenDurationMs >= PAGE_HIDDEN_THRESHOLD_MS) {
-          lastActivityTime = 0;
-        }
-      }
-      pageHiddenTime = null;
-      isPageVisible = true;
-      isWindowFocused = document.hasFocus();
-      updateActivityTimerPanel();
-    }
-  });
-  window.addEventListener("blur", function () {
-    isWindowFocused = false;
-    // Keep blur network-free: some browsers close in-flight requests while
-    // switching applications. The current segment is retained for the next
-    // heartbeat/pagehide/visibility-hidden telemetry.
-    lastActivityTime = 0;
-    updateActivityTimerPanel();
-  });
-  window.addEventListener("focus", function () {
-    isWindowFocused = document.hasFocus();
-    lastActivityTime = 0;
-    updateActivityTimerPanel();
-  });
-  window.addEventListener("pagehide", function () {
-    sendSandboxTelemetryIfActive("pagehide");
-  });
-  window.addEventListener("beforeunload", function () {
-    sendSandboxTelemetryIfActive("panel_unloaded");
-  });
 })();

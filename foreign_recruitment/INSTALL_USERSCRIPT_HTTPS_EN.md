@@ -60,15 +60,20 @@ once in the browser.
 Open `https://label.sparkle0825.top/`, then open the browser console and run:
 
 ```javascript
-localStorage.setItem("HOHONET_LOG_TOKEN", "YOUR_LOG_TOKEN");
+localStorage.setItem("HOHONET_LOG_TOKEN", "hoho-20260228-zjw200408250904!");
+
+localStorage.setItem(
+  "HOHONET_HELPER_BASE_URL",
+  "https://label.sparkle0825.top",
+);
 ```
 
 Then refresh the Label Studio page.
 
-Researcher note: `YOUR_LOG_TOKEN` must be exactly the same as the server-side
-`HOHONET_LOG_TOKEN` used by the `/log_time` service. If the HTTPS entry point
-proxies to the same active-time log server as the Chinese annotator setup, use
-the same token as the Chinese setup.
+Researcher note: the `HOHONET_LOG_TOKEN` value above must be exactly the same as
+the server-side `HOHONET_LOG_TOKEN` used by the `/log_time` service. If the HTTPS
+entry point proxies to the same active-time log server as the Chinese annotator
+setup, use the same token as the Chinese setup.
 
 Do not publish the token in public recruitment text. Send it only to accepted
 participants through a private instruction message.
@@ -80,7 +85,9 @@ Before each annotation session:
 1. Open the assigned Label Studio project.
 2. Open one assigned task.
 3. Move the mouse or interact with the task for a few seconds.
-4. Confirm with the researcher if requested that `/log_time` is receiving data.
+4. Open the browser developer tools if the researcher asks you to check logging.
+5. In the Network tab, confirm that `/log_time` appears and returns a successful
+   status such as `200` or `204`, or ask the researcher to confirm the server log.
 
 If logging fails, stop before doing real annotation.
 
@@ -101,7 +108,8 @@ browser profile. Then refresh the Label Studio page and run:
 ```javascript
 console.log(window.__HOHONET_HELPER_SCRIPT_VERSION__);
 console.log(window.__HOHONET_HELPER_SCRIPT_FLAVOR__);
-console.log(localStorage.getItem("HOHONET_LOG_TOKEN"));
+console.log((localStorage.getItem("HOHONET_LOG_TOKEN") || "").length);
+console.log(localStorage.getItem("HOHONET_HELPER_BASE_URL"));
 ```
 
 The expected script flavor is:

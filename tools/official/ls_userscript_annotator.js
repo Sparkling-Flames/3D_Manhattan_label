@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator
 // @namespace    http://tampermonkey.net/
-// @version      0.25-official
+// @version      0.26-official
 // @description  正式标注版：连接 Label Studio 与 HoHoNet 3D 查看器，并强制记录 active_time
 // @author       HoHoNet
 // @match        http://175.178.71.217:8080/*
@@ -168,7 +168,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "0.25-official";
+  const SCRIPT_VERSION = "0.26-official";
   console.log(`HoHoNet Helper: 已加载 (v${SCRIPT_VERSION})`);
   console.log(
     "HoHoNet viewer base: set localStorage.HOHONET_VIEWER_BASE_URL = location.origin when /tools is reverse-proxied on LS origin",
@@ -2485,7 +2485,7 @@
       pageHiddenTime = Date.now();
       isPageVisible = false;
       if (wasOnAnnotationPageForActiveTime && activeSeconds > 0) {
-        closeActiveTimeSegment("VISIBILITY_HIDDEN");
+        closeActiveTimeSegment("VISIBILITY_HIDDEN", { keepalive: true });
       }
     } else {
       // 页面重新显示
@@ -2509,6 +2509,10 @@
     return isPageVisible && isWindowFocused && isLikelyAnnotationPage();
   }
 
+  function shouldFlushActiveTimeOnCountingStop() {
+    return !isPageVisible || !isLikelyAnnotationPage();
+  }
+
   ["mousemove", "keydown", "click", "scroll", "wheel"].forEach((evt) => {
     window.addEventListener(
       evt,
@@ -2526,11 +2530,14 @@
   setInterval(() => {
     const onCountingPage = isActiveTimeCountingPage();
     if (!onCountingPage) {
-      if (wasOnAnnotationPageForActiveTime && activeSeconds > 0) {
+      const shouldFlush = shouldFlushActiveTimeOnCountingStop();
+      if (shouldFlush && wasOnAnnotationPageForActiveTime && activeSeconds > 0) {
         closeActiveTimeSegment("LEAVE_ANNOTATION_PAGE");
       }
       lastActivityTime = 0;
-      wasOnAnnotationPageForActiveTime = false;
+      if (shouldFlush) {
+        wasOnAnnotationPageForActiveTime = false;
+      }
     }
 
     if (
@@ -2667,9 +2674,8 @@
 
   window.addEventListener("blur", () => {
     isWindowFocused = false;
-    if (wasOnAnnotationPageForActiveTime && activeSeconds > 0) {
-      closeActiveTimeSegment("BLUR");
-    }
+    // Window blur can abort fetches in some browsers. Pause counting here and
+    // keep the current segment for the next successful in-page upload.
     lastActivityTime = 0;
   });
 

@@ -89,6 +89,8 @@ def test_oos_scope_is_excluded():
         source_export="<memory>",
     )
 
+    assert summary["n_scope_vote_oos"] == 1
+    assert summary["n_scope_vote_missing_or_unknown"] == 0
     assert summary["n_fit_ok"] == 0
     assert summary["n_audit_ineligible"] == 1
     assert summary["audit_ineligibility_counts"]["oos_geometry"] == 1
@@ -240,6 +242,10 @@ def test_missing_scope_is_not_counted_as_oos():
         source_export="<memory>",
     )
 
+    assert summary["n_scope_vote_oos"] == 0
+    assert summary["n_scope_vote_missing_or_unknown"] == 1
+    assert summary["n_scope_oos"] == 0
+    assert summary["n_scope_missing_or_unknown"] == 1
     assert summary["scope_alias_counts"]["scope_missing_or_unknown"] == 1
     assert summary["scope_vote_distribution"]["scope_missing_or_unknown"] == 1
     assert summary["audit_ineligibility_counts"]["scope_missing_or_unknown"] == 1
