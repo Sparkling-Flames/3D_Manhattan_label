@@ -50,6 +50,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - [VIS_3D_GEOMETRY_FIXTURE_PLAN_v1.md](paper_a_manhattan/VIS_3D_GEOMETRY_FIXTURE_PLAN_v1.md)
 
 对应工具：`tools/paper_a_manhattan/`
+- `tools/paper_a_manhattan/manhattan_candidate_gate.py` provides the M14.3 expert-side candidate gating core for constrained-fit outputs; it is not correctness, formal `g_t`, routing, worker quality, writeback, UI, or P1/C1/C2/T1/V1 logic.
 
 ## 论文 B 线
 
