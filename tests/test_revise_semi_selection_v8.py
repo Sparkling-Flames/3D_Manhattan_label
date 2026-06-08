@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from tools.revise_semi_selection_v8 import build_semi_v8, load_inputs, build_stage1_audit_v4
+from tools.thesis_main.registry.revise_semi_selection_v8 import build_semi_v8, load_inputs, build_stage1_audit_v4
 
 
 def test_build_semi_v8_restores_main_trap_count_and_uses_task580() -> None:

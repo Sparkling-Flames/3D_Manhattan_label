@@ -10,7 +10,7 @@ from __future__ import annotations
 import csv
 import json
 
-from tools.render_manhattan_geometry_review_sheet import (
+from tools.paper_a_manhattan.render_manhattan_geometry_review_sheet import (
     enrich_rows_from_source_records,
     focus_tasks_appear_first,
     infer_source_records_path,

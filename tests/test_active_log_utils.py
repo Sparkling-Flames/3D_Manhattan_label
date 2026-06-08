@@ -1,8 +1,8 @@
 import json
 from pathlib import Path
 
-from tools.active_log_utils import resolve_active_log_files
-from tools.analyze_quality import load_active_logs, lookup_active_log_entry
+from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
+from tools.thesis_main.analysis.analyze_quality import load_active_logs, lookup_active_log_entry
 
 
 def test_resolve_active_log_files_prefers_new_server_and_ignores_legacy(tmp_path: Path):

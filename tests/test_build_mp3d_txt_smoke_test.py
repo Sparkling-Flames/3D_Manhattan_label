@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from tools.build_mp3d_txt_smoke_test import build_smoke_test_payload
+from tools.thesis_main.data_prep.build_mp3d_txt_smoke_test import build_smoke_test_payload
 
 
 def test_build_mp3d_txt_smoke_test_payload_excludes_prescreen_and_has_scope():

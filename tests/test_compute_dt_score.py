@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from tools.compute_dt_score import BatchAbortError, DtScoreComputer, canonical_json_hash, l2_normalize
+from tools.thesis_main.registry.compute_dt_score import BatchAbortError, DtScoreComputer, canonical_json_hash, l2_normalize
 
 
 class FakeDtScoreComputer(DtScoreComputer):

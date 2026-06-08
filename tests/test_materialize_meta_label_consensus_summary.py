@@ -8,11 +8,11 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from tools.materialize_meta_label_consensus_summary import build_summary
+from tools.thesis_main.registry.materialize_meta_label_consensus_summary import build_summary
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "tools" / "materialize_meta_label_consensus_summary.py"
+SCRIPT = ROOT / "tools" / "thesis_main" / "registry" / "materialize_meta_label_consensus_summary.py"
 
 
 def test_build_summary_demotes_default_aliases_and_uses_registry() -> None:

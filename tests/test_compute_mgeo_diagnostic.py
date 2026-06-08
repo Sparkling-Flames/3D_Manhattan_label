@@ -9,7 +9,7 @@ ROOT = Path(__file__).resolve().parents[1]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from tools.compute_mgeo_diagnostic import diagnose_submission, main, summarize_workers
+from tools.paper_a_manhattan.compute_mgeo_diagnostic import diagnose_submission, main, summarize_workers
 
 
 def _row(**overrides):

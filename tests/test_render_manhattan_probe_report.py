@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 
-from tools.render_manhattan_probe_report import main, render_markdown_report
+from tools.paper_a_manhattan.render_manhattan_probe_report import main, render_markdown_report
 
 
 def _summary(include_suggestions=True):

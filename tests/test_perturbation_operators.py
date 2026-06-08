@@ -2,9 +2,7 @@ import json
 from pathlib import Path
 import sys
 
-sys.path.insert(0, str(Path(__file__).parent.parent / "tools"))
-
-from perturbation_operators import (  # noqa: E402
+from tools.thesis_main.registry.perturbation_operators import (  # noqa: E402
     AcceptableOperator,
     CatastrophicFailOperator,
     CornerDuplicateOperator,

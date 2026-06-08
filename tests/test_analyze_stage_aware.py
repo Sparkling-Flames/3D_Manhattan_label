@@ -2,7 +2,7 @@ import json
 
 import pandas as pd
 
-from analyze_stage_aware import (
+from tools.thesis_main.analysis.analyze_stage_aware import (
     _pick_consensus_token,
     _task_scene_consensus,
     add_row_audit_columns,

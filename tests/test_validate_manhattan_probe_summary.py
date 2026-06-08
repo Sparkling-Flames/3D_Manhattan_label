@@ -9,7 +9,7 @@ from __future__ import annotations
 
 import json
 
-from tools.validate_manhattan_probe_summary import main, validate_summary
+from tools.paper_a_manhattan.validate_manhattan_probe_summary import main, validate_summary
 
 
 def _summary():

@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from tools.revise_semi_selection_v9 import build_semi_v9, build_stage1_audit_v5, load_inputs
+from tools.thesis_main.registry.revise_semi_selection_v9 import build_semi_v9, build_stage1_audit_v5, load_inputs
 
 
 def test_build_semi_v9_removes_active_fail_audit_and_keeps_holdout() -> None:

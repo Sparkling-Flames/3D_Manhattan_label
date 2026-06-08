@@ -1,6 +1,6 @@
 import math
 
-from tools.manhattan_constrained_fit import fit_manhattan_layout
+from tools.paper_a_manhattan.manhattan_constrained_fit import fit_manhattan_layout
 
 
 CAMERA_HEIGHT = 1.6

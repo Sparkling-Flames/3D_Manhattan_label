@@ -2,9 +2,9 @@ import json
 from pathlib import Path
 
 
-DEBUG_SCRIPT = Path("tools/dev_only/manhattan_ls_sandbox_panel_debug.user.js")
-TIMED_SCRIPT = Path("tools/dev_only/manhattan_ls_sandbox_panel_timed.user.js")
-LEGACY_PROTOTYPE = Path("tools/dev_only/manhattan_ls_sandbox_panel.user.js")
+DEBUG_SCRIPT = Path("tools/paper_a_manhattan/dev_only/manhattan_ls_sandbox_panel_debug.user.js")
+TIMED_SCRIPT = Path("tools/paper_a_manhattan/dev_only/manhattan_ls_sandbox_panel_timed.user.js")
+LEGACY_PROTOTYPE = Path("tools/paper_a_manhattan/dev_only/manhattan_ls_sandbox_panel.user.js")
 SANDBOX_IMPORT = Path(
     "import_json/sandbox/manhattan_m8/manhattan_m8_sandbox_smoke_import_2026-05-07.json"
 )
@@ -16,8 +16,8 @@ def read(path: Path) -> str:
 
 
 def test_debug_and_timed_scripts_are_dev_only_paths():
-    assert DEBUG_SCRIPT.as_posix() == "tools/dev_only/manhattan_ls_sandbox_panel_debug.user.js"
-    assert TIMED_SCRIPT.as_posix() == "tools/dev_only/manhattan_ls_sandbox_panel_timed.user.js"
+    assert DEBUG_SCRIPT.as_posix() == "tools/paper_a_manhattan/dev_only/manhattan_ls_sandbox_panel_debug.user.js"
+    assert TIMED_SCRIPT.as_posix() == "tools/paper_a_manhattan/dev_only/manhattan_ls_sandbox_panel_timed.user.js"
     assert LEGACY_PROTOTYPE.exists()
 
 

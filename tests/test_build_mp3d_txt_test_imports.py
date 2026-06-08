@@ -1,7 +1,7 @@
 from pathlib import Path
 
-from tools.build_mp3d_txt_smoke_test import build_smoke_test_payload
-from tools.build_mp3d_txt_test_imports import _build_manual_task, _build_semi_task
+from tools.thesis_main.data_prep.build_mp3d_txt_smoke_test import build_smoke_test_payload
+from tools.thesis_main.data_prep.build_mp3d_txt_test_imports import _build_manual_task, _build_semi_task
 
 
 def test_build_mp3d_txt_test_imports_manual_has_no_predictions_and_semi_has_predictions():

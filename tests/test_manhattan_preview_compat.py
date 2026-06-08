@@ -1,6 +1,6 @@
 import pytest
 
-from tools.manhattan_preview_compat import (
+from tools.paper_a_manhattan.manhattan_preview_compat import (
     COMPATIBLE,
     FAILURE_DUPLICATE,
     FAILURE_ODD_KEYPOINT,

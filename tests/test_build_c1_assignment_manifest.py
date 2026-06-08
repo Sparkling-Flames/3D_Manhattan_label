@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "tools" / "build_c1_assignment_manifest.py"
+SCRIPT = ROOT / "tools" / "thesis_main" / "registry" / "build_c1_assignment_manifest.py"
 
 
 def write_csv(path: Path, fieldnames: list[str], rows: list[dict[str, str]]) -> None:
