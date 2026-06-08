@@ -49,6 +49,7 @@ from tools.label_studio.build_stage1_prescreen_imports import build_import_paylo
 from tools.paper_a_manhattan.manhattan_constrained_fit import fit_manhattan_layout
 from tools.paper_a_manhattan.manhattan_candidate_gate import gate_manhattan_candidate
 from tools.paper_a_manhattan.manhattan_layout_state import build_room_layout_state
+from tools.paper_a_manhattan.manhattan_pair_assist import propose_align_pair_x
 from tools.paper_b.validate_b0_relabel_audit import validate_csv
 ```
 
