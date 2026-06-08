@@ -1,6 +1,8 @@
 import copy
 import json
 
+from tools.paper_a_manhattan.manhattan_candidate_gate import EXPERT_REVIEW_DELTA_THRESHOLD
+from tools.paper_a_manhattan.manhattan_constrained_fit import MAX_POINT_MOVE_FAIL_THRESHOLD
 from tools.paper_a_manhattan.manhattan_pair_assist import (
     ELIGIBLE,
     REVIEW_ONLY,
@@ -32,6 +34,15 @@ def _clean_pairs():
     ]
 
 
+def _rows_for_shape(target_row):
+    return [
+        {"top": {"x": 10.0, "y": TOP_Y}, "bottom": {"x": 10.0, "y": BOTTOM_Y}},
+        target_row,
+        {"top": {"x": 60.0, "y": TOP_Y}, "bottom": {"x": 60.0, "y": BOTTOM_Y}},
+        {"top": {"x": 80.0, "y": TOP_Y}, "bottom": {"x": 80.0, "y": BOTTOM_Y}},
+    ]
+
+
 def test_clean_pair_with_x_mismatch_generates_candidate_for_current_pair_only():
     rows = _pairs_with_mismatch()
 
@@ -56,6 +67,53 @@ def test_clean_pair_with_x_mismatch_generates_candidate_for_current_pair_only():
         }
     ]
     assert proposal["max_abs_delta"] == 2.0
+
+
+def test_small_x_mismatch_is_eligible_and_returns_candidate():
+    proposal = propose_align_pair_x(_pairs_with_mismatch(), 2)
+
+    assert proposal["assist_status"] == ELIGIBLE
+    assert proposal["candidate_pairs"]
+    assert proposal["max_abs_delta"] < EXPERT_REVIEW_DELTA_THRESHOLD
+
+
+def test_max_abs_delta_at_expert_review_threshold_is_review_only_without_candidate():
+    rows = _rows_for_shape(
+        {"top": {"x": 40.0, "y": TOP_Y}, "bottom": {"x": 30.0, "y": BOTTOM_Y}}
+    )
+
+    proposal = propose_align_pair_x(rows, 2)
+
+    assert proposal["max_abs_delta"] == EXPERT_REVIEW_DELTA_THRESHOLD
+    assert proposal["assist_status"] == REVIEW_ONLY
+    assert proposal["assist_reasons"] == ["max_abs_delta_large"]
+    assert proposal["candidate_pairs"] == []
+    assert proposal["per_point_delta"] == []
+
+
+def test_max_abs_delta_above_hard_move_threshold_suppresses_without_candidate():
+    rows = _rows_for_shape(
+        {"top": {"x": 56.0, "y": TOP_Y}, "bottom": {"x": 30.0, "y": BOTTOM_Y}}
+    )
+
+    proposal = propose_align_pair_x(rows, 2)
+
+    assert proposal["max_abs_delta"] > MAX_POINT_MOVE_FAIL_THRESHOLD
+    assert proposal["assist_status"] == SUPPRESS
+    assert proposal["assist_reasons"] == ["max_abs_delta_exceeds_fit_fail_threshold"]
+    assert proposal["candidate_pairs"] == []
+    assert proposal["per_point_delta"] == []
+
+
+def test_candidate_movement_gate_does_not_modify_input_object():
+    rows = _rows_for_shape(
+        {"top": {"x": 40.0, "y": TOP_Y}, "bottom": {"x": 30.0, "y": BOTTOM_Y}}
+    )
+    before = copy.deepcopy(rows)
+
+    propose_align_pair_x(rows, 2)
+
+    assert rows == before
 
 
 def test_y_values_are_unchanged():
@@ -163,4 +221,50 @@ def test_only_center_strategy_is_supported():
 
     assert proposal["assist_status"] == SUPPRESS
     assert proposal["assist_reasons"] == ["unsupported_strategy"]
+    assert proposal["candidate_pairs"] == []
+
+
+def test_top_bottom_shape_updates_corresponding_x_fields_for_small_mismatch():
+    rows = _rows_for_shape(
+        {"top": {"x": 34.0, "y": TOP_Y}, "bottom": {"x": 30.0, "y": BOTTOM_Y}}
+    )
+
+    proposal = propose_align_pair_x(rows, 2)
+
+    assert proposal["assist_status"] == ELIGIBLE
+    assert proposal["candidate_pairs"][1]["top"]["x"] == 32.0
+    assert proposal["candidate_pairs"][1]["bottom"]["x"] == 32.0
+
+
+def test_ceiling_floor_shape_updates_corresponding_x_fields_for_small_mismatch():
+    rows = _rows_for_shape(
+        {"ceiling": {"x": 34.0, "y": TOP_Y}, "floor": {"x": 30.0, "y": BOTTOM_Y}}
+    )
+
+    proposal = propose_align_pair_x(rows, 2)
+
+    assert proposal["assist_status"] == ELIGIBLE
+    assert proposal["candidate_pairs"][1]["ceiling"]["x"] == 32.0
+    assert proposal["candidate_pairs"][1]["floor"]["x"] == 32.0
+
+
+def test_flat_top_bottom_shape_updates_corresponding_x_fields_for_small_mismatch():
+    rows = _rows_for_shape(
+        {"top_x": 34.0, "top_y": TOP_Y, "bottom_x": 30.0, "bottom_y": BOTTOM_Y}
+    )
+
+    proposal = propose_align_pair_x(rows, 2)
+
+    assert proposal["assist_status"] == ELIGIBLE
+    assert proposal["candidate_pairs"][1]["top_x"] == 32.0
+    assert proposal["candidate_pairs"][1]["bottom_x"] == 32.0
+
+
+def test_single_x_shape_has_no_separate_top_bottom_x_mismatch_to_candidate():
+    rows = _rows_for_shape({"x": 30.0, "y_ceiling": TOP_Y, "y_floor": BOTTOM_Y})
+
+    proposal = propose_align_pair_x(rows, 2)
+
+    assert proposal["assist_status"] == REVIEW_ONLY
+    assert proposal["assist_reasons"] == ["vertical_x_residual_zero"]
     assert proposal["candidate_pairs"] == []

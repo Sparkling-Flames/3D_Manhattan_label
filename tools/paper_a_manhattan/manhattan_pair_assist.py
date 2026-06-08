@@ -13,7 +13,11 @@ import copy
 import math
 from typing import Any, Mapping, Sequence
 
-from tools.paper_a_manhattan.manhattan_constrained_fit import parse_ordered_pairs
+from tools.paper_a_manhattan.manhattan_candidate_gate import EXPERT_REVIEW_DELTA_THRESHOLD
+from tools.paper_a_manhattan.manhattan_constrained_fit import (
+    MAX_POINT_MOVE_FAIL_THRESHOLD,
+    parse_ordered_pairs,
+)
 from tools.paper_a_manhattan.manhattan_layout_state import build_room_layout_state
 
 
@@ -198,6 +202,20 @@ def _empty_proposal(diagnosis: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
+def _gated_empty_proposal(
+    diagnosis: Mapping[str, Any],
+    *,
+    assist_status: str,
+    assist_reasons: list[str],
+    max_abs_delta: float | None,
+) -> dict[str, Any]:
+    result = _empty_proposal(diagnosis)
+    result["assist_status"] = assist_status
+    result["assist_reasons"] = assist_reasons
+    result["max_abs_delta"] = max_abs_delta
+    return result
+
+
 def propose_align_pair_x(
     ordered_pairs: Sequence[Mapping[str, Any]],
     pair_index: int,
@@ -246,11 +264,26 @@ def propose_align_pair_x(
     delta_values = [abs(top_dx), abs(bottom_dx), 0.0]
     max_abs_delta = max(delta_values) if delta_values else None
     if max_abs_delta is None:
-        return {
-            **_empty_proposal(diagnosis),
-            "assist_status": REVIEW_ONLY,
-            "assist_reasons": ["max_abs_delta_unavailable"],
-        }
+        return _gated_empty_proposal(
+            diagnosis,
+            assist_status=REVIEW_ONLY,
+            assist_reasons=["max_abs_delta_unavailable"],
+            max_abs_delta=None,
+        )
+    if max_abs_delta > MAX_POINT_MOVE_FAIL_THRESHOLD:
+        return _gated_empty_proposal(
+            diagnosis,
+            assist_status=SUPPRESS,
+            assist_reasons=["max_abs_delta_exceeds_fit_fail_threshold"],
+            max_abs_delta=max_abs_delta,
+        )
+    if max_abs_delta >= EXPERT_REVIEW_DELTA_THRESHOLD:
+        return _gated_empty_proposal(
+            diagnosis,
+            assist_status=REVIEW_ONLY,
+            assist_reasons=["max_abs_delta_large"],
+            max_abs_delta=max_abs_delta,
+        )
 
     return {
         "candidate_pairs": candidate_pairs,
