@@ -1,7 +1,7 @@
 import json
 from pathlib import Path
 
-from tools.audit_m8_sandbox_active_log import audit_m8_sandbox_active_log, main
+from tools.paper_a_manhattan.audit_m8_sandbox_active_log import audit_m8_sandbox_active_log, main
 
 
 def _write_jsonl(path: Path, rows: list[dict | str]) -> None:

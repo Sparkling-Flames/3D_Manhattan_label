@@ -1,17 +1,9 @@
 import csv
-import importlib.util
 from pathlib import Path
-import sys
 
+from tools.paper_b import validate_b0_relabel_audit as validator
 
 ROOT = Path(__file__).resolve().parents[1]
-MODULE_PATH = ROOT / "tools" / "validate_b0_relabel_audit.py"
-
-spec = importlib.util.spec_from_file_location("validate_b0_relabel_audit", MODULE_PATH)
-validator = importlib.util.module_from_spec(spec)
-assert spec.loader is not None
-sys.modules[spec.name] = validator
-spec.loader.exec_module(validator)
 
 
 FIELDNAMES = [

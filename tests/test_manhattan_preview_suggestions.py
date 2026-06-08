@@ -1,4 +1,4 @@
-from tools.manhattan_preview_suggestions import build_preview_suggestion_candidates
+from tools.paper_a_manhattan.manhattan_preview_suggestions import build_preview_suggestion_candidates
 
 
 """Tests for M2 preview-only suggestion candidates.

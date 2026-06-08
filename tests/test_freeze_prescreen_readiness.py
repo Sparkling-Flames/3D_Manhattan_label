@@ -1,9 +1,6 @@
 from pathlib import Path
-import sys
 
-sys.path.insert(0, str(Path(__file__).parent.parent / "tools"))
-
-from freeze_prescreen_readiness import (  # noqa: E402
+from tools.thesis_main.registry.freeze_prescreen_readiness import (
     build_oos_gate_pool_freeze,
     build_prescreen_manual_anchor_inventory,
     build_prescreen_readiness_audit,

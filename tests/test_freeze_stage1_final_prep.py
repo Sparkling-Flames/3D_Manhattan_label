@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from tools.freeze_stage1_final_prep import (
+from tools.thesis_main.registry.freeze_stage1_final_prep import (
     build_oos_final_quota_binding,
     build_semi_control_keepdrop_resolution,
     build_stage1_final_binding_audit,

@@ -2,13 +2,10 @@ from __future__ import annotations
 
 import csv
 import json
-import sys
 from pathlib import Path
 
 
-sys.path.insert(0, str(Path(__file__).parent.parent / "tools"))
-
-from audit_p1_exact_copy_low_time import (  # noqa: E402
+from tools.thesis_main.analysis.audit_p1_exact_copy_low_time import (
     AuditConfig,
     apply_exact_copy_low_time_rules,
     build_audit_rows,

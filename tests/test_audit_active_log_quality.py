@@ -2,7 +2,7 @@ import csv
 import json
 from pathlib import Path
 
-from tools.audit_active_log_quality import audit_active_logs, main
+from tools.thesis_main.analysis.audit_active_log_quality import audit_active_logs, main
 
 
 def test_audit_active_logs_ignores_legacy_and_counts_quality_signals(tmp_path: Path) -> None:

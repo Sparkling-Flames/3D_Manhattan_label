@@ -9,7 +9,7 @@ import pytest
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "tools" / "init_task_risk_rule_manifest.py"
+SCRIPT = ROOT / "tools" / "thesis_main" / "registry" / "init_task_risk_rule_manifest.py"
 
 
 def test_init_task_risk_rule_manifest(tmp_path: Path) -> None:

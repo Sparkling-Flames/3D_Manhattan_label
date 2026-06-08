@@ -8,7 +8,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "tools" / "audit_c1_assignment_manifest.py"
+SCRIPT = ROOT / "tools" / "thesis_main" / "registry" / "audit_c1_assignment_manifest.py"
 
 
 FIELDNAMES = [

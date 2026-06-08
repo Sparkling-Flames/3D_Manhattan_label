@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from tools.build_experiment_visual_audit import (
+from tools.thesis_main.analysis.build_experiment_visual_audit import (
     build_anomaly_audit_table,
     build_field_audit_table,
     build_scope_conflict_table,

@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from tools.revise_semi_selection_v7 import build_semi_v7, build_stage1_audit_v3, _load_inputs
+from tools.thesis_main.registry.revise_semi_selection_v7 import build_semi_v7, build_stage1_audit_v3, _load_inputs
 
 
 def test_revise_semi_selection_v7_applies_semantic_tightening():

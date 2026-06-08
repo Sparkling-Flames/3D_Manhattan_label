@@ -1,6 +1,6 @@
 from pathlib import Path
 
-from tools.build_stage1_prescreen_imports import build_import_payloads, load_inputs
+from tools.label_studio.build_stage1_prescreen_imports import build_import_payloads, load_inputs
 
 
 def test_build_stage1_prescreen_imports_counts_and_structure():

@@ -4,7 +4,7 @@ import csv
 import json
 from pathlib import Path
 
-from tools.rebind_stage1_to_final_gold import run
+from tools.thesis_main.registry.rebind_stage1_to_final_gold import run
 
 
 def _write_csv(path: Path, rows: list[dict[str, str]], fieldnames: list[str]) -> None:

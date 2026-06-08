@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from tools.freeze_trap_collection import (
+from tools.thesis_main.registry.freeze_trap_collection import (
     CLASS_ACCEPTABLE,
     DEFAULT_SYNTHETIC_PRESET,
     LAYOUT_COORD_CONTRACT,

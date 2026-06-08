@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from tools.analyze_semi_label_overlap import build_rows, build_summary
+from tools.thesis_main.analysis.analyze_semi_label_overlap import build_rows, build_summary
 
 
 def test_analyze_semi_label_overlap_flags_only_task580_in_latest_verified() -> None:

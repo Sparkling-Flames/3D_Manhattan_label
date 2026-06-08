@@ -3,16 +3,17 @@ import xml.etree.ElementTree as ET
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "foreign_recruitment" / "ls_userscript_annotator_https_en.user.js"
-DEBUG_SCRIPT = ROOT / "foreign_recruitment" / "ls_userscript_annotator_https_en_debug.user.js"
-OFFICIAL_SCRIPT = ROOT / "tools" / "official" / "ls_userscript_annotator.js"
-GUIDE = ROOT / "foreign_recruitment" / "ANNOTATOR_GUIDE_EN.md"
-INSTALL = ROOT / "foreign_recruitment" / "INSTALL_USERSCRIPT_HTTPS_EN.md"
-CLOUDRESEARCH = ROOT / "foreign_recruitment" / "CLOUDRESEARCH_CONNECT_SETUP_GUIDE.md"
-MAIN_XML = ROOT / "tools" / "label_studio_view_config.xml"
-MANUAL_XML = ROOT / "tools" / "label_studio_view_config_manual.xml"
-FOREIGN_MAIN_XML = ROOT / "foreign_recruitment" / "label_studio_view_config_en.xml"
-FOREIGN_MANUAL_XML = ROOT / "foreign_recruitment" / "label_studio_view_config_manual_en.xml"
+FOREIGN_DIR = ROOT / "tools" / "thesis_main" / "foreign_recruitment"
+SCRIPT = FOREIGN_DIR / "ls_userscript_annotator_https_en.user.js"
+DEBUG_SCRIPT = FOREIGN_DIR / "ls_userscript_annotator_https_en_debug.user.js"
+OFFICIAL_SCRIPT = ROOT / "tools" / "label_studio" / "official" / "ls_userscript_annotator.js"
+GUIDE = FOREIGN_DIR / "ANNOTATOR_GUIDE_EN.md"
+INSTALL = FOREIGN_DIR / "INSTALL_USERSCRIPT_HTTPS_EN.md"
+CLOUDRESEARCH = FOREIGN_DIR / "CLOUDRESEARCH_CONNECT_SETUP_GUIDE.md"
+MAIN_XML = ROOT / "tools" / "label_studio" / "label_studio_view_config.xml"
+MANUAL_XML = ROOT / "tools" / "label_studio" / "label_studio_view_config_manual.xml"
+FOREIGN_MAIN_XML = FOREIGN_DIR / "label_studio_view_config_en.xml"
+FOREIGN_MANUAL_XML = FOREIGN_DIR / "label_studio_view_config_manual_en.xml"
 
 
 def read(path: Path) -> str:

@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from tools.summarize_manhattan_geometry_manual_review import (
+from tools.paper_a_manhattan.summarize_manhattan_geometry_manual_review import (
     load_manual_review_csv,
     main,
     summarize_manual_review,

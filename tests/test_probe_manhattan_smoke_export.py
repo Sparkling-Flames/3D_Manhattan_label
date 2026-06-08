@@ -1,6 +1,6 @@
 import pytest
 
-from tools.probe_manhattan_smoke_export import main, probe_tasks
+from tools.paper_a_manhattan.probe_manhattan_smoke_export import main, probe_tasks
 
 
 """Synthetic tests for the read-only smoke export probe.

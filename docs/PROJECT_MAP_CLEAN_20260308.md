@@ -1,565 +1,84 @@
-# HoHoNet 纯净仓库地图
-
-## 文档目标
-
-这份文档只回答一件事：
-
-当前仓库里，哪些目录和文件属于现役主链，它们各自承担什么职责。
-
-这份地图刻意不做这些事：
-
-- 不写时间线
-- 不写“几号补充”
-- 不写阶段性争论和交接背景
-- 不把 legacy / 原型 /临时讨论稿混进正式入口
-
----
-
-## 一、主链总览
-
-当前仓库的现役主链可以压缩成 8 层：
-
-1. `import_json/`
-   - planned import / planned split 真源
-2. `tools/prepare_labelstudio_docker.py` 及相关导入脚本
-   - 生成可导入 Label Studio 的任务 JSON
-3. `tools/official/ls_userscript_annotator.js`
-   - 正式标注端浏览器脚本
-4. `tools/cors_server.py` + `tools/official/start_log_server.sh`
-   - active-time 日志采集链
-5. `export_label/`
-   - Label Studio 运行时导出真源
-6. `tools/analyze_quality.py` + `tools/official/analyze_quality_formal.py`
-   - 正式分析链
-7. `tools/build_registry_suite.py` 等 registry / audit 脚本
-   - planned / runtime / log 的 join 与审计
-8. `analysis_results/`
-   - 所有分析结果、freeze、manifest、图表与审计产物落盘位置
-
----
-
-## 二、根目录地图
-
-### 当前需要保留认知的根目录文件
-
-- `README.md`
-  - 仓库门面说明
-- `QUICK_START.md`
-  - 快速进入当前标注与分析链
-- `hohonet_env.example`
-  - 部署环境变量模板
-- `nginx_fixed.conf`
-  - 当前最接近正式使用的 Nginx 代理配置参考
-
-### 当前真正重要的根目录目录
-
-- `tools/`
-  - 主代码目录
-- `tools/official/`
-  - 正式运行入口
-- `docs/`
-  - 正式说明文档
-- `foreign_recruitment/`
-  - 外国招募人员专用 HTTPS / 英文 Stage 1 标注包；隔离于当前中文 P1 入口，不修改 frozen import JSON 或正式协议边界
-- `import_json/`
-  - 导入 JSON 与 planned split
-- `export_label/`
-  - 导出 JSON 与运行时真源
-- `active_logs/`
-  - active-time 日志
-- `analysis_results/`
-  - 分析结果与审计产物
-- `tests/`
-  - 自动化测试
-- `trap集/`
-  - trap / manual 候选与人工素材层
-- `data/`
-  - 数据资产层
-- `output/`
-  - HoHoNet 推理与中间产物层
-
-### 默认不属于纯净地图主入口的根目录内容
-
-- 原始 HoHoNet 训练/推理旧链
-- 各类缓存目录
-- 临时输出
-- 历史备份配置
-
----
-
-## 三、`tools/` 地图
-
-### 正式分析与审计主链
-
-- `tools/analyze_quality.py`
-  - 上游质量分析主入口
-- `tools/official/analyze_quality_formal.py`
-  - 正式分析入口
-- `tools/build_experiment_visual_audit.py`
-  - 每轮实验结果的图表与审计包生成器
-- `tools/audit_active_log_quality.py`
-  - active-log 质量审计
-- `tools/aggregate_analysis.py`
-  - 多份分析结果汇总
-- `tools/compute_mgeo_diagnostic.py`
-  - Paper A / A-line 的 offline audit-only Manhattan geometry diagnostic MVP。读取 JSONL layout geometry，输出可选 `M_geo` sidecar 与 worker-level `J_u` summary；不接入 routing、Label Studio UI、import/export 或正式轮次 artifact contract。
-### Experiment-outside / post-hoc Manhattan toolchain
-
-- `tools/manhattan_preview_compat.py`
-  - Deterministic 3D preview compatibility parser for experiment-outside Manhattan assistant prototyping.
-- `tools/probe_manhattan_smoke_export.py`
-  - Read-only smoke export probe for keypoint / scope / preview compatibility / residual / preview-only suggestion summaries.
-- `tools/manhattan_geometry_residual.py`
-  - M1 residual calculator for preview-compatible keypoints; reports preview geometry stability only.
-- `tools/manhattan_constrained_fit.py`
-  - M14.1/M14.2 pure Python Manhattan constrained fitting prototype for ordered paired corners in Label Studio 0-100 coordinates. It converts to panorama angular coordinates, searches deterministic Manhattan yaw candidates, estimates a height-aware closed Manhattan candidate with `atan2` reprojection, reports `fit_status`, `fit_residual`, `manhattan_yaw_*`, `layout_height_candidate`, `per_point_delta`, and warnings, and remains dev-only / sandbox-only with no writeback, no UI integration, no routing, and no formal artifact role.
-- `tools/audit_manhattan_constrained_fit_smoke.py`
-  - M15/M15.2/M15.3 read-only smoke export audit for the M14.2 Manhattan constrained fitting core. It consumes a copied/local Label Studio export JSON, builds current-preview paired corners, writes smoke sidecars under `analysis_results/manhattan_constrained_fit_smoke/`, separates normal-only audit eligibility from scope-independent `geometry_debug`, uses explicit `scope_vote_*` naming so scope votes are not read as adjudicated OOS truth, emits annotation-level geometry-debug review candidates for task-level Manhattan stability inspection, and remains dev-only / smoke-only with no export modification, no annotation writeback, no formal `g_t`, no routing, no worker tier, and no `P1/C1/C2/T1/V1` artifact role.
-- `tools/render_manhattan_geometry_review_sheet.py`
-  - M15.4 standalone offline HTML review sheet renderer for Manhattan geometry-debug review candidates. It consumes `smoke_geometry_debug_review_candidates_*.jsonl`, renders red original points, hollow blue fitted candidate points, optional delta arrows, and local-only manual review fields plus a CSV template under `analysis_results/manhattan_constrained_fit_smoke/`; visual review only, no Label Studio UI integration, no annotation writeback, no formal `g_t`, no routing, no worker quality metric, and no `P1/C1/C2/T1/V1` artifact role.
-- `tools/summarize_manhattan_geometry_manual_review.py`
-  - M15.5 manual review aggregation CLI for offline Manhattan geometry-debug visual review. It consumes the completed manual review CSV, validates `plausible_candidate` and `likely_issue`, writes summary JSON and Markdown report sidecars under `analysis_results/manhattan_constrained_fit_smoke/`, and keeps M16 ghost candidate UI blocked when high-risk / large-delta rows show `algorithm_overfit` with `unsure` or `no`; no Label Studio UI integration, no annotation writeback, no formal `g_t`, no routing, no worker quality metric, and no `P1/C1/C2/T1/V1` artifact role.
-- `tools/manhattan_preview_suggestions.py`
-  - M2 preview-only suggestion summary helper; emits review prompt type counts only.
-- `tools/render_manhattan_probe_report.py`
-  - M3 read-only Markdown report renderer. It consumes probe summary JSON only and does not read `export_label/` directly.
-- `tools/render_manhattan_contact_sheet.py`
-  - M4 standalone HTML contact sheet renderer. It consumes probe summary JSON only, does not load real panorama images, and does not read `export_label/` directly.
-- `tools/validate_manhattan_probe_summary.py`
-  - M6 JSON validator for Manhattan probe summary sidecars. It checks required fields, count invariants, and forbidden payload terms without opening `source_export` or reading `export_label/`.
-- `tools/dev_only/manhattan_ls_sandbox_panel_debug.user.js`
-  - M8.1/M13.2 server-scoped dev-only sandbox panel debug variant for `175.178.71.217:8080`; no active_time upload, with M9 preview-only Manhattan deviation display, M10 direction-only diagnosis, M12 direction-only hint, M12.4 independent manual-selected and diagnosis-affected pair highlights, task-switch overlay cleanup, M12.5 transparent 2D order badges, M13.1 issue-aware 2D visual reference lines, and M13.2 UI split into a compact primary toolbar, separate Preview order panel, and default-collapsed Debug drawer. Includes sandbox meta-label guard and official-style preview-only corner-order controls with Label Studio 0-100 coordinate pair rows. Highlighting and guide references are limited to the Preview order panel row and 2D panorama order labels / guides; they do not add 3D preview highlighting. It is not an official userscript, not worker-facing, performs no annotation writeback, initiates no submit, and has no routing or formal artifact integration.
-- `tools/dev_only/manhattan_ls_sandbox_panel_timed.user.js`
-  - M8.1/M8.3/M13.2 server-scoped dev-only sandbox panel timed variant for `175.178.71.217:8080`; may POST only sandbox telemetry to `/log_time` with exclusion tags and activity-gated sandbox active-time counters, skips heartbeat POSTs when no new active seconds have accumulated, with M9 preview-only Manhattan deviation display, M10 direction-only diagnosis, M12 direction-only hint, M12.4 independent manual-selected and diagnosis-affected pair highlights, task-switch overlay cleanup, M12.5 transparent 2D order badges, M13.1 issue-aware 2D visual reference lines, and M13.2 UI split into a compact primary toolbar, separate Preview order panel, and default-collapsed Debug drawer. Includes sandbox meta-label guard and official-style preview-only corner-order controls with Label Studio 0-100 coordinate pair rows. Highlighting and guide references are limited to the Preview order panel row and 2D panorama order labels / guides; they do not add 3D preview highlighting. It is not an official userscript, not worker-facing, performs no annotation writeback, initiates no submit, and has no routing or formal artifact integration.
-- `tools/audit_m8_sandbox_active_log.py`
-  - M8.2 read-only active-log audit for M8 sandbox telemetry. It checks sandbox exclusion tags, required fields, and heartbeat intervals from active log JSONL; it does not validate RQ1 primary active_time, does not read or modify `export_label/`, and is not routing / formal `g_t` / `P1/C1/C2/T1/V1` artifact logic.
-- Boundary: experiment-outside / post-hoc only; not formal protocol core; no UI / worker-facing experiment; no formal `g_t`; no routing; no `P1/C1/C2/T1/V1` artifacts.
-
-### 导入与分池主链
-
-- `tools/prepare_labelstudio_docker.py`
-  - 生成可导入 Label Studio 的任务 JSON
-- `tools/create_labelstudio_split.py`
-  - 生成可重复 split
-- `tools/create_labelstudio_split_by_outline.py`
-  - 按 outline / 协议生成导入分池
-- `tools/build_stage1_prescreen_imports.py`
-  - Stage 1 / prescreen 导入包构造
-
-### truth / final-gold / freeze 主链
-
-- `tools/extract_truth_layer.py`
-  - 从精标导出中抽取 truth layer
-- `tools/materialize_final_gold_records.py`
-  - 物化 final-gold 记录层
-- `tools/build_final_gold_preflight.py`
-  - final-gold 接入前检查
-- `tools/rebind_stage1_to_final_gold.py`
-  - Stage 1 与 final-gold 重绑
-- `tools/freeze_prescreen_manual.py`
-  - manual freeze
-- `tools/freeze_stage1_final_prep.py`
-  - Stage 1 final prep freeze
-- `tools/revise_semi_selection_v10.py`
-  - semi selection 收口
-
-### registry / manifest / round-based 主链
-
-- `tools/build_task_registry.py`
-  - planned registry
-- `tools/build_registry_suite.py`
-  - planned / runtime / log 多层 registry 总装
-- `tools/build_c1_assignment_manifest.py`
-  - `C1` assignment manifest 生成
-- `tools/build_calibration_round_input_manifest.py`
-  - 将 planned Stage 2 import JSON 收口为 Calibration round input manifest
-- `tools/audit_c1_assignment_manifest.py`
-  - 审计 `C1` assignment manifest 的 target/min k、worker 负载与 reserve 排除
-- `tools/init_task_risk_rule_manifest.py`
-  - 初始化 `task_risk_rule_manifest`
-- `tools/materialize_meta_label_consensus_summary.py`
-  - 物化 meta-label 共识摘要
-- `tools/compute_dt_score.py`
-  - `d_t` 最小正式实现
-- `tools/compute_g_t_diagnostics.py`
-  - `g_t` 标注前结构诊断 dry-run 工具；只用于 exploratory contact sheet 与人工 sanity check 准备，不是正式 routing 入口
-
-### 日志与运行时链路
-
-- `tools/cors_server.py`
-  - active-time 接收服务
-- `tools/official/start_log_server.sh`
-  - 正式日志服务启动脚本
-- `tools/split_active_logs.py`
-  - active-log 拆分
-- `tools/lead_time_stats.py`
-  - `lead_time` / `active_time` 对照
-- `tools/audit_p1_exact_copy_low_time.py`
-  - P1 process-integrity sidecar audit；只检测 exact corner-geometry duplicate + low primary active_time 的 worker-level 大量发生风险，不自动排除 worker，不改变 P1 评分或 admission 公式
-- `tools/meta_label_guard.py`
-  - 导出字段合规兜底
-### Label Studio frontend chain
-
-- `tools/official/ls_userscript_annotator.js`
-  - Official Chinese annotator helper.
-- `foreign_recruitment/ls_userscript_annotator_https_en.user.js`
-  - Foreign HTTPS English helper. Matches only `https://label.sparkle0825.top/*`, defaults helper/viewer/log URLs to same-origin, and captures optional CloudResearch / worker IDs; it does not replace or modify the official Chinese helper.
-- `foreign_recruitment/ls_userscript_annotator_https_en_debug.user.js`
-  - Foreign HTTPS English debug helper. Same target path and payload contract as the normal foreign helper, but the debug panel is enabled by default; do not enable both foreign helper scripts at once.
-- `foreign_recruitment/label_studio_view_config_en.xml`
-  - English Label Studio view config for foreign HTTPS main/semi-style Stage 1 projects. It keeps the same export field names and aliases as `tools/label_studio_view_config.xml`; use only for newly created foreign-facing projects, not to mutate already-running Stage 1 projects.
-- `foreign_recruitment/label_studio_view_config_manual_en.xml`
-  - English Label Studio view config for foreign HTTPS manual-style Stage 1 projects. It keeps the same export field names and aliases as `tools/label_studio_view_config_manual.xml`; use only for newly created foreign-facing projects.
-- `tools/official/ls_userscript_debug.js`
-  - Official debug helper.
-- `tools/label_studio_view_config.xml`
-  - Main Label Studio view config.
-- `tools/label_studio_view_config_manual.xml`
-  - Manual-condition Label Studio view config.
-- `tools/vis_3d.html`
-  - 3D preview page.
-- `tools/ls_3d_logic.js`
-  - 3D logic helper.
-- `tools/three.min.js`
-  - 3D dependency.
-- `tools/OrbitControls.js`
-  - 3D interaction dependency.
-
-### 辅助但仍在用
-
-- `tools/pooled_qa_plots.py`
-  - pooled QA 图包
-- `tools/analyze_stage_aware.py`
-  - stage-aware 原型分析入口
-- `tools/save_quality_figures.py`
-  - 质量图表生成
-- `tools/viz_quality_report.py`
-  - 可视化报告
-- `tools/benchmark_cost.py`
-  - 成本/效率辅助分析
-- `tools/diagnose_gating_bias.py`
-  - 门控偏差排查
-
-### 默认不属于正式入口
-
-- `tools/legacy/`
-- `tools/legacy_server/`
-- 旧 notebook
-- 研究原型脚本
-
----
-
-## 四、`tools/official/` 地图
-
-这是“正式运行入口”目录，优先级高于 `tools/` 里的同类文件。
-
-- `tools/official/analyze_quality_formal.py`
-  - 正式分析入口
-- `tools/official/ls_userscript_annotator.js`
-  - 正式标注员脚本
-- `tools/official/ls_userscript_debug.js`
-  - 调试/巡检脚本
-- `tools/official/start_log_server.sh`
-  - 正式日志服务入口
-- `tools/official/README.md`
-  - 正式入口说明
-
----
-
-## 五、`import_json/` 地图
-
-这个目录只放 planned import 侧文件，不放运行时导出。
-
-### 当前关键目录
-
-- `import_json/stage1_prescreen_final_20260325/`
-  - 当前 Stage 1 / prescreen 正式导入包
-- `import_json/outline_v2_seed20260228/`
-  - outline / seed 固定后的导入集合
-- `import_json/mp3d_txt_smoke_test_20260328/`
-  - smoke test 导入包
-- `import_json/sandbox/manhattan_m8/`
-  - M8.1 sandbox-only import package generated from copied 2026-05-07 smoke tasks. This is not a formal import directory, not `P1/C1/C2/T1/V1`, not thesis active_time evidence, and sandbox exports must remain separate from formal `export_label/` data.
-
-### 当前关键文件类型
-
-- `*_import*.json`
-  - 直接导入 Label Studio 的任务 JSON
-- `*_summary*.json`
-  - 导入包摘要
-- `*_report*.json`
-  - split / import 报告
-
-### 职责边界
-
-- 这里只描述 planned split / planned task
-- 它不是运行时标注真源
-- 与 `export_label/` 必须分开理解
-
----
-
-## 六、`export_label/` 地图
-
-这个目录只放 Label Studio 导出 JSON。
-
-### 当前关键区域
-
-- `export_label/人工精标/`
-  - 精标导出与 truth / final-gold 上游
-- 根目录下少量 `project-*.json`
-  - 仍在被兼容审计、测试或对照链使用
-- `export_label/legacy/`
-  - 历史导出归档
-
-### 职责边界
-
-- 这里是运行时标注真源
-- 它记录“实际发生了什么”
-- 它不是 planned split 真源
-
----
-
-## 七、`active_logs/` 地图
-
-这个目录保存 active-time 日志和相关说明。
-
-- `active_logs/readme.md`
-  - 写入路径与归档说明
-- `active_logs/*.jsonl`
-  - 每日日志
-- 各类子目录
-  - 可按服务器、脚本版本或轮次拆分
-
-### 职责边界
-
-- 这里只存日志与日志归档
-- 它不是质量分析结果目录
-
----
-
-## 八、`analysis_results/` 地图
-
-这个目录只存分析产物、freeze、registry、图表和审计结果，不存代码。
-
-### 当前主链目录
-
-- `analysis_results/phase1_progress_20260324/`
-  - Stage 1 / prescreen 主 freeze 与 binding 审计目录
-- `analysis_results/final_gold_layer_20260325/`
-  - final-gold 主层
-- `analysis_results/truth_layer_extraction_20260324/`
-  - truth-layer extraction 输出
-
-### 当前仍需保留认知的支撑目录
-
-- `analysis_results/trap_collection_freeze_20260320/`
-  - trap freeze 输出
-- `analysis_results/mp3d_txt_smoke_test_20260328/`
-  - smoke test 输出
-- `analysis_results/manhattan_geometry_diagnostic/`
-  - Smoke/probe sidecar outputs for the experiment-outside / post-hoc Manhattan toolchain. Contains the 2026-05-07 probe summary, Markdown report, standalone HTML contact sheet, optional M8.2 sandbox active-log audit JSON, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, not RQ1 primary active_time evidence, and not `P1/C1/C2/T1/V1` artifacts.
-- `analysis_results/manhattan_constrained_fit_smoke/`
-  - M15/M15.2/M15.3/M15.4/M15.5 smoke-only sidecar outputs for the M14.2 Manhattan constrained fit audit on the 2026-05-18 Label Studio export. Contains records JSONL, summary JSON, candidate CSV, geometry_debug by-annotation/by-task CSVs, geometry-debug review candidate CSV/JSONL, visual review HTML, manual review CSV template/completed fields, manual review aggregation JSON/Markdown reports, and README; not formal `g_t`, not routing input, not worker quality / correctness labels, not OOS adjudication, and not `P1/C1/C2/T1/V1` artifacts.
-- `analysis_results/pooled_qa/`
-  - pooled QA 图包与审计表
-- `analysis_results/c_manifests_20260310/`
-  - C 线 manifest 支撑输出
-- `analysis_results/c_manifests_20260311/`
-  - C 线后续支撑输出
-
-### 历史但保留可追溯性的目录
-
-- `analysis_results/selection_freeze_20260317/`
-- `analysis_results/stage_aware_analysis_freeze_*`
-- `analysis_results/phase1_progress_20260311/`
-- `analysis_results/export_inventory_20260309/`
-- `analysis_results/registry_20260308/`
-- `analysis_results/registry_20260308_march7_check/`
-- `analysis_results/rerun_20260308/`
-
-### 已归档区域
-
-- `analysis_results/legacy/`
-  - 不再承担当前主链入口职责的历史结果
-
-### 使用约定
-
-- 新结果优先建独立子目录，不要散在根目录
-- 主链判断优先看：
-  1. `phase1_progress_20260324/`
-  2. `final_gold_layer_20260325/`
-  3. `truth_layer_extraction_20260324/`
-  4. `analysis_results/README.md`
-
----
-
-## 九、`tests/` 地图
-
-这个目录放当前仍有效的自动化测试。
-
-### 主链关键测试
-
-- `tests/test_audit_active_log_quality.py`
-- `tests/test_audit_p1_exact_copy_low_time.py`
-- `tests/test_build_experiment_visual_audit.py`
-- `tests/test_build_c1_assignment_manifest.py`
-- `tests/test_init_task_risk_rule_manifest.py`
-- `tests/test_materialize_meta_label_consensus_summary.py`
-- `tests/test_compute_dt_score.py`
-- `tests/test_compute_g_t_diagnostics.py`
-- `tests/test_compute_mgeo_diagnostic.py`
-- `tests/test_foreign_recruitment_userscript_static.py`
-  - 外国 HTTPS 标注包的静态护栏测试：检查域名匹配、同源 HTTPS 默认地址、CloudResearch id 捕获、英文文档 active-time / project-scope 提醒。
-### Experiment-outside / post-hoc Manhattan toolchain tests
-
-- `tests/test_manhattan_preview_compat.py`
-- `tests/test_probe_manhattan_smoke_export.py`
-- `tests/test_manhattan_geometry_residual.py`
-- `tests/test_manhattan_constrained_fit.py`
-- `tests/test_audit_manhattan_constrained_fit_smoke.py`
-- `tests/test_render_manhattan_geometry_review_sheet.py`
-- `tests/test_summarize_manhattan_geometry_manual_review.py`
-- `tests/test_manhattan_preview_suggestions.py`
-- `tests/test_render_manhattan_probe_report.py`
-- `tests/test_render_manhattan_contact_sheet.py`
-- `tests/test_validate_manhattan_probe_summary.py`
-- `tests/test_manhattan_ls_sandbox_panel_static.py`
-- `tests/test_audit_m8_sandbox_active_log.py`
-- Boundary: these tests cover the experiment-outside / post-hoc Manhattan toolchain only; they are not formal protocol core tests and do not validate UI, worker-facing experiment behavior, formal `g_t`, routing, or `P1/C1/C2/T1/V1` artifacts.
-
-- `tests/test_extract_truth_layer.py`
-- `tests/test_materialize_final_gold_records.py`
-- `tests/test_build_final_gold_preflight.py`
-- `tests/test_freeze_stage1_final_prep.py`
-- `tests/test_rebind_stage1_to_final_gold.py`
-
-### 职责边界
-
-- 这里只放当前还应运行的测试
-- 不把已经失效的历史验证脚本当成正式回归依据
-
----
-
-## 十、`docs/` 地图
-
-`docs/` 只保留当前正式入口、正式参考和必要的操作文档。
-
-### 当前优先入口
-
-- `docs/README_INDEX.md`
-  - 文档总索引
-- `docs/ROUND_BASED_EXECUTION_PROTOCOL_v1.md`
-  - round-based 主协议
-- `docs/ROUND_BASED_ASSIGNMENT_SOP_v1.md`
-  - round-based 分发 SOP
-- `docs/PRESCREEN_STAGE1_OPERATIONAL_GUIDE_20260327.md`
-  - prescreen 运行手册
-- `docs/P1_PRESCREEN_LAUNCH_CHECKLIST_v1.md`
-  - `P1` 启动清单
-- `docs/C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md`
-  - `C1/C2` 工件字段合同
-- `docs/RQ3_MINIMAL_EVIDENCE_CHAIN_CONTRACT_v1.md`
-  - `RQ3` 最小证据链合同
-- `docs/STAGE3_OOD_PREPARATION_PLAN_v1.md`
-  - Stage 3 / Main-Validation / OOD-aware routing 准备计划
-- `docs/MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md`
-  - 当前 Manhattan 工具入口。统一区分 A-line post-hoc audit-only `M_geo` worker-profile diagnostic 与实验外 realtime Manhattan / 3D preview assistant prototype；不写成 protocol core。
-- `docs/VIS_3D_GEOMETRY_COMPATIBILITY_SPEC_v1.md`
-  - 实验外 realtime Manhattan assistant 的 3D preview 几何兼容性说明。记录 current `vis_3d.html` / `ls_3d_logic.js` / official userscript 的 keypoint、pairing、坐标转换、closure 与 compatibility failure 边界；不修改 worker-facing UI。
-- `docs/VIS_3D_GEOMETRY_FIXTURE_PLAN_v1.md`
-  - 实验外 realtime Manhattan assistant 的 synthetic fixture 设计。覆盖 clean rectangle、wraparound seam、duplicate / near-duplicate、odd keypoint 与 wrong-order / self-intersection；只服务后续 deterministic compatibility tests，不写 UI，不接正式 routing，不进入 worker-facing experiment。
-- `docs/MANHATTAN_LS_SANDBOX_READINESS_SPEC_v1.md`
-  - M7 readiness spec for future Label Studio sandbox testing of the experiment-outside Manhattan toolchain. It is a design/checklist document only: no UI changes, no official userscript changes, no formal project integration, and actual LS operation testing starts only after an M8 dev-only sandbox prototype.
-- `docs/MANHATTAN_LS_SANDBOX_OPERATION_CHECKLIST_v1.md`
-  - M8 operation checklist for limited dev-only Label Studio sandbox testing and M8.2 read-only active-log audit. Requires copied smoke tasks or dedicated sandbox import, developer / expert tester only, no ordinary worker access, no official userscript changes, no writeback, no formal experiment evidence use, and sandbox telemetry exclusion from primary active_time.
-- `docs/MANHATTAN_CONSTRAINED_FIT_PLAN_v1.md`
-  - M14.1/M14.2 design note for the dev-only Manhattan constrained fitting core. Explains why global median ceiling/floor guide bands are invalid for equirectangular panoramas, documents yaw-aware Manhattan fitting and height-aware `atan2` reprojection, records the no-writeback constrained-candidate boundary, and does not change protocol, routing, Label Studio UI, or formal artifacts.
-- `docs/OOS_SCOPE_POLICY_AUDIT_v1.md`
-  - M15.2 audit policy note clarifying that a scope vote is not adjudicated OOS, majority OOS is only scope_distribution / disagreement evidence, task-level OOS requires expert adjudication or an explicit artifact, and scope-independent geometry_debug is allowed for parseable keypoints without changing protocol, routing, or formal artifacts.
-- `docs/AMBIGUITY_AWARE_HOHONET_EXTENSION_PLAN_v1.md`
-  - B-line / Paper B 的 Ambiguity-aware enclosed HoHoNet 研究计划；属于 non-thesis-facing model research planning，不是 A-line protocol amendment，不回流 A-line routing、formal `g_t`、OOS gate、V1 artifact 或生产 Label Studio 导入/界面
-- `docs/PAPER_B_MODEL_ARCHITECTURE_SPEC_v1.md`
-  - Paper B / non-thesis-facing 的 HoHoNet-AE 架构规划；定义 `P_enc`、`A_amb(x)`、`r_over`、训练目标与禁止输出，不进入 A-line `P1 / C1 / C2 / T1 / V1`
-- `docs/ZIND_MAPPING_AUDIT_PROTOCOL_v1.md`
-  - Paper B / non-thesis-facing 的 ZInD raw / visible mapping audit 规划；用于判断 `Y_enc`、`Y_ext_ref`、`usable_for_B1Z` 与 `usable_for_B2_aux`，不替代 MP3D / MatterportLayout B0 审计
-- `docs/SOP_labelstudio_experiment.md`
-  - Label Studio 运行 SOP
-- `docs/README_ANNOTATOR.md`
-  - 标注员说明
-- `docs/手动分析流程.md`
-  - 自己拿到数据后手动跑分析的流程
-- `docs/ANALYSIS_DATA_FLOW.md`
-  - 数据流说明
-- `docs/label studio注意事项.md`
-  - LS Community Edition 运营边界
-
-### 论文与提纲相关
-
-- `docs/overleaf_project/`
-- `docs/overleaf_project_en_elsarticle/`
-
-### 约束目录
-
-- `docs/约束/`
-  - 协议、约束、字段边界与方法说明
-
-### 归档目录
-
+# HOHONET 项目地图
+
+更新时间：2026-06-08
+
+本地图记录当前仓库的主要目录边界。新增、删除、移动文件后必须检查本文档是否需要同步。
+
+## 顶层目录
+
+- `tools/`：脚本和运行资源，按论文线与共享运行层拆分。
+- `docs/`：协议、SOP、字段合同、论文线文档和 agent 规则；论文模板/参考资料等大块写作资产默认按 `.gitignore` 留在本地。
+- `import_json/`：planned import / planned split 真源。
+- `export_label/`：Label Studio 运行时标注导出真源，不作为脚本写入目标。
+- `active_logs/`：原始 `active_time` 日志真源。
+- `analysis_results/`：生成结果、审计、manifest、图表和中间分析产物。
+- `tests/`：tools 与字段合同的 pytest 覆盖。
+- `data/`：数据资产。
+- `output/`：HoHoNet 推理与中间产物。
+- `trap集/`：trap / manual 候选素材层。
+
+## tools 布局
+
+- `tools/README.md`：tools 总入口；根目录不再保留旧脚本 wrapper。
+- `tools/thesis_main/`
+  - 论文主线工具。
+  - `analysis/`：质量分析、active-time audit、stage-aware 分析、图表、统计汇总。
+  - `registry/`：registry、manifest、freeze、final-gold、trap/materialization、risk-rule、`d_t/g_t` dry-run、export inventory。
+  - `data_prep/`：数据集准备和 MP3D smoke/import 生成。
+  - `foreign_recruitment/`：P1/PreScreen 外国标注员 HTTPS 英文适配包。
+- `tools/paper_a_manhattan/`
+  - Paper A Manhattan / sandbox / expert review / post-hoc audit-only 工具。
+  - `dev_only/`：Manhattan sandbox userscripts。
+- `tools/paper_b/`
+  - Paper B 工具。当前包括 `validate_b0_relabel_audit.py`；后续 B0/B1/B2 训练、cue、bilayout、审计脚本只进本目录。
+- `tools/label_studio/`
+  - 三条线共享的 Label Studio XML、3D viewer、server/CORS、COS/upload、import/build helper 和 `official/`。
+  - 云服务器运行时 URL `/tools/vis_3d.html` 保持兼容，这是部署路由，不代表源码仍在 `tools/` 根目录。
+- `tools/legacy/`、`tools/legacy_server/`、`tools/backups/`
+  - 历史或备份目录，默认不迁移、不修订。
+
+## docs 布局
+
+- `docs/README_INDEX.md`：docs 总索引。
+- `docs/PROJECT_MAP_CLEAN_20260308.md`：本文件，仓库地图。
+- `docs/thesis_main/`
+  - 正式执行主线文档。
+  - 包括 protocol、assignment SOP、PreScreen、Calibration、Main(Test + Validation)、统计计划、字段合同、final-gold、registry、论文主线写作材料。
+  - `manuscript/` 可保存 Overleaf 项目和主线论文写作资产，但按现有 `.gitignore` 默认不提交。
+- `docs/paper_a_manhattan/`
+  - Paper A Manhattan 支线文档。
+  - 包括 geometry roadmap、constrained fit、LS sandbox、expert review、OOS scope audit、3D geometry compatibility/fixture。
+- `docs/paper_b/`
+  - Paper B 支线文档。
+  - 包括 ambiguity-aware HoHoNet、ZInD mapping、B-line freeze/audit、模型架构和后续训练计划。
+- `docs/label_studio/`
+  - Label Studio CE-only、active-time、云端部署、COS、标注员/开发者说明。
+- `docs/agent/`
+  - Agent 上下文、playbook、写入规则和给 Codex 的补充说明。
+  - 关键入口：`AGENT_CONTEXT_INDEX.md`、`WRITE_RULES.md`、`playbooks/`。
+- `docs/shared/`
+  - 论文模板、参考资料、共享写作资产；按现有 `.gitignore` 默认不提交。
 - `docs/legacy/`
-  - 历史文档归档区
-- `docs/legacy/manhattan/`
-  - Manhattan v1 legacy reference 归档区，包含原始 diagnostic plan、offline CLI MVP contract 与 export adapter preflight contract。
-  - 当前 Manhattan 工具入口是 `docs/MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md`；`docs/VIS_3D_GEOMETRY_COMPATIBILITY_SPEC_v1.md` 是当前 3D preview compatibility spec。
-  - Legacy v1 不再作为当前 implementation authority。Realtime assistant 仍是实验外 expert-side / lab-side prototype，不是 protocol core，也不是 worker-facing main experiment condition。
+  - 历史材料，默认不迁移、不修订。
 
----
+## 真源与输出层
 
-## 十一、`trap集/` 地图
+- `import_json/` 是 planned import / planned split 真源。
+- `export_label/` 是 Label Studio 运行时导出真源；本次 tools/docs 迁移不写入、不移动、不重命名。
+- `active_logs/` 是原始 active-time 日志真源。
+  - 云服务器端仍应位于仓库根下，例如 `/home/ubuntu/workspace/HoHoNet/active_logs/`。
+  - 若云端设置 `ACTIVE_LOG_DIR="active_logs/new_server"`，新日志应进入 `/home/ubuntu/workspace/HoHoNet/active_logs/new_server/`。
+  - `tools/label_studio/cors_server.py` 的源码迁移不应改变日志存储根目录。
+- `analysis_results/` 是输出、审计和图表落盘区，不是输入真源。
 
-这个目录是 trap / manual 候选的人工素材层，不是最终 freeze 输出目录。
+## 写入与迁移规则
 
-### 当前需要知道的内容
-
-- 各类 trap family 原始素材
-- 说明文件与 inventory
-- semi / manual / OOS 候选的人工整理依据
-
-### 职责边界
-
-- 这里是上游人工素材层
-- 真正进入 freeze / manifest / import 的结构化输出应看 `analysis_results/` 和 `import_json/`
-
----
-
-## 十二、哪些内容默认不是正式入口
-
-以下内容即使还在仓库里，也不应默认为“当前该从这里开始”：
-
-- `legacy/` 下任何内容
-- 历史 notebook
-- 旧服务器脚本
-- 临时讨论稿
-- 审稿式意见记录
-- 原型分析目录
-- 只服务于某次一次性试跑的临时产物
-
----
-
-## 十三、一句话使用规则
-
-如果你只想知道“现在该看哪里”，顺序固定为：
-
-1. `docs/README_INDEX.md`
-2. `tools/official/`
-3. `import_json/` 与 `export_label/`
-4. `analysis_results/`
-
-
-## Agent-ready 入口
-
-- `AGENTS.md`
-  - Codex 仓库级常驻上下文入口。
-- `docs/AGENT_CONTEXT_INDEX.md`
-  - Codex 上下文路由表。
-- `docs/agent_playbooks/`
-  - Codex 狭义工作流 playbook，覆盖验证、文档同步、协议/统计护栏、CE-only 护栏与交付摘要。
+- 新增 `tools/` 脚本必须进入对应论文线或共享 Label Studio 目录，不得直接放在 `tools/` 根目录。
+- 新增 `docs/` 主题文档必须进入对应分类目录，不得直接放在 `docs/` 根目录。
+- 主线工具和文档分别进入 `tools/thesis_main/` 与 `docs/thesis_main/`。
+- Paper A Manhattan 工具和文档分别进入 `tools/paper_a_manhattan/` 与 `docs/paper_a_manhattan/`。
+- Paper B 工具和文档分别进入 `tools/paper_b/` 与 `docs/paper_b/`。
+- Label Studio 共享资源和说明分别进入 `tools/label_studio/` 与 `docs/label_studio/`。
+- Agent 规则和 playbook 进入 `docs/agent/`。
+- legacy 默认不迁移、不修订。
+- 不改变 protocol、schema、routing、SOP 语义。
