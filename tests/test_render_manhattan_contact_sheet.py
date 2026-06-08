@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import json
 
-from tools.render_manhattan_contact_sheet import main, render_html_contact_sheet
+from tools.paper_a_manhattan.render_manhattan_contact_sheet import main, render_html_contact_sheet
 
 
 def _summary(include_examples=True):

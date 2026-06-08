@@ -4,7 +4,7 @@ import csv
 import json
 from pathlib import Path
 
-from tools.freeze_prescreen_manual import freeze_manual_selection, run
+from tools.thesis_main.registry.freeze_prescreen_manual import freeze_manual_selection, run
 
 
 def _manual_registry_rows() -> list[dict[str, str]]:

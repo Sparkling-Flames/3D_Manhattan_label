@@ -4,7 +4,7 @@ import csv
 import json
 from pathlib import Path
 
-from tools.build_final_gold_preflight import run
+from tools.thesis_main.registry.build_final_gold_preflight import run
 
 
 def _write_json(path: Path, payload: object) -> None:

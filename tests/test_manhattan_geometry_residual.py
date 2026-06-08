@@ -1,11 +1,11 @@
 import pytest
 
-from tools.manhattan_geometry_residual import (
+from tools.paper_a_manhattan.manhattan_geometry_residual import (
     RESIDUAL_VERSION,
     compute_m1_residual,
     compute_residual_from_pairs,
 )
-from tools.manhattan_preview_compat import (
+from tools.paper_a_manhattan.manhattan_preview_compat import (
     FAILURE_DUPLICATE,
     FAILURE_ODD_KEYPOINT,
     check_preview_compatibility,

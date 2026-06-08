@@ -2,7 +2,7 @@ from __future__ import annotations
 
 from pathlib import Path
 
-from tools.revise_semi_selection_v10 import build_semi_v10, build_stage1_audit_v6, load_inputs
+from tools.thesis_main.registry.revise_semi_selection_v10 import build_semi_v10, build_stage1_audit_v6, load_inputs
 
 
 def test_build_semi_v10_replaces_task580_with_task668() -> None:

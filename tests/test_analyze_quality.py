@@ -15,8 +15,7 @@ from pathlib import Path
 import sys
 
 # 导入被测模块
-sys.path.insert(0, str(Path(__file__).parent.parent / "tools"))
-from analyze_quality import (
+from tools.thesis_main.analysis.analyze_quality import (
     parse_quality_flags_v2,
     compute_iou,
     compute_boundary_mse_rmse,
@@ -280,7 +279,7 @@ class TestLayoutStandardMetricsP01:
     
     def test_layout_metrics_no_mismatch_gate(self, sample_corners_8, sample_corners_6):
         """TC-REG003: layout 指标应能计算不同点数的输入（P0-1 核心验证）"""
-        from analyze_quality import compute_layout_standard_metrics
+        from tools.thesis_main.analysis.analyze_quality import compute_layout_standard_metrics
         
         # 8点 vs 6点：点数不同，但 layout 2D/3D IoU 应该能计算
         iou2d, iou3d, depth_rmse, delta1, used, meta = compute_layout_standard_metrics(
@@ -298,7 +297,7 @@ class TestLayoutStandardMetricsP01:
     
     def test_pointwise_still_requires_match(self, sample_corners_8, sample_corners_6):
         """TC-REG003 补充: pointwise RMSE 仍应因点数不同而拒绝计算"""
-        from analyze_quality import compute_pointwise_rmse_cyclic
+        from tools.thesis_main.analysis.analyze_quality import compute_pointwise_rmse_cyclic
         
         # pointwise RMSE 需要点级对应，应当失败
         rmse, used, meta = compute_pointwise_rmse_cyclic(

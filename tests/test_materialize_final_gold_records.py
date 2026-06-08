@@ -4,7 +4,7 @@ import csv
 import json
 from pathlib import Path
 
-from tools.materialize_final_gold_records import run
+from tools.thesis_main.registry.materialize_final_gold_records import run
 
 
 def _write_json(path: Path, payload: object) -> None:

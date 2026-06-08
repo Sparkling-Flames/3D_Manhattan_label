@@ -6,7 +6,7 @@ from pathlib import Path
 
 from PIL import Image
 
-from tools.compute_g_t_diagnostics import OUTPUT_COLUMNS, compute_diagnostics, parse_task, run_dryrun
+from tools.thesis_main.registry.compute_g_t_diagnostics import OUTPUT_COLUMNS, compute_diagnostics, parse_task, run_dryrun
 
 
 def _write_image(path: Path) -> Path:

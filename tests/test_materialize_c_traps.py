@@ -1,9 +1,6 @@
 from pathlib import Path
-import sys
 
-sys.path.insert(0, str(Path(__file__).parent.parent / "tools"))
-
-from materialize_c_traps import (  # noqa: E402
+from tools.thesis_main.registry.materialize_c_traps import (
     APPENDIX_PERTURBATION_SECTION,
     DEFAULT_PRESCREEN_TRAP_FAMILIES,
     build_c_manifest_consistency_audit,
@@ -185,7 +182,7 @@ def test_consistency_audit_appendix_notes_and_manual_queue_are_machine_readable(
 
 
 def test_xml_model_issue_crosswalk_matches_xml_aliases_and_operator_families():
-    xml_rows = load_xml_model_issue_choices(Path(__file__).parent.parent / "tools" / "label_studio_view_config.xml")
+    xml_rows = load_xml_model_issue_choices(Path(__file__).parent.parent / "tools" / "label_studio" / "label_studio_view_config.xml")
     family_rows = build_family_coverage_rows([])
 
     crosswalk = build_xml_model_issue_operator_crosswalk(

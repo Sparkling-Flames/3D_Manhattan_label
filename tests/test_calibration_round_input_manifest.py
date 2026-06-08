@@ -7,7 +7,7 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-SCRIPT = ROOT / "tools" / "build_calibration_round_input_manifest.py"
+SCRIPT = ROOT / "tools" / "thesis_main" / "registry" / "build_calibration_round_input_manifest.py"
 
 
 def write_import(path: Path, dataset_group: str, names: list[str]) -> None:

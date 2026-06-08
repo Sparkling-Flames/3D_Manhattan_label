@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.audit_manhattan_constrained_fit_smoke import (
+from tools.paper_a_manhattan.audit_manhattan_constrained_fit_smoke import (
     audit_export,
     audit_tasks,
     find_latest_export_for_date,

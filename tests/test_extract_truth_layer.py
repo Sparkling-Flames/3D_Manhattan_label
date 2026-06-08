@@ -4,7 +4,7 @@ import csv
 import json
 from pathlib import Path
 
-from tools.extract_truth_layer import (
+from tools.thesis_main.registry.extract_truth_layer import (
     build_oos_reconciliation_case,
     classify_priority_flag,
     run,

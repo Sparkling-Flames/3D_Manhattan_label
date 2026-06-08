@@ -176,5 +176,5 @@ sample_export_large.json            # 1000+任务性能测试
 
 ## 相关文档
 
-- [docs/TEST_PLAN_AND_REVIEW.md](../docs/TEST_PLAN_AND_REVIEW.md): 完整测试计划与用例设计（30+用例详细说明）
-- [docs/ANALYSIS_DATA_FLOW.md](../docs/ANALYSIS_DATA_FLOW.md): 数据流与门控逻辑（含已知问题追踪）
+- [docs/thesis_main/TEST_PLAN_AND_REVIEW.md](../docs/thesis_main/TEST_PLAN_AND_REVIEW.md): 完整测试计划与用例设计（30+用例详细说明）
+- [docs/thesis_main/ANALYSIS_DATA_FLOW.md](../docs/thesis_main/ANALYSIS_DATA_FLOW.md): 数据流与门控逻辑（含已知问题追踪）
