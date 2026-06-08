@@ -67,8 +67,29 @@ def test_oos_split_level_non_manhattan_metadata_suppresses_candidate():
     assert "metadata_non_manhattan" in result["blocking_reasons"]
 
 
+def test_oos_insufficient_metadata_scope_suppresses_candidate():
+    result = gate_manhattan_candidate(_clean_record(), {"metadata": {"scope": "oos_insufficient"}})
+
+    assert result["gate_status"] == SUPPRESS
+    assert "metadata_oos_insufficient" in result["blocking_reasons"]
+
+
+def test_oos_insufficient_top_level_scope_suppresses_candidate():
+    result = gate_manhattan_candidate(_clean_record(scope="oos_insufficient"))
+
+    assert result["gate_status"] == SUPPRESS
+    assert "metadata_oos_insufficient" in result["blocking_reasons"]
+
+
 def test_not_manhattan_assumable_metadata_suppresses_candidate():
     result = gate_manhattan_candidate(_clean_record(), {"metadata": {"manhattan_assumable": False}})
+
+    assert result["gate_status"] == SUPPRESS
+    assert "metadata_not_manhattan_assumable" in result["blocking_reasons"]
+
+
+def test_string_false_manhattan_assumable_metadata_suppresses_candidate():
+    result = gate_manhattan_candidate(_clean_record(), {"metadata": {"manhattan_assumable": "no"}})
 
     assert result["gate_status"] == SUPPRESS
     assert "metadata_not_manhattan_assumable" in result["blocking_reasons"]
@@ -106,11 +127,32 @@ def test_max_abs_delta_can_be_computed_from_per_point_delta():
     assert gate_manhattan_candidate(record)["gate_status"] == EXPERT_REVIEW_ONLY
 
 
+def test_missing_per_point_delta_on_clean_ok_record_goes_to_expert_review_only():
+    result = gate_manhattan_candidate(_clean_record(per_point_delta=[]))
+
+    assert result["gate_status"] == EXPERT_REVIEW_ONLY
+    assert "max_abs_delta_unavailable" in result["gate_reasons"]
+
+
+def test_unparseable_per_point_delta_on_clean_ok_record_goes_to_expert_review_only():
+    result = gate_manhattan_candidate(_clean_record(per_point_delta=[{"pair_index": 1, "top_dx": "bad"}]))
+
+    assert result["gate_status"] == EXPERT_REVIEW_ONLY
+    assert "max_abs_delta_unavailable" in result["gate_reasons"]
+
+
 def test_layout_height_spread_high_goes_to_expert_review_only():
     result = gate_manhattan_candidate(_clean_record(layout_height_spread=0.75))
 
     assert result["gate_status"] == EXPERT_REVIEW_ONLY
     assert "layout_height_spread_high" in result["gate_reasons"]
+
+
+def test_warning_only_layout_height_spread_high_goes_to_expert_review_only():
+    result = gate_manhattan_candidate(_clean_record(warnings=["layout_height_spread_high"], layout_height_spread=None))
+
+    assert result["gate_status"] == EXPERT_REVIEW_ONLY
+    assert "warning_layout_height_spread_high" in result["gate_reasons"]
 
 
 def test_layout_height_spread_fail_suppresses_candidate():

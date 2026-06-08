@@ -43,6 +43,7 @@ METADATA_BLOCKING_TOKENS = {
     "oos_open_boundary",
     "oos_split_level",
     "oos_geometry",
+    "oos_insufficient",
     "not_manhattan_assumable",
     "open_boundary",
     "split_level",
@@ -57,6 +58,9 @@ WARNING_BLOCKING_TOKENS = {
     "implausible_layout_height",
     "candidate_moves_points_too_far",
     "fit_residual_too_high",
+}
+WARNING_REVIEW_TOKENS = {
+    "layout_height_spread_high",
 }
 
 
@@ -85,6 +89,16 @@ def _as_tokens(value: Any) -> list[str]:
             tokens.extend(_as_tokens(nested))
         return tokens
     return [str(value).strip().lower()]
+
+
+def _is_false_like(value: Any) -> bool:
+    if value is False:
+        return True
+    if isinstance(value, str):
+        return value.strip().lower() in {"false", "0", "no"}
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return value == 0
+    return False
 
 
 def _contains_any_token(value: Any, blocking_tokens: set[str]) -> list[str]:
@@ -174,12 +188,14 @@ def gate_manhattan_candidate(
             "manhattan_assumable": record.get("manhattan_assumable"),
         }
     metadata_hits = _contains_any_token(metadata_payload, METADATA_BLOCKING_TOKENS)
-    if isinstance(metadata_payload, Mapping) and metadata_payload.get("manhattan_assumable") is False:
+    if isinstance(metadata_payload, Mapping) and _is_false_like(metadata_payload.get("manhattan_assumable")):
         metadata_hits.append("not_manhattan_assumable")
     blocking_reasons.extend(f"metadata_{hit}" for hit in sorted(set(metadata_hits)))
 
     warning_hits = _contains_any_token(record.get("warnings"), WARNING_BLOCKING_TOKENS)
     blocking_reasons.extend(f"warning_{hit}" for hit in warning_hits)
+    review_warning_hits = _contains_any_token(record.get("warnings"), WARNING_REVIEW_TOKENS)
+    review_reasons.extend(f"warning_{hit}" for hit in review_warning_hits)
 
     supplied_delta = _as_float(record.get("max_abs_delta"))
     computed_delta = compute_max_abs_delta(record.get("per_point_delta"))
@@ -189,6 +205,8 @@ def gate_manhattan_candidate(
             blocking_reasons.append("max_abs_delta_exceeds_fit_fail_threshold")
         elif max_abs_delta >= EXPERT_REVIEW_DELTA_THRESHOLD:
             review_reasons.append("max_abs_delta_large")
+    elif fit_status == "ok":
+        review_reasons.append("max_abs_delta_unavailable")
 
     layout_height_spread = _as_float(record.get("layout_height_spread"))
     if layout_height_spread is not None:
