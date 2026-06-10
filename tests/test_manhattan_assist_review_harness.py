@@ -1,6 +1,7 @@
 import json
 
 from tools.paper_a_manhattan.manhattan_assist_review_harness import (
+    SUMMARY_SCHEMA_VERSION,
     build_pair_assist_review_rows,
     summarize_pair_assist_review,
 )
@@ -247,6 +248,9 @@ def test_output_is_json_serializable():
     rows = build_pair_assist_review_rows([_small_mismatch_record()])
     summary = summarize_pair_assist_review(rows)
 
+    assert summary["summary_schema_version"] == SUMMARY_SCHEMA_VERSION
+    assert summary["review_harness_version"] == "manhattan_assist_review_harness_m15_6_v1"
+    assert "summary_schema_version" not in rows[0]
     json.dumps(rows)
     json.dumps(summary)
 

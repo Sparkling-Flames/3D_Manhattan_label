@@ -22,6 +22,7 @@ from tools.paper_a_manhattan.manhattan_pair_assist import (
 
 
 REVIEW_HARNESS_VERSION = "manhattan_assist_review_harness_m15_6_v1"
+SUMMARY_SCHEMA_VERSION = "manhattan_assist_summary_schema_m15_6_1_v1"
 
 
 def _is_true_like(value: Any) -> bool | None:
@@ -259,11 +260,13 @@ def summarize_pair_assist_review(rows: Sequence[Mapping[str, Any]]) -> dict[str,
         "max_abs_delta_p90": _quantile(deltas, 0.9),
         "max_abs_delta_max": max(deltas) if deltas else None,
         "review_harness_version": REVIEW_HARNESS_VERSION,
+        "summary_schema_version": SUMMARY_SCHEMA_VERSION,
     }
 
 
 __all__ = [
     "REVIEW_HARNESS_VERSION",
+    "SUMMARY_SCHEMA_VERSION",
     "build_pair_assist_review_rows",
     "summarize_pair_assist_review",
 ]
