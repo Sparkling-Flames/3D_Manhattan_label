@@ -1,0 +1,61 @@
+{
+  "created_for": "foreign_https_stage1_labelstudio_import",
+  "date": "2026-06-09",
+  "source_dir": "import_json/stage1_prescreen_final_20260325",
+  "output_dir": "import_json/stage1_prescreen_foreign_https_20260609",
+  "old_vis_3d_base": "http://175.178.71.217:8000",
+  "new_vis_3d_base": "https://label.sparkle0825.top",
+  "rule": "Only data.vis_3d base URL is changed. Task order, image URL, predictions, metadata, task_id, base_task_id, and all labels/proposals remain identical to the Chinese Stage 1 imports.",
+  "files": [
+    {
+      "source": "import_json/stage1_prescreen_final_20260325/stage1_prescreen_manual_import_v2.json",
+      "output": "import_json/stage1_prescreen_foreign_https_20260609/stage1_prescreen_manual_import_v2_foreign_https.json",
+      "task_count": 30,
+      "vis_3d_url_rewritten_count": 30
+    },
+    {
+      "source": "import_json/stage1_prescreen_final_20260325/stage1_prescreen_semi_import_v5.json",
+      "output": "import_json/stage1_prescreen_foreign_https_20260609/stage1_prescreen_semi_import_v5_foreign_https.json",
+      "task_count": 18,
+      "vis_3d_url_rewritten_count": 18
+    },
+    {
+      "source": "import_json/stage1_prescreen_final_20260325/stage1_prescreen_oos_import_v2.json",
+      "output": "import_json/stage1_prescreen_foreign_https_20260609/stage1_prescreen_oos_import_v2_foreign_https.json",
+      "task_count": 9,
+      "vis_3d_url_rewritten_count": 9
+    },
+    {
+      "source": "import_json/stage1_prescreen_final_20260325/stage1_prescreen_oos_audit_only_import_v1.json",
+      "output": "import_json/stage1_prescreen_foreign_https_20260609/stage1_prescreen_oos_audit_only_import_v1_foreign_https.json",
+      "task_count": 1,
+      "vis_3d_url_rewritten_count": 1
+    }
+  ],
+  "test_source_dir": "import_json/stage1_https_test_20260523",
+  "mp3d_txt_smoke_test_source_dir": "import_json/mp3d_txt_smoke_test_20260328",
+  "mp3d_txt_smoke_test_files": [
+    {
+      "source": "import_json/mp3d_txt_smoke_test_20260328/mp3d_txt_manual_smoke_import_v1.json",
+      "output": "import_json/stage1_prescreen_foreign_https_20260609/mp3d_txt_manual_smoke_import_v1_foreign_https.json",
+      "task_count": 5,
+      "dataset_groups": [
+        "MP3D_TXT_SMOKE_manual"
+      ],
+      "condition_values": [
+        "manual"
+      ]
+    },
+    {
+      "source": "import_json/mp3d_txt_smoke_test_20260328/mp3d_txt_semi_smoke_import_v1.json",
+      "output": "import_json/stage1_prescreen_foreign_https_20260609/mp3d_txt_semi_smoke_import_v1_foreign_https.json",
+      "task_count": 5,
+      "dataset_groups": [
+        "MP3D_TXT_SMOKE_semi"
+      ],
+      "condition_values": [
+        "semi"
+      ]
+    }
+  ]
+}

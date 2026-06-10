@@ -8,6 +8,20 @@ from tools.paper_a_manhattan.manhattan_assist_review_harness import (
 
 TOP_Y = 32.0
 BOTTOM_Y = 70.0
+COUNT_FIELDS = [
+    "n_records",
+    "n_candidate_returned",
+    "n_suppressed",
+    "n_review_only",
+    "n_eligible",
+    "n_large_delta_blocked",
+    "n_manual_review",
+    "n_missing_manual_review",
+    "n_manual_candidate_returned",
+    "n_manual_plausible_yes",
+    "n_manual_unsafe_candidate",
+    "n_manual_algorithm_overfit",
+]
 
 
 def _record(target_pair, **overrides):
@@ -113,7 +127,8 @@ def test_manual_review_fields_are_copied():
 def test_summary_handles_empty_rows():
     summary = summarize_pair_assist_review([])
 
-    assert summary["n_records"] == 0
+    for field_name in COUNT_FIELDS:
+        assert summary[field_name] == 0
     assert summary["candidate_retention_rate"] == 0.0
     assert summary["suppress_rate"] == 0.0
     assert summary["review_only_rate"] == 0.0
@@ -136,6 +151,14 @@ def test_summary_handles_rows_without_manual_review():
     assert rows[0]["manual_plausible_candidate"] is None
     assert rows[0]["manual_unsafe_candidate"] is None
     assert rows[0]["manual_algorithm_overfit"] is None
+    assert summary["n_records"] == 1
+    assert summary["n_candidate_returned"] == 1
+    assert summary["n_manual_review"] == 0
+    assert summary["n_missing_manual_review"] == 1
+    assert summary["n_manual_candidate_returned"] == 0
+    assert summary["n_manual_plausible_yes"] == 0
+    assert summary["n_manual_unsafe_candidate"] == 0
+    assert summary["n_manual_algorithm_overfit"] == 0
     assert summary["missing_manual_review_rate"] == 1.0
     assert summary["manual_review_plausible_rate"] == 0.0
     assert summary["unsafe_candidate_rate"] == 0.0
@@ -166,6 +189,17 @@ def test_summary_rates_and_delta_quantiles_are_computed():
     summary = summarize_pair_assist_review(rows)
 
     assert summary["n_records"] == 3
+    assert summary["n_candidate_returned"] == 1
+    assert summary["n_suppressed"] == 1
+    assert summary["n_review_only"] == 1
+    assert summary["n_eligible"] == 1
+    assert summary["n_large_delta_blocked"] == 1
+    assert summary["n_manual_review"] == 2
+    assert summary["n_missing_manual_review"] == 1
+    assert summary["n_manual_candidate_returned"] == 1
+    assert summary["n_manual_plausible_yes"] == 1
+    assert summary["n_manual_unsafe_candidate"] == 0
+    assert summary["n_manual_algorithm_overfit"] == 1
     assert summary["candidate_retention_rate"] == 1 / 3
     assert summary["suppress_rate"] == 1 / 3
     assert summary["review_only_rate"] == 1 / 3
@@ -178,6 +212,35 @@ def test_summary_rates_and_delta_quantiles_are_computed():
     assert summary["max_abs_delta_p50"] == 3.5
     assert summary["max_abs_delta_p90"] == 4.7
     assert summary["max_abs_delta_max"] == 5.0
+
+
+def test_manual_candidate_returned_denominator_is_counted_separately():
+    rows = build_pair_assist_review_rows([
+        _small_mismatch_record(
+            task_id="task-1",
+            manual_review={
+                "plausible_candidate": "no",
+                "unsafe_candidate": "yes",
+                "likely_issue": "annotation_geometry",
+            },
+        ),
+        _record(
+            {"top": {"x": 40.0, "y": TOP_Y}, "bottom": {"x": 30.0, "y": BOTTOM_Y}},
+            task_id="task-2",
+            manual_review={
+                "plausible_candidate": "unsure",
+                "unsafe_candidate": "yes",
+                "likely_issue": "algorithm_overfit",
+            },
+        ),
+    ])
+
+    summary = summarize_pair_assist_review(rows)
+
+    assert summary["n_manual_review"] == 2
+    assert summary["n_manual_candidate_returned"] == 1
+    assert summary["n_manual_unsafe_candidate"] == 1
+    assert summary["unsafe_candidate_rate"] == 1.0
 
 
 def test_output_is_json_serializable():

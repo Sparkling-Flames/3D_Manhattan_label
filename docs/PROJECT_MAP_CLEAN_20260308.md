@@ -9,6 +9,7 @@
 - `tools/`：脚本和运行资源，按论文线与共享运行层拆分。
 - `docs/`：协议、SOP、字段合同、论文线文档和 agent 规则；论文模板/参考资料等大块写作资产默认按 `.gitignore` 留在本地。
 - `import_json/`：planned import / planned split 真源。
+  - `stage1_prescreen_foreign_https_20260609/`：Stage 1 / P1 外国标注员 HTTPS Label Studio 导入包；仅将正式中文包的 `data.vis_3d` base URL 改为 `https://label.sparkle0825.top`，任务池、顺序、metadata、proposal 与图片 URL 保持不变。
 - `export_label/`：Label Studio 运行时标注导出真源，不作为脚本写入目标。
 - `active_logs/`：原始 `active_time` 日志真源。
 - `analysis_results/`：生成结果、审计、manifest、图表和中间分析产物。
@@ -23,6 +24,7 @@
 - `tools/thesis_main/`
   - 论文主线工具。
   - `analysis/`：质量分析、active-time audit、stage-aware 分析、图表、统计汇总。
+    - `rebuild_stage1_chinese_completion_excel.py`：按最新 `标注人员.xlsx`、`退出标注.xlsx`、Stage 1 中文 LS JSON 导出和 active logs 重算中文 P1 完成情况工作簿。
   - `registry/`：registry、manifest、freeze、final-gold、trap/materialization、risk-rule、`d_t/g_t` dry-run、export inventory。
   - `data_prep/`：数据集准备和 MP3D smoke/import 生成。
   - `foreign_recruitment/`：P1/PreScreen 外国标注员 HTTPS 英文适配包。

@@ -7,7 +7,6 @@ Use Chrome or Edge on a desktop/laptop.
 Install one of these browser extensions:
 
 - Tampermonkey
-- Violentmonkey
 
 Do not use incognito/private browsing mode.
 
@@ -23,12 +22,6 @@ The script should show this name:
 
 ```text
 HoHoNet Helper Official Annotator HTTPS EN
-```
-
-For troubleshooting only, the researcher may ask you to install:
-
-```text
-ls_userscript_annotator_https_en_debug.user.js
 ```
 
 Do not enable the normal English helper and the debug English helper at the same
@@ -62,15 +55,13 @@ Open `https://label.sparkle0825.top/`, then open the browser console and run:
 ```javascript
 localStorage.setItem("HOHONET_LOG_TOKEN", "hoho-20260228-zjw200408250904!");
 
-localStorage.setItem("HOHONET_HELPER_BASE_URL", "https://label.sparkle0825.top");
+localStorage.setItem(
+  "HOHONET_HELPER_BASE_URL",
+  "https://label.sparkle0825.top",
+);
 ```
 
 Then refresh the Label Studio page.
-
-Researcher note: the `HOHONET_LOG_TOKEN` value above must be exactly the same as
-the server-side `HOHONET_LOG_TOKEN` used by the `/log_time` service. If the HTTPS
-entry point proxies to the same active-time log server as the Chinese annotator
-setup, use the same token as the Chinese setup.
 
 Do not publish the token in public recruitment text. Send it only to accepted
 participants through a private instruction message.
@@ -82,7 +73,7 @@ Before each annotation session:
 1. Open the assigned Label Studio project.
 2. Open one assigned task.
 3. Move the mouse or interact with the task for a few seconds.
-4. Open the browser developer tools if the researcher asks you to check logging.
+4. Open the browser developer tools to check logging.
 5. In the Network tab, confirm that `/log_time` appears and returns a successful
    status such as `200` or `204`, or ask the researcher to confirm the server log.
 
@@ -97,10 +88,7 @@ refresh the Label Studio page.
 If the browser console shows `Missing HOHONET_LOG_TOKEN`, do not continue real
 annotation until the localStorage token has been set.
 
-If the token is already set but `/log_time` still reports `token= (len=0)`,
-check that only one HoHoNet helper script is enabled in the userscript manager.
-Disable old HTTP, Chinese, debug, or previous English helper scripts for this
-browser profile. Then refresh the Label Studio page and run:
+Then refresh the Label Studio page and run:
 
 ```javascript
 console.log(window.__HOHONET_HELPER_SCRIPT_VERSION__);
@@ -113,12 +101,6 @@ The expected script flavor is:
 
 ```text
 foreign_https_en
-```
-
-If you are intentionally using the debug helper, the expected script flavor is:
-
-```text
-foreign_https_en_debug
 ```
 
 If the 3D viewer does not load, refresh the task page once.

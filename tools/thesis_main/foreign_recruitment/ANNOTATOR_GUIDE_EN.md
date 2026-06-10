@@ -21,9 +21,8 @@ Use the HTTPS link provided by the researcher, usually in this form:
 
 ```text
 https://label.sparkle0825.top/?participantId=YOUR_CONNECT_ID
+https://label.sparkle0825.top
 ```
-
-Do not replace this with an HTTP link.
 
 ## 3. What You Are Annotating
 
@@ -37,7 +36,7 @@ Depending on the assigned project, you may see:
 - `P1_oos`: judge whether the scene is in scope, while still completing the
   required fields in Label Studio.
 
-The researcher will tell you which project(s) to complete.
+important:When you move the mouse over the options of the element tag, there will be a hint for each option.
 
 ## 4. Scope
 
@@ -48,7 +47,7 @@ Use `in_scope` when the image is a valid indoor room layout target.
 Use `out_of_scope` when the scene is not a valid indoor room layout target, for
 example when the main room boundary cannot reasonably be annotated.
 
-Important: the current Label Studio form may still require geometry fields even
+Important: the current Label Studio form  still require geometry fields even
 for out-of-scope cases. If so, complete the required fields as instructed and
 use the scope answer to mark the case.
 

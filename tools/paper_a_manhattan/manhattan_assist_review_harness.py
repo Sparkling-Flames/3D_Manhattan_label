@@ -204,42 +204,55 @@ def summarize_pair_assist_review(rows: Sequence[Mapping[str, Any]]) -> dict[str,
         if row.get("candidate_returned")
     ]
     deltas = _numeric_values(rows, "max_abs_delta")
+    n_candidate_returned = sum(1 for row in rows if row.get("candidate_returned"))
+    n_suppressed = sum(1 for row in rows if row.get("assist_status") == SUPPRESS)
+    n_review_only = sum(1 for row in rows if row.get("assist_status") == REVIEW_ONLY)
+    n_eligible = sum(1 for row in rows if row.get("assist_status") == ELIGIBLE)
+    n_large_delta_blocked = sum(1 for row in rows if _has_large_delta_block(row))
+    n_manual_review = len(manual_rows)
+    n_missing_manual_review = sum(1 for row in rows if not row.get("has_manual_review"))
+    n_manual_candidate_returned = len(manual_candidate_rows)
+    n_manual_plausible_yes = sum(1 for row in manual_rows if _is_plausible_yes(row))
+    n_manual_unsafe_candidate = sum(
+        1 for row in manual_candidate_rows
+        if row.get("manual_unsafe_candidate") is True
+    )
+    n_manual_algorithm_overfit = sum(
+        1 for row in manual_rows
+        if row.get("manual_algorithm_overfit") is True
+    )
     return {
         "n_records": n_records,
-        "candidate_retention_rate": _rate(
-            sum(1 for row in rows if row.get("candidate_returned")),
-            n_records,
-        ),
-        "suppress_rate": _rate(
-            sum(1 for row in rows if row.get("assist_status") == SUPPRESS),
-            n_records,
-        ),
-        "review_only_rate": _rate(
-            sum(1 for row in rows if row.get("assist_status") == REVIEW_ONLY),
-            n_records,
-        ),
-        "eligible_rate": _rate(
-            sum(1 for row in rows if row.get("assist_status") == ELIGIBLE),
-            n_records,
-        ),
-        "large_delta_block_rate": _rate(
-            sum(1 for row in rows if _has_large_delta_block(row)),
-            n_records,
-        ),
+        "n_candidate_returned": n_candidate_returned,
+        "n_suppressed": n_suppressed,
+        "n_review_only": n_review_only,
+        "n_eligible": n_eligible,
+        "n_large_delta_blocked": n_large_delta_blocked,
+        "n_manual_review": n_manual_review,
+        "n_missing_manual_review": n_missing_manual_review,
+        "n_manual_candidate_returned": n_manual_candidate_returned,
+        "n_manual_plausible_yes": n_manual_plausible_yes,
+        "n_manual_unsafe_candidate": n_manual_unsafe_candidate,
+        "n_manual_algorithm_overfit": n_manual_algorithm_overfit,
+        "candidate_retention_rate": _rate(n_candidate_returned, n_records),
+        "suppress_rate": _rate(n_suppressed, n_records),
+        "review_only_rate": _rate(n_review_only, n_records),
+        "eligible_rate": _rate(n_eligible, n_records),
+        "large_delta_block_rate": _rate(n_large_delta_blocked, n_records),
         "unsafe_candidate_rate": _rate(
-            sum(1 for row in manual_candidate_rows if row.get("manual_unsafe_candidate") is True),
+            n_manual_unsafe_candidate,
             len(manual_candidate_rows),
         ),
         "algorithm_overfit_rate": _rate(
-            sum(1 for row in manual_rows if row.get("manual_algorithm_overfit") is True),
+            n_manual_algorithm_overfit,
             len(manual_rows),
         ),
         "manual_review_plausible_rate": _rate(
-            sum(1 for row in manual_rows if _is_plausible_yes(row)),
+            n_manual_plausible_yes,
             len(manual_rows),
         ),
         "missing_manual_review_rate": _rate(
-            sum(1 for row in rows if not row.get("has_manual_review")),
+            n_missing_manual_review,
             n_records,
         ),
         "max_abs_delta_p50": _quantile(deltas, 0.5),
