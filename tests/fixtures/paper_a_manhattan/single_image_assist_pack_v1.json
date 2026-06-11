@@ -92,5 +92,52 @@
       {"type": "keypointlabels", "value": {"x": 80.0, "y": 32.0}},
       {"type": "keypointlabels", "value": {"x": 80.0, "y": 70.0}}
     ]
+  },
+  "label_studio_result_odd": {
+    "task_id": "single-task-008",
+    "annotation_id": "single-ann-008",
+    "metadata": {"scope": "normal", "manhattan_assumable": true},
+    "result": [
+      {"type": "keypointlabels", "value": {"x": 10.0, "y": 32.0}},
+      {"type": "keypointlabels", "value": {"x": 10.0, "y": 70.0}},
+      {"type": "keypointlabels", "value": {"x": 34.0, "y": 32.0}}
+    ]
+  },
+  "raw_keypoints_duplicate": {
+    "task_id": "single-task-009",
+    "annotation_id": "single-ann-009",
+    "keypoints": [
+      {"x": 10.0, "y": 32.0},
+      {"x": 10.0, "y": 70.0},
+      {"x": 10.4, "y": 33.0},
+      {"x": 10.4, "y": 69.0},
+      {"x": 60.0, "y": 32.0},
+      {"x": 60.0, "y": 70.0},
+      {"x": 80.0, "y": 32.0},
+      {"x": 80.0, "y": 70.0}
+    ],
+    "metadata": {}
+  },
+  "simplified_dense_corner": {
+    "task_id": "single-task-010",
+    "annotation_id": "single-ann-010",
+    "ordered_pairs": [
+      {"top": {"x": 10.0, "y": 32.0}, "bottom": {"x": 10.0, "y": 70.0}},
+      {"top": {"x": 10.4, "y": 33.0}, "bottom": {"x": 10.4, "y": 69.0}},
+      {"top": {"x": 60.0, "y": 32.0}, "bottom": {"x": 60.0, "y": 70.0}},
+      {"top": {"x": 80.0, "y": 32.0}, "bottom": {"x": 80.0, "y": 70.0}}
+    ],
+    "metadata": {}
+  },
+  "simplified_order_zigzag": {
+    "task_id": "single-task-011",
+    "annotation_id": "single-ann-011",
+    "ordered_pairs": [
+      {"top": {"x": 30.0, "y": 32.0}, "bottom": {"x": 30.0, "y": 70.0}},
+      {"top": {"x": 10.0, "y": 32.0}, "bottom": {"x": 10.0, "y": 70.0}},
+      {"top": {"x": 40.0, "y": 32.0}, "bottom": {"x": 40.0, "y": 70.0}},
+      {"top": {"x": 20.0, "y": 32.0}, "bottom": {"x": 20.0, "y": 70.0}}
+    ],
+    "metadata": {}
   }
 }

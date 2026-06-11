@@ -33,6 +33,9 @@ from tools.paper_a_manhattan.manhattan_pair_assist import (  # noqa: E402
 )
 from tools.paper_a_manhattan.manhattan_preview_compat import (  # noqa: E402
     COMPATIBLE,
+    DEFAULT_HEIGHT,
+    DEFAULT_WIDTH,
+    DUPLICATE_CORNER_THRESHOLD_RATIO,
     check_preview_compatibility,
 )
 
@@ -155,10 +158,11 @@ def _raw_keypoints_from_payload(payload: Mapping[str, Any]) -> tuple[str, list[A
 
 
 def _resolve_ordered_pairs(payload: Mapping[str, Any]) -> tuple[str, dict[str, Any], list[dict[str, Any]]]:
-    width = _as_int(payload.get("width"), 1024)
-    height = _as_int(payload.get("height"), 512)
+    width = _as_int(payload.get("width"), DEFAULT_WIDTH)
+    height = _as_int(payload.get("height"), DEFAULT_HEIGHT)
     preserve_order = _as_bool(payload.get("preserve_order"), False)
     if isinstance(payload.get("ordered_pairs"), list):
+        ordered_pairs = list(payload["ordered_pairs"])
         return (
             "simplified_ordered_pairs",
             _preview_summary(
@@ -168,7 +172,7 @@ def _resolve_ordered_pairs(payload: Mapping[str, Any]) -> tuple[str, dict[str, A
                 height=height,
                 preserve_order=preserve_order,
             ),
-            list(payload["ordered_pairs"]),
+            ordered_pairs,
         )
 
     input_mode, raw_keypoints = _raw_keypoints_from_payload(payload)
@@ -195,6 +199,143 @@ def _resolve_ordered_pairs(payload: Mapping[str, Any]) -> tuple[str, dict[str, A
         return input_mode, preview_info, []
     ordered_pairs = [_preview_pair_to_ordered_pair(pair) for pair in preview.ordered_corners]
     return input_mode, preview_info, ordered_pairs
+
+
+def _center_rows_from_ordered_pairs(
+    ordered_pairs: Sequence[Mapping[str, Any]],
+    *,
+    index_source: str,
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for idx, pair in enumerate(ordered_pairs, start=1):
+        try:
+            top_x = float(pair["top"]["x"])
+            bottom_x = float(pair["bottom"]["x"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        rows.append(
+            {
+                "pair_index": idx,
+                "center_x": (top_x + bottom_x) / 2.0,
+                "index_source": index_source,
+            }
+        )
+    return rows
+
+
+def _center_rows_from_preview(preview: Any, width: int) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for idx, pair in enumerate(preview.ordered_corners, start=1):
+        rows.append(
+            {
+                "pair_index": idx,
+                "center_x": pair.x * 100.0 / width,
+                "index_source": "preview_ordered_corners",
+            }
+        )
+    return rows
+
+
+def _duplicate_diagnostics_from_centers(
+    centers: Sequence[Mapping[str, Any]],
+    *,
+    threshold_percent: float,
+) -> list[dict[str, Any]]:
+    diagnostics: list[dict[str, Any]] = []
+    ordered = sorted(centers, key=lambda row: float(row["center_x"]))
+    for left, right in zip(ordered, ordered[1:]):
+        delta = abs(float(right["center_x"]) - float(left["center_x"]))
+        if delta < threshold_percent:
+            diagnostics.append(
+                {
+                    "left_pair_index": left["pair_index"],
+                    "right_pair_index": right["pair_index"],
+                    "left_center_x": left["center_x"],
+                    "right_center_x": right["center_x"],
+                    "delta_center_x": delta,
+                    "duplicate_threshold_percent": threshold_percent,
+                    "reason": "near_duplicate_corner_pair",
+                    "manual_only": True,
+                    "index_source": left.get("index_source", "unknown"),
+                }
+            )
+    return diagnostics
+
+
+def _order_diagnostics_from_centers(centers: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+    if len(centers) < 2:
+        return {
+            "is_x_monotonic": True,
+            "n_direction_changes": 0,
+            "direction_change_pairs": [],
+            "manual_only_reason": None,
+        }
+    deltas: list[tuple[int, int, float]] = []
+    for left, right in zip(centers, centers[1:]):
+        delta = float(right["center_x"]) - float(left["center_x"])
+        if delta == 0:
+            continue
+        deltas.append((int(left["pair_index"]), int(right["pair_index"]), delta))
+    signs = [1 if delta > 0 else -1 for _, _, delta in deltas]
+    direction_changes: list[dict[str, Any]] = []
+    for idx in range(1, len(signs)):
+        if signs[idx] == signs[idx - 1]:
+            continue
+        direction_changes.append(
+            {
+                "left_pair_index": deltas[idx - 1][0],
+                "middle_pair_index": deltas[idx - 1][1],
+                "right_pair_index": deltas[idx][1],
+                "from_direction": "increasing" if signs[idx - 1] > 0 else "decreasing",
+                "to_direction": "increasing" if signs[idx] > 0 else "decreasing",
+                "reason": "local_order_zigzag",
+                "manual_only": True,
+            }
+        )
+    return {
+        "is_x_monotonic": not direction_changes,
+        "n_direction_changes": len(direction_changes),
+        "direction_change_pairs": direction_changes,
+        "manual_only_reason": "local_order_zigzag" if direction_changes else None,
+    }
+
+
+def _diagnostics_from_payload(
+    payload: Mapping[str, Any],
+    ordered_pairs: Sequence[Mapping[str, Any]],
+    *,
+    input_mode: str,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    width = _as_int(payload.get("width"), DEFAULT_WIDTH)
+    height = _as_int(payload.get("height"), DEFAULT_HEIGHT)
+    preserve_order = _as_bool(payload.get("preserve_order"), False)
+    threshold_percent = DUPLICATE_CORNER_THRESHOLD_RATIO * 100.0
+
+    if input_mode == "simplified_ordered_pairs":
+        centers = _center_rows_from_ordered_pairs(
+            ordered_pairs,
+            index_source="ordered_pairs_input_order",
+        )
+    else:
+        _, raw_keypoints = _raw_keypoints_from_payload(payload)
+        if not isinstance(raw_keypoints, list):
+            centers = []
+        else:
+            preview = check_preview_compatibility(
+                raw_keypoints,
+                preserve_order=preserve_order,
+                width=width,
+                height=height,
+            )
+            centers = _center_rows_from_preview(preview, width)
+
+    return (
+        _duplicate_diagnostics_from_centers(
+            centers,
+            threshold_percent=threshold_percent,
+        ),
+        _order_diagnostics_from_centers(centers),
+    )
 
 
 def _pair_indices(ordered_pairs: Sequence[Mapping[str, Any]]) -> list[int]:
@@ -232,11 +373,16 @@ def _proposal_row(
     return row
 
 
-def _manual_edit_row(pair: Mapping[str, Any], proposal: Mapping[str, Any]) -> dict[str, Any]:
+def _manual_edit_row(
+    pair: Mapping[str, Any],
+    proposal: Mapping[str, Any],
+    manual_only_reason: str | None = None,
+) -> dict[str, Any]:
     pair_index = proposal["pair_index"]
     top = pair["top"]
     bottom = pair["bottom"]
-    eligible = proposal.get("assist_status") == ELIGIBLE
+    eligible = proposal.get("assist_status") == ELIGIBLE and manual_only_reason is None
+    reason = manual_only_reason or "; ".join(proposal.get("assist_reasons", []))
     row = {
         "pair_index": pair_index,
         "action": "align_pair_x" if eligible else "manual_review_only",
@@ -246,12 +392,12 @@ def _manual_edit_row(pair: Mapping[str, Any], proposal: Mapping[str, Any]) -> di
         "to_bottom_x": proposal.get("suggested_bottom_x") if eligible else None,
         "top_dx": proposal.get("top_dx"),
         "bottom_dx": proposal.get("bottom_dx"),
-        "reason": None if eligible else "; ".join(proposal.get("assist_reasons", [])),
+        "reason": None if eligible else reason,
         "y_change_allowed": False,
         "notes": (
             "Manual expert may align top.x and bottom.x only; keep y unchanged."
             if eligible
-            else "; ".join(proposal.get("assist_reasons", []))
+            else reason
         ),
     }
     return row
@@ -313,17 +459,26 @@ def _review_priority(
 def _recommended_review_order(
     proposals: Sequence[Mapping[str, Any]],
     height_rows: Sequence[Mapping[str, Any]],
+    manual_only_reasons: Mapping[int, str] | None = None,
 ) -> list[dict[str, Any]]:
     height_lookup = _height_row_by_pair(height_rows)
+    manual_only_reasons = manual_only_reasons or {}
     ranked: list[tuple[tuple[float, float], dict[str, Any]]] = []
     for proposal in proposals:
         pair_index = proposal["pair_index"]
         height_row = height_lookup.get(pair_index)
-        review_priority, primary_action, manual_only, sort_key = _review_priority(
-            proposal,
-            height_row,
-        )
+        if pair_index in manual_only_reasons:
+            review_priority = "manual_only_dense_or_order"
+            primary_action = "manual_review_only"
+            manual_only = True
+            sort_key = (2.0, 0.0)
+        else:
+            review_priority, primary_action, manual_only, sort_key = _review_priority(
+                proposal,
+                height_row,
+            )
         reason = _first_reason(
+            [manual_only_reasons[pair_index]] if pair_index in manual_only_reasons else [],
             proposal.get("assist_reasons", []),
             height_row.get("height_reproject_blocking_reasons", []) if height_row else [],
             height_row.get("height_reproject_reasons", []) if height_row else [],
@@ -390,11 +545,16 @@ def _summary(
 
 def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
     input_mode, preview_compatibility, ordered_pairs = _resolve_ordered_pairs(payload)
+    duplicate_diagnostics, order_diagnostics = _diagnostics_from_payload(
+        payload,
+        ordered_pairs,
+        input_mode=input_mode,
+    )
     metadata = payload.get("metadata") if isinstance(payload.get("metadata"), Mapping) else None
     task_id = payload.get("task_id")
     annotation_id = payload.get("annotation_id")
 
-    if preview_compatibility["status"] != COMPATIBLE and input_mode == "raw_keypoints":
+    if preview_compatibility["status"] != COMPATIBLE and input_mode != "simplified_ordered_pairs":
         return {
             "task_id": task_id,
             "annotation_id": annotation_id,
@@ -405,6 +565,8 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
             "pair_diagnostics": [],
             "align_pair_x_proposals": [],
             "height_reproject_applicability_rows": [],
+            "duplicate_diagnostics": duplicate_diagnostics,
+            "order_diagnostics": order_diagnostics,
             "recommended_review_order": [],
             "manual_edit_table": [],
             "summary": _summary(
@@ -436,11 +598,23 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         ],
         operation=HEIGHT_REPROJECT_APPLICABILITY_OPERATION,
     )
+    manual_only_reasons: dict[int, str] = {}
+    for diagnostic in duplicate_diagnostics:
+        reason = diagnostic["reason"]
+        manual_only_reasons[int(diagnostic["left_pair_index"])] = reason
+        manual_only_reasons[int(diagnostic["right_pair_index"])] = reason
+    for change in order_diagnostics.get("direction_change_pairs", []):
+        for key in ("left_pair_index", "middle_pair_index", "right_pair_index"):
+            manual_only_reasons[int(change[key])] = "local_order_zigzag"
     recommended = [
-        *_recommended_review_order(proposals, height_rows),
+        *_recommended_review_order(proposals, height_rows, manual_only_reasons),
     ]
     manual_edit_table = [
-        _manual_edit_row(ordered_pairs[int(row["pair_index"]) - 1], row)
+        _manual_edit_row(
+            ordered_pairs[int(row["pair_index"]) - 1],
+            row,
+            manual_only_reasons.get(int(row["pair_index"])),
+        )
         for row in proposals
     ]
 
@@ -454,6 +628,8 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         "pair_diagnostics": pair_diagnostics,
         "align_pair_x_proposals": proposals,
         "height_reproject_applicability_rows": height_rows,
+        "duplicate_diagnostics": duplicate_diagnostics,
+        "order_diagnostics": order_diagnostics,
         "recommended_review_order": recommended,
         "manual_edit_table": manual_edit_table,
         "summary": _summary(
@@ -492,6 +668,7 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         "# Single-image Manhattan Assist Report",
         "",
         NO_WRITEBACK_NOTE,
+        "Only rows with action=align_pair_x may be used as manual x-alignment references. Do not edit y from this report.",
         "",
         "## Preview Compatibility",
         "",
@@ -515,6 +692,25 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
             payload.get("pair_diagnostics", []),
         )
     )
+    lines.extend(["", "## Recommended Review Order", ""])
+    lines.extend(
+        _markdown_table(
+            [
+                "rank",
+                "pair_index",
+                "review_priority",
+                "primary_action",
+                "assist_status",
+                "height_reproject_status",
+                "vertical_x_residual",
+                "height_residual",
+                "max_abs_delta",
+                "reason",
+                "manual_only",
+            ],
+            payload.get("recommended_review_order", []),
+        )
+    )
     lines.extend(["", "## Manual Edit Table", ""])
     lines.extend(
         _markdown_table(
@@ -531,6 +727,36 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 "reason",
             ],
             payload.get("manual_edit_table", []),
+        )
+    )
+    lines.extend(["", "## Duplicate / Dense Corner Diagnostics", ""])
+    lines.extend(
+        _markdown_table(
+            [
+                "left_pair_index",
+                "right_pair_index",
+                "left_center_x",
+                "right_center_x",
+                "delta_center_x",
+                "duplicate_threshold_percent",
+                "reason",
+                "manual_only",
+                "index_source",
+            ],
+            payload.get("duplicate_diagnostics", []),
+        )
+    )
+    order_diagnostics = payload.get("order_diagnostics") or {}
+    lines.extend(["", "## Order Diagnostics", ""])
+    lines.extend(
+        _markdown_table(
+            [
+                "is_x_monotonic",
+                "n_direction_changes",
+                "direction_change_pairs",
+                "manual_only_reason",
+            ],
+            [order_diagnostics],
         )
     )
     lines.extend(["", "## Height Applicability Summary", ""])

@@ -82,6 +82,17 @@ def test_label_studio_result_alias_extracts_keypoints_and_outputs_results():
     assert len(result["height_reproject_applicability_rows"]) == 4
 
 
+def test_label_studio_result_odd_keypoints_short_circuits_without_suggestions():
+    result = build_single_image_assist(_fixture_case("label_studio_result_odd"))
+
+    assert result["input_mode"] == "label_studio_result"
+    assert result["preview_compatibility"]["status"] == "compatibility_failure_odd_keypoint"
+    assert result["ordered_pairs"] == []
+    assert result["pair_diagnostics"] == []
+    assert result["align_pair_x_proposals"] == []
+    assert result["manual_edit_table"] == []
+
+
 def test_align_pair_x_eligible_outputs_suggested_x_and_no_y_change():
     result = build_single_image_assist(_fixture_case("simplified_ordered_pairs"))
     proposal = next(row for row in result["align_pair_x_proposals"] if row["pair_index"] == 2)
@@ -153,6 +164,60 @@ def test_recommended_review_order_is_object_list_with_required_fields():
         assert field_name in first
 
 
+def test_raw_keypoints_duplicate_failure_outputs_duplicate_diagnostics():
+    result = build_single_image_assist(_fixture_case("raw_keypoints_duplicate"))
+
+    assert result["preview_compatibility"]["status"] == "compatibility_failure_duplicate"
+    assert result["ordered_pairs"] == []
+    assert result["manual_edit_table"] == []
+    assert result["duplicate_diagnostics"]
+    diagnostic = result["duplicate_diagnostics"][0]
+    assert diagnostic["reason"] == "near_duplicate_corner_pair"
+    assert diagnostic["manual_only"] is True
+    assert diagnostic["index_source"] == "preview_ordered_corners"
+
+
+def test_simplified_dense_corner_outputs_duplicate_diagnostics_without_crashing():
+    result = build_single_image_assist(_fixture_case("simplified_dense_corner"))
+
+    assert result["input_mode"] == "simplified_ordered_pairs"
+    assert result["summary"]["n_ordered_pairs"] == 4
+    assert result["duplicate_diagnostics"]
+    diagnostic = result["duplicate_diagnostics"][0]
+    assert diagnostic["left_pair_index"] == 1
+    assert diagnostic["right_pair_index"] == 2
+    assert diagnostic["reason"] == "near_duplicate_corner_pair"
+
+
+def test_order_zigzag_fixture_outputs_local_order_zigzag():
+    result = build_single_image_assist(_fixture_case("simplified_order_zigzag"))
+
+    assert result["order_diagnostics"]["is_x_monotonic"] is False
+    assert result["order_diagnostics"]["manual_only_reason"] == "local_order_zigzag"
+    assert result["order_diagnostics"]["n_direction_changes"] > 0
+
+
+def test_duplicate_or_order_manual_only_pairs_do_not_get_align_pair_x_suggestions():
+    dense = build_single_image_assist(_fixture_case("simplified_dense_corner"))
+    dense_edit = next(row for row in dense["manual_edit_table"] if row["pair_index"] == 1)
+    dense_review = next(row for row in dense["recommended_review_order"] if row["pair_index"] == 1)
+    zigzag = build_single_image_assist(_fixture_case("simplified_order_zigzag"))
+    zigzag_edit = next(row for row in zigzag["manual_edit_table"] if row["pair_index"] == 1)
+    zigzag_review = next(row for row in zigzag["recommended_review_order"] if row["pair_index"] == 1)
+
+    assert dense_edit["action"] == "manual_review_only"
+    assert dense_edit["to_top_x"] is None
+    assert dense_edit["to_bottom_x"] is None
+    assert dense_review["manual_only"] is True
+    assert dense_review["primary_action"] == "manual_review_only"
+    assert dense_review["reason"] == "near_duplicate_corner_pair"
+    assert zigzag_edit["action"] == "manual_review_only"
+    assert zigzag_edit["to_top_x"] is None
+    assert zigzag_edit["to_bottom_x"] is None
+    assert zigzag_review["manual_only"] is True
+    assert zigzag_review["reason"] == "local_order_zigzag"
+
+
 def test_cli_output_is_json_serializable(tmp_path):
     input_path = tmp_path / "single_input.json"
     output_path = tmp_path / "single_output.json"
@@ -193,6 +258,11 @@ def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
     assert "Preview Compatibility" in text
     assert "Pair Diagnostics" in text
     assert "Manual Edit Table" in text
+    assert "Recommended Review Order" in text
+    assert "align_x_first" in text
+    assert "Do not edit y from this report" in text
+    assert "Duplicate / Dense Corner Diagnostics" in text
+    assert "Order Diagnostics" in text
     assert "Height Applicability Summary" in text
     assert "no UI, no apply/writeback" in text
 
