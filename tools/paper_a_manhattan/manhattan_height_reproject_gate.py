@@ -39,6 +39,7 @@ STATE_SUPPRESS_WARNINGS = {
 }
 TARGET_REVIEW_WARNINGS = {
     "height_residual_high",
+    "vertical_corner_x_mismatch",
 }
 TARGET_SUPPRESS_WARNINGS = {
     "top_not_above_bottom",
@@ -56,21 +57,52 @@ def _is_false_like(value: Any) -> bool:
     return False
 
 
-def _metadata_suppress_reason(metadata: Mapping[str, Any] | None) -> str | None:
+def _iter_metadata_tokens(value: Any):
+    if value is None:
+        return
+    if isinstance(value, Mapping):
+        for key, item in value.items():
+            yield str(key).strip().lower()
+            yield from _iter_metadata_tokens(item)
+        return
+    if isinstance(value, (list, tuple, set, frozenset)):
+        for item in value:
+            yield from _iter_metadata_tokens(item)
+        return
+    text = str(value).strip().lower()
+    if text:
+        yield text
+
+
+def _has_false_like_manhattan_assumable(value: Any) -> bool:
+    if isinstance(value, Mapping):
+        for key, item in value.items():
+            if str(key).strip().lower() == "manhattan_assumable" and _is_false_like(item):
+                return True
+            if _has_false_like_manhattan_assumable(item):
+                return True
+    elif isinstance(value, (list, tuple, set, frozenset)):
+        return any(_has_false_like_manhattan_assumable(item) for item in value)
+    return False
+
+
+def _metadata_suppress_reasons(metadata: Mapping[str, Any] | None) -> list[str]:
     if not metadata:
-        return None
-    for key in ("scope", "layout_type"):
-        value = metadata.get(key)
-        if value is not None:
-            token = str(value).strip().lower()
-            if token in METADATA_SUPPRESS_TOKENS:
-                return f"metadata_{token}"
+        return []
+
+    reasons: set[str] = set()
+    for raw_token in _iter_metadata_tokens(metadata):
+        for suppress_token in METADATA_SUPPRESS_TOKENS:
+            if raw_token == suppress_token or suppress_token in raw_token:
+                reasons.add(f"metadata_{suppress_token}")
+
     for token in METADATA_SUPPRESS_TOKENS:
         if metadata.get(token):
-            return f"metadata_{token}"
-    if _is_false_like(metadata.get("manhattan_assumable")):
-        return "metadata_not_manhattan_assumable"
-    return None
+            reasons.add(f"metadata_{token}")
+
+    if _has_false_like_manhattan_assumable(metadata):
+        reasons.add("metadata_not_manhattan_assumable")
+    return sorted(reasons)
 
 
 def _as_pair_index(pair_index: Any) -> int | None:
@@ -108,12 +140,14 @@ def _finish(
     status: str,
     reasons: list[str],
 ) -> dict[str, Any]:
+    reason_list = sorted(set(reasons))
     return {
         "state_status": state.get("state_status"),
         "target_pair_index": target_pair_index,
         "height_reproject_status": status,
         "height_reproject_applicable": status == ELIGIBLE,
-        "height_reproject_blocking_reasons": sorted(set(reasons)),
+        "height_reproject_blocking_reasons": [] if status == ELIGIBLE else reason_list,
+        "height_reproject_reasons": reason_list if status == ELIGIBLE else [],
         "estimated_layout_height": state.get("layout_height_candidate"),
         "layout_height_spread": state.get("layout_height_spread"),
         "target_height_residual_before": (
@@ -145,13 +179,12 @@ def diagnose_height_reproject_applicability(
             reasons=["invalid_pair_index"],
         )
 
-    metadata_reason = _metadata_suppress_reason(metadata)
+    metadata_reasons = _metadata_suppress_reasons(metadata)
     state = build_room_layout_state(ordered_pairs, metadata=metadata)
     state_status = state.get("state_status")
     if state_status in {"failed", "excluded"}:
         reasons = [f"state_{state_status}"] + list(state.get("state_warnings", []))
-        if metadata_reason:
-            reasons.append(metadata_reason)
+        reasons.extend(metadata_reasons)
         return _finish(
             state=state,
             target_pair_index=target_pair_index,
@@ -162,8 +195,7 @@ def diagnose_height_reproject_applicability(
 
     suppress_reasons: list[str] = []
     review_reasons: list[str] = []
-    if metadata_reason:
-        suppress_reasons.append(metadata_reason)
+    suppress_reasons.extend(metadata_reasons)
 
     state_warnings = set(state.get("state_warnings", []))
     suppress_reasons.extend(
@@ -240,12 +272,26 @@ def gate_height_y_delta(
     parsed_delta = _as_finite_float(max_y_delta)
     expert_threshold = _as_finite_float(expert_review_threshold)
     hard_threshold = _as_finite_float(hard_fail_threshold)
-    if parsed_delta is None or expert_threshold is None or hard_threshold is None:
+    if parsed_delta is None:
         return {
             "height_reproject_status": REVIEW_ONLY,
             "height_reproject_blocking_reasons": ["max_y_delta_unavailable"],
             "max_y_delta": parsed_delta,
             "y_delta_gate_status": "review_only_delta_unavailable",
+            "gate_version": GATE_VERSION,
+        }
+    if (
+        expert_threshold is None
+        or hard_threshold is None
+        or expert_threshold < 0
+        or hard_threshold <= 0
+        or hard_threshold < expert_threshold
+    ):
+        return {
+            "height_reproject_status": REVIEW_ONLY,
+            "height_reproject_blocking_reasons": ["invalid_y_delta_thresholds"],
+            "max_y_delta": parsed_delta,
+            "y_delta_gate_status": "review_only_invalid_y_delta_thresholds",
             "gate_version": GATE_VERSION,
         }
     if parsed_delta > hard_threshold:

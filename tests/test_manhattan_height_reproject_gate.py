@@ -30,7 +30,8 @@ def test_clean_state_with_enough_anchors_is_eligible():
     assert result["target_pair_index"] == 2
     assert result["height_reproject_status"] == ELIGIBLE
     assert result["height_reproject_applicable"] is True
-    assert result["height_reproject_blocking_reasons"] == ["height_reproject_applicable"]
+    assert result["height_reproject_blocking_reasons"] == []
+    assert result["height_reproject_reasons"] == ["height_reproject_applicable"]
     assert result["estimated_layout_height"] is not None
     assert result["layout_height_spread"] == 0.0
     assert result["target_height_residual_before"] == 0.0
@@ -56,6 +57,28 @@ def test_oos_insufficient_suppresses():
         _clean_pairs(),
         2,
         metadata={"scope": "oos_insufficient"},
+    )
+
+    assert result["height_reproject_status"] == SUPPRESS
+    assert "metadata_oos_insufficient" in result["height_reproject_blocking_reasons"]
+
+
+def test_scope_vote_oos_open_boundary_suppresses():
+    result = diagnose_height_reproject_applicability(
+        _clean_pairs(),
+        2,
+        metadata={"scope_vote": "oos_open_boundary"},
+    )
+
+    assert result["height_reproject_status"] == SUPPRESS
+    assert "metadata_oos_open_boundary" in result["height_reproject_blocking_reasons"]
+
+
+def test_nested_metadata_oos_insufficient_suppresses():
+    result = diagnose_height_reproject_applicability(
+        _clean_pairs(),
+        2,
+        metadata={"review": {"tokens": ["normal", {"scope": "oos_insufficient"}]}},
     )
 
     assert result["height_reproject_status"] == SUPPRESS
@@ -112,6 +135,19 @@ def test_target_height_residual_high_is_review_only():
     assert result["target_height_residual_before"] > 0.5
 
 
+def test_target_vertical_corner_x_mismatch_is_review_only():
+    rows = _clean_pairs()
+    rows[1]["top"]["x"] = 32.0
+
+    result = diagnose_height_reproject_applicability(rows, 2)
+
+    assert result["height_reproject_status"] == REVIEW_ONLY
+    assert (
+        "target_warning_vertical_corner_x_mismatch"
+        in result["height_reproject_blocking_reasons"]
+    )
+
+
 def test_target_top_not_above_bottom_suppresses():
     rows = _clean_pairs()
     rows[1]["top"]["y"] = 75.0
@@ -158,6 +194,21 @@ def test_gate_height_y_delta_unavailable_large_hard_fail_and_small():
     ]
     assert small["height_reproject_status"] == ELIGIBLE
     assert small["height_reproject_blocking_reasons"] == []
+
+
+def test_gate_height_y_delta_invalid_thresholds_are_review_only():
+    for expert_threshold, hard_threshold in (
+        (None, 10.0),
+        ("bad", 10.0),
+        (float("inf"), 10.0),
+        (-1.0, 10.0),
+        (4.0, 0.0),
+        (10.0, 4.0),
+    ):
+        result = gate_height_y_delta(3.0, expert_threshold, hard_threshold)
+
+        assert result["height_reproject_status"] == REVIEW_ONLY
+        assert result["height_reproject_blocking_reasons"] == ["invalid_y_delta_thresholds"]
 
 
 def test_output_is_json_serializable_and_has_no_candidate_or_writeback_fields():

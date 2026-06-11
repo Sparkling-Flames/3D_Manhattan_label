@@ -54,6 +54,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - `tools/paper_a_manhattan/manhattan_candidate_gate.py` provides the M14.3 expert-side candidate gating core for constrained-fit outputs; it is not correctness, formal `g_t`, routing, worker quality, writeback, UI, or P1/C1/C2/T1/V1 logic.
 - `tools/paper_a_manhattan/manhattan_layout_state.py` provides the M14.4 expert-side RoomLayoutState and pair diagnostics core; it is diagnostic only and has no UI, snap/apply/writeback, routing, worker quality, formal `g_t`, or P1/C1/C2/T1/V1 role.
 - `tools/paper_a_manhattan/manhattan_pair_assist.py` provides the M14.5 expert-side low-risk pair diagnostics consumer and x-alignment preview candidate core; it does not apply, snap, reproject height, move walls, write annotations, add UI, route, or create formal artifacts.
+- `tools/paper_a_manhattan/manhattan_height_reproject_gate.py` provides the M15.8 diagnostic-only height reproject applicability and y-delta gate; it does not implement height reproject, return candidates, write annotations, add UI, route, or create formal artifacts.
 
 ## 论文 B 线
 
