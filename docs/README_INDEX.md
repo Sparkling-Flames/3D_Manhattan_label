@@ -57,6 +57,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - `tools/paper_a_manhattan/manhattan_height_reproject_gate.py` provides the M15.8 diagnostic-only height reproject applicability and y-delta gate; it does not implement height reproject, return candidates, write annotations, add UI, route, or create formal artifacts.
 - `tools/paper_a_manhattan/manhattan_assist_review_harness.py` provides offline M15.x review/evaluation rows and summaries, including M15.9 diagnostic-only height reproject applicability evaluation; it does not generate candidates, write annotations, add UI, route, or create formal artifacts.
 - `tools/paper_a_manhattan/run_height_reproject_applicability_smoke.py` runs the M15.10 offline height applicability regression fixture through the review harness and emits JSON rows/summary only; it does not generate y candidates, write annotations, add UI, route, or create formal artifacts.
+- `tools/paper_a_manhattan/run_single_image_manhattan_assist.py` provides the M15.11 single-image expert-side diagnostic CLI for preview compatibility, RoomLayoutState, Align Pair X suggestions, and height applicability rows; it does not implement UI, apply/writeback, y reproject candidates, routing, or formal artifacts.
 
 ## 论文 B 线
 

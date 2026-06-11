@@ -328,6 +328,44 @@ def main() -> None:
     nonaccountable_rows: list[dict[str, Any]] = []
     missing_detail: list[dict[str, Any]] = []
     all_excel_rows: list[dict[str, Any]] = []
+    p1_suite_rows: list[dict[str, Any]] = []
+
+    any_participant_ids = set().union(*(set(project_data[pid]["worker_tasks"]) for pid in [28, 29, 30]))
+    p1_accountable_ids = sorted(
+        [worker_id for worker_id in any_participant_ids if is_accountable_worker(worker_id, exit_ids)],
+        key=lambda x: int(x) if x.isdigit() else 9999,
+    )
+    p1_full_suite_complete_ids: list[str] = []
+    p1_full_suite_incomplete: list[tuple[str, dict[int, list[str]]]] = []
+    for worker_id in p1_accountable_ids:
+        missing_by_project: dict[int, list[str]] = {}
+        for project_id in [28, 29, 30]:
+            data = project_data[project_id]
+            done_set = data["worker_tasks"].get(worker_id, set())
+            missing = [tid for tid in data["task_ids"] if tid not in done_set]
+            missing_by_project[project_id] = missing
+        if all(not missing_by_project[project_id] for project_id in [28, 29, 30]):
+            p1_full_suite_complete_ids.append(worker_id)
+        else:
+            p1_full_suite_incomplete.append((worker_id, missing_by_project))
+        staff = staff_by_id.get(worker_id, {})
+        suite_row: dict[str, Any] = {
+            "编号": int(worker_id) if worker_id.isdigit() else worker_id,
+            "人员": staff.get("人员"),
+            "人员状态": worker_status(worker_id, exit_ids),
+            "纳入完成率责任口径": "是",
+            "P1全套完成": "是" if all(not missing_by_project[pid] for pid in [28, 29, 30]) else "否",
+        }
+        for project_id in [28, 29, 30]:
+            data = project_data[project_id]
+            total = len(data["task_ids"])
+            done = total - len(missing_by_project[project_id])
+            suite_row[f"{PROJECT_TYPE[project_id]}完成"] = f"{done}/{total}"
+            suite_row[f"{PROJECT_TYPE[project_id]}缺失数"] = len(missing_by_project[project_id])
+            suite_row[f"{PROJECT_TYPE[project_id]}缺失任务"] = (
+                "、".join(missing_by_project[project_id]) if missing_by_project[project_id] else None
+            )
+        p1_suite_rows.append(suite_row)
 
     for project_id in [28, 29, 30]:
         data = project_data[project_id]
@@ -449,10 +487,16 @@ def main() -> None:
                 "实际完整人数": len(complete),
                 "实际未完整人数": len(incomplete),
                 "实际未完整人员": miss_text,
-                "责任口径参与人数": len(accountable_ids),
-                "责任口径完整人数": len(accountable_complete),
-                "责任口径未完整人数": len(accountable_incomplete),
-                "责任口径未完整人员": accountable_miss_text,
+                "责任口径参与人数": len(p1_accountable_ids),
+                "责任口径完整人数": len(p1_full_suite_complete_ids),
+                "责任口径未完整人数": len(p1_full_suite_incomplete),
+                "责任口径未完整人员": "无"
+                if not p1_full_suite_incomplete
+                else "、".join(
+                    f"{worker_id} {staff_by_id.get(worker_id, {}).get('人员') or ''}"
+                    for worker_id, _ in p1_full_suite_incomplete
+                ),
+                "责任口径说明": "P1全套责任口径：责任人员必须完成 manual/semi/oos 三个项目",
             }
         )
         for staff in numbered_staff:
@@ -476,6 +520,52 @@ def main() -> None:
                     "是否退出人员": "是" if worker_id in exit_ids else "否",
                 }
             )
+
+    incomplete_rows = []
+    missing_detail = []
+    for worker_id, missing_by_project in p1_full_suite_incomplete:
+        staff = staff_by_id.get(worker_id, {})
+        for project_id in [28, 29, 30]:
+            data = project_data[project_id]
+            total = len(data["task_ids"])
+            missing = missing_by_project[project_id]
+            done = total - len(missing)
+            if not missing:
+                continue
+            incomplete_rows.append(
+                {
+                    "项目ID": project_id,
+                    "项目": PROJECT_NAME[project_id],
+                    "项目类型": PROJECT_TYPE[project_id],
+                    "编号": int(worker_id) if worker_id.isdigit() else worker_id,
+                    "人员": staff.get("人员"),
+                    "人员状态": worker_status(worker_id, exit_ids),
+                    "任务总数": total,
+                    "已完成任务数(去重)": done,
+                    "缺失任务数": len(missing),
+                    "缺失任务ID列表": "、".join(missing),
+                    "是否退出人员": "是" if worker_id in exit_ids else "否",
+                    "口径": "P1全套责任口径：责任人员必须完成 manual/semi/oos 三个项目",
+                }
+            )
+            for task_id in missing:
+                task = data["task_map"].get(task_id, {})
+                missing_detail.append(
+                    {
+                        "项目ID": project_id,
+                        "项目": PROJECT_NAME[project_id],
+                        "项目类型": PROJECT_TYPE[project_id],
+                        "编号": int(worker_id) if worker_id.isdigit() else worker_id,
+                        "人员": staff.get("人员"),
+                        "人员状态": worker_status(worker_id, exit_ids),
+                        "缺失任务ID": task_id,
+                        "LabelStudio任务ID": task.get("LabelStudio任务ID"),
+                        "base_task_id": task.get("base_task_id"),
+                        "title": task.get("title"),
+                        "口径": "P1全套责任口径：责任人员必须完成 manual/semi/oos 三个项目",
+                        "是否退出人员": "是" if worker_id in exit_ids else "否",
+                    }
+                )
 
     person_rows: list[dict[str, Any]] = []
     for staff in numbered_staff:
@@ -506,6 +596,7 @@ def main() -> None:
     wb.remove(wb.active)
     add_sheet(wb, "项目对应关系", project_relation_rows)
     add_sheet(wb, "汇总", summary_rows)
+    add_sheet(wb, "P1全套责任口径", p1_suite_rows)
     add_sheet(wb, "人员一一对应", person_rows)
     add_sheet(wb, "未完整人员", incomplete_rows)
     add_sheet(wb, "非责任口径人员", nonaccountable_rows)
@@ -547,7 +638,7 @@ def main() -> None:
             },
             {
                 "说明项": "主要口径",
-                "内容": "“未完整人员”采用完成率责任口径；管理人员暂不参与与退出人员不纳入该口径，但保留在实际参与者与非责任口径人员表中。",
+                "内容": "“未完整人员”和汇总中的责任口径采用 P1 全套责任口径；责任人员必须同时完成 manual/semi/oos 三个项目，只完成单个项目不算完整完成。",
             },
             {
                 "说明项": "辅助口径",
