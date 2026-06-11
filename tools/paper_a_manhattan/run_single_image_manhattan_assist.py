@@ -218,33 +218,19 @@ def _ordered_pairs_from_preview_with_order(preview: Any, order: Sequence[int]) -
     ]
 
 
-def _resolve_ordered_pairs(
-    payload: Mapping[str, Any],
-) -> tuple[str, dict[str, Any], list[dict[str, Any]], dict[str, Any]]:
+def _parse_input_payload(payload: Mapping[str, Any]) -> dict[str, Any]:
     width = _as_int(payload.get("width"), DEFAULT_WIDTH)
     height = _as_int(payload.get("height"), DEFAULT_HEIGHT)
     preserve_order = _as_bool(payload.get("preserve_order"), False)
     if isinstance(payload.get("ordered_pairs"), list):
-        ordered_pairs = list(payload["ordered_pairs"])
-        preview_info = _preview_summary(
-            None,
-            input_mode="simplified_ordered_pairs",
-            width=width,
-            height=height,
-            preserve_order=preserve_order,
-        )
-        return (
-            "simplified_ordered_pairs",
-            preview_info,
-            ordered_pairs,
-            _topology_override_info(
-                active=False,
-                source="ordered_pairs_input_order",
-                default_preview_status=preview_info["status"],
-                default_preview_reason=preview_info["compatibility_reason"],
-                payload=payload,
-            ),
-        )
+        return {
+            "input_mode": "simplified_ordered_pairs",
+            "ordered_pairs": list(payload["ordered_pairs"]),
+            "raw_keypoints": None,
+            "width": width,
+            "height": height,
+            "preserve_order": preserve_order,
+        }
 
     input_mode, raw_keypoints = _raw_keypoints_from_payload(payload)
     if not isinstance(raw_keypoints, list):
@@ -252,20 +238,69 @@ def _resolve_ordered_pairs(
             "input must include ordered_pairs, keypoints, raw_keypoints, result, "
             "or label_studio_result"
         )
+    return {
+        "input_mode": input_mode,
+        "ordered_pairs": None,
+        "raw_keypoints": raw_keypoints,
+        "width": width,
+        "height": height,
+        "preserve_order": preserve_order,
+    }
+
+
+def _run_default_preview(parsed_input: Mapping[str, Any]) -> tuple[Any | None, dict[str, Any], list[dict[str, Any]]]:
+    input_mode = str(parsed_input["input_mode"])
+    width = int(parsed_input["width"])
+    height = int(parsed_input["height"])
+    preserve_order = bool(parsed_input["preserve_order"])
+    if input_mode == "simplified_ordered_pairs":
+        return (
+            None,
+            _preview_summary(
+                None,
+                input_mode=input_mode,
+                width=width,
+                height=height,
+                preserve_order=preserve_order,
+            ),
+            [],
+        )
 
     preview = check_preview_compatibility(
-        raw_keypoints,
+        parsed_input["raw_keypoints"],
         preserve_order=preserve_order,
         width=width,
         height=height,
     )
-    preview_info = _preview_summary(
+    return (
         preview,
-        input_mode=input_mode,
-        width=width,
-        height=height,
-        preserve_order=preserve_order,
+        _preview_summary(
+            preview,
+            input_mode=input_mode,
+            width=width,
+            height=height,
+            preserve_order=preserve_order,
+        ),
+        _center_rows_from_preview(preview, width),
     )
+
+
+def _resolve_topology_policy(
+    payload: Mapping[str, Any],
+    parsed_input: Mapping[str, Any],
+    preview: Any | None,
+    preview_info: Mapping[str, Any],
+) -> dict[str, Any]:
+    input_mode = str(parsed_input["input_mode"])
+    if input_mode == "simplified_ordered_pairs":
+        return _topology_override_info(
+            active=False,
+            source="ordered_pairs_input_order",
+            default_preview_status=preview_info["status"],
+            default_preview_reason=preview_info["compatibility_reason"],
+            payload=payload,
+        )
+
     default_status = preview.status
     default_reason = preview.compatibility_reason
     if _as_bool(payload.get("order_verified_by_expert"), False):
@@ -274,91 +309,100 @@ def _resolve_ordered_pairs(
             len(preview.ordered_corners),
         )
         if invalid_reason is not None:
-            return (
-                input_mode,
-                preview_info,
-                [],
-                _topology_override_info(
-                    active=False,
-                    source="invalid_preview_order_override",
-                    default_preview_status=default_status,
-                    default_preview_reason=default_reason,
-                    payload=payload,
-                    override_status="invalid_preview_order_override",
-                    invalid_reason=invalid_reason,
-                ),
+            return _topology_override_info(
+                active=False,
+                source="invalid_preview_order_override",
+                default_preview_status=default_status,
+                default_preview_reason=default_reason,
+                payload=payload,
+                override_status="invalid_preview_order_override",
+                invalid_reason=invalid_reason,
             )
         if default_status not in PREVIEW_ORDER_OVERRIDE_ALLOWED_STATUSES:
             if default_status == COMPATIBLE:
-                ordered_pairs = [
-                    _preview_pair_to_ordered_pair(pair)
-                    for pair in preview.ordered_corners
-                ]
-                return (
-                    input_mode,
-                    preview_info,
-                    ordered_pairs,
-                    _topology_override_info(
-                        active=False,
-                        source="default_preview_order",
-                        default_preview_status=default_status,
-                        default_preview_reason=default_reason,
-                        payload=payload,
-                        override_status="preview_order_override_ignored_for_compatible_default",
-                    ),
-                )
-            return (
-                input_mode,
-                preview_info,
-                [],
-                _topology_override_info(
+                return _topology_override_info(
                     active=False,
-                    source="preview_order_override_not_allowed_for_status",
+                    source="default_preview_order",
                     default_preview_status=default_status,
                     default_preview_reason=default_reason,
                     payload=payload,
-                    override_status="preview_order_override_not_allowed_for_status",
-                    invalid_reason="preview_order_override_not_allowed_for_status",
-                ),
-            )
-        return (
-            input_mode,
-            preview_info,
-            _ordered_pairs_from_preview_with_order(preview, override_order or []),
-            _topology_override_info(
-                active=True,
-                source="expert_verified_preview_order",
-                default_preview_status=default_status,
-                default_preview_reason=default_reason,
-                payload=payload,
-                override_status="valid_preview_order_override",
-            ),
-        )
-    if preview.status != COMPATIBLE:
-        return (
-            input_mode,
-            preview_info,
-            [],
-            _topology_override_info(
+                    override_status="preview_order_override_ignored_for_compatible_default",
+                )
+            return _topology_override_info(
                 active=False,
-                source="default_preview_order_unusable",
+                source="preview_order_override_not_allowed_for_status",
                 default_preview_status=default_status,
                 default_preview_reason=default_reason,
                 payload=payload,
-            ),
-        )
-    ordered_pairs = [_preview_pair_to_ordered_pair(pair) for pair in preview.ordered_corners]
-    return (
-        input_mode,
-        preview_info,
-        ordered_pairs,
-        _topology_override_info(
-            active=False,
-            source="default_preview_order",
+                override_status="preview_order_override_not_allowed_for_status",
+                invalid_reason="preview_order_override_not_allowed_for_status",
+            )
+        return _topology_override_info(
+            active=True,
+            source="expert_verified_preview_order",
             default_preview_status=default_status,
             default_preview_reason=default_reason,
             payload=payload,
-        ),
+            override_status="valid_preview_order_override",
+        )
+
+    if preview.status != COMPATIBLE:
+        return _topology_override_info(
+            active=False,
+            source="default_preview_order_unusable",
+            default_preview_status=default_status,
+            default_preview_reason=default_reason,
+            payload=payload,
+        )
+    return _topology_override_info(
+        active=False,
+        source="default_preview_order",
+        default_preview_status=default_status,
+        default_preview_reason=default_reason,
+        payload=payload,
+    )
+
+
+def _materialize_ordered_pairs(
+    parsed_input: Mapping[str, Any],
+    preview: Any | None,
+    topology_override: Mapping[str, Any],
+) -> list[dict[str, Any]]:
+    if parsed_input["input_mode"] == "simplified_ordered_pairs":
+        return list(parsed_input["ordered_pairs"])
+    if topology_override.get("preview_order_override_active"):
+        override_order, _ = _validate_preview_order_override(
+            topology_override.get("preview_order_override"),
+            len(preview.ordered_corners),
+        )
+        return _ordered_pairs_from_preview_with_order(preview, override_order or [])
+    if topology_override.get("topology_source") == "default_preview_order":
+        return [_preview_pair_to_ordered_pair(pair) for pair in preview.ordered_corners]
+    return []
+
+
+def _resolve_ordered_pairs(
+    payload: Mapping[str, Any],
+) -> tuple[str, dict[str, Any], list[dict[str, Any]], dict[str, Any], list[dict[str, Any]]]:
+    parsed_input = _parse_input_payload(payload)
+    preview, preview_info, default_centers = _run_default_preview(parsed_input)
+    topology_override = _resolve_topology_policy(
+        payload,
+        parsed_input,
+        preview,
+        preview_info,
+    )
+    ordered_pairs = _materialize_ordered_pairs(
+        parsed_input,
+        preview,
+        topology_override,
+    )
+    return (
+        str(parsed_input["input_mode"]),
+        dict(preview_info),
+        ordered_pairs,
+        topology_override,
+        default_centers,
     )
 
 
@@ -468,27 +512,13 @@ def _order_diagnostics_from_centers(
 
 
 def _diagnostics_from_payload(
-    payload: Mapping[str, Any],
     ordered_pairs: Sequence[Mapping[str, Any]],
     *,
-    input_mode: str,
     topology_override: Mapping[str, Any],
+    default_centers: Sequence[Mapping[str, Any]],
 ) -> tuple[list[dict[str, Any]], dict[str, Any], dict[str, Any]]:
-    width = _as_int(payload.get("width"), DEFAULT_WIDTH)
-    height = _as_int(payload.get("height"), DEFAULT_HEIGHT)
-    preserve_order = _as_bool(payload.get("preserve_order"), False)
     threshold_percent = DUPLICATE_CORNER_THRESHOLD_RATIO * 100.0
-
-    default_centers: list[dict[str, Any]] = []
-    _, raw_keypoints = _raw_keypoints_from_payload(payload)
-    if isinstance(raw_keypoints, list):
-        preview = check_preview_compatibility(
-            raw_keypoints,
-            preserve_order=preserve_order,
-            width=width,
-            height=height,
-        )
-        default_centers = _center_rows_from_preview(preview, width)
+    default_centers = list(default_centers)
 
     if ordered_pairs:
         effective_centers = _center_rows_from_ordered_pairs(
@@ -585,18 +615,6 @@ def _manual_edit_row(
         ),
     }
     return row
-
-
-def _review_sort_key(proposal: Mapping[str, Any]) -> tuple[float, float]:
-    status_priority = {
-        ELIGIBLE: 0.0,
-        "review_only": 1.0,
-        "suppress": 2.0,
-    }.get(str(proposal.get("assist_status")), 3.0)
-    residual = proposal.get("vertical_x_residual")
-    if not isinstance(residual, (int, float)):
-        residual = -1.0
-    return (status_priority, -float(residual))
 
 
 def _first_reason(*reason_lists: Sequence[Any]) -> str:
@@ -728,19 +746,25 @@ def _summary(
 
 
 def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
-    input_mode, preview_compatibility, ordered_pairs, topology_override = _resolve_ordered_pairs(
-        payload
-    )
+    (
+        input_mode,
+        preview_compatibility,
+        ordered_pairs,
+        topology_override,
+        default_preview_centers,
+    ) = _resolve_ordered_pairs(payload)
     (
         duplicate_diagnostics,
         default_order_diagnostics,
         effective_order_diagnostics,
     ) = _diagnostics_from_payload(
-        payload,
         ordered_pairs,
-        input_mode=input_mode,
         topology_override=topology_override,
+        default_centers=default_preview_centers,
     )
+    # Backward-compatible alias: downstream M15.11/M15.12 readers used
+    # order_diagnostics before default/effective order diagnostics were split.
+    # Remove only after all sidecar consumers read effective_order_diagnostics.
     order_diagnostics = effective_order_diagnostics
     metadata = payload.get("metadata") if isinstance(payload.get("metadata"), Mapping) else None
     task_id = payload.get("task_id")
@@ -777,6 +801,8 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
                 or preview_compatibility.get("compatibility_reason"),
             },
             "topology_override": topology_override,
+            # Convenience mirrors for older JSON readers; topology_override is
+            # the canonical nested provenance object.
             "preview_order_override_active": topology_override["preview_order_override_active"],
             "topology_source": topology_override["topology_source"],
             "default_preview_status": topology_override["default_preview_status"],
@@ -858,6 +884,8 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
             else preview_compatibility.get("compatibility_reason"),
         },
         "topology_override": topology_override,
+        # Convenience mirrors for older JSON readers; topology_override is the
+        # canonical nested provenance object.
         "preview_order_override_active": topology_override["preview_order_override_active"],
         "topology_source": topology_override["topology_source"],
         "default_preview_status": topology_override["default_preview_status"],

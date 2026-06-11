@@ -320,6 +320,7 @@ def test_override_dense_pairs_remain_manual_only_but_non_dense_pair_can_align_x(
         == "expert_verified_non_x_monotonic_order"
     )
     assert result["effective_order_diagnostics"]["manual_only_reason"] is None
+    assert result["order_diagnostics"] == result["effective_order_diagnostics"]
     assert align_edit["action"] == "align_pair_x"
     assert align_edit["to_top_x"] == 90.0
     assert align_edit["to_bottom_x"] == 90.0
