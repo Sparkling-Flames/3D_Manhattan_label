@@ -45,5 +45,52 @@
       {"top": {"x": 80.0, "y": 32.0}, "bottom": {"x": 80.0, "y": 70.0}}
     ],
     "metadata": {}
+  },
+  "raw_keypoints_preserve_order_wrong_order": {
+    "task_id": "single-task-005",
+    "annotation_id": "single-ann-005",
+    "preserve_order": true,
+    "keypoints": [
+      {"x": 60.0, "y": 32.0},
+      {"x": 60.0, "y": 70.0},
+      {"x": 10.0, "y": 32.0},
+      {"x": 10.0, "y": 70.0},
+      {"x": 30.0, "y": 32.0},
+      {"x": 30.0, "y": 70.0},
+      {"x": 80.0, "y": 32.0},
+      {"x": 80.0, "y": 70.0}
+    ],
+    "metadata": {}
+  },
+  "label_studio_result": {
+    "task_id": "single-task-006",
+    "annotation_id": "single-ann-006",
+    "metadata": {"scope": "normal", "manhattan_assumable": true},
+    "result": [
+      {"type": "rectanglelabels", "value": {"x": 0.0, "y": 0.0}},
+      {"type": "keypointlabels", "value": {"x": 10.0, "y": 32.0}},
+      {"type": "keypointlabels", "value": {"x": 10.0, "y": 70.0}},
+      {"type": "keypointlabels", "value": {"x": 34.0, "y": 32.0}},
+      {"type": "keypointlabels", "value": {"x": 30.0, "y": 70.0}},
+      {"type": "keypointlabels", "value": {"x": 60.0, "y": 32.0}},
+      {"type": "keypointlabels", "value": {"x": 60.0, "y": 70.0}},
+      {"type": "keypointlabels", "value": {"x": 80.0, "y": 32.0}},
+      {"type": "keypointlabels", "value": {"x": 80.0, "y": 70.0}}
+    ]
+  },
+  "label_studio_result_alias": {
+    "task_id": "single-task-007",
+    "annotation_id": "single-ann-007",
+    "metadata": {"scope": "normal", "manhattan_assumable": true},
+    "label_studio_result": [
+      {"type": "keypointlabels", "value": {"x": 10.0, "y": 32.0}},
+      {"type": "keypointlabels", "value": {"x": 10.0, "y": 70.0}},
+      {"type": "keypointlabels", "value": {"x": 34.0, "y": 32.0}},
+      {"type": "keypointlabels", "value": {"x": 30.0, "y": 70.0}},
+      {"type": "keypointlabels", "value": {"x": 60.0, "y": 32.0}},
+      {"type": "keypointlabels", "value": {"x": 60.0, "y": 70.0}},
+      {"type": "keypointlabels", "value": {"x": 80.0, "y": 32.0}},
+      {"type": "keypointlabels", "value": {"x": 80.0, "y": 70.0}}
+    ]
   }
 }

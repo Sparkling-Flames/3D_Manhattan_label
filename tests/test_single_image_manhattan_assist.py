@@ -54,6 +54,34 @@ def test_raw_keypoints_odd_unpaired_is_incompatible_without_suggestions():
     assert result["manual_edit_table"] == []
 
 
+def test_raw_keypoints_preserve_order_true_can_trigger_wrong_order_failure():
+    result = build_single_image_assist(_fixture_case("raw_keypoints_preserve_order_wrong_order"))
+
+    assert result["input_mode"] == "raw_keypoints"
+    assert result["preview_compatibility"]["preserve_order"] is True
+    assert result["preview_compatibility"]["status"] == "compatibility_failure_wrong_order"
+    assert result["ordered_pairs"] == []
+    assert result["manual_edit_table"] == []
+
+
+def test_label_studio_result_input_extracts_keypoints_and_outputs_results():
+    result = build_single_image_assist(_fixture_case("label_studio_result"))
+
+    assert result["input_mode"] == "label_studio_result"
+    assert result["preview_compatibility"]["status"] == "compatible"
+    assert len(result["ordered_pairs"]) == 4
+    assert len(result["manual_edit_table"]) == 4
+
+
+def test_label_studio_result_alias_extracts_keypoints_and_outputs_results():
+    result = build_single_image_assist(_fixture_case("label_studio_result_alias"))
+
+    assert result["input_mode"] == "label_studio_result"
+    assert result["preview_compatibility"]["status"] == "compatible"
+    assert len(result["ordered_pairs"]) == 4
+    assert len(result["height_reproject_applicability_rows"]) == 4
+
+
 def test_align_pair_x_eligible_outputs_suggested_x_and_no_y_change():
     result = build_single_image_assist(_fixture_case("simplified_ordered_pairs"))
     proposal = next(row for row in result["align_pair_x_proposals"] if row["pair_index"] == 2)
@@ -66,6 +94,8 @@ def test_align_pair_x_eligible_outputs_suggested_x_and_no_y_change():
     assert edit_row["action"] == "align_pair_x"
     assert edit_row["to_top_x"] == 32.0
     assert edit_row["to_bottom_x"] == 32.0
+    assert "to_top_y" not in edit_row
+    assert "to_bottom_y" not in edit_row
     assert edit_row["y_change_allowed"] is False
 
 
@@ -78,9 +108,10 @@ def test_review_only_case_does_not_output_suggested_x():
     assert "max_abs_delta_large" in proposal["assist_reasons"]
     assert "suggested_top_x" not in proposal
     assert "suggested_bottom_x" not in proposal
-    assert edit_row["action"] == "review_only_no_x_suggestion"
-    assert "to_top_x" not in edit_row
-    assert "to_bottom_x" not in edit_row
+    assert edit_row["action"] == "manual_review_only"
+    assert edit_row["to_top_x"] is None
+    assert edit_row["to_bottom_x"] is None
+    assert edit_row["reason"] == "max_abs_delta_large"
     assert edit_row["y_change_allowed"] is False
 
 
@@ -93,7 +124,33 @@ def test_output_has_no_forbidden_top_level_fields():
 def test_recommended_review_order_prioritizes_obvious_x_mismatch_pair():
     result = build_single_image_assist(_fixture_case("simplified_ordered_pairs"))
 
-    assert result["recommended_review_order"][0] == 2
+    first = result["recommended_review_order"][0]
+    assert first["rank"] == 1
+    assert first["pair_index"] == 2
+    assert first["review_priority"] == "align_x_first"
+    assert first["primary_action"] == "align_pair_x"
+    assert first["reason"] == "align_pair_x_candidate_available"
+    assert first["manual_only"] is False
+
+
+def test_recommended_review_order_is_object_list_with_required_fields():
+    result = build_single_image_assist(_fixture_case("review_only_large_delta"))
+    first = result["recommended_review_order"][0]
+
+    for field_name in (
+        "rank",
+        "pair_index",
+        "review_priority",
+        "primary_action",
+        "assist_status",
+        "height_reproject_status",
+        "vertical_x_residual",
+        "height_residual",
+        "max_abs_delta",
+        "reason",
+        "manual_only",
+    ):
+        assert field_name in first
 
 
 def test_cli_output_is_json_serializable(tmp_path):
@@ -110,6 +167,34 @@ def test_cli_output_is_json_serializable(tmp_path):
     payload = json.loads(output_path.read_text(encoding="utf-8"))
     json.dumps(payload)
     assert payload["tool_version"] == "single_image_manhattan_assist_m15_11_v1"
+
+
+def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
+    input_path = tmp_path / "single_input.json"
+    output_path = tmp_path / "single_output.json"
+    markdown_path = tmp_path / "single_report.md"
+    input_path.write_text(
+        json.dumps(_fixture_case("simplified_ordered_pairs")),
+        encoding="utf-8",
+    )
+
+    exit_code = main([
+        "--input",
+        str(input_path),
+        "--output",
+        str(output_path),
+        "--markdown-output",
+        str(markdown_path),
+        "--pretty",
+    ])
+
+    assert exit_code == 0
+    text = markdown_path.read_text(encoding="utf-8")
+    assert "Preview Compatibility" in text
+    assert "Pair Diagnostics" in text
+    assert "Manual Edit Table" in text
+    assert "Height Applicability Summary" in text
+    assert "no UI, no apply/writeback" in text
 
 
 def test_run_single_image_assist_returns_payload_without_stdout_requirement(tmp_path):

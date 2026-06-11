@@ -44,6 +44,32 @@ NO_WRITEBACK_NOTE = (
 )
 
 
+def _as_int(value: Any, default: int) -> int:
+    if isinstance(value, bool) or value is None:
+        return default
+    try:
+        parsed = int(value)
+    except (TypeError, ValueError):
+        return default
+    return parsed if parsed > 0 else default
+
+
+def _as_bool(value: Any, default: bool = False) -> bool:
+    if value is None:
+        return default
+    if isinstance(value, bool):
+        return value
+    if isinstance(value, str):
+        normalized = value.strip().lower()
+        if normalized in {"true", "1", "yes", "y"}:
+            return True
+        if normalized in {"false", "0", "no", "n"}:
+            return False
+    if isinstance(value, (int, float)):
+        return value != 0
+    return default
+
+
 def _load_json(path: Path) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
     if not isinstance(payload, dict):
@@ -60,7 +86,14 @@ def _preview_pair_to_ordered_pair(pair: Any) -> dict[str, Any]:
     }
 
 
-def _preview_summary(preview: Any | None, *, input_mode: str) -> dict[str, Any]:
+def _preview_summary(
+    preview: Any | None,
+    *,
+    input_mode: str,
+    width: int | None = None,
+    height: int | None = None,
+    preserve_order: bool | None = None,
+) -> dict[str, Any]:
     if preview is None:
         return {
             "status": "not_run_simplified_ordered_pairs",
@@ -70,6 +103,9 @@ def _preview_summary(preview: Any | None, *, input_mode: str) -> dict[str, Any]:
             "suggestion_allowed": True,
             "compatibility_reason": "ordered_pairs_input_bypasses_preview_parser",
             "pairing_rule_version": None,
+            "width": width,
+            "height": height,
+            "preserve_order": preserve_order,
         }
     return {
         "status": preview.status,
@@ -79,27 +115,86 @@ def _preview_summary(preview: Any | None, *, input_mode: str) -> dict[str, Any]:
         "suggestion_allowed": preview.suggestion_allowed,
         "compatibility_reason": preview.compatibility_reason,
         "pairing_rule_version": preview.pairing_rule_version,
+        "width": width,
+        "height": height,
+        "preserve_order": preserve_order,
     }
 
 
+def _extract_label_studio_keypoints(results: Any) -> list[dict[str, Any]]:
+    if not isinstance(results, list):
+        return []
+    keypoints: list[dict[str, Any]] = []
+    for idx, result in enumerate(results):
+        if not isinstance(result, Mapping) or result.get("type") != "keypointlabels":
+            continue
+        value = result.get("value")
+        if not isinstance(value, Mapping):
+            continue
+        try:
+            x = float(value["x"])
+            y = float(value["y"])
+        except (KeyError, TypeError, ValueError):
+            continue
+        keypoints.append({"x": x, "y": y, "original_index": idx})
+    return keypoints
+
+
+def _raw_keypoints_from_payload(payload: Mapping[str, Any]) -> tuple[str, list[Any] | None]:
+    if isinstance(payload.get("keypoints"), list):
+        return "raw_keypoints", payload["keypoints"]
+    if isinstance(payload.get("raw_keypoints"), list):
+        return "raw_keypoints", payload["raw_keypoints"]
+    if isinstance(payload.get("result"), list):
+        return "label_studio_result", _extract_label_studio_keypoints(payload["result"])
+    if isinstance(payload.get("label_studio_result"), list):
+        return "label_studio_result", _extract_label_studio_keypoints(
+            payload["label_studio_result"]
+        )
+    return "unknown", None
+
+
 def _resolve_ordered_pairs(payload: Mapping[str, Any]) -> tuple[str, dict[str, Any], list[dict[str, Any]]]:
+    width = _as_int(payload.get("width"), 1024)
+    height = _as_int(payload.get("height"), 512)
+    preserve_order = _as_bool(payload.get("preserve_order"), False)
     if isinstance(payload.get("ordered_pairs"), list):
         return (
             "simplified_ordered_pairs",
-            _preview_summary(None, input_mode="simplified_ordered_pairs"),
+            _preview_summary(
+                None,
+                input_mode="simplified_ordered_pairs",
+                width=width,
+                height=height,
+                preserve_order=preserve_order,
+            ),
             list(payload["ordered_pairs"]),
         )
 
-    raw_keypoints = payload.get("keypoints", payload.get("raw_keypoints"))
+    input_mode, raw_keypoints = _raw_keypoints_from_payload(payload)
     if not isinstance(raw_keypoints, list):
-        raise ValueError("input must include ordered_pairs, keypoints, or raw_keypoints")
+        raise ValueError(
+            "input must include ordered_pairs, keypoints, raw_keypoints, result, "
+            "or label_studio_result"
+        )
 
-    preview = check_preview_compatibility(raw_keypoints)
-    preview_info = _preview_summary(preview, input_mode="raw_keypoints")
+    preview = check_preview_compatibility(
+        raw_keypoints,
+        preserve_order=preserve_order,
+        width=width,
+        height=height,
+    )
+    preview_info = _preview_summary(
+        preview,
+        input_mode=input_mode,
+        width=width,
+        height=height,
+        preserve_order=preserve_order,
+    )
     if preview.status != COMPATIBLE:
-        return "raw_keypoints", preview_info, []
+        return input_mode, preview_info, []
     ordered_pairs = [_preview_pair_to_ordered_pair(pair) for pair in preview.ordered_corners]
-    return "raw_keypoints", preview_info, ordered_pairs
+    return input_mode, preview_info, ordered_pairs
 
 
 def _pair_indices(ordered_pairs: Sequence[Mapping[str, Any]]) -> list[int]:
@@ -144,11 +239,14 @@ def _manual_edit_row(pair: Mapping[str, Any], proposal: Mapping[str, Any]) -> di
     eligible = proposal.get("assist_status") == ELIGIBLE
     row = {
         "pair_index": pair_index,
-        "action": "align_pair_x" if eligible else "review_only_no_x_suggestion",
+        "action": "align_pair_x" if eligible else "manual_review_only",
         "from_top_x": top["x"],
         "from_bottom_x": bottom["x"],
+        "to_top_x": proposal.get("suggested_top_x") if eligible else None,
+        "to_bottom_x": proposal.get("suggested_bottom_x") if eligible else None,
         "top_dx": proposal.get("top_dx"),
         "bottom_dx": proposal.get("bottom_dx"),
+        "reason": None if eligible else "; ".join(proposal.get("assist_reasons", [])),
         "y_change_allowed": False,
         "notes": (
             "Manual expert may align top.x and bottom.x only; keep y unchanged."
@@ -156,9 +254,6 @@ def _manual_edit_row(pair: Mapping[str, Any], proposal: Mapping[str, Any]) -> di
             else "; ".join(proposal.get("assist_reasons", []))
         ),
     }
-    if eligible:
-        row["to_top_x"] = proposal.get("suggested_top_x")
-        row["to_bottom_x"] = proposal.get("suggested_bottom_x")
     return row
 
 
@@ -172,6 +267,91 @@ def _review_sort_key(proposal: Mapping[str, Any]) -> tuple[float, float]:
     if not isinstance(residual, (int, float)):
         residual = -1.0
     return (status_priority, -float(residual))
+
+
+def _first_reason(*reason_lists: Sequence[Any]) -> str:
+    for reasons in reason_lists:
+        for reason in reasons:
+            return str(reason)
+    return "no_specific_reason"
+
+
+def _height_row_by_pair(height_rows: Sequence[Mapping[str, Any]]) -> dict[int, Mapping[str, Any]]:
+    lookup: dict[int, Mapping[str, Any]] = {}
+    for row in height_rows:
+        pair_index = row.get("target_pair_index")
+        if isinstance(pair_index, int):
+            lookup[pair_index] = row
+    return lookup
+
+
+def _review_priority(
+    proposal: Mapping[str, Any],
+    height_row: Mapping[str, Any] | None,
+) -> tuple[str, str, bool, tuple[float, float]]:
+    assist_status = proposal.get("assist_status")
+    height_status = height_row.get("height_reproject_status") if height_row else None
+    vertical = proposal.get("vertical_x_residual")
+    height_residual = proposal.get("height_residual")
+    has_warnings = bool(proposal.get("pair_warnings") or proposal.get("state_warnings"))
+    if not isinstance(vertical, (int, float)):
+        vertical = 0.0
+    if not isinstance(height_residual, (int, float)):
+        height_residual = 0.0
+    if assist_status == ELIGIBLE and vertical > 0:
+        return "align_x_first", "align_pair_x", False, (0.0, -float(vertical))
+    if assist_status == "review_only" or height_status == "review_only" or has_warnings:
+        return "diagnostic_review", "manual_review_only", False, (
+            1.0,
+            -max(float(vertical), float(height_residual)),
+        )
+    if assist_status == "suppress" or height_status == "suppress":
+        return "manual_only_suppressed", "manual_review_only", True, (2.0, -float(vertical))
+    return "low_priority_review", "manual_review_only", False, (3.0, -float(vertical))
+
+
+def _recommended_review_order(
+    proposals: Sequence[Mapping[str, Any]],
+    height_rows: Sequence[Mapping[str, Any]],
+) -> list[dict[str, Any]]:
+    height_lookup = _height_row_by_pair(height_rows)
+    ranked: list[tuple[tuple[float, float], dict[str, Any]]] = []
+    for proposal in proposals:
+        pair_index = proposal["pair_index"]
+        height_row = height_lookup.get(pair_index)
+        review_priority, primary_action, manual_only, sort_key = _review_priority(
+            proposal,
+            height_row,
+        )
+        reason = _first_reason(
+            proposal.get("assist_reasons", []),
+            height_row.get("height_reproject_blocking_reasons", []) if height_row else [],
+            height_row.get("height_reproject_reasons", []) if height_row else [],
+        )
+        ranked.append(
+            (
+                sort_key,
+                {
+                    "rank": 0,
+                    "pair_index": pair_index,
+                    "review_priority": review_priority,
+                    "primary_action": primary_action,
+                    "assist_status": proposal.get("assist_status"),
+                    "height_reproject_status": (
+                        height_row.get("height_reproject_status") if height_row else None
+                    ),
+                    "vertical_x_residual": proposal.get("vertical_x_residual"),
+                    "height_residual": proposal.get("height_residual"),
+                    "max_abs_delta": proposal.get("max_abs_delta"),
+                    "reason": reason,
+                    "manual_only": manual_only,
+                },
+            )
+        )
+    output = [row for _, row in sorted(ranked, key=lambda item: item[0])]
+    for rank, row in enumerate(output, start=1):
+        row["rank"] = rank
+    return output
 
 
 def _summary(
@@ -257,8 +437,7 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         operation=HEIGHT_REPROJECT_APPLICABILITY_OPERATION,
     )
     recommended = [
-        row["pair_index"]
-        for row in sorted(proposals, key=_review_sort_key)
+        *_recommended_review_order(proposals, height_rows),
     ]
     manual_edit_table = [
         _manual_edit_row(ordered_pairs[int(row["pair_index"]) - 1], row)
@@ -285,13 +464,92 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
             height_rows=height_rows,
         ),
         "tool_version": TOOL_VERSION,
-    }
+}
+
+
+def _format_cell(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, float):
+        return f"{value:.3f}"
+    return str(value)
+
+
+def _markdown_table(headers: Sequence[str], rows: Sequence[Mapping[str, Any]]) -> list[str]:
+    lines = [
+        "| " + " | ".join(headers) + " |",
+        "| " + " | ".join("---" for _ in headers) + " |",
+    ]
+    for row in rows:
+        lines.append("| " + " | ".join(_format_cell(row.get(header)) for header in headers) + " |")
+    return lines
+
+
+def render_markdown_report(payload: Mapping[str, Any]) -> str:
+    preview = payload.get("preview_compatibility", {})
+    summary = payload.get("summary", {})
+    lines = [
+        "# Single-image Manhattan Assist Report",
+        "",
+        NO_WRITEBACK_NOTE,
+        "",
+        "## Preview Compatibility",
+        "",
+        f"- status: `{preview.get('status')}`",
+        f"- input_mode: `{payload.get('input_mode')}`",
+        f"- reason: `{preview.get('compatibility_reason')}`",
+        f"- preserve_order: `{preview.get('preserve_order')}`",
+        "",
+        "## Pair Diagnostics",
+        "",
+    ]
+    lines.extend(
+        _markdown_table(
+            [
+                "pair_index",
+                "vertical_x_residual",
+                "height_residual",
+                "top_bottom_delta_y",
+                "warnings",
+            ],
+            payload.get("pair_diagnostics", []),
+        )
+    )
+    lines.extend(["", "## Manual Edit Table", ""])
+    lines.extend(
+        _markdown_table(
+            [
+                "pair_index",
+                "action",
+                "from_top_x",
+                "to_top_x",
+                "from_bottom_x",
+                "to_bottom_x",
+                "top_dx",
+                "bottom_dx",
+                "y_change_allowed",
+                "reason",
+            ],
+            payload.get("manual_edit_table", []),
+        )
+    )
+    lines.extend(["", "## Height Applicability Summary", ""])
+    lines.extend(
+        [
+            f"- applicable: `{summary.get('n_height_reproject_applicable')}`",
+            f"- review_only: `{summary.get('n_height_reproject_review_only')}`",
+            f"- suppressed: `{summary.get('n_height_reproject_suppressed')}`",
+            "",
+        ]
+    )
+    return "\n".join(lines) + "\n"
 
 
 def run_single_image_assist(
     input_path: Path,
     output_path: Path | None = None,
     *,
+    markdown_output: Path | None = None,
     pretty: bool = False,
 ) -> dict[str, Any]:
     payload = build_single_image_assist(_load_json(input_path))
@@ -301,6 +559,9 @@ def run_single_image_assist(
     else:
         output_path.parent.mkdir(parents=True, exist_ok=True)
         output_path.write_text(text + "\n", encoding="utf-8")
+    if markdown_output is not None:
+        markdown_output.parent.mkdir(parents=True, exist_ok=True)
+        markdown_output.write_text(render_markdown_report(payload), encoding="utf-8")
     return payload
 
 
@@ -310,13 +571,19 @@ def _build_parser() -> argparse.ArgumentParser:
     )
     parser.add_argument("--input", required=True, type=Path, help="Single-image input JSON.")
     parser.add_argument("--output", type=Path, help="Optional output JSON sidecar path.")
+    parser.add_argument("--markdown-output", type=Path, help="Optional Markdown report path.")
     parser.add_argument("--pretty", action="store_true", help="Pretty-print JSON.")
     return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     args = _build_parser().parse_args(argv)
-    run_single_image_assist(args.input, args.output, pretty=args.pretty)
+    run_single_image_assist(
+        args.input,
+        args.output,
+        markdown_output=args.markdown_output,
+        pretty=args.pretty,
+    )
     return 0
 
 
