@@ -63,6 +63,24 @@ def test_oos_insufficient_suppresses():
     assert "metadata_oos_insufficient" in result["height_reproject_blocking_reasons"]
 
 
+def test_false_metadata_flag_does_not_suppress_but_true_flag_does():
+    false_result = diagnose_height_reproject_applicability(
+        _clean_pairs(),
+        2,
+        metadata={"oos_insufficient": False},
+    )
+    true_result = diagnose_height_reproject_applicability(
+        _clean_pairs(),
+        2,
+        metadata={"oos_insufficient": True},
+    )
+
+    assert false_result["height_reproject_status"] == ELIGIBLE
+    assert false_result["height_reproject_blocking_reasons"] == []
+    assert true_result["height_reproject_status"] == SUPPRESS
+    assert "metadata_oos_insufficient" in true_result["height_reproject_blocking_reasons"]
+
+
 def test_scope_vote_oos_open_boundary_suppresses():
     result = diagnose_height_reproject_applicability(
         _clean_pairs(),
@@ -209,6 +227,14 @@ def test_gate_height_y_delta_invalid_thresholds_are_review_only():
 
         assert result["height_reproject_status"] == REVIEW_ONLY
         assert result["height_reproject_blocking_reasons"] == ["invalid_y_delta_thresholds"]
+
+
+def test_gate_height_y_delta_negative_delta_is_review_only():
+    result = gate_height_y_delta(-1.0, 4.0, 10.0)
+
+    assert result["height_reproject_status"] == REVIEW_ONLY
+    assert result["height_reproject_blocking_reasons"] == ["invalid_max_y_delta"]
+    assert result["y_delta_gate_status"] == "review_only_invalid_max_y_delta"
 
 
 def test_output_is_json_serializable_and_has_no_candidate_or_writeback_fields():

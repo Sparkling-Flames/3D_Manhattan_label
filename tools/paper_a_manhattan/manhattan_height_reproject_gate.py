@@ -57,21 +57,42 @@ def _is_false_like(value: Any) -> bool:
     return False
 
 
-def _iter_metadata_tokens(value: Any):
+def _is_true_like(value: Any) -> bool:
+    if value is True:
+        return True
+    if isinstance(value, str):
+        return value.strip().lower() in {"true", "1", "yes", "y"}
+    if isinstance(value, (int, float)) and not isinstance(value, bool):
+        return value == 1
+    return False
+
+
+def _iter_metadata_value_tokens(value: Any):
     if value is None:
         return
     if isinstance(value, Mapping):
-        for key, item in value.items():
-            yield str(key).strip().lower()
-            yield from _iter_metadata_tokens(item)
+        for item in value.values():
+            yield from _iter_metadata_value_tokens(item)
         return
     if isinstance(value, (list, tuple, set, frozenset)):
         for item in value:
-            yield from _iter_metadata_tokens(item)
+            yield from _iter_metadata_value_tokens(item)
         return
     text = str(value).strip().lower()
     if text:
         yield text
+
+
+def _iter_true_flag_tokens(value: Any):
+    if isinstance(value, Mapping):
+        for key, item in value.items():
+            token = str(key).strip().lower()
+            if token in METADATA_SUPPRESS_TOKENS and _is_true_like(item):
+                yield token
+            yield from _iter_true_flag_tokens(item)
+    elif isinstance(value, (list, tuple, set, frozenset)):
+        for item in value:
+            yield from _iter_true_flag_tokens(item)
 
 
 def _has_false_like_manhattan_assumable(value: Any) -> bool:
@@ -91,14 +112,13 @@ def _metadata_suppress_reasons(metadata: Mapping[str, Any] | None) -> list[str]:
         return []
 
     reasons: set[str] = set()
-    for raw_token in _iter_metadata_tokens(metadata):
+    for raw_token in _iter_metadata_value_tokens(metadata):
         for suppress_token in METADATA_SUPPRESS_TOKENS:
             if raw_token == suppress_token or suppress_token in raw_token:
                 reasons.add(f"metadata_{suppress_token}")
 
-    for token in METADATA_SUPPRESS_TOKENS:
-        if metadata.get(token):
-            reasons.add(f"metadata_{token}")
+    for token in _iter_true_flag_tokens(metadata):
+        reasons.add(f"metadata_{token}")
 
     if _has_false_like_manhattan_assumable(metadata):
         reasons.add("metadata_not_manhattan_assumable")
@@ -278,6 +298,14 @@ def gate_height_y_delta(
             "height_reproject_blocking_reasons": ["max_y_delta_unavailable"],
             "max_y_delta": parsed_delta,
             "y_delta_gate_status": "review_only_delta_unavailable",
+            "gate_version": GATE_VERSION,
+        }
+    if parsed_delta < 0:
+        return {
+            "height_reproject_status": REVIEW_ONLY,
+            "height_reproject_blocking_reasons": ["invalid_max_y_delta"],
+            "max_y_delta": parsed_delta,
+            "y_delta_gate_status": "review_only_invalid_max_y_delta",
             "gate_version": GATE_VERSION,
         }
     if (

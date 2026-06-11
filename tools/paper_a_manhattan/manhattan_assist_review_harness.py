@@ -12,6 +12,9 @@ from __future__ import annotations
 import math
 from typing import Any, Mapping, Sequence
 
+from tools.paper_a_manhattan.manhattan_height_reproject_gate import (
+    diagnose_height_reproject_applicability,
+)
 from tools.paper_a_manhattan.manhattan_pair_assist import (
     ELIGIBLE,
     REVIEW_ONLY,
@@ -23,6 +26,10 @@ from tools.paper_a_manhattan.manhattan_pair_assist import (
 
 REVIEW_HARNESS_VERSION = "manhattan_assist_review_harness_m15_6_v1"
 SUMMARY_SCHEMA_VERSION = "manhattan_assist_summary_schema_m15_6_1_v1"
+HEIGHT_REPROJECT_SUMMARY_SCHEMA_VERSION = (
+    "manhattan_height_reproject_applicability_summary_m15_9_v1"
+)
+HEIGHT_REPROJECT_APPLICABILITY_OPERATION = "height_reproject_applicability"
 
 
 def _is_true_like(value: Any) -> bool | None:
@@ -101,6 +108,39 @@ def build_pair_assist_review_rows(
         ordered_pairs = record.get("ordered_pairs", [])
         target_pair_index = record.get("target_pair_index")
         metadata = record.get("metadata")
+        if operation == HEIGHT_REPROJECT_APPLICABILITY_OPERATION:
+            diagnosis = diagnose_height_reproject_applicability(
+                ordered_pairs,
+                target_pair_index,
+                metadata=metadata,
+            )
+            row = {
+                "task_id": record.get("task_id"),
+                "annotation_id": record.get("annotation_id"),
+                "target_pair_index": diagnosis.get("target_pair_index", target_pair_index),
+                "operation": operation,
+                "state_status": diagnosis.get("state_status"),
+                "height_reproject_status": diagnosis.get("height_reproject_status"),
+                "height_reproject_applicable": diagnosis.get("height_reproject_applicable"),
+                "height_reproject_blocking_reasons": list(
+                    diagnosis.get("height_reproject_blocking_reasons", [])
+                ),
+                "height_reproject_reasons": list(diagnosis.get("height_reproject_reasons", [])),
+                "estimated_layout_height": diagnosis.get("estimated_layout_height"),
+                "layout_height_spread": diagnosis.get("layout_height_spread"),
+                "target_height_residual_before": diagnosis.get(
+                    "target_height_residual_before"
+                ),
+                "max_y_delta": diagnosis.get("max_y_delta"),
+                "y_delta_gate_status": diagnosis.get("y_delta_gate_status"),
+                "candidate_returned": False,
+                "candidate_retained": False,
+                "review_harness_version": REVIEW_HARNESS_VERSION,
+            }
+            row.update(_manual_fields(record.get("manual_review")))
+            rows.append(row)
+            continue
+
         if operation == "align_pair_x":
             diagnosis = diagnose_pair_alignment(ordered_pairs, target_pair_index, metadata=metadata)
             proposal = propose_align_pair_x(ordered_pairs, target_pair_index, metadata=metadata)
@@ -264,9 +304,84 @@ def summarize_pair_assist_review(rows: Sequence[Mapping[str, Any]]) -> dict[str,
     }
 
 
+def _height_reason_counts(rows: Sequence[Mapping[str, Any]]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for row in rows:
+        reasons = list(row.get("height_reproject_blocking_reasons", []))
+        reasons.extend(row.get("height_reproject_reasons", []))
+        for reason in reasons:
+            token = str(reason)
+            counts[token] = counts.get(token, 0) + 1
+    return dict(sorted(counts.items()))
+
+
+def summarize_height_reproject_applicability_review(
+    rows: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    """Summarize height applicability review rows without candidate safety claims."""
+    n_records = len(rows)
+    n_height_reproject_applicable = sum(
+        1 for row in rows
+        if row.get("height_reproject_applicable") is True
+    )
+    n_height_reproject_suppressed = sum(
+        1 for row in rows
+        if row.get("height_reproject_status") == SUPPRESS
+    )
+    n_height_reproject_review_only = sum(
+        1 for row in rows
+        if row.get("height_reproject_status") == REVIEW_ONLY
+    )
+    n_height_reproject_blocked = (
+        n_height_reproject_suppressed + n_height_reproject_review_only
+    )
+    n_not_evaluated_no_candidate = sum(
+        1 for row in rows
+        if row.get("y_delta_gate_status") == "not_evaluated_no_candidate"
+    )
+    n_missing_manual_review = sum(1 for row in rows if not row.get("has_manual_review"))
+    layout_spreads = _numeric_values(rows, "layout_height_spread")
+    target_residuals = _numeric_values(rows, "target_height_residual_before")
+    return {
+        "n_records": n_records,
+        "n_height_reproject_applicable": n_height_reproject_applicable,
+        "n_height_reproject_suppressed": n_height_reproject_suppressed,
+        "n_height_reproject_review_only": n_height_reproject_review_only,
+        "n_height_reproject_blocked": n_height_reproject_blocked,
+        "height_reproject_applicable_rate": _rate(
+            n_height_reproject_applicable,
+            n_records,
+        ),
+        "height_reproject_suppress_rate": _rate(
+            n_height_reproject_suppressed,
+            n_records,
+        ),
+        "height_reproject_review_only_rate": _rate(
+            n_height_reproject_review_only,
+            n_records,
+        ),
+        "n_not_evaluated_no_candidate": n_not_evaluated_no_candidate,
+        "n_missing_manual_review": n_missing_manual_review,
+        "layout_height_spread_p50": _quantile(layout_spreads, 0.5),
+        "layout_height_spread_p90": _quantile(layout_spreads, 0.9),
+        "layout_height_spread_max": max(layout_spreads) if layout_spreads else None,
+        "target_height_residual_before_p50": _quantile(target_residuals, 0.5),
+        "target_height_residual_before_p90": _quantile(target_residuals, 0.9),
+        "target_height_residual_before_max": (
+            max(target_residuals) if target_residuals else None
+        ),
+        "height_reproject_reason_counts": _height_reason_counts(rows),
+        "review_harness_version": REVIEW_HARNESS_VERSION,
+        "summary_schema_version": HEIGHT_REPROJECT_SUMMARY_SCHEMA_VERSION,
+    }
+
+
 __all__ = [
     "REVIEW_HARNESS_VERSION",
     "SUMMARY_SCHEMA_VERSION",
+    "HEIGHT_REPROJECT_APPLICABILITY_OPERATION",
+    "HEIGHT_REPROJECT_SUMMARY_SCHEMA_VERSION",
     "build_pair_assist_review_rows",
+    "summarize_height_reproject_applicability_review",
     "summarize_pair_assist_review",
 ]
