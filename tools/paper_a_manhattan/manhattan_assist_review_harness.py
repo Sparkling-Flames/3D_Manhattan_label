@@ -29,6 +29,9 @@ SUMMARY_SCHEMA_VERSION = "manhattan_assist_summary_schema_m15_6_1_v1"
 HEIGHT_REPROJECT_SUMMARY_SCHEMA_VERSION = (
     "manhattan_height_reproject_applicability_summary_m15_9_v1"
 )
+HEIGHT_REPROJECT_ROW_SCHEMA_VERSION = (
+    "manhattan_height_reproject_applicability_rows_m15_9_v1"
+)
 HEIGHT_REPROJECT_APPLICABILITY_OPERATION = "height_reproject_applicability"
 
 
@@ -136,6 +139,7 @@ def build_pair_assist_review_rows(
                 "candidate_returned": False,
                 "candidate_retained": False,
                 "review_harness_version": REVIEW_HARNESS_VERSION,
+                "height_reproject_row_schema_version": HEIGHT_REPROJECT_ROW_SCHEMA_VERSION,
             }
             row.update(_manual_fields(record.get("manual_review")))
             rows.append(row)
@@ -380,6 +384,7 @@ __all__ = [
     "REVIEW_HARNESS_VERSION",
     "SUMMARY_SCHEMA_VERSION",
     "HEIGHT_REPROJECT_APPLICABILITY_OPERATION",
+    "HEIGHT_REPROJECT_ROW_SCHEMA_VERSION",
     "HEIGHT_REPROJECT_SUMMARY_SCHEMA_VERSION",
     "build_pair_assist_review_rows",
     "summarize_height_reproject_applicability_review",

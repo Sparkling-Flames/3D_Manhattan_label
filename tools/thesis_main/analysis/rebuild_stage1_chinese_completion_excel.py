@@ -26,6 +26,23 @@ STAGE_DIR = EXPORT_DIR / "stage1_chinese"
 OUT = STAGE_DIR / "标注完成情况完整结果.xlsx"
 PROJECT_NAME = {28: "project-28", 29: "project-29", 30: "project-30"}
 PROJECT_TYPE = {28: "manual", 29: "semi", 30: "oos"}
+ADMIN_NONPARTICIPANT_IDS = {"2"}
+FORCED_EXIT_IDS = {"18"}
+ACCOUNTABLE_EXIT_OVERRIDE_IDS = {"11"}
+
+
+def worker_status(worker_id: str, exit_ids: set[str]) -> str:
+    if worker_id in ACCOUNTABLE_EXIT_OVERRIDE_IDS:
+        return "退出名单但暂计入"
+    if worker_id in ADMIN_NONPARTICIPANT_IDS:
+        return "管理人员暂不参与"
+    if worker_id in exit_ids:
+        return "退出人员"
+    return "普通标注人员"
+
+
+def is_accountable_worker(worker_id: str, exit_ids: set[str]) -> bool:
+    return worker_id not in ADMIN_NONPARTICIPANT_IDS and worker_id not in exit_ids
 
 
 def compact_name(value: object) -> str:
@@ -218,12 +235,15 @@ def build_active_time_rows(
         staff = staff_by_id.get(annotator_id)
         in_staff = annotator_id in staff_by_id
         is_exited = annotator_id in exit_ids
+        status = worker_status(annotator_id, exit_ids)
         appeared_in_json = annotator_id in project_data[project_id]["worker_tasks"]
         anomaly_types: list[str] = []
         if annotator_id in {"", "unknown", "None", "null"} or not annotator_id.isdigit():
             anomaly_types.append("active_time_annotator_id_missing_or_non_numeric")
         elif not in_staff:
             anomaly_types.append("active_time_annotator_id_not_in_staff_excel")
+        if annotator_id in ADMIN_NONPARTICIPANT_IDS:
+            anomaly_types.append("active_time_from_admin_nonparticipant")
         if is_exited:
             anomaly_types.append("active_time_from_exited_person")
         if not appeared_in_json:
@@ -235,6 +255,7 @@ def build_active_time_rows(
             "active_annotator_id": annotator_id,
             "人员表匹配": "是" if in_staff else "否",
             "人员": staff.get("人员") if staff else None,
+            "人员状态": status,
             "退出人员": "是" if is_exited else "否",
             "JSON中是否有有效标注": "是" if appeared_in_json else "否",
             "JSON有效完成任务数": len(project_data[project_id]["worker_tasks"].get(annotator_id, set())),
@@ -282,6 +303,7 @@ def main() -> None:
     staff_rows, staff_by_id = load_staff()
     numbered_staff = [r for r in staff_rows if r["编号"] is not None]
     exit_rows, exit_ids = load_exit_mapping(staff_by_id)
+    exit_ids = (set(exit_ids) | FORCED_EXIT_IDS) - ACCOUNTABLE_EXIT_OVERRIDE_IDS
     project_data = load_project_data()
     active_summary_rows, active_anomaly_rows, parse_error_count = build_active_time_rows(
         project_data, staff_by_id, exit_ids
@@ -303,6 +325,7 @@ def main() -> None:
     summary_rows: list[dict[str, Any]] = []
     participant_detail: list[dict[str, Any]] = []
     incomplete_rows: list[dict[str, Any]] = []
+    nonaccountable_rows: list[dict[str, Any]] = []
     missing_detail: list[dict[str, Any]] = []
     all_excel_rows: list[dict[str, Any]] = []
 
@@ -312,10 +335,15 @@ def main() -> None:
         actual_ids = sorted(data["worker_tasks"], key=lambda x: int(x) if x.isdigit() else 9999)
         complete: list[str] = []
         incomplete: list[tuple[str, int, list[str]]] = []
+        accountable_ids = [worker_id for worker_id in actual_ids if is_accountable_worker(worker_id, exit_ids)]
+        accountable_complete: list[str] = []
+        accountable_incomplete: list[tuple[str, int, list[str]]] = []
         for worker_id in actual_ids:
             done = len(data["worker_tasks"][worker_id])
             missing = [tid for tid in data["task_ids"] if tid not in data["worker_tasks"][worker_id]]
             staff = staff_by_id.get(worker_id, {})
+            status_label = worker_status(worker_id, exit_ids)
+            accountable = is_accountable_worker(worker_id, exit_ids)
             status = "完整" if done == total else "未完整"
             participant_detail.append(
                 {
@@ -324,6 +352,8 @@ def main() -> None:
                     "项目类型": PROJECT_TYPE[project_id],
                     "编号": int(worker_id) if worker_id.isdigit() else worker_id,
                     "人员": staff.get("人员"),
+                    "人员状态": status_label,
+                    "纳入完成率责任口径": "是" if accountable else "否",
                     "是否实际参与": "是",
                     "完成状态": status,
                     "任务总数": total,
@@ -339,6 +369,27 @@ def main() -> None:
                 complete.append(worker_id)
             else:
                 incomplete.append((worker_id, done, missing))
+            if accountable and done == total:
+                accountable_complete.append(worker_id)
+            elif accountable:
+                accountable_incomplete.append((worker_id, done, missing))
+            else:
+                nonaccountable_rows.append(
+                    {
+                        "项目ID": project_id,
+                        "项目": PROJECT_NAME[project_id],
+                        "项目类型": PROJECT_TYPE[project_id],
+                        "编号": int(worker_id) if worker_id.isdigit() else worker_id,
+                        "人员": staff.get("人员"),
+                        "人员状态": status_label,
+                        "任务总数": total,
+                        "已完成任务数(去重)": done,
+                        "缺失任务数": len(missing),
+                        "缺失任务ID列表": "、".join(missing) if missing else None,
+                        "保留原因": "保留运行痕迹，但不纳入完成率责任口径",
+                    }
+                )
+            if accountable and done != total:
                 incomplete_rows.append(
                     {
                         "项目ID": project_id,
@@ -346,6 +397,7 @@ def main() -> None:
                         "项目类型": PROJECT_TYPE[project_id],
                         "编号": int(worker_id) if worker_id.isdigit() else worker_id,
                         "人员": staff.get("人员"),
+                        "人员状态": status_label,
                         "任务总数": total,
                         "已完成任务数(去重)": done,
                         "缺失任务数": len(missing),
@@ -362,6 +414,7 @@ def main() -> None:
                             "项目类型": PROJECT_TYPE[project_id],
                             "编号": int(worker_id) if worker_id.isdigit() else worker_id,
                             "人员": staff.get("人员"),
+                            "人员状态": status_label,
                             "缺失任务ID": task_id,
                             "LabelStudio任务ID": task.get("LabelStudio任务ID"),
                             "base_task_id": task.get("base_task_id"),
@@ -378,6 +431,14 @@ def main() -> None:
                 for worker_id, done, _ in incomplete
             )
         )
+        accountable_miss_text = (
+            "无"
+            if not accountable_incomplete
+            else "、".join(
+                f"{worker_id} {staff_by_id.get(worker_id, {}).get('人员') or ''}({done}/{total})"
+                for worker_id, done, _ in accountable_incomplete
+            )
+        )
         summary_rows.append(
             {
                 "项目ID": project_id,
@@ -385,9 +446,13 @@ def main() -> None:
                 "项目类型": PROJECT_TYPE[project_id],
                 "任务总数": total,
                 "实际参与人数": len(actual_ids),
-                "完整人数": len(complete),
-                "未完整人数": len(incomplete),
-                "未完整人员": miss_text,
+                "实际完整人数": len(complete),
+                "实际未完整人数": len(incomplete),
+                "实际未完整人员": miss_text,
+                "责任口径参与人数": len(accountable_ids),
+                "责任口径完整人数": len(accountable_complete),
+                "责任口径未完整人数": len(accountable_incomplete),
+                "责任口径未完整人员": accountable_miss_text,
             }
         )
         for staff in numbered_staff:
@@ -401,6 +466,8 @@ def main() -> None:
                     "项目类型": PROJECT_TYPE[project_id],
                     "编号": staff["编号"],
                     "人员": staff["人员"],
+                    "人员状态": worker_status(worker_id, exit_ids),
+                    "纳入完成率责任口径": "是" if is_accountable_worker(worker_id, exit_ids) else "否",
                     "JSON中是否出现": "是" if worker_id in data["worker_tasks"] else "否",
                     "任务总数": total,
                     "已完成任务数(去重)": len(done_set),
@@ -413,7 +480,12 @@ def main() -> None:
     person_rows: list[dict[str, Any]] = []
     for staff in numbered_staff:
         worker_id = str(staff["编号"])
-        row = {"编号": staff["编号"], "人员": staff["人员"]}
+        row = {
+            "编号": staff["编号"],
+            "人员": staff["人员"],
+            "人员状态": worker_status(worker_id, exit_ids),
+            "纳入完成率责任口径": "是" if is_accountable_worker(worker_id, exit_ids) else "否",
+        }
         for project_id in [28, 29, 30]:
             data = project_data[project_id]
             total = len(data["task_ids"])
@@ -436,6 +508,7 @@ def main() -> None:
     add_sheet(wb, "汇总", summary_rows)
     add_sheet(wb, "人员一一对应", person_rows)
     add_sheet(wb, "未完整人员", incomplete_rows)
+    add_sheet(wb, "非责任口径人员", nonaccountable_rows)
     add_sheet(wb, "实际参与者明细", participant_detail)
     add_sheet(wb, "缺失任务明细", missing_detail)
     add_sheet(wb, "所有Excel编号口径", all_excel_rows)
@@ -474,16 +547,20 @@ def main() -> None:
             },
             {
                 "说明项": "主要口径",
-                "内容": "“未完整人员”按该项目JSON中实际出现过有效标注的人计算；若该人没有覆盖该项目全部任务，则判为未完整。",
+                "内容": "“未完整人员”采用完成率责任口径；管理人员暂不参与与退出人员不纳入该口径，但保留在实际参与者与非责任口径人员表中。",
             },
             {
                 "说明项": "辅助口径",
                 "内容": "“所有Excel编号口径”把新版标注人员Excel中每个有编号的人都放到每个项目下统计，JSON中未出现的人会显示为未出现。",
             },
+            {
+                "说明项": "特殊人员口径",
+                "内容": "2号为管理人员暂不参与；18号当前按退出人员处理；11号虽在退出名单映射中，但因实际完整参与，暂时纳入完成率责任口径。历史标注和 active_time 均不删除。",
+            },
             {"说明项": "有效标注", "内容": "排除 was_cancelled=True 的标注。"},
             {
                 "说明项": "active_time异常",
-                "内容": "只作为过程审计；列出 project-28/29/30 中 active_time annotator_id 不在人员表、缺失/非数字、属于退出人员，或该项目JSON没有有效标注的日志主体。",
+                "内容": "只作为过程审计；列出 project-28/29/30 中 active_time annotator_id 不在人员表、缺失/非数字、属于退出人员、管理人员暂不参与，或该项目JSON没有有效标注的日志主体。",
             },
             {
                 "说明项": "active_time来源",
@@ -507,7 +584,11 @@ def main() -> None:
             fill = None
             if values.get("异常类型"):
                 fill = bad_fill
-            elif values.get("是否退出人员") == "是" or values.get("退出人员") == "是":
+            elif (
+                values.get("是否退出人员") == "是"
+                or values.get("退出人员") == "是"
+                or values.get("人员状态") in {"管理人员暂不参与", "退出人员"}
+            ):
                 fill = warn_fill
             if fill:
                 for cell in row_cells:

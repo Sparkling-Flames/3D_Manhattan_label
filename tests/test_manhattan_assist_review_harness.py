@@ -2,6 +2,7 @@ import json
 
 from tools.paper_a_manhattan.manhattan_assist_review_harness import (
     HEIGHT_REPROJECT_APPLICABILITY_OPERATION,
+    HEIGHT_REPROJECT_ROW_SCHEMA_VERSION,
     SUMMARY_SCHEMA_VERSION,
     build_pair_assist_review_rows,
     summarize_height_reproject_applicability_review,
@@ -260,6 +261,7 @@ def test_output_is_json_serializable():
     assert summary["summary_schema_version"] == SUMMARY_SCHEMA_VERSION
     assert summary["review_harness_version"] == "manhattan_assist_review_harness_m15_6_v1"
     assert "summary_schema_version" not in rows[0]
+    assert "height_reproject_row_schema_version" not in rows[0]
     json.dumps(rows)
     json.dumps(summary)
 
@@ -295,6 +297,7 @@ def test_height_reproject_applicability_operation_generates_row_without_candidat
     assert row["y_delta_gate_status"] == "not_evaluated_no_candidate"
     assert row["candidate_returned"] is False
     assert row["candidate_retained"] is False
+    assert row["height_reproject_row_schema_version"] == HEIGHT_REPROJECT_ROW_SCHEMA_VERSION
     assert "candidate_pairs" not in row
     assert "annotation" not in row
     assert "writeback" not in row
