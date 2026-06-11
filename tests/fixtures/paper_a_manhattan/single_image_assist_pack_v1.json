@@ -229,5 +229,55 @@
       {"x": 88.0, "y": 70.0}
     ],
     "metadata": {}
+  },
+  "raw_keypoints_wrong_order_with_verified_order": {
+    "task_id": "single-task-015",
+    "annotation_id": "single-ann-015",
+    "preserve_order": true,
+    "order_verified_by_expert": true,
+    "preview_order_override": [2, 3, 1, 4],
+    "order_override_note": "Verified order repairs preserve-order conflict for offline diagnostics.",
+    "keypoints": [
+      {"x": 60.0, "y": 32.0},
+      {"x": 60.0, "y": 70.0},
+      {"x": 10.0, "y": 32.0},
+      {"x": 10.0, "y": 70.0},
+      {"x": 30.0, "y": 32.0},
+      {"x": 30.0, "y": 70.0},
+      {"x": 80.0, "y": 32.0},
+      {"x": 80.0, "y": 70.0}
+    ],
+    "metadata": {}
+  },
+  "raw_keypoints_odd_with_verified_order": {
+    "task_id": "single-task-016",
+    "annotation_id": "single-ann-016",
+    "order_verified_by_expert": true,
+    "preview_order_override": [1],
+    "order_override_note": "Odd keypoint structural failure must not be bypassed.",
+    "keypoints": [
+      {"x": 10.0, "y": 32.0},
+      {"x": 10.0, "y": 70.0},
+      {"x": 34.0, "y": 32.0}
+    ],
+    "metadata": {}
+  },
+  "raw_keypoints_wraparound_with_verified_order": {
+    "task_id": "single-task-017",
+    "annotation_id": "single-ann-017",
+    "order_verified_by_expert": true,
+    "preview_order_override": [1, 2, 3, 4],
+    "order_override_note": "Wraparound/seam structural failure must not be bypassed.",
+    "keypoints": [
+      {"x": 1.0, "y": 32.0},
+      {"x": 1.0, "y": 70.0},
+      {"x": 10.0, "y": 32.0},
+      {"x": 10.0, "y": 70.0},
+      {"x": 90.0, "y": 32.0},
+      {"x": 90.0, "y": 70.0},
+      {"x": 99.0, "y": 32.0},
+      {"x": 99.0, "y": 70.0}
+    ],
+    "metadata": {}
   }
 }

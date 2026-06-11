@@ -224,6 +224,10 @@ def test_verified_preview_order_override_allows_duplicate_raw_input_to_continue(
     assert result["preview_compatibility"]["status"] == "compatibility_failure_duplicate"
     assert result["preview_order_override_active"] is True
     assert result["topology_source"] == "expert_verified_preview_order"
+    assert (
+        result["topology_override"]["topology_override_schema_version"]
+        == "verified_preview_order_m15_13_v1"
+    )
     assert result["default_preview_status"] == "compatibility_failure_duplicate"
     assert result["default_preview_reason"] == "near_duplicate_corner_pair"
     assert len(result["ordered_pairs"]) == 10
@@ -239,6 +243,43 @@ def test_verified_preview_order_override_reorders_ordered_pairs():
     ]
 
     assert centers[:4] == [20.0, 10.0, 30.0, 10.4]
+
+
+def test_verified_preview_order_override_allows_wrong_order_raw_input_to_continue():
+    result = build_single_image_assist(_fixture_case("raw_keypoints_wrong_order_with_verified_order"))
+
+    assert result["preview_compatibility"]["status"] == "compatibility_failure_wrong_order"
+    assert result["preview_order_override_active"] is True
+    assert result["topology_source"] == "expert_verified_preview_order"
+    assert result["effective_preview_compatibility"]["status"] == "compatible_with_expert_verified_order"
+    assert len(result["ordered_pairs"]) == 4
+    assert len(result["manual_edit_table"]) == 4
+
+
+def test_verified_preview_order_override_does_not_bypass_odd_unpaired_failure():
+    result = build_single_image_assist(_fixture_case("raw_keypoints_odd_with_verified_order"))
+
+    assert result["preview_compatibility"]["status"] == "compatibility_failure_odd_keypoint"
+    assert result["preview_order_override_active"] is False
+    assert result["topology_source"] == "preview_order_override_not_allowed_for_status"
+    assert result["effective_preview_compatibility"]["status"] == (
+        "preview_order_override_not_allowed_for_status"
+    )
+    assert result["ordered_pairs"] == []
+    assert result["manual_edit_table"] == []
+    assert result["align_pair_x_proposals"] == []
+
+
+def test_verified_preview_order_override_does_not_bypass_wraparound_failure():
+    result = build_single_image_assist(_fixture_case("raw_keypoints_wraparound_with_verified_order"))
+
+    assert result["preview_compatibility"]["status"] == "compatibility_failure_wraparound_unresolved"
+    assert result["topology_source"] == "preview_order_override_not_allowed_for_status"
+    assert result["effective_preview_compatibility"]["status"] == (
+        "preview_order_override_not_allowed_for_status"
+    )
+    assert result["ordered_pairs"] == []
+    assert result["manual_edit_table"] == []
 
 
 def test_invalid_preview_order_override_returns_invalid_without_suggestions():
@@ -273,10 +314,17 @@ def test_override_dense_pairs_remain_manual_only_but_non_dense_pair_can_align_x(
     assert dense_edit["to_bottom_x"] is None
     assert dense_review["manual_only"] is True
     assert dense_review["reason"] == "near_duplicate_corner_pair"
+    assert result["default_order_diagnostics"]["manual_only_reason"] is None
+    assert (
+        result["effective_order_diagnostics"]["diagnostic_reason"]
+        == "expert_verified_non_x_monotonic_order"
+    )
+    assert result["effective_order_diagnostics"]["manual_only_reason"] is None
     assert align_edit["action"] == "align_pair_x"
     assert align_edit["to_top_x"] == 90.0
     assert align_edit["to_bottom_x"] == 90.0
     assert align_review["primary_action"] == "align_pair_x"
+    assert align_review["manual_only"] is False
 
 
 def test_cli_output_is_json_serializable(tmp_path):
@@ -292,7 +340,7 @@ def test_cli_output_is_json_serializable(tmp_path):
     assert exit_code == 0
     payload = json.loads(output_path.read_text(encoding="utf-8"))
     json.dumps(payload)
-    assert payload["tool_version"] == "single_image_manhattan_assist_m15_11_v1"
+    assert payload["tool_version"] == "single_image_manhattan_assist_m15_13_v1"
 
 
 def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):

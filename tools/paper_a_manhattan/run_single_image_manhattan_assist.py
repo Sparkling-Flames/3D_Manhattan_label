@@ -40,7 +40,12 @@ from tools.paper_a_manhattan.manhattan_preview_compat import (  # noqa: E402
 )
 
 
-TOOL_VERSION = "single_image_manhattan_assist_m15_11_v1"
+TOOL_VERSION = "single_image_manhattan_assist_m15_13_v1"
+TOPOLOGY_OVERRIDE_SCHEMA_VERSION = "verified_preview_order_m15_13_v1"
+PREVIEW_ORDER_OVERRIDE_ALLOWED_STATUSES = {
+    "compatibility_failure_duplicate",
+    "compatibility_failure_wrong_order",
+}
 NO_WRITEBACK_NOTE = (
     "Expert-side diagnostic only: no UI, no apply/writeback, no routing, "
     "no formal g_t, no worker quality metric, no P1/C1/C2/T1/V1 artifact."
@@ -168,6 +173,7 @@ def _topology_override_info(
     invalid_reason: str | None = None,
 ) -> dict[str, Any]:
     return {
+        "topology_override_schema_version": TOPOLOGY_OVERRIDE_SCHEMA_VERSION,
         "preview_order_override_active": active,
         "topology_source": source,
         "default_preview_status": default_preview_status,
@@ -282,6 +288,39 @@ def _resolve_ordered_pairs(
                     invalid_reason=invalid_reason,
                 ),
             )
+        if default_status not in PREVIEW_ORDER_OVERRIDE_ALLOWED_STATUSES:
+            if default_status == COMPATIBLE:
+                ordered_pairs = [
+                    _preview_pair_to_ordered_pair(pair)
+                    for pair in preview.ordered_corners
+                ]
+                return (
+                    input_mode,
+                    preview_info,
+                    ordered_pairs,
+                    _topology_override_info(
+                        active=False,
+                        source="default_preview_order",
+                        default_preview_status=default_status,
+                        default_preview_reason=default_reason,
+                        payload=payload,
+                        override_status="preview_order_override_ignored_for_compatible_default",
+                    ),
+                )
+            return (
+                input_mode,
+                preview_info,
+                [],
+                _topology_override_info(
+                    active=False,
+                    source="preview_order_override_not_allowed_for_status",
+                    default_preview_status=default_status,
+                    default_preview_reason=default_reason,
+                    payload=payload,
+                    override_status="preview_order_override_not_allowed_for_status",
+                    invalid_reason="preview_order_override_not_allowed_for_status",
+                ),
+            )
         return (
             input_mode,
             preview_info,
@@ -384,7 +423,12 @@ def _duplicate_diagnostics_from_centers(
     return diagnostics
 
 
-def _order_diagnostics_from_centers(centers: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
+def _order_diagnostics_from_centers(
+    centers: Sequence[Mapping[str, Any]],
+    *,
+    reason: str = "local_order_zigzag",
+    manual_only: bool = True,
+) -> dict[str, Any]:
     if len(centers) < 2:
         return {
             "is_x_monotonic": True,
@@ -410,15 +454,16 @@ def _order_diagnostics_from_centers(centers: Sequence[Mapping[str, Any]]) -> dic
                 "right_pair_index": deltas[idx][1],
                 "from_direction": "increasing" if signs[idx - 1] > 0 else "decreasing",
                 "to_direction": "increasing" if signs[idx] > 0 else "decreasing",
-                "reason": "local_order_zigzag",
-                "manual_only": True,
+                "reason": reason,
+                "manual_only": manual_only,
             }
         )
     return {
         "is_x_monotonic": not direction_changes,
         "n_direction_changes": len(direction_changes),
         "direction_change_pairs": direction_changes,
-        "manual_only_reason": "local_order_zigzag" if direction_changes else None,
+        "manual_only_reason": reason if direction_changes and manual_only else None,
+        "diagnostic_reason": reason if direction_changes else None,
     }
 
 
@@ -428,14 +473,25 @@ def _diagnostics_from_payload(
     *,
     input_mode: str,
     topology_override: Mapping[str, Any],
-) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+) -> tuple[list[dict[str, Any]], dict[str, Any], dict[str, Any]]:
     width = _as_int(payload.get("width"), DEFAULT_WIDTH)
     height = _as_int(payload.get("height"), DEFAULT_HEIGHT)
     preserve_order = _as_bool(payload.get("preserve_order"), False)
     threshold_percent = DUPLICATE_CORNER_THRESHOLD_RATIO * 100.0
 
+    default_centers: list[dict[str, Any]] = []
+    _, raw_keypoints = _raw_keypoints_from_payload(payload)
+    if isinstance(raw_keypoints, list):
+        preview = check_preview_compatibility(
+            raw_keypoints,
+            preserve_order=preserve_order,
+            width=width,
+            height=height,
+        )
+        default_centers = _center_rows_from_preview(preview, width)
+
     if ordered_pairs:
-        centers = _center_rows_from_ordered_pairs(
+        effective_centers = _center_rows_from_ordered_pairs(
             ordered_pairs,
             index_source=(
                 "expert_verified_preview_order"
@@ -444,24 +500,25 @@ def _diagnostics_from_payload(
             ),
         )
     else:
-        _, raw_keypoints = _raw_keypoints_from_payload(payload)
-        if not isinstance(raw_keypoints, list):
-            centers = []
-        else:
-            preview = check_preview_compatibility(
-                raw_keypoints,
-                preserve_order=preserve_order,
-                width=width,
-                height=height,
-            )
-            centers = _center_rows_from_preview(preview, width)
+        effective_centers = default_centers
 
+    effective_reason = (
+        "expert_verified_non_x_monotonic_order"
+        if topology_override.get("preview_order_override_active")
+        else "local_order_zigzag"
+    )
+    effective_manual_only = not topology_override.get("preview_order_override_active")
     return (
         _duplicate_diagnostics_from_centers(
-            centers,
+            effective_centers,
             threshold_percent=threshold_percent,
         ),
-        _order_diagnostics_from_centers(centers),
+        _order_diagnostics_from_centers(default_centers or effective_centers),
+        _order_diagnostics_from_centers(
+            effective_centers,
+            reason=effective_reason,
+            manual_only=effective_manual_only,
+        ),
     )
 
 
@@ -674,19 +731,29 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
     input_mode, preview_compatibility, ordered_pairs, topology_override = _resolve_ordered_pairs(
         payload
     )
-    duplicate_diagnostics, order_diagnostics = _diagnostics_from_payload(
+    (
+        duplicate_diagnostics,
+        default_order_diagnostics,
+        effective_order_diagnostics,
+    ) = _diagnostics_from_payload(
         payload,
         ordered_pairs,
         input_mode=input_mode,
         topology_override=topology_override,
     )
+    order_diagnostics = effective_order_diagnostics
     metadata = payload.get("metadata") if isinstance(payload.get("metadata"), Mapping) else None
     task_id = payload.get("task_id")
     annotation_id = payload.get("annotation_id")
 
     invalid_override = topology_override.get("override_status") == "invalid_preview_order_override"
+    override_not_allowed = (
+        topology_override.get("override_status")
+        == "preview_order_override_not_allowed_for_status"
+    )
     if (
         invalid_override
+        or override_not_allowed
         or (
             preview_compatibility["status"] != COMPATIBLE
             and input_mode != "simplified_ordered_pairs"
@@ -699,7 +766,13 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
             "input_mode": input_mode,
             "preview_compatibility": preview_compatibility,
             "effective_preview_compatibility": {
-                "status": "invalid_preview_order_override" if invalid_override else "not_compatible",
+                "status": (
+                    "invalid_preview_order_override"
+                    if invalid_override
+                    else "preview_order_override_not_allowed_for_status"
+                    if override_not_allowed
+                    else "not_compatible"
+                ),
                 "reason": topology_override.get("invalid_reason")
                 or preview_compatibility.get("compatibility_reason"),
             },
@@ -714,6 +787,8 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
             "align_pair_x_proposals": [],
             "height_reproject_applicability_rows": [],
             "duplicate_diagnostics": duplicate_diagnostics,
+            "default_order_diagnostics": default_order_diagnostics,
+            "effective_order_diagnostics": effective_order_diagnostics,
             "order_diagnostics": order_diagnostics,
             "recommended_review_order": [],
             "manual_edit_table": [],
@@ -751,9 +826,12 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         reason = diagnostic["reason"]
         manual_only_reasons[int(diagnostic["left_pair_index"])] = reason
         manual_only_reasons[int(diagnostic["right_pair_index"])] = reason
-    for change in order_diagnostics.get("direction_change_pairs", []):
-        for key in ("left_pair_index", "middle_pair_index", "right_pair_index"):
-            manual_only_reasons.setdefault(int(change[key]), "local_order_zigzag")
+    if not topology_override.get("preview_order_override_active"):
+        for change in order_diagnostics.get("direction_change_pairs", []):
+            if change.get("manual_only") is not True:
+                continue
+            for key in ("left_pair_index", "middle_pair_index", "right_pair_index"):
+                manual_only_reasons.setdefault(int(change[key]), "local_order_zigzag")
     recommended = [
         *_recommended_review_order(proposals, height_rows, manual_only_reasons),
     ]
@@ -790,6 +868,8 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         "align_pair_x_proposals": proposals,
         "height_reproject_applicability_rows": height_rows,
         "duplicate_diagnostics": duplicate_diagnostics,
+        "default_order_diagnostics": default_order_diagnostics,
+        "effective_order_diagnostics": effective_order_diagnostics,
         "order_diagnostics": order_diagnostics,
         "recommended_review_order": recommended,
         "manual_edit_table": manual_edit_table,
