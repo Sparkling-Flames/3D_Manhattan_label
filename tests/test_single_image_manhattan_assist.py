@@ -218,6 +218,67 @@ def test_duplicate_or_order_manual_only_pairs_do_not_get_align_pair_x_suggestion
     assert zigzag_review["reason"] == "local_order_zigzag"
 
 
+def test_verified_preview_order_override_allows_duplicate_raw_input_to_continue():
+    result = build_single_image_assist(_fixture_case("raw_keypoints_duplicate_with_verified_order"))
+
+    assert result["preview_compatibility"]["status"] == "compatibility_failure_duplicate"
+    assert result["preview_order_override_active"] is True
+    assert result["topology_source"] == "expert_verified_preview_order"
+    assert result["default_preview_status"] == "compatibility_failure_duplicate"
+    assert result["default_preview_reason"] == "near_duplicate_corner_pair"
+    assert len(result["ordered_pairs"]) == 10
+    assert len(result["pair_diagnostics"]) == 10
+    assert len(result["manual_edit_table"]) == 10
+
+
+def test_verified_preview_order_override_reorders_ordered_pairs():
+    result = build_single_image_assist(_fixture_case("raw_keypoints_duplicate_with_verified_order"))
+    centers = [
+        (pair["top"]["x"] + pair["bottom"]["x"]) / 2.0
+        for pair in result["ordered_pairs"]
+    ]
+
+    assert centers[:4] == [20.0, 10.0, 30.0, 10.4]
+
+
+def test_invalid_preview_order_override_returns_invalid_without_suggestions():
+    result = build_single_image_assist(_fixture_case("raw_keypoints_duplicate_with_invalid_order"))
+
+    assert result["topology_source"] == "invalid_preview_order_override"
+    assert result["effective_preview_compatibility"]["status"] == "invalid_preview_order_override"
+    assert result["topology_override"]["invalid_reason"] == "preview_order_override_duplicate_index"
+    assert result["ordered_pairs"] == []
+    assert result["manual_edit_table"] == []
+    assert result["align_pair_x_proposals"] == []
+
+
+def test_unverified_preview_order_override_does_not_bypass_duplicate_stop():
+    result = build_single_image_assist(_fixture_case("raw_keypoints_duplicate_unverified_order"))
+
+    assert result["preview_order_override_active"] is False
+    assert result["preview_compatibility"]["status"] == "compatibility_failure_duplicate"
+    assert result["ordered_pairs"] == []
+    assert result["manual_edit_table"] == []
+
+
+def test_override_dense_pairs_remain_manual_only_but_non_dense_pair_can_align_x():
+    result = build_single_image_assist(_fixture_case("raw_keypoints_duplicate_with_verified_order"))
+    dense_edit = next(row for row in result["manual_edit_table"] if row["pair_index"] == 2)
+    dense_review = next(row for row in result["recommended_review_order"] if row["pair_index"] == 2)
+    align_edit = next(row for row in result["manual_edit_table"] if row["pair_index"] == 10)
+    align_review = next(row for row in result["recommended_review_order"] if row["pair_index"] == 10)
+
+    assert dense_edit["action"] == "manual_review_only"
+    assert dense_edit["to_top_x"] is None
+    assert dense_edit["to_bottom_x"] is None
+    assert dense_review["manual_only"] is True
+    assert dense_review["reason"] == "near_duplicate_corner_pair"
+    assert align_edit["action"] == "align_pair_x"
+    assert align_edit["to_top_x"] == 90.0
+    assert align_edit["to_bottom_x"] == 90.0
+    assert align_review["primary_action"] == "align_pair_x"
+
+
 def test_cli_output_is_json_serializable(tmp_path):
     input_path = tmp_path / "single_input.json"
     output_path = tmp_path / "single_output.json"
@@ -256,6 +317,7 @@ def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
     assert exit_code == 0
     text = markdown_path.read_text(encoding="utf-8")
     assert "Preview Compatibility" in text
+    assert "Topology Override" in text
     assert "Pair Diagnostics" in text
     assert "Manual Edit Table" in text
     assert "Recommended Review Order" in text
@@ -265,6 +327,22 @@ def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
     assert "Order Diagnostics" in text
     assert "Height Applicability Summary" in text
     assert "no UI, no apply/writeback" in text
+
+
+def test_markdown_reports_topology_override_when_active(tmp_path):
+    input_path = tmp_path / "single_input.json"
+    markdown_path = tmp_path / "single_report.md"
+    input_path.write_text(
+        json.dumps(_fixture_case("raw_keypoints_duplicate_with_verified_order")),
+        encoding="utf-8",
+    )
+
+    main(["--input", str(input_path), "--markdown-output", str(markdown_path), "--pretty"])
+
+    text = markdown_path.read_text(encoding="utf-8")
+    assert "Topology Override" in text
+    assert "expert_verified_preview_order" in text
+    assert "Manual preview order selected" in text
 
 
 def test_run_single_image_assist_returns_payload_without_stdout_requirement(tmp_path):
