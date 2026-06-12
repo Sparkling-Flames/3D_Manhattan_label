@@ -1,6 +1,6 @@
 # Verified 3D Local Assist Open Spec v1
 
-This spec defines the M15.14/M15.15a verified 3D local assist harness for the
+This spec defines the M15.14/M15.15 verified 3D local assist harness for the
 Paper A Manhattan experiment-outside toolchain.
 
 ## Scope
@@ -39,17 +39,28 @@ The CLI and helper expose a `verified_3d_local_assist` object with:
 - `writeback_allowed=false`
 - `ui_allowed=false`
 
-Candidate rows for `translate_pair_cluster_x_dryrun` include:
+Candidate rows for local x dry-runs include:
 
 - `candidate_id`
 - `operation`
+- `candidate_family`
+- `candidate_rank`
 - `target_pair_indices`
 - `dx`
-- `status`: `eligible`, `review_only`, or `suppress`
+- `status`: compatibility alias for the review decision
+- `candidate_decision`: `suggested_review`, `neutral_review`, or `suppress`
 - `before_metrics`
 - `after_metrics`
 - `improved_metrics`
+- `before_local_geometry_metrics`
+- `after_local_geometry_metrics`
+- `geometry_metric_deltas`
+- `local_geometry_score_before`
+- `local_geometry_score_after`
+- `local_geometry_score_delta`
+- `decision_reasons`
 - `risk_reasons`
+- `expert_action_allowed=false`
 - `y_change_allowed=false`
 - `writeback_allowed=false`
 
@@ -68,8 +79,14 @@ review diagnostic only. It does not decide GT, correctness, or enclosed scope.
 
 ## X-only Dry-run
 
-`translate_pair_cluster_x_dryrun` evaluates small local x translations such as
-`[-0.5, -0.25, 0.25, 0.5]` in Label Studio percent units.
+The M15.15 candidate families are:
+
+- `translate_single_pair_x_dryrun`
+- `translate_pair_cluster_x_dryrun`
+- `separate_dense_pair_x_dryrun`
+
+The harness evaluates small local x translations in Label Studio percent units.
+Symmetric dense-pair separation uses conservative internal `+/- dx` offsets.
 
 The dry-run:
 
@@ -83,6 +100,43 @@ The dry-run:
 
 The candidate rows intentionally do not include writeback payloads or annotation
 patches.
+
+## Local Geometry Scoring
+
+M15.15b adds local 3D/BEV geometry scoring for each candidate. Metrics include:
+
+- `local_manhattan_angle_residual_sum`
+- `local_manhattan_angle_residual_max`
+- `local_wall_length_min`
+- `local_wall_length_ratio`
+- `local_wall_length_change_max`
+- `local_fold_or_self_intersection`
+- `dense_pair_bev_distance`
+- `dense_pair_floor_distance_delta`
+- `movement_abs_max`
+- `movement_penalty`
+- `local_geometry_score`
+
+The local scope is the target pair or cluster and adjacent wall segments. Angle
+residual is measured against the nearest Manhattan direction (`k*pi/2`) in BEV.
+Lower `local_geometry_score` means a more stable dry-run geometry under this
+heuristic. It is a plausibility/stability score only, not correctness.
+
+## Candidate Ranking
+
+M15.15c ranks candidates by `candidate_decision`, then by
+`local_geometry_score_delta`.
+
+- `suggested_review`: local geometry score decreases and no blocking risk is
+  present.
+- `neutral_review`: no clear improvement and no blocking risk is present.
+- `suppress`: state worsens, seam/top-bottom/self-intersection risk appears,
+  a local wall becomes too short, movement is too large, or local wall length
+  changes too much.
+
+`candidate_decision` is not apply permission. It is a review-level sorting cue.
+The current harness still does not generate y candidates, annotation patches, or
+writeback payloads.
 
 ## Non-goals
 

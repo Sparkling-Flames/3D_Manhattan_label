@@ -1088,6 +1088,9 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
             f"- operation_family: `{verified_local.get('operation_family')}`",
             f"- state_status: `{verified_local.get('state_status')}`",
             f"- writeback_allowed: `{verified_local.get('writeback_allowed')}`",
+            "- These candidates are review-level dry-runs, not edit instructions.",
+            "- Use them to inspect directionality; do not apply without visual confirmation.",
+            "- Y coordinates remain unchanged in this report.",
             "",
             "### Dense Corner Reclassification",
             "",
@@ -1112,11 +1115,16 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
     lines.extend(
         _markdown_table(
             [
+                "candidate_rank",
                 "candidate_id",
+                "candidate_family",
                 "operation",
                 "target_pair_indices",
                 "dx",
                 "status",
+                "local_geometry_score_delta",
+                "candidate_decision",
+                "decision_reasons",
                 "improved_metrics",
                 "risk_reasons",
                 "y_change_allowed",

@@ -27,7 +27,7 @@ def test_simplified_ordered_pairs_outputs_diagnostics_proposals_and_height_rows(
     assert len(result["align_pair_x_proposals"]) == 4
     assert len(result["height_reproject_applicability_rows"]) == 4
     assert result["verified_3d_local_assist"]["schema_version"] == (
-        "verified_3d_local_assist_m15_14_v1"
+        "verified_3d_local_assist_m15_15_v1"
     )
     assert len(result["manual_edit_table"]) == 4
     assert result["summary"]["n_ordered_pairs"] == 4
@@ -382,6 +382,9 @@ def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
     assert "Verified 3D Local Assist" in text
     assert "Dense Corner Reclassification" in text
     assert "Local X Translation Dry-run Candidates" in text
+    assert "candidate_rank" in text
+    assert "candidate_decision" in text
+    assert "These candidates are review-level dry-runs" in text
     assert "no UI, no apply/writeback" in text
 
 
@@ -389,9 +392,23 @@ def test_verified_3d_local_assist_generates_dryrun_rows_for_verified_dense_case(
     result = build_single_image_assist(_fixture_case("raw_keypoints_duplicate_with_verified_order"))
 
     assist = result["verified_3d_local_assist"]
-    assert assist["schema_version"] == "verified_3d_local_assist_m15_14_v1"
+    assert assist["schema_version"] == "verified_3d_local_assist_m15_15_v1"
     assert assist["dense_corner_reclassification"]
+    assert assist["dense_corner_reclassification"][0]["classification"] == (
+        "dense_but_distinct_3d_corner"
+    )
+    assert assist["candidate_rows"]
+    assert any(
+        (candidate["local_geometry_score_delta"] or 0) != 0
+        for candidate in assist["candidate_rows"]
+    )
     for candidate in assist["candidate_rows"]:
+        assert "candidate_rank" in candidate
+        assert "candidate_family" in candidate
+        assert "candidate_decision" in candidate
+        assert "decision_reasons" in candidate
+        assert "before_local_geometry_metrics" in candidate
+        assert "after_local_geometry_metrics" in candidate
         assert candidate["y_change_allowed"] is False
         assert candidate["writeback_allowed"] is False
         assert "candidate_pairs" not in candidate

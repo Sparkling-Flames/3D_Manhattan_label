@@ -2,6 +2,8 @@ import copy
 import json
 
 from tools.paper_a_manhattan.manhattan_verified_3d_local_assist import (
+    SEPARATE_DENSE_PAIR_X_DRYRUN,
+    TRANSLATE_SINGLE_PAIR_X_DRYRUN,
     TRANSLATE_PAIR_CLUSTER_X_DRYRUN,
     VERIFIED_3D_LOCAL_ASSIST_VERSION,
     build_verified_3d_local_assist,
@@ -65,15 +67,25 @@ def test_verified_order_active_generates_x_only_translation_dryrun_candidates():
 
     candidates = result["candidate_rows"]
     assert candidates
-    assert candidates[0]["operation"] == TRANSLATE_PAIR_CLUSTER_X_DRYRUN
-    assert candidates[0]["target_pair_indices"] == [1, 2]
-    assert candidates[0]["y_change_allowed"] is False
-    assert candidates[0]["writeback_allowed"] is False
-    assert "before_metrics" in candidates[0]
-    assert "after_metrics" in candidates[0]
-    assert "candidate_pairs" not in candidates[0]
-    assert "apply" not in candidates[0]
-    assert "writeback" not in candidates[0]
+    families = {candidate["candidate_family"] for candidate in candidates}
+    assert TRANSLATE_SINGLE_PAIR_X_DRYRUN in families
+    assert TRANSLATE_PAIR_CLUSTER_X_DRYRUN in families
+    assert SEPARATE_DENSE_PAIR_X_DRYRUN in families
+    first = candidates[0]
+    assert first["candidate_rank"] == 1
+    assert first["y_change_allowed"] is False
+    assert first["writeback_allowed"] is False
+    assert first["expert_action_allowed"] is False
+    assert "before_metrics" in first
+    assert "after_metrics" in first
+    assert "before_local_geometry_metrics" in first
+    assert "after_local_geometry_metrics" in first
+    assert "geometry_metric_deltas" in first
+    assert "local_geometry_score_delta" in first
+    assert "decision_reasons" in first
+    assert "candidate_pairs" not in first
+    assert "apply" not in first
+    assert "writeback" not in first
 
 
 def test_translation_dryrun_does_not_mutate_input_or_pair_order():
@@ -129,3 +141,36 @@ def test_output_is_json_serializable_and_has_no_annotation_patch_fields():
     assert "candidate_pairs" not in result
     assert "apply" not in result
     assert "writeback" not in result
+
+
+def test_candidate_can_be_suggested_review_when_local_geometry_score_improves():
+    result = build_verified_3d_local_assist(
+        _distinct_dense_pairs(),
+        topology_override=VERIFIED_TOPOLOGY,
+    )
+
+    assert any(
+        candidate["candidate_decision"] == "suggested_review"
+        and candidate["local_geometry_score_delta"] < 0
+        for candidate in result["candidate_rows"]
+    )
+
+
+def test_candidate_can_be_suppressed_for_short_wall_or_self_intersection():
+    result = build_verified_3d_local_assist(
+        _true_duplicate_pairs(),
+        topology_override=VERIFIED_TOPOLOGY,
+        target_pair_indices=[1],
+    )
+
+    suppressed = [
+        candidate
+        for candidate in result["candidate_rows"]
+        if candidate["candidate_decision"] == "suppress"
+    ]
+    assert suppressed
+    assert any(
+        "local_wall_too_short" in candidate["decision_reasons"]
+        or "local_fold_or_self_intersection" in candidate["decision_reasons"]
+        for candidate in suppressed
+    )
