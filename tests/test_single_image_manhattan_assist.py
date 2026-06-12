@@ -449,8 +449,12 @@ def test_task218_ann3741_list_override_with_ten_materializes_verified_assist():
 def test_task238_explicit_target_pair_generates_x_only_dryrun_without_writeback():
     result = build_single_image_assist(_task238_payload())
     candidates = result["verified_3d_local_assist"]["candidate_rows"]
+    adaptive_rows = result["verified_3d_local_assist"]["adaptive_x_search_rows"]
 
     assert candidates
+    assert adaptive_rows
+    assert adaptive_rows[0]["target_pair_indices"] == [4]
+    assert adaptive_rows[0]["confidence_label"] == "no_improvement"
     assert {tuple(row["target_pair_indices"]) for row in candidates} == {(4,)}
     assert {row["candidate_family"] for row in candidates} == {
         "translate_single_pair_x_dryrun"
@@ -519,7 +523,7 @@ def test_cli_output_is_json_serializable(tmp_path):
     assert exit_code == 0
     payload = json.loads(output_path.read_text(encoding="utf-8"))
     json.dumps(payload)
-    assert payload["tool_version"] == "single_image_manhattan_assist_m15_15_v1"
+    assert payload["tool_version"] == "single_image_manhattan_assist_m15_16_v1"
 
 
 def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
@@ -559,6 +563,8 @@ def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
     assert "Corner Angle Diagnostics" in text
     assert "Dense Corner Reclassification" in text
     assert "Local X Translation Dry-run Candidates" in text
+    assert "Adaptive Local X Search" in text
+    assert "Adaptive search is a review-level bounded dry-run" in text
     assert "2D x-order crossing is not topology reordering" in text
     assert "candidate_rank" in text
     assert "candidate_decision" in text
@@ -576,6 +582,8 @@ def test_markdown_includes_hard_stop_override_and_height_sections():
     assert "## Override Pack" in hard_stop_text
     assert "override pack only helps expert prepare a verified order".lower() in hard_stop_text.lower()
     assert "## Conservative Height Reproject Candidates" in explicit_text
+    assert "## Verified 3D Local Assist" in explicit_text
+    assert "### Adaptive Local X Search" in explicit_text
     assert "Explicit target pair mode is an exploratory x-only dry-run" in explicit_text
 
 

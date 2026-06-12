@@ -219,6 +219,38 @@ occur after the dry-run translation. This warning does not rewrite topology,
 does not change pair order, and does not by itself imply suppression when an
 expert-verified preview order is active. It remains a manual review cue.
 
+## M15.17 Adaptive Local X Search
+
+M15.17 adds `adaptive_x_search_rows` under `verified_3d_local_assist`. This is
+an additional explanation layer over the existing x-only dry-runs. It does not
+replace fixed-grid `candidate_rows` and does not change their ranking.
+
+Adaptive search uses a bounded derivative-free 1D coarse-to-fine search over
+local x translation:
+
+- coarse grid: `[-0.75, -0.50, -0.25, 0.0, +0.25, +0.50, +0.75]`;
+- fine grid: `±0.20` around the best coarse dx with `0.05` step;
+- no gradient descent, no global optimization claim, and no topology rewrite.
+
+Rows include `best_dx`, `baseline_score`, `best_score`, `score_delta`,
+`score_curve`, `flat_score_region`, `confidence_label`, affected wall/corner
+indices, and x-order crossing warnings. `score_curve` points expose dx,
+local geometry score, local wall-angle residual summary, risk reasons, and
+2D x-order crossing state.
+
+`confidence_label` is a review cue only:
+
+- `directional`: best score is clearly below baseline and no blocking risk is
+  present.
+- `flat_uncertain`: the curve improves but has a flat region near the best dx,
+  so exact movement magnitude is not reliable.
+- `no_improvement`: the best available score is not better than baseline.
+- `suppressed`: all searched points are blocked or scoring is unavailable.
+
+Adaptive search remains x-only: y coordinates, pair order, annotations, UI
+state, and writeback payloads are unchanged. It is not correctness, GT,
+routing, worker quality, or an edit instruction.
+
 ## Non-goals
 
 This spec does not implement UI, ghost overlays, apply/undo, Label Studio

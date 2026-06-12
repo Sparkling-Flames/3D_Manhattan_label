@@ -47,7 +47,7 @@ from tools.paper_a_manhattan.manhattan_verified_3d_local_assist import (  # noqa
 )
 
 
-TOOL_VERSION = "single_image_manhattan_assist_m15_15_v1"
+TOOL_VERSION = "single_image_manhattan_assist_m15_16_v1"
 TOPOLOGY_OVERRIDE_SCHEMA_VERSION = "verified_preview_order_m15_13_v1"
 PREVIEW_ORDER_OVERRIDE_ALLOWED_STATUSES = {
     "compatibility_failure_duplicate",
@@ -1527,6 +1527,36 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 "writeback_allowed",
             ],
             verified_local.get("candidate_rows", []),
+        )
+    )
+    lines.extend(["", "### Adaptive Local X Search", ""])
+    lines.extend(
+        [
+            "Adaptive search is a review-level bounded dry-run, not an edit instruction.",
+            (
+                "A flat region means the exact dx is not reliable; use it only "
+                "as directionality."
+            ),
+            "Y coordinates remain unchanged.",
+            "",
+        ]
+    )
+    lines.extend(
+        _markdown_table(
+            [
+                "search_rank",
+                "search_family",
+                "target_pair_indices",
+                "best_dx",
+                "score_delta",
+                "confidence_label",
+                "flat_score_region",
+                "x_order_crossing_at_best",
+                "decision_reasons",
+                "y_change_allowed",
+                "writeback_allowed",
+            ],
+            verified_local.get("adaptive_x_search_rows", []),
         )
     )
     lines.append("")

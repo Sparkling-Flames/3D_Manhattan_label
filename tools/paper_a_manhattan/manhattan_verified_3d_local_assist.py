@@ -14,10 +14,13 @@ from tools.paper_a_manhattan.manhattan_layout_state import build_room_layout_sta
 
 
 VERIFIED_3D_LOCAL_ASSIST_VERSION = "verified_3d_local_assist_m15_15_v1"
+ADAPTIVE_X_SEARCH_VERSION = "adaptive_local_x_search_m15_17_v1"
 OPERATION_FAMILY = "verified_3d_local_assist"
 TRANSLATE_SINGLE_PAIR_X_DRYRUN = "translate_single_pair_x_dryrun"
 TRANSLATE_PAIR_CLUSTER_X_DRYRUN = "translate_pair_cluster_x_dryrun"
 SEPARATE_DENSE_PAIR_X_DRYRUN = "separate_dense_pair_x_dryrun"
+TRANSLATE_SINGLE_PAIR_X_ADAPTIVE_SEARCH = "translate_single_pair_x_adaptive_search"
+TRANSLATE_PAIR_CLUSTER_X_ADAPTIVE_SEARCH = "translate_pair_cluster_x_adaptive_search"
 
 CENTER_X_DUPLICATE_THRESHOLD_PERCENT = 1.0
 BEV_DISTINCT_DISTANCE_THRESHOLD = 0.3
@@ -31,6 +34,13 @@ SUGGESTED_SCORE_DELTA_THRESHOLD = -0.01
 MIN_LOCAL_WALL_LENGTH = 0.05
 MAX_WALL_LENGTH_CHANGE = 1.0
 ANGLE_WARNING_DEG = 15.0
+ADAPTIVE_X_SEARCH_MIN = -0.75
+ADAPTIVE_X_SEARCH_MAX = 0.75
+ADAPTIVE_X_COARSE_GRID = (-0.75, -0.5, -0.25, 0.0, 0.25, 0.5, 0.75)
+ADAPTIVE_X_FINE_RADIUS = 0.20
+ADAPTIVE_X_FINE_STEP = 0.05
+FLAT_SCORE_EPSILON = 0.01
+ADAPTIVE_DIRECTIONAL_SCORE_DELTA = -0.01
 
 
 def _pair_index_set(target_pair_indices: Sequence[Any] | None) -> set[int]:
@@ -1031,6 +1041,285 @@ def _rank_candidates(candidates: Sequence[Mapping[str, Any]]) -> list[dict[str, 
     return ranked
 
 
+def _adaptive_fine_grid(best_dx: float) -> list[float]:
+    start = max(ADAPTIVE_X_SEARCH_MIN, best_dx - ADAPTIVE_X_FINE_RADIUS)
+    end = min(ADAPTIVE_X_SEARCH_MAX, best_dx + ADAPTIVE_X_FINE_RADIUS)
+    values: list[float] = []
+    current = start
+    while current <= end + 1e-9:
+        values.append(round(current, 2))
+        current += ADAPTIVE_X_FINE_STEP
+    return values
+
+
+def _adaptive_search_specs(
+    dense_reclassification: Sequence[Mapping[str, Any]],
+    target_pair_indices: Sequence[Any] | None,
+    topology_override: Mapping[str, Any] | None,
+) -> list[dict[str, Any]]:
+    specs: list[dict[str, Any]] = []
+    explicit_targets = sorted(_pair_index_set(target_pair_indices))
+    for pair_index in explicit_targets:
+        specs.append(
+            {
+                "search_family": TRANSLATE_SINGLE_PAIR_X_ADAPTIVE_SEARCH,
+                "target_pair_indices": [pair_index],
+                "source": "explicit_target_pair_indices",
+            }
+        )
+    if _topology_override_active(topology_override):
+        for cluster in _target_clusters(dense_reclassification, None):
+            for pair_index in cluster:
+                specs.append(
+                    {
+                        "search_family": TRANSLATE_SINGLE_PAIR_X_ADAPTIVE_SEARCH,
+                        "target_pair_indices": [pair_index],
+                        "source": "dense_corner_reclassification",
+                    }
+                )
+            specs.append(
+                {
+                    "search_family": TRANSLATE_PAIR_CLUSTER_X_ADAPTIVE_SEARCH,
+                    "target_pair_indices": list(cluster),
+                    "source": "dense_corner_reclassification",
+                }
+            )
+    return specs
+
+
+def _adaptive_curve_point(
+    ordered_pairs: Sequence[Mapping[str, Any]],
+    metadata: Mapping[str, Any] | None,
+    before_state: Mapping[str, Any],
+    source_lookup: Mapping[int, int],
+    target_pair_indices: Sequence[int],
+    dx: float,
+) -> dict[str, Any]:
+    offsets = {pair_index: dx for pair_index in target_pair_indices}
+    movement_abs_max = max(abs(value) for value in offsets.values()) if offsets else 0.0
+    baseline_local_metrics = _local_geometry_metrics(
+        before_state,
+        target_pair_indices,
+        movement_abs_max=0.0,
+    )
+    candidate_pairs = _apply_x_offsets(ordered_pairs, offsets)
+    after_state = build_room_layout_state(candidate_pairs, metadata=metadata)
+    before_metrics = _metric_summary(before_state, target_pair_indices)
+    after_metrics = _metric_summary(after_state, target_pair_indices)
+    after_local_metrics = _local_geometry_metrics(
+        after_state,
+        target_pair_indices,
+        before_state=before_state,
+        movement_abs_max=movement_abs_max,
+    )
+    risks = _candidate_risk_reasons(
+        before_metrics,
+        after_metrics,
+        baseline_local_metrics,
+        after_local_metrics,
+        after_state,
+        movement_abs_max,
+    )
+    affected_walls = _affected_wall_indices(before_state, target_pair_indices)
+    angle_summary = _wall_angle_summary(
+        _wall_angle_table(after_state, source_lookup),
+        affected_walls,
+    )
+    x_crossing, crossed_pairs = _x_order_crossing(
+        ordered_pairs,
+        candidate_pairs,
+        target_pair_indices,
+    )
+    return {
+        "dx": round(dx, 2),
+        "local_geometry_score": _as_float(after_local_metrics.get("local_geometry_score")),
+        "wall_angle_residual_sum_deg": angle_summary.get("wall_angle_residual_sum_deg"),
+        "wall_angle_residual_max_deg": angle_summary.get("wall_angle_residual_max_deg"),
+        "risk_reasons": risks,
+        "x_order_crossing_after_translation": x_crossing,
+        "crossed_pair_indices": crossed_pairs,
+    }
+
+
+def _best_curve_point(curve: Sequence[Mapping[str, Any]]) -> Mapping[str, Any] | None:
+    viable = [
+        point
+        for point in curve
+        if not point.get("risk_reasons") and _as_float(point.get("local_geometry_score")) is not None
+    ]
+    if not viable:
+        return None
+    return min(
+        viable,
+        key=lambda point: (
+            float(point["local_geometry_score"]),
+            abs(float(point["dx"])),
+            float(point["dx"]),
+        ),
+    )
+
+
+def _flat_region(curve: Sequence[Mapping[str, Any]], best_score: float) -> tuple[bool, float | None, float | None]:
+    flat_dx = [
+        _as_float(point.get("dx"))
+        for point in curve
+        if not point.get("risk_reasons")
+        and _as_float(point.get("local_geometry_score")) is not None
+        and float(point["local_geometry_score"]) <= best_score + FLAT_SCORE_EPSILON
+    ]
+    flat_dx = [value for value in flat_dx if value is not None]
+    if not flat_dx:
+        return False, None, None
+    return (max(flat_dx) - min(flat_dx) >= 0.10, min(flat_dx), max(flat_dx))
+
+
+def _adaptive_confidence(
+    *,
+    all_suppressed: bool,
+    best_score: float | None,
+    baseline_score: float | None,
+    flat_score_region: bool,
+) -> tuple[str, list[str]]:
+    if all_suppressed:
+        return "suppressed", ["all_search_points_blocked_by_risk"]
+    if best_score is None or baseline_score is None:
+        return "suppressed", ["local_geometry_score_unavailable"]
+    if best_score >= baseline_score:
+        return "no_improvement", ["best_score_not_better_than_baseline"]
+    if flat_score_region:
+        return "flat_uncertain", ["flat_score_region_near_best"]
+    if best_score - baseline_score <= ADAPTIVE_DIRECTIONAL_SCORE_DELTA:
+        return "directional", ["best_score_improved_directionally"]
+    return "flat_uncertain", ["improvement_small_or_uncertain"]
+
+
+def _build_adaptive_x_search_rows(
+    ordered_pairs: Sequence[Mapping[str, Any]],
+    metadata: Mapping[str, Any] | None,
+    topology_override: Mapping[str, Any] | None,
+    dense_reclassification: Sequence[Mapping[str, Any]],
+    target_pair_indices: Sequence[Any] | None,
+    before_state: Mapping[str, Any],
+    source_lookup: Mapping[int, int],
+) -> list[dict[str, Any]]:
+    specs = _adaptive_search_specs(
+        dense_reclassification,
+        target_pair_indices,
+        topology_override,
+    )
+    rows: list[dict[str, Any]] = []
+    for spec in specs:
+        targets = list(spec["target_pair_indices"])
+        baseline_metrics = _local_geometry_metrics(
+            before_state,
+            targets,
+            movement_abs_max=0.0,
+        )
+        baseline_score = _as_float(baseline_metrics.get("local_geometry_score"))
+        coarse_points = [
+            _adaptive_curve_point(
+                ordered_pairs,
+                metadata,
+                before_state,
+                source_lookup,
+                targets,
+                dx,
+            )
+            for dx in ADAPTIVE_X_COARSE_GRID
+        ]
+        coarse_best = _best_curve_point(coarse_points)
+        best_coarse_dx = (
+            float(coarse_best["dx"])
+            if coarse_best is not None
+            else 0.0
+        )
+        fine_grid = _adaptive_fine_grid(best_coarse_dx)
+        dx_values = sorted({*(float(point["dx"]) for point in coarse_points), *fine_grid})
+        score_curve = [
+            _adaptive_curve_point(
+                ordered_pairs,
+                metadata,
+                before_state,
+                source_lookup,
+                targets,
+                dx,
+            )
+            for dx in dx_values
+        ]
+        best_point = _best_curve_point(score_curve)
+        best_dx = _as_float(best_point.get("dx")) if best_point else None
+        best_score = _as_float(best_point.get("local_geometry_score")) if best_point else None
+        flat, flat_min, flat_max = (
+            _flat_region(score_curve, best_score)
+            if best_score is not None
+            else (False, None, None)
+        )
+        all_suppressed = best_point is None
+        confidence, decision_reasons = _adaptive_confidence(
+            all_suppressed=all_suppressed,
+            best_score=best_score,
+            baseline_score=baseline_score,
+            flat_score_region=flat,
+        )
+        affected_walls = _affected_wall_indices(before_state, targets)
+        affected_corners = _affected_corner_indices(targets)
+        x_crossing = bool(best_point.get("x_order_crossing_after_translation")) if best_point else False
+        crossed_pairs = list(best_point.get("crossed_pair_indices", [])) if best_point else []
+        if x_crossing:
+            decision_reasons = [*decision_reasons, "x_order_crossing_at_best"]
+        rows.append(
+            {
+                "search_schema_version": ADAPTIVE_X_SEARCH_VERSION,
+                "search_family": spec["search_family"],
+                "search_source": spec.get("source"),
+                "target_pair_indices": targets,
+                "search_range": [ADAPTIVE_X_SEARCH_MIN, ADAPTIVE_X_SEARCH_MAX],
+                "coarse_grid": list(ADAPTIVE_X_COARSE_GRID),
+                "fine_grid": fine_grid,
+                "best_dx": best_dx,
+                "best_score": best_score,
+                "baseline_score": baseline_score,
+                "score_delta": (
+                    best_score - baseline_score
+                    if best_score is not None and baseline_score is not None
+                    else None
+                ),
+                "score_curve": score_curve,
+                "flat_score_region": flat,
+                "flat_score_dx_min": flat_min,
+                "flat_score_dx_max": flat_max,
+                "confidence_label": confidence,
+                "decision_reasons": decision_reasons,
+                "affected_wall_indices": affected_walls,
+                "affected_corner_indices": affected_corners,
+                "x_order_crossing_at_best": x_crossing,
+                "crossed_pair_indices_at_best": crossed_pairs,
+                "y_change_allowed": False,
+                "writeback_allowed": False,
+                "expert_action_allowed": False,
+                "annotation_patch_allowed": False,
+            }
+        )
+    return _rank_adaptive_rows(rows)
+
+
+def _rank_adaptive_rows(rows: Sequence[Mapping[str, Any]]) -> list[dict[str, Any]]:
+    def sort_key(row: Mapping[str, Any]) -> tuple[int, float, str]:
+        confidence_rank = {
+            "directional": 0,
+            "flat_uncertain": 1,
+            "no_improvement": 2,
+            "suppressed": 3,
+        }.get(str(row.get("confidence_label")), 4)
+        delta = _as_float(row.get("score_delta"))
+        return (confidence_rank, delta if delta is not None else 999.0, str(row.get("search_family")))
+
+    ranked = [dict(row) for row in sorted(rows, key=sort_key)]
+    for rank, row in enumerate(ranked, start=1):
+        row["search_rank"] = rank
+    return ranked
+
+
 def build_verified_3d_local_assist(
     ordered_pairs: Sequence[Mapping[str, Any]],
     metadata: Mapping[str, Any] | None = None,
@@ -1054,6 +1343,15 @@ def build_verified_3d_local_assist(
         state,
         source_lookup,
     )
+    adaptive_rows = _build_adaptive_x_search_rows(
+        ordered_pairs,
+        metadata,
+        topology_override,
+        dense_reclassification,
+        target_pair_indices,
+        state,
+        source_lookup,
+    )
     return {
         "schema_version": VERIFIED_3D_LOCAL_ASSIST_VERSION,
         "operation_family": OPERATION_FAMILY,
@@ -1065,11 +1363,12 @@ def build_verified_3d_local_assist(
         "wall_angle_table": wall_angles,
         "corner_angle_table": corner_angles,
         "candidate_rows": candidates,
+        "adaptive_x_search_rows": adaptive_rows,
         "risk_reasons": sorted(
             {
                 reason
-                for candidate in candidates
-                for reason in candidate.get("risk_reasons", [])
+                for row in [*candidates, *adaptive_rows]
+                for reason in row.get("risk_reasons", [])
             }
         ),
         "writeback_allowed": False,
@@ -1078,9 +1377,12 @@ def build_verified_3d_local_assist(
 
 
 __all__ = [
+    "ADAPTIVE_X_SEARCH_VERSION",
     "OPERATION_FAMILY",
     "SEPARATE_DENSE_PAIR_X_DRYRUN",
+    "TRANSLATE_PAIR_CLUSTER_X_ADAPTIVE_SEARCH",
     "TRANSLATE_SINGLE_PAIR_X_DRYRUN",
+    "TRANSLATE_SINGLE_PAIR_X_ADAPTIVE_SEARCH",
     "TRANSLATE_PAIR_CLUSTER_X_DRYRUN",
     "VERIFIED_3D_LOCAL_ASSIST_VERSION",
     "build_verified_3d_local_assist",
