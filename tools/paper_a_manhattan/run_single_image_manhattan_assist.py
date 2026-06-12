@@ -38,6 +38,9 @@ from tools.paper_a_manhattan.manhattan_preview_compat import (  # noqa: E402
     DUPLICATE_CORNER_THRESHOLD_RATIO,
     check_preview_compatibility,
 )
+from tools.paper_a_manhattan.manhattan_verified_3d_local_assist import (  # noqa: E402
+    build_verified_3d_local_assist,
+)
 
 
 TOOL_VERSION = "single_image_manhattan_assist_m15_13_v1"
@@ -812,6 +815,7 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
             "pair_diagnostics": [],
             "align_pair_x_proposals": [],
             "height_reproject_applicability_rows": [],
+            "verified_3d_local_assist": None,
             "duplicate_diagnostics": duplicate_diagnostics,
             "default_order_diagnostics": default_order_diagnostics,
             "effective_order_diagnostics": effective_order_diagnostics,
@@ -869,6 +873,12 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         )
         for row in proposals
     ]
+    verified_3d_local_assist = build_verified_3d_local_assist(
+        ordered_pairs,
+        metadata=metadata,
+        topology_override=topology_override,
+        target_pair_indices=payload.get("target_pair_indices"),
+    )
 
     return {
         "task_id": task_id,
@@ -895,6 +905,7 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         "pair_diagnostics": pair_diagnostics,
         "align_pair_x_proposals": proposals,
         "height_reproject_applicability_rows": height_rows,
+        "verified_3d_local_assist": verified_3d_local_assist,
         "duplicate_diagnostics": duplicate_diagnostics,
         "default_order_diagnostics": default_order_diagnostics,
         "effective_order_diagnostics": effective_order_diagnostics,
@@ -1069,6 +1080,52 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
             "",
         ]
     )
+    verified_local = payload.get("verified_3d_local_assist") or {}
+    lines.extend(["## Verified 3D Local Assist", ""])
+    lines.extend(
+        [
+            f"- schema_version: `{verified_local.get('schema_version')}`",
+            f"- operation_family: `{verified_local.get('operation_family')}`",
+            f"- state_status: `{verified_local.get('state_status')}`",
+            f"- writeback_allowed: `{verified_local.get('writeback_allowed')}`",
+            "",
+            "### Dense Corner Reclassification",
+            "",
+        ]
+    )
+    lines.extend(
+        _markdown_table(
+            [
+                "left_pair_index",
+                "right_pair_index",
+                "delta_center_x",
+                "bev_distance",
+                "floor_distance_delta",
+                "min_adjacent_wall_length",
+                "classification",
+                "reason_tokens",
+            ],
+            verified_local.get("dense_corner_reclassification", []),
+        )
+    )
+    lines.extend(["", "### Local X Translation Dry-run Candidates", ""])
+    lines.extend(
+        _markdown_table(
+            [
+                "candidate_id",
+                "operation",
+                "target_pair_indices",
+                "dx",
+                "status",
+                "improved_metrics",
+                "risk_reasons",
+                "y_change_allowed",
+                "writeback_allowed",
+            ],
+            verified_local.get("candidate_rows", []),
+        )
+    )
+    lines.append("")
     return "\n".join(lines) + "\n"
 
 

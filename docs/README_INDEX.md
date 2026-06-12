@@ -44,6 +44,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - [MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md](paper_a_manhattan/MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md)
 - [MANHATTAN_CONSTRAINED_FIT_PLAN_v1.md](paper_a_manhattan/MANHATTAN_CONSTRAINED_FIT_PLAN_v1.md)
 - [MANHATTAN_HEIGHT_REPROJECT_SAFETY_CONTRACT_v1.md](paper_a_manhattan/MANHATTAN_HEIGHT_REPROJECT_SAFETY_CONTRACT_v1.md)
+- [VERIFIED_3D_LOCAL_ASSIST_OPEN_SPEC_v1.md](paper_a_manhattan/VERIFIED_3D_LOCAL_ASSIST_OPEN_SPEC_v1.md)
 - [MANHATTAN_LS_SANDBOX_READINESS_SPEC_v1.md](paper_a_manhattan/MANHATTAN_LS_SANDBOX_READINESS_SPEC_v1.md)
 - [MANHATTAN_LS_SANDBOX_OPERATION_CHECKLIST_v1.md](paper_a_manhattan/MANHATTAN_LS_SANDBOX_OPERATION_CHECKLIST_v1.md)
 - [OOS_SCOPE_POLICY_AUDIT_v1.md](paper_a_manhattan/OOS_SCOPE_POLICY_AUDIT_v1.md)
@@ -56,8 +57,9 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - `tools/paper_a_manhattan/manhattan_pair_assist.py` provides the M14.5 expert-side low-risk pair diagnostics consumer and x-alignment preview candidate core; it does not apply, snap, reproject height, move walls, write annotations, add UI, route, or create formal artifacts.
 - `tools/paper_a_manhattan/manhattan_height_reproject_gate.py` provides the M15.8 diagnostic-only height reproject applicability and y-delta gate; it does not implement height reproject, return candidates, write annotations, add UI, route, or create formal artifacts.
 - `tools/paper_a_manhattan/manhattan_assist_review_harness.py` provides offline M15.x review/evaluation rows and summaries, including M15.9 diagnostic-only height reproject applicability evaluation; it does not generate candidates, write annotations, add UI, route, or create formal artifacts.
+- `tools/paper_a_manhattan/manhattan_verified_3d_local_assist.py` provides the M15.14/M15.15a expert-side verified 3D local assist harness for dense-corner reclassification and x-only dry-run metrics; it does not add UI, write annotations, auto reorder/merge corners, emit y candidates, route, or create formal artifacts.
 - `tools/paper_a_manhattan/run_height_reproject_applicability_smoke.py` runs the M15.10 offline height applicability regression fixture through the review harness and emits JSON rows/summary only; it does not generate y candidates, write annotations, add UI, route, or create formal artifacts.
-- `tools/paper_a_manhattan/run_single_image_manhattan_assist.py` provides the M15.11 single-image expert-side diagnostic CLI for preview compatibility, RoomLayoutState, Align Pair X suggestions, and height applicability rows; it does not implement UI, apply/writeback, y reproject candidates, routing, or formal artifacts.
+- `tools/paper_a_manhattan/run_single_image_manhattan_assist.py` provides the M15.x single-image expert-side diagnostic CLI for preview compatibility, RoomLayoutState, Align Pair X suggestions, height applicability rows, and verified 3D local assist sidecars; it does not implement UI, apply/writeback, y reproject candidates, routing, or formal artifacts.
 
 ## 论文 B 线
 

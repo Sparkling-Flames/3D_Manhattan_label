@@ -26,6 +26,9 @@ def test_simplified_ordered_pairs_outputs_diagnostics_proposals_and_height_rows(
     assert len(result["pair_diagnostics"]) == 4
     assert len(result["align_pair_x_proposals"]) == 4
     assert len(result["height_reproject_applicability_rows"]) == 4
+    assert result["verified_3d_local_assist"]["schema_version"] == (
+        "verified_3d_local_assist_m15_14_v1"
+    )
     assert len(result["manual_edit_table"]) == 4
     assert result["summary"]["n_ordered_pairs"] == 4
 
@@ -51,6 +54,7 @@ def test_raw_keypoints_odd_unpaired_is_incompatible_without_suggestions():
     assert result["room_layout_state"] is None
     assert result["align_pair_x_proposals"] == []
     assert result["height_reproject_applicability_rows"] == []
+    assert result["verified_3d_local_assist"] is None
     assert result["manual_edit_table"] == []
 
 
@@ -375,7 +379,24 @@ def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
     assert "Duplicate / Dense Corner Diagnostics" in text
     assert "Order Diagnostics" in text
     assert "Height Applicability Summary" in text
+    assert "Verified 3D Local Assist" in text
+    assert "Dense Corner Reclassification" in text
+    assert "Local X Translation Dry-run Candidates" in text
     assert "no UI, no apply/writeback" in text
+
+
+def test_verified_3d_local_assist_generates_dryrun_rows_for_verified_dense_case():
+    result = build_single_image_assist(_fixture_case("raw_keypoints_duplicate_with_verified_order"))
+
+    assist = result["verified_3d_local_assist"]
+    assert assist["schema_version"] == "verified_3d_local_assist_m15_14_v1"
+    assert assist["dense_corner_reclassification"]
+    for candidate in assist["candidate_rows"]:
+        assert candidate["y_change_allowed"] is False
+        assert candidate["writeback_allowed"] is False
+        assert "candidate_pairs" not in candidate
+        assert "apply" not in candidate
+        assert "writeback" not in candidate
 
 
 def test_markdown_reports_topology_override_when_active(tmp_path):
