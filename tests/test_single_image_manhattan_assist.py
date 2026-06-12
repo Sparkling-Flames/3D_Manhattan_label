@@ -249,6 +249,18 @@ def test_verified_preview_order_override_reorders_ordered_pairs():
     assert centers[:4] == [20.0, 10.0, 30.0, 10.4]
 
 
+def test_pair_index_mapping_preserves_verified_order_source_indices():
+    result = build_single_image_assist(_fixture_case("raw_keypoints_duplicate_with_verified_order"))
+    mapping = result["pair_index_mapping"]
+
+    assert mapping[1]["effective_pair_index"] == 2
+    assert mapping[1]["source_preview_order_index"] == 1
+    assert mapping[3]["effective_pair_index"] == 4
+    assert mapping[3]["source_preview_order_index"] == 2
+    assert mapping[1]["center_x"] == 10.0
+    assert mapping[3]["center_x"] == 10.4
+
+
 def test_verified_preview_order_override_allows_wrong_order_raw_input_to_continue():
     result = build_single_image_assist(_fixture_case("raw_keypoints_wrong_order_with_verified_order"))
 
@@ -380,8 +392,12 @@ def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
     assert "Order Diagnostics" in text
     assert "Height Applicability Summary" in text
     assert "Verified 3D Local Assist" in text
+    assert "Pair Index Mapping" in text
+    assert "Wall Angle Diagnostics" in text
+    assert "Corner Angle Diagnostics" in text
     assert "Dense Corner Reclassification" in text
     assert "Local X Translation Dry-run Candidates" in text
+    assert "2D x-order crossing is not topology reordering" in text
     assert "candidate_rank" in text
     assert "candidate_decision" in text
     assert "These candidates are review-level dry-runs" in text
@@ -397,6 +413,8 @@ def test_verified_3d_local_assist_generates_dryrun_rows_for_verified_dense_case(
     assert assist["dense_corner_reclassification"][0]["classification"] == (
         "dense_but_distinct_3d_corner"
     )
+    assert assist["wall_angle_table"]
+    assert assist["corner_angle_table"]
     assert assist["candidate_rows"]
     assert any(
         (candidate["local_geometry_score_delta"] or 0) != 0
@@ -409,6 +427,12 @@ def test_verified_3d_local_assist_generates_dryrun_rows_for_verified_dense_case(
         assert "decision_reasons" in candidate
         assert "before_local_geometry_metrics" in candidate
         assert "after_local_geometry_metrics" in candidate
+        assert "before_local_wall_angle_summary" in candidate
+        assert "after_local_wall_angle_summary" in candidate
+        assert "affected_wall_indices" in candidate
+        assert "affected_corner_indices" in candidate
+        assert "x_order_crossing_after_translation" in candidate
+        assert "crossing_scope" in candidate
         assert candidate["y_change_allowed"] is False
         assert candidate["writeback_allowed"] is False
         assert "candidate_pairs" not in candidate

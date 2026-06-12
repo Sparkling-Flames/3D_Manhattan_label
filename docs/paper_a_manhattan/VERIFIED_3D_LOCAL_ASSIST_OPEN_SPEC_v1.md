@@ -58,6 +58,15 @@ Candidate rows for local x dry-runs include:
 - `local_geometry_score_before`
 - `local_geometry_score_after`
 - `local_geometry_score_delta`
+- `before_local_wall_angle_summary`
+- `after_local_wall_angle_summary`
+- `wall_angle_residual_sum_delta_deg`
+- `wall_angle_residual_max_delta_deg`
+- `affected_wall_indices`
+- `affected_corner_indices`
+- `x_order_crossing_after_translation`
+- `crossed_pair_indices`
+- `crossing_scope=2d_x_only_not_topology`
 - `decision_reasons`
 - `risk_reasons`
 - `expert_action_allowed=false`
@@ -137,6 +146,31 @@ M15.15c ranks candidates by `candidate_decision`, then by
 `candidate_decision` is not apply permission. It is a review-level sorting cue.
 The current harness still does not generate y candidates, annotation patches, or
 writeback payloads.
+
+## M15.15d Angle and Order Provenance Diagnostics
+
+M15.15d adds explainability fields for expert-side review:
+
+- `pair_index_mapping`: maps each effective report pair index to its
+  `source_preview_order_index`. Candidate `target_pair_indices` always refer to
+  effective pair indices, not original Label Studio order or GT identity.
+- `wall_angle_table`: per-wall direction, nearest Manhattan axis, angle
+  residual, length, and source-order provenance for both endpoints.
+- `corner_angle_table`: per-corner BEV turn angle, residual from 90 degrees,
+  and local angle warning.
+
+Angle diagnostics are plausibility and explainability signals only. They are not
+correctness labels, GT decisions, formal `g_t`, routing signals, worker-quality
+metrics, or P1/C1/C2/T1/V1 artifacts.
+
+Candidate rows also report local before/after wall-angle summaries for the
+affected wall/corner neighborhood. These fields explain why a dry-run may look
+more or less stable, but they do not authorize any edit.
+
+`x_order_crossing_after_translation` flags a 2D x-order crossing that would
+occur after the dry-run translation. This warning does not rewrite topology,
+does not change pair order, and does not by itself imply suppression when an
+expert-verified preview order is active. It remains a manual review cue.
 
 ## Non-goals
 

@@ -30,6 +30,7 @@ DEFAULT_DX_GRID = (0.25, 0.5)
 SUGGESTED_SCORE_DELTA_THRESHOLD = -0.01
 MIN_LOCAL_WALL_LENGTH = 0.05
 MAX_WALL_LENGTH_CHANGE = 1.0
+ANGLE_WARNING_DEG = 15.0
 
 
 def _pair_index_set(target_pair_indices: Sequence[Any] | None) -> set[int]:
@@ -105,6 +106,155 @@ def _bev_from_corner(corner: Mapping[str, Any]) -> tuple[float | None, float | N
     if distance is None or u_rad is None:
         return None, None
     return distance * math.cos(u_rad), distance * math.sin(u_rad)
+
+
+def _source_index_lookup(
+    pair_index_mapping: Sequence[Mapping[str, Any]] | None,
+) -> dict[int, int]:
+    lookup: dict[int, int] = {}
+    if pair_index_mapping:
+        for row in pair_index_mapping:
+            effective = row.get("effective_pair_index")
+            source = row.get("source_preview_order_index")
+            if isinstance(effective, int) and isinstance(source, int):
+                lookup[effective] = source
+    return lookup
+
+
+def _source_index(pair_index: int, source_lookup: Mapping[int, int]) -> int:
+    return int(source_lookup.get(pair_index, pair_index))
+
+
+def _deg(value_rad: float) -> float:
+    return math.degrees(value_rad)
+
+
+def _nearest_axis_deg(direction_rad: float) -> float:
+    direction_deg = _deg(direction_rad)
+    return round(direction_deg / 90.0) * 90.0
+
+
+def _wall_angle_table(
+    state: Mapping[str, Any],
+    source_lookup: Mapping[int, int],
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    for wall in state.get("walls", []):
+        direction = _as_float(wall.get("direction_rad"))
+        if direction is None:
+            direction_deg = None
+            nearest_axis = None
+            residual_deg = None
+        else:
+            direction_deg = _deg(direction)
+            nearest_axis = _nearest_axis_deg(direction)
+            residual_deg = _deg(_nearest_manhattan_angle_residual(direction))
+        from_pair = wall.get("from_pair_index")
+        to_pair = wall.get("to_pair_index")
+        rows.append(
+            {
+                "wall_index": wall.get("wall_index"),
+                "from_pair_index": from_pair,
+                "to_pair_index": to_pair,
+                "from_source_preview_order_index": (
+                    _source_index(from_pair, source_lookup)
+                    if isinstance(from_pair, int)
+                    else None
+                ),
+                "to_source_preview_order_index": (
+                    _source_index(to_pair, source_lookup)
+                    if isinstance(to_pair, int)
+                    else None
+                ),
+                "direction_deg": direction_deg,
+                "nearest_manhattan_axis_deg": nearest_axis,
+                "angle_residual_deg": residual_deg,
+                "length": wall.get("length"),
+            }
+        )
+    return rows
+
+
+def _bev_points_by_pair(state: Mapping[str, Any]) -> dict[int, tuple[float, float]]:
+    output: dict[int, tuple[float, float]] = {}
+    for corner in state.get("corners", []):
+        pair_index = corner.get("pair_index")
+        x, y = _bev_from_corner(corner)
+        if isinstance(pair_index, int) and x is not None and y is not None:
+            output[pair_index] = (x, y)
+    return output
+
+
+def _turn_angle_deg(
+    prev_point: tuple[float, float],
+    point: tuple[float, float],
+    next_point: tuple[float, float],
+) -> float | None:
+    v1 = (prev_point[0] - point[0], prev_point[1] - point[1])
+    v2 = (next_point[0] - point[0], next_point[1] - point[1])
+    n1 = math.hypot(v1[0], v1[1])
+    n2 = math.hypot(v2[0], v2[1])
+    if n1 == 0 or n2 == 0:
+        return None
+    dot = v1[0] * v2[0] + v1[1] * v2[1]
+    cos_value = max(-1.0, min(1.0, dot / (n1 * n2)))
+    return math.degrees(math.acos(cos_value))
+
+
+def _corner_angle_table(
+    state: Mapping[str, Any],
+    source_lookup: Mapping[int, int],
+) -> list[dict[str, Any]]:
+    corners = list(state.get("corners", []))
+    bev_points = _bev_points_by_pair(state)
+    n_corners = len(corners)
+    rows: list[dict[str, Any]] = []
+    if n_corners < 3:
+        return rows
+    for index, corner in enumerate(corners):
+        pair_index = corner.get("pair_index")
+        prev_corner = corners[(index - 1) % n_corners]
+        next_corner = corners[(index + 1) % n_corners]
+        if not all(
+            isinstance(row.get("pair_index"), int)
+            for row in (prev_corner, corner, next_corner)
+        ):
+            continue
+        prev_pair = int(prev_corner["pair_index"])
+        current_pair = int(pair_index)
+        next_pair = int(next_corner["pair_index"])
+        angle = None
+        residual = None
+        if (
+            prev_pair in bev_points
+            and current_pair in bev_points
+            and next_pair in bev_points
+        ):
+            angle = _turn_angle_deg(
+                bev_points[prev_pair],
+                bev_points[current_pair],
+                bev_points[next_pair],
+            )
+            residual = abs(angle - 90.0) if angle is not None else None
+        rows.append(
+            {
+                "corner_pair_index": current_pair,
+                "corner_source_preview_order_index": _source_index(
+                    current_pair,
+                    source_lookup,
+                ),
+                "prev_wall_index": index if index > 0 else n_corners,
+                "next_wall_index": index + 1,
+                "turn_angle_deg": angle,
+                "angle_to_90_residual_deg": residual,
+                "local_angle_warning": (
+                    "turn_angle_far_from_90"
+                    if residual is not None and residual > ANGLE_WARNING_DEG
+                    else None
+                ),
+            }
+        )
+    return rows
 
 
 def _build_local_3d_diagnostics(state: Mapping[str, Any]) -> list[dict[str, Any]]:
@@ -507,6 +657,78 @@ def _geometry_metric_deltas(
     return deltas
 
 
+def _wall_angle_summary(
+    wall_angle_rows: Sequence[Mapping[str, Any]],
+    affected_wall_indices: Sequence[int],
+) -> dict[str, Any]:
+    affected = set(affected_wall_indices)
+    residuals = [
+        _as_float(row.get("angle_residual_deg"))
+        for row in wall_angle_rows
+        if row.get("wall_index") in affected
+    ]
+    residuals = [value for value in residuals if value is not None]
+    return {
+        "wall_angle_residual_sum_deg": sum(residuals) if residuals else None,
+        "wall_angle_residual_max_deg": max(residuals) if residuals else None,
+        "n_walls": len(residuals),
+    }
+
+
+def _summary_delta(
+    before_summary: Mapping[str, Any],
+    after_summary: Mapping[str, Any],
+    key: str,
+) -> float | None:
+    before = _as_float(before_summary.get(key))
+    after = _as_float(after_summary.get(key))
+    return after - before if before is not None and after is not None else None
+
+
+def _affected_wall_indices(state: Mapping[str, Any], target_pair_indices: Sequence[int]) -> list[int]:
+    return sorted(_local_wall_indices(state, target_pair_indices))
+
+
+def _affected_corner_indices(target_pair_indices: Sequence[int]) -> list[int]:
+    return sorted(set(target_pair_indices))
+
+
+def _center_xs(ordered_pairs: Sequence[Mapping[str, Any]]) -> dict[int, float]:
+    centers: dict[int, float] = {}
+    for index, pair in enumerate(ordered_pairs, start=1):
+        top = pair.get("top", {})
+        bottom = pair.get("bottom", {})
+        top_x = _as_float(top.get("x"))
+        bottom_x = _as_float(bottom.get("x"))
+        if top_x is not None and bottom_x is not None:
+            centers[index] = (top_x + bottom_x) / 2.0
+    return centers
+
+
+def _x_order_crossing(
+    before_pairs: Sequence[Mapping[str, Any]],
+    after_pairs: Sequence[Mapping[str, Any]],
+    target_pair_indices: Sequence[int],
+) -> tuple[bool, list[int]]:
+    before_centers = _center_xs(before_pairs)
+    after_centers = _center_xs(after_pairs)
+    target_set = set(target_pair_indices)
+    crossed: set[int] = set()
+    for target in target_set:
+        if target not in before_centers or target not in after_centers:
+            continue
+        for other, before_other in before_centers.items():
+            if other == target or other not in after_centers:
+                continue
+            before_delta = before_centers[target] - before_other
+            after_delta = after_centers[target] - after_centers[other]
+            if before_delta == 0 or after_delta == 0:
+                continue
+            if before_delta * after_delta < 0:
+                crossed.add(other)
+    return bool(crossed), sorted(crossed)
+
+
 def _apply_x_offsets(
     ordered_pairs: Sequence[Mapping[str, Any]],
     offsets: Mapping[int, float],
@@ -669,6 +891,7 @@ def _build_translation_candidates(
     dense_reclassification: Sequence[Mapping[str, Any]],
     target_pair_indices: Sequence[Any] | None,
     before_state: Mapping[str, Any],
+    source_lookup: Mapping[int, int],
 ) -> list[dict[str, Any]]:
     explicit_targets = sorted(_pair_index_set(target_pair_indices))
     specs = _explicit_candidate_specs(explicit_targets)
@@ -691,6 +914,16 @@ def _build_translation_candidates(
         candidate_pairs = _apply_x_offsets(ordered_pairs, offsets)
         after_state = build_room_layout_state(candidate_pairs, metadata=metadata)
         after_metrics = _metric_summary(after_state, cluster)
+        affected_walls = _affected_wall_indices(before_state, cluster)
+        affected_corners = _affected_corner_indices(cluster)
+        before_angle_summary = _wall_angle_summary(
+            _wall_angle_table(before_state, source_lookup),
+            affected_walls,
+        )
+        after_angle_summary = _wall_angle_summary(
+            _wall_angle_table(after_state, source_lookup),
+            affected_walls,
+        )
         after_local_metrics = _local_geometry_metrics(
             after_state,
             cluster,
@@ -714,7 +947,17 @@ def _build_translation_candidates(
             after_state,
             movement_abs_max,
         )
+        x_crossing, crossed_pairs = _x_order_crossing(
+            ordered_pairs,
+            candidate_pairs,
+            cluster,
+        )
         decision, decision_reasons = _candidate_decision(risks, score_delta)
+        if x_crossing:
+            decision_reasons = [
+                *decision_reasons,
+                "x_order_crossing_after_translation",
+            ]
         family = str(spec["candidate_family"])
         dx = float(spec["dx"])
         candidates.append(
@@ -742,6 +985,23 @@ def _build_translation_candidates(
                 "local_geometry_score_before": score_before,
                 "local_geometry_score_after": score_after,
                 "local_geometry_score_delta": score_delta,
+                "before_local_wall_angle_summary": before_angle_summary,
+                "after_local_wall_angle_summary": after_angle_summary,
+                "wall_angle_residual_sum_delta_deg": _summary_delta(
+                    before_angle_summary,
+                    after_angle_summary,
+                    "wall_angle_residual_sum_deg",
+                ),
+                "wall_angle_residual_max_delta_deg": _summary_delta(
+                    before_angle_summary,
+                    after_angle_summary,
+                    "wall_angle_residual_max_deg",
+                ),
+                "affected_wall_indices": affected_walls,
+                "affected_corner_indices": affected_corners,
+                "x_order_crossing_after_translation": x_crossing,
+                "crossed_pair_indices": crossed_pairs,
+                "crossing_scope": "2d_x_only_not_topology",
                 "candidate_decision": decision,
                 "decision_reasons": decision_reasons,
                 "risk_reasons": risks,
@@ -774,11 +1034,15 @@ def build_verified_3d_local_assist(
     metadata: Mapping[str, Any] | None = None,
     topology_override: Mapping[str, Any] | None = None,
     target_pair_indices: Sequence[Any] | None = None,
+    pair_index_mapping: Sequence[Mapping[str, Any]] | None = None,
 ) -> dict[str, Any]:
     """Build verified 3D local assist diagnostics and dry-run candidates."""
     state = build_room_layout_state(ordered_pairs, metadata=metadata)
+    source_lookup = _source_index_lookup(pair_index_mapping)
     local_diagnostics = _build_local_3d_diagnostics(state)
     dense_reclassification = _reclassify_dense_corners(local_diagnostics, state)
+    wall_angles = _wall_angle_table(state, source_lookup)
+    corner_angles = _corner_angle_table(state, source_lookup)
     candidates = _build_translation_candidates(
         ordered_pairs,
         metadata,
@@ -786,6 +1050,7 @@ def build_verified_3d_local_assist(
         dense_reclassification,
         target_pair_indices,
         state,
+        source_lookup,
     )
     return {
         "schema_version": VERIFIED_3D_LOCAL_ASSIST_VERSION,
@@ -795,6 +1060,8 @@ def build_verified_3d_local_assist(
         "before_metrics": _metric_summary(state, []),
         "local_3d_diagnostics": local_diagnostics,
         "dense_corner_reclassification": dense_reclassification,
+        "wall_angle_table": wall_angles,
+        "corner_angle_table": corner_angles,
         "candidate_rows": candidates,
         "risk_reasons": sorted(
             {

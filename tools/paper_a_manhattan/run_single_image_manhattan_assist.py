@@ -559,6 +559,39 @@ def _pair_indices(ordered_pairs: Sequence[Mapping[str, Any]]) -> list[int]:
     return list(range(1, len(ordered_pairs) + 1))
 
 
+def _pair_index_mapping(
+    ordered_pairs: Sequence[Mapping[str, Any]],
+    topology_override: Mapping[str, Any],
+) -> list[dict[str, Any]]:
+    override_order = topology_override.get("preview_order_override")
+    use_override = (
+        topology_override.get("preview_order_override_active") is True
+        and isinstance(override_order, list)
+        and len(override_order) == len(ordered_pairs)
+    )
+    rows: list[dict[str, Any]] = []
+    for effective_index, pair in enumerate(ordered_pairs, start=1):
+        source_index = override_order[effective_index - 1] if use_override else effective_index
+        top = pair.get("top", {})
+        bottom = pair.get("bottom", {})
+        rows.append(
+            {
+                "effective_pair_index": effective_index,
+                "source_preview_order_index": source_index,
+                "top_x": top.get("x"),
+                "bottom_x": bottom.get("x"),
+                "center_x": (
+                    (float(top["x"]) + float(bottom["x"])) / 2.0
+                    if "x" in top and "x" in bottom
+                    else None
+                ),
+                "top_y": top.get("y"),
+                "bottom_y": bottom.get("y"),
+            }
+        )
+    return rows
+
+
 def _proposal_row(
     ordered_pairs: Sequence[Mapping[str, Any]],
     pair_index: int,
@@ -816,6 +849,7 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
             "align_pair_x_proposals": [],
             "height_reproject_applicability_rows": [],
             "verified_3d_local_assist": None,
+            "pair_index_mapping": [],
             "duplicate_diagnostics": duplicate_diagnostics,
             "default_order_diagnostics": default_order_diagnostics,
             "effective_order_diagnostics": effective_order_diagnostics,
@@ -873,11 +907,13 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         )
         for row in proposals
     ]
+    pair_index_mapping = _pair_index_mapping(ordered_pairs, topology_override)
     verified_3d_local_assist = build_verified_3d_local_assist(
         ordered_pairs,
         metadata=metadata,
         topology_override=topology_override,
         target_pair_indices=payload.get("target_pair_indices"),
+        pair_index_mapping=pair_index_mapping,
     )
 
     return {
@@ -906,6 +942,7 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         "align_pair_x_proposals": proposals,
         "height_reproject_applicability_rows": height_rows,
         "verified_3d_local_assist": verified_3d_local_assist,
+        "pair_index_mapping": pair_index_mapping,
         "duplicate_diagnostics": duplicate_diagnostics,
         "default_order_diagnostics": default_order_diagnostics,
         "effective_order_diagnostics": effective_order_diagnostics,
@@ -988,8 +1025,35 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
     lines.extend(
         [
             "",
-        "## Pair Diagnostics",
-        "",
+            "## Pair Index Mapping",
+            "",
+            (
+                "Report `pair_index` values refer to the effective ordered_pairs position. "
+                "`source_preview_order_index` is the original default preview pair number. "
+                "Candidate `target_pair_indices` use `effective_pair_index`."
+            ),
+            "",
+        ]
+    )
+    lines.extend(
+        _markdown_table(
+            [
+                "effective_pair_index",
+                "source_preview_order_index",
+                "top_x",
+                "bottom_x",
+                "center_x",
+                "top_y",
+                "bottom_y",
+            ],
+            payload.get("pair_index_mapping", []),
+        )
+    )
+    lines.extend(
+        [
+            "",
+            "## Pair Diagnostics",
+            "",
         ]
     )
     lines.extend(
@@ -1111,7 +1175,76 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
             verified_local.get("dense_corner_reclassification", []),
         )
     )
+    lines.extend(["", "### Pair Index Mapping", ""])
+    lines.extend(
+        [
+            (
+                "Inside verified 3D local assist, candidate `target_pair_indices` "
+                "refer to `effective_pair_index`; source preview order is provenance only."
+            ),
+            "",
+        ]
+    )
+    lines.extend(
+        _markdown_table(
+            [
+                "effective_pair_index",
+                "source_preview_order_index",
+                "center_x",
+                "top_x",
+                "bottom_x",
+            ],
+            payload.get("pair_index_mapping", []),
+        )
+    )
+    lines.extend(["", "### Wall Angle Diagnostics", ""])
+    lines.extend(
+        _markdown_table(
+            [
+                "wall_index",
+                "from_pair_index",
+                "to_pair_index",
+                "from_source_preview_order_index",
+                "to_source_preview_order_index",
+                "direction_deg",
+                "nearest_manhattan_axis_deg",
+                "angle_residual_deg",
+                "length",
+            ],
+            verified_local.get("wall_angle_table", []),
+        )
+    )
+    lines.extend(["", "### Corner Angle Diagnostics", ""])
+    lines.extend(
+        [
+            (
+                "`turn_angle_deg` is the BEV angle between the previous and next wall "
+                "vectors at the current corner; residual is measured from 90 degrees."
+            ),
+            "",
+        ]
+    )
+    lines.extend(
+        _markdown_table(
+            [
+                "corner_pair_index",
+                "corner_source_preview_order_index",
+                "prev_wall_index",
+                "next_wall_index",
+                "turn_angle_deg",
+                "angle_to_90_residual_deg",
+                "local_angle_warning",
+            ],
+            verified_local.get("corner_angle_table", []),
+        )
+    )
     lines.extend(["", "### Local X Translation Dry-run Candidates", ""])
+    lines.extend(
+        [
+            "2D x-order crossing is not topology reordering.",
+            "",
+        ]
+    )
     lines.extend(
         _markdown_table(
             [
@@ -1123,6 +1256,13 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 "dx",
                 "status",
                 "local_geometry_score_delta",
+                "wall_angle_residual_sum_delta_deg",
+                "wall_angle_residual_max_delta_deg",
+                "affected_wall_indices",
+                "affected_corner_indices",
+                "x_order_crossing_after_translation",
+                "crossed_pair_indices",
+                "crossing_scope",
                 "candidate_decision",
                 "decision_reasons",
                 "improved_metrics",
