@@ -1179,23 +1179,12 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
     lines.extend(
         [
             (
-                "Inside verified 3D local assist, candidate `target_pair_indices` "
-                "refer to `effective_pair_index`; source preview order is provenance only."
+                "See the global Pair Index Mapping table above. Inside verified 3D "
+                "local assist, candidate `target_pair_indices` refer to "
+                "`effective_pair_index`; source preview order is provenance only."
             ),
             "",
         ]
-    )
-    lines.extend(
-        _markdown_table(
-            [
-                "effective_pair_index",
-                "source_preview_order_index",
-                "center_x",
-                "top_x",
-                "bottom_x",
-            ],
-            payload.get("pair_index_mapping", []),
-        )
     )
     lines.extend(["", "### Wall Angle Diagnostics", ""])
     lines.extend(
