@@ -4,6 +4,7 @@ from pathlib import Path
 from tools.paper_a_manhattan.run_single_image_manhattan_assist import (
     build_single_image_assist,
     main,
+    render_markdown_report,
     run_single_image_assist,
 )
 
@@ -16,6 +17,45 @@ def _fixture_case(case_id):
     return json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))[case_id]
 
 
+def _raw_duplicate_payload(n_pairs, order_string):
+    centers = [10.0, 10.4, *[20.0 + index * 10.0 for index in range(n_pairs - 2)]]
+    keypoints = []
+    for center in centers:
+        keypoints.append({"x": center, "y": 32.0})
+        keypoints.append({"x": center, "y": 70.0})
+    return {
+        "task_id": "218",
+        "annotation_id": f"synthetic-{n_pairs}",
+        "order_verified_by_expert": True,
+        "preview_order_override_string": order_string,
+        "keypoints": keypoints,
+        "metadata": {"scope": "normal", "manhattan_assumable": True},
+    }
+
+
+def _task238_payload():
+    return {
+        "task_id": "238",
+        "annotation_id": "2389",
+        "target_pair_indices": [4],
+        "metadata": {"scope": "normal", "manhattan_assumable": True},
+        "result": [
+            {"type": "keypointlabels", "value": {"x": 74.3810546875, "y": 40.470703125}},
+            {"type": "keypointlabels", "value": {"x": 74.3810546875, "y": 67.003125}},
+            {"type": "keypointlabels", "value": {"x": 90.6126953125, "y": 44.287109375}},
+            {"type": "keypointlabels", "value": {"x": 90.6126953125, "y": 60.2421875}},
+            {"type": "keypointlabels", "value": {"x": 2.4635470266948207, "y": 44.124096109784276}},
+            {"type": "keypointlabels", "value": {"x": 2.4635470266948207, "y": 59.80567030166545}},
+            {"type": "keypointlabels", "value": {"x": 45.023411241281494, "y": 34.07355598298071}},
+            {"type": "keypointlabels", "value": {"x": 45.023411241281494, "y": 73.94455130073246}},
+            {"type": "keypointlabels", "value": {"x": 53.508771929824576, "y": 33.583959899749374}},
+            {"type": "keypointlabels", "value": {"x": 53.508771929824576, "y": 74.43609022556392}},
+            {"type": "keypointlabels", "value": {"x": 66.16541353383458, "y": 8.270676691729323}},
+            {"type": "keypointlabels", "value": {"x": 66.16541353383458, "y": 92.73182957393483}},
+        ],
+    }
+
+
 def test_simplified_ordered_pairs_outputs_diagnostics_proposals_and_height_rows():
     result = build_single_image_assist(_fixture_case("simplified_ordered_pairs"))
 
@@ -26,6 +66,7 @@ def test_simplified_ordered_pairs_outputs_diagnostics_proposals_and_height_rows(
     assert len(result["pair_diagnostics"]) == 4
     assert len(result["align_pair_x_proposals"]) == 4
     assert len(result["height_reproject_applicability_rows"]) == 4
+    assert len(result["height_reproject_candidate_rows"]) == 4
     assert result["verified_3d_local_assist"]["schema_version"] == (
         "verified_3d_local_assist_m15_15_v1"
     )
@@ -175,6 +216,10 @@ def test_raw_keypoints_duplicate_failure_outputs_duplicate_diagnostics():
     assert result["ordered_pairs"] == []
     assert result["manual_edit_table"] == []
     assert result["duplicate_diagnostics"]
+    assert result["preview_pair_table"]
+    assert result["near_duplicate_pair_table"]
+    assert result["override_pack"]["override_needed"] is True
+    assert result["override_pack"]["writeback_allowed"] is False
     diagnostic = result["duplicate_diagnostics"][0]
     assert diagnostic["reason"] == "near_duplicate_corner_pair"
     assert diagnostic["manual_only"] is True
@@ -309,6 +354,23 @@ def test_invalid_preview_order_override_returns_invalid_without_suggestions():
     assert result["align_pair_x_proposals"] == []
 
 
+def test_invalid_preview_order_override_length_and_out_of_range_do_not_materialize():
+    length_result = build_single_image_assist(_raw_duplicate_payload(8, "2134657"))
+    range_payload = _raw_duplicate_payload(8, "21346579")
+    range_result = build_single_image_assist(range_payload)
+
+    assert length_result["topology_override"]["invalid_reason"] == (
+        "preview_order_override_length_mismatch"
+    )
+    assert length_result["ordered_pairs"] == []
+    assert length_result["room_layout_state"] is None
+    assert range_result["topology_override"]["invalid_reason"] == (
+        "preview_order_override_out_of_range"
+    )
+    assert range_result["ordered_pairs"] == []
+    assert range_result["room_layout_state"] is None
+
+
 def test_unverified_preview_order_override_does_not_bypass_duplicate_stop():
     result = build_single_image_assist(_fixture_case("raw_keypoints_duplicate_unverified_order"))
 
@@ -316,6 +378,77 @@ def test_unverified_preview_order_override_does_not_bypass_duplicate_stop():
     assert result["preview_compatibility"]["status"] == "compatibility_failure_duplicate"
     assert result["ordered_pairs"] == []
     assert result["manual_edit_table"] == []
+
+
+def test_task218_ann2369_order_string_parses_and_materializes_verified_assist():
+    result = build_single_image_assist(_raw_duplicate_payload(8, "21346578"))
+
+    assert result["preview_compatibility"]["status"] == "compatibility_failure_duplicate"
+    assert result["topology_override"]["preview_order_override"] == [2, 1, 3, 4, 6, 5, 7, 8]
+    assert result["override_pack"]["override_validation_status"] == "valid"
+    assert result["ordered_pairs"]
+    assert result["pair_index_mapping"]
+    assert result["room_layout_state"]["state_status"] == "ok"
+    assert result["verified_3d_local_assist"]["schema_version"] == (
+        "verified_3d_local_assist_m15_15_v1"
+    )
+
+
+def test_task218_ann3741_order_string_with_ten_parses_stably():
+    result = build_single_image_assist(_raw_duplicate_payload(10, "213465879 10"))
+
+    assert result["topology_override"]["preview_order_override"] == [
+        2,
+        1,
+        3,
+        4,
+        6,
+        5,
+        8,
+        7,
+        9,
+        10,
+    ]
+    assert result["ordered_pairs"]
+    assert result["pair_index_mapping"]
+    assert result["room_layout_state"]["state_status"] == "ok"
+    assert result["verified_3d_local_assist"]["schema_version"] == (
+        "verified_3d_local_assist_m15_15_v1"
+    )
+
+
+def test_task238_explicit_target_pair_generates_x_only_dryrun_without_writeback():
+    result = build_single_image_assist(_task238_payload())
+    candidates = result["verified_3d_local_assist"]["candidate_rows"]
+
+    assert candidates
+    assert {tuple(row["target_pair_indices"]) for row in candidates} == {(4,)}
+    assert {row["candidate_family"] for row in candidates} == {
+        "translate_single_pair_x_dryrun"
+    }
+    assert {row["candidate_source"] for row in candidates} == {
+        "explicit_target_pair_indices"
+    }
+    assert all(row["y_change_allowed"] is False for row in candidates)
+    assert all(row["writeback_allowed"] is False for row in candidates)
+    assert all("candidate_pairs" not in row for row in candidates)
+    assert any(row["candidate_decision"] == "neutral_review" for row in candidates)
+
+
+def test_task238_outputs_conservative_height_candidate_for_pair_four():
+    result = build_single_image_assist(_task238_payload())
+    rows = result["height_reproject_candidate_rows"]
+    pair_four = next(row for row in rows if row["target_pair_index"] == 4)
+
+    assert rows[0]["target_pair_index"] == 4
+    assert pair_four["candidate_decision"] == "suggested_review"
+    assert pair_four["height_residual_before"] > 0.45
+    assert pair_four["height_residual_after"] < pair_four["height_residual_before"]
+    assert pair_four["height_residual_delta"] < 0
+    assert pair_four["top_x_before"] == pair_four["top_x_after"]
+    assert pair_four["bottom_x_before"] == pair_four["bottom_x_after"]
+    assert pair_four["writeback_allowed"] is False
+    assert pair_four["annotation_patch_allowed"] is False
 
 
 def test_override_dense_pairs_remain_manual_only_but_non_dense_pair_can_align_x():
@@ -387,7 +520,7 @@ def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
     assert "Manual Edit Table" in text
     assert "Recommended Review Order" in text
     assert "align_x_first" in text
-    assert "Do not edit y from this report" in text
+    assert "Conservative Height Reproject rows are review-level dry-runs" in text
     assert "Duplicate / Dense Corner Diagnostics" in text
     assert "Order Diagnostics" in text
     assert "Height Applicability Summary" in text
@@ -402,6 +535,19 @@ def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
     assert "candidate_decision" in text
     assert "These candidates are review-level dry-runs" in text
     assert "no UI, no apply/writeback" in text
+
+
+def test_markdown_includes_hard_stop_override_and_height_sections():
+    hard_stop = build_single_image_assist(_fixture_case("raw_keypoints_duplicate"))
+    explicit = build_single_image_assist(_task238_payload())
+    hard_stop_text = render_markdown_report(hard_stop)
+    explicit_text = render_markdown_report(explicit)
+
+    assert "## Preview Pair Table" in hard_stop_text
+    assert "## Override Pack" in hard_stop_text
+    assert "override pack only helps expert prepare a verified order".lower() in hard_stop_text.lower()
+    assert "## Conservative Height Reproject Candidates" in explicit_text
+    assert "Explicit target pair mode is an exploratory x-only dry-run" in explicit_text
 
 
 def test_verified_3d_local_assist_generates_dryrun_rows_for_verified_dense_case():

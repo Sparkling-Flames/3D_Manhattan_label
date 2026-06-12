@@ -20,8 +20,10 @@ P1/C1/C2/T1/V1 artifact.
 - `metadata`: optional scope/Manhattan metadata consumed by the existing
   `RoomLayoutState` diagnostics.
 - `topology_override`: optional provenance from the single-image CLI. Local x
-  translation dry-run candidates require `order_verified_by_expert=true` and
-  `preview_order_override_active=true`.
+  translation dry-run candidates from dense-corner reclassification require
+  `order_verified_by_expert=true` and `preview_order_override_active=true`.
+  Explicit target-pair x dry-runs may run when the default preview is compatible
+  or when an expert override is valid.
 - `target_pair_indices`: optional explicit pair indices for local dry-run
   evaluation. These are review targets only and do not imply correctness.
 
@@ -110,6 +112,50 @@ The dry-run:
 The candidate rows intentionally do not include writeback payloads or annotation
 patches.
 
+### Explicit Target Candidate Mode
+
+M15.15d.2 allows `target_pair_indices=[...]` to request exploratory
+`translate_single_pair_x_dryrun` rows even when no dense corner was
+reclassified. This mode is only available after the single-image entrypoint has
+materialized an effective order from either a compatible default preview or a
+valid expert override. It does not require `preview_order_override_active`.
+
+Explicit target rows remain x-only:
+
+- they do not change y;
+- they do not change pair order;
+- they do not generate annotation patches or writeback payloads;
+- they do not claim to solve height residuals.
+
+If the x-only local geometry score does not clearly improve, the candidate is
+`neutral_review`. This is a review sorting cue, not edit permission.
+
+### Hard-stop Override Pack
+
+M15.15d.1 adds hard-stop explainability for default preview failures such as
+`compatibility_failure_duplicate`. The single-image report still returns:
+
+- `preview_pair_table`: default preview pair provenance, including top/bottom
+  ids, x/y coordinates, center x, and `pairing_source=default_preview_order`.
+- `near_duplicate_pair_table`: adjacent default preview pairs whose center x
+  distance is below the duplicate threshold, with
+  `manual_override_required=true`.
+- `override_pack`: accepted override formats, default preview status/reason,
+  validation status/reasons, and an example default-order list.
+
+The override pack only helps an expert prepare a verified order. It is not
+automatic reorder, merge, delete, apply, or writeback. A valid override must:
+
+- match the default preview pair count;
+- contain no duplicates;
+- stay within `1..default_n_pairs`;
+- have `order_verified_by_expert=true`.
+
+`preview_order_override_string` accepts compact one-digit strings such as
+`21346578`, mixed compact-plus-spaced strings such as `213465879 10`, and fully
+space-separated strings such as `2 1 3 4 6 5 8 7 9 10`. Ambiguous two-digit
+compact strings are invalid rather than guessed.
+
 ## Local Geometry Scoring
 
 M15.15b adds local 3D/BEV geometry scoring for each candidate. Metrics include:
@@ -175,7 +221,8 @@ expert-verified preview order is active. It remains a manual review cue.
 ## Non-goals
 
 This spec does not implement UI, ghost overlays, apply/undo, Label Studio
-integration, y-coordinate height reproject candidates, local Manhattan snap,
-wall moves, room-height sliders, automatic reorder, automatic merge, automatic
-corner deletion, correctness labels, GT decisions, routing, worker profile
-signals, or formal A-line artifacts.
+integration, adaptive x search, local Manhattan snap, wall moves, room-height
+sliders, automatic reorder, automatic merge, automatic corner deletion,
+correctness labels, GT decisions, routing, worker profile signals, or formal
+A-line artifacts. Conservative height/y reproject candidates are specified
+separately as review-level dry-runs and are not edit instructions.

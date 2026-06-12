@@ -1,0 +1,93 @@
+{
+  "align_pair_x_proposals": [],
+  "annotation_id": "2369",
+  "default_order_diagnostics": {
+    "diagnostic_reason": null,
+    "direction_change_pairs": [],
+    "is_x_monotonic": true,
+    "manual_only_reason": null,
+    "n_direction_changes": 0
+  },
+  "default_preview_reason": "near_duplicate_corner_pair",
+  "default_preview_status": "compatibility_failure_duplicate",
+  "duplicate_diagnostics": [
+    {
+      "delta_center_x": 0.6702899999999943,
+      "duplicate_threshold_percent": 1.0,
+      "index_source": "preview_ordered_corners",
+      "left_center_x": 50.497198,
+      "left_pair_index": 5,
+      "manual_only": true,
+      "reason": "near_duplicate_corner_pair",
+      "right_center_x": 51.16748799999999,
+      "right_pair_index": 6
+    }
+  ],
+  "effective_order_diagnostics": {
+    "diagnostic_reason": null,
+    "direction_change_pairs": [],
+    "is_x_monotonic": true,
+    "manual_only_reason": null,
+    "n_direction_changes": 0
+  },
+  "effective_preview_compatibility": {
+    "reason": "near_duplicate_corner_pair",
+    "status": "not_compatible"
+  },
+  "height_reproject_applicability_rows": [],
+  "input_mode": "label_studio_result",
+  "manual_edit_table": [],
+  "order_diagnostics": {
+    "diagnostic_reason": null,
+    "direction_change_pairs": [],
+    "is_x_monotonic": true,
+    "manual_only_reason": null,
+    "n_direction_changes": 0
+  },
+  "ordered_pairs": [],
+  "pair_diagnostics": [],
+  "pair_index_mapping": [],
+  "preview_compatibility": {
+    "compatibility_reason": "near_duplicate_corner_pair",
+    "height": 512,
+    "input_mode": "label_studio_result",
+    "n_pairs": 8,
+    "n_unpaired_points": 0,
+    "pairing_rule_version": "official_userscript_nearest_x_strict_lt_v1",
+    "preserve_order": false,
+    "status": "compatibility_failure_duplicate",
+    "suggestion_allowed": false,
+    "width": 1024
+  },
+  "preview_order_override_active": false,
+  "recommended_review_order": [],
+  "room_layout_state": null,
+  "summary": {
+    "input_mode": "label_studio_result",
+    "n_align_pair_x_eligible": 0,
+    "n_align_pair_x_review_only": 0,
+    "n_align_pair_x_suppressed": 0,
+    "n_height_reproject_applicable": 0,
+    "n_height_reproject_review_only": 0,
+    "n_height_reproject_suppressed": 0,
+    "n_ordered_pairs": 0,
+    "note": "Expert-side diagnostic only: no UI, no apply/writeback, no routing, no formal g_t, no worker quality metric, no P1/C1/C2/T1/V1 artifact.",
+    "preview_status": "compatibility_failure_duplicate"
+  },
+  "task_id": "218",
+  "tool_version": "single_image_manhattan_assist_m15_15_v1",
+  "topology_override": {
+    "default_preview_reason": "near_duplicate_corner_pair",
+    "default_preview_status": "compatibility_failure_duplicate",
+    "invalid_reason": null,
+    "order_override_note": null,
+    "order_verified_by_expert": false,
+    "override_status": "not_requested",
+    "preview_order_override": null,
+    "preview_order_override_active": false,
+    "topology_override_schema_version": "verified_preview_order_m15_13_v1",
+    "topology_source": "default_preview_order_unusable"
+  },
+  "topology_source": "default_preview_order_unusable",
+  "verified_3d_local_assist": null
+}

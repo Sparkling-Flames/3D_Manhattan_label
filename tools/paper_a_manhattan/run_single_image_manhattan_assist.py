@@ -26,6 +26,9 @@ from tools.paper_a_manhattan.manhattan_assist_review_harness import (  # noqa: E
     build_pair_assist_review_rows,
 )
 from tools.paper_a_manhattan.manhattan_layout_state import build_room_layout_state  # noqa: E402
+from tools.paper_a_manhattan.manhattan_height_reproject_candidate import (  # noqa: E402
+    build_height_reproject_candidate_rows,
+)
 from tools.paper_a_manhattan.manhattan_pair_assist import (  # noqa: E402
     ELIGIBLE,
     diagnose_pair_alignment,
@@ -147,7 +150,7 @@ def _extract_label_studio_keypoints(results: Any) -> list[dict[str, Any]]:
             y = float(value["y"])
         except (KeyError, TypeError, ValueError):
             continue
-        keypoints.append({"x": x, "y": y, "original_index": idx})
+        keypoints.append({"x": x, "y": y, "point_id": result.get("id"), "original_index": idx})
     return keypoints
 
 
@@ -174,19 +177,63 @@ def _topology_override_info(
     payload: Mapping[str, Any],
     override_status: str = "not_requested",
     invalid_reason: str | None = None,
+    override_order: Sequence[int] | None = None,
+    validation_reasons: Sequence[str] | None = None,
 ) -> dict[str, Any]:
+    reasons = list(validation_reasons or ([] if invalid_reason is None else [invalid_reason]))
     return {
         "topology_override_schema_version": TOPOLOGY_OVERRIDE_SCHEMA_VERSION,
         "preview_order_override_active": active,
         "topology_source": source,
         "default_preview_status": default_preview_status,
         "default_preview_reason": default_preview_reason,
-        "preview_order_override": payload.get("preview_order_override"),
+        "preview_order_override": list(override_order) if override_order is not None else payload.get("preview_order_override"),
+        "preview_order_override_string": payload.get("preview_order_override_string"),
         "order_verified_by_expert": _as_bool(payload.get("order_verified_by_expert"), False),
         "order_override_note": payload.get("order_override_note"),
         "override_status": override_status,
         "invalid_reason": invalid_reason,
+        "override_validation_status": (
+            "valid"
+            if override_status == "valid_preview_order_override"
+            else "invalid"
+            if invalid_reason is not None
+            else "not_requested"
+            if payload.get("preview_order_override") is None
+            and payload.get("preview_order_override_string") is None
+            else "not_active"
+        ),
+        "override_validation_reasons": reasons,
     }
+
+
+def _parse_preview_order_override_string(value: Any, pair_count: int) -> tuple[list[int] | None, str | None]:
+    if not isinstance(value, str):
+        return None, "preview_order_override_string_not_string"
+    text = value.strip()
+    if not text:
+        return None, "preview_order_override_string_empty"
+    if not all(char.isdigit() or char.isspace() for char in text):
+        return None, "preview_order_override_string_non_digit"
+
+    if any(char.isspace() for char in text):
+        parsed: list[int] = []
+        for token in text.split():
+            if len(token) > 1 and int(token) <= pair_count:
+                parsed.append(int(token))
+            elif len(token) == 1:
+                parsed.append(int(token))
+            elif all(char != "0" for char in token):
+                parsed.extend(int(char) for char in token)
+            else:
+                return None, "preview_order_override_string_ambiguous"
+        return parsed, None
+
+    if pair_count > 9:
+        return None, "preview_order_override_string_ambiguous_without_spaces"
+    if "0" in text:
+        return None, "preview_order_override_string_zero_without_two_digit_context"
+    return [int(char) for char in text], None
 
 
 def _validate_preview_order_override(order: Any, pair_count: int) -> tuple[list[int] | None, str | None]:
@@ -212,6 +259,21 @@ def _validate_preview_order_override(order: Any, pair_count: int) -> tuple[list[
     if any(value < 1 or value > pair_count for value in parsed):
         return None, "preview_order_override_out_of_range"
     return parsed, None
+
+
+def _resolve_preview_order_override(
+    payload: Mapping[str, Any],
+    pair_count: int,
+) -> tuple[list[int] | None, str | None]:
+    if payload.get("preview_order_override_string") is not None:
+        parsed_string, string_error = _parse_preview_order_override_string(
+            payload.get("preview_order_override_string"),
+            pair_count,
+        )
+        if string_error is not None:
+            return None, string_error
+        return _validate_preview_order_override(parsed_string, pair_count)
+    return _validate_preview_order_override(payload.get("preview_order_override"), pair_count)
 
 
 def _ordered_pairs_from_preview_with_order(preview: Any, order: Sequence[int]) -> list[dict[str, Any]]:
@@ -307,10 +369,7 @@ def _resolve_topology_policy(
     default_status = preview.status
     default_reason = preview.compatibility_reason
     if _as_bool(payload.get("order_verified_by_expert"), False):
-        override_order, invalid_reason = _validate_preview_order_override(
-            payload.get("preview_order_override"),
-            len(preview.ordered_corners),
-        )
+        override_order, invalid_reason = _resolve_preview_order_override(payload, len(preview.ordered_corners))
         if invalid_reason is not None:
             return _topology_override_info(
                 active=False,
@@ -320,6 +379,7 @@ def _resolve_topology_policy(
                 payload=payload,
                 override_status="invalid_preview_order_override",
                 invalid_reason=invalid_reason,
+                override_order=override_order,
             )
         if default_status not in PREVIEW_ORDER_OVERRIDE_ALLOWED_STATUSES:
             if default_status == COMPATIBLE:
@@ -330,6 +390,7 @@ def _resolve_topology_policy(
                     default_preview_reason=default_reason,
                     payload=payload,
                     override_status="preview_order_override_ignored_for_compatible_default",
+                    override_order=override_order,
                 )
             return _topology_override_info(
                 active=False,
@@ -339,6 +400,7 @@ def _resolve_topology_policy(
                 payload=payload,
                 override_status="preview_order_override_not_allowed_for_status",
                 invalid_reason="preview_order_override_not_allowed_for_status",
+                override_order=override_order,
             )
         return _topology_override_info(
             active=True,
@@ -347,6 +409,19 @@ def _resolve_topology_policy(
             default_preview_reason=default_reason,
             payload=payload,
             override_status="valid_preview_order_override",
+            override_order=override_order,
+            validation_reasons=["order_verified_by_expert"],
+        )
+
+    if payload.get("preview_order_override") is not None or payload.get("preview_order_override_string") is not None:
+        return _topology_override_info(
+            active=False,
+            source="invalid_preview_order_override",
+            default_preview_status=default_status,
+            default_preview_reason=default_reason,
+            payload=payload,
+            override_status="invalid_preview_order_override",
+            invalid_reason="order_not_verified_by_expert",
         )
 
     if preview.status != COMPATIBLE:
@@ -386,9 +461,22 @@ def _materialize_ordered_pairs(
 
 def _resolve_ordered_pairs(
     payload: Mapping[str, Any],
-) -> tuple[str, dict[str, Any], list[dict[str, Any]], dict[str, Any], list[dict[str, Any]]]:
+) -> tuple[
+    str,
+    dict[str, Any],
+    list[dict[str, Any]],
+    dict[str, Any],
+    list[dict[str, Any]],
+    list[dict[str, Any]],
+    list[dict[str, Any]],
+]:
     parsed_input = _parse_input_payload(payload)
     preview, preview_info, default_centers = _run_default_preview(parsed_input)
+    preview_pair_table = _preview_pair_table_from_preview(preview)
+    near_duplicate_pair_table = _near_duplicate_pair_table_from_preview(
+        preview_pair_table,
+        threshold_percent=DUPLICATE_CORNER_THRESHOLD_RATIO * 100.0,
+    )
     topology_override = _resolve_topology_policy(
         payload,
         parsed_input,
@@ -406,6 +494,8 @@ def _resolve_ordered_pairs(
         ordered_pairs,
         topology_override,
         default_centers,
+        preview_pair_table,
+        near_duplicate_pair_table,
     )
 
 
@@ -442,6 +532,99 @@ def _center_rows_from_preview(preview: Any, width: int) -> list[dict[str, Any]]:
             }
         )
     return rows
+
+
+def _point_id(point: Any) -> str:
+    if point.point_id is not None:
+        return str(point.point_id)
+    if point.original_index is not None:
+        return f"input_index_{point.original_index}"
+    return "unknown"
+
+
+def _preview_pair_table_from_preview(preview: Any | None) -> list[dict[str, Any]]:
+    if preview is None:
+        return []
+    rows: list[dict[str, Any]] = []
+    for idx, pair in enumerate(preview.ordered_corners, start=1):
+        top = pair.p1 if pair.p1.y <= pair.p2.y else pair.p2
+        bottom = pair.p2 if pair.p1.y <= pair.p2.y else pair.p1
+        rows.append(
+            {
+                "preview_pair_index": idx,
+                "top_id": _point_id(top),
+                "bottom_id": _point_id(bottom),
+                "top_x": top.x_percent,
+                "bottom_x": bottom.x_percent,
+                "center_x": (top.x_percent + bottom.x_percent) / 2.0,
+                "top_y": top.y_percent,
+                "bottom_y": bottom.y_percent,
+                "pairing_source": "default_preview_order",
+            }
+        )
+    return rows
+
+
+def _near_duplicate_pair_table_from_preview(
+    preview_pair_table: Sequence[Mapping[str, Any]],
+    *,
+    threshold_percent: float,
+) -> list[dict[str, Any]]:
+    rows: list[dict[str, Any]] = []
+    ordered = sorted(preview_pair_table, key=lambda row: float(row["center_x"]))
+    for left, right in zip(ordered, ordered[1:]):
+        delta = abs(float(right["center_x"]) - float(left["center_x"]))
+        if delta < threshold_percent:
+            rows.append(
+                {
+                    "left_preview_pair_index": left["preview_pair_index"],
+                    "right_preview_pair_index": right["preview_pair_index"],
+                    "left_center_x": left["center_x"],
+                    "right_center_x": right["center_x"],
+                    "delta_center_x": delta,
+                    "duplicate_threshold_percent": threshold_percent,
+                    "reason": "near_duplicate_corner_pair",
+                    "manual_override_required": True,
+                }
+            )
+    return rows
+
+
+def _override_pack(
+    *,
+    preview_info: Mapping[str, Any],
+    topology_override: Mapping[str, Any],
+) -> dict[str, Any]:
+    default_n_pairs = preview_info.get("n_pairs")
+    example = (
+        list(range(1, int(default_n_pairs) + 1))
+        if isinstance(default_n_pairs, int)
+        else []
+    )
+    status = str(topology_override.get("override_validation_status") or "not_requested")
+    reasons = list(topology_override.get("override_validation_reasons", []))
+    hard_stop = preview_info.get("status") != COMPATIBLE
+    return {
+        "override_needed": hard_stop and not topology_override.get("preview_order_override_active"),
+        "hard_stop_reason": (
+            topology_override.get("invalid_reason")
+            or preview_info.get("compatibility_reason")
+            if hard_stop or status == "invalid"
+            else None
+        ),
+        "default_n_pairs": default_n_pairs,
+        "default_preview_status": preview_info.get("status"),
+        "default_preview_reason": preview_info.get("compatibility_reason"),
+        "accepted_override_formats": [
+            "preview_order_override=[2,1,3,4]",
+            "preview_order_override_string='2134'",
+            "preview_order_override_string='2 1 3 4 9 10'",
+        ],
+        "example_preview_order_override": example,
+        "override_validation_status": status,
+        "override_validation_reasons": reasons,
+        "writeback_allowed": False,
+    }
 
 
 def _duplicate_diagnostics_from_centers(
@@ -788,6 +971,8 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         ordered_pairs,
         topology_override,
         default_preview_centers,
+        preview_pair_table,
+        near_duplicate_pair_table,
     ) = _resolve_ordered_pairs(payload)
     (
         duplicate_diagnostics,
@@ -805,6 +990,10 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
     metadata = payload.get("metadata") if isinstance(payload.get("metadata"), Mapping) else None
     task_id = payload.get("task_id")
     annotation_id = payload.get("annotation_id")
+    override_pack = _override_pack(
+        preview_info=preview_compatibility,
+        topology_override=topology_override,
+    )
 
     invalid_override = topology_override.get("override_status") == "invalid_preview_order_override"
     override_not_allowed = (
@@ -823,6 +1012,7 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         return {
             "task_id": task_id,
             "annotation_id": annotation_id,
+            "target_pair_indices": payload.get("target_pair_indices"),
             "input_mode": input_mode,
             "preview_compatibility": preview_compatibility,
             "effective_preview_compatibility": {
@@ -848,8 +1038,12 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
             "pair_diagnostics": [],
             "align_pair_x_proposals": [],
             "height_reproject_applicability_rows": [],
+            "height_reproject_candidate_rows": [],
             "verified_3d_local_assist": None,
             "pair_index_mapping": [],
+            "preview_pair_table": preview_pair_table,
+            "near_duplicate_pair_table": near_duplicate_pair_table,
+            "override_pack": override_pack,
             "duplicate_diagnostics": duplicate_diagnostics,
             "default_order_diagnostics": default_order_diagnostics,
             "effective_order_diagnostics": effective_order_diagnostics,
@@ -885,6 +1079,11 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         ],
         operation=HEIGHT_REPROJECT_APPLICABILITY_OPERATION,
     )
+    height_candidate_rows = build_height_reproject_candidate_rows(
+        ordered_pairs,
+        metadata=metadata,
+        target_pair_indices=payload.get("height_target_pair_indices"),
+    )
     manual_only_reasons: dict[int, str] = {}
     for diagnostic in duplicate_diagnostics:
         reason = diagnostic["reason"]
@@ -919,6 +1118,7 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
     return {
         "task_id": task_id,
         "annotation_id": annotation_id,
+        "target_pair_indices": payload.get("target_pair_indices"),
         "input_mode": input_mode,
         "preview_compatibility": preview_compatibility,
         "effective_preview_compatibility": {
@@ -941,8 +1141,12 @@ def build_single_image_assist(payload: Mapping[str, Any]) -> dict[str, Any]:
         "pair_diagnostics": pair_diagnostics,
         "align_pair_x_proposals": proposals,
         "height_reproject_applicability_rows": height_rows,
+        "height_reproject_candidate_rows": height_candidate_rows,
         "verified_3d_local_assist": verified_3d_local_assist,
         "pair_index_mapping": pair_index_mapping,
+        "preview_pair_table": preview_pair_table,
+        "near_duplicate_pair_table": near_duplicate_pair_table,
+        "override_pack": override_pack,
         "duplicate_diagnostics": duplicate_diagnostics,
         "default_order_diagnostics": default_order_diagnostics,
         "effective_order_diagnostics": effective_order_diagnostics,
@@ -986,7 +1190,11 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         "# Single-image Manhattan Assist Report",
         "",
         NO_WRITEBACK_NOTE,
-        "Only rows with action=align_pair_x may be used as manual x-alignment references. Do not edit y from this report.",
+        (
+            "Legacy Manual Edit Table only covers align_pair_x. Verified 3D Local "
+            "Assist and Conservative Height Reproject rows are review-level "
+            "dry-runs, not edit instructions. Do not apply without visual confirmation."
+        ),
         "",
         "## Preview Compatibility",
         "",
@@ -995,9 +1203,77 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         f"- reason: `{preview.get('compatibility_reason')}`",
         f"- preserve_order: `{preview.get('preserve_order')}`",
         "",
-        "## Topology Override",
+        "## Preview Pair Table",
         "",
     ]
+    lines.extend(
+        _markdown_table(
+            [
+                "preview_pair_index",
+                "top_id",
+                "bottom_id",
+                "top_x",
+                "bottom_x",
+                "center_x",
+                "top_y",
+                "bottom_y",
+                "pairing_source",
+            ],
+            payload.get("preview_pair_table", []),
+        )
+    )
+    lines.extend(["", "## Near Duplicate Pair Table", ""])
+    lines.extend(
+        _markdown_table(
+            [
+                "left_preview_pair_index",
+                "right_preview_pair_index",
+                "left_center_x",
+                "right_center_x",
+                "delta_center_x",
+                "duplicate_threshold_percent",
+                "reason",
+                "manual_override_required",
+            ],
+            payload.get("near_duplicate_pair_table", []),
+        )
+    )
+    lines.extend(
+        [
+            "",
+            "## Override Pack",
+            "",
+            (
+                "Override pack only helps expert prepare a verified order; it is "
+                "not automatic reorder."
+            ),
+            "",
+        ]
+    )
+    lines.extend(
+        _markdown_table(
+            [
+                "override_needed",
+                "hard_stop_reason",
+                "default_n_pairs",
+                "default_preview_status",
+                "default_preview_reason",
+                "accepted_override_formats",
+                "example_preview_order_override",
+                "override_validation_status",
+                "override_validation_reasons",
+                "writeback_allowed",
+            ],
+            [payload.get("override_pack", {})],
+        )
+    )
+    lines.extend(
+        [
+            "",
+            "## Topology Override",
+            "",
+        ]
+    )
     lines.extend(
         _markdown_table(
             [
@@ -1006,7 +1282,10 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 "default_preview_status",
                 "default_preview_reason",
                 "preview_order_override",
+                "preview_order_override_string",
                 "order_override_note",
+                "override_validation_status",
+                "override_validation_reasons",
             ],
             [
                 {
@@ -1017,7 +1296,16 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                     "default_preview_status": topology.get("default_preview_status"),
                     "default_preview_reason": topology.get("default_preview_reason"),
                     "preview_order_override": topology.get("preview_order_override"),
+                    "preview_order_override_string": topology.get(
+                        "preview_order_override_string"
+                    ),
                     "order_override_note": topology.get("order_override_note"),
+                    "override_validation_status": topology.get(
+                        "override_validation_status"
+                    ),
+                    "override_validation_reasons": topology.get(
+                        "override_validation_reasons"
+                    ),
                 }
             ],
         )
@@ -1144,6 +1432,27 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
             "",
         ]
     )
+    lines.extend(["## Conservative Height Reproject Candidates", ""])
+    lines.extend(
+        _markdown_table(
+            [
+                "candidate_rank",
+                "target_pair_index",
+                "operation",
+                "top_y_before",
+                "top_y_after",
+                "top_y_delta",
+                "height_residual_before",
+                "height_residual_after",
+                "height_residual_delta",
+                "candidate_decision",
+                "gate_reasons",
+                "writeback_allowed",
+            ],
+            payload.get("height_reproject_candidate_rows", []),
+        )
+    )
+    lines.append("")
     verified_local = payload.get("verified_3d_local_assist") or {}
     lines.extend(["## Verified 3D Local Assist", ""])
     lines.extend(
@@ -1231,6 +1540,12 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
     lines.extend(
         [
             "2D x-order crossing is not topology reordering.",
+            (
+                "Explicit target pair mode is an exploratory x-only dry-run; it "
+                "does not claim to solve y/height residuals."
+                if payload.get("target_pair_indices")
+                else ""
+            ),
             "",
         ]
     )

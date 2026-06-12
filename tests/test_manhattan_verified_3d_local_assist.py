@@ -212,6 +212,28 @@ def test_explicit_target_pair_indices_can_generate_dryrun_when_verified():
     assert result["candidate_rows"][0]["target_pair_indices"] == [3]
 
 
+def test_explicit_target_pair_indices_do_not_require_override_active():
+    result = build_verified_3d_local_assist(
+        _true_duplicate_pairs(),
+        topology_override={
+            "preview_order_override_active": False,
+            "order_verified_by_expert": False,
+            "topology_source": "default_preview_order",
+        },
+        target_pair_indices=[3],
+    )
+
+    assert result["candidate_rows"]
+    assert {candidate["candidate_family"] for candidate in result["candidate_rows"]} == {
+        TRANSLATE_SINGLE_PAIR_X_DRYRUN
+    }
+    assert {candidate["candidate_source"] for candidate in result["candidate_rows"]} == {
+        "explicit_target_pair_indices"
+    }
+    assert all(candidate["y_change_allowed"] is False for candidate in result["candidate_rows"])
+    assert all(candidate["writeback_allowed"] is False for candidate in result["candidate_rows"])
+
+
 def test_output_is_json_serializable_and_has_no_annotation_patch_fields():
     result = build_verified_3d_local_assist(
         _distinct_dense_pairs(),

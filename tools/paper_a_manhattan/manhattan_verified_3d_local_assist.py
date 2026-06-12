@@ -876,6 +876,7 @@ def _explicit_candidate_specs(target_pair_indices: Sequence[Any] | None) -> list
             specs.append(
                 {
                     "candidate_family": TRANSLATE_SINGLE_PAIR_X_DRYRUN,
+                    "candidate_source": "explicit_target_pair_indices",
                     "target_pair_indices": [pair_index],
                     "dx": dx,
                     "offsets": {pair_index: dx},
@@ -972,6 +973,7 @@ def _build_translation_candidates(
                 ),
                 "operation": family,
                 "candidate_family": family,
+                "candidate_source": spec.get("candidate_source", "dense_corner_reclassification"),
                 "target_pair_indices": list(cluster),
                 "dx": dx,
                 "offsets": {str(key): value for key, value in offsets.items()},
