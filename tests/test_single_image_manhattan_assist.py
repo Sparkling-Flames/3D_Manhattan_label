@@ -1,5 +1,6 @@
 import json
 from pathlib import Path
+import subprocess
 
 from tools.paper_a_manhattan.run_single_image_manhattan_assist import (
     build_single_image_assist,
@@ -10,6 +11,10 @@ from tools.paper_a_manhattan.run_single_image_manhattan_assist import (
 
 
 FIXTURE_PATH = Path("tests/fixtures/paper_a_manhattan/single_image_assist_pack_v1.json")
+README_INDEX_PATH = Path("docs/README_INDEX.md")
+HEIGHT_CANDIDATE_SPEC_PATH = Path(
+    "docs/paper_a_manhattan/CONSERVATIVE_HEIGHT_REPROJECT_CANDIDATE_SPEC_v1.md"
+)
 FORBIDDEN_TOP_LEVEL_FIELDS = {"annotation", "writeback", "apply", "candidate_pairs"}
 
 
@@ -17,7 +22,7 @@ def _fixture_case(case_id):
     return json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))[case_id]
 
 
-def _raw_duplicate_payload(n_pairs, order_string):
+def _raw_duplicate_payload(n_pairs, order):
     centers = [10.0, 10.4, *[20.0 + index * 10.0 for index in range(n_pairs - 2)]]
     keypoints = []
     for center in centers:
@@ -27,7 +32,7 @@ def _raw_duplicate_payload(n_pairs, order_string):
         "task_id": "218",
         "annotation_id": f"synthetic-{n_pairs}",
         "order_verified_by_expert": True,
-        "preview_order_override_string": order_string,
+        "preview_order_override": order,
         "keypoints": keypoints,
         "metadata": {"scope": "normal", "manhattan_assumable": True},
     }
@@ -175,6 +180,20 @@ def test_output_has_no_forbidden_top_level_fields():
     result = build_single_image_assist(_fixture_case("simplified_ordered_pairs"))
 
     assert FORBIDDEN_TOP_LEVEL_FIELDS.isdisjoint(result)
+
+
+def test_readme_referenced_height_candidate_spec_exists_and_is_git_visible():
+    text = README_INDEX_PATH.read_text(encoding="utf-8")
+
+    assert "CONSERVATIVE_HEIGHT_REPROJECT_CANDIDATE_SPEC_v1.md" in text
+    assert HEIGHT_CANDIDATE_SPEC_PATH.exists()
+    git_result = subprocess.run(
+        ["git", "ls-files", "--error-unmatch", str(HEIGHT_CANDIDATE_SPEC_PATH)],
+        check=False,
+        capture_output=True,
+        text=True,
+    )
+    assert git_result.returncode == 0
 
 
 def test_recommended_review_order_prioritizes_obvious_x_mismatch_pair():
@@ -354,11 +373,17 @@ def test_invalid_preview_order_override_returns_invalid_without_suggestions():
     assert result["align_pair_x_proposals"] == []
 
 
-def test_invalid_preview_order_override_length_and_out_of_range_do_not_materialize():
-    length_result = build_single_image_assist(_raw_duplicate_payload(8, "2134657"))
-    range_payload = _raw_duplicate_payload(8, "21346579")
+def test_invalid_preview_order_override_non_list_length_and_out_of_range_do_not_materialize():
+    non_list_result = build_single_image_assist(_raw_duplicate_payload(8, {"order": [2, 1]}))
+    length_result = build_single_image_assist(_raw_duplicate_payload(8, [2, 1, 3, 4, 6, 5, 7]))
+    range_payload = _raw_duplicate_payload(8, [2, 1, 3, 4, 6, 5, 7, 9])
     range_result = build_single_image_assist(range_payload)
 
+    assert non_list_result["topology_override"]["invalid_reason"] == (
+        "preview_order_override_not_list"
+    )
+    assert non_list_result["ordered_pairs"] == []
+    assert non_list_result["room_layout_state"] is None
     assert length_result["topology_override"]["invalid_reason"] == (
         "preview_order_override_length_mismatch"
     )
@@ -380,8 +405,10 @@ def test_unverified_preview_order_override_does_not_bypass_duplicate_stop():
     assert result["manual_edit_table"] == []
 
 
-def test_task218_ann2369_order_string_parses_and_materializes_verified_assist():
-    result = build_single_image_assist(_raw_duplicate_payload(8, "21346578"))
+def test_task218_ann2369_list_override_materializes_verified_assist():
+    result = build_single_image_assist(
+        _raw_duplicate_payload(8, [2, 1, 3, 4, 6, 5, 7, 8])
+    )
 
     assert result["preview_compatibility"]["status"] == "compatibility_failure_duplicate"
     assert result["topology_override"]["preview_order_override"] == [2, 1, 3, 4, 6, 5, 7, 8]
@@ -394,8 +421,10 @@ def test_task218_ann2369_order_string_parses_and_materializes_verified_assist():
     )
 
 
-def test_task218_ann3741_order_string_with_ten_parses_stably():
-    result = build_single_image_assist(_raw_duplicate_payload(10, "213465879 10"))
+def test_task218_ann3741_list_override_with_ten_materializes_verified_assist():
+    result = build_single_image_assist(
+        _raw_duplicate_payload(10, [2, 1, 3, 4, 6, 5, 8, 7, 9, 10])
+    )
 
     assert result["topology_override"]["preview_order_override"] == [
         2,

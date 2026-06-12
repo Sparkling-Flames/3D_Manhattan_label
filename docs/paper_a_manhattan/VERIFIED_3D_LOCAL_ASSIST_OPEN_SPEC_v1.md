@@ -151,10 +151,11 @@ automatic reorder, merge, delete, apply, or writeback. A valid override must:
 - stay within `1..default_n_pairs`;
 - have `order_verified_by_expert=true`.
 
-`preview_order_override_string` accepts compact one-digit strings such as
-`21346578`, mixed compact-plus-spaced strings such as `213465879 10`, and fully
-space-separated strings such as `2 1 3 4 6 5 8 7 9 10`. Ambiguous two-digit
-compact strings are invalid rather than guessed.
+`preview_order_override` is a structured list, for example
+`[2, 1, 3, 4, 6, 5, 7, 8]`. Non-list values are invalid
+(`preview_order_override_not_list`). String parsing is intentionally out of
+scope; future Label Studio integration should read current corner order and
+materialize structured order/ordered-pair data directly.
 
 ## Local Geometry Scoring
 

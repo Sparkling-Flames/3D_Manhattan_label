@@ -3,9 +3,10 @@
 This is an offline M15.x diagnostic entrypoint. It reads one image annotation,
 checks preview compatibility when raw keypoints are supplied, builds
 RoomLayoutState diagnostics, proposes low-risk Align Pair X review prompts, and
-reports height reproject applicability. It does not implement UI, ghost
-overlays, apply/undo/writeback, true height reproject candidates, routing, or
-formal artifacts.
+reports height reproject applicability rows plus conservative fixed-bottom /
+top-y review-only dry-run rows. It does not implement UI, ghost overlays,
+apply/undo/writeback, true automatic height reproject, routing, or formal
+artifacts.
 """
 
 from __future__ import annotations
@@ -188,7 +189,6 @@ def _topology_override_info(
         "default_preview_status": default_preview_status,
         "default_preview_reason": default_preview_reason,
         "preview_order_override": list(override_order) if override_order is not None else payload.get("preview_order_override"),
-        "preview_order_override_string": payload.get("preview_order_override_string"),
         "order_verified_by_expert": _as_bool(payload.get("order_verified_by_expert"), False),
         "order_override_note": payload.get("order_override_note"),
         "override_status": override_status,
@@ -200,40 +200,10 @@ def _topology_override_info(
             if invalid_reason is not None
             else "not_requested"
             if payload.get("preview_order_override") is None
-            and payload.get("preview_order_override_string") is None
             else "not_active"
         ),
         "override_validation_reasons": reasons,
     }
-
-
-def _parse_preview_order_override_string(value: Any, pair_count: int) -> tuple[list[int] | None, str | None]:
-    if not isinstance(value, str):
-        return None, "preview_order_override_string_not_string"
-    text = value.strip()
-    if not text:
-        return None, "preview_order_override_string_empty"
-    if not all(char.isdigit() or char.isspace() for char in text):
-        return None, "preview_order_override_string_non_digit"
-
-    if any(char.isspace() for char in text):
-        parsed: list[int] = []
-        for token in text.split():
-            if len(token) > 1 and int(token) <= pair_count:
-                parsed.append(int(token))
-            elif len(token) == 1:
-                parsed.append(int(token))
-            elif all(char != "0" for char in token):
-                parsed.extend(int(char) for char in token)
-            else:
-                return None, "preview_order_override_string_ambiguous"
-        return parsed, None
-
-    if pair_count > 9:
-        return None, "preview_order_override_string_ambiguous_without_spaces"
-    if "0" in text:
-        return None, "preview_order_override_string_zero_without_two_digit_context"
-    return [int(char) for char in text], None
 
 
 def _validate_preview_order_override(order: Any, pair_count: int) -> tuple[list[int] | None, str | None]:
@@ -259,21 +229,6 @@ def _validate_preview_order_override(order: Any, pair_count: int) -> tuple[list[
     if any(value < 1 or value > pair_count for value in parsed):
         return None, "preview_order_override_out_of_range"
     return parsed, None
-
-
-def _resolve_preview_order_override(
-    payload: Mapping[str, Any],
-    pair_count: int,
-) -> tuple[list[int] | None, str | None]:
-    if payload.get("preview_order_override_string") is not None:
-        parsed_string, string_error = _parse_preview_order_override_string(
-            payload.get("preview_order_override_string"),
-            pair_count,
-        )
-        if string_error is not None:
-            return None, string_error
-        return _validate_preview_order_override(parsed_string, pair_count)
-    return _validate_preview_order_override(payload.get("preview_order_override"), pair_count)
 
 
 def _ordered_pairs_from_preview_with_order(preview: Any, order: Sequence[int]) -> list[dict[str, Any]]:
@@ -369,7 +324,10 @@ def _resolve_topology_policy(
     default_status = preview.status
     default_reason = preview.compatibility_reason
     if _as_bool(payload.get("order_verified_by_expert"), False):
-        override_order, invalid_reason = _resolve_preview_order_override(payload, len(preview.ordered_corners))
+        override_order, invalid_reason = _validate_preview_order_override(
+            payload.get("preview_order_override"),
+            len(preview.ordered_corners),
+        )
         if invalid_reason is not None:
             return _topology_override_info(
                 active=False,
@@ -413,7 +371,7 @@ def _resolve_topology_policy(
             validation_reasons=["order_verified_by_expert"],
         )
 
-    if payload.get("preview_order_override") is not None or payload.get("preview_order_override_string") is not None:
+    if payload.get("preview_order_override") is not None:
         return _topology_override_info(
             active=False,
             source="invalid_preview_order_override",
@@ -617,8 +575,6 @@ def _override_pack(
         "default_preview_reason": preview_info.get("compatibility_reason"),
         "accepted_override_formats": [
             "preview_order_override=[2,1,3,4]",
-            "preview_order_override_string='2134'",
-            "preview_order_override_string='2 1 3 4 9 10'",
         ],
         "example_preview_order_override": example,
         "override_validation_status": status,
@@ -1282,7 +1238,6 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 "default_preview_status",
                 "default_preview_reason",
                 "preview_order_override",
-                "preview_order_override_string",
                 "order_override_note",
                 "override_validation_status",
                 "override_validation_reasons",
@@ -1296,9 +1251,6 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                     "default_preview_status": topology.get("default_preview_status"),
                     "default_preview_reason": topology.get("default_preview_reason"),
                     "preview_order_override": topology.get("preview_order_override"),
-                    "preview_order_override_string": topology.get(
-                        "preview_order_override_string"
-                    ),
                     "order_override_note": topology.get("order_override_note"),
                     "override_validation_status": topology.get(
                         "override_validation_status"
