@@ -345,7 +345,7 @@ def test_cli_output_is_json_serializable(tmp_path):
     assert exit_code == 0
     payload = json.loads(output_path.read_text(encoding="utf-8"))
     json.dumps(payload)
-    assert payload["tool_version"] == "single_image_manhattan_assist_m15_13_v1"
+    assert payload["tool_version"] == "single_image_manhattan_assist_m15_15_v1"
 
 
 def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):

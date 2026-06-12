@@ -43,7 +43,7 @@ from tools.paper_a_manhattan.manhattan_verified_3d_local_assist import (  # noqa
 )
 
 
-TOOL_VERSION = "single_image_manhattan_assist_m15_13_v1"
+TOOL_VERSION = "single_image_manhattan_assist_m15_15_v1"
 TOPOLOGY_OVERRIDE_SCHEMA_VERSION = "verified_preview_order_m15_13_v1"
 PREVIEW_ORDER_OVERRIDE_ALLOWED_STATUSES = {
     "compatibility_failure_duplicate",
