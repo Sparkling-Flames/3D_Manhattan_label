@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Debug Staff
 // @namespace    http://tampermonkey.net/
-// @version      0.24-debug
+// @version      stage1_helper_ordercache_hotfix_20260617_v1
 // @description  调试/巡检版：连接 Label Studio 与 HoHoNet 3D 查看器，可本地禁用 active_time
 // @author       HoHoNet
 // @match        http://175.178.71.217:8080/*
@@ -69,7 +69,10 @@
   const OVERLAY_ID = "hohonet-overlay";
   const TOGGLE_BTN_ID = "hohonet-toggle-labels-btn";
   const LABELS_VISIBLE_KEY = "hohonet_labels_visible"; // sessionStorage
-  const PREVIEW_ORDER_OVERRIDES_KEY = "hohonet_preview_order_overrides_v1";
+  const CORNER_ORDER_CACHE_SCHEMA = "corner_order_cache_v1";
+  const CORNER_ORDER_CACHE_HOTFIX_VERSION =
+    "stage1_helper_ordercache_hotfix_20260617_v1";
+  const PREVIEW_ORDER_OVERRIDES_KEY = CORNER_ORDER_CACHE_SCHEMA;
   const PREVIEW_ORDER_ROUND_DIGITS = 1;
   const PREVIEW_PANEL_ID = "hohonet-preview-order-panel";
   const PREVIEW_PANEL_STYLE_ID = "hohonet-preview-order-panel-style";
@@ -185,7 +188,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "0.24-debug";
+  const SCRIPT_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";
   console.log(`HoHoNet Helper: 已加载 (v${SCRIPT_VERSION})`);
   console.log(
     "HoHoNet debug active_time: disabled by default; enable with localStorage.HOHONET_ENABLE_DEBUG_ACTIVE_TIME=1",
@@ -856,8 +859,20 @@
     return `${getProjectId()}::${getTaskId()}::${getAnnotatorId()}`;
   }
 
+  function getCornerOrderCacheContext() {
+    return {
+      project_id: String(getProjectId() || "unknown_project"),
+      task_id: String(getTaskId() || "unknown_task"),
+      user_id: String(getAnnotatorId() || "unknown_user"),
+    };
+  }
+
+  function getCornerOrderCacheKey(context = getCornerOrderCacheContext()) {
+    return `project:${context.project_id}::task:${context.task_id}::user:${context.user_id}`;
+  }
+
   function getPreviewOverrideTaskKey() {
-    return `${getLegacyPreviewOverrideTaskKey()}::${getCurrentAnnotationId()}`;
+    return getCornerOrderCacheKey();
   }
 
   function getIdentityOrder(length) {
@@ -994,28 +1009,184 @@
   }
 
   function loadPreviewOrderOverride(taskKey) {
-    const all = loadJsonFromLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, {});
-    if (!all || typeof all !== "object" || Array.isArray(all)) return null;
-    const value = all[taskKey];
+    const cache = loadJsonFromLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, {});
+    const entries =
+      cache &&
+      typeof cache === "object" &&
+      !Array.isArray(cache) &&
+      cache.schema === CORNER_ORDER_CACHE_SCHEMA &&
+      cache.entries &&
+      typeof cache.entries === "object" &&
+      !Array.isArray(cache.entries)
+        ? cache.entries
+        : {};
+    const value = entries[taskKey];
     if (!value || typeof value !== "object" || Array.isArray(value)) return null;
     return value;
   }
 
   function savePreviewOrderOverride(taskKey, payload) {
-    const all = loadJsonFromLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, {});
+    const context = getCornerOrderCacheContext();
+    const order = normalizePreviewOrder(
+      payload?.order,
+      Number(payload?.corner_count) ||
+        (Array.isArray(payload?.order) ? payload.order.length : 0),
+    );
+    if (!taskKey || !order) return false;
+    const cache = loadJsonFromLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, {});
     const next =
-      all && typeof all === "object" && !Array.isArray(all) ? all : {};
-    next[taskKey] = payload;
+      cache &&
+      typeof cache === "object" &&
+      !Array.isArray(cache) &&
+      cache.schema === CORNER_ORDER_CACHE_SCHEMA
+        ? cache
+        : { schema: CORNER_ORDER_CACHE_SCHEMA, entries: {} };
+    if (!next.entries || typeof next.entries !== "object" || Array.isArray(next.entries)) {
+      next.entries = {};
+    }
+    next.schema = CORNER_ORDER_CACHE_SCHEMA;
+    next.updated_at = Date.now();
+    next.entries[taskKey] = {
+      schema: CORNER_ORDER_CACHE_SCHEMA,
+      cache_key: taskKey,
+      project_id: context.project_id,
+      task_id: context.task_id,
+      user_id: context.user_id,
+      corner_count: order.length,
+      signature: String(payload?.signature || ""),
+      order,
+      updated_at: Date.now(),
+      source: String(payload?.source || "preview_order_state"),
+      script_version: SCRIPT_VERSION,
+      hotfix_version: CORNER_ORDER_CACHE_HOTFIX_VERSION,
+    };
     saveJsonToLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, next);
+    window.__HOHONET_CORNER_ORDER_CACHE_LAST_STATUS__ = {
+      ok: true,
+      reason: "saved",
+      cache_key: taskKey,
+      order,
+    };
+    return true;
   }
 
   function clearPreviewOrderOverride(taskKey) {
-    const all = loadJsonFromLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, {});
-    if (!all || typeof all !== "object" || Array.isArray(all)) return;
-    if (!(taskKey in all)) return;
-    delete all[taskKey];
-    saveJsonToLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, all);
+    const cache = loadJsonFromLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, {});
+    if (
+      !cache ||
+      typeof cache !== "object" ||
+      Array.isArray(cache) ||
+      !cache.entries ||
+      typeof cache.entries !== "object" ||
+      Array.isArray(cache.entries)
+    ) {
+      return false;
+    }
+    if (!(taskKey in cache.entries)) return false;
+    delete cache.entries[taskKey];
+    cache.updated_at = Date.now();
+    saveJsonToLocalStorage(PREVIEW_ORDER_OVERRIDES_KEY, cache);
+    window.__HOHONET_CORNER_ORDER_CACHE_LAST_STATUS__ = {
+      ok: true,
+      reason: "cleared",
+      cache_key: taskKey,
+    };
+    return true;
   }
+
+  function rejectCornerOrderCache(reason, extra = {}) {
+    const status = {
+      ok: false,
+      reason,
+      ...extra,
+    };
+    window.__HOHONET_CORNER_ORDER_CACHE_LAST_STATUS__ = status;
+    console.warn("HoHoNet: corner-order cache rejected:", status);
+    return { record: null, order: null, reason };
+  }
+
+  function validateCornerOrderCacheRecord(record, taskKey, expected = {}) {
+    if (!record || typeof record !== "object" || Array.isArray(record)) {
+      return rejectCornerOrderCache("missing_record", { cache_key: taskKey });
+    }
+    const context = getCornerOrderCacheContext();
+    if (record.schema !== CORNER_ORDER_CACHE_SCHEMA) {
+      return rejectCornerOrderCache("schema_mismatch", { cache_key: taskKey });
+    }
+    if (record.cache_key && record.cache_key !== taskKey) {
+      return rejectCornerOrderCache("cache_key_mismatch", { cache_key: taskKey });
+    }
+    if (String(record.project_id || "") !== context.project_id) {
+      return rejectCornerOrderCache("project_mismatch", { cache_key: taskKey });
+    }
+    if (String(record.task_id || "") !== context.task_id) {
+      return rejectCornerOrderCache("task_mismatch", { cache_key: taskKey });
+    }
+    if (String(record.user_id || "") !== context.user_id) {
+      return rejectCornerOrderCache("user_mismatch", { cache_key: taskKey });
+    }
+    const cornerCount = Number(expected.corner_count || 0);
+    if (!Number.isInteger(cornerCount) || cornerCount <= 0) {
+      return rejectCornerOrderCache("invalid_expected_corner_count", { cache_key: taskKey });
+    }
+    if (Number(record.corner_count) !== cornerCount) {
+      return rejectCornerOrderCache("corner_count_mismatch", {
+        cache_key: taskKey,
+        expected_corner_count: cornerCount,
+        cached_corner_count: Number(record.corner_count),
+      });
+    }
+    if (
+      expected.signature &&
+      record.signature &&
+      String(record.signature) !== String(expected.signature)
+    ) {
+      return rejectCornerOrderCache("signature_mismatch", { cache_key: taskKey });
+    }
+    const order = normalizePreviewOrder(record.order, cornerCount);
+    if (!order) {
+      return rejectCornerOrderCache("invalid_order_missing_duplicate_or_out_of_range", {
+        cache_key: taskKey,
+      });
+    }
+    window.__HOHONET_CORNER_ORDER_CACHE_LAST_STATUS__ = {
+      ok: true,
+      reason: "loaded",
+      cache_key: taskKey,
+      order,
+    };
+    return { record: { ...record, order }, order, reason: "loaded" };
+  }
+
+  function loadValidatedPreviewOrderOverride(taskKey, expected = {}) {
+    const record = loadPreviewOrderOverride(taskKey);
+    return validateCornerOrderCacheRecord(record, taskKey, expected);
+  }
+
+  function isIdentityPreviewOrder(order) {
+    if (!Array.isArray(order)) return false;
+    return order.every((value, idx) => Number(value) === idx);
+  }
+
+  function persistAdjustedPreviewOrder(order, cornerCount, signature, source) {
+    const normalized = normalizePreviewOrder(order, cornerCount);
+    if (!normalized || isIdentityPreviewOrder(normalized)) return false;
+    const taskKey = getCurrentPreviewStorageTaskKey();
+    return savePreviewOrderOverride(taskKey, {
+      signature,
+      order: normalized,
+      corner_count: cornerCount,
+      source,
+    });
+  }
+
+  window.__HOHONET_CLEAR_CORNER_ORDER_CACHE_FOR_CURRENT_TASK__ = () => {
+    const taskKey = getCurrentPreviewStorageTaskKey();
+    return {
+      cache_key: taskKey,
+      cleared: clearPreviewOrderOverride(taskKey),
+    };
+  };
 
   function ensurePreviewControlPanelStyle() {
     if (document.getElementById(PREVIEW_PANEL_STYLE_ID)) return;
@@ -1339,13 +1510,22 @@
 
   function handlePreviewOrderStateMessage(data) {
     currentPreviewUiState = createPreviewUiStateFromMessage(data);
+    const orderLength =
+      currentPreviewDefaultCount ||
+      (Array.isArray(data.previewOrder) ? data.previewOrder.length : 0);
     const previewOrder = normalizePreviewOrder(
       data.previewOrder,
-      currentPreviewDefaultCount,
+      orderLength,
     );
     const previewSignature = String(data.previewSignature || "");
     if (previewOrder) {
       syncPreviewOverlayWithOrder(previewOrder, previewSignature);
+      persistAdjustedPreviewOrder(
+        previewOrder,
+        orderLength,
+        previewSignature,
+        "preview_order_state",
+      );
     }
     updatePreviewControlPanelUi();
   }
@@ -1353,9 +1533,12 @@
   function handlePreviewOrderSaveMessage(iframe, data) {
     const taskKey = getCurrentPreviewStorageTaskKey();
     const signature = String(data.previewSignature || currentPreviewSignature || "");
+    const orderLength =
+      currentPreviewDefaultCount ||
+      (Array.isArray(data.previewOrder) ? data.previewOrder.length : 0);
     const normalizedOrder = normalizePreviewOrder(
       data.previewOrder,
-      currentPreviewDefaultCount,
+      orderLength,
     );
     if (!taskKey || !signature || !normalizedOrder) {
       postPreviewOrderAck(iframe, "save", false, "invalid_payload");
@@ -1365,6 +1548,8 @@
     savePreviewOrderOverride(taskKey, {
       signature,
       order: normalizedOrder,
+      corner_count: normalizedOrder.length,
+      source: "preview_order_save",
       updated_at: Date.now(),
     });
     currentPreviewSignature = signature;
@@ -2167,12 +2352,18 @@
           }
 
           const previewTaskKey = getPreviewOverrideTaskKey();
-          const legacyPreviewTaskKey = getLegacyPreviewOverrideTaskKey();
           const previewSignature = buildPreviewSignature(pairedDefault);
           const identityOrder = getIdentityOrder(pairedDefault.length);
-          const storedOverride =
-            loadPreviewOrderOverride(previewTaskKey) ||
-            loadPreviewOrderOverride(legacyPreviewTaskKey);
+          applyPreviewRuntimeFromLayout(
+            previewTaskKey,
+            previewSignature,
+            pairedDefault,
+          );
+          const cacheResult = loadValidatedPreviewOrderOverride(previewTaskKey, {
+            corner_count: pairedDefault.length,
+            signature: previewSignature,
+          });
+          const storedOverride = cacheResult.record;
           let previewOrderActive = false;
           let previewOrder = identityOrder;
           let pairedForPreview = pairedDefault.slice();
@@ -2189,12 +2380,6 @@
               pairedForPreview = applied.corners;
             }
           }
-
-          applyPreviewRuntimeFromLayout(
-            previewTaskKey,
-            previewSignature,
-            pairedDefault,
-          );
 
           console.log("HoHoNet: paired default:", pairedDefault);
           console.log("HoHoNet: preview order state:", {

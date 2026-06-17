@@ -7,6 +7,10 @@ FOREIGN_DIR = ROOT / "tools" / "thesis_main" / "foreign_recruitment"
 SCRIPT = FOREIGN_DIR / "ls_userscript_annotator_https_en.user.js"
 DEBUG_SCRIPT = FOREIGN_DIR / "ls_userscript_annotator_https_en_debug.user.js"
 OFFICIAL_SCRIPT = ROOT / "tools" / "label_studio" / "official" / "ls_userscript_annotator.js"
+OFFICIAL_DEBUG_SCRIPT = ROOT / "tools" / "label_studio" / "official" / "ls_userscript_debug.js"
+MANHATTAN_DEBUG_SCRIPT = ROOT / "tools" / "paper_a_manhattan" / "dev_only" / "manhattan_ls_sandbox_panel_debug.user.js"
+MANHATTAN_TIMED_SCRIPT = ROOT / "tools" / "paper_a_manhattan" / "dev_only" / "manhattan_ls_sandbox_panel_timed.user.js"
+MANHATTAN_PROTO_SCRIPT = ROOT / "tools" / "paper_a_manhattan" / "dev_only" / "manhattan_ls_sandbox_panel.user.js"
 VIS_3D = ROOT / "tools" / "label_studio" / "vis_3d.html"
 GUIDE = FOREIGN_DIR / "ANNOTATOR_GUIDE_EN.md"
 INSTALL = FOREIGN_DIR / "INSTALL_USERSCRIPT_HTTPS_EN.md"
@@ -170,7 +174,7 @@ def test_preview_order_message_listener_is_robust_to_iframe_recreation():
 
 
 def test_corner_order_cache_hotfix_is_inline_and_task_scoped():
-    for path in [OFFICIAL_SCRIPT, SCRIPT, DEBUG_SCRIPT]:
+    for path in [OFFICIAL_SCRIPT, OFFICIAL_DEBUG_SCRIPT, SCRIPT, DEBUG_SCRIPT]:
         text = read(path)
         assert 'const CORNER_ORDER_CACHE_SCHEMA = "corner_order_cache_v1";' in text
         assert 'const SCRIPT_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";' in text
@@ -193,6 +197,27 @@ def test_corner_order_cache_hotfix_is_inline_and_task_scoped():
         assert "window.__HOHONET_CLEAR_CORNER_ORDER_CACHE_FOR_CURRENT_TASK__" in text
         assert "@require" not in text
         assert "ls_corner_order_state.js" not in text
+
+
+def test_manhattan_corner_order_cache_hotfix_is_inline_and_task_scoped():
+    for path in [MANHATTAN_DEBUG_SCRIPT, MANHATTAN_TIMED_SCRIPT]:
+        text = read(path)
+        assert "@version      stage1_helper_ordercache_hotfix_20260617_v1" in text
+        assert 'const PANEL_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";' in text
+        assert 'const CORNER_ORDER_CACHE_SCHEMA = "corner_order_cache_v1";' in text
+        assert "`project:${context.project_id}::task:${context.task_id}::user:${context.user_id}`" in text
+        assert "loadValidatedCornerOrderCache(cacheKey" in text
+        assert "persistOrClearCurrentPreviewOrder(\"manhattan_preview_order_update\")" in text
+        assert "clearCornerOrderCache(getCornerOrderCacheKey())" in text
+        assert "window.__HOHONET_CLEAR_CORNER_ORDER_CACHE_FOR_CURRENT_TASK__" in text
+        assert "invalid_order_missing_duplicate_or_out_of_range" in text
+        assert "corner_count_mismatch" in text
+        assert "@require" not in text
+        assert "ls_corner_order_state.js" not in text
+
+    prototype_text = read(MANHATTAN_PROTO_SCRIPT)
+    assert "currentPreviewOrder" not in prototype_text
+    assert "corner_order_cache_v1" not in prototype_text
 
 
 def test_foreign_preview_order_status_translates_current_viewer_messages():

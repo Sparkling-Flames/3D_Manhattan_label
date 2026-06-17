@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HOHONET Manhattan LS Sandbox Panel Debug
 // @namespace    hohonet-dev-only
-// @version      m13.2-dev-only-debug-0.1.0
+// @version      stage1_helper_ordercache_hotfix_20260617_v1
 // @description  dev-only sandbox-only read-only Manhattan panel; debug variant with no active_time upload.
 // @match        http://175.178.71.217:8080/*
 // @match        https://175.178.71.217:8080/*
@@ -41,7 +41,7 @@
   window[WINDOW_GUARD] = { script_variant: "debug" };
 
   const PANEL_ID = "hohonet-manhattan-sandbox-panel";
-  const PANEL_VERSION = "m13.2-dev-only-debug-0.1.0";
+  const PANEL_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";
   const TOOLBAR_ID = "hohonet-m13-primary-toolbar";
   const TOOLBAR_BODY_ID = "hohonet-m13-primary-toolbar-body";
   const DEBUG_DRAWER_TOGGLE_ID = "hohonet-m13-debug-drawer-toggle";
@@ -60,6 +60,9 @@
   const PREVIEW_PANEL_PAIR_INPUT_ID = "hohonet-m8-preview-order-pair-input";
   const PREVIEW_PANEL_SWAP_INPUT_ID = "hohonet-m8-preview-order-swap-input";
   const PREVIEW_PANEL_POSITION_KEY = "hohonet_m8_preview_order_panel_position";
+  const CORNER_ORDER_CACHE_SCHEMA = "corner_order_cache_v1";
+  const CORNER_ORDER_CACHE_HOTFIX_VERSION =
+    "stage1_helper_ordercache_hotfix_20260617_v1";
   const DEFAULT_WIDTH = 1024;
   const DEFAULT_HEIGHT = 512;
   const DUPLICATE_KEYPOINT_THRESHOLD_RATIO = 0.01;
@@ -274,6 +277,67 @@
       }
     }
     return null;
+  }
+
+  function knownText(value) {
+    if (value === undefined || value === null) return "unknown";
+    const textValue = String(value).trim();
+    return textValue || "unknown";
+  }
+
+  function getTaskId() {
+    try {
+      const storeTaskId = getStore()?.task?.id;
+      if (storeTaskId !== undefined && storeTaskId !== null) {
+        return knownText(storeTaskId);
+      }
+      const params = new URLSearchParams(window.location.search);
+      const queryTaskId = params.get("task") || params.get("task_id");
+      if (queryTaskId) return knownText(queryTaskId);
+      const match = window.location.pathname.match(/\/tasks\/(\d+)/);
+      if (match) return match[1];
+    } catch (e) {}
+    return "unknown";
+  }
+
+  function getProjectId() {
+    try {
+      const store = getStore();
+      const candidates = [
+        store?.project?.id,
+        store?.task?.project,
+        store?.task?.projectId,
+        store?.task?.data?.project_id,
+      ];
+      for (const candidate of candidates) {
+        if (candidate !== undefined && candidate !== null && String(candidate).trim()) {
+          return knownText(candidate);
+        }
+      }
+      const match = window.location.pathname.match(/\/projects\/(\d+)/);
+      if (match) return match[1];
+    } catch (e) {}
+    return "unknown";
+  }
+
+  function getAnnotatorId() {
+    try {
+      const store = getStore();
+      const candidates = [
+        store?.user?.id,
+        store?.user?.pk,
+        store?.currentUser?.id,
+        store?.task?.data?.annotator_id,
+      ];
+      for (const candidate of candidates) {
+        if (candidate !== undefined && candidate !== null && String(candidate).trim()) {
+          return knownText(candidate);
+        }
+      }
+      const profileText = document.querySelector("[data-testid*='user'], [class*='user']")?.textContent;
+      if (profileText) return knownText(profileText);
+    } catch (e) {}
+    return "unknown";
   }
 
   function toArrayFromMaybeObservable(value) {
@@ -1337,6 +1401,217 @@
     return normalized;
   }
 
+  function loadJsonFromLocalStorage(key, fallback) {
+    try {
+      const raw = window.localStorage.getItem(key);
+      if (!raw) return fallback;
+      return JSON.parse(raw);
+    } catch (e) {
+      return fallback;
+    }
+  }
+
+  function saveJsonToLocalStorage(key, value) {
+    try {
+      window.localStorage.setItem(key, JSON.stringify(value));
+    } catch (e) {}
+  }
+
+  function getCornerOrderCacheContext() {
+    return {
+      project_id: String(getProjectId() || "unknown_project"),
+      task_id: String(getTaskId() || "unknown_task"),
+      user_id: String(getAnnotatorId() || "unknown_user"),
+    };
+  }
+
+  function getCornerOrderCacheKey(context = getCornerOrderCacheContext()) {
+    return `project:${context.project_id}::task:${context.task_id}::user:${context.user_id}`;
+  }
+
+  function buildPreviewPairsSignature(pairs) {
+    if (!Array.isArray(pairs) || !pairs.length) return "";
+    return pairs
+      .map((pair) =>
+        [
+          Number(pair?.x_ls ?? pair?.x ?? 0).toFixed(1),
+          Number(pair?.ceiling_y_ls ?? pair?.y_ceiling ?? 0).toFixed(1),
+          Number(pair?.floor_y_ls ?? pair?.y_floor ?? 0).toFixed(1),
+        ].join(","),
+      )
+      .join("|");
+  }
+
+  function loadCornerOrderCacheRecord(taskKey) {
+    const cache = loadJsonFromLocalStorage(CORNER_ORDER_CACHE_SCHEMA, {});
+    const entries =
+      cache &&
+      typeof cache === "object" &&
+      !Array.isArray(cache) &&
+      cache.schema === CORNER_ORDER_CACHE_SCHEMA &&
+      cache.entries &&
+      typeof cache.entries === "object" &&
+      !Array.isArray(cache.entries)
+        ? cache.entries
+        : {};
+    const value = entries[taskKey];
+    return value && typeof value === "object" && !Array.isArray(value) ? value : null;
+  }
+
+  function rejectCornerOrderCache(reason, extra = {}) {
+    const status = { ok: false, reason, ...extra };
+    window.__HOHONET_CORNER_ORDER_CACHE_LAST_STATUS__ = status;
+    console.warn("HoHoNet Manhattan: corner-order cache rejected:", status);
+    return { record: null, order: null, reason };
+  }
+
+  function validateCornerOrderCacheRecord(record, taskKey, expected = {}) {
+    if (!record || typeof record !== "object" || Array.isArray(record)) {
+      return rejectCornerOrderCache("missing_record", { cache_key: taskKey });
+    }
+    const context = getCornerOrderCacheContext();
+    if (record.schema !== CORNER_ORDER_CACHE_SCHEMA) {
+      return rejectCornerOrderCache("schema_mismatch", { cache_key: taskKey });
+    }
+    if (record.cache_key && record.cache_key !== taskKey) {
+      return rejectCornerOrderCache("cache_key_mismatch", { cache_key: taskKey });
+    }
+    if (String(record.project_id || "") !== context.project_id) {
+      return rejectCornerOrderCache("project_mismatch", { cache_key: taskKey });
+    }
+    if (String(record.task_id || "") !== context.task_id) {
+      return rejectCornerOrderCache("task_mismatch", { cache_key: taskKey });
+    }
+    if (String(record.user_id || "") !== context.user_id) {
+      return rejectCornerOrderCache("user_mismatch", { cache_key: taskKey });
+    }
+    const cornerCount = Number(expected.corner_count || 0);
+    if (!Number.isInteger(cornerCount) || cornerCount <= 0) {
+      return rejectCornerOrderCache("invalid_expected_corner_count", { cache_key: taskKey });
+    }
+    if (Number(record.corner_count) !== cornerCount) {
+      return rejectCornerOrderCache("corner_count_mismatch", {
+        cache_key: taskKey,
+        expected_corner_count: cornerCount,
+        cached_corner_count: Number(record.corner_count),
+      });
+    }
+    if (expected.signature && record.signature && String(record.signature) !== String(expected.signature)) {
+      return rejectCornerOrderCache("signature_mismatch", { cache_key: taskKey });
+    }
+    const order = normalizePreviewOrder(record.order, cornerCount);
+    if (!order) {
+      return rejectCornerOrderCache("invalid_order_missing_duplicate_or_out_of_range", {
+        cache_key: taskKey,
+      });
+    }
+    window.__HOHONET_CORNER_ORDER_CACHE_LAST_STATUS__ = {
+      ok: true,
+      reason: "loaded",
+      cache_key: taskKey,
+      order,
+    };
+    return { record: { ...record, order }, order, reason: "loaded" };
+  }
+
+  function loadValidatedCornerOrderCache(taskKey, expected = {}) {
+    return validateCornerOrderCacheRecord(loadCornerOrderCacheRecord(taskKey), taskKey, expected);
+  }
+
+  function isIdentityPreviewOrder(order) {
+    return Array.isArray(order) && order.every((value, index) => Number(value) === index);
+  }
+
+  function saveCornerOrderCache(taskKey, order, cornerCount, signature, source) {
+    const normalized = normalizePreviewOrder(order, cornerCount);
+    if (!taskKey || !normalized) return false;
+    const context = getCornerOrderCacheContext();
+    const cache = loadJsonFromLocalStorage(CORNER_ORDER_CACHE_SCHEMA, {});
+    const next =
+      cache &&
+      typeof cache === "object" &&
+      !Array.isArray(cache) &&
+      cache.schema === CORNER_ORDER_CACHE_SCHEMA
+        ? cache
+        : { schema: CORNER_ORDER_CACHE_SCHEMA, entries: {} };
+    if (!next.entries || typeof next.entries !== "object" || Array.isArray(next.entries)) {
+      next.entries = {};
+    }
+    next.schema = CORNER_ORDER_CACHE_SCHEMA;
+    next.updated_at = Date.now();
+    next.entries[taskKey] = {
+      schema: CORNER_ORDER_CACHE_SCHEMA,
+      cache_key: taskKey,
+      project_id: context.project_id,
+      task_id: context.task_id,
+      user_id: context.user_id,
+      corner_count: normalized.length,
+      signature: String(signature || ""),
+      order: normalized,
+      updated_at: Date.now(),
+      source: String(source || "manhattan_preview_order_update"),
+      script_version: PANEL_VERSION,
+      hotfix_version: CORNER_ORDER_CACHE_HOTFIX_VERSION,
+    };
+    saveJsonToLocalStorage(CORNER_ORDER_CACHE_SCHEMA, next);
+    window.__HOHONET_CORNER_ORDER_CACHE_LAST_STATUS__ = {
+      ok: true,
+      reason: "saved",
+      cache_key: taskKey,
+      order: normalized,
+    };
+    return true;
+  }
+
+  function clearCornerOrderCache(taskKey) {
+    const cache = loadJsonFromLocalStorage(CORNER_ORDER_CACHE_SCHEMA, {});
+    if (
+      !cache ||
+      typeof cache !== "object" ||
+      Array.isArray(cache) ||
+      !cache.entries ||
+      typeof cache.entries !== "object" ||
+      Array.isArray(cache.entries)
+    ) {
+      return false;
+    }
+    if (!(taskKey in cache.entries)) return false;
+    delete cache.entries[taskKey];
+    cache.updated_at = Date.now();
+    saveJsonToLocalStorage(CORNER_ORDER_CACHE_SCHEMA, cache);
+    window.__HOHONET_CORNER_ORDER_CACHE_LAST_STATUS__ = {
+      ok: true,
+      reason: "cleared",
+      cache_key: taskKey,
+    };
+    return true;
+  }
+
+  function persistOrClearCurrentPreviewOrder(source) {
+    const taskKey = getCornerOrderCacheKey();
+    const signature = buildPreviewPairsSignature(currentPreviewBasePairs);
+    const normalized = normalizePreviewOrder(currentPreviewOrder, currentPreviewBasePairs.length);
+    if (!normalized) return false;
+    if (isIdentityPreviewOrder(normalized)) {
+      return clearCornerOrderCache(taskKey);
+    }
+    return saveCornerOrderCache(
+      taskKey,
+      normalized,
+      currentPreviewBasePairs.length,
+      signature,
+      source,
+    );
+  }
+
+  window.__HOHONET_CLEAR_CORNER_ORDER_CACHE_FOR_CURRENT_TASK__ = () => {
+    const taskKey = getCornerOrderCacheKey();
+    return {
+      cache_key: taskKey,
+      cleared: clearCornerOrderCache(taskKey),
+    };
+  };
+
   function orderedPreviewPairs() {
     const order = normalizePreviewOrder(currentPreviewOrder, currentPreviewBasePairs.length);
     return order ? order.map((index) => currentPreviewBasePairs[index]) : currentPreviewBasePairs.slice();
@@ -1566,8 +1841,10 @@
   }
 
   function sendPreviewOrderToIframe() {
+    if (!currentPreviewBasePairs.length) return "native_preview_unavailable";
+    persistOrClearCurrentPreviewOrder("manhattan_preview_order_update");
     const iframe = findNativePreviewIframe();
-    if (!iframe || !iframe.contentWindow || !currentPreviewBasePairs.length) return "native_preview_unavailable";
+    if (!iframe || !iframe.contentWindow) return "native_preview_unavailable";
     const ordered = orderedPreviewPairs();
     const imageUrl = findMainImage()?.src || getImageUrlFromStore();
     iframe.contentWindow.postMessage(
@@ -1603,6 +1880,15 @@
       };
     });
     currentPreviewOrder = currentPreviewBasePairs.map((_, index) => index);
+    const cacheKey = getCornerOrderCacheKey();
+    const cacheSignature = buildPreviewPairsSignature(currentPreviewBasePairs);
+    const cacheResult = loadValidatedCornerOrderCache(cacheKey, {
+      corner_count: currentPreviewBasePairs.length,
+      signature: cacheSignature,
+    });
+    if (cacheResult.order) {
+      currentPreviewOrder = cacheResult.order;
+    }
     currentPreviewSelectedPairIndex = 0;
     currentDiagnosisAffectedPairIndex = null;
     highlightState.status = "not_applied";
@@ -1890,6 +2176,7 @@
     reset.addEventListener("click", () => {
       currentPreviewOrder = currentPreviewBasePairs.map((_, index) => index);
       currentPreviewSelectedPairIndex = 0;
+      clearCornerOrderCache(getCornerOrderCacheKey());
       sendPreviewOrderToIframe();
     });
     const locateSection = document.createElement("div");
@@ -1938,6 +2225,7 @@
       : buildPreviewPairs(state.keypoints, DEFAULT_WIDTH);
     if (state.preview_url && state.preview_pairs?.length) {
       setPreviewBasePairs(pairs);
+      sendPreviewOrderToIframe();
       return "native_preview_already_loaded";
     }
     if (!pairs.length) return "no_preview_pairs";
@@ -1973,6 +2261,7 @@
     if (!currentPreviewBasePairs.length) return;
     currentPreviewOrder = currentPreviewBasePairs.map((_, index) => index);
     currentPreviewSelectedPairIndex = 0;
+    clearCornerOrderCache(getCornerOrderCacheKey());
     sendPreviewOrderToIframe();
   }
 
