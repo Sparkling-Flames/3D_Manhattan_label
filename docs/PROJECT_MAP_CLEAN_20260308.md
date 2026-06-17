@@ -31,6 +31,7 @@
 - `tools/paper_a_manhattan/`
   - Paper A Manhattan / sandbox / expert review / post-hoc audit-only 工具。
   - `dev_only/`：Manhattan sandbox userscripts。
+  - `manhattan_3d_projection.py` 与 `run_local_3d_projection_review.py`：M15.19 本地 2D→3D 公式镜像、几何指标和只读 review 产物生成；不连接云端、不写回、不进入正式 artifact。
 - `tools/paper_b/`
   - Paper B 工具。当前包括 `validate_b0_relabel_audit.py`；后续 B0/B1/B2 训练、cue、bilayout、审计脚本只进本目录。
 - `tools/label_studio/`
@@ -49,7 +50,7 @@
   - `manuscript/` 可保存 Overleaf 项目和主线论文写作资产，但按现有 `.gitignore` 默认不提交。
 - `docs/paper_a_manhattan/`
   - Paper A Manhattan 支线文档。
-  - 包括 geometry roadmap、constrained fit、LS sandbox、expert review、OOS scope audit、3D geometry compatibility/fixture。
+  - 包括 geometry roadmap、constrained fit、LS sandbox、expert review、OOS scope audit、3D geometry compatibility/fixture 和 M15.19 local 3D projection review 规格。
 - `docs/paper_b/`
   - Paper B 支线文档。
   - 包括 ambiguity-aware HoHoNet、ZInD mapping、B-line freeze/audit、模型架构和后续训练计划。

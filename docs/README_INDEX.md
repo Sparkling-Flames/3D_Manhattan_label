@@ -47,6 +47,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - [CONSERVATIVE_HEIGHT_REPROJECT_CANDIDATE_SPEC_v1.md](paper_a_manhattan/CONSERVATIVE_HEIGHT_REPROJECT_CANDIDATE_SPEC_v1.md)
 - [ADAPTIVE_LOCAL_X_SEARCH_SPEC_v1.md](paper_a_manhattan/ADAPTIVE_LOCAL_X_SEARCH_SPEC_v1.md)
 - [LOCAL_FLOORPRINT_DENSE_CORNER_PROBE_SPEC_v1.md](paper_a_manhattan/LOCAL_FLOORPRINT_DENSE_CORNER_PROBE_SPEC_v1.md)
+- [LOCAL_3D_PROJECTION_REVIEW_SPEC_v1.md](paper_a_manhattan/LOCAL_3D_PROJECTION_REVIEW_SPEC_v1.md)
 - [VERIFIED_3D_LOCAL_ASSIST_OPEN_SPEC_v1.md](paper_a_manhattan/VERIFIED_3D_LOCAL_ASSIST_OPEN_SPEC_v1.md)
 - [MANHATTAN_LS_SANDBOX_READINESS_SPEC_v1.md](paper_a_manhattan/MANHATTAN_LS_SANDBOX_READINESS_SPEC_v1.md)
 - [MANHATTAN_LS_SANDBOX_OPERATION_CHECKLIST_v1.md](paper_a_manhattan/MANHATTAN_LS_SANDBOX_OPERATION_CHECKLIST_v1.md)
@@ -65,6 +66,8 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - `tools/paper_a_manhattan/manhattan_local_floorprint_probe.py` provides M15.18 fixed bottom-y sensitivity and unresolved dense-corner local hypothesis dry-runs; it does not authorize edits, emit annotation patches, apply topology changes, add UI, route, or create formal artifacts.
 - `tools/paper_a_manhattan/run_height_reproject_applicability_smoke.py` runs the M15.10 offline height applicability regression fixture through the review harness and emits JSON rows/summary only; it does not generate y candidates, write annotations, add UI, route, or create formal artifacts.
 - `tools/paper_a_manhattan/run_single_image_manhattan_assist.py` provides the M15.x single-image expert-side diagnostic CLI for preview compatibility, override-pack provenance, RoomLayoutState, Align Pair X suggestions, height applicability rows, conservative height review rows, and verified 3D local assist sidecars; it does not implement UI, apply/writeback, routing, or formal artifacts.
+- `tools/paper_a_manhattan/manhattan_3d_projection.py` mirrors the current `vis_3d.html` projection formula and computes local-only floorprint, turn, height, dense-pair, clamp, and provenance metrics; it is not correctness, GT, writeback, routing, worker scoring, or a formal artifact.
+- `tools/paper_a_manhattan/run_local_3d_projection_review.py` generates M15.19 local JSON/Markdown/HTML reviews from local panorama files and optional M15.18.3 candidates; it does not connect to Label Studio or change annotations.
 
 ## 论文 B 线
 

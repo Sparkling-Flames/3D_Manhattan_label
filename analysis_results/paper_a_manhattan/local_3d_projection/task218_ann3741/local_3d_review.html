@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Local 3D Projection Review</title>
+  <style>
+    :root { color-scheme: dark; font-family: system-ui, sans-serif; }
+    body { margin:0; background:#0b1020; color:#e5e7eb; }
+    header { padding:12px 16px; border-bottom:1px solid #334155; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }
+    button, select { padding:7px 10px; border-radius:6px; border:1px solid #475569; background:#172033; color:#fff; }
+    button { cursor:pointer; }
+    #warning { color:#fbbf24; font-size:13px; }
+    main { display:grid; grid-template-columns:minmax(0,1fr) 310px; min-height:calc(100vh - 58px); }
+    #views { display:grid; grid-template-columns:1fr; gap:8px; padding:8px; }
+    #views.side { grid-template-columns:1fr 1fr; }
+    iframe { width:100%; min-height:620px; border:1px solid #334155; border-radius:8px; background:#111; }
+    #right-view { display:none; }
+    #views.side #right-view { display:block; }
+    aside { padding:14px; border-left:1px solid #334155; background:#111827; overflow:auto; }
+    pre { white-space:pre-wrap; overflow-wrap:anywhere; font-size:12px; }
+    .muted { color:#94a3b8; font-size:12px; }
+  </style>
+</head>
+<body>
+  <header>
+    <strong>M15.19 Local 3D Review</strong>
+    <label>Variant <select id="variant"></select></label>
+    <button id="side" type="button">Side-by-side</button>
+    <button id="labels" type="button">Hide labels</button>
+    <span id="warning"></span>
+  </header>
+  <main>
+    <section id="views">
+      <iframe id="left-view" title="selected geometry" src="../../../../tools/label_studio/vis_3d.html"></iframe>
+      <iframe id="right-view" title="original geometry" src="../../../../tools/label_studio/vis_3d.html"></iframe>
+    </section>
+    <aside>
+      <h3>Metric summary</h3><pre id="metrics"></pre>
+      <h3>Provenance</h3><pre id="provenance"></pre>
+      <p class="muted">Read-only local diagnostic. If a texture is blocked under file://, run <code>python -m http.server &lt;repo_or_review_root&gt;</code> and open this page through localhost.</p>
+    </aside>
+  </main>
+  <script>
+    const REVIEW = {"width": 1024, "height": 512, "imageUrl": "../../../../data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg", "variants": [{"name": "original", "corners": [{"x": 62.665994798439534, "y_ceiling": 82.60720416124839, "y_floor": 467.10438231469436}, {"x": 13.96, "y_ceiling": 228.73400000196864, "y_floor": 316.76000000000005}, {"x": 91.97, "y_ceiling": 223.24, "y_floor": 285.87}, {"x": 283.87, "y_ceiling": 197.47, "y_floor": 309.64}, {"x": 458.7468671679198, "y_ceiling": 75.70927318295739, "y_floor": 442.70676691729324}, {"x": 449.12280701754383, "y_ceiling": 62.89002506265664, "y_floor": 463.2380952380953}, {"x": 529.0, "y_ceiling": 65.0, "y_floor": 450.0}, {"x": 518.0, "y_ceiling": 132.66319895968792, "y_floor": 393.65799739921977}, {"x": 655.5505914174253, "y_ceiling": 167.0, "y_floor": 350.0}, {"x": 860.0, "y_ceiling": 161.0, "y_floor": 356.0}], "summary": {"wall_residual_sum_deg": 115.11631039126917, "corner_residual_sum_deg": 196.3387972340774, "height_residual_sum": 2.5207689004982994, "vertical_x_residual_sum": 0.9361349081416286, "minimum_dense_floor_3d_separation": 0.23362462584837704, "minimum_wall_length": 0.23362462584837704, "short_wall_count": 2, "self_intersection": false, "warnings": ["auto_coordinate_mode_ambiguous_values_fit_both_ls_percent_and_small_pixel_range"]}}, {"name": "candidate_1", "corners": [{"x": 62.665994798439534, "y_ceiling": 82.60720416124839, "y_floor": 467.10438231469436}, {"x": 13.96, "y_ceiling": 228.73400000196864, "y_floor": 316.76000000000005}, {"x": 91.97, "y_ceiling": 223.24, "y_floor": 285.87}, {"x": 283.87, "y_ceiling": 197.47, "y_floor": 309.64}, {"x": 463.8668671679198, "y_ceiling": 75.70927318295739, "y_floor": 442.70676691729324}, {"x": 449.12280701754383, "y_ceiling": 62.89002506265664, "y_floor": 463.2380952380953}, {"x": 529.0, "y_ceiling": 65.0, "y_floor": 450.0}, {"x": 518.0, "y_ceiling": 132.66319895968792, "y_floor": 393.65799739921977}, {"x": 655.5505914174253, "y_ceiling": 167.0, "y_floor": 350.0}, {"x": 860.0, "y_ceiling": 161.0, "y_floor": 356.0}], "summary": {"wall_residual_sum_deg": 109.5453658156921, "corner_residual_sum_deg": 196.1434453643318, "height_residual_sum": 2.5207689004982994, "vertical_x_residual_sum": 0.5601950585175679, "minimum_dense_floor_3d_separation": 0.23718850093575858, "minimum_wall_length": 0.23718850093575858, "short_wall_count": 2, "self_intersection": false, "warnings": ["auto_coordinate_mode_ambiguous_values_fit_both_ls_percent_and_small_pixel_range"]}}], "provenance": {"input": "task218_ann3741_m1516_stabilized_input.json", "inputSha256": "a0646242b9e0f07a29282906e20c6c67a7bcc05cd704d6b7db209957576eaef7", "imageSha256": "2c2f9794ddc2bcb70fc54ceb303614eba35a018b5693d89717e7e61e8241f220", "coordinateMode": "ls_percent"}};
+    const select = document.getElementById('variant');
+    const views = document.getElementById('views');
+    const left = document.getElementById('left-view');
+    const right = document.getElementById('right-view');
+    const metrics = document.getElementById('metrics');
+    let labelsVisible = true;
+    REVIEW.variants.forEach((variant, index) => {
+      const option = document.createElement('option'); option.value = index; option.textContent = variant.name; select.appendChild(option);
+    });
+    if (!REVIEW.imageUrl) document.getElementById('warning').textContent = 'Texture unavailable; geometry remains reviewable.';
+    function sendLayout(frame, variant) {
+      if (!frame.contentWindow) return;
+      frame.contentWindow.postMessage({
+        type: 'update_layout', corners: variant.corners, baseCorners: variant.corners,
+        previewOrder: variant.corners.map((_, i) => i), previewOrderActive: true,
+        preserveOrder: true, width: REVIEW.width, height: REVIEW.height,
+        imageUrl: REVIEW.imageUrl, previewSignature: 'm15-19-' + variant.name
+      }, '*');
+      frame.contentWindow.postMessage({type:'set_label_visibility', visible:labelsVisible}, '*');
+    }
+    function refresh() {
+      const selected = REVIEW.variants[Number(select.value || 0)];
+      sendLayout(left, selected); sendLayout(right, REVIEW.variants[0]);
+      metrics.textContent = JSON.stringify(selected.summary, null, 2);
+    }
+    left.addEventListener('load', refresh); right.addEventListener('load', refresh); select.addEventListener('change', refresh);
+    document.getElementById('side').addEventListener('click', () => { views.classList.toggle('side'); refresh(); });
+    document.getElementById('labels').addEventListener('click', (event) => {
+      labelsVisible = !labelsVisible; event.currentTarget.textContent = labelsVisible ? 'Hide labels' : 'Show labels'; refresh();
+    });
+    document.getElementById('provenance').textContent = JSON.stringify(REVIEW.provenance, null, 2);
+    setTimeout(refresh, 300);
+  </script>
+</body>
+</html>
