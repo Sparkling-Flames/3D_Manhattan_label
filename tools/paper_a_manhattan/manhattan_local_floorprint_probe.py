@@ -563,7 +563,18 @@ def _probe_row(
         decision_reasons = list(risks)
     elif topology_review_only:
         confidence = "neutral_review"
-        decision_reasons = ["topology_variant_manual_review_only"]
+        decision_reasons = [
+            "topology_variant_manual_review_only",
+            "local_geometry_score_is_plausibility_not_correctness",
+            "automatic_topology_change_forbidden",
+        ]
+        if score_delta is not None and score_delta <= SCORE_IMPROVEMENT_THRESHOLD:
+            decision_reasons.insert(
+                0,
+                "score_improved_but_topology_variant_remains_neutral_review",
+            )
+        else:
+            decision_reasons.insert(0, "no_actionable_topology_improvement")
     elif score_delta is not None and score_delta <= SCORE_IMPROVEMENT_THRESHOLD:
         confidence = "directional"
         decision_reasons = ["local_geometry_score_improved_directionally"]

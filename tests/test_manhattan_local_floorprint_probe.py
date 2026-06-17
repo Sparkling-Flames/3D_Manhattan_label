@@ -14,8 +14,8 @@ from tools.paper_a_manhattan.manhattan_verified_3d_local_assist import (
 
 def _unresolved_dense_pairs():
     return [
-        {"top": {"x": 9.0, "y": 30.0}, "bottom": {"x": 11.0, "y": 70.0}},
         {"top": {"x": 9.4, "y": 30.2}, "bottom": {"x": 11.4, "y": 70.2}},
+        {"top": {"x": 9.0, "y": 30.0}, "bottom": {"x": 11.0, "y": 70.0}},
         {"top": {"x": 50.0, "y": 30.0}, "bottom": {"x": 50.0, "y": 70.0}},
         {"top": {"x": 80.0, "y": 30.0}, "bottom": {"x": 80.0, "y": 70.0}},
     ]
@@ -91,6 +91,15 @@ def test_unresolved_dense_corner_emits_all_five_local_hypotheses():
     assert all(row["writeback_allowed"] is False for row in rows)
     assert all(row["expert_action_allowed"] is False for row in rows)
     assert all(row["annotation_patch_allowed"] is False for row in rows)
+    flip = next(row for row in rows if row["hypothesis_id"] == "local_dense_pair_order_flip")
+    assert flip["confidence_label"] == "neutral_review"
+    assert flip["local_geometry_score_delta"] < 0
+    assert "score_improved_but_topology_variant_remains_neutral_review" in flip[
+        "decision_reasons"
+    ]
+    assert "local_geometry_score_is_plausibility_not_correctness" in flip[
+        "decision_reasons"
+    ]
 
 
 def test_dense_but_distinct_corner_does_not_trigger_topology_probe():

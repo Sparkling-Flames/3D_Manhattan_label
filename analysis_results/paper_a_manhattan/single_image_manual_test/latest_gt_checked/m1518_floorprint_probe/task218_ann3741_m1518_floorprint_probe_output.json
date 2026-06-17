@@ -1960,6 +1960,7 @@
   "topology_source": "expert_verified_preview_order",
   "verified_3d_local_assist": {
     "adaptive_x_search_rows": [],
+    "annotation_patch_allowed": false,
     "before_metrics": {
       "layout_height_candidate": 3.070192098898684,
       "layout_height_spread": 0.303489401743144,
@@ -2077,6 +2078,7 @@
         "right_pair_index": 5
       }
     ],
+    "expert_action_allowed": false,
     "floorprint_sensitivity_rows": [
       {
         "affected_corner_indices": [
@@ -6375,6 +6377,7 @@
         "x_order_crossing_after_translation": false
       }
     ],
+    "floorprint_sensitivity_schema_version": "floorprint_sensitivity_m15_18_v1",
     "local_3d_diagnostics": [
       {
         "adjacent_wall_lengths": [
@@ -6644,7 +6647,10 @@
         "confidence_label": "neutral_review",
         "corner_angle_residual_sum_delta": -20.7576896333818,
         "decision_reasons": [
-          "topology_variant_manual_review_only"
+          "score_improved_but_topology_variant_remains_neutral_review",
+          "topology_variant_manual_review_only",
+          "local_geometry_score_is_plausibility_not_correctness",
+          "automatic_topology_change_forbidden"
         ],
         "dense_pair_indices": [
           6,
@@ -6730,7 +6736,10 @@
         "confidence_label": "neutral_review",
         "corner_angle_residual_sum_delta": 0.0,
         "decision_reasons": [
-          "topology_variant_manual_review_only"
+          "no_actionable_topology_improvement",
+          "topology_variant_manual_review_only",
+          "local_geometry_score_is_plausibility_not_correctness",
+          "automatic_topology_change_forbidden"
         ],
         "dense_pair_indices": [
           6,
@@ -6911,7 +6920,10 @@
         "confidence_label": "neutral_review",
         "corner_angle_residual_sum_delta": -54.11953288003615,
         "decision_reasons": [
-          "topology_variant_manual_review_only"
+          "score_improved_but_topology_variant_remains_neutral_review",
+          "topology_variant_manual_review_only",
+          "local_geometry_score_is_plausibility_not_correctness",
+          "automatic_topology_change_forbidden"
         ],
         "dense_pair_indices": [
           6,
@@ -6961,6 +6973,7 @@
         "y_change_allowed": false
       }
     ],
+    "local_dense_corner_probe_schema_version": "local_dense_corner_probe_m15_18_v1",
     "operation_family": "verified_3d_local_assist",
     "risk_reasons": [
       "state_warnings_worsened"

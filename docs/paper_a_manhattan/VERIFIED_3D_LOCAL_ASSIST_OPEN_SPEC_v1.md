@@ -38,7 +38,9 @@ The CLI and helper expose a `verified_3d_local_assist` object with:
 - `dense_corner_reclassification`
 - `candidate_rows`
 - `adaptive_x_search_rows`
+- `floorprint_sensitivity_schema_version`
 - `floorprint_sensitivity_rows`
+- `local_dense_corner_probe_schema_version`
 - `local_dense_corner_probe_rows`
 - `risk_reasons`
 - `writeback_allowed=false`
@@ -273,6 +275,11 @@ All M15.18 rows set `writeback_allowed=false`,
 score and confidence labels are geometry stability cues, not correctness, GT,
 or edit instructions. The full row contract and fixed grids are defined in
 `LOCAL_FLOORPRINT_DENSE_CORNER_PROBE_SPEC_v1.md`.
+
+The parent JSON object exposes the two M15.18 sidecar schema versions as named
+fields, so consumers do not infer their contract from the legacy
+`verified_3d_local_assist_m15_15_v1` harness schema. Markdown reports repeat
+both schema versions and the three no-action permission flags.
 
 ## Non-goals
 

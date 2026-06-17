@@ -588,6 +588,10 @@ def test_markdown_includes_hard_stop_override_and_height_sections():
     assert "### Adaptive Local X Search" in explicit_text
     assert "### Floor-Footprint Sensitivity" in explicit_text
     assert "### Local Dense-Corner Hypothesis Probe" in explicit_text
+    assert "floorprint_sensitivity_m15_18_v1" in explicit_text
+    assert "local_dense_corner_probe_m15_18_v1" in explicit_text
+    assert "expert_action_allowed" in explicit_text
+    assert "annotation_patch_allowed" in explicit_text
     assert "No writeback / no patch." in explicit_text
     assert "Explicit target pair mode is an exploratory x-only dry-run" in explicit_text
 

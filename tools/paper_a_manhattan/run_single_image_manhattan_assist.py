@@ -1566,6 +1566,13 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
     lines.extend(
         [
             (
+                "- schema_version: "
+                f"`{verified_local.get('floorprint_sensitivity_schema_version')}`"
+            ),
+            "- writeback_allowed: `false`",
+            "- expert_action_allowed: `false`",
+            "- annotation_patch_allowed: `false`",
+            (
                 "Bottom-y changes alter the floor footprint and may change BEV "
                 "wall/corner angles."
             ),
@@ -1586,6 +1593,8 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 "decision_label",
                 "decision_reasons",
                 "writeback_allowed",
+                "expert_action_allowed",
+                "annotation_patch_allowed",
             ],
             verified_local.get("floorprint_sensitivity_rows", []),
         )
@@ -1593,6 +1602,13 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
     lines.extend(["", "### Local Dense-Corner Hypothesis Probe", ""])
     lines.extend(
         [
+            (
+                "- schema_version: "
+                f"`{verified_local.get('local_dense_corner_probe_schema_version')}`"
+            ),
+            "- writeback_allowed: `false`",
+            "- expert_action_allowed: `false`",
+            "- annotation_patch_allowed: `false`",
             "Only triggered for unresolved dense corners.",
             "Hypotheses are local dry-runs.",
             "Topology variants are not automatic reorder.",
@@ -1611,8 +1627,11 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 "wall_angle_residual_sum_delta",
                 "corner_angle_residual_sum_delta",
                 "confidence_label",
+                "decision_reasons",
                 "risk_reasons",
                 "writeback_allowed",
+                "expert_action_allowed",
+                "annotation_patch_allowed",
             ],
             verified_local.get("local_dense_corner_probe_rows", []),
         )

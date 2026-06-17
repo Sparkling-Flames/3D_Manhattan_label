@@ -257,6 +257,15 @@ def test_m1518_sidecars_preserve_existing_adaptive_and_candidate_rows():
     assert result["candidate_rows"]
     assert result["adaptive_x_search_rows"]
     assert result["local_dense_corner_probe_rows"] == []
+    assert result["floorprint_sensitivity_schema_version"] == (
+        "floorprint_sensitivity_m15_18_v1"
+    )
+    assert result["local_dense_corner_probe_schema_version"] == (
+        "local_dense_corner_probe_m15_18_v1"
+    )
+    assert result["writeback_allowed"] is False
+    assert result["expert_action_allowed"] is False
+    assert result["annotation_patch_allowed"] is False
 
 
 def test_candidate_can_be_suggested_review_when_local_geometry_score_improves():

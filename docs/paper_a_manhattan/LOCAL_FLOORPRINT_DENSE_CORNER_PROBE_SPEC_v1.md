@@ -52,6 +52,11 @@ x-order crossing, score, confidence, decision, and risk summaries. The local
 geometry score is a plausibility/stability heuristic only, not correctness or
 GT.
 
+When a topology variant has a substantially lower score, its row remains
+`neutral_review`. `decision_reasons` explicitly record that the score improved,
+that the topology variant is manual-review-only, that the score is plausibility
+rather than correctness, and that automatic topology change is forbidden.
+
 Hard gates include non-finite movement, top not above bottom,
 self-intersection, severe short wall, worsened state status/warnings, and
 movement outside the fixed grid bounds. If no hypothesis improves clearly,
@@ -64,6 +69,15 @@ Every M15.18 row contains:
 - `writeback_allowed=false`
 - `expert_action_allowed=false`
 - `annotation_patch_allowed=false`
+
+The parent `verified_3d_local_assist` JSON object exposes both sidecar contracts
+independently of its legacy harness schema:
+
+- `floorprint_sensitivity_schema_version = "floorprint_sensitivity_m15_18_v1"`
+- `local_dense_corner_probe_schema_version = "local_dense_corner_probe_m15_18_v1"`
+
+Markdown reports print both schema versions and all three permission flags in
+the section preamble and row tables.
 
 The implementation does not provide UI, plugin integration, ghost overlays,
 apply/undo, annotation patches, writeback payloads, automatic reorder,

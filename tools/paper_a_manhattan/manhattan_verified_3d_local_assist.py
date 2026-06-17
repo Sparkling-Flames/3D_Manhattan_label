@@ -12,6 +12,8 @@ from typing import Any, Mapping, Sequence
 
 from tools.paper_a_manhattan.manhattan_layout_state import build_room_layout_state
 from tools.paper_a_manhattan.manhattan_local_floorprint_probe import (
+    FLOORPRINT_SENSITIVITY_VERSION,
+    LOCAL_DENSE_CORNER_PROBE_VERSION,
     build_floorprint_sensitivity_rows,
     build_local_dense_corner_probe_rows,
 )
@@ -1367,6 +1369,8 @@ def build_verified_3d_local_assist(
     )
     return {
         "schema_version": VERIFIED_3D_LOCAL_ASSIST_VERSION,
+        "floorprint_sensitivity_schema_version": FLOORPRINT_SENSITIVITY_VERSION,
+        "local_dense_corner_probe_schema_version": LOCAL_DENSE_CORNER_PROBE_VERSION,
         "operation_family": OPERATION_FAMILY,
         "state_status": state.get("state_status"),
         "state_warnings": list(state.get("state_warnings", [])),
@@ -1392,6 +1396,8 @@ def build_verified_3d_local_assist(
             }
         ),
         "writeback_allowed": False,
+        "expert_action_allowed": False,
+        "annotation_patch_allowed": False,
         "ui_allowed": False,
     }
 

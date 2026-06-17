@@ -182,54 +182,62 @@ Y coordinates remain unchanged.
 
 ### Floor-Footprint Sensitivity
 
+- schema_version: `floorprint_sensitivity_m15_18_v1`
+- writeback_allowed: `false`
+- expert_action_allowed: `false`
+- annotation_patch_allowed: `false`
 Bottom-y changes alter the floor footprint and may change BEV wall/corner angles.
 This is sensitivity analysis only, not an edit instruction.
 
-| target_pair_index | bottom_y_delta | wall_angle_residual_sum_delta | corner_angle_residual_sum_delta | height_residual_delta | state_status_after | x_order_crossing_after_translation | decision_label | decision_reasons | writeback_allowed |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| 1 | -3.000 | 26.740 | 53.481 | 0.437 | ok | False | suppress | ['state_warnings_worsened'] | False |
-| 1 | -2.000 | 17.767 | 35.534 | 0.254 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 1 | -1.000 | 8.741 | 17.482 | 0.113 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 1 | 1.000 | -8.179 | -16.357 | 0.055 | ok | False | improves | ['local_diagnostic_residuals_decrease'] | False |
-| 1 | 2.000 | -15.624 | -31.248 | 0.133 | ok | False | improves | ['local_diagnostic_residuals_decrease'] | False |
-| 1 | 3.000 | -12.651 | -27.339 | 0.199 | ok | False | improves | ['local_diagnostic_residuals_decrease'] | False |
-| 2 | -3.000 | 17.793 | 31.945 | 0.190 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 2 | -2.000 | 12.170 | 19.990 | 0.120 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 2 | -1.000 | 6.198 | 7.367 | 0.054 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 2 | 1.000 | 5.707 | 13.808 | 0.028 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 2 | 2.000 | 12.506 | 27.406 | 0.078 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 2 | 3.000 | 19.055 | 40.504 | 0.129 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 3 | -3.000 | 20.394 | 42.573 | 0.197 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 3 | -2.000 | 13.402 | 28.589 | 0.127 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 3 | -1.000 | 6.157 | 14.099 | 0.061 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 3 | 1.000 | 5.678 | 8.938 | 0.023 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 3 | 2.000 | 11.036 | 23.202 | 0.071 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 3 | 3.000 | 17.548 | 36.909 | 0.122 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 4 | -3.000 | 4.381 | 13.708 | 0.613 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 4 | -2.000 | 1.513 | 7.972 | 0.405 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 4 | -1.000 | -1.098 | 2.561 | 0.201 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 4 | 1.000 | 1.035 | 2.847 | -0.198 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 4 | 2.000 | 2.011 | 6.119 | -0.393 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 4 | 3.000 | 2.934 | 9.762 | -0.371 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 5 | -3.000 | 8.550 | 17.030 | 0.008 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 5 | -2.000 | 5.345 | 9.363 | -0.072 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 5 | -1.000 | 2.507 | 2.367 | -0.063 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 5 | 1.000 | 2.019 | 0.736 | 0.057 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 5 | 2.000 | 4.745 | 1.516 | 0.108 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 5 | 3.000 | 7.284 | 2.347 | 0.155 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 6 | -3.000 | 4.220 | 5.039 | 0.248 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 6 | -2.000 | -8.321 | -17.140 | 0.090 | ok | False | improves | ['local_diagnostic_residuals_decrease'] | False |
-| 6 | -1.000 | -5.013 | -16.024 | -0.034 | ok | False | improves | ['local_diagnostic_residuals_decrease'] | False |
-| 6 | 1.000 | 11.225 | 19.021 | 0.083 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 6 | 2.000 | 21.630 | 39.830 | 0.154 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
-| 6 | 3.000 | 31.201 | 58.972 | 0.214 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False |
+| target_pair_index | bottom_y_delta | wall_angle_residual_sum_delta | corner_angle_residual_sum_delta | height_residual_delta | state_status_after | x_order_crossing_after_translation | decision_label | decision_reasons | writeback_allowed | expert_action_allowed | annotation_patch_allowed |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| 1 | -3.000 | 26.740 | 53.481 | 0.437 | ok | False | suppress | ['state_warnings_worsened'] | False | False | False |
+| 1 | -2.000 | 17.767 | 35.534 | 0.254 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 1 | -1.000 | 8.741 | 17.482 | 0.113 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 1 | 1.000 | -8.179 | -16.357 | 0.055 | ok | False | improves | ['local_diagnostic_residuals_decrease'] | False | False | False |
+| 1 | 2.000 | -15.624 | -31.248 | 0.133 | ok | False | improves | ['local_diagnostic_residuals_decrease'] | False | False | False |
+| 1 | 3.000 | -12.651 | -27.339 | 0.199 | ok | False | improves | ['local_diagnostic_residuals_decrease'] | False | False | False |
+| 2 | -3.000 | 17.793 | 31.945 | 0.190 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 2 | -2.000 | 12.170 | 19.990 | 0.120 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 2 | -1.000 | 6.198 | 7.367 | 0.054 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 2 | 1.000 | 5.707 | 13.808 | 0.028 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 2 | 2.000 | 12.506 | 27.406 | 0.078 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 2 | 3.000 | 19.055 | 40.504 | 0.129 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 3 | -3.000 | 20.394 | 42.573 | 0.197 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 3 | -2.000 | 13.402 | 28.589 | 0.127 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 3 | -1.000 | 6.157 | 14.099 | 0.061 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 3 | 1.000 | 5.678 | 8.938 | 0.023 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 3 | 2.000 | 11.036 | 23.202 | 0.071 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 3 | 3.000 | 17.548 | 36.909 | 0.122 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 4 | -3.000 | 4.381 | 13.708 | 0.613 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 4 | -2.000 | 1.513 | 7.972 | 0.405 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 4 | -1.000 | -1.098 | 2.561 | 0.201 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 4 | 1.000 | 1.035 | 2.847 | -0.198 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 4 | 2.000 | 2.011 | 6.119 | -0.393 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 4 | 3.000 | 2.934 | 9.762 | -0.371 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 5 | -3.000 | 8.550 | 17.030 | 0.008 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 5 | -2.000 | 5.345 | 9.363 | -0.072 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 5 | -1.000 | 2.507 | 2.367 | -0.063 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 5 | 1.000 | 2.019 | 0.736 | 0.057 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 5 | 2.000 | 4.745 | 1.516 | 0.108 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 5 | 3.000 | 7.284 | 2.347 | 0.155 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 6 | -3.000 | 4.220 | 5.039 | 0.248 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 6 | -2.000 | -8.321 | -17.140 | 0.090 | ok | False | improves | ['local_diagnostic_residuals_decrease'] | False | False | False |
+| 6 | -1.000 | -5.013 | -16.024 | -0.034 | ok | False | improves | ['local_diagnostic_residuals_decrease'] | False | False | False |
+| 6 | 1.000 | 11.225 | 19.021 | 0.083 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 6 | 2.000 | 21.630 | 39.830 | 0.154 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
+| 6 | 3.000 | 31.201 | 58.972 | 0.214 | ok | False | worsens | ['local_diagnostic_residuals_increase'] | False | False | False |
 
 ### Local Dense-Corner Hypothesis Probe
 
+- schema_version: `local_dense_corner_probe_m15_18_v1`
+- writeback_allowed: `false`
+- expert_action_allowed: `false`
+- annotation_patch_allowed: `false`
 Only triggered for unresolved dense corners.
 Hypotheses are local dry-runs.
 Topology variants are not automatic reorder.
 No writeback / no patch.
 
-| hypothesis_id | topology_variant | local_window_pair_indices | bottom_xy_offsets | local_geometry_score_delta | wall_angle_residual_sum_delta | corner_angle_residual_sum_delta | confidence_label | risk_reasons | writeback_allowed |
-| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| hypothesis_id | topology_variant | local_window_pair_indices | bottom_xy_offsets | local_geometry_score_delta | wall_angle_residual_sum_delta | corner_angle_residual_sum_delta | confidence_label | decision_reasons | risk_reasons | writeback_allowed | expert_action_allowed | annotation_patch_allowed |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
