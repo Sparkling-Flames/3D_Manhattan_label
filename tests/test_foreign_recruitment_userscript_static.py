@@ -7,6 +7,7 @@ FOREIGN_DIR = ROOT / "tools" / "thesis_main" / "foreign_recruitment"
 SCRIPT = FOREIGN_DIR / "ls_userscript_annotator_https_en.user.js"
 DEBUG_SCRIPT = FOREIGN_DIR / "ls_userscript_annotator_https_en_debug.user.js"
 OFFICIAL_SCRIPT = ROOT / "tools" / "label_studio" / "official" / "ls_userscript_annotator.js"
+VIS_3D = ROOT / "tools" / "label_studio" / "vis_3d.html"
 GUIDE = FOREIGN_DIR / "ANNOTATOR_GUIDE_EN.md"
 INSTALL = FOREIGN_DIR / "INSTALL_USERSCRIPT_HTTPS_EN.md"
 CLOUDRESEARCH = FOREIGN_DIR / "CLOUDRESEARCH_CONNECT_SETUP_GUIDE.md"
@@ -33,10 +34,10 @@ def test_https_foreign_debug_userscript_uses_same_https_path_and_debug_flavor():
     text = read(DEBUG_SCRIPT)
 
     assert "HoHoNet Helper Official Annotator HTTPS EN DEBUG" in text
-    assert "@version      0.29-foreign-https-en-debug" in text
+    assert "@version      0.30-foreign-https-en-debug" in text
     assert "@match        https://label.sparkle0825.top/*" in text
     assert "http://175.178.71.217:8000" not in text
-    assert 'const SCRIPT_VERSION = "0.29-foreign-https-en-debug";' in text
+    assert 'const SCRIPT_VERSION = "0.30-foreign-https-en-debug";' in text
     assert 'window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en_debug";' in text
     assert 'window.localStorage.getItem("HOHONET_DEBUG_PANEL") !== "0"' in text
 
@@ -71,8 +72,8 @@ def test_https_foreign_userscript_is_self_contained_not_remote_loader():
     assert "fetchFirstAvailableHelper" not in text
     assert "/tools/official/ls_userscript_annotator.js" not in text
     assert "/tools/ls_userscript.js?foreign_https_en" not in text
-    assert "@version      0.29-foreign-https-en-standalone" in text
-    assert 'const SCRIPT_VERSION = "0.29-foreign-https-en-standalone";' in text
+    assert "@version      0.30-foreign-https-en-standalone" in text
+    assert 'const SCRIPT_VERSION = "0.30-foreign-https-en-standalone";' in text
     assert "...getForeignRecruitmentMetadataForPayload()," in text
     assert "Missing HOHONET_LOG_TOKEN" in text
     assert "window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;" in text
@@ -127,8 +128,8 @@ def test_https_foreign_debug_active_time_matches_focus_and_delta_gates():
 def test_official_active_time_uses_focus_and_delta_gates():
     text = read(OFFICIAL_SCRIPT)
 
-    assert "@version      0.26-official" in text
-    assert 'const SCRIPT_VERSION = "0.26-official";' in text
+    assert "@version      0.27-official" in text
+    assert 'const SCRIPT_VERSION = "0.27-official";' in text
     assert "function isActiveTimeCountingPage()" in text
     assert "return isPageVisible && isWindowFocused && isLikelyAnnotationPage();" in text
     assert "let isWindowFocused = document.hasFocus();" in text
@@ -139,6 +140,41 @@ def test_official_active_time_uses_focus_and_delta_gates():
     assert "shouldFlushActiveTimeOnCountingStop" in text
     assert 'closeActiveTimeSegment("BLUR")' not in text
     assert 'closeActiveTimeSegment("VISIBILITY_HIDDEN", { keepalive: true })' in text
+
+
+def test_preview_order_cache_ack_text_is_not_mojibake():
+    text = read(VIS_3D)
+
+    assert "保存成功：本地缓存已更新" in text
+    assert "删除成功：已恢复默认顺序" in text
+    assert "本地缓存操作失败" in text
+    for mojibake in [
+        "宸蹭繚",
+        "宸插垹",
+        "鏈湴",
+        "绻氱€",
+        "閺堫",
+    ]:
+        assert mojibake not in text
+
+
+def test_preview_order_message_listener_is_robust_to_iframe_recreation():
+    for path in [OFFICIAL_SCRIPT, SCRIPT, DEBUG_SCRIPT]:
+        text = read(path)
+        assert "function isPreviewOrderMessage(data)" in text
+        assert '\"hohonet_preview_order_save\"' in text
+        assert "event.source !== iframe.contentWindow" not in text
+        assert "currentPreviewDefaultCount ||" in text
+        assert "Array.isArray(data.previewOrder) ? data.previewOrder.length : 0" in text
+        assert "postPreviewOrderAck(iframe, \"save\", false, \"invalid_payload\")" in text
+
+
+def test_foreign_preview_order_status_translates_current_viewer_messages():
+    for path in [SCRIPT, DEBUG_SCRIPT]:
+        text = read(path)
+        assert '["保存成功：本地缓存已更新", "Save successful: local cache updated"]' in text
+        assert '["删除成功：已恢复默认顺序", "Delete successful: default order restored"]' in text
+        assert '["本地缓存操作失败", "Local cache operation failed"]' in text
 
 
 def test_foreign_worker_docs_include_required_timing_and_scope_warnings():

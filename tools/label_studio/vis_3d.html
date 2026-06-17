@@ -816,17 +816,17 @@
           if (data.action === "save") {
             previewState.savedOrder = previewState.currentOrder.slice();
             previewState.savedOverrideActive = true;
-            updateControlState("宸蹭繚瀛樺埌鏈湴缂撳瓨");
+            updateControlState("保存成功：本地缓存已更新");
           } else if (
             data.action === "clear" ||
             data.action === "delete_saved"
           ) {
             previewState.savedOrder = null;
             previewState.savedOverrideActive = false;
-            updateControlState("宸插垹闄ゆ湰鍦板凡淇濆瓨椤哄簭");
+            updateControlState("删除成功：已恢复默认顺序");
           }
         } else {
-          updateControlState("鏈湴缂撳瓨鎿嶄綔澶辫触");
+          updateControlState("本地缓存操作失败");
         }
       }
 

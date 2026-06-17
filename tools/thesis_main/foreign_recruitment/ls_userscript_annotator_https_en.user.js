@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator HTTPS EN
 // @namespace    https://label.sparkle0825.top/
-// @version      0.29-foreign-https-en-standalone
+// @version      0.30-foreign-https-en-standalone
 // @description  Self-contained HTTPS helper for foreign HoHoNet Stage 1 annotators. Based on the official annotator helper; adds same-origin HTTPS defaults and optional CloudResearch worker-id metadata.
 // @author       HoHoNet
 // @match        https://label.sparkle0825.top/*
@@ -244,7 +244,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "0.29-foreign-https-en-standalone";
+  const SCRIPT_VERSION = "0.30-foreign-https-en-standalone";
   window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;
   window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en";
   console.log(`HoHoNet Helper: loaded (v${SCRIPT_VERSION})`);
@@ -262,8 +262,11 @@
       ["当前预览：默认顺序", "Current preview: default order"],
       ["当前预览：临时调整", "Current preview: temporary order"],
       ["已保存到本地缓存", "Saved to local cache"],
+      ["保存成功：本地缓存已更新", "Save successful: local cache updated"],
       ["已恢复当前预览到默认顺序", "Restored current preview to default order"],
       ["已删除当前缓存并恢复默认顺序", "Deleted saved order and restored default order"],
+      ["删除成功：已恢复默认顺序", "Delete successful: default order restored"],
+      ["本地缓存操作失败", "Local cache operation failed"],
       ["已载入已保存顺序", "Loaded saved order"],
       ["已载入默认顺序", "Loaded default order"],
     ];
@@ -1418,9 +1421,12 @@
 
   function handlePreviewOrderStateMessage(data) {
     currentPreviewUiState = createPreviewUiStateFromMessage(data);
+    const orderLength =
+      currentPreviewDefaultCount ||
+      (Array.isArray(data.previewOrder) ? data.previewOrder.length : 0);
     const previewOrder = normalizePreviewOrder(
       data.previewOrder,
-      currentPreviewDefaultCount,
+      orderLength,
     );
     const previewSignature = String(data.previewSignature || "");
     if (previewOrder) {
@@ -1432,9 +1438,12 @@
   function handlePreviewOrderSaveMessage(iframe, data) {
     const taskKey = getCurrentPreviewStorageTaskKey();
     const signature = String(data.previewSignature || currentPreviewSignature || "");
+    const orderLength =
+      currentPreviewDefaultCount ||
+      (Array.isArray(data.previewOrder) ? data.previewOrder.length : 0);
     const normalizedOrder = normalizePreviewOrder(
       data.previewOrder,
-      currentPreviewDefaultCount,
+      orderLength,
     );
     if (!taskKey || !signature || !normalizedOrder) {
       postPreviewOrderAck(iframe, "save", false, "invalid_payload");
@@ -2752,12 +2761,25 @@
 
   // 【关键修复】立即上报（flush）当前任务的累积时间
   // v0.21: 支持累积秒数 (taskCumulativeSeconds + 当前片段)
-  window.addEventListener("message", (event) => {
-    const iframe = document.getElementById(IFRAME_ID);
-    if (!iframe || event.source !== iframe.contentWindow) return;
+  function isPreviewOrderMessage(data) {
+    return (
+      data &&
+      typeof data === "object" &&
+      [
+        "hohonet_preview_order_state",
+        "hohonet_preview_order_save",
+        "hohonet_preview_order_delete_saved",
+        "hohonet_preview_order_clear",
+      ].includes(data.type)
+    );
+  }
 
+  window.addEventListener("message", (event) => {
     const data = event.data;
-    if (!data || typeof data !== "object") return;
+    if (!isPreviewOrderMessage(data)) return;
+
+    const iframe = document.getElementById(IFRAME_ID);
+    if (!iframe || !iframe.contentWindow) return;
 
     if (data.type === "hohonet_preview_order_state") {
       handlePreviewOrderStateMessage(data);

@@ -26,14 +26,17 @@ STAGE_DIR = EXPORT_DIR / "stage1_chinese"
 OUT = STAGE_DIR / "标注完成情况完整结果.xlsx"
 PROJECT_NAME = {28: "project-28", 29: "project-29", 30: "project-30"}
 PROJECT_TYPE = {28: "manual", 29: "semi", 30: "oos"}
-ADMIN_NONPARTICIPANT_IDS = {"2"}
-FORCED_EXIT_IDS = {"18"}
+ADMIN_NONPARTICIPANT_IDS: set[str] = set()
+FORCED_EXIT_IDS: set[str] = set()
 ACCOUNTABLE_EXIT_OVERRIDE_IDS = {"11"}
+FUTURE_ACCOUNTABLE_IDS = {"1", "2", "18"}
 
 
 def worker_status(worker_id: str, exit_ids: set[str]) -> str:
     if worker_id in ACCOUNTABLE_EXIT_OVERRIDE_IDS:
         return "退出名单但暂计入"
+    if worker_id in FUTURE_ACCOUNTABLE_IDS:
+        return "后续参与待补齐"
     if worker_id in ADMIN_NONPARTICIPANT_IDS:
         return "管理人员暂不参与"
     if worker_id in exit_ids:
@@ -331,8 +334,9 @@ def main() -> None:
     p1_suite_rows: list[dict[str, Any]] = []
 
     any_participant_ids = set().union(*(set(project_data[pid]["worker_tasks"]) for pid in [28, 29, 30]))
+    p1_candidate_ids = any_participant_ids | FUTURE_ACCOUNTABLE_IDS
     p1_accountable_ids = sorted(
-        [worker_id for worker_id in any_participant_ids if is_accountable_worker(worker_id, exit_ids)],
+        [worker_id for worker_id in p1_candidate_ids if is_accountable_worker(worker_id, exit_ids)],
         key=lambda x: int(x) if x.isdigit() else 9999,
     )
     p1_full_suite_complete_ids: list[str] = []
@@ -646,12 +650,12 @@ def main() -> None:
             },
             {
                 "说明项": "特殊人员口径",
-                "内容": "2号为管理人员暂不参与；18号当前按退出人员处理；11号虽在退出名单映射中，但因实际完整参与，暂时纳入完成率责任口径。历史标注和 active_time 均不删除。",
+                "内容": "1号、2号、18号后续会参与，纳入 P1 全套责任口径并标为“后续参与待补齐”；11号虽在退出名单映射中，但因实际完整参与，暂时纳入完成率责任口径。历史标注和 active_time 均不删除。",
             },
             {"说明项": "有效标注", "内容": "排除 was_cancelled=True 的标注。"},
             {
                 "说明项": "active_time异常",
-                "内容": "只作为过程审计；列出 project-28/29/30 中 active_time annotator_id 不在人员表、缺失/非数字、属于退出人员、管理人员暂不参与，或该项目JSON没有有效标注的日志主体。",
+                "内容": "只作为过程审计；列出 project-28/29/30 中 active_time annotator_id 不在人员表、缺失/非数字、属于退出人员、管理人员暂不参与，或该项目JSON没有有效标注的日志主体。1号、2号、18号当前不因后续参与状态本身记异常。",
             },
             {
                 "说明项": "active_time来源",

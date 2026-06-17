@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator
 // @namespace    http://tampermonkey.net/
-// @version      0.26-official
+// @version      0.27-official
 // @description  正式标注版：连接 Label Studio 与 HoHoNet 3D 查看器，并强制记录 active_time
 // @author       HoHoNet
 // @match        http://175.178.71.217:8080/*
@@ -168,7 +168,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "0.26-official";
+  const SCRIPT_VERSION = "0.27-official";
   console.log(`HoHoNet Helper: 已加载 (v${SCRIPT_VERSION})`);
   console.log(
     "HoHoNet viewer base: set localStorage.HOHONET_VIEWER_BASE_URL = location.origin when /tools is reverse-proxied on LS origin",
@@ -1319,9 +1319,12 @@
 
   function handlePreviewOrderStateMessage(data) {
     currentPreviewUiState = createPreviewUiStateFromMessage(data);
+    const orderLength =
+      currentPreviewDefaultCount ||
+      (Array.isArray(data.previewOrder) ? data.previewOrder.length : 0);
     const previewOrder = normalizePreviewOrder(
       data.previewOrder,
-      currentPreviewDefaultCount,
+      orderLength,
     );
     const previewSignature = String(data.previewSignature || "");
     if (previewOrder) {
@@ -1333,9 +1336,12 @@
   function handlePreviewOrderSaveMessage(iframe, data) {
     const taskKey = getCurrentPreviewStorageTaskKey();
     const signature = String(data.previewSignature || currentPreviewSignature || "");
+    const orderLength =
+      currentPreviewDefaultCount ||
+      (Array.isArray(data.previewOrder) ? data.previewOrder.length : 0);
     const normalizedOrder = normalizePreviewOrder(
       data.previewOrder,
-      currentPreviewDefaultCount,
+      orderLength,
     );
     if (!taskKey || !signature || !normalizedOrder) {
       postPreviewOrderAck(iframe, "save", false, "invalid_payload");
@@ -2643,12 +2649,25 @@
 
   // 【关键修复】立即上报（flush）当前任务的累积时间
   // v0.21: 支持累积秒数 (taskCumulativeSeconds + 当前片段)
-  window.addEventListener("message", (event) => {
-    const iframe = document.getElementById(IFRAME_ID);
-    if (!iframe || event.source !== iframe.contentWindow) return;
+  function isPreviewOrderMessage(data) {
+    return (
+      data &&
+      typeof data === "object" &&
+      [
+        "hohonet_preview_order_state",
+        "hohonet_preview_order_save",
+        "hohonet_preview_order_delete_saved",
+        "hohonet_preview_order_clear",
+      ].includes(data.type)
+    );
+  }
 
+  window.addEventListener("message", (event) => {
     const data = event.data;
-    if (!data || typeof data !== "object") return;
+    if (!isPreviewOrderMessage(data)) return;
+
+    const iframe = document.getElementById(IFRAME_ID);
+    if (!iframe || !iframe.contentWindow) return;
 
     if (data.type === "hohonet_preview_order_state") {
       handlePreviewOrderStateMessage(data);
