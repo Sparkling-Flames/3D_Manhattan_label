@@ -47,7 +47,7 @@ from tools.paper_a_manhattan.manhattan_verified_3d_local_assist import (  # noqa
 )
 
 
-TOOL_VERSION = "single_image_manhattan_assist_m15_18_2_v1"
+TOOL_VERSION = "single_image_manhattan_assist_m15_18_3_v1"
 TOPOLOGY_OVERRIDE_SCHEMA_VERSION = "verified_preview_order_m15_13_v1"
 PREVIEW_ORDER_OVERRIDE_ALLOWED_STATUSES = {
     "compatibility_failure_duplicate",
@@ -1138,13 +1138,97 @@ def _markdown_table(headers: Sequence[str], rows: Sequence[Mapping[str, Any]]) -
     return lines
 
 
+def _human_action_summary(payload: Mapping[str, Any]) -> list[str]:
+    verified = payload.get("verified_3d_local_assist") or {}
+    eligible = [
+        row
+        for row in verified.get("local_dense_corner_probe_rows", [])
+        if row.get("recommendation_eligible") is True
+        and row.get("probe_mode") == "align_then_translate_column"
+    ]
+    eligible.sort(
+        key=lambda row: (
+            float(row.get("local_geometry_score_delta", 0.0)),
+            list(row.get("target_pair_indices", [999]))[0],
+        )
+    )
+    source_lookup = {
+        row.get("effective_pair_index"): row.get("source_preview_order_index")
+        for row in payload.get("pair_index_mapping", [])
+    }
+    lines = [
+        "## Human Action Summary (LS Coordinates)",
+        "",
+        "Expert-side dry-run only. Do not apply without visual confirmation.",
+        "",
+    ]
+    if not eligible:
+        lines.extend(
+            [
+                "No direct LS-coordinate edit suggestion.",
+                "Only diagnostic/sensitivity rows are available.",
+                "",
+            ]
+        )
+        return lines
+    for rank, row in enumerate(eligible[:3], start=1):
+        target = int(row["target_pair_indices"][0])
+        source = source_lookup.get(target)
+        lines.extend(
+            [
+                f"### Candidate {rank}: align-then-translate column",
+                "",
+                "- This is a dry-run review suggestion, not an automatic modification.",
+                f"- effective_pair_index: {target}",
+                f"- source_preview_order_index: {source}",
+                (
+                    "- operation: align top/bottom x to one vertical column, "
+                    "then shift the column"
+                ),
+                "- LS coordinate change:",
+                f"  - top_x: {float(row['top_x_before']):.3f} -> {float(row['top_x_after']):.3f}",
+                f"  - bottom_x: {float(row['bottom_x_before']):.3f} -> {float(row['bottom_x_after']):.3f}",
+                (
+                    f"  - top_y: {float(row['top_y_before']):.3f} -> "
+                    f"{float(row['top_y_after']):.3f} unchanged"
+                ),
+                (
+                    f"  - bottom_y: {float(row['bottom_y_before']):.3f} -> "
+                    f"{float(row['bottom_y_after']):.3f} unchanged"
+                ),
+                (
+                    "- dense center-x separation: "
+                    f"{float(row['dense_pair_center_x_separation_before']):.3f} -> "
+                    f"{float(row['dense_pair_center_x_separation_after']):.3f}"
+                ),
+                (
+                    "- dense BEV separation: "
+                    f"{float(row['dense_pair_bev_separation_before']):.3f} -> "
+                    f"{float(row['dense_pair_bev_separation_after']):.3f}"
+                ),
+                f"- local score delta: {float(row['local_geometry_score_delta']):.3f}",
+                "- visual checks:",
+                "  - confirm the dense pair remains two real distinct corners",
+                "  - confirm the short wall between the dense pair is not collapsed",
+                "  - confirm 2D top/bottom points still lie on visible layout boundaries",
+                (
+                    "  - reject if the 3D view is more Manhattan-like but no longer "
+                    "matches the image"
+                ),
+                "",
+            ]
+        )
+    return lines
+
+
 def render_markdown_report(payload: Mapping[str, Any]) -> str:
     preview = payload.get("preview_compatibility", {})
     topology = payload.get("topology_override", {})
     summary = payload.get("summary", {})
-    lines = [
-        "# Single-image Manhattan Assist Report",
-        "",
+    lines = ["# Single-image Manhattan Assist Report", ""]
+    lines.extend(_human_action_summary(payload))
+    lines.extend(
+        [
         NO_WRITEBACK_NOTE,
         (
             "Legacy Manual Edit Table only covers align_pair_x. Verified 3D Local "
@@ -1161,7 +1245,8 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         "",
         "## Preview Pair Table",
         "",
-    ]
+        ]
+    )
     lines.extend(
         _markdown_table(
             [
@@ -1617,8 +1702,8 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 "used to edit Label Studio points."
             ),
             (
-                "Directional rows must be column-constrained: top_x and bottom_x "
-                "move together and the dense-separation gate must pass."
+                "Directional rows must use align-then-translate: final top_x and "
+                "bottom_x align and the dense-separation gate must pass."
             ),
             "No writeback / no patch.",
             "",
@@ -1633,11 +1718,23 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 "local_window_pair_indices",
                 "bottom_xy_offsets",
                 "column_xy_offsets",
+                "align_then_translate_column_target",
+                "top_x_before",
+                "bottom_x_before",
+                "top_x_after",
+                "bottom_x_after",
+                "top_y_before",
+                "bottom_y_before",
+                "top_y_after",
+                "bottom_y_after",
+                "vertical_x_residual_before",
+                "vertical_x_residual_after",
+                "offsets_are_column_synchronized",
+                "final_top_bottom_x_aligned",
                 "local_geometry_score_delta",
                 "wall_angle_residual_sum_delta",
                 "corner_angle_residual_sum_delta",
                 "confidence_label",
-                "pair_vertical_x_consistent",
                 "dense_pair_center_x_separation_before",
                 "dense_pair_center_x_separation_after",
                 "minimum_dense_pair_center_x_separation",

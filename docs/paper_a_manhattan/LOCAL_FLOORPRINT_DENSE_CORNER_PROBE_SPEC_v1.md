@@ -1,6 +1,6 @@
 # Local Floor-Footprint & Dense-Corner Probe Spec v1
 
-Status: M15.18.2 expert-side diagnostic sidecar.
+Status: M15.18.3 expert-side diagnostic sidecar.
 
 Scope: Paper A Manhattan experiment-outside / offline / dry-run only.
 
@@ -37,6 +37,7 @@ and emits the following hypothesis rows:
 4. `keep_order_with_bottom_xy_micro_probe`
 5. `short_wall_with_bottom_xy_micro_probe`
 6. `keep_order_with_column_floor_probe`
+7. `keep_order_with_align_then_translate_column_probe`
 
 Micro probes use fixed grids:
 
@@ -62,8 +63,8 @@ pair, column-constrained movement applies:
 - `bottom_y += dy_floor`
 - `top_y` remains unchanged
 
-The row exposes equal `top_x_delta` and `bottom_x_delta`,
-`pair_vertical_x_consistent=true`, and `column_x_changed=true`. A nominal
+The row exposes equal `top_x_delta` and `bottom_x_delta` through
+`offsets_are_column_synchronized=true`. A nominal
 column probe with `dx=0` and only bottom-y movement is still sensitivity-only.
 If unchanged top-y worsens the local height residual beyond the conservative
 tolerance, the row is suppressed rather than recommended.
@@ -75,7 +76,31 @@ percent for center-x and `0.3` geometry units for BEV. A candidate that further
 compresses an already-dense pair is suppressed. Directional rows require
 `dense_separation_gate_passed=true`.
 
-Rows use `schema_version = "local_dense_corner_probe_m15_18_2_v1"` and expose
+## M15.18.3 Align-Then-Translate Semantics
+
+M15.18.3 separates synchronized offsets from final vertical alignment:
+
+- `offsets_are_column_synchronized` reports whether raw top/bottom x deltas
+  are equal.
+- `final_top_bottom_x_aligned` reports whether final top and bottom x differ by
+  at most `0.05`.
+
+Raw synchronized shifts remain diagnostic `neutral_review` rows when they do
+not end aligned. The `align_then_translate_column` probe first aligns top and
+bottom x to the original pair center, then applies `dx` from
+`[-0.50, -0.25, +0.25, +0.50]`. Top y and bottom y remain unchanged.
+
+Recommendation eligibility requires align-then-translate mode, final x
+alignment, negative local score delta, no hard risks or topology adoption, and
+passing dense center-x/BEV separation gates. Rows expose before/after LS
+coordinates and vertical residuals; they remain no-writeback dry-runs.
+
+Markdown reports begin with `Human Action Summary (LS Coordinates)`. It lists
+at most three eligible align-then-translate rows using effective/source pair
+indices, explicit LS coordinate changes, separation changes, score delta, and
+visual checks. Bottom-only and topology rows never appear as direct edits.
+
+Rows use `schema_version = "local_dense_corner_probe_m15_18_3_v1"` and expose
 wall-angle, corner-angle, height-residual, short-wall, self-intersection,
 x-order crossing, score, confidence, decision, and risk summaries. The local
 geometry score is a plausibility/stability heuristic only, not correctness or
@@ -103,7 +128,7 @@ The parent `verified_3d_local_assist` JSON object exposes both sidecar contracts
 independently of its legacy harness schema:
 
 - `floorprint_sensitivity_schema_version = "floorprint_sensitivity_m15_18_v1"`
-- `local_dense_corner_probe_schema_version = "local_dense_corner_probe_m15_18_2_v1"`
+- `local_dense_corner_probe_schema_version = "local_dense_corner_probe_m15_18_3_v1"`
 
 Markdown reports print both schema versions and all three permission flags in
 the section preamble and row tables.

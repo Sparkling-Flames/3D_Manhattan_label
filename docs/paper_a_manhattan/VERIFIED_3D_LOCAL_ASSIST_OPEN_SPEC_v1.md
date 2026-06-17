@@ -291,6 +291,21 @@ candidate from compressing a dense pair below
 `min(before_separation, threshold)`. The local dense-corner sidecar schema is
 `local_dense_corner_probe_m15_18_2_v1`.
 
+### M15.18.3 Align-Then-Translate Candidate Semantics
+
+The current local probe schema is `local_dense_corner_probe_m15_18_3_v1`.
+`offsets_are_column_synchronized` describes equal raw x offsets, while
+`final_top_bottom_x_aligned` describes final coordinate alignment. Direct
+recommendation eligibility is restricted to `align_then_translate_column`
+rows whose final vertical residual is at most `0.05`, local score decreases,
+dense-separation gates pass, and no hard risk or topology adoption is present.
+
+The Markdown report starts with `Human Action Summary (LS Coordinates)` and
+translates up to three eligible rows into explicit before/after LS coordinates.
+When none are eligible, it states that no direct LS-coordinate edit suggestion
+is available. This remains expert-side dry-run guidance, not an annotation
+patch or writeback path.
+
 ## Non-goals
 
 This spec does not implement UI, ghost overlays, apply/undo, Label Studio

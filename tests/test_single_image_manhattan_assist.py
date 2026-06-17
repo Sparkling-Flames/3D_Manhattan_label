@@ -15,6 +15,14 @@ README_INDEX_PATH = Path("docs/README_INDEX.md")
 HEIGHT_CANDIDATE_SPEC_PATH = Path(
     "docs/paper_a_manhattan/CONSERVATIVE_HEIGHT_REPROJECT_CANDIDATE_SPEC_v1.md"
 )
+M1518_3_3741_INPUT_PATH = Path(
+    "analysis_results/paper_a_manhattan/single_image_manual_test/"
+    "latest_gt_checked/task218_ann3741_m1516_stabilized_input.json"
+)
+M1518_3_2369_INPUT_PATH = Path(
+    "analysis_results/paper_a_manhattan/single_image_manual_test/"
+    "latest_gt_checked/task218_ann2369_m1516_stabilized_input.json"
+)
 FORBIDDEN_TOP_LEVEL_FIELDS = {"annotation", "writeback", "apply", "candidate_pairs"}
 
 
@@ -77,7 +85,7 @@ def test_simplified_ordered_pairs_outputs_diagnostics_proposals_and_height_rows(
     )
     assert len(result["manual_edit_table"]) == 4
     assert result["summary"]["n_ordered_pairs"] == 4
-    assert result["tool_version"] == "single_image_manhattan_assist_m15_18_2_v1"
+    assert result["tool_version"] == "single_image_manhattan_assist_m15_18_3_v1"
 
 
 def test_raw_keypoints_compatible_converts_to_ordered_pairs_and_outputs_results():
@@ -525,7 +533,7 @@ def test_cli_output_is_json_serializable(tmp_path):
     assert exit_code == 0
     payload = json.loads(output_path.read_text(encoding="utf-8"))
     json.dumps(payload)
-    assert payload["tool_version"] == "single_image_manhattan_assist_m15_18_2_v1"
+    assert payload["tool_version"] == "single_image_manhattan_assist_m15_18_3_v1"
 
 
 def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
@@ -589,14 +597,49 @@ def test_markdown_includes_hard_stop_override_and_height_sections():
     assert "### Floor-Footprint Sensitivity" in explicit_text
     assert "### Local Dense-Corner Hypothesis Probe" in explicit_text
     assert "floorprint_sensitivity_m15_18_v1" in explicit_text
-    assert "local_dense_corner_probe_m15_18_2_v1" in explicit_text
+    assert "local_dense_corner_probe_m15_18_3_v1" in explicit_text
     assert "Bottom-only hypothesis rows are sensitivity-only" in explicit_text
-    assert "pair_vertical_x_consistent" in explicit_text
+    assert "final_top_bottom_x_aligned" in explicit_text
     assert "dense_separation_gate_passed" in explicit_text
     assert "expert_action_allowed" in explicit_text
     assert "annotation_patch_allowed" in explicit_text
     assert "No writeback / no patch." in explicit_text
     assert "Explicit target pair mode is an exploratory x-only dry-run" in explicit_text
+
+
+def test_3741_human_action_summary_reports_aligned_ls_coordinates_first():
+    payload = json.loads(M1518_3_3741_INPUT_PATH.read_text(encoding="utf-8"))
+    result = build_single_image_assist(payload)
+    text = render_markdown_report(result)
+    eligible = [
+        row
+        for row in result["verified_3d_local_assist"]["local_dense_corner_probe_rows"]
+        if row["recommendation_eligible"]
+    ]
+
+    assert eligible
+    assert all(row["probe_mode"] == "align_then_translate_column" for row in eligible)
+    assert all(row["top_x_after"] == row["bottom_x_after"] for row in eligible)
+    assert text.index("## Human Action Summary (LS Coordinates)") < text.index(
+        "## Preview Compatibility"
+    )
+    assert "### Candidate 1: align-then-translate column" in text
+    assert "- LS coordinate change:" in text
+    assert "- effective_pair_index: 5" in text
+    assert "- source_preview_order_index: 6" in text
+    assert "bottom_only_sensitivity" not in text.split("## Preview Compatibility")[0]
+
+
+def test_2369_and_task238_human_summary_has_no_dense_edit_suggestion():
+    payload_2369 = json.loads(M1518_3_2369_INPUT_PATH.read_text(encoding="utf-8"))
+    text_2369 = render_markdown_report(build_single_image_assist(payload_2369))
+    text_238 = render_markdown_report(build_single_image_assist(_task238_payload()))
+
+    for text in (text_2369, text_238):
+        summary = text.split("## Preview Compatibility")[0]
+        assert "No direct LS-coordinate edit suggestion." in summary
+        assert "Only diagnostic/sensitivity rows are available." in summary
+        assert "align-then-translate column" not in summary
 
 
 def test_verified_3d_local_assist_generates_dryrun_rows_for_verified_dense_case():

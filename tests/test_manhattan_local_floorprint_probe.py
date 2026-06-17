@@ -104,6 +104,7 @@ def test_unresolved_dense_corner_emits_legacy_sensitivity_and_column_probe():
         "keep_order_with_bottom_xy_micro_probe",
         "short_wall_with_bottom_xy_micro_probe",
         "keep_order_with_column_floor_probe",
+        "keep_order_with_align_then_translate_column_probe",
     }
     assert all(row["schema_version"] == LOCAL_DENSE_CORNER_PROBE_VERSION for row in rows)
     assert all(row["confidence_label"] for row in rows)
@@ -125,16 +126,47 @@ def test_unresolved_dense_corner_emits_legacy_sensitivity_and_column_probe():
     assert len(bottom_only) == 2
     assert all(row["confidence_label"] == "sensitivity_only" for row in bottom_only)
     assert all(row["recommendation_eligible"] is False for row in bottom_only)
-    assert all(row["pair_vertical_x_consistent"] is False for row in bottom_only)
+    assert all(row["final_top_bottom_x_aligned"] is False for row in bottom_only)
     assert all("not_editable_bottom_only" in row["decision_reasons"] for row in bottom_only)
 
-    column = next(
+    raw_column = next(
         row for row in rows if row["hypothesis_id"] == "keep_order_with_column_floor_probe"
     )
-    assert column["probe_mode"] == "column_constrained"
-    assert column["pair_vertical_x_consistent"] is True
-    for offset in column["column_xy_offsets"].values():
+    assert raw_column["probe_mode"] == "raw_synchronized_column"
+    assert raw_column["offsets_are_column_synchronized"] is True
+    assert raw_column["final_top_bottom_x_aligned"] is False
+    assert raw_column["recommendation_eligible"] is False
+    for offset in raw_column["column_xy_offsets"].values():
         assert offset["top_x_delta"] == offset["bottom_x_delta"]
+
+    align = next(
+        row
+        for row in rows
+        if row["hypothesis_id"]
+        == "keep_order_with_align_then_translate_column_probe"
+    )
+    for field_name in (
+        "top_x_before",
+        "bottom_x_before",
+        "top_x_after",
+        "bottom_x_after",
+        "top_y_before",
+        "bottom_y_before",
+        "top_y_after",
+        "bottom_y_after",
+        "vertical_x_residual_before",
+        "vertical_x_residual_after",
+        "offsets_are_column_synchronized",
+        "final_top_bottom_x_aligned",
+    ):
+        assert field_name in align
+    assert align["probe_mode"] == "align_then_translate_column"
+    assert align["final_top_bottom_x_aligned"] is True
+    assert align["vertical_x_residual_after"] <= 0.05
+    assert align["top_x_after"] == align["bottom_x_after"]
+    assert align["top_y_after"] == align["top_y_before"]
+    assert align["bottom_y_after"] == align["bottom_y_before"]
+    assert "pair_vertical_x_consistent" not in align
 
 
 def test_recommendation_rows_preserve_vertical_x_and_dense_separation_gate():
@@ -146,10 +178,13 @@ def test_recommendation_rows_preserve_vertical_x_and_dense_separation_gate():
     assert recommendations
     for row in recommendations:
         assert row["confidence_label"] == "directional"
-        assert row["probe_mode"] == "column_constrained"
-        assert row["pair_vertical_x_consistent"] is True
-        assert row["column_x_changed"] is True
+        assert row["probe_mode"] == "align_then_translate_column"
+        assert row["final_top_bottom_x_aligned"] is True
+        assert row["vertical_x_residual_after"] <= 0.05
         assert row["dense_separation_gate_passed"] is True
+        assert row["writeback_allowed"] is False
+        assert row["expert_action_allowed"] is False
+        assert row["annotation_patch_allowed"] is False
         assert row["dense_pair_center_x_separation_after"] >= row[
             "minimum_dense_pair_center_x_separation"
         ]

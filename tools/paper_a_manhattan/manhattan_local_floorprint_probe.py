@@ -13,7 +13,7 @@ from tools.paper_a_manhattan.manhattan_layout_state import build_room_layout_sta
 
 
 FLOORPRINT_SENSITIVITY_VERSION = "floorprint_sensitivity_m15_18_v1"
-LOCAL_DENSE_CORNER_PROBE_VERSION = "local_dense_corner_probe_m15_18_2_v1"
+LOCAL_DENSE_CORNER_PROBE_VERSION = "local_dense_corner_probe_m15_18_3_v1"
 BOTTOM_Y_PERTURBATIONS = (-3.0, -2.0, -1.0, 1.0, 2.0, 3.0)
 BOTTOM_X_MICRO_GRID = (-0.5, -0.25, 0.0, 0.25, 0.5)
 BOTTOM_Y_MICRO_GRID = (-3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0)
@@ -24,6 +24,8 @@ DENSE_CENTER_X_SEPARATION_THRESHOLD = 1.0
 DENSE_BEV_SEPARATION_THRESHOLD = 0.3
 SEPARATION_EPSILON = 1e-9
 TOP_Y_UNCHANGED_HEIGHT_WORSEN_TOLERANCE = 0.05
+ALIGN_THEN_TRANSLATE_DX_GRID = (-0.5, -0.25, 0.25, 0.5)
+FINAL_VERTICAL_X_ALIGNMENT_TOLERANCE = 0.05
 
 
 def _as_float(value: Any) -> float | None:
@@ -470,6 +472,20 @@ def _apply_column_offsets(
     return candidate
 
 
+def _apply_align_then_translate_column(
+    ordered_pairs: Sequence[Mapping[str, Any]],
+    pair_index: int,
+    dx: float,
+) -> list[dict[str, dict[str, float]]]:
+    candidate = _copy_pairs(ordered_pairs)
+    pair = candidate[pair_index - 1]
+    column_x_before = (pair["top"]["x"] + pair["bottom"]["x"]) / 2.0
+    column_x_after = column_x_before + dx
+    pair["top"]["x"] = column_x_after
+    pair["bottom"]["x"] = column_x_after
+    return candidate
+
+
 def _dense_pair_separation(
     ordered_pairs: Sequence[Mapping[str, Any]],
     state: Mapping[str, Any],
@@ -548,6 +564,7 @@ def _evaluate_dense_candidate(
     *,
     movement_x: float,
     movement_y: float,
+    strict_center_noncompression: bool = False,
 ) -> tuple[dict[str, Any], list[str], float | None]:
     after_state = build_room_layout_state(candidate_pairs, metadata=metadata)
     after = _snapshot(after_state, local_window)
@@ -569,6 +586,18 @@ def _evaluate_dense_candidate(
         _as_float(before_snapshot.get("dense_pair_bev_separation")),
         after_bev,
     )
+    before_center = _as_float(before_snapshot.get("dense_pair_center_x_separation"))
+    if strict_center_noncompression and before_center is not None:
+        minimum_center = before_center
+        separation_reasons = [
+            reason
+            for reason in separation_reasons
+            if reason != "dense_pair_center_x_separation_reduced_below_gate"
+        ]
+        if after_center is None or after_center + SEPARATION_EPSILON < before_center:
+            separation_reasons.append(
+                "dense_pair_center_x_separation_reduced_below_gate"
+            )
     after["dense_pair_center_x_separation"] = after_center
     after["dense_pair_bev_separation"] = after_bev
     after["minimum_dense_pair_center_x_separation"] = minimum_center
@@ -650,6 +679,126 @@ def _best_micro_candidate(
     return candidate, offsets, after, risks, score_delta
 
 
+def _best_align_then_translate_candidate(
+    ordered_pairs: Sequence[Mapping[str, Any]],
+    metadata: Mapping[str, Any] | None,
+    dense_pair_indices: Sequence[int],
+    local_window: Sequence[int],
+    before_snapshot: Mapping[str, Any],
+) -> tuple[
+    list[dict[str, dict[str, float]]],
+    int,
+    float,
+    dict[str, Any],
+    list[str],
+    float | None,
+]:
+    evaluated: list[
+        tuple[
+            tuple[int, float, float],
+            list[dict[str, dict[str, float]]],
+            int,
+            float,
+            dict[str, Any],
+            list[str],
+            float | None,
+        ]
+    ] = []
+    for pair_index in dense_pair_indices:
+        for dx in ALIGN_THEN_TRANSLATE_DX_GRID:
+            candidate = _apply_align_then_translate_column(
+                ordered_pairs,
+                pair_index,
+                dx,
+            )
+            after, risks, score_delta = _evaluate_dense_candidate(
+                ordered_pairs,
+                candidate,
+                metadata,
+                local_window,
+                dense_pair_indices,
+                before_snapshot,
+                movement_x=dx,
+                movement_y=0.0,
+                strict_center_noncompression=True,
+            )
+            crossing = _x_order_crossing(ordered_pairs, candidate, [pair_index])
+            if crossing:
+                risks = sorted({*risks, "x_order_crossing_after_translation"})
+            evaluated.append(
+                (
+                    (
+                        len(risks),
+                        float("inf") if score_delta is None else score_delta,
+                        abs(dx),
+                    ),
+                    candidate,
+                    pair_index,
+                    dx,
+                    after,
+                    risks,
+                    score_delta,
+                )
+            )
+    _, candidate, pair_index, dx, after, risks, score_delta = min(
+        evaluated,
+        key=lambda item: item[0],
+    )
+    return candidate, pair_index, dx, after, risks, score_delta
+
+
+def _coordinate_change(
+    before_pairs: Sequence[Mapping[str, Any]],
+    after_pairs: Sequence[Mapping[str, Any]],
+    target_pair_indices: Sequence[int],
+) -> dict[str, Any]:
+    if len(target_pair_indices) != 1:
+        return {
+            "top_x_before": None,
+            "bottom_x_before": None,
+            "top_x_after": None,
+            "bottom_x_after": None,
+            "top_y_before": None,
+            "bottom_y_before": None,
+            "top_y_after": None,
+            "bottom_y_after": None,
+            "vertical_x_residual_before": None,
+            "vertical_x_residual_after": None,
+            "offsets_are_column_synchronized": None,
+            "final_top_bottom_x_aligned": None,
+        }
+    pair_index = target_pair_indices[0]
+    if not (1 <= pair_index <= len(before_pairs) and pair_index <= len(after_pairs)):
+        return _coordinate_change(before_pairs, after_pairs, [])
+    before = before_pairs[pair_index - 1]
+    after = after_pairs[pair_index - 1]
+    top_x_before = float(before["top"]["x"])
+    bottom_x_before = float(before["bottom"]["x"])
+    top_x_after = float(after["top"]["x"])
+    bottom_x_after = float(after["bottom"]["x"])
+    top_delta = top_x_after - top_x_before
+    bottom_delta = bottom_x_after - bottom_x_before
+    residual_after = abs(top_x_after - bottom_x_after)
+    return {
+        "top_x_before": top_x_before,
+        "bottom_x_before": bottom_x_before,
+        "top_x_after": top_x_after,
+        "bottom_x_after": bottom_x_after,
+        "top_y_before": float(before["top"]["y"]),
+        "bottom_y_before": float(before["bottom"]["y"]),
+        "top_y_after": float(after["top"]["y"]),
+        "bottom_y_after": float(after["bottom"]["y"]),
+        "vertical_x_residual_before": abs(top_x_before - bottom_x_before),
+        "vertical_x_residual_after": residual_after,
+        "offsets_are_column_synchronized": (
+            abs(top_delta - bottom_delta) <= SEPARATION_EPSILON
+        ),
+        "final_top_bottom_x_aligned": (
+            residual_after <= FINAL_VERTICAL_X_ALIGNMENT_TOLERANCE
+        ),
+    }
+
+
 def _probe_row(
     *,
     hypothesis_id: str,
@@ -659,8 +808,10 @@ def _probe_row(
     target_pair_indices: Sequence[int],
     bottom_xy_offsets: Mapping[int, tuple[float, float]],
     column_xy_offsets: Mapping[int, tuple[float, float]],
+    align_then_translate_column_target: Mapping[str, Any] | None,
     probe_mode: str,
-    pair_vertical_x_consistent: bool,
+    before_pairs: Sequence[Mapping[str, Any]],
+    after_pairs: Sequence[Mapping[str, Any]],
     before: Mapping[str, Any],
     after: Mapping[str, Any],
     score_delta: float | None,
@@ -669,12 +820,18 @@ def _probe_row(
     evaluation_pair_order: Sequence[int],
 ) -> dict[str, Any]:
     topology_review_only = topology_variant != "keep_local_order"
+    coordinate_change = _coordinate_change(
+        before_pairs,
+        after_pairs,
+        target_pair_indices,
+    )
+    final_aligned = coordinate_change["final_top_bottom_x_aligned"] is True
     bottom_only_sensitivity = probe_mode == "bottom_only_sensitivity"
     column_x_changed = any(
         abs(dx) > SEPARATION_EPSILON for dx, _ in column_xy_offsets.values()
     )
     column_effectively_bottom_only = (
-        probe_mode == "column_constrained"
+        probe_mode == "raw_synchronized_column"
         and not column_x_changed
         and any(abs(dy_floor) > SEPARATION_EPSILON for _, dy_floor in column_xy_offsets.values())
     )
@@ -686,9 +843,6 @@ def _probe_row(
             "pair_vertical_x_consistency_not_preserved",
             *risks,
         ]
-    elif not pair_vertical_x_consistent:
-        confidence = "suppressed"
-        decision_reasons = ["pair_vertical_x_consistency_not_preserved"]
     elif risks:
         confidence = "suppressed"
         decision_reasons = list(risks)
@@ -706,15 +860,28 @@ def _probe_row(
             )
         else:
             decision_reasons.insert(0, "no_actionable_topology_improvement")
+    elif probe_mode == "raw_synchronized_column":
+        confidence = "neutral_review"
+        decision_reasons = [
+            "raw_synchronized_shift_is_diagnostic_only",
+            (
+                "final_top_bottom_x_aligned"
+                if final_aligned
+                else "final_top_bottom_x_not_aligned"
+            ),
+        ]
+    elif probe_mode == "align_then_translate_column" and not final_aligned:
+        confidence = "suppressed"
+        decision_reasons = ["final_top_bottom_x_not_aligned"]
     elif (
-        probe_mode == "column_constrained"
+        probe_mode == "align_then_translate_column"
         and score_delta is not None
-        and score_delta <= SCORE_IMPROVEMENT_THRESHOLD
+        and score_delta < 0.0
     ):
         confidence = "directional"
         decision_reasons = [
             "local_geometry_score_improved_directionally",
-            "column_constrained_vertical_x_consistency_preserved",
+            "align_then_translate_final_x_alignment_passed",
             "dense_separation_gate_passed",
         ]
     else:
@@ -740,18 +907,27 @@ def _probe_row(
             }
             for pair_index, (dx, dy_floor) in column_xy_offsets.items()
         },
+        "align_then_translate_column_target": (
+            dict(align_then_translate_column_target)
+            if align_then_translate_column_target
+            else None
+        ),
         "probe_mode": probe_mode,
         "vertical_x_policy": (
-            "translate_top_and_bottom_x_together"
-            if probe_mode == "column_constrained"
+            "align_top_bottom_x_then_translate_column"
+            if probe_mode == "align_then_translate_column"
             else (
-                "bottom_only_sensitivity_not_editable"
-                if bottom_only_sensitivity
-                else "unchanged_or_topology_dryrun"
+                "translate_top_and_bottom_x_together"
+                if probe_mode == "raw_synchronized_column"
+                else (
+                    "bottom_only_sensitivity_not_editable"
+                    if bottom_only_sensitivity
+                    else "unchanged_or_topology_dryrun"
+                )
             )
         ),
-        "pair_vertical_x_consistent": pair_vertical_x_consistent,
         "column_x_changed": column_x_changed,
+        **coordinate_change,
         "top_y_policy": "unchanged",
         "y_change_allowed": False,
         "evaluation_pair_order": list(evaluation_pair_order),
@@ -805,9 +981,13 @@ def _probe_row(
         "confidence_label": confidence,
         "recommendation_eligible": (
             confidence == "directional"
-            and probe_mode == "column_constrained"
-            and pair_vertical_x_consistent
-            and column_x_changed
+            and probe_mode == "align_then_translate_column"
+            and final_aligned
+            and _as_float(coordinate_change["vertical_x_residual_after"]) is not None
+            and float(coordinate_change["vertical_x_residual_after"])
+            <= FINAL_VERTICAL_X_ALIGNMENT_TOLERANCE
+            and not risks
+            and not topology_review_only
         ),
         "decision_reasons": decision_reasons,
         "risk_reasons": list(risks),
@@ -822,7 +1002,7 @@ def build_local_dense_corner_probe_rows(
     dense_reclassification: Sequence[Mapping[str, Any]],
     metadata: Mapping[str, Any] | None = None,
 ) -> list[dict[str, Any]]:
-    """Evaluate five local dry-run hypotheses for unresolved dense corners only."""
+    """Evaluate local dry-run hypotheses for unresolved dense corners only."""
     before_state = build_room_layout_state(ordered_pairs, metadata=metadata)
     rows: list[dict[str, Any]] = []
     base_order = list(range(1, len(ordered_pairs) + 1))
@@ -863,8 +1043,10 @@ def build_local_dense_corner_probe_rows(
                 target_pair_indices=dense_pair_indices,
                 bottom_xy_offsets={},
                 column_xy_offsets={},
+                align_then_translate_column_target=None,
                 probe_mode="diagnostic_baseline",
-                pair_vertical_x_consistent=True,
+                before_pairs=ordered_pairs,
+                after_pairs=baseline,
                 before=before,
                 after=baseline_after,
                 score_delta=baseline_delta,
@@ -894,8 +1076,10 @@ def build_local_dense_corner_probe_rows(
                 target_pair_indices=dense_pair_indices,
                 bottom_xy_offsets={},
                 column_xy_offsets={},
+                align_then_translate_column_target=None,
                 probe_mode="topology_dryrun",
-                pair_vertical_x_consistent=True,
+                before_pairs=ordered_pairs,
+                after_pairs=flipped,
                 before=before,
                 after=flipped_after,
                 score_delta=flipped_delta,
@@ -914,8 +1098,10 @@ def build_local_dense_corner_probe_rows(
                 target_pair_indices=dense_pair_indices,
                 bottom_xy_offsets={},
                 column_xy_offsets={},
+                align_then_translate_column_target=None,
                 probe_mode="topology_dryrun",
-                pair_vertical_x_consistent=True,
+                before_pairs=ordered_pairs,
+                after_pairs=baseline,
                 before=before,
                 after=baseline_after,
                 score_delta=baseline_delta,
@@ -943,8 +1129,10 @@ def build_local_dense_corner_probe_rows(
                 target_pair_indices=list(offsets),
                 bottom_xy_offsets=offsets,
                 column_xy_offsets={},
+                align_then_translate_column_target=None,
                 probe_mode="bottom_only_sensitivity",
-                pair_vertical_x_consistent=False,
+                before_pairs=ordered_pairs,
+                after_pairs=micro,
                 before=before,
                 after=micro_after,
                 score_delta=micro_delta,
@@ -962,8 +1150,10 @@ def build_local_dense_corner_probe_rows(
                 target_pair_indices=list(offsets),
                 bottom_xy_offsets=offsets,
                 column_xy_offsets={},
+                align_then_translate_column_target=None,
                 probe_mode="bottom_only_sensitivity",
-                pair_vertical_x_consistent=False,
+                before_pairs=ordered_pairs,
+                after_pairs=micro,
                 before=before,
                 after=micro_after,
                 score_delta=micro_delta,
@@ -996,13 +1186,65 @@ def build_local_dense_corner_probe_rows(
                 target_pair_indices=list(column_offsets),
                 bottom_xy_offsets={},
                 column_xy_offsets=column_offsets,
-                probe_mode="column_constrained",
-                pair_vertical_x_consistent=True,
+                align_then_translate_column_target=None,
+                probe_mode="raw_synchronized_column",
+                before_pairs=ordered_pairs,
+                after_pairs=column,
                 before=before,
                 after=column_after,
                 score_delta=column_delta,
                 risks=column_risks,
                 x_order_crossing=column_crossing,
+                evaluation_pair_order=base_order,
+            )
+        )
+        (
+            align_candidate,
+            align_pair_index,
+            align_dx,
+            align_after,
+            align_risks,
+            align_delta,
+        ) = _best_align_then_translate_candidate(
+            ordered_pairs,
+            metadata,
+            dense_pair_indices,
+            window,
+            before,
+        )
+        align_before_pair = ordered_pairs[align_pair_index - 1]
+        column_x_before = (
+            float(align_before_pair["top"]["x"])
+            + float(align_before_pair["bottom"]["x"])
+        ) / 2.0
+        align_crossing = _x_order_crossing(
+            ordered_pairs,
+            align_candidate,
+            [align_pair_index],
+        )
+        rows.append(
+            _probe_row(
+                hypothesis_id="keep_order_with_align_then_translate_column_probe",
+                topology_variant="keep_local_order",
+                local_window=window,
+                dense_pair_indices=dense_pair_indices,
+                target_pair_indices=[align_pair_index],
+                bottom_xy_offsets={},
+                column_xy_offsets={},
+                align_then_translate_column_target={
+                    "target_pair_index": align_pair_index,
+                    "column_x_before": column_x_before,
+                    "dx": align_dx,
+                    "column_x_after": column_x_before + align_dx,
+                },
+                probe_mode="align_then_translate_column",
+                before_pairs=ordered_pairs,
+                after_pairs=align_candidate,
+                before=before,
+                after=align_after,
+                score_delta=align_delta,
+                risks=align_risks,
+                x_order_crossing=align_crossing,
                 evaluation_pair_order=base_order,
             )
         )
