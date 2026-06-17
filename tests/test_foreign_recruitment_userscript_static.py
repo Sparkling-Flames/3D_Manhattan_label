@@ -34,10 +34,10 @@ def test_https_foreign_debug_userscript_uses_same_https_path_and_debug_flavor():
     text = read(DEBUG_SCRIPT)
 
     assert "HoHoNet Helper Official Annotator HTTPS EN DEBUG" in text
-    assert "@version      0.30-foreign-https-en-debug" in text
+    assert "@version      stage1_helper_ordercache_hotfix_20260617_v1" in text
     assert "@match        https://label.sparkle0825.top/*" in text
     assert "http://175.178.71.217:8000" not in text
-    assert 'const SCRIPT_VERSION = "0.30-foreign-https-en-debug";' in text
+    assert 'const SCRIPT_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";' in text
     assert 'window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en_debug";' in text
     assert 'window.localStorage.getItem("HOHONET_DEBUG_PANEL") !== "0"' in text
 
@@ -72,8 +72,8 @@ def test_https_foreign_userscript_is_self_contained_not_remote_loader():
     assert "fetchFirstAvailableHelper" not in text
     assert "/tools/official/ls_userscript_annotator.js" not in text
     assert "/tools/ls_userscript.js?foreign_https_en" not in text
-    assert "@version      0.30-foreign-https-en-standalone" in text
-    assert 'const SCRIPT_VERSION = "0.30-foreign-https-en-standalone";' in text
+    assert "@version      stage1_helper_ordercache_hotfix_20260617_v1" in text
+    assert 'const SCRIPT_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";' in text
     assert "...getForeignRecruitmentMetadataForPayload()," in text
     assert "Missing HOHONET_LOG_TOKEN" in text
     assert "window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;" in text
@@ -128,8 +128,8 @@ def test_https_foreign_debug_active_time_matches_focus_and_delta_gates():
 def test_official_active_time_uses_focus_and_delta_gates():
     text = read(OFFICIAL_SCRIPT)
 
-    assert "@version      0.27-official" in text
-    assert 'const SCRIPT_VERSION = "0.27-official";' in text
+    assert "@version      stage1_helper_ordercache_hotfix_20260617_v1" in text
+    assert 'const SCRIPT_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";' in text
     assert "function isActiveTimeCountingPage()" in text
     assert "return isPageVisible && isWindowFocused && isLikelyAnnotationPage();" in text
     assert "let isWindowFocused = document.hasFocus();" in text
@@ -167,6 +167,32 @@ def test_preview_order_message_listener_is_robust_to_iframe_recreation():
         assert "currentPreviewDefaultCount ||" in text
         assert "Array.isArray(data.previewOrder) ? data.previewOrder.length : 0" in text
         assert "postPreviewOrderAck(iframe, \"save\", false, \"invalid_payload\")" in text
+
+
+def test_corner_order_cache_hotfix_is_inline_and_task_scoped():
+    for path in [OFFICIAL_SCRIPT, SCRIPT, DEBUG_SCRIPT]:
+        text = read(path)
+        assert 'const CORNER_ORDER_CACHE_SCHEMA = "corner_order_cache_v1";' in text
+        assert 'const SCRIPT_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";' in text
+        assert "`project:${context.project_id}::task:${context.task_id}::user:${context.user_id}`" in text
+        assert "schema: CORNER_ORDER_CACHE_SCHEMA" in text
+        assert "entries[taskKey]" in text
+        assert "project_id: context.project_id" in text
+        assert "task_id: context.task_id" in text
+        assert "user_id: context.user_id" in text
+        assert "corner_count: order.length" in text
+        assert "validateCornerOrderCacheRecord" in text
+        assert "corner_count_mismatch" in text
+        assert "invalid_order_missing_duplicate_or_out_of_range" in text
+        assert "persistAdjustedPreviewOrder(" in text
+        assert '"preview_order_state"' in text
+        assert "loadValidatedPreviewOrderOverride(previewTaskKey" in text
+        assert text.index("applyPreviewRuntimeFromLayout(\n            previewTaskKey") < text.index(
+            "loadValidatedPreviewOrderOverride(previewTaskKey"
+        )
+        assert "window.__HOHONET_CLEAR_CORNER_ORDER_CACHE_FOR_CURRENT_TASK__" in text
+        assert "@require" not in text
+        assert "ls_corner_order_state.js" not in text
 
 
 def test_foreign_preview_order_status_translates_current_viewer_messages():
