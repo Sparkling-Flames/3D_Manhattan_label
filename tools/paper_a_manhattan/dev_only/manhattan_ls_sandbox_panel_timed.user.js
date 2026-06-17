@@ -169,6 +169,37 @@
     } catch (e) {}
   }
 
+  function set2DLabelsVisible(visible) {
+    renderPreviewOverlayPairs(orderedPreviewPairs());
+  }
+
+  function set3DPreviewLabelsVisible(visible) {
+    const iframe = findNativePreviewIframe();
+    if (!iframe || !iframe.contentWindow) return;
+    iframe.contentWindow.postMessage(
+      { type: "set_label_visibility", visible: Boolean(visible) },
+      "*",
+    );
+  }
+
+  function applyLabelVisibilityState() {
+    const visible = getLabelsVisible();
+    set2DLabelsVisible(visible);
+    set3DPreviewLabelsVisible(visible);
+    applyToggleBtnState(document.getElementById(TOGGLE_LABELS_BUTTON_ID), visible);
+  }
+
+  function setLabelVisibility(visible) {
+    setLabelsVisible(Boolean(visible));
+    applyLabelVisibilityState();
+  }
+
+  function scheduleLabelVisibilityStateApply() {
+    applyLabelVisibilityState();
+    window.setTimeout(applyLabelVisibilityState, 0);
+    window.setTimeout(applyLabelVisibilityState, 120);
+  }
+
   function getGuideBandsVisible() {
     try {
       return window.sessionStorage.getItem(GUIDE_BANDS_VISIBLE_KEY) === "1";
@@ -1326,6 +1357,10 @@
       iframe.dataset.src = url;
       iframe.src = url;
     }
+    if (!iframe.dataset.labelVisibilityBound) {
+      iframe.dataset.labelVisibilityBound = "1";
+      iframe.addEventListener("load", scheduleLabelVisibilityStateApply);
+    }
     let button = document.getElementById(OFFICIAL_BUTTON_ID);
     if (!button) {
       button = document.createElement("button");
@@ -1943,6 +1978,7 @@
     );
     renderPreviewOverlayPairs(ordered);
     updatePreviewOrderPanelUi();
+    scheduleLabelVisibilityStateApply();
     return "native_preview_order_update_sent";
   }
 
@@ -1981,9 +2017,7 @@
 
   function toggleCornerOrderLabels() {
     const visible = !getLabelsVisible();
-    setLabelsVisible(visible);
-    applyToggleBtnState(document.getElementById(TOGGLE_LABELS_BUTTON_ID), visible);
-    renderPreviewOverlayPairs(orderedPreviewPairs());
+    setLabelVisibility(visible);
   }
 
   function toggleGuideBands() {
@@ -2327,6 +2361,7 @@
       },
       "*",
     );
+    scheduleLabelVisibilityStateApply();
     return "native_preview_update_sent";
   }
 
@@ -2701,7 +2736,7 @@
       updateActivityTimerPanel();
       updateManhattanDeviationPanel(state.manhattan_deviation);
       updateMetaGuardPanel(metaGuard);
-      applyToggleBtnState(document.getElementById(TOGGLE_LABELS_BUTTON_ID), getLabelsVisible());
+      applyLabelVisibilityState();
       applyGuideBtnState(document.getElementById(GUIDE_BANDS_BUTTON_ID), getGuideBandsVisible());
       syncPrimaryToolbar();
       updateDebugDrawerButton();

@@ -214,6 +214,7 @@
       let H = 512;
       let currentTexture = null;
       let currentTextureUrl = null;
+      let cornerLabelsVisible = true;
       const textureLoader = new THREE.TextureLoader();
 
       const previewState = {
@@ -446,7 +447,18 @@
         const sprite = new THREE.Sprite(spriteMaterial);
         sprite.scale.set(0.5, 0.5, 0.5);
         sprite.renderOrder = 999;
+        sprite.userData.hohonetCornerLabel = true;
+        sprite.visible = cornerLabelsVisible;
         return sprite;
+      }
+
+      function setCornerLabelVisibility(visible) {
+        cornerLabelsVisible = Boolean(visible);
+        meshObjects.forEach((object) => {
+          if (object?.userData?.hohonetCornerLabel === true) {
+            object.visible = cornerLabelsVisible;
+          }
+        });
       }
 
       function cloneCorner(corner) {
@@ -1193,6 +1205,11 @@
 
         if (data.type === "update_layout") {
           loadPreviewFromMessage(data);
+          return;
+        }
+
+        if (data.type === "set_label_visibility") {
+          setCornerLabelVisibility(data.visible);
           return;
         }
 

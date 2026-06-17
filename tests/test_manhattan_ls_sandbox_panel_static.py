@@ -35,7 +35,7 @@ def test_both_scripts_have_required_guard_text():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
         for required in [
-            "m13.2-dev-only",
+            "stage1_helper_ordercache_hotfix_20260617_v1",
             "dev-only",
             "sandbox-only",
             "expert/developer tester only",
@@ -95,8 +95,8 @@ def test_timed_script_only_posts_sandbox_log_time_payload():
     assert 'method: "POST"' in text
     assert "}/log_time`" in text
     assert "X-HOHONET-TOKEN" in text
-    assert "@version      m13.2-dev-only-timed-0.1.2" in text
-    assert 'const PANEL_VERSION = "m13.2-dev-only-timed-0.1.2";' in text
+    assert "@version      stage1_helper_ordercache_hotfix_20260617_v1" in text
+    assert 'const PANEL_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";' in text
     assert "HEARTBEAT_INTERVAL_MS = 15000" in text
     assert "sendSandboxTelemetryIfActive(\"heartbeat\")" in text
     assert "skipped_no_active_seconds" in text
@@ -370,11 +370,76 @@ def test_both_scripts_include_sandbox_meta_guard_and_preview_order_controls():
             assert required in text
 
 
+def test_hide_labels_unifies_2d_and_3d_preview_visibility_without_writeback():
+    for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
+        text = read(script)
+        for required in [
+            "function setLabelVisibility(visible)",
+            "function applyLabelVisibilityState()",
+            "function set2DLabelsVisible(visible)",
+            "function set3DPreviewLabelsVisible(visible)",
+            '{ type: "set_label_visibility", visible: Boolean(visible) }',
+            'iframe.addEventListener("load", scheduleLabelVisibilityStateApply)',
+            "function scheduleLabelVisibilityStateApply()",
+        ]:
+            assert required in text
+
+        apply_start = text.index("function applyLabelVisibilityState")
+        apply_end = text.index("function setLabelVisibility", apply_start)
+        apply_text = text[apply_start:apply_end]
+        assert "set2DLabelsVisible(visible)" in apply_text
+        assert "set3DPreviewLabelsVisible(visible)" in apply_text
+
+        toggle_start = text.index("function toggleCornerOrderLabels")
+        toggle_end = text.index("function toggleGuideBands", toggle_start)
+        toggle_text = text[toggle_start:toggle_end]
+        assert "setLabelVisibility(visible)" in toggle_text
+        assert "setLabelsVisible(visible)" not in toggle_text
+
+        send_start = text.index("function sendPreviewOrderToIframe")
+        send_end = text.index("function setPreviewBasePairs", send_start)
+        assert "scheduleLabelVisibilityStateApply()" in text[send_start:send_end]
+
+        update_start = text.index("function updatePreviewIframe")
+        update_end = text.index("function performRefresh3DPreview", update_start)
+        assert "scheduleLabelVisibilityStateApply()" in text[update_start:update_end]
+
+        visibility_start = text.index("function set2DLabelsVisible")
+        visibility_end = text.index("function getGuideBandsVisible", visibility_start)
+        visibility_text = text[visibility_start:visibility_end]
+        assert "contentWindow.eval" not in visibility_text
+        assert "contentDocument" not in visibility_text
+        for forbidden in [
+            "annotation",
+            "writeback",
+            "submit",
+            "save",
+            "routing",
+            "formal_g_t",
+            "P1/C1/C2/T1/V1",
+        ]:
+            assert forbidden not in visibility_text
+
+
+def test_vis_3d_handles_label_visibility_messages_and_preserves_state_on_rebuild():
+    text = read(Path("tools/label_studio/vis_3d.html"))
+    for required in [
+        "let cornerLabelsVisible = true;",
+        "sprite.userData.hohonetCornerLabel = true;",
+        "sprite.visible = cornerLabelsVisible;",
+        "function setCornerLabelVisibility(visible)",
+        "object?.userData?.hohonetCornerLabel === true",
+        'data.type === "set_label_visibility"',
+        "setCornerLabelVisibility(data.visible)",
+    ]:
+        assert required in text
+
+
 def test_both_scripts_include_m13_guide_bands_and_transparent_badges():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)
         for required in [
-            "m13.2-dev-only",
+            "stage1_helper_ordercache_hotfix_20260617_v1",
             "hohonet-m13-primary-toolbar",
             "Manhattan tools",
             "Refresh 3D",
