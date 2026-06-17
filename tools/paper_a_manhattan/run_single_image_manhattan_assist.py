@@ -47,7 +47,7 @@ from tools.paper_a_manhattan.manhattan_verified_3d_local_assist import (  # noqa
 )
 
 
-TOOL_VERSION = "single_image_manhattan_assist_m15_18_v1"
+TOOL_VERSION = "single_image_manhattan_assist_m15_18_2_v1"
 TOPOLOGY_OVERRIDE_SCHEMA_VERSION = "verified_preview_order_m15_13_v1"
 PREVIEW_ORDER_OVERRIDE_ALLOWED_STATUSES = {
     "compatibility_failure_duplicate",
@@ -1612,6 +1612,14 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
             "Only triggered for unresolved dense corners.",
             "Hypotheses are local dry-runs.",
             "Topology variants are not automatic reorder.",
+            (
+                "Bottom-only hypothesis rows are sensitivity-only and must not be "
+                "used to edit Label Studio points."
+            ),
+            (
+                "Directional rows must be column-constrained: top_x and bottom_x "
+                "move together and the dense-separation gate must pass."
+            ),
             "No writeback / no patch.",
             "",
         ]
@@ -1621,12 +1629,23 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
             [
                 "hypothesis_id",
                 "topology_variant",
+                "probe_mode",
                 "local_window_pair_indices",
                 "bottom_xy_offsets",
+                "column_xy_offsets",
                 "local_geometry_score_delta",
                 "wall_angle_residual_sum_delta",
                 "corner_angle_residual_sum_delta",
                 "confidence_label",
+                "pair_vertical_x_consistent",
+                "dense_pair_center_x_separation_before",
+                "dense_pair_center_x_separation_after",
+                "minimum_dense_pair_center_x_separation",
+                "dense_pair_bev_separation_before",
+                "dense_pair_bev_separation_after",
+                "minimum_dense_pair_bev_separation",
+                "dense_separation_gate_passed",
+                "recommendation_eligible",
                 "decision_reasons",
                 "risk_reasons",
                 "writeback_allowed",

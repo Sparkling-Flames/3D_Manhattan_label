@@ -13,13 +13,17 @@ from tools.paper_a_manhattan.manhattan_layout_state import build_room_layout_sta
 
 
 FLOORPRINT_SENSITIVITY_VERSION = "floorprint_sensitivity_m15_18_v1"
-LOCAL_DENSE_CORNER_PROBE_VERSION = "local_dense_corner_probe_m15_18_v1"
+LOCAL_DENSE_CORNER_PROBE_VERSION = "local_dense_corner_probe_m15_18_2_v1"
 BOTTOM_Y_PERTURBATIONS = (-3.0, -2.0, -1.0, 1.0, 2.0, 3.0)
 BOTTOM_X_MICRO_GRID = (-0.5, -0.25, 0.0, 0.25, 0.5)
 BOTTOM_Y_MICRO_GRID = (-3.0, -2.0, -1.0, 0.0, 1.0, 2.0, 3.0)
 MIN_WALL_LENGTH = 0.05
 SHORT_WALL_REVIEW_LENGTH = 0.2
 SCORE_IMPROVEMENT_THRESHOLD = -0.01
+DENSE_CENTER_X_SEPARATION_THRESHOLD = 1.0
+DENSE_BEV_SEPARATION_THRESHOLD = 0.3
+SEPARATION_EPSILON = 1e-9
+TOP_Y_UNCHANGED_HEIGHT_WORSEN_TOLERANCE = 0.05
 
 
 def _as_float(value: Any) -> float | None:
@@ -454,6 +458,75 @@ def _apply_bottom_offsets(
     return candidate
 
 
+def _apply_column_offsets(
+    ordered_pairs: Sequence[Mapping[str, Any]],
+    offsets: Mapping[int, tuple[float, float]],
+) -> list[dict[str, dict[str, float]]]:
+    candidate = _copy_pairs(ordered_pairs)
+    for pair_index, (dx, dy_floor) in offsets.items():
+        candidate[pair_index - 1]["top"]["x"] += dx
+        candidate[pair_index - 1]["bottom"]["x"] += dx
+        candidate[pair_index - 1]["bottom"]["y"] += dy_floor
+    return candidate
+
+
+def _dense_pair_separation(
+    ordered_pairs: Sequence[Mapping[str, Any]],
+    state: Mapping[str, Any],
+    dense_pair_indices: Sequence[int],
+) -> tuple[float | None, float | None]:
+    if len(dense_pair_indices) != 2:
+        return None, None
+    left, right = dense_pair_indices
+    if not all(1 <= pair_index <= len(ordered_pairs) for pair_index in (left, right)):
+        return None, None
+    centers = _center_xs(ordered_pairs)
+    center_separation = abs(centers[left] - centers[right])
+    points = _bev_points(state)
+    bev_separation = None
+    if left in points and right in points:
+        bev_separation = math.hypot(
+            points[left][0] - points[right][0],
+            points[left][1] - points[right][1],
+        )
+    return center_separation, bev_separation
+
+
+def _minimum_required_separation(
+    before: float | None,
+    threshold: float,
+) -> float | None:
+    return min(before, threshold) if before is not None else None
+
+
+def dense_separation_gate_reasons(
+    before_center: float | None,
+    after_center: float | None,
+    before_bev: float | None,
+    after_bev: float | None,
+) -> tuple[list[str], float | None, float | None]:
+    reasons: list[str] = []
+    minimum_center = _minimum_required_separation(
+        before_center,
+        DENSE_CENTER_X_SEPARATION_THRESHOLD,
+    )
+    minimum_bev = _minimum_required_separation(
+        before_bev,
+        DENSE_BEV_SEPARATION_THRESHOLD,
+    )
+    if (
+        minimum_center is not None
+        and (after_center is None or after_center + SEPARATION_EPSILON < minimum_center)
+    ):
+        reasons.append("dense_pair_center_x_separation_reduced_below_gate")
+    if (
+        minimum_bev is not None
+        and (after_bev is None or after_bev + SEPARATION_EPSILON < minimum_bev)
+    ):
+        reasons.append("dense_pair_bev_separation_reduced_below_gate")
+    return reasons, minimum_center, minimum_bev
+
+
 def _flip_dense_pair(
     ordered_pairs: Sequence[Mapping[str, Any]], dense_pair_indices: Sequence[int]
 ) -> tuple[list[dict[str, dict[str, float]]], list[int]]:
@@ -470,6 +543,7 @@ def _evaluate_dense_candidate(
     candidate_pairs: Sequence[Mapping[str, Any]],
     metadata: Mapping[str, Any] | None,
     local_window: Sequence[int],
+    dense_pair_indices: Sequence[int],
     before_snapshot: Mapping[str, Any],
     *,
     movement_x: float,
@@ -484,6 +558,33 @@ def _evaluate_dense_candidate(
         movement_x=movement_x,
         movement_y=movement_y,
     )
+    after_center, after_bev = _dense_pair_separation(
+        candidate_pairs,
+        after_state,
+        dense_pair_indices,
+    )
+    separation_reasons, minimum_center, minimum_bev = dense_separation_gate_reasons(
+        _as_float(before_snapshot.get("dense_pair_center_x_separation")),
+        after_center,
+        _as_float(before_snapshot.get("dense_pair_bev_separation")),
+        after_bev,
+    )
+    after["dense_pair_center_x_separation"] = after_center
+    after["dense_pair_bev_separation"] = after_bev
+    after["minimum_dense_pair_center_x_separation"] = minimum_center
+    after["minimum_dense_pair_bev_separation"] = minimum_bev
+    risks.extend(separation_reasons)
+    height_delta = _delta(
+        before_snapshot["height_residual_summary"]["residual_sum"],
+        after["height_residual_summary"]["residual_sum"],
+    )
+    if (
+        movement_y != 0.0
+        and height_delta is not None
+        and height_delta > TOP_Y_UNCHANGED_HEIGHT_WORSEN_TOLERANCE
+    ):
+        risks.append("top_y_unchanged_height_residual_worsened")
+    risks = sorted(set(risks))
     return after, risks, _delta(
         before_snapshot.get("local_geometry_score"), after.get("local_geometry_score")
     )
@@ -495,6 +596,8 @@ def _best_micro_candidate(
     dense_pair_indices: Sequence[int],
     local_window: Sequence[int],
     before_snapshot: Mapping[str, Any],
+    *,
+    column_constrained: bool,
 ) -> tuple[
     list[dict[str, dict[str, float]]],
     dict[int, tuple[float, float]],
@@ -516,12 +619,17 @@ def _best_micro_candidate(
         for dx in BOTTOM_X_MICRO_GRID:
             for dy in BOTTOM_Y_MICRO_GRID:
                 offsets = {pair_index: (dx, dy)}
-                candidate = _apply_bottom_offsets(ordered_pairs, offsets)
+                candidate = (
+                    _apply_column_offsets(ordered_pairs, offsets)
+                    if column_constrained
+                    else _apply_bottom_offsets(ordered_pairs, offsets)
+                )
                 after, risks, score_delta = _evaluate_dense_candidate(
                     ordered_pairs,
                     candidate,
                     metadata,
                     local_window,
+                    dense_pair_indices,
                     before_snapshot,
                     movement_x=dx,
                     movement_y=dy,
@@ -550,6 +658,9 @@ def _probe_row(
     dense_pair_indices: Sequence[int],
     target_pair_indices: Sequence[int],
     bottom_xy_offsets: Mapping[int, tuple[float, float]],
+    column_xy_offsets: Mapping[int, tuple[float, float]],
+    probe_mode: str,
+    pair_vertical_x_consistent: bool,
     before: Mapping[str, Any],
     after: Mapping[str, Any],
     score_delta: float | None,
@@ -558,7 +669,27 @@ def _probe_row(
     evaluation_pair_order: Sequence[int],
 ) -> dict[str, Any]:
     topology_review_only = topology_variant != "keep_local_order"
-    if risks:
+    bottom_only_sensitivity = probe_mode == "bottom_only_sensitivity"
+    column_x_changed = any(
+        abs(dx) > SEPARATION_EPSILON for dx, _ in column_xy_offsets.values()
+    )
+    column_effectively_bottom_only = (
+        probe_mode == "column_constrained"
+        and not column_x_changed
+        and any(abs(dy_floor) > SEPARATION_EPSILON for _, dy_floor in column_xy_offsets.values())
+    )
+    if bottom_only_sensitivity or column_effectively_bottom_only:
+        confidence = "sensitivity_only"
+        decision_reasons = [
+            "not_editable_bottom_only",
+            "bottom_only_perturbation_restricted_to_sensitivity",
+            "pair_vertical_x_consistency_not_preserved",
+            *risks,
+        ]
+    elif not pair_vertical_x_consistent:
+        confidence = "suppressed"
+        decision_reasons = ["pair_vertical_x_consistency_not_preserved"]
+    elif risks:
         confidence = "suppressed"
         decision_reasons = list(risks)
     elif topology_review_only:
@@ -575,9 +706,17 @@ def _probe_row(
             )
         else:
             decision_reasons.insert(0, "no_actionable_topology_improvement")
-    elif score_delta is not None and score_delta <= SCORE_IMPROVEMENT_THRESHOLD:
+    elif (
+        probe_mode == "column_constrained"
+        and score_delta is not None
+        and score_delta <= SCORE_IMPROVEMENT_THRESHOLD
+    ):
         confidence = "directional"
-        decision_reasons = ["local_geometry_score_improved_directionally"]
+        decision_reasons = [
+            "local_geometry_score_improved_directionally",
+            "column_constrained_vertical_x_consistency_preserved",
+            "dense_separation_gate_passed",
+        ]
     else:
         confidence = "no_improvement"
         decision_reasons = ["no_clear_local_geometry_improvement"]
@@ -593,6 +732,26 @@ def _probe_row(
             str(pair_index): {"bottom_x_delta": dx, "bottom_y_delta": dy}
             for pair_index, (dx, dy) in bottom_xy_offsets.items()
         },
+        "column_xy_offsets": {
+            str(pair_index): {
+                "top_x_delta": dx,
+                "bottom_x_delta": dx,
+                "bottom_y_delta": dy_floor,
+            }
+            for pair_index, (dx, dy_floor) in column_xy_offsets.items()
+        },
+        "probe_mode": probe_mode,
+        "vertical_x_policy": (
+            "translate_top_and_bottom_x_together"
+            if probe_mode == "column_constrained"
+            else (
+                "bottom_only_sensitivity_not_editable"
+                if bottom_only_sensitivity
+                else "unchanged_or_topology_dryrun"
+            )
+        ),
+        "pair_vertical_x_consistent": pair_vertical_x_consistent,
+        "column_x_changed": column_x_changed,
         "top_y_policy": "unchanged",
         "y_change_allowed": False,
         "evaluation_pair_order": list(evaluation_pair_order),
@@ -625,7 +784,31 @@ def _probe_row(
         "local_geometry_score_before": before.get("local_geometry_score"),
         "local_geometry_score_after": after.get("local_geometry_score"),
         "local_geometry_score_delta": score_delta,
+        "dense_pair_center_x_separation_before": before.get(
+            "dense_pair_center_x_separation"
+        ),
+        "dense_pair_center_x_separation_after": after.get(
+            "dense_pair_center_x_separation"
+        ),
+        "minimum_dense_pair_center_x_separation": after.get(
+            "minimum_dense_pair_center_x_separation"
+        ),
+        "dense_pair_bev_separation_before": before.get("dense_pair_bev_separation"),
+        "dense_pair_bev_separation_after": after.get("dense_pair_bev_separation"),
+        "minimum_dense_pair_bev_separation": after.get(
+            "minimum_dense_pair_bev_separation"
+        ),
+        "dense_separation_gate_passed": not any(
+            reason.startswith("dense_pair_") and reason.endswith("_below_gate")
+            for reason in risks
+        ),
         "confidence_label": confidence,
+        "recommendation_eligible": (
+            confidence == "directional"
+            and probe_mode == "column_constrained"
+            and pair_vertical_x_consistent
+            and column_x_changed
+        ),
         "decision_reasons": decision_reasons,
         "risk_reasons": list(risks),
         "writeback_allowed": False,
@@ -652,6 +835,13 @@ def build_local_dense_corner_probe_rows(
         ]
         window = _local_window(len(ordered_pairs), dense_pair_indices)
         before = _snapshot(before_state, window)
+        before_center, before_bev = _dense_pair_separation(
+            ordered_pairs,
+            before_state,
+            dense_pair_indices,
+        )
+        before["dense_pair_center_x_separation"] = before_center
+        before["dense_pair_bev_separation"] = before_bev
 
         baseline = _copy_pairs(ordered_pairs)
         baseline_after, baseline_risks, baseline_delta = _evaluate_dense_candidate(
@@ -659,6 +849,7 @@ def build_local_dense_corner_probe_rows(
             baseline,
             metadata,
             window,
+            dense_pair_indices,
             before,
             movement_x=0.0,
             movement_y=0.0,
@@ -671,6 +862,9 @@ def build_local_dense_corner_probe_rows(
                 dense_pair_indices=dense_pair_indices,
                 target_pair_indices=dense_pair_indices,
                 bottom_xy_offsets={},
+                column_xy_offsets={},
+                probe_mode="diagnostic_baseline",
+                pair_vertical_x_consistent=True,
                 before=before,
                 after=baseline_after,
                 score_delta=baseline_delta,
@@ -686,6 +880,7 @@ def build_local_dense_corner_probe_rows(
             flipped,
             metadata,
             window,
+            dense_pair_indices,
             before,
             movement_x=0.0,
             movement_y=0.0,
@@ -698,6 +893,9 @@ def build_local_dense_corner_probe_rows(
                 dense_pair_indices=dense_pair_indices,
                 target_pair_indices=dense_pair_indices,
                 bottom_xy_offsets={},
+                column_xy_offsets={},
+                probe_mode="topology_dryrun",
+                pair_vertical_x_consistent=True,
                 before=before,
                 after=flipped_after,
                 score_delta=flipped_delta,
@@ -715,6 +913,9 @@ def build_local_dense_corner_probe_rows(
                 dense_pair_indices=dense_pair_indices,
                 target_pair_indices=dense_pair_indices,
                 bottom_xy_offsets={},
+                column_xy_offsets={},
+                probe_mode="topology_dryrun",
+                pair_vertical_x_consistent=True,
                 before=before,
                 after=baseline_after,
                 score_delta=baseline_delta,
@@ -730,6 +931,7 @@ def build_local_dense_corner_probe_rows(
             dense_pair_indices,
             window,
             before,
+            column_constrained=False,
         )
         micro_crossing = _x_order_crossing(ordered_pairs, micro, list(offsets))
         rows.append(
@@ -740,6 +942,9 @@ def build_local_dense_corner_probe_rows(
                 dense_pair_indices=dense_pair_indices,
                 target_pair_indices=list(offsets),
                 bottom_xy_offsets=offsets,
+                column_xy_offsets={},
+                probe_mode="bottom_only_sensitivity",
+                pair_vertical_x_consistent=False,
                 before=before,
                 after=micro_after,
                 score_delta=micro_delta,
@@ -756,11 +961,48 @@ def build_local_dense_corner_probe_rows(
                 dense_pair_indices=dense_pair_indices,
                 target_pair_indices=list(offsets),
                 bottom_xy_offsets=offsets,
+                column_xy_offsets={},
+                probe_mode="bottom_only_sensitivity",
+                pair_vertical_x_consistent=False,
                 before=before,
                 after=micro_after,
                 score_delta=micro_delta,
                 risks=micro_risks,
                 x_order_crossing=micro_crossing,
+                evaluation_pair_order=base_order,
+            )
+        )
+        column, column_offsets, column_after, column_risks, column_delta = (
+            _best_micro_candidate(
+                ordered_pairs,
+                metadata,
+                dense_pair_indices,
+                window,
+                before,
+                column_constrained=True,
+            )
+        )
+        column_crossing = _x_order_crossing(
+            ordered_pairs,
+            column,
+            list(column_offsets),
+        )
+        rows.append(
+            _probe_row(
+                hypothesis_id="keep_order_with_column_floor_probe",
+                topology_variant="keep_local_order",
+                local_window=window,
+                dense_pair_indices=dense_pair_indices,
+                target_pair_indices=list(column_offsets),
+                bottom_xy_offsets={},
+                column_xy_offsets=column_offsets,
+                probe_mode="column_constrained",
+                pair_vertical_x_consistent=True,
+                before=before,
+                after=column_after,
+                score_delta=column_delta,
+                risks=column_risks,
+                x_order_crossing=column_crossing,
                 evaluation_pair_order=base_order,
             )
         )
@@ -773,4 +1015,5 @@ __all__ = [
     "LOCAL_DENSE_CORNER_PROBE_VERSION",
     "build_floorprint_sensitivity_rows",
     "build_local_dense_corner_probe_rows",
+    "dense_separation_gate_reasons",
 ]

@@ -281,6 +281,16 @@ fields, so consumers do not infer their contract from the legacy
 `verified_3d_local_assist_m15_15_v1` harness schema. Markdown reports repeat
 both schema versions and the three no-action permission flags.
 
+### M15.18.2 Candidate Policy
+
+Bottom-only local hypothesis rows are sensitivity-only and cannot be
+recommendations. Directional eligibility requires a column-constrained move
+that applies the same x delta to top and bottom, makes an actual column x move,
+and passes center-x and BEV dense-separation gates. The gate prevents a
+candidate from compressing a dense pair below
+`min(before_separation, threshold)`. The local dense-corner sidecar schema is
+`local_dense_corner_probe_m15_18_2_v1`.
+
 ## Non-goals
 
 This spec does not implement UI, ghost overlays, apply/undo, Label Studio

@@ -77,7 +77,7 @@ def test_simplified_ordered_pairs_outputs_diagnostics_proposals_and_height_rows(
     )
     assert len(result["manual_edit_table"]) == 4
     assert result["summary"]["n_ordered_pairs"] == 4
-    assert result["tool_version"] == "single_image_manhattan_assist_m15_18_v1"
+    assert result["tool_version"] == "single_image_manhattan_assist_m15_18_2_v1"
 
 
 def test_raw_keypoints_compatible_converts_to_ordered_pairs_and_outputs_results():
@@ -525,7 +525,7 @@ def test_cli_output_is_json_serializable(tmp_path):
     assert exit_code == 0
     payload = json.loads(output_path.read_text(encoding="utf-8"))
     json.dumps(payload)
-    assert payload["tool_version"] == "single_image_manhattan_assist_m15_18_v1"
+    assert payload["tool_version"] == "single_image_manhattan_assist_m15_18_2_v1"
 
 
 def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
@@ -589,7 +589,10 @@ def test_markdown_includes_hard_stop_override_and_height_sections():
     assert "### Floor-Footprint Sensitivity" in explicit_text
     assert "### Local Dense-Corner Hypothesis Probe" in explicit_text
     assert "floorprint_sensitivity_m15_18_v1" in explicit_text
-    assert "local_dense_corner_probe_m15_18_v1" in explicit_text
+    assert "local_dense_corner_probe_m15_18_2_v1" in explicit_text
+    assert "Bottom-only hypothesis rows are sensitivity-only" in explicit_text
+    assert "pair_vertical_x_consistent" in explicit_text
+    assert "dense_separation_gate_passed" in explicit_text
     assert "expert_action_allowed" in explicit_text
     assert "annotation_patch_allowed" in explicit_text
     assert "No writeback / no patch." in explicit_text
