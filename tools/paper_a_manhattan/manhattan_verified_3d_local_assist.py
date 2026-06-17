@@ -11,6 +11,10 @@ import math
 from typing import Any, Mapping, Sequence
 
 from tools.paper_a_manhattan.manhattan_layout_state import build_room_layout_state
+from tools.paper_a_manhattan.manhattan_local_floorprint_probe import (
+    build_floorprint_sensitivity_rows,
+    build_local_dense_corner_probe_rows,
+)
 
 
 VERIFIED_3D_LOCAL_ASSIST_VERSION = "verified_3d_local_assist_m15_15_v1"
@@ -1352,6 +1356,15 @@ def build_verified_3d_local_assist(
         state,
         source_lookup,
     )
+    floorprint_sensitivity_rows = build_floorprint_sensitivity_rows(
+        ordered_pairs,
+        metadata=metadata,
+    )
+    local_dense_corner_probe_rows = build_local_dense_corner_probe_rows(
+        ordered_pairs,
+        dense_reclassification,
+        metadata=metadata,
+    )
     return {
         "schema_version": VERIFIED_3D_LOCAL_ASSIST_VERSION,
         "operation_family": OPERATION_FAMILY,
@@ -1364,10 +1377,17 @@ def build_verified_3d_local_assist(
         "corner_angle_table": corner_angles,
         "candidate_rows": candidates,
         "adaptive_x_search_rows": adaptive_rows,
+        "floorprint_sensitivity_rows": floorprint_sensitivity_rows,
+        "local_dense_corner_probe_rows": local_dense_corner_probe_rows,
         "risk_reasons": sorted(
             {
                 reason
-                for row in [*candidates, *adaptive_rows]
+                for row in [
+                    *candidates,
+                    *adaptive_rows,
+                    *floorprint_sensitivity_rows,
+                    *local_dense_corner_probe_rows,
+                ]
                 for reason in row.get("risk_reasons", [])
             }
         ),

@@ -1,6 +1,6 @@
 # Verified 3D Local Assist Open Spec v1
 
-This spec defines the M15.14/M15.15 verified 3D local assist harness for the
+This spec defines the M15.14-M15.18 verified 3D local assist harness for the
 Paper A Manhattan experiment-outside toolchain.
 
 ## Scope
@@ -37,6 +37,9 @@ The CLI and helper expose a `verified_3d_local_assist` object with:
 - `local_3d_diagnostics`
 - `dense_corner_reclassification`
 - `candidate_rows`
+- `adaptive_x_search_rows`
+- `floorprint_sensitivity_rows`
+- `local_dense_corner_probe_rows`
 - `risk_reasons`
 - `writeback_allowed=false`
 - `ui_allowed=false`
@@ -251,10 +254,30 @@ Adaptive search remains x-only: y coordinates, pair order, annotations, UI
 state, and writeback payloads are unchanged. It is not correctness, GT,
 routing, worker quality, or an edit instruction.
 
+## M15.18 Floor-Footprint and Dense-Corner Probe
+
+M15.18 adds two diagnostic sidecars. `floorprint_sensitivity_rows` enumerate
+fixed bottom-y perturbations for every effective pair. These dry-runs preserve
+x, top y, and pair order while rebuilding `RoomLayoutState` and reporting local
+wall/corner angle, height residual, self-intersection, and state-warning
+changes.
+
+`local_dense_corner_probe_rows` are emitted only for
+`unresolved_dense_corner`. The probe evaluates five local hypotheses, including
+temporary order/short-wall variants and bounded bottom-xy micro probes. An
+order variant changes temporary evaluation state only; it never replaces
+official `ordered_pairs` and never receives automatic adoption permission.
+
+All M15.18 rows set `writeback_allowed=false`,
+`expert_action_allowed=false`, and `annotation_patch_allowed=false`. The local
+score and confidence labels are geometry stability cues, not correctness, GT,
+or edit instructions. The full row contract and fixed grids are defined in
+`LOCAL_FLOORPRINT_DENSE_CORNER_PROBE_SPEC_v1.md`.
+
 ## Non-goals
 
 This spec does not implement UI, ghost overlays, apply/undo, Label Studio
-integration, adaptive x search, local Manhattan snap, wall moves, room-height
+integration, local Manhattan snap, wall moves, room-height
 sliders, automatic reorder, automatic merge, automatic corner deletion,
 correctness labels, GT decisions, routing, worker profile signals, or formal
 A-line artifacts. Conservative height/y reproject candidates are specified

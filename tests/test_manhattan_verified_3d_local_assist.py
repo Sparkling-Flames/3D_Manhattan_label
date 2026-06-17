@@ -247,6 +247,18 @@ def test_output_is_json_serializable_and_has_no_annotation_patch_fields():
     assert "writeback" not in result
 
 
+def test_m1518_sidecars_preserve_existing_adaptive_and_candidate_rows():
+    result = build_verified_3d_local_assist(
+        _distinct_dense_pairs(),
+        topology_override=VERIFIED_TOPOLOGY,
+    )
+
+    assert result["floorprint_sensitivity_rows"]
+    assert result["candidate_rows"]
+    assert result["adaptive_x_search_rows"]
+    assert result["local_dense_corner_probe_rows"] == []
+
+
 def test_candidate_can_be_suggested_review_when_local_geometry_score_improves():
     result = build_verified_3d_local_assist(
         _distinct_dense_pairs(),

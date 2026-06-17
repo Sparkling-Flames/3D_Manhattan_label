@@ -47,7 +47,7 @@ from tools.paper_a_manhattan.manhattan_verified_3d_local_assist import (  # noqa
 )
 
 
-TOOL_VERSION = "single_image_manhattan_assist_m15_16_v1"
+TOOL_VERSION = "single_image_manhattan_assist_m15_18_v1"
 TOPOLOGY_OVERRIDE_SCHEMA_VERSION = "verified_preview_order_m15_13_v1"
 PREVIEW_ORDER_OVERRIDE_ALLOWED_STATUSES = {
     "compatibility_failure_duplicate",
@@ -1415,7 +1415,10 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
             f"- writeback_allowed: `{verified_local.get('writeback_allowed')}`",
             "- These candidates are review-level dry-runs, not edit instructions.",
             "- Use them to inspect directionality; do not apply without visual confirmation.",
-            "- Y coordinates remain unchanged in this report.",
+            (
+                "- Existing x-only rows leave y unchanged; M15.18 changes bottom-y "
+                "only inside sensitivity/hypothesis dry-runs."
+            ),
             "",
             "### Dense Corner Reclassification",
             "",
@@ -1559,7 +1562,61 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
             verified_local.get("adaptive_x_search_rows", []),
         )
     )
-    lines.append("")
+    lines.extend(["", "### Floor-Footprint Sensitivity", ""])
+    lines.extend(
+        [
+            (
+                "Bottom-y changes alter the floor footprint and may change BEV "
+                "wall/corner angles."
+            ),
+            "This is sensitivity analysis only, not an edit instruction.",
+            "",
+        ]
+    )
+    lines.extend(
+        _markdown_table(
+            [
+                "target_pair_index",
+                "bottom_y_delta",
+                "wall_angle_residual_sum_delta",
+                "corner_angle_residual_sum_delta",
+                "height_residual_delta",
+                "state_status_after",
+                "x_order_crossing_after_translation",
+                "decision_label",
+                "decision_reasons",
+                "writeback_allowed",
+            ],
+            verified_local.get("floorprint_sensitivity_rows", []),
+        )
+    )
+    lines.extend(["", "### Local Dense-Corner Hypothesis Probe", ""])
+    lines.extend(
+        [
+            "Only triggered for unresolved dense corners.",
+            "Hypotheses are local dry-runs.",
+            "Topology variants are not automatic reorder.",
+            "No writeback / no patch.",
+            "",
+        ]
+    )
+    lines.extend(
+        _markdown_table(
+            [
+                "hypothesis_id",
+                "topology_variant",
+                "local_window_pair_indices",
+                "bottom_xy_offsets",
+                "local_geometry_score_delta",
+                "wall_angle_residual_sum_delta",
+                "corner_angle_residual_sum_delta",
+                "confidence_label",
+                "risk_reasons",
+                "writeback_allowed",
+            ],
+            verified_local.get("local_dense_corner_probe_rows", []),
+        )
+    )
     return "\n".join(lines) + "\n"
 
 

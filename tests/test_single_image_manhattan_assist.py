@@ -77,6 +77,7 @@ def test_simplified_ordered_pairs_outputs_diagnostics_proposals_and_height_rows(
     )
     assert len(result["manual_edit_table"]) == 4
     assert result["summary"]["n_ordered_pairs"] == 4
+    assert result["tool_version"] == "single_image_manhattan_assist_m15_18_v1"
 
 
 def test_raw_keypoints_compatible_converts_to_ordered_pairs_and_outputs_results():
@@ -444,6 +445,7 @@ def test_task218_ann3741_list_override_with_ten_materializes_verified_assist():
     assert result["verified_3d_local_assist"]["schema_version"] == (
         "verified_3d_local_assist_m15_15_v1"
     )
+    assert result["verified_3d_local_assist"]["floorprint_sensitivity_rows"]
 
 
 def test_task238_explicit_target_pair_generates_x_only_dryrun_without_writeback():
@@ -523,7 +525,7 @@ def test_cli_output_is_json_serializable(tmp_path):
     assert exit_code == 0
     payload = json.loads(output_path.read_text(encoding="utf-8"))
     json.dumps(payload)
-    assert payload["tool_version"] == "single_image_manhattan_assist_m15_16_v1"
+    assert payload["tool_version"] == "single_image_manhattan_assist_m15_18_v1"
 
 
 def test_markdown_output_is_written_with_no_writeback_disclaimer(tmp_path):
@@ -584,6 +586,9 @@ def test_markdown_includes_hard_stop_override_and_height_sections():
     assert "## Conservative Height Reproject Candidates" in explicit_text
     assert "## Verified 3D Local Assist" in explicit_text
     assert "### Adaptive Local X Search" in explicit_text
+    assert "### Floor-Footprint Sensitivity" in explicit_text
+    assert "### Local Dense-Corner Hypothesis Probe" in explicit_text
+    assert "No writeback / no patch." in explicit_text
     assert "Explicit target pair mode is an exploratory x-only dry-run" in explicit_text
 
 
