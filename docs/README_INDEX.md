@@ -71,6 +71,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - `tools/paper_a_manhattan/serve_local_3d_projection_review.py` serves one generated review from repository root on `127.0.0.1`; it is a read-only local launcher helper and does not connect to Label Studio or write annotations.
 - `tools/paper_a_manhattan/manhattan_m1520_local_candidate_search.py` provides M15.20–M15.22 bounded local candidates, expert assertion gates, and three assertion-constrained joint probe families; it does not perform global optimization, authorize final fixes, write annotations, route tasks, or create formal artifacts.
 - `tools/paper_a_manhattan/run_m1520_local_candidate_search.py` generates the local JSON/Markdown candidate report and reads the optional M15.21 assertion sidecar used by M15.22 joint probes; it does not add viewer UI or mutate Label Studio data.
+- `tools/paper_a_manhattan/run_m1524_hard_case_audit_pack.py` aggregates the 3741/2369/2389 applicable, smoke, and safe-skip states into a read-only JSON/Markdown audit pack; it does not add candidates or change M15.22 scoring/gating.
 
 ## 论文 B 线
 

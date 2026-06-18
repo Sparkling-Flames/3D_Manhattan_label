@@ -1,0 +1,101 @@
+{
+  "schema_version": "m15_24_hard_case_audit_pack_v1",
+  "safety_boundary": {
+    "expert_side": true,
+    "offline_local_only": true,
+    "annotation_write_allowed": false,
+    "annotation_patch_generated": false,
+    "routing_input": false,
+    "formal_artifact": false,
+    "correctness_oracle": false
+  },
+  "case_count": 3,
+  "cases": [
+    {
+      "case_name": "task218_ann3741",
+      "case_category": "dense_corner_topology_instability",
+      "input_file": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/task218_ann3741_m1516_stabilized_input.json",
+      "assertion_source": "file",
+      "applicability_status": "applicable",
+      "generated_count": 54,
+      "retained_count": 21,
+      "joint_candidate_count": 12,
+      "direct_fix_available": false,
+      "best_executable_candidate_id": "candidate_1",
+      "best_executable_family": "height_aware_y_probe",
+      "best_executable_decision_class": "partial_diagnostic",
+      "best_joint_candidate_id": "candidate_2",
+      "best_joint_family": "joint_5_6_7_dense_footprint",
+      "best_joint_decision_class": "partial_diagnostic",
+      "primary_unresolved_edges": [
+        "6-7"
+      ],
+      "persistent_short_wall_edges": [
+        "5-6",
+        "6-7"
+      ],
+      "assertion_violation_count": 4,
+      "new_unresolved_edge_count": 6,
+      "self_intersection_or_collapse_count": 1,
+      "notes": [
+        "Aggregate diagnostic only; detailed per-candidate evidence remains in the local search output."
+      ]
+    },
+    {
+      "case_name": "task218_ann2369",
+      "case_category": "joint_search_smoke_applicable",
+      "input_file": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/task218_ann2369_m1516_stabilized_input.json",
+      "assertion_source": "inline",
+      "applicability_status": "applicable",
+      "generated_count": 54,
+      "retained_count": 21,
+      "joint_candidate_count": 12,
+      "direct_fix_available": false,
+      "best_executable_candidate_id": "candidate_1",
+      "best_executable_family": "joint_6_7_y_depth_balance",
+      "best_executable_decision_class": "candidate_for_manual_review",
+      "best_joint_candidate_id": "candidate_1",
+      "best_joint_family": "joint_6_7_y_depth_balance",
+      "best_joint_decision_class": "candidate_for_manual_review",
+      "primary_unresolved_edges": [],
+      "persistent_short_wall_edges": [],
+      "assertion_violation_count": 1,
+      "new_unresolved_edge_count": 3,
+      "self_intersection_or_collapse_count": 2,
+      "notes": [
+        "Aggregate diagnostic only; detailed per-candidate evidence remains in the local search output."
+      ]
+    },
+    {
+      "case_name": "task238_ann2389",
+      "case_category": "ineligible_safe_skip",
+      "input_file": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/task238_ann2389_m1516_stabilized_input.json",
+      "assertion_source": "inline",
+      "applicability_status": "ineligible_safe_skip",
+      "generated_count": 0,
+      "retained_count": 0,
+      "joint_candidate_count": 0,
+      "direct_fix_available": false,
+      "best_executable_candidate_id": null,
+      "best_executable_family": null,
+      "best_executable_decision_class": null,
+      "best_joint_candidate_id": null,
+      "best_joint_family": null,
+      "best_joint_decision_class": null,
+      "primary_unresolved_edges": [],
+      "persistent_short_wall_edges": [],
+      "assertion_violation_count": 0,
+      "new_unresolved_edge_count": 0,
+      "self_intersection_or_collapse_count": 0,
+      "notes": [
+        "M15.22 joint families require pairs 5/6/7/8; available pair count is 6 and assertion window is [2, 3, 4, 5]."
+      ]
+    }
+  ],
+  "summary": {
+    "applicable_count": 2,
+    "ineligible_safe_skip_count": 1,
+    "error_count": 0,
+    "direct_fix_available_count": 0
+  }
+}
