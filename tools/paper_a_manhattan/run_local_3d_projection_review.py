@@ -3,17 +3,18 @@
 from __future__ import annotations
 
 import argparse
+import base64
 import copy
 import datetime as dt
 import hashlib
-import html
 import json
+import mimetypes
 import os
 import re
 import sys
 from pathlib import Path
 from typing import Any, Mapping, Sequence
-from urllib.parse import unquote, urlparse
+from urllib.parse import quote, unquote, urlparse
 
 REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
@@ -30,7 +31,9 @@ from tools.paper_a_manhattan.run_single_image_manhattan_assist import (  # noqa:
 )
 
 
-REVIEW_SCHEMA_VERSION = "local_3d_projection_review_m15_19_v1"
+REVIEW_SCHEMA_VERSION = "local_3d_projection_review_m15_19_2_v1"
+INSPECTION_SCHEMA_VERSION = "local_3d_inspection_m15_19_2_v1"
+MAX_EMBEDDED_IMAGE_BYTES = 8 * 1024 * 1024
 SAFETY_BOUNDARY = {
     "expert_side": True,
     "offline_local_only": True,
@@ -57,6 +60,36 @@ def _sha256(path: Path) -> str:
         for block in iter(lambda: handle.read(1024 * 1024), b""):
             digest.update(block)
     return digest.hexdigest()
+
+
+def _embedded_image_data_url(
+    path: Path | None, *, max_bytes: int = MAX_EMBEDDED_IMAGE_BYTES
+) -> tuple[str | None, dict[str, Any]]:
+    if path is None or not path.is_file():
+        return None, {
+            "embedded": False,
+            "reason": "local_image_unavailable",
+            "mime_type": None,
+            "source_bytes": None,
+        }
+    size = path.stat().st_size
+    mime_type = mimetypes.guess_type(path.name)[0] or "application/octet-stream"
+    if size > max_bytes:
+        return None, {
+            "embedded": False,
+            "reason": "image_exceeds_embed_limit",
+            "mime_type": mime_type,
+            "source_bytes": size,
+            "max_bytes": max_bytes,
+        }
+    encoded = base64.b64encode(path.read_bytes()).decode("ascii")
+    return f"data:{mime_type};base64,{encoded}", {
+        "embedded": True,
+        "reason": "embedded_for_file_protocol",
+        "mime_type": mime_type,
+        "source_bytes": size,
+        "max_bytes": max_bytes,
+    }
 
 
 def _source_image(payload: Mapping[str, Any]) -> str | None:
@@ -507,8 +540,14 @@ def _wall_residual(variant: Mapping[str, Any], from_pair: int, to_pair: int) -> 
 def render_markdown_report(payload: Mapping[str, Any]) -> str:
     provenance = payload["input_provenance"]
     image_info = provenance["image"]
+    assets = payload.get("local_review_assets", {})
     variants = payload["variants"]
     original = variants[0]
+    auto_ls_warning = (
+        payload["coordinate_mode_requested"] == "auto"
+        and "auto_coordinate_mode_ambiguous_values_fit_both_ls_percent_and_small_pixel_range"
+        in original["projection"].get("warnings", [])
+    )
     lines = [
         "# Local 3D Projection Review",
         "",
@@ -525,8 +564,19 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         f"- Local image: `{image_info.get('image_path')}`",
         f"- Image exists: `{image_info.get('image_exists')}`",
         f"- Image SHA-256: `{image_info.get('image_sha256')}`",
+        f"- Viewer URL: `{assets.get('viewer_url')}`",
+        f"- Image URL for viewer: `{assets.get('image_url_for_viewer')}`",
+        f"- Texture expected: `{assets.get('texture_expected')}`",
         "- Network access used: `False`",
         "",
+        *(
+            [
+                "> **Coordinate warning:** input was inferred as LS percent from an ambiguous 0–100 range. For Label Studio inputs, rerun with `--coordinate-mode ls_percent`.",
+                "",
+            ]
+            if auto_ls_warning
+            else []
+        ),
         "## Human Review Summary",
         "",
         "Local-only diagnostic. No annotation changes are produced.",
@@ -680,29 +730,184 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
     return "\n".join(lines)
 
 
-def _relative_asset_url(target: Path, out_dir: Path, local_server_root: Path | None) -> str | None:
+def _relative_asset_url(target: Path, base_dir: Path) -> str:
     target = target.resolve()
-    out_dir = out_dir.resolve()
-    if local_server_root is not None:
-        root = local_server_root.resolve()
-        try:
-            target.relative_to(root)
-            out_dir.relative_to(root)
-        except ValueError:
-            return None
+    base_dir = base_dir.resolve()
     try:
-        return Path(os.path.relpath(target, out_dir)).as_posix()
+        relative = Path(os.path.relpath(target, base_dir)).as_posix()
+        return quote(relative, safe="/.")
     except ValueError:
         # Windows cannot form a relative path across drive letters.  This is
         # still local-only; localhost serving should instead use a common root.
         return target.as_uri()
 
 
+def _server_root_asset_url(target: Path, local_server_root: Path) -> str | None:
+    try:
+        relative = target.resolve().relative_to(local_server_root.resolve())
+    except ValueError:
+        return None
+    return "/" + quote(relative.as_posix(), safe="/.")
+
+
+def _build_review_asset_urls(
+    *,
+    viewer_path: Path,
+    resolved_image: Path | None,
+    out_dir: Path,
+    local_server_root: Path | None,
+) -> tuple[str, str | None]:
+    """Build URLs against the document that actually consumes each asset.
+
+    The wrapper consumes ``viewer_url``.  The iframe document consumes
+    ``image_url_for_viewer``.  They therefore cannot share the same relative
+    base unless both are emitted as server-root URLs.
+    """
+
+    if local_server_root is not None:
+        root = local_server_root.resolve()
+        try:
+            out_dir.resolve().relative_to(root)
+        except ValueError as exc:
+            raise ValueError("output directory is outside --local-server-root") from exc
+        viewer_url = _server_root_asset_url(viewer_path, root)
+        if viewer_url is None:
+            raise ValueError("vis_3d.html is outside --local-server-root")
+        image_url = (
+            _server_root_asset_url(resolved_image, root)
+            if resolved_image is not None
+            else None
+        )
+        return viewer_url, image_url
+
+    viewer_url = _relative_asset_url(viewer_path, out_dir)
+    image_url = (
+        _relative_asset_url(resolved_image, viewer_path.parent)
+        if resolved_image is not None
+        else None
+    )
+    return viewer_url, image_url
+
+
+def _inspection_metadata(variant: Mapping[str, Any]) -> dict[str, Any]:
+    projection_pairs = list(variant["projection"]["pairs"])
+    heights = {
+        int(row["effective_pair_index"]): row
+        for row in variant["metrics"]["heights"]["pairs"]
+    }
+    corner_turns = {
+        int(row["corner_pair_index"]): row
+        for row in variant["metrics"]["corner_turns"]["corners"]
+    }
+    pairs: list[dict[str, Any]] = []
+    issues: list[dict[str, Any]] = []
+    for pair in projection_pairs:
+        pair_index = int(pair["effective_pair_index"])
+        height = heights.get(pair_index, {})
+        turn = corner_turns.get(pair_index, {})
+        pairs.append(
+            {
+                "effective_pair_index": pair_index,
+                "source_preview_order_index": pair.get("source_preview_order_index"),
+                "input": pair["input"],
+                "normalized": pair["normalized"],
+                "floor_3d": pair["floor_3d"],
+                "ceiling_3d": pair["ceiling_3d"],
+                "wall_height": pair["wall_height"],
+                "top_bottom_x_residual": pair["top_bottom_x_residual"],
+                "height_residual": height.get("height_residual"),
+                "local_height_residual": height.get("local_height_residual"),
+                "suspicious_low_height": height.get("suspicious_low_height", False),
+                "suspicious_high_height": height.get("suspicious_high_height", False),
+                "previous_wall_index": turn.get("prev_wall_index"),
+                "next_wall_index": turn.get("next_wall_index"),
+                "junction_angle_deg": turn.get("turn_angle_deg"),
+                "junction_residual_to_90_deg": turn.get(
+                    "angle_to_90_residual_deg"
+                ),
+                "junction_angle_kind": "unsigned_smaller_floorprint_angle_0_180",
+                "turn_warning": turn.get("warning_far_from_90", False),
+                "warnings": pair.get("warnings", []),
+            }
+        )
+        if height.get("suspicious_low_height") or height.get("suspicious_high_height"):
+            issues.append(
+                {
+                    "priority": 3,
+                    "type": "height",
+                    "pair_index": pair_index,
+                    "severity": abs(float(height.get("height_residual", 0.0))),
+                }
+            )
+        if turn.get("warning_far_from_90"):
+            issues.append(
+                {
+                    "priority": 2,
+                    "type": "corner",
+                    "pair_index": pair_index,
+                    "severity": float(turn.get("angle_to_90_residual_deg", 0.0)),
+                }
+            )
+
+    walls = [dict(row) for row in variant["metrics"]["floorprint"]["walls"]]
+    for wall in walls:
+        if wall.get("angle_warning"):
+            issues.append(
+                {
+                    "priority": 1,
+                    "type": "wall",
+                    "wall_index": int(wall["wall_index"]),
+                    "severity": float(wall["angle_residual_deg"]),
+                }
+            )
+        if wall.get("short_wall"):
+            issues.append(
+                {
+                    "priority": 4,
+                    "type": "wall",
+                    "wall_index": int(wall["wall_index"]),
+                    "severity": max(
+                        0.0,
+                        float(wall.get("short_wall_threshold", 0.0))
+                        - float(wall["floor_wall_length"]),
+                    ),
+                    "reason": "short_wall",
+                }
+            )
+    if variant["metrics"]["floorprint"].get("self_intersection"):
+        issues.append(
+            {"priority": 0, "type": "layout", "severity": 1.0, "reason": "self_intersection"}
+        )
+    issues.sort(key=lambda row: (int(row["priority"]), -float(row["severity"])))
+    return {
+        "schema_version": INSPECTION_SCHEMA_VERSION,
+        "variant_name": variant["name"],
+        "pairs": pairs,
+        "walls": walls,
+        "issues": issues,
+    }
+
+
+def _windows_launcher_text(out_dir: Path, html_path: Path) -> str:
+    repo_relative_from_output = Path(os.path.relpath(REPO_ROOT, out_dir)).as_posix()
+    review_relative = html_path.resolve().relative_to(REPO_ROOT).as_posix()
+    repo_windows = repo_relative_from_output.replace("/", "\\")
+    review_windows = review_relative.replace("/", "\\")
+    return (
+        "@echo off\r\n"
+        "setlocal\r\n"
+        f'for %%I in ("%~dp0{repo_windows}") do set "REPO_ROOT=%%~fI"\r\n'
+        'cd /d "%REPO_ROOT%"\r\n'
+        "python tools\\paper_a_manhattan\\serve_local_3d_projection_review.py "
+        f'--repo-root "%REPO_ROOT%" --review "{review_windows}"\r\n'
+        "if errorlevel 1 pause\r\n"
+    )
+
+
 def render_review_html(
     payload: Mapping[str, Any],
     *,
-    viewer_url: str,
-    image_url: str | None,
+    file_image_data_url: str | None,
 ) -> str:
     minimal_variants = []
     for variant in payload["variants"]:
@@ -715,22 +920,43 @@ def render_review_html(
             for pair in variant["projection"]["pairs"]
         ]
         minimal_variants.append(
-            {"name": variant["name"], "corners": corners, "summary": variant["summary"]}
+            {
+                "name": variant["name"],
+                "corners": corners,
+                "summary": variant["summary"],
+                "inspection": _inspection_metadata(variant),
+            }
         )
+    assets = payload["local_review_assets"]
     data = {
         "width": payload["width"],
         "height": payload["height"],
-        "imageUrl": image_url,
+        "assets": {
+            "server": {
+                "viewerUrl": assets["server"]["viewer_url"],
+                "imageUrl": assets["server"]["image_url_for_viewer"],
+                "textureExpected": assets["server"]["texture_expected"],
+            },
+            "file": {
+                "viewerUrl": assets["file"]["viewer_url"],
+                "imageUrl": file_image_data_url,
+                "textureExpected": bool(file_image_data_url),
+                "embed": assets["file"]["embed"],
+            },
+        },
+        "coordinateModeRequested": payload["coordinate_mode_requested"],
+        "coordinateWarnings": payload["variants"][0]["projection"].get("warnings", []),
         "variants": minimal_variants,
         "provenance": {
             "input": payload["input_provenance"]["input_file"],
-            "inputSha256": payload["input_provenance"]["input_sha256"],
-            "imageSha256": payload["input_provenance"]["image"].get("image_sha256"),
-            "coordinateMode": payload["variants"][0]["projection"]["coordinate_mode"],
+            "input_sha256": payload["input_provenance"]["input_sha256"],
+            "image_exists": payload["input_provenance"]["image"].get("image_exists"),
+            "image_sha256": payload["input_provenance"]["image"].get("image_sha256"),
+            "coordinate_mode_requested": payload["coordinate_mode_requested"],
+            "coordinate_mode_effective": payload["variants"][0]["projection"]["coordinate_mode"],
         },
     }
     encoded = json.dumps(data, ensure_ascii=False).replace("<", "\\u003c")
-    safe_viewer = html.escape(viewer_url, quote=True)
     return f"""<!doctype html>
 <html lang="en">
 <head>
@@ -743,8 +969,8 @@ def render_review_html(
     header {{ padding:12px 16px; border-bottom:1px solid #334155; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }}
     button, select {{ padding:7px 10px; border-radius:6px; border:1px solid #475569; background:#172033; color:#fff; }}
     button {{ cursor:pointer; }}
-    #warning {{ color:#fbbf24; font-size:13px; }}
-    main {{ display:grid; grid-template-columns:minmax(0,1fr) 310px; min-height:calc(100vh - 58px); }}
+    #warning {{ display:none; flex-basis:100%; color:#fde68a; background:#78350f; border:1px solid #b45309; border-radius:6px; padding:8px 10px; font-size:13px; font-weight:650; }}
+    main {{ display:grid; grid-template-columns:minmax(0,1fr) 370px; min-height:calc(100vh - 58px); }}
     #views {{ display:grid; grid-template-columns:1fr; gap:8px; padding:8px; }}
     #views.side {{ grid-template-columns:1fr 1fr; }}
     iframe {{ width:100%; min-height:620px; border:1px solid #334155; border-radius:8px; background:#111; }}
@@ -753,25 +979,41 @@ def render_review_html(
     aside {{ padding:14px; border-left:1px solid #334155; background:#111827; overflow:auto; }}
     pre {{ white-space:pre-wrap; overflow-wrap:anywhere; font-size:12px; }}
     .muted {{ color:#94a3b8; font-size:12px; }}
+    .active {{ background:#2563eb; border-color:#60a5fa; }}
+    .toolbar-group {{ display:flex; gap:5px; align-items:center; }}
   </style>
 </head>
 <body>
   <header>
-    <strong>M15.19 Local 3D Review</strong>
+    <strong>M15.19.2 Local 3D Inspection Workbench</strong>
     <label>Variant <select id="variant"></select></label>
     <button id="side" type="button">Side-by-side</button>
     <button id="labels" type="button">Hide labels</button>
+    <button id="heatmap" type="button">Heatmap</button>
+    <button id="ghost" type="button">Ghost original</button>
+    <button id="measure" type="button">Measure</button>
+    <button id="next-issue" type="button">Next issue</button>
+    <span class="toolbar-group">
+      <button data-camera="top" type="button">Top</button>
+      <button data-camera="isometric" type="button">Isometric</button>
+      <button data-camera="inside" type="button">Inside</button>
+      <button data-camera="reset" type="button">Reset view</button>
+    </span>
     <span id="warning"></span>
   </header>
   <main>
     <section id="views">
-      <iframe id="left-view" title="selected geometry" src="{safe_viewer}"></iframe>
-      <iframe id="right-view" title="original geometry" src="{safe_viewer}"></iframe>
+      <iframe id="left-view" title="selected geometry"></iframe>
+      <iframe id="right-view" title="original geometry"></iframe>
     </section>
     <aside>
+      <h3>Inspector</h3><pre id="inspector">Click a corner or wall.</pre>
+      <h3>Measurement</h3><pre id="measurement">Measure mode is off.</pre>
       <h3>Metric summary</h3><pre id="metrics"></pre>
+      <h3>Viewer / texture status</h3><pre id="texture-status"></pre>
       <h3>Provenance</h3><pre id="provenance"></pre>
-      <p class="muted">Read-only local diagnostic. If a texture is blocked under file://, run <code>python -m http.server &lt;repo_or_review_root&gt;</code> and open this page through localhost.</p>
+      <p class="muted">Wall click: global-XZ heading and Manhattan-axis deviation. Corner click: angle between its previous and next wall. Heatmap: green ≤5°, orange ≤15°, red &gt;15°, purple = short wall.</p>
+      <p class="muted">Read-only local diagnostic. Open this HTML directly to use its embedded local texture, or double-click <code>open_local_3d_review.cmd</code> for localhost mode.</p>
     </aside>
   </main>
   <script>
@@ -781,33 +1023,156 @@ def render_review_html(
     const left = document.getElementById('left-view');
     const right = document.getElementById('right-view');
     const metrics = document.getElementById('metrics');
+    const inspector = document.getElementById('inspector');
+    const measurement = document.getElementById('measurement');
+    const warning = document.getElementById('warning');
+    const textureStatus = document.getElementById('texture-status');
+    const provenance = document.getElementById('provenance');
+    const activeMode = window.location.protocol === 'file:' ? 'file' : 'server';
+    const activeAssets = REVIEW.assets[activeMode];
+    const viewerStates = {{left:'loading', right:'loading'}};
+    const viewerReasons = {{left:'waiting_for_viewer_ready', right:'waiting_for_viewer_ready'}};
+    const viewerTimeouts = {{left:null, right:null}};
+    const textureStates = {{left: activeAssets.textureExpected ? 'pending' : 'unavailable', right: activeAssets.textureExpected ? 'pending' : 'unavailable'}};
+    const textureReasons = {{left: null, right: null}};
+    const textureTimeouts = {{left: null, right: null}};
     let labelsVisible = true;
+    let heatmapVisible = false;
+    let ghostVisible = false;
+    let measureMode = false;
+    let issueCursor = -1;
     REVIEW.variants.forEach((variant, index) => {{
       const option = document.createElement('option'); option.value = index; option.textContent = variant.name; select.appendChild(option);
     }});
-    if (!REVIEW.imageUrl) document.getElementById('warning').textContent = 'Texture unavailable; geometry remains reviewable.';
+    function updateTextureUi() {{
+      const warnings = [];
+      if (REVIEW.coordinateModeRequested === 'auto' && REVIEW.coordinateWarnings.includes('auto_coordinate_mode_ambiguous_values_fit_both_ls_percent_and_small_pixel_range')) {{
+        warnings.push('Coordinate mode was inferred as LS percent. For Label Studio inputs, rerun with --coordinate-mode ls_percent.');
+      }}
+      if (viewerStates.left === 'failed') {{
+        warnings.push('The 3D viewer did not load. Use open_local_3d_review.cmd or verify the viewer path.');
+      }} else if (!activeAssets.textureExpected) {{
+        warnings.push('Texture unavailable; geometry remains reviewable.');
+      }} else if (textureStates.left === 'failed' || textureStates.left === 'unavailable') {{
+        warnings.push('Local image exists but the 3D viewer did not load its texture. Do not treat this review as visually verified.');
+      }}
+      warning.textContent = warnings.join(' ');
+      warning.style.display = warnings.length ? 'block' : 'none';
+      textureStatus.textContent = JSON.stringify({{
+        mode: activeMode,
+        selected_viewer: viewerStates.left,
+        selected_viewer_reason: viewerReasons.left,
+        selected_view: textureStates.left,
+        selected_reason: textureReasons.left,
+        original_view: textureStates.right,
+        original_reason: textureReasons.right
+      }}, null, 2);
+      provenance.textContent = JSON.stringify({{
+        ...REVIEW.provenance,
+        active_mode: activeMode,
+        viewer_url: activeAssets.viewerUrl,
+        image_url_for_viewer: activeMode === 'file' ? 'embedded_data_url' : activeAssets.imageUrl,
+        texture_expected: activeAssets.textureExpected,
+        viewer_load_status: viewerStates.left,
+        texture_load_status: textureStates.left
+      }}, null, 2);
+    }}
+    window.addEventListener('message', (event) => {{
+      const data = event.data;
+      if (!data || typeof data !== 'object') return;
+      const key = event.source === left.contentWindow ? 'left' : (event.source === right.contentWindow ? 'right' : null);
+      if (!key) return;
+      if (data.type === 'hohonet_viewer_ready') {{
+        clearTimeout(viewerTimeouts[key]);
+        viewerStates[key] = 'ready';
+        viewerReasons[key] = data.version || 'viewer_ready';
+        sendLayout(key === 'left' ? left : right, key === 'left' ? selectedVariant() : REVIEW.variants[0]);
+        updateTextureUi();
+        return;
+      }}
+      if (data.type === 'hohonet_geometry_selection') {{
+        if (key === 'left') inspector.textContent = JSON.stringify(data.selection || {{}}, null, 2);
+        return;
+      }}
+      if (data.type === 'hohonet_measurement_status') {{
+        if (key === 'left') measurement.textContent = JSON.stringify(data.measurement || {{}}, null, 2);
+        return;
+      }}
+      if (data.type !== 'hohonet_texture_status') return;
+      textureStates[key] = data.status || (data.hasTexture ? 'loaded' : 'failed');
+      textureReasons[key] = data.reason || null;
+      if (textureStates[key] === 'loaded' || textureStates[key] === 'failed' || textureStates[key] === 'unavailable') {{
+        clearTimeout(textureTimeouts[key]);
+        textureTimeouts[key] = null;
+      }}
+      updateTextureUi();
+    }});
+    function selectedVariant() {{ return REVIEW.variants[Number(select.value || 0)]; }}
+    function postInspectionCommand(command, payload = {{}}) {{
+      if (viewerStates.left !== 'ready') return;
+      left.contentWindow.postMessage({{type:'hohonet_inspection_command', command, ...payload}}, '*');
+    }}
     function sendLayout(frame, variant) {{
-      if (!frame.contentWindow) return;
+      const key = frame === left ? 'left' : 'right';
+      if (!frame.contentWindow || viewerStates[key] !== 'ready') return;
+      if (activeAssets.textureExpected) {{
+        clearTimeout(textureTimeouts[key]);
+        textureStates[key] = 'pending';
+        textureReasons[key] = 'waiting_for_viewer_texture_status';
+      }}
       frame.contentWindow.postMessage({{
         type: 'update_layout', corners: variant.corners, baseCorners: variant.corners,
         previewOrder: variant.corners.map((_, i) => i), previewOrderActive: true,
         preserveOrder: true, width: REVIEW.width, height: REVIEW.height,
-        imageUrl: REVIEW.imageUrl, previewSignature: 'm15-19-' + variant.name
+        imageUrl: activeAssets.imageUrl, previewSignature: 'm15-19-2-' + variant.name,
+        variantName: variant.name, inspectionMode: true,
+        inspectionMetadata: variant.inspection,
+        ghostCorners: ghostVisible && variant.name !== 'original' ? REVIEW.variants[0].corners : null,
+        displayOptions: {{heatmap:heatmapVisible, ghost:ghostVisible, measureMode}}
       }}, '*');
       frame.contentWindow.postMessage({{type:'set_label_visibility', visible:labelsVisible}}, '*');
+      if (activeAssets.textureExpected) {{
+        textureTimeouts[key] = setTimeout(() => {{
+          if (textureStates[key] === 'pending' || textureStates[key] === 'loading') {{
+            textureStates[key] = 'failed';
+            textureReasons[key] = 'texture_status_timeout';
+            updateTextureUi();
+          }}
+        }}, 5000);
+      }}
+      updateTextureUi();
     }}
     function refresh() {{
-      const selected = REVIEW.variants[Number(select.value || 0)];
+      const selected = selectedVariant();
       sendLayout(left, selected); sendLayout(right, REVIEW.variants[0]);
       metrics.textContent = JSON.stringify(selected.summary, null, 2);
+      inspector.textContent = 'Click a corner or wall.';
+      issueCursor = -1;
     }}
-    left.addEventListener('load', refresh); right.addEventListener('load', refresh); select.addEventListener('change', refresh);
+    function initializeFrame(frame, key) {{
+      viewerTimeouts[key] = setTimeout(() => {{
+        if (viewerStates[key] !== 'ready') {{
+          viewerStates[key] = 'failed'; viewerReasons[key] = 'viewer_ready_timeout'; updateTextureUi();
+        }}
+      }}, 5000);
+      frame.src = activeAssets.viewerUrl;
+    }}
+    select.addEventListener('change', refresh);
     document.getElementById('side').addEventListener('click', () => {{ views.classList.toggle('side'); refresh(); }});
     document.getElementById('labels').addEventListener('click', (event) => {{
       labelsVisible = !labelsVisible; event.currentTarget.textContent = labelsVisible ? 'Hide labels' : 'Show labels'; refresh();
     }});
-    document.getElementById('provenance').textContent = JSON.stringify(REVIEW.provenance, null, 2);
-    setTimeout(refresh, 300);
+    document.getElementById('heatmap').addEventListener('click', (event) => {{ heatmapVisible = !heatmapVisible; event.currentTarget.classList.toggle('active', heatmapVisible); refresh(); }});
+    document.getElementById('ghost').addEventListener('click', (event) => {{ ghostVisible = !ghostVisible; event.currentTarget.classList.toggle('active', ghostVisible); refresh(); }});
+    document.getElementById('measure').addEventListener('click', (event) => {{ measureMode = !measureMode; event.currentTarget.classList.toggle('active', measureMode); measurement.textContent = measureMode ? 'Select two corner points.' : 'Measure mode is off.'; postInspectionCommand('set_measure_mode', {{enabled:measureMode}}); }});
+    document.getElementById('next-issue').addEventListener('click', () => {{
+      const issues = selectedVariant().inspection.issues || []; if (!issues.length) return;
+      issueCursor = (issueCursor + 1) % issues.length; postInspectionCommand('select_issue', {{issue:issues[issueCursor]}});
+    }});
+    document.querySelectorAll('[data-camera]').forEach((button) => button.addEventListener('click', () => postInspectionCommand('camera_preset', {{preset:button.dataset.camera}})));
+    metrics.textContent = JSON.stringify(selectedVariant().summary, null, 2);
+    updateTextureUi();
+    initializeFrame(left, 'left'); initializeFrame(right, 'right');
   </script>
 </body>
 </html>
@@ -912,29 +1277,63 @@ def run_local_review(
     json_path = out_dir / "projection_metrics.json"
     report_path = out_dir / "projection_review_report.md"
     html_path = out_dir / "local_3d_review.html"
+    launcher_path = out_dir / "open_local_3d_review.cmd"
     viewer_path = Path(__file__).resolve().parents[1] / "label_studio" / "vis_3d.html"
-    viewer_url = _relative_asset_url(viewer_path, out_dir, local_server_root)
-    if viewer_url is None:
-        raise ValueError("vis_3d.html is outside --local-server-root")
-    image_url = (
-        _relative_asset_url(resolved_image, out_dir, local_server_root)
-        if resolved_image is not None
-        else None
+    server_viewer_url, server_image_url = _build_review_asset_urls(
+        viewer_path=viewer_path,
+        resolved_image=resolved_image,
+        out_dir=out_dir,
+        local_server_root=local_server_root,
     )
-    if resolved_image is not None and image_url is None:
+    file_viewer_url, _ = _build_review_asset_urls(
+        viewer_path=viewer_path,
+        resolved_image=resolved_image,
+        out_dir=out_dir,
+        local_server_root=None,
+    )
+    file_image_data_url, embed_info = _embedded_image_data_url(resolved_image)
+    if resolved_image is not None and server_image_url is None:
         review_payload["input_provenance"]["image"]["warnings"].append(
             "resolved_image_outside_local_server_root_texture_unavailable"
         )
+    server_texture_expected = bool(
+        resolved_image is not None
+        and review_payload["input_provenance"]["image"]["image_exists"]
+        and server_image_url
+    )
+    review_payload["local_review_assets"] = {
+        "viewer_url": server_viewer_url,
+        "image_url_for_viewer": server_image_url,
+        "texture_expected": server_texture_expected,
+        "server": {
+            "viewer_url": server_viewer_url,
+            "image_url_for_viewer": server_image_url,
+            "texture_expected": server_texture_expected,
+        },
+        "file": {"viewer_url": file_viewer_url, "embed": embed_info},
+    }
 
     json_path.write_text(
         json.dumps(review_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
     )
     report_path.write_text(render_markdown_report(review_payload), encoding="utf-8")
     html_path.write_text(
-        render_review_html(review_payload, viewer_url=viewer_url, image_url=image_url),
+        render_review_html(review_payload, file_image_data_url=file_image_data_url),
         encoding="utf-8",
     )
-    return {"json": json_path, "report": report_path, "html": html_path}
+    output_paths = {
+        "json": json_path,
+        "report": report_path,
+        "html": html_path,
+    }
+    try:
+        launcher_text = _windows_launcher_text(out_dir, html_path)
+    except ValueError:
+        pass
+    else:
+        launcher_path.write_text(launcher_text, encoding="utf-8", newline="")
+        output_paths["launcher"] = launcher_path
+    return output_paths
 
 
 def _build_parser() -> argparse.ArgumentParser:

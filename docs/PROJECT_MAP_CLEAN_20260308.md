@@ -31,11 +31,12 @@
 - `tools/paper_a_manhattan/`
   - Paper A Manhattan / sandbox / expert review / post-hoc audit-only 工具。
   - `dev_only/`：Manhattan sandbox userscripts。
-  - `manhattan_3d_projection.py` 与 `run_local_3d_projection_review.py`：M15.19 本地 2D→3D 公式镜像、几何指标和只读 review 产物生成；不连接云端、不写回、不进入正式 artifact。
+  - `manhattan_3d_projection.py`、`run_local_3d_projection_review.py` 与 `serve_local_3d_projection_review.py`：M15.19–M15.19.2 本地 2D→3D 公式镜像、几何指标、file/localhost 双模式贴图、只读 3D inspection workbench 和 loopback launcher；不连接云端、不写回、不进入正式 artifact。
 - `tools/paper_b/`
   - Paper B 工具。当前包括 `validate_b0_relabel_audit.py`；后续 B0/B1/B2 训练、cue、bilayout、审计脚本只进本目录。
 - `tools/label_studio/`
   - 三条线共享的 Label Studio XML、3D viewer、server/CORS、COS/upload、import/build helper 和 `official/`。
+  - `vis_3d_pre_m15_19_2_backup.html`：commit `f6d53b0` 的 viewer 原样备份，仅用于回滚/对照，不是运行时入口。
   - 云服务器运行时 URL `/tools/vis_3d.html` 保持兼容，这是部署路由，不代表源码仍在 `tools/` 根目录。
 - `tools/legacy/`、`tools/legacy_server/`、`tools/backups/`
   - 历史或备份目录，默认不迁移、不修订。

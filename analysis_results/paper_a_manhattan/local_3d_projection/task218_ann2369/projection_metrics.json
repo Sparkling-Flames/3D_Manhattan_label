@@ -1,7 +1,7 @@
 {
-  "schema_version": "local_3d_projection_review_m15_19_v1",
+  "schema_version": "local_3d_projection_review_m15_19_2_v1",
   "case_name": "task218_ann2369",
-  "coordinate_mode_requested": "auto",
+  "coordinate_mode_requested": "ls_percent",
   "width": 1024,
   "height": 512,
   "camera_height": 1.6,
@@ -147,12 +147,10 @@
         "schema_version": "local_3d_projection_m15_19_v1",
         "coordinate_mode": "ls_percent",
         "coordinate_provenance": {
-          "coordinate_mode_requested": "auto",
+          "coordinate_mode_requested": "ls_percent",
           "coordinate_mode": "ls_percent",
-          "inference_reason": "all coordinates are within 0..100; LS/result/report inputs preferentially use ls_percent",
-          "warnings": [
-            "auto_coordinate_mode_ambiguous_values_fit_both_ls_percent_and_small_pixel_range"
-          ]
+          "inference_reason": "coordinate mode explicitly set to ls_percent",
+          "warnings": []
         },
         "width": 1024,
         "height": 512,
@@ -471,9 +469,7 @@
             "warnings": []
           }
         ],
-        "warnings": [
-          "auto_coordinate_mode_ambiguous_values_fit_both_ls_percent_and_small_pixel_range"
-        ]
+        "warnings": []
       },
       "metrics": {
         "floorprint": {
@@ -1223,10 +1219,28 @@
         "minimum_wall_length": 1.0776699261214207,
         "short_wall_count": 0,
         "self_intersection": false,
-        "warnings": [
-          "auto_coordinate_mode_ambiguous_values_fit_both_ls_percent_and_small_pixel_range"
-        ]
+        "warnings": []
       }
     }
-  ]
+  ],
+  "local_review_assets": {
+    "viewer_url": "/tools/label_studio/vis_3d.html",
+    "image_url_for_viewer": "/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+    "texture_expected": true,
+    "server": {
+      "viewer_url": "/tools/label_studio/vis_3d.html",
+      "image_url_for_viewer": "/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "texture_expected": true
+    },
+    "file": {
+      "viewer_url": "../../../../tools/label_studio/vis_3d.html",
+      "embed": {
+        "embedded": true,
+        "reason": "embedded_for_file_protocol",
+        "mime_type": "image/jpeg",
+        "source_bytes": 60612,
+        "max_bytes": 8388608
+      }
+    }
+  }
 }

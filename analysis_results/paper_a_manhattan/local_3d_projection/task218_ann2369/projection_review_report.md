@@ -2,17 +2,20 @@
 
 ## Input Provenance
 
-- Review schema: `local_3d_projection_review_m15_19_v1`
+- Review schema: `local_3d_projection_review_m15_19_2_v1`
 - Projection schema: `local_3d_projection_m15_19_v1`
 - Input file: `task218_ann2369_m1516_stabilized_input.json`
 - Input SHA-256: `eeb4bcd6b6546b61069904b03e4e28cddd7fe15ea76832194b270e0085669541`
 - Ordered-pair source: `build_single_image_assist.ordered_pairs`
-- coordinate_mode requested/effective: `auto` / `ls_percent`
+- coordinate_mode requested/effective: `ls_percent` / `ls_percent`
 - W / H / CAM_H: `1024` / `512` / `1.6`
 - Image source basename: `q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg`
 - Local image: `q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg`
 - Image exists: `True`
 - Image SHA-256: `2c2f9794ddc2bcb70fc54ceb303614eba35a018b5693d89717e7e61e8241f220`
+- Viewer URL: `/tools/label_studio/vis_3d.html`
+- Image URL for viewer: `/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg`
+- Texture expected: `True`
 - Network access used: `False`
 
 ## Human Review Summary

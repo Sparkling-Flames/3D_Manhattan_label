@@ -435,6 +435,71 @@ def test_vis_3d_handles_label_visibility_messages_and_preserves_state_on_rebuild
         assert required in text
 
 
+def test_vis_3d_reports_texture_load_status_to_parent():
+    text = read(Path("tools/label_studio/vis_3d.html"))
+    for required in [
+        'type: "hohonet_texture_status"',
+        'reportTextureStatus("loading", false, imageUrl, "texture_load_requested")',
+        'reportTextureStatus("loaded", true, imageUrl, "texture_load_succeeded")',
+        'reportTextureStatus("failed", false, imageUrl, "texture_load_failed")',
+        'reportTextureStatus("unavailable", false, null, "image_url_unavailable")',
+    ]:
+        assert required in text
+
+
+def test_vis_3d_gates_read_only_inspection_and_reports_selections():
+    text = read(Path("tools/label_studio/vis_3d.html"))
+    for required in [
+        "inspectionState.enabled = data.inspectionMode === true",
+        'type: "hohonet_viewer_ready"',
+        'type: "hohonet_geometry_selection"',
+        'type: "hohonet_measurement_status"',
+        'data.type === "hohonet_inspection_command"',
+        'data.command === "set_measure_mode"',
+        'data.command === "camera_preset"',
+        'data.command === "select_issue"',
+        "raycaster.intersectObjects(interactiveObjects, false)",
+        'hit.object.userData.hohonetInspectionType === "corner"',
+        "inspectionState.displayOptions.heatmap",
+        "inspectionState.displayOptions.ghost",
+        "focusInspectionPoint",
+        "function addCornerAngleGuide(pairIndex, endpoint)",
+        "wall-to-wall angle:",
+        "heading (global XZ):",
+        "deviation from axis:",
+        'heading_reference: "global_xz_counterclockwise_from_positive_x"',
+        "junction_residual_to_90_deg",
+    ]:
+        assert required in text
+
+    load_start = text.index("function loadPreviewFromMessage")
+    load_end = text.index("try {", load_start)
+    load_text = text[load_start:load_end]
+    assert "inspectionMode === true" in load_text
+    assert "data.inspectionMetadata" in load_text
+
+    wall_start = text.index("function selectWall")
+    wall_end = text.index("function focusInspectionPoint", wall_start)
+    wall_text = text[wall_start:wall_end]
+    assert "wall_heading_deg" in wall_text
+    assert "axis_deviation_deg" in wall_text
+    assert "adjacent_corner_angles" not in wall_text
+
+    for forbidden in ["annotation patch", "formal_g_t", "routing decision"]:
+        assert forbidden not in text.lower()
+
+
+def test_pre_m15192_vis_3d_backup_is_not_the_runtime_entrypoint():
+    active = read(Path("tools/label_studio/vis_3d.html"))
+    backup_path = Path("tools/label_studio/vis_3d_pre_m15_19_2_backup.html")
+    backup = read(backup_path)
+
+    assert backup_path.is_file()
+    assert 'version: "m15.19.2"' in active
+    assert 'version: "m15.19.2"' not in backup
+    assert 'type: "hohonet_viewer_ready"' not in backup
+
+
 def test_both_scripts_include_m13_guide_bands_and_transparent_badges():
     for script in [DEBUG_SCRIPT, TIMED_SCRIPT]:
         text = read(script)

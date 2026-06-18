@@ -67,7 +67,8 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - `tools/paper_a_manhattan/run_height_reproject_applicability_smoke.py` runs the M15.10 offline height applicability regression fixture through the review harness and emits JSON rows/summary only; it does not generate y candidates, write annotations, add UI, route, or create formal artifacts.
 - `tools/paper_a_manhattan/run_single_image_manhattan_assist.py` provides the M15.x single-image expert-side diagnostic CLI for preview compatibility, override-pack provenance, RoomLayoutState, Align Pair X suggestions, height applicability rows, conservative height review rows, and verified 3D local assist sidecars; it does not implement UI, apply/writeback, routing, or formal artifacts.
 - `tools/paper_a_manhattan/manhattan_3d_projection.py` mirrors the current `vis_3d.html` projection formula and computes local-only floorprint, turn, height, dense-pair, clamp, and provenance metrics; it is not correctness, GT, writeback, routing, worker scoring, or a formal artifact.
-- `tools/paper_a_manhattan/run_local_3d_projection_review.py` generates M15.19 local JSON/Markdown/HTML reviews from local panorama files and optional M15.18.3 candidates; it does not connect to Label Studio or change annotations.
+- `tools/paper_a_manhattan/run_local_3d_projection_review.py` generates M15.19–M15.19.2 local JSON/Markdown/HTML reviews from local panorama files and optional M15.18.3 candidates, including direct-file embedded textures, iframe-safe localhost URLs, explicit viewer/texture state, and a read-only 3D inspection workbench.
+- `tools/paper_a_manhattan/serve_local_3d_projection_review.py` serves one generated review from repository root on `127.0.0.1`; it is a read-only local launcher helper and does not connect to Label Studio or write annotations.
 
 ## 论文 B 线
 
@@ -102,6 +103,8 @@ B 线覆盖 ambiguity-aware HoHoNet、ZInD mapping、B0 relabel audit、后续�
 - [SOP_labelstudio_experiment.md](label_studio/SOP_labelstudio_experiment.md)
 
 对应工具：`tools/label_studio/`
+
+- `tools/label_studio/vis_3d_pre_m15_19_2_backup.html` is the verbatim `vis_3d.html` snapshot from commit `f6d53b0`, retained only as a pre-M15.19.2 rollback/reference copy; runtime entry points continue to use `vis_3d.html`.
 
 ## Agent 与写入规则
 

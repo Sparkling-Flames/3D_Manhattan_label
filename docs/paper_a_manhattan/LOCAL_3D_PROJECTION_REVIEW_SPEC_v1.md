@@ -129,7 +129,8 @@ M15.19.2 在不改变投影公式、指标语义和只读边界的前提下，�
 - 直接打开 `local_3d_review.html` 时，iframe 使用相对 `vis_3d.html` 路径，本地 panorama 以 data URL 嵌入 HTML；嵌入只用于本地显示，不写入 `projection_metrics.json`。
 - localhost 模式继续使用 repository-root URL；每个仓库内输出目录生成可双击的 `open_local_3d_review.cmd`，由 `serve_local_3d_projection_review.py` 在 `127.0.0.1` 提供只读静态服务。
 - wrapper 必须等待 `hohonet_viewer_ready` 后才发送 layout，并分别报告 viewer load 与 texture load 状态，避免把 iframe 本身未加载误报为贴图失败。
-- 点击 floor/ceiling 角点时显示 pair、source order、输入/归一化坐标、权威 Python 3D 坐标、高度与 turn residual；点击墙面时显示方向、最近 Manhattan 轴、角度 residual、长度、短墙状态和两端相邻 corner 夹角。
+- 点击 floor/ceiling 角点时显示 pair、source order、输入/归一化坐标、权威 Python 3D 坐标、高度，以及该角点前一墙与后一墙在 floorprint 上形成的无符号较小夹角（0–180°）和相对 90° 的 residual；3D viewer 同时绘制两条射线与角弧。
+- 点击墙面时只显示该墙在全局 XZ 平面的 heading、最近 Manhattan 轴 heading、对该轴的 deviation、长度和短墙状态。墙面 heading/axis deviation 不是两面墙之间的夹角，墙间夹角不得重复挂在墙面 selection payload 中。
 - 检查工具包括 residual heatmap、candidate/original ghost overlay、两角点 3D 测量、top/isometric/inside/reset camera preset 和按严重度排序的 issue navigation。
 - 所有交互只选择、观察和测量；不允许拖动角点、保存坐标、生成 patch、写回 annotation 或自动接受 candidate。
 

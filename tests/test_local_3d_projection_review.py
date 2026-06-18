@@ -5,10 +5,20 @@ from pathlib import Path
 import pytest
 
 from tools.paper_a_manhattan.run_local_3d_projection_review import (
+    REPO_ROOT,
+    REVIEW_SCHEMA_VERSION,
     SAFETY_BOUNDARY,
+    _build_review_asset_urls,
+    _inspection_metadata,
+    _windows_launcher_text,
     apply_candidate_row,
+    build_projection_variant,
     resolve_local_image,
     run_local_review,
+)
+from tools.paper_a_manhattan.serve_local_3d_projection_review import (
+    _within,
+    build_server,
 )
 from tools.paper_a_manhattan.run_single_image_manhattan_assist import TOOL_VERSION
 
@@ -53,6 +63,89 @@ def test_candidate_application_is_copy_only_and_aligns_column():
     assert [row["top"]["x"] for row in candidate[1:]] == [35.0, 60.0, 85.0]
 
 
+def test_asset_urls_use_the_consumer_document_or_server_root(tmp_path):
+    root = tmp_path / "repo"
+    viewer = root / "tools" / "label_studio" / "vis_3d.html"
+    image = root / "data" / "mp3d_layout" / "img_v" / "pano.jpg"
+    out_dir = root / "analysis_results" / "review" / "case"
+    viewer.parent.mkdir(parents=True)
+    image.parent.mkdir(parents=True)
+    out_dir.mkdir(parents=True)
+    viewer.write_text("viewer", encoding="utf-8")
+    image.write_bytes(b"image")
+
+    root_viewer_url, root_image_url = _build_review_asset_urls(
+        viewer_path=viewer,
+        resolved_image=image,
+        out_dir=out_dir,
+        local_server_root=root,
+    )
+    assert root_viewer_url == "/tools/label_studio/vis_3d.html"
+    assert root_image_url == "/data/mp3d_layout/img_v/pano.jpg"
+
+    file_viewer_url, file_image_url = _build_review_asset_urls(
+        viewer_path=viewer,
+        resolved_image=image,
+        out_dir=out_dir,
+        local_server_root=None,
+    )
+    assert file_viewer_url == "../../../tools/label_studio/vis_3d.html"
+    assert file_image_url == "../../data/mp3d_layout/img_v/pano.jpg"
+
+
+def test_local_launcher_is_portable_and_server_is_loopback_only(tmp_path):
+    output = REPO_ROOT / "analysis_results" / "paper_a_manhattan" / "local_3d_projection" / "case"
+    launcher = _windows_launcher_text(output, output / "local_3d_review.html")
+    assert "serve_local_3d_projection_review.py" in launcher
+    assert '--repo-root "%REPO_ROOT%"' in launcher
+    assert "analysis_results\\paper_a_manhattan\\local_3d_projection\\case\\local_3d_review.html" in launcher
+    assert str(REPO_ROOT) not in launcher
+
+    root = tmp_path / "repo"
+    root.mkdir()
+    review = root / "review.html"
+    review.write_text("review", encoding="utf-8")
+    assert _within(review, root) == review.resolve()
+    with pytest.raises(ValueError, match="outside repository root"):
+        _within(tmp_path / "outside.html", root)
+    with pytest.raises(ValueError, match="127.0.0.1"):
+        build_server(repo_root=root, host="0.0.0.0", port=0)
+    server = build_server(repo_root=root, port=0)
+    try:
+        assert server.server_address[0] == "127.0.0.1"
+        assert server.server_address[1] > 0
+    finally:
+        server.server_close()
+
+
+def test_inspection_metadata_has_authoritative_corner_wall_and_issue_metrics():
+    variant = build_projection_variant(
+        "original",
+        _ordered_pairs(),
+        width=1024,
+        height=512,
+        coordinate_mode="ls_percent",
+        camera_height=1.6,
+    )
+    inspection = _inspection_metadata(variant)
+
+    assert inspection["schema_version"] == "local_3d_inspection_m15_19_2_v1"
+    assert inspection["pairs"][0]["floor_3d"] == variant["projection"]["pairs"][0]["floor_3d"]
+    pair = inspection["pairs"][0]
+    assert pair["previous_wall_index"] == 4
+    assert pair["next_wall_index"] == 1
+    assert pair["junction_angle_deg"] is not None
+    assert pair["junction_residual_to_90_deg"] is not None
+    assert pair["junction_angle_kind"] == "unsigned_smaller_floorprint_angle_0_180"
+    wall = inspection["walls"][0]
+    assert wall["direction_deg"] is not None
+    assert wall["angle_residual_deg"] is not None
+    assert "adjacent_corner_angles" not in wall
+    assert inspection["issues"] == sorted(
+        inspection["issues"], key=lambda row: (row["priority"], -row["severity"])
+    )
+
+
 def test_local_image_resolver_explicit_path_has_priority(tmp_path):
     root = tmp_path / "images"
     root.mkdir()
@@ -91,13 +184,15 @@ def test_missing_image_still_generates_geometry_only_outputs(tmp_path):
         input_path=input_path,
         out_dir=out_dir,
         image_root=tmp_path / "missing-root",
-        coordinate_mode="ls_percent",
+        coordinate_mode="auto",
     )
 
     assert all(path.is_file() for path in paths.values())
     payload = json.loads(paths["json"].read_text(encoding="utf-8"))
+    assert payload["schema_version"] == REVIEW_SCHEMA_VERSION
     assert payload["input_provenance"]["image"]["image_exists"] is False
     assert "texture unavailable" in paths["html"].read_text(encoding="utf-8").lower()
+    assert "--coordinate-mode ls_percent" in paths["report"].read_text(encoding="utf-8")
 
 
 def test_candidate_metrics_and_static_html_contract(tmp_path):
@@ -138,6 +233,7 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     )
 
     payload = json.loads(paths["json"].read_text(encoding="utf-8"))
+    assert payload["schema_version"] == "local_3d_projection_review_m15_19_2_v1"
     assert [variant["name"] for variant in payload["variants"]] == [
         "original",
         "candidate_1",
@@ -157,6 +253,7 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     }
     assert candidate["summary"]["minimum_dense_floor_3d_separation"] is not None
     assert candidate["summary"]["vertical_x_residual_sum"] < payload["variants"][0]["summary"]["vertical_x_residual_sum"]
+    assert payload["local_review_assets"]["file"]["embed"]["embedded"] is True
 
     page = paths["html"].read_text(encoding="utf-8")
     lower = page.lower()
@@ -164,6 +261,23 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     assert "postMessage" in page
     assert "update_layout" in page
     assert "Hide labels" in page and "Show labels" in page
+    assert "hohonet_texture_status" in page
+    assert "texture_load_status" in page
+    assert "image_url_for_viewer" in page
+    assert "viewer_url" in page
+    assert "texture_expected" in page
+    assert "texture_status_timeout" in page
+    assert "--coordinate-mode ls_percent" in page
+    assert "data:image/jpeg;base64," in page
+    assert "hohonet_viewer_ready" in page
+    assert "hohonet_geometry_selection" in page
+    assert "hohonet_measurement_status" in page
+    assert "inspectionMode: true" in page
+    assert "Heatmap" in page and "Ghost original" in page and "Measure" in page
+    assert "Next issue" in page and 'data-camera="top"' in page
+    assert "junction_angle_kind" in page
+    assert "adjacent_corner_angles" not in page
+    assert '<iframe id="left-view" title="selected geometry"></iframe>' in page
     for forbidden in (
         "fetch(",
         "label studio api",

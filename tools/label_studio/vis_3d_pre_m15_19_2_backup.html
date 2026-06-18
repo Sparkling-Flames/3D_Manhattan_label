@@ -135,30 +135,12 @@
         opacity: 0.45;
         cursor: not-allowed;
       }
-
-      #inspection-hud {
-        display: none;
-        position: absolute;
-        right: 12px;
-        top: 12px;
-        z-index: 35;
-        max-width: 330px;
-        padding: 9px 11px;
-        border: 1px solid rgba(96, 165, 250, 0.55);
-        border-radius: 8px;
-        background: rgba(8, 15, 30, 0.88);
-        color: #e5e7eb;
-        font: 12px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace;
-        white-space: pre-wrap;
-        pointer-events: none;
-      }
     </style>
     <script src="three.min.js"></script>
     <script src="OrbitControls.js"></script>
   </head>
   <body>
     <div id="info">状态：就绪（拖动旋转，滚轮缩放）</div>
-    <div id="inspection-hud">Inspector ready</div>
     <div id="controls">
       <div id="controls-header">
         <div id="controls-title">高级</div>
@@ -234,21 +216,6 @@
       let currentTextureUrl = null;
       let cornerLabelsVisible = true;
       const textureLoader = new THREE.TextureLoader();
-      const raycaster = new THREE.Raycaster();
-      const pointer = new THREE.Vector2();
-      let interactiveObjects = [];
-      let selectionObjects = [];
-      let measurementObjects = [];
-      let inspectionGeometry = null;
-      let pointerDownPosition = null;
-      const inspectionState = {
-        enabled: false,
-        variantName: "",
-        metadata: null,
-        ghostCorners: null,
-        displayOptions: { heatmap: false, ghost: false, measureMode: false },
-        measurementPoints: [],
-      };
 
       const previewState = {
         baseCorners: [],
@@ -952,337 +919,6 @@
         setPanelCollapsed(!panel.classList.contains("collapsed"), true);
       });
 
-      function removeSceneObjects(objects) {
-        objects.forEach((object) => {
-          scene.remove(object);
-          object.geometry?.dispose?.();
-          if (Array.isArray(object.material)) {
-            object.material.forEach((material) => material?.dispose?.());
-          } else {
-            object.material?.dispose?.();
-          }
-        });
-        objects.length = 0;
-      }
-
-      function clearInspectionSelection() {
-        removeSceneObjects(selectionObjects);
-        const hud = document.getElementById("inspection-hud");
-        if (hud && inspectionState.enabled) hud.innerText = "Click a corner or wall.";
-      }
-
-      function clearMeasurement() {
-        inspectionState.measurementPoints = [];
-        removeSceneObjects(measurementObjects);
-        if (inspectionState.enabled) {
-          window.parent.postMessage(
-            { type: "hohonet_measurement_status", measurement: { status: "cleared" } },
-            "*"
-          );
-        }
-      }
-
-      function pairMetadata(pairIndex) {
-        return inspectionState.metadata?.pairs?.find(
-          (row) => Number(row.effective_pair_index) === Number(pairIndex)
-        ) || null;
-      }
-
-      function wallMetadata(wallIndex) {
-        return inspectionState.metadata?.walls?.find(
-          (row) => Number(row.wall_index) === Number(wallIndex)
-        ) || null;
-      }
-
-      function compactNumber(value) {
-        return Number.isFinite(Number(value)) ? Number(value).toFixed(3) : "--";
-      }
-
-      function showInspectionHud(selection) {
-        const hud = document.getElementById("inspection-hud");
-        if (!hud || !inspectionState.enabled) return;
-        if (selection.type === "corner") {
-          const point = selection.coordinates_3d || {};
-          hud.innerText = [
-            `Corner ${selection.pair_index} · ${selection.endpoint}`,
-            `3D: (${compactNumber(point.x)}, ${compactNumber(point.y)}, ${compactNumber(point.z)})`,
-            `wall height: ${compactNumber(selection.wall_height)}`,
-            `height residual: ${compactNumber(selection.height_residual)}`,
-            `walls: ${selection.previous_wall_index} ↔ ${selection.next_wall_index}`,
-            `wall-to-wall angle: ${compactNumber(selection.junction_angle_deg)}°`,
-            `deviation from 90°: ${compactNumber(selection.junction_residual_to_90_deg)}°`,
-          ].join("\n");
-        } else if (selection.type === "wall") {
-          hud.innerText = [
-            `Wall ${selection.wall_index} · ${selection.from_pair} → ${selection.to_pair}`,
-            `length: ${compactNumber(selection.floor_wall_length)}`,
-            `heading (global XZ): ${compactNumber(selection.wall_heading_deg)}°`,
-            `nearest axis heading: ${compactNumber(selection.nearest_axis_heading_deg)}°`,
-            `deviation from axis: ${compactNumber(selection.axis_deviation_deg)}°`,
-            `short wall: ${selection.short_wall ? "yes" : "no"}`,
-          ].join("\n");
-        } else {
-          hud.innerText = JSON.stringify(selection, null, 2);
-        }
-      }
-
-      function postGeometrySelection(selection) {
-        showInspectionHud(selection);
-        window.parent.postMessage(
-          {
-            type: "hohonet_geometry_selection",
-            variantName: inspectionState.variantName,
-            selection,
-          },
-          "*"
-        );
-      }
-
-      function wallColor(metric) {
-        if (metric?.short_wall) return 0xa855f7;
-        const residual = Number(metric?.angle_residual_deg || 0);
-        if (residual > 15) return 0xef4444;
-        if (residual > 5) return 0xf59e0b;
-        return 0x22c55e;
-      }
-
-      function addCornerAngleGuide(pairIndex, endpoint) {
-        if (!inspectionGeometry) return;
-        const count = inspectionState.metadata?.pairs?.length || 0;
-        if (count < 3) return;
-        const points = endpoint === "ceiling"
-          ? inspectionGeometry.ceilPoints
-          : inspectionGeometry.floorPoints;
-        const index = Number(pairIndex) - 1;
-        const center = points[index];
-        const previous = points[(index - 1 + count) % count];
-        const next = points[(index + 1) % count];
-        if (!center || !previous || !next) return;
-
-        const previousDirection = previous.clone().sub(center);
-        const nextDirection = next.clone().sub(center);
-        previousDirection.y = 0;
-        nextDirection.y = 0;
-        const previousLength = previousDirection.length();
-        const nextLength = nextDirection.length();
-        if (previousLength <= 1e-9 || nextLength <= 1e-9) return;
-        previousDirection.normalize();
-        nextDirection.normalize();
-        const radius = Math.max(0.18, Math.min(0.75, Math.min(previousLength, nextLength) * 0.28));
-        const raisedCenter = center.clone().add(new THREE.Vector3(0, 0.025, 0));
-        const previousRayEnd = raisedCenter.clone().add(previousDirection.clone().multiplyScalar(radius));
-        const nextRayEnd = raisedCenter.clone().add(nextDirection.clone().multiplyScalar(radius));
-        const rayGeometry = new THREE.BufferGeometry().setFromPoints([
-          raisedCenter, previousRayEnd, raisedCenter, nextRayEnd,
-        ]);
-        const rayLine = new THREE.LineSegments(
-          rayGeometry,
-          new THREE.LineBasicMaterial({ color: 0x38bdf8, depthTest: false })
-        );
-        rayLine.renderOrder = 52;
-        scene.add(rayLine);
-        selectionObjects.push(rayLine);
-
-        const startAngle = Math.atan2(previousDirection.z, previousDirection.x);
-        const endAngle = Math.atan2(nextDirection.z, nextDirection.x);
-        let delta = ((endAngle - startAngle + Math.PI * 3) % (Math.PI * 2)) - Math.PI;
-        const arcPoints = [];
-        for (let step = 0; step <= 32; step += 1) {
-          const angle = startAngle + delta * (step / 32);
-          arcPoints.push(new THREE.Vector3(
-            raisedCenter.x + Math.cos(angle) * radius,
-            raisedCenter.y,
-            raisedCenter.z + Math.sin(angle) * radius
-          ));
-        }
-        const arcLine = new THREE.Line(
-          new THREE.BufferGeometry().setFromPoints(arcPoints),
-          new THREE.LineBasicMaterial({ color: 0xfacc15, depthTest: false })
-        );
-        arcLine.renderOrder = 53;
-        scene.add(arcLine);
-        selectionObjects.push(arcLine);
-      }
-
-      function addCornerSelection(point, pairIndex, endpoint) {
-        clearInspectionSelection();
-        const material = new THREE.MeshBasicMaterial({ color: 0x38bdf8, depthTest: false });
-        const marker = new THREE.Mesh(new THREE.SphereGeometry(0.16, 20, 20), material);
-        marker.position.copy(point);
-        marker.renderOrder = 50;
-        scene.add(marker);
-        selectionObjects.push(marker);
-        addCornerAngleGuide(pairIndex, endpoint);
-      }
-
-      function addWallSelection(wallIndex) {
-        clearInspectionSelection();
-        if (!inspectionGeometry) return;
-        const index = Number(wallIndex) - 1;
-        const c1 = inspectionGeometry.ceilPoints[index];
-        const f1 = inspectionGeometry.floorPoints[index];
-        const c2 = inspectionGeometry.ceilPoints[index + 1];
-        const f2 = inspectionGeometry.floorPoints[index + 1];
-        if (!c1 || !f1 || !c2 || !f2) return;
-        const geometry = new THREE.BufferGeometry().setFromPoints([
-          c1, f1, f2, c2, c1,
-        ]);
-        const line = new THREE.Line(
-          geometry,
-          new THREE.LineBasicMaterial({ color: 0x38bdf8, depthTest: false })
-        );
-        line.renderOrder = 50;
-        scene.add(line);
-        selectionObjects.push(line);
-      }
-
-      function selectCorner(pairIndex, endpoint, point) {
-        const metadata = pairMetadata(pairIndex) || {};
-        const selection = {
-          type: "corner",
-          pair_index: Number(pairIndex),
-          source_preview_order_index: metadata.source_preview_order_index ?? null,
-          endpoint,
-          coordinates_3d: endpoint === "ceiling" ? metadata.ceiling_3d : metadata.floor_3d,
-          input_coordinates: metadata.input || null,
-          normalized_coordinates: metadata.normalized || null,
-          wall_height: metadata.wall_height ?? null,
-          height_residual: metadata.height_residual ?? null,
-          local_height_residual: metadata.local_height_residual ?? null,
-          previous_wall_index: metadata.previous_wall_index ?? null,
-          next_wall_index: metadata.next_wall_index ?? null,
-          junction_angle_deg: metadata.junction_angle_deg ?? null,
-          junction_residual_to_90_deg: metadata.junction_residual_to_90_deg ?? null,
-          junction_angle_kind: metadata.junction_angle_kind || "unsigned_smaller_floorprint_angle_0_180",
-        };
-        addCornerSelection(point, pairIndex, endpoint);
-        postGeometrySelection(selection);
-        if (inspectionState.displayOptions.measureMode) addMeasurementPoint(selection, point);
-      }
-
-      function selectWall(wallIndex) {
-        const metric = wallMetadata(wallIndex) || {};
-        const selection = {
-          type: "wall",
-          wall_index: Number(wallIndex),
-          from_pair: metric.from_pair ?? null,
-          to_pair: metric.to_pair ?? null,
-          floor_wall_vector: metric.floor_wall_vector || null,
-          floor_wall_length: metric.floor_wall_length ?? null,
-          ceiling_wall_length: metric.ceiling_wall_length ?? null,
-          length_ratio: metric.length_ratio ?? null,
-          wall_heading_deg: metric.direction_deg ?? null,
-          heading_reference: "global_xz_counterclockwise_from_positive_x",
-          nearest_axis_heading_deg: metric.nearest_manhattan_axis_deg ?? null,
-          axis_deviation_deg: metric.angle_residual_deg ?? null,
-          angle_warning: !!metric.angle_warning,
-          short_wall: !!metric.short_wall,
-          short_wall_threshold: metric.short_wall_threshold ?? null,
-        };
-        addWallSelection(wallIndex);
-        postGeometrySelection(selection);
-      }
-
-      function focusInspectionPoint(point) {
-        if (!point) return;
-        controls.target.copy(point);
-        camera.lookAt(point);
-        controls.update();
-      }
-
-      function addMeasurementPoint(selection, point) {
-        if (inspectionState.measurementPoints.length >= 2) clearMeasurement();
-        inspectionState.measurementPoints.push({ selection, point: point.clone() });
-        if (inspectionState.measurementPoints.length < 2) {
-          window.parent.postMessage(
-            {
-              type: "hohonet_measurement_status",
-              measurement: { status: "waiting_for_second_point", first: selection },
-            },
-            "*"
-          );
-          return;
-        }
-        const [first, second] = inspectionState.measurementPoints;
-        const delta = second.point.clone().sub(first.point);
-        const line = new THREE.Line(
-          new THREE.BufferGeometry().setFromPoints([first.point, second.point]),
-          new THREE.LineDashedMaterial({ color: 0x22d3ee, dashSize: 0.12, gapSize: 0.06, depthTest: false })
-        );
-        line.computeLineDistances();
-        line.renderOrder = 60;
-        scene.add(line);
-        measurementObjects.push(line);
-        window.parent.postMessage(
-          {
-            type: "hohonet_measurement_status",
-            measurement: {
-              status: "complete",
-              from: first.selection,
-              to: second.selection,
-              distance_3d: first.point.distanceTo(second.point),
-              delta: { x: delta.x, y: delta.y, z: delta.z },
-            },
-          },
-          "*"
-        );
-      }
-
-      function geometryCenterAndRadius() {
-        const points = [
-          ...(inspectionGeometry?.ceilPoints || []),
-          ...(inspectionGeometry?.floorPoints || []),
-        ];
-        if (!points.length) return { center: new THREE.Vector3(0, -1.6, 0), radius: 6 };
-        const box = new THREE.Box3().setFromPoints(points);
-        const center = box.getCenter(new THREE.Vector3());
-        return { center, radius: Math.max(2, box.getSize(new THREE.Vector3()).length()) };
-      }
-
-      function applyCameraPreset(preset) {
-        const { center, radius } = geometryCenterAndRadius();
-        if (preset === "top") camera.position.set(center.x, center.y + radius, center.z + 0.001);
-        else if (preset === "inside") camera.position.set(0, 0, 0);
-        else if (preset === "isometric") camera.position.set(center.x + radius * 0.65, center.y + radius * 0.55, center.z + radius * 0.65);
-        else camera.position.set(0, 8, 0);
-        controls.target.copy(preset === "reset" ? new THREE.Vector3(0, -1.6, 0) : center);
-        camera.lookAt(controls.target);
-        controls.update();
-      }
-
-      function selectIssue(issue) {
-        if (!issue) return;
-        if (issue.type === "wall" && issue.wall_index) {
-          selectWall(issue.wall_index);
-          const index = Number(issue.wall_index) - 1;
-          const floorPoints = inspectionGeometry?.floorPoints || [];
-          const a = floorPoints[index];
-          const b = floorPoints[index + 1];
-          if (a && b) focusInspectionPoint(a.clone().add(b).multiplyScalar(0.5));
-        }
-        else if ((issue.type === "corner" || issue.type === "height") && issue.pair_index) {
-          const pair = Number(issue.pair_index) - 1;
-          const point = inspectionGeometry?.floorPoints?.[pair];
-          if (point) {
-            selectCorner(issue.pair_index, "floor", point);
-            focusInspectionPoint(point);
-          }
-        } else postGeometrySelection({ type: "layout", ...issue });
-      }
-
-      function reportTextureStatus(status, hasTexture, imageUrl, reason) {
-        window.parent.postMessage(
-          {
-            type: "hohonet_texture_status",
-            status,
-            hasTexture: !!hasTexture,
-            imageUrl: imageUrl || null,
-            reason: reason || null,
-          },
-          "*"
-        );
-      }
-
       function drawLayout(corners, imageUrl, options = {}) {
         meshObjects.forEach((object) => scene.remove(object));
         meshObjects = [];
@@ -1297,12 +933,10 @@
           panoMaterial.uniforms.map.value = currentTexture;
           panoMaterial.needsUpdate = true;
           renderGeometry(corners, true, options);
-          reportTextureStatus("loaded", true, imageUrl, "cached_texture_reused");
           return;
         }
 
         if (imageUrl) {
-          reportTextureStatus("loading", false, imageUrl, "texture_load_requested");
           textureLoader.load(
             imageUrl,
             (texture) => {
@@ -1313,7 +947,6 @@
               panoMaterial.uniforms.map.value = currentTexture;
               panoMaterial.needsUpdate = true;
               renderGeometry(corners, true, options);
-              reportTextureStatus("loaded", true, imageUrl, "texture_load_succeeded");
             },
             undefined,
             () => {
@@ -1321,52 +954,45 @@
               currentTextureUrl = null;
               updateStatus("纹理加载失败（可能是 CORS）");
               renderGeometry(corners, false, options);
-              reportTextureStatus("failed", false, imageUrl, "texture_load_failed");
             }
           );
         } else {
           currentTexture = null;
           currentTextureUrl = null;
           renderGeometry(corners, false, options);
-          reportTextureStatus("unavailable", false, null, "image_url_unavailable");
         }
-      }
-
-      function projectCornersForViewer(corners) {
-        const ceilPoints = [];
-        const floorPoints = [];
-        const CAM_H = 1.6;
-        corners.forEach((corner) => {
-          const u = (corner.x / W) * 2 * Math.PI - Math.PI;
-          const vFloor = (corner.y_floor / H - 0.5) * Math.PI;
-          const vCeil = (corner.y_ceiling / H - 0.5) * Math.PI;
-          const safeFloor = Math.max(0.01, Math.min(1.5, vFloor));
-          const dist = CAM_H / Math.tan(safeFloor);
-          const x = dist * Math.sin(u);
-          const z = -dist * Math.cos(u);
-          const safeCeil = Math.max(-1.5, Math.min(-0.01, vCeil));
-          ceilPoints.push(new THREE.Vector3(x, -dist * Math.tan(safeCeil), z));
-          floorPoints.push(new THREE.Vector3(x, -CAM_H, z));
-        });
-        return { ceilPoints, floorPoints, cameraHeight: CAM_H };
       }
 
       function renderGeometry(corners, hasTexture, options = {}) {
         meshObjects.forEach((object) => scene.remove(object));
         meshObjects = [];
-        interactiveObjects = [];
-        clearInspectionSelection();
-        clearMeasurement();
 
         const preserveOrder = !!options.preserveOrder;
         const orderedCorners = preserveOrder
           ? cloneCorners(corners)
           : cloneCorners(corners).sort((a, b) => a.x - b.x);
 
-        const projected = projectCornersForViewer(orderedCorners);
-        const ceilPoints = projected.ceilPoints;
-        const floorPoints = projected.floorPoints;
-        const CAM_H = projected.cameraHeight;
+        const ceilPoints = [];
+        const floorPoints = [];
+        const CAM_H = 1.6;
+
+        orderedCorners.forEach((corner) => {
+          const u = (corner.x / W) * 2 * Math.PI - Math.PI;
+          const vFloor = (corner.y_floor / H - 0.5) * Math.PI;
+          const vCeil = (corner.y_ceiling / H - 0.5) * Math.PI;
+
+          const safeFloor = Math.max(0.01, Math.min(1.5, vFloor));
+          const dist = CAM_H / Math.tan(safeFloor);
+
+          const x = dist * Math.sin(u);
+          const z = -dist * Math.cos(u);
+          const yFloor = -CAM_H;
+          const safeCeil = Math.max(-1.5, Math.min(-0.01, vCeil));
+          const yCeil = -dist * Math.tan(safeCeil);
+
+          ceilPoints.push(new THREE.Vector3(x, yCeil, z));
+          floorPoints.push(new THREE.Vector3(x, yFloor, z));
+        });
 
         if (ceilPoints.length > 0) {
           ceilPoints.push(ceilPoints[0].clone());
@@ -1404,37 +1030,8 @@
           new THREE.Float32BufferAttribute(wallVertices, 3)
         );
         const wallMesh = new THREE.Mesh(wallGeo, material);
-        wallMesh.userData.hohonetInspectionType = "wall_set";
         scene.add(wallMesh);
         meshObjects.push(wallMesh);
-        if (inspectionState.enabled) interactiveObjects.push(wallMesh);
-
-        if (inspectionState.enabled && inspectionState.displayOptions.heatmap) {
-          for (let i = 0; i < ceilPoints.length - 1; i += 1) {
-            const p1 = ceilPoints[i];
-            const p2 = floorPoints[i];
-            const p3 = ceilPoints[i + 1];
-            const p4 = floorPoints[i + 1];
-            const overlayGeometry = new THREE.BufferGeometry();
-            overlayGeometry.setAttribute(
-              "position",
-              new THREE.Float32BufferAttribute([
-                p1.x,p1.y,p1.z, p2.x,p2.y,p2.z, p3.x,p3.y,p3.z,
-                p2.x,p2.y,p2.z, p4.x,p4.y,p4.z, p3.x,p3.y,p3.z,
-              ], 3)
-            );
-            const overlay = new THREE.Mesh(
-              overlayGeometry,
-              new THREE.MeshBasicMaterial({
-                color: wallColor(wallMetadata(i + 1)), transparent: true,
-                opacity: 0.3, side: THREE.DoubleSide, depthWrite: false,
-              })
-            );
-            overlay.renderOrder = 15;
-            scene.add(overlay);
-            meshObjects.push(overlay);
-          }
-        }
 
         const floorGeo = new THREE.BufferGeometry();
         const floorVertices = [];
@@ -1484,15 +1081,9 @@
 
         const sphereGeo = new THREE.SphereGeometry(0.1, 16, 16);
         const sphereMat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
-        [...ceilPoints.slice(0, orderedCorners.length), ...floorPoints.slice(0, orderedCorners.length)].forEach((point, pointIndex) => {
+        [...ceilPoints, ...floorPoints].forEach((point) => {
           const sphere = new THREE.Mesh(sphereGeo, sphereMat);
           sphere.position.copy(point);
-          if (inspectionState.enabled) {
-            sphere.userData.hohonetInspectionType = "corner";
-            sphere.userData.pairIndex = (pointIndex % orderedCorners.length) + 1;
-            sphere.userData.endpoint = pointIndex < orderedCorners.length ? "ceiling" : "floor";
-            interactiveObjects.push(sphere);
-          }
           scene.add(sphere);
           meshObjects.push(sphere);
         });
@@ -1505,39 +1096,6 @@
           meshObjects.push(sprite);
         });
 
-        inspectionGeometry = { ceilPoints, floorPoints };
-        if (
-          inspectionState.enabled && inspectionState.displayOptions.ghost &&
-          Array.isArray(inspectionState.ghostCorners) && inspectionState.ghostCorners.length
-        ) {
-          const ghost = projectCornersForViewer(inspectionState.ghostCorners);
-          const ghostEdges = [];
-          for (let i = 0; i < ghost.floorPoints.length; i += 1) {
-            const next = (i + 1) % ghost.floorPoints.length;
-            for (const [a, b] of [
-              [ghost.ceilPoints[i], ghost.floorPoints[i]],
-              [ghost.ceilPoints[i], ghost.ceilPoints[next]],
-              [ghost.floorPoints[i], ghost.floorPoints[next]],
-            ]) ghostEdges.push(a.x,a.y,a.z,b.x,b.y,b.z);
-          }
-          const ghostGeometry = new THREE.BufferGeometry();
-          ghostGeometry.setAttribute("position", new THREE.Float32BufferAttribute(ghostEdges, 3));
-          const ghostLine = new THREE.LineSegments(
-            ghostGeometry,
-            new THREE.LineDashedMaterial({ color:0x38bdf8, transparent:true, opacity:0.8, dashSize:0.12, gapSize:0.06, depthTest:false })
-          );
-          ghostLine.computeLineDistances();
-          ghostLine.renderOrder = 40;
-          scene.add(ghostLine);
-          meshObjects.push(ghostLine);
-        }
-
-        const hud = document.getElementById("inspection-hud");
-        if (hud) {
-          hud.style.display = inspectionState.enabled ? "block" : "none";
-          if (inspectionState.enabled) hud.innerText = "Click a corner or wall.";
-        }
-
         updateStatus(
           `已渲染 ${orderedCorners.length} 面墙（${hasTexture ? "带纹理" : "纯色"}）`
         );
@@ -1547,87 +1105,6 @@
           camera.lookAt(0, -CAM_H, 0);
           controls.target.set(0, -CAM_H, 0);
           controls.update();
-        }
-      }
-
-      function inspectionHit(event) {
-        if (!inspectionState.enabled || !interactiveObjects.length) return null;
-        const rect = renderer.domElement.getBoundingClientRect();
-        pointer.x = ((event.clientX - rect.left) / rect.width) * 2 - 1;
-        pointer.y = -((event.clientY - rect.top) / rect.height) * 2 + 1;
-        raycaster.setFromCamera(pointer, camera);
-        const hits = raycaster.intersectObjects(interactiveObjects, false);
-        if (!hits.length) return null;
-        const nearest = hits[0];
-        const nearbyCorner = hits.find(
-          (hit) =>
-            hit.object.userData.hohonetInspectionType === "corner" &&
-            hit.distance <= nearest.distance + 0.2
-        );
-        return nearbyCorner || nearest;
-      }
-
-      function handleInspectionHit(hit, focus = false) {
-        if (!hit) {
-          clearInspectionSelection();
-          postGeometrySelection({ type: "none" });
-          return;
-        }
-        const kind = hit.object.userData.hohonetInspectionType;
-        if (kind === "corner") {
-          selectCorner(
-            hit.object.userData.pairIndex,
-            hit.object.userData.endpoint,
-            hit.object.position
-          );
-        } else if (kind === "wall_set") {
-          selectWall(Math.floor(Number(hit.faceIndex || 0) / 2) + 1);
-        }
-        if (focus) {
-          focusInspectionPoint(hit.point);
-        }
-      }
-
-      renderer.domElement.addEventListener("pointerdown", (event) => {
-        if (!inspectionState.enabled) return;
-        pointerDownPosition = { x: event.clientX, y: event.clientY };
-      });
-      renderer.domElement.addEventListener("pointerup", (event) => {
-        if (!inspectionState.enabled || !pointerDownPosition) return;
-        const moved = Math.hypot(
-          event.clientX - pointerDownPosition.x,
-          event.clientY - pointerDownPosition.y
-        );
-        pointerDownPosition = null;
-        if (moved <= 4) handleInspectionHit(inspectionHit(event), false);
-      });
-      renderer.domElement.addEventListener("pointermove", (event) => {
-        if (!inspectionState.enabled) return;
-        renderer.domElement.style.cursor = inspectionHit(event) ? "pointer" : "grab";
-      });
-      renderer.domElement.addEventListener("dblclick", (event) => {
-        if (inspectionState.enabled) handleInspectionHit(inspectionHit(event), true);
-      });
-      window.addEventListener("keydown", (event) => {
-        if (inspectionState.enabled && event.key === "Escape") {
-          clearInspectionSelection();
-          clearMeasurement();
-          postGeometrySelection({ type: "none" });
-        }
-      });
-
-      function handleInspectionCommand(data) {
-        if (!inspectionState.enabled) return;
-        if (data.command === "set_measure_mode") {
-          inspectionState.displayOptions.measureMode = !!data.enabled;
-          clearMeasurement();
-        } else if (data.command === "camera_preset") {
-          applyCameraPreset(String(data.preset || "reset"));
-        } else if (data.command === "select_issue") {
-          selectIssue(data.issue);
-        } else if (data.command === "clear_selection") {
-          clearInspectionSelection();
-          clearMeasurement();
         }
       }
 
@@ -1660,24 +1137,6 @@
       function loadPreviewFromMessage(data) {
         if (data.width) W = data.width;
         if (data.height) H = data.height;
-
-        inspectionState.enabled = data.inspectionMode === true;
-        inspectionState.variantName = String(data.variantName || "");
-        inspectionState.metadata = inspectionState.enabled && data.inspectionMetadata
-          ? data.inspectionMetadata
-          : null;
-        inspectionState.ghostCorners = inspectionState.enabled && Array.isArray(data.ghostCorners)
-          ? cloneCorners(data.ghostCorners)
-          : null;
-        inspectionState.displayOptions = {
-          heatmap: !!data.displayOptions?.heatmap,
-          ghost: !!data.displayOptions?.ghost,
-          measureMode: !!data.displayOptions?.measureMode,
-        };
-        if (!inspectionState.enabled) {
-          clearInspectionSelection();
-          clearMeasurement();
-        }
 
         const baseCorners =
           Array.isArray(data.baseCorners) && data.baseCorners.length
@@ -1754,11 +1213,6 @@
           return;
         }
 
-        if (data.type === "hohonet_inspection_command") {
-          handleInspectionCommand(data);
-          return;
-        }
-
         if (data.type === "hohonet_preview_order_command") {
           handlePreviewOrderCommand(data);
           return;
@@ -1768,21 +1222,6 @@
           handlePreviewOrderAck(data);
         }
       });
-      window.parent.postMessage(
-        {
-          type: "hohonet_viewer_ready",
-          version: "m15.19.2",
-          capabilities: {
-            texture_status: true,
-            geometry_selection: true,
-            measurement: true,
-            heatmap: true,
-            ghost: true,
-            camera_presets: true,
-          },
-        },
-        "*"
-      );
     </script>
   </body>
 </html>
