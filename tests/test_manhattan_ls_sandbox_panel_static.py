@@ -485,8 +485,51 @@ def test_vis_3d_gates_read_only_inspection_and_reports_selections():
     assert "axis_deviation_deg" in wall_text
     assert "adjacent_corner_angles" not in wall_text
 
-    for forbidden in ["annotation patch", "formal_g_t", "routing decision"]:
+    for forbidden in [
+        "writeback",
+        "annotation patch",
+        "annotation_patch",
+        "routing",
+        "formal_g_t",
+        "formal g_t",
+        "p1/c1/c2/t1/v1",
+    ]:
         assert forbidden not in text.lower()
+
+    post_start = text.index("function postGeometrySelection")
+    post_end = text.index("function wallColor", post_start)
+    post_text = text[post_start:post_end]
+    assert "window.parent.postMessage" in post_text
+    assert 'type: "hohonet_geometry_selection"' in post_text
+    for forbidden in ["fetch(", "xmlhttprequest", "submit", "save", "patch"]:
+        assert forbidden not in post_text.lower()
+
+
+def test_vis_3d_wall_picking_uses_explicit_per_wall_metadata():
+    text = read(Path("tools/label_studio/vis_3d.html"))
+
+    assert "faceIndex" not in text
+    assert 'pickingMesh.userData.hohonetInspectionType = "wall"' in text
+    assert "pickingMesh.userData.wallIndex = i + 1" in text
+    assert "interactiveObjects.push(pickingMesh)" in text
+
+    wall_mesh_start = text.index("const wallMesh = new THREE.Mesh")
+    heatmap_start = text.index(
+        "if (inspectionState.enabled && inspectionState.displayOptions.heatmap)",
+        wall_mesh_start,
+    )
+    picking_block = text[wall_mesh_start:heatmap_start]
+    assert "if (inspectionState.enabled)" in picking_block
+    assert "opacity: 0" in picking_block
+    assert "pickingMaterial.colorWrite = false" in picking_block
+    assert "interactiveObjects.push(wallMesh)" not in picking_block
+
+    hit_start = text.index("function handleInspectionHit")
+    hit_end = text.index('renderer.domElement.addEventListener("pointerdown"', hit_start)
+    hit_text = text[hit_start:hit_end]
+    assert 'kind === "wall"' in hit_text
+    assert "selectWall(Number(hit.object.userData.wallIndex))" in hit_text
+    assert "Math.floor" not in hit_text
 
 
 def test_pre_m15192_vis_3d_backup_is_not_the_runtime_entrypoint():

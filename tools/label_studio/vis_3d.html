@@ -1404,10 +1404,38 @@
           new THREE.Float32BufferAttribute(wallVertices, 3)
         );
         const wallMesh = new THREE.Mesh(wallGeo, material);
-        wallMesh.userData.hohonetInspectionType = "wall_set";
         scene.add(wallMesh);
         meshObjects.push(wallMesh);
-        if (inspectionState.enabled) interactiveObjects.push(wallMesh);
+
+        if (inspectionState.enabled) {
+          for (let i = 0; i < ceilPoints.length - 1; i += 1) {
+            const p1 = ceilPoints[i];
+            const p2 = floorPoints[i];
+            const p3 = ceilPoints[i + 1];
+            const p4 = floorPoints[i + 1];
+            const pickingGeometry = new THREE.BufferGeometry();
+            pickingGeometry.setAttribute(
+              "position",
+              new THREE.Float32BufferAttribute([
+                p1.x, p1.y, p1.z, p2.x, p2.y, p2.z, p3.x, p3.y, p3.z,
+                p2.x, p2.y, p2.z, p4.x, p4.y, p4.z, p3.x, p3.y, p3.z,
+              ], 3)
+            );
+            const pickingMaterial = new THREE.MeshBasicMaterial({
+              transparent: true,
+              opacity: 0,
+              side: THREE.DoubleSide,
+              depthWrite: false,
+            });
+            pickingMaterial.colorWrite = false;
+            const pickingMesh = new THREE.Mesh(pickingGeometry, pickingMaterial);
+            pickingMesh.userData.hohonetInspectionType = "wall";
+            pickingMesh.userData.wallIndex = i + 1;
+            scene.add(pickingMesh);
+            meshObjects.push(pickingMesh);
+            interactiveObjects.push(pickingMesh);
+          }
+        }
 
         if (inspectionState.enabled && inspectionState.displayOptions.heatmap) {
           for (let i = 0; i < ceilPoints.length - 1; i += 1) {
@@ -1580,8 +1608,8 @@
             hit.object.userData.endpoint,
             hit.object.position
           );
-        } else if (kind === "wall_set") {
-          selectWall(Math.floor(Number(hit.faceIndex || 0) / 2) + 1);
+        } else if (kind === "wall") {
+          selectWall(Number(hit.object.userData.wallIndex));
         }
         if (focus) {
           focusInspectionPoint(hit.point);
