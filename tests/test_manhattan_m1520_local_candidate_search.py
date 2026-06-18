@@ -2,12 +2,16 @@ import copy
 import json
 from pathlib import Path
 
+import pytest
+
 from tools.paper_a_manhattan.manhattan_m1520_local_candidate_search import (
+    ASSERTION_SCHEMA_VERSION,
     CORE_WINDOW,
     FAMILIES,
     SAFETY_BOUNDARY,
     _candidate_triage,
     generate_local_candidates,
+    normalize_expert_assertions,
     run_local_candidate_search,
 )
 from tools.paper_a_manhattan.run_m1520_local_candidate_search import (
@@ -107,7 +111,27 @@ def test_report_contains_coordinates_required_walls_and_human_try_field():
 def test_cli_writes_read_only_json_and_markdown(tmp_path):
     input_path = tmp_path / "input.json"
     input_path.write_text(json.dumps({"ordered_pairs": _pairs()}), encoding="utf-8")
-    paths = run(input_path=input_path, out_dir=tmp_path / "out", retain_per_family=1)
+    assertion_path = tmp_path / "assertion.json"
+    assertion_path.write_text(
+        json.dumps(
+            {
+                "schema_version": ASSERTION_SCHEMA_VERSION,
+                "keep_distinct_pairs": [[5, 6]],
+                "primary_edges": ["6-7"],
+                "allowed_short_edges": ["5-6"],
+                "do_not_move_pairs": [8],
+                "candidate_window": list(CORE_WINDOW),
+                "notes": [],
+            }
+        ),
+        encoding="utf-8",
+    )
+    paths = run(
+        input_path=input_path,
+        out_dir=tmp_path / "out",
+        retain_per_family=1,
+        assertion_path=assertion_path,
+    )
 
     assert paths["json"].is_file()
     assert paths["report"].is_file()
@@ -115,6 +139,9 @@ def test_cli_writes_read_only_json_and_markdown(tmp_path):
     assert payload["input_provenance"]["ordered_pair_source"] == "input.ordered_pairs"
     assert payload["safety_boundary"] == SAFETY_BOUNDARY
     assert payload["projection_config"]["coordinate_mode"] == "ls_percent"
+    assert payload["expert_assertions_used"]["primary_edges"] == ["6-7"]
+    assert payload["input_provenance"]["assertion_file"] == "assertion.json"
+    assert payload["input_provenance"]["assertion_sha256"]
 
 
 def test_static_boundary_has_no_writeback_or_formal_chain():
@@ -164,13 +191,32 @@ def test_preserved_dynamic_short_wall_is_partial_not_manual_review():
     assert triage["direct_ls_trial_allowed"] is False
 
 
+def test_assertion_schema_rejects_window_mismatch():
+    with pytest.raises(ValueError, match="candidate_window"):
+        normalize_expert_assertions(
+            {
+                "schema_version": ASSERTION_SCHEMA_VERSION,
+                "candidate_window": [4, 5, 6, 7, 8, 9],
+            },
+            valid_pair_indices=range(1, 11),
+            local_window=CORE_WINDOW,
+        )
+
+
 def test_task218_ann3741_hardening_regression():
     input_path = Path(
         "analysis_results/paper_a_manhattan/single_image_manual_test/"
         "latest_gt_checked/task218_ann3741_m1516_stabilized_input.json"
     )
     pairs, _ = extract_ordered_pairs(json.loads(input_path.read_text(encoding="utf-8")))
-    result = run_local_candidate_search(pairs, retain_per_family=3)
+    assertion_path = Path(
+        "analysis_results/paper_a_manhattan/local_candidate_search/"
+        "task218_ann3741/expert_assertion.json"
+    )
+    assertions = json.loads(assertion_path.read_text(encoding="utf-8"))
+    result = run_local_candidate_search(
+        pairs, retain_per_family=3, expert_assertions=assertions
+    )
     executable = result["candidates"]
     topology = result["topology_hypotheses"]
     all_rows = [*executable, *topology]
@@ -178,7 +224,9 @@ def test_task218_ann3741_hardening_regression():
 
     assert result["candidate_generation"]["generated_count"] == 42
     assert result["candidate_generation"]["retained_count"] == 12
-    assert result["schema_version"] == "m15_20_local_candidate_search_v1_2"
+    assert result["schema_version"] == "m15_21_expert_assertion_workflow_v1"
+    assert result["expert_assertions_used"]["keep_distinct_pairs"] == [[5, 6]]
+    assert result["assertion_effects"]["candidate_generation_changed"] is False
     assert result["case_triage"]["direct_fix_available"] is False
     assert "6-7" in result["case_triage"]["primary_unresolved_edges"]
     assert {"5-6", "6-7"}.issubset(result["case_triage"]["persistent_short_wall_edges"])
@@ -202,7 +250,10 @@ def test_task218_ann3741_hardening_regression():
     assert "6-7" in align["all_unresolved_required_edges"]
     assert any(text.startswith("5-6 residual improves") for text in align["improves"])
     assert any(text.startswith("6-7 remains unresolved") for text in align["fails_because"])
+    assert any("allowed existing short-wall risk" in text for text in align["fails_because"])
     assert "6-7" in align["triage_summary"]
+    assert align["direct_ls_trial_allowed"] is False
+    assert "asserted primary edge 6-7" in align["next_expert_check"]
 
     short = next(
         row
@@ -226,3 +277,10 @@ def test_task218_ann3741_hardening_regression():
     topology_report = report[report.index("## Read-only topology hypotheses") :]
     assert "Diagnostic score" in topology_report
     assert "- Score:" not in topology_report
+    assert "## Expert assertions used" in report
+    assert "## Assertion effects" in report
+    assert "allowed existing short-wall risk" in report
+    assert all(
+        sorted(row["ordered_pair_indices_after"]) == list(range(1, 11))
+        for row in all_rows
+    )

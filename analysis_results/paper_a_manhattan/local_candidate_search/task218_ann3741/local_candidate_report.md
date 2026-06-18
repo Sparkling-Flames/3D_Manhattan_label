@@ -16,7 +16,49 @@
 - Best executable candidate: `candidate_1` (`partial_diagnostic`)
 - Why not direct LS apply: Best numeric executable candidate is still partial; required local geometry remains unresolved.
 - Primary unresolved local structure: `['6-7']`; persistent dynamic short-wall risk: `['5-6', '6-7']`.
-- Recommended next step: Continue with local joint search or expert assertion workflow; do not apply directly in LS.
+- Recommended next step: Inspect asserted primary edge 6-7; do not apply directly in LS.
+
+## Expert assertions used
+
+```json
+{
+  "schema_version": "m15_21_expert_assertion_v1",
+  "case_name": "task218_ann3741",
+  "keep_distinct_pairs": [
+    [
+      5,
+      6
+    ]
+  ],
+  "primary_edges": [
+    "6-7"
+  ],
+  "allowed_short_edges": [
+    "5-6"
+  ],
+  "do_not_move_pairs": [
+    4,
+    8
+  ],
+  "candidate_window": [
+    5,
+    6,
+    7,
+    8
+  ],
+  "notes": [
+    "Pairs 5 and 6 represent distinct semantic corners and must not be merged or deleted.",
+    "The existing 5-6 short wall may be preserved for diagnosis but is not declared geometrically correct.",
+    "Edge 6-7 is the primary unresolved local failure."
+  ]
+}
+```
+
+## Assertion effects
+
+- Candidate generation changed: `False`
+- Gate and explanation only: `True`
+- Candidates downgraded/blocked by assertion: `['topology_2']`
 
 ## Baseline walls
 
@@ -44,11 +86,13 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
 - Short-wall preservation explanation: `None`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
 - decision_class: `partial_diagnostic`
 - triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 25.030; 6-7 remains unresolved: 35.368 -> 25.030.
 - improves: `['6-7 residual improves 35.368 -> 25.030', '5-6 residual improves 11.560 -> 8.305', 'local height residual improves']`
-- fails_because: `['6-7 remains unresolved: 35.368 -> 25.030', 'dynamic short-wall risk remains at 5-6 and 6-7', 'dynamic short-wall risk worsens']`
-- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
+- fails_because: `['6-7 remains unresolved: 35.368 -> 25.030', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -90,11 +134,13 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
 - Short-wall preservation explanation: `None`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
 - decision_class: `partial_diagnostic`
 - triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 26.315; 6-7 remains unresolved: 35.368 -> 26.315.
 - improves: `['6-7 residual improves 35.368 -> 26.315', '7-8 residual improves 1.048 -> 0.568']`
-- fails_because: `['6-7 remains unresolved: 35.368 -> 26.315', 'dynamic short-wall risk remains at 5-6 and 6-7', 'dynamic short-wall risk worsens']`
-- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
+- fails_because: `['6-7 remains unresolved: 35.368 -> 26.315', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -136,11 +182,13 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
 - Short-wall preservation explanation: `None`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
 - decision_class: `partial_diagnostic`
 - triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 30.292; 6-7 remains unresolved: 35.368 -> 30.292.
 - improves: `['6-7 residual improves 35.368 -> 30.292', '5-6 residual improves 11.560 -> 10.155', 'local height residual improves']`
-- fails_because: `['6-7 remains unresolved: 35.368 -> 30.292', 'dynamic short-wall risk remains at 5-6 and 6-7', 'dynamic short-wall risk worsens']`
-- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
+- fails_because: `['6-7 remains unresolved: 35.368 -> 30.292', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -182,11 +230,13 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `False` / `True`
 - Short-wall preservation explanation: `pre-existing dynamic short-wall risk preserved without increased deficit`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
 - decision_class: `partial_diagnostic`
 - triage_summary: partial_diagnostic: 5-6 residual improves 11.560 -> 6.086; 6-7 remains unresolved: 35.368 -> 35.368.
 - improves: `['5-6 residual improves 11.560 -> 6.086', '4-5 residual improves 1.451 -> 1.353']`
-- fails_because: `['6-7 remains unresolved: 35.368 -> 35.368', 'dynamic short-wall risk remains at 5-6 and 6-7']`
-- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
+- fails_because: `['6-7 remains unresolved: 35.368 -> 35.368', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -228,11 +278,13 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `False` / `True`
 - Short-wall preservation explanation: `pre-existing dynamic short-wall risk preserved without increased deficit`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
 - decision_class: `partial_diagnostic`
 - triage_summary: partial_diagnostic: 5-6 residual improves 11.560 -> 7.886; 6-7 remains unresolved: 35.368 -> 34.782.
 - improves: `['5-6 residual improves 11.560 -> 7.886', '6-7 residual improves 35.368 -> 34.782']`
-- fails_because: `['6-7 remains unresolved: 35.368 -> 34.782', 'dynamic short-wall risk remains at 5-6 and 6-7']`
-- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
+- fails_because: `['6-7 remains unresolved: 35.368 -> 34.782', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -274,11 +326,13 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `False` / `True`
 - Short-wall preservation explanation: `pre-existing dynamic short-wall risk preserved without increased deficit`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
 - decision_class: `partial_diagnostic`
 - triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 32.982; 6-7 remains unresolved: 35.368 -> 32.982.
 - improves: `['6-7 residual improves 35.368 -> 32.982']`
-- fails_because: `['6-7 remains unresolved: 35.368 -> 32.982', 'dynamic short-wall risk remains at 5-6 and 6-7']`
-- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
+- fails_because: `['6-7 remains unresolved: 35.368 -> 32.982', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -320,11 +374,13 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
 - Short-wall preservation explanation: `None`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
 - decision_class: `partial_diagnostic`
 - triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 30.430; 6-7 remains unresolved: 35.368 -> 30.430.
 - improves: `['6-7 residual improves 35.368 -> 30.430', '4-5 residual improves 1.451 -> 1.108', 'local height residual improves']`
-- fails_because: `['6-7 remains unresolved: 35.368 -> 30.430', 'dynamic short-wall risk remains at 5-6 and 6-7', 'dynamic short-wall risk worsens']`
-- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
+- fails_because: `['6-7 remains unresolved: 35.368 -> 30.430', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -372,11 +428,13 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
 - Short-wall preservation explanation: `None`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
 - decision_class: `partial_diagnostic`
 - triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 30.582; 5-6 remains unresolved: 11.560 -> 17.078.
 - improves: `['6-7 residual improves 35.368 -> 30.582', '4-5 residual improves 1.451 -> 1.141', 'local height residual improves']`
-- fails_because: `['5-6 remains unresolved: 11.560 -> 17.078', '6-7 remains unresolved: 35.368 -> 30.582', 'dynamic short-wall risk remains at 5-6 and 6-7', 'dynamic short-wall risk worsens']`
-- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
+- fails_because: `['5-6 remains unresolved: 11.560 -> 17.078', '6-7 remains unresolved: 35.368 -> 30.582', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -424,11 +482,13 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
 - Short-wall preservation explanation: `None`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
 - decision_class: `partial_diagnostic`
 - triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 30.806; 5-6 remains unresolved: 11.560 -> 21.005.
 - improves: `['6-7 residual improves 35.368 -> 30.806', '4-5 residual improves 1.451 -> 1.186', 'local height residual improves']`
-- fails_because: `['5-6 remains unresolved: 11.560 -> 21.005', '6-7 remains unresolved: 35.368 -> 30.806', 'dynamic short-wall risk remains at 5-6 and 6-7', 'dynamic short-wall risk worsens']`
-- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
+- fails_because: `['5-6 remains unresolved: 11.560 -> 21.005', '6-7 remains unresolved: 35.368 -> 30.806', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -480,6 +540,8 @@
 - short_wall_edges_after: `[]`
 - short_wall_worsened / below_dynamic_short_threshold: `False` / `False`
 - Short-wall preservation explanation: `None`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
 
 ### 2D coordinate changes
 
@@ -517,7 +579,7 @@
 - Label: `swap_pair_7_8`
 - Changed pairs: `[7, 8]`
 - Diagnostic score: `22.129`. Not executable; not ranked with candidate_N.
-- Disposition: `neutral_review_topology_hypothesis`
+- Disposition: `suppressed_assertion_violation`
 - manual_ls_try_recommended: `False`
 - direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `True` / `False`
@@ -527,6 +589,8 @@
 - short_wall_edges_after: `['5-6']`
 - short_wall_worsened / below_dynamic_short_threshold: `False` / `True`
 - Short-wall preservation explanation: `pre-existing dynamic short-wall risk preserved without increased deficit`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `['moves do-not-move pairs: 8']`
 
 ### 2D coordinate changes
 
@@ -574,6 +638,8 @@
 - short_wall_edges_after: `[]`
 - short_wall_worsened / below_dynamic_short_threshold: `False` / `False`
 - Short-wall preservation explanation: `None`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
 
 ### 2D coordinate changes
 

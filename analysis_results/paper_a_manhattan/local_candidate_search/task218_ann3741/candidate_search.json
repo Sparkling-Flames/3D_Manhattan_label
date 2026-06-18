@@ -1,5 +1,5 @@
 {
-  "schema_version": "m15_20_local_candidate_search_v1_2",
+  "schema_version": "m15_21_expert_assertion_workflow_v1",
   "scope": {
     "case_specific": "task218_ann3741",
     "local_window": [
@@ -40,6 +40,44 @@
     "routing_input": false,
     "formal_artifact": false
   },
+  "expert_assertions_used": {
+    "schema_version": "m15_21_expert_assertion_v1",
+    "case_name": "task218_ann3741",
+    "keep_distinct_pairs": [
+      [
+        5,
+        6
+      ]
+    ],
+    "primary_edges": [
+      "6-7"
+    ],
+    "allowed_short_edges": [
+      "5-6"
+    ],
+    "do_not_move_pairs": [
+      4,
+      8
+    ],
+    "candidate_window": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "notes": [
+      "Pairs 5 and 6 represent distinct semantic corners and must not be merged or deleted.",
+      "The existing 5-6 short wall may be preserved for diagnosis but is not declared geometrically correct.",
+      "Edge 6-7 is the primary unresolved local failure."
+    ]
+  },
+  "assertion_effects": {
+    "candidate_generation_changed": false,
+    "gate_and_explanation_only": true,
+    "violating_candidate_ids": [
+      "topology_2"
+    ]
+  },
   "case_triage": {
     "direct_fix_available": false,
     "best_executable_candidate_id": "candidate_1",
@@ -51,7 +89,7 @@
       "5-6",
       "6-7"
     ],
-    "recommended_next_step": "Continue with local joint search or expert assertion workflow; do not apply directly in LS."
+    "recommended_next_step": "Inspect asserted primary edge 6-7; do not apply directly in LS."
   },
   "score_contract": {
     "lower_is_better": true,
@@ -335,12 +373,25 @@
       ],
       "fails_because": [
         "6-7 remains unresolved: 35.368 -> 25.030",
-        "dynamic short-wall risk remains at 5-6 and 6-7",
+        "allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim",
+        "dynamic short-wall risk remains at 6-7",
         "dynamic short-wall risk worsens"
       ],
-      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "next_expert_check": "Inspect asserted primary edge 6-7 before considering direct LS application.",
       "direct_ls_trial_allowed": false,
       "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 25.030; 6-7 remains unresolved: 35.368 -> 25.030.",
+      "assertion_violations": [],
+      "assertion_effects": [
+        "keep 5-6 distinct; merge/delete/topology collapse prohibited",
+        "allowed existing short-wall risk (still risky): 5-6",
+        "primary edge focus: 6-7"
+      ],
+      "assertion_primary_edges": [
+        "6-7"
+      ],
+      "assertion_allowed_short_wall_edges": [
+        "5-6"
+      ],
       "candidate_rank": 1,
       "candidate_id": "candidate_1"
     },
@@ -550,12 +601,25 @@
       ],
       "fails_because": [
         "6-7 remains unresolved: 35.368 -> 26.315",
-        "dynamic short-wall risk remains at 5-6 and 6-7",
+        "allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim",
+        "dynamic short-wall risk remains at 6-7",
         "dynamic short-wall risk worsens"
       ],
-      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "next_expert_check": "Inspect asserted primary edge 6-7 before considering direct LS application.",
       "direct_ls_trial_allowed": false,
       "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 26.315; 6-7 remains unresolved: 35.368 -> 26.315.",
+      "assertion_violations": [],
+      "assertion_effects": [
+        "keep 5-6 distinct; merge/delete/topology collapse prohibited",
+        "allowed existing short-wall risk (still risky): 5-6",
+        "primary edge focus: 6-7"
+      ],
+      "assertion_primary_edges": [
+        "6-7"
+      ],
+      "assertion_allowed_short_wall_edges": [
+        "5-6"
+      ],
       "candidate_rank": 2,
       "candidate_id": "candidate_2"
     },
@@ -766,12 +830,25 @@
       ],
       "fails_because": [
         "6-7 remains unresolved: 35.368 -> 30.292",
-        "dynamic short-wall risk remains at 5-6 and 6-7",
+        "allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim",
+        "dynamic short-wall risk remains at 6-7",
         "dynamic short-wall risk worsens"
       ],
-      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "next_expert_check": "Inspect asserted primary edge 6-7 before considering direct LS application.",
       "direct_ls_trial_allowed": false,
       "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 30.292; 6-7 remains unresolved: 35.368 -> 30.292.",
+      "assertion_violations": [],
+      "assertion_effects": [
+        "keep 5-6 distinct; merge/delete/topology collapse prohibited",
+        "allowed existing short-wall risk (still risky): 5-6",
+        "primary edge focus: 6-7"
+      ],
+      "assertion_primary_edges": [
+        "6-7"
+      ],
+      "assertion_allowed_short_wall_edges": [
+        "5-6"
+      ],
       "candidate_rank": 3,
       "candidate_id": "candidate_3"
     },
@@ -981,11 +1058,24 @@
       ],
       "fails_because": [
         "6-7 remains unresolved: 35.368 -> 35.368",
-        "dynamic short-wall risk remains at 5-6 and 6-7"
+        "allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim",
+        "dynamic short-wall risk remains at 6-7"
       ],
-      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "next_expert_check": "Inspect asserted primary edge 6-7 before considering direct LS application.",
       "direct_ls_trial_allowed": false,
       "triage_summary": "partial_diagnostic: 5-6 residual improves 11.560 -> 6.086; 6-7 remains unresolved: 35.368 -> 35.368.",
+      "assertion_violations": [],
+      "assertion_effects": [
+        "keep 5-6 distinct; merge/delete/topology collapse prohibited",
+        "allowed existing short-wall risk (still risky): 5-6",
+        "primary edge focus: 6-7"
+      ],
+      "assertion_primary_edges": [
+        "6-7"
+      ],
+      "assertion_allowed_short_wall_edges": [
+        "5-6"
+      ],
       "candidate_rank": 4,
       "candidate_id": "candidate_4"
     },
@@ -1195,11 +1285,24 @@
       ],
       "fails_because": [
         "6-7 remains unresolved: 35.368 -> 34.782",
-        "dynamic short-wall risk remains at 5-6 and 6-7"
+        "allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim",
+        "dynamic short-wall risk remains at 6-7"
       ],
-      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "next_expert_check": "Inspect asserted primary edge 6-7 before considering direct LS application.",
       "direct_ls_trial_allowed": false,
       "triage_summary": "partial_diagnostic: 5-6 residual improves 11.560 -> 7.886; 6-7 remains unresolved: 35.368 -> 34.782.",
+      "assertion_violations": [],
+      "assertion_effects": [
+        "keep 5-6 distinct; merge/delete/topology collapse prohibited",
+        "allowed existing short-wall risk (still risky): 5-6",
+        "primary edge focus: 6-7"
+      ],
+      "assertion_primary_edges": [
+        "6-7"
+      ],
+      "assertion_allowed_short_wall_edges": [
+        "5-6"
+      ],
       "candidate_rank": 5,
       "candidate_id": "candidate_5"
     },
@@ -1408,11 +1511,24 @@
       ],
       "fails_because": [
         "6-7 remains unresolved: 35.368 -> 32.982",
-        "dynamic short-wall risk remains at 5-6 and 6-7"
+        "allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim",
+        "dynamic short-wall risk remains at 6-7"
       ],
-      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "next_expert_check": "Inspect asserted primary edge 6-7 before considering direct LS application.",
       "direct_ls_trial_allowed": false,
       "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 32.982; 6-7 remains unresolved: 35.368 -> 32.982.",
+      "assertion_violations": [],
+      "assertion_effects": [
+        "keep 5-6 distinct; merge/delete/topology collapse prohibited",
+        "allowed existing short-wall risk (still risky): 5-6",
+        "primary edge focus: 6-7"
+      ],
+      "assertion_primary_edges": [
+        "6-7"
+      ],
+      "assertion_allowed_short_wall_edges": [
+        "5-6"
+      ],
       "candidate_rank": 6,
       "candidate_id": "candidate_6"
     },
@@ -1681,12 +1797,25 @@
       ],
       "fails_because": [
         "6-7 remains unresolved: 35.368 -> 30.430",
-        "dynamic short-wall risk remains at 5-6 and 6-7",
+        "allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim",
+        "dynamic short-wall risk remains at 6-7",
         "dynamic short-wall risk worsens"
       ],
-      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "next_expert_check": "Inspect asserted primary edge 6-7 before considering direct LS application.",
       "direct_ls_trial_allowed": false,
       "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 30.430; 6-7 remains unresolved: 35.368 -> 30.430.",
+      "assertion_violations": [],
+      "assertion_effects": [
+        "keep 5-6 distinct; merge/delete/topology collapse prohibited",
+        "allowed existing short-wall risk (still risky): 5-6",
+        "primary edge focus: 6-7"
+      ],
+      "assertion_primary_edges": [
+        "6-7"
+      ],
+      "assertion_allowed_short_wall_edges": [
+        "5-6"
+      ],
       "candidate_rank": 7,
       "candidate_id": "candidate_7"
     },
@@ -1958,12 +2087,25 @@
       "fails_because": [
         "5-6 remains unresolved: 11.560 -> 17.078",
         "6-7 remains unresolved: 35.368 -> 30.582",
-        "dynamic short-wall risk remains at 5-6 and 6-7",
+        "allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim",
+        "dynamic short-wall risk remains at 6-7",
         "dynamic short-wall risk worsens"
       ],
-      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "next_expert_check": "Inspect asserted primary edge 6-7 before considering direct LS application.",
       "direct_ls_trial_allowed": false,
       "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 30.582; 5-6 remains unresolved: 11.560 -> 17.078.",
+      "assertion_violations": [],
+      "assertion_effects": [
+        "keep 5-6 distinct; merge/delete/topology collapse prohibited",
+        "allowed existing short-wall risk (still risky): 5-6",
+        "primary edge focus: 6-7"
+      ],
+      "assertion_primary_edges": [
+        "6-7"
+      ],
+      "assertion_allowed_short_wall_edges": [
+        "5-6"
+      ],
       "candidate_rank": 8,
       "candidate_id": "candidate_8"
     },
@@ -2235,12 +2377,25 @@
       "fails_because": [
         "5-6 remains unresolved: 11.560 -> 21.005",
         "6-7 remains unresolved: 35.368 -> 30.806",
-        "dynamic short-wall risk remains at 5-6 and 6-7",
+        "allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim",
+        "dynamic short-wall risk remains at 6-7",
         "dynamic short-wall risk worsens"
       ],
-      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "next_expert_check": "Inspect asserted primary edge 6-7 before considering direct LS application.",
       "direct_ls_trial_allowed": false,
       "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 30.806; 5-6 remains unresolved: 11.560 -> 21.005.",
+      "assertion_violations": [],
+      "assertion_effects": [
+        "keep 5-6 distinct; merge/delete/topology collapse prohibited",
+        "allowed existing short-wall risk (still risky): 5-6",
+        "primary edge focus: 6-7"
+      ],
+      "assertion_primary_edges": [
+        "6-7"
+      ],
+      "assertion_allowed_short_wall_edges": [
+        "5-6"
+      ],
       "candidate_rank": 9,
       "candidate_id": "candidate_9"
     }
@@ -2517,9 +2672,18 @@
         "5-6 is missing after candidate",
         "6-7 is missing after candidate"
       ],
-      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "next_expert_check": "Inspect asserted primary edge 6-7 before considering direct LS application.",
       "direct_ls_trial_allowed": false,
       "triage_summary": "blocked: local height residual improves; 4-5 is missing after candidate.",
+      "assertion_violations": [],
+      "assertion_effects": [
+        "keep 5-6 distinct; merge/delete/topology collapse prohibited",
+        "primary edge focus: 6-7"
+      ],
+      "assertion_primary_edges": [
+        "6-7"
+      ],
+      "assertion_allowed_short_wall_edges": [],
       "topology_rank": 1,
       "candidate_id": "topology_1"
     },
@@ -2586,7 +2750,7 @@
         "6-7",
         "7-8"
       ],
-      "disposition": "neutral_review_topology_hypothesis",
+      "disposition": "suppressed_assertion_violation",
       "manual_ls_try_recommended": false,
       "height_worsened": false,
       "short_wall_after": true,
@@ -2791,11 +2955,25 @@
       "fails_because": [
         "6-7 is missing after candidate",
         "7-8 is missing after candidate",
-        "dynamic short-wall risk remains at 5-6"
+        "allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim"
       ],
-      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "next_expert_check": "Inspect asserted primary edge 6-7 before considering direct LS application.",
       "direct_ls_trial_allowed": false,
       "triage_summary": "blocked: local height residual improves; 6-7 is missing after candidate.",
+      "assertion_violations": [
+        "moves do-not-move pairs: 8"
+      ],
+      "assertion_effects": [
+        "keep 5-6 distinct; merge/delete/topology collapse prohibited",
+        "allowed existing short-wall risk (still risky): 5-6",
+        "primary edge focus: 6-7"
+      ],
+      "assertion_primary_edges": [
+        "6-7"
+      ],
+      "assertion_allowed_short_wall_edges": [
+        "5-6"
+      ],
       "topology_rank": 2,
       "candidate_id": "topology_2"
     },
@@ -3072,9 +3250,18 @@
         "6-7 is missing after candidate",
         "7-8 is missing after candidate"
       ],
-      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "next_expert_check": "Inspect asserted primary edge 6-7 before considering direct LS application.",
       "direct_ls_trial_allowed": false,
       "triage_summary": "blocked: local height residual improves; 5-6 is missing after candidate.",
+      "assertion_violations": [],
+      "assertion_effects": [
+        "keep 5-6 distinct; merge/delete/topology collapse prohibited",
+        "primary edge focus: 6-7"
+      ],
+      "assertion_primary_edges": [
+        "6-7"
+      ],
+      "assertion_allowed_short_wall_edges": [],
       "topology_rank": 3,
       "candidate_id": "topology_3"
     }
@@ -3082,6 +3269,8 @@
   "input_provenance": {
     "input_file": "task218_ann3741_m1516_stabilized_input.json",
     "input_sha256": "a0646242b9e0f07a29282906e20c6c67a7bcc05cd704d6b7db209957576eaef7",
-    "ordered_pair_source": "build_single_image_assist.ordered_pairs"
+    "ordered_pair_source": "build_single_image_assist.ordered_pairs",
+    "assertion_file": "expert_assertion.json",
+    "assertion_sha256": "3032b5540f6be0e744a6182343156f053df8c84e3355ee4943cab7ec3bb3e698"
   }
 }

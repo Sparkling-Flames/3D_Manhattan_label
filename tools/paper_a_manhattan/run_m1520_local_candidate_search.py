@@ -59,6 +59,16 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         f"- Primary unresolved local structure: `{payload['case_triage']['primary_unresolved_edges']}`; persistent dynamic short-wall risk: `{payload['case_triage']['persistent_short_wall_edges']}`.",
         f"- Recommended next step: {payload['case_triage']['recommended_next_step']}",
         "",
+        "## Expert assertions used",
+        "",
+        f"```json\n{json.dumps(payload.get('expert_assertions_used'), ensure_ascii=False, indent=2)}\n```",
+        "",
+        "## Assertion effects",
+        "",
+        f"- Candidate generation changed: `{payload['assertion_effects']['candidate_generation_changed']}`",
+        f"- Gate and explanation only: `{payload['assertion_effects']['gate_and_explanation_only']}`",
+        f"- Candidates downgraded/blocked by assertion: `{payload['assertion_effects']['violating_candidate_ids']}`",
+        "",
         "## Baseline walls",
         "",
         "| edge | residual (deg) | floor length | short wall | threshold |",
@@ -104,6 +114,8 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 f"- short_wall_edges_after: `{row['short_wall_edges_after']}`",
                 f"- short_wall_worsened / below_dynamic_short_threshold: `{row['short_wall_worsened']}` / `{row['below_dynamic_short_threshold']}`",
                 f"- Short-wall preservation explanation: `{row['short_wall_preservation_explanation']}`",
+                f"- Assertion effects: `{row.get('assertion_effects', [])}`",
+                f"- Assertion violations: `{row.get('assertion_violations', [])}`",
             ]
         )
         if not is_topology:
@@ -179,18 +191,27 @@ def run(
     out_dir: Path,
     expanded_window: bool = False,
     retain_per_family: int = 3,
+    assertion_path: Path | None = None,
 ) -> dict[str, Path]:
     payload = json.loads(input_path.read_text(encoding="utf-8"))
     ordered_pairs, source = extract_ordered_pairs(payload)
+    assertions = (
+        json.loads(assertion_path.read_text(encoding="utf-8"))
+        if assertion_path
+        else None
+    )
     result = run_local_candidate_search(
         ordered_pairs,
         local_window=EXPANDED_WINDOW if expanded_window else CORE_WINDOW,
         retain_per_family=retain_per_family,
+        expert_assertions=assertions,
     )
     result["input_provenance"] = {
         "input_file": input_path.name,
         "input_sha256": _sha256(input_path),
         "ordered_pair_source": source,
+        "assertion_file": assertion_path.name if assertion_path else None,
+        "assertion_sha256": _sha256(assertion_path) if assertion_path else None,
     }
     out_dir.mkdir(parents=True, exist_ok=True)
     json_path = out_dir / "candidate_search.json"
@@ -206,12 +227,14 @@ def main() -> int:
     parser.add_argument("--out-dir", type=Path, required=True)
     parser.add_argument("--expanded-window", action="store_true")
     parser.add_argument("--retain-per-family", type=int, default=3)
+    parser.add_argument("--assertion", type=Path)
     args = parser.parse_args()
     paths = run(
         input_path=args.input,
         out_dir=args.out_dir,
         expanded_window=args.expanded_window,
         retain_per_family=args.retain_per_family,
+        assertion_path=args.assertion,
     )
     for kind, path in paths.items():
         print(f"{kind}: {path}")

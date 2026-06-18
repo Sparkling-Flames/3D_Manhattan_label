@@ -15,7 +15,8 @@ from tools.paper_a_manhattan.run_local_3d_projection_review import (
 )
 
 
-SCHEMA_VERSION = "m15_20_local_candidate_search_v1_2"
+SCHEMA_VERSION = "m15_21_expert_assertion_workflow_v1"
+ASSERTION_SCHEMA_VERSION = "m15_21_expert_assertion_v1"
 CORE_WINDOW = (5, 6, 7, 8)
 EXPANDED_WINDOW = (4, 5, 6, 7, 8, 9)
 HEIGHT_PROBE_PAIRS = (5, 6, 7)
@@ -43,6 +44,74 @@ SAFETY_BOUNDARY = {
     "routing_input": False,
     "formal_artifact": False,
 }
+
+
+def normalize_expert_assertions(
+    payload: Mapping[str, Any] | None,
+    *,
+    valid_pair_indices: Iterable[int],
+    local_window: Sequence[int],
+) -> dict[str, Any] | None:
+    if payload is None:
+        return None
+    if payload.get("schema_version") != ASSERTION_SCHEMA_VERSION:
+        raise ValueError(f"assertion schema_version must be {ASSERTION_SCHEMA_VERSION}")
+    valid = set(int(value) for value in valid_pair_indices)
+
+    def pair_list(name: str) -> list[int]:
+        values = payload.get(name, [])
+        if not isinstance(values, list) or any(
+            isinstance(value, bool) or not isinstance(value, int) or value not in valid
+            for value in values
+        ):
+            raise ValueError(f"assertion {name} must contain valid pair indices")
+        return list(dict.fromkeys(values))
+
+    def edges(name: str) -> list[str]:
+        values = payload.get(name, [])
+        if not isinstance(values, list):
+            raise ValueError(f"assertion {name} must be a list")
+        output: list[str] = []
+        for value in values:
+            try:
+                left, right = (int(item) for item in str(value).split("-"))
+            except (TypeError, ValueError):
+                raise ValueError(f"assertion {name} contains invalid edge {value!r}") from None
+            if left not in valid or right not in valid or left == right:
+                raise ValueError(f"assertion {name} contains invalid edge {value!r}")
+            output.append(f"{left}-{right}")
+        return list(dict.fromkeys(output))
+
+    keep_distinct = payload.get("keep_distinct_pairs", [])
+    if not isinstance(keep_distinct, list):
+        raise ValueError("assertion keep_distinct_pairs must be a list")
+    normalized_distinct: list[list[int]] = []
+    for pair in keep_distinct:
+        if (
+            not isinstance(pair, list)
+            or len(pair) != 2
+            or any(isinstance(value, bool) or not isinstance(value, int) for value in pair)
+            or pair[0] == pair[1]
+            or not set(pair).issubset(valid)
+        ):
+            raise ValueError("each keep_distinct_pairs entry must contain two valid distinct indices")
+        normalized_distinct.append(pair)
+    candidate_window = pair_list("candidate_window")
+    if candidate_window and candidate_window != list(local_window):
+        raise ValueError("assertion candidate_window must match the configured local window")
+    notes = payload.get("notes", [])
+    if not isinstance(notes, list) or any(not isinstance(note, str) for note in notes):
+        raise ValueError("assertion notes must be a list of strings")
+    return {
+        "schema_version": ASSERTION_SCHEMA_VERSION,
+        "case_name": payload.get("case_name"),
+        "keep_distinct_pairs": normalized_distinct,
+        "primary_edges": edges("primary_edges"),
+        "allowed_short_edges": edges("allowed_short_edges"),
+        "do_not_move_pairs": pair_list("do_not_move_pairs"),
+        "candidate_window": candidate_window or list(local_window),
+        "notes": notes,
+    }
 
 
 def _pair_index(pair: Mapping[str, Any]) -> int:
@@ -528,17 +597,34 @@ def _candidate_triage(candidate: Mapping[str, Any]) -> dict[str, Any]:
                 f"{wall['edge']} remains unresolved: "
                 f"{wall['before_residual_deg']:.3f} -> {wall['after_residual_deg']:.3f}"
             )
-    if candidate["short_wall_edges_after"]:
+    allowed_short = set(candidate.get("assertion_allowed_short_wall_edges", []))
+    allowed_existing = [
+        edge for edge in candidate["short_wall_edges_after"] if edge in allowed_short
+    ]
+    unallowed_short = [
+        edge for edge in candidate["short_wall_edges_after"] if edge not in allowed_short
+    ]
+    if allowed_existing:
+        fails.append(
+            "allowed existing short-wall risk remains at "
+            + " and ".join(allowed_existing)
+            + "; allowance is not a correctness claim"
+        )
+    if unallowed_short:
         fails.append(
             "dynamic short-wall risk remains at "
-            + " and ".join(candidate["short_wall_edges_after"])
+            + " and ".join(unallowed_short)
         )
     if candidate["short_wall_worsened"]:
         fails.append("dynamic short-wall risk worsens")
     if candidate["height_worsened"]:
         fails.append("local height residual worsens")
 
-    blocked = bool(candidate["hard_gate"] or candidate["edge_missing_after"])
+    blocked = bool(
+        candidate["hard_gate"]
+        or candidate["edge_missing_after"]
+        or candidate.get("assertion_violations")
+    )
     preserved_short_wall_only = bool(
         candidate["below_dynamic_short_threshold"]
         and candidate["short_wall_preservation_explanation"]
@@ -569,7 +655,17 @@ def _candidate_triage(candidate: Mapping[str, Any]) -> dict[str, Any]:
         decision_class == "candidate_for_manual_review"
         and candidate["manual_ls_try_recommended"]
     )
-    if "6-7" in candidate["all_unresolved_required_edges"]:
+    asserted_primary = candidate.get("assertion_primary_edges", [])
+    unresolved_primary = [
+        edge for edge in asserted_primary if edge in candidate["all_unresolved_required_edges"]
+    ]
+    if unresolved_primary:
+        next_check = (
+            "Inspect asserted primary edge "
+            + ", ".join(unresolved_primary)
+            + " before considering direct LS application."
+        )
+    elif "6-7" in candidate["all_unresolved_required_edges"]:
         next_check = "Inspect the 6-7-8 window before considering direct LS application."
     elif candidate["all_unresolved_required_edges"]:
         next_check = (
@@ -597,6 +693,49 @@ def _candidate_triage(candidate: Mapping[str, Any]) -> dict[str, Any]:
     }
 
 
+def _apply_expert_assertions(
+    candidate: dict[str, Any], assertions: Mapping[str, Any]
+) -> None:
+    violations: list[str] = []
+    effects: list[str] = []
+    changed = set(candidate["changed_pair_indices"])
+    forbidden = changed.intersection(assertions["do_not_move_pairs"])
+    if forbidden:
+        violations.append("moves do-not-move pairs: " + ", ".join(map(str, sorted(forbidden))))
+    outside = changed.difference(assertions["candidate_window"])
+    if outside:
+        violations.append("moves pairs outside candidate_window: " + ", ".join(map(str, sorted(outside))))
+    for left, right in assertions["keep_distinct_pairs"]:
+        edge = f"{left}-{right}"
+        effects.append(f"keep {edge} distinct; merge/delete/topology collapse prohibited")
+        if any(detail.startswith(edge + ":") for detail in candidate["collapse_risk_details"]):
+            violations.append(f"violates keep_distinct_pairs at {edge}")
+    allowed_existing = [
+        edge
+        for edge in candidate["short_wall_edges_after"]
+        if edge in assertions["allowed_short_edges"]
+    ]
+    if allowed_existing:
+        effects.append(
+            "allowed existing short-wall risk (still risky): "
+            + ", ".join(allowed_existing)
+        )
+    if assertions["primary_edges"]:
+        effects.append("primary edge focus: " + ", ".join(assertions["primary_edges"]))
+    candidate.update(
+        {
+            "assertion_violations": violations,
+            "assertion_effects": effects,
+            "assertion_primary_edges": list(assertions["primary_edges"]),
+            "assertion_allowed_short_wall_edges": allowed_existing,
+        }
+    )
+    if violations:
+        candidate["manual_ls_try_recommended"] = False
+        candidate["disposition"] = "suppressed_assertion_violation"
+    candidate.update(_candidate_triage(candidate))
+
+
 def run_local_candidate_search(
     ordered_pairs: Sequence[Mapping[str, Any]],
     *,
@@ -606,10 +745,16 @@ def run_local_candidate_search(
     coordinate_mode: str = "ls_percent",
     local_window: Sequence[int] = CORE_WINDOW,
     retain_per_family: int = 3,
+    expert_assertions: Mapping[str, Any] | None = None,
 ) -> dict[str, Any]:
     if coordinate_mode != "ls_percent":
         raise ValueError("M15.20 requires explicit coordinate_mode='ls_percent'")
     baseline_pairs = _copy_pairs(ordered_pairs)
+    assertions = normalize_expert_assertions(
+        expert_assertions,
+        valid_pair_indices=_pair_lookup(baseline_pairs),
+        local_window=local_window,
+    )
     baseline = build_projection_variant(
         "original",
         baseline_pairs,
@@ -630,6 +775,9 @@ def run_local_candidate_search(
         )
         for row in generated
     ]
+    if assertions:
+        for row in evaluated:
+            _apply_expert_assertions(row, assertions)
     retained: list[dict[str, Any]] = []
     counts: dict[str, int] = {}
     for family in FAMILIES:
@@ -657,10 +805,22 @@ def run_local_candidate_search(
         "direct_fix_available": False,
         "best_executable_candidate_id": best["candidate_id"] if best else None,
         "best_executable_decision_class": best["decision_class"] if best else None,
-        "primary_unresolved_edges": best["primary_unresolved_edges"] if best else [],
+        "primary_unresolved_edges": (
+            [
+                edge
+                for edge in assertions["primary_edges"]
+                if best and edge in best["all_unresolved_required_edges"]
+            ]
+            if assertions
+            else (best["primary_unresolved_edges"] if best else [])
+        ),
         "persistent_short_wall_edges": best["short_wall_edges_after"] if best else [],
         "recommended_next_step": (
-            "Continue with local joint search or expert assertion workflow; do not apply directly in LS."
+            "Inspect asserted primary edge "
+            + ", ".join(assertions["primary_edges"])
+            + "; do not apply directly in LS."
+            if best and assertions and assertions["primary_edges"]
+            else "Continue with local joint search or expert assertion workflow; do not apply directly in LS."
             if best
             else "No executable candidate is available for review."
         ),
@@ -681,6 +841,16 @@ def run_local_candidate_search(
             "coordinate_mode": coordinate_mode,
         },
         "safety_boundary": dict(SAFETY_BOUNDARY),
+        "expert_assertions_used": assertions,
+        "assertion_effects": {
+            "candidate_generation_changed": False,
+            "gate_and_explanation_only": True,
+            "violating_candidate_ids": [
+                row["candidate_id"]
+                for row in [*executable, *topology]
+                if row.get("assertion_violations")
+            ],
+        },
         "case_triage": case_triage,
         "score_contract": {
             "lower_is_better": True,
