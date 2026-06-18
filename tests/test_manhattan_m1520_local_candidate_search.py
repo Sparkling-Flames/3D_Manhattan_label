@@ -10,7 +10,9 @@ from tools.paper_a_manhattan.manhattan_m1520_local_candidate_search import (
     FAMILIES,
     SAFETY_BOUNDARY,
     _candidate_triage,
+    _candidate_ranking_key,
     generate_local_candidates,
+    generate_joint_candidates,
     normalize_expert_assertions,
     run_local_candidate_search,
 )
@@ -46,7 +48,7 @@ def test_generation_has_four_bounded_families_and_never_uses_bottom_only_y():
     candidates = generate_local_candidates(original)
 
     assert original == frozen
-    assert {row["family"] for row in candidates} == set(FAMILIES)
+    assert {row["family"] for row in candidates} == set(FAMILIES[:4])
     assert all(set(row["changed_pair_indices"]).issubset(CORE_WINDOW) for row in candidates)
 
     before = _lookup(original)
@@ -203,6 +205,29 @@ def test_assertion_schema_rejects_window_mismatch():
         )
 
 
+def test_assertion_violation_ranks_after_safe_candidate_even_with_lower_score():
+    violating = {
+        "family": "column_x_align_translate",
+        "label": "moves_do_not_move_pair",
+        "score": -100.0,
+        "hard_gate": False,
+        "assertion_violations": ["moves do-not-move pairs: 6"],
+        "decision_class": "blocked",
+        "disposition": "suppressed_assertion_violation",
+    }
+    safe = {
+        "family": "height_aware_y_probe",
+        "label": "safe_partial",
+        "score": -1.0,
+        "hard_gate": False,
+        "assertion_violations": [],
+        "decision_class": "partial_diagnostic",
+        "disposition": "partial_neutral_review",
+    }
+
+    assert sorted([violating, safe], key=_candidate_ranking_key) == [safe, violating]
+
+
 def test_task218_ann3741_hardening_regression():
     input_path = Path(
         "analysis_results/paper_a_manhattan/single_image_manual_test/"
@@ -222,11 +247,12 @@ def test_task218_ann3741_hardening_regression():
     all_rows = [*executable, *topology]
     report = render_markdown_report(result)
 
-    assert result["candidate_generation"]["generated_count"] == 42
-    assert result["candidate_generation"]["retained_count"] == 12
-    assert result["schema_version"] == "m15_21_expert_assertion_workflow_v1"
+    assert result["candidate_generation"]["generated_count"] == 54
+    assert result["candidate_generation"]["retained_count"] == 21
+    assert result["schema_version"] == "m15_22_local_joint_candidate_search_v1"
     assert result["expert_assertions_used"]["keep_distinct_pairs"] == [[5, 6]]
-    assert result["assertion_effects"]["candidate_generation_changed"] is False
+    assert result["assertion_effects"]["candidate_generation_changed"] is True
+    assert result["assertion_effects"]["joint_candidate_count"] == 12
     assert result["case_triage"]["direct_fix_available"] is False
     assert "6-7" in result["case_triage"]["primary_unresolved_edges"]
     assert {"5-6", "6-7"}.issubset(result["case_triage"]["persistent_short_wall_edges"])
@@ -284,3 +310,48 @@ def test_task218_ann3741_hardening_regression():
         sorted(row["ordered_pair_indices_after"]) == list(range(1, 11))
         for row in all_rows
     )
+    joint = [row for row in executable if row["family"].startswith("joint_")]
+    assert {row["family"] for row in joint} == set(FAMILIES[4:])
+    assert all(row["assertion_compliant"] in {True, False} for row in joint)
+    assert all(8 not in row["changed_pair_indices"] for row in joint)
+    assert all("primary_edge_improved" in row for row in joint)
+    assert all("allowed_short_wall_worsened" in row for row in joint)
+    assert all("new_unresolved_edges" in row for row in joint)
+
+
+def test_m1522_joint_search_smoke_2369_and_ineligible_2389():
+    root = Path("analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked")
+    cases = {}
+    for case in ("task218_ann2369", "task238_ann2389"):
+        path = root / f"{case}_m1516_stabilized_input.json"
+        cases[case], _ = extract_ordered_pairs(json.loads(path.read_text(encoding="utf-8")))
+
+    assertion_2369 = {
+        "schema_version": ASSERTION_SCHEMA_VERSION,
+        "keep_distinct_pairs": [[5, 6]],
+        "primary_edges": ["6-7"],
+        "allowed_short_edges": ["5-6"],
+        "do_not_move_pairs": [8],
+        "candidate_window": list(CORE_WINDOW),
+        "notes": [],
+    }
+    result_2369 = run_local_candidate_search(
+        cases["task218_ann2369"], expert_assertions=assertion_2369
+    )
+    assert result_2369["candidate_generation"]["generated_count"] == 54
+    assert any(row["family"].startswith("joint_") for row in result_2369["candidates"])
+
+    assertion_2389 = normalize_expert_assertions(
+        {
+            "schema_version": ASSERTION_SCHEMA_VERSION,
+            "keep_distinct_pairs": [[2, 3]],
+            "primary_edges": ["3-4"],
+            "allowed_short_edges": ["2-3"],
+            "do_not_move_pairs": [1, 6],
+            "candidate_window": [2, 3, 4, 5],
+            "notes": [],
+        },
+        valid_pair_indices=range(1, 7),
+        local_window=[2, 3, 4, 5],
+    )
+    assert generate_joint_candidates(cases["task238_ann2389"], assertion_2389) == []

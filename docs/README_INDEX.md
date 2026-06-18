@@ -69,8 +69,8 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - `tools/paper_a_manhattan/manhattan_3d_projection.py` mirrors the current `vis_3d.html` projection formula and computes local-only floorprint, turn, height, dense-pair, clamp, and provenance metrics; it is not correctness, GT, writeback, routing, worker scoring, or a formal artifact.
 - `tools/paper_a_manhattan/run_local_3d_projection_review.py` generates M15.19–M15.19.2 local JSON/Markdown/HTML reviews from local panorama files and optional M15.18.3 candidates, including direct-file embedded textures, iframe-safe localhost URLs, explicit viewer/texture state, and a read-only 3D inspection workbench.
 - `tools/paper_a_manhattan/serve_local_3d_projection_review.py` serves one generated review from repository root on `127.0.0.1`; it is a read-only local launcher helper and does not connect to Label Studio or write annotations.
-- `tools/paper_a_manhattan/manhattan_m1520_local_candidate_search.py` provides the M15.20 bounded local candidate families and M15.21 expert assertion gates/explanations for task218_ann3741; assertions do not expand search, authorize final fixes, write annotations, route tasks, or create formal artifacts.
-- `tools/paper_a_manhattan/run_m1520_local_candidate_search.py` generates the local JSON/Markdown candidate report and optionally reads an M15.21 assertion sidecar; it does not add viewer UI or mutate Label Studio data.
+- `tools/paper_a_manhattan/manhattan_m1520_local_candidate_search.py` provides M15.20–M15.22 bounded local candidates, expert assertion gates, and three assertion-constrained joint probe families; it does not perform global optimization, authorize final fixes, write annotations, route tasks, or create formal artifacts.
+- `tools/paper_a_manhattan/run_m1520_local_candidate_search.py` generates the local JSON/Markdown candidate report and reads the optional M15.21 assertion sidecar used by M15.22 joint probes; it does not add viewer UI or mutate Label Studio data.
 
 ## 论文 B 线
 

@@ -39,7 +39,7 @@ def _fmt(value: Any, digits: int = 3) -> str:
 
 def render_markdown_report(payload: Mapping[str, Any]) -> str:
     lines = [
-        "# M15.20 Local Candidate Report — task218_ann3741",
+        "# M15.22 Local Joint Candidate Report — task218_ann3741",
         "",
         "> 仅供专家本地只读审查。候选不是最终修复，不写回 Label Studio，不进入 routing 或正式 artifact。",
         "> No candidate is authorized as final fix unless all required edges are resolved and no short-wall/collapse risk is worsened.",
@@ -116,6 +116,11 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 f"- Short-wall preservation explanation: `{row['short_wall_preservation_explanation']}`",
                 f"- Assertion effects: `{row.get('assertion_effects', [])}`",
                 f"- Assertion violations: `{row.get('assertion_violations', [])}`",
+                f"- Assertion compliant: `{row.get('assertion_compliant')}`",
+                f"- Primary edge improved: `{row.get('primary_edge_improved', [])}`",
+                f"- Allowed short wall worsened: `{row.get('allowed_short_wall_worsened', [])}`",
+                f"- New unresolved edges: `{row.get('new_unresolved_edges', [])}`",
+                f"- Collapse / self-intersection: `{row.get('collapse_risk_details', [])}` / `{row.get('self_intersection')}`",
             ]
         )
         if not is_topology:

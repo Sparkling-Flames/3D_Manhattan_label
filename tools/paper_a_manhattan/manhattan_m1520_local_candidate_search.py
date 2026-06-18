@@ -15,7 +15,7 @@ from tools.paper_a_manhattan.run_local_3d_projection_review import (
 )
 
 
-SCHEMA_VERSION = "m15_21_expert_assertion_workflow_v1"
+SCHEMA_VERSION = "m15_22_local_joint_candidate_search_v1"
 ASSERTION_SCHEMA_VERSION = "m15_21_expert_assertion_v1"
 CORE_WINDOW = (5, 6, 7, 8)
 EXPANDED_WINDOW = (4, 5, 6, 7, 8, 9)
@@ -26,6 +26,9 @@ FAMILIES = (
     "height_aware_y_probe",
     "local_order_topology_hypothesis",
     "dense_corner_preservation_joint_xy",
+    "joint_6_7_y_depth_balance",
+    "joint_6_7_8_synchronized_xy",
+    "joint_5_6_7_dense_footprint",
 )
 COLLAPSE_WALL_LENGTH = 0.10
 COLLAPSE_FLOOR_SEPARATION = 0.10
@@ -265,6 +268,81 @@ def generate_local_candidates(
     return rows
 
 
+def generate_joint_candidates(
+    ordered_pairs: Sequence[Mapping[str, Any]],
+    assertions: Mapping[str, Any],
+) -> list[dict[str, Any]]:
+    """Generate the bounded M15.22 families; pair 8 is a fixed anchor."""
+
+    available = set(_pair_lookup(ordered_pairs))
+    if not set(CORE_WINDOW).issubset(available):
+        return []
+    if not set(CORE_WINDOW).issubset(assertions["candidate_window"]):
+        return []
+    if {5, 6, 7}.intersection(assertions["do_not_move_pairs"]):
+        return []
+    rows: list[dict[str, Any]] = []
+
+    for amount in (0.5, 1.0):
+        for direction in (-1.0, 1.0):
+            changed = _copy_pairs(ordered_pairs)
+            lookup = _pair_lookup(changed)
+            for pair_index, sign in ((6, direction), (7, -direction)):
+                pair = lookup[pair_index]
+                pair["top"]["y"] = float(pair["top"]["y"]) + sign * amount
+                pair["bottom"]["y"] = float(pair["bottom"]["y"]) - sign * amount
+            rows.append(
+                _candidate(
+                    "joint_6_7_y_depth_balance",
+                    f"pairs_6_7_y_balance_{direction * amount:+.2f}",
+                    changed,
+                    (6, 7),
+                )
+            )
+
+    for dx, dy in ((0.25, 0.5), (-0.25, -0.5), (0.5, -0.5), (-0.5, 0.5)):
+        changed = _copy_pairs(ordered_pairs)
+        lookup = _pair_lookup(changed)
+        for pair_index, y_sign in ((6, 1.0), (7, -1.0)):
+            pair = lookup[pair_index]
+            pair["top"]["x"] = float(pair["top"]["x"]) + dx
+            pair["bottom"]["x"] = float(pair["bottom"]["x"]) + dx
+            pair["top"]["y"] = float(pair["top"]["y"]) + y_sign * dy
+            pair["bottom"]["y"] = float(pair["bottom"]["y"]) + y_sign * dy
+        rows.append(
+            _candidate(
+                "joint_6_7_8_synchronized_xy",
+                f"pairs_6_7_xy_dx_{dx:+.2f}_dy_{dy:+.2f}_anchor_8",
+                changed,
+                (6, 7),
+            )
+        )
+
+    for separation_dx in (0.15, 0.30):
+        for depth_shift in (-0.5, 0.5):
+            changed = _copy_pairs(ordered_pairs)
+            lookup = _pair_lookup(changed)
+            for pair_index, x_shift, y_shift in (
+                (5, -separation_dx, depth_shift),
+                (6, separation_dx, depth_shift),
+                (7, separation_dx / 2.0, -depth_shift),
+            ):
+                pair = lookup[pair_index]
+                pair["top"]["x"] = float(pair["top"]["x"]) + x_shift
+                pair["bottom"]["x"] = float(pair["bottom"]["x"]) + x_shift
+                pair["top"]["y"] = float(pair["top"]["y"]) + y_shift
+                pair["bottom"]["y"] = float(pair["bottom"]["y"]) + y_shift
+            rows.append(
+                _candidate(
+                    "joint_5_6_7_dense_footprint",
+                    f"pairs_5_6_7_footprint_sep_{separation_dx:.2f}_depth_{depth_shift:+.2f}",
+                    changed,
+                    (5, 6, 7),
+                )
+            )
+    return rows
+
+
 def _wall_by_edge(variant: Mapping[str, Any]) -> dict[tuple[int, int], Mapping[str, Any]]:
     return {
         (int(row["from_pair"]), int(row["to_pair"])): row
@@ -439,8 +517,11 @@ def evaluate_candidate(
                 ),
                 "edge_present_after": not missing,
                 "edge_missing_after": missing,
+                "before_floor_wall_length": float(before_row["floor_wall_length"]) if before_row else None,
                 "after_floor_wall_length": float(after_row["floor_wall_length"]) if after_row else None,
+                "before_short_wall": bool(before_row["short_wall"]) if before_row else None,
                 "short_wall": bool(after_row["short_wall"]) if after_row else None,
+                "before_short_wall_threshold": float(before_row["short_wall_threshold"]) if before_row else None,
                 "short_wall_threshold": float(after_row["short_wall_threshold"]) if after_row else None,
                 "below_dynamic_short_threshold": bool(after_row["short_wall"]) if after_row else None,
             }
@@ -720,20 +801,81 @@ def _apply_expert_assertions(
             "allowed existing short-wall risk (still risky): "
             + ", ".join(allowed_existing)
         )
+    allowed_short_worsened: list[str] = []
+    for wall in candidate["required_wall_residuals"]:
+        if wall["edge"] not in assertions["allowed_short_edges"]:
+            continue
+        if wall["after_floor_wall_length"] is None or wall["short_wall_threshold"] is None:
+            continue
+        before_deficit = max(
+            0.0,
+            float(wall["before_short_wall_threshold"])
+            - float(wall["before_floor_wall_length"]),
+        )
+        after_deficit = max(
+            0.0,
+            float(wall["short_wall_threshold"])
+            - float(wall["after_floor_wall_length"]),
+        )
+        if after_deficit > before_deficit + 1e-9:
+            allowed_short_worsened.append(wall["edge"])
+    if allowed_short_worsened:
+        violations.append(
+            "worsens allowed existing short-wall edges: "
+            + ", ".join(allowed_short_worsened)
+        )
     if assertions["primary_edges"]:
         effects.append("primary edge focus: " + ", ".join(assertions["primary_edges"]))
+    primary_edge_improvements = [
+        wall["edge"]
+        for wall in candidate["required_wall_residuals"]
+        if wall["edge"] in assertions["primary_edges"]
+        and wall["after_residual_deg"] is not None
+        and wall["before_residual_deg"] is not None
+        and wall["after_residual_deg"] < wall["before_residual_deg"] - 0.01
+    ]
+    baseline_unresolved = {
+        wall["edge"]
+        for wall in candidate["required_wall_residuals"]
+        if wall["before_residual_deg"] is None
+        or wall["before_residual_deg"] > UNRESOLVED_WALL_RESIDUAL_DEG
+    }
+    new_unresolved = [
+        edge
+        for edge in candidate["all_unresolved_required_edges"]
+        if edge not in baseline_unresolved
+    ]
     candidate.update(
         {
             "assertion_violations": violations,
+            "assertion_compliant": not violations,
             "assertion_effects": effects,
             "assertion_primary_edges": list(assertions["primary_edges"]),
             "assertion_allowed_short_wall_edges": allowed_existing,
+            "primary_edge_improved": primary_edge_improvements,
+            "allowed_short_wall_worsened": allowed_short_worsened,
+            "new_unresolved_edges": new_unresolved,
         }
     )
     if violations:
         candidate["manual_ls_try_recommended"] = False
         candidate["disposition"] = "suppressed_assertion_violation"
     candidate.update(_candidate_triage(candidate))
+
+
+def _candidate_ranking_key(candidate: Mapping[str, Any]) -> tuple[Any, ...]:
+    blocked = bool(
+        candidate.get("hard_gate")
+        or candidate.get("assertion_violations")
+        or candidate.get("decision_class") == "blocked"
+        or candidate.get("disposition") == "suppressed_assertion_violation"
+    )
+    bucket = 3 if blocked else {
+        "candidate_for_manual_review": 0,
+        "partial_diagnostic": 1,
+        "neutral_diagnostic": 2,
+    }.get(candidate.get("decision_class"), 2)
+    return bucket, float(candidate["score"]), candidate["family"], candidate["label"]
 
 
 def run_local_candidate_search(
@@ -764,6 +906,10 @@ def run_local_candidate_search(
         camera_height=camera_height,
     )
     generated = generate_local_candidates(baseline_pairs, local_window=local_window)
+    joint_generated: list[dict[str, Any]] = []
+    if assertions:
+        joint_generated = generate_joint_candidates(baseline_pairs, assertions)
+        generated.extend(joint_generated)
     evaluated = [
         evaluate_candidate(
             baseline,
@@ -791,9 +937,8 @@ def run_local_candidate_search(
     topology = [
         row for row in retained if row["family"] == "local_order_topology_hypothesis"
     ]
-    sort_key = lambda row: (bool(row["hard_gate"]), float(row["score"]), row["family"], row["label"])
-    executable.sort(key=sort_key)
-    topology.sort(key=sort_key)
+    executable.sort(key=_candidate_ranking_key)
+    topology.sort(key=_candidate_ranking_key)
     for rank, row in enumerate(executable, start=1):
         row["candidate_rank"] = rank
         row["candidate_id"] = f"candidate_{rank}"
@@ -828,7 +973,7 @@ def run_local_candidate_search(
     return {
         "schema_version": SCHEMA_VERSION,
         "scope": {
-            "case_specific": "task218_ann3741",
+            "case_specific": assertions.get("case_name") if assertions else None,
             "local_window": list(local_window),
             "core_window": list(CORE_WINDOW),
             "height_probe_pairs": list(HEIGHT_PROBE_PAIRS),
@@ -843,8 +988,9 @@ def run_local_candidate_search(
         "safety_boundary": dict(SAFETY_BOUNDARY),
         "expert_assertions_used": assertions,
         "assertion_effects": {
-            "candidate_generation_changed": False,
-            "gate_and_explanation_only": True,
+            "candidate_generation_changed": bool(joint_generated),
+            "joint_candidate_count": len(joint_generated),
+            "gate_and_explanation_only": False,
             "violating_candidate_ids": [
                 row["candidate_id"]
                 for row in [*executable, *topology]
