@@ -1,5 +1,5 @@
 {
-  "schema_version": "m15_20_local_candidate_search_v1_1",
+  "schema_version": "m15_20_local_candidate_search_v1_2",
   "scope": {
     "case_specific": "task218_ann3741",
     "local_window": [
@@ -39,6 +39,19 @@
     "worker_facing": false,
     "routing_input": false,
     "formal_artifact": false
+  },
+  "case_triage": {
+    "direct_fix_available": false,
+    "best_executable_candidate_id": "candidate_1",
+    "best_executable_decision_class": "partial_diagnostic",
+    "primary_unresolved_edges": [
+      "6-7"
+    ],
+    "persistent_short_wall_edges": [
+      "5-6",
+      "6-7"
+    ],
+    "recommended_next_step": "Continue with local joint search or expert assertion workflow; do not apply directly in LS."
   },
   "score_contract": {
     "lower_is_better": true,
@@ -314,6 +327,20 @@
         9,
         10
       ],
+      "decision_class": "partial_diagnostic",
+      "improves": [
+        "6-7 residual improves 35.368 -> 25.030",
+        "5-6 residual improves 11.560 -> 8.305",
+        "local height residual improves"
+      ],
+      "fails_because": [
+        "6-7 remains unresolved: 35.368 -> 25.030",
+        "dynamic short-wall risk remains at 5-6 and 6-7",
+        "dynamic short-wall risk worsens"
+      ],
+      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "direct_ls_trial_allowed": false,
+      "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 25.030; 6-7 remains unresolved: 35.368 -> 25.030.",
       "candidate_rank": 1,
       "candidate_id": "candidate_1"
     },
@@ -516,6 +543,19 @@
         9,
         10
       ],
+      "decision_class": "partial_diagnostic",
+      "improves": [
+        "6-7 residual improves 35.368 -> 26.315",
+        "7-8 residual improves 1.048 -> 0.568"
+      ],
+      "fails_because": [
+        "6-7 remains unresolved: 35.368 -> 26.315",
+        "dynamic short-wall risk remains at 5-6 and 6-7",
+        "dynamic short-wall risk worsens"
+      ],
+      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "direct_ls_trial_allowed": false,
+      "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 26.315; 6-7 remains unresolved: 35.368 -> 26.315.",
       "candidate_rank": 2,
       "candidate_id": "candidate_2"
     },
@@ -718,6 +758,20 @@
         9,
         10
       ],
+      "decision_class": "partial_diagnostic",
+      "improves": [
+        "6-7 residual improves 35.368 -> 30.292",
+        "5-6 residual improves 11.560 -> 10.155",
+        "local height residual improves"
+      ],
+      "fails_because": [
+        "6-7 remains unresolved: 35.368 -> 30.292",
+        "dynamic short-wall risk remains at 5-6 and 6-7",
+        "dynamic short-wall risk worsens"
+      ],
+      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "direct_ls_trial_allowed": false,
+      "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 30.292; 6-7 remains unresolved: 35.368 -> 30.292.",
       "candidate_rank": 3,
       "candidate_id": "candidate_3"
     },
@@ -920,6 +974,18 @@
         9,
         10
       ],
+      "decision_class": "partial_diagnostic",
+      "improves": [
+        "5-6 residual improves 11.560 -> 6.086",
+        "4-5 residual improves 1.451 -> 1.353"
+      ],
+      "fails_because": [
+        "6-7 remains unresolved: 35.368 -> 35.368",
+        "dynamic short-wall risk remains at 5-6 and 6-7"
+      ],
+      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "direct_ls_trial_allowed": false,
+      "triage_summary": "partial_diagnostic: 5-6 residual improves 11.560 -> 6.086; 6-7 remains unresolved: 35.368 -> 35.368.",
       "candidate_rank": 4,
       "candidate_id": "candidate_4"
     },
@@ -1122,6 +1188,18 @@
         9,
         10
       ],
+      "decision_class": "partial_diagnostic",
+      "improves": [
+        "5-6 residual improves 11.560 -> 7.886",
+        "6-7 residual improves 35.368 -> 34.782"
+      ],
+      "fails_because": [
+        "6-7 remains unresolved: 35.368 -> 34.782",
+        "dynamic short-wall risk remains at 5-6 and 6-7"
+      ],
+      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "direct_ls_trial_allowed": false,
+      "triage_summary": "partial_diagnostic: 5-6 residual improves 11.560 -> 7.886; 6-7 remains unresolved: 35.368 -> 34.782.",
       "candidate_rank": 5,
       "candidate_id": "candidate_5"
     },
@@ -1324,6 +1402,17 @@
         9,
         10
       ],
+      "decision_class": "partial_diagnostic",
+      "improves": [
+        "6-7 residual improves 35.368 -> 32.982"
+      ],
+      "fails_because": [
+        "6-7 remains unresolved: 35.368 -> 32.982",
+        "dynamic short-wall risk remains at 5-6 and 6-7"
+      ],
+      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "direct_ls_trial_allowed": false,
+      "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 32.982; 6-7 remains unresolved: 35.368 -> 32.982.",
       "candidate_rank": 6,
       "candidate_id": "candidate_6"
     },
@@ -1584,6 +1673,20 @@
         9,
         10
       ],
+      "decision_class": "partial_diagnostic",
+      "improves": [
+        "6-7 residual improves 35.368 -> 30.430",
+        "4-5 residual improves 1.451 -> 1.108",
+        "local height residual improves"
+      ],
+      "fails_because": [
+        "6-7 remains unresolved: 35.368 -> 30.430",
+        "dynamic short-wall risk remains at 5-6 and 6-7",
+        "dynamic short-wall risk worsens"
+      ],
+      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "direct_ls_trial_allowed": false,
+      "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 30.430; 6-7 remains unresolved: 35.368 -> 30.430.",
       "candidate_rank": 7,
       "candidate_id": "candidate_7"
     },
@@ -1846,6 +1949,21 @@
         9,
         10
       ],
+      "decision_class": "partial_diagnostic",
+      "improves": [
+        "6-7 residual improves 35.368 -> 30.582",
+        "4-5 residual improves 1.451 -> 1.141",
+        "local height residual improves"
+      ],
+      "fails_because": [
+        "5-6 remains unresolved: 11.560 -> 17.078",
+        "6-7 remains unresolved: 35.368 -> 30.582",
+        "dynamic short-wall risk remains at 5-6 and 6-7",
+        "dynamic short-wall risk worsens"
+      ],
+      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "direct_ls_trial_allowed": false,
+      "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 30.582; 5-6 remains unresolved: 11.560 -> 17.078.",
       "candidate_rank": 8,
       "candidate_id": "candidate_8"
     },
@@ -2108,6 +2226,21 @@
         9,
         10
       ],
+      "decision_class": "partial_diagnostic",
+      "improves": [
+        "6-7 residual improves 35.368 -> 30.806",
+        "4-5 residual improves 1.451 -> 1.186",
+        "local height residual improves"
+      ],
+      "fails_because": [
+        "5-6 remains unresolved: 11.560 -> 21.005",
+        "6-7 remains unresolved: 35.368 -> 30.806",
+        "dynamic short-wall risk remains at 5-6 and 6-7",
+        "dynamic short-wall risk worsens"
+      ],
+      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "direct_ls_trial_allowed": false,
+      "triage_summary": "partial_diagnostic: 6-7 residual improves 35.368 -> 30.806; 5-6 remains unresolved: 11.560 -> 21.005.",
       "candidate_rank": 9,
       "candidate_id": "candidate_9"
     }
@@ -2375,6 +2508,18 @@
         9,
         10
       ],
+      "decision_class": "blocked",
+      "improves": [
+        "local height residual improves"
+      ],
+      "fails_because": [
+        "4-5 is missing after candidate",
+        "5-6 is missing after candidate",
+        "6-7 is missing after candidate"
+      ],
+      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "direct_ls_trial_allowed": false,
+      "triage_summary": "blocked: local height residual improves; 4-5 is missing after candidate.",
       "topology_rank": 1,
       "candidate_id": "topology_1"
     },
@@ -2639,6 +2784,18 @@
         9,
         10
       ],
+      "decision_class": "blocked",
+      "improves": [
+        "local height residual improves"
+      ],
+      "fails_because": [
+        "6-7 is missing after candidate",
+        "7-8 is missing after candidate",
+        "dynamic short-wall risk remains at 5-6"
+      ],
+      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "direct_ls_trial_allowed": false,
+      "triage_summary": "blocked: local height residual improves; 6-7 is missing after candidate.",
       "topology_rank": 2,
       "candidate_id": "topology_2"
     },
@@ -2906,6 +3063,18 @@
         9,
         10
       ],
+      "decision_class": "blocked",
+      "improves": [
+        "local height residual improves"
+      ],
+      "fails_because": [
+        "5-6 is missing after candidate",
+        "6-7 is missing after candidate",
+        "7-8 is missing after candidate"
+      ],
+      "next_expert_check": "Inspect the 6-7-8 window before considering direct LS application.",
+      "direct_ls_trial_allowed": false,
+      "triage_summary": "blocked: local height residual improves; 5-6 is missing after candidate.",
       "topology_rank": 3,
       "candidate_id": "topology_3"
     }

@@ -51,6 +51,14 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         "- coordinate_mode: `ls_percent`（显式固定）",
         "- Hard gates: introduced self-intersection；5/6/7 collapse risk",
         "",
+        "## Case-level Verdict",
+        "",
+        "- Case verdict: No candidate is authorized as final fix.",
+        f"- Best executable candidate: `{payload['case_triage']['best_executable_candidate_id']}` (`{payload['case_triage']['best_executable_decision_class']}`)",
+        "- Why not direct LS apply: Best numeric executable candidate is still partial; required local geometry remains unresolved.",
+        f"- Primary unresolved local structure: `{payload['case_triage']['primary_unresolved_edges']}`; persistent dynamic short-wall risk: `{payload['case_triage']['persistent_short_wall_edges']}`.",
+        f"- Recommended next step: {payload['case_triage']['recommended_next_step']}",
+        "",
         "## Baseline walls",
         "",
         "| edge | residual (deg) | floor length | short wall | threshold |",
@@ -63,7 +71,8 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
     report_rows = [*payload["candidates"], *payload.get("topology_hypotheses", [])]
     topology_started = False
     for row in report_rows:
-        if row["family"] == "local_order_topology_hypothesis" and not topology_started:
+        is_topology = row["family"] == "local_order_topology_hypothesis"
+        if is_topology and not topology_started:
             topology_started = True
             lines.extend(
                 [
@@ -80,9 +89,14 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 "",
                 f"- Label: `{row['label']}`",
                 f"- Changed pairs: `{row['changed_pair_indices']}`",
-                f"- Score: `{_fmt(row['score'])}` (lower is better)",
+                (
+                    f"- Diagnostic score: `{_fmt(row['score'])}`. Not executable; not ranked with candidate_N."
+                    if is_topology
+                    else f"- Score: `{_fmt(row['score'])}` (lower is better)"
+                ),
                 f"- Disposition: `{row['disposition']}`",
                 f"- manual_ls_try_recommended: `{row['manual_ls_try_recommended']}`",
+                f"- direct_ls_trial_allowed: `{row['direct_ls_trial_allowed']}`",
                 f"- Height worsened / short wall / hard gate: `{row['height_worsened']}` / `{row['short_wall_after']}` / `{row['hard_gate']}`",
                 f"- edge_missing_after: `{row['edge_missing_after']}`",
                 f"- primary_unresolved_edges: `{row['primary_unresolved_edges']}`",
@@ -90,6 +104,20 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 f"- short_wall_edges_after: `{row['short_wall_edges_after']}`",
                 f"- short_wall_worsened / below_dynamic_short_threshold: `{row['short_wall_worsened']}` / `{row['below_dynamic_short_threshold']}`",
                 f"- Short-wall preservation explanation: `{row['short_wall_preservation_explanation']}`",
+            ]
+        )
+        if not is_topology:
+            lines.extend(
+                [
+                    f"- decision_class: `{row['decision_class']}`",
+                    f"- triage_summary: {row['triage_summary']}",
+                    f"- improves: `{row['improves']}`",
+                    f"- fails_because: `{row['fails_because']}`",
+                    f"- next_expert_check: {row['next_expert_check']}",
+                ]
+            )
+        lines.extend(
+            [
                 "",
                 "### 2D coordinate changes",
                 "",

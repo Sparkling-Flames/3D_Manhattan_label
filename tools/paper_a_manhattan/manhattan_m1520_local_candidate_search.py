@@ -15,7 +15,7 @@ from tools.paper_a_manhattan.run_local_3d_projection_review import (
 )
 
 
-SCHEMA_VERSION = "m15_20_local_candidate_search_v1_1"
+SCHEMA_VERSION = "m15_20_local_candidate_search_v1_2"
 CORE_WINDOW = (5, 6, 7, 8)
 EXPANDED_WINDOW = (4, 5, 6, 7, 8, 9)
 HEIGHT_PROBE_PAIRS = (5, 6, 7)
@@ -470,7 +470,7 @@ def evaluate_candidate(
         recommend = False
 
     changed = raw_candidate["changed_pair_indices"]
-    return {
+    result = {
         "family": raw_candidate["family"],
         "label": raw_candidate["label"],
         "changed_pair_indices": changed,
@@ -501,6 +501,96 @@ def evaluate_candidate(
         },
         "required_wall_residuals": required_walls,
         "ordered_pair_indices_after": [_pair_index(row) for row in raw_candidate["ordered_pairs"]],
+    }
+    result.update(_candidate_triage(result))
+    return result
+
+
+def _candidate_triage(candidate: Mapping[str, Any]) -> dict[str, Any]:
+    improvement_rows: list[tuple[float, str]] = []
+    fails: list[str] = []
+    for wall in candidate["required_wall_residuals"]:
+        before = wall["before_residual_deg"]
+        after = wall["after_residual_deg"]
+        if before is not None and after is not None and after < before - 0.01:
+            improvement_rows.append(
+                (before - after, f"{wall['edge']} residual improves {before:.3f} -> {after:.3f}")
+            )
+    improves = [text for _, text in sorted(improvement_rows, reverse=True)]
+    if candidate["score_components"]["height_residual"]["delta"] < -0.01:
+        improves.append("local height residual improves")
+
+    for wall in candidate["required_wall_residuals"]:
+        if wall["edge_missing_after"]:
+            fails.append(f"{wall['edge']} is missing after candidate")
+        elif wall["edge"] in candidate["all_unresolved_required_edges"]:
+            fails.append(
+                f"{wall['edge']} remains unresolved: "
+                f"{wall['before_residual_deg']:.3f} -> {wall['after_residual_deg']:.3f}"
+            )
+    if candidate["short_wall_edges_after"]:
+        fails.append(
+            "dynamic short-wall risk remains at "
+            + " and ".join(candidate["short_wall_edges_after"])
+        )
+    if candidate["short_wall_worsened"]:
+        fails.append("dynamic short-wall risk worsens")
+    if candidate["height_worsened"]:
+        fails.append("local height residual worsens")
+
+    blocked = bool(candidate["hard_gate"] or candidate["edge_missing_after"])
+    clean_for_review = (
+        not blocked
+        and not candidate["all_unresolved_required_edges"]
+        and not candidate["short_wall_worsened"]
+        and candidate["family"] != "local_order_topology_hypothesis"
+    )
+    score_improves = float(candidate["score"]) < -0.01
+    if blocked:
+        decision_class = "blocked"
+    elif clean_for_review:
+        decision_class = "candidate_for_manual_review"
+    elif (
+        candidate["short_wall_worsened"]
+        or (
+            candidate["below_dynamic_short_threshold"]
+            and candidate["short_wall_preservation_explanation"]
+        )
+        or (score_improves and candidate["all_unresolved_required_edges"])
+    ):
+        decision_class = "partial_diagnostic"
+    else:
+        decision_class = "neutral_diagnostic"
+
+    direct_ls_trial_allowed = bool(
+        decision_class == "candidate_for_manual_review"
+        and candidate["manual_ls_try_recommended"]
+    )
+    if "6-7" in candidate["all_unresolved_required_edges"]:
+        next_check = "Inspect the 6-7-8 window before considering direct LS application."
+    elif candidate["all_unresolved_required_edges"]:
+        next_check = (
+            "Inspect unresolved local edges "
+            + ", ".join(candidate["all_unresolved_required_edges"])
+            + " before any LS trial."
+        )
+    elif candidate["short_wall_edges_after"]:
+        next_check = "Inspect dynamic short-wall geometry before any LS trial."
+    else:
+        next_check = "Perform expert visual review before any LS trial."
+    summary = (
+        f"{decision_class}: "
+        + (improves[0] if improves else "no clear local improvement")
+        + (f"; {fails[0]}" if fails else "; no required-edge blocker detected")
+        + "."
+    )
+    return {
+        "decision_class": decision_class,
+        "improves": improves,
+        "fails_because": fails,
+        "next_expert_check": next_check,
+        "direct_ls_trial_allowed": direct_ls_trial_allowed,
+        "triage_summary": summary,
     }
 
 
@@ -559,6 +649,19 @@ def run_local_candidate_search(
     for rank, row in enumerate(topology, start=1):
         row["topology_rank"] = rank
         row["candidate_id"] = f"topology_{rank}"
+    best = executable[0] if executable else None
+    case_triage = {
+        "direct_fix_available": False,
+        "best_executable_candidate_id": best["candidate_id"] if best else None,
+        "best_executable_decision_class": best["decision_class"] if best else None,
+        "primary_unresolved_edges": best["primary_unresolved_edges"] if best else [],
+        "persistent_short_wall_edges": best["short_wall_edges_after"] if best else [],
+        "recommended_next_step": (
+            "Continue with local joint search or expert assertion workflow; do not apply directly in LS."
+            if best
+            else "No executable candidate is available for review."
+        ),
+    }
     return {
         "schema_version": SCHEMA_VERSION,
         "scope": {
@@ -575,6 +678,7 @@ def run_local_candidate_search(
             "coordinate_mode": coordinate_mode,
         },
         "safety_boundary": dict(SAFETY_BOUNDARY),
+        "case_triage": case_triage,
         "score_contract": {
             "lower_is_better": True,
             "weights": {

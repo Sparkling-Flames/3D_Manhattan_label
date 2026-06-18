@@ -117,9 +117,8 @@ def test_cli_writes_read_only_json_and_markdown(tmp_path):
 
 
 def test_static_boundary_has_no_writeback_or_formal_chain():
-    source = Path(
-        "tools/paper_a_manhattan/manhattan_m1520_local_candidate_search.py"
-    ).read_text(encoding="utf-8").lower()
+    source = Path("tools/paper_a_manhattan/manhattan_m1520_local_candidate_search.py").read_text(encoding="utf-8").lower()
+    runner = Path("tools/paper_a_manhattan/run_m1520_local_candidate_search.py").read_text(encoding="utf-8").lower()
 
     assert '"annotation_write_allowed": false' in source
     assert '"annotation_patch_generated": false' in source
@@ -128,6 +127,9 @@ def test_static_boundary_has_no_writeback_or_formal_chain():
     assert "writeback" not in source
     assert "formal_g_t" not in source
     assert "p1/c1/c2/t1/v1" not in source
+    assert '"routing_input": true' not in source
+    assert '"formal_artifact": true' not in source
+    assert "annotation_patch" not in runner
 
 
 def test_task218_ann3741_hardening_regression():
@@ -144,7 +146,21 @@ def test_task218_ann3741_hardening_regression():
 
     assert result["candidate_generation"]["generated_count"] == 42
     assert result["candidate_generation"]["retained_count"] == 12
-    assert result["schema_version"] == "m15_20_local_candidate_search_v1_1"
+    assert result["schema_version"] == "m15_20_local_candidate_search_v1_2"
+    assert result["case_triage"]["direct_fix_available"] is False
+    assert "6-7" in result["case_triage"]["primary_unresolved_edges"]
+    assert {"5-6", "6-7"}.issubset(result["case_triage"]["persistent_short_wall_edges"])
+    for row in executable:
+        assert {
+            "decision_class",
+            "improves",
+            "fails_because",
+            "next_expert_check",
+            "triage_summary",
+            "direct_ls_trial_allowed",
+        }.issubset(row)
+        assert row["decision_class"] != "candidate_for_manual_review"
+        assert row["direct_ls_trial_allowed"] is False
     assert all(row["disposition"] != "final_fix" for row in all_rows)
     assert all(row["manual_ls_try_recommended"] is False for row in topology)
     assert report.index("## Executable candidates ranking") < report.index("## Read-only topology hypotheses")
@@ -152,6 +168,9 @@ def test_task218_ann3741_hardening_regression():
     align = next(row for row in executable if row["label"] == "pair_5_align_dx_+0.50")
     assert align["disposition"] in {"partial_neutral_review", "neutral_review"}
     assert "6-7" in align["all_unresolved_required_edges"]
+    assert any(text.startswith("5-6 residual improves") for text in align["improves"])
+    assert any(text.startswith("6-7 remains unresolved") for text in align["fails_because"])
+    assert "6-7" in align["triage_summary"]
 
     short = next(
         row
@@ -172,3 +191,6 @@ def test_task218_ann3741_hardening_regression():
         wall["edge_missing_after"] is True
         for wall in missing["required_wall_residuals"]
     )
+    topology_report = report[report.index("## Read-only topology hypotheses") :]
+    assert "Diagnostic score" in topology_report
+    assert "- Score:" not in topology_report

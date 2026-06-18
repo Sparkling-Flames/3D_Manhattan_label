@@ -10,6 +10,14 @@
 - coordinate_mode: `ls_percent`（显式固定）
 - Hard gates: introduced self-intersection；5/6/7 collapse risk
 
+## Case-level Verdict
+
+- Case verdict: No candidate is authorized as final fix.
+- Best executable candidate: `candidate_1` (`partial_diagnostic`)
+- Why not direct LS apply: Best numeric executable candidate is still partial; required local geometry remains unresolved.
+- Primary unresolved local structure: `['6-7']`; persistent dynamic short-wall risk: `['5-6', '6-7']`.
+- Recommended next step: Continue with local joint search or expert assertion workflow; do not apply directly in LS.
+
 ## Baseline walls
 
 | edge | residual (deg) | floor length | short wall | threshold |
@@ -28,6 +36,7 @@
 - Score: `-20.714` (lower is better)
 - Disposition: `partial_neutral_review`
 - manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `True` / `False`
 - edge_missing_after: `[]`
 - primary_unresolved_edges: `['6-7']`
@@ -35,6 +44,11 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
 - Short-wall preservation explanation: `None`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 25.030; 6-7 remains unresolved: 35.368 -> 25.030.
+- improves: `['6-7 residual improves 35.368 -> 25.030', '5-6 residual improves 11.560 -> 8.305', 'local height residual improves']`
+- fails_because: `['6-7 remains unresolved: 35.368 -> 25.030', 'dynamic short-wall risk remains at 5-6 and 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -68,6 +82,7 @@
 - Score: `-16.623` (lower is better)
 - Disposition: `partial_neutral_review`
 - manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `True` / `False`
 - edge_missing_after: `[]`
 - primary_unresolved_edges: `['6-7']`
@@ -75,6 +90,11 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
 - Short-wall preservation explanation: `None`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 26.315; 6-7 remains unresolved: 35.368 -> 26.315.
+- improves: `['6-7 residual improves 35.368 -> 26.315', '7-8 residual improves 1.048 -> 0.568']`
+- fails_because: `['6-7 remains unresolved: 35.368 -> 26.315', 'dynamic short-wall risk remains at 5-6 and 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -108,6 +128,7 @@
 - Score: `-11.091` (lower is better)
 - Disposition: `partial_neutral_review`
 - manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `True` / `False`
 - edge_missing_after: `[]`
 - primary_unresolved_edges: `['6-7']`
@@ -115,6 +136,11 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
 - Short-wall preservation explanation: `None`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 30.292; 6-7 remains unresolved: 35.368 -> 30.292.
+- improves: `['6-7 residual improves 35.368 -> 30.292', '5-6 residual improves 11.560 -> 10.155', 'local height residual improves']`
+- fails_because: `['6-7 remains unresolved: 35.368 -> 30.292', 'dynamic short-wall risk remains at 5-6 and 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -148,6 +174,7 @@
 - Score: `-5.477` (lower is better)
 - Disposition: `partial_neutral_review`
 - manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `True` / `False`
 - edge_missing_after: `[]`
 - primary_unresolved_edges: `['6-7']`
@@ -155,6 +182,11 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `False` / `True`
 - Short-wall preservation explanation: `pre-existing dynamic short-wall risk preserved without increased deficit`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: 5-6 residual improves 11.560 -> 6.086; 6-7 remains unresolved: 35.368 -> 35.368.
+- improves: `['5-6 residual improves 11.560 -> 6.086', '4-5 residual improves 1.451 -> 1.353']`
+- fails_because: `['6-7 remains unresolved: 35.368 -> 35.368', 'dynamic short-wall risk remains at 5-6 and 6-7']`
+- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -188,6 +220,7 @@
 - Score: `-5.157` (lower is better)
 - Disposition: `partial_neutral_review`
 - manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `True` / `False`
 - edge_missing_after: `[]`
 - primary_unresolved_edges: `['6-7']`
@@ -195,6 +228,11 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `False` / `True`
 - Short-wall preservation explanation: `pre-existing dynamic short-wall risk preserved without increased deficit`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: 5-6 residual improves 11.560 -> 7.886; 6-7 remains unresolved: 35.368 -> 34.782.
+- improves: `['5-6 residual improves 11.560 -> 7.886', '6-7 residual improves 35.368 -> 34.782']`
+- fails_because: `['6-7 remains unresolved: 35.368 -> 34.782', 'dynamic short-wall risk remains at 5-6 and 6-7']`
+- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -228,6 +266,7 @@
 - Score: `-4.977` (lower is better)
 - Disposition: `partial_neutral_review`
 - manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `True` / `False`
 - edge_missing_after: `[]`
 - primary_unresolved_edges: `['6-7']`
@@ -235,6 +274,11 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `False` / `True`
 - Short-wall preservation explanation: `pre-existing dynamic short-wall risk preserved without increased deficit`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 32.982; 6-7 remains unresolved: 35.368 -> 32.982.
+- improves: `['6-7 residual improves 35.368 -> 32.982']`
+- fails_because: `['6-7 remains unresolved: 35.368 -> 32.982', 'dynamic short-wall risk remains at 5-6 and 6-7']`
+- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -268,6 +312,7 @@
 - Score: `-1.463` (lower is better)
 - Disposition: `partial_neutral_review`
 - manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `True` / `False`
 - edge_missing_after: `[]`
 - primary_unresolved_edges: `['6-7']`
@@ -275,6 +320,11 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
 - Short-wall preservation explanation: `None`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 30.430; 6-7 remains unresolved: 35.368 -> 30.430.
+- improves: `['6-7 residual improves 35.368 -> 30.430', '4-5 residual improves 1.451 -> 1.108', 'local height residual improves']`
+- fails_because: `['6-7 remains unresolved: 35.368 -> 30.430', 'dynamic short-wall risk remains at 5-6 and 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -314,6 +364,7 @@
 - Score: `8.142` (lower is better)
 - Disposition: `partial_neutral_review`
 - manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `True` / `False`
 - edge_missing_after: `[]`
 - primary_unresolved_edges: `['6-7']`
@@ -321,6 +372,11 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
 - Short-wall preservation explanation: `None`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 30.582; 5-6 remains unresolved: 11.560 -> 17.078.
+- improves: `['6-7 residual improves 35.368 -> 30.582', '4-5 residual improves 1.451 -> 1.141', 'local height residual improves']`
+- fails_because: `['5-6 remains unresolved: 11.560 -> 17.078', '6-7 remains unresolved: 35.368 -> 30.582', 'dynamic short-wall risk remains at 5-6 and 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -360,6 +416,7 @@
 - Score: `18.583` (lower is better)
 - Disposition: `partial_neutral_review`
 - manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `True` / `False`
 - edge_missing_after: `[]`
 - primary_unresolved_edges: `['6-7']`
@@ -367,6 +424,11 @@
 - short_wall_edges_after: `['5-6', '6-7']`
 - short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
 - Short-wall preservation explanation: `None`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 30.806; 5-6 remains unresolved: 11.560 -> 21.005.
+- improves: `['6-7 residual improves 35.368 -> 30.806', '4-5 residual improves 1.451 -> 1.186', 'local height residual improves']`
+- fails_because: `['5-6 remains unresolved: 11.560 -> 21.005', '6-7 remains unresolved: 35.368 -> 30.806', 'dynamic short-wall risk remains at 5-6 and 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect the 6-7-8 window before considering direct LS application.
 
 ### 2D coordinate changes
 
@@ -407,9 +469,10 @@
 
 - Label: `swap_pair_5_6`
 - Changed pairs: `[5, 6]`
-- Score: `-49.680` (lower is better)
+- Diagnostic score: `-49.680`. Not executable; not ranked with candidate_N.
 - Disposition: `neutral_review_topology_hypothesis`
 - manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `False` / `False`
 - edge_missing_after: `['4-5', '5-6', '6-7']`
 - primary_unresolved_edges: `['6-7']`
@@ -453,9 +516,10 @@
 
 - Label: `swap_pair_7_8`
 - Changed pairs: `[7, 8]`
-- Score: `22.129` (lower is better)
+- Diagnostic score: `22.129`. Not executable; not ranked with candidate_N.
 - Disposition: `neutral_review_topology_hypothesis`
 - manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `True` / `False`
 - edge_missing_after: `['6-7', '7-8']`
 - primary_unresolved_edges: `['6-7']`
@@ -499,9 +563,10 @@
 
 - Label: `swap_pair_6_7`
 - Changed pairs: `[6, 7]`
-- Score: `55.690` (lower is better)
+- Diagnostic score: `55.690`. Not executable; not ranked with candidate_N.
 - Disposition: `suppressed_hard_risk`
 - manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
 - Height worsened / short wall / hard gate: `False` / `False` / `True`
 - edge_missing_after: `['5-6', '6-7', '7-8']`
 - primary_unresolved_edges: `['6-7']`
