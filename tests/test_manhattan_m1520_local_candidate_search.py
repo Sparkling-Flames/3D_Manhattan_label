@@ -11,6 +11,7 @@ from tools.paper_a_manhattan.manhattan_m1520_local_candidate_search import (
     SAFETY_BOUNDARY,
     _candidate_triage,
     _candidate_ranking_key,
+    _retain_candidates_per_family,
     generate_local_candidates,
     generate_joint_candidates,
     normalize_expert_assertions,
@@ -226,6 +227,32 @@ def test_assertion_violation_ranks_after_safe_candidate_even_with_lower_score():
     }
 
     assert sorted([violating, safe], key=_candidate_ranking_key) == [safe, violating]
+
+
+def test_family_retention_prefers_compliant_candidate_over_lower_score_violation():
+    violating = {
+        "family": "column_x_align_translate",
+        "label": "violating_low_score",
+        "score": -100.0,
+        "hard_gate": False,
+        "assertion_violations": ["moves do-not-move pairs: 6"],
+        "decision_class": "blocked",
+        "disposition": "suppressed_assertion_violation",
+    }
+    compliant = {
+        "family": "column_x_align_translate",
+        "label": "compliant_partial",
+        "score": -1.0,
+        "hard_gate": False,
+        "assertion_violations": [],
+        "decision_class": "partial_diagnostic",
+        "disposition": "partial_neutral_review",
+    }
+
+    retained, counts = _retain_candidates_per_family([violating, compliant], 1)
+
+    assert counts["column_x_align_translate"] == 2
+    assert retained == [compliant]
 
 
 def test_task218_ann3741_hardening_regression():

@@ -878,6 +878,19 @@ def _candidate_ranking_key(candidate: Mapping[str, Any]) -> tuple[Any, ...]:
     return bucket, float(candidate["score"]), candidate["family"], candidate["label"]
 
 
+def _retain_candidates_per_family(
+    evaluated: Sequence[dict[str, Any]], retain_per_family: int
+) -> tuple[list[dict[str, Any]], dict[str, int]]:
+    retained: list[dict[str, Any]] = []
+    counts: dict[str, int] = {}
+    for family in FAMILIES:
+        family_rows = [row for row in evaluated if row["family"] == family]
+        counts[family] = len(family_rows)
+        family_rows.sort(key=_candidate_ranking_key)
+        retained.extend(family_rows[: max(1, retain_per_family)])
+    return retained, counts
+
+
 def run_local_candidate_search(
     ordered_pairs: Sequence[Mapping[str, Any]],
     *,
@@ -924,13 +937,7 @@ def run_local_candidate_search(
     if assertions:
         for row in evaluated:
             _apply_expert_assertions(row, assertions)
-    retained: list[dict[str, Any]] = []
-    counts: dict[str, int] = {}
-    for family in FAMILIES:
-        family_rows = [row for row in evaluated if row["family"] == family]
-        counts[family] = len(family_rows)
-        family_rows.sort(key=lambda row: (bool(row["hard_gate"]), float(row["score"]), row["label"]))
-        retained.extend(family_rows[: max(1, retain_per_family)])
+    retained, counts = _retain_candidates_per_family(evaluated, retain_per_family)
     executable = [
         row for row in retained if row["family"] != "local_order_topology_hypothesis"
     ]

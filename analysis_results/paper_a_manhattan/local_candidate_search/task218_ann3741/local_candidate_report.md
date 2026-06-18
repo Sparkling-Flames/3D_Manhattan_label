@@ -58,7 +58,7 @@
 
 - Candidate generation changed: `True`
 - Gate and explanation only: `False`
-- Candidates downgraded/blocked by assertion: `['candidate_12', 'candidate_13', 'candidate_14', 'candidate_15', 'candidate_16', 'candidate_17', 'candidate_18', 'topology_2']`
+- Candidates downgraded/blocked by assertion: `['candidate_16', 'candidate_17', 'candidate_18', 'topology_2']`
 
 ## Baseline walls
 
@@ -189,7 +189,113 @@
 | 6-7 | 35.368 | 25.403 | -9.965 | True | False | 0.286 | yes | 0.502 | yes |
 | 7-8 | 1.048 | 0.999 | -0.048 | True | False | 0.813 | no | 0.502 | no |
 
-## candidate_3 — column_x_align_translate
+## candidate_3 — height_aware_y_probe
+
+- Label: `pair_7_top_+0.50_bottom_+0.50`
+- Changed pairs: `[7]`
+- Score: `-9.645` (lower is better)
+- Disposition: `partial_neutral_review`
+- manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
+- Height worsened / short wall / hard gate: `False` / `True` / `False`
+- edge_missing_after: `[]`
+- primary_unresolved_edges: `['6-7']`
+- all_unresolved_required_edges: `['6-7']`
+- short_wall_edges_after: `['5-6', '6-7']`
+- short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
+- Short-wall preservation explanation: `None`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
+- Assertion compliant: `True`
+- Primary edge improved: `['6-7']`
+- Allowed short wall worsened: `[]`
+- New unresolved edges: `[]`
+- Collapse / self-intersection: `[]` / `{'before': False, 'after': False}`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 31.083; 6-7 remains unresolved: 35.368 -> 31.083.
+- improves: `['6-7 residual improves 35.368 -> 31.083', '7-8 residual improves 1.048 -> 0.798', 'local height residual improves']`
+- fails_because: `['6-7 remains unresolved: 35.368 -> 31.083', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
+
+### 2D coordinate changes
+
+| pair | field | before | after | delta | changed |
+|---:|---|---:|---:|---:|---|
+| 7 | top_x | 51.660 | 51.660 | 0.000 | False |
+| 7 | top_y | 12.695 | 13.195 | 0.500 | True |
+| 7 | bottom_x | 51.660 | 51.660 | 0.000 | False |
+| 7 | bottom_y | 87.891 | 88.391 | 0.500 | True |
+
+### 3D coordinates
+
+| pair | variant | floor (x,y,z) | ceiling (x,y,z) | wall height |
+|---:|---|---|---|---:|
+| 7 | original | (0.067, -1.600, -0.636) | (0.067, 1.518, -0.636) | 3.118 |
+| 7 | candidate | (0.064, -1.600, -0.608) | (0.064, 1.388, -0.608) | 2.988 |
+
+### Required wall residuals
+
+| edge | before | after | delta | present | missing | floor length | short wall | threshold | below dynamic threshold |
+|---|---:|---:|---:|---|---|---:|---|---:|---|
+| 4-5 | 1.451 | 1.451 | 0.000 | True | False | 4.385 | no | 0.502 | no |
+| 5-6 | 11.560 | 11.560 | 0.000 | True | False | 0.234 | yes | 0.502 | yes |
+| 6-7 | 35.368 | 31.083 | -4.285 | True | False | 0.291 | yes | 0.502 | yes |
+| 7-8 | 1.048 | 0.798 | -0.250 | True | False | 0.812 | no | 0.502 | no |
+
+## candidate_4 — height_aware_y_probe
+
+- Label: `pair_7_top_-0.50_bottom_+0.50`
+- Changed pairs: `[7]`
+- Score: `-7.796` (lower is better)
+- Disposition: `partial_neutral_review`
+- manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
+- Height worsened / short wall / hard gate: `False` / `True` / `False`
+- edge_missing_after: `[]`
+- primary_unresolved_edges: `['6-7']`
+- all_unresolved_required_edges: `['6-7']`
+- short_wall_edges_after: `['5-6', '6-7']`
+- short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
+- Short-wall preservation explanation: `None`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
+- Assertion compliant: `True`
+- Primary edge improved: `['6-7']`
+- Allowed short wall worsened: `[]`
+- New unresolved edges: `[]`
+- Collapse / self-intersection: `[]` / `{'before': False, 'after': False}`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: 6-7 residual improves 35.368 -> 31.083; 6-7 remains unresolved: 35.368 -> 31.083.
+- improves: `['6-7 residual improves 35.368 -> 31.083', '7-8 residual improves 1.048 -> 0.798']`
+- fails_because: `['6-7 remains unresolved: 35.368 -> 31.083', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'dynamic short-wall risk worsens']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
+
+### 2D coordinate changes
+
+| pair | field | before | after | delta | changed |
+|---:|---|---:|---:|---:|---|
+| 7 | top_x | 51.660 | 51.660 | 0.000 | False |
+| 7 | top_y | 12.695 | 12.195 | -0.500 | True |
+| 7 | bottom_x | 51.660 | 51.660 | 0.000 | False |
+| 7 | bottom_y | 87.891 | 88.391 | 0.500 | True |
+
+### 3D coordinates
+
+| pair | variant | floor (x,y,z) | ceiling (x,y,z) | wall height |
+|---:|---|---|---|---:|
+| 7 | original | (0.067, -1.600, -0.636) | (0.067, 1.518, -0.636) | 3.118 |
+| 7 | candidate | (0.064, -1.600, -0.608) | (0.064, 1.516, -0.608) | 3.116 |
+
+### Required wall residuals
+
+| edge | before | after | delta | present | missing | floor length | short wall | threshold | below dynamic threshold |
+|---|---:|---:|---:|---|---|---:|---|---:|---|
+| 4-5 | 1.451 | 1.451 | 0.000 | True | False | 4.385 | no | 0.502 | no |
+| 5-6 | 11.560 | 11.560 | 0.000 | True | False | 0.234 | yes | 0.502 | yes |
+| 6-7 | 35.368 | 31.083 | -4.285 | True | False | 0.291 | yes | 0.502 | yes |
+| 7-8 | 1.048 | 0.798 | -0.250 | True | False | 0.812 | no | 0.502 | no |
+
+## candidate_5 — column_x_align_translate
 
 - Label: `pair_5_align_dx_+0.50`
 - Changed pairs: `[5]`
@@ -242,7 +348,7 @@
 | 6-7 | 35.368 | 35.368 | 0.000 | True | False | 0.309 | yes | 0.502 | yes |
 | 7-8 | 1.048 | 1.048 | 0.000 | True | False | 0.784 | no | 0.502 | no |
 
-## candidate_4 — column_x_align_translate
+## candidate_6 — column_x_align_translate
 
 - Label: `pair_6_align_dx_-0.50`
 - Changed pairs: `[6]`
@@ -295,7 +401,7 @@
 | 6-7 | 35.368 | 34.782 | -0.586 | True | False | 0.325 | yes | 0.502 | yes |
 | 7-8 | 1.048 | 1.048 | 0.000 | True | False | 0.784 | no | 0.502 | no |
 
-## candidate_5 — column_x_align_translate
+## candidate_7 — column_x_align_translate
 
 - Label: `pair_7_align_dx_+0.50`
 - Changed pairs: `[7]`
@@ -348,7 +454,7 @@
 | 6-7 | 35.368 | 32.982 | -2.386 | True | False | 0.325 | yes | 0.502 | yes |
 | 7-8 | 1.048 | 2.498 | 1.450 | True | False | 0.787 | no | 0.502 | no |
 
-## candidate_6 — joint_5_6_7_dense_footprint
+## candidate_8 — joint_5_6_7_dense_footprint
 
 - Label: `pairs_5_6_7_footprint_sep_0.30_depth_-0.50`
 - Changed pairs: `[5, 6, 7]`
@@ -413,7 +519,7 @@
 | 6-7 | 35.368 | 25.167 | -10.200 | True | False | 0.283 | yes | 0.502 | yes |
 | 7-8 | 1.048 | 1.200 | 0.153 | True | False | 0.813 | no | 0.502 | no |
 
-## candidate_7 — dense_corner_preservation_joint_xy
+## candidate_9 — dense_corner_preservation_joint_xy
 
 - Label: `pairs_5_6_separate_0.15_y_-0.50`
 - Changed pairs: `[5, 6]`
@@ -472,7 +578,7 @@
 | 6-7 | 35.368 | 30.430 | -4.938 | True | False | 0.299 | yes | 0.502 | yes |
 | 7-8 | 1.048 | 1.048 | 0.000 | True | False | 0.784 | no | 0.502 | no |
 
-## candidate_8 — dense_corner_preservation_joint_xy
+## candidate_10 — dense_corner_preservation_joint_xy
 
 - Label: `pairs_5_6_separate_0.30_y_-0.50`
 - Changed pairs: `[5, 6]`
@@ -531,7 +637,7 @@
 | 6-7 | 35.368 | 30.582 | -4.786 | True | False | 0.295 | yes | 0.502 | yes |
 | 7-8 | 1.048 | 1.048 | 0.000 | True | False | 0.784 | no | 0.502 | no |
 
-## candidate_9 — joint_6_7_y_depth_balance
+## candidate_11 — joint_6_7_y_depth_balance
 
 - Label: `pairs_6_7_y_balance_-0.50`
 - Changed pairs: `[6, 7]`
@@ -590,7 +696,7 @@
 | 6-7 | 35.368 | 43.634 | 8.267 | True | False | 0.339 | yes | 0.502 | yes |
 | 7-8 | 1.048 | 1.320 | 0.272 | True | False | 0.754 | no | 0.502 | no |
 
-## candidate_10 — dense_corner_preservation_joint_xy
+## candidate_12 — dense_corner_preservation_joint_xy
 
 - Label: `pairs_5_6_separate_0.50_y_-0.50`
 - Changed pairs: `[5, 6]`
@@ -649,7 +755,66 @@
 | 6-7 | 35.368 | 30.806 | -4.562 | True | False | 0.288 | yes | 0.502 | yes |
 | 7-8 | 1.048 | 1.048 | 0.000 | True | False | 0.784 | no | 0.502 | no |
 
-## candidate_11 — joint_6_7_8_synchronized_xy
+## candidate_13 — joint_6_7_y_depth_balance
+
+- Label: `pairs_6_7_y_balance_-1.00`
+- Changed pairs: `[6, 7]`
+- Score: `19.041` (lower is better)
+- Disposition: `partial_neutral_review`
+- manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
+- Height worsened / short wall / hard gate: `True` / `True` / `False`
+- edge_missing_after: `[]`
+- primary_unresolved_edges: `['6-7']`
+- all_unresolved_required_edges: `['6-7']`
+- short_wall_edges_after: `['5-6', '6-7']`
+- short_wall_worsened / below_dynamic_short_threshold: `False` / `True`
+- Short-wall preservation explanation: `pre-existing dynamic short-wall risk preserved without increased deficit`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
+- Assertion compliant: `True`
+- Primary edge improved: `[]`
+- Allowed short wall worsened: `[]`
+- New unresolved edges: `[]`
+- Collapse / self-intersection: `[]` / `{'before': False, 'after': False}`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: no clear local improvement; 6-7 remains unresolved: 35.368 -> 39.528.
+- improves: `[]`
+- fails_because: `['6-7 remains unresolved: 35.368 -> 39.528', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'local height residual worsens']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
+
+### 2D coordinate changes
+
+| pair | field | before | after | delta | changed |
+|---:|---|---:|---:|---:|---|
+| 6 | top_x | 43.860 | 43.860 | 0.000 | False |
+| 6 | top_y | 12.283 | 11.283 | -1.000 | True |
+| 6 | bottom_x | 43.860 | 43.860 | 0.000 | False |
+| 6 | bottom_y | 90.476 | 91.476 | 1.000 | True |
+| 7 | top_x | 51.660 | 51.660 | 0.000 | False |
+| 7 | top_y | 12.695 | 13.695 | 1.000 | True |
+| 7 | bottom_x | 51.660 | 51.660 | 0.000 | False |
+| 7 | bottom_y | 87.891 | 86.891 | -1.000 | True |
+
+### 3D coordinates
+
+| pair | variant | floor (x,y,z) | ceiling (x,y,z) | wall height |
+|---:|---|---|---|---:|
+| 6 | original | (-0.186, -1.600, -0.457) | (-0.186, 1.215, -0.457) | 2.815 |
+| 7 | original | (0.067, -1.600, -0.636) | (0.067, 1.518, -0.636) | 3.118 |
+| 6 | candidate | (-0.165, -1.600, -0.407) | (-0.165, 1.186, -0.407) | 2.786 |
+| 7 | candidate | (0.073, -1.600, -0.695) | (0.073, 1.523, -0.695) | 3.123 |
+
+### Required wall residuals
+
+| edge | before | after | delta | present | missing | floor length | short wall | threshold | below dynamic threshold |
+|---|---:|---:|---:|---|---|---:|---|---:|---|
+| 4-5 | 1.451 | 1.451 | 0.000 | True | False | 4.385 | no | 0.502 | no |
+| 5-6 | 11.560 | 13.550 | 1.990 | True | False | 0.287 | yes | 0.502 | yes |
+| 6-7 | 35.368 | 39.528 | 4.161 | True | False | 0.374 | yes | 0.502 | yes |
+| 7-8 | 1.048 | 1.619 | 0.571 | True | False | 0.725 | no | 0.502 | no |
+
+## candidate_14 — joint_6_7_8_synchronized_xy
 
 - Label: `pairs_6_7_xy_dx_-0.50_dy_+0.50_anchor_8`
 - Changed pairs: `[6, 7]`
@@ -708,7 +873,66 @@
 | 6-7 | 35.368 | 44.566 | 9.198 | True | False | 0.339 | yes | 0.502 | yes |
 | 7-8 | 1.048 | 0.271 | -0.777 | True | False | 0.752 | no | 0.502 | no |
 
-## candidate_12 — joint_6_7_y_depth_balance
+## candidate_15 — joint_6_7_8_synchronized_xy
+
+- Label: `pairs_6_7_xy_dx_+0.25_dy_+0.50_anchor_8`
+- Changed pairs: `[6, 7]`
+- Score: `24.121` (lower is better)
+- Disposition: `partial_neutral_review`
+- manual_ls_try_recommended: `False`
+- direct_ls_trial_allowed: `False`
+- Height worsened / short wall / hard gate: `True` / `True` / `False`
+- edge_missing_after: `[]`
+- primary_unresolved_edges: `['6-7']`
+- all_unresolved_required_edges: `['6-7']`
+- short_wall_edges_after: `['5-6', '6-7']`
+- short_wall_worsened / below_dynamic_short_threshold: `False` / `True`
+- Short-wall preservation explanation: `pre-existing dynamic short-wall risk preserved without increased deficit`
+- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
+- Assertion violations: `[]`
+- Assertion compliant: `True`
+- Primary edge improved: `[]`
+- Allowed short wall worsened: `[]`
+- New unresolved edges: `[]`
+- Collapse / self-intersection: `[]` / `{'before': False, 'after': False}`
+- decision_class: `partial_diagnostic`
+- triage_summary: partial_diagnostic: no clear local improvement; 6-7 remains unresolved: 35.368 -> 42.734.
+- improves: `[]`
+- fails_because: `['6-7 remains unresolved: 35.368 -> 42.734', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'local height residual worsens']`
+- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
+
+### 2D coordinate changes
+
+| pair | field | before | after | delta | changed |
+|---:|---|---:|---:|---:|---|
+| 6 | top_x | 43.860 | 44.110 | 0.250 | True |
+| 6 | top_y | 12.283 | 12.783 | 0.500 | True |
+| 6 | bottom_x | 43.860 | 44.110 | 0.250 | True |
+| 6 | bottom_y | 90.476 | 90.976 | 0.500 | True |
+| 7 | top_x | 51.660 | 51.910 | 0.250 | True |
+| 7 | top_y | 12.695 | 12.195 | -0.500 | True |
+| 7 | bottom_x | 51.660 | 51.910 | 0.250 | True |
+| 7 | bottom_y | 87.891 | 87.391 | -0.500 | True |
+
+### 3D coordinates
+
+| pair | variant | floor (x,y,z) | ceiling (x,y,z) | wall height |
+|---:|---|---|---|---:|
+| 6 | original | (-0.186, -1.600, -0.457) | (-0.186, 1.215, -0.457) | 2.815 |
+| 7 | original | (0.067, -1.600, -0.636) | (0.067, 1.518, -0.636) | 3.118 |
+| 6 | candidate | (-0.169, -1.600, -0.435) | (-0.169, 1.098, -0.435) | 2.698 |
+| 7 | candidate | (0.080, -1.600, -0.664) | (0.080, 1.660, -0.664) | 3.260 |
+
+### Required wall residuals
+
+| edge | before | after | delta | present | missing | floor length | short wall | threshold | below dynamic threshold |
+|---|---:|---:|---:|---|---|---:|---|---:|---|
+| 4-5 | 1.451 | 1.451 | 0.000 | True | False | 4.385 | no | 0.502 | no |
+| 5-6 | 11.560 | 14.259 | 2.699 | True | False | 0.260 | yes | 0.502 | yes |
+| 6-7 | 35.368 | 42.734 | 7.367 | True | False | 0.339 | yes | 0.502 | yes |
+| 7-8 | 1.048 | 2.110 | 1.062 | True | False | 0.756 | no | 0.502 | no |
+
+## candidate_16 — joint_6_7_y_depth_balance
 
 - Label: `pairs_6_7_y_balance_+1.00`
 - Changed pairs: `[6, 7]`
@@ -767,7 +991,7 @@
 | 6-7 | 35.368 | 14.739 | -20.628 | True | False | 0.276 | yes | 0.502 | yes |
 | 7-8 | 1.048 | 0.568 | -0.480 | True | False | 0.841 | no | 0.502 | no |
 
-## candidate_13 — joint_6_7_8_synchronized_xy
+## candidate_17 — joint_6_7_8_synchronized_xy
 
 - Label: `pairs_6_7_xy_dx_-0.25_dy_-0.50_anchor_8`
 - Changed pairs: `[6, 7]`
@@ -825,230 +1049,6 @@
 | 5-6 | 11.560 | 7.956 | -3.604 | True | False | 0.208 | yes | 0.502 | yes |
 | 6-7 | 35.368 | 26.541 | -8.826 | True | False | 0.288 | yes | 0.502 | yes |
 | 7-8 | 1.048 | 0.124 | -0.923 | True | False | 0.811 | no | 0.502 | no |
-
-## candidate_14 — height_aware_y_probe
-
-- Label: `pair_6_top_+1.00_bottom_-1.00`
-- Changed pairs: `[6]`
-- Score: `-20.714` (lower is better)
-- Disposition: `suppressed_assertion_violation`
-- manual_ls_try_recommended: `False`
-- direct_ls_trial_allowed: `False`
-- Height worsened / short wall / hard gate: `False` / `True` / `False`
-- edge_missing_after: `[]`
-- primary_unresolved_edges: `['6-7']`
-- all_unresolved_required_edges: `['6-7']`
-- short_wall_edges_after: `['5-6', '6-7']`
-- short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
-- Short-wall preservation explanation: `None`
-- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
-- Assertion violations: `['worsens allowed existing short-wall edges: 5-6']`
-- Assertion compliant: `False`
-- Primary edge improved: `['6-7']`
-- Allowed short wall worsened: `['5-6']`
-- New unresolved edges: `[]`
-- Collapse / self-intersection: `[]` / `{'before': False, 'after': False}`
-- decision_class: `blocked`
-- triage_summary: blocked: 6-7 residual improves 35.368 -> 25.030; 6-7 remains unresolved: 35.368 -> 25.030.
-- improves: `['6-7 residual improves 35.368 -> 25.030', '5-6 residual improves 11.560 -> 8.305', 'local height residual improves']`
-- fails_because: `['6-7 remains unresolved: 35.368 -> 25.030', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'dynamic short-wall risk worsens']`
-- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
-
-### 2D coordinate changes
-
-| pair | field | before | after | delta | changed |
-|---:|---|---:|---:|---:|---|
-| 6 | top_x | 43.860 | 43.860 | 0.000 | False |
-| 6 | top_y | 12.283 | 13.283 | 1.000 | True |
-| 6 | bottom_x | 43.860 | 43.860 | 0.000 | False |
-| 6 | bottom_y | 90.476 | 89.476 | -1.000 | True |
-
-### 3D coordinates
-
-| pair | variant | floor (x,y,z) | ceiling (x,y,z) | wall height |
-|---:|---|---|---|---:|
-| 6 | original | (-0.186, -1.600, -0.457) | (-0.186, 1.215, -0.457) | 2.815 |
-| 6 | candidate | (-0.207, -1.600, -0.509) | (-0.207, 1.239, -0.509) | 2.839 |
-
-### Required wall residuals
-
-| edge | before | after | delta | present | missing | floor length | short wall | threshold | below dynamic threshold |
-|---|---:|---:|---:|---|---|---:|---|---:|---|
-| 4-5 | 1.451 | 1.451 | 0.000 | True | False | 4.385 | no | 0.502 | no |
-| 5-6 | 11.560 | 8.305 | -3.255 | True | False | 0.179 | yes | 0.502 | yes |
-| 6-7 | 35.368 | 25.030 | -10.338 | True | False | 0.302 | yes | 0.502 | yes |
-| 7-8 | 1.048 | 1.048 | 0.000 | True | False | 0.784 | no | 0.502 | no |
-
-## candidate_15 — joint_6_7_y_depth_balance
-
-- Label: `pairs_6_7_y_balance_+0.50`
-- Changed pairs: `[6, 7]`
-- Score: `-18.512` (lower is better)
-- Disposition: `suppressed_assertion_violation`
-- manual_ls_try_recommended: `False`
-- direct_ls_trial_allowed: `False`
-- Height worsened / short wall / hard gate: `False` / `True` / `False`
-- edge_missing_after: `[]`
-- primary_unresolved_edges: `['6-7']`
-- all_unresolved_required_edges: `['6-7']`
-- short_wall_edges_after: `['5-6', '6-7']`
-- short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
-- Short-wall preservation explanation: `None`
-- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
-- Assertion violations: `['worsens allowed existing short-wall edges: 5-6']`
-- Assertion compliant: `False`
-- Primary edge improved: `['6-7']`
-- Allowed short wall worsened: `['5-6']`
-- New unresolved edges: `[]`
-- Collapse / self-intersection: `[]` / `{'before': False, 'after': False}`
-- decision_class: `blocked`
-- triage_summary: blocked: 6-7 residual improves 35.368 -> 25.641; 6-7 remains unresolved: 35.368 -> 25.641.
-- improves: `['6-7 residual improves 35.368 -> 25.641', '5-6 residual improves 11.560 -> 10.155', '7-8 residual improves 1.048 -> 0.798', 'local height residual improves']`
-- fails_because: `['6-7 remains unresolved: 35.368 -> 25.641', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'dynamic short-wall risk worsens']`
-- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
-
-### 2D coordinate changes
-
-| pair | field | before | after | delta | changed |
-|---:|---|---:|---:|---:|---|
-| 6 | top_x | 43.860 | 43.860 | 0.000 | False |
-| 6 | top_y | 12.283 | 12.783 | 0.500 | True |
-| 6 | bottom_x | 43.860 | 43.860 | 0.000 | False |
-| 6 | bottom_y | 90.476 | 89.976 | -0.500 | True |
-| 7 | top_x | 51.660 | 51.660 | 0.000 | False |
-| 7 | top_y | 12.695 | 12.195 | -0.500 | True |
-| 7 | bottom_x | 51.660 | 51.660 | 0.000 | False |
-| 7 | bottom_y | 87.891 | 88.391 | 0.500 | True |
-
-### 3D coordinates
-
-| pair | variant | floor (x,y,z) | ceiling (x,y,z) | wall height |
-|---:|---|---|---|---:|
-| 6 | original | (-0.186, -1.600, -0.457) | (-0.186, 1.215, -0.457) | 2.815 |
-| 7 | original | (0.067, -1.600, -0.636) | (0.067, 1.518, -0.636) | 3.118 |
-| 6 | candidate | (-0.196, -1.600, -0.483) | (-0.196, 1.227, -0.483) | 2.827 |
-| 7 | candidate | (0.064, -1.600, -0.608) | (0.064, 1.516, -0.608) | 3.116 |
-
-### Required wall residuals
-
-| edge | before | after | delta | present | missing | floor length | short wall | threshold | below dynamic threshold |
-|---|---:|---:|---:|---|---|---:|---|---:|---|
-| 4-5 | 1.451 | 1.451 | 0.000 | True | False | 4.385 | no | 0.502 | no |
-| 5-6 | 11.560 | 10.155 | -1.405 | True | False | 0.206 | yes | 0.502 | yes |
-| 6-7 | 35.368 | 25.641 | -9.726 | True | False | 0.288 | yes | 0.502 | yes |
-| 7-8 | 1.048 | 0.798 | -0.250 | True | False | 0.812 | no | 0.502 | no |
-
-## candidate_16 — height_aware_y_probe
-
-- Label: `pair_6_top_-0.50_bottom_-0.50`
-- Changed pairs: `[6]`
-- Score: `-11.091` (lower is better)
-- Disposition: `suppressed_assertion_violation`
-- manual_ls_try_recommended: `False`
-- direct_ls_trial_allowed: `False`
-- Height worsened / short wall / hard gate: `False` / `True` / `False`
-- edge_missing_after: `[]`
-- primary_unresolved_edges: `['6-7']`
-- all_unresolved_required_edges: `['6-7']`
-- short_wall_edges_after: `['5-6', '6-7']`
-- short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
-- Short-wall preservation explanation: `None`
-- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
-- Assertion violations: `['worsens allowed existing short-wall edges: 5-6']`
-- Assertion compliant: `False`
-- Primary edge improved: `['6-7']`
-- Allowed short wall worsened: `['5-6']`
-- New unresolved edges: `[]`
-- Collapse / self-intersection: `[]` / `{'before': False, 'after': False}`
-- decision_class: `blocked`
-- triage_summary: blocked: 6-7 residual improves 35.368 -> 30.292; 6-7 remains unresolved: 35.368 -> 30.292.
-- improves: `['6-7 residual improves 35.368 -> 30.292', '5-6 residual improves 11.560 -> 10.155', 'local height residual improves']`
-- fails_because: `['6-7 remains unresolved: 35.368 -> 30.292', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'dynamic short-wall risk worsens']`
-- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
-
-### 2D coordinate changes
-
-| pair | field | before | after | delta | changed |
-|---:|---|---:|---:|---:|---|
-| 6 | top_x | 43.860 | 43.860 | 0.000 | False |
-| 6 | top_y | 12.283 | 11.783 | -0.500 | True |
-| 6 | bottom_x | 43.860 | 43.860 | 0.000 | False |
-| 6 | bottom_y | 90.476 | 89.976 | -0.500 | True |
-
-### 3D coordinates
-
-| pair | variant | floor (x,y,z) | ceiling (x,y,z) | wall height |
-|---:|---|---|---|---:|
-| 6 | original | (-0.186, -1.600, -0.457) | (-0.186, 1.215, -0.457) | 2.815 |
-| 6 | candidate | (-0.196, -1.600, -0.483) | (-0.196, 1.343, -0.483) | 2.943 |
-
-### Required wall residuals
-
-| edge | before | after | delta | present | missing | floor length | short wall | threshold | below dynamic threshold |
-|---|---:|---:|---:|---|---|---:|---|---:|---|
-| 4-5 | 1.451 | 1.451 | 0.000 | True | False | 4.385 | no | 0.502 | no |
-| 5-6 | 11.560 | 10.155 | -1.405 | True | False | 0.206 | yes | 0.502 | yes |
-| 6-7 | 35.368 | 30.292 | -5.076 | True | False | 0.304 | yes | 0.502 | yes |
-| 7-8 | 1.048 | 1.048 | 0.000 | True | False | 0.784 | no | 0.502 | no |
-
-## candidate_17 — joint_6_7_8_synchronized_xy
-
-- Label: `pairs_6_7_xy_dx_+0.50_dy_-0.50_anchor_8`
-- Changed pairs: `[6, 7]`
-- Score: `-9.988` (lower is better)
-- Disposition: `suppressed_assertion_violation`
-- manual_ls_try_recommended: `False`
-- direct_ls_trial_allowed: `False`
-- Height worsened / short wall / hard gate: `False` / `True` / `False`
-- edge_missing_after: `[]`
-- primary_unresolved_edges: `['6-7']`
-- all_unresolved_required_edges: `['6-7']`
-- short_wall_edges_after: `['5-6', '6-7']`
-- short_wall_worsened / below_dynamic_short_threshold: `True` / `True`
-- Short-wall preservation explanation: `None`
-- Assertion effects: `['keep 5-6 distinct; merge/delete/topology collapse prohibited', 'allowed existing short-wall risk (still risky): 5-6', 'primary edge focus: 6-7']`
-- Assertion violations: `['worsens allowed existing short-wall edges: 5-6']`
-- Assertion compliant: `False`
-- Primary edge improved: `['6-7']`
-- Allowed short wall worsened: `['5-6']`
-- New unresolved edges: `[]`
-- Collapse / self-intersection: `[]` / `{'before': False, 'after': False}`
-- decision_class: `blocked`
-- triage_summary: blocked: 6-7 residual improves 35.368 -> 23.841; 6-7 remains unresolved: 35.368 -> 23.841.
-- improves: `['6-7 residual improves 35.368 -> 23.841', 'local height residual improves']`
-- fails_because: `['6-7 remains unresolved: 35.368 -> 23.841', 'allowed existing short-wall risk remains at 5-6; allowance is not a correctness claim', 'dynamic short-wall risk remains at 6-7', 'dynamic short-wall risk worsens']`
-- next_expert_check: Inspect asserted primary edge 6-7 before considering direct LS application.
-
-### 2D coordinate changes
-
-| pair | field | before | after | delta | changed |
-|---:|---|---:|---:|---:|---|
-| 6 | top_x | 43.860 | 44.360 | 0.500 | True |
-| 6 | top_y | 12.283 | 11.783 | -0.500 | True |
-| 6 | bottom_x | 43.860 | 44.360 | 0.500 | True |
-| 6 | bottom_y | 90.476 | 89.976 | -0.500 | True |
-| 7 | top_x | 51.660 | 52.160 | 0.500 | True |
-| 7 | top_y | 12.695 | 13.195 | 0.500 | True |
-| 7 | bottom_x | 51.660 | 52.160 | 0.500 | True |
-| 7 | bottom_y | 87.891 | 88.391 | 0.500 | True |
-
-### 3D coordinates
-
-| pair | variant | floor (x,y,z) | ceiling (x,y,z) | wall height |
-|---:|---|---|---|---:|
-| 6 | original | (-0.186, -1.600, -0.457) | (-0.186, 1.215, -0.457) | 2.815 |
-| 7 | original | (0.067, -1.600, -0.636) | (0.067, 1.518, -0.636) | 3.118 |
-| 6 | candidate | (-0.181, -1.600, -0.489) | (-0.181, 1.343, -0.489) | 2.943 |
-| 7 | candidate | (0.083, -1.600, -0.605) | (0.083, 1.388, -0.605) | 2.988 |
-
-### Required wall residuals
-
-| edge | before | after | delta | present | missing | floor length | short wall | threshold | below dynamic threshold |
-|---|---:|---:|---:|---|---|---:|---|---:|---|
-| 4-5 | 1.451 | 1.451 | 0.000 | True | False | 4.385 | no | 0.502 | no |
-| 5-6 | 11.560 | 14.673 | 3.113 | True | False | 0.204 | yes | 0.502 | yes |
-| 6-7 | 35.368 | 23.841 | -11.526 | True | False | 0.288 | yes | 0.502 | yes |
-| 7-8 | 1.048 | 2.135 | 1.087 | True | False | 0.815 | no | 0.502 | no |
 
 ## candidate_18 — joint_5_6_7_dense_footprint
 
