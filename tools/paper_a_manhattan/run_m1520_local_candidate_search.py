@@ -42,6 +42,7 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         "# M15.20 Local Candidate Report — task218_ann3741",
         "",
         "> 仅供专家本地只读审查。候选不是最终修复，不写回 Label Studio，不进入 routing 或正式 artifact。",
+        "> No candidate is authorized as final fix unless all required edges are resolved and no short-wall/collapse risk is worsened.",
         "",
         "## Scope",
         "",
@@ -52,13 +53,26 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         "",
         "## Baseline walls",
         "",
-        "| edge | residual (deg) | floor length |",
-        "|---|---:|---:|",
+        "| edge | residual (deg) | floor length | short wall | threshold |",
+        "|---|---:|---:|---|---:|",
     ]
     for row in payload["baseline"]["required_wall_residuals"]:
-        lines.append(f"| {row['edge']} | {_fmt(row['residual_deg'])} | {_fmt(row['floor_wall_length'])} |")
+        lines.append(f"| {row['edge']} | {_fmt(row['residual_deg'])} | {_fmt(row['floor_wall_length'])} | {row['short_wall']} | {_fmt(row['short_wall_threshold'])} |")
 
-    for row in payload["candidates"]:
+    lines.extend(["", "## Executable candidates ranking"])
+    report_rows = [*payload["candidates"], *payload.get("topology_hypotheses", [])]
+    topology_started = False
+    for row in report_rows:
+        if row["family"] == "local_order_topology_hypothesis" and not topology_started:
+            topology_started = True
+            lines.extend(
+                [
+                    "",
+                    "## Read-only topology hypotheses",
+                    "",
+                    "> Topology hypotheses are not executable candidate rankings.",
+                ]
+            )
         lines.extend(
             [
                 "",
@@ -68,9 +82,14 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 f"- Changed pairs: `{row['changed_pair_indices']}`",
                 f"- Score: `{_fmt(row['score'])}` (lower is better)",
                 f"- Disposition: `{row['disposition']}`",
-                f"- Recommend manual LS try: `{row['manual_ls_try_recommended']}`",
+                f"- manual_ls_try_recommended: `{row['manual_ls_try_recommended']}`",
                 f"- Height worsened / short wall / hard gate: `{row['height_worsened']}` / `{row['short_wall_after']}` / `{row['hard_gate']}`",
-                f"- Unresolved required edges: `{row['unresolved_required_edges']}`",
+                f"- edge_missing_after: `{row['edge_missing_after']}`",
+                f"- primary_unresolved_edges: `{row['primary_unresolved_edges']}`",
+                f"- all_unresolved_required_edges: `{row['all_unresolved_required_edges']}`",
+                f"- short_wall_edges_after: `{row['short_wall_edges_after']}`",
+                f"- short_wall_worsened / below_dynamic_short_threshold: `{row['short_wall_worsened']}` / `{row['below_dynamic_short_threshold']}`",
+                f"- Short-wall preservation explanation: `{row['short_wall_preservation_explanation']}`",
                 "",
                 "### 2D coordinate changes",
                 "",
@@ -104,13 +123,13 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                 "",
                 "### Required wall residuals",
                 "",
-                "| edge | before | after | delta | length after | present |",
-                "|---|---:|---:|---:|---:|---|",
+                "| edge | before | after | delta | present | missing | floor length | short wall | threshold | below dynamic threshold |",
+                "|---|---:|---:|---:|---|---|---:|---|---:|---|",
             ]
         )
         for wall in row["required_wall_residuals"]:
             lines.append(
-                f"| {wall['edge']} | {_fmt(wall['before_residual_deg'])} | {_fmt(wall['after_residual_deg'])} | {_fmt(wall['delta_deg'])} | {_fmt(wall['after_floor_wall_length'])} | {wall['edge_present_after']} |"
+                f"| {wall['edge']} | {_fmt(wall['before_residual_deg'])} | {_fmt(wall['after_residual_deg'])} | {_fmt(wall['delta_deg'])} | {wall['edge_present_after']} | {wall['edge_missing_after']} | {_fmt(wall['after_floor_wall_length'])} | {_fmt(wall['short_wall'])} | {_fmt(wall['short_wall_threshold'])} | {_fmt(wall['below_dynamic_short_threshold'])} |"
             )
     lines.extend(
         [

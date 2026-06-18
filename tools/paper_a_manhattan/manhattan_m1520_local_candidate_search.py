@@ -15,7 +15,7 @@ from tools.paper_a_manhattan.run_local_3d_projection_review import (
 )
 
 
-SCHEMA_VERSION = "m15_20_local_candidate_search_v1"
+SCHEMA_VERSION = "m15_20_local_candidate_search_v1_1"
 CORE_WINDOW = (5, 6, 7, 8)
 EXPANDED_WINDOW = (4, 5, 6, 7, 8, 9)
 HEIGHT_PROBE_PAIRS = (5, 6, 7)
@@ -26,7 +26,6 @@ FAMILIES = (
     "local_order_topology_hypothesis",
     "dense_corner_preservation_joint_xy",
 )
-MIN_WALL_LENGTH = 0.20
 COLLAPSE_WALL_LENGTH = 0.10
 COLLAPSE_FLOOR_SEPARATION = 0.10
 UNRESOLVED_WALL_RESIDUAL_DEG = 15.0
@@ -321,8 +320,72 @@ def evaluate_candidate(
 
     minimum_before = min(float(baseline_walls[i]["floor_wall_length"]) for i in local_wall_indices)
     minimum_after = min(float(candidate_walls[i]["floor_wall_length"]) for i in local_wall_indices)
-    short_penalty_before = max(0.0, MIN_WALL_LENGTH - minimum_before)
-    short_penalty_after = max(0.0, MIN_WALL_LENGTH - minimum_after)
+
+    required_walls = []
+    before_edges = _wall_by_edge(baseline)
+    after_edges = _wall_by_edge(variant)
+    edge_missing_after: list[str] = []
+    all_unresolved: list[str] = []
+    primary_unresolved: list[str] = []
+    short_wall_edges_before: list[str] = []
+    short_wall_edges_after: list[str] = []
+    short_penalty_before = 0.0
+    short_penalty_after = 0.0
+    for edge in REPORT_WALL_EDGES:
+        edge_name = f"{edge[0]}-{edge[1]}"
+        before_row = before_edges.get(edge)
+        after_row = after_edges.get(edge)
+        after_residual = float(after_row["angle_residual_deg"]) if after_row else None
+        missing = after_row is None
+        unresolved = missing or after_residual > UNRESOLVED_WALL_RESIDUAL_DEG
+        if missing:
+            edge_missing_after.append(edge_name)
+        if unresolved:
+            all_unresolved.append(edge_name)
+            if edge == (6, 7):
+                primary_unresolved.append(edge_name)
+        if before_row and bool(before_row["short_wall"]):
+            short_wall_edges_before.append(edge_name)
+            short_penalty_before += max(
+                0.0,
+                float(before_row["short_wall_threshold"])
+                - float(before_row["floor_wall_length"]),
+            )
+        if after_row and bool(after_row["short_wall"]):
+            short_wall_edges_after.append(edge_name)
+            short_penalty_after += max(
+                0.0,
+                float(after_row["short_wall_threshold"])
+                - float(after_row["floor_wall_length"]),
+            )
+        required_walls.append(
+            {
+                "edge": edge_name,
+                "before_residual_deg": float(before_row["angle_residual_deg"]) if before_row else None,
+                "after_residual_deg": after_residual,
+                "delta_deg": (
+                    after_residual - float(before_row["angle_residual_deg"])
+                    if before_row and after_residual is not None
+                    else None
+                ),
+                "edge_present_after": not missing,
+                "edge_missing_after": missing,
+                "after_floor_wall_length": float(after_row["floor_wall_length"]) if after_row else None,
+                "short_wall": bool(after_row["short_wall"]) if after_row else None,
+                "short_wall_threshold": float(after_row["short_wall_threshold"]) if after_row else None,
+                "below_dynamic_short_threshold": bool(after_row["short_wall"]) if after_row else None,
+            }
+        )
+    short_wall_worsened = (
+        not set(short_wall_edges_after).issubset(short_wall_edges_before)
+        or short_penalty_after > short_penalty_before + 1e-9
+    )
+    below_dynamic_short_threshold = bool(short_wall_edges_after)
+    short_wall_preservation_explanation = (
+        "pre-existing dynamic short-wall risk preserved without increased deficit"
+        if below_dynamic_short_threshold and not short_wall_worsened
+        else None
+    )
 
     dense_before = _dense_relation(baseline, 5, 6)
     dense_after = _dense_relation(variant, 5, 6)
@@ -385,40 +448,18 @@ def evaluate_candidate(
         + 0.25 * movement
     )
 
-    required_walls = []
-    before_edges = _wall_by_edge(baseline)
-    after_edges = _wall_by_edge(variant)
-    unresolved = []
-    for edge in REPORT_WALL_EDGES:
-        before_row = before_edges.get(edge)
-        after_row = after_edges.get(edge)
-        after_residual = float(after_row["angle_residual_deg"]) if after_row else None
-        if edge in ((6, 7), (7, 8)) and (
-            after_residual is None or after_residual > UNRESOLVED_WALL_RESIDUAL_DEG
-        ):
-            unresolved.append(f"{edge[0]}-{edge[1]}")
-        required_walls.append(
-            {
-                "edge": f"{edge[0]}-{edge[1]}",
-                "before_residual_deg": float(before_row["angle_residual_deg"]) if before_row else None,
-                "after_residual_deg": after_residual,
-                "delta_deg": (
-                    after_residual - float(before_row["angle_residual_deg"])
-                    if before_row and after_residual is not None
-                    else None
-                ),
-                "after_floor_wall_length": float(after_row["floor_wall_length"]) if after_row else None,
-                "edge_present_after": after_row is not None,
-            }
-        )
-
     if hard_gate_reasons:
         disposition = "suppressed_hard_risk"
         recommend = False
     elif raw_candidate["family"] == "local_order_topology_hypothesis":
         disposition = "neutral_review_topology_hypothesis"
         recommend = False
-    elif score < -0.01 and unresolved:
+    elif (
+        edge_missing_after
+        or all_unresolved
+        or short_wall_worsened
+        or (below_dynamic_short_threshold and not short_wall_preservation_explanation)
+    ):
         disposition = "partial_neutral_review"
         recommend = False
     elif score < -0.01:
@@ -440,11 +481,18 @@ def evaluate_candidate(
         "hard_gate": bool(hard_gate_reasons),
         "hard_gate_reasons": hard_gate_reasons,
         "collapse_risk_details": collapse_edges,
-        "unresolved_required_edges": unresolved,
+        "edge_missing_after": edge_missing_after,
+        "primary_unresolved_edges": primary_unresolved,
+        "all_unresolved_required_edges": all_unresolved,
+        "unresolved_required_edges": all_unresolved,
         "disposition": disposition,
         "manual_ls_try_recommended": recommend,
         "height_worsened": components["height_residual"]["delta"] > 1e-9,
-        "short_wall_after": minimum_after < MIN_WALL_LENGTH,
+        "short_wall_after": below_dynamic_short_threshold,
+        "short_wall_edges_after": short_wall_edges_after,
+        "short_wall_worsened": short_wall_worsened,
+        "below_dynamic_short_threshold": below_dynamic_short_threshold,
+        "short_wall_preservation_explanation": short_wall_preservation_explanation,
         "self_intersection": {"before": self_intersection_before, "after": self_intersection_after},
         "coordinate_changes": coordinate_changes,
         "coordinates_3d": {
@@ -496,10 +544,21 @@ def run_local_candidate_search(
         counts[family] = len(family_rows)
         family_rows.sort(key=lambda row: (bool(row["hard_gate"]), float(row["score"]), row["label"]))
         retained.extend(family_rows[: max(1, retain_per_family)])
-    retained.sort(key=lambda row: (bool(row["hard_gate"]), float(row["score"]), row["family"], row["label"]))
-    for rank, row in enumerate(retained, start=1):
+    executable = [
+        row for row in retained if row["family"] != "local_order_topology_hypothesis"
+    ]
+    topology = [
+        row for row in retained if row["family"] == "local_order_topology_hypothesis"
+    ]
+    sort_key = lambda row: (bool(row["hard_gate"]), float(row["score"]), row["family"], row["label"])
+    executable.sort(key=sort_key)
+    topology.sort(key=sort_key)
+    for rank, row in enumerate(executable, start=1):
         row["candidate_rank"] = rank
         row["candidate_id"] = f"candidate_{rank}"
+    for rank, row in enumerate(topology, start=1):
+        row["topology_rank"] = rank
+        row["candidate_id"] = f"topology_{rank}"
     return {
         "schema_version": SCHEMA_VERSION,
         "scope": {
@@ -527,6 +586,7 @@ def run_local_candidate_search(
                 "movement_l1_ls_percent": 0.25,
             },
             "hard_gates": ["introduced_self_intersection", "local_5_6_7_collapse_risk"],
+            "short_wall_semantics": "M15.19 floorprint wall.short_wall and wall.short_wall_threshold",
             "final_fix_authorized": False,
         },
         "baseline": {
@@ -536,6 +596,8 @@ def run_local_candidate_search(
                     "edge": f"{left}-{right}",
                     "residual_deg": float(_wall_by_edge(baseline)[(left, right)]["angle_residual_deg"]),
                     "floor_wall_length": float(_wall_by_edge(baseline)[(left, right)]["floor_wall_length"]),
+                    "short_wall": bool(_wall_by_edge(baseline)[(left, right)]["short_wall"]),
+                    "short_wall_threshold": float(_wall_by_edge(baseline)[(left, right)]["short_wall_threshold"]),
                 }
                 for left, right in REPORT_WALL_EDGES
             ],
@@ -544,7 +606,10 @@ def run_local_candidate_search(
             "generated_count": len(generated),
             "generated_count_by_family": counts,
             "retained_per_family": max(1, retain_per_family),
-            "retained_count": len(retained),
+            "retained_count": len(executable) + len(topology),
+            "executable_retained_count": len(executable),
+            "topology_retained_count": len(topology),
         },
-        "candidates": retained,
+        "candidates": executable,
+        "topology_hypotheses": topology,
     }

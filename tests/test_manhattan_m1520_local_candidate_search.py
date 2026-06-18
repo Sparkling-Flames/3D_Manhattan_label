@@ -13,6 +13,7 @@ from tools.paper_a_manhattan.run_m1520_local_candidate_search import (
     render_markdown_report,
     run,
 )
+from tools.paper_a_manhattan.run_local_3d_projection_review import extract_ordered_pairs
 
 
 def _pairs():
@@ -57,15 +58,13 @@ def test_generation_has_four_bounded_families_and_never_uses_bottom_only_y():
 def test_topology_hypotheses_keep_every_pair_and_are_never_recommended():
     original = _pairs()
     result = run_local_candidate_search(original, retain_per_family=3)
-    topology = [
-        row
-        for row in result["candidates"]
-        if row["family"] == "local_order_topology_hypothesis"
-    ]
+    topology = result["topology_hypotheses"]
 
     assert topology
     assert all(row["disposition"] in {"neutral_review_topology_hypothesis", "suppressed_hard_risk"} for row in topology)
     assert all(row["manual_ls_try_recommended"] is False for row in topology)
+    assert all("candidate_rank" not in row for row in topology)
+    assert all(row["family"] != "local_order_topology_hypothesis" for row in result["candidates"])
     assert all(sorted(row["ordered_pair_indices_after"]) == list(range(1, 11)) for row in topology)
 
 
@@ -95,9 +94,11 @@ def test_report_contains_coordinates_required_walls_and_human_try_field():
     assert "2D coordinate changes" in report
     assert "3D coordinates" in report
     assert "4-5" in report and "5-6" in report and "6-7" in report and "7-8" in report
-    assert "Recommend manual LS try" in report
+    assert "manual_ls_try_recommended" in report
     assert "partial_neutral_review" in report
     assert "annotation patch" in report
+    assert report.index("## Executable candidates ranking") < report.index("## Read-only topology hypotheses")
+    assert "Topology hypotheses are not executable candidate rankings." in report
     for field in ("top_x", "bottom_x", "top_y", "bottom_y"):
         assert field in report
 
@@ -127,3 +128,47 @@ def test_static_boundary_has_no_writeback_or_formal_chain():
     assert "writeback" not in source
     assert "formal_g_t" not in source
     assert "p1/c1/c2/t1/v1" not in source
+
+
+def test_task218_ann3741_hardening_regression():
+    input_path = Path(
+        "analysis_results/paper_a_manhattan/single_image_manual_test/"
+        "latest_gt_checked/task218_ann3741_m1516_stabilized_input.json"
+    )
+    pairs, _ = extract_ordered_pairs(json.loads(input_path.read_text(encoding="utf-8")))
+    result = run_local_candidate_search(pairs, retain_per_family=3)
+    executable = result["candidates"]
+    topology = result["topology_hypotheses"]
+    all_rows = [*executable, *topology]
+    report = render_markdown_report(result)
+
+    assert result["candidate_generation"]["generated_count"] == 42
+    assert result["candidate_generation"]["retained_count"] == 12
+    assert result["schema_version"] == "m15_20_local_candidate_search_v1_1"
+    assert all(row["disposition"] != "final_fix" for row in all_rows)
+    assert all(row["manual_ls_try_recommended"] is False for row in topology)
+    assert report.index("## Executable candidates ranking") < report.index("## Read-only topology hypotheses")
+
+    align = next(row for row in executable if row["label"] == "pair_5_align_dx_+0.50")
+    assert align["disposition"] in {"partial_neutral_review", "neutral_review"}
+    assert "6-7" in align["all_unresolved_required_edges"]
+
+    short = next(
+        row
+        for row in executable
+        if any(
+            wall["after_floor_wall_length"] is not None
+            and 0.178 < wall["after_floor_wall_length"] < 0.180
+            for wall in row["required_wall_residuals"]
+        )
+    )
+    assert short["below_dynamic_short_threshold"] is True
+    assert short["short_wall_worsened"] is True
+    assert short["manual_ls_try_recommended"] is False
+
+    missing = next(row for row in topology if row["edge_missing_after"])
+    assert missing["edge_missing_after"]
+    assert any(
+        wall["edge_missing_after"] is True
+        for wall in missing["required_wall_residuals"]
+    )

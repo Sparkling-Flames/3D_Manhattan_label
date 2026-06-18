@@ -1,5 +1,5 @@
 {
-  "schema_version": "m15_20_local_candidate_search_v1",
+  "schema_version": "m15_20_local_candidate_search_v1_1",
   "scope": {
     "case_specific": "task218_ann3741",
     "local_window": [
@@ -54,6 +54,7 @@
       "introduced_self_intersection",
       "local_5_6_7_collapse_risk"
     ],
+    "short_wall_semantics": "M15.19 floorprint wall.short_wall and wall.short_wall_threshold",
     "final_fix_authorized": false
   },
   "baseline": {
@@ -73,22 +74,30 @@
       {
         "edge": "4-5",
         "residual_deg": 1.451050488877712,
-        "floor_wall_length": 4.385009538750962
+        "floor_wall_length": 4.385009538750962,
+        "short_wall": false,
+        "short_wall_threshold": 0.501655001355003
       },
       {
         "edge": "5-6",
         "residual_deg": 11.55972645724654,
-        "floor_wall_length": 0.23362462584837704
+        "floor_wall_length": 0.23362462584837704,
+        "short_wall": true,
+        "short_wall_threshold": 0.501655001355003
       },
       {
         "edge": "6-7",
         "residual_deg": 35.367792295442314,
-        "floor_wall_length": 0.3094527451981201
+        "floor_wall_length": 0.3094527451981201,
+        "short_wall": true,
+        "short_wall_threshold": 0.501655001355003
       },
       {
         "edge": "7-8",
         "residual_deg": 1.0477215155218573,
-        "floor_wall_length": 0.7835697388865898
+        "floor_wall_length": 0.7835697388865898,
+        "short_wall": false,
+        "short_wall_threshold": 0.501655001355003
       }
     ]
   },
@@ -101,239 +110,11 @@
       "dense_corner_preservation_joint_xy": 6
     },
     "retained_per_family": 3,
-    "retained_count": 12
+    "retained_count": 12,
+    "executable_retained_count": 9,
+    "topology_retained_count": 3
   },
   "candidates": [
-    {
-      "family": "local_order_topology_hypothesis",
-      "label": "swap_pair_5_6",
-      "changed_pair_indices": [
-        5,
-        6
-      ],
-      "topology_hypothesis": "adjacent_order_swap_5_6",
-      "score": -35.873251571452826,
-      "score_lower_is_better": true,
-      "score_components": {
-        "window_wall_residual": {
-          "before": 49.426290757088424,
-          "after": 26.439997967628955,
-          "delta": -22.98629278945947
-        },
-        "window_corner_residual": {
-          "before": 74.60563001976986,
-          "after": 50.911527889646194,
-          "delta": -23.694102130123667
-        },
-        "height_residual": {
-          "before": 0.40748017343629783,
-          "after": 0.3034894017431453,
-          "delta": -0.10399077169315252
-        },
-        "minimum_wall_length": {
-          "before": 0.23362462584837704,
-          "after": 0.23362462584837704,
-          "delta": 0.0
-        },
-        "minimum_wall_length_penalty": {
-          "before": 0.0,
-          "after": 0.0,
-          "delta": 0.0
-        },
-        "dense_separation_preservation": {
-          "floor_3d_before": 0.23362462584837704,
-          "floor_3d_after": 0.23362462584837704,
-          "center_x_percent_before": 0.9398496240601517,
-          "center_x_percent_after": 0.9398496240601517,
-          "loss_penalty": 0.0
-        },
-        "movement_l1_ls_percent": 0.0
-      },
-      "hard_gate": false,
-      "hard_gate_reasons": [],
-      "collapse_risk_details": [],
-      "unresolved_required_edges": [
-        "6-7"
-      ],
-      "disposition": "neutral_review_topology_hypothesis",
-      "manual_ls_try_recommended": false,
-      "height_worsened": false,
-      "short_wall_after": false,
-      "self_intersection": {
-        "before": false,
-        "after": false
-      },
-      "coordinate_changes": [
-        {
-          "effective_pair_index": 5,
-          "fields": {
-            "top_x": {
-              "before": 44.611528822055135,
-              "after": 44.611528822055135,
-              "delta": 0.0,
-              "changed": false
-            },
-            "top_y": {
-              "before": 14.786967418546364,
-              "after": 14.786967418546364,
-              "delta": 0.0,
-              "changed": false
-            },
-            "bottom_x": {
-              "before": 44.987468671679196,
-              "after": 44.987468671679196,
-              "delta": 0.0,
-              "changed": false
-            },
-            "bottom_y": {
-              "before": 86.46616541353383,
-              "after": 86.46616541353383,
-              "delta": 0.0,
-              "changed": false
-            }
-          }
-        },
-        {
-          "effective_pair_index": 6,
-          "fields": {
-            "top_x": {
-              "before": 43.859649122807014,
-              "after": 43.859649122807014,
-              "delta": 0.0,
-              "changed": false
-            },
-            "top_y": {
-              "before": 12.283208020050125,
-              "after": 12.283208020050125,
-              "delta": 0.0,
-              "changed": false
-            },
-            "bottom_x": {
-              "before": 43.859649122807014,
-              "after": 43.859649122807014,
-              "delta": 0.0,
-              "changed": false
-            },
-            "bottom_y": {
-              "before": 90.47619047619048,
-              "after": 90.47619047619048,
-              "delta": 0.0,
-              "changed": false
-            }
-          }
-        }
-      ],
-      "coordinates_3d": {
-        "original": [
-          {
-            "effective_pair_index": 5,
-            "floor_3d": {
-              "x": -0.23253759020972273,
-              "y": -1.6,
-              "z": -0.6861427792133783
-            },
-            "ceiling_3d": {
-              "x": -0.23253759020972273,
-              "y": 1.4457027378813943,
-              "z": -0.6861427792133783
-            },
-            "wall_height": 3.0457027378813946
-          },
-          {
-            "effective_pair_index": 6,
-            "floor_3d": {
-              "x": -0.1857217097670582,
-              "y": -1.6,
-              "z": -0.45725691433489285
-            },
-            "ceiling_3d": {
-              "x": -0.1857217097670582,
-              "y": 1.2148346660384843,
-              "z": -0.45725691433489285
-            },
-            "wall_height": 2.814834666038484
-          }
-        ],
-        "candidate": [
-          {
-            "effective_pair_index": 6,
-            "floor_3d": {
-              "x": -0.1857217097670582,
-              "y": -1.6,
-              "z": -0.45725691433489285
-            },
-            "ceiling_3d": {
-              "x": -0.1857217097670582,
-              "y": 1.2148346660384843,
-              "z": -0.45725691433489285
-            },
-            "wall_height": 2.814834666038484
-          },
-          {
-            "effective_pair_index": 5,
-            "floor_3d": {
-              "x": -0.23253759020972273,
-              "y": -1.6,
-              "z": -0.6861427792133783
-            },
-            "ceiling_3d": {
-              "x": -0.23253759020972273,
-              "y": 1.4457027378813943,
-              "z": -0.6861427792133783
-            },
-            "wall_height": 3.0457027378813946
-          }
-        ]
-      },
-      "required_wall_residuals": [
-        {
-          "edge": "4-5",
-          "before_residual_deg": 1.451050488877712,
-          "after_residual_deg": null,
-          "delta_deg": null,
-          "after_floor_wall_length": null,
-          "edge_present_after": false
-        },
-        {
-          "edge": "5-6",
-          "before_residual_deg": 11.55972645724654,
-          "after_residual_deg": null,
-          "delta_deg": null,
-          "after_floor_wall_length": null,
-          "edge_present_after": false
-        },
-        {
-          "edge": "6-7",
-          "before_residual_deg": 35.367792295442314,
-          "after_residual_deg": null,
-          "delta_deg": null,
-          "after_floor_wall_length": null,
-          "edge_present_after": false
-        },
-        {
-          "edge": "7-8",
-          "before_residual_deg": 1.0477215155218573,
-          "after_residual_deg": 1.0477215155218573,
-          "delta_deg": 0.0,
-          "after_floor_wall_length": 0.7835697388865898,
-          "edge_present_after": true
-        }
-      ],
-      "ordered_pair_indices_after": [
-        1,
-        2,
-        3,
-        4,
-        6,
-        5,
-        7,
-        8,
-        9,
-        10
-      ],
-      "candidate_rank": 1,
-      "candidate_id": "candidate_1"
-    },
     {
       "family": "height_aware_y_probe",
       "label": "pair_6_top_+1.00_bottom_-1.00",
@@ -341,7 +122,7 @@
         6
       ],
       "topology_hypothesis": null,
-      "score": -21.95859834862862,
+      "score": -20.714041876205194,
       "score_lower_is_better": true,
       "score_components": {
         "window_wall_residual": {
@@ -365,9 +146,9 @@
           "delta": -0.05437692615946885
         },
         "minimum_wall_length_penalty": {
-          "before": 0.0,
-          "after": 0.02075230031109182,
-          "delta": 0.02075230031109182
+          "before": 0.46023263166350875,
+          "after": 0.522470147722048,
+          "delta": 0.06223751605853928
         },
         "dense_separation_preservation": {
           "floor_3d_before": 0.23362462584837704,
@@ -381,6 +162,13 @@
       "hard_gate": false,
       "hard_gate_reasons": [],
       "collapse_risk_details": [],
+      "edge_missing_after": [],
+      "primary_unresolved_edges": [
+        "6-7"
+      ],
+      "all_unresolved_required_edges": [
+        "6-7"
+      ],
       "unresolved_required_edges": [
         "6-7"
       ],
@@ -388,6 +176,13 @@
       "manual_ls_try_recommended": false,
       "height_worsened": false,
       "short_wall_after": true,
+      "short_wall_edges_after": [
+        "5-6",
+        "6-7"
+      ],
+      "short_wall_worsened": true,
+      "below_dynamic_short_threshold": true,
+      "short_wall_preservation_explanation": null,
       "self_intersection": {
         "before": false,
         "after": false
@@ -463,32 +258,48 @@
           "before_residual_deg": 1.451050488877712,
           "after_residual_deg": 1.451050488877712,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 4.385009538750962,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         },
         {
           "edge": "5-6",
           "before_residual_deg": 11.55972645724654,
           "after_residual_deg": 8.305037030977502,
           "delta_deg": -3.2546894262690387,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.1792476996889082,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "6-7",
           "before_residual_deg": 35.367792295442314,
           "after_residual_deg": 25.029780909499095,
           "delta_deg": -10.338011385943219,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.3015921552990497,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "7-8",
           "before_residual_deg": 1.0477215155218573,
           "after_residual_deg": 1.0477215155218573,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.7835697388865898,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         }
       ],
       "ordered_pair_indices_after": [
@@ -503,8 +314,8 @@
         9,
         10
       ],
-      "candidate_rank": 2,
-      "candidate_id": "candidate_2"
+      "candidate_rank": 1,
+      "candidate_id": "candidate_1"
     },
     {
       "family": "height_aware_y_probe",
@@ -513,7 +324,7 @@
         7
       ],
       "topology_hypothesis": null,
-      "score": -17.661546555408492,
+      "score": -16.622769405571287,
       "score_lower_is_better": true,
       "score_components": {
         "window_wall_residual": {
@@ -537,9 +348,9 @@
           "delta": 0.0
         },
         "minimum_wall_length_penalty": {
-          "before": 0.0,
-          "after": 0.0,
-          "delta": 0.0
+          "before": 0.46023263166350875,
+          "after": 0.4948585366580822,
+          "delta": 0.034625904994573464
         },
         "dense_separation_preservation": {
           "floor_3d_before": 0.23362462584837704,
@@ -553,13 +364,27 @@
       "hard_gate": false,
       "hard_gate_reasons": [],
       "collapse_risk_details": [],
+      "edge_missing_after": [],
+      "primary_unresolved_edges": [
+        "6-7"
+      ],
+      "all_unresolved_required_edges": [
+        "6-7"
+      ],
       "unresolved_required_edges": [
         "6-7"
       ],
       "disposition": "partial_neutral_review",
       "manual_ls_try_recommended": false,
       "height_worsened": false,
-      "short_wall_after": false,
+      "short_wall_after": true,
+      "short_wall_edges_after": [
+        "5-6",
+        "6-7"
+      ],
+      "short_wall_worsened": true,
+      "below_dynamic_short_threshold": true,
+      "short_wall_preservation_explanation": null,
       "self_intersection": {
         "before": false,
         "after": false
@@ -635,32 +460,48 @@
           "before_residual_deg": 1.451050488877712,
           "after_residual_deg": 1.451050488877712,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 4.385009538750962,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         },
         {
           "edge": "5-6",
           "before_residual_deg": 11.55972645724654,
           "after_residual_deg": 11.55972645724654,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.23362462584837704,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "6-7",
           "before_residual_deg": 35.367792295442314,
           "after_residual_deg": 26.314880105134762,
           "delta_deg": -9.052912190307552,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.27482684020354664,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "7-8",
           "before_residual_deg": 1.0477215155218573,
           "after_residual_deg": 0.5676979928958872,
           "delta_deg": -0.48002352262597014,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.8407664948388177,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         }
       ],
       "ordered_pair_indices_after": [
@@ -675,8 +516,8 @@
         9,
         10
       ],
-      "candidate_rank": 3,
-      "candidate_id": "candidate_3"
+      "candidate_rank": 2,
+      "candidate_id": "candidate_2"
     },
     {
       "family": "height_aware_y_probe",
@@ -685,7 +526,7 @@
         6
       ],
       "topology_hypothesis": null,
-      "score": -12.059143642773716,
+      "score": -11.090640799554398,
       "score_lower_is_better": true,
       "score_components": {
         "window_wall_residual": {
@@ -709,9 +550,9 @@
           "delta": -0.027131092154129427
         },
         "minimum_wall_length_penalty": {
-          "before": 0.0,
-          "after": 0.0,
-          "delta": 0.0
+          "before": 0.46023263166350875,
+          "after": 0.49251605977081936,
+          "delta": 0.03228342810731061
         },
         "dense_separation_preservation": {
           "floor_3d_before": 0.23362462584837704,
@@ -725,13 +566,27 @@
       "hard_gate": false,
       "hard_gate_reasons": [],
       "collapse_risk_details": [],
+      "edge_missing_after": [],
+      "primary_unresolved_edges": [
+        "6-7"
+      ],
+      "all_unresolved_required_edges": [
+        "6-7"
+      ],
       "unresolved_required_edges": [
         "6-7"
       ],
       "disposition": "partial_neutral_review",
       "manual_ls_try_recommended": false,
       "height_worsened": false,
-      "short_wall_after": false,
+      "short_wall_after": true,
+      "short_wall_edges_after": [
+        "5-6",
+        "6-7"
+      ],
+      "short_wall_worsened": true,
+      "below_dynamic_short_threshold": true,
+      "short_wall_preservation_explanation": null,
       "self_intersection": {
         "before": false,
         "after": false
@@ -807,32 +662,48 @@
           "before_residual_deg": 1.451050488877712,
           "after_residual_deg": 1.451050488877712,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 4.385009538750962,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         },
         {
           "edge": "5-6",
           "before_residual_deg": 11.55972645724654,
           "after_residual_deg": 10.15494579685324,
           "delta_deg": -1.4047806603932997,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.2064935336942476,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "6-7",
           "before_residual_deg": 35.367792295442314,
           "after_residual_deg": 30.291979421890062,
           "delta_deg": -5.075812873552252,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.30430040924493895,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "7-8",
           "before_residual_deg": 1.0477215155218573,
           "after_residual_deg": 1.0477215155218573,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.7835697388865898,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         }
       ],
       "ordered_pair_indices_after": [
@@ -847,8 +718,8 @@
         9,
         10
       ],
-      "candidate_rank": 4,
-      "candidate_id": "candidate_4"
+      "candidate_rank": 3,
+      "candidate_id": "candidate_3"
     },
     {
       "family": "column_x_align_translate",
@@ -857,7 +728,7 @@
         5
       ],
       "topology_hypothesis": null,
-      "score": -5.3697825430134785,
+      "score": -5.476698795634925,
       "score_lower_is_better": true,
       "score_components": {
         "window_wall_residual": {
@@ -881,9 +752,9 @@
           "delta": 0.0035638750873815406
         },
         "minimum_wall_length_penalty": {
-          "before": 0.0,
-          "after": 0.0,
-          "delta": 0.0
+          "before": 0.46023263166350875,
+          "after": 0.4566687565761272,
+          "delta": -0.0035638750873815406
         },
         "dense_separation_preservation": {
           "floor_3d_before": 0.23362462584837704,
@@ -897,13 +768,27 @@
       "hard_gate": false,
       "hard_gate_reasons": [],
       "collapse_risk_details": [],
+      "edge_missing_after": [],
+      "primary_unresolved_edges": [
+        "6-7"
+      ],
+      "all_unresolved_required_edges": [
+        "6-7"
+      ],
       "unresolved_required_edges": [
         "6-7"
       ],
       "disposition": "partial_neutral_review",
       "manual_ls_try_recommended": false,
       "height_worsened": false,
-      "short_wall_after": false,
+      "short_wall_after": true,
+      "short_wall_edges_after": [
+        "5-6",
+        "6-7"
+      ],
+      "short_wall_worsened": false,
+      "below_dynamic_short_threshold": true,
+      "short_wall_preservation_explanation": "pre-existing dynamic short-wall risk preserved without increased deficit",
       "self_intersection": {
         "before": false,
         "after": false
@@ -979,32 +864,48 @@
           "before_residual_deg": 1.451050488877712,
           "after_residual_deg": 1.353374554004887,
           "delta_deg": -0.09767593487282511,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 4.40649961309068,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         },
         {
           "edge": "5-6",
           "before_residual_deg": 11.55972645724654,
           "after_residual_deg": 6.086457816542293,
           "delta_deg": -5.473268640704248,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.23718850093575858,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "6-7",
           "before_residual_deg": 35.367792295442314,
           "after_residual_deg": 35.367792295442314,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.3094527451981201,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "7-8",
           "before_residual_deg": 1.0477215155218573,
           "after_residual_deg": 1.0477215155218573,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.7835697388865898,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         }
       ],
       "ordered_pair_indices_after": [
@@ -1019,8 +920,8 @@
         9,
         10
       ],
-      "candidate_rank": 5,
-      "candidate_id": "candidate_5"
+      "candidate_rank": 4,
+      "candidate_id": "candidate_4"
     },
     {
       "family": "column_x_align_translate",
@@ -1029,7 +930,7 @@
         6
       ],
       "topology_hypothesis": null,
-      "score": -4.595063799324684,
+      "score": -5.156830406665703,
       "score_lower_is_better": true,
       "score_components": {
         "window_wall_residual": {
@@ -1053,9 +954,9 @@
           "delta": 0.0035638750873816516
         },
         "minimum_wall_length_penalty": {
-          "before": 0.0,
-          "after": 0.0,
-          "delta": 0.0
+          "before": 0.46023263166350875,
+          "after": 0.4415070780854748,
+          "delta": -0.01872555357803396
         },
         "dense_separation_preservation": {
           "floor_3d_before": 0.23362462584837704,
@@ -1069,13 +970,27 @@
       "hard_gate": false,
       "hard_gate_reasons": [],
       "collapse_risk_details": [],
+      "edge_missing_after": [],
+      "primary_unresolved_edges": [
+        "6-7"
+      ],
+      "all_unresolved_required_edges": [
+        "6-7"
+      ],
       "unresolved_required_edges": [
         "6-7"
       ],
       "disposition": "partial_neutral_review",
       "manual_ls_try_recommended": false,
       "height_worsened": false,
-      "short_wall_after": false,
+      "short_wall_after": true,
+      "short_wall_edges_after": [
+        "5-6",
+        "6-7"
+      ],
+      "short_wall_worsened": false,
+      "below_dynamic_short_threshold": true,
+      "short_wall_preservation_explanation": "pre-existing dynamic short-wall risk preserved without increased deficit",
       "self_intersection": {
         "before": false,
         "after": false
@@ -1151,32 +1066,48 @@
           "before_residual_deg": 1.451050488877712,
           "after_residual_deg": 1.451050488877712,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 4.385009538750962,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         },
         {
           "edge": "5-6",
           "before_residual_deg": 11.55972645724654,
           "after_residual_deg": 7.886457816542247,
           "delta_deg": -3.6732686407042934,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.2371885009357587,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "6-7",
           "before_residual_deg": 35.367792295442314,
           "after_residual_deg": 34.781894716132115,
           "delta_deg": -0.585897579310199,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.3246144236887724,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "7-8",
           "before_residual_deg": 1.0477215155218573,
           "after_residual_deg": 1.0477215155218573,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.7835697388865898,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         }
       ],
       "ordered_pair_indices_after": [
@@ -1191,8 +1122,8 @@
         9,
         10
       ],
-      "candidate_rank": 6,
-      "candidate_id": "candidate_6"
+      "candidate_rank": 5,
+      "candidate_id": "candidate_5"
     },
     {
       "family": "column_x_align_translate",
@@ -1201,7 +1132,7 @@
         7
       ],
       "topology_hypothesis": null,
-      "score": -4.5217951586203355,
+      "score": -4.976645513339905,
       "score_lower_is_better": true,
       "score_components": {
         "window_wall_residual": {
@@ -1225,9 +1156,9 @@
           "delta": 0.0
         },
         "minimum_wall_length_penalty": {
-          "before": 0.0,
-          "after": 0.0,
-          "delta": 0.0
+          "before": 0.46023263166350875,
+          "after": 0.44507095317285644,
+          "delta": -0.015161678490652308
         },
         "dense_separation_preservation": {
           "floor_3d_before": 0.23362462584837704,
@@ -1241,13 +1172,27 @@
       "hard_gate": false,
       "hard_gate_reasons": [],
       "collapse_risk_details": [],
+      "edge_missing_after": [],
+      "primary_unresolved_edges": [
+        "6-7"
+      ],
+      "all_unresolved_required_edges": [
+        "6-7"
+      ],
       "unresolved_required_edges": [
         "6-7"
       ],
       "disposition": "partial_neutral_review",
       "manual_ls_try_recommended": false,
       "height_worsened": false,
-      "short_wall_after": false,
+      "short_wall_after": true,
+      "short_wall_edges_after": [
+        "5-6",
+        "6-7"
+      ],
+      "short_wall_worsened": false,
+      "below_dynamic_short_threshold": true,
+      "short_wall_preservation_explanation": "pre-existing dynamic short-wall risk preserved without increased deficit",
       "self_intersection": {
         "before": false,
         "after": false
@@ -1323,32 +1268,48 @@
           "before_residual_deg": 1.451050488877712,
           "after_residual_deg": 1.451050488877712,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 4.385009538750962,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         },
         {
           "edge": "5-6",
           "before_residual_deg": 11.55972645724654,
           "after_residual_deg": 11.55972645724654,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.23362462584837704,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "6-7",
           "before_residual_deg": 35.367792295442314,
           "after_residual_deg": 32.9818947161321,
           "delta_deg": -2.3858975793102104,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.3246144236887724,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "7-8",
           "before_residual_deg": 1.0477215155218573,
           "after_residual_deg": 2.498043193315425,
           "delta_deg": 1.4503216777935677,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.7865929041546454,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         }
       ],
       "ordered_pair_indices_after": [
@@ -1363,8 +1324,8 @@
         9,
         10
       ],
-      "candidate_rank": 7,
-      "candidate_id": "candidate_7"
+      "candidate_rank": 6,
+      "candidate_id": "candidate_6"
     },
     {
       "family": "dense_corner_preservation_joint_xy",
@@ -1374,7 +1335,7 @@
         6
       ],
       "topology_hypothesis": null,
-      "score": -1.7177912140169962,
+      "score": -1.4630157177938408,
       "score_lower_is_better": true,
       "score_components": {
         "window_wall_residual": {
@@ -1398,9 +1359,9 @@
           "delta": 0.0015176684685420383
         },
         "minimum_wall_length_penalty": {
-          "before": 0.0,
-          "after": 0.0,
-          "delta": 0.0
+          "before": 0.46023263166350875,
+          "after": 0.4687251482042806,
+          "delta": 0.008492516540771822
         },
         "dense_separation_preservation": {
           "floor_3d_before": 0.23362462584837704,
@@ -1414,13 +1375,27 @@
       "hard_gate": false,
       "hard_gate_reasons": [],
       "collapse_risk_details": [],
+      "edge_missing_after": [],
+      "primary_unresolved_edges": [
+        "6-7"
+      ],
+      "all_unresolved_required_edges": [
+        "6-7"
+      ],
       "unresolved_required_edges": [
         "6-7"
       ],
       "disposition": "partial_neutral_review",
       "manual_ls_try_recommended": false,
       "height_worsened": false,
-      "short_wall_after": false,
+      "short_wall_after": true,
+      "short_wall_edges_after": [
+        "5-6",
+        "6-7"
+      ],
+      "short_wall_worsened": true,
+      "below_dynamic_short_threshold": true,
+      "short_wall_preservation_explanation": null,
       "self_intersection": {
         "before": false,
         "after": false
@@ -1553,32 +1528,48 @@
           "before_residual_deg": 1.451050488877712,
           "after_residual_deg": 1.108045990786195,
           "delta_deg": -0.343004498091517,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 4.3679006495666455,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         },
         {
           "edge": "5-6",
           "before_residual_deg": 11.55972645724654,
           "after_residual_deg": 14.150767462798427,
           "delta_deg": 2.5910410055518867,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.23514229431691908,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "6-7",
           "before_residual_deg": 35.367792295442314,
           "after_residual_deg": 30.430202448904595,
           "delta_deg": -4.937589846537719,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.2994425601888063,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "7-8",
           "before_residual_deg": 1.0477215155218573,
           "after_residual_deg": 1.0477215155218573,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.7835697388865898,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         }
       ],
       "ordered_pair_indices_after": [
@@ -1593,8 +1584,8 @@
         9,
         10
       ],
-      "candidate_rank": 8,
-      "candidate_id": "candidate_8"
+      "candidate_rank": 7,
+      "candidate_id": "candidate_7"
     },
     {
       "family": "dense_corner_preservation_joint_xy",
@@ -1604,7 +1595,7 @@
         6
       ],
       "topology_hypothesis": null,
-      "score": 7.712129904357139,
+      "score": 8.141549948530411,
       "score_lower_is_better": true,
       "score_components": {
         "window_wall_residual": {
@@ -1628,9 +1619,9 @@
           "delta": 0.0005449804672015557
         },
         "minimum_wall_length_penalty": {
-          "before": 0.0,
-          "after": 0.0,
-          "delta": 0.0
+          "before": 0.46023263166350875,
+          "after": 0.47454663313595113,
+          "delta": 0.014314001472442384
         },
         "dense_separation_preservation": {
           "floor_3d_before": 0.23362462584837704,
@@ -1644,13 +1635,29 @@
       "hard_gate": false,
       "hard_gate_reasons": [],
       "collapse_risk_details": [],
-      "unresolved_required_edges": [
+      "edge_missing_after": [],
+      "primary_unresolved_edges": [
         "6-7"
       ],
-      "disposition": "neutral_review",
+      "all_unresolved_required_edges": [
+        "5-6",
+        "6-7"
+      ],
+      "unresolved_required_edges": [
+        "5-6",
+        "6-7"
+      ],
+      "disposition": "partial_neutral_review",
       "manual_ls_try_recommended": false,
       "height_worsened": false,
-      "short_wall_after": false,
+      "short_wall_after": true,
+      "short_wall_edges_after": [
+        "5-6",
+        "6-7"
+      ],
+      "short_wall_worsened": true,
+      "below_dynamic_short_threshold": true,
+      "short_wall_preservation_explanation": null,
       "self_intersection": {
         "before": false,
         "after": false
@@ -1783,32 +1790,48 @@
           "before_residual_deg": 1.451050488877712,
           "after_residual_deg": 1.1409969519001493,
           "delta_deg": -0.31005353697756277,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 4.361242578515423,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         },
         {
           "edge": "5-6",
           "before_residual_deg": 11.55972645724654,
           "after_residual_deg": 17.077914315631233,
           "delta_deg": 5.518187858384692,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.2341696063155786,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "6-7",
           "before_residual_deg": 35.367792295442314,
           "after_residual_deg": 30.581876360839885,
           "delta_deg": -4.7859159346024285,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.2945937632584762,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "7-8",
           "before_residual_deg": 1.0477215155218573,
           "after_residual_deg": 1.0477215155218573,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.7835697388865898,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         }
       ],
       "ordered_pair_indices_after": [
@@ -1823,8 +1846,8 @@
         9,
         10
       ],
-      "candidate_rank": 9,
-      "candidate_id": "candidate_9"
+      "candidate_rank": 8,
+      "candidate_id": "candidate_8"
     },
     {
       "family": "dense_corner_preservation_joint_xy",
@@ -1834,7 +1857,7 @@
         6
       ],
       "topology_hypothesis": null,
-      "score": 17.949354940514716,
+      "score": 18.58339904615526,
       "score_lower_is_better": true,
       "score_components": {
         "window_wall_residual": {
@@ -1858,9 +1881,9 @@
           "delta": 0.0001736040159616148
         },
         "minimum_wall_length_penalty": {
-          "before": 0.0,
-          "after": 0.0,
-          "delta": 0.0
+          "before": 0.46023263166350875,
+          "after": 0.48136743518486025,
+          "delta": 0.021134803521351497
         },
         "dense_separation_preservation": {
           "floor_3d_before": 0.23362462584837704,
@@ -1874,13 +1897,29 @@
       "hard_gate": false,
       "hard_gate_reasons": [],
       "collapse_risk_details": [],
-      "unresolved_required_edges": [
+      "edge_missing_after": [],
+      "primary_unresolved_edges": [
         "6-7"
       ],
-      "disposition": "neutral_review",
+      "all_unresolved_required_edges": [
+        "5-6",
+        "6-7"
+      ],
+      "unresolved_required_edges": [
+        "5-6",
+        "6-7"
+      ],
+      "disposition": "partial_neutral_review",
       "manual_ls_try_recommended": false,
       "height_worsened": false,
-      "short_wall_after": false,
+      "short_wall_after": true,
+      "short_wall_edges_after": [
+        "5-6",
+        "6-7"
+      ],
+      "short_wall_worsened": true,
+      "below_dynamic_short_threshold": true,
+      "short_wall_preservation_explanation": null,
       "self_intersection": {
         "before": false,
         "after": false
@@ -2013,32 +2052,48 @@
           "before_residual_deg": 1.451050488877712,
           "after_residual_deg": 1.1863700134230157,
           "delta_deg": -0.2646804754546963,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 4.352404867301542,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         },
         {
           "edge": "5-6",
           "before_residual_deg": 11.55972645724654,
           "after_residual_deg": 21.00453414300341,
           "delta_deg": 9.44480768575687,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.23379822986433865,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "6-7",
           "before_residual_deg": 35.367792295442314,
           "after_residual_deg": 30.806156687887324,
           "delta_deg": -4.56163560755499,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.28814433766080705,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "7-8",
           "before_residual_deg": 1.0477215155218573,
           "after_residual_deg": 1.0477215155218573,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.7835697388865898,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         }
       ],
       "ordered_pair_indices_after": [
@@ -2053,8 +2108,275 @@
         9,
         10
       ],
-      "candidate_rank": 10,
-      "candidate_id": "candidate_10"
+      "candidate_rank": 9,
+      "candidate_id": "candidate_9"
+    }
+  ],
+  "topology_hypotheses": [
+    {
+      "family": "local_order_topology_hypothesis",
+      "label": "swap_pair_5_6",
+      "changed_pair_indices": [
+        5,
+        6
+      ],
+      "topology_hypothesis": "adjacent_order_swap_5_6",
+      "score": -49.68023052135809,
+      "score_lower_is_better": true,
+      "score_components": {
+        "window_wall_residual": {
+          "before": 49.426290757088424,
+          "after": 26.439997967628955,
+          "delta": -22.98629278945947
+        },
+        "window_corner_residual": {
+          "before": 74.60563001976986,
+          "after": 50.911527889646194,
+          "delta": -23.694102130123667
+        },
+        "height_residual": {
+          "before": 0.40748017343629783,
+          "after": 0.3034894017431453,
+          "delta": -0.10399077169315252
+        },
+        "minimum_wall_length": {
+          "before": 0.23362462584837704,
+          "after": 0.23362462584837704,
+          "delta": 0.0
+        },
+        "minimum_wall_length_penalty": {
+          "before": 0.46023263166350875,
+          "after": 0.0,
+          "delta": -0.46023263166350875
+        },
+        "dense_separation_preservation": {
+          "floor_3d_before": 0.23362462584837704,
+          "floor_3d_after": 0.23362462584837704,
+          "center_x_percent_before": 0.9398496240601517,
+          "center_x_percent_after": 0.9398496240601517,
+          "loss_penalty": 0.0
+        },
+        "movement_l1_ls_percent": 0.0
+      },
+      "hard_gate": false,
+      "hard_gate_reasons": [],
+      "collapse_risk_details": [],
+      "edge_missing_after": [
+        "4-5",
+        "5-6",
+        "6-7"
+      ],
+      "primary_unresolved_edges": [
+        "6-7"
+      ],
+      "all_unresolved_required_edges": [
+        "4-5",
+        "5-6",
+        "6-7"
+      ],
+      "unresolved_required_edges": [
+        "4-5",
+        "5-6",
+        "6-7"
+      ],
+      "disposition": "neutral_review_topology_hypothesis",
+      "manual_ls_try_recommended": false,
+      "height_worsened": false,
+      "short_wall_after": false,
+      "short_wall_edges_after": [],
+      "short_wall_worsened": false,
+      "below_dynamic_short_threshold": false,
+      "short_wall_preservation_explanation": null,
+      "self_intersection": {
+        "before": false,
+        "after": false
+      },
+      "coordinate_changes": [
+        {
+          "effective_pair_index": 5,
+          "fields": {
+            "top_x": {
+              "before": 44.611528822055135,
+              "after": 44.611528822055135,
+              "delta": 0.0,
+              "changed": false
+            },
+            "top_y": {
+              "before": 14.786967418546364,
+              "after": 14.786967418546364,
+              "delta": 0.0,
+              "changed": false
+            },
+            "bottom_x": {
+              "before": 44.987468671679196,
+              "after": 44.987468671679196,
+              "delta": 0.0,
+              "changed": false
+            },
+            "bottom_y": {
+              "before": 86.46616541353383,
+              "after": 86.46616541353383,
+              "delta": 0.0,
+              "changed": false
+            }
+          }
+        },
+        {
+          "effective_pair_index": 6,
+          "fields": {
+            "top_x": {
+              "before": 43.859649122807014,
+              "after": 43.859649122807014,
+              "delta": 0.0,
+              "changed": false
+            },
+            "top_y": {
+              "before": 12.283208020050125,
+              "after": 12.283208020050125,
+              "delta": 0.0,
+              "changed": false
+            },
+            "bottom_x": {
+              "before": 43.859649122807014,
+              "after": 43.859649122807014,
+              "delta": 0.0,
+              "changed": false
+            },
+            "bottom_y": {
+              "before": 90.47619047619048,
+              "after": 90.47619047619048,
+              "delta": 0.0,
+              "changed": false
+            }
+          }
+        }
+      ],
+      "coordinates_3d": {
+        "original": [
+          {
+            "effective_pair_index": 5,
+            "floor_3d": {
+              "x": -0.23253759020972273,
+              "y": -1.6,
+              "z": -0.6861427792133783
+            },
+            "ceiling_3d": {
+              "x": -0.23253759020972273,
+              "y": 1.4457027378813943,
+              "z": -0.6861427792133783
+            },
+            "wall_height": 3.0457027378813946
+          },
+          {
+            "effective_pair_index": 6,
+            "floor_3d": {
+              "x": -0.1857217097670582,
+              "y": -1.6,
+              "z": -0.45725691433489285
+            },
+            "ceiling_3d": {
+              "x": -0.1857217097670582,
+              "y": 1.2148346660384843,
+              "z": -0.45725691433489285
+            },
+            "wall_height": 2.814834666038484
+          }
+        ],
+        "candidate": [
+          {
+            "effective_pair_index": 6,
+            "floor_3d": {
+              "x": -0.1857217097670582,
+              "y": -1.6,
+              "z": -0.45725691433489285
+            },
+            "ceiling_3d": {
+              "x": -0.1857217097670582,
+              "y": 1.2148346660384843,
+              "z": -0.45725691433489285
+            },
+            "wall_height": 2.814834666038484
+          },
+          {
+            "effective_pair_index": 5,
+            "floor_3d": {
+              "x": -0.23253759020972273,
+              "y": -1.6,
+              "z": -0.6861427792133783
+            },
+            "ceiling_3d": {
+              "x": -0.23253759020972273,
+              "y": 1.4457027378813943,
+              "z": -0.6861427792133783
+            },
+            "wall_height": 3.0457027378813946
+          }
+        ]
+      },
+      "required_wall_residuals": [
+        {
+          "edge": "4-5",
+          "before_residual_deg": 1.451050488877712,
+          "after_residual_deg": null,
+          "delta_deg": null,
+          "edge_present_after": false,
+          "edge_missing_after": true,
+          "after_floor_wall_length": null,
+          "short_wall": null,
+          "short_wall_threshold": null,
+          "below_dynamic_short_threshold": null
+        },
+        {
+          "edge": "5-6",
+          "before_residual_deg": 11.55972645724654,
+          "after_residual_deg": null,
+          "delta_deg": null,
+          "edge_present_after": false,
+          "edge_missing_after": true,
+          "after_floor_wall_length": null,
+          "short_wall": null,
+          "short_wall_threshold": null,
+          "below_dynamic_short_threshold": null
+        },
+        {
+          "edge": "6-7",
+          "before_residual_deg": 35.367792295442314,
+          "after_residual_deg": null,
+          "delta_deg": null,
+          "edge_present_after": false,
+          "edge_missing_after": true,
+          "after_floor_wall_length": null,
+          "short_wall": null,
+          "short_wall_threshold": null,
+          "below_dynamic_short_threshold": null
+        },
+        {
+          "edge": "7-8",
+          "before_residual_deg": 1.0477215155218573,
+          "after_residual_deg": 1.0477215155218573,
+          "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
+          "after_floor_wall_length": 0.7835697388865898,
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
+        }
+      ],
+      "ordered_pair_indices_after": [
+        1,
+        2,
+        3,
+        4,
+        6,
+        5,
+        7,
+        8,
+        9,
+        10
+      ],
+      "topology_rank": 1,
+      "candidate_id": "topology_1"
     },
     {
       "family": "local_order_topology_hypothesis",
@@ -2064,7 +2386,7 @@
         8
       ],
       "topology_hypothesis": "adjacent_order_swap_7_8",
-      "score": 27.894613996406093,
+      "score": 22.12854631169961,
       "score_lower_is_better": true,
       "score_components": {
         "window_wall_residual": {
@@ -2088,9 +2410,9 @@
           "delta": 0.0
         },
         "minimum_wall_length_penalty": {
-          "before": 0.0,
-          "after": 0.0,
-          "delta": 0.0
+          "before": 0.46023263166350875,
+          "after": 0.2680303755066259,
+          "delta": -0.19220225615688286
         },
         "dense_separation_preservation": {
           "floor_3d_before": 0.23362462584837704,
@@ -2104,6 +2426,17 @@
       "hard_gate": false,
       "hard_gate_reasons": [],
       "collapse_risk_details": [],
+      "edge_missing_after": [
+        "6-7",
+        "7-8"
+      ],
+      "primary_unresolved_edges": [
+        "6-7"
+      ],
+      "all_unresolved_required_edges": [
+        "6-7",
+        "7-8"
+      ],
       "unresolved_required_edges": [
         "6-7",
         "7-8"
@@ -2111,7 +2444,13 @@
       "disposition": "neutral_review_topology_hypothesis",
       "manual_ls_try_recommended": false,
       "height_worsened": false,
-      "short_wall_after": false,
+      "short_wall_after": true,
+      "short_wall_edges_after": [
+        "5-6"
+      ],
+      "short_wall_worsened": false,
+      "below_dynamic_short_threshold": true,
+      "short_wall_preservation_explanation": "pre-existing dynamic short-wall risk preserved without increased deficit",
       "self_intersection": {
         "before": false,
         "after": false
@@ -2244,32 +2583,48 @@
           "before_residual_deg": 1.451050488877712,
           "after_residual_deg": 1.451050488877712,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 4.385009538750962,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         },
         {
           "edge": "5-6",
           "before_residual_deg": 11.55972645724654,
           "after_residual_deg": 11.55972645724654,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 0.23362462584837704,
-          "edge_present_after": true
+          "short_wall": true,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": true
         },
         {
           "edge": "6-7",
           "before_residual_deg": 35.367792295442314,
           "after_residual_deg": null,
           "delta_deg": null,
+          "edge_present_after": false,
+          "edge_missing_after": true,
           "after_floor_wall_length": null,
-          "edge_present_after": false
+          "short_wall": null,
+          "short_wall_threshold": null,
+          "below_dynamic_short_threshold": null
         },
         {
           "edge": "7-8",
           "before_residual_deg": 1.0477215155218573,
           "after_residual_deg": null,
           "delta_deg": null,
+          "edge_present_after": false,
+          "edge_missing_after": true,
           "after_floor_wall_length": null,
-          "edge_present_after": false
+          "short_wall": null,
+          "short_wall_threshold": null,
+          "below_dynamic_short_threshold": null
         }
       ],
       "ordered_pair_indices_after": [
@@ -2284,8 +2639,8 @@
         9,
         10
       ],
-      "candidate_rank": 11,
-      "candidate_id": "candidate_11"
+      "topology_rank": 2,
+      "candidate_id": "topology_2"
     },
     {
       "family": "local_order_topology_hypothesis",
@@ -2295,7 +2650,7 @@
         7
       ],
       "topology_hypothesis": "adjacent_order_swap_6_7",
-      "score": 69.49731337795569,
+      "score": 55.69033442805043,
       "score_lower_is_better": true,
       "score_components": {
         "window_wall_residual": {
@@ -2319,9 +2674,9 @@
           "delta": 0.06964686728549704
         },
         "minimum_wall_length_penalty": {
-          "before": 0.0,
+          "before": 0.46023263166350875,
           "after": 0.0,
-          "delta": 0.0
+          "delta": -0.46023263166350875
         },
         "dense_separation_preservation": {
           "floor_3d_before": 0.23362462584837704,
@@ -2337,7 +2692,21 @@
         "introduced_self_intersection"
       ],
       "collapse_risk_details": [],
+      "edge_missing_after": [
+        "5-6",
+        "6-7",
+        "7-8"
+      ],
+      "primary_unresolved_edges": [
+        "6-7"
+      ],
+      "all_unresolved_required_edges": [
+        "5-6",
+        "6-7",
+        "7-8"
+      ],
       "unresolved_required_edges": [
+        "5-6",
         "6-7",
         "7-8"
       ],
@@ -2345,6 +2714,10 @@
       "manual_ls_try_recommended": false,
       "height_worsened": false,
       "short_wall_after": false,
+      "short_wall_edges_after": [],
+      "short_wall_worsened": false,
+      "below_dynamic_short_threshold": false,
+      "short_wall_preservation_explanation": null,
       "self_intersection": {
         "before": false,
         "after": true
@@ -2477,32 +2850,48 @@
           "before_residual_deg": 1.451050488877712,
           "after_residual_deg": 1.451050488877712,
           "delta_deg": 0.0,
+          "edge_present_after": true,
+          "edge_missing_after": false,
           "after_floor_wall_length": 4.385009538750962,
-          "edge_present_after": true
+          "short_wall": false,
+          "short_wall_threshold": 0.501655001355003,
+          "below_dynamic_short_threshold": false
         },
         {
           "edge": "5-6",
           "before_residual_deg": 11.55972645724654,
           "after_residual_deg": null,
           "delta_deg": null,
+          "edge_present_after": false,
+          "edge_missing_after": true,
           "after_floor_wall_length": null,
-          "edge_present_after": false
+          "short_wall": null,
+          "short_wall_threshold": null,
+          "below_dynamic_short_threshold": null
         },
         {
           "edge": "6-7",
           "before_residual_deg": 35.367792295442314,
           "after_residual_deg": null,
           "delta_deg": null,
+          "edge_present_after": false,
+          "edge_missing_after": true,
           "after_floor_wall_length": null,
-          "edge_present_after": false
+          "short_wall": null,
+          "short_wall_threshold": null,
+          "below_dynamic_short_threshold": null
         },
         {
           "edge": "7-8",
           "before_residual_deg": 1.0477215155218573,
           "after_residual_deg": null,
           "delta_deg": null,
+          "edge_present_after": false,
+          "edge_missing_after": true,
           "after_floor_wall_length": null,
-          "edge_present_after": false
+          "short_wall": null,
+          "short_wall_threshold": null,
+          "below_dynamic_short_threshold": null
         }
       ],
       "ordered_pair_indices_after": [
@@ -2517,8 +2906,8 @@
         9,
         10
       ],
-      "candidate_rank": 12,
-      "candidate_id": "candidate_12"
+      "topology_rank": 3,
+      "candidate_id": "topology_3"
     }
   ],
   "input_provenance": {
