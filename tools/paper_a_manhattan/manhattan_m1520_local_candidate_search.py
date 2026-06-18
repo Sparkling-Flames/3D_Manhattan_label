@@ -539,10 +539,16 @@ def _candidate_triage(candidate: Mapping[str, Any]) -> dict[str, Any]:
         fails.append("local height residual worsens")
 
     blocked = bool(candidate["hard_gate"] or candidate["edge_missing_after"])
+    preserved_short_wall_only = bool(
+        candidate["below_dynamic_short_threshold"]
+        and candidate["short_wall_preservation_explanation"]
+        and not candidate["short_wall_worsened"]
+    )
     clean_for_review = (
         not blocked
         and not candidate["all_unresolved_required_edges"]
         and not candidate["short_wall_worsened"]
+        and not preserved_short_wall_only
         and candidate["family"] != "local_order_topology_hypothesis"
     )
     score_improves = float(candidate["score"]) < -0.01
@@ -552,10 +558,7 @@ def _candidate_triage(candidate: Mapping[str, Any]) -> dict[str, Any]:
         decision_class = "candidate_for_manual_review"
     elif (
         candidate["short_wall_worsened"]
-        or (
-            candidate["below_dynamic_short_threshold"]
-            and candidate["short_wall_preservation_explanation"]
-        )
+        or preserved_short_wall_only
         or (score_improves and candidate["all_unresolved_required_edges"])
     ):
         decision_class = "partial_diagnostic"

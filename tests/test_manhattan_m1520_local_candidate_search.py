@@ -6,6 +6,7 @@ from tools.paper_a_manhattan.manhattan_m1520_local_candidate_search import (
     CORE_WINDOW,
     FAMILIES,
     SAFETY_BOUNDARY,
+    _candidate_triage,
     generate_local_candidates,
     run_local_candidate_search,
 )
@@ -130,6 +131,37 @@ def test_static_boundary_has_no_writeback_or_formal_chain():
     assert '"routing_input": true' not in source
     assert '"formal_artifact": true' not in source
     assert "annotation_patch" not in runner
+
+
+def test_preserved_dynamic_short_wall_is_partial_not_manual_review():
+    triage = _candidate_triage(
+        {
+            "family": "column_x_align_translate",
+            "score": -1.0,
+            "hard_gate": False,
+            "edge_missing_after": [],
+            "all_unresolved_required_edges": [],
+            "short_wall_worsened": False,
+            "below_dynamic_short_threshold": True,
+            "short_wall_preservation_explanation": "pre-existing risk preserved",
+            "short_wall_edges_after": ["5-6"],
+            "manual_ls_try_recommended": True,
+            "height_worsened": False,
+            "score_components": {"height_residual": {"delta": 0.0}},
+            "required_wall_residuals": [
+                {
+                    "edge": edge,
+                    "before_residual_deg": 1.0,
+                    "after_residual_deg": 1.0,
+                    "edge_missing_after": False,
+                }
+                for edge in ("4-5", "5-6", "6-7", "7-8")
+            ],
+        }
+    )
+
+    assert triage["decision_class"] == "partial_diagnostic"
+    assert triage["direct_ls_trial_allowed"] is False
 
 
 def test_task218_ann3741_hardening_regression():
