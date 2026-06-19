@@ -248,7 +248,7 @@
         ghostCorners: null,
         changedPairIndices: [],
         changedWallIndices: [],
-        displayOptions: { ghost: false, measureMode: false },
+        displayOptions: { ghost: false, measureMode: false, texture: true },
         measurementPoints: [],
       };
 
@@ -1367,13 +1367,16 @@
           floorPoints.push(floorPoints[0].clone());
         }
 
-        const material = hasTexture
+        const inspectionTextureHidden =
+          inspectionState.enabled && !inspectionState.displayOptions.texture;
+        const textureDisplayed = hasTexture && !inspectionTextureHidden;
+        const material = textureDisplayed
           ? panoMaterial
           : new THREE.MeshBasicMaterial({
-              color: 0xcccccc,
-              wireframe: true,
+              color: inspectionTextureHidden ? 0x374151 : 0xcccccc,
+              wireframe: !inspectionTextureHidden,
               transparent: true,
-              opacity: 0.3,
+              opacity: inspectionTextureHidden ? 0.45 : 0.3,
               side: THREE.DoubleSide,
             });
 
@@ -1572,7 +1575,7 @@
         }
 
         updateStatus(
-          `已渲染 ${orderedCorners.length} 面墙（${hasTexture ? "带纹理" : "纯色"}）`
+          `已渲染 ${orderedCorners.length} 面墙（${textureDisplayed ? "带纹理" : "纯色"}）`
         );
 
         if (options.resetView) {
@@ -1711,6 +1714,7 @@
         inspectionState.displayOptions = {
           ghost: !!data.displayOptions?.ghost,
           measureMode: !!data.displayOptions?.measureMode,
+          texture: data.displayOptions?.texture !== false,
         };
         if (!inspectionState.enabled) {
           clearInspectionSelection();

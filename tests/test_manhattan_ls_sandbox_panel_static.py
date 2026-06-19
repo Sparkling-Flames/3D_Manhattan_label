@@ -461,6 +461,7 @@ def test_vis_3d_gates_read_only_inspection_and_reports_selections():
         "raycaster.intersectObjects(interactiveObjects, false)",
         'hit.object.userData.hohonetInspectionType === "corner"',
         "inspectionState.displayOptions.ghost",
+        "inspectionState.enabled && !inspectionState.displayOptions.texture",
         "inspectionState.enabled && changedWallSet.size",
         "changedWallLine.computeLineDistances()",
         "focusInspectionPoint",

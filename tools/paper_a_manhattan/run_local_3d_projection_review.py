@@ -1149,6 +1149,7 @@ def render_review_html(
     <label>Variant <select id="variant"></select></label>
     <button id="side" type="button">Side-by-side</button>
     <button id="labels" type="button">Hide labels</button>
+    <button id="texture" class="active" type="button">Texture: ON</button>
     <button id="ghost" class="active" type="button">Ghost original</button>
     <button id="measure" type="button">Measure</button>
     <button id="next-issue" type="button">Next issue</button>
@@ -1200,6 +1201,7 @@ def render_review_html(
     const textureReasons = {{left: null, right: null}};
     const textureTimeouts = {{left: null, right: null}};
     let labelsVisible = true;
+    let textureVisible = true;
     let ghostVisible = true;
     let measureMode = false;
     let issueCursor = -1;
@@ -1302,7 +1304,7 @@ def render_review_html(
         changedPairIndices: variant.changedPairIndices || [],
         changedWallIndices: variant.changedWallIndices || [],
         ghostCorners: ghostVisible && variant.name !== 'original' ? REVIEW.variants[0].corners : null,
-        displayOptions: {{ghost:ghostVisible, measureMode}}
+        displayOptions: {{ghost:ghostVisible, measureMode, texture:textureVisible}}
       }}, '*');
       frame.contentWindow.postMessage({{type:'set_label_visibility', visible:labelsVisible}}, '*');
       if (activeAssets.textureExpected) {{
@@ -1336,6 +1338,12 @@ def render_review_html(
     document.getElementById('side').addEventListener('click', () => {{ views.classList.toggle('side'); refresh(); }});
     document.getElementById('labels').addEventListener('click', (event) => {{
       labelsVisible = !labelsVisible; event.currentTarget.textContent = labelsVisible ? 'Hide labels' : 'Show labels'; refresh();
+    }});
+    document.getElementById('texture').addEventListener('click', (event) => {{
+      textureVisible = !textureVisible;
+      event.currentTarget.textContent = textureVisible ? 'Texture: ON' : 'Texture: OFF';
+      event.currentTarget.classList.toggle('active', textureVisible);
+      refresh();
     }});
     document.getElementById('ghost').addEventListener('click', (event) => {{ ghostVisible = !ghostVisible; event.currentTarget.classList.toggle('active', ghostVisible); refresh(); }});
     document.getElementById('measure').addEventListener('click', (event) => {{ measureMode = !measureMode; event.currentTarget.classList.toggle('active', measureMode); measurement.textContent = measureMode ? 'Select two corner points.' : 'Measure mode is off.'; postInspectionCommand('set_measure_mode', {{enabled:measureMode}}); }});

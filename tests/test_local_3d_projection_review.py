@@ -277,6 +277,10 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     assert "hohonet_geometry_selection" in page
     assert "hohonet_measurement_status" in page
     assert "inspectionMode: true" in page
+    assert "Texture: ON" in page and "Texture: OFF" in page
+    assert "let textureVisible = true" in page
+    assert "texture:textureVisible" in page
+    assert "imageUrl: activeAssets.imageUrl" in page
     assert "Ghost original" in page and "Measure" in page
     assert "Residual edges" not in page
     assert "M15.22 triage" in page
@@ -373,6 +377,10 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     assert "changedWallLine.computeLineDistances()" in viewer
     assert "LineDashedMaterial({ color:0xe5e7eb" in viewer
     assert "new THREE.MeshBasicMaterial({ color: 0xfacc15" in viewer
+    assert "inspectionState.enabled && !inspectionState.displayOptions.texture" in viewer
+    assert "texture: data.displayOptions?.texture !== false" in viewer
+    assert "color: inspectionTextureHidden ? 0x374151 : 0xcccccc" in viewer
+    assert "const textureDisplayed = hasTexture && !inspectionTextureHidden" in viewer
 
 
 def test_safety_regression_keeps_m1518_and_formal_boundaries():
