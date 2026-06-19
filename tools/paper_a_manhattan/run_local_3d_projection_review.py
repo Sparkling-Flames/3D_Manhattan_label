@@ -1056,11 +1056,19 @@ def render_review_html(
             }
             for pair in variant["projection"]["pairs"]
         ]
+        changed_pair_set = set(changed_pair_indices)
+        changed_wall_indices = [
+            wall_index
+            for wall_index in range(1, len(corners) + 1)
+            if wall_index in changed_pair_set
+            or (wall_index % len(corners)) + 1 in changed_pair_set
+        ]
         minimal_variants.append(
             {
                 "name": variant["name"],
                 "displayName": variant.get("display_name", variant["name"]),
                 "changedPairIndices": changed_pair_indices,
+                "changedWallIndices": changed_wall_indices,
                 "corners": corners,
                 "summary": variant["summary"],
                 "triage": {
@@ -1141,7 +1149,6 @@ def render_review_html(
     <label>Variant <select id="variant"></select></label>
     <button id="side" type="button">Side-by-side</button>
     <button id="labels" type="button">Hide labels</button>
-    <button id="heatmap" type="button" title="Debug-only; disabled by default">Residual edges</button>
     <button id="ghost" class="active" type="button">Ghost original</button>
     <button id="measure" type="button">Measure</button>
     <button id="next-issue" type="button">Next issue</button>
@@ -1166,7 +1173,7 @@ def render_review_html(
       <h3>Metric summary</h3><pre id="metrics"></pre>
       <h3>Viewer / texture status</h3><pre id="texture-status"></pre>
       <h3>Provenance</h3><pre id="provenance"></pre>
-      <p class="muted">Wall click: global-XZ heading and Manhattan-axis deviation. Corner click: angle between its previous and next wall. Residual edges are debug-only and disabled by default.</p>
+      <p class="muted">Wall click: global-XZ heading and Manhattan-axis deviation. Corner click: angle between its previous and next wall. White dashed walls mark candidate-modified geometry.</p>
       <p class="muted">Read-only local diagnostic. Open this HTML directly to use its embedded local texture, or double-click <code>open_local_3d_review.cmd</code> for localhost mode.</p>
     </aside>
   </main>
@@ -1193,7 +1200,6 @@ def render_review_html(
     const textureReasons = {{left: null, right: null}};
     const textureTimeouts = {{left: null, right: null}};
     let labelsVisible = true;
-    let heatmapVisible = false;
     let ghostVisible = true;
     let measureMode = false;
     let issueCursor = -1;
@@ -1294,8 +1300,9 @@ def render_review_html(
         variantName: variant.name, inspectionMode: true,
         inspectionMetadata: variant.inspection,
         changedPairIndices: variant.changedPairIndices || [],
+        changedWallIndices: variant.changedWallIndices || [],
         ghostCorners: ghostVisible && variant.name !== 'original' ? REVIEW.variants[0].corners : null,
-        displayOptions: {{heatmap:heatmapVisible, ghost:ghostVisible, measureMode}}
+        displayOptions: {{ghost:ghostVisible, measureMode}}
       }}, '*');
       frame.contentWindow.postMessage({{type:'set_label_visibility', visible:labelsVisible}}, '*');
       if (activeAssets.textureExpected) {{
@@ -1330,7 +1337,6 @@ def render_review_html(
     document.getElementById('labels').addEventListener('click', (event) => {{
       labelsVisible = !labelsVisible; event.currentTarget.textContent = labelsVisible ? 'Hide labels' : 'Show labels'; refresh();
     }});
-    document.getElementById('heatmap').addEventListener('click', (event) => {{ heatmapVisible = !heatmapVisible; event.currentTarget.classList.toggle('active', heatmapVisible); refresh(); }});
     document.getElementById('ghost').addEventListener('click', (event) => {{ ghostVisible = !ghostVisible; event.currentTarget.classList.toggle('active', ghostVisible); refresh(); }});
     document.getElementById('measure').addEventListener('click', (event) => {{ measureMode = !measureMode; event.currentTarget.classList.toggle('active', measureMode); measurement.textContent = measureMode ? 'Select two corner points.' : 'Measure mode is off.'; postInspectionCommand('set_measure_mode', {{enabled:measureMode}}); }});
     document.getElementById('next-issue').addEventListener('click', () => {{

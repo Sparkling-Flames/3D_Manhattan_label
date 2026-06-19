@@ -247,7 +247,8 @@
         metadata: null,
         ghostCorners: null,
         changedPairIndices: [],
-        displayOptions: { heatmap: false, ghost: false, measureMode: false },
+        changedWallIndices: [],
+        displayOptions: { ghost: false, measureMode: false },
         measurementPoints: [],
       };
 
@@ -1039,14 +1040,6 @@
         );
       }
 
-      function wallColor(metric) {
-        if (metric?.short_wall) return 0xa855f7;
-        const residual = Number(metric?.angle_residual_deg || 0);
-        if (residual > 15) return 0xef4444;
-        if (residual > 5) return 0xf59e0b;
-        return 0x22c55e;
-      }
-
       function addCornerAngleGuide(pairIndex, endpoint) {
         if (!inspectionGeometry) return;
         const count = inspectionState.metadata?.pairs?.length || 0;
@@ -1438,27 +1431,6 @@
           }
         }
 
-        if (inspectionState.enabled && inspectionState.displayOptions.heatmap) {
-          for (let i = 0; i < ceilPoints.length - 1; i += 1) {
-            const p1 = ceilPoints[i];
-            const p2 = floorPoints[i];
-            const p3 = ceilPoints[i + 1];
-            const p4 = floorPoints[i + 1];
-            const residualGeometry = new THREE.BufferGeometry().setFromPoints([
-              p1, p2, p2, p4, p4, p3, p3, p1,
-            ]);
-            const residualEdges = new THREE.LineSegments(
-              residualGeometry,
-              new THREE.LineBasicMaterial({
-                color: wallColor(wallMetadata(i + 1)), depthTest: false,
-              })
-            );
-            residualEdges.renderOrder = 45;
-            scene.add(residualEdges);
-            meshObjects.push(residualEdges);
-          }
-        }
-
         const floorGeo = new THREE.BufferGeometry();
         const floorVertices = [];
         const floorCenter = new THREE.Vector3(0, -CAM_H, 0);
@@ -1478,7 +1450,7 @@
         meshObjects.push(floorMesh);
 
         const lineMat = new THREE.LineBasicMaterial({
-          color: inspectionState.enabled ? 0x60a5fa : 0x00ff00,
+          color: 0x00ff00,
           depthTest: false,
         });
         const edges = [];
@@ -1506,12 +1478,11 @@
         meshObjects.push(lineMesh);
 
         const changedPairSet = new Set(inspectionState.changedPairIndices);
-        if (inspectionState.enabled && changedPairSet.size) {
+        const changedWallSet = new Set(inspectionState.changedWallIndices);
+        if (inspectionState.enabled && changedWallSet.size) {
           const changedWallEdges = [];
           for (let i = 0; i < orderedCorners.length; i += 1) {
-            const fromPair = i + 1;
-            const toPair = ((i + 1) % orderedCorners.length) + 1;
-            if (!changedPairSet.has(fromPair) && !changedPairSet.has(toPair)) continue;
+            if (!changedWallSet.has(i + 1)) continue;
             const p1 = ceilPoints[i];
             const p2 = floorPoints[i];
             const p3 = ceilPoints[i + 1];
@@ -1527,8 +1498,12 @@
           );
           const changedWallLine = new THREE.LineSegments(
             changedWallGeometry,
-            new THREE.LineBasicMaterial({ color: 0xf97316, depthTest: false })
+            new THREE.LineDashedMaterial({
+              color: 0xffffff, transparent: true, opacity: 0.95,
+              dashSize: 0.12, gapSize: 0.08, depthTest: false,
+            })
           );
+          changedWallLine.computeLineDistances();
           changedWallLine.renderOrder = 46;
           scene.add(changedWallLine);
           meshObjects.push(changedWallLine);
@@ -1539,7 +1514,7 @@
         [...ceilPoints.slice(0, orderedCorners.length), ...floorPoints.slice(0, orderedCorners.length)].forEach((point, pointIndex) => {
           const pairIndex = (pointIndex % orderedCorners.length) + 1;
           const changed = inspectionState.enabled && changedPairSet.has(pairIndex);
-          const markerGeometry = changed ? new THREE.SphereGeometry(0.18, 16, 16) : sphereGeo;
+          const markerGeometry = changed ? new THREE.SphereGeometry(0.12, 16, 16) : sphereGeo;
           const markerMaterial = inspectionState.enabled
             ? new THREE.MeshBasicMaterial({ color: changed ? 0xff2d95 : 0x60a5fa })
             : sphereMat;
@@ -1730,8 +1705,10 @@
         inspectionState.changedPairIndices = inspectionState.enabled && Array.isArray(data.changedPairIndices)
           ? data.changedPairIndices.map(Number).filter(Number.isFinite)
           : [];
+        inspectionState.changedWallIndices = inspectionState.enabled && Array.isArray(data.changedWallIndices)
+          ? data.changedWallIndices.map(Number).filter(Number.isFinite)
+          : [];
         inspectionState.displayOptions = {
-          heatmap: !!data.displayOptions?.heatmap,
           ghost: !!data.displayOptions?.ghost,
           measureMode: !!data.displayOptions?.measureMode,
         };
@@ -1837,7 +1814,6 @@
             texture_status: true,
             geometry_selection: true,
             measurement: true,
-            heatmap: true,
             ghost: true,
             camera_presets: true,
           },

@@ -460,8 +460,9 @@ def test_vis_3d_gates_read_only_inspection_and_reports_selections():
         'data.command === "select_issue"',
         "raycaster.intersectObjects(interactiveObjects, false)",
         'hit.object.userData.hohonetInspectionType === "corner"',
-        "inspectionState.displayOptions.heatmap",
         "inspectionState.displayOptions.ghost",
+        "inspectionState.enabled && changedWallSet.size",
+        "changedWallLine.computeLineDistances()",
         "focusInspectionPoint",
         "function addCornerAngleGuide(pairIndex, endpoint)",
         "wall-to-wall angle:",
@@ -497,7 +498,7 @@ def test_vis_3d_gates_read_only_inspection_and_reports_selections():
         assert forbidden not in text.lower()
 
     post_start = text.index("function postGeometrySelection")
-    post_end = text.index("function wallColor", post_start)
+    post_end = text.index("function addCornerAngleGuide", post_start)
     post_text = text[post_start:post_end]
     assert "window.parent.postMessage" in post_text
     assert 'type: "hohonet_geometry_selection"' in post_text
@@ -514,11 +515,8 @@ def test_vis_3d_wall_picking_uses_explicit_per_wall_metadata():
     assert "interactiveObjects.push(pickingMesh)" in text
 
     wall_mesh_start = text.index("const wallMesh = new THREE.Mesh")
-    heatmap_start = text.index(
-        "if (inspectionState.enabled && inspectionState.displayOptions.heatmap)",
-        wall_mesh_start,
-    )
-    picking_block = text[wall_mesh_start:heatmap_start]
+    floor_start = text.index("const floorGeo", wall_mesh_start)
+    picking_block = text[wall_mesh_start:floor_start]
     assert "if (inspectionState.enabled)" in picking_block
     assert "opacity: 0" in picking_block
     assert "pickingMaterial.colorWrite = false" in picking_block
