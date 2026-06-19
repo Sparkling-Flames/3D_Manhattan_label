@@ -537,7 +537,7 @@ def test_pre_m15192_vis_3d_backup_is_not_the_runtime_entrypoint():
     backup = read(backup_path)
 
     assert backup_path.is_file()
-    assert 'version: "m15.19.2"' in active
+    assert 'version: "m15.23.4"' in active
     assert 'version: "m15.19.2"' not in backup
     assert 'type: "hohonet_viewer_ready"' not in backup
 

@@ -133,7 +133,7 @@ def test_inspection_metadata_has_authoritative_corner_wall_and_issue_metrics():
     )
     inspection = _inspection_metadata(variant)
 
-    assert inspection["schema_version"] == "local_3d_inspection_m15_19_2_v1"
+    assert inspection["schema_version"] == "local_3d_inspection_m15_23_4_v1"
     assert inspection["pairs"][0]["floor_3d"] == variant["projection"]["pairs"][0]["floor_3d"]
     pair = inspection["pairs"][0]
     assert pair["previous_wall_index"] == 4
@@ -194,6 +194,7 @@ def test_missing_image_still_generates_geometry_only_outputs(tmp_path):
     assert all(path.is_file() for path in paths.values())
     payload = json.loads(paths["json"].read_text(encoding="utf-8"))
     assert payload["schema_version"] == REVIEW_SCHEMA_VERSION
+    assert REVIEW_SCHEMA_VERSION == "local_3d_projection_review_m15_23_4_v1"
     assert payload["input_provenance"]["image"]["image_exists"] is False
     assert "texture unavailable" in paths["html"].read_text(encoding="utf-8").lower()
     assert "--coordinate-mode ls_percent" in paths["report"].read_text(encoding="utf-8")
@@ -261,6 +262,8 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
 
     page = paths["html"].read_text(encoding="utf-8")
     lower = page.lower()
+    assert "M15.19.2 Local 3D Inspection Workbench" not in page
+    assert "M15.23.4 Local 3D Candidate Review Workbench" in page
     assert "vis_3d.html" in page
     assert "postMessage" in page
     assert "update_layout" in page
@@ -282,12 +285,19 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     assert "texture:textureVisible" in page
     assert "imageUrl: activeAssets.imageUrl" in page
     assert "Ghost original" in page and "Measure" in page
+    assert "Candidate changed walls = red dashed." in page
+    assert "Changed pairs = magenta markers." in page
+    assert "Current layout = green solid." in page
+    assert "Original ghost = low-opacity grey dashed." in page
+    assert "Texture ON/OFF affects display only; imageUrl remains loaded." in page
+    assert "Preview only / no writeback." in page
     assert "Residual edges" not in page
     assert "M15.22 triage" in page
     assert "Next issue" in page and 'data-camera="top"' in page
     assert "junction_angle_kind" in page
     assert "adjacent_corner_angles" not in page
     assert '<iframe id="left-view" title="selected geometry"></iframe>' in page
+    safety_lower = lower.replace("preview only / no writeback.", "")
     for forbidden in (
         "fetch(",
         "label studio api",
@@ -297,7 +307,13 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
         "routing",
         "formal_g_t",
     ):
-        assert forbidden not in lower
+        assert forbidden not in safety_lower
+
+    report = paths["report"].read_text(encoding="utf-8").lower()
+    assert "this is an expert-side local visual review." in report
+    assert "candidate previews are diagnostic only." in report
+    assert "texture toggle and ghost are display controls only." in report
+    assert "no annotation patch or label studio writeback is produced." in report
 
 
 def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
@@ -381,6 +397,7 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     assert "texture: data.displayOptions?.texture !== false" in viewer
     assert "color: inspectionTextureHidden ? 0x374151 : 0xcccccc" in viewer
     assert "const textureDisplayed = hasTexture && !inspectionTextureHidden" in viewer
+    assert 'version: "m15.23.4"' in viewer
 
 
 def test_safety_regression_keeps_m1518_and_formal_boundaries():

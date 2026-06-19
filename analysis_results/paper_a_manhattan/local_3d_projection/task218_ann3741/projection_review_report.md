@@ -2,7 +2,7 @@
 
 ## Input Provenance
 
-- Review schema: `local_3d_projection_review_m15_23_v1`
+- Review schema: `local_3d_projection_review_m15_23_4_v1`
 - Projection schema: `local_3d_projection_m15_19_v1`
 - Input file: `task218_ann3741_m1516_stabilized_input.json`
 - Input SHA-256: `a0646242b9e0f07a29282906e20c6c67a7bcc05cd704d6b7db209957576eaef7`
@@ -20,7 +20,10 @@
 
 ## Human Review Summary
 
-Local-only diagnostic. No annotation changes are produced.
+This is an expert-side local visual review.
+Candidate previews are diagnostic only.
+Texture toggle and ghost are display controls only.
+No annotation patch or Label Studio writeback is produced.
 
 ### candidate_1 | height_aware_y_probe | partial | 6-7 35.368→26.315
 

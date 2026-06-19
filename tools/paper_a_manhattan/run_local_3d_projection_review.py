@@ -31,8 +31,8 @@ from tools.paper_a_manhattan.run_single_image_manhattan_assist import (  # noqa:
 )
 
 
-REVIEW_SCHEMA_VERSION = "local_3d_projection_review_m15_23_v1"
-INSPECTION_SCHEMA_VERSION = "local_3d_inspection_m15_19_2_v1"
+REVIEW_SCHEMA_VERSION = "local_3d_projection_review_m15_23_4_v1"
+INSPECTION_SCHEMA_VERSION = "local_3d_inspection_m15_23_4_v1"
 MAX_EMBEDDED_IMAGE_BYTES = 8 * 1024 * 1024
 SAFETY_BOUNDARY = {
     "expert_side": True,
@@ -669,7 +669,10 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         ),
         "## Human Review Summary",
         "",
-        "Local-only diagnostic. No annotation changes are produced.",
+        "This is an expert-side local visual review.",
+        "Candidate previews are diagnostic only.",
+        "Texture toggle and ghost are display controls only.",
+        "No annotation patch or Label Studio writeback is produced.",
         "",
     ]
     candidates = variants[1:]
@@ -1107,6 +1110,8 @@ def render_review_html(
         "coordinateWarnings": payload["variants"][0]["projection"].get("warnings", []),
         "variants": minimal_variants,
         "provenance": {
+            "workbench_version": "m15.23.4",
+            "review_schema": payload["schema_version"],
             "input": payload["input_provenance"]["input_file"],
             "input_sha256": payload["input_provenance"]["input_sha256"],
             "image_exists": payload["input_provenance"]["image"].get("image_exists"),
@@ -1121,7 +1126,7 @@ def render_review_html(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Local 3D Projection Review</title>
+  <title>M15.23.4 Local 3D Candidate Review Workbench</title>
   <style>
     :root {{ color-scheme: dark; font-family: system-ui, sans-serif; }}
     body {{ margin:0; background:#0b1020; color:#e5e7eb; }}
@@ -1145,7 +1150,7 @@ def render_review_html(
 </head>
 <body>
   <header>
-    <strong>M15.19.2 Local 3D Inspection Workbench</strong>
+    <strong>M15.23.4 Local 3D Candidate Review Workbench</strong>
     <label>Variant <select id="variant"></select></label>
     <button id="side" type="button">Side-by-side</button>
     <button id="labels" type="button">Hide labels</button>
@@ -1174,6 +1179,15 @@ def render_review_html(
       <h3>Metric summary</h3><pre id="metrics"></pre>
       <h3>Viewer / texture status</h3><pre id="texture-status"></pre>
       <h3>Provenance</h3><pre id="provenance"></pre>
+      <h3>Visual feature summary</h3>
+      <ul class="muted">
+        <li>Candidate changed walls = red dashed.</li>
+        <li>Changed pairs = magenta markers.</li>
+        <li>Current layout = green solid.</li>
+        <li>Original ghost = low-opacity grey dashed.</li>
+        <li>Texture ON/OFF affects display only; imageUrl remains loaded.</li>
+        <li>Preview only / no writeback.</li>
+      </ul>
       <p class="muted">Wall click: global-XZ heading and Manhattan-axis deviation. Corner click: angle between its previous and next wall. Red dashed walls mark candidate-modified geometry.</p>
       <p class="muted">Read-only local diagnostic. Open this HTML directly to use its embedded local texture, or double-click <code>open_local_3d_review.cmd</code> for localhost mode.</p>
     </aside>
@@ -1298,7 +1312,7 @@ def render_review_html(
         type: 'update_layout', corners: variant.corners, baseCorners: variant.corners,
         previewOrder: variant.corners.map((_, i) => i), previewOrderActive: true,
         preserveOrder: true, width: REVIEW.width, height: REVIEW.height,
-        imageUrl: activeAssets.imageUrl, previewSignature: 'm15-19-2-' + variant.name,
+        imageUrl: activeAssets.imageUrl, previewSignature: 'm15-23-4-' + variant.name,
         variantName: variant.name, inspectionMode: true,
         inspectionMetadata: variant.inspection,
         changedPairIndices: variant.changedPairIndices || [],
