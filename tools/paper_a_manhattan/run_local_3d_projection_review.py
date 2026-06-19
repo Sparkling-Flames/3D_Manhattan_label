@@ -1110,7 +1110,7 @@ def render_review_html(
         "coordinateWarnings": payload["variants"][0]["projection"].get("warnings", []),
         "variants": minimal_variants,
         "provenance": {
-            "workbench_version": "m15.23.4",
+            "workbench_version": "m15.23.5",
             "review_schema": payload["schema_version"],
             "input": payload["input_provenance"]["input_file"],
             "input_sha256": payload["input_provenance"]["input_sha256"],
@@ -1126,7 +1126,7 @@ def render_review_html(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>M15.23.4 Local 3D Candidate Review Workbench</title>
+  <title>M15.23.5 Multi-Candidate Compare Grid</title>
   <style>
     :root {{ color-scheme: dark; font-family: system-ui, sans-serif; }}
     body {{ margin:0; background:#0b1020; color:#e5e7eb; }}
@@ -1134,13 +1134,20 @@ def render_review_html(
     button, select {{ padding:7px 10px; border-radius:6px; border:1px solid #475569; background:#172033; color:#fff; }}
     button {{ cursor:pointer; }}
     #warning {{ display:none; flex-basis:100%; color:#fde68a; background:#78350f; border:1px solid #b45309; border-radius:6px; padding:8px 10px; font-size:13px; font-weight:650; }}
-    main {{ display:grid; grid-template-columns:minmax(0,1fr) 370px; min-height:calc(100vh - 58px); }}
-    #views {{ display:grid; grid-template-columns:1fr; gap:8px; padding:8px; }}
-    #views.side {{ grid-template-columns:1fr 1fr; }}
-    iframe {{ width:100%; min-height:620px; border:1px solid #334155; border-radius:8px; background:#111; }}
-    #right-view {{ display:none; }}
-    #views.side #right-view {{ display:block; }}
+    main {{ display:grid; grid-template-columns:minmax(0,1fr) 430px; min-height:calc(100vh - 58px); }}
+    #views {{ display:grid; gap:8px; padding:8px; align-content:start; }}
+    #views.grid-1 {{ grid-template-columns:1fr; }}
+    #views.grid-2, #views.grid-4 {{ grid-template-columns:repeat(2,minmax(0,1fr)); }}
+    .review-panel {{ border:2px solid #334155; border-radius:8px; background:#0f172a; overflow:hidden; }}
+    .review-panel.active-panel {{ border-color:#facc15; box-shadow:0 0 0 1px #facc15; }}
+    .panel-header {{ display:flex; gap:7px; align-items:center; padding:7px; background:#172033; cursor:pointer; }}
+    .panel-header select {{ min-width:0; flex:1; }}
+    .panel-status {{ color:#cbd5e1; font-size:11px; }}
+    .review-panel iframe {{ width:100%; min-height:390px; border:0; background:#111; display:block; }}
+    #views.grid-1 .review-panel iframe {{ min-height:620px; }}
     aside {{ padding:14px; border-left:1px solid #334155; background:#111827; overflow:auto; }}
+    table {{ width:100%; border-collapse:collapse; font-size:11px; }}
+    th, td {{ border:1px solid #334155; padding:4px; text-align:left; vertical-align:top; }}
     pre {{ white-space:pre-wrap; overflow-wrap:anywhere; font-size:12px; }}
     .muted {{ color:#94a3b8; font-size:12px; }}
     .active {{ background:#2563eb; border-color:#60a5fa; }}
@@ -1150,9 +1157,8 @@ def render_review_html(
 </head>
 <body>
   <header>
-    <strong>M15.23.4 Local 3D Candidate Review Workbench</strong>
-    <label>Variant <select id="variant"></select></label>
-    <button id="side" type="button">Side-by-side</button>
+    <strong>M15.23.5 Multi-Candidate Compare Grid</strong>
+    <label>Compare grid <select id="panel-count"><option value="1">1 panel</option><option value="2">2 panels</option><option value="4" selected>4 panels</option></select></label>
     <button id="labels" type="button">Hide labels</button>
     <button id="texture" class="active" type="button">Texture: ON</button>
     <button id="ghost" class="active" type="button">Ghost original</button>
@@ -1167,10 +1173,17 @@ def render_review_html(
     <span id="warning"></span>
   </header>
   <main>
-    <section id="views">
-      <iframe id="left-view" title="selected geometry"></iframe>
-      <iframe id="right-view" title="original geometry"></iframe>
-    </section>
+    <section id="views" class="grid-4"></section>
+    <template id="panel-template">
+      <article class="review-panel">
+        <div class="panel-header">
+          <strong class="panel-number"></strong>
+          <select class="panel-variant" aria-label="Panel variant"></select>
+          <span class="panel-status"></span>
+        </div>
+        <iframe title="candidate geometry panel"></iframe>
+      </article>
+    </template>
     <aside>
       <h3>Inspector</h3><pre id="inspector">Click a corner or wall.</pre>
       <h3>Measurement</h3><pre id="measurement">Measure mode is off.</pre>
@@ -1178,6 +1191,8 @@ def render_review_html(
       <h3>M15.22 triage</h3><pre id="triage"></pre>
       <h3>Metric summary</h3><pre id="metrics"></pre>
       <h3>Viewer / texture status</h3><pre id="texture-status"></pre>
+      <h3>Compare summary</h3>
+      <table id="compare-table"><thead><tr><th>Panel</th><th>Variant</th><th>Decision</th><th>LS trial</th><th>Unresolved</th><th>Wall residual</th><th>Short walls</th></tr></thead><tbody></tbody></table>
       <h3>Provenance</h3><pre id="provenance"></pre>
       <h3>Visual feature summary</h3>
       <ul class="muted">
@@ -1186,6 +1201,7 @@ def render_review_html(
         <li>Current layout = green solid.</li>
         <li>Original ghost = low-opacity grey dashed.</li>
         <li>Texture ON/OFF affects display only; imageUrl remains loaded.</li>
+        <li>Camera presets broadcast; live OrbitControls are not synchronized.</li>
         <li>Preview only / no writeback.</li>
       </ul>
       <p class="muted">Wall click: global-XZ heading and Manhattan-axis deviation. Corner click: angle between its previous and next wall. Red dashed walls mark candidate-modified geometry.</p>
@@ -1194,10 +1210,10 @@ def render_review_html(
   </main>
   <script>
     const REVIEW = {encoded};
-    const select = document.getElementById('variant');
     const views = document.getElementById('views');
-    const left = document.getElementById('left-view');
-    const right = document.getElementById('right-view');
+    const panelCountSelect = document.getElementById('panel-count');
+    const panelTemplate = document.getElementById('panel-template');
+    const compareTableBody = document.querySelector('#compare-table tbody');
     const metrics = document.getElementById('metrics');
     const triage = document.getElementById('triage');
     const triageWarning = document.getElementById('triage-warning');
@@ -1208,85 +1224,116 @@ def render_review_html(
     const provenance = document.getElementById('provenance');
     const activeMode = window.location.protocol === 'file:' ? 'file' : 'server';
     const activeAssets = REVIEW.assets[activeMode];
-    const viewerStates = {{left:'loading', right:'loading'}};
-    const viewerReasons = {{left:'waiting_for_viewer_ready', right:'waiting_for_viewer_ready'}};
-    const viewerTimeouts = {{left:null, right:null}};
-    const textureStates = {{left: activeAssets.textureExpected ? 'pending' : 'unavailable', right: activeAssets.textureExpected ? 'pending' : 'unavailable'}};
-    const textureReasons = {{left: null, right: null}};
-    const textureTimeouts = {{left: null, right: null}};
+    const preferredPanelVariants = ['original', 'candidate_1', 'candidate_2', 'candidate_5'];
+    let panels = [];
+    let activePanelIndex = 0;
     let labelsVisible = true;
     let textureVisible = true;
     let ghostVisible = true;
     let measureMode = false;
     let issueCursor = -1;
-    REVIEW.variants.forEach((variant, index) => {{
-      const option = document.createElement('option'); option.value = index; option.textContent = variant.displayName; select.appendChild(option);
-    }});
-    if (REVIEW.variants.length > 1) select.value = '1';
+
+    function defaultPanelAssignments() {{
+      const assignments = preferredPanelVariants
+        .map((name) => REVIEW.variants.findIndex((variant) => variant.name === name))
+        .filter((index, position, rows) => index >= 0 && rows.indexOf(index) === position);
+      REVIEW.variants.forEach((_, index) => {{ if (!assignments.includes(index)) assignments.push(index); }});
+      return assignments.slice(0, 4);
+    }}
+    const panelAssignments = defaultPanelAssignments();
+    const defaultPanelCount = REVIEW.variants.length >= 4 ? 4 : (REVIEW.variants.length >= 2 ? 2 : 1);
+    panelCountSelect.value = String(defaultPanelCount);
+
+    function activePanel() {{ return panels[activePanelIndex] || panels[0] || null; }}
+    function panelVariant(panel) {{ return REVIEW.variants[panel.variantIndex] || REVIEW.variants[0]; }}
+    function updatePanelHeader(panel) {{
+      const variant = panelVariant(panel);
+      const triage = variant.triage || {{}};
+      panel.status.textContent = `${{triage.decision_class || 'original'}} · LS trial ${{triage.direct_ls_trial_allowed ?? false}}`;
+      panel.frame.title = `Panel ${{panel.index + 1}}: ${{variant.name}}`;
+    }}
+    function updateCompareTable() {{
+      compareTableBody.innerHTML = '';
+      panels.forEach((panel) => {{
+        const variant = panelVariant(panel);
+        const triage = variant.triage || {{}};
+        const values = [
+          panel === activePanel() ? `${{panel.index + 1}} (active)` : String(panel.index + 1),
+          variant.name,
+          triage.decision_class || 'original',
+          String(triage.direct_ls_trial_allowed ?? false),
+          JSON.stringify(triage.primary_unresolved_edges || []),
+          Number(variant.summary?.wall_residual_sum_deg ?? 0).toFixed(3),
+          JSON.stringify(triage.short_wall_edges_after || []),
+        ];
+        const row = document.createElement('tr');
+        values.forEach((value) => {{ const cell = document.createElement('td'); cell.textContent = value; row.appendChild(cell); }});
+        compareTableBody.appendChild(row);
+      }});
+    }}
     function updateTextureUi() {{
       const warnings = [];
       if (REVIEW.coordinateModeRequested === 'auto' && REVIEW.coordinateWarnings.includes('auto_coordinate_mode_ambiguous_values_fit_both_ls_percent_and_small_pixel_range')) {{
         warnings.push('Coordinate mode was inferred as LS percent. For Label Studio inputs, rerun with --coordinate-mode ls_percent.');
       }}
-      if (viewerStates.left === 'failed') {{
-        warnings.push('The 3D viewer did not load. Use open_local_3d_review.cmd or verify the viewer path.');
+      if (panels.some((panel) => panel.viewerState === 'failed')) {{
+        warnings.push('At least one 3D panel did not load. Use open_local_3d_review.cmd or verify the viewer path.');
       }} else if (!activeAssets.textureExpected) {{
         warnings.push('Texture unavailable; geometry remains reviewable.');
-      }} else if (textureStates.left === 'failed' || textureStates.left === 'unavailable') {{
-        warnings.push('Local image exists but the 3D viewer did not load its texture. Do not treat this review as visually verified.');
+      }} else if (panels.some((panel) => panel.textureState === 'failed' || panel.textureState === 'unavailable')) {{
+        warnings.push('Local image exists but at least one panel did not load its texture. Do not treat this review as visually verified.');
       }}
       warning.textContent = warnings.join(' ');
       warning.style.display = warnings.length ? 'block' : 'none';
-      textureStatus.textContent = JSON.stringify({{
-        mode: activeMode,
-        selected_viewer: viewerStates.left,
-        selected_viewer_reason: viewerReasons.left,
-        selected_view: textureStates.left,
-        selected_reason: textureReasons.left,
-        original_view: textureStates.right,
-        original_reason: textureReasons.right
-      }}, null, 2);
+      textureStatus.textContent = JSON.stringify(panels.map((panel) => ({{
+        panel: panel.index + 1, variant: panelVariant(panel).name,
+        viewer: panel.viewerState, viewer_reason: panel.viewerReason,
+        texture: panel.textureState, texture_reason: panel.textureReason,
+      }})), null, 2);
+      const active = activePanel();
       provenance.textContent = JSON.stringify({{
         ...REVIEW.provenance,
         active_mode: activeMode,
         viewer_url: activeAssets.viewerUrl,
         image_url_for_viewer: activeMode === 'file' ? 'embedded_data_url' : activeAssets.imageUrl,
         texture_expected: activeAssets.textureExpected,
-        viewer_load_status: viewerStates.left,
-        texture_load_status: textureStates.left
+        active_panel: active ? active.index + 1 : null,
+        active_variant: active ? panelVariant(active).name : null,
+        viewer_load_status: active?.viewerState || null,
+        texture_load_status: active?.textureState || null
       }}, null, 2);
     }}
     window.addEventListener('message', (event) => {{
       const data = event.data;
       if (!data || typeof data !== 'object') return;
-      const key = event.source === left.contentWindow ? 'left' : (event.source === right.contentWindow ? 'right' : null);
-      if (!key) return;
+      const panel = panels.find((row) => event.source === row.frame.contentWindow);
+      if (!panel) return;
       if (data.type === 'hohonet_viewer_ready') {{
-        clearTimeout(viewerTimeouts[key]);
-        viewerStates[key] = 'ready';
-        viewerReasons[key] = data.version || 'viewer_ready';
-        sendLayout(key === 'left' ? left : right, key === 'left' ? selectedVariant() : REVIEW.variants[0]);
+        clearTimeout(panel.viewerTimeout);
+        panel.viewerState = 'ready';
+        panel.viewerReason = data.version || 'viewer_ready';
+        sendLayout(panel);
         updateTextureUi();
         return;
       }}
       if (data.type === 'hohonet_geometry_selection') {{
-        if (key === 'left') inspector.textContent = JSON.stringify(data.selection || {{}}, null, 2);
+        setActivePanel(panel.index);
+        inspector.textContent = JSON.stringify(data.selection || {{}}, null, 2);
         return;
       }}
       if (data.type === 'hohonet_measurement_status') {{
-        if (key === 'left') measurement.textContent = JSON.stringify(data.measurement || {{}}, null, 2);
+        if (panel === activePanel()) measurement.textContent = JSON.stringify(data.measurement || {{}}, null, 2);
         return;
       }}
       if (data.type !== 'hohonet_texture_status') return;
-      textureStates[key] = data.status || (data.hasTexture ? 'loaded' : 'failed');
-      textureReasons[key] = data.reason || null;
-      if (textureStates[key] === 'loaded' || textureStates[key] === 'failed' || textureStates[key] === 'unavailable') {{
-        clearTimeout(textureTimeouts[key]);
-        textureTimeouts[key] = null;
+      panel.textureState = data.status || (data.hasTexture ? 'loaded' : 'failed');
+      panel.textureReason = data.reason || null;
+      if (['loaded', 'failed', 'unavailable'].includes(panel.textureState)) {{
+        clearTimeout(panel.textureTimeout);
+        panel.textureTimeout = null;
       }}
       updateTextureUi();
     }});
-    function selectedVariant() {{ return REVIEW.variants[Number(select.value || 0)]; }}
     function updateTriageUi(variant) {{
       const data = variant.triage || {{}};
       triage.textContent = JSON.stringify(data, null, 2);
@@ -1296,80 +1343,134 @@ def render_review_html(
         : '';
       triageWarning.style.display = blocked ? 'block' : 'none';
     }}
-    function postInspectionCommand(command, payload = {{}}) {{
-      if (viewerStates.left !== 'ready') return;
-      left.contentWindow.postMessage({{type:'hohonet_inspection_command', command, ...payload}}, '*');
+    function updateActiveUi() {{
+      const panel = activePanel(); if (!panel) return;
+      const variant = panelVariant(panel);
+      metrics.textContent = JSON.stringify(variant.summary, null, 2);
+      updateTriageUi(variant);
+      updateCompareTable();
     }}
-    function sendLayout(frame, variant) {{
-      const key = frame === left ? 'left' : 'right';
-      if (!frame.contentWindow || viewerStates[key] !== 'ready') return;
+    function postPanelCommand(panel, command, payload = {{}}) {{
+      if (!panel || panel.viewerState !== 'ready') return;
+      panel.frame.contentWindow.postMessage({{type:'hohonet_inspection_command', command, ...payload}}, '*');
+    }}
+    function postActiveInspectionCommand(command, payload = {{}}) {{ postPanelCommand(activePanel(), command, payload); }}
+    function broadcastInspectionCommand(command, payload = {{}}) {{
+      panels.forEach((panel) => postPanelCommand(panel, command, payload));
+    }}
+    function syncMeasureMode() {{
+      panels.forEach((panel) => postPanelCommand(panel, 'set_measure_mode', {{enabled: measureMode && panel === activePanel()}}));
+    }}
+    function setActivePanel(index) {{
+      if (!panels[index]) return;
+      activePanelIndex = index;
+      panels.forEach((panel) => panel.element.classList.toggle('active-panel', panel.index === index));
+      inspector.textContent = 'Click a corner or wall.';
+      measurement.textContent = measureMode ? 'Select two corner points.' : 'Measure mode is off.';
+      issueCursor = -1;
+      syncMeasureMode();
+      updateActiveUi();
+      updateTextureUi();
+    }}
+    function sendLayout(panel) {{
+      const variant = panelVariant(panel);
+      if (!panel.frame.contentWindow || panel.viewerState !== 'ready') return;
       if (activeAssets.textureExpected) {{
-        clearTimeout(textureTimeouts[key]);
-        textureStates[key] = 'pending';
-        textureReasons[key] = 'waiting_for_viewer_texture_status';
+        clearTimeout(panel.textureTimeout);
+        panel.textureState = 'pending';
+        panel.textureReason = 'waiting_for_viewer_texture_status';
       }}
-      frame.contentWindow.postMessage({{
+      panel.frame.contentWindow.postMessage({{
         type: 'update_layout', corners: variant.corners, baseCorners: variant.corners,
         previewOrder: variant.corners.map((_, i) => i), previewOrderActive: true,
         preserveOrder: true, width: REVIEW.width, height: REVIEW.height,
-        imageUrl: activeAssets.imageUrl, previewSignature: 'm15-23-4-' + variant.name,
+        imageUrl: activeAssets.imageUrl, previewSignature: 'm15-23-5-' + panel.index + '-' + variant.name,
         variantName: variant.name, inspectionMode: true,
         inspectionMetadata: variant.inspection,
         changedPairIndices: variant.changedPairIndices || [],
         changedWallIndices: variant.changedWallIndices || [],
         ghostCorners: ghostVisible && variant.name !== 'original' ? REVIEW.variants[0].corners : null,
-        displayOptions: {{ghost:ghostVisible, measureMode, texture:textureVisible}}
+        displayOptions: {{ghost:ghostVisible, measureMode:measureMode && panel === activePanel(), texture:textureVisible}}
       }}, '*');
-      frame.contentWindow.postMessage({{type:'set_label_visibility', visible:labelsVisible}}, '*');
+      panel.frame.contentWindow.postMessage({{type:'set_label_visibility', visible:labelsVisible}}, '*');
       if (activeAssets.textureExpected) {{
-        textureTimeouts[key] = setTimeout(() => {{
-          if (textureStates[key] === 'pending' || textureStates[key] === 'loading') {{
-            textureStates[key] = 'failed';
-            textureReasons[key] = 'texture_status_timeout';
+        panel.textureTimeout = setTimeout(() => {{
+          if (panel.textureState === 'pending' || panel.textureState === 'loading') {{
+            panel.textureState = 'failed';
+            panel.textureReason = 'texture_status_timeout';
             updateTextureUi();
           }}
         }}, 5000);
       }}
+      updatePanelHeader(panel);
       updateTextureUi();
     }}
-    function refresh() {{
-      const selected = selectedVariant();
-      sendLayout(left, selected); sendLayout(right, REVIEW.variants[0]);
-      metrics.textContent = JSON.stringify(selected.summary, null, 2);
-      updateTriageUi(selected);
-      inspector.textContent = 'Click a corner or wall.';
-      issueCursor = -1;
+    function refreshAllPanels() {{
+      panels.forEach((panel) => sendLayout(panel));
+      updateActiveUi();
     }}
-    function initializeFrame(frame, key) {{
-      viewerTimeouts[key] = setTimeout(() => {{
-        if (viewerStates[key] !== 'ready') {{
-          viewerStates[key] = 'failed'; viewerReasons[key] = 'viewer_ready_timeout'; updateTextureUi();
-        }}
-      }}, 5000);
-      frame.src = activeAssets.viewerUrl;
+    function buildPanels(count) {{
+      panels.forEach((panel) => {{ clearTimeout(panel.viewerTimeout); clearTimeout(panel.textureTimeout); }});
+      panels = []; views.innerHTML = ''; activePanelIndex = 0;
+      const actualCount = Math.min(count, REVIEW.variants.length, 4);
+      views.className = `grid-${{count}}`;
+      for (let index = 0; index < actualCount; index += 1) {{
+        const element = panelTemplate.content.firstElementChild.cloneNode(true);
+        const frame = element.querySelector('iframe');
+        const selector = element.querySelector('.panel-variant');
+        const panel = {{
+          index, element, frame, selector, status: element.querySelector('.panel-status'),
+          variantIndex: panelAssignments[index] ?? index,
+          viewerState: 'loading', viewerReason: 'waiting_for_viewer_ready', viewerTimeout: null,
+          textureState: activeAssets.textureExpected ? 'pending' : 'unavailable', textureReason: null, textureTimeout: null,
+        }};
+        element.querySelector('.panel-number').textContent = `P${{index + 1}}`;
+        REVIEW.variants.forEach((variant, variantIndex) => {{
+          const option = document.createElement('option'); option.value = variantIndex; option.textContent = variant.displayName; selector.appendChild(option);
+        }});
+        selector.value = String(panel.variantIndex);
+        element.querySelector('.panel-header').addEventListener('click', () => setActivePanel(index));
+        selector.addEventListener('click', (event) => event.stopPropagation());
+        selector.addEventListener('change', () => {{
+          panel.variantIndex = Number(selector.value); setActivePanel(index); sendLayout(panel); updateActiveUi();
+        }});
+        panels.push(panel); views.appendChild(element); updatePanelHeader(panel);
+        panel.viewerTimeout = setTimeout(() => {{
+          if (panel.viewerState !== 'ready') {{
+            panel.viewerState = 'failed'; panel.viewerReason = 'viewer_ready_timeout'; updateTextureUi();
+          }}
+        }}, 5000);
+        frame.src = activeAssets.viewerUrl;
+      }}
+      setActivePanel(0);
     }}
-    select.addEventListener('change', refresh);
-    document.getElementById('side').addEventListener('click', () => {{ views.classList.toggle('side'); refresh(); }});
+    panelCountSelect.addEventListener('change', () => buildPanels(Number(panelCountSelect.value)));
     document.getElementById('labels').addEventListener('click', (event) => {{
-      labelsVisible = !labelsVisible; event.currentTarget.textContent = labelsVisible ? 'Hide labels' : 'Show labels'; refresh();
+      labelsVisible = !labelsVisible; event.currentTarget.textContent = labelsVisible ? 'Hide labels' : 'Show labels';
+      panels.forEach((panel) => {{ if (panel.viewerState === 'ready') panel.frame.contentWindow.postMessage({{type:'set_label_visibility', visible:labelsVisible}}, '*'); }});
     }});
     document.getElementById('texture').addEventListener('click', (event) => {{
       textureVisible = !textureVisible;
       event.currentTarget.textContent = textureVisible ? 'Texture: ON' : 'Texture: OFF';
       event.currentTarget.classList.toggle('active', textureVisible);
-      refresh();
+      refreshAllPanels();
     }});
-    document.getElementById('ghost').addEventListener('click', (event) => {{ ghostVisible = !ghostVisible; event.currentTarget.classList.toggle('active', ghostVisible); refresh(); }});
-    document.getElementById('measure').addEventListener('click', (event) => {{ measureMode = !measureMode; event.currentTarget.classList.toggle('active', measureMode); measurement.textContent = measureMode ? 'Select two corner points.' : 'Measure mode is off.'; postInspectionCommand('set_measure_mode', {{enabled:measureMode}}); }});
+    document.getElementById('ghost').addEventListener('click', (event) => {{
+      ghostVisible = !ghostVisible; event.currentTarget.classList.toggle('active', ghostVisible); refreshAllPanels();
+    }});
+    document.getElementById('measure').addEventListener('click', (event) => {{
+      measureMode = !measureMode; event.currentTarget.classList.toggle('active', measureMode);
+      measurement.textContent = measureMode ? 'Select two corner points.' : 'Measure mode is off.'; syncMeasureMode();
+    }});
     document.getElementById('next-issue').addEventListener('click', () => {{
-      const issues = selectedVariant().inspection.issues || []; if (!issues.length) return;
-      issueCursor = (issueCursor + 1) % issues.length; postInspectionCommand('select_issue', {{issue:issues[issueCursor]}});
+      const panel = activePanel(); if (!panel) return;
+      const issues = panelVariant(panel).inspection.issues || []; if (!issues.length) return;
+      issueCursor = (issueCursor + 1) % issues.length; postActiveInspectionCommand('select_issue', {{issue:issues[issueCursor]}});
     }});
-    document.querySelectorAll('[data-camera]').forEach((button) => button.addEventListener('click', () => postInspectionCommand('camera_preset', {{preset:button.dataset.camera}})));
-    metrics.textContent = JSON.stringify(selectedVariant().summary, null, 2);
-    updateTriageUi(selectedVariant());
-    updateTextureUi();
-    initializeFrame(left, 'left'); initializeFrame(right, 'right');
+    document.querySelectorAll('[data-camera]').forEach((button) => button.addEventListener('click', () => {{
+      broadcastInspectionCommand('camera_preset', {{preset:button.dataset.camera}});
+    }}));
+    buildPanels(defaultPanelCount);
   </script>
 </body>
 </html>

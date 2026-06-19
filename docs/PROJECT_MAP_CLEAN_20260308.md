@@ -31,9 +31,10 @@
 - `tools/paper_a_manhattan/`
   - Paper A Manhattan / sandbox / expert review / post-hoc audit-only 工具。
   - `dev_only/`：Manhattan sandbox userscripts。
-  - `manhattan_3d_projection.py`、`run_local_3d_projection_review.py` 与 `serve_local_3d_projection_review.py`：M15.19–M15.23.1 本地投影、M15.22 candidate bridge、changed-pair/partial-warning visual diff、双模式贴图和只读 inspection workbench；不连接云端、不写回、不进入正式 artifact。
+  - `manhattan_3d_projection.py`、`run_local_3d_projection_review.py` 与 `serve_local_3d_projection_review.py`：M15.19–M15.23.4 本地投影、M15.22 candidate bridge、changed-wall/partial-warning visual diff、texture/ghost 显示控制和只读 inspection workbench；不连接云端、不写回、不进入正式 artifact。
   - `manhattan_m1520_local_candidate_search.py` 与 `run_m1520_local_candidate_search.py`：M15.20–M15.22 的有界局部候选、专家 assertion gate/解释、三类 joint probe 与 JSON/Markdown 审查报告；不做全局优化、自动应用、标注写回、routing 或正式 artifact。
   - `run_m1524_hard_case_audit_pack.py`：聚合 3741、2369、2389 的 applicable/smoke/safe-skip 状态，生成只读 hard-case audit JSON/Markdown；不修改候选搜索、评分或 gate。
+  - `run_m1525_visual_verdict_pack.py`：将 task218_ann3741 的专家人工视觉结论及输入哈希落盘为只读 JSON/Markdown sidecar；不修改候选、投影、viewer、routing 或标注。
 - `tools/paper_b/`
   - Paper B 工具。当前包括 `validate_b0_relabel_audit.py`；后续 B0/B1/B2 训练、cue、bilayout、审计脚本只进本目录。
 - `tools/label_studio/`

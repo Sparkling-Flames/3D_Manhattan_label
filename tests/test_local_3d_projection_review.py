@@ -263,7 +263,8 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     page = paths["html"].read_text(encoding="utf-8")
     lower = page.lower()
     assert "M15.19.2 Local 3D Inspection Workbench" not in page
-    assert "M15.23.4 Local 3D Candidate Review Workbench" in page
+    assert "M15.23.5 Multi-Candidate Compare Grid" in page
+    assert "Compare grid" in page
     assert "vis_3d.html" in page
     assert "postMessage" in page
     assert "update_layout" in page
@@ -296,7 +297,9 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     assert "Next issue" in page and 'data-camera="top"' in page
     assert "junction_angle_kind" in page
     assert "adjacent_corner_angles" not in page
-    assert '<iframe id="left-view" title="selected geometry"></iframe>' in page
+    assert '<template id="panel-template">' in page
+    assert '<select class="panel-variant" aria-label="Panel variant"></select>' in page
+    assert 'class="review-panel"' in page
     safety_lower = lower.replace("preview only / no writeback.", "")
     for forbidden in (
         "fetch(",
@@ -366,6 +369,29 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     assert "decision_class" in page and "direct_ls_trial_allowed" in page
     assert "variant.displayName" in page
     assert "let ghostVisible = true" in page
+    assert "preferredPanelVariants = ['original', 'candidate_1', 'candidate_2', 'candidate_5']" in page
+    assert "Math.min(count, REVIEW.variants.length, 4)" in page
+    assert "panels.forEach((panel) => sendLayout(panel))" in page
+    assert "panels.forEach((panel) => postPanelCommand(panel, command, payload))" in page
+    assert "type:'set_label_visibility', visible:labelsVisible" in page
+    assert page.count("refreshAllPanels();") >= 2
+    assert "broadcastInspectionCommand('camera_preset'" in page
+    assert "postActiveInspectionCommand('select_issue'" in page
+    assert "measureMode && panel === activePanel()" in page
+    assert "if (panel === activePanel()) measurement.textContent" in page
+    assert "setActivePanel(panel.index)" in page
+    assert "ghostCorners: ghostVisible && variant.name !== 'original'" in page
+    assert "sendLayout(right, REVIEW.variants[0])" not in page
+    assert "left-view" not in page and "right-view" not in page
+    assert "Side-by-side" not in page
+    for field in (
+        "decision_class",
+        "direct_ls_trial_allowed",
+        "primary_unresolved_edges",
+        "wall_residual_sum_deg",
+        "short_wall_edges_after",
+    ):
+        assert field in page
     assert "Residual edges" not in page
     assert "heatmap" not in page
     assert "PARTIAL DIAGNOSTIC ONLY — do not apply directly in LS." in page
