@@ -246,6 +246,7 @@
         variantName: "",
         metadata: null,
         ghostCorners: null,
+        changedPairIndices: [],
         displayOptions: { heatmap: false, ghost: false, measureMode: false },
         measurementPoints: [],
       };
@@ -1106,7 +1107,7 @@
 
       function addCornerSelection(point, pairIndex, endpoint) {
         clearInspectionSelection();
-        const material = new THREE.MeshBasicMaterial({ color: 0x38bdf8, depthTest: false });
+        const material = new THREE.MeshBasicMaterial({ color: 0xfacc15, depthTest: false });
         const marker = new THREE.Mesh(new THREE.SphereGeometry(0.16, 20, 20), material);
         marker.position.copy(point);
         marker.renderOrder = 50;
@@ -1129,7 +1130,7 @@
         ]);
         const line = new THREE.Line(
           geometry,
-          new THREE.LineBasicMaterial({ color: 0x38bdf8, depthTest: false })
+          new THREE.LineBasicMaterial({ color: 0xfacc15, depthTest: false })
         );
         line.renderOrder = 50;
         scene.add(line);
@@ -1443,24 +1444,18 @@
             const p2 = floorPoints[i];
             const p3 = ceilPoints[i + 1];
             const p4 = floorPoints[i + 1];
-            const overlayGeometry = new THREE.BufferGeometry();
-            overlayGeometry.setAttribute(
-              "position",
-              new THREE.Float32BufferAttribute([
-                p1.x,p1.y,p1.z, p2.x,p2.y,p2.z, p3.x,p3.y,p3.z,
-                p2.x,p2.y,p2.z, p4.x,p4.y,p4.z, p3.x,p3.y,p3.z,
-              ], 3)
-            );
-            const overlay = new THREE.Mesh(
-              overlayGeometry,
-              new THREE.MeshBasicMaterial({
-                color: wallColor(wallMetadata(i + 1)), transparent: true,
-                opacity: 0.3, side: THREE.DoubleSide, depthWrite: false,
+            const residualGeometry = new THREE.BufferGeometry().setFromPoints([
+              p1, p2, p2, p4, p4, p3, p3, p1,
+            ]);
+            const residualEdges = new THREE.LineSegments(
+              residualGeometry,
+              new THREE.LineBasicMaterial({
+                color: wallColor(wallMetadata(i + 1)), depthTest: false,
               })
             );
-            overlay.renderOrder = 15;
-            scene.add(overlay);
-            meshObjects.push(overlay);
+            residualEdges.renderOrder = 45;
+            scene.add(residualEdges);
+            meshObjects.push(residualEdges);
           }
         }
 
@@ -1483,7 +1478,7 @@
         meshObjects.push(floorMesh);
 
         const lineMat = new THREE.LineBasicMaterial({
-          color: 0x00ff00,
+          color: inspectionState.enabled ? 0x60a5fa : 0x00ff00,
           depthTest: false,
         });
         const edges = [];
@@ -1510,14 +1505,49 @@
         scene.add(lineMesh);
         meshObjects.push(lineMesh);
 
+        const changedPairSet = new Set(inspectionState.changedPairIndices);
+        if (inspectionState.enabled && changedPairSet.size) {
+          const changedWallEdges = [];
+          for (let i = 0; i < orderedCorners.length; i += 1) {
+            const fromPair = i + 1;
+            const toPair = ((i + 1) % orderedCorners.length) + 1;
+            if (!changedPairSet.has(fromPair) && !changedPairSet.has(toPair)) continue;
+            const p1 = ceilPoints[i];
+            const p2 = floorPoints[i];
+            const p3 = ceilPoints[i + 1];
+            const p4 = floorPoints[i + 1];
+            for (const [a, b] of [[p1,p2], [p2,p4], [p4,p3], [p3,p1]]) {
+              changedWallEdges.push(a.x,a.y,a.z,b.x,b.y,b.z);
+            }
+          }
+          const changedWallGeometry = new THREE.BufferGeometry();
+          changedWallGeometry.setAttribute(
+            "position",
+            new THREE.Float32BufferAttribute(changedWallEdges, 3)
+          );
+          const changedWallLine = new THREE.LineSegments(
+            changedWallGeometry,
+            new THREE.LineBasicMaterial({ color: 0xf97316, depthTest: false })
+          );
+          changedWallLine.renderOrder = 46;
+          scene.add(changedWallLine);
+          meshObjects.push(changedWallLine);
+        }
+
         const sphereGeo = new THREE.SphereGeometry(0.1, 16, 16);
         const sphereMat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
         [...ceilPoints.slice(0, orderedCorners.length), ...floorPoints.slice(0, orderedCorners.length)].forEach((point, pointIndex) => {
-          const sphere = new THREE.Mesh(sphereGeo, sphereMat);
+          const pairIndex = (pointIndex % orderedCorners.length) + 1;
+          const changed = inspectionState.enabled && changedPairSet.has(pairIndex);
+          const markerGeometry = changed ? new THREE.SphereGeometry(0.18, 16, 16) : sphereGeo;
+          const markerMaterial = inspectionState.enabled
+            ? new THREE.MeshBasicMaterial({ color: changed ? 0xff2d95 : 0x60a5fa })
+            : sphereMat;
+          const sphere = new THREE.Mesh(markerGeometry, markerMaterial);
           sphere.position.copy(point);
           if (inspectionState.enabled) {
             sphere.userData.hohonetInspectionType = "corner";
-            sphere.userData.pairIndex = (pointIndex % orderedCorners.length) + 1;
+            sphere.userData.pairIndex = pairIndex;
             sphere.userData.endpoint = pointIndex < orderedCorners.length ? "ceiling" : "floor";
             interactiveObjects.push(sphere);
           }
@@ -1552,7 +1582,7 @@
           ghostGeometry.setAttribute("position", new THREE.Float32BufferAttribute(ghostEdges, 3));
           const ghostLine = new THREE.LineSegments(
             ghostGeometry,
-            new THREE.LineDashedMaterial({ color:0x38bdf8, transparent:true, opacity:0.8, dashSize:0.12, gapSize:0.06, depthTest:false })
+            new THREE.LineDashedMaterial({ color:0xe5e7eb, transparent:true, opacity:0.45, dashSize:0.12, gapSize:0.08, depthTest:false })
           );
           ghostLine.computeLineDistances();
           ghostLine.renderOrder = 40;
@@ -1697,6 +1727,9 @@
         inspectionState.ghostCorners = inspectionState.enabled && Array.isArray(data.ghostCorners)
           ? cloneCorners(data.ghostCorners)
           : null;
+        inspectionState.changedPairIndices = inspectionState.enabled && Array.isArray(data.changedPairIndices)
+          ? data.changedPairIndices.map(Number).filter(Number.isFinite)
+          : [];
         inspectionState.displayOptions = {
           heatmap: !!data.displayOptions?.heatmap,
           ghost: !!data.displayOptions?.ghost,

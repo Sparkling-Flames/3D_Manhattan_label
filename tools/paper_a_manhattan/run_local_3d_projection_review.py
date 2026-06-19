@@ -1035,6 +1035,19 @@ def render_review_html(
     minimal_variants = []
     for variant in payload["variants"]:
         candidate_row = variant.get("candidate_row") or {}
+        coordinate_changes = candidate_row.get("coordinate_changes")
+        changed_pair_indices = (
+            sorted(
+                {
+                    int(change["effective_pair_index"])
+                    for change in coordinate_changes
+                    if isinstance(change, Mapping)
+                    and change.get("effective_pair_index") is not None
+                }
+            )
+            if isinstance(coordinate_changes, list)
+            else []
+        )
         corners = [
             {
                 "x": pair["normalized"]["x"],
@@ -1047,6 +1060,7 @@ def render_review_html(
             {
                 "name": variant["name"],
                 "displayName": variant.get("display_name", variant["name"]),
+                "changedPairIndices": changed_pair_indices,
                 "corners": corners,
                 "summary": variant["summary"],
                 "triage": {
@@ -1118,6 +1132,7 @@ def render_review_html(
     .muted {{ color:#94a3b8; font-size:12px; }}
     .active {{ background:#2563eb; border-color:#60a5fa; }}
     .toolbar-group {{ display:flex; gap:5px; align-items:center; }}
+    #triage-warning {{ display:none; color:#fff7ed; background:#9a3412; border:2px solid #fb923c; border-radius:6px; padding:10px; font-weight:800; }}
   </style>
 </head>
 <body>
@@ -1126,7 +1141,7 @@ def render_review_html(
     <label>Variant <select id="variant"></select></label>
     <button id="side" type="button">Side-by-side</button>
     <button id="labels" type="button">Hide labels</button>
-    <button id="heatmap" type="button" title="Debug-only; disabled by default">Heatmap (debug-only)</button>
+    <button id="heatmap" type="button" title="Debug-only; disabled by default">Residual edges</button>
     <button id="ghost" class="active" type="button">Ghost original</button>
     <button id="measure" type="button">Measure</button>
     <button id="next-issue" type="button">Next issue</button>
@@ -1146,11 +1161,12 @@ def render_review_html(
     <aside>
       <h3>Inspector</h3><pre id="inspector">Click a corner or wall.</pre>
       <h3>Measurement</h3><pre id="measurement">Measure mode is off.</pre>
+      <div id="triage-warning"></div>
       <h3>M15.22 triage</h3><pre id="triage"></pre>
       <h3>Metric summary</h3><pre id="metrics"></pre>
       <h3>Viewer / texture status</h3><pre id="texture-status"></pre>
       <h3>Provenance</h3><pre id="provenance"></pre>
-      <p class="muted">Wall click: global-XZ heading and Manhattan-axis deviation. Corner click: angle between its previous and next wall. Heatmap is debug-only and disabled by default.</p>
+      <p class="muted">Wall click: global-XZ heading and Manhattan-axis deviation. Corner click: angle between its previous and next wall. Residual edges are debug-only and disabled by default.</p>
       <p class="muted">Read-only local diagnostic. Open this HTML directly to use its embedded local texture, or double-click <code>open_local_3d_review.cmd</code> for localhost mode.</p>
     </aside>
   </main>
@@ -1162,6 +1178,7 @@ def render_review_html(
     const right = document.getElementById('right-view');
     const metrics = document.getElementById('metrics');
     const triage = document.getElementById('triage');
+    const triageWarning = document.getElementById('triage-warning');
     const inspector = document.getElementById('inspector');
     const measurement = document.getElementById('measurement');
     const warning = document.getElementById('warning');
@@ -1248,6 +1265,15 @@ def render_review_html(
       updateTextureUi();
     }});
     function selectedVariant() {{ return REVIEW.variants[Number(select.value || 0)]; }}
+    function updateTriageUi(variant) {{
+      const data = variant.triage || {{}};
+      triage.textContent = JSON.stringify(data, null, 2);
+      const blocked = data.decision_class === 'partial_diagnostic' || data.direct_ls_trial_allowed === false;
+      triageWarning.textContent = blocked
+        ? 'PARTIAL DIAGNOSTIC ONLY — do not apply directly in LS. Primary unresolved edges: ' + JSON.stringify(data.primary_unresolved_edges || [])
+        : '';
+      triageWarning.style.display = blocked ? 'block' : 'none';
+    }}
     function postInspectionCommand(command, payload = {{}}) {{
       if (viewerStates.left !== 'ready') return;
       left.contentWindow.postMessage({{type:'hohonet_inspection_command', command, ...payload}}, '*');
@@ -1267,6 +1293,7 @@ def render_review_html(
         imageUrl: activeAssets.imageUrl, previewSignature: 'm15-19-2-' + variant.name,
         variantName: variant.name, inspectionMode: true,
         inspectionMetadata: variant.inspection,
+        changedPairIndices: variant.changedPairIndices || [],
         ghostCorners: ghostVisible && variant.name !== 'original' ? REVIEW.variants[0].corners : null,
         displayOptions: {{heatmap:heatmapVisible, ghost:ghostVisible, measureMode}}
       }}, '*');
@@ -1286,7 +1313,7 @@ def render_review_html(
       const selected = selectedVariant();
       sendLayout(left, selected); sendLayout(right, REVIEW.variants[0]);
       metrics.textContent = JSON.stringify(selected.summary, null, 2);
-      triage.textContent = JSON.stringify(selected.triage || {{}}, null, 2);
+      updateTriageUi(selected);
       inspector.textContent = 'Click a corner or wall.';
       issueCursor = -1;
     }}
@@ -1312,7 +1339,7 @@ def render_review_html(
     }});
     document.querySelectorAll('[data-camera]').forEach((button) => button.addEventListener('click', () => postInspectionCommand('camera_preset', {{preset:button.dataset.camera}})));
     metrics.textContent = JSON.stringify(selectedVariant().summary, null, 2);
-    triage.textContent = JSON.stringify(selectedVariant().triage || {{}}, null, 2);
+    updateTriageUi(selectedVariant());
     updateTextureUi();
     initializeFrame(left, 'left'); initializeFrame(right, 'right');
   </script>

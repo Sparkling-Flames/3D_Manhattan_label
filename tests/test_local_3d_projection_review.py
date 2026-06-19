@@ -276,8 +276,8 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     assert "hohonet_geometry_selection" in page
     assert "hohonet_measurement_status" in page
     assert "inspectionMode: true" in page
-    assert "Heatmap" in page and "Ghost original" in page and "Measure" in page
-    assert "Heatmap (debug-only)" in page
+    assert "Residual edges" in page and "Ghost original" in page and "Measure" in page
+    assert "Residual edges" in page
     assert "M15.22 triage" in page
     assert "Next issue" in page and 'data-camera="top"' in page
     assert "junction_angle_kind" in page
@@ -328,7 +328,7 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     paths = run_local_review(
         input_path=input_path,
         candidate_json=candidate_path,
-        candidate_limit=3,
+        candidate_limit=5,
         out_dir=tmp_path / "review",
         coordinate_mode="ls_percent",
     )
@@ -336,7 +336,7 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     assert payload["input_provenance"]["candidate"]["source"] == "m15_22_candidate_search_json"
     assert [row["name"] for row in payload["variants"]] == [
         "original",
-        *[row["candidate_id"] for row in rows[:3]],
+        *[row["candidate_id"] for row in rows[:5]],
     ]
     assert payload["variants"][1]["candidate_row"]["decision_class"]
 
@@ -345,7 +345,21 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     assert "decision_class" in page and "direct_ls_trial_allowed" in page
     assert "variant.displayName" in page
     assert "let ghostVisible = true" in page
-    assert "Heatmap (debug-only)" in page
+    assert "Residual edges" in page
+    assert "PARTIAL DIAGNOSTIC ONLY — do not apply directly in LS." in page
+    assert '"changedPairIndices": [5, 6, 7]' in page
+    assert '"changedPairIndices": [5]' in page
+
+    viewer = (REPO_ROOT / "tools/label_studio/vis_3d.html").read_text(encoding="utf-8")
+    assert "inspectionState.enabled && inspectionState.displayOptions.heatmap" in viewer
+    assert "const residualEdges = new THREE.LineSegments" in viewer
+    assert "const overlay = new THREE.Mesh" not in viewer
+    assert "changedPairIndices" in viewer
+    assert "new THREE.SphereGeometry(0.18" in viewer
+    assert "0xff2d95" in viewer and "0xf97316" in viewer
+    assert "LineDashedMaterial({ color:0xe5e7eb" in viewer
+    assert "LineDashedMaterial({ color:0x38bdf8" not in viewer
+    assert "new THREE.MeshBasicMaterial({ color: 0xfacc15" in viewer
 
 
 def test_safety_regression_keeps_m1518_and_formal_boundaries():
