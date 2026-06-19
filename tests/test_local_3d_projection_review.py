@@ -369,7 +369,7 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     assert "color: 0x00ff00" in viewer
     assert "new THREE.SphereGeometry(0.12" in viewer
     assert "0xff2d95" in viewer
-    assert "color: 0xffffff" in viewer and "opacity: 0.95" in viewer
+    assert "color: 0xef4444" in viewer and "opacity: 0.95" in viewer
     assert "changedWallLine.computeLineDistances()" in viewer
     assert "LineDashedMaterial({ color:0xe5e7eb" in viewer
     assert "new THREE.MeshBasicMaterial({ color: 0xfacc15" in viewer
