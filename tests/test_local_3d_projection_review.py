@@ -11,8 +11,11 @@ from tools.paper_a_manhattan.run_local_3d_projection_review import (
     _build_review_asset_urls,
     _inspection_metadata,
     _windows_launcher_text,
+    apply_m1522_candidate,
     apply_candidate_row,
     build_projection_variant,
+    extract_m1522_candidate_rows,
+    extract_ordered_pairs,
     resolve_local_image,
     run_local_review,
 )
@@ -233,7 +236,7 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     )
 
     payload = json.loads(paths["json"].read_text(encoding="utf-8"))
-    assert payload["schema_version"] == "local_3d_projection_review_m15_19_2_v1"
+    assert payload["schema_version"] == REVIEW_SCHEMA_VERSION
     assert [variant["name"] for variant in payload["variants"]] == [
         "original",
         "candidate_1",
@@ -274,6 +277,8 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     assert "hohonet_measurement_status" in page
     assert "inspectionMode: true" in page
     assert "Heatmap" in page and "Ghost original" in page and "Measure" in page
+    assert "Heatmap (debug-only)" in page
+    assert "M15.22 triage" in page
     assert "Next issue" in page and 'data-camera="top"' in page
     assert "junction_angle_kind" in page
     assert "adjacent_corner_angles" not in page
@@ -288,6 +293,59 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
         "formal_g_t",
     ):
         assert forbidden not in lower
+
+
+def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
+    input_path = REPO_ROOT / (
+        "analysis_results/paper_a_manhattan/single_image_manual_test/"
+        "latest_gt_checked/task218_ann3741_m1516_stabilized_input.json"
+    )
+    candidate_path = REPO_ROOT / (
+        "analysis_results/paper_a_manhattan/local_candidate_search/"
+        "task218_ann3741/candidate_search.json"
+    )
+    candidate_payload = json.loads(candidate_path.read_text(encoding="utf-8"))
+    rows = extract_m1522_candidate_rows(candidate_payload, limit=5)
+
+    assert len(rows) == 5
+    assert all(not row["hard_gate"] for row in rows)
+    assert all(not row["assertion_violations"] for row in rows)
+    multi = next(row for row in rows if len(row["coordinate_changes"]) > 1)
+    pairs, _ = extract_ordered_pairs(json.loads(input_path.read_text(encoding="utf-8")))
+    frozen = copy.deepcopy(pairs)
+    applied = apply_m1522_candidate(pairs, multi)
+    assert pairs == frozen
+    for change in multi["coordinate_changes"]:
+        pair = next(
+            item
+            for item in applied
+            if int(item["effective_pair_index"]) == int(change["effective_pair_index"])
+        )
+        for field, values in change["fields"].items():
+            endpoint, axis = field.split("_")
+            assert pair[endpoint][axis] == pytest.approx(float(values["after"]))
+
+    paths = run_local_review(
+        input_path=input_path,
+        candidate_json=candidate_path,
+        candidate_limit=3,
+        out_dir=tmp_path / "review",
+        coordinate_mode="ls_percent",
+    )
+    payload = json.loads(paths["json"].read_text(encoding="utf-8"))
+    assert payload["input_provenance"]["candidate"]["source"] == "m15_22_candidate_search_json"
+    assert [row["name"] for row in payload["variants"]] == [
+        "original",
+        *[row["candidate_id"] for row in rows[:3]],
+    ]
+    assert payload["variants"][1]["candidate_row"]["decision_class"]
+
+    page = paths["html"].read_text(encoding="utf-8")
+    assert rows[0]["family"] in page
+    assert "decision_class" in page and "direct_ls_trial_allowed" in page
+    assert "variant.displayName" in page
+    assert "let ghostVisible = true" in page
+    assert "Heatmap (debug-only)" in page
 
 
 def test_safety_regression_keeps_m1518_and_formal_boundaries():

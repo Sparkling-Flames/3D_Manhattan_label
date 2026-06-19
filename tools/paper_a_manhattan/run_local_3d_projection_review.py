@@ -31,7 +31,7 @@ from tools.paper_a_manhattan.run_single_image_manhattan_assist import (  # noqa:
 )
 
 
-REVIEW_SCHEMA_VERSION = "local_3d_projection_review_m15_19_2_v1"
+REVIEW_SCHEMA_VERSION = "local_3d_projection_review_m15_23_v1"
 INSPECTION_SCHEMA_VERSION = "local_3d_inspection_m15_19_2_v1"
 MAX_EMBEDDED_IMAGE_BYTES = 8 * 1024 * 1024
 SAFETY_BOUNDARY = {
@@ -292,6 +292,34 @@ def extract_candidate_rows(payload: Mapping[str, Any], *, limit: int = 3) -> lis
     return rows
 
 
+def extract_m1522_candidate_rows(
+    payload: Mapping[str, Any], *, limit: int = 5
+) -> list[dict[str, Any]]:
+    """Extract executable M15.22 candidates without changing their ranking."""
+
+    candidates = payload.get("candidates")
+    if not isinstance(candidates, list):
+        return []
+    rows: list[dict[str, Any]] = []
+    for raw in candidates:
+        if not isinstance(raw, Mapping):
+            continue
+        if raw.get("family") == "local_order_topology_hypothesis":
+            continue
+        if raw.get("hard_gate") or raw.get("assertion_violations"):
+            continue
+        if raw.get("decision_class") == "blocked" or str(
+            raw.get("disposition", "")
+        ).startswith("suppressed"):
+            continue
+        if not isinstance(raw.get("coordinate_changes"), list) or not raw["coordinate_changes"]:
+            continue
+        rows.append(copy.deepcopy(dict(raw)))
+        if len(rows) >= max(0, limit):
+            break
+    return rows
+
+
 def extract_candidate_rows_from_report(path: Path, *, limit: int = 3) -> list[dict[str, Any]]:
     """Best-effort fallback for the Human Action Summary when JSON is unavailable."""
 
@@ -356,6 +384,68 @@ def apply_candidate_row(
     if row.get("source_preview_order_index") is not None:
         pair["source_preview_order_index"] = int(row["source_preview_order_index"])
     return output
+
+
+def apply_m1522_candidate(
+    ordered_pairs: Sequence[Mapping[str, Any]], row: Mapping[str, Any]
+) -> list[dict[str, Any]]:
+    """Apply coordinate_changes to a copy; never mutate or reorder input."""
+
+    output = copy.deepcopy(list(ordered_pairs))
+    lookup = {int(pair["effective_pair_index"]): pair for pair in output}
+    field_map = {
+        "top_x": ("top", "x"),
+        "top_y": ("top", "y"),
+        "bottom_x": ("bottom", "x"),
+        "bottom_y": ("bottom", "y"),
+    }
+    changes = row.get("coordinate_changes")
+    if not isinstance(changes, list) or not changes:
+        raise ValueError("M15.22 candidate requires coordinate_changes")
+    for change in changes:
+        if not isinstance(change, Mapping):
+            raise ValueError("coordinate_changes entries must be objects")
+        pair_index = int(change["effective_pair_index"])
+        pair = lookup.get(pair_index)
+        if pair is None:
+            raise ValueError(f"candidate pair {pair_index} is absent from ordered pairs")
+        fields = change.get("fields")
+        if not isinstance(fields, Mapping):
+            raise ValueError("coordinate change fields must be an object")
+        for field, values in fields.items():
+            if field not in field_map or not isinstance(values, Mapping) or "after" not in values:
+                raise ValueError(f"unsupported M15.22 coordinate change field {field!r}")
+            endpoint, axis = field_map[field]
+            if not isinstance(pair.get(endpoint), dict):
+                raise ValueError("M15.22 candidate application requires top/bottom shape")
+            pair[endpoint][axis] = float(values["after"])
+    return output
+
+
+def _candidate_display_label(row: Mapping[str, Any], fallback: str) -> str:
+    candidate_id = str(row.get("candidate_id") or fallback)
+    family = str(row.get("family") or row.get("probe_mode") or "candidate")
+    decision = str(row.get("decision_class") or row.get("disposition") or "review")
+    decision = decision.removesuffix("_diagnostic").removesuffix("_review")
+    walls = row.get("required_wall_residuals")
+    if isinstance(walls, list):
+        wall = next(
+            (
+                item
+                for item in walls
+                if isinstance(item, Mapping) and item.get("edge") == "6-7"
+            ),
+            None,
+        )
+        if wall and wall.get("before_residual_deg") is not None and wall.get(
+            "after_residual_deg"
+        ) is not None:
+            return (
+                f"{candidate_id} | {family} | {decision} | 6-7 "
+                f"{float(wall['before_residual_deg']):.3f}→"
+                f"{float(wall['after_residual_deg']):.3f}"
+            )
+    return f"{candidate_id} | {family} | {decision}"
 
 
 def _summary(
@@ -586,12 +676,45 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
     if not candidates:
         lines.extend(
             [
-                "No eligible align-then-translate candidate was supplied. Review covers original geometry only.",
+                "No eligible executable candidate was supplied. Review covers original geometry only.",
                 "",
             ]
         )
     for index, candidate in enumerate(candidates, start=1):
         row = candidate["candidate_row"]
+        if isinstance(row.get("coordinate_changes"), list):
+            lines.extend(
+                [
+                    f"### {_candidate_display_label(row, f'candidate_{index}')}",
+                    "",
+                    f"- decision_class: `{row.get('decision_class')}`",
+                    f"- improves: `{row.get('improves', [])}`",
+                    f"- fails_because: `{row.get('fails_because', [])}`",
+                    f"- direct_ls_trial_allowed: `{row.get('direct_ls_trial_allowed')}`",
+                    f"- primary_unresolved_edges: `{row.get('primary_unresolved_edges', [])}`",
+                    f"- short_wall_edges_after: `{row.get('short_wall_edges_after', [])}`",
+                    "- Applied coordinate changes:",
+                ]
+            )
+            for change in row["coordinate_changes"]:
+                fields = change.get("fields", {})
+                changed_fields = [
+                    f"{field} {_fmt(values.get('before'))}→{_fmt(values.get('after'))}"
+                    for field, values in fields.items()
+                    if isinstance(values, Mapping) and values.get("changed")
+                ]
+                lines.append(
+                    f"  - pair {change.get('effective_pair_index')}: "
+                    + (", ".join(changed_fields) if changed_fields else "no numeric change")
+                )
+            lines.extend(
+                [
+                    f"- wall residual sum: {_fmt(original['summary']['wall_residual_sum_deg'])} -> {_fmt(candidate['summary']['wall_residual_sum_deg'])}",
+                    "- Preview only; this is not correctness evidence and cannot write back.",
+                    "",
+                ]
+            )
+            continue
         target = int(row["effective_pair_index"])
         source = row.get("source_preview_order_index")
         before_height = _pair_height(original, target)
@@ -911,6 +1034,7 @@ def render_review_html(
 ) -> str:
     minimal_variants = []
     for variant in payload["variants"]:
+        candidate_row = variant.get("candidate_row") or {}
         corners = [
             {
                 "x": pair["normalized"]["x"],
@@ -922,8 +1046,21 @@ def render_review_html(
         minimal_variants.append(
             {
                 "name": variant["name"],
+                "displayName": variant.get("display_name", variant["name"]),
                 "corners": corners,
                 "summary": variant["summary"],
+                "triage": {
+                    key: candidate_row.get(key)
+                    for key in (
+                        "decision_class",
+                        "improves",
+                        "fails_because",
+                        "direct_ls_trial_allowed",
+                        "primary_unresolved_edges",
+                        "short_wall_edges_after",
+                    )
+                    if candidate_row.get(key) is not None
+                },
                 "inspection": _inspection_metadata(variant),
             }
         )
@@ -989,8 +1126,8 @@ def render_review_html(
     <label>Variant <select id="variant"></select></label>
     <button id="side" type="button">Side-by-side</button>
     <button id="labels" type="button">Hide labels</button>
-    <button id="heatmap" type="button">Heatmap</button>
-    <button id="ghost" type="button">Ghost original</button>
+    <button id="heatmap" type="button" title="Debug-only; disabled by default">Heatmap (debug-only)</button>
+    <button id="ghost" class="active" type="button">Ghost original</button>
     <button id="measure" type="button">Measure</button>
     <button id="next-issue" type="button">Next issue</button>
     <span class="toolbar-group">
@@ -1009,10 +1146,11 @@ def render_review_html(
     <aside>
       <h3>Inspector</h3><pre id="inspector">Click a corner or wall.</pre>
       <h3>Measurement</h3><pre id="measurement">Measure mode is off.</pre>
+      <h3>M15.22 triage</h3><pre id="triage"></pre>
       <h3>Metric summary</h3><pre id="metrics"></pre>
       <h3>Viewer / texture status</h3><pre id="texture-status"></pre>
       <h3>Provenance</h3><pre id="provenance"></pre>
-      <p class="muted">Wall click: global-XZ heading and Manhattan-axis deviation. Corner click: angle between its previous and next wall. Heatmap: green ≤5°, orange ≤15°, red &gt;15°, purple = short wall.</p>
+      <p class="muted">Wall click: global-XZ heading and Manhattan-axis deviation. Corner click: angle between its previous and next wall. Heatmap is debug-only and disabled by default.</p>
       <p class="muted">Read-only local diagnostic. Open this HTML directly to use its embedded local texture, or double-click <code>open_local_3d_review.cmd</code> for localhost mode.</p>
     </aside>
   </main>
@@ -1023,6 +1161,7 @@ def render_review_html(
     const left = document.getElementById('left-view');
     const right = document.getElementById('right-view');
     const metrics = document.getElementById('metrics');
+    const triage = document.getElementById('triage');
     const inspector = document.getElementById('inspector');
     const measurement = document.getElementById('measurement');
     const warning = document.getElementById('warning');
@@ -1038,12 +1177,13 @@ def render_review_html(
     const textureTimeouts = {{left: null, right: null}};
     let labelsVisible = true;
     let heatmapVisible = false;
-    let ghostVisible = false;
+    let ghostVisible = true;
     let measureMode = false;
     let issueCursor = -1;
     REVIEW.variants.forEach((variant, index) => {{
-      const option = document.createElement('option'); option.value = index; option.textContent = variant.name; select.appendChild(option);
+      const option = document.createElement('option'); option.value = index; option.textContent = variant.displayName; select.appendChild(option);
     }});
+    if (REVIEW.variants.length > 1) select.value = '1';
     function updateTextureUi() {{
       const warnings = [];
       if (REVIEW.coordinateModeRequested === 'auto' && REVIEW.coordinateWarnings.includes('auto_coordinate_mode_ambiguous_values_fit_both_ls_percent_and_small_pixel_range')) {{
@@ -1146,6 +1286,7 @@ def render_review_html(
       const selected = selectedVariant();
       sendLayout(left, selected); sendLayout(right, REVIEW.variants[0]);
       metrics.textContent = JSON.stringify(selected.summary, null, 2);
+      triage.textContent = JSON.stringify(selected.triage || {{}}, null, 2);
       inspector.textContent = 'Click a corner or wall.';
       issueCursor = -1;
     }}
@@ -1171,6 +1312,7 @@ def render_review_html(
     }});
     document.querySelectorAll('[data-camera]').forEach((button) => button.addEventListener('click', () => postInspectionCommand('camera_preset', {{preset:button.dataset.camera}})));
     metrics.textContent = JSON.stringify(selectedVariant().summary, null, 2);
+    triage.textContent = JSON.stringify(selectedVariant().triage || {{}}, null, 2);
     updateTextureUi();
     initializeFrame(left, 'left'); initializeFrame(right, 'right');
   </script>
@@ -1193,6 +1335,7 @@ def run_local_review(
     coordinate_mode: str = "auto",
     camera_height: float = DEFAULT_CAMERA_HEIGHT,
     local_server_root: Path | None = None,
+    candidate_limit: int = 5,
 ) -> dict[str, Path]:
     input_path = input_path.resolve()
     payload = _read_json(input_path)
@@ -1202,11 +1345,17 @@ def run_local_review(
     )
 
     candidate_rows: list[dict[str, Any]] = []
+    m1522_candidates = False
     candidate_provenance: dict[str, Any] | None = None
     if candidate_json is not None:
         candidate_json = candidate_json.resolve()
         candidate_payload = _read_json(candidate_json)
-        candidate_rows = extract_candidate_rows(candidate_payload)
+        m1522_candidates = isinstance(candidate_payload.get("candidates"), list)
+        candidate_rows = (
+            extract_m1522_candidate_rows(candidate_payload, limit=candidate_limit)
+            if m1522_candidates
+            else extract_candidate_rows(candidate_payload, limit=candidate_limit)
+        )
         mapping = _mapping_lookup(candidate_payload)
         for index, pair in enumerate(ordered_pairs, start=1):
             if mapping.get(index) is not None:
@@ -1214,7 +1363,11 @@ def run_local_review(
         candidate_provenance = {
             "file": candidate_json.name,
             "sha256": _sha256(candidate_json),
-            "source": "candidate_json",
+            "source": (
+                "m15_22_candidate_search_json"
+                if m1522_candidates
+                else "candidate_json"
+            ),
         }
     elif candidate_report is not None:
         candidate_report = candidate_report.resolve()
@@ -1236,9 +1389,14 @@ def run_local_review(
         )
     ]
     for index, row in enumerate(candidate_rows, start=1):
-        candidate_pairs = apply_candidate_row(ordered_pairs, row)
+        candidate_pairs = (
+            apply_m1522_candidate(ordered_pairs, row)
+            if m1522_candidates
+            else apply_candidate_row(ordered_pairs, row)
+        )
+        variant_name = str(row.get("candidate_id") or f"candidate_{index}")
         variant = build_projection_variant(
-            f"candidate_{index}",
+            variant_name,
             candidate_pairs,
             width=width,
             height=height,
@@ -1246,6 +1404,7 @@ def run_local_review(
             camera_height=camera_height,
             candidate_row=row,
         )
+        variant["display_name"] = _candidate_display_label(row, variant_name)
         variant["delta_from_original"] = _summary_delta(
             variants[0]["summary"], variant["summary"]
         )
@@ -1344,6 +1503,7 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--image-path", type=Path)
     parser.add_argument("--candidate-json", type=Path)
     parser.add_argument("--candidate-report", type=Path)
+    parser.add_argument("--candidate-limit", type=int, default=5)
     parser.add_argument("--case-name")
     parser.add_argument("--width", type=int, default=1024)
     parser.add_argument("--height", type=int, default=512)
@@ -1370,6 +1530,7 @@ def main(argv: Sequence[str] | None = None) -> int:
         coordinate_mode=args.coordinate_mode,
         camera_height=args.camera_height,
         local_server_root=args.local_server_root,
+        candidate_limit=args.candidate_limit,
     )
     for label, path in paths.items():
         print(f"{label}: {path}")
