@@ -1413,7 +1413,7 @@ def render_review_html(
       panels.forEach((panel) => {{ clearTimeout(panel.viewerTimeout); clearTimeout(panel.textureTimeout); }});
       panels = []; views.innerHTML = ''; activePanelIndex = 0;
       const actualCount = Math.min(count, REVIEW.variants.length, 4);
-      views.className = `grid-${{count}}`;
+      views.className = `grid-${{actualCount}}`;
       for (let index = 0; index < actualCount; index += 1) {{
         const element = panelTemplate.content.firstElementChild.cloneNode(true);
         const frame = element.querySelector('iframe');

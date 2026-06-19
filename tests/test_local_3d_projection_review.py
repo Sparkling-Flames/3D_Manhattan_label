@@ -371,6 +371,8 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     assert "let ghostVisible = true" in page
     assert "preferredPanelVariants = ['original', 'candidate_1', 'candidate_2', 'candidate_5']" in page
     assert "Math.min(count, REVIEW.variants.length, 4)" in page
+    assert "views.className = `grid-${actualCount}`" in page
+    assert "views.className = `grid-${count}`" not in page
     assert "panels.forEach((panel) => sendLayout(panel))" in page
     assert "panels.forEach((panel) => postPanelCommand(panel, command, payload))" in page
     assert "type:'set_label_visibility', visible:labelsVisible" in page
