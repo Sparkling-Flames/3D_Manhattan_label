@@ -122,6 +122,14 @@ def test_local_launcher_is_portable_and_server_is_loopback_only(tmp_path):
         server.server_close()
 
 
+def test_review_html_has_collapsible_original_panorama_contract():
+    source = Path("tools/paper_a_manhattan/run_local_3d_projection_review.py").read_text(encoding="utf-8")
+    assert '<details id="original-panorama" open>' in source
+    assert 'id="original-panorama-image"' in source
+    assert "activeAssets.imageUrl" in source
+    assert "Original panorama unavailable; 3D geometry remains available." in source
+
+
 def test_inspection_metadata_has_authoritative_corner_wall_and_issue_metrics():
     variant = build_projection_variant(
         "original",
@@ -268,7 +276,7 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     assert "vis_3d.html" in page
     assert "postMessage" in page
     assert "update_layout" in page
-    assert "Hide labels" in page and "Show labels" in page
+    assert "Hide corners" in page and "Show corners" in page
     assert "hohonet_texture_status" in page
     assert "texture_load_status" in page
     assert "image_url_for_viewer" in page
@@ -437,12 +445,20 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     assert "changedPairIndices" in viewer and "changedWallIndices" in viewer
     assert "inspectionState.enabled && changedWallSet.size" in viewer
     assert "color: 0x00ff00" in viewer
-    assert "new THREE.SphereGeometry(0.12" in viewer
+    assert "const CORNER_RADIUS = 0.065" in viewer
+    assert "const CHANGED_CORNER_RADIUS = 0.08" in viewer
+    assert "const SELECTED_CORNER_RADIUS = 0.10" in viewer
+    assert "const CORNER_OPACITY = 0.55" in viewer
+    assert "const CHANGED_CORNER_OPACITY = 0.65" in viewer
+    assert "const SELECTED_CORNER_OPACITY = 0.70" in viewer
+    assert "const HIDDEN_CORNER_OPACITY = 0.05" in viewer
+    assert "object.userData.hohonetBaseOpacity" in viewer
+    assert "object.material.opacity = cornerLabelsVisible" in viewer
     assert "0xff2d95" in viewer
     assert "color: 0xef4444" in viewer and "opacity: 0.95" in viewer
     assert "changedWallLine.computeLineDistances()" in viewer
     assert "LineDashedMaterial({ color:0xe5e7eb" in viewer
-    assert "new THREE.MeshBasicMaterial({ color: 0xfacc15" in viewer
+    assert "color: 0xfacc15, transparent: true, opacity: SELECTED_CORNER_OPACITY" in viewer
     assert "inspectionState.enabled && !inspectionState.displayOptions.texture" in viewer
     assert "texture: data.displayOptions?.texture !== false" in viewer
     assert "color: inspectionTextureHidden ? 0x374151 : 0xcccccc" in viewer

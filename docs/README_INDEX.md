@@ -82,6 +82,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - `tools/paper_a_manhattan/run_manhattan_hypothesis_ranking_core.py` emits the standalone `manhattan_constrained_hypothesis_ranking_core_v1` output; M15.28 is retained only as its legacy candidate source.
   M15.28 compatibility fields are deprecated for the new core. New consumers must read only `portfolio_ranking` and `constrained_evaluations`; legacy portfolio, gate, and score fields are confined to compact `legacy_diagnostics`.
 - `tools/paper_a_manhattan/materialize_manhattan_feedback_ledger_entry.py` validates a core output plus expert review and writes one feedback-ledger JSONL entry; it does not train, update parameters, apply candidates, or write annotations.
+- `tools/paper_a_manhattan/run_manhattan_hypothesis_local_review.py` bridges core-native review geometry into the existing expert-side local 3D compare page; it is offline/read-only and does not expose the bridge to workers or routing.
 
 ## 论文 B 线
 

@@ -1191,6 +1191,10 @@ def render_review_html(
     .remove-panel {{ min-width:68px; padding:5px 8px; }}
     .review-panel iframe {{ width:100%; height:100%; min-height:0; border:0; background:#111; display:block; }}
     aside {{ min-height:0; padding:14px; border-left:1px solid #334155; background:#111827; overflow:auto; }}
+    #original-panorama {{ margin-bottom:12px; border:1px solid #334155; border-radius:6px; background:#0f172a; }}
+    #original-panorama summary {{ cursor:pointer; padding:8px; font-weight:700; }}
+    #original-panorama img {{ display:block; width:100%; max-height:240px; object-fit:contain; background:#020617; }}
+    #original-panorama-status {{ display:block; padding:6px 8px; }}
     table {{ width:100%; border-collapse:collapse; font-size:11px; }}
     th, td {{ border:1px solid #334155; padding:4px; text-align:left; vertical-align:top; }}
     pre {{ white-space:pre-wrap; overflow-wrap:anywhere; font-size:12px; }}
@@ -1205,7 +1209,7 @@ def render_review_html(
     <strong>M15.23.7 Scrollable Flexible Compare Grid</strong>
     <button id="add-panel" type="button">+ Panel</button>
     <span id="panel-count-status" class="muted">Panels 0 / 6</span>
-    <button id="labels" type="button">Hide labels</button>
+    <button id="labels" type="button">Hide corners</button>
     <button id="texture" class="active" type="button">Texture: ON</button>
     <button id="ghost" class="active" type="button">Ghost original</button>
     <button id="measure" type="button">Measure</button>
@@ -1232,6 +1236,11 @@ def render_review_html(
       </article>
     </template>
     <aside>
+      <details id="original-panorama" open>
+        <summary>Original panorama</summary>
+        <img id="original-panorama-image" alt="Original panorama for geometry review" hidden>
+        <span id="original-panorama-status" class="muted">Loading original panorama…</span>
+      </details>
       <h3>Inspector</h3><pre id="inspector">Click a corner or wall.</pre>
       <h3>Measurement</h3><pre id="measurement">Measure mode is off.</pre>
       <div id="triage-warning"></div>
@@ -1270,6 +1279,8 @@ def render_review_html(
     const warning = document.getElementById('warning');
     const textureStatus = document.getElementById('texture-status');
     const provenance = document.getElementById('provenance');
+    const originalPanoramaImage = document.getElementById('original-panorama-image');
+    const originalPanoramaStatus = document.getElementById('original-panorama-status');
     const activeMode = window.location.protocol === 'file:' ? 'file' : 'server';
     const activeAssets = REVIEW.assets[activeMode];
     const MAX_COMPARE_PANELS = 6;
@@ -1283,6 +1294,20 @@ def render_review_html(
     let ghostVisible = true;
     let measureMode = false;
     let issueCursor = -1;
+
+    if (activeAssets.imageUrl) {{
+      originalPanoramaImage.src = activeAssets.imageUrl;
+      originalPanoramaImage.hidden = false;
+      originalPanoramaStatus.textContent = activeMode === 'file'
+        ? 'Embedded local panorama · read-only'
+        : 'Repository-local panorama · read-only';
+      originalPanoramaImage.addEventListener('error', () => {{
+        originalPanoramaImage.hidden = true;
+        originalPanoramaStatus.textContent = 'Original panorama failed to load; 3D geometry remains available.';
+      }});
+    }} else {{
+      originalPanoramaStatus.textContent = 'Original panorama unavailable; 3D geometry remains available.';
+    }}
 
     function defaultPanelAssignments() {{
       const assignments = preferredPanelVariants
@@ -1551,7 +1576,7 @@ def render_review_html(
     addPanelButton.addEventListener('click', addPanel);
     window.addEventListener('resize', layoutPanels);
     document.getElementById('labels').addEventListener('click', (event) => {{
-      labelsVisible = !labelsVisible; event.currentTarget.textContent = labelsVisible ? 'Hide labels' : 'Show labels';
+      labelsVisible = !labelsVisible; event.currentTarget.textContent = labelsVisible ? 'Hide corners' : 'Show corners';
       panels.forEach((panel) => {{ if (panel.viewerState === 'ready') panel.frame.contentWindow.postMessage({{type:'set_label_visibility', visible:labelsVisible}}, '*'); }});
     }});
     document.getElementById('texture').addEventListener('click', (event) => {{
@@ -1722,9 +1747,13 @@ def run_local_review(
             "original",
             *[
                 str(row["candidate_id"])
-                for role in ("m15.26_best", "m15.27_best", "m15.27_second")
                 for row in candidate_rows
-                if row.get("review_role") == role and row.get("candidate_id") is not None
+                if (
+                    row.get("preferred_panel")
+                    or row.get("review_role")
+                    in {"m15.26_best", "m15.27_best", "m15.27_second"}
+                )
+                and row.get("candidate_id") is not None
             ],
         ][:4],
     }

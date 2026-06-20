@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import json
 import sys
 from pathlib import Path
@@ -69,6 +70,15 @@ def build_core_payload_from_legacy(legacy_payload: Mapping[str, Any]) -> dict[st
         row["recommended_review_candidate"] = bool(
             row["candidate_id"] in selected_ids and row["is_improving_hypothesis"]
         )
+    canonical_candidates = {row["candidate_id"]: row for row in candidate_set}
+    for name, bucket in portfolio.items():
+        if name in {"diagnostic_only_candidates", "suppressed_candidates"}:
+            for entry in bucket:
+                candidate_id = entry["candidate"]["candidate_id"]
+                entry["candidate"] = dict(canonical_candidates[candidate_id])
+        elif bucket.get("candidate"):
+            candidate_id = bucket["candidate"]["candidate_id"]
+            bucket["candidate"] = dict(canonical_candidates[candidate_id])
     evaluation_by_id = {
         row["candidate_id"]: evaluation for row, evaluation in zip(candidate_set, evaluations)
     }
@@ -125,6 +135,12 @@ def build_core_payload_from_legacy(legacy_payload: Mapping[str, Any]) -> dict[st
         },
         "case_contract": case_contract,
         "candidate_set": candidate_set,
+        "candidate_review_geometry": {
+            row["candidate_id"]: {
+                "coordinate_changes": copy.deepcopy(row.get("coordinate_changes", []))
+            }
+            for row in rows
+        },
         "constrained_evaluations": {
             row["candidate_id"]: _core_evaluation(evaluation)
             for row, evaluation in zip(candidate_set, evaluations)
@@ -202,6 +218,10 @@ def build_payload(
             "camera_height": float(projection["camera_height"]),
         },
         "source_variant": "original",
+        "image_provenance": copy.deepcopy(
+            projection.get("input_provenance", {}).get("image", {})
+        ),
+        "source_projection_artifact": projection_path.as_posix(),
     }
     return core
 

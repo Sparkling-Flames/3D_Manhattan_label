@@ -2,6 +2,8 @@ import copy
 import json
 from pathlib import Path
 
+import pytest
+
 from tools.paper_a_manhattan.manhattan_case_contract import build_case_contract
 from tools.paper_a_manhattan.manhattan_constrained_hypothesis_evaluator import evaluate_hypothesis
 from tools.paper_a_manhattan.manhattan_hypothesis_portfolio import build_hypothesis_portfolio
@@ -41,6 +43,7 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
     assert set(payload) >= {
         "case_contract",
         "candidate_set",
+        "candidate_review_geometry",
         "constrained_evaluations",
         "portfolio_ranking",
         "suppressed_candidates",
@@ -90,6 +93,24 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
     }
     assert payload["suppressed_candidates"]
     assert all(set(row) == required_suppressed for row in payload["suppressed_candidates"])
+    canonical = {row["candidate_id"]: row for row in payload["candidate_set"]}
+    for name, bucket in payload["portfolio_ranking"].items():
+        if name in {"diagnostic_only_candidates", "suppressed_candidates"}:
+            entries = bucket
+        else:
+            entries = [bucket] if bucket.get("candidate") else []
+        for entry in entries:
+            candidate = entry["candidate"]
+            assert candidate["recommended_review_candidate"] == canonical[candidate["candidate_id"]]["recommended_review_candidate"]
+    best = payload["portfolio_ranking"]["best_balanced"]["candidate"]
+    assert best["recommended_review_candidate"] is True
+    geometry = payload["candidate_review_geometry"][best["candidate_id"]]["coordinate_changes"]
+    if best["candidate_id"] == "m1528_candidate_0017":
+        deltas = {
+            int(change["effective_pair_index"]): change["fields"]["bottom_y"]["after"] - change["fields"]["bottom_y"]["before"]
+            for change in geometry
+        }
+        assert deltas == {6: pytest.approx(-1.0), 7: pytest.approx(1.0)}
     assert payload["safety_boundary"]["automatic_apply"] is False
     assert payload["safety_boundary"]["annotation_writeback"] is False
     assert payload["safety_boundary"]["worker_facing"] is False

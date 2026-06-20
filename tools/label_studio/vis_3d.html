@@ -233,6 +233,13 @@
       let currentTexture = null;
       let currentTextureUrl = null;
       let cornerLabelsVisible = true;
+      const CORNER_RADIUS = 0.065;
+      const CHANGED_CORNER_RADIUS = 0.08;
+      const SELECTED_CORNER_RADIUS = 0.10;
+      const CORNER_OPACITY = 0.55;
+      const CHANGED_CORNER_OPACITY = 0.65;
+      const SELECTED_CORNER_OPACITY = 0.70;
+      const HIDDEN_CORNER_OPACITY = 0.05;
       const textureLoader = new THREE.TextureLoader();
       const raycaster = new THREE.Raycaster();
       const pointer = new THREE.Vector2();
@@ -489,9 +496,18 @@
 
       function setCornerLabelVisibility(visible) {
         cornerLabelsVisible = Boolean(visible);
-        meshObjects.forEach((object) => {
+        [...meshObjects, ...selectionObjects].forEach((object) => {
           if (object?.userData?.hohonetCornerLabel === true) {
             object.visible = cornerLabelsVisible;
+          }
+          if (
+            object?.userData?.hohonetCornerMarker === true
+            && object.material
+          ) {
+            object.material.opacity = cornerLabelsVisible
+              ? object.userData.hohonetBaseOpacity
+              : HIDDEN_CORNER_OPACITY;
+            object.material.needsUpdate = true;
           }
         });
       }
@@ -1100,10 +1116,18 @@
 
       function addCornerSelection(point, pairIndex, endpoint) {
         clearInspectionSelection();
-        const material = new THREE.MeshBasicMaterial({ color: 0xfacc15, depthTest: false });
-        const marker = new THREE.Mesh(new THREE.SphereGeometry(0.16, 20, 20), material);
+        const material = new THREE.MeshBasicMaterial({
+          color: 0xfacc15, transparent: true, opacity: SELECTED_CORNER_OPACITY,
+          depthTest: false,
+        });
+        const marker = new THREE.Mesh(
+          new THREE.SphereGeometry(SELECTED_CORNER_RADIUS, 20, 20), material
+        );
         marker.position.copy(point);
         marker.renderOrder = 50;
+        marker.userData.hohonetCornerMarker = true;
+        marker.userData.hohonetBaseOpacity = SELECTED_CORNER_OPACITY;
+        if (!cornerLabelsVisible) marker.material.opacity = HIDDEN_CORNER_OPACITY;
         scene.add(marker);
         selectionObjects.push(marker);
         addCornerAngleGuide(pairIndex, endpoint);
@@ -1512,17 +1536,30 @@
           meshObjects.push(changedWallLine);
         }
 
-        const sphereGeo = new THREE.SphereGeometry(0.1, 16, 16);
-        const sphereMat = new THREE.MeshBasicMaterial({ color: 0xffff00 });
+        const sphereGeo = new THREE.SphereGeometry(CORNER_RADIUS, 16, 16);
+        const sphereMat = new THREE.MeshBasicMaterial({
+          color: 0xffff00, transparent: true, opacity: CORNER_OPACITY,
+        });
         [...ceilPoints.slice(0, orderedCorners.length), ...floorPoints.slice(0, orderedCorners.length)].forEach((point, pointIndex) => {
           const pairIndex = (pointIndex % orderedCorners.length) + 1;
           const changed = inspectionState.enabled && changedPairSet.has(pairIndex);
-          const markerGeometry = changed ? new THREE.SphereGeometry(0.12, 16, 16) : sphereGeo;
+          const markerGeometry = changed
+            ? new THREE.SphereGeometry(CHANGED_CORNER_RADIUS, 16, 16)
+            : sphereGeo;
           const markerMaterial = inspectionState.enabled
-            ? new THREE.MeshBasicMaterial({ color: changed ? 0xff2d95 : 0x60a5fa })
+            ? new THREE.MeshBasicMaterial({
+                color: changed ? 0xff2d95 : 0x60a5fa,
+                transparent: true,
+                opacity: changed ? CHANGED_CORNER_OPACITY : CORNER_OPACITY,
+              })
             : sphereMat;
           const sphere = new THREE.Mesh(markerGeometry, markerMaterial);
           sphere.position.copy(point);
+          sphere.userData.hohonetCornerMarker = true;
+          sphere.userData.hohonetBaseOpacity = changed
+            ? CHANGED_CORNER_OPACITY
+            : CORNER_OPACITY;
+          if (!cornerLabelsVisible) sphere.material.opacity = HIDDEN_CORNER_OPACITY;
           if (inspectionState.enabled) {
             sphere.userData.hohonetInspectionType = "corner";
             sphere.userData.pairIndex = pairIndex;
