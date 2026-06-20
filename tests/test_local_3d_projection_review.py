@@ -263,8 +263,8 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     page = paths["html"].read_text(encoding="utf-8")
     lower = page.lower()
     assert "M15.19.2 Local 3D Inspection Workbench" not in page
-    assert "M15.23.5 Multi-Candidate Compare Grid" in page
-    assert "Compare grid" in page
+    assert "M15.23.7 Scrollable Flexible Compare Grid" in page
+    assert "+ Panel" in page and "Panels 0 / 6" in page
     assert "vis_3d.html" in page
     assert "postMessage" in page
     assert "update_layout" in page
@@ -300,6 +300,9 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     assert '<template id="panel-template">' in page
     assert '<select class="panel-variant" aria-label="Panel variant"></select>' in page
     assert 'class="review-panel"' in page
+    assert 'class="remove-panel"' in page
+    assert 'id="panel-count"' not in page
+    assert "grid-1" not in page and "grid-2" not in page and "grid-4" not in page
     safety_lower = lower.replace("preview only / no writeback.", "")
     for forbidden in (
         "fetch(",
@@ -370,9 +373,28 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     assert "variant.displayName" in page
     assert "let ghostVisible = true" in page
     assert "REVIEW.preferredPanelVariants.length" in page
-    assert "Math.min(count, REVIEW.variants.length, 4)" in page
-    assert "views.className = `grid-${actualCount}`" in page
-    assert "views.className = `grid-${count}`" not in page
+    assert "const MAX_COMPARE_PANELS = 6" in page
+    assert "function layoutPanels()" in page
+    assert "function createPanel(variantIndex)" in page
+    assert "function addPanel()" in page
+    assert "function removePanel(panel)" in page
+    assert "views.style.gridTemplateRows" in page
+    assert "`repeat(${rowCount}, ${rowHeight}px)`" in page
+    assert "const visibleRows = Math.min(rowCount, 2)" in page
+    assert "views.clientHeight - verticalPadding" in page
+    assert "overflow-y:auto; align-content:start" in page
+    assert "grid-template-columns:auto minmax(120px,1fr) minmax(0,150px) auto" in page
+    assert "panel.status.title = statusText" in page
+    assert "count % 2 === 1 && index === 0 ? '1 / -1' : 'auto'" in page
+    assert "Math.min(MAX_COMPARE_PANELS, REVIEW.variants.length)" in page
+    assert "function buildPanels" not in page
+    assert "views.innerHTML" not in page
+    assert "createPanel(nextUnusedVariantIndex())" in page
+    assert "panels.splice(removeIndex, 1); panel.element.remove();" in page
+    assert "panel.removeButton.disabled = panels.length <= 1" in page
+    assert "window.addEventListener('resize', layoutPanels)" in page
+    assert "height:100vh; overflow:hidden" in page
+    assert "grid-template-rows:auto minmax(0,1fr)" in page
     assert "panels.forEach((panel) => sendLayout(panel))" in page
     assert "panels.forEach((panel) => postPanelCommand(panel, command, payload))" in page
     assert "type:'set_label_visibility', visible:labelsVisible" in page

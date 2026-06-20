@@ -1157,7 +1157,7 @@ def render_review_html(
         "variants": minimal_variants,
         "preferredPanelVariants": list(payload.get("preferred_panel_variants", [])),
         "provenance": {
-            "workbench_version": "m15.23.5",
+            "workbench_version": "m15.23.7",
             "review_schema": payload["schema_version"],
             "input": payload["input_provenance"]["input_file"],
             "input_sha256": payload["input_provenance"]["input_sha256"],
@@ -1173,26 +1173,24 @@ def render_review_html(
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>M15.23.5 Multi-Candidate Compare Grid</title>
+  <title>M15.23.7 Scrollable Flexible Compare Grid</title>
   <style>
     :root {{ color-scheme: dark; font-family: system-ui, sans-serif; }}
-    body {{ margin:0; background:#0b1020; color:#e5e7eb; }}
-    header {{ padding:12px 16px; border-bottom:1px solid #334155; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }}
+    body {{ margin:0; height:100vh; overflow:hidden; background:#0b1020; color:#e5e7eb; display:flex; flex-direction:column; }}
+    header {{ flex:0 0 auto; padding:12px 16px; border-bottom:1px solid #334155; display:flex; gap:8px; align-items:center; flex-wrap:wrap; }}
     button, select {{ padding:7px 10px; border-radius:6px; border:1px solid #475569; background:#172033; color:#fff; }}
     button {{ cursor:pointer; }}
     #warning {{ display:none; flex-basis:100%; color:#fde68a; background:#78350f; border:1px solid #b45309; border-radius:6px; padding:8px 10px; font-size:13px; font-weight:650; }}
-    main {{ display:grid; grid-template-columns:minmax(0,1fr) 430px; min-height:calc(100vh - 58px); }}
-    #views {{ display:grid; gap:8px; padding:8px; align-content:start; }}
-    #views.grid-1 {{ grid-template-columns:1fr; }}
-    #views.grid-2, #views.grid-4 {{ grid-template-columns:repeat(2,minmax(0,1fr)); }}
-    .review-panel {{ border:2px solid #334155; border-radius:8px; background:#0f172a; overflow:hidden; }}
+    main {{ flex:1 1 auto; min-height:0; display:grid; grid-template-columns:minmax(0,1fr) 430px; }}
+    #views {{ min-height:0; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:8px; padding:8px; overflow-y:auto; align-content:start; }}
+    .review-panel {{ min-height:0; display:grid; grid-template-rows:auto minmax(0,1fr); border:2px solid #334155; border-radius:8px; background:#0f172a; overflow:hidden; }}
     .review-panel.active-panel {{ border-color:#facc15; box-shadow:0 0 0 1px #facc15; }}
-    .panel-header {{ display:flex; gap:7px; align-items:center; padding:7px; background:#172033; cursor:pointer; }}
-    .panel-header select {{ min-width:0; flex:1; }}
-    .panel-status {{ color:#cbd5e1; font-size:11px; }}
-    .review-panel iframe {{ width:100%; min-height:390px; border:0; background:#111; display:block; }}
-    #views.grid-1 .review-panel iframe {{ min-height:620px; }}
-    aside {{ padding:14px; border-left:1px solid #334155; background:#111827; overflow:auto; }}
+    .panel-header {{ display:grid; grid-template-columns:auto minmax(120px,1fr) minmax(0,150px) auto; gap:7px; align-items:center; padding:7px; background:#172033; cursor:pointer; }}
+    .panel-header select {{ min-width:0; width:100%; }}
+    .panel-status {{ min-width:0; max-width:150px; color:#cbd5e1; font-size:11px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }}
+    .remove-panel {{ min-width:68px; padding:5px 8px; }}
+    .review-panel iframe {{ width:100%; height:100%; min-height:0; border:0; background:#111; display:block; }}
+    aside {{ min-height:0; padding:14px; border-left:1px solid #334155; background:#111827; overflow:auto; }}
     table {{ width:100%; border-collapse:collapse; font-size:11px; }}
     th, td {{ border:1px solid #334155; padding:4px; text-align:left; vertical-align:top; }}
     pre {{ white-space:pre-wrap; overflow-wrap:anywhere; font-size:12px; }}
@@ -1204,8 +1202,9 @@ def render_review_html(
 </head>
 <body>
   <header>
-    <strong>M15.23.5 Multi-Candidate Compare Grid</strong>
-    <label>Compare grid <select id="panel-count"><option value="1">1 panel</option><option value="2">2 panels</option><option value="4" selected>4 panels</option></select></label>
+    <strong>M15.23.7 Scrollable Flexible Compare Grid</strong>
+    <button id="add-panel" type="button">+ Panel</button>
+    <span id="panel-count-status" class="muted">Panels 0 / 6</span>
     <button id="labels" type="button">Hide labels</button>
     <button id="texture" class="active" type="button">Texture: ON</button>
     <button id="ghost" class="active" type="button">Ghost original</button>
@@ -1220,13 +1219,14 @@ def render_review_html(
     <span id="warning"></span>
   </header>
   <main>
-    <section id="views" class="grid-4"></section>
+    <section id="views"></section>
     <template id="panel-template">
       <article class="review-panel">
         <div class="panel-header">
           <strong class="panel-number"></strong>
           <select class="panel-variant" aria-label="Panel variant"></select>
           <span class="panel-status"></span>
+          <button class="remove-panel" type="button">Remove</button>
         </div>
         <iframe title="candidate geometry panel"></iframe>
       </article>
@@ -1258,7 +1258,8 @@ def render_review_html(
   <script>
     const REVIEW = {encoded};
     const views = document.getElementById('views');
-    const panelCountSelect = document.getElementById('panel-count');
+    const addPanelButton = document.getElementById('add-panel');
+    const panelCountStatus = document.getElementById('panel-count-status');
     const panelTemplate = document.getElementById('panel-template');
     const compareTableBody = document.querySelector('#compare-table tbody');
     const metrics = document.getElementById('metrics');
@@ -1271,6 +1272,7 @@ def render_review_html(
     const provenance = document.getElementById('provenance');
     const activeMode = window.location.protocol === 'file:' ? 'file' : 'server';
     const activeAssets = REVIEW.assets[activeMode];
+    const MAX_COMPARE_PANELS = 6;
     const preferredPanelVariants = REVIEW.preferredPanelVariants.length
       ? REVIEW.preferredPanelVariants
       : ['original', 'candidate_1', 'candidate_2', 'candidate_5'];
@@ -1287,18 +1289,20 @@ def render_review_html(
         .map((name) => REVIEW.variants.findIndex((variant) => variant.name === name))
         .filter((index, position, rows) => index >= 0 && rows.indexOf(index) === position);
       REVIEW.variants.forEach((_, index) => {{ if (!assignments.includes(index)) assignments.push(index); }});
-      return assignments.slice(0, 4);
+      return assignments;
     }}
     const panelAssignments = defaultPanelAssignments();
     const defaultPanelCount = REVIEW.variants.length >= 4 ? 4 : (REVIEW.variants.length >= 2 ? 2 : 1);
-    panelCountSelect.value = String(defaultPanelCount);
+    let nextPanelId = 1;
 
     function activePanel() {{ return panels[activePanelIndex] || panels[0] || null; }}
     function panelVariant(panel) {{ return REVIEW.variants[panel.variantIndex] || REVIEW.variants[0]; }}
     function updatePanelHeader(panel) {{
       const variant = panelVariant(panel);
       const triage = variant.triage || {{}};
-      panel.status.textContent = `${{triage.decision_class || 'original'}} · manual review ${{triage.manual_review_candidate ?? false}}`;
+      const statusText = `${{triage.decision_class || 'original'}} · manual review ${{triage.manual_review_candidate ?? false}}`;
+      panel.status.textContent = statusText;
+      panel.status.title = statusText;
       panel.frame.title = `Panel ${{panel.index + 1}}: ${{variant.name}}`;
     }}
     function updateCompareTable() {{
@@ -1436,7 +1440,7 @@ def render_review_html(
         type: 'update_layout', corners: variant.corners, baseCorners: variant.corners,
         previewOrder: variant.corners.map((_, i) => i), previewOrderActive: true,
         preserveOrder: true, width: REVIEW.width, height: REVIEW.height,
-        imageUrl: activeAssets.imageUrl, previewSignature: 'm15-23-5-' + panel.index + '-' + variant.name,
+        imageUrl: activeAssets.imageUrl, previewSignature: 'm15-23-6-' + panel.id + '-' + variant.name,
         variantName: variant.name, inspectionMode: true,
         inspectionMetadata: variant.inspection,
         changedPairIndices: variant.changedPairIndices || [],
@@ -1461,42 +1465,91 @@ def render_review_html(
       panels.forEach((panel) => sendLayout(panel));
       updateActiveUi();
     }}
-    function buildPanels(count) {{
-      panels.forEach((panel) => {{ clearTimeout(panel.viewerTimeout); clearTimeout(panel.textureTimeout); }});
-      panels = []; views.innerHTML = ''; activePanelIndex = 0;
-      const actualCount = Math.min(count, REVIEW.variants.length, 4);
-      views.className = `grid-${{actualCount}}`;
-      for (let index = 0; index < actualCount; index += 1) {{
-        const element = panelTemplate.content.firstElementChild.cloneNode(true);
-        const frame = element.querySelector('iframe');
-        const selector = element.querySelector('.panel-variant');
-        const panel = {{
-          index, element, frame, selector, status: element.querySelector('.panel-status'),
-          variantIndex: panelAssignments[index] ?? index,
-          viewerState: 'loading', viewerReason: 'waiting_for_viewer_ready', viewerTimeout: null,
-          textureState: activeAssets.textureExpected ? 'pending' : 'unavailable', textureReason: null, textureTimeout: null,
-        }};
-        element.querySelector('.panel-number').textContent = `P${{index + 1}}`;
-        REVIEW.variants.forEach((variant, variantIndex) => {{
-          const option = document.createElement('option'); option.value = variantIndex; option.textContent = variant.displayName; selector.appendChild(option);
-        }});
-        selector.value = String(panel.variantIndex);
-        element.querySelector('.panel-header').addEventListener('click', () => setActivePanel(index));
-        selector.addEventListener('click', (event) => event.stopPropagation());
-        selector.addEventListener('change', () => {{
-          panel.variantIndex = Number(selector.value); setActivePanel(index); sendLayout(panel); updateActiveUi();
-        }});
-        panels.push(panel); views.appendChild(element); updatePanelHeader(panel);
-        panel.viewerTimeout = setTimeout(() => {{
-          if (panel.viewerState !== 'ready') {{
-            panel.viewerState = 'failed'; panel.viewerReason = 'viewer_ready_timeout'; updateTextureUi();
-          }}
-        }}, 5000);
-        frame.src = activeAssets.viewerUrl;
-      }}
-      setActivePanel(0);
+    function layoutPanels() {{
+      const count = panels.length;
+      const rowCount = count % 2 === 0 ? count / 2 : (count + 1) / 2;
+      const visibleRows = Math.min(rowCount, 2);
+      const styles = getComputedStyle(views);
+      const verticalPadding = parseFloat(styles.paddingTop) + parseFloat(styles.paddingBottom);
+      const rowGap = parseFloat(styles.rowGap) || 8;
+      const innerHeight = Math.max(0, views.clientHeight - verticalPadding);
+      const rowHeight = Math.max(180, (innerHeight - rowGap * (visibleRows - 1)) / visibleRows);
+      views.style.gridTemplateRows = `repeat(${{rowCount}}, ${{rowHeight}}px)`;
+      panels.forEach((panel, index) => {{
+        panel.element.style.gridColumn = count % 2 === 1 && index === 0 ? '1 / -1' : 'auto';
+      }});
     }}
-    panelCountSelect.addEventListener('change', () => buildPanels(Number(panelCountSelect.value)));
+    function reindexPanels() {{
+      panels.forEach((panel, index) => {{
+        panel.index = index;
+        panel.number.textContent = `P${{index + 1}}`;
+        panel.removeButton.setAttribute('aria-label', `Remove panel ${{index + 1}}`);
+        updatePanelHeader(panel);
+      }});
+    }}
+    function updatePanelControls() {{
+      const limit = Math.min(MAX_COMPARE_PANELS, REVIEW.variants.length);
+      panelCountStatus.textContent = `Panels ${{panels.length}} / ${{limit}}`;
+      addPanelButton.disabled = panels.length >= limit;
+      panels.forEach((panel) => {{ panel.removeButton.disabled = panels.length <= 1; }});
+    }}
+    function nextUnusedVariantIndex() {{
+      const used = new Set(panels.map((panel) => panel.variantIndex));
+      return panelAssignments.find((variantIndex) => !used.has(variantIndex)) ?? 0;
+    }}
+    function createPanel(variantIndex) {{
+      const element = panelTemplate.content.firstElementChild.cloneNode(true);
+      const frame = element.querySelector('iframe');
+      const selector = element.querySelector('.panel-variant');
+      const panel = {{
+        id: nextPanelId++, index: panels.length, element, frame, selector,
+        number: element.querySelector('.panel-number'), status: element.querySelector('.panel-status'),
+        removeButton: element.querySelector('.remove-panel'), variantIndex,
+        viewerState: 'loading', viewerReason: 'waiting_for_viewer_ready', viewerTimeout: null,
+        textureState: activeAssets.textureExpected ? 'pending' : 'unavailable', textureReason: null, textureTimeout: null,
+      }};
+      REVIEW.variants.forEach((variant, optionIndex) => {{
+        const option = document.createElement('option'); option.value = optionIndex; option.textContent = variant.displayName; selector.appendChild(option);
+      }});
+      selector.value = String(panel.variantIndex);
+      element.querySelector('.panel-header').addEventListener('click', () => setActivePanel(panels.indexOf(panel)));
+      selector.addEventListener('click', (event) => event.stopPropagation());
+      selector.addEventListener('change', () => {{
+        panel.variantIndex = Number(selector.value); setActivePanel(panels.indexOf(panel)); sendLayout(panel); updateActiveUi();
+      }});
+      panel.removeButton.addEventListener('click', (event) => {{ event.stopPropagation(); removePanel(panel); }});
+      panels.push(panel); views.appendChild(element); reindexPanels(); layoutPanels(); updatePanelControls();
+      panel.viewerTimeout = setTimeout(() => {{
+        if (panel.viewerState !== 'ready') {{
+          panel.viewerState = 'failed'; panel.viewerReason = 'viewer_ready_timeout'; updateTextureUi();
+        }}
+      }}, 5000);
+      frame.src = activeAssets.viewerUrl;
+      return panel;
+    }}
+    function addPanel() {{
+      if (panels.length >= Math.min(MAX_COMPARE_PANELS, REVIEW.variants.length)) return;
+      createPanel(nextUnusedVariantIndex());
+      updateCompareTable(); updateTextureUi();
+    }}
+    function removePanel(panel) {{
+      if (panels.length <= 1) return;
+      const activeBefore = activePanel();
+      const removeIndex = panels.indexOf(panel);
+      if (removeIndex < 0) return;
+      clearTimeout(panel.viewerTimeout); clearTimeout(panel.textureTimeout);
+      panels.splice(removeIndex, 1); panel.element.remove();
+      reindexPanels(); layoutPanels(); updatePanelControls();
+      if (panel === activeBefore) {{
+        setActivePanel(Math.max(0, removeIndex - 1));
+      }} else {{
+        activePanelIndex = panels.indexOf(activeBefore);
+        panels.forEach((row) => row.element.classList.toggle('active-panel', row === activeBefore));
+        updateCompareTable(); updateTextureUi();
+      }}
+    }}
+    addPanelButton.addEventListener('click', addPanel);
+    window.addEventListener('resize', layoutPanels);
     document.getElementById('labels').addEventListener('click', (event) => {{
       labelsVisible = !labelsVisible; event.currentTarget.textContent = labelsVisible ? 'Hide labels' : 'Show labels';
       panels.forEach((panel) => {{ if (panel.viewerState === 'ready') panel.frame.contentWindow.postMessage({{type:'set_label_visibility', visible:labelsVisible}}, '*'); }});
@@ -1522,7 +1575,10 @@ def render_review_html(
     document.querySelectorAll('[data-camera]').forEach((button) => button.addEventListener('click', () => {{
       broadcastInspectionCommand('camera_preset', {{preset:button.dataset.camera}});
     }}));
-    buildPanels(defaultPanelCount);
+    for (let index = 0; index < defaultPanelCount; index += 1) {{
+      createPanel(panelAssignments[index] ?? index);
+    }}
+    setActivePanel(0);
   </script>
 </body>
 </html>
