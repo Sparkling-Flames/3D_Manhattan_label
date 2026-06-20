@@ -76,6 +76,10 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
         {"legacy_score_breakdown", "local_score_total"}.isdisjoint(evaluation)
         for evaluation in payload["constrained_evaluations"].values()
     )
+    assert all(
+        evaluation["plane_proxy_metrics"]["plane_proxy_status"] in {"available", "partial_available"}
+        for evaluation in payload["constrained_evaluations"].values()
+    )
     assert isinstance(verdict["legacy_ls_trial_available"], bool)
     for bucket in payload["legacy_diagnostics"]["legacy_portfolio_candidates"].values():
         assert set(bucket) == {"candidate_id", "action_family", "reason"}

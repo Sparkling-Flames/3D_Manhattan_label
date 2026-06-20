@@ -171,6 +171,148 @@ def _direction_family_diagnostics(
     return fit, parallel, "available" if parallel is not None else "insufficient_same_family_pairs"
 
 
+def _plane_proxy_metrics(
+    manhattan: Mapping[str, Any],
+    height: Mapping[str, Any],
+    floorprint: Mapping[str, Any],
+) -> dict[str, Any]:
+    """Materialize geometry-only plane proxies; this is not depth-based plane fitting."""
+    direction = manhattan.get("direction_family_fit")
+    parallel = manhattan.get("parallel_family_residual")
+    if isinstance(direction, Mapping):
+        plane_assignment = {
+            "status": "available",
+            "method": "direction_family_assignments_as_vertical_plane_families_v0",
+            "frame_offset_deg": direction["frame_offset_deg"],
+            "plane_families": [
+                {
+                    "plane_family_id": family["family_id"],
+                    "wall_axis_heading_deg": family["axis_heading_deg"],
+                    "wall_count": family["wall_count"],
+                }
+                for family in direction["families"]
+            ],
+            "wall_assignments": [
+                {
+                    "wall_index": row["wall_index"],
+                    "from_pair": row["from_pair"],
+                    "to_pair": row["to_pair"],
+                    "plane_family_id": row["assigned_family"],
+                    "heading_residual_deg": row["residual_deg"],
+                }
+                for row in direction["assignments"]
+            ],
+        }
+    else:
+        plane_assignment = {
+            "status": "unavailable",
+            "method": "direction_family_assignments_as_vertical_plane_families_v0",
+            "unavailable_reason": manhattan.get("direction_family_fit_unavailable_reason"),
+        }
+
+    parallel_consistency = (
+        {
+            "status": "available",
+            "method": "direction_family_pairwise_heading_residual_v0",
+            "median_deg": parallel["median_deg"],
+            "max_deg": parallel["max_deg"],
+            "pair_count": parallel["pair_count"],
+        }
+        if isinstance(parallel, Mapping)
+        else {
+            "status": "unavailable",
+            "method": "direction_family_pairwise_heading_residual_v0",
+            "median_deg": None,
+            "max_deg": None,
+            "pair_count": 0,
+            "unavailable_reason": manhattan.get("parallel_family_residual_unavailable_reason"),
+        }
+    )
+
+    populated_families = (
+        [family for family in direction["families"] if family["wall_count"] > 0]
+        if isinstance(direction, Mapping)
+        else []
+    )
+    if len(populated_families) == 2:
+        separation = _angular_distance_deg(
+            populated_families[0]["axis_heading_deg"],
+            populated_families[1]["axis_heading_deg"],
+            180.0,
+        )
+        orthogonal_consistency = {
+            "status": "available",
+            "method": "fitted_plane_family_axis_separation_v0",
+            "axis_separation_deg": separation,
+            "orthogonal_residual_deg": abs(90.0 - separation),
+        }
+    else:
+        orthogonal_consistency = {
+            "status": "unavailable",
+            "method": "fitted_plane_family_axis_separation_v0",
+            "axis_separation_deg": None,
+            "orthogonal_residual_deg": None,
+            "unavailable_reason": "insufficient_populated_direction_families",
+        }
+
+    height_available = _finite(height.get("dominant_height_h_star"))
+    height_consistency = {
+        "status": "available" if height_available else "unavailable",
+        "method": "dominant_projected_wall_height_cluster_v0",
+        "dominant_height_h_star": height.get("dominant_height_h_star"),
+        "height_cluster_mad": height.get("height_cluster_mad"),
+        "max_height_residual": height.get("max_height_residual") if height_available else None,
+        "height_outlier_pairs": list(height.get("height_outlier_pairs", [])),
+        "unavailable_reason": None if height_available else "missing_projected_wall_heights",
+    }
+
+    walls = list(floorprint.get("walls", []))
+    wall_residuals = [
+        float(row["angle_residual_deg"])
+        for row in walls
+        if isinstance(row, Mapping) and _finite(row.get("angle_residual_deg"))
+    ]
+    floor_available = bool(wall_residuals)
+    floor_residual = {
+        "status": "available" if floor_available else "unavailable",
+        "method": "structured_floorprint_wall_residual_proxy_v0_no_depth_no_plane_fit",
+        "wall_residual_median_deg": statistics.median(wall_residuals) if floor_available else None,
+        "wall_residual_max_deg": max(wall_residuals) if floor_available else None,
+        "unresolved_edge_count": manhattan.get("unresolved_edge_count") if floor_available else None,
+        "self_intersection": bool(floorprint.get("self_intersection")) if floor_available else None,
+        "unavailable_reason": None if floor_available else "missing_floorprint_wall_residuals",
+    }
+
+    components = {
+        "plane_family_assignment": plane_assignment,
+        "wall_plane_parallel_consistency": parallel_consistency,
+        "wall_plane_orthogonal_consistency": orthogonal_consistency,
+        "dominant_height_plane_consistency": height_consistency,
+        "floor_polygon_plane_proxy_residual": floor_residual,
+    }
+    missing = [name for name, value in components.items() if value["status"] != "available"]
+    available_count = len(components) - len(missing)
+    status = "available" if not missing else "partial_available" if available_count else "unavailable"
+    return {
+        "plane_proxy_version": "plane_proxy_metrics_v0",
+        "status": status,
+        "plane_proxy_status": status,
+        **components,
+        "unavailable_reason": (
+            None if status == "available" else
+            "missing_or_insufficient_proxy_inputs" if status == "partial_available" else
+            "no_plane_proxy_inputs_available"
+        ),
+        "missing_fields": missing,
+        "scope_boundary": {
+            "geometry_proxy_only": True,
+            "depth_model_used": False,
+            "geolayout_reproduction": False,
+            "column_evidence_layer": False,
+        },
+    }
+
+
 def _projection_metric_errors(variant: Mapping[str, Any]) -> list[str]:
     walls = variant.get("metrics", {}).get("floorprint", {}).get("walls")
     heights = variant.get("metrics", {}).get("heights", {}).get("pairs")
@@ -424,6 +566,11 @@ def evaluate_hypothesis(
         "dominant_height_cluster_members": cluster["cluster_members"] if cluster else [],
         "dominant_height_cluster_method": cluster["method"] if cluster else None,
     }
+    plane_proxy = _plane_proxy_metrics(
+        manhattan,
+        height,
+        candidate_variant.get("metrics", {}).get("floorprint", {}),
+    )
 
     baseline_short = {name for name, row in baseline_walls.items() if row.get("short_wall") and int(name.split("-")[0]) < int(name.split("-")[1])}
     candidate_short = {name for name, row in candidate_walls.items() if row.get("short_wall") and int(name.split("-")[0]) < int(name.split("-")[1])}
@@ -510,6 +657,7 @@ def evaluate_hypothesis(
         "feasibility": feasibility,
         "manhattan_feasibility": manhattan,
         "height_consistency": height,
+        "plane_proxy_metrics": plane_proxy,
         "layout_plausibility": plausibility,
         "evidence_consistency": _evidence(candidate_variant),
         "movement_edit_cost": movement,

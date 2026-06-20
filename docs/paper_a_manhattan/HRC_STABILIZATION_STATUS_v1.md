@@ -15,11 +15,11 @@
 |---|---|---|
 | C0 | 部分完成，待收口 | 输出合同已降级 legacy score；排序 key 仍使用 `local_score_total` 末位兜底，尚非严格 diagnostic only。 |
 | C1 | 部分完成 | `manhattan_case_contract.py` 已有 case contract 与 projection-rule-based inferred contract，也保留无 metrics 时的 legacy fallback；不是完全脱离 legacy 默认值的通用 case analyzer。 |
-| C2 | v1 diagnostic implemented | evaluator 已输出 hard feasibility、wall/turn/local residual、height consistency、layout plausibility、evidence interface、movement/edit cost 与 decision class；`direction_family_fit` / `parallel_family_residual` v1 已实现并由真实 projection artifacts 与 core runner 回归锁定，但仍只是可审计 diagnostic，不是 C4 Column Evidence Layer，也不是 C5 Plane Proxy Metrics。 |
+| C2 | v1 diagnostic implemented | evaluator 已输出 hard feasibility、wall/turn/local residual、height consistency、layout plausibility、evidence interface、movement/edit cost 与 decision class；`direction_family_fit` / `parallel_family_residual` v1 已实现并由真实 projection artifacts 与 core runner 回归锁定，但仍只是可审计 diagnostic，不是 C4 Column Evidence Layer。 |
 | C3 | 未实现新模块 | 当前只是 M15.28 action library 的 legacy candidate source 接入 core；不是新的 constrained candidate generator。 |
 | C4 | 未实现 | 未发现独立 Column Evidence Layer。evaluator 只有 evidence 字段接口及 `top_bottom_x_residual` 派生列一致性指标，不等于 HoHoNet/HorizonNet column evidence 实现。 |
-| C5 | 未实现 | 未发现 Plane Proxy Metrics 实现；现有 wall/turn/height residual 不构成 plane-family、floor-polygon 或 height-plane proxy 层。 |
-| C6 | 部分存在，冻结 | `manhattan_hypothesis_portfolio.py` 已提供固定 bucket 外壳与 lexicographic 选择；因 C2 仍是 v1 diagnostic 且 C4/C5 未实现，不扩展 bucket，不把当前外壳声明为稳定 ranker。 |
+| C5 | C5-lite plane proxy v0 implemented | evaluator 已物化独立 `plane_proxy_metrics`：复用 direction-family、同族平行 residual、dominant height cluster 与 floorprint residual 形成 geometry proxy。它不是 depth model、不是 GeoLayout reproduction、不是 C4 evidence layer，也不进入 ranking。 |
+| C6 | 部分存在，冻结 | `manhattan_hypothesis_portfolio.py` 已提供固定 bucket 外壳与 lexicographic 选择；因 C2/C5 仍是 diagnostic 且 C4 未实现，不扩展 bucket，不把当前外壳声明为稳定 ranker。 |
 | C7 | blocked | legacy `manhattan_m1527_semantic_direct_search.py` 存在 Hooke–Jeeves 搜索，但新 geometry-normalized MADS/Hooke–Jeeves 在 evaluator 稳定前不得启动。 |
 | C8 | 仅记录系统 | feedback ledger schema 与 `materialize_manhattan_feedback_ledger_entry.py` 可保留；不得进入训练、参数更新或自动应用系统。 |
 | C9 | blocked | 未发现 Adaptive Parameter Update 实现；不得启动。 |
@@ -27,7 +27,7 @@
 
 ## 3. 唯一允许的下一步
 
-HRC-S2.1 已用真实 projection artifacts 与 core runner 回归锁定 C2 的 `direction_family_fit` 与 `parallel_family_residual` v1 行为。本状态同步不授权后续算法扩展：
+C5-lite 已物化并回归锁定 `plane_proxy_metrics` v0；它只增加 geometry diagnostic，不改变 ranking、decision 或 safety boundary。本状态同步不授权后续算法扩展：
 
 - 不先做 C3/C4/C6/C7/C9/C10；
 - 不继续调 `local_score_total` 权重；
@@ -45,6 +45,6 @@ HRC-S2.1 已用真实 projection artifacts 与 core runner 回归锁定 C2 的 `
 - `docs/paper_a_manhattan/后续方针.md`：C0–C10 目标定义。
 - `docs/paper_a_manhattan/M15_LEGACY_ARTIFACT_DEPENDENCY_INVENTORY_v1.md`：legacy source/compatibility chain 仍被 core 使用的依据。
 - `docs/paper_a_manhattan/MANHATTAN_HYPOTHESIS_FEEDBACK_LEDGER_SCHEMA_v1.md` 与 `tools/paper_a_manhattan/materialize_manhattan_feedback_ledger_entry.py`：C8 只记录、不训练、不写回边界。
-- 独立 C3 constrained generator、C4 Column Evidence Layer、C5 Plane Proxy Metrics、C9 Adaptive Parameter Update、C10 Lightweight Candidate Ranker 文件：missing / not found。
+- 独立 C3 constrained generator、C4 Column Evidence Layer、C9 Adaptive Parameter Update、C10 Lightweight Candidate Ranker 文件：missing / not found。
 
 本冻结不改变 Paper A 正式实验、`P1/C1/C2/T1/V1`、routing、worker-facing、协议或 Label Studio 数据。

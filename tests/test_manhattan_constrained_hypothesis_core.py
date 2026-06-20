@@ -125,6 +125,12 @@ def test_direction_family_and_parallel_residual_are_auditable_when_headings_exis
     assert parallel["max_deg"] == pytest.approx(1.0)
     assert manhattan["parallel_family_residual_unavailable_reason"] is None
 
+    plane = _evaluate(candidate_variant=variant)["plane_proxy_metrics"]
+    assert plane["status"] == "available"
+    assert plane["plane_family_assignment"]["wall_assignments"]
+    assert plane["wall_plane_parallel_consistency"]["pair_count"] == 2
+    assert plane["wall_plane_orthogonal_consistency"]["orthogonal_residual_deg"] == pytest.approx(0.0)
+
 
 def test_direction_family_missing_heading_is_explicit_and_does_not_crash():
     manhattan = _evaluate()["manhattan_feasibility"]
@@ -133,6 +139,12 @@ def test_direction_family_missing_heading_is_explicit_and_does_not_crash():
     assert manhattan["direction_family_fit_unavailable_reason"] == "unavailable_due_to_missing_wall_heading"
     assert manhattan["parallel_family_residual"] is None
     assert manhattan["parallel_family_residual_unavailable_reason"] == "unavailable_due_to_missing_wall_heading"
+
+    plane = _evaluate()["plane_proxy_metrics"]
+    assert plane["status"] == "partial_available"
+    assert plane["plane_family_assignment"]["status"] == "unavailable"
+    assert plane["wall_plane_parallel_consistency"]["median_deg"] is None
+    assert "plane_family_assignment" in plane["missing_fields"]
 
     one_wall = _variant()
     one_wall["metrics"]["floorprint"]["walls"] = one_wall["metrics"]["floorprint"]["walls"][:1]
@@ -244,6 +256,9 @@ def test_height_uses_largest_gap_dominant_cluster_not_global_median():
     assert height["dominant_height_cluster_members"] == [1, 2, 3]
     assert height["height_outlier_pairs"] == [4]
     assert height["dominant_height_cluster_method"] == "largest_gap_connected_cluster_then_minimum_mad"
+    plane_height = evaluation["plane_proxy_metrics"]["dominant_height_plane_consistency"]
+    assert plane_height["height_cluster_mad"] == height["height_cluster_mad"]
+    assert plane_height["max_height_residual"] == height["max_height_residual"]
 
 
 def test_incomplete_projection_metrics_hard_fail_without_exception():
@@ -293,6 +308,8 @@ def test_real_projection_artifact_regression(artifact):
     assert evaluation["manhattan_feasibility"]["direction_family_fit_status"] == "available"
     assert direction_fit is not None
     assert direction_fit["residual_summary"]["wall_count"] > 0
+    assert evaluation["plane_proxy_metrics"]["status"] in {"available", "partial_available"}
+    assert evaluation["evaluation_status"] == "complete"
 
 
 def test_decision_classes_are_structured_and_legacy_gate_is_not_a_hard_gate():
