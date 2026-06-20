@@ -29,6 +29,7 @@
   - `data_prep/`：数据集准备和 MP3D smoke/import 生成。
   - `foreign_recruitment/`：P1/PreScreen 外国标注员 HTTPS 英文适配包。
 - `tools/paper_a_manhattan/`
+  - Manhattan Constrained Hypothesis Ranking Core：case contract、structured evaluator 与 portfolio ranking；M15.* 仅作为兼容候选源。
   - Paper A Manhattan / sandbox / expert review / post-hoc audit-only 工具。
   - `dev_only/`：Manhattan sandbox userscripts。
   - `manhattan_3d_projection.py`、`run_local_3d_projection_review.py` 与 `serve_local_3d_projection_review.py`：本地投影与只读 candidate review；M15.23.7 提供 1–6-panel flexible compare grid、始终可见的 panel 删除按钮、每个 viewport 两行及额外行滚动，全局广播 labels/texture/ghost/camera preset，inspector/measure/next issue 仅作用于 active panel；不连接云端、不写回、不进入正式 artifact。
@@ -57,6 +58,7 @@
   - 包括 protocol、assignment SOP、PreScreen、Calibration、Main(Test + Validation)、统计计划、字段合同、final-gold、registry、论文主线写作材料。
   - `manuscript/` 可保存 Overleaf 项目和主线论文写作资产，但按现有 `.gitignore` 默认不提交。
 - `docs/paper_a_manhattan/`
+  - 包含 hypothesis feedback ledger schema；仅定义专家反馈数据合同，不实现训练或写回。
   - Paper A Manhattan 支线文档。
   - 包括 geometry roadmap、constrained fit、LS sandbox、expert review、OOS scope audit、3D geometry compatibility/fixture 和 M15.19 local 3D projection review 规格。
 - `docs/paper_b/`

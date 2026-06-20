@@ -7,6 +7,14 @@ from collections import Counter
 from typing import Any, Mapping, Sequence
 
 from tools.paper_a_manhattan.manhattan_m1520_local_candidate_search import normalize_expert_assertions
+from tools.paper_a_manhattan.manhattan_case_contract import build_case_contract
+from tools.paper_a_manhattan.manhattan_constrained_hypothesis_evaluator import (
+    build_hypothesis_ranking_key,
+    evaluate_hypothesis,
+)
+from tools.paper_a_manhattan.manhattan_hypothesis_portfolio import (
+    build_hypothesis_portfolio,
+)
 from tools.paper_a_manhattan.manhattan_m1526_adaptive_local_probe import (
     _constraint_state,
     _copy_pairs,
@@ -196,7 +204,7 @@ def _portfolio(rows: Sequence[Mapping[str, Any]], baseline_score: Mapping[str, A
     return {
         "best_primary_candidate": bucket(eligible, lambda row: (row["score_breakdown"]["primary_edge_6_7_residual"], row["candidate_id"]), "no hard-gate and short-wall-band compliant candidate"),
         "best_height_candidate": bucket([row for row in eligible if row["score_breakdown"]["primary_edge_6_7_residual"] <= primary_before + 0.25], lambda row: (row["score_breakdown"]["dominant_height_cluster_l1"], row["candidate_id"]), "no height candidate preserves primary edge within 0.25 degrees"),
-        "best_balanced_candidate": bucket(eligible, lambda row: (row["score_breakdown"]["local_score_total"], row["candidate_id"]), "no balanced candidate passed gates"),
+        "best_balanced_candidate": bucket(eligible, lambda row: (*row["hypothesis_ranking_key"], row["candidate_id"]), "no balanced candidate passed gates"),
         "best_short_wall_preserving_candidate": bucket(eligible, lambda row: (abs(row["score_breakdown"]["allowed_short_wall_deficit_delta"]), row["score_breakdown"]["primary_edge_6_7_residual"], row["candidate_id"]), "no short-wall preserving candidate passed gates"),
         "best_low_movement_candidate": bucket([row for row in eligible if primary_before - row["score_breakdown"]["primary_edge_6_7_residual"] >= 5.0], lambda row: (row["score_breakdown"]["movement_l1_ls_percent"], row["candidate_id"]), "no compliant candidate improves primary edge by at least 5 degrees"),
     }
@@ -221,6 +229,12 @@ def run_action_library(
     baseline_score = _score_breakdown(baseline_variant, movement_l1=0.0, anchor_violations=constraints["anchor_violations"], assertion_violations=constraints["assertion_violations"], geometry_invalid_reasons=constraints["geometry_invalid_reasons"])
     from tools.paper_a_manhattan.manhattan_m1527_semantic_direct_search import _height_distance
     baseline_score["dominant_height_cluster_l1"] = _height_distance(baseline_variant, cluster["h_star"])
+    baseline_score["legacy_score_role"] = "diagnostic_only"
+    case_contract = build_case_contract(
+        baseline_pairs,
+        expert_assertions=expert_assertion,
+        projection_metrics=baseline_variant["metrics"],
+    )
     baseline_deficit = _short_deficit(baseline_score)
     seen = {_signature(baseline_pairs)}
     rows: list[dict[str, Any]] = []
@@ -248,6 +262,23 @@ def run_action_library(
             row = _evaluate(candidate_id, "baseline", "action_library", round_index, float(step), action, baseline_pairs, candidate_pairs, baseline_score, assertions, projection_config, cluster)
             deficit_delta = _short_deficit(row["score_breakdown"]) - baseline_deficit
             row["score_breakdown"]["allowed_short_wall_deficit_delta"] = deficit_delta
+            row["score_breakdown"]["legacy_score_role"] = "diagnostic_only"
+            candidate_variant = build_projection_variant(
+                candidate_id,
+                candidate_pairs,
+                **projection_config,
+            )
+            row["constrained_evaluation"] = evaluate_hypothesis(
+                baseline_variant,
+                candidate_variant,
+                baseline_pairs,
+                candidate_pairs,
+                case_contract,
+                legacy_score_breakdown=row["score_breakdown"],
+            )
+            row["hypothesis_ranking_key"] = list(
+                build_hypothesis_ranking_key(row["constrained_evaluation"])
+            )
             band_ok = deficit_delta <= ALLOWED_SHORT_DEFICIT_BAND + 1e-12
             checks = {
                 "assertion_compliant": row["assertion_compliant"],
@@ -265,12 +296,14 @@ def run_action_library(
         if len(rows) >= max_evaluations:
             break
 
-    ranked = sorted(rows, key=_candidate_rank)
+    ranked = sorted(rows, key=lambda row: (*row["hypothesis_ranking_key"], row["candidate_id"]))
     portfolios = _portfolio(rows, baseline_score)
+    structured_portfolio = build_hypothesis_portfolio(rows)
     available = any(row["manual_review_candidate"] for row in rows)
     return {
         "schema_version": SCHEMA_VERSION,
         "safety_boundary": dict(SAFETY_BOUNDARY),
+        "case_contract": case_contract,
         "expert_assertions_used": assertions,
         "secondary_window": secondary,
         "dominant_height_cluster": cluster,
@@ -281,5 +314,7 @@ def run_action_library(
         "family_evaluation_counts": dict(sorted(counts.items())),
         "top_candidates": ranked[:TOP_LIMIT],
         "portfolio_candidates": portfolios,
+        "portfolio_ranking": structured_portfolio,
+        "legacy_score_role": "diagnostic_only",
         "overall_verdict": {"manual_review_candidate_available": available, "automatic_fix_claimed": False, "best_candidate_requires_visual_review": True},
     }

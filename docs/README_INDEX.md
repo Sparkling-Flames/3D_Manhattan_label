@@ -43,6 +43,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 
 - [MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md](paper_a_manhattan/MANHATTAN_GEOMETRY_TOOL_ROADMAP_v2.md)
 - [MANHATTAN_CONSTRAINED_FIT_PLAN_v1.md](paper_a_manhattan/MANHATTAN_CONSTRAINED_FIT_PLAN_v1.md)
+- [MANHATTAN_HYPOTHESIS_FEEDBACK_LEDGER_SCHEMA_v1.md](paper_a_manhattan/MANHATTAN_HYPOTHESIS_FEEDBACK_LEDGER_SCHEMA_v1.md)
 - [MANHATTAN_HEIGHT_REPROJECT_SAFETY_CONTRACT_v1.md](paper_a_manhattan/MANHATTAN_HEIGHT_REPROJECT_SAFETY_CONTRACT_v1.md)
 - [CONSERVATIVE_HEIGHT_REPROJECT_CANDIDATE_SPEC_v1.md](paper_a_manhattan/CONSERVATIVE_HEIGHT_REPROJECT_CANDIDATE_SPEC_v1.md)
 - [ADAPTIVE_LOCAL_X_SEARCH_SPEC_v1.md](paper_a_manhattan/ADAPTIVE_LOCAL_X_SEARCH_SPEC_v1.md)
@@ -77,6 +78,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - `tools/paper_a_manhattan/manhattan_m1527_semantic_direct_search.py` and `run_m1527_semantic_direct_search.py` provide the M15.27.1 deterministic semantic search and manual-review-only verdict contract; legacy M15.27 output is archived under the case-local `legacy/` directory.
 - `tools/paper_a_manhattan/run_m1527_optimization_trace_ledger.py` seeds and atomically records the expert comparison of the M15.22/M15.26/M15.27.1 path; it writes only the local optimization ledger.
 - `tools/paper_a_manhattan/manhattan_m1528_semantic_action_library.py` and `run_m1528_semantic_action_library.py` add decoupled x, primary-edge, short-wall-preserving, height-portfolio, and explicitly gated secondary-window actions. The official runner requires a reviewed trace ledger and never claims an automatic fix.
+- `tools/paper_a_manhattan/manhattan_case_contract.py`, `manhattan_constrained_hypothesis_evaluator.py`, and `manhattan_hypothesis_portfolio.py` provide the Manhattan Constrained Hypothesis Ranking Core. Legacy M15.* remains a candidate source; hard gates and structured metrics drive expert-side offline portfolio ranking without apply, writeback, worker-facing, routing, or protocol behavior.
 
 ## 论文 B 线
 
