@@ -36,6 +36,7 @@
   - `run_m1524_hard_case_audit_pack.py`：聚合 3741、2369、2389 的 applicable/smoke/safe-skip 状态，生成只读 hard-case audit JSON/Markdown；不修改候选搜索、评分或 gate。
   - `run_m1525_visual_verdict_pack.py`：将 task218_ann3741 在 M15.23.4 阶段形成的专家人工视觉结论及输入哈希落盘为只读 JSON/Markdown sidecar；M15.23.5 compare grid 是后续显示增强，不改变该 verdict，也不修改候选、投影、viewer、routing 或标注。
   - `manhattan_m1526_adaptive_local_probe.py` 与 `run_m1526_adaptive_local_probe.py`：面向 task218_ann3741 的 deterministic bounded primary-edge/wall-surface-aware adaptive dry-run，记录 assertion-constrained 变量、分解 score、beam search trace 与保守 direct-trial gate；不修改 projection、M15.22、viewer、标注、routing 或正式 artifact。
+  - `manhattan_m1527_semantic_direct_search.py` 与 `run_m1527_semantic_direct_search.py`：面向 task218_ann3741 的 deterministic expert-side semantic Hooke–Jeeves dry-run，将 azimuth、wall-height 与 floor-depth action 分开试探并只落盘 top candidates；不修改 projection、M15.22、viewer、标注、routing 或正式 artifact。
 - `tools/paper_b/`
   - Paper B 工具。当前包括 `validate_b0_relabel_audit.py`；后续 B0/B1/B2 训练、cue、bilayout、审计脚本只进本目录。
 - `tools/label_studio/`

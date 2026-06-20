@@ -1,0 +1,899 @@
+{
+  "schema_version": "m15_27_semantic_direct_search_v1",
+  "safety_boundary": {
+    "expert_side": true,
+    "offline_local_only": true,
+    "dry_run_only": true,
+    "annotation_write_allowed": false,
+    "annotation_patch_generated": false,
+    "automatic_apply": false,
+    "automatic_global_optimization": false,
+    "worker_facing": false,
+    "routing_input": false,
+    "formal_artifact": false
+  },
+  "semantic_variable_mapping": {
+    "x": "azimuth",
+    "top_y": "wall_height",
+    "bottom_y": "floor_depth"
+  },
+  "semantic_action_families": {
+    "height_outlier_pull_top_y": "wall_height",
+    "floor_depth_balance_bottom_y": "floor_depth",
+    "azimuth_pair_shift_x": "azimuth",
+    "azimuth_block_shift_x": "azimuth",
+    "dense_pair_separation_x": "azimuth",
+    "mixed_x_bottom_y_pattern": "azimuth+floor_depth"
+  },
+  "dominant_height_cluster": {
+    "source_metric": "projected_wall_height",
+    "target_pair_indices": [
+      1,
+      2,
+      5,
+      6,
+      7,
+      8
+    ],
+    "method": "largest_gap_connected_cluster_then_minimum_mad",
+    "gap_threshold": 0.3,
+    "h_star": 2.9937073520348183,
+    "cluster_members": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "mad": 0.08830605079669374,
+    "height_outliers": [
+      1,
+      2
+    ],
+    "projected_wall_heights": {
+      "1": 2.414503971873784,
+      "2": 2.2908784665503172,
+      "5": 3.0457027378813946,
+      "6": 2.814834666038484,
+      "7": 3.1183240677816295,
+      "8": 2.941711966188242
+    }
+  },
+  "expert_assertions_used": {
+    "schema_version": "m15_21_expert_assertion_v1",
+    "case_name": "task218_ann3741",
+    "keep_distinct_pairs": [
+      [
+        5,
+        6
+      ]
+    ],
+    "primary_edges": [
+      "6-7"
+    ],
+    "allowed_short_edges": [
+      "5-6"
+    ],
+    "do_not_move_pairs": [
+      4,
+      8
+    ],
+    "candidate_window": [
+      5,
+      6,
+      7,
+      8
+    ],
+    "notes": [
+      "Pairs 5 and 6 represent distinct semantic corners and must not be merged or deleted.",
+      "The existing 5-6 short wall may be preserved for diagnosis but is not declared geometrically correct.",
+      "Edge 6-7 is the primary unresolved local failure."
+    ]
+  },
+  "search_config": {
+    "strategy": "deterministic_hooke_jeeves_semantic_pattern_search",
+    "step_schedule": [
+      1.0,
+      0.5,
+      0.25,
+      0.125
+    ],
+    "max_evaluations": 600,
+    "top_candidate_limit": 5,
+    "randomness_used": false,
+    "mixed_action_requires_profitable_single_axis_actions": true,
+    "order_mutation_allowed": false,
+    "merge_delete_allowed": false,
+    "topology_rewrite_allowed": false
+  },
+  "baseline": {
+    "score_breakdown": {
+      "primary_edge_6_7_residual": 35.367792295442314,
+      "wall_2_3_surface_or_heading_residual": 37.02045729278922,
+      "wall_5_6_7_8_footprint_residual": 47.97524026821071,
+      "y_height_consistency_residual_pairs_1_2_5_6_7_8": 1.8914606548441415,
+      "short_wall_penalty": 46.02326316635087,
+      "short_wall_deficits": {
+        "5-6": 0.2680303755066259,
+        "6-7": 0.19220225615688286
+      },
+      "movement_penalty": 0.0,
+      "movement_l1_ls_percent": 0.0,
+      "anchor_violation_penalty": 0.0,
+      "assertion_violation_penalty": 0.0,
+      "fold_or_self_intersection_penalty": 0.0,
+      "local_score_total": 309.9149651039561,
+      "dominant_height_cluster_l1": 1.6895124390818332
+    }
+  },
+  "evaluation_count": 95,
+  "family_evaluation_counts": {
+    "azimuth_block_shift_x": 8,
+    "azimuth_pair_shift_x": 25,
+    "dense_pair_separation_x": 8,
+    "floor_depth_balance_bottom_y": 32,
+    "height_outlier_pull_top_y": 16,
+    "mixed_x_bottom_y_pattern": 6
+  },
+  "search_trace": [
+    {
+      "round_index": 1,
+      "step_size": 1.0,
+      "exploratory_count": 22,
+      "mixed_enabled": false,
+      "pattern_extension_evaluated": true,
+      "accepted_candidate_id": "m1527_candidate_0023",
+      "accepted_action_family": "azimuth_pair_shift_x",
+      "reason": "accepted_local_gate_move"
+    },
+    {
+      "round_index": 2,
+      "step_size": 0.5,
+      "exploratory_count": 23,
+      "mixed_enabled": true,
+      "pattern_extension_evaluated": true,
+      "accepted_candidate_id": "m1527_candidate_0047",
+      "accepted_action_family": "mixed_x_bottom_y_pattern",
+      "reason": "accepted_local_gate_move"
+    },
+    {
+      "round_index": 3,
+      "step_size": 0.25,
+      "exploratory_count": 23,
+      "mixed_enabled": true,
+      "pattern_extension_evaluated": true,
+      "accepted_candidate_id": "m1527_candidate_0070",
+      "accepted_action_family": "mixed_x_bottom_y_pattern",
+      "reason": "accepted_local_gate_move"
+    },
+    {
+      "round_index": 4,
+      "step_size": 0.125,
+      "exploratory_count": 23,
+      "mixed_enabled": true,
+      "pattern_extension_evaluated": true,
+      "accepted_candidate_id": "m1527_candidate_0094",
+      "accepted_action_family": "mixed_x_bottom_y_pattern",
+      "reason": "accepted_local_gate_move"
+    }
+  ],
+  "top_candidates": [
+    {
+      "candidate_id": "m1527_candidate_0094",
+      "parent_candidate_id": "m1527_candidate_0070",
+      "phase": "exploratory_mixed",
+      "round_index": 4,
+      "step_size": 0.125,
+      "action_family": "mixed_x_bottom_y_pattern",
+      "semantic_lever": "azimuth+floor_depth",
+      "action": {
+        "family": "mixed_x_bottom_y_pattern",
+        "direction": 1,
+        "moves": [
+          {
+            "pair_index": 5,
+            "field": "x",
+            "multiplier": 0.5
+          },
+          {
+            "pair_index": 6,
+            "field": "x",
+            "multiplier": 0.5
+          },
+          {
+            "pair_index": 7,
+            "field": "x",
+            "multiplier": 0.5
+          },
+          {
+            "pair_index": 7,
+            "field": "bottom_y",
+            "multiplier": 1.0
+          }
+        ]
+      },
+      "changed_pair_indices": [
+        5,
+        6,
+        7
+      ],
+      "coordinate_changes": [
+        {
+          "effective_pair_index": 5,
+          "fields": {
+            "top_x": {
+              "before": 44.611528822055135,
+              "after": 44.986998746867165
+            },
+            "bottom_x": {
+              "before": 44.987468671679196,
+              "after": 44.986998746867165
+            }
+          }
+        },
+        {
+          "effective_pair_index": 6,
+          "fields": {
+            "top_x": {
+              "before": 43.859649122807014,
+              "after": 44.047149122807014
+            },
+            "bottom_x": {
+              "before": 43.859649122807014,
+              "after": 44.047149122807014
+            },
+            "bottom_y": {
+              "before": 90.47619047619048,
+              "after": 90.22619047619048
+            }
+          }
+        },
+        {
+          "effective_pair_index": 7,
+          "fields": {
+            "top_x": {
+              "before": 51.66015625,
+              "after": 53.34765625
+            },
+            "bottom_x": {
+              "before": 51.66015625,
+              "after": 53.34765625
+            },
+            "bottom_y": {
+              "before": 87.890625,
+              "after": 89.265625
+            }
+          }
+        }
+      ],
+      "score_breakdown": {
+        "primary_edge_6_7_residual": 14.170744905397669,
+        "wall_2_3_surface_or_heading_residual": 37.02045729278922,
+        "wall_5_6_7_8_footprint_residual": 28.654473542230505,
+        "y_height_consistency_residual_pairs_1_2_5_6_7_8": 1.5934384294276231,
+        "short_wall_penalty": 47.12456186486326,
+        "short_wall_deficits": {
+          "5-6": 0.28157860786862154,
+          "6-7": 0.18966701078001108
+        },
+        "movement_penalty": 1.4377349624060152,
+        "movement_l1_ls_percent": 5.750939849624061,
+        "anchor_violation_penalty": 0.0,
+        "assertion_violation_penalty": 0.0,
+        "fold_or_self_intersection_penalty": 0.0,
+        "local_score_total": 205.36482022455053,
+        "dominant_height_cluster_l1": 1.5934384294276231
+      },
+      "gate_result": {
+        "passed": true,
+        "checks": {
+          "hard_constraints": true,
+          "primary_or_height_gain": true,
+          "wall_2_3_not_materially_worsened": true,
+          "footprint_not_materially_worsened": true,
+          "short_wall_not_seriously_worsened": true
+        }
+      },
+      "failure_reason": [],
+      "assertion_compliant": true,
+      "assertion_violations": [],
+      "geometry_valid": true,
+      "geometry_invalid_reasons": [],
+      "decision_class": "candidate_for_manual_review",
+      "direct_ls_trial_allowed": true,
+      "direct_trial_gate": {
+        "checks": {
+          "assertion_compliant": true,
+          "geometry_valid": true,
+          "primary_edge_significantly_improved": true,
+          "primary_edge_resolved_under_15_deg": true,
+          "wall_2_3_not_worsened": true,
+          "wall_5_6_7_8_not_worsened": true,
+          "y_height_consistency_improved": true,
+          "movement_below_threshold": true,
+          "short_wall_not_seriously_worsened": true
+        },
+        "failed_checks": [],
+        "short_wall_gate_reasons": [],
+        "passed": true
+      },
+      "order_mutation": false,
+      "merge_delete": false,
+      "topology_rewrite": false
+    },
+    {
+      "candidate_id": "m1527_candidate_0086",
+      "parent_candidate_id": "m1527_candidate_0070",
+      "phase": "exploratory",
+      "round_index": 4,
+      "step_size": 0.125,
+      "action_family": "floor_depth_balance_bottom_y",
+      "semantic_lever": "floor_depth",
+      "action": {
+        "family": "floor_depth_balance_bottom_y",
+        "direction": 1,
+        "moves": [
+          {
+            "pair_index": 7,
+            "field": "bottom_y",
+            "multiplier": 1.0
+          }
+        ]
+      },
+      "changed_pair_indices": [
+        5,
+        6,
+        7
+      ],
+      "coordinate_changes": [
+        {
+          "effective_pair_index": 5,
+          "fields": {
+            "top_x": {
+              "before": 44.611528822055135,
+              "after": 44.924498746867165
+            },
+            "bottom_x": {
+              "before": 44.987468671679196,
+              "after": 44.924498746867165
+            }
+          }
+        },
+        {
+          "effective_pair_index": 6,
+          "fields": {
+            "top_x": {
+              "before": 43.859649122807014,
+              "after": 43.984649122807014
+            },
+            "bottom_x": {
+              "before": 43.859649122807014,
+              "after": 43.984649122807014
+            },
+            "bottom_y": {
+              "before": 90.47619047619048,
+              "after": 90.22619047619048
+            }
+          }
+        },
+        {
+          "effective_pair_index": 7,
+          "fields": {
+            "top_x": {
+              "before": 51.66015625,
+              "after": 53.28515625
+            },
+            "bottom_x": {
+              "before": 51.66015625,
+              "after": 53.28515625
+            },
+            "bottom_y": {
+              "before": 87.890625,
+              "after": 89.265625
+            }
+          }
+        }
+      ],
+      "score_breakdown": {
+        "primary_edge_6_7_residual": 14.395744905397578,
+        "wall_2_3_surface_or_heading_residual": 37.02045729278922,
+        "wall_5_6_7_8_footprint_residual": 28.965620684043557,
+        "y_height_consistency_residual_pairs_1_2_5_6_7_8": 1.5934384294276231,
+        "short_wall_penalty": 47.12456186486327,
+        "short_wall_deficits": {
+          "5-6": 0.2815786078686216,
+          "6-7": 0.18966701078001108
+        },
+        "movement_penalty": 1.3752349624060152,
+        "movement_l1_ls_percent": 5.500939849624061,
+        "anchor_violation_penalty": 0.0,
+        "assertion_violation_penalty": 0.0,
+        "fold_or_self_intersection_penalty": 0.0,
+        "local_score_total": 206.51346736636322,
+        "dominant_height_cluster_l1": 1.5934384294276231
+      },
+      "gate_result": {
+        "passed": true,
+        "checks": {
+          "hard_constraints": true,
+          "primary_or_height_gain": true,
+          "wall_2_3_not_materially_worsened": true,
+          "footprint_not_materially_worsened": true,
+          "short_wall_not_seriously_worsened": true
+        }
+      },
+      "failure_reason": [],
+      "assertion_compliant": true,
+      "assertion_violations": [],
+      "geometry_valid": true,
+      "geometry_invalid_reasons": [],
+      "decision_class": "candidate_for_manual_review",
+      "direct_ls_trial_allowed": true,
+      "direct_trial_gate": {
+        "checks": {
+          "assertion_compliant": true,
+          "geometry_valid": true,
+          "primary_edge_significantly_improved": true,
+          "primary_edge_resolved_under_15_deg": true,
+          "wall_2_3_not_worsened": true,
+          "wall_5_6_7_8_not_worsened": true,
+          "y_height_consistency_improved": true,
+          "movement_below_threshold": true,
+          "short_wall_not_seriously_worsened": true
+        },
+        "failed_checks": [],
+        "short_wall_gate_reasons": [],
+        "passed": true
+      },
+      "order_mutation": false,
+      "merge_delete": false,
+      "topology_rewrite": false
+    },
+    {
+      "candidate_id": "m1527_candidate_0095",
+      "parent_candidate_id": "m1527_candidate_0070",
+      "phase": "pattern_extension",
+      "round_index": 4,
+      "step_size": 0.125,
+      "action_family": "mixed_x_bottom_y_pattern",
+      "semantic_lever": "azimuth+floor_depth",
+      "action": {
+        "family": "mixed_x_bottom_y_pattern",
+        "direction": 1,
+        "moves": [
+          {
+            "pair_index": 5,
+            "field": "x",
+            "multiplier": 0.5
+          },
+          {
+            "pair_index": 6,
+            "field": "x",
+            "multiplier": 0.5
+          },
+          {
+            "pair_index": 7,
+            "field": "x",
+            "multiplier": 0.5
+          },
+          {
+            "pair_index": 7,
+            "field": "bottom_y",
+            "multiplier": 1.0
+          }
+        ]
+      },
+      "changed_pair_indices": [
+        5,
+        6,
+        7
+      ],
+      "coordinate_changes": [
+        {
+          "effective_pair_index": 5,
+          "fields": {
+            "top_x": {
+              "before": 44.611528822055135,
+              "after": 45.049498746867165
+            },
+            "bottom_x": {
+              "before": 44.987468671679196,
+              "after": 45.049498746867165
+            }
+          }
+        },
+        {
+          "effective_pair_index": 6,
+          "fields": {
+            "top_x": {
+              "before": 43.859649122807014,
+              "after": 44.109649122807014
+            },
+            "bottom_x": {
+              "before": 43.859649122807014,
+              "after": 44.109649122807014
+            },
+            "bottom_y": {
+              "before": 90.47619047619048,
+              "after": 90.22619047619048
+            }
+          }
+        },
+        {
+          "effective_pair_index": 7,
+          "fields": {
+            "top_x": {
+              "before": 51.66015625,
+              "after": 53.41015625
+            },
+            "bottom_x": {
+              "before": 51.66015625,
+              "after": 53.41015625
+            },
+            "bottom_y": {
+              "before": 87.890625,
+              "after": 89.390625
+            }
+          }
+        }
+      ],
+      "score_breakdown": {
+        "primary_edge_6_7_residual": 12.773404126529954,
+        "wall_2_3_surface_or_heading_residual": 37.02045729278922,
+        "wall_5_6_7_8_footprint_residual": 27.039165772540002,
+        "y_height_consistency_residual_pairs_1_2_5_6_7_8": 1.61015796067933,
+        "short_wall_penalty": 47.42942423527907,
+        "short_wall_deficits": {
+          "5-6": 0.28157860786862166,
+          "6-7": 0.19271563448416906
+        },
+        "movement_penalty": 1.5625,
+        "movement_l1_ls_percent": 6.25,
+        "anchor_violation_penalty": 0.0,
+        "assertion_violation_penalty": 0.0,
+        "fold_or_self_intersection_penalty": 0.0,
+        "local_score_total": 198.75697205991602,
+        "dominant_height_cluster_l1": 1.61015796067933
+      },
+      "gate_result": {
+        "passed": true,
+        "checks": {
+          "hard_constraints": true,
+          "primary_or_height_gain": true,
+          "wall_2_3_not_materially_worsened": true,
+          "footprint_not_materially_worsened": true,
+          "short_wall_not_seriously_worsened": true
+        }
+      },
+      "failure_reason": [],
+      "assertion_compliant": true,
+      "assertion_violations": [],
+      "geometry_valid": true,
+      "geometry_invalid_reasons": [],
+      "decision_class": "partial_diagnostic",
+      "direct_ls_trial_allowed": false,
+      "direct_trial_gate": {
+        "checks": {
+          "assertion_compliant": true,
+          "geometry_valid": true,
+          "primary_edge_significantly_improved": true,
+          "primary_edge_resolved_under_15_deg": true,
+          "wall_2_3_not_worsened": true,
+          "wall_5_6_7_8_not_worsened": true,
+          "y_height_consistency_improved": true,
+          "movement_below_threshold": false,
+          "short_wall_not_seriously_worsened": true
+        },
+        "failed_checks": [
+          "movement_below_threshold"
+        ],
+        "short_wall_gate_reasons": [],
+        "passed": false
+      },
+      "order_mutation": false,
+      "merge_delete": false,
+      "topology_rewrite": false
+    },
+    {
+      "candidate_id": "m1527_candidate_0092",
+      "parent_candidate_id": "m1527_candidate_0070",
+      "phase": "exploratory",
+      "round_index": 4,
+      "step_size": 0.125,
+      "action_family": "azimuth_block_shift_x",
+      "semantic_lever": "azimuth",
+      "action": {
+        "family": "azimuth_block_shift_x",
+        "direction": 1,
+        "moves": [
+          {
+            "pair_index": 5,
+            "field": "x",
+            "multiplier": 0.5
+          },
+          {
+            "pair_index": 6,
+            "field": "x",
+            "multiplier": 0.5
+          },
+          {
+            "pair_index": 7,
+            "field": "x",
+            "multiplier": 0.5
+          }
+        ]
+      },
+      "changed_pair_indices": [
+        5,
+        6,
+        7
+      ],
+      "coordinate_changes": [
+        {
+          "effective_pair_index": 5,
+          "fields": {
+            "top_x": {
+              "before": 44.611528822055135,
+              "after": 44.986998746867165
+            },
+            "bottom_x": {
+              "before": 44.987468671679196,
+              "after": 44.986998746867165
+            }
+          }
+        },
+        {
+          "effective_pair_index": 6,
+          "fields": {
+            "top_x": {
+              "before": 43.859649122807014,
+              "after": 44.047149122807014
+            },
+            "bottom_x": {
+              "before": 43.859649122807014,
+              "after": 44.047149122807014
+            },
+            "bottom_y": {
+              "before": 90.47619047619048,
+              "after": 90.22619047619048
+            }
+          }
+        },
+        {
+          "effective_pair_index": 7,
+          "fields": {
+            "top_x": {
+              "before": 51.66015625,
+              "after": 53.34765625
+            },
+            "bottom_x": {
+              "before": 51.66015625,
+              "after": 53.34765625
+            },
+            "bottom_y": {
+              "before": 87.890625,
+              "after": 89.140625
+            }
+          }
+        }
+      ],
+      "score_breakdown": {
+        "primary_edge_6_7_residual": 15.323062570872594,
+        "wall_2_3_surface_or_heading_residual": 37.02045729278922,
+        "wall_5_6_7_8_footprint_residual": 29.937929771488882,
+        "y_height_consistency_residual_pairs_1_2_5_6_7_8": 1.5891930979235784,
+        "short_wall_penalty": 46.806000267603245,
+        "short_wall_deficits": {
+          "5-6": 0.28157860786862154,
+          "6-7": 0.18648139480741094
+        },
+        "movement_penalty": 1.4064849624060152,
+        "movement_l1_ls_percent": 5.625939849624061,
+        "anchor_violation_penalty": 0.0,
+        "assertion_violation_penalty": 0.0,
+        "fold_or_self_intersection_penalty": 0.0,
+        "local_score_total": 210.86528220340813,
+        "dominant_height_cluster_l1": 1.5766727923443167
+      },
+      "gate_result": {
+        "passed": true,
+        "checks": {
+          "hard_constraints": true,
+          "primary_or_height_gain": true,
+          "wall_2_3_not_materially_worsened": true,
+          "footprint_not_materially_worsened": true,
+          "short_wall_not_seriously_worsened": true
+        }
+      },
+      "failure_reason": [],
+      "assertion_compliant": true,
+      "assertion_violations": [],
+      "geometry_valid": true,
+      "geometry_invalid_reasons": [],
+      "decision_class": "partial_diagnostic",
+      "direct_ls_trial_allowed": false,
+      "direct_trial_gate": {
+        "checks": {
+          "assertion_compliant": true,
+          "geometry_valid": true,
+          "primary_edge_significantly_improved": true,
+          "primary_edge_resolved_under_15_deg": false,
+          "wall_2_3_not_worsened": true,
+          "wall_5_6_7_8_not_worsened": true,
+          "y_height_consistency_improved": true,
+          "movement_below_threshold": true,
+          "short_wall_not_seriously_worsened": true
+        },
+        "failed_checks": [
+          "primary_edge_resolved_under_15_deg"
+        ],
+        "short_wall_gate_reasons": [],
+        "passed": false
+      },
+      "order_mutation": false,
+      "merge_delete": false,
+      "topology_rewrite": false
+    },
+    {
+      "candidate_id": "m1527_candidate_0087",
+      "parent_candidate_id": "m1527_candidate_0070",
+      "phase": "exploratory",
+      "round_index": 4,
+      "step_size": 0.125,
+      "action_family": "azimuth_pair_shift_x",
+      "semantic_lever": "azimuth",
+      "action": {
+        "family": "azimuth_pair_shift_x",
+        "direction": 1,
+        "moves": [
+          {
+            "pair_index": 7,
+            "field": "x",
+            "multiplier": 0.5
+          }
+        ]
+      },
+      "changed_pair_indices": [
+        5,
+        6,
+        7
+      ],
+      "coordinate_changes": [
+        {
+          "effective_pair_index": 5,
+          "fields": {
+            "top_x": {
+              "before": 44.611528822055135,
+              "after": 44.924498746867165
+            },
+            "bottom_x": {
+              "before": 44.987468671679196,
+              "after": 44.924498746867165
+            }
+          }
+        },
+        {
+          "effective_pair_index": 6,
+          "fields": {
+            "top_x": {
+              "before": 43.859649122807014,
+              "after": 43.984649122807014
+            },
+            "bottom_x": {
+              "before": 43.859649122807014,
+              "after": 43.984649122807014
+            },
+            "bottom_y": {
+              "before": 90.47619047619048,
+              "after": 90.22619047619048
+            }
+          }
+        },
+        {
+          "effective_pair_index": 7,
+          "fields": {
+            "top_x": {
+              "before": 51.66015625,
+              "after": 53.34765625
+            },
+            "bottom_x": {
+              "before": 51.66015625,
+              "after": 53.34765625
+            },
+            "bottom_y": {
+              "before": 87.890625,
+              "after": 89.140625
+            }
+          }
+        }
+      ],
+      "score_breakdown": {
+        "primary_edge_6_7_residual": 15.362056425952574,
+        "wall_2_3_surface_or_heading_residual": 37.02045729278922,
+        "wall_5_6_7_8_footprint_residual": 30.201923626568856,
+        "y_height_consistency_residual_pairs_1_2_5_6_7_8": 1.5891930979235784,
+        "short_wall_penalty": 46.60793758315271,
+        "short_wall_deficits": {
+          "5-6": 0.2815786078686216,
+          "6-7": 0.1845007679629055
+        },
+        "movement_penalty": 1.3752349624060152,
+        "movement_l1_ls_percent": 5.500939849624061,
+        "anchor_violation_penalty": 0.0,
+        "assertion_violation_penalty": 0.0,
+        "fold_or_self_intersection_penalty": 0.0,
+        "local_score_total": 211.05593879435747,
+        "dominant_height_cluster_l1": 1.5766727923443167
+      },
+      "gate_result": {
+        "passed": true,
+        "checks": {
+          "hard_constraints": true,
+          "primary_or_height_gain": true,
+          "wall_2_3_not_materially_worsened": true,
+          "footprint_not_materially_worsened": true,
+          "short_wall_not_seriously_worsened": true
+        }
+      },
+      "failure_reason": [],
+      "assertion_compliant": true,
+      "assertion_violations": [],
+      "geometry_valid": true,
+      "geometry_invalid_reasons": [],
+      "decision_class": "partial_diagnostic",
+      "direct_ls_trial_allowed": false,
+      "direct_trial_gate": {
+        "checks": {
+          "assertion_compliant": true,
+          "geometry_valid": true,
+          "primary_edge_significantly_improved": true,
+          "primary_edge_resolved_under_15_deg": false,
+          "wall_2_3_not_worsened": true,
+          "wall_5_6_7_8_not_worsened": true,
+          "y_height_consistency_improved": true,
+          "movement_below_threshold": true,
+          "short_wall_not_seriously_worsened": true
+        },
+        "failed_checks": [
+          "primary_edge_resolved_under_15_deg"
+        ],
+        "short_wall_gate_reasons": [],
+        "passed": false
+      },
+      "order_mutation": false,
+      "merge_delete": false,
+      "topology_rewrite": false
+    }
+  ],
+  "m15_26_comparison": {
+    "m15_26_best_candidate_id": "m1526_candidate_0301",
+    "m15_26_primary_edge_residual": 15.616643467002177,
+    "m15_27_primary_edge_residual": 14.170744905397669,
+    "m15_27_primary_edge_better": true,
+    "m15_27_still_partial": false
+  },
+  "overall_verdict": {
+    "direct_fix_available": true,
+    "best_candidate_id": "m1527_candidate_0094",
+    "best_decision_class": "candidate_for_manual_review",
+    "verdict": "candidate_for_manual_review_available"
+  },
+  "case_name": "task218_ann3741",
+  "source_artifacts": {
+    "visual_verdict": {
+      "path": "analysis_results/paper_a_manhattan/visual_verdict/task218_ann3741/visual_verdict.json",
+      "sha256": "44642550c8e86421d75aab6baf618d3d9d114fa93a7028bafedf2626a5a71888"
+    },
+    "adaptive_probe": {
+      "path": "analysis_results/paper_a_manhattan/adaptive_local_probe/task218_ann3741/adaptive_probe.json",
+      "sha256": "d98426890df3f35b4f3597f5063d97aa75c4d2e370835a08b8f334c47530fe16"
+    },
+    "expert_assertion": {
+      "path": "analysis_results/paper_a_manhattan/local_candidate_search/task218_ann3741/expert_assertion.json",
+      "sha256": "3032b5540f6be0e744a6182343156f053df8c84e3355ee4943cab7ec3bb3e698"
+    },
+    "projection_metrics": {
+      "path": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann3741/projection_metrics.json",
+      "sha256": "4b2952fa2106c6f01c873254c6d8749edaf7fac994f54541801c2c619f155ffb"
+    }
+  }
+}

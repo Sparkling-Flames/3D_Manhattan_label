@@ -74,6 +74,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - `tools/paper_a_manhattan/run_m1524_hard_case_audit_pack.py` aggregates the 3741/2369/2389 applicable, smoke, and safe-skip states into a read-only JSON/Markdown audit pack; it does not add candidates or change M15.22 scoring/gating.
 - `tools/paper_a_manhattan/run_m1525_visual_verdict_pack.py` records the task218_ann3741 expert visual verdict and source hashes as a read-only JSON/Markdown sidecar. That verdict was archived from the pre-compare-grid M15.23.4 review; the later M15.23.5 compare grid improves visual comparison only and does not alter the verdict.
 - `tools/paper_a_manhattan/manhattan_m1526_adaptive_local_probe.py` and `run_m1526_adaptive_local_probe.py` provide the deterministic bounded primary-edge/wall-surface-aware adaptive dry-run for task218_ann3741, with assertion-constrained variables, decomposed scores, beam trace, and conservative direct-trial gates; they do not modify projection, M15.22, annotations, routing, viewer behavior, or formal artifacts.
+- `tools/paper_a_manhattan/manhattan_m1527_semantic_direct_search.py` and `run_m1527_semantic_direct_search.py` provide a deterministic expert-side semantic Hooke-Jeeves search over separate azimuth, wall-height, and floor-depth actions; outputs are top-candidate-only dry-run diagnostics with no projection, viewer, annotation, routing, or formal-path changes.
 
 ## 论文 B 线
 
