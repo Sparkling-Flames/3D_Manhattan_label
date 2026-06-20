@@ -372,20 +372,23 @@ def evaluate_hypothesis(
         or (local_residuals and baseline_local_residuals and sum(local_residuals) < sum(baseline_local_residuals) - 1e-9)
         or height["height_outlier_l1"] < baseline_height_l1 - 1e-9
     )
-    if not feasibility["hard_gate_passed"]:
+    if metric_errors:
+        decision_class = "diagnostic_only_incomplete_metrics"
+    elif not feasibility["hard_gate_passed"]:
         decision_class = "suppressed_hard_constraint"
     elif not improved:
-        decision_class = "neutral_no_improvement"
+        decision_class = "hard_feasible_neutral"
     elif legacy_trial_allowed is False:
         decision_class = "legacy_trial_blocked"
     elif _evidence(candidate_variant)["evidence_status"] != "available":
-        decision_class = "diagnostic_only_incomplete_evidence"
+        decision_class = "hard_feasible_improving_evidence_unavailable"
     else:
-        decision_class = "eligible_ranked_hypothesis"
+        decision_class = "hard_feasible_improving_evidence_supported"
     return {
         "evaluator_version": EVALUATOR_VERSION,
         "evaluation_status": "incomplete_metrics" if metric_errors else "complete",
         "decision_class": decision_class,
+        "is_improving_hypothesis": improved,
         "feasibility": feasibility,
         "manhattan_feasibility": manhattan,
         "height_consistency": height,

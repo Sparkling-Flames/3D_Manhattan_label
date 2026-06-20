@@ -14,6 +14,9 @@ from tools.paper_a_manhattan.run_manhattan_hypothesis_ranking_core import (
 
 
 ROOT = Path("analysis_results/paper_a_manhattan")
+EXPERT_FIXTURE = json.loads(
+    Path("tests/fixtures/manhattan_expert_verdict_regression_v1.json").read_text(encoding="utf-8")
+)["cases"]
 
 
 def _artifact(case):
@@ -34,7 +37,7 @@ def _config(payload):
 def test_standalone_core_runner_schema_and_verdicts(tmp_path):
     payload = build_payload()
     assert payload["schema_version"] == SCHEMA_VERSION
-    assert "portfolio_candidates" not in payload
+    assert {"portfolio_candidates", "m15_28_gate", "legacy_m15_28_gate"}.isdisjoint(payload)
     assert set(payload) >= {
         "case_contract",
         "candidate_set",
@@ -45,17 +48,48 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
         "overall_verdict",
     }
     verdict = payload["overall_verdict"]
-    assert verdict["hypothesis_available"] == any(row["hard_gate_passed"] for row in payload["candidate_set"])
-    assert verdict["legacy_ls_trial_available"] == any(
-        row["hard_gate_passed"] and row["legacy_direct_ls_trial_allowed"]
+    assert verdict["hard_feasible_candidate_available"] == any(row["hard_gate_passed"] for row in payload["candidate_set"])
+    assert verdict["improving_hypothesis_available"] == any(
+        row["hard_gate_passed"] and row["is_improving_hypothesis"]
         for row in payload["candidate_set"]
+    )
+    assert verdict["recommended_review_candidate_available"] == any(
+        row["recommended_review_candidate"] for row in payload["candidate_set"]
     )
     assert any(
-        row["hard_gate_passed"] and not row["legacy_direct_ls_trial_allowed"]
-        for row in payload["candidate_set"]
+        evaluation["feasibility"]["hard_gate_passed"]
+        and candidate_id not in payload["legacy_diagnostics"]["legacy_direct_ls_trial_candidates"]
+        for candidate_id, evaluation in payload["constrained_evaluations"].items()
     )
-    assert verdict["hypothesis_available"] is True
+    assert verdict["hard_feasible_candidate_available"] is True
     assert payload["legacy_diagnostics"]["legacy_score_role"] == "diagnostic_only"
+    assert payload["legacy_diagnostics"]["legacy_portfolio_role"] == "diagnostic_only"
+    assert isinstance(verdict["legacy_ls_trial_available"], bool)
+    for bucket in payload["legacy_diagnostics"]["legacy_portfolio_candidates"].values():
+        assert set(bucket) == {"candidate_id", "action_family", "reason"}
+    main_surface = {key: value for key, value in payload.items() if key != "legacy_diagnostics"}
+    main_text = json.dumps(main_surface, ensure_ascii=False)
+    for deprecated in (
+        '"portfolio_candidates"',
+        '"m15_28_gate"',
+        '"legacy_m15_28_gate"',
+        '"legacy_score_breakdown"',
+        '"local_score_total"',
+        '"legacy_default_contract"',
+        '"legacy_source_files"',
+    ):
+        assert deprecated not in main_text
+    required_suppressed = {
+        "candidate_id",
+        "decision_class",
+        "hard_failure_reasons",
+        "projection_metric_errors",
+        "plausibility_failure_reasons",
+        "action_family",
+        "changed_pair_indices",
+    }
+    assert payload["suppressed_candidates"]
+    assert all(set(row) == required_suppressed for row in payload["suppressed_candidates"])
     assert payload["safety_boundary"]["automatic_apply"] is False
     assert payload["safety_boundary"]["annotation_writeback"] is False
     assert payload["safety_boundary"]["worker_facing"] is False
@@ -70,6 +104,7 @@ def test_3741_real_candidate_beats_low_legacy_score_hard_failure():
     baseline = next(row for row in payload["variants"] if row["name"] == "original")
     candidate = next(row for row in payload["variants"] if row["name"] == "m1527_candidate_0094")
     assertion = json.loads((ROOT / "local_candidate_search/task218_ann3741/expert_assertion.json").read_text(encoding="utf-8"))
+    assert assertion["do_not_move_pairs"] == EXPERT_FIXTURE["task218_ann3741"]["do_not_move_pairs"]
     contract = build_case_contract(baseline["ordered_pairs"], assertion, baseline["metrics"])
     candidate_row = candidate["candidate_row"]
     good = evaluate_hypothesis(
@@ -97,6 +132,7 @@ def test_3741_real_candidate_beats_low_legacy_score_hard_failure():
     )
     rows = [{"candidate_id": "real_3741"}, {"candidate_id": "low_score_hard_fail"}]
     portfolio = build_hypothesis_portfolio(rows, [good, bad])
+    assert EXPERT_FIXTURE["task218_ann3741"]["hard_fail_must_be_suppressed"] is True
     assert good["feasibility"]["hard_gate_passed"] is True
     assert bad["decision_class"] == "suppressed_hard_constraint"
     assert portfolio["best_balanced"]["candidate"]["candidate_id"] == "real_3741"
@@ -110,7 +146,9 @@ def test_2369_dense_but_distinct_candidate_remains_rankable():
         row for row in baseline["metrics"]["dense_pairs"]["pairs"]
         if row["classification"] == "dense_but_distinct_3d_corner"
     )
+    assert dense["classification"] == EXPERT_FIXTURE["task218_ann2369"]["expected_dense_class"]
     left, right = int(dense["pair_i"]), int(dense["pair_j"])
+    assert [[left, right]] == EXPERT_FIXTURE["task218_ann2369"]["keep_distinct_pairs"]
     pairs = copy.deepcopy(baseline["ordered_pairs"])
     target = next(row for row in pairs if int(row["effective_pair_index"]) == left)
     target["top"]["x"] += 0.01
@@ -142,6 +180,7 @@ def test_2389_real_height_probe_orders_by_dominant_cluster_residual():
         baseline, baseline, baseline["ordered_pairs"], baseline["ordered_pairs"], baseline_contract
     )
     target_index = baseline_eval["height_consistency"]["height_outlier_pairs"][0]
+    assert [target_index] == EXPERT_FIXTURE["task238_ann2389"]["dominant_height_outlier_pairs"]
     evaluations = []
     rows = []
     for delta in (-0.5, 0.5):
@@ -159,6 +198,28 @@ def test_2389_real_height_probe_orders_by_dominant_cluster_residual():
         )
         evaluations.append(evaluate_hypothesis(baseline, candidate, baseline["ordered_pairs"], pairs, contract))
         rows.append({"candidate_id": candidate["name"]})
+    pure_x_pairs = copy.deepcopy(baseline["ordered_pairs"])
+    pure_x_target = pure_x_pairs[0]
+    pure_x_target["top"]["x"] += 0.01
+    pure_x_target["bottom"]["x"] += 0.01
+    pure_x_variant = build_projection_variant("pure_x", pure_x_pairs, **_config(payload))
+    pure_x_contract = build_case_contract(
+        baseline["ordered_pairs"],
+        {"candidate_window": [int(pure_x_target["effective_pair_index"])], "movable_fields_by_pair": {str(pure_x_target["effective_pair_index"]): ["x"]}},
+        baseline["metrics"],
+    )
+    evaluations.append(
+        evaluate_hypothesis(
+            baseline,
+            pure_x_variant,
+            baseline["ordered_pairs"],
+            pure_x_pairs,
+            pure_x_contract,
+        )
+    )
+    rows.append({"candidate_id": "pure_x"})
     expected = rows[min(range(2), key=lambda index: evaluations[index]["height_consistency"]["height_outlier_l1"])]["candidate_id"]
+    assert min(evaluation["height_consistency"]["height_outlier_l1"] for evaluation in evaluations[:2]) < evaluations[2]["height_consistency"]["height_outlier_l1"]
+    assert EXPERT_FIXTURE["task238_ann2389"]["height_candidate_must_rank_by_height_before_pure_x_tie_break"] is True
     portfolio = build_hypothesis_portfolio(rows, evaluations)
     assert portfolio["best_height_consistent"]["candidate"]["candidate_id"] == expected

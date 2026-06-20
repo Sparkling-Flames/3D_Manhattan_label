@@ -1,0 +1,18 @@
+{
+  "schema_version": "manhattan_expert_verdict_regression_v1",
+  "cases": {
+    "task218_ann3741": {
+      "do_not_move_pairs": [4, 8],
+      "known_primary_edge": "6-7",
+      "hard_fail_must_be_suppressed": true
+    },
+    "task218_ann2369": {
+      "keep_distinct_pairs": [[5, 6]],
+      "expected_dense_class": "dense_but_distinct_3d_corner"
+    },
+    "task238_ann2389": {
+      "dominant_height_outlier_pairs": [4],
+      "height_candidate_must_rank_by_height_before_pure_x_tie_break": true
+    }
+  }
+}

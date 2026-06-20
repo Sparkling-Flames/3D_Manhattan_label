@@ -336,6 +336,7 @@ def run_action_library(
         "portfolio_candidates": portfolios,
         "legacy_portfolio_candidates": portfolios,
         "portfolio_candidates_role": "legacy_diagnostic_only",
+        "legacy_portfolio_candidates_role": "diagnostic_only",
         "portfolio_ranking": structured_portfolio,
         "legacy_score_role": "diagnostic_only",
         "overall_verdict": {

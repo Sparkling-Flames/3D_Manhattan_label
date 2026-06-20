@@ -39,3 +39,11 @@
 ## 后续用途
 
 人工判断不应长期只是流程阻塞点。积累后的 ledger 可用于评估固定阈值、调整 deterministic ranking 参数，或在单独审查后训练轻量 ranker；任何训练或上线均不属于本 v1 schema 的实现范围。
+
+## Compatibility surface
+
+M15.28 compatibility fields are deprecated for the Manhattan Constrained Hypothesis Ranking Core. 新代码只能消费 `portfolio_ranking` 与 `constrained_evaluations`；`portfolio_candidates`、`m15_28_gate`、`legacy_m15_28_gate` 和 `local_score_total` 不属于新 core 主输出合同，只能以 compact diagnostic summary 保存在 `legacy_diagnostics`。
+
+## Materialization
+
+`tools/paper_a_manhattan/materialize_manhattan_feedback_ledger_entry.py` 接收 `manhattan_constrained_hypothesis_ranking_core_v1` JSON 与 expert review JSON，验证 candidate ID 和 accepted 状态后输出单条 JSONL。该步骤只物化审计记录，不训练模型、不更新 ranker 参数、不应用候选，也不写回 annotation。

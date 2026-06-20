@@ -258,9 +258,32 @@ def test_decision_classes_are_structured_and_legacy_gate_is_not_a_hard_gate():
     neutral = evaluate_hypothesis(baseline, baseline, _pairs(), _pairs(), contract)
     hard = _evaluate(candidate_variant={"metrics": {}})
 
-    assert diagnostic["decision_class"] == "diagnostic_only_incomplete_evidence"
+    assert diagnostic["decision_class"] == "hard_feasible_improving_evidence_unavailable"
     assert blocked["decision_class"] == "legacy_trial_blocked"
     assert blocked["feasibility"]["hard_gate_passed"] is True
-    assert eligible["decision_class"] == "eligible_ranked_hypothesis"
-    assert neutral["decision_class"] == "neutral_no_improvement"
-    assert hard["decision_class"] == "suppressed_hard_constraint"
+    assert eligible["decision_class"] == "hard_feasible_improving_evidence_supported"
+    assert neutral["decision_class"] == "hard_feasible_neutral"
+    assert hard["decision_class"] == "diagnostic_only_incomplete_metrics"
+
+
+def test_projection_rule_based_case_analyzer_on_real_artifacts():
+    root = Path("analysis_results/paper_a_manhattan/local_3d_projection")
+    expected = {
+        "task218_ann3741": {"primary": "2-3", "height": {1, 2}},
+        "task218_ann2369": {"primary": "8-1", "height": {1, 7, 8}},
+        "task238_ann2389": {"primary": "6-1", "height": {4}},
+    }
+    for case, values in expected.items():
+        payload = json.loads((root / case / "projection_metrics.json").read_text(encoding="utf-8"))
+        original = payload["variants"][0]
+        contract = build_case_contract(
+            original["ordered_pairs"], projection_metrics=original["metrics"]
+        )
+        assert contract["inferred_primary_edges"] == [values["primary"]]
+        assert set(contract["inferred_height_target_pairs"]) == values["height"]
+        assert contract["auto_contract_summary"]["legacy_fallback_used"] is False
+        assert contract["inferred_local_window_pairs"]
+    payload = json.loads((root / "task218_ann2369/projection_metrics.json").read_text(encoding="utf-8"))
+    original = payload["variants"][0]
+    contract = build_case_contract(original["ordered_pairs"], projection_metrics=original["metrics"])
+    assert contract["inferred_keep_distinct_pairs"] == [[5, 6]]

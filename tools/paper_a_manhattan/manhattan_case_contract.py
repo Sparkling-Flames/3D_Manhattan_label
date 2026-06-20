@@ -11,6 +11,69 @@ LEGACY_SOURCE_FILES = [
     "tools/paper_a_manhattan/manhattan_m1527_semantic_direct_search.py",
     "tools/paper_a_manhattan/manhattan_m1528_semantic_action_library.py",
 ]
+PRIMARY_RESIDUAL_DEG = 15.0
+SECONDARY_RESIDUAL_DEG = 10.0
+
+
+def _infer_contract(
+    indices: Sequence[int], projection_metrics: Mapping[str, Any]
+) -> dict[str, Any]:
+    walls = [
+        row
+        for row in projection_metrics.get("floorprint", {}).get("walls", [])
+        if row.get("from_pair") is not None
+        and row.get("to_pair") is not None
+        and isinstance(row.get("angle_residual_deg"), (int, float))
+    ]
+    ranked = sorted(walls, key=lambda row: (-float(row["angle_residual_deg"]), int(row["from_pair"])))
+    primary = [
+        f"{int(row['from_pair'])}-{int(row['to_pair'])}"
+        for row in ranked[:1]
+        if float(row["angle_residual_deg"]) >= PRIMARY_RESIDUAL_DEG
+    ]
+    secondary = [
+        f"{int(row['from_pair'])}-{int(row['to_pair'])}"
+        for row in ranked[1:]
+        if float(row["angle_residual_deg"]) >= SECONDARY_RESIDUAL_DEG
+    ][:2]
+    height_targets = sorted(
+        int(row["effective_pair_index"])
+        for row in projection_metrics.get("heights", {}).get("pairs", [])
+        if row.get("suspicious_low_height") or row.get("suspicious_high_height")
+    )
+    keep_distinct = sorted(
+        [int(row["pair_i"]), int(row["pair_j"])]
+        for row in projection_metrics.get("dense_pairs", {}).get("pairs", [])
+        if row.get("classification") == "dense_but_distinct_3d_corner"
+    )
+    positions = {value: position for position, value in enumerate(indices)}
+    local: set[int] = set(height_targets)
+    for name in [*primary, *secondary]:
+        for value in map(int, name.split("-")):
+            if value not in positions:
+                continue
+            position = positions[value]
+            local.update(
+                {
+                    indices[(position - 1) % len(indices)],
+                    value,
+                    indices[(position + 1) % len(indices)],
+                }
+            )
+    local.update(value for pair in keep_distinct for value in pair)
+    movable = {str(index): ["x", "bottom_y"] for index in sorted(local)}
+    for index in height_targets:
+        movable.setdefault(str(index), [])
+        if "top_y" not in movable[str(index)]:
+            movable[str(index)].append("top_y")
+    return {
+        "inferred_primary_edges": primary,
+        "inferred_secondary_edges": secondary,
+        "inferred_local_window_pairs": sorted(local),
+        "inferred_height_target_pairs": height_targets,
+        "inferred_keep_distinct_pairs": keep_distinct,
+        "inferred_movable_fields_by_pair": movable,
+    }
 
 
 def build_case_contract(
@@ -22,14 +85,26 @@ def build_case_contract(
     assertions = dict(expert_assertions or {})
     indices = [int(row["effective_pair_index"]) for row in layout_pairs]
     available = set(indices)
+    metrics = projection_metrics or {}
+    inferred = _infer_contract(indices, metrics) if indices and metrics else {
+        "inferred_primary_edges": [],
+        "inferred_secondary_edges": [],
+        "inferred_local_window_pairs": [],
+        "inferred_height_target_pairs": [],
+        "inferred_keep_distinct_pairs": [],
+        "inferred_movable_fields_by_pair": {},
+    }
 
     def edge(left: int, right: int) -> str | None:
         return f"{left}-{right}" if {left, right} <= available else None
 
-    primary = [value for value in (edge(6, 7),) if value]
-    secondary = [value for value in (edge(2, 3),) if value]
-    window = [value for value in (5, 6, 7, 8) if value in available]
-    legacy_defaults_used = bool(primary or secondary or window)
+    legacy_primary = [value for value in (edge(6, 7),) if value]
+    legacy_secondary = [value for value in (edge(2, 3),) if value]
+    legacy_window = [value for value in (5, 6, 7, 8) if value in available]
+    primary = inferred["inferred_primary_edges"] if metrics else legacy_primary
+    secondary = inferred["inferred_secondary_edges"] if metrics else legacy_secondary
+    window = inferred["inferred_local_window_pairs"] if metrics else legacy_window
+    legacy_defaults_used = not bool(metrics)
 
     primary = list(assertions.get("primary_edges", primary))
     secondary = list(
@@ -40,12 +115,25 @@ def build_case_contract(
     protected = sorted(
         {int(value) for value in assertions.get("protected_pairs", do_not_move)} | set(do_not_move)
     )
+    keep_distinct_source = assertions.get(
+        "keep_distinct_pairs", inferred["inferred_keep_distinct_pairs"]
+    )
     keep_distinct = [
         [int(pair[0]), int(pair[1])]
-        for pair in assertions.get("keep_distinct_pairs", [])
+        for pair in keep_distinct_source
     ]
     allowed_short = [str(value) for value in assertions.get("allowed_short_edges", [])]
-    default_fields = {str(index): ["x", "top_y", "bottom_y"] for index in window if index not in do_not_move}
+    default_fields = {
+        str(index): list(fields)
+        for index, fields in inferred["inferred_movable_fields_by_pair"].items()
+        if int(index) not in do_not_move
+    }
+    if assertions.get("candidate_window") or assertions.get("local_window_pairs"):
+        default_fields = {
+            str(index): ["x", "top_y", "bottom_y"]
+            for index in window
+            if index not in do_not_move
+        }
     for index in assertions.get("allow_secondary_window_pairs", []):
         if int(index) not in do_not_move:
             default_fields[str(int(index))] = list(
@@ -55,7 +143,6 @@ def build_case_contract(
         str(key): list(value)
         for key, value in assertions.get("movable_fields_by_pair", default_fields).items()
     }
-    metrics = projection_metrics or {}
     return {
         "schema_version": SCHEMA_VERSION,
         "primary_edges": primary,
@@ -66,6 +153,13 @@ def build_case_contract(
         "keep_distinct_pairs": keep_distinct,
         "allowed_short_edges": allowed_short,
         "movable_fields_by_pair": movable,
+        **inferred,
+        "auto_contract_summary": {
+            "source": "projection_rule_based_v1" if metrics else "legacy_fallback",
+            "legacy_fallback_used": legacy_defaults_used,
+            "primary_residual_threshold_deg": PRIMARY_RESIDUAL_DEG,
+            "secondary_residual_threshold_deg": SECONDARY_RESIDUAL_DEG,
+        },
         "suspected_failure_family": assertions.get("suspected_failure_family", "local_manhattan_residual"),
         "order_override_status": assertions.get("order_override_status", "not_requested"),
         "topology_hypothesis_allowed": bool(assertions.get("topology_hypothesis_allowed", False)),
@@ -74,7 +168,7 @@ def build_case_contract(
             "hohonet": bool(metrics.get("hohonet_evidence")),
             "expert_assertions": bool(assertions),
         },
-        "contract_source": "rule_based_v1",
+        "contract_source": "rule_based_projection_v2" if metrics else "rule_based_v1",
         "legacy_default_contract": {
             "used": legacy_defaults_used,
             "reason": (

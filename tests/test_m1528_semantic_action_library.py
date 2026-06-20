@@ -55,10 +55,10 @@ def test_m1528_action_library_and_review_gate(tmp_path):
     assert {path: _digest(path) for path in PROTECTED} == before
     payload = json.loads(paths["json"].read_text(encoding="utf-8"))
     assert payload["schema_version"] == "m15_28_semantic_action_library_v1"
-    assert payload["case_contract"]["contract_source"] == "rule_based_v1"
+    assert payload["case_contract"]["contract_source"] == "rule_based_projection_v2"
     assert payload["legacy_score_role"] == "diagnostic_only"
     assert payload["portfolio_candidates_role"] == "legacy_diagnostic_only"
-    assert payload["legacy_portfolio_candidates"] == payload["portfolio_candidates"]
+    assert payload["legacy_portfolio_candidates_role"] == "diagnostic_only"
     assert payload["overall_verdict"]["verdict_basis"] == "constrained_hard_gate_and_manual_review_gate"
     assert payload["portfolio_ranking"]["best_balanced"].get("candidate") or payload["portfolio_ranking"]["best_balanced"].get("reason")
     assert all("constrained_evaluation" in row and "hypothesis_ranking_key" in row for row in payload["top_candidates"])

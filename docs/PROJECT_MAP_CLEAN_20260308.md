@@ -29,7 +29,7 @@
   - `data_prep/`：数据集准备和 MP3D smoke/import 生成。
   - `foreign_recruitment/`：P1/PreScreen 外国标注员 HTTPS 英文适配包。
 - `tools/paper_a_manhattan/`
-  - Manhattan Constrained Hypothesis Ranking Core：case contract、structured evaluator、standalone runner 与 portfolio ranking；M15.* 仅作为兼容候选源。
+  - Manhattan Constrained Hypothesis Ranking Core：case analyzer、structured evaluator、standalone runner、portfolio ranking 与 feedback-ledger JSONL materializer；M15.* 仅作为兼容候选源。
   - Paper A Manhattan / sandbox / expert review / post-hoc audit-only 工具。
   - `dev_only/`：Manhattan sandbox userscripts。
   - `manhattan_3d_projection.py`、`run_local_3d_projection_review.py` 与 `serve_local_3d_projection_review.py`：本地投影与只读 candidate review；M15.23.7 提供 1–6-panel flexible compare grid、始终可见的 panel 删除按钮、每个 viewport 两行及额外行滚动，全局广播 labels/texture/ghost/camera preset，inspector/measure/next issue 仅作用于 active panel；不连接云端、不写回、不进入正式 artifact。
