@@ -263,6 +263,7 @@ def run_action_library(
             deficit_delta = _short_deficit(row["score_breakdown"]) - baseline_deficit
             row["score_breakdown"]["allowed_short_wall_deficit_delta"] = deficit_delta
             row["score_breakdown"]["legacy_score_role"] = "diagnostic_only"
+            band_ok = deficit_delta <= ALLOWED_SHORT_DEFICIT_BAND + 1e-12
             candidate_variant = build_projection_variant(
                 candidate_id,
                 candidate_pairs,
@@ -275,11 +276,12 @@ def run_action_library(
                 candidate_pairs,
                 case_contract,
                 legacy_score_breakdown=row["score_breakdown"],
+                legacy_trial_allowed=bool(row["direct_ls_trial_allowed"] and band_ok),
             )
+            row["decision_class"] = row["constrained_evaluation"]["decision_class"]
             row["hypothesis_ranking_key"] = list(
                 build_hypothesis_ranking_key(row["constrained_evaluation"])
             )
-            band_ok = deficit_delta <= ALLOWED_SHORT_DEFICIT_BAND + 1e-12
             checks = {
                 "assertion_compliant": row["assertion_compliant"],
                 "geometry_valid": row["geometry_valid"],
@@ -330,6 +332,7 @@ def run_action_library(
         "evaluation_count": len(rows),
         "family_evaluation_counts": dict(sorted(counts.items())),
         "top_candidates": ranked[:TOP_LIMIT],
+        "candidate_set": rows,
         "portfolio_candidates": portfolios,
         "legacy_portfolio_candidates": portfolios,
         "portfolio_candidates_role": "legacy_diagnostic_only",

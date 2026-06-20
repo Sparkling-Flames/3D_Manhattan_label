@@ -229,3 +229,38 @@ def test_real_projection_artifact_regression(artifact):
     assert evaluation["evaluation_status"] == "complete"
     assert evaluation["feasibility"]["projection_valid"] is True
     assert evaluation["height_consistency"]["dominant_height_cluster_members"]
+
+
+def test_decision_classes_are_structured_and_legacy_gate_is_not_a_hard_gate():
+    baseline = _variant()
+    improved = _variant()
+    next(row for row in improved["metrics"]["floorprint"]["walls"] if row["from_pair"] == 3)["angle_residual_deg"] = 10.0
+    contract = build_case_contract(_pairs(), {"primary_edges": ["3-4"], "candidate_window": []})
+
+    diagnostic = evaluate_hypothesis(baseline, improved, _pairs(), _pairs(), contract)
+    blocked = evaluate_hypothesis(
+        baseline, improved, _pairs(), _pairs(), contract, legacy_trial_allowed=False
+    )
+    evidence = {field: [] if field == "visual_conflict_flags" else 0.0 for field in (
+        "hohonet_wallwall_peak_alignment",
+        "hohonet_floor_boundary_rmse_delta",
+        "hohonet_ceiling_boundary_rmse_delta",
+        "candidate_corner_column_delta",
+        "seam_consistency_delta",
+        "visual_conflict_flags",
+        "image_edge_support_optional",
+    )}
+    eligible_variant = _variant(evidence=evidence)
+    next(row for row in eligible_variant["metrics"]["floorprint"]["walls"] if row["from_pair"] == 3)["angle_residual_deg"] = 10.0
+    eligible = evaluate_hypothesis(
+        baseline, eligible_variant, _pairs(), _pairs(), contract, legacy_trial_allowed=True
+    )
+    neutral = evaluate_hypothesis(baseline, baseline, _pairs(), _pairs(), contract)
+    hard = _evaluate(candidate_variant={"metrics": {}})
+
+    assert diagnostic["decision_class"] == "diagnostic_only_incomplete_evidence"
+    assert blocked["decision_class"] == "legacy_trial_blocked"
+    assert blocked["feasibility"]["hard_gate_passed"] is True
+    assert eligible["decision_class"] == "eligible_ranked_hypothesis"
+    assert neutral["decision_class"] == "neutral_no_improvement"
+    assert hard["decision_class"] == "suppressed_hard_constraint"

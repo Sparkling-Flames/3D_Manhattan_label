@@ -79,6 +79,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - `tools/paper_a_manhattan/run_m1527_optimization_trace_ledger.py` seeds and atomically records the expert comparison of the M15.22/M15.26/M15.27.1 path; it writes only the local optimization ledger.
 - `tools/paper_a_manhattan/manhattan_m1528_semantic_action_library.py` and `run_m1528_semantic_action_library.py` add decoupled x, primary-edge, short-wall-preserving, height-portfolio, and explicitly gated secondary-window actions. The official runner requires a reviewed trace ledger and never claims an automatic fix.
 - `tools/paper_a_manhattan/manhattan_case_contract.py`, `manhattan_constrained_hypothesis_evaluator.py`, and `manhattan_hypothesis_portfolio.py` provide the Manhattan Constrained Hypothesis Ranking Core. Legacy M15.* remains a candidate source; hard gates and structured metrics drive expert-side offline portfolio ranking without apply, writeback, worker-facing, routing, or protocol behavior.
+- `tools/paper_a_manhattan/run_manhattan_hypothesis_ranking_core.py` emits the standalone `manhattan_constrained_hypothesis_ranking_core_v1` output; M15.28 is retained only as its legacy candidate source.
 
 ## 论文 B 线
 

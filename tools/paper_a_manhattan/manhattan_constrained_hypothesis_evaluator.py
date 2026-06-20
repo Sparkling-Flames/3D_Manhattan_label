@@ -204,6 +204,7 @@ def evaluate_hypothesis(
     candidate_pairs: Sequence[Mapping[str, Any]],
     case_contract: Mapping[str, Any],
     legacy_score_breakdown: Mapping[str, Any] | None = None,
+    legacy_trial_allowed: bool | None = None,
 ) -> dict[str, Any]:
     """Evaluate one candidate. Hard failures are gates, never numeric penalties."""
     before, after = _pairs(baseline_pairs), _pairs(candidate_pairs)
@@ -338,9 +339,53 @@ def evaluate_hypothesis(
         "plausibility_failure_reasons": plausibility_reasons,
     }
     legacy = dict(legacy_score_breakdown or {})
+    baseline_wall_residuals = [
+        float(row["angle_residual_deg"])
+        for row in baseline_variant.get("metrics", {}).get("floorprint", {}).get("walls", [])
+        if _finite(row.get("angle_residual_deg"))
+    ]
+    baseline_local_residuals = [
+        float(baseline_walls[name]["angle_residual_deg"])
+        for name in local_edges
+        if name in baseline_walls
+    ]
+    baseline_height_rows = [
+        row
+        for row in baseline_variant.get("metrics", {}).get("heights", {}).get("pairs", [])
+        if row.get("effective_pair_index") is not None and _finite(row.get("wall_height"))
+    ]
+    baseline_cluster = dominant_height_cluster_from_rows(baseline_height_rows) if baseline_height_rows else None
+    baseline_height_l1 = (
+        sum(abs(float(row["wall_height"]) - baseline_cluster["h_star"]) for row in baseline_height_rows)
+        if baseline_cluster
+        else math.inf
+    )
+    improved = bool(
+        (
+            wall_residuals
+            and baseline_wall_residuals
+            and (
+            max(wall_residuals) < max(baseline_wall_residuals) - 1e-9
+            or statistics.median(wall_residuals) < statistics.median(baseline_wall_residuals) - 1e-9
+            )
+        )
+        or (local_residuals and baseline_local_residuals and sum(local_residuals) < sum(baseline_local_residuals) - 1e-9)
+        or height["height_outlier_l1"] < baseline_height_l1 - 1e-9
+    )
+    if not feasibility["hard_gate_passed"]:
+        decision_class = "suppressed_hard_constraint"
+    elif not improved:
+        decision_class = "neutral_no_improvement"
+    elif legacy_trial_allowed is False:
+        decision_class = "legacy_trial_blocked"
+    elif _evidence(candidate_variant)["evidence_status"] != "available":
+        decision_class = "diagnostic_only_incomplete_evidence"
+    else:
+        decision_class = "eligible_ranked_hypothesis"
     return {
         "evaluator_version": EVALUATOR_VERSION,
         "evaluation_status": "incomplete_metrics" if metric_errors else "complete",
+        "decision_class": decision_class,
         "feasibility": feasibility,
         "manhattan_feasibility": manhattan,
         "height_consistency": height,
