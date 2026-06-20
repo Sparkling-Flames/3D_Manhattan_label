@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import copy
-import statistics
 from collections import Counter
 from typing import Any, Mapping, Sequence
 
@@ -22,6 +21,9 @@ from tools.paper_a_manhattan.manhattan_m1526_adaptive_local_probe import (
     _pair_lookup,
     _score_breakdown,
     _signature,
+)
+from tools.paper_a_manhattan.manhattan_constrained_hypothesis_evaluator import (
+    dominant_height_cluster_from_rows,
 )
 from tools.paper_a_manhattan.run_local_3d_projection_review import (
     build_projection_variant,
@@ -68,42 +70,11 @@ def manual_review_candidate_available(payload: Mapping[str, Any]) -> bool:
 def dominant_height_cluster(variant: Mapping[str, Any]) -> dict[str, Any]:
     """Select the largest projected-height component; MAD breaks ties."""
     heights = _height_lookup(variant)
-    rows = sorted(
-        (float(heights[index]["wall_height"]), index)
-        for index in HEIGHT_TARGET_PAIRS
-        if index in heights
+    return dominant_height_cluster_from_rows(
+        list(heights.values()),
+        target_pair_indices=HEIGHT_TARGET_PAIRS,
+        gap_threshold=HEIGHT_CLUSTER_GAP,
     )
-    components: list[list[tuple[float, int]]] = []
-    for row in rows:
-        if not components or row[0] - components[-1][-1][0] > HEIGHT_CLUSTER_GAP:
-            components.append([row])
-        else:
-            components[-1].append(row)
-
-    def summary(component: Sequence[tuple[float, int]]) -> tuple[int, float, float]:
-        values = [row[0] for row in component]
-        center = statistics.median(values)
-        mad = statistics.median(abs(value - center) for value in values)
-        return len(component), mad, center
-
-    selected = min(components, key=lambda rows: (-summary(rows)[0], summary(rows)[1], summary(rows)[2]))
-    _, mad, h_star = summary(selected)
-    members = sorted(row[1] for row in selected)
-    return {
-        "source_metric": "projected_wall_height",
-        "target_pair_indices": list(HEIGHT_TARGET_PAIRS),
-        "method": "largest_gap_connected_cluster_then_minimum_mad",
-        "gap_threshold": HEIGHT_CLUSTER_GAP,
-        "h_star": h_star,
-        "cluster_members": members,
-        "mad": mad,
-        "height_outliers": [index for index in HEIGHT_TARGET_PAIRS if index not in members],
-        "projected_wall_heights": {
-            str(index): float(heights[index]["wall_height"])
-            for index in HEIGHT_TARGET_PAIRS
-            if index in heights
-        },
-    }
 
 
 def _actions(cluster: Mapping[str, Any], frozen: set[int]) -> list[dict[str, Any]]:

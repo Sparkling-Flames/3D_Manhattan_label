@@ -1,4 +1,8 @@
 from copy import deepcopy
+import json
+from pathlib import Path
+
+import pytest
 
 from tools.paper_a_manhattan.manhattan_case_contract import build_case_contract
 from tools.paper_a_manhattan.manhattan_constrained_hypothesis_evaluator import (
@@ -21,7 +25,7 @@ def _pairs():
     ]
 
 
-def _variant(*, short_edges=(), lengths=None, self_intersection=False, evidence=None):
+def _variant(*, short_edges=(), lengths=None, self_intersection=False, evidence=None, warnings=None, warning_codes=None):
     lengths = lengths or {}
     walls = []
     for left, right, residual in ((1, 2, 3.0), (2, 3, 8.0), (3, 4, 18.0), (4, 1, 5.0)):
@@ -55,7 +59,11 @@ def _variant(*, short_edges=(), lengths=None, self_intersection=False, evidence=
             },
             "heights": {"pairs": heights},
         },
-        "projection": {"pairs": projection_pairs, "warnings": []},
+        "projection": {
+            "pairs": projection_pairs,
+            "warnings": list(warnings or []),
+            **({"warning_codes": list(warning_codes)} if warning_codes is not None else {}),
+        },
     }
     if evidence is not None:
         result["evidence"] = evidence
@@ -154,3 +162,70 @@ def test_case_contract_and_evaluator_keep_the_safety_boundary_read_only():
     assert evaluation["safety_boundary"]["annotation_patch_generated"] is False
     assert evaluation["safety_boundary"]["worker_facing"] is False
     assert evaluation["safety_boundary"]["routing_input"] is False
+
+
+def test_movable_fields_are_a_hard_contract():
+    contract = build_case_contract(
+        _pairs(),
+        {"candidate_window": [2], "movable_fields_by_pair": {"2": ["x"]}},
+    )
+    candidate = _pairs()
+    candidate[1]["top"]["y"] += 1.0
+    evaluation = _evaluate(candidate_pairs=candidate, contract=contract)
+    assert evaluation["feasibility"]["authorized_mutations_only"] is False
+    assert "unauthorized_mutation_pair_2_top_y" in evaluation["feasibility"]["hard_failure_reasons"]
+    assert evaluation["feasibility"]["hard_gate_passed"] is False
+
+
+def test_height_uses_largest_gap_dominant_cluster_not_global_median():
+    evaluation = _evaluate()
+    height = evaluation["height_consistency"]
+    assert height["dominant_height_h_star"] == pytest.approx(2.81)
+    assert height["dominant_height_cluster_members"] == [1, 2, 3]
+    assert height["height_outlier_pairs"] == [4]
+    assert height["dominant_height_cluster_method"] == "largest_gap_connected_cluster_then_minimum_mad"
+
+
+def test_incomplete_projection_metrics_hard_fail_without_exception():
+    variant = _variant()
+    variant["metrics"]["heights"]["pairs"] = []
+    evaluation = _evaluate(candidate_variant=variant)
+    assert evaluation["evaluation_status"] == "incomplete_metrics"
+    assert evaluation["feasibility"]["projection_valid"] is False
+    assert "projection_metrics:missing_height_pairs" in evaluation["feasibility"]["hard_failure_reasons"]
+    assert evaluation["feasibility"]["hard_gate_passed"] is False
+
+
+def test_seam_text_is_diagnostic_but_structured_code_is_a_hard_gate():
+    text_only = _evaluate(candidate_variant=_variant(warnings=["wrap seam may need review"]))
+    assert text_only["feasibility"]["wrap_or_seam_not_broken"] is True
+    assert text_only["feasibility"]["wrap_or_seam_gate_status"] == "not_available_diagnostic_only"
+    assert text_only["feasibility"]["wrap_or_seam_diagnostic_warnings"]
+
+    coded = _evaluate(candidate_variant=_variant(warning_codes=["wrap_seam_broken"]))
+    assert coded["feasibility"]["wrap_or_seam_not_broken"] is False
+    assert coded["feasibility"]["hard_gate_passed"] is False
+
+
+@pytest.mark.parametrize(
+    "artifact",
+    [
+        "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann3741/projection_metrics.json",
+        "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+        "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
+    ],
+)
+def test_real_projection_artifact_regression(artifact):
+    payload = json.loads(Path(artifact).read_text(encoding="utf-8"))
+    variant = next(row for row in payload["variants"] if row["name"] == "original")
+    pairs = variant["ordered_pairs"]
+    evaluation = evaluate_hypothesis(
+        variant,
+        variant,
+        pairs,
+        pairs,
+        build_case_contract(pairs, projection_metrics=variant["metrics"]),
+    )
+    assert evaluation["evaluation_status"] == "complete"
+    assert evaluation["feasibility"]["projection_valid"] is True
+    assert evaluation["height_consistency"]["dominant_height_cluster_members"]

@@ -10,6 +10,8 @@ from typing import Any, Mapping, Sequence
 EVALUATOR_VERSION = "manhattan_constrained_hypothesis_evaluator_v1"
 UNRESOLVED_EDGE_DEG = 15.0
 COLLAPSE_THRESHOLD = 0.05
+HEIGHT_CLUSTER_GAP = 0.30
+HARD_SEAM_WARNING_CODES = {"wrap_seam_broken", "wrap_or_seam_broken", "unresolved_wrap_seam"}
 EVIDENCE_FIELDS = (
     "hohonet_wallwall_peak_alignment",
     "hohonet_floor_boundary_rmse_delta",
@@ -37,10 +39,119 @@ def _walls(variant: Mapping[str, Any]) -> dict[str, Mapping[str, Any]]:
     rows = variant.get("metrics", {}).get("floorprint", {}).get("walls", [])
     result: dict[str, Mapping[str, Any]] = {}
     for row in rows:
+        if (
+            not isinstance(row, Mapping)
+            or row.get("from_pair") is None
+            or row.get("to_pair") is None
+            or not all(_finite(row.get(field)) for field in ("floor_wall_length", "short_wall_threshold", "angle_residual_deg"))
+        ):
+            continue
         direct = _edge_name(row["from_pair"], row["to_pair"])
         reverse = _edge_name(row["to_pair"], row["from_pair"])
         result[direct] = result[reverse] = row
     return result
+
+
+def _finite(value: Any) -> bool:
+    try:
+        return math.isfinite(float(value))
+    except (TypeError, ValueError):
+        return False
+
+
+def _projection_metric_errors(variant: Mapping[str, Any]) -> list[str]:
+    walls = variant.get("metrics", {}).get("floorprint", {}).get("walls")
+    heights = variant.get("metrics", {}).get("heights", {}).get("pairs")
+    pairs = variant.get("projection", {}).get("pairs")
+    errors: list[str] = []
+    if not isinstance(walls, list) or not walls:
+        errors.append("missing_floorprint_walls")
+    elif any(
+        not isinstance(row, Mapping)
+        or row.get("from_pair") is None
+        or row.get("to_pair") is None
+        or not all(_finite(row.get(field)) for field in ("floor_wall_length", "short_wall_threshold", "angle_residual_deg"))
+        for row in walls
+    ):
+        errors.append("invalid_floorprint_wall_values")
+    if not isinstance(heights, list) or not heights:
+        errors.append("missing_height_pairs")
+    elif any(
+        not isinstance(row, Mapping)
+        or row.get("effective_pair_index") is None
+        or not _finite(row.get("wall_height"))
+        for row in heights
+    ):
+        errors.append("invalid_height_pair_values")
+    if not isinstance(pairs, list) or not pairs:
+        errors.append("missing_projection_pairs")
+    elif any(
+        not isinstance(row, Mapping)
+        or row.get("effective_pair_index") is None
+        or not _finite(row.get("top_bottom_x_residual"))
+        for row in pairs
+    ):
+        errors.append("invalid_projection_pair_values")
+    return errors
+
+
+def dominant_height_cluster_from_rows(
+    height_rows: Sequence[Mapping[str, Any]],
+    *,
+    target_pair_indices: Sequence[int] | None = None,
+    gap_threshold: float = HEIGHT_CLUSTER_GAP,
+) -> dict[str, Any]:
+    """Largest connected projected-height component; minimum MAD breaks ties."""
+    targets = list(target_pair_indices) if target_pair_indices is not None else [int(row["effective_pair_index"]) for row in height_rows]
+    lookup = {int(row["effective_pair_index"]): float(row["wall_height"]) for row in height_rows}
+    rows = sorted((lookup[index], index) for index in targets if index in lookup)
+    if not rows:
+        raise ValueError("dominant height cluster requires projected wall heights")
+    components: list[list[tuple[float, int]]] = []
+    for row in rows:
+        if not components or row[0] - components[-1][-1][0] > gap_threshold:
+            components.append([row])
+        else:
+            components[-1].append(row)
+
+    def summary(component: Sequence[tuple[float, int]]) -> tuple[int, float, float]:
+        values = [row[0] for row in component]
+        center = statistics.median(values)
+        mad = statistics.median(abs(value - center) for value in values)
+        return len(component), mad, center
+
+    selected = min(components, key=lambda component: (-summary(component)[0], summary(component)[1], summary(component)[2]))
+    _, mad, h_star = summary(selected)
+    members = sorted(row[1] for row in selected)
+    return {
+        "source_metric": "projected_wall_height",
+        "target_pair_indices": targets,
+        "method": "largest_gap_connected_cluster_then_minimum_mad",
+        "gap_threshold": gap_threshold,
+        "h_star": h_star,
+        "cluster_members": members,
+        "mad": mad,
+        "height_outliers": [index for index in targets if index in lookup and index not in members],
+        "projected_wall_heights": {str(index): lookup[index] for index in targets if index in lookup},
+    }
+
+
+def _unauthorized_mutations(
+    before: Mapping[int, Mapping[str, Any]],
+    after: Mapping[int, Mapping[str, Any]],
+    movable_fields_by_pair: Mapping[str, Any],
+) -> list[str]:
+    allowed = {int(index): set(fields) for index, fields in movable_fields_by_pair.items()}
+    violations: list[str] = []
+    for index in before.keys() & after.keys():
+        for endpoint in ("top", "bottom"):
+            for axis in ("x", "y"):
+                if float(before[index][endpoint][axis]) == float(after[index][endpoint][axis]):
+                    continue
+                field = "x" if axis == "x" else f"{endpoint}_y"
+                if field not in allowed.get(index, set()):
+                    violations.append(f"unauthorized_mutation_pair_{index}_{field}")
+    return violations
 
 
 def _movement(
@@ -96,6 +207,9 @@ def evaluate_hypothesis(
 ) -> dict[str, Any]:
     """Evaluate one candidate. Hard failures are gates, never numeric penalties."""
     before, after = _pairs(baseline_pairs), _pairs(candidate_pairs)
+    baseline_metric_errors = _projection_metric_errors(baseline_variant)
+    candidate_metric_errors = _projection_metric_errors(candidate_variant)
+    metric_errors = [*(f"baseline:{reason}" for reason in baseline_metric_errors), *candidate_metric_errors]
     baseline_walls, candidate_walls = _walls(baseline_variant), _walls(candidate_variant)
     baseline_order = [int(row["effective_pair_index"]) for row in baseline_pairs]
     candidate_order = [int(row["effective_pair_index"]) for row in candidate_pairs]
@@ -104,6 +218,9 @@ def evaluate_hypothesis(
     no_pair_fold = all(float(row["top"]["y"]) < float(row["bottom"]["y"]) for row in candidate_pairs)
     no_self_intersection = not bool(candidate_variant.get("metrics", {}).get("floorprint", {}).get("self_intersection"))
     protected_moved = [index for index in case_contract.get("protected_pairs", []) if index in before and before[index] != after.get(index)]
+    unauthorized_mutations = _unauthorized_mutations(
+        before, after, case_contract.get("movable_fields_by_pair", {})
+    )
     distinct_failures: list[str] = []
     margins: list[float] = []
     for pair in case_contract.get("keep_distinct_pairs", []):
@@ -114,11 +231,12 @@ def evaluate_hypothesis(
         elif wall:
             margins.append(float(wall["floor_wall_length"]) - COLLAPSE_THRESHOLD)
     warnings = list(candidate_variant.get("projection", {}).get("warnings", []))
-    wrap_ok = not any("seam" in str(value).lower() or "wrap" in str(value).lower() for value in warnings)
-    projection_valid = bool(candidate_variant.get("metrics")) and not any(
-        "projection" in str(value).lower() and "invalid" in str(value).lower() for value in warnings
-    )
-    assertion_valid = not protected_moved and not distinct_failures
+    warning_codes = set(candidate_variant.get("projection", {}).get("warning_codes", []))
+    warning_codes.update(str(row["code"]) for row in warnings if isinstance(row, Mapping) and row.get("code"))
+    seam_diagnostics = [str(value) for value in warnings if not isinstance(value, Mapping) and ("seam" in str(value).lower() or "wrap" in str(value).lower())]
+    wrap_ok = not bool(warning_codes & HARD_SEAM_WARNING_CODES)
+    projection_valid = not metric_errors
+    assertion_valid = not protected_moved and not distinct_failures and not unauthorized_mutations
     checks = {
         "topology_valid": topology_valid,
         "assertion_valid": assertion_valid,
@@ -128,19 +246,29 @@ def evaluate_hypothesis(
         "no_unapproved_order_mutation": no_order_mutation,
         "keep_distinct_pairs_not_collapsed": not distinct_failures,
         "protected_pairs_not_moved": not protected_moved,
+        "authorized_mutations_only": not unauthorized_mutations,
         "wrap_or_seam_not_broken": wrap_ok,
     }
     hard_reasons = [name for name, passed in checks.items() if not passed]
-    feasibility = {**checks, "hard_gate_passed": not hard_reasons, "hard_failure_reasons": hard_reasons}
+    hard_reasons.extend(unauthorized_mutations)
+    hard_reasons.extend(f"projection_metrics:{reason}" for reason in metric_errors)
+    feasibility = {
+        **checks,
+        "hard_gate_passed": not hard_reasons,
+        "hard_failure_reasons": hard_reasons,
+        "projection_metric_errors": metric_errors,
+        "wrap_or_seam_gate_status": "structured_codes_checked" if warning_codes else "not_available_diagnostic_only",
+        "wrap_or_seam_diagnostic_warnings": seam_diagnostics,
+    }
 
     wall_rows = list(candidate_variant.get("metrics", {}).get("floorprint", {}).get("walls", []))
-    wall_residuals = [float(row["angle_residual_deg"]) for row in wall_rows]
+    wall_residuals = [float(row["angle_residual_deg"]) for row in wall_rows if _finite(row.get("angle_residual_deg"))]
     turn_rows = list(candidate_variant.get("metrics", {}).get("corner_turns", {}).get("corners", []))
-    turn_residuals = [float(row["angle_to_90_residual_deg"]) for row in turn_rows if row.get("angle_to_90_residual_deg") is not None]
+    turn_residuals = [float(row["angle_to_90_residual_deg"]) for row in turn_rows if _finite(row.get("angle_to_90_residual_deg"))]
     local_edges = list(case_contract.get("primary_edges", [])) + list(case_contract.get("secondary_edges", []))
     local_residuals = [float(candidate_walls[name]["angle_residual_deg"]) for name in local_edges if name in candidate_walls]
     projection_pairs = list(candidate_variant.get("projection", {}).get("pairs", []))
-    column_residuals = [float(row.get("top_bottom_x_residual", 0.0)) for row in projection_pairs]
+    column_residuals = [float(row["top_bottom_x_residual"]) for row in projection_pairs if _finite(row.get("top_bottom_x_residual"))]
     manhattan = {
         "direction_family_fit": None,
         "direction_family_fit_unavailable_reason": "v1 projection metrics expose nearest-axis residuals, not fitted direction-family labels",
@@ -156,16 +284,16 @@ def evaluate_hypothesis(
     }
 
     height_rows = list(candidate_variant.get("metrics", {}).get("heights", {}).get("pairs", []))
-    heights = [float(row["wall_height"]) for row in height_rows]
-    h_star = statistics.median(heights) if heights else None
+    valid_height_rows = [row for row in height_rows if row.get("effective_pair_index") is not None and _finite(row.get("wall_height"))]
+    cluster = dominant_height_cluster_from_rows(valid_height_rows) if valid_height_rows else None
+    h_star = cluster["h_star"] if cluster else None
     residual_by_pair = {
         int(row["effective_pair_index"]): abs(float(row["wall_height"]) - h_star)
-        for row in height_rows
+        for row in valid_height_rows
     } if h_star is not None else {}
     residuals = list(residual_by_pair.values())
-    mad = statistics.median(residuals) if residuals else None
-    threshold = max(0.15, 2.5 * mad) if mad is not None else math.inf
-    height_outliers = sorted(index for index, value in residual_by_pair.items() if value > threshold)
+    mad = cluster["mad"] if cluster else None
+    height_outliers = cluster["height_outliers"] if cluster else []
     height = {
         "dominant_height_h_star": h_star,
         "height_cluster_mad": mad,
@@ -174,6 +302,8 @@ def evaluate_hypothesis(
         "top_bottom_column_residual": sum(column_residuals) / len(column_residuals) if column_residuals else None,
         "height_outlier_pairs": height_outliers,
         "height_correction_direction": None,
+        "dominant_height_cluster_members": cluster["cluster_members"] if cluster else [],
+        "dominant_height_cluster_method": cluster["method"] if cluster else None,
     }
 
     baseline_short = {name for name, row in baseline_walls.items() if row.get("short_wall") and int(name.split("-")[0]) < int(name.split("-")[1])}
@@ -210,6 +340,7 @@ def evaluate_hypothesis(
     legacy = dict(legacy_score_breakdown or {})
     return {
         "evaluator_version": EVALUATOR_VERSION,
+        "evaluation_status": "incomplete_metrics" if metric_errors else "complete",
         "feasibility": feasibility,
         "manhattan_feasibility": manhattan,
         "height_consistency": height,

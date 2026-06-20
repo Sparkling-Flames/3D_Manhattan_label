@@ -46,6 +46,11 @@ def build_case_contract(
     ]
     allowed_short = [str(value) for value in assertions.get("allowed_short_edges", [])]
     default_fields = {str(index): ["x", "top_y", "bottom_y"] for index in window if index not in do_not_move}
+    for index in assertions.get("allow_secondary_window_pairs", []):
+        if int(index) not in do_not_move:
+            default_fields[str(int(index))] = list(
+                assertions.get("allowed_movable_fields_for_secondary", [])
+            )
     movable = {
         str(key): list(value)
         for key, value in assertions.get("movable_fields_by_pair", default_fields).items()

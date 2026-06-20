@@ -184,7 +184,7 @@ def _short_deficit(score: Mapping[str, Any], edge: str = "5-6") -> float:
 def _candidate_rank(row: Mapping[str, Any]) -> tuple[Any, ...]:
     score = row["score_breakdown"]
     return (
-        not row["m15_28_gate"]["passed"],
+        not row["legacy_m15_28_gate"]["passed"],
         not row["manual_review_candidate"],
         float(score["primary_edge_6_7_residual"]),
         abs(float(score["allowed_short_wall_deficit_delta"])),
@@ -195,7 +195,7 @@ def _candidate_rank(row: Mapping[str, Any]) -> tuple[Any, ...]:
 
 
 def _portfolio(rows: Sequence[Mapping[str, Any]], baseline_score: Mapping[str, Any]) -> dict[str, Any]:
-    eligible = [row for row in rows if row["m15_28_gate"]["passed"]]
+    eligible = [row for row in rows if row["legacy_m15_28_gate"]["passed"]]
 
     def bucket(candidates: Sequence[Mapping[str, Any]], key: Any, empty: str) -> dict[str, Any]:
         return {"candidate": min(candidates, key=key) if candidates else None, "reason": None if candidates else empty}
@@ -285,8 +285,21 @@ def run_action_library(
                 "geometry_valid": row["geometry_valid"],
                 "allowed_short_wall_band": band_ok,
             }
-            row["m15_28_gate"] = {"passed": all(checks.values()), "checks": checks}
-            row["manual_review_candidate"] = bool(row["direct_ls_trial_allowed"] and band_ok)
+            legacy_gate = {
+                "passed": all(checks.values()),
+                "checks": checks,
+                "role": "legacy_diagnostic_only",
+            }
+            row["legacy_m15_28_gate"] = legacy_gate
+            row["m15_28_gate"] = legacy_gate  # compatibility alias
+            row["constrained_hard_gate"] = dict(
+                row["constrained_evaluation"]["feasibility"]
+            )
+            row["manual_review_candidate"] = bool(
+                row["constrained_hard_gate"]["hard_gate_passed"]
+                and row["direct_ls_trial_allowed"]
+                and band_ok
+            )
             row["automatic_fix_claimed"] = False
             row["best_candidate_requires_visual_review"] = True
             if not band_ok:
@@ -299,7 +312,11 @@ def run_action_library(
     ranked = sorted(rows, key=lambda row: (*row["hypothesis_ranking_key"], row["candidate_id"]))
     portfolios = _portfolio(rows, baseline_score)
     structured_portfolio = build_hypothesis_portfolio(rows)
-    available = any(row["manual_review_candidate"] for row in rows)
+    available = any(
+        row["constrained_hard_gate"]["hard_gate_passed"]
+        and row["manual_review_candidate"]
+        for row in rows
+    )
     return {
         "schema_version": SCHEMA_VERSION,
         "safety_boundary": dict(SAFETY_BOUNDARY),
@@ -314,7 +331,14 @@ def run_action_library(
         "family_evaluation_counts": dict(sorted(counts.items())),
         "top_candidates": ranked[:TOP_LIMIT],
         "portfolio_candidates": portfolios,
+        "legacy_portfolio_candidates": portfolios,
+        "portfolio_candidates_role": "legacy_diagnostic_only",
         "portfolio_ranking": structured_portfolio,
         "legacy_score_role": "diagnostic_only",
-        "overall_verdict": {"manual_review_candidate_available": available, "automatic_fix_claimed": False, "best_candidate_requires_visual_review": True},
+        "overall_verdict": {
+            "manual_review_candidate_available": available,
+            "verdict_basis": "constrained_hard_gate_and_manual_review_gate",
+            "automatic_fix_claimed": False,
+            "best_candidate_requires_visual_review": True,
+        },
     }
