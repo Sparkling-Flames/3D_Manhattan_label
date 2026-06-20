@@ -289,6 +289,10 @@ def test_real_projection_artifact_regression(artifact):
     assert evaluation["evaluation_status"] == "complete"
     assert evaluation["feasibility"]["projection_valid"] is True
     assert evaluation["height_consistency"]["dominant_height_cluster_members"]
+    direction_fit = evaluation["manhattan_feasibility"]["direction_family_fit"]
+    assert evaluation["manhattan_feasibility"]["direction_family_fit_status"] == "available"
+    assert direction_fit is not None
+    assert direction_fit["residual_summary"]["wall_count"] > 0
 
 
 def test_decision_classes_are_structured_and_legacy_gate_is_not_a_hard_gate():

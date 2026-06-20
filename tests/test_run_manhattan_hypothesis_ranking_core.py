@@ -67,6 +67,15 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
     assert verdict["hard_feasible_candidate_available"] is True
     assert payload["legacy_diagnostics"]["legacy_score_role"] == "diagnostic_only"
     assert payload["legacy_diagnostics"]["legacy_portfolio_role"] == "diagnostic_only"
+    assert payload["legacy_diagnostics"]["legacy_local_score_total"]
+    assert any(
+        evaluation["manhattan_feasibility"]["direction_family_fit_status"] == "available"
+        for evaluation in payload["constrained_evaluations"].values()
+    )
+    assert all(
+        {"legacy_score_breakdown", "local_score_total"}.isdisjoint(evaluation)
+        for evaluation in payload["constrained_evaluations"].values()
+    )
     assert isinstance(verdict["legacy_ls_trial_available"], bool)
     for bucket in payload["legacy_diagnostics"]["legacy_portfolio_candidates"].values():
         assert set(bucket) == {"candidate_id", "action_family", "reason"}
