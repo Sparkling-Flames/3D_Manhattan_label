@@ -299,7 +299,8 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     assert "Current layout = green solid." in page
     assert "Original ghost = low-opacity grey dashed." in page
     assert "Texture ON/OFF affects display only; imageUrl remains loaded." in page
-    assert "Preview only / no writeback." in page
+    assert "Candidate previews are diagnostic only; no automatic fix is claimed." in page
+    assert "No annotation patch or Label Studio writeback is produced." in page
     assert "Residual edges" not in page
     assert "Candidate triage" in page
     assert "Next issue" in page and 'data-camera="top"' in page
@@ -311,7 +312,9 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     assert 'class="remove-panel"' in page
     assert 'id="panel-count"' not in page
     assert "grid-1" not in page and "grid-2" not in page and "grid-4" not in page
-    safety_lower = lower.replace("preview only / no writeback.", "")
+    safety_lower = lower.replace(
+        "no annotation patch or label studio writeback is produced.", ""
+    )
     for forbidden in (
         "fetch(",
         "label studio api",
@@ -326,6 +329,7 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     report = paths["report"].read_text(encoding="utf-8").lower()
     assert "this is an expert-side local visual review." in report
     assert "candidate previews are diagnostic only." in report
+    assert "no automatic fix is claimed." in report
     assert "texture toggle and ghost are display controls only." in report
     assert "no annotation patch or label studio writeback is produced." in report
 
@@ -452,8 +456,11 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     assert "const CHANGED_CORNER_OPACITY = 0.65" in viewer
     assert "const SELECTED_CORNER_OPACITY = 0.70" in viewer
     assert "const HIDDEN_CORNER_OPACITY = 0.05" in viewer
+    assert "const HIDDEN_CORNER_COLOR = 0xe2e8f0" in viewer
     assert "object.userData.hohonetBaseOpacity" in viewer
+    assert "object.userData.hohonetBaseColor" in viewer
     assert "object.material.opacity = cornerLabelsVisible" in viewer
+    assert "object.material.color.setHex(" in viewer
     assert "0xff2d95" in viewer
     assert "color: 0xef4444" in viewer and "opacity: 0.95" in viewer
     assert "changedWallLine.computeLineDistances()" in viewer
@@ -512,6 +519,54 @@ def test_m1527_visual_bridge_defaults_and_extra_candidates(tmp_path):
     assert "MANUAL-REVIEW CANDIDATE — visual review required; no automatic fix is claimed." in page
     for candidate_id in ("m1527_candidate_0095", "m1527_candidate_0092", "m1527_candidate_0087"):
         assert candidate_id in page
+
+
+def test_hypothesis_core_bridge_includes_0017_and_preserves_safety(tmp_path):
+    input_path = REPO_ROOT / (
+        "analysis_results/paper_a_manhattan/single_image_manual_test/"
+        "latest_gt_checked/task218_ann3741_m1516_stabilized_input.json"
+    )
+    core_path = REPO_ROOT / (
+        "analysis_results/paper_a_manhattan/hypothesis_ranking_core/"
+        "task218_ann3741/hypothesis_ranking_core.json"
+    )
+    paths = run_local_review(
+        input_path=input_path,
+        candidate_json=core_path,
+        out_dir=tmp_path / "core_review",
+        coordinate_mode="ls_percent",
+    )
+
+    payload = json.loads(paths["json"].read_text(encoding="utf-8"))
+    variants = {row["name"]: row for row in payload["variants"]}
+    assert "original" in variants
+    assert "m1528_candidate_0017" in variants
+    changes = variants["m1528_candidate_0017"]["candidate_row"]["coordinate_changes"]
+    deltas = {
+        (change["effective_pair_index"], field): values["after"] - values["before"]
+        for change in changes
+        for field, values in change["fields"].items()
+    }
+    assert deltas[(6, "bottom_y")] == pytest.approx(-1.0)
+    assert deltas[(7, "bottom_y")] == pytest.approx(1.0)
+    assert payload["preferred_panel_variants"] == [
+        "original",
+        "m1528_candidate_0017",
+        "m1528_candidate_0001",
+        "m1528_candidate_0070",
+    ]
+    provenance = payload["input_provenance"]["candidate"]
+    assert provenance["source"] == "manhattan_hypothesis_ranking_core_json"
+    assert payload["input_provenance"]["candidate_sources"][0]["source"] == provenance["source"]
+
+    page = paths["html"].read_text(encoding="utf-8")
+    report = paths["report"].read_text(encoding="utf-8").lower()
+    assert "m1528_candidate_0017" in page
+    assert "MANUAL-REVIEW CANDIDATE" in page
+    assert "no automatic fix is claimed" in page.lower() and "no automatic fix is claimed" in report
+    assert "no annotation patch or label studio writeback is produced" in page.lower()
+    assert "no annotation patch or label studio writeback is produced" in report
+    assert "evidence unavailable" in page.lower()
 
 
 def test_safety_regression_keeps_m1518_and_formal_boundaries():

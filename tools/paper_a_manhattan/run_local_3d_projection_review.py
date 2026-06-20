@@ -33,6 +33,7 @@ from tools.paper_a_manhattan.run_single_image_manhattan_assist import (  # noqa:
 
 REVIEW_SCHEMA_VERSION = "local_3d_projection_review_m15_27_1_bridge_v1"
 INSPECTION_SCHEMA_VERSION = "local_3d_inspection_m15_23_4_v1"
+HYPOTHESIS_CORE_SCHEMA_VERSION = "manhattan_constrained_hypothesis_ranking_core_v1"
 MAX_EMBEDDED_IMAGE_BYTES = 8 * 1024 * 1024
 SAFETY_BOUNDARY = {
     "expert_side": True,
@@ -317,6 +318,94 @@ def extract_m1522_candidate_rows(
         rows.append(copy.deepcopy(dict(raw)))
         if len(rows) >= max(0, limit):
             break
+    return rows
+
+
+def extract_hypothesis_core_candidate_rows(
+    payload: Mapping[str, Any], *, limit: int = 5
+) -> list[dict[str, Any]]:
+    """Normalize ranked core candidates for expert-side visual review only."""
+
+    candidates = {
+        row.get("candidate_id"): row
+        for row in payload.get("candidate_set", [])
+        if isinstance(row, Mapping) and row.get("candidate_id")
+    }
+    geometry = payload.get("candidate_review_geometry", {})
+    evaluations = payload.get("constrained_evaluations", {})
+    portfolio = payload.get("portfolio_ranking", {})
+    if not all(isinstance(value, Mapping) for value in (geometry, evaluations, portfolio)):
+        return []
+
+    selected: list[tuple[str, str]] = []
+    seen: set[str] = set()
+
+    def add(candidate: Any, role: str) -> None:
+        if not isinstance(candidate, Mapping):
+            return
+        candidate_id = candidate.get("candidate_id")
+        if candidate_id and candidate_id not in seen:
+            seen.add(str(candidate_id))
+            selected.append((str(candidate_id), role))
+
+    bucket_names = (
+        "best_balanced",
+        "best_short_wall_preserving",
+        "best_low_movement",
+        "best_height_consistent",
+    )
+    for bucket in bucket_names:
+        entry = portfolio.get(bucket)
+        add(entry.get("candidate") if isinstance(entry, Mapping) else None, bucket)
+    for candidate in payload.get("candidate_set", []):
+        if isinstance(candidate, Mapping) and candidate.get("recommended_review_candidate") is True:
+            add(candidate, "recommended_review_candidate")
+
+    preferred_ids = [candidate_id for candidate_id, _ in selected[:3]]
+    rows: list[dict[str, Any]] = []
+    for rank, (candidate_id, role) in enumerate(selected[: max(0, limit)], start=1):
+        candidate = candidates.get(candidate_id)
+        review_geometry = geometry.get(candidate_id)
+        if not isinstance(candidate, Mapping) or not isinstance(review_geometry, Mapping):
+            continue
+        coordinate_changes = review_geometry.get("coordinate_changes")
+        if not isinstance(coordinate_changes, list) or not coordinate_changes:
+            continue
+        evaluation = evaluations.get(candidate_id, {})
+        evidence = evaluation.get("evidence_consistency", {}) if isinstance(evaluation, Mapping) else {}
+        plausibility = evaluation.get("layout_plausibility", {}) if isinstance(evaluation, Mapping) else {}
+        row = copy.deepcopy(dict(candidate))
+        row.update(
+            {
+                "family": row.get("action_family"),
+                "source_stage": "manhattan_core",
+                "source_rank": rank,
+                "review_role": role,
+                "coordinate_changes": copy.deepcopy(coordinate_changes),
+                "manual_review_candidate": bool(row.get("recommended_review_candidate")),
+                "automatic_fix_claimed": False,
+                "best_candidate_requires_visual_review": True,
+                "direct_ls_trial_allowed": False,
+                "ls_trial_candidate": False,
+                "primary_unresolved_edges": [],
+                "short_wall_edges_after": [],
+                "evidence_status": evidence.get("evidence_status") if isinstance(evidence, Mapping) else None,
+                "evidence_warning": (
+                    "evidence unavailable; expert visual confirmation required"
+                    if isinstance(evidence, Mapping) and evidence.get("evidence_status") == "unavailable"
+                    else None
+                ),
+                "short_wall_deficit_delta": plausibility.get("short_wall_deficit_delta") if isinstance(plausibility, Mapping) else None,
+                "short_wall_plausibility_warning": (
+                    "metric worsened; expert visual confirmation required"
+                    if isinstance(plausibility.get("short_wall_deficit_delta"), (int, float))
+                    and plausibility["short_wall_deficit_delta"] > 0
+                    else None
+                ),
+                "preferred_panel": candidate_id in preferred_ids,
+            }
+        )
+        rows.append(row)
     return rows
 
 
@@ -711,6 +800,7 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         "",
         "This is an expert-side local visual review.",
         "Candidate previews are diagnostic only.",
+        "No automatic fix is claimed.",
         "Texture toggle and ghost are display controls only.",
         "No annotation patch or Label Studio writeback is produced.",
         "",
@@ -734,6 +824,8 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                     f"- improves: `{row.get('improves', [])}`",
                     f"- fails_because: `{row.get('fails_because', [])}`",
                     f"- direct_ls_trial_allowed: `{row.get('direct_ls_trial_allowed')}`",
+                    f"- evidence_status: `{row.get('evidence_status')}`",
+                    f"- evidence_warning: `{row.get('evidence_warning')}`",
                     f"- primary_unresolved_edges: `{row.get('primary_unresolved_edges', [])}`",
                     f"- short_wall_edges_after: `{row.get('short_wall_edges_after', [])}`",
                     "- Applied coordinate changes:",
@@ -1129,6 +1221,11 @@ def render_review_html(
                         "automatic_fix_claimed",
                         "best_candidate_requires_visual_review",
                         "action_family",
+                        "evidence_status",
+                        "evidence_warning",
+                        "ls_trial_candidate",
+                        "short_wall_deficit_delta",
+                        "short_wall_plausibility_warning",
                     )
                     if candidate_row.get(key) is not None
                 },
@@ -1258,7 +1355,8 @@ def render_review_html(
         <li>Original ghost = low-opacity grey dashed.</li>
         <li>Texture ON/OFF affects display only; imageUrl remains loaded.</li>
         <li>Camera presets broadcast; live OrbitControls are not synchronized.</li>
-        <li>Preview only / no writeback.</li>
+        <li>Candidate previews are diagnostic only; no automatic fix is claimed.</li>
+        <li>No annotation patch or Label Studio writeback is produced.</li>
       </ul>
       <p class="muted">Wall click: global-XZ heading and Manhattan-axis deviation. Corner click: angle between its previous and next wall. Red dashed walls mark candidate-modified geometry.</p>
       <p class="muted">Read-only local diagnostic. Open this HTML directly to use its embedded local texture, or double-click <code>open_local_3d_review.cmd</code> for localhost mode.</p>
@@ -1642,11 +1740,18 @@ def run_local_review(
     if candidate_json is not None:
         candidate_json = candidate_json.resolve()
         candidate_payload = _read_json(candidate_json)
+        hypothesis_core_candidates = (
+            candidate_payload.get("schema_version") == HYPOTHESIS_CORE_SCHEMA_VERSION
+        )
         m1522_candidates = isinstance(candidate_payload.get("candidates"), list)
         candidate_rows = (
-            extract_m1522_candidate_rows(candidate_payload, limit=candidate_limit)
-            if m1522_candidates
-            else extract_candidate_rows(candidate_payload, limit=candidate_limit)
+            extract_hypothesis_core_candidate_rows(candidate_payload, limit=candidate_limit)
+            if hypothesis_core_candidates
+            else (
+                extract_m1522_candidate_rows(candidate_payload, limit=candidate_limit)
+                if m1522_candidates
+                else extract_candidate_rows(candidate_payload, limit=candidate_limit)
+            )
         )
         mapping = _mapping_lookup(candidate_payload)
         for index, pair in enumerate(ordered_pairs, start=1):
@@ -1656,9 +1761,13 @@ def run_local_review(
             "file": candidate_json.name,
             "sha256": _sha256(candidate_json),
             "source": (
-                "m15_22_candidate_search_json"
-                if m1522_candidates
-                else "candidate_json"
+                "manhattan_hypothesis_ranking_core_json"
+                if hypothesis_core_candidates
+                else (
+                    "m15_22_candidate_search_json"
+                    if m1522_candidates
+                    else "candidate_json"
+                )
             ),
         }
         candidate_sources.append(candidate_provenance)

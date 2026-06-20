@@ -240,6 +240,7 @@
       const CHANGED_CORNER_OPACITY = 0.65;
       const SELECTED_CORNER_OPACITY = 0.70;
       const HIDDEN_CORNER_OPACITY = 0.05;
+      const HIDDEN_CORNER_COLOR = 0xe2e8f0;
       const textureLoader = new THREE.TextureLoader();
       const raycaster = new THREE.Raycaster();
       const pointer = new THREE.Vector2();
@@ -507,6 +508,11 @@
             object.material.opacity = cornerLabelsVisible
               ? object.userData.hohonetBaseOpacity
               : HIDDEN_CORNER_OPACITY;
+            object.material.color.setHex(
+              cornerLabelsVisible
+                ? object.userData.hohonetBaseColor
+                : HIDDEN_CORNER_COLOR
+            );
             object.material.needsUpdate = true;
           }
         });
@@ -1127,7 +1133,11 @@
         marker.renderOrder = 50;
         marker.userData.hohonetCornerMarker = true;
         marker.userData.hohonetBaseOpacity = SELECTED_CORNER_OPACITY;
-        if (!cornerLabelsVisible) marker.material.opacity = HIDDEN_CORNER_OPACITY;
+        marker.userData.hohonetBaseColor = marker.material.color.getHex();
+        if (!cornerLabelsVisible) {
+          marker.material.opacity = HIDDEN_CORNER_OPACITY;
+          marker.material.color.setHex(HIDDEN_CORNER_COLOR);
+        }
         scene.add(marker);
         selectionObjects.push(marker);
         addCornerAngleGuide(pairIndex, endpoint);
@@ -1559,7 +1569,11 @@
           sphere.userData.hohonetBaseOpacity = changed
             ? CHANGED_CORNER_OPACITY
             : CORNER_OPACITY;
-          if (!cornerLabelsVisible) sphere.material.opacity = HIDDEN_CORNER_OPACITY;
+          sphere.userData.hohonetBaseColor = sphere.material.color.getHex();
+          if (!cornerLabelsVisible) {
+            sphere.material.opacity = HIDDEN_CORNER_OPACITY;
+            sphere.material.color.setHex(HIDDEN_CORNER_COLOR);
+          }
           if (inspectionState.enabled) {
             sphere.userData.hohonetInspectionType = "corner";
             sphere.userData.pairIndex = pairIndex;
