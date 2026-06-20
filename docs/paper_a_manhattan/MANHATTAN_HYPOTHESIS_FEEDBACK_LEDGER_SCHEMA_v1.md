@@ -47,3 +47,12 @@ M15.28 compatibility fields are deprecated for the Manhattan Constrained Hypothe
 ## Materialization
 
 `tools/paper_a_manhattan/materialize_manhattan_feedback_ledger_entry.py` 接收 `manhattan_constrained_hypothesis_ranking_core_v1` JSON 与 expert review JSON，验证 candidate ID 和 accepted 状态后输出单条 JSONL。该步骤只物化审计记录，不训练模型、不更新 ranker 参数、不应用候选，也不写回 annotation。
+
+### Diagnostic-useful but not final
+
+Ledger v1 also supports an expert selecting a candidate as a useful diagnostic direction without accepting it as a final correction:
+
+- `expert_selected_candidate_role` records the diagnostic role.
+- `candidate_verdicts` preserves per-candidate expert verdicts such as `reject_as_final_but_directionally_useful`.
+- `final_layout_available=false` requires `final_layout=null`.
+- Both `accepted_directly` and `accepted_after_minor_edit` remain `false`; this state must not be reinterpreted as acceptance.

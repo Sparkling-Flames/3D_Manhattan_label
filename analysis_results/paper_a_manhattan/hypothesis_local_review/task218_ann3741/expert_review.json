@@ -1,0 +1,63 @@
+{
+  "schema_version": "manhattan_hypothesis_expert_review_v1",
+  "case_id": "task218_ann3741",
+  "review_artifact": "local_3d_review from hypothesis_ranking_core.json",
+  "texture_loaded": false,
+  "review_mode": "geometry_only_screenshot",
+  "shown_rank": [
+    "m1528_candidate_0017",
+    "m1528_candidate_0001",
+    "m1528_candidate_0070"
+  ],
+  "preferred_panels": [
+    "original",
+    "m1528_candidate_0017",
+    "m1528_candidate_0001",
+    "m1528_candidate_0070"
+  ],
+  "candidate_comparison": {
+    "m1528_candidate_0017": {
+      "role": "best_balanced",
+      "visual_effect": "locally_better",
+      "observed_change": "5-6 and 6-7 angles improved to some degree",
+      "short_wall_damage": "no_obvious_visual_damage",
+      "final_fix_sufficient": false,
+      "reason_not_final": "Full correction likely requires broader adjustment of pairs 1, 2, maybe 3, 5, 6, 7, 8, maybe 9, 10."
+    },
+    "m1528_candidate_0001": {
+      "visual_effect": "almost_unchanged",
+      "usefulness": "low"
+    },
+    "m1528_candidate_0070": {
+      "visual_effect": "almost_unchanged",
+      "usefulness": "low"
+    }
+  },
+  "best_directional_candidate": "m1528_candidate_0017",
+  "final_verdict_for_0017": "reject_as_final_but_directionally_useful",
+  "expert_selected_candidate": null,
+  "expert_rejected_candidates": [
+    "m1528_candidate_0017",
+    "m1528_candidate_0001",
+    "m1528_candidate_0070"
+  ],
+  "accepted_directly": false,
+  "accepted_after_minor_edit": false,
+  "manual_edit_needed": true,
+  "manual_edit_after_candidate": null,
+  "final_layout": null,
+  "delta_candidate_to_final": null,
+  "expected_scope": {
+    "definite_pairs": [1, 2, 5, 6, 7, 8, 10],
+    "possible_pairs": [3, 9],
+    "edit_size": "not_minor"
+  },
+  "rejected_reason_optional": "0017 is the best generated candidate and a useful local diagnostic direction, but it is not an acceptable final layout correction.",
+  "case_tags": [
+    "geometry_only_review",
+    "directionally_useful",
+    "reject_as_final",
+    "broad_manual_edit_needed"
+  ],
+  "notes": "0017 is the best candidate among the generated candidates, but it is only a local diagnostic improvement, not an acceptable final layout correction."
+}

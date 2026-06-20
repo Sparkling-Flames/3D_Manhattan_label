@@ -35,6 +35,20 @@ def materialize_entry(
         raise ValueError("accepted candidate status requires expert_selected_candidate")
     manual_edit = expert_review.get("manual_edit_after_candidate")
     delta = expert_review.get("delta_candidate_to_final")
+    final_layout = expert_review.get("final_layout")
+    final_layout_available = bool(
+        expert_review.get("final_layout_available", final_layout is not None)
+    )
+    candidate_verdicts = expert_review.get("candidate_verdicts", {})
+    if not isinstance(candidate_verdicts, Mapping):
+        raise ValueError("candidate_verdicts must be an object")
+    unknown_verdicts = set(candidate_verdicts) - set(candidates)
+    if unknown_verdicts:
+        raise ValueError(
+            f"candidate_verdicts references unknown candidates: {sorted(unknown_verdicts)}"
+        )
+    if not final_layout_available and final_layout is not None:
+        raise ValueError("final_layout must be null when final_layout_available is false")
     if accepted_after_edit and (manual_edit is None or delta is None):
         raise ValueError("accepted_after_minor_edit requires edit and delta records")
     if accepted_directly and (manual_edit not in (None, {}, []) or delta not in (None, {}, [])):
@@ -50,9 +64,14 @@ def materialize_entry(
         "candidate_metrics": dict(evaluations),
         "shown_rank": shown_rank,
         "expert_selected_candidate": selected,
+        "expert_selected_candidate_role": expert_review.get(
+            "expert_selected_candidate_role"
+        ),
         "expert_rejected_candidates": rejected,
+        "candidate_verdicts": dict(candidate_verdicts),
         "manual_edit_after_candidate": manual_edit,
-        "final_layout": expert_review.get("final_layout"),
+        "final_layout": final_layout,
+        "final_layout_available": final_layout_available,
         "delta_candidate_to_final": delta,
         "accepted_directly": accepted_directly,
         "accepted_after_minor_edit": accepted_after_edit,
