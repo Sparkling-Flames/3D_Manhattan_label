@@ -47,6 +47,10 @@ def materialize_entry(
         raise ValueError(
             f"candidate_verdicts references unknown candidates: {sorted(unknown_verdicts)}"
         )
+    if (accepted_directly or accepted_after_edit) and not final_layout_available:
+        raise ValueError("accepted candidate status requires final_layout_available=true")
+    if final_layout_available and final_layout is None:
+        raise ValueError("final_layout must exist when final_layout_available is true")
     if not final_layout_available and final_layout is not None:
         raise ValueError("final_layout must be null when final_layout_available is false")
     if accepted_after_edit and (manual_edit is None or delta is None):

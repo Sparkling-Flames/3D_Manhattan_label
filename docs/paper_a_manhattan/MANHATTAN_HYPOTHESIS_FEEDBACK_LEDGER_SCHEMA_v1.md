@@ -14,9 +14,12 @@
 | `candidate_metrics` | object | candidate ID 到 constrained evaluation 的映射。 |
 | `shown_rank` | array | 实际展示顺序；不得用事后顺序覆盖。 |
 | `expert_selected_candidate` | string/null | 专家选择的 candidate ID；未选择时为 `null`。 |
+| `expert_selected_candidate_role` | string/null | 记录候选被选中的角色，例如 `directionally_useful_local_diagnostic`。 |
 | `expert_rejected_candidates` | array | 明确拒绝的 candidate ID。 |
+| `candidate_verdicts` | object | Per-candidate expert verdict map，可记录 `reject_as_final_but_directionally_useful`、`low_usefulness` 等结论。 |
 | `manual_edit_after_candidate` | object/null | 选择候选后由专家进行的人工编辑 delta；没有则为 `null`。 |
 | `final_layout` | object/null | 专家确认后的最终布局；未确认时为 `null`。 |
+| `final_layout_available` | boolean | 是否存在专家确认后的最终布局；为 `false` 时 `final_layout` 必须为 `null`。 |
 | `delta_candidate_to_final` | object/null | 所选候选到最终布局的字段级差异。 |
 | `accepted_directly` | boolean | 候选是否未经坐标修改直接接受。 |
 | `accepted_after_minor_edit` | boolean | 候选是否经小幅人工修改后接受。 |
@@ -55,4 +58,5 @@ Ledger v1 also supports an expert selecting a candidate as a useful diagnostic d
 - `expert_selected_candidate_role` records the diagnostic role.
 - `candidate_verdicts` preserves per-candidate expert verdicts such as `reject_as_final_but_directionally_useful`.
 - `final_layout_available=false` requires `final_layout=null`.
+- `final_layout_available=true` requires a non-null `final_layout`; either accepted state also requires both conditions.
 - Both `accepted_directly` and `accepted_after_minor_edit` remain `false`; this state must not be reinterpreted as acceptance.

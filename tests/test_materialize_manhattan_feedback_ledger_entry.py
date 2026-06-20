@@ -96,6 +96,33 @@ def test_rejects_unknown_candidate_and_conflicting_acceptance():
         materialize_entry(_core(), review)
 
 
+def test_rejects_inconsistent_final_layout_availability():
+    review = _review()
+    review.update(
+        accepted_directly=False,
+        final_layout=None,
+        final_layout_available=True,
+    )
+    with pytest.raises(ValueError, match="final_layout must exist"):
+        materialize_entry(_core(), review)
+
+    review = _review()
+    review["final_layout_available"] = False
+    with pytest.raises(ValueError, match="requires final_layout_available=true"):
+        materialize_entry(_core(), review)
+
+    review = _review()
+    review.update(
+        accepted_directly=False,
+        accepted_after_minor_edit=True,
+        final_layout_available=False,
+        manual_edit_after_candidate={"pair": 1},
+        delta_candidate_to_final={"pair": 1},
+    )
+    with pytest.raises(ValueError, match="requires final_layout_available=true"):
+        materialize_entry(_core(), review)
+
+
 def test_materializes_task218_0017_directional_not_final_review(tmp_path):
     core_path = Path(ROOT) / (
         "hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json"
@@ -112,6 +139,7 @@ def test_materializes_task218_0017_directional_not_final_review(tmp_path):
     assert entry["accepted_directly"] is False
     assert entry["accepted_after_minor_edit"] is False
     assert entry["final_layout_available"] is False
+    assert entry["final_layout"] is None
     assert (
         entry["candidate_verdicts"]["m1528_candidate_0017"]["verdict"]
         == "reject_as_final_but_directionally_useful"
