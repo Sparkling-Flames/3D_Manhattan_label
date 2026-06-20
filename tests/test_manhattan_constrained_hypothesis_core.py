@@ -103,6 +103,66 @@ def test_evidence_unavailable_and_legacy_score_are_diagnostic_only():
     assert evaluation["legacy_score_role"] == "diagnostic_only"
 
 
+def test_direction_family_and_parallel_residual_are_auditable_when_headings_exist():
+    variant = _variant()
+    for wall, heading in zip(
+        variant["metrics"]["floorprint"]["walls"], (2.0, 91.0, 181.0, 272.0)
+    ):
+        wall["direction_deg"] = heading
+    manhattan = _evaluate(candidate_variant=variant)["manhattan_feasibility"]
+
+    fit = manhattan["direction_family_fit"]
+    assert fit["status"] == "available"
+    assert fit["dominant_family"]["family_id"] in {"family_0", "family_1"}
+    assert len(fit["assignments"]) == 4
+    assert fit["residual_summary"]["wall_count"] == 4
+    assert manhattan["direction_family_fit_unavailable_reason"] is None
+
+    parallel = manhattan["parallel_family_residual"]
+    assert parallel["status"] == "available"
+    assert parallel["pair_count"] == 2
+    assert parallel["median_deg"] == pytest.approx(1.0)
+    assert parallel["max_deg"] == pytest.approx(1.0)
+    assert manhattan["parallel_family_residual_unavailable_reason"] is None
+
+
+def test_direction_family_missing_heading_is_explicit_and_does_not_crash():
+    manhattan = _evaluate()["manhattan_feasibility"]
+    assert manhattan["direction_family_fit"] is None
+    assert manhattan["direction_family_fit_status"] == "unavailable_due_to_missing_wall_heading"
+    assert manhattan["direction_family_fit_unavailable_reason"] == "unavailable_due_to_missing_wall_heading"
+    assert manhattan["parallel_family_residual"] is None
+    assert manhattan["parallel_family_residual_unavailable_reason"] == "unavailable_due_to_missing_wall_heading"
+
+    one_wall = _variant()
+    one_wall["metrics"]["floorprint"]["walls"] = one_wall["metrics"]["floorprint"]["walls"][:1]
+    one_wall["metrics"]["floorprint"]["walls"][0]["direction_deg"] = 0.0
+    limited = _evaluate(candidate_variant=one_wall)["manhattan_feasibility"]
+    assert limited["direction_family_fit_status"] == "insufficient_walls"
+    assert limited["parallel_family_residual_unavailable_reason"] == "insufficient_walls"
+
+
+def test_direction_ranking_preserves_hard_gate_and_legacy_last_fallback():
+    available_variant = _variant()
+    for wall, heading in zip(
+        available_variant["metrics"]["floorprint"]["walls"], (0.0, 100.0, 180.0, 280.0)
+    ):
+        wall["direction_deg"] = heading
+    available = _evaluate(candidate_variant=available_variant, legacy=1000.0)
+    missing = _evaluate(legacy=-1000.0)
+    assert build_hypothesis_ranking_key(available) < build_hypothesis_ranking_key(missing)
+
+    hard_pairs = _pairs()
+    hard_pairs[0]["top"]["x"] += 1.0
+    hard = _evaluate(candidate_pairs=hard_pairs, candidate_variant=available_variant, legacy=-1e9)
+    assert build_hypothesis_ranking_key(available) < build_hypothesis_ranking_key(hard)
+
+    same_but_low_legacy = deepcopy(available)
+    same_but_low_legacy["local_score_total"] = -1.0
+    assert build_hypothesis_ranking_key(available)[:-1] == build_hypothesis_ranking_key(same_but_low_legacy)[:-1]
+    assert build_hypothesis_ranking_key(same_but_low_legacy) < build_hypothesis_ranking_key(available)
+
+
 def test_short_wall_existing_new_and_collapsed_are_distinct():
     candidate_variant = _variant(
         short_edges={"2-3", "3-4"},

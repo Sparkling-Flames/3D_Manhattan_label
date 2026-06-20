@@ -59,6 +59,118 @@ def _finite(value: Any) -> bool:
         return False
 
 
+def _angular_distance_deg(left: float, right: float, period: float) -> float:
+    delta = abs((left - right) % period)
+    return min(delta, period - delta)
+
+
+def _direction_family_diagnostics(
+    wall_rows: Sequence[Mapping[str, Any]],
+) -> tuple[dict[str, Any] | None, dict[str, Any] | None, str]:
+    """Fit one orthogonal frame from explicit wall headings; never infer missing headings."""
+    if len(wall_rows) < 2:
+        return None, None, "insufficient_walls"
+    headings = [row for row in wall_rows if _finite(row.get("direction_deg"))]
+    if len(headings) != len(wall_rows):
+        return None, None, "unavailable_due_to_missing_wall_heading"
+
+    folded = [float(row["direction_deg"]) % 90.0 for row in headings]
+    frame_offset = min(
+        folded,
+        key=lambda candidate: (
+            statistics.median(
+                _angular_distance_deg(value, candidate, 90.0) for value in folded
+            ),
+            sum(_angular_distance_deg(value, candidate, 90.0) for value in folded),
+            max(_angular_distance_deg(value, candidate, 90.0) for value in folded),
+            candidate,
+        ),
+    )
+    axes = (frame_offset, (frame_offset + 90.0) % 180.0)
+    assignments: list[dict[str, Any]] = []
+    for position, row in enumerate(headings):
+        heading = float(row["direction_deg"]) % 180.0
+        family_index = min(
+            range(2), key=lambda index: (_angular_distance_deg(heading, axes[index], 180.0), index)
+        )
+        assignments.append(
+            {
+                "wall_index": row.get("wall_index", position + 1),
+                "from_pair": row.get("from_pair"),
+                "to_pair": row.get("to_pair"),
+                "heading_deg": heading,
+                "assigned_family": f"family_{family_index}",
+                "assigned_axis_heading_deg": axes[family_index],
+                "residual_deg": _angular_distance_deg(heading, axes[family_index], 180.0),
+            }
+        )
+
+    families = []
+    for index, axis in enumerate(axes):
+        family_id = f"family_{index}"
+        members = [row for row in assignments if row["assigned_family"] == family_id]
+        residuals = [row["residual_deg"] for row in members]
+        families.append(
+            {
+                "family_id": family_id,
+                "axis_heading_deg": axis,
+                "wall_count": len(members),
+                "residual_median_deg": statistics.median(residuals) if residuals else None,
+                "residual_max_deg": max(residuals) if residuals else None,
+            }
+        )
+    dominant = min(
+        families,
+        key=lambda family: (
+            -family["wall_count"],
+            family["residual_median_deg"] if family["residual_median_deg"] is not None else math.inf,
+            family["family_id"],
+        ),
+    )
+    residuals = [row["residual_deg"] for row in assignments]
+    fit = {
+        "status": "available",
+        "method": "wall_direction_deg_l1_frame_mod_90_v1",
+        "frame_offset_deg": frame_offset,
+        "dominant_family": dict(dominant),
+        "families": families,
+        "assignments": assignments,
+        "residual_summary": {
+            "median_deg": statistics.median(residuals),
+            "max_deg": max(residuals),
+            "wall_count": len(assignments),
+        },
+    }
+
+    pair_residuals = []
+    family_summaries = []
+    for family in families:
+        members = [row for row in assignments if row["assigned_family"] == family["family_id"]]
+        values = [
+            _angular_distance_deg(left["heading_deg"], right["heading_deg"], 180.0)
+            for index, left in enumerate(members)
+            for right in members[index + 1 :]
+        ]
+        pair_residuals.extend(values)
+        family_summaries.append(
+            {
+                "family_id": family["family_id"],
+                "pair_count": len(values),
+                "median_deg": statistics.median(values) if values else None,
+                "max_deg": max(values) if values else None,
+            }
+        )
+    parallel = None if not pair_residuals else {
+        "status": "available",
+        "method": "within_assigned_family_pairwise_heading_residual_v1",
+        "median_deg": statistics.median(pair_residuals),
+        "max_deg": max(pair_residuals),
+        "pair_count": len(pair_residuals),
+        "families": family_summaries,
+    }
+    return fit, parallel, "available" if parallel is not None else "insufficient_same_family_pairs"
+
+
 def _projection_metric_errors(variant: Mapping[str, Any]) -> list[str]:
     walls = variant.get("metrics", {}).get("floorprint", {}).get("walls")
     heights = variant.get("metrics", {}).get("heights", {}).get("pairs")
@@ -270,15 +382,21 @@ def evaluate_hypothesis(
     local_residuals = [float(candidate_walls[name]["angle_residual_deg"]) for name in local_edges if name in candidate_walls]
     projection_pairs = list(candidate_variant.get("projection", {}).get("pairs", []))
     column_residuals = [float(row["top_bottom_x_residual"]) for row in projection_pairs if _finite(row.get("top_bottom_x_residual"))]
+    direction_fit, parallel_residual, direction_status = _direction_family_diagnostics(wall_rows)
+    parallel_status = direction_status if direction_fit is None else (
+        "available" if parallel_residual is not None else "insufficient_same_family_pairs"
+    )
     manhattan = {
-        "direction_family_fit": None,
-        "direction_family_fit_unavailable_reason": "v1 projection metrics expose nearest-axis residuals, not fitted direction-family labels",
+        "direction_family_fit": direction_fit,
+        "direction_family_fit_status": "available" if direction_fit is not None else direction_status,
+        "direction_family_fit_unavailable_reason": None if direction_fit is not None else direction_status,
         "wall_residual_median": statistics.median(wall_residuals) if wall_residuals else math.inf,
         "wall_residual_max": max(wall_residuals, default=math.inf),
         "turn_residual_median": statistics.median(turn_residuals) if turn_residuals else None,
         "turn_residual_max": max(turn_residuals) if turn_residuals else None,
-        "parallel_family_residual": None,
-        "parallel_family_residual_unavailable_reason": "parallel family grouping is not emitted by the current projection core",
+        "parallel_family_residual": parallel_residual,
+        "parallel_family_residual_status": parallel_status,
+        "parallel_family_residual_unavailable_reason": None if parallel_residual is not None else parallel_status,
         "local_window_residual": sum(local_residuals) if local_residuals else None,
         "unresolved_edge_count": sum(value > UNRESOLVED_EDGE_DEG for value in wall_residuals),
         "floor_ceiling_column_consistency": statistics.median(column_residuals) if column_residuals else None,
@@ -421,8 +539,17 @@ def build_hypothesis_ranking_key(evaluation: Mapping[str, Any]) -> tuple[Any, ..
         numeric_deltas = [evidence.get(name) for name in ("hohonet_floor_boundary_rmse_delta", "hohonet_ceiling_boundary_rmse_delta", "candidate_corner_column_delta", "seam_consistency_delta")]
         evidence_regression = sum(float(value) > 0 for value in numeric_deltas if isinstance(value, (int, float))) + bool(evidence.get("visual_conflict_flags"))
     legacy = evaluation.get("local_score_total")
+    direction = manhattan.get("direction_family_fit")
+    parallel = manhattan.get("parallel_family_residual")
+    direction_summary = direction.get("residual_summary", {}) if isinstance(direction, Mapping) else {}
     return (
         not bool(feasibility["hard_gate_passed"]),
+        direction is None,
+        float(direction_summary.get("max_deg", math.inf)),
+        float(direction_summary.get("median_deg", math.inf)),
+        parallel is None,
+        float(parallel.get("max_deg", math.inf)) if isinstance(parallel, Mapping) else math.inf,
+        float(parallel.get("median_deg", math.inf)) if isinstance(parallel, Mapping) else math.inf,
         int(manhattan["unresolved_edge_count"]),
         float(manhattan["wall_residual_max"]),
         float(manhattan["wall_residual_median"]),
