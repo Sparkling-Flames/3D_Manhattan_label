@@ -1,5 +1,5 @@
 {
-  "schema_version": "m15_27_semantic_direct_search_v1",
+  "schema_version": "m15_27_1_semantic_direct_search_v1",
   "safety_boundary": {
     "expert_side": true,
     "offline_local_only": true,
@@ -872,10 +872,12 @@
     "m15_27_still_partial": false
   },
   "overall_verdict": {
-    "direct_fix_available": true,
+    "manual_review_candidate_available": true,
+    "automatic_fix_claimed": false,
+    "best_candidate_requires_visual_review": true,
     "best_candidate_id": "m1527_candidate_0094",
     "best_decision_class": "candidate_for_manual_review",
-    "verdict": "candidate_for_manual_review_available"
+    "verdict": "manual_review_candidate_available"
   },
   "case_name": "task218_ann3741",
   "source_artifacts": {
@@ -889,11 +891,11 @@
     },
     "expert_assertion": {
       "path": "analysis_results/paper_a_manhattan/local_candidate_search/task218_ann3741/expert_assertion.json",
-      "sha256": "3032b5540f6be0e744a6182343156f053df8c84e3355ee4943cab7ec3bb3e698"
+      "sha256": "496b9e878aff408789ee7e952103fcc77370d724f1d37a8c13d405f262a9b1f0"
     },
     "projection_metrics": {
       "path": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann3741/projection_metrics.json",
-      "sha256": "4b2952fa2106c6f01c873254c6d8749edaf7fac994f54541801c2c619f155ffb"
+      "sha256": "a09cbceb425cd3ba0b9c1e5e19d0192fd9915e1a9f4e2975e12c59d0818f526e"
     }
   }
 }

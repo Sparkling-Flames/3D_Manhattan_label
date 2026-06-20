@@ -5,6 +5,7 @@ from pathlib import Path
 from tools.paper_a_manhattan.manhattan_m1527_semantic_direct_search import (
     ACTION_FAMILIES,
     SAFETY_BOUNDARY,
+    manual_review_candidate_available,
 )
 from tools.paper_a_manhattan.run_m1527_semantic_direct_search import run
 
@@ -31,7 +32,7 @@ def test_m1527_semantic_direct_search(tmp_path):
     }
 
     payload = json.loads(paths["json"].read_text(encoding="utf-8"))
-    assert payload["schema_version"] == "m15_27_semantic_direct_search_v1"
+    assert payload["schema_version"] == "m15_27_1_semantic_direct_search_v1"
     assert payload["safety_boundary"] == SAFETY_BOUNDARY
     assert SAFETY_BOUNDARY == {
         "expert_side": True,
@@ -70,8 +71,21 @@ def test_m1527_semantic_direct_search(tmp_path):
         assert row["topology_rewrite"] is False
         assert row["action_family"] in ACTION_FAMILIES
         assert isinstance(row["failure_reason"], list)
-    if payload["overall_verdict"]["direct_fix_available"]:
+    verdict = payload["overall_verdict"]
+    assert "direct_fix_available" not in verdict
+    assert verdict["automatic_fix_claimed"] is False
+    assert verdict["best_candidate_requires_visual_review"] is True
+    if verdict["manual_review_candidate_available"]:
         assert payload["top_candidates"][0]["direct_ls_trial_allowed"] is True
+    assert manual_review_candidate_available(payload) is verdict["manual_review_candidate_available"]
+    assert manual_review_candidate_available(
+        {"schema_version": "m15_27_semantic_direct_search_v1", "overall_verdict": {"direct_fix_available": True}}
+    ) is True
+
+    report = paths["report"].read_text(encoding="utf-8")
+    assert "Manual-review candidate available: `True`" in report
+    assert "Automatic fix claimed: `False`" in report
+    assert "Direct fix available" not in report
 
     source = Path("tools/paper_a_manhattan/manhattan_m1527_semantic_direct_search.py").read_text(encoding="utf-8").lower()
     for forbidden in ("fetch(", "label studio api", "submit", "formal_g_t"):

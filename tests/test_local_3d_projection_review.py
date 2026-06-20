@@ -194,7 +194,7 @@ def test_missing_image_still_generates_geometry_only_outputs(tmp_path):
     assert all(path.is_file() for path in paths.values())
     payload = json.loads(paths["json"].read_text(encoding="utf-8"))
     assert payload["schema_version"] == REVIEW_SCHEMA_VERSION
-    assert REVIEW_SCHEMA_VERSION == "local_3d_projection_review_m15_23_4_v1"
+    assert REVIEW_SCHEMA_VERSION == "local_3d_projection_review_m15_27_1_bridge_v1"
     assert payload["input_provenance"]["image"]["image_exists"] is False
     assert "texture unavailable" in paths["html"].read_text(encoding="utf-8").lower()
     assert "--coordinate-mode ls_percent" in paths["report"].read_text(encoding="utf-8")
@@ -293,7 +293,7 @@ def test_candidate_metrics_and_static_html_contract(tmp_path):
     assert "Texture ON/OFF affects display only; imageUrl remains loaded." in page
     assert "Preview only / no writeback." in page
     assert "Residual edges" not in page
-    assert "M15.22 triage" in page
+    assert "Candidate triage" in page
     assert "Next issue" in page and 'data-camera="top"' in page
     assert "junction_angle_kind" in page
     assert "adjacent_corner_angles" not in page
@@ -369,7 +369,7 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     assert "decision_class" in page and "direct_ls_trial_allowed" in page
     assert "variant.displayName" in page
     assert "let ghostVisible = true" in page
-    assert "preferredPanelVariants = ['original', 'candidate_1', 'candidate_2', 'candidate_5']" in page
+    assert "REVIEW.preferredPanelVariants.length" in page
     assert "Math.min(count, REVIEW.variants.length, 4)" in page
     assert "views.className = `grid-${actualCount}`" in page
     assert "views.className = `grid-${count}`" not in page
@@ -426,6 +426,54 @@ def test_m1523_bridge_applies_ranked_multi_pair_candidates(tmp_path):
     assert "color: inspectionTextureHidden ? 0x374151 : 0xcccccc" in viewer
     assert "const textureDisplayed = hasTexture && !inspectionTextureHidden" in viewer
     assert 'version: "m15.23.4"' in viewer
+
+
+def test_m1527_visual_bridge_defaults_and_extra_candidates(tmp_path):
+    input_path = REPO_ROOT / (
+        "analysis_results/paper_a_manhattan/single_image_manual_test/"
+        "latest_gt_checked/task218_ann3741_m1516_stabilized_input.json"
+    )
+    paths = run_local_review(
+        input_path=input_path,
+        candidate_json=REPO_ROOT / (
+            "analysis_results/paper_a_manhattan/local_candidate_search/"
+            "task218_ann3741/candidate_search.json"
+        ),
+        adaptive_probe_json=REPO_ROOT / (
+            "analysis_results/paper_a_manhattan/adaptive_local_probe/"
+            "task218_ann3741/adaptive_probe.json"
+        ),
+        semantic_search_json=REPO_ROOT / (
+            "analysis_results/paper_a_manhattan/semantic_direct_search/"
+            "task218_ann3741/semantic_direct_search.json"
+        ),
+        candidate_limit=5,
+        out_dir=tmp_path / "review",
+        coordinate_mode="ls_percent",
+    )
+    payload = json.loads(paths["json"].read_text(encoding="utf-8"))
+    assert payload["preferred_panel_variants"] == [
+        "original",
+        "m1526_candidate_0301",
+        "m1527_candidate_0094",
+        "m1527_candidate_0086",
+    ]
+    names = {row["name"] for row in payload["variants"]}
+    assert {
+        "m1527_candidate_0095",
+        "m1527_candidate_0092",
+        "m1527_candidate_0087",
+    }.issubset(names)
+    best = next(row for row in payload["variants"] if row["name"] == "m1527_candidate_0094")
+    assert best["candidate_row"]["manual_review_candidate"] is True
+    assert best["candidate_row"]["automatic_fix_claimed"] is False
+
+    page = paths["html"].read_text(encoding="utf-8")
+    review = json.loads(re.search(r"const REVIEW = (.*);", page).group(1))
+    assert review["preferredPanelVariants"] == payload["preferred_panel_variants"]
+    assert "MANUAL-REVIEW CANDIDATE — visual review required; no automatic fix is claimed." in page
+    for candidate_id in ("m1527_candidate_0095", "m1527_candidate_0092", "m1527_candidate_0087"):
+        assert candidate_id in page
 
 
 def test_safety_regression_keeps_m1518_and_formal_boundaries():

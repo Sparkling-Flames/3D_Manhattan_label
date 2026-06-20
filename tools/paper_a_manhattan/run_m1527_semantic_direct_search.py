@@ -87,7 +87,9 @@ def render_markdown(payload: Mapping[str, Any]) -> str:
     lines = [
         "# M15.27 Semantic Direct Search v1 — task218_ann3741",
         "",
-        f"**Direct fix available: `{verdict['direct_fix_available']}`.**",
+        f"**Manual-review candidate available: `{verdict['manual_review_candidate_available']}`.**",
+        f"**Automatic fix claimed: `{verdict['automatic_fix_claimed']}`.**",
+        f"**Best candidate requires visual review: `{verdict['best_candidate_requires_visual_review']}`.**",
         "",
         "## Semantic levers",
         "",

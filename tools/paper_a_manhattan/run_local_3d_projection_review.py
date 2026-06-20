@@ -31,7 +31,7 @@ from tools.paper_a_manhattan.run_single_image_manhattan_assist import (  # noqa:
 )
 
 
-REVIEW_SCHEMA_VERSION = "local_3d_projection_review_m15_23_4_v1"
+REVIEW_SCHEMA_VERSION = "local_3d_projection_review_m15_27_1_bridge_v1"
 INSPECTION_SCHEMA_VERSION = "local_3d_inspection_m15_23_4_v1"
 MAX_EMBEDDED_IMAGE_BYTES = 8 * 1024 * 1024
 SAFETY_BOUNDARY = {
@@ -320,6 +320,42 @@ def extract_m1522_candidate_rows(
     return rows
 
 
+def extract_probe_candidate_rows(
+    payload: Mapping[str, Any], *, source_stage: str, limit: int
+) -> list[dict[str, Any]]:
+    """Normalize ranked M15.26/M15.27 rows for the existing read-only bridge."""
+
+    candidates = payload.get("top_candidates")
+    if not isinstance(candidates, list):
+        return []
+    baseline_primary = (
+        payload.get("baseline", {})
+        .get("score_breakdown", {})
+        .get("primary_edge_6_7_residual")
+    )
+    rows: list[dict[str, Any]] = []
+    for rank, raw in enumerate(candidates[: max(0, limit)], start=1):
+        if not isinstance(raw, Mapping) or not isinstance(raw.get("coordinate_changes"), list):
+            continue
+        row = copy.deepcopy(dict(raw))
+        row["source_stage"] = source_stage
+        row["source_rank"] = rank
+        row["review_role"] = f"{source_stage}_best" if rank == 1 else (
+            f"{source_stage}_second" if rank == 2 else f"{source_stage}_additional"
+        )
+        row["family"] = row.get("action_family") or row.get("family") or "adaptive_probe"
+        score = row.get("score_breakdown", {})
+        after_primary = score.get("primary_edge_6_7_residual") if isinstance(score, Mapping) else None
+        row["primary_edge_residual_before"] = baseline_primary
+        row["primary_edge_residual_after"] = after_primary
+        row["primary_unresolved_edges"] = ["6-7"] if after_primary is not None and float(after_primary) > 15.0 else []
+        row["manual_review_candidate"] = bool(row.get("direct_ls_trial_allowed"))
+        row["automatic_fix_claimed"] = False
+        row["best_candidate_requires_visual_review"] = source_stage == "m15.27"
+        rows.append(row)
+    return rows
+
+
 def extract_candidate_rows_from_report(path: Path, *, limit: int = 3) -> list[dict[str, Any]]:
     """Best-effort fallback for the Human Action Summary when JSON is unavailable."""
 
@@ -424,7 +460,7 @@ def apply_m1522_candidate(
 
 def _candidate_display_label(row: Mapping[str, Any], fallback: str) -> str:
     candidate_id = str(row.get("candidate_id") or fallback)
-    family = str(row.get("family") or row.get("probe_mode") or "candidate")
+    family = str(row.get("family") or row.get("action_family") or row.get("probe_mode") or "candidate")
     decision = str(row.get("decision_class") or row.get("disposition") or "review")
     decision = decision.removesuffix("_diagnostic").removesuffix("_review")
     walls = row.get("required_wall_residuals")
@@ -445,6 +481,10 @@ def _candidate_display_label(row: Mapping[str, Any], fallback: str) -> str:
                 f"{float(wall['before_residual_deg']):.3f}→"
                 f"{float(wall['after_residual_deg']):.3f}"
             )
+    primary_before = row.get("primary_edge_residual_before")
+    primary_after = row.get("primary_edge_residual_after")
+    if primary_before is not None and primary_after is not None:
+        return f"{candidate_id} | {family} | {decision} | 6-7 {float(primary_before):.3f}→{float(primary_after):.3f}"
     return f"{candidate_id} | {family} | {decision}"
 
 
@@ -1083,6 +1123,12 @@ def render_review_html(
                         "direct_ls_trial_allowed",
                         "primary_unresolved_edges",
                         "short_wall_edges_after",
+                        "source_stage",
+                        "source_rank",
+                        "manual_review_candidate",
+                        "automatic_fix_claimed",
+                        "best_candidate_requires_visual_review",
+                        "action_family",
                     )
                     if candidate_row.get(key) is not None
                 },
@@ -1109,6 +1155,7 @@ def render_review_html(
         "coordinateModeRequested": payload["coordinate_mode_requested"],
         "coordinateWarnings": payload["variants"][0]["projection"].get("warnings", []),
         "variants": minimal_variants,
+        "preferredPanelVariants": list(payload.get("preferred_panel_variants", [])),
         "provenance": {
             "workbench_version": "m15.23.5",
             "review_schema": payload["schema_version"],
@@ -1188,11 +1235,11 @@ def render_review_html(
       <h3>Inspector</h3><pre id="inspector">Click a corner or wall.</pre>
       <h3>Measurement</h3><pre id="measurement">Measure mode is off.</pre>
       <div id="triage-warning"></div>
-      <h3>M15.22 triage</h3><pre id="triage"></pre>
+      <h3>Candidate triage</h3><pre id="triage"></pre>
       <h3>Metric summary</h3><pre id="metrics"></pre>
       <h3>Viewer / texture status</h3><pre id="texture-status"></pre>
       <h3>Compare summary</h3>
-      <table id="compare-table"><thead><tr><th>Panel</th><th>Variant</th><th>Decision</th><th>LS trial</th><th>Unresolved</th><th>Wall residual</th><th>Short walls</th></tr></thead><tbody></tbody></table>
+      <table id="compare-table"><thead><tr><th>Panel</th><th>Variant</th><th>Decision</th><th>Manual review</th><th>Unresolved</th><th>Wall residual</th><th>Short walls</th></tr></thead><tbody></tbody></table>
       <h3>Provenance</h3><pre id="provenance"></pre>
       <h3>Visual feature summary</h3>
       <ul class="muted">
@@ -1224,7 +1271,9 @@ def render_review_html(
     const provenance = document.getElementById('provenance');
     const activeMode = window.location.protocol === 'file:' ? 'file' : 'server';
     const activeAssets = REVIEW.assets[activeMode];
-    const preferredPanelVariants = ['original', 'candidate_1', 'candidate_2', 'candidate_5'];
+    const preferredPanelVariants = REVIEW.preferredPanelVariants.length
+      ? REVIEW.preferredPanelVariants
+      : ['original', 'candidate_1', 'candidate_2', 'candidate_5'];
     let panels = [];
     let activePanelIndex = 0;
     let labelsVisible = true;
@@ -1249,7 +1298,7 @@ def render_review_html(
     function updatePanelHeader(panel) {{
       const variant = panelVariant(panel);
       const triage = variant.triage || {{}};
-      panel.status.textContent = `${{triage.decision_class || 'original'}} · LS trial ${{triage.direct_ls_trial_allowed ?? false}}`;
+      panel.status.textContent = `${{triage.decision_class || 'original'}} · manual review ${{triage.manual_review_candidate ?? false}}`;
       panel.frame.title = `Panel ${{panel.index + 1}}: ${{variant.name}}`;
     }}
     function updateCompareTable() {{
@@ -1261,7 +1310,7 @@ def render_review_html(
           panel === activePanel() ? `${{panel.index + 1}} (active)` : String(panel.index + 1),
           variant.name,
           triage.decision_class || 'original',
-          String(triage.direct_ls_trial_allowed ?? false),
+          String(triage.manual_review_candidate ?? false),
           JSON.stringify(triage.primary_unresolved_edges || []),
           Number(variant.summary?.wall_residual_sum_deg ?? 0).toFixed(3),
           JSON.stringify(triage.short_wall_edges_after || []),
@@ -1337,11 +1386,14 @@ def render_review_html(
     function updateTriageUi(variant) {{
       const data = variant.triage || {{}};
       triage.textContent = JSON.stringify(data, null, 2);
+      const manualReview = data.manual_review_candidate === true;
       const blocked = data.decision_class === 'partial_diagnostic' || data.direct_ls_trial_allowed === false;
-      triageWarning.textContent = blocked
-        ? 'PARTIAL DIAGNOSTIC ONLY — do not apply directly in LS. Primary unresolved edges: ' + JSON.stringify(data.primary_unresolved_edges || [])
-        : '';
-      triageWarning.style.display = blocked ? 'block' : 'none';
+      triageWarning.textContent = manualReview
+        ? 'MANUAL-REVIEW CANDIDATE — visual review required; no automatic fix is claimed.'
+        : blocked
+          ? 'PARTIAL DIAGNOSTIC ONLY — do not apply directly in LS. Primary unresolved edges: ' + JSON.stringify(data.primary_unresolved_edges || [])
+          : '';
+      triageWarning.style.display = manualReview || blocked ? 'block' : 'none';
     }}
     function updateActiveUi() {{
       const panel = activePanel(); if (!panel) return;
@@ -1485,6 +1537,8 @@ def run_local_review(
     image_path: Path | None = None,
     candidate_json: Path | None = None,
     candidate_report: Path | None = None,
+    adaptive_probe_json: Path | None = None,
+    semantic_search_json: Path | None = None,
     case_name: str | None = None,
     width: int = 1024,
     height: int = 512,
@@ -1503,6 +1557,7 @@ def run_local_review(
     candidate_rows: list[dict[str, Any]] = []
     m1522_candidates = False
     candidate_provenance: dict[str, Any] | None = None
+    candidate_sources: list[dict[str, Any]] = []
     if candidate_json is not None:
         candidate_json = candidate_json.resolve()
         candidate_payload = _read_json(candidate_json)
@@ -1525,6 +1580,7 @@ def run_local_review(
                 else "candidate_json"
             ),
         }
+        candidate_sources.append(candidate_provenance)
     elif candidate_report is not None:
         candidate_report = candidate_report.resolve()
         candidate_rows = extract_candidate_rows_from_report(candidate_report)
@@ -1533,6 +1589,26 @@ def run_local_review(
             "sha256": _sha256(candidate_report),
             "source": "candidate_report_fallback",
         }
+        candidate_sources.append(candidate_provenance)
+
+    for source_path, source_stage, limit in (
+        (adaptive_probe_json, "m15.26", 1),
+        (semantic_search_json, "m15.27", 5),
+    ):
+        if source_path is None:
+            continue
+        resolved_source = source_path.resolve()
+        source_payload = _read_json(resolved_source)
+        candidate_rows.extend(
+            extract_probe_candidate_rows(source_payload, source_stage=source_stage, limit=limit)
+        )
+        candidate_sources.append(
+            {
+                "file": resolved_source.name,
+                "sha256": _sha256(resolved_source),
+                "source": f"{source_stage}_top_candidates",
+            }
+        )
 
     variants = [
         build_projection_variant(
@@ -1545,11 +1621,9 @@ def run_local_review(
         )
     ]
     for index, row in enumerate(candidate_rows, start=1):
-        candidate_pairs = (
-            apply_m1522_candidate(ordered_pairs, row)
-            if m1522_candidates
-            else apply_candidate_row(ordered_pairs, row)
-        )
+        candidate_pairs = apply_m1522_candidate(ordered_pairs, row) if isinstance(
+            row.get("coordinate_changes"), list
+        ) else apply_candidate_row(ordered_pairs, row)
         variant_name = str(row.get("candidate_id") or f"candidate_{index}")
         variant = build_projection_variant(
             variant_name,
@@ -1583,10 +1657,20 @@ def run_local_review(
             "input_sha256": _sha256(input_path),
             "ordered_pair_source": pair_source,
             "candidate": candidate_provenance,
+            "candidate_sources": candidate_sources,
             "image": image_info,
         },
         "safety_boundary": SAFETY_BOUNDARY,
         "variants": variants,
+        "preferred_panel_variants": [
+            "original",
+            *[
+                str(row["candidate_id"])
+                for role in ("m15.26_best", "m15.27_best", "m15.27_second")
+                for row in candidate_rows
+                if row.get("review_role") == role and row.get("candidate_id") is not None
+            ],
+        ][:4],
     }
 
     json_path = out_dir / "projection_metrics.json"
@@ -1659,6 +1743,8 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--image-path", type=Path)
     parser.add_argument("--candidate-json", type=Path)
     parser.add_argument("--candidate-report", type=Path)
+    parser.add_argument("--adaptive-probe-json", type=Path)
+    parser.add_argument("--semantic-search-json", type=Path)
     parser.add_argument("--candidate-limit", type=int, default=5)
     parser.add_argument("--case-name")
     parser.add_argument("--width", type=int, default=1024)
@@ -1680,6 +1766,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         image_path=args.image_path,
         candidate_json=args.candidate_json,
         candidate_report=args.candidate_report,
+        adaptive_probe_json=args.adaptive_probe_json,
+        semantic_search_json=args.semantic_search_json,
         case_name=args.case_name,
         width=args.width,
         height=args.height,

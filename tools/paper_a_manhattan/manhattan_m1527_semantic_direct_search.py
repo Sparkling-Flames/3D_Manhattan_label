@@ -28,7 +28,7 @@ from tools.paper_a_manhattan.run_local_3d_projection_review import (
 )
 
 
-SCHEMA_VERSION = "m15_27_semantic_direct_search_v1"
+SCHEMA_VERSION = "m15_27_1_semantic_direct_search_v1"
 STEP_SCHEDULE = (1.0, 0.5, 0.25, 0.125)
 MAX_EVALUATIONS = 600
 TOP_LIMIT = 5
@@ -55,6 +55,14 @@ ACTION_FAMILIES = {
     "dense_pair_separation_x": "azimuth",
     "mixed_x_bottom_y_pattern": "azimuth+floor_depth",
 }
+
+
+def manual_review_candidate_available(payload: Mapping[str, Any]) -> bool:
+    """Read the current verdict, with a legacy-only compatibility fallback."""
+    verdict = payload.get("overall_verdict", {})
+    if payload.get("schema_version") == SCHEMA_VERSION:
+        return bool(verdict.get("manual_review_candidate_available"))
+    return bool(verdict.get("direct_fix_available"))
 
 
 def dominant_height_cluster(variant: Mapping[str, Any]) -> dict[str, Any]:
@@ -178,7 +186,7 @@ def _evaluate(
     )
     movement, changes, changed_pairs = _movement(baseline_pairs, candidate_pairs)
     constraints = _constraint_state(baseline_pairs, candidate_pairs, variant, assertions)
-    if action["family"] == "dense_pair_separation_x":
+    if action.get("enforce_dense_pair_order") or action["family"] == "dense_pair_separation_x":
         before = _pair_lookup(baseline_pairs)
         after = _pair_lookup(candidate_pairs)
         old_delta = float(before[6]["bottom"]["x"]) - float(before[5]["bottom"]["x"])
@@ -224,7 +232,7 @@ def _evaluate(
         "round_index": round_index,
         "step_size": step,
         "action_family": action["family"],
-        "semantic_lever": ACTION_FAMILIES[action["family"]],
+        "semantic_lever": action.get("semantic_lever", ACTION_FAMILIES.get(action["family"], "semantic_geometry")),
         "action": copy.deepcopy(action),
         "changed_pair_indices": changed_pairs,
         "coordinate_changes": changes,
@@ -393,9 +401,11 @@ def run_semantic_direct_search(
             "m15_27_still_partial": not bool(direct),
         },
         "overall_verdict": {
-            "direct_fix_available": bool(direct),
+            "manual_review_candidate_available": bool(direct),
+            "automatic_fix_claimed": False,
+            "best_candidate_requires_visual_review": True,
             "best_candidate_id": best["candidate_id"] if best else None,
             "best_decision_class": best["decision_class"] if best else None,
-            "verdict": "candidate_for_manual_review_available" if direct else "no_direct_fix_available",
+            "verdict": "manual_review_candidate_available" if direct else "no_manual_review_candidate_available",
         },
     }

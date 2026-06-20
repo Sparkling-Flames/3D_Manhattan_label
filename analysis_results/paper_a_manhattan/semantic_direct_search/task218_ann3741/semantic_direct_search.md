@@ -1,6 +1,8 @@
 # M15.27 Semantic Direct Search v1 — task218_ann3741
 
-**Direct fix available: `True`.**
+**Manual-review candidate available: `True`.**
+**Automatic fix claimed: `False`.**
+**Best candidate requires visual review: `True`.**
 
 ## Semantic levers
 
