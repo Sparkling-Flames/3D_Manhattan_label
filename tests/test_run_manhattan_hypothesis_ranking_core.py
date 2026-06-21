@@ -43,6 +43,7 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
     assert {"portfolio_candidates", "m15_28_gate", "legacy_m15_28_gate"}.isdisjoint(payload)
     assert set(payload) >= {
         "case_contract",
+        "candidate_source_metadata",
         "candidate_set",
         "candidate_review_geometry",
         "constrained_evaluations",
@@ -51,6 +52,11 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
         "legacy_diagnostics",
         "overall_verdict",
     }
+    source = payload["candidate_source_metadata"]
+    assert source["source_type"] == "legacy_m1528_action_library"
+    assert source["generator_role"] == "legacy_wrapper"
+    assert source["candidate_count"] == len(payload["candidate_set"])
+    assert source["no_new_candidate_strategy_introduced"] is True
     assert set(payload["portfolio_ranking"]) == {
         "best_manhattan_feasible",
         "best_height_consistent",

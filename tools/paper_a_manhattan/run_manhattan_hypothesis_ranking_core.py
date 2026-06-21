@@ -22,7 +22,9 @@ from tools.paper_a_manhattan.manhattan_constrained_hypothesis_evaluator import (
     build_hypothesis_ranking_key,
     evaluate_hypothesis,
 )
-from tools.paper_a_manhattan.manhattan_m1528_semantic_action_library import run_action_library
+from tools.paper_a_manhattan.manhattan_legacy_m1528_candidate_source import (
+    load_legacy_m1528_candidates,
+)
 from tools.paper_a_manhattan.run_local_3d_projection_review import build_projection_variant
 from tools.paper_a_manhattan.run_m1528_semantic_action_library import (
     DEFAULT_ASSERTION,
@@ -99,7 +101,10 @@ def _enrich_legacy_with_column_evidence(
     }
 
 
-def build_core_payload_from_legacy(legacy_payload: Mapping[str, Any]) -> dict[str, Any]:
+def build_core_payload_from_legacy(
+    legacy_payload: Mapping[str, Any],
+    candidate_source: Mapping[str, Any] | None = None,
+) -> dict[str, Any]:
     rows = list(legacy_payload.get("candidate_set", []))
     if not rows:
         raise ValueError("legacy candidate source returned no candidate_set")
@@ -187,7 +192,7 @@ def build_core_payload_from_legacy(legacy_payload: Mapping[str, Any]) -> dict[st
         for key in ("legacy_default_contract", "legacy_source_files")
         if key in case_contract
     }
-    return {
+    core = {
         "schema_version": SCHEMA_VERSION,
         "case_name": legacy_payload.get("case_name"),
         "safety_boundary": {
@@ -265,6 +270,22 @@ def build_core_payload_from_legacy(legacy_payload: Mapping[str, Any]) -> dict[st
             "verdict_basis": "hard_feasibility_improvement_and_portfolio_selection",
         },
     }
+    if candidate_source is not None:
+        core["candidate_source_metadata"] = {
+            "source_id": candidate_source["source_id"],
+            "source_type": candidate_source["source_type"],
+            "source_version": candidate_source["source_version"],
+            "generator_role": candidate_source["generator_role"],
+            "candidate_count": candidate_source["candidate_count"],
+            "source_limitations": copy.deepcopy(candidate_source["source_limitations"]),
+            "no_new_candidate_strategy_introduced": candidate_source[
+                "no_new_candidate_strategy_introduced"
+            ],
+            "legacy_source_module": candidate_source["source_provenance"][
+                "legacy_source_module"
+            ],
+        }
+    return core
 
 
 def build_payload(
@@ -280,7 +301,7 @@ def build_payload(
     )
     if original is None or not isinstance(original.get("ordered_pairs"), list):
         raise ValueError("projection metrics must contain original ordered_pairs")
-    legacy = run_action_library(
+    candidate_source = load_legacy_m1528_candidates(
         original["ordered_pairs"],
         expert_assertion=assertion,
         projection_config={
@@ -290,6 +311,7 @@ def build_payload(
             "camera_height": float(projection["camera_height"]),
         },
     )
+    legacy = candidate_source["legacy_payload"]
     projection_config = {
         "width": int(projection["width"]),
         "height": int(projection["height"]),
@@ -302,7 +324,7 @@ def build_payload(
     )
     _enrich_legacy_with_column_evidence(legacy, original, projection_config, source)
     legacy["case_name"] = str(projection.get("case_name") or assertion.get("case_name"))
-    core = build_core_payload_from_legacy(legacy)
+    core = build_core_payload_from_legacy(legacy, candidate_source)
     core["state_before"] = {
         "ordered_pairs": original["ordered_pairs"],
         "projection_config": {
