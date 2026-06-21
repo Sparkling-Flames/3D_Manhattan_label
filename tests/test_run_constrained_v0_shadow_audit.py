@@ -60,7 +60,10 @@ def test_shadow_audit_writes_reports_and_fails_closed_without_identity(tmp_path,
     assert paths["markdown"].is_file()
     assert payload["candidate_count"] == 0
     assert payload["missing_required_evidence_for_column_x_alignment"] is True
-    assert "column_identity_unavailable" in payload["unavailable_summary"]["reasons"]
+    assert set(payload["unavailable_summary"]["reasons"]) >= {
+        "evidence_unavailable",
+        "column_identity_unavailable",
+    }
     assert payload["accepted"] is False
     assert payload["downstream_recommendation"] is False
 

@@ -157,6 +157,26 @@ def test_column_identity_must_be_explicitly_available():
     assert "column_identity_unavailable" in payload["unavailable_summary"]["reasons"]
 
 
+def test_source_level_missing_evidence_records_evidence_and_identity_reasons():
+    payload = build_column_x_alignment_shadow_source(
+        [
+            {
+                "effective_pair_index": 1,
+                "top": {"x": 10.0, "y": 20.0},
+                "bottom": {"x": 12.0, "y": 80.0},
+            }
+        ],
+        {"movable_fields_by_pair": {"1": ["x"]}},
+        None,
+        {"coordinate_mode": "ls_percent", "width": 1024, "height": 512},
+    )
+    assert payload["candidate_count"] == 0
+    assert set(payload["unavailable_summary"]["reasons"]) >= {
+        "evidence_unavailable",
+        "column_identity_unavailable",
+    }
+
+
 def test_order_merge_uses_separation_margin():
     payload = _column_source(second_center=11.2, keep_distinct=False)
     assert payload["candidate_set"] == []
