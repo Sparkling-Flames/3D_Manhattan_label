@@ -68,12 +68,21 @@ def build_column_x_alignment_shadow_source(
     evidence = dict(evidence_summary or {})
     if evidence.get("evidence_status") != "available":
         unavailable.append("evidence_unavailable")
-    if evidence.get("visual_conflict_flags") or evidence.get("column_identity_status") == "conflict":
+    if evidence.get("visual_conflict_flags"):
         unavailable.append("evidence_conflict")
+    if evidence.get("column_identity_status") == "conflict":
+        unavailable.append("column_identity_conflict")
     if evidence.get("seam_ambiguity"):
         unavailable.append("seam_ambiguity")
-    if not projection_config:
+    required_projection = {"coordinate_mode", "width", "height"}
+    if not projection_config or required_projection.difference(projection_config):
         unavailable.append("projection_config_missing")
+    else:
+        try:
+            if not str(projection_config["coordinate_mode"]) or float(projection_config["width"]) <= 0 or float(projection_config["height"]) <= 0:
+                unavailable.append("projection_config_invalid")
+        except (TypeError, ValueError):
+            unavailable.append("projection_config_invalid")
     if unavailable:
         payload["unavailable_summary"] = {"reasons": unavailable, "eligible_pair_count": 0}
         validate_candidate_source(payload)
@@ -88,6 +97,33 @@ def build_column_x_alignment_shadow_source(
     seam_pairs = {int(value) for value in evidence.get("seam_ambiguous_pairs", [])}
     conflict_pairs = {int(value) for value in evidence.get("column_identity_conflicts", [])}
     dense_pairs = {int(value) for value in evidence.get("dense_pair_indices", [])}
+    identity_by_pair = {
+        int(index): status
+        for index, status in evidence.get("column_identity_by_pair", {}).items()
+    }
+    default_margin_used = not any(
+        key in case_contract for key in ("keep_distinct_margin_min", "min_column_separation")
+    )
+    separation_margin = float(
+        case_contract.get(
+            "keep_distinct_margin_min",
+            case_contract.get("min_column_separation", 0.25),
+        )
+    )
+    seam_margin = float(evidence.get("seam_margin", case_contract.get("seam_margin", 0.5)))
+    seam_safe = bool(evidence.get("seam_safe", case_contract.get("seam_safe", False)))
+    coordinate_upper = (
+        100.0
+        if "percent" in str(projection_config["coordinate_mode"]).lower()
+        else float(projection_config["width"])
+    )
+    payload["source_provenance"].update(
+        {
+            "column_separation_margin": separation_margin,
+            "default_margin_used": default_margin_used,
+            "seam_margin": seam_margin,
+        }
+    )
     pair_lookup: dict[int, Mapping[str, Any]] = {}
     centers: dict[int, float] = {}
     for row in ordered_pairs:
@@ -110,11 +146,23 @@ def build_column_x_alignment_shadow_source(
             reasons.append("seam_ambiguity")
         if index in conflict_pairs:
             reasons.append("column_identity_conflict")
+        identity_status = identity_by_pair.get(index, evidence.get("column_identity_status"))
+        if identity_status != "available":
+            reasons.append(
+                "column_identity_conflict"
+                if identity_status == "conflict"
+                else "column_identity_unavailable"
+            )
         if index in dense_pairs:
             reasons.append("dense_pair_alignment_disallowed")
         top_x = float(row["top"]["x"])
         bottom_x = float(row["bottom"]["x"])
         target_x = centers[index]
+        if not seam_safe and any(
+            value < seam_margin or coordinate_upper - value < seam_margin
+            for value in (top_x, bottom_x, target_x)
+        ):
+            reasons.append("seam_margin_risk")
         if top_x == bottom_x:
             reasons.append("x_residual_zero")
         distinct_partners = {
@@ -122,9 +170,15 @@ def build_column_x_alignment_shadow_source(
             for left, right in keep_distinct
             if index in {left, right}
         }
-        if any(centers.get(partner) == target_x for partner in distinct_partners):
+        if any(
+            partner in centers and abs(centers[partner] - target_x) < separation_margin
+            for partner in distinct_partners
+        ):
             reasons.append("keep_distinct_collapse_risk")
-        if any(other != index and center == target_x for other, center in centers.items()):
+        if any(
+            other != index and abs(center - target_x) < separation_margin
+            for other, center in centers.items()
+        ):
             reasons.append("order_mutation_or_pair_merge_risk")
         if reasons:
             unavailable.extend(f"pair_{index}:{reason}" for reason in reasons)
@@ -153,6 +207,11 @@ def build_column_x_alignment_shadow_source(
                     "protected_pair": False,
                     "seam_ambiguous": False,
                     "column_identity_conflict": False,
+                    "column_identity_status": "available",
+                    "column_separation_margin": separation_margin,
+                    "default_margin_used": default_margin_used,
+                    "seam_margin": seam_margin,
+                    "seam_safe": seam_safe,
                 },
                 "hard_reject_reasons": [],
                 "source_provenance": {

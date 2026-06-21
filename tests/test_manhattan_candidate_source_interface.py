@@ -79,32 +79,48 @@ def test_non_shadow_source_cannot_be_empty():
         validate_candidate_source(payload)
 
 
-def _column_source(*, protected=False, movable=True, conflict=False):
+def _column_source(
+    *,
+    protected=False,
+    movable=True,
+    conflict=False,
+    identity=True,
+    second_center=30.0,
+    keep_distinct=True,
+    top_x=10.0,
+    bottom_x=12.0,
+    seam_safe=False,
+    projection_config=None,
+):
     return build_column_x_alignment_shadow_source(
         [
             {
                 "effective_pair_index": 1,
-                "top": {"x": 10.0, "y": 20.0},
-                "bottom": {"x": 12.0, "y": 80.0},
+                "top": {"x": top_x, "y": 20.0},
+                "bottom": {"x": bottom_x, "y": 80.0},
             },
             {
                 "effective_pair_index": 2,
-                "top": {"x": 30.0, "y": 25.0},
-                "bottom": {"x": 30.0, "y": 75.0},
+                "top": {"x": second_center, "y": 25.0},
+                "bottom": {"x": second_center, "y": 75.0},
             },
         ],
         {
             "protected_pairs": [1] if protected else [],
             "movable_fields_by_pair": {"1": ["x"]} if movable else {},
-            "keep_distinct_pairs": [[1, 2]],
+            "keep_distinct_pairs": [[1, 2]] if keep_distinct else [],
         },
         {
             "evidence_status": "available",
             "visual_conflict_flags": ["corner_conflict"] if conflict else [],
             "column_identity_conflicts": [],
             "seam_ambiguous_pairs": [],
+            **({"column_identity_status": "available"} if identity else {}),
+            "seam_safe": seam_safe,
         },
-        {"coordinate_mode": "ls_percent", "width": 1024, "height": 512},
+        projection_config
+        if projection_config is not None
+        else {"coordinate_mode": "ls_percent", "width": 1024, "height": 512},
     )
 
 
@@ -118,6 +134,7 @@ def test_column_x_alignment_emits_shadow_only_x_changes():
     fields = candidate["coordinate_changes"][0]["fields"]
     assert set(fields) == {"top_x", "bottom_x"}
     assert fields["top_x"]["after"] == fields["bottom_x"]["after"] == 11.0
+    assert candidate["eligibility_trace"]["default_margin_used"] is True
 
 
 @pytest.mark.parametrize(
@@ -132,3 +149,42 @@ def test_column_x_alignment_rejects_ineligible_inputs(kwargs, reason):
     payload = _column_source(**kwargs)
     assert payload["candidate_set"] == []
     assert any(reason in value for value in payload["unavailable_summary"]["reasons"])
+
+
+def test_column_identity_must_be_explicitly_available():
+    payload = _column_source(identity=False)
+    assert payload["candidate_set"] == []
+    assert "pair_1:column_identity_unavailable" in payload["unavailable_summary"]["reasons"]
+
+
+def test_order_merge_uses_separation_margin():
+    payload = _column_source(second_center=11.2, keep_distinct=False)
+    assert payload["candidate_set"] == []
+    assert "pair_1:order_mutation_or_pair_merge_risk" in payload["unavailable_summary"]["reasons"]
+
+
+def test_keep_distinct_uses_separation_margin():
+    payload = _column_source(second_center=11.2)
+    assert payload["candidate_set"] == []
+    assert "pair_1:keep_distinct_collapse_risk" in payload["unavailable_summary"]["reasons"]
+
+
+def test_near_seam_requires_explicit_safe_flag():
+    blocked = _column_source(top_x=0.1, bottom_x=0.3)
+    allowed = _column_source(top_x=0.1, bottom_x=0.3, seam_safe=True)
+    assert blocked["candidate_set"] == []
+    assert "pair_1:seam_margin_risk" in blocked["unavailable_summary"]["reasons"]
+    assert allowed["candidate_count"] == 1
+
+
+@pytest.mark.parametrize(
+    "config,reason",
+    [
+        ({"coordinate_mode": "ls_percent", "width": 1024}, "projection_config_missing"),
+        ({"coordinate_mode": "ls_percent", "width": 0, "height": 512}, "projection_config_invalid"),
+    ],
+)
+def test_projection_config_minimum_contract(config, reason):
+    payload = _column_source(projection_config=config)
+    assert payload["candidate_set"] == []
+    assert reason in payload["unavailable_summary"]["reasons"]
