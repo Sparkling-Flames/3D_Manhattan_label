@@ -60,6 +60,23 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
         "diagnostic_only_candidates",
         "suppressed_candidates",
     }
+    expected_selection = {
+        "best_manhattan_feasible": ("m1528_candidate_0019", "legacy_trial_blocked", True, "edge_6_7_normal_slide_proxy"),
+        "best_balanced": ("m1528_candidate_0019", "legacy_trial_blocked", True, "edge_6_7_normal_slide_proxy"),
+        "best_height_consistent": ("m1528_candidate_0017", "legacy_trial_blocked", True, "edge_6_7_floor_depth_balance"),
+        "best_short_wall_preserving": ("m1528_candidate_0001", "hard_feasible_neutral", True, "vertical_column_align_x"),
+        "best_low_movement": ("m1528_candidate_0070", "hard_feasible_neutral", True, "azimuth_translate_keep_top_bottom_delta"),
+    }
+    for name, expected in expected_selection.items():
+        candidate = payload["portfolio_ranking"][name]["candidate"]
+        assert (
+            candidate["candidate_id"],
+            candidate["decision_class"],
+            candidate["hard_gate_passed"],
+            candidate["action_family"],
+        ) == expected
+    assert payload["portfolio_ranking"]["best_hohonet_consistent"]["candidate"] is None
+    assert payload["portfolio_ranking"]["best_hohonet_consistent"]["reason"]
     verdict = payload["overall_verdict"]
     assert verdict["hard_feasible_candidate_available"] == any(row["hard_gate_passed"] for row in payload["candidate_set"])
     assert verdict["improving_hypothesis_available"] == any(

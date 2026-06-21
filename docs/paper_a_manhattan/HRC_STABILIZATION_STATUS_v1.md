@@ -16,10 +16,10 @@
 | C0 | 部分完成，待收口 | 输出合同已降级 legacy score；排序 key 仍使用 `local_score_total` 末位兜底，尚非严格 diagnostic only。 |
 | C1 | 部分完成 | `manhattan_case_contract.py` 已有 case contract 与 projection-rule-based inferred contract，也保留无 metrics 时的 legacy fallback；不是完全脱离 legacy 默认值的通用 case analyzer。 |
 | C2 | v1 diagnostic implemented | evaluator 已输出 hard feasibility、wall/turn/local residual、height consistency、layout plausibility、evidence interface、movement/edit cost 与 decision class；`direction_family_fit` / `parallel_family_residual` v1 已实现并由真实 projection artifacts 与 core runner 回归锁定，但仍只是可审计 diagnostic，不是 C4 Column Evidence Layer。 |
-| C3 | 未实现新模块 | 当前只是 M15.28 action library 的 legacy candidate source 接入 core；不是新的 constrained candidate generator。 |
+| C3 | 未实现新模块；next blocked-until-audit-passes | 当前只是 M15.28 action library 的 legacy candidate source 接入 core；不是新的 constrained candidate generator。只有 C6.1 post-change selection audit 通过后，才允许收口 candidate source interface / legacy wrapper。 |
 | C4 | 未实现 | 未发现独立 Column Evidence Layer。evaluator 只有 evidence 字段接口及 `top_bottom_x_residual` 派生列一致性指标，不等于 HoHoNet/HorizonNet column evidence 实现。 |
 | C5 | C5-lite plane proxy v0 implemented | evaluator 已物化独立 `plane_proxy_metrics`：复用 direction-family、同族平行 residual、dominant height cluster 与 floorprint residual 形成 geometry proxy。它不是 depth model、不是 GeoLayout reproduction、不是 C4 evidence layer；C6.1 只把其中 parallel/orthogonal consistency 用作 Manhattan bucket tie-break。 |
-| C6 | partially tightened / contract-level alignment with C2/C5 diagnostics | `manhattan_hypothesis_portfolio.py` 保持原有 bucket 集合；`best_manhattan_feasible` 已按 hard-gate eligible 集合消费 C2 direction/parallel residual，并以 C5 parallel/orthogonal proxy 作 tie-break。仍不声明 stable ranker，不新增 bucket，C5 不冒充 C4 evidence。 |
+| C6 | partially tightened / contract-level alignment with C2/C5 diagnostics | `manhattan_hypothesis_portfolio.py` 保持原有 bucket 集合；`best_manhattan_feasible` 已按 hard-gate eligible 集合消费 C2 direction/parallel residual，并以 C5 parallel/orthogonal proxy 作 tie-break。默认 case 选择由 `m1528_candidate_0017` 变为 `m1528_candidate_0019`，原因是 direction-family max residual 前置，状态为 `needs_manual_visual_sanity_check`；仍不声明 stable ranker。 |
 | C7 | blocked | legacy `manhattan_m1527_semantic_direct_search.py` 存在 Hooke–Jeeves 搜索，但新 geometry-normalized MADS/Hooke–Jeeves 在 evaluator 稳定前不得启动。 |
 | C8 | 仅记录系统 | feedback ledger schema 与 `materialize_manhattan_feedback_ledger_entry.py` 可保留；不得进入训练、参数更新或自动应用系统。 |
 | C9 | blocked | 未发现 Adaptive Parameter Update 实现；不得启动。 |
@@ -27,7 +27,9 @@
 
 ## 3. 唯一允许的下一步
 
-下一步允许 C6.1 portfolio/ranking contract 收口；不新增 bucket，不声明 stable ranker。范围仅限 C2/C5 diagnostics 与现有 bucket 的合同对齐：
+C6.1 已完成；下一步只允许 C6.1 post-change selection audit。audit 通过后，才进入 C3 candidate source interface / legacy wrapper 收口。
+
+当前只读 audit 已锁定默认 core 六个 selection bucket 的 candidate/decision/hard-gate/action-family，并确认 bucket 集合未变；`best_manhattan_feasible` 的选择变化仍需人工视觉 sanity check，因此不把 C6 声明为 fully complete 或 stable ranker。
 
 - 不先做 C3/C4/C7/C9/C10；
 - 不继续调 `local_score_total` 权重；
