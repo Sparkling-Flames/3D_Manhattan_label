@@ -1,5 +1,14 @@
 import json
 
+import pytest
+
+from tools.paper_a_manhattan.manhattan_candidate_source_interface import (
+    OUTPUT_SCHEMA_VERSION,
+    validate_candidate_source,
+)
+from tools.paper_a_manhattan.manhattan_constrained_v0_candidate_source import (
+    build_constrained_v0_shadow_source,
+)
 from tools.paper_a_manhattan.manhattan_legacy_m1528_candidate_source import (
     load_legacy_m1528_candidates,
 )
@@ -38,3 +47,32 @@ def test_legacy_wrapper_preserves_m1528_candidate_ids():
     assert wrapped["candidate_generation_allowed"] is False
     assert wrapped["no_new_candidate_strategy_introduced"] is True
     assert wrapped["generator_role"] == "legacy_wrapper"
+
+
+def test_constrained_v0_shadow_skeleton_is_explicitly_empty():
+    payload = build_constrained_v0_shadow_source({"case_id": "shadow"})
+
+    assert validate_candidate_source(payload) is payload
+    assert payload["candidate_count"] == 0
+    assert payload["candidate_set"] == []
+    assert payload["candidate_generation_allowed"] is False
+    assert payload["no_new_candidate_strategy_introduced"] is True
+    assert "coordinate_changes" not in payload
+
+
+def test_non_shadow_source_cannot_be_empty():
+    payload = {
+        "source_id": "invalid_empty",
+        "source_type": "legacy_m1528_action_library",
+        "source_version": "test",
+        "generator_role": "legacy_wrapper",
+        "candidate_generation_allowed": False,
+        "candidate_count": 0,
+        "candidate_set": [],
+        "case_contract": {},
+        "source_provenance": {},
+        "source_limitations": [],
+        "output_schema_version": OUTPUT_SCHEMA_VERSION,
+    }
+    with pytest.raises(ValueError, match="must be non-empty"):
+        validate_candidate_source(payload)
