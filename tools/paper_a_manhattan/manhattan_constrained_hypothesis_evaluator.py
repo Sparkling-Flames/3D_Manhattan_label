@@ -442,12 +442,18 @@ def _movement(
 
 def _evidence(variant: Mapping[str, Any]) -> dict[str, Any]:
     source = variant.get("evidence") or variant.get("metrics", {}).get("evidence") or {}
-    present = [field for field in EVIDENCE_FIELDS if field in source]
-    status = "available" if len(present) == len(EVIDENCE_FIELDS) else "partial" if present else "unavailable"
+    required = EVIDENCE_FIELDS[:-1]
+    present = [field for field in required if source.get(field) is not None]
+    status = source.get("evidence_status")
+    if status not in {"available", "partial", "unavailable"}:
+        status = "available" if len(present) == len(required) else "partial" if present else "unavailable"
     return {
         **{field: source.get(field) for field in EVIDENCE_FIELDS},
         "evidence_status": status,
-        "missing_fields": [field for field in EVIDENCE_FIELDS if field not in source],
+        "evidence_version": source.get("evidence_version"),
+        "source_provenance": source.get("source_provenance"),
+        "unavailable_reason": source.get("unavailable_reason"),
+        "missing_fields": list(source.get("missing_fields") or [field for field in required if source.get(field) is None]),
     }
 
 
@@ -637,6 +643,7 @@ def evaluate_hypothesis(
         or (local_residuals and baseline_local_residuals and sum(local_residuals) < sum(baseline_local_residuals) - 1e-9)
         or height["height_outlier_l1"] < baseline_height_l1 - 1e-9
     )
+    evidence = _evidence(candidate_variant)
     if metric_errors:
         decision_class = "diagnostic_only_incomplete_metrics"
     elif not feasibility["hard_gate_passed"]:
@@ -645,7 +652,7 @@ def evaluate_hypothesis(
         decision_class = "hard_feasible_neutral"
     elif legacy_trial_allowed is False:
         decision_class = "legacy_trial_blocked"
-    elif _evidence(candidate_variant)["evidence_status"] != "available":
+    elif evidence["evidence_status"] != "available":
         decision_class = "hard_feasible_improving_evidence_unavailable"
     else:
         decision_class = "hard_feasible_improving_evidence_supported"
@@ -659,7 +666,8 @@ def evaluate_hypothesis(
         "height_consistency": height,
         "plane_proxy_metrics": plane_proxy,
         "layout_plausibility": plausibility,
-        "evidence_consistency": _evidence(candidate_variant),
+        "column_evidence": evidence,
+        "evidence_consistency": evidence,
         "movement_edit_cost": movement,
         "legacy_score_breakdown": legacy,
         "local_score_total": legacy.get("local_score_total"),

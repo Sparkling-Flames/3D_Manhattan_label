@@ -25,10 +25,60 @@ def build_hypothesis_portfolio(
         selected = min(candidates, key=key)
         return {"candidate": selected["candidate"], "evaluation": selected["evaluation"], "reason": None}
 
-    evidence_available = [entry for entry in eligible if entry["evaluation"]["evidence_consistency"]["evidence_status"] != "unavailable"]
+    evidence_available = [entry for entry in eligible if entry["evaluation"]["evidence_consistency"]["evidence_status"] == "available"]
+
+    def metric(value: Any) -> float:
+        return float(value) if isinstance(value, (int, float)) else math.inf
+
+    def l1_vector(entry: Mapping[str, Any]) -> tuple[float, ...]:
+        manhattan = entry["evaluation"]["manhattan_feasibility"]
+        direction = manhattan.get("direction_family_fit")
+        parallel = manhattan.get("parallel_family_residual")
+        direction_summary = direction.get("residual_summary", {}) if isinstance(direction, Mapping) else {}
+        return (
+            float(direction is None),
+            metric(direction_summary.get("max_deg")),
+            metric(direction_summary.get("median_deg")),
+            float(parallel is None),
+            metric(parallel.get("max_deg")) if isinstance(parallel, Mapping) else math.inf,
+            metric(parallel.get("median_deg")) if isinstance(parallel, Mapping) else math.inf,
+            metric(manhattan.get("turn_residual_max")),
+            metric(manhattan.get("turn_residual_median")),
+            metric(manhattan.get("unresolved_edge_count")),
+            metric(manhattan.get("local_window_residual")),
+            metric(manhattan.get("floor_ceiling_column_consistency")),
+        )
+
+    def dominates(left: Mapping[str, Any], right: Mapping[str, Any]) -> bool:
+        a, b = l1_vector(left), l1_vector(right)
+        return all(x <= y for x, y in zip(a, b)) and any(x < y for x, y in zip(a, b))
+
+    manhattan_frontier = [
+        entry for entry in eligible
+        if not any(dominates(other, entry) for other in eligible if other is not entry)
+    ]
+
+    def evidence_key(entry: Mapping[str, Any]) -> tuple[Any, ...]:
+        evidence = entry["evaluation"]["evidence_consistency"]
+        deltas = [
+            metric(evidence.get(name))
+            for name in (
+                "candidate_corner_column_delta",
+                "hohonet_floor_boundary_rmse_delta",
+                "hohonet_ceiling_boundary_rmse_delta",
+                "seam_consistency_delta",
+            )
+        ]
+        finite = [value for value in deltas if math.isfinite(value)]
+        return (
+            evidence.get("evidence_status") != "available",
+            len(evidence.get("visual_conflict_flags") or []),
+            sum(value > 0 for value in finite),
+            sum(max(0.0, value) for value in finite),
+            *deltas,
+        )
 
     def manhattan_key(entry: Mapping[str, Any]) -> tuple[Any, ...]:
-        metric = lambda value: float(value) if isinstance(value, (int, float)) else math.inf
         evaluation = entry["evaluation"]
         manhattan = evaluation["manhattan_feasibility"]
         direction = manhattan.get("direction_family_fit")
@@ -56,7 +106,11 @@ def build_hypothesis_portfolio(
 
     selected_ids: set[Any] = set()
     result = {
-        "best_manhattan_feasible": bucket(eligible, manhattan_key, "no candidate passed the hard gate"),
+        "best_manhattan_feasible": bucket(
+            manhattan_frontier,
+            lambda entry: (*evidence_key(entry), *manhattan_key(entry)),
+            "no candidate passed the hard gate",
+        ),
         "best_height_consistent": bucket(eligible, lambda entry: (
             entry["evaluation"]["height_consistency"]["height_outlier_l1"],
             entry["evaluation"]["height_consistency"]["max_height_residual"],
@@ -70,13 +124,27 @@ def build_hypothesis_portfolio(
             entry["evaluation"]["movement_edit_cost"]["movement_l1_normalized"],
             entry["evaluation"]["movement_edit_cost"]["changed_endpoint_count"],
         ), "no candidate passed the hard gate"),
-        "best_hohonet_consistent": bucket(evidence_available, lambda entry: (
-            bool(entry["evaluation"]["evidence_consistency"].get("visual_conflict_flags")),
-            entry["evaluation"]["evidence_consistency"].get("hohonet_floor_boundary_rmse_delta") or 0.0,
-            entry["evaluation"]["evidence_consistency"].get("hohonet_ceiling_boundary_rmse_delta") or 0.0,
-        ), "HoHoNet evidence unavailable for all hard-gate candidates" if eligible else "no candidate passed the hard gate"),
-        "best_balanced": bucket(eligible, lambda entry: build_hypothesis_ranking_key(entry["evaluation"]), "no candidate passed the hard gate"),
+        "best_hohonet_consistent": bucket(
+            evidence_available,
+            evidence_key,
+            "HoHoNet evidence unavailable for all hard-gate candidates" if eligible else "no candidate passed the hard gate",
+        ),
+        "best_balanced": bucket(
+            manhattan_frontier,
+            lambda entry: (*evidence_key(entry), *build_hypothesis_ranking_key(entry["evaluation"])),
+            "no candidate passed the hard gate",
+        ),
     }
+    for value in result.values():
+        evidence = value.get("evaluation", {}).get("evidence_consistency", {})
+        value["selection_status"] = "selected_but_audit_blocked" if value.get("candidate") else "unavailable"
+        value["layer_status"] = (
+            "diagnostic_only"
+            if evidence.get("evidence_status") == "available" and not evidence.get("visual_conflict_flags")
+            else "needs_manual_review"
+        ) if value.get("candidate") else "unavailable"
+        value["accepted"] = False
+        value["downstream_recommendation"] = False
     for value in result.values():
         if value["candidate"] is not None:
             selected_ids.add(value["candidate"].get("candidate_id"))

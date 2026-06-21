@@ -58,7 +58,7 @@
   - 包括 protocol、assignment SOP、PreScreen、Calibration、Main(Test + Validation)、统计计划、字段合同、final-gold、registry、论文主线写作材料。
   - `manuscript/` 可保存 Overleaf 项目和主线论文写作资产，但按现有 `.gitignore` 默认不提交。
 - `docs/paper_a_manhattan/`
-  - 包含 hypothesis feedback ledger schema 与 M15.20–M15.28 只读 artifact dependency inventory；仅定义专家反馈数据合同和迁移阻塞清单，不实现训练、写回或 legacy 迁移。
+  - 包含 HRC stabilization、selection audit、scoring-layer contract、hypothesis feedback ledger schema 与 M15.20–M15.28 只读 dependency inventory；不实现训练、写回或 legacy 迁移。
   - Paper A Manhattan 支线文档。
   - 包括 geometry roadmap、constrained fit、LS sandbox、expert review、OOS scope audit、3D geometry compatibility/fixture 和 M15.19 local 3D projection review 规格。
 - `docs/paper_b/`

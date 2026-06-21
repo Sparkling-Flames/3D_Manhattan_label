@@ -9,6 +9,7 @@ from tools.paper_a_manhattan.manhattan_constrained_hypothesis_evaluator import e
 from tools.paper_a_manhattan.manhattan_hypothesis_portfolio import build_hypothesis_portfolio
 from tools.paper_a_manhattan.run_local_3d_projection_review import build_projection_variant
 from tools.paper_a_manhattan.run_manhattan_hypothesis_ranking_core import (
+    DEFAULT_PROJECTION,
     SCHEMA_VERSION,
     build_payload,
     run,
@@ -61,8 +62,8 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
         "suppressed_candidates",
     }
     expected_selection = {
-        "best_manhattan_feasible": ("m1528_candidate_0019", "legacy_trial_blocked", True, "edge_6_7_normal_slide_proxy"),
-        "best_balanced": ("m1528_candidate_0019", "legacy_trial_blocked", True, "edge_6_7_normal_slide_proxy"),
+        "best_manhattan_feasible": ("m1528_candidate_0017", "legacy_trial_blocked", True, "edge_6_7_floor_depth_balance"),
+        "best_balanced": ("m1528_candidate_0017", "legacy_trial_blocked", True, "edge_6_7_floor_depth_balance"),
         "best_height_consistent": ("m1528_candidate_0017", "legacy_trial_blocked", True, "edge_6_7_floor_depth_balance"),
         "best_short_wall_preserving": ("m1528_candidate_0001", "hard_feasible_neutral", True, "vertical_column_align_x"),
         "best_low_movement": ("m1528_candidate_0070", "hard_feasible_neutral", True, "azimuth_translate_keep_top_bottom_delta"),
@@ -75,17 +76,18 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
             candidate["hard_gate_passed"],
             candidate["action_family"],
         ) == expected
-    assert payload["portfolio_ranking"]["best_hohonet_consistent"]["candidate"] is None
-    assert payload["portfolio_ranking"]["best_hohonet_consistent"]["reason"]
+    assert payload["portfolio_ranking"]["best_hohonet_consistent"]["candidate"]
     verdict = payload["overall_verdict"]
     assert verdict["hard_feasible_candidate_available"] == any(row["hard_gate_passed"] for row in payload["candidate_set"])
     assert verdict["improving_hypothesis_available"] == any(
         row["hard_gate_passed"] and row["is_improving_hypothesis"]
         for row in payload["candidate_set"]
     )
-    assert verdict["recommended_review_candidate_available"] == any(
-        row["recommended_review_candidate"] for row in payload["candidate_set"]
-    )
+    assert any(row["recommended_review_candidate"] for row in payload["candidate_set"])
+    assert verdict["recommended_review_candidate_available"] is False
+    assert verdict["selection_status"] == "audit_blocked"
+    assert verdict["recommended_status"] == "not_accepted_pending_post_change_selection_audit"
+    assert verdict["c6_1_blocked_reason"] == "C6.1 manual visual sanity check rejected 0019 over 0017"
     assert any(
         evaluation["feasibility"]["hard_gate_passed"]
         and candidate_id not in payload["legacy_diagnostics"]["legacy_direct_ls_trial_candidates"]
@@ -107,6 +109,15 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
         evaluation["plane_proxy_metrics"]["plane_proxy_status"] in {"available", "partial_available"}
         for evaluation in payload["constrained_evaluations"].values()
     )
+    assert all(
+        evaluation["column_evidence"]["evidence_status"] == "available"
+        for evaluation in payload["constrained_evaluations"].values()
+    )
+    for name, bucket in payload["portfolio_ranking"].items():
+        if name in {"diagnostic_only_candidates", "suppressed_candidates"}:
+            continue
+        assert bucket["accepted"] is False
+        assert bucket["downstream_recommendation"] is False
     assert isinstance(verdict["legacy_ls_trial_available"], bool)
     for bucket in payload["legacy_diagnostics"]["legacy_portfolio_candidates"].values():
         assert set(bucket) == {"candidate_id", "action_family", "reason"}
@@ -158,6 +169,23 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
 
     output = run(tmp_path)
     assert json.loads(output.read_text(encoding="utf-8"))["schema_version"] == SCHEMA_VERSION
+
+
+def test_core_column_evidence_missing_source_fails_closed(tmp_path):
+    projection = json.loads(DEFAULT_PROJECTION.read_text(encoding="utf-8"))
+    projection["input_provenance"]["image"]["source_image_basename"] = "missing.jpg"
+    projection["input_provenance"]["image"]["source_image"] = "missing.jpg"
+    path = tmp_path / "projection.json"
+    path.write_text(json.dumps(projection), encoding="utf-8")
+
+    payload = build_payload(projection_path=path)
+    assert payload["column_evidence_source_inventory"]["evidence_status"] == "unavailable"
+    assert all(
+        evaluation["column_evidence"]["evidence_status"] == "unavailable"
+        for evaluation in payload["constrained_evaluations"].values()
+    )
+    assert payload["portfolio_ranking"]["best_hohonet_consistent"]["candidate"] is None
+    assert payload["overall_verdict"]["recommended_review_candidate_available"] is False
 
 
 def test_3741_real_candidate_beats_low_legacy_score_hard_failure():

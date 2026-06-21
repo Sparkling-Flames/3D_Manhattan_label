@@ -14,7 +14,16 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 from tools.paper_a_manhattan.manhattan_hypothesis_portfolio import build_hypothesis_portfolio
+from tools.paper_a_manhattan.manhattan_column_evidence import (
+    compute_column_evidence,
+    inventory_hohonet_source,
+)
+from tools.paper_a_manhattan.manhattan_constrained_hypothesis_evaluator import (
+    build_hypothesis_ranking_key,
+    evaluate_hypothesis,
+)
 from tools.paper_a_manhattan.manhattan_m1528_semantic_action_library import run_action_library
+from tools.paper_a_manhattan.run_local_3d_projection_review import build_projection_variant
 from tools.paper_a_manhattan.run_m1528_semantic_action_library import (
     DEFAULT_ASSERTION,
     DEFAULT_PROJECTION,
@@ -23,6 +32,8 @@ from tools.paper_a_manhattan.run_m1528_semantic_action_library import (
 
 SCHEMA_VERSION = "manhattan_constrained_hypothesis_ranking_core_v1"
 DEFAULT_OUT_DIR = Path("analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741")
+AUDIT_BLOCKED_REASON = "C6.1 manual visual sanity check rejected 0019 over 0017"
+POST_CHANGE_BLOCKED_REASON = "C6.2 post-change manual visual sanity check pending"
 
 
 def _core_evaluation(evaluation: Mapping[str, Any]) -> dict[str, Any]:
@@ -30,6 +41,61 @@ def _core_evaluation(evaluation: Mapping[str, Any]) -> dict[str, Any]:
         key: value
         for key, value in evaluation.items()
         if key not in {"legacy_score_breakdown", "local_score_total", "legacy_score_role"}
+    }
+
+
+def _candidate_pairs(
+    baseline_pairs: list[Mapping[str, Any]], coordinate_changes: list[Mapping[str, Any]]
+) -> list[dict[str, Any]]:
+    pairs = copy.deepcopy(baseline_pairs)
+    lookup = {int(row["effective_pair_index"]): row for row in pairs}
+    for change in coordinate_changes:
+        row = lookup[int(change["effective_pair_index"])]
+        for field, delta in change.get("fields", {}).items():
+            endpoint, axis = field.split("_", 1)
+            row[endpoint][axis] = float(delta["after"])
+    return pairs
+
+
+def _enrich_legacy_with_column_evidence(
+    legacy: dict[str, Any],
+    original: Mapping[str, Any],
+    projection_config: Mapping[str, Any],
+    source: Mapping[str, Any],
+) -> None:
+    baseline_pairs = list(original["ordered_pairs"])
+    for row in legacy["candidate_set"]:
+        pairs = _candidate_pairs(baseline_pairs, list(row.get("coordinate_changes", [])))
+        candidate_variant = build_projection_variant(
+            row["candidate_id"], pairs, **projection_config
+        )
+        evidence = compute_column_evidence(
+            source,
+            baseline_pairs,
+            pairs,
+            coordinate_mode=str(projection_config["coordinate_mode"]),
+        )
+        candidate_variant["evidence"] = evidence
+        evaluation = evaluate_hypothesis(
+            original,
+            candidate_variant,
+            baseline_pairs,
+            pairs,
+            legacy["case_contract"],
+            legacy_score_breakdown=row.get("score_breakdown"),
+            legacy_trial_allowed=bool(
+                row.get("direct_ls_trial_allowed")
+                and row.get("legacy_m15_28_gate", {}).get("checks", {}).get(
+                    "allowed_short_wall_band"
+                )
+            ),
+        )
+        row["constrained_evaluation"] = evaluation
+        row["constrained_hard_gate"] = dict(evaluation["feasibility"])
+        row["decision_class"] = evaluation["decision_class"]
+        row["hypothesis_ranking_key"] = list(build_hypothesis_ranking_key(evaluation))
+    legacy["column_evidence_source_inventory"] = {
+        key: value for key, value in source.items() if key != "corners"
     }
 
 
@@ -145,6 +211,9 @@ def build_core_payload_from_legacy(legacy_payload: Mapping[str, Any]) -> dict[st
             row["candidate_id"]: _core_evaluation(evaluation)
             for row, evaluation in zip(candidate_set, evaluations)
         },
+        "column_evidence_source_inventory": copy.deepcopy(
+            legacy_payload.get("column_evidence_source_inventory", {})
+        ),
         "portfolio_ranking": portfolio,
         "suppressed_candidates": suppressed,
         "legacy_diagnostics": {
@@ -170,9 +239,11 @@ def build_core_payload_from_legacy(legacy_payload: Mapping[str, Any]) -> dict[st
                 row["hard_gate_passed"] and row["is_improving_hypothesis"]
                 for row in candidate_set
             ),
-            "recommended_review_candidate_available": any(
-                row["recommended_review_candidate"] for row in candidate_set
-            ),
+            "recommended_review_candidate_available": False,
+            "selection_status": "audit_blocked",
+            "recommended_status": "not_accepted_pending_post_change_selection_audit",
+            "blocked_reason": POST_CHANGE_BLOCKED_REASON,
+            "c6_1_blocked_reason": AUDIT_BLOCKED_REASON,
             "legacy_ls_trial_available": any(
                 evaluation["feasibility"]["hard_gate_passed"]
                 and row.get("direct_ls_trial_allowed")
@@ -207,6 +278,17 @@ def build_payload(
             "camera_height": float(projection["camera_height"]),
         },
     )
+    projection_config = {
+        "width": int(projection["width"]),
+        "height": int(projection["height"]),
+        "coordinate_mode": str(projection["coordinate_mode_requested"]),
+        "camera_height": float(projection["camera_height"]),
+    }
+    source = inventory_hohonet_source(
+        projection.get("input_provenance", {}).get("image", {}),
+        repo_root=REPO_ROOT,
+    )
+    _enrich_legacy_with_column_evidence(legacy, original, projection_config, source)
     legacy["case_name"] = str(projection.get("case_name") or assertion.get("case_name"))
     core = build_core_payload_from_legacy(legacy)
     core["state_before"] = {
