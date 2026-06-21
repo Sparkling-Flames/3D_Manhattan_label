@@ -16,7 +16,7 @@
 | C0 | 部分完成，待收口 | 输出合同已降级 legacy score；排序 key 仍使用 `local_score_total` 末位兜底，尚非严格 diagnostic only。 |
 | C1 | 部分完成 | `manhattan_case_contract.py` 已有 case contract 与 projection-rule-based inferred contract，也保留无 metrics 时的 legacy fallback；不是完全脱离 legacy 默认值的通用 case analyzer。 |
 | C2 | v1 diagnostic implemented | evaluator 已输出 hard feasibility、wall/turn/local residual、height consistency、layout plausibility、evidence interface、movement/edit cost 与 decision class；`direction_family_fit` / `parallel_family_residual` v1 已实现并由真实 projection artifacts 与 core runner 回归锁定，但仍只是可审计 diagnostic，不是 C4 Column Evidence Layer。 |
-| C3 | C3.1–C3.3 complete；C3.4a column-x + audit；C3.4b height-target shadow-only implemented；C3.4b.1 metadata/audit consistency fixed | 两个 family 均只生成 shadow artifact，不接入 active selection、不证明 final correctness；height source metadata 与 audit schema/title 已 family-aware。其余三个 family 仍 missing，`legacy_m1528` 仍是唯一 active source。 |
+| C3 | C3.1–C3.3 complete；C3.4a column-x + audit；C3.4b/4b.1 height-target + consistency；C3.4b.3 positive shadow audit implemented | positive audit 仅使用 explicit fixture summary/after-y，不是模型输出、accepted recommendation 或 final correctness proof。两个 family 均不接入 active selection；其余三个 family 仍 missing，`legacy_m1528` 仍是唯一 active source。 |
 | C4 | C4-lite implemented | runner 对已有 HoHoNet proposal 执行 source inventory/parser probe，并物化 corner column、floor/ceiling boundary 与 seam delta；缺失、歧义或合同异常时 fail-closed 为 unavailable，不训练模型、不写回。 |
 | C5 | C5-lite plane proxy v0 implemented | evaluator 已物化独立 `plane_proxy_metrics`：复用 direction-family、同族平行 residual、dominant height cluster 与 floorprint residual 形成 geometry proxy。它不是 depth model、不是 GeoLayout reproduction、不是 C4 evidence layer；C6.2 仅把其中 geometry diagnostics 用于分层排序。 |
 | C6 | C6.2 layered ranking implemented；post-change audit narrowly passed for selection drift | bucket 集合不变；L0 suppress、L1 多指标 Pareto、L2 HoHoNet evidence、L3/L4 diagnostics、L5 fallback 已分层。默认 case 选择 0017 的漂移通过窄范围人工核验，但不声明 stable ranker。 |
@@ -27,7 +27,7 @@
 
 ## 3. 唯一允许的下一步
 
-C6.1 audit、Scoring Layer Contract、C4-lite、C6.2 与 C3.1–C3.4b.1 已完成；`manual_post_change_audit = narrow_pass_for_selection_drift_only`。下一步只允许 C3.4b.2 `height_target_reproject` shadow audit；不得接入 active runner selection，不得替换 `legacy_m1528`。C6 仍不是 stable ranker；C7/C9/C10 继续 blocked。
+C6.1 audit、Scoring Layer Contract、C4-lite、C6.2 与 C3.1–C3.4b.3 已完成；`manual_post_change_audit = narrow_pass_for_selection_drift_only`。height positive audit 仅验证 explicit summary 的 shadow contract；不得进入第三个 family，不得接入 active runner selection，不得替换 `legacy_m1528`。C6 仍不是 stable ranker；C7/C9/C10 继续 blocked。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 

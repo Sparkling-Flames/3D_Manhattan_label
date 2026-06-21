@@ -124,6 +124,7 @@ def test_height_shadow_audit_materializes_explicit_after_y(tmp_path, monkeypatch
             "height_outlier_pairs": [1],
             "after_y_by_pair": {"1": {"top_y": 18.0}},
             "formula_status": "explicit_after_y",
+            "height_target_source": "explicit_fixture",
         },
     )
     monkeypatch.setattr(audit, "AUDIT_ROOT", tmp_path / "audit")
@@ -145,6 +146,23 @@ def test_height_shadow_audit_materializes_explicit_after_y(tmp_path, monkeypatch
     assert payload["formula_status"] == "explicit_after_y"
     assert payload["accepted"] is False
     assert payload["downstream_recommendation"] is False
+    assert payload["positive_shadow_fixture"] is True
+    assert payload["model_derived"] is False
+    assert payload["final_correctness_proof"] is False
+    candidates = payload["candidate_source"]["candidate_set"]
+    assert candidates
+    for candidate in candidates:
+        assert candidate["shadow_only"] is True
+        assert candidate["accepted"] is False
+        assert candidate["downstream_recommendation"] is False
+        assert candidate["active_runner_role"] is False
+        assert candidate["annotation_writeback"] is False
+        fields = candidate["coordinate_changes"][0]["fields"]
+        assert set(fields) <= {"top_y", "bottom_y"}
+        assert not any(field.endswith("_x") for field in fields)
+        assert candidate["generation_constraints"]["x_unchanged"] is True
+        assert candidate["generation_constraints"]["order_unchanged"] is True
+        assert candidate["generation_constraints"]["topology_unchanged"] is True
 
 
 def test_height_no_summary_audit_is_height_specific_and_empty(tmp_path, monkeypatch):

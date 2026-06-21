@@ -85,6 +85,12 @@ def build_audit_payload(
         evidence.get("column_identity_status") is not None
         or bool(evidence.get("column_identity_by_pair"))
     )
+    explicit_height_summary = (
+        family == "height_target_reproject"
+        and height_summary.get("height_target_source")
+        in {"explicit_fixture", "explicit_manual_height_summary"}
+        and height_summary.get("formula_status") == "explicit_after_y"
+    )
     return {
         "schema_version": (
             "constrained_v0_column_x_shadow_audit_v1"
@@ -128,6 +134,11 @@ def build_audit_payload(
             "dominant_height_target", height_summary.get("target_height")
         ),
         "formula_status": height_summary.get("formula_status", "unavailable"),
+        "positive_shadow_fixture": explicit_height_summary,
+        "explicit_height_summary": explicit_height_summary,
+        "model_derived": False if explicit_height_summary else None,
+        "accepted_recommendation": False,
+        "final_correctness_proof": False,
         "candidate_source": source,
         "source_artifacts": {
             "projection": _source(projection_path),
@@ -162,6 +173,9 @@ def render_markdown(payload: Mapping[str, Any]) -> str:
             f"- Height outlier pairs: `{payload['height_outlier_pairs']}`",
             f"- Target height: `{payload['target_height']}`",
             f"- Formula status: `{payload['formula_status']}`",
+            f"- Positive shadow fixture / explicit summary: `{payload['positive_shadow_fixture']}`",
+            f"- Model-derived: `{payload['model_derived']}`",
+            "- This is not an accepted recommendation and not a final correctness proof.",
             "- Authorization: shadow-only; accepted=false; downstream_recommendation=false.",
             "- This audit does not establish final geometric correctness.",
             "",
