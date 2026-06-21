@@ -7,6 +7,7 @@ from tools.paper_a_manhattan.manhattan_candidate_source_interface import (
     validate_candidate_source,
 )
 from tools.paper_a_manhattan.manhattan_constrained_v0_candidate_source import (
+    build_column_x_alignment_shadow_source,
     build_constrained_v0_shadow_source,
 )
 from tools.paper_a_manhattan.manhattan_legacy_m1528_candidate_source import (
@@ -76,3 +77,58 @@ def test_non_shadow_source_cannot_be_empty():
     }
     with pytest.raises(ValueError, match="must be non-empty"):
         validate_candidate_source(payload)
+
+
+def _column_source(*, protected=False, movable=True, conflict=False):
+    return build_column_x_alignment_shadow_source(
+        [
+            {
+                "effective_pair_index": 1,
+                "top": {"x": 10.0, "y": 20.0},
+                "bottom": {"x": 12.0, "y": 80.0},
+            },
+            {
+                "effective_pair_index": 2,
+                "top": {"x": 30.0, "y": 25.0},
+                "bottom": {"x": 30.0, "y": 75.0},
+            },
+        ],
+        {
+            "protected_pairs": [1] if protected else [],
+            "movable_fields_by_pair": {"1": ["x"]} if movable else {},
+            "keep_distinct_pairs": [[1, 2]],
+        },
+        {
+            "evidence_status": "available",
+            "visual_conflict_flags": ["corner_conflict"] if conflict else [],
+            "column_identity_conflicts": [],
+            "seam_ambiguous_pairs": [],
+        },
+        {"coordinate_mode": "ls_percent", "width": 1024, "height": 512},
+    )
+
+
+def test_column_x_alignment_emits_shadow_only_x_changes():
+    payload = _column_source()
+    assert payload["candidate_count"] == 1
+    candidate = payload["candidate_set"][0]
+    assert candidate["shadow_only"] is True
+    assert candidate["accepted"] is False
+    assert candidate["downstream_recommendation"] is False
+    fields = candidate["coordinate_changes"][0]["fields"]
+    assert set(fields) == {"top_x", "bottom_x"}
+    assert fields["top_x"]["after"] == fields["bottom_x"]["after"] == 11.0
+
+
+@pytest.mark.parametrize(
+    "kwargs,reason",
+    [
+        ({"protected": True}, "protected_pair_mutation"),
+        ({"movable": False}, "x_permission_missing"),
+        ({"conflict": True}, "evidence_conflict"),
+    ],
+)
+def test_column_x_alignment_rejects_ineligible_inputs(kwargs, reason):
+    payload = _column_source(**kwargs)
+    assert payload["candidate_set"] == []
+    assert any(reason in value for value in payload["unavailable_summary"]["reasons"])

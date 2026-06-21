@@ -34,8 +34,14 @@ def validate_candidate_source(payload: Mapping[str, Any]) -> Mapping[str, Any]:
         not candidates
         and payload["source_type"] == "constrained_v0_candidate_source"
         and payload["generator_role"] == "shadow_constrained_generator"
-        and payload.get("constrained_v0_implementation_status") == "skeleton_only"
-        and payload["candidate_generation_allowed"] is False
+        and (
+            (
+                payload.get("constrained_v0_implementation_status") == "skeleton_only"
+                and payload["candidate_generation_allowed"] is False
+            )
+            or payload.get("constrained_v0_implementation_status")
+            == "column_x_alignment_shadow_only"
+        )
     )
     if not candidates and not shadow_empty:
         raise ValueError("candidate source candidate_set must be non-empty unless shadow skeleton")
