@@ -154,7 +154,7 @@ def test_column_x_alignment_rejects_ineligible_inputs(kwargs, reason):
 def test_column_identity_must_be_explicitly_available():
     payload = _column_source(identity=False)
     assert payload["candidate_set"] == []
-    assert "pair_1:column_identity_unavailable" in payload["unavailable_summary"]["reasons"]
+    assert "column_identity_unavailable" in payload["unavailable_summary"]["reasons"]
 
 
 def test_order_merge_uses_separation_margin():

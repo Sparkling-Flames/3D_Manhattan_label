@@ -1,0 +1,172 @@
+"""Materialize a read-only constrained_v0 column-x shadow audit."""
+
+from __future__ import annotations
+
+import argparse
+import hashlib
+import json
+from collections import Counter
+from pathlib import Path
+from typing import Any, Mapping
+
+from tools.paper_a_manhattan.manhattan_case_contract import build_case_contract
+from tools.paper_a_manhattan.manhattan_constrained_v0_candidate_source import (
+    build_column_x_alignment_shadow_source,
+)
+from tools.paper_a_manhattan.run_m1528_semantic_action_library import (
+    DEFAULT_ASSERTION,
+    DEFAULT_PROJECTION,
+)
+
+
+AUDIT_ROOT = Path("analysis_results/paper_a_manhattan/constrained_v0_shadow_audit")
+DEFAULT_OUT_DIR = AUDIT_ROOT / "task218_ann3741"
+
+
+def _read(path: Path) -> dict[str, Any]:
+    value = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(value, dict):
+        raise ValueError(f"{path} must contain a JSON object")
+    return value
+
+
+def _source(path: Path) -> dict[str, str]:
+    return {"path": path.as_posix(), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+
+
+def build_audit_payload(
+    *,
+    projection_path: Path = DEFAULT_PROJECTION,
+    case_config_path: Path = DEFAULT_ASSERTION,
+    evidence_path: Path | None = None,
+) -> dict[str, Any]:
+    projection = _read(projection_path)
+    original = next(
+        (row for row in projection.get("variants", []) if row.get("name") == "original"),
+        None,
+    )
+    if original is None or not isinstance(original.get("ordered_pairs"), list):
+        raise ValueError("projection artifact must contain original ordered_pairs")
+    case_config = _read(case_config_path)
+    contract = (
+        case_config
+        if "movable_fields_by_pair" in case_config
+        else build_case_contract(
+            original["ordered_pairs"], case_config, original.get("metrics", {})
+        )
+    )
+    evidence = _read(evidence_path) if evidence_path else {}
+    config = {
+        "coordinate_mode": projection.get(
+            "coordinate_mode_requested", projection.get("coordinate_mode")
+        ),
+        "width": projection.get("width"),
+        "height": projection.get("height"),
+    }
+    source = build_column_x_alignment_shadow_source(
+        original["ordered_pairs"], contract, evidence, config
+    )
+    reasons = list(source.get("unavailable_summary", {}).get("reasons", []))
+    reason_counts = Counter(reason.split(":", 1)[-1] for reason in reasons)
+    candidates = source["candidate_set"]
+    explicit_identity = (
+        evidence.get("column_identity_status") is not None
+        or bool(evidence.get("column_identity_by_pair"))
+    )
+    return {
+        "schema_version": "constrained_v0_column_x_shadow_audit_v1",
+        "case_name": projection.get("case_name") or case_config.get("case_name"),
+        "active_runner_role": False,
+        "shadow_only": True,
+        "accepted": False,
+        "downstream_recommendation": False,
+        "legacy_m1528_active_source_unchanged": True,
+        "candidate_count": source["candidate_count"],
+        "unavailable_summary": source.get("unavailable_summary", {}),
+        "generated_candidate_ids": [row["candidate_id"] for row in candidates],
+        "changed_pair_indices": {
+            row["candidate_id"]: row["changed_pair_indices"] for row in candidates
+        },
+        "coordinate_changes_summary": {
+            row["candidate_id"]: row["coordinate_changes"] for row in candidates
+        },
+        "rejection_reason_counts": dict(sorted(reason_counts.items())),
+        "evidence_status": evidence.get("evidence_status", "unavailable"),
+        "column_identity_status": evidence.get("column_identity_status", "unavailable"),
+        "missing_required_evidence_for_column_x_alignment": not explicit_identity,
+        "seam_guard_summary": {
+            "seam_safe": bool(evidence.get("seam_safe", contract.get("seam_safe", False))),
+            "seam_ambiguity": bool(evidence.get("seam_ambiguity", False)),
+            "seam_ambiguous_pairs": list(evidence.get("seam_ambiguous_pairs", [])),
+            "seam_margin": source["source_provenance"].get("seam_margin"),
+        },
+        "margin_used": source["source_provenance"].get("column_separation_margin"),
+        "default_margin_used": source["source_provenance"].get("default_margin_used"),
+        "min_x_residual_used": None,
+        "candidate_source": source,
+        "source_artifacts": {
+            "projection": _source(projection_path),
+            "case_config": _source(case_config_path),
+            "evidence": _source(evidence_path) if evidence_path else None,
+        },
+    }
+
+
+def render_markdown(payload: Mapping[str, Any]) -> str:
+    return "\n".join(
+        [
+            "# Constrained v0 Column-X Shadow Audit",
+            "",
+            f"- Case: `{payload.get('case_name')}`",
+            f"- Candidate count: `{payload['candidate_count']}`",
+            f"- Evidence status: `{payload['evidence_status']}`",
+            f"- Column identity status: `{payload['column_identity_status']}`",
+            f"- Missing required evidence: `{payload['missing_required_evidence_for_column_x_alignment']}`",
+            f"- Generated candidate ids: `{payload['generated_candidate_ids']}`",
+            f"- Rejection reasons: `{payload['rejection_reason_counts']}`",
+            f"- Margin used: `{payload['margin_used']}`",
+            f"- Seam guard: `{payload['seam_guard_summary']}`",
+            "- Authorization: shadow-only; accepted=false; downstream_recommendation=false.",
+            "- This audit does not establish final geometric correctness.",
+            "",
+        ]
+    )
+
+
+def run(
+    out_dir: Path = DEFAULT_OUT_DIR,
+    **kwargs: Any,
+) -> dict[str, Path]:
+    root = AUDIT_ROOT.resolve()
+    destination = out_dir.resolve()
+    if destination != root and root not in destination.parents:
+        raise ValueError(f"shadow audit output must stay under {AUDIT_ROOT.as_posix()}")
+    payload = build_audit_payload(**kwargs)
+    destination.mkdir(parents=True, exist_ok=True)
+    json_path = destination / "constrained_v0_shadow_audit.json"
+    report_path = destination / "constrained_v0_shadow_audit.md"
+    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    report_path.write_text(render_markdown(payload), encoding="utf-8")
+    return {"json": json_path, "markdown": report_path}
+
+
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--projection", type=Path, default=DEFAULT_PROJECTION)
+    parser.add_argument("--case-config", type=Path, default=DEFAULT_ASSERTION)
+    parser.add_argument("--evidence", type=Path)
+    parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
+    args = parser.parse_args()
+    print(
+        run(
+            args.out_dir,
+            projection_path=args.projection,
+            case_config_path=args.case_config,
+            evidence_path=args.evidence,
+        )["json"]
+    )
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

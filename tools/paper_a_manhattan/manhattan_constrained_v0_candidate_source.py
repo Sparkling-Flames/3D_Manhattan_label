@@ -66,6 +66,29 @@ def build_column_x_alignment_shadow_source(
     payload = _base_payload(case_contract, status="column_x_alignment_shadow_only")
     unavailable: list[str] = []
     evidence = dict(evidence_summary or {})
+    default_margin_used = not any(
+        key in case_contract for key in ("keep_distinct_margin_min", "min_column_separation")
+    )
+    separation_margin = float(
+        case_contract.get(
+            "keep_distinct_margin_min",
+            case_contract.get("min_column_separation", 0.25),
+        )
+    )
+    seam_margin = float(evidence.get("seam_margin", case_contract.get("seam_margin", 0.5)))
+    payload["source_provenance"].update(
+        {
+            "column_separation_margin": separation_margin,
+            "default_margin_used": default_margin_used,
+            "seam_margin": seam_margin,
+        }
+    )
+    identity_by_pair_raw = evidence.get("column_identity_by_pair", {})
+    if (
+        evidence.get("column_identity_status") not in {"available", "conflict"}
+        and not identity_by_pair_raw
+    ):
+        unavailable.append("column_identity_unavailable")
     if evidence.get("evidence_status") != "available":
         unavailable.append("evidence_unavailable")
     if evidence.get("visual_conflict_flags"):
@@ -99,30 +122,13 @@ def build_column_x_alignment_shadow_source(
     dense_pairs = {int(value) for value in evidence.get("dense_pair_indices", [])}
     identity_by_pair = {
         int(index): status
-        for index, status in evidence.get("column_identity_by_pair", {}).items()
+        for index, status in identity_by_pair_raw.items()
     }
-    default_margin_used = not any(
-        key in case_contract for key in ("keep_distinct_margin_min", "min_column_separation")
-    )
-    separation_margin = float(
-        case_contract.get(
-            "keep_distinct_margin_min",
-            case_contract.get("min_column_separation", 0.25),
-        )
-    )
-    seam_margin = float(evidence.get("seam_margin", case_contract.get("seam_margin", 0.5)))
     seam_safe = bool(evidence.get("seam_safe", case_contract.get("seam_safe", False)))
     coordinate_upper = (
         100.0
         if "percent" in str(projection_config["coordinate_mode"]).lower()
         else float(projection_config["width"])
-    )
-    payload["source_provenance"].update(
-        {
-            "column_separation_margin": separation_margin,
-            "default_margin_used": default_margin_used,
-            "seam_margin": seam_margin,
-        }
     )
     pair_lookup: dict[int, Mapping[str, Any]] = {}
     centers: dict[int, float] = {}
