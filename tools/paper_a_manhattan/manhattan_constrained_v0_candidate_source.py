@@ -40,6 +40,8 @@ def _base_payload(case_contract: Mapping[str, Any], *, status: str) -> dict[str,
         "constrained_v0_implementation_status": status,
         "accepted": False,
         "downstream_recommendation": False,
+        "active_runner_role": False,
+        "annotation_writeback": False,
     }
 
 
@@ -240,5 +242,187 @@ def build_column_x_alignment_shadow_source(
         "reasons": sorted(set(unavailable)),
         "eligible_pair_count": len(candidates),
     }
+    validate_candidate_source(payload)
+    return payload
+
+
+def build_height_target_reproject_shadow_source(
+    ordered_pairs: Sequence[Mapping[str, Any]],
+    case_contract: Mapping[str, Any],
+    height_summary: Mapping[str, Any] | None,
+    evidence_summary: Mapping[str, Any] | None,
+    projection_config: Mapping[str, Any],
+) -> dict[str, Any]:
+    payload = _base_payload(case_contract, status="column_x_alignment_shadow_only")
+    payload["requested_family"] = "height_target_reproject"
+    payload["family_implementation_status"] = "height_target_reproject_shadow_only"
+    payload["source_limitations"] = [
+        "shadow only",
+        "only column_x_alignment and height_target_reproject are implemented",
+        "height reproject requires explicit after-y values",
+        "no active selection role",
+        "no accepted recommendation",
+    ]
+    summary = dict(height_summary or {})
+    evidence = dict(evidence_summary or {})
+    unavailable: list[str] = []
+    required_projection = {"coordinate_mode", "width", "height", "camera_height"}
+    if not projection_config or required_projection.difference(projection_config):
+        unavailable.append("projection_config_missing")
+    else:
+        try:
+            if (
+                not str(projection_config["coordinate_mode"])
+                or float(projection_config["width"]) <= 0
+                or float(projection_config["height"]) <= 0
+                or float(projection_config["camera_height"]) <= 0
+            ):
+                unavailable.append("projection_config_invalid")
+        except (TypeError, ValueError):
+            unavailable.append("projection_config_invalid")
+    status = summary.get("height_target_status")
+    if status == "conflict" or summary.get("height_target_conflict"):
+        unavailable.append("height_target_conflict")
+    elif status != "available":
+        unavailable.append("height_target_unavailable")
+    if summary.get("split_level") or summary.get("multi_height") or summary.get(
+        "split_level_or_multi_height"
+    ):
+        unavailable.append("split_level_or_multi_height")
+    if evidence.get("height_target_conflict"):
+        unavailable.append("height_target_conflict")
+    target_key = next(
+        (key for key in ("dominant_height_target", "target_height") if summary.get(key) is not None),
+        None,
+    )
+    if target_key is None:
+        unavailable.append("height_target_unavailable")
+    target_height = summary.get(target_key) if target_key else None
+    if unavailable:
+        payload["unavailable_summary"] = {
+            "reasons": sorted(set(unavailable)),
+            "eligible_pair_count": 0,
+        }
+        validate_candidate_source(payload)
+        return payload
+
+    protected = {int(value) for value in case_contract.get("protected_pairs", [])}
+    movable = {
+        int(index): set(fields)
+        for index, fields in case_contract.get("movable_fields_by_pair", {}).items()
+    }
+    target_pairs = {
+        int(value)
+        for value in (
+            list(summary.get("height_outlier_pairs") or [])
+            + list(case_contract.get("inferred_height_target_pairs") or [])
+        )
+    }
+    if not target_pairs:
+        unavailable.append("height_target_unavailable")
+    after_by_pair = summary.get("after_y_by_pair", {})
+    if not isinstance(after_by_pair, Mapping):
+        after_by_pair = {}
+    pair_lookup: dict[int, Mapping[str, Any]] = {}
+    for row in ordered_pairs:
+        try:
+            index = int(row["effective_pair_index"])
+            float(row["top"]["y"])
+            float(row["bottom"]["y"])
+            pair_lookup[index] = row
+        except (KeyError, TypeError, ValueError):
+            unavailable.append("missing_required_pair_fields")
+
+    candidates = []
+    for index in sorted(target_pairs):
+        reasons = []
+        row = pair_lookup.get(index)
+        if row is None:
+            reasons.append("missing_required_pair_fields")
+        if index in protected:
+            reasons.append("protected_pair_mutation")
+        allowed = movable.get(index, set())
+        allowed_y = allowed.intersection({"top_y", "bottom_y"})
+        if not allowed_y:
+            reasons.append("y_permission_missing")
+        explicit_after = after_by_pair.get(str(index), after_by_pair.get(index))
+        if not isinstance(explicit_after, Mapping):
+            reasons.append("height_reproject_formula_unavailable")
+        if reasons:
+            unavailable.extend(f"pair_{index}:{reason}" for reason in reasons)
+            continue
+        fields = {}
+        for field in sorted(allowed_y):
+            if field not in explicit_after:
+                continue
+            endpoint = "top" if field == "top_y" else "bottom"
+            before = float(row[endpoint]["y"])
+            after = float(explicit_after[field])
+            fields[field] = {"before": before, "after": after, "delta": after - before}
+        if not fields:
+            unavailable.append(f"pair_{index}:height_reproject_formula_unavailable")
+            continue
+        after_top = fields.get("top_y", {}).get("after", float(row["top"]["y"]))
+        after_bottom = fields.get("bottom_y", {}).get("after", float(row["bottom"]["y"]))
+        if after_top >= after_bottom:
+            unavailable.append(f"pair_{index}:pair_fold_risk")
+            continue
+        candidates.append(
+            {
+                "candidate_id": f"constrained_v0_height_target_reproject_pair_{index}",
+                "action_family": "height_target_reproject",
+                "source_id": "constrained_v0",
+                "shadow_only": True,
+                "accepted": False,
+                "downstream_recommendation": False,
+                "active_runner_role": False,
+                "annotation_writeback": False,
+                "changed_pair_indices": [index],
+                "coordinate_changes": [
+                    {"effective_pair_index": index, "fields": fields}
+                ],
+                "eligibility_trace": {
+                    "height_target_status": "available",
+                    "target_pair": index,
+                    "y_permission": True,
+                    "protected_pair": False,
+                    "split_level_or_multi_height": False,
+                    "formula_status": "explicit_after_y",
+                },
+                "hard_reject_reasons": [],
+                "source_provenance": {
+                    "source_id": "constrained_v0",
+                    "source_version": SOURCE_VERSION,
+                    "contract_doc_path": CONTRACT_PATH,
+                    "target_pair": index,
+                    "target_fields": sorted(fields),
+                    "height_target_source": summary.get("height_target_source", target_key),
+                    "height_target_value": target_height,
+                    "formula_status_used": summary.get("formula_status", "explicit_after_y"),
+                },
+                "generation_constraints": {
+                    "single_pair_only": True,
+                    "x_unchanged": True,
+                    "order_unchanged": True,
+                    "pair_identity_unchanged": True,
+                    "topology_unchanged": True,
+                    "whole_layout_translation": False,
+                    "shadow_only": True,
+                },
+            }
+        )
+    payload["candidate_set"] = candidates
+    payload["candidate_count"] = len(candidates)
+    payload["unavailable_summary"] = {
+        "reasons": sorted(set(unavailable)),
+        "eligible_pair_count": len(candidates),
+    }
+    payload["source_provenance"].update(
+        {
+            "height_target_source": summary.get("height_target_source", target_key),
+            "height_target_value": target_height,
+            "formula_status": summary.get("formula_status", "explicit_after_y"),
+        }
+    )
     validate_candidate_source(payload)
     return payload

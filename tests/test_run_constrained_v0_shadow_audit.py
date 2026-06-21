@@ -15,6 +15,7 @@ def _inputs(tmp_path):
             "case_name": "shadow_fixture",
             "width": 1024,
             "height": 512,
+            "camera_height": 1.6,
             "coordinate_mode_requested": "ls_percent",
             "variants": [
                 {
@@ -96,3 +97,43 @@ def test_shadow_audit_generates_only_shadow_candidate_with_explicit_identity(tmp
         and row["downstream_recommendation"] is False
         for row in payload["candidate_source"]["candidate_set"]
     )
+
+
+def test_height_shadow_audit_materializes_explicit_after_y(tmp_path, monkeypatch):
+    projection, contract = _inputs(tmp_path)
+    contract.write_text(
+        json.dumps(
+            {
+                "case_name": "shadow_fixture",
+                "protected_pairs": [],
+                "movable_fields_by_pair": {"1": ["top_y"]},
+                "inferred_height_target_pairs": [],
+            }
+        ),
+        encoding="utf-8",
+    )
+    height_summary = _write(
+        tmp_path / "height.json",
+        {
+            "height_target_status": "available",
+            "target_height": 3.0,
+            "height_outlier_pairs": [1],
+            "after_y_by_pair": {"1": {"top_y": 18.0}},
+            "formula_status": "explicit_after_y",
+        },
+    )
+    monkeypatch.setattr(audit, "AUDIT_ROOT", tmp_path / "audit")
+    paths = audit.run(
+        tmp_path / "audit" / "height",
+        projection_path=projection,
+        case_config_path=contract,
+        height_summary_path=height_summary,
+        family="height_target_reproject",
+    )
+    payload = json.loads(paths["json"].read_text(encoding="utf-8"))
+    assert payload["family"] == "height_target_reproject"
+    assert payload["candidate_count"] == 1
+    assert payload["target_height"] == 3.0
+    assert payload["formula_status"] == "explicit_after_y"
+    assert payload["accepted"] is False
+    assert payload["downstream_recommendation"] is False

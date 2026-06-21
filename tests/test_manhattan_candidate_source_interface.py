@@ -9,6 +9,7 @@ from tools.paper_a_manhattan.manhattan_candidate_source_interface import (
 from tools.paper_a_manhattan.manhattan_constrained_v0_candidate_source import (
     build_column_x_alignment_shadow_source,
     build_constrained_v0_shadow_source,
+    build_height_target_reproject_shadow_source,
 )
 from tools.paper_a_manhattan.manhattan_legacy_m1528_candidate_source import (
     load_legacy_m1528_candidates,
@@ -208,3 +209,68 @@ def test_projection_config_minimum_contract(config, reason):
     payload = _column_source(projection_config=config)
     assert payload["candidate_set"] == []
     assert reason in payload["unavailable_summary"]["reasons"]
+
+
+def _height_source(
+    *, protected=False, movable=True, status="available", split=False, after=True
+):
+    summary = {
+        "height_target_status": status,
+        "dominant_height_target": 3.0,
+        "height_outlier_pairs": [1],
+        "formula_status": "explicit_after_y",
+    }
+    if split:
+        summary["multi_height"] = True
+    if after:
+        summary["after_y_by_pair"] = {"1": {"top_y": 18.0}}
+    return build_height_target_reproject_shadow_source(
+        [
+            {
+                "effective_pair_index": 1,
+                "top": {"x": 10.0, "y": 20.0},
+                "bottom": {"x": 10.0, "y": 80.0},
+            }
+        ],
+        {
+            "protected_pairs": [1] if protected else [],
+            "movable_fields_by_pair": {"1": ["top_y"]} if movable else {},
+            "inferred_height_target_pairs": [],
+        },
+        summary,
+        {},
+        {
+            "coordinate_mode": "ls_percent",
+            "width": 1024,
+            "height": 512,
+            "camera_height": 1.6,
+        },
+    )
+
+
+def test_height_target_reproject_emits_shadow_only_y_change():
+    payload = _height_source()
+    assert payload["candidate_count"] == 1
+    candidate = payload["candidate_set"][0]
+    assert candidate["shadow_only"] is True
+    assert candidate["accepted"] is False
+    assert candidate["downstream_recommendation"] is False
+    fields = candidate["coordinate_changes"][0]["fields"]
+    assert set(fields) == {"top_y"}
+    assert all(not field.endswith("_x") for field in fields)
+
+
+@pytest.mark.parametrize(
+    "kwargs,reason",
+    [
+        ({"protected": True}, "protected_pair_mutation"),
+        ({"movable": False}, "y_permission_missing"),
+        ({"status": "unavailable"}, "height_target_unavailable"),
+        ({"split": True}, "split_level_or_multi_height"),
+        ({"after": False}, "height_reproject_formula_unavailable"),
+    ],
+)
+def test_height_target_reproject_fails_closed(kwargs, reason):
+    payload = _height_source(**kwargs)
+    assert payload["candidate_set"] == []
+    assert any(reason in value for value in payload["unavailable_summary"]["reasons"])

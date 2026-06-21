@@ -16,7 +16,7 @@
 | C0 | 部分完成，待收口 | 输出合同已降级 legacy score；排序 key 仍使用 `local_score_total` 末位兜底，尚非严格 diagnostic only。 |
 | C1 | 部分完成 | `manhattan_case_contract.py` 已有 case contract 与 projection-rule-based inferred contract，也保留无 metrics 时的 legacy fallback；不是完全脱离 legacy 默认值的通用 case analyzer。 |
 | C2 | v1 diagnostic implemented | evaluator 已输出 hard feasibility、wall/turn/local residual、height consistency、layout plausibility、evidence interface、movement/edit cost 与 decision class；`direction_family_fit` / `parallel_family_residual` v1 已实现并由真实 projection artifacts 与 core runner 回归锁定，但仍只是可审计 diagnostic，不是 C4 Column Evidence Layer。 |
-| C3 | C3.1–C3.3 complete；C3.4a/4a.1 column-x implemented/hardened；C3.4a.2 shadow audit implemented | audit 只物化 JSON/Markdown shadow artifact；缺 explicit column identity 时 fail closed。它不接入 active selection，也不证明 final correctness。其余四个 family 仍 missing，`legacy_m1528` 仍是唯一 active source。 |
+| C3 | C3.1–C3.3 complete；C3.4a column-x + audit；C3.4b `height_target_reproject` shadow-only implemented | 两个 family 均只生成 shadow artifact，不接入 active selection、不证明 final correctness；height v0 仅接受 explicit after-y，不猜测重投影公式。其余三个 family 仍 missing，`legacy_m1528` 仍是唯一 active source。 |
 | C4 | C4-lite implemented | runner 对已有 HoHoNet proposal 执行 source inventory/parser probe，并物化 corner column、floor/ceiling boundary 与 seam delta；缺失、歧义或合同异常时 fail-closed 为 unavailable，不训练模型、不写回。 |
 | C5 | C5-lite plane proxy v0 implemented | evaluator 已物化独立 `plane_proxy_metrics`：复用 direction-family、同族平行 residual、dominant height cluster 与 floorprint residual 形成 geometry proxy。它不是 depth model、不是 GeoLayout reproduction、不是 C4 evidence layer；C6.2 仅把其中 geometry diagnostics 用于分层排序。 |
 | C6 | C6.2 layered ranking implemented；post-change audit narrowly passed for selection drift | bucket 集合不变；L0 suppress、L1 多指标 Pareto、L2 HoHoNet evidence、L3/L4 diagnostics、L5 fallback 已分层。默认 case 选择 0017 的漂移通过窄范围人工核验，但不声明 stable ranker。 |
@@ -31,7 +31,7 @@ C6.1 audit、Scoring Layer Contract、C4-lite、C6.2 与 C3.1–C3.4a 已完成�
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
-- 不扩展 C4，不做 full image-edge evidence；除 `column_x_alignment` 外的 constrained_v0 family 仍不得实现，C7/C9/C10 仍 blocked；
+- 不扩展 C4，不做 full image-edge evidence；除 `column_x_alignment`、`height_target_reproject` 外的 constrained_v0 family 仍不得实现，C7/C9/C10 仍 blocked；
 - 不继续调 `local_score_total` 权重；
 - 不新增 portfolio bucket；
 - 不自动写回 annotation。
@@ -50,6 +50,6 @@ C6.1 audit、Scoring Layer Contract、C4-lite、C6.2 与 C3.1–C3.4a 已完成�
 - `docs/paper_a_manhattan/后续方针.md`：C0–C10 目标定义。
 - `docs/paper_a_manhattan/M15_LEGACY_ARTIFACT_DEPENDENCY_INVENTORY_v1.md`：legacy source/compatibility chain 仍被 core 使用的依据。
 - `docs/paper_a_manhattan/MANHATTAN_HYPOTHESIS_FEEDBACK_LEDGER_SCHEMA_v1.md` 与 `tools/paper_a_manhattan/materialize_manhattan_feedback_ledger_entry.py`：C8 只记录、不训练、不写回边界。
-- C3.1–C3.3 与 C3.4a shadow-only `column_x_alignment` 已存在；`height_target_reproject`、`short_wall_preserving_local`、`primary_edge_direction_family_repair`、`floor_depth_balance` implementation，以及 C9/C10：missing / not found。C4-lite 已实现，不在 missing 清单内。
+- C3.1–C3.3、C3.4a column-x 与 C3.4b height-target shadow-only 已存在；`short_wall_preserving_local`、`primary_edge_direction_family_repair`、`floor_depth_balance` implementation，以及 C9/C10：missing / not found。C4-lite 已实现，不在 missing 清单内。
 
 本冻结不改变 Paper A 正式实验、`P1/C1/C2/T1/V1`、routing、worker-facing、协议或 Label Studio 数据。
