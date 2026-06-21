@@ -27,11 +27,11 @@
 
 ## 3. 唯一允许的下一步
 
-C6.1 audit、Scoring Layer Contract、C4-lite、C6.2、C3.1 interface/wrapper 与 C3.2 contract draft 已完成；`manual_post_change_audit = narrow_pass_for_selection_drift_only`。不得实现或接入 `constrained_v0`，也不得做 C7/C9/C10。
+C6.1 audit、Scoring Layer Contract、C4-lite、C6.2、C3.1 interface/wrapper 与 C3.2 contract draft/acceptance 已完成；`manual_post_change_audit = narrow_pass_for_selection_drift_only`。下一步只允许 C3.3 `constrained_v0` shadow skeleton：不得生成真实候选，不得接入 active runner selection，不得替换 `legacy_m1528`；C7/C9/C10 继续 blocked。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
-- 不扩展 C4，不做 full image-edge evidence；C3 仅允许 interface / legacy wrapper 收口，C7/C9/C10 仍 blocked；
+- 不扩展 C4，不做 full image-edge evidence；C3 仅允许无真实候选的 C3.3 shadow skeleton，C7/C9/C10 仍 blocked；
 - 不继续调 `local_score_total` 权重；
 - 不新增 portfolio bucket；
 - 不自动写回 annotation。
