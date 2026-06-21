@@ -30,17 +30,27 @@ def validate_candidate_source(payload: Mapping[str, Any]) -> Mapping[str, Any]:
         raise ValueError("candidate source candidate_set must be a list")
     if payload["candidate_count"] != len(candidates):
         raise ValueError("candidate source candidate_count mismatch")
+    shadow_status = payload.get("constrained_v0_implementation_status")
     shadow_empty = (
         not candidates
         and payload["source_type"] == "constrained_v0_candidate_source"
         and payload["generator_role"] == "shadow_constrained_generator"
-        and (
-            (
-                payload.get("constrained_v0_implementation_status") == "skeleton_only"
-                and payload["candidate_generation_allowed"] is False
+        and shadow_status
+        in {
+            "skeleton_only",
+            "column_x_alignment_shadow_only",
+            "height_target_reproject_shadow_only",
+        }
+        and payload.get("source_provenance", {}).get("implementation_status")
+        == shadow_status
+        and all(
+            payload.get(field) is False
+            for field in (
+                "accepted",
+                "downstream_recommendation",
+                "active_runner_role",
+                "annotation_writeback",
             )
-            or payload.get("constrained_v0_implementation_status")
-            == "column_x_alignment_shadow_only"
         )
     )
     if not candidates and not shadow_empty:

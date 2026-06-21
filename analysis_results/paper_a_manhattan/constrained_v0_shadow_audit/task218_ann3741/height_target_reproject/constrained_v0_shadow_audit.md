@@ -1,4 +1,4 @@
-# Constrained v0 Column-X Shadow Audit
+# Constrained v0 Height Target Shadow Audit
 
 - Case: `task218_ann3741`
 - Family: `height_target_reproject`

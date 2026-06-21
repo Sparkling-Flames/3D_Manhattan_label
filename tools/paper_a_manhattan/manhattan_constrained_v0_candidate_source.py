@@ -303,6 +303,7 @@ def build_height_target_reproject_shadow_source(
             "reasons": sorted(set(unavailable)),
             "eligible_pair_count": 0,
         }
+        validate_candidate_source(payload)
         return payload
 
     protected = {int(value) for value in case_contract.get("protected_pairs", [])}
@@ -423,6 +424,5 @@ def build_height_target_reproject_shadow_source(
             "formula_status": summary.get("formula_status", "explicit_after_y"),
         }
     )
-    if candidates:
-        validate_candidate_source(payload)
+    validate_candidate_source(payload)
     return payload

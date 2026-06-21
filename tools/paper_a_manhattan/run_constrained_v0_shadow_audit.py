@@ -181,8 +181,10 @@ def run(
     destination.mkdir(parents=True, exist_ok=True)
     json_path = destination / "constrained_v0_shadow_audit.json"
     report_path = destination / "constrained_v0_shadow_audit.md"
-    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    report_path.write_text(render_markdown(payload), encoding="utf-8")
+    with json_path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+    with report_path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(render_markdown(payload))
     return {"json": json_path, "markdown": report_path}
 
 

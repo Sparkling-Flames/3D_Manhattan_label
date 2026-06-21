@@ -145,3 +145,25 @@ def test_height_shadow_audit_materializes_explicit_after_y(tmp_path, monkeypatch
     assert payload["formula_status"] == "explicit_after_y"
     assert payload["accepted"] is False
     assert payload["downstream_recommendation"] is False
+
+
+def test_height_no_summary_audit_is_height_specific_and_empty(tmp_path, monkeypatch):
+    projection, contract = _inputs(tmp_path)
+    monkeypatch.setattr(audit, "AUDIT_ROOT", tmp_path / "audit")
+    paths = audit.run(
+        tmp_path / "audit" / "height-empty",
+        projection_path=projection,
+        case_config_path=contract,
+        family="height_target_reproject",
+    )
+    payload = json.loads(paths["json"].read_text(encoding="utf-8"))
+    assert payload["schema_version"] == "constrained_v0_height_target_shadow_audit_v1"
+    assert paths["markdown"].read_text(encoding="utf-8").startswith(
+        "# Constrained v0 Height Target Shadow Audit"
+    )
+    assert payload["candidate_count"] == 0
+    assert "height_target_unavailable" in payload["unavailable_summary"]["reasons"]
+    assert (
+        payload["candidate_source"]["source_provenance"]["implementation_status"]
+        == "height_target_reproject_shadow_only"
+    )

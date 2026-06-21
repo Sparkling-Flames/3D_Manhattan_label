@@ -2,6 +2,7 @@ import json
 
 import pytest
 
+from tools.paper_a_manhattan import manhattan_constrained_v0_candidate_source as constrained_source
 from tools.paper_a_manhattan.manhattan_candidate_source_interface import (
     OUTPUT_SCHEMA_VERSION,
     validate_candidate_source,
@@ -282,3 +283,22 @@ def test_height_target_reproject_fails_closed(kwargs, reason):
     payload = _height_source(**kwargs)
     assert payload["candidate_set"] == []
     assert any(reason in value for value in payload["unavailable_summary"]["reasons"])
+
+
+def test_height_empty_shadow_source_is_validated(monkeypatch):
+    calls = []
+    original = constrained_source.validate_candidate_source
+
+    def checked(payload):
+        calls.append(payload)
+        return original(payload)
+
+    monkeypatch.setattr(constrained_source, "validate_candidate_source", checked)
+    payload = _height_source(status="unavailable")
+    assert payload["candidate_set"] == []
+    assert calls == [payload]
+    assert validate_candidate_source(payload) is payload
+    assert (
+        payload["source_provenance"]["implementation_status"]
+        == "height_target_reproject_shadow_only"
+    )
