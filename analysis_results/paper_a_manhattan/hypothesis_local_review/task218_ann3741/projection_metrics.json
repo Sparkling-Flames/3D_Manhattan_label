@@ -7,17 +7,17 @@
   "camera_height": 1.6,
   "input_provenance": {
     "input_file": "hypothesis_review_bridge_manifest.json",
-    "input_sha256": "00d2a7f7f92c39601b72d1fb9ccfed24a0d489c63edf9076835099032c975b44",
+    "input_sha256": "490e6dddf429d1897454f670280cbebd2c23c8d138469bd7c27586e701672710",
     "ordered_pair_source": "input.ordered_pairs",
     "candidate": {
       "file": "hypothesis_review_bridge_manifest.json",
-      "sha256": "00d2a7f7f92c39601b72d1fb9ccfed24a0d489c63edf9076835099032c975b44",
+      "sha256": "490e6dddf429d1897454f670280cbebd2c23c8d138469bd7c27586e701672710",
       "source": "m15_22_candidate_search_json"
     },
     "candidate_sources": [
       {
         "file": "hypothesis_review_bridge_manifest.json",
-        "sha256": "00d2a7f7f92c39601b72d1fb9ccfed24a0d489c63edf9076835099032c975b44",
+        "sha256": "490e6dddf429d1897454f670280cbebd2c23c8d138469bd7c27586e701672710",
         "source": "m15_22_candidate_search_json"
       }
     ],
@@ -8313,24 +8313,23 @@
       }
     },
     {
-      "name": "m1528_candidate_0039",
+      "name": "m1528_candidate_0043",
       "candidate_row": {
-        "candidate_id": "m1528_candidate_0039",
-        "family": "edge_6_7_floor_depth_balance",
-        "action_family": "edge_6_7_floor_depth_balance",
+        "candidate_id": "m1528_candidate_0043",
+        "family": "preserve_5_6_length_with_6_7_fix",
+        "action_family": "preserve_5_6_length_with_6_7_fix",
         "coordinate_changes": [
-          {
-            "effective_pair_index": 6,
-            "fields": {
-              "bottom_y": {
-                "before": 90.47619047619048,
-                "after": 89.97619047619048
-              }
-            }
-          },
           {
             "effective_pair_index": 7,
             "fields": {
+              "top_x": {
+                "before": 51.66015625,
+                "after": 51.91015625
+              },
+              "bottom_x": {
+                "before": 51.66015625,
+                "after": 51.91015625
+              },
               "bottom_y": {
                 "before": 87.890625,
                 "after": 88.390625
@@ -8420,18 +8419,18 @@
           },
           "bottom": {
             "x": 43.859649122807014,
-            "y": 89.97619047619048
+            "y": 90.47619047619048
           },
           "effective_pair_index": 6,
           "source_preview_order_index": 5
         },
         {
           "top": {
-            "x": 51.66015625,
+            "x": 51.91015625,
             "y": 12.6953125
           },
           "bottom": {
-            "x": 51.66015625,
+            "x": 51.91015625,
             "y": 88.390625
           },
           "effective_pair_index": 7,
@@ -8689,34 +8688,34 @@
               "top_x": 43.859649122807014,
               "bottom_x": 43.859649122807014,
               "top_y": 12.283208020050125,
-              "bottom_y": 89.97619047619048
+              "bottom_y": 90.47619047619048
             },
             "normalized": {
               "x": 449.12280701754383,
               "top_x": 449.12280701754383,
               "bottom_x": 449.12280701754383,
               "top_y": 62.89002506265664,
-              "bottom_y": 460.6780952380953
+              "bottom_y": 463.2380952380953
             },
             "u_rad": -0.38580962412506237,
-            "v_floor_raw_rad": 1.255889063185063,
-            "v_floor_safe_rad": 1.255889063185063,
+            "v_floor_raw_rad": 1.2715970264530119,
+            "v_floor_safe_rad": 1.2715970264530119,
             "v_ceiling_raw_rad": -1.1849079660118496,
             "v_ceiling_safe_rad": -1.1849079660118496,
             "floor_clamped": false,
             "ceiling_clamped": false,
-            "floor_distance": 0.5211949823181018,
+            "floor_distance": 0.49353463828374494,
             "floor_3d": {
-              "x": -0.1961305564584881,
+              "x": -0.1857217097670582,
               "y": -1.6,
-              "z": -0.4828840589798448
+              "z": -0.45725691433489285
             },
             "ceiling_3d": {
-              "x": -0.1961305564584881,
-              "y": 1.2829205554592151,
-              "z": -0.4828840589798448
+              "x": -0.1857217097670582,
+              "y": 1.2148346660384843,
+              "z": -0.45725691433489285
             },
-            "wall_height": 2.882920555459215,
+            "wall_height": 2.814834666038484,
             "top_bottom_x_residual": 0.0,
             "top_bottom_x_residual_px": 0.0,
             "warnings": []
@@ -8725,19 +8724,19 @@
             "effective_pair_index": 7,
             "source_preview_order_index": 8,
             "input": {
-              "top_x": 51.66015625,
-              "bottom_x": 51.66015625,
+              "top_x": 51.91015625,
+              "bottom_x": 51.91015625,
               "top_y": 12.6953125,
               "bottom_y": 88.390625
             },
             "normalized": {
-              "x": 529.0,
-              "top_x": 529.0,
-              "bottom_x": 529.0,
+              "x": 531.5600000000001,
+              "top_x": 531.5600000000001,
+              "bottom_x": 531.5600000000001,
               "top_y": 65.0,
               "bottom_y": 452.56
             },
-            "u_rad": 0.10431069357622347,
+            "u_rad": 0.12001865684417279,
             "v_floor_raw_rad": 1.2060770546672066,
             "v_floor_safe_rad": 1.2060770546672066,
             "v_ceiling_raw_rad": -1.1719613219446299,
@@ -8746,14 +8745,14 @@
             "ceiling_clamped": false,
             "floor_distance": 0.6108805983596876,
             "floor_3d": {
-              "x": 0.06360588600194893,
+              "x": 0.07314117995029167,
               "y": -1.6,
-              "z": -0.6075602000774878
+              "z": -0.6064861690490303
             },
             "ceiling_3d": {
-              "x": 0.06360588600194893,
+              "x": 0.07314117995029167,
               "y": 1.4495744249486795,
-              "z": -0.6075602000774878
+              "z": -0.6064861690490303
             },
             "wall_height": 3.0495744249486796,
             "top_bottom_x_residual": 0.0,
@@ -8960,14 +8959,14 @@
               "from_pair": 5,
               "to_pair": 6,
               "floor_wall_vector": {
-                "x": 0.036407033751234635,
-                "z": 0.20325872023353347
+                "x": 0.04681588044266452,
+                "z": 0.22888586487848545
               },
-              "floor_wall_length": 0.2064935336942476,
-              "direction_deg": 79.84505420314676,
+              "floor_wall_length": 0.23362462584837704,
+              "direction_deg": 78.44027354275346,
               "nearest_manhattan_axis_deg": 90.0,
-              "angle_residual_deg": 10.15494579685324,
-              "ceiling_wall_length": 0.2064935336942476,
+              "angle_residual_deg": 11.55972645724654,
+              "ceiling_wall_length": 0.23362462584837704,
               "length_ratio": 1.0,
               "angle_warning": false,
               "short_wall": true,
@@ -8978,14 +8977,14 @@
               "from_pair": 6,
               "to_pair": 7,
               "floor_wall_vector": {
-                "x": 0.25973644246043703,
-                "z": -0.12467614109764297
+                "x": 0.2588628897173499,
+                "z": -0.14922925471413745
               },
-              "floor_wall_length": 0.2881096313922936,
-              "direction_deg": 334.3585193030056,
+              "floor_wall_length": 0.2987965296574807,
+              "direction_deg": 330.0374151350922,
               "nearest_manhattan_axis_deg": 0.0,
-              "angle_residual_deg": 25.64148069699445,
-              "ceiling_wall_length": 0.2881096313922936,
+              "angle_residual_deg": 29.962584864907797,
+              "ceiling_wall_length": 0.2987965296574807,
               "length_ratio": 1.0,
               "angle_warning": true,
               "short_wall": true,
@@ -8996,14 +8995,14 @@
               "from_pair": 7,
               "to_pair": 8,
               "floor_wall_vector": {
-                "x": -0.011311040625232957,
-                "z": -0.8122537768367326
+                "x": -0.020846334573575695,
+                "z": -0.8133278078651901
               },
-              "floor_wall_length": 0.8123325289717027,
-              "direction_deg": 269.20217914448426,
+              "floor_wall_length": 0.8135949193007225,
+              "direction_deg": 268.53177829632875,
               "nearest_manhattan_axis_deg": 270.0,
-              "angle_residual_deg": 0.797820855515738,
-              "ceiling_wall_length": 0.8123325289717027,
+              "angle_residual_deg": 1.4682217036712473,
+              "ceiling_wall_length": 0.8135949193007225,
               "length_ratio": 1.0,
               "angle_warning": false,
               "short_wall": false,
@@ -9067,9 +9066,9 @@
           "self_intersection": false,
           "summary": {
             "n_walls": 10,
-            "wall_residual_sum_deg": 103.73531747242188,
+            "wall_residual_sum_deg": 110.13160314888404,
             "wall_residual_max_deg": 37.02045729278922,
-            "minimum_wall_length": 0.2064935336942476,
+            "minimum_wall_length": 0.23362462584837704,
             "short_wall_count": 2,
             "self_intersection": false
           }
@@ -9112,32 +9111,32 @@
               "corner_pair_index": 5,
               "prev_wall_index": 4,
               "next_wall_index": 5,
-              "turn_angle_deg": 101.60599628573095,
-              "angle_to_90_residual_deg": 11.605996285730953,
+              "turn_angle_deg": 103.01077694612427,
+              "angle_to_90_residual_deg": 13.010776946124267,
               "warning_far_from_90": false
             },
             {
               "corner_pair_index": 6,
               "prev_wall_index": 5,
               "next_wall_index": 6,
-              "turn_angle_deg": 74.51346509985883,
-              "angle_to_90_residual_deg": 15.486534900141166,
+              "turn_angle_deg": 71.59714159233877,
+              "angle_to_90_residual_deg": 18.402858407661228,
               "warning_far_from_90": true
             },
             {
               "corner_pair_index": 7,
               "prev_wall_index": 6,
               "next_wall_index": 7,
-              "turn_angle_deg": 114.84365984147868,
-              "angle_to_90_residual_deg": 24.843659841478683,
+              "turn_angle_deg": 118.49436316123649,
+              "angle_to_90_residual_deg": 28.494363161236492,
               "warning_far_from_90": true
             },
             {
               "corner_pair_index": 8,
               "prev_wall_index": 7,
               "next_wall_index": 8,
-              "turn_angle_deg": 93.71661711553558,
-              "angle_to_90_residual_deg": 3.716617115535584,
+              "turn_angle_deg": 93.04621626738005,
+              "angle_to_90_residual_deg": 3.0462162673800464,
               "warning_far_from_90": false
             },
             {
@@ -9159,7 +9158,7 @@
           ],
           "summary": {
             "n_corners": 10,
-            "corner_residual_sum_deg": 177.38597535719396,
+            "corner_residual_sum_deg": 184.68738199670958,
             "corner_residual_max_deg": 39.84392695791641
           }
         },
@@ -9176,7 +9175,7 @@
               "local_height_residual": 0.0,
               "suspicious_low_height": true,
               "suspicious_high_height": false,
-              "suspicious_threshold": 0.3383058014782714
+              "suspicious_threshold": 0.4234131632541849
             },
             {
               "effective_pair_index": 2,
@@ -9189,7 +9188,7 @@
               "local_height_residual": -0.12362550532346672,
               "suspicious_low_height": true,
               "suspicious_high_height": false,
-              "suspicious_threshold": 0.3383058014782714
+              "suspicious_threshold": 0.4234131632541849
             },
             {
               "effective_pair_index": 3,
@@ -9202,7 +9201,7 @@
               "local_height_residual": 0.00023851442461930716,
               "suspicious_low_height": false,
               "suspicious_high_height": false,
-              "suspicious_threshold": 0.3383058014782714
+              "suspicious_threshold": 0.4234131632541849
             },
             {
               "effective_pair_index": 4,
@@ -9215,7 +9214,7 @@
               "local_height_residual": 0.0,
               "suspicious_low_height": false,
               "suspicious_high_height": false,
-              "suspicious_threshold": 0.3383058014782714
+              "suspicious_threshold": 0.4234131632541849
             },
             {
               "effective_pair_index": 5,
@@ -9228,20 +9227,20 @@
               "local_height_residual": 0.0,
               "suspicious_low_height": false,
               "suspicious_high_height": false,
-              "suspicious_threshold": 0.3383058014782714
+              "suspicious_threshold": 0.4234131632541849
             },
             {
               "effective_pair_index": 6,
               "source_preview_order_index": 5,
-              "wall_height": 2.882920555459215,
+              "wall_height": 2.814834666038484,
               "median_wall_height": 3.047638581415037,
-              "height_residual": -0.16471802595582208,
-              "height_residual_abs": 0.16471802595582208,
+              "height_residual": -0.23280391537655287,
+              "height_residual_abs": 0.23280391537655287,
               "local_height_median": 3.0457027378813946,
-              "local_height_residual": -0.16278218242217957,
+              "local_height_residual": -0.23086807184291036,
               "suspicious_low_height": false,
               "suspicious_high_height": false,
-              "suspicious_threshold": 0.3383058014782714
+              "suspicious_threshold": 0.4234131632541849
             },
             {
               "effective_pair_index": 7,
@@ -9254,7 +9253,7 @@
               "local_height_residual": 0.10786245876043754,
               "suspicious_low_height": false,
               "suspicious_high_height": false,
-              "suspicious_threshold": 0.3383058014782714
+              "suspicious_threshold": 0.4234131632541849
             },
             {
               "effective_pair_index": 8,
@@ -9267,7 +9266,7 @@
               "local_height_residual": -0.10786245876043754,
               "suspicious_low_height": false,
               "suspicious_high_height": false,
-              "suspicious_threshold": 0.3383058014782714
+              "suspicious_threshold": 0.4234131632541849
             },
             {
               "effective_pair_index": 9,
@@ -9280,7 +9279,7 @@
               "local_height_residual": 0.0,
               "suspicious_low_height": false,
               "suspicious_high_height": false,
-              "suspicious_threshold": 0.3383058014782714
+              "suspicious_threshold": 0.4234131632541849
             },
             {
               "effective_pair_index": 10,
@@ -9293,14 +9292,14 @@
               "local_height_residual": 0.003222527808926401,
               "suspicious_low_height": false,
               "suspicious_high_height": false,
-              "suspicious_threshold": 0.3383058014782714
+              "suspicious_threshold": 0.4234131632541849
             }
           ],
           "summary": {
             "n_pairs": 10,
             "median_wall_height": 3.047638581415037,
-            "height_mad": 0.13532232059130855,
-            "height_residual_sum": 2.3839333682446187,
+            "height_mad": 0.16936526530167395,
+            "height_residual_sum": 2.4520192576653494,
             "height_residual_max": 0.7567601148647198,
             "suspicious_low_pair_indices": [
               1,
@@ -9369,8 +9368,8 @@
               "center_x_separation": 37.7399230682719,
               "center_x_separation_percent": 37.7399230682719,
               "center_x_separation_px": 386.4568122191043,
-              "floor_3d_separation": 0.9025093398312852,
-              "floor_distance_delta": 0.06893475421190343,
+              "floor_3d_separation": 0.8766409268524491,
+              "floor_distance_delta": 0.04127441017754657,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
               "classification": "not_dense_2d",
@@ -9379,10 +9378,10 @@
             {
               "pair_i": 1,
               "pair_j": 7,
-              "center_x_separation": 45.540430195464886,
-              "center_x_separation_percent": 45.540430195464886,
-              "center_x_separation_px": 466.33400520156044,
-              "floor_3d_separation": 1.052956992958532,
+              "center_x_separation": 45.79043019546489,
+              "center_x_separation_percent": 45.79043019546489,
+              "center_x_separation_px": 468.8940052015605,
+              "floor_3d_separation": 1.0540650565767224,
               "floor_distance_delta": 0.15862037025348918,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
@@ -9473,8 +9472,8 @@
               "center_x_separation": 42.496367872807014,
               "center_x_separation_percent": 42.496367872807014,
               "center_x_separation_px": 435.16280701754386,
-              "floor_3d_separation": 4.5614073751590345,
-              "floor_distance_delta": 3.569731507332768,
+              "floor_3d_separation": 4.536159904853907,
+              "floor_distance_delta": 3.597391851367125,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
               "classification": "not_dense_2d",
@@ -9483,10 +9482,10 @@
             {
               "pair_i": 2,
               "pair_j": 7,
-              "center_x_separation": 50.296875,
-              "center_x_separation_percent": 50.296875,
-              "center_x_separation_px": 515.04,
-              "floor_3d_separation": 4.7017146220523784,
+              "center_x_separation": 50.546875,
+              "center_x_separation_percent": 50.546875,
+              "center_x_separation_px": 517.6,
+              "floor_3d_separation": 4.701493332875177,
               "floor_distance_delta": 3.4800458912911822,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
@@ -9564,8 +9563,8 @@
               "center_x_separation": 34.87820381030702,
               "center_x_separation_percent": 34.87820381030702,
               "center_x_separation_px": 357.15280701754386,
-              "floor_3d_separation": 8.945011194763858,
-              "floor_distance_delta": 8.11064720533587,
+              "floor_3d_separation": 8.927902508306225,
+              "floor_distance_delta": 8.138307549370227,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
               "classification": "not_dense_2d",
@@ -9574,10 +9573,10 @@
             {
               "pair_i": 3,
               "pair_j": 7,
-              "center_x_separation": 42.6787109375,
-              "center_x_separation_percent": 42.6787109375,
-              "center_x_separation_px": 437.03,
-              "floor_3d_separation": 9.18322608862408,
+              "center_x_separation": 42.9287109375,
+              "center_x_separation_percent": 42.9287109375,
+              "center_x_separation_px": 439.59000000000003,
+              "floor_3d_separation": 9.187165894846821,
               "floor_distance_delta": 8.020961589294284,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
@@ -9642,8 +9641,8 @@
               "center_x_separation": 16.137969435307014,
               "center_x_separation_percent": 16.137969435307014,
               "center_x_separation_px": 165.25280701754383,
-              "floor_3d_separation": 4.431170996040799,
-              "floor_distance_delta": 4.163275063955192,
+              "floor_3d_separation": 4.443440685927909,
+              "floor_distance_delta": 4.1909354079895484,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
               "classification": "not_dense_2d",
@@ -9652,10 +9651,10 @@
             {
               "pair_i": 4,
               "pair_j": 7,
-              "center_x_separation": 23.9384765625,
-              "center_x_separation_percent": 23.9384765625,
-              "center_x_separation_px": 245.13,
-              "floor_3d_separation": 4.683587056803462,
+              "center_x_separation": 24.188476562500007,
+              "center_x_separation_percent": 24.188476562500007,
+              "center_x_separation_px": 247.69000000000005,
+              "floor_3d_separation": 4.69315806692936,
               "floor_distance_delta": 4.073589447913606,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
@@ -9707,20 +9706,20 @@
               "center_x_separation": 0.9398496240601517,
               "center_x_separation_percent": 0.9398496240601517,
               "center_x_separation_px": 9.624060150375954,
-              "floor_3d_separation": 0.2064935336942476,
-              "floor_distance_delta": 0.2032811348363588,
+              "floor_3d_separation": 0.23362462584837704,
+              "floor_distance_delta": 0.23094147887071564,
               "short_wall_relation": true,
-              "adjacent_wall_length": 0.2064935336942476,
+              "adjacent_wall_length": 0.23362462584837704,
               "classification": "unresolved_dense_corner",
               "warnings": []
             },
             {
               "pair_i": 5,
               "pair_j": 7,
-              "center_x_separation": 6.860657503132833,
-              "center_x_separation_percent": 6.860657503132833,
-              "center_x_separation_px": 70.25313283208021,
-              "floor_3d_separation": 0.30639220004168094,
+              "center_x_separation": 7.110657503132839,
+              "center_x_separation_percent": 7.110657503132839,
+              "center_x_separation_px": 72.81313283208027,
+              "floor_3d_separation": 0.31588714134863705,
               "floor_distance_delta": 0.11359551879477303,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
@@ -9769,13 +9768,13 @@
             {
               "pair_i": 6,
               "pair_j": 7,
-              "center_x_separation": 7.800507127192985,
-              "center_x_separation_percent": 7.800507127192985,
-              "center_x_separation_px": 79.87719298245617,
-              "floor_3d_separation": 0.2881096313922936,
-              "floor_distance_delta": 0.08968561604158576,
+              "center_x_separation": 8.05050712719299,
+              "center_x_separation_percent": 8.05050712719299,
+              "center_x_separation_px": 82.43719298245622,
+              "floor_3d_separation": 0.2987965296574807,
+              "floor_distance_delta": 0.11734596007594261,
               "short_wall_relation": true,
-              "adjacent_wall_length": 0.2881096313922936,
+              "adjacent_wall_length": 0.2987965296574807,
               "classification": "not_dense_2d",
               "warnings": []
             },
@@ -9785,8 +9784,8 @@
               "center_x_separation": 6.726288377192985,
               "center_x_separation_percent": 6.726288377192985,
               "center_x_separation_px": 68.87719298245617,
-              "floor_3d_separation": 0.9693053447688702,
-              "floor_distance_delta": 0.8995817347961493,
+              "floor_3d_separation": 0.9915482737839105,
+              "floor_distance_delta": 0.9272420788305062,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
               "classification": "not_dense_2d",
@@ -9798,8 +9797,8 @@
               "center_x_separation": 20.15896332030092,
               "center_x_separation_percent": 20.15896332030092,
               "center_x_separation_px": 206.42778439988143,
-              "floor_3d_separation": 2.356345437435854,
-              "floor_distance_delta": 1.9381816414609094,
+              "floor_3d_separation": 2.359034697091493,
+              "floor_distance_delta": 1.9658419854952665,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
               "classification": "not_dense_2d",
@@ -9811,8 +9810,8 @@
               "center_x_separation": 40.124725877192986,
               "center_x_separation_percent": 40.124725877192986,
               "center_x_separation_px": 410.87719298245617,
-              "floor_3d_separation": 2.712847275025636,
-              "floor_distance_delta": 1.7506304632724463,
+              "floor_3d_separation": 2.6887209547884288,
+              "floor_distance_delta": 1.7782908073068033,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
               "classification": "not_dense_2d",
@@ -9821,23 +9820,23 @@
             {
               "pair_i": 7,
               "pair_j": 8,
-              "center_x_separation": 1.07421875,
-              "center_x_separation_percent": 1.07421875,
-              "center_x_separation_px": 11.0,
-              "floor_3d_separation": 0.8123325289717027,
+              "center_x_separation": 1.3242187500000058,
+              "center_x_separation_percent": 1.3242187500000058,
+              "center_x_separation_px": 13.56000000000006,
+              "floor_3d_separation": 0.8135949193007225,
               "floor_distance_delta": 0.8098961187545636,
               "short_wall_relation": false,
-              "adjacent_wall_length": 0.8123325289717027,
+              "adjacent_wall_length": 0.8135949193007225,
               "classification": "not_dense_2d",
               "warnings": []
             },
             {
               "pair_i": 7,
               "pair_j": 9,
-              "center_x_separation": 12.358456193107937,
-              "center_x_separation_percent": 12.358456193107937,
-              "center_x_separation_px": 126.55059141742527,
-              "floor_3d_separation": 2.0683817293976268,
+              "center_x_separation": 12.10845619310793,
+              "center_x_separation_percent": 12.10845619310793,
+              "center_x_separation_px": 123.99059141742521,
+              "floor_3d_separation": 2.0604349772965196,
               "floor_distance_delta": 1.848496025419324,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
@@ -9847,10 +9846,10 @@
             {
               "pair_i": 7,
               "pair_j": 10,
-              "center_x_separation": 32.32421875,
-              "center_x_separation_percent": 32.32421875,
-              "center_x_separation_px": 331.0,
-              "floor_3d_separation": 2.6013619314426935,
+              "center_x_separation": 32.07421874999999,
+              "center_x_separation_percent": 32.07421874999999,
+              "center_x_separation_px": 328.43999999999994,
+              "floor_3d_separation": 2.5938137515809743,
               "floor_distance_delta": 1.6609448472308608,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
@@ -9906,10 +9905,10 @@
                 "center_x_separation": 0.9398496240601517,
                 "center_x_separation_percent": 0.9398496240601517,
                 "center_x_separation_px": 9.624060150375954,
-                "floor_3d_separation": 0.2064935336942476,
-                "floor_distance_delta": 0.2032811348363588,
+                "floor_3d_separation": 0.23362462584837704,
+                "floor_distance_delta": 0.23094147887071564,
                 "short_wall_relation": true,
-                "adjacent_wall_length": 0.2064935336942476,
+                "adjacent_wall_length": 0.23362462584837704,
                 "classification": "unresolved_dense_corner",
                 "warnings": []
               }
@@ -9918,24 +9917,24 @@
         }
       },
       "summary": {
-        "wall_residual_sum_deg": 103.73531747242188,
-        "corner_residual_sum_deg": 177.38597535719396,
-        "height_residual_sum": 2.3839333682446187,
+        "wall_residual_sum_deg": 110.13160314888404,
+        "corner_residual_sum_deg": 184.68738199670958,
+        "height_residual_sum": 2.4520192576653494,
         "vertical_x_residual_sum": 0.9361349081416286,
-        "minimum_dense_floor_3d_separation": 0.2064935336942476,
-        "minimum_wall_length": 0.2064935336942476,
+        "minimum_dense_floor_3d_separation": 0.23362462584837704,
+        "minimum_wall_length": 0.23362462584837704,
         "short_wall_count": 2,
         "self_intersection": false,
         "warnings": []
       },
-      "display_name": "m1528_candidate_0039 | edge_6_7_floor_depth_balance | legacy_trial_blocked",
+      "display_name": "m1528_candidate_0043 | preserve_5_6_length_with_6_7_fix | legacy_trial_blocked",
       "delta_from_original": {
-        "wall_residual_sum_deg": -11.380992918847284,
-        "corner_residual_sum_deg": -18.952821876883434,
-        "height_residual_sum": -0.13683553225368073,
+        "wall_residual_sum_deg": -4.984707242385127,
+        "corner_residual_sum_deg": -11.651415237367814,
+        "height_residual_sum": -0.06874964283294993,
         "vertical_x_residual_sum": 0.0,
-        "minimum_dense_floor_3d_separation": -0.027131092154129427,
-        "minimum_wall_length": -0.027131092154129427,
+        "minimum_dense_floor_3d_separation": 0.0,
+        "minimum_wall_length": 0.0,
         "short_wall_count": 0.0,
         "self_intersection_before": false,
         "self_intersection_after": false,
@@ -9945,18 +9944,18 @@
       "metric_comparison": {
         "wall_residual_sum_deg": {
           "before": 115.11631039126917,
-          "after": 103.73531747242188,
-          "delta": -11.380992918847284
+          "after": 110.13160314888404,
+          "delta": -4.984707242385127
         },
         "corner_residual_sum_deg": {
           "before": 196.3387972340774,
-          "after": 177.38597535719396,
-          "delta": -18.952821876883434
+          "after": 184.68738199670958,
+          "delta": -11.651415237367814
         },
         "height_residual_sum": {
           "before": 2.5207689004982994,
-          "after": 2.3839333682446187,
-          "delta": -0.13683553225368073
+          "after": 2.4520192576653494,
+          "delta": -0.06874964283294993
         },
         "pair_vertical_x_residual": {
           "before": null,
@@ -9965,13 +9964,13 @@
         },
         "dense_floor_3d_separation": {
           "before": 0.23362462584837704,
-          "after": 0.2064935336942476,
-          "delta": -0.027131092154129427
+          "after": 0.23362462584837704,
+          "delta": 0.0
         },
         "short_wall_length": {
           "before": 0.23362462584837704,
-          "after": 0.2064935336942476,
-          "delta": -0.027131092154129427
+          "after": 0.23362462584837704,
+          "delta": 0.0
         },
         "self_intersection": {
           "before": false,

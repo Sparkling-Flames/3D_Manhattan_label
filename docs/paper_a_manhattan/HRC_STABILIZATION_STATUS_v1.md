@@ -18,7 +18,7 @@
 | C2 | v1 diagnostic implemented | evaluator 已输出 hard feasibility、wall/turn/local residual、height consistency、layout plausibility、evidence interface、movement/edit cost 与 decision class；`direction_family_fit` / `parallel_family_residual` v1 已实现并由真实 projection artifacts 与 core runner 回归锁定，但仍只是可审计 diagnostic，不是 C4 Column Evidence Layer。 |
 | C3 | 未实现新模块；next blocked-until-audit-passes | 当前只是 M15.28 action library 的 legacy candidate source 接入 core；不是新的 constrained candidate generator。只有 C6.2 post-change selection audit 通过后，才允许收口 candidate source interface / legacy wrapper。 |
 | C4 | C4-lite implemented | runner 对已有 HoHoNet proposal 执行 source inventory/parser probe，并物化 corner column、floor/ceiling boundary 与 seam delta；缺失、歧义或合同异常时 fail-closed 为 unavailable，不训练模型、不写回。 |
-| C5 | C5-lite plane proxy v0 implemented | evaluator 已物化独立 `plane_proxy_metrics`：复用 direction-family、同族平行 residual、dominant height cluster 与 floorprint residual 形成 geometry proxy。它不是 depth model、不是 GeoLayout reproduction、不是 C4 evidence layer；C6.1 只把其中 parallel/orthogonal consistency 用作 Manhattan bucket tie-break。 |
+| C5 | C5-lite plane proxy v0 implemented | evaluator 已物化独立 `plane_proxy_metrics`：复用 direction-family、同族平行 residual、dominant height cluster 与 floorprint residual 形成 geometry proxy。它不是 depth model、不是 GeoLayout reproduction、不是 C4 evidence layer；C6.2 仅把其中 geometry diagnostics 用于分层排序。 |
 | C6 | C6.2 layered ranking implemented；post-change audit pending | bucket 集合不变；L0 suppress、L1 多指标 Pareto、L2 HoHoNet evidence、L3/L4 diagnostics、L5 fallback 已分层。默认 case 当前选择 0017，但 runner-level recommendation 仍 `audit_blocked`，不声明 stable ranker。 |
 | C7 | blocked | legacy `manhattan_m1527_semantic_direct_search.py` 存在 Hooke–Jeeves 搜索，但新 geometry-normalized MADS/Hooke–Jeeves 在 evaluator 稳定前不得启动。 |
 | C8 | 仅记录系统 | feedback ledger schema 与 `materialize_manhattan_feedback_ledger_entry.py` 可保留；不得进入训练、参数更新或自动应用系统。 |
@@ -29,9 +29,9 @@
 
 C6.1 audit、Scoring Layer Contract、C4-lite 与 C6.2 已完成；下一步只允许 C6.2 post-change selection audit。人工 audit 通过后，才进入 C3 candidate source interface / legacy wrapper 收口。
 
-当前 bucket selection 仅供诊断：`accepted=false`、`downstream_recommendation=false`，overall verdict 保持 `audit_blocked`。
+`candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前 audit-blocked 期间三者分别为 `false`、`false`、`false`。
 
-- 不先做 C3/C4/C7/C9/C10；
+- 不扩展 C4，不做 full image-edge evidence；C3/C7/C9/C10 仍 blocked；
 - 不继续调 `local_score_total` 权重；
 - 不新增 portfolio bucket；
 - 不自动写回 annotation。
@@ -47,6 +47,6 @@ C6.1 audit、Scoring Layer Contract、C4-lite 与 C6.2 已完成；下一步只�
 - `docs/paper_a_manhattan/后续方针.md`：C0–C10 目标定义。
 - `docs/paper_a_manhattan/M15_LEGACY_ARTIFACT_DEPENDENCY_INVENTORY_v1.md`：legacy source/compatibility chain 仍被 core 使用的依据。
 - `docs/paper_a_manhattan/MANHATTAN_HYPOTHESIS_FEEDBACK_LEDGER_SCHEMA_v1.md` 与 `tools/paper_a_manhattan/materialize_manhattan_feedback_ledger_entry.py`：C8 只记录、不训练、不写回边界。
-- 独立 C3 constrained generator、C4 Column Evidence Layer、C9 Adaptive Parameter Update、C10 Lightweight Candidate Ranker 文件：missing / not found。
+- 独立 C3 constrained generator、C9 Adaptive Parameter Update、C10 Lightweight Candidate Ranker 文件：missing / not found；C4-lite 已实现，不在 missing 清单内。
 
 本冻结不改变 Paper A 正式实验、`P1/C1/C2/T1/V1`、routing、worker-facing、协议或 Label Studio 数据。

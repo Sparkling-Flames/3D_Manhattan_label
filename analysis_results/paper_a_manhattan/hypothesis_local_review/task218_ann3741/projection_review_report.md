@@ -5,7 +5,7 @@
 - Review schema: `local_3d_projection_review_m15_27_1_bridge_v1`
 - Projection schema: `local_3d_projection_m15_19_v1`
 - Input file: `hypothesis_review_bridge_manifest.json`
-- Input SHA-256: `00d2a7f7f92c39601b72d1fb9ccfed24a0d489c63edf9076835099032c975b44`
+- Input SHA-256: `490e6dddf429d1897454f670280cbebd2c23c8d138469bd7c27586e701672710`
 - Ordered-pair source: `input.ordered_pairs`
 - coordinate_mode requested/effective: `ls_percent` / `ls_percent`
 - W / H / CAM_H: `1024` / `512` / `1.6`
@@ -22,6 +22,7 @@
 
 This is an expert-side local visual review.
 Candidate previews are diagnostic only.
+No automatic fix is claimed.
 Texture toggle and ghost are display controls only.
 No annotation patch or Label Studio writeback is produced.
 
@@ -31,6 +32,8 @@ No annotation patch or Label Studio writeback is produced.
 - improves: `[]`
 - fails_because: `[]`
 - direct_ls_trial_allowed: `None`
+- evidence_status: `None`
+- evidence_warning: `None`
 - primary_unresolved_edges: `[]`
 - short_wall_edges_after: `['5-6', '6-7']`
 - Applied coordinate changes:
@@ -45,6 +48,8 @@ No annotation patch or Label Studio writeback is produced.
 - improves: `[]`
 - fails_because: `[]`
 - direct_ls_trial_allowed: `None`
+- evidence_status: `None`
+- evidence_warning: `None`
 - primary_unresolved_edges: `[]`
 - short_wall_edges_after: `['5-6', '6-7']`
 - Applied coordinate changes:
@@ -58,6 +63,8 @@ No annotation patch or Label Studio writeback is produced.
 - improves: `[]`
 - fails_because: `[]`
 - direct_ls_trial_allowed: `None`
+- evidence_status: `None`
+- evidence_warning: `None`
 - primary_unresolved_edges: `[]`
 - short_wall_edges_after: `['5-6', '6-7']`
 - Applied coordinate changes:
@@ -71,6 +78,8 @@ No annotation patch or Label Studio writeback is produced.
 - improves: `[]`
 - fails_because: `[]`
 - direct_ls_trial_allowed: `None`
+- evidence_status: `None`
+- evidence_warning: `None`
 - primary_unresolved_edges: `[]`
 - short_wall_edges_after: `['5-6', '6-7']`
 - Applied coordinate changes:
@@ -79,18 +88,19 @@ No annotation patch or Label Studio writeback is produced.
 - wall residual sum: 115.116 -> 101.165
 - Preview only; this is not correctness evidence and cannot write back.
 
-### m1528_candidate_0039 | edge_6_7_floor_depth_balance | legacy_trial_blocked
+### m1528_candidate_0043 | preserve_5_6_length_with_6_7_fix | legacy_trial_blocked
 
 - decision_class: `legacy_trial_blocked`
 - improves: `[]`
 - fails_because: `[]`
 - direct_ls_trial_allowed: `None`
+- evidence_status: `None`
+- evidence_warning: `None`
 - primary_unresolved_edges: `[]`
 - short_wall_edges_after: `['5-6', '6-7']`
 - Applied coordinate changes:
-  - pair 6: no numeric change
   - pair 7: no numeric change
-- wall residual sum: 115.116 -> 103.735
+- wall residual sum: 115.116 -> 110.132
 - Preview only; this is not correctness evidence and cannot write back.
 
 ## Candidate Metric Summary
@@ -102,7 +112,7 @@ No annotation patch or Label Studio writeback is produced.
 | m1528_candidate_0001 | 115.116 | 196.339 | 2.521 | 0.560 | 0.234 | False |
 | m1528_candidate_0070 | 115.822 | 196.365 | 2.521 | 0.936 | 0.233 | False |
 | m1528_candidate_0019 | 101.165 | 173.962 | 2.384 | 0.936 | 0.208 | False |
-| m1528_candidate_0039 | 103.735 | 177.386 | 2.384 | 0.936 | 0.206 | False |
+| m1528_candidate_0043 | 110.132 | 184.687 | 2.452 | 0.936 | 0.234 | False |
 
 ## Pair 3D Coordinates — original
 
@@ -329,7 +339,7 @@ No annotation patch or Label Studio writeback is produced.
 | 9 | 8 | 9 | 85.950 | 4.050 | False |
 | 10 | 9 | 10 | 68.672 | 21.328 | True |
 
-## Pair 3D Coordinates — m1528_candidate_0039
+## Pair 3D Coordinates — m1528_candidate_0043
 
 | pair | source order | floor (x,y,z) | ceiling (x,y,z) | wall height | height residual | clamp warnings |
 | ---: | ---: | --- | --- | ---: | ---: | --- |
@@ -338,13 +348,13 @@ No annotation patch or Label Studio writeback is produced.
 | 3 | 3 | (-4.617, -1.600, 7.293) | (-4.617, 1.759, 7.293) | 3.359 | 0.311 | none |
 | 4 | 4 | (-4.616, -1.600, -0.797) | (-4.616, 1.759, -0.797) | 3.359 | 0.311 | none |
 | 5 | 6 | (-0.233, -1.600, -0.686) | (-0.233, 1.446, -0.686) | 3.046 | -0.002 | none |
-| 6 | 5 | (-0.196, -1.600, -0.483) | (-0.196, 1.283, -0.483) | 2.883 | -0.165 | none |
-| 7 | 8 | (0.064, -1.600, -0.608) | (0.064, 1.450, -0.608) | 3.050 | 0.002 | none |
+| 6 | 5 | (-0.186, -1.600, -0.457) | (-0.186, 1.215, -0.457) | 2.815 | -0.233 | none |
+| 7 | 8 | (0.073, -1.600, -0.606) | (0.073, 1.450, -0.606) | 3.050 | 0.002 | none |
 | 8 | 7 | (0.052, -1.600, -1.420) | (0.052, 1.342, -1.420) | 2.942 | -0.106 | none |
 | 9 | 9 | (1.897, -1.600, -1.565) | (1.897, 1.495, -1.565) | 3.095 | 0.047 | none |
 | 10 | 10 | (1.919, -1.600, 1.215) | (1.919, 1.498, 1.215) | 3.098 | 0.050 | none |
 
-## Wall Metrics — m1528_candidate_0039
+## Wall Metrics — m1528_candidate_0043
 
 | wall | from-to | length | direction | nearest axis | residual | short |
 | ---: | --- | ---: | ---: | ---: | ---: | --- |
@@ -352,14 +362,14 @@ No annotation patch or Label Studio writeback is produced.
 | 2 | 2-3 | 5.344 | 142.980 | 180.000 | 37.020 | False |
 | 3 | 3-4 | 8.091 | 270.004 | 270.000 | 0.004 | False |
 | 4 | 4-5 | 4.385 | 1.451 | 0.000 | 1.451 | False |
-| 5 | 5-6 | 0.206 | 79.845 | 90.000 | 10.155 | True |
-| 6 | 6-7 | 0.288 | 334.359 | 0.000 | 25.641 | True |
-| 7 | 7-8 | 0.812 | 269.202 | 270.000 | 0.798 | False |
+| 5 | 5-6 | 0.234 | 78.440 | 90.000 | 11.560 | True |
+| 6 | 6-7 | 0.299 | 330.037 | 0.000 | 29.963 | True |
+| 7 | 7-8 | 0.814 | 268.532 | 270.000 | 1.468 | False |
 | 8 | 8-9 | 1.850 | 355.486 | 0.000 | 4.514 | False |
 | 9 | 9-10 | 2.781 | 89.535 | 90.000 | 0.465 | False |
 | 10 | 10-1 | 2.236 | 200.863 | 180.000 | 20.863 | False |
 
-## Corner Metrics — m1528_candidate_0039
+## Corner Metrics — m1528_candidate_0043
 
 | pair | prev wall | next wall | turn angle | residual to 90 | warning |
 | ---: | ---: | ---: | ---: | ---: | --- |
@@ -367,10 +377,10 @@ No annotation patch or Label Studio writeback is produced.
 | 2 | 1 | 2 | 129.844 | 39.844 | True |
 | 3 | 2 | 3 | 52.976 | 37.024 | True |
 | 4 | 3 | 4 | 88.553 | 1.447 | False |
-| 5 | 4 | 5 | 101.606 | 11.606 | False |
-| 6 | 5 | 6 | 74.513 | 15.487 | True |
-| 7 | 6 | 7 | 114.844 | 24.844 | True |
-| 8 | 7 | 8 | 93.717 | 3.717 | False |
+| 5 | 4 | 5 | 103.011 | 13.011 | False |
+| 6 | 5 | 6 | 71.597 | 18.403 | True |
+| 7 | 6 | 7 | 118.494 | 28.494 | True |
+| 8 | 7 | 8 | 93.046 | 3.046 | False |
 | 9 | 8 | 9 | 85.950 | 4.050 | False |
 | 10 | 9 | 10 | 68.672 | 21.328 | True |
 

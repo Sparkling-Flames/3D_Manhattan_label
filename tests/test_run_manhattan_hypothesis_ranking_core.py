@@ -88,6 +88,11 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
     assert verdict["selection_status"] == "audit_blocked"
     assert verdict["recommended_status"] == "not_accepted_pending_post_change_selection_audit"
     assert verdict["c6_1_blocked_reason"] == "C6.1 manual visual sanity check rejected 0019 over 0017"
+    assert payload["authorization_contract"]["candidate_set.recommended_review_candidate"] == "diagnostic_bucket_selection_only"
+    assert payload["authorization_contract"]["audit_blocked_effect"] == {
+        "accepted": False,
+        "downstream_recommendation": False,
+    }
     assert any(
         evaluation["feasibility"]["hard_gate_passed"]
         and candidate_id not in payload["legacy_diagnostics"]["legacy_direct_ls_trial_candidates"]

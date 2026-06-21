@@ -284,22 +284,21 @@
       ]
     },
     {
-      "candidate_id": "m1528_candidate_0039",
-      "family": "edge_6_7_floor_depth_balance",
-      "action_family": "edge_6_7_floor_depth_balance",
+      "candidate_id": "m1528_candidate_0043",
+      "family": "preserve_5_6_length_with_6_7_fix",
+      "action_family": "preserve_5_6_length_with_6_7_fix",
       "coordinate_changes": [
-        {
-          "effective_pair_index": 6,
-          "fields": {
-            "bottom_y": {
-              "before": 90.47619047619048,
-              "after": 89.97619047619048
-            }
-          }
-        },
         {
           "effective_pair_index": 7,
           "fields": {
+            "top_x": {
+              "before": 51.66015625,
+              "after": 51.91015625
+            },
+            "bottom_x": {
+              "before": 51.66015625,
+              "after": 51.91015625
+            },
             "bottom_y": {
               "before": 87.890625,
               "after": 88.390625
@@ -324,7 +323,7 @@
   ],
   "core_provenance": {
     "path": "D:/Work/HOHONET/analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
-    "sha256": "411a6fa6919e336256482291f182e8b7d62caebb2532259b43b253d9d4bcebd1",
+    "sha256": "7ae4c43dbfa0d7deaad453f4c6a4a34753b4ff4bd342a79c49a6f7d2085d5ffa",
     "schema_version": "manhattan_constrained_hypothesis_ranking_core_v1"
   },
   "safety_boundary": {

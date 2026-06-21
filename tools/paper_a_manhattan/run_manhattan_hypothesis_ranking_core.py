@@ -214,6 +214,18 @@ def build_core_payload_from_legacy(legacy_payload: Mapping[str, Any]) -> dict[st
         "column_evidence_source_inventory": copy.deepcopy(
             legacy_payload.get("column_evidence_source_inventory", {})
         ),
+        "authorization_contract": {
+            "candidate_set.recommended_review_candidate": "diagnostic_bucket_selection_only",
+            "downstream_authority": [
+                "overall_verdict.recommended_review_candidate_available",
+                "portfolio_ranking.<bucket>.accepted",
+                "portfolio_ranking.<bucket>.downstream_recommendation",
+            ],
+            "audit_blocked_effect": {
+                "accepted": False,
+                "downstream_recommendation": False,
+            },
+        },
         "portfolio_ranking": portfolio,
         "suppressed_candidates": suppressed,
         "legacy_diagnostics": {
