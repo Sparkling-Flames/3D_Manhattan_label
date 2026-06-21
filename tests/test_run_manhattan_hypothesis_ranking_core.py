@@ -50,6 +50,16 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
         "legacy_diagnostics",
         "overall_verdict",
     }
+    assert set(payload["portfolio_ranking"]) == {
+        "best_manhattan_feasible",
+        "best_height_consistent",
+        "best_short_wall_preserving",
+        "best_low_movement",
+        "best_hohonet_consistent",
+        "best_balanced",
+        "diagnostic_only_candidates",
+        "suppressed_candidates",
+    }
     verdict = payload["overall_verdict"]
     assert verdict["hard_feasible_candidate_available"] == any(row["hard_gate_passed"] for row in payload["candidate_set"])
     assert verdict["improving_hypothesis_available"] == any(

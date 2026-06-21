@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import math
 from typing import Any, Mapping, Sequence
 
 from tools.paper_a_manhattan.manhattan_constrained_hypothesis_evaluator import build_hypothesis_ranking_key
@@ -25,12 +26,37 @@ def build_hypothesis_portfolio(
         return {"candidate": selected["candidate"], "evaluation": selected["evaluation"], "reason": None}
 
     evidence_available = [entry for entry in eligible if entry["evaluation"]["evidence_consistency"]["evidence_status"] != "unavailable"]
+
+    def manhattan_key(entry: Mapping[str, Any]) -> tuple[Any, ...]:
+        metric = lambda value: float(value) if isinstance(value, (int, float)) else math.inf
+        evaluation = entry["evaluation"]
+        manhattan = evaluation["manhattan_feasibility"]
+        direction = manhattan.get("direction_family_fit")
+        parallel = manhattan.get("parallel_family_residual")
+        direction_summary = direction.get("residual_summary", {}) if isinstance(direction, Mapping) else {}
+        plane = evaluation.get("plane_proxy_metrics", {})
+        plane_parallel = plane.get("wall_plane_parallel_consistency", {})
+        plane_orthogonal = plane.get("wall_plane_orthogonal_consistency", {})
+        return (
+            direction is None,
+            metric(direction_summary.get("max_deg")),
+            metric(direction_summary.get("median_deg")),
+            parallel is None,
+            metric(parallel.get("max_deg")) if isinstance(parallel, Mapping) else math.inf,
+            metric(parallel.get("median_deg")) if isinstance(parallel, Mapping) else math.inf,
+            plane_parallel.get("status") != "available",
+            metric(plane_parallel.get("max_deg")),
+            metric(plane_parallel.get("median_deg")),
+            plane_orthogonal.get("status") != "available",
+            metric(plane_orthogonal.get("orthogonal_residual_deg")),
+            int(manhattan["unresolved_edge_count"]),
+            float(manhattan["wall_residual_max"]),
+            float(manhattan["wall_residual_median"]),
+        )
+
     selected_ids: set[Any] = set()
     result = {
-        "best_manhattan_feasible": bucket(eligible, lambda entry: (
-            entry["evaluation"]["manhattan_feasibility"]["unresolved_edge_count"],
-            entry["evaluation"]["manhattan_feasibility"]["wall_residual_max"],
-        ), "no candidate passed the hard gate"),
+        "best_manhattan_feasible": bucket(eligible, manhattan_key, "no candidate passed the hard gate"),
         "best_height_consistent": bucket(eligible, lambda entry: (
             entry["evaluation"]["height_consistency"]["height_outlier_l1"],
             entry["evaluation"]["height_consistency"]["max_height_residual"],

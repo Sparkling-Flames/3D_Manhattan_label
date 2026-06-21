@@ -217,6 +217,27 @@ def test_portfolio_suppresses_hard_failures_and_populates_every_bucket():
     assert portfolio["best_hohonet_consistent"]["reason"]
 
 
+def test_best_manhattan_feasible_prefers_c2_c5_diagnostics_over_wall_max():
+    variant = _variant()
+    for wall, heading in zip(
+        variant["metrics"]["floorprint"]["walls"], (0.0, 90.0, 180.0, 270.0)
+    ):
+        wall["direction_deg"] = heading
+    c2_c5_good = _evaluate(candidate_variant=variant)
+    wall_only_good = deepcopy(c2_c5_good)
+    wall_only_good["manhattan_feasibility"]["direction_family_fit"]["residual_summary"].update(
+        {"max_deg": 20.0, "median_deg": 10.0}
+    )
+    wall_only_good["plane_proxy_metrics"]["wall_plane_orthogonal_consistency"]["orthogonal_residual_deg"] = 20.0
+    wall_only_good["manhattan_feasibility"]["wall_residual_max"] = 0.0
+
+    portfolio = build_hypothesis_portfolio(
+        [{"candidate_id": "c2_c5_good"}, {"candidate_id": "wall_only_good"}],
+        [c2_c5_good, wall_only_good],
+    )
+    assert portfolio["best_manhattan_feasible"]["candidate"]["candidate_id"] == "c2_c5_good"
+
+
 def test_case_contract_and_evaluator_keep_the_safety_boundary_read_only():
     contract = build_case_contract(
         _pairs(),
