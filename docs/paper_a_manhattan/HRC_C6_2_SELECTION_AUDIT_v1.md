@@ -41,5 +41,6 @@ review metrics 已包含 `m1528_candidate_0017` 与 `m1528_candidate_0019`；若
 - 所有 bucket 均为 `accepted=false`、`downstream_recommendation=false`。
 - `candidate_set.recommended_review_candidate` 仅表示 diagnostic/bucket selection；下游授权以 overall verdict 与 bucket authorization fields 为准。
 - 本文只确认计算合同和选择可解释性，不声称 0017 已成为最终修正。
-- 自动 audit 通过；人工视觉 sanity check 尚未完成，overall verdict 保持 `audit_blocked`。
-- C3 继续 blocked，直到人工 post-change selection audit 明确通过。
+- `manual_post_change_audit = narrow_pass_for_selection_drift_only`：0017 相比 0019 在 local protruding-pillar / short-wall region 与 pair-6 height 上更合理。
+- 该判断仅确认 C6.2 selection drift 没有明显变差；未基于整张图或完整标注裁决最终正确性，0017 不是 accepted final fix。
+- 所有 bucket 继续保持 `accepted=false`、`downstream_recommendation=false`；C3 仅解除 audit gate，允许进入 candidate source interface / legacy wrapper 收口。
