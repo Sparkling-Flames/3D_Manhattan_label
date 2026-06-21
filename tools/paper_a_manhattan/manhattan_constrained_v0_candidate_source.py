@@ -253,7 +253,7 @@ def build_height_target_reproject_shadow_source(
     evidence_summary: Mapping[str, Any] | None,
     projection_config: Mapping[str, Any],
 ) -> dict[str, Any]:
-    payload = _base_payload(case_contract, status="column_x_alignment_shadow_only")
+    payload = _base_payload(case_contract, status="height_target_reproject_shadow_only")
     payload["requested_family"] = "height_target_reproject"
     payload["family_implementation_status"] = "height_target_reproject_shadow_only"
     payload["source_limitations"] = [
@@ -303,7 +303,6 @@ def build_height_target_reproject_shadow_source(
             "reasons": sorted(set(unavailable)),
             "eligible_pair_count": 0,
         }
-        validate_candidate_source(payload)
         return payload
 
     protected = {int(value) for value in case_contract.get("protected_pairs", [])}
@@ -424,5 +423,6 @@ def build_height_target_reproject_shadow_source(
             "formula_status": summary.get("formula_status", "explicit_after_y"),
         }
     )
-    validate_candidate_source(payload)
+    if candidates:
+        validate_candidate_source(payload)
     return payload

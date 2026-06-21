@@ -251,6 +251,14 @@ def _height_source(
 def test_height_target_reproject_emits_shadow_only_y_change():
     payload = _height_source()
     assert payload["candidate_count"] == 1
+    assert (
+        payload["source_provenance"]["implementation_status"]
+        == "height_target_reproject_shadow_only"
+    )
+    assert (
+        payload["constrained_v0_implementation_status"]
+        == "height_target_reproject_shadow_only"
+    )
     candidate = payload["candidate_set"][0]
     assert candidate["shadow_only"] is True
     assert candidate["accepted"] is False

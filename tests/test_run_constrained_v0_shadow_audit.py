@@ -59,6 +59,10 @@ def test_shadow_audit_writes_reports_and_fails_closed_without_identity(tmp_path,
     payload = json.loads(paths["json"].read_text(encoding="utf-8"))
 
     assert paths["markdown"].is_file()
+    assert payload["schema_version"] == "constrained_v0_column_x_shadow_audit_v1"
+    assert paths["markdown"].read_text(encoding="utf-8").startswith(
+        "# Constrained v0 Column-X Shadow Audit"
+    )
     assert payload["candidate_count"] == 0
     assert payload["missing_required_evidence_for_column_x_alignment"] is True
     assert set(payload["unavailable_summary"]["reasons"]) >= {
@@ -132,6 +136,10 @@ def test_height_shadow_audit_materializes_explicit_after_y(tmp_path, monkeypatch
     )
     payload = json.loads(paths["json"].read_text(encoding="utf-8"))
     assert payload["family"] == "height_target_reproject"
+    assert payload["schema_version"] == "constrained_v0_height_target_shadow_audit_v1"
+    assert paths["markdown"].read_text(encoding="utf-8").startswith(
+        "# Constrained v0 Height Target Shadow Audit"
+    )
     assert payload["candidate_count"] == 1
     assert payload["target_height"] == 3.0
     assert payload["formula_status"] == "explicit_after_y"

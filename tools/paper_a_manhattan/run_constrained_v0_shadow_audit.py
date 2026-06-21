@@ -86,7 +86,11 @@ def build_audit_payload(
         or bool(evidence.get("column_identity_by_pair"))
     )
     return {
-        "schema_version": "constrained_v0_column_x_shadow_audit_v1",
+        "schema_version": (
+            "constrained_v0_column_x_shadow_audit_v1"
+            if family == "column_x_alignment"
+            else "constrained_v0_height_target_shadow_audit_v1"
+        ),
         "case_name": projection.get("case_name") or case_config.get("case_name"),
         "family": family,
         "active_runner_role": False,
@@ -135,9 +139,14 @@ def build_audit_payload(
 
 
 def render_markdown(payload: Mapping[str, Any]) -> str:
+    title = (
+        "Constrained v0 Column-X Shadow Audit"
+        if payload["family"] == "column_x_alignment"
+        else "Constrained v0 Height Target Shadow Audit"
+    )
     return "\n".join(
         [
-            "# Constrained v0 Column-X Shadow Audit",
+            f"# {title}",
             "",
             f"- Case: `{payload.get('case_name')}`",
             f"- Family: `{payload['family']}`",
