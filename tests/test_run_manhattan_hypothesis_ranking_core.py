@@ -5,7 +5,10 @@ from pathlib import Path
 import pytest
 
 from tools.paper_a_manhattan.manhattan_case_contract import build_case_contract
-from tools.paper_a_manhattan.manhattan_constrained_hypothesis_evaluator import evaluate_hypothesis
+from tools.paper_a_manhattan.manhattan_constrained_hypothesis_evaluator import (
+    build_hypothesis_ranking_key,
+    evaluate_hypothesis,
+)
 from tools.paper_a_manhattan.manhattan_hypothesis_portfolio import build_hypothesis_portfolio
 from tools.paper_a_manhattan.run_local_3d_projection_review import build_projection_variant
 from tools.paper_a_manhattan.run_manhattan_hypothesis_ranking_core import (
@@ -116,6 +119,15 @@ def test_standalone_core_runner_schema_and_verdicts(tmp_path):
         {"legacy_score_breakdown", "local_score_total"}.isdisjoint(evaluation)
         for evaluation in payload["constrained_evaluations"].values()
     )
+    legacy_scores = payload["legacy_diagnostics"]["legacy_local_score_total"]
+    for row in payload["candidate_set"]:
+        candidate_id = row["candidate_id"]
+        evaluation = payload["constrained_evaluations"][candidate_id]
+        assert row["hypothesis_ranking_key"] == list(build_hypothesis_ranking_key(evaluation))
+        with_legacy = copy.deepcopy(evaluation)
+        with_legacy["local_score_total"] = legacy_scores[candidate_id]
+        assert build_hypothesis_ranking_key(with_legacy) == build_hypothesis_ranking_key(evaluation)
+        assert row["hypothesis_ranking_key"][-1] != legacy_scores[candidate_id]
     assert all(
         evaluation["plane_proxy_metrics"]["plane_proxy_status"] in {"available", "partial_available"}
         for evaluation in payload["constrained_evaluations"].values()

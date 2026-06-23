@@ -7,13 +7,13 @@
 - 主 evaluator：`tools/paper_a_manhattan/manhattan_constrained_hypothesis_evaluator.py`。
 - portfolio/ranking：`tools/paper_a_manhattan/manhattan_hypothesis_portfolio.py`；独立 runner 为 `tools/paper_a_manhattan/run_manhattan_hypothesis_ranking_core.py`。
 - candidate source：runner 通过 C3.1 interface 与 legacy wrapper 调用 M15.28 action library；`legacy_m1528` 仍是唯一 active source，不是新的 constrained candidate generator。
-- legacy score：core 输出已把 `legacy_score_breakdown` / `local_score_total` 移出 `constrained_evaluations`，集中到 `legacy_diagnostics` 并标记 `diagnostic_only`。但 `build_hypothesis_ranking_key()` 仍把 `local_score_total` 作为末位 tie-breaker，因此“只作诊断”尚未在排序语义上完全成立；禁止继续调其权重。
+- legacy score：core 输出已把 `legacy_score_breakdown` / `local_score_total` 移出 `constrained_evaluations`，集中到 `legacy_diagnostics` 并标记 `diagnostic_only`；`build_hypothesis_ranking_key()` 已移除 `local_score_total`，legacy score 不再进入 active ranking key，禁止继续调其权重。
 
 ## 2. C0–C10 状态
 
 | 阶段 | 冻结状态 | 仓库实际状态 |
 |---|---|---|
-| C0 | 部分完成，待收口 | 输出合同已降级 legacy score；排序 key 仍使用 `local_score_total` 末位兜底，尚非严格 diagnostic only。 |
+| C0 | completed | legacy score removed from active ranking key; retained only as diagnostics。`legacy_score_breakdown` / `local_score_total` 仅保留在 legacy diagnostics / evaluator diagnostic fields，不进入 active ranking。 |
 | C1 | 部分完成 | `manhattan_case_contract.py` 已有 case contract 与 projection-rule-based inferred contract，也保留无 metrics 时的 legacy fallback；不是完全脱离 legacy 默认值的通用 case analyzer。 |
 | C2 | v1 diagnostic implemented | evaluator 已输出 hard feasibility、wall/turn/local residual、height consistency、layout plausibility、evidence interface、movement/edit cost 与 decision class；`direction_family_fit` / `parallel_family_residual` v1 已实现并由真实 projection artifacts 与 core runner 回归锁定，但仍只是可审计 diagnostic，不是 C4 Column Evidence Layer。 |
 | C3 | C3.1–C3.4b.3 complete；C3.5 two-family consolidation audit implemented | column-x real audit 与 height real audit 均 fail closed；height positive fixture 仅验证 explicit after-y shadow contract。两个 family 均不接入 active selection；其余三个 family 冻结为 missing，`legacy_m1528` 仍是唯一 active source。 |
@@ -38,7 +38,7 @@ C6.1 audit、Scoring Layer Contract、C4-lite、C6.2 与 C3.1–C3.5 已完成�
 
 ## 4. 文件与依据
 
-- `tools/paper_a_manhattan/manhattan_constrained_hypothesis_evaluator.py`：C2 字段、hard gate、ranking key 与 legacy score tie-breaker。
+- `tools/paper_a_manhattan/manhattan_constrained_hypothesis_evaluator.py`：C2 字段、hard gate、ranking key；legacy score 已从 active ranking key 移除，仅保留 diagnostic 输出。
 - `tools/paper_a_manhattan/manhattan_case_contract.py`：C1 inferred contract、legacy fallback 与安全边界。
 - `tools/paper_a_manhattan/manhattan_hypothesis_portfolio.py`：C6 当前 portfolio 外壳。
 - `tools/paper_a_manhattan/manhattan_candidate_source_interface.py`：C3.1 candidate source 最小字段合同与校验。

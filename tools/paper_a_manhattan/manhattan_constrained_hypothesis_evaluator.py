@@ -683,7 +683,7 @@ def evaluate_hypothesis(
 
 
 def build_hypothesis_ranking_key(evaluation: Mapping[str, Any]) -> tuple[Any, ...]:
-    """Lexicographic ranking key; legacy score is the final fallback only."""
+    """Lexicographic structured ranking key; legacy score is excluded from active ranking."""
     feasibility = evaluation["feasibility"]
     manhattan = evaluation["manhattan_feasibility"]
     height = evaluation["height_consistency"]
@@ -694,7 +694,6 @@ def build_hypothesis_ranking_key(evaluation: Mapping[str, Any]) -> tuple[Any, ..
     if evidence["evidence_status"] != "unavailable":
         numeric_deltas = [evidence.get(name) for name in ("hohonet_floor_boundary_rmse_delta", "hohonet_ceiling_boundary_rmse_delta", "candidate_corner_column_delta", "seam_consistency_delta")]
         evidence_regression = sum(float(value) > 0 for value in numeric_deltas if isinstance(value, (int, float))) + bool(evidence.get("visual_conflict_flags"))
-    legacy = evaluation.get("local_score_total")
     direction = manhattan.get("direction_family_fit")
     parallel = manhattan.get("parallel_family_residual")
     direction_summary = direction.get("residual_summary", {}) if isinstance(direction, Mapping) else {}
@@ -716,5 +715,4 @@ def build_hypothesis_ranking_key(evaluation: Mapping[str, Any]) -> tuple[Any, ..
         max(0.0, float(plausibility["short_wall_deficit_delta"])),
         float(movement["movement_l1_normalized"]),
         float(movement["manual_adjustment_cost_proxy"]),
-        float(legacy) if legacy is not None else math.inf,
     )

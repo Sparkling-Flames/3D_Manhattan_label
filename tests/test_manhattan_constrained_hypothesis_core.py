@@ -154,7 +154,7 @@ def test_direction_family_missing_heading_is_explicit_and_does_not_crash():
     assert limited["parallel_family_residual_unavailable_reason"] == "insufficient_walls"
 
 
-def test_direction_ranking_preserves_hard_gate_and_legacy_last_fallback():
+def test_ranking_key_excludes_legacy_score():
     available_variant = _variant()
     for wall, heading in zip(
         available_variant["metrics"]["floorprint"]["walls"], (0.0, 100.0, 180.0, 280.0)
@@ -171,8 +171,10 @@ def test_direction_ranking_preserves_hard_gate_and_legacy_last_fallback():
 
     same_but_low_legacy = deepcopy(available)
     same_but_low_legacy["local_score_total"] = -1.0
-    assert build_hypothesis_ranking_key(available)[:-1] == build_hypothesis_ranking_key(same_but_low_legacy)[:-1]
-    assert build_hypothesis_ranking_key(same_but_low_legacy) < build_hypothesis_ranking_key(available)
+    assert same_but_low_legacy["legacy_score_breakdown"] == available["legacy_score_breakdown"]
+    assert same_but_low_legacy["local_score_total"] != available["local_score_total"]
+    assert available["legacy_score_role"] == "diagnostic_only"
+    assert build_hypothesis_ranking_key(available) == build_hypothesis_ranking_key(same_but_low_legacy)
 
 
 def test_short_wall_existing_new_and_collapsed_are_distinct():
