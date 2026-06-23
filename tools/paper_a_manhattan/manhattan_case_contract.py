@@ -84,8 +84,8 @@ def build_case_contract(
     """Build a conservative contract; expert assertions may override defaults."""
     assertions = dict(expert_assertions or {})
     indices = [int(row["effective_pair_index"]) for row in layout_pairs]
-    available = set(indices)
     metrics = projection_metrics or {}
+    has_metrics = bool(metrics)
     inferred = _infer_contract(indices, metrics) if indices and metrics else {
         "inferred_primary_edges": [],
         "inferred_secondary_edges": [],
@@ -95,16 +95,10 @@ def build_case_contract(
         "inferred_movable_fields_by_pair": {},
     }
 
-    def edge(left: int, right: int) -> str | None:
-        return f"{left}-{right}" if {left, right} <= available else None
-
-    legacy_primary = [value for value in (edge(6, 7),) if value]
-    legacy_secondary = [value for value in (edge(2, 3),) if value]
-    legacy_window = [value for value in (5, 6, 7, 8) if value in available]
-    primary = inferred["inferred_primary_edges"] if metrics else legacy_primary
-    secondary = inferred["inferred_secondary_edges"] if metrics else legacy_secondary
-    window = inferred["inferred_local_window_pairs"] if metrics else legacy_window
-    legacy_defaults_used = not bool(metrics)
+    primary = inferred["inferred_primary_edges"] if has_metrics else []
+    secondary = inferred["inferred_secondary_edges"] if has_metrics else []
+    window = inferred["inferred_local_window_pairs"] if has_metrics else []
+    legacy_defaults_used = False
 
     primary = list(assertions.get("primary_edges", primary))
     secondary = list(
@@ -143,8 +137,13 @@ def build_case_contract(
         str(key): list(value)
         for key, value in assertions.get("movable_fields_by_pair", default_fields).items()
     }
+    contract_available = has_metrics or bool(primary or secondary or window or movable or keep_distinct)
+    fail_closed = not contract_available
     return {
         "schema_version": SCHEMA_VERSION,
+        "contract_status": "available" if contract_available else "unavailable",
+        "expert_review_only": fail_closed,
+        "fail_closed": fail_closed,
         "primary_edges": primary,
         "secondary_edges": secondary,
         "local_window_pairs": window,
@@ -155,7 +154,13 @@ def build_case_contract(
         "movable_fields_by_pair": movable,
         **inferred,
         "auto_contract_summary": {
-            "source": "projection_rule_based_v1" if metrics else "legacy_fallback",
+            "source": (
+                "projection_rule_based_v1"
+                if has_metrics
+                else "expert_assertion_only"
+                if contract_available
+                else "contract_unavailable_fail_closed"
+            ),
             "legacy_fallback_used": legacy_defaults_used,
             "primary_residual_threshold_deg": PRIMARY_RESIDUAL_DEG,
             "secondary_residual_threshold_deg": SECONDARY_RESIDUAL_DEG,
@@ -168,14 +173,19 @@ def build_case_contract(
             "hohonet": bool(metrics.get("hohonet_evidence")),
             "expert_assertions": bool(assertions),
         },
-        "contract_source": "rule_based_projection_v2" if metrics else "rule_based_v1",
+        "contract_source": (
+            "rule_based_projection_v2"
+            if has_metrics
+            else "expert_assertion_only"
+            if contract_available
+            else "contract_unavailable"
+        ),
         "legacy_default_contract": {
             "used": legacy_defaults_used,
             "reason": (
-                "v1 compatibility defaults mirror the legacy 6-7, 2-3, and 5-6-7-8 scope; "
-                "they are case defaults, not global geometry truth"
-                if legacy_defaults_used
-                else "legacy default edges are unavailable in this layout"
+                "legacy defaults disabled; insufficient projection metrics"
+                if not has_metrics and not contract_available
+                else "legacy default edges are disabled"
             ),
         },
         "legacy_source_files": list(LEGACY_SOURCE_FILES),

@@ -11,6 +11,9 @@
 ### task218_ann3741
 
 - contract_source: `rule_based_projection_v2`
+- contract_status: `available`
+- fail_closed: `False`
+- expert_review_only: `False`
 - legacy_default_contract.used: `False`
 - auto_contract_summary.source: `projection_rule_based_v1`
 - risk: `None`
@@ -18,9 +21,12 @@
 
 ### synthetic_missing_metrics
 
-- contract_source: `rule_based_v1`
-- legacy_default_contract.used: `True`
-- auto_contract_summary.source: `legacy_fallback`
-- risk: `legacy_default_contract_in_active_contract`
+- contract_source: `contract_unavailable`
+- contract_status: `unavailable`
+- fail_closed: `True`
+- expert_review_only: `True`
+- legacy_default_contract.used: `False`
+- auto_contract_summary.source: `contract_unavailable_fail_closed`
+- risk: `contract_unavailable_fail_closed`
 - recommended_next_status: `contract_unavailable_expert_review_only_fail_closed_candidate`
 

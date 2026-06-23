@@ -14,7 +14,7 @@
 | 阶段 | 冻结状态 | 仓库实际状态 |
 |---|---|---|
 | C0 | completed | legacy score removed from active ranking key; retained only as diagnostics。`legacy_score_breakdown` / `local_score_total` 仅保留在 legacy diagnostics / evaluator diagnostic fields，不进入 active ranking。 |
-| C1 | C1.1 fallback audit implemented；仍 partial | `manhattan_case_contract.py` 已有 case contract 与 projection-rule-based inferred contract；C1.1 审计确认 task218_ann3741 正常路径不使用 legacy fallback，但 synthetic missing-metrics 路径仍会让 legacy default contract 进入 active case_contract。下一步才允许 C1.2 fail-closed contract-unavailable refactor。 |
+| C1 | completed | `manhattan_case_contract.py` 已有 case contract 与 projection-rule-based inferred contract；C1.2 已禁用 missing-metrics legacy default contract。projection metrics / expert assertions 不足时输出 `contract_status=unavailable`、`contract_source=contract_unavailable`、`fail_closed=true`、`expert_review_only=true`，不再生成 legacy primary/secondary/window/movable active contract。 |
 | C2 | v1 diagnostic implemented | evaluator 已输出 hard feasibility、wall/turn/local residual、height consistency、layout plausibility、evidence interface、movement/edit cost 与 decision class；`direction_family_fit` / `parallel_family_residual` v1 已实现并由真实 projection artifacts 与 core runner 回归锁定，但仍只是可审计 diagnostic，不是 C4 Column Evidence Layer。 |
 | C3 | C3.1–C3.4b.3 complete；C3.5 two-family consolidation audit implemented | column-x real audit 与 height real audit 均 fail closed；height positive fixture 仅验证 explicit after-y shadow contract。两个 family 均不接入 active selection；其余三个 family 冻结为 missing，`legacy_m1528` 仍是唯一 active source。 |
 | C4 | C4-lite implemented | runner 对已有 HoHoNet proposal 执行 source inventory/parser probe，并物化 corner column、floor/ceiling boundary 与 seam delta；缺失、歧义或合同异常时 fail-closed 为 unavailable，不训练模型、不写回。 |
@@ -27,7 +27,7 @@
 
 ## 3. 唯一允许的下一步
 
-C6.1 audit、Scoring Layer Contract、C4-lite、C6.2、C3.1–C3.5 与 C1.1 fallback audit 已完成；`manual_post_change_audit = narrow_pass_for_selection_drift_only`。下一步只允许 C1.2 fail-closed contract-unavailable refactor。C3 当前冻结为 two-family shadow state；不得进入第三个 family，不得接入 active runner selection，不得替换 `legacy_m1528`。C6 仍不是 stable ranker；C7/C9/C10 继续 blocked。
+C6.1 audit、Scoring Layer Contract、C4-lite、C6.2、C3.1–C3.5、C1.1 fallback audit 与 C1.2 fail-closed contract-unavailable refactor 已完成；`manual_post_change_audit = narrow_pass_for_selection_drift_only`。下一步不得进入 C3 第三个 family；只允许回到 C6 stability audit 或 C2/C5 diagnostics hardening。C3 当前冻结为 two-family shadow state；不得接入 active runner selection，不得替换 `legacy_m1528`。C6 仍不是 stable ranker；C7/C9/C10 继续 blocked。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
@@ -39,8 +39,8 @@ C6.1 audit、Scoring Layer Contract、C4-lite、C6.2、C3.1–C3.5 与 C1.1 fall
 ## 4. 文件与依据
 
 - `tools/paper_a_manhattan/manhattan_constrained_hypothesis_evaluator.py`：C2 字段、hard gate、ranking key；legacy score 已从 active ranking key 移除，仅保留 diagnostic 输出。
-- `tools/paper_a_manhattan/manhattan_case_contract.py`：C1 inferred contract、legacy fallback 与安全边界。
-- `tools/paper_a_manhattan/run_case_contract_fallback_audit.py`：C1.1 read-only fallback audit；记录 projection-rule-based 正常路径与 missing-metrics legacy fallback 风险，不改变 runner。
+- `tools/paper_a_manhattan/manhattan_case_contract.py`：C1 inferred contract、C1.2 missing-metrics fail-closed contract-unavailable 行为与安全边界。
+- `tools/paper_a_manhattan/run_case_contract_fallback_audit.py`：C1.1/C1.2 read-only fallback audit；记录 projection-rule-based 正常路径与 missing-metrics fail-closed 状态，不改变 runner。
 - `tools/paper_a_manhattan/manhattan_hypothesis_portfolio.py`：C6 当前 portfolio 外壳。
 - `tools/paper_a_manhattan/manhattan_candidate_source_interface.py`：C3.1 candidate source 最小字段合同与校验。
 - `tools/paper_a_manhattan/manhattan_legacy_m1528_candidate_source.py`：C3.1 legacy wrapper；仅调用既有 M15.28 action library。

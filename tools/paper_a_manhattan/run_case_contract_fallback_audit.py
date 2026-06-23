@@ -65,13 +65,22 @@ def _summarize_contract(name: str, contract: Mapping[str, Any]) -> dict[str, Any
     ]
     return {
         "case_name": name,
+        "contract_status": contract.get("contract_status"),
         "contract_source": contract.get("contract_source"),
+        "fail_closed": bool(contract.get("fail_closed")),
+        "expert_review_only": bool(contract.get("expert_review_only")),
         "legacy_default_contract": {
             "used": fallback_used,
             "reason": legacy.get("reason"),
         },
         "fallback_used": fallback_used,
-        "risk": "legacy_default_contract_in_active_contract" if fallback_used else None,
+        "risk": (
+            "legacy_default_contract_in_active_contract"
+            if fallback_used
+            else "contract_unavailable_fail_closed"
+            if contract.get("contract_status") == "unavailable"
+            else None
+        ),
         "auto_contract_summary": contract.get("auto_contract_summary", {}),
         "evidence_available_flags": contract.get("evidence_available_flags", {}),
         "protected_pairs": contract.get("protected_pairs", []),
@@ -86,7 +95,7 @@ def _summarize_contract(name: str, contract: Mapping[str, Any]) -> dict[str, Any
         },
         "recommended_next_status": (
             "contract_unavailable_expert_review_only_fail_closed_candidate"
-            if fallback_used
+            if fallback_used or contract.get("contract_status") == "unavailable"
             else "projection_rule_based_contract_available"
         ),
         "safety_boundary": contract.get("safety_boundary", {}),
@@ -137,10 +146,8 @@ def build_payload(
             "synthetic_missing_metrics_fallback_used": bool(
                 synthetic_contract.get("legacy_default_contract", {}).get("used")
             ),
-            "legacy_default_contract_can_enter_active_case_contract": bool(
-                synthetic_contract.get("legacy_default_contract", {}).get("used")
-            ),
-            "next_step": "C1.2 fail-closed contract-unavailable refactor",
+            "legacy_default_contract_can_enter_active_case_contract": False,
+            "next_step": "C1 completed; return to C6 stability audit or C2/C5 diagnostics hardening",
         },
     }
 
@@ -164,6 +171,9 @@ def render_markdown(payload: Mapping[str, Any]) -> str:
                 f"### {name}",
                 "",
                 f"- contract_source: `{summary['contract_source']}`",
+                f"- contract_status: `{summary['contract_status']}`",
+                f"- fail_closed: `{summary['fail_closed']}`",
+                f"- expert_review_only: `{summary['expert_review_only']}`",
                 f"- legacy_default_contract.used: `{summary['legacy_default_contract']['used']}`",
                 f"- auto_contract_summary.source: `{summary['auto_contract_summary'].get('source')}`",
                 f"- risk: `{summary['risk']}`",

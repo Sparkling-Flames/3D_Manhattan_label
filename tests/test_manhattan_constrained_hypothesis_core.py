@@ -259,6 +259,22 @@ def test_case_contract_and_evaluator_keep_the_safety_boundary_read_only():
     assert evaluation["safety_boundary"]["routing_input"] is False
 
 
+def test_case_contract_missing_metrics_fail_closed_without_legacy_defaults():
+    contract = build_case_contract(_pairs())
+    assert contract["contract_status"] == "unavailable"
+    assert contract["contract_source"] == "contract_unavailable"
+    assert contract["fail_closed"] is True
+    assert contract["expert_review_only"] is True
+    assert contract["primary_edges"] == []
+    assert contract["secondary_edges"] == []
+    assert contract["local_window_pairs"] == []
+    assert contract["movable_fields_by_pair"] == {}
+    assert contract["keep_distinct_pairs"] == []
+    assert contract["legacy_default_contract"]["used"] is False
+    assert contract["auto_contract_summary"]["source"] == "contract_unavailable_fail_closed"
+    assert contract["auto_contract_summary"]["legacy_fallback_used"] is False
+
+
 def test_movable_fields_are_a_hard_contract():
     contract = build_case_contract(
         _pairs(),
