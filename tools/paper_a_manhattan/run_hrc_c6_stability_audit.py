@@ -112,7 +112,7 @@ def _task3741(core: Mapping[str, Any]) -> dict[str, Any]:
     }
     return {
         "case_name": "task218_ann3741",
-        "audit_mode": "active_hrc_payload",
+        "audit_mode": "active_hrc_bucket_audit",
         "bucket_summary": _bucket_summary(core),
         "selection_regression": {
             "best_manhattan_feasible_is_0017": bucket_ids["best_manhattan_feasible"] == "m1528_candidate_0017",
@@ -158,6 +158,7 @@ def _projection_case(case: str) -> dict[str, Any]:
         "case_name": case,
         "audit_mode": "regression_evidence_only",
         "active_hrc_runner_status": "not_available_in_active_hrc_runner",
+        "active_hrc_reason": "no active HRC candidate set for this case",
         "source_artifact": path.as_posix(),
         "dense_but_distinct_pairs": [
             [row.get("pair_i"), row.get("pair_j")]
@@ -194,10 +195,12 @@ def _task533() -> dict[str, Any]:
         "case_name": "gt75_task533",
         "audit_mode": "verified_order_evidence_only",
         "active_hrc_runner_status": "not_available_in_active_hrc_runner",
+        "active_hrc_reason": "no active HRC candidate set for this case",
         "source_artifact": report.as_posix(),
         "verified_order_evidence_present": "order_verified_by_expert" in text,
         "duplicate_default_status_present": "compatibility_failure_duplicate" in text,
-        "pair_merge_or_duplicate_recommendation": False,
+        "pair_merge_or_duplicate_recommendation_by_active_hrc": None,
+        "pair_merge_or_duplicate_recommendation_reason": "no active HRC candidate set for this case",
         "recommendation_semantics": {
             "accepted": False,
             "downstream_recommendation": False,
@@ -212,9 +215,11 @@ def _ordinary_compatible() -> dict[str, Any]:
         "case_name": "ordinary_raw_keypoints_compatible_fixture",
         "audit_mode": "fixture_evidence_only",
         "active_hrc_runner_status": "not_available_in_active_hrc_runner",
+        "active_hrc_reason": "no active HRC candidate set for this case",
         "source_artifact": fixture.as_posix(),
         "fixture_present": "raw_keypoints_compatible" in payload,
-        "meaningless_candidate_preference_detected": False,
+        "meaningless_candidate_preference_by_active_hrc": None,
+        "meaningless_candidate_preference_reason": "no active HRC candidate set for this case",
         "recommendation_semantics": {
             "accepted": False,
             "downstream_recommendation": False,
@@ -226,22 +231,39 @@ def build_audit_payload() -> dict[str, Any]:
     core = build_payload()
     task3741 = _task3741(core)
     c4_overstrong = task3741["c4_evidence_layer_check"]["c4_conflict_with_manual_reference"]
+    task2369 = _projection_case("task218_ann2369")
+    task2389 = _projection_case("task238_ann2389")
     cases = {
         "task218_ann3741": task3741,
         "task218_ann2369": {
-            **_projection_case("task218_ann2369"),
-            "dense_but_distinct_not_collapsed": True,
+            **task2369,
+            "dense_but_distinct_evidence_present": bool(task2369["dense_but_distinct_pairs"]),
+            "dense_but_distinct_not_collapsed_by_active_hrc": None,
+            "dense_but_distinct_not_collapsed_reason": "no active HRC candidate set for this case",
         },
         "task238_ann2389": {
-            **_projection_case("task238_ann2389"),
-            "height_dominant_not_suppressed_by_direction_or_plane_proxy": True,
+            **task2389,
+            "height_outlier_evidence_present": bool(task2389["height_outlier_pairs"]),
+            "height_dominant_not_suppressed_by_active_hrc": None,
+            "height_dominant_not_suppressed_reason": "no active HRC candidate set for this case",
         },
         "gt75_task533": _task533(),
         "ordinary_compatible": _ordinary_compatible(),
     }
+    active_cases = ["task218_ann3741"]
+    evidence_only_cases = [
+        "task218_ann2369",
+        "task238_ann2389",
+        "gt75_task533",
+        "ordinary_compatible",
+    ]
     return {
         "schema_version": SCHEMA_VERSION,
         "audit_name": "HRC C6 stability audit",
+        "active_hrc_bucket_audit_cases": active_cases,
+        "evidence_only_cases": evidence_only_cases,
+        "full_multi_case_bucket_audit_complete": False,
+        "conclusion_basis": "only task218_ann3741 has active HRC bucket audit; other cases are evidence-only",
         "active_runner_changed": False,
         "legacy_m1528_only_active_source": core["candidate_source_metadata"]["source_id"] == "legacy_m1528",
         "accepted": False,
@@ -254,16 +276,8 @@ def build_audit_payload() -> dict[str, Any]:
             "c4_overstrong_risk": c4_overstrong,
             "ranking_change_recommended_now": False,
         },
-        "audit_conclusion": (
-            "C: C4 evidence layer unstable"
-            if c4_overstrong
-            else "A: C6 stable enough for C3 shadow expansion"
-        ),
-        "next_allowed_step": (
-            "repair C4-lite contract/ranking before C3"
-            if c4_overstrong
-            else "C3 shadow expansion only; no active runner selection"
-        ),
+        "audit_conclusion": "B: C6 still audit-blocked; only task218_ann3741 has active HRC bucket audit",
+        "next_allowed_step": "C6.3c active multi-case bucket audit or C2/C5 diagnostics hardening; C3 shadow expansion remains blocked",
     }
 
 
@@ -273,6 +287,8 @@ def render_markdown(payload: Mapping[str, Any]) -> str:
         "",
         f"- Schema: `{payload['schema_version']}`",
         f"- Conclusion: `{payload['audit_conclusion']}`",
+        f"- Conclusion basis: `{payload['conclusion_basis']}`",
+        f"- Full multi-case bucket audit complete: `{payload['full_multi_case_bucket_audit_complete']}`",
         f"- C4 overstrong risk: `{payload['c4_layer_strength_audit']['c4_overstrong_risk']}`",
         f"- Accepted: `{payload['accepted']}`",
         f"- Downstream recommendation: `{payload['downstream_recommendation']}`",

@@ -1,7 +1,9 @@
 # HRC C6 Stability Audit
 
 - Schema: `hrc_c6_stability_audit_v1`
-- Conclusion: `A: C6 stable enough for C3 shadow expansion`
+- Conclusion: `B: C6 still audit-blocked; only task218_ann3741 has active HRC bucket audit`
+- Conclusion basis: `only task218_ann3741 has active HRC bucket audit; other cases are evidence-only`
+- Full multi-case bucket audit complete: `False`
 - C4 overstrong risk: `False`
 - Accepted: `False`
 - Downstream recommendation: `False`
