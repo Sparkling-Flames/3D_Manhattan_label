@@ -1,0 +1,287 @@
+{
+  "schema_version": "hrc_c6_stability_audit_v1",
+  "audit_name": "HRC C6 stability audit",
+  "active_runner_changed": false,
+  "legacy_m1528_only_active_source": true,
+  "accepted": false,
+  "downstream_recommendation": false,
+  "bucket_names": [
+    "best_manhattan_feasible",
+    "best_height_consistent",
+    "best_short_wall_preserving",
+    "best_low_movement",
+    "best_hohonet_consistent",
+    "best_balanced"
+  ],
+  "cases": {
+    "task218_ann3741": {
+      "case_name": "task218_ann3741",
+      "audit_mode": "active_hrc_payload",
+      "bucket_summary": {
+        "best_manhattan_feasible": {
+          "candidate_id": "m1528_candidate_0017",
+          "decision_class": "legacy_trial_blocked",
+          "hard_gate_passed": true,
+          "action_family": "edge_6_7_floor_depth_balance",
+          "selection_status": "selected_but_audit_blocked",
+          "accepted": false,
+          "downstream_recommendation": false,
+          "recommended_review_candidate": true,
+          "selection_driver": "mixed",
+          "c2_status": {
+            "direction_family_fit_status": "available",
+            "parallel_family_residual_status": "available"
+          },
+          "c5_status": "available",
+          "c4_status": "available",
+          "c4_visual_conflict_flags": []
+        },
+        "best_height_consistent": {
+          "candidate_id": "m1528_candidate_0017",
+          "decision_class": "legacy_trial_blocked",
+          "hard_gate_passed": true,
+          "action_family": "edge_6_7_floor_depth_balance",
+          "selection_status": "selected_but_audit_blocked",
+          "accepted": false,
+          "downstream_recommendation": false,
+          "recommended_review_candidate": true,
+          "selection_driver": "height_consistency",
+          "c2_status": {
+            "direction_family_fit_status": "available",
+            "parallel_family_residual_status": "available"
+          },
+          "c5_status": "available",
+          "c4_status": "available",
+          "c4_visual_conflict_flags": []
+        },
+        "best_short_wall_preserving": {
+          "candidate_id": "m1528_candidate_0001",
+          "decision_class": "hard_feasible_neutral",
+          "hard_gate_passed": true,
+          "action_family": "vertical_column_align_x",
+          "selection_status": "selected_but_audit_blocked",
+          "accepted": false,
+          "downstream_recommendation": false,
+          "recommended_review_candidate": false,
+          "selection_driver": "layout_plausibility",
+          "c2_status": {
+            "direction_family_fit_status": "available",
+            "parallel_family_residual_status": "available"
+          },
+          "c5_status": "available",
+          "c4_status": "available",
+          "c4_visual_conflict_flags": []
+        },
+        "best_low_movement": {
+          "candidate_id": "m1528_candidate_0070",
+          "decision_class": "hard_feasible_neutral",
+          "hard_gate_passed": true,
+          "action_family": "azimuth_translate_keep_top_bottom_delta",
+          "selection_status": "selected_but_audit_blocked",
+          "accepted": false,
+          "downstream_recommendation": false,
+          "recommended_review_candidate": false,
+          "selection_driver": "movement_cost",
+          "c2_status": {
+            "direction_family_fit_status": "available",
+            "parallel_family_residual_status": "available"
+          },
+          "c5_status": "available",
+          "c4_status": "available",
+          "c4_visual_conflict_flags": [
+            "candidate_corner_column_delta"
+          ]
+        },
+        "best_hohonet_consistent": {
+          "candidate_id": "m1528_candidate_0007",
+          "decision_class": "hard_feasible_neutral",
+          "hard_gate_passed": true,
+          "action_family": "azimuth_translate_keep_top_bottom_delta",
+          "selection_status": "selected_but_audit_blocked",
+          "accepted": false,
+          "downstream_recommendation": false,
+          "recommended_review_candidate": false,
+          "selection_driver": "c4_evidence",
+          "c2_status": {
+            "direction_family_fit_status": "available",
+            "parallel_family_residual_status": "available"
+          },
+          "c5_status": "available",
+          "c4_status": "available",
+          "c4_visual_conflict_flags": []
+        },
+        "best_balanced": {
+          "candidate_id": "m1528_candidate_0017",
+          "decision_class": "legacy_trial_blocked",
+          "hard_gate_passed": true,
+          "action_family": "edge_6_7_floor_depth_balance",
+          "selection_status": "selected_but_audit_blocked",
+          "accepted": false,
+          "downstream_recommendation": false,
+          "recommended_review_candidate": true,
+          "selection_driver": "mixed",
+          "c2_status": {
+            "direction_family_fit_status": "available",
+            "parallel_family_residual_status": "available"
+          },
+          "c5_status": "available",
+          "c4_status": "available",
+          "c4_visual_conflict_flags": []
+        }
+      },
+      "selection_regression": {
+        "best_manhattan_feasible_is_0017": true,
+        "best_balanced_is_0017": true,
+        "best_height_consistent_is_0017": true,
+        "candidate_0019_selected_in_primary_buckets": false
+      },
+      "manual_conclusion_alignment": {
+        "manual_reference": "0017 narrowly passed selection-drift audit over 0019 but is not a final accepted fix",
+        "selection_matches_manual_reference": true
+      },
+      "c4_evidence_layer_check": {
+        "candidate_0019_evidence_key_better_than_0017": false,
+        "c4_conflict_with_manual_reference": false
+      },
+      "recommendation_semantics": {
+        "any_recommended_review_candidate": true,
+        "overall_recommended_review_candidate_available": false,
+        "explanation_risk": "explained_by_overall_audit_blocked"
+      }
+    },
+    "task218_ann2369": {
+      "case_name": "task218_ann2369",
+      "audit_mode": "regression_evidence_only",
+      "active_hrc_runner_status": "not_available_in_active_hrc_runner",
+      "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+      "dense_but_distinct_pairs": [
+        [
+          5,
+          6
+        ]
+      ],
+      "height_outlier_pairs": [
+        1,
+        7,
+        8
+      ],
+      "recommendation_semantics": {
+        "accepted": false,
+        "downstream_recommendation": false
+      },
+      "bucket_summary": {
+        "best_manhattan_feasible": {
+          "candidate_id": null,
+          "reason": "regression_evidence_only_no_active_hrc_candidate_set",
+          "selection_driver": "mixed"
+        },
+        "best_height_consistent": {
+          "candidate_id": null,
+          "reason": "regression_evidence_only_no_active_hrc_candidate_set",
+          "selection_driver": "height_consistency"
+        },
+        "best_short_wall_preserving": {
+          "candidate_id": null,
+          "reason": "regression_evidence_only_no_active_hrc_candidate_set",
+          "selection_driver": "layout_plausibility"
+        },
+        "best_low_movement": {
+          "candidate_id": null,
+          "reason": "regression_evidence_only_no_active_hrc_candidate_set",
+          "selection_driver": "movement_cost"
+        },
+        "best_hohonet_consistent": {
+          "candidate_id": null,
+          "reason": "regression_evidence_only_no_active_hrc_candidate_set",
+          "selection_driver": "c4_evidence"
+        },
+        "best_balanced": {
+          "candidate_id": null,
+          "reason": "regression_evidence_only_no_active_hrc_candidate_set",
+          "selection_driver": "mixed"
+        }
+      },
+      "dense_but_distinct_not_collapsed": true
+    },
+    "task238_ann2389": {
+      "case_name": "task238_ann2389",
+      "audit_mode": "regression_evidence_only",
+      "active_hrc_runner_status": "not_available_in_active_hrc_runner",
+      "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
+      "dense_but_distinct_pairs": [],
+      "height_outlier_pairs": [
+        4
+      ],
+      "recommendation_semantics": {
+        "accepted": false,
+        "downstream_recommendation": false
+      },
+      "bucket_summary": {
+        "best_manhattan_feasible": {
+          "candidate_id": null,
+          "reason": "regression_evidence_only_no_active_hrc_candidate_set",
+          "selection_driver": "mixed"
+        },
+        "best_height_consistent": {
+          "candidate_id": null,
+          "reason": "regression_evidence_only_no_active_hrc_candidate_set",
+          "selection_driver": "height_consistency"
+        },
+        "best_short_wall_preserving": {
+          "candidate_id": null,
+          "reason": "regression_evidence_only_no_active_hrc_candidate_set",
+          "selection_driver": "layout_plausibility"
+        },
+        "best_low_movement": {
+          "candidate_id": null,
+          "reason": "regression_evidence_only_no_active_hrc_candidate_set",
+          "selection_driver": "movement_cost"
+        },
+        "best_hohonet_consistent": {
+          "candidate_id": null,
+          "reason": "regression_evidence_only_no_active_hrc_candidate_set",
+          "selection_driver": "c4_evidence"
+        },
+        "best_balanced": {
+          "candidate_id": null,
+          "reason": "regression_evidence_only_no_active_hrc_candidate_set",
+          "selection_driver": "mixed"
+        }
+      },
+      "height_dominant_not_suppressed_by_direction_or_plane_proxy": true
+    },
+    "gt75_task533": {
+      "case_name": "gt75_task533",
+      "audit_mode": "verified_order_evidence_only",
+      "active_hrc_runner_status": "not_available_in_active_hrc_runner",
+      "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/task533_gt75/m1518_3_candidate_semantics/candidate_b_annotation_3425_m1518_3_candidate_semantics_report.md",
+      "verified_order_evidence_present": true,
+      "duplicate_default_status_present": true,
+      "pair_merge_or_duplicate_recommendation": false,
+      "recommendation_semantics": {
+        "accepted": false,
+        "downstream_recommendation": false
+      }
+    },
+    "ordinary_compatible": {
+      "case_name": "ordinary_raw_keypoints_compatible_fixture",
+      "audit_mode": "fixture_evidence_only",
+      "active_hrc_runner_status": "not_available_in_active_hrc_runner",
+      "source_artifact": "tests/fixtures/paper_a_manhattan/single_image_assist_pack_v1.json",
+      "fixture_present": true,
+      "meaningless_candidate_preference_detected": false,
+      "recommendation_semantics": {
+        "accepted": false,
+        "downstream_recommendation": false
+      }
+    }
+  },
+  "c4_layer_strength_audit": {
+    "best_manhattan_feasible_current_order": "(*evidence_key, *manhattan_key)",
+    "best_balanced_current_order": "(*evidence_key, *build_hypothesis_ranking_key)",
+    "c4_overstrong_risk": false,
+    "ranking_change_recommended_now": false
+  },
+  "audit_conclusion": "A: C6 stable enough for C3 shadow expansion",
+  "next_allowed_step": "C3 shadow expansion only; no active runner selection"
+}
