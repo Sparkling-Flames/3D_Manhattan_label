@@ -19,7 +19,7 @@
 | C3 | C3.1–C3.4b.3 complete；C3.5 two-family consolidation audit implemented | column-x real audit 与 height real audit 均 fail closed；height positive fixture 仅验证 explicit after-y shadow contract。两个 family 均不接入 active selection；其余三个 family 冻结为 missing，`legacy_m1528` 仍是唯一 active source。 |
 | C4 | C4-lite implemented | runner 对已有 HoHoNet proposal 执行 source inventory/parser probe，并物化 corner column、floor/ceiling boundary 与 seam delta；缺失、歧义或合同异常时 fail-closed 为 unavailable，不训练模型、不写回。 |
 | C5 | C5-lite plane proxy v0 implemented | evaluator 已物化独立 `plane_proxy_metrics`：复用 direction-family、同族平行 residual、dominant height cluster 与 floorprint residual 形成 geometry proxy。它不是 depth model、不是 GeoLayout reproduction、不是 C4 evidence layer；C6.2 仅把其中 geometry diagnostics 用于分层排序。 |
-| C6 | C6.3c active multi-case bucket audit attempted；multi-case bucket audit incomplete；not stable ranker | `task218_ann3741` active bucket audit passed, but 2369/2389/gt75/task533/ordinary-compatible remain `unavailable_for_active_hrc_bucket_audit` because real active candidate_set inputs are not available. C6 remains audit-blocked for multi-case stability and still must not output accepted/downstream recommendation. |
+| C6 | C6.3d multi-case audit input packs materialized；still audit-blocked；not stable ranker | C6.3d produced audit-only candidate input packs for 2369/2389/gt75/ordinary-compatible. 2369/2389/gt75 have existing-artifact candidate rows; ordinary-compatible remains unavailable because no non-baseline candidate rows exist. `ready_for_c6_3e_bucket_audit=false`; C3 shadow expansion remains blocked. |
 | C7 | blocked | legacy `manhattan_m1527_semantic_direct_search.py` 存在 Hooke–Jeeves 搜索，但新 geometry-normalized MADS/Hooke–Jeeves 在 evaluator 稳定前不得启动。 |
 | C8 | 仅记录系统 | feedback ledger schema 与 `materialize_manhattan_feedback_ledger_entry.py` 可保留；不得进入训练、参数更新或自动应用系统。 |
 | C9 | blocked | 未发现 Adaptive Parameter Update 实现；不得启动。 |
@@ -27,7 +27,7 @@
 
 ## 3. 唯一允许的下一步
 
-C6.1 audit、Scoring Layer Contract、C4-lite、C6.2、C3.1–C3.5、C1.1 fallback audit、C1.2/C1.2.1 fail-closed contract-unavailable refactor、C6.3b honesty fix 与 C6.3c active multi-case bucket audit attempt 已完成；当前 C6 结论为 `B: C6 still audit-blocked; only task218_ann3741 has active HRC bucket audit`。下一步只允许为 2369/2389/gt75/ordinary 提供真实 active candidate_set 输入后重跑 multi-case bucket audit，或做 C2/C5 diagnostics hardening；C3 shadow expansion remains blocked；不得接入 active runner selection，不得替换 `legacy_m1528`，不得产生 accepted/downstream recommendation。C6 仍不是 stable ranker；C7/C9/C10 继续 blocked。
+C6.1 audit、Scoring Layer Contract、C4-lite、C6.2、C3.1–C3.5、C1.1 fallback audit、C1.2/C1.2.1 fail-closed contract-unavailable refactor、C6.3b honesty fix、C6.3c active multi-case bucket audit attempt 与 C6.3d multi-case audit input pack materialization 已完成；当前 C6 仍 audit-blocked。C6.3d summary 中 `ready_for_c6_3e_bucket_audit=false`，因为 ordinary-compatible 没有真实非 baseline candidate_set。下一步只有在补齐真实 source artifact 后才允许 C6.3e multi-case bucket audit；否则转 C2/C5 diagnostics hardening。C3 shadow expansion remains blocked；不得接入 active runner selection，不得替换 `legacy_m1528`，不得产生 accepted/downstream recommendation。C6 仍不是 stable ranker；C7/C9/C10 继续 blocked。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
@@ -43,6 +43,7 @@ C6.1 audit、Scoring Layer Contract、C4-lite、C6.2、C3.1–C3.5、C1.1 fallba
 - `tools/paper_a_manhattan/run_case_contract_fallback_audit.py`：C1.1/C1.2 read-only fallback audit；记录 projection-rule-based 正常路径与 missing-metrics fail-closed 状态，不改变 runner。
 - `tools/paper_a_manhattan/manhattan_hypothesis_portfolio.py`：C6 当前 portfolio 外壳。
 - `tools/paper_a_manhattan/run_hrc_c6_stability_audit.py`：C6.3c read-only active multi-case bucket audit attempt；区分 active HRC bucket audit、`unavailable_for_active_hrc_bucket_audit` 与 evidence-only / fixture-only records，并记录 accepted/downstream 边界。
+- `tools/paper_a_manhattan/run_hrc_multicase_audit_input_pack.py`：C6.3d read-only audit input pack materializer；仅复用已有 candidate artifacts / fixtures，输出 audit-only packs，不接入 active runner、不写回、不授权 recommendation。
 - `tools/paper_a_manhattan/manhattan_candidate_source_interface.py`：C3.1 candidate source 最小字段合同与校验。
 - `tools/paper_a_manhattan/manhattan_legacy_m1528_candidate_source.py`：C3.1 legacy wrapper；仅调用既有 M15.28 action library。
 - `tools/paper_a_manhattan/manhattan_constrained_v0_candidate_source.py`：C3.3 contract-only shadow skeleton；固定输出空 candidate set，无 active runner role。

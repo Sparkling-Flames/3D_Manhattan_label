@@ -89,6 +89,7 @@ Legacy M15 specs are background; current active selection remains HRC-gated and 
 
 - `tools/paper_a_manhattan/run_case_contract_fallback_audit.py` materializes C1 fallback/fail-closed audit for real, missing-metrics, and partial/malformed-metrics paths; read-only audit runner; does not change active runner selection.
 - `tools/paper_a_manhattan/run_hrc_c6_stability_audit.py` materializes the read-only C6.3c stability audit attempt, explicitly separating active HRC bucket audit cases, unavailable active-HRC cases, and evidence-only / fixture-only records; it does not change ranking, active source, or recommendation authorization.
+- `tools/paper_a_manhattan/run_hrc_multicase_audit_input_pack.py` materializes C6.3d audit-only multi-case candidate input packs from existing artifacts / fixtures; it does not generate new candidates, change active runner selection, or authorize recommendation/writeback.
 - `tools/paper_a_manhattan/run_constrained_v0_shadow_audit.py` materializes read-only constrained_v0 shadow audits; it does not change active source or ranking.
 - `tools/paper_a_manhattan/run_constrained_v0_consolidation_audit.py` consolidates the two implemented constrained_v0 shadow families and their fail-closed/positive-fixture audits; it does not authorize a third family or active source replacement.
 - `tools/paper_a_manhattan/materialize_manhattan_feedback_ledger_entry.py` validates a core output plus expert review and writes one feedback-ledger JSONL entry; it does not train, update parameters, apply candidates, or write annotations.
