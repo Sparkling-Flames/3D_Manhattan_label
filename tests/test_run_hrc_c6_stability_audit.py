@@ -2,6 +2,7 @@ import json
 
 from tools.paper_a_manhattan.run_hrc_c6_stability_audit import (
     BUCKETS,
+    NON_3741_CASES,
     SCHEMA_VERSION,
     build_audit_payload,
     run,
@@ -17,12 +18,8 @@ def test_c6_stability_audit_payload_and_task3741_buckets():
     assert payload["accepted"] is False
     assert payload["downstream_recommendation"] is False
     assert payload["active_hrc_bucket_audit_cases"] == ["task218_ann3741"]
-    assert payload["evidence_only_cases"] == [
-        "task218_ann2369",
-        "task238_ann2389",
-        "gt75_task533",
-        "ordinary_compatible",
-    ]
+    assert payload["unavailable_active_hrc_cases"] == list(NON_3741_CASES)
+    assert payload["evidence_only_cases"] == list(NON_3741_CASES)
     assert payload["full_multi_case_bucket_audit_complete"] is False
 
     case = payload["cases"]["task218_ann3741"]
@@ -62,23 +59,28 @@ def test_c6_stability_audit_regression_and_evidence_only_cases():
     assert payload["c4_layer_strength_audit"]["ranking_change_recommended_now"] is False
     assert payload["audit_conclusion"].startswith("B: C6 still audit-blocked")
     assert "C3 shadow expansion remains blocked" in payload["next_allowed_step"]
+    assert not payload["audit_conclusion"].startswith("A:")
+
+    for name in NON_3741_CASES:
+        case = payload["cases"][name]
+        assert case["audit_mode"] == "unavailable_for_active_hrc_bucket_audit"
+        assert case["unavailable_reason"]
+        assert case["evidence_only_recorded"] is True
+        assert case["active_hrc_bucket_verified"] is False
+        assert case["recommendation_semantics"]["accepted"] is False
+        assert case["recommendation_semantics"]["downstream_recommendation"] is False
 
     dense = payload["cases"]["task218_ann2369"]
-    assert dense["audit_mode"] == "regression_evidence_only"
     assert dense["dense_but_distinct_evidence_present"] is True
     assert dense["dense_but_distinct_not_collapsed_by_active_hrc"] is None
     assert dense["dense_but_distinct_not_collapsed_reason"] == "no active HRC candidate set for this case"
     assert dense["dense_but_distinct_pairs"]
-    assert dense["recommendation_semantics"]["accepted"] is False
-    assert dense["recommendation_semantics"]["downstream_recommendation"] is False
 
     height = payload["cases"]["task238_ann2389"]
     assert height["height_outlier_evidence_present"] is True
     assert height["height_dominant_not_suppressed_by_active_hrc"] is None
     assert height["height_dominant_not_suppressed_reason"] == "no active HRC candidate set for this case"
     assert height["height_outlier_pairs"]
-    assert height["recommendation_semantics"]["accepted"] is False
-    assert height["recommendation_semantics"]["downstream_recommendation"] is False
 
     task533 = payload["cases"]["gt75_task533"]
     assert task533["verified_order_evidence_present"] is True

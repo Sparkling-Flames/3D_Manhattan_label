@@ -4,6 +4,12 @@
   "active_hrc_bucket_audit_cases": [
     "task218_ann3741"
   ],
+  "unavailable_active_hrc_cases": [
+    "task218_ann2369",
+    "task238_ann2389",
+    "gt75_task533",
+    "ordinary_compatible"
+  ],
   "evidence_only_cases": [
     "task218_ann2369",
     "task238_ann2389",
@@ -11,7 +17,7 @@
     "ordinary_compatible"
   ],
   "full_multi_case_bucket_audit_complete": false,
-  "conclusion_basis": "only task218_ann3741 has active HRC bucket audit; other cases are evidence-only",
+  "conclusion_basis": "only task218_ann3741 has active HRC bucket audit; task218_ann2369/task238_ann2389/gt75_task533/ordinary_compatible are unavailable for active HRC bucket audit and remain evidence-only",
   "active_runner_changed": false,
   "legacy_m1528_only_active_source": true,
   "accepted": false,
@@ -162,7 +168,10 @@
     },
     "task218_ann2369": {
       "case_name": "task218_ann2369",
-      "audit_mode": "regression_evidence_only",
+      "audit_mode": "unavailable_for_active_hrc_bucket_audit",
+      "unavailable_reason": "case-specific HRC expert_assertion/candidate_set is not available to the active runner",
+      "evidence_only_recorded": true,
+      "active_hrc_bucket_verified": false,
       "active_hrc_runner_status": "not_available_in_active_hrc_runner",
       "active_hrc_reason": "no active HRC candidate set for this case",
       "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
@@ -219,7 +228,10 @@
     },
     "task238_ann2389": {
       "case_name": "task238_ann2389",
-      "audit_mode": "regression_evidence_only",
+      "audit_mode": "unavailable_for_active_hrc_bucket_audit",
+      "unavailable_reason": "case-specific HRC expert_assertion/candidate_set is not available to the active runner",
+      "evidence_only_recorded": true,
+      "active_hrc_bucket_verified": false,
       "active_hrc_runner_status": "not_available_in_active_hrc_runner",
       "active_hrc_reason": "no active HRC candidate set for this case",
       "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
@@ -269,7 +281,10 @@
     },
     "gt75_task533": {
       "case_name": "gt75_task533",
-      "audit_mode": "verified_order_evidence_only",
+      "audit_mode": "unavailable_for_active_hrc_bucket_audit",
+      "unavailable_reason": "no HRC projection artifact and active HRC candidate_set are available for this verified-order record",
+      "evidence_only_recorded": true,
+      "active_hrc_bucket_verified": false,
       "active_hrc_runner_status": "not_available_in_active_hrc_runner",
       "active_hrc_reason": "no active HRC candidate set for this case",
       "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/task533_gt75/m1518_3_candidate_semantics/candidate_b_annotation_3425_m1518_3_candidate_semantics_report.md",
@@ -284,7 +299,10 @@
     },
     "ordinary_compatible": {
       "case_name": "ordinary_raw_keypoints_compatible_fixture",
-      "audit_mode": "fixture_evidence_only",
+      "audit_mode": "unavailable_for_active_hrc_bucket_audit",
+      "unavailable_reason": "fixture has no active HRC projection artifact and candidate_set",
+      "evidence_only_recorded": true,
+      "active_hrc_bucket_verified": false,
       "active_hrc_runner_status": "not_available_in_active_hrc_runner",
       "active_hrc_reason": "no active HRC candidate set for this case",
       "source_artifact": "tests/fixtures/paper_a_manhattan/single_image_assist_pack_v1.json",
@@ -304,5 +322,5 @@
     "ranking_change_recommended_now": false
   },
   "audit_conclusion": "B: C6 still audit-blocked; only task218_ann3741 has active HRC bucket audit",
-  "next_allowed_step": "C6.3c active multi-case bucket audit or C2/C5 diagnostics hardening; C3 shadow expansion remains blocked"
+  "next_allowed_step": "C6.3c active multi-case bucket audit requires real active candidate_set inputs for 2369/2389/gt75/ordinary, or proceed to C2/C5 diagnostics hardening; C3 shadow expansion remains blocked"
 }

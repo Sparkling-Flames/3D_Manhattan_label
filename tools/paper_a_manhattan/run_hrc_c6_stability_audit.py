@@ -22,6 +22,12 @@ BUCKETS = (
     "best_hohonet_consistent",
     "best_balanced",
 )
+NON_3741_CASES = (
+    "task218_ann2369",
+    "task238_ann2389",
+    "gt75_task533",
+    "ordinary_compatible",
+)
 
 
 def _metric(value: Any) -> float:
@@ -156,7 +162,10 @@ def _projection_case(case: str) -> dict[str, Any]:
     heights = metrics.get("heights", {}).get("pairs", [])
     return {
         "case_name": case,
-        "audit_mode": "regression_evidence_only",
+        "audit_mode": "unavailable_for_active_hrc_bucket_audit",
+        "unavailable_reason": "case-specific HRC expert_assertion/candidate_set is not available to the active runner",
+        "evidence_only_recorded": True,
+        "active_hrc_bucket_verified": False,
         "active_hrc_runner_status": "not_available_in_active_hrc_runner",
         "active_hrc_reason": "no active HRC candidate set for this case",
         "source_artifact": path.as_posix(),
@@ -193,7 +202,10 @@ def _task533() -> dict[str, Any]:
     text = report.read_text(encoding="utf-8")
     return {
         "case_name": "gt75_task533",
-        "audit_mode": "verified_order_evidence_only",
+        "audit_mode": "unavailable_for_active_hrc_bucket_audit",
+        "unavailable_reason": "no HRC projection artifact and active HRC candidate_set are available for this verified-order record",
+        "evidence_only_recorded": True,
+        "active_hrc_bucket_verified": False,
         "active_hrc_runner_status": "not_available_in_active_hrc_runner",
         "active_hrc_reason": "no active HRC candidate set for this case",
         "source_artifact": report.as_posix(),
@@ -213,7 +225,10 @@ def _ordinary_compatible() -> dict[str, Any]:
     payload = json.loads(fixture.read_text(encoding="utf-8"))
     return {
         "case_name": "ordinary_raw_keypoints_compatible_fixture",
-        "audit_mode": "fixture_evidence_only",
+        "audit_mode": "unavailable_for_active_hrc_bucket_audit",
+        "unavailable_reason": "fixture has no active HRC projection artifact and candidate_set",
+        "evidence_only_recorded": True,
+        "active_hrc_bucket_verified": False,
         "active_hrc_runner_status": "not_available_in_active_hrc_runner",
         "active_hrc_reason": "no active HRC candidate set for this case",
         "source_artifact": fixture.as_posix(),
@@ -251,19 +266,16 @@ def build_audit_payload() -> dict[str, Any]:
         "ordinary_compatible": _ordinary_compatible(),
     }
     active_cases = ["task218_ann3741"]
-    evidence_only_cases = [
-        "task218_ann2369",
-        "task238_ann2389",
-        "gt75_task533",
-        "ordinary_compatible",
-    ]
+    unavailable_cases = list(NON_3741_CASES)
+    evidence_only_cases = list(NON_3741_CASES)
     return {
         "schema_version": SCHEMA_VERSION,
         "audit_name": "HRC C6 stability audit",
         "active_hrc_bucket_audit_cases": active_cases,
+        "unavailable_active_hrc_cases": unavailable_cases,
         "evidence_only_cases": evidence_only_cases,
         "full_multi_case_bucket_audit_complete": False,
-        "conclusion_basis": "only task218_ann3741 has active HRC bucket audit; other cases are evidence-only",
+        "conclusion_basis": "only task218_ann3741 has active HRC bucket audit; task218_ann2369/task238_ann2389/gt75_task533/ordinary_compatible are unavailable for active HRC bucket audit and remain evidence-only",
         "active_runner_changed": False,
         "legacy_m1528_only_active_source": core["candidate_source_metadata"]["source_id"] == "legacy_m1528",
         "accepted": False,
@@ -277,7 +289,7 @@ def build_audit_payload() -> dict[str, Any]:
             "ranking_change_recommended_now": False,
         },
         "audit_conclusion": "B: C6 still audit-blocked; only task218_ann3741 has active HRC bucket audit",
-        "next_allowed_step": "C6.3c active multi-case bucket audit or C2/C5 diagnostics hardening; C3 shadow expansion remains blocked",
+        "next_allowed_step": "C6.3c active multi-case bucket audit requires real active candidate_set inputs for 2369/2389/gt75/ordinary, or proceed to C2/C5 diagnostics hardening; C3 shadow expansion remains blocked",
     }
 
 
@@ -288,6 +300,8 @@ def render_markdown(payload: Mapping[str, Any]) -> str:
         f"- Schema: `{payload['schema_version']}`",
         f"- Conclusion: `{payload['audit_conclusion']}`",
         f"- Conclusion basis: `{payload['conclusion_basis']}`",
+        f"- Active HRC bucket audit cases: `{', '.join(payload['active_hrc_bucket_audit_cases'])}`",
+        f"- Unavailable active HRC cases: `{', '.join(payload['unavailable_active_hrc_cases'])}`",
         f"- Full multi-case bucket audit complete: `{payload['full_multi_case_bucket_audit_complete']}`",
         f"- C4 overstrong risk: `{payload['c4_layer_strength_audit']['c4_overstrong_risk']}`",
         f"- Accepted: `{payload['accepted']}`",
@@ -301,9 +315,11 @@ def render_markdown(payload: Mapping[str, Any]) -> str:
             f"- `{name}`: `{summary.get('candidate_id')}` / `{summary.get('selection_driver')}` / accepted=`{summary.get('accepted')}`"
         )
     lines.extend(["", "## Evidence-only cases", ""])
-    for name in ("task218_ann2369", "task238_ann2389", "gt75_task533", "ordinary_compatible"):
+    for name in NON_3741_CASES:
         case = payload["cases"][name]
-        lines.append(f"- `{name}`: `{case['audit_mode']}`; accepted=false; downstream=false")
+        lines.append(
+            f"- `{name}`: `{case['audit_mode']}`; reason=`{case['unavailable_reason']}`; accepted=false; downstream=false"
+        )
     lines.append("")
     return "\n".join(lines)
 
