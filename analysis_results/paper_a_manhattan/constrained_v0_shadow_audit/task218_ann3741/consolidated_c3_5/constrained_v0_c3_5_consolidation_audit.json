@@ -1,0 +1,78 @@
+{
+  "schema_version": "constrained_v0_c3_5_consolidation_audit_v1",
+  "case_name": "task218_ann3741",
+  "active_runner_role": false,
+  "legacy_m1528_active_source_unchanged": true,
+  "accepted": false,
+  "downstream_recommendation": false,
+  "implemented_families": [
+    "column_x_alignment",
+    "height_target_reproject"
+  ],
+  "deferred_families": [
+    "short_wall_preserving_local",
+    "primary_edge_direction_family_repair",
+    "floor_depth_balance"
+  ],
+  "per_family_audit": {
+    "column_x_alignment_real": {
+      "candidate_count": 0,
+      "reasons": [
+        "column_identity_unavailable",
+        "evidence_unavailable"
+      ],
+      "generated_candidate_ids": [],
+      "model_derived": null,
+      "final_correctness_proof": false,
+      "schema_version": "constrained_v0_column_x_shadow_audit_v1"
+    },
+    "height_target_reproject_real": {
+      "candidate_count": 0,
+      "reasons": [
+        "height_target_unavailable"
+      ],
+      "generated_candidate_ids": [],
+      "model_derived": null,
+      "final_correctness_proof": false,
+      "schema_version": "constrained_v0_height_target_shadow_audit_v1"
+    },
+    "height_target_reproject_positive_fixture": {
+      "candidate_count": 1,
+      "reasons": [
+        "pair_1:height_reproject_formula_unavailable",
+        "pair_1:y_permission_missing",
+        "pair_2:height_reproject_formula_unavailable",
+        "pair_2:y_permission_missing"
+      ],
+      "generated_candidate_ids": [
+        "constrained_v0_height_target_reproject_pair_6"
+      ],
+      "model_derived": false,
+      "final_correctness_proof": false,
+      "schema_version": "constrained_v0_height_target_shadow_audit_v1"
+    }
+  },
+  "candidate_safety_summary": {
+    "generated_candidate_count": 1,
+    "all_shadow_only": true,
+    "all_accepted_false": true,
+    "all_downstream_recommendation_false": true,
+    "all_active_runner_role_false": true,
+    "all_annotation_writeback_false": true,
+    "positive_height_coordinate_fields": [
+      "top_y"
+    ],
+    "positive_height_contains_x": false
+  },
+  "warnings": [
+    "This audit does not authorize active source replacement.",
+    "This audit does not prove final geometric correctness.",
+    "C6 remains not stable ranker.",
+    "C7/C9/C10 remain blocked."
+  ],
+  "source_artifacts": {
+    "projection": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann3741/projection_metrics.json",
+    "case_config": "analysis_results/paper_a_manhattan/local_candidate_search/task218_ann3741/expert_assertion.json",
+    "positive_height_summary": "analysis_results/paper_a_manhattan/constrained_v0_shadow_audit/fixtures/height_target_positive_summary.json"
+  }
+}
