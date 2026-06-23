@@ -44,6 +44,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - [HRC_STABILIZATION_STATUS_v1.md](paper_a_manhattan/HRC_STABILIZATION_STATUS_v1.md)：唯一当前状态入口。
 - [HRC_SCORING_LAYER_CONTRACT_v1.md](paper_a_manhattan/HRC_SCORING_LAYER_CONTRACT_v1.md)
 - [HRC_C3_2_CONSTRAINED_V0_SOURCE_CONTRACT_v1.md](paper_a_manhattan/HRC_C3_2_CONSTRAINED_V0_SOURCE_CONTRACT_v1.md)
+- [HRC_C6_5_GLOBAL_HYPOTHESIS_PROBE_SPEC_v1.md](paper_a_manhattan/HRC_C6_5_GLOBAL_HYPOTHESIS_PROBE_SPEC_v1.md)：shadow-only global hypothesis probe spec；not generator execution.
 - [MANHATTAN_HEIGHT_REPROJECT_SAFETY_CONTRACT_v1.md](paper_a_manhattan/MANHATTAN_HEIGHT_REPROJECT_SAFETY_CONTRACT_v1.md)
 - [MANHATTAN_HYPOTHESIS_FEEDBACK_LEDGER_SCHEMA_v1.md](paper_a_manhattan/MANHATTAN_HYPOTHESIS_FEEDBACK_LEDGER_SCHEMA_v1.md)：schema/contract；不是 training/update system。
 
