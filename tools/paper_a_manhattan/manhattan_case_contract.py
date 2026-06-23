@@ -15,6 +15,35 @@ PRIMARY_RESIDUAL_DEG = 15.0
 SECONDARY_RESIDUAL_DEG = 10.0
 
 
+def _has_contract_metrics(projection_metrics: Mapping[str, Any]) -> bool:
+    walls = projection_metrics.get("floorprint", {}).get("walls", [])
+    if any(
+        row.get("from_pair") is not None
+        and row.get("to_pair") is not None
+        and isinstance(row.get("angle_residual_deg"), (int, float))
+        for row in walls
+    ):
+        return True
+    heights = projection_metrics.get("heights", {}).get("pairs", [])
+    if any(
+        row.get("effective_pair_index") is not None
+        and (
+            row.get("suspicious_low_height")
+            or row.get("suspicious_high_height")
+            or isinstance(row.get("wall_height"), (int, float))
+        )
+        for row in heights
+    ):
+        return True
+    dense = projection_metrics.get("dense_pairs", {}).get("pairs", [])
+    return any(
+        row.get("pair_i") is not None
+        and row.get("pair_j") is not None
+        and row.get("classification") is not None
+        for row in dense
+    )
+
+
 def _infer_contract(
     indices: Sequence[int], projection_metrics: Mapping[str, Any]
 ) -> dict[str, Any]:
@@ -86,7 +115,8 @@ def build_case_contract(
     indices = [int(row["effective_pair_index"]) for row in layout_pairs]
     metrics = projection_metrics or {}
     has_metrics = bool(metrics)
-    inferred = _infer_contract(indices, metrics) if indices and metrics else {
+    usable_metrics = _has_contract_metrics(metrics) if has_metrics else False
+    inferred = _infer_contract(indices, metrics) if indices and usable_metrics else {
         "inferred_primary_edges": [],
         "inferred_secondary_edges": [],
         "inferred_local_window_pairs": [],
@@ -95,9 +125,9 @@ def build_case_contract(
         "inferred_movable_fields_by_pair": {},
     }
 
-    primary = inferred["inferred_primary_edges"] if has_metrics else []
-    secondary = inferred["inferred_secondary_edges"] if has_metrics else []
-    window = inferred["inferred_local_window_pairs"] if has_metrics else []
+    primary = inferred["inferred_primary_edges"] if usable_metrics else []
+    secondary = inferred["inferred_secondary_edges"] if usable_metrics else []
+    window = inferred["inferred_local_window_pairs"] if usable_metrics else []
     legacy_defaults_used = False
 
     primary = list(assertions.get("primary_edges", primary))
@@ -137,7 +167,7 @@ def build_case_contract(
         str(key): list(value)
         for key, value in assertions.get("movable_fields_by_pair", default_fields).items()
     }
-    contract_available = has_metrics or bool(primary or secondary or window or movable or keep_distinct)
+    contract_available = usable_metrics or bool(primary or secondary or window or movable or keep_distinct)
     fail_closed = not contract_available
     return {
         "schema_version": SCHEMA_VERSION,
@@ -156,7 +186,7 @@ def build_case_contract(
         "auto_contract_summary": {
             "source": (
                 "projection_rule_based_v1"
-                if has_metrics
+                if usable_metrics
                 else "expert_assertion_only"
                 if contract_available
                 else "contract_unavailable_fail_closed"
@@ -170,12 +200,13 @@ def build_case_contract(
         "topology_hypothesis_allowed": bool(assertions.get("topology_hypothesis_allowed", False)),
         "evidence_available_flags": {
             "projection_metrics": bool(metrics),
+            "usable_projection_metrics": usable_metrics,
             "hohonet": bool(metrics.get("hohonet_evidence")),
             "expert_assertions": bool(assertions),
         },
         "contract_source": (
             "rule_based_projection_v2"
-            if has_metrics
+            if usable_metrics
             else "expert_assertion_only"
             if contract_available
             else "contract_unavailable"
@@ -183,8 +214,8 @@ def build_case_contract(
         "legacy_default_contract": {
             "used": legacy_defaults_used,
             "reason": (
-                "legacy defaults disabled; insufficient projection metrics"
-                if not has_metrics and not contract_available
+                "legacy defaults disabled; insufficient usable projection metrics"
+                if not usable_metrics and not contract_available
                 else "legacy default edges are disabled"
             ),
         },

@@ -14,6 +14,7 @@
   },
   "evidence_available_flags": {
     "projection_metrics": true,
+    "usable_projection_metrics": true,
     "hohonet": false,
     "expert_assertions": true
   },
@@ -73,6 +74,7 @@
       },
       "evidence_available_flags": {
         "projection_metrics": true,
+        "usable_projection_metrics": true,
         "hohonet": false,
         "expert_assertions": true
       },
@@ -148,7 +150,7 @@
       "expert_review_only": true,
       "legacy_default_contract": {
         "used": false,
-        "reason": "legacy defaults disabled; insufficient projection metrics"
+        "reason": "legacy defaults disabled; insufficient usable projection metrics"
       },
       "fallback_used": false,
       "risk": "contract_unavailable_fail_closed",
@@ -160,6 +162,64 @@
       },
       "evidence_available_flags": {
         "projection_metrics": false,
+        "usable_projection_metrics": false,
+        "hohonet": false,
+        "expert_assertions": false
+      },
+      "protected_pairs": [],
+      "movable_fields_by_pair": {},
+      "keep_distinct_pairs": [],
+      "primary_edges": [],
+      "secondary_edges": [],
+      "local_window_pairs": [],
+      "inferred_fields_present": {
+        "inferred_primary_edges": true,
+        "inferred_secondary_edges": true,
+        "inferred_local_window_pairs": true,
+        "inferred_height_target_pairs": true,
+        "inferred_keep_distinct_pairs": true,
+        "inferred_movable_fields_by_pair": true
+      },
+      "inferred_fields_nonempty": {
+        "inferred_primary_edges": false,
+        "inferred_secondary_edges": false,
+        "inferred_local_window_pairs": false,
+        "inferred_height_target_pairs": false,
+        "inferred_keep_distinct_pairs": false,
+        "inferred_movable_fields_by_pair": false
+      },
+      "recommended_next_status": "contract_unavailable_expert_review_only_fail_closed_candidate",
+      "safety_boundary": {
+        "expert_side_only": true,
+        "offline_dry_run_only": true,
+        "automatic_apply": false,
+        "annotation_writeback": false,
+        "worker_facing": false,
+        "routing_input": false,
+        "thesis_protocol_artifact": false
+      }
+    },
+    "synthetic_partial_malformed_metrics": {
+      "case_name": "synthetic_partial_malformed_metrics",
+      "contract_status": "unavailable",
+      "contract_source": "contract_unavailable",
+      "fail_closed": true,
+      "expert_review_only": true,
+      "legacy_default_contract": {
+        "used": false,
+        "reason": "legacy defaults disabled; insufficient usable projection metrics"
+      },
+      "fallback_used": false,
+      "risk": "contract_unavailable_fail_closed",
+      "auto_contract_summary": {
+        "source": "contract_unavailable_fail_closed",
+        "legacy_fallback_used": false,
+        "primary_residual_threshold_deg": 15.0,
+        "secondary_residual_threshold_deg": 10.0
+      },
+      "evidence_available_flags": {
+        "projection_metrics": true,
+        "usable_projection_metrics": false,
         "hohonet": false,
         "expert_assertions": false
       },
@@ -214,7 +274,9 @@
   "audit_conclusion": {
     "real_case_uses_legacy_default_contract": false,
     "synthetic_missing_metrics_fallback_used": false,
+    "synthetic_partial_malformed_metrics_fallback_used": false,
     "legacy_default_contract_can_enter_active_case_contract": false,
+    "invalid_contract_can_enter_active_case_contract": false,
     "next_step": "C1 completed; return to C6 stability audit or C2/C5 diagnostics hardening"
   }
 }

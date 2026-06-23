@@ -114,6 +114,15 @@ def build_payload(
         original["ordered_pairs"], assertion, original.get("metrics", {})
     )
     synthetic_contract = build_case_contract(_minimal_pairs())
+    malformed_contract = build_case_contract(
+        _minimal_pairs(), projection_metrics={"floorprint": {"walls": []}}
+    )
+    missing_summary = _summarize_contract(
+        "synthetic_missing_metrics", synthetic_contract
+    )
+    malformed_summary = _summarize_contract(
+        "synthetic_partial_malformed_metrics", malformed_contract
+    )
     return {
         "schema_version": SCHEMA_VERSION,
         "case_name": "task218_ann3741",
@@ -127,9 +136,8 @@ def build_payload(
         "inferred_fields_present": _summarize_contract("task218_ann3741", real_contract)["inferred_fields_present"],
         "cases": {
             "task218_ann3741": _summarize_contract("task218_ann3741", real_contract),
-            "synthetic_missing_metrics": _summarize_contract(
-                "synthetic_missing_metrics", synthetic_contract
-            ),
+            "synthetic_missing_metrics": missing_summary,
+            "synthetic_partial_malformed_metrics": malformed_summary,
         },
         "active_runner_unchanged": True,
         "accepted": False,
@@ -146,7 +154,17 @@ def build_payload(
             "synthetic_missing_metrics_fallback_used": bool(
                 synthetic_contract.get("legacy_default_contract", {}).get("used")
             ),
-            "legacy_default_contract_can_enter_active_case_contract": False,
+            "synthetic_partial_malformed_metrics_fallback_used": bool(
+                malformed_contract.get("legacy_default_contract", {}).get("used")
+            ),
+            "legacy_default_contract_can_enter_active_case_contract": any(
+                summary["legacy_default_contract"]["used"]
+                for summary in (missing_summary, malformed_summary)
+            ),
+            "invalid_contract_can_enter_active_case_contract": any(
+                summary["contract_status"] != "unavailable"
+                for summary in (missing_summary, malformed_summary)
+            ),
             "next_step": "C1 completed; return to C6 stability audit or C2/C5 diagnostics hardening",
         },
     }

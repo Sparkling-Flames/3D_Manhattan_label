@@ -30,3 +30,14 @@
 - risk: `contract_unavailable_fail_closed`
 - recommended_next_status: `contract_unavailable_expert_review_only_fail_closed_candidate`
 
+### synthetic_partial_malformed_metrics
+
+- contract_source: `contract_unavailable`
+- contract_status: `unavailable`
+- fail_closed: `True`
+- expert_review_only: `True`
+- legacy_default_contract.used: `False`
+- auto_contract_summary.source: `contract_unavailable_fail_closed`
+- risk: `contract_unavailable_fail_closed`
+- recommended_next_status: `contract_unavailable_expert_review_only_fail_closed_candidate`
+

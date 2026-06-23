@@ -274,6 +274,20 @@ def test_case_contract_missing_metrics_fail_closed_without_legacy_defaults():
     assert contract["auto_contract_summary"]["source"] == "contract_unavailable_fail_closed"
     assert contract["auto_contract_summary"]["legacy_fallback_used"] is False
 
+    malformed = build_case_contract(_pairs(), projection_metrics={"floorprint": {"walls": []}})
+    assert malformed["contract_status"] == "unavailable"
+    assert malformed["contract_source"] == "contract_unavailable"
+    assert malformed["fail_closed"] is True
+    assert malformed["expert_review_only"] is True
+    assert malformed["primary_edges"] == []
+    assert malformed["secondary_edges"] == []
+    assert malformed["local_window_pairs"] == []
+    assert malformed["movable_fields_by_pair"] == {}
+    assert malformed["keep_distinct_pairs"] == []
+    assert malformed["legacy_default_contract"]["used"] is False
+    assert malformed["evidence_available_flags"]["projection_metrics"] is True
+    assert malformed["evidence_available_flags"]["usable_projection_metrics"] is False
+
 
 def test_movable_fields_are_a_hard_contract():
     contract = build_case_contract(

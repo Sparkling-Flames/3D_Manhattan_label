@@ -23,6 +23,7 @@ def test_case_contract_fallback_audit_records_real_and_missing_metrics_paths():
     assert real["legacy_default_contract"]["used"] is False
     assert real["fallback_used"] is False
     assert real["evidence_available_flags"]["projection_metrics"] is True
+    assert real["evidence_available_flags"]["usable_projection_metrics"] is True
     assert "6-7" in real["primary_edges"]
     assert real["protected_pairs"]
     assert real["movable_fields_by_pair"]
@@ -40,22 +41,42 @@ def test_case_contract_fallback_audit_records_real_and_missing_metrics_paths():
     assert missing["auto_contract_summary"]["source"] == "contract_unavailable_fail_closed"
     assert missing["auto_contract_summary"]["legacy_fallback_used"] is False
     assert missing["legacy_default_contract"]["used"] is False
-    assert missing["legacy_default_contract"]["reason"] == "legacy defaults disabled; insufficient projection metrics"
+    assert missing["legacy_default_contract"]["reason"] == "legacy defaults disabled; insufficient usable projection metrics"
     assert missing["fallback_used"] is False
     assert missing["risk"] == "contract_unavailable_fail_closed"
     assert missing["evidence_available_flags"]["projection_metrics"] is False
+    assert missing["evidence_available_flags"]["usable_projection_metrics"] is False
     assert missing["primary_edges"] == []
     assert missing["secondary_edges"] == []
     assert missing["local_window_pairs"] == []
     assert missing["movable_fields_by_pair"] == {}
     assert missing["keep_distinct_pairs"] == []
     assert not any(missing["inferred_fields_nonempty"].values())
+
+    malformed = payload["cases"]["synthetic_partial_malformed_metrics"]
+    assert malformed["contract_status"] == "unavailable"
+    assert malformed["contract_source"] == "contract_unavailable"
+    assert malformed["fail_closed"] is True
+    assert malformed["expert_review_only"] is True
+    assert malformed["auto_contract_summary"]["source"] == "contract_unavailable_fail_closed"
+    assert malformed["legacy_default_contract"]["used"] is False
+    assert malformed["fallback_used"] is False
+    assert malformed["risk"] == "contract_unavailable_fail_closed"
+    assert malformed["evidence_available_flags"]["projection_metrics"] is True
+    assert malformed["evidence_available_flags"]["usable_projection_metrics"] is False
+    assert malformed["primary_edges"] == []
+    assert malformed["secondary_edges"] == []
+    assert malformed["local_window_pairs"] == []
+    assert malformed["movable_fields_by_pair"] == {}
+    assert malformed["keep_distinct_pairs"] == []
     assert payload["audit_conclusion"]["legacy_default_contract_can_enter_active_case_contract"] is False
+    assert payload["audit_conclusion"]["invalid_contract_can_enter_active_case_contract"] is False
 
     paths = run()
     written = json.loads(paths["json"].read_text(encoding="utf-8"))
     assert written["cases"]["synthetic_missing_metrics"]["fallback_used"] is False
     assert written["cases"]["synthetic_missing_metrics"]["contract_status"] == "unavailable"
+    assert written["cases"]["synthetic_partial_malformed_metrics"]["contract_status"] == "unavailable"
     assert paths["markdown"].read_text(encoding="utf-8").startswith(
         "# HRC C1.1 Case Contract Fallback Audit"
     )
