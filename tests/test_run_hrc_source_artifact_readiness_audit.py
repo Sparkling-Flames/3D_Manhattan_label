@@ -21,12 +21,13 @@ def test_readiness_audit_is_read_only_and_blocked():
     assert payload["accepted"] is False
     assert payload["downstream_recommendation"] is False
     assert payload["annotation_writeback"] is False
-    assert payload["ready_for_c6_5b_proposal_manifest"] is False
-    assert payload["ready_cases"] == []
+    assert payload["execution_allowed"] is False
+    assert payload["artifact_inputs_ready_for_c6_5b"] is False
+    assert payload["artifact_inputs_ready_cases"] == []
     assert set(payload["status_boundaries"].values()) == {"blocked"}
 
 
-def test_readiness_matrix_fail_closed_rules():
+def test_manifest_validation_and_readiness_semantics():
     payload = build_audit_payload()
     cases = payload["cases"]
     assert set(cases) == {
@@ -37,46 +38,42 @@ def test_readiness_matrix_fail_closed_rules():
         "ordinary_compatible",
     }
     for case in cases.values():
+        assert case["execution_allowed"] is False
+        assert "ready" not in case
+        assert all("ready" not in row for row in case["probe_family_readiness"].values())
+        assert all(
+            "artifact_inputs_ready" in row and row["execution_allowed"] is False
+            for row in case["probe_family_readiness"].values()
+        )
+        assert all(validation["valid"] for validation in case["source_validation"].values())
         matrix = case["evidence_readiness_matrix"]
         assert set(matrix) == set(EVIDENCE_TYPES)
         assert all(row["status"] in STATUSES for row in matrix.values())
-        for row in matrix.values():
-            assert set(row) == {
-                "status",
-                "source_artifact",
-                "sha256",
-                "materialization_hint",
-                "missing_reason",
-                "manual_evidence_requirement",
-            }
-            if row["status"] in {
-                "available_from_existing_artifact",
-                "materializable_from_existing_artifact",
-                "requires_manual_visual_evidence",
-            }:
-                assert row["source_artifact"]
-                assert row["sha256"]
-
-    ordinary = cases["ordinary_compatible"]
-    assert ordinary["source_readiness"] == "source_blocked"
-    assert ordinary["probe_family_readiness"]["multi_pair_x_alignment"]["ready"] is False
-    assert ordinary["probe_family_readiness"]["floor_depth_balance_global"]["ready"] is False
 
     task3741 = cases["task218_ann3741"]
-    assert task3741["evidence_readiness_matrix"]["rankable_by_current_HRC"]["status"] == "available_from_existing_artifact"
-    assert task3741["evidence_readiness_matrix"]["explicit_column_identity"]["status"] == "requires_manual_visual_evidence"
-    assert task3741["probe_family_readiness"]["multi_pair_x_alignment"]["ready"] is False
+    manual = task3741["evidence_readiness_matrix"]["explicit_column_identity"]
+    assert manual["status"] == "requires_manual_visual_evidence"
+    assert manual["source_artifact"] is None
+    assert manual["sha256"] is None
+    assert manual["supporting_artifacts"]
+    assert manual["manual_evidence_sidecar_schema"]
+    assert task3741["probe_family_readiness"]["multi_pair_x_alignment"]["artifact_inputs_ready"] is False
 
     for name in ("task218_ann2369", "task238_ann2389"):
         matrix = cases[name]["evidence_readiness_matrix"]
         assert matrix["direction_family_fit"]["status"] == "materializable_from_existing_artifact"
         assert matrix["parallel_family_residual"]["status"] == "materializable_from_existing_artifact"
+        assert matrix["projection_derived_height_evidence"]["status"] == "available_from_existing_artifact"
+        assert matrix["candidate_row_height_source"]["status"] == "available_from_existing_artifact"
 
-    assert cases["gt75_task533"]["evidence_readiness_matrix"]["verified_order_record"]["status"] == "available_from_existing_artifact"
-    assert cases["gt75_task533"]["evidence_readiness_matrix"]["projection_metrics"]["status"] == "unavailable"
-    assert payload["manual_evidence_required"]
-    assert payload["recommended_next_step"] == "materialize available source artifacts"
-    forbidden = ("C3", "C7", "optimizer", "active runner", "writeback")
+    gt75 = cases["gt75_task533"]["evidence_readiness_matrix"]
+    assert gt75["verified_order_record"]["status"] == "available_from_existing_artifact"
+    assert gt75["projection_metrics"]["status"] == "unavailable"
+    assert gt75["projection_derived_height_evidence"]["status"] == "unavailable"
+    assert gt75["candidate_row_height_source"]["status"] == "available_from_existing_artifact"
+
+    assert payload["recommended_next_step"] == "materialize audit-only evidence inputs from existing artifacts"
+    forbidden = ("C3", "C7", "optimizer", "active runner", "writeback", "proposal manifest")
     assert not any(token.lower() in payload["recommended_next_step"].lower() for token in forbidden)
 
 

@@ -1,4 +1,4 @@
-"""Audit C6.5 source readiness without generating proposals, candidates, or geometry."""
+"""Audit C6.5 evidence-input readiness without generating probes or geometry."""
 
 from __future__ import annotations
 
@@ -10,17 +10,10 @@ from typing import Any, Mapping, Sequence
 
 
 SCHEMA_VERSION = "hrc_source_artifact_readiness_audit_v1"
-ROOT = Path("analysis_results/paper_a_manhattan")
-HRC_ROOT = ROOT / "hypothesis_ranking_core"
-SPEC = Path("docs/paper_a_manhattan/HRC_C6_5_GLOBAL_HYPOTHESIS_PROBE_SPEC_v1.md")
-ADEQUACY = HRC_ROOT / "candidate_adequacy_audit/hrc_candidate_adequacy_audit.json"
-INPUT_PACK = HRC_ROOT / "multicase_audit_input_pack/hrc_multicase_audit_input_pack_summary.json"
-PLANNER = HRC_ROOT / "shadow_global_probe_planner/hrc_shadow_global_probe_planner.json"
-HRC_3741 = HRC_ROOT / "task218_ann3741/hypothesis_ranking_core.json"
-PROJECTION_3741 = ROOT / "local_3d_projection/task218_ann3741/projection_metrics.json"
-GT75_ORDER = ROOT / "single_image_manual_test/task533_gt75/candidate_b_annotation_3425_input_verified_order.json"
-HOHONET_DIR = Path("output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34")
-DEFAULT_OUT_DIR = HRC_ROOT / "source_artifact_readiness_audit"
+ROOT = Path("analysis_results/paper_a_manhattan/hypothesis_ranking_core")
+DEFAULT_OUT_DIR = ROOT / "source_artifact_readiness_audit"
+DEFAULT_MANIFEST = DEFAULT_OUT_DIR / "source_artifact_manifest.json"
+MANUAL_SIDECAR_SCHEMA = DEFAULT_OUT_DIR / "manual_evidence_sidecar_schema.json"
 
 EVIDENCE_TYPES = (
     "projection_metrics",
@@ -30,7 +23,8 @@ EVIDENCE_TYPES = (
     "explicit_column_identity",
     "keep_distinct_contract",
     "short_wall_diagnostics",
-    "height_evidence",
+    "projection_derived_height_evidence",
+    "candidate_row_height_source",
     "case_contract",
     "constrained_evaluation",
     "rankable_by_current_HRC",
@@ -47,7 +41,11 @@ STATUSES = {
     "not_applicable",
 }
 FAMILY_REQUIREMENTS = {
-    "global_height_reproject": ("projection_metrics", "height_evidence", "case_contract"),
+    "global_height_reproject": (
+        "projection_metrics",
+        "projection_derived_height_evidence",
+        "case_contract",
+    ),
     "direction_family_azimuth_snap": (
         "projection_metrics",
         "direction_family_fit",
@@ -76,222 +74,329 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _nested(payload: Mapping[str, Any], field: str | None) -> Any:
+    value: Any = payload
+    for part in (field or "").split("."):
+        if part:
+            value = value.get(part) if isinstance(value, Mapping) else None
+    return value
+
+
+def _validate_source(spec: Mapping[str, Any]) -> dict[str, Any]:
+    path = Path(spec["path"])
+    result = {
+        "valid": False,
+        "path": path.as_posix(),
+        "sha256": _sha256(path) if path.exists() else None,
+        "schema_version": None,
+        "case_identity_valid": None,
+        "required_variant": spec.get("required_variant"),
+        "variant_valid": None,
+        "row_count": None,
+        "row_count_valid": None,
+        "errors": [],
+    }
+    if not path.exists():
+        result["errors"].append("source_artifact_missing")
+        return result
+
+    if path.suffix.lower() == ".txt":
+        rows = [line.split() for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        result["row_count"] = len(rows)
+        result["row_count_valid"] = len(rows) >= int(spec.get("minimum_row_count", 0))
+        if spec.get("expected_format") == "paired_two_column_rows":
+            if len(rows) % 2 or not all(len(row) == 2 for row in rows):
+                result["errors"].append("paired_two_column_rows_invalid")
+        if not result["row_count_valid"]:
+            result["errors"].append("row_count_below_minimum")
+        result["valid"] = not result["errors"]
+        return result
+
+    payload = _load(path)
+    nested_case = spec.get("required_nested_case")
+    if nested_case:
+        payload = payload.get(nested_case) or {}
+        if not payload:
+            result["errors"].append("required_nested_case_missing")
+
+    schema_field = spec.get("schema_field")
+    if schema_field:
+        result["schema_version"] = _nested(payload, schema_field)
+        if result["schema_version"] != spec.get("expected_schema"):
+            result["errors"].append("schema_version_mismatch")
+
+    identities = spec.get("identity_fields") or {}
+    result["case_identity_valid"] = all(_nested(payload, field) == expected for field, expected in identities.items())
+    if identities and not result["case_identity_valid"]:
+        result["errors"].append("case_identity_mismatch")
+
+    variant = spec.get("required_variant")
+    if variant:
+        variants = payload.get("variants") or []
+        result["variant_valid"] = any(row.get("name") == variant for row in variants)
+        if not result["variant_valid"]:
+            result["errors"].append("required_variant_missing")
+
+    true_field = spec.get("required_true_field")
+    if true_field and _nested(payload, true_field) is not True:
+        result["errors"].append("required_true_field_missing")
+
+    row_field = spec.get("row_field")
+    if row_field:
+        rows = _nested(payload, row_field)
+        result["row_count"] = len(rows) if isinstance(rows, list) else 0
+        result["row_count_valid"] = result["row_count"] >= int(spec.get("minimum_row_count", 0))
+        if not result["row_count_valid"]:
+            result["errors"].append("row_count_below_minimum")
+
+    result["valid"] = not result["errors"]
+    return result
+
+
 def _entry(
     status: str,
-    source: Path | None = None,
+    validation: Mapping[str, Any] | None = None,
     *,
     hint: str | None = None,
     missing: str | None = None,
     manual: str | None = None,
+    supporting: Sequence[Mapping[str, Any]] = (),
 ) -> dict[str, Any]:
     assert status in STATUSES
     return {
         "status": status,
-        "source_artifact": source.as_posix() if source else None,
-        "sha256": _sha256(source) if source else None,
+        "source_artifact": validation.get("path") if validation else None,
+        "sha256": validation.get("sha256") if validation else None,
         "materialization_hint": hint,
         "missing_reason": missing,
         "manual_evidence_requirement": manual,
+        "manual_evidence_sidecar_schema": MANUAL_SIDECAR_SCHEMA.as_posix() if manual else None,
+        "supporting_artifacts": list(supporting),
     }
 
 
-def _original_metrics(path: Path | None) -> dict[str, Any]:
-    if not path:
+def _source_entry(validation: Mapping[str, Any] | None, *, hint: str | None = None) -> dict[str, Any]:
+    if not validation:
+        return _entry("unavailable", missing="source artifact is not declared in manifest")
+    if not validation["valid"]:
+        return _entry("unavailable", validation, missing="; ".join(validation["errors"]))
+    return _entry(
+        "materializable_from_existing_artifact" if hint else "available_from_existing_artifact",
+        validation,
+        hint=hint,
+    )
+
+
+def _manual_entry(requirement: str, *supporting: Mapping[str, Any] | None) -> dict[str, Any]:
+    refs = [
+        {"path": row["path"], "sha256": row["sha256"]}
+        for row in supporting
+        if row and row["valid"]
+    ]
+    return _entry(
+        "requires_manual_visual_evidence",
+        manual=requirement,
+        supporting=refs,
+    )
+
+
+def _original_metrics(projection: Mapping[str, Any] | None) -> dict[str, Any]:
+    if not projection or not projection["valid"]:
         return {}
-    variants = _load(path).get("variants") or []
+    variants = _load(Path(projection["path"])).get("variants") or []
     original = next((row for row in variants if row.get("name") == "original"), {})
     return original.get("metrics") or {}
 
 
-def _hohonet_path(projection: Path | None, case_name: str) -> Path | None:
-    if projection:
-        image = ((_load(projection).get("input_provenance") or {}).get("image") or {})
-        basename = image.get("source_image_basename")
-    elif case_name == "gt75_task533":
-        basename = (_load(GT75_ORDER).get("metadata") or {}).get("image_title")
-    else:
-        basename = None
-    path = HOHONET_DIR / f"{Path(basename).stem}.txt" if basename else None
-    return path if path and path.exists() else None
-
-
-def _available(source: Path) -> dict[str, Any]:
-    return _entry("available_from_existing_artifact", source)
-
-
-def _materializable(source: Path, hint: str) -> dict[str, Any]:
-    return _entry("materializable_from_existing_artifact", source, hint=hint)
-
-
-def _manual(source: Path, requirement: str) -> dict[str, Any]:
-    return _entry(
-        "requires_manual_visual_evidence",
-        source,
-        manual=requirement,
-    )
-
-
-def _unavailable(reason: str) -> dict[str, Any]:
-    return _entry("unavailable", missing=reason)
-
-
-def _not_applicable() -> dict[str, Any]:
-    return _entry("not_applicable")
-
-
 def _case_matrix(
     case_name: str,
-    adequacy: Mapping[str, Any],
-    pack: Mapping[str, Any] | None,
-) -> dict[str, Any]:
-    is_3741 = case_name == "task218_ann3741"
-    core = _load(HRC_3741) if is_3741 else {}
-    projection_ref = None if is_3741 else ((pack or {}).get("source_artifacts") or {}).get("projection_artifact")
-    projection = PROJECTION_3741 if is_3741 else Path(projection_ref["path"]) if projection_ref else None
-    candidate_ref = None if is_3741 else ((pack or {}).get("source_artifacts") or {}).get("candidate_artifact")
-    candidate = HRC_3741 if is_3741 else Path(candidate_ref["path"]) if candidate_ref else None
-    metrics = _original_metrics(projection)
-    walls = (metrics.get("floorprint") or {}).get("walls") or []
-    has_direction = bool(walls) and all(wall.get("direction_deg") is not None for wall in walls)
-    dense_pairs = (metrics.get("dense_pairs") or {}).get("pairs") or []
-    has_dense_distinct = any(row.get("classification") == "dense_but_distinct_3d_corner" for row in dense_pairs)
-    hohonet = _hohonet_path(projection, case_name)
+    sources: Mapping[str, Mapping[str, Any]],
+) -> tuple[dict[str, Any], dict[str, Any]]:
+    validations = {role: _validate_source(spec) for role, spec in sources.items()}
+    hrc = validations.get("hrc_payload")
+    projection = validations.get("projection_metrics")
+    candidate = validations.get("candidate_rows")
+    c4 = validations.get("c4_proposal")
+    order = validations.get("verified_order_record")
+    core = _load(Path(hrc["path"])) if hrc and hrc["valid"] else {}
     evaluations = list((core.get("constrained_evaluations") or {}).values())
     evaluation = evaluations[0] if evaluations else {}
     manhattan = evaluation.get("manhattan_feasibility") or {}
+    metrics = _original_metrics(projection)
+    floorprint = metrics.get("floorprint") or {}
+    walls = floorprint.get("walls") or []
+    heights = (metrics.get("heights") or {}).get("pairs") or []
+    dense = (metrics.get("dense_pairs") or {}).get("pairs") or []
+    has_dense_distinct = any(row.get("classification") == "dense_but_distinct_3d_corner" for row in dense)
+    candidate_rows = (
+        (_load(Path(candidate["path"])).get("height_reproject_candidate_rows") or [])
+        if candidate and candidate["valid"]
+        else []
+    )
 
-    source_blocked = case_name == "ordinary_compatible"
+    projection_entry = _source_entry(projection)
     matrix = {
-        "projection_metrics": _available(projection) if projection else _unavailable("no projection metrics source artifact"),
+        "projection_metrics": projection_entry,
         "floorprint_or_depth_proxy": (
-            _available(projection)
-            if walls
-            else _unavailable("no usable floorprint/depth proxy artifact")
+            _source_entry(projection) if walls else _entry("unavailable", missing="validated projection has no floorprint walls")
         ),
         "direction_family_fit": (
-            _available(HRC_3741)
+            _source_entry(hrc)
             if manhattan.get("direction_family_fit_status") == "available"
-            else _materializable(projection, "run existing C2 evaluator over the original projection variant")
-            if projection and has_direction
-            else _unavailable("direction headings are unavailable")
+            else _source_entry(projection, hint="materialize audit-only C2 direction diagnostics from original projection variant")
+            if walls and all(row.get("direction_deg") is not None for row in walls)
+            else _entry("unavailable", missing="validated direction headings are unavailable")
         ),
         "parallel_family_residual": (
-            _available(HRC_3741)
+            _source_entry(hrc)
             if manhattan.get("parallel_family_residual_status") == "available"
-            else _materializable(projection, "run existing C2 direction-family assignment over projection walls")
-            if projection and has_direction
-            else _unavailable("direction-family assignments cannot be formed")
+            else _source_entry(projection, hint="materialize audit-only C2 parallel-family diagnostics")
+            if walls and all(row.get("direction_deg") is not None for row in walls)
+            else _entry("unavailable", missing="direction-family assignment inputs are unavailable")
         ),
         "explicit_column_identity": (
-            _unavailable("ordinary-compatible source is blocked")
-            if source_blocked
-            else _manual(candidate, "expert must confirm pair-level column identity; C4 diagnostics are not explicit identity")
+            _manual_entry(
+                "manual sidecar must identify pair-level column identity; supporting artifacts are not the evidence verdict",
+                candidate or hrc,
+                c4,
+            )
+            if candidate or hrc
+            else _entry("unavailable", missing="no supporting artifact for manual column identity review")
         ),
         "keep_distinct_contract": (
-            _available(HRC_3741)
+            _source_entry(hrc)
             if (core.get("case_contract") or {}).get("keep_distinct_pairs")
-            else _materializable(projection, "materialize keep-distinct evidence from dense_but_distinct projection relations")
-            if projection and has_dense_distinct
-            else _manual(candidate, "expert keep-distinct assertion is required before multi-pair x/short-wall planning")
-            if candidate and not source_blocked
-            else _unavailable("no keep-distinct contract or evidence source")
+            else _source_entry(
+                projection,
+                hint="materialize audit-only keep-distinct input from dense_but_distinct projection relation",
+            )
+            if has_dense_distinct
+            else _manual_entry(
+                "manual sidecar must record keep-distinct verdict",
+                candidate,
+                projection,
+            )
+            if candidate
+            else _entry("unavailable", missing="no keep-distinct contract or supporting artifact")
         ),
         "short_wall_diagnostics": (
-            _available(projection)
-            if "short_wall_count" in ((metrics.get("floorprint") or {}).get("summary") or {})
-            else _unavailable("no projection floorprint short-wall diagnostics")
+            _source_entry(projection)
+            if "short_wall_count" in (floorprint.get("summary") or {})
+            else _entry("unavailable", missing="validated projection has no short-wall summary")
         ),
-        "height_evidence": (
-            _available(HRC_3741)
+        "projection_derived_height_evidence": (
+            _source_entry(hrc)
             if evaluation.get("height_consistency")
-            else _available(projection)
-            if (metrics.get("heights") or {}).get("pairs")
-            else _available(candidate)
-            if candidate and adequacy["variable_coverage"]["top_y_change"] and not source_blocked
-            else _unavailable("no height projection or candidate evidence")
+            else _source_entry(projection)
+            if heights
+            else _entry("unavailable", missing="no projection-derived height evidence")
+        ),
+        "candidate_row_height_source": (
+            _source_entry(candidate)
+            if candidate_rows
+            else _entry("not_applicable")
+            if hrc
+            else _entry("unavailable", missing="no validated height candidate rows")
         ),
         "case_contract": (
-            _available(HRC_3741)
+            _source_entry(hrc)
             if core.get("case_contract")
-            else _materializable(projection, "run existing fail-closed build_case_contract over usable projection metrics")
-            if projection and walls
-            else _unavailable("case contract would fail closed without usable projection metrics")
+            else _source_entry(
+                projection,
+                hint="materialize audit-only fail-closed case contract from validated projection metrics",
+            )
+            if walls
+            else _entry("unavailable", missing="usable projection metrics are required")
         ),
         "constrained_evaluation": (
-            _available(HRC_3741)
+            _source_entry(hrc)
             if evaluations
-            else _materializable(candidate, "evaluate existing candidate rows after case-contract materialization")
-            if candidate and projection and adequacy["candidate_count"] > 0
-            else _unavailable("candidate rows and projection/contract inputs are not jointly available")
+            else _source_entry(
+                candidate,
+                hint="materialize audit-only constrained evaluations after case-contract validation",
+            )
+            if candidate_rows and walls
+            else _entry("unavailable", missing="validated candidate rows and projection metrics are both required")
         ),
         "rankable_by_current_HRC": (
-            _available(HRC_3741)
-            if adequacy["readiness"]["rankable_by_current_HRC"]
-            else _materializable(candidate, "materialize case contract and constrained evaluations; do not change active runner")
-            if candidate and projection and adequacy["candidate_count"] > 0
-            else _unavailable("current HRC ranking inputs are incomplete")
+            _source_entry(hrc)
+            if evaluations and core.get("case_contract")
+            else _source_entry(
+                candidate,
+                hint="materialize audit-only HRC inputs; this does not change active runner selection",
+            )
+            if candidate_rows and walls
+            else _entry("unavailable", missing="current HRC inputs are incomplete")
         ),
         "source_candidate_rows": (
-            _available(candidate)
-            if candidate and adequacy["candidate_count"] > 0 and not source_blocked
-            else _unavailable("no existing non-baseline candidate rows")
+            _source_entry(hrc)
+            if (core.get("candidate_set") or [])
+            else _source_entry(candidate)
+            if candidate_rows
+            else _entry("unavailable", missing="no validated non-baseline candidate rows")
         ),
-        "verified_order_record": _available(GT75_ORDER) if case_name == "gt75_task533" else _not_applicable(),
+        "verified_order_record": _source_entry(order) if order else _entry("not_applicable"),
         "c4_evidence_diagnostics": (
-            _available(HRC_3741)
+            _source_entry(hrc)
             if (core.get("column_evidence_source_inventory") or {}).get("evidence_status") == "available"
-            else _materializable(hohonet, "run existing C4-lite parser/evaluator against existing ordered pairs")
-            if hohonet and candidate and not source_blocked
-            else _unavailable("no usable C4-lite proposal plus ordered-pair source")
+            else _source_entry(c4, hint="materialize audit-only C4-lite diagnostics from validated proposal rows")
+            if c4
+            else _entry("unavailable", missing="validated C4 proposal is unavailable")
         ),
         "c5_plane_proxy_metrics": (
-            _available(HRC_3741)
+            _source_entry(hrc)
             if (evaluation.get("plane_proxy_metrics") or {}).get("plane_proxy_status") == "available"
-            else _materializable(projection, "run existing C2/C5 evaluator over projection metrics")
-            if projection and walls
-            else _unavailable("projection metrics required for C5 geometry proxy")
+            else _source_entry(projection, hint="materialize audit-only C5 geometry proxy from projection metrics")
+            if walls
+            else _entry("unavailable", missing="validated projection metrics are required")
         ),
     }
     assert set(matrix) == set(EVIDENCE_TYPES)
-    return matrix
+    return matrix, validations
 
 
 def _family_readiness(matrix: Mapping[str, Mapping[str, Any]]) -> dict[str, Any]:
-    ready_status = {"available_from_existing_artifact"}
     result = {}
     for family, requirements in FAMILY_REQUIREMENTS.items():
-        pending = [name for name in requirements if matrix[name]["status"] not in ready_status]
+        pending = [
+            name
+            for name in requirements
+            if matrix[name]["status"] != "available_from_existing_artifact"
+        ]
         result[family] = {
-            "ready": not pending,
+            "artifact_inputs_ready": not pending,
             "pending_inputs": pending,
             "execution_allowed": False,
         }
     return result
 
 
-def build_audit_payload() -> dict[str, Any]:
-    adequacy = _load(ADEQUACY)
-    packs = _load(INPUT_PACK)["packs"]
-    planner = _load(PLANNER)
+def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any]:
+    manifest = _load(manifest_path)
+    if manifest.get("schema_version") != "hrc_source_artifact_manifest_v1":
+        raise ValueError("unsupported source artifact manifest schema")
+
     cases = {}
-    for case_name, summary in adequacy["cases"].items():
-        matrix = _case_matrix(case_name, summary, packs.get(case_name))
+    for case_name, sources in manifest["cases"].items():
+        matrix, validations = _case_matrix(case_name, sources)
         families = _family_readiness(matrix)
         cases[case_name] = {
             "case_name": case_name,
-            "candidate_input_status": summary["candidate_input_status"],
-            "source_readiness": "source_blocked" if case_name == "ordinary_compatible" else "partial",
             "evidence_readiness_matrix": matrix,
+            "source_validation": validations,
             "probe_family_readiness": families,
-            "ready_for_c6_5b": all(row["ready"] for row in families.values()),
+            "artifact_inputs_ready": all(row["artifact_inputs_ready"] for row in families.values()),
+            "execution_allowed": False,
             "audit_only": True,
             "accepted": False,
             "downstream_recommendation": False,
             "annotation_writeback": False,
         }
 
-    ready_cases = [name for name, row in cases.items() if row["ready_for_c6_5b"]]
-    blocked_cases = [name for name in cases if name not in ready_cases]
+    artifact_inputs_ready_cases = [
+        name for name, row in cases.items() if row["artifact_inputs_ready"]
+    ]
+    blocked_cases = [name for name in cases if name not in artifact_inputs_ready_cases]
     by_status = {
         status: sorted(
             f"{case_name}:{evidence}"
@@ -301,10 +406,18 @@ def build_audit_payload() -> dict[str, Any]:
         )
         for status in STATUSES
     }
-    ready = len(ready_cases) == len(cases) and not by_status["requires_manual_visual_evidence"]
-    assert planner["ready_for_c6_5b_proposal_manifest"] is False
     return {
         "schema_version": SCHEMA_VERSION,
+        "source_manifest": {
+            "path": manifest_path.as_posix(),
+            "sha256": _sha256(manifest_path),
+            "schema_version": manifest["schema_version"],
+        },
+        "manual_evidence_sidecar_schema": {
+            "path": MANUAL_SIDECAR_SCHEMA.as_posix(),
+            "sha256": _sha256(MANUAL_SIDECAR_SCHEMA),
+            "schema_version": _load(MANUAL_SIDECAR_SCHEMA)["schema_version"],
+        },
         "audit_only": True,
         "generated_candidate": False,
         "generated_proposal_manifest": False,
@@ -315,15 +428,16 @@ def build_audit_payload() -> dict[str, Any]:
         "accepted": False,
         "downstream_recommendation": False,
         "annotation_writeback": False,
+        "execution_allowed": False,
         "cases": cases,
-        "ready_for_c6_5b_proposal_manifest": ready,
-        "ready_cases": ready_cases,
+        "artifact_inputs_ready_for_c6_5b": len(artifact_inputs_ready_cases) == len(cases),
+        "artifact_inputs_ready_cases": artifact_inputs_ready_cases,
         "blocked_cases": blocked_cases,
         "materializable_inputs": by_status["materializable_from_existing_artifact"],
         "manual_evidence_required": by_status["requires_manual_visual_evidence"],
         "unavailable_inputs": by_status["unavailable"],
         "recommended_next_step": (
-            "materialize available source artifacts"
+            "materialize audit-only evidence inputs from existing artifacts"
             if by_status["materializable_from_existing_artifact"]
             else "define manual evidence sidecar schema"
             if by_status["requires_manual_visual_evidence"]
@@ -342,39 +456,33 @@ def render_markdown(payload: Mapping[str, Any]) -> str:
     lines = [
         "# HRC C6.5a.1 Source Artifact Readiness Audit",
         "",
-        f"- Ready for C6.5b: `{payload['ready_for_c6_5b_proposal_manifest']}`",
-        f"- Ready cases: `{payload['ready_cases']}`",
+        f"- Artifact inputs ready for C6.5b: `{payload['artifact_inputs_ready_for_c6_5b']}`",
+        f"- Artifact-input-ready cases: `{payload['artifact_inputs_ready_cases']}`",
         f"- Blocked cases: `{payload['blocked_cases']}`",
         f"- Recommended next step: `{payload['recommended_next_step']}`",
+        "- Execution allowed: `false`",
         "- Candidate/proposal/geometry generated: `false`",
         "",
-        "## Case matrix summary",
-        "",
     ]
-    for name, case in payload["cases"].items():
-        counts: dict[str, int] = {}
-        for row in case["evidence_readiness_matrix"].values():
-            counts[row["status"]] = counts.get(row["status"], 0) + 1
-        lines.append(f"- `{name}`: source=`{case['source_readiness']}`; statuses={counts}")
-    lines.append("")
     return "\n".join(lines)
 
 
-def run(out_dir: Path = DEFAULT_OUT_DIR) -> dict[str, Path]:
-    payload = build_audit_payload()
+def run(out_dir: Path = DEFAULT_OUT_DIR, manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Path]:
+    payload = build_audit_payload(manifest_path)
     out_dir.mkdir(parents=True, exist_ok=True)
     json_path = out_dir / "hrc_source_artifact_readiness_audit.json"
     md_path = out_dir / "hrc_source_artifact_readiness_audit.md"
-    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    md_path.write_text(render_markdown(payload), encoding="utf-8")
+    json_path.write_bytes((json.dumps(payload, ensure_ascii=False, indent=2) + "\n").encode("utf-8"))
+    md_path.write_bytes(render_markdown(payload).encode("utf-8"))
     return {"json": json_path, "markdown": md_path}
 
 
 def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--out-dir", type=Path, default=DEFAULT_OUT_DIR)
+    parser.add_argument("--manifest", type=Path, default=DEFAULT_MANIFEST)
     args = parser.parse_args(argv)
-    print(run(args.out_dir)["json"])
+    print(run(args.out_dir, args.manifest)["json"])
     return 0
 
 
