@@ -45,6 +45,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - [HRC_SCORING_LAYER_CONTRACT_v1.md](paper_a_manhattan/HRC_SCORING_LAYER_CONTRACT_v1.md)
 - [HRC_C3_2_CONSTRAINED_V0_SOURCE_CONTRACT_v1.md](paper_a_manhattan/HRC_C3_2_CONSTRAINED_V0_SOURCE_CONTRACT_v1.md)
 - [HRC_C6_5_GLOBAL_HYPOTHESIS_PROBE_SPEC_v1.md](paper_a_manhattan/HRC_C6_5_GLOBAL_HYPOTHESIS_PROBE_SPEC_v1.md)：shadow-only global hypothesis probe spec；not generator execution.
+- [HRC_C6_5A_4_SCORING_EVALUATOR_HARDENING_SPEC_v1.md](paper_a_manhattan/HRC_C6_5A_4_SCORING_EVALUATOR_HARDENING_SPEC_v1.md)：spec-only L0–L5 scoring/evaluator hardening contract；不修改 evaluator/ranking/portfolio。
 - [MANHATTAN_HEIGHT_REPROJECT_SAFETY_CONTRACT_v1.md](paper_a_manhattan/MANHATTAN_HEIGHT_REPROJECT_SAFETY_CONTRACT_v1.md)
 - [MANHATTAN_HYPOTHESIS_FEEDBACK_LEDGER_SCHEMA_v1.md](paper_a_manhattan/MANHATTAN_HYPOTHESIS_FEEDBACK_LEDGER_SCHEMA_v1.md)：schema/contract；不是 training/update system。
 
@@ -95,7 +96,7 @@ Legacy M15 specs are background; current active selection remains HRC-gated and 
 - `tools/paper_a_manhattan/run_hrc_shadow_global_probe_planner.py` materializes the C6.5a read-only planner from the C6.5 spec and existing C6.4/input-pack evidence; it generates no candidate or geometry variant and does not change active runner, ranking, or C3.
 - `tools/paper_a_manhattan/run_hrc_source_artifact_readiness_audit.py` materializes the manifest-driven C6.5a.1 case/evidence source-readiness matrix with schema/identity/variant/row-count validation and a separate manual-evidence sidecar contract; it generates no candidate, proposal, or geometry.
 - `tools/paper_a_manhattan/run_hrc_evidence_input_materialization.py` materializes C6.5a.2 audit-only C2/C4/C5 and fail-closed contract inputs for validated existing original variants; it does not project candidate rows, rank candidates, or authorize C6.5b.
-- `tools/paper_a_manhattan/run_hrc_scoring_compliance_audit.py` materializes the C6.5a.3 read-only L0-L5 scoring compliance audit against the scoring contracts; it reports current ordering violations without changing evaluator, ranking, portfolio, or runner.
+- `tools/paper_a_manhattan/run_hrc_scoring_compliance_audit.py` materializes the C6.5a.3/4c L0-L5 compliance and selection regression audit; it records resolved layer-order violations and remaining evidence/manual-data blockers without authorizing C6.5b.
 - `tools/paper_a_manhattan/run_constrained_v0_shadow_audit.py` materializes read-only constrained_v0 shadow audits; it does not change active source or ranking.
 - `tools/paper_a_manhattan/run_constrained_v0_consolidation_audit.py` consolidates the two implemented constrained_v0 shadow families and their fail-closed/positive-fixture audits; it does not authorize a third family or active source replacement.
 - `tools/paper_a_manhattan/materialize_manhattan_feedback_ledger_entry.py` validates a core output plus expert review and writes one feedback-ledger JSONL entry; it does not train, update parameters, apply candidates, or write annotations.

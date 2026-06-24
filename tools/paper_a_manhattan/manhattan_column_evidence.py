@@ -192,6 +192,7 @@ def compute_column_evidence(
     reference = list(source["corners"])
     baseline = _pairs_to_corners(baseline_pairs, width, height)
     candidate = _pairs_to_corners(candidate_pairs, width, height)
+    candidate_specific = baseline != candidate
     try:
         reference_ceiling, reference_floor = _boundary(reference, width, height)
         baseline_ceiling, baseline_floor = _boundary(baseline, width, height)
@@ -228,6 +229,8 @@ def compute_column_evidence(
         **deltas,
         "visual_conflict_flags": conflicts,
         "image_edge_support_optional": None,
+        "candidate_preference_authorized": candidate_specific,
+        "candidate_specific_geometry": candidate_specific,
         "missing_fields": ["image_edge_support_optional"],
         "unavailable_reason": None,
         "scope_boundary": {

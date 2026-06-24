@@ -19,7 +19,7 @@
 | C3 | C3.1–C3.4b.3 complete；C3.5 two-family consolidation audit implemented | column-x real audit 与 height real audit 均 fail closed；height positive fixture 仅验证 explicit after-y shadow contract。两个 family 均不接入 active selection；其余三个 family 冻结为 missing，`legacy_m1528` 仍是唯一 active source。 |
 | C4 | C4-lite implemented | runner 对已有 HoHoNet proposal 执行 source inventory/parser probe，并物化 corner column、floor/ceiling boundary 与 seam delta；缺失、歧义或合同异常时 fail-closed 为 unavailable，不训练模型、不写回。 |
 | C5 | C5-lite plane proxy v0 implemented | evaluator 已物化独立 `plane_proxy_metrics`：复用 direction-family、同族平行 residual、dominant height cluster 与 floorprint residual 形成 geometry proxy。它不是 depth model、不是 GeoLayout reproduction、不是 C4 evidence layer；C6.2 仅把其中 geometry diagnostics 用于分层排序。 |
-| C6 | C6.5a.3 scoring compliance audit implemented；compliance partial；still audit-blocked | L0 hard-gate priority and L5 legacy exclusion are compliant, but L1 direction ordering can precede unresolved/turn/local structure, global L3 height precedes L2 evidence, and portfolio Manhattan selection mixes C5 plane proxy into the L1 key. C4 for 2369/2389 remains baseline-only and cannot authorize candidate preference. |
+| C6 | C6.5a.4a spec + 4b fixture contract + 4c minimal implementation completed；still audit-blocked | Active key now follows L0→L5, L1 structural metrics precede direction residuals, L2 has availability/conflict/delta gates, C5 moved out of best_manhattan_feasible, and L4 supports a manual-evidence gate. Default critical bucket selections did not drift. Compliance remains partial because candidate-specific C4 and manual sidecars are incomplete. |
 | C7 | blocked | legacy `manhattan_m1527_semantic_direct_search.py` 存在 Hooke–Jeeves 搜索，但新 geometry-normalized MADS/Hooke–Jeeves 在 evaluator 稳定前不得启动。 |
 | C8 | 仅记录系统 | feedback ledger schema 与 `materialize_manhattan_feedback_ledger_entry.py` 可保留；不得进入训练、参数更新或自动应用系统。 |
 | C9 | blocked | 未发现 Adaptive Parameter Update 实现；不得启动。 |
@@ -27,7 +27,7 @@
 
 ## 3. 唯一允许的下一步
 
-C6.5a.3 compliance 结论为 `partial`，不是通过：L0 与 accepted/downstream 阻断安全，legacy score 不进入 active ranking；但 L1/L2/L3 层序和 L4 manual evidence 仍有 blocker。C6.5b 未授权，C6.5a.4 evaluator hardening spec 也暂未授权；先收口 compliance findings。C3 shadow expansion remains blocked；不得接入 active runner selection，不得替换 `legacy_m1528`，不得产生 accepted/downstream recommendation。C7/C9/C10 继续 blocked。
+C6.5a.4a/4b/4c 已完成：spec、fixture-based compliance contract 与最小 layered-key/portfolio implementation 已落地。默认 case 的 `best_manhattan_feasible` / `best_balanced` / `best_height_consistent` 仍为 0017，short-wall 仍为 0001，low-movement 仍为 0070；accepted/downstream 继续 false。当前 compliance 仍为 `partial`，因为 2369/2389 没有 candidate-specific C4 projection delta，manual sidecar 也未完成。下一步只允许 C6.5a.4d post-change scoring compliance and selection audit；C6.5b、C3 shadow expansion、C7/C9/C10 继续 blocked。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
@@ -50,6 +50,9 @@ C6.5a.3 compliance 结论为 `partial`，不是通过：L0 与 accepted/downstre
 - `tools/paper_a_manhattan/run_hrc_source_artifact_readiness_audit.py`：C6.5a.1 manifest-driven source readiness audit；校验 schema/case identity/variant/row count，区分 projection height 与 candidate-row height，并引用独立 manual evidence sidecar schema；不生成 candidate/proposal/geometry，不改 active runner/ranking/C3。
 - `tools/paper_a_manhattan/run_hrc_evidence_input_materialization.py`：C6.5a.2 audit-only evidence input materializer；只处理 readiness audit 标记为 materializable 的 2369/2389 输入，复用 original variant 物化 C2/C4/C5/contract baseline diagnostics，不投影或修改 candidate rows，不改 active runner/ranking/C3。
 - `tools/paper_a_manhattan/run_hrc_scoring_compliance_audit.py`：C6.5a.3 read-only scoring compliance audit；映射 evaluator/ranking fields 到 L0-L5，记录层序违规和 accepted gate，完全不改 evaluator/ranking/portfolio/runner。
+- `docs/paper_a_manhattan/HRC_C6_5A_4_SCORING_EVALUATOR_HARDENING_SPEC_v1.md`：C6.5a.4 spec-only hardening contract；定义未来 L0–L5 key 与 gate 改造，不构成实现授权。
+- `tests/fixtures/paper_a_manhattan/hrc_scoring_layer_compliance_v1.json` 与 `tests/test_hrc_scoring_layer_hardening_contract.py`：C6.5a.4b fixture-based contract；锁定 hard gate、L1/L2/L3/L4/L5 层序及 legacy exclusion。
+- `tools/paper_a_manhattan/manhattan_constrained_hypothesis_evaluator.py` 与 `manhattan_hypothesis_portfolio.py`：C6.5a.4c 最小实现；共享 L0–L5 layer key，保持 bucket 集合与 recommendation authorization 不变。
 - `tools/paper_a_manhattan/manhattan_candidate_source_interface.py`：C3.1 candidate source 最小字段合同与校验。
 - `tools/paper_a_manhattan/manhattan_legacy_m1528_candidate_source.py`：C3.1 legacy wrapper；仅调用既有 M15.28 action library。
 - `tools/paper_a_manhattan/manhattan_constrained_v0_candidate_source.py`：C3.3 contract-only shadow skeleton；固定输出空 candidate set，无 active runner role。

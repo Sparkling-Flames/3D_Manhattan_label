@@ -452,6 +452,10 @@ def _evidence(variant: Mapping[str, Any]) -> dict[str, Any]:
         "evidence_status": status,
         "evidence_version": source.get("evidence_version"),
         "source_provenance": source.get("source_provenance"),
+        "candidate_preference_authorized": bool(
+            source.get("candidate_preference_authorized", status == "available")
+        ),
+        "candidate_specific_geometry": source.get("candidate_specific_geometry"),
         "unavailable_reason": source.get("unavailable_reason"),
         "missing_fields": list(source.get("missing_fields") or [field for field in required if source.get(field) is None]),
     }
@@ -644,6 +648,14 @@ def evaluate_hypothesis(
         or height["height_outlier_l1"] < baseline_height_l1 - 1e-9
     )
     evidence = _evidence(candidate_variant)
+    manual_evidence = dict(
+        candidate_variant.get("manual_evidence")
+        or {
+            "required": False,
+            "status": "not_required",
+            "schema_version": None,
+        }
+    )
     if metric_errors:
         decision_class = "diagnostic_only_incomplete_metrics"
     elif not feasibility["hard_gate_passed"]:
@@ -668,6 +680,7 @@ def evaluate_hypothesis(
         "layout_plausibility": plausibility,
         "column_evidence": evidence,
         "evidence_consistency": evidence,
+        "manual_evidence": manual_evidence,
         "movement_edit_cost": movement,
         "legacy_score_breakdown": legacy,
         "local_score_total": legacy.get("local_score_total"),
@@ -682,37 +695,96 @@ def evaluate_hypothesis(
     }
 
 
-def build_hypothesis_ranking_key(evaluation: Mapping[str, Any]) -> tuple[Any, ...]:
-    """Lexicographic structured ranking key; legacy score is excluded from active ranking."""
+def build_hypothesis_ranking_layers(
+    evaluation: Mapping[str, Any],
+) -> dict[str, tuple[Any, ...]]:
+    """Return explicit L0-L5 lexicographic groups for active ranking."""
     feasibility = evaluation["feasibility"]
     manhattan = evaluation["manhattan_feasibility"]
     height = evaluation["height_consistency"]
     evidence = evaluation["evidence_consistency"]
+    plane = evaluation.get("plane_proxy_metrics", {})
     plausibility = evaluation["layout_plausibility"]
     movement = evaluation["movement_edit_cost"]
-    evidence_regression = 0
-    if evidence["evidence_status"] != "unavailable":
-        numeric_deltas = [evidence.get(name) for name in ("hohonet_floor_boundary_rmse_delta", "hohonet_ceiling_boundary_rmse_delta", "candidate_corner_column_delta", "seam_consistency_delta")]
-        evidence_regression = sum(float(value) > 0 for value in numeric_deltas if isinstance(value, (int, float))) + bool(evidence.get("visual_conflict_flags"))
+    manual = evaluation.get("manual_evidence", {})
     direction = manhattan.get("direction_family_fit")
     parallel = manhattan.get("parallel_family_residual")
     direction_summary = direction.get("residual_summary", {}) if isinstance(direction, Mapping) else {}
-    return (
-        not bool(feasibility["hard_gate_passed"]),
-        direction is None,
-        float(direction_summary.get("max_deg", math.inf)),
-        float(direction_summary.get("median_deg", math.inf)),
-        parallel is None,
-        float(parallel.get("max_deg", math.inf)) if isinstance(parallel, Mapping) else math.inf,
-        float(parallel.get("median_deg", math.inf)) if isinstance(parallel, Mapping) else math.inf,
-        int(manhattan["unresolved_edge_count"]),
-        float(manhattan["wall_residual_max"]),
-        float(manhattan["wall_residual_median"]),
-        float(height["height_outlier_l1"]),
-        evidence_regression,
-        len(plausibility["short_wall_collapsed"]),
-        len(plausibility["new_short_wall_created"]),
-        max(0.0, float(plausibility["short_wall_deficit_delta"])),
-        float(movement["movement_l1_normalized"]),
-        float(movement["manual_adjustment_cost_proxy"]),
+    deltas = tuple(
+        float(evidence.get(name))
+        if isinstance(evidence.get(name), (int, float))
+        else math.inf
+        for name in (
+            "candidate_corner_column_delta",
+            "hohonet_floor_boundary_rmse_delta",
+            "hohonet_ceiling_boundary_rmse_delta",
+            "seam_consistency_delta",
+        )
     )
+    finite_deltas = [value for value in deltas if math.isfinite(value)]
+    plane_parallel = plane.get("wall_plane_parallel_consistency", {})
+    plane_orthogonal = plane.get("wall_plane_orthogonal_consistency", {})
+    floor_plane = plane.get("floor_polygon_plane_proxy_residual", {})
+    manual_blocked = bool(manual.get("required")) and manual.get("status") != "available"
+
+    metric = lambda value: float(value) if isinstance(value, (int, float)) else math.inf
+    return {
+        "L0": (not bool(feasibility["hard_gate_passed"]),),
+        "L1": (
+            int(manhattan["unresolved_edge_count"]),
+            manhattan.get("turn_residual_max") is None,
+            metric(manhattan.get("turn_residual_max")),
+            metric(manhattan.get("turn_residual_median")),
+            manhattan.get("local_window_residual") is None,
+            metric(manhattan.get("local_window_residual")),
+            manhattan.get("floor_ceiling_column_consistency") is None,
+            metric(manhattan.get("floor_ceiling_column_consistency")),
+            direction is None,
+            parallel is None,
+            metric(direction_summary.get("max_deg")),
+            metric(direction_summary.get("median_deg")),
+            metric(parallel.get("max_deg")) if isinstance(parallel, Mapping) else math.inf,
+            metric(parallel.get("median_deg")) if isinstance(parallel, Mapping) else math.inf,
+            metric(manhattan.get("wall_residual_max")),
+            metric(manhattan.get("wall_residual_median")),
+        ),
+        "L2": (
+            evidence.get("evidence_status") != "available"
+            or not evidence.get("candidate_preference_authorized", False),
+            bool(evidence.get("visual_conflict_flags")),
+            len(evidence.get("visual_conflict_flags") or []),
+            sum(value > 0 for value in finite_deltas),
+            sum(max(0.0, value) for value in finite_deltas),
+            *deltas,
+        ),
+        "L3": (
+            plane_parallel.get("status") != "available",
+            metric(plane_parallel.get("max_deg")),
+            metric(plane_parallel.get("median_deg")),
+            plane_orthogonal.get("status") != "available",
+            metric(plane_orthogonal.get("orthogonal_residual_deg")),
+            floor_plane.get("status") != "available",
+            metric(floor_plane.get("wall_residual_max_deg")),
+            metric(height.get("height_outlier_l1")),
+            metric(height.get("max_height_residual")),
+            metric(height.get("height_cluster_mad")),
+        ),
+        "L4": (
+            manual_blocked,
+            len(plausibility["short_wall_collapsed"]),
+            len(plausibility["new_short_wall_created"]),
+            max(0.0, float(plausibility["short_wall_deficit_delta"])),
+        ),
+        "L5": (
+            metric(movement.get("movement_l1_normalized")),
+            int(movement.get("changed_pair_count", 0)),
+            int(movement.get("changed_endpoint_count", 0)),
+            metric(movement.get("manual_adjustment_cost_proxy")),
+        ),
+    }
+
+
+def build_hypothesis_ranking_key(evaluation: Mapping[str, Any]) -> tuple[Any, ...]:
+    """Lexicographic L0-L5 ranking key; legacy score is excluded."""
+    layers = build_hypothesis_ranking_layers(evaluation)
+    return tuple(value for layer in ("L0", "L1", "L2", "L3", "L4", "L5") for value in layers[layer])
