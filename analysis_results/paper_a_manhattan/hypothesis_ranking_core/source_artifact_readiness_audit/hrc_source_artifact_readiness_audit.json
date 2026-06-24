@@ -1,0 +1,938 @@
+{
+  "schema_version": "hrc_source_artifact_readiness_audit_v1",
+  "audit_only": true,
+  "generated_candidate": false,
+  "generated_proposal_manifest": false,
+  "generated_geometry_variant": false,
+  "active_runner_changed": false,
+  "ranking_changed": false,
+  "c3_changed": false,
+  "accepted": false,
+  "downstream_recommendation": false,
+  "annotation_writeback": false,
+  "cases": {
+    "task218_ann3741": {
+      "case_name": "task218_ann3741",
+      "candidate_input_status": "available",
+      "source_readiness": "partial",
+      "evidence_readiness_matrix": {
+        "projection_metrics": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann3741/projection_metrics.json",
+          "sha256": "df4d615ec10bf112ab1a82f17f49cb93458d020195b14ec4097abf5888d3324b",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "floorprint_or_depth_proxy": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann3741/projection_metrics.json",
+          "sha256": "df4d615ec10bf112ab1a82f17f49cb93458d020195b14ec4097abf5888d3324b",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "direction_family_fit": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+          "sha256": "c70c9269ee1d62ee1657c46ddd7c9331d40900083d693bb43622c28cf3f77845",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "parallel_family_residual": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+          "sha256": "c70c9269ee1d62ee1657c46ddd7c9331d40900083d693bb43622c28cf3f77845",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "explicit_column_identity": {
+          "status": "requires_manual_visual_evidence",
+          "source_artifact": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+          "sha256": "c70c9269ee1d62ee1657c46ddd7c9331d40900083d693bb43622c28cf3f77845",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": "expert must confirm pair-level column identity; C4 diagnostics are not explicit identity"
+        },
+        "keep_distinct_contract": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+          "sha256": "c70c9269ee1d62ee1657c46ddd7c9331d40900083d693bb43622c28cf3f77845",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "short_wall_diagnostics": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann3741/projection_metrics.json",
+          "sha256": "df4d615ec10bf112ab1a82f17f49cb93458d020195b14ec4097abf5888d3324b",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "height_evidence": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+          "sha256": "c70c9269ee1d62ee1657c46ddd7c9331d40900083d693bb43622c28cf3f77845",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "case_contract": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+          "sha256": "c70c9269ee1d62ee1657c46ddd7c9331d40900083d693bb43622c28cf3f77845",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "constrained_evaluation": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+          "sha256": "c70c9269ee1d62ee1657c46ddd7c9331d40900083d693bb43622c28cf3f77845",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "rankable_by_current_HRC": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+          "sha256": "c70c9269ee1d62ee1657c46ddd7c9331d40900083d693bb43622c28cf3f77845",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "source_candidate_rows": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+          "sha256": "c70c9269ee1d62ee1657c46ddd7c9331d40900083d693bb43622c28cf3f77845",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "verified_order_record": {
+          "status": "not_applicable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "c4_evidence_diagnostics": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+          "sha256": "c70c9269ee1d62ee1657c46ddd7c9331d40900083d693bb43622c28cf3f77845",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "c5_plane_proxy_metrics": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+          "sha256": "c70c9269ee1d62ee1657c46ddd7c9331d40900083d693bb43622c28cf3f77845",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        }
+      },
+      "probe_family_readiness": {
+        "global_height_reproject": {
+          "ready": true,
+          "pending_inputs": [],
+          "execution_allowed": false
+        },
+        "direction_family_azimuth_snap": {
+          "ready": true,
+          "pending_inputs": [],
+          "execution_allowed": false
+        },
+        "floor_depth_balance_global": {
+          "ready": true,
+          "pending_inputs": [],
+          "execution_allowed": false
+        },
+        "multi_pair_x_alignment": {
+          "ready": false,
+          "pending_inputs": [
+            "explicit_column_identity"
+          ],
+          "execution_allowed": false
+        },
+        "short_wall_preserving_floorprint_balance": {
+          "ready": true,
+          "pending_inputs": [],
+          "execution_allowed": false
+        }
+      },
+      "ready_for_c6_5b": false,
+      "audit_only": true,
+      "accepted": false,
+      "downstream_recommendation": false,
+      "annotation_writeback": false
+    },
+    "task218_ann2369": {
+      "case_name": "task218_ann2369",
+      "candidate_input_status": "available",
+      "source_readiness": "partial",
+      "evidence_readiness_matrix": {
+        "projection_metrics": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+          "sha256": "0ad2f6d7d7afb0cc7948f413abb9f0ba68e09b51882185bb56b82b8afe3a893c",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "floorprint_or_depth_proxy": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+          "sha256": "0ad2f6d7d7afb0cc7948f413abb9f0ba68e09b51882185bb56b82b8afe3a893c",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "direction_family_fit": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+          "sha256": "0ad2f6d7d7afb0cc7948f413abb9f0ba68e09b51882185bb56b82b8afe3a893c",
+          "materialization_hint": "run existing C2 evaluator over the original projection variant",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "parallel_family_residual": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+          "sha256": "0ad2f6d7d7afb0cc7948f413abb9f0ba68e09b51882185bb56b82b8afe3a893c",
+          "materialization_hint": "run existing C2 direction-family assignment over projection walls",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "explicit_column_identity": {
+          "status": "requires_manual_visual_evidence",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task218_ann2369_m1518_3_candidate_semantics_output.json",
+          "sha256": "ece4c8497471cb2b1320b2ef0b7bfbf568b410ed175dce2ad166e49c52796656",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": "expert must confirm pair-level column identity; C4 diagnostics are not explicit identity"
+        },
+        "keep_distinct_contract": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+          "sha256": "0ad2f6d7d7afb0cc7948f413abb9f0ba68e09b51882185bb56b82b8afe3a893c",
+          "materialization_hint": "materialize keep-distinct evidence from dense_but_distinct projection relations",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "short_wall_diagnostics": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+          "sha256": "0ad2f6d7d7afb0cc7948f413abb9f0ba68e09b51882185bb56b82b8afe3a893c",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "height_evidence": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+          "sha256": "0ad2f6d7d7afb0cc7948f413abb9f0ba68e09b51882185bb56b82b8afe3a893c",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "case_contract": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+          "sha256": "0ad2f6d7d7afb0cc7948f413abb9f0ba68e09b51882185bb56b82b8afe3a893c",
+          "materialization_hint": "run existing fail-closed build_case_contract over usable projection metrics",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "constrained_evaluation": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task218_ann2369_m1518_3_candidate_semantics_output.json",
+          "sha256": "ece4c8497471cb2b1320b2ef0b7bfbf568b410ed175dce2ad166e49c52796656",
+          "materialization_hint": "evaluate existing candidate rows after case-contract materialization",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "rankable_by_current_HRC": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task218_ann2369_m1518_3_candidate_semantics_output.json",
+          "sha256": "ece4c8497471cb2b1320b2ef0b7bfbf568b410ed175dce2ad166e49c52796656",
+          "materialization_hint": "materialize case contract and constrained evaluations; do not change active runner",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "source_candidate_rows": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task218_ann2369_m1518_3_candidate_semantics_output.json",
+          "sha256": "ece4c8497471cb2b1320b2ef0b7bfbf568b410ed175dce2ad166e49c52796656",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "verified_order_record": {
+          "status": "not_applicable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "c4_evidence_diagnostics": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.txt",
+          "sha256": "8432e6915a9c81724c11282779801460c822c4cad7d6cbf897483090a71eafc6",
+          "materialization_hint": "run existing C4-lite parser/evaluator against existing ordered pairs",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "c5_plane_proxy_metrics": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+          "sha256": "0ad2f6d7d7afb0cc7948f413abb9f0ba68e09b51882185bb56b82b8afe3a893c",
+          "materialization_hint": "run existing C2/C5 evaluator over projection metrics",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        }
+      },
+      "probe_family_readiness": {
+        "global_height_reproject": {
+          "ready": false,
+          "pending_inputs": [
+            "case_contract"
+          ],
+          "execution_allowed": false
+        },
+        "direction_family_azimuth_snap": {
+          "ready": false,
+          "pending_inputs": [
+            "direction_family_fit",
+            "parallel_family_residual"
+          ],
+          "execution_allowed": false
+        },
+        "floor_depth_balance_global": {
+          "ready": true,
+          "pending_inputs": [],
+          "execution_allowed": false
+        },
+        "multi_pair_x_alignment": {
+          "ready": false,
+          "pending_inputs": [
+            "explicit_column_identity",
+            "keep_distinct_contract"
+          ],
+          "execution_allowed": false
+        },
+        "short_wall_preserving_floorprint_balance": {
+          "ready": false,
+          "pending_inputs": [
+            "keep_distinct_contract"
+          ],
+          "execution_allowed": false
+        }
+      },
+      "ready_for_c6_5b": false,
+      "audit_only": true,
+      "accepted": false,
+      "downstream_recommendation": false,
+      "annotation_writeback": false
+    },
+    "task238_ann2389": {
+      "case_name": "task238_ann2389",
+      "candidate_input_status": "available",
+      "source_readiness": "partial",
+      "evidence_readiness_matrix": {
+        "projection_metrics": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
+          "sha256": "a525bf4afc6dee5cbffdfc56b6b0b3b7040a629591aa02a81390ab23fd9f0474",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "floorprint_or_depth_proxy": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
+          "sha256": "a525bf4afc6dee5cbffdfc56b6b0b3b7040a629591aa02a81390ab23fd9f0474",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "direction_family_fit": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
+          "sha256": "a525bf4afc6dee5cbffdfc56b6b0b3b7040a629591aa02a81390ab23fd9f0474",
+          "materialization_hint": "run existing C2 evaluator over the original projection variant",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "parallel_family_residual": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
+          "sha256": "a525bf4afc6dee5cbffdfc56b6b0b3b7040a629591aa02a81390ab23fd9f0474",
+          "materialization_hint": "run existing C2 direction-family assignment over projection walls",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "explicit_column_identity": {
+          "status": "requires_manual_visual_evidence",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task238_ann2389_m1518_3_candidate_semantics_output.json",
+          "sha256": "5f89a031e3c38eaac3a04c75d35ba8ae751fd56cbe79719ffaffb24292beb1b6",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": "expert must confirm pair-level column identity; C4 diagnostics are not explicit identity"
+        },
+        "keep_distinct_contract": {
+          "status": "requires_manual_visual_evidence",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task238_ann2389_m1518_3_candidate_semantics_output.json",
+          "sha256": "5f89a031e3c38eaac3a04c75d35ba8ae751fd56cbe79719ffaffb24292beb1b6",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": "expert keep-distinct assertion is required before multi-pair x/short-wall planning"
+        },
+        "short_wall_diagnostics": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
+          "sha256": "a525bf4afc6dee5cbffdfc56b6b0b3b7040a629591aa02a81390ab23fd9f0474",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "height_evidence": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
+          "sha256": "a525bf4afc6dee5cbffdfc56b6b0b3b7040a629591aa02a81390ab23fd9f0474",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "case_contract": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
+          "sha256": "a525bf4afc6dee5cbffdfc56b6b0b3b7040a629591aa02a81390ab23fd9f0474",
+          "materialization_hint": "run existing fail-closed build_case_contract over usable projection metrics",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "constrained_evaluation": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task238_ann2389_m1518_3_candidate_semantics_output.json",
+          "sha256": "5f89a031e3c38eaac3a04c75d35ba8ae751fd56cbe79719ffaffb24292beb1b6",
+          "materialization_hint": "evaluate existing candidate rows after case-contract materialization",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "rankable_by_current_HRC": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task238_ann2389_m1518_3_candidate_semantics_output.json",
+          "sha256": "5f89a031e3c38eaac3a04c75d35ba8ae751fd56cbe79719ffaffb24292beb1b6",
+          "materialization_hint": "materialize case contract and constrained evaluations; do not change active runner",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "source_candidate_rows": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task238_ann2389_m1518_3_candidate_semantics_output.json",
+          "sha256": "5f89a031e3c38eaac3a04c75d35ba8ae751fd56cbe79719ffaffb24292beb1b6",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "verified_order_record": {
+          "status": "not_applicable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "c4_evidence_diagnostics": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34/b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15.txt",
+          "sha256": "858f0be5d1d552336fdcd2bd94f0aadb2256d949f4f562ae68de1546b2ed0464",
+          "materialization_hint": "run existing C4-lite parser/evaluator against existing ordered pairs",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "c5_plane_proxy_metrics": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
+          "sha256": "a525bf4afc6dee5cbffdfc56b6b0b3b7040a629591aa02a81390ab23fd9f0474",
+          "materialization_hint": "run existing C2/C5 evaluator over projection metrics",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        }
+      },
+      "probe_family_readiness": {
+        "global_height_reproject": {
+          "ready": false,
+          "pending_inputs": [
+            "case_contract"
+          ],
+          "execution_allowed": false
+        },
+        "direction_family_azimuth_snap": {
+          "ready": false,
+          "pending_inputs": [
+            "direction_family_fit",
+            "parallel_family_residual"
+          ],
+          "execution_allowed": false
+        },
+        "floor_depth_balance_global": {
+          "ready": true,
+          "pending_inputs": [],
+          "execution_allowed": false
+        },
+        "multi_pair_x_alignment": {
+          "ready": false,
+          "pending_inputs": [
+            "explicit_column_identity",
+            "keep_distinct_contract"
+          ],
+          "execution_allowed": false
+        },
+        "short_wall_preserving_floorprint_balance": {
+          "ready": false,
+          "pending_inputs": [
+            "keep_distinct_contract"
+          ],
+          "execution_allowed": false
+        }
+      },
+      "ready_for_c6_5b": false,
+      "audit_only": true,
+      "accepted": false,
+      "downstream_recommendation": false,
+      "annotation_writeback": false
+    },
+    "gt75_task533": {
+      "case_name": "gt75_task533",
+      "candidate_input_status": "available",
+      "source_readiness": "partial",
+      "evidence_readiness_matrix": {
+        "projection_metrics": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "no projection metrics source artifact",
+          "manual_evidence_requirement": null
+        },
+        "floorprint_or_depth_proxy": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "no usable floorprint/depth proxy artifact",
+          "manual_evidence_requirement": null
+        },
+        "direction_family_fit": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "direction headings are unavailable",
+          "manual_evidence_requirement": null
+        },
+        "parallel_family_residual": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "direction-family assignments cannot be formed",
+          "manual_evidence_requirement": null
+        },
+        "explicit_column_identity": {
+          "status": "requires_manual_visual_evidence",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/task533_gt75/m1518_3_candidate_semantics/candidate_b_annotation_3425_m1518_3_candidate_semantics_output.json",
+          "sha256": "c02cff2182491ded1f22c037906c7aa5d8cc6abd974b7b114e18a6b74c3c1f4e",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": "expert must confirm pair-level column identity; C4 diagnostics are not explicit identity"
+        },
+        "keep_distinct_contract": {
+          "status": "requires_manual_visual_evidence",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/task533_gt75/m1518_3_candidate_semantics/candidate_b_annotation_3425_m1518_3_candidate_semantics_output.json",
+          "sha256": "c02cff2182491ded1f22c037906c7aa5d8cc6abd974b7b114e18a6b74c3c1f4e",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": "expert keep-distinct assertion is required before multi-pair x/short-wall planning"
+        },
+        "short_wall_diagnostics": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "no projection floorprint short-wall diagnostics",
+          "manual_evidence_requirement": null
+        },
+        "height_evidence": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/task533_gt75/m1518_3_candidate_semantics/candidate_b_annotation_3425_m1518_3_candidate_semantics_output.json",
+          "sha256": "c02cff2182491ded1f22c037906c7aa5d8cc6abd974b7b114e18a6b74c3c1f4e",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "case_contract": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "case contract would fail closed without usable projection metrics",
+          "manual_evidence_requirement": null
+        },
+        "constrained_evaluation": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "candidate rows and projection/contract inputs are not jointly available",
+          "manual_evidence_requirement": null
+        },
+        "rankable_by_current_HRC": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "current HRC ranking inputs are incomplete",
+          "manual_evidence_requirement": null
+        },
+        "source_candidate_rows": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/task533_gt75/m1518_3_candidate_semantics/candidate_b_annotation_3425_m1518_3_candidate_semantics_output.json",
+          "sha256": "c02cff2182491ded1f22c037906c7aa5d8cc6abd974b7b114e18a6b74c3c1f4e",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "verified_order_record": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/single_image_manual_test/task533_gt75/candidate_b_annotation_3425_input_verified_order.json",
+          "sha256": "1ea7602c9cd32671117e7911e9589b2c1350f0aa9763b49b89eee2657486fc3c",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "c4_evidence_diagnostics": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34/yqstnuAEVhm_e3face7b2196414d95ed97151aa13058.txt",
+          "sha256": "8062cfe75e480857d931d90124fc65f637983ef16c0bea2aaddef598ed82fcd4",
+          "materialization_hint": "run existing C4-lite parser/evaluator against existing ordered pairs",
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "c5_plane_proxy_metrics": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "projection metrics required for C5 geometry proxy",
+          "manual_evidence_requirement": null
+        }
+      },
+      "probe_family_readiness": {
+        "global_height_reproject": {
+          "ready": false,
+          "pending_inputs": [
+            "projection_metrics",
+            "case_contract"
+          ],
+          "execution_allowed": false
+        },
+        "direction_family_azimuth_snap": {
+          "ready": false,
+          "pending_inputs": [
+            "projection_metrics",
+            "direction_family_fit",
+            "parallel_family_residual"
+          ],
+          "execution_allowed": false
+        },
+        "floor_depth_balance_global": {
+          "ready": false,
+          "pending_inputs": [
+            "projection_metrics",
+            "floorprint_or_depth_proxy"
+          ],
+          "execution_allowed": false
+        },
+        "multi_pair_x_alignment": {
+          "ready": false,
+          "pending_inputs": [
+            "projection_metrics",
+            "explicit_column_identity",
+            "keep_distinct_contract"
+          ],
+          "execution_allowed": false
+        },
+        "short_wall_preserving_floorprint_balance": {
+          "ready": false,
+          "pending_inputs": [
+            "projection_metrics",
+            "floorprint_or_depth_proxy",
+            "short_wall_diagnostics",
+            "keep_distinct_contract"
+          ],
+          "execution_allowed": false
+        }
+      },
+      "ready_for_c6_5b": false,
+      "audit_only": true,
+      "accepted": false,
+      "downstream_recommendation": false,
+      "annotation_writeback": false
+    },
+    "ordinary_compatible": {
+      "case_name": "ordinary_compatible",
+      "candidate_input_status": "unavailable",
+      "source_readiness": "source_blocked",
+      "evidence_readiness_matrix": {
+        "projection_metrics": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "no projection metrics source artifact",
+          "manual_evidence_requirement": null
+        },
+        "floorprint_or_depth_proxy": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "no usable floorprint/depth proxy artifact",
+          "manual_evidence_requirement": null
+        },
+        "direction_family_fit": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "direction headings are unavailable",
+          "manual_evidence_requirement": null
+        },
+        "parallel_family_residual": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "direction-family assignments cannot be formed",
+          "manual_evidence_requirement": null
+        },
+        "explicit_column_identity": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "ordinary-compatible source is blocked",
+          "manual_evidence_requirement": null
+        },
+        "keep_distinct_contract": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "no keep-distinct contract or evidence source",
+          "manual_evidence_requirement": null
+        },
+        "short_wall_diagnostics": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "no projection floorprint short-wall diagnostics",
+          "manual_evidence_requirement": null
+        },
+        "height_evidence": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "no height projection or candidate evidence",
+          "manual_evidence_requirement": null
+        },
+        "case_contract": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "case contract would fail closed without usable projection metrics",
+          "manual_evidence_requirement": null
+        },
+        "constrained_evaluation": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "candidate rows and projection/contract inputs are not jointly available",
+          "manual_evidence_requirement": null
+        },
+        "rankable_by_current_HRC": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "current HRC ranking inputs are incomplete",
+          "manual_evidence_requirement": null
+        },
+        "source_candidate_rows": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "no existing non-baseline candidate rows",
+          "manual_evidence_requirement": null
+        },
+        "verified_order_record": {
+          "status": "not_applicable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null
+        },
+        "c4_evidence_diagnostics": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "no usable C4-lite proposal plus ordered-pair source",
+          "manual_evidence_requirement": null
+        },
+        "c5_plane_proxy_metrics": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "projection metrics required for C5 geometry proxy",
+          "manual_evidence_requirement": null
+        }
+      },
+      "probe_family_readiness": {
+        "global_height_reproject": {
+          "ready": false,
+          "pending_inputs": [
+            "projection_metrics",
+            "height_evidence",
+            "case_contract"
+          ],
+          "execution_allowed": false
+        },
+        "direction_family_azimuth_snap": {
+          "ready": false,
+          "pending_inputs": [
+            "projection_metrics",
+            "direction_family_fit",
+            "parallel_family_residual"
+          ],
+          "execution_allowed": false
+        },
+        "floor_depth_balance_global": {
+          "ready": false,
+          "pending_inputs": [
+            "projection_metrics",
+            "floorprint_or_depth_proxy"
+          ],
+          "execution_allowed": false
+        },
+        "multi_pair_x_alignment": {
+          "ready": false,
+          "pending_inputs": [
+            "projection_metrics",
+            "explicit_column_identity",
+            "keep_distinct_contract"
+          ],
+          "execution_allowed": false
+        },
+        "short_wall_preserving_floorprint_balance": {
+          "ready": false,
+          "pending_inputs": [
+            "projection_metrics",
+            "floorprint_or_depth_proxy",
+            "short_wall_diagnostics",
+            "keep_distinct_contract"
+          ],
+          "execution_allowed": false
+        }
+      },
+      "ready_for_c6_5b": false,
+      "audit_only": true,
+      "accepted": false,
+      "downstream_recommendation": false,
+      "annotation_writeback": false
+    }
+  },
+  "ready_for_c6_5b_proposal_manifest": false,
+  "ready_cases": [],
+  "blocked_cases": [
+    "task218_ann3741",
+    "task218_ann2369",
+    "task238_ann2389",
+    "gt75_task533",
+    "ordinary_compatible"
+  ],
+  "materializable_inputs": [
+    "gt75_task533:c4_evidence_diagnostics",
+    "task218_ann2369:c4_evidence_diagnostics",
+    "task218_ann2369:c5_plane_proxy_metrics",
+    "task218_ann2369:case_contract",
+    "task218_ann2369:constrained_evaluation",
+    "task218_ann2369:direction_family_fit",
+    "task218_ann2369:keep_distinct_contract",
+    "task218_ann2369:parallel_family_residual",
+    "task218_ann2369:rankable_by_current_HRC",
+    "task238_ann2389:c4_evidence_diagnostics",
+    "task238_ann2389:c5_plane_proxy_metrics",
+    "task238_ann2389:case_contract",
+    "task238_ann2389:constrained_evaluation",
+    "task238_ann2389:direction_family_fit",
+    "task238_ann2389:parallel_family_residual",
+    "task238_ann2389:rankable_by_current_HRC"
+  ],
+  "manual_evidence_required": [
+    "gt75_task533:explicit_column_identity",
+    "gt75_task533:keep_distinct_contract",
+    "task218_ann2369:explicit_column_identity",
+    "task218_ann3741:explicit_column_identity",
+    "task238_ann2389:explicit_column_identity",
+    "task238_ann2389:keep_distinct_contract"
+  ],
+  "unavailable_inputs": [
+    "gt75_task533:c5_plane_proxy_metrics",
+    "gt75_task533:case_contract",
+    "gt75_task533:constrained_evaluation",
+    "gt75_task533:direction_family_fit",
+    "gt75_task533:floorprint_or_depth_proxy",
+    "gt75_task533:parallel_family_residual",
+    "gt75_task533:projection_metrics",
+    "gt75_task533:rankable_by_current_HRC",
+    "gt75_task533:short_wall_diagnostics",
+    "ordinary_compatible:c4_evidence_diagnostics",
+    "ordinary_compatible:c5_plane_proxy_metrics",
+    "ordinary_compatible:case_contract",
+    "ordinary_compatible:constrained_evaluation",
+    "ordinary_compatible:direction_family_fit",
+    "ordinary_compatible:explicit_column_identity",
+    "ordinary_compatible:floorprint_or_depth_proxy",
+    "ordinary_compatible:height_evidence",
+    "ordinary_compatible:keep_distinct_contract",
+    "ordinary_compatible:parallel_family_residual",
+    "ordinary_compatible:projection_metrics",
+    "ordinary_compatible:rankable_by_current_HRC",
+    "ordinary_compatible:short_wall_diagnostics",
+    "ordinary_compatible:source_candidate_rows"
+  ],
+  "recommended_next_step": "materialize available source artifacts",
+  "status_boundaries": {
+    "c3_shadow_expansion": "blocked",
+    "c7_optimizer": "blocked",
+    "c9_learning": "blocked",
+    "c10_ranker": "blocked"
+  }
+}
