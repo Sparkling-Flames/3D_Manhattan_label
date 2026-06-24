@@ -1,0 +1,275 @@
+{
+  "schema_version": "hrc_scoring_compliance_audit_v1",
+  "source_artifacts": [
+    {
+      "path": "docs/paper_a_manhattan/HRC_SCORING_LAYER_CONTRACT_v1.md",
+      "sha256": "03cd4c40cf1f86990ce059c66feed726228bb81afcc43d1213032da09d5929bd"
+    },
+    {
+      "path": "docs/paper_a_manhattan/评分如何制定.md",
+      "sha256": "18db909fd1cd1a1afe53bea03f566a48f9e61ebdda17d299065eea437bb87e3f"
+    },
+    {
+      "path": "tools/paper_a_manhattan/manhattan_constrained_hypothesis_evaluator.py",
+      "sha256": "33160f17b1c35bd61eb29a401dd83e55d7de56915764f2af7c6e3eca0f1bdeb5"
+    },
+    {
+      "path": "tools/paper_a_manhattan/manhattan_hypothesis_portfolio.py",
+      "sha256": "5d9622aba3e1d2b6c3c9548ce2dd9b5d7f1bec6ef46529fd55444a77b0003118"
+    },
+    {
+      "path": "tools/paper_a_manhattan/run_manhattan_hypothesis_ranking_core.py",
+      "sha256": "36f9c62921a2abdde2747050baf2acc7702aeb0b654d7ebf0c3f9d7b06df8de5"
+    },
+    {
+      "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/evidence_input_materialization/hrc_evidence_input_materialization.json",
+      "sha256": "2255467c1150cf043075b3ce752775bc020b94ea586435a04a51fd2bae8dbb2e"
+    }
+  ],
+  "layer_mapping": {
+    "L0": [
+      "feasibility.topology_valid",
+      "feasibility.projection_valid",
+      "feasibility.no_self_intersection",
+      "feasibility.no_pair_fold",
+      "feasibility.no_unapproved_order_mutation",
+      "feasibility.protected_pairs_not_moved",
+      "feasibility.keep_distinct_pairs_not_collapsed",
+      "feasibility.authorized_mutations_only",
+      "feasibility.wrap_or_seam_not_broken",
+      "feasibility.hard_gate_passed"
+    ],
+    "L1": [
+      "manhattan_feasibility.direction_family_fit",
+      "manhattan_feasibility.parallel_family_residual",
+      "manhattan_feasibility.turn_residual_max",
+      "manhattan_feasibility.turn_residual_median",
+      "manhattan_feasibility.unresolved_edge_count",
+      "manhattan_feasibility.local_window_residual",
+      "manhattan_feasibility.floor_ceiling_column_consistency",
+      "manhattan_feasibility.wall_residual_max",
+      "manhattan_feasibility.wall_residual_median"
+    ],
+    "L2": [
+      "evidence_consistency.evidence_status",
+      "evidence_consistency.visual_conflict_flags",
+      "evidence_consistency.hohonet_wallwall_peak_alignment",
+      "evidence_consistency.hohonet_floor_boundary_rmse_delta",
+      "evidence_consistency.hohonet_ceiling_boundary_rmse_delta",
+      "evidence_consistency.candidate_corner_column_delta",
+      "evidence_consistency.seam_consistency_delta"
+    ],
+    "L3": [
+      "plane_proxy_metrics",
+      "height_consistency.dominant_height_h_star",
+      "height_consistency.height_cluster_mad",
+      "height_consistency.max_height_residual",
+      "height_consistency.height_outlier_l1",
+      "height_consistency.height_outlier_pairs"
+    ],
+    "L4": [
+      "layout_plausibility.existing_short_wall_preserved",
+      "layout_plausibility.short_wall_collapsed",
+      "layout_plausibility.new_short_wall_created",
+      "layout_plausibility.keep_distinct_margin",
+      "case_contract.keep_distinct_pairs",
+      "manual_evidence_sidecar"
+    ],
+    "L5": [
+      "movement_edit_cost.movement_l1_normalized",
+      "movement_edit_cost.changed_pair_count",
+      "movement_edit_cost.manual_adjustment_cost_proxy",
+      "legacy_diagnostics.local_score_total"
+    ]
+  },
+  "ranking_key_mapping": [
+    {
+      "index": 0,
+      "field": "not hard_gate_passed",
+      "layer": "L0"
+    },
+    {
+      "index": 1,
+      "field": "direction_family_missing",
+      "layer": "L1"
+    },
+    {
+      "index": 2,
+      "field": "direction_family_max_deg",
+      "layer": "L1"
+    },
+    {
+      "index": 3,
+      "field": "direction_family_median_deg",
+      "layer": "L1"
+    },
+    {
+      "index": 4,
+      "field": "parallel_family_missing",
+      "layer": "L1"
+    },
+    {
+      "index": 5,
+      "field": "parallel_family_max_deg",
+      "layer": "L1"
+    },
+    {
+      "index": 6,
+      "field": "parallel_family_median_deg",
+      "layer": "L1"
+    },
+    {
+      "index": 7,
+      "field": "unresolved_edge_count",
+      "layer": "L1"
+    },
+    {
+      "index": 8,
+      "field": "wall_residual_max",
+      "layer": "L1"
+    },
+    {
+      "index": 9,
+      "field": "wall_residual_median",
+      "layer": "L1"
+    },
+    {
+      "index": 10,
+      "field": "height_outlier_l1",
+      "layer": "L3"
+    },
+    {
+      "index": 11,
+      "field": "evidence_regression",
+      "layer": "L2"
+    },
+    {
+      "index": 12,
+      "field": "short_wall_collapsed_count",
+      "layer": "L4"
+    },
+    {
+      "index": 13,
+      "field": "new_short_wall_count",
+      "layer": "L4"
+    },
+    {
+      "index": 14,
+      "field": "short_wall_deficit_delta",
+      "layer": "L4"
+    },
+    {
+      "index": 15,
+      "field": "movement_l1_normalized",
+      "layer": "L5"
+    },
+    {
+      "index": 16,
+      "field": "manual_adjustment_cost_proxy",
+      "layer": "L5"
+    }
+  ],
+  "contract_compliance_status": "partial",
+  "layer_audits": {
+    "L0": {
+      "status": "complete",
+      "hard_gate_is_first_ranking_key_item": true,
+      "hard_gate_failures_in_suppressed_candidates": true,
+      "residual_height_or_movement_can_override_hard_gate": false
+    },
+    "L1": {
+      "status": "partial",
+      "multi_metric_fields_exist": true,
+      "single_direction_metric_can_dominate_current_global_key": true,
+      "turn_and_local_residual_present_in_global_key": false
+    },
+    "L2": {
+      "status": "partial",
+      "accepted_requires_runner_authorization": true,
+      "current_accepted_gate_safe": true,
+      "baseline_only_diagnostics": true,
+      "candidate_preference_authorized": false
+    },
+    "L3": {
+      "status": "partial",
+      "c5_is_geometry_proxy_only": true,
+      "c5_is_c4_evidence": false,
+      "height_compared_after_l2_in_global_key": false
+    },
+    "L4": {
+      "status": "partial",
+      "short_wall_and_keep_distinct_fields_exist": true,
+      "manual_sidecar_complete": false
+    },
+    "L5": {
+      "status": "complete",
+      "movement_is_final_active_tie_break": true,
+      "legacy_score_in_active_ranking_key": false,
+      "legacy_score_role": "diagnostic_only"
+    }
+  },
+  "layer_order_violations": [
+    {
+      "code": "L1_DIRECTION_PRECEDES_MULTI_METRIC_STRUCTURE",
+      "severity": "high",
+      "location": "build_hypothesis_ranking_key indices 2-7",
+      "finding": "direction max/median and parallel residual precede unresolved_edge_count; turn_residual and local_window_residual are absent from the global key"
+    },
+    {
+      "code": "L2_AFTER_L3_IN_GLOBAL_KEY",
+      "severity": "high",
+      "location": "build_hypothesis_ranking_key indices 10-11",
+      "finding": "height_outlier_l1 (L3) is compared before evidence_regression (L2)"
+    },
+    {
+      "code": "C5_MIXED_INTO_MANHATTAN_BUCKET_KEY",
+      "severity": "medium",
+      "location": "manhattan_hypothesis_portfolio.manhattan_key",
+      "finding": "C5 plane parallel/orthogonal proxies are embedded in the best_manhattan_feasible key before unresolved/wall residual metrics"
+    },
+    {
+      "code": "L2_BASELINE_ONLY_CANNOT_PREFER_CANDIDATE",
+      "severity": "blocking",
+      "location": "C6.5a.2 evidence materialization",
+      "finding": "2369/2389 C4 deltas are baseline-to-baseline zero diagnostics with no candidate projection variants; they cannot support candidate preference"
+    },
+    {
+      "code": "L4_MANUAL_EVIDENCE_INCOMPLETE",
+      "severity": "blocking",
+      "location": "source readiness/manual sidecar",
+      "finding": "2369 keep-distinct is projection-derived, while explicit column identity remains manual; 2389 lacks explicit column identity and keep-distinct contract"
+    }
+  ],
+  "accepted_gate_audit": {
+    "overall_recommended_review_candidate_available": false,
+    "all_portfolio_buckets_accepted_false": true,
+    "downstream_recommendation_available": false,
+    "status": "safe_but_audit_blocked"
+  },
+  "candidate_preference_blockers": [
+    "2369/2389 C4 evidence is baseline-to-baseline diagnostic only",
+    "candidate projection variant count is zero",
+    "rankable_by_current_HRC is false",
+    "manual explicit column identity is pending",
+    "supporting artifacts are not manual verdicts"
+  ],
+  "audit_only": true,
+  "evaluator_changed": false,
+  "ranking_key_changed": false,
+  "portfolio_changed": false,
+  "active_runner_changed": false,
+  "c3_changed": false,
+  "accepted": false,
+  "downstream_recommendation": false,
+  "annotation_writeback": false,
+  "c6_status": "audit_blocked",
+  "c6_5b_authorized": false,
+  "c6_5a_4_authorized": false,
+  "next_allowed_step": "remain blocked; resolve scoring compliance findings before C6.5a.4 evaluator hardening spec",
+  "status_boundaries": {
+    "c3_shadow_expansion": "blocked",
+    "c7_optimizer": "blocked",
+    "c9_learning": "blocked",
+    "c10_ranker": "blocked"
+  }
+}
