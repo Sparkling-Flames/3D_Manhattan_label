@@ -1,0 +1,1572 @@
+{
+  "schema_version": "hrc_evidence_input_materialization_v1",
+  "source_manifest": {
+    "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/source_artifact_readiness_audit/source_artifact_manifest.json",
+    "sha256": "3cebde707506caf5c5f24d6d6ecf93979d41e7da9316008d797a030fa058f667"
+  },
+  "source_readiness_audit": {
+    "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/source_artifact_readiness_audit/hrc_source_artifact_readiness_audit.json",
+    "sha256": "5aa1dd9f1b251ceb65a35c7ea9470ea979170459e08c03e7ccdb9cd1a50c6ffb"
+  },
+  "cases": {
+    "task218_ann2369": {
+      "case_name": "task218_ann2369",
+      "source_artifacts": {
+        "candidate_rows": {
+          "path": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task218_ann2369_m1518_3_candidate_semantics_output.json",
+          "sha256": "ece4c8497471cb2b1320b2ef0b7bfbf568b410ed175dce2ad166e49c52796656"
+        },
+        "projection_metrics": {
+          "path": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+          "sha256": "0ad2f6d7d7afb0cc7948f413abb9f0ba68e09b51882185bb56b82b8afe3a893c"
+        },
+        "c4_proposal": {
+          "path": "output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.txt",
+          "sha256": "8432e6915a9c81724c11282779801460c822c4cad7d6cbf897483090a71eafc6"
+        }
+      },
+      "processed_materializable_inputs": [
+        "c4_evidence_diagnostics",
+        "c5_plane_proxy_metrics",
+        "case_contract",
+        "constrained_evaluation",
+        "direction_family_fit",
+        "parallel_family_residual",
+        "rankable_by_current_HRC"
+      ],
+      "skipped_manual_inputs": [
+        "explicit_column_identity"
+      ],
+      "candidate_rows_read_only": {
+        "row_count": 8,
+        "modified": false,
+        "used_as_projected_candidate_variant": false
+      },
+      "direction_family_fit": {
+        "status": "available",
+        "method": "wall_direction_deg_l1_frame_mod_90_v1",
+        "frame_offset_deg": 89.99134555607509,
+        "dominant_family": {
+          "family_id": "family_0",
+          "axis_heading_deg": 89.99134555607509,
+          "wall_count": 4,
+          "residual_median_deg": 0.23413631040645555,
+          "residual_max_deg": 1.4099566947362376
+        },
+        "families": [
+          {
+            "family_id": "family_0",
+            "axis_heading_deg": 89.99134555607509,
+            "wall_count": 4,
+            "residual_median_deg": 0.23413631040645555,
+            "residual_max_deg": 1.4099566947362376
+          },
+          {
+            "family_id": "family_1",
+            "axis_heading_deg": 179.9913455560751,
+            "wall_count": 4,
+            "residual_median_deg": 4.787147949545528,
+            "residual_max_deg": 20.87203652832494
+          }
+        ],
+        "assignments": [
+          {
+            "wall_index": 1,
+            "from_pair": 1,
+            "to_pair": 2,
+            "heading_deg": 91.40130225081133,
+            "assigned_family": "family_0",
+            "assigned_axis_heading_deg": 89.99134555607509,
+            "residual_deg": 1.4099566947362376
+          },
+          {
+            "wall_index": 2,
+            "from_pair": 2,
+            "to_pair": 3,
+            "heading_deg": 179.9913455560751,
+            "assigned_family": "family_1",
+            "assigned_axis_heading_deg": 179.9913455560751,
+            "residual_deg": 0.0
+          },
+          {
+            "wall_index": 3,
+            "from_pair": 3,
+            "to_pair": 4,
+            "heading_deg": 90.00376444492383,
+            "assigned_family": "family_0",
+            "assigned_axis_heading_deg": 89.99134555607509,
+            "residual_deg": 0.012418888848742426
+          },
+          {
+            "wall_index": 4,
+            "from_pair": 4,
+            "to_pair": 5,
+            "heading_deg": 179.99820859175242,
+            "assigned_family": "family_1",
+            "assigned_axis_heading_deg": 179.9913455560751,
+            "residual_deg": 0.006863035677326934
+          },
+          {
+            "wall_index": 5,
+            "from_pair": 5,
+            "to_pair": 6,
+            "heading_deg": 90.00001015411766,
+            "assigned_family": "family_0",
+            "assigned_axis_heading_deg": 89.99134555607509,
+            "residual_deg": 0.00866459804257147
+          },
+          {
+            "wall_index": 6,
+            "from_pair": 6,
+            "to_pair": 7,
+            "heading_deg": 9.55877841948881,
+            "assigned_family": "family_1",
+            "assigned_axis_heading_deg": 179.9913455560751,
+            "residual_deg": 9.567432863413728
+          },
+          {
+            "wall_index": 7,
+            "from_pair": 7,
+            "to_pair": 8,
+            "heading_deg": 89.53549182411092,
+            "assigned_family": "family_0",
+            "assigned_axis_heading_deg": 89.99134555607509,
+            "residual_deg": 0.4558537319641687
+          },
+          {
+            "wall_index": 8,
+            "from_pair": 8,
+            "to_pair": 1,
+            "heading_deg": 20.86338208440003,
+            "assigned_family": "family_1",
+            "assigned_axis_heading_deg": 179.9913455560751,
+            "residual_deg": 20.87203652832494
+          }
+        ],
+        "residual_summary": {
+          "median_deg": 0.23413631040645555,
+          "max_deg": 20.87203652832494,
+          "wall_count": 8
+        }
+      },
+      "parallel_family_residual": {
+        "status": "available",
+        "method": "within_assigned_family_pairwise_heading_residual_v1",
+        "median_deg": 1.6335512616970362,
+        "max_deg": 20.87203652832494,
+        "pair_count": 12,
+        "families": [
+          {
+            "family_id": "family_0",
+            "pair_count": 6,
+            "median_deg": 0.9329052133502032,
+            "max_deg": 1.8658104267004063
+          },
+          {
+            "family_id": "family_1",
+            "pair_count": 6,
+            "median_deg": 10.43601826416247,
+            "max_deg": 20.87203652832494
+          }
+        ]
+      },
+      "case_contract": {
+        "schema_version": "manhattan_case_contract_v1",
+        "contract_status": "available",
+        "expert_review_only": false,
+        "fail_closed": false,
+        "primary_edges": [
+          "8-1"
+        ],
+        "secondary_edges": [],
+        "local_window_pairs": [
+          1,
+          2,
+          5,
+          6,
+          7,
+          8
+        ],
+        "protected_pairs": [],
+        "do_not_move_pairs": [],
+        "keep_distinct_pairs": [
+          [
+            5,
+            6
+          ]
+        ],
+        "allowed_short_edges": [],
+        "movable_fields_by_pair": {
+          "1": [
+            "x",
+            "bottom_y",
+            "top_y"
+          ],
+          "2": [
+            "x",
+            "bottom_y"
+          ],
+          "5": [
+            "x",
+            "bottom_y"
+          ],
+          "6": [
+            "x",
+            "bottom_y"
+          ],
+          "7": [
+            "x",
+            "bottom_y",
+            "top_y"
+          ],
+          "8": [
+            "x",
+            "bottom_y",
+            "top_y"
+          ]
+        },
+        "inferred_primary_edges": [
+          "8-1"
+        ],
+        "inferred_secondary_edges": [],
+        "inferred_local_window_pairs": [
+          1,
+          2,
+          5,
+          6,
+          7,
+          8
+        ],
+        "inferred_height_target_pairs": [
+          1,
+          7,
+          8
+        ],
+        "inferred_keep_distinct_pairs": [
+          [
+            5,
+            6
+          ]
+        ],
+        "inferred_movable_fields_by_pair": {
+          "1": [
+            "x",
+            "bottom_y",
+            "top_y"
+          ],
+          "2": [
+            "x",
+            "bottom_y"
+          ],
+          "5": [
+            "x",
+            "bottom_y"
+          ],
+          "6": [
+            "x",
+            "bottom_y"
+          ],
+          "7": [
+            "x",
+            "bottom_y",
+            "top_y"
+          ],
+          "8": [
+            "x",
+            "bottom_y",
+            "top_y"
+          ]
+        },
+        "auto_contract_summary": {
+          "source": "projection_rule_based_v1",
+          "legacy_fallback_used": false,
+          "primary_residual_threshold_deg": 15.0,
+          "secondary_residual_threshold_deg": 10.0
+        },
+        "suspected_failure_family": "local_manhattan_residual",
+        "order_override_status": "not_requested",
+        "topology_hypothesis_allowed": false,
+        "evidence_available_flags": {
+          "projection_metrics": true,
+          "usable_projection_metrics": true,
+          "hohonet": false,
+          "expert_assertions": false
+        },
+        "contract_source": "rule_based_projection_v2",
+        "legacy_default_contract": {
+          "used": false,
+          "reason": "legacy default edges are disabled"
+        },
+        "legacy_source_files": [
+          "tools/paper_a_manhattan/manhattan_m1526_adaptive_local_probe.py",
+          "tools/paper_a_manhattan/manhattan_m1527_semantic_direct_search.py",
+          "tools/paper_a_manhattan/manhattan_m1528_semantic_action_library.py"
+        ],
+        "safety_boundary": {
+          "expert_side_only": true,
+          "offline_dry_run_only": true,
+          "automatic_apply": false,
+          "annotation_writeback": false,
+          "worker_facing": false,
+          "routing_input": false,
+          "thesis_protocol_artifact": false
+        }
+      },
+      "constrained_evaluation": {
+        "scope": "baseline_original_diagnostic_only",
+        "baseline_original_not_candidate_evaluation": true,
+        "evaluation_status": "complete",
+        "decision_class": "hard_feasible_neutral",
+        "feasibility": {
+          "topology_valid": true,
+          "assertion_valid": true,
+          "projection_valid": true,
+          "no_self_intersection": true,
+          "no_pair_fold": true,
+          "no_unapproved_order_mutation": true,
+          "keep_distinct_pairs_not_collapsed": true,
+          "protected_pairs_not_moved": true,
+          "authorized_mutations_only": true,
+          "wrap_or_seam_not_broken": true,
+          "hard_gate_passed": true,
+          "hard_failure_reasons": [],
+          "projection_metric_errors": [],
+          "wrap_or_seam_gate_status": "not_available_diagnostic_only",
+          "wrap_or_seam_diagnostic_warnings": []
+        },
+        "manhattan_feasibility": {
+          "direction_family_fit": {
+            "status": "available",
+            "method": "wall_direction_deg_l1_frame_mod_90_v1",
+            "frame_offset_deg": 89.99134555607509,
+            "dominant_family": {
+              "family_id": "family_0",
+              "axis_heading_deg": 89.99134555607509,
+              "wall_count": 4,
+              "residual_median_deg": 0.23413631040645555,
+              "residual_max_deg": 1.4099566947362376
+            },
+            "families": [
+              {
+                "family_id": "family_0",
+                "axis_heading_deg": 89.99134555607509,
+                "wall_count": 4,
+                "residual_median_deg": 0.23413631040645555,
+                "residual_max_deg": 1.4099566947362376
+              },
+              {
+                "family_id": "family_1",
+                "axis_heading_deg": 179.9913455560751,
+                "wall_count": 4,
+                "residual_median_deg": 4.787147949545528,
+                "residual_max_deg": 20.87203652832494
+              }
+            ],
+            "assignments": [
+              {
+                "wall_index": 1,
+                "from_pair": 1,
+                "to_pair": 2,
+                "heading_deg": 91.40130225081133,
+                "assigned_family": "family_0",
+                "assigned_axis_heading_deg": 89.99134555607509,
+                "residual_deg": 1.4099566947362376
+              },
+              {
+                "wall_index": 2,
+                "from_pair": 2,
+                "to_pair": 3,
+                "heading_deg": 179.9913455560751,
+                "assigned_family": "family_1",
+                "assigned_axis_heading_deg": 179.9913455560751,
+                "residual_deg": 0.0
+              },
+              {
+                "wall_index": 3,
+                "from_pair": 3,
+                "to_pair": 4,
+                "heading_deg": 90.00376444492383,
+                "assigned_family": "family_0",
+                "assigned_axis_heading_deg": 89.99134555607509,
+                "residual_deg": 0.012418888848742426
+              },
+              {
+                "wall_index": 4,
+                "from_pair": 4,
+                "to_pair": 5,
+                "heading_deg": 179.99820859175242,
+                "assigned_family": "family_1",
+                "assigned_axis_heading_deg": 179.9913455560751,
+                "residual_deg": 0.006863035677326934
+              },
+              {
+                "wall_index": 5,
+                "from_pair": 5,
+                "to_pair": 6,
+                "heading_deg": 90.00001015411766,
+                "assigned_family": "family_0",
+                "assigned_axis_heading_deg": 89.99134555607509,
+                "residual_deg": 0.00866459804257147
+              },
+              {
+                "wall_index": 6,
+                "from_pair": 6,
+                "to_pair": 7,
+                "heading_deg": 9.55877841948881,
+                "assigned_family": "family_1",
+                "assigned_axis_heading_deg": 179.9913455560751,
+                "residual_deg": 9.567432863413728
+              },
+              {
+                "wall_index": 7,
+                "from_pair": 7,
+                "to_pair": 8,
+                "heading_deg": 89.53549182411092,
+                "assigned_family": "family_0",
+                "assigned_axis_heading_deg": 89.99134555607509,
+                "residual_deg": 0.4558537319641687
+              },
+              {
+                "wall_index": 8,
+                "from_pair": 8,
+                "to_pair": 1,
+                "heading_deg": 20.86338208440003,
+                "assigned_family": "family_1",
+                "assigned_axis_heading_deg": 179.9913455560751,
+                "residual_deg": 20.87203652832494
+              }
+            ],
+            "residual_summary": {
+              "median_deg": 0.23413631040645555,
+              "max_deg": 20.87203652832494,
+              "wall_count": 8
+            }
+          },
+          "direction_family_fit_status": "available",
+          "direction_family_fit_unavailable_reason": null,
+          "wall_residual_median": 0.23658130990699533,
+          "wall_residual_max": 20.86338208440003,
+          "turn_residual_median": 5.484362480053704,
+          "turn_residual_max": 21.327890260289124,
+          "parallel_family_residual": {
+            "status": "available",
+            "method": "within_assigned_family_pairwise_heading_residual_v1",
+            "median_deg": 1.6335512616970362,
+            "max_deg": 20.87203652832494,
+            "pair_count": 12,
+            "families": [
+              {
+                "family_id": "family_0",
+                "pair_count": 6,
+                "median_deg": 0.9329052133502032,
+                "max_deg": 1.8658104267004063
+              },
+              {
+                "family_id": "family_1",
+                "pair_count": 6,
+                "median_deg": 10.43601826416247,
+                "max_deg": 20.87203652832494
+              }
+            ]
+          },
+          "parallel_family_residual_status": "available",
+          "parallel_family_residual_unavailable_reason": null,
+          "local_window_residual": 20.86338208440003,
+          "unresolved_edge_count": 1,
+          "floor_ceiling_column_consistency": 0.0
+        },
+        "height_consistency": {
+          "dominant_height_h_star": 3.3588455328235343,
+          "height_cluster_mad": 1.9321192785692887e-05,
+          "height_outlier_l1": 1.4696860936653864,
+          "max_height_residual": 0.9443415609497503,
+          "top_bottom_column_residual": 0.07002438231469599,
+          "height_outlier_pairs": [
+            1
+          ],
+          "height_correction_direction": null,
+          "dominant_height_cluster_members": [
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8
+          ],
+          "dominant_height_cluster_method": "largest_gap_connected_cluster_then_minimum_mad"
+        },
+        "layout_plausibility": {
+          "new_short_wall_created": [],
+          "existing_short_wall_preserved": [],
+          "short_wall_collapsed": [],
+          "short_wall_deficit_delta": 0,
+          "short_wall_explains_dense_corner": false,
+          "keep_distinct_margin": 1.0276699261214206,
+          "movement_l1_normalized": 0.0,
+          "movement_max_pair": 0.0,
+          "changed_pair_count": 0,
+          "plausibility_failure_reasons": []
+        },
+        "column_evidence": {
+          "hohonet_wallwall_peak_alignment": {
+            "baseline_rmse_px": 22.753702846725997,
+            "candidate_rmse_px": 22.753702846725997
+          },
+          "hohonet_floor_boundary_rmse_delta": 0.0,
+          "hohonet_ceiling_boundary_rmse_delta": 0.0,
+          "candidate_corner_column_delta": 0.0,
+          "seam_consistency_delta": 0.0,
+          "visual_conflict_flags": [],
+          "image_edge_support_optional": null,
+          "evidence_status": "available",
+          "evidence_version": "manhattan_column_evidence_v0",
+          "source_provenance": {
+            "source_path": "output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.txt",
+            "source_sha256": "8432e6915a9c81724c11282779801460c822c4cad7d6cbf897483090a71eafc6",
+            "parser_method": "paired_two_column_rows",
+            "coordinate_contract": "hohonet_model_output_layout_txt@1024x512"
+          },
+          "unavailable_reason": null,
+          "missing_fields": [
+            "image_edge_support_optional"
+          ]
+        },
+        "plane_proxy_metrics": {
+          "plane_proxy_version": "plane_proxy_metrics_v0",
+          "status": "available",
+          "plane_proxy_status": "available",
+          "plane_family_assignment": {
+            "status": "available",
+            "method": "direction_family_assignments_as_vertical_plane_families_v0",
+            "frame_offset_deg": 89.99134555607509,
+            "plane_families": [
+              {
+                "plane_family_id": "family_0",
+                "wall_axis_heading_deg": 89.99134555607509,
+                "wall_count": 4
+              },
+              {
+                "plane_family_id": "family_1",
+                "wall_axis_heading_deg": 179.9913455560751,
+                "wall_count": 4
+              }
+            ],
+            "wall_assignments": [
+              {
+                "wall_index": 1,
+                "from_pair": 1,
+                "to_pair": 2,
+                "plane_family_id": "family_0",
+                "heading_residual_deg": 1.4099566947362376
+              },
+              {
+                "wall_index": 2,
+                "from_pair": 2,
+                "to_pair": 3,
+                "plane_family_id": "family_1",
+                "heading_residual_deg": 0.0
+              },
+              {
+                "wall_index": 3,
+                "from_pair": 3,
+                "to_pair": 4,
+                "plane_family_id": "family_0",
+                "heading_residual_deg": 0.012418888848742426
+              },
+              {
+                "wall_index": 4,
+                "from_pair": 4,
+                "to_pair": 5,
+                "plane_family_id": "family_1",
+                "heading_residual_deg": 0.006863035677326934
+              },
+              {
+                "wall_index": 5,
+                "from_pair": 5,
+                "to_pair": 6,
+                "plane_family_id": "family_0",
+                "heading_residual_deg": 0.00866459804257147
+              },
+              {
+                "wall_index": 6,
+                "from_pair": 6,
+                "to_pair": 7,
+                "plane_family_id": "family_1",
+                "heading_residual_deg": 9.567432863413728
+              },
+              {
+                "wall_index": 7,
+                "from_pair": 7,
+                "to_pair": 8,
+                "plane_family_id": "family_0",
+                "heading_residual_deg": 0.4558537319641687
+              },
+              {
+                "wall_index": 8,
+                "from_pair": 8,
+                "to_pair": 1,
+                "plane_family_id": "family_1",
+                "heading_residual_deg": 20.87203652832494
+              }
+            ]
+          },
+          "wall_plane_parallel_consistency": {
+            "status": "available",
+            "method": "direction_family_pairwise_heading_residual_v0",
+            "median_deg": 1.6335512616970362,
+            "max_deg": 20.87203652832494,
+            "pair_count": 12
+          },
+          "wall_plane_orthogonal_consistency": {
+            "status": "available",
+            "method": "fitted_plane_family_axis_separation_v0",
+            "axis_separation_deg": 90.0,
+            "orthogonal_residual_deg": 0.0
+          },
+          "dominant_height_plane_consistency": {
+            "status": "available",
+            "method": "dominant_projected_wall_height_cluster_v0",
+            "dominant_height_h_star": 3.3588455328235343,
+            "height_cluster_mad": 1.9321192785692887e-05,
+            "max_height_residual": 0.9443415609497503,
+            "height_outlier_pairs": [
+              1
+            ],
+            "unavailable_reason": null
+          },
+          "floor_polygon_plane_proxy_residual": {
+            "status": "available",
+            "method": "structured_floorprint_wall_residual_proxy_v0_no_depth_no_plane_fit",
+            "wall_residual_median_deg": 0.23658130990699533,
+            "wall_residual_max_deg": 20.86338208440003,
+            "unresolved_edge_count": 1,
+            "self_intersection": false,
+            "unavailable_reason": null
+          },
+          "unavailable_reason": null,
+          "missing_fields": [],
+          "scope_boundary": {
+            "geometry_proxy_only": true,
+            "depth_model_used": false,
+            "geolayout_reproduction": false,
+            "column_evidence_layer": false
+          }
+        }
+      },
+      "rankable_by_current_HRC_input_summary": {
+        "rankable": false,
+        "reason": "existing candidate rows have no validated candidate projection variants; baseline diagnostic is not rankable candidate input",
+        "candidate_row_count": 8,
+        "candidate_projection_variant_count": 0,
+        "ranking_key_materialized": false,
+        "portfolio_materialized": false
+      },
+      "c4_lite_diagnostics": {
+        "evidence_version": "manhattan_column_evidence_v0",
+        "evidence_status": "available",
+        "source_provenance": {
+          "source_path": "output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.txt",
+          "source_sha256": "8432e6915a9c81724c11282779801460c822c4cad7d6cbf897483090a71eafc6",
+          "parser_method": "paired_two_column_rows",
+          "coordinate_contract": "hohonet_model_output_layout_txt@1024x512"
+        },
+        "hohonet_wallwall_peak_alignment": {
+          "baseline_rmse_px": 22.753702846725997,
+          "candidate_rmse_px": 22.753702846725997
+        },
+        "candidate_corner_column_delta": 0.0,
+        "hohonet_ceiling_boundary_rmse_delta": 0.0,
+        "hohonet_floor_boundary_rmse_delta": 0.0,
+        "seam_consistency_delta": 0.0,
+        "visual_conflict_flags": [],
+        "image_edge_support_optional": null,
+        "missing_fields": [
+          "image_edge_support_optional"
+        ],
+        "unavailable_reason": null,
+        "scope_boundary": {
+          "existing_hohonet_proposal_only": true,
+          "image_model_used": false,
+          "depth_model_used": false
+        },
+        "baseline_to_baseline_materialization": true,
+        "candidate_preference_claim": false
+      },
+      "c5_plane_proxy_metrics": {
+        "plane_proxy_version": "plane_proxy_metrics_v0",
+        "status": "available",
+        "plane_proxy_status": "available",
+        "plane_family_assignment": {
+          "status": "available",
+          "method": "direction_family_assignments_as_vertical_plane_families_v0",
+          "frame_offset_deg": 89.99134555607509,
+          "plane_families": [
+            {
+              "plane_family_id": "family_0",
+              "wall_axis_heading_deg": 89.99134555607509,
+              "wall_count": 4
+            },
+            {
+              "plane_family_id": "family_1",
+              "wall_axis_heading_deg": 179.9913455560751,
+              "wall_count": 4
+            }
+          ],
+          "wall_assignments": [
+            {
+              "wall_index": 1,
+              "from_pair": 1,
+              "to_pair": 2,
+              "plane_family_id": "family_0",
+              "heading_residual_deg": 1.4099566947362376
+            },
+            {
+              "wall_index": 2,
+              "from_pair": 2,
+              "to_pair": 3,
+              "plane_family_id": "family_1",
+              "heading_residual_deg": 0.0
+            },
+            {
+              "wall_index": 3,
+              "from_pair": 3,
+              "to_pair": 4,
+              "plane_family_id": "family_0",
+              "heading_residual_deg": 0.012418888848742426
+            },
+            {
+              "wall_index": 4,
+              "from_pair": 4,
+              "to_pair": 5,
+              "plane_family_id": "family_1",
+              "heading_residual_deg": 0.006863035677326934
+            },
+            {
+              "wall_index": 5,
+              "from_pair": 5,
+              "to_pair": 6,
+              "plane_family_id": "family_0",
+              "heading_residual_deg": 0.00866459804257147
+            },
+            {
+              "wall_index": 6,
+              "from_pair": 6,
+              "to_pair": 7,
+              "plane_family_id": "family_1",
+              "heading_residual_deg": 9.567432863413728
+            },
+            {
+              "wall_index": 7,
+              "from_pair": 7,
+              "to_pair": 8,
+              "plane_family_id": "family_0",
+              "heading_residual_deg": 0.4558537319641687
+            },
+            {
+              "wall_index": 8,
+              "from_pair": 8,
+              "to_pair": 1,
+              "plane_family_id": "family_1",
+              "heading_residual_deg": 20.87203652832494
+            }
+          ]
+        },
+        "wall_plane_parallel_consistency": {
+          "status": "available",
+          "method": "direction_family_pairwise_heading_residual_v0",
+          "median_deg": 1.6335512616970362,
+          "max_deg": 20.87203652832494,
+          "pair_count": 12
+        },
+        "wall_plane_orthogonal_consistency": {
+          "status": "available",
+          "method": "fitted_plane_family_axis_separation_v0",
+          "axis_separation_deg": 90.0,
+          "orthogonal_residual_deg": 0.0
+        },
+        "dominant_height_plane_consistency": {
+          "status": "available",
+          "method": "dominant_projected_wall_height_cluster_v0",
+          "dominant_height_h_star": 3.3588455328235343,
+          "height_cluster_mad": 1.9321192785692887e-05,
+          "max_height_residual": 0.9443415609497503,
+          "height_outlier_pairs": [
+            1
+          ],
+          "unavailable_reason": null
+        },
+        "floor_polygon_plane_proxy_residual": {
+          "status": "available",
+          "method": "structured_floorprint_wall_residual_proxy_v0_no_depth_no_plane_fit",
+          "wall_residual_median_deg": 0.23658130990699533,
+          "wall_residual_max_deg": 20.86338208440003,
+          "unresolved_edge_count": 1,
+          "self_intersection": false,
+          "unavailable_reason": null
+        },
+        "unavailable_reason": null,
+        "missing_fields": [],
+        "scope_boundary": {
+          "geometry_proxy_only": true,
+          "depth_model_used": false,
+          "geolayout_reproduction": false,
+          "column_evidence_layer": false
+        }
+      },
+      "audit_only": true,
+      "execution_allowed": false,
+      "accepted": false,
+      "downstream_recommendation": false,
+      "annotation_writeback": false
+    },
+    "task238_ann2389": {
+      "case_name": "task238_ann2389",
+      "source_artifacts": {
+        "candidate_rows": {
+          "path": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task238_ann2389_m1518_3_candidate_semantics_output.json",
+          "sha256": "5f89a031e3c38eaac3a04c75d35ba8ae751fd56cbe79719ffaffb24292beb1b6"
+        },
+        "projection_metrics": {
+          "path": "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
+          "sha256": "a525bf4afc6dee5cbffdfc56b6b0b3b7040a629591aa02a81390ab23fd9f0474"
+        },
+        "c4_proposal": {
+          "path": "output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34/b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15.txt",
+          "sha256": "858f0be5d1d552336fdcd2bd94f0aadb2256d949f4f562ae68de1546b2ed0464"
+        }
+      },
+      "processed_materializable_inputs": [
+        "c4_evidence_diagnostics",
+        "c5_plane_proxy_metrics",
+        "case_contract",
+        "constrained_evaluation",
+        "direction_family_fit",
+        "parallel_family_residual",
+        "rankable_by_current_HRC"
+      ],
+      "skipped_manual_inputs": [
+        "explicit_column_identity",
+        "keep_distinct_contract"
+      ],
+      "candidate_rows_read_only": {
+        "row_count": 6,
+        "modified": false,
+        "used_as_projected_candidate_variant": false
+      },
+      "direction_family_fit": {
+        "status": "available",
+        "method": "wall_direction_deg_l1_frame_mod_90_v1",
+        "frame_offset_deg": 1.8741264337215995,
+        "dominant_family": {
+          "family_id": "family_1",
+          "axis_heading_deg": 91.8741264337216,
+          "wall_count": 3,
+          "residual_median_deg": 0.29060146638435924,
+          "residual_max_deg": 1.4104344428674835
+        },
+        "families": [
+          {
+            "family_id": "family_0",
+            "axis_heading_deg": 1.8741264337215995,
+            "wall_count": 3,
+            "residual_median_deg": 1.2755598641914503,
+            "residual_max_deg": 17.74873768555608
+          },
+          {
+            "family_id": "family_1",
+            "axis_heading_deg": 91.8741264337216,
+            "wall_count": 3,
+            "residual_median_deg": 0.29060146638435924,
+            "residual_max_deg": 1.4104344428674835
+          }
+        ],
+        "assignments": [
+          {
+            "wall_index": 1,
+            "from_pair": 1,
+            "to_pair": 2,
+            "heading_deg": 92.16472790010596,
+            "assigned_family": "family_1",
+            "assigned_axis_heading_deg": 91.8741264337216,
+            "residual_deg": 0.29060146638435924
+          },
+          {
+            "wall_index": 2,
+            "from_pair": 2,
+            "to_pair": 3,
+            "heading_deg": 0.5985665695301584,
+            "assigned_family": "family_0",
+            "assigned_axis_heading_deg": 1.8741264337215995,
+            "residual_deg": 1.2755598641914503
+          },
+          {
+            "wall_index": 3,
+            "from_pair": 3,
+            "to_pair": 4,
+            "heading_deg": 91.8741264337216,
+            "assigned_family": "family_1",
+            "assigned_axis_heading_deg": 91.8741264337216,
+            "residual_deg": 0.0
+          },
+          {
+            "wall_index": 4,
+            "from_pair": 4,
+            "to_pair": 5,
+            "heading_deg": 2.178511704412925,
+            "assigned_family": "family_0",
+            "assigned_axis_heading_deg": 1.8741264337215995,
+            "residual_deg": 0.3043852706913257
+          },
+          {
+            "wall_index": 5,
+            "from_pair": 5,
+            "to_pair": 6,
+            "heading_deg": 90.46369199085413,
+            "assigned_family": "family_1",
+            "assigned_axis_heading_deg": 91.8741264337216,
+            "residual_deg": 1.4104344428674835
+          },
+          {
+            "wall_index": 6,
+            "from_pair": 6,
+            "to_pair": 1,
+            "heading_deg": 164.12538874816553,
+            "assigned_family": "family_0",
+            "assigned_axis_heading_deg": 1.8741264337215995,
+            "residual_deg": 17.74873768555608
+          }
+        ],
+        "residual_summary": {
+          "median_deg": 0.789972567441388,
+          "max_deg": 17.74873768555608,
+          "wall_count": 6
+        }
+      },
+      "parallel_family_residual": {
+        "status": "available",
+        "method": "within_assigned_family_pairwise_heading_residual_v1",
+        "median_deg": 1.6404905220672958,
+        "max_deg": 18.053122956247392,
+        "pair_count": 6,
+        "families": [
+          {
+            "family_id": "family_0",
+            "pair_count": 3,
+            "median_deg": 16.47317782136463,
+            "max_deg": 18.053122956247392
+          },
+          {
+            "family_id": "family_1",
+            "pair_count": 3,
+            "median_deg": 1.4104344428674693,
+            "max_deg": 1.7010359092518286
+          }
+        ]
+      },
+      "case_contract": {
+        "schema_version": "manhattan_case_contract_v1",
+        "contract_status": "available",
+        "expert_review_only": false,
+        "fail_closed": false,
+        "primary_edges": [
+          "6-1"
+        ],
+        "secondary_edges": [],
+        "local_window_pairs": [
+          1,
+          2,
+          4,
+          5,
+          6
+        ],
+        "protected_pairs": [],
+        "do_not_move_pairs": [],
+        "keep_distinct_pairs": [],
+        "allowed_short_edges": [],
+        "movable_fields_by_pair": {
+          "1": [
+            "x",
+            "bottom_y"
+          ],
+          "2": [
+            "x",
+            "bottom_y"
+          ],
+          "4": [
+            "x",
+            "bottom_y",
+            "top_y"
+          ],
+          "5": [
+            "x",
+            "bottom_y"
+          ],
+          "6": [
+            "x",
+            "bottom_y"
+          ]
+        },
+        "inferred_primary_edges": [
+          "6-1"
+        ],
+        "inferred_secondary_edges": [],
+        "inferred_local_window_pairs": [
+          1,
+          2,
+          4,
+          5,
+          6
+        ],
+        "inferred_height_target_pairs": [
+          4
+        ],
+        "inferred_keep_distinct_pairs": [],
+        "inferred_movable_fields_by_pair": {
+          "1": [
+            "x",
+            "bottom_y"
+          ],
+          "2": [
+            "x",
+            "bottom_y"
+          ],
+          "4": [
+            "x",
+            "bottom_y",
+            "top_y"
+          ],
+          "5": [
+            "x",
+            "bottom_y"
+          ],
+          "6": [
+            "x",
+            "bottom_y"
+          ]
+        },
+        "auto_contract_summary": {
+          "source": "projection_rule_based_v1",
+          "legacy_fallback_used": false,
+          "primary_residual_threshold_deg": 15.0,
+          "secondary_residual_threshold_deg": 10.0
+        },
+        "suspected_failure_family": "local_manhattan_residual",
+        "order_override_status": "not_requested",
+        "topology_hypothesis_allowed": false,
+        "evidence_available_flags": {
+          "projection_metrics": true,
+          "usable_projection_metrics": true,
+          "hohonet": false,
+          "expert_assertions": false
+        },
+        "contract_source": "rule_based_projection_v2",
+        "legacy_default_contract": {
+          "used": false,
+          "reason": "legacy default edges are disabled"
+        },
+        "legacy_source_files": [
+          "tools/paper_a_manhattan/manhattan_m1526_adaptive_local_probe.py",
+          "tools/paper_a_manhattan/manhattan_m1527_semantic_direct_search.py",
+          "tools/paper_a_manhattan/manhattan_m1528_semantic_action_library.py"
+        ],
+        "safety_boundary": {
+          "expert_side_only": true,
+          "offline_dry_run_only": true,
+          "automatic_apply": false,
+          "annotation_writeback": false,
+          "worker_facing": false,
+          "routing_input": false,
+          "thesis_protocol_artifact": false
+        }
+      },
+      "constrained_evaluation": {
+        "scope": "baseline_original_diagnostic_only",
+        "baseline_original_not_candidate_evaluation": true,
+        "evaluation_status": "complete",
+        "decision_class": "hard_feasible_neutral",
+        "feasibility": {
+          "topology_valid": true,
+          "assertion_valid": true,
+          "projection_valid": true,
+          "no_self_intersection": true,
+          "no_pair_fold": true,
+          "no_unapproved_order_mutation": true,
+          "keep_distinct_pairs_not_collapsed": true,
+          "protected_pairs_not_moved": true,
+          "authorized_mutations_only": true,
+          "wrap_or_seam_not_broken": true,
+          "hard_gate_passed": true,
+          "hard_failure_reasons": [],
+          "projection_metric_errors": [],
+          "wrap_or_seam_gate_status": "not_available_diagnostic_only",
+          "wrap_or_seam_diagnostic_warnings": []
+        },
+        "manhattan_feasibility": {
+          "direction_family_fit": {
+            "status": "available",
+            "method": "wall_direction_deg_l1_frame_mod_90_v1",
+            "frame_offset_deg": 1.8741264337215995,
+            "dominant_family": {
+              "family_id": "family_1",
+              "axis_heading_deg": 91.8741264337216,
+              "wall_count": 3,
+              "residual_median_deg": 0.29060146638435924,
+              "residual_max_deg": 1.4104344428674835
+            },
+            "families": [
+              {
+                "family_id": "family_0",
+                "axis_heading_deg": 1.8741264337215995,
+                "wall_count": 3,
+                "residual_median_deg": 1.2755598641914503,
+                "residual_max_deg": 17.74873768555608
+              },
+              {
+                "family_id": "family_1",
+                "axis_heading_deg": 91.8741264337216,
+                "wall_count": 3,
+                "residual_median_deg": 0.29060146638435924,
+                "residual_max_deg": 1.4104344428674835
+              }
+            ],
+            "assignments": [
+              {
+                "wall_index": 1,
+                "from_pair": 1,
+                "to_pair": 2,
+                "heading_deg": 92.16472790010596,
+                "assigned_family": "family_1",
+                "assigned_axis_heading_deg": 91.8741264337216,
+                "residual_deg": 0.29060146638435924
+              },
+              {
+                "wall_index": 2,
+                "from_pair": 2,
+                "to_pair": 3,
+                "heading_deg": 0.5985665695301584,
+                "assigned_family": "family_0",
+                "assigned_axis_heading_deg": 1.8741264337215995,
+                "residual_deg": 1.2755598641914503
+              },
+              {
+                "wall_index": 3,
+                "from_pair": 3,
+                "to_pair": 4,
+                "heading_deg": 91.8741264337216,
+                "assigned_family": "family_1",
+                "assigned_axis_heading_deg": 91.8741264337216,
+                "residual_deg": 0.0
+              },
+              {
+                "wall_index": 4,
+                "from_pair": 4,
+                "to_pair": 5,
+                "heading_deg": 2.178511704412925,
+                "assigned_family": "family_0",
+                "assigned_axis_heading_deg": 1.8741264337215995,
+                "residual_deg": 0.3043852706913257
+              },
+              {
+                "wall_index": 5,
+                "from_pair": 5,
+                "to_pair": 6,
+                "heading_deg": 90.46369199085413,
+                "assigned_family": "family_1",
+                "assigned_axis_heading_deg": 91.8741264337216,
+                "residual_deg": 1.4104344428674835
+              },
+              {
+                "wall_index": 6,
+                "from_pair": 6,
+                "to_pair": 1,
+                "heading_deg": 164.12538874816553,
+                "assigned_family": "family_0",
+                "assigned_axis_heading_deg": 1.8741264337215995,
+                "residual_deg": 17.74873768555608
+              }
+            ],
+            "residual_summary": {
+              "median_deg": 0.789972567441388,
+              "max_deg": 17.74873768555608,
+              "wall_count": 6
+            }
+          },
+          "direction_family_fit_status": "available",
+          "direction_family_fit_unavailable_reason": null,
+          "wall_residual_median": 2.019427166913772,
+          "wall_residual_max": 15.874611251834466,
+          "turn_residual_median": 1.6404905220672958,
+          "turn_residual_max": 18.039339151940425,
+          "parallel_family_residual": {
+            "status": "available",
+            "method": "within_assigned_family_pairwise_heading_residual_v1",
+            "median_deg": 1.6404905220672958,
+            "max_deg": 18.053122956247392,
+            "pair_count": 6,
+            "families": [
+              {
+                "family_id": "family_0",
+                "pair_count": 3,
+                "median_deg": 16.47317782136463,
+                "max_deg": 18.053122956247392
+              },
+              {
+                "family_id": "family_1",
+                "pair_count": 3,
+                "median_deg": 1.4104344428674693,
+                "max_deg": 1.7010359092518286
+              }
+            ]
+          },
+          "parallel_family_residual_status": "available",
+          "parallel_family_residual_unavailable_reason": null,
+          "local_window_residual": 15.874611251834466,
+          "unresolved_edge_count": 1,
+          "floor_ceiling_column_consistency": 0.0
+        },
+        "height_consistency": {
+          "dominant_height_h_star": 2.534824063766143,
+          "height_cluster_mad": 0.004935725531890256,
+          "height_outlier_l1": 0.6368979906465939,
+          "max_height_residual": 0.4638437326893712,
+          "top_bottom_column_residual": 0.0,
+          "height_outlier_pairs": [
+            4
+          ],
+          "height_correction_direction": null,
+          "dominant_height_cluster_members": [
+            1,
+            2,
+            3,
+            5,
+            6
+          ],
+          "dominant_height_cluster_method": "largest_gap_connected_cluster_then_minimum_mad"
+        },
+        "layout_plausibility": {
+          "new_short_wall_created": [],
+          "existing_short_wall_preserved": [],
+          "short_wall_collapsed": [],
+          "short_wall_deficit_delta": 0,
+          "short_wall_explains_dense_corner": false,
+          "keep_distinct_margin": null,
+          "movement_l1_normalized": 0.0,
+          "movement_max_pair": 0.0,
+          "changed_pair_count": 0,
+          "plausibility_failure_reasons": []
+        },
+        "column_evidence": {
+          "hohonet_wallwall_peak_alignment": {
+            "baseline_rmse_px": 12.272035518135896,
+            "candidate_rmse_px": 12.272035518135896
+          },
+          "hohonet_floor_boundary_rmse_delta": 0.0,
+          "hohonet_ceiling_boundary_rmse_delta": 0.0,
+          "candidate_corner_column_delta": 0.0,
+          "seam_consistency_delta": 0.0,
+          "visual_conflict_flags": [],
+          "image_edge_support_optional": null,
+          "evidence_status": "available",
+          "evidence_version": "manhattan_column_evidence_v0",
+          "source_provenance": {
+            "source_path": "output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34/b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15.txt",
+            "source_sha256": "858f0be5d1d552336fdcd2bd94f0aadb2256d949f4f562ae68de1546b2ed0464",
+            "parser_method": "paired_two_column_rows",
+            "coordinate_contract": "hohonet_model_output_layout_txt@1024x512"
+          },
+          "unavailable_reason": null,
+          "missing_fields": [
+            "image_edge_support_optional"
+          ]
+        },
+        "plane_proxy_metrics": {
+          "plane_proxy_version": "plane_proxy_metrics_v0",
+          "status": "available",
+          "plane_proxy_status": "available",
+          "plane_family_assignment": {
+            "status": "available",
+            "method": "direction_family_assignments_as_vertical_plane_families_v0",
+            "frame_offset_deg": 1.8741264337215995,
+            "plane_families": [
+              {
+                "plane_family_id": "family_0",
+                "wall_axis_heading_deg": 1.8741264337215995,
+                "wall_count": 3
+              },
+              {
+                "plane_family_id": "family_1",
+                "wall_axis_heading_deg": 91.8741264337216,
+                "wall_count": 3
+              }
+            ],
+            "wall_assignments": [
+              {
+                "wall_index": 1,
+                "from_pair": 1,
+                "to_pair": 2,
+                "plane_family_id": "family_1",
+                "heading_residual_deg": 0.29060146638435924
+              },
+              {
+                "wall_index": 2,
+                "from_pair": 2,
+                "to_pair": 3,
+                "plane_family_id": "family_0",
+                "heading_residual_deg": 1.2755598641914503
+              },
+              {
+                "wall_index": 3,
+                "from_pair": 3,
+                "to_pair": 4,
+                "plane_family_id": "family_1",
+                "heading_residual_deg": 0.0
+              },
+              {
+                "wall_index": 4,
+                "from_pair": 4,
+                "to_pair": 5,
+                "plane_family_id": "family_0",
+                "heading_residual_deg": 0.3043852706913257
+              },
+              {
+                "wall_index": 5,
+                "from_pair": 5,
+                "to_pair": 6,
+                "plane_family_id": "family_1",
+                "heading_residual_deg": 1.4104344428674835
+              },
+              {
+                "wall_index": 6,
+                "from_pair": 6,
+                "to_pair": 1,
+                "plane_family_id": "family_0",
+                "heading_residual_deg": 17.74873768555608
+              }
+            ]
+          },
+          "wall_plane_parallel_consistency": {
+            "status": "available",
+            "method": "direction_family_pairwise_heading_residual_v0",
+            "median_deg": 1.6404905220672958,
+            "max_deg": 18.053122956247392,
+            "pair_count": 6
+          },
+          "wall_plane_orthogonal_consistency": {
+            "status": "available",
+            "method": "fitted_plane_family_axis_separation_v0",
+            "axis_separation_deg": 90.0,
+            "orthogonal_residual_deg": 0.0
+          },
+          "dominant_height_plane_consistency": {
+            "status": "available",
+            "method": "dominant_projected_wall_height_cluster_v0",
+            "dominant_height_h_star": 2.534824063766143,
+            "height_cluster_mad": 0.004935725531890256,
+            "max_height_residual": 0.4638437326893712,
+            "height_outlier_pairs": [
+              4
+            ],
+            "unavailable_reason": null
+          },
+          "floor_polygon_plane_proxy_residual": {
+            "status": "available",
+            "method": "structured_floorprint_wall_residual_proxy_v0_no_depth_no_plane_fit",
+            "wall_residual_median_deg": 2.019427166913772,
+            "wall_residual_max_deg": 15.874611251834466,
+            "unresolved_edge_count": 1,
+            "self_intersection": false,
+            "unavailable_reason": null
+          },
+          "unavailable_reason": null,
+          "missing_fields": [],
+          "scope_boundary": {
+            "geometry_proxy_only": true,
+            "depth_model_used": false,
+            "geolayout_reproduction": false,
+            "column_evidence_layer": false
+          }
+        }
+      },
+      "rankable_by_current_HRC_input_summary": {
+        "rankable": false,
+        "reason": "existing candidate rows have no validated candidate projection variants; baseline diagnostic is not rankable candidate input",
+        "candidate_row_count": 6,
+        "candidate_projection_variant_count": 0,
+        "ranking_key_materialized": false,
+        "portfolio_materialized": false
+      },
+      "c4_lite_diagnostics": {
+        "evidence_version": "manhattan_column_evidence_v0",
+        "evidence_status": "available",
+        "source_provenance": {
+          "source_path": "output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34/b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15.txt",
+          "source_sha256": "858f0be5d1d552336fdcd2bd94f0aadb2256d949f4f562ae68de1546b2ed0464",
+          "parser_method": "paired_two_column_rows",
+          "coordinate_contract": "hohonet_model_output_layout_txt@1024x512"
+        },
+        "hohonet_wallwall_peak_alignment": {
+          "baseline_rmse_px": 12.272035518135896,
+          "candidate_rmse_px": 12.272035518135896
+        },
+        "candidate_corner_column_delta": 0.0,
+        "hohonet_ceiling_boundary_rmse_delta": 0.0,
+        "hohonet_floor_boundary_rmse_delta": 0.0,
+        "seam_consistency_delta": 0.0,
+        "visual_conflict_flags": [],
+        "image_edge_support_optional": null,
+        "missing_fields": [
+          "image_edge_support_optional"
+        ],
+        "unavailable_reason": null,
+        "scope_boundary": {
+          "existing_hohonet_proposal_only": true,
+          "image_model_used": false,
+          "depth_model_used": false
+        },
+        "baseline_to_baseline_materialization": true,
+        "candidate_preference_claim": false
+      },
+      "c5_plane_proxy_metrics": {
+        "plane_proxy_version": "plane_proxy_metrics_v0",
+        "status": "available",
+        "plane_proxy_status": "available",
+        "plane_family_assignment": {
+          "status": "available",
+          "method": "direction_family_assignments_as_vertical_plane_families_v0",
+          "frame_offset_deg": 1.8741264337215995,
+          "plane_families": [
+            {
+              "plane_family_id": "family_0",
+              "wall_axis_heading_deg": 1.8741264337215995,
+              "wall_count": 3
+            },
+            {
+              "plane_family_id": "family_1",
+              "wall_axis_heading_deg": 91.8741264337216,
+              "wall_count": 3
+            }
+          ],
+          "wall_assignments": [
+            {
+              "wall_index": 1,
+              "from_pair": 1,
+              "to_pair": 2,
+              "plane_family_id": "family_1",
+              "heading_residual_deg": 0.29060146638435924
+            },
+            {
+              "wall_index": 2,
+              "from_pair": 2,
+              "to_pair": 3,
+              "plane_family_id": "family_0",
+              "heading_residual_deg": 1.2755598641914503
+            },
+            {
+              "wall_index": 3,
+              "from_pair": 3,
+              "to_pair": 4,
+              "plane_family_id": "family_1",
+              "heading_residual_deg": 0.0
+            },
+            {
+              "wall_index": 4,
+              "from_pair": 4,
+              "to_pair": 5,
+              "plane_family_id": "family_0",
+              "heading_residual_deg": 0.3043852706913257
+            },
+            {
+              "wall_index": 5,
+              "from_pair": 5,
+              "to_pair": 6,
+              "plane_family_id": "family_1",
+              "heading_residual_deg": 1.4104344428674835
+            },
+            {
+              "wall_index": 6,
+              "from_pair": 6,
+              "to_pair": 1,
+              "plane_family_id": "family_0",
+              "heading_residual_deg": 17.74873768555608
+            }
+          ]
+        },
+        "wall_plane_parallel_consistency": {
+          "status": "available",
+          "method": "direction_family_pairwise_heading_residual_v0",
+          "median_deg": 1.6404905220672958,
+          "max_deg": 18.053122956247392,
+          "pair_count": 6
+        },
+        "wall_plane_orthogonal_consistency": {
+          "status": "available",
+          "method": "fitted_plane_family_axis_separation_v0",
+          "axis_separation_deg": 90.0,
+          "orthogonal_residual_deg": 0.0
+        },
+        "dominant_height_plane_consistency": {
+          "status": "available",
+          "method": "dominant_projected_wall_height_cluster_v0",
+          "dominant_height_h_star": 2.534824063766143,
+          "height_cluster_mad": 0.004935725531890256,
+          "max_height_residual": 0.4638437326893712,
+          "height_outlier_pairs": [
+            4
+          ],
+          "unavailable_reason": null
+        },
+        "floor_polygon_plane_proxy_residual": {
+          "status": "available",
+          "method": "structured_floorprint_wall_residual_proxy_v0_no_depth_no_plane_fit",
+          "wall_residual_median_deg": 2.019427166913772,
+          "wall_residual_max_deg": 15.874611251834466,
+          "unresolved_edge_count": 1,
+          "self_intersection": false,
+          "unavailable_reason": null
+        },
+        "unavailable_reason": null,
+        "missing_fields": [],
+        "scope_boundary": {
+          "geometry_proxy_only": true,
+          "depth_model_used": false,
+          "geolayout_reproduction": false,
+          "column_evidence_layer": false
+        }
+      },
+      "audit_only": true,
+      "execution_allowed": false,
+      "accepted": false,
+      "downstream_recommendation": false,
+      "annotation_writeback": false
+    }
+  },
+  "processed_cases": [
+    "task218_ann2369",
+    "task238_ann2389"
+  ],
+  "processed_status": "materializable_from_existing_artifact_only",
+  "manual_evidence_processed": false,
+  "supporting_artifacts_used_as_manual_verdicts": false,
+  "generated_candidate": false,
+  "generated_proposal_manifest": false,
+  "generated_geometry_variant": false,
+  "active_runner_changed": false,
+  "ranking_changed": false,
+  "c3_changed": false,
+  "audit_only": true,
+  "execution_allowed": false,
+  "accepted": false,
+  "downstream_recommendation": false,
+  "annotation_writeback": false,
+  "c6_status": "audit_blocked",
+  "c6_5b_authorized": false,
+  "conclusion": "C6 remains audit-blocked; C6.5b is not authorized unless a later scoring/evaluator compliance audit approves the evidence/ranking contract.",
+  "recommended_next_step": "audit-only scoring/evaluator compliance review of materialized evidence inputs",
+  "status_boundaries": {
+    "c3_shadow_expansion": "blocked",
+    "c7_optimizer": "blocked",
+    "c9_learning": "blocked",
+    "c10_ranker": "blocked"
+  }
+}

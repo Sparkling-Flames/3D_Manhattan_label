@@ -19,7 +19,7 @@
 | C3 | C3.1–C3.4b.3 complete；C3.5 two-family consolidation audit implemented | column-x real audit 与 height real audit 均 fail closed；height positive fixture 仅验证 explicit after-y shadow contract。两个 family 均不接入 active selection；其余三个 family 冻结为 missing，`legacy_m1528` 仍是唯一 active source。 |
 | C4 | C4-lite implemented | runner 对已有 HoHoNet proposal 执行 source inventory/parser probe，并物化 corner column、floor/ceiling boundary 与 seam delta；缺失、歧义或合同异常时 fail-closed 为 unavailable，不训练模型、不写回。 |
 | C5 | C5-lite plane proxy v0 implemented | evaluator 已物化独立 `plane_proxy_metrics`：复用 direction-family、同族平行 residual、dominant height cluster 与 floorprint residual 形成 geometry proxy。它不是 depth model、不是 GeoLayout reproduction、不是 C4 evidence layer；C6.2 仅把其中 geometry diagnostics 用于分层排序。 |
-| C6 | C6.5a.1 source artifact readiness audit hardened；still audit-blocked；not stable ranker | Readiness is now manifest-driven and means `artifact_inputs_ready`, never execution authorization. Sources are validated for schema/case identity/variant/row count; manual verdicts use a separate sidecar schema and supporting artifacts are not treated as the verdict itself. Height sources distinguish projection-derived evidence from candidate rows. |
+| C6 | C6.5a.2 audit-only evidence input materialization implemented；still audit-blocked；not stable ranker | For 2369/2389, validated original variants now materialize C2 direction/parallel, fail-closed case contract, baseline-only constrained diagnostics, C4-lite parser diagnostics, and C5 plane proxies. Existing candidate rows remain unmodified and are not treated as projected/rankable variants. C6.5b remains unauthorized pending a later scoring/evaluator compliance audit. |
 | C7 | blocked | legacy `manhattan_m1527_semantic_direct_search.py` 存在 Hooke–Jeeves 搜索，但新 geometry-normalized MADS/Hooke–Jeeves 在 evaluator 稳定前不得启动。 |
 | C8 | 仅记录系统 | feedback ledger schema 与 `materialize_manhattan_feedback_ledger_entry.py` 可保留；不得进入训练、参数更新或自动应用系统。 |
 | C9 | blocked | 未发现 Adaptive Parameter Update 实现；不得启动。 |
@@ -27,7 +27,7 @@
 
 ## 3. 唯一允许的下一步
 
-C6.5a.1 hardening 已完成；当前 C6 仍 audit-blocked。结论为 `artifact_inputs_ready_for_c6_5b=false`、`artifact_inputs_ready_cases=[]`、`execution_allowed=false`。下一步仅允许从已验证 existing artifacts 物化 audit-only evidence inputs，或补独立 manual evidence sidecar；这不是 proposal、candidate、active source 或执行授权。C3 shadow expansion remains blocked；不得接入 active runner selection，不得替换 `legacy_m1528`，不得产生 accepted/downstream recommendation。C6 仍不是 stable ranker；C7/C9/C10 继续 blocked。
+C6.5a.2 已仅从 validated existing artifacts 物化 2369/2389 audit-only evidence inputs；没有 candidate projection variant，因此 `rankable_by_current_HRC=false`，未物化 ranking key/portfolio。C6 仍 audit-blocked，C6.5b 未授权；只有后续 scoring/evaluator compliance audit 接受 evidence/ranking contract 后才可重新评估。C3 shadow expansion remains blocked；不得接入 active runner selection，不得替换 `legacy_m1528`，不得产生 accepted/downstream recommendation。C7/C9/C10 继续 blocked。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
@@ -48,6 +48,7 @@ C6.5a.1 hardening 已完成；当前 C6 仍 audit-blocked。结论为 `artifact_
 - `docs/paper_a_manhattan/HRC_C6_5_GLOBAL_HYPOTHESIS_PROBE_SPEC_v1.md`：C6.5 shadow-only global hypothesis probe safety spec；仅定义未来有限 probe 的合同，不实现生成器、不运行优化、不接 active runner。
 - `tools/paper_a_manhattan/run_hrc_shadow_global_probe_planner.py`：C6.5a read-only planner skeleton；只记录各 case 的 family readiness、missing inputs 与 hard gates，不生成 candidate/geometry variant，不改 active runner/ranking/C3。
 - `tools/paper_a_manhattan/run_hrc_source_artifact_readiness_audit.py`：C6.5a.1 manifest-driven source readiness audit；校验 schema/case identity/variant/row count，区分 projection height 与 candidate-row height，并引用独立 manual evidence sidecar schema；不生成 candidate/proposal/geometry，不改 active runner/ranking/C3。
+- `tools/paper_a_manhattan/run_hrc_evidence_input_materialization.py`：C6.5a.2 audit-only evidence input materializer；只处理 readiness audit 标记为 materializable 的 2369/2389 输入，复用 original variant 物化 C2/C4/C5/contract baseline diagnostics，不投影或修改 candidate rows，不改 active runner/ranking/C3。
 - `tools/paper_a_manhattan/manhattan_candidate_source_interface.py`：C3.1 candidate source 最小字段合同与校验。
 - `tools/paper_a_manhattan/manhattan_legacy_m1528_candidate_source.py`：C3.1 legacy wrapper；仅调用既有 M15.28 action library。
 - `tools/paper_a_manhattan/manhattan_constrained_v0_candidate_source.py`：C3.3 contract-only shadow skeleton；固定输出空 candidate set，无 active runner role。
