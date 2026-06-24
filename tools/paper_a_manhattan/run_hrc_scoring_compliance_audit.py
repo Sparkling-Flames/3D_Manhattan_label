@@ -172,6 +172,7 @@ def build_audit_payload() -> dict[str, Any]:
     }
     return {
         "schema_version": SCHEMA_VERSION,
+        "audit_phase": "C6.5a.4d",
         "source_artifacts": [
             {"path": path.as_posix(), "sha256": _sha256(path)} for path in SOURCE_PATHS
         ],
@@ -255,7 +256,7 @@ def build_audit_payload() -> dict[str, Any]:
         "c6_status": "audit_blocked",
         "c6_5b_authorized": False,
         "c6_5a_4_implementation_completed": True,
-        "next_allowed_step": "C6.5a.4d post-change scoring compliance and selection audit",
+        "next_allowed_step": "resolve candidate-specific C4 evidence and complete manual evidence sidecars; C6.5b remains unauthorized",
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",
             "c7_optimizer": "blocked",
@@ -267,17 +268,38 @@ def build_audit_payload() -> dict[str, Any]:
 
 def render_markdown(payload: Mapping[str, Any]) -> str:
     lines = [
-        "# HRC C6.5a.3 Scoring Compliance Audit (post-4c)",
+        "# HRC C6.5a.4d Post-change Scoring Compliance and Selection Audit",
         "",
+        f"- Ranking key length: `{payload['ranking_key_length']}`",
+        f"- Selection drift: `{str(payload['selection_regression']['selection_drift']).lower()}`",
+        f"- Accepted: `{str(payload['accepted']).lower()}`",
+        f"- Downstream recommendation: `{str(payload['downstream_recommendation']).lower()}`",
         f"- Compliance: `{payload['contract_compliance_status']}`",
         f"- C6 status: `{payload['c6_status']}`",
-        f"- C6.5b authorized: `{payload['c6_5b_authorized']}`",
+        f"- C6.5b authorized: `{str(payload['c6_5b_authorized']).lower()}`",
         f"- Next allowed step: `{payload['next_allowed_step']}`",
         "",
     ]
     for layer, audit in payload["layer_audits"].items():
         lines.append(f"- `{layer}`: `{audit['status']}`")
-    lines.append("")
+    lines.extend(
+        [
+            "",
+            "## Blocked boundaries",
+            "",
+            "- C3 shadow expansion: `blocked`",
+            "- C7 optimizer: `blocked`",
+            "- C9 learning: `blocked`",
+            "- C10 ranker: `blocked`",
+            "",
+            "## Remaining manual-review boundary",
+            "",
+            "- 2369/2389 still require explicit column identity and keep-distinct manual evidence sidecars.",
+            "- Future 3741 dense-corner / short-wall / pillar judgments remain manual-review-only.",
+            "- Projection-derived artifacts may support review but cannot replace the manual verdict.",
+            "",
+        ]
+    )
     return "\n".join(lines)
 
 

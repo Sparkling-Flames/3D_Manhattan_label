@@ -1,5 +1,6 @@
 {
   "schema_version": "hrc_scoring_compliance_audit_v1",
+  "audit_phase": "C6.5a.4d",
   "source_artifacts": [
     {
       "path": "docs/paper_a_manhattan/HRC_SCORING_LAYER_CONTRACT_v1.md",
@@ -11,7 +12,7 @@
     },
     {
       "path": "docs/paper_a_manhattan/HRC_C6_5A_4_SCORING_EVALUATOR_HARDENING_SPEC_v1.md",
-      "sha256": "28bb51f667ca2e323b6f13cdd973fcb55f513a493d48d602738cca0cf33c3477"
+      "sha256": "91caac056d2b20ddfbc22acd5d50b4b6c5d21504a7d1a71bbd0f51698e4733dc"
     },
     {
       "path": "tools/paper_a_manhattan/manhattan_constrained_hypothesis_evaluator.py",
@@ -393,7 +394,7 @@
   "c6_status": "audit_blocked",
   "c6_5b_authorized": false,
   "c6_5a_4_implementation_completed": true,
-  "next_allowed_step": "C6.5a.4d post-change scoring compliance and selection audit",
+  "next_allowed_step": "resolve candidate-specific C4 evidence and complete manual evidence sidecars; C6.5b remains unauthorized",
   "status_boundaries": {
     "c3_shadow_expansion": "blocked",
     "c7_optimizer": "blocked",

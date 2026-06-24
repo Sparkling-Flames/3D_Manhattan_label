@@ -239,3 +239,25 @@ C6.5b remains unauthorized。
 regression expectations。
 
 C3 shadow expansion、C7 optimizer、C9/C10 learning/ranker 继续 blocked。
+
+## 12. Post-4c implementation note
+
+C6.5a.4a–4c 已按本规范完成最小实现；C6.5a.4d 只执行 post-change scoring
+compliance 与 selection regression audit，不修改本合同主体。
+
+4d 固定验收结果：
+
+- `ranking_key_length=44`；
+- `selection_drift=false`；
+- `accepted=false`、`downstream_recommendation=false`；
+- `C6.5b_authorized=false`；
+- C3/C7/C9/C10 继续 blocked。
+
+剩余 blockers 不变：
+
+- candidate-specific C4 evidence 缺失；
+- manual column identity / keep-distinct sidecar 不完整。
+
+Manual evidence sidecar 仍需人工审查。2369 / 2389 的 explicit column identity 与
+keep-distinct contract，以及未来 3741 dense-corner / short-wall / pillar 情况，均不能由
+projection-derived artifact 自动替代人工判断。

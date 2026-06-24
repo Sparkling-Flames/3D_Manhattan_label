@@ -15,6 +15,8 @@ from tools.paper_a_manhattan.run_hrc_scoring_compliance_audit import (
 def test_scoring_compliance_audit_reports_partial_without_mutation():
     payload = build_audit_payload()
     assert payload["schema_version"] == SCHEMA_VERSION
+    assert payload["audit_phase"] == "C6.5a.4d"
+    assert payload["ranking_key_length"] == 44
     assert payload["contract_compliance_status"] == "partial"
     assert payload["audit_only"] is True
     assert payload["evaluator_changed"] is True
@@ -69,7 +71,13 @@ def test_layer_mapping_and_violations_match_current_implementation():
     assert payload["selection_regression"]["selection_drift"] is False
     assert payload["selection_regression"]["accepted"] is False
     assert payload["selection_regression"]["downstream_recommendation"] is False
-    assert payload["next_allowed_step"] == "C6.5a.4d post-change scoring compliance and selection audit"
+    assert "C6.5b remains unauthorized" in payload["next_allowed_step"]
+    assert payload["status_boundaries"] == {
+        "c3_shadow_expansion": "blocked",
+        "c7_optimizer": "blocked",
+        "c9_learning": "blocked",
+        "c10_ranker": "blocked",
+    }
 
 
 def test_scoring_compliance_audit_writes_artifacts(tmp_path):
@@ -77,7 +85,7 @@ def test_scoring_compliance_audit_writes_artifacts(tmp_path):
     payload = json.loads(paths["json"].read_text(encoding="utf-8"))
     assert payload["schema_version"] == SCHEMA_VERSION
     assert paths["markdown"].read_text(encoding="utf-8").startswith(
-        "# HRC C6.5a.3 Scoring Compliance Audit"
+        "# HRC C6.5a.4d Post-change Scoring Compliance and Selection Audit"
     )
 
 
