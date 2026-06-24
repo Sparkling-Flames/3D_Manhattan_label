@@ -1,0 +1,30 @@
+{
+  "schema_version": "hrc_manual_evidence_sidecar_v1",
+  "case_name": "task238_ann2389",
+  "corrected_gt_id": "4543gt",
+  "evidence_type": "keep_distinct_contract",
+  "reviewer": "human_expert",
+  "reviewed_at": "2026-06-24T16:54:38.543118Z",
+  "verdict": "available",
+  "rationale": "Human expert confirms neighboring corners are distinct and the short wall is real; short_wall_exists is rationale only, not an evidence_type.",
+  "short_wall_exists": true,
+  "endpoint_precision_note": "minor endpoint offset possible; topology/identity confirmed but not sub-pixel perfect GT",
+  "supporting_artifacts": [
+    {
+      "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_annotation_4543gt.json",
+      "sha256": "fc277856cc94ffd10907f88422cd17ab32eb709842432fcbadf1f7e9fab114dd"
+    },
+    {
+      "path": "analysis_results/paper_a_manhattan/hypothesis_local_review/task238_ann2389/projection_metrics.json",
+      "sha256": "2ff9045827fbb029d70b4798b5e0a5e615928145cde4a8b954cdda7d253e8ca6"
+    }
+  ],
+  "supporting_artifacts_are_manual_verdict": false,
+  "safety_boundary": {
+    "audit_only": true,
+    "active_runner_role": false,
+    "accepted": false,
+    "downstream_recommendation": false,
+    "annotation_writeback": false
+  }
+}

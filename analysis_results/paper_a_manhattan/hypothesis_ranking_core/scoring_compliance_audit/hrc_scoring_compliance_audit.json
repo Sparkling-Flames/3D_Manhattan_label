@@ -28,7 +28,11 @@
     },
     {
       "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/evidence_input_materialization/hrc_evidence_input_materialization.json",
-      "sha256": "2255467c1150cf043075b3ce752775bc020b94ea586435a04a51fd2bae8dbb2e"
+      "sha256": "bd1a69125392fe693c465644a779f3f4f4dff8369dfc011e9f88e36ec0f7bd64"
+    },
+    {
+      "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/hrc_gt_correction_audit_4543gt.json",
+      "sha256": "7feced6626e9fa41de051f388002088f06e8462a792df8d475ee52a9c1e90b3a"
     }
   ],
   "layer_mapping": {
@@ -348,7 +352,7 @@
     {
       "code": "L4_MANUAL_EVIDENCE_INCOMPLETE",
       "severity": "blocking",
-      "finding": "manual column-identity/keep-distinct sidecars remain incomplete"
+      "finding": "2369 manual column-identity/keep-distinct evidence remains incomplete; 2389 is available only for corrected GT 4543gt"
     }
   ],
   "accepted_gate_audit": {
@@ -379,9 +383,21 @@
   "candidate_preference_blockers": [
     "2369/2389 C4 evidence is baseline-to-baseline diagnostic only",
     "candidate projection variant count is zero",
-    "manual explicit column identity is pending",
+    "2369 manual explicit column identity/keep-distinct evidence is pending",
+    "2389 corrected GT manual evidence is available but is not candidate-specific",
     "supporting artifacts are not manual verdicts"
   ],
+  "corrected_gt_audit": {
+    "materialized": true,
+    "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/hrc_gt_correction_audit_4543gt.json",
+    "sha256": "7feced6626e9fa41de051f388002088f06e8462a792df8d475ee52a9c1e90b3a",
+    "manual_evidence_available": true,
+    "accepted_final_fix": false
+  },
+  "candidate_preference_authorized": {
+    "task218_ann2369": false,
+    "task238_ann2389": false
+  },
   "audit_only": true,
   "evaluator_changed": true,
   "ranking_key_changed": true,

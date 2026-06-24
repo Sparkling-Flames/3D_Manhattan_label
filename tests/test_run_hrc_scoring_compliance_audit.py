@@ -78,6 +78,13 @@ def test_layer_mapping_and_violations_match_current_implementation():
         "c9_learning": "blocked",
         "c10_ranker": "blocked",
     }
+    assert payload["corrected_gt_audit"]["materialized"] is True
+    assert payload["corrected_gt_audit"]["manual_evidence_available"] is True
+    assert payload["corrected_gt_audit"]["accepted_final_fix"] is False
+    assert payload["candidate_preference_authorized"] == {
+        "task218_ann2369": False,
+        "task238_ann2389": False,
+    }
 
 
 def test_scoring_compliance_audit_writes_artifacts(tmp_path):

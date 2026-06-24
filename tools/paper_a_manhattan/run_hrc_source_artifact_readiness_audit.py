@@ -14,6 +14,10 @@ ROOT = Path("analysis_results/paper_a_manhattan/hypothesis_ranking_core")
 DEFAULT_OUT_DIR = ROOT / "source_artifact_readiness_audit"
 DEFAULT_MANIFEST = DEFAULT_OUT_DIR / "source_artifact_manifest.json"
 MANUAL_SIDECAR_SCHEMA = DEFAULT_OUT_DIR / "manual_evidence_sidecar_schema.json"
+GT_CORRECTION_AUDIT = Path(
+    "analysis_results/paper_a_manhattan/gt_correction_audit/"
+    "task238_ann2389_4543gt/hrc_gt_correction_audit_4543gt.json"
+)
 
 EVIDENCE_TYPES = (
     "projection_metrics",
@@ -393,6 +397,35 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
             "annotation_writeback": False,
         }
 
+    correction = _load(GT_CORRECTION_AUDIT)
+    if correction.get("schema_version") != "hrc_gt_correction_audit_v1":
+        raise ValueError("unsupported corrected GT audit schema")
+    corrected_case = cases["task238_ann2389"]
+    for evidence_type in ("explicit_column_identity", "keep_distinct_contract"):
+        sidecar = correction["manual_sidecars"][evidence_type]
+        corrected_case["evidence_readiness_matrix"][evidence_type] = {
+            "status": "available_from_existing_artifact",
+            "source_artifact": sidecar["path"],
+            "sha256": sidecar["sha256"],
+            "materialization_hint": None,
+            "missing_reason": None,
+            "manual_evidence_requirement": None,
+            "manual_evidence_sidecar_schema": MANUAL_SIDECAR_SCHEMA.as_posix(),
+            "supporting_artifacts": [],
+        }
+    corrected_case["corrected_gt_materialized"] = True
+    corrected_case["corrected_gt_id"] = correction["corrected_gt_id"]
+    corrected_case["manual_evidence_available_for_corrected_gt"] = True
+    corrected_case["candidate_specific"] = False
+    corrected_case["candidate_preference_authorized"] = False
+    corrected_case["probe_family_readiness"] = _family_readiness(
+        corrected_case["evidence_readiness_matrix"]
+    )
+    corrected_case["artifact_inputs_ready"] = all(
+        row["artifact_inputs_ready"]
+        for row in corrected_case["probe_family_readiness"].values()
+    )
+
     artifact_inputs_ready_cases = [
         name for name, row in cases.items() if row["artifact_inputs_ready"]
     ]
@@ -428,6 +461,15 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
         "accepted": False,
         "downstream_recommendation": False,
         "annotation_writeback": False,
+        "corrected_gt_materialized": True,
+        "corrected_gt_audit": {
+            "path": GT_CORRECTION_AUDIT.as_posix(),
+            "sha256": _sha256(GT_CORRECTION_AUDIT),
+        },
+        "candidate_preference_authorized": {
+            "task218_ann2369": False,
+            "task238_ann2389": False,
+        },
         "execution_allowed": False,
         "cases": cases,
         "artifact_inputs_ready_for_c6_5b": len(artifact_inputs_ready_cases) == len(cases),

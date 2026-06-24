@@ -6,7 +6,7 @@
   },
   "source_readiness_audit": {
     "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/source_artifact_readiness_audit/hrc_source_artifact_readiness_audit.json",
-    "sha256": "5aa1dd9f1b251ceb65a35c7ea9470ea979170459e08c03e7ccdb9cd1a50c6ffb"
+    "sha256": "91027f97c2ed6f4a18c98505b97f77304c50384415c44a513a5d381898f1e2b9"
   },
   "cases": {
     "task218_ann2369": {
@@ -527,6 +527,8 @@
             "parser_method": "paired_two_column_rows",
             "coordinate_contract": "hohonet_model_output_layout_txt@1024x512"
           },
+          "candidate_preference_authorized": false,
+          "candidate_specific_geometry": false,
           "unavailable_reason": null,
           "missing_fields": [
             "image_edge_support_optional"
@@ -681,6 +683,8 @@
         "seam_consistency_delta": 0.0,
         "visual_conflict_flags": [],
         "image_edge_support_optional": null,
+        "candidate_preference_authorized": false,
+        "candidate_specific_geometry": false,
         "missing_fields": [
           "image_edge_support_optional"
         ],
@@ -845,10 +849,7 @@
         "parallel_family_residual",
         "rankable_by_current_HRC"
       ],
-      "skipped_manual_inputs": [
-        "explicit_column_identity",
-        "keep_distinct_contract"
-      ],
+      "skipped_manual_inputs": [],
       "candidate_rows_read_only": {
         "row_count": 6,
         "modified": false,
@@ -1275,6 +1276,8 @@
             "parser_method": "paired_two_column_rows",
             "coordinate_contract": "hohonet_model_output_layout_txt@1024x512"
           },
+          "candidate_preference_authorized": false,
+          "candidate_specific_geometry": false,
           "unavailable_reason": null,
           "missing_fields": [
             "image_edge_support_optional"
@@ -1415,6 +1418,8 @@
         "seam_consistency_delta": 0.0,
         "visual_conflict_flags": [],
         "image_edge_support_optional": null,
+        "candidate_preference_authorized": false,
+        "candidate_specific_geometry": false,
         "missing_fields": [
           "image_edge_support_optional"
         ],

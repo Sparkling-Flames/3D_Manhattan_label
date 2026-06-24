@@ -26,6 +26,10 @@ DEFAULT_OUT_DIR = ROOT / "scoring_compliance_audit"
 MATERIALIZATION = (
     ROOT / "evidence_input_materialization/hrc_evidence_input_materialization.json"
 )
+GT_CORRECTION_AUDIT = Path(
+    "analysis_results/paper_a_manhattan/gt_correction_audit/"
+    "task238_ann2389_4543gt/hrc_gt_correction_audit_4543gt.json"
+)
 SOURCE_PATHS = (
     Path("docs/paper_a_manhattan/HRC_SCORING_LAYER_CONTRACT_v1.md"),
     Path("docs/paper_a_manhattan/评分如何制定.md"),
@@ -34,6 +38,7 @@ SOURCE_PATHS = (
     Path("tools/paper_a_manhattan/manhattan_hypothesis_portfolio.py"),
     Path("tools/paper_a_manhattan/run_manhattan_hypothesis_ranking_core.py"),
     MATERIALIZATION,
+    GT_CORRECTION_AUDIT,
 )
 
 LAYER_MAPPING = {
@@ -132,6 +137,7 @@ def build_audit_payload() -> dict[str, Any]:
     layers = build_hypothesis_ranking_layers(evaluation)
     key = build_hypothesis_ranking_key(evaluation)
     materialized = json.loads(MATERIALIZATION.read_text(encoding="utf-8"))
+    correction = json.loads(GT_CORRECTION_AUDIT.read_text(encoding="utf-8"))
     baseline_only = all(
         case["c4_lite_diagnostics"]["baseline_to_baseline_materialization"]
         and not case["c4_lite_diagnostics"]["candidate_preference_claim"]
@@ -156,7 +162,7 @@ def build_audit_payload() -> dict[str, Any]:
         {
             "code": "L4_MANUAL_EVIDENCE_INCOMPLETE",
             "severity": "blocking",
-            "finding": "manual column-identity/keep-distinct sidecars remain incomplete",
+            "finding": "2369 manual column-identity/keep-distinct evidence remains incomplete; 2389 is available only for corrected GT 4543gt",
         },
     ]
     expected_selection = {
@@ -241,9 +247,24 @@ def build_audit_payload() -> dict[str, Any]:
         "candidate_preference_blockers": [
             "2369/2389 C4 evidence is baseline-to-baseline diagnostic only",
             "candidate projection variant count is zero",
-            "manual explicit column identity is pending",
+            "2369 manual explicit column identity/keep-distinct evidence is pending",
+            "2389 corrected GT manual evidence is available but is not candidate-specific",
             "supporting artifacts are not manual verdicts",
         ],
+        "corrected_gt_audit": {
+            "materialized": correction["corrected_gt_id"] == "4543gt",
+            "path": GT_CORRECTION_AUDIT.as_posix(),
+            "sha256": _sha256(GT_CORRECTION_AUDIT),
+            "manual_evidence_available": all(
+                row["verdict"] == "available"
+                for row in correction["manual_sidecars"].values()
+            ),
+            "accepted_final_fix": False,
+        },
+        "candidate_preference_authorized": {
+            "task218_ann2369": False,
+            "task238_ann2389": False,
+        },
         "audit_only": True,
         "evaluator_changed": True,
         "ranking_key_changed": True,

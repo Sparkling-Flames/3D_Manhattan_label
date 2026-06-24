@@ -5,7 +5,7 @@
 - Review schema: `local_3d_projection_review_m15_27_1_bridge_v1`
 - Projection schema: `local_3d_projection_m15_19_v1`
 - Input file: `hypothesis_review_bridge_manifest.json`
-- Input SHA-256: `490e6dddf429d1897454f670280cbebd2c23c8d138469bd7c27586e701672710`
+- Input SHA-256: `d65630925de486f1c14bb35401c74502e97d7f3d46aeee703eed4abd72796bf3`
 - Ordered-pair source: `input.ordered_pairs`
 - coordinate_mode requested/effective: `ls_percent` / `ls_percent`
 - W / H / CAM_H: `1024` / `512` / `1.6`
