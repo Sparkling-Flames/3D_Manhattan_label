@@ -35,6 +35,7 @@ C6.5a.9 已物化 3741 的 deterministic segment-aware Manhattan wall-line refit
 C6.5a.9.1 已修正 3741 的 id 语义：所有分段、权重和报告均使用 `source_pair_id`，内部几何仅使用显式映射后的 `solver_position`；`verified_order_source_id` 记录每个 solver position 对应的原始 pair。锁定 `source_pair_id=2 -> solver_position=1`，重跑结果继续保持 review-only、fail-closed safety boundary。
 C6.5a.9.3 已记录 `robust_all_long_edges` 被人工 2D review 否决，并物化 deterministic pair2 anchor/right-half top_y guarded candidates；新候选仍仅供人工 review，不构成 C4 image evidence、acceptance 或 writeback。
 C6.5a.9.4 已记录 `pair2_anchored_height_clamped` 为 partially improved but human-rejected，并物化 s2/s11 baseline-x anchored、bottom_y/top_y targeted 的 deterministic review candidates；不启动 C7 optimizer，所有结果继续保持 audit-only。
+C6.5a.9.5 已记录 `s2_s11_height_pair_repair` 为 human-rejected，并以 `robust_all_long_edges` 的统一高度趋势和 baseline continuity references 估计 dominant height plane，物化 s2/s11 baseline-x constrained、bottom-y sensitivity-guided deterministic candidates；不构成 acceptance、C4 image evidence 或 writeback。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
