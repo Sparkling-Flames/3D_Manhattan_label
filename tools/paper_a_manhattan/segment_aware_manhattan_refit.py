@@ -69,6 +69,8 @@ PROTECTED_SOURCE_EDGES_BY_CHAIN = {
     "chain_5_6_7_8": ((6, 5), (5, 8), (8, 7)),
     "chain_12_11_1": ((12, 11), (11, 2), (2, 1)),
 }
+PAIR2_GUARD = {"x": 1.5, "top_y": 2.0, "bottom_y": 2.0}
+RIGHT_TOP_Y_GUARDS = {7: 2.0, 9: 1.2, 10: 1.2, 11: 1.5, 12: 1.5}
 
 
 def solver_position_for_source_pair(source_pair_id: int) -> int:
@@ -262,6 +264,248 @@ def _movement(
         "total": sum(row["top"] + row["bottom"] for row in rows),
         "max": max(row["max"] for row in rows),
     }
+
+
+def _copy_pairs_by_source(
+    points_by_source_pair_id: Mapping[str, Mapping[str, Any]],
+) -> dict[int, dict[str, Any]]:
+    return {
+        int(source_id): {
+            **row,
+            "top": dict(row["top"]),
+            "bottom": dict(row["bottom"]),
+        }
+        for source_id, row in points_by_source_pair_id.items()
+    }
+
+
+def _blend(value: float, baseline: float, fraction: float) -> float:
+    return baseline + fraction * (value - baseline)
+
+
+def _guard_candidate(
+    baseline: Mapping[int, Mapping[str, Any]],
+    old: Mapping[int, Mapping[str, Any]],
+    *,
+    pair2_fraction: float,
+    right_top_fraction: float | None,
+    anchor_top_fraction: float | None = None,
+    chain_top_fraction: float | None = None,
+) -> list[dict[str, Any]]:
+    candidate = _copy_pairs_by_source({str(k): v for k, v in old.items()})
+    for endpoint in ("top", "bottom"):
+        for axis in ("x", "y"):
+            candidate[2][endpoint][axis] = _blend(
+                float(old[2][endpoint][axis]),
+                float(baseline[2][endpoint][axis]),
+                pair2_fraction,
+            )
+    for source_id, upward_limit in RIGHT_TOP_Y_GUARDS.items():
+        old_y = float(old[source_id]["top"]["y"])
+        baseline_y = float(baseline[source_id]["top"]["y"])
+        proposed = (
+            old_y
+            if right_top_fraction is None
+            else _blend(old_y, baseline_y, right_top_fraction)
+        )
+        candidate[source_id]["top"]["y"] = max(proposed, baseline_y - upward_limit)
+    if anchor_top_fraction is not None:
+        for source_id in (3, 4):
+            candidate[source_id]["top"]["y"] = _blend(
+                float(old[source_id]["top"]["y"]),
+                float(baseline[source_id]["top"]["y"]),
+                anchor_top_fraction,
+            )
+    if chain_top_fraction is not None:
+        for source_id in (5, 6):
+            candidate[source_id]["top"]["y"] = _blend(
+                float(old[source_id]["top"]["y"]),
+                float(baseline[source_id]["top"]["y"]),
+                chain_top_fraction,
+            )
+    return [candidate[source_id] for source_id in VERIFIED_ORDER_SOURCE_IDS]
+
+
+def _guard_metrics(
+    baseline_pairs: Sequence[Mapping[str, Any]],
+    candidate_pairs: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    baseline = {int(row["source_pair_id"]): row for row in baseline_pairs}
+    candidate = {int(row["source_pair_id"]): row for row in candidate_pairs}
+    movement = _movement(baseline_pairs, candidate_pairs)
+    movement_by_source = {
+        row["source_pair_id"]: row for row in movement["per_pair"]
+    }
+    pair2_deltas = {
+        f"{endpoint}_{axis}": float(candidate[2][endpoint][axis])
+        - float(baseline[2][endpoint][axis])
+        for endpoint in ("top", "bottom")
+        for axis in ("x", "y")
+    }
+    pair2_passed = (
+        abs(pair2_deltas["top_x"]) <= PAIR2_GUARD["x"]
+        and abs(pair2_deltas["bottom_x"]) <= PAIR2_GUARD["x"]
+        and abs(pair2_deltas["top_y"]) <= PAIR2_GUARD["top_y"]
+        and abs(pair2_deltas["bottom_y"]) <= PAIR2_GUARD["bottom_y"]
+    )
+    top_y_changes = {
+        source_id: float(candidate[source_id]["top"]["y"])
+        - float(baseline[source_id]["top"]["y"])
+        for source_id in VERIFIED_ORDER_SOURCE_IDS
+    }
+    right_violations = [
+        source_id
+        for source_id, limit in RIGHT_TOP_Y_GUARDS.items()
+        if top_y_changes[source_id] < -limit - 1e-9
+    ]
+    projection = project_layout_to_3d(
+        candidate_pairs, 1024, 512, "ls_percent", DEFAULT_CAMERA_HEIGHT
+    )
+    geometry = compute_all_geometry_metrics(projection)
+    floor = geometry["floorprint"]
+    floor_points = np.array(
+        [[row["floor_3d"]["x"], row["floor_3d"]["z"]] for row in projection["pairs"]]
+    )
+    baseline_projection = project_layout_to_3d(
+        baseline_pairs, 1024, 512, "ls_percent", DEFAULT_CAMERA_HEIGHT
+    )
+    baseline_floor = np.array(
+        [
+            [row["floor_3d"]["x"], row["floor_3d"]["z"]]
+            for row in baseline_projection["pairs"]
+        ]
+    )
+    baseline_lengths = {
+        edge: float(
+            np.linalg.norm(
+                baseline_floor[_array_index_for_source_pair(edge[1])]
+                - baseline_floor[_array_index_for_source_pair(edge[0])]
+            )
+        )
+        for edges in PROTECTED_SOURCE_EDGES_BY_CHAIN.values()
+        for edge in edges
+    }
+    chain_status, _ = _chain_preserved(floor_points, baseline_lengths)
+    suppress_reasons = []
+    if not pair2_passed:
+        suppress_reasons.append("source_pair_2_2d_anchor_guard_failed")
+    if right_violations:
+        suppress_reasons.append("right_half_top_y_guard_failed")
+    if len(candidate_pairs) != 12:
+        suppress_reasons.append("topology_invalid")
+    if floor.get("self_intersection"):
+        suppress_reasons.append("self_intersection")
+    if not chain_status["chain_5_6_7_8"]:
+        suppress_reasons.append("chain_5_6_7_8_broken")
+    if not chain_status["chain_12_11_1"]:
+        suppress_reasons.append("chain_12_11_1_broken")
+    return {
+        "source_pair_2_guard_passed": pair2_passed,
+        "source_pair_2_top_movement": movement_by_source[2]["top"],
+        "source_pair_2_bottom_movement": movement_by_source[2]["bottom"],
+        "source_pair_2_deltas": pair2_deltas,
+        "right_half_top_y_guard_passed": not right_violations,
+        "right_half_top_y_violations": right_violations,
+        "chain_5_6_7_8_preserved": chain_status["chain_5_6_7_8"],
+        "chain_12_11_1_preserved": chain_status["chain_12_11_1"],
+        "topology_valid": len(candidate_pairs) == 12,
+        "self_intersection": floor.get("self_intersection"),
+        "order_preserved": [
+            int(row["source_pair_id"]) for row in candidate_pairs
+        ]
+        == VERIFIED_ORDER_SOURCE_IDS,
+        "strong_anchor_3_4_movement": max(
+            movement_by_source[source_id]["max"] for source_id in (3, 4)
+        ),
+        "top_y_changes_by_source_pair_id": top_y_changes,
+        "total_movement": movement["total"],
+        "max_movement": movement["max"],
+        "wall_residual_sum": floor.get("summary", {}).get(
+            "wall_residual_sum_deg"
+        ),
+        "turn_residual_max": geometry["corner_turns"]["summary"].get(
+            "corner_residual_max_deg"
+        ),
+        "height_consistency_l1": geometry["heights"]["summary"].get(
+            "height_residual_sum"
+        ),
+        "suppress_reasons": suppress_reasons,
+    }
+
+
+def build_2d_guarded_candidates(
+    baseline_points_by_source_pair_id: Mapping[str, Mapping[str, Any]],
+    old_points_by_source_pair_id: Mapping[str, Mapping[str, Any]],
+) -> list[dict[str, Any]]:
+    baseline = _copy_pairs_by_source(baseline_points_by_source_pair_id)
+    old = _copy_pairs_by_source(old_points_by_source_pair_id)
+    specs = (
+        (
+            "pair2_anchored_height_clamped",
+            _guard_candidate(
+                baseline,
+                old,
+                pair2_fraction=0.18,
+                right_top_fraction=None,
+            ),
+            "guard_clamp",
+        ),
+        (
+            "pair2_anchored_moderated_height_refit",
+            _guard_candidate(
+                baseline,
+                old,
+                pair2_fraction=0.15,
+                right_top_fraction=0.35,
+                anchor_top_fraction=0.25,
+            ),
+            "moderated_height_fit",
+        ),
+        (
+            "local_chain_preserving_height_refit",
+            _guard_candidate(
+                baseline,
+                old,
+                pair2_fraction=0.10,
+                right_top_fraction=0.25,
+                anchor_top_fraction=0.20,
+                chain_top_fraction=0.50,
+            ),
+            "chain_preserving_height_moderation",
+        ),
+    )
+    candidates = []
+    baseline_pairs = [baseline[source_id] for source_id in VERIFIED_ORDER_SOURCE_IDS]
+    for candidate_id, coordinates, method in specs:
+        metrics = _guard_metrics(baseline_pairs, coordinates)
+        metrics["height_moderation_applied"] = method != "guard_clamp"
+        metrics["recommendation_label"] = (
+            "suppress"
+            if metrics["suppress_reasons"]
+            else "plausible_but_needs_review"
+        )
+        candidates.append(
+            {
+                "candidate_id": candidate_id,
+                "generation_method": method,
+                "deterministic": True,
+                "random_or_fixed_step_grid_used": False,
+                "corrected_coordinates": coordinates,
+                **metrics,
+            }
+        )
+    viable = [row for row in candidates if not row["suppress_reasons"]]
+    if viable:
+        top = min(
+            viable,
+            key=lambda row: (
+                row["height_consistency_l1"],
+                row["strong_anchor_3_4_movement"],
+                row["total_movement"],
+            ),
+        )
+        top["recommendation_label"] = "recommended_for_human_review"
+    return candidates
 
 
 def solve_segment_aware_refit(

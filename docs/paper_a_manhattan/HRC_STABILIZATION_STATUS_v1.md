@@ -33,6 +33,7 @@ Candidate-specific C4 input contract 已物化并 fail-closed：3741/0017 与 45
 
 C6.5a.9 已物化 3741 的 deterministic segment-aware Manhattan wall-line refit：固定 12-pair verified order，corner 来自相邻墙线交点，3–4 strong anchor 基本保持，5–6–7–8 与 12–11–1 短墙链保持；结果仅供人工 review，不接 active ranking 或 writeback。
 C6.5a.9.1 已修正 3741 的 id 语义：所有分段、权重和报告均使用 `source_pair_id`，内部几何仅使用显式映射后的 `solver_position`；`verified_order_source_id` 记录每个 solver position 对应的原始 pair。锁定 `source_pair_id=2 -> solver_position=1`，重跑结果继续保持 review-only、fail-closed safety boundary。
+C6.5a.9.3 已记录 `robust_all_long_edges` 被人工 2D review 否决，并物化 deterministic pair2 anchor/right-half top_y guarded candidates；新候选仍仅供人工 review，不构成 C4 image evidence、acceptance 或 writeback。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
