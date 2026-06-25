@@ -35,6 +35,20 @@ CANDIDATE_DRY_RUN = (
     / "c6_5a_6_candidate_dry_run/task238_ann2389_4543gt/"
     "hrc_c6_5a_6_candidate_dry_run.json"
 )
+MANUAL_SELECTION_LEDGER = (
+    ROOT
+    / "c6_5a_6_2_manual_selection_ledger/task238_ann2389_4543gt/"
+    "hrc_c6_5a_6_2_manual_selection_ledger.json"
+)
+C6_5A_7_DIR = ROOT / "c6_5a_7_blocker_closure"
+SIDECAR_2369_EXPLICIT = (
+    C6_5A_7_DIR
+    / "manual_sidecar_explicit_column_identity_task218_ann2369_unavailable.json"
+)
+SIDECAR_2369_KEEP = (
+    C6_5A_7_DIR
+    / "manual_sidecar_keep_distinct_contract_task218_ann2369_unavailable.json"
+)
 LEGACY_TARGET_CASES = ("task218_ann2369", "task238_ann2389")
 CORRECTED_CASE = "task238_ann2389_4543gt"
 TARGET_CASES = (*LEGACY_TARGET_CASES, CORRECTED_CASE)
@@ -300,6 +314,7 @@ def build_payload(
     }
     cases[CORRECTED_CASE] = _corrected_case_payload(readiness)
     dry_run = _load(CANDIDATE_DRY_RUN)
+    selection = _load(MANUAL_SELECTION_LEDGER)
     cases[CORRECTED_CASE]["candidate_dry_run"] = {
         "generated": True,
         "path": CANDIDATE_DRY_RUN.as_posix(),
@@ -307,6 +322,27 @@ def build_payload(
         "candidate_count": dry_run["candidate_count"],
         "used_for_preference": False,
         "candidate_preference_authorized": False,
+    }
+    cases[CORRECTED_CASE]["manual_selection"] = {
+        "selected_candidate": selection["selected_candidate"],
+        "selected_y_step": selection["selected_y_step"],
+        "review_only": True,
+        "accepted": False,
+        "candidate_preference_authorized": False,
+    }
+    cases["task218_ann2369"]["manual_sidecar_status"] = {
+        "status": "unavailable_pending_human_confirmation",
+        "explicit_column_identity": {
+            "path": SIDECAR_2369_EXPLICIT.as_posix(),
+            "sha256": _sha256(SIDECAR_2369_EXPLICIT),
+            "verdict": _load(SIDECAR_2369_EXPLICIT)["verdict"],
+        },
+        "keep_distinct_contract": {
+            "path": SIDECAR_2369_KEEP.as_posix(),
+            "sha256": _sha256(SIDECAR_2369_KEEP),
+            "verdict": _load(SIDECAR_2369_KEEP)["verdict"],
+        },
+        "supporting_artifacts_are_manual_verdicts": False,
     }
     return {
         "schema_version": SCHEMA_VERSION,
@@ -324,6 +360,11 @@ def build_payload(
         "manual_evidence_processed": True,
         "supporting_artifacts_used_as_manual_verdicts": False,
         "c6_5a_6_candidate_dry_run_generated": True,
+        "c6_5a_7_blocker_closure_status": {
+            "2369_manual_sidecar": "unavailable_pending_human_confirmation",
+            "candidate_specific_c4_complete": False,
+            "c6_5b_authorized": False,
+        },
         "generated_candidate": False,
         "generated_proposal_manifest": False,
         "generated_geometry_variant": False,
@@ -339,7 +380,8 @@ def build_payload(
         "c6_5b_authorized": False,
         "conclusion": "C6 remains audit-blocked; C6.5b is not authorized unless a later scoring/evaluator compliance audit approves the evidence/ranking contract.",
         "recommended_next_step": (
-            "human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep"
+            "human review of task218_ann2369 explicit column identity and "
+            "keep-distinct contract; candidate-specific C4 evidence remains required"
         ),
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",

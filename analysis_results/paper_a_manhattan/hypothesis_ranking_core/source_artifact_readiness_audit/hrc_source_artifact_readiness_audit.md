@@ -3,6 +3,6 @@
 - Artifact inputs ready for C6.5b: `False`
 - Artifact-input-ready cases: `[]`
 - Blocked cases: `['task218_ann3741', 'task218_ann2369', 'task238_ann2389', 'gt75_task533', 'ordinary_compatible', 'task238_ann2389_4543gt']`
-- Recommended next step: `human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep`
+- Recommended next step: `human review of task218_ann2369 explicit column identity and keep-distinct contract; candidate-specific C4 evidence remains required`
 - Execution allowed: `false`
 - Candidate/proposal/geometry generated: `false`

@@ -23,6 +23,19 @@ CANDIDATE_DRY_RUN = Path(
     "c6_5a_6_candidate_dry_run/task238_ann2389_4543gt/"
     "hrc_c6_5a_6_candidate_dry_run.json"
 )
+MANUAL_SELECTION_LEDGER = ROOT / (
+    "c6_5a_6_2_manual_selection_ledger/task238_ann2389_4543gt/"
+    "hrc_c6_5a_6_2_manual_selection_ledger.json"
+)
+C6_5A_7_DIR = ROOT / "c6_5a_7_blocker_closure"
+SIDECAR_2369_EXPLICIT = (
+    C6_5A_7_DIR
+    / "manual_sidecar_explicit_column_identity_task218_ann2369_unavailable.json"
+)
+SIDECAR_2369_KEEP = (
+    C6_5A_7_DIR
+    / "manual_sidecar_keep_distinct_contract_task218_ann2369_unavailable.json"
+)
 
 EVIDENCE_TYPES = (
     "projection_metrics",
@@ -506,6 +519,11 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
     cases["task238_ann2389"]["candidate_preference_authorized"] = False
     cases[correction["case_name"]] = _corrected_gt_case(correction)
     dry_run = _load(CANDIDATE_DRY_RUN)
+    selection = _load(MANUAL_SELECTION_LEDGER)
+    sidecar_2369 = {
+        "explicit_column_identity": _load(SIDECAR_2369_EXPLICIT),
+        "keep_distinct_contract": _load(SIDECAR_2369_KEEP),
+    }
     if (
         dry_run.get("case_name") != "task238_ann2389_4543gt"
         or dry_run.get("candidate_count", 0) <= 0
@@ -518,6 +536,25 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
         "candidate_count": dry_run["candidate_count"],
         "candidate_preference_authorized": False,
         "execution_allowed": False,
+    }
+    cases["task238_ann2389_4543gt"]["manual_selection"] = {
+        "selected_candidate": selection["selected_candidate"],
+        "selected_y_step": selection["selected_y_step"],
+        "review_only": True,
+        "accepted": False,
+        "candidate_preference_authorized": False,
+    }
+    cases["task218_ann2369"]["manual_sidecar_status"] = {
+        evidence_type: {
+            "path": path.as_posix(),
+            "sha256": _sha256(path),
+            "verdict": sidecar_2369[evidence_type]["verdict"],
+            "supporting_artifacts_are_manual_verdict": False,
+        }
+        for evidence_type, path in {
+            "explicit_column_identity": SIDECAR_2369_EXPLICIT,
+            "keep_distinct_contract": SIDECAR_2369_KEEP,
+        }.items()
     }
 
     artifact_inputs_ready_cases = [
@@ -581,6 +618,11 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
             "candidate_preference_authorized_old_case": False,
             "candidate_preference_authorized_corrected_case": False,
         },
+        "c6_5a_7_blocker_closure_status": {
+            "2369_manual_sidecar": "unavailable_pending_human_confirmation",
+            "candidate_specific_c4_complete": False,
+            "c6_5b_authorized": False,
+        },
         "execution_allowed": False,
         "cases": cases,
         "artifact_inputs_ready_for_c6_5b": len(artifact_inputs_ready_cases) == len(cases),
@@ -590,7 +632,8 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
         "manual_evidence_required": by_status["requires_manual_visual_evidence"],
         "unavailable_inputs": by_status["unavailable"],
         "recommended_next_step": (
-            "human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep"
+            "human review of task218_ann2369 explicit column identity and "
+            "keep-distinct contract; candidate-specific C4 evidence remains required"
         ),
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",

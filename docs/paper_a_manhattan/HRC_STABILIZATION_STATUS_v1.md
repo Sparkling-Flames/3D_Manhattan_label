@@ -27,7 +27,7 @@
 
 ## 3. 唯一允许的下一步
 
-C6.5a.5.1 completed。4543gt uses independent 4-pair corrected projection；`short_wall_exists=false`；`keep_distinct_contract=not_applicable`；explicit column identity available。旧 `task238_ann2389` 仅为 deprecated old-GT diagnostic，其 manual requirements 不是 corrected-GT blocker。C6.5a.6.2 completed：人工选择 `c6_5a_6_1_candidate_0003`（pair2 y `+0.75`）供 review only；不构成自动接受或 preference 授权。candidate-specific C4 evidence 仍缺失，2369 manual sidecar 仍 pending；C6.5b、C3 shadow expansion、C7/C9/C10 继续 blocked。
+C6.5a.7 blocker closure audit completed。4543gt 继续使用独立 4-pair corrected projection；人工选择 `c6_5a_6_1_candidate_0003` 仍仅供 review。2369 的 explicit-column / keep-distinct sidecar 已按真实状态物化为 `unavailable`，没有从 supporting artifacts 推断人工 verdict。candidate-specific C4 evidence 对 2369、deprecated old 2389 和 selected 4543gt candidate 0003 仍缺失；C6.5b 未授权，C3 shadow expansion、C7/C9/C10 继续 blocked。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
@@ -53,6 +53,7 @@ C6.5a.5.1 completed。4543gt uses independent 4-pair corrected projection；`sho
 - `tools/paper_a_manhattan/run_hrc_gt_correction_audit.py`：C6.5a.5/5.1 corrected-GT audit；保留 task238/2389 旧 GT 为 deprecated source，物化独立 `task238_ann2389_4543gt` 4-pair projection 与 explicit-column sidecar；short-wall/keep-distinct 不适用，不生成 candidate、不授权 preference/C6.5b。
 - `tools/paper_a_manhattan/run_hrc_c6_5a_6_candidate_dry_run.py`：C6.5a.6.1 四个固定 pair2 y-step（`+0.25/+0.50/+0.75/+1.00`）4-pair audit-only 候选及本地 3D preview；不执行搜索、不接 active ranking/portfolio、不授权 preference/writeback。
 - `tools/paper_a_manhattan/run_hrc_c6_5a_6_2_manual_selection_ledger.py`：C6.5a.6.2 人工 review-only selection ledger；校验所选 candidate 来自 C6.5a.6.1，不改变 accepted/downstream/preference/writeback。
+- `tools/paper_a_manhattan/run_hrc_c6_5a_7_blocker_closure_audit.py`：C6.5a.7 blocker closure pack；区分 baseline C4-lite、candidate-specific C4、manual preference 与 final acceptance，并保持 C6.5b blocked。
 - `docs/paper_a_manhattan/HRC_C6_5A_4_SCORING_EVALUATOR_HARDENING_SPEC_v1.md`：C6.5a.4 spec-only hardening contract；定义未来 L0–L5 key 与 gate 改造，不构成实现授权。
 - `tests/fixtures/paper_a_manhattan/hrc_scoring_layer_compliance_v1.json` 与 `tests/test_hrc_scoring_layer_hardening_contract.py`：C6.5a.4b fixture-based contract；锁定 hard gate、L1/L2/L3/L4/L5 层序及 legacy exclusion。
 - `tools/paper_a_manhattan/manhattan_constrained_hypothesis_evaluator.py` 与 `manhattan_hypothesis_portfolio.py`：C6.5a.4c 最小实现；共享 L0–L5 layer key，保持 bucket 集合与 recommendation authorization 不变。

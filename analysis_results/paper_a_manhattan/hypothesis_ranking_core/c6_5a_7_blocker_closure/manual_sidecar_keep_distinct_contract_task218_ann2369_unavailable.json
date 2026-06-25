@@ -1,0 +1,38 @@
+{
+  "schema_version": "hrc_manual_evidence_sidecar_v1",
+  "case_name": "task218_ann2369",
+  "evidence_type": "keep_distinct_contract",
+  "reviewer": "pending_human_expert",
+  "reviewed_at": null,
+  "verdict": "unavailable",
+  "rationale": "No recorded human verdict exists. Projection, candidate, and preview artifacts are supporting material only and cannot supply the verdict.",
+  "required_human_confirmation": [
+    "Which nearby corners represent distinct physical room corners?",
+    "Must the dense pair remain distinct under any later candidate adjustment?"
+  ],
+  "supporting_artifacts": [
+    {
+      "path": "analysis_results/paper_a_manhattan/local_3d_projection/task218_ann2369/projection_metrics.json",
+      "sha256": "0ad2f6d7d7afb0cc7948f413abb9f0ba68e09b51882185bb56b82b8afe3a893c",
+      "exists": true
+    },
+    {
+      "path": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task218_ann2369_m1518_3_candidate_semantics_output.json",
+      "sha256": "ece4c8497471cb2b1320b2ef0b7bfbf568b410ed175dce2ad166e49c52796656",
+      "exists": true
+    },
+    {
+      "path": "analysis_results/paper_a_manhattan/hypothesis_local_review/task218_ann2369/local_3d_review.html",
+      "sha256": "8821c018ad956f83f664da19aa9dedbf263d38579c92fc1f07c39ff194ab7c5a",
+      "exists": true
+    }
+  ],
+  "supporting_artifacts_are_manual_verdict": false,
+  "safety_boundary": {
+    "audit_only": true,
+    "active_runner_role": false,
+    "accepted": false,
+    "downstream_recommendation": false,
+    "annotation_writeback": false
+  }
+}

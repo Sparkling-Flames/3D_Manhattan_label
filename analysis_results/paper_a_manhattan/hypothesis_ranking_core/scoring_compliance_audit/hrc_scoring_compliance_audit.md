@@ -7,7 +7,7 @@
 - Compliance: `partial`
 - C6 status: `audit_blocked`
 - C6.5b authorized: `false`
-- Next allowed step: `human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep; C6.5b remains blocked`
+- Next allowed step: `human review of task218_ann2369 explicit column identity and keep-distinct contract; candidate-specific C4 evidence remains required; C6.5b remains blocked`
 
 - `L0`: `complete`
 - `L1`: `complete`
@@ -25,8 +25,8 @@
 
 ## Remaining manual-review boundary
 
-- 2369 manual sidecar remains pending.
-- 2369/2389 candidate-specific C4 evidence remains absent.
+- 2369 manual sidecars are materialized as unavailable; no human verdict was inferred.
+- Candidate-specific C4 evidence remains absent for 2369, old 2389, and selected 4543gt candidate 0003.
 - 2389 corrected GT has explicit column identity; keep-distinct is not applicable.
 - Future 3741 dense-corner / short-wall / pillar judgments remain manual-review-only.
 - Projection-derived artifacts may support review but cannot replace the manual verdict.

@@ -28,7 +28,7 @@
     },
     {
       "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/evidence_input_materialization/hrc_evidence_input_materialization.json",
-      "sha256": "f82a75ceb241c9197ef3a0571e49c2b263c0935894fbc3cc83a470a7e7235ec9"
+      "sha256": "05dd04a0cdbb26b4c5766130eecf6b920a8cab2f2cfce63dff6c7e117ce9f603"
     },
     {
       "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/hrc_gt_correction_audit_4543gt.json",
@@ -351,12 +351,12 @@
     {
       "code": "L2_BASELINE_ONLY_CANNOT_PREFER_CANDIDATE",
       "severity": "blocking",
-      "finding": "2369/2389 candidate-specific C4 evidence is absent"
+      "finding": "candidate-specific C4 evidence is absent for 2369, deprecated old 2389, and selected corrected-GT candidate 0003"
     },
     {
       "code": "L4_MANUAL_EVIDENCE_INCOMPLETE",
       "severity": "blocking",
-      "finding": "2369 manual sidecar remains pending; 2389 corrected GT has explicit column identity available and keep-distinct is not applicable"
+      "finding": "2369 explicit-column and keep-distinct manual verdicts are unavailable; supporting artifacts are not manual verdicts"
     }
   ],
   "accepted_gate_audit": {
@@ -385,9 +385,9 @@
     "downstream_recommendation": false
   },
   "candidate_preference_blockers": [
-    "2369/2389 candidate-specific C4 evidence is absent",
-    "candidate projection variant count is zero",
-    "2369 manual sidecar is pending",
+    "candidate-specific C4 evidence is absent for 2369, old 2389, and selected 4543gt candidate 0003",
+    "2369 explicit column identity human verdict is unavailable",
+    "2369 keep-distinct contract human verdict is unavailable",
     "2389 corrected GT explicit column identity is available",
     "2389 corrected GT keep-distinct is not applicable",
     "supporting artifacts are not manual verdicts"
@@ -422,9 +422,28 @@
     "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_6_candidate_dry_run/task238_ann2389_4543gt/hrc_c6_5a_6_candidate_dry_run.json",
     "sha256": "c5bb9053fc8144be7f195ba4cd1ce6afdf3acb72d7df87e8bff32ae7b79cc1e4",
     "candidate_count": 4,
-    "human_comparison_status": "pending",
+    "human_comparison_status": "selected_for_review_only",
+    "selected_candidate": "c6_5a_6_1_candidate_0003",
+    "selected_y_step": 0.75,
     "active_ranking_changed": false,
     "candidate_preference_authorized": false
+  },
+  "c6_5a_7_blocker_closure_status": {
+    "2369_manual_sidecars": {
+      "explicit_column_identity": {
+        "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_explicit_column_identity_task218_ann2369_unavailable.json",
+        "sha256": "1e4f0ffbd28200417cf5cae956db32f65b4e478a9f6e9e663d0316567f195f05",
+        "verdict": "unavailable"
+      },
+      "keep_distinct_contract": {
+        "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_keep_distinct_contract_task218_ann2369_unavailable.json",
+        "sha256": "72de89d3edbe8a500cdbbf9a637dadd3fce03f36539de49e1594d4086d6aa917",
+        "verdict": "unavailable"
+      }
+    },
+    "supporting_artifacts_are_manual_verdicts": false,
+    "candidate_specific_c4_complete": false,
+    "c6_5b_authorized": false
   },
   "audit_only": true,
   "evaluator_changed": true,
@@ -438,7 +457,7 @@
   "c6_status": "audit_blocked",
   "c6_5b_authorized": false,
   "c6_5a_4_implementation_completed": true,
-  "next_allowed_step": "human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep; C6.5b remains blocked",
+  "next_allowed_step": "human review of task218_ann2369 explicit column identity and keep-distinct contract; candidate-specific C4 evidence remains required; C6.5b remains blocked",
   "status_boundaries": {
     "c3_shadow_expansion": "blocked",
     "c7_optimizer": "blocked",

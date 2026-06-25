@@ -1,0 +1,188 @@
+{
+  "schema_version": "hrc_c6_5a_7_blocker_closure_report_v1",
+  "audit_stage": "C6.5a.7",
+  "generated_at": "2026-06-25T04:15:05.428229+00:00",
+  "source_artifacts": {
+    "readiness": {
+      "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/source_artifact_readiness_audit/hrc_source_artifact_readiness_audit.json",
+      "sha256": "ae5ea5be46da24264578475100785155cbd47b5a6a1d2f518a490dda82373ce3",
+      "exists": true
+    },
+    "evidence_materialization": {
+      "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/evidence_input_materialization/hrc_evidence_input_materialization.json",
+      "sha256": "05dd04a0cdbb26b4c5766130eecf6b920a8cab2f2cfce63dff6c7e117ce9f603",
+      "exists": true
+    },
+    "scoring_compliance": {
+      "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/scoring_compliance_audit/hrc_scoring_compliance_audit.json",
+      "sha256": "ec73540ed95b5ccb1132c6bfbaec38300523750f056b30f877b7d8cda1d2b209",
+      "exists": true
+    },
+    "manual_selection_ledger": {
+      "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_6_2_manual_selection_ledger/task238_ann2389_4543gt/hrc_c6_5a_6_2_manual_selection_ledger.json",
+      "sha256": "089839e5169cbaa6165d29528307f063ae3b31a6b9963fa925962a7bfad3a6d3",
+      "exists": true
+    },
+    "manual_sidecar_schema": {
+      "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/source_artifact_readiness_audit/manual_evidence_sidecar_schema.json",
+      "sha256": "834d222db25da918dc085abb69826273f0ba7b84e120b24bf89bdd9a8680f630",
+      "exists": true
+    },
+    "old_gt": {
+      "status": "deprecated_superseded_source",
+      "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/old_gt_annotation_2389_deprecated.json",
+      "sha256": "071cd32cf0038a0ff51c39a02faf15d5854eb04eb4cfb37f4a88c5cb73b1343d"
+    },
+    "corrected_gt": {
+      "status": "audit_artifact_corrected_gt_source",
+      "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_annotation_4543gt.json",
+      "sha256": "3b1df29c0b57f1c3dbcb54356618010a401fc454fd0c9cc5f62a6b1c0b2df901",
+      "accepted_final_fix": false
+    }
+  },
+  "closed_blockers": [
+    "4543gt corrected projection is independent and has four pairs",
+    "4543gt explicit column identity manual evidence is available",
+    "4543gt keep-distinct contract is not applicable",
+    "C6.5a.6.2 manual review selection is recorded without acceptance",
+    "2369 missing-manual-verdict state is now explicitly materialized"
+  ],
+  "remaining_blockers": [
+    "2369 explicit column identity human verdict unavailable",
+    "2369 keep-distinct contract human verdict unavailable",
+    "candidate-specific C4 evidence absent for 2369, old 2389, and selected 4543gt candidate 0003",
+    "3741 explicit column identity manual evidence remains incomplete",
+    "C6.5b requires explicit user approval even after evidence readiness"
+  ],
+  "manual_sidecar_2369": {
+    "status": "unavailable_pending_human_confirmation",
+    "records": {
+      "explicit_column_identity": {
+        "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_explicit_column_identity_task218_ann2369_unavailable.json",
+        "sha256": "1e4f0ffbd28200417cf5cae956db32f65b4e478a9f6e9e663d0316567f195f05",
+        "exists": true,
+        "verdict": "unavailable",
+        "human_verdict_recorded": false
+      },
+      "keep_distinct_contract": {
+        "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_keep_distinct_contract_task218_ann2369_unavailable.json",
+        "sha256": "72de89d3edbe8a500cdbbf9a637dadd3fce03f36539de49e1594d4086d6aa917",
+        "exists": true,
+        "verdict": "unavailable",
+        "human_verdict_recorded": false
+      }
+    },
+    "supporting_artifacts_are_manual_verdicts": false
+  },
+  "c4_evidence_gap_table": [
+    {
+      "case_name": "task218_ann2369",
+      "candidate_available": true,
+      "selected_or_review_candidate": null,
+      "c4_lite_available": true,
+      "c4_lite_scope": "baseline_to_baseline_only",
+      "candidate_specific_c4_available": false,
+      "manual_visual_preference": false,
+      "accepted_final_fix": false,
+      "candidate_preference_authorized": false,
+      "blocker_reason": "candidate-specific C4 delta and human sidecar verdicts are absent"
+    },
+    {
+      "case_name": "task238_ann2389",
+      "candidate_available": true,
+      "selected_or_review_candidate": null,
+      "c4_lite_available": true,
+      "c4_lite_scope": "baseline_to_baseline_only",
+      "candidate_specific_c4_available": false,
+      "manual_visual_preference": false,
+      "accepted_final_fix": false,
+      "candidate_preference_authorized": false,
+      "blocker_reason": "deprecated old-GT diagnostic; candidate-specific C4 evidence absent"
+    },
+    {
+      "case_name": "task238_ann2389_4543gt",
+      "candidate_available": true,
+      "selected_or_review_candidate": "c6_5a_6_1_candidate_0003",
+      "c4_lite_available": false,
+      "c4_lite_scope": "corrected_baseline_projection_is_not_C4_evidence",
+      "candidate_specific_c4_available": false,
+      "manual_visual_preference": true,
+      "accepted_final_fix": false,
+      "candidate_preference_authorized": false,
+      "blocker_reason": "selected candidate 0003 has visual preference but no candidate-specific image evidence"
+    },
+    {
+      "case_name": "task218_ann3741",
+      "candidate_available": true,
+      "selected_or_review_candidate": "m1528_candidate_0017",
+      "c4_lite_available": true,
+      "c4_lite_scope": "candidate_specific_projection_delta",
+      "candidate_specific_c4_available": true,
+      "manual_visual_preference": true,
+      "accepted_final_fix": false,
+      "candidate_preference_authorized": false,
+      "blocker_reason": "manual explicit column identity remains incomplete; selected candidate is diagnostic only"
+    }
+  ],
+  "case_by_case_readiness": {
+    "task218_ann2369": {
+      "candidate_specific_c4_ready": false,
+      "candidate_preference_authorized": false,
+      "accepted_final_fix": false,
+      "ready_for_c6_5b": false
+    },
+    "task238_ann2389": {
+      "candidate_specific_c4_ready": false,
+      "candidate_preference_authorized": false,
+      "accepted_final_fix": false,
+      "ready_for_c6_5b": false
+    },
+    "task238_ann2389_4543gt": {
+      "candidate_specific_c4_ready": false,
+      "candidate_preference_authorized": false,
+      "accepted_final_fix": false,
+      "ready_for_c6_5b": false
+    },
+    "task218_ann3741": {
+      "candidate_specific_c4_ready": true,
+      "candidate_preference_authorized": false,
+      "accepted_final_fix": false,
+      "ready_for_c6_5b": false
+    }
+  },
+  "selected_candidate_status": {
+    "candidate_id": "c6_5a_6_1_candidate_0003",
+    "selected_y_step": 0.75,
+    "review_only": true,
+    "accepted": false,
+    "active_ranking_role": false,
+    "portfolio_role": false,
+    "downstream_recommendation": false
+  },
+  "c6_5b_readiness_decision": {
+    "all_candidate_specific_c4_ready": false,
+    "all_required_manual_sidecars_ready": false,
+    "authorized": false,
+    "decision": "blocked",
+    "exact_minimal_next_blocker": "obtain human-expert verdicts for task218_ann2369 explicit column identity and keep-distinct contract; then materialize genuine candidate-specific C4 evidence for the intended review candidates",
+    "explicit_user_approval_still_required_if_theoretically_ready": true
+  },
+  "safety_boundary": {
+    "audit_only": true,
+    "active_runner_changed": false,
+    "ranking_key_changed": false,
+    "portfolio_changed": false,
+    "accepted": false,
+    "downstream_recommendation": false,
+    "candidate_preference_authorized": false,
+    "annotation_patch_generated": false,
+    "annotation_writeback": false
+  },
+  "status_boundaries": {
+    "c6_5b": "blocked",
+    "c3_shadow_expansion": "blocked",
+    "c7_optimizer": "blocked",
+    "c9_learning": "blocked",
+    "c10_ranker": "blocked"
+  }
+}

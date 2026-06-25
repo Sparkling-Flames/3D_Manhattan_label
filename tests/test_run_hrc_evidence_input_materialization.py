@@ -83,6 +83,16 @@ def test_materialized_fields_and_source_validation():
     assert corrected["candidate_dry_run"]["generated"] is True
     assert corrected["candidate_dry_run"]["candidate_count"] > 0
     assert corrected["candidate_dry_run"]["used_for_preference"] is False
+    assert corrected["manual_selection"]["selected_candidate"] == (
+        "c6_5a_6_1_candidate_0003"
+    )
+    assert corrected["manual_selection"]["review_only"] is True
+    assert corrected["manual_selection"]["accepted"] is False
+    sidecars = payload["cases"]["task218_ann2369"]["manual_sidecar_status"]
+    assert sidecars["status"] == "unavailable_pending_human_confirmation"
+    assert sidecars["explicit_column_identity"]["verdict"] == "unavailable"
+    assert sidecars["keep_distinct_contract"]["verdict"] == "unavailable"
+    assert sidecars["supporting_artifacts_are_manual_verdicts"] is False
     assert corrected["rankable_by_current_HRC_input_summary"][
         "candidate_preference_authorized"
     ] is False

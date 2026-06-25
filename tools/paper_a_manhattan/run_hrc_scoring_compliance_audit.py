@@ -35,6 +35,20 @@ CANDIDATE_DRY_RUN = (
     / "c6_5a_6_candidate_dry_run/task238_ann2389_4543gt/"
     "hrc_c6_5a_6_candidate_dry_run.json"
 )
+MANUAL_SELECTION_LEDGER = (
+    ROOT
+    / "c6_5a_6_2_manual_selection_ledger/task238_ann2389_4543gt/"
+    "hrc_c6_5a_6_2_manual_selection_ledger.json"
+)
+C6_5A_7_DIR = ROOT / "c6_5a_7_blocker_closure"
+SIDECAR_2369_EXPLICIT = (
+    C6_5A_7_DIR
+    / "manual_sidecar_explicit_column_identity_task218_ann2369_unavailable.json"
+)
+SIDECAR_2369_KEEP = (
+    C6_5A_7_DIR
+    / "manual_sidecar_keep_distinct_contract_task218_ann2369_unavailable.json"
+)
 SOURCE_PATHS = (
     Path("docs/paper_a_manhattan/HRC_SCORING_LAYER_CONTRACT_v1.md"),
     Path("docs/paper_a_manhattan/评分如何制定.md"),
@@ -145,6 +159,7 @@ def build_audit_payload() -> dict[str, Any]:
     materialized = json.loads(MATERIALIZATION.read_text(encoding="utf-8"))
     correction = json.loads(GT_CORRECTION_AUDIT.read_text(encoding="utf-8"))
     dry_run = json.loads(CANDIDATE_DRY_RUN.read_text(encoding="utf-8"))
+    selection = json.loads(MANUAL_SELECTION_LEDGER.read_text(encoding="utf-8"))
     baseline_only = all(
         materialized["cases"][name]["c4_lite_diagnostics"][
             "baseline_to_baseline_materialization"
@@ -170,12 +185,18 @@ def build_audit_payload() -> dict[str, Any]:
         {
             "code": "L2_BASELINE_ONLY_CANNOT_PREFER_CANDIDATE",
             "severity": "blocking",
-            "finding": "2369/2389 candidate-specific C4 evidence is absent",
+            "finding": (
+                "candidate-specific C4 evidence is absent for 2369, deprecated "
+                "old 2389, and selected corrected-GT candidate 0003"
+            ),
         },
         {
             "code": "L4_MANUAL_EVIDENCE_INCOMPLETE",
             "severity": "blocking",
-            "finding": "2369 manual sidecar remains pending; 2389 corrected GT has explicit column identity available and keep-distinct is not applicable",
+            "finding": (
+                "2369 explicit-column and keep-distinct manual verdicts are "
+                "unavailable; supporting artifacts are not manual verdicts"
+            ),
         },
     ]
     expected_selection = {
@@ -258,9 +279,9 @@ def build_audit_payload() -> dict[str, Any]:
             "downstream_recommendation": False,
         },
         "candidate_preference_blockers": [
-            "2369/2389 candidate-specific C4 evidence is absent",
-            "candidate projection variant count is zero",
-            "2369 manual sidecar is pending",
+            "candidate-specific C4 evidence is absent for 2369, old 2389, and selected 4543gt candidate 0003",
+            "2369 explicit column identity human verdict is unavailable",
+            "2369 keep-distinct contract human verdict is unavailable",
             "2389 corrected GT explicit column identity is available",
             "2389 corrected GT keep-distinct is not applicable",
             "supporting artifacts are not manual verdicts",
@@ -298,9 +319,28 @@ def build_audit_payload() -> dict[str, Any]:
             "path": CANDIDATE_DRY_RUN.as_posix(),
             "sha256": _sha256(CANDIDATE_DRY_RUN),
             "candidate_count": dry_run["candidate_count"],
-            "human_comparison_status": "pending",
+            "human_comparison_status": "selected_for_review_only",
+            "selected_candidate": selection["selected_candidate"],
+            "selected_y_step": selection["selected_y_step"],
             "active_ranking_changed": False,
             "candidate_preference_authorized": False,
+        },
+        "c6_5a_7_blocker_closure_status": {
+            "2369_manual_sidecars": {
+                "explicit_column_identity": {
+                    "path": SIDECAR_2369_EXPLICIT.as_posix(),
+                    "sha256": _sha256(SIDECAR_2369_EXPLICIT),
+                    "verdict": "unavailable",
+                },
+                "keep_distinct_contract": {
+                    "path": SIDECAR_2369_KEEP.as_posix(),
+                    "sha256": _sha256(SIDECAR_2369_KEEP),
+                    "verdict": "unavailable",
+                },
+            },
+            "supporting_artifacts_are_manual_verdicts": False,
+            "candidate_specific_c4_complete": False,
+            "c6_5b_authorized": False,
         },
         "audit_only": True,
         "evaluator_changed": True,
@@ -315,7 +355,8 @@ def build_audit_payload() -> dict[str, Any]:
         "c6_5b_authorized": False,
         "c6_5a_4_implementation_completed": True,
         "next_allowed_step": (
-            "human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep; "
+            "human review of task218_ann2369 explicit column identity and "
+            "keep-distinct contract; candidate-specific C4 evidence remains required; "
             "C6.5b remains blocked"
         ),
         "status_boundaries": {
@@ -355,8 +396,8 @@ def render_markdown(payload: Mapping[str, Any]) -> str:
             "",
             "## Remaining manual-review boundary",
             "",
-            "- 2369 manual sidecar remains pending.",
-            "- 2369/2389 candidate-specific C4 evidence remains absent.",
+            "- 2369 manual sidecars are materialized as unavailable; no human verdict was inferred.",
+            "- Candidate-specific C4 evidence remains absent for 2369, old 2389, and selected 4543gt candidate 0003.",
             "- 2389 corrected GT has explicit column identity; keep-distinct is not applicable.",
             "- Future 3741 dense-corner / short-wall / pillar judgments remain manual-review-only.",
             "- Projection-derived artifacts may support review but cannot replace the manual verdict.",

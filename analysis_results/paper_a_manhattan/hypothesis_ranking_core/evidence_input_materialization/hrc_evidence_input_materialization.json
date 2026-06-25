@@ -6,7 +6,7 @@
   },
   "source_readiness_audit": {
     "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/source_artifact_readiness_audit/hrc_source_artifact_readiness_audit.json",
-    "sha256": "79930b7aed47f6a98d28e23ff9a571495e17a585ae2ab16cacc7b301b3ed479a"
+    "sha256": "ae5ea5be46da24264578475100785155cbd47b5a6a1d2f518a490dda82373ce3"
   },
   "cases": {
     "task218_ann2369": {
@@ -822,7 +822,21 @@
       "execution_allowed": false,
       "accepted": false,
       "downstream_recommendation": false,
-      "annotation_writeback": false
+      "annotation_writeback": false,
+      "manual_sidecar_status": {
+        "status": "unavailable_pending_human_confirmation",
+        "explicit_column_identity": {
+          "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_explicit_column_identity_task218_ann2369_unavailable.json",
+          "sha256": "1e4f0ffbd28200417cf5cae956db32f65b4e478a9f6e9e663d0316567f195f05",
+          "verdict": "unavailable"
+        },
+        "keep_distinct_contract": {
+          "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_keep_distinct_contract_task218_ann2369_unavailable.json",
+          "sha256": "72de89d3edbe8a500cdbbf9a637dadd3fce03f36539de49e1594d4086d6aa917",
+          "verdict": "unavailable"
+        },
+        "supporting_artifacts_are_manual_verdicts": false
+      }
     },
     "task238_ann2389": {
       "case_name": "task238_ann2389",
@@ -2159,6 +2173,13 @@
         "candidate_count": 4,
         "used_for_preference": false,
         "candidate_preference_authorized": false
+      },
+      "manual_selection": {
+        "selected_candidate": "c6_5a_6_1_candidate_0003",
+        "selected_y_step": 0.75,
+        "review_only": true,
+        "accepted": false,
+        "candidate_preference_authorized": false
       }
     }
   },
@@ -2171,6 +2192,11 @@
   "manual_evidence_processed": true,
   "supporting_artifacts_used_as_manual_verdicts": false,
   "c6_5a_6_candidate_dry_run_generated": true,
+  "c6_5a_7_blocker_closure_status": {
+    "2369_manual_sidecar": "unavailable_pending_human_confirmation",
+    "candidate_specific_c4_complete": false,
+    "c6_5b_authorized": false
+  },
   "generated_candidate": false,
   "generated_proposal_manifest": false,
   "generated_geometry_variant": false,
@@ -2185,7 +2211,7 @@
   "c6_status": "audit_blocked",
   "c6_5b_authorized": false,
   "conclusion": "C6 remains audit-blocked; C6.5b is not authorized unless a later scoring/evaluator compliance audit approves the evidence/ranking contract.",
-  "recommended_next_step": "human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep",
+  "recommended_next_step": "human review of task218_ann2369 explicit column identity and keep-distinct contract; candidate-specific C4 evidence remains required",
   "status_boundaries": {
     "c3_shadow_expansion": "blocked",
     "c7_optimizer": "blocked",

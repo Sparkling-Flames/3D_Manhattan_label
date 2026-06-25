@@ -46,6 +46,11 @@
     "candidate_preference_authorized_old_case": false,
     "candidate_preference_authorized_corrected_case": false
   },
+  "c6_5a_7_blocker_closure_status": {
+    "2369_manual_sidecar": "unavailable_pending_human_confirmation",
+    "candidate_specific_c4_complete": false,
+    "c6_5b_authorized": false
+  },
   "execution_allowed": false,
   "cases": {
     "task218_ann3741": {
@@ -532,7 +537,21 @@
       "audit_only": true,
       "accepted": false,
       "downstream_recommendation": false,
-      "annotation_writeback": false
+      "annotation_writeback": false,
+      "manual_sidecar_status": {
+        "explicit_column_identity": {
+          "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_explicit_column_identity_task218_ann2369_unavailable.json",
+          "sha256": "1e4f0ffbd28200417cf5cae956db32f65b4e478a9f6e9e663d0316567f195f05",
+          "verdict": "unavailable",
+          "supporting_artifacts_are_manual_verdict": false
+        },
+        "keep_distinct_contract": {
+          "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_keep_distinct_contract_task218_ann2369_unavailable.json",
+          "sha256": "72de89d3edbe8a500cdbbf9a637dadd3fce03f36539de49e1594d4086d6aa917",
+          "verdict": "unavailable",
+          "supporting_artifacts_are_manual_verdict": false
+        }
+      }
     },
     "task238_ann2389": {
       "case_name": "task238_ann2389",
@@ -1537,6 +1556,13 @@
         "candidate_count": 4,
         "candidate_preference_authorized": false,
         "execution_allowed": false
+      },
+      "manual_selection": {
+        "selected_candidate": "c6_5a_6_1_candidate_0003",
+        "selected_y_step": 0.75,
+        "review_only": true,
+        "accepted": false,
+        "candidate_preference_authorized": false
       }
     }
   },
@@ -1611,7 +1637,7 @@
     "task238_ann2389_4543gt:rankable_by_current_HRC",
     "task238_ann2389_4543gt:source_candidate_rows"
   ],
-  "recommended_next_step": "human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep",
+  "recommended_next_step": "human review of task218_ann2369 explicit column identity and keep-distinct contract; candidate-specific C4 evidence remains required",
   "status_boundaries": {
     "c3_shadow_expansion": "blocked",
     "c7_optimizer": "blocked",

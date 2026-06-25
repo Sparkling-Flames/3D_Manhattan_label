@@ -84,6 +84,20 @@ def test_manifest_validation_and_readiness_semantics():
     assert corrected["candidate_dry_run"]["generated"] is True
     assert corrected["candidate_dry_run"]["candidate_count"] > 0
     assert corrected["candidate_dry_run"]["candidate_preference_authorized"] is False
+    assert corrected["manual_selection"] == {
+        "selected_candidate": "c6_5a_6_1_candidate_0003",
+        "selected_y_step": 0.75,
+        "review_only": True,
+        "accepted": False,
+        "candidate_preference_authorized": False,
+    }
+    sidecars = cases["task218_ann2369"]["manual_sidecar_status"]
+    assert set(sidecars) == {"explicit_column_identity", "keep_distinct_contract"}
+    assert all(row["verdict"] == "unavailable" for row in sidecars.values())
+    assert all(
+        row["supporting_artifacts_are_manual_verdict"] is False
+        for row in sidecars.values()
+    )
     assert payload["candidate_preference_authorized"] == {
         "task218_ann2369": False,
         "task238_ann2389": False,
@@ -106,7 +120,8 @@ def test_manifest_validation_and_readiness_semantics():
 
     assert "C6.5a.5.1 consistency fix" not in payload["recommended_next_step"]
     assert payload["recommended_next_step"] == (
-        "human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep"
+        "human review of task218_ann2369 explicit column identity and "
+        "keep-distinct contract; candidate-specific C4 evidence remains required"
     )
     forbidden = ("C3", "C7", "optimizer", "active runner", "writeback", "proposal manifest")
     assert not any(token.lower() in payload["recommended_next_step"].lower() for token in forbidden)
