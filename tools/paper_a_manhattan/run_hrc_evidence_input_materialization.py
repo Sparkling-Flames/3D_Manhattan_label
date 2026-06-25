@@ -43,12 +43,13 @@ MANUAL_SELECTION_LEDGER = (
 C6_5A_7_DIR = ROOT / "c6_5a_7_blocker_closure"
 SIDECAR_2369_EXPLICIT = (
     C6_5A_7_DIR
-    / "manual_sidecar_explicit_column_identity_task218_ann2369_unavailable.json"
+    / "manual_sidecar_explicit_column_identity_task218_ann2369.json"
 )
 SIDECAR_2369_KEEP = (
     C6_5A_7_DIR
-    / "manual_sidecar_keep_distinct_contract_task218_ann2369_unavailable.json"
+    / "manual_sidecar_keep_distinct_contract_task218_ann2369.json"
 )
+REFERENCE_2369_3741 = C6_5A_7_DIR / "same_image_updated_human_reference_2369_to_3741.json"
 LEGACY_TARGET_CASES = ("task218_ann2369", "task238_ann2389")
 CORRECTED_CASE = "task238_ann2389_4543gt"
 TARGET_CASES = (*LEGACY_TARGET_CASES, CORRECTED_CASE)
@@ -331,7 +332,7 @@ def build_payload(
         "candidate_preference_authorized": False,
     }
     cases["task218_ann2369"]["manual_sidecar_status"] = {
-        "status": "unavailable_pending_human_confirmation",
+        "status": "partial_with_pair2_exception",
         "explicit_column_identity": {
             "path": SIDECAR_2369_EXPLICIT.as_posix(),
             "sha256": _sha256(SIDECAR_2369_EXPLICIT),
@@ -343,6 +344,15 @@ def build_payload(
             "verdict": _load(SIDECAR_2369_KEEP)["verdict"],
         },
         "supporting_artifacts_are_manual_verdicts": False,
+    }
+    reference = _load(REFERENCE_2369_3741)
+    cases["task218_ann2369"]["same_image_updated_human_reference"] = {
+        "path": REFERENCE_2369_3741.as_posix(),
+        "sha256": _sha256(REFERENCE_2369_3741),
+        "reference_annotation_id": 3741,
+        "verified_order": reference["verified_order"],
+        "automatic_candidate": False,
+        "accepted_final_fix": False,
     }
     return {
         "schema_version": SCHEMA_VERSION,
@@ -361,7 +371,8 @@ def build_payload(
         "supporting_artifacts_used_as_manual_verdicts": False,
         "c6_5a_6_candidate_dry_run_generated": True,
         "c6_5a_7_blocker_closure_status": {
-            "2369_manual_sidecar": "unavailable_pending_human_confirmation",
+            "2369_explicit_column_identity": "available_with_exception_pair2",
+            "2369_keep_distinct_contract": "available",
             "candidate_specific_c4_complete": False,
             "c6_5b_authorized": False,
         },
@@ -380,8 +391,8 @@ def build_payload(
         "c6_5b_authorized": False,
         "conclusion": "C6 remains audit-blocked; C6.5b is not authorized unless a later scoring/evaluator compliance audit approves the evidence/ranking contract.",
         "recommended_next_step": (
-            "human review of task218_ann2369 explicit column identity and "
-            "keep-distinct contract; candidate-specific C4 evidence remains required"
+            "resolve task218_ann2369 pair2 column identity under occlusion; "
+            "candidate-specific C4 evidence remains required"
         ),
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",

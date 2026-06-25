@@ -1,21 +1,21 @@
 {
   "schema_version": "hrc_c6_5a_7_blocker_closure_report_v1",
-  "audit_stage": "C6.5a.7",
-  "generated_at": "2026-06-25T04:15:05.428229+00:00",
+  "audit_stage": "C6.5a.7.1",
+  "generated_at": "2026-06-25T04:44:47.010787+00:00",
   "source_artifacts": {
     "readiness": {
       "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/source_artifact_readiness_audit/hrc_source_artifact_readiness_audit.json",
-      "sha256": "ae5ea5be46da24264578475100785155cbd47b5a6a1d2f518a490dda82373ce3",
+      "sha256": "2d892b4d05cb8a1a6b9c52275ce012e9b1f386a613423b6df312c7b9fb9a78ee",
       "exists": true
     },
     "evidence_materialization": {
       "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/evidence_input_materialization/hrc_evidence_input_materialization.json",
-      "sha256": "05dd04a0cdbb26b4c5766130eecf6b920a8cab2f2cfce63dff6c7e117ce9f603",
+      "sha256": "a6a3b86a1e26da4f1bc04e7f29d71f5f6ceb50cbd3642490a90ebcbcd2fdce38",
       "exists": true
     },
     "scoring_compliance": {
       "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/scoring_compliance_audit/hrc_scoring_compliance_audit.json",
-      "sha256": "ec73540ed95b5ccb1132c6bfbaec38300523750f056b30f877b7d8cda1d2b209",
+      "sha256": "c6341ac398185eba625b0a249a3543f015024eafcf09d223d88b5fef64a15240",
       "exists": true
     },
     "manual_selection_ledger": {
@@ -25,7 +25,7 @@
     },
     "manual_sidecar_schema": {
       "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/source_artifact_readiness_audit/manual_evidence_sidecar_schema.json",
-      "sha256": "834d222db25da918dc085abb69826273f0ba7b84e120b24bf89bdd9a8680f630",
+      "sha256": "9fddcef17c01a819a58419ffb4b1860a3219fd3750de8576c7507517c102a637",
       "exists": true
     },
     "old_gt": {
@@ -45,39 +45,66 @@
     "4543gt explicit column identity manual evidence is available",
     "4543gt keep-distinct contract is not applicable",
     "C6.5a.6.2 manual review selection is recorded without acceptance",
-    "2369 missing-manual-verdict state is now explicitly materialized"
+    "2369 missing-manual-verdict state is now explicitly materialized",
+    "2369 keep-distinct contract for protruding wall 4-5 is human-confirmed",
+    "2369 and 3741 same-image identity and 3741 verified order are recorded"
   ],
   "remaining_blockers": [
-    "2369 explicit column identity human verdict unavailable",
-    "2369 keep-distinct contract human verdict unavailable",
+    "2369 pair2 explicit column identity remains unresolved due to occlusion",
     "candidate-specific C4 evidence absent for 2369, old 2389, and selected 4543gt candidate 0003",
-    "3741 explicit column identity manual evidence remains incomplete",
     "C6.5b requires explicit user approval even after evidence readiness"
   ],
   "manual_sidecar_2369": {
-    "status": "unavailable_pending_human_confirmation",
+    "status": "partial_with_pair2_exception",
+    "current_candidate_available": false,
+    "short_wall_exists": false,
+    "protruding_wall_4_5_keep_distinct": true,
     "records": {
       "explicit_column_identity": {
-        "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_explicit_column_identity_task218_ann2369_unavailable.json",
-        "sha256": "1e4f0ffbd28200417cf5cae956db32f65b4e478a9f6e9e663d0316567f195f05",
+        "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_explicit_column_identity_task218_ann2369.json",
+        "sha256": "4a2730f26fad827fcf242794c495bd7b8ac179f5ddcbc50cc5ffecf0fbade003",
         "exists": true,
-        "verdict": "unavailable",
-        "human_verdict_recorded": false
+        "verdict": "available_with_exception",
+        "human_verdict_recorded": true
       },
       "keep_distinct_contract": {
-        "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_keep_distinct_contract_task218_ann2369_unavailable.json",
-        "sha256": "72de89d3edbe8a500cdbbf9a637dadd3fce03f36539de49e1594d4086d6aa917",
+        "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_keep_distinct_contract_task218_ann2369.json",
+        "sha256": "7910025d37e6a4fd42fa26eb80bfaf49a5269750141ccef975773cea3168107e",
         "exists": true,
-        "verdict": "unavailable",
-        "human_verdict_recorded": false
+        "verdict": "available",
+        "human_verdict_recorded": true
       }
     },
     "supporting_artifacts_are_manual_verdicts": false
   },
+  "same_image_updated_human_reference": {
+    "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/same_image_updated_human_reference_2369_to_3741.json",
+    "sha256": "11d84dfbeb64a6af41938f381478d20b1dffc13c823fc50ac3d23fb0e7c2badf",
+    "exists": true,
+    "same_image": true,
+    "source_annotation_id": 2369,
+    "reference_annotation_id": 3741,
+    "verified_order": [
+      2,
+      1,
+      3,
+      4,
+      6,
+      5,
+      8,
+      7,
+      9,
+      10,
+      12,
+      11
+    ],
+    "automatic_candidate": false,
+    "accepted_final_fix": false
+  },
   "c4_evidence_gap_table": [
     {
       "case_name": "task218_ann2369",
-      "candidate_available": true,
+      "candidate_available": false,
       "selected_or_review_candidate": null,
       "c4_lite_available": true,
       "c4_lite_scope": "baseline_to_baseline_only",
@@ -85,7 +112,7 @@
       "manual_visual_preference": false,
       "accepted_final_fix": false,
       "candidate_preference_authorized": false,
-      "blocker_reason": "candidate-specific C4 delta and human sidecar verdicts are absent"
+      "blocker_reason": "pair2 column identity remains unresolved and candidate-specific C4 evidence is absent; legacy candidate rows are not a current candidate"
     },
     {
       "case_name": "task238_ann2389",
@@ -164,7 +191,7 @@
     "all_required_manual_sidecars_ready": false,
     "authorized": false,
     "decision": "blocked",
-    "exact_minimal_next_blocker": "obtain human-expert verdicts for task218_ann2369 explicit column identity and keep-distinct contract; then materialize genuine candidate-specific C4 evidence for the intended review candidates",
+    "exact_minimal_next_blocker": "resolve task218_ann2369 pair2 column identity under occlusion and materialize genuine candidate-specific C4 evidence for the intended review candidates",
     "explicit_user_approval_still_required_if_theoretically_ready": true
   },
   "safety_boundary": {

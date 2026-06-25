@@ -89,10 +89,16 @@ def test_materialized_fields_and_source_validation():
     assert corrected["manual_selection"]["review_only"] is True
     assert corrected["manual_selection"]["accepted"] is False
     sidecars = payload["cases"]["task218_ann2369"]["manual_sidecar_status"]
-    assert sidecars["status"] == "unavailable_pending_human_confirmation"
-    assert sidecars["explicit_column_identity"]["verdict"] == "unavailable"
-    assert sidecars["keep_distinct_contract"]["verdict"] == "unavailable"
+    assert sidecars["status"] == "partial_with_pair2_exception"
+    assert sidecars["explicit_column_identity"]["verdict"] == "available_with_exception"
+    assert sidecars["keep_distinct_contract"]["verdict"] == "available"
     assert sidecars["supporting_artifacts_are_manual_verdicts"] is False
+    reference = payload["cases"]["task218_ann2369"][
+        "same_image_updated_human_reference"
+    ]
+    assert reference["reference_annotation_id"] == 3741
+    assert reference["verified_order"] == [2, 1, 3, 4, 6, 5, 8, 7, 9, 10, 12, 11]
+    assert reference["automatic_candidate"] is False
     assert corrected["rankable_by_current_HRC_input_summary"][
         "candidate_preference_authorized"
     ] is False

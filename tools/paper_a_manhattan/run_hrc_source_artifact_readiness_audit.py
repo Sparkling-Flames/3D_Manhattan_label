@@ -30,12 +30,13 @@ MANUAL_SELECTION_LEDGER = ROOT / (
 C6_5A_7_DIR = ROOT / "c6_5a_7_blocker_closure"
 SIDECAR_2369_EXPLICIT = (
     C6_5A_7_DIR
-    / "manual_sidecar_explicit_column_identity_task218_ann2369_unavailable.json"
+    / "manual_sidecar_explicit_column_identity_task218_ann2369.json"
 )
 SIDECAR_2369_KEEP = (
     C6_5A_7_DIR
-    / "manual_sidecar_keep_distinct_contract_task218_ann2369_unavailable.json"
+    / "manual_sidecar_keep_distinct_contract_task218_ann2369.json"
 )
+REFERENCE_2369_3741 = C6_5A_7_DIR / "same_image_updated_human_reference_2369_to_3741.json"
 
 EVIDENCE_TYPES = (
     "projection_metrics",
@@ -556,6 +557,31 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
             "keep_distinct_contract": SIDECAR_2369_KEEP,
         }.items()
     }
+    explicit = cases["task218_ann2369"]["evidence_readiness_matrix"][
+        "explicit_column_identity"
+    ]
+    explicit.update(
+        {
+            "source_artifact": SIDECAR_2369_EXPLICIT.as_posix(),
+            "sha256": _sha256(SIDECAR_2369_EXPLICIT),
+            "missing_reason": "pair2 unresolved due to heavy occlusion",
+            "manual_evidence_requirement": "resolve pair2 column identity",
+        }
+    )
+    cases["task218_ann2369"]["evidence_readiness_matrix"][
+        "keep_distinct_contract"
+    ] = _entry(
+        "available_from_existing_artifact",
+        {"path": SIDECAR_2369_KEEP.as_posix(), "sha256": _sha256(SIDECAR_2369_KEEP)},
+    )
+    cases["task218_ann2369"]["same_image_updated_human_reference"] = {
+        "path": REFERENCE_2369_3741.as_posix(),
+        "sha256": _sha256(REFERENCE_2369_3741),
+        "reference_annotation_id": 3741,
+        "verified_order": _load(REFERENCE_2369_3741)["verified_order"],
+        "automatic_candidate": False,
+        "accepted_final_fix": False,
+    }
 
     artifact_inputs_ready_cases = [
         name for name, row in cases.items() if row["artifact_inputs_ready"]
@@ -602,7 +628,7 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
             "path": CANDIDATE_DRY_RUN.as_posix(),
             "sha256": _sha256(CANDIDATE_DRY_RUN),
             "candidate_count": dry_run["candidate_count"],
-            "human_comparison_status": "pending",
+            "human_comparison_status": "selected_for_review_only",
             "candidate_preference_authorized": False,
         },
         "candidate_preference_authorized": {
@@ -619,7 +645,8 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
             "candidate_preference_authorized_corrected_case": False,
         },
         "c6_5a_7_blocker_closure_status": {
-            "2369_manual_sidecar": "unavailable_pending_human_confirmation",
+            "2369_explicit_column_identity": "available_with_exception_pair2",
+            "2369_keep_distinct_contract": "available",
             "candidate_specific_c4_complete": False,
             "c6_5b_authorized": False,
         },
@@ -632,8 +659,8 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
         "manual_evidence_required": by_status["requires_manual_visual_evidence"],
         "unavailable_inputs": by_status["unavailable"],
         "recommended_next_step": (
-            "human review of task218_ann2369 explicit column identity and "
-            "keep-distinct contract; candidate-specific C4 evidence remains required"
+            "resolve task218_ann2369 pair2 column identity under occlusion; "
+            "candidate-specific C4 evidence remains required"
         ),
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",

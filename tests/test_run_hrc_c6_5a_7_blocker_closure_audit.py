@@ -14,16 +14,29 @@ def test_blocker_closure_does_not_forge_manual_or_candidate_evidence(tmp_path):
             "source_artifact_readiness_audit/manual_evidence_sidecar_schema.json"
         ).read_text(encoding="utf-8")
     )
-    for evidence_type in ("explicit_column_identity", "keep_distinct_contract"):
-        sidecar = json.loads(paths[evidence_type].read_text(encoding="utf-8"))
-        assert sidecar["evidence_type"] in schema["allowed_evidence_types"]
-        assert sidecar["verdict"] == "unavailable"
-        assert sidecar["reviewer"] == "pending_human_expert"
-        assert sidecar["reviewed_at"] is None
-        assert sidecar["supporting_artifacts_are_manual_verdict"] is False
+    explicit = json.loads(paths["explicit_column_identity"].read_text(encoding="utf-8"))
+    keep = json.loads(paths["keep_distinct_contract"].read_text(encoding="utf-8"))
+    assert explicit["evidence_type"] in schema["allowed_evidence_types"]
+    assert explicit["verdict"] == "available_with_exception"
+    assert explicit["verdict"] in schema["allowed_verdicts"]
+    assert explicit["full_availability"] is False
+    assert explicit["exceptions"] == [
+        {
+            "pair_index": 2,
+            "status": "unresolved",
+            "reason": "heavy occlusion and unreliable 3D preview texture in that region",
+        }
+    ]
+    assert keep["verdict"] == "available"
+    assert keep["keep_distinct_pairs"] == [[4, 5]]
+    assert keep["must_not_merge"] is True
+    assert keep["protruding_wall_structure_between_pairs"] == [4, 5]
+    assert explicit["supporting_artifacts_are_manual_verdict"] is False
+    assert keep["supporting_artifacts_are_manual_verdict"] is False
 
     rows = {row["case_name"]: row for row in payload["c4_evidence_gap_table"]}
     assert rows["task218_ann2369"]["c4_lite_scope"] == "baseline_to_baseline_only"
+    assert rows["task218_ann2369"]["candidate_available"] is False
     assert rows["task218_ann2369"]["candidate_specific_c4_available"] is False
     assert rows["task238_ann2389_4543gt"]["selected_or_review_candidate"] == (
         "c6_5a_6_1_candidate_0003"
@@ -34,6 +47,22 @@ def test_blocker_closure_does_not_forge_manual_or_candidate_evidence(tmp_path):
     ] is False
     assert rows["task218_ann3741"]["candidate_specific_c4_available"] is True
     assert all(not row["candidate_preference_authorized"] for row in rows.values())
+    reference = json.loads(paths["same_image_reference"].read_text(encoding="utf-8"))
+    gt = json.loads(Path("export_label/groudTruth.json").read_text(encoding="utf-8"))
+    records = {
+        annotation["id"]: (task["id"], task["data"]["image"], task["data"]["title"])
+        for task in gt
+        for annotation in task.get("annotations", [])
+        if annotation.get("id") in (2369, 3741)
+    }
+    assert records[2369] == records[3741]
+    assert reference["same_image"] is True
+    assert reference["source_annotation_id"] == 2369
+    assert reference["reference_annotation_id"] == 3741
+    assert reference["verified_order"] == [2, 1, 3, 4, 6, 5, 8, 7, 9, 10, 12, 11]
+    assert reference["accepted"] is False
+    assert reference["candidate_preference_authorized"] is False
+    assert reference["annotation_writeback"] is False
 
 
 def test_blocker_closure_preserves_sources_and_boundaries(tmp_path):

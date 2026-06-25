@@ -6,7 +6,7 @@
   },
   "source_readiness_audit": {
     "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/source_artifact_readiness_audit/hrc_source_artifact_readiness_audit.json",
-    "sha256": "ae5ea5be46da24264578475100785155cbd47b5a6a1d2f518a490dda82373ce3"
+    "sha256": "2d892b4d05cb8a1a6b9c52275ce012e9b1f386a613423b6df312c7b9fb9a78ee"
   },
   "cases": {
     "task218_ann2369": {
@@ -824,18 +824,39 @@
       "downstream_recommendation": false,
       "annotation_writeback": false,
       "manual_sidecar_status": {
-        "status": "unavailable_pending_human_confirmation",
+        "status": "partial_with_pair2_exception",
         "explicit_column_identity": {
-          "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_explicit_column_identity_task218_ann2369_unavailable.json",
-          "sha256": "1e4f0ffbd28200417cf5cae956db32f65b4e478a9f6e9e663d0316567f195f05",
-          "verdict": "unavailable"
+          "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_explicit_column_identity_task218_ann2369.json",
+          "sha256": "4a2730f26fad827fcf242794c495bd7b8ac179f5ddcbc50cc5ffecf0fbade003",
+          "verdict": "available_with_exception"
         },
         "keep_distinct_contract": {
-          "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_keep_distinct_contract_task218_ann2369_unavailable.json",
-          "sha256": "72de89d3edbe8a500cdbbf9a637dadd3fce03f36539de49e1594d4086d6aa917",
-          "verdict": "unavailable"
+          "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/manual_sidecar_keep_distinct_contract_task218_ann2369.json",
+          "sha256": "7910025d37e6a4fd42fa26eb80bfaf49a5269750141ccef975773cea3168107e",
+          "verdict": "available"
         },
         "supporting_artifacts_are_manual_verdicts": false
+      },
+      "same_image_updated_human_reference": {
+        "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_7_blocker_closure/same_image_updated_human_reference_2369_to_3741.json",
+        "sha256": "11d84dfbeb64a6af41938f381478d20b1dffc13c823fc50ac3d23fb0e7c2badf",
+        "reference_annotation_id": 3741,
+        "verified_order": [
+          2,
+          1,
+          3,
+          4,
+          6,
+          5,
+          8,
+          7,
+          9,
+          10,
+          12,
+          11
+        ],
+        "automatic_candidate": false,
+        "accepted_final_fix": false
       }
     },
     "task238_ann2389": {
@@ -2193,7 +2214,8 @@
   "supporting_artifacts_used_as_manual_verdicts": false,
   "c6_5a_6_candidate_dry_run_generated": true,
   "c6_5a_7_blocker_closure_status": {
-    "2369_manual_sidecar": "unavailable_pending_human_confirmation",
+    "2369_explicit_column_identity": "available_with_exception_pair2",
+    "2369_keep_distinct_contract": "available",
     "candidate_specific_c4_complete": false,
     "c6_5b_authorized": false
   },
@@ -2211,7 +2233,7 @@
   "c6_status": "audit_blocked",
   "c6_5b_authorized": false,
   "conclusion": "C6 remains audit-blocked; C6.5b is not authorized unless a later scoring/evaluator compliance audit approves the evidence/ranking contract.",
-  "recommended_next_step": "human review of task218_ann2369 explicit column identity and keep-distinct contract; candidate-specific C4 evidence remains required",
+  "recommended_next_step": "resolve task218_ann2369 pair2 column identity under occlusion; candidate-specific C4 evidence remains required",
   "status_boundaries": {
     "c3_shadow_expansion": "blocked",
     "c7_optimizer": "blocked",

@@ -43,11 +43,11 @@ MANUAL_SELECTION_LEDGER = (
 C6_5A_7_DIR = ROOT / "c6_5a_7_blocker_closure"
 SIDECAR_2369_EXPLICIT = (
     C6_5A_7_DIR
-    / "manual_sidecar_explicit_column_identity_task218_ann2369_unavailable.json"
+    / "manual_sidecar_explicit_column_identity_task218_ann2369.json"
 )
 SIDECAR_2369_KEEP = (
     C6_5A_7_DIR
-    / "manual_sidecar_keep_distinct_contract_task218_ann2369_unavailable.json"
+    / "manual_sidecar_keep_distinct_contract_task218_ann2369.json"
 )
 SOURCE_PATHS = (
     Path("docs/paper_a_manhattan/HRC_SCORING_LAYER_CONTRACT_v1.md"),
@@ -194,8 +194,8 @@ def build_audit_payload() -> dict[str, Any]:
             "code": "L4_MANUAL_EVIDENCE_INCOMPLETE",
             "severity": "blocking",
             "finding": (
-                "2369 explicit-column and keep-distinct manual verdicts are "
-                "unavailable; supporting artifacts are not manual verdicts"
+                "2369 explicit-column identity is available with pair2 exception; "
+                "keep-distinct 4-5 is available, but partial evidence cannot authorize preference"
             ),
         },
     ]
@@ -280,8 +280,8 @@ def build_audit_payload() -> dict[str, Any]:
         },
         "candidate_preference_blockers": [
             "candidate-specific C4 evidence is absent for 2369, old 2389, and selected 4543gt candidate 0003",
-            "2369 explicit column identity human verdict is unavailable",
-            "2369 keep-distinct contract human verdict is unavailable",
+            "2369 pair2 explicit column identity remains unresolved due to occlusion",
+            "2369 keep-distinct 4-5 is human-confirmed but does not replace candidate-specific C4",
             "2389 corrected GT explicit column identity is available",
             "2389 corrected GT keep-distinct is not applicable",
             "supporting artifacts are not manual verdicts",
@@ -330,12 +330,12 @@ def build_audit_payload() -> dict[str, Any]:
                 "explicit_column_identity": {
                     "path": SIDECAR_2369_EXPLICIT.as_posix(),
                     "sha256": _sha256(SIDECAR_2369_EXPLICIT),
-                    "verdict": "unavailable",
+                    "verdict": "available_with_exception",
                 },
                 "keep_distinct_contract": {
                     "path": SIDECAR_2369_KEEP.as_posix(),
                     "sha256": _sha256(SIDECAR_2369_KEEP),
-                    "verdict": "unavailable",
+                    "verdict": "available",
                 },
             },
             "supporting_artifacts_are_manual_verdicts": False,
@@ -355,8 +355,8 @@ def build_audit_payload() -> dict[str, Any]:
         "c6_5b_authorized": False,
         "c6_5a_4_implementation_completed": True,
         "next_allowed_step": (
-            "human review of task218_ann2369 explicit column identity and "
-            "keep-distinct contract; candidate-specific C4 evidence remains required; "
+            "resolve task218_ann2369 pair2 column identity under occlusion; "
+            "candidate-specific C4 evidence remains required; "
             "C6.5b remains blocked"
         ),
         "status_boundaries": {
@@ -396,7 +396,7 @@ def render_markdown(payload: Mapping[str, Any]) -> str:
             "",
             "## Remaining manual-review boundary",
             "",
-            "- 2369 manual sidecars are materialized as unavailable; no human verdict was inferred.",
+            "- 2369 explicit-column identity is available with pair2 exception; keep-distinct 4-5 is available.",
             "- Candidate-specific C4 evidence remains absent for 2369, old 2389, and selected 4543gt candidate 0003.",
             "- 2389 corrected GT has explicit column identity; keep-distinct is not applicable.",
             "- Future 3741 dense-corner / short-wall / pillar judgments remain manual-review-only.",

@@ -72,7 +72,7 @@ def test_layer_mapping_and_violations_match_current_implementation():
     assert payload["selection_regression"]["accepted"] is False
     assert payload["selection_regression"]["downstream_recommendation"] is False
     assert "C6.5a.5.1 consistency fix" not in payload["next_allowed_step"]
-    assert "human review of task218_ann2369" in payload["next_allowed_step"]
+    assert "resolve task218_ann2369 pair2" in payload["next_allowed_step"]
     assert payload["c6_5a_6_candidate_dry_run"]["generated"] is True
     assert payload["c6_5a_6_candidate_dry_run"]["candidate_count"] > 0
     assert payload["c6_5a_6_candidate_dry_run"]["active_ranking_changed"] is False
@@ -84,10 +84,12 @@ def test_layer_mapping_and_violations_match_current_implementation():
     assert closure["candidate_specific_c4_complete"] is False
     assert closure["c6_5b_authorized"] is False
     assert closure["supporting_artifacts_are_manual_verdicts"] is False
-    assert all(
-        row["verdict"] == "unavailable"
-        for row in closure["2369_manual_sidecars"].values()
-    )
+    assert closure["2369_manual_sidecars"]["explicit_column_identity"][
+        "verdict"
+    ] == "available_with_exception"
+    assert closure["2369_manual_sidecars"]["keep_distinct_contract"][
+        "verdict"
+    ] == "available"
     assert payload["corrected_gt_status_summary"] == {
         "old_case": "task238_ann2389",
         "old_case_role": "deprecated_old_gt_diagnostic_only",

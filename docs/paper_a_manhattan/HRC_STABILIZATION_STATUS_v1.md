@@ -27,7 +27,7 @@
 
 ## 3. 唯一允许的下一步
 
-C6.5a.7 blocker closure audit completed。4543gt 继续使用独立 4-pair corrected projection；人工选择 `c6_5a_6_1_candidate_0003` 仍仅供 review。2369 的 explicit-column / keep-distinct sidecar 已按真实状态物化为 `unavailable`，没有从 supporting artifacts 推断人工 verdict。candidate-specific C4 evidence 对 2369、deprecated old 2389 和 selected 4543gt candidate 0003 仍缺失；C6.5b 未授权，C3 shadow expansion、C7/C9/C10 继续 blocked。
+C6.5a.7.1 human verdict materialization completed。2369 与 3741 已验证为同一 image/title；3741 是 same-image updated human reference，verified order 为 `2→1→3→4→6→5→8→7→9→10→12→11`，不是 automatic candidate 或 accepted final fix。2369 explicit-column identity 为 `available_with_exception`，pair2 因严重遮挡及该区域 3D preview 贴图不可靠而 unresolved；4–5 真实突出墙体的 keep-distinct contract 已由人工确认。4543gt 的 `c6_5a_6_1_candidate_0003` 仍仅为 review-only。candidate-specific C4 evidence 仍缺失；C6.5b 未授权，C3 shadow expansion、C7/C9/C10 继续 blocked。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 

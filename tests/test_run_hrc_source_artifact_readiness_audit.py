@@ -93,7 +93,8 @@ def test_manifest_validation_and_readiness_semantics():
     }
     sidecars = cases["task218_ann2369"]["manual_sidecar_status"]
     assert set(sidecars) == {"explicit_column_identity", "keep_distinct_contract"}
-    assert all(row["verdict"] == "unavailable" for row in sidecars.values())
+    assert sidecars["explicit_column_identity"]["verdict"] == "available_with_exception"
+    assert sidecars["keep_distinct_contract"]["verdict"] == "available"
     assert all(
         row["supporting_artifacts_are_manual_verdict"] is False
         for row in sidecars.values()
@@ -120,8 +121,8 @@ def test_manifest_validation_and_readiness_semantics():
 
     assert "C6.5a.5.1 consistency fix" not in payload["recommended_next_step"]
     assert payload["recommended_next_step"] == (
-        "human review of task218_ann2369 explicit column identity and "
-        "keep-distinct contract; candidate-specific C4 evidence remains required"
+        "resolve task218_ann2369 pair2 column identity under occlusion; "
+        "candidate-specific C4 evidence remains required"
     )
     forbidden = ("C3", "C7", "optimizer", "active runner", "writeback", "proposal manifest")
     assert not any(token.lower() in payload["recommended_next_step"].lower() for token in forbidden)
