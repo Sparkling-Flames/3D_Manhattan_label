@@ -315,7 +315,7 @@ def build_audit_payload() -> dict[str, Any]:
         "c6_5b_authorized": False,
         "c6_5a_4_implementation_completed": True,
         "next_allowed_step": (
-            "human comparison of C6.5a.6 task238_ann2389_4543gt dry-run candidates; "
+            "human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep; "
             "C6.5b remains blocked"
         ),
         "status_boundaries": {

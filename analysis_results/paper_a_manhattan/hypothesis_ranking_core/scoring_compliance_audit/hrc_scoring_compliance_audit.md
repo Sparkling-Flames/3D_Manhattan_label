@@ -7,7 +7,7 @@
 - Compliance: `partial`
 - C6 status: `audit_blocked`
 - C6.5b authorized: `false`
-- Next allowed step: `human comparison of C6.5a.6 task238_ann2389_4543gt dry-run candidates; C6.5b remains blocked`
+- Next allowed step: `human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep; C6.5b remains blocked`
 
 - `L0`: `complete`
 - `L1`: `complete`

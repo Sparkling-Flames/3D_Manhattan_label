@@ -1,4 +1,4 @@
-"""Generate three fixed audit-only candidates for corrected GT 4543gt."""
+"""Generate the fixed C6.5a.6.1 pair-2 y-step audit for corrected GT 4543gt."""
 
 from __future__ import annotations
 
@@ -24,7 +24,7 @@ from tools.paper_a_manhattan.run_local_3d_projection_review import (
 )
 
 
-SCHEMA_VERSION = "hrc_c6_5a_6_candidate_dry_run_v1"
+SCHEMA_VERSION = "hrc_c6_5a_6_1_pair2_y_step_audit_v1"
 CASE_NAME = "task238_ann2389_4543gt"
 SOURCE_PROJECTION = Path(
     "analysis_results/paper_a_manhattan/gt_correction_audit/"
@@ -134,38 +134,21 @@ def _candidate_specs(
     pair = baseline_pairs[1]
     return [
         {
-            "candidate_id": "c6_5a_6_candidate_0001",
-            "action_family": "shift_pair2_column_left_0_75",
+            "candidate_id": f"c6_5a_6_1_candidate_{index:04d}",
+            "action_family": f"shift_pair2_vertical_band_down_{step:.2f}".replace(
+                ".", "_"
+            ),
+            "audit_role": "primary_y_step_sweep",
+            "y_step": step,
             "coordinate_changes": [
                 _change(
                     pair,
-                    top_x=float(pair["top"]["x"]) - 0.75,
-                    bottom_x=float(pair["bottom"]["x"]) - 0.75,
+                    top_y=float(pair["top"]["y"]) + step,
+                    bottom_y=float(pair["bottom"]["y"]) + step,
                 )
             ],
-        },
-        {
-            "candidate_id": "c6_5a_6_candidate_0002",
-            "action_family": "shift_pair2_vertical_band_down_0_75",
-            "coordinate_changes": [
-                _change(
-                    pair,
-                    top_y=float(pair["top"]["y"]) + 0.75,
-                    bottom_y=float(pair["bottom"]["y"]) + 0.75,
-                )
-            ],
-        },
-        {
-            "candidate_id": "c6_5a_6_candidate_0003",
-            "action_family": "shift_pair2_vertical_band_up_0_75",
-            "coordinate_changes": [
-                _change(
-                    pair,
-                    top_y=float(pair["top"]["y"]) - 0.75,
-                    bottom_y=float(pair["bottom"]["y"]) - 0.75,
-                )
-            ],
-        },
+        }
+        for index, step in enumerate((0.25, 0.50, 0.75, 1.00), start=1)
     ]
 
 
@@ -213,6 +196,7 @@ def build_payload() -> dict[str, Any]:
                 "short_wall_assumption": False,
                 "keep_distinct_assumption": False,
                 "candidate_specific_c4": {
+                    "available": False,
                     "availability": "unavailable",
                     "candidate_preference_authorized": False,
                     "reason": "no candidate-specific image evidence or projection delta",
@@ -261,7 +245,20 @@ def build_payload() -> dict[str, Any]:
                 "sha256": _sha256(SOURCE_SNAPSHOT),
             },
         },
-        "generation_mode": "fixed_finite_audit_probes_no_search",
+        "generation_mode": "fixed_finite_y_step_audit_no_search",
+        "audit_stage": "C6.5a.6.1",
+        "provenance_resolution": {
+            "prior_c6_5a_6_candidate_0002_y_delta": 0.75,
+            "stale_description_y_delta": 0.50,
+            "resolved_statement": (
+                "The prior generated script, JSON, Markdown, and preview encoded "
+                "candidate 0002 as pair2 top/bottom y +0.75; +0.50 was stale prose."
+            ),
+            "superseded_non_sweep_candidates": [
+                "shift_pair2_column_left_0_75",
+                "shift_pair2_vertical_band_up_0_75",
+            ],
+        },
         "candidate_count": len(candidates),
         "candidate_set": candidates,
         "top_candidates": [
@@ -269,17 +266,29 @@ def build_payload() -> dict[str, Any]:
                 "display_order": row["display_order"],
                 "candidate_id": row["candidate_id"],
                 "action_family": row["action_family"],
-                "movement_l1_normalized": row["diagnostics"]["movement_cost"][
+                "y_step": row["y_step"],
+                "movement": row["diagnostics"]["movement_cost"][
                     "movement_l1_normalized"
                 ],
-                "height_outlier_l1": row["diagnostics"]["height_consistency"][
+                "height_l1": row["diagnostics"]["height_consistency"][
                     "height_outlier_l1"
                 ],
-                "wall_residual_max": row["diagnostics"]["wall_residual_max"],
-                "turn_residual_max": row["diagnostics"]["turn_residual_max"],
+                "wall_max": row["diagnostics"]["wall_residual_max"],
+                "turn_max": row["diagnostics"]["turn_residual_max"],
+                "self_intersection": row["diagnostics"]["self_intersection"],
+                "pair_count": row["pair_count"],
+                "short_wall_count": row["diagnostics"]["short_wall_count"],
+                "candidate_specific_c4": False,
+                "candidate_preference_authorized": False,
             }
             for row in candidates
         ],
+        "manual_visual_observation": {
+            "preferred_geometry": "pair2_top_bottom_y_shift_down",
+            "preferred_y_step": 0.75,
+            "status": "user_currently_visually_prefers_this_step",
+            "scope": "manual_visual_preference_only_not_automatic_acceptance",
+        },
         "candidate_preference_authorized": False,
         "preference_status": "manual_comparison_only_no_authorized_preference",
         "generated_proposal": False,
@@ -336,21 +345,25 @@ def run(
     _write_json(manifest_path, _review_manifest(payload))
     md_path.write_bytes(
         (
-            "# HRC C6.5a.6 Candidate Dry-run\n\n"
+            "# HRC C6.5a.6.1 Pair2 Y-step Sweep Audit\n\n"
             "- Case: `task238_ann2389_4543gt`\n"
             f"- Candidate count: `{payload['candidate_count']}`\n"
-            "- Generation: `fixed_finite_audit_probes_no_search`\n"
+            "- Generation: `fixed_finite_y_step_audit_no_search`\n"
+            "- Prior C6.5a.6 candidate 0002 provenance: `pair2 y +0.75`; "
+            "`+0.50` was stale prose.\n"
+            "- Current manual visual observation: pair2 downward y-shift "
+            "`+0.75` is preferred; this is not automatic acceptance.\n"
             "- Candidate preference authorized: `false`\n"
             "- Accepted/downstream/writeback: `false/false/false`\n"
             "- C6.5b/C3/C7/C9/C10: `blocked`\n\n"
-            "| order | candidate | family | movement | height L1 | wall max | turn max |\n"
-            "|---:|---|---|---:|---:|---:|---:|\n"
+            "| order | candidate | y step | movement | height L1 | wall max | turn max | self-x | pairs | short walls | C4 | preference |\n"
+            "|---:|---|---:|---:|---:|---:|---:|---|---:|---:|---|---|\n"
             + "\n".join(
                 f"| {row['display_order']} | {row['candidate_id']} | "
-                f"{row['action_family']} | {row['movement_l1_normalized']:.6f} | "
-                f"{row['height_outlier_l1']:.6f} | "
-                f"{row['wall_residual_max']:.6f} | "
-                f"{row['turn_residual_max']:.6f} |"
+                f"{row['y_step']:+.2f} | {row['movement']:.6f} | "
+                f"{row['height_l1']:.6f} | {row['wall_max']:.6f} | "
+                f"{row['turn_max']:.6f} | {str(row['self_intersection']).lower()} | "
+                f"{row['pair_count']} | {row['short_wall_count']} | false | false |"
                 for row in payload["top_candidates"]
             )
             + "\n"

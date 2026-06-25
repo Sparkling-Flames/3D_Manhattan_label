@@ -72,7 +72,7 @@ def test_layer_mapping_and_violations_match_current_implementation():
     assert payload["selection_regression"]["accepted"] is False
     assert payload["selection_regression"]["downstream_recommendation"] is False
     assert "C6.5a.5.1 consistency fix" not in payload["next_allowed_step"]
-    assert "human comparison of C6.5a.6" in payload["next_allowed_step"]
+    assert "human comparison of C6.5a.6.1" in payload["next_allowed_step"]
     assert payload["c6_5a_6_candidate_dry_run"]["generated"] is True
     assert payload["c6_5a_6_candidate_dry_run"]["candidate_count"] > 0
     assert payload["c6_5a_6_candidate_dry_run"]["active_ranking_changed"] is False

@@ -54,23 +54,23 @@
   ],
   "candidates": [
     {
-      "candidate_id": "c6_5a_6_candidate_0001",
-      "family": "shift_pair2_column_left_0_75",
-      "action_family": "shift_pair2_column_left_0_75",
+      "candidate_id": "c6_5a_6_1_candidate_0001",
+      "family": "shift_pair2_vertical_band_down_0_25",
+      "action_family": "shift_pair2_vertical_band_down_0_25",
       "coordinate_changes": [
         {
           "effective_pair_index": 2,
           "fields": {
-            "top_x": {
-              "before": 67.41344195519349,
-              "after": 66.66344195519349,
-              "delta": -0.75,
+            "top_y": {
+              "before": 10.183299389002038,
+              "after": 10.433299389002038,
+              "delta": 0.25,
               "changed": true
             },
-            "bottom_x": {
-              "before": 68.0244399185336,
-              "after": 67.2744399185336,
-              "delta": -0.75,
+            "bottom_y": {
+              "before": 93.27902240325867,
+              "after": 93.52902240325867,
+              "delta": 0.25,
               "changed": true
             }
           }
@@ -90,7 +90,43 @@
       "evidence_warning": "candidate-specific C4 unavailable; visual comparison only"
     },
     {
-      "candidate_id": "c6_5a_6_candidate_0002",
+      "candidate_id": "c6_5a_6_1_candidate_0002",
+      "family": "shift_pair2_vertical_band_down_0_50",
+      "action_family": "shift_pair2_vertical_band_down_0_50",
+      "coordinate_changes": [
+        {
+          "effective_pair_index": 2,
+          "fields": {
+            "top_y": {
+              "before": 10.183299389002038,
+              "after": 10.683299389002038,
+              "delta": 0.5,
+              "changed": true
+            },
+            "bottom_y": {
+              "before": 93.27902240325867,
+              "after": 93.77902240325867,
+              "delta": 0.5,
+              "changed": true
+            }
+          }
+        }
+      ],
+      "decision_class": "legacy_trial_blocked",
+      "hard_gate": false,
+      "assertion_violations": [],
+      "manual_review_candidate": true,
+      "automatic_fix_claimed": false,
+      "source_stage": "c6_5a_6_fixed_candidate_dry_run",
+      "review_role": "diagnostic_2",
+      "selection_reason": "fixed_display_order_not_preference",
+      "preferred_panel": true,
+      "short_wall_edges_after": [],
+      "evidence_status": "unavailable",
+      "evidence_warning": "candidate-specific C4 unavailable; visual comparison only"
+    },
+    {
+      "candidate_id": "c6_5a_6_1_candidate_0003",
       "family": "shift_pair2_vertical_band_down_0_75",
       "action_family": "shift_pair2_vertical_band_down_0_75",
       "coordinate_changes": [
@@ -118,7 +154,7 @@
       "manual_review_candidate": true,
       "automatic_fix_claimed": false,
       "source_stage": "c6_5a_6_fixed_candidate_dry_run",
-      "review_role": "diagnostic_2",
+      "review_role": "diagnostic_3",
       "selection_reason": "fixed_display_order_not_preference",
       "preferred_panel": true,
       "short_wall_edges_after": [],
@@ -126,35 +162,35 @@
       "evidence_warning": "candidate-specific C4 unavailable; visual comparison only"
     },
     {
-      "candidate_id": "c6_5a_6_candidate_0003",
-      "family": "shift_pair2_vertical_band_up_0_75",
-      "action_family": "shift_pair2_vertical_band_up_0_75",
+      "candidate_id": "c6_5a_6_1_candidate_0004",
+      "family": "shift_pair2_vertical_band_down_1_00",
+      "action_family": "shift_pair2_vertical_band_down_1_00",
       "coordinate_changes": [
         {
           "effective_pair_index": 2,
           "fields": {
             "top_y": {
               "before": 10.183299389002038,
-              "after": 9.433299389002038,
-              "delta": -0.75,
+              "after": 11.183299389002038,
+              "delta": 1.0,
               "changed": true
             },
             "bottom_y": {
               "before": 93.27902240325867,
-              "after": 92.52902240325867,
-              "delta": -0.75,
+              "after": 94.27902240325867,
+              "delta": 1.0,
               "changed": true
             }
           }
         }
       ],
-      "decision_class": "hard_feasible_neutral",
+      "decision_class": "legacy_trial_blocked",
       "hard_gate": false,
       "assertion_violations": [],
       "manual_review_candidate": true,
       "automatic_fix_claimed": false,
       "source_stage": "c6_5a_6_fixed_candidate_dry_run",
-      "review_role": "diagnostic_3",
+      "review_role": "diagnostic_4",
       "selection_reason": "fixed_display_order_not_preference",
       "preferred_panel": true,
       "short_wall_edges_after": [],

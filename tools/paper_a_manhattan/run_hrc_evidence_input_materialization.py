@@ -339,7 +339,7 @@ def build_payload(
         "c6_5b_authorized": False,
         "conclusion": "C6 remains audit-blocked; C6.5b is not authorized unless a later scoring/evaluator compliance audit approves the evidence/ranking contract.",
         "recommended_next_step": (
-            "human comparison of C6.5a.6 task238_ann2389_4543gt dry-run candidates"
+            "human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep"
         ),
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",

@@ -510,7 +510,7 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
         dry_run.get("case_name") != "task238_ann2389_4543gt"
         or dry_run.get("candidate_count", 0) <= 0
     ):
-        raise ValueError("invalid C6.5a.6 candidate dry-run artifact")
+        raise ValueError("invalid C6.5a.6.1 candidate sweep artifact")
     cases["task238_ann2389_4543gt"]["candidate_dry_run"] = {
         "generated": True,
         "path": CANDIDATE_DRY_RUN.as_posix(),
@@ -590,7 +590,7 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
         "manual_evidence_required": by_status["requires_manual_visual_evidence"],
         "unavailable_inputs": by_status["unavailable"],
         "recommended_next_step": (
-            "human comparison of C6.5a.6 task238_ann2389_4543gt dry-run candidates"
+            "human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep"
         ),
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",

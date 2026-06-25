@@ -106,7 +106,7 @@ def test_manifest_validation_and_readiness_semantics():
 
     assert "C6.5a.5.1 consistency fix" not in payload["recommended_next_step"]
     assert payload["recommended_next_step"] == (
-        "human comparison of C6.5a.6 task238_ann2389_4543gt dry-run candidates"
+        "human comparison of C6.5a.6.1 task238_ann2389_4543gt y-step sweep"
     )
     forbidden = ("C3", "C7", "optimizer", "active runner", "writeback", "proposal manifest")
     assert not any(token.lower() in payload["recommended_next_step"].lower() for token in forbidden)
