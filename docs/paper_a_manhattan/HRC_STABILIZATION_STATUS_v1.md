@@ -27,7 +27,7 @@
 
 ## 3. 唯一允许的下一步
 
-C6.5a.5.1 completed。4543gt uses independent 4-pair corrected projection；`short_wall_exists=false`；`keep_distinct_contract=not_applicable`；explicit column identity available。旧 `task238_ann2389` 仅为 deprecated old-GT diagnostic，其 manual requirements 不是 corrected-GT blocker。C6.5b remains blocked；下一步只允许人工审查本 corrected-GT audit，或在用户明确批准后执行 C6.5a.6 `task238_ann2389_4543gt` candidate dry-run。C3 shadow expansion、C7/C9/C10 继续 blocked。
+C6.5a.5.1 completed。4543gt uses independent 4-pair corrected projection；`short_wall_exists=false`；`keep_distinct_contract=not_applicable`；explicit column identity available。旧 `task238_ann2389` 仅为 deprecated old-GT diagnostic，其 manual requirements 不是 corrected-GT blocker。C6.5a.6 fixed finite candidate dry-run completed，当前仅等待人工比较；candidate preference 仍未授权。C6.5b、C3 shadow expansion、C7/C9/C10 继续 blocked。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
@@ -51,6 +51,7 @@ C6.5a.5.1 completed。4543gt uses independent 4-pair corrected projection；`sho
 - `tools/paper_a_manhattan/run_hrc_evidence_input_materialization.py`：C6.5a.2 audit-only evidence input materializer；只处理 readiness audit 标记为 materializable 的 2369/2389 输入，复用 original variant 物化 C2/C4/C5/contract baseline diagnostics，不投影或修改 candidate rows，不改 active runner/ranking/C3。
 - `tools/paper_a_manhattan/run_hrc_scoring_compliance_audit.py`：C6.5a.3 read-only scoring compliance audit；映射 evaluator/ranking fields 到 L0-L5，记录层序违规和 accepted gate，完全不改 evaluator/ranking/portfolio/runner。
 - `tools/paper_a_manhattan/run_hrc_gt_correction_audit.py`：C6.5a.5/5.1 corrected-GT audit；保留 task238/2389 旧 GT 为 deprecated source，物化独立 `task238_ann2389_4543gt` 4-pair projection 与 explicit-column sidecar；short-wall/keep-distinct 不适用，不生成 candidate、不授权 preference/C6.5b。
+- `tools/paper_a_manhattan/run_hrc_c6_5a_6_candidate_dry_run.py`：C6.5a.6 三个固定 4-pair audit-only 微调候选及本地 3D preview；不执行搜索、不接 active ranking/portfolio、不授权 preference/writeback。
 - `docs/paper_a_manhattan/HRC_C6_5A_4_SCORING_EVALUATOR_HARDENING_SPEC_v1.md`：C6.5a.4 spec-only hardening contract；定义未来 L0–L5 key 与 gate 改造，不构成实现授权。
 - `tests/fixtures/paper_a_manhattan/hrc_scoring_layer_compliance_v1.json` 与 `tests/test_hrc_scoring_layer_hardening_contract.py`：C6.5a.4b fixture-based contract；锁定 hard gate、L1/L2/L3/L4/L5 层序及 legacy exclusion。
 - `tools/paper_a_manhattan/manhattan_constrained_hypothesis_evaluator.py` 与 `manhattan_hypothesis_portfolio.py`：C6.5a.4c 最小实现；共享 L0–L5 layer key，保持 bucket 集合与 recommendation authorization 不变。

@@ -7,4 +7,4 @@ def test_c6_5a_5_1_is_completed_not_next_step():
     ).read_text(encoding="utf-8")
     assert "C6.5a.5.1 completed" in text
     assert "当前唯一允许下一步为 C6.5a.5.1" not in text
-    assert "task238_ann2389_4543gt` candidate dry-run" in text
+    assert "C6.5a.6 fixed finite candidate dry-run completed" in text

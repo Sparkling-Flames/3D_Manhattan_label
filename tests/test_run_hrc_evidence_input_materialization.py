@@ -80,6 +80,9 @@ def test_materialized_fields_and_source_validation():
     assert corrected["candidate_specific"] is False
     assert corrected["candidate_count"] == 0
     assert corrected["candidate_preference_authorized"] is False
+    assert corrected["candidate_dry_run"]["generated"] is True
+    assert corrected["candidate_dry_run"]["candidate_count"] > 0
+    assert corrected["candidate_dry_run"]["used_for_preference"] is False
     assert corrected["rankable_by_current_HRC_input_summary"][
         "candidate_preference_authorized"
     ] is False

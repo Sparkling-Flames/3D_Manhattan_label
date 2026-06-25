@@ -72,7 +72,11 @@ def test_layer_mapping_and_violations_match_current_implementation():
     assert payload["selection_regression"]["accepted"] is False
     assert payload["selection_regression"]["downstream_recommendation"] is False
     assert "C6.5a.5.1 consistency fix" not in payload["next_allowed_step"]
-    assert "C6.5a.6 task238_ann2389_4543gt candidate dry-run" in payload["next_allowed_step"]
+    assert "human comparison of C6.5a.6" in payload["next_allowed_step"]
+    assert payload["c6_5a_6_candidate_dry_run"]["generated"] is True
+    assert payload["c6_5a_6_candidate_dry_run"]["candidate_count"] > 0
+    assert payload["c6_5a_6_candidate_dry_run"]["active_ranking_changed"] is False
+    assert payload["c6_5a_6_candidate_dry_run"]["candidate_preference_authorized"] is False
     assert payload["corrected_gt_status_summary"] == {
         "old_case": "task238_ann2389",
         "old_case_role": "deprecated_old_gt_diagnostic_only",

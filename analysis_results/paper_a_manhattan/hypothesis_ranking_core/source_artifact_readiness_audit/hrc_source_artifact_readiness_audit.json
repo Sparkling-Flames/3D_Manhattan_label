@@ -25,6 +25,14 @@
     "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/hrc_gt_correction_audit_4543gt.json",
     "sha256": "d9c0532987fa45f94bee3b632ff4b0548b54b8b21acf114b1845b041dd730eb4"
   },
+  "c6_5a_6_candidate_dry_run": {
+    "generated": true,
+    "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_6_candidate_dry_run/task238_ann2389_4543gt/hrc_c6_5a_6_candidate_dry_run.json",
+    "sha256": "e4dc6becdfd7f5a1d7decf8b56512961343778cc42718d9179510b61c8008a81",
+    "candidate_count": 3,
+    "human_comparison_status": "pending",
+    "candidate_preference_authorized": false
+  },
   "candidate_preference_authorized": {
     "task218_ann2369": false,
     "task238_ann2389": false,
@@ -1521,7 +1529,15 @@
       "accepted": false,
       "downstream_recommendation": false,
       "annotation_writeback": false,
-      "corrected_pair_count": 4
+      "corrected_pair_count": 4,
+      "candidate_dry_run": {
+        "generated": true,
+        "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_6_candidate_dry_run/task238_ann2389_4543gt/hrc_c6_5a_6_candidate_dry_run.json",
+        "sha256": "e4dc6becdfd7f5a1d7decf8b56512961343778cc42718d9179510b61c8008a81",
+        "candidate_count": 3,
+        "candidate_preference_authorized": false,
+        "execution_allowed": false
+      }
     }
   },
   "artifact_inputs_ready_for_c6_5b": false,
@@ -1595,7 +1611,7 @@
     "task238_ann2389_4543gt:rankable_by_current_HRC",
     "task238_ann2389_4543gt:source_candidate_rows"
   ],
-  "recommended_next_step": "human review of corrected-GT audit, or C6.5a.6 task238_ann2389_4543gt candidate dry-run only after explicit user approval",
+  "recommended_next_step": "human comparison of C6.5a.6 task238_ann2389_4543gt dry-run candidates",
   "status_boundaries": {
     "c3_shadow_expansion": "blocked",
     "c7_optimizer": "blocked",

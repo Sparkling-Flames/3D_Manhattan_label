@@ -30,6 +30,11 @@ GT_CORRECTION_AUDIT = Path(
     "analysis_results/paper_a_manhattan/gt_correction_audit/"
     "task238_ann2389_4543gt/hrc_gt_correction_audit_4543gt.json"
 )
+CANDIDATE_DRY_RUN = (
+    ROOT
+    / "c6_5a_6_candidate_dry_run/task238_ann2389_4543gt/"
+    "hrc_c6_5a_6_candidate_dry_run.json"
+)
 SOURCE_PATHS = (
     Path("docs/paper_a_manhattan/HRC_SCORING_LAYER_CONTRACT_v1.md"),
     Path("docs/paper_a_manhattan/评分如何制定.md"),
@@ -39,6 +44,7 @@ SOURCE_PATHS = (
     Path("tools/paper_a_manhattan/run_manhattan_hypothesis_ranking_core.py"),
     MATERIALIZATION,
     GT_CORRECTION_AUDIT,
+    CANDIDATE_DRY_RUN,
 )
 
 LAYER_MAPPING = {
@@ -138,6 +144,7 @@ def build_audit_payload() -> dict[str, Any]:
     key = build_hypothesis_ranking_key(evaluation)
     materialized = json.loads(MATERIALIZATION.read_text(encoding="utf-8"))
     correction = json.loads(GT_CORRECTION_AUDIT.read_text(encoding="utf-8"))
+    dry_run = json.loads(CANDIDATE_DRY_RUN.read_text(encoding="utf-8"))
     baseline_only = all(
         materialized["cases"][name]["c4_lite_diagnostics"][
             "baseline_to_baseline_materialization"
@@ -286,6 +293,15 @@ def build_audit_payload() -> dict[str, Any]:
             "candidate_preference_authorized_old_case": False,
             "candidate_preference_authorized_corrected_case": False,
         },
+        "c6_5a_6_candidate_dry_run": {
+            "generated": True,
+            "path": CANDIDATE_DRY_RUN.as_posix(),
+            "sha256": _sha256(CANDIDATE_DRY_RUN),
+            "candidate_count": dry_run["candidate_count"],
+            "human_comparison_status": "pending",
+            "active_ranking_changed": False,
+            "candidate_preference_authorized": False,
+        },
         "audit_only": True,
         "evaluator_changed": True,
         "ranking_key_changed": True,
@@ -299,8 +315,7 @@ def build_audit_payload() -> dict[str, Any]:
         "c6_5b_authorized": False,
         "c6_5a_4_implementation_completed": True,
         "next_allowed_step": (
-            "human review of corrected-GT audit, or C6.5a.6 "
-            "task238_ann2389_4543gt candidate dry-run only after explicit user approval; "
+            "human comparison of C6.5a.6 task238_ann2389_4543gt dry-run candidates; "
             "C6.5b remains blocked"
         ),
         "status_boundaries": {

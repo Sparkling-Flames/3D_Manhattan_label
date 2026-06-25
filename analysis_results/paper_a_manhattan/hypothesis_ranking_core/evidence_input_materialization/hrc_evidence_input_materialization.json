@@ -6,7 +6,7 @@
   },
   "source_readiness_audit": {
     "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/source_artifact_readiness_audit/hrc_source_artifact_readiness_audit.json",
-    "sha256": "c925f7ec5c8d81d7f703efd1edd12bc9bab5c9b20d890d2f3caa07643c8313ea"
+    "sha256": "f0fc5225e10d99844fbfd49f9c0217360d023b4cb390119ff5451bf30d9a69db"
   },
   "cases": {
     "task218_ann2369": {
@@ -2151,7 +2151,15 @@
       "execution_allowed": false,
       "accepted": false,
       "downstream_recommendation": false,
-      "annotation_writeback": false
+      "annotation_writeback": false,
+      "candidate_dry_run": {
+        "generated": true,
+        "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_6_candidate_dry_run/task238_ann2389_4543gt/hrc_c6_5a_6_candidate_dry_run.json",
+        "sha256": "e4dc6becdfd7f5a1d7decf8b56512961343778cc42718d9179510b61c8008a81",
+        "candidate_count": 3,
+        "used_for_preference": false,
+        "candidate_preference_authorized": false
+      }
     }
   },
   "processed_cases": [
@@ -2162,6 +2170,7 @@
   "processed_status": "existing_artifact_only_with_corrected_gt",
   "manual_evidence_processed": true,
   "supporting_artifacts_used_as_manual_verdicts": false,
+  "c6_5a_6_candidate_dry_run_generated": true,
   "generated_candidate": false,
   "generated_proposal_manifest": false,
   "generated_geometry_variant": false,
@@ -2176,7 +2185,7 @@
   "c6_status": "audit_blocked",
   "c6_5b_authorized": false,
   "conclusion": "C6 remains audit-blocked; C6.5b is not authorized unless a later scoring/evaluator compliance audit approves the evidence/ranking contract.",
-  "recommended_next_step": "C6.5a.5.1 consistency fix / post-fix audit only",
+  "recommended_next_step": "human comparison of C6.5a.6 task238_ann2389_4543gt dry-run candidates",
   "status_boundaries": {
     "c3_shadow_expansion": "blocked",
     "c7_optimizer": "blocked",

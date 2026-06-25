@@ -81,6 +81,9 @@ def test_manifest_validation_and_readiness_semantics():
     assert corrected["evidence_readiness_matrix"]["keep_distinct_contract"]["status"] == "not_applicable"
     assert corrected["probe_family_readiness"]["short_wall_preserving_floorprint_balance"]["applicable"] is False
     assert corrected["probe_family_readiness"]["short_wall_preserving_floorprint_balance"]["artifact_inputs_ready"] is False
+    assert corrected["candidate_dry_run"]["generated"] is True
+    assert corrected["candidate_dry_run"]["candidate_count"] > 0
+    assert corrected["candidate_dry_run"]["candidate_preference_authorized"] is False
     assert payload["candidate_preference_authorized"] == {
         "task218_ann2369": False,
         "task238_ann2389": False,
@@ -102,7 +105,9 @@ def test_manifest_validation_and_readiness_semantics():
     assert gt75["candidate_row_height_source"]["status"] == "available_from_existing_artifact"
 
     assert "C6.5a.5.1 consistency fix" not in payload["recommended_next_step"]
-    assert "C6.5a.6 task238_ann2389_4543gt candidate dry-run" in payload["recommended_next_step"]
+    assert payload["recommended_next_step"] == (
+        "human comparison of C6.5a.6 task238_ann2389_4543gt dry-run candidates"
+    )
     forbidden = ("C3", "C7", "optimizer", "active runner", "writeback", "proposal manifest")
     assert not any(token.lower() in payload["recommended_next_step"].lower() for token in forbidden)
 

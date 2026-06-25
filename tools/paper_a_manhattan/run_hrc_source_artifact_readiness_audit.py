@@ -18,6 +18,11 @@ GT_CORRECTION_AUDIT = Path(
     "analysis_results/paper_a_manhattan/gt_correction_audit/"
     "task238_ann2389_4543gt/hrc_gt_correction_audit_4543gt.json"
 )
+CANDIDATE_DRY_RUN = Path(
+    "analysis_results/paper_a_manhattan/hypothesis_ranking_core/"
+    "c6_5a_6_candidate_dry_run/task238_ann2389_4543gt/"
+    "hrc_c6_5a_6_candidate_dry_run.json"
+)
 
 EVIDENCE_TYPES = (
     "projection_metrics",
@@ -500,6 +505,20 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
     cases["task238_ann2389"]["source_status"] = "deprecated_old_gt_diagnostic"
     cases["task238_ann2389"]["candidate_preference_authorized"] = False
     cases[correction["case_name"]] = _corrected_gt_case(correction)
+    dry_run = _load(CANDIDATE_DRY_RUN)
+    if (
+        dry_run.get("case_name") != "task238_ann2389_4543gt"
+        or dry_run.get("candidate_count", 0) <= 0
+    ):
+        raise ValueError("invalid C6.5a.6 candidate dry-run artifact")
+    cases["task238_ann2389_4543gt"]["candidate_dry_run"] = {
+        "generated": True,
+        "path": CANDIDATE_DRY_RUN.as_posix(),
+        "sha256": _sha256(CANDIDATE_DRY_RUN),
+        "candidate_count": dry_run["candidate_count"],
+        "candidate_preference_authorized": False,
+        "execution_allowed": False,
+    }
 
     artifact_inputs_ready_cases = [
         name for name, row in cases.items() if row["artifact_inputs_ready"]
@@ -541,6 +560,14 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
             "path": GT_CORRECTION_AUDIT.as_posix(),
             "sha256": _sha256(GT_CORRECTION_AUDIT),
         },
+        "c6_5a_6_candidate_dry_run": {
+            "generated": True,
+            "path": CANDIDATE_DRY_RUN.as_posix(),
+            "sha256": _sha256(CANDIDATE_DRY_RUN),
+            "candidate_count": dry_run["candidate_count"],
+            "human_comparison_status": "pending",
+            "candidate_preference_authorized": False,
+        },
         "candidate_preference_authorized": {
             "task218_ann2369": False,
             "task238_ann2389": False,
@@ -563,8 +590,7 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
         "manual_evidence_required": by_status["requires_manual_visual_evidence"],
         "unavailable_inputs": by_status["unavailable"],
         "recommended_next_step": (
-            "human review of corrected-GT audit, or C6.5a.6 "
-            "task238_ann2389_4543gt candidate dry-run only after explicit user approval"
+            "human comparison of C6.5a.6 task238_ann2389_4543gt dry-run candidates"
         ),
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",

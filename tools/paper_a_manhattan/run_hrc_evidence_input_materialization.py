@@ -30,6 +30,11 @@ READINESS_DIR = ROOT / "source_artifact_readiness_audit"
 DEFAULT_MANIFEST = READINESS_DIR / "source_artifact_manifest.json"
 DEFAULT_READINESS = READINESS_DIR / "hrc_source_artifact_readiness_audit.json"
 DEFAULT_OUT_DIR = ROOT / "evidence_input_materialization"
+CANDIDATE_DRY_RUN = (
+    ROOT
+    / "c6_5a_6_candidate_dry_run/task238_ann2389_4543gt/"
+    "hrc_c6_5a_6_candidate_dry_run.json"
+)
 LEGACY_TARGET_CASES = ("task218_ann2369", "task238_ann2389")
 CORRECTED_CASE = "task238_ann2389_4543gt"
 TARGET_CASES = (*LEGACY_TARGET_CASES, CORRECTED_CASE)
@@ -294,6 +299,15 @@ def build_payload(
         for case_name in LEGACY_TARGET_CASES
     }
     cases[CORRECTED_CASE] = _corrected_case_payload(readiness)
+    dry_run = _load(CANDIDATE_DRY_RUN)
+    cases[CORRECTED_CASE]["candidate_dry_run"] = {
+        "generated": True,
+        "path": CANDIDATE_DRY_RUN.as_posix(),
+        "sha256": _sha256(CANDIDATE_DRY_RUN),
+        "candidate_count": dry_run["candidate_count"],
+        "used_for_preference": False,
+        "candidate_preference_authorized": False,
+    }
     return {
         "schema_version": SCHEMA_VERSION,
         "source_manifest": {
@@ -309,6 +323,7 @@ def build_payload(
         "processed_status": "existing_artifact_only_with_corrected_gt",
         "manual_evidence_processed": True,
         "supporting_artifacts_used_as_manual_verdicts": False,
+        "c6_5a_6_candidate_dry_run_generated": True,
         "generated_candidate": False,
         "generated_proposal_manifest": False,
         "generated_geometry_variant": False,
@@ -323,7 +338,9 @@ def build_payload(
         "c6_status": "audit_blocked",
         "c6_5b_authorized": False,
         "conclusion": "C6 remains audit-blocked; C6.5b is not authorized unless a later scoring/evaluator compliance audit approves the evidence/ranking contract.",
-        "recommended_next_step": "C6.5a.5.1 consistency fix / post-fix audit only",
+        "recommended_next_step": (
+            "human comparison of C6.5a.6 task238_ann2389_4543gt dry-run candidates"
+        ),
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",
             "c7_optimizer": "blocked",
