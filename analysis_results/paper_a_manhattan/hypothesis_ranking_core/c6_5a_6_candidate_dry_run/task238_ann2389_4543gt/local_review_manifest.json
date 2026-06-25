@@ -55,28 +55,28 @@
   "candidates": [
     {
       "candidate_id": "c6_5a_6_candidate_0001",
-      "family": "align_pair2_vertical_column_x",
-      "action_family": "align_pair2_vertical_column_x",
+      "family": "shift_pair2_column_left_0_75",
+      "action_family": "shift_pair2_column_left_0_75",
       "coordinate_changes": [
         {
           "effective_pair_index": 2,
           "fields": {
             "top_x": {
               "before": 67.41344195519349,
-              "after": 67.71894093686355,
-              "delta": 0.3054989816700555,
+              "after": 66.66344195519349,
+              "delta": -0.75,
               "changed": true
             },
             "bottom_x": {
               "before": 68.0244399185336,
-              "after": 67.71894093686355,
-              "delta": -0.3054989816700555,
+              "after": 67.2744399185336,
+              "delta": -0.75,
               "changed": true
             }
           }
         }
       ],
-      "decision_class": "hard_feasible_neutral",
+      "decision_class": "legacy_trial_blocked",
       "hard_gate": false,
       "assertion_violations": [],
       "manual_review_candidate": true,
@@ -91,22 +91,22 @@
     },
     {
       "candidate_id": "c6_5a_6_candidate_0002",
-      "family": "shift_pair2_vertical_band_down_0_5",
-      "action_family": "shift_pair2_vertical_band_down_0_5",
+      "family": "shift_pair2_vertical_band_down_0_75",
+      "action_family": "shift_pair2_vertical_band_down_0_75",
       "coordinate_changes": [
         {
           "effective_pair_index": 2,
           "fields": {
             "top_y": {
               "before": 10.183299389002038,
-              "after": 10.683299389002038,
-              "delta": 0.5,
+              "after": 10.933299389002038,
+              "delta": 0.75,
               "changed": true
             },
             "bottom_y": {
               "before": 93.27902240325867,
-              "after": 93.77902240325867,
-              "delta": 0.5,
+              "after": 94.02902240325867,
+              "delta": 0.75,
               "changed": true
             }
           }
@@ -127,40 +127,28 @@
     },
     {
       "candidate_id": "c6_5a_6_candidate_0003",
-      "family": "align_pair2_x_and_shift_down_0_5",
-      "action_family": "align_pair2_x_and_shift_down_0_5",
+      "family": "shift_pair2_vertical_band_up_0_75",
+      "action_family": "shift_pair2_vertical_band_up_0_75",
       "coordinate_changes": [
         {
           "effective_pair_index": 2,
           "fields": {
-            "top_x": {
-              "before": 67.41344195519349,
-              "after": 67.71894093686355,
-              "delta": 0.3054989816700555,
-              "changed": true
-            },
-            "bottom_x": {
-              "before": 68.0244399185336,
-              "after": 67.71894093686355,
-              "delta": -0.3054989816700555,
-              "changed": true
-            },
             "top_y": {
               "before": 10.183299389002038,
-              "after": 10.683299389002038,
-              "delta": 0.5,
+              "after": 9.433299389002038,
+              "delta": -0.75,
               "changed": true
             },
             "bottom_y": {
               "before": 93.27902240325867,
-              "after": 93.77902240325867,
-              "delta": 0.5,
+              "after": 92.52902240325867,
+              "delta": -0.75,
               "changed": true
             }
           }
         }
       ],
-      "decision_class": "legacy_trial_blocked",
+      "decision_class": "hard_feasible_neutral",
       "hard_gate": false,
       "assertion_violations": [],
       "manual_review_candidate": true,

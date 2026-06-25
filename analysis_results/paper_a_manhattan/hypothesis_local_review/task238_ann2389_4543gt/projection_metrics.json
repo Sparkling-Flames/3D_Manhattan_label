@@ -7,17 +7,17 @@
   "camera_height": 1.6,
   "input_provenance": {
     "input_file": "local_review_manifest.json",
-    "input_sha256": "6af05c1f5cae770f8d3bc57c89f7f766e55ee7ec0d6b6f7efe1389016719dffd",
+    "input_sha256": "b9ef814025f13cfd62e139579cfd1579c0e52026916eb37a36431d6d137ad0b8",
     "ordered_pair_source": "input.ordered_pairs",
     "candidate": {
       "file": "local_review_manifest.json",
-      "sha256": "6af05c1f5cae770f8d3bc57c89f7f766e55ee7ec0d6b6f7efe1389016719dffd",
+      "sha256": "b9ef814025f13cfd62e139579cfd1579c0e52026916eb37a36431d6d137ad0b8",
       "source": "m15_22_candidate_search_json"
     },
     "candidate_sources": [
       {
         "file": "local_review_manifest.json",
-        "sha256": "6af05c1f5cae770f8d3bc57c89f7f766e55ee7ec0d6b6f7efe1389016719dffd",
+        "sha256": "b9ef814025f13cfd62e139579cfd1579c0e52026916eb37a36431d6d137ad0b8",
         "source": "m15_22_candidate_search_json"
       }
     ],
@@ -569,28 +569,28 @@
       "name": "c6_5a_6_candidate_0001",
       "candidate_row": {
         "candidate_id": "c6_5a_6_candidate_0001",
-        "family": "align_pair2_vertical_column_x",
-        "action_family": "align_pair2_vertical_column_x",
+        "family": "shift_pair2_column_left_0_75",
+        "action_family": "shift_pair2_column_left_0_75",
         "coordinate_changes": [
           {
             "effective_pair_index": 2,
             "fields": {
               "top_x": {
                 "before": 67.41344195519349,
-                "after": 67.71894093686355,
-                "delta": 0.3054989816700555,
+                "after": 66.66344195519349,
+                "delta": -0.75,
                 "changed": true
               },
               "bottom_x": {
                 "before": 68.0244399185336,
-                "after": 67.71894093686355,
-                "delta": -0.3054989816700555,
+                "after": 67.2744399185336,
+                "delta": -0.75,
                 "changed": true
               }
             }
           }
         ],
-        "decision_class": "hard_feasible_neutral",
+        "decision_class": "legacy_trial_blocked",
         "hard_gate": false,
         "assertion_violations": [],
         "manual_review_candidate": true,
@@ -618,11 +618,11 @@
         },
         {
           "top": {
-            "x": 67.71894093686355,
+            "x": 66.66344195519349,
             "y": 10.183299389002038
           },
           "bottom": {
-            "x": 67.71894093686355,
+            "x": 67.2744399185336,
             "y": 93.27902240325867
           },
           "effective_pair_index": 2,
@@ -709,19 +709,19 @@
             "effective_pair_index": 2,
             "source_preview_order_index": 2,
             "input": {
-              "top_x": 67.71894093686355,
-              "bottom_x": 67.71894093686355,
+              "top_x": 66.66344195519349,
+              "bottom_x": 67.2744399185336,
               "top_y": 10.183299389002038,
               "bottom_y": 93.27902240325867
             },
             "normalized": {
-              "x": 693.4419551934827,
-              "top_x": 693.4419551934827,
-              "bottom_x": 693.4419551934827,
+              "x": 685.7619551934827,
+              "top_x": 682.6336456211814,
+              "bottom_x": 688.8902647657841,
               "top_y": 52.13849287169043,
               "bottom_y": 477.5885947046844
             },
-            "u_rad": 1.1133138935328395,
+            "u_rad": 1.066190003728992,
             "v_floor_raw_rad": 1.359650588366255,
             "v_floor_safe_rad": 1.359650588366255,
             "v_ceiling_raw_rad": -1.2508785412969543,
@@ -730,18 +730,18 @@
             "ceiling_clamped": false,
             "floor_distance": 0.3429448423498853,
             "floor_3d": {
-              "x": 0.30767890706670226,
+              "x": 0.300201867489322,
               "y": -1.6,
-              "z": -0.15147559222735288
+              "z": -0.1658010966499054
             },
             "ceiling_3d": {
-              "x": 0.30767890706670226,
+              "x": 0.300201867489322,
               "y": 1.03515467062422,
-              "z": -0.15147559222735288
+              "z": -0.1658010966499054
             },
             "wall_height": 2.63515467062422,
-            "top_bottom_x_residual": 0.0,
-            "top_bottom_x_residual_px": 0.0,
+            "top_bottom_x_residual": 0.610997963340111,
+            "top_bottom_x_residual_px": 6.256619144602723,
             "warnings": []
           },
           {
@@ -833,14 +833,14 @@
               "from_pair": 1,
               "to_pair": 2,
               "floor_wall_vector": {
-                "x": 1.082939199501344,
-                "z": -5.119900956536275
+                "x": 1.0754621599239638,
+                "z": -5.1342264609588275
               },
-              "floor_wall_length": 5.233177152988199,
-              "direction_deg": 281.94292638143844,
+              "floor_wall_length": 5.2456553651415305,
+              "direction_deg": 281.8306463628446,
               "nearest_manhattan_axis_deg": 270.0,
-              "angle_residual_deg": 11.94292638143844,
-              "ceiling_wall_length": 5.233177152988199,
+              "angle_residual_deg": 11.830646362844618,
+              "ceiling_wall_length": 5.2456553651415305,
               "length_ratio": 1.0,
               "angle_warning": false,
               "short_wall": false,
@@ -851,14 +851,14 @@
               "from_pair": 2,
               "to_pair": 3,
               "floor_wall_vector": {
-                "x": 2.3951221103006617,
-                "z": 0.046312042085492985
+                "x": 2.402599149878042,
+                "z": 0.060637546508045495
               },
-              "floor_wall_length": 2.3955698129032315,
-              "direction_deg": 1.107732219461918,
+              "floor_wall_length": 2.4033642227180643,
+              "direction_deg": 1.445741835211919,
               "nearest_manhattan_axis_deg": 0.0,
-              "angle_residual_deg": 1.1077322194619228,
-              "ceiling_wall_length": 2.3955698129032315,
+              "angle_residual_deg": 1.4457418352119191,
+              "ceiling_wall_length": 2.4033642227180643,
               "length_ratio": 1.0,
               "angle_warning": false,
               "short_wall": false,
@@ -904,9 +904,9 @@
           "self_intersection": false,
           "summary": {
             "n_walls": 4,
-            "wall_residual_sum_deg": 29.38896184358896,
+            "wall_residual_sum_deg": 29.614691440745133,
             "wall_residual_max_deg": 15.874611251834466,
-            "minimum_wall_length": 2.3955698129032315,
+            "minimum_wall_length": 2.4033642227180643,
             "short_wall_count": 0,
             "self_intersection": false
           }
@@ -917,24 +917,24 @@
               "corner_pair_index": 1,
               "prev_wall_index": 4,
               "next_wall_index": 1,
-              "turn_angle_deg": 62.18246236672708,
-              "angle_to_90_residual_deg": 27.81753763327292,
+              "turn_angle_deg": 62.294742385320944,
+              "angle_to_90_residual_deg": 27.705257614679056,
               "warning_far_from_90": true
             },
             {
               "corner_pair_index": 2,
               "prev_wall_index": 1,
               "next_wall_index": 2,
-              "turn_angle_deg": 100.83519416197655,
-              "angle_to_90_residual_deg": 10.835194161976546,
+              "turn_angle_deg": 100.38490452763268,
+              "angle_to_90_residual_deg": 10.384904527632685,
               "warning_far_from_90": false
             },
             {
               "corner_pair_index": 3,
               "prev_wall_index": 2,
               "next_wall_index": 3,
-              "turn_angle_deg": 90.64404022860779,
-              "angle_to_90_residual_deg": 0.6440402286077926,
+              "turn_angle_deg": 90.98204984435779,
+              "angle_to_90_residual_deg": 0.982049844357789,
               "warning_far_from_90": false
             },
             {
@@ -948,8 +948,8 @@
           ],
           "summary": {
             "n_corners": 4,
-            "corner_residual_sum_deg": 55.635075266545854,
-            "corner_residual_max_deg": 27.81753763327292
+            "corner_residual_sum_deg": 55.410515229358126,
+            "corner_residual_max_deg": 27.705257614679056
           }
         },
         "heights": {
@@ -1022,13 +1022,13 @@
             {
               "pair_i": 1,
               "pair_j": 2,
-              "center_x_separation": 65.25539391016872,
-              "center_x_separation_percent": 65.25539391016872,
-              "center_x_separation_px": 668.2152336401277,
-              "floor_3d_separation": 5.233177152988199,
+              "center_x_separation": 64.50539391016872,
+              "center_x_separation_percent": 64.50539391016872,
+              "center_x_separation_px": 660.5352336401277,
+              "floor_3d_separation": 5.2456553651415305,
               "floor_distance_delta": 4.685601580000623,
               "short_wall_relation": false,
-              "adjacent_wall_length": 5.233177152988199,
+              "adjacent_wall_length": 5.2456553651415305,
               "classification": "not_dense_2d",
               "warnings": []
             },
@@ -1061,23 +1061,23 @@
             {
               "pair_i": 2,
               "pair_j": 3,
-              "center_x_separation": 6.662113750636456,
-              "center_x_separation_percent": 6.662113750636456,
-              "center_x_separation_px": 68.22004480651731,
-              "floor_3d_separation": 2.3955698129032315,
+              "center_x_separation": 7.412113750636462,
+              "center_x_separation_percent": 7.412113750636462,
+              "center_x_separation_px": 75.90004480651737,
+              "floor_3d_separation": 2.4033642227180643,
               "floor_distance_delta": 2.3619013107169575,
               "short_wall_relation": false,
-              "adjacent_wall_length": 2.3955698129032315,
+              "adjacent_wall_length": 2.4033642227180643,
               "classification": "not_dense_2d",
               "warnings": []
             },
             {
               "pair_i": 2,
               "pair_j": 4,
-              "center_x_separation": 22.893754375636444,
-              "center_x_separation_percent": 22.893754375636444,
-              "center_x_separation_px": 234.43204480651718,
-              "floor_3d_separation": 4.76660882960196,
+              "center_x_separation": 23.64375437563645,
+              "center_x_separation_percent": 23.64375437563645,
+              "center_x_separation_px": 242.11204480651725,
+              "floor_3d_separation": 4.782756968075004,
               "floor_distance_delta": 4.456779081217741,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
@@ -1105,24 +1105,24 @@
         }
       },
       "summary": {
-        "wall_residual_sum_deg": 29.38896184358896,
-        "corner_residual_sum_deg": 55.635075266545854,
+        "wall_residual_sum_deg": 29.614691440745133,
+        "corner_residual_sum_deg": 55.410515229358126,
         "height_residual_sum": 0.26844913928340963,
-        "vertical_x_residual_sum": 0.0,
+        "vertical_x_residual_sum": 0.610997963340111,
         "minimum_dense_floor_3d_separation": null,
-        "minimum_wall_length": 2.3955698129032315,
+        "minimum_wall_length": 2.4033642227180643,
         "short_wall_count": 0,
         "self_intersection": false,
         "warnings": []
       },
-      "display_name": "c6_5a_6_candidate_0001 | align_pair2_vertical_column_x | hard_feasible_neutral",
+      "display_name": "c6_5a_6_candidate_0001 | shift_pair2_column_left_0_75 | legacy_trial_blocked",
       "delta_from_original": {
-        "wall_residual_sum_deg": 0.0,
-        "corner_residual_sum_deg": 0.0,
+        "wall_residual_sum_deg": 0.22572959715617458,
+        "corner_residual_sum_deg": -0.22456003718772877,
         "height_residual_sum": 0.0,
-        "vertical_x_residual_sum": -0.610997963340111,
+        "vertical_x_residual_sum": 0.0,
         "minimum_dense_floor_3d_separation": null,
-        "minimum_wall_length": 0.0,
+        "minimum_wall_length": 0.0077944098148328145,
         "short_wall_count": 0.0,
         "self_intersection_before": false,
         "self_intersection_after": false,
@@ -1132,13 +1132,13 @@
       "metric_comparison": {
         "wall_residual_sum_deg": {
           "before": 29.38896184358896,
-          "after": 29.38896184358896,
-          "delta": 0.0
+          "after": 29.614691440745133,
+          "delta": 0.22572959715617458
         },
         "corner_residual_sum_deg": {
           "before": 55.635075266545854,
-          "after": 55.635075266545854,
-          "delta": 0.0
+          "after": 55.410515229358126,
+          "delta": -0.22456003718772877
         },
         "height_residual_sum": {
           "before": 0.26844913928340963,
@@ -1157,8 +1157,8 @@
         },
         "short_wall_length": {
           "before": 2.3955698129032315,
-          "after": 2.3955698129032315,
-          "delta": 0.0
+          "after": 2.4033642227180643,
+          "delta": 0.0077944098148328145
         },
         "self_intersection": {
           "before": false,
@@ -1175,22 +1175,22 @@
       "name": "c6_5a_6_candidate_0002",
       "candidate_row": {
         "candidate_id": "c6_5a_6_candidate_0002",
-        "family": "shift_pair2_vertical_band_down_0_5",
-        "action_family": "shift_pair2_vertical_band_down_0_5",
+        "family": "shift_pair2_vertical_band_down_0_75",
+        "action_family": "shift_pair2_vertical_band_down_0_75",
         "coordinate_changes": [
           {
             "effective_pair_index": 2,
             "fields": {
               "top_y": {
                 "before": 10.183299389002038,
-                "after": 10.683299389002038,
-                "delta": 0.5,
+                "after": 10.933299389002038,
+                "delta": 0.75,
                 "changed": true
               },
               "bottom_y": {
                 "before": 93.27902240325867,
-                "after": 93.77902240325867,
-                "delta": 0.5,
+                "after": 94.02902240325867,
+                "delta": 0.75,
                 "changed": true
               }
             }
@@ -1225,11 +1225,11 @@
         {
           "top": {
             "x": 67.41344195519349,
-            "y": 10.683299389002038
+            "y": 10.933299389002038
           },
           "bottom": {
             "x": 68.0244399185336,
-            "y": 93.77902240325867
+            "y": 94.02902240325867
           },
           "effective_pair_index": 2,
           "source_preview_order_index": 2
@@ -1317,35 +1317,35 @@
             "input": {
               "top_x": 67.41344195519349,
               "bottom_x": 68.0244399185336,
-              "top_y": 10.683299389002038,
-              "bottom_y": 93.77902240325867
+              "top_y": 10.933299389002038,
+              "bottom_y": 94.02902240325867
             },
             "normalized": {
               "x": 693.4419551934827,
               "top_x": 690.3136456211813,
               "bottom_x": 696.5702647657841,
-              "top_y": 54.69849287169043,
-              "bottom_y": 480.1485947046844
+              "top_y": 55.978492871690435,
+              "bottom_y": 481.4285947046844
             },
             "u_rad": 1.1133138935328395,
-            "v_floor_raw_rad": 1.3753585516342042,
-            "v_floor_safe_rad": 1.3753585516342042,
-            "v_ceiling_raw_rad": -1.2351705780290052,
-            "v_ceiling_safe_rad": -1.2351705780290052,
+            "v_floor_raw_rad": 1.3832125332681784,
+            "v_floor_safe_rad": 1.3832125332681784,
+            "v_ceiling_raw_rad": -1.2273165963950308,
+            "v_ceiling_safe_rad": -1.2273165963950308,
             "floor_clamped": false,
             "ceiling_clamped": false,
-            "floor_distance": 0.3167435172150034,
+            "floor_distance": 0.30370467509782595,
             "floor_3d": {
-              "x": 0.2841719342661752,
+              "x": 0.272473911153947,
               "y": -1.6,
-              "z": -0.139902707168774
+              "z": -0.13414357016550232
             },
             "ceiling_3d": {
-              "x": 0.2841719342661752,
-              "y": 0.9080354604077295,
-              "z": -0.139902707168774
+              "x": 0.272473911153947,
+              "y": 0.849150968036073,
+              "z": -0.13414357016550232
             },
-            "wall_height": 2.5080354604077297,
+            "wall_height": 2.449150968036073,
             "top_bottom_x_residual": 0.610997963340111,
             "top_bottom_x_residual_px": 6.256619144602837,
             "warnings": []
@@ -1439,14 +1439,14 @@
               "from_pair": 1,
               "to_pair": 2,
               "floor_wall_vector": {
-                "x": 1.059432226700817,
-                "z": -5.108328071477697
+                "x": 1.0477342035885886,
+                "z": -5.102568934474425
               },
-              "floor_wall_length": 5.217030987910586,
-              "direction_deg": 281.7166512528784,
+              "floor_wall_length": 5.209026463019062,
+              "direction_deg": 281.6035257255209,
               "nearest_manhattan_axis_deg": 270.0,
-              "angle_residual_deg": 11.716651252878421,
-              "ceiling_wall_length": 5.217030987910586,
+              "angle_residual_deg": 11.60352572552091,
+              "ceiling_wall_length": 5.209026463019062,
               "length_ratio": 1.0,
               "angle_warning": false,
               "short_wall": false,
@@ -1457,14 +1457,14 @@
               "from_pair": 2,
               "to_pair": 3,
               "floor_wall_vector": {
-                "x": 2.4186290831011887,
-                "z": 0.034739157026914116
+                "x": 2.430327106213417,
+                "z": 0.02898002002364243
               },
-              "floor_wall_length": 2.418878552274553,
-              "direction_deg": 0.8228918764036046,
+              "floor_wall_length": 2.4304998837186256,
+              "direction_deg": 0.6831813467640253,
               "nearest_manhattan_axis_deg": 0.0,
-              "angle_residual_deg": 0.8228918764036166,
-              "ceiling_wall_length": 2.418878552274553,
+              "angle_residual_deg": 0.6831813467640302,
+              "ceiling_wall_length": 2.4304998837186256,
               "length_ratio": 1.0,
               "angle_warning": false,
               "short_wall": false,
@@ -1510,9 +1510,9 @@
           "self_intersection": false,
           "summary": {
             "n_walls": 4,
-            "wall_residual_sum_deg": 28.877846371970634,
+            "wall_residual_sum_deg": 28.625010314973537,
             "wall_residual_max_deg": 15.874611251834466,
-            "minimum_wall_length": 2.418878552274553,
+            "minimum_wall_length": 2.4304998837186256,
             "short_wall_count": 0,
             "self_intersection": false
           }
@@ -1523,24 +1523,24 @@
               "corner_pair_index": 1,
               "prev_wall_index": 4,
               "next_wall_index": 1,
-              "turn_angle_deg": 62.40873749528711,
-              "angle_to_90_residual_deg": 27.591262504712887,
+              "turn_angle_deg": 62.52186302264461,
+              "angle_to_90_residual_deg": 27.47813697735539,
               "warning_far_from_90": true
             },
             {
               "corner_pair_index": 2,
               "prev_wall_index": 1,
               "next_wall_index": 2,
-              "turn_angle_deg": 100.89375937647482,
-              "angle_to_90_residual_deg": 10.893759376474819,
+              "turn_angle_deg": 100.92034437875691,
+              "angle_to_90_residual_deg": 10.920344378756909,
               "warning_far_from_90": false
             },
             {
               "corner_pair_index": 3,
               "prev_wall_index": 2,
               "next_wall_index": 3,
-              "turn_angle_deg": 90.35919988554947,
-              "angle_to_90_residual_deg": 0.35919988554947224,
+              "turn_angle_deg": 90.2194893559099,
+              "angle_to_90_residual_deg": 0.21948935590990004,
               "warning_far_from_90": false
             },
             {
@@ -1554,8 +1554,8 @@
           ],
           "summary": {
             "n_corners": 4,
-            "corner_residual_sum_deg": 55.182525009425774,
-            "corner_residual_max_deg": 27.591262504712887
+            "corner_residual_sum_deg": 54.956273954710795,
+            "corner_residual_max_deg": 27.47813697735539
           }
         },
         "heights": {
@@ -1564,11 +1564,11 @@
               "effective_pair_index": 1,
               "source_preview_order_index": 1,
               "wall_height": 2.53894387787356,
-              "median_wall_height": 2.4894198225272897,
-              "height_residual": 0.049524055346270135,
-              "height_residual_abs": 0.049524055346270135,
-              "local_height_median": 2.5080354604077297,
-              "local_height_residual": 0.030908417465830063,
+              "median_wall_height": 2.4599775763414615,
+              "height_residual": 0.07896630153209827,
+              "height_residual_abs": 0.07896630153209827,
+              "local_height_median": 2.47080418464685,
+              "local_height_residual": 0.06813969322670976,
               "suspicious_low_height": false,
               "suspicious_high_height": false,
               "suspicious_threshold": 0.25
@@ -1576,11 +1576,11 @@
             {
               "effective_pair_index": 2,
               "source_preview_order_index": 2,
-              "wall_height": 2.5080354604077297,
-              "median_wall_height": 2.4894198225272897,
-              "height_residual": 0.018615637880440072,
-              "height_residual_abs": 0.018615637880440072,
-              "local_height_median": 2.5080354604077297,
+              "wall_height": 2.449150968036073,
+              "median_wall_height": 2.4599775763414615,
+              "height_residual": -0.010826608305388508,
+              "height_residual_abs": 0.010826608305388508,
+              "local_height_median": 2.449150968036073,
               "local_height_residual": 0.0,
               "suspicious_low_height": false,
               "suspicious_high_height": false,
@@ -1590,11 +1590,11 @@
               "effective_pair_index": 3,
               "source_preview_order_index": 3,
               "wall_height": 2.4348452245675203,
-              "median_wall_height": 2.4894198225272897,
-              "height_residual": -0.05457459795976938,
-              "height_residual_abs": 0.05457459795976938,
-              "local_height_median": 2.47080418464685,
-              "local_height_residual": -0.03595896007932975,
+              "median_wall_height": 2.4599775763414615,
+              "height_residual": -0.02513235177394124,
+              "height_residual_abs": 0.02513235177394124,
+              "local_height_median": 2.449150968036073,
+              "local_height_residual": -0.014305743468552734,
               "suspicious_low_height": false,
               "suspicious_high_height": false,
               "suspicious_threshold": 0.25
@@ -1603,9 +1603,9 @@
               "effective_pair_index": 4,
               "source_preview_order_index": 4,
               "wall_height": 2.47080418464685,
-              "median_wall_height": 2.4894198225272897,
-              "height_residual": -0.01861563788043963,
-              "height_residual_abs": 0.01861563788043963,
+              "median_wall_height": 2.4599775763414615,
+              "height_residual": 0.010826608305388508,
+              "height_residual_abs": 0.010826608305388508,
               "local_height_median": 2.47080418464685,
               "local_height_residual": 0.0,
               "suspicious_low_height": false,
@@ -1615,10 +1615,10 @@
           ],
           "summary": {
             "n_pairs": 4,
-            "median_wall_height": 2.4894198225272897,
-            "height_mad": 0.034069846613355104,
-            "height_residual_sum": 0.1413299290669192,
-            "height_residual_max": 0.05457459795976938,
+            "median_wall_height": 2.4599775763414615,
+            "height_mad": 0.017979480039664875,
+            "height_residual_sum": 0.12575186991681653,
+            "height_residual_max": 0.07896630153209827,
             "suspicious_low_pair_indices": [],
             "suspicious_high_pair_indices": []
           }
@@ -1631,10 +1631,10 @@
               "center_x_separation": 65.25539391016872,
               "center_x_separation_percent": 65.25539391016872,
               "center_x_separation_px": 668.2152336401277,
-              "floor_3d_separation": 5.217030987910586,
-              "floor_distance_delta": 4.711802905135505,
+              "floor_3d_separation": 5.209026463019062,
+              "floor_distance_delta": 4.724841747252682,
               "short_wall_relation": false,
-              "adjacent_wall_length": 5.217030987910586,
+              "adjacent_wall_length": 5.209026463019062,
               "classification": "not_dense_2d",
               "warnings": []
             },
@@ -1670,10 +1670,10 @@
               "center_x_separation": 6.662113750636456,
               "center_x_separation_percent": 6.662113750636456,
               "center_x_separation_px": 68.22004480651731,
-              "floor_3d_separation": 2.418878552274553,
-              "floor_distance_delta": 2.388102635851839,
+              "floor_3d_separation": 2.4304998837186256,
+              "floor_distance_delta": 2.401141477969017,
               "short_wall_relation": false,
-              "adjacent_wall_length": 2.418878552274553,
+              "adjacent_wall_length": 2.4304998837186256,
               "classification": "not_dense_2d",
               "warnings": []
             },
@@ -1683,8 +1683,8 @@
               "center_x_separation": 22.893754375636444,
               "center_x_separation_percent": 22.893754375636444,
               "center_x_separation_px": 234.43204480651718,
-              "floor_3d_separation": 4.768276806613212,
-              "floor_distance_delta": 4.482980406352623,
+              "floor_3d_separation": 4.769160283676103,
+              "floor_distance_delta": 4.4960192484698,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
               "classification": "not_dense_2d",
@@ -1711,24 +1711,24 @@
         }
       },
       "summary": {
-        "wall_residual_sum_deg": 28.877846371970634,
-        "corner_residual_sum_deg": 55.182525009425774,
-        "height_residual_sum": 0.1413299290669192,
+        "wall_residual_sum_deg": 28.625010314973537,
+        "corner_residual_sum_deg": 54.956273954710795,
+        "height_residual_sum": 0.12575186991681653,
         "vertical_x_residual_sum": 0.610997963340111,
         "minimum_dense_floor_3d_separation": null,
-        "minimum_wall_length": 2.418878552274553,
+        "minimum_wall_length": 2.4304998837186256,
         "short_wall_count": 0,
         "self_intersection": false,
         "warnings": []
       },
-      "display_name": "c6_5a_6_candidate_0002 | shift_pair2_vertical_band_down_0_5 | legacy_trial_blocked",
+      "display_name": "c6_5a_6_candidate_0002 | shift_pair2_vertical_band_down_0_75 | legacy_trial_blocked",
       "delta_from_original": {
-        "wall_residual_sum_deg": -0.511115471618325,
-        "corner_residual_sum_deg": -0.45255025712008035,
-        "height_residual_sum": -0.12711921021649042,
+        "wall_residual_sum_deg": -0.7639515286154221,
+        "corner_residual_sum_deg": -0.6788013118350591,
+        "height_residual_sum": -0.1426972693665931,
         "vertical_x_residual_sum": 0.0,
         "minimum_dense_floor_3d_separation": null,
-        "minimum_wall_length": 0.023308739371321607,
+        "minimum_wall_length": 0.03493007081539412,
         "short_wall_count": 0.0,
         "self_intersection_before": false,
         "self_intersection_after": false,
@@ -1738,18 +1738,18 @@
       "metric_comparison": {
         "wall_residual_sum_deg": {
           "before": 29.38896184358896,
-          "after": 28.877846371970634,
-          "delta": -0.511115471618325
+          "after": 28.625010314973537,
+          "delta": -0.7639515286154221
         },
         "corner_residual_sum_deg": {
           "before": 55.635075266545854,
-          "after": 55.182525009425774,
-          "delta": -0.45255025712008035
+          "after": 54.956273954710795,
+          "delta": -0.6788013118350591
         },
         "height_residual_sum": {
           "before": 0.26844913928340963,
-          "after": 0.1413299290669192,
-          "delta": -0.12711921021649042
+          "after": 0.12575186991681653,
+          "delta": -0.1426972693665931
         },
         "pair_vertical_x_residual": {
           "before": null,
@@ -1763,8 +1763,8 @@
         },
         "short_wall_length": {
           "before": 2.3955698129032315,
-          "after": 2.418878552274553,
-          "delta": 0.023308739371321607
+          "after": 2.4304998837186256,
+          "delta": 0.03493007081539412
         },
         "self_intersection": {
           "before": false,
@@ -1781,40 +1781,28 @@
       "name": "c6_5a_6_candidate_0003",
       "candidate_row": {
         "candidate_id": "c6_5a_6_candidate_0003",
-        "family": "align_pair2_x_and_shift_down_0_5",
-        "action_family": "align_pair2_x_and_shift_down_0_5",
+        "family": "shift_pair2_vertical_band_up_0_75",
+        "action_family": "shift_pair2_vertical_band_up_0_75",
         "coordinate_changes": [
           {
             "effective_pair_index": 2,
             "fields": {
-              "top_x": {
-                "before": 67.41344195519349,
-                "after": 67.71894093686355,
-                "delta": 0.3054989816700555,
-                "changed": true
-              },
-              "bottom_x": {
-                "before": 68.0244399185336,
-                "after": 67.71894093686355,
-                "delta": -0.3054989816700555,
-                "changed": true
-              },
               "top_y": {
                 "before": 10.183299389002038,
-                "after": 10.683299389002038,
-                "delta": 0.5,
+                "after": 9.433299389002038,
+                "delta": -0.75,
                 "changed": true
               },
               "bottom_y": {
                 "before": 93.27902240325867,
-                "after": 93.77902240325867,
-                "delta": 0.5,
+                "after": 92.52902240325867,
+                "delta": -0.75,
                 "changed": true
               }
             }
           }
         ],
-        "decision_class": "legacy_trial_blocked",
+        "decision_class": "hard_feasible_neutral",
         "hard_gate": false,
         "assertion_violations": [],
         "manual_review_candidate": true,
@@ -1842,12 +1830,12 @@
         },
         {
           "top": {
-            "x": 67.71894093686355,
-            "y": 10.683299389002038
+            "x": 67.41344195519349,
+            "y": 9.433299389002038
           },
           "bottom": {
-            "x": 67.71894093686355,
-            "y": 93.77902240325867
+            "x": 68.0244399185336,
+            "y": 92.52902240325867
           },
           "effective_pair_index": 2,
           "source_preview_order_index": 2
@@ -1933,39 +1921,39 @@
             "effective_pair_index": 2,
             "source_preview_order_index": 2,
             "input": {
-              "top_x": 67.71894093686355,
-              "bottom_x": 67.71894093686355,
-              "top_y": 10.683299389002038,
-              "bottom_y": 93.77902240325867
+              "top_x": 67.41344195519349,
+              "bottom_x": 68.0244399185336,
+              "top_y": 9.433299389002038,
+              "bottom_y": 92.52902240325867
             },
             "normalized": {
               "x": 693.4419551934827,
-              "top_x": 693.4419551934827,
-              "bottom_x": 693.4419551934827,
-              "top_y": 54.69849287169043,
-              "bottom_y": 480.1485947046844
+              "top_x": 690.3136456211813,
+              "bottom_x": 696.5702647657841,
+              "top_y": 48.298492871690435,
+              "bottom_y": 473.74859470468436
             },
             "u_rad": 1.1133138935328395,
-            "v_floor_raw_rad": 1.3753585516342042,
-            "v_floor_safe_rad": 1.3753585516342042,
-            "v_ceiling_raw_rad": -1.2351705780290052,
-            "v_ceiling_safe_rad": -1.2351705780290052,
+            "v_floor_raw_rad": 1.3360886434643315,
+            "v_floor_safe_rad": 1.3360886434643315,
+            "v_ceiling_raw_rad": -1.2744404861988778,
+            "v_ceiling_safe_rad": -1.2744404861988778,
             "floor_clamped": false,
             "ceiling_clamped": false,
-            "floor_distance": 0.3167435172150034,
+            "floor_distance": 0.3825834431760389,
             "floor_3d": {
-              "x": 0.2841719342661752,
+              "x": 0.34324136456358867,
               "y": -1.6,
-              "z": -0.139902707168774
+              "z": -0.16898359874543736
             },
             "ceiling_3d": {
-              "x": 0.2841719342661752,
-              "y": 0.9080354604077295,
-              "z": -0.139902707168774
+              "x": 0.34324136456358867,
+              "y": 1.2529429207931135,
+              "z": -0.16898359874543736
             },
-            "wall_height": 2.5080354604077297,
-            "top_bottom_x_residual": 0.0,
-            "top_bottom_x_residual_px": 0.0,
+            "wall_height": 2.8529429207931134,
+            "top_bottom_x_residual": 0.610997963340111,
+            "top_bottom_x_residual_px": 6.256619144602837,
             "warnings": []
           },
           {
@@ -2057,14 +2045,14 @@
               "from_pair": 1,
               "to_pair": 2,
               "floor_wall_vector": {
-                "x": 1.059432226700817,
-                "z": -5.108328071477697
+                "x": 1.1185016569982302,
+                "z": -5.13740896305436
               },
-              "floor_wall_length": 5.217030987910586,
-              "direction_deg": 281.7166512528784,
+              "floor_wall_length": 5.257757774030585,
+              "direction_deg": 282.28259555715096,
               "nearest_manhattan_axis_deg": 270.0,
-              "angle_residual_deg": 11.716651252878421,
-              "ceiling_wall_length": 5.217030987910586,
+              "angle_residual_deg": 12.282595557150955,
+              "ceiling_wall_length": 5.257757774030585,
               "length_ratio": 1.0,
               "angle_warning": false,
               "short_wall": false,
@@ -2075,14 +2063,14 @@
               "from_pair": 2,
               "to_pair": 3,
               "floor_wall_vector": {
-                "x": 2.4186290831011887,
-                "z": 0.034739157026914116
+                "x": 2.3595596528037754,
+                "z": 0.06382004860357747
               },
-              "floor_wall_length": 2.418878552274553,
-              "direction_deg": 0.8228918764036046,
+              "floor_wall_length": 2.3604225794851303,
+              "direction_deg": 1.5493264331807308,
               "nearest_manhattan_axis_deg": 0.0,
-              "angle_residual_deg": 0.8228918764036166,
-              "ceiling_wall_length": 2.418878552274553,
+              "angle_residual_deg": 1.5493264331807381,
+              "ceiling_wall_length": 2.3604225794851303,
               "length_ratio": 1.0,
               "angle_warning": false,
               "short_wall": false,
@@ -2128,9 +2116,9 @@
           "self_intersection": false,
           "summary": {
             "n_walls": 4,
-            "wall_residual_sum_deg": 28.877846371970634,
+            "wall_residual_sum_deg": 30.17022523302029,
             "wall_residual_max_deg": 15.874611251834466,
-            "minimum_wall_length": 2.418878552274553,
+            "minimum_wall_length": 2.3604225794851303,
             "short_wall_count": 0,
             "self_intersection": false
           }
@@ -2141,24 +2129,24 @@
               "corner_pair_index": 1,
               "prev_wall_index": 4,
               "next_wall_index": 1,
-              "turn_angle_deg": 62.40873749528711,
-              "angle_to_90_residual_deg": 27.591262504712887,
+              "turn_angle_deg": 61.84279319101457,
+              "angle_to_90_residual_deg": 28.15720680898543,
               "warning_far_from_90": true
             },
             {
               "corner_pair_index": 2,
               "prev_wall_index": 1,
               "next_wall_index": 2,
-              "turn_angle_deg": 100.89375937647482,
-              "angle_to_90_residual_deg": 10.893759376474819,
+              "turn_angle_deg": 100.73326912397023,
+              "angle_to_90_residual_deg": 10.733269123970231,
               "warning_far_from_90": false
             },
             {
               "corner_pair_index": 3,
               "prev_wall_index": 2,
               "next_wall_index": 3,
-              "turn_angle_deg": 90.35919988554947,
-              "angle_to_90_residual_deg": 0.35919988554947224,
+              "turn_angle_deg": 91.08563444232661,
+              "angle_to_90_residual_deg": 1.085634442326608,
               "warning_far_from_90": false
             },
             {
@@ -2172,8 +2160,8 @@
           ],
           "summary": {
             "n_corners": 4,
-            "corner_residual_sum_deg": 55.182525009425774,
-            "corner_residual_max_deg": 27.591262504712887
+            "corner_residual_sum_deg": 56.314413617970864,
+            "corner_residual_max_deg": 28.15720680898543
           }
         },
         "heights": {
@@ -2182,11 +2170,11 @@
               "effective_pair_index": 1,
               "source_preview_order_index": 1,
               "wall_height": 2.53894387787356,
-              "median_wall_height": 2.4894198225272897,
-              "height_residual": 0.049524055346270135,
-              "height_residual_abs": 0.049524055346270135,
-              "local_height_median": 2.5080354604077297,
-              "local_height_residual": 0.030908417465830063,
+              "median_wall_height": 2.504874031260205,
+              "height_residual": 0.03406984661335466,
+              "height_residual_abs": 0.03406984661335466,
+              "local_height_median": 2.53894387787356,
+              "local_height_residual": 0.0,
               "suspicious_low_height": false,
               "suspicious_high_height": false,
               "suspicious_threshold": 0.25
@@ -2194,23 +2182,23 @@
             {
               "effective_pair_index": 2,
               "source_preview_order_index": 2,
-              "wall_height": 2.5080354604077297,
-              "median_wall_height": 2.4894198225272897,
-              "height_residual": 0.018615637880440072,
-              "height_residual_abs": 0.018615637880440072,
-              "local_height_median": 2.5080354604077297,
-              "local_height_residual": 0.0,
+              "wall_height": 2.8529429207931134,
+              "median_wall_height": 2.504874031260205,
+              "height_residual": 0.34806888953290827,
+              "height_residual_abs": 0.34806888953290827,
+              "local_height_median": 2.53894387787356,
+              "local_height_residual": 0.3139990429195536,
               "suspicious_low_height": false,
-              "suspicious_high_height": false,
+              "suspicious_high_height": true,
               "suspicious_threshold": 0.25
             },
             {
               "effective_pair_index": 3,
               "source_preview_order_index": 3,
               "wall_height": 2.4348452245675203,
-              "median_wall_height": 2.4894198225272897,
-              "height_residual": -0.05457459795976938,
-              "height_residual_abs": 0.05457459795976938,
+              "median_wall_height": 2.504874031260205,
+              "height_residual": -0.07002880669268485,
+              "height_residual_abs": 0.07002880669268485,
               "local_height_median": 2.47080418464685,
               "local_height_residual": -0.03595896007932975,
               "suspicious_low_height": false,
@@ -2221,9 +2209,9 @@
               "effective_pair_index": 4,
               "source_preview_order_index": 4,
               "wall_height": 2.47080418464685,
-              "median_wall_height": 2.4894198225272897,
-              "height_residual": -0.01861563788043963,
-              "height_residual_abs": 0.01861563788043963,
+              "median_wall_height": 2.504874031260205,
+              "height_residual": -0.034069846613355104,
+              "height_residual_abs": 0.034069846613355104,
               "local_height_median": 2.47080418464685,
               "local_height_residual": 0.0,
               "suspicious_low_height": false,
@@ -2233,12 +2221,14 @@
           ],
           "summary": {
             "n_pairs": 4,
-            "median_wall_height": 2.4894198225272897,
-            "height_mad": 0.034069846613355104,
-            "height_residual_sum": 0.1413299290669192,
-            "height_residual_max": 0.05457459795976938,
+            "median_wall_height": 2.504874031260205,
+            "height_mad": 0.05204932665301998,
+            "height_residual_sum": 0.4862373894523029,
+            "height_residual_max": 0.34806888953290827,
             "suspicious_low_pair_indices": [],
-            "suspicious_high_pair_indices": []
+            "suspicious_high_pair_indices": [
+              2
+            ]
           }
         },
         "dense_pairs": {
@@ -2249,10 +2239,10 @@
               "center_x_separation": 65.25539391016872,
               "center_x_separation_percent": 65.25539391016872,
               "center_x_separation_px": 668.2152336401277,
-              "floor_3d_separation": 5.217030987910586,
-              "floor_distance_delta": 4.711802905135505,
+              "floor_3d_separation": 5.257757774030585,
+              "floor_distance_delta": 4.6459629791744685,
               "short_wall_relation": false,
-              "adjacent_wall_length": 5.217030987910586,
+              "adjacent_wall_length": 5.257757774030585,
               "classification": "not_dense_2d",
               "warnings": []
             },
@@ -2288,10 +2278,10 @@
               "center_x_separation": 6.662113750636456,
               "center_x_separation_percent": 6.662113750636456,
               "center_x_separation_px": 68.22004480651731,
-              "floor_3d_separation": 2.418878552274553,
-              "floor_distance_delta": 2.388102635851839,
+              "floor_3d_separation": 2.3604225794851303,
+              "floor_distance_delta": 2.3222627098908037,
               "short_wall_relation": false,
-              "adjacent_wall_length": 2.418878552274553,
+              "adjacent_wall_length": 2.3604225794851303,
               "classification": "not_dense_2d",
               "warnings": []
             },
@@ -2301,8 +2291,8 @@
               "center_x_separation": 22.893754375636444,
               "center_x_separation_percent": 22.893754375636444,
               "center_x_separation_px": 234.43204480651718,
-              "floor_3d_separation": 4.768276806613212,
-              "floor_distance_delta": 4.482980406352623,
+              "floor_3d_separation": 4.764358221288346,
+              "floor_distance_delta": 4.417140480391588,
               "short_wall_relation": false,
               "adjacent_wall_length": null,
               "classification": "not_dense_2d",
@@ -2329,24 +2319,24 @@
         }
       },
       "summary": {
-        "wall_residual_sum_deg": 28.877846371970634,
-        "corner_residual_sum_deg": 55.182525009425774,
-        "height_residual_sum": 0.1413299290669192,
-        "vertical_x_residual_sum": 0.0,
+        "wall_residual_sum_deg": 30.17022523302029,
+        "corner_residual_sum_deg": 56.314413617970864,
+        "height_residual_sum": 0.4862373894523029,
+        "vertical_x_residual_sum": 0.610997963340111,
         "minimum_dense_floor_3d_separation": null,
-        "minimum_wall_length": 2.418878552274553,
+        "minimum_wall_length": 2.3604225794851303,
         "short_wall_count": 0,
         "self_intersection": false,
         "warnings": []
       },
-      "display_name": "c6_5a_6_candidate_0003 | align_pair2_x_and_shift_down_0_5 | legacy_trial_blocked",
+      "display_name": "c6_5a_6_candidate_0003 | shift_pair2_vertical_band_up_0_75 | hard_feasible_neutral",
       "delta_from_original": {
-        "wall_residual_sum_deg": -0.511115471618325,
-        "corner_residual_sum_deg": -0.45255025712008035,
-        "height_residual_sum": -0.12711921021649042,
-        "vertical_x_residual_sum": -0.610997963340111,
+        "wall_residual_sum_deg": 0.7812633894313308,
+        "corner_residual_sum_deg": 0.6793383514250095,
+        "height_residual_sum": 0.21778825016889325,
+        "vertical_x_residual_sum": 0.0,
         "minimum_dense_floor_3d_separation": null,
-        "minimum_wall_length": 0.023308739371321607,
+        "minimum_wall_length": -0.03514723341810111,
         "short_wall_count": 0.0,
         "self_intersection_before": false,
         "self_intersection_after": false,
@@ -2356,18 +2346,18 @@
       "metric_comparison": {
         "wall_residual_sum_deg": {
           "before": 29.38896184358896,
-          "after": 28.877846371970634,
-          "delta": -0.511115471618325
+          "after": 30.17022523302029,
+          "delta": 0.7812633894313308
         },
         "corner_residual_sum_deg": {
           "before": 55.635075266545854,
-          "after": 55.182525009425774,
-          "delta": -0.45255025712008035
+          "after": 56.314413617970864,
+          "delta": 0.6793383514250095
         },
         "height_residual_sum": {
           "before": 0.26844913928340963,
-          "after": 0.1413299290669192,
-          "delta": -0.12711921021649042
+          "after": 0.4862373894523029,
+          "delta": 0.21778825016889325
         },
         "pair_vertical_x_residual": {
           "before": null,
@@ -2381,8 +2371,8 @@
         },
         "short_wall_length": {
           "before": 2.3955698129032315,
-          "after": 2.418878552274553,
-          "delta": 0.023308739371321607
+          "after": 2.3604225794851303,
+          "delta": -0.03514723341810111
         },
         "self_intersection": {
           "before": false,

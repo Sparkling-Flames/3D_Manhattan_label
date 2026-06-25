@@ -9,6 +9,6 @@
 
 | order | candidate | family | movement | height L1 | wall max | turn max |
 |---:|---|---|---:|---:|---:|---:|
-| 1 | c6_5a_6_candidate_0001 | align_pair2_vertical_column_x | 0.000382 | 0.268449 | 15.874611 | 27.817538 |
-| 2 | c6_5a_6_candidate_0002 | shift_pair2_vertical_band_down_0_5 | 0.000625 | 0.141330 | 15.874611 | 27.591263 |
-| 3 | c6_5a_6_candidate_0003 | align_pair2_x_and_shift_down_0_5 | 0.001007 | 0.141330 | 15.874611 | 27.591263 |
+| 1 | c6_5a_6_candidate_0001 | shift_pair2_column_left_0_75 | 0.000937 | 0.268449 | 15.874611 | 27.705258 |
+| 2 | c6_5a_6_candidate_0002 | shift_pair2_vertical_band_down_0_75 | 0.000937 | 0.125752 | 15.874611 | 27.478137 |
+| 3 | c6_5a_6_candidate_0003 | shift_pair2_vertical_band_up_0_75 | 0.000937 | 0.486237 | 15.874611 | 28.157207 |

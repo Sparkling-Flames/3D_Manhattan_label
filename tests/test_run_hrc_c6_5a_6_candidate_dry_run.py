@@ -20,6 +20,13 @@ def test_candidate_dry_run_uses_corrected_four_pair_source():
     assert all(row["topology_preserved"] is True for row in payload["candidate_set"])
     assert all(row["diagnostics"]["self_intersection"] is False for row in payload["candidate_set"])
     assert all(row["diagnostics"]["short_wall_count"] == 0 for row in payload["candidate_set"])
+    changes = [
+        row["coordinate_changes"][0]["fields"] for row in payload["candidate_set"]
+    ]
+    assert changes[0]["top_x"]["delta"] == changes[0]["bottom_x"]["delta"] == -0.75
+    assert changes[1]["top_y"]["delta"] == changes[1]["bottom_y"]["delta"] == 0.75
+    assert changes[2]["top_y"]["delta"] == changes[2]["bottom_y"]["delta"] == -0.75
+    assert len({json.dumps(row, sort_keys=True) for row in changes}) == 3
 
 
 def test_candidate_dry_run_preserves_authorization_boundaries():

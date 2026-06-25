@@ -132,36 +132,37 @@ def _candidate_specs(
     baseline_pairs: Sequence[Mapping[str, Any]],
 ) -> list[dict[str, Any]]:
     pair = baseline_pairs[1]
-    mean_x = (float(pair["top"]["x"]) + float(pair["bottom"]["x"])) / 2.0
     return [
         {
             "candidate_id": "c6_5a_6_candidate_0001",
-            "action_family": "align_pair2_vertical_column_x",
+            "action_family": "shift_pair2_column_left_0_75",
             "coordinate_changes": [
-                _change(pair, top_x=mean_x, bottom_x=mean_x)
+                _change(
+                    pair,
+                    top_x=float(pair["top"]["x"]) - 0.75,
+                    bottom_x=float(pair["bottom"]["x"]) - 0.75,
+                )
             ],
         },
         {
             "candidate_id": "c6_5a_6_candidate_0002",
-            "action_family": "shift_pair2_vertical_band_down_0_5",
+            "action_family": "shift_pair2_vertical_band_down_0_75",
             "coordinate_changes": [
                 _change(
                     pair,
-                    top_y=float(pair["top"]["y"]) + 0.5,
-                    bottom_y=float(pair["bottom"]["y"]) + 0.5,
+                    top_y=float(pair["top"]["y"]) + 0.75,
+                    bottom_y=float(pair["bottom"]["y"]) + 0.75,
                 )
             ],
         },
         {
             "candidate_id": "c6_5a_6_candidate_0003",
-            "action_family": "align_pair2_x_and_shift_down_0_5",
+            "action_family": "shift_pair2_vertical_band_up_0_75",
             "coordinate_changes": [
                 _change(
                     pair,
-                    top_x=mean_x,
-                    bottom_x=mean_x,
-                    top_y=float(pair["top"]["y"]) + 0.5,
-                    bottom_y=float(pair["bottom"]["y"]) + 0.5,
+                    top_y=float(pair["top"]["y"]) - 0.75,
+                    bottom_y=float(pair["bottom"]["y"]) - 0.75,
                 )
             ],
         },
@@ -368,6 +369,8 @@ def run(
         camera_height=1.6,
         local_server_root=_local_server_root(preview_dir),
     )
+    for path in preview_paths.values():
+        path.write_bytes(path.read_bytes().replace(b"\r\n", b"\n"))
     return {
         "json": json_path,
         "markdown": md_path,
