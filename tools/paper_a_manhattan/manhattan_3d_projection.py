@@ -217,6 +217,34 @@ def project_corner_to_3d(
     }
 
 
+def floor_point_to_layout_pair(
+    x_3d: float,
+    z_3d: float,
+    *,
+    layout_height: float,
+    camera_height: float = DEFAULT_CAMERA_HEIGHT,
+) -> dict[str, dict[str, float]]:
+    """Invert the local floor projection into one vertical LS-percent pair."""
+
+    x_3d = _as_float(x_3d, field="x_3d")
+    z_3d = _as_float(z_3d, field="z_3d")
+    layout_height = _as_float(layout_height, field="layout_height")
+    camera_height = _as_float(camera_height, field="camera_height")
+    distance = math.hypot(x_3d, z_3d)
+    if distance <= 1e-9 or layout_height <= camera_height or camera_height <= 0:
+        raise ValueError("invalid floor point or layout height for reprojection")
+    u = math.atan2(x_3d, -z_3d)
+    x = ((u + math.pi) % (2.0 * math.pi)) / (2.0 * math.pi) * 100.0
+    floor_v = math.atan(camera_height / distance)
+    ceiling_v = -math.atan((layout_height - camera_height) / distance)
+    floor_y = (floor_v / math.pi + 0.5) * 100.0
+    ceiling_y = (ceiling_v / math.pi + 0.5) * 100.0
+    return {
+        "top": {"x": x, "y": ceiling_y},
+        "bottom": {"x": x, "y": floor_y},
+    }
+
+
 def project_layout_to_3d(
     ordered_pairs: Sequence[Mapping[str, Any]],
     width: int,

@@ -31,6 +31,8 @@ C6.5a.7.1 human verdict materialization completed。2369 与 3741 已验证为�
 
 Candidate-specific C4 input contract 已物化并 fail-closed：3741/0017 与 4543gt/0003 均有 candidate-specific projection delta，但 `candidate_specific_image_evidence_available=false`。人工视觉 note 不等于 manual image-evidence note；两者 `candidate_specific_c4_contract_complete=false`、`candidate_preference_authorized=false`。
 
+C6.5a.9 已物化 3741 的 deterministic segment-aware Manhattan wall-line refit：固定 12-pair verified order，corner 来自相邻墙线交点，3–4 strong anchor 基本保持，5–6–7–8 与 12–11–1 短墙链保持；结果仅供人工 review，不接 active ranking 或 writeback。
+
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
 - 不扩展 C4，不做 full image-edge evidence；除 `column_x_alignment`、`height_target_reproject` 外的 constrained_v0 family 仍不得实现，C7/C9/C10 仍 blocked；

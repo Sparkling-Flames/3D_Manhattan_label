@@ -13,3 +13,5 @@ def test_c6_5a_7_1_is_completed_without_authorizing_c6_5b():
     assert "4–5" in text
     assert "candidate_specific_image_evidence_available=false" in text
     assert "candidate_specific_c4_contract_complete=false" in text
+    assert "C6.5a.9 已物化" in text
+    assert "corner 来自相邻墙线交点" in text
