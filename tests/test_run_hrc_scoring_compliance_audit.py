@@ -90,6 +90,22 @@ def test_layer_mapping_and_violations_match_current_implementation():
     assert closure["2369_manual_sidecars"]["keep_distinct_contract"][
         "verdict"
     ] == "available"
+    c4_contract = payload["candidate_specific_c4_contract"]
+    assert c4_contract["all_records_fail_closed"] is True
+    records = {row["case_name"]: row for row in c4_contract["records"]}
+    assert records["task218_ann3741"][
+        "candidate_specific_projection_delta_available"
+    ] is True
+    assert records["task218_ann3741"][
+        "candidate_specific_image_evidence_available"
+    ] is False
+    assert records["task238_ann2389_4543gt"][
+        "candidate_specific_projection_delta_available"
+    ] is True
+    assert records["task238_ann2389_4543gt"][
+        "candidate_specific_image_evidence_available"
+    ] is False
+    assert all(not row["candidate_preference_authorized"] for row in records.values())
     assert payload["corrected_gt_status_summary"] == {
         "old_case": "task238_ann2389",
         "old_case_role": "deprecated_old_gt_diagnostic_only",

@@ -37,15 +37,31 @@ def test_blocker_closure_does_not_forge_manual_or_candidate_evidence(tmp_path):
     rows = {row["case_name"]: row for row in payload["c4_evidence_gap_table"]}
     assert rows["task218_ann2369"]["c4_lite_scope"] == "baseline_to_baseline_only"
     assert rows["task218_ann2369"]["candidate_available"] is False
-    assert rows["task218_ann2369"]["candidate_specific_c4_available"] is False
+    assert rows["task218_ann2369"][
+        "candidate_specific_projection_delta_available"
+    ] is False
+    assert rows["task218_ann2369"][
+        "candidate_specific_image_evidence_available"
+    ] is False
     assert rows["task238_ann2389_4543gt"]["selected_or_review_candidate"] == (
         "c6_5a_6_1_candidate_0003"
     )
     assert rows["task238_ann2389_4543gt"]["accepted_final_fix"] is False
     assert rows["task238_ann2389_4543gt"][
-        "candidate_specific_c4_available"
+        "candidate_specific_projection_delta_available"
+    ] is True
+    assert rows["task238_ann2389_4543gt"][
+        "candidate_specific_image_evidence_available"
     ] is False
-    assert rows["task218_ann3741"]["candidate_specific_c4_available"] is True
+    assert rows["task218_ann3741"][
+        "candidate_specific_projection_delta_available"
+    ] is True
+    assert rows["task218_ann3741"][
+        "candidate_specific_image_evidence_available"
+    ] is False
+    assert all(
+        not row["candidate_specific_c4_contract_complete"] for row in rows.values()
+    )
     assert all(not row["candidate_preference_authorized"] for row in rows.values())
     reference = json.loads(paths["same_image_reference"].read_text(encoding="utf-8"))
     gt = json.loads(Path("export_label/groudTruth.json").read_text(encoding="utf-8"))

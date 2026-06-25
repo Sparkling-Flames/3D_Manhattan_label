@@ -1,0 +1,156 @@
+{
+  "schema_version": "hrc_candidate_specific_c4_contract_audit_v1",
+  "contract_schema_version": "hrc_candidate_specific_c4_evidence_v1",
+  "records": [
+    {
+      "schema_version": "hrc_candidate_specific_c4_evidence_v1",
+      "case_name": "task218_ann3741",
+      "candidate_id": "m1528_candidate_0017",
+      "baseline_only": {
+        "available": true,
+        "role": "reference_only"
+      },
+      "candidate_specific_projection_delta": {
+        "status": "available",
+        "source": {
+          "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/task218_ann3741/hypothesis_ranking_core.json",
+          "sha256": "c70c9269ee1d62ee1657c46ddd7c9331d40900083d693bb43622c28cf3f77845"
+        },
+        "delta_fields": {
+          "candidate_corner_column_delta": 0.0,
+          "hohonet_floor_boundary_rmse_delta": -1.6776836737148955,
+          "hohonet_ceiling_boundary_rmse_delta": 0.0,
+          "seam_consistency_delta": 0.0
+        },
+        "scope": "HoHoNet proposal/projection delta; not image-edge evidence"
+      },
+      "candidate_specific_image_evidence": {
+        "status": "unavailable",
+        "image_edge_support": null,
+        "candidate_image_boundary_alignment_delta": null,
+        "manual_image_evidence_note": null,
+        "reason": "no candidate-specific image-edge or image-boundary evidence artifact"
+      },
+      "manual_visual_note": {
+        "status": "available",
+        "source": {
+          "path": "analysis_results/paper_a_manhattan/hypothesis_feedback_reviews/task218_ann3741_m1528_candidate_0017_review.json",
+          "sha256": "ee6cc63b99ea19010ea12d0c801fb0504f45704d9e9a55a4dd13d61197e43047"
+        },
+        "role": "diagnostic_visual_preference_not_image_evidence"
+      },
+      "safety_boundary": {
+        "audit_only": true,
+        "active_runner_role": false,
+        "accepted": false,
+        "downstream_recommendation": false,
+        "candidate_preference_authorized": false,
+        "annotation_writeback": false
+      },
+      "contract_evaluation": {
+        "valid_schema": true,
+        "validation_errors": [],
+        "baseline_only_available": true,
+        "candidate_specific_projection_delta_available": true,
+        "candidate_specific_image_evidence_available": false,
+        "manual_visual_note_available": true,
+        "manual_image_evidence_note_available": false,
+        "missing_candidate_specific_image_inputs": [
+          "image_edge_support",
+          "candidate_image_boundary_alignment_delta",
+          "manual_image_evidence_note"
+        ],
+        "candidate_specific_c4_contract_complete": false,
+        "candidate_preference_authorized": false,
+        "fail_closed": true
+      }
+    },
+    {
+      "schema_version": "hrc_candidate_specific_c4_evidence_v1",
+      "case_name": "task238_ann2389_4543gt",
+      "candidate_id": "c6_5a_6_1_candidate_0003",
+      "baseline_only": {
+        "available": true,
+        "role": "corrected_gt_reference_only"
+      },
+      "candidate_specific_projection_delta": {
+        "status": "available",
+        "source": {
+          "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_6_candidate_dry_run/task238_ann2389_4543gt/hrc_c6_5a_6_candidate_dry_run.json",
+          "sha256": "c5bb9053fc8144be7f195ba4cd1ce6afdf3acb72d7df87e8bff32ae7b79cc1e4"
+        },
+        "coordinate_changes": [
+          {
+            "effective_pair_index": 2,
+            "fields": {
+              "top_y": {
+                "before": 10.183299389002038,
+                "after": 10.933299389002038,
+                "delta": 0.75,
+                "changed": true
+              },
+              "bottom_y": {
+                "before": 93.27902240325867,
+                "after": 94.02902240325867,
+                "delta": 0.75,
+                "changed": true
+              }
+            }
+          }
+        ],
+        "scope": "candidate geometry/projection delta; not image-boundary evidence"
+      },
+      "candidate_specific_image_evidence": {
+        "status": "unavailable",
+        "image_edge_support": null,
+        "candidate_image_boundary_alignment_delta": null,
+        "manual_image_evidence_note": null,
+        "reason": "required candidate-specific image inputs have not been materialized"
+      },
+      "manual_visual_note": {
+        "status": "available",
+        "source": {
+          "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_6_2_manual_selection_ledger/task238_ann2389_4543gt/hrc_c6_5a_6_2_manual_selection_ledger.json",
+          "sha256": "089839e5169cbaa6165d29528307f063ae3b31a6b9963fa925962a7bfad3a6d3"
+        },
+        "role": "manual_visual_preference_only_not_image_evidence"
+      },
+      "safety_boundary": {
+        "audit_only": true,
+        "active_runner_role": false,
+        "accepted": false,
+        "downstream_recommendation": false,
+        "candidate_preference_authorized": false,
+        "annotation_writeback": false
+      },
+      "contract_evaluation": {
+        "valid_schema": true,
+        "validation_errors": [],
+        "baseline_only_available": true,
+        "candidate_specific_projection_delta_available": true,
+        "candidate_specific_image_evidence_available": false,
+        "manual_visual_note_available": true,
+        "manual_image_evidence_note_available": false,
+        "missing_candidate_specific_image_inputs": [
+          "image_edge_support",
+          "candidate_image_boundary_alignment_delta",
+          "manual_image_evidence_note"
+        ],
+        "candidate_specific_c4_contract_complete": false,
+        "candidate_preference_authorized": false,
+        "fail_closed": true
+      }
+    }
+  ],
+  "all_records_fail_closed": true,
+  "candidate_preference_authorized": false,
+  "c6_5b_authorized": false,
+  "safety_boundary": {
+    "audit_only": true,
+    "active_runner_role": false,
+    "accepted": false,
+    "downstream_recommendation": false,
+    "candidate_preference_authorized": false,
+    "annotation_writeback": false
+  }
+}

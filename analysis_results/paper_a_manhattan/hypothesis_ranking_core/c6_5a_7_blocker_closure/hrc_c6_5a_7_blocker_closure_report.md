@@ -14,12 +14,12 @@
 
 ## C4 evidence gap table
 
-| case | candidate | selected/review | C4-lite | candidate-specific C4 | preference authorized | blocker |
-|---|---|---|---|---|---|---|
-| task218_ann2369 | False | None | True (baseline_to_baseline_only) | False | False | pair2 column identity remains unresolved and candidate-specific C4 evidence is absent; legacy candidate rows are not a current candidate |
-| task238_ann2389 | True | None | True (baseline_to_baseline_only) | False | False | deprecated old-GT diagnostic; candidate-specific C4 evidence absent |
-| task238_ann2389_4543gt | True | c6_5a_6_1_candidate_0003 | False (corrected_baseline_projection_is_not_C4_evidence) | False | False | selected candidate 0003 has visual preference but no candidate-specific image evidence |
-| task218_ann3741 | True | m1528_candidate_0017 | True (candidate_specific_projection_delta) | True | False | manual explicit column identity remains incomplete; selected candidate is diagnostic only |
+| case | candidate | selected/review | C4-lite | projection delta | image evidence | preference authorized | blocker |
+|---|---|---|---|---|---|---|---|
+| task218_ann2369 | False | None | True (baseline_to_baseline_only) | False | False | False | pair2 column identity remains unresolved and candidate-specific C4 evidence is absent; legacy candidate rows are not a current candidate |
+| task238_ann2389 | True | None | True (baseline_to_baseline_only) | False | False | False | deprecated old-GT diagnostic; candidate-specific C4 evidence absent |
+| task238_ann2389_4543gt | True | c6_5a_6_1_candidate_0003 | False (corrected_baseline_projection_is_not_C4_evidence) | True | False | False | selected candidate 0003 has visual preference but no candidate-specific image evidence |
+| task218_ann3741 | True | m1528_candidate_0017 | True (candidate_specific_projection_delta_only) | True | False | False | projection delta exists, but candidate-specific image evidence is unavailable; selected candidate is diagnostic only |
 
 ## Remaining blockers
 

@@ -49,6 +49,10 @@ SIDECAR_2369_KEEP = (
     C6_5A_7_DIR
     / "manual_sidecar_keep_distinct_contract_task218_ann2369.json"
 )
+C4_CONTRACT_AUDIT = (
+    ROOT
+    / "candidate_specific_c4_contract/hrc_candidate_specific_c4_contract_audit.json"
+)
 SOURCE_PATHS = (
     Path("docs/paper_a_manhattan/HRC_SCORING_LAYER_CONTRACT_v1.md"),
     Path("docs/paper_a_manhattan/评分如何制定.md"),
@@ -59,6 +63,7 @@ SOURCE_PATHS = (
     MATERIALIZATION,
     GT_CORRECTION_AUDIT,
     CANDIDATE_DRY_RUN,
+    C4_CONTRACT_AUDIT,
 )
 
 LAYER_MAPPING = {
@@ -160,6 +165,7 @@ def build_audit_payload() -> dict[str, Any]:
     correction = json.loads(GT_CORRECTION_AUDIT.read_text(encoding="utf-8"))
     dry_run = json.loads(CANDIDATE_DRY_RUN.read_text(encoding="utf-8"))
     selection = json.loads(MANUAL_SELECTION_LEDGER.read_text(encoding="utf-8"))
+    c4_contract = json.loads(C4_CONTRACT_AUDIT.read_text(encoding="utf-8"))
     baseline_only = all(
         materialized["cases"][name]["c4_lite_diagnostics"][
             "baseline_to_baseline_materialization"
@@ -341,6 +347,28 @@ def build_audit_payload() -> dict[str, Any]:
             "supporting_artifacts_are_manual_verdicts": False,
             "candidate_specific_c4_complete": False,
             "c6_5b_authorized": False,
+        },
+        "candidate_specific_c4_contract": {
+            "path": C4_CONTRACT_AUDIT.as_posix(),
+            "sha256": _sha256(C4_CONTRACT_AUDIT),
+            "all_records_fail_closed": c4_contract["all_records_fail_closed"],
+            "records": [
+                {
+                    "case_name": row["case_name"],
+                    "candidate_id": row["candidate_id"],
+                    "candidate_specific_projection_delta_available": row[
+                        "contract_evaluation"
+                    ]["candidate_specific_projection_delta_available"],
+                    "candidate_specific_image_evidence_available": row[
+                        "contract_evaluation"
+                    ]["candidate_specific_image_evidence_available"],
+                    "candidate_specific_c4_contract_complete": row[
+                        "contract_evaluation"
+                    ]["candidate_specific_c4_contract_complete"],
+                    "candidate_preference_authorized": False,
+                }
+                for row in c4_contract["records"]
+            ],
         },
         "audit_only": True,
         "evaluator_changed": True,

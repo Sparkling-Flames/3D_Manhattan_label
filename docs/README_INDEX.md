@@ -46,6 +46,7 @@ A 线覆盖 Manhattan geometry、sandbox、expert review、post-hoc audit-only�
 - [HRC_C3_2_CONSTRAINED_V0_SOURCE_CONTRACT_v1.md](paper_a_manhattan/HRC_C3_2_CONSTRAINED_V0_SOURCE_CONTRACT_v1.md)
 - [HRC_C6_5_GLOBAL_HYPOTHESIS_PROBE_SPEC_v1.md](paper_a_manhattan/HRC_C6_5_GLOBAL_HYPOTHESIS_PROBE_SPEC_v1.md)：shadow-only global hypothesis probe spec；not generator execution.
 - [HRC_C6_5A_4_SCORING_EVALUATOR_HARDENING_SPEC_v1.md](paper_a_manhattan/HRC_C6_5A_4_SCORING_EVALUATOR_HARDENING_SPEC_v1.md)：spec-only L0–L5 scoring/evaluator hardening contract；不修改 evaluator/ranking/portfolio。
+- [HRC_CANDIDATE_SPECIFIC_C4_INPUT_CONTRACT_v1.md](paper_a_manhattan/HRC_CANDIDATE_SPECIFIC_C4_INPUT_CONTRACT_v1.md)：区分 baseline-only、candidate projection delta、candidate image evidence 与 manual visual note 的 fail-closed 输入合同；不是 full C4 或图像模型。
 - [MANHATTAN_HEIGHT_REPROJECT_SAFETY_CONTRACT_v1.md](paper_a_manhattan/MANHATTAN_HEIGHT_REPROJECT_SAFETY_CONTRACT_v1.md)
 - [MANHATTAN_HYPOTHESIS_FEEDBACK_LEDGER_SCHEMA_v1.md](paper_a_manhattan/MANHATTAN_HYPOTHESIS_FEEDBACK_LEDGER_SCHEMA_v1.md)：schema/contract；不是 training/update system。
 
@@ -101,6 +102,7 @@ Legacy M15 specs are background; current active selection remains HRC-gated and 
 - `tools/paper_a_manhattan/run_hrc_c6_5a_6_candidate_dry_run.py` materializes the four fixed pair2 y-step 4-pair audit-only candidates and local 3D comparison preview for `task238_ann2389_4543gt`; it performs no search and changes no active ranking or authorization.
 - `tools/paper_a_manhattan/run_hrc_c6_5a_6_2_manual_selection_ledger.py` materializes the C6.5a.6.2 human review-only selection of candidate 0003 (`y +0.75`); it does not accept, authorize, apply, or write back the candidate.
 - `tools/paper_a_manhattan/run_hrc_c6_5a_7_blocker_closure_audit.py` materializes the C6.5a.7.1 blocker closure report, 2369 partial explicit-column / available keep-distinct verdicts, and the 3741 same-image updated-human-reference order; it does not authorize C6.5b or alter active ranking.
+- `tools/paper_a_manhattan/run_hrc_candidate_specific_c4_contract_audit.py` materializes fail-closed candidate-specific C4 contract records for 3741/0017 and 4543gt/0003; projection delta does not imply image evidence.
 - `tools/paper_a_manhattan/run_constrained_v0_shadow_audit.py` materializes read-only constrained_v0 shadow audits; it does not change active source or ranking.
 - `tools/paper_a_manhattan/run_constrained_v0_consolidation_audit.py` consolidates the two implemented constrained_v0 shadow families and their fail-closed/positive-fixture audits; it does not authorize a third family or active source replacement.
 - `tools/paper_a_manhattan/materialize_manhattan_feedback_ledger_entry.py` validates a core output plus expert review and writes one feedback-ledger JSONL entry; it does not train, update parameters, apply candidates, or write annotations.

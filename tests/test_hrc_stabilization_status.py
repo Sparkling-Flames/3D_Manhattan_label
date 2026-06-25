@@ -11,3 +11,5 @@ def test_c6_5a_7_1_is_completed_without_authorizing_c6_5b():
     assert "C6.5b 未授权" in text
     assert "pair2" in text
     assert "4–5" in text
+    assert "candidate_specific_image_evidence_available=false" in text
+    assert "candidate_specific_c4_contract_complete=false" in text

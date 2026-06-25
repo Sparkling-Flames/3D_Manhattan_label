@@ -29,6 +29,8 @@
 
 C6.5a.7.1 human verdict materialization completed。2369 与 3741 已验证为同一 image/title；3741 是 same-image updated human reference，verified order 为 `2→1→3→4→6→5→8→7→9→10→12→11`，不是 automatic candidate 或 accepted final fix。2369 explicit-column identity 为 `available_with_exception`，pair2 因严重遮挡及该区域 3D preview 贴图不可靠而 unresolved；4–5 真实突出墙体的 keep-distinct contract 已由人工确认。4543gt 的 `c6_5a_6_1_candidate_0003` 仍仅为 review-only。candidate-specific C4 evidence 仍缺失；C6.5b 未授权，C3 shadow expansion、C7/C9/C10 继续 blocked。
 
+Candidate-specific C4 input contract 已物化并 fail-closed：3741/0017 与 4543gt/0003 均有 candidate-specific projection delta，但 `candidate_specific_image_evidence_available=false`。人工视觉 note 不等于 manual image-evidence note；两者 `candidate_specific_c4_contract_complete=false`、`candidate_preference_authorized=false`。
+
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
 - 不扩展 C4，不做 full image-edge evidence；除 `column_x_alignment`、`height_target_reproject` 外的 constrained_v0 family 仍不得实现，C7/C9/C10 仍 blocked；
@@ -54,6 +56,7 @@ C6.5a.7.1 human verdict materialization completed。2369 与 3741 已验证为�
 - `tools/paper_a_manhattan/run_hrc_c6_5a_6_candidate_dry_run.py`：C6.5a.6.1 四个固定 pair2 y-step（`+0.25/+0.50/+0.75/+1.00`）4-pair audit-only 候选及本地 3D preview；不执行搜索、不接 active ranking/portfolio、不授权 preference/writeback。
 - `tools/paper_a_manhattan/run_hrc_c6_5a_6_2_manual_selection_ledger.py`：C6.5a.6.2 人工 review-only selection ledger；校验所选 candidate 来自 C6.5a.6.1，不改变 accepted/downstream/preference/writeback。
 - `tools/paper_a_manhattan/run_hrc_c6_5a_7_blocker_closure_audit.py`：C6.5a.7 blocker closure pack；区分 baseline C4-lite、candidate-specific C4、manual preference 与 final acceptance，并保持 C6.5b blocked。
+- `docs/paper_a_manhattan/HRC_CANDIDATE_SPECIFIC_C4_INPUT_CONTRACT_v1.md`、`tools/paper_a_manhattan/candidate_specific_c4_evidence_contract.py`：候选级 C4 最小输入合同与 fail-closed 校验；不实现 full C4 或图像模型。
 - `docs/paper_a_manhattan/HRC_C6_5A_4_SCORING_EVALUATOR_HARDENING_SPEC_v1.md`：C6.5a.4 spec-only hardening contract；定义未来 L0–L5 key 与 gate 改造，不构成实现授权。
 - `tests/fixtures/paper_a_manhattan/hrc_scoring_layer_compliance_v1.json` 与 `tests/test_hrc_scoring_layer_hardening_contract.py`：C6.5a.4b fixture-based contract；锁定 hard gate、L1/L2/L3/L4/L5 层序及 legacy exclusion。
 - `tools/paper_a_manhattan/manhattan_constrained_hypothesis_evaluator.py` 与 `manhattan_hypothesis_portfolio.py`：C6.5a.4c 最小实现；共享 L0–L5 layer key，保持 bucket 集合与 recommendation authorization 不变。

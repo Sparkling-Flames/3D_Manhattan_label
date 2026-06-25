@@ -41,6 +41,10 @@ GT_CORRECTION = (
     / "gt_correction_audit/task238_ann2389_4543gt/"
     "hrc_gt_correction_audit_4543gt.json"
 )
+C4_CONTRACT_AUDIT = (
+    HRC
+    / "candidate_specific_c4_contract/hrc_candidate_specific_c4_contract_audit.json"
+)
 GT_SOURCE = Path("export_label/groudTruth.json")
 VERIFIED_ORDER_3741 = [2, 1, 3, 4, 6, 5, 8, 7, 9, 10, 12, 11]
 HUMAN_REVIEWED_AT = "2026-06-25T00:00:00+08:00"
@@ -213,20 +217,10 @@ def _c4_gap_table() -> list[dict[str, Any]]:
     review_3741 = _load(REVIEW_3741)
     ledger = _load(SELECTION_LEDGER)
     dry_run = _load(DRY_RUN_4543)
-    candidate_specific_3741 = any(
-        evidence.get("evidence_status") == "available"
-        and any(
-            evidence.get(field) not in (0, 0.0, None)
-            for field in (
-                "candidate_corner_column_delta",
-                "hohonet_floor_boundary_rmse_delta",
-                "hohonet_ceiling_boundary_rmse_delta",
-                "seam_consistency_delta",
-            )
-        )
-        for row in core_3741["constrained_evaluations"].values()
-        for evidence in (row.get("evidence_consistency", {}),)
-    )
+    contract = {
+        row["case_name"]: row["contract_evaluation"]
+        for row in _load(C4_CONTRACT_AUDIT)["records"]
+    }
     return [
         {
             "case_name": "task218_ann2369",
@@ -237,7 +231,9 @@ def _c4_gap_table() -> list[dict[str, Any]]:
             ]["evidence_status"]
             == "available",
             "c4_lite_scope": "baseline_to_baseline_only",
-            "candidate_specific_c4_available": False,
+            "candidate_specific_projection_delta_available": False,
+            "candidate_specific_image_evidence_available": False,
+            "candidate_specific_c4_contract_complete": False,
             "manual_visual_preference": False,
             "accepted_final_fix": False,
             "candidate_preference_authorized": False,
@@ -255,7 +251,9 @@ def _c4_gap_table() -> list[dict[str, Any]]:
             ]["evidence_status"]
             == "available",
             "c4_lite_scope": "baseline_to_baseline_only",
-            "candidate_specific_c4_available": False,
+            "candidate_specific_projection_delta_available": False,
+            "candidate_specific_image_evidence_available": False,
+            "candidate_specific_c4_contract_complete": False,
             "manual_visual_preference": False,
             "accepted_final_fix": False,
             "candidate_preference_authorized": False,
@@ -267,7 +265,15 @@ def _c4_gap_table() -> list[dict[str, Any]]:
             "selected_or_review_candidate": ledger["selected_candidate"],
             "c4_lite_available": False,
             "c4_lite_scope": "corrected_baseline_projection_is_not_C4_evidence",
-            "candidate_specific_c4_available": False,
+            "candidate_specific_projection_delta_available": contract[
+                "task238_ann2389_4543gt"
+            ]["candidate_specific_projection_delta_available"],
+            "candidate_specific_image_evidence_available": contract[
+                "task238_ann2389_4543gt"
+            ]["candidate_specific_image_evidence_available"],
+            "candidate_specific_c4_contract_complete": contract[
+                "task238_ann2389_4543gt"
+            ]["candidate_specific_c4_contract_complete"],
             "manual_visual_preference": True,
             "accepted_final_fix": False,
             "candidate_preference_authorized": False,
@@ -278,12 +284,23 @@ def _c4_gap_table() -> list[dict[str, Any]]:
             "candidate_available": len(core_3741["candidate_set"]) > 0,
             "selected_or_review_candidate": review_3741["expert_selected_candidate"],
             "c4_lite_available": True,
-            "c4_lite_scope": "candidate_specific_projection_delta",
-            "candidate_specific_c4_available": candidate_specific_3741,
+            "c4_lite_scope": "candidate_specific_projection_delta_only",
+            "candidate_specific_projection_delta_available": contract[
+                "task218_ann3741"
+            ]["candidate_specific_projection_delta_available"],
+            "candidate_specific_image_evidence_available": contract[
+                "task218_ann3741"
+            ]["candidate_specific_image_evidence_available"],
+            "candidate_specific_c4_contract_complete": contract[
+                "task218_ann3741"
+            ]["candidate_specific_c4_contract_complete"],
             "manual_visual_preference": True,
             "accepted_final_fix": review_3741["accepted_directly"],
             "candidate_preference_authorized": False,
-            "blocker_reason": "manual explicit column identity remains incomplete; selected candidate is diagnostic only",
+            "blocker_reason": (
+                "projection delta exists, but candidate-specific image evidence is "
+                "unavailable; selected candidate is diagnostic only"
+            ),
         },
     ]
 
@@ -301,7 +318,9 @@ def build_payload(sidecars: dict[str, Path]) -> dict[str, Any]:
         if evidence_type != "same_image_reference"
     }
     c4_table = _c4_gap_table()
-    all_c4_ready = all(row["candidate_specific_c4_available"] for row in c4_table)
+    all_c4_ready = all(
+        row["candidate_specific_c4_contract_complete"] for row in c4_table
+    )
     all_manual_ready = all(row["verdict"] == "available" for row in sidecar_status.values())
     reference = _load(sidecars["same_image_reference"])
     return {
@@ -314,6 +333,7 @@ def build_payload(sidecars: dict[str, Path]) -> dict[str, Any]:
             "scoring_compliance": _source(COMPLIANCE),
             "manual_selection_ledger": _source(SELECTION_LEDGER),
             "manual_sidecar_schema": _source(SIDECAR_SCHEMA),
+            "candidate_specific_c4_contract": _source(C4_CONTRACT_AUDIT),
             "old_gt": correction["old_gt"],
             "corrected_gt": correction["corrected_gt"],
         },
@@ -352,7 +372,7 @@ def build_payload(sidecars: dict[str, Path]) -> dict[str, Any]:
         "case_by_case_readiness": {
             row["case_name"]: {
                 "candidate_specific_c4_ready": row[
-                    "candidate_specific_c4_available"
+                    "candidate_specific_c4_contract_complete"
                 ],
                 "candidate_preference_authorized": False,
                 "accepted_final_fix": False,
@@ -389,7 +409,9 @@ def build_payload(sidecars: dict[str, Path]) -> dict[str, Any]:
 def render_markdown(payload: dict[str, Any]) -> str:
     rows = "\n".join(
         "| {case_name} | {candidate_available} | {selected_or_review_candidate} | "
-        "{c4_lite_available} ({c4_lite_scope}) | {candidate_specific_c4_available} | "
+        "{c4_lite_available} ({c4_lite_scope}) | "
+        "{candidate_specific_projection_delta_available} | "
+        "{candidate_specific_image_evidence_available} | "
         "{candidate_preference_authorized} | {blocker_reason} |".format(**row)
         for row in payload["c4_evidence_gap_table"]
     )
@@ -405,8 +427,8 @@ def render_markdown(payload: dict[str, Any]) -> str:
         "- Keep-distinct status: `available`; protruding wall 4-5 must remain distinct\n"
         "- Supporting artifacts are manual verdicts: `false`\n\n"
         "## C4 evidence gap table\n\n"
-        "| case | candidate | selected/review | C4-lite | candidate-specific C4 | preference authorized | blocker |\n"
-        "|---|---|---|---|---|---|---|\n"
+        "| case | candidate | selected/review | C4-lite | projection delta | image evidence | preference authorized | blocker |\n"
+        "|---|---|---|---|---|---|---|---|\n"
         f"{rows}\n\n"
         "## Remaining blockers\n\n"
         + "\n".join(f"- {row}" for row in payload["remaining_blockers"])

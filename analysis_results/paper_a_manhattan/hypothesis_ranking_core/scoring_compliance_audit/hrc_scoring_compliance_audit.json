@@ -37,6 +37,10 @@
     {
       "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/c6_5a_6_candidate_dry_run/task238_ann2389_4543gt/hrc_c6_5a_6_candidate_dry_run.json",
       "sha256": "c5bb9053fc8144be7f195ba4cd1ce6afdf3acb72d7df87e8bff32ae7b79cc1e4"
+    },
+    {
+      "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/candidate_specific_c4_contract/hrc_candidate_specific_c4_contract_audit.json",
+      "sha256": "7d576eeb1feafe7beab870e4d3442f2c418106229bf11b3bd73ef96ef0b3c189"
     }
   ],
   "layer_mapping": {
@@ -444,6 +448,29 @@
     "supporting_artifacts_are_manual_verdicts": false,
     "candidate_specific_c4_complete": false,
     "c6_5b_authorized": false
+  },
+  "candidate_specific_c4_contract": {
+    "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/candidate_specific_c4_contract/hrc_candidate_specific_c4_contract_audit.json",
+    "sha256": "7d576eeb1feafe7beab870e4d3442f2c418106229bf11b3bd73ef96ef0b3c189",
+    "all_records_fail_closed": true,
+    "records": [
+      {
+        "case_name": "task218_ann3741",
+        "candidate_id": "m1528_candidate_0017",
+        "candidate_specific_projection_delta_available": true,
+        "candidate_specific_image_evidence_available": false,
+        "candidate_specific_c4_contract_complete": false,
+        "candidate_preference_authorized": false
+      },
+      {
+        "case_name": "task238_ann2389_4543gt",
+        "candidate_id": "c6_5a_6_1_candidate_0003",
+        "candidate_specific_projection_delta_available": true,
+        "candidate_specific_image_evidence_available": false,
+        "candidate_specific_c4_contract_complete": false,
+        "candidate_preference_authorized": false
+      }
+    ]
   },
   "audit_only": true,
   "evaluator_changed": true,
