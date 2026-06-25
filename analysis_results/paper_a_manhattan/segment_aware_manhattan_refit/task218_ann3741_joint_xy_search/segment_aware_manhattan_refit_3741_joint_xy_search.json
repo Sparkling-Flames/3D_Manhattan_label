@@ -1,0 +1,2137 @@
+{
+  "schema_version": "segment_aware_manhattan_refit_3741_joint_xy_search_v1",
+  "case_name": "task218_ann3741",
+  "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+  "id_semantics": {
+    "source_pair_id": "Label Studio / preview original pair number",
+    "solver_position": "one-based position after verified-order sorting",
+    "verified_order_source_id": "source_pair_id at each solver_position"
+  },
+  "verified_order_source_ids": [
+    2,
+    1,
+    3,
+    4,
+    6,
+    5,
+    8,
+    7,
+    9,
+    10,
+    12,
+    11
+  ],
+  "source_pair_to_solver_position": {
+    "2": 1,
+    "1": 2,
+    "3": 3,
+    "4": 4,
+    "6": 5,
+    "5": 6,
+    "8": 7,
+    "7": 8,
+    "9": 9,
+    "10": 10,
+    "12": 11,
+    "11": 12
+  },
+  "solver_position_to_verified_order_source_id": {
+    "1": 2,
+    "2": 1,
+    "3": 3,
+    "4": 4,
+    "5": 6,
+    "6": 5,
+    "7": 8,
+    "8": 7,
+    "9": 9,
+    "10": 10,
+    "11": 12,
+    "12": 11
+  },
+  "rejected_diagnostic_references": {
+    "robust_all_long_edges": {
+      "status": "rejected_by_2d_review",
+      "strength": "3d_height_unified",
+      "failure": "source_pair_2_over_moved_from_true_corner"
+    },
+    "pair2_anchored_height_clamped": {
+      "status": "rejected_by_human_3d_review",
+      "failure": "height_inconsistency_worse"
+    },
+    "s2_s11_height_pair_repair": {
+      "status": "rejected_by_human_3d_review",
+      "failure": "multiple_heights_remain"
+    },
+    "height_plane_preserved_s2_s11_s1_adapter": {
+      "status": "rejected_by_human_2d_review",
+      "strength": "height_plane_residual_low",
+      "failures": [
+        "top_y_pulled_too_high_again",
+        "bottom_y_downward_adjustment_not_effective",
+        "joint_x_y_compensation_missing"
+      ]
+    }
+  },
+  "search_budget": 6000,
+  "evaluated_count": 1880,
+  "kept_count": 555,
+  "suppressed_count": 1325,
+  "deterministic": true,
+  "random_seed_used": false,
+  "action_family_counts": {
+    "s2_bottom_y_plus_x_compensated": 49,
+    "s2_top_bottom_y_plus_x_compensated": 392,
+    "s2_s11_joint_height_angle": 1296,
+    "s2_s11_s1_adapter_joint": 125,
+    "s2_s5_s6_bottom_depth_joint": 9,
+    "s2_s5_s6_s7_s8_chain_bottom_depth_joint": 9
+  },
+  "reference_metrics": {
+    "baseline": {
+      "wall": 93.46430200114153,
+      "turn": 40.00640089139861,
+      "height": 2.2582639241840843
+    },
+    "robust": {
+      "wall": 41.47038691526561,
+      "turn": 1.1368683772161603e-13,
+      "height": 1.1102230246251565e-14
+    },
+    "previous": {
+      "wall": 45.276749563836546,
+      "turn": 17.30319271182293,
+      "height": 1.199040866595169e-14
+    },
+    "y_targeted": {
+      "wall": 63.0176422309593,
+      "turn": 26.03826817746416,
+      "height": 1.7991794502786376
+    }
+  },
+  "family_best_candidates": [
+    {
+      "action_family": "s2_bottom_y_plus_x_compensated",
+      "generation_method": "bounded_deterministic_semantic_coordinate_search",
+      "deterministic": true,
+      "random_or_fixed_step_grid_used": false,
+      "search_variables_used": {
+        "s2_x": 0.0,
+        "s2_top_y": 0.0,
+        "s2_bottom_y": 0.0
+      },
+      "source_pair_2_x_delta_from_baseline": 0.0,
+      "source_pair_2_top_y_delta_from_baseline": 0.0,
+      "source_pair_2_bottom_y_delta_from_baseline": 0.0,
+      "source_pair_2_bottom_y_downward_adjustment_applied": false,
+      "source_pair_2_x_compensation_applied": false,
+      "source_pair_11_x_delta_from_baseline": 0.0,
+      "source_pair_11_top_y_delta_from_baseline": 0.0,
+      "source_pair_11_bottom_y_delta_from_baseline": 0.0,
+      "source_pair_11_x_compensation_applied": false,
+      "source_pair_1_as_sacrificial_adapter": false,
+      "source_pair_1_movement": 4.370091168209268,
+      "s5_s6_bottom_y_adjustment_applied": true,
+      "s7_s8_bottom_y_adjustment_applied": false,
+      "bottom_y_direction_note": {
+        "bottom_y_larger_means_point_lower_in_image": true
+      },
+      "wall_residual_sum": 45.45145045212786,
+      "turn_residual_max": 14.185963399232406,
+      "height_consistency_l1": 2.113822234748822,
+      "height_plane_residual_l1": 2.113822234748822,
+      "height_outlier_count": 3,
+      "chain_5_6_7_8_preserved": true,
+      "chain_12_11_1_preserved": true,
+      "topology_valid": true,
+      "self_intersection": false,
+      "order_preserved": true,
+      "total_movement": 29.85133942038538,
+      "max_movement": 5.027686580280486,
+      "objective_breakdown": {
+        "geometry_score": 1.3818944556836374,
+        "height_score": 3.0922777934360273,
+        "2d_anchor_score": 0.0,
+        "bottom_depth_score": -0.05,
+        "movement_score": 0.6955674288248537,
+        "height_plane_is_soft_regularizer": true,
+        "total": 10.00956710964819,
+        "comparison_to_references": {
+          "wall_vs_baseline": -48.012851549013675,
+          "wall_vs_robust": 3.9810635368622513,
+          "height_vs_previous_9_5": 2.11382223474881
+        }
+      },
+      "recommendation_label": "suppress",
+      "suppress_reasons": [
+        "height_worse_than_9_4_guard"
+      ],
+      "corrected_coordinates": [
+        {
+          "source_pair_id": 2,
+          "solver_position": 1,
+          "verified_order_source_id": 2,
+          "top": {
+            "x": 5.889724310776942,
+            "y": 14.786967418546364
+          },
+          "bottom": {
+            "x": 5.889724310776942,
+            "y": 91.47869674185463
+          },
+          "effective_pair_index": 1
+        },
+        {
+          "top": {
+            "x": 0.34290478814528647,
+            "y": 41.65898099154619
+          },
+          "bottom": {
+            "x": 0.34290478814528647,
+            "y": 57.61789006459336
+          },
+          "source_pair_id": 1,
+          "solver_position": 2,
+          "verified_order_source_id": 1,
+          "effective_pair_index": 2,
+          "source_preview_order_index": 1,
+          "point_ids": {
+            "top_id": "kp_6",
+            "bottom_id": "kp_7"
+          }
+        },
+        {
+          "top": {
+            "x": 9.128202368107015,
+            "y": 43.203167804940094
+          },
+          "bottom": {
+            "x": 9.128202368107015,
+            "y": 56.19947248193613
+          },
+          "source_pair_id": 3,
+          "solver_position": 3,
+          "verified_order_source_id": 3,
+          "effective_pair_index": 3,
+          "source_preview_order_index": 3,
+          "point_ids": {
+            "top_id": "kp_8",
+            "bottom_id": "kp_9"
+          }
+        },
+        {
+          "top": {
+            "x": 27.410957965652642,
+            "y": 39.058894298538
+          },
+          "bottom": {
+            "x": 27.410957965652642,
+            "y": 60.020336398089334
+          },
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "source_preview_order_index": 4,
+          "point_ids": {
+            "top_id": "kp_10",
+            "bottom_id": "kp_11"
+          }
+        },
+        {
+          "top": {
+            "x": 46.13663017821954,
+            "y": 17.137158536785712
+          },
+          "bottom": {
+            "x": 46.13663017821954,
+            "y": 81.50874592008077
+          },
+          "source_pair_id": 6,
+          "solver_position": 5,
+          "verified_order_source_id": 6,
+          "effective_pair_index": 5,
+          "source_preview_order_index": 6,
+          "point_ids": {
+            "top_id": "-4TzkLtjeO",
+            "bottom_id": "7R_vYvj4bN"
+          }
+        },
+        {
+          "top": {
+            "x": 44.36703866987801,
+            "y": 11.402412342834095
+          },
+          "bottom": {
+            "x": 44.36703866987801,
+            "y": 87.573459332818
+          },
+          "source_pair_id": 5,
+          "solver_position": 6,
+          "verified_order_source_id": 5,
+          "effective_pair_index": 6,
+          "source_preview_order_index": 5,
+          "point_ids": {
+            "top_id": "9Tiplq2Pvq",
+            "bottom_id": "zGbQgzhVWW"
+          }
+        },
+        {
+          "top": {
+            "x": 52.06679785137357,
+            "y": 11.137995288377079
+          },
+          "bottom": {
+            "x": 52.06679785137357,
+            "y": 87.85701134257397
+          },
+          "source_pair_id": 8,
+          "solver_position": 7,
+          "verified_order_source_id": 8,
+          "effective_pair_index": 7,
+          "source_preview_order_index": 8,
+          "point_ids": {
+            "top_id": "kp_12",
+            "bottom_id": "kp_13"
+          }
+        },
+        {
+          "top": {
+            "x": 50.378095580497586,
+            "y": 21.89033221150598
+          },
+          "bottom": {
+            "x": 50.378095580497586,
+            "y": 76.62127196977598
+          },
+          "source_pair_id": 7,
+          "solver_position": 8,
+          "verified_order_source_id": 7,
+          "effective_pair_index": 8,
+          "source_preview_order_index": 7,
+          "point_ids": {
+            "top_id": "kp_14",
+            "bottom_id": "kp_15"
+          }
+        },
+        {
+          "top": {
+            "x": 63.78090512564466,
+            "y": 31.6171875
+          },
+          "bottom": {
+            "x": 63.78090512564466,
+            "y": 68.74147895391475
+          },
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "source_preview_order_index": 9,
+          "point_ids": {
+            "top_id": "kp_0",
+            "bottom_id": "kp_1"
+          }
+        },
+        {
+          "top": {
+            "x": 83.34955092974104,
+            "y": 30.4453125
+          },
+          "bottom": {
+            "x": 83.34955092974104,
+            "y": 69.3659181657466
+          },
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "source_preview_order_index": 10,
+          "point_ids": {
+            "top_id": "kp_2",
+            "bottom_id": "kp_3"
+          }
+        },
+        {
+          "top": {
+            "x": 98.90149346547022,
+            "y": 20.55639097744361
+          },
+          "bottom": {
+            "x": 98.90149346547022,
+            "y": 78.66395669515278
+          },
+          "source_pair_id": 12,
+          "solver_position": 11,
+          "verified_order_source_id": 12,
+          "effective_pair_index": 11,
+          "source_preview_order_index": 12,
+          "point_ids": {
+            "top_id": "YzRMT1hSFI",
+            "bottom_id": "ejD1N6pEta"
+          }
+        },
+        {
+          "source_pair_id": 11,
+          "solver_position": 12,
+          "verified_order_source_id": 11,
+          "top": {
+            "x": 98.37092731829574,
+            "y": 14.285714285714285
+          },
+          "bottom": {
+            "x": 98.37092731829574,
+            "y": 91.22807017543859
+          },
+          "effective_pair_index": 12
+        }
+      ],
+      "safety_flags": {
+        "audit_only": true,
+        "accepted": false,
+        "downstream_recommendation": false,
+        "candidate_preference_authorized": false,
+        "annotation_writeback": false,
+        "annotation_patch_generated": false
+      },
+      "candidate_id": "joint_xy_family_best_0001"
+    },
+    {
+      "action_family": "s2_s11_joint_height_angle",
+      "generation_method": "bounded_deterministic_semantic_coordinate_search",
+      "deterministic": true,
+      "random_or_fixed_step_grid_used": false,
+      "search_variables_used": {
+        "s2_x": 0.0,
+        "s2_top_y": -0.6,
+        "s2_bottom_y": 0.0,
+        "s11_x": 0.0,
+        "s11_top_y": -1.8,
+        "s11_bottom_y": 0.6
+      },
+      "source_pair_2_x_delta_from_baseline": 0.0,
+      "source_pair_2_top_y_delta_from_baseline": -0.5999999999999996,
+      "source_pair_2_bottom_y_delta_from_baseline": 0.0,
+      "source_pair_2_bottom_y_downward_adjustment_applied": false,
+      "source_pair_2_x_compensation_applied": false,
+      "source_pair_11_x_delta_from_baseline": 0.0,
+      "source_pair_11_top_y_delta_from_baseline": -1.8000000000000007,
+      "source_pair_11_bottom_y_delta_from_baseline": 0.5999999999999943,
+      "source_pair_11_x_compensation_applied": false,
+      "source_pair_1_as_sacrificial_adapter": false,
+      "source_pair_1_movement": 4.370091168209268,
+      "s5_s6_bottom_y_adjustment_applied": true,
+      "s7_s8_bottom_y_adjustment_applied": false,
+      "bottom_y_direction_note": {
+        "bottom_y_larger_means_point_lower_in_image": true
+      },
+      "wall_residual_sum": 36.74079625252,
+      "turn_residual_max": 5.475309199624547,
+      "height_consistency_l1": 1.995144922207567,
+      "height_plane_residual_l1": 1.995144922207567,
+      "height_outlier_count": 3,
+      "chain_5_6_7_8_preserved": true,
+      "chain_12_11_1_preserved": true,
+      "topology_valid": true,
+      "self_intersection": false,
+      "order_preserved": true,
+      "total_movement": 32.85133942038537,
+      "max_movement": 5.027686580280486,
+      "objective_breakdown": {
+        "geometry_score": 0.9173262317045515,
+        "height_score": 2.9439311527594585,
+        "2d_anchor_score": 0.7499999999999992,
+        "bottom_depth_score": -0.1,
+        "movement_score": 0.7255674288248537,
+        "height_plane_is_soft_regularizer": true,
+        "total": 10.188838484493106,
+        "comparison_to_references": {
+          "wall_vs_baseline": -56.723505748621534,
+          "wall_vs_robust": -4.729590662745608,
+          "height_vs_previous_9_5": 1.995144922207555
+        }
+      },
+      "recommendation_label": "plausible_but_needs_review",
+      "suppress_reasons": [],
+      "corrected_coordinates": [
+        {
+          "source_pair_id": 2,
+          "solver_position": 1,
+          "verified_order_source_id": 2,
+          "top": {
+            "x": 5.889724310776942,
+            "y": 14.186967418546365
+          },
+          "bottom": {
+            "x": 5.889724310776942,
+            "y": 91.47869674185463
+          },
+          "effective_pair_index": 1
+        },
+        {
+          "top": {
+            "x": 0.34290478814528647,
+            "y": 41.65898099154619
+          },
+          "bottom": {
+            "x": 0.34290478814528647,
+            "y": 57.61789006459336
+          },
+          "source_pair_id": 1,
+          "solver_position": 2,
+          "verified_order_source_id": 1,
+          "effective_pair_index": 2,
+          "source_preview_order_index": 1,
+          "point_ids": {
+            "top_id": "kp_6",
+            "bottom_id": "kp_7"
+          }
+        },
+        {
+          "top": {
+            "x": 9.128202368107015,
+            "y": 43.203167804940094
+          },
+          "bottom": {
+            "x": 9.128202368107015,
+            "y": 56.19947248193613
+          },
+          "source_pair_id": 3,
+          "solver_position": 3,
+          "verified_order_source_id": 3,
+          "effective_pair_index": 3,
+          "source_preview_order_index": 3,
+          "point_ids": {
+            "top_id": "kp_8",
+            "bottom_id": "kp_9"
+          }
+        },
+        {
+          "top": {
+            "x": 27.410957965652642,
+            "y": 39.058894298538
+          },
+          "bottom": {
+            "x": 27.410957965652642,
+            "y": 60.020336398089334
+          },
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "source_preview_order_index": 4,
+          "point_ids": {
+            "top_id": "kp_10",
+            "bottom_id": "kp_11"
+          }
+        },
+        {
+          "top": {
+            "x": 46.13663017821954,
+            "y": 17.137158536785712
+          },
+          "bottom": {
+            "x": 46.13663017821954,
+            "y": 81.50874592008077
+          },
+          "source_pair_id": 6,
+          "solver_position": 5,
+          "verified_order_source_id": 6,
+          "effective_pair_index": 5,
+          "source_preview_order_index": 6,
+          "point_ids": {
+            "top_id": "-4TzkLtjeO",
+            "bottom_id": "7R_vYvj4bN"
+          }
+        },
+        {
+          "top": {
+            "x": 44.36703866987801,
+            "y": 11.402412342834095
+          },
+          "bottom": {
+            "x": 44.36703866987801,
+            "y": 87.573459332818
+          },
+          "source_pair_id": 5,
+          "solver_position": 6,
+          "verified_order_source_id": 5,
+          "effective_pair_index": 6,
+          "source_preview_order_index": 5,
+          "point_ids": {
+            "top_id": "9Tiplq2Pvq",
+            "bottom_id": "zGbQgzhVWW"
+          }
+        },
+        {
+          "top": {
+            "x": 52.06679785137357,
+            "y": 11.137995288377079
+          },
+          "bottom": {
+            "x": 52.06679785137357,
+            "y": 87.85701134257397
+          },
+          "source_pair_id": 8,
+          "solver_position": 7,
+          "verified_order_source_id": 8,
+          "effective_pair_index": 7,
+          "source_preview_order_index": 8,
+          "point_ids": {
+            "top_id": "kp_12",
+            "bottom_id": "kp_13"
+          }
+        },
+        {
+          "top": {
+            "x": 50.378095580497586,
+            "y": 21.89033221150598
+          },
+          "bottom": {
+            "x": 50.378095580497586,
+            "y": 76.62127196977598
+          },
+          "source_pair_id": 7,
+          "solver_position": 8,
+          "verified_order_source_id": 7,
+          "effective_pair_index": 8,
+          "source_preview_order_index": 7,
+          "point_ids": {
+            "top_id": "kp_14",
+            "bottom_id": "kp_15"
+          }
+        },
+        {
+          "top": {
+            "x": 63.78090512564466,
+            "y": 31.6171875
+          },
+          "bottom": {
+            "x": 63.78090512564466,
+            "y": 68.74147895391475
+          },
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "source_preview_order_index": 9,
+          "point_ids": {
+            "top_id": "kp_0",
+            "bottom_id": "kp_1"
+          }
+        },
+        {
+          "top": {
+            "x": 83.34955092974104,
+            "y": 30.4453125
+          },
+          "bottom": {
+            "x": 83.34955092974104,
+            "y": 69.3659181657466
+          },
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "source_preview_order_index": 10,
+          "point_ids": {
+            "top_id": "kp_2",
+            "bottom_id": "kp_3"
+          }
+        },
+        {
+          "top": {
+            "x": 98.90149346547022,
+            "y": 20.55639097744361
+          },
+          "bottom": {
+            "x": 98.90149346547022,
+            "y": 78.66395669515278
+          },
+          "source_pair_id": 12,
+          "solver_position": 11,
+          "verified_order_source_id": 12,
+          "effective_pair_index": 11,
+          "source_preview_order_index": 12,
+          "point_ids": {
+            "top_id": "YzRMT1hSFI",
+            "bottom_id": "ejD1N6pEta"
+          }
+        },
+        {
+          "source_pair_id": 11,
+          "solver_position": 12,
+          "verified_order_source_id": 11,
+          "top": {
+            "x": 98.37092731829574,
+            "y": 12.485714285714284
+          },
+          "bottom": {
+            "x": 98.37092731829574,
+            "y": 91.82807017543858
+          },
+          "effective_pair_index": 12
+        }
+      ],
+      "safety_flags": {
+        "audit_only": true,
+        "accepted": false,
+        "downstream_recommendation": false,
+        "candidate_preference_authorized": false,
+        "annotation_writeback": false,
+        "annotation_patch_generated": false
+      },
+      "candidate_id": "joint_xy_family_best_0002"
+    },
+    {
+      "action_family": "s2_top_bottom_y_plus_x_compensated",
+      "generation_method": "bounded_deterministic_semantic_coordinate_search",
+      "deterministic": true,
+      "random_or_fixed_step_grid_used": false,
+      "search_variables_used": {
+        "s2_x": 0.0,
+        "s2_top_y": -1.8,
+        "s2_bottom_y": 0.0
+      },
+      "source_pair_2_x_delta_from_baseline": 0.0,
+      "source_pair_2_top_y_delta_from_baseline": -1.8000000000000007,
+      "source_pair_2_bottom_y_delta_from_baseline": 0.0,
+      "source_pair_2_bottom_y_downward_adjustment_applied": false,
+      "source_pair_2_x_compensation_applied": false,
+      "source_pair_11_x_delta_from_baseline": 0.0,
+      "source_pair_11_top_y_delta_from_baseline": 0.0,
+      "source_pair_11_bottom_y_delta_from_baseline": 0.0,
+      "source_pair_11_x_compensation_applied": false,
+      "source_pair_1_as_sacrificial_adapter": false,
+      "source_pair_1_movement": 4.370091168209268,
+      "s5_s6_bottom_y_adjustment_applied": true,
+      "s7_s8_bottom_y_adjustment_applied": false,
+      "bottom_y_direction_note": {
+        "bottom_y_larger_means_point_lower_in_image": true
+      },
+      "wall_residual_sum": 45.45145045212786,
+      "turn_residual_max": 14.185963399232406,
+      "height_consistency_l1": 1.9742873859390708,
+      "height_plane_residual_l1": 1.9742873859390708,
+      "height_outlier_count": 3,
+      "chain_5_6_7_8_preserved": true,
+      "chain_12_11_1_preserved": true,
+      "topology_valid": true,
+      "self_intersection": false,
+      "order_preserved": true,
+      "total_movement": 31.651339420385376,
+      "max_movement": 5.027686580280486,
+      "objective_breakdown": {
+        "geometry_score": 1.3818944556836374,
+        "height_score": 2.9178592324238384,
+        "2d_anchor_score": 0.6300000000000002,
+        "bottom_depth_score": -0.05,
+        "movement_score": 0.7135674288248537,
+        "height_plane_is_soft_regularizer": true,
+        "total": 11.279613699826248,
+        "comparison_to_references": {
+          "wall_vs_baseline": -48.012851549013675,
+          "wall_vs_robust": 3.9810635368622513,
+          "height_vs_previous_9_5": 1.9742873859390588
+        }
+      },
+      "recommendation_label": "plausible_but_needs_review",
+      "suppress_reasons": [],
+      "corrected_coordinates": [
+        {
+          "source_pair_id": 2,
+          "solver_position": 1,
+          "verified_order_source_id": 2,
+          "top": {
+            "x": 5.889724310776942,
+            "y": 12.986967418546364
+          },
+          "bottom": {
+            "x": 5.889724310776942,
+            "y": 91.47869674185463
+          },
+          "effective_pair_index": 1
+        },
+        {
+          "top": {
+            "x": 0.34290478814528647,
+            "y": 41.65898099154619
+          },
+          "bottom": {
+            "x": 0.34290478814528647,
+            "y": 57.61789006459336
+          },
+          "source_pair_id": 1,
+          "solver_position": 2,
+          "verified_order_source_id": 1,
+          "effective_pair_index": 2,
+          "source_preview_order_index": 1,
+          "point_ids": {
+            "top_id": "kp_6",
+            "bottom_id": "kp_7"
+          }
+        },
+        {
+          "top": {
+            "x": 9.128202368107015,
+            "y": 43.203167804940094
+          },
+          "bottom": {
+            "x": 9.128202368107015,
+            "y": 56.19947248193613
+          },
+          "source_pair_id": 3,
+          "solver_position": 3,
+          "verified_order_source_id": 3,
+          "effective_pair_index": 3,
+          "source_preview_order_index": 3,
+          "point_ids": {
+            "top_id": "kp_8",
+            "bottom_id": "kp_9"
+          }
+        },
+        {
+          "top": {
+            "x": 27.410957965652642,
+            "y": 39.058894298538
+          },
+          "bottom": {
+            "x": 27.410957965652642,
+            "y": 60.020336398089334
+          },
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "source_preview_order_index": 4,
+          "point_ids": {
+            "top_id": "kp_10",
+            "bottom_id": "kp_11"
+          }
+        },
+        {
+          "top": {
+            "x": 46.13663017821954,
+            "y": 17.137158536785712
+          },
+          "bottom": {
+            "x": 46.13663017821954,
+            "y": 81.50874592008077
+          },
+          "source_pair_id": 6,
+          "solver_position": 5,
+          "verified_order_source_id": 6,
+          "effective_pair_index": 5,
+          "source_preview_order_index": 6,
+          "point_ids": {
+            "top_id": "-4TzkLtjeO",
+            "bottom_id": "7R_vYvj4bN"
+          }
+        },
+        {
+          "top": {
+            "x": 44.36703866987801,
+            "y": 11.402412342834095
+          },
+          "bottom": {
+            "x": 44.36703866987801,
+            "y": 87.573459332818
+          },
+          "source_pair_id": 5,
+          "solver_position": 6,
+          "verified_order_source_id": 5,
+          "effective_pair_index": 6,
+          "source_preview_order_index": 5,
+          "point_ids": {
+            "top_id": "9Tiplq2Pvq",
+            "bottom_id": "zGbQgzhVWW"
+          }
+        },
+        {
+          "top": {
+            "x": 52.06679785137357,
+            "y": 11.137995288377079
+          },
+          "bottom": {
+            "x": 52.06679785137357,
+            "y": 87.85701134257397
+          },
+          "source_pair_id": 8,
+          "solver_position": 7,
+          "verified_order_source_id": 8,
+          "effective_pair_index": 7,
+          "source_preview_order_index": 8,
+          "point_ids": {
+            "top_id": "kp_12",
+            "bottom_id": "kp_13"
+          }
+        },
+        {
+          "top": {
+            "x": 50.378095580497586,
+            "y": 21.89033221150598
+          },
+          "bottom": {
+            "x": 50.378095580497586,
+            "y": 76.62127196977598
+          },
+          "source_pair_id": 7,
+          "solver_position": 8,
+          "verified_order_source_id": 7,
+          "effective_pair_index": 8,
+          "source_preview_order_index": 7,
+          "point_ids": {
+            "top_id": "kp_14",
+            "bottom_id": "kp_15"
+          }
+        },
+        {
+          "top": {
+            "x": 63.78090512564466,
+            "y": 31.6171875
+          },
+          "bottom": {
+            "x": 63.78090512564466,
+            "y": 68.74147895391475
+          },
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "source_preview_order_index": 9,
+          "point_ids": {
+            "top_id": "kp_0",
+            "bottom_id": "kp_1"
+          }
+        },
+        {
+          "top": {
+            "x": 83.34955092974104,
+            "y": 30.4453125
+          },
+          "bottom": {
+            "x": 83.34955092974104,
+            "y": 69.3659181657466
+          },
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "source_preview_order_index": 10,
+          "point_ids": {
+            "top_id": "kp_2",
+            "bottom_id": "kp_3"
+          }
+        },
+        {
+          "top": {
+            "x": 98.90149346547022,
+            "y": 20.55639097744361
+          },
+          "bottom": {
+            "x": 98.90149346547022,
+            "y": 78.66395669515278
+          },
+          "source_pair_id": 12,
+          "solver_position": 11,
+          "verified_order_source_id": 12,
+          "effective_pair_index": 11,
+          "source_preview_order_index": 12,
+          "point_ids": {
+            "top_id": "YzRMT1hSFI",
+            "bottom_id": "ejD1N6pEta"
+          }
+        },
+        {
+          "source_pair_id": 11,
+          "solver_position": 12,
+          "verified_order_source_id": 11,
+          "top": {
+            "x": 98.37092731829574,
+            "y": 14.285714285714285
+          },
+          "bottom": {
+            "x": 98.37092731829574,
+            "y": 91.22807017543859
+          },
+          "effective_pair_index": 12
+        }
+      ],
+      "safety_flags": {
+        "audit_only": true,
+        "accepted": false,
+        "downstream_recommendation": false,
+        "candidate_preference_authorized": false,
+        "annotation_writeback": false,
+        "annotation_patch_generated": false
+      },
+      "candidate_id": "joint_xy_family_best_0003"
+    },
+    {
+      "action_family": "s2_s11_s1_adapter_joint",
+      "generation_method": "bounded_deterministic_semantic_coordinate_search",
+      "deterministic": true,
+      "random_or_fixed_step_grid_used": false,
+      "search_variables_used": {
+        "s1_x": -0.75,
+        "s1_top_y": -1.0,
+        "s1_bottom_y": -1.5
+      },
+      "source_pair_2_x_delta_from_baseline": 0.0,
+      "source_pair_2_top_y_delta_from_baseline": -0.5999999999999996,
+      "source_pair_2_bottom_y_delta_from_baseline": 0.0,
+      "source_pair_2_bottom_y_downward_adjustment_applied": false,
+      "source_pair_2_x_compensation_applied": false,
+      "source_pair_11_x_delta_from_baseline": 0.0,
+      "source_pair_11_top_y_delta_from_baseline": -1.8000000000000007,
+      "source_pair_11_bottom_y_delta_from_baseline": 0.5999999999999943,
+      "source_pair_11_x_compensation_applied": false,
+      "source_pair_1_as_sacrificial_adapter": true,
+      "source_pair_1_movement": 1.6770509831248424,
+      "s5_s6_bottom_y_adjustment_applied": true,
+      "s7_s8_bottom_y_adjustment_applied": false,
+      "bottom_y_direction_note": {
+        "bottom_y_larger_means_point_lower_in_image": true
+      },
+      "wall_residual_sum": 59.67231975636619,
+      "turn_residual_max": 26.550085946564835,
+      "height_consistency_l1": 1.9969624867619227,
+      "height_plane_residual_l1": 1.9969624867619227,
+      "height_outlier_count": 3,
+      "chain_5_6_7_8_preserved": true,
+      "chain_12_11_1_preserved": true,
+      "topology_valid": true,
+      "self_intersection": false,
+      "order_preserved": true,
+      "total_movement": 29.176954610431164,
+      "max_movement": 5.027686580280486,
+      "objective_breakdown": {
+        "geometry_score": 2.0784492600128184,
+        "height_score": 2.946203108452403,
+        "2d_anchor_score": 0.7499999999999992,
+        "bottom_depth_score": -0.1,
+        "movement_score": 0.5990555745558308,
+        "height_plane_is_soft_regularizer": true,
+        "total": 13.613041162530694,
+        "comparison_to_references": {
+          "wall_vs_baseline": -33.79198224477534,
+          "wall_vs_robust": 18.201932841100586,
+          "height_vs_previous_9_5": 1.9969624867619107
+        }
+      },
+      "recommendation_label": "plausible_but_needs_review",
+      "suppress_reasons": [],
+      "corrected_coordinates": [
+        {
+          "source_pair_id": 2,
+          "solver_position": 1,
+          "verified_order_source_id": 2,
+          "top": {
+            "x": 5.889724310776942,
+            "y": 14.186967418546365
+          },
+          "bottom": {
+            "x": 5.889724310776942,
+            "y": 91.47869674185463
+          },
+          "effective_pair_index": 1
+        },
+        {
+          "top": {
+            "x": 0.61328125,
+            "y": 38.6746093753845
+          },
+          "bottom": {
+            "x": 0.61328125,
+            "y": 60.36718750000001
+          },
+          "source_pair_id": 1,
+          "solver_position": 2,
+          "verified_order_source_id": 1,
+          "effective_pair_index": 2,
+          "source_preview_order_index": 1,
+          "point_ids": {
+            "top_id": "kp_6",
+            "bottom_id": "kp_7"
+          }
+        },
+        {
+          "top": {
+            "x": 9.128202368107015,
+            "y": 43.203167804940094
+          },
+          "bottom": {
+            "x": 9.128202368107015,
+            "y": 56.19947248193613
+          },
+          "source_pair_id": 3,
+          "solver_position": 3,
+          "verified_order_source_id": 3,
+          "effective_pair_index": 3,
+          "source_preview_order_index": 3,
+          "point_ids": {
+            "top_id": "kp_8",
+            "bottom_id": "kp_9"
+          }
+        },
+        {
+          "top": {
+            "x": 27.410957965652642,
+            "y": 39.058894298538
+          },
+          "bottom": {
+            "x": 27.410957965652642,
+            "y": 60.020336398089334
+          },
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "source_preview_order_index": 4,
+          "point_ids": {
+            "top_id": "kp_10",
+            "bottom_id": "kp_11"
+          }
+        },
+        {
+          "top": {
+            "x": 46.13663017821954,
+            "y": 17.137158536785712
+          },
+          "bottom": {
+            "x": 46.13663017821954,
+            "y": 81.50874592008077
+          },
+          "source_pair_id": 6,
+          "solver_position": 5,
+          "verified_order_source_id": 6,
+          "effective_pair_index": 5,
+          "source_preview_order_index": 6,
+          "point_ids": {
+            "top_id": "-4TzkLtjeO",
+            "bottom_id": "7R_vYvj4bN"
+          }
+        },
+        {
+          "top": {
+            "x": 44.36703866987801,
+            "y": 11.402412342834095
+          },
+          "bottom": {
+            "x": 44.36703866987801,
+            "y": 87.573459332818
+          },
+          "source_pair_id": 5,
+          "solver_position": 6,
+          "verified_order_source_id": 5,
+          "effective_pair_index": 6,
+          "source_preview_order_index": 5,
+          "point_ids": {
+            "top_id": "9Tiplq2Pvq",
+            "bottom_id": "zGbQgzhVWW"
+          }
+        },
+        {
+          "top": {
+            "x": 52.06679785137357,
+            "y": 11.137995288377079
+          },
+          "bottom": {
+            "x": 52.06679785137357,
+            "y": 87.85701134257397
+          },
+          "source_pair_id": 8,
+          "solver_position": 7,
+          "verified_order_source_id": 8,
+          "effective_pair_index": 7,
+          "source_preview_order_index": 8,
+          "point_ids": {
+            "top_id": "kp_12",
+            "bottom_id": "kp_13"
+          }
+        },
+        {
+          "top": {
+            "x": 50.378095580497586,
+            "y": 21.89033221150598
+          },
+          "bottom": {
+            "x": 50.378095580497586,
+            "y": 76.62127196977598
+          },
+          "source_pair_id": 7,
+          "solver_position": 8,
+          "verified_order_source_id": 7,
+          "effective_pair_index": 8,
+          "source_preview_order_index": 7,
+          "point_ids": {
+            "top_id": "kp_14",
+            "bottom_id": "kp_15"
+          }
+        },
+        {
+          "top": {
+            "x": 63.78090512564466,
+            "y": 31.6171875
+          },
+          "bottom": {
+            "x": 63.78090512564466,
+            "y": 68.74147895391475
+          },
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "source_preview_order_index": 9,
+          "point_ids": {
+            "top_id": "kp_0",
+            "bottom_id": "kp_1"
+          }
+        },
+        {
+          "top": {
+            "x": 83.34955092974104,
+            "y": 30.4453125
+          },
+          "bottom": {
+            "x": 83.34955092974104,
+            "y": 69.3659181657466
+          },
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "source_preview_order_index": 10,
+          "point_ids": {
+            "top_id": "kp_2",
+            "bottom_id": "kp_3"
+          }
+        },
+        {
+          "top": {
+            "x": 98.90149346547022,
+            "y": 20.55639097744361
+          },
+          "bottom": {
+            "x": 98.90149346547022,
+            "y": 78.66395669515278
+          },
+          "source_pair_id": 12,
+          "solver_position": 11,
+          "verified_order_source_id": 12,
+          "effective_pair_index": 11,
+          "source_preview_order_index": 12,
+          "point_ids": {
+            "top_id": "YzRMT1hSFI",
+            "bottom_id": "ejD1N6pEta"
+          }
+        },
+        {
+          "source_pair_id": 11,
+          "solver_position": 12,
+          "verified_order_source_id": 11,
+          "top": {
+            "x": 98.37092731829574,
+            "y": 12.485714285714284
+          },
+          "bottom": {
+            "x": 98.37092731829574,
+            "y": 91.82807017543858
+          },
+          "effective_pair_index": 12
+        }
+      ],
+      "safety_flags": {
+        "audit_only": true,
+        "accepted": false,
+        "downstream_recommendation": false,
+        "candidate_preference_authorized": false,
+        "annotation_writeback": false,
+        "annotation_patch_generated": false
+      },
+      "candidate_id": "joint_xy_family_best_0004"
+    },
+    {
+      "action_family": "s2_s5_s6_s7_s8_chain_bottom_depth_joint",
+      "generation_method": "bounded_deterministic_semantic_coordinate_search",
+      "deterministic": true,
+      "random_or_fixed_step_grid_used": false,
+      "search_variables_used": {
+        "s5_x": 0.3,
+        "s5_bottom_y": 0.6,
+        "s6_x": 0.3,
+        "s6_bottom_y": 0.6,
+        "s7_x": 0.3,
+        "s7_bottom_y": 0.6,
+        "s8_x": 0.3,
+        "s8_bottom_y": 0.6
+      },
+      "source_pair_2_x_delta_from_baseline": 0.0,
+      "source_pair_2_top_y_delta_from_baseline": -1.8000000000000007,
+      "source_pair_2_bottom_y_delta_from_baseline": 0.0,
+      "source_pair_2_bottom_y_downward_adjustment_applied": false,
+      "source_pair_2_x_compensation_applied": false,
+      "source_pair_11_x_delta_from_baseline": 0.0,
+      "source_pair_11_top_y_delta_from_baseline": 0.0,
+      "source_pair_11_bottom_y_delta_from_baseline": 0.0,
+      "source_pair_11_x_compensation_applied": false,
+      "source_pair_1_as_sacrificial_adapter": false,
+      "source_pair_1_movement": 4.370091168209268,
+      "s5_s6_bottom_y_adjustment_applied": true,
+      "s7_s8_bottom_y_adjustment_applied": true,
+      "bottom_y_direction_note": {
+        "bottom_y_larger_means_point_lower_in_image": true
+      },
+      "wall_residual_sum": 64.61060275037255,
+      "turn_residual_max": 29.234692569035282,
+      "height_consistency_l1": 2.357315853846891,
+      "height_plane_residual_l1": 2.8530543279940836,
+      "height_outlier_count": 4,
+      "chain_5_6_7_8_preserved": true,
+      "chain_12_11_1_preserved": true,
+      "topology_valid": true,
+      "self_intersection": false,
+      "order_preserved": true,
+      "total_movement": 27.815898894702947,
+      "max_movement": 4.370091168209268,
+      "objective_breakdown": {
+        "geometry_score": 2.266701807308627,
+        "height_score": 3.670579435845412,
+        "2d_anchor_score": 0.6300000000000002,
+        "bottom_depth_score": -0.2,
+        "movement_score": 0.6423332529644685,
+        "height_plane_is_soft_regularizer": true,
+        "total": 15.103315032929858,
+        "comparison_to_references": {
+          "wall_vs_baseline": -28.853699250768983,
+          "wall_vs_robust": 23.140215835106943,
+          "height_vs_previous_9_5": 2.357315853846879
+        }
+      },
+      "recommendation_label": "suppress",
+      "suppress_reasons": [
+        "height_worse_than_9_4_guard"
+      ],
+      "corrected_coordinates": [
+        {
+          "source_pair_id": 2,
+          "solver_position": 1,
+          "verified_order_source_id": 2,
+          "top": {
+            "x": 5.889724310776942,
+            "y": 12.986967418546364
+          },
+          "bottom": {
+            "x": 5.889724310776942,
+            "y": 91.47869674185463
+          },
+          "effective_pair_index": 1
+        },
+        {
+          "top": {
+            "x": 0.34290478814528647,
+            "y": 41.65898099154619
+          },
+          "bottom": {
+            "x": 0.34290478814528647,
+            "y": 57.61789006459336
+          },
+          "source_pair_id": 1,
+          "solver_position": 2,
+          "verified_order_source_id": 1,
+          "effective_pair_index": 2,
+          "source_preview_order_index": 1,
+          "point_ids": {
+            "top_id": "kp_6",
+            "bottom_id": "kp_7"
+          }
+        },
+        {
+          "top": {
+            "x": 9.128202368107015,
+            "y": 43.203167804940094
+          },
+          "bottom": {
+            "x": 9.128202368107015,
+            "y": 56.19947248193613
+          },
+          "source_pair_id": 3,
+          "solver_position": 3,
+          "verified_order_source_id": 3,
+          "effective_pair_index": 3,
+          "source_preview_order_index": 3,
+          "point_ids": {
+            "top_id": "kp_8",
+            "bottom_id": "kp_9"
+          }
+        },
+        {
+          "top": {
+            "x": 27.410957965652642,
+            "y": 39.058894298538
+          },
+          "bottom": {
+            "x": 27.410957965652642,
+            "y": 60.020336398089334
+          },
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "source_preview_order_index": 4,
+          "point_ids": {
+            "top_id": "kp_10",
+            "bottom_id": "kp_11"
+          }
+        },
+        {
+          "top": {
+            "x": 45.599,
+            "y": 17.137158536785712
+          },
+          "bottom": {
+            "x": 45.599,
+            "y": 87.06616541353382
+          },
+          "source_pair_id": 6,
+          "solver_position": 5,
+          "verified_order_source_id": 6,
+          "effective_pair_index": 5,
+          "source_preview_order_index": 6,
+          "point_ids": {
+            "top_id": "-4TzkLtjeO",
+            "bottom_id": "7R_vYvj4bN"
+          }
+        },
+        {
+          "top": {
+            "x": 44.15964912280701,
+            "y": 11.402412342834095
+          },
+          "bottom": {
+            "x": 44.15964912280701,
+            "y": 88.076
+          },
+          "source_pair_id": 5,
+          "solver_position": 6,
+          "verified_order_source_id": 5,
+          "effective_pair_index": 6,
+          "source_preview_order_index": 5,
+          "point_ids": {
+            "top_id": "9Tiplq2Pvq",
+            "bottom_id": "zGbQgzhVWW"
+          }
+        },
+        {
+          "top": {
+            "x": 51.96015625,
+            "y": 11.137995288377079
+          },
+          "bottom": {
+            "x": 51.96015625,
+            "y": 88.490625
+          },
+          "source_pair_id": 8,
+          "solver_position": 7,
+          "verified_order_source_id": 8,
+          "effective_pair_index": 7,
+          "source_preview_order_index": 8,
+          "point_ids": {
+            "top_id": "kp_12",
+            "bottom_id": "kp_13"
+          }
+        },
+        {
+          "top": {
+            "x": 50.8859375,
+            "y": 21.89033221150598
+          },
+          "bottom": {
+            "x": 50.8859375,
+            "y": 77.4863276170351
+          },
+          "source_pair_id": 7,
+          "solver_position": 8,
+          "verified_order_source_id": 7,
+          "effective_pair_index": 8,
+          "source_preview_order_index": 7,
+          "point_ids": {
+            "top_id": "kp_14",
+            "bottom_id": "kp_15"
+          }
+        },
+        {
+          "top": {
+            "x": 63.78090512564466,
+            "y": 31.6171875
+          },
+          "bottom": {
+            "x": 63.78090512564466,
+            "y": 68.74147895391475
+          },
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "source_preview_order_index": 9,
+          "point_ids": {
+            "top_id": "kp_0",
+            "bottom_id": "kp_1"
+          }
+        },
+        {
+          "top": {
+            "x": 83.34955092974104,
+            "y": 30.4453125
+          },
+          "bottom": {
+            "x": 83.34955092974104,
+            "y": 69.3659181657466
+          },
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "source_preview_order_index": 10,
+          "point_ids": {
+            "top_id": "kp_2",
+            "bottom_id": "kp_3"
+          }
+        },
+        {
+          "top": {
+            "x": 98.90149346547022,
+            "y": 20.55639097744361
+          },
+          "bottom": {
+            "x": 98.90149346547022,
+            "y": 78.66395669515278
+          },
+          "source_pair_id": 12,
+          "solver_position": 11,
+          "verified_order_source_id": 12,
+          "effective_pair_index": 11,
+          "source_preview_order_index": 12,
+          "point_ids": {
+            "top_id": "YzRMT1hSFI",
+            "bottom_id": "ejD1N6pEta"
+          }
+        },
+        {
+          "source_pair_id": 11,
+          "solver_position": 12,
+          "verified_order_source_id": 11,
+          "top": {
+            "x": 98.37092731829574,
+            "y": 14.285714285714285
+          },
+          "bottom": {
+            "x": 98.37092731829574,
+            "y": 91.22807017543859
+          },
+          "effective_pair_index": 12
+        }
+      ],
+      "safety_flags": {
+        "audit_only": true,
+        "accepted": false,
+        "downstream_recommendation": false,
+        "candidate_preference_authorized": false,
+        "annotation_writeback": false,
+        "annotation_patch_generated": false
+      },
+      "candidate_id": "joint_xy_family_best_0005"
+    },
+    {
+      "action_family": "s2_s5_s6_bottom_depth_joint",
+      "generation_method": "bounded_deterministic_semantic_coordinate_search",
+      "deterministic": true,
+      "random_or_fixed_step_grid_used": false,
+      "search_variables_used": {
+        "s5_x": -0.3,
+        "s5_bottom_y": 0.0,
+        "s6_x": -0.3,
+        "s6_bottom_y": 0.0
+      },
+      "source_pair_2_x_delta_from_baseline": 0.0,
+      "source_pair_2_top_y_delta_from_baseline": -1.8000000000000007,
+      "source_pair_2_bottom_y_delta_from_baseline": 0.0,
+      "source_pair_2_bottom_y_downward_adjustment_applied": false,
+      "source_pair_2_x_compensation_applied": false,
+      "source_pair_11_x_delta_from_baseline": 0.0,
+      "source_pair_11_top_y_delta_from_baseline": 0.0,
+      "source_pair_11_bottom_y_delta_from_baseline": 0.0,
+      "source_pair_11_x_compensation_applied": false,
+      "source_pair_1_as_sacrificial_adapter": false,
+      "source_pair_1_movement": 4.370091168209268,
+      "s5_s6_bottom_y_adjustment_applied": false,
+      "s7_s8_bottom_y_adjustment_applied": false,
+      "bottom_y_direction_note": {
+        "bottom_y_larger_means_point_lower_in_image": true
+      },
+      "wall_residual_sum": 65.60522369160316,
+      "turn_residual_max": 29.872309375514043,
+      "height_consistency_l1": 2.5352919147558364,
+      "height_plane_residual_l1": 2.5352919147558373,
+      "height_outlier_count": 4,
+      "chain_5_6_7_8_preserved": true,
+      "chain_12_11_1_preserved": true,
+      "topology_valid": true,
+      "self_intersection": false,
+      "order_preserved": true,
+      "total_movement": 26.49524730019631,
+      "max_movement": 4.370091168209268,
+      "objective_breakdown": {
+        "geometry_score": 2.3078481196825313,
+        "height_score": 3.769114893444796,
+        "2d_anchor_score": 0.6300000000000002,
+        "bottom_depth_score": 0.0,
+        "movement_score": 0.6291267370194021,
+        "height_plane_is_soft_regularizer": true,
+        "total": 15.597514535757929,
+        "comparison_to_references": {
+          "wall_vs_baseline": -27.859078309538376,
+          "wall_vs_robust": 24.13483677633755,
+          "height_vs_previous_9_5": 2.5352919147558244
+        }
+      },
+      "recommendation_label": "suppress",
+      "suppress_reasons": [
+        "claimed_downward_adjustment_without_positive_delta",
+        "height_worse_than_9_4_guard"
+      ],
+      "corrected_coordinates": [
+        {
+          "source_pair_id": 2,
+          "solver_position": 1,
+          "verified_order_source_id": 2,
+          "top": {
+            "x": 5.889724310776942,
+            "y": 12.986967418546364
+          },
+          "bottom": {
+            "x": 5.889724310776942,
+            "y": 91.47869674185463
+          },
+          "effective_pair_index": 1
+        },
+        {
+          "top": {
+            "x": 0.34290478814528647,
+            "y": 41.65898099154619
+          },
+          "bottom": {
+            "x": 0.34290478814528647,
+            "y": 57.61789006459336
+          },
+          "source_pair_id": 1,
+          "solver_position": 2,
+          "verified_order_source_id": 1,
+          "effective_pair_index": 2,
+          "source_preview_order_index": 1,
+          "point_ids": {
+            "top_id": "kp_6",
+            "bottom_id": "kp_7"
+          }
+        },
+        {
+          "top": {
+            "x": 9.128202368107015,
+            "y": 43.203167804940094
+          },
+          "bottom": {
+            "x": 9.128202368107015,
+            "y": 56.19947248193613
+          },
+          "source_pair_id": 3,
+          "solver_position": 3,
+          "verified_order_source_id": 3,
+          "effective_pair_index": 3,
+          "source_preview_order_index": 3,
+          "point_ids": {
+            "top_id": "kp_8",
+            "bottom_id": "kp_9"
+          }
+        },
+        {
+          "top": {
+            "x": 27.410957965652642,
+            "y": 39.058894298538
+          },
+          "bottom": {
+            "x": 27.410957965652642,
+            "y": 60.020336398089334
+          },
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "source_preview_order_index": 4,
+          "point_ids": {
+            "top_id": "kp_10",
+            "bottom_id": "kp_11"
+          }
+        },
+        {
+          "top": {
+            "x": 44.999,
+            "y": 17.137158536785712
+          },
+          "bottom": {
+            "x": 44.999,
+            "y": 86.46616541353383
+          },
+          "source_pair_id": 6,
+          "solver_position": 5,
+          "verified_order_source_id": 6,
+          "effective_pair_index": 5,
+          "source_preview_order_index": 6,
+          "point_ids": {
+            "top_id": "-4TzkLtjeO",
+            "bottom_id": "7R_vYvj4bN"
+          }
+        },
+        {
+          "top": {
+            "x": 43.559649122807016,
+            "y": 11.402412342834095
+          },
+          "bottom": {
+            "x": 43.559649122807016,
+            "y": 87.476
+          },
+          "source_pair_id": 5,
+          "solver_position": 6,
+          "verified_order_source_id": 5,
+          "effective_pair_index": 6,
+          "source_preview_order_index": 5,
+          "point_ids": {
+            "top_id": "9Tiplq2Pvq",
+            "bottom_id": "zGbQgzhVWW"
+          }
+        },
+        {
+          "top": {
+            "x": 52.06679785137357,
+            "y": 11.137995288377079
+          },
+          "bottom": {
+            "x": 52.06679785137357,
+            "y": 87.85701134257397
+          },
+          "source_pair_id": 8,
+          "solver_position": 7,
+          "verified_order_source_id": 8,
+          "effective_pair_index": 7,
+          "source_preview_order_index": 8,
+          "point_ids": {
+            "top_id": "kp_12",
+            "bottom_id": "kp_13"
+          }
+        },
+        {
+          "top": {
+            "x": 50.378095580497586,
+            "y": 21.89033221150598
+          },
+          "bottom": {
+            "x": 50.378095580497586,
+            "y": 76.62127196977598
+          },
+          "source_pair_id": 7,
+          "solver_position": 8,
+          "verified_order_source_id": 7,
+          "effective_pair_index": 8,
+          "source_preview_order_index": 7,
+          "point_ids": {
+            "top_id": "kp_14",
+            "bottom_id": "kp_15"
+          }
+        },
+        {
+          "top": {
+            "x": 63.78090512564466,
+            "y": 31.6171875
+          },
+          "bottom": {
+            "x": 63.78090512564466,
+            "y": 68.74147895391475
+          },
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "source_preview_order_index": 9,
+          "point_ids": {
+            "top_id": "kp_0",
+            "bottom_id": "kp_1"
+          }
+        },
+        {
+          "top": {
+            "x": 83.34955092974104,
+            "y": 30.4453125
+          },
+          "bottom": {
+            "x": 83.34955092974104,
+            "y": 69.3659181657466
+          },
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "source_preview_order_index": 10,
+          "point_ids": {
+            "top_id": "kp_2",
+            "bottom_id": "kp_3"
+          }
+        },
+        {
+          "top": {
+            "x": 98.90149346547022,
+            "y": 20.55639097744361
+          },
+          "bottom": {
+            "x": 98.90149346547022,
+            "y": 78.66395669515278
+          },
+          "source_pair_id": 12,
+          "solver_position": 11,
+          "verified_order_source_id": 12,
+          "effective_pair_index": 11,
+          "source_preview_order_index": 12,
+          "point_ids": {
+            "top_id": "YzRMT1hSFI",
+            "bottom_id": "ejD1N6pEta"
+          }
+        },
+        {
+          "source_pair_id": 11,
+          "solver_position": 12,
+          "verified_order_source_id": 11,
+          "top": {
+            "x": 98.37092731829574,
+            "y": 14.285714285714285
+          },
+          "bottom": {
+            "x": 98.37092731829574,
+            "y": 91.22807017543859
+          },
+          "effective_pair_index": 12
+        }
+      ],
+      "safety_flags": {
+        "audit_only": true,
+        "accepted": false,
+        "downstream_recommendation": false,
+        "candidate_preference_authorized": false,
+        "annotation_writeback": false,
+        "annotation_patch_generated": false
+      },
+      "candidate_id": "joint_xy_family_best_0006"
+    }
+  ],
+  "top_candidate_id": "balanced_joint_xy_best_effort",
+  "top_candidate": {
+    "action_family": "balanced_joint_xy_best_effort",
+    "generation_method": "bounded_deterministic_semantic_coordinate_search",
+    "deterministic": true,
+    "random_or_fixed_step_grid_used": false,
+    "search_variables_used": {
+      "s2_x": 0.0,
+      "s2_top_y": -0.6,
+      "s2_bottom_y": 0.0,
+      "s11_x": 0.0,
+      "s11_top_y": -1.8,
+      "s11_bottom_y": 0.6
+    },
+    "source_pair_2_x_delta_from_baseline": 0.0,
+    "source_pair_2_top_y_delta_from_baseline": -0.5999999999999996,
+    "source_pair_2_bottom_y_delta_from_baseline": 0.0,
+    "source_pair_2_bottom_y_downward_adjustment_applied": false,
+    "source_pair_2_x_compensation_applied": false,
+    "source_pair_11_x_delta_from_baseline": 0.0,
+    "source_pair_11_top_y_delta_from_baseline": -1.8000000000000007,
+    "source_pair_11_bottom_y_delta_from_baseline": 0.5999999999999943,
+    "source_pair_11_x_compensation_applied": false,
+    "source_pair_1_as_sacrificial_adapter": false,
+    "source_pair_1_movement": 4.370091168209268,
+    "s5_s6_bottom_y_adjustment_applied": true,
+    "s7_s8_bottom_y_adjustment_applied": false,
+    "bottom_y_direction_note": {
+      "bottom_y_larger_means_point_lower_in_image": true
+    },
+    "wall_residual_sum": 36.74079625252,
+    "turn_residual_max": 5.475309199624547,
+    "height_consistency_l1": 1.995144922207567,
+    "height_plane_residual_l1": 1.995144922207567,
+    "height_outlier_count": 3,
+    "chain_5_6_7_8_preserved": true,
+    "chain_12_11_1_preserved": true,
+    "topology_valid": true,
+    "self_intersection": false,
+    "order_preserved": true,
+    "total_movement": 32.85133942038537,
+    "max_movement": 5.027686580280486,
+    "objective_breakdown": {
+      "geometry_score": 0.9173262317045515,
+      "height_score": 2.9439311527594585,
+      "2d_anchor_score": 0.7499999999999992,
+      "bottom_depth_score": -0.1,
+      "movement_score": 0.7255674288248537,
+      "height_plane_is_soft_regularizer": true,
+      "total": 10.188838484493106,
+      "comparison_to_references": {
+        "wall_vs_baseline": -56.723505748621534,
+        "wall_vs_robust": -4.729590662745608,
+        "height_vs_previous_9_5": 1.995144922207555
+      }
+    },
+    "recommendation_label": "plausible_but_needs_review",
+    "suppress_reasons": [],
+    "corrected_coordinates": [
+      {
+        "source_pair_id": 2,
+        "solver_position": 1,
+        "verified_order_source_id": 2,
+        "top": {
+          "x": 5.889724310776942,
+          "y": 14.186967418546365
+        },
+        "bottom": {
+          "x": 5.889724310776942,
+          "y": 91.47869674185463
+        },
+        "effective_pair_index": 1
+      },
+      {
+        "top": {
+          "x": 0.34290478814528647,
+          "y": 41.65898099154619
+        },
+        "bottom": {
+          "x": 0.34290478814528647,
+          "y": 57.61789006459336
+        },
+        "source_pair_id": 1,
+        "solver_position": 2,
+        "verified_order_source_id": 1,
+        "effective_pair_index": 2,
+        "source_preview_order_index": 1,
+        "point_ids": {
+          "top_id": "kp_6",
+          "bottom_id": "kp_7"
+        }
+      },
+      {
+        "top": {
+          "x": 9.128202368107015,
+          "y": 43.203167804940094
+        },
+        "bottom": {
+          "x": 9.128202368107015,
+          "y": 56.19947248193613
+        },
+        "source_pair_id": 3,
+        "solver_position": 3,
+        "verified_order_source_id": 3,
+        "effective_pair_index": 3,
+        "source_preview_order_index": 3,
+        "point_ids": {
+          "top_id": "kp_8",
+          "bottom_id": "kp_9"
+        }
+      },
+      {
+        "top": {
+          "x": 27.410957965652642,
+          "y": 39.058894298538
+        },
+        "bottom": {
+          "x": 27.410957965652642,
+          "y": 60.020336398089334
+        },
+        "source_pair_id": 4,
+        "solver_position": 4,
+        "verified_order_source_id": 4,
+        "effective_pair_index": 4,
+        "source_preview_order_index": 4,
+        "point_ids": {
+          "top_id": "kp_10",
+          "bottom_id": "kp_11"
+        }
+      },
+      {
+        "top": {
+          "x": 46.13663017821954,
+          "y": 17.137158536785712
+        },
+        "bottom": {
+          "x": 46.13663017821954,
+          "y": 81.50874592008077
+        },
+        "source_pair_id": 6,
+        "solver_position": 5,
+        "verified_order_source_id": 6,
+        "effective_pair_index": 5,
+        "source_preview_order_index": 6,
+        "point_ids": {
+          "top_id": "-4TzkLtjeO",
+          "bottom_id": "7R_vYvj4bN"
+        }
+      },
+      {
+        "top": {
+          "x": 44.36703866987801,
+          "y": 11.402412342834095
+        },
+        "bottom": {
+          "x": 44.36703866987801,
+          "y": 87.573459332818
+        },
+        "source_pair_id": 5,
+        "solver_position": 6,
+        "verified_order_source_id": 5,
+        "effective_pair_index": 6,
+        "source_preview_order_index": 5,
+        "point_ids": {
+          "top_id": "9Tiplq2Pvq",
+          "bottom_id": "zGbQgzhVWW"
+        }
+      },
+      {
+        "top": {
+          "x": 52.06679785137357,
+          "y": 11.137995288377079
+        },
+        "bottom": {
+          "x": 52.06679785137357,
+          "y": 87.85701134257397
+        },
+        "source_pair_id": 8,
+        "solver_position": 7,
+        "verified_order_source_id": 8,
+        "effective_pair_index": 7,
+        "source_preview_order_index": 8,
+        "point_ids": {
+          "top_id": "kp_12",
+          "bottom_id": "kp_13"
+        }
+      },
+      {
+        "top": {
+          "x": 50.378095580497586,
+          "y": 21.89033221150598
+        },
+        "bottom": {
+          "x": 50.378095580497586,
+          "y": 76.62127196977598
+        },
+        "source_pair_id": 7,
+        "solver_position": 8,
+        "verified_order_source_id": 7,
+        "effective_pair_index": 8,
+        "source_preview_order_index": 7,
+        "point_ids": {
+          "top_id": "kp_14",
+          "bottom_id": "kp_15"
+        }
+      },
+      {
+        "top": {
+          "x": 63.78090512564466,
+          "y": 31.6171875
+        },
+        "bottom": {
+          "x": 63.78090512564466,
+          "y": 68.74147895391475
+        },
+        "source_pair_id": 9,
+        "solver_position": 9,
+        "verified_order_source_id": 9,
+        "effective_pair_index": 9,
+        "source_preview_order_index": 9,
+        "point_ids": {
+          "top_id": "kp_0",
+          "bottom_id": "kp_1"
+        }
+      },
+      {
+        "top": {
+          "x": 83.34955092974104,
+          "y": 30.4453125
+        },
+        "bottom": {
+          "x": 83.34955092974104,
+          "y": 69.3659181657466
+        },
+        "source_pair_id": 10,
+        "solver_position": 10,
+        "verified_order_source_id": 10,
+        "effective_pair_index": 10,
+        "source_preview_order_index": 10,
+        "point_ids": {
+          "top_id": "kp_2",
+          "bottom_id": "kp_3"
+        }
+      },
+      {
+        "top": {
+          "x": 98.90149346547022,
+          "y": 20.55639097744361
+        },
+        "bottom": {
+          "x": 98.90149346547022,
+          "y": 78.66395669515278
+        },
+        "source_pair_id": 12,
+        "solver_position": 11,
+        "verified_order_source_id": 12,
+        "effective_pair_index": 11,
+        "source_preview_order_index": 12,
+        "point_ids": {
+          "top_id": "YzRMT1hSFI",
+          "bottom_id": "ejD1N6pEta"
+        }
+      },
+      {
+        "source_pair_id": 11,
+        "solver_position": 12,
+        "verified_order_source_id": 11,
+        "top": {
+          "x": 98.37092731829574,
+          "y": 12.485714285714284
+        },
+        "bottom": {
+          "x": 98.37092731829574,
+          "y": 91.82807017543858
+        },
+        "effective_pair_index": 12
+      }
+    ],
+    "safety_flags": {
+      "audit_only": true,
+      "accepted": false,
+      "downstream_recommendation": false,
+      "candidate_preference_authorized": false,
+      "annotation_writeback": false,
+      "annotation_patch_generated": false
+    },
+    "candidate_id": "balanced_joint_xy_best_effort",
+    "source_action_family": "s2_s11_joint_height_angle"
+  },
+  "safety_flags": {
+    "audit_only": true,
+    "accepted": false,
+    "downstream_recommendation": false,
+    "candidate_preference_authorized": false,
+    "annotation_writeback": false,
+    "annotation_patch_generated": false
+  },
+  "audit_only": true,
+  "accepted": false,
+  "downstream_recommendation": false,
+  "candidate_preference_authorized": false,
+  "annotation_writeback": false,
+  "annotation_patch_generated": false
+}
