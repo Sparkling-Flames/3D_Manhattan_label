@@ -838,8 +838,18 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                     for field, values in fields.items()
                     if isinstance(values, Mapping) and values.get("changed")
                 ]
+                source_pair_id = change.get("source_pair_id")
+                solver_position = change.get(
+                    "solver_position", change.get("effective_pair_index")
+                )
+                pair_label = (
+                    f"source pair {source_pair_id} "
+                    f"(solver position {solver_position})"
+                    if source_pair_id is not None
+                    else f"pair {change.get('effective_pair_index')}"
+                )
                 lines.append(
-                    f"  - pair {change.get('effective_pair_index')}: "
+                    f"  - {pair_label}: "
                     + (", ".join(changed_fields) if changed_fields else "no numeric change")
                 )
             lines.extend(

@@ -5,7 +5,7 @@
 - Review schema: `local_3d_projection_review_m15_27_1_bridge_v1`
 - Projection schema: `local_3d_projection_m15_19_v1`
 - Input file: `_review_input.json`
-- Input SHA-256: `180789b0620ba11a07834762be66dd3a96a5da2ebff085035bc3248284ba7abf`
+- Input SHA-256: `a0c9023204abb7fedb64d0239afa4673571c896ff1455a7e0424d60e3c3119bf`
 - Ordered-pair source: `input.ordered_pairs`
 - coordinate_mode requested/effective: `ls_percent` / `ls_percent`
 - W / H / CAM_H: `1024` / `512` / `1.6`
@@ -26,7 +26,7 @@ No automatic fix is claimed.
 Texture toggle and ghost are display controls only.
 No annotation patch or Label Studio writeback is produced.
 
-### anchor_34_plus_910 | segment_aware_manhattan_wall_line_refit | review
+### robust_all_long_edges | segment_aware_manhattan_wall_line_refit | review
 
 - decision_class: `None`
 - improves: `[]`
@@ -37,19 +37,19 @@ No annotation patch or Label Studio writeback is produced.
 - primary_unresolved_edges: `[]`
 - short_wall_edges_after: `[]`
 - Applied coordinate changes:
-  - pair 1: no numeric change
-  - pair 2: no numeric change
-  - pair 3: no numeric change
-  - pair 4: no numeric change
-  - pair 5: no numeric change
-  - pair 6: no numeric change
-  - pair 7: no numeric change
-  - pair 8: no numeric change
-  - pair 9: no numeric change
-  - pair 10: no numeric change
-  - pair 11: no numeric change
-  - pair 12: no numeric change
-- wall residual sum: 93.464 -> 1.825
+  - source pair 2 (solver position 1): no numeric change
+  - source pair 1 (solver position 2): no numeric change
+  - source pair 3 (solver position 3): no numeric change
+  - source pair 4 (solver position 4): no numeric change
+  - source pair 6 (solver position 5): no numeric change
+  - source pair 5 (solver position 6): no numeric change
+  - source pair 8 (solver position 7): no numeric change
+  - source pair 7 (solver position 8): no numeric change
+  - source pair 9 (solver position 9): no numeric change
+  - source pair 10 (solver position 10): no numeric change
+  - source pair 12 (solver position 11): no numeric change
+  - source pair 11 (solver position 12): no numeric change
+- wall residual sum: 93.464 -> 41.470
 - Preview only; this is not correctness evidence and cannot write back.
 
 ## Candidate Metric Summary
@@ -57,24 +57,24 @@ No annotation patch or Label Studio writeback is produced.
 | variant | wall residual sum | corner residual sum | height residual sum | vertical x residual sum | min wall | self-intersection |
 | --- | ---: | ---: | ---: | ---: | ---: | --- |
 | original | 93.464 | 173.124 | 2.258 | 0.000 | 0.087 | False |
-| anchor_34_plus_910 | 1.825 | 0.000 | 0.000 | 0.000 | 0.170 | False |
+| robust_all_long_edges | 41.470 | 0.000 | 0.000 | 0.000 | 0.312 | False |
 
 ## Pair 3D Coordinates — original
 
 | pair | source order | floor (x,y,z) | ceiling (x,y,z) | wall height | height residual | clamp warnings |
 | ---: | ---: | --- | --- | ---: | ---: | --- |
-| 1 | None | (-0.159, -1.600, 0.409) | (-0.159, 0.876, 0.409) | 2.476 | -0.594 | none |
-| 2 | None | (-0.350, -1.600, 4.076) | (-0.350, 1.376, 4.076) | 2.976 | -0.095 | none |
-| 3 | None | (-4.617, -1.600, 7.293) | (-4.617, 1.759, 7.293) | 3.359 | 0.289 | none |
-| 4 | None | (-4.616, -1.600, -0.797) | (-4.616, 1.759, -0.797) | 3.359 | 0.288 | none |
-| 5 | None | (-0.211, -1.600, -0.693) | (-0.211, 1.446, -0.693) | 3.046 | -0.024 | none |
-| 6 | None | (-0.250, -1.600, -0.615) | (-0.250, 1.635, -0.615) | 3.235 | 0.165 | none |
-| 7 | None | (0.067, -1.600, -0.636) | (0.067, 1.518, -0.636) | 3.118 | 0.048 | none |
-| 8 | None | (0.052, -1.600, -1.420) | (0.052, 1.342, -1.420) | 2.942 | -0.128 | none |
-| 9 | None | (1.897, -1.600, -1.565) | (1.897, 1.495, -1.565) | 3.095 | 0.024 | none |
-| 10 | None | (1.919, -1.600, 1.215) | (1.919, 1.498, 1.215) | 3.098 | 0.028 | none |
-| 11 | None | (0.072, -1.600, 1.145) | (0.072, 1.427, 1.145) | 3.027 | -0.044 | none |
-| 12 | None | (0.046, -1.600, 0.450) | (0.046, 0.939, 0.450) | 2.539 | -0.531 | none |
+| 1 | 2 | (-0.159, -1.600, 0.409) | (-0.159, 0.876, 0.409) | 2.476 | -0.594 | none |
+| 2 | 1 | (-0.350, -1.600, 4.076) | (-0.350, 1.376, 4.076) | 2.976 | -0.095 | none |
+| 3 | 3 | (-4.617, -1.600, 7.293) | (-4.617, 1.759, 7.293) | 3.359 | 0.289 | none |
+| 4 | 4 | (-4.616, -1.600, -0.797) | (-4.616, 1.759, -0.797) | 3.359 | 0.288 | none |
+| 5 | 6 | (-0.211, -1.600, -0.693) | (-0.211, 1.446, -0.693) | 3.046 | -0.024 | none |
+| 6 | 5 | (-0.250, -1.600, -0.615) | (-0.250, 1.635, -0.615) | 3.235 | 0.165 | none |
+| 7 | 8 | (0.067, -1.600, -0.636) | (0.067, 1.518, -0.636) | 3.118 | 0.048 | none |
+| 8 | 7 | (0.052, -1.600, -1.420) | (0.052, 1.342, -1.420) | 2.942 | -0.128 | none |
+| 9 | 9 | (1.897, -1.600, -1.565) | (1.897, 1.495, -1.565) | 3.095 | 0.024 | none |
+| 10 | 10 | (1.919, -1.600, 1.215) | (1.919, 1.498, 1.215) | 3.098 | 0.028 | none |
+| 11 | 12 | (0.072, -1.600, 1.145) | (0.072, 1.427, 1.145) | 3.027 | -0.044 | none |
+| 12 | 11 | (0.046, -1.600, 0.450) | (0.046, 0.939, 0.450) | 2.539 | -0.531 | none |
 
 ## Wall Metrics — original
 
@@ -110,41 +110,41 @@ No annotation patch or Label Studio writeback is produced.
 | 11 | 10 | 11 | 94.329 | 4.329 | False |
 | 12 | 11 | 12 | 103.431 | 13.431 | False |
 
-## Pair 3D Coordinates — anchor_34_plus_910
+## Pair 3D Coordinates — robust_all_long_edges
 
 | pair | source order | floor (x,y,z) | ceiling (x,y,z) | wall height | height residual | clamp warnings |
 | ---: | ---: | --- | --- | ---: | ---: | --- |
-| 1 | None | (-0.187, -1.600, 0.430) | (-0.187, 1.759, 0.430) | 3.359 | -0.000 | none |
-| 2 | None | (-0.169, -1.600, 7.185) | (-0.169, 1.759, 7.185) | 3.359 | -0.000 | none |
-| 3 | None | (-4.606, -1.600, 7.196) | (-4.606, 1.759, 7.196) | 3.359 | 0.000 | none |
-| 4 | None | (-4.627, -1.600, -0.784) | (-4.627, 1.759, -0.784) | 3.359 | -0.000 | none |
-| 5 | None | (-0.231, -1.600, -0.796) | (-0.231, 1.759, -0.796) | 3.359 | -0.000 | none |
-| 6 | None | (-0.230, -1.600, -0.625) | (-0.230, 1.759, -0.625) | 3.359 | 0.000 | none |
-| 7 | None | (0.061, -1.600, -0.626) | (0.061, 1.759, -0.626) | 3.359 | 0.000 | none |
-| 8 | None | (0.058, -1.600, -1.525) | (0.058, 1.759, -1.525) | 3.359 | 0.000 | none |
-| 9 | None | (1.905, -1.600, -1.530) | (1.905, 1.759, -1.530) | 3.359 | -0.000 | none |
-| 10 | None | (1.912, -1.600, 1.190) | (1.912, 1.759, 1.190) | 3.359 | 0.000 | none |
-| 11 | None | (0.060, -1.600, 1.195) | (0.060, 1.759, 1.195) | 3.359 | 0.000 | none |
-| 12 | None | (0.058, -1.600, 0.429) | (0.058, 1.759, 0.429) | 3.359 | -0.000 | none |
+| 1 | 2 | (-0.508, -1.600, 0.476) | (-0.508, 1.759, 0.476) | 3.359 | 0.000 | none |
+| 2 | 1 | (-0.141, -1.600, 6.556) | (-0.141, 1.759, 6.556) | 3.359 | -0.000 | none |
+| 3 | 3 | (-4.401, -1.600, 6.813) | (-4.401, 1.759, 6.813) | 3.359 | 0.000 | none |
+| 4 | 4 | (-4.857, -1.600, -0.741) | (-4.857, 1.759, -0.741) | 3.359 | 0.000 | none |
+| 5 | 6 | (-0.252, -1.600, -1.020) | (-0.252, 1.759, -1.020) | 3.359 | -0.000 | none |
+| 6 | 5 | (-0.228, -1.600, -0.618) | (-0.228, 1.759, -0.618) | 3.359 | 0.000 | none |
+| 7 | 8 | (0.083, -1.600, -0.636) | (0.083, 1.759, -0.636) | 3.359 | -0.000 | none |
+| 8 | 7 | (0.034, -1.600, -1.444) | (0.034, 1.759, -1.444) | 3.359 | 0.000 | none |
+| 9 | 9 | (1.825, -1.600, -1.553) | (1.825, 1.759, -1.553) | 3.359 | -0.000 | none |
+| 10 | 10 | (1.988, -1.600, 1.151) | (1.988, 1.759, 1.151) | 3.359 | 0.000 | none |
+| 11 | 12 | (0.087, -1.600, 1.265) | (0.087, 1.759, 1.265) | 3.359 | -0.000 | none |
+| 12 | 11 | (0.038, -1.600, 0.443) | (0.038, 1.759, 0.443) | 3.359 | -0.000 | none |
 
-## Wall Metrics — anchor_34_plus_910
+## Wall Metrics — robust_all_long_edges
 
 | wall | from-to | length | direction | nearest axis | residual | short |
 | ---: | --- | ---: | ---: | ---: | ---: | --- |
-| 1 | 1-2 | 6.755 | 89.848 | 90.000 | 0.152 | False |
-| 2 | 2-3 | 4.436 | 179.848 | 180.000 | 0.152 | False |
-| 3 | 3-4 | 7.981 | 269.848 | 270.000 | 0.152 | False |
-| 4 | 4-5 | 4.396 | 359.848 | 0.000 | 0.152 | False |
-| 5 | 5-6 | 0.170 | 89.848 | 90.000 | 0.152 | True |
-| 6 | 6-7 | 0.291 | 359.848 | 0.000 | 0.152 | True |
-| 7 | 7-8 | 0.899 | 269.848 | 270.000 | 0.152 | False |
-| 8 | 8-9 | 1.846 | 359.848 | 0.000 | 0.152 | False |
-| 9 | 9-10 | 2.721 | 89.848 | 90.000 | 0.152 | False |
-| 10 | 10-11 | 1.851 | 179.848 | 180.000 | 0.152 | False |
-| 11 | 11-12 | 0.766 | 269.848 | 270.000 | 0.152 | False |
-| 12 | 12-1 | 0.246 | 179.848 | 180.000 | 0.152 | True |
+| 1 | 1-2 | 6.091 | 86.544 | 90.000 | 3.456 | False |
+| 2 | 2-3 | 4.268 | 176.544 | 180.000 | 3.456 | False |
+| 3 | 3-4 | 7.568 | 266.544 | 270.000 | 3.456 | False |
+| 4 | 4-5 | 4.613 | 356.544 | 0.000 | 3.456 | False |
+| 5 | 5-6 | 0.403 | 86.544 | 90.000 | 3.456 | False |
+| 6 | 6-7 | 0.312 | 356.544 | 0.000 | 3.456 | True |
+| 7 | 7-8 | 0.809 | 266.544 | 270.000 | 3.456 | False |
+| 8 | 8-9 | 1.794 | 356.544 | 0.000 | 3.456 | False |
+| 9 | 9-10 | 2.708 | 86.544 | 90.000 | 3.456 | False |
+| 10 | 10-11 | 1.904 | 176.544 | 180.000 | 3.456 | False |
+| 11 | 11-12 | 0.824 | 266.544 | 270.000 | 3.456 | False |
+| 12 | 12-1 | 0.547 | 176.544 | 180.000 | 3.456 | False |
 
-## Corner Metrics — anchor_34_plus_910
+## Corner Metrics — robust_all_long_edges
 
 | pair | prev wall | next wall | turn angle | residual to 90 | warning |
 | ---: | ---: | ---: | ---: | ---: | --- |

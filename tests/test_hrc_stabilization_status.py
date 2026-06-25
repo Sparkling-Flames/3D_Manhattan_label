@@ -15,3 +15,5 @@ def test_c6_5a_7_1_is_completed_without_authorizing_c6_5b():
     assert "candidate_specific_c4_contract_complete=false" in text
     assert "C6.5a.9 已物化" in text
     assert "corner 来自相邻墙线交点" in text
+    assert "C6.5a.9.1 已修正 3741 的 id 语义" in text
+    assert "`source_pair_id=2 -> solver_position=1`" in text

@@ -14,8 +14,18 @@ from tools.paper_a_manhattan.manhattan_3d_projection import (
     project_layout_to_3d,
 )
 
-VERIFIED_ORDER = [2, 1, 3, 4, 6, 5, 8, 7, 9, 10, 12, 11]
-PAIR_WEIGHTS = {
+VERIFIED_ORDER_SOURCE_IDS = [2, 1, 3, 4, 6, 5, 8, 7, 9, 10, 12, 11]
+SOURCE_PAIR_TO_SOLVER_POSITION = {
+    source_pair_id: solver_position
+    for solver_position, source_pair_id in enumerate(
+        VERIFIED_ORDER_SOURCE_IDS, start=1
+    )
+}
+SOLVER_POSITION_TO_SOURCE_PAIR_ID = {
+    solver_position: source_pair_id
+    for source_pair_id, solver_position in SOURCE_PAIR_TO_SOLVER_POSITION.items()
+}
+SOURCE_PAIR_WEIGHTS = {
     1: 1.5,
     2: 0.25,
     3: 8.0,
@@ -29,15 +39,60 @@ PAIR_WEIGHTS = {
     11: 1.5,
     12: 1.5,
 }
-SEGMENTS = {
-    "strong_anchor_segment": {"pairs": [3, 4], "edge": [3, 4]},
-    "medium_anchor_segment": {"pairs": [9, 10], "edge": [9, 10]},
-    "suspect_skew_segment": {"pairs": [2, 3], "low_confidence_pair": 2},
-    "complex_short_wall_chain_A": {"pairs": [5, 6, 7, 8]},
-    "complex_short_wall_chain_B": {"pairs": [12, 11, 1]},
-    "protected_structure": {"chains": [[5, 6, 7, 8], [12, 11, 1]]},
+SEGMENTS_BY_SOURCE_PAIR_ID = {
+    "strong_anchor_segment": {
+        "source_pair_ids": [3, 4],
+        "source_edge_ids": [3, 4],
+    },
+    "medium_anchor_segment": {
+        "source_pair_ids": [9, 10],
+        "source_edge_ids": [9, 10],
+    },
+    "suspect_skew_segment": {
+        "source_pair_ids": [2, 3],
+        "low_confidence_source_pair_id": 2,
+    },
+    "complex_short_wall_chain_A": {
+        "source_pair_ids": [5, 6, 7, 8],
+        "verified_cyclic_source_path": [6, 5, 8, 7],
+    },
+    "complex_short_wall_chain_B": {
+        "source_pair_ids": [12, 11, 1],
+        "verified_cyclic_source_path": [12, 11, 2, 1],
+        "topology_note": "source pair 2 lies between source pairs 11 and 1 in verified order",
+    },
+    "protected_structure": {
+        "source_pair_chains": [[5, 6, 7, 8], [12, 11, 1]]
+    },
 }
-PROTECTED_EDGES = ((5, 6), (6, 7), (7, 8), (11, 12), (12, 1))
+PROTECTED_SOURCE_EDGES_BY_CHAIN = {
+    "chain_5_6_7_8": ((6, 5), (5, 8), (8, 7)),
+    "chain_12_11_1": ((12, 11), (11, 2), (2, 1)),
+}
+
+
+def solver_position_for_source_pair(source_pair_id: int) -> int:
+    return SOURCE_PAIR_TO_SOLVER_POSITION[source_pair_id]
+
+
+def source_pair_id_for_solver_position(solver_position: int) -> int:
+    return SOLVER_POSITION_TO_SOURCE_PAIR_ID[solver_position]
+
+
+def _array_index_for_source_pair(source_pair_id: int) -> int:
+    return solver_position_for_source_pair(source_pair_id) - 1
+
+
+def _edge_index_for_source_edge(left_source_id: int, right_source_id: int) -> int:
+    left_position = solver_position_for_source_pair(left_source_id)
+    right_position = solver_position_for_source_pair(right_source_id)
+    expected_right = left_position % len(VERIFIED_ORDER_SOURCE_IDS) + 1
+    if right_position != expected_right:
+        raise ValueError(
+            f"source edge {left_source_id}->{right_source_id} is not adjacent "
+            "in verified order"
+        )
+    return left_position - 1
 
 
 def _angle_mod_90(vector: np.ndarray) -> float:
@@ -54,12 +109,15 @@ def _direction_variants(points: np.ndarray) -> list[dict[str, Any]]:
     edge_vectors = np.roll(points, -1, axis=0) - points
     edge_angles = [_angle_mod_90(row) for row in edge_vectors]
     lengths = np.linalg.norm(edge_vectors, axis=1)
-    theta34 = edge_angles[2]
-    theta910 = edge_angles[8]
+    theta34 = edge_angles[_edge_index_for_source_edge(3, 4)]
+    theta910 = edge_angles[_edge_index_for_source_edge(9, 10)]
+    excluded_source_ids = {2, 6, 5, 8, 12, 11}
     long = [
         index
         for index, length in enumerate(lengths)
-        if length >= float(np.median(lengths)) and index not in {1, 4, 5, 6, 10, 11}
+        if length >= float(np.median(lengths))
+        and source_pair_id_for_solver_position(index + 1)
+        not in excluded_source_ids
     ]
     return [
         {"variant_id": "anchor_34_dominant", "theta_rad": theta34},
@@ -89,7 +147,9 @@ def _fit_lines(
     for start in (0, 1):
         families = [(start + index) % 2 for index in range(len(points))]
         residual = sum(
-            PAIR_WEIGHTS[index + 1]
+            SOURCE_PAIR_WEIGHTS[
+                source_pair_id_for_solver_position(index + 1)
+            ]
             * abs(
                 math.sin(
                     math.atan2(float(vector[1]), float(vector[0]))
@@ -106,15 +166,23 @@ def _fit_lines(
         direction = directions[family]
         normal = np.array([-direction[1], direction[0]])
         left, right = points[index], points[(index + 1) % len(points)]
-        left_weight = PAIR_WEIGHTS[index + 1]
-        right_weight = PAIR_WEIGHTS[(index + 1) % len(points) + 1]
+        left_solver_position = index + 1
+        right_solver_position = (index + 1) % len(points) + 1
+        left_source_id = source_pair_id_for_solver_position(left_solver_position)
+        right_source_id = source_pair_id_for_solver_position(right_solver_position)
+        left_weight = SOURCE_PAIR_WEIGHTS[left_source_id]
+        right_weight = SOURCE_PAIR_WEIGHTS[right_source_id]
         offset = (
             left_weight * float(normal @ left)
             + right_weight * float(normal @ right)
         ) / (left_weight + right_weight)
         lines.append(
             {
-                "edge": [index + 1, (index + 1) % len(points) + 1],
+                "source_edge_ids": [left_source_id, right_source_id],
+                "solver_edge_positions": [
+                    left_solver_position,
+                    right_solver_position,
+                ],
                 "family": "A" if family == 0 else "B",
                 "direction": direction.tolist(),
                 "normal": normal.tolist(),
@@ -127,7 +195,10 @@ def _fit_lines(
         previous, current = lines[(index - 1) % len(lines)], lines[index]
         matrix = np.array([previous["normal"], current["normal"]], dtype=float)
         if abs(float(np.linalg.det(matrix))) <= 1e-9:
-            errors.append(f"parallel_adjacent_lines_at_pair_{index + 1}")
+            source_pair_id = source_pair_id_for_solver_position(index + 1)
+            errors.append(
+                f"parallel_adjacent_lines_at_source_pair_{source_pair_id}"
+            )
             continue
         intersections.append(
             np.linalg.solve(
@@ -139,17 +210,27 @@ def _fit_lines(
 
 def _chain_preserved(
     fitted: np.ndarray, baseline_lengths: Mapping[tuple[int, int], float]
-) -> tuple[bool, float]:
+) -> tuple[dict[str, bool], float]:
     median_length = float(np.median(list(baseline_lengths.values())))
     threshold = max(0.12, 0.12 * median_length)
     lengths = {
-        edge: float(np.linalg.norm(fitted[edge[1] - 1] - fitted[edge[0] - 1]))
-        for edge in PROTECTED_EDGES
+        edge: float(
+            np.linalg.norm(
+                fitted[_array_index_for_source_pair(edge[1])]
+                - fitted[_array_index_for_source_pair(edge[0])]
+            )
+        )
+        for edges in PROTECTED_SOURCE_EDGES_BY_CHAIN.values()
+        for edge in edges
     }
-    return all(
-        lengths[edge] >= min(threshold, baseline_lengths[edge] * 0.35)
-        for edge in PROTECTED_EDGES
-    ), min(lengths.values())
+    preserved = {
+        chain_name: all(
+            lengths[edge] >= min(threshold, baseline_lengths[edge] * 0.35)
+            for edge in edges
+        )
+        for chain_name, edges in PROTECTED_SOURCE_EDGES_BY_CHAIN.items()
+    }
+    return preserved, min(lengths.values())
 
 
 def _movement(
@@ -165,7 +246,17 @@ def _movement(
             (float(left["bottom"]["x"]), float(left["bottom"]["y"])),
             (float(right["bottom"]["x"]), float(right["bottom"]["y"])),
         )
-        rows.append({"pair_index": index, "top": top, "bottom": bottom, "max": max(top, bottom)})
+        source_pair_id = source_pair_id_for_solver_position(index)
+        rows.append(
+            {
+                "source_pair_id": source_pair_id,
+                "solver_position": index,
+                "verified_order_source_id": source_pair_id,
+                "top": top,
+                "bottom": bottom,
+                "max": max(top, bottom),
+            }
+        )
     return {
         "per_pair": rows,
         "total": sum(row["top"] + row["bottom"] for row in rows),
@@ -176,7 +267,7 @@ def _movement(
 def solve_segment_aware_refit(
     ordered_pairs: Sequence[Mapping[str, Any]],
     *,
-    point_ids: Mapping[int, Mapping[str, str]],
+    point_ids_by_source_pair_id: Mapping[int, Mapping[str, str]],
     reprojection_fn: Callable[..., dict[str, Any]] | None = floor_point_to_layout_pair,
 ) -> dict[str, Any]:
     if len(ordered_pairs) != 12:
@@ -199,7 +290,10 @@ def solve_segment_aware_refit(
         dtype=float,
     )
     baseline_lengths = {
-        (index + 1, (index + 1) % 12 + 1): float(
+        (
+            source_pair_id_for_solver_position(index + 1),
+            source_pair_id_for_solver_position((index + 1) % 12 + 1),
+        ): float(
             np.linalg.norm(points[(index + 1) % 12] - points[index])
         )
         for index in range(12)
@@ -207,8 +301,10 @@ def solve_segment_aware_refit(
     layout_height = float(
         np.median(
             [
-                baseline_projection["pairs"][index - 1]["wall_height"]
-                for index in (3, 4)
+                baseline_projection["pairs"][
+                    _array_index_for_source_pair(source_pair_id)
+                ]["wall_height"]
+                for source_pair_id in (3, 4)
             ]
         )
     )
@@ -220,6 +316,7 @@ def solve_segment_aware_refit(
         if len(fitted) == 12 and not errors:
             try:
                 for index, point in enumerate(fitted, start=1):
+                    source_pair_id = source_pair_id_for_solver_position(index)
                     pair = reprojection_fn(
                         float(point[0]),
                         float(point[1]),
@@ -229,19 +326,30 @@ def solve_segment_aware_refit(
                     corrected.append(
                         {
                             **pair,
+                            "source_pair_id": source_pair_id,
+                            "solver_position": index,
+                            "verified_order_source_id": source_pair_id,
                             "effective_pair_index": index,
-                            "source_preview_order_index": VERIFIED_ORDER[index - 1],
-                            "point_ids": dict(point_ids[index]),
+                            "source_preview_order_index": source_pair_id,
+                            "point_ids": dict(
+                                point_ids_by_source_pair_id[source_pair_id]
+                            ),
                         }
                     )
             except (KeyError, TypeError, ValueError) as exc:
                 suppress.append(f"reprojection_failed:{type(exc).__name__}")
-        chain_ok, protected_min = (
+        chain_status, protected_min = (
             _chain_preserved(fitted, baseline_lengths)
             if len(fitted) == 12
-            else (False, 0.0)
+            else (
+                {
+                    chain_name: False
+                    for chain_name in PROTECTED_SOURCE_EDGES_BY_CHAIN
+                },
+                0.0,
+            )
         )
-        if not chain_ok:
+        if not all(chain_status.values()):
             suppress.append("protected_short_wall_chain_not_preserved")
         variant_projection = (
             project_layout_to_3d(corrected, 1024, 512, "ls_percent", DEFAULT_CAMERA_HEIGHT)
@@ -252,6 +360,9 @@ def solve_segment_aware_refit(
         floor = metrics.get("floorprint", {})
         turns = metrics.get("corner_turns", {})
         movement = _movement(ordered_pairs, corrected) if corrected else {"per_pair": [], "total": None, "max": None}
+        movement_by_source = {
+            row["source_pair_id"]: row for row in movement["per_pair"]
+        }
         if floor.get("self_intersection"):
             suppress.append("self_intersection")
         recommendation = "suppress" if suppress else "plausible_but_needs_review"
@@ -264,29 +375,51 @@ def solve_segment_aware_refit(
                 )
                 % 180.0,
                 "wall_lines": lines,
-                "fitted_intersections": fitted.tolist(),
+                "fitted_intersections_by_solver_position": [
+                    {
+                        "source_pair_id": source_pair_id_for_solver_position(
+                            solver_position
+                        ),
+                        "solver_position": solver_position,
+                        "verified_order_source_id": source_pair_id_for_solver_position(
+                            solver_position
+                        ),
+                        "floor_xz": point.tolist(),
+                    }
+                    for solver_position, point in enumerate(fitted, start=1)
+                ],
                 "corrected_coordinates": corrected or None,
+                "movement_by_source_pair_id": movement["per_pair"],
                 "metrics": {
                     "topology_valid": len(fitted) == 12,
                     "self_intersection": floor.get("self_intersection"),
                     "order_preserved": bool(corrected) and [
-                        row["source_preview_order_index"] for row in corrected
+                        row["verified_order_source_id"] for row in corrected
                     ]
-                    == VERIFIED_ORDER,
+                    == VERIFIED_ORDER_SOURCE_IDS,
                     "wall_family_assignment_valid": not errors,
                     "strong_anchor_movement": max(
-                        (movement["per_pair"][index - 1]["max"] for index in (3, 4)),
+                        (
+                            movement_by_source[source_pair_id]["max"]
+                            for source_pair_id in (3, 4)
+                        ),
                         default=None,
                     ),
                     "medium_anchor_movement": max(
-                        (movement["per_pair"][index - 1]["max"] for index in (9, 10)),
+                        (
+                            movement_by_source[source_pair_id]["max"]
+                            for source_pair_id in (9, 10)
+                        ),
                         default=None,
                     ),
-                    "suspect_point_2_movement": (
-                        movement["per_pair"][1]["max"] if movement["per_pair"] else None
+                    "suspect_source_pair_2_movement": (
+                        movement_by_source[2]["max"] if movement_by_source else None
                     ),
-                    "chain_5_6_7_8_preserved": chain_ok,
-                    "chain_12_11_1_preserved": chain_ok,
+                    "suspect_source_pair_2_solver_position": (
+                        solver_position_for_source_pair(2)
+                    ),
+                    "chain_5_6_7_8_preserved": chain_status["chain_5_6_7_8"],
+                    "chain_12_11_1_preserved": chain_status["chain_12_11_1"],
                     "min_wall_length": floor.get("summary", {}).get("minimum_wall_length"),
                     "protected_chain_min_wall_length": protected_min,
                     "short_wall_count": floor.get("summary", {}).get("short_wall_count"),
@@ -326,10 +459,17 @@ def solve_segment_aware_refit(
     return {
         "status": "ok" if top else "failed",
         "fail_closed": top is None,
-        "verified_order": VERIFIED_ORDER,
-        "segment_definitions": SEGMENTS,
-        "observation_weights": PAIR_WEIGHTS,
-        "layout_height_source": "strong_anchor_pairs_3_4",
+        "id_semantics": {
+            "source_pair_id": "Label Studio / preview original pair number",
+            "solver_position": "one-based position after verified-order sorting",
+            "verified_order_source_id": "source_pair_id at each solver_position",
+        },
+        "verified_order_source_ids": VERIFIED_ORDER_SOURCE_IDS,
+        "source_pair_to_solver_position": SOURCE_PAIR_TO_SOLVER_POSITION,
+        "solver_position_to_verified_order_source_id": SOLVER_POSITION_TO_SOURCE_PAIR_ID,
+        "segment_definitions_by_source_pair_id": SEGMENTS_BY_SOURCE_PAIR_ID,
+        "observation_weights_by_source_pair_id": SOURCE_PAIR_WEIGHTS,
+        "layout_height_source": "strong_anchor_source_pairs_3_4",
         "layout_height": layout_height,
         "direction_variants": variants,
         "top_candidate_id": top["variant_id"] if top else None,
