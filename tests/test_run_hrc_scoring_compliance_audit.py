@@ -71,9 +71,16 @@ def test_layer_mapping_and_violations_match_current_implementation():
     assert payload["selection_regression"]["selection_drift"] is False
     assert payload["selection_regression"]["accepted"] is False
     assert payload["selection_regression"]["downstream_recommendation"] is False
-    assert payload["next_allowed_step"] == (
-        "C6.5a.5.1 consistency fix / post-fix audit only; C6.5b remains blocked"
-    )
+    assert "C6.5a.5.1 consistency fix" not in payload["next_allowed_step"]
+    assert "C6.5a.6 task238_ann2389_4543gt candidate dry-run" in payload["next_allowed_step"]
+    assert payload["corrected_gt_status_summary"] == {
+        "old_case": "task238_ann2389",
+        "old_case_role": "deprecated_old_gt_diagnostic_only",
+        "old_case_manual_requirements_are_corrected_gt_blockers": False,
+        "corrected_case": "task238_ann2389_4543gt",
+        "candidate_preference_authorized_old_case": False,
+        "candidate_preference_authorized_corrected_case": False,
+    }
     assert payload["status_boundaries"] == {
         "c3_shadow_expansion": "blocked",
         "c7_optimizer": "blocked",

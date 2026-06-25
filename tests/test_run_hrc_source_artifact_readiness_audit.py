@@ -86,6 +86,14 @@ def test_manifest_validation_and_readiness_semantics():
         "task238_ann2389": False,
         "task238_ann2389_4543gt": False,
     }
+    assert payload["corrected_gt_status_summary"] == {
+        "old_case": "task238_ann2389",
+        "old_case_role": "deprecated_old_gt_diagnostic_only",
+        "old_case_manual_requirements_are_corrected_gt_blockers": False,
+        "corrected_case": "task238_ann2389_4543gt",
+        "candidate_preference_authorized_old_case": False,
+        "candidate_preference_authorized_corrected_case": False,
+    }
 
     gt75 = cases["gt75_task533"]["evidence_readiness_matrix"]
     assert gt75["verified_order_record"]["status"] == "available_from_existing_artifact"
@@ -93,7 +101,8 @@ def test_manifest_validation_and_readiness_semantics():
     assert gt75["projection_derived_height_evidence"]["status"] == "unavailable"
     assert gt75["candidate_row_height_source"]["status"] == "available_from_existing_artifact"
 
-    assert payload["recommended_next_step"] == "C6.5a.5.1 consistency fix / post-fix audit only"
+    assert "C6.5a.5.1 consistency fix" not in payload["recommended_next_step"]
+    assert "C6.5a.6 task238_ann2389_4543gt candidate dry-run" in payload["recommended_next_step"]
     forbidden = ("C3", "C7", "optimizer", "active runner", "writeback", "proposal manifest")
     assert not any(token.lower() in payload["recommended_next_step"].lower() for token in forbidden)
 

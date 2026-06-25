@@ -27,7 +27,7 @@
 
 ## 3. 唯一允许的下一步
 
-C6.5a.4a/4b/4c/4d 与 C6.5a.5 已完成。4543gt 使用独立 4-pair corrected projection，explicit column identity available；该 corrected layout 无短墙，keep-distinct 不适用。2369 manual sidecar 仍 pending，2369/2389 仍无 candidate-specific C4 evidence。当前唯一允许下一步为 C6.5a.5.1 consistency fix / post-fix audit；C6.5b、C3 shadow expansion、C7/C9/C10 继续 blocked。
+C6.5a.5.1 completed。4543gt uses independent 4-pair corrected projection；`short_wall_exists=false`；`keep_distinct_contract=not_applicable`；explicit column identity available。旧 `task238_ann2389` 仅为 deprecated old-GT diagnostic，其 manual requirements 不是 corrected-GT blocker。C6.5b remains blocked；下一步只允许人工审查本 corrected-GT audit，或在用户明确批准后执行 C6.5a.6 `task238_ann2389_4543gt` candidate dry-run。C3 shadow expansion、C7/C9/C10 继续 blocked。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 

@@ -7,7 +7,7 @@
 - Compliance: `partial`
 - C6 status: `audit_blocked`
 - C6.5b authorized: `false`
-- Next allowed step: `C6.5a.5.1 consistency fix / post-fix audit only; C6.5b remains blocked`
+- Next allowed step: `human review of corrected-GT audit, or C6.5a.6 task238_ann2389_4543gt candidate dry-run only after explicit user approval; C6.5b remains blocked`
 
 - `L0`: `complete`
 - `L1`: `complete`

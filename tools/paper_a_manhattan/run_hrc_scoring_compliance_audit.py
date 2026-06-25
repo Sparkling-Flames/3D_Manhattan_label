@@ -278,6 +278,14 @@ def build_audit_payload() -> dict[str, Any]:
             "task238_ann2389": False,
             "task238_ann2389_4543gt": False,
         },
+        "corrected_gt_status_summary": {
+            "old_case": "task238_ann2389",
+            "old_case_role": "deprecated_old_gt_diagnostic_only",
+            "old_case_manual_requirements_are_corrected_gt_blockers": False,
+            "corrected_case": "task238_ann2389_4543gt",
+            "candidate_preference_authorized_old_case": False,
+            "candidate_preference_authorized_corrected_case": False,
+        },
         "audit_only": True,
         "evaluator_changed": True,
         "ranking_key_changed": True,
@@ -290,7 +298,11 @@ def build_audit_payload() -> dict[str, Any]:
         "c6_status": "audit_blocked",
         "c6_5b_authorized": False,
         "c6_5a_4_implementation_completed": True,
-        "next_allowed_step": "C6.5a.5.1 consistency fix / post-fix audit only; C6.5b remains blocked",
+        "next_allowed_step": (
+            "human review of corrected-GT audit, or C6.5a.6 "
+            "task238_ann2389_4543gt candidate dry-run only after explicit user approval; "
+            "C6.5b remains blocked"
+        ),
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",
             "c7_optimizer": "blocked",

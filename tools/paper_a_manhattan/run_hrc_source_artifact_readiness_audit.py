@@ -546,6 +546,14 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
             "task238_ann2389": False,
             "task238_ann2389_4543gt": False,
         },
+        "corrected_gt_status_summary": {
+            "old_case": "task238_ann2389",
+            "old_case_role": "deprecated_old_gt_diagnostic_only",
+            "old_case_manual_requirements_are_corrected_gt_blockers": False,
+            "corrected_case": "task238_ann2389_4543gt",
+            "candidate_preference_authorized_old_case": False,
+            "candidate_preference_authorized_corrected_case": False,
+        },
         "execution_allowed": False,
         "cases": cases,
         "artifact_inputs_ready_for_c6_5b": len(artifact_inputs_ready_cases) == len(cases),
@@ -554,7 +562,10 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
         "materializable_inputs": by_status["materializable_from_existing_artifact"],
         "manual_evidence_required": by_status["requires_manual_visual_evidence"],
         "unavailable_inputs": by_status["unavailable"],
-        "recommended_next_step": "C6.5a.5.1 consistency fix / post-fix audit only",
+        "recommended_next_step": (
+            "human review of corrected-GT audit, or C6.5a.6 "
+            "task238_ann2389_4543gt candidate dry-run only after explicit user approval"
+        ),
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",
             "c7_optimizer": "blocked",
