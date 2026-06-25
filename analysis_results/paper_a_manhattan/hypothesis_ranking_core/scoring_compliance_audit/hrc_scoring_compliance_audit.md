@@ -7,7 +7,7 @@
 - Compliance: `partial`
 - C6 status: `audit_blocked`
 - C6.5b authorized: `false`
-- Next allowed step: `resolve candidate-specific C4 evidence and complete manual evidence sidecars; C6.5b remains unauthorized`
+- Next allowed step: `C6.5a.5.1 consistency fix / post-fix audit only; C6.5b remains blocked`
 
 - `L0`: `complete`
 - `L1`: `complete`
@@ -25,6 +25,8 @@
 
 ## Remaining manual-review boundary
 
-- 2369/2389 still require explicit column identity and keep-distinct manual evidence sidecars.
+- 2369 manual sidecar remains pending.
+- 2369/2389 candidate-specific C4 evidence remains absent.
+- 2389 corrected GT has explicit column identity; keep-distinct is not applicable.
 - Future 3741 dense-corner / short-wall / pillar judgments remain manual-review-only.
 - Projection-derived artifacts may support review but cannot replace the manual verdict.

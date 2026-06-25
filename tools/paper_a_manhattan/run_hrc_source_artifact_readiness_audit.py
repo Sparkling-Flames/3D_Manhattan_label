@@ -375,6 +375,103 @@ def _family_readiness(matrix: Mapping[str, Mapping[str, Any]]) -> dict[str, Any]
     return result
 
 
+def _corrected_gt_case(correction: Mapping[str, Any]) -> dict[str, Any]:
+    projection_ref = correction["corrected_projection"]
+    sidecar_ref = correction["manual_sidecars"]["explicit_column_identity"]
+    projection_path = Path(projection_ref["path"])
+    sidecar_path = Path(sidecar_ref["path"])
+    if (
+        _sha256(projection_path) != projection_ref["sha256"]
+        or _sha256(sidecar_path) != sidecar_ref["sha256"]
+    ):
+        raise ValueError("corrected GT artifact hash drift")
+    projection = _load(projection_path)
+    variant = projection["variants"][0]
+    projection_validation = {
+        "valid": True,
+        "path": projection_path.as_posix(),
+        "sha256": projection_ref["sha256"],
+    }
+    sidecar_validation = {
+        "valid": True,
+        "path": sidecar_path.as_posix(),
+        "sha256": sidecar_ref["sha256"],
+    }
+    matrix = {
+        "projection_metrics": _source_entry(projection_validation),
+        "floorprint_or_depth_proxy": _source_entry(projection_validation),
+        "direction_family_fit": _source_entry(
+            projection_validation,
+            hint="materialize corrected-GT direction diagnostics",
+        ),
+        "parallel_family_residual": _source_entry(
+            projection_validation,
+            hint="materialize corrected-GT parallel-family diagnostics",
+        ),
+        "explicit_column_identity": _source_entry(sidecar_validation),
+        "keep_distinct_contract": _entry("not_applicable"),
+        "short_wall_diagnostics": _source_entry(projection_validation),
+        "projection_derived_height_evidence": _source_entry(projection_validation),
+        "candidate_row_height_source": _entry("not_applicable"),
+        "case_contract": _source_entry(
+            projection_validation,
+            hint="materialize corrected-GT audit-only case contract",
+        ),
+        "constrained_evaluation": _entry(
+            "unavailable", missing="corrected GT has no candidate-specific candidate"
+        ),
+        "rankable_by_current_HRC": _entry(
+            "unavailable", missing="corrected GT is not candidate-specific"
+        ),
+        "source_candidate_rows": _entry(
+            "unavailable", missing="corrected GT candidate count is zero"
+        ),
+        "verified_order_record": _entry("not_applicable"),
+        "c4_evidence_diagnostics": _entry(
+            "unavailable", missing="candidate-specific C4 evidence is absent"
+        ),
+        "c5_plane_proxy_metrics": _source_entry(
+            projection_validation,
+            hint="materialize corrected-GT C5 geometry proxy",
+        ),
+    }
+    families = _family_readiness(matrix)
+    families["short_wall_preserving_floorprint_balance"] = {
+        "applicable": False,
+        "artifact_inputs_ready": False,
+        "pending_inputs": [],
+        "not_applicable_reason": (
+            "4543gt has no short wall and does not require keep-distinct preservation"
+        ),
+        "execution_allowed": False,
+    }
+    return {
+        "case_name": correction["case_name"],
+        "source_case_name": correction["source_case_name"],
+        "corrected_gt_materialized": True,
+        "corrected_gt_id": correction["corrected_gt_id"],
+        "source_status": "corrected_gt_audit_source",
+        "short_wall_exists": False,
+        "keep_distinct_required": False,
+        "manual_evidence_available_for_corrected_gt": True,
+        "candidate_specific": False,
+        "candidate_preference_authorized": False,
+        "evidence_readiness_matrix": matrix,
+        "source_validation": {
+            "corrected_projection": projection_validation,
+            "explicit_column_identity_sidecar": sidecar_validation,
+        },
+        "probe_family_readiness": families,
+        "artifact_inputs_ready": False,
+        "execution_allowed": False,
+        "audit_only": True,
+        "accepted": False,
+        "downstream_recommendation": False,
+        "annotation_writeback": False,
+        "corrected_pair_count": len(variant["ordered_pairs"]),
+    }
+
+
 def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any]:
     manifest = _load(manifest_path)
     if manifest.get("schema_version") != "hrc_source_artifact_manifest_v1":
@@ -400,31 +497,9 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
     correction = _load(GT_CORRECTION_AUDIT)
     if correction.get("schema_version") != "hrc_gt_correction_audit_v1":
         raise ValueError("unsupported corrected GT audit schema")
-    corrected_case = cases["task238_ann2389"]
-    for evidence_type in ("explicit_column_identity", "keep_distinct_contract"):
-        sidecar = correction["manual_sidecars"][evidence_type]
-        corrected_case["evidence_readiness_matrix"][evidence_type] = {
-            "status": "available_from_existing_artifact",
-            "source_artifact": sidecar["path"],
-            "sha256": sidecar["sha256"],
-            "materialization_hint": None,
-            "missing_reason": None,
-            "manual_evidence_requirement": None,
-            "manual_evidence_sidecar_schema": MANUAL_SIDECAR_SCHEMA.as_posix(),
-            "supporting_artifacts": [],
-        }
-    corrected_case["corrected_gt_materialized"] = True
-    corrected_case["corrected_gt_id"] = correction["corrected_gt_id"]
-    corrected_case["manual_evidence_available_for_corrected_gt"] = True
-    corrected_case["candidate_specific"] = False
-    corrected_case["candidate_preference_authorized"] = False
-    corrected_case["probe_family_readiness"] = _family_readiness(
-        corrected_case["evidence_readiness_matrix"]
-    )
-    corrected_case["artifact_inputs_ready"] = all(
-        row["artifact_inputs_ready"]
-        for row in corrected_case["probe_family_readiness"].values()
-    )
+    cases["task238_ann2389"]["source_status"] = "deprecated_old_gt_diagnostic"
+    cases["task238_ann2389"]["candidate_preference_authorized"] = False
+    cases[correction["case_name"]] = _corrected_gt_case(correction)
 
     artifact_inputs_ready_cases = [
         name for name, row in cases.items() if row["artifact_inputs_ready"]
@@ -469,6 +544,7 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
         "candidate_preference_authorized": {
             "task218_ann2369": False,
             "task238_ann2389": False,
+            "task238_ann2389_4543gt": False,
         },
         "execution_allowed": False,
         "cases": cases,
@@ -478,13 +554,7 @@ def build_audit_payload(manifest_path: Path = DEFAULT_MANIFEST) -> dict[str, Any
         "materializable_inputs": by_status["materializable_from_existing_artifact"],
         "manual_evidence_required": by_status["requires_manual_visual_evidence"],
         "unavailable_inputs": by_status["unavailable"],
-        "recommended_next_step": (
-            "materialize audit-only evidence inputs from existing artifacts"
-            if by_status["materializable_from_existing_artifact"]
-            else "define manual evidence sidecar schema"
-            if by_status["requires_manual_visual_evidence"]
-            else "remain blocked"
-        ),
+        "recommended_next_step": "C6.5a.5.1 consistency fix / post-fix audit only",
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",
             "c7_optimizer": "blocked",

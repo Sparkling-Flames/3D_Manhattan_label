@@ -71,7 +71,9 @@ def test_layer_mapping_and_violations_match_current_implementation():
     assert payload["selection_regression"]["selection_drift"] is False
     assert payload["selection_regression"]["accepted"] is False
     assert payload["selection_regression"]["downstream_recommendation"] is False
-    assert "C6.5b remains unauthorized" in payload["next_allowed_step"]
+    assert payload["next_allowed_step"] == (
+        "C6.5a.5.1 consistency fix / post-fix audit only; C6.5b remains blocked"
+    )
     assert payload["status_boundaries"] == {
         "c3_shadow_expansion": "blocked",
         "c7_optimizer": "blocked",
@@ -80,10 +82,16 @@ def test_layer_mapping_and_violations_match_current_implementation():
     }
     assert payload["corrected_gt_audit"]["materialized"] is True
     assert payload["corrected_gt_audit"]["manual_evidence_available"] is True
+    assert payload["corrected_gt_audit"]["explicit_column_identity"] == "available"
+    assert payload["corrected_gt_audit"]["keep_distinct_contract"] == "not_applicable"
+    assert payload["corrected_gt_audit"]["short_wall_exists"] is False
+    assert payload["corrected_gt_audit"]["four_corner_layout_sufficient"] is True
+    assert payload["corrected_gt_audit"]["endpoint_precision_blocking"] is False
     assert payload["corrected_gt_audit"]["accepted_final_fix"] is False
     assert payload["candidate_preference_authorized"] == {
         "task218_ann2369": False,
         "task238_ann2389": False,
+        "task238_ann2389_4543gt": False,
     }
 
 

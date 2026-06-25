@@ -23,11 +23,12 @@
   "corrected_gt_materialized": true,
   "corrected_gt_audit": {
     "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/hrc_gt_correction_audit_4543gt.json",
-    "sha256": "7feced6626e9fa41de051f388002088f06e8462a792df8d475ee52a9c1e90b3a"
+    "sha256": "d9c0532987fa45f94bee3b632ff4b0548b54b8b21acf114b1845b041dd730eb4"
   },
   "candidate_preference_authorized": {
     "task218_ann2369": false,
-    "task238_ann2389": false
+    "task238_ann2389": false,
+    "task238_ann2389_4543gt": false
   },
   "execution_allowed": false,
   "cases": {
@@ -561,24 +562,42 @@
           "supporting_artifacts": []
         },
         "explicit_column_identity": {
-          "status": "available_from_existing_artifact",
-          "source_artifact": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/manual_sidecar_explicit_column_identity_4543gt.json",
-          "sha256": "06ff5b142d4362e65b7cb498b7ba06c2282b9f61118f8c23c74e299c308543bf",
+          "status": "requires_manual_visual_evidence",
+          "source_artifact": null,
+          "sha256": null,
           "materialization_hint": null,
           "missing_reason": null,
-          "manual_evidence_requirement": null,
+          "manual_evidence_requirement": "manual sidecar must identify pair-level column identity; supporting artifacts are not the evidence verdict",
           "manual_evidence_sidecar_schema": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/source_artifact_readiness_audit/manual_evidence_sidecar_schema.json",
-          "supporting_artifacts": []
+          "supporting_artifacts": [
+            {
+              "path": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task238_ann2389_m1518_3_candidate_semantics_output.json",
+              "sha256": "5f89a031e3c38eaac3a04c75d35ba8ae751fd56cbe79719ffaffb24292beb1b6"
+            },
+            {
+              "path": "output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34/b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15.txt",
+              "sha256": "858f0be5d1d552336fdcd2bd94f0aadb2256d949f4f562ae68de1546b2ed0464"
+            }
+          ]
         },
         "keep_distinct_contract": {
-          "status": "available_from_existing_artifact",
-          "source_artifact": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/manual_sidecar_keep_distinct_contract_4543gt.json",
-          "sha256": "e72ffce08ebbaaeb0d5e8a445d324f04e612c18dd703e3147c28af86fda491da",
+          "status": "requires_manual_visual_evidence",
+          "source_artifact": null,
+          "sha256": null,
           "materialization_hint": null,
           "missing_reason": null,
-          "manual_evidence_requirement": null,
+          "manual_evidence_requirement": "manual sidecar must record keep-distinct verdict",
           "manual_evidence_sidecar_schema": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/source_artifact_readiness_audit/manual_evidence_sidecar_schema.json",
-          "supporting_artifacts": []
+          "supporting_artifacts": [
+            {
+              "path": "analysis_results/paper_a_manhattan/single_image_manual_test/latest_gt_checked/m1518_3_candidate_semantics/task238_ann2389_m1518_3_candidate_semantics_output.json",
+              "sha256": "5f89a031e3c38eaac3a04c75d35ba8ae751fd56cbe79719ffaffb24292beb1b6"
+            },
+            {
+              "path": "analysis_results/paper_a_manhattan/local_3d_projection/task238_ann2389/projection_metrics.json",
+              "sha256": "a525bf4afc6dee5cbffdfc56b6b0b3b7040a629591aa02a81390ab23fd9f0474"
+            }
+          ]
         },
         "short_wall_diagnostics": {
           "status": "available_from_existing_artifact",
@@ -741,13 +760,18 @@
           "execution_allowed": false
         },
         "multi_pair_x_alignment": {
-          "artifact_inputs_ready": true,
-          "pending_inputs": [],
+          "artifact_inputs_ready": false,
+          "pending_inputs": [
+            "explicit_column_identity",
+            "keep_distinct_contract"
+          ],
           "execution_allowed": false
         },
         "short_wall_preserving_floorprint_balance": {
-          "artifact_inputs_ready": true,
-          "pending_inputs": [],
+          "artifact_inputs_ready": false,
+          "pending_inputs": [
+            "keep_distinct_contract"
+          ],
           "execution_allowed": false
         }
       },
@@ -757,10 +781,7 @@
       "accepted": false,
       "downstream_recommendation": false,
       "annotation_writeback": false,
-      "corrected_gt_materialized": true,
-      "corrected_gt_id": "4543gt",
-      "manual_evidence_available_for_corrected_gt": true,
-      "candidate_specific": false,
+      "source_status": "deprecated_old_gt_diagnostic",
       "candidate_preference_authorized": false
     },
     "gt75_task533": {
@@ -1264,6 +1285,235 @@
       "accepted": false,
       "downstream_recommendation": false,
       "annotation_writeback": false
+    },
+    "task238_ann2389_4543gt": {
+      "case_name": "task238_ann2389_4543gt",
+      "source_case_name": "task238_ann2389",
+      "corrected_gt_materialized": true,
+      "corrected_gt_id": "4543gt",
+      "source_status": "corrected_gt_audit_source",
+      "short_wall_exists": false,
+      "keep_distinct_required": false,
+      "manual_evidence_available_for_corrected_gt": true,
+      "candidate_specific": false,
+      "candidate_preference_authorized": false,
+      "evidence_readiness_matrix": {
+        "projection_metrics": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_projection_metrics_4543gt.json",
+          "sha256": "6a8511265b33e8c1d92101559249811e22baa6a4f11d2da97826db226f1d921d",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "floorprint_or_depth_proxy": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_projection_metrics_4543gt.json",
+          "sha256": "6a8511265b33e8c1d92101559249811e22baa6a4f11d2da97826db226f1d921d",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "direction_family_fit": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_projection_metrics_4543gt.json",
+          "sha256": "6a8511265b33e8c1d92101559249811e22baa6a4f11d2da97826db226f1d921d",
+          "materialization_hint": "materialize corrected-GT direction diagnostics",
+          "missing_reason": null,
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "parallel_family_residual": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_projection_metrics_4543gt.json",
+          "sha256": "6a8511265b33e8c1d92101559249811e22baa6a4f11d2da97826db226f1d921d",
+          "materialization_hint": "materialize corrected-GT parallel-family diagnostics",
+          "missing_reason": null,
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "explicit_column_identity": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/manual_sidecar_explicit_column_identity_4543gt.json",
+          "sha256": "eb2cd9d51e0d1890e7b14d048e5ef664e55ba58d60f0e9ecf00be7efadc6e945",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "keep_distinct_contract": {
+          "status": "not_applicable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "short_wall_diagnostics": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_projection_metrics_4543gt.json",
+          "sha256": "6a8511265b33e8c1d92101559249811e22baa6a4f11d2da97826db226f1d921d",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "projection_derived_height_evidence": {
+          "status": "available_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_projection_metrics_4543gt.json",
+          "sha256": "6a8511265b33e8c1d92101559249811e22baa6a4f11d2da97826db226f1d921d",
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "candidate_row_height_source": {
+          "status": "not_applicable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "case_contract": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_projection_metrics_4543gt.json",
+          "sha256": "6a8511265b33e8c1d92101559249811e22baa6a4f11d2da97826db226f1d921d",
+          "materialization_hint": "materialize corrected-GT audit-only case contract",
+          "missing_reason": null,
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "constrained_evaluation": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "corrected GT has no candidate-specific candidate",
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "rankable_by_current_HRC": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "corrected GT is not candidate-specific",
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "source_candidate_rows": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "corrected GT candidate count is zero",
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "verified_order_record": {
+          "status": "not_applicable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": null,
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "c4_evidence_diagnostics": {
+          "status": "unavailable",
+          "source_artifact": null,
+          "sha256": null,
+          "materialization_hint": null,
+          "missing_reason": "candidate-specific C4 evidence is absent",
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        },
+        "c5_plane_proxy_metrics": {
+          "status": "materializable_from_existing_artifact",
+          "source_artifact": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_projection_metrics_4543gt.json",
+          "sha256": "6a8511265b33e8c1d92101559249811e22baa6a4f11d2da97826db226f1d921d",
+          "materialization_hint": "materialize corrected-GT C5 geometry proxy",
+          "missing_reason": null,
+          "manual_evidence_requirement": null,
+          "manual_evidence_sidecar_schema": null,
+          "supporting_artifacts": []
+        }
+      },
+      "source_validation": {
+        "corrected_projection": {
+          "valid": true,
+          "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_projection_metrics_4543gt.json",
+          "sha256": "6a8511265b33e8c1d92101559249811e22baa6a4f11d2da97826db226f1d921d"
+        },
+        "explicit_column_identity_sidecar": {
+          "valid": true,
+          "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/manual_sidecar_explicit_column_identity_4543gt.json",
+          "sha256": "eb2cd9d51e0d1890e7b14d048e5ef664e55ba58d60f0e9ecf00be7efadc6e945"
+        }
+      },
+      "probe_family_readiness": {
+        "global_height_reproject": {
+          "artifact_inputs_ready": false,
+          "pending_inputs": [
+            "case_contract"
+          ],
+          "execution_allowed": false
+        },
+        "direction_family_azimuth_snap": {
+          "artifact_inputs_ready": false,
+          "pending_inputs": [
+            "direction_family_fit",
+            "parallel_family_residual"
+          ],
+          "execution_allowed": false
+        },
+        "floor_depth_balance_global": {
+          "artifact_inputs_ready": true,
+          "pending_inputs": [],
+          "execution_allowed": false
+        },
+        "multi_pair_x_alignment": {
+          "artifact_inputs_ready": false,
+          "pending_inputs": [
+            "keep_distinct_contract"
+          ],
+          "execution_allowed": false
+        },
+        "short_wall_preserving_floorprint_balance": {
+          "applicable": false,
+          "artifact_inputs_ready": false,
+          "pending_inputs": [],
+          "not_applicable_reason": "4543gt has no short wall and does not require keep-distinct preservation",
+          "execution_allowed": false
+        }
+      },
+      "artifact_inputs_ready": false,
+      "execution_allowed": false,
+      "audit_only": true,
+      "accepted": false,
+      "downstream_recommendation": false,
+      "annotation_writeback": false,
+      "corrected_pair_count": 4
     }
   },
   "artifact_inputs_ready_for_c6_5b": false,
@@ -1273,7 +1523,8 @@
     "task218_ann2369",
     "task238_ann2389",
     "gt75_task533",
-    "ordinary_compatible"
+    "ordinary_compatible",
+    "task238_ann2389_4543gt"
   ],
   "materializable_inputs": [
     "gt75_task533:c4_evidence_diagnostics",
@@ -1291,13 +1542,19 @@
     "task238_ann2389:constrained_evaluation",
     "task238_ann2389:direction_family_fit",
     "task238_ann2389:parallel_family_residual",
-    "task238_ann2389:rankable_by_current_HRC"
+    "task238_ann2389:rankable_by_current_HRC",
+    "task238_ann2389_4543gt:c5_plane_proxy_metrics",
+    "task238_ann2389_4543gt:case_contract",
+    "task238_ann2389_4543gt:direction_family_fit",
+    "task238_ann2389_4543gt:parallel_family_residual"
   ],
   "manual_evidence_required": [
     "gt75_task533:explicit_column_identity",
     "gt75_task533:keep_distinct_contract",
     "task218_ann2369:explicit_column_identity",
-    "task218_ann3741:explicit_column_identity"
+    "task218_ann3741:explicit_column_identity",
+    "task238_ann2389:explicit_column_identity",
+    "task238_ann2389:keep_distinct_contract"
   ],
   "unavailable_inputs": [
     "gt75_task533:c5_plane_proxy_metrics",
@@ -1324,9 +1581,13 @@
     "ordinary_compatible:projection_metrics",
     "ordinary_compatible:rankable_by_current_HRC",
     "ordinary_compatible:short_wall_diagnostics",
-    "ordinary_compatible:source_candidate_rows"
+    "ordinary_compatible:source_candidate_rows",
+    "task238_ann2389_4543gt:c4_evidence_diagnostics",
+    "task238_ann2389_4543gt:constrained_evaluation",
+    "task238_ann2389_4543gt:rankable_by_current_HRC",
+    "task238_ann2389_4543gt:source_candidate_rows"
   ],
-  "recommended_next_step": "materialize audit-only evidence inputs from existing artifacts",
+  "recommended_next_step": "C6.5a.5.1 consistency fix / post-fix audit only",
   "status_boundaries": {
     "c3_shadow_expansion": "blocked",
     "c7_optimizer": "blocked",

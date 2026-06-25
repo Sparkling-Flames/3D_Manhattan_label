@@ -34,6 +34,7 @@ def test_manifest_validation_and_readiness_semantics():
         "task218_ann3741",
         "task218_ann2369",
         "task238_ann2389",
+        "task238_ann2389_4543gt",
         "gt75_task533",
         "ordinary_compatible",
     }
@@ -66,17 +67,24 @@ def test_manifest_validation_and_readiness_semantics():
         assert matrix["projection_derived_height_evidence"]["status"] == "available_from_existing_artifact"
         assert matrix["candidate_row_height_source"]["status"] == "available_from_existing_artifact"
 
-    corrected = cases["task238_ann2389"]
+    assert cases["task238_ann2389"]["source_status"] == "deprecated_old_gt_diagnostic"
+    corrected = cases["task238_ann2389_4543gt"]
     assert corrected["corrected_gt_materialized"] is True
     assert corrected["corrected_gt_id"] == "4543gt"
     assert corrected["manual_evidence_available_for_corrected_gt"] is True
     assert corrected["candidate_specific"] is False
     assert corrected["candidate_preference_authorized"] is False
+    assert corrected["short_wall_exists"] is False
+    assert corrected["keep_distinct_required"] is False
+    assert corrected["corrected_pair_count"] == 4
     assert corrected["evidence_readiness_matrix"]["explicit_column_identity"]["status"] == "available_from_existing_artifact"
-    assert corrected["evidence_readiness_matrix"]["keep_distinct_contract"]["status"] == "available_from_existing_artifact"
+    assert corrected["evidence_readiness_matrix"]["keep_distinct_contract"]["status"] == "not_applicable"
+    assert corrected["probe_family_readiness"]["short_wall_preserving_floorprint_balance"]["applicable"] is False
+    assert corrected["probe_family_readiness"]["short_wall_preserving_floorprint_balance"]["artifact_inputs_ready"] is False
     assert payload["candidate_preference_authorized"] == {
         "task218_ann2369": False,
         "task238_ann2389": False,
+        "task238_ann2389_4543gt": False,
     }
 
     gt75 = cases["gt75_task533"]["evidence_readiness_matrix"]
@@ -85,7 +93,7 @@ def test_manifest_validation_and_readiness_semantics():
     assert gt75["projection_derived_height_evidence"]["status"] == "unavailable"
     assert gt75["candidate_row_height_source"]["status"] == "available_from_existing_artifact"
 
-    assert payload["recommended_next_step"] == "materialize audit-only evidence inputs from existing artifacts"
+    assert payload["recommended_next_step"] == "C6.5a.5.1 consistency fix / post-fix audit only"
     forbidden = ("C3", "C7", "optimizer", "active runner", "writeback", "proposal manifest")
     assert not any(token.lower() in payload["recommended_next_step"].lower() for token in forbidden)
 

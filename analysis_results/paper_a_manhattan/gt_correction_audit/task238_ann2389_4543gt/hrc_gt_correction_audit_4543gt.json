@@ -1,6 +1,7 @@
 {
   "schema_version": "hrc_gt_correction_audit_v1",
-  "case_name": "task238_ann2389",
+  "case_name": "task238_ann2389_4543gt",
+  "source_case_name": "task238_ann2389",
   "task_id": 238,
   "source_task_id": 2722,
   "annotation_id": 2389,
@@ -12,30 +13,33 @@
   "old_gt": {
     "status": "deprecated_superseded_source",
     "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/old_gt_annotation_2389_deprecated.json",
-    "sha256": "eea860e7a5b73edb1b2c5f4c91abf92bffb81b395c2cf216a7c2abffb91430fa"
+    "sha256": "071cd32cf0038a0ff51c39a02faf15d5854eb04eb4cfb37f4a88c5cb73b1343d"
   },
   "corrected_gt": {
     "status": "audit_artifact_corrected_gt_source",
     "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_annotation_4543gt.json",
-    "sha256": "fc277856cc94ffd10907f88422cd17ab32eb709842432fcbadf1f7e9fab114dd",
+    "sha256": "3b1df29c0b57f1c3dbcb54356618010a401fc454fd0c9cc5f62a6b1c0b2df901",
     "accepted_final_fix": false
+  },
+  "corrected_projection": {
+    "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/corrected_gt_projection_metrics_4543gt.json",
+    "sha256": "6a8511265b33e8c1d92101559249811e22baa6a4f11d2da97826db226f1d921d",
+    "schema_version": "hrc_corrected_gt_projection_metrics_v1",
+    "pair_count": 4,
+    "source_annotation_id": 4543
   },
   "manual_findings": {
     "explicit_column_identity": "available",
-    "keep_distinct_contract": "available",
-    "short_wall_exists": true,
+    "short_wall_exists": false,
+    "keep_distinct_required": false,
+    "keep_distinct_contract": "not_applicable",
+    "four_corner_layout_sufficient": true,
     "endpoint_precision_note": "minor endpoint offset possible; topology/identity confirmed but not sub-pixel perfect GT"
   },
   "manual_sidecars": {
     "explicit_column_identity": {
       "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/manual_sidecar_explicit_column_identity_4543gt.json",
-      "sha256": "06ff5b142d4362e65b7cb498b7ba06c2282b9f61118f8c23c74e299c308543bf",
-      "schema_version": "hrc_manual_evidence_sidecar_v1",
-      "verdict": "available"
-    },
-    "keep_distinct_contract": {
-      "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/manual_sidecar_keep_distinct_contract_4543gt.json",
-      "sha256": "e72ffce08ebbaaeb0d5e8a445d324f04e612c18dd703e3147c28af86fda491da",
+      "sha256": "eb2cd9d51e0d1890e7b14d048e5ef664e55ba58d60f0e9ecf00be7efadc6e945",
       "schema_version": "hrc_manual_evidence_sidecar_v1",
       "verdict": "available"
     }
@@ -952,10 +956,13 @@
         "delta": 0.0
       }
     },
-    "manual_projection_discrepancy": {
-      "short_wall_exists_manual": true,
+    "semantic_correction": {
+      "short_wall_exists": false,
+      "keep_distinct_required": false,
+      "keep_distinct_contract": "not_applicable",
+      "four_corner_layout_sufficient": true,
       "corrected_projection_short_wall_count": 0,
-      "interpretation": "manual short-wall rationale is available, while current projection threshold does not classify a short wall; endpoint precision remains approximate and projection diagnostics do not replace the manual verdict"
+      "interpretation": "short-wall/dense-corner preservation is not required for corrected GT 4543gt; endpoint precision remains a non-blocking note"
     }
   },
   "candidate_status": {
@@ -981,5 +988,5 @@
     "c9_learning": "blocked",
     "c10_ranker": "blocked"
   },
-  "next_allowed_step": "review corrected-GT audit and resolve remaining candidate-specific C4 and 2369 manual-evidence blockers; C6.5b remains blocked"
+  "next_allowed_step": "C6.5a.5.1 consistency fix / post-fix audit only; C6.5b remains blocked"
 }

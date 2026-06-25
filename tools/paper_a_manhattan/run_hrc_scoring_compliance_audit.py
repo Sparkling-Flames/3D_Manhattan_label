@@ -139,10 +139,16 @@ def build_audit_payload() -> dict[str, Any]:
     materialized = json.loads(MATERIALIZATION.read_text(encoding="utf-8"))
     correction = json.loads(GT_CORRECTION_AUDIT.read_text(encoding="utf-8"))
     baseline_only = all(
-        case["c4_lite_diagnostics"]["baseline_to_baseline_materialization"]
-        and not case["c4_lite_diagnostics"]["candidate_preference_claim"]
-        and not case["rankable_by_current_HRC_input_summary"]["rankable"]
-        for case in materialized["cases"].values()
+        materialized["cases"][name]["c4_lite_diagnostics"][
+            "baseline_to_baseline_materialization"
+        ]
+        and not materialized["cases"][name]["c4_lite_diagnostics"][
+            "candidate_preference_claim"
+        ]
+        and not materialized["cases"][name][
+            "rankable_by_current_HRC_input_summary"
+        ]["rankable"]
+        for name in ("task218_ann2369", "task238_ann2389")
     )
     authorization_safe = (
         core["overall_verdict"]["recommended_review_candidate_available"] is False
@@ -157,12 +163,12 @@ def build_audit_payload() -> dict[str, Any]:
         {
             "code": "L2_BASELINE_ONLY_CANNOT_PREFER_CANDIDATE",
             "severity": "blocking",
-            "finding": "2369/2389 C4 remains baseline-only with no candidate projection variants",
+            "finding": "2369/2389 candidate-specific C4 evidence is absent",
         },
         {
             "code": "L4_MANUAL_EVIDENCE_INCOMPLETE",
             "severity": "blocking",
-            "finding": "2369 manual column-identity/keep-distinct evidence remains incomplete; 2389 is available only for corrected GT 4543gt",
+            "finding": "2369 manual sidecar remains pending; 2389 corrected GT has explicit column identity available and keep-distinct is not applicable",
         },
     ]
     expected_selection = {
@@ -245,10 +251,11 @@ def build_audit_payload() -> dict[str, Any]:
             "downstream_recommendation": False,
         },
         "candidate_preference_blockers": [
-            "2369/2389 C4 evidence is baseline-to-baseline diagnostic only",
+            "2369/2389 candidate-specific C4 evidence is absent",
             "candidate projection variant count is zero",
-            "2369 manual explicit column identity/keep-distinct evidence is pending",
-            "2389 corrected GT manual evidence is available but is not candidate-specific",
+            "2369 manual sidecar is pending",
+            "2389 corrected GT explicit column identity is available",
+            "2389 corrected GT keep-distinct is not applicable",
             "supporting artifacts are not manual verdicts",
         ],
         "corrected_gt_audit": {
@@ -259,11 +266,17 @@ def build_audit_payload() -> dict[str, Any]:
                 row["verdict"] == "available"
                 for row in correction["manual_sidecars"].values()
             ),
+            "explicit_column_identity": "available",
+            "keep_distinct_contract": "not_applicable",
+            "short_wall_exists": False,
+            "four_corner_layout_sufficient": True,
+            "endpoint_precision_blocking": False,
             "accepted_final_fix": False,
         },
         "candidate_preference_authorized": {
             "task218_ann2369": False,
             "task238_ann2389": False,
+            "task238_ann2389_4543gt": False,
         },
         "audit_only": True,
         "evaluator_changed": True,
@@ -277,7 +290,7 @@ def build_audit_payload() -> dict[str, Any]:
         "c6_status": "audit_blocked",
         "c6_5b_authorized": False,
         "c6_5a_4_implementation_completed": True,
-        "next_allowed_step": "resolve candidate-specific C4 evidence and complete manual evidence sidecars; C6.5b remains unauthorized",
+        "next_allowed_step": "C6.5a.5.1 consistency fix / post-fix audit only; C6.5b remains blocked",
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",
             "c7_optimizer": "blocked",
@@ -315,7 +328,9 @@ def render_markdown(payload: Mapping[str, Any]) -> str:
             "",
             "## Remaining manual-review boundary",
             "",
-            "- 2369/2389 still require explicit column identity and keep-distinct manual evidence sidecars.",
+            "- 2369 manual sidecar remains pending.",
+            "- 2369/2389 candidate-specific C4 evidence remains absent.",
+            "- 2389 corrected GT has explicit column identity; keep-distinct is not applicable.",
             "- Future 3741 dense-corner / short-wall / pillar judgments remain manual-review-only.",
             "- Projection-derived artifacts may support review but cannot replace the manual verdict.",
             "",

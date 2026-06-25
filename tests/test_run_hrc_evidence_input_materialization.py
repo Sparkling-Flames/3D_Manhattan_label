@@ -12,8 +12,8 @@ def test_materialization_is_audit_only_and_does_not_rank():
     payload = build_payload()
     assert payload["schema_version"] == SCHEMA_VERSION
     assert payload["processed_cases"] == list(TARGET_CASES)
-    assert payload["processed_status"] == "materializable_from_existing_artifact_only"
-    assert payload["manual_evidence_processed"] is False
+    assert payload["processed_status"] == "existing_artifact_only_with_corrected_gt"
+    assert payload["manual_evidence_processed"] is True
     assert payload["supporting_artifacts_used_as_manual_verdicts"] is False
     assert payload["generated_candidate"] is False
     assert payload["generated_proposal_manifest"] is False
@@ -41,7 +41,8 @@ def test_materialized_fields_and_source_validation():
         "parallel_family_residual",
         "rankable_by_current_HRC",
     }
-    for case in payload["cases"].values():
+    for name in ("task218_ann2369", "task238_ann2389"):
+        case = payload["cases"][name]
         assert set(case["processed_materializable_inputs"]) == expected
         assert case["direction_family_fit"]["status"] == "available"
         assert case["parallel_family_residual"]["status"] == "available"
@@ -62,6 +63,29 @@ def test_materialized_fields_and_source_validation():
         assert case["audit_only"] is True
         assert case["execution_allowed"] is False
         assert all(row["sha256"] for row in case["source_artifacts"].values())
+
+    corrected = payload["cases"]["task238_ann2389_4543gt"]
+    assert corrected["projection_pair_count"] == 4
+    assert corrected["old_gt_projection_used"] is False
+    assert "4543gt" in corrected["source_artifacts"]["corrected_projection"]["path"]
+    assert corrected["old_gt_projection_path"] not in json.dumps(
+        corrected["source_artifacts"]
+    )
+    assert corrected["manual_evidence"] == {
+        "explicit_column_identity": "available",
+        "keep_distinct_contract": "not_applicable",
+        "short_wall_exists": False,
+        "keep_distinct_required": False,
+    }
+    assert corrected["candidate_specific"] is False
+    assert corrected["candidate_count"] == 0
+    assert corrected["candidate_preference_authorized"] is False
+    assert corrected["rankable_by_current_HRC_input_summary"][
+        "candidate_preference_authorized"
+    ] is False
+    assert corrected["accepted"] is False
+    assert corrected["downstream_recommendation"] is False
+    assert corrected["annotation_writeback"] is False
 
 
 def test_materialization_writes_json_and_markdown(tmp_path):

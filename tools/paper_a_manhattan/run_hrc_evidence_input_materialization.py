@@ -30,7 +30,9 @@ READINESS_DIR = ROOT / "source_artifact_readiness_audit"
 DEFAULT_MANIFEST = READINESS_DIR / "source_artifact_manifest.json"
 DEFAULT_READINESS = READINESS_DIR / "hrc_source_artifact_readiness_audit.json"
 DEFAULT_OUT_DIR = ROOT / "evidence_input_materialization"
-TARGET_CASES = ("task218_ann2369", "task238_ann2389")
+LEGACY_TARGET_CASES = ("task218_ann2369", "task238_ann2389")
+CORRECTED_CASE = "task238_ann2389_4543gt"
+TARGET_CASES = (*LEGACY_TARGET_CASES, CORRECTED_CASE)
 TARGET_INPUTS = {
     "direction_family_fit",
     "parallel_family_residual",
@@ -174,6 +176,109 @@ def _case_payload(
     }
 
 
+def _corrected_case_payload(readiness: Mapping[str, Any]) -> dict[str, Any]:
+    correction = _load(Path(readiness["corrected_gt_audit"]["path"]))
+    projection_path = Path(correction["corrected_projection"]["path"])
+    projection_payload = _load(projection_path)
+    if _sha256(projection_path) != correction["corrected_projection"]["sha256"]:
+        raise ValueError("corrected GT projection hash drift")
+    variant = projection_payload["variants"][0]
+    pairs = list(variant["ordered_pairs"])
+    if len(pairs) != 4:
+        raise ValueError("corrected GT projection must contain four pairs")
+    metrics = variant["metrics"]
+    contract = build_case_contract(pairs, projection_metrics=metrics)
+    evaluation = evaluate_hypothesis(
+        variant,
+        variant,
+        pairs,
+        pairs,
+        contract,
+    )
+    sidecar = correction["manual_sidecars"]["explicit_column_identity"]
+    return {
+        "case_name": CORRECTED_CASE,
+        "source_case_name": "task238_ann2389",
+        "corrected_gt_id": "4543gt",
+        "source_status": "corrected_gt_audit_source",
+        "source_artifacts": {
+            "corrected_projection": {
+                "path": projection_path.as_posix(),
+                "sha256": _sha256(projection_path),
+            },
+            "corrected_gt": correction["corrected_gt"],
+            "explicit_column_identity_sidecar": sidecar,
+        },
+        "projection_pair_count": len(pairs),
+        "old_gt_projection_used": False,
+        "old_gt_projection_path": (
+            "analysis_results/paper_a_manhattan/local_3d_projection/"
+            "task238_ann2389/projection_metrics.json"
+        ),
+        "processed_materializable_inputs": [
+            "case_contract",
+            "c5_plane_proxy_metrics",
+            "direction_family_fit",
+            "parallel_family_residual",
+            "projection_derived_height_evidence",
+        ],
+        "skipped_manual_inputs": [],
+        "manual_evidence": {
+            "explicit_column_identity": "available",
+            "keep_distinct_contract": "not_applicable",
+            "short_wall_exists": False,
+            "keep_distinct_required": False,
+        },
+        "candidate_rows_read_only": {
+            "row_count": 0,
+            "modified": False,
+            "used_as_projected_candidate_variant": False,
+        },
+        "candidate_specific": False,
+        "candidate_count": 0,
+        "candidate_preference_authorized": False,
+        "direction_family_fit": evaluation["manhattan_feasibility"][
+            "direction_family_fit"
+        ],
+        "parallel_family_residual": evaluation["manhattan_feasibility"][
+            "parallel_family_residual"
+        ],
+        "case_contract": contract,
+        "constrained_evaluation": {
+            "scope": "corrected_gt_baseline_diagnostic_only",
+            "baseline_original_not_candidate_evaluation": True,
+            "evaluation_status": evaluation["evaluation_status"],
+            "decision_class": evaluation["decision_class"],
+            "feasibility": evaluation["feasibility"],
+            "manhattan_feasibility": evaluation["manhattan_feasibility"],
+            "height_consistency": evaluation["height_consistency"],
+            "layout_plausibility": evaluation["layout_plausibility"],
+            "plane_proxy_metrics": evaluation["plane_proxy_metrics"],
+        },
+        "rankable_by_current_HRC_input_summary": {
+            "rankable": False,
+            "reason": "corrected GT has no candidate-specific candidate or projection delta",
+            "candidate_row_count": 0,
+            "candidate_projection_variant_count": 0,
+            "candidate_preference_authorized": False,
+            "ranking_key_materialized": False,
+            "portfolio_materialized": False,
+        },
+        "c4_lite_diagnostics": {
+            "evidence_status": "unavailable",
+            "candidate_specific": False,
+            "candidate_preference_claim": False,
+            "reason": "candidate-specific C4 evidence is absent",
+        },
+        "c5_plane_proxy_metrics": evaluation["plane_proxy_metrics"],
+        "audit_only": True,
+        "execution_allowed": False,
+        "accepted": False,
+        "downstream_recommendation": False,
+        "annotation_writeback": False,
+    }
+
+
 def build_payload(
     manifest_path: Path = DEFAULT_MANIFEST,
     readiness_path: Path = DEFAULT_READINESS,
@@ -186,8 +291,9 @@ def build_payload(
         raise ValueError("unsupported readiness audit schema")
     cases = {
         case_name: _case_payload(case_name, manifest, readiness)
-        for case_name in TARGET_CASES
+        for case_name in LEGACY_TARGET_CASES
     }
+    cases[CORRECTED_CASE] = _corrected_case_payload(readiness)
     return {
         "schema_version": SCHEMA_VERSION,
         "source_manifest": {
@@ -200,8 +306,8 @@ def build_payload(
         },
         "cases": cases,
         "processed_cases": list(TARGET_CASES),
-        "processed_status": "materializable_from_existing_artifact_only",
-        "manual_evidence_processed": False,
+        "processed_status": "existing_artifact_only_with_corrected_gt",
+        "manual_evidence_processed": True,
         "supporting_artifacts_used_as_manual_verdicts": False,
         "generated_candidate": False,
         "generated_proposal_manifest": False,
@@ -217,7 +323,7 @@ def build_payload(
         "c6_status": "audit_blocked",
         "c6_5b_authorized": False,
         "conclusion": "C6 remains audit-blocked; C6.5b is not authorized unless a later scoring/evaluator compliance audit approves the evidence/ranking contract.",
-        "recommended_next_step": "audit-only scoring/evaluator compliance review of materialized evidence inputs",
+        "recommended_next_step": "C6.5a.5.1 consistency fix / post-fix audit only",
         "status_boundaries": {
             "c3_shadow_expansion": "blocked",
             "c7_optimizer": "blocked",

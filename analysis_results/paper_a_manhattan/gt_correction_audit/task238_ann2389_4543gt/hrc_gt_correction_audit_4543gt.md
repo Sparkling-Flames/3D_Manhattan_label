@@ -1,6 +1,6 @@
 # HRC C6.5a.5 GT Correction Materialization and Diagnostic Audit
 
-- Case: `task238_ann2389`
+- Case: `task238_ann2389_4543gt`
 - Corrected GT: `4543gt`
 - Old GT: `deprecated_superseded_source`
 - Candidate-specific: `false`
@@ -21,4 +21,4 @@
 - `minimum_wall_length`: `0.8885206187463435` -> `2.3955698129032315`
 - `short_wall_count`: `0` -> `0`
 
-Manual review confirms column identity, keep-distinct topology, and a real short wall. Current projection threshold reports no short wall; this diagnostic does not replace the manual verdict.
+Manual review confirms explicit column identity and a sufficient four-corner topology. Short-wall/dense-corner preservation and keep-distinct evidence are not applicable.

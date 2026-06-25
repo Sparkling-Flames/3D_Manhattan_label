@@ -35,6 +35,8 @@ CASE_TASK_ID = 238
 OLD_ANNOTATION_ID = 2389
 CORRECTED_ANNOTATION_ID = 4543
 CORRECTED_GT_ID = "4543gt"
+CORRECTED_CASE_NAME = "task238_ann2389_4543gt"
+CORRECTED_PROJECTION_SCHEMA_VERSION = "hrc_corrected_gt_projection_metrics_v1"
 SAFETY_BOUNDARY = {
     "audit_only": True,
     "active_runner_role": False,
@@ -86,6 +88,7 @@ def _snapshot(
     return {
         "schema_version": SOURCE_SNAPSHOT_SCHEMA_VERSION,
         "case_name": "task238_ann2389",
+        "corrected_case_name": CORRECTED_CASE_NAME,
         "task_id": CASE_TASK_ID,
         "source_task_id": SOURCE_TASK_ID,
         "annotation_id": int(annotation["id"]),
@@ -99,7 +102,9 @@ def _snapshot(
     }
 
 
-def _diagnostics(annotation: Mapping[str, Any]) -> dict[str, Any]:
+def _diagnostics(
+    annotation: Mapping[str, Any],
+) -> tuple[dict[str, Any], dict[str, Any]]:
     assist = build_single_image_assist(
         {
             "task_id": str(CASE_TASK_ID),
@@ -133,7 +138,7 @@ def _diagnostics(annotation: Mapping[str, Any]) -> dict[str, Any]:
         for point in ("floor_3d", "ceiling_3d")
         for value in pair[point].values()
     )
-    return {
+    diagnostics = {
         "projection_validity": {
             "valid": finite_projection and not projection["warnings"],
             "warnings": projection["warnings"],
@@ -168,6 +173,7 @@ def _diagnostics(annotation: Mapping[str, Any]) -> dict[str, Any]:
             for row in projection["pairs"]
         ],
     }
+    return diagnostics, variant
 
 
 def _delta(old: Any, corrected: Any) -> float | None:
@@ -226,29 +232,26 @@ def _comparison(old: Mapping[str, Any], corrected: Mapping[str, Any]) -> dict[st
 
 
 def _sidecar(
-    evidence_type: str,
     *,
     reviewed_at: str,
     supporting_artifacts: Sequence[Mapping[str, str]],
 ) -> dict[str, Any]:
-    rationale = (
-        "Human expert confirms top/bottom belong to the same real vertical edge."
-        if evidence_type == "explicit_column_identity"
-        else (
-            "Human expert confirms neighboring corners are distinct and the short wall "
-            "is real; short_wall_exists is rationale only, not an evidence_type."
-        )
-    )
     return {
         "schema_version": SIDECAR_SCHEMA_VERSION,
-        "case_name": "task238_ann2389",
+        "case_name": CORRECTED_CASE_NAME,
         "corrected_gt_id": CORRECTED_GT_ID,
-        "evidence_type": evidence_type,
+        "evidence_type": "explicit_column_identity",
         "reviewer": "human_expert",
         "reviewed_at": reviewed_at,
         "verdict": "available",
-        "rationale": rationale,
-        "short_wall_exists": True,
+        "rationale": (
+            "Human expert confirms top/bottom belong to the same real vertical layout "
+            "edge; four corners are sufficient for the corrected enclosed room layout."
+        ),
+        "short_wall_exists": False,
+        "keep_distinct_required": False,
+        "keep_distinct_contract": "not_applicable",
+        "four_corner_layout_sufficient": True,
         "endpoint_precision_note": (
             "minor endpoint offset possible; topology/identity confirmed but not "
             "sub-pixel perfect GT"
@@ -287,40 +290,59 @@ def run(
         ),
     )
 
-    old_diagnostics = _diagnostics(old_annotation)
-    corrected_diagnostics = _diagnostics(corrected_annotation)
+    old_diagnostics, old_variant = _diagnostics(old_annotation)
+    corrected_diagnostics, corrected_variant = _diagnostics(corrected_annotation)
+    corrected_projection_path = out_dir / "corrected_gt_projection_metrics_4543gt.json"
+    _write_json(
+        corrected_projection_path,
+        {
+            "schema_version": CORRECTED_PROJECTION_SCHEMA_VERSION,
+            "case_name": CORRECTED_CASE_NAME,
+            "source_case_name": "task238_ann2389",
+            "corrected_gt_id": CORRECTED_GT_ID,
+            "source_artifact": {
+                "path": corrected_path.as_posix(),
+                "sha256": _sha256(corrected_path),
+            },
+            "pair_count": 4,
+            "variants": [
+                {
+                    **corrected_variant,
+                    "name": "corrected_gt_4543gt",
+                    "candidate_row": None,
+                }
+            ],
+            "candidate_specific": False,
+            "candidate_count": 0,
+            "candidate_preference_authorized": False,
+            "safety_boundary": SAFETY_BOUNDARY,
+        },
+    )
     support = [
         {"path": corrected_path.as_posix(), "sha256": _sha256(corrected_path)},
         {
-            "path": (
-                "analysis_results/paper_a_manhattan/hypothesis_local_review/"
-                "task238_ann2389/projection_metrics.json"
-            ),
-            "sha256": _sha256(
-                Path(
-                    "analysis_results/paper_a_manhattan/hypothesis_local_review/"
-                    "task238_ann2389/projection_metrics.json"
-                )
-            ),
+            "path": corrected_projection_path.as_posix(),
+            "sha256": _sha256(corrected_projection_path),
         },
     ]
-    sidecar_paths = {
-        evidence_type: out_dir / f"manual_sidecar_{evidence_type}_4543gt.json"
-        for evidence_type in ("explicit_column_identity", "keep_distinct_contract")
-    }
-    for evidence_type, path in sidecar_paths.items():
-        _write_json(
-            path,
-            _sidecar(
-                evidence_type,
-                reviewed_at=str(corrected_annotation["updated_at"]),
-                supporting_artifacts=support,
-            ),
-        )
+    explicit_sidecar_path = (
+        out_dir / "manual_sidecar_explicit_column_identity_4543gt.json"
+    )
+    _write_json(
+        explicit_sidecar_path,
+        _sidecar(
+            reviewed_at=str(corrected_annotation["updated_at"]),
+            supporting_artifacts=support,
+        ),
+    )
+    (out_dir / "manual_sidecar_keep_distinct_contract_4543gt.json").unlink(
+        missing_ok=True
+    )
 
     payload = {
         "schema_version": SCHEMA_VERSION,
-        "case_name": "task238_ann2389",
+        "case_name": CORRECTED_CASE_NAME,
+        "source_case_name": "task238_ann2389",
         "task_id": CASE_TASK_ID,
         "source_task_id": SOURCE_TASK_ID,
         "annotation_id": OLD_ANNOTATION_ID,
@@ -340,37 +362,47 @@ def run(
             "sha256": _sha256(corrected_path),
             "accepted_final_fix": False,
         },
+        "corrected_projection": {
+            "path": corrected_projection_path.as_posix(),
+            "sha256": _sha256(corrected_projection_path),
+            "schema_version": CORRECTED_PROJECTION_SCHEMA_VERSION,
+            "pair_count": 4,
+            "source_annotation_id": CORRECTED_ANNOTATION_ID,
+        },
         "manual_findings": {
             "explicit_column_identity": "available",
-            "keep_distinct_contract": "available",
-            "short_wall_exists": True,
+            "short_wall_exists": False,
+            "keep_distinct_required": False,
+            "keep_distinct_contract": "not_applicable",
+            "four_corner_layout_sufficient": True,
             "endpoint_precision_note": (
                 "minor endpoint offset possible; topology/identity confirmed but not "
                 "sub-pixel perfect GT"
             ),
         },
         "manual_sidecars": {
-            name: {
-                "path": path.as_posix(),
-                "sha256": _sha256(path),
+            "explicit_column_identity": {
+                "path": explicit_sidecar_path.as_posix(),
+                "sha256": _sha256(explicit_sidecar_path),
                 "schema_version": SIDECAR_SCHEMA_VERSION,
                 "verdict": "available",
             }
-            for name, path in sidecar_paths.items()
         },
         "diagnostics": {
             "old_gt": old_diagnostics,
             "corrected_gt": corrected_diagnostics,
             "old_vs_corrected": _comparison(old_diagnostics, corrected_diagnostics),
-            "manual_projection_discrepancy": {
-                "short_wall_exists_manual": True,
+            "semantic_correction": {
+                "short_wall_exists": False,
+                "keep_distinct_required": False,
+                "keep_distinct_contract": "not_applicable",
+                "four_corner_layout_sufficient": True,
                 "corrected_projection_short_wall_count": corrected_diagnostics[
                     "short_wall_diagnostics"
                 ]["summary"]["short_wall_count"],
                 "interpretation": (
-                    "manual short-wall rationale is available, while current projection "
-                    "threshold does not classify a short wall; endpoint precision remains "
-                    "approximate and projection diagnostics do not replace the manual verdict"
+                    "short-wall/dense-corner preservation is not required for corrected "
+                    "GT 4543gt; endpoint precision remains a non-blocking note"
                 ),
             },
         },
@@ -386,20 +418,19 @@ def run(
         "c6_status": "audit_blocked",
         "status_boundaries": STATUS_BOUNDARIES,
         "next_allowed_step": (
-            "review corrected-GT audit and resolve remaining candidate-specific C4 and "
-            "2369 manual-evidence blockers; C6.5b remains blocked"
+            "C6.5a.5.1 consistency fix / post-fix audit only; C6.5b remains blocked"
         ),
     }
     json_path = out_dir / "hrc_gt_correction_audit_4543gt.json"
     md_path = out_dir / "hrc_gt_correction_audit_4543gt.md"
     _write_json(json_path, payload)
     comparison = payload["diagnostics"]["old_vs_corrected"]
-    md_path.write_text(
+    md_path.write_bytes(
         "\n".join(
             [
                 "# HRC C6.5a.5 GT Correction Materialization and Diagnostic Audit",
                 "",
-                "- Case: `task238_ann2389`",
+                "- Case: `task238_ann2389_4543gt`",
                 "- Corrected GT: `4543gt`",
                 "- Old GT: `deprecated_superseded_source`",
                 "- Candidate-specific: `false`",
@@ -414,20 +445,20 @@ def run(
                     for name, row in comparison.items()
                 ],
                 "",
-                "Manual review confirms column identity, keep-distinct topology, and a "
-                "real short wall. Current projection threshold reports no short wall; "
-                "this diagnostic does not replace the manual verdict.",
+                "Manual review confirms explicit column identity and a sufficient "
+                "four-corner topology. Short-wall/dense-corner preservation and "
+                "keep-distinct evidence are not applicable.",
                 "",
             ]
-        ),
-        encoding="utf-8",
+        ).encode("utf-8")
     )
     return {
         "json": json_path,
         "markdown": md_path,
         "old_gt": old_path,
         "corrected_gt": corrected_path,
-        **{f"sidecar_{name}": path for name, path in sidecar_paths.items()},
+        "corrected_projection": corrected_projection_path,
+        "sidecar_explicit_column_identity": explicit_sidecar_path,
     }
 
 

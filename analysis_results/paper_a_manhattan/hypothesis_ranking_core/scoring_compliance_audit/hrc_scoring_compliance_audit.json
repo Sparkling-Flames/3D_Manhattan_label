@@ -28,11 +28,11 @@
     },
     {
       "path": "analysis_results/paper_a_manhattan/hypothesis_ranking_core/evidence_input_materialization/hrc_evidence_input_materialization.json",
-      "sha256": "bd1a69125392fe693c465644a779f3f4f4dff8369dfc011e9f88e36ec0f7bd64"
+      "sha256": "cffe56525e5cdc392dd55b43f8f2180ad5115309907bacf574d2dc0f5741e5e5"
     },
     {
       "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/hrc_gt_correction_audit_4543gt.json",
-      "sha256": "7feced6626e9fa41de051f388002088f06e8462a792df8d475ee52a9c1e90b3a"
+      "sha256": "d9c0532987fa45f94bee3b632ff4b0548b54b8b21acf114b1845b041dd730eb4"
     }
   ],
   "layer_mapping": {
@@ -347,12 +347,12 @@
     {
       "code": "L2_BASELINE_ONLY_CANNOT_PREFER_CANDIDATE",
       "severity": "blocking",
-      "finding": "2369/2389 C4 remains baseline-only with no candidate projection variants"
+      "finding": "2369/2389 candidate-specific C4 evidence is absent"
     },
     {
       "code": "L4_MANUAL_EVIDENCE_INCOMPLETE",
       "severity": "blocking",
-      "finding": "2369 manual column-identity/keep-distinct evidence remains incomplete; 2389 is available only for corrected GT 4543gt"
+      "finding": "2369 manual sidecar remains pending; 2389 corrected GT has explicit column identity available and keep-distinct is not applicable"
     }
   ],
   "accepted_gate_audit": {
@@ -381,22 +381,29 @@
     "downstream_recommendation": false
   },
   "candidate_preference_blockers": [
-    "2369/2389 C4 evidence is baseline-to-baseline diagnostic only",
+    "2369/2389 candidate-specific C4 evidence is absent",
     "candidate projection variant count is zero",
-    "2369 manual explicit column identity/keep-distinct evidence is pending",
-    "2389 corrected GT manual evidence is available but is not candidate-specific",
+    "2369 manual sidecar is pending",
+    "2389 corrected GT explicit column identity is available",
+    "2389 corrected GT keep-distinct is not applicable",
     "supporting artifacts are not manual verdicts"
   ],
   "corrected_gt_audit": {
     "materialized": true,
     "path": "analysis_results/paper_a_manhattan/gt_correction_audit/task238_ann2389_4543gt/hrc_gt_correction_audit_4543gt.json",
-    "sha256": "7feced6626e9fa41de051f388002088f06e8462a792df8d475ee52a9c1e90b3a",
+    "sha256": "d9c0532987fa45f94bee3b632ff4b0548b54b8b21acf114b1845b041dd730eb4",
     "manual_evidence_available": true,
+    "explicit_column_identity": "available",
+    "keep_distinct_contract": "not_applicable",
+    "short_wall_exists": false,
+    "four_corner_layout_sufficient": true,
+    "endpoint_precision_blocking": false,
     "accepted_final_fix": false
   },
   "candidate_preference_authorized": {
     "task218_ann2369": false,
-    "task238_ann2389": false
+    "task238_ann2389": false,
+    "task238_ann2389_4543gt": false
   },
   "audit_only": true,
   "evaluator_changed": true,
@@ -410,7 +417,7 @@
   "c6_status": "audit_blocked",
   "c6_5b_authorized": false,
   "c6_5a_4_implementation_completed": true,
-  "next_allowed_step": "resolve candidate-specific C4 evidence and complete manual evidence sidecars; C6.5b remains unauthorized",
+  "next_allowed_step": "C6.5a.5.1 consistency fix / post-fix audit only; C6.5b remains blocked",
   "status_boundaries": {
     "c3_shadow_expansion": "blocked",
     "c7_optimizer": "blocked",
