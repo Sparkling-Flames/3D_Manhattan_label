@@ -50,14 +50,16 @@ def _write_csv(path: Path, rows: list[dict]) -> Path:
 
 
 def _canonical(path: Path, export: Path, rows: list[tuple[str, str, str]]) -> Path:
+    export_tasks = json.loads(export.read_text(encoding="utf-8"))
+    project_by_task = {str(task["id"]): str(task.get("project") or task.get("project_id") or "1") for task in export_tasks}
     return _write_csv(
         path,
         [
             {
                 "source_export": str(export),
-                "project_id": "1",
+                "project_id": project_by_task.get(task_id, "1"),
                 "task_id": task_id,
-                "task_key": f"1:{task_id}",
+                "task_key": f"{project_by_task.get(task_id, '1')}:{task_id}",
                 "task_label": f"{task_id}.jpg",
                 "dataset_group": "PreScreen_manual",
                 "condition": "manual",
@@ -100,7 +102,7 @@ def _run(tmp_path: Path, tasks: list[dict], canonical_rows: list[tuple[str, str,
     canonical = _canonical(tmp_path / "canonical.csv", export, canonical_rows)
     completion = _completion(tmp_path / "completion.csv", sorted({worker for _task, worker, _ann in canonical_rows}))
     final_gold = _gold(tmp_path / "gold.jsonl", gold_records)
-    task_rows, response_rows, _unknown, _mixed, _worker, summary = build_scope_audits(canonical, final_gold, completion)
+    task_rows, response_rows, _unknown, _mixed, _worker, _synthetic, summary = build_scope_audits(canonical, final_gold, completion)
     return {r["task_id"]: r for r in task_rows}, {(r["task_id"], r["annotator_id"]): r for r in response_rows}, summary
 
 
@@ -159,7 +161,7 @@ def test_undercoverage_label_does_not_become_oos_subtype(tmp_path: Path) -> None
 
 def test_real_unknown_gold_tasks_are_allowlisted_or_zero() -> None:
     repo = Path(__file__).resolve().parents[1]
-    _task_rows, _response_rows, unknown_rows, _mixed_rows, _worker_rows, summary = build_scope_audits(
+    _task_rows, _response_rows, unknown_rows, _mixed_rows, _worker_rows, _synthetic_rows, summary = build_scope_audits(
         repo / "analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv",
         repo / "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
         repo / "analysis_results/prescreen_closeout/prescreen_completion_audit.csv",
@@ -171,7 +173,7 @@ def test_real_unknown_gold_tasks_are_allowlisted_or_zero() -> None:
 
 def test_real_mixed_scope_does_not_override_final_gold_and_oos_not_geometry_primary() -> None:
     repo = Path(__file__).resolve().parents[1]
-    task_rows, response_rows, _unknown_rows, mixed_rows, _worker_rows, _summary = build_scope_audits(
+    task_rows, response_rows, _unknown_rows, mixed_rows, _worker_rows, _synthetic_rows, _summary = build_scope_audits(
         repo / "analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv",
         repo / "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
         repo / "analysis_results/prescreen_closeout/prescreen_completion_audit.csv",
@@ -183,3 +185,131 @@ def test_real_mixed_scope_does_not_override_final_gold_and_oos_not_geometry_prim
     assert all(task_by_id[str(row["task_id"])]["task_scope_adjudication_source"] != "unresolved" for row in mixed_rows)
     assert all(row["geometry_primary_possible"] is False for row in task_rows if str(row["task_final_scope"]).startswith("oos_"))
     assert all(row["geometry_primary_possible"] is False for row in response_rows if str(row["task_final_scope"]).startswith("oos_"))
+
+
+def _synthetic_task(ls_task_id: str, candidate_id: str, worker_scope: str = "normal") -> dict:
+    return {
+        "id": ls_task_id,
+        "project": 40,
+        "data": {
+            "title": "synthetic.jpg",
+            "dataset_group": "PreScreen_semi",
+            "condition": "semi",
+            "task_id": f"synthetic::{candidate_id}",
+            "base_task_id": "runtime_base",
+            "synthetic_candidate_id": candidate_id,
+            "source_type": "trap_synthetic",
+            "proposal_source_kind": "frozen_synthetic_asset",
+        },
+        "annotations": [_annotation("a1", "w1", worker_scope)],
+    }
+
+
+def _synthetic_bank(path: Path, candidate_id: str, source_base_task_id: str = "source_base", family: str = "corner_drift") -> Path:
+    path.write_text(
+        json.dumps(
+            {
+                "candidate_id": candidate_id,
+                "source_base_task_id": source_base_task_id,
+                "source_title": f"{source_base_task_id}.jpg",
+                "family": family,
+                "source_type": "trap_synthetic_disjoint_source",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    return path
+
+
+def test_synthetic_task_binds_to_source_final_gold(tmp_path: Path) -> None:
+    candidate_id = "synthetic_ok"
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_synthetic_task("1", candidate_id, worker_scope="oos_geometry")]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(
+        tmp_path / "gold.jsonl",
+        [{"task_id": "source_task", "base_task_id": "source_base", "final_scope_alias": "oos_geometry", "final_scope_binary": "oos"}],
+    )
+    bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id)
+
+    task_rows, response_rows, unknown_rows, _mixed, _worker, synthetic_rows, _summary = build_scope_audits(
+        canonical, final_gold, completion, None, bank
+    )
+
+    assert task_rows[0]["task_scope_adjudication_source"] == "synthetic_asset_source_gold"
+    assert task_rows[0]["task_final_scope"] == "oos_geometry"
+    assert task_rows[0]["geometry_primary_possible"] is False
+    assert response_rows[0]["worker_scope_response"] == "correct_oos"
+    assert not unknown_rows
+    assert synthetic_rows[0]["scope_binding_status"] == "synthetic_bound_to_source_gold"
+
+
+def test_synthetic_bank_matched_but_source_gold_missing_is_not_unknown_gold(tmp_path: Path) -> None:
+    candidate_id = "synthetic_no_source_gold"
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_synthetic_task("1", candidate_id)]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+    bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id)
+
+    task_rows, _response_rows, unknown_rows, _mixed, _worker, synthetic_rows, _summary = build_scope_audits(
+        canonical, final_gold, completion, None, bank
+    )
+
+    assert task_rows[0]["task_final_scope"] == "synthetic_scope_unresolved"
+    assert task_rows[0]["task_scope_adjudication_source"] == "synthetic_asset_bank_no_source_gold"
+    assert not unknown_rows
+    assert synthetic_rows[0]["scope_binding_status"] == "synthetic_bank_matched_source_gold_missing"
+
+
+def test_synthetic_bank_missing_is_not_unknown_gold(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_synthetic_task("1", "not_in_bank")]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+
+    task_rows, _response_rows, unknown_rows, _mixed, _worker, synthetic_rows, _summary = build_scope_audits(
+        canonical, final_gold, completion, None, tmp_path / "missing_bank.jsonl"
+    )
+
+    assert task_rows[0]["task_final_scope"] == "synthetic_scope_unresolved"
+    assert task_rows[0]["task_scope_adjudication_source"] == "synthetic_asset_unmatched"
+    assert not unknown_rows
+    assert synthetic_rows[0]["scope_binding_status"] == "synthetic_bank_missing"
+
+
+def test_language_mirror_counts_two_runtime_rows_one_base_image(tmp_path: Path) -> None:
+    candidate_id = "mirror_candidate"
+    export = tmp_path / "export.json"
+    tasks = [_synthetic_task("1", candidate_id), _synthetic_task("2", candidate_id)]
+    tasks[0]["project"] = 29
+    tasks[1]["project"] = 40
+    export.write_text(json.dumps(tasks), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1"), ("2", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+    bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id)
+
+    _task_rows, _response_rows, _unknown, _mixed, _worker, _synthetic, summary = build_scope_audits(canonical, final_gold, completion, None, bank)
+
+    assert summary["synthetic_scope_unresolved_task_rows"] == 2
+    assert summary["synthetic_scope_unresolved_base_image_count"] == 1
+
+
+def test_ordinary_non_synthetic_missing_final_gold_still_unknown(tmp_path: Path) -> None:
+    tasks = [_task("1", "ordinary_missing", "", [_annotation("a1", "w1", "normal")])]
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps(tasks), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+
+    task_rows, _response_rows, unknown_rows, _mixed, _worker, _synthetic, summary = build_scope_audits(canonical, final_gold, completion)
+
+    assert task_rows[0]["task_final_scope"] == "unknown_gold"
+    assert len(unknown_rows) == 1
+    assert summary["non_synthetic_unknown_gold_task_rows"] == 1
