@@ -166,6 +166,8 @@ def test_real_unknown_gold_tasks_are_allowlisted_or_zero() -> None:
         repo / "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
         repo / "analysis_results/prescreen_closeout/prescreen_completion_audit.csv",
         repo / "analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv",
+        repo / "analysis_results/trap_collection_freeze_20260320/semi_synthetic_disjoint_candidate_bank_v2.jsonl",
+        repo / "analysis_results/prescreen_closeout/prescreen_synthetic_expert_review.csv",
     )
 
     assert summary["unknown_gold_tasks"] == 0 or all(row["allowlisted"] for row in unknown_rows)
@@ -178,6 +180,8 @@ def test_real_mixed_scope_does_not_override_final_gold_and_oos_not_geometry_prim
         repo / "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
         repo / "analysis_results/prescreen_closeout/prescreen_completion_audit.csv",
         repo / "analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv",
+        repo / "analysis_results/trap_collection_freeze_20260320/semi_synthetic_disjoint_candidate_bank_v2.jsonl",
+        repo / "analysis_results/prescreen_closeout/prescreen_synthetic_expert_review.csv",
     )
 
     task_by_id = {str(row["task_id"]): row for row in task_rows}
@@ -222,6 +226,36 @@ def _synthetic_bank(path: Path, candidate_id: str, source_base_task_id: str = "s
     return path
 
 
+def _synthetic_expert_review(
+    path: Path,
+    *,
+    runtime_task_id: str,
+    mirror_task_id: str = "",
+    base_image_key: str = "source_base",
+    planned_family: str = "over_parsing",
+    realized_primary: str = "corner_duplicate",
+    worker_note: str = "scope only",
+) -> Path:
+    return _write_csv(
+        path,
+        [
+            {
+                "runtime_task_id": runtime_task_id,
+                "mirror_task_id": mirror_task_id,
+                "base_image_key": base_image_key,
+                "planned_synthetic_family": planned_family,
+                "expert_final_scope": "in_scope",
+                "scope_gold_ready": "true",
+                "expert_realized_model_issue_primary": realized_primary,
+                "expert_realized_model_issue_secondary": "",
+                "trap_effective": "true",
+                "planned_realized_mismatch": str(planned_family != realized_primary).lower(),
+                "operator_validity_note": worker_note,
+            }
+        ],
+    )
+
+
 def test_synthetic_task_binds_to_source_final_gold(tmp_path: Path) -> None:
     candidate_id = "synthetic_ok"
     export = tmp_path / "export.json"
@@ -244,6 +278,53 @@ def test_synthetic_task_binds_to_source_final_gold(tmp_path: Path) -> None:
     assert response_rows[0]["worker_scope_response"] == "correct_oos"
     assert not unknown_rows
     assert synthetic_rows[0]["scope_binding_status"] == "synthetic_bound_to_source_gold"
+
+
+def test_synthetic_expert_review_binds_source_gold_missing_scope_only(tmp_path: Path) -> None:
+    candidate_id = "synthetic_reviewed"
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_synthetic_task("1", candidate_id, worker_scope="normal")]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+    bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id, family="over_parsing")
+    review = _synthetic_expert_review(tmp_path / "review.csv", runtime_task_id="1")
+
+    task_rows, response_rows, unknown_rows, _mixed, _worker, synthetic_rows, summary = build_scope_audits(
+        canonical, final_gold, completion, None, bank, review
+    )
+
+    assert task_rows[0]["task_final_scope"] == "in_scope"
+    assert task_rows[0]["task_scope_adjudication_source"] == "synthetic_asset_expert_review"
+    assert task_rows[0]["geometry_primary_possible"] is False
+    assert response_rows[0]["worker_scope_response"] == "correct_in_scope"
+    assert response_rows[0]["geometry_primary_possible"] is False
+    assert not unknown_rows
+    assert synthetic_rows[0]["scope_binding_status"] == "synthetic_bound_by_expert_scope_review"
+    assert synthetic_rows[0]["primary_eligible_after_binding"] is False
+    assert synthetic_rows[0]["geometry_gold_ready_after_binding"] is False
+    assert synthetic_rows[0]["planned_realized_mismatch"] == "true"
+    assert summary["synthetic_scope_unresolved_task_rows"] == 0
+    assert summary["synthetic_scope_bound_task_rows"] == 1
+
+
+def test_synthetic_expert_realized_model_issue_does_not_override_worker_scope(tmp_path: Path) -> None:
+    candidate_id = "synthetic_worker_oos"
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_synthetic_task("1", candidate_id, worker_scope="oos_geometry")]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+    bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id, family="over_parsing")
+    review = _synthetic_expert_review(tmp_path / "review.csv", runtime_task_id="1", realized_primary="corner_duplicate")
+
+    _task_rows, response_rows, _unknown_rows, _mixed, _worker, synthetic_rows, _summary = build_scope_audits(
+        canonical, final_gold, completion, None, bank, review
+    )
+
+    assert synthetic_rows[0]["expert_realized_model_issue_primary"] == "corner_duplicate"
+    assert response_rows[0]["worker_scope_normalized"] == "oos"
+    assert response_rows[0]["worker_scope_response"] == "scope_false_positive"
 
 
 def test_synthetic_bank_matched_but_source_gold_missing_is_not_unknown_gold(tmp_path: Path) -> None:
@@ -298,6 +379,46 @@ def test_language_mirror_counts_two_runtime_rows_one_base_image(tmp_path: Path) 
 
     assert summary["synthetic_scope_unresolved_task_rows"] == 2
     assert summary["synthetic_scope_unresolved_base_image_count"] == 1
+
+
+def test_language_mirror_expert_review_counts_two_runtime_rows_one_base_image(tmp_path: Path) -> None:
+    candidate_id = "mirror_reviewed"
+    export = tmp_path / "export.json"
+    tasks = [_synthetic_task("1", candidate_id), _synthetic_task("2", candidate_id)]
+    tasks[0]["project"] = 29
+    tasks[1]["project"] = 40
+    export.write_text(json.dumps(tasks), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1"), ("2", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+    bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id)
+    review = _synthetic_expert_review(tmp_path / "review.csv", runtime_task_id="1", mirror_task_id="2")
+
+    _task_rows, _response_rows, _unknown, _mixed, _worker, _synthetic, summary = build_scope_audits(
+        canonical, final_gold, completion, None, bank, review
+    )
+
+    assert summary["synthetic_scope_bound_task_rows"] == 2
+    assert summary["synthetic_scope_bound_base_image_count"] == 1
+    assert summary["synthetic_scope_unresolved_task_rows"] == 0
+
+
+def test_real_synthetic_expert_review_resolves_all_current_synthetic_scope_unresolved() -> None:
+    repo = Path(__file__).resolve().parents[1]
+    _task_rows, _response_rows, _unknown_rows, _mixed_rows, _worker_rows, synthetic_rows, summary = build_scope_audits(
+        repo / "analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv",
+        repo / "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
+        repo / "analysis_results/prescreen_closeout/prescreen_completion_audit.csv",
+        repo / "analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv",
+        repo / "analysis_results/trap_collection_freeze_20260320/semi_synthetic_disjoint_candidate_bank_v2.jsonl",
+        repo / "analysis_results/prescreen_closeout/prescreen_synthetic_expert_review.csv",
+    )
+
+    assert summary["synthetic_scope_unresolved_task_rows"] == 0
+    assert summary["synthetic_scope_bound_task_rows"] == 12
+    assert summary["synthetic_scope_bound_base_image_count"] == 6
+    assert summary["synthetic_bound_by_expert_scope_review_task_rows"] == 12
+    assert all(row["scope_binding_status"] == "synthetic_bound_by_expert_scope_review" for row in synthetic_rows)
 
 
 def test_ordinary_non_synthetic_missing_final_gold_still_unknown(tmp_path: Path) -> None:

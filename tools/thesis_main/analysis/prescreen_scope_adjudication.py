@@ -19,6 +19,7 @@ DEFAULT_FINAL_GOLD = Path("analysis_results/final_gold_layer_20260325/final_gold
 DEFAULT_COMPLETION = Path("analysis_results/prescreen_closeout/prescreen_completion_audit.csv")
 DEFAULT_UNKNOWN_GOLD_ALLOWLIST = Path("analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv")
 DEFAULT_SYNTHETIC_BANK = Path("analysis_results/trap_collection_freeze_20260320/semi_synthetic_disjoint_candidate_bank_v2.jsonl")
+DEFAULT_SYNTHETIC_EXPERT_REVIEW = Path("analysis_results/prescreen_closeout/prescreen_synthetic_expert_review.csv")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/prescreen_closeout")
 
 TASK_FIELDS = [
@@ -125,7 +126,26 @@ SYNTHETIC_BINDING_FIELDS = [
     "task_final_scope_after_binding",
     "task_scope_adjudication_source_after_binding",
     "primary_eligible_after_binding",
+    "geometry_gold_ready_after_binding",
+    "expert_realized_model_issue_primary",
+    "expert_realized_model_issue_secondary",
+    "trap_effective",
+    "planned_realized_mismatch",
     "notes",
+]
+
+SYNTHETIC_EXPERT_REVIEW_FIELDS = [
+    "runtime_task_id",
+    "mirror_task_id",
+    "base_image_key",
+    "planned_synthetic_family",
+    "expert_final_scope",
+    "scope_gold_ready",
+    "expert_realized_model_issue_primary",
+    "expert_realized_model_issue_secondary",
+    "trap_effective",
+    "planned_realized_mismatch",
+    "operator_validity_note",
 ]
 
 ALLOWED_OOS = {"oos_geometry", "oos_open_boundary", "oos_split_level", "oos_insufficient"}
@@ -181,6 +201,18 @@ def _load_synthetic_bank(path: Path | None) -> dict[str, dict[str, Any]]:
             cid = _safe(rec.get("candidate_id"))
             if cid:
                 out[cid] = rec
+    return out
+
+
+def _load_synthetic_expert_review(path: Path | None) -> dict[str, dict[str, str]]:
+    if not path or not path.exists():
+        return {}
+    out: dict[str, dict[str, str]] = {}
+    for row in _load_csv(path):
+        for key_name in ("runtime_task_id", "mirror_task_id"):
+            task_id = _safe(row.get(key_name))
+            if task_id:
+                out[task_id] = row
     return out
 
 
@@ -296,6 +328,7 @@ def _synthetic_scope_binding(
     runtime_task_id: str,
     data: dict[str, Any],
     synthetic_bank: dict[str, dict[str, Any]],
+    synthetic_expert_review: dict[str, dict[str, str]],
     final_gold_index: dict[str, dict[str, Any]],
 ) -> tuple[str, str, str, str, str, dict[str, Any] | None]:
     if not _is_synthetic_trap(data):
@@ -319,6 +352,7 @@ def _synthetic_scope_binding(
         return "synthetic_scope_unresolved", "synthetic_asset_unmatched", "", "", "synthetic candidate missing from bank", audit
     source_base_task_id = _safe(bank_row.get("source_base_task_id"))
     source_gold = final_gold_index.get(f"base_task_id:{source_base_task_id}") if source_base_task_id else None
+    expert_review = synthetic_expert_review.get(runtime_task_id)
     if source_gold:
         raw_scope = _safe(source_gold.get("final_scope_alias") or source_gold.get("final_scope_binary"))
         final_scope = _normalize_task_scope(raw_scope, _safe(source_gold.get("final_scope_binary")))
@@ -335,6 +369,30 @@ def _synthetic_scope_binding(
             notes="synthetic source bound to final_gold by source_base_task_id",
         )
         return final_scope, "synthetic_asset_source_gold", raw_scope, f"base_task_id:{source_base_task_id}", "", audit
+    if expert_review and _safe(expert_review.get("scope_gold_ready")).lower() == "true":
+        raw_scope = _safe(expert_review.get("expert_final_scope"))
+        final_scope = _normalize_task_scope(raw_scope)
+        audit = _synthetic_audit_row(
+            project_id=project_id,
+            runtime_task_id=runtime_task_id,
+            data=data,
+            candidate_id=candidate_id,
+            bank_row=bank_row,
+            source_gold=None,
+            status="synthetic_bound_by_expert_scope_review",
+            final_scope=final_scope,
+            source="synthetic_asset_expert_review",
+            notes=_safe(expert_review.get("operator_validity_note")),
+            expert_review=expert_review,
+        )
+        return (
+            final_scope,
+            "synthetic_asset_expert_review",
+            raw_scope,
+            f"synthetic_expert_review:{runtime_task_id}",
+            "synthetic expert review resolves scope only; no corrected geometry GT",
+            audit,
+        )
     audit = _synthetic_audit_row(
         project_id=project_id,
         runtime_task_id=runtime_task_id,
@@ -369,6 +427,7 @@ def _synthetic_audit_row(
     final_scope: str,
     source: str,
     notes: str,
+    expert_review: dict[str, str] | None = None,
 ) -> dict[str, Any]:
     source_base_task_id = _safe((bank_row or {}).get("source_base_task_id"))
     source_scope = _safe((source_gold or {}).get("final_scope_alias") or (source_gold or {}).get("final_scope_binary"))
@@ -392,7 +451,12 @@ def _synthetic_audit_row(
         "scope_binding_status": status,
         "task_final_scope_after_binding": final_scope,
         "task_scope_adjudication_source_after_binding": source,
-        "primary_eligible_after_binding": _geometry_possible(final_scope),
+        "primary_eligible_after_binding": _geometry_possible(final_scope) and source != "synthetic_asset_expert_review",
+        "geometry_gold_ready_after_binding": source != "synthetic_asset_expert_review" and _geometry_possible(final_scope),
+        "expert_realized_model_issue_primary": _safe((expert_review or {}).get("expert_realized_model_issue_primary")),
+        "expert_realized_model_issue_secondary": _safe((expert_review or {}).get("expert_realized_model_issue_secondary")),
+        "trap_effective": _safe((expert_review or {}).get("trap_effective")),
+        "planned_realized_mismatch": _safe((expert_review or {}).get("planned_realized_mismatch")),
         "notes": notes,
     }
 
@@ -444,12 +508,14 @@ def build_scope_audits(
     completion_csv: Path | None = None,
     unknown_gold_allowlist_csv: Path | None = None,
     synthetic_bank_jsonl: Path | None = None,
+    synthetic_expert_review_csv: Path | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     canonical_rows = _load_csv(canonical_csv)
     completion = _load_completion(completion_csv)
     final_gold_index = _load_final_gold(final_gold_jsonl)
     unknown_gold_allowlist = _load_unknown_gold_allowlist(unknown_gold_allowlist_csv)
     synthetic_bank = _load_synthetic_bank(synthetic_bank_jsonl)
+    synthetic_expert_review = _load_synthetic_expert_review(synthetic_expert_review_csv)
     task_index, ann_index = _load_export_details(canonical_rows)
 
     task_groups: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
@@ -480,6 +546,7 @@ def build_scope_audits(
             runtime_task_id=key[2],
             data=data,
             synthetic_bank=synthetic_bank,
+            synthetic_expert_review=synthetic_expert_review,
             final_gold_index=final_gold_index,
         )
         if synthetic_audit:
@@ -500,6 +567,7 @@ def build_scope_audits(
                 n_missing += 1
         mixed = n_in > 0 and n_oos > 0
         unresolved = task_scope in UNRESOLVED_SCOPES or task_scope == "unknown_gold"
+        geometry_primary_possible = _geometry_possible(task_scope) and source != "synthetic_asset_expert_review"
         task_row = {
             "task_id": key[2],
             "project_id": key[1],
@@ -517,7 +585,7 @@ def build_scope_audits(
             "n_worker_scope_missing": n_missing,
             "mixed_scope_flag": mixed,
             "unresolved_scope_flag": unresolved,
-            "geometry_primary_possible": _geometry_possible(task_scope),
+            "geometry_primary_possible": geometry_primary_possible,
             "notes": note,
         }
         task_rows.append(task_row)
@@ -581,8 +649,17 @@ def build_scope_audits(
     runtime_task_rows = len(task_rows)
     base_image_count = len({_safe(row.get("image_id")) for row in task_rows if _safe(row.get("image_id"))})
     unknown_gold_base_images = {_safe(row.get("image_id")) for row in unknown_gold_rows if _safe(row.get("image_id"))}
-    synthetic_bound_rows = [r for r in synthetic_audit_rows if r["scope_binding_status"] == "synthetic_bound_to_source_gold"]
-    synthetic_unresolved_rows = [r for r in synthetic_audit_rows if r["scope_binding_status"] != "synthetic_bound_to_source_gold"]
+    synthetic_bound_rows = [
+        r
+        for r in synthetic_audit_rows
+        if r["scope_binding_status"] in {"synthetic_bound_to_source_gold", "synthetic_bound_by_expert_scope_review"}
+    ]
+    synthetic_expert_bound_rows = [r for r in synthetic_audit_rows if r["scope_binding_status"] == "synthetic_bound_by_expert_scope_review"]
+    synthetic_unresolved_rows = [
+        r
+        for r in synthetic_audit_rows
+        if r["scope_binding_status"] not in {"synthetic_bound_to_source_gold", "synthetic_bound_by_expert_scope_review"}
+    ]
     summary = {
         "dry_run": True,
         "data_complete": False,
@@ -598,6 +675,10 @@ def build_scope_audits(
         "non_synthetic_unknown_gold_base_image_count": len(unknown_gold_base_images),
         "synthetic_scope_bound_task_rows": len(synthetic_bound_rows),
         "synthetic_scope_bound_base_image_count": len({_safe(r.get("base_image_key")) for r in synthetic_bound_rows if _safe(r.get("base_image_key"))}),
+        "synthetic_bound_by_expert_scope_review_task_rows": len(synthetic_expert_bound_rows),
+        "synthetic_bound_by_expert_scope_review_base_image_count": len(
+            {_safe(r.get("base_image_key")) for r in synthetic_expert_bound_rows if _safe(r.get("base_image_key"))}
+        ),
         "synthetic_scope_unresolved_task_rows": len(synthetic_unresolved_rows),
         "synthetic_scope_unresolved_base_image_count": len({_safe(r.get("base_image_key")) for r in synthetic_unresolved_rows if _safe(r.get("base_image_key"))}),
         "runtime_task_rows": runtime_task_rows,
@@ -646,6 +727,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--completion-csv", default=str(DEFAULT_COMPLETION))
     parser.add_argument("--unknown-gold-allowlist-csv", default=str(DEFAULT_UNKNOWN_GOLD_ALLOWLIST))
     parser.add_argument("--synthetic-bank-jsonl", default=str(DEFAULT_SYNTHETIC_BANK))
+    parser.add_argument("--synthetic-expert-review-csv", default=str(DEFAULT_SYNTHETIC_EXPERT_REVIEW))
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
     args = parser.parse_args(argv)
 
@@ -656,6 +738,7 @@ def main(argv: list[str] | None = None) -> int:
         Path(args.completion_csv) if args.completion_csv else None,
         Path(args.unknown_gold_allowlist_csv) if args.unknown_gold_allowlist_csv else None,
         Path(args.synthetic_bank_jsonl) if args.synthetic_bank_jsonl else None,
+        Path(args.synthetic_expert_review_csv) if args.synthetic_expert_review_csv else None,
     )
     task_path = out_dir / "prescreen_scope_adjudication.csv"
     response_path = out_dir / "prescreen_scope_response_audit.csv"
