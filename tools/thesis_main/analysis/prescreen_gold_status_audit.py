@@ -61,9 +61,9 @@ def _write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writerows(rows)
 
 
-def _load_final_gold(path: Path | None) -> dict[str, list[dict[str, Any]]]:
+def _load_final_gold(path: Path | None) -> dict[str, list[dict[str, Any]]] | None:
     if not path or not path.exists():
-        return {}
+        return None
     index: dict[str, list[dict[str, Any]]] = {}
     with path.open("r", encoding="utf-8") as f:
         for line in f:
@@ -119,9 +119,13 @@ def _geometry_parseable(rec: dict[str, Any]) -> bool:
     return False
 
 
-def _validation_status(row: dict[str, str], final_gold_index: dict[str, list[dict[str, Any]]]) -> str:
+def _validation_status(row: dict[str, str], role: str, final_gold_index: dict[str, list[dict[str, Any]]] | None) -> str:
     if _safe(row.get("task_final_scope")) in OOS_SCOPES | UNRESOLVED_SCOPES:
         return "unresolved_reference"
+    if role == "synthetic_source_gt_checked" and _safe(row.get("geometry_gold_source")) == "export_label_groudTruth":
+        return "external_source_gt_checked"
+    if final_gold_index is None:
+        return "unvalidated_reference"
     keys = _reference_keys(row)
     if not keys:
         return "unresolved_reference"
@@ -155,7 +159,7 @@ def _reference_role(row: dict[str, str]) -> str:
     return "unresolved_not_applicable"
 
 
-def _status_tuple(row: dict[str, str], role: str) -> tuple[str, str, bool, str, bool]:
+def _status_tuple(row: dict[str, str], role: str, validation_status: str) -> tuple[str, str, bool, str, bool]:
     status = _safe(row.get("geometry_gold_status"))
     validation = _safe(row.get("geometry_gold_validation_level"))
     scope = _safe(row.get("task_final_scope"))
@@ -166,6 +170,17 @@ def _status_tuple(row: dict[str, str], role: str) -> tuple[str, str, bool, str, 
         return "not_applicable", "not_applicable", False, "oos_scope", False
     if role == "unresolved_not_applicable" or scope in UNRESOLVED_SCOPES:
         return "deferred", "not_ready", True, "unresolved_scope", True
+    if validation_status == "final_gold_geometry_checked" and role in {"manual_final_gold_ref", "semi_condition_reference_only"} and scope == "in_scope":
+        return "ready_for_alignment", "ready_for_undercoverage_audit", False, "final_gold_geometry_checked", False
+    if validation_status == "external_source_gt_checked":
+        return "ready_for_alignment", "ready_for_undercoverage_audit", False, "synthetic_gt_checked", False
+    if validation_status in {"missing_final_gold", "duplicate_final_gold", "invalid_final_gold_geometry"}:
+        mapping = {
+            "missing_final_gold": "missing",
+            "duplicate_final_gold": "duplicate",
+            "invalid_final_gold_geometry": "invalid",
+        }
+        return mapping[validation_status], "not_ready", True, validation_status, True
     if status == "ready" and validation == "source_gt_annotation_count_checked":
         return "ready_for_alignment", "ready_for_undercoverage_audit", False, "synthetic_gt_checked", False
     if status == "ready" and validation == "final_gold_ref_only":
@@ -189,8 +204,8 @@ def build_gold_status_audit(alignment_csv: Path, final_gold_jsonl: Path | None =
     out: list[dict[str, Any]] = []
     for row in rows:
         role = _reference_role(row)
-        alignment_status, undercoverage_status, ambiguity, reason, review = _status_tuple(row, role)
-        validation_status = _validation_status(row, final_gold_index)
+        validation_status = _validation_status(row, role, final_gold_index)
+        alignment_status, undercoverage_status, ambiguity, reason, review = _status_tuple(row, role, validation_status)
         out.append(
             {
                 "task_id": _safe(row.get("task_id")),

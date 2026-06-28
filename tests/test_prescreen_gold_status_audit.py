@@ -107,22 +107,62 @@ def test_manual_final_gold_ref_only_requires_review(tmp_path: Path) -> None:
     assert row["manual_review_required"] is True
 
 
-def test_final_gold_reference_geometry_checked_by_task_id(tmp_path: Path) -> None:
+def test_final_gold_geometry_checked_upgrades_manual_final_gold_ref(tmp_path: Path) -> None:
     alignment = _write_csv(tmp_path / "alignment.csv", [_alignment_row("manual", gold_task="task_id:462")])
     final_gold = _gold(tmp_path / "gold.jsonl", [_gold_record("462")])
 
     rows, _summary = build_gold_status_audit(alignment, final_gold)
 
-    assert rows[0]["validation_status"] == "final_gold_geometry_checked"
+    row = rows[0]
+    assert row["validation_status"] == "final_gold_geometry_checked"
+    assert row["gold_status_for_alignment"] == "ready_for_alignment"
+    assert row["gold_status_for_undercoverage"] == "ready_for_undercoverage_audit"
+    assert row["gold_ambiguity_flag"] is False
+    assert row["gold_ambiguity_reason"] == "final_gold_geometry_checked"
+    assert row["manual_review_required"] is False
 
 
-def test_final_gold_reference_geometry_checked_by_base_task_id(tmp_path: Path) -> None:
-    alignment = _write_csv(tmp_path / "alignment.csv", [_alignment_row("manual", gold_task="base_task_id:base_1")])
+def test_final_gold_geometry_checked_upgrades_semi_condition_reference(tmp_path: Path) -> None:
+    alignment = _write_csv(
+        tmp_path / "alignment.csv",
+        [
+            _alignment_row(
+                "semi",
+                dataset_group="PreScreen_semi",
+                condition="semi",
+                gold_task="base_task_id:base_1",
+            )
+        ],
+    )
     final_gold = _gold(tmp_path / "gold.jsonl", [_gold_record("462", base_task_id="base_1")])
 
     rows, _summary = build_gold_status_audit(alignment, final_gold)
 
-    assert rows[0]["validation_status"] == "final_gold_geometry_checked"
+    row = rows[0]
+    assert row["validation_status"] == "final_gold_geometry_checked"
+    assert row["gold_status_for_alignment"] == "ready_for_alignment"
+    assert row["gold_status_for_undercoverage"] == "ready_for_undercoverage_audit"
+    assert row["gold_ambiguity_flag"] is False
+    assert row["gold_ambiguity_reason"] == "final_gold_geometry_checked"
+    assert row["manual_review_required"] is False
+
+
+def test_mirror_mismatch_overrides_final_gold_validation_success(tmp_path: Path) -> None:
+    alignment = _write_csv(
+        tmp_path / "alignment.csv",
+        [_alignment_row("manual", gold_task="task_id:462", alignment_status="mirror_gold_mismatch")],
+    )
+    final_gold = _gold(tmp_path / "gold.jsonl", [_gold_record("462")])
+
+    rows, _summary = build_gold_status_audit(alignment, final_gold)
+
+    row = rows[0]
+    assert row["validation_status"] == "final_gold_geometry_checked"
+    assert row["gold_status_for_alignment"] == "ambiguous"
+    assert row["gold_status_for_undercoverage"] == "not_ready"
+    assert row["gold_ambiguity_flag"] is True
+    assert row["gold_ambiguity_reason"] == "mirror_gold_mismatch"
+    assert row["manual_review_required"] is True
 
 
 def test_final_gold_reference_missing_duplicate_invalid_and_unresolved(tmp_path: Path) -> None:
@@ -155,7 +195,43 @@ def test_final_gold_reference_missing_duplicate_invalid_and_unresolved(tmp_path:
         "invalid_final_gold_geometry",
         "unresolved_reference",
     ]
+    assert [row["gold_status_for_alignment"] for row in rows[:3]] == ["missing", "duplicate", "invalid"]
+    assert all(row["gold_status_for_undercoverage"] == "not_ready" for row in rows[:4])
+    assert all(row["gold_ambiguity_flag"] is True for row in rows[:4])
+    assert all(row["manual_review_required"] is True for row in rows[:4])
+    assert [row["gold_ambiguity_reason"] for row in rows[:3]] == [
+        "missing_final_gold",
+        "duplicate_final_gold",
+        "invalid_final_gold_geometry",
+    ]
     assert summary["validation_status_counts"]["invalid_final_gold_geometry"] == 2
+
+
+def test_synthetic_source_gt_checked_is_external_not_missing_final_gold(tmp_path: Path) -> None:
+    alignment = _write_csv(
+        tmp_path / "alignment.csv",
+        [
+            _alignment_row(
+                "synth",
+                dataset_group="PreScreen_semi",
+                condition="semi",
+                source="synthetic_asset_expert_review",
+                validation_level="source_gt_annotation_count_checked",
+                gold_source="export_label_groudTruth",
+                gold_task="2752",
+            )
+        ],
+    )
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+
+    rows, _summary = build_gold_status_audit(alignment, final_gold)
+
+    row = rows[0]
+    assert row["validation_status"] == "external_source_gt_checked"
+    assert row["gold_status_for_alignment"] == "ready_for_alignment"
+    assert row["gold_status_for_undercoverage"] == "ready_for_undercoverage_audit"
+    assert row["gold_ambiguity_flag"] is False
+    assert row["manual_review_required"] is False
 
 
 def test_oos_gold_status_is_not_applicable(tmp_path: Path) -> None:
