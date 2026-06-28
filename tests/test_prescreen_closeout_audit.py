@@ -4,6 +4,7 @@ import json
 from pathlib import Path
 
 from tools.thesis_main.analysis.prescreen_active_time_source_audit import build_active_time_source_audit
+from tools.thesis_main.analysis.prescreen_completion_audit import build_completion_audit, write_completion_audit
 from tools.thesis_main.analysis.prescreen_canonicalize_export import build_canonical_tables
 
 BASE_POINTS = [(10, 10), (10, 90), (50, 20), (50, 80)]
@@ -31,6 +32,12 @@ def _task(task_id: int, annotations: list[dict]) -> dict:
         "data": {"title": f"task_{task_id}.jpg", "dataset_group": "PreScreen_manual"},
         "annotations": annotations,
     }
+
+
+def _task_with_group(task_id: int, group: str, annotations: list[dict]) -> dict:
+    task = _task(task_id, annotations)
+    task["data"]["dataset_group"] = group
+    return task
 
 
 def _write_export(tmp_path: Path, tasks: list[dict]) -> Path:
@@ -144,3 +151,122 @@ def test_active_time_sources_define_primary_sensitivity_and_missing_without_impu
     assert audit["w_fallback"]["primary_active_time_eligible_count"] == 0
     assert audit["w_fallback"]["sensitivity_active_time_eligible_count"] == 1
     assert audit["w_missing"]["n_missing"] == 1
+
+
+def _write_csv(path: Path, rows: list[dict]) -> Path:
+    import csv
+
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0].keys()))
+        writer.writeheader()
+        writer.writerows(rows)
+    return path
+
+
+def _minimal_canonical(path: Path) -> Path:
+    rows = [
+        {"annotator_id": "complete", "dataset_group": "PreScreen_manual", "condition": "", "active_time_source": "log"},
+        {"annotator_id": "pending", "dataset_group": "PreScreen_manual", "condition": "", "active_time_source": "log"},
+        {"annotator_id": "known_bad", "dataset_group": "PreScreen_manual", "condition": "", "active_time_source": "lead_time_fallback"},
+        {"annotator_id": "unknown", "dataset_group": "PreScreen_manual", "condition": "", "active_time_source": "missing"},
+    ]
+    return _write_csv(path, rows)
+
+
+def _minimal_roster(path: Path) -> Path:
+    rows = [
+        {
+            "annotator_id": "complete",
+            "language": "zh",
+            "expected_manual": "1",
+            "expected_semi": "0",
+            "expected_oos": "0",
+            "expected_total": "1",
+            "will_continue": "true",
+            "dropout": "false",
+            "known_bad_or_process_risk": "false",
+            "exclude_from_primary_candidate": "false",
+            "completion_status_override": "",
+            "notes": "",
+        },
+        {
+            "annotator_id": "pending",
+            "language": "zh",
+            "expected_manual": "2",
+            "expected_semi": "0",
+            "expected_oos": "0",
+            "expected_total": "2",
+            "will_continue": "true",
+            "dropout": "false",
+            "known_bad_or_process_risk": "false",
+            "exclude_from_primary_candidate": "false",
+            "completion_status_override": "",
+            "notes": "",
+        },
+        {
+            "annotator_id": "dropout",
+            "language": "zh",
+            "expected_manual": "1",
+            "expected_semi": "0",
+            "expected_oos": "0",
+            "expected_total": "1",
+            "will_continue": "false",
+            "dropout": "true",
+            "known_bad_or_process_risk": "false",
+            "exclude_from_primary_candidate": "true",
+            "completion_status_override": "",
+            "notes": "quit before completion",
+        },
+        {
+            "annotator_id": "known_bad",
+            "language": "zh",
+            "expected_manual": "1",
+            "expected_semi": "0",
+            "expected_oos": "0",
+            "expected_total": "1",
+            "will_continue": "true",
+            "dropout": "false",
+            "known_bad_or_process_risk": "true",
+            "exclude_from_primary_candidate": "true",
+            "completion_status_override": "",
+            "notes": "process risk",
+        },
+    ]
+    return _write_csv(path, rows)
+
+
+def test_completion_audit_statuses_and_denominator_policy(tmp_path: Path) -> None:
+    canonical = _minimal_canonical(tmp_path / "canonical.csv")
+    roster = _minimal_roster(tmp_path / "roster.csv")
+
+    audit = {row["annotator_id"]: row for row in build_completion_audit(canonical, roster)}
+
+    assert audit["complete"]["completion_status"] == "complete"
+    assert audit["pending"]["completion_status"] == "pending_completion"
+    assert audit["dropout"]["completion_status"] == "dropout_no_future"
+    assert audit["dropout"]["total_observed"] == 0
+    assert audit["known_bad"]["completion_status"] == "known_bad_complete"
+    assert audit["unknown"]["completion_status"] == "unknown_roster"
+    assert audit["complete"]["eligible_for_final_completion_denominator"] is True
+    assert audit["dropout"]["eligible_for_final_completion_denominator"] is False
+    assert audit["known_bad"]["eligible_for_final_completion_denominator"] is False
+
+    include_known_bad = {row["annotator_id"]: row for row in build_completion_audit(canonical, roster, exclude_known_bad_from_denominator=False)}
+    assert include_known_bad["known_bad"]["eligible_for_final_completion_denominator"] is True
+
+
+def test_active_time_audit_carries_completion_status(tmp_path: Path) -> None:
+    canonical = _minimal_canonical(tmp_path / "canonical.csv")
+    roster = _minimal_roster(tmp_path / "roster.csv")
+    completion_rows = build_completion_audit(canonical, roster)
+    completion_csv = tmp_path / "completion.csv"
+    write_completion_audit(completion_csv, completion_rows)
+
+    audit = {(row["annotator_id"], row["condition"]): row for row in build_active_time_source_audit(canonical, completion_csv)}
+
+    assert audit[("complete", "manual")]["language"] == "zh"
+    assert audit[("complete", "manual")]["completion_status"] == "complete"
+    assert audit[("complete", "manual")]["eligible_for_primary_prescreen_candidate"] == "True"
+    assert audit[("known_bad", "manual")]["completion_status"] == "known_bad_complete"
+    assert audit[("known_bad", "manual")]["eligible_for_primary_prescreen_candidate"] == "False"
