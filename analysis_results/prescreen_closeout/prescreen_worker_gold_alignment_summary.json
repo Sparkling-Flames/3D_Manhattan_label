@@ -1,0 +1,22 @@
+{
+  "dry_run": true,
+  "rows": 1130,
+  "alignment_available_count": 1105,
+  "gold_alignment_bucket_counts": {
+    "reference_ready_geometry_present": 728,
+    "corner_count_mismatch": 242,
+    "possible_overcoverage": 31,
+    "possible_undercoverage": 104,
+    "worker_geometry_parse_error": 25
+  },
+  "reference_validation_status_counts": {
+    "final_gold_geometry_checked": 986,
+    "external_source_gt_checked": 144
+  },
+  "undercoverage_candidate_count": 104,
+  "overcoverage_candidate_count": 31,
+  "forbidden_outputs_generated": false,
+  "forbidden_metric_field_count": 0,
+  "worker_gold_alignment_audit_csv": "analysis_results\\prescreen_closeout\\prescreen_worker_gold_alignment_audit.csv",
+  "worker_gold_alignment_summary_json": "analysis_results\\prescreen_closeout\\prescreen_worker_gold_alignment_summary.json"
+}
