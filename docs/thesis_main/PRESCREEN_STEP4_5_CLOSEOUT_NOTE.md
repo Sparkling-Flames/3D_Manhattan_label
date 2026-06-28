@@ -7,6 +7,7 @@ Status: dry-run contract only. This note records the current Step 4-5 audit boun
 - Step 4 resolves scope adjudication, synthetic scope binding, and synthetic source geometry GT binding evidence.
 - Step 5 reads Step 4 audit outputs and produces geometry gold alignment / geometry eligibility dry-run labels.
 - Step 5 may mark evidence roles, geometry gold status, validation level, manual-anchor dry-run eligibility, and mirror alignment status.
+- `manual_anchor_primary_possible` and related Step 5 manual-anchor fields are dry-run geometry eligibility labels only. They are not worker admission decisions, reliability estimates, formal `r0` / `r_u` inputs, or C1 handoff material.
 - Step 5 must not compute geometry score, worker admission, `r0`, `r_u`, `wmax`, routing profiles, or C1 handoff.
 
 ## Input Dependencies
