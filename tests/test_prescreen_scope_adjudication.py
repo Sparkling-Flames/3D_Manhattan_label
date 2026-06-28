@@ -256,6 +256,24 @@ def _synthetic_expert_review(
     )
 
 
+def _export_gt(path: Path, rows: list[tuple[str, str, int]]) -> Path:
+    path.write_text(
+        json.dumps(
+            [
+                {
+                    "id": task_id,
+                    "project": 20,
+                    "data": {"title": f"{base_key}.jpg"},
+                    "annotations": [{"id": f"a_{task_id}"} for _ in range(annotation_count)],
+                }
+                for base_key, task_id, annotation_count in rows
+            ]
+        ),
+        encoding="utf-8",
+    )
+    return path
+
+
 def test_synthetic_task_binds_to_source_final_gold(tmp_path: Path) -> None:
     candidate_id = "synthetic_ok"
     export = tmp_path / "export.json"
@@ -306,6 +324,56 @@ def test_synthetic_expert_review_binds_source_gold_missing_scope_only(tmp_path: 
     assert synthetic_rows[0]["planned_realized_mismatch"] == "true"
     assert summary["synthetic_scope_unresolved_task_rows"] == 0
     assert summary["synthetic_scope_bound_task_rows"] == 1
+
+
+def test_synthetic_geometry_gt_unique_export_match_is_ready_but_scoring_deferred(tmp_path: Path) -> None:
+    candidate_id = "synthetic_reviewed"
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_synthetic_task("1", candidate_id, worker_scope="normal")]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+    bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id, source_base_task_id="source_base")
+    review = _synthetic_expert_review(tmp_path / "review.csv", runtime_task_id="1")
+    gt = _export_gt(tmp_path / "gt.json", [("source_base", "2752", 1)])
+
+    task_rows, _response_rows, _unknown, _mixed, _worker, synthetic_rows, summary = build_scope_audits(
+        canonical, final_gold, completion, None, bank, review, gt
+    )
+    geometry_rows = summary["_synthetic_geometry_gt_rows"]
+
+    assert geometry_rows[0]["geometry_binding_status"] == "synthetic_geometry_bound_to_export_gt"
+    assert geometry_rows[0]["geometry_gold_task_id"] == "2752"
+    assert geometry_rows[0]["geometry_gold_ready"] is True
+    assert geometry_rows[0]["geometry_primary_possible"] is False
+    assert task_rows[0]["geometry_primary_possible"] is False
+    assert synthetic_rows[0]["geometry_gold_ready_after_binding"] is True
+    assert summary["synthetic_geometry_gt_bound_task_rows"] == 1
+    assert summary["synthetic_geometry_scoring_deferred_task_rows"] == 1
+
+
+def test_synthetic_geometry_gt_missing_duplicate_or_bad_annotation_count_is_audited(tmp_path: Path) -> None:
+    candidate_id = "synthetic_reviewed"
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_synthetic_task("1", candidate_id)]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+    review = _synthetic_expert_review(tmp_path / "review.csv", runtime_task_id="1")
+
+    cases = [
+        ("missing", [], "missing_export_gt"),
+        ("duplicate", [("source_base", "1", 1), ("source_base", "2", 1)], "duplicate_export_gt"),
+        ("bad_count", [("source_base", "1", 2)], "invalid_annotation_count"),
+    ]
+    for name, gt_rows, expected in cases:
+        bank = _synthetic_bank(tmp_path / f"{name}_bank.jsonl", candidate_id, source_base_task_id="source_base")
+        gt = _export_gt(tmp_path / f"{name}_gt.json", gt_rows)
+        *_rest, summary = build_scope_audits(canonical, final_gold, completion, None, bank, review, gt)
+        row = summary["_synthetic_geometry_gt_rows"][0]
+        assert row["geometry_binding_status"] == expected
+        assert row["geometry_gold_ready"] is False
+        assert summary["synthetic_geometry_gt_unbound_task_rows"] == 1
 
 
 def test_synthetic_expert_realized_model_issue_does_not_override_worker_scope(tmp_path: Path) -> None:
@@ -393,13 +461,17 @@ def test_language_mirror_expert_review_counts_two_runtime_rows_one_base_image(tm
     final_gold = _gold(tmp_path / "gold.jsonl", [])
     bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id)
     review = _synthetic_expert_review(tmp_path / "review.csv", runtime_task_id="1", mirror_task_id="2")
+    gt = _export_gt(tmp_path / "gt.json", [("source_base", "2752", 1)])
 
     _task_rows, _response_rows, _unknown, _mixed, _worker, _synthetic, summary = build_scope_audits(
-        canonical, final_gold, completion, None, bank, review
+        canonical, final_gold, completion, None, bank, review, gt
     )
 
     assert summary["synthetic_scope_bound_task_rows"] == 2
     assert summary["synthetic_scope_bound_base_image_count"] == 1
+    assert summary["synthetic_geometry_gt_bound_task_rows"] == 2
+    assert summary["synthetic_geometry_gt_bound_base_image_count"] == 1
+    assert {row["geometry_gold_task_id"] for row in summary["_synthetic_geometry_gt_rows"]} == {"2752"}
     assert summary["synthetic_scope_unresolved_task_rows"] == 0
 
 
@@ -412,6 +484,7 @@ def test_real_synthetic_expert_review_resolves_all_current_synthetic_scope_unres
         repo / "analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv",
         repo / "analysis_results/trap_collection_freeze_20260320/semi_synthetic_disjoint_candidate_bank_v2.jsonl",
         repo / "analysis_results/prescreen_closeout/prescreen_synthetic_expert_review.csv",
+        repo / "export_label/groudTruth.json",
     )
 
     assert summary["synthetic_scope_unresolved_task_rows"] == 0
@@ -419,6 +492,33 @@ def test_real_synthetic_expert_review_resolves_all_current_synthetic_scope_unres
     assert summary["synthetic_scope_bound_base_image_count"] == 6
     assert summary["synthetic_bound_by_expert_scope_review_task_rows"] == 12
     assert all(row["scope_binding_status"] == "synthetic_bound_by_expert_scope_review" for row in synthetic_rows)
+
+
+def test_real_synthetic_geometry_gt_binds_all_current_source_images() -> None:
+    repo = Path(__file__).resolve().parents[1]
+    *_rest, summary = build_scope_audits(
+        repo / "analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv",
+        repo / "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
+        repo / "analysis_results/prescreen_closeout/prescreen_completion_audit.csv",
+        repo / "analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv",
+        repo / "analysis_results/trap_collection_freeze_20260320/semi_synthetic_disjoint_candidate_bank_v2.jsonl",
+        repo / "analysis_results/prescreen_closeout/prescreen_synthetic_expert_review.csv",
+        repo / "export_label/groudTruth.json",
+    )
+    rows = summary["_synthetic_geometry_gt_rows"]
+    expected = {
+        "7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456": "2752",
+        "B6ByNegPMKs_75327de9719945aa8b893a6404667884": "2766",
+        "Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12": "2942",
+        "e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8": "2719",
+        "e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a": "2611",
+        "q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103": "2495",
+    }
+
+    assert summary["synthetic_geometry_gt_bound_task_rows"] == 12
+    assert summary["synthetic_geometry_gt_bound_base_image_count"] == 6
+    assert summary["synthetic_geometry_gt_unbound_task_rows"] == 0
+    assert {row["base_image_key"]: str(row["geometry_gold_task_id"]) for row in rows} == expected
 
 
 def test_ordinary_non_synthetic_missing_final_gold_still_unknown(tmp_path: Path) -> None:
