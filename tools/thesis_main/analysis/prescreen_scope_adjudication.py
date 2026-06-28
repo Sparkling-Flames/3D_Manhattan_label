@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import sys
 from collections import Counter, defaultdict
@@ -21,6 +22,7 @@ DEFAULT_UNKNOWN_GOLD_ALLOWLIST = Path("analysis_results/prescreen_closeout/presc
 DEFAULT_SYNTHETIC_BANK = Path("analysis_results/trap_collection_freeze_20260320/semi_synthetic_disjoint_candidate_bank_v2.jsonl")
 DEFAULT_SYNTHETIC_EXPERT_REVIEW = Path("analysis_results/prescreen_closeout/prescreen_synthetic_expert_review.csv")
 DEFAULT_EXPORT_GT = Path("export_label/groudTruth.json")
+DEFAULT_RAW_INPUT_MANIFEST = Path("analysis_results/prescreen_closeout/raw_inputs/raw_input_snapshot_manifest.csv")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/prescreen_closeout")
 
 TASK_FIELDS = [
@@ -124,10 +126,13 @@ SYNTHETIC_BINDING_FIELDS = [
     "matched_source_final_gold_task_id",
     "matched_source_final_scope",
     "scope_binding_status",
+    "scope_gold_source",
     "task_final_scope_after_binding",
     "task_scope_adjudication_source_after_binding",
     "primary_eligible_after_binding",
+    "geometry_gold_source_after_binding",
     "geometry_gold_ready_after_binding",
+    "geometry_scoring_deferred_after_binding",
     "expert_realized_model_issue_primary",
     "expert_realized_model_issue_secondary",
     "trap_effective",
@@ -158,6 +163,7 @@ SYNTHETIC_GEOMETRY_GT_FIELDS = [
     "synthetic_candidate_id",
     "source_base_task_id",
     "planned_synthetic_family",
+    "scope_gold_source",
     "expert_final_scope",
     "scope_gold_ready",
     "geometry_gold_source",
@@ -168,6 +174,7 @@ SYNTHETIC_GEOMETRY_GT_FIELDS = [
     "task_scope_adjudication_source",
     "task_geometry_adjudication_source",
     "geometry_primary_possible",
+    "geometry_scoring_deferred",
     "notes",
 ]
 
@@ -180,7 +187,7 @@ def _safe(value: Any) -> str:
 
 
 def _load_csv(path: Path) -> list[dict[str, str]]:
-    with path.open("r", newline="", encoding="utf-8") as f:
+    with path.open("r", newline="", encoding="utf-8-sig") as f:
         return list(csv.DictReader(f))
 
 
@@ -251,6 +258,44 @@ def _load_export_gt_by_title(path: Path | None) -> dict[str, list[dict[str, Any]
     return out
 
 
+def _sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def _validate_export_gt_manifest(manifest_path: Path | None, export_gt_path: Path | None) -> dict[str, str]:
+    if not manifest_path or not export_gt_path:
+        return {}
+    rows = _load_csv(manifest_path)
+    norm_export = _norm_manifest_path(export_gt_path)
+    matches = [row for row in rows if _norm_manifest_path(_safe(row.get("source_path"))) == norm_export]
+    if len(matches) != 1:
+        raise ValueError(f"expected one raw input manifest row for {export_gt_path}, found {len(matches)}")
+    row = matches[0]
+    snapshot = _manifest_path(_safe(row.get("snapshot_path")))
+    sha = _safe(row.get("sha256")).lower()
+    if not snapshot.exists():
+        raise ValueError(f"manifest snapshot does not exist for {export_gt_path}: {snapshot}")
+    if not sha:
+        raise ValueError(f"manifest sha256 missing for {export_gt_path}")
+    actual = _sha256(snapshot)
+    if actual.lower() != sha:
+        raise ValueError(f"manifest sha256 mismatch for {export_gt_path}: {sha} != {actual}")
+    return {"export_gt_snapshot_path": str(snapshot), "export_gt_sha256": actual}
+
+
+def _manifest_path(path: str | Path) -> Path:
+    p = Path(path)
+    return p if p.is_absolute() else _PROJECT_ROOT / p
+
+
+def _norm_manifest_path(path: str | Path) -> str:
+    return str(_manifest_path(path)).replace("/", "\\").lower()
+
+
 def _synthetic_geometry_gt_rows(
     synthetic_rows: list[dict[str, Any]],
     synthetic_expert_review: dict[str, dict[str, str]],
@@ -285,6 +330,7 @@ def _synthetic_geometry_gt_rows(
                 "synthetic_candidate_id": row.get("synthetic_candidate_id", ""),
                 "source_base_task_id": row.get("source_base_task_id", ""),
                 "planned_synthetic_family": row.get("synthetic_family", ""),
+                "scope_gold_source": row.get("scope_gold_source", ""),
                 "expert_final_scope": _safe(review.get("expert_final_scope")) or row.get("task_final_scope_after_binding", ""),
                 "scope_gold_ready": _safe(review.get("scope_gold_ready")),
                 "geometry_gold_source": "export_label_groudTruth" if ready else "",
@@ -295,6 +341,7 @@ def _synthetic_geometry_gt_rows(
                 "task_scope_adjudication_source": row.get("task_scope_adjudication_source_after_binding", ""),
                 "task_geometry_adjudication_source": "export_label_groudTruth" if ready else "",
                 "geometry_primary_possible": False,
+                "geometry_scoring_deferred": ready,
                 "notes": "geometry GT bound; primary geometry scoring deferred to Step 5" if ready else "geometry GT not uniquely ready",
             }
         )
@@ -536,8 +583,11 @@ def _synthetic_audit_row(
         "scope_binding_status": status,
         "task_final_scope_after_binding": final_scope,
         "task_scope_adjudication_source_after_binding": source,
+        "scope_gold_source": "prescreen_synthetic_expert_review" if source == "synthetic_asset_expert_review" else source,
         "primary_eligible_after_binding": _geometry_possible(final_scope) and source != "synthetic_asset_expert_review",
+        "geometry_gold_source_after_binding": "",
         "geometry_gold_ready_after_binding": source != "synthetic_asset_expert_review" and _geometry_possible(final_scope),
+        "geometry_scoring_deferred_after_binding": False,
         "expert_realized_model_issue_primary": _safe((expert_review or {}).get("expert_realized_model_issue_primary")),
         "expert_realized_model_issue_secondary": _safe((expert_review or {}).get("expert_realized_model_issue_secondary")),
         "trap_effective": _safe((expert_review or {}).get("trap_effective")),
@@ -595,6 +645,7 @@ def build_scope_audits(
     synthetic_bank_jsonl: Path | None = None,
     synthetic_expert_review_csv: Path | None = None,
     export_gt_json: Path | None = None,
+    raw_input_manifest_csv: Path | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     canonical_rows = _load_csv(canonical_csv)
     completion = _load_completion(completion_csv)
@@ -603,6 +654,7 @@ def build_scope_audits(
     synthetic_bank = _load_synthetic_bank(synthetic_bank_jsonl)
     synthetic_expert_review = _load_synthetic_expert_review(synthetic_expert_review_csv)
     export_gt_by_title = _load_export_gt_by_title(export_gt_json)
+    export_gt_evidence = _validate_export_gt_manifest(raw_input_manifest_csv, export_gt_json)
     task_index, ann_index = _load_export_details(canonical_rows)
 
     task_groups: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
@@ -752,10 +804,14 @@ def build_scope_audits(
     synthetic_geometry_unbound_rows = [r for r in synthetic_geometry_rows if r["geometry_binding_status"] != "synthetic_geometry_bound_to_export_gt"]
     synthetic_geometry_scoring_deferred_rows = [r for r in synthetic_geometry_bound_rows if not bool(r["geometry_primary_possible"])]
     geometry_ready_by_runtime = {str(r["runtime_task_id"]): bool(r["geometry_gold_ready"]) for r in synthetic_geometry_rows}
+    geometry_source_by_runtime = {str(r["runtime_task_id"]): str(r["geometry_gold_source"]) for r in synthetic_geometry_rows}
+    geometry_deferred_by_runtime = {str(r["runtime_task_id"]): bool(r["geometry_scoring_deferred"]) for r in synthetic_geometry_rows}
     for row in synthetic_audit_rows:
         runtime_task_id = str(row.get("runtime_task_id", ""))
         if runtime_task_id in geometry_ready_by_runtime:
             row["geometry_gold_ready_after_binding"] = geometry_ready_by_runtime[runtime_task_id]
+            row["geometry_gold_source_after_binding"] = geometry_source_by_runtime[runtime_task_id]
+            row["geometry_scoring_deferred_after_binding"] = geometry_deferred_by_runtime[runtime_task_id]
     summary = {
         "dry_run": True,
         "data_complete": False,
@@ -788,7 +844,9 @@ def build_scope_audits(
         "synthetic_geometry_gt_source": "export_label_groudTruth",
         "synthetic_geometry_primary_possible_task_rows": sum(bool(r["geometry_primary_possible"]) for r in synthetic_geometry_rows),
         "synthetic_geometry_scoring_deferred_task_rows": len(synthetic_geometry_scoring_deferred_rows),
+        "geometry_score_fields_present": False,
         "_synthetic_geometry_gt_rows": synthetic_geometry_rows,
+        **export_gt_evidence,
         "runtime_task_rows": runtime_task_rows,
         "base_image_count": base_image_count,
         "language_mirror_note": "Chinese/English Label Studio mirrors count as separate runtime task rows; base_image_count deduplicates by base/source image key.",
@@ -837,6 +895,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--synthetic-bank-jsonl", default=str(DEFAULT_SYNTHETIC_BANK))
     parser.add_argument("--synthetic-expert-review-csv", default=str(DEFAULT_SYNTHETIC_EXPERT_REVIEW))
     parser.add_argument("--export-gt-json", default=str(DEFAULT_EXPORT_GT))
+    parser.add_argument("--raw-input-manifest-csv", default=str(DEFAULT_RAW_INPUT_MANIFEST))
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
     args = parser.parse_args(argv)
 
@@ -849,6 +908,7 @@ def main(argv: list[str] | None = None) -> int:
         Path(args.synthetic_bank_jsonl) if args.synthetic_bank_jsonl else None,
         Path(args.synthetic_expert_review_csv) if args.synthetic_expert_review_csv else None,
         Path(args.export_gt_json) if args.export_gt_json else None,
+        Path(args.raw_input_manifest_csv) if args.raw_input_manifest_csv else None,
     )
     synthetic_geometry_rows = summary.pop("_synthetic_geometry_gt_rows", [])
     task_path = out_dir / "prescreen_scope_adjudication.csv"
