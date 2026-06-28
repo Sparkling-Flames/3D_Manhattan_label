@@ -42,7 +42,16 @@ def _task(
     }
 
 
-def _response(task_id: str, *, dataset_group: str, condition: str, scope: str, geometry: bool = True) -> dict:
+def _response(
+    task_id: str,
+    *,
+    dataset_group: str,
+    condition: str,
+    scope: str,
+    geometry: bool = True,
+    worker_scope_response: str = "correct_in_scope",
+    primary_eligible: bool = True,
+) -> dict:
     return {
         "annotator_id": "w1",
         "project_id": "1",
@@ -52,6 +61,8 @@ def _response(task_id: str, *, dataset_group: str, condition: str, scope: str, g
         "task_final_scope": scope,
         "task_scope_adjudication_source": "final_gold",
         "geometry_valid_or_present": str(geometry),
+        "worker_scope_response": worker_scope_response,
+        "scope_response_primary_eligible": str(primary_eligible),
     }
 
 
@@ -127,6 +138,68 @@ def test_manual_in_scope_ready_gold_is_manual_primary_candidate_not_admission(tm
     assert summary["forbidden_metric_field_count"] == 0
 
 
+def test_response_without_geometry_is_not_manual_anchor_even_if_task_is_ready(tmp_path: Path) -> None:
+    paths = _inputs(
+        tmp_path,
+        [_task("nogeom", dataset_group="PreScreen_manual", condition="manual", scope="in_scope")],
+        [_response("nogeom", dataset_group="PreScreen_manual", condition="manual", scope="in_scope", geometry=False)],
+    )
+
+    task_rows, response_rows, _summary = build_geometry_eligibility(*paths)
+
+    assert task_rows[0]["manual_anchor_role"] is True
+    assert response_rows[0]["manual_anchor_role"] is False
+    assert response_rows[0]["manual_anchor_primary_possible"] is False
+    assert response_rows[0]["geometry_evidence_role"] != "manual_prescreen_candidate"
+
+
+def test_response_with_scope_error_is_not_manual_anchor(tmp_path: Path) -> None:
+    paths = _inputs(
+        tmp_path,
+        [_task("scopeerr", dataset_group="PreScreen_manual", condition="manual", scope="in_scope")],
+        [
+            _response(
+                "scopeerr",
+                dataset_group="PreScreen_manual",
+                condition="manual",
+                scope="in_scope",
+                worker_scope_response="scope_false_positive",
+            )
+        ],
+    )
+
+    _task_rows, response_rows, _summary = build_geometry_eligibility(*paths)
+
+    assert response_rows[0]["manual_anchor_role"] is False
+    assert response_rows[0]["manual_anchor_primary_possible"] is False
+
+
+def test_response_not_primary_eligible_is_not_manual_anchor(tmp_path: Path) -> None:
+    paths = _inputs(
+        tmp_path,
+        [_task("ineligible", dataset_group="PreScreen_manual", condition="manual", scope="in_scope")],
+        [_response("ineligible", dataset_group="PreScreen_manual", condition="manual", scope="in_scope", primary_eligible=False)],
+    )
+
+    _task_rows, response_rows, _summary = build_geometry_eligibility(*paths)
+
+    assert response_rows[0]["manual_anchor_role"] is False
+    assert response_rows[0]["manual_anchor_primary_possible"] is False
+
+
+def test_response_correct_geometry_present_and_primary_eligible_is_manual_anchor(tmp_path: Path) -> None:
+    paths = _inputs(
+        tmp_path,
+        [_task("good", dataset_group="PreScreen_manual", condition="manual", scope="in_scope")],
+        [_response("good", dataset_group="PreScreen_manual", condition="manual", scope="in_scope")],
+    )
+
+    _task_rows, response_rows, _summary = build_geometry_eligibility(*paths)
+
+    assert response_rows[0]["manual_anchor_role"] is True
+    assert response_rows[0]["manual_anchor_primary_possible"] is True
+
+
 def test_semi_synthetic_ready_gt_is_audit_only_not_manual_or_admission_anchor(tmp_path: Path) -> None:
     paths = _inputs(
         tmp_path,
@@ -139,6 +212,7 @@ def test_semi_synthetic_ready_gt_is_audit_only_not_manual_or_admission_anchor(tm
     task_rows, _response_rows, _summary = build_geometry_eligibility(*paths)
 
     assert task_rows[0]["geometry_gold_status"] == "ready"
+    assert task_rows[0]["geometry_gold_validation_level"] == "source_gt_annotation_count_checked"
     assert task_rows[0]["geometry_evidence_role"] in {"semi_synthetic_trap_audit", "semi_aux_geometry_alignment"}
     assert task_rows[0]["geometry_scoring_role"] in {"semi_trap_audit", "semi_aux_geometry_alignment"}
     assert task_rows[0]["manual_anchor_role"] is False
@@ -242,6 +316,27 @@ def test_language_mirror_gold_task_mismatch_is_audited(tmp_path: Path) -> None:
     assert {row["geometry_alignment_status"] for row in task_rows} == {"mirror_gold_mismatch"}
 
 
+def test_manual_and_synthetic_same_base_with_different_gold_do_not_trigger_mirror_mismatch(tmp_path: Path) -> None:
+    manual = _task("manual", dataset_group="PreScreen_manual", condition="manual", scope="in_scope", final_gold_ref="manual_gt")
+    semi = _task("semi", dataset_group="PreScreen_semi", condition="semi", scope="in_scope", source="synthetic_asset_expert_review")
+    semi["image_id"] = manual["image_id"]
+    paths = _inputs(
+        tmp_path,
+        [manual, semi],
+        [
+            _response("manual", dataset_group="PreScreen_manual", condition="manual", scope="in_scope"),
+            _response("semi", dataset_group="PreScreen_semi", condition="semi", scope="in_scope"),
+        ],
+        [_synthetic_scope("semi", ready=True)],
+        [_synthetic_geometry("semi", base=manual["image_id"], gold_task="synthetic_gt")],
+    )
+
+    task_rows, _response_rows, summary = build_geometry_eligibility(*paths)
+
+    assert summary["mirror_alignment_mismatch_count"] == 0
+    assert {row["geometry_alignment_status"] for row in task_rows} == {"aligned_ready"}
+
+
 def test_cli_writes_only_step5_dry_run_outputs(tmp_path: Path) -> None:
     paths = _inputs(
         tmp_path,
@@ -268,3 +363,5 @@ def test_cli_writes_only_step5_dry_run_outputs(tmp_path: Path) -> None:
 
 # Local audit regression tests may read analysis_results in future extensions.
 # Those depend on local frozen raw inputs/manifest/summary/audit CSV, not clean-clone CI.
+# Step 5 should read frozen snapshot/canonical/Step 4 audit outputs, not mutable LS raw exports.
+# A later preflight can check schema, key mapping, manifest sha, binding rate, and forbidden outputs.

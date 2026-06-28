@@ -28,6 +28,7 @@ AUDIT_FIELDS = [
     "task_final_scope",
     "task_scope_adjudication_source",
     "geometry_gold_status",
+    "geometry_gold_validation_level",
     "geometry_gold_source",
     "geometry_gold_task_id",
     "geometry_evidence_role",
@@ -93,6 +94,14 @@ def _geometry_status(task: dict[str, str], synthetic_geometry: dict[str, str] | 
     return "missing"
 
 
+def _geometry_validation_level(task: dict[str, str], status: str, synthetic_geometry: dict[str, str] | None) -> str:
+    if synthetic_geometry and status == "ready" and _safe(synthetic_geometry.get("geometry_gold_annotation_count")) == "1":
+        return "source_gt_annotation_count_checked"
+    if status == "ready" and _safe(task.get("final_gold_ref")):
+        return "final_gold_ref_only"
+    return "not_validated"
+
+
 def _roles(task: dict[str, str], status: str, synthetic_geometry: dict[str, str] | None) -> tuple[str, str, bool, bool]:
     dataset_group = _safe(task.get("dataset_group"))
     scope = _safe(task.get("task_final_scope"))
@@ -127,6 +136,22 @@ def _forbidden_metric_field_count(rows: list[dict[str, Any]]) -> int:
     return sum(1 for row in rows for key in row if "score" in str(key).lower())
 
 
+def _response_anchor_ready(task: dict[str, Any], response: dict[str, str]) -> tuple[bool, str]:
+    missing = [field for field in ("worker_scope_response", "scope_response_primary_eligible") if field not in response]
+    if missing:
+        return False, "response eligibility fields missing"
+    ready = (
+        task["geometry_scoring_role"] == "manual_primary_candidate"
+        and task["dataset_group"] == "PreScreen_manual"
+        and task["task_final_scope"] == "in_scope"
+        and task["geometry_gold_status"] == "ready"
+        and _truthy(response.get("geometry_valid_or_present"))
+        and _safe(response.get("worker_scope_response")) == "correct_in_scope"
+        and _truthy(response.get("scope_response_primary_eligible"))
+    )
+    return ready, ""
+
+
 def build_geometry_eligibility(
     scope_adjudication_csv: Path,
     scope_response_csv: Path,
@@ -147,6 +172,7 @@ def build_geometry_eligibility(
         synth_scope = synthetic_by_task.get(task_id)
         synth_geometry = synthetic_geometry_by_task.get(task_id)
         status = _geometry_status(task, synth_geometry)
+        validation_level = _geometry_validation_level(task, status, synth_geometry)
         evidence_role, scoring_role, manual_role, manual_possible = _roles(task, status, synth_geometry or synth_scope)
         base_image_key = _safe((synth_geometry or synth_scope or {}).get("base_image_key")) or _safe(task.get("image_id"))
         row = {
@@ -159,6 +185,7 @@ def build_geometry_eligibility(
             "task_final_scope": _safe(task.get("task_final_scope")),
             "task_scope_adjudication_source": _safe(task.get("task_scope_adjudication_source")),
             "geometry_gold_status": status,
+            "geometry_gold_validation_level": validation_level,
             "geometry_gold_source": _safe((synth_geometry or {}).get("geometry_gold_source")) or ("final_gold" if status == "ready" else ""),
             "geometry_gold_task_id": _safe((synth_geometry or {}).get("geometry_gold_task_id")) or _safe(task.get("final_gold_ref")),
             "geometry_evidence_role": evidence_role,
@@ -173,10 +200,17 @@ def build_geometry_eligibility(
         }
         alignment_rows.append(row)
 
-    by_base: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    by_base: dict[tuple[str, str, str, str], list[dict[str, Any]]] = defaultdict(list)
     for row in alignment_rows:
         if row["base_image_key"]:
-            by_base[str(row["base_image_key"])].append(row)
+            by_base[
+                (
+                    str(row["dataset_group"]),
+                    str(row["condition"]),
+                    str(row["task_scope_adjudication_source"]),
+                    str(row["base_image_key"]),
+                )
+            ].append(row)
     for rows in by_base.values():
         gold_ids = {str(row["geometry_gold_task_id"]) for row in rows if row["geometry_gold_status"] == "ready"}
         if len(rows) > 1 and len(gold_ids) > 1:
@@ -189,7 +223,17 @@ def build_geometry_eligibility(
         task = task_by_id.get(_safe(response.get("task_id")))
         if not task:
             continue
-        eligibility_rows.append({"annotator_id": _safe(response.get("annotator_id")), **task})
+        response_ready, response_note = _response_anchor_ready(task, response)
+        response_row = {"annotator_id": _safe(response.get("annotator_id")), **task}
+        response_row["manual_anchor_role"] = response_ready
+        response_row["manual_anchor_primary_possible"] = response_ready
+        if not response_ready and task["geometry_scoring_role"] == "manual_primary_candidate":
+            response_row["geometry_evidence_role"] = "unresolved_excluded"
+            response_row["geometry_scoring_role"] = "unresolved_excluded"
+            response_row["notes"] = response_note or "response not eligible for manual anchor dry-run"
+        response_row["admission_anchor_role"] = False
+        response_row["admission_anchor_possible"] = False
+        eligibility_rows.append(response_row)
 
     all_output_rows = [*alignment_rows, *eligibility_rows]
     summary = {
@@ -198,6 +242,7 @@ def build_geometry_eligibility(
         "response_rows": len(eligibility_rows),
         "base_image_count": len({str(row["base_image_key"]) for row in alignment_rows if row["base_image_key"]}),
         "geometry_gold_status_counts": dict(Counter(str(row["geometry_gold_status"]) for row in alignment_rows)),
+        "geometry_gold_validation_level_counts": dict(Counter(str(row["geometry_gold_validation_level"]) for row in alignment_rows)),
         "geometry_evidence_role_counts": dict(Counter(str(row["geometry_evidence_role"]) for row in alignment_rows)),
         "geometry_scoring_role_counts": dict(Counter(str(row["geometry_scoring_role"]) for row in alignment_rows)),
         "manual_anchor_possible_task_rows": sum(bool(row["manual_anchor_primary_possible"]) for row in alignment_rows),
