@@ -322,6 +322,32 @@ def test_synthetic_task_binds_to_source_final_gold(tmp_path: Path) -> None:
     assert synthetic_rows[0]["scope_binding_status"] == "synthetic_bound_to_source_gold"
 
 
+def test_synthetic_source_gold_in_scope_is_not_manual_or_admission_anchor(tmp_path: Path) -> None:
+    candidate_id = "synthetic_in_scope_source_gold"
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_synthetic_task("1", candidate_id, worker_scope="normal")]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(
+        tmp_path / "gold.jsonl",
+        [{"task_id": "source_task", "base_task_id": "source_base", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}],
+    )
+    bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id)
+    gt = _export_gt(tmp_path / "gt.json", [("source_base", "2752", 1)])
+
+    task_rows, _response_rows, _unknown_rows, _mixed, _worker, synthetic_rows, _summary = build_scope_audits(
+        canonical, final_gold, completion, None, bank, None, gt
+    )
+
+    assert task_rows[0]["geometry_primary_possible"] is True
+    assert synthetic_rows[0]["scope_binding_status"] == "synthetic_bound_to_source_gold"
+    assert synthetic_rows[0]["geometry_gold_ready_after_binding"] is True
+    assert synthetic_rows[0]["geometry_scoring_role"] == "semi_trap_audit"
+    assert synthetic_rows[0]["primary_eligible_after_binding"] is False
+    assert synthetic_rows[0]["manual_anchor_role"] is False
+    assert synthetic_rows[0]["manual_anchor_primary_possible"] is False
+
+
 def test_synthetic_expert_review_binds_source_gold_missing_scope_only(tmp_path: Path) -> None:
     candidate_id = "synthetic_reviewed"
     export = tmp_path / "export.json"
@@ -584,6 +610,8 @@ def test_language_mirror_expert_review_counts_two_runtime_rows_one_base_image(tm
     assert summary["synthetic_scope_unresolved_task_rows"] == 0
 
 
+# Local audit regression: these tests intentionally depend on local analysis_results,
+# frozen raw inputs, manifest, summary, and audit CSV. They are not a clean-clone CI contract.
 def test_real_synthetic_expert_review_resolves_all_current_synthetic_scope_unresolved() -> None:
     repo = Path(__file__).resolve().parents[1]
     _task_rows, _response_rows, _unknown_rows, _mixed_rows, _worker_rows, synthetic_rows, summary = build_scope_audits(
