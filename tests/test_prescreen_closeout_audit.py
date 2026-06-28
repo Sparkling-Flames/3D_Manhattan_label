@@ -270,3 +270,87 @@ def test_active_time_audit_carries_completion_status(tmp_path: Path) -> None:
     assert audit[("complete", "manual")]["eligible_for_primary_prescreen_candidate"] == "True"
     assert audit[("known_bad", "manual")]["completion_status"] == "known_bad_complete"
     assert audit[("known_bad", "manual")]["eligible_for_primary_prescreen_candidate"] == "False"
+
+
+def test_known_bad_incomplete_worker_in_roster_is_not_unknown_roster(tmp_path: Path) -> None:
+    canonical = _write_csv(
+        tmp_path / "canonical.csv",
+        [{"annotator_id": "26", "dataset_group": "PreScreen_manual", "condition": "", "active_time_source": "log"}],
+    )
+    roster = _write_csv(
+        tmp_path / "roster.csv",
+        [
+            {
+                "annotator_id": "26",
+                "language": "en",
+                "expected_manual": "30",
+                "expected_semi": "18",
+                "expected_oos": "9",
+                "expected_total": "57",
+                "will_continue": "false",
+                "dropout": "false",
+                "known_bad_or_process_risk": "true",
+                "exclude_from_primary_candidate": "true",
+                "completion_status_override": "incomplete_excluded",
+                "notes": "known bad / bad annotation / will not complete remaining manual task",
+            }
+        ],
+    )
+
+    row = build_completion_audit(canonical, roster)[0]
+
+    assert row["completion_status"] == "incomplete_excluded"
+    assert row["eligible_for_final_completion_denominator"] is False
+    assert row["eligible_for_primary_prescreen_candidate"] is False
+
+
+def test_unknown_roster_only_when_worker_absent_from_roster(tmp_path: Path) -> None:
+    canonical = _write_csv(
+        tmp_path / "canonical.csv",
+        [{"annotator_id": "missing", "dataset_group": "PreScreen_manual", "condition": "", "active_time_source": "log"}],
+    )
+    roster = _write_csv(
+        tmp_path / "roster.csv",
+        [
+            {
+                "annotator_id": "listed",
+                "language": "en",
+                "expected_manual": "1",
+                "expected_semi": "0",
+                "expected_oos": "0",
+                "expected_total": "1",
+                "will_continue": "true",
+                "dropout": "false",
+                "known_bad_or_process_risk": "false",
+                "exclude_from_primary_candidate": "false",
+                "completion_status_override": "",
+                "notes": "",
+            }
+        ],
+    )
+
+    audit = {row["annotator_id"]: row for row in build_completion_audit(canonical, roster)}
+
+    assert audit["missing"]["completion_status"] == "unknown_roster"
+    assert audit["listed"]["completion_status"] == "pending_completion"
+
+
+def test_fixed_closeout_roster_status_summary_matches_expected_counts() -> None:
+    repo_root = Path(__file__).resolve().parents[1]
+    rows = build_completion_audit(
+        repo_root / "analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv",
+        repo_root / "analysis_results/prescreen_closeout/prescreen_worker_roster.csv",
+    )
+    counts: dict[str, int] = {}
+    for row in rows:
+        status = str(row["completion_status"])
+        counts[status] = counts.get(status, 0) + 1
+
+    assert counts == {
+        "complete": 21,
+        "pending_completion": 3,
+        "dropout_no_future": 3,
+        "known_bad_complete": 1,
+        "incomplete_excluded": 1,
+    }
+    assert "unknown_roster" not in counts
