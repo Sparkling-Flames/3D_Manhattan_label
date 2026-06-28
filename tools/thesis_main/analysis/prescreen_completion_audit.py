@@ -17,6 +17,7 @@ FIELDS = [
     "manual_observed",
     "semi_observed",
     "oos_observed",
+    "unknown_observed",
     "total_observed",
     "manual_expected",
     "semi_expected",
@@ -28,6 +29,7 @@ FIELDS = [
     "total_missing",
     "completion_rate",
     "completion_status",
+    "condition_schema_warning",
     "will_continue",
     "dropout",
     "known_bad_or_process_risk",
@@ -115,7 +117,8 @@ def build_completion_audit(
         manual_observed = counts[annotator_id]["manual"]
         semi_observed = counts[annotator_id]["semi"]
         oos_observed = counts[annotator_id]["oos"]
-        total_observed = manual_observed + semi_observed + oos_observed + counts[annotator_id]["unknown"]
+        unknown_observed = counts[annotator_id]["unknown"]
+        total_observed = manual_observed + semi_observed + oos_observed + unknown_observed
         manual_expected = _int(roster_row.get("expected_manual"))
         semi_expected = _int(roster_row.get("expected_semi"))
         oos_expected = _int(roster_row.get("expected_oos"))
@@ -142,6 +145,7 @@ def build_completion_audit(
                 "manual_observed": manual_observed,
                 "semi_observed": semi_observed,
                 "oos_observed": oos_observed,
+                "unknown_observed": unknown_observed,
                 "total_observed": total_observed,
                 "manual_expected": manual_expected,
                 "semi_expected": semi_expected,
@@ -153,6 +157,7 @@ def build_completion_audit(
                 "total_missing": max(total_expected - total_observed, 0),
                 "completion_rate": round(total_observed / total_expected, 6) if total_expected else "",
                 "completion_status": status,
+                "condition_schema_warning": "unknown_condition_observed" if unknown_observed else "",
                 "will_continue": will_continue,
                 "dropout": dropout,
                 "known_bad_or_process_risk": known_bad,

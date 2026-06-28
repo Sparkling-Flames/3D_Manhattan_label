@@ -335,6 +335,37 @@ def test_unknown_roster_only_when_worker_absent_from_roster(tmp_path: Path) -> N
     assert audit["listed"]["completion_status"] == "pending_completion"
 
 
+def test_completion_audit_flags_unknown_condition_schema_drift(tmp_path: Path) -> None:
+    canonical = _write_csv(
+        tmp_path / "canonical.csv",
+        [{"annotator_id": "w1", "dataset_group": "unexpected_pool", "condition": "weird", "active_time_source": "log"}],
+    )
+    roster = _write_csv(
+        tmp_path / "roster.csv",
+        [
+            {
+                "annotator_id": "w1",
+                "language": "zh",
+                "expected_manual": "0",
+                "expected_semi": "0",
+                "expected_oos": "0",
+                "expected_total": "1",
+                "will_continue": "true",
+                "dropout": "false",
+                "known_bad_or_process_risk": "false",
+                "exclude_from_primary_candidate": "false",
+                "completion_status_override": "",
+                "notes": "",
+            }
+        ],
+    )
+
+    row = build_completion_audit(canonical, roster)[0]
+
+    assert row["unknown_observed"] == 1
+    assert row["condition_schema_warning"] == "unknown_condition_observed"
+
+
 def test_fixed_closeout_roster_status_summary_matches_expected_counts() -> None:
     repo_root = Path(__file__).resolve().parents[1]
     rows = build_completion_audit(

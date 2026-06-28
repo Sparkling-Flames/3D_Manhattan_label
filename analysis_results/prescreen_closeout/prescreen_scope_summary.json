@@ -1,0 +1,27 @@
+{
+  "dry_run": true,
+  "data_complete": false,
+  "n_tasks": 114,
+  "n_responses": 1346,
+  "task_final_scope_counts": {
+    "in_scope": 84,
+    "unknown_gold": 12,
+    "oos_open_boundary": 4,
+    "oos_split_level": 10,
+    "oos_geometry": 2,
+    "oos_insufficient": 2
+  },
+  "worker_scope_response_counts": {
+    "correct_in_scope": 807,
+    "scope_false_positive": 179,
+    "not_applicable_unresolved": 144,
+    "correct_oos": 122,
+    "scope_false_negative": 94
+  },
+  "unknown_gold_tasks": 12,
+  "unresolved_mixed_tasks": 0,
+  "missing_worker_scope_rows": 0,
+  "mixed_scope_tasks": 71,
+  "scope_adjudication_csv": "analysis_results\\prescreen_closeout\\prescreen_scope_adjudication.csv",
+  "scope_response_audit_csv": "analysis_results\\prescreen_closeout\\prescreen_scope_response_audit.csv"
+}

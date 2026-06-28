@@ -245,8 +245,19 @@ def snapshot_inputs(paths: list[Path], output_dir: Path) -> Path:
     raw_dir.mkdir(parents=True, exist_ok=True)
     manifest_rows = []
     for src in paths:
+        source_kind = _source_kind(src)
         if not src.exists():
-            manifest_rows.append({"source_path": str(src), "snapshot_path": "", "exists": False, "bytes": "", "file_count": ""})
+            manifest_rows.append(
+                {
+                    "source_path": str(src),
+                    "snapshot_path": "",
+                    "exists": False,
+                    "bytes": "",
+                    "file_count": "",
+                    "source_kind": source_kind,
+                    "notes": _manifest_note(source_kind),
+                }
+            )
             continue
         dst = raw_dir / src.name
         if src.is_dir():
@@ -264,16 +275,48 @@ def snapshot_inputs(paths: list[Path], output_dir: Path) -> Path:
                     "exists": True,
                     "bytes": sum(p.stat().st_size for p in files),
                     "file_count": len(files),
+                    "source_kind": source_kind,
+                    "notes": _manifest_note(source_kind),
                 }
             )
         else:
             shutil.copy2(src, dst)
             manifest_rows.append(
-                {"source_path": str(src), "snapshot_path": str(dst), "exists": True, "bytes": dst.stat().st_size, "file_count": 1}
+                {
+                    "source_path": str(src),
+                    "snapshot_path": str(dst),
+                    "exists": True,
+                    "bytes": dst.stat().st_size,
+                    "file_count": 1,
+                    "source_kind": source_kind,
+                    "notes": _manifest_note(source_kind),
+                }
             )
     manifest_path = raw_dir / "raw_input_snapshot_manifest.csv"
     _write_csv(manifest_path, manifest_rows)
     return manifest_path
+
+
+def _source_kind(path: Path) -> str:
+    text = str(path).replace("\\", "/").lower()
+    name = path.name.lower()
+    if "prescreen_worker_roster" in name:
+        return "audit_control_input"
+    if "active_logs" in text or name.startswith("active_times_"):
+        return "raw_active_log_snapshot"
+    if "final_gold" in name:
+        return "reference_gold_snapshot"
+    if name.endswith(".json") and "export_label" in text:
+        return "raw_label_studio_export"
+    return "audit_reference_input"
+
+
+def _manifest_note(source_kind: str) -> str:
+    if source_kind == "audit_control_input":
+        return "roster is an audit_control_input / fixed closeout roster contract, not a raw worker submission source"
+    if source_kind == "raw_label_studio_export":
+        return "raw Label Studio export snapshot; do not edit in closeout audit"
+    return "raw/audit snapshot retained; primary eligibility decided in closeout audit layer"
 
 
 def main(argv: list[str] | None = None) -> int:
