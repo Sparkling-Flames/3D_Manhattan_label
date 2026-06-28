@@ -300,7 +300,7 @@ def snapshot_inputs(paths: list[Path], output_dir: Path) -> Path:
 def _source_kind(path: Path) -> str:
     text = str(path).replace("\\", "/").lower()
     name = path.name.lower()
-    if "prescreen_worker_roster" in name:
+    if "prescreen_worker_roster" in name or "allowlist" in name:
         return "audit_control_input"
     if "active_logs" in text or name.startswith("active_times_"):
         return "raw_active_log_snapshot"
@@ -313,7 +313,7 @@ def _source_kind(path: Path) -> str:
 
 def _manifest_note(source_kind: str) -> str:
     if source_kind == "audit_control_input":
-        return "roster is an audit_control_input / fixed closeout roster contract, not a raw worker submission source"
+        return "audit control input / fixed closeout contract, not a raw worker submission source"
     if source_kind == "raw_label_studio_export":
         return "raw Label Studio export snapshot; do not edit in closeout audit"
     return "raw/audit snapshot retained; primary eligibility decided in closeout audit layer"

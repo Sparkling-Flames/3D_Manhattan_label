@@ -17,6 +17,7 @@ from tools.thesis_main.analysis.analyze_quality import extract_data, parse_quali
 DEFAULT_CANONICAL = Path("analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv")
 DEFAULT_FINAL_GOLD = Path("analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl")
 DEFAULT_COMPLETION = Path("analysis_results/prescreen_closeout/prescreen_completion_audit.csv")
+DEFAULT_UNKNOWN_GOLD_ALLOWLIST = Path("analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/prescreen_closeout")
 
 TASK_FIELDS = [
@@ -60,6 +61,48 @@ RESPONSE_FIELDS = [
     "notes",
 ]
 
+UNKNOWN_GOLD_FIELDS = [
+    "project_id",
+    "task_id",
+    "dataset_group",
+    "condition",
+    "image_id",
+    "data_title",
+    "expected_final_gold_key",
+    "match_failure_reason",
+    "allowlisted",
+    "allowlist_reason",
+]
+
+MIXED_TASK_FIELDS = [
+    "project_id",
+    "task_id",
+    "dataset_group",
+    "condition",
+    "image_id",
+    "data_title",
+    "task_final_scope",
+    "task_scope_adjudication_source",
+    "worker_scope_values_seen",
+    "n_worker_in_scope",
+    "n_worker_oos",
+    "n_worker_scope_missing",
+    "geometry_primary_possible",
+]
+
+WORKER_SCOPE_FIELDS = [
+    "annotator_id",
+    "language",
+    "completion_status",
+    "n_correct_in_scope",
+    "n_correct_oos",
+    "n_scope_false_positive",
+    "n_scope_false_negative",
+    "n_unknown_or_missing",
+    "n_not_applicable_unresolved",
+    "scope_accuracy_on_adjudicated_tasks",
+]
+
 ALLOWED_OOS = {"oos_geometry", "oos_open_boundary", "oos_split_level", "oos_insufficient"}
 UNRESOLVED_SCOPES = {"unresolved_mixed", "unknown_gold", "audit_only"}
 
@@ -99,6 +142,17 @@ def _load_final_gold(path: Path) -> dict[str, dict[str, Any]]:
                 if value:
                     index[f"{key}:{value}"] = rec
     return index
+
+
+def _load_unknown_gold_allowlist(path: Path | None) -> dict[tuple[str, str], str]:
+    if not path or not path.exists():
+        return {}
+    rows = _load_csv(path)
+    return {
+        (_safe(row.get("project_id")), _safe(row.get("task_id"))): _safe(row.get("reason") or row.get("allowlist_reason"))
+        for row in rows
+        if _safe(row.get("project_id")) and _safe(row.get("task_id"))
+    }
 
 
 def _normalize_task_scope(alias: str, binary: str = "") -> str:
@@ -158,6 +212,15 @@ def _final_gold_for(data: dict[str, Any], final_gold: dict[str, dict[str, Any]])
     return None, ""
 
 
+def _expected_gold_key(data: dict[str, Any]) -> str:
+    keys = []
+    for key_name in ("task_id", "base_task_id"):
+        value = _safe(data.get(key_name))
+        if value:
+            keys.append(f"{key_name}:{value}")
+    return ";".join(keys)
+
+
 def _task_scope(data: dict[str, Any], final_gold_index: dict[str, dict[str, Any]]) -> tuple[str, str, str, str, str]:
     rec, ref = _final_gold_for(data, final_gold_index)
     if rec:
@@ -203,10 +266,12 @@ def build_scope_audits(
     canonical_csv: Path,
     final_gold_jsonl: Path,
     completion_csv: Path | None = None,
-) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+    unknown_gold_allowlist_csv: Path | None = None,
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     canonical_rows = _load_csv(canonical_csv)
     completion = _load_completion(completion_csv)
     final_gold_index = _load_final_gold(final_gold_jsonl)
+    unknown_gold_allowlist = _load_unknown_gold_allowlist(unknown_gold_allowlist_csv)
     task_index, ann_index = _load_export_details(canonical_rows)
 
     task_groups: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
@@ -226,6 +291,7 @@ def build_scope_audits(
     }
 
     task_rows: list[dict[str, Any]] = []
+    unknown_gold_rows: list[dict[str, Any]] = []
     task_scope_map: dict[tuple[str, str, str], dict[str, Any]] = {}
     for key, rows in sorted(task_groups.items()):
         task = task_index.get(key)
@@ -267,6 +333,23 @@ def build_scope_audits(
         }
         task_rows.append(task_row)
         task_scope_map[key] = task_row
+        if task_scope == "unknown_gold":
+            expected_key = _expected_gold_key(data)
+            allowlist_reason = unknown_gold_allowlist.get((key[1], key[2]), "")
+            unknown_gold_rows.append(
+                {
+                    "project_id": key[1],
+                    "task_id": key[2],
+                    "dataset_group": rows[0].get("dataset_group", ""),
+                    "condition": rows[0].get("condition", ""),
+                    "image_id": task_row["image_id"],
+                    "data_title": task_row["data_title"],
+                    "expected_final_gold_key": expected_key,
+                    "match_failure_reason": note or "no final_gold match for expected keys",
+                    "allowlisted": bool(allowlist_reason),
+                    "allowlist_reason": allowlist_reason,
+                }
+            )
 
     response_rows: list[dict[str, Any]] = []
     for row in parsed_rows:
@@ -300,11 +383,21 @@ def build_scope_audits(
             }
         )
 
+    mixed_task_rows = [
+        {field: row.get(field, "") for field in MIXED_TASK_FIELDS}
+        for row in task_rows
+        if bool(row.get("mixed_scope_flag"))
+    ]
+    worker_rows = _worker_scope_summary(response_rows)
     summary = {
         "dry_run": True,
         "data_complete": False,
         "n_tasks": len(task_rows),
         "n_responses": len(response_rows),
+        "n_unknown_gold_audit_rows": len(unknown_gold_rows),
+        "n_unknown_gold_allowlisted": sum(bool(r["allowlisted"]) for r in unknown_gold_rows),
+        "n_mixed_task_audit_rows": len(mixed_task_rows),
+        "n_worker_scope_summary_rows": len(worker_rows),
         "task_final_scope_counts": dict(Counter(str(r["task_final_scope"]) for r in task_rows)),
         "worker_scope_response_counts": dict(Counter(str(r["worker_scope_response"]) for r in response_rows)),
         "unknown_gold_tasks": sum(r["task_final_scope"] == "unknown_gold" for r in task_rows),
@@ -312,7 +405,33 @@ def build_scope_audits(
         "missing_worker_scope_rows": sum(r["worker_scope_normalized"] == "missing" for r in response_rows),
         "mixed_scope_tasks": sum(bool(r["mixed_scope_flag"]) for r in task_rows),
     }
-    return task_rows, response_rows, summary
+    return task_rows, response_rows, unknown_gold_rows, mixed_task_rows, worker_rows, summary
+
+
+def _worker_scope_summary(response_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in response_rows:
+        grouped[_safe(row.get("annotator_id"))].append(row)
+    out: list[dict[str, Any]] = []
+    for annotator_id, rows in sorted(grouped.items(), key=lambda item: int(item[0]) if item[0].isdigit() else item[0]):
+        counts = Counter(str(row.get("worker_scope_response")) for row in rows)
+        correct = counts["correct_in_scope"] + counts["correct_oos"]
+        adjudicated = correct + counts["scope_false_positive"] + counts["scope_false_negative"]
+        out.append(
+            {
+                "annotator_id": annotator_id,
+                "language": rows[0].get("language", ""),
+                "completion_status": rows[0].get("completion_status", ""),
+                "n_correct_in_scope": counts["correct_in_scope"],
+                "n_correct_oos": counts["correct_oos"],
+                "n_scope_false_positive": counts["scope_false_positive"],
+                "n_scope_false_negative": counts["scope_false_negative"],
+                "n_unknown_or_missing": counts["unknown_or_missing"],
+                "n_not_applicable_unresolved": counts["not_applicable_unresolved"],
+                "scope_accuracy_on_adjudicated_tasks": round(correct / adjudicated, 6) if adjudicated else "",
+            }
+        )
+    return out
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -320,21 +439,37 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--canonical-csv", default=str(DEFAULT_CANONICAL))
     parser.add_argument("--final-gold-jsonl", default=str(DEFAULT_FINAL_GOLD))
     parser.add_argument("--completion-csv", default=str(DEFAULT_COMPLETION))
+    parser.add_argument("--unknown-gold-allowlist-csv", default=str(DEFAULT_UNKNOWN_GOLD_ALLOWLIST))
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
     args = parser.parse_args(argv)
 
     out_dir = Path(args.output_dir)
-    task_rows, response_rows, summary = build_scope_audits(
+    task_rows, response_rows, unknown_gold_rows, mixed_task_rows, worker_rows, summary = build_scope_audits(
         Path(args.canonical_csv),
         Path(args.final_gold_jsonl),
         Path(args.completion_csv) if args.completion_csv else None,
+        Path(args.unknown_gold_allowlist_csv) if args.unknown_gold_allowlist_csv else None,
     )
     task_path = out_dir / "prescreen_scope_adjudication.csv"
     response_path = out_dir / "prescreen_scope_response_audit.csv"
+    unknown_gold_path = out_dir / "prescreen_scope_unknown_gold_audit.csv"
+    mixed_task_path = out_dir / "prescreen_scope_mixed_task_audit.csv"
+    worker_scope_path = out_dir / "prescreen_worker_scope_summary.csv"
     summary_path = out_dir / "prescreen_scope_summary.json"
     _write_csv(task_path, TASK_FIELDS, task_rows)
     _write_csv(response_path, RESPONSE_FIELDS, response_rows)
-    summary.update({"scope_adjudication_csv": str(task_path), "scope_response_audit_csv": str(response_path)})
+    _write_csv(unknown_gold_path, UNKNOWN_GOLD_FIELDS, unknown_gold_rows)
+    _write_csv(mixed_task_path, MIXED_TASK_FIELDS, mixed_task_rows)
+    _write_csv(worker_scope_path, WORKER_SCOPE_FIELDS, worker_rows)
+    summary.update(
+        {
+            "scope_adjudication_csv": str(task_path),
+            "scope_response_audit_csv": str(response_path),
+            "scope_unknown_gold_audit_csv": str(unknown_gold_path),
+            "scope_mixed_task_audit_csv": str(mixed_task_path),
+            "worker_scope_summary_csv": str(worker_scope_path),
+        }
+    )
     summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0

@@ -100,7 +100,7 @@ def _run(tmp_path: Path, tasks: list[dict], canonical_rows: list[tuple[str, str,
     canonical = _canonical(tmp_path / "canonical.csv", export, canonical_rows)
     completion = _completion(tmp_path / "completion.csv", sorted({worker for _task, worker, _ann in canonical_rows}))
     final_gold = _gold(tmp_path / "gold.jsonl", gold_records)
-    task_rows, response_rows, summary = build_scope_audits(canonical, final_gold, completion)
+    task_rows, response_rows, _unknown, _mixed, _worker, summary = build_scope_audits(canonical, final_gold, completion)
     return {r["task_id"]: r for r in task_rows}, {(r["task_id"], r["annotator_id"]): r for r in response_rows}, summary
 
 
@@ -155,3 +155,31 @@ def test_undercoverage_label_does_not_become_oos_subtype(tmp_path: Path) -> None
 
     assert task_rows["1"]["task_final_scope"] == "in_scope"
     assert not str(task_rows["1"]["task_final_scope"]).startswith("oos_")
+
+
+def test_real_unknown_gold_tasks_are_allowlisted_or_zero() -> None:
+    repo = Path(__file__).resolve().parents[1]
+    _task_rows, _response_rows, unknown_rows, _mixed_rows, _worker_rows, summary = build_scope_audits(
+        repo / "analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv",
+        repo / "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
+        repo / "analysis_results/prescreen_closeout/prescreen_completion_audit.csv",
+        repo / "analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv",
+    )
+
+    assert summary["unknown_gold_tasks"] == 0 or all(row["allowlisted"] for row in unknown_rows)
+
+
+def test_real_mixed_scope_does_not_override_final_gold_and_oos_not_geometry_primary() -> None:
+    repo = Path(__file__).resolve().parents[1]
+    task_rows, response_rows, _unknown_rows, mixed_rows, _worker_rows, _summary = build_scope_audits(
+        repo / "analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv",
+        repo / "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
+        repo / "analysis_results/prescreen_closeout/prescreen_completion_audit.csv",
+        repo / "analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv",
+    )
+
+    task_by_id = {str(row["task_id"]): row for row in task_rows}
+    assert mixed_rows
+    assert all(task_by_id[str(row["task_id"])]["task_scope_adjudication_source"] != "unresolved" for row in mixed_rows)
+    assert all(row["geometry_primary_possible"] is False for row in task_rows if str(row["task_final_scope"]).startswith("oos_"))
+    assert all(row["geometry_primary_possible"] is False for row in response_rows if str(row["task_final_scope"]).startswith("oos_"))
