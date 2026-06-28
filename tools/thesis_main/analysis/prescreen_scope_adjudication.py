@@ -133,6 +133,9 @@ SYNTHETIC_BINDING_FIELDS = [
     "geometry_gold_source_after_binding",
     "geometry_gold_ready_after_binding",
     "geometry_scoring_deferred_after_binding",
+    "geometry_scoring_role",
+    "manual_anchor_role",
+    "manual_anchor_primary_possible",
     "expert_realized_model_issue_primary",
     "expert_realized_model_issue_secondary",
     "trap_effective",
@@ -175,11 +178,21 @@ SYNTHETIC_GEOMETRY_GT_FIELDS = [
     "task_geometry_adjudication_source",
     "geometry_primary_possible",
     "geometry_scoring_deferred",
+    "geometry_scoring_role",
+    "manual_anchor_role",
+    "manual_anchor_primary_possible",
     "notes",
 ]
 
 ALLOWED_OOS = {"oos_geometry", "oos_open_boundary", "oos_split_level", "oos_insufficient"}
 UNRESOLVED_SCOPES = {"unresolved_mixed", "unknown_gold", "audit_only", "synthetic_scope_unresolved"}
+GEOMETRY_SCORE_FIELD_NAMES = {
+    "geometry_score",
+    "geometry_iou",
+    "corner_error",
+    "layout_score",
+    "primary_geometry_score",
+}
 
 
 def _safe(value: Any) -> str:
@@ -266,9 +279,9 @@ def _sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def _validate_export_gt_manifest(manifest_path: Path | None, export_gt_path: Path | None) -> dict[str, str]:
+def _validate_export_gt_manifest(manifest_path: Path | None, export_gt_path: Path | None) -> tuple[Path | None, dict[str, Any]]:
     if not manifest_path or not export_gt_path:
-        return {}
+        return export_gt_path, {}
     rows = _load_csv(manifest_path)
     norm_export = _norm_manifest_path(export_gt_path)
     matches = [row for row in rows if _norm_manifest_path(_safe(row.get("source_path"))) == norm_export]
@@ -284,7 +297,13 @@ def _validate_export_gt_manifest(manifest_path: Path | None, export_gt_path: Pat
     actual = _sha256(snapshot)
     if actual.lower() != sha:
         raise ValueError(f"manifest sha256 mismatch for {export_gt_path}: {sha} != {actual}")
-    return {"export_gt_snapshot_path": str(snapshot), "export_gt_sha256": actual}
+    evidence: dict[str, Any] = {"export_gt_snapshot_path": str(snapshot), "export_gt_sha256": actual}
+    source = _manifest_path(_safe(row.get("source_path")))
+    if source.exists():
+        source_sha = _sha256(source)
+        evidence["export_gt_source_sha256"] = source_sha
+        evidence["export_gt_source_snapshot_sha256_match"] = source_sha.lower() == actual.lower()
+    return snapshot, evidence
 
 
 def _manifest_path(path: str | Path) -> Path:
@@ -342,6 +361,9 @@ def _synthetic_geometry_gt_rows(
                 "task_geometry_adjudication_source": "export_label_groudTruth" if ready else "",
                 "geometry_primary_possible": False,
                 "geometry_scoring_deferred": ready,
+                "geometry_scoring_role": "semi_trap_audit" if ready else "",
+                "manual_anchor_role": False,
+                "manual_anchor_primary_possible": False,
                 "notes": "geometry GT bound; primary geometry scoring deferred to Step 5" if ready else "geometry GT not uniquely ready",
             }
         )
@@ -522,7 +544,7 @@ def _synthetic_scope_binding(
             "synthetic_asset_expert_review",
             raw_scope,
             f"synthetic_expert_review:{runtime_task_id}",
-            "synthetic expert review resolves scope only; no corrected geometry GT",
+            "synthetic expert review resolves scope; source geometry GT is bound in synthetic geometry audit; primary geometry scoring deferred to Step 5",
             audit,
         )
     audit = _synthetic_audit_row(
@@ -588,6 +610,9 @@ def _synthetic_audit_row(
         "geometry_gold_source_after_binding": "",
         "geometry_gold_ready_after_binding": source != "synthetic_asset_expert_review" and _geometry_possible(final_scope),
         "geometry_scoring_deferred_after_binding": False,
+        "geometry_scoring_role": "semi_trap_audit" if source == "synthetic_asset_expert_review" else "",
+        "manual_anchor_role": False,
+        "manual_anchor_primary_possible": False,
         "expert_realized_model_issue_primary": _safe((expert_review or {}).get("expert_realized_model_issue_primary")),
         "expert_realized_model_issue_secondary": _safe((expert_review or {}).get("expert_realized_model_issue_secondary")),
         "trap_effective": _safe((expert_review or {}).get("trap_effective")),
@@ -637,6 +662,18 @@ def _scope_response(task_scope: str, worker_scope: str) -> str:
     return "unknown_or_missing"
 
 
+def _geometry_score_fields_present(row_groups: list[list[dict[str, Any]]]) -> bool:
+    for rows in row_groups:
+        for row in rows:
+            for key in row:
+                key_lower = str(key).lower()
+                if key_lower in GEOMETRY_SCORE_FIELD_NAMES:
+                    return True
+                if key_lower.endswith("_score") and any(token in key_lower for token in ("geometry", "layout", "corner")):
+                    return True
+    return False
+
+
 def build_scope_audits(
     canonical_csv: Path,
     final_gold_jsonl: Path,
@@ -653,8 +690,8 @@ def build_scope_audits(
     unknown_gold_allowlist = _load_unknown_gold_allowlist(unknown_gold_allowlist_csv)
     synthetic_bank = _load_synthetic_bank(synthetic_bank_jsonl)
     synthetic_expert_review = _load_synthetic_expert_review(synthetic_expert_review_csv)
-    export_gt_by_title = _load_export_gt_by_title(export_gt_json)
-    export_gt_evidence = _validate_export_gt_manifest(raw_input_manifest_csv, export_gt_json)
+    export_gt_binding_path, export_gt_evidence = _validate_export_gt_manifest(raw_input_manifest_csv, export_gt_json)
+    export_gt_by_title = _load_export_gt_by_title(export_gt_binding_path)
     task_index, ann_index = _load_export_details(canonical_rows)
 
     task_groups: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
@@ -812,6 +849,8 @@ def build_scope_audits(
             row["geometry_gold_ready_after_binding"] = geometry_ready_by_runtime[runtime_task_id]
             row["geometry_gold_source_after_binding"] = geometry_source_by_runtime[runtime_task_id]
             row["geometry_scoring_deferred_after_binding"] = geometry_deferred_by_runtime[runtime_task_id]
+            if geometry_deferred_by_runtime[runtime_task_id]:
+                row["geometry_scoring_role"] = "semi_trap_audit"
     summary = {
         "dry_run": True,
         "data_complete": False,
@@ -844,7 +883,7 @@ def build_scope_audits(
         "synthetic_geometry_gt_source": "export_label_groudTruth",
         "synthetic_geometry_primary_possible_task_rows": sum(bool(r["geometry_primary_possible"]) for r in synthetic_geometry_rows),
         "synthetic_geometry_scoring_deferred_task_rows": len(synthetic_geometry_scoring_deferred_rows),
-        "geometry_score_fields_present": False,
+        "geometry_score_fields_present": _geometry_score_fields_present([task_rows, response_rows, synthetic_audit_rows, synthetic_geometry_rows]),
         "_synthetic_geometry_gt_rows": synthetic_geometry_rows,
         **export_gt_evidence,
         "runtime_task_rows": runtime_task_rows,

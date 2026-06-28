@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.prescreen_scope_adjudication import build_scope_audits
+from tools.thesis_main.analysis.prescreen_scope_adjudication import build_scope_audits, main
 
 
 def _choice(scope: str | None) -> list[dict]:
@@ -277,6 +277,27 @@ def _export_gt(path: Path, rows: list[tuple[str, str, int]]) -> Path:
     return path
 
 
+def _export_gt_manifest(path: Path, source: Path, snapshot: Path) -> Path:
+    return _write_csv(
+        path,
+        [
+            {
+                "source_path": str(source),
+                "snapshot_path": str(snapshot),
+                "exists": "True",
+                "bytes": str(snapshot.stat().st_size),
+                "file_count": "1",
+                "source_kind": "reference_geometry_gt_snapshot",
+                "snapshot_cutoff_at": "test",
+                "data_complete": "false",
+                "completion_basis": "test",
+                "notes": "test snapshot",
+                "sha256": hashlib.sha256(snapshot.read_bytes()).hexdigest(),
+            }
+        ],
+    )
+
+
 def test_synthetic_task_binds_to_source_final_gold(tmp_path: Path) -> None:
     candidate_id = "synthetic_ok"
     export = tmp_path / "export.json"
@@ -352,12 +373,92 @@ def test_synthetic_geometry_gt_unique_export_match_is_ready_but_scoring_deferred
     assert geometry_rows[0]["geometry_gold_ready"] is True
     assert geometry_rows[0]["geometry_primary_possible"] is False
     assert geometry_rows[0]["geometry_scoring_deferred"] is True
+    assert geometry_rows[0]["geometry_scoring_role"] == "semi_trap_audit"
+    assert geometry_rows[0]["manual_anchor_role"] is False
+    assert geometry_rows[0]["manual_anchor_primary_possible"] is False
     assert task_rows[0]["geometry_primary_possible"] is False
     assert synthetic_rows[0]["geometry_gold_ready_after_binding"] is True
     assert synthetic_rows[0]["geometry_gold_source_after_binding"] == "export_label_groudTruth"
     assert synthetic_rows[0]["geometry_scoring_deferred_after_binding"] is True
+    assert synthetic_rows[0]["geometry_scoring_role"] == "semi_trap_audit"
+    assert synthetic_rows[0]["manual_anchor_role"] is False
+    assert synthetic_rows[0]["manual_anchor_primary_possible"] is False
     assert summary["synthetic_geometry_gt_bound_task_rows"] == 1
     assert summary["synthetic_geometry_scoring_deferred_task_rows"] == 1
+    assert summary["geometry_score_fields_present"] is False
+
+
+def test_export_gt_binding_uses_manifest_snapshot_not_source(tmp_path: Path) -> None:
+    candidate_id = "synthetic_reviewed"
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_synthetic_task("1", candidate_id, worker_scope="normal")]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+    bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id, source_base_task_id="source_base")
+    review = _synthetic_expert_review(tmp_path / "review.csv", runtime_task_id="1")
+    source = _export_gt(tmp_path / "source_groudTruth.json", [("source_base", "source_task", 1)])
+    snapshot = _export_gt(tmp_path / "snapshot_groudTruth.json", [("source_base", "snapshot_task", 1)])
+    manifest = _export_gt_manifest(tmp_path / "manifest.csv", source, snapshot)
+
+    *_rest, summary = build_scope_audits(canonical, final_gold, completion, None, bank, review, source, manifest)
+    row = summary["_synthetic_geometry_gt_rows"][0]
+
+    assert row["geometry_gold_task_id"] == "snapshot_task"
+    assert summary["export_gt_snapshot_path"] == str(snapshot)
+    assert summary["export_gt_sha256"] == hashlib.sha256(snapshot.read_bytes()).hexdigest()
+    assert summary["export_gt_source_snapshot_sha256_match"] is False
+
+
+def test_scope_adjudication_cli_only_writes_step4_outputs(tmp_path: Path) -> None:
+    candidate_id = "synthetic_reviewed"
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_synthetic_task("1", candidate_id, worker_scope="normal")]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+    bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id, source_base_task_id="source_base")
+    review = _synthetic_expert_review(tmp_path / "review.csv", runtime_task_id="1")
+    gt = _export_gt(tmp_path / "groudTruth.json", [("source_base", "2752", 1)])
+    manifest = _export_gt_manifest(tmp_path / "manifest.csv", gt, gt)
+    out = tmp_path / "out"
+
+    assert (
+        main(
+            [
+                "--canonical-csv",
+                str(canonical),
+                "--final-gold-jsonl",
+                str(final_gold),
+                "--completion-csv",
+                str(completion),
+                "--unknown-gold-allowlist-csv",
+                "",
+                "--synthetic-bank-jsonl",
+                str(bank),
+                "--synthetic-expert-review-csv",
+                str(review),
+                "--export-gt-json",
+                str(gt),
+                "--raw-input-manifest-csv",
+                str(manifest),
+                "--output-dir",
+                str(out),
+            ]
+        )
+        == 0
+    )
+
+    assert {p.name for p in out.iterdir()} == {
+        "prescreen_scope_adjudication.csv",
+        "prescreen_scope_response_audit.csv",
+        "prescreen_scope_unknown_gold_audit.csv",
+        "prescreen_scope_mixed_task_audit.csv",
+        "prescreen_worker_scope_summary.csv",
+        "prescreen_synthetic_scope_binding_audit.csv",
+        "prescreen_synthetic_geometry_gt_binding_audit.csv",
+        "prescreen_scope_summary.json",
+    }
 
 
 def test_synthetic_geometry_gt_missing_duplicate_or_bad_annotation_count_is_audited(tmp_path: Path) -> None:
@@ -535,9 +636,15 @@ def test_real_synthetic_geometry_gt_binds_all_current_source_images() -> None:
     assert all(row["geometry_gold_source"] == "export_label_groudTruth" for row in rows)
     assert all(str(row.get("geometry_primary_possible")) == "False" or row.get("geometry_primary_possible") is False for row in rows)
     assert all(str(row.get("geometry_scoring_deferred")) == "True" or row.get("geometry_scoring_deferred") is True for row in rows)
+    assert all(row["geometry_scoring_role"] == "semi_trap_audit" for row in rows)
+    assert all(str(row.get("manual_anchor_role")) == "False" or row.get("manual_anchor_role") is False for row in rows)
+    assert all(str(row.get("manual_anchor_primary_possible")) == "False" or row.get("manual_anchor_primary_possible") is False for row in rows)
     assert all(row["dataset_group"] == "PreScreen_semi" and row["condition"] == "semi" for row in synthetic_rows)
     assert all(str(row["primary_eligible_after_binding"]) == "False" or row["primary_eligible_after_binding"] is False for row in synthetic_rows)
+    assert all(row["geometry_scoring_role"] == "semi_trap_audit" for row in synthetic_rows)
+    assert all(str(row.get("manual_anchor_role")) == "False" or row.get("manual_anchor_role") is False for row in synthetic_rows)
     assert not any(key == "geometry_score" or key.endswith("_score") for row in rows for key in row)
+    assert summary["geometry_score_fields_present"] is False
 
     grouped: dict[str, list[dict]] = {}
     for row in rows:
