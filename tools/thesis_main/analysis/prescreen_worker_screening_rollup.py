@@ -8,6 +8,9 @@ from pathlib import Path
 from typing import Any
 
 DEFAULT_DIR = Path("analysis_results/prescreen_closeout")
+DEFAULT_EXACT_COPY = Path("analysis_results/p1_exact_copy_low_time_audit/p1_worker_independence_summary.csv")
+HIGH_REVIEW_MIN_COUNT = 2
+HIGH_REVIEW_RATE = 0.2
 
 AUDIT_FIELDS = [
     "annotator_id",
@@ -32,6 +35,7 @@ AUDIT_FIELDS = [
     "n_consensus_guarded_tasks",
     "screening_recommendation",
     "screening_reason",
+    "evidence_tier",
     "dry_run",
     "notes",
 ]
@@ -74,6 +78,10 @@ def _write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writerows(rows)
 
 
+def _worker_id(row: dict[str, str]) -> str:
+    return _safe(row.get("annotator_id") or row.get("worker_id") or row.get("completed_by"))
+
+
 def _recommend(row: dict[str, Any]) -> tuple[str, str]:
     status = _safe(row["completion_status"])
     if status == "pending_completion":
@@ -82,13 +90,28 @@ def _recommend(row: dict[str, Any]) -> tuple[str, str]:
         return "exclude_process_risk", "completion_or_process_risk"
     if _safe(row["copy_audit_recommended_action"]) == "fail_recommended":
         return "exclude_process_risk", "copy_low_time_fail_recommended"
-    if int(row["n_undercoverage_high"]) > 0:
+    high = int(row["n_undercoverage_high"])
+    available = int(row["n_alignment_available"])
+    high_rate = high / available if available else 0.0
+    if high == 1:
+        return "continue_candidate", "warning_manual_review_candidate_single_high_undercoverage"
+    if high >= HIGH_REVIEW_MIN_COUNT or high_rate >= HIGH_REVIEW_RATE:
         return "manual_review", "high_undercoverage_review"
-    if int(row["n_alignment_available"]) == 0 and int(row["n_manual_anchor_eligible_responses"]) == 0:
+    if available == 0 and int(row["n_manual_anchor_eligible_responses"]) == 0:
         return "insufficient_evidence", "no_alignment_or_anchor_evidence"
     if int(row["n_minority_full_room_candidate"]) > 0:
         return "continue_candidate", "protected_full_room_candidate"
     return "continue_candidate", "no_major_dry_run_risk"
+
+
+def _evidence_tier(row: dict[str, Any]) -> str:
+    if _safe(row["screening_recommendation"]) == "exclude_process_risk":
+        return "process_risk"
+    if int(row["n_minority_full_room_candidate"]) > 0 and _safe(row["screening_reason"]) == "protected_full_room_candidate":
+        return "protected_full_room"
+    if _safe(row["screening_recommendation"]) == "manual_review" or "undercoverage" in _safe(row["screening_reason"]):
+        return "geometry_risk"
+    return "review_only"
 
 
 def build_worker_screening_rollup(
@@ -118,12 +141,14 @@ def build_worker_screening_rollup(
         active_rows[_safe(row.get("annotator_id"))][1] += _num(row.get("n_rows"))
     dup_same = Counter(_safe(row.get("annotator_id")) for row in duplicate if _safe(row.get("duplicate_geometry_type")) == "duplicate_same_geometry")
     revisions = Counter(_safe(row.get("annotator_id")) for row in duplicate if _safe(row.get("duplicate_geometry_type")) == "revision")
-    exact_events = Counter(_safe(row.get("annotator_id")) for row in exact_copy)
+    exact_events: Counter[str] = Counter()
     exact_action: dict[str, str] = {}
     for row in exact_copy:
+        aid = _worker_id(row)
+        exact_events[aid] += int(_num(row.get("n_exact_copy_low_time_events")) or 1)
         action = _safe(row.get("copy_audit_recommended_action") or row.get("recommended_action"))
         if action:
-            exact_action[_safe(row.get("annotator_id"))] = action
+            exact_action[aid] = action
     scope_counts: dict[str, Counter[str]] = defaultdict(Counter)
     for row in scope:
         scope_counts[_safe(row.get("annotator_id"))][_safe(row.get("worker_scope_response"))] += 1
@@ -166,16 +191,21 @@ def build_worker_screening_rollup(
             "n_consensus_guarded_tasks": worker_guarded[aid],
             "screening_recommendation": "",
             "screening_reason": "",
+            "evidence_tier": "",
             "dry_run": True,
             "notes": "dry-run screening rollup only; no admission, rejection, or reliability profile",
         }
         row["screening_recommendation"], row["screening_reason"] = _recommend(row)
+        row["evidence_tier"] = _evidence_tier(row)
         out.append(row)
     summary = {
         "dry_run": True,
         "worker_rows": len(out),
         "screening_recommendation_counts": dict(Counter(str(row["screening_recommendation"]) for row in out)),
+        "evidence_tier_counts": dict(Counter(str(row["evidence_tier"]) for row in out)),
         "optional_exact_copy_summary_missing": exact_missing,
+        "copy_risk_evaluation_status": "not_evaluated_missing_optional_input" if exact_missing else "evaluated",
+        "undercoverage_manual_review_rule": {"high_count_gte": HIGH_REVIEW_MIN_COUNT, "high_rate_gte": HIGH_REVIEW_RATE},
         "forbidden_outputs_generated": False,
         "forbidden_metric_field_count": sum(1 for row in out for key in row if "score" in key.lower()),
     }
@@ -192,7 +222,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--alignment-csv", default=str(DEFAULT_DIR / "prescreen_worker_gold_alignment_audit.csv"))
     parser.add_argument("--undercoverage-csv", default=str(DEFAULT_DIR / "prescreen_undercoverage_risk_audit.csv"))
     parser.add_argument("--consensus-guard-csv", default=str(DEFAULT_DIR / "prescreen_consensus_guard_audit.csv"))
-    parser.add_argument("--exact-copy-csv", default="")
+    parser.add_argument("--exact-copy-csv", default=str(DEFAULT_EXACT_COPY))
     parser.add_argument("--output-dir", default=str(DEFAULT_DIR))
     args = parser.parse_args(argv)
     rows, summary = build_worker_screening_rollup(

@@ -58,6 +58,7 @@ def test_complete_clean_worker_continue_candidate(tmp_path: Path) -> None:
     rows, _summary = _run(tmp_path, [_completion("w1")])
 
     assert rows[0]["screening_recommendation"] == "continue_candidate"
+    assert rows[0]["evidence_tier"] == "review_only"
 
 
 def test_pending_worker_hold_pending_completion(tmp_path: Path) -> None:
@@ -70,20 +71,40 @@ def test_known_bad_or_incomplete_excluded_process_risk(tmp_path: Path) -> None:
     rows, _summary = _run(tmp_path, [_completion("w1", "incomplete_excluded", "False")])
 
     assert rows[0]["screening_recommendation"] == "exclude_process_risk"
+    assert rows[0]["evidence_tier"] == "process_risk"
 
 
 def test_exact_copy_fail_recommended_excludes_process_risk(tmp_path: Path) -> None:
-    exact = _csv(tmp_path / "exact.csv", [{"annotator_id": "w1", "copy_audit_recommended_action": "fail_recommended"}])
-    rows, _summary = _run(tmp_path, [_completion("w1")], exact=exact)
+    exact = _csv(tmp_path / "exact.csv", [{"worker_id": "w1", "recommended_action": "fail_recommended", "n_exact_copy_low_time_events": "3"}])
+    rows, summary = _run(tmp_path, [_completion("w1")], exact=exact)
 
     assert rows[0]["screening_recommendation"] == "exclude_process_risk"
+    assert rows[0]["n_exact_copy_low_time_events"] == 3
+    assert summary["copy_risk_evaluation_status"] == "evaluated"
 
 
-def test_high_undercoverage_worker_manual_review(tmp_path: Path) -> None:
+def test_single_high_undercoverage_is_warning_candidate_not_manual_review(tmp_path: Path) -> None:
     under = _csv(tmp_path / "under_high.csv", [{"annotator_id": "w1", "undercoverage_risk_level": "high", "minority_full_room_candidate": "False"}])
     rows, _summary = _run(tmp_path, [_completion("w1")], under=under)
 
+    assert rows[0]["screening_recommendation"] == "continue_candidate"
+    assert rows[0]["screening_reason"] == "warning_manual_review_candidate_single_high_undercoverage"
+    assert rows[0]["evidence_tier"] == "geometry_risk"
+
+
+def test_repeated_high_undercoverage_worker_manual_review(tmp_path: Path) -> None:
+    under = _csv(
+        tmp_path / "under_high2.csv",
+        [
+            {"annotator_id": "w1", "undercoverage_risk_level": "high", "minority_full_room_candidate": "False"},
+            {"annotator_id": "w1", "undercoverage_risk_level": "high", "minority_full_room_candidate": "False"},
+        ],
+    )
+    align = _csv(tmp_path / "align2.csv", [{"annotator_id": "w1", "alignment_available": "True", "task_id": "t1"}, {"annotator_id": "w1", "alignment_available": "True", "task_id": "t2"}])
+    rows, _summary = _run(tmp_path, [_completion("w1")], under=under, alignment=align)
+
     assert rows[0]["screening_recommendation"] == "manual_review"
+    assert rows[0]["evidence_tier"] == "geometry_risk"
 
 
 def test_minority_full_room_candidate_is_not_punished(tmp_path: Path) -> None:
@@ -92,6 +113,7 @@ def test_minority_full_room_candidate_is_not_punished(tmp_path: Path) -> None:
 
     assert rows[0]["screening_recommendation"] == "continue_candidate"
     assert rows[0]["screening_reason"] == "protected_full_room_candidate"
+    assert rows[0]["evidence_tier"] == "protected_full_room"
 
 
 def test_insufficient_evidence(tmp_path: Path) -> None:
@@ -119,6 +141,7 @@ def test_cli_writes_only_worker_screening_sidecars(tmp_path: Path) -> None:
         "--alignment-csv", str(paths["alignment"]),
         "--undercoverage-csv", str(paths["under"]),
         "--consensus-guard-csv", str(paths["guard"]),
+        "--exact-copy-csv", "",
         "--output-dir", str(out),
     ]) == 0
 

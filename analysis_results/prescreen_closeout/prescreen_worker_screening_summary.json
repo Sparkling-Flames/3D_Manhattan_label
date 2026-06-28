@@ -3,11 +3,22 @@
   "worker_rows": 29,
   "screening_recommendation_counts": {
     "hold_pending_completion": 3,
-    "manual_review": 18,
+    "manual_review": 12,
     "exclude_process_risk": 5,
-    "continue_candidate": 3
+    "continue_candidate": 9
+  },
+  "evidence_tier_counts": {
+    "review_only": 3,
+    "geometry_risk": 18,
+    "process_risk": 5,
+    "protected_full_room": 3
   },
   "optional_exact_copy_summary_missing": true,
+  "copy_risk_evaluation_status": "not_evaluated_missing_optional_input",
+  "undercoverage_manual_review_rule": {
+    "high_count_gte": 2,
+    "high_rate_gte": 0.2
+  },
   "forbidden_outputs_generated": false,
   "forbidden_metric_field_count": 0,
   "worker_screening_rollup_csv": "analysis_results\\prescreen_closeout\\prescreen_worker_screening_rollup.csv",

@@ -10,6 +10,7 @@ from typing import Any
 DEFAULT_UNDERCOVERAGE = Path("analysis_results/prescreen_closeout/prescreen_undercoverage_risk_audit.csv")
 DEFAULT_ALIGNMENT = Path("analysis_results/prescreen_closeout/prescreen_worker_gold_alignment_audit.csv")
 DEFAULT_DUPLICATE = Path("analysis_results/prescreen_closeout/prescreen_duplicate_annotation_audit.csv")
+DEFAULT_EXACT_COPY = Path("analysis_results/p1_exact_copy_low_time_audit/p1_worker_independence_summary.csv")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/prescreen_closeout")
 
 AUDIT_FIELDS = [
@@ -54,6 +55,10 @@ def _load_optional_csv(path: Path | None) -> tuple[list[dict[str, str]], bool]:
         return list(csv.DictReader(f)), False
 
 
+def _worker_id(row: dict[str, str]) -> str:
+    return _safe(row.get("annotator_id") or row.get("worker_id") or row.get("completed_by"))
+
+
 def _write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
@@ -80,8 +85,12 @@ def build_consensus_guard_audit(
         for row in duplicates
         if int(float(_safe(row.get("duplicate_group_size")) or 0)) > 1 or _safe(row.get("duplicate_geometry_type")) == "duplicate_same_geometry"
     )
-    low_time_tasks = {
-        _safe(row.get("task_id"))
+    alignment_by_task: dict[str, set[str]] = defaultdict(set)
+    for row in _load_csv(alignment_csv):
+        if _worker_id(row):
+            alignment_by_task[_safe(row.get("task_id"))].add(_worker_id(row))
+    fail_workers = {
+        _worker_id(row)
         for row in exact_copy
         if _safe(row.get("recommended_action") or row.get("copy_audit_recommended_action")) == "fail_recommended"
     }
@@ -92,7 +101,8 @@ def build_consensus_guard_audit(
         majority = any(_truthy(row.get("task_majority_undercoverage_risk")) for row in rows)
         n_minority = sum(1 for row in rows if _truthy(row.get("minority_full_room_candidate")))
         copy_dominated = bool(evaluable and duplicate_by_task[task_id] >= max(1, len(evaluable) / 2))
-        low_time = task_id in low_time_tasks
+        task_workers = alignment_by_task.get(task_id, set())
+        low_time = bool(task_workers and len(task_workers & fail_workers) > len(task_workers) / 2)
         insufficient = len(evaluable) < 2
         gold_conflict = majority
         semi_conflict = _safe(rows[0].get("dataset_group")) == "PreScreen_semi" and (majority or n_under > 0)
@@ -136,6 +146,7 @@ def build_consensus_guard_audit(
         "consensus_guard_bucket_counts": dict(Counter(str(row["consensus_guard_bucket"]) for row in out)),
         "manual_review_required_count": sum(bool(row["manual_review_required"]) for row in out),
         "optional_exact_copy_summary_missing": exact_missing,
+        "copy_risk_evaluation_status": "not_evaluated_missing_optional_input" if exact_missing else "evaluated",
         "forbidden_outputs_generated": False,
         "forbidden_metric_field_count": sum(1 for row in out for key in row if "score" in key.lower()),
     }
@@ -147,7 +158,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--undercoverage-csv", default=str(DEFAULT_UNDERCOVERAGE))
     parser.add_argument("--alignment-csv", default=str(DEFAULT_ALIGNMENT))
     parser.add_argument("--duplicate-csv", default=str(DEFAULT_DUPLICATE))
-    parser.add_argument("--exact-copy-csv", default="")
+    parser.add_argument("--exact-copy-csv", default=str(DEFAULT_EXACT_COPY))
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
     args = parser.parse_args(argv)
     rows, summary = build_consensus_guard_audit(

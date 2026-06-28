@@ -39,6 +39,7 @@ def test_consensus_safe_and_optional_exact_copy_missing(tmp_path: Path) -> None:
 
     assert rows[0]["consensus_guard_bucket"] == "consensus_safe"
     assert summary["optional_exact_copy_summary_missing"] is True
+    assert summary["copy_risk_evaluation_status"] == "not_evaluated_missing_optional_input"
 
 
 def test_majority_undercoverage_and_minority_protection(tmp_path: Path) -> None:
@@ -63,6 +64,18 @@ def test_copy_risk_dominated_consensus(tmp_path: Path) -> None:
     assert rows[0]["consensus_guard_bucket"] == "copy_risk_guard"
 
 
+def test_worker_exact_copy_summary_drives_low_time_guard(tmp_path: Path) -> None:
+    under = _csv(tmp_path / "u.csv", [_under("t", "w1"), _under("t", "w2")])
+    align = _csv(tmp_path / "a.csv", [{"task_id": "t", "annotator_id": "w1"}, {"task_id": "t", "annotator_id": "w2"}])
+    exact = _csv(tmp_path / "exact.csv", [{"worker_id": "w1", "recommended_action": "fail_recommended"}, {"worker_id": "w2", "recommended_action": "fail_recommended"}])
+
+    rows, summary = build_consensus_guard_audit(under, align, _csv(tmp_path / "d.csv", [_dup()]), exact)
+
+    assert rows[0]["low_time_dominated_consensus"] is True
+    assert rows[0]["consensus_guard_bucket"] == "low_time_guard"
+    assert summary["copy_risk_evaluation_status"] == "evaluated"
+
+
 def test_insufficient_evidence(tmp_path: Path) -> None:
     rows, _summary = build_consensus_guard_audit(_csv(tmp_path / "u.csv", [_under("t", "w1", "not_evaluable")]), _alignment(tmp_path / "a.csv"), _csv(tmp_path / "d.csv", [_dup()]))
 
@@ -75,7 +88,7 @@ def test_cli_writes_only_consensus_guard_sidecars(tmp_path: Path) -> None:
     dup = _csv(tmp_path / "d.csv", [_dup()])
     out = tmp_path / "out"
 
-    assert main(["--undercoverage-csv", str(under), "--alignment-csv", str(align), "--duplicate-csv", str(dup), "--output-dir", str(out)]) == 0
+    assert main(["--undercoverage-csv", str(under), "--alignment-csv", str(align), "--duplicate-csv", str(dup), "--exact-copy-csv", "", "--output-dir", str(out)]) == 0
 
     assert {p.name for p in out.iterdir()} == {"prescreen_consensus_guard_audit.csv", "prescreen_consensus_guard_summary.json"}
     assert not any(any(token in p.name.lower() for token in ("geometry_score", "admission", "reject", "r0", "r_u", "wmax", "routing", "c1", "handoff", "reliability")) for p in out.iterdir())
