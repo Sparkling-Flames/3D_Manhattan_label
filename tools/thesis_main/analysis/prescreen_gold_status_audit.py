@@ -13,6 +13,7 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 DEFAULT_ALIGNMENT = Path("analysis_results/prescreen_closeout/prescreen_geometry_gold_alignment_audit.csv")
+DEFAULT_FINAL_GOLD = Path("analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/prescreen_closeout")
 
 AUDIT_FIELDS = [
@@ -33,6 +34,7 @@ AUDIT_FIELDS = [
     "gold_status_for_undercoverage",
     "gold_ambiguity_flag",
     "gold_ambiguity_reason",
+    "validation_status",
     "manual_review_required",
     "dry_run",
     "notes",
@@ -57,6 +59,83 @@ def _write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer = csv.DictWriter(f, fieldnames=AUDIT_FIELDS)
         writer.writeheader()
         writer.writerows(rows)
+
+
+def _load_final_gold(path: Path | None) -> dict[str, list[dict[str, Any]]]:
+    if not path or not path.exists():
+        return {}
+    index: dict[str, list[dict[str, Any]]] = {}
+    with path.open("r", encoding="utf-8") as f:
+        for line in f:
+            if not line.strip():
+                continue
+            rec = json.loads(line)
+            for key_name in ("task_id", "base_task_id"):
+                value = _safe(rec.get(key_name))
+                if value:
+                    index.setdefault(f"{key_name}:{value}", []).append(rec)
+    return index
+
+
+def _reference_keys(row: dict[str, str]) -> list[str]:
+    ref = _safe(row.get("geometry_gold_task_id") or row.get("final_gold_ref"))
+    if not ref:
+        return []
+    if ":" in ref:
+        return [ref]
+    return [f"task_id:{ref}", f"base_task_id:{ref}"]
+
+
+def _annotation_count(rec: dict[str, Any]) -> int:
+    annotations = rec.get("annotations")
+    if isinstance(annotations, list):
+        return len(annotations)
+    return 1
+
+
+def _geometry_parseable(rec: dict[str, Any]) -> bool:
+    corners = rec.get("canonical_corners_norm")
+    if isinstance(corners, list) and corners:
+        for corner in corners:
+            if not isinstance(corner, dict):
+                return False
+            for key in ("x_pct", "y_top_pct", "y_bottom_pct"):
+                try:
+                    float(corner[key])
+                except (KeyError, TypeError, ValueError):
+                    return False
+        return True
+    pairs = rec.get("runtime_pairs_1024x512")
+    if isinstance(pairs, list) and pairs:
+        for pair in pairs:
+            if not isinstance(pair, dict):
+                return False
+            for key in ("x", "y_ceiling", "y_floor"):
+                try:
+                    float(pair[key])
+                except (KeyError, TypeError, ValueError):
+                    return False
+        return True
+    return False
+
+
+def _validation_status(row: dict[str, str], final_gold_index: dict[str, list[dict[str, Any]]]) -> str:
+    if _safe(row.get("task_final_scope")) in OOS_SCOPES | UNRESOLVED_SCOPES:
+        return "unresolved_reference"
+    keys = _reference_keys(row)
+    if not keys:
+        return "unresolved_reference"
+    matches: list[dict[str, Any]] = []
+    for key in keys:
+        matches.extend(final_gold_index.get(key, []))
+    if not matches:
+        return "missing_final_gold"
+    if len(matches) > 1:
+        return "duplicate_final_gold"
+    rec = matches[0]
+    if _annotation_count(rec) != 1 or not _geometry_parseable(rec):
+        return "invalid_final_gold_geometry"
+    return "final_gold_geometry_checked"
 
 
 def _reference_role(row: dict[str, str]) -> str:
@@ -104,12 +183,14 @@ def _forbidden_metric_field_count(rows: list[dict[str, Any]]) -> int:
     return sum(1 for row in rows for key in row if "score" in str(key).lower())
 
 
-def build_gold_status_audit(alignment_csv: Path) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+def build_gold_status_audit(alignment_csv: Path, final_gold_jsonl: Path | None = None) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     rows = _load_csv(alignment_csv)
+    final_gold_index = _load_final_gold(final_gold_jsonl)
     out: list[dict[str, Any]] = []
     for row in rows:
         role = _reference_role(row)
         alignment_status, undercoverage_status, ambiguity, reason, review = _status_tuple(row, role)
+        validation_status = _validation_status(row, final_gold_index)
         out.append(
             {
                 "task_id": _safe(row.get("task_id")),
@@ -129,6 +210,7 @@ def build_gold_status_audit(alignment_csv: Path) -> tuple[list[dict[str, Any]], 
                 "gold_status_for_undercoverage": undercoverage_status,
                 "gold_ambiguity_flag": ambiguity,
                 "gold_ambiguity_reason": reason,
+                "validation_status": validation_status,
                 "manual_review_required": review,
                 "dry_run": True,
                 "notes": "dry-run gold status sidecar only; no geometry scoring or worker materialization",
@@ -140,6 +222,7 @@ def build_gold_status_audit(alignment_csv: Path) -> tuple[list[dict[str, Any]], 
         "gold_reference_role_counts": dict(Counter(str(row["gold_reference_role"]) for row in out)),
         "gold_status_for_alignment_counts": dict(Counter(str(row["gold_status_for_alignment"]) for row in out)),
         "gold_status_for_undercoverage_counts": dict(Counter(str(row["gold_status_for_undercoverage"]) for row in out)),
+        "validation_status_counts": dict(Counter(str(row["validation_status"]) for row in out)),
         "gold_ambiguity_flag_count": sum(bool(row["gold_ambiguity_flag"]) for row in out),
         "manual_review_required_count": sum(bool(row["manual_review_required"]) for row in out),
         "forbidden_outputs_generated": False,
@@ -151,10 +234,11 @@ def build_gold_status_audit(alignment_csv: Path) -> tuple[list[dict[str, Any]], 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--alignment-csv", default=str(DEFAULT_ALIGNMENT))
+    parser.add_argument("--final-gold-jsonl", default=str(DEFAULT_FINAL_GOLD))
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
     args = parser.parse_args(argv)
 
-    rows, summary = build_gold_status_audit(Path(args.alignment_csv))
+    rows, summary = build_gold_status_audit(Path(args.alignment_csv), Path(args.final_gold_jsonl) if args.final_gold_jsonl else None)
     out_dir = Path(args.output_dir)
     audit_path = out_dir / "prescreen_gold_status_audit.csv"
     summary_path = out_dir / "prescreen_gold_status_summary.json"

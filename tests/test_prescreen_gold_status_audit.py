@@ -52,6 +52,24 @@ def _run(tmp_path: Path, rows: list[dict]):
     return build_gold_status_audit(alignment)
 
 
+def _gold(path: Path, rows: list[dict]) -> Path:
+    path.write_text("\n".join(json.dumps(row) for row in rows) + "\n", encoding="utf-8")
+    return path
+
+
+def _gold_record(task_id: str, *, base_task_id: str = "", corners: list[dict] | None = None, annotations: list[dict] | None = None) -> dict:
+    rec = {
+        "task_id": task_id,
+        "base_task_id": base_task_id,
+        "canonical_corners_norm": corners
+        if corners is not None
+        else [{"x_pct": 1.0, "y_top_pct": 2.0, "y_bottom_pct": 3.0}],
+    }
+    if annotations is not None:
+        rec["annotations"] = annotations
+    return rec
+
+
 def test_synthetic_source_gt_checked_is_ready_for_alignment_and_undercoverage(tmp_path: Path) -> None:
     rows, summary = _run(
         tmp_path,
@@ -87,6 +105,57 @@ def test_manual_final_gold_ref_only_requires_review(tmp_path: Path) -> None:
     assert row["gold_ambiguity_flag"] is True
     assert row["gold_ambiguity_reason"] == "final_gold_ref_only"
     assert row["manual_review_required"] is True
+
+
+def test_final_gold_reference_geometry_checked_by_task_id(tmp_path: Path) -> None:
+    alignment = _write_csv(tmp_path / "alignment.csv", [_alignment_row("manual", gold_task="task_id:462")])
+    final_gold = _gold(tmp_path / "gold.jsonl", [_gold_record("462")])
+
+    rows, _summary = build_gold_status_audit(alignment, final_gold)
+
+    assert rows[0]["validation_status"] == "final_gold_geometry_checked"
+
+
+def test_final_gold_reference_geometry_checked_by_base_task_id(tmp_path: Path) -> None:
+    alignment = _write_csv(tmp_path / "alignment.csv", [_alignment_row("manual", gold_task="base_task_id:base_1")])
+    final_gold = _gold(tmp_path / "gold.jsonl", [_gold_record("462", base_task_id="base_1")])
+
+    rows, _summary = build_gold_status_audit(alignment, final_gold)
+
+    assert rows[0]["validation_status"] == "final_gold_geometry_checked"
+
+
+def test_final_gold_reference_missing_duplicate_invalid_and_unresolved(tmp_path: Path) -> None:
+    alignment = _write_csv(
+        tmp_path / "alignment.csv",
+        [
+            _alignment_row("missing", gold_task="task_id:missing"),
+            _alignment_row("duplicate", gold_task="task_id:dup"),
+            _alignment_row("invalid_geometry", gold_task="task_id:bad_geom"),
+            _alignment_row("invalid_annotation_count", gold_task="task_id:bad_count"),
+            _alignment_row("unresolved", scope="unknown_gold", gold_task=""),
+        ],
+    )
+    final_gold = _gold(
+        tmp_path / "gold.jsonl",
+        [
+            _gold_record("dup"),
+            _gold_record("dup"),
+            _gold_record("bad_geom", corners=[]),
+            _gold_record("bad_count", annotations=[{"id": 1}, {"id": 2}]),
+        ],
+    )
+
+    rows, summary = build_gold_status_audit(alignment, final_gold)
+
+    assert [row["validation_status"] for row in rows] == [
+        "missing_final_gold",
+        "duplicate_final_gold",
+        "invalid_final_gold_geometry",
+        "invalid_final_gold_geometry",
+        "unresolved_reference",
+    ]
+    assert summary["validation_status_counts"]["invalid_final_gold_geometry"] == 2
 
 
 def test_oos_gold_status_is_not_applicable(tmp_path: Path) -> None:
@@ -165,9 +234,10 @@ def test_mirror_mismatch_is_ambiguous(tmp_path: Path) -> None:
 
 def test_cli_writes_only_gold_status_sidecar_outputs(tmp_path: Path) -> None:
     alignment = _write_csv(tmp_path / "alignment.csv", [_alignment_row("manual")])
+    final_gold = _gold(tmp_path / "gold.jsonl", [_gold_record("gold")])
     out = tmp_path / "out"
 
-    assert main(["--alignment-csv", str(alignment), "--output-dir", str(out)]) == 0
+    assert main(["--alignment-csv", str(alignment), "--final-gold-jsonl", str(final_gold), "--output-dir", str(out)]) == 0
 
     assert {p.name for p in out.iterdir()} == {
         "prescreen_gold_status_audit.csv",
