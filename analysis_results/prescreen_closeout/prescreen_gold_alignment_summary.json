@@ -1,0 +1,30 @@
+{
+  "dry_run": true,
+  "runtime_task_rows": 114,
+  "response_rows": 1346,
+  "base_image_count": 57,
+  "geometry_gold_status_counts": {
+    "ready": 96,
+    "not_applicable": 18
+  },
+  "geometry_evidence_role_counts": {
+    "manual_prescreen_candidate": 60,
+    "semi_condition_diagnostic": 24,
+    "semi_synthetic_trap_audit": 12,
+    "oos_excluded": 18
+  },
+  "geometry_scoring_role_counts": {
+    "manual_primary_candidate": 60,
+    "semi_aux_geometry_alignment": 24,
+    "semi_trap_audit": 12,
+    "oos_excluded": 18
+  },
+  "manual_anchor_possible_task_rows": 60,
+  "admission_anchor_possible_task_rows": 0,
+  "mirror_alignment_mismatch_count": 0,
+  "forbidden_metric_field_count": 0,
+  "forbidden_outputs_generated": false,
+  "geometry_gold_alignment_audit_csv": "analysis_results\\prescreen_closeout\\prescreen_geometry_gold_alignment_audit.csv",
+  "geometry_eligibility_audit_csv": "analysis_results\\prescreen_closeout\\prescreen_geometry_eligibility_audit.csv",
+  "gold_alignment_summary_json": "analysis_results\\prescreen_closeout\\prescreen_gold_alignment_summary.json"
+}
