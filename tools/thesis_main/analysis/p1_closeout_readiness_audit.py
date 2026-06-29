@@ -17,7 +17,9 @@ REQUIRED_ARTIFACTS = [
     "prescreen_scope_summary.json",
     "prescreen_scope_response_audit.csv",
     "prescreen_worker_scope_summary.csv",
+    "prescreen_geometry_gold_alignment_audit.csv",
     "prescreen_geometry_eligibility_audit.csv",
+    "prescreen_gold_alignment_summary.json",
 ]
 
 OPTIONAL_ARTIFACTS = [

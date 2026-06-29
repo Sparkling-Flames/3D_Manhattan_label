@@ -60,7 +60,9 @@ def _closeout_dir(tmp_path: Path, *, data_complete: bool = True, unknown_gold: i
     _write_csv(root / "prescreen_worker_roster.csv", [{"annotator_id": "1", "known_bad_or_process_risk": "False", "dropout": "False"}])
     _write_csv(root / "prescreen_scope_response_audit.csv", [{"task_id": "1", "dry_run": "True"}])
     _write_csv(root / "prescreen_worker_scope_summary.csv", [{"annotator_id": "1", "completion_status": "complete"}])
+    _write_csv(root / "prescreen_geometry_gold_alignment_audit.csv", [{"task_id": "1", "dry_run": "True"}])
     _write_csv(root / "prescreen_geometry_eligibility_audit.csv", [{"task_id": "1", "dry_run": "True"}])
+    _write_json(root / "prescreen_gold_alignment_summary.json", {"dry_run": True})
     return root
 
 
@@ -108,6 +110,21 @@ def test_required_artifacts_present_can_reach_review_without_formal_artifacts(tm
     assert summary["readiness_status"] == "ready_for_materialization_review"
     assert summary["formal_materialization_allowed"] is False
     assert summary["missing_required_artifacts"] == []
+
+
+def test_missing_step5_dry_run_outputs_block(tmp_path: Path) -> None:
+    root = _closeout_dir(tmp_path)
+    (root / "prescreen_geometry_gold_alignment_audit.csv").unlink()
+    (root / "prescreen_gold_alignment_summary.json").unlink()
+
+    summary = build_readiness_summary(root)
+
+    assert summary["readiness_status"] == "blocked"
+    assert "missing_required_dry_run_artifacts" in summary["blockers"]
+    assert set(summary["missing_required_artifacts"]) >= {
+        "prescreen_geometry_gold_alignment_audit.csv",
+        "prescreen_gold_alignment_summary.json",
+    }
 
 
 def test_pending_completion_blocks(tmp_path: Path) -> None:
