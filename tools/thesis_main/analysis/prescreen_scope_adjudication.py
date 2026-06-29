@@ -282,21 +282,7 @@ def _sha256(path: Path) -> str:
 def _validate_export_gt_manifest(manifest_path: Path | None, export_gt_path: Path | None) -> tuple[Path | None, dict[str, Any]]:
     if not manifest_path or not export_gt_path:
         return export_gt_path, {}
-    rows = _load_csv(manifest_path)
-    norm_export = _norm_manifest_path(export_gt_path)
-    matches = [row for row in rows if _norm_manifest_path(_safe(row.get("source_path"))) == norm_export]
-    if len(matches) != 1:
-        raise ValueError(f"expected one raw input manifest row for {export_gt_path}, found {len(matches)}")
-    row = matches[0]
-    snapshot = _manifest_path(_safe(row.get("snapshot_path")))
-    sha = _safe(row.get("sha256")).lower()
-    if not snapshot.exists():
-        raise ValueError(f"manifest snapshot does not exist for {export_gt_path}: {snapshot}")
-    if not sha:
-        raise ValueError(f"manifest sha256 missing for {export_gt_path}")
-    actual = _sha256(snapshot)
-    if actual.lower() != sha:
-        raise ValueError(f"manifest sha256 mismatch for {export_gt_path}: {sha} != {actual}")
+    snapshot, actual, row = _validate_manifest_snapshot(manifest_path, export_gt_path)
     evidence: dict[str, Any] = {"export_gt_snapshot_path": str(snapshot), "export_gt_sha256": actual}
     source = _manifest_path(_safe(row.get("source_path")))
     if source.exists():
@@ -306,13 +292,38 @@ def _validate_export_gt_manifest(manifest_path: Path | None, export_gt_path: Pat
     return snapshot, evidence
 
 
+def _validate_manifest_snapshot(manifest_path: Path, source_path: Path | str) -> tuple[Path, str, dict[str, str]]:
+    rows = _load_csv(manifest_path)
+    norm_export = _norm_manifest_path(source_path)
+    matches = [row for row in rows if _norm_manifest_path(_safe(row.get("source_path"))) == norm_export]
+    if len(matches) != 1:
+        raise ValueError(f"expected one raw input manifest row for {source_path}, found {len(matches)}")
+    row = matches[0]
+    snapshot = _manifest_path(_safe(row.get("snapshot_path")))
+    sha = _safe(row.get("sha256")).lower()
+    if not snapshot.exists():
+        raise ValueError(f"manifest snapshot does not exist for {source_path}: {snapshot}")
+    if not sha:
+        raise ValueError(f"manifest sha256 missing for {source_path}")
+    actual = _sha256(snapshot)
+    if actual.lower() != sha:
+        raise ValueError(f"manifest sha256 mismatch for {source_path}: {sha} != {actual}")
+    return snapshot, actual, row
+
+
 def _manifest_path(path: str | Path) -> Path:
-    p = Path(path)
-    return p if p.is_absolute() else _PROJECT_ROOT / p
+    text = _safe(path)
+    p = Path(text)
+    alt = Path(text.replace("\\", "/"))
+    if p.is_absolute():
+        return p
+    if alt.is_absolute():
+        return alt
+    return _PROJECT_ROOT / alt
 
 
 def _norm_manifest_path(path: str | Path) -> str:
-    return str(_manifest_path(path)).replace("/", "\\").lower()
+    return str(_manifest_path(str(path).replace("\\", "/"))).replace("\\", "/").rstrip("/").casefold()
 
 
 def _synthetic_geometry_gt_rows(
@@ -405,11 +416,20 @@ def _geometry_possible(scope: str) -> bool:
     return scope == "in_scope"
 
 
-def _load_export_details(canonical_rows: list[dict[str, str]]) -> tuple[dict[tuple[str, str, str], dict[str, Any]], dict[tuple[str, str, str, str], dict[str, Any]]]:
+def _load_export_details(
+    canonical_rows: list[dict[str, str]], raw_input_manifest_csv: Path | None = None
+) -> tuple[dict[tuple[str, str, str], dict[str, Any]], dict[tuple[str, str, str, str], dict[str, Any]], dict[str, Any]]:
     task_index: dict[tuple[str, str, str], dict[str, Any]] = {}
     ann_index: dict[tuple[str, str, str, str], dict[str, Any]] = {}
+    source_snapshot_mismatch = 0
     for export_path_text in sorted({_safe(row.get("source_export")) for row in canonical_rows if _safe(row.get("source_export"))}):
-        export_path = Path(export_path_text)
+        if raw_input_manifest_csv:
+            export_path, actual_sha, manifest_row = _validate_manifest_snapshot(raw_input_manifest_csv, export_path_text)
+            source = _manifest_path(_safe(manifest_row.get("source_path")))
+            if source.exists() and _sha256(source).lower() != actual_sha.lower():
+                source_snapshot_mismatch += 1
+        else:
+            export_path = Path(export_path_text)
         with export_path.open("r", encoding="utf-8") as f:
             tasks = json.load(f)
         for task in tasks:
@@ -420,7 +440,11 @@ def _load_export_details(canonical_rows: list[dict[str, str]]) -> tuple[dict[tup
             for idx, ann in enumerate(task.get("annotations") or [], start=1):
                 ann_id = _safe(ann.get("id")) or f"annotation_index_{idx}"
                 ann_index[(export_path_text, project_id, task_id, ann_id)] = ann
-    return task_index, ann_index
+    evidence = {
+        "source_export_snapshot_count": len({row.get("source_export") for row in canonical_rows if _safe(row.get("source_export"))}),
+        "source_export_source_snapshot_sha256_mismatch_count": source_snapshot_mismatch,
+    }
+    return task_index, ann_index, evidence
 
 
 def _task_data(task: dict[str, Any] | None) -> dict[str, Any]:
@@ -692,7 +716,7 @@ def build_scope_audits(
     synthetic_expert_review = _load_synthetic_expert_review(synthetic_expert_review_csv)
     export_gt_binding_path, export_gt_evidence = _validate_export_gt_manifest(raw_input_manifest_csv, export_gt_json)
     export_gt_by_title = _load_export_gt_by_title(export_gt_binding_path)
-    task_index, ann_index = _load_export_details(canonical_rows)
+    task_index, ann_index, source_export_evidence = _load_export_details(canonical_rows, raw_input_manifest_csv)
 
     task_groups: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
     parsed_rows: list[dict[str, Any]] = []
@@ -886,6 +910,7 @@ def build_scope_audits(
         "geometry_score_fields_present": _geometry_score_fields_present([task_rows, response_rows, synthetic_audit_rows, synthetic_geometry_rows]),
         "_synthetic_geometry_gt_rows": synthetic_geometry_rows,
         **export_gt_evidence,
+        **source_export_evidence,
         "runtime_task_rows": runtime_task_rows,
         "base_image_count": base_image_count,
         "language_mirror_note": "Chinese/English Label Studio mirrors count as separate runtime task rows; base_image_count deduplicates by base/source image key.",
@@ -937,6 +962,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--raw-input-manifest-csv", default=str(DEFAULT_RAW_INPUT_MANIFEST))
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
     args = parser.parse_args(argv)
+
+    if not args.raw_input_manifest_csv:
+        raise ValueError("raw input manifest required for Step4 CLI")
 
     out_dir = Path(args.output_dir)
     task_rows, response_rows, unknown_gold_rows, mixed_task_rows, worker_rows, synthetic_audit_rows, summary = build_scope_audits(

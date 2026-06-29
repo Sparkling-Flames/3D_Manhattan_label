@@ -20,6 +20,21 @@ from tools.thesis_main.analysis.audit_p1_exact_copy_low_time import canonical_ge
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
 
 DEFAULT_OUTPUT_DIR = Path("analysis_results/prescreen_closeout")
+DEFAULT_COMPLETION_BASIS = "current_partial_export_with_known_dropout_and_pending_completion"
+
+MANIFEST_FIELDS = [
+    "source_path",
+    "snapshot_path",
+    "exists",
+    "bytes",
+    "file_count",
+    "source_kind",
+    "snapshot_cutoff_at",
+    "data_complete",
+    "completion_basis",
+    "notes",
+    "sha256",
+]
 
 
 def _safe_str(value: Any, default: str = "") -> str:
@@ -248,10 +263,36 @@ def _sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def snapshot_inputs(paths: list[Path], output_dir: Path) -> Path:
+def _directory_sha256(root: Path, files: list[Path]) -> str:
+    h = hashlib.sha256()
+    for path in sorted(files, key=lambda p: p.relative_to(root).as_posix()):
+        rel = path.relative_to(root).as_posix()
+        digest = _sha256(path)
+        h.update(f"{rel}\0{path.stat().st_size}\0{digest}\n".encode("utf-8"))
+    return h.hexdigest()
+
+
+def _write_manifest_csv(path: Path, rows: list[dict[str, Any]]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", newline="", encoding="utf-8") as f:
+        writer = csv.DictWriter(f, fieldnames=MANIFEST_FIELDS)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def snapshot_inputs(
+    paths: list[Path],
+    output_dir: Path,
+    *,
+    snapshot_cutoff_at: str | None = None,
+    data_complete: bool = False,
+    completion_basis: str = DEFAULT_COMPLETION_BASIS,
+) -> Path:
     raw_dir = output_dir / "raw_inputs"
     raw_dir.mkdir(parents=True, exist_ok=True)
     manifest_rows = []
+    cutoff = snapshot_cutoff_at or datetime.now(timezone.utc).isoformat()
+    common = {"snapshot_cutoff_at": cutoff, "data_complete": str(data_complete).lower(), "completion_basis": completion_basis}
     for src in paths:
         source_kind = _source_kind(src)
         if not src.exists():
@@ -263,6 +304,7 @@ def snapshot_inputs(paths: list[Path], output_dir: Path) -> Path:
                     "bytes": "",
                     "file_count": "",
                     "source_kind": source_kind,
+                    **common,
                     "sha256": "",
                     "notes": _manifest_note(source_kind),
                 }
@@ -285,7 +327,8 @@ def snapshot_inputs(paths: list[Path], output_dir: Path) -> Path:
                     "bytes": sum(p.stat().st_size for p in files),
                     "file_count": len(files),
                     "source_kind": source_kind,
-                    "sha256": "",
+                    **common,
+                    "sha256": _directory_sha256(dst, files),
                     "notes": _manifest_note(source_kind),
                 }
             )
@@ -299,12 +342,13 @@ def snapshot_inputs(paths: list[Path], output_dir: Path) -> Path:
                     "bytes": dst.stat().st_size,
                     "file_count": 1,
                     "source_kind": source_kind,
+                    **common,
                     "sha256": _sha256(dst),
                     "notes": _manifest_note(source_kind),
                 }
             )
     manifest_path = raw_dir / "raw_input_snapshot_manifest.csv"
-    _write_csv(manifest_path, manifest_rows)
+    _write_manifest_csv(manifest_path, manifest_rows)
     return manifest_path
 
 
@@ -315,6 +359,8 @@ def _source_kind(path: Path) -> str:
         return "audit_control_input"
     if "active_logs" in text or name.startswith("active_times_"):
         return "raw_active_log_snapshot"
+    if name in {"groudtruth.json", "groundtruth.json"}:
+        return "reference_geometry_gt_snapshot"
     if "final_gold" in name:
         return "reference_gold_snapshot"
     if name.endswith(".json") and "export_label" in text:
@@ -327,8 +373,10 @@ def _manifest_note(source_kind: str) -> str:
         return "audit control input / fixed closeout contract, not a raw worker submission source"
     if source_kind == "raw_label_studio_export":
         return "raw Label Studio export snapshot; do not edit in closeout audit"
+    if source_kind == "reference_geometry_gt_snapshot":
+        return "read-only frozen geometry GT snapshot for synthetic/source geometry binding"
     if source_kind == "raw_active_log_snapshot":
-        return "directory snapshots use bytes/file_count here; single-file snapshots carry sha256"
+        return "active-log directory snapshot carries aggregate sha256 over copied files"
     return "raw/audit snapshot retained; primary eligibility decided in closeout audit layer"
 
 
@@ -339,6 +387,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
     parser.add_argument("--snapshot-input", action="append", default=[], help="Extra raw input to copy into raw_inputs.")
     parser.add_argument("--geometry-round-px", type=float, default=0.5)
+    parser.add_argument("--snapshot-cutoff-at", default=None)
+    parser.add_argument("--data-complete", action="store_true")
+    parser.add_argument("--completion-basis", default=DEFAULT_COMPLETION_BASIS)
     args = parser.parse_args(argv)
 
     output_dir = Path(args.output_dir)
@@ -352,7 +403,13 @@ def main(argv: list[str] | None = None) -> int:
     _write_csv(duplicate_path, duplicate)
 
     snapshot_paths = export_paths + ([active_log] if active_log else []) + [Path(p) for p in args.snapshot_input]
-    manifest_path = snapshot_inputs(snapshot_paths, output_dir)
+    manifest_path = snapshot_inputs(
+        snapshot_paths,
+        output_dir,
+        snapshot_cutoff_at=args.snapshot_cutoff_at,
+        data_complete=args.data_complete,
+        completion_basis=args.completion_basis,
+    )
     summary.update(
         {
             "created_at": datetime.now(timezone.utc).isoformat(),

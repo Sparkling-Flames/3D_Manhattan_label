@@ -7,7 +7,7 @@ from pathlib import Path
 
 from tools.thesis_main.analysis.prescreen_active_time_source_audit import build_active_time_source_audit
 from tools.thesis_main.analysis.prescreen_completion_audit import build_completion_audit, write_completion_audit
-from tools.thesis_main.analysis.prescreen_canonicalize_export import build_canonical_tables, snapshot_inputs
+from tools.thesis_main.analysis.prescreen_canonicalize_export import MANIFEST_FIELDS, build_canonical_tables, snapshot_inputs
 
 BASE_POINTS = [(10, 10), (10, 90), (50, 20), (50, 80)]
 DIFF_POINTS = [(15, 10), (15, 90), (55, 20), (55, 80)]
@@ -99,8 +99,11 @@ def test_snapshot_inputs_writes_sha256_for_regular_file(tmp_path: Path) -> None:
     rows = list(csv.DictReader(manifest.open("r", encoding="utf-8-sig", newline="")))
 
     snapshot = Path(rows[0]["snapshot_path"])
+    assert list(rows[0].keys()) == MANIFEST_FIELDS
     assert rows[0]["sha256"]
     assert rows[0]["sha256"] == hashlib.sha256(snapshot.read_bytes()).hexdigest()
+    assert rows[0]["data_complete"] == "false"
+    assert rows[0]["completion_basis"] == "current_partial_export_with_known_dropout_and_pending_completion"
 
 
 def test_snapshot_inputs_missing_source_has_empty_sha256_field(tmp_path: Path) -> None:
@@ -112,18 +115,34 @@ def test_snapshot_inputs_missing_source_has_empty_sha256_field(tmp_path: Path) -
     assert row["sha256"] == ""
 
 
-def test_snapshot_inputs_directory_has_sha256_field_without_single_file_digest(tmp_path: Path) -> None:
+def test_snapshot_inputs_directory_has_aggregate_sha256_that_changes_with_content(tmp_path: Path) -> None:
     source_dir = tmp_path / "active_logs"
     source_dir.mkdir()
     (source_dir / "active_times_2026.jsonl").write_text("{}\n", encoding="utf-8")
 
-    manifest = snapshot_inputs([source_dir], tmp_path / "out")
-    row = next(csv.DictReader(manifest.open("r", encoding="utf-8-sig", newline="")))
+    manifest1 = snapshot_inputs([source_dir], tmp_path / "out1")
+    row = next(csv.DictReader(manifest1.open("r", encoding="utf-8-sig", newline="")))
 
     assert row["exists"] == "True"
     assert row["file_count"] == "1"
     assert "sha256" in row
-    assert row["sha256"] == ""
+    assert row["sha256"]
+    (source_dir / "active_times_2026.jsonl").write_text('{"changed": true}\n', encoding="utf-8")
+    manifest2 = snapshot_inputs([source_dir], tmp_path / "out2")
+    changed = next(csv.DictReader(manifest2.open("r", encoding="utf-8-sig", newline="")))
+    assert changed["sha256"] != row["sha256"]
+
+
+def test_snapshot_inputs_marks_groudtruth_as_reference_geometry_gt(tmp_path: Path) -> None:
+    source = tmp_path / "export_label" / "groudTruth.json"
+    source.parent.mkdir()
+    source.write_text("[]", encoding="utf-8")
+
+    manifest = snapshot_inputs([source], tmp_path / "out")
+    row = next(csv.DictReader(manifest.open("r", encoding="utf-8-sig", newline="")))
+
+    assert row["source_kind"] == "reference_geometry_gt_snapshot"
+    assert "geometry GT" in row["notes"]
 
 
 def test_same_worker_task_duplicate_different_geometry_is_revision_audit(tmp_path: Path) -> None:

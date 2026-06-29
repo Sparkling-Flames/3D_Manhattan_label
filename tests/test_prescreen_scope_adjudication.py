@@ -281,22 +281,24 @@ def _export_gt(path: Path, rows: list[tuple[str, str, int]]) -> Path:
 def _export_gt_manifest(path: Path, source: Path, snapshot: Path) -> Path:
     return _write_csv(
         path,
-        [
-            {
-                "source_path": str(source),
-                "snapshot_path": str(snapshot),
-                "exists": "True",
-                "bytes": str(snapshot.stat().st_size),
-                "file_count": "1",
-                "source_kind": "reference_geometry_gt_snapshot",
-                "snapshot_cutoff_at": "test",
-                "data_complete": "false",
-                "completion_basis": "test",
-                "notes": "test snapshot",
-                "sha256": hashlib.sha256(snapshot.read_bytes()).hexdigest(),
-            }
-        ],
+        [_manifest_row(source, snapshot, "reference_geometry_gt_snapshot")],
     )
+
+
+def _manifest_row(source: Path, snapshot: Path, source_kind: str = "raw_label_studio_export") -> dict:
+    return {
+        "source_path": str(source),
+        "snapshot_path": str(snapshot),
+        "exists": "True",
+        "bytes": str(snapshot.stat().st_size),
+        "file_count": "1",
+        "source_kind": source_kind,
+        "snapshot_cutoff_at": "test",
+        "data_complete": "false",
+        "completion_basis": "test",
+        "notes": "test snapshot",
+        "sha256": hashlib.sha256(snapshot.read_bytes()).hexdigest(),
+    }
 
 
 def test_synthetic_task_binds_to_source_final_gold(tmp_path: Path) -> None:
@@ -426,7 +428,7 @@ def test_export_gt_binding_uses_manifest_snapshot_not_source(tmp_path: Path) -> 
     review = _synthetic_expert_review(tmp_path / "review.csv", runtime_task_id="1")
     source = _export_gt(tmp_path / "source_groudTruth.json", [("source_base", "source_task", 1)])
     snapshot = _export_gt(tmp_path / "snapshot_groudTruth.json", [("source_base", "snapshot_task", 1)])
-    manifest = _export_gt_manifest(tmp_path / "manifest.csv", source, snapshot)
+    manifest = _write_csv(tmp_path / "manifest.csv", [_manifest_row(export, export), _manifest_row(source, snapshot, "reference_geometry_gt_snapshot")])
 
     *_rest, summary = build_scope_audits(canonical, final_gold, completion, None, bank, review, source, manifest)
     row = summary["_synthetic_geometry_gt_rows"][0]
@@ -435,6 +437,113 @@ def test_export_gt_binding_uses_manifest_snapshot_not_source(tmp_path: Path) -> 
     assert summary["export_gt_snapshot_path"] == str(snapshot)
     assert summary["export_gt_sha256"] == hashlib.sha256(snapshot.read_bytes()).hexdigest()
     assert summary["export_gt_source_snapshot_sha256_match"] is False
+
+
+def test_scope_adjudication_reads_worker_scope_from_source_export_snapshot(tmp_path: Path) -> None:
+    source = tmp_path / "source_export.json"
+    snapshot = tmp_path / "snapshot_export.json"
+    source.write_text(json.dumps([_task("1", "fg_in", "normal", [_annotation("a1", "w1", "oos_geometry")])]), encoding="utf-8")
+    snapshot.write_text(json.dumps([_task("1", "fg_in", "normal", [_annotation("a1", "w1", "normal")])]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", source, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}])
+    manifest = _export_gt_manifest(tmp_path / "manifest.csv", source, snapshot)
+
+    _task_rows, response_rows, *_rest, summary = build_scope_audits(canonical, final_gold, completion, None, None, None, None, manifest)
+
+    assert response_rows[0]["worker_scope_response"] == "correct_in_scope"
+    assert summary["source_export_source_snapshot_sha256_mismatch_count"] == 1
+
+
+def test_source_export_manifest_sha256_mismatch_fails_closed(tmp_path: Path) -> None:
+    source = tmp_path / "source_export.json"
+    snapshot = tmp_path / "snapshot_export.json"
+    source.write_text(json.dumps([_task("1", "fg_in", "normal", [_annotation("a1", "w1", "normal")])]), encoding="utf-8")
+    snapshot.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", source, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}])
+    manifest = _write_csv(
+        tmp_path / "manifest.csv",
+        [
+            {
+                "source_path": str(source),
+                "snapshot_path": str(snapshot),
+                "exists": "True",
+                "bytes": str(snapshot.stat().st_size),
+                "file_count": "1",
+                "source_kind": "raw_label_studio_export",
+                "snapshot_cutoff_at": "test",
+                "data_complete": "false",
+                "completion_basis": "test",
+                "notes": "bad sha",
+                "sha256": "0" * 64,
+            }
+        ],
+    )
+
+    with pytest.raises(ValueError, match="sha256 mismatch"):
+        build_scope_audits(canonical, final_gold, completion, None, None, None, None, manifest)
+
+
+def test_duplicate_manifest_source_path_fails_closed(tmp_path: Path) -> None:
+    source = tmp_path / "source_export.json"
+    snapshot = tmp_path / "snapshot_export.json"
+    source.write_text(json.dumps([_task("1", "fg_in", "normal", [_annotation("a1", "w1", "normal")])]), encoding="utf-8")
+    snapshot.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
+    row = {
+        "source_path": str(source),
+        "snapshot_path": str(snapshot),
+        "exists": "True",
+        "bytes": str(snapshot.stat().st_size),
+        "file_count": "1",
+        "source_kind": "raw_label_studio_export",
+        "snapshot_cutoff_at": "test",
+        "data_complete": "false",
+        "completion_basis": "test",
+        "notes": "dup",
+        "sha256": hashlib.sha256(snapshot.read_bytes()).hexdigest(),
+    }
+    canonical = _canonical(tmp_path / "canonical.csv", source, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}])
+    manifest = _write_csv(tmp_path / "manifest.csv", [row, row])
+
+    with pytest.raises(ValueError, match="expected one raw input manifest row"):
+        build_scope_audits(canonical, final_gold, completion, None, None, None, None, manifest)
+
+
+def test_manifest_windows_style_paths_resolve_snapshot(tmp_path: Path) -> None:
+    source = tmp_path / "source_export.json"
+    snapshot = tmp_path / "snapshot_export.json"
+    source.write_text(json.dumps([_task("1", "fg_in", "normal", [_annotation("a1", "w1", "normal")])]), encoding="utf-8")
+    snapshot.write_text(source.read_text(encoding="utf-8"), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", source, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}])
+    manifest = _write_csv(
+        tmp_path / "manifest.csv",
+        [
+            {
+                "source_path": str(source).replace("/", "\\"),
+                "snapshot_path": str(snapshot).replace("/", "\\"),
+                "exists": "True",
+                "bytes": str(snapshot.stat().st_size),
+                "file_count": "1",
+                "source_kind": "raw_label_studio_export",
+                "snapshot_cutoff_at": "test",
+                "data_complete": "false",
+                "completion_basis": "test",
+                "notes": "windows style",
+                "sha256": hashlib.sha256(snapshot.read_bytes()).hexdigest(),
+            }
+        ],
+    )
+
+    task_rows, response_rows, *_rest = build_scope_audits(canonical, final_gold, completion, None, None, None, None, manifest)
+
+    assert task_rows[0]["task_final_scope"] == "in_scope"
+    assert response_rows[0]["worker_scope_response"] == "correct_in_scope"
 
 
 def test_scope_adjudication_accepts_canonicalize_generated_export_gt_manifest(tmp_path: Path) -> None:
@@ -459,7 +568,7 @@ def test_scope_adjudication_cli_only_writes_step4_outputs(tmp_path: Path) -> Non
     bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id, source_base_task_id="source_base")
     review = _synthetic_expert_review(tmp_path / "review.csv", runtime_task_id="1")
     gt = _export_gt(tmp_path / "groudTruth.json", [("source_base", "2752", 1)])
-    manifest = _export_gt_manifest(tmp_path / "manifest.csv", gt, gt)
+    manifest = snapshot_inputs([export, gt], tmp_path / "freeze")
     out = tmp_path / "out"
 
     assert (
@@ -498,6 +607,30 @@ def test_scope_adjudication_cli_only_writes_step4_outputs(tmp_path: Path) -> Non
         "prescreen_synthetic_geometry_gt_binding_audit.csv",
         "prescreen_scope_summary.json",
     }
+
+
+def test_scope_adjudication_cli_rejects_missing_raw_input_manifest(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_task("1", "fg_in", "normal", [_annotation("a1", "w1", "normal")])]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}])
+
+    with pytest.raises(ValueError, match="raw input manifest required"):
+        main(
+            [
+                "--canonical-csv",
+                str(canonical),
+                "--final-gold-jsonl",
+                str(final_gold),
+                "--completion-csv",
+                str(completion),
+                "--raw-input-manifest-csv",
+                "",
+                "--export-gt-json",
+                "",
+            ]
+        )
 
 
 def test_synthetic_geometry_gt_missing_duplicate_or_bad_annotation_count_is_audited(tmp_path: Path) -> None:
