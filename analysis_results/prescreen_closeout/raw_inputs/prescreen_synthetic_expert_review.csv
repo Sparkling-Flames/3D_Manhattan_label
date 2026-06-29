@@ -1,0 +1,7 @@
+runtime_task_id,mirror_task_id,base_image_key,planned_synthetic_family,expert_final_scope,scope_gold_ready,expert_realized_model_issue_primary,expert_realized_model_issue_secondary,trap_effective,planned_realized_mismatch,operator_validity_note
+3167,3095,7y3sRwLe3Va_92fb09a83f8949619b9dc5bda2855456,corner_drift,in_scope,true,over_parsing,corner_duplicate,true,true,原模型在非真实墙角处已有识别错误，重复点位于错误墙角附近；主类偏过度解析
+3168,3096,B6ByNegPMKs_75327de9719945aa8b893a6404667884,corner_drift,in_scope,true,corner_drift,,true,false,轻微角点漂移，trap 有效但较弱
+3169,3097,Z6MFQCViBuw_fbef2c9afec642c88d01cf09c90aec12,corner_duplicate,in_scope,true,corner_duplicate,,true,false,角点重复，trap 有效且匹配
+3170,3098,e9zR4mvMWw7_12c84e77f6564013a032220e8f9037e8,corner_duplicate,in_scope,true,corner_duplicate,,true,false,角点重复，trap 有效且匹配
+3171,3099,e9zR4mvMWw7_ac03b99e3f3642be80b4d24fde0af03a,over_parsing,in_scope,true,corner_duplicate,,true,true,计划为 over_parsing，但实际更像角点重复；过度解析 synthetic operator 在该样本上表现较弱
+3172,3100,q9vSo1VnCiC_a412536ff52747d3b078f66e764cf103,over_parsing,in_scope,true,corner_duplicate,,true,true,计划为 over_parsing，但实际更像角点重复；过度解析 synthetic operator 在该样本上表现较弱

@@ -292,6 +292,19 @@ def _validate_export_gt_manifest(manifest_path: Path | None, export_gt_path: Pat
     return snapshot, evidence
 
 
+def _validate_final_gold_manifest(manifest_path: Path | None, final_gold_path: Path) -> tuple[Path, dict[str, Any]]:
+    if not manifest_path:
+        raise ValueError("raw input manifest required for final_gold")
+    snapshot, actual, row = _validate_manifest_snapshot(manifest_path, final_gold_path)
+    evidence: dict[str, Any] = {"final_gold_snapshot_path": str(snapshot), "final_gold_sha256": actual}
+    source = _manifest_path(_safe(row.get("source_path")))
+    if source.exists():
+        source_sha = _sha256(source)
+        evidence["final_gold_source_sha256"] = source_sha
+        evidence["final_gold_source_snapshot_sha256_match"] = source_sha.lower() == actual.lower()
+    return snapshot, evidence
+
+
 def _validate_manifest_snapshot(manifest_path: Path, source_path: Path | str) -> tuple[Path, str, dict[str, str]]:
     rows = _load_csv(manifest_path)
     norm_export = _norm_manifest_path(source_path)
@@ -707,10 +720,19 @@ def build_scope_audits(
     synthetic_expert_review_csv: Path | None = None,
     export_gt_json: Path | None = None,
     raw_input_manifest_csv: Path | None = None,
+    *,
+    allow_unsafe_mutable_inputs_for_tests: bool = False,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+    if not raw_input_manifest_csv and not allow_unsafe_mutable_inputs_for_tests:
+        raise ValueError("raw input manifest required for Step4 closeout")
     canonical_rows = _load_csv(canonical_csv)
     completion = _load_completion(completion_csv)
-    final_gold_index = _load_final_gold(final_gold_jsonl)
+    final_gold_binding_path, final_gold_evidence = (
+        _validate_final_gold_manifest(raw_input_manifest_csv, final_gold_jsonl)
+        if raw_input_manifest_csv
+        else (final_gold_jsonl, {})
+    )
+    final_gold_index = _load_final_gold(final_gold_binding_path)
     unknown_gold_allowlist = _load_unknown_gold_allowlist(unknown_gold_allowlist_csv)
     synthetic_bank = _load_synthetic_bank(synthetic_bank_jsonl)
     synthetic_expert_review = _load_synthetic_expert_review(synthetic_expert_review_csv)
@@ -910,6 +932,7 @@ def build_scope_audits(
         "geometry_score_fields_present": _geometry_score_fields_present([task_rows, response_rows, synthetic_audit_rows, synthetic_geometry_rows]),
         "_synthetic_geometry_gt_rows": synthetic_geometry_rows,
         **export_gt_evidence,
+        **final_gold_evidence,
         **source_export_evidence,
         "runtime_task_rows": runtime_task_rows,
         "base_image_count": base_image_count,

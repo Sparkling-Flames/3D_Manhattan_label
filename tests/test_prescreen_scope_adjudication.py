@@ -8,7 +8,12 @@ from pathlib import Path
 import pytest
 
 from tools.thesis_main.analysis.prescreen_canonicalize_export import snapshot_inputs
-from tools.thesis_main.analysis.prescreen_scope_adjudication import _validate_export_gt_manifest, build_scope_audits, main
+from tools.thesis_main.analysis.prescreen_scope_adjudication import _validate_export_gt_manifest, build_scope_audits as _build_scope_audits, main
+
+
+def build_scope_audits(*args, **kwargs):
+    kwargs.setdefault("allow_unsafe_mutable_inputs_for_tests", True)
+    return _build_scope_audits(*args, **kwargs)
 
 
 def _choice(scope: str | None) -> list[dict]:
@@ -428,7 +433,10 @@ def test_export_gt_binding_uses_manifest_snapshot_not_source(tmp_path: Path) -> 
     review = _synthetic_expert_review(tmp_path / "review.csv", runtime_task_id="1")
     source = _export_gt(tmp_path / "source_groudTruth.json", [("source_base", "source_task", 1)])
     snapshot = _export_gt(tmp_path / "snapshot_groudTruth.json", [("source_base", "snapshot_task", 1)])
-    manifest = _write_csv(tmp_path / "manifest.csv", [_manifest_row(export, export), _manifest_row(source, snapshot, "reference_geometry_gt_snapshot")])
+    manifest = _write_csv(
+        tmp_path / "manifest.csv",
+        [_manifest_row(export, export), _manifest_row(final_gold, final_gold, "reference_gold_snapshot"), _manifest_row(source, snapshot, "reference_geometry_gt_snapshot")],
+    )
 
     *_rest, summary = build_scope_audits(canonical, final_gold, completion, None, bank, review, source, manifest)
     row = summary["_synthetic_geometry_gt_rows"][0]
@@ -447,12 +455,69 @@ def test_scope_adjudication_reads_worker_scope_from_source_export_snapshot(tmp_p
     canonical = _canonical(tmp_path / "canonical.csv", source, [("1", "w1", "a1")])
     completion = _completion(tmp_path / "completion.csv", ["w1"])
     final_gold = _gold(tmp_path / "gold.jsonl", [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}])
-    manifest = _export_gt_manifest(tmp_path / "manifest.csv", source, snapshot)
+    manifest = _write_csv(tmp_path / "manifest.csv", [_manifest_row(source, snapshot), _manifest_row(final_gold, final_gold, "reference_gold_snapshot")])
 
     _task_rows, response_rows, *_rest, summary = build_scope_audits(canonical, final_gold, completion, None, None, None, None, manifest)
 
     assert response_rows[0]["worker_scope_response"] == "correct_in_scope"
     assert summary["source_export_source_snapshot_sha256_mismatch_count"] == 1
+
+
+def test_scope_adjudication_reads_final_gold_from_manifest_snapshot(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_task("1", "fg_in", "normal", [_annotation("a1", "w1", "normal")])]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    source_gold = _gold(tmp_path / "source_gold.jsonl", [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "oos_geometry", "final_scope_binary": "oos"}])
+    snapshot_gold = _gold(tmp_path / "snapshot_gold.jsonl", [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}])
+    manifest = _write_csv(tmp_path / "manifest.csv", [_manifest_row(export, export), _manifest_row(source_gold, snapshot_gold, "reference_gold_snapshot")])
+
+    task_rows, _response_rows, *_rest, summary = _build_scope_audits(canonical, source_gold, completion, None, None, None, None, manifest)
+
+    assert task_rows[0]["task_final_scope"] == "in_scope"
+    assert summary["final_gold_snapshot_path"] == str(snapshot_gold)
+    assert summary["final_gold_source_snapshot_sha256_match"] is False
+
+
+def test_final_gold_manifest_sha256_mismatch_fails_closed(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_task("1", "fg_in", "normal", [_annotation("a1", "w1", "normal")])]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}])
+    bad = _manifest_row(final_gold, final_gold, "reference_gold_snapshot")
+    bad["sha256"] = "0" * 64
+    manifest = _write_csv(tmp_path / "manifest.csv", [_manifest_row(export, export), bad])
+
+    with pytest.raises(ValueError, match="sha256 mismatch"):
+        _build_scope_audits(canonical, final_gold, completion, None, None, None, None, manifest)
+
+
+def test_duplicate_final_gold_manifest_row_fails_closed(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_task("1", "fg_in", "normal", [_annotation("a1", "w1", "normal")])]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}])
+    row = _manifest_row(final_gold, final_gold, "reference_gold_snapshot")
+    manifest = _write_csv(tmp_path / "manifest.csv", [_manifest_row(export, export), row, row])
+
+    with pytest.raises(ValueError, match="expected one raw input manifest row"):
+        _build_scope_audits(canonical, final_gold, completion, None, None, None, None, manifest)
+
+
+def test_build_scope_audits_requires_manifest_by_default_but_allows_explicit_unsafe_tests(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_task("1", "fg_in", "normal", [_annotation("a1", "w1", "normal")])]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", export, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(tmp_path / "gold.jsonl", [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}])
+
+    with pytest.raises(ValueError, match="raw input manifest required"):
+        _build_scope_audits(canonical, final_gold, completion)
+
+    task_rows, *_rest = _build_scope_audits(canonical, final_gold, completion, allow_unsafe_mutable_inputs_for_tests=True)
+    assert task_rows[0]["task_final_scope"] == "in_scope"
 
 
 def test_source_export_manifest_sha256_mismatch_fails_closed(tmp_path: Path) -> None:
@@ -466,6 +531,7 @@ def test_source_export_manifest_sha256_mismatch_fails_closed(tmp_path: Path) -> 
     manifest = _write_csv(
         tmp_path / "manifest.csv",
         [
+            _manifest_row(final_gold, final_gold, "reference_gold_snapshot"),
             {
                 "source_path": str(source),
                 "snapshot_path": str(snapshot),
@@ -507,7 +573,7 @@ def test_duplicate_manifest_source_path_fails_closed(tmp_path: Path) -> None:
     canonical = _canonical(tmp_path / "canonical.csv", source, [("1", "w1", "a1")])
     completion = _completion(tmp_path / "completion.csv", ["w1"])
     final_gold = _gold(tmp_path / "gold.jsonl", [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}])
-    manifest = _write_csv(tmp_path / "manifest.csv", [row, row])
+    manifest = _write_csv(tmp_path / "manifest.csv", [_manifest_row(final_gold, final_gold, "reference_gold_snapshot"), row, row])
 
     with pytest.raises(ValueError, match="expected one raw input manifest row"):
         build_scope_audits(canonical, final_gold, completion, None, None, None, None, manifest)
@@ -524,6 +590,7 @@ def test_manifest_windows_style_paths_resolve_snapshot(tmp_path: Path) -> None:
     manifest = _write_csv(
         tmp_path / "manifest.csv",
         [
+            _manifest_row(final_gold, final_gold, "reference_gold_snapshot"),
             {
                 "source_path": str(source).replace("/", "\\"),
                 "snapshot_path": str(snapshot).replace("/", "\\"),
@@ -568,7 +635,7 @@ def test_scope_adjudication_cli_only_writes_step4_outputs(tmp_path: Path) -> Non
     bank = _synthetic_bank(tmp_path / "bank.jsonl", candidate_id, source_base_task_id="source_base")
     review = _synthetic_expert_review(tmp_path / "review.csv", runtime_task_id="1")
     gt = _export_gt(tmp_path / "groudTruth.json", [("source_base", "2752", 1)])
-    manifest = snapshot_inputs([export, gt], tmp_path / "freeze")
+    manifest = snapshot_inputs([export, final_gold, gt], tmp_path / "freeze")
     out = tmp_path / "out"
 
     assert (
@@ -856,6 +923,8 @@ def test_export_gt_manifest_missing_sha256_fails(tmp_path: Path) -> None:
     manifest = _write_csv(
         tmp_path / "manifest.csv",
         [
+            _manifest_row(export, export),
+            _manifest_row(final_gold, final_gold, "reference_gold_snapshot"),
             {
                 "source_path": str(gt),
                 "snapshot_path": str(gt),
