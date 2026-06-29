@@ -240,6 +240,14 @@ def _write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
         writer.writerows(rows)
 
 
+def _sha256(path: Path) -> str:
+    h = hashlib.sha256()
+    with path.open("rb") as f:
+        for chunk in iter(lambda: f.read(1024 * 1024), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
 def snapshot_inputs(paths: list[Path], output_dir: Path) -> Path:
     raw_dir = output_dir / "raw_inputs"
     raw_dir.mkdir(parents=True, exist_ok=True)
@@ -255,6 +263,7 @@ def snapshot_inputs(paths: list[Path], output_dir: Path) -> Path:
                     "bytes": "",
                     "file_count": "",
                     "source_kind": source_kind,
+                    "sha256": "",
                     "notes": _manifest_note(source_kind),
                 }
             )
@@ -276,6 +285,7 @@ def snapshot_inputs(paths: list[Path], output_dir: Path) -> Path:
                     "bytes": sum(p.stat().st_size for p in files),
                     "file_count": len(files),
                     "source_kind": source_kind,
+                    "sha256": "",
                     "notes": _manifest_note(source_kind),
                 }
             )
@@ -289,6 +299,7 @@ def snapshot_inputs(paths: list[Path], output_dir: Path) -> Path:
                     "bytes": dst.stat().st_size,
                     "file_count": 1,
                     "source_kind": source_kind,
+                    "sha256": _sha256(dst),
                     "notes": _manifest_note(source_kind),
                 }
             )
@@ -316,6 +327,8 @@ def _manifest_note(source_kind: str) -> str:
         return "audit control input / fixed closeout contract, not a raw worker submission source"
     if source_kind == "raw_label_studio_export":
         return "raw Label Studio export snapshot; do not edit in closeout audit"
+    if source_kind == "raw_active_log_snapshot":
+        return "directory snapshots use bytes/file_count here; single-file snapshots carry sha256"
     return "raw/audit snapshot retained; primary eligibility decided in closeout audit layer"
 
 

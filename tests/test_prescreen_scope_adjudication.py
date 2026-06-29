@@ -7,7 +7,8 @@ from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.prescreen_scope_adjudication import build_scope_audits, main
+from tools.thesis_main.analysis.prescreen_canonicalize_export import snapshot_inputs
+from tools.thesis_main.analysis.prescreen_scope_adjudication import _validate_export_gt_manifest, build_scope_audits, main
 
 
 def _choice(scope: str | None) -> list[dict]:
@@ -434,6 +435,18 @@ def test_export_gt_binding_uses_manifest_snapshot_not_source(tmp_path: Path) -> 
     assert summary["export_gt_snapshot_path"] == str(snapshot)
     assert summary["export_gt_sha256"] == hashlib.sha256(snapshot.read_bytes()).hexdigest()
     assert summary["export_gt_source_snapshot_sha256_match"] is False
+
+
+def test_scope_adjudication_accepts_canonicalize_generated_export_gt_manifest(tmp_path: Path) -> None:
+    gt = _export_gt(tmp_path / "groudTruth.json", [("source_base", "2752", 1)])
+    manifest = snapshot_inputs([gt], tmp_path / "out")
+
+    snapshot, evidence = _validate_export_gt_manifest(manifest, gt)
+
+    assert snapshot is not None
+    assert snapshot != gt
+    assert evidence["export_gt_snapshot_path"] == str(snapshot)
+    assert evidence["export_gt_sha256"] == hashlib.sha256(snapshot.read_bytes()).hexdigest()
 
 
 def test_scope_adjudication_cli_only_writes_step4_outputs(tmp_path: Path) -> None:

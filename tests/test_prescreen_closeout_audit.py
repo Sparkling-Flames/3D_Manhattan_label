@@ -1,11 +1,13 @@
 from __future__ import annotations
 
 import json
+import csv
+import hashlib
 from pathlib import Path
 
 from tools.thesis_main.analysis.prescreen_active_time_source_audit import build_active_time_source_audit
 from tools.thesis_main.analysis.prescreen_completion_audit import build_completion_audit, write_completion_audit
-from tools.thesis_main.analysis.prescreen_canonicalize_export import build_canonical_tables
+from tools.thesis_main.analysis.prescreen_canonicalize_export import build_canonical_tables, snapshot_inputs
 
 BASE_POINTS = [(10, 10), (10, 90), (50, 20), (50, 80)]
 DIFF_POINTS = [(15, 10), (15, 90), (55, 20), (55, 80)]
@@ -87,6 +89,41 @@ def test_same_worker_task_duplicate_same_geometry_becomes_one_canonical_row(tmp_
     assert canonical[0]["duplicate_geometry_type"] == "duplicate_same_geometry"
     assert canonical[0]["lead_time_seconds"] == "20.0"
     assert duplicate[0]["lead_time_policy"] == "canonical_only_not_summed"
+
+
+def test_snapshot_inputs_writes_sha256_for_regular_file(tmp_path: Path) -> None:
+    source = tmp_path / "export.json"
+    source.write_text('{"ok": true}', encoding="utf-8")
+
+    manifest = snapshot_inputs([source], tmp_path / "out")
+    rows = list(csv.DictReader(manifest.open("r", encoding="utf-8-sig", newline="")))
+
+    snapshot = Path(rows[0]["snapshot_path"])
+    assert rows[0]["sha256"]
+    assert rows[0]["sha256"] == hashlib.sha256(snapshot.read_bytes()).hexdigest()
+
+
+def test_snapshot_inputs_missing_source_has_empty_sha256_field(tmp_path: Path) -> None:
+    manifest = snapshot_inputs([tmp_path / "missing.json"], tmp_path / "out")
+    row = next(csv.DictReader(manifest.open("r", encoding="utf-8-sig", newline="")))
+
+    assert row["exists"] == "False"
+    assert "sha256" in row
+    assert row["sha256"] == ""
+
+
+def test_snapshot_inputs_directory_has_sha256_field_without_single_file_digest(tmp_path: Path) -> None:
+    source_dir = tmp_path / "active_logs"
+    source_dir.mkdir()
+    (source_dir / "active_times_2026.jsonl").write_text("{}\n", encoding="utf-8")
+
+    manifest = snapshot_inputs([source_dir], tmp_path / "out")
+    row = next(csv.DictReader(manifest.open("r", encoding="utf-8-sig", newline="")))
+
+    assert row["exists"] == "True"
+    assert row["file_count"] == "1"
+    assert "sha256" in row
+    assert row["sha256"] == ""
 
 
 def test_same_worker_task_duplicate_different_geometry_is_revision_audit(tmp_path: Path) -> None:
