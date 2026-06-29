@@ -1,0 +1,38 @@
+{
+  "dry_run": true,
+  "formal_materialization_allowed": false,
+  "data_complete": false,
+  "completion_basis": "current_partial_export_with_known_dropout_and_pending_completion",
+  "base_image_count": 57,
+  "runtime_task_rows": 114,
+  "worker_completion_status_counts": {
+    "pending_completion": 3,
+    "complete": 20,
+    "dropout_no_future": 3,
+    "known_bad_complete": 2,
+    "incomplete_excluded": 1
+  },
+  "known_bad_or_process_risk_count": 3,
+  "dropout_count": 3,
+  "pending_completion_count": 3,
+  "incomplete_excluded_count": 1,
+  "unknown_gold_count": 0,
+  "unknown_gold_allowlisted_count": 0,
+  "mixed_scope_count": 71,
+  "source_export_snapshot_count": 6,
+  "final_gold_source_snapshot_sha256_match": true,
+  "export_gt_source_snapshot_sha256_match": true,
+  "source_export_source_snapshot_sha256_mismatch_count": 0,
+  "geometry_score_fields_present": false,
+  "forbidden_artifact_count": 0,
+  "forbidden_artifacts": [],
+  "missing_required_artifacts": [],
+  "missing_optional_artifacts": [],
+  "optional_audit_status": "available",
+  "screening_status": "provisional_dry_run",
+  "readiness_status": "blocked",
+  "blockers": [
+    "data_complete_false",
+    "pending_completion_present"
+  ]
+}

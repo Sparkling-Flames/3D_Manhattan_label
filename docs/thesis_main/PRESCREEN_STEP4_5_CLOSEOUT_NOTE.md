@@ -39,6 +39,10 @@ Only these dry-run files are allowed:
 
 Do not generate geometry score, admission, `r0`, `r_u`, `wmax`, `w_max`, routing, C1 handoff, or worker reliability profile artifacts from Step 4-5 dry-run.
 
+## Readiness Gate
+
+`tools/thesis_main/analysis/p1_closeout_readiness_audit.py` is a dry-run readiness gate before any formal P1 materialization. It reports blockers from existing closeout artifacts; it is not a formal P1 output, admission decision, reliability estimate, routing input, or C1 handoff.
+
 ## Next Freeze Point
 
 After Stage 1 annotation is complete, freeze raw inputs again, update the raw input manifest, and rerun Step 1-5 from the frozen snapshot chain before any formal analysis or downstream materialization.
