@@ -1,5 +1,10 @@
 {
   "dry_run": true,
+  "screening_status": "provisional_dry_run",
+  "final_stage1_closeout_ready": false,
+  "stage2_roster_use": "manual_review_allowed_but_not_formal_admission",
+  "active_time_input_status": "stale_or_not_final",
+  "completion_input_status": "pending_workers_present",
   "worker_rows": 29,
   "screening_recommendation_counts": {
     "hold_pending_completion": 3,
@@ -15,6 +20,20 @@
   },
   "optional_exact_copy_summary_missing": true,
   "copy_risk_evaluation_status": "not_evaluated_missing_optional_input",
+  "pending_completion_worker_count": 3,
+  "pending_completion_worker_ids": [
+    "1",
+    "2",
+    "18"
+  ],
+  "dropout_or_incomplete_excluded_count": 4,
+  "known_bad_or_process_risk_count": 3,
+  "manual_process_exclusion_count": 1,
+  "manual_process_exclusion_ids": [
+    "21"
+  ],
+  "manual_process_exclusion_basis": "manual_process_risk_override_not_algorithmic_copy_detection",
+  "forbidden_materialization_status": "not_generated",
   "undercoverage_manual_review_rule": {
     "high_count_gte": 2,
     "high_rate_gte": 0.2

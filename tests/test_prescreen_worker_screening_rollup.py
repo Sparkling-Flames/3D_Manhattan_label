@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import csv
+import json
 from pathlib import Path
 
 from tools.thesis_main.analysis.prescreen_worker_screening_rollup import build_worker_screening_rollup, main
@@ -14,14 +15,16 @@ def _csv(path: Path, rows: list[dict]) -> Path:
     return path
 
 
-def _completion(aid: str, status: str = "complete", eligible: str = "True") -> dict:
+def _completion(aid: str, status: str = "complete", eligible: str = "True", known_bad: str = "False", notes: str = "") -> dict:
     return {
         "annotator_id": aid,
         "completion_status": status,
         "eligible_for_primary_prescreen_candidate": eligible,
+        "known_bad_or_process_risk": known_bad,
         "total_expected": "10",
         "total_observed": "10" if status == "complete" else "5",
         "total_missing": "0" if status == "complete" else "5",
+        "notes": notes,
     }
 
 
@@ -62,9 +65,12 @@ def test_complete_clean_worker_continue_candidate(tmp_path: Path) -> None:
 
 
 def test_pending_worker_hold_pending_completion(tmp_path: Path) -> None:
-    rows, _summary = _run(tmp_path, [_completion("w1", "pending_completion", "False")])
+    rows, summary = _run(tmp_path, [_completion("w1", "pending_completion", "False")])
 
     assert rows[0]["screening_recommendation"] == "hold_pending_completion"
+    assert summary["final_stage1_closeout_ready"] is False
+    assert summary["completion_input_status"] == "pending_workers_present"
+    assert summary["pending_completion_worker_ids"] == ["w1"]
 
 
 def test_known_bad_or_incomplete_excluded_process_risk(tmp_path: Path) -> None:
@@ -72,6 +78,28 @@ def test_known_bad_or_incomplete_excluded_process_risk(tmp_path: Path) -> None:
 
     assert rows[0]["screening_recommendation"] == "exclude_process_risk"
     assert rows[0]["evidence_tier"] == "process_risk"
+
+
+def test_manual_process_exclusion_is_provisional_override_not_algorithmic_copy_detection(tmp_path: Path) -> None:
+    rows, summary = _run(
+        tmp_path,
+        [
+            _completion(
+                "21",
+                "known_bad_complete",
+                "False",
+                "True",
+                "confirmed process-risk / suspected copied annotation / manually excluded before Stage 2",
+            )
+        ],
+    )
+
+    assert rows[0]["screening_recommendation"] == "exclude_process_risk"
+    assert summary["screening_status"] == "provisional_dry_run"
+    assert summary["manual_process_exclusion_count"] == 1
+    assert summary["manual_process_exclusion_ids"] == ["21"]
+    assert summary["manual_process_exclusion_basis"] == "manual_process_risk_override_not_algorithmic_copy_detection"
+    assert summary["copy_risk_evaluation_status"] == "not_evaluated_missing_optional_input"
 
 
 def test_exact_copy_fail_recommended_excludes_process_risk(tmp_path: Path) -> None:
@@ -149,3 +177,6 @@ def test_cli_writes_only_worker_screening_sidecars(tmp_path: Path) -> None:
     assert not any(any(token in p.name.lower() for token in ("geometry_score", "admission", "reject", "r0", "r_u", "wmax", "routing", "c1", "handoff", "reliability")) for p in out.iterdir())
     rows = list(csv.DictReader((out / "prescreen_worker_screening_rollup.csv").open(encoding="utf-8-sig")))
     assert not any("score" in key.lower() for row in rows for key in row)
+    summary = json.loads((out / "prescreen_worker_screening_summary.json").read_text(encoding="utf-8"))
+    assert summary["screening_status"] == "provisional_dry_run"
+    assert summary["forbidden_materialization_status"] == "not_generated"

@@ -114,6 +114,19 @@ def _evidence_tier(row: dict[str, Any]) -> str:
     return "review_only"
 
 
+def _manual_process_exclusion_ids(completion: list[dict[str, str]]) -> list[str]:
+    ids = []
+    for row in completion:
+        notes = _safe(row.get("notes")).lower()
+        if (
+            _truthy(row.get("known_bad_or_process_risk"))
+            and not _truthy(row.get("eligible_for_primary_prescreen_candidate"))
+            and ("manually excluded" in notes or "manual process" in notes or "confirmed process-risk" in notes)
+        ):
+            ids.append(_safe(row.get("annotator_id")))
+    return sorted(ids, key=lambda x: int(x) if x.isdigit() else x)
+
+
 def build_worker_screening_rollup(
     completion_csv: Path,
     active_time_csv: Path,
@@ -200,11 +213,30 @@ def build_worker_screening_rollup(
         out.append(row)
     summary = {
         "dry_run": True,
+        "screening_status": "provisional_dry_run",
+        "final_stage1_closeout_ready": False,
+        "stage2_roster_use": "manual_review_allowed_but_not_formal_admission",
+        "active_time_input_status": "stale_or_not_final",
+        "completion_input_status": "pending_workers_present"
+        if any(_safe(row.get("completion_status")) == "pending_completion" for row in completion)
+        else "no_pending_workers_in_current_completion_audit",
         "worker_rows": len(out),
         "screening_recommendation_counts": dict(Counter(str(row["screening_recommendation"]) for row in out)),
         "evidence_tier_counts": dict(Counter(str(row["evidence_tier"]) for row in out)),
         "optional_exact_copy_summary_missing": exact_missing,
         "copy_risk_evaluation_status": "not_evaluated_missing_optional_input" if exact_missing else "evaluated",
+        "pending_completion_worker_count": sum(_safe(row.get("completion_status")) == "pending_completion" for row in completion),
+        "pending_completion_worker_ids": [
+            _safe(row.get("annotator_id")) for row in completion if _safe(row.get("completion_status")) == "pending_completion"
+        ],
+        "dropout_or_incomplete_excluded_count": sum(
+            _safe(row.get("completion_status")) in {"dropout_no_future", "incomplete_excluded"} for row in completion
+        ),
+        "known_bad_or_process_risk_count": sum(_truthy(row.get("known_bad_or_process_risk")) for row in completion),
+        "manual_process_exclusion_count": len(_manual_process_exclusion_ids(completion)),
+        "manual_process_exclusion_ids": _manual_process_exclusion_ids(completion),
+        "manual_process_exclusion_basis": "manual_process_risk_override_not_algorithmic_copy_detection",
+        "forbidden_materialization_status": "not_generated",
         "undercoverage_manual_review_rule": {"high_count_gte": HIGH_REVIEW_MIN_COUNT, "high_rate_gte": HIGH_REVIEW_RATE},
         "forbidden_outputs_generated": False,
         "forbidden_metric_field_count": sum(1 for row in out for key in row if "score" in key.lower()),
