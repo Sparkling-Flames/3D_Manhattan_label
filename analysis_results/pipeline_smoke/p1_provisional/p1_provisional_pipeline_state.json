@@ -1,0 +1,24 @@
+{
+  "dry_run": true,
+  "provisional_only": true,
+  "data_complete": false,
+  "formal_materialization_allowed": false,
+  "smoke_pipeline_allowed": true,
+  "readiness_status": "blocked",
+  "readiness_blockers": [
+    "data_complete_false",
+    "pending_completion_present"
+  ],
+  "pending_completion_count": 3,
+  "pending_worker_ids": [
+    "1",
+    "2",
+    "18"
+  ],
+  "unknown_gold_count": 0,
+  "forbidden_artifact_count": 0,
+  "geometry_score_fields_present": false,
+  "missing_required_artifacts": [],
+  "not_for_thesis_claim": true,
+  "notes": "script integration smoke test only; blocked readiness still forbids formal P1 materialization"
+}
