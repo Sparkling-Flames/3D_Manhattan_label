@@ -15,7 +15,7 @@ annotator_id,completion_status,eligible_for_primary_prescreen_candidate,n_expect
 17,complete,True,57,57,0,1,0,0,0,,45,3,5,27,48,1,2,1,4,continue_candidate,warning_manual_review_candidate_single_high_undercoverage,geometry_risk,True,"dry-run screening rollup only; no admission, rejection, or reliability profile"
 18,pending_completion,False,57,27,30,1,0,0,0,,18,0,5,0,18,0,0,0,0,hold_pending_completion,pending_completion,review_only,True,"dry-run screening rollup only; no admission, rejection, or reliability profile"
 19,known_bad_complete,False,57,57,0,0,0,0,0,,45,3,1,0,48,8,6,0,4,exclude_process_risk,completion_or_process_risk,process_risk,True,"dry-run screening rollup only; no admission, rejection, or reliability profile"
-21,complete,True,57,57,0,1,0,0,0,,43,5,3,26,48,2,0,1,4,manual_review,high_undercoverage_review,geometry_risk,True,"dry-run screening rollup only; no admission, rejection, or reliability profile"
+21,known_bad_complete,False,57,57,0,1,0,0,0,,43,5,3,26,48,2,0,1,4,exclude_process_risk,completion_or_process_risk,process_risk,True,"dry-run screening rollup only; no admission, rejection, or reliability profile"
 26,incomplete_excluded,False,57,56,1,0,0,0,0,,24,23,7,0,22,1,1,1,1,exclude_process_risk,completion_or_process_risk,process_risk,True,"dry-run screening rollup only; no admission, rejection, or reliability profile"
 27,complete,True,57,57,0,1,0,0,0,,48,0,0,30,48,0,0,2,2,continue_candidate,protected_full_room_candidate,protected_full_room,True,"dry-run screening rollup only; no admission, rejection, or reliability profile"
 28,complete,True,57,57,0,1,0,0,0,,34,14,5,22,48,3,2,0,2,manual_review,high_undercoverage_review,geometry_risk,True,"dry-run screening rollup only; no admission, rejection, or reliability profile"

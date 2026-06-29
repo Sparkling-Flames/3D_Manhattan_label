@@ -378,10 +378,14 @@ def test_fixed_closeout_roster_status_summary_matches_expected_counts() -> None:
         counts[status] = counts.get(status, 0) + 1
 
     assert counts == {
-        "complete": 21,
+        "complete": 20,
         "pending_completion": 3,
         "dropout_no_future": 3,
-        "known_bad_complete": 1,
+        "known_bad_complete": 2,
         "incomplete_excluded": 1,
     }
     assert "unknown_roster" not in counts
+    id21 = next(row for row in rows if row["annotator_id"] == "21")
+    assert id21["completion_status"] == "known_bad_complete"
+    assert id21["known_bad_or_process_risk"] is True
+    assert id21["eligible_for_primary_prescreen_candidate"] is False
