@@ -1,0 +1,9 @@
+"""Compatibility contracts for the quality_core boundary package."""
+
+ANALYZE_QUALITY_LEGACY_COMPAT = True
+FORMAL_PIPELINE_ENTRY = False
+OUTPUT_SCHEMA_CHANGE_ALLOWED = False
+DRY_RUN_ONLY_FOR_SMOKE = True
+NO_WORKER_ROUTING = True
+NO_ADMISSION_DECISION = True
+NO_GT_MUTATION = True

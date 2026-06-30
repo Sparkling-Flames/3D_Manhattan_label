@@ -49,6 +49,13 @@ Run `python tools/thesis_main/analysis/pipeline_smoke_runner.py` to rerun the lo
 The runner reads `analysis_results/prescreen_closeout/` and writes stage outputs under `analysis_results/pipeline_smoke/`.
 The only root-level runner state is `analysis_results/pipeline_smoke/pipeline_smoke_state.json`; all outputs remain dry-run/provisional only.
 
+## Terminology Boundary
+
+The pipeline-smoke `c1_calibration_preview`, `t1_main_dryrun`, and `v1_validation_dryrun` outputs are future-round table-shape / interface smoke scaffolds, not the formal thesis rounds.
+Formal C1 forms provisional calibration estimates and reference-basis candidates; formal C2 freezes score, risk tiers, routing contract, `tau_d`, and `I_t^{OOD}` activation rules.
+`v1_validation_dryrun` does not implement HoHoNet penultimate-layer feature extraction, `d_t` reference construction, `I_t^{OOD}` routing, or formal Validation analysis.
+Pipeline smoke outputs are executable interface checks only. They are not formal P1/C1/C2/T1/V1 evidence, thesis claims, routing inputs, worker scoring outputs, or frozen analysis artifacts.
+
 ## Next Freeze Point
 
 After Stage 1 annotation is complete, freeze raw inputs again, update the raw input manifest, and rerun Step 1-5 from the frozen snapshot chain before any formal analysis or downstream materialization.
