@@ -146,6 +146,26 @@ def test_official_active_time_uses_focus_and_delta_gates():
     assert 'closeActiveTimeSegment("VISIBILITY_HIDDEN", { keepalive: true })' in text
 
 
+def test_official_and_foreign_active_time_use_annotation_level_keys_and_panels():
+    for path in [OFFICIAL_SCRIPT, SCRIPT]:
+        text = read(path)
+        assert "ACTIVE_TIME_TOKEN_PANEL_ID" in text
+        assert "ACTIVE_TIME_STATUS_PANEL_ID" in text
+        assert "function getCurrentAnnotationId()" in text
+        assert "store?.annotationStore?.selected?.id" in text
+        assert "currentActiveTimeKey" in text
+        assert "function handleActiveTimeKeyChange(nextMetadata)" in text
+        assert "handleActiveTimeKeyChange(resolveActiveTimeMetadata())" in text
+        assert "ACTIVE_TIME_KEY_SWITCH" in text
+        assert "annotation_id: report.annotationId" in text
+        assert "active_time_key: report.activeTimeKey" in text
+        assert "annotation_match_status: report.annotationMatchStatus" in text
+        assert "lastPostedSecondsByTask.get(report.activeTimeKey)" in text
+        assert "taskCumulativeSeconds.get(metadata.activeTimeKey)" in text
+        assert "taskCumulativeSeconds.set(report.activeTimeKey, report.reportSeconds)" in text
+        assert 'document.querySelector("#4564")' not in text
+
+
 def test_preview_order_cache_ack_text_is_not_mojibake():
     text = read(VIS_3D)
 

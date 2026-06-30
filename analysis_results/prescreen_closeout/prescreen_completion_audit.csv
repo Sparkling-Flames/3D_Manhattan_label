@@ -1,6 +1,6 @@
 annotator_id,language,manual_observed,semi_observed,oos_observed,unknown_observed,total_observed,manual_expected,semi_expected,oos_expected,total_expected,manual_missing,semi_missing,oos_missing,total_missing,completion_rate,completion_status,condition_schema_warning,will_continue,dropout,known_bad_or_process_risk,eligible_for_final_completion_denominator,eligible_for_primary_prescreen_candidate,notes
-1,zh,0,0,0,0,0,30,18,9,57,30,18,9,57,0.0,pending_completion,,True,False,False,True,False,listed in Chinese worker roster; no current canonical rows
-2,zh,2,7,0,0,9,30,18,9,57,28,11,9,48,0.157895,pending_completion,,True,False,False,True,False,listed in Chinese worker roster; partial current canonical rows
+1,zh,30,18,9,0,57,30,18,9,57,0,0,0,0,1.0,complete,,True,False,False,True,True,listed in Chinese worker roster; no current canonical rows
+2,zh,30,18,9,0,57,30,18,9,57,0,0,0,0,1.0,complete,,True,False,False,True,True,listed in Chinese worker roster; partial current canonical rows
 6,zh,30,18,9,0,57,30,18,9,57,0,0,0,0,1.0,complete,,True,False,False,True,True,listed in Chinese worker roster
 7,zh,0,0,0,0,0,30,18,9,57,30,18,9,57,0.0,dropout_no_future,,False,True,False,False,False,matched dropout form: 23软工陈德昕
 8,zh,30,18,9,0,57,30,18,9,57,0,0,0,0,1.0,complete,,True,False,False,True,True,listed in Chinese worker roster
@@ -13,7 +13,7 @@ annotator_id,language,manual_observed,semi_observed,oos_observed,unknown_observe
 15,zh,30,18,9,0,57,30,18,9,57,0,0,0,0,1.0,complete,,True,False,False,True,True,listed in Chinese worker roster
 16,zh,0,0,0,0,0,30,18,9,57,30,18,9,57,0.0,dropout_no_future,,False,True,False,False,False,dropout/no future completion per fixed closeout roster
 17,zh,30,18,9,0,57,30,18,9,57,0,0,0,0,1.0,complete,,True,False,False,True,True,listed in Chinese worker roster
-18,zh,0,18,9,0,27,30,18,9,57,30,0,0,30,0.473684,pending_completion,,True,False,False,True,False,listed in Chinese worker roster; pending manual completion in current export
+18,zh,30,18,9,0,57,30,18,9,57,0,0,0,0,1.0,complete,,True,False,False,True,True,listed in Chinese worker roster; pending manual completion in current export
 19,zh,30,18,9,0,57,30,18,9,57,0,0,0,0,1.0,known_bad_complete,,True,False,True,False,False,listed as process risk in Chinese worker roster
 21,zh,30,18,9,0,57,30,18,9,57,0,0,0,0,1.0,known_bad_complete,,True,False,True,False,False,confirmed process-risk / suspected copied annotation / manually excluded before Stage 2
 26,en,29,18,9,0,56,30,18,9,57,1,0,0,1,0.982456,incomplete_excluded,,False,False,True,False,False,known bad / bad annotation / will not complete remaining manual task

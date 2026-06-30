@@ -26,6 +26,7 @@ def test_build_c1_assignment_manifest(tmp_path: Path) -> None:
         [
             {"worker_id": "worker_b", "admission_status": "admitted"},
             {"worker_id": "worker_a", "admission_status": "admitted"},
+            {"worker_id": "worker_watch", "admission_status": "pass_with_watch"},
             {"worker_id": "worker_c", "admission_status": "failed"},
         ],
     )
@@ -70,11 +71,11 @@ def test_build_c1_assignment_manifest(tmp_path: Path) -> None:
     with output_csv.open("r", encoding="utf-8", newline="") as f:
         rows = list(csv.DictReader(f))
 
-    assert len(rows) == 6
-    assert {r["worker_id"] for r in rows} == {"worker_a", "worker_b"}
+    assert len(rows) == 7
+    assert {r["worker_id"] for r in rows} == {"worker_a", "worker_b", "worker_watch"}
 
     anchor_rows = [r for r in rows if r["dataset_group"] == "Calibration_anchor"]
-    assert len(anchor_rows) == 2
+    assert len(anchor_rows) == 3
     assert all(r["assignment_reason"] == "common_anchor" for r in anchor_rows)
     assert all(r["is_common_anchor"] == "true" for r in anchor_rows)
 

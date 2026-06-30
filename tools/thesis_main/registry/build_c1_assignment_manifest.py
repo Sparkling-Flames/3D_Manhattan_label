@@ -6,7 +6,7 @@ import json
 from pathlib import Path
 
 
-ADMITTED_VALUES = {"admitted", "pass", "passed", "true", "1", "yes", "y"}
+ADMITTED_VALUES = {"admitted", "pass", "pass_with_watch", "passed", "true", "1", "yes", "y"}
 
 
 def load_admitted_workers(path: Path) -> list[str]:

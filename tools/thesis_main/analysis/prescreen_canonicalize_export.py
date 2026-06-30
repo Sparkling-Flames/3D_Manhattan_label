@@ -66,6 +66,14 @@ def _annotation_id(annotation: dict[str, Any], index: int) -> str:
     return _safe_str(annotation.get("id"), f"annotation_index_{index}")
 
 
+def _annotation_match_status(annotation_id: str) -> str:
+    return "unknown_annotation" if not annotation_id or annotation_id.startswith("annotation_index_") else "annotation_id_present"
+
+
+def _active_time_key(project_id: str, task_id: str, worker_id: str, annotation_id: str) -> str:
+    return "|".join((project_id, task_id, worker_id, annotation_id))
+
+
 def _task_id(task: dict[str, Any], index: int) -> str:
     return _safe_str(task.get("id") or task.get("task_id"), f"task_index_{index}")
 
@@ -102,9 +110,19 @@ def _active_entry(
     project_id: str,
     task_id: str,
     worker_id: str,
+    annotation_id: str,
     lead_time_seconds: float,
+    *,
+    allow_task_level_fallback: bool,
 ) -> tuple[str, str, str, str, int, int]:
-    entry, match_status = lookup_active_log_entry(active_times, project_id, task_id, worker_id)
+    entry, match_status = lookup_active_log_entry(
+        active_times,
+        project_id,
+        task_id,
+        worker_id,
+        annotation_id,
+        allow_task_level_fallback=allow_task_level_fallback,
+    )
     if entry:
         return (
             str(float(entry.get("active_time_value", 0.0))),
@@ -120,6 +138,30 @@ def _active_entry(
     return ("", "missing", match_status, "", 0, 0)
 
 
+def _set_active_fields(row: dict[str, Any], active_times: dict, *, allow_task_level_fallback: bool) -> None:
+    active_time, source, match_status, source_file, session_count, event_count = _active_entry(
+        active_times,
+        str(row["project_id"]),
+        str(row["task_id"]),
+        str(row["annotator_id"]),
+        str(row["annotation_id"]),
+        _lead_time_value(row),
+        allow_task_level_fallback=allow_task_level_fallback,
+    )
+    row.update(
+        {
+            "active_time": active_time,
+            "active_time_source": source,
+            "active_time_match_status": match_status,
+            "active_time_source_file": source_file,
+            "active_time_session_count": session_count,
+            "active_time_event_count": event_count,
+            "primary_active_time_eligible": source == "log",
+            "sensitivity_active_time_eligible": source in {"log", "lead_time_fallback"},
+        }
+    )
+
+
 def _geometry(annotation: dict[str, Any], round_px: float) -> tuple[str, str, int, str]:
     try:
         corners, _poly, _choice_map, _quality = extract_data(annotation.get("result", []))
@@ -132,6 +174,13 @@ def _geometry(annotation: dict[str, Any], round_px: float) -> tuple[str, str, in
 def _canonical_id(project_id: str, task_id: str, worker_id: str) -> str:
     payload = f"{project_id}|{task_id}|{worker_id}".encode("utf-8")
     return hashlib.sha1(payload).hexdigest()[:16]
+
+
+def _lead_time_value(row: dict[str, Any]) -> float:
+    try:
+        return float(row.get("lead_time_seconds") or 0)
+    except ValueError:
+        return 0.0
 
 
 def build_canonical_tables(
@@ -157,10 +206,8 @@ def build_canonical_tables(
                 if not isinstance(ann, dict):
                     continue
                 worker_id = _worker_id(ann)
+                annotation_id = _annotation_id(ann, ann_index)
                 lead_time = float(ann.get("lead_time", 0) or 0)
-                active_time, source, match_status, source_file, session_count, event_count = _active_entry(
-                    active_times, project_id, task_id, worker_id, lead_time
-                )
                 geometry_hash, geometry_payload, n_corners, parse_error = _geometry(ann, geometry_round_px)
                 row = {
                     "source_export": str(export_path),
@@ -171,35 +218,47 @@ def build_canonical_tables(
                     "dataset_group": _safe_str(data.get("dataset_group")),
                     "condition": _safe_str(data.get("condition")),
                     "annotator_id": worker_id,
-                    "annotation_id": _annotation_id(ann, ann_index),
+                    "annotation_id": annotation_id,
+                    "annotation_match_status": _annotation_match_status(annotation_id),
+                    "active_time_key": _active_time_key(project_id, task_id, worker_id, annotation_id),
                     "annotation_sort_key": "|".join(_sort_value(ann, ann_index)),
                     "lead_time_seconds": str(lead_time) if lead_time > 0 else "",
-                    "active_time": active_time,
-                    "active_time_source": source,
-                    "active_time_match_status": match_status,
-                    "active_time_source_file": source_file,
-                    "active_time_session_count": session_count,
-                    "active_time_event_count": event_count,
+                    "active_time": "",
+                    "active_time_source": "",
+                    "active_time_match_status": "",
+                    "active_time_source_file": "",
+                    "active_time_session_count": 0,
+                    "active_time_event_count": 0,
                     "geometry_hash": geometry_hash,
                     "canonical_geometry": geometry_payload,
                     "n_corners": n_corners,
                     "parse_error": parse_error,
-                    "primary_active_time_eligible": source == "log",
-                    "sensitivity_active_time_eligible": source in {"log", "lead_time_fallback"},
+                    "primary_active_time_eligible": False,
+                    "sensitivity_active_time_eligible": False,
                 }
+                _set_active_fields(row, active_times, allow_task_level_fallback=True)
                 groups[(project_id, task_id, worker_id)].append(row)
 
     canonical_rows: list[dict[str, Any]] = []
     duplicate_rows: list[dict[str, Any]] = []
     for (project_id, task_id, worker_id), rows in sorted(groups.items()):
         rows = sorted(rows, key=lambda r: r["annotation_sort_key"])
-        canonical = rows[-1].copy()
-        duplicate_ids = [r["annotation_id"] for r in rows if r["annotation_id"] != canonical["annotation_id"]]
         hashes = {r["geometry_hash"] for r in rows if r["geometry_hash"]}
         group_size = len(rows)
         duplicate_type = "single"
         if group_size > 1:
             duplicate_type = "revision" if len(hashes) > 1 else "duplicate_same_geometry"
+            for row in rows:
+                _set_active_fields(row, active_times, allow_task_level_fallback=False)
+        if duplicate_type == "duplicate_same_geometry":
+            canonical = max(rows, key=lambda r: (_lead_time_value(r), r["annotation_sort_key"])).copy()
+        else:
+            canonical = rows[-1].copy()
+        duplicate_ids = [r["annotation_id"] for r in rows if r["annotation_id"] != canonical["annotation_id"]]
+        duplicate_time_ambiguous = (
+            group_size > 1
+            and canonical.get("active_time_match_status") != "project+task+annotator+annotation"
+        )
         canonical.update(
             {
                 "canonical_annotation_id": _canonical_id(project_id, task_id, worker_id),
@@ -207,7 +266,7 @@ def build_canonical_tables(
                 "duplicate_annotation_ids": ";".join(duplicate_ids),
                 "duplicate_group_size": group_size,
                 "duplicate_geometry_type": duplicate_type,
-                "duplicate_time_ambiguous": group_size > 1,
+                "duplicate_time_ambiguous": duplicate_time_ambiguous,
                 "eligible_for_primary_analysis": True,
                 "exclusion_reason": "",
             }
@@ -227,7 +286,7 @@ def build_canonical_tables(
                     "duplicate_group_size": group_size,
                     "duplicate_geometry_type": duplicate_type,
                     "n_distinct_geometry_hashes": len(hashes),
-                    "duplicate_time_ambiguous": True,
+                    "duplicate_time_ambiguous": duplicate_time_ambiguous,
                     "lead_time_policy": "canonical_only_not_summed",
                 }
             )

@@ -324,6 +324,13 @@ def _validate_manifest_snapshot(manifest_path: Path, source_path: Path | str) ->
     return snapshot, actual, row
 
 
+def _manifest_data_complete(manifest_path: Path | None) -> bool:
+    if not manifest_path:
+        return False
+    rows = _load_csv(manifest_path)
+    return bool(rows) and all(_safe(row.get("data_complete")).lower() == "true" for row in rows)
+
+
 def _manifest_path(path: str | Path) -> Path:
     text = _safe(path)
     p = Path(text)
@@ -899,7 +906,7 @@ def build_scope_audits(
                 row["geometry_scoring_role"] = "semi_trap_audit"
     summary = {
         "dry_run": True,
-        "data_complete": False,
+        "data_complete": _manifest_data_complete(raw_input_manifest_csv),
         "n_tasks": len(task_rows),
         "n_responses": len(response_rows),
         "n_unknown_gold_audit_rows": len(unknown_gold_rows),

@@ -111,16 +111,25 @@ def test_exact_copy_fail_recommended_excludes_process_risk(tmp_path: Path) -> No
     assert summary["copy_risk_evaluation_status"] == "evaluated"
 
 
+def test_revision_duplicate_forces_process_manual_review(tmp_path: Path) -> None:
+    duplicate = _csv(tmp_path / "duplicate_revision.csv", [{"annotator_id": "w1", "duplicate_geometry_type": "revision", "task_id": "t1"}])
+    rows, _summary = _run(tmp_path, [_completion("w1")], duplicate=duplicate)
+
+    assert rows[0]["screening_recommendation"] == "manual_review"
+    assert rows[0]["screening_reason"] == "duplicate_revision_manual_review"
+    assert rows[0]["evidence_tier"] == "process_risk"
+
+
 def test_single_high_undercoverage_is_warning_candidate_not_manual_review(tmp_path: Path) -> None:
     under = _csv(tmp_path / "under_high.csv", [{"annotator_id": "w1", "undercoverage_risk_level": "high", "minority_full_room_candidate": "False"}])
     rows, _summary = _run(tmp_path, [_completion("w1")], under=under)
 
     assert rows[0]["screening_recommendation"] == "continue_candidate"
-    assert rows[0]["screening_reason"] == "warning_manual_review_candidate_single_high_undercoverage"
+    assert rows[0]["screening_reason"] == "task_or_worker_undercoverage_watch"
     assert rows[0]["evidence_tier"] == "geometry_risk"
 
 
-def test_repeated_high_undercoverage_worker_manual_review(tmp_path: Path) -> None:
+def test_repeated_high_undercoverage_worker_is_nonblocking_watch(tmp_path: Path) -> None:
     under = _csv(
         tmp_path / "under_high2.csv",
         [
@@ -131,8 +140,34 @@ def test_repeated_high_undercoverage_worker_manual_review(tmp_path: Path) -> Non
     align = _csv(tmp_path / "align2.csv", [{"annotator_id": "w1", "alignment_available": "True", "task_id": "t1"}, {"annotator_id": "w1", "alignment_available": "True", "task_id": "t2"}])
     rows, _summary = _run(tmp_path, [_completion("w1")], under=under, alignment=align)
 
-    assert rows[0]["screening_recommendation"] == "manual_review"
+    assert rows[0]["screening_recommendation"] == "continue_candidate"
+    assert rows[0]["screening_reason"] == "task_or_worker_undercoverage_watch"
     assert rows[0]["evidence_tier"] == "geometry_risk"
+
+
+def test_task_majority_undercoverage_is_excluded_from_worker_counts(tmp_path: Path) -> None:
+    under = _csv(
+        tmp_path / "under_task_majority.csv",
+        [
+            {
+                "annotator_id": "w1",
+                "undercoverage_risk_level": "high",
+                "minority_full_room_candidate": "False",
+                "task_majority_undercoverage_risk": "True",
+            },
+            {
+                "annotator_id": "w1",
+                "undercoverage_risk_level": "high",
+                "minority_full_room_candidate": "False",
+                "task_majority_undercoverage_risk": "True",
+            },
+        ],
+    )
+    rows, _summary = _run(tmp_path, [_completion("w1")], under=under)
+
+    assert rows[0]["n_undercoverage_high"] == 0
+    assert rows[0]["screening_recommendation"] == "continue_candidate"
+    assert rows[0]["screening_reason"] == "no_major_dry_run_risk"
 
 
 def test_minority_full_room_candidate_is_not_punished(tmp_path: Path) -> None:

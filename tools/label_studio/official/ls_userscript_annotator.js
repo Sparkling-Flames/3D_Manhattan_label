@@ -66,6 +66,8 @@
   const BUTTON_ID = "hohonet-refresh-btn";
   const WRAPPER_ID = "hohonet-wrapper";
   const DEBUG_ID = "hohonet-debug-panel";
+  const ACTIVE_TIME_TOKEN_PANEL_ID = "hohonet-active-time-token-panel";
+  const ACTIVE_TIME_STATUS_PANEL_ID = "hohonet-active-time-status-panel";
   const OVERLAY_ID = "hohonet-overlay";
   const TOGGLE_BTN_ID = "hohonet-toggle-labels-btn";
   const LABELS_VISIBLE_KEY = "hohonet_labels_visible"; // sessionStorage
@@ -164,6 +166,10 @@
   if (existingWrapper) existingWrapper.remove();
   const existingDebug = document.getElementById(DEBUG_ID);
   if (existingDebug) existingDebug.remove();
+  const existingTokenPanel = document.getElementById(ACTIVE_TIME_TOKEN_PANEL_ID);
+  if (existingTokenPanel) existingTokenPanel.remove();
+  const existingStatusPanel = document.getElementById(ACTIVE_TIME_STATUS_PANEL_ID);
+  if (existingStatusPanel) existingStatusPanel.remove();
   const existingOverlay = document.getElementById(OVERLAY_ID);
   if (existingOverlay) existingOverlay.remove();
   const existingPreviewPanel = document.getElementById(PREVIEW_PANEL_ID);
@@ -302,6 +308,54 @@
       document.body.appendChild(panel);
     }
     panel.innerText = `HoHoNet 调试 (v${SCRIPT_VERSION}):\n` + msg;
+  }
+
+  let lastActiveTimeUploadStatus = "pending";
+
+  function ensureActiveTimePanel(id, bottomPx) {
+    let panel = document.getElementById(id);
+    if (!panel) {
+      panel = document.createElement("div");
+      panel.id = id;
+      panel.style.cssText = `position: fixed; right: 12px; bottom: ${bottomPx}px; max-width: 360px; background: rgba(24,24,27,0.94); color: #f4f4f5; padding: 8px 10px; z-index: 10000; font-family: Arial, sans-serif; font-size: 12px; line-height: 1.35; border-radius: 6px; box-shadow: 0 2px 10px rgba(0,0,0,0.25);`;
+      document.body.appendChild(panel);
+    }
+    return panel;
+  }
+
+  function setStoredLogTokenFromPrompt() {
+    const token = window.prompt("Set HOHONET_LOG_TOKEN");
+    if (token && token.trim()) {
+      window.localStorage.setItem("HOHONET_LOG_TOKEN", token.trim());
+      updateActiveTimePanels(null, "token_set");
+    }
+  }
+
+  function updateActiveTimePanels(report = null, uploadStatus = lastActiveTimeUploadStatus) {
+    lastActiveTimeUploadStatus = uploadStatus || lastActiveTimeUploadStatus;
+    const tokenPanel = ensureActiveTimePanel(ACTIVE_TIME_TOKEN_PANEL_ID, 12);
+    const statusPanel = ensureActiveTimePanel(ACTIVE_TIME_STATUS_PANEL_ID, 92);
+    const tokenOk = Boolean(getLogToken());
+    tokenPanel.textContent = tokenOk
+      ? `Log token OK (${maskToken(getLogToken())})`
+      : "Missing HOHONET_LOG_TOKEN. Active-time upload may fail.";
+    if (!tokenOk) {
+      const button = document.createElement("button");
+      button.textContent = "Set token";
+      button.style.cssText = "margin-left: 8px; font-size: 12px;";
+      button.addEventListener("click", setStoredLogTokenFromPrompt);
+      tokenPanel.appendChild(button);
+    }
+    const metadata = report || resolveActiveTimeMetadata();
+    const seconds = report && report.reportSeconds !== undefined ? report.reportSeconds : activeSeconds;
+    statusPanel.textContent = [
+      `Active-time status: ${lastActiveTimeUploadStatus}`,
+      `key: ${metadata.activeTimeKey || "unknown"}`,
+      `annotation: ${metadata.annotationId || "unknown_annotation"} (${metadata.annotationMatchStatus || "unknown_annotation"})`,
+      `seconds: ${seconds}`,
+    ].join("\n");
+    statusPanel.style.border = metadata.annotationMatchStatus === "unknown_annotation" ? "1px solid #f59e0b" : "1px solid #3f3f46";
+    tokenPanel.style.border = tokenOk ? "1px solid #22c55e" : "1px solid #ef4444";
   }
 
   function getLabelsVisible() {
@@ -2452,8 +2506,10 @@
   // 修改: 将空闲阈值降低到 15s 以获得更精确的“活动”测量
   const IDLE_THRESHOLD = 15 * 1000;
   let currentTaskId = null;
+  let currentActiveTimeKey = null;
+  let currentActiveTimeMetadata = null;
 
-  // v0.21: cumulative seconds per task within same session (fix A->B->A undercount)
+  // v0.21: cumulative seconds per active_time_key within same session.
   const taskCumulativeSeconds = new Map();
   const lastPostedSecondsByTask = new Map();
   const ACTIVE_TIME_METADATA_KEYS = [
@@ -2461,12 +2517,14 @@
     "projectId",
     "projectName",
     "annotatorId",
+    "annotationId",
   ];
   const lastKnownActiveTimeMetadata = {
     taskId: null,
     projectId: null,
     projectName: null,
     annotatorId: null,
+    annotationId: null,
     updatedAt: 0,
   };
 
@@ -2525,7 +2583,23 @@
       projectId: getProjectId(),
       projectName: getProjectName(),
       annotatorId: getAnnotatorId(),
+      annotationId: getCurrentAnnotationId(),
     };
+  }
+
+  function annotationMatchStatus(annotationId) {
+    return isKnownActiveTimeMetadataValue(annotationId) && String(annotationId) !== "unknown_annotation"
+      ? "annotation_id_present"
+      : "unknown_annotation";
+  }
+
+  function buildActiveTimeKey(metadata) {
+    return [
+      metadata.projectId || "unknown",
+      metadata.taskId || "unknown",
+      metadata.annotatorId || "unknown",
+      metadata.annotationId || "unknown_annotation",
+    ].join("|");
   }
 
   function resolveActiveTimeMetadata(preferredTaskId = null) {
@@ -2536,7 +2610,10 @@
       ? String(live.projectId).trim()
       : lastKnownActiveTimeMetadata.projectId || "unknown";
 
-    return {
+    const annotationId = isKnownActiveTimeMetadataValue(live.annotationId)
+      ? String(live.annotationId).trim()
+      : "unknown_annotation";
+    const resolved = {
       taskId: isKnownActiveTimeMetadataValue(live.taskId)
         ? String(live.taskId).trim()
         : lastKnownActiveTimeMetadata.taskId || "unknown",
@@ -2551,15 +2628,20 @@
       annotatorId: isKnownActiveTimeMetadataValue(live.annotatorId)
         ? String(live.annotatorId).trim()
         : lastKnownActiveTimeMetadata.annotatorId || "unknown",
+      annotationId,
+      annotationMatchStatus: annotationMatchStatus(annotationId),
     };
+    resolved.activeTimeKey = buildActiveTimeKey(resolved);
+    return resolved;
   }
 
   function buildActiveTimeReport(
     forceTaskId = null,
     forcedActiveSeconds = null,
+    forceMetadata = null,
   ) {
     // fragment 表示“当前连续活动片段”，不是“自上次网络上报以来的增量”。
-    const metadata = resolveActiveTimeMetadata(forceTaskId);
+    const metadata = forceMetadata || resolveActiveTimeMetadata(forceTaskId);
     const reportTaskId = metadata.taskId;
     const currentFragment =
       forcedActiveSeconds !== null ? forcedActiveSeconds : activeSeconds;
@@ -2568,12 +2650,15 @@
       return null;
     }
 
-    const previousCumulative = taskCumulativeSeconds.get(reportTaskId) || 0;
+    const previousCumulative = taskCumulativeSeconds.get(metadata.activeTimeKey) || 0;
     const reportSeconds = previousCumulative + currentFragment;
     if (reportSeconds <= 0) return null;
 
     return {
       reportTaskId,
+      annotationId: metadata.annotationId,
+      annotationMatchStatus: metadata.annotationMatchStatus,
+      activeTimeKey: metadata.activeTimeKey,
       projectId: metadata.projectId,
       projectName: metadata.projectName,
       annotatorId: metadata.annotatorId,
@@ -2586,18 +2671,44 @@
     };
   }
 
+  function handleActiveTimeKeyChange(nextMetadata) {
+    if (!nextMetadata || nextMetadata.taskId === "unknown") return;
+    if (
+      currentActiveTimeKey &&
+      nextMetadata.activeTimeKey !== currentActiveTimeKey &&
+      activeSeconds > 0
+    ) {
+      const report = buildActiveTimeReport(null, activeSeconds, currentActiveTimeMetadata);
+      if (report) {
+        taskCumulativeSeconds.set(report.activeTimeKey, report.reportSeconds);
+        void postActiveTimeReport(report, {
+          manualFlush: true,
+          logPrefix: "ACTIVE_TIME_KEY_SWITCH",
+        });
+      }
+      resetCurrentActiveTimeSegment();
+    }
+    currentActiveTimeKey = nextMetadata.activeTimeKey;
+    currentActiveTimeMetadata = nextMetadata;
+    currentTaskId = nextMetadata.taskId;
+    updateActiveTimePanels(nextMetadata, lastActiveTimeUploadStatus);
+  }
+
   async function postActiveTimeReport(
     report,
     { manualFlush = false, keepalive = false, logPrefix = "LOG" } = {},
   ) {
     if (!report) return null;
 
-    const lastPostedSeconds = lastPostedSecondsByTask.get(report.reportTaskId) || 0;
+    const lastPostedSeconds = lastPostedSecondsByTask.get(report.activeTimeKey) || 0;
     if (report.reportSeconds <= lastPostedSeconds) {
       return null;
     }
 
     const tokenNow = getLogToken();
+    if (!tokenNow) {
+      updateActiveTimePanels(report, "missing_token");
+    }
     try {
       const response = await fetch(HOHONET_LOG_TIME_URL(), {
         method: "POST",
@@ -2608,6 +2719,9 @@
         },
         body: JSON.stringify({
           task_id: report.reportTaskId,
+          annotation_id: report.annotationId,
+          active_time_key: report.activeTimeKey,
+          annotation_match_status: report.annotationMatchStatus,
           project_id: report.projectId,
           project_name: report.projectName,
           annotator_id: report.annotatorId,
@@ -2621,6 +2735,7 @@
         }),
       });
       if (!response.ok) {
+        updateActiveTimePanels(report, response.status === 403 ? "forbidden_403" : `http_${response.status}`);
         console.warn(
           `[${logPrefix}] 上报异常: ${response.status} ${response.statusText}`,
         );
@@ -2630,7 +2745,8 @@
           );
         }
       } else {
-        lastPostedSecondsByTask.set(report.reportTaskId, report.reportSeconds);
+        lastPostedSecondsByTask.set(report.activeTimeKey, report.reportSeconds);
+        updateActiveTimePanels(report, "ok");
       }
       if (response.ok && manualFlush) {
         console.log(
@@ -2640,6 +2756,7 @@
       return response;
     } catch (e) {
       console.warn(`[${logPrefix}] 上报失败:`, e);
+      updateActiveTimePanels(report, "fetch_failed");
       return null;
     }
   }
@@ -2648,14 +2765,16 @@
     reason = "PAGE_EXIT",
     { keepalive = false } = {},
   ) {
-    const report = buildActiveTimeReport(currentTaskId || getTaskId(), activeSeconds);
+    const report = buildActiveTimeReport(currentTaskId || getTaskId(), activeSeconds, currentActiveTimeMetadata);
     resetCurrentActiveTimeSegment();
     currentTaskId = null;
+    currentActiveTimeKey = null;
+    currentActiveTimeMetadata = null;
     wasOnAnnotationPageForActiveTime = false;
 
     if (!report) return;
 
-    taskCumulativeSeconds.set(report.reportTaskId, report.reportSeconds);
+    taskCumulativeSeconds.set(report.activeTimeKey, report.reportSeconds);
     void postActiveTimeReport(report, {
       manualFlush: true,
       keepalive,
@@ -2714,6 +2833,11 @@
   // v0.21 修复: 仅在「页面可见 + 标注任务页面 + 有近期交互」时累积
   setInterval(() => {
     const onCountingPage = isActiveTimeCountingPage();
+    if (onCountingPage) {
+      handleActiveTimeKeyChange(resolveActiveTimeMetadata());
+    } else {
+      updateActiveTimePanels(null, lastActiveTimeUploadStatus);
+    }
     if (!onCountingPage) {
       const shouldFlush = shouldFlushActiveTimeOnCountingStop();
       if (shouldFlush && wasOnAnnotationPageForActiveTime && activeSeconds > 0) {
@@ -2736,8 +2860,8 @@
 
     // 更新 UI
     const totalForTask =
-      currentTaskId && taskCumulativeSeconds.has(currentTaskId)
-        ? taskCumulativeSeconds.get(currentTaskId) + activeSeconds
+      currentActiveTimeKey && taskCumulativeSeconds.has(currentActiveTimeKey)
+        ? taskCumulativeSeconds.get(currentActiveTimeKey) + activeSeconds
         : activeSeconds;
     if (isDebugPanelEnabled()) {
       const debugPanel = document.getElementById(DEBUG_ID);
@@ -2899,7 +3023,7 @@
       return;
     }
 
-    taskCumulativeSeconds.set(report.reportTaskId, report.reportSeconds);
+    taskCumulativeSeconds.set(report.activeTimeKey, report.reportSeconds);
     await postActiveTimeReport(report, {
       manualFlush: true,
       logPrefix: "FLUSH",
@@ -2937,6 +3061,8 @@
     if (taskId === "unknown") {
       return;
     }
+
+    handleActiveTimeKeyChange(resolveActiveTimeMetadata(taskId));
 
     cacheLastKnownActiveTimeMetadata(captureCurrentActiveTimeMetadata(taskId));
 

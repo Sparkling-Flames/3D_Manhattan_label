@@ -613,6 +613,25 @@ def test_manifest_windows_style_paths_resolve_snapshot(tmp_path: Path) -> None:
     assert response_rows[0]["worker_scope_response"] == "correct_in_scope"
 
 
+def test_scope_summary_reflects_complete_raw_input_manifest(tmp_path: Path) -> None:
+    source = tmp_path / "source_export.json"
+    source.write_text(json.dumps([_task("1", "fg_in", "normal", [_annotation("a1", "w1", "normal")])]), encoding="utf-8")
+    canonical = _canonical(tmp_path / "canonical.csv", source, [("1", "w1", "a1")])
+    completion = _completion(tmp_path / "completion.csv", ["w1"])
+    final_gold = _gold(
+        tmp_path / "gold.jsonl",
+        [{"task_id": "fg_in", "base_task_id": "base_fg_in", "final_scope_alias": "normal", "final_scope_binary": "in_scope"}],
+    )
+    rows = [_manifest_row(source, source), _manifest_row(final_gold, final_gold, "reference_gold_snapshot")]
+    for row in rows:
+        row["data_complete"] = "true"
+    manifest = _write_csv(tmp_path / "manifest.csv", rows)
+
+    *_rows, summary = build_scope_audits(canonical, final_gold, completion, None, None, None, None, manifest)
+
+    assert summary["data_complete"] is True
+
+
 def test_scope_adjudication_accepts_canonicalize_generated_export_gt_manifest(tmp_path: Path) -> None:
     gt = _export_gt(tmp_path / "groudTruth.json", [("source_base", "2752", 1)])
     manifest = snapshot_inputs([gt], tmp_path / "out")

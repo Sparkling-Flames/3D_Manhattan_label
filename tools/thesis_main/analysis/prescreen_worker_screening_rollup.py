@@ -96,9 +96,9 @@ def _recommend(row: dict[str, Any]) -> tuple[str, str]:
     available = int(row["n_alignment_available"])
     high_rate = high / available if available else 0.0
     if high == 1:
-        return "continue_candidate", "warning_manual_review_candidate_single_high_undercoverage"
+        return "continue_candidate", "task_or_worker_undercoverage_watch"
     if high >= HIGH_REVIEW_MIN_COUNT or high_rate >= HIGH_REVIEW_RATE:
-        return "manual_review", "high_undercoverage_review"
+        return "continue_candidate", "task_or_worker_undercoverage_watch"
     if available == 0 and int(row["n_manual_anchor_eligible_responses"]) == 0:
         return "insufficient_evidence", "no_alignment_or_anchor_evidence"
     if int(row["n_minority_full_room_candidate"]) > 0:
@@ -175,6 +175,8 @@ def build_worker_screening_rollup(
     minority = Counter()
     for row in under:
         aid = _safe(row.get("annotator_id"))
+        if _truthy(row.get("task_majority_undercoverage_risk")):
+            continue
         under_counts[aid][_safe(row.get("undercoverage_risk_level"))] += 1
         if _truthy(row.get("minority_full_room_candidate")):
             minority[aid] += 1
@@ -241,7 +243,12 @@ def build_worker_screening_rollup(
         "manual_process_exclusion_ids": _manual_process_exclusion_ids(completion),
         "manual_process_exclusion_basis": "manual_process_risk_override_not_algorithmic_copy_detection",
         "forbidden_materialization_status": "not_generated",
-        "undercoverage_manual_review_rule": {"high_count_gte": HIGH_REVIEW_MIN_COUNT, "high_rate_gte": HIGH_REVIEW_RATE},
+        "undercoverage_screening_rule": {
+            "p1_policy": "nonblocking_watch_only",
+            "task_majority_undercoverage_risk": "excluded_from_worker_level_counts",
+            "watch_high_count_gte": HIGH_REVIEW_MIN_COUNT,
+            "watch_high_rate_gte": HIGH_REVIEW_RATE,
+        },
         "forbidden_outputs_generated": False,
         "forbidden_metric_field_count": sum(1 for row in out for key in row if "score" in key.lower()),
     }

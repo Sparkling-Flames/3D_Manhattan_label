@@ -154,3 +154,104 @@ def test_load_active_logs_can_filter_by_server_received_date(tmp_path: Path):
 
     assert logs[("23", "200", "7")]["active_time_value"] == 12.0
     assert logs[("23", "200", "7")]["active_time_session_count"] == 1
+
+
+def test_load_active_logs_keeps_annotation_sessions_separate(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+
+    log_file = active_logs / "active_times_2026-06-30.jsonl"
+    log_file.write_text(
+        "\n".join(
+            [
+                json.dumps(
+                    {
+                        "project_id": "23",
+                        "task_id": "300",
+                        "annotator_id": "8",
+                        "annotation_id": "a1",
+                        "session_id": "s1",
+                        "active_seconds": 10,
+                    }
+                ),
+                json.dumps(
+                    {
+                        "project_id": "23",
+                        "task_id": "300",
+                        "annotator_id": "8",
+                        "annotation_id": "a1",
+                        "session_id": "s1",
+                        "active_seconds": 14,
+                    }
+                ),
+                json.dumps(
+                    {
+                        "project_id": "23",
+                        "task_id": "300",
+                        "annotator_id": "8",
+                        "annotation_id": "a1",
+                        "session_id": "s2",
+                        "active_seconds": 3,
+                    }
+                ),
+                json.dumps(
+                    {
+                        "project_id": "23",
+                        "task_id": "300",
+                        "annotator_id": "8",
+                        "annotation_id": "a2",
+                        "session_id": "s1",
+                        "active_seconds": 40,
+                    }
+                ),
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    logs = load_active_logs(str(active_logs))
+
+    assert logs[("23", "300", "8", "a1")]["active_time_value"] == 17.0
+    assert logs[("23", "300", "8", "a1")]["active_time_session_count"] == 2
+    assert logs[("23", "300", "8", "a2")]["active_time_value"] == 40.0
+    assert logs[("23", "300", "8")]["active_time_value"] == 57.0
+
+    entry, status = lookup_active_log_entry(logs, "23", "300", "8", annotation_id="a2")
+    assert status == "project+task+annotator+annotation"
+    assert entry["active_time_value"] == 40.0
+
+
+def test_lookup_annotation_disables_task_level_fallback_for_duplicate_rows(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+    (active_logs / "active_times_2026-06-30.jsonl").write_text(
+        json.dumps(
+            {
+                "project_id": "23",
+                "task_id": "301",
+                "annotator_id": "8",
+                "session_id": "legacy",
+                "active_seconds": 99,
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    logs = load_active_logs(str(active_logs))
+
+    entry, status = lookup_active_log_entry(logs, "23", "301", "8", annotation_id="a1")
+    assert status == "project+task+annotator"
+    assert entry["active_time_value"] == 99.0
+
+    entry, status = lookup_active_log_entry(
+        logs,
+        "23",
+        "301",
+        "8",
+        annotation_id="a1",
+        allow_task_level_fallback=False,
+    )
+    assert entry is None
+    assert status == "annotation_missing_task_level_ambiguous"

@@ -51,6 +51,9 @@ def load_active_logs(log_dir, start_time=None, end_time=None):
         active_time_event_count,
       }
 
+      When logs include annotation_id, annotation-level keys are also emitted:
+      dict[(project_id, task_id, annotator_id, annotation_id)] -> same fields.
+
       For backward compatibility, a legacy (task_id, annotator_id) key is also
       emitted only when the pair maps to exactly one project_id. If the same
       pair appears under multiple projects, the legacy key is deliberately
@@ -91,8 +94,9 @@ def load_active_logs(log_dir, start_time=None, end_time=None):
                     s_id = str(data.get('session_id', 'default'))
                     p_id = str(data.get('project_id', '') or '').strip()
                     sec = float(data.get('active_seconds', 0))
+                    ann_id = str(data.get('annotation_id', '') or '').strip()
 
-                    key = (p_id, t_id, a_id, s_id)
+                    key = (p_id, t_id, a_id, ann_id, s_id)
                     if sec > session_maxes[key]:
                         session_maxes[key] = sec
                     session_files[key].add(os.path.basename(fpath))
@@ -107,14 +111,23 @@ def load_active_logs(log_dir, start_time=None, end_time=None):
         'active_time_event_count': 0,
         'active_time_project_ids': set(),
     })
-    for (p_id, t_id, a_id, _s_id), max_sec in session_maxes.items():
+    for (p_id, t_id, a_id, ann_id, _s_id), max_sec in session_maxes.items():
         bucket = final_logs[(p_id, t_id, a_id)]
         bucket['active_time_value'] += max_sec
-        bucket['active_time_source_file'].update(session_files[(p_id, t_id, a_id, _s_id)])
+        bucket['active_time_source_file'].update(session_files[(p_id, t_id, a_id, ann_id, _s_id)])
         bucket['active_time_session_count'] += 1
-        bucket['active_time_event_count'] += session_events[(p_id, t_id, a_id, _s_id)]
+        bucket['active_time_event_count'] += session_events[(p_id, t_id, a_id, ann_id, _s_id)]
         if p_id:
             bucket['active_time_project_ids'].add(p_id)
+
+        if ann_id:
+            ann_bucket = final_logs[(p_id, t_id, a_id, ann_id)]
+            ann_bucket['active_time_value'] += max_sec
+            ann_bucket['active_time_source_file'].update(session_files[(p_id, t_id, a_id, ann_id, _s_id)])
+            ann_bucket['active_time_session_count'] += 1
+            ann_bucket['active_time_event_count'] += session_events[(p_id, t_id, a_id, ann_id, _s_id)]
+            if p_id:
+                ann_bucket['active_time_project_ids'].add(p_id)
 
     serialized = {}
     for key, value in final_logs.items():
@@ -127,7 +140,10 @@ def load_active_logs(log_dir, start_time=None, end_time=None):
         }
 
     by_legacy_pair = defaultdict(list)
-    for (p_id, t_id, a_id), value in final_logs.items():
+    for key, value in final_logs.items():
+        if len(key) != 3:
+            continue
+        p_id, t_id, a_id = key
         by_legacy_pair[(t_id, a_id)].append((p_id, value))
 
     for (t_id, a_id), project_values in by_legacy_pair.items():
@@ -146,13 +162,24 @@ def load_active_logs(log_dir, start_time=None, end_time=None):
     return serialized
 
 
-def lookup_active_log_entry(active_times, project_id, task_id, annotator_id):
+def lookup_active_log_entry(active_times, project_id, task_id, annotator_id, annotation_id=None, allow_task_level_fallback=True):
     """Return a project-safe active log match and its match status."""
     p_id = str(project_id or '').strip()
     t_id = str(task_id)
     a_id = str(annotator_id)
+    ann_id = str(annotation_id or '').strip()
 
     if p_id:
+        if ann_id:
+            exact_annotation = active_times.get((p_id, t_id, a_id, ann_id))
+            if exact_annotation:
+                return exact_annotation, 'project+task+annotator+annotation'
+            if not allow_task_level_fallback:
+                return None, 'annotation_missing_task_level_ambiguous'
+
+        if not allow_task_level_fallback:
+            return None, 'annotation_missing_task_level_ambiguous'
+
         exact = active_times.get((p_id, t_id, a_id))
         if exact:
             return exact, 'project+task+annotator'

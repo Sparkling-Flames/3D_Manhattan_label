@@ -66,6 +66,12 @@ def _write_log(tmp_path: Path) -> Path:
     return path
 
 
+def _write_annotation_logs(tmp_path: Path, rows: list[dict]) -> Path:
+    path = tmp_path / "active_times_2026-06-30.jsonl"
+    path.write_text("\n".join(json.dumps(row) for row in rows) + "\n", encoding="utf-8")
+    return path
+
+
 def test_same_worker_task_duplicate_same_geometry_becomes_one_canonical_row(tmp_path: Path) -> None:
     export = _write_export(
         tmp_path,
@@ -89,6 +95,29 @@ def test_same_worker_task_duplicate_same_geometry_becomes_one_canonical_row(tmp_
     assert canonical[0]["duplicate_geometry_type"] == "duplicate_same_geometry"
     assert canonical[0]["lead_time_seconds"] == "20.0"
     assert duplicate[0]["lead_time_policy"] == "canonical_only_not_summed"
+
+
+def test_same_geometry_duplicate_keeps_longer_lead_time_even_if_older(tmp_path: Path) -> None:
+    export = _write_export(
+        tmp_path,
+        [
+            _task(
+                1,
+                [
+                    _annotation("w1", annotation_id="a1", lead_time=60, updated_at="2026-01-01T00:00:00"),
+                    _annotation("w1", annotation_id="a2", lead_time=10, updated_at="2026-01-01T00:01:00"),
+                ],
+            )
+        ],
+    )
+
+    canonical, duplicate, _summary = build_canonical_tables([export])
+
+    assert canonical[0]["raw_canonical_annotation_id"] == "a1"
+    assert canonical[0]["duplicate_annotation_ids"] == "a2"
+    assert canonical[0]["duplicate_geometry_type"] == "duplicate_same_geometry"
+    assert canonical[0]["lead_time_seconds"] == "60.0"
+    assert duplicate[0]["raw_canonical_annotation_id"] == "a1"
 
 
 def test_snapshot_inputs_writes_sha256_for_regular_file(tmp_path: Path) -> None:
@@ -164,6 +193,89 @@ def test_same_worker_task_duplicate_different_geometry_is_revision_audit(tmp_pat
     assert len(canonical) == 1
     assert canonical[0]["duplicate_geometry_type"] == "revision"
     assert duplicate[0]["n_distinct_geometry_hashes"] == 2
+    assert duplicate[0]["duplicate_time_ambiguous"] is True
+
+
+def test_duplicate_annotations_use_exact_annotation_active_time_when_available(tmp_path: Path) -> None:
+    export = _write_export(
+        tmp_path,
+        [
+            _task(
+                1,
+                [
+                    _annotation("w1", annotation_id="a1", lead_time=10, updated_at="2026-01-01T00:00:00"),
+                    _annotation("w1", annotation_id="a2", lead_time=20, updated_at="2026-01-01T00:01:00"),
+                ],
+            )
+        ],
+    )
+    active_log = _write_annotation_logs(
+        tmp_path,
+        [
+            {
+                "project_id": "23",
+                "task_id": "1",
+                "annotator_id": "w1",
+                "annotation_id": "a1",
+                "session_id": "s1",
+                "active_seconds": 12,
+            },
+            {
+                "project_id": "23",
+                "task_id": "1",
+                "annotator_id": "w1",
+                "annotation_id": "a2",
+                "session_id": "s1",
+                "active_seconds": 34,
+            },
+        ],
+    )
+
+    canonical, duplicate, _summary = build_canonical_tables([export], active_log)
+
+    assert canonical[0]["raw_canonical_annotation_id"] == "a2"
+    assert canonical[0]["annotation_match_status"] == "annotation_id_present"
+    assert canonical[0]["active_time_key"] == "23|1|w1|a2"
+    assert canonical[0]["active_time"] == "34.0"
+    assert canonical[0]["active_time_source"] == "log"
+    assert canonical[0]["active_time_match_status"] == "project+task+annotator+annotation"
+    assert canonical[0]["duplicate_time_ambiguous"] is False
+    assert duplicate[0]["duplicate_time_ambiguous"] is False
+
+
+def test_duplicate_annotations_do_not_use_legacy_task_level_active_time(tmp_path: Path) -> None:
+    export = _write_export(
+        tmp_path,
+        [
+            _task(
+                1,
+                [
+                    _annotation("w1", annotation_id="a1", lead_time=10, updated_at="2026-01-01T00:00:00"),
+                    _annotation("w1", annotation_id="a2", lead_time=20, updated_at="2026-01-01T00:01:00"),
+                ],
+            )
+        ],
+    )
+    active_log = _write_annotation_logs(
+        tmp_path,
+        [
+            {
+                "project_id": "23",
+                "task_id": "1",
+                "annotator_id": "w1",
+                "session_id": "legacy",
+                "active_seconds": 99,
+            }
+        ],
+    )
+
+    canonical, duplicate, _summary = build_canonical_tables([export], active_log)
+
+    assert canonical[0]["raw_canonical_annotation_id"] == "a2"
+    assert canonical[0]["active_time"] == "20.0"
+    assert canonical[0]["active_time_source"] == "lead_time_fallback"
+    assert canonical[0]["active_time_match_status"] == "fallback_annotation_missing_task_level_ambiguous"
+    assert canonical[0]["duplicate_time_ambiguous"] is True
     assert duplicate[0]["duplicate_time_ambiguous"] is True
 
 
@@ -434,8 +546,7 @@ def test_fixed_closeout_roster_status_summary_matches_expected_counts() -> None:
         counts[status] = counts.get(status, 0) + 1
 
     assert counts == {
-        "complete": 20,
-        "pending_completion": 3,
+        "complete": 23,
         "dropout_no_future": 3,
         "known_bad_complete": 2,
         "incomplete_excluded": 1,

@@ -1,0 +1,38 @@
+{
+  "version": "p1_w_max_locked_v1",
+  "basis": "C1 planned load cap from 12 anchor tasks plus 75 core tasks at k=5 over admitted P1 workers",
+  "n_eligible_for_C1": 23,
+  "anchor_tasks_per_worker": 12,
+  "core_tasks": 75,
+  "core_target_k": 5,
+  "max_c1_tasks_per_worker": 29,
+  "worker_w_max": {
+    "1": 29,
+    "2": 29,
+    "6": 29,
+    "8": 29,
+    "10": 29,
+    "11": 29,
+    "12": 29,
+    "13": 29,
+    "14": 29,
+    "15": 29,
+    "17": 29,
+    "18": 29,
+    "27": 29,
+    "28": 29,
+    "29": 29,
+    "30": 29,
+    "31": 29,
+    "32": 29,
+    "33": 29,
+    "34": 29,
+    "35": 29,
+    "36": 29,
+    "37": 29
+  },
+  "notes": [
+    "This is a load cap, not a routing profile.",
+    "Worker 31 admitted with lead_time fallback audit note; primary active_time log remains unavailable."
+  ]
+}
