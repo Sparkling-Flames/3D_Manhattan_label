@@ -1,4 +1,6 @@
 .DS_Store
+*.pyc
+.ipynb_checkpoints/
 output
 ckpt
 data
@@ -144,6 +146,7 @@ docs/AGENT_CONTEXT_INDEX.md
 !tools/**
 !tests/**
 !active_logs/**
+active_logs/new_server/**/*.jsonl
 !analysis_results/**
 !paper_figures/**
 
