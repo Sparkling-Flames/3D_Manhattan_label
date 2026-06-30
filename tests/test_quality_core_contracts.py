@@ -22,6 +22,8 @@ def test_quality_core_contract_flags():
     assert contracts.NO_WORKER_ROUTING is True
     assert contracts.NO_ADMISSION_DECISION is True
     assert contracts.NO_GT_MUTATION is True
+    assert contracts.NO_FORMAL_C1_C2_FREEZE is True
+    assert contracts.NO_HOHONET_LATENT_DT is True
 
 
 def test_quality_core_boundary_files_exist():
