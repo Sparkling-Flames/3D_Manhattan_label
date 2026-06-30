@@ -151,15 +151,38 @@ def test_official_and_foreign_active_time_use_annotation_level_keys_and_panels()
         text = read(path)
         assert "ACTIVE_TIME_TOKEN_PANEL_ID" in text
         assert "ACTIVE_TIME_STATUS_PANEL_ID" in text
+        assert "ACTIVE_TIME_PANEL_MODE_KEY" in text
+        assert "ACTIVE_TIME_RETRY_QUEUE_KEY" in text
+        assert "ACTIVE_TIME_RETRY_TTL_MS = 72 * 60 * 60 * 1000" in text
+        assert "ACTIVE_TIME_RETRY_MAX_ITEMS = 200" in text
         assert "function getCurrentAnnotationId()" in text
+        assert "function getTaskIdentity()" in text
+        assert "function getProjectIdentity()" in text
+        assert "function getAnnotationIdentity()" in text
         assert "store?.annotationStore?.selected?.id" in text
+        assert 'source: "store.task.id"' in text
+        assert 'source: "store.project.id"' in text
+        assert 'source: "store.annotationStore.selected.id"' in text
+        assert 'source: "url.query"' in text
+        assert 'source: "url.path"' in text
         assert "currentActiveTimeKey" in text
         assert "function handleActiveTimeKeyChange(nextMetadata)" in text
         assert "handleActiveTimeKeyChange(resolveActiveTimeMetadata())" in text
         assert "ACTIVE_TIME_KEY_SWITCH" in text
         assert "annotation_id: report.annotationId" in text
+        assert "task_id_source: report.taskIdSource" in text
+        assert "project_id_source: report.projectIdSource" in text
+        assert "annotation_id_source: report.annotationIdSource" in text
         assert "active_time_key: report.activeTimeKey" in text
+        assert "active_time_alias_from: report.activeTimeAliasFrom" in text
+        assert 'activeTimeAliasReason: "unknown_annotation_late_bound"' in text
+        assert 'lateBindingStatus === "ambiguous_multiple_annotations"' in text
+        assert "late_binding_status: report.lateBindingStatus" in text
         assert "annotation_match_status: report.annotationMatchStatus" in text
+        assert "function retryQueuedActiveTime" in text
+        assert "item.retry_status = \"expired_orphaned\"" in text
+        assert 'existing.retry_status === "expired_orphaned"' in text
+        assert "String(payload.annotator_id || \"\") !== String(currentAnnotator || \"\")" in text
         assert "lastPostedSecondsByTask.get(report.activeTimeKey)" in text
         assert "taskCumulativeSeconds.get(metadata.activeTimeKey)" in text
         assert "taskCumulativeSeconds.set(report.activeTimeKey, report.reportSeconds)" in text

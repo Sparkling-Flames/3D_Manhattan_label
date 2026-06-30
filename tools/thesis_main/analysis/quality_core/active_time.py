@@ -38,6 +38,13 @@ def _parse_active_log_event_time(data):
     return None
 
 
+def _parse_active_time_key(value):
+    parts = str(value or '').split('|')
+    if len(parts) != 4:
+        return None
+    return tuple(part.strip() for part in parts)
+
+
 def load_active_logs(log_dir, start_time=None, end_time=None):
     """
     Load active time logs from a directory of JSONL files.
@@ -63,6 +70,10 @@ def load_active_logs(log_dir, start_time=None, end_time=None):
     session_maxes = defaultdict(float)
     session_files = defaultdict(set)
     session_events = defaultdict(int)
+    alias_superseded_session_keys = set()
+    ambiguous_promotion_session_keys = set()
+    actual_annotations_by_context = defaultdict(set)
+    parsed_events = []
     start_dt = _parse_cli_datetime(start_time) if start_time else None
     end_dt = _parse_cli_datetime(end_time, is_end=True) if end_time else None
 
@@ -95,14 +106,51 @@ def load_active_logs(log_dir, start_time=None, end_time=None):
                     p_id = str(data.get('project_id', '') or '').strip()
                     sec = float(data.get('active_seconds', 0))
                     ann_id = str(data.get('annotation_id', '') or '').strip()
+                    alias_from = _parse_active_time_key(data.get('active_time_alias_from'))
+                    alias_reason = str(data.get('active_time_alias_reason', '') or '').strip()
+                    late_status = str(data.get('late_binding_status', '') or '').strip()
 
-                    key = (p_id, t_id, a_id, ann_id, s_id)
-                    if sec > session_maxes[key]:
-                        session_maxes[key] = sec
-                    session_files[key].add(os.path.basename(fpath))
-                    session_events[key] += 1
+                    parsed_events.append(
+                        (p_id, t_id, a_id, ann_id, s_id, sec, os.path.basename(fpath), alias_from, alias_reason, late_status)
+                    )
+                    if ann_id and ann_id != 'unknown_annotation':
+                        actual_annotations_by_context[(p_id, t_id, a_id, s_id)].add(ann_id)
                 except Exception:
                     pass
+
+    for p_id, t_id, a_id, ann_id, s_id, _sec, _source_file, alias_from, alias_reason, late_status in parsed_events:
+        if (
+            alias_from
+            and alias_reason == 'unknown_annotation_late_bound'
+            and late_status == 'single_actual_annotation'
+        ):
+            alias_p, alias_t, alias_a, _alias_ann = alias_from
+            if (alias_p, alias_t, alias_a) == (p_id, t_id, a_id):
+                actual_ids = actual_annotations_by_context[(p_id, t_id, a_id, s_id)]
+                if len(actual_ids) > 1:
+                    ambiguous_promotion_session_keys.add((p_id, t_id, a_id, ann_id, s_id))
+
+    for p_id, t_id, a_id, ann_id, s_id, sec, source_file, alias_from, alias_reason, late_status in parsed_events:
+        try:
+            key = (p_id, t_id, a_id, ann_id, s_id)
+            if key in ambiguous_promotion_session_keys:
+                continue
+            if (
+                alias_from
+                and alias_reason == 'unknown_annotation_late_bound'
+                and late_status == 'single_actual_annotation'
+            ):
+                alias_p, alias_t, alias_a, alias_ann = alias_from
+                if (alias_p, alias_t, alias_a) == (p_id, t_id, a_id):
+                            actual_ids = actual_annotations_by_context[(p_id, t_id, a_id, s_id)]
+                            if actual_ids == {ann_id}:
+                                alias_superseded_session_keys.add((alias_p, alias_t, alias_a, alias_ann, s_id))
+            if sec > session_maxes[key]:
+                session_maxes[key] = sec
+            session_files[key].add(source_file)
+            session_events[key] += 1
+        except Exception:
+            pass
 
     final_logs = defaultdict(lambda: {
         'active_time_value': 0.0,
@@ -112,6 +160,8 @@ def load_active_logs(log_dir, start_time=None, end_time=None):
         'active_time_project_ids': set(),
     })
     for (p_id, t_id, a_id, ann_id, _s_id), max_sec in session_maxes.items():
+        if (p_id, t_id, a_id, ann_id, _s_id) in alias_superseded_session_keys:
+            continue
         bucket = final_logs[(p_id, t_id, a_id)]
         bucket['active_time_value'] += max_sec
         bucket['active_time_source_file'].update(session_files[(p_id, t_id, a_id, ann_id, _s_id)])

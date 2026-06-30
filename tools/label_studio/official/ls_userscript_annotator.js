@@ -49,6 +49,8 @@
   function isLikelyAnnotationPage() {
     try {
       // URL 带 task 参数，或路径包含 /tasks/<id>
+      const taskIdentity = getTaskIdentity?.();
+      if (taskIdentity && taskIdentity.id !== "unknown") return true;
       const params = new URLSearchParams(window.location.search);
       if (params.get("task")) return true;
       if (/\/tasks\/\d+/.test(window.location.pathname)) return true;
@@ -68,6 +70,10 @@
   const DEBUG_ID = "hohonet-debug-panel";
   const ACTIVE_TIME_TOKEN_PANEL_ID = "hohonet-active-time-token-panel";
   const ACTIVE_TIME_STATUS_PANEL_ID = "hohonet-active-time-status-panel";
+  const ACTIVE_TIME_PANEL_MODE_KEY = "HOHONET_ACTIVE_TIME_PANEL_MODE";
+  const ACTIVE_TIME_RETRY_QUEUE_KEY = "HOHONET_ACTIVE_TIME_RETRY_QUEUE_V1";
+  const ACTIVE_TIME_RETRY_TTL_MS = 72 * 60 * 60 * 1000;
+  const ACTIVE_TIME_RETRY_MAX_ITEMS = 200;
   const OVERLAY_ID = "hohonet-overlay";
   const TOGGLE_BTN_ID = "hohonet-toggle-labels-btn";
   const LABELS_VISIBLE_KEY = "hohonet_labels_visible"; // sessionStorage
@@ -323,11 +329,37 @@
     return panel;
   }
 
+  function getActiveTimePanelMode() {
+    try {
+      const mode = window.localStorage.getItem(ACTIVE_TIME_PANEL_MODE_KEY);
+      return ["compact", "details", "hidden"].includes(mode) ? mode : "compact";
+    } catch (e) {
+      return "compact";
+    }
+  }
+
+  function setActiveTimePanelMode(mode) {
+    try {
+      window.localStorage.setItem(ACTIVE_TIME_PANEL_MODE_KEY, mode);
+    } catch (e) {}
+  }
+
+  function isActiveTimePanelForcedOpen(metadata, uploadStatus, tokenOk) {
+    const status = String(uploadStatus || "");
+    return (
+      !tokenOk ||
+      ["missing_token", "forbidden_403", "fetch_failed"].includes(status) ||
+      status.startsWith("http_") ||
+      (metadata && metadata.annotationMatchStatus === "unknown_annotation")
+    );
+  }
+
   function setStoredLogTokenFromPrompt() {
     const token = window.prompt("Set HOHONET_LOG_TOKEN");
     if (token && token.trim()) {
       window.localStorage.setItem("HOHONET_LOG_TOKEN", token.trim());
       updateActiveTimePanels(null, "token_set");
+      void retryQueuedActiveTime("TOKEN_SET");
     }
   }
 
@@ -336,22 +368,39 @@
     const tokenPanel = ensureActiveTimePanel(ACTIVE_TIME_TOKEN_PANEL_ID, 12);
     const statusPanel = ensureActiveTimePanel(ACTIVE_TIME_STATUS_PANEL_ID, 92);
     const tokenOk = Boolean(getLogToken());
+    const metadata = report || resolveActiveTimeMetadata();
+    const mode = getActiveTimePanelMode();
+    const forcedOpen = isActiveTimePanelForcedOpen(metadata, lastActiveTimeUploadStatus, tokenOk);
+    const showDetails = forcedOpen || mode === "details";
+    const hidden = mode === "hidden" && !forcedOpen;
+    tokenPanel.style.display = hidden ? "none" : "block";
+    statusPanel.style.display = showDetails && !hidden ? "block" : "none";
     tokenPanel.textContent = tokenOk
       ? `Log token OK (${maskToken(getLogToken())})`
       : "Missing HOHONET_LOG_TOKEN. Active-time upload may fail.";
+    tokenPanel.style.cursor = "pointer";
+    tokenPanel.onclick = () => {
+      const nextMode = getActiveTimePanelMode() === "details" ? "compact" : "details";
+      setActiveTimePanelMode(nextMode);
+      updateActiveTimePanels(report, lastActiveTimeUploadStatus);
+    };
     if (!tokenOk) {
       const button = document.createElement("button");
       button.textContent = "Set token";
       button.style.cssText = "margin-left: 8px; font-size: 12px;";
+      button.onclick = (event) => event.stopPropagation();
       button.addEventListener("click", setStoredLogTokenFromPrompt);
       tokenPanel.appendChild(button);
     }
-    const metadata = report || resolveActiveTimeMetadata();
     const seconds = report && report.reportSeconds !== undefined ? report.reportSeconds : activeSeconds;
     statusPanel.textContent = [
       `Active-time status: ${lastActiveTimeUploadStatus}`,
       `key: ${metadata.activeTimeKey || "unknown"}`,
       `annotation: ${metadata.annotationId || "unknown_annotation"} (${metadata.annotationMatchStatus || "unknown_annotation"})`,
+      `task source: ${metadata.taskIdSource || "unknown"}`,
+      `project source: ${metadata.projectIdSource || "unknown"}`,
+      `annotation source: ${metadata.annotationIdSource || "unknown"}`,
+      `late-binding: ${metadata.lateBindingStatus || "none"}`,
       `seconds: ${seconds}`,
     ].join("\n");
     statusPanel.style.border = metadata.annotationMatchStatus === "unknown_annotation" ? "1px solid #f59e0b" : "1px solid #3f3f46";
@@ -878,14 +927,63 @@
     } catch (e) {}
   }
 
-  function getCurrentAnnotationId() {
+  function getIdentityValue(value) {
+    if (value === undefined || value === null) return null;
+    const normalized = String(value).trim();
+    return normalized && normalized !== "unknown" ? normalized : null;
+  }
+
+  function getTaskIdentity() {
     try {
       const store = getStore();
-      const annId = store?.annotationStore?.selected?.id;
-      if (annId !== undefined && annId !== null && String(annId).trim()) {
-        return String(annId).trim();
+      const taskId = getIdentityValue(
+        store?.task?.id ||
+          store?.taskStore?.selected?.id ||
+          store?.annotationStore?.selected?.task?.id,
+      );
+      if (taskId) {
+        return { id: taskId, source: "store.task.id" };
       }
     } catch (e) {}
+    try {
+      const params = new URLSearchParams(window.location.search);
+      const q = getIdentityValue(params.get("task"));
+      if (q) return { id: q, source: "url.query" };
+      const match = window.location.pathname.match(/tasks\/(\d+)/);
+      if (match) return { id: match[1], source: "url.path" };
+    } catch (e) {}
+    return { id: "unknown", source: "unknown" };
+  }
+
+  function getProjectIdentity() {
+    try {
+      const store = getStore();
+      const projectId = getIdentityValue(store?.project?.id);
+      if (projectId) {
+        return { id: projectId, source: "store.project.id" };
+      }
+    } catch (e) {}
+    try {
+      const match = window.location.pathname.match(/projects\/(\d+)/);
+      if (match) return { id: match[1], source: "url.path" };
+    } catch (e) {}
+    return { id: "unknown", source: "unknown" };
+  }
+
+  function getAnnotationIdentity() {
+    try {
+      const store = getStore();
+      const annId = getIdentityValue(store?.annotationStore?.selected?.id);
+      if (annId) {
+        return { id: annId, source: "store.annotationStore.selected.id" };
+      }
+    } catch (e) {}
+    return { id: "unknown_annotation", source: "unknown" };
+  }
+
+  function getCurrentAnnotationId() {
+    const identity = getAnnotationIdentity();
+    if (identity.id !== "unknown") return identity.id;
     return "unknown_annotation";
   }
 
@@ -2508,6 +2606,7 @@
   let currentTaskId = null;
   let currentActiveTimeKey = null;
   let currentActiveTimeMetadata = null;
+  const lateBindingActualByContext = new Map();
 
   // v0.21: cumulative seconds per active_time_key within same session.
   const taskCumulativeSeconds = new Map();
@@ -2518,6 +2617,9 @@
     "projectName",
     "annotatorId",
     "annotationId",
+    "taskIdSource",
+    "projectIdSource",
+    "annotationIdSource",
   ];
   const lastKnownActiveTimeMetadata = {
     taskId: null,
@@ -2525,6 +2627,9 @@
     projectName: null,
     annotatorId: null,
     annotationId: null,
+    taskIdSource: null,
+    projectIdSource: null,
+    annotationIdSource: null,
     updatedAt: 0,
   };
 
@@ -2574,16 +2679,22 @@
   }
 
   function captureCurrentActiveTimeMetadata(preferredTaskId = null) {
+    const taskIdentity = getTaskIdentity();
+    const projectIdentity = getProjectIdentity();
+    const annotationIdentity = getAnnotationIdentity();
     const taskId =
       preferredTaskId !== null && preferredTaskId !== undefined
         ? preferredTaskId
-        : currentTaskId || getTaskId();
+        : currentTaskId || taskIdentity.id;
     return {
       taskId,
-      projectId: getProjectId(),
+      taskIdSource: taskIdentity.source,
+      projectId: projectIdentity.id,
+      projectIdSource: projectIdentity.source,
       projectName: getProjectName(),
       annotatorId: getAnnotatorId(),
-      annotationId: getCurrentAnnotationId(),
+      annotationId: annotationIdentity.id,
+      annotationIdSource: annotationIdentity.source,
     };
   }
 
@@ -2600,6 +2711,42 @@
       metadata.annotatorId || "unknown",
       metadata.annotationId || "unknown_annotation",
     ].join("|");
+  }
+
+  function activeTimeContextKey(metadata) {
+    return [
+      sessionId,
+      metadata.projectId || "unknown",
+      metadata.taskId || "unknown",
+      metadata.annotatorId || "unknown",
+    ].join("|");
+  }
+
+  function isUnknownAnnotationMetadata(metadata) {
+    return !metadata || metadata.annotationId === "unknown_annotation";
+  }
+
+  function noteActualAnnotationForContext(metadata) {
+    if (!metadata || isUnknownAnnotationMetadata(metadata)) return "unknown_annotation";
+    const contextKey = activeTimeContextKey(metadata);
+    const existing = lateBindingActualByContext.get(contextKey);
+    if (existing && existing !== metadata.annotationId) {
+      lateBindingActualByContext.set(contextKey, "__ambiguous__");
+      return "ambiguous_multiple_annotations";
+    }
+    if (existing === "__ambiguous__") return "ambiguous_multiple_annotations";
+    lateBindingActualByContext.set(contextKey, metadata.annotationId);
+    return "single_actual_annotation";
+  }
+
+  function getLateBindingStatusForSwitch(oldMetadata, nextMetadata) {
+    if (!isUnknownAnnotationMetadata(oldMetadata) || isUnknownAnnotationMetadata(nextMetadata)) {
+      return "";
+    }
+    if (activeTimeContextKey(oldMetadata) !== activeTimeContextKey(nextMetadata)) {
+      return "";
+    }
+    return noteActualAnnotationForContext(nextMetadata);
   }
 
   function resolveActiveTimeMetadata(preferredTaskId = null) {
@@ -2630,7 +2777,18 @@
         : lastKnownActiveTimeMetadata.annotatorId || "unknown",
       annotationId,
       annotationMatchStatus: annotationMatchStatus(annotationId),
+      taskIdSource: isKnownActiveTimeMetadataValue(live.taskIdSource)
+        ? String(live.taskIdSource).trim()
+        : lastKnownActiveTimeMetadata.taskIdSource || "unknown",
+      projectIdSource: isKnownActiveTimeMetadataValue(live.projectIdSource)
+        ? String(live.projectIdSource).trim()
+        : lastKnownActiveTimeMetadata.projectIdSource || "unknown",
+      annotationIdSource: isKnownActiveTimeMetadataValue(live.annotationIdSource)
+        ? String(live.annotationIdSource).trim()
+        : lastKnownActiveTimeMetadata.annotationIdSource || "unknown",
+      lateBindingStatus: "",
     };
+    noteActualAnnotationForContext(resolved);
     resolved.activeTimeKey = buildActiveTimeKey(resolved);
     return resolved;
   }
@@ -2659,7 +2817,13 @@
       annotationId: metadata.annotationId,
       annotationMatchStatus: metadata.annotationMatchStatus,
       activeTimeKey: metadata.activeTimeKey,
+      activeTimeAliasFrom: metadata.activeTimeAliasFrom || "",
+      activeTimeAliasReason: metadata.activeTimeAliasReason || "",
+      lateBindingStatus: metadata.lateBindingStatus || "",
       projectId: metadata.projectId,
+      taskIdSource: metadata.taskIdSource || "unknown",
+      projectIdSource: metadata.projectIdSource || "unknown",
+      annotationIdSource: metadata.annotationIdSource || "unknown",
       projectName: metadata.projectName,
       annotatorId: metadata.annotatorId,
       currentFragment,
@@ -2671,14 +2835,160 @@
     };
   }
 
+  function buildActiveTimePayload(report, manualFlush) {
+    return {
+      task_id: report.reportTaskId,
+      task_id_source: report.taskIdSource,
+      annotation_id: report.annotationId,
+      annotation_id_source: report.annotationIdSource,
+      active_time_key: report.activeTimeKey,
+      active_time_alias_from: report.activeTimeAliasFrom || "",
+      active_time_alias_reason: report.activeTimeAliasReason || "",
+      late_binding_status: report.lateBindingStatus || "",
+      annotation_match_status: report.annotationMatchStatus,
+      project_id: report.projectId,
+      project_id_source: report.projectIdSource,
+      project_name: report.projectName,
+      annotator_id: report.annotatorId,
+      session_id: sessionId,
+      active_seconds: report.reportSeconds,
+      active_seconds_fragment: report.currentFragment,
+      timestamp: Date.now(),
+      is_manual_flush: manualFlush,
+      script_version: SCRIPT_VERSION,
+      page_type: report.pageType,
+    };
+  }
+
+  function loadActiveTimeRetryQueue() {
+    try {
+      const raw = window.localStorage.getItem(ACTIVE_TIME_RETRY_QUEUE_KEY);
+      const parsed = raw ? JSON.parse(raw) : {};
+      return parsed && typeof parsed === "object" && !Array.isArray(parsed) ? parsed : {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function saveActiveTimeRetryQueue(queue) {
+    try {
+      window.localStorage.setItem(ACTIVE_TIME_RETRY_QUEUE_KEY, JSON.stringify(queue));
+    } catch (e) {}
+  }
+
+  function activeTimeQueueKey(payload) {
+    return `${payload.session_id || sessionId}|${payload.active_time_key}`;
+  }
+
+  function pruneActiveTimeRetryQueue(queue) {
+    const now = Date.now();
+    for (const key of Object.keys(queue)) {
+      const item = queue[key] || {};
+      const updatedAt = Number(item.updated_at || item.created_at || 0);
+      if (updatedAt && now - updatedAt > ACTIVE_TIME_RETRY_TTL_MS) {
+        item.retry_status = "expired_orphaned";
+        queue[key] = item;
+      }
+    }
+    const liveEntries = Object.entries(queue)
+      .filter(([, item]) => item.retry_status !== "expired_orphaned")
+      .sort((a, b) => Number(b[1].updated_at || 0) - Number(a[1].updated_at || 0));
+    const keep = new Set(liveEntries.slice(0, ACTIVE_TIME_RETRY_MAX_ITEMS).map(([key]) => key));
+    for (const [key, item] of Object.entries(queue)) {
+      if (item.retry_status !== "expired_orphaned" && !keep.has(key)) {
+        delete queue[key];
+      }
+    }
+    return queue;
+  }
+
+  function upsertActiveTimeRetryPayload(payload) {
+    const queue = pruneActiveTimeRetryQueue(loadActiveTimeRetryQueue());
+    const key = activeTimeQueueKey(payload);
+    const existing = queue[key];
+    const now = Date.now();
+    if (
+      !existing ||
+      existing.retry_status === "expired_orphaned" ||
+      Number(payload.active_seconds || 0) >= Number(existing.payload?.active_seconds || 0)
+    ) {
+      queue[key] = {
+        payload,
+        created_at: existing?.retry_status === "expired_orphaned" ? now : existing?.created_at || now,
+        updated_at: now,
+        retry_status: "pending",
+      };
+    }
+    saveActiveTimeRetryQueue(queue);
+  }
+
+  function deleteActiveTimeRetryPayload(payload) {
+    const queue = loadActiveTimeRetryQueue();
+    delete queue[activeTimeQueueKey(payload)];
+    saveActiveTimeRetryQueue(queue);
+  }
+
+  function deleteActiveTimeRetryKey(activeTimeKey) {
+    const queue = loadActiveTimeRetryQueue();
+    delete queue[`${sessionId}|${activeTimeKey}`];
+    saveActiveTimeRetryQueue(queue);
+  }
+
+  async function retryQueuedActiveTime(logPrefix = "RETRY") {
+    const tokenNow = getLogToken();
+    if (!tokenNow) return;
+    const queue = pruneActiveTimeRetryQueue(loadActiveTimeRetryQueue());
+    const currentAnnotator = getAnnotatorId();
+    for (const [key, item] of Object.entries(queue)) {
+      if (!item || item.retry_status === "expired_orphaned") continue;
+      const payload = item.payload || {};
+      if (String(payload.annotator_id || "") !== String(currentAnnotator || "")) continue;
+      try {
+        const response = await fetch(HOHONET_LOG_TIME_URL(), {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "X-HOHONET-TOKEN": tokenNow,
+          },
+          body: JSON.stringify(payload),
+        });
+        if (response.ok) {
+          delete queue[key];
+        }
+      } catch (e) {
+        console.warn(`[${logPrefix}] retry failed:`, e);
+      }
+    }
+    saveActiveTimeRetryQueue(queue);
+  }
+
   function handleActiveTimeKeyChange(nextMetadata) {
     if (!nextMetadata || nextMetadata.taskId === "unknown") return;
     if (
       currentActiveTimeKey &&
       nextMetadata.activeTimeKey !== currentActiveTimeKey &&
-      activeSeconds > 0
+      (activeSeconds > 0 || taskCumulativeSeconds.has(currentActiveTimeKey))
     ) {
-      const report = buildActiveTimeReport(null, activeSeconds, currentActiveTimeMetadata);
+      const lateBindingStatus = getLateBindingStatusForSwitch(currentActiveTimeMetadata, nextMetadata);
+      let reportMetadata = currentActiveTimeMetadata;
+      let secondsForReport = activeSeconds;
+      if (lateBindingStatus === "single_actual_annotation") {
+        reportMetadata = {
+          ...nextMetadata,
+          activeTimeAliasFrom: currentActiveTimeKey,
+          activeTimeAliasReason: "unknown_annotation_late_bound",
+          lateBindingStatus,
+        };
+        secondsForReport = (taskCumulativeSeconds.get(currentActiveTimeKey) || 0) + activeSeconds;
+        taskCumulativeSeconds.delete(currentActiveTimeKey);
+        deleteActiveTimeRetryKey(currentActiveTimeKey);
+      } else if (lateBindingStatus === "ambiguous_multiple_annotations") {
+        reportMetadata = {
+          ...currentActiveTimeMetadata,
+          lateBindingStatus,
+        };
+      }
+      const report = buildActiveTimeReport(null, secondsForReport, reportMetadata);
       if (report) {
         taskCumulativeSeconds.set(report.activeTimeKey, report.reportSeconds);
         void postActiveTimeReport(report, {
@@ -2706,6 +3016,8 @@
     }
 
     const tokenNow = getLogToken();
+    const payload = buildActiveTimePayload(report, manualFlush);
+    upsertActiveTimeRetryPayload(payload);
     if (!tokenNow) {
       updateActiveTimePanels(report, "missing_token");
     }
@@ -2717,22 +3029,7 @@
           "Content-Type": "application/json",
           ...(tokenNow ? { "X-HOHONET-TOKEN": tokenNow } : {}),
         },
-        body: JSON.stringify({
-          task_id: report.reportTaskId,
-          annotation_id: report.annotationId,
-          active_time_key: report.activeTimeKey,
-          annotation_match_status: report.annotationMatchStatus,
-          project_id: report.projectId,
-          project_name: report.projectName,
-          annotator_id: report.annotatorId,
-          session_id: sessionId,
-          active_seconds: report.reportSeconds,
-          active_seconds_fragment: report.currentFragment,
-          timestamp: Date.now(),
-          is_manual_flush: manualFlush,
-          script_version: SCRIPT_VERSION,
-          page_type: report.pageType,
-        }),
+        body: JSON.stringify(payload),
       });
       if (!response.ok) {
         updateActiveTimePanels(report, response.status === 403 ? "forbidden_403" : `http_${response.status}`);
@@ -2746,6 +3043,7 @@
         }
       } else {
         lastPostedSecondsByTask.set(report.activeTimeKey, report.reportSeconds);
+        deleteActiveTimeRetryPayload(payload);
         updateActiveTimePanels(report, "ok");
       }
       if (response.ok && manualFlush) {
@@ -2873,24 +3171,12 @@
 
   // 尝试从 URL 或 UI 提取任务 ID
   function getTaskId() {
-    // 1. URL 参数
-    const params = new URLSearchParams(window.location.search);
-    if (params.get("task")) return params.get("task");
-
-    // 2. URL 路径 (例如 /projects/1/data/import?task=123)
-    // 或 /projects/1/tasks/123
-    const match = window.location.pathname.match(/tasks\/(\d+)/);
-    if (match) return match[1];
-
-    return "unknown";
+    return getTaskIdentity().id;
   }
 
   // 尝试从 URL 提取项目 ID
   function getProjectId() {
-    // URL 路径 (例如 /projects/1/data/import?task=123)
-    const match = window.location.pathname.match(/projects\/(\d+)/);
-    if (match) return match[1];
-    return "unknown";
+    return getProjectIdentity().id;
   }
 
   // 尝试提取项目名称
@@ -3004,6 +3290,7 @@
   window.addEventListener("focus", () => {
     isWindowFocused = document.hasFocus();
     lastActivityTime = 0;
+    void retryQueuedActiveTime("FOCUS_RETRY");
   });
 
   window.addEventListener("pagehide", () => {
@@ -3120,6 +3407,8 @@
     if (TARGET_PROJECTS.length > 0 && !TARGET_PROJECTS.includes(projectId)) {
       return; // 如果不在目标项目中，跳过日志记录
     }
+
+    void retryQueuedActiveTime("PERIODIC_RETRY");
 
     // 周期性上报当前任务的累积时间
     // v0.21: active_seconds 改为累积值 (之前片段 + 当前片段)

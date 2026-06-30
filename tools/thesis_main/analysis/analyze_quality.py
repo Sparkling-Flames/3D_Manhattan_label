@@ -180,7 +180,7 @@ def main():
                     'details': cons_details
                 })
 
-            for ann in anns:
+            for ann_index, ann in enumerate(anns, start=1):
                 # If we still don't have a prediction object, check if it's inside the annotation
                 current_pred_obj = pred_obj
                 if not current_pred_obj and ann.get('prediction') and isinstance(ann.get('prediction'), dict):
@@ -210,13 +210,15 @@ def main():
                         u_id = str(ann['completed_by'].get('id', 'unknown'))
                     else:
                         u_id = str(ann['completed_by'])
-                
+                annotation_id = str(ann.get('id') or f"annotation_index_{ann_index}")
+
                 # Get active time from logs, fallback to lead_time
                 active_log_entry, active_time_match_status = lookup_active_log_entry(
                     active_times,
                     export_project_id,
                     t_id,
                     u_id,
+                    annotation_id=annotation_id,
                 )
                 active_time = 0
                 active_time_source = 'missing'
