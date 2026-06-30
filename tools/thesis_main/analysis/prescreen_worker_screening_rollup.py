@@ -90,6 +90,8 @@ def _recommend(row: dict[str, Any]) -> tuple[str, str]:
         return "exclude_process_risk", "completion_or_process_risk"
     if _safe(row["copy_audit_recommended_action"]) == "fail_recommended":
         return "exclude_process_risk", "copy_low_time_fail_recommended"
+    if int(row["n_revision"]) > 0:
+        return "manual_review", "duplicate_revision_manual_review"
     high = int(row["n_undercoverage_high"])
     available = int(row["n_alignment_available"])
     high_rate = high / available if available else 0.0
@@ -106,6 +108,8 @@ def _recommend(row: dict[str, Any]) -> tuple[str, str]:
 
 def _evidence_tier(row: dict[str, Any]) -> str:
     if _safe(row["screening_recommendation"]) == "exclude_process_risk":
+        return "process_risk"
+    if _safe(row["screening_reason"]) == "duplicate_revision_manual_review":
         return "process_risk"
     if int(row["n_minority_full_room_candidate"]) > 0 and _safe(row["screening_reason"]) == "protected_full_room_candidate":
         return "protected_full_room"
