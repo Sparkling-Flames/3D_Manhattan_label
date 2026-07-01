@@ -1,0 +1,28 @@
+{
+  "passed": false,
+  "blockers": [
+    "p1_c1_overlap_audit"
+  ],
+  "protocol_position": "C1_launch_readiness_only_not_final_worker_tier",
+  "pass_count_gate": "full_execution",
+  "watch_policy": "retained_as_handoff_sidecar_not_exclusion",
+  "audit_status": {
+    "assignment_manifest_audit": true,
+    "p1_c1_overlap_audit": false,
+    "project_mapping_audit": true,
+    "tests": true
+  },
+  "counts": {
+    "workers": 23,
+    "clean_pass_workers": 6,
+    "watch_pass_workers": 17,
+    "anchor_tasks": 12,
+    "core_tasks": 75,
+    "reserve_tasks": 13,
+    "reserve_assignments": 0,
+    "assignment_rows": 651,
+    "distribution_workers": 23,
+    "core_redundancy_min": 5,
+    "core_redundancy_max": 5
+  }
+}

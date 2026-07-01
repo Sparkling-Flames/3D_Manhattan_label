@@ -1,0 +1,39 @@
+{
+  "passed": true,
+  "blockers": [],
+  "counts": {
+    "projects": 2,
+    "assignment_batches": 2,
+    "reserve_task_imports": 0,
+    "project_task_mismatches": 0,
+    "language_entry_mismatches": 0
+  },
+  "project_audit_rows": [
+    {
+      "project_name": "C1_anchor_all",
+      "interface_language": "zh",
+      "assignment_batch": "anchor_all",
+      "import_json": "import_json\\outline_v2_seed20260228\\stage2_calibration_manual_anchor_import.json",
+      "expected_task_count": 12,
+      "imported_task_count": 12,
+      "missing_task_count": 0,
+      "extra_task_count": 0,
+      "reserve_task_count": 0,
+      "wrong_group_count": 0,
+      "passed": true
+    },
+    {
+      "project_name": "C1_core_all",
+      "interface_language": "zh",
+      "assignment_batch": "core_rr_k5",
+      "import_json": "import_json\\outline_v2_seed20260228\\stage2_calibration_manual_core_import.json",
+      "expected_task_count": 75,
+      "imported_task_count": 75,
+      "missing_task_count": 0,
+      "extra_task_count": 0,
+      "reserve_task_count": 0,
+      "wrong_group_count": 0,
+      "passed": true
+    }
+  ]
+}
