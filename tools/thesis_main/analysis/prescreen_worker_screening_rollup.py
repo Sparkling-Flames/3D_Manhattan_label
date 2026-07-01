@@ -9,6 +9,7 @@ from typing import Any
 
 DEFAULT_DIR = Path("analysis_results/prescreen_closeout")
 DEFAULT_EXACT_COPY = Path("analysis_results/p1_exact_copy_low_time_audit/p1_worker_independence_summary.csv")
+DEFAULT_MANUAL_OVERRIDES = Path("analysis_results/prescreen_closeout/prescreen_manual_overrides_20260701.json")
 HIGH_REVIEW_MIN_COUNT = 2
 HIGH_REVIEW_RATE = 0.2
 
@@ -22,6 +23,9 @@ AUDIT_FIELDS = [
     "active_time_source_coverage",
     "n_duplicate_same_geometry",
     "n_revision",
+    "n_revision_resolved_by_manual_override",
+    "duplicate_revision_resolution",
+    "fallback_watch",
     "n_exact_copy_low_time_events",
     "copy_audit_recommended_action",
     "n_scope_correct_in_scope",
@@ -70,6 +74,21 @@ def _load_optional_csv(path: Path | None) -> tuple[list[dict[str, str]], bool]:
         return list(csv.DictReader(f)), False
 
 
+def _load_manual_overrides(path: Path | None) -> tuple[dict[tuple[str, str], str], set[str]]:
+    if not path or not path.exists():
+        return {}, set()
+    data = json.loads(path.read_text(encoding="utf-8"))
+    resolved: dict[tuple[str, str], str] = {}
+    for item in data.get("duplicate_annotation_overrides", []):
+        worker_id = _safe(item.get("worker_id"))
+        task_id = _safe(item.get("task_id"))
+        final_annotation_id = _safe(item.get("final_annotation_id"))
+        if _safe(item.get("duplicate_geometry_type")) == "revision" and worker_id and task_id and final_annotation_id:
+            resolved[(worker_id, task_id)] = f"manual_override_resolved_final_annotation_{final_annotation_id}"
+    fallback_watch = {_safe(item.get("worker_id")) for item in data.get("fallback_watch_workers", []) if _safe(item.get("worker_id"))}
+    return resolved, fallback_watch
+
+
 def _write_csv(path: Path, rows: list[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as f:
@@ -90,8 +109,10 @@ def _recommend(row: dict[str, Any]) -> tuple[str, str]:
         return "exclude_process_risk", "completion_or_process_risk"
     if _safe(row["copy_audit_recommended_action"]) == "fail_recommended":
         return "exclude_process_risk", "copy_low_time_fail_recommended"
-    if int(row["n_revision"]) > 0:
+    if int(row["n_revision"]) > int(row["n_revision_resolved_by_manual_override"]):
         return "manual_review", "duplicate_revision_manual_review"
+    if _safe(row["duplicate_revision_resolution"]):
+        return "continue_candidate", _safe(row["duplicate_revision_resolution"])
     high = int(row["n_undercoverage_high"])
     available = int(row["n_alignment_available"])
     high_rate = high / available if available else 0.0
@@ -109,7 +130,7 @@ def _recommend(row: dict[str, Any]) -> tuple[str, str]:
 def _evidence_tier(row: dict[str, Any]) -> str:
     if _safe(row["screening_recommendation"]) == "exclude_process_risk":
         return "process_risk"
-    if _safe(row["screening_reason"]) == "duplicate_revision_manual_review":
+    if _safe(row["screening_reason"]) == "duplicate_revision_manual_review" or _safe(row["duplicate_revision_resolution"]):
         return "process_risk"
     if int(row["n_minority_full_room_candidate"]) > 0 and _safe(row["screening_reason"]) == "protected_full_room_candidate":
         return "protected_full_room"
@@ -141,6 +162,7 @@ def build_worker_screening_rollup(
     undercoverage_csv: Path,
     consensus_guard_csv: Path,
     exact_copy_csv: Path | None = None,
+    manual_overrides_json: Path | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     completion = _load_csv(completion_csv)
     active = _load_csv(active_time_csv)
@@ -151,19 +173,38 @@ def build_worker_screening_rollup(
     under = _load_csv(undercoverage_csv)
     guard = _load_csv(consensus_guard_csv)
     exact_copy, exact_missing = _load_optional_csv(exact_copy_csv)
+    resolved_revisions, fallback_watch_workers = _load_manual_overrides(manual_overrides_json)
 
     active_rows = defaultdict(lambda: [0.0, 0.0])
     for row in active:
-        active_rows[_safe(row.get("annotator_id"))][0] += _num(row.get("n_log"))
-        active_rows[_safe(row.get("annotator_id"))][1] += _num(row.get("n_rows"))
+        aid = _safe(row.get("annotator_id"))
+        active_rows[aid][0] += _num(row.get("n_log"))
+        active_rows[aid][1] += _num(row.get("n_rows"))
+        if _num(row.get("n_lead_time_fallback")) > 0 and _num(row.get("n_log")) == 0:
+            fallback_watch_workers.add(aid)
     dup_same = Counter(_safe(row.get("annotator_id")) for row in duplicate if _safe(row.get("duplicate_geometry_type")) == "duplicate_same_geometry")
-    revisions = Counter(_safe(row.get("annotator_id")) for row in duplicate if _safe(row.get("duplicate_geometry_type")) == "revision")
+    revisions: Counter[str] = Counter()
+    resolved_revision_counts: Counter[str] = Counter()
+    revision_resolution: dict[str, str] = {}
+    for row in duplicate:
+        if _safe(row.get("duplicate_geometry_type")) != "revision":
+            continue
+        aid = _safe(row.get("annotator_id"))
+        revisions[aid] += 1
+        resolution = resolved_revisions.get((aid, _safe(row.get("task_id"))), "")
+        if resolution:
+            resolved_revision_counts[aid] += 1
+            revision_resolution[aid] = resolution
     exact_events: Counter[str] = Counter()
     exact_action: dict[str, str] = {}
     for row in exact_copy:
         aid = _worker_id(row)
-        exact_events[aid] += int(_num(row.get("n_exact_copy_low_time_events")) or 1)
         action = _safe(row.get("copy_audit_recommended_action") or row.get("recommended_action"))
+        n_events = int(_num(row.get("n_exact_copy_low_time_events")))
+        if n_events > 0:
+            exact_events[aid] += n_events
+        elif action and action != "no_action":
+            exact_events[aid] += 1
         if action:
             exact_action[aid] = action
     scope_counts: dict[str, Counter[str]] = defaultdict(Counter)
@@ -187,6 +228,7 @@ def build_worker_screening_rollup(
     for comp in completion:
         aid = _safe(comp.get("annotator_id"))
         active_log, active_total = active_rows[aid]
+        fallback_watch = aid in fallback_watch_workers and _truthy(comp.get("eligible_for_primary_prescreen_candidate"))
         row = {
             "annotator_id": aid,
             "completion_status": _safe(comp.get("completion_status")),
@@ -197,6 +239,9 @@ def build_worker_screening_rollup(
             "active_time_source_coverage": f"{(active_log / active_total):.6g}" if active_total else "",
             "n_duplicate_same_geometry": dup_same[aid],
             "n_revision": revisions[aid],
+            "n_revision_resolved_by_manual_override": resolved_revision_counts[aid],
+            "duplicate_revision_resolution": revision_resolution.get(aid, ""),
+            "fallback_watch": fallback_watch,
             "n_exact_copy_low_time_events": exact_events[aid],
             "copy_audit_recommended_action": exact_action.get(aid, ""),
             "n_scope_correct_in_scope": scope_counts[aid]["correct_in_scope"],
@@ -217,14 +262,22 @@ def build_worker_screening_rollup(
         row["screening_recommendation"], row["screening_reason"] = _recommend(row)
         row["evidence_tier"] = _evidence_tier(row)
         out.append(row)
+    unresolved_manual_review = sum(_safe(row["screening_recommendation"]) == "manual_review" for row in out)
+    has_pending = any(_safe(row.get("completion_status")) == "pending_completion" for row in completion)
+    ready_for_review = not has_pending and unresolved_manual_review == 0
+    eligible_fallback_watch = {_safe(row["annotator_id"]) for row in out if _truthy(row.get("fallback_watch"))}
     summary = {
         "dry_run": True,
-        "screening_status": "provisional_dry_run",
-        "final_stage1_closeout_ready": False,
-        "stage2_roster_use": "manual_review_allowed_but_not_formal_admission",
-        "active_time_input_status": "stale_or_not_final",
+        "screening_status": "ready_for_manual_materialization_review" if ready_for_review else "provisional_dry_run",
+        "final_stage1_closeout_ready": ready_for_review,
+        "ready_for_manual_materialization_review": ready_for_review,
+        "stage2_roster_use": "manual_materialization_review_ready_not_formal_admission",
+        "active_time_input_status": "final_with_fallback_watch" if eligible_fallback_watch else "final_primary_log_only",
+        "fallback_watch_worker_ids": sorted(eligible_fallback_watch, key=lambda x: int(x) if x.isdigit() else x),
+        "unresolved_manual_review_count": unresolved_manual_review,
+        "manual_override_resolved_revision_count": sum(resolved_revision_counts.values()),
         "completion_input_status": "pending_workers_present"
-        if any(_safe(row.get("completion_status")) == "pending_completion" for row in completion)
+        if has_pending
         else "no_pending_workers_in_current_completion_audit",
         "worker_rows": len(out),
         "screening_recommendation_counts": dict(Counter(str(row["screening_recommendation"]) for row in out)),
@@ -266,6 +319,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--undercoverage-csv", default=str(DEFAULT_DIR / "prescreen_undercoverage_risk_audit.csv"))
     parser.add_argument("--consensus-guard-csv", default=str(DEFAULT_DIR / "prescreen_consensus_guard_audit.csv"))
     parser.add_argument("--exact-copy-csv", default=str(DEFAULT_EXACT_COPY))
+    parser.add_argument("--manual-overrides-json", default=str(DEFAULT_MANUAL_OVERRIDES))
     parser.add_argument("--output-dir", default=str(DEFAULT_DIR))
     args = parser.parse_args(argv)
     rows, summary = build_worker_screening_rollup(
@@ -278,6 +332,7 @@ def main(argv: list[str] | None = None) -> int:
         Path(args.undercoverage_csv),
         Path(args.consensus_guard_csv),
         Path(args.exact_copy_csv) if args.exact_copy_csv else None,
+        Path(args.manual_overrides_json) if args.manual_overrides_json else None,
     )
     out_dir = Path(args.output_dir)
     audit_path = out_dir / "prescreen_worker_screening_rollup.csv"

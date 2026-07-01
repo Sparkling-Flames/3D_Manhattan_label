@@ -54,6 +54,7 @@ def _run(tmp_path: Path, workers: list[dict], **overrides):
         paths["under"],
         paths["guard"],
         paths.get("exact"),
+        paths.get("manual_overrides"),
     )
 
 
@@ -95,7 +96,7 @@ def test_manual_process_exclusion_is_provisional_override_not_algorithmic_copy_d
     )
 
     assert rows[0]["screening_recommendation"] == "exclude_process_risk"
-    assert summary["screening_status"] == "provisional_dry_run"
+    assert summary["screening_status"] == "ready_for_manual_materialization_review"
     assert summary["manual_process_exclusion_count"] == 1
     assert summary["manual_process_exclusion_ids"] == ["21"]
     assert summary["manual_process_exclusion_basis"] == "manual_process_risk_override_not_algorithmic_copy_detection"
@@ -111,6 +112,13 @@ def test_exact_copy_fail_recommended_excludes_process_risk(tmp_path: Path) -> No
     assert summary["copy_risk_evaluation_status"] == "evaluated"
 
 
+def test_exact_copy_no_action_zero_events_does_not_create_watch_event(tmp_path: Path) -> None:
+    exact = _csv(tmp_path / "exact.csv", [{"worker_id": "w1", "recommended_action": "no_action", "n_exact_copy_low_time_events": "0"}])
+    rows, _summary = _run(tmp_path, [_completion("w1")], exact=exact)
+
+    assert rows[0]["n_exact_copy_low_time_events"] == 0
+
+
 def test_revision_duplicate_forces_process_manual_review(tmp_path: Path) -> None:
     duplicate = _csv(tmp_path / "duplicate_revision.csv", [{"annotator_id": "w1", "duplicate_geometry_type": "revision", "task_id": "t1"}])
     rows, _summary = _run(tmp_path, [_completion("w1")], duplicate=duplicate)
@@ -118,6 +126,52 @@ def test_revision_duplicate_forces_process_manual_review(tmp_path: Path) -> None
     assert rows[0]["screening_recommendation"] == "manual_review"
     assert rows[0]["screening_reason"] == "duplicate_revision_manual_review"
     assert rows[0]["evidence_tier"] == "process_risk"
+
+
+def test_revision_duplicate_manual_override_resolves_review_but_keeps_audit_trace(tmp_path: Path) -> None:
+    duplicate = _csv(tmp_path / "duplicate_revision.csv", [{"annotator_id": "36", "duplicate_geometry_type": "revision", "task_id": "3129"}])
+    override = tmp_path / "manual_overrides.json"
+    override.write_text(
+        json.dumps(
+            {
+                "duplicate_annotation_overrides": [
+                    {
+                        "worker_id": "36",
+                        "task_id": "3129",
+                        "duplicate_geometry_type": "revision",
+                        "final_annotation_id": "4595",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    rows, summary = _run(tmp_path, [_completion("36")], duplicate=duplicate, manual_overrides=override)
+
+    assert rows[0]["n_revision"] == 1
+    assert rows[0]["n_revision_resolved_by_manual_override"] == 1
+    assert rows[0]["screening_recommendation"] == "continue_candidate"
+    assert rows[0]["screening_reason"] == "manual_override_resolved_final_annotation_4595"
+    assert rows[0]["evidence_tier"] == "process_risk"
+    assert summary["ready_for_manual_materialization_review"] is True
+    assert summary["manual_override_resolved_revision_count"] == 1
+
+
+def test_fallback_only_worker_sets_final_fallback_watch_status(tmp_path: Path) -> None:
+    active = _csv(
+        tmp_path / "active_fallback.csv",
+        [
+            {"annotator_id": "34", "n_log": "0", "n_rows": "10", "n_lead_time_fallback": "10"},
+            {"annotator_id": "26", "n_log": "0", "n_rows": "10", "n_lead_time_fallback": "10"},
+        ],
+    )
+    rows, summary = _run(tmp_path, [_completion("34"), _completion("26", "incomplete_excluded", "False")], active=active)
+    by_worker = {row["annotator_id"]: row for row in rows}
+
+    assert by_worker["34"]["fallback_watch"] is True
+    assert by_worker["26"]["fallback_watch"] is False
+    assert summary["active_time_input_status"] == "final_with_fallback_watch"
+    assert summary["fallback_watch_worker_ids"] == ["34"]
 
 
 def test_single_high_undercoverage_is_warning_candidate_not_manual_review(tmp_path: Path) -> None:
@@ -213,5 +267,5 @@ def test_cli_writes_only_worker_screening_sidecars(tmp_path: Path) -> None:
     rows = list(csv.DictReader((out / "prescreen_worker_screening_rollup.csv").open(encoding="utf-8-sig")))
     assert not any("score" in key.lower() for row in rows for key in row)
     summary = json.loads((out / "prescreen_worker_screening_summary.json").read_text(encoding="utf-8"))
-    assert summary["screening_status"] == "provisional_dry_run"
+    assert summary["screening_status"] == "ready_for_manual_materialization_review"
     assert summary["forbidden_materialization_status"] == "not_generated"

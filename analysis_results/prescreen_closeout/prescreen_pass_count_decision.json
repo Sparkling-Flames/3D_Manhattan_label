@@ -1,19 +1,30 @@
 {
+  "materialization_status": "materialized",
+  "worker_rows": 29,
   "n_invited_or_rostered": 29,
   "n_completed_including_known_bad": 25,
   "n_complete_eligible_pool": 23,
-  "n_pass": 12,
-  "n_pass_with_watch": 11,
+  "n_pass": 9,
+  "n_pass_with_watch": 14,
   "n_fail": 6,
   "n_manual_review_required_unresolved": 0,
   "n_eligible_for_C1": 23,
   "protocol_mode": "full",
   "rq3_scene_specific_allowed": true,
-  "reason": "P1 manual audit allowed all 23 complete eligible workers; hard exclusions are 7,9,16,19,21,26; worker 31 allowed with lead_time fallback audit note.",
+  "reason": "P1 closeout materialized from resolved screening rollup; unresolved manual review count is zero.",
+  "semi_synthetic_issue_review": {
+    "path": "analysis_results\\prescreen_closeout\\prescreen_semi_synthetic_trap_issue_review.csv",
+    "n_mirror_pairs": 6,
+    "planned_actual_mismatch_count": 3
+  },
   "forbidden_freezes_not_created": [
     "formal_r_u",
     "r_u_scene",
     "tau_d",
     "routing_profile"
-  ]
+  ],
+  "prescreen_worker_admission_csv": "analysis_results\\prescreen_closeout\\prescreen_worker_admission.csv",
+  "prescreen_r0_snapshot_csv": "analysis_results\\prescreen_closeout\\prescreen_r0_snapshot.csv",
+  "prescreen_pass_count_decision_json": "analysis_results\\prescreen_closeout\\prescreen_pass_count_decision.json",
+  "prescreen_round_report_md": "analysis_results\\prescreen_closeout\\prescreen_round_report.md"
 }

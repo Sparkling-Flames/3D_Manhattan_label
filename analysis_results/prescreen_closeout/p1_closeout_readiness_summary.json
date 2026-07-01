@@ -1,8 +1,9 @@
 {
   "dry_run": true,
-  "formal_materialization_allowed": false,
+  "formal_materialization_allowed": true,
+  "materialization_status": "materialized",
   "data_complete": true,
-  "completion_basis": "formal_prescreen_20260630_zh_en_active_logs_prescreen_final_gt",
+  "completion_basis": "formal_prescreen_20260701_zh_en_active_logs_prescreen_final_gt",
   "base_image_count": 57,
   "runtime_task_rows": 114,
   "worker_completion_status_counts": {
@@ -28,7 +29,13 @@
   "missing_required_artifacts": [],
   "missing_optional_artifacts": [],
   "optional_audit_status": "available",
-  "screening_status": "provisional_dry_run",
-  "readiness_status": "ready_for_materialization_review",
+  "screening_status": "ready_for_manual_materialization_review",
+  "readiness_status": "materialized",
+  "materialized_artifacts": [
+    "analysis_results/prescreen_closeout/prescreen_worker_admission.csv",
+    "analysis_results/prescreen_closeout/prescreen_r0_snapshot.csv",
+    "analysis_results/prescreen_closeout/prescreen_pass_count_decision.json",
+    "analysis_results/prescreen_closeout/prescreen_round_report.md"
+  ],
   "blockers": []
 }
