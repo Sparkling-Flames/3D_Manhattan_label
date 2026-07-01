@@ -3,10 +3,12 @@ from __future__ import annotations
 import json
 import csv
 import hashlib
+import inspect
 from pathlib import Path
 
 from tools.thesis_main.analysis.prescreen_active_time_source_audit import build_active_time_source_audit
 from tools.thesis_main.analysis.prescreen_completion_audit import build_completion_audit, write_completion_audit
+import tools.thesis_main.analysis.prescreen_canonicalize_export as canonicalize_module
 from tools.thesis_main.analysis.prescreen_canonicalize_export import MANIFEST_FIELDS, build_canonical_tables, snapshot_inputs
 
 BASE_POINTS = [(10, 10), (10, 90), (50, 20), (50, 80)]
@@ -277,6 +279,73 @@ def test_duplicate_annotations_do_not_use_legacy_task_level_active_time(tmp_path
     assert canonical[0]["active_time_match_status"] == "fallback_annotation_missing_task_level_ambiguous"
     assert canonical[0]["duplicate_time_ambiguous"] is True
     assert duplicate[0]["duplicate_time_ambiguous"] is True
+
+
+def test_prescreen_canonicalize_imports_quality_core_directly() -> None:
+    source = inspect.getsource(canonicalize_module)
+
+    assert "tools.thesis_main.analysis.analyze_quality import" not in source
+    assert "tools.thesis_main.analysis.quality_core.active_time import" in source
+    assert "tools.thesis_main.analysis.quality_core.choice_parser import" in source
+
+
+def test_owner_mismatch_annotation_log_does_not_pollute_canonical_task_fallback(tmp_path: Path) -> None:
+    export = _write_export(
+        tmp_path,
+        [
+            _task(
+                1,
+                [
+                    _annotation("worker_a", annotation_id="ann_a", lead_time=11),
+                    _annotation("worker_b", annotation_id="ann_b", lead_time=22),
+                ],
+            )
+        ],
+    )
+    active_log = _write_annotation_logs(
+        tmp_path,
+        [
+            {
+                "project_id": "23",
+                "task_id": "1",
+                "annotator_id": "worker_b",
+                "annotation_id": "ann_a",
+                "session_id": "s1",
+                "active_seconds": 99,
+            }
+        ],
+    )
+
+    canonical, _duplicate, _summary = build_canonical_tables([export], active_log)
+    by_worker = {row["annotator_id"]: row for row in canonical}
+
+    assert by_worker["worker_b"]["raw_canonical_annotation_id"] == "ann_b"
+    assert by_worker["worker_b"]["active_time_source"] == "lead_time_fallback"
+    assert by_worker["worker_b"]["active_time"] == "22.0"
+    assert by_worker["worker_b"]["active_time_match_status"] == "fallback_no_direct_log"
+
+
+def test_owner_match_annotation_log_exact_matches_in_canonicalize(tmp_path: Path) -> None:
+    export = _write_export(tmp_path, [_task(1, [_annotation("worker_a", annotation_id="ann_a", lead_time=11)])])
+    active_log = _write_annotation_logs(
+        tmp_path,
+        [
+            {
+                "project_id": "23",
+                "task_id": "1",
+                "annotator_id": "worker_a",
+                "annotation_id": "ann_a",
+                "session_id": "s1",
+                "active_seconds": 33,
+            }
+        ],
+    )
+
+    canonical, _duplicate, _summary = build_canonical_tables([export], active_log)
+
+    assert canonical[0]["active_time_source"] == "log"
+    assert canonical[0]["active_time"] == "33.0"
+    assert canonical[0]["active_time_match_status"] == "project+task+annotator+annotation"
 
 
 def test_active_time_sources_define_primary_sensitivity_and_missing_without_imputation(tmp_path: Path) -> None:

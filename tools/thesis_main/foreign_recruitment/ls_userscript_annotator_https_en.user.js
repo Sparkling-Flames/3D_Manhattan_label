@@ -465,48 +465,205 @@
     }
   }
 
+  function clearStoredLogToken() {
+    try {
+      window.localStorage.removeItem("HOHONET_LOG_TOKEN");
+    } catch (e) {}
+    updateActiveTimePanels(null, "missing_token");
+  }
+
+  function getActiveTimeTokenUiState(uploadStatus, token) {
+    const status = String(uploadStatus || "");
+    if (!token || status === "missing_token") {
+      return {
+        title: "Active-time token missing",
+        body: "Set the token before annotation so time can be uploaded.",
+        border: "#ef4444",
+        action: "Set active-time token",
+        primary: true,
+      };
+    }
+    if (status === "forbidden_403") {
+      return {
+        title: "Invalid active-time token",
+        body: "Server rejected the token. Re-enter it to resume uploads.",
+        border: "#ef4444",
+        action: "Re-enter token",
+        primary: true,
+      };
+    }
+    if (status === "ok") {
+      return {
+        title: "Active-time upload ready",
+        body: `Token verified by server (${maskToken(token)}).`,
+        border: "#22c55e",
+        action: "Change token",
+        primary: false,
+      };
+    }
+    if (status === "fetch_failed" || status.startsWith("http_")) {
+      return {
+        title: "Active-time upload not confirmed",
+        body: "Upload failed. The saved token has not been verified yet.",
+        border: "#f59e0b",
+        action: "Change token",
+        primary: false,
+      };
+    }
+    return {
+      title: "Active-time token saved",
+      body: "Waiting for the next upload to verify the token.",
+      border: "#f59e0b",
+      action: "Change token",
+      primary: false,
+    };
+  }
+
+  function getActiveTimeAnnotationNotice(metadata) {
+    if (metadata?.annotationIdSource === "selected_annotation_not_owned_by_current_user") {
+      return "Selected annotation belongs to another user. Time is held until your own annotation is active.";
+    }
+    if (metadata?.annotationMatchStatus === "unknown_annotation") {
+      return "Annotation is not confirmed yet. Time will remain unassigned unless it can be safely matched.";
+    }
+    return "";
+  }
+
+  function appendActiveTimePanelButton(container, label, onClick, { primary = false, danger = false } = {}) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = label;
+    button.style.cssText = [
+      "padding: 6px 10px",
+      "border-radius: 4px",
+      "font-size: 12px",
+      "font-weight: 600",
+      "cursor: pointer",
+      danger ? "border: 1px solid #ef4444" : primary ? "border: 1px solid #2563eb" : "border: 1px solid #d1d5db",
+      danger ? "background: #fff" : primary ? "background: #2563eb" : "background: #fff",
+      danger ? "color: #b91c1c" : primary ? "color: #fff" : "color: #111827",
+    ].join("; ");
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      onClick();
+    });
+    container.appendChild(button);
+  }
+
+  function appendActiveTimeDetailRow(container, label, value, { badge = false } = {}) {
+    const row = document.createElement("div");
+    row.style.cssText = "display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 12px; align-items: center; padding: 9px 0; border-top: 1px solid #e5e7eb;";
+    const labelEl = document.createElement("div");
+    labelEl.textContent = label;
+    labelEl.style.cssText = "color: #6b7280; font-size: 12px;";
+    const valueEl = document.createElement("div");
+    valueEl.style.cssText = badge
+      ? "justify-self: end; display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 999px; background: #dcfce7; color: #15803d; font-size: 12px; font-weight: 700;"
+      : "color: #111827; font-size: 12px; font-weight: 600; text-align: right; overflow-wrap: anywhere;";
+    if (badge) {
+      const dot = document.createElement("span");
+      dot.style.cssText = "width: 7px; height: 7px; border-radius: 999px; background: #22c55e; display: inline-block;";
+      const text = document.createElement("span");
+      text.textContent = String(value || "unknown");
+      valueEl.appendChild(dot);
+      valueEl.appendChild(text);
+    } else {
+      valueEl.textContent = String(value || "unknown");
+    }
+    row.appendChild(labelEl);
+    row.appendChild(valueEl);
+    container.appendChild(row);
+  }
+
   function updateActiveTimePanels(report = null, uploadStatus = lastActiveTimeUploadStatus) {
     lastActiveTimeUploadStatus = uploadStatus || lastActiveTimeUploadStatus;
     const tokenPanel = ensureActiveTimePanel(ACTIVE_TIME_TOKEN_PANEL_ID, 12);
     const statusPanel = ensureActiveTimePanel(ACTIVE_TIME_STATUS_PANEL_ID, 92);
-    const tokenOk = Boolean(getLogToken());
+    const token = getLogToken();
+    const tokenOk = Boolean(token);
     const metadata = report || resolveActiveTimeMetadata();
     const mode = getActiveTimePanelMode();
     const forcedOpen = isActiveTimePanelForcedOpen(metadata, lastActiveTimeUploadStatus, tokenOk);
-    const showDetails = forcedOpen || mode === "details";
+    const showDetails = mode === "details" || forcedOpen;
     const hidden = mode === "hidden" && !forcedOpen;
+    const minimized = !showDetails;
     tokenPanel.style.display = hidden ? "none" : "block";
     statusPanel.style.display = showDetails && !hidden ? "block" : "none";
-    tokenPanel.textContent = tokenOk
-      ? `Log token OK (${maskToken(getLogToken())})`
-      : "Missing HOHONET_LOG_TOKEN. Active-time upload may fail.";
-    tokenPanel.style.cursor = "pointer";
-    tokenPanel.onclick = () => {
-      const nextMode = getActiveTimePanelMode() === "details" ? "compact" : "details";
-      setActiveTimePanelMode(nextMode);
-      updateActiveTimePanels(report, lastActiveTimeUploadStatus);
-    };
-    if (!tokenOk) {
-      const button = document.createElement("button");
-      button.textContent = "Set token";
-      button.style.cssText = "margin-left: 8px; font-size: 12px;";
-      button.onclick = (event) => event.stopPropagation();
-      button.addEventListener("click", setStoredLogTokenFromPrompt);
-      tokenPanel.appendChild(button);
+    tokenPanel.textContent = "";
+    tokenPanel.onclick = null;
+    tokenPanel.style.cursor = "default";
+    tokenPanel.style.background = "#fff";
+    tokenPanel.style.color = "#111827";
+    tokenPanel.style.padding = "10px 12px";
+    tokenPanel.style.borderRadius = "8px";
+    tokenPanel.style.maxWidth = "420px";
+    tokenPanel.style.width = "min(420px, calc(100vw - 24px))";
+    tokenPanel.style.boxShadow = "0 6px 20px rgba(15,23,42,0.18)";
+    const tokenState = getActiveTimeTokenUiState(lastActiveTimeUploadStatus, token);
+    tokenPanel.style.border = `1px solid ${tokenState.border}`;
+    if (minimized) {
+      tokenPanel.style.padding = "6px";
+      tokenPanel.style.width = "auto";
+      tokenPanel.style.maxWidth = "none";
+      tokenPanel.style.border = "1px solid #e5e7eb";
+      tokenPanel.style.boxShadow = "0 4px 14px rgba(15,23,42,0.14)";
+      appendActiveTimePanelButton(tokenPanel, "Details", () => {
+        setActiveTimePanelMode("details");
+        updateActiveTimePanels(report, lastActiveTimeUploadStatus);
+      });
+      return;
     }
+    const title = document.createElement("div");
+    title.textContent = tokenState.title;
+    title.style.cssText = "font-size: 13px; font-weight: 700; margin-bottom: 3px;";
+    tokenPanel.appendChild(title);
+    const body = document.createElement("div");
+    body.textContent = tokenState.body;
+    body.style.cssText = "font-size: 12px; color: #4b5563; margin-bottom: 8px;";
+    tokenPanel.appendChild(body);
+    const noticeText = getActiveTimeAnnotationNotice(metadata);
+    if (noticeText) {
+      const notice = document.createElement("div");
+      notice.textContent = noticeText;
+      notice.style.cssText = "font-size: 12px; color: #92400e; margin-bottom: 8px;";
+      tokenPanel.appendChild(notice);
+    }
+    const actions = document.createElement("div");
+    actions.style.cssText = "display: flex; gap: 8px; flex-wrap: wrap;";
+    appendActiveTimePanelButton(actions, tokenState.action, setStoredLogTokenFromPrompt, { primary: tokenState.primary });
+    if (tokenOk) {
+      appendActiveTimePanelButton(actions, "Clear token", clearStoredLogToken, { danger: true });
+    }
+    if (!forcedOpen) {
+      appendActiveTimePanelButton(actions, mode === "details" ? "Hide details" : "Details", () => {
+        setActiveTimePanelMode(mode === "details" ? "compact" : "details");
+        updateActiveTimePanels(report, lastActiveTimeUploadStatus);
+      });
+    }
+    tokenPanel.appendChild(actions);
     const seconds = report && report.reportSeconds !== undefined ? report.reportSeconds : activeSeconds;
-    statusPanel.textContent = [
-      `Active-time status: ${lastActiveTimeUploadStatus}`,
-      `key: ${metadata.activeTimeKey || "unknown"}`,
-      `annotation: ${metadata.annotationId || "unknown_annotation"} (${metadata.annotationMatchStatus || "unknown_annotation"})`,
-      `task source: ${metadata.taskIdSource || "unknown"}`,
-      `project source: ${metadata.projectIdSource || "unknown"}`,
-      `annotation source: ${metadata.annotationIdSource || "unknown"}`,
-      `late-binding: ${metadata.lateBindingStatus || "none"}`,
-      `seconds: ${seconds}`,
-    ].join("\n");
-    statusPanel.style.border = metadata.annotationMatchStatus === "unknown_annotation" ? "1px solid #f59e0b" : "1px solid #3f3f46";
-    tokenPanel.style.border = tokenOk ? "1px solid #22c55e" : "1px solid #ef4444";
+    statusPanel.textContent = "";
+    statusPanel.style.background = "#fff";
+    statusPanel.style.color = "#111827";
+    statusPanel.style.padding = "14px 18px";
+    statusPanel.style.borderRadius = "12px";
+    statusPanel.style.maxWidth = "420px";
+    statusPanel.style.width = "min(420px, calc(100vw - 24px))";
+    statusPanel.style.boxShadow = "0 10px 28px rgba(15,23,42,0.22)";
+    statusPanel.style.bottom = `${24 + (tokenPanel.offsetHeight || 96)}px`;
+    const detailTitle = document.createElement("div");
+    detailTitle.textContent = "Technical Active-Time Details";
+    detailTitle.style.cssText = "font-size: 15px; font-weight: 800; margin-bottom: 10px;";
+    statusPanel.appendChild(detailTitle);
+    appendActiveTimeDetailRow(statusPanel, "Status", lastActiveTimeUploadStatus, { badge: lastActiveTimeUploadStatus === "ok" });
+    appendActiveTimeDetailRow(statusPanel, "Key", metadata.activeTimeKey || "unknown");
+    appendActiveTimeDetailRow(statusPanel, "Annotation", `${metadata.annotationId || "unknown_annotation"} (${metadata.annotationMatchStatus || "unknown_annotation"})`);
+    appendActiveTimeDetailRow(statusPanel, "Task Source", metadata.taskIdSource || "unknown");
+    appendActiveTimeDetailRow(statusPanel, "Project Source", metadata.projectIdSource || "unknown");
+    appendActiveTimeDetailRow(statusPanel, "Annotation Source", metadata.annotationIdSource || "unknown");
+    appendActiveTimeDetailRow(statusPanel, "Late-binding", metadata.lateBindingStatus || "none");
+    appendActiveTimeDetailRow(statusPanel, "Seconds", seconds);
+    statusPanel.style.border = metadata.annotationMatchStatus === "unknown_annotation" ? "1px solid #f59e0b" : "1px solid #e5e7eb";
   }
 
   function getLabelsVisible() {

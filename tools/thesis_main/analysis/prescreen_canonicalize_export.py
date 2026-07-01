@@ -15,9 +15,10 @@ _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
-from tools.thesis_main.analysis.analyze_quality import extract_data, load_active_logs, lookup_active_log_entry
 from tools.thesis_main.analysis.audit_p1_exact_copy_low_time import canonical_geometry_hash
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
+from tools.thesis_main.analysis.quality_core.active_time import load_active_logs, lookup_active_log_entry
+from tools.thesis_main.analysis.quality_core.choice_parser import extract_data
 
 DEFAULT_OUTPUT_DIR = Path("analysis_results/prescreen_closeout")
 DEFAULT_COMPLETION_BASIS = "current_partial_export_with_known_dropout_and_pending_completion"
@@ -59,7 +60,7 @@ def _worker_id(annotation: dict[str, Any]) -> str:
             value = _safe_str(completed_by.get(key))
             if value:
                 return value
-    return _safe_str(completed_by, "unknown")
+    return _safe_str(completed_by) or _safe_str(annotation.get("worker_id"), "unknown")
 
 
 def _annotation_id(annotation: dict[str, Any], index: int) -> str:
@@ -68,6 +69,31 @@ def _annotation_id(annotation: dict[str, Any], index: int) -> str:
 
 def _annotation_match_status(annotation_id: str) -> str:
     return "unknown_annotation" if not annotation_id or annotation_id.startswith("annotation_index_") else "annotation_id_present"
+
+
+def _add_owner(owner_map: dict[Any, str], key: Any, owner: str) -> None:
+    previous = owner_map.get(key)
+    owner_map[key] = owner if previous in (None, owner) else "__ambiguous_owner__"
+
+
+def _build_annotation_owner_map(exports: list[tuple[Path, list[dict[str, Any]]]]) -> dict[Any, str]:
+    owner_map: dict[Any, str] = {}
+    for _export_path, tasks in exports:
+        for task_index, task in enumerate(tasks, start=1):
+            project_id = _project_id(task)
+            task_id = _task_id(task, task_index)
+            annotations = task.get("annotations") or []
+            if not isinstance(annotations, list):
+                continue
+            for ann_index, ann in enumerate(annotations, start=1):
+                if not isinstance(ann, dict):
+                    continue
+                annotation_id = _annotation_id(ann, ann_index)
+                owner = _worker_id(ann)
+                _add_owner(owner_map, (project_id, task_id, annotation_id), owner)
+                _add_owner(owner_map, (task_id, annotation_id), owner)
+                _add_owner(owner_map, annotation_id, owner)
+    return owner_map
 
 
 def _active_time_key(project_id: str, task_id: str, worker_id: str, annotation_id: str) -> str:
@@ -189,12 +215,14 @@ def build_canonical_tables(
     *,
     geometry_round_px: float = 0.5,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
-    active_times = load_active_logs(str(active_log_path)) if active_log_path else {}
+    exports = [(path, _load_export(path)) for path in export_paths]
+    owner_map = _build_annotation_owner_map(exports)
+    active_times = load_active_logs(str(active_log_path), annotation_owner_map=owner_map) if active_log_path else {}
     groups: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
     n_tasks = 0
 
-    for export_path in export_paths:
-        for task_index, task in enumerate(_load_export(export_path), start=1):
+    for export_path, tasks in exports:
+        for task_index, task in enumerate(tasks, start=1):
             n_tasks += 1
             task_id = _task_id(task, task_index)
             project_id = _project_id(task)

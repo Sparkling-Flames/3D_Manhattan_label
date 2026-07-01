@@ -18,7 +18,10 @@ The logging token is used to record active annotation time.
 
 Open the browser console on the Label Studio website and run the setup command provided by the researcher.
 
-Logging Token:
+Logging Token:  
+```javascript
+hoho-20260228-zjw200408250904!
+```
 
 ```javascript
 localStorage.setItem("HOHONET_LOG_TOKEN", "hoho-20260228-zjw200408250904!");

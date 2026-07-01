@@ -355,7 +355,7 @@
   }
 
   function setStoredLogTokenFromPrompt() {
-    const token = window.prompt("Set HOHONET_LOG_TOKEN");
+    const token = window.prompt("设置 HOHONET_LOG_TOKEN");
     if (token && token.trim()) {
       window.localStorage.setItem("HOHONET_LOG_TOKEN", token.trim());
       updateActiveTimePanels(null, "token_set");
@@ -363,48 +363,205 @@
     }
   }
 
+  function clearStoredLogToken() {
+    try {
+      window.localStorage.removeItem("HOHONET_LOG_TOKEN");
+    } catch (e) {}
+    updateActiveTimePanels(null, "missing_token");
+  }
+
+  function getActiveTimeTokenUiState(uploadStatus, token) {
+    const status = String(uploadStatus || "");
+    if (!token || status === "missing_token") {
+      return {
+        title: "缺少 active-time token",
+        body: "开始标注前请先设置 token，确保时间可以上传。",
+        border: "#ef4444",
+        action: "设置 active-time token",
+        primary: true,
+      };
+    }
+    if (status === "forbidden_403") {
+      return {
+        title: "active-time token 无效",
+        body: "服务器拒绝了当前 token，请重新输入后继续上传。",
+        border: "#ef4444",
+        action: "重新输入 token",
+        primary: true,
+      };
+    }
+    if (status === "ok") {
+      return {
+        title: "active-time 上传正常",
+        body: `服务器已验证 token（${maskToken(token)}）。`,
+        border: "#22c55e",
+        action: "更换 token",
+        primary: false,
+      };
+    }
+    if (status === "fetch_failed" || status.startsWith("http_")) {
+      return {
+        title: "active-time 上传未确认",
+        body: "上传失败，当前 token 尚未被服务器验证。",
+        border: "#f59e0b",
+        action: "更换 token",
+        primary: false,
+      };
+    }
+    return {
+      title: "active-time token 已保存",
+      body: "等待下一次上传来验证 token。",
+      border: "#f59e0b",
+      action: "更换 token",
+      primary: false,
+    };
+  }
+
+  function getActiveTimeAnnotationNotice(metadata) {
+    if (metadata?.annotationIdSource === "selected_annotation_not_owned_by_current_user") {
+      return "当前选中的 annotation 属于其他用户；在切换到你自己的 annotation 前，时间会暂存为未匹配。";
+    }
+    if (metadata?.annotationMatchStatus === "unknown_annotation") {
+      return "当前 annotation 尚未确认；除非后续能安全匹配，否则时间会保留为未分配审计记录。";
+    }
+    return "";
+  }
+
+  function appendActiveTimePanelButton(container, label, onClick, { primary = false, danger = false } = {}) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = label;
+    button.style.cssText = [
+      "padding: 6px 10px",
+      "border-radius: 4px",
+      "font-size: 12px",
+      "font-weight: 600",
+      "cursor: pointer",
+      danger ? "border: 1px solid #ef4444" : primary ? "border: 1px solid #2563eb" : "border: 1px solid #d1d5db",
+      danger ? "background: #fff" : primary ? "background: #2563eb" : "background: #fff",
+      danger ? "color: #b91c1c" : primary ? "color: #fff" : "color: #111827",
+    ].join("; ");
+    button.addEventListener("click", (event) => {
+      event.stopPropagation();
+      onClick();
+    });
+    container.appendChild(button);
+  }
+
+  function appendActiveTimeDetailRow(container, label, value, { badge = false } = {}) {
+    const row = document.createElement("div");
+    row.style.cssText = "display: grid; grid-template-columns: 128px minmax(0, 1fr); gap: 12px; align-items: center; padding: 9px 0; border-top: 1px solid #e5e7eb;";
+    const labelEl = document.createElement("div");
+    labelEl.textContent = label;
+    labelEl.style.cssText = "color: #6b7280; font-size: 12px;";
+    const valueEl = document.createElement("div");
+    valueEl.style.cssText = badge
+      ? "justify-self: end; display: inline-flex; align-items: center; gap: 6px; padding: 2px 8px; border-radius: 999px; background: #dcfce7; color: #15803d; font-size: 12px; font-weight: 700;"
+      : "color: #111827; font-size: 12px; font-weight: 600; text-align: right; overflow-wrap: anywhere;";
+    if (badge) {
+      const dot = document.createElement("span");
+      dot.style.cssText = "width: 7px; height: 7px; border-radius: 999px; background: #22c55e; display: inline-block;";
+      const text = document.createElement("span");
+      text.textContent = String(value || "unknown");
+      valueEl.appendChild(dot);
+      valueEl.appendChild(text);
+    } else {
+      valueEl.textContent = String(value || "unknown");
+    }
+    row.appendChild(labelEl);
+    row.appendChild(valueEl);
+    container.appendChild(row);
+  }
+
   function updateActiveTimePanels(report = null, uploadStatus = lastActiveTimeUploadStatus) {
     lastActiveTimeUploadStatus = uploadStatus || lastActiveTimeUploadStatus;
     const tokenPanel = ensureActiveTimePanel(ACTIVE_TIME_TOKEN_PANEL_ID, 12);
     const statusPanel = ensureActiveTimePanel(ACTIVE_TIME_STATUS_PANEL_ID, 92);
-    const tokenOk = Boolean(getLogToken());
+    const token = getLogToken();
+    const tokenOk = Boolean(token);
     const metadata = report || resolveActiveTimeMetadata();
     const mode = getActiveTimePanelMode();
     const forcedOpen = isActiveTimePanelForcedOpen(metadata, lastActiveTimeUploadStatus, tokenOk);
-    const showDetails = forcedOpen || mode === "details";
+    const showDetails = mode === "details" || forcedOpen;
     const hidden = mode === "hidden" && !forcedOpen;
+    const minimized = !showDetails;
     tokenPanel.style.display = hidden ? "none" : "block";
     statusPanel.style.display = showDetails && !hidden ? "block" : "none";
-    tokenPanel.textContent = tokenOk
-      ? `Log token OK (${maskToken(getLogToken())})`
-      : "Missing HOHONET_LOG_TOKEN. Active-time upload may fail.";
-    tokenPanel.style.cursor = "pointer";
-    tokenPanel.onclick = () => {
-      const nextMode = getActiveTimePanelMode() === "details" ? "compact" : "details";
-      setActiveTimePanelMode(nextMode);
-      updateActiveTimePanels(report, lastActiveTimeUploadStatus);
-    };
-    if (!tokenOk) {
-      const button = document.createElement("button");
-      button.textContent = "Set token";
-      button.style.cssText = "margin-left: 8px; font-size: 12px;";
-      button.onclick = (event) => event.stopPropagation();
-      button.addEventListener("click", setStoredLogTokenFromPrompt);
-      tokenPanel.appendChild(button);
+    tokenPanel.textContent = "";
+    tokenPanel.onclick = null;
+    tokenPanel.style.cursor = "default";
+    tokenPanel.style.background = "#fff";
+    tokenPanel.style.color = "#111827";
+    tokenPanel.style.padding = "10px 12px";
+    tokenPanel.style.borderRadius = "8px";
+    tokenPanel.style.maxWidth = "420px";
+    tokenPanel.style.width = "min(420px, calc(100vw - 24px))";
+    tokenPanel.style.boxShadow = "0 6px 20px rgba(15,23,42,0.18)";
+    const tokenState = getActiveTimeTokenUiState(lastActiveTimeUploadStatus, token);
+    tokenPanel.style.border = `1px solid ${tokenState.border}`;
+    if (minimized) {
+      tokenPanel.style.padding = "6px";
+      tokenPanel.style.width = "auto";
+      tokenPanel.style.maxWidth = "none";
+      tokenPanel.style.border = "1px solid #e5e7eb";
+      tokenPanel.style.boxShadow = "0 4px 14px rgba(15,23,42,0.14)";
+      appendActiveTimePanelButton(tokenPanel, "展开详情", () => {
+        setActiveTimePanelMode("details");
+        updateActiveTimePanels(report, lastActiveTimeUploadStatus);
+      });
+      return;
     }
+    const title = document.createElement("div");
+    title.textContent = tokenState.title;
+    title.style.cssText = "font-size: 13px; font-weight: 700; margin-bottom: 3px;";
+    tokenPanel.appendChild(title);
+    const body = document.createElement("div");
+    body.textContent = tokenState.body;
+    body.style.cssText = "font-size: 12px; color: #4b5563; margin-bottom: 8px;";
+    tokenPanel.appendChild(body);
+    const noticeText = getActiveTimeAnnotationNotice(metadata);
+    if (noticeText) {
+      const notice = document.createElement("div");
+      notice.textContent = noticeText;
+      notice.style.cssText = "font-size: 12px; color: #92400e; margin-bottom: 8px;";
+      tokenPanel.appendChild(notice);
+    }
+    const actions = document.createElement("div");
+    actions.style.cssText = "display: flex; gap: 8px; flex-wrap: wrap;";
+    appendActiveTimePanelButton(actions, tokenState.action, setStoredLogTokenFromPrompt, { primary: tokenState.primary });
+    if (tokenOk) {
+      appendActiveTimePanelButton(actions, "清除 token", clearStoredLogToken, { danger: true });
+    }
+    if (!forcedOpen) {
+      appendActiveTimePanelButton(actions, mode === "details" ? "隐藏详情" : "展开详情", () => {
+        setActiveTimePanelMode(mode === "details" ? "compact" : "details");
+        updateActiveTimePanels(report, lastActiveTimeUploadStatus);
+      });
+    }
+    tokenPanel.appendChild(actions);
     const seconds = report && report.reportSeconds !== undefined ? report.reportSeconds : activeSeconds;
-    statusPanel.textContent = [
-      `Active-time status: ${lastActiveTimeUploadStatus}`,
-      `key: ${metadata.activeTimeKey || "unknown"}`,
-      `annotation: ${metadata.annotationId || "unknown_annotation"} (${metadata.annotationMatchStatus || "unknown_annotation"})`,
-      `task source: ${metadata.taskIdSource || "unknown"}`,
-      `project source: ${metadata.projectIdSource || "unknown"}`,
-      `annotation source: ${metadata.annotationIdSource || "unknown"}`,
-      `late-binding: ${metadata.lateBindingStatus || "none"}`,
-      `seconds: ${seconds}`,
-    ].join("\n");
-    statusPanel.style.border = metadata.annotationMatchStatus === "unknown_annotation" ? "1px solid #f59e0b" : "1px solid #3f3f46";
-    tokenPanel.style.border = tokenOk ? "1px solid #22c55e" : "1px solid #ef4444";
+    statusPanel.textContent = "";
+    statusPanel.style.background = "#fff";
+    statusPanel.style.color = "#111827";
+    statusPanel.style.padding = "14px 18px";
+    statusPanel.style.borderRadius = "12px";
+    statusPanel.style.maxWidth = "420px";
+    statusPanel.style.width = "min(420px, calc(100vw - 24px))";
+    statusPanel.style.boxShadow = "0 10px 28px rgba(15,23,42,0.22)";
+    statusPanel.style.bottom = `${24 + (tokenPanel.offsetHeight || 96)}px`;
+    const detailTitle = document.createElement("div");
+    detailTitle.textContent = "Active-Time 技术详情";
+    detailTitle.style.cssText = "font-size: 15px; font-weight: 800; margin-bottom: 10px;";
+    statusPanel.appendChild(detailTitle);
+    appendActiveTimeDetailRow(statusPanel, "状态", lastActiveTimeUploadStatus, { badge: lastActiveTimeUploadStatus === "ok" });
+    appendActiveTimeDetailRow(statusPanel, "Key", metadata.activeTimeKey || "unknown");
+    appendActiveTimeDetailRow(statusPanel, "Annotation", `${metadata.annotationId || "unknown_annotation"} (${metadata.annotationMatchStatus || "unknown_annotation"})`);
+    appendActiveTimeDetailRow(statusPanel, "Task 来源", metadata.taskIdSource || "unknown");
+    appendActiveTimeDetailRow(statusPanel, "Project 来源", metadata.projectIdSource || "unknown");
+    appendActiveTimeDetailRow(statusPanel, "Annotation 来源", metadata.annotationIdSource || "unknown");
+    appendActiveTimeDetailRow(statusPanel, "Late-binding", metadata.lateBindingStatus || "none");
+    appendActiveTimeDetailRow(statusPanel, "秒数", seconds);
+    statusPanel.style.border = metadata.annotationMatchStatus === "unknown_annotation" ? "1px solid #f59e0b" : "1px solid #e5e7eb";
   }
 
   function getLabelsVisible() {

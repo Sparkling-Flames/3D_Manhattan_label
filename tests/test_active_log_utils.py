@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
-from tools.thesis_main.analysis.analyze_quality import load_active_logs, lookup_active_log_entry
+from tools.thesis_main.analysis.quality_core.active_time import load_active_logs, lookup_active_log_entry
 
 
 def test_resolve_active_log_files_prefers_new_server_and_ignores_legacy(tmp_path: Path):
@@ -491,3 +491,53 @@ def test_annotation_owner_mismatch_does_not_create_exact_or_task_fallback_match(
 
     assert entry is None
     assert status == "missing"
+
+
+def test_annotation_owner_match_still_allows_exact_match(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+    (active_logs / "active_times_2026-06-30.jsonl").write_text(
+        json.dumps(
+            {
+                "project_id": "23",
+                "task_id": "405",
+                "annotator_id": "worker_a",
+                "annotation_id": "ann_a",
+                "session_id": "s1",
+                "active_seconds": 20,
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    logs = load_active_logs(str(active_logs), annotation_owner_map={("23", "405", "ann_a"): "worker_a"})
+    entry, status = lookup_active_log_entry(logs, "23", "405", "worker_a", annotation_id="ann_a")
+
+    assert status == "project+task+annotator+annotation"
+    assert entry["active_time_value"] == 20.0
+
+
+def test_annotation_owner_map_none_keeps_legacy_annotation_log_behavior(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+    (active_logs / "active_times_2026-06-30.jsonl").write_text(
+        json.dumps(
+            {
+                "project_id": "23",
+                "task_id": "406",
+                "annotator_id": "worker_b",
+                "annotation_id": "ann_owned_by_a",
+                "session_id": "s1",
+                "active_seconds": 20,
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    logs = load_active_logs(str(active_logs), annotation_owner_map=None)
+    entry, status = lookup_active_log_entry(logs, "23", "406", "worker_b", annotation_id="ann_owned_by_a")
+
+    assert status == "project+task+annotator+annotation"
+    assert entry["active_time_value"] == 20.0
