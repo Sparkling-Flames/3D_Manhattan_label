@@ -151,6 +151,7 @@ def build_closeout_materialization(
     rollup_csv: Path,
     w_max_json: Path,
     issue_review_csv: Path,
+    superseded_closeout_note: str = "",
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any], str]:
     rollup = _load_csv(rollup_csv)
     wmax = json.loads(w_max_json.read_text(encoding="utf-8")) if w_max_json.exists() else {"worker_w_max": {}}
@@ -239,8 +240,7 @@ def build_closeout_materialization(
         "semi_synthetic_issue_review": issue_review,
         "forbidden_freezes_not_created": ["formal_r_u", "r_u_scene", "tau_d", "routing_profile"],
     }
-    report = "\n".join(
-        [
+    report_lines = [
             "# PreScreen Round Report",
             "",
             "P1 closeout materializes admission, r_u^(0), w_max handoff, and audit evidence only. It does not freeze formal r_u, tau_d, score, or routing.",
@@ -252,8 +252,10 @@ def build_closeout_materialization(
             f"- Resolved duplicate revision overrides: {', '.join(resolved_revisions) if resolved_revisions else 'none'}.",
             f"- Semi synthetic issue review: {issue_review['n_mirror_pairs']} mirror pairs from {issue_review['path']}; labels come from manual_review reviewed_* fields, not planned_operator.",
             "- Undercoverage: P1 nonblocking watch; task-majority undercoverage does not become worker-level exclusion.",
-        ]
-    )
+    ]
+    if _safe(superseded_closeout_note):
+        report_lines.append(f"- {_safe(superseded_closeout_note)}.")
+    report = "\n".join(report_lines)
     return admission_rows, r0_rows, summary, report
 
 
@@ -263,11 +265,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--w-max-json", default=str(DEFAULT_WMAX))
     parser.add_argument("--issue-review-csv", default=str(DEFAULT_ISSUE_REVIEW))
     parser.add_argument("--output-dir", default=str(DEFAULT_DIR))
+    parser.add_argument("--superseded-closeout-note", default="")
     args = parser.parse_args(argv)
     admission, r0, summary, report = build_closeout_materialization(
         Path(args.rollup_csv),
         Path(args.w_max_json),
         Path(args.issue_review_csv),
+        superseded_closeout_note=args.superseded_closeout_note,
     )
     out_dir = Path(args.output_dir)
     admission_path = out_dir / "prescreen_worker_admission.csv"

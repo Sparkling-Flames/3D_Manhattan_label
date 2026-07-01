@@ -91,7 +91,12 @@ def test_materialize_admission_and_r0_from_resolved_rollup(tmp_path: Path) -> No
     wmax = tmp_path / "wmax.json"
     wmax.write_text(json.dumps({"worker_w_max": {"36": 29}}), encoding="utf-8")
 
-    admission, r0, summary, report = build_closeout_materialization(rollup, wmax, _issue_review(tmp_path / "issue.csv"))
+    admission, r0, summary, report = build_closeout_materialization(
+        rollup,
+        wmax,
+        _issue_review(tmp_path / "issue.csv"),
+        superseded_closeout_note="old P1 closeout superseded by gtfix run, but retained as historical snapshot",
+    )
 
     by_worker = {row["worker_id"]: row for row in admission}
     assert by_worker["36"]["admission_status"] == "pass_with_watch"
@@ -103,6 +108,7 @@ def test_materialize_admission_and_r0_from_resolved_rollup(tmp_path: Path) -> No
     assert r0[0]["r_u_0_basis"] == "p1_proxy_scope_geometry_not_formal_r_u"
     assert summary["semi_synthetic_issue_review"]["planned_actual_mismatch_count"] == 1
     assert "planned_operator" in report
+    assert "old P1 closeout superseded by gtfix run" in report
     assert "tau_d" in summary["forbidden_freezes_not_created"]
 
 
@@ -117,9 +123,11 @@ def test_materialize_cli_writes_formal_closeout_artifacts(tmp_path: Path) -> Non
         "--w-max-json", str(wmax),
         "--issue-review-csv", str(_issue_review(tmp_path / "issue.csv")),
         "--output-dir", str(out),
+        "--superseded-closeout-note", "old P1 closeout superseded by gtfix run, but retained as historical snapshot",
     ]) == 0
 
     assert (out / "prescreen_worker_admission.csv").exists()
     assert (out / "prescreen_r0_snapshot.csv").exists()
     assert (out / "prescreen_pass_count_decision.json").exists()
     assert (out / "prescreen_round_report.md").exists()
+    assert "old P1 closeout superseded by gtfix run" in (out / "prescreen_round_report.md").read_text(encoding="utf-8")
