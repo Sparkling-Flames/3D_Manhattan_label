@@ -38,6 +38,27 @@ from tools.thesis_main.analysis.quality_core.geometry_metrics import (
 from tools.thesis_main.analysis.quality_core.report_writer import _safe_float, _summarize_by_tag, write_quality_report
 
 
+def _annotation_worker_id(annotation):
+    completed_by = annotation.get('completed_by')
+    if isinstance(completed_by, dict):
+        return str(completed_by.get('id', 'unknown'))
+    return str(completed_by) if completed_by is not None else 'unknown'
+
+
+def _build_annotation_owner_map(tasks):
+    owner_map = {}
+    for task in tasks:
+        project_id = str(task.get('project', ''))
+        task_id = str(task.get('id'))
+        for index, annotation in enumerate(task.get('annotations', []) or [], start=1):
+            annotation_id = str(annotation.get('id') or f"annotation_index_{index}")
+            owner = _annotation_worker_id(annotation)
+            owner_map[(project_id, task_id, annotation_id)] = owner
+            owner_map[(task_id, annotation_id)] = owner
+            owner_map[annotation_id] = owner
+    return owner_map
+
+
 def main():
     parser = argparse.ArgumentParser(description="Analyze annotation quality and efficiency")
     parser.add_argument('export_json', help="Path to Label Studio export JSON file")
@@ -87,12 +108,22 @@ def main():
     date_str = datetime.now().strftime("%Y%m%d")
     output_csv = args.output if args.output else os.path.join(args.output_dir, f"quality_report_{date_str}.csv")
 
+    try:
+        with open(args.export_json, 'r', encoding='utf-8') as f:
+            tasks = json.load(f)
+        if isinstance(tasks, dict):
+            tasks = [tasks]
+    except Exception as e:
+        print(f"Error processing JSON: {e}")
+        return
+
     # 1. Load Active Logs
     print("Loading active logs...")
     active_times = load_active_logs(
         args.active_logs,
         start_time=args.active_log_start,
         end_time=args.active_log_end,
+        annotation_owner_map=_build_annotation_owner_map(tasks),
     )
     if args.active_log_start or args.active_log_end:
         print(f"Active log time window: start={args.active_log_start or '(none)'} end={args.active_log_end or '(none)'}")
@@ -108,13 +139,6 @@ def main():
     print(f"Processing {args.export_json}...")
     
     try:
-        with open(args.export_json, 'r', encoding='utf-8') as f:
-            tasks = json.load(f)
-            
-        # Handle list or dict (Label Studio export format varies)
-        if isinstance(tasks, dict):
-            tasks = [tasks] # Single task
-            
         for task in tasks:
             t_id = str(task.get('id'))
             # NEW: Extract title and image metadata for cross-project pairing

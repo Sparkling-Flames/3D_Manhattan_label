@@ -317,6 +317,77 @@ def _run_cli(tmp_path):
     return list(header), rows, result
 
 
+def test_analyze_quality_owner_mismatch_log_does_not_fallback_to_wrong_worker(tmp_path):
+    export_path = tmp_path / "export_owner.json"
+    logs_dir = tmp_path / "active_logs"
+    logs_dir.mkdir()
+    output_csv = tmp_path / "quality_owner.csv"
+    tasks = [
+        {
+            "id": 201,
+            "project": 55,
+            "data": {"title": "owner", "image": "owner.jpg", "dataset_group": "Synthetic"},
+            "annotations": [
+                _annotation(1, scope="normal", difficulty=["trivial"], model_issue=["acceptable"], lead_time=30),
+                _annotation(2, scope="normal", difficulty=["trivial"], model_issue=["acceptable"], lead_time=40),
+            ],
+        }
+    ]
+    export_path.write_text(json.dumps(tasks), encoding="utf-8")
+    events = [
+        {
+            "project_id": "55",
+            "task_id": "201",
+            "annotator_id": "1",
+            "annotation_id": "100",
+            "session_id": "ok",
+            "active_seconds": 11,
+            "server_received_at": "2026-07-01T10:00:00",
+        },
+        {
+            "project_id": "55",
+            "task_id": "201",
+            "annotator_id": "2",
+            "annotation_id": "100",
+            "session_id": "wrong_owner",
+            "active_seconds": 99,
+            "server_received_at": "2026-07-01T10:00:10",
+        },
+    ]
+    (logs_dir / "active_times_unit.jsonl").write_text("\n".join(json.dumps(e) for e in events), encoding="utf-8")
+
+    subprocess.run(
+        [
+            sys.executable,
+            str(ANALYZE_QUALITY),
+            str(export_path),
+            "--active-logs",
+            str(logs_dir),
+            "--output_dir",
+            str(tmp_path / "out"),
+            "--output",
+            str(output_csv),
+            "--dataset_group",
+            "UnitFixture",
+        ],
+        cwd=REPO_ROOT,
+        text=True,
+        capture_output=True,
+        check=True,
+    )
+
+    with output_csv.open(newline="", encoding="utf-8") as f:
+        rows = list(csv.DictReader(f))
+    by_user = {row["annotator_id"]: row for row in rows}
+
+    assert by_user["1"]["active_time_source"] == "log"
+    assert by_user["1"]["active_time_match_status"] == "project+task+annotator+annotation"
+    assert float(by_user["1"]["active_time"]) == 11.0
+    assert by_user["2"]["active_time_source"] == "lead_time_fallback"
+    assert by_user["2"]["active_time_match_status"] == "fallback_no_direct_log"
+    assert float(by_user["2"]["active_time"]) == 40.0
+
+
 def test_quality_core_exposes_migrated_functions():
     from tools.thesis_main.analysis.quality_core import active_time, choice_parser, consensus_reliability, geometry_metrics
 

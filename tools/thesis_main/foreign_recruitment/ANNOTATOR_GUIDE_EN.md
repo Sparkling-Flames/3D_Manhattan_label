@@ -47,7 +47,7 @@ Use `in_scope` when the image is a valid indoor room layout target.
 Use `out_of_scope` when the scene is not a valid indoor room layout target, for
 example when the main room boundary cannot reasonably be annotated.
 
-Important: the current Label Studio form  still require geometry fields even
+Important: the current Label Studio form may still require geometry fields even
 for out-of-scope cases. If so, complete the required fields as instructed and
 use the scope answer to mark the case.
 

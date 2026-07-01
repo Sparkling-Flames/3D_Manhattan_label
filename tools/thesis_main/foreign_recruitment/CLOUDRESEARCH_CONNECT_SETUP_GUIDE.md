@@ -55,6 +55,9 @@ Use HTTPS:
 https://label.sparkle0825.top
 ```
 
+Do not use Connect Waves for passer selection. Use Included Participants / Connect IDs
+with the `participantId` URL parameter for follow-up invitations.
+
 ## 5. Payment And Review
 
 P1 is a real screening annotation task, not only a two-task practice task.

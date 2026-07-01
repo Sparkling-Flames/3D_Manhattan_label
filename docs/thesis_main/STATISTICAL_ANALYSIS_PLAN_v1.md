@@ -34,7 +34,7 @@ The expected execution path assumes `18-20` workers pass `P1` and continue throu
 
 - `lead_time` is not part of the primary estimand for `RQ1`.
 - Any fallback from `active_time` to `lead_time` must be reported as sensitivity support, not as a silent merge into the primary estimand.
-- Annotation-level active logs must preserve `active_time_alias_from`, `active_time_alias_reason`, `late_binding_status`, `task_id_source`, `project_id_source`, and `annotation_id_source`; `late_binding_status` is `single_actual_annotation` or `ambiguous_multiple_annotations`, and `unknown_annotation` late-binding is promoted only for a single actual annotation within the same session/project/task/annotator context.
+- Annotation-level active logs must preserve `active_time_alias_from`, `active_time_alias_reason`, `late_binding_status`, `task_id_source`, `project_id_source`, and `annotation_id_source`; `unknown_annotation` may merge only as `short_unknown_bootstrap_merged` when the segment is short, timestamp-continuous, and has a single same-owner actual annotation in the same session/project/task/annotator context. Longer, discontinuous, owner-mismatched, or multi-actual unknown segments remain unassigned/audit evidence.
 - For post-`P1` duplicate same-geometry submissions, the default timing value is `max_reliable_active_time`; `sum_segments` is audit/sensitivity-only and is allowed only when logs show explicit non-overlapping continuous segments.
 - Different-geometry duplicate submissions remain manual-review cases and must not be automatically merged.
 

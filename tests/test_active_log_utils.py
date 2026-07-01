@@ -257,7 +257,7 @@ def test_lookup_annotation_disables_task_level_fallback_for_duplicate_rows(tmp_p
     assert status == "annotation_missing_task_level_ambiguous"
 
 
-def test_late_bound_annotation_supersedes_unknown_alias_session(tmp_path: Path):
+def test_short_unknown_bootstrap_merges_to_single_actual_without_double_count(tmp_path: Path):
     active_logs = tmp_path / "active_logs"
     active_logs.mkdir()
     (active_logs / "active_times_2026-06-30.jsonl").write_text(
@@ -270,7 +270,8 @@ def test_late_bound_annotation_supersedes_unknown_alias_session(tmp_path: Path):
                         "annotator_id": "8",
                         "annotation_id": "unknown_annotation",
                         "session_id": "s1",
-                        "active_seconds": 290,
+                        "active_seconds": 4,
+                        "server_received_at": "2026-07-01T10:00:00",
                     }
                 ),
                 json.dumps(
@@ -280,10 +281,11 @@ def test_late_bound_annotation_supersedes_unknown_alias_session(tmp_path: Path):
                         "annotator_id": "8",
                         "annotation_id": "a123",
                         "active_time_alias_from": "23|400|8|unknown_annotation",
-                        "active_time_alias_reason": "unknown_annotation_late_bound",
-                        "late_binding_status": "single_actual_annotation",
+                        "active_time_alias_reason": "short_unknown_bootstrap",
+                        "late_binding_status": "short_unknown_bootstrap_merged",
                         "session_id": "s1",
-                        "active_seconds": 300,
+                        "active_seconds": 4,
+                        "server_received_at": "2026-07-01T10:00:08",
                     }
                 ),
             ]
@@ -294,12 +296,12 @@ def test_late_bound_annotation_supersedes_unknown_alias_session(tmp_path: Path):
 
     logs = load_active_logs(str(active_logs))
 
-    assert logs[("23", "400", "8")]["active_time_value"] == 300.0
-    assert logs[("23", "400", "8", "a123")]["active_time_value"] == 300.0
+    assert logs[("23", "400", "8")]["active_time_value"] == 4.0
+    assert logs[("23", "400", "8", "a123")]["active_time_value"] == 4.0
     assert ("23", "400", "8", "unknown_annotation") not in logs
 
 
-def test_ambiguous_late_binding_does_not_supersede_unknown_alias(tmp_path: Path):
+def test_long_unknown_does_not_merge_but_actual_time_remains(tmp_path: Path):
     active_logs = tmp_path / "active_logs"
     active_logs.mkdir()
     (active_logs / "active_times_2026-06-30.jsonl").write_text(
@@ -312,7 +314,8 @@ def test_ambiguous_late_binding_does_not_supersede_unknown_alias(tmp_path: Path)
                         "annotator_id": "8",
                         "annotation_id": "unknown_annotation",
                         "session_id": "s1",
-                        "active_seconds": 90,
+                        "active_seconds": 6,
+                        "server_received_at": "2026-07-01T10:00:00",
                     }
                 ),
                 json.dumps(
@@ -321,11 +324,9 @@ def test_ambiguous_late_binding_does_not_supersede_unknown_alias(tmp_path: Path)
                         "task_id": "401",
                         "annotator_id": "8",
                         "annotation_id": "a123",
-                        "active_time_alias_from": "23|401|8|unknown_annotation",
-                        "active_time_alias_reason": "unknown_annotation_late_bound",
-                        "late_binding_status": "ambiguous_multiple_annotations",
                         "session_id": "s1",
-                        "active_seconds": 5,
+                        "active_seconds": 10,
+                        "server_received_at": "2026-07-01T10:00:08",
                     }
                 ),
             ]
@@ -336,12 +337,12 @@ def test_ambiguous_late_binding_does_not_supersede_unknown_alias(tmp_path: Path)
 
     logs = load_active_logs(str(active_logs))
 
-    assert logs[("23", "401", "8")]["active_time_value"] == 95.0
-    assert logs[("23", "401", "8", "unknown_annotation")]["active_time_value"] == 90.0
-    assert logs[("23", "401", "8", "a123")]["active_time_value"] == 5.0
+    assert logs[("23", "401", "8")]["active_time_value"] == 16.0
+    assert logs[("23", "401", "8", "unknown_annotation")]["active_time_value"] == 6.0
+    assert logs[("23", "401", "8", "a123")]["active_time_value"] == 10.0
 
 
-def test_late_bound_single_status_is_ignored_when_session_has_multiple_actual_annotations(tmp_path: Path):
+def test_non_continuous_unknown_does_not_merge_but_actual_time_remains(tmp_path: Path):
     active_logs = tmp_path / "active_logs"
     active_logs.mkdir()
     (active_logs / "active_times_2026-06-30.jsonl").write_text(
@@ -354,7 +355,8 @@ def test_late_bound_single_status_is_ignored_when_session_has_multiple_actual_an
                         "annotator_id": "8",
                         "annotation_id": "unknown_annotation",
                         "session_id": "s1",
-                        "active_seconds": 290,
+                        "active_seconds": 4,
+                        "server_received_at": "2026-07-01T10:00:00",
                     }
                 ),
                 json.dumps(
@@ -364,10 +366,11 @@ def test_late_bound_single_status_is_ignored_when_session_has_multiple_actual_an
                         "annotator_id": "8",
                         "annotation_id": "a123",
                         "active_time_alias_from": "23|402|8|unknown_annotation",
-                        "active_time_alias_reason": "unknown_annotation_late_bound",
-                        "late_binding_status": "single_actual_annotation",
+                        "active_time_alias_reason": "short_unknown_bootstrap",
+                        "late_binding_status": "short_unknown_bootstrap_merged",
                         "session_id": "s1",
-                        "active_seconds": 300,
+                        "active_seconds": 4,
+                        "server_received_at": "2026-07-01T10:01:00",
                     }
                 ),
                 json.dumps(
@@ -377,17 +380,8 @@ def test_late_bound_single_status_is_ignored_when_session_has_multiple_actual_an
                         "annotator_id": "8",
                         "annotation_id": "a123",
                         "session_id": "s1",
-                        "active_seconds": 310,
-                    }
-                ),
-                json.dumps(
-                    {
-                        "project_id": "23",
-                        "task_id": "402",
-                        "annotator_id": "8",
-                        "annotation_id": "b456",
-                        "session_id": "s1",
-                        "active_seconds": 5,
+                        "active_seconds": 12,
+                        "server_received_at": "2026-07-01T10:01:05",
                     }
                 ),
             ]
@@ -398,7 +392,102 @@ def test_late_bound_single_status_is_ignored_when_session_has_multiple_actual_an
 
     logs = load_active_logs(str(active_logs))
 
-    assert logs[("23", "402", "8")]["active_time_value"] == 295.0
-    assert logs[("23", "402", "8", "unknown_annotation")]["active_time_value"] == 290.0
-    assert logs[("23", "402", "8", "b456")]["active_time_value"] == 5.0
-    assert ("23", "402", "8", "a123") not in logs
+    assert logs[("23", "402", "8")]["active_time_value"] == 16.0
+    assert logs[("23", "402", "8", "unknown_annotation")]["active_time_value"] == 4.0
+    assert logs[("23", "402", "8", "a123")]["active_time_value"] == 12.0
+
+
+def test_multiple_actual_annotations_keep_actual_times_and_leave_unknown_unassigned(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+    (active_logs / "active_times_2026-06-30.jsonl").write_text(
+        "\n".join(
+            [
+                json.dumps(
+                    {
+                        "project_id": "23",
+                        "task_id": "403",
+                        "annotator_id": "8",
+                        "annotation_id": "unknown_annotation",
+                        "session_id": "s1",
+                        "active_seconds": 4,
+                        "server_received_at": "2026-07-01T10:00:00",
+                    }
+                ),
+                json.dumps(
+                    {
+                        "project_id": "23",
+                        "task_id": "403",
+                        "annotator_id": "8",
+                        "annotation_id": "a123",
+                        "active_time_alias_from": "23|403|8|unknown_annotation",
+                        "active_time_alias_reason": "short_unknown_bootstrap",
+                        "late_binding_status": "short_unknown_bootstrap_merged",
+                        "session_id": "s1",
+                        "active_seconds": 4,
+                        "server_received_at": "2026-07-01T10:00:08",
+                    }
+                ),
+                json.dumps(
+                    {
+                        "project_id": "23",
+                        "task_id": "403",
+                        "annotator_id": "8",
+                        "annotation_id": "a123",
+                        "session_id": "s1",
+                        "active_seconds": 10,
+                        "server_received_at": "2026-07-01T10:00:20",
+                    }
+                ),
+                json.dumps(
+                    {
+                        "project_id": "23",
+                        "task_id": "403",
+                        "annotator_id": "8",
+                        "annotation_id": "b456",
+                        "session_id": "s1",
+                        "active_seconds": 5,
+                        "server_received_at": "2026-07-01T10:00:30",
+                    }
+                ),
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    logs = load_active_logs(str(active_logs))
+
+    assert logs[("23", "403", "8")]["active_time_value"] == 19.0
+    assert logs[("23", "403", "8", "unknown_annotation")]["active_time_value"] == 4.0
+    assert logs[("23", "403", "8", "a123")]["active_time_value"] == 10.0
+    assert logs[("23", "403", "8", "b456")]["active_time_value"] == 5.0
+
+
+def test_annotation_owner_mismatch_does_not_create_exact_or_task_fallback_match(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+    (active_logs / "active_times_2026-06-30.jsonl").write_text(
+        json.dumps(
+            {
+                "project_id": "23",
+                "task_id": "404",
+                "annotator_id": "worker_b",
+                "annotation_id": "ann_owned_by_a",
+                "session_id": "s1",
+                "active_seconds": 20,
+                "server_received_at": "2026-07-01T10:00:00",
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    logs = load_active_logs(
+        str(active_logs),
+        annotation_owner_map={("23", "404", "ann_owned_by_a"): "worker_a"},
+    )
+    entry, status = lookup_active_log_entry(logs, "23", "404", "worker_b", annotation_id="ann_owned_by_b")
+
+    assert entry is None
+    assert status == "missing"

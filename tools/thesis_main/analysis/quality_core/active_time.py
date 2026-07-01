@@ -24,7 +24,7 @@ def _parse_cli_datetime(value, *, is_end=False):
 
 
 def _parse_active_log_event_time(data):
-    """Return the server-side event time when available."""
+    """Return server event time, falling back to client timestamp milliseconds."""
     server_received_at = data.get("server_received_at")
     if server_received_at:
         try:
@@ -33,6 +33,15 @@ def _parse_active_log_event_time(data):
             if parsed.tzinfo is not None:
                 parsed = parsed.replace(tzinfo=None)
             return parsed
+        except Exception:
+            return None
+    timestamp = data.get("timestamp")
+    if timestamp not in (None, ""):
+        try:
+            value = float(timestamp)
+            if value > 10_000_000_000:
+                value = value / 1000.0
+            return datetime.fromtimestamp(value)
         except Exception:
             return None
     return None
@@ -45,7 +54,44 @@ def _parse_active_time_key(value):
     return tuple(part.strip() for part in parts)
 
 
-def load_active_logs(log_dir, start_time=None, end_time=None):
+def _annotation_owner(annotation_owner_map, project_id, task_id, annotation_id):
+    if not annotation_owner_map or not annotation_id or annotation_id == 'unknown_annotation':
+        return None
+    for key in (
+        (project_id, task_id, annotation_id),
+        (task_id, annotation_id),
+        annotation_id,
+    ):
+        if key in annotation_owner_map:
+            owner = str(annotation_owner_map[key] or '').strip()
+            return owner or None
+    return None
+
+
+def _same_or_unknown_owner(annotation_owner_map, project_id, task_id, annotation_id, annotator_id):
+    owner = _annotation_owner(annotation_owner_map, project_id, task_id, annotation_id)
+    return owner is None or owner == str(annotator_id)
+
+
+def _event_key(event, annotation_id=None):
+    return (
+        event['project_id'],
+        event['task_id'],
+        event['annotator_id'],
+        event['annotation_id'] if annotation_id is None else annotation_id,
+        event['session_id'],
+    )
+
+
+def _is_short_bootstrap_alias(event):
+    return (
+        event['alias_from']
+        and event['alias_reason'] in {'short_unknown_bootstrap', 'unknown_annotation_late_bound'}
+        and event['late_status'] in {'short_unknown_bootstrap_merged', 'single_actual_annotation'}
+    )
+
+
+def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_map=None):
     """
     Load active time logs from a directory of JSONL files.
     Logic: max within a session, sum across sessions.
@@ -71,8 +117,8 @@ def load_active_logs(log_dir, start_time=None, end_time=None):
     session_files = defaultdict(set)
     session_events = defaultdict(int)
     alias_superseded_session_keys = set()
-    ambiguous_promotion_session_keys = set()
     actual_annotations_by_context = defaultdict(set)
+    unknown_events_by_context = defaultdict(list)
     parsed_events = []
     start_dt = _parse_cli_datetime(start_time) if start_time else None
     end_dt = _parse_cli_datetime(end_time, is_end=True) if end_time else None
@@ -91,8 +137,8 @@ def load_active_logs(log_dir, start_time=None, end_time=None):
                     continue
                 try:
                     data = json.loads(line)
+                    event_dt = _parse_active_log_event_time(data)
                     if start_dt or end_dt:
-                        event_dt = _parse_active_log_event_time(data)
                         if event_dt is None:
                             continue
                         if start_dt and event_dt < start_dt:
@@ -109,45 +155,74 @@ def load_active_logs(log_dir, start_time=None, end_time=None):
                     alias_from = _parse_active_time_key(data.get('active_time_alias_from'))
                     alias_reason = str(data.get('active_time_alias_reason', '') or '').strip()
                     late_status = str(data.get('late_binding_status', '') or '').strip()
+                    if not _same_or_unknown_owner(annotation_owner_map, p_id, t_id, ann_id, a_id):
+                        continue
 
-                    parsed_events.append(
-                        (p_id, t_id, a_id, ann_id, s_id, sec, os.path.basename(fpath), alias_from, alias_reason, late_status)
-                    )
+                    event = {
+                        'project_id': p_id,
+                        'task_id': t_id,
+                        'annotator_id': a_id,
+                        'annotation_id': ann_id,
+                        'session_id': s_id,
+                        'seconds': sec,
+                        'source_file': os.path.basename(fpath),
+                        'alias_from': alias_from,
+                        'alias_reason': alias_reason,
+                        'late_status': late_status,
+                        'event_dt': event_dt,
+                    }
+                    parsed_events.append(event)
                     if ann_id and ann_id != 'unknown_annotation':
                         actual_annotations_by_context[(p_id, t_id, a_id, s_id)].add(ann_id)
+                    elif ann_id == 'unknown_annotation':
+                        unknown_events_by_context[(p_id, t_id, a_id, s_id)].append(event)
                 except Exception:
                     pass
 
-    for p_id, t_id, a_id, ann_id, s_id, _sec, _source_file, alias_from, alias_reason, late_status in parsed_events:
-        if (
-            alias_from
-            and alias_reason == 'unknown_annotation_late_bound'
-            and late_status == 'single_actual_annotation'
+    def can_merge_short_unknown(event):
+        if not _is_short_bootstrap_alias(event):
+            return False
+        alias_p, alias_t, alias_a, alias_ann = event['alias_from']
+        if alias_ann != 'unknown_annotation':
+            return False
+        if (alias_p, alias_t, alias_a) != (event['project_id'], event['task_id'], event['annotator_id']):
+            return False
+        if event['seconds'] > 5 or event['event_dt'] is None:
+            return False
+        context = (event['project_id'], event['task_id'], event['annotator_id'], event['session_id'])
+        if actual_annotations_by_context[context] != {event['annotation_id']}:
+            return False
+        if not _same_or_unknown_owner(
+            annotation_owner_map,
+            event['project_id'],
+            event['task_id'],
+            event['annotation_id'],
+            event['annotator_id'],
         ):
-            alias_p, alias_t, alias_a, _alias_ann = alias_from
-            if (alias_p, alias_t, alias_a) == (p_id, t_id, a_id):
-                actual_ids = actual_annotations_by_context[(p_id, t_id, a_id, s_id)]
-                if len(actual_ids) > 1:
-                    ambiguous_promotion_session_keys.add((p_id, t_id, a_id, ann_id, s_id))
-
-    for p_id, t_id, a_id, ann_id, s_id, sec, source_file, alias_from, alias_reason, late_status in parsed_events:
-        try:
-            key = (p_id, t_id, a_id, ann_id, s_id)
-            if key in ambiguous_promotion_session_keys:
+            return False
+        unknown_events = unknown_events_by_context.get(context, [])
+        if not unknown_events:
+            return event['alias_reason'] == 'short_unknown_bootstrap'
+        for unknown_event in unknown_events:
+            if unknown_event['event_dt'] is None:
                 continue
-            if (
-                alias_from
-                and alias_reason == 'unknown_annotation_late_bound'
-                and late_status == 'single_actual_annotation'
-            ):
-                alias_p, alias_t, alias_a, alias_ann = alias_from
-                if (alias_p, alias_t, alias_a) == (p_id, t_id, a_id):
-                            actual_ids = actual_annotations_by_context[(p_id, t_id, a_id, s_id)]
-                            if actual_ids == {ann_id}:
-                                alias_superseded_session_keys.add((alias_p, alias_t, alias_a, alias_ann, s_id))
-            if sec > session_maxes[key]:
-                session_maxes[key] = sec
-            session_files[key].add(source_file)
+            delta = (event['event_dt'] - unknown_event['event_dt']).total_seconds()
+            if 0 <= delta <= 10 and unknown_event['seconds'] <= 5:
+                return True
+        return False
+
+    for event in parsed_events:
+        try:
+            key = _event_key(event)
+            if _is_short_bootstrap_alias(event):
+                alias_p, alias_t, alias_a, alias_ann = event['alias_from']
+                if can_merge_short_unknown(event):
+                    alias_superseded_session_keys.add((alias_p, alias_t, alias_a, alias_ann, event['session_id']))
+                else:
+                    key = _event_key(event, alias_ann)
+            if event['seconds'] > session_maxes[key]:
+                session_maxes[key] = event['seconds']
+            session_files[key].add(event['source_file'])
             session_events[key] += 1
         except Exception:
             pass

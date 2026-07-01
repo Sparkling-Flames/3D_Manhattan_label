@@ -26,6 +26,8 @@ HoHoNet Helper Official Annotator HTTPS EN
 
 Do not enable the normal English helper and the debug English helper at the same
 time. Enable only one HoHoNet helper script in your userscript manager.
+The debug helper file is `ls_userscript_annotator_https_en_debug.user.js`, and
+its script flavor is `foreign_https_en_debug`.
 
 It should only run on:
 
@@ -59,6 +61,9 @@ localStorage.setItem(
   "HOHONET_HELPER_BASE_URL",
   "https://label.sparkle0825.top",
 );
+
+// Equivalent one-line form:
+localStorage.setItem("HOHONET_HELPER_BASE_URL", "https://label.sparkle0825.top");
 ```
 
 Then refresh the Label Studio page.

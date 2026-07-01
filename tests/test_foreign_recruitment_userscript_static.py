@@ -19,6 +19,8 @@ MAIN_XML = ROOT / "tools" / "label_studio" / "label_studio_view_config.xml"
 MANUAL_XML = ROOT / "tools" / "label_studio" / "label_studio_view_config_manual.xml"
 FOREIGN_MAIN_XML = FOREIGN_DIR / "label_studio_view_config_en.xml"
 FOREIGN_MANUAL_XML = FOREIGN_DIR / "label_studio_view_config_manual_en.xml"
+ACTIVE_TIME_HARDENING_VERSION = "stage1_active_time_annotation_hardening_20260701_v1"
+ORDER_CACHE_HOTFIX_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1"
 
 
 def read(path: Path) -> str:
@@ -76,8 +78,8 @@ def test_https_foreign_userscript_is_self_contained_not_remote_loader():
     assert "fetchFirstAvailableHelper" not in text
     assert "/tools/official/ls_userscript_annotator.js" not in text
     assert "/tools/ls_userscript.js?foreign_https_en" not in text
-    assert "@version      stage1_helper_ordercache_hotfix_20260617_v1" in text
-    assert 'const SCRIPT_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";' in text
+    assert f"@version      {ACTIVE_TIME_HARDENING_VERSION}" in text
+    assert f'const SCRIPT_VERSION = "{ACTIVE_TIME_HARDENING_VERSION}";' in text
     assert "...getForeignRecruitmentMetadataForPayload()," in text
     assert "Missing HOHONET_LOG_TOKEN" in text
     assert "window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;" in text
@@ -132,8 +134,8 @@ def test_https_foreign_debug_active_time_matches_focus_and_delta_gates():
 def test_official_active_time_uses_focus_and_delta_gates():
     text = read(OFFICIAL_SCRIPT)
 
-    assert "@version      stage1_helper_ordercache_hotfix_20260617_v1" in text
-    assert 'const SCRIPT_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";' in text
+    assert f"@version      {ACTIVE_TIME_HARDENING_VERSION}" in text
+    assert f'const SCRIPT_VERSION = "{ACTIVE_TIME_HARDENING_VERSION}";' in text
     assert "function isActiveTimeCountingPage()" in text
     assert "return isPageVisible && isWindowFocused && isLikelyAnnotationPage();" in text
     assert "let isWindowFocused = document.hasFocus();" in text
@@ -149,6 +151,8 @@ def test_official_active_time_uses_focus_and_delta_gates():
 def test_official_and_foreign_active_time_use_annotation_level_keys_and_panels():
     for path in [OFFICIAL_SCRIPT, SCRIPT]:
         text = read(path)
+        assert f"@version      {ACTIVE_TIME_HARDENING_VERSION}" in text
+        assert f'const SCRIPT_VERSION = "{ACTIVE_TIME_HARDENING_VERSION}";' in text
         assert "ACTIVE_TIME_TOKEN_PANEL_ID" in text
         assert "ACTIVE_TIME_STATUS_PANEL_ID" in text
         assert "ACTIVE_TIME_PANEL_MODE_KEY" in text
@@ -160,11 +164,24 @@ def test_official_and_foreign_active_time_use_annotation_level_keys_and_panels()
         assert "function getProjectIdentity()" in text
         assert "function getAnnotationIdentity()" in text
         assert "store?.annotationStore?.selected?.id" in text
-        assert 'source: "store.task.id"' in text
-        assert 'source: "store.project.id"' in text
-        assert 'source: "store.annotationStore.selected.id"' in text
+        assert '"store.task.id"' in text
+        assert '"store.taskStore.selected.id"' in text
+        assert '"store.annotationStore.selected.task.id"' in text
+        assert '"store.project.id"' in text
+        assert '"store.task.project"' in text
+        assert '"store.task.project_id"' in text
+        assert '"store.taskStore.selected.project"' in text
+        assert '"store.taskStore.selected.project_id"' in text
+        assert '"store.annotationStore.selected.task.project"' in text
+        assert '"store.annotationStore.selected.task.project_id"' in text
+        assert '"store.annotationStore.selected.id"' in text
+        assert '"store.annotationStore.selected.pk"' in text
+        assert '"store.annotationStore.selected.annotation.id"' in text
         assert 'source: "url.query"' in text
         assert 'source: "url.path"' in text
+        assert "selected_annotation_not_owned_by_current_user" in text
+        assert "selected_annotation_id: report.selectedAnnotationId" in text
+        assert "selected_annotation_owner_id: report.selectedAnnotationOwnerId" in text
         assert "currentActiveTimeKey" in text
         assert "function handleActiveTimeKeyChange(nextMetadata)" in text
         assert "handleActiveTimeKeyChange(resolveActiveTimeMetadata())" in text
@@ -175,8 +192,9 @@ def test_official_and_foreign_active_time_use_annotation_level_keys_and_panels()
         assert "annotation_id_source: report.annotationIdSource" in text
         assert "active_time_key: report.activeTimeKey" in text
         assert "active_time_alias_from: report.activeTimeAliasFrom" in text
-        assert 'activeTimeAliasReason: "unknown_annotation_late_bound"' in text
-        assert 'lateBindingStatus === "ambiguous_multiple_annotations"' in text
+        assert 'activeTimeAliasReason: "short_unknown_bootstrap"' in text
+        assert 'lateBindingStatus: "short_unknown_bootstrap_merged"' in text
+        assert 'lateBindingStatus: "unknown_annotation_ambiguous"' in text
         assert "late_binding_status: report.lateBindingStatus" in text
         assert "annotation_match_status: report.annotationMatchStatus" in text
         assert "function retryQueuedActiveTime" in text
@@ -220,7 +238,7 @@ def test_corner_order_cache_hotfix_is_inline_and_task_scoped():
     for path in [OFFICIAL_SCRIPT, OFFICIAL_DEBUG_SCRIPT, SCRIPT, DEBUG_SCRIPT]:
         text = read(path)
         assert 'const CORNER_ORDER_CACHE_SCHEMA = "corner_order_cache_v1";' in text
-        assert 'const SCRIPT_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";' in text
+        assert f'"{ORDER_CACHE_HOTFIX_VERSION}"' in text
         assert "`project:${context.project_id}::task:${context.task_id}::user:${context.user_id}`" in text
         assert "schema: CORNER_ORDER_CACHE_SCHEMA" in text
         assert "entries[taskKey]" in text

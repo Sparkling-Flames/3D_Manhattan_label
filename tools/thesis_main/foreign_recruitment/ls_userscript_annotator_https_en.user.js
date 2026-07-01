@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator HTTPS EN
 // @namespace    https://label.sparkle0825.top/
-// @version      stage1_helper_ordercache_hotfix_20260617_v1
+// @version      stage1_active_time_annotation_hardening_20260701_v1
 // @description  Self-contained HTTPS helper for foreign HoHoNet Stage 1 annotators. Based on the official annotator helper; adds same-origin HTTPS defaults and optional CloudResearch worker-id metadata.
 // @author       HoHoNet
 // @match        https://label.sparkle0825.top/*
@@ -259,7 +259,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "stage1_helper_ordercache_hotfix_20260617_v1";
+  const SCRIPT_VERSION = "stage1_active_time_annotation_hardening_20260701_v1";
   window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;
   window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en";
   console.log(`HoHoNet Helper: loaded (v${SCRIPT_VERSION})`);
@@ -1031,21 +1031,35 @@
 
   function getIdentityValue(value) {
     if (value === undefined || value === null) return null;
+    if (typeof value === "object") {
+      return getIdentityValue(value.id ?? value.pk ?? value.user_id);
+    }
     const normalized = String(value).trim();
-    return normalized && normalized !== "unknown" ? normalized : null;
+    return normalized && normalized !== "unknown" && normalized !== "[object Object]" ? normalized : null;
+  }
+
+  function getIdentityCandidate(value, source) {
+    const id = getIdentityValue(value);
+    return id ? { id, source } : null;
+  }
+
+  function firstIdentityCandidate(candidates, fallbackId = "unknown", fallbackSource = "unknown") {
+    for (const [value, source] of candidates) {
+      const candidate = getIdentityCandidate(value, source);
+      if (candidate) return candidate;
+    }
+    return { id: fallbackId, source: fallbackSource };
   }
 
   function getTaskIdentity() {
     try {
       const store = getStore();
-      const taskId = getIdentityValue(
-        store?.task?.id ||
-          store?.taskStore?.selected?.id ||
-          store?.annotationStore?.selected?.task?.id,
-      );
-      if (taskId) {
-        return { id: taskId, source: "store.task.id" };
-      }
+      const candidate = firstIdentityCandidate([
+        [store?.task?.id, "store.task.id"],
+        [store?.taskStore?.selected?.id, "store.taskStore.selected.id"],
+        [store?.annotationStore?.selected?.task?.id, "store.annotationStore.selected.task.id"],
+      ]);
+      if (candidate.id !== "unknown") return candidate;
     } catch (e) {}
     try {
       const params = new URLSearchParams(window.location.search);
@@ -1060,10 +1074,16 @@
   function getProjectIdentity() {
     try {
       const store = getStore();
-      const projectId = getIdentityValue(store?.project?.id);
-      if (projectId) {
-        return { id: projectId, source: "store.project.id" };
-      }
+      const candidate = firstIdentityCandidate([
+        [store?.project?.id, "store.project.id"],
+        [store?.task?.project, "store.task.project"],
+        [store?.task?.project_id, "store.task.project_id"],
+        [store?.taskStore?.selected?.project, "store.taskStore.selected.project"],
+        [store?.taskStore?.selected?.project_id, "store.taskStore.selected.project_id"],
+        [store?.annotationStore?.selected?.task?.project, "store.annotationStore.selected.task.project"],
+        [store?.annotationStore?.selected?.task?.project_id, "store.annotationStore.selected.task.project_id"],
+      ]);
+      if (candidate.id !== "unknown") return candidate;
     } catch (e) {}
     try {
       const match = window.location.pathname.match(/projects\/(\d+)/);
@@ -1075,10 +1095,51 @@
   function getAnnotationIdentity() {
     try {
       const store = getStore();
-      const annId = getIdentityValue(store?.annotationStore?.selected?.id);
-      if (annId) {
-        return { id: annId, source: "store.annotationStore.selected.id" };
+      const selected = store?.annotationStore?.selected;
+      let selectedJson = null;
+      try {
+        selectedJson = selected?.toJSON?.();
+      } catch (e) {}
+      const annotation = firstIdentityCandidate([
+        [selected?.id, "store.annotationStore.selected.id"],
+        [selected?.pk, "store.annotationStore.selected.pk"],
+        [selected?.annotation?.id, "store.annotationStore.selected.annotation.id"],
+        [selectedJson?.id, "store.annotationStore.selected.toJSON.id"],
+      ], "unknown_annotation", "unknown");
+      if (annotation.id === "unknown_annotation") return annotation;
+
+      const owner = firstIdentityCandidate([
+        [selected?.completed_by, "store.annotationStore.selected.completed_by"],
+        [selected?.completed_by?.id, "store.annotationStore.selected.completed_by.id"],
+        [selected?.user, "store.annotationStore.selected.user"],
+        [selected?.user?.id, "store.annotationStore.selected.user.id"],
+        [selected?.user_id, "store.annotationStore.selected.user_id"],
+        [selected?.createdBy, "store.annotationStore.selected.createdBy"],
+        [selected?.createdBy?.id, "store.annotationStore.selected.createdBy.id"],
+        [selected?.created_by, "store.annotationStore.selected.created_by"],
+        [selected?.created_by?.id, "store.annotationStore.selected.created_by.id"],
+        [selectedJson?.completed_by, "store.annotationStore.selected.toJSON.completed_by"],
+        [selectedJson?.completed_by?.id, "store.annotationStore.selected.toJSON.completed_by.id"],
+        [selectedJson?.user, "store.annotationStore.selected.toJSON.user"],
+        [selectedJson?.user?.id, "store.annotationStore.selected.toJSON.user.id"],
+        [selectedJson?.user_id, "store.annotationStore.selected.toJSON.user_id"],
+      ], "", "");
+      const currentAnnotator = getAnnotatorId();
+      if (owner.id && currentAnnotator !== "unknown" && owner.id !== String(currentAnnotator)) {
+        return {
+          id: "unknown_annotation",
+          source: "selected_annotation_not_owned_by_current_user",
+          selectedAnnotationId: annotation.id,
+          selectedAnnotationOwnerId: owner.id,
+          selectedAnnotationOwnerSource: owner.source,
+        };
       }
+      return {
+        ...annotation,
+        selectedAnnotationId: annotation.id,
+        selectedAnnotationOwnerId: owner.id || "",
+        selectedAnnotationOwnerSource: owner.source || "",
+      };
     } catch (e) {}
     return { id: "unknown_annotation", source: "unknown" };
   }
@@ -2726,6 +2787,9 @@
     "taskIdSource",
     "projectIdSource",
     "annotationIdSource",
+    "selectedAnnotationId",
+    "selectedAnnotationOwnerId",
+    "selectedAnnotationOwnerSource",
   ];
   const lastKnownActiveTimeMetadata = {
     taskId: null,
@@ -2736,6 +2800,9 @@
     taskIdSource: null,
     projectIdSource: null,
     annotationIdSource: null,
+    selectedAnnotationId: null,
+    selectedAnnotationOwnerId: null,
+    selectedAnnotationOwnerSource: null,
     updatedAt: 0,
   };
 
@@ -2801,6 +2868,9 @@
       annotatorId: getAnnotatorId(),
       annotationId: annotationIdentity.id,
       annotationIdSource: annotationIdentity.source,
+      selectedAnnotationId: annotationIdentity.selectedAnnotationId || "",
+      selectedAnnotationOwnerId: annotationIdentity.selectedAnnotationOwnerId || "",
+      selectedAnnotationOwnerSource: annotationIdentity.selectedAnnotationOwnerSource || "",
     };
   }
 
@@ -2892,6 +2962,9 @@
       annotationIdSource: isKnownActiveTimeMetadataValue(live.annotationIdSource)
         ? String(live.annotationIdSource).trim()
         : lastKnownActiveTimeMetadata.annotationIdSource || "unknown",
+      selectedAnnotationId: String(live.selectedAnnotationId || ""),
+      selectedAnnotationOwnerId: String(live.selectedAnnotationOwnerId || ""),
+      selectedAnnotationOwnerSource: String(live.selectedAnnotationOwnerSource || ""),
       lateBindingStatus: "",
     };
     noteActualAnnotationForContext(resolved);
@@ -2930,6 +3003,9 @@
       taskIdSource: metadata.taskIdSource || "unknown",
       projectIdSource: metadata.projectIdSource || "unknown",
       annotationIdSource: metadata.annotationIdSource || "unknown",
+      selectedAnnotationId: metadata.selectedAnnotationId || "",
+      selectedAnnotationOwnerId: metadata.selectedAnnotationOwnerId || "",
+      selectedAnnotationOwnerSource: metadata.selectedAnnotationOwnerSource || "",
       projectName: metadata.projectName,
       annotatorId: metadata.annotatorId,
       currentFragment,
@@ -2947,6 +3023,9 @@
       task_id_source: report.taskIdSource,
       annotation_id: report.annotationId,
       annotation_id_source: report.annotationIdSource,
+      selected_annotation_id: report.selectedAnnotationId,
+      selected_annotation_owner_id: report.selectedAnnotationOwnerId,
+      selected_annotation_owner_source: report.selectedAnnotationOwnerSource,
       active_time_key: report.activeTimeKey,
       active_time_alias_from: report.activeTimeAliasFrom || "",
       active_time_alias_reason: report.activeTimeAliasReason || "",
@@ -3079,20 +3158,26 @@
       const lateBindingStatus = getLateBindingStatusForSwitch(currentActiveTimeMetadata, nextMetadata);
       let reportMetadata = currentActiveTimeMetadata;
       let secondsForReport = activeSeconds;
-      if (lateBindingStatus === "single_actual_annotation") {
+      const unknownCumulativeSeconds = (taskCumulativeSeconds.get(currentActiveTimeKey) || 0) + activeSeconds;
+      if (lateBindingStatus === "single_actual_annotation" && unknownCumulativeSeconds <= 5) {
         reportMetadata = {
           ...nextMetadata,
           activeTimeAliasFrom: currentActiveTimeKey,
-          activeTimeAliasReason: "unknown_annotation_late_bound",
-          lateBindingStatus,
+          activeTimeAliasReason: "short_unknown_bootstrap",
+          lateBindingStatus: "short_unknown_bootstrap_merged",
         };
-        secondsForReport = (taskCumulativeSeconds.get(currentActiveTimeKey) || 0) + activeSeconds;
+        secondsForReport = unknownCumulativeSeconds;
         taskCumulativeSeconds.delete(currentActiveTimeKey);
         deleteActiveTimeRetryKey(currentActiveTimeKey);
+      } else if (lateBindingStatus === "single_actual_annotation") {
+        reportMetadata = {
+          ...currentActiveTimeMetadata,
+          lateBindingStatus: "unknown_annotation_unassigned",
+        };
       } else if (lateBindingStatus === "ambiguous_multiple_annotations") {
         reportMetadata = {
           ...currentActiveTimeMetadata,
-          lateBindingStatus,
+          lateBindingStatus: "unknown_annotation_ambiguous",
         };
       }
       const report = buildActiveTimeReport(null, secondsForReport, reportMetadata);
