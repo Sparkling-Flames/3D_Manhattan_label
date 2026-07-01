@@ -53,8 +53,11 @@
     "active_logs": {
       "path": "active_logs/prescreen",
       "file_count": 60,
-      "aggregate_sha256": "99EF7E9153E4BE4B45220AB30516C01B408764E21B6A68D4BE36B82A1F5A0E82",
-      "status": "final_with_fallback_watch"
+      "aggregate_sha256": "116f44bc568df7099ac14c2e6052002709ad648cee7e32922aa44e833b1b173f",
+      "status": "final_with_fallback_watch",
+      "hash_algorithm": "prescreen_canonicalize_export._directory_sha256: sorted relative path + file size + per-file sha256 over frozen copied active_times_*.jsonl snapshot",
+      "snapshot_path": "analysis_results\\prescreen_closeout_final_gold_v2_20260701\\raw_inputs\\prescreen",
+      "snapshot_manifest_sha256_source": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/raw_input_snapshot_manifest.csv"
     },
     "geometry_gt": {
       "path": "export_label/groudTruth.json",
