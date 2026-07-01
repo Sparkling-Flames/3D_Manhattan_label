@@ -1,0 +1,47 @@
+{
+  "created_at": "2026-07-01T17:39:19",
+  "tool": "tools/thesis_main/analysis/audit_p1_exact_copy_low_time.py",
+  "config": {
+    "stage_filter": "P1",
+    "assume_p1_export": false,
+    "active_log_start": null,
+    "active_log_end": null,
+    "geometry_round_px": 0.5,
+    "min_valid_tasks_for_worker": 10,
+    "event_active_time_ratio": 0.25,
+    "event_active_time_floor_sec": 10.0,
+    "manual_review_min_events": 5,
+    "manual_review_rate": 0.3,
+    "fail_recommended_rate": 0.7,
+    "fail_if_all_valid": true,
+    "allow_lead_time_primary": false
+  },
+  "export_json": "analysis_results\\prescreen_closeout_final_gold_v2_20260701\\p1_combined_exports_for_exact_copy_audit.json",
+  "n_tasks_in_export": 114,
+  "n_tasks_included": 114,
+  "n_tasks_filtered_out": 0,
+  "n_annotation_rows": 1485,
+  "parse_error_count": 31,
+  "active_log_path": "active_logs\\prescreen",
+  "active_log_start": "",
+  "active_log_end": "",
+  "active_log_loaded": true,
+  "stage_filter": "P1",
+  "assume_p1_export": false,
+  "stage_filter_task_breakdown": {
+    "explicit_p1": 114
+  },
+  "unknown_worker_count": 0,
+  "n_primary_exact_copy_low_time_events": 25,
+  "n_fallback_low_time_duplicate_audit": 34,
+  "n_exact_duplicate_annotation_rows": 352,
+  "n_workers": 26,
+  "n_workers_manual_review": 3,
+  "n_workers_fail_recommended": 0,
+  "outputs": {
+    "event_audit_csv": "analysis_results/prescreen_closeout_final_gold_v2_20260701/p1_exact_copy_low_time_audit/p1_exact_copy_low_time_event_audit.csv",
+    "worker_summary_csv": "analysis_results/prescreen_closeout_final_gold_v2_20260701/p1_exact_copy_low_time_audit/p1_worker_independence_summary.csv",
+    "summary_json": "analysis_results/prescreen_closeout_final_gold_v2_20260701/p1_exact_copy_low_time_audit/p1_exact_copy_low_time_summary.json",
+    "report_md": "analysis_results/prescreen_closeout_final_gold_v2_20260701/p1_exact_copy_low_time_audit/p1_exact_copy_low_time_report.md"
+  }
+}

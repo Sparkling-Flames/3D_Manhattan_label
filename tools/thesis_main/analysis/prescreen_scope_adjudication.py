@@ -422,14 +422,30 @@ def _normalize_task_scope(alias: str, binary: str = "") -> str:
     if text in ALLOWED_OOS:
         return text
     if binary == "oos":
-        return "oos_geometry"
+        return "oos"
     if text == "audit_only":
         return "audit_only"
     return "unknown_gold"
 
 
 def _is_oos_scope(scope: str) -> bool:
-    return scope in ALLOWED_OOS
+    return scope == "oos" or scope in ALLOWED_OOS
+
+
+def _scope_binary(scope: str) -> str:
+    if scope == "in_scope":
+        return "in_scope"
+    if _is_oos_scope(scope):
+        return "oos"
+    return "unknown_gold"
+
+
+def _oos_subtype_for_audit(scope: str) -> str:
+    if scope in ALLOWED_OOS:
+        return scope
+    if scope == "oos":
+        return "oos_unspecified"
+    return ""
 
 
 def _geometry_possible(scope: str) -> bool:
@@ -691,17 +707,18 @@ def _worker_scope(annotation: dict[str, Any] | None) -> tuple[str, str, bool]:
 
 
 def _scope_response(task_scope: str, worker_scope: str) -> str:
-    if task_scope in UNRESOLVED_SCOPES or task_scope == "unknown_gold":
+    task_binary = _scope_binary(task_scope)
+    if task_scope in UNRESOLVED_SCOPES or task_binary == "unknown_gold":
         return "not_applicable_unresolved"
     if worker_scope == "missing":
         return "unknown_or_missing"
-    if task_scope == "in_scope" and worker_scope == "in_scope":
+    if task_binary == "in_scope" and worker_scope == "in_scope":
         return "correct_in_scope"
-    if task_scope == "in_scope" and worker_scope == "oos":
+    if task_binary == "in_scope" and worker_scope == "oos":
         return "scope_false_positive"
-    if _is_oos_scope(task_scope) and worker_scope == "oos":
+    if task_binary == "oos" and worker_scope == "oos":
         return "correct_oos"
-    if _is_oos_scope(task_scope) and worker_scope == "in_scope":
+    if task_binary == "oos" and worker_scope == "in_scope":
         return "scope_false_negative"
     return "unknown_or_missing"
 
@@ -945,6 +962,10 @@ def build_scope_audits(
         "base_image_count": base_image_count,
         "language_mirror_note": "Chinese/English Label Studio mirrors count as separate runtime task rows; base_image_count deduplicates by base/source image key.",
         "task_final_scope_counts": dict(Counter(str(r["task_final_scope"]) for r in task_rows)),
+        "task_final_scope_binary_counts": dict(Counter(_scope_binary(str(r["task_final_scope"])) for r in task_rows)),
+        "task_oos_subtype_counts_expert_audit_only": dict(
+            Counter(subtype for subtype in (_oos_subtype_for_audit(str(r["task_final_scope"])) for r in task_rows) if subtype)
+        ),
         "worker_scope_response_counts": dict(Counter(str(r["worker_scope_response"]) for r in response_rows)),
         "unknown_gold_tasks": sum(r["task_final_scope"] == "unknown_gold" for r in task_rows),
         "unresolved_mixed_tasks": sum(r["task_final_scope"] == "unresolved_mixed" for r in task_rows),

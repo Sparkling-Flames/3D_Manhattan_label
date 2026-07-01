@@ -86,6 +86,23 @@ def _issue_review(path: Path) -> Path:
     )
 
 
+def _correction_audit(path: Path) -> Path:
+    path.write_text(
+        json.dumps(
+            {
+                "source_final_gold_sha256": "oldhash",
+                "corrected_final_gold_v2_sha256": "newhash",
+                "corrections": [
+                    {"task_id": "564", "correction_type": "geometry_contract", "affected_runtime_tasks": ["3065", "3137"]},
+                    {"task_id": "696", "correction_type": "scope_contract", "affected_runtime_tasks": ["3077", "3149"]},
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    return path
+
+
 def test_materialize_admission_and_r0_from_resolved_rollup(tmp_path: Path) -> None:
     rollup = _rollup(tmp_path / "rollup.csv")
     wmax = tmp_path / "wmax.json"
@@ -95,6 +112,7 @@ def test_materialize_admission_and_r0_from_resolved_rollup(tmp_path: Path) -> No
         rollup,
         wmax,
         _issue_review(tmp_path / "issue.csv"),
+        _correction_audit(tmp_path / "correction_audit.json"),
         superseded_closeout_note="old P1 closeout superseded by gtfix run, but retained as historical snapshot",
     )
 
@@ -107,7 +125,10 @@ def test_materialize_admission_and_r0_from_resolved_rollup(tmp_path: Path) -> No
     assert by_worker["19"]["c1_handoff_note"] == "excluded_from_C1"
     assert r0[0]["r_u_0_basis"] == "p1_proxy_scope_geometry_not_formal_r_u"
     assert summary["semi_synthetic_issue_review"]["planned_actual_mismatch_count"] == 1
+    assert summary["final_gold_correction_audit"]["corrected_final_gold_v2_sha256"] == "newhash"
     assert "planned_operator" in report
+    assert "task 564 geometry_contract affected 3065, 3137" in report
+    assert "task 696 scope_contract affected 3077, 3149" in report
     assert "old P1 closeout superseded by gtfix run" in report
     assert "tau_d" in summary["forbidden_freezes_not_created"]
 

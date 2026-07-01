@@ -1,6 +1,8 @@
 # PreScreen Step 4-5 Closeout Note
 
-Status: dry-run contract only. This note records the current Step 4-5 audit boundary; it is not a formal scoring, admission, routing, or C1 handoff artifact.
+Status: Step 4-5 audit contract. The consolidated final-gold v2 P1 closeout is materialized under `analysis_results/prescreen_closeout_final_gold_v2_20260701/`; Step 4-5 outputs remain audit evidence, not formal `r_u`, `tau_d`, routing, or C1 calibration artifacts.
+
+Original P1 closeout and GT106-only gtfix run are superseded by the consolidated final-gold v2 closeout. They are retained only as historical snapshots under `analysis_results/legacy/prescreen_closeout_superseded_20260701/`.
 
 ## Current Contract
 
@@ -13,7 +15,7 @@ Status: dry-run contract only. This note records the current Step 4-5 audit boun
 
 ## Input Dependencies
 
-- Frozen raw input manifest and snapshots under `analysis_results/prescreen_closeout/raw_inputs/`.
+- Frozen raw input manifest and snapshots under `analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/`.
 - File snapshots carry `sha256`; directory snapshots such as `active_logs` carry an aggregate digest over copied relative paths, file sizes, and file hashes.
 - Source/snapshot SHA mismatch is provenance evidence that mutable source changed after freeze; Step 4 must still read the validated snapshot.
 - Audit, control, and reference sidecar inputs used by this closeout are copied into the raw input snapshot directory when frozen, with their own `sha256`; they remain provenance inputs for dry-run audits, not formal scoring artifacts.
@@ -31,9 +33,9 @@ Step 4 and Step 5 should read frozen snapshot / canonical / Step 4 audit outputs
 
 Only these dry-run files are allowed:
 
-- `analysis_results/prescreen_closeout/prescreen_geometry_gold_alignment_audit.csv`
-- `analysis_results/prescreen_closeout/prescreen_geometry_eligibility_audit.csv`
-- `analysis_results/prescreen_closeout/prescreen_gold_alignment_summary.json`
+- `analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_geometry_gold_alignment_audit.csv`
+- `analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_geometry_eligibility_audit.csv`
+- `analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_gold_alignment_summary.json`
 
 ## Forbidden Outputs
 
@@ -46,7 +48,7 @@ Do not generate geometry score, admission, `r0`, `r_u`, `wmax`, `w_max`, routing
 ## Internal Smoke Runner
 
 Run `python tools/thesis_main/analysis/pipeline_smoke_runner.py` to rerun the local provisional pipeline smoke chain.
-The runner reads `analysis_results/prescreen_closeout/` and writes stage outputs under `analysis_results/pipeline_smoke/`.
+The runner should read the current formal closeout at `analysis_results/prescreen_closeout_final_gold_v2_20260701/` and writes stage outputs under `analysis_results/pipeline_smoke/`.
 The only root-level runner state is `analysis_results/pipeline_smoke/pipeline_smoke_state.json`; all outputs remain dry-run/provisional only.
 
 ## Terminology Boundary

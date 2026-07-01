@@ -147,15 +147,29 @@ def _validate_issue_review(path: Path) -> dict[str, Any]:
     }
 
 
+def _load_final_gold_correction_audit(path: Path | None) -> dict[str, Any]:
+    if not path:
+        return {}
+    audit = json.loads(path.read_text(encoding="utf-8"))
+    return {
+        "path": str(path),
+        "source_final_gold_sha256": _safe(audit.get("source_final_gold_sha256")),
+        "corrected_final_gold_v2_sha256": _safe(audit.get("corrected_final_gold_v2_sha256")),
+        "corrections": audit.get("corrections") or [],
+    }
+
+
 def build_closeout_materialization(
     rollup_csv: Path,
     w_max_json: Path,
     issue_review_csv: Path,
+    final_gold_correction_audit_json: Path | None = None,
     superseded_closeout_note: str = "",
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any], str]:
     rollup = _load_csv(rollup_csv)
     wmax = json.loads(w_max_json.read_text(encoding="utf-8")) if w_max_json.exists() else {"worker_w_max": {}}
     issue_review = _validate_issue_review(issue_review_csv)
+    correction_audit = _load_final_gold_correction_audit(final_gold_correction_audit_json)
     worker_wmax = {str(k): v for k, v in wmax.get("worker_w_max", {}).items()}
     admission_rows: list[dict[str, Any]] = []
     r0_rows: list[dict[str, Any]] = []
@@ -238,6 +252,7 @@ def build_closeout_materialization(
         "rq3_scene_specific_allowed": rq3,
         "reason": "P1 closeout materialized from resolved screening rollup; unresolved manual review count is zero.",
         "semi_synthetic_issue_review": issue_review,
+        "final_gold_correction_audit": correction_audit,
         "forbidden_freezes_not_created": ["formal_r_u", "r_u_scene", "tau_d", "routing_profile"],
     }
     report_lines = [
@@ -255,6 +270,12 @@ def build_closeout_materialization(
     ]
     if _safe(superseded_closeout_note):
         report_lines.append(f"- {_safe(superseded_closeout_note)}.")
+    if correction_audit:
+        correction_parts = [
+            f"task {row.get('task_id')} {row.get('correction_type')} affected {', '.join(str(t) for t in row.get('affected_runtime_tasks', []))}"
+            for row in correction_audit["corrections"]
+        ]
+        report_lines.append(f"- Final-gold v2 corrections: {'; '.join(correction_parts)}.")
     report = "\n".join(report_lines)
     return admission_rows, r0_rows, summary, report
 
@@ -264,6 +285,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--rollup-csv", default=str(DEFAULT_DIR / "prescreen_worker_screening_rollup.csv"))
     parser.add_argument("--w-max-json", default=str(DEFAULT_WMAX))
     parser.add_argument("--issue-review-csv", default=str(DEFAULT_ISSUE_REVIEW))
+    parser.add_argument("--final-gold-correction-audit-json", default="")
     parser.add_argument("--output-dir", default=str(DEFAULT_DIR))
     parser.add_argument("--superseded-closeout-note", default="")
     args = parser.parse_args(argv)
@@ -271,6 +293,7 @@ def main(argv: list[str] | None = None) -> int:
         Path(args.rollup_csv),
         Path(args.w_max_json),
         Path(args.issue_review_csv),
+        Path(args.final_gold_correction_audit_json) if args.final_gold_correction_audit_json else None,
         superseded_closeout_note=args.superseded_closeout_note,
     )
     out_dir = Path(args.output_dir)

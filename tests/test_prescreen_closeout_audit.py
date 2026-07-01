@@ -605,9 +605,10 @@ def test_completion_audit_flags_unknown_condition_schema_drift(tmp_path: Path) -
 
 def test_fixed_closeout_roster_status_summary_matches_expected_counts() -> None:
     repo_root = Path(__file__).resolve().parents[1]
+    closeout = repo_root / "analysis_results/prescreen_closeout_final_gold_v2_20260701"
     rows = build_completion_audit(
-        repo_root / "analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv",
-        repo_root / "analysis_results/prescreen_closeout/prescreen_worker_roster.csv",
+        closeout / "prescreen_canonical_annotations.csv",
+        closeout / "raw_inputs/prescreen_worker_roster.csv",
     )
     counts: dict[str, int] = {}
     for row in rows:

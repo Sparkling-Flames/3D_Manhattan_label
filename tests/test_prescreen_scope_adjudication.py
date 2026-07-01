@@ -10,6 +10,9 @@ import pytest
 from tools.thesis_main.analysis.prescreen_canonicalize_export import snapshot_inputs
 from tools.thesis_main.analysis.prescreen_scope_adjudication import _validate_export_gt_manifest, build_scope_audits as _build_scope_audits, main
 
+REAL_CLOSEOUT_DIR = Path("analysis_results/prescreen_closeout_final_gold_v2_20260701")
+REAL_FINAL_GOLD = REAL_CLOSEOUT_DIR / "final_gold_records_v2_p1_closeout_corrected.jsonl"
+
 
 def build_scope_audits(*args, **kwargs):
     kwargs.setdefault("allow_unsafe_mutable_inputs_for_tests", True)
@@ -144,6 +147,28 @@ def test_scope_response_matrix_and_geometry_policy(tmp_path: Path) -> None:
     assert task_rows["1"]["task_final_scope"] == "in_scope"
 
 
+def test_scope_summary_has_binary_counts_and_oos_subtype_is_audit_only(tmp_path: Path) -> None:
+    tasks = [
+        _task("1", "fg_oos_unspecified", "oos_geometry", [_annotation("a1", "w1", "oos_open_boundary")]),
+        _task("2", "fg_oos_subtype", "oos_geometry", [_annotation("a2", "w1", "oos_geometry")]),
+    ]
+    task_rows, response_rows, summary = _run(
+        tmp_path,
+        tasks,
+        [("1", "w1", "a1"), ("2", "w1", "a2")],
+        [
+            {"task_id": "fg_oos_unspecified", "base_task_id": "base_fg_oos_unspecified", "final_scope_alias": "", "final_scope_binary": "oos"},
+            {"task_id": "fg_oos_subtype", "base_task_id": "base_fg_oos_subtype", "final_scope_alias": "oos_insufficient", "final_scope_binary": "oos"},
+        ],
+    )
+
+    assert task_rows["1"]["task_final_scope"] == "oos"
+    assert response_rows[("1", "w1")]["worker_scope_response"] == "correct_oos"
+    assert response_rows[("2", "w1")]["worker_scope_response"] == "correct_oos"
+    assert summary["task_final_scope_binary_counts"] == {"oos": 2}
+    assert summary["task_oos_subtype_counts_expert_audit_only"] == {"oos_unspecified": 1, "oos_insufficient": 1}
+
+
 def test_missing_final_gold_is_unknown_and_not_primary(tmp_path: Path) -> None:
     tasks = [_task("1", "no_gold", "", [_annotation("a1", "w1", "normal")])]
     task_rows, response_rows, _summary = _run(tmp_path, tasks, [("1", "w1", "a1")], [])
@@ -171,12 +196,12 @@ def test_undercoverage_label_does_not_become_oos_subtype(tmp_path: Path) -> None
 def test_real_unknown_gold_tasks_are_allowlisted_or_zero() -> None:
     repo = Path(__file__).resolve().parents[1]
     _task_rows, _response_rows, unknown_rows, _mixed_rows, _worker_rows, _synthetic_rows, summary = build_scope_audits(
-        repo / "analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv",
-        repo / "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
-        repo / "analysis_results/prescreen_closeout/prescreen_completion_audit.csv",
-        repo / "analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv",
+        repo / REAL_CLOSEOUT_DIR / "prescreen_canonical_annotations.csv",
+        repo / REAL_FINAL_GOLD,
+        repo / REAL_CLOSEOUT_DIR / "prescreen_completion_audit.csv",
+        repo / REAL_CLOSEOUT_DIR / "raw_inputs/prescreen_scope_unknown_gold_allowlist.csv",
         repo / "analysis_results/trap_collection_freeze_20260320/semi_synthetic_disjoint_candidate_bank_v2.jsonl",
-        repo / "analysis_results/prescreen_closeout/prescreen_synthetic_expert_review.csv",
+        repo / REAL_CLOSEOUT_DIR / "raw_inputs/prescreen_synthetic_expert_review.csv",
     )
 
     assert summary["unknown_gold_tasks"] == 0 or all(row["allowlisted"] for row in unknown_rows)
@@ -185,12 +210,12 @@ def test_real_unknown_gold_tasks_are_allowlisted_or_zero() -> None:
 def test_real_mixed_scope_does_not_override_final_gold_and_oos_not_geometry_primary() -> None:
     repo = Path(__file__).resolve().parents[1]
     task_rows, response_rows, _unknown_rows, mixed_rows, _worker_rows, _synthetic_rows, _summary = build_scope_audits(
-        repo / "analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv",
-        repo / "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
-        repo / "analysis_results/prescreen_closeout/prescreen_completion_audit.csv",
-        repo / "analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv",
+        repo / REAL_CLOSEOUT_DIR / "prescreen_canonical_annotations.csv",
+        repo / REAL_FINAL_GOLD,
+        repo / REAL_CLOSEOUT_DIR / "prescreen_completion_audit.csv",
+        repo / REAL_CLOSEOUT_DIR / "raw_inputs/prescreen_scope_unknown_gold_allowlist.csv",
         repo / "analysis_results/trap_collection_freeze_20260320/semi_synthetic_disjoint_candidate_bank_v2.jsonl",
-        repo / "analysis_results/prescreen_closeout/prescreen_synthetic_expert_review.csv",
+        repo / REAL_CLOSEOUT_DIR / "raw_inputs/prescreen_synthetic_expert_review.csv",
     )
 
     task_by_id = {str(row["task_id"]): row for row in task_rows}
@@ -847,12 +872,12 @@ def test_language_mirror_expert_review_counts_two_runtime_rows_one_base_image(tm
 def test_real_synthetic_expert_review_resolves_all_current_synthetic_scope_unresolved() -> None:
     repo = Path(__file__).resolve().parents[1]
     _task_rows, _response_rows, _unknown_rows, _mixed_rows, _worker_rows, synthetic_rows, summary = build_scope_audits(
-        repo / "analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv",
-        repo / "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
-        repo / "analysis_results/prescreen_closeout/prescreen_completion_audit.csv",
-        repo / "analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv",
+        repo / REAL_CLOSEOUT_DIR / "prescreen_canonical_annotations.csv",
+        repo / REAL_FINAL_GOLD,
+        repo / REAL_CLOSEOUT_DIR / "prescreen_completion_audit.csv",
+        repo / REAL_CLOSEOUT_DIR / "raw_inputs/prescreen_scope_unknown_gold_allowlist.csv",
         repo / "analysis_results/trap_collection_freeze_20260320/semi_synthetic_disjoint_candidate_bank_v2.jsonl",
-        repo / "analysis_results/prescreen_closeout/prescreen_synthetic_expert_review.csv",
+        repo / REAL_CLOSEOUT_DIR / "raw_inputs/prescreen_synthetic_expert_review.csv",
         repo / "export_label/groudTruth.json",
     )
 
@@ -866,14 +891,14 @@ def test_real_synthetic_expert_review_resolves_all_current_synthetic_scope_unres
 def test_real_synthetic_geometry_gt_binds_all_current_source_images() -> None:
     repo = Path(__file__).resolve().parents[1]
     _task_rows, _response_rows, _unknown, _mixed, _worker, synthetic_rows, summary = build_scope_audits(
-        repo / "analysis_results/prescreen_closeout/prescreen_canonical_annotations.csv",
-        repo / "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
-        repo / "analysis_results/prescreen_closeout/prescreen_completion_audit.csv",
-        repo / "analysis_results/prescreen_closeout/prescreen_scope_unknown_gold_allowlist.csv",
+        repo / REAL_CLOSEOUT_DIR / "prescreen_canonical_annotations.csv",
+        repo / REAL_FINAL_GOLD,
+        repo / REAL_CLOSEOUT_DIR / "prescreen_completion_audit.csv",
+        repo / REAL_CLOSEOUT_DIR / "raw_inputs/prescreen_scope_unknown_gold_allowlist.csv",
         repo / "analysis_results/trap_collection_freeze_20260320/semi_synthetic_disjoint_candidate_bank_v2.jsonl",
-        repo / "analysis_results/prescreen_closeout/prescreen_synthetic_expert_review.csv",
+        repo / REAL_CLOSEOUT_DIR / "raw_inputs/prescreen_synthetic_expert_review.csv",
         repo / "export_label/groudTruth.json",
-        repo / "analysis_results/prescreen_closeout/raw_inputs/raw_input_snapshot_manifest.csv",
+        repo / REAL_CLOSEOUT_DIR / "raw_inputs/raw_input_snapshot_manifest.csv",
     )
     rows = summary["_synthetic_geometry_gt_rows"]
     expected = {
@@ -917,7 +942,7 @@ def test_real_synthetic_geometry_gt_binds_all_current_source_images() -> None:
 
 def test_real_export_gt_manifest_has_snapshot_and_sha256() -> None:
     repo = Path(__file__).resolve().parents[1]
-    manifest = repo / "analysis_results/prescreen_closeout/raw_inputs/raw_input_snapshot_manifest.csv"
+    manifest = repo / REAL_CLOSEOUT_DIR / "raw_inputs/raw_input_snapshot_manifest.csv"
     rows = list(csv.DictReader(manifest.open("r", encoding="utf-8-sig")))
     matches = [row for row in rows if row["source_path"] == "export_label\\groudTruth.json"]
 

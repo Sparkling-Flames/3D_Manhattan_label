@@ -20,6 +20,7 @@ from tools.thesis_main.registry.perturbation_operators import (
 DEFAULT_FINAL_GOLD = Path("analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl")
 DEFAULT_EXPORT_GT = Path("export_label/groudTruth.json")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/prescreen_closeout_gtfix_20260701")
+DEFAULT_V2_OUTPUT_DIR = Path("analysis_results/prescreen_closeout_final_gold_v2_20260701")
 
 
 def _safe(value: Any) -> str:
@@ -158,6 +159,104 @@ def apply_gt_override(
     return {"corrected_final_gold_jsonl": corrected_path, "audit_json": audit_path}
 
 
+def _single_final_gold_row(rows: list[dict[str, Any]], task_id: str) -> tuple[int, dict[str, Any]]:
+    matches = [(index, row) for index, row in enumerate(rows) if _safe(row.get("task_id")) == task_id]
+    if len(matches) != 1:
+        raise ValueError(f"expected one final gold task {task_id}, found {len(matches)}")
+    return matches[0]
+
+
+def apply_final_gold_v2_corrections(
+    *,
+    final_gold_jsonl: Path,
+    export_gt_json: Path,
+    output_dir: Path,
+) -> dict[str, Path]:
+    rows = _read_jsonl(final_gold_jsonl)
+    gt_tasks = json.loads(export_gt_json.read_text(encoding="utf-8"))
+    if not isinstance(gt_tasks, list):
+        raise ValueError(f"{export_gt_json} is not a Label Studio task-list export")
+
+    index_564, old_564 = _single_final_gold_row(rows, "564")
+    gt_task = _find_gt_task(gt_tasks, "2590", "106")
+    if _safe(old_564.get("base_task_id")) != _task_base_key(gt_task):
+        raise ValueError("base task mismatch for final gold 564")
+    annotations = gt_task.get("annotations") or []
+    if len(annotations) != 1:
+        raise ValueError(f"GT task 2590 expected one annotation, found {len(annotations)}")
+    corners_norm, meta = ls_keypoints_to_canonical_corners(annotations[0].get("result") or [])
+    if int(meta.get("n_keypoints", 0)) != 8 or len(corners_norm) != 4:
+        raise ValueError("GT106 correction must be 4 pairs / 8 keypoints")
+    new_564 = dict(old_564)
+    new_564["canonical_corners_norm"] = corners_norm
+    new_564["runtime_pairs_1024x512"] = canonical_corners_to_runtime_pairs(corners_norm, 1024, 512)
+    new_564["n_corners"] = 4
+    new_564["pair_coverage"] = float(meta.get("pair_coverage", 0.0))
+    notes_564 = list(new_564.get("final_gold_notes") or [])
+    if "gt106_geometry_override_20260701" not in notes_564:
+        notes_564.append("gt106_geometry_override_20260701")
+    new_564["final_gold_notes"] = notes_564
+    rows[index_564] = new_564
+
+    index_696, old_696 = _single_final_gold_row(rows, "696")
+    if _safe(old_696.get("base_task_id")) != "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15":
+        raise ValueError("base task mismatch for final gold 696")
+    new_696 = dict(old_696)
+    new_696.update(
+        {
+            "final_scope_binary": "oos",
+            "final_scope_subtype": "oos_insufficient",
+            "final_scope_alias": "oos_insufficient",
+            "geometry_gold_ready": False,
+            "canonical_corners_norm": [],
+            "runtime_pairs_1024x512": [],
+            "n_corners": 0,
+            "pair_coverage": 0.0,
+        }
+    )
+    notes_696 = list(new_696.get("final_gold_notes") or [])
+    if "task696_scope_override_oos_insufficient_20260701" not in notes_696:
+        notes_696.append("task696_scope_override_oos_insufficient_20260701")
+    new_696["final_gold_notes"] = notes_696
+    rows[index_696] = new_696
+
+    corrected_path = output_dir / "final_gold_records_v2_p1_closeout_corrected.jsonl"
+    audit_path = output_dir / "prescreen_final_gold_v2_correction_audit.json"
+    _write_jsonl(corrected_path, rows)
+    old_564_pairs = len(old_564.get("runtime_pairs_1024x512") or old_564.get("canonical_corners_norm") or [])
+    new_564_pairs = len(new_564["runtime_pairs_1024x512"])
+    audit = {
+        "status": "applied",
+        "source_final_gold_sha256": _sha256(final_gold_jsonl),
+        "corrected_final_gold_v2_sha256": _sha256(corrected_path),
+        "corrections": [
+            {
+                "task_id": "564",
+                "correction_type": "geometry_contract",
+                "old_pair_count": old_564_pairs,
+                "new_pair_count": new_564_pairs,
+                "old_keypoint_count": old_564_pairs * 2,
+                "new_keypoint_count": new_564_pairs * 2,
+                "affected_runtime_tasks": ["3065", "3137"],
+            },
+            {
+                "task_id": "696",
+                "correction_type": "scope_contract",
+                "old_final_scope_binary": _safe(old_696.get("final_scope_binary")),
+                "old_final_scope_alias": _safe(old_696.get("final_scope_alias")),
+                "new_final_scope_binary": "oos",
+                "new_final_scope_subtype": "oos_insufficient",
+                "new_final_scope_alias": "oos_insufficient",
+                "old_geometry_gold_ready": bool(old_696.get("geometry_gold_ready")),
+                "new_geometry_gold_ready": False,
+                "affected_runtime_tasks": ["3077", "3149"],
+            },
+        ],
+    }
+    _write_json(audit_path, audit)
+    return {"corrected_final_gold_v2_jsonl": corrected_path, "audit_json": audit_path}
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--final-gold-jsonl", default=str(DEFAULT_FINAL_GOLD))
@@ -169,7 +268,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--expected-pair-count", type=int, default=4)
     parser.add_argument("--expected-keypoint-count", type=int, default=8)
     parser.add_argument("--final-gold-n-corners", type=int, default=4)
+    parser.add_argument("--consolidated-v2", action="store_true")
     args = parser.parse_args(argv)
+    if args.consolidated_v2:
+        outputs = apply_final_gold_v2_corrections(
+            final_gold_jsonl=Path(args.final_gold_jsonl),
+            export_gt_json=Path(args.export_gt_json),
+            output_dir=Path(args.output_dir),
+        )
+        print(json.dumps({key: str(value) for key, value in outputs.items()}, ensure_ascii=False, indent=2))
+        return 0
     outputs = apply_gt_override(
         final_gold_jsonl=Path(args.final_gold_jsonl),
         export_gt_json=Path(args.export_gt_json),
