@@ -48,7 +48,12 @@ def audit_overlap(prescreen_imports: list[Path], calibration_manifest: Path) -> 
     for path in prescreen_imports:
         p1_rows.extend(load_ls_import_tasks(path))
     c1_sets = load_calibration_manifest_tasks(calibration_manifest)
-    c1_rows = [row for group in ("Calibration_anchor", "Calibration_core", "Calibration_reserve") for row in c1_sets.get(group, [])]
+    c1_rows = [
+        row
+        for group, rows in c1_sets.items()
+        if group.startswith("Calibration_")
+        for row in rows
+    ]
     source_imports = {safe(row.get("source_import_json")) for row in c1_rows if safe(row.get("source_import_json"))}
     for source in sorted(source_imports):
         path = Path(source)

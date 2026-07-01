@@ -42,6 +42,7 @@ def summarize_launch_readiness(
     distribution_index: Path,
     tests_status: str,
     worker_roster_csv: Path | None = None,
+    admission_source: str = "",
 ) -> dict:
     assignment_rows = load_csv(assignment_manifest)
     csets = load_calibration_manifest_tasks(calibration_manifest)
@@ -89,6 +90,7 @@ def summarize_launch_readiness(
         "passed": not blockers,
         "blockers": blockers,
         "protocol_position": "C1_launch_readiness_only_not_final_worker_tier",
+        "admission_source": admission_source or str(worker_roster_csv or ""),
         "pass_count_gate": "full_execution" if len(workers) >= 16 else "downgrade_required",
         "watch_policy": "retained_as_handoff_sidecar_not_exclusion",
         "audit_status": audit_status,
@@ -118,6 +120,7 @@ def main() -> None:
     parser.add_argument("--distribution-index", required=True, type=Path)
     parser.add_argument("--tests-status", required=True)
     parser.add_argument("--worker-roster", type=Path)
+    parser.add_argument("--admission-source", default="")
     parser.add_argument("--output-json", type=Path)
     args = parser.parse_args()
 
@@ -130,6 +133,7 @@ def main() -> None:
         distribution_index=args.distribution_index,
         tests_status=args.tests_status,
         worker_roster_csv=args.worker_roster,
+        admission_source=args.admission_source,
     )
     if args.output_json:
         write_json(args.output_json, summary)

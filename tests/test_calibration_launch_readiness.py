@@ -129,6 +129,33 @@ def test_overlap_audit_uses_calibration_source_import_for_title_stem(tmp_path: P
     assert summary["overlap_counts"]["title_stem"] == 1
 
 
+def test_overlap_audit_checks_calibration_semi(tmp_path: Path) -> None:
+    p1 = _json(tmp_path / "p1.json", [_import_task("semi_01", "PreScreen_semi")])
+    calibration = _json(
+        tmp_path / "calibration.json",
+        {
+            "task_sets": {
+                "Calibration_anchor": [],
+                "Calibration_core": [],
+                "Calibration_reserve": [],
+                "Calibration_semi": [
+                    {
+                        "task_id": "semi_01",
+                        "base_task_id": "semi_01",
+                        "image_id": "semi_01",
+                        "dataset_group": "Calibration_semi",
+                    }
+                ],
+            }
+        },
+    )
+
+    summary = audit_overlap([p1], calibration)
+
+    assert summary["passed"] is False
+    assert summary["overlap_counts"]["base_task_id"] == 1
+
+
 def test_project_mapping_requires_exact_batch_tasks_and_blocks_reserve(tmp_path: Path) -> None:
     workers = tuple(f"w{idx:02d}" for idx in range(16))
     assignment = _assignment(tmp_path / "assignment.csv", workers)
@@ -245,9 +272,11 @@ def test_launch_readiness_summarizes_required_audits(tmp_path: Path) -> None:
         project_mapping_audit_json=mapping_audit,
         distribution_index=dist_index,
         tests_status="pass",
+        admission_source="analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_worker_admission.csv",
     )
 
     assert summary["passed"] is True
+    assert summary["admission_source"].endswith("prescreen_closeout_final_gold_v2_20260701/prescreen_worker_admission.csv")
     assert summary["counts"]["workers"] == 16
     assert summary["counts"]["anchor_tasks"] == 1
     assert summary["counts"]["core_tasks"] == 2
