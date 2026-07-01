@@ -234,6 +234,76 @@ def test_synthetic_source_gt_checked_is_external_not_missing_final_gold(tmp_path
     assert row["manual_review_required"] is False
 
 
+def test_semi_synthetic_disjoint_trap_reference_ready_is_nonblocking(tmp_path: Path) -> None:
+    alignment = _write_csv(
+        tmp_path / "alignment.csv",
+        [
+            _alignment_row(
+                "3167",
+                dataset_group="PreScreen_semi",
+                condition="semi",
+                source="synthetic_asset_expert_review",
+                gold_status="ready",
+                validation_level="not_validated",
+                gold_source="export_label_groudTruth",
+                gold_task="2752",
+                alignment_status="aligned_ready",
+            )
+        ],
+    )
+    synthetic_scope = _write_csv(
+        tmp_path / "synthetic_scope.csv",
+        [
+            {
+                "runtime_task_id": "3167",
+                "dataset_group": "PreScreen_semi",
+                "condition": "semi",
+                "base_image_key": "base_3167",
+                "synthetic_candidate_id": "legacy_disjoint_source_011_corner_drift",
+                "synthetic_source_type": "trap_synthetic",
+                "scope_gold_source": "prescreen_synthetic_expert_review",
+                "task_final_scope_after_binding": "in_scope",
+                "geometry_gold_ready_after_binding": "True",
+                "geometry_scoring_deferred_after_binding": "True",
+                "geometry_scoring_role": "semi_trap_audit",
+            }
+        ],
+    )
+    selection = tmp_path / "selection.json"
+    selection.write_text(
+        json.dumps(
+            {
+                "selected_trap_rows": [
+                    {
+                        "candidate_id": "legacy_disjoint_source_011_corner_drift",
+                        "source_type": "trap_synthetic_disjoint_source",
+                        "selection_status": "synthetic_backfill_selected",
+                        "rebind_status": "carry_forward_frozen_synthetic_asset",
+                    }
+                ]
+            }
+        ),
+        encoding="utf-8",
+    )
+    visual = _write_csv(
+        tmp_path / "visual.csv",
+        [{"base_task_id": "base_3167", "status": "ok"}],
+    )
+    final_gold = _gold(tmp_path / "gold.jsonl", [])
+
+    rows, summary = build_gold_status_audit(alignment, final_gold, synthetic_scope, selection, visual)
+
+    row = rows[0]
+    assert row["validation_status"] == "semi_trap_reference_ready"
+    assert row["gold_status_for_alignment"] == "semi_trap_reference_ready"
+    assert row["gold_status_for_undercoverage"] == "not_applicable"
+    assert row["gold_ambiguity_flag"] is False
+    assert row["gold_ambiguity_reason"] == "semi_trap_reference_ready"
+    assert row["manual_review_required"] is False
+    assert summary["validation_status_counts"]["semi_trap_reference_ready"] == 1
+    assert summary["manual_review_required_count"] == 0
+
+
 def test_oos_gold_status_is_not_applicable(tmp_path: Path) -> None:
     rows, _summary = _run(
         tmp_path,

@@ -7,15 +7,14 @@
   "completion_input_status": "no_pending_workers_in_current_completion_audit",
   "worker_rows": 29,
   "screening_recommendation_counts": {
-    "continue_candidate": 12,
-    "manual_review": 11,
-    "exclude_process_risk": 6
+    "continue_candidate": 22,
+    "exclude_process_risk": 6,
+    "manual_review": 1
   },
   "evidence_tier_counts": {
-    "review_only": 3,
-    "geometry_risk": 16,
+    "review_only": 12,
     "process_risk": 7,
-    "protected_full_room": 3
+    "geometry_risk": 10
   },
   "optional_exact_copy_summary_missing": false,
   "copy_risk_evaluation_status": "evaluated",
@@ -29,9 +28,11 @@
   ],
   "manual_process_exclusion_basis": "manual_process_risk_override_not_algorithmic_copy_detection",
   "forbidden_materialization_status": "not_generated",
-  "undercoverage_manual_review_rule": {
-    "high_count_gte": 2,
-    "high_rate_gte": 0.2
+  "undercoverage_screening_rule": {
+    "p1_policy": "nonblocking_watch_only",
+    "task_majority_undercoverage_risk": "excluded_from_worker_level_counts",
+    "watch_high_count_gte": 2,
+    "watch_high_rate_gte": 0.2
   },
   "forbidden_outputs_generated": false,
   "forbidden_metric_field_count": 0,

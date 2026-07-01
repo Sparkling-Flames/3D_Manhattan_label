@@ -14,6 +14,9 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 DEFAULT_ALIGNMENT = Path("analysis_results/prescreen_closeout/prescreen_geometry_gold_alignment_audit.csv")
 DEFAULT_FINAL_GOLD = Path("analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl")
+DEFAULT_SYNTHETIC_SCOPE = Path("analysis_results/prescreen_closeout/prescreen_synthetic_scope_binding_audit.csv")
+DEFAULT_SYNTHETIC_SELECTION = Path("analysis_results/phase1_progress_20260324/prescreen_semi_final_selection_v10.json")
+DEFAULT_VISUAL_REVIEW = Path("analysis_results/stage1_p1_manual_semi_bilayout_allmix_full_layout_compare_20260519/stage1_p1_manual_semi_bilayout_allmix_top_differences.csv")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/prescreen_closeout")
 
 AUDIT_FIELDS = [
@@ -42,6 +45,7 @@ AUDIT_FIELDS = [
 
 OOS_SCOPES = {"oos_geometry", "oos_open_boundary", "oos_split_level", "oos_insufficient"}
 UNRESOLVED_SCOPES = {"unknown_gold", "unresolved_mixed", "audit_only", "synthetic_scope_unresolved"}
+SYNTHETIC_READY_SELECTIONS = {"synthetic_backfill_selected", "carry_forward_frozen_synthetic_asset"}
 
 
 def _safe(value: Any) -> str:
@@ -75,6 +79,60 @@ def _load_final_gold(path: Path | None) -> dict[str, list[dict[str, Any]]] | Non
                 if value:
                     index.setdefault(f"{key_name}:{value}", []).append(rec)
     return index
+
+
+def _truthy(value: Any) -> bool:
+    return str(value).strip().lower() in {"1", "true", "yes", "y"}
+
+
+def _load_synthetic_scope(path: Path | None) -> dict[str, dict[str, str]]:
+    if not path or not path.exists():
+        return {}
+    return {str(row.get("runtime_task_id") or ""): row for row in _load_csv(path)}
+
+
+def _load_selection(path: Path | None) -> dict[str, dict[str, str]]:
+    if not path or not path.exists():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    rows = data.get("selected_trap_rows", []) if isinstance(data, dict) else []
+    return {str(row.get("candidate_id") or ""): row for row in rows if isinstance(row, dict)}
+
+
+def _load_visual_ok(path: Path | None) -> set[str]:
+    if not path or not path.exists():
+        return set()
+    out = set()
+    for row in _load_csv(path):
+        if _safe(row.get("status")).lower() == "ok":
+            for key in ("base_task_id", "base_image_key"):
+                value = _safe(row.get(key))
+                if value:
+                    out.add(value)
+    return out
+
+
+def _semi_trap_reference_ready(row: dict[str, str], synthetic_scope: dict[str, dict[str, str]], selection: dict[str, dict[str, str]], visual_ok: set[str]) -> bool:
+    if _safe(row.get("dataset_group")) != "PreScreen_semi":
+        return False
+    synth = synthetic_scope.get(_safe(row.get("task_id")))
+    if not synth:
+        return False
+    candidate_id = _safe(synth.get("synthetic_candidate_id"))
+    selected = selection.get(candidate_id)
+    if not selected:
+        return False
+    selection_status = {_safe(selected.get("selection_status")), _safe(selected.get("rebind_status"))}
+    return (
+        candidate_id.startswith("legacy_disjoint_source_")
+        and _safe(selected.get("source_type")) == "trap_synthetic_disjoint_source"
+        and bool(selection_status & SYNTHETIC_READY_SELECTIONS)
+        and _safe(synth.get("scope_gold_source")) == "prescreen_synthetic_expert_review"
+        and _safe(synth.get("task_final_scope_after_binding")) == "in_scope"
+        and _truthy(synth.get("geometry_gold_ready_after_binding"))
+        and _safe(synth.get("geometry_scoring_role")) == "semi_trap_audit"
+        and _safe(synth.get("base_image_key")) in visual_ok
+    )
 
 
 def _reference_keys(row: dict[str, str]) -> list[str]:
@@ -164,6 +222,8 @@ def _status_tuple(row: dict[str, str], role: str, validation_status: str) -> tup
     validation = _safe(row.get("geometry_gold_validation_level"))
     scope = _safe(row.get("task_final_scope"))
     alignment = _safe(row.get("geometry_alignment_status"))
+    if validation_status == "semi_trap_reference_ready":
+        return "semi_trap_reference_ready", "not_applicable", False, "semi_trap_reference_ready", False
     if alignment == "mirror_gold_mismatch":
         return "ambiguous", "not_ready", True, "mirror_gold_mismatch", True
     if role == "oos_not_applicable":
@@ -198,13 +258,24 @@ def _forbidden_metric_field_count(rows: list[dict[str, Any]]) -> int:
     return sum(1 for row in rows for key in row if "score" in str(key).lower())
 
 
-def build_gold_status_audit(alignment_csv: Path, final_gold_jsonl: Path | None = None) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+def build_gold_status_audit(
+    alignment_csv: Path,
+    final_gold_jsonl: Path | None = None,
+    synthetic_scope_csv: Path | None = None,
+    synthetic_selection_json: Path | None = None,
+    visual_review_csv: Path | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     rows = _load_csv(alignment_csv)
     final_gold_index = _load_final_gold(final_gold_jsonl)
+    synthetic_scope = _load_synthetic_scope(synthetic_scope_csv)
+    selection = _load_selection(synthetic_selection_json)
+    visual_ok = _load_visual_ok(visual_review_csv)
     out: list[dict[str, Any]] = []
     for row in rows:
         role = _reference_role(row)
         validation_status = _validation_status(row, role, final_gold_index)
+        if _semi_trap_reference_ready(row, synthetic_scope, selection, visual_ok):
+            validation_status = "semi_trap_reference_ready"
         alignment_status, undercoverage_status, ambiguity, reason, review = _status_tuple(row, role, validation_status)
         out.append(
             {
@@ -250,10 +321,19 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--alignment-csv", default=str(DEFAULT_ALIGNMENT))
     parser.add_argument("--final-gold-jsonl", default=str(DEFAULT_FINAL_GOLD))
+    parser.add_argument("--synthetic-scope-csv", default=str(DEFAULT_SYNTHETIC_SCOPE))
+    parser.add_argument("--synthetic-selection-json", default=str(DEFAULT_SYNTHETIC_SELECTION))
+    parser.add_argument("--visual-review-csv", default=str(DEFAULT_VISUAL_REVIEW))
     parser.add_argument("--output-dir", default=str(DEFAULT_OUTPUT_DIR))
     args = parser.parse_args(argv)
 
-    rows, summary = build_gold_status_audit(Path(args.alignment_csv), Path(args.final_gold_jsonl) if args.final_gold_jsonl else None)
+    rows, summary = build_gold_status_audit(
+        Path(args.alignment_csv),
+        Path(args.final_gold_jsonl) if args.final_gold_jsonl else None,
+        Path(args.synthetic_scope_csv) if args.synthetic_scope_csv else None,
+        Path(args.synthetic_selection_json) if args.synthetic_selection_json else None,
+        Path(args.visual_review_csv) if args.visual_review_csv else None,
+    )
     out_dir = Path(args.output_dir)
     audit_path = out_dir / "prescreen_gold_status_audit.csv"
     summary_path = out_dir / "prescreen_gold_status_summary.json"

@@ -53,6 +53,10 @@
     },
     "manual_override_sidecar": {
       "path": "analysis_results/prescreen_closeout/prescreen_manual_overrides_20260701.json"
+    },
+    "semi_synthetic_trap_issue_review_sidecar": {
+      "path": "analysis_results/prescreen_closeout/prescreen_semi_synthetic_trap_issue_review.csv",
+      "role": "mirror_pair_level_actual_issue_family_source"
     }
   },
   "policies": {
@@ -65,7 +69,8 @@
     "owner_mismatch_annotation_log": "exclude_from_exact_and_task_level_fallback_buckets",
     "fallback_worker_admission": "not_auto_exclusion",
     "undercoverage": "p1_nonblocking_watch",
-    "task_majority_undercoverage": "exclude_from_worker_level_penalty"
+    "task_majority_undercoverage": "exclude_from_worker_level_penalty",
+    "semi_synthetic_issue_family": "use_reviewed_actual_issue_fields_not_planned_operator"
   },
   "pre_rerun_test_gate": [
     "pytest tests/test_active_log_utils.py tests/test_prescreen_closeout_audit.py tests/test_prescreen_worker_screening_rollup.py"
