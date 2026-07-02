@@ -6,6 +6,9 @@ from pathlib import Path
 
 from tools.thesis_main.registry.build_calibration_rebuild_v2_drafts import (
     INVENTORY_FIELDS,
+    audit_manual_semi_overlap,
+    audit_semi_source,
+    build_readiness_draft,
     build_inventory,
     build_manual_assignment,
     build_semi_assignment,
@@ -142,3 +145,83 @@ def test_assignments_enforce_core_k5_semi_k4_and_no_same_image_overlap() -> None
     assert semi_audit["worker_semi_load_max"] <= 5
     assert overlap_audit["manual_semi_same_image_overlap_count"] == 0
     assert all(row["used_for_r_u"] == "false" and row["used_for_rq2"] == "true" for row in semi_rows)
+
+
+def test_core_extra_assignments_use_seeded_worker_order_not_lexical_order() -> None:
+    rows = [_candidate(i, reviewed=i <= 30) for i in range(1, 125)]
+    anchor, core, _, _ = select_manual_pools(rows)
+    workers = [{"worker_id": str(i), "watch_flag": "False"} for i in range(1, 24)]
+
+    manual_rows, manual_audit = build_manual_assignment(anchor, core, workers)
+    core_load = {}
+    for row in manual_rows:
+        if row["dataset_group"] == "Calibration_core":
+            core_load[row["worker_id"]] = core_load.get(row["worker_id"], 0) + 1
+    extra_workers = {worker_id for worker_id, count in core_load.items() if count == 17}
+    lexical_first_seven = set(sorted({worker["worker_id"] for worker in workers})[:7])
+
+    assert manual_audit["worker_core_load_min"] == 16
+    assert manual_audit["worker_core_load_max"] == 17
+    assert len(extra_workers) == 7
+    assert extra_workers != lexical_first_seven
+
+
+def test_negative_semi_source_audit_counts_anchor_and_reserve_in_semi() -> None:
+    anchor = [_candidate(1)]
+    core = [_candidate(2)]
+    reserve = [_candidate(3)]
+    semi = [anchor[0], core[0], reserve[0]]
+
+    audit = audit_semi_source(semi, core, anchor, reserve)
+
+    assert audit["source_pool_all_core"] is False
+    assert audit["anchor_in_semi_count"] == 1
+    assert audit["reserve_in_semi_count"] == 1
+
+
+def test_negative_manual_semi_same_worker_same_image_overlap_detected() -> None:
+    manual_rows = [{"worker_id": "w1", "base_task_id": "base_1"}]
+    semi_rows = [{"worker_id": "w1", "base_task_id": "base_1"}]
+
+    audit = audit_manual_semi_overlap(manual_rows, semi_rows)
+
+    assert audit["passed"] is False
+    assert audit["manual_semi_same_image_overlap_count"] == 1
+
+
+def test_negative_legacy_label_is_not_upgraded_to_confirmed_family(tmp_path: Path) -> None:
+    _write_old_json(tmp_path / "export_label/project-2-at-2026-03-25-10-52-c04c6496.json")
+    raw = tmp_path / "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs"
+    raw.mkdir(parents=True)
+    (raw / "project-1-at-x.json").write_text("[]", encoding="utf-8")
+    gold = tmp_path / "analysis_results/prescreen_closeout_final_gold_v2_20260701/final_gold_records_v2_p1_closeout_corrected.jsonl"
+    gold.parent.mkdir(parents=True, exist_ok=True)
+    gold.write_text("", encoding="utf-8")
+    (tmp_path / "trap集").mkdir()
+    (tmp_path / "trap集/旧标注补充清单_20260702.md").write_text(
+        "| task_id | x |\n| --- | --- |\n| 460 | x |\n", encoding="utf-8"
+    )
+
+    rows, _ = build_inventory(tmp_path)
+    row = next(row for row in rows if row["task_id"] == "460")
+
+    assert row["legacy_label_status"] == "legacy_proxy"
+    assert row["expert_review_status"] == "unreviewed"
+    assert row["proxy_confidence"] == "legacy_proxy"
+    assert row["proxy_confidence"] != "confirmed"
+
+
+def test_negative_readiness_draft_never_passes_before_human_review() -> None:
+    readiness = build_readiness_draft(
+        deprecation={"passed": True},
+        balance={"prescreen_overlap_count": 0, "warnings": []},
+        manual_audit={"passed": True, "reserve_assignment_count": 0},
+        semi_audit={"passed": True},
+        overlap_audit={"passed": True, "manual_semi_same_image_overlap_count": 0},
+        semi_quota={"source_pool_all_core": True, "shortfalls": {}},
+        test_results="all local checks passed",
+    )
+
+    assert readiness["passed"] is False
+    assert readiness["status"] == "draft_pending_human_review"
+    assert "manual pool draft pending human approval" in readiness["blockers"]

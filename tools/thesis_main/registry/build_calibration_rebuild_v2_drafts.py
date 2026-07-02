@@ -164,6 +164,23 @@ def _manual_review_rows(path: Path) -> dict[str, dict[str, str]]:
     return rows
 
 
+def _hard_exclude_ids(path: Path) -> set[str]:
+    if not path.exists():
+        return set()
+    in_section = False
+    ids: set[str] = set()
+    for line in path.read_text(encoding="utf-8").splitlines():
+        if line.startswith("## "):
+            in_section = "直接排除" in line
+            continue
+        if not in_section or not line.startswith("|") or "---" in line or "task" in line:
+            continue
+        cells = [c.strip() for c in line.strip("|").split("|")]
+        if cells and cells[0].isdigit():
+            ids.add(cells[0])
+    return ids
+
+
 def _final_gold(root: Path) -> dict[str, dict]:
     path = root / "analysis_results/prescreen_closeout_final_gold_v2_20260701/final_gold_records_v2_p1_closeout_corrected.jsonl"
     out: dict[str, dict] = {}
@@ -233,7 +250,7 @@ def build_inventory(root: Path) -> tuple[list[dict], dict]:
     legacy_unreviewed = _markdown_task_ids(root / "trap集/旧标注补充清单_20260702.md")
     pure_model = _markdown_task_ids(root / "trap集/纯模型问题任务记录_20260702.md")
     semi_model = {row["task_id"]: row for row in _read_csv(root / "trap集/校准semi模型问题整理_20260702.csv")}
-    hard_exclude = {"566", "615", "649", "498"}
+    hard_exclude = _hard_exclude_ids(root / "trap集/亲自复核整理与分层_20260702.md")
 
     rows: list[dict] = []
     for task in tasks:
@@ -426,6 +443,21 @@ def select_semi_from_core(core: list[dict], seed: int = SEED) -> tuple[list[dict
     return selected, {"quotas": quotas, "shortfalls": shortfalls, "semi_count": len(selected)}
 
 
+def audit_semi_source(semi: list[dict], core: list[dict], anchor: list[dict], reserve: list[dict]) -> dict:
+    semi_ids = {row["task_id"] for row in semi}
+    core_ids = {row["task_id"] for row in core}
+    anchor_ids = {row["task_id"] for row in anchor}
+    reserve_ids = {row["task_id"] for row in reserve}
+    return {
+        "source_pool_all_core": semi_ids <= core_ids,
+        "anchor_in_semi_count": len(semi_ids & anchor_ids),
+        "reserve_in_semi_count": len(semi_ids & reserve_ids),
+        "legacy_proxy_unconfirmed_count": sum(row.get("semi_family_confidence") == "legacy_proxy" for row in semi),
+        "used_for_r_u": False,
+        "used_for_rq2": True,
+    }
+
+
 def load_workers(root: Path) -> list[dict[str, str]]:
     rows = _read_csv(root / "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_worker_admission.csv")
     workers = [r for r in rows if _bool(r.get("eligible_for_C1"))]
@@ -437,6 +469,7 @@ def load_workers(root: Path) -> list[dict[str, str]]:
 def build_manual_assignment(anchor: list[dict], core: list[dict], workers: list[dict[str, str]]) -> tuple[list[dict], dict]:
     rows: list[dict] = []
     order_by_worker = defaultdict(int)
+    shuffled_rank = {worker["worker_id"]: idx for idx, worker in enumerate(workers)}
     for task in anchor:
         for worker in workers:
             order_by_worker[worker["worker_id"]] += 1
@@ -455,7 +488,7 @@ def build_manual_assignment(anchor: list[dict], core: list[dict], workers: list[
             })
     load = Counter()
     for idx, task in enumerate(core):
-        ranked = sorted(workers, key=lambda w: (load[w["worker_id"]], (idx + int(w["worker_id"])) % len(workers)))
+        ranked = sorted(workers, key=lambda w: (load[w["worker_id"]], (idx + shuffled_rank[w["worker_id"]]) % len(workers)))
         for worker in ranked[:5]:
             load[worker["worker_id"]] += 1
             order_by_worker[worker["worker_id"]] += 1
@@ -551,20 +584,60 @@ def build_semi_assignment(semi: list[dict], manual_rows: list[dict], workers: li
     counts = Counter(r["task_id"] for r in rows)
     semi_load = Counter(r["worker_id"] for r in rows)
     load_values = [semi_load[w["worker_id"]] for w in workers]
+    overlap_audit = audit_manual_semi_overlap(manual_rows, rows)
     audit = {
-        "passed": len(semi) == 25 and set(counts.values()) == {4} and overlap == 0 and min(load_values) >= 4 and max(load_values) <= 5,
+        "passed": len(semi) == 25 and set(counts.values()) == {4} and overlap_audit["manual_semi_same_image_overlap_count"] == 0 and min(load_values) >= 4 and max(load_values) <= 5,
         "semi_task_count": len(semi),
         "semi_k_min": min(counts.values()) if counts else 0,
         "semi_k_max": max(counts.values()) if counts else 0,
         "worker_semi_load_min": min(load_values) if load_values else 0,
         "worker_semi_load_max": max(load_values) if load_values else 0,
-        "manual_semi_same_image_overlap_count": overlap,
+        "manual_semi_same_image_overlap_count": overlap_audit["manual_semi_same_image_overlap_count"],
         "anchor_in_semi_count": 0,
         "reserve_in_semi_count": 0,
         "used_for_r_u_false_count": sum(r["used_for_r_u"] == "false" for r in rows),
         "used_for_rq2_true_count": sum(r["used_for_rq2"] == "true" for r in rows),
     }
-    return rows, {"manual_semi_same_image_overlap_count": overlap, "passed": overlap == 0}, audit
+    return rows, overlap_audit, audit
+
+
+def audit_manual_semi_overlap(manual_rows: list[dict], semi_rows: list[dict]) -> dict:
+    manual_pairs = {(row["worker_id"], row["base_task_id"]) for row in manual_rows}
+    overlap = sum((row["worker_id"], row["base_task_id"]) in manual_pairs for row in semi_rows)
+    return {"manual_semi_same_image_overlap_count": overlap, "passed": overlap == 0}
+
+
+def build_readiness_draft(
+    *,
+    deprecation: dict,
+    balance: dict,
+    manual_audit: dict,
+    semi_audit: dict,
+    overlap_audit: dict,
+    semi_quota: dict,
+    test_results: str,
+) -> dict:
+    return {
+        "passed": False,
+        "status": "draft_pending_human_review",
+        "blockers": [
+            "manual pool draft pending human approval",
+            "semi family draft pending human approval",
+            "LS import not yet materialized",
+            "active log smoke test not yet run on v2 projects",
+            "worker-facing distribution not generated",
+        ],
+        "protocol_checks": {
+            "random_c1_deprecated": deprecation["passed"],
+            "reserve_excluded_from_c1": manual_audit["reserve_assignment_count"] == 0,
+            "semi_only_from_core": semi_quota["source_pool_all_core"],
+            "readiness_for_launch": False,
+        },
+        "overlap_checks": {"prescreen_overlap_count": balance["prescreen_overlap_count"]},
+        "assignment_checks": {"manual": manual_audit, "semi": semi_audit, "manual_semi_overlap": overlap_audit},
+        "proxy_balance_warnings": balance["warnings"] + [f"semi_shortfall:{k}={v}" for k, v in semi_quota.get("shortfalls", {}).items()],
+        "test_results": test_results,
+    }
 
 
 def _import_task(row: dict, group: str, include_model_issue: bool) -> dict:
@@ -624,14 +697,9 @@ def build_all(root: Path, test_results: str = "not_run_by_script") -> dict:
     _write_json(out / "calibration_pool_proxy_balance_summary_v2.json", balance)
     semi, semi_quota = select_semi_from_core(core)
     _write_csv(out / "calibration_semi_selection_draft_v2.csv", semi, POOL_FIELDS + ["semi_family", "semi_family_confidence", "semi_selection_rank"])
-    _write_json(out / "calibration_semi_family_quota_draft_v2.json", semi_quota | {
-        "source_pool_all_core": all(r["calibration_split"] == "core" for r in semi),
-        "anchor_in_semi_count": 0,
-        "reserve_in_semi_count": 0,
-        "legacy_proxy_unconfirmed_count": sum(r["semi_family_confidence"] == "legacy_proxy" for r in semi),
-        "used_for_r_u": False,
-        "used_for_rq2": True,
-    })
+    semi_source_audit = audit_semi_source(semi, core, anchor, reserve)
+    semi_quota = semi_quota | semi_source_audit
+    _write_json(out / "calibration_semi_family_quota_draft_v2.json", semi_quota)
     _write_csv(out / "calibration_semi_source_audit_v2.csv", semi, POOL_FIELDS + ["semi_family", "semi_family_confidence", "semi_selection_rank"])
     workers = load_workers(root)
     manual_assign, manual_audit = build_manual_assignment(anchor, core, workers)
@@ -651,27 +719,15 @@ def build_all(root: Path, test_results: str = "not_run_by_script") -> dict:
         "counts": {"anchor": len(anchor), "core": len(core), "semi": len(semi), "reserve": len(reserve)},
         "reserve_import_scope": "C2_draft_only",
     })
-    readiness = {
-        "passed": False,
-        "status": "draft_pending_human_review",
-        "blockers": [
-            "manual pool draft pending human approval",
-            "semi family draft pending human approval",
-            "LS import not yet materialized",
-            "active log smoke test not yet run on v2 projects",
-            "worker-facing distribution not generated",
-        ],
-        "protocol_checks": {
-            "random_c1_deprecated": deprecation["passed"],
-            "reserve_excluded_from_c1": manual_audit["reserve_assignment_count"] == 0,
-            "semi_only_from_core": all(r["calibration_split"] == "core" for r in semi),
-            "readiness_for_launch": False,
-        },
-        "overlap_checks": {"prescreen_overlap_count": balance["prescreen_overlap_count"]},
-        "assignment_checks": {"manual": manual_audit, "semi": semi_audit, "manual_semi_overlap": overlap_audit},
-        "proxy_balance_warnings": balance["warnings"] + [f"semi_shortfall:{k}={v}" for k, v in semi_quota.get("shortfalls", {}).items()],
-        "test_results": test_results,
-    }
+    readiness = build_readiness_draft(
+        deprecation=deprecation,
+        balance=balance,
+        manual_audit=manual_audit,
+        semi_audit=semi_audit,
+        overlap_audit=overlap_audit,
+        semi_quota=semi_quota,
+        test_results=test_results,
+    )
     _write_json(out / "c1_launch_readiness_draft_v2.json", readiness)
     report = "\n".join([
         "# C1/C2 v2 rebuild draft report",
