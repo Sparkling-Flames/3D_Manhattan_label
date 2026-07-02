@@ -33,7 +33,7 @@ def test_ls_import_materialization_audit(tmp_path: Path) -> None:
             continue
         internal.append({"worker_id": "w", "task_id": row["task_id"], "base_task_id": row["base_task_id"], "inner_id": row["inner_id"], "task_url": row["task_url"], "dataset_group": row["intended_project_group"]})
     _csv(out / "worker_distribution_internal_manifest_v3_1.csv", ["worker_id", "task_id", "base_task_id", "inner_id", "task_url", "dataset_group"], internal)
-    _csv(out / "worker_facing_distribution_zh_merged_v3_1.csv", ["public_worker_code", "worker_name", "order", "inner_id"], [{"public_worker_code": "W001", "worker_name": "张三", "order": str(i), "inner_id": row["inner_id"]} for i, row in enumerate(internal, start=1)])
+    _csv(out / "worker_facing_distribution_zh_merged_v3_1.csv", ["public_worker_code", "worker_name", "entry", "inner_id"], [{"public_worker_code": "W001", "worker_name": "张三", "entry": "B", "inner_id": row["inner_id"]} for row in internal])
     (out / "worker_facing_distribution_overseas_individual_v3_1").mkdir()
     (out / "c1_launch_readiness_draft_v3_1.json").write_text(json.dumps({"passed": False}), encoding="utf-8")
 

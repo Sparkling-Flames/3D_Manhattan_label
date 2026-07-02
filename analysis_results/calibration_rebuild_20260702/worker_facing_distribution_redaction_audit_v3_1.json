@@ -5,11 +5,11 @@
   "zh_fields": [
     "public_worker_code",
     "worker_name",
-    "order",
+    "entry",
     "inner_id"
   ],
   "overseas_fields": [
-    "order",
+    "entry",
     "inner_id"
   ],
   "zh_fields_allowed": true,
@@ -38,6 +38,11 @@
   "zh_internal_worker_risk_leaked": false,
   "zh_worker_name_source": "export_label/标注人员.xlsx",
   "overseas_each_file_single_worker": true,
+  "entry_mapping": {
+    "A": "C1_anchor_all",
+    "B": "C1_core_all",
+    "C": "C1_semi"
+  },
   "all_worker_facing_inner_ids_backlink_internal": true,
   "internal_manifest_assignment_row_count": 751,
   "assignment_row_count": 751,

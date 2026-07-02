@@ -23,8 +23,13 @@ INTERNAL_FIELDS = [
     "source_manifest",
     "internal_only",
 ]
-ZH_FIELDS = ["public_worker_code", "worker_name", "order", "inner_id"]
-OVERSEAS_FIELDS = ["order", "inner_id"]
+ZH_FIELDS = ["public_worker_code", "worker_name", "entry", "inner_id"]
+OVERSEAS_FIELDS = ["entry", "inner_id"]
+ENTRY_BY_GROUP = {
+    "Calibration_anchor": "A",
+    "Calibration_core": "B",
+    "Calibration_semi": "C",
+}
 FORBIDDEN = [
     "dataset_group",
     "anchor",
@@ -71,6 +76,10 @@ def _public(worker_id: str) -> str:
 
 def _safe_file(value: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", value)
+
+
+def _entry(dataset_group: str) -> str:
+    return ENTRY_BY_GROUP[dataset_group]
 
 
 def _planned_import_mapping(out: Path) -> dict[tuple[str, str], dict[str, str]]:
@@ -151,21 +160,21 @@ def build(root: Path) -> dict:
             _write_csv(
                 overseas_dir / f"worker_{_safe_file(public)}.csv",
                 OVERSEAS_FIELDS,
-                [{"order": str(idx), "inner_id": row["inner_id"]} for idx, row in enumerate(rows, start=1)],
+                [{"entry": _entry(row["dataset_group"]), "inner_id": row["inner_id"]} for row in rows],
             )
         else:
-            for idx, row in enumerate(rows, start=1):
-                zh_rows.append({"public_worker_code": public, "worker_name": zh_names.get(worker_id, ""), "order": str(idx), "inner_id": row["inner_id"]})
+            for row in rows:
+                zh_rows.append({"public_worker_code": public, "worker_name": zh_names.get(worker_id, ""), "entry": _entry(row["dataset_group"]), "inner_id": row["inner_id"]})
     zh_path = out / "worker_facing_distribution_zh_merged_v3_1.csv"
     _write_csv(zh_path, ZH_FIELDS, zh_rows)
 
     overseas_files = sorted(overseas_dir.glob("worker_*.csv"))
-    internal_pairs = {(r["public_worker_code"], r["inner_id"]) for r in internal_rows}
+    internal_pairs = {(r["public_worker_code"], _entry(r["dataset_group"]), r["inner_id"]) for r in internal_rows}
     overseas_ok = True
     for path in overseas_files:
         public = path.stem.removeprefix("worker_")
         rows = _read_csv(path)
-        if any((public, row["inner_id"]) not in internal_pairs for row in rows):
+        if any((public, row["entry"], row["inner_id"]) not in internal_pairs for row in rows):
             overseas_ok = False
     assignment_count = sum(len(rows) for _, rows in assignments)
     audit = {
@@ -187,7 +196,8 @@ def build(root: Path) -> dict:
         "zh_internal_worker_risk_leaked": False,
         "zh_worker_name_source": "export_label/标注人员.xlsx",
         "overseas_each_file_single_worker": overseas_ok,
-        "all_worker_facing_inner_ids_backlink_internal": all(row["inner_id"] and any(r["inner_id"] == row["inner_id"] for r in internal_rows) for row in zh_rows)
+        "entry_mapping": {"A": "C1_anchor_all", "B": "C1_core_all", "C": "C1_semi"},
+        "all_worker_facing_inner_ids_backlink_internal": all(row["inner_id"] and (row["public_worker_code"], row["entry"], row["inner_id"]) in internal_pairs for row in zh_rows)
         and overseas_ok,
         "internal_manifest_assignment_row_count": len(internal_rows),
         "assignment_row_count": assignment_count,

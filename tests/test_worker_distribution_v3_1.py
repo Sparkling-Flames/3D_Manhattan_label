@@ -42,10 +42,12 @@ def test_worker_distribution_redacts_worker_facing_fields(tmp_path: Path) -> Non
     assert audit["passed"] is True
     zh_fields = next(csv.reader((out / "worker_facing_distribution_zh_merged_v3_1.csv").open(encoding="utf-8-sig")))
     overseas_fields = next(csv.reader((out / "worker_facing_distribution_overseas_individual_v3_1/worker_W028.csv").open(encoding="utf-8-sig")))
-    assert zh_fields == ["public_worker_code", "worker_name", "order", "inner_id"]
-    assert overseas_fields == ["order", "inner_id"]
+    assert zh_fields == ["public_worker_code", "worker_name", "entry", "inner_id"]
+    assert overseas_fields == ["entry", "inner_id"]
     zh_row = next(csv.DictReader((out / "worker_facing_distribution_zh_merged_v3_1.csv").open(encoding="utf-8-sig")))
     overseas_row = next(csv.DictReader((out / "worker_facing_distribution_overseas_individual_v3_1/worker_W028.csv").open(encoding="utf-8-sig")))
+    assert zh_row["entry"] == "B"
+    assert overseas_row["entry"] == "C"
     assert zh_row["inner_id"] == "1"
     assert overseas_row["inner_id"] == "1"
     assert not any(audit["worker_facing_forbidden_terms"].values())

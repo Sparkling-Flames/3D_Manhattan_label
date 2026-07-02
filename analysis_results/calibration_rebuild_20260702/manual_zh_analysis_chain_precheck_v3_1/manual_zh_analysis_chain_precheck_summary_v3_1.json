@@ -1,0 +1,35 @@
+{
+  "passed": false,
+  "status": "manual_zh_analysis_chain_precheck",
+  "scope": "manual_zh_smoke_fixture_only",
+  "statistical_interpretation_allowed": false,
+  "full_c1_smoke_test_passed": false,
+  "n_exported_tasks": 4,
+  "n_raw_annotations": 4,
+  "n_canonical_annotations": 4,
+  "annotation_id_present_count": 4,
+  "annotation_id_missing_count": 0,
+  "annotation_level_log_match_count": 0,
+  "task_level_fallback_count": 4,
+  "lead_time_fallback_count": 0,
+  "missing_log_count": 0,
+  "primary_active_time_eligible_count": 4,
+  "duplicate_group_count": 0,
+  "revision_group_count": 0,
+  "outside_assignment_submission_count": 1,
+  "duplicate_worker_task_submission_count": 0,
+  "manifest_back_match_passed": false,
+  "active_time_binding_passed": true,
+  "canonicalization_passed": true,
+  "realized_vs_assigned_passed": false,
+  "worker_facing_bare_inner_id_ambiguity_detected": true,
+  "behavior_not_strictly_verified_count": 2,
+  "blockers": [
+    "outside_assignment_submission_detected"
+  ],
+  "warnings": [
+    "active_log_task_level_fallback_only",
+    "bare_inner_id_ambiguous_across_projects_use_entry_plus_inner_id",
+    "behavior_not_strictly_verified_for_some_rows"
+  ]
+}
