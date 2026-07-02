@@ -1,0 +1,59 @@
+{
+  "created_for": "C1_v3_1_smoke_test_import_draft",
+  "status": "draft_not_imported",
+  "no_label_studio_api_call": true,
+  "source": "calibration v3.1 frozen drafts + export_label/groudTruth.json mapping",
+  "manual_source_counts": {
+    "anchor": 2,
+    "core": 2
+  },
+  "semi_count": 3,
+  "files": [
+    {
+      "path": "import_json\\calibration_c1_v3_1_smoke\\c1_v3_1_manual_smoke_import_zh.json",
+      "task_count": 4,
+      "condition": "manual",
+      "vis_3d_base": "http://175.178.71.217:8000"
+    },
+    {
+      "path": "import_json\\calibration_c1_v3_1_smoke\\c1_v3_1_semi_smoke_import_zh.json",
+      "task_count": 3,
+      "condition": "semi",
+      "vis_3d_base": "http://175.178.71.217:8000",
+      "all_have_predictions": true
+    },
+    {
+      "path": "import_json\\calibration_c1_v3_1_smoke\\c1_v3_1_manual_smoke_import_foreign_https.json",
+      "task_count": 4,
+      "condition": "manual",
+      "vis_3d_base": "https://label.sparkle0825.top"
+    },
+    {
+      "path": "import_json\\calibration_c1_v3_1_smoke\\c1_v3_1_semi_smoke_import_foreign_https.json",
+      "task_count": 3,
+      "condition": "semi",
+      "vis_3d_base": "https://label.sparkle0825.top",
+      "all_have_predictions": true
+    }
+  ],
+  "service_compatibility": {
+    "zh_175_http": {
+      "files": [
+        "c1_v3_1_manual_smoke_import_zh.json",
+        "c1_v3_1_semi_smoke_import_zh.json"
+      ],
+      "vis_3d_base": "http://175.178.71.217:8000",
+      "intended_label_studio_entry": "175.178/http entry"
+    },
+    "foreign_https": {
+      "files": [
+        "c1_v3_1_manual_smoke_import_foreign_https.json",
+        "c1_v3_1_semi_smoke_import_foreign_https.json"
+      ],
+      "vis_3d_base": "https://label.sparkle0825.top",
+      "intended_label_studio_entry": "https foreign entry"
+    },
+    "do_not_mix_entries": true,
+    "reason": "$vis_3d is fetched by the Label Studio frontend, so scheme/CORS must match the service entry."
+  }
+}

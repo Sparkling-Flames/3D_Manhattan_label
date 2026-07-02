@@ -1,11 +1,13 @@
 {
   "passed": true,
+  "inner_id_source": "planned_import_file_order_1_based",
+  "inner_id_not_from_export_label_groudTruth": true,
   "all_assigned_rows_have_inner_id": true,
   "all_internal_manifest_rows_have_valid_inner_id": true,
   "manual_assignment_rows": 651,
   "semi_assignment_rows": 100,
   "worker_distribution_internal_rows": 751,
-  "no_duplicate_worker_id_inner_id": true,
+  "no_duplicate_worker_id_dataset_group_inner_id": true,
   "missing_task_url_in_internal_manifest_count": 0,
   "worker_facing_uses_inner_id_only": true,
   "counts": {
@@ -17,8 +19,8 @@
   "reserve_c2_only_not_in_worker_distribution": true,
   "worker_facing_redaction_passed": true,
   "mapping_status_counts": {
-    "ok": 112,
-    "ok_c2_only": 13
+    "planned_import_order": 112,
+    "planned_c2_only": 13
   },
   "blockers": []
 }

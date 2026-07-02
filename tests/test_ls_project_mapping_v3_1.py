@@ -28,6 +28,7 @@ def test_ls_project_mapping_v3_1_audits_counts_and_redaction(tmp_path: Path) -> 
     semi = [{"worker_id": str(i % 23), "task_id": f"s{i % 25}", "base_task_id": f"semi_{i % 25}", "dataset_group": "Calibration_semi", "assignment_batch": "semi", "expected_completion_order": str(i)} for i in range(100)]
     _csv(out / "assignment_manifest_C1_manual_draft_v3_1.csv", manual_fields, manual)
     _csv(out / "assignment_manifest_C1_semi_draft_v3_1.csv", manual_fields, semi)
+    _csv(out / "calibration_anchor_draft_v2.csv", ["task_id", "base_task_id", "image_stem"], [{"task_id": f"a{i}", "base_task_id": f"anchor_{i}", "image_stem": f"anchor_{i}"} for i in range(12)])
     _csv(out / "calibration_core_draft_v3_1.csv", ["task_id", "base_task_id", "image_stem"], [{"task_id": f"c{i}", "base_task_id": f"core_{i}", "image_stem": f"core_{i}"} for i in range(75)])
     _csv(out / "calibration_reserve_draft_v3_1.csv", ["task_id", "base_task_id", "image_stem"], [{"task_id": f"r{i}", "base_task_id": f"reserve_{i}", "image_stem": f"reserve_{i}"} for i in range(13)])
     _csv(out / "calibration_semi_selection_draft_v3_1.csv", ["task_id", "base_task_id", "image_stem"], [{"task_id": f"s{i}", "base_task_id": f"semi_{i}", "image_stem": f"semi_{i}"} for i in range(25)])
@@ -40,12 +41,6 @@ def test_ls_project_mapping_v3_1_audits_counts_and_redaction(tmp_path: Path) -> 
     redaction = {"passed": True, "counts": {"zh_rows": 751}, "dataset_group_leaked": False, "anchor_core_semi_leaked": False, "used_for_r_u_or_rq2_leaked": False, "semi_family_leaked": False, "model_issue_difficulty_source_status_leaked": False}
     (out / "worker_facing_distribution_redaction_audit_v3_1.json").write_text(json.dumps(redaction), encoding="utf-8")
     (out / "c1_launch_readiness_draft_v3_1.json").write_text(json.dumps({"passed": False, "blockers": []}), encoding="utf-8")
-    stems = {row["base_task_id"] for row in manual + semi} | {f"reserve_{i}" for i in range(13)}
-    export = [{"id": i, "inner_id": i, "project": 1, "data": {"title": f"{stem}.jpg"}} for i, stem in enumerate(sorted(stems), start=1)]
-    export_dir = tmp_path / "export_label"
-    export_dir.mkdir()
-    (export_dir / "groudTruth.json").write_text(json.dumps(export), encoding="utf-8")
-
     summary = build(tmp_path)
 
     assert summary["passed"] is True
@@ -54,3 +49,7 @@ def test_ls_project_mapping_v3_1_audits_counts_and_redaction(tmp_path: Path) -> 
     assert summary["worker_distribution_internal_rows"] == 751
     assert summary["reserve_c2_only_not_in_worker_distribution"] is True
     assert summary["worker_facing_redaction_passed"] is True
+    rows = list(csv.DictReader((out / "ls_project_mapping_audit_v3_1.csv").open(encoding="utf-8-sig")))
+    assert next(row for row in rows if row["base_task_id"] == "anchor_0")["inner_id"] == "1"
+    assert next(row for row in rows if row["base_task_id"] == "core_0")["inner_id"] == "1"
+    assert next(row for row in rows if row["base_task_id"] == "reserve_0")["mapping_status"] == "planned_c2_only"

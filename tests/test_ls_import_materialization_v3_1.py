@@ -33,6 +33,8 @@ def test_ls_import_materialization_audit(tmp_path: Path) -> None:
             continue
         internal.append({"worker_id": "w", "task_id": row["task_id"], "base_task_id": row["base_task_id"], "inner_id": row["inner_id"], "task_url": row["task_url"], "dataset_group": row["intended_project_group"]})
     _csv(out / "worker_distribution_internal_manifest_v3_1.csv", ["worker_id", "task_id", "base_task_id", "inner_id", "task_url", "dataset_group"], internal)
+    _csv(out / "worker_facing_distribution_zh_merged_v3_1.csv", ["public_worker_code", "worker_name", "order", "inner_id"], [{"public_worker_code": "W001", "worker_name": "张三", "order": str(i), "inner_id": row["inner_id"]} for i, row in enumerate(internal, start=1)])
+    (out / "worker_facing_distribution_overseas_individual_v3_1").mkdir()
     (out / "c1_launch_readiness_draft_v3_1.json").write_text(json.dumps({"passed": False}), encoding="utf-8")
 
     summary = build(tmp_path)
@@ -41,5 +43,7 @@ def test_ls_import_materialization_audit(tmp_path: Path) -> None:
     assert summary["counts"] == {"Calibration_anchor": 12, "Calibration_core": 75, "Calibration_semi": 25, "Calibration_reserve": 13}
     assert summary["assigned_c1_tasks_have_inner_id_and_task_url"] is True
     assert summary["reserve_not_in_c1_worker_facing_distribution"] is True
+    assert summary["worker_facing_inner_ids_subset_of_manual_semi"] is True
+    assert summary["worker_facing_reserve_inner_id_count"] == 0
     assert summary["no_duplicate_inner_id_within_each_intended_project_group"] is True
     assert summary["import_candidate_forbidden_keys_found"] == {}

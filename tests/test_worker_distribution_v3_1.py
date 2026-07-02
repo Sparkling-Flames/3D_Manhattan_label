@@ -22,6 +22,10 @@ def test_worker_distribution_redacts_worker_facing_fields(tmp_path: Path) -> Non
     fields = ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group", "assignment_batch", "assignment_reason", "is_common_anchor", "expected_completion_order", "manifest_version", "watch_flag"]
     _csv(out / "assignment_manifest_C1_manual_draft_v3_1.csv", fields, [{"round_id": "C1", "worker_id": "1", "task_id": "t1", "base_task_id": "scene_a", "dataset_group": "Calibration_core", "assignment_batch": "core", "assignment_reason": "x", "is_common_anchor": "false", "expected_completion_order": "1", "manifest_version": "v", "watch_flag": "True"}])
     _csv(out / "assignment_manifest_C1_semi_draft_v3_1.csv", fields + ["used_for_r_u", "used_for_rq2", "semi_family"], [{"round_id": "C1", "worker_id": "28", "task_id": "t2", "base_task_id": "scene_b", "dataset_group": "Calibration_semi", "assignment_batch": "semi", "assignment_reason": "x", "is_common_anchor": "false", "expected_completion_order": "1", "manifest_version": "v", "watch_flag": "True", "used_for_r_u": "false", "used_for_rq2": "true", "semi_family": "x"}])
+    pool_fields = ["task_id", "base_task_id", "image_stem"]
+    _csv(out / "calibration_anchor_draft_v2.csv", pool_fields, [{"task_id": "a1", "base_task_id": "scene_anchor", "image_stem": "scene_anchor"}])
+    _csv(out / "calibration_core_draft_v3_1.csv", pool_fields, [{"task_id": "t1", "base_task_id": "scene_a", "image_stem": "scene_a"}])
+    _csv(out / "calibration_semi_selection_draft_v3_1.csv", pool_fields, [{"task_id": "t2", "base_task_id": "scene_b", "image_stem": "scene_b"}])
     export = [
         {"id": 101, "inner_id": 11, "project": 9, "data": {"title": "scene_a.jpg"}},
         {"id": 102, "inner_id": 12, "project": 9, "data": {"title": "scene_b.jpg"}},
@@ -40,4 +44,8 @@ def test_worker_distribution_redacts_worker_facing_fields(tmp_path: Path) -> Non
     overseas_fields = next(csv.reader((out / "worker_facing_distribution_overseas_individual_v3_1/worker_W028.csv").open(encoding="utf-8-sig")))
     assert zh_fields == ["public_worker_code", "worker_name", "order", "inner_id"]
     assert overseas_fields == ["order", "inner_id"]
+    zh_row = next(csv.DictReader((out / "worker_facing_distribution_zh_merged_v3_1.csv").open(encoding="utf-8-sig")))
+    overseas_row = next(csv.DictReader((out / "worker_facing_distribution_overseas_individual_v3_1/worker_W028.csv").open(encoding="utf-8-sig")))
+    assert zh_row["inner_id"] == "1"
+    assert overseas_row["inner_id"] == "1"
     assert not any(audit["worker_facing_forbidden_terms"].values())

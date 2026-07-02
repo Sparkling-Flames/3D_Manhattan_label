@@ -65,10 +65,6 @@ def _write_csv(path: Path, fields: list[str], rows: list[dict]) -> None:
         writer.writerows(rows)
 
 
-def _stem(value: str) -> str:
-    return Path(str(value)).stem
-
-
 def _public(worker_id: str) -> str:
     return f"W{int(worker_id):03d}" if str(worker_id).isdigit() else f"W{worker_id}"
 
@@ -77,18 +73,19 @@ def _safe_file(value: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", value)
 
 
-def _ls_mapping(path: Path) -> dict[str, dict[str, str]]:
-    rows = json.loads(path.read_text(encoding="utf-8"))
-    out = {}
-    for row in rows:
-        data = row.get("data") or {}
-        stem = _stem(data.get("title") or data.get("image") or "")
-        if stem:
-            out[stem] = {
-                "inner_id": str(row.get("inner_id") or ""),
-                "task_url": f"http://175.178.71.217:8000/projects/{row.get('project')}/data?task={row.get('id')}" if row.get("id") and row.get("project") else "",
+def _planned_import_mapping(out: Path) -> dict[tuple[str, str], dict[str, str]]:
+    out_map = {}
+    for group, project, filename in [
+        ("Calibration_anchor", "C1_anchor_all", "calibration_anchor_draft_v2.csv"),
+        ("Calibration_core", "C1_core_all", "calibration_core_draft_v3_1.csv"),
+        ("Calibration_semi", "C1_semi", "calibration_semi_selection_draft_v3_1.csv"),
+    ]:
+        for idx, row in enumerate(_read_csv(out / filename), start=1):
+            out_map[(group, row["base_task_id"])] = {
+                "inner_id": str(idx),
+                "task_url": f"planned://{project}/{idx}",
             }
-    return out
+    return out_map
 
 
 def _zh_names(path: Path) -> dict[str, str]:
@@ -116,14 +113,14 @@ def build(root: Path) -> dict:
     out = root / OUT_DIR
     manual_path = out / "assignment_manifest_C1_manual_draft_v3_1.csv"
     semi_path = out / "assignment_manifest_C1_semi_draft_v3_1.csv"
-    mapping = _ls_mapping(root / "export_label/groudTruth.json")
+    mapping = _planned_import_mapping(out)
     zh_names = _zh_names(root / "export_label/标注人员.xlsx")
     overseas = _overseas_ids(root / "export_label/外国标注人员.xlsx")
     assignments = [(manual_path, _read_csv(manual_path)), (semi_path, _read_csv(semi_path))]
     internal_rows = []
     for source_path, rows in assignments:
         for row in rows:
-            m = mapping.get(row["base_task_id"], {})
+            m = mapping.get((row["dataset_group"], row["base_task_id"]), {})
             internal_rows.append(
                 {
                     "worker_id": row["worker_id"],
@@ -173,6 +170,8 @@ def build(root: Path) -> dict:
     assignment_count = sum(len(rows) for _, rows in assignments)
     audit = {
         "passed": True,
+        "inner_id_source": "planned_import_file_order_1_based",
+        "inner_id_not_from_export_label_groudTruth": True,
         "zh_fields": ZH_FIELDS,
         "overseas_fields": OVERSEAS_FIELDS,
         "zh_fields_allowed": list(csv.DictReader(zh_path.open(encoding="utf-8-sig")).fieldnames or []) == ZH_FIELDS,
