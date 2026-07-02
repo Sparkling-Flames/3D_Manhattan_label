@@ -1,7 +1,10 @@
 {
-  "passed": true,
-  "blockers": [],
-  "protocol_position": "C1_launch_readiness_only_not_final_worker_tier",
+  "passed": false,
+  "blockers": [
+    "current_c1_deprecated_do_not_launch",
+    "replacement_proxy_balanced_pool_not_built_yet"
+  ],
+  "protocol_position": "C1_deprecated_not_launch_ready",
   "admission_source": "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_worker_admission.csv",
   "pass_count_gate": "full_execution",
   "watch_policy": "retained_as_handoff_sidecar_not_exclusion",

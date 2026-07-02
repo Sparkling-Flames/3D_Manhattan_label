@@ -1,11 +1,13 @@
 {
   "meta": {
-    "manifest_version": "v1_formal_p1_final_gold_v2_20260701_overlap_cleaned",
+    "manifest_version": "v1_deprecated_do_not_launch_20260702",
     "source": "planned_import_json",
     "c1_core_operational_target_k": 5,
     "c1_core_preregistered_min_k": 4,
     "reserve_policy": "unchanged_C2_only",
-    "c1_status": "provisional_only",
+    "c1_status": "deprecated_do_not_launch",
+    "deprecated_at": "2026-07-02",
+    "deprecated_reason": "Current C1 launch artifacts are voided before launch. Replacement pool will be redesigned later as proxy-balanced Calibration pool, not strict scene-stratified.",
     "prescreen_closeout_source": "analysis_results/prescreen_closeout_final_gold_v2_20260701",
     "admission_source": "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_worker_admission.csv",
     "overlap_repair": "replaced_16_calibration_tasks_from_unused_reserved_pool"
