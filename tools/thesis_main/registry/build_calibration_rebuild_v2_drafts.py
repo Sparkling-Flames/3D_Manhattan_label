@@ -36,11 +36,18 @@ INVENTORY_FIELDS = [
     "old_semi_model_issue_raw",
     "legacy_label_status",
     "expert_review_status",
+    "latest_human_reviewed",
+    "scope_difficulty_reviewed",
+    "legacy_proxy",
+    "unreviewed",
     "expert_scope_confirmed",
     "expert_proxy_family_primary",
     "expert_proxy_family_secondary",
     "model_issue_only",
     "semi_only",
+    "scope_gate_only",
+    "requires_gt_fix",
+    "requires_gt_review",
     "hard_exclude",
     "exclude_reason",
     "eligible_for_manual_calibration",
@@ -48,6 +55,7 @@ INVENTORY_FIELDS = [
     "eligible_for_anchor_candidate",
     "eligible_for_reserve_candidate",
     "eligible_for_semi_candidate",
+    "core_candidate_type",
     "proxy_confidence",
     "notes",
 ]
@@ -181,6 +189,15 @@ def _hard_exclude_ids(path: Path) -> set[str]:
     return ids
 
 
+GT_FIX_TERMS = ["GT待修正", "GT 待修正", "适合semi但GT待修正"]
+GT_REVIEW_TERMS = ["GT 不稳定", "需先确认 GT"]
+SEMI_DEFER_TERMS = ["更适合semi", "更适合 semi", "适合做 semi", "适合semi"]
+
+
+def _contains_any(text: str, terms: list[str]) -> bool:
+    return any(term in text for term in terms)
+
+
 def _final_gold(root: Path) -> dict[str, dict]:
     path = root / "analysis_results/prescreen_closeout_final_gold_v2_20260701/final_gold_records_v2_p1_closeout_corrected.jsonl"
     out: dict[str, dict] = {}
@@ -269,16 +286,34 @@ def build_inventory(root: Path) -> tuple[list[dict], dict]:
         semi_row = semi_model.get(tid, {})
         used_prescreen = image_stem in prescreen
         used_random = image_stem in random_c1 or tid in random_c1
+        note_text = review.get("decision", "") + review.get("note", "") + semi_row.get("manual_note", "")
         model_only = tid in pure_model and tid not in manual_review
-        semi_only = False
+        requires_gt_fix = _contains_any(note_text, GT_FIX_TERMS)
+        requires_gt_review = _contains_any(note_text, GT_REVIEW_TERMS)
+        semi_only = requires_gt_fix or (_contains_any(note_text, SEMI_DEFER_TERMS) and tid not in manual_review)
         excluded = tid in hard_exclude or any(word in review.get("decision", "") + review.get("note", "") for word in ["不适合", "GT 错误", "不好"])
-        expert_status = "reviewed" if tid in manual_review or tid in scope_difficulty_reviewed else ("unreviewed" if tid in legacy_unreviewed else "none")
+        latest_reviewed = tid in manual_review
+        scope_reviewed = tid in scope_difficulty_reviewed
+        legacy_proxy = tid in legacy_unreviewed or bool(old_scope or old_diff or old_model)
+        unreviewed = (not latest_reviewed) and (not scope_reviewed)
+        expert_status = (
+            "latest_human_reviewed"
+            if latest_reviewed
+            else ("scope_difficulty_reviewed" if scope_reviewed else ("legacy_proxy" if legacy_proxy else "unreviewed"))
+        )
         legacy_status = "legacy_proxy" if old_scope or old_diff or old_model else "none"
         primary = review.get("difficulty") or semi_row.get("primary_model_issue") or (old_diff.split(";")[0] if old_diff else "")
         secondary = semi_row.get("primary_model_issue") or old_model
         geometry_ready = bool(fg.get("geometry_gold_ready", keypoints >= 2))
         scope_ready = bool(fg.get("scope_gold_ready", bool(old_scope or review.get("scope"))))
-        manual_ok = (not used_prescreen) and (not excluded) and geometry_ready and (not model_only) and (not semi_only)
+        scope_gate_only = "oos" in (old_scope + review.get("scope", "")).lower()
+        manual_ok = (not used_prescreen) and (not excluded) and geometry_ready and (not model_only) and (not requires_gt_fix)
+        if scope_gate_only:
+            core_type = "core_scope_gate_audit_candidate"
+        elif old_model or semi_row:
+            core_type = "core_paired_semi_counterpart_candidate"
+        else:
+            core_type = "core_reliability_candidate"
         row = {
             "task_id": tid,
             "base_task_id": image_stem,
@@ -308,19 +343,37 @@ def build_inventory(root: Path) -> tuple[list[dict], dict]:
             "old_semi_model_issue_raw": old_model,
             "legacy_label_status": legacy_status,
             "expert_review_status": expert_status,
+            "latest_human_reviewed": str(latest_reviewed).lower(),
+            "scope_difficulty_reviewed": str(scope_reviewed).lower(),
+            "legacy_proxy": str(legacy_proxy).lower(),
+            "unreviewed": str(unreviewed).lower(),
             "expert_scope_confirmed": review.get("scope", ""),
             "expert_proxy_family_primary": primary,
             "expert_proxy_family_secondary": secondary,
             "model_issue_only": str(model_only).lower(),
             "semi_only": str(semi_only).lower(),
+            "scope_gate_only": str(scope_gate_only).lower(),
+            "requires_gt_fix": str(requires_gt_fix).lower(),
+            "requires_gt_review": str(requires_gt_review).lower(),
             "hard_exclude": str(excluded).lower(),
             "exclude_reason": "hard_exclude_from_human_review" if excluded else "",
             "eligible_for_manual_calibration": str(manual_ok).lower(),
             "eligible_for_core_proxy_sampling": str(manual_ok).lower(),
-            "eligible_for_anchor_candidate": str(manual_ok and expert_status == "reviewed").lower(),
+            "eligible_for_anchor_candidate": str(
+                manual_ok
+                and latest_reviewed
+                and geometry_ready
+                and scope_ready
+                and (not requires_gt_fix)
+                and (not requires_gt_review)
+                and (not semi_only)
+                and (not scope_gate_only)
+                and (not model_only)
+            ).lower(),
             "eligible_for_reserve_candidate": str(manual_ok).lower(),
             "eligible_for_semi_candidate": str(manual_ok and bool(old_model or semi_row)).lower(),
-            "proxy_confidence": "confirmed" if tid in manual_review else ("legacy_proxy" if tid in legacy_unreviewed else "weak_proxy"),
+            "core_candidate_type": core_type,
+            "proxy_confidence": "confirmed" if latest_reviewed else ("legacy_proxy" if legacy_proxy else "weak_proxy"),
             "notes": review.get("decision") or review.get("note") or semi_row.get("manual_note", ""),
         }
         rows.append(row)
@@ -329,7 +382,7 @@ def build_inventory(root: Path) -> tuple[list[dict], dict]:
         "eligible_manual_count": sum(_bool(r["eligible_for_manual_calibration"]) for r in rows),
         "hard_exclude_count": sum(_bool(r["hard_exclude"]) for r in rows),
         "prescreen_used_count": sum(_bool(r["used_in_prescreen"]) for r in rows),
-        "legacy_unreviewed_count": sum(r["expert_review_status"] == "unreviewed" for r in rows),
+        "legacy_unreviewed_count": sum(_bool(r["legacy_proxy"]) and _bool(r["unreviewed"]) for r in rows),
         "model_issue_only_count": sum(_bool(r["model_issue_only"]) for r in rows),
         "semi_only_count": sum(_bool(r["semi_only"]) for r in rows),
     }
@@ -364,9 +417,10 @@ def select_manual_pools(rows: list[dict], seed: int = SEED) -> tuple[list[dict],
     eligible = [r for r in rows if _bool(r["eligible_for_manual_calibration"])]
     anchors = [r for r in eligible if _bool(r["eligible_for_anchor_candidate"])]
     stable_hard = [r for r in anchors if any(w in r["notes"] + r["expert_proxy_family_primary"] for w in ["高", "难"]) and not r["old_manual_scope_raw"].startswith("oos")]
-    easy_mid = [r for r in anchors if r not in stable_hard]
     rng.shuffle(stable_hard)
-    anchor = stable_hard[:2] + _take_balanced(easy_mid, 12 - min(2, len(stable_hard)), rng)
+    selected_stable = stable_hard[:2]
+    anchor_fill = [r for r in anchors if r not in selected_stable]
+    anchor = selected_stable + _take_balanced(anchor_fill, 12 - len(selected_stable), rng)
     anchor_ids = {r["task_id"] for r in anchor}
     remaining = [r for r in eligible if r["task_id"] not in anchor_ids]
     core = _take_balanced(remaining, 75, rng)
@@ -385,8 +439,11 @@ def select_manual_pools(rows: list[dict], seed: int = SEED) -> tuple[list[dict],
         for rank, row in enumerate(selected, start=1):
             row["calibration_split"] = split
             row["selection_rank"] = str(rank)
-            row["selection_reason"] = "draft_proxy_balanced"
-            row["used_for_r_u"] = "true" if not (row["old_manual_scope_raw"].startswith("oos") or "oos" in row["expert_scope_confirmed"].lower()) else "false_scope_gate_audit"
+            row["selection_reason"] = row["core_candidate_type"] if split == "core" else "draft_proxy_balanced"
+            if split == "core":
+                row["used_for_r_u"] = "true" if row["core_candidate_type"] == "core_reliability_candidate" else "false_non_reliability_core"
+            else:
+                row["used_for_r_u"] = "false_scope_gate_audit" if _bool(row["scope_gate_only"]) else "true"
     return anchor, core, reserve, audit
 
 
@@ -532,12 +589,13 @@ def build_semi_assignment(semi: list[dict], manual_rows: list[dict], workers: li
         manual_by_base[row["base_task_id"]].add(row["worker_id"])
     semi_load = Counter()
     worker_by_id = {worker["worker_id"]: worker for worker in workers}
+    shuffled_rank = {worker["worker_id"]: idx for idx, worker in enumerate(workers)}
     rows: list[dict] = []
     overlap = 0
     for task in semi:
         blocked = manual_by_base[task["base_task_id"]]
         available = [w for w in workers if w["worker_id"] not in blocked]
-        picked = sorted(available, key=lambda w: (semi_load[w["worker_id"]], int(w["worker_id"])))[:4]
+        picked = sorted(available, key=lambda w: (semi_load[w["worker_id"]], shuffled_rank[w["worker_id"]]))[:4]
         for worker in picked:
             semi_load[worker["worker_id"]] += 1
             if worker["worker_id"] in blocked:
@@ -564,8 +622,8 @@ def build_semi_assignment(semi: list[dict], manual_rows: list[dict], workers: li
         highs = [w["worker_id"] for w in workers if semi_load[w["worker_id"]] > 4]
         if not lows or not highs:
             break
-        low = sorted(lows, key=lambda wid: (semi_load[wid], int(wid)))[0]
-        high = sorted(highs, key=lambda wid: (-semi_load[wid], int(wid)))[0]
+        low = sorted(lows, key=lambda wid: (semi_load[wid], shuffled_rank[wid]))[0]
+        high = sorted(highs, key=lambda wid: (-semi_load[wid], shuffled_rank[wid]))[0]
         for row in rows:
             if row["worker_id"] != high:
                 continue
@@ -601,9 +659,25 @@ def build_semi_assignment(semi: list[dict], manual_rows: list[dict], workers: li
     return rows, overlap_audit, audit
 
 
-def audit_manual_semi_overlap(manual_rows: list[dict], semi_rows: list[dict]) -> dict:
+def manual_semi_overlap_rows(manual_rows: list[dict], semi_rows: list[dict]) -> list[dict]:
     manual_pairs = {(row["worker_id"], row["base_task_id"]) for row in manual_rows}
-    overlap = sum((row["worker_id"], row["base_task_id"]) in manual_pairs for row in semi_rows)
+    rows = []
+    for row in semi_rows:
+        overlap = (row["worker_id"], row["base_task_id"]) in manual_pairs
+        rows.append(
+            {
+                "task_id": row.get("task_id", ""),
+                "base_task_id": row["base_task_id"],
+                "worker_id": row["worker_id"],
+                "manual_semi_same_image_overlap": str(overlap).lower(),
+            }
+        )
+    return rows
+
+
+def audit_manual_semi_overlap(manual_rows: list[dict], semi_rows: list[dict]) -> dict:
+    rows = manual_semi_overlap_rows(manual_rows, semi_rows)
+    overlap = sum(_bool(row["manual_semi_same_image_overlap"]) for row in rows)
     return {"manual_semi_same_image_overlap_count": overlap, "passed": overlap == 0}
 
 
@@ -626,7 +700,8 @@ def build_readiness_draft(
             "LS import not yet materialized",
             "active log smoke test not yet run on v2 projects",
             "worker-facing distribution not generated",
-        ],
+        ]
+        + balance.get("blockers", []),
         "protocol_checks": {
             "random_c1_deprecated": deprecation["passed"],
             "reserve_excluded_from_c1": manual_audit["reserve_assignment_count"] == 0,
@@ -649,6 +724,8 @@ def _import_task(row: dict, group: str, include_model_issue: bool) -> dict:
         "image_id": row["image_id"],
         "dataset_group": group,
         "calibration_v2_status": "draft_pending_human_review",
+        "launch_allowed": False,
+        "artifact_status": "draft_not_for_launch",
         "legacy_scope_raw_sidecar": row["old_manual_scope_raw"],
         "legacy_difficulty_raw_sidecar": row["old_manual_difficulty_raw"],
         "proxy_confidence": row["proxy_confidence"],
@@ -707,7 +784,11 @@ def build_all(root: Path, test_results: str = "not_run_by_script") -> dict:
     _write_json(out / "c1_manual_assignment_audit_v2.json", manual_audit)
     semi_assign, overlap_audit, semi_audit = build_semi_assignment(semi, manual_assign, workers)
     _write_csv(out / "assignment_manifest_C1_semi_draft_v2.csv", semi_assign, SEMI_ASSIGNMENT_FIELDS)
-    _write_csv(out / "manual_semi_same_image_overlap_audit_v2.csv", [overlap_audit], ["passed", "manual_semi_same_image_overlap_count"])
+    _write_csv(
+        out / "manual_semi_same_image_overlap_audit_v2.csv",
+        manual_semi_overlap_rows(manual_assign, semi_assign),
+        ["task_id", "base_task_id", "worker_id", "manual_semi_same_image_overlap"],
+    )
     _write_json(out / "c1_semi_assignment_audit_v2.json", semi_audit)
     _write_json(import_dir / "stage2_calibration_manual_anchor_import_c1_v2_draft.json", [_import_task(r, "Calibration_anchor", False) for r in anchor])
     _write_json(import_dir / "stage2_calibration_manual_core_import_c1_v2_draft.json", [_import_task(r, "Calibration_core", False) for r in core])
@@ -715,6 +796,8 @@ def build_all(root: Path, test_results: str = "not_run_by_script") -> dict:
     _write_json(import_dir / "stage2_calibration_reserve_import_c2_v2_draft.json", [_import_task(r, "Calibration_reserve", False) for r in reserve])
     _write_json(import_dir / "calibration_import_draft_summary_v2.json", {
         "status": "draft_pending_human_review",
+        "artifact_status": "draft_not_for_launch",
+        "launch_allowed": False,
         "no_label_studio_import_performed": True,
         "counts": {"anchor": len(anchor), "core": len(core), "semi": len(semi), "reserve": len(reserve)},
         "reserve_import_scope": "C2_draft_only",

@@ -12,6 +12,7 @@ from tools.thesis_main.registry.build_calibration_rebuild_v2_drafts import (
     build_inventory,
     build_manual_assignment,
     build_semi_assignment,
+    manual_semi_overlap_rows,
     select_manual_pools,
     select_semi_from_core,
 )
@@ -102,7 +103,9 @@ def test_inventory_keeps_legacy_unreviewed_but_excludes_prescreen_and_hard_exclu
     rows, summary = build_inventory(tmp_path)
     by_id = {row["task_id"]: row for row in rows}
 
-    assert by_id["460"]["expert_review_status"] == "unreviewed"
+    assert by_id["460"]["expert_review_status"] == "legacy_proxy"
+    assert by_id["460"]["legacy_proxy"] == "true"
+    assert by_id["460"]["unreviewed"] == "true"
     assert by_id["460"]["hard_exclude"] == "false"
     assert by_id["461"]["used_in_prescreen"] == "true"
     assert by_id["461"]["eligible_for_manual_calibration"] == "false"
@@ -187,6 +190,15 @@ def test_negative_manual_semi_same_worker_same_image_overlap_detected() -> None:
 
     assert audit["passed"] is False
     assert audit["manual_semi_same_image_overlap_count"] == 1
+    rows = manual_semi_overlap_rows(manual_rows, semi_rows)
+    assert rows == [
+        {
+            "task_id": "",
+            "base_task_id": "base_1",
+            "worker_id": "w1",
+            "manual_semi_same_image_overlap": "true",
+        }
+    ]
 
 
 def test_negative_legacy_label_is_not_upgraded_to_confirmed_family(tmp_path: Path) -> None:
@@ -206,9 +218,44 @@ def test_negative_legacy_label_is_not_upgraded_to_confirmed_family(tmp_path: Pat
     row = next(row for row in rows if row["task_id"] == "460")
 
     assert row["legacy_label_status"] == "legacy_proxy"
-    assert row["expert_review_status"] == "unreviewed"
+    assert row["expert_review_status"] == "legacy_proxy"
+    assert row["unreviewed"] == "true"
     assert row["proxy_confidence"] == "legacy_proxy"
     assert row["proxy_confidence"] != "confirmed"
+
+
+def test_anchor_candidate_requires_latest_confirmed_and_no_gt_or_scope_downgrade(tmp_path: Path) -> None:
+    _write_old_json(tmp_path / "export_label/project-2-at-2026-03-25-10-52-c04c6496.json")
+    raw = tmp_path / "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs"
+    raw.mkdir(parents=True)
+    (raw / "project-1-at-x.json").write_text("[]", encoding="utf-8")
+    gold = tmp_path / "analysis_results/prescreen_closeout_final_gold_v2_20260701/final_gold_records_v2_p1_closeout_corrected.jsonl"
+    gold.parent.mkdir(parents=True, exist_ok=True)
+    gold.write_text("", encoding="utf-8")
+    (tmp_path / "trap集").mkdir()
+    (tmp_path / "trap集/亲自复核整理与分层_20260702.md").write_text(
+        "\n".join(
+            [
+                "| task | 建议层 | scope | 难度代理 | 人工评价 | 处理建议 |",
+                "| --- | --- | --- | --- | --- | --- |",
+                "| 460 | 简单 | inscope | 简单 | 简单图 | 可用 |",
+                "| 461 | 中高 | inscope | 遮挡明显 | GT 不稳定 | 可保留为高难候选，但需先确认 GT 稳定性 |",
+                "| 566 | 中等 | inscope | 遮挡明显 | 适合semi但GT待修正 | 必入 manual；GT 修正后可优先抽入 semi |",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    rows, _ = build_inventory(tmp_path)
+    by_id = {row["task_id"]: row for row in rows}
+
+    assert by_id["460"]["latest_human_reviewed"] == "true"
+    assert by_id["460"]["proxy_confidence"] == "confirmed"
+    assert by_id["460"]["eligible_for_anchor_candidate"] == "true"
+    assert by_id["461"]["requires_gt_review"] == "true"
+    assert by_id["461"]["eligible_for_anchor_candidate"] == "false"
+    assert by_id["566"]["requires_gt_fix"] == "true"
+    assert by_id["566"]["eligible_for_anchor_candidate"] == "false"
 
 
 def test_negative_readiness_draft_never_passes_before_human_review() -> None:
