@@ -10,15 +10,18 @@ from tools.thesis_main.registry.build_calibration_rebuild_v2_drafts import (
     audit_manual_semi_overlap,
     audit_semi_source,
     build_full_candidate_inventory_v3,
+    build_manual_assignment_v3_1,
     build_readiness_draft,
     build_inventory,
     build_manual_assignment,
     build_semi_assignment,
     load_frozen_anchor_v3,
     manual_semi_overlap_rows,
+    select_core_reserve_v3_1,
     select_core_reserve_v3,
     select_manual_pools,
     select_semi_from_core,
+    _worker_scene_exposure,
 )
 
 
@@ -142,14 +145,14 @@ def _write_frozen_anchor(path: Path) -> list[dict[str, str]]:
     return rows
 
 
-def _v3_candidate(task_id: str, *, legacy: bool = False, unreviewed: bool = True) -> dict[str, str]:
+def _v3_candidate(task_id: str, *, legacy: bool = False, unreviewed: bool = True, scene: str = "base") -> dict[str, str]:
     row = {field: "" for field in FULL_INVENTORY_V3_FIELDS}
     row.update(
         {
             "task_id": task_id,
-            "base_task_id": f"base_{task_id}",
-            "image_id": f"base_{task_id}",
-            "image_stem": f"base_{task_id}",
+            "base_task_id": f"{scene}_{task_id}",
+            "image_id": f"{scene}_{task_id}",
+            "image_stem": f"{scene}_{task_id}",
             "used_in_prescreen": "false",
             "geometry_gold_ready": "true",
             "scope_gold_ready": "true",
@@ -253,6 +256,73 @@ def test_v3_semi_still_only_draws_from_core() -> None:
     assert audit["source_pool_all_core"] is True
     assert audit["anchor_in_semi_count"] == 0
     assert audit["reserve_in_semi_count"] == 0
+
+
+def test_v3_1_source_quota_and_ru_logic_keep_460_473_non_reliability() -> None:
+    anchor = [{"task_id": str(tid), "image_stem": f"anchor_{tid}"} for tid in [561, 621, 683, 474, 547, 518, 626, 482, 580, 563, 557, 558]]
+    rows = [_v3_candidate("460", legacy=True, unreviewed=False, scene="s0"), _v3_candidate("473", legacy=True, unreviewed=False, scene="s1")]
+    rows += [_v3_candidate(f"k{i}", legacy=True, unreviewed=False, scene=f"s{i % 12}") for i in range(90)]
+    rows += [_v3_candidate(f"u{i}", legacy=False, unreviewed=True, scene=f"s{i % 12}") for i in range(90)]
+
+    core, reserve, audit = select_core_reserve_v3_1(rows, anchor)
+
+    by_id = {row["task_id"]: row for row in core}
+    assert len(core) == 75
+    assert len(reserve) == 13
+    assert not {"460", "473"} & {row["task_id"] for row in anchor}
+    assert {"460", "473"} <= set(by_id)
+    assert by_id["460"]["used_for_r_u"] == "false_non_reliability_core"
+    assert by_id["473"]["used_for_r_u"] == "false_non_reliability_core"
+    assert 24 <= audit["core_unreviewed_pool_count"] <= 27
+    assert 48 <= audit["core_known_or_proxy_count"] <= 51
+    assert audit["core_source_quota_passed"] is True
+    assert audit["core_used_for_r_u_true_count"] >= 60
+
+
+def test_v3_1_scene_aware_assignment_and_source_exposure() -> None:
+    anchor = [{"task_id": f"anchor_{i}", "base_task_id": f"anchor_{i}", "image_stem": f"anchor_{i}"} for i in range(12)]
+    core = [_v3_candidate(f"k{i}", legacy=True, unreviewed=False, scene=f"s{i % 15}") for i in range(50)]
+    core += [_v3_candidate(f"u{i}", legacy=False, unreviewed=True, scene=f"s{i % 15}") for i in range(25)]
+    for row in core:
+        row["calibration_split"] = "core"
+        row["used_for_r_u"] = "true"
+    workers = [{"worker_id": str(i), "watch_flag": "False"} for i in range(1, 24)]
+
+    manual_rows, manual_audit, _, scene_audit, _, source_audit = build_manual_assignment_v3_1(anchor, core, workers)
+
+    assert manual_audit["core_redundancy_min"] == 5
+    assert manual_audit["core_redundancy_max"] == 5
+    assert scene_audit["core_worker_scene_max"] <= 4
+    assert source_audit["worker_unreviewed_core_load_min"] >= 4
+    assert source_audit["worker_unreviewed_core_load_max"] <= 7
+    assert len([row for row in manual_rows if row["dataset_group"] == "Calibration_core"]) == 375
+
+
+def test_v3_1_scene_exposure_fails_at_six() -> None:
+    rows = [{"worker_id": "w1", "base_task_id": "scene_a", "dataset_group": "Calibration_core"} for _ in range(6)]
+
+    _, audit = _worker_scene_exposure(rows)
+
+    assert audit["passed"] is False
+    assert audit["fail_at_ge_6_count"] == 1
+
+
+def test_v3_1_semi_assignments_remain_false_for_ru() -> None:
+    anchor = [{"task_id": f"anchor_{i}", "base_task_id": f"anchor_{i}", "image_stem": f"anchor_{i}"} for i in range(12)]
+    core = [_v3_candidate(f"k{i}", legacy=True, unreviewed=False, scene=f"s{i % 15}") for i in range(50)]
+    core += [_v3_candidate(f"u{i}", legacy=False, unreviewed=True, scene=f"s{i % 15}") for i in range(25)]
+    for row in core:
+        row["calibration_split"] = "core"
+        row["used_for_r_u"] = "true"
+    workers = [{"worker_id": str(i), "watch_flag": "False"} for i in range(1, 24)]
+    manual_rows, *_ = build_manual_assignment_v3_1(anchor, core, workers)
+    semi, _ = select_semi_from_core(core)
+
+    semi_rows, _, semi_audit = build_semi_assignment(semi, manual_rows, workers)
+
+    assert semi_audit["semi_k_min"] == 4
+    assert semi_audit["semi_k_max"] == 4
+    assert all(row["used_for_r_u"] == "false" for row in semi_rows)
 
 
 def test_manual_pool_counts_and_exclusions() -> None:

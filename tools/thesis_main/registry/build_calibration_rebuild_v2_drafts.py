@@ -13,7 +13,11 @@ from urllib.parse import parse_qs, unquote, urlparse
 OUT_DIR = Path("analysis_results/calibration_rebuild_20260702")
 IMPORT_DIR = Path("import_json/calibration_c1_v2_draft")
 SEED = 20260702
+CORE_SELECTION_SEED = 202607021
+CORE_TASK_ORDER_SEED = 202607022
+WORKER_ASSIGNMENT_SEED = 202607023
 ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS = {"460", "473"}
+FROZEN_ANCHOR_TASK_IDS = {"561", "621", "683", "474", "547", "518", "626", "482", "580", "563", "557", "558"}
 
 INVENTORY_FIELDS = [
     "task_id",
@@ -650,6 +654,43 @@ def _take_balanced(rows: list[dict], n: int, rng: random.Random) -> list[dict]:
     return out
 
 
+def _scene_id(row: dict) -> str:
+    return _safe(row.get("image_stem") or row.get("base_task_id")).split("_")[0]
+
+
+def _take_balanced_scene_capped(rows: list[dict], n: int, rng: random.Random, selected: list[dict], scene_cap: int = 18) -> list[dict]:
+    scene_counts = Counter(_scene_id(row) for row in selected)
+    picked: list[dict] = []
+    for row in _take_balanced(rows, len(rows), rng):
+        if len(picked) >= n:
+            break
+        if scene_counts[_scene_id(row)] >= scene_cap:
+            continue
+        picked.append(row)
+        scene_counts[_scene_id(row)] += 1
+    if len(picked) < n:
+        picked_ids = {row["task_id"] for row in picked}
+        for row in _take_balanced([r for r in rows if r["task_id"] not in picked_ids], len(rows), rng):
+            if len(picked) >= n:
+                break
+            picked.append(row)
+    return picked
+
+
+def _core_used_for_r_u(row: dict) -> str:
+    if row["task_id"] in ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS:
+        return "false_non_reliability_core"
+    if (
+        row.get("core_candidate_type") == "core_scope_gate_audit_candidate"
+        or _bool(row.get("scope_gate_only"))
+        or _bool(row.get("model_issue_only"))
+        or _bool(row.get("requires_gt_fix"))
+        or _bool(row.get("requires_gt_review"))
+    ):
+        return "false_non_reliability_core"
+    return "true"
+
+
 def load_frozen_anchor_v3(root: Path) -> list[dict]:
     rows = _read_csv(root / OUT_DIR / "calibration_anchor_draft_v2.csv")
     for rank, row in enumerate(rows, start=1):
@@ -666,7 +707,7 @@ def _mark_pool_rows(rows: list[dict], split: str, reason: str) -> list[dict]:
         row["selection_rank"] = str(rank)
         row["selection_reason"] = reason if row["task_id"] not in ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS else f"{reason};non_anchor_core_semi_counterpart"
         if split == "core":
-            row["used_for_r_u"] = "true" if row["core_candidate_type"] == "core_reliability_candidate" else "false_non_reliability_core"
+            row["used_for_r_u"] = _core_used_for_r_u(row)
         else:
             row["used_for_r_u"] = "false"
     return rows
@@ -725,6 +766,73 @@ def select_core_reserve_v3(rows: list[dict], frozen_anchor: list[dict], seed: in
         "anchor_excluded_core_counterpart_in_core": sorted({row["task_id"] for row in core} & ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS),
     }
     return core, reserve, audit
+
+
+def select_core_reserve_v3_1(rows: list[dict], frozen_anchor: list[dict], seed: int = CORE_SELECTION_SEED) -> tuple[list[dict], list[dict], dict]:
+    rng = random.Random(seed)
+    anchor_ids = {row["task_id"] for row in frozen_anchor}
+    anchor_stems = {row["image_stem"] for row in frozen_anchor}
+    eligible = [
+        row
+        for row in rows
+        if _bool(row["eligible_after_exclusion"])
+        and row["task_id"] not in anchor_ids
+        and row["image_stem"] not in anchor_stems
+    ]
+    priority = [row for row in eligible if row["task_id"] in ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS]
+    priority_ids = {row["task_id"] for row in priority}
+    known_pool = [row for row in eligible if row["task_id"] not in priority_ids and not _bool(row["unreviewed_pool"])]
+    unreviewed_pool = [row for row in eligible if row["task_id"] not in priority_ids and _bool(row["unreviewed_pool"])]
+    target_unreviewed = 25
+    target_known = 75 - target_unreviewed
+    core = priority[:]
+    known_need = max(0, target_known - sum(not _bool(row["unreviewed_pool"]) for row in core))
+    core += _take_balanced_scene_capped(known_pool, known_need, rng, core)
+    core_ids = {row["task_id"] for row in core}
+    unreviewed_need = max(0, target_unreviewed - sum(_bool(row["unreviewed_pool"]) for row in core))
+    core += _take_balanced_scene_capped([row for row in unreviewed_pool if row["task_id"] not in core_ids], unreviewed_need, rng, core)
+    core_ids = {row["task_id"] for row in core}
+    if len(core) < 75:
+        fillers = [row for row in eligible if row["task_id"] not in core_ids]
+        core += _take_balanced_scene_capped(fillers, 75 - len(core), rng, core)
+    core = core[:75]
+    core_ids = {row["task_id"] for row in core}
+    reserve = _take_balanced_scene_capped([row for row in eligible if row["task_id"] not in core_ids], 13, rng, [])
+    _mark_pool_rows(core, "core", "v3_1_full_pool_source_quota")
+    _mark_pool_rows(reserve, "reserve", "v3_1_full_pool_c2_only_reserve")
+    unreviewed_count = sum(_bool(row["unreviewed_pool"]) for row in core)
+    known_count = len(core) - unreviewed_count
+    false_rows = [row for row in core if row.get("used_for_r_u") != "true"]
+    scope_gate_count = sum(row.get("core_candidate_type") == "core_scope_gate_audit_candidate" or _bool(row.get("scope_gate_only")) for row in core)
+    required_non_rel = [row["task_id"] for row in false_rows]
+    warnings: list[str] = []
+    blockers: list[str] = []
+    if not (24 <= unreviewed_count <= 27 and 48 <= known_count <= 51):
+        blockers.append("core_source_quota_failed")
+    if len(core) != 75 or len(reserve) != 13:
+        blockers.append("insufficient_v3_1_core_or_reserve_candidates")
+    missing_counterparts = sorted(ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS - {row["task_id"] for row in core})
+    if missing_counterparts:
+        blockers.append("missing_required_core_semi_counterpart:" + ",".join(missing_counterparts))
+    if set(anchor_ids) != FROZEN_ANCHOR_TASK_IDS:
+        blockers.append("frozen_anchor_task_ids_changed")
+    return core, reserve, {
+        "warnings": warnings,
+        "blockers": blockers,
+        "core_unreviewed_pool_target": target_unreviewed,
+        "core_unreviewed_pool_count": unreviewed_count,
+        "core_known_or_proxy_count": known_count,
+        "core_source_quota_passed": 24 <= unreviewed_count <= 27 and 48 <= known_count <= 51,
+        "core_used_for_r_u_true_count": sum(row.get("used_for_r_u") == "true" for row in core),
+        "core_used_for_r_u_false_count": len(false_rows),
+        "core_scope_gate_audit_count": scope_gate_count,
+        "core_required_non_reliability_task_ids": required_non_rel,
+        "anchor_frozen_count": len(frozen_anchor),
+        "anchor_task_ids": [row["task_id"] for row in frozen_anchor],
+        "anchor_unchanged_from_v2": set(anchor_ids) == FROZEN_ANCHOR_TASK_IDS,
+        "anchor_excluded_core_counterpart_task_ids": sorted(ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS),
+        "anchor_excluded_core_counterpart_in_core": sorted({row["task_id"] for row in core} & ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS),
+    }
 
 
 def select_manual_pools(rows: list[dict], seed: int = SEED) -> tuple[list[dict], list[dict], list[dict], dict]:
@@ -904,6 +1012,152 @@ def build_manual_assignment(anchor: list[dict], core: list[dict], workers: list[
         "watch_workers_included": sum(_bool(w.get("watch_flag")) for w in workers),
     }
     return rows, audit
+
+
+def _worker_scene_exposure(manual_rows: list[dict]) -> tuple[list[dict], dict]:
+    counts = Counter((row["worker_id"], row["base_task_id"].split("_")[0]) for row in manual_rows if row["dataset_group"] == "Calibration_core")
+    rows = [
+        {
+            "worker_id": worker_id,
+            "scene_id": scene_id,
+            "core_scene_assignment_count": str(count),
+            "status": "fail" if count >= 6 else ("warning" if count == 5 else "pass"),
+        }
+        for (worker_id, scene_id), count in sorted(counts.items())
+    ]
+    max_count = max(counts.values()) if counts else 0
+    return rows, {
+        "passed": max_count < 6,
+        "target_passed": max_count <= 4,
+        "core_worker_scene_max": max_count,
+        "warning_at_5_count": sum(count == 5 for count in counts.values()),
+        "fail_at_ge_6_count": sum(count >= 6 for count in counts.values()),
+    }
+
+
+def _worker_source_exposure(manual_rows: list[dict], core_by_id: dict[str, dict]) -> tuple[list[dict], dict]:
+    by_worker: dict[str, Counter] = defaultdict(Counter)
+    for row in manual_rows:
+        if row["dataset_group"] != "Calibration_core":
+            continue
+        source = "unreviewed" if _bool(core_by_id[row["task_id"]].get("unreviewed_pool")) else "known_or_proxy"
+        by_worker[row["worker_id"]][source] += 1
+    rows = []
+    unreviewed_values = []
+    for worker_id in sorted(by_worker):
+        unreviewed = by_worker[worker_id]["unreviewed"]
+        known = by_worker[worker_id]["known_or_proxy"]
+        unreviewed_values.append(unreviewed)
+        rows.append(
+            {
+                "worker_id": worker_id,
+                "unreviewed_core_assignment_count": str(unreviewed),
+                "known_or_proxy_core_assignment_count": str(known),
+                "status": "pass" if 4 <= unreviewed <= 7 else "warning",
+            }
+        )
+    return rows, {
+        "passed": bool(unreviewed_values) and min(unreviewed_values) >= 4 and max(unreviewed_values) <= 7,
+        "worker_unreviewed_core_load_min": min(unreviewed_values) if unreviewed_values else 0,
+        "worker_unreviewed_core_load_max": max(unreviewed_values) if unreviewed_values else 0,
+    }
+
+
+def build_manual_assignment_v3_1(anchor: list[dict], core: list[dict], workers: list[dict[str, str]]) -> tuple[list[dict], dict, list[dict], dict, list[dict], dict]:
+    rows: list[dict] = []
+    order_by_worker = defaultdict(int)
+    worker_rng = random.Random(WORKER_ASSIGNMENT_SEED)
+    worker_order = workers[:]
+    worker_rng.shuffle(worker_order)
+    worker_rank = {worker["worker_id"]: idx for idx, worker in enumerate(worker_order)}
+    for task in anchor:
+        for worker in worker_order:
+            order_by_worker[worker["worker_id"]] += 1
+            rows.append({
+                "round_id": "C1",
+                "worker_id": worker["worker_id"],
+                "task_id": task["task_id"],
+                "base_task_id": task["base_task_id"],
+                "dataset_group": "Calibration_anchor",
+                "assignment_batch": "anchor_all",
+                "assignment_reason": "common_anchor",
+                "is_common_anchor": "true",
+                "expected_completion_order": str(order_by_worker[worker["worker_id"]]),
+                "manifest_version": "C1_manual_v3_1_draft",
+                "watch_flag": _safe(worker.get("watch_flag")),
+            })
+    target_load = {worker["worker_id"]: 17 if idx < 7 else 16 for idx, worker in enumerate(worker_order)}
+    task_rng = random.Random(CORE_TASK_ORDER_SEED)
+    random_rank = {task["task_id"]: task_rng.random() for task in core}
+    scene_totals = Counter(_scene_id(task) for task in core)
+    ordered_core = sorted(core, key=lambda task: (-scene_totals[_scene_id(task)], random_rank[task["task_id"]]))
+    load = Counter()
+    scene_load = Counter()
+    unreviewed_load = Counter()
+    for task in ordered_core:
+        scene = _scene_id(task)
+        def ranked(limit: int) -> list[dict[str, str]]:
+            candidates = [
+                worker
+                for worker in worker_order
+                if load[worker["worker_id"]] < target_load[worker["worker_id"]]
+                and scene_load[(worker["worker_id"], scene)] < limit
+            ]
+            if len(candidates) < 5:
+                candidates = [worker for worker in worker_order if scene_load[(worker["worker_id"], scene)] < limit]
+            if _bool(task.get("unreviewed_pool")):
+                return sorted(candidates, key=lambda worker: (unreviewed_load[worker["worker_id"]], load[worker["worker_id"]], scene_load[(worker["worker_id"], scene)], worker_rank[worker["worker_id"]]))
+            return sorted(candidates, key=lambda worker: (load[worker["worker_id"]], scene_load[(worker["worker_id"], scene)], worker_rank[worker["worker_id"]]))
+        picked = ranked(4)[:5]
+        if len(picked) < 5:
+            picked = ranked(5)[:5]
+        if len(picked) < 5:
+            picked = sorted(worker_order, key=lambda worker: (load[worker["worker_id"]], scene_load[(worker["worker_id"], scene)], worker_rank[worker["worker_id"]]))[:5]
+        for worker in picked:
+            wid = worker["worker_id"]
+            load[wid] += 1
+            scene_load[(wid, scene)] += 1
+            if _bool(task.get("unreviewed_pool")):
+                unreviewed_load[wid] += 1
+            order_by_worker[wid] += 1
+            rows.append({
+                "round_id": "C1",
+                "worker_id": wid,
+                "task_id": task["task_id"],
+                "base_task_id": task["base_task_id"],
+                "dataset_group": "Calibration_core",
+                "assignment_batch": "core_scene_aware_k5",
+                "assignment_reason": "scene_aware_balanced_core",
+                "is_common_anchor": "false",
+                "expected_completion_order": str(order_by_worker[wid]),
+                "manifest_version": "C1_manual_v3_1_draft",
+                "watch_flag": _safe(worker.get("watch_flag")),
+            })
+    core_counts = Counter(row["task_id"] for row in rows if row["dataset_group"] == "Calibration_core")
+    total_load = Counter(row["worker_id"] for row in rows)
+    core_by_id = {row["task_id"]: row for row in core}
+    scene_rows, scene_audit = _worker_scene_exposure(rows)
+    source_rows, source_audit = _worker_source_exposure(rows, core_by_id)
+    audit = {
+        "passed": len(anchor) == 12 and len(core) == 75 and set(core_counts.values()) == {5} and scene_audit["passed"] and source_audit["passed"],
+        "anchor_task_count": len(anchor),
+        "core_task_count": len(core),
+        "eligible_worker_count": len(workers),
+        "core_redundancy_min": min(core_counts.values()) if core_counts else 0,
+        "core_redundancy_max": max(core_counts.values()) if core_counts else 0,
+        "reserve_assignment_count": 0,
+        "worker_core_load_min": min(load.values()) if load else 0,
+        "worker_core_load_max": max(load.values()) if load else 0,
+        "worker_total_manual_load_min": min(total_load.values()) if total_load else 0,
+        "worker_total_manual_load_max": max(total_load.values()) if total_load else 0,
+        "duplicate_worker_task_count": len(rows) - len({(row["worker_id"], row["task_id"]) for row in rows}),
+        "duplicate_task_assignment_within_worker": 0,
+        "watch_workers_included": sum(_bool(worker.get("watch_flag")) for worker in workers),
+        "core_worker_scene_max": scene_audit["core_worker_scene_max"],
+        "worker_unreviewed_core_load_min": source_audit["worker_unreviewed_core_load_min"],
+        "worker_unreviewed_core_load_max": source_audit["worker_unreviewed_core_load_max"],
+    }
+    return rows, audit, scene_rows, scene_audit, source_rows, source_audit
 
 
 def build_semi_assignment(semi: list[dict], manual_rows: list[dict], workers: list[dict[str, str]], manifest_version: str = "C1_semi_v2_draft") -> tuple[list[dict], dict, dict]:
@@ -1108,6 +1362,36 @@ def _balance_summary_v3(inventory_summary: dict, anchor: list[dict], core: list[
     }
 
 
+def _balance_summary_v3_1(inventory_summary: dict, anchor: list[dict], core: list[dict], reserve: list[dict], audit: dict) -> dict:
+    selected = anchor + core + reserve
+    return {
+        **inventory_summary,
+        "counts": {"anchor": len(anchor), "core": len(core), "reserve": len(reserve)},
+        "prescreen_overlap_count": sum(_bool(row.get("used_in_prescreen")) for row in selected),
+        "hard_exclude_inclusion_count": sum(_bool(row.get("hard_exclude")) for row in selected),
+        "model_issue_only_inclusion_count": sum(_bool(row.get("model_issue_only")) for row in selected),
+        "core_unreviewed_pool_target": audit["core_unreviewed_pool_target"],
+        "core_unreviewed_pool_count": audit["core_unreviewed_pool_count"],
+        "core_known_or_proxy_count": audit["core_known_or_proxy_count"],
+        "core_source_quota_passed": audit["core_source_quota_passed"],
+        "core_used_for_r_u_true_count": audit["core_used_for_r_u_true_count"],
+        "core_used_for_r_u_false_count": audit["core_used_for_r_u_false_count"],
+        "core_scope_gate_audit_count": audit["core_scope_gate_audit_count"],
+        "core_required_non_reliability_task_ids": audit["core_required_non_reliability_task_ids"],
+        "corner_count_bin_distribution": dict(Counter(row.get("corner_count_bin", "") for row in core + reserve)),
+        "source_status_distribution": dict(Counter(row.get("source_status", "frozen_anchor") for row in core + reserve)),
+        "source_concentration": dict(Counter(_scene_id(row) for row in core + reserve)),
+        "anchor_frozen_count": audit["anchor_frozen_count"],
+        "anchor_unchanged_from_v2": audit["anchor_unchanged_from_v2"],
+        "anchor_task_ids": audit["anchor_task_ids"],
+        "anchor_excluded_core_counterpart_task_ids": audit["anchor_excluded_core_counterpart_task_ids"],
+        "anchor_excluded_core_counterpart_in_core": audit["anchor_excluded_core_counterpart_in_core"],
+        "reserve_c2_only_status": "reserve_not_assigned_in_C1",
+        "warnings": audit.get("warnings", []),
+        "blockers": audit.get("blockers", []),
+    }
+
+
 def build_all(root: Path, test_results: str = "not_run_by_script") -> dict:
     out = root / OUT_DIR
     import_dir = root / IMPORT_DIR
@@ -1244,12 +1528,77 @@ def build_all_v3(root: Path, test_results: str = "not_run_by_script") -> dict:
     }
 
 
+def build_all_v3_1(root: Path, test_results: str = "not_run_by_script") -> dict:
+    out = root / OUT_DIR
+    deprecation = _deprecation_audit(root)
+    _write_json(out / "random_c1_deprecation_audit_v1.json", deprecation)
+    inventory, inventory_summary = build_full_candidate_inventory_v3(root)
+    _write_csv(out / "calibration_full_candidate_inventory_v3.csv", inventory, FULL_INVENTORY_V3_FIELDS)
+    _write_json(out / "calibration_full_candidate_inventory_summary_v3.json", inventory_summary)
+    anchor = load_frozen_anchor_v3(root)
+    core, reserve, pool_audit = select_core_reserve_v3_1(inventory, anchor)
+    _write_csv(out / "calibration_core_draft_v3_1.csv", core, POOL_FIELDS_V3)
+    _write_csv(out / "calibration_reserve_draft_v3_1.csv", reserve, POOL_FIELDS_V3)
+    balance = _balance_summary_v3_1(inventory_summary, anchor, core, reserve, pool_audit)
+    semi, semi_quota = select_semi_from_core(core)
+    _write_csv(out / "calibration_semi_selection_draft_v3_1.csv", semi, POOL_FIELDS_V3 + ["semi_family", "semi_family_confidence", "semi_selection_rank"])
+    semi_source_audit = audit_semi_source(semi, core, anchor, reserve)
+    semi_quota = semi_quota | semi_source_audit
+    workers = load_workers(root)
+    manual_assign, manual_audit, scene_rows, scene_audit, source_rows, source_audit = build_manual_assignment_v3_1(anchor, core, workers)
+    if scene_audit["warning_at_5_count"]:
+        balance["warnings"].append("worker_scene_exposure_warning_at_5")
+    if scene_audit["fail_at_ge_6_count"]:
+        balance["blockers"].append("worker_scene_exposure_fail_ge_6")
+    if not source_audit["passed"]:
+        balance["blockers"].append("worker_unreviewed_source_exposure_outside_4_7")
+    _write_json(out / "calibration_pool_source_balance_summary_v3_1.json", balance)
+    _write_csv(out / "assignment_manifest_C1_manual_draft_v3_1.csv", manual_assign, ASSIGNMENT_FIELDS)
+    _write_json(out / "c1_manual_assignment_audit_v3_1.json", manual_audit)
+    _write_csv(out / "worker_scene_exposure_audit_v3_1.csv", scene_rows, ["worker_id", "scene_id", "core_scene_assignment_count", "status"])
+    _write_json(out / "worker_scene_exposure_audit_v3_1.json", scene_audit)
+    _write_csv(out / "worker_source_exposure_audit_v3_1.csv", source_rows, ["worker_id", "unreviewed_core_assignment_count", "known_or_proxy_core_assignment_count", "status"])
+    _write_json(out / "worker_source_exposure_audit_v3_1.json", source_audit)
+    semi_assign, overlap_audit, semi_audit = build_semi_assignment(semi, manual_assign, workers, manifest_version="C1_semi_v3_1_draft")
+    _write_csv(out / "assignment_manifest_C1_semi_draft_v3_1.csv", semi_assign, SEMI_ASSIGNMENT_FIELDS)
+    _write_csv(
+        out / "manual_semi_same_image_overlap_audit_v3_1.csv",
+        manual_semi_overlap_rows(manual_assign, semi_assign),
+        ["task_id", "base_task_id", "worker_id", "manual_semi_same_image_overlap"],
+    )
+    _write_json(out / "c1_semi_assignment_audit_v3_1.json", semi_audit)
+    readiness = build_readiness_draft(
+        deprecation=deprecation,
+        balance=balance,
+        manual_audit=manual_audit,
+        semi_audit=semi_audit,
+        overlap_audit=overlap_audit,
+        semi_quota=semi_quota,
+        test_results=test_results,
+    )
+    readiness["status"] = "draft_pending_human_review_v3_1_targeted_revision"
+    readiness["no_label_studio_import_performed"] = True
+    readiness["worker_facing_distribution_generated"] = False
+    _write_json(out / "c1_launch_readiness_draft_v3_1.json", readiness)
+    return {
+        "inventory": inventory,
+        "anchor": anchor,
+        "core": core,
+        "reserve": reserve,
+        "semi": semi,
+        "manual_audit": manual_audit,
+        "semi_audit": semi_audit,
+        "readiness": readiness,
+        "balance": balance,
+    }
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build Calibration C1/C2 v3 draft core/reserve rebuild and audits.")
+    parser = argparse.ArgumentParser(description="Build Calibration C1/C2 v3.1 targeted revision drafts and audits.")
     parser.add_argument("--root", type=Path, default=Path("."))
     parser.add_argument("--test-results", default="not_run_by_script")
     args = parser.parse_args()
-    build_all_v3(args.root.resolve(), test_results=args.test_results)
+    build_all_v3_1(args.root.resolve(), test_results=args.test_results)
 
 
 if __name__ == "__main__":
