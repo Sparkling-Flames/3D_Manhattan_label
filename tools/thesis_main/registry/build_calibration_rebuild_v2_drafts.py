@@ -161,7 +161,7 @@ def _manual_review_rows(path: Path) -> dict[str, dict[str, str]]:
         if not line.startswith("|") or "---" in line or "task" in line:
             continue
         cells = [c.strip() for c in line.strip("|").split("|")]
-        if cells and cells[0].isdigit():
+        if len(cells) >= 6 and cells[0].isdigit():
             rows[cells[0]] = {
                 "layer": cells[1] if len(cells) > 1 else "",
                 "scope": cells[2] if len(cells) > 2 else "",
@@ -286,11 +286,11 @@ def build_inventory(root: Path) -> tuple[list[dict], dict]:
         semi_row = semi_model.get(tid, {})
         used_prescreen = image_stem in prescreen
         used_random = image_stem in random_c1 or tid in random_c1
-        note_text = review.get("decision", "") + review.get("note", "") + semi_row.get("manual_note", "")
+        review_note_text = review.get("decision", "") + review.get("note", "")
         model_only = tid in pure_model and tid not in manual_review
-        requires_gt_fix = _contains_any(note_text, GT_FIX_TERMS)
-        requires_gt_review = _contains_any(note_text, GT_REVIEW_TERMS)
-        semi_only = requires_gt_fix or (_contains_any(note_text, SEMI_DEFER_TERMS) and tid not in manual_review)
+        requires_gt_fix = _contains_any(review_note_text, GT_FIX_TERMS)
+        requires_gt_review = _contains_any(review_note_text, GT_REVIEW_TERMS)
+        semi_only = requires_gt_fix or (_contains_any(review_note_text, SEMI_DEFER_TERMS) and tid not in manual_review)
         excluded = tid in hard_exclude or any(word in review.get("decision", "") + review.get("note", "") for word in ["不适合", "GT 错误", "不好"])
         latest_reviewed = tid in manual_review
         scope_reviewed = tid in scope_difficulty_reviewed
@@ -306,7 +306,9 @@ def build_inventory(root: Path) -> tuple[list[dict], dict]:
         secondary = semi_row.get("primary_model_issue") or old_model
         geometry_ready = bool(fg.get("geometry_gold_ready", keypoints >= 2))
         scope_ready = bool(fg.get("scope_gold_ready", bool(old_scope or review.get("scope"))))
-        scope_gate_only = "oos" in (old_scope + review.get("scope", "")).lower()
+        final_gold_scope = _safe(fg.get("final_scope_binary") or fg.get("final_scope_alias"))
+        effective_scope = review.get("scope", "") or final_gold_scope or old_scope
+        scope_gate_only = "oos" in effective_scope.lower()
         manual_ok = (not used_prescreen) and (not excluded) and geometry_ready and (not model_only) and (not requires_gt_fix)
         if scope_gate_only:
             core_type = "core_scope_gate_audit_candidate"
@@ -374,7 +376,13 @@ def build_inventory(root: Path) -> tuple[list[dict], dict]:
             "eligible_for_semi_candidate": str(manual_ok and bool(old_model or semi_row)).lower(),
             "core_candidate_type": core_type,
             "proxy_confidence": "confirmed" if latest_reviewed else ("legacy_proxy" if legacy_proxy else "weak_proxy"),
-            "notes": review.get("decision") or review.get("note") or semi_row.get("manual_note", ""),
+            "notes": "; ".join(
+                p
+                for p in [
+                    review.get("decision") or review.get("note") or semi_row.get("manual_note", ""),
+                ]
+                if p
+            ),
         }
         rows.append(row)
     summary = {
@@ -749,6 +757,8 @@ def _balance_summary(anchor: list[dict], core: list[dict], reserve: list[dict], 
         "legacy_proxy_unreviewed_count": sum(r["expert_review_status"] == "unreviewed" for r in selected),
         "source_concentration": dict(Counter(r["image_stem"].split("_")[0] for r in selected)),
         "stable_hard_anchor_count": audit.get("stable_hard_anchor_count", 0),
+        "anchor_false_scope_gate_audit_count": sum(r.get("used_for_r_u") == "false_scope_gate_audit" for r in anchor),
+        "anchor_used_for_r_u_true_count": sum(r.get("used_for_r_u") == "true" for r in anchor),
         "reserve_c2_only_status": "reserve_not_assigned_in_C1",
         "warnings": audit.get("warnings", []),
         "blockers": audit.get("blockers", []),

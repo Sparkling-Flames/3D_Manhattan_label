@@ -139,6 +139,8 @@ def test_assignments_enforce_core_k5_semi_k4_and_no_same_image_overlap() -> None
 
     assert semi_quota["semi_count"] == 25
     assert all(row["calibration_split"] == "core" for row in semi)
+    assert manual_audit["passed"] is True
+    assert manual_audit["anchor_task_count"] == 12
     assert manual_audit["core_redundancy_min"] == 5
     assert manual_audit["core_redundancy_max"] == 5
     assert manual_audit["reserve_assignment_count"] == 0
@@ -256,6 +258,154 @@ def test_anchor_candidate_requires_latest_confirmed_and_no_gt_or_scope_downgrade
     assert by_id["461"]["eligible_for_anchor_candidate"] == "false"
     assert by_id["566"]["requires_gt_fix"] == "true"
     assert by_id["566"]["eligible_for_anchor_candidate"] == "false"
+
+
+def test_latest_human_inscope_overrides_legacy_oos_scope_for_473(tmp_path: Path) -> None:
+    old_json = tmp_path / "export_label/project-2-at-2026-03-25-10-52-c04c6496.json"
+    old_json.parent.mkdir(parents=True, exist_ok=True)
+    old_json.write_text(
+        json.dumps(
+            [
+                {
+                    "id": 473,
+                    "data": {"image": "https://example.test/img_473.png", "title": "img_473.png"},
+                    "annotations": [
+                        {
+                            "result": [
+                                {"from_name": "kp", "type": "keypointlabels", "value": {"keypointlabels": ["Corner"]}},
+                                {"from_name": "kp", "type": "keypointlabels", "value": {"keypointlabels": ["Corner"]}},
+                                {"from_name": "scope", "type": "choices", "value": {"choices": ["oos_insufficient"]}},
+                                {"from_name": "difficulty", "type": "choices", "value": {"choices": ["hard"]}},
+                            ]
+                        }
+                    ],
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    raw = tmp_path / "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs"
+    raw.mkdir(parents=True)
+    (raw / "project-1-at-x.json").write_text("[]", encoding="utf-8")
+    gold = tmp_path / "analysis_results/prescreen_closeout_final_gold_v2_20260701/final_gold_records_v2_p1_closeout_corrected.jsonl"
+    gold.parent.mkdir(parents=True, exist_ok=True)
+    gold.write_text("", encoding="utf-8")
+    trap = tmp_path / "trap集"
+    trap.mkdir()
+    (trap / "亲自复核整理与分层_20260702.md").write_text(
+        "\n".join(
+            [
+                "| task | 建议层 | scope | 难度代理 | 人工评价 | 处理建议 |",
+                "| --- | --- | --- | --- | --- | --- |",
+                "| 473 | 中等 + semi优先 | inscope | 遮挡明显，跨门扩张 | 适合做 semi | 已进入 manual 候选；后续可优先抽入 semi |",
+                "| task | 处理建议 |",
+                "| --- | --- |",
+                "| 473 | 已进入 manual 候选；后续可优先抽入 semi |",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    rows, _ = build_inventory(tmp_path)
+    row = rows[0]
+
+    assert row["task_id"] == "473"
+    assert row["requires_gt_fix"] == "false"
+    assert row["semi_only"] == "false"
+    assert row["scope_gate_only"] == "false"
+    assert row["eligible_for_anchor_candidate"] == "true"
+
+
+def test_gt_fix_text_in_latest_human_review_still_blocks_anchor(tmp_path: Path) -> None:
+    _write_old_json(tmp_path / "export_label/project-2-at-2026-03-25-10-52-c04c6496.json")
+    raw = tmp_path / "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs"
+    raw.mkdir(parents=True)
+    (raw / "project-1-at-x.json").write_text("[]", encoding="utf-8")
+    gold = tmp_path / "analysis_results/prescreen_closeout_final_gold_v2_20260701/final_gold_records_v2_p1_closeout_corrected.jsonl"
+    gold.parent.mkdir(parents=True, exist_ok=True)
+    gold.write_text("", encoding="utf-8")
+    trap = tmp_path / "trap集"
+    trap.mkdir()
+    (trap / "亲自复核整理与分层_20260702.md").write_text(
+        "\n".join(
+            [
+                "| task | 建议层 | scope | 难度代理 | 人工评价 | 处理建议 |",
+                "| --- | --- | --- | --- | --- | --- |",
+                "| 566 | 中等 | inscope | 遮挡明显 | 适合semi但GT待修正 | GT 修正前不得进入 anchor |",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    rows, _ = build_inventory(tmp_path)
+    row = next(row for row in rows if row["task_id"] == "566")
+
+    assert row["requires_gt_fix"] == "true"
+    assert row["eligible_for_anchor_candidate"] == "false"
+
+
+def test_latest_human_scope_override_is_general_not_hardcoded_to_473(tmp_path: Path) -> None:
+    old_json = tmp_path / "export_label/project-2-at-2026-03-25-10-52-c04c6496.json"
+    old_json.parent.mkdir(parents=True, exist_ok=True)
+    old_json.write_text(
+        json.dumps(
+            [
+                {
+                    "id": 777,
+                    "data": {"image": "https://example.test/img_777.png", "title": "img_777.png"},
+                    "annotations": [
+                        {
+                            "result": [
+                                {"from_name": "kp", "type": "keypointlabels", "value": {"keypointlabels": ["Corner"]}},
+                                {"from_name": "kp", "type": "keypointlabels", "value": {"keypointlabels": ["Corner"]}},
+                                {"from_name": "scope", "type": "choices", "value": {"choices": ["oos_insufficient"]}},
+                                {"from_name": "difficulty", "type": "choices", "value": {"choices": ["hard"]}},
+                            ]
+                        }
+                    ],
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    raw = tmp_path / "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs"
+    raw.mkdir(parents=True)
+    (raw / "project-1-at-x.json").write_text("[]", encoding="utf-8")
+    gold = tmp_path / "analysis_results/prescreen_closeout_final_gold_v2_20260701/final_gold_records_v2_p1_closeout_corrected.jsonl"
+    gold.parent.mkdir(parents=True, exist_ok=True)
+    gold.write_text("", encoding="utf-8")
+    trap = tmp_path / "trap集"
+    trap.mkdir()
+    (trap / "亲自复核整理与分层_20260702.md").write_text(
+        "\n".join(
+            [
+                "| task | 建议层 | scope | 难度代理 | 人工评价 | 处理建议 |",
+                "| --- | --- | --- | --- | --- | --- |",
+                "| 777 | 中等 + semi优先 | inscope | 遮挡明显，跨门扩张 | 适合做 semi | 已进入 manual 候选；后续可优先抽入 semi |",
+            ]
+        ),
+        encoding="utf-8",
+    )
+
+    rows, _ = build_inventory(tmp_path)
+    row = rows[0]
+
+    assert row["task_id"] == "777"
+    assert row["scope_gate_only"] == "false"
+    assert row["eligible_for_anchor_candidate"] == "true"
+
+
+def test_manual_assignment_audit_fails_when_anchor_shortfall() -> None:
+    anchor = [_candidate(i) for i in range(1, 12)]
+    core = [_candidate(i) for i in range(100, 175)]
+    workers = [{"worker_id": str(i), "watch_flag": "False"} for i in range(1, 24)]
+
+    _, audit = build_manual_assignment(anchor, core, workers)
+
+    assert audit["passed"] is False
+    assert audit["anchor_task_count"] == 11
+    assert audit["core_redundancy_min"] == 5
+    assert audit["core_redundancy_max"] == 5
 
 
 def test_negative_readiness_draft_never_passes_before_human_review() -> None:
