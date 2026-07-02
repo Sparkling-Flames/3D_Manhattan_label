@@ -1,0 +1,24 @@
+{
+  "passed": true,
+  "counts": {
+    "Calibration_anchor": 12,
+    "Calibration_core": 75,
+    "Calibration_semi": 25,
+    "Calibration_reserve": 13
+  },
+  "expected_counts_passed": true,
+  "assigned_c1_tasks_have_inner_id_and_task_url": true,
+  "reserve_not_in_c1_worker_facing_distribution": true,
+  "c1_worker_facing_only_references_manual_semi_assignment_inner_id": true,
+  "import_candidate_forbidden_keys_found": {},
+  "no_duplicate_inner_id_within_each_intended_project_group": true,
+  "duplicate_inner_id_by_group": {
+    "Calibration_anchor": [],
+    "Calibration_core": [],
+    "Calibration_semi": [],
+    "Calibration_reserve": []
+  },
+  "missing_required_import_candidate_count": 0,
+  "no_mismatch_between_intended_group_and_source_draft": true,
+  "blockers": []
+}

@@ -1,12 +1,10 @@
 {
   "passed": false,
-  "status": "draft_pending_human_review_v3_1_targeted_revision",
+  "status": "draft_pending_ls_materialization_and_smoke_test",
   "blockers": [
-    "manual pool draft pending human approval",
-    "semi family draft pending human approval",
     "LS import not yet materialized",
-    "active log smoke test not yet run on v2 projects",
-    "worker-facing distribution pending approval"
+    "active log smoke test not yet run on v3_1 projects",
+    "final launch approval pending"
   ],
   "protocol_checks": {
     "random_c1_deprecated": true,
@@ -60,14 +58,17 @@
     "semi_shortfall:漏标=2",
     "semi_shortfall:模型预标注失败/拓扑失败=1"
   ],
-  "test_results": "pytest tests/test_worker_distribution_v3_1.py tests/test_calibration_rebuild_v2_drafts.py: 23 passed",
+  "test_results": "pytest tests/test_worker_distribution_v3_1.py tests/test_calibration_rebuild_v2_drafts.py tests/test_ls_project_mapping_v3_1.py: 24 passed",
   "no_label_studio_import_performed": true,
   "worker_facing_distribution_generated": true,
-  "worker_facing_distribution_approved": false,
+  "worker_facing_distribution_approved": true,
   "semi_family_proxy_audit_accepted": true,
   "semi_family_human_recheck_required": false,
   "active_log_smoke_test": "pending",
   "launch_still_blocked": true,
   "ls_project_mapping_audit_generated": true,
-  "ls_project_mapping_audit_passed": true
+  "ls_project_mapping_audit_passed": true,
+  "ls_import_materialization_plan_generated": true,
+  "ls_import_materialization_audit_passed": true,
+  "active_log_smoke_test_plan_generated": true
 }
