@@ -5,14 +5,18 @@ import json
 from pathlib import Path
 
 from tools.thesis_main.registry.build_calibration_rebuild_v2_drafts import (
+    FULL_INVENTORY_V3_FIELDS,
     INVENTORY_FIELDS,
     audit_manual_semi_overlap,
     audit_semi_source,
+    build_full_candidate_inventory_v3,
     build_readiness_draft,
     build_inventory,
     build_manual_assignment,
     build_semi_assignment,
+    load_frozen_anchor_v3,
     manual_semi_overlap_rows,
+    select_core_reserve_v3,
     select_manual_pools,
     select_semi_from_core,
 )
@@ -89,6 +93,88 @@ def _write_old_json(path: Path) -> None:
     path.write_text(json.dumps(payload), encoding="utf-8")
 
 
+def _write_full_pool(path: Path, count: int = 20) -> None:
+    img_dir = path / "data/mp3d_layout/img_v"
+    img_dir.mkdir(parents=True, exist_ok=True)
+    layout_dir = path / "output/layout_json"
+    layout_dir.mkdir(parents=True, exist_ok=True)
+    imports = []
+    for i in range(count):
+        stem = f"scene_{i:03d}"
+        if i == 0:
+            stem = "img_460"
+        elif i == 1:
+            stem = "img_473"
+        (img_dir / f"{stem}.jpg").write_text("x", encoding="utf-8")
+        (layout_dir / f"{stem}.json").write_text(
+            json.dumps({"layout": {"num_corners": 4, "corners": [{}, {}, {}, {}]}}),
+            encoding="utf-8",
+        )
+        imports.append({"data": {"image": f"https://cos.test/{stem}.jpg", "title": f"{stem}.jpg", "vis_3d": ""}})
+    import_dir = path / "import_json"
+    import_dir.mkdir(parents=True, exist_ok=True)
+    (import_dir / "label_studio_import_docker.json").write_text(json.dumps(imports), encoding="utf-8")
+
+
+def _write_frozen_anchor(path: Path) -> list[dict[str, str]]:
+    rows = []
+    for i in range(12):
+        row = {field: "" for field in INVENTORY_FIELDS}
+        row.update(
+            {
+                "task_id": f"anchor_{i}",
+                "base_task_id": f"anchor_stem_{i}",
+                "image_id": f"anchor_stem_{i}",
+                "image_stem": f"anchor_stem_{i}",
+                "calibration_split": "anchor",
+                "selection_rank": str(i + 1),
+                "selection_reason": "frozen_human_approved_anchor12",
+                "used_for_r_u": "true",
+            }
+        )
+        rows.append(row)
+    out = path / "analysis_results/calibration_rebuild_20260702/calibration_anchor_draft_v2.csv"
+    out.parent.mkdir(parents=True, exist_ok=True)
+    with out.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(rows[0]))
+        writer.writeheader()
+        writer.writerows(rows)
+    return rows
+
+
+def _v3_candidate(task_id: str, *, legacy: bool = False, unreviewed: bool = True) -> dict[str, str]:
+    row = {field: "" for field in FULL_INVENTORY_V3_FIELDS}
+    row.update(
+        {
+            "task_id": task_id,
+            "base_task_id": f"base_{task_id}",
+            "image_id": f"base_{task_id}",
+            "image_stem": f"base_{task_id}",
+            "used_in_prescreen": "false",
+            "geometry_gold_ready": "true",
+            "scope_gold_ready": "true",
+            "gt_pair_count": "4",
+            "corner_count_bin": "pairs_le_4",
+            "hard_exclude": "false",
+            "model_issue_only": "false",
+            "eligible_after_exclusion": "true",
+            "eligible_for_manual_calibration": "true",
+            "eligible_for_core_proxy_sampling": "true",
+            "eligible_for_reserve_candidate": "true",
+            "eligible_for_semi_candidate": "true",
+            "core_candidate_type": "core_reliability_candidate",
+            "legacy_labeled_proxy": str(legacy).lower(),
+            "legacy_proxy": str(legacy).lower(),
+            "unreviewed_pool": str(unreviewed).lower(),
+            "source_status": "legacy_labeled_proxy" if legacy else "unreviewed_pool",
+            "proxy_confidence": "legacy_proxy" if legacy else "weak_proxy",
+        }
+    )
+    if task_id in {"460", "473"}:
+        row["core_candidate_type"] = "core_paired_semi_counterpart_candidate"
+    return row
+
+
 def test_inventory_keeps_legacy_unreviewed_but_excludes_prescreen_and_hard_exclude(tmp_path: Path) -> None:
     _write_old_json(tmp_path / "export_label/project-2-at-2026-03-25-10-52-c04c6496.json")
     raw = tmp_path / "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs"
@@ -111,6 +197,62 @@ def test_inventory_keeps_legacy_unreviewed_but_excludes_prescreen_and_hard_exclu
     assert by_id["461"]["eligible_for_manual_calibration"] == "false"
     assert by_id["566"]["hard_exclude"] == "true"
     assert summary["hard_exclude_count"] == 1
+
+
+def test_v3_full_inventory_uses_full_pool_not_only_old_project2(tmp_path: Path) -> None:
+    _write_full_pool(tmp_path, count=20)
+    _write_old_json(tmp_path / "export_label/project-2-at-2026-03-25-10-52-c04c6496.json")
+    _write_frozen_anchor(tmp_path)
+
+    rows, summary = build_full_candidate_inventory_v3(tmp_path)
+
+    assert len(rows) == 20
+    assert summary["old_export_project2_count"] == 3
+    assert summary["build_inventory_depends_only_on_old_export"] is False
+    assert summary["unreviewed_pool_count"] > summary["old_export_project2_count"]
+
+
+def test_v3_legacy_proxy_share_warns_when_over_threshold() -> None:
+    anchor = [{"task_id": f"anchor_{i}", "image_stem": f"anchor_{i}"} for i in range(12)]
+    rows = [_v3_candidate(str(i), legacy=True, unreviewed=False) for i in range(90)]
+
+    core, reserve, audit = select_core_reserve_v3(rows, anchor)
+
+    assert len(core) == 75
+    assert len(reserve) == 13
+    assert audit["core_legacy_labeled_proxy_share"] > 0.50
+    assert audit["warnings"]
+
+
+def test_v3_keeps_frozen_anchor_unchanged_and_460_473_in_core(tmp_path: Path) -> None:
+    frozen = _write_frozen_anchor(tmp_path)
+    rows = [_v3_candidate(str(i), legacy=False, unreviewed=True) for i in range(100, 210)]
+    rows.extend([_v3_candidate("460", legacy=True, unreviewed=False), _v3_candidate("473", legacy=True, unreviewed=False)])
+    anchor = load_frozen_anchor_v3(tmp_path)
+
+    core, reserve, audit = select_core_reserve_v3(rows, anchor)
+
+    assert [row["task_id"] for row in anchor] == [row["task_id"] for row in frozen]
+    assert not {"460", "473"} & {row["task_id"] for row in anchor}
+    assert {"460", "473"} <= {row["task_id"] for row in core}
+    assert len(core) == 75
+    assert len(reserve) == 13
+    assert audit["anchor_unchanged_from_v2"] is True
+
+
+def test_v3_semi_still_only_draws_from_core() -> None:
+    anchor = [{"task_id": f"anchor_{i}", "image_stem": f"anchor_{i}"} for i in range(12)]
+    rows = [_v3_candidate(str(i), legacy=False, unreviewed=True) for i in range(100, 210)]
+    rows.extend([_v3_candidate("460", legacy=True, unreviewed=False), _v3_candidate("473", legacy=True, unreviewed=False)])
+    core, reserve, _ = select_core_reserve_v3(rows, anchor)
+
+    semi, quota = select_semi_from_core(core)
+    audit = audit_semi_source(semi, core, anchor, reserve)
+
+    assert quota["semi_count"] == 25
+    assert audit["source_pool_all_core"] is True
+    assert audit["anchor_in_semi_count"] == 0
+    assert audit["reserve_in_semi_count"] == 0
 
 
 def test_manual_pool_counts_and_exclusions() -> None:

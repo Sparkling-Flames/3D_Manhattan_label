@@ -7,7 +7,7 @@ import random
 import re
 from collections import Counter, defaultdict
 from pathlib import Path
-from urllib.parse import unquote, urlparse
+from urllib.parse import parse_qs, unquote, urlparse
 
 
 OUT_DIR = Path("analysis_results/calibration_rebuild_20260702")
@@ -62,6 +62,18 @@ INVENTORY_FIELDS = [
 ]
 
 POOL_FIELDS = INVENTORY_FIELDS + ["calibration_split", "selection_rank", "selection_reason", "used_for_r_u"]
+FULL_INVENTORY_V3_EXTRA_FIELDS = [
+    "used_in_existing_manual_or_old_label",
+    "legacy_labeled_proxy",
+    "unreviewed_pool",
+    "source_status",
+    "eligible_after_exclusion",
+    "full_pool_order",
+    "full_pool_source",
+]
+FULL_INVENTORY_V3_FIELDS = INVENTORY_FIELDS + FULL_INVENTORY_V3_EXTRA_FIELDS
+POOL_FIELDS_V3 = FULL_INVENTORY_V3_FIELDS + ["calibration_split", "selection_rank", "selection_reason", "used_for_r_u"]
+LEGACY_PROXY_CORE_MAX_SHARE = 0.50
 ASSIGNMENT_FIELDS = [
     "round_id",
     "worker_id",
@@ -128,6 +140,29 @@ def _corner_bin(pair_count: int) -> str:
     if pair_count <= 8:
         return "pairs_7_8"
     return "pairs_ge_9"
+
+
+def _vis3d_pair_count(value: object) -> int:
+    data = parse_qs(urlparse(_safe(value)).query).get("data", [""])[0]
+    if not data:
+        return 0
+    try:
+        parsed = json.loads(data)
+    except json.JSONDecodeError:
+        return 0
+    return len(parsed) if isinstance(parsed, list) else 0
+
+
+def _layout_pair_count(root: Path, image_stem: str) -> int:
+    path = root / "output/layout_json" / f"{image_stem}.json"
+    if not path.exists():
+        return 0
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return 0
+    corners = (payload.get("layout") or {}).get("num_corners") or len((payload.get("layout") or {}).get("corners") or [])
+    return int(corners) if corners else 0
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:
@@ -399,6 +434,199 @@ def build_inventory(root: Path) -> tuple[list[dict], dict]:
     return rows, summary
 
 
+def _old_project2_by_stem(root: Path) -> dict[str, dict]:
+    path = root / "export_label/project-2-at-2026-03-25-10-52-c04c6496.json"
+    if not path.exists():
+        return {}
+    out: dict[str, dict] = {}
+    for task in json.loads(path.read_text(encoding="utf-8")):
+        data = task.get("data") or {}
+        stem = _stem(data.get("title") or data.get("image"))
+        if stem:
+            out[stem] = task
+    return out
+
+
+def _cos_import_by_stem(root: Path) -> dict[str, dict]:
+    path = root / "import_json/label_studio_import_docker.json"
+    if not path.exists():
+        return {}
+    out: dict[str, dict] = {}
+    for task in json.loads(path.read_text(encoding="utf-8")):
+        data = task.get("data") or {}
+        stem = _stem(data.get("title") or data.get("image"))
+        if stem:
+            out[stem] = task
+    return out
+
+
+def _full_image_files(root: Path) -> list[Path]:
+    img_v = sorted((root / "data/mp3d_layout/img_v").glob("*"))
+    test = sorted((root / "data/mp3d_layout/test").rglob("*"))
+    files = [p for p in img_v + test if p.is_file() and p.suffix.lower() in {".jpg", ".jpeg", ".png"}]
+    by_stem: dict[str, Path] = {}
+    for path in files:
+        by_stem.setdefault(path.stem, path)
+    return [by_stem[k] for k in sorted(by_stem)]
+
+
+def _source_sidecars_for_task(tid: str, old_task: dict | None, manual_review: dict, scope_reviewed: set[str], legacy_unreviewed: set[str], pure_model: set[str], semi_model: dict) -> str:
+    return ";".join(
+        p
+        for p in [
+            "full_local_image_registry",
+            "old_label_json" if old_task else "",
+            "亲自复核整理" if tid in manual_review else "",
+            "范围难度人工分层候选" if tid in scope_reviewed else "",
+            "旧标注补充清单" if tid in legacy_unreviewed else "",
+            "纯模型问题任务记录" if tid in pure_model else "",
+            "校准semi模型问题整理" if tid in semi_model else "",
+        ]
+        if p
+    )
+
+
+def build_full_candidate_inventory_v3(root: Path) -> tuple[list[dict], dict]:
+    full_files = _full_image_files(root)
+    old_by_stem = _old_project2_by_stem(root)
+    cos_by_stem = _cos_import_by_stem(root)
+    final_gold = _final_gold(root)
+    prescreen = _prescreen_stems(root)
+    random_c1 = _deprecated_c1_stems(root)
+    manual_review = _manual_review_rows(root / "trap集/亲自复核整理与分层_20260702.md")
+    scope_difficulty_reviewed = _markdown_task_ids(root / "trap集/范围难度人工分层候选_20260702.md")
+    legacy_unreviewed = _markdown_task_ids(root / "trap集/旧标注补充清单_20260702.md")
+    pure_model = _markdown_task_ids(root / "trap集/纯模型问题任务记录_20260702.md")
+    semi_model = {row["task_id"]: row for row in _read_csv(root / "trap集/校准semi模型问题整理_20260702.csv")}
+    hard_exclude = _hard_exclude_ids(root / "trap集/亲自复核整理与分层_20260702.md")
+    frozen_anchor_ids = {row["task_id"] for row in _read_csv(root / OUT_DIR / "calibration_anchor_draft_v2.csv")}
+    frozen_anchor_stems = {row["image_stem"] for row in _read_csv(root / OUT_DIR / "calibration_anchor_draft_v2.csv")}
+
+    rows: list[dict] = []
+    for order, local_path in enumerate(full_files, start=1):
+        image_stem = local_path.stem
+        old_task = old_by_stem.get(image_stem)
+        old_data = (old_task or {}).get("data") or {}
+        tid = _safe((old_task or {}).get("id")) or image_stem
+        cos_task = cos_by_stem.get(image_stem, {})
+        cos_data = cos_task.get("data") or {}
+        image = cos_data.get("image") or local_path.as_posix()
+        pairs = _vis3d_pair_count(cos_data.get("vis_3d")) or _layout_pair_count(root, image_stem)
+        keypoints = pairs * 2 if pairs else _keypoints(old_task or {})
+        if not pairs and keypoints:
+            pairs = keypoints // 2
+        fg = final_gold.get(tid) or final_gold.get(image_stem) or {}
+        review = manual_review.get(tid, {})
+        old_scope = ";".join(_choices(old_task or {}, "scope"))
+        old_diff = ";".join(_choices(old_task or {}, "difficulty"))
+        old_model = ";".join(_choices(old_task or {}, "model_issue"))
+        semi_row = semi_model.get(tid, {})
+        latest_reviewed = tid in manual_review
+        scope_reviewed = tid in scope_difficulty_reviewed
+        legacy_labeled = bool(old_task and (old_scope or old_diff or old_model)) or tid in legacy_unreviewed
+        used_old_or_manual = bool(old_task) or latest_reviewed or scope_reviewed or tid in legacy_unreviewed or tid in pure_model or tid in semi_model
+        used_prescreen = image_stem in prescreen
+        used_random = image_stem in random_c1 or tid in random_c1
+        review_text = review.get("decision", "") + review.get("note", "")
+        model_only = tid in pure_model and tid not in manual_review
+        requires_gt_fix = _contains_any(review_text, GT_FIX_TERMS)
+        requires_gt_review = _contains_any(review_text, GT_REVIEW_TERMS)
+        semi_only = requires_gt_fix or (_contains_any(review_text, SEMI_DEFER_TERMS) and tid not in manual_review)
+        excluded = tid in hard_exclude or any(word in review_text for word in ["不适合", "GT 错误", "不好"])
+        final_gold_scope = _safe(fg.get("final_scope_binary") or fg.get("final_scope_alias"))
+        effective_scope = review.get("scope", "") or final_gold_scope or old_scope
+        scope_gate_only = "oos" in effective_scope.lower()
+        geometry_ready = bool(fg.get("geometry_gold_ready", pairs >= 2))
+        scope_ready = bool(fg.get("scope_gold_ready", True))
+        primary = review.get("difficulty") or semi_row.get("primary_model_issue") or (old_diff.split(";")[0] if old_diff else "")
+        secondary = semi_row.get("primary_model_issue") or old_model
+        source_status = (
+            "latest_human_reviewed"
+            if latest_reviewed
+            else ("legacy_labeled_proxy" if legacy_labeled else "unreviewed_pool")
+        )
+        core_type = (
+            "core_scope_gate_audit_candidate"
+            if scope_gate_only
+            else ("core_paired_semi_counterpart_candidate" if old_model or semi_row or tid in ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS else "core_reliability_candidate")
+        )
+        eligible = (
+            (tid not in frozen_anchor_ids)
+            and (image_stem not in frozen_anchor_stems)
+            and (not used_prescreen)
+            and (not excluded)
+            and (not model_only)
+            and (not requires_gt_fix)
+            and geometry_ready
+            and scope_ready
+        )
+        row = {
+            "task_id": tid,
+            "base_task_id": image_stem,
+            "image_id": image_stem,
+            "image_stem": image_stem,
+            "source_path": str(local_path.relative_to(root)) if local_path.is_relative_to(root) else str(local_path),
+            "image_path": image,
+            "source_pool": "full_local_mp3d_layout_image_registry_v3",
+            "source_files": _source_sidecars_for_task(tid, old_task, manual_review, scope_difficulty_reviewed, legacy_unreviewed, pure_model, semi_model),
+            "used_in_prescreen": str(used_prescreen).lower(),
+            "used_in_random_c1_deprecated": str(used_random).lower(),
+            "has_final_gold": str(bool(fg)).lower(),
+            "geometry_gold_ready": str(geometry_ready).lower(),
+            "scope_gold_ready": str(scope_ready).lower(),
+            "gt_keypoint_count": str(keypoints or fg.get("n_corners", "")),
+            "gt_pair_count": str(pairs or (int(fg.get("n_corners", 0)) // 2 if fg else "")),
+            "corner_count_bin": _corner_bin(pairs),
+            "old_manual_scope_raw": old_scope,
+            "old_manual_difficulty_raw": old_diff,
+            "old_semi_model_issue_raw": old_model,
+            "legacy_label_status": "legacy_proxy" if legacy_labeled else "none",
+            "expert_review_status": source_status,
+            "latest_human_reviewed": str(latest_reviewed).lower(),
+            "scope_difficulty_reviewed": str(scope_reviewed).lower(),
+            "legacy_proxy": str(legacy_labeled).lower(),
+            "unreviewed": str((not latest_reviewed) and (not scope_reviewed)).lower(),
+            "expert_scope_confirmed": review.get("scope", ""),
+            "expert_proxy_family_primary": primary,
+            "expert_proxy_family_secondary": secondary,
+            "model_issue_only": str(model_only).lower(),
+            "semi_only": str(semi_only).lower(),
+            "scope_gate_only": str(scope_gate_only).lower(),
+            "requires_gt_fix": str(requires_gt_fix).lower(),
+            "requires_gt_review": str(requires_gt_review).lower(),
+            "hard_exclude": str(excluded).lower(),
+            "exclude_reason": "hard_exclude_from_human_review" if excluded else "",
+            "eligible_for_manual_calibration": str(eligible).lower(),
+            "eligible_for_core_proxy_sampling": str(eligible).lower(),
+            "eligible_for_anchor_candidate": "false",
+            "eligible_for_reserve_candidate": str(eligible).lower(),
+            "eligible_for_semi_candidate": str(eligible and bool(old_model or semi_row or tid in ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS)).lower(),
+            "core_candidate_type": core_type,
+            "proxy_confidence": "confirmed" if latest_reviewed else ("legacy_proxy" if legacy_labeled else "weak_proxy"),
+            "notes": review.get("decision") or review.get("note") or semi_row.get("manual_note", ""),
+            "used_in_existing_manual_or_old_label": str(used_old_or_manual).lower(),
+            "legacy_labeled_proxy": str(legacy_labeled).lower(),
+            "unreviewed_pool": str(not used_old_or_manual).lower(),
+            "source_status": source_status,
+            "eligible_after_exclusion": str(eligible).lower(),
+            "full_pool_order": str(order),
+            "full_pool_source": "data/mp3d_layout/img_v",
+        }
+        rows.append(row)
+    summary = {
+        "full_pool_count": len(rows),
+        "prescreen_used_count": sum(_bool(r["used_in_prescreen"]) for r in rows),
+        "legacy_labeled_proxy_count": sum(_bool(r["legacy_labeled_proxy"]) for r in rows),
+        "latest_human_reviewed_count": sum(_bool(r["latest_human_reviewed"]) for r in rows),
+        "unreviewed_pool_count": sum(_bool(r["unreviewed_pool"]) for r in rows),
+        "eligible_after_exclusion_count": sum(_bool(r["eligible_after_exclusion"]) for r in rows),
+        "source_pool": "data/mp3d_layout/img_v",
+        "old_export_project2_count": len(old_by_stem),
+        "build_inventory_depends_only_on_old_export": False,
+    }
+    return rows, summary
+
+
 def _sort_key(row: dict) -> tuple:
     return (
         row["corner_count_bin"],
@@ -420,6 +648,83 @@ def _take_balanced(rows: list[dict], n: int, rng: random.Random) -> list[dict]:
             if buckets[key] and len(out) < n:
                 out.append(buckets[key].pop())
     return out
+
+
+def load_frozen_anchor_v3(root: Path) -> list[dict]:
+    rows = _read_csv(root / OUT_DIR / "calibration_anchor_draft_v2.csv")
+    for rank, row in enumerate(rows, start=1):
+        row["calibration_split"] = "anchor"
+        row["selection_rank"] = row.get("selection_rank") or str(rank)
+        row["selection_reason"] = row.get("selection_reason") or "frozen_human_approved_anchor12"
+        row["used_for_r_u"] = row.get("used_for_r_u") or "true"
+    return rows
+
+
+def _mark_pool_rows(rows: list[dict], split: str, reason: str) -> list[dict]:
+    for rank, row in enumerate(rows, start=1):
+        row["calibration_split"] = split
+        row["selection_rank"] = str(rank)
+        row["selection_reason"] = reason if row["task_id"] not in ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS else f"{reason};non_anchor_core_semi_counterpart"
+        if split == "core":
+            row["used_for_r_u"] = "true" if row["core_candidate_type"] == "core_reliability_candidate" else "false_non_reliability_core"
+        else:
+            row["used_for_r_u"] = "false"
+    return rows
+
+
+def select_core_reserve_v3(rows: list[dict], frozen_anchor: list[dict], seed: int = SEED) -> tuple[list[dict], list[dict], dict]:
+    rng = random.Random(seed + 3)
+    anchor_ids = {row["task_id"] for row in frozen_anchor}
+    anchor_stems = {row["image_stem"] for row in frozen_anchor}
+    eligible = [
+        row
+        for row in rows
+        if _bool(row["eligible_after_exclusion"])
+        and row["task_id"] not in anchor_ids
+        and row["image_stem"] not in anchor_stems
+    ]
+    priority = [row for row in eligible if row["task_id"] in ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS]
+    priority_ids = {row["task_id"] for row in priority}
+    pool = [row for row in eligible if row["task_id"] not in priority_ids]
+    unreviewed = [row for row in pool if _bool(row["unreviewed_pool"])]
+    other = [row for row in pool if not _bool(row["unreviewed_pool"])]
+    core = priority + _take_balanced(unreviewed, min(38, 75 - len(priority), len(unreviewed)), rng)
+    core_ids = {row["task_id"] for row in core}
+    if len(core) < 75:
+        core += _take_balanced([row for row in other if row["task_id"] not in core_ids], 75 - len(core), rng)
+    core_ids = {row["task_id"] for row in core}
+    if len(core) < 75:
+        core += _take_balanced([row for row in unreviewed if row["task_id"] not in core_ids], 75 - len(core), rng)
+    core = core[:75]
+    core_ids = {row["task_id"] for row in core}
+    reserve_candidates = [row for row in eligible if row["task_id"] not in core_ids]
+    reserve = _take_balanced(reserve_candidates, 13, rng)
+    _mark_pool_rows(core, "core", "v3_full_pool_proxy_balanced")
+    _mark_pool_rows(reserve, "reserve", "v3_full_pool_c2_only_reserve")
+    legacy_share = (sum(_bool(row["legacy_labeled_proxy"]) for row in core) / len(core)) if core else 0
+    warnings: list[str] = []
+    blockers: list[str] = []
+    if legacy_share > LEGACY_PROXY_CORE_MAX_SHARE:
+        warnings.append(f"core_legacy_labeled_proxy_share_gt_{LEGACY_PROXY_CORE_MAX_SHARE:.2f}")
+    if len(core) != 75 or len(reserve) != 13:
+        blockers.append("insufficient_v3_core_or_reserve_candidates")
+    missing_counterparts = sorted(ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS - {row["task_id"] for row in core})
+    if missing_counterparts:
+        blockers.append("missing_required_core_semi_counterpart:" + ",".join(missing_counterparts))
+    audit = {
+        "warnings": warnings,
+        "blockers": blockers,
+        "core_legacy_labeled_proxy_count": sum(_bool(row["legacy_labeled_proxy"]) for row in core),
+        "core_legacy_labeled_proxy_share": legacy_share,
+        "core_unreviewed_pool_count": sum(_bool(row["unreviewed_pool"]) for row in core),
+        "core_unreviewed_pool_share": (sum(_bool(row["unreviewed_pool"]) for row in core) / len(core)) if core else 0,
+        "anchor_frozen_count": len(frozen_anchor),
+        "anchor_task_ids": [row["task_id"] for row in frozen_anchor],
+        "anchor_unchanged_from_v2": len(frozen_anchor) == 12,
+        "anchor_excluded_core_counterpart_task_ids": sorted(ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS),
+        "anchor_excluded_core_counterpart_in_core": sorted({row["task_id"] for row in core} & ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS),
+    }
+    return core, reserve, audit
 
 
 def select_manual_pools(rows: list[dict], seed: int = SEED) -> tuple[list[dict], list[dict], list[dict], dict]:
@@ -541,7 +846,7 @@ def load_workers(root: Path) -> list[dict[str, str]]:
     return workers
 
 
-def build_manual_assignment(anchor: list[dict], core: list[dict], workers: list[dict[str, str]]) -> tuple[list[dict], dict]:
+def build_manual_assignment(anchor: list[dict], core: list[dict], workers: list[dict[str, str]], manifest_version: str = "C1_manual_v2_draft") -> tuple[list[dict], dict]:
     rows: list[dict] = []
     order_by_worker = defaultdict(int)
     shuffled_rank = {worker["worker_id"]: idx for idx, worker in enumerate(workers)}
@@ -558,7 +863,7 @@ def build_manual_assignment(anchor: list[dict], core: list[dict], workers: list[
                 "assignment_reason": "common_anchor",
                 "is_common_anchor": "true",
                 "expected_completion_order": str(order_by_worker[worker["worker_id"]]),
-                "manifest_version": "C1_manual_v2_draft",
+                "manifest_version": manifest_version,
                 "watch_flag": _safe(worker.get("watch_flag")),
             })
     load = Counter()
@@ -577,7 +882,7 @@ def build_manual_assignment(anchor: list[dict], core: list[dict], workers: list[
                 "assignment_reason": "balanced_core",
                 "is_common_anchor": "false",
                 "expected_completion_order": str(order_by_worker[worker["worker_id"]]),
-                "manifest_version": "C1_manual_v2_draft",
+                "manifest_version": manifest_version,
                 "watch_flag": _safe(worker.get("watch_flag")),
             })
     core_counts = Counter(r["task_id"] for r in rows if r["dataset_group"] == "Calibration_core")
@@ -601,7 +906,7 @@ def build_manual_assignment(anchor: list[dict], core: list[dict], workers: list[
     return rows, audit
 
 
-def build_semi_assignment(semi: list[dict], manual_rows: list[dict], workers: list[dict[str, str]]) -> tuple[list[dict], dict, dict]:
+def build_semi_assignment(semi: list[dict], manual_rows: list[dict], workers: list[dict[str, str]], manifest_version: str = "C1_semi_v2_draft") -> tuple[list[dict], dict, dict]:
     manual_by_base: dict[str, set[str]] = defaultdict(set)
     for row in manual_rows:
         manual_by_base[row["base_task_id"]].add(row["worker_id"])
@@ -628,7 +933,7 @@ def build_semi_assignment(semi: list[dict], manual_rows: list[dict], workers: li
                 "assignment_reason": "rq2_paired_audit",
                 "is_common_anchor": "false",
                 "expected_completion_order": str(semi_load[worker["worker_id"]]),
-                "manifest_version": "C1_semi_v2_draft",
+                "manifest_version": manifest_version,
                 "watch_flag": _safe(worker.get("watch_flag")),
                 "used_for_r_u": "false",
                 "used_for_rq2": "true",
@@ -777,6 +1082,32 @@ def _balance_summary(anchor: list[dict], core: list[dict], reserve: list[dict], 
     }
 
 
+def _balance_summary_v3(inventory_summary: dict, anchor: list[dict], core: list[dict], reserve: list[dict], audit: dict) -> dict:
+    selected = anchor + core + reserve
+    return {
+        **inventory_summary,
+        "counts": {"anchor": len(anchor), "core": len(core), "reserve": len(reserve)},
+        "prescreen_overlap_count": sum(_bool(r.get("used_in_prescreen")) for r in selected),
+        "hard_exclude_inclusion_count": sum(_bool(r.get("hard_exclude")) for r in selected),
+        "model_issue_only_inclusion_count": sum(_bool(r.get("model_issue_only")) for r in selected),
+        "core_legacy_labeled_proxy_count": audit["core_legacy_labeled_proxy_count"],
+        "core_legacy_labeled_proxy_share": audit["core_legacy_labeled_proxy_share"],
+        "core_unreviewed_pool_count": audit["core_unreviewed_pool_count"],
+        "core_unreviewed_pool_share": audit["core_unreviewed_pool_share"],
+        "corner_count_bin_distribution": dict(Counter(r.get("corner_count_bin", "") for r in core + reserve)),
+        "source_status_distribution": dict(Counter(r.get("source_status", "frozen_anchor") for r in core + reserve)),
+        "source_concentration": dict(Counter((r.get("image_stem", "").split("_")[0] or "unknown") for r in core + reserve)),
+        "anchor_frozen_count": audit["anchor_frozen_count"],
+        "anchor_unchanged_from_v2": audit["anchor_unchanged_from_v2"],
+        "anchor_task_ids": audit["anchor_task_ids"],
+        "anchor_excluded_core_counterpart_task_ids": audit["anchor_excluded_core_counterpart_task_ids"],
+        "anchor_excluded_core_counterpart_in_core": audit["anchor_excluded_core_counterpart_in_core"],
+        "reserve_c2_only_status": "reserve_not_assigned_in_C1",
+        "warnings": audit.get("warnings", []),
+        "blockers": audit.get("blockers", []),
+    }
+
+
 def build_all(root: Path, test_results: str = "not_run_by_script") -> dict:
     out = root / OUT_DIR
     import_dir = root / IMPORT_DIR
@@ -858,12 +1189,67 @@ def build_all(root: Path, test_results: str = "not_run_by_script") -> dict:
     }
 
 
+def build_all_v3(root: Path, test_results: str = "not_run_by_script") -> dict:
+    out = root / OUT_DIR
+    deprecation = _deprecation_audit(root)
+    _write_json(out / "random_c1_deprecation_audit_v1.json", deprecation)
+    inventory, inventory_summary = build_full_candidate_inventory_v3(root)
+    _write_csv(out / "calibration_full_candidate_inventory_v3.csv", inventory, FULL_INVENTORY_V3_FIELDS)
+    _write_json(out / "calibration_full_candidate_inventory_summary_v3.json", inventory_summary)
+    anchor = load_frozen_anchor_v3(root)
+    core, reserve, pool_audit = select_core_reserve_v3(inventory, anchor)
+    _write_csv(out / "calibration_core_draft_v3.csv", core, POOL_FIELDS_V3)
+    _write_csv(out / "calibration_reserve_draft_v3.csv", reserve, POOL_FIELDS_V3)
+    balance = _balance_summary_v3(inventory_summary, anchor, core, reserve, pool_audit)
+    _write_json(out / "calibration_pool_source_balance_summary_v3.json", balance)
+    semi, semi_quota = select_semi_from_core(core)
+    _write_csv(out / "calibration_semi_selection_draft_v3.csv", semi, POOL_FIELDS_V3 + ["semi_family", "semi_family_confidence", "semi_selection_rank"])
+    semi_source_audit = audit_semi_source(semi, core, anchor, reserve)
+    semi_quota = semi_quota | semi_source_audit
+    workers = load_workers(root)
+    manual_assign, manual_audit = build_manual_assignment(anchor, core, workers, manifest_version="C1_manual_v3_draft")
+    _write_csv(out / "assignment_manifest_C1_manual_draft_v3.csv", manual_assign, ASSIGNMENT_FIELDS)
+    _write_json(out / "c1_manual_assignment_audit_v3.json", manual_audit)
+    semi_assign, overlap_audit, semi_audit = build_semi_assignment(semi, manual_assign, workers, manifest_version="C1_semi_v3_draft")
+    _write_csv(out / "assignment_manifest_C1_semi_draft_v3.csv", semi_assign, SEMI_ASSIGNMENT_FIELDS)
+    _write_csv(
+        out / "manual_semi_same_image_overlap_audit_v3.csv",
+        manual_semi_overlap_rows(manual_assign, semi_assign),
+        ["task_id", "base_task_id", "worker_id", "manual_semi_same_image_overlap"],
+    )
+    _write_json(out / "c1_semi_assignment_audit_v3.json", semi_audit)
+    readiness = build_readiness_draft(
+        deprecation=deprecation,
+        balance=balance,
+        manual_audit=manual_audit,
+        semi_audit=semi_audit,
+        overlap_audit=overlap_audit,
+        semi_quota=semi_quota,
+        test_results=test_results,
+    )
+    readiness["status"] = "draft_pending_human_review_v3_core_reserve_rebuild"
+    readiness["no_label_studio_import_performed"] = True
+    readiness["worker_facing_distribution_generated"] = False
+    _write_json(out / "c1_launch_readiness_draft_v3.json", readiness)
+    return {
+        "inventory": inventory,
+        "anchor": anchor,
+        "core": core,
+        "reserve": reserve,
+        "semi": semi,
+        "manual_audit": manual_audit,
+        "semi_audit": semi_audit,
+        "readiness": readiness,
+        "balance": balance,
+    }
+
+
 def main() -> None:
-    parser = argparse.ArgumentParser(description="Build Calibration C1/C2 v2 draft selection and audits.")
+    parser = argparse.ArgumentParser(description="Build Calibration C1/C2 v3 draft core/reserve rebuild and audits.")
     parser.add_argument("--root", type=Path, default=Path("."))
     parser.add_argument("--test-results", default="not_run_by_script")
     args = parser.parse_args()
-    build_all(args.root.resolve(), test_results=args.test_results)
+    build_all_v3(args.root.resolve(), test_results=args.test_results)
 
 
 if __name__ == "__main__":
