@@ -128,6 +128,20 @@ def test_manual_pool_counts_and_exclusions() -> None:
     assert len([row for row in anchor if "高难" in row["notes"] + row["expert_proxy_family_primary"]]) >= 1
 
 
+def test_460_473_are_core_counterparts_not_anchor() -> None:
+    rows = [_candidate(i, reviewed=i <= 30) for i in range(1, 125)]
+    rows.extend([_candidate(460), _candidate(473)])
+
+    anchor, core, reserve, audit = select_manual_pools(rows)
+
+    assert len(anchor) == 12
+    assert len(core) == 75
+    assert len(reserve) == 13
+    assert not {"460", "473"} & {row["task_id"] for row in anchor}
+    assert {"460", "473"} <= {row["task_id"] for row in core}
+    assert audit["anchor_excluded_core_counterpart_in_core"] == ["460", "473"]
+
+
 def test_assignments_enforce_core_k5_semi_k4_and_no_same_image_overlap() -> None:
     rows = [_candidate(i, reviewed=i <= 30) for i in range(1, 125)]
     anchor, core, _, _ = select_manual_pools(rows)
@@ -253,7 +267,9 @@ def test_anchor_candidate_requires_latest_confirmed_and_no_gt_or_scope_downgrade
 
     assert by_id["460"]["latest_human_reviewed"] == "true"
     assert by_id["460"]["proxy_confidence"] == "confirmed"
-    assert by_id["460"]["eligible_for_anchor_candidate"] == "true"
+    assert by_id["460"]["eligible_for_manual_calibration"] == "true"
+    assert by_id["460"]["eligible_for_core_proxy_sampling"] == "true"
+    assert by_id["460"]["eligible_for_anchor_candidate"] == "false"
     assert by_id["461"]["requires_gt_review"] == "true"
     assert by_id["461"]["eligible_for_anchor_candidate"] == "false"
     assert by_id["566"]["requires_gt_fix"] == "true"
@@ -313,7 +329,9 @@ def test_latest_human_inscope_overrides_legacy_oos_scope_for_473(tmp_path: Path)
     assert row["requires_gt_fix"] == "false"
     assert row["semi_only"] == "false"
     assert row["scope_gate_only"] == "false"
-    assert row["eligible_for_anchor_candidate"] == "true"
+    assert row["eligible_for_manual_calibration"] == "true"
+    assert row["eligible_for_core_proxy_sampling"] == "true"
+    assert row["eligible_for_anchor_candidate"] == "false"
 
 
 def test_gt_fix_text_in_latest_human_review_still_blocks_anchor(tmp_path: Path) -> None:

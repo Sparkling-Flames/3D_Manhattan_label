@@ -13,6 +13,7 @@ from urllib.parse import unquote, urlparse
 OUT_DIR = Path("analysis_results/calibration_rebuild_20260702")
 IMPORT_DIR = Path("import_json/calibration_c1_v2_draft")
 SEED = 20260702
+ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS = {"460", "473"}
 
 INVENTORY_FIELDS = [
     "task_id",
@@ -363,6 +364,7 @@ def build_inventory(root: Path) -> tuple[list[dict], dict]:
             "eligible_for_core_proxy_sampling": str(manual_ok).lower(),
             "eligible_for_anchor_candidate": str(
                 manual_ok
+                and tid not in ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS
                 and latest_reviewed
                 and geometry_ready
                 and scope_ready
@@ -423,7 +425,11 @@ def _take_balanced(rows: list[dict], n: int, rng: random.Random) -> list[dict]:
 def select_manual_pools(rows: list[dict], seed: int = SEED) -> tuple[list[dict], list[dict], list[dict], dict]:
     rng = random.Random(seed)
     eligible = [r for r in rows if _bool(r["eligible_for_manual_calibration"])]
-    anchors = [r for r in eligible if _bool(r["eligible_for_anchor_candidate"])]
+    anchors = [
+        r
+        for r in eligible
+        if _bool(r["eligible_for_anchor_candidate"]) and r["task_id"] not in ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS
+    ]
     stable_hard = [r for r in anchors if any(w in r["notes"] + r["expert_proxy_family_primary"] for w in ["高", "难"]) and not r["old_manual_scope_raw"].startswith("oos")]
     rng.shuffle(stable_hard)
     selected_stable = stable_hard[:2]
@@ -431,7 +437,9 @@ def select_manual_pools(rows: list[dict], seed: int = SEED) -> tuple[list[dict],
     anchor = selected_stable + _take_balanced(anchor_fill, 12 - len(selected_stable), rng)
     anchor_ids = {r["task_id"] for r in anchor}
     remaining = [r for r in eligible if r["task_id"] not in anchor_ids]
-    core = _take_balanced(remaining, 75, rng)
+    core_priority = [r for r in remaining if r["task_id"] in ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS]
+    core_fill = [r for r in remaining if r["task_id"] not in ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS]
+    core = core_priority + _take_balanced(core_fill, 75 - len(core_priority), rng)
     core_ids = {r["task_id"] for r in core}
     reserve_candidates = [r for r in remaining if r["task_id"] not in core_ids]
     reserve_candidates.sort(key=lambda r: ("oos" not in r["old_manual_scope_raw"] + r["expert_scope_confirmed"], r["proxy_confidence"], r["task_id"]))
@@ -440,6 +448,8 @@ def select_manual_pools(rows: list[dict], seed: int = SEED) -> tuple[list[dict],
         "blockers": [],
         "warnings": [],
         "stable_hard_anchor_count": len([r for r in anchor if r in stable_hard]),
+        "anchor_excluded_core_counterpart_task_ids": sorted(ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS),
+        "anchor_excluded_core_counterpart_in_core": sorted(core_ids & ANCHOR_EXCLUDED_CORE_COUNTERPART_TASK_IDS),
     }
     if len(anchor) != 12 or len(core) != 75 or len(reserve) != 13:
         audit["blockers"].append("insufficient_manual_pool_candidates")
@@ -757,6 +767,8 @@ def _balance_summary(anchor: list[dict], core: list[dict], reserve: list[dict], 
         "legacy_proxy_unreviewed_count": sum(r["expert_review_status"] == "unreviewed" for r in selected),
         "source_concentration": dict(Counter(r["image_stem"].split("_")[0] for r in selected)),
         "stable_hard_anchor_count": audit.get("stable_hard_anchor_count", 0),
+        "anchor_excluded_core_counterpart_task_ids": audit.get("anchor_excluded_core_counterpart_task_ids", []),
+        "anchor_excluded_core_counterpart_in_core": audit.get("anchor_excluded_core_counterpart_in_core", []),
         "anchor_false_scope_gate_audit_count": sum(r.get("used_for_r_u") == "false_scope_gate_audit" for r in anchor),
         "anchor_used_for_r_u_true_count": sum(r.get("used_for_r_u") == "true" for r in anchor),
         "reserve_c2_only_status": "reserve_not_assigned_in_C1",
