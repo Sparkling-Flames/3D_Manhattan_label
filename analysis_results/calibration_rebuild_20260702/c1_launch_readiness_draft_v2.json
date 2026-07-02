@@ -1,0 +1,61 @@
+{
+  "passed": false,
+  "status": "draft_pending_human_review",
+  "blockers": [
+    "manual pool draft pending human approval",
+    "semi family draft pending human approval",
+    "LS import not yet materialized",
+    "active log smoke test not yet run on v2 projects",
+    "worker-facing distribution not generated"
+  ],
+  "protocol_checks": {
+    "random_c1_deprecated": true,
+    "reserve_excluded_from_c1": true,
+    "semi_only_from_core": true,
+    "readiness_for_launch": false
+  },
+  "overlap_checks": {
+    "prescreen_overlap_count": 0
+  },
+  "assignment_checks": {
+    "manual": {
+      "passed": true,
+      "anchor_task_count": 12,
+      "core_task_count": 75,
+      "eligible_worker_count": 23,
+      "core_redundancy_min": 5,
+      "core_redundancy_max": 5,
+      "reserve_assignment_count": 0,
+      "worker_core_load_min": 16,
+      "worker_core_load_max": 17,
+      "worker_total_manual_load_min": 28,
+      "worker_total_manual_load_max": 29,
+      "duplicate_worker_task_count": 0,
+      "duplicate_task_assignment_within_worker": 0,
+      "watch_workers_included": 14
+    },
+    "semi": {
+      "passed": true,
+      "semi_task_count": 25,
+      "semi_k_min": 4,
+      "semi_k_max": 4,
+      "worker_semi_load_min": 4,
+      "worker_semi_load_max": 5,
+      "manual_semi_same_image_overlap_count": 0,
+      "anchor_in_semi_count": 0,
+      "reserve_in_semi_count": 0,
+      "used_for_r_u_false_count": 100,
+      "used_for_rq2_true_count": 100
+    },
+    "manual_semi_overlap": {
+      "manual_semi_same_image_overlap_count": 0,
+      "passed": true
+    }
+  },
+  "proxy_balance_warnings": [
+    "semi_shortfall:角点重复=2",
+    "semi_shortfall:漏标=2",
+    "semi_shortfall:模型预标注失败/拓扑失败=1"
+  ],
+  "test_results": "pytest tests/test_build_c1_assignment_manifest.py tests/test_calibration_rebuild_v2_drafts.py = 6 passed"
+}
