@@ -39,6 +39,10 @@ def _task(runtime_id: str, task_id: str, base: str, annotations: list[dict]) -> 
     }
 
 
+def _read_csv(path: Path) -> list[dict[str, str]]:
+    return list(csv.DictReader(path.open(encoding="utf-8")))
+
+
 def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_path: Path) -> None:
     fields = ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group"]
     manual = tmp_path / "manual.csv"
@@ -49,6 +53,7 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
         {"round_id": "C1", "worker_id": "w1", "task_id": "t1", "base_task_id": "base1", "dataset_group": "Calibration_core"},
         {"round_id": "C1", "worker_id": "w2", "task_id": "t2", "base_task_id": "base2", "dataset_group": "Calibration_core"},
         {"round_id": "C1", "worker_id": "w3", "task_id": "t3", "base_task_id": "base3", "dataset_group": "Calibration_core"},
+        {"round_id": "C1", "worker_id": "w4", "task_id": "missing", "base_task_id": "base_missing", "dataset_group": "Calibration_core"},
     ]
     _csv(manual, fields, assigned)
     _csv(semi, fields, [])
@@ -60,6 +65,7 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
             {"task_id": "t1", "base_task_id": "base1", "inner_id": "1", "intended_project_group": "Calibration_core", "mapping_status": "planned"},
             {"task_id": "t2", "base_task_id": "base2", "inner_id": "2", "intended_project_group": "Calibration_core", "mapping_status": "planned"},
             {"task_id": "t3", "base_task_id": "base3", "inner_id": "3", "intended_project_group": "Calibration_core", "mapping_status": "planned"},
+            {"task_id": "missing", "base_task_id": "base_missing", "inner_id": "4", "intended_project_group": "Calibration_core", "mapping_status": "planned"},
         ],
     )
     export = tmp_path / "c1_export.json"
@@ -81,7 +87,7 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
             [
                 json.dumps({"project_id": "66", "task_id": "200", "annotator_id": "w1", "annotation_id": "a1", "session_id": "s1", "active_seconds": 12}),
                 json.dumps({"project_id": "66", "task_id": "201", "annotator_id": "w2", "session_id": "single", "active_seconds": 7}),
-                json.dumps({"project_id": "66", "task_id": "203", "annotator_id": "w1", "annotation_id": "d2", "session_id": "s2", "active_seconds": 5}),
+                json.dumps({"project_id": "66", "task_id": "203", "annotator_id": "w1", "session_id": "single", "active_seconds": 5}),
             ]
         )
         + "\n",
@@ -114,5 +120,54 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
     assert by_runtime["202"]["sensitivity_active_time_eligible"] == "true"
     assert by_runtime["203"]["duplicate_group_size"] == "2"
     assert by_runtime["203"]["duplicate_worker_task_submission"] == "true"
+    assert by_runtime["203"]["active_time_match_status"] == "project+task+annotator"
+    assert by_runtime["203"]["primary_active_time_eligible"] == "false"
+    assert by_runtime["203"]["sensitivity_active_time_eligible"] == "true"
+    realized_audit = _read_csv(out / "c1_realized_vs_assigned_audit.csv")
+    assert any(row["task_id"] == "missing" and row["worker_id"] == "w4" and row["missing_submission"] == "true" for row in realized_audit)
     assert (out / "raw_inputs" / "raw_input_snapshot_manifest.csv").exists()
     assert (out / "c1_runtime_task_mapping.csv").exists()
+
+
+def test_c1_canonicalization_runtime_collision_blocks(tmp_path: Path) -> None:
+    fields = ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group"]
+    manual = tmp_path / "manual.csv"
+    semi = tmp_path / "semi.csv"
+    internal = tmp_path / "internal.csv"
+    mapping = tmp_path / "mapping.csv"
+    _csv(manual, fields, [])
+    _csv(semi, fields, [])
+    _csv(internal, fields, [])
+    _csv(mapping, ["task_id", "base_task_id", "inner_id", "intended_project_group", "mapping_status"], [])
+    export_a = tmp_path / "a.json"
+    export_b = tmp_path / "b.json"
+    export_a.write_text(json.dumps([_task("same", "t1", "b1", [])]), encoding="utf-8")
+    export_b.write_text(json.dumps([_task("same", "t2", "b2", [])]), encoding="utf-8")
+
+    out = tmp_path / "out"
+    summary = build_canonicalization([export_a, export_b], manual, semi, internal, mapping, active_log=None, output_dir=out)
+
+    assert summary["runtime_key_collision_count"] == 1
+    assert "runtime_key_collision_detected" in summary["blockers"]
+    assert _read_csv(out / "c1_runtime_key_collision_audit.csv")[0]["collision_task_id"] == "t2"
+
+
+def test_c1_canonicalization_planned_mapping_missing_blocks(tmp_path: Path) -> None:
+    fields = ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group"]
+    manual = tmp_path / "manual.csv"
+    semi = tmp_path / "semi.csv"
+    internal = tmp_path / "internal.csv"
+    mapping = tmp_path / "mapping.csv"
+    _csv(manual, fields, [])
+    _csv(semi, fields, [])
+    _csv(internal, fields, [])
+    _csv(mapping, ["task_id", "base_task_id", "inner_id", "intended_project_group", "mapping_status"], [])
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_task("1", "unplanned", "base_unplanned", [])]), encoding="utf-8")
+
+    out = tmp_path / "out"
+    summary = build_canonicalization([export], manual, semi, internal, mapping, active_log=None, output_dir=out)
+
+    assert summary["planned_mapping_missing_count"] == 1
+    assert "planned_mapping_missing" in summary["blockers"]
+    assert _read_csv(out / "c1_runtime_task_mapping.csv")[0]["planned_mapping_status"] == "planned_mapping_missing"

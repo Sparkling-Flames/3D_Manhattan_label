@@ -4,6 +4,7 @@ import argparse
 import csv
 import hashlib
 import json
+import shutil
 import sys
 from collections import Counter
 from datetime import datetime, timezone
@@ -21,17 +22,24 @@ from tools.thesis_main.analysis.c1_live_collection_monitor import (
     SEMI_ASSIGNMENT_DEFAULT,
     WORKER_DISTRIBUTION_DEFAULT,
     RUNTIME_MAPPING_FIELDS,
+    RUNTIME_COLLISION_FIELDS,
     active_time_policy,
+    active_time_for_annotation,
+    assignment_key,
     assignment_sets,
     bool_text,
+    build_annotation_owner_map,
     build_runtime_task_mapping,
     is_reserve,
     read_csv,
     safe,
+    sha256_file,
     write_csv,
     write_json,
 )
-from tools.thesis_main.analysis.prescreen_canonicalize_export import build_canonical_tables, snapshot_inputs
+from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
+from tools.thesis_main.analysis.quality_core.active_time import load_active_logs
+from tools.thesis_main.analysis.prescreen_canonicalize_export import build_canonical_tables
 
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
 
@@ -57,9 +65,12 @@ CANONICAL_FIELDS = [
     "geometry_hash",
     "n_corners",
     "parse_error",
+    "planned_mapping_status",
+    "runtime_binding_status",
     "assigned_expected",
     "appears_in_internal_distribution",
     "outside_assignment_submission",
+    "missing_submission",
     "duplicate_worker_task_submission",
     "source_export",
     "raw_canonical_annotation_id",
@@ -105,6 +116,7 @@ REALIZED_AUDIT_FIELDS = [
     "assigned_expected",
     "appears_in_internal_distribution",
     "outside_assignment_submission",
+    "missing_submission",
     "duplicate_worker_task_submission",
     "reserve_realized_submission",
 ]
@@ -128,6 +140,48 @@ def _merge_manifest(export_paths: list[Path], runtime_rows: list[dict[str, str]]
             }
         )
     return rows
+
+
+def snapshot_inputs_unique(paths: list[Path], output_dir: Path, completion_basis: str) -> Path:
+    raw_dir = output_dir / "raw_inputs"
+    raw_dir.mkdir(parents=True, exist_ok=True)
+    rows: list[dict[str, Any]] = []
+
+    def add_file(path: Path, source_kind: str) -> None:
+        exists = path.exists() and path.is_file()
+        digest = sha256_file(path) if exists else ""
+        snapshot_path = ""
+        size = ""
+        if exists:
+            snapshot_path = str(raw_dir / f"{len(rows) + 1:03d}_{digest[:12]}_{path.name}")
+            shutil.copy2(path, snapshot_path)
+            size = str(Path(snapshot_path).stat().st_size)
+        rows.append(
+            {
+                "source_path": str(path),
+                "snapshot_path": snapshot_path,
+                "source_kind": source_kind,
+                "exists": bool_text(exists),
+                "bytes": size,
+                "sha256": digest,
+                "completion_basis": completion_basis,
+            }
+        )
+
+    for path in paths:
+        if path.is_dir():
+            _resolved, files = resolve_active_log_files(path)
+            if files:
+                for file_path in files:
+                    add_file(file_path, "active_log_snapshot")
+            else:
+                add_file(path, "active_log_snapshot")
+        else:
+            add_file(path, "raw_input_snapshot")
+
+    manifest_path = raw_dir / "raw_input_snapshot_manifest.csv"
+    write_csv(manifest_path, rows)
+    return manifest_path
 
 
 def _enhance_duplicate_rows(
@@ -169,8 +223,9 @@ def build_canonicalization(
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     assigned, internal = assignment_sets(manual_assignment, semi_assignment, worker_distribution)
-    runtime_rows, runtime_lookup = build_runtime_task_mapping(export_paths, planned_task_mapping)
+    runtime_rows, runtime_lookup, collision_rows = build_runtime_task_mapping(export_paths, planned_task_mapping)
     canonical_base, duplicate_base, base_summary = build_canonical_tables(export_paths, active_log)
+    active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths)) if active_log else {}
 
     worker_task_counts = Counter(
         (
@@ -200,7 +255,20 @@ def build_canonicalization(
             safe(row.get("active_time_source")),
             safe(row.get("active_time_match_status")),
             session_count,
+            str(row.get("duplicate_time_ambiguous", "")).lower() == "true" or row.get("duplicate_time_ambiguous") is True,
         )
+        duplicate_time_ambiguous = str(row.get("duplicate_time_ambiguous", "")).lower() == "true" or row.get("duplicate_time_ambiguous") is True
+        active_override: dict[str, Any] = {}
+        if duplicate_time_ambiguous and active_times:
+            task_level_active = active_time_for_annotation(active_times, project_id, runtime_task_id, worker_id, raw_annotation_id, 0.0)
+            if task_level_active["active_time_source"] == "log":
+                active_override = task_level_active
+                primary, sensitivity = active_time_policy(
+                    safe(task_level_active.get("active_time_source")),
+                    safe(task_level_active.get("active_time_match_status")),
+                    int(task_level_active.get("active_time_session_count") or 0),
+                    duplicate_time_ambiguous=True,
+                )
         try:
             duplicate_group_size = int(row.get("duplicate_group_size") or 1)
         except (TypeError, ValueError):
@@ -219,17 +287,20 @@ def build_canonicalization(
             "worker_id": worker_id,
             "annotation_id": raw_annotation_id,
             "canonical_annotation_id": _canonical_id(round_id, project_id, runtime_task_id, worker_id, raw_annotation_id),
-            "active_time": row.get("active_time", ""),
-            "active_time_source": row.get("active_time_source", ""),
-            "active_time_match_status": row.get("active_time_match_status", ""),
+            "active_time": active_override.get("active_time", row.get("active_time", "")),
+            "active_time_source": active_override.get("active_time_source", row.get("active_time_source", "")),
+            "active_time_match_status": active_override.get("active_time_match_status", row.get("active_time_match_status", "")),
             "primary_active_time_eligible": bool_text(primary),
             "sensitivity_active_time_eligible": bool_text(sensitivity),
             "geometry_hash": row.get("geometry_hash", ""),
             "n_corners": row.get("n_corners", ""),
             "parse_error": row.get("parse_error", ""),
+            "planned_mapping_status": info.get("planned_mapping_status", ""),
+            "runtime_binding_status": info.get("runtime_binding_status", ""),
             "assigned_expected": bool_text(key in assigned),
             "appears_in_internal_distribution": bool_text(key in internal),
             "outside_assignment_submission": bool_text(key not in assigned),
+            "missing_submission": "false",
             "duplicate_worker_task_submission": bool_text(
                 duplicate_group_size > 1 or worker_task_counts[(project_id, runtime_task_id, worker_id)] > 1
             ),
@@ -238,23 +309,50 @@ def build_canonicalization(
             "duplicate_annotation_ids": row.get("duplicate_annotation_ids", ""),
             "duplicate_group_size": row.get("duplicate_group_size", ""),
             "duplicate_geometry_type": row.get("duplicate_geometry_type", ""),
-            "active_time_source_file": row.get("active_time_source_file", ""),
-            "active_time_session_count": row.get("active_time_session_count", ""),
-            "active_time_event_count": row.get("active_time_event_count", ""),
+            "active_time_source_file": active_override.get("active_time_source_file", row.get("active_time_source_file", "")),
+            "active_time_session_count": active_override.get("active_time_session_count", row.get("active_time_session_count", "")),
+            "active_time_event_count": active_override.get("active_time_event_count", row.get("active_time_event_count", "")),
             "reserve_realized_submission": bool_text(is_reserve(info)),
         }
         canonical_rows.append(c_row)
         active_rows.append({field: c_row.get(field, "") for field in ACTIVE_AUDIT_FIELDS})
         realized_rows.append({field: c_row.get(field, "") for field in REALIZED_AUDIT_FIELDS})
 
+    realized_assigned_keys = {assignment_key(row) for row in realized_rows if assignment_key(row) in assigned}
+    for worker, task_id, base_task_id, dataset_group in sorted(assigned - realized_assigned_keys):
+        key = (worker, task_id, base_task_id, dataset_group)
+        realized_rows.append(
+            {
+                "round_id": round_id,
+                "planned_project_name": "",
+                "project_id": "",
+                "ls_runtime_task_id": "",
+                "planned_inner_id": "",
+                "task_code": "",
+                "task_id": task_id,
+                "base_task_id": base_task_id,
+                "dataset_group": dataset_group,
+                "worker_id": worker,
+                "annotation_id": "",
+                "canonical_annotation_id": "",
+                "assigned_expected": "true",
+                "appears_in_internal_distribution": bool_text(key in internal),
+                "outside_assignment_submission": "false",
+                "missing_submission": "true",
+                "duplicate_worker_task_submission": "false",
+                "reserve_realized_submission": "false",
+            }
+        )
+
     duplicate_rows = _enhance_duplicate_rows(duplicate_base, runtime_lookup, round_id)
-    raw_manifest = snapshot_inputs(
+    raw_manifest = snapshot_inputs_unique(
         export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping],
         output_dir,
         completion_basis="c1_closeout_canonicalization_snapshot",
     )
 
     write_csv(output_dir / "c1_runtime_task_mapping.csv", runtime_rows, RUNTIME_MAPPING_FIELDS)
+    write_csv(output_dir / "c1_runtime_key_collision_audit.csv", collision_rows, RUNTIME_COLLISION_FIELDS)
     write_csv(output_dir / "c1_canonical_annotations.csv", canonical_rows, CANONICAL_FIELDS)
     write_csv(output_dir / "c1_duplicate_annotation_audit.csv", duplicate_rows)
     write_csv(output_dir / "c1_active_time_binding_audit.csv", active_rows, ACTIVE_AUDIT_FIELDS)
@@ -265,6 +363,7 @@ def build_canonicalization(
     duplicate_count = sum(row["duplicate_worker_task_submission"] == "true" for row in canonical_rows)
     reserve_count = sum(row["reserve_realized_submission"] == "true" for row in canonical_rows)
     primary_missing = sum(row["primary_active_time_eligible"] != "true" for row in canonical_rows)
+    planned_missing_count = sum(row["planned_mapping_status"] == "planned_mapping_missing" for row in runtime_rows)
     summary = {
         **base_summary,
         "created_at": datetime.now(timezone.utc).isoformat(),
@@ -274,18 +373,23 @@ def build_canonicalization(
         "outside_assignment_submission_count": outside_count,
         "duplicate_worker_task_submission_count": duplicate_count,
         "reserve_realized_submission_count": reserve_count,
+        "missing_submission_count": sum(row["missing_submission"] == "true" for row in realized_rows),
+        "runtime_key_collision_count": len(collision_rows),
+        "planned_mapping_missing_count": planned_missing_count,
         "active_log_primary_missing_count": primary_missing,
         "active_log_missing_rate": round(primary_missing / len(canonical_rows), 6) if canonical_rows else 0.0,
         "canonical_csv": str(output_dir / "c1_canonical_annotations.csv"),
         "raw_input_manifest": str(raw_manifest),
         "primary_active_time_policy": "log with project+task+worker+annotation or unambiguous project+task+worker direct match; lead_time never primary",
-        "passed": outside_count == 0 and duplicate_count == 0 and reserve_count == 0,
+        "passed": outside_count == 0 and duplicate_count == 0 and reserve_count == 0 and not collision_rows and not planned_missing_count,
         "blockers": [
             name
             for name, count in (
                 ("outside_assignment_submission_detected", outside_count),
                 ("duplicate_worker_task_submission_detected", duplicate_count),
                 ("reserve_realized_submission_detected", reserve_count),
+                ("runtime_key_collision_detected", len(collision_rows)),
+                ("planned_mapping_missing", planned_missing_count),
             )
             if count
         ],
