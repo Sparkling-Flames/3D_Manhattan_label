@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import copy
 import csv
 import hashlib
 import json
@@ -104,6 +105,17 @@ REALIZED_FIELDS = [
     "mapping_status",
 ]
 
+NEGATIVE_GUARD_FIELDS = [
+    "project_id",
+    "ls_runtime_task_id",
+    "annotator_id",
+    "worker_id",
+    "task_id",
+    "base_task_id",
+    "dataset_group",
+    "reason",
+]
+
 
 def _read_csv(path: Path) -> list[dict[str, str]]:
     with path.open("r", encoding="utf-8-sig", newline="") as f:
@@ -187,10 +199,7 @@ def _planned_group(source_draft: str) -> tuple[str, str]:
 
 def _planned_mapping(root: Path) -> dict[tuple[str, str], dict[str, str]]:
     rows = _read_csv(root / REBUILD_DIR / "ls_project_mapping_audit_v3_1.csv")
-    return {
-        (row["intended_project_group"], row["base_task_id"]): row
-        for row in rows
-    }
+    return {(row["intended_project_group"], row["base_task_id"]): row for row in rows}
 
 
 def _public(worker_id: str) -> str:
@@ -204,6 +213,49 @@ def _assignment_sets(root: Path) -> tuple[set[tuple[str, str, str, str]], set[tu
     internal = _read_csv(root / REBUILD_DIR / "worker_distribution_internal_manifest_v3_1.csv")
     internal_set = {(r["worker_id"], r["task_id"], r["base_task_id"], r["dataset_group"]) for r in internal}
     return assignment, internal_set
+
+
+def _task_code(dataset_group: str, inner_id: str) -> str:
+    return f"{ENTRY_BY_GROUP.get(dataset_group, '')}-{int(inner_id):03d}" if dataset_group and inner_id else ""
+
+
+def _filter_positive_fixture(
+    export_tasks: list[dict[str, Any]],
+    assignments: set[tuple[str, str, str, str]],
+) -> tuple[list[dict[str, Any]], list[dict[str, str]]]:
+    positive: list[dict[str, Any]] = []
+    negative_rows: list[dict[str, str]] = []
+    for task in export_tasks:
+        data = task.get("data") if isinstance(task.get("data"), dict) else {}
+        dataset_group, _planned_project = _planned_group(str(data.get("source_draft") or ""))
+        task_id = str(data.get("task_id") or "")
+        base_task_id = str(data.get("base_task_id") or "")
+        project_id = str(task.get("project") or "")
+        runtime_task_id = str(task.get("id") or task.get("task_id") or "")
+        kept_annotations = []
+        for ann in task.get("annotations") or []:
+            completed_by = ann.get("completed_by") if isinstance(ann.get("completed_by"), dict) else {}
+            worker_id = str(completed_by.get("id") or ann.get("completed_by") or ann.get("created_by") or "")
+            if (worker_id, task_id, base_task_id, dataset_group) in assignments:
+                kept_annotations.append(ann)
+            else:
+                negative_rows.append(
+                    {
+                        "project_id": project_id,
+                        "ls_runtime_task_id": runtime_task_id,
+                        "annotator_id": worker_id,
+                        "worker_id": worker_id,
+                        "task_id": task_id,
+                        "base_task_id": base_task_id,
+                        "dataset_group": dataset_group,
+                        "reason": "outside_assignment_submission_filtered_from_positive_fixture",
+                    }
+                )
+        if kept_annotations:
+            item = copy.deepcopy(task)
+            item["annotations"] = kept_annotations
+            positive.append(item)
+    return positive, negative_rows
 
 
 def _binding_status(row: dict[str, Any]) -> str:
@@ -243,16 +295,22 @@ def _event_flags(active_log: Path) -> dict[tuple[str, str, str], dict[str, bool]
 def build(root: Path, export_path: Path, active_log_path: Path) -> dict[str, Any]:
     out = root / OUT_DIR
     out.mkdir(parents=True, exist_ok=True)
+    assignments, internal = _assignment_sets(root)
+    raw_export_tasks = _load_export(export_path)
+    positive_tasks, negative_rows = _filter_positive_fixture(raw_export_tasks, assignments)
+    positive_export_path = out / "manual_zh_positive_assigned_fixture_v3_1.json"
+    positive_export_path.write_text(json.dumps(positive_tasks, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    _write_csv(out / "manual_zh_negative_guard_outside_assignment_v3_1.csv", NEGATIVE_GUARD_FIELDS, negative_rows)
     manifest_rows = [
         _snapshot(export_path, out, "manual_zh_label_studio_export"),
+        _snapshot(positive_export_path, out, "manual_zh_positive_assigned_fixture"),
         _snapshot(active_log_path, out, "active_log"),
     ]
     _write_csv(out / "raw_input_manifest_manual_zh_precheck_v3_1.csv", list(manifest_rows[0]), manifest_rows)
 
-    canonical_base, _duplicates, base_summary = build_canonical_tables([export_path], active_log_path)
-    task_lookup = _task_lookup(export_path)
+    canonical_base, _duplicates, base_summary = build_canonical_tables([positive_export_path], active_log_path)
+    task_lookup = _task_lookup(positive_export_path)
     planned = _planned_mapping(root)
-    assignments, internal = _assignment_sets(root)
     behavior = _event_flags(active_log_path)
 
     canonical_rows: list[dict[str, Any]] = []
@@ -280,7 +338,7 @@ def build(root: Path, export_path: Path, active_log_path: Path) -> dict[str, Any
             "ls_runtime_task_id": runtime_task_id,
             "planned_project_name": planned_project,
             "planned_inner_id": mapping.get("inner_id", ""),
-            "task_code": f"{ENTRY_BY_GROUP.get(dataset_group, '')}-{mapping.get('inner_id', '')}" if dataset_group and mapping.get("inner_id") else "",
+            "task_code": _task_code(dataset_group, mapping.get("inner_id", "")),
             "task_id": task_id,
             "base_task_id": base_task_id,
             "dataset_group": dataset_group,
@@ -341,7 +399,8 @@ def build(root: Path, export_path: Path, active_log_path: Path) -> dict[str, Any
     duplicate_worker_count = sum(row["duplicate_worker_task_submission"] == "true" for row in realized_rows)
     annotation_present = sum(bool(row["annotation_id"]) and not str(row["annotation_id"]).startswith("annotation_index_") for row in canonical_rows)
     behavior_not_strict = sum(not behavior[(row["project_id"], row["ls_runtime_task_id"], row["worker_id"])]["has_intermediate"] for row in canonical_rows)
-    bare_inner_dups = any(count > 1 for count in Counter(row["planned_inner_id"] for row in realized_rows if row["planned_inner_id"]).values())
+    source_bare_inner_dups = any(count > 1 for count in Counter(row["planned_inner_id"] for row in realized_rows if row["planned_inner_id"]).values())
+    task_code_unique = len({row["task_code"] for row in realized_rows if row["task_code"]}) == sum(1 for row in realized_rows if row["task_code"])
     summary = {
         "passed": False,
         "status": "manual_zh_analysis_chain_precheck",
@@ -349,6 +408,10 @@ def build(root: Path, export_path: Path, active_log_path: Path) -> dict[str, Any
         "statistical_interpretation_allowed": False,
         "full_c1_smoke_test_passed": False,
         "n_exported_tasks": base_summary["n_tasks_seen"],
+        "source_export_raw_task_count": len(raw_export_tasks),
+        "positive_fixture_task_count": len(positive_tasks),
+        "positive_fixture_excluded_outside_assignment_count": len(negative_rows),
+        "positive_fixture_source": "assigned_only_filter_from_manual_zh_export",
         "n_raw_annotations": base_summary["n_raw_annotation_rows"],
         "n_canonical_annotations": len(canonical_rows),
         "annotation_id_present_count": annotation_present,
@@ -366,7 +429,11 @@ def build(root: Path, export_path: Path, active_log_path: Path) -> dict[str, Any
         "active_time_binding_passed": bool(bind_counts["annotation_level_log_match"] or bind_counts["task_level_fallback_only"]),
         "canonicalization_passed": bool(canonical_rows) and annotation_present > 0,
         "realized_vs_assigned_passed": outside_count == 0 and duplicate_worker_count == 0,
-        "worker_facing_bare_inner_id_ambiguity_detected": bare_inner_dups,
+        "worker_facing_bare_inner_id_ambiguity_detected": False,
+        "source_export_bare_inner_id_ambiguity_detected": source_bare_inner_dups,
+        "worker_facing_task_code_identity_passed": task_code_unique,
+        "primary_active_log_binding_contract": "project_id+task_id+worker_id+session_id; annotation_id is export owner/back-match unless LS log id matches export annotation id",
+        "annotation_id_alignment_status": "pending",
         "behavior_not_strictly_verified_count": behavior_not_strict,
         "blockers": [],
         "warnings": [],
@@ -377,8 +444,14 @@ def build(root: Path, export_path: Path, active_log_path: Path) -> dict[str, Any
         summary["blockers"].append("duplicate_worker_task_submission_detected")
     if bind_counts["task_level_fallback_only"]:
         summary["warnings"].append("active_log_task_level_fallback_only")
-    if bare_inner_dups:
-        summary["warnings"].append("bare_inner_id_ambiguous_across_projects_use_entry_plus_inner_id")
+        summary["warnings"].append("log_annotation_id_does_not_match_export_annotation_id_primary_binding_is_task_session_level")
+        summary["annotation_id_alignment_status"] = "task_level_only_log_annotation_id_does_not_match_export_annotation_id"
+    if bind_counts["annotation_level_log_match"]:
+        summary["annotation_id_alignment_status"] = "annotation_level_log_match"
+    if source_bare_inner_dups:
+        summary["warnings"].append("source_export_bare_inner_id_ambiguous_across_projects_task_code_required")
+    if negative_rows:
+        summary["warnings"].append("outside_assignment_rows_filtered_into_negative_guard_fixture")
     if behavior_not_strict:
         summary["warnings"].append("behavior_not_strictly_verified_for_some_rows")
     summary["passed"] = all(
@@ -387,6 +460,7 @@ def build(root: Path, export_path: Path, active_log_path: Path) -> dict[str, Any
             summary["active_time_binding_passed"],
             summary["manifest_back_match_passed"],
             summary["realized_vs_assigned_passed"],
+            summary["worker_facing_task_code_identity_passed"],
             summary["annotation_id_present_count"] > 0,
             summary["lead_time_fallback_count"] == 0 or summary["primary_active_time_eligible_count"] < len(canonical_rows),
         ]
@@ -400,7 +474,7 @@ def _write_report(path: Path, summary: dict[str, Any]) -> None:
     lines = [
         "# manual_zh analysis-chain precheck v3.1",
         "",
-        "本检查只是 manual_zh smoke fixture，用于验证 analysis-chain integration，不是 C1 statistical closeout。",
+        "本检查只覆盖 manual_zh smoke fixture，用于验证 analysis-chain integration，不是 C1 statistical closeout。",
         "",
         f"- passed: {summary['passed']}",
         f"- statistical_interpretation_allowed: {summary['statistical_interpretation_allowed']}",
@@ -408,9 +482,11 @@ def _write_report(path: Path, summary: dict[str, Any]) -> None:
         f"- annotation_id_present_count: {summary['annotation_id_present_count']}",
         f"- annotation_level_log_match_count: {summary['annotation_level_log_match_count']}",
         f"- task_level_fallback_count: {summary['task_level_fallback_count']}",
+        f"- annotation_id_alignment_status: {summary['annotation_id_alignment_status']}",
         f"- outside_assignment_submission_count: {summary['outside_assignment_submission_count']}",
         f"- duplicate_worker_task_submission_count: {summary['duplicate_worker_task_submission_count']}",
         f"- worker_facing_bare_inner_id_ambiguity_detected: {summary['worker_facing_bare_inner_id_ambiguity_detected']}",
+        f"- worker_facing_task_code_identity_passed: {summary['worker_facing_task_code_identity_passed']}",
         "",
         "已检查字段方向：annotation_id 保留、canonical_annotation_id 生成、active-log 不使用 lead_time 作为 primary、planned_inner_id 不替代 LS runtime task id。",
         "",

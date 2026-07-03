@@ -15,6 +15,7 @@ INTERNAL_FIELDS = [
     "public_worker_code",
     "task_id",
     "base_task_id",
+    "task_code",
     "inner_id",
     "task_url",
     "dataset_group",
@@ -23,8 +24,8 @@ INTERNAL_FIELDS = [
     "source_manifest",
     "internal_only",
 ]
-ZH_FIELDS = ["public_worker_code", "worker_name", "entry", "inner_id"]
-OVERSEAS_FIELDS = ["entry", "inner_id"]
+ZH_FIELDS = ["public_worker_code", "worker_name", "task_code"]
+OVERSEAS_FIELDS = ["task_code"]
 ENTRY_BY_GROUP = {
     "Calibration_anchor": "A",
     "Calibration_core": "B",
@@ -82,6 +83,10 @@ def _entry(dataset_group: str) -> str:
     return ENTRY_BY_GROUP[dataset_group]
 
 
+def _task_code(dataset_group: str, inner_id: str) -> str:
+    return f"{_entry(dataset_group)}-{int(inner_id):03d}" if inner_id else ""
+
+
 def _planned_import_mapping(out: Path) -> dict[tuple[str, str], dict[str, str]]:
     out_map = {}
     for group, project, filename in [
@@ -136,6 +141,7 @@ def build(root: Path) -> dict:
                     "public_worker_code": _public(row["worker_id"]),
                     "task_id": row["task_id"],
                     "base_task_id": row["base_task_id"],
+                    "task_code": _task_code(row["dataset_group"], m.get("inner_id", "")),
                     "inner_id": m.get("inner_id", ""),
                     "task_url": m.get("task_url", ""),
                     "dataset_group": row["dataset_group"],
@@ -160,21 +166,21 @@ def build(root: Path) -> dict:
             _write_csv(
                 overseas_dir / f"worker_{_safe_file(public)}.csv",
                 OVERSEAS_FIELDS,
-                [{"entry": _entry(row["dataset_group"]), "inner_id": row["inner_id"]} for row in rows],
+                [{"task_code": row["task_code"]} for row in rows],
             )
         else:
             for row in rows:
-                zh_rows.append({"public_worker_code": public, "worker_name": zh_names.get(worker_id, ""), "entry": _entry(row["dataset_group"]), "inner_id": row["inner_id"]})
+                zh_rows.append({"public_worker_code": public, "worker_name": zh_names.get(worker_id, ""), "task_code": row["task_code"]})
     zh_path = out / "worker_facing_distribution_zh_merged_v3_1.csv"
     _write_csv(zh_path, ZH_FIELDS, zh_rows)
 
     overseas_files = sorted(overseas_dir.glob("worker_*.csv"))
-    internal_pairs = {(r["public_worker_code"], _entry(r["dataset_group"]), r["inner_id"]) for r in internal_rows}
+    internal_pairs = {(r["public_worker_code"], r["task_code"]) for r in internal_rows}
     overseas_ok = True
     for path in overseas_files:
         public = path.stem.removeprefix("worker_")
         rows = _read_csv(path)
-        if any((public, row["entry"], row["inner_id"]) not in internal_pairs for row in rows):
+        if any((public, row["task_code"]) not in internal_pairs for row in rows):
             overseas_ok = False
     assignment_count = sum(len(rows) for _, rows in assignments)
     audit = {
@@ -197,7 +203,10 @@ def build(root: Path) -> dict:
         "zh_worker_name_source": "export_label/标注人员.xlsx",
         "overseas_each_file_single_worker": overseas_ok,
         "entry_mapping": {"A": "C1_anchor_all", "B": "C1_core_all", "C": "C1_semi"},
-        "all_worker_facing_inner_ids_backlink_internal": all(row["inner_id"] and (row["public_worker_code"], row["entry"], row["inner_id"]) in internal_pairs for row in zh_rows)
+        "task_code_format": "A/B/C + '-' + zero_padded_planned_inner_id",
+        "worker_facing_task_code_unique": len({(row["public_worker_code"], row["task_code"]) for row in zh_rows}) == len(zh_rows)
+        and all(len({row["task_code"] for row in _read_csv(path)}) == len(_read_csv(path)) for path in overseas_files),
+        "all_worker_facing_task_codes_backlink_internal": all(row["task_code"] and (row["public_worker_code"], row["task_code"]) in internal_pairs for row in zh_rows)
         and overseas_ok,
         "internal_manifest_assignment_row_count": len(internal_rows),
         "assignment_row_count": assignment_count,
@@ -209,7 +218,8 @@ def build(root: Path) -> dict:
         audit["zh_fields_allowed"]
         and audit["overseas_fields_allowed"]
         and not any(audit["worker_facing_forbidden_terms"].values())
-        and audit["all_worker_facing_inner_ids_backlink_internal"]
+        and audit["worker_facing_task_code_unique"]
+        and audit["all_worker_facing_task_codes_backlink_internal"]
         and audit["internal_manifest_matches_assignment_rows"]
         and audit["inner_id_missing_count"] == 0
     )

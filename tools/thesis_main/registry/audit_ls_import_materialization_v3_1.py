@@ -17,6 +17,7 @@ GROUPS = {
 AUDIT_FIELDS = [
     "task_id",
     "base_task_id",
+    "task_code",
     "inner_id",
     "intended_project_group",
     "has_image",
@@ -62,11 +63,11 @@ def _write_json(path: Path, payload: object) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
-def _worker_facing_inner_ids(out: Path) -> set[str]:
-    ids = {row["inner_id"] for row in _read_csv(out / "worker_facing_distribution_zh_merged_v3_1.csv")}
+def _worker_facing_task_codes(out: Path) -> set[str]:
+    ids = {row["task_code"] for row in _read_csv(out / "worker_facing_distribution_zh_merged_v3_1.csv")}
     for path in (out / "worker_facing_distribution_overseas_individual_v3_1").glob("worker_*.csv"):
-        ids.update(row["inner_id"] for row in _read_csv(path))
-    return {inner_id for inner_id in ids if inner_id}
+        ids.update(row["task_code"] for row in _read_csv(path))
+    return {task_code for task_code in ids if task_code}
 
 
 def _title(row: dict[str, str]) -> str:
@@ -90,8 +91,9 @@ def build(root: Path) -> dict:
     mapping: dict[tuple[str, str], dict] = {}
     for row in mapping_rows:
         key = (row.get("intended_project_group", ""), row["base_task_id"])
-        entry = mapping.setdefault(key, {"inner_id": row.get("inner_id", ""), "task_url": row.get("task_url", "")})
+        entry = mapping.setdefault(key, {"inner_id": row.get("inner_id", ""), "task_code": row.get("task_code", ""), "task_url": row.get("task_url", "")})
         entry["inner_id"] = entry["inner_id"] or row.get("inner_id", "")
+        entry["task_code"] = entry["task_code"] or row.get("task_code", "")
         entry["task_url"] = entry["task_url"] or row.get("task_url", "")
     internal = _read_csv(out / "worker_distribution_internal_manifest_v3_1.csv")
     internal_inner = {row["inner_id"] for row in internal}
@@ -122,6 +124,7 @@ def build(root: Path) -> dict:
                 {
                     "task_id": row.get("task_id", ""),
                     "base_task_id": row.get("base_task_id", ""),
+                    "task_code": m.get("task_code", ""),
                     "inner_id": inner_id,
                     "intended_project_group": intended_group,
                     "has_image": str(bool(candidate["image"])).lower(),
@@ -154,10 +157,10 @@ def build(root: Path) -> dict:
     _write_json(out / "ls_import_materialization_plan_v3_1.json", plan)
 
     assigned_internal = [row for row in internal if row["dataset_group"] != "Calibration_reserve"]
-    manual_semi_inner_ids = {row["inner_id"] for row in assigned_internal}
-    worker_facing_inner_ids = _worker_facing_inner_ids(out)
-    worker_facing_reserve_inner_ids = worker_facing_inner_ids - manual_semi_inner_ids
-    wf_inner_ok = worker_facing_inner_ids <= manual_semi_inner_ids
+    manual_semi_task_codes = {row["task_code"] for row in assigned_internal}
+    worker_facing_task_codes = _worker_facing_task_codes(out)
+    worker_facing_reserve_task_codes = worker_facing_task_codes - manual_semi_task_codes
+    wf_inner_ok = worker_facing_task_codes <= manual_semi_task_codes
     reserve_in_worker = any(row["intended_project_group"] == "Calibration_reserve" and row["appears_in_worker_distribution"] == "true" for row in audit_rows)
     expected_counts = group_counts == {"Calibration_anchor": 12, "Calibration_core": 75, "Calibration_semi": 25, "Calibration_reserve": 13}
     summary = {
@@ -169,8 +172,11 @@ def build(root: Path) -> dict:
         "assigned_c1_tasks_have_inner_id_and_task_url": all(row["inner_id"] and row["task_url"] for row in internal),
         "reserve_not_in_c1_worker_facing_distribution": not reserve_in_worker,
         "c1_worker_facing_only_references_manual_semi_assignment_inner_id": wf_inner_ok,
+        "c1_worker_facing_only_references_manual_semi_assignment_task_code": wf_inner_ok,
         "worker_facing_inner_ids_subset_of_manual_semi": wf_inner_ok,
-        "worker_facing_reserve_inner_id_count": len(worker_facing_reserve_inner_ids),
+        "worker_facing_task_codes_subset_of_manual_semi": wf_inner_ok,
+        "worker_facing_reserve_inner_id_count": len(worker_facing_reserve_task_codes),
+        "worker_facing_reserve_task_code_count": len(worker_facing_reserve_task_codes),
         "import_candidate_forbidden_keys_found": forbidden_keys_found,
         "no_duplicate_inner_id_within_each_intended_project_group": all(not values for values in duplicate_by_group.values()),
         "duplicate_inner_id_by_group": duplicate_by_group,
@@ -185,6 +191,7 @@ def build(root: Path) -> dict:
             summary["reserve_not_in_c1_worker_facing_distribution"],
             summary["c1_worker_facing_only_references_manual_semi_assignment_inner_id"],
             summary["worker_facing_reserve_inner_id_count"] == 0,
+            summary["worker_facing_reserve_task_code_count"] == 0,
             not forbidden_keys_found,
             summary["no_duplicate_inner_id_within_each_intended_project_group"],
             missing_required == 0,
@@ -206,7 +213,7 @@ def build(root: Path) -> dict:
                 "active log smoke test not yet run on v3_1 projects",
                 "final launch approval pending",
             ],
-            "test_results": "pytest tests/test_worker_distribution_v3_1.py tests/test_calibration_rebuild_v2_drafts.py tests/test_ls_project_mapping_v3_1.py tests/test_ls_import_materialization_v3_1.py: 25 passed",
+            "test_results": "pytest tests/test_worker_distribution_v3_1.py tests/test_calibration_rebuild_v2_drafts.py tests/test_ls_project_mapping_v3_1.py tests/test_ls_import_materialization_v3_1.py tests/test_manual_zh_analysis_chain_precheck_v3_1.py: 26 passed",
             "worker_facing_distribution_approved": True,
             "semi_family_proxy_audit_accepted": True,
             "semi_family_human_recheck_required": False,

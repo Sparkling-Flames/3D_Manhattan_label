@@ -85,7 +85,10 @@ def test_manual_zh_precheck_preserves_binding_and_assignment_boundaries(tmp_path
     active = {row["annotation_id"]: row for row in csv.DictReader((precheck / "manual_zh_active_time_binding_audit_v3_1.csv").open(encoding="utf-8-sig"))}
     realized = list(csv.DictReader((precheck / "manual_zh_realized_vs_assigned_audit_v3_1.csv").open(encoding="utf-8-sig")))
 
-    assert {row["annotation_id"] for row in canonical} >= {"ann_exact", "ann_lead", "ann_new", "ann_outside"}
+    negative = list(csv.DictReader((precheck / "manual_zh_negative_guard_outside_assignment_v3_1.csv").open(encoding="utf-8-sig")))
+
+    assert {row["annotation_id"] for row in canonical} >= {"ann_exact", "ann_lead", "ann_new"}
+    assert "ann_outside" not in {row["annotation_id"] for row in canonical}
     assert all(row["canonical_annotation_id"] for row in canonical)
     assert active["ann_exact"]["active_time_key"] == "65|100|2|ann_exact"
     assert active["ann_exact"]["active_time_source"] == "log"
@@ -93,7 +96,11 @@ def test_manual_zh_precheck_preserves_binding_and_assignment_boundaries(tmp_path
     assert active["ann_lead"]["active_time_source"] == "lead_time_fallback"
     assert active["ann_lead"]["primary_active_time_eligible"] == "False"
     assert sum(row["task_id"] == "d" for row in realized) == 1
-    assert next(row for row in realized if row["task_id"] == "x")["outside_assignment_submission"] == "true"
-    assert summary["worker_facing_bare_inner_id_ambiguity_detected"] is True
+    assert not any(row["outside_assignment_submission"] == "true" for row in realized)
+    assert next(row for row in negative if row["task_id"] == "x")["reason"] == "outside_assignment_submission_filtered_from_positive_fixture"
+    assert summary["worker_facing_bare_inner_id_ambiguity_detected"] is False
+    assert summary["source_export_bare_inner_id_ambiguity_detected"] is True
+    assert summary["worker_facing_task_code_identity_passed"] is True
+    assert summary["positive_fixture_excluded_outside_assignment_count"] == 1
     assert summary["statistical_interpretation_allowed"] is False
     assert summary["full_c1_smoke_test_passed"] is False

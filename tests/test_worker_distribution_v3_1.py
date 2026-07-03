@@ -42,12 +42,12 @@ def test_worker_distribution_redacts_worker_facing_fields(tmp_path: Path) -> Non
     assert audit["passed"] is True
     zh_fields = next(csv.reader((out / "worker_facing_distribution_zh_merged_v3_1.csv").open(encoding="utf-8-sig")))
     overseas_fields = next(csv.reader((out / "worker_facing_distribution_overseas_individual_v3_1/worker_W028.csv").open(encoding="utf-8-sig")))
-    assert zh_fields == ["public_worker_code", "worker_name", "entry", "inner_id"]
-    assert overseas_fields == ["entry", "inner_id"]
+    assert zh_fields == ["public_worker_code", "worker_name", "task_code"]
+    assert overseas_fields == ["task_code"]
     zh_row = next(csv.DictReader((out / "worker_facing_distribution_zh_merged_v3_1.csv").open(encoding="utf-8-sig")))
     overseas_row = next(csv.DictReader((out / "worker_facing_distribution_overseas_individual_v3_1/worker_W028.csv").open(encoding="utf-8-sig")))
-    assert zh_row["entry"] == "B"
-    assert overseas_row["entry"] == "C"
-    assert zh_row["inner_id"] == "1"
-    assert overseas_row["inner_id"] == "1"
+    assert zh_row["task_code"] == "B-001"
+    assert overseas_row["task_code"] == "C-001"
+    assert audit["worker_facing_task_code_unique"] is True
+    assert audit["all_worker_facing_task_codes_backlink_internal"] is True
     assert not any(audit["worker_facing_forbidden_terms"].values())

@@ -12,6 +12,8 @@ FIELDS = [
     "task_id",
     "base_task_id",
     "image_stem",
+    "planned_project_name",
+    "task_code",
     "inner_id",
     "task_url",
     "intended_project_group",
@@ -27,6 +29,14 @@ FORBIDDEN_FLAGS = [
     "semi_family_leaked",
     "model_issue_difficulty_source_status_leaked",
 ]
+
+ENTRY_BY_GROUP = {"Calibration_anchor": "A", "Calibration_core": "B", "Calibration_semi": "C", "Calibration_reserve": "R"}
+PROJECT_BY_GROUP = {
+    "Calibration_anchor": "C1_anchor_all",
+    "Calibration_core": "C1_core_all",
+    "Calibration_semi": "C1_semi",
+    "Calibration_reserve": "C2_reserve_draft_only",
+}
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:
@@ -52,6 +62,8 @@ def _planned_import_mapping(root: Path) -> dict[tuple[str, str], dict[str, str]]
         for idx, row in enumerate(_read_csv(root / OUT_DIR / filename), start=1):
             out[(group, row["base_task_id"])] = {
                 "inner_id": str(idx),
+                "task_code": f"{ENTRY_BY_GROUP[group]}-{idx:03d}",
+                "planned_project_name": project,
                 "task_url": f"planned://{project}/{idx}",
                 "mapping_status": "planned_import_order",
             }
@@ -100,6 +112,8 @@ def build(root: Path) -> dict:
                 "task_id": task_id,
                 "base_task_id": base_task_id,
                 "image_stem": base_task_id,
+                "planned_project_name": m.get("planned_project_name", PROJECT_BY_GROUP.get(group, "")),
+                "task_code": m.get("task_code", ""),
                 "inner_id": m.get("inner_id", ""),
                 "task_url": m.get("task_url", ""),
                 "intended_project_group": group,
@@ -118,6 +132,8 @@ def build(root: Path) -> dict:
                 "task_id": row["task_id"],
                 "base_task_id": row["base_task_id"],
                 "image_stem": row["image_stem"],
+                "planned_project_name": m.get("planned_project_name", "C2_reserve_draft_only"),
+                "task_code": m.get("task_code", ""),
                 "inner_id": m.get("inner_id", ""),
                 "task_url": m.get("task_url", ""),
                 "intended_project_group": "Calibration_reserve",
@@ -156,7 +172,9 @@ def build(root: Path) -> dict:
         "worker_distribution_internal_rows": len(internal),
         "no_duplicate_worker_id_dataset_group_inner_id": len(internal_pairs) == len(set(internal_pairs)),
         "missing_task_url_in_internal_manifest_count": sum(not row["task_url"] for row in internal),
-        "worker_facing_uses_inner_id_only": True,
+        "worker_facing_uses_inner_id_only": False,
+        "worker_facing_uses_task_code_only": True,
+        "task_code_backlinks_planned_project_and_inner_id": all(row["task_code"] and row["planned_project_name"] and row["inner_id"] for row in rows),
         "counts": {
             "anchor": len({row["task_id"] for row in manual if row["dataset_group"] == "Calibration_anchor"}),
             "core": len({row["task_id"] for row in manual if row["dataset_group"] == "Calibration_core"}),
@@ -177,6 +195,7 @@ def build(root: Path) -> dict:
             expected,
             summary["no_duplicate_worker_id_dataset_group_inner_id"],
             summary["missing_task_url_in_internal_manifest_count"] == 0,
+            summary["task_code_backlinks_planned_project_and_inner_id"],
             expected_counts,
             summary["reserve_c2_only_not_in_worker_distribution"],
             summary["worker_facing_redaction_passed"],

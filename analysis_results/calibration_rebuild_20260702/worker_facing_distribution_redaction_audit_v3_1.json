@@ -5,12 +5,10 @@
   "zh_fields": [
     "public_worker_code",
     "worker_name",
-    "entry",
-    "inner_id"
+    "task_code"
   ],
   "overseas_fields": [
-    "entry",
-    "inner_id"
+    "task_code"
   ],
   "zh_fields_allowed": true,
   "overseas_fields_allowed": true,
@@ -43,7 +41,9 @@
     "B": "C1_core_all",
     "C": "C1_semi"
   },
-  "all_worker_facing_inner_ids_backlink_internal": true,
+  "task_code_format": "A/B/C + '-' + zero_padded_planned_inner_id",
+  "worker_facing_task_code_unique": true,
+  "all_worker_facing_task_codes_backlink_internal": true,
   "internal_manifest_assignment_row_count": 751,
   "assignment_row_count": 751,
   "internal_manifest_matches_assignment_rows": true,
