@@ -119,6 +119,8 @@ venv.bak/
 # Project-specific rules: only include top-level docs markdown, exclude docs subfolders
 docs/*
 !docs/*.md
+!docs/agent/
+!docs/agent/REPO_PATH_MAP.md
 !docs/thesis_main/
 docs/thesis_main/*
 !docs/thesis_main/PRESCREEN_STEP4_5_CLOSEOUT_NOTE.md

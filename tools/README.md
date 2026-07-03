@@ -25,6 +25,8 @@
 ```bash
 python tools/thesis_main/analysis/analyze_quality.py export_label/project-export.json --output_dir analysis_results
 python tools/thesis_main/analysis/audit_active_log_quality.py active_logs --summary-json analysis_results/active_log_audit_summary.json
+python tools/thesis_main/analysis/c1_live_collection_monitor.py --help
+python tools/thesis_main/analysis/c1_canonicalize_exports.py --help
 python tools/thesis_main/analysis/aggregate_analysis.py --csv main:analysis_results/quality_report.csv --output-dir analysis_results
 
 python tools/thesis_main/registry/build_registry_suite.py --help

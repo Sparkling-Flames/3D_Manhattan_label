@@ -14,7 +14,7 @@
 - `import_json/stage1_prescreen_final_20260325/`
 - `analysis_results/phase1_progress_20260324/stage1_final_binding_audit_v6.json`
 - `analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl`
-- `tools/thesis_main/tools/thesis_main/tools/thesis_main/foreign_recruitment/`
+- `tools/thesis_main/foreign_recruitment/`
 
 注意事项：
 
@@ -140,7 +140,8 @@
 
 - `git status --short`
 - `docs/PROJECT_MAP_CLEAN_20260308.md`
-- `docs/shared/elsarticle/elsarticle/README_INDEX.md`
+- `docs/README_INDEX.md`
+- `docs/agent/REPO_PATH_MAP.md`
 - `docs/agent/WRITE_RULES.md`
 - `docs/agent/playbooks/`
 

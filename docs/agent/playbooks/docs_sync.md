@@ -10,7 +10,7 @@
 
 - 运行 `git status --short`。
 - 检查 `docs/PROJECT_MAP_CLEAN_20260308.md`。
-- 检查 `docs/shared/elsarticle/elsarticle/README_INDEX.md`。
+- 检查 `docs/README_INDEX.md`。
 - 确认变更文件是正式入口、支撑文档，还是 legacy / 临时工件。
 - 同步改动保持短小，采用索引式登记。
 
