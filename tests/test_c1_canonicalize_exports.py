@@ -110,6 +110,14 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
     assert summary["n_canonical_rows"] == 4
     assert summary["outside_assignment_submission_count"] == 0
     assert summary["duplicate_worker_task_submission_count"] == 1
+    assert summary["active_time_primary_ineligible_count"] == 2
+    assert summary["active_time_log_missing_count"] == 0
+    assert summary["active_time_task_level_fallback_count"] == 1
+    assert summary["active_time_lead_time_fallback_count"] == 1
+    assert summary["active_time_sensitivity_eligible_count"] == 4
+    assert summary["structural_integrity_passed"] is False
+    assert summary["collection_completeness_passed"] is False
+    assert summary["passed_semantics"] == "structural_only_not_collection_complete"
     assert all(row["round_id"] == "C1" for row in rows)
     assert all(row["canonical_annotation_id"] for row in rows)
     assert by_runtime["200"]["primary_active_time_eligible"] == "true"
@@ -171,3 +179,33 @@ def test_c1_canonicalization_planned_mapping_missing_blocks(tmp_path: Path) -> N
     assert summary["planned_mapping_missing_count"] == 1
     assert "planned_mapping_missing" in summary["blockers"]
     assert _read_csv(out / "c1_runtime_task_mapping.csv")[0]["planned_mapping_status"] == "planned_mapping_missing"
+
+
+def test_require_complete_makes_missing_submission_fail_passed(tmp_path: Path) -> None:
+    fields = ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group"]
+    manual = tmp_path / "manual.csv"
+    semi = tmp_path / "semi.csv"
+    internal = tmp_path / "internal.csv"
+    mapping = tmp_path / "mapping.csv"
+    assigned = [{"round_id": "C1", "worker_id": "w1", "task_id": "missing", "base_task_id": "base_missing", "dataset_group": "Calibration_core"}]
+    _csv(manual, fields, assigned)
+    _csv(semi, fields, [])
+    _csv(internal, fields, assigned)
+    _csv(
+        mapping,
+        ["task_id", "base_task_id", "inner_id", "intended_project_group", "mapping_status"],
+        [{"task_id": "missing", "base_task_id": "base_missing", "inner_id": "1", "intended_project_group": "Calibration_core", "mapping_status": "planned"}],
+    )
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([]), encoding="utf-8")
+
+    summary = build_canonicalization([export], manual, semi, internal, mapping, active_log=None, output_dir=tmp_path / "out")
+
+    assert summary["structural_integrity_passed"] is True
+    assert summary["collection_completeness_passed"] is False
+    assert summary["passed"] is True
+
+    strict = build_canonicalization([export], manual, semi, internal, mapping, active_log=None, output_dir=tmp_path / "strict", require_complete=True)
+
+    assert strict["passed"] is False
+    assert strict["passed_semantics"] == "structural_and_collection_complete"
