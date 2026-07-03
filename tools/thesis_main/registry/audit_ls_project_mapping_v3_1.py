@@ -8,6 +8,7 @@ from pathlib import Path
 
 
 OUT_DIR = Path("analysis_results/calibration_rebuild_20260702")
+WORKER_FACING_DIR = "worker_facing_distribution_release_v3_1"
 FIELDS = [
     "task_id",
     "base_task_id",
@@ -83,13 +84,13 @@ def _selection_rows(root: Path) -> list[dict[str, str]]:
 
 
 def _zh_missing_names(root: Path) -> int:
-    rows = _read_csv(root / OUT_DIR / "worker_facing_distribution_zh_merged_v3_1.csv")
+    rows = _read_csv(root / OUT_DIR / WORKER_FACING_DIR / "worker_facing_distribution_zh_merged_v3_1.csv")
     return sum(not row.get("worker_name") for row in rows)
 
 
 def _overseas_rows(root: Path) -> int:
-    folder = root / OUT_DIR / "worker_facing_distribution_overseas_individual_v3_1"
-    return sum(len(_read_csv(path)) for path in folder.glob("worker_*.csv"))
+    folder = root / OUT_DIR / WORKER_FACING_DIR
+    return sum(len(_read_csv(path)) for path in folder.glob("worker_W*.csv"))
 
 
 def build(root: Path) -> dict:
@@ -98,7 +99,7 @@ def build(root: Path) -> dict:
     semi_assign = _read_csv(out / "assignment_manifest_C1_semi_draft_v3_1.csv")
     internal = _read_csv(out / "worker_distribution_internal_manifest_v3_1.csv")
     redaction_path = out / "worker_facing_distribution_redaction_audit_v3_1.json"
-    redaction = json.loads(redaction_path.read_text(encoding="utf-8"))
+    redaction = json.loads(redaction_path.read_text(encoding="utf-8-sig"))
     planned = _planned_import_mapping(root)
 
     manual_tasks = {(row["task_id"], row["base_task_id"], row["dataset_group"]) for row in manual}
@@ -207,19 +208,22 @@ def build(root: Path) -> dict:
     (out / "ls_project_mapping_audit_v3_1.json").write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     readiness_path = out / "c1_launch_readiness_draft_v3_1.json"
-    readiness = json.loads(readiness_path.read_text(encoding="utf-8"))
+    readiness = json.loads(readiness_path.read_text(encoding="utf-8-sig"))
+    readiness.pop("no_label_studio_import_performed", None)
     readiness.update(
         {
             "passed": False,
             "test_results": "pytest tests/test_worker_distribution_v3_1.py tests/test_calibration_rebuild_v2_drafts.py: 23 passed",
             "ls_project_mapping_audit_generated": True,
             "ls_project_mapping_audit_passed": summary["passed"],
-            "active_log_smoke_test": "pending",
+            "label_studio_import_status": "researcher_manual_import_verified",
+            "researcher_manual_import_verified": True,
+            "full_export_backed_smoke_test_passed": False,
+            "operational_smoke_status": "manual operational smoke verified, export-backed evidence partial",
+            "active_log_smoke_test": "partial_operational_verification_manual_zh_export_backed_only",
             "launch_still_blocked": True,
         }
     )
-    if "LS import not yet materialized" not in readiness.get("blockers", []):
-        readiness.setdefault("blockers", []).append("LS import not yet materialized")
     readiness_path.write_text(json.dumps(readiness, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     return summary
 

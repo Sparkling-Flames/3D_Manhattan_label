@@ -38,7 +38,8 @@ def test_ls_project_mapping_v3_1_audits_counts_and_redaction(tmp_path: Path) -> 
         prefix = {"Calibration_anchor": "A", "Calibration_core": "B", "Calibration_semi": "C"}[row["dataset_group"]]
         internal.append({**row, "public_worker_code": "W001", "task_code": f"{prefix}-{idx:03d}", "inner_id": str(idx), "task_url": f"http://x/{idx}", "source_manifest": "x", "internal_only": "true"})
     _csv(out / "worker_distribution_internal_manifest_v3_1.csv", internal_fields, internal)
-    _csv(out / "worker_facing_distribution_zh_merged_v3_1.csv", ["public_worker_code", "worker_name", "task_code"], [{"public_worker_code": "W001", "worker_name": "张三", "task_code": row["task_code"]} for row in internal])
+    release = out / "worker_facing_distribution_release_v3_1"
+    _csv(release / "worker_facing_distribution_zh_merged_v3_1.csv", ["public_worker_code", "worker_name", "task_code"], [{"public_worker_code": "W001", "worker_name": "张三", "task_code": row["task_code"]} for row in internal])
     redaction = {"passed": True, "counts": {"zh_rows": 751}, "dataset_group_leaked": False, "anchor_core_semi_leaked": False, "used_for_r_u_or_rq2_leaked": False, "semi_family_leaked": False, "model_issue_difficulty_source_status_leaked": False}
     (out / "worker_facing_distribution_redaction_audit_v3_1.json").write_text(json.dumps(redaction), encoding="utf-8")
     (out / "c1_launch_readiness_draft_v3_1.json").write_text(json.dumps({"passed": False, "blockers": []}), encoding="utf-8")

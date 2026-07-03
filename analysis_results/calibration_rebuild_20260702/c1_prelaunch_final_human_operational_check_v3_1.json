@@ -6,7 +6,7 @@
     "full_export_backed_smoke_test_passed":  false,
     "operational_smoke_status":  "manual operational smoke verified, export-backed evidence partial",
     "active_log_status":  "partial_operational_verification_manual_zh_export_backed_only",
-    "task_code_identity":  "A/B/C zero-padded planned import order, e.g. A-001 B-017 C-002",
+    "task_code_identity":  "中文 worker-facing 使用 任务1/任务2/任务3 + 三位编号，例如 任务1-001、任务2-017、任务3-002；海外表仍使用 A/B/C",
     "entry_mapping":  {
                           "A":  "C1_anchor_all",
                           "B":  "C1_core_all",
@@ -32,5 +32,11 @@
                      "full export-backed smoke not complete",
                      "active log annotation_id does not match export annotation_id; primary binding remains task/session level",
                      "negative guard fixture records prior outside-assignment test submission"
-                 ]
+                 ],
+    "worker_facing_distribution_dir":  "analysis_results/calibration_rebuild_20260702/worker_facing_distribution_release_v3_1",
+    "zh_task_code_display_mapping":  {
+                                         "任务1":  "C1_anchor_all",
+                                         "任务2":  "C1_core_all",
+                                         "任务3":  "C1_semi"
+                                     }
 }

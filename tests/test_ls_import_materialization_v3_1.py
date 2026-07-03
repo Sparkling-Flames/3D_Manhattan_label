@@ -34,8 +34,14 @@ def test_ls_import_materialization_audit(tmp_path: Path) -> None:
             continue
         internal.append({"worker_id": "w", "task_id": row["task_id"], "base_task_id": row["base_task_id"], "task_code": row["task_code"], "inner_id": row["inner_id"], "task_url": row["task_url"], "dataset_group": row["intended_project_group"]})
     _csv(out / "worker_distribution_internal_manifest_v3_1.csv", ["worker_id", "task_id", "base_task_id", "task_code", "inner_id", "task_url", "dataset_group"], internal)
-    _csv(out / "worker_facing_distribution_zh_merged_v3_1.csv", ["public_worker_code", "worker_name", "task_code"], [{"public_worker_code": "W001", "worker_name": "张三", "task_code": row["task_code"]} for row in internal])
-    (out / "worker_facing_distribution_overseas_individual_v3_1").mkdir()
+    release = out / "worker_facing_distribution_release_v3_1"
+    display = {"A": "任务1", "B": "任务2", "C": "任务3"}
+    _csv(
+        release / "worker_facing_distribution_zh_merged_v3_1.csv",
+        ["public_worker_code", "worker_name", "task_code"],
+        [{"public_worker_code": "W001", "worker_name": "张三", "task_code": row["task_code"].replace(row["task_code"][0], display.get(row["task_code"][0], row["task_code"][0]), 1)} for row in internal],
+    )
+    release.mkdir(exist_ok=True)
     (out / "c1_launch_readiness_draft_v3_1.json").write_text(json.dumps({"passed": False}), encoding="utf-8")
 
     summary = build(tmp_path)

@@ -10,21 +10,24 @@
   "overseas_fields": [
     "task_code"
   ],
+  "worker_facing_distribution_dir": "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1",
+  "zh_worker_workbook_path": "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_facing_distribution_zh_by_worker_v3_1.xlsx",
+  "zh_worker_workbook_generated": true,
   "zh_fields_allowed": true,
   "overseas_fields_allowed": true,
   "worker_facing_forbidden_terms": {
-    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_zh_merged_v3_1.csv": [],
-    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_overseas_individual_v3_1\\worker_W027.csv": [],
-    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_overseas_individual_v3_1\\worker_W028.csv": [],
-    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_overseas_individual_v3_1\\worker_W029.csv": [],
-    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_overseas_individual_v3_1\\worker_W030.csv": [],
-    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_overseas_individual_v3_1\\worker_W031.csv": [],
-    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_overseas_individual_v3_1\\worker_W032.csv": [],
-    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_overseas_individual_v3_1\\worker_W033.csv": [],
-    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_overseas_individual_v3_1\\worker_W034.csv": [],
-    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_overseas_individual_v3_1\\worker_W035.csv": [],
-    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_overseas_individual_v3_1\\worker_W036.csv": [],
-    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_overseas_individual_v3_1\\worker_W037.csv": []
+    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_facing_distribution_zh_merged_v3_1.csv": [],
+    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_W027.csv": [],
+    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_W028.csv": [],
+    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_W029.csv": [],
+    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_W030.csv": [],
+    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_W031.csv": [],
+    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_W032.csv": [],
+    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_W033.csv": [],
+    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_W034.csv": [],
+    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_W035.csv": [],
+    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_W036.csv": [],
+    "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\worker_facing_distribution_release_v3_1\\worker_W037.csv": []
   },
   "watch_flag_leaked": false,
   "dataset_group_leaked": false,
@@ -41,7 +44,13 @@
     "B": "C1_core_all",
     "C": "C1_semi"
   },
+  "zh_task_code_display_mapping": {
+    "任务1": "C1_anchor_all",
+    "任务2": "C1_core_all",
+    "任务3": "C1_semi"
+  },
   "task_code_format": "A/B/C + '-' + zero_padded_planned_inner_id",
+  "zh_task_code_format": "任务1/任务2/任务3 + '-' + zero_padded_planned_inner_id",
   "worker_facing_task_code_unique": true,
   "all_worker_facing_task_codes_backlink_internal": true,
   "internal_manifest_assignment_row_count": 751,

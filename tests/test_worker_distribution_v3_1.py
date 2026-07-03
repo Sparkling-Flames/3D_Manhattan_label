@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 import pandas as pd
+from openpyxl import load_workbook
 
 from tools.thesis_main.registry.build_worker_distribution_v3_1 import build
 
@@ -40,14 +41,21 @@ def test_worker_distribution_redacts_worker_facing_fields(tmp_path: Path) -> Non
     audit = build(tmp_path)
 
     assert audit["passed"] is True
-    zh_fields = next(csv.reader((out / "worker_facing_distribution_zh_merged_v3_1.csv").open(encoding="utf-8-sig")))
-    overseas_fields = next(csv.reader((out / "worker_facing_distribution_overseas_individual_v3_1/worker_W028.csv").open(encoding="utf-8-sig")))
+    release = out / "worker_facing_distribution_release_v3_1"
+    zh_fields = next(csv.reader((release / "worker_facing_distribution_zh_merged_v3_1.csv").open(encoding="utf-8-sig")))
+    overseas_fields = next(csv.reader((release / "worker_W028.csv").open(encoding="utf-8-sig")))
     assert zh_fields == ["public_worker_code", "worker_name", "task_code"]
     assert overseas_fields == ["task_code"]
-    zh_row = next(csv.DictReader((out / "worker_facing_distribution_zh_merged_v3_1.csv").open(encoding="utf-8-sig")))
-    overseas_row = next(csv.DictReader((out / "worker_facing_distribution_overseas_individual_v3_1/worker_W028.csv").open(encoding="utf-8-sig")))
-    assert zh_row["task_code"] == "B-001"
+    zh_row = next(csv.DictReader((release / "worker_facing_distribution_zh_merged_v3_1.csv").open(encoding="utf-8-sig")))
+    overseas_row = next(csv.DictReader((release / "worker_W028.csv").open(encoding="utf-8-sig")))
+    assert zh_row["task_code"] == "任务2-001"
     assert overseas_row["task_code"] == "C-001"
+    workbook = load_workbook(release / "worker_facing_distribution_zh_by_worker_v3_1.xlsx", read_only=True)
+    worker_sheet = "张三"
+    assert workbook.sheetnames == ["说明", worker_sheet]
+    assert workbook[worker_sheet]["A1"].value == "order"
+    assert workbook[worker_sheet]["B1"].value == "task_code"
+    assert workbook[worker_sheet]["B2"].value == "任务2-001"
     assert audit["worker_facing_task_code_unique"] is True
     assert audit["all_worker_facing_task_codes_backlink_internal"] is True
     assert not any(audit["worker_facing_forbidden_terms"].values())
