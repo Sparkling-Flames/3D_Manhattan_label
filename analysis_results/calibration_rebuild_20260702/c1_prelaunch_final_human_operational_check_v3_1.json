@@ -1,0 +1,36 @@
+﻿{
+    "passed":  true,
+    "status":  "prelaunch_final_human_operational_check",
+    "evidence_scope":  "file_level_full_distribution_plus_researcher_manual_import_verification_plus_manual_zh_export_backed_partial",
+    "researcher_manual_import_verified":  true,
+    "full_export_backed_smoke_test_passed":  false,
+    "operational_smoke_status":  "manual operational smoke verified, export-backed evidence partial",
+    "active_log_status":  "partial_operational_verification_manual_zh_export_backed_only",
+    "task_code_identity":  "A/B/C zero-padded planned import order, e.g. A-001 B-017 C-002",
+    "entry_mapping":  {
+                          "A":  "C1_anchor_all",
+                          "B":  "C1_core_all",
+                          "C":  "C1_semi"
+                      },
+    "worker_facing_task_code_unique":  true,
+    "task_code_backlinks_planned_project_and_inner_id":  true,
+    "zh_entry_available":  true,
+    "overseas_entry_available":  true,
+    "zh_rows":  389,
+    "overseas_files":  11,
+    "overseas_rows_total":  362,
+    "reserve_not_sent_to_worker":  true,
+    "redaction_passed":  true,
+    "forbidden_internal_fields_leaked":  false,
+    "manual_zh_export_backed_precheck_passed":  true,
+    "manual_zh_outside_assignment_submission_count":  0,
+    "filtered_negative_guard_count":  1,
+    "test_worker_submission_is_excludable":  true,
+    "annotation_level_exact_binding_verified":  false,
+    "active_log_binding_contract":  "project_id+task_id+worker_id+session_id; annotation_id is export owner/back-match unless LS log id matches export annotation id",
+    "warnings":  [
+                     "full export-backed smoke not complete",
+                     "active log annotation_id does not match export annotation_id; primary binding remains task/session level",
+                     "negative guard fixture records prior outside-assignment test submission"
+                 ]
+}
