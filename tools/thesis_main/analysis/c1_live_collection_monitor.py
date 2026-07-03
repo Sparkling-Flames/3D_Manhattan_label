@@ -111,6 +111,12 @@ def bool_text(value: bool) -> str:
     return "true" if value else "false"
 
 
+def csv_value(value: Any) -> Any:
+    if isinstance(value, bool):
+        return bool_text(value)
+    return value
+
+
 def read_csv(path: Path) -> list[dict[str, str]]:
     if not path.exists():
         return []
@@ -127,7 +133,7 @@ def write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str] | No
             return
         writer = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()
-        writer.writerows(rows)
+        writer.writerows({key: csv_value(value) for key, value in row.items()} for row in rows)
 
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:
@@ -524,6 +530,12 @@ def _rate(numerator: int, denominator: int) -> float:
     return round(numerator / denominator, 6) if denominator else 0.0
 
 
+def truthy(value: Any) -> bool:
+    if isinstance(value, bool):
+        return value
+    return safe(value).lower() == "true"
+
+
 def summarize_by_worker(rows: list[dict[str, Any]], assigned: set[tuple[str, str, str, str]]) -> list[dict[str, Any]]:
     assigned_by_worker = Counter(worker for worker, _task, _base, _group in assigned)
     realized_assigned_keys = {assignment_key(row) for row in rows if assignment_key(row) in assigned}
@@ -570,12 +582,12 @@ def summarize_by_task(rows: list[dict[str, Any]], assigned: set[tuple[str, str, 
 
 def _active_counts(group: list[dict[str, Any]]) -> dict[str, int]:
     return {
-        "active_time_primary_ineligible_count": sum(not bool(row["primary_active_time_eligible"]) for row in group),
+        "active_time_primary_ineligible_count": sum(not truthy(row["primary_active_time_eligible"]) for row in group),
         "active_time_log_missing_count": sum(safe(row.get("active_time_source")) == "missing" for row in group),
         "active_time_task_level_fallback_count": sum(
             safe(row.get("active_time_source")) == "log"
             and safe(row.get("active_time_match_status")) == PRIMARY_ACTIVE_TIME_STATUS_TASK
-            and not bool(row.get("primary_active_time_eligible"))
+            and not truthy(row.get("primary_active_time_eligible"))
             for row in group
         ),
         "active_time_lead_time_fallback_count": sum(safe(row.get("active_time_source")) == "lead_time_fallback" for row in group),
@@ -583,12 +595,12 @@ def _active_counts(group: list[dict[str, Any]]) -> dict[str, int]:
             "ambiguous" in safe(row.get("active_time_match_status"))
             or "mismatch" in safe(row.get("active_time_match_status"))
             or (
-                bool(row.get("duplicate_worker_task_submission"))
+                truthy(row.get("duplicate_worker_task_submission"))
                 and safe(row.get("active_time_match_status")) == PRIMARY_ACTIVE_TIME_STATUS_TASK
             )
             for row in group
         ),
-        "active_time_sensitivity_eligible_count": sum(bool(row["sensitivity_active_time_eligible"]) for row in group),
+        "active_time_sensitivity_eligible_count": sum(truthy(row["sensitivity_active_time_eligible"]) for row in group),
     }
 
 
@@ -599,7 +611,7 @@ def active_health(rows: list[dict[str, Any]], key: str) -> list[dict[str, Any]]:
     out = []
     for value, group in sorted(grouped.items()):
         total = len(group)
-        primary = sum(bool(row["primary_active_time_eligible"]) for row in group)
+        primary = sum(truthy(row["primary_active_time_eligible"]) for row in group)
         counts = _active_counts(group)
         out.append(
             {
@@ -635,6 +647,8 @@ def build_monitor(
     reserve_rows = [row for row in realized_rows if row["reserve_realized_submission"]]
     active_counts = _active_counts(realized_rows)
     planned_missing_count = sum(row["planned_mapping_status"] == "planned_mapping_missing" for row in runtime_rows)
+    missing_submission_count = sum(row["missing_submission"] for row in realized_audit_rows)
+    structural_integrity_passed = len(outside_rows) == 0 and len(duplicate_rows) == 0 and len(reserve_rows) == 0 and not collision_rows and not planned_missing_count
 
     write_csv(output_dir / "c1_runtime_task_mapping.csv", runtime_rows, RUNTIME_MAPPING_FIELDS)
     write_csv(output_dir / "c1_runtime_key_collision_audit.csv", collision_rows, RUNTIME_COLLISION_FIELDS)
@@ -656,12 +670,16 @@ def build_monitor(
         "outside_assignment_submission_count": len(outside_rows),
         "duplicate_worker_task_submission_count": len(duplicate_rows),
         "reserve_realized_submission_count": len(reserve_rows),
+        "missing_submission_count": missing_submission_count,
         "runtime_key_collision_count": len(collision_rows),
         "planned_mapping_missing_count": planned_missing_count,
         **active_counts,
         "active_log_missing_count": active_counts["active_time_log_missing_count"],
         "active_log_missing_rate": _rate(active_counts["active_time_log_missing_count"], len(realized_rows)),
-        "passed": len(outside_rows) == 0 and len(duplicate_rows) == 0 and len(reserve_rows) == 0 and not collision_rows and not planned_missing_count,
+        "structural_integrity_passed": structural_integrity_passed,
+        "collection_completeness_passed": missing_submission_count == 0,
+        "passed": structural_integrity_passed,
+        "passed_semantics": "structural_only_not_collection_complete",
         "blockers": [
             name
             for name, count in (

@@ -164,7 +164,7 @@ def test_completion_uses_assignment_keys_and_outside_duplicate_do_not_offset_mis
     assert int(worker["outside_assignment_submission_count"]) >= 1
     assert int(worker["duplicate_worker_task_submission_count"]) >= 2
     audit = _read_csv(out / "c1_live_realized_vs_assigned_audit.csv")
-    assert any(row["task_id"] == "missing" and row["missing_submission"] == "True" for row in audit)
+    assert any(row["task_id"] == "missing" and row["missing_submission"] == "true" for row in audit)
 
 
 def test_runtime_key_collision_is_blocker(tmp_path: Path) -> None:

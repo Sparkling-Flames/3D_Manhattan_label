@@ -28,6 +28,7 @@ from tools.thesis_main.analysis.c1_live_collection_monitor import (
     assignment_key,
     assignment_sets,
     bool_text,
+    _active_counts,
     build_annotation_owner_map,
     build_runtime_task_mapping,
     is_reserve,
@@ -220,6 +221,7 @@ def build_canonicalization(
     active_log: Path | None = ACTIVE_LOG_DEFAULT,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
     round_id: str = "C1",
+    require_complete: bool = False,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     assigned, internal = assignment_sets(manual_assignment, semi_assignment, worker_distribution)
@@ -362,8 +364,12 @@ def build_canonicalization(
     outside_count = sum(row["outside_assignment_submission"] == "true" for row in canonical_rows)
     duplicate_count = sum(row["duplicate_worker_task_submission"] == "true" for row in canonical_rows)
     reserve_count = sum(row["reserve_realized_submission"] == "true" for row in canonical_rows)
-    primary_missing = sum(row["primary_active_time_eligible"] != "true" for row in canonical_rows)
+    active_counts = _active_counts(canonical_rows)
     planned_missing_count = sum(row["planned_mapping_status"] == "planned_mapping_missing" for row in runtime_rows)
+    missing_submission_count = sum(row["missing_submission"] == "true" for row in realized_rows)
+    structural_integrity_passed = outside_count == 0 and duplicate_count == 0 and reserve_count == 0 and not collision_rows and not planned_missing_count
+    collection_completeness_passed = missing_submission_count == 0
+    passed = structural_integrity_passed and (collection_completeness_passed if require_complete else True)
     summary = {
         **base_summary,
         "created_at": datetime.now(timezone.utc).isoformat(),
@@ -373,15 +379,22 @@ def build_canonicalization(
         "outside_assignment_submission_count": outside_count,
         "duplicate_worker_task_submission_count": duplicate_count,
         "reserve_realized_submission_count": reserve_count,
-        "missing_submission_count": sum(row["missing_submission"] == "true" for row in realized_rows),
+        "missing_submission_count": missing_submission_count,
         "runtime_key_collision_count": len(collision_rows),
         "planned_mapping_missing_count": planned_missing_count,
-        "active_log_primary_missing_count": primary_missing,
-        "active_log_missing_rate": round(primary_missing / len(canonical_rows), 6) if canonical_rows else 0.0,
+        **active_counts,
+        "active_log_primary_missing_count": active_counts["active_time_primary_ineligible_count"],
+        "active_log_missing_count": active_counts["active_time_log_missing_count"],
+        "active_log_missing_rate": round(active_counts["active_time_log_missing_count"] / len(canonical_rows), 6) if canonical_rows else 0.0,
         "canonical_csv": str(output_dir / "c1_canonical_annotations.csv"),
         "raw_input_manifest": str(raw_manifest),
         "primary_active_time_policy": "log with project+task+worker+annotation or unambiguous project+task+worker direct match; lead_time never primary",
-        "passed": outside_count == 0 and duplicate_count == 0 and reserve_count == 0 and not collision_rows and not planned_missing_count,
+        "structural_integrity_passed": structural_integrity_passed,
+        "collection_completeness_passed": collection_completeness_passed,
+        "require_complete": require_complete,
+        "passed": passed,
+        "passed_semantics": "structural_only_not_collection_complete" if not require_complete else "structural_and_collection_complete",
+        "collision_output_use": "debug_only_do_not_use_downstream" if collision_rows else "downstream_eligible_if_other_blockers_absent",
         "blockers": [
             name
             for name, count in (
@@ -408,6 +421,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--active-log", type=Path, default=ACTIVE_LOG_DEFAULT)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--round-id", default="C1")
+    parser.add_argument("--require-complete", action="store_true")
     args = parser.parse_args(argv)
     summary = build_canonicalization(
         args.export_json,
@@ -418,6 +432,7 @@ def main(argv: list[str] | None = None) -> int:
         active_log=args.active_log,
         output_dir=args.output_dir,
         round_id=args.round_id,
+        require_complete=args.require_complete,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if summary["passed"] else 1
