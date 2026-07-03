@@ -163,6 +163,7 @@ B 线覆盖 ambiguity-aware HoHoNet、ZInD mapping、B0 relabel audit、后续�
 目录：[agent/](agent/)
 
 - [AGENT_CONTEXT_INDEX.md](agent/AGENT_CONTEXT_INDEX.md)
+- [REPO_PATH_MAP.md](agent/REPO_PATH_MAP.md)
 - [WRITE_RULES.md](agent/WRITE_RULES.md)
 - [playbooks/](agent/playbooks/)
 
