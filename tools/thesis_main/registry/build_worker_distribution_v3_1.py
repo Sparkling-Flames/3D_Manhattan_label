@@ -10,6 +10,7 @@ import pandas as pd
 
 
 OUT_DIR = Path("analysis_results/calibration_rebuild_20260702")
+WORKER_FACING_DIR = "worker_facing_distribution_release_v3_1"
 INTERNAL_FIELDS = [
     "worker_id",
     "public_worker_code",
@@ -31,6 +32,8 @@ ENTRY_BY_GROUP = {
     "Calibration_core": "B",
     "Calibration_semi": "C",
 }
+ZH_DISPLAY_PREFIX = {"A": "任务1", "B": "任务2", "C": "任务3"}
+ZH_INTERNAL_PREFIX = {v: k for k, v in ZH_DISPLAY_PREFIX.items()}
 FORBIDDEN = [
     "dataset_group",
     "anchor",
@@ -79,12 +82,34 @@ def _safe_file(value: str) -> str:
     return re.sub(r"[^A-Za-z0-9_.-]+", "_", value)
 
 
+def _safe_sheet(value: str, fallback: str, used: set[str]) -> str:
+    base = re.sub(r"[][\\/*?:]+", "_", value).strip() or fallback
+    name = base[:31]
+    if name not in used:
+        used.add(name)
+        return name
+    suffix = f"_{fallback}"
+    name = f"{base[:31 - len(suffix)]}{suffix}"
+    used.add(name)
+    return name
+
+
 def _entry(dataset_group: str) -> str:
     return ENTRY_BY_GROUP[dataset_group]
 
 
 def _task_code(dataset_group: str, inner_id: str) -> str:
     return f"{_entry(dataset_group)}-{int(inner_id):03d}" if inner_id else ""
+
+
+def _zh_task_code(task_code: str) -> str:
+    prefix, sep, rest = task_code.partition("-")
+    return f"{ZH_DISPLAY_PREFIX.get(prefix, prefix)}{sep}{rest}" if task_code else ""
+
+
+def _internal_task_code(task_code: str) -> str:
+    prefix, sep, rest = task_code.partition("-")
+    return f"{ZH_INTERNAL_PREFIX.get(prefix, prefix)}{sep}{rest}" if task_code else ""
 
 
 def _planned_import_mapping(out: Path) -> dict[tuple[str, str], dict[str, str]]:
@@ -123,6 +148,26 @@ def _contains_forbidden(path: Path) -> list[str]:
     return [term for term in FORBIDDEN if term.lower() in text]
 
 
+def _write_zh_workbook(path: Path, zh_rows: list[dict[str, str]]) -> None:
+    rows_by_worker: dict[tuple[str, str], list[dict[str, str]]] = {}
+    for row in zh_rows:
+        rows_by_worker.setdefault((row["public_worker_code"], row["worker_name"]), []).append(row)
+    with pd.ExcelWriter(path, engine="openpyxl") as writer:
+        pd.DataFrame(
+            [
+                {"说明": "每个标注员使用自己编号对应的 sheet。"},
+                {"说明": "请按 task_code 找任务，例如 A-001、B-017、C-002。"},
+                {"说明": "A/B/C 是三个不同入口；同一个编号在不同入口不是同一个任务。"},
+            ]
+        ).to_excel(writer, sheet_name="说明", index=False)
+        used = {"说明"}
+        for (public, name), rows in sorted(rows_by_worker.items()):
+            sheet = _safe_sheet(name, public, used)
+            pd.DataFrame(
+                [{"order": idx, "task_code": row["task_code"]} for idx, row in enumerate(rows, start=1)]
+            ).to_excel(writer, sheet_name=sheet, index=False)
+
+
 def build(root: Path) -> dict:
     out = root / OUT_DIR
     manual_path = out / "assignment_manifest_C1_manual_draft_v3_1.csv"
@@ -156,7 +201,9 @@ def build(root: Path) -> dict:
     _write_csv(internal_path, INTERNAL_FIELDS, internal_rows)
 
     zh_rows = []
-    overseas_dir = out / "worker_facing_distribution_overseas_individual_v3_1"
+    release_dir = out / WORKER_FACING_DIR
+    for old_file in release_dir.glob("worker_W*.csv"):
+        old_file.unlink()
     by_worker: dict[str, list[dict]] = {}
     for row in internal_rows:
         by_worker.setdefault(row["worker_id"], []).append(row)
@@ -164,17 +211,19 @@ def build(root: Path) -> dict:
         public = _public(worker_id)
         if worker_id in overseas:
             _write_csv(
-                overseas_dir / f"worker_{_safe_file(public)}.csv",
+                release_dir / f"worker_{_safe_file(public)}.csv",
                 OVERSEAS_FIELDS,
                 [{"task_code": row["task_code"]} for row in rows],
             )
         else:
             for row in rows:
-                zh_rows.append({"public_worker_code": public, "worker_name": zh_names.get(worker_id, ""), "task_code": row["task_code"]})
-    zh_path = out / "worker_facing_distribution_zh_merged_v3_1.csv"
+                zh_rows.append({"public_worker_code": public, "worker_name": zh_names.get(worker_id, ""), "task_code": _zh_task_code(row["task_code"])})
+    zh_path = release_dir / "worker_facing_distribution_zh_merged_v3_1.csv"
     _write_csv(zh_path, ZH_FIELDS, zh_rows)
+    zh_workbook_path = release_dir / "worker_facing_distribution_zh_by_worker_v3_1.xlsx"
+    _write_zh_workbook(zh_workbook_path, zh_rows)
 
-    overseas_files = sorted(overseas_dir.glob("worker_*.csv"))
+    overseas_files = sorted(release_dir.glob("worker_W*.csv"))
     internal_pairs = {(r["public_worker_code"], r["task_code"]) for r in internal_rows}
     overseas_ok = True
     for path in overseas_files:
@@ -189,6 +238,9 @@ def build(root: Path) -> dict:
         "inner_id_not_from_export_label_groudTruth": True,
         "zh_fields": ZH_FIELDS,
         "overseas_fields": OVERSEAS_FIELDS,
+        "worker_facing_distribution_dir": str(release_dir),
+        "zh_worker_workbook_path": str(zh_workbook_path),
+        "zh_worker_workbook_generated": zh_workbook_path.exists(),
         "zh_fields_allowed": list(csv.DictReader(zh_path.open(encoding="utf-8-sig")).fieldnames or []) == ZH_FIELDS,
         "overseas_fields_allowed": all((list(csv.DictReader(p.open(encoding="utf-8-sig")).fieldnames or []) == OVERSEAS_FIELDS) for p in overseas_files),
         "worker_facing_forbidden_terms": {str(p): _contains_forbidden(p) for p in [zh_path, *overseas_files]},
@@ -203,10 +255,12 @@ def build(root: Path) -> dict:
         "zh_worker_name_source": "export_label/标注人员.xlsx",
         "overseas_each_file_single_worker": overseas_ok,
         "entry_mapping": {"A": "C1_anchor_all", "B": "C1_core_all", "C": "C1_semi"},
+        "zh_task_code_display_mapping": {"任务1": "C1_anchor_all", "任务2": "C1_core_all", "任务3": "C1_semi"},
         "task_code_format": "A/B/C + '-' + zero_padded_planned_inner_id",
+        "zh_task_code_format": "任务1/任务2/任务3 + '-' + zero_padded_planned_inner_id",
         "worker_facing_task_code_unique": len({(row["public_worker_code"], row["task_code"]) for row in zh_rows}) == len(zh_rows)
         and all(len({row["task_code"] for row in _read_csv(path)}) == len(_read_csv(path)) for path in overseas_files),
-        "all_worker_facing_task_codes_backlink_internal": all(row["task_code"] and (row["public_worker_code"], row["task_code"]) in internal_pairs for row in zh_rows)
+        "all_worker_facing_task_codes_backlink_internal": all(row["task_code"] and (row["public_worker_code"], _internal_task_code(row["task_code"])) in internal_pairs for row in zh_rows)
         and overseas_ok,
         "internal_manifest_assignment_row_count": len(internal_rows),
         "assignment_row_count": assignment_count,
@@ -220,6 +274,7 @@ def build(root: Path) -> dict:
         and not any(audit["worker_facing_forbidden_terms"].values())
         and audit["worker_facing_task_code_unique"]
         and audit["all_worker_facing_task_codes_backlink_internal"]
+        and audit["zh_worker_workbook_generated"]
         and audit["internal_manifest_matches_assignment_rows"]
         and audit["inner_id_missing_count"] == 0
     )
@@ -227,7 +282,8 @@ def build(root: Path) -> dict:
     audit_path.write_text(json.dumps(audit, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
     readiness_path = out / "c1_launch_readiness_draft_v3_1.json"
-    readiness = json.loads(readiness_path.read_text(encoding="utf-8"))
+    readiness = json.loads(readiness_path.read_text(encoding="utf-8-sig"))
+    readiness.pop("no_label_studio_import_performed", None)
     readiness["blockers"] = [
         "worker-facing distribution pending approval" if blocker == "worker-facing distribution not generated" else blocker
         for blocker in readiness.get("blockers", [])
@@ -239,8 +295,11 @@ def build(root: Path) -> dict:
             "worker_facing_distribution_approved": False,
             "semi_family_proxy_audit_accepted": True,
             "semi_family_human_recheck_required": False,
-            "no_label_studio_import_performed": True,
-            "active_log_smoke_test": "pending",
+            "label_studio_import_status": "researcher_manual_import_verified",
+            "researcher_manual_import_verified": True,
+            "full_export_backed_smoke_test_passed": False,
+            "operational_smoke_status": "manual operational smoke verified, export-backed evidence partial",
+            "active_log_smoke_test": "partial_operational_verification_manual_zh_export_backed_only",
             "launch_still_blocked": True,
         }
     )

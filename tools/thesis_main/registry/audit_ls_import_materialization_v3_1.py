@@ -8,6 +8,8 @@ from pathlib import Path
 
 
 OUT_DIR = Path("analysis_results/calibration_rebuild_20260702")
+WORKER_FACING_DIR = "worker_facing_distribution_release_v3_1"
+ZH_INTERNAL_PREFIX = {"任务1": "A", "任务2": "B", "任务3": "C"}
 GROUPS = {
     "C1_anchor_all": ("Calibration_anchor", "calibration_anchor_draft_v2.csv"),
     "C1_core_all": ("Calibration_core", "calibration_core_draft_v3_1.csv"),
@@ -63,9 +65,15 @@ def _write_json(path: Path, payload: object) -> None:
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
+def _internal_task_code(task_code: str) -> str:
+    prefix, sep, rest = task_code.partition("-")
+    return f"{ZH_INTERNAL_PREFIX.get(prefix, prefix)}{sep}{rest}" if task_code else ""
+
+
 def _worker_facing_task_codes(out: Path) -> set[str]:
-    ids = {row["task_code"] for row in _read_csv(out / "worker_facing_distribution_zh_merged_v3_1.csv")}
-    for path in (out / "worker_facing_distribution_overseas_individual_v3_1").glob("worker_*.csv"):
+    release_dir = out / WORKER_FACING_DIR
+    ids = {_internal_task_code(row["task_code"]) for row in _read_csv(release_dir / "worker_facing_distribution_zh_merged_v3_1.csv")}
+    for path in release_dir.glob("worker_W*.csv"):
         ids.update(row["task_code"] for row in _read_csv(path))
     return {task_code for task_code in ids if task_code}
 
@@ -203,14 +211,15 @@ def build(root: Path) -> dict:
     _write_json(out / "ls_import_materialization_audit_v3_1.json", summary)
 
     readiness_path = out / "c1_launch_readiness_draft_v3_1.json"
-    readiness = json.loads(readiness_path.read_text(encoding="utf-8"))
+    readiness = json.loads(readiness_path.read_text(encoding="utf-8-sig"))
+    readiness.pop("no_label_studio_import_performed", None)
     readiness.update(
         {
             "passed": False,
-            "status": "draft_pending_ls_materialization_and_smoke_test",
+            "status": "draft_pending_full_export_backed_smoke_and_launch_approval",
             "blockers": [
-                "LS import not yet materialized",
-                "active log smoke test not yet run on v3_1 projects",
+                "full export-backed smoke test not complete",
+                "annotation-level exact active-log binding not verified",
                 "final launch approval pending",
             ],
             "test_results": "pytest tests/test_worker_distribution_v3_1.py tests/test_calibration_rebuild_v2_drafts.py tests/test_ls_project_mapping_v3_1.py tests/test_ls_import_materialization_v3_1.py tests/test_manual_zh_analysis_chain_precheck_v3_1.py: 26 passed",
@@ -219,8 +228,11 @@ def build(root: Path) -> dict:
             "semi_family_human_recheck_required": False,
             "ls_project_mapping_audit_generated": True,
             "ls_project_mapping_audit_passed": True,
-            "no_label_studio_import_performed": True,
-            "active_log_smoke_test": "pending",
+            "label_studio_import_status": "researcher_manual_import_verified",
+            "researcher_manual_import_verified": True,
+            "full_export_backed_smoke_test_passed": False,
+            "operational_smoke_status": "manual operational smoke verified, export-backed evidence partial",
+            "active_log_smoke_test": "partial_operational_verification_manual_zh_export_backed_only",
             "launch_still_blocked": True,
             "ls_import_materialization_plan_generated": True,
             "ls_import_materialization_audit_passed": summary["passed"],

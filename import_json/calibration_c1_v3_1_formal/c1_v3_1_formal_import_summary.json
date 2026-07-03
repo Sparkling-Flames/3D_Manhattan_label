@@ -1,0 +1,91 @@
+{
+  "created_for": "C1_v3_1_formal_import_json",
+  "status": "formal_import_json_ready_for_researcher_manual_import",
+  "no_label_studio_api_call": true,
+  "source": "calibration v3.1 frozen anchor/core/semi drafts + export_label/groudTruth.json mapping",
+  "counts": {
+    "anchor": 12,
+    "core": 75,
+    "semi": 25
+  },
+  "files": [
+    {
+      "path": "import_json\\calibration_c1_v3_1_formal\\c1_v3_1_anchor_import_zh.json",
+      "project_name": "C1_anchor_all",
+      "source_draft": "anchor",
+      "task_count": 12,
+      "condition": "manual",
+      "vis_3d_base": "http://175.178.71.217:8000",
+      "all_have_predictions": false
+    },
+    {
+      "path": "import_json\\calibration_c1_v3_1_formal\\c1_v3_1_core_import_zh.json",
+      "project_name": "C1_core_all",
+      "source_draft": "core",
+      "task_count": 75,
+      "condition": "manual",
+      "vis_3d_base": "http://175.178.71.217:8000",
+      "all_have_predictions": false
+    },
+    {
+      "path": "import_json\\calibration_c1_v3_1_formal\\c1_v3_1_semi_import_zh.json",
+      "project_name": "C1_semi",
+      "source_draft": "semi",
+      "task_count": 25,
+      "condition": "semi",
+      "vis_3d_base": "http://175.178.71.217:8000",
+      "all_have_predictions": true
+    },
+    {
+      "path": "import_json\\calibration_c1_v3_1_formal\\c1_v3_1_anchor_import_foreign_https.json",
+      "project_name": "C1_anchor_all",
+      "source_draft": "anchor",
+      "task_count": 12,
+      "condition": "manual",
+      "vis_3d_base": "https://label.sparkle0825.top",
+      "all_have_predictions": false
+    },
+    {
+      "path": "import_json\\calibration_c1_v3_1_formal\\c1_v3_1_core_import_foreign_https.json",
+      "project_name": "C1_core_all",
+      "source_draft": "core",
+      "task_count": 75,
+      "condition": "manual",
+      "vis_3d_base": "https://label.sparkle0825.top",
+      "all_have_predictions": false
+    },
+    {
+      "path": "import_json\\calibration_c1_v3_1_formal\\c1_v3_1_semi_import_foreign_https.json",
+      "project_name": "C1_semi",
+      "source_draft": "semi",
+      "task_count": 25,
+      "condition": "semi",
+      "vis_3d_base": "https://label.sparkle0825.top",
+      "all_have_predictions": true
+    }
+  ],
+  "service_compatibility": {
+    "zh_175_http": {
+      "files": [
+        "c1_v3_1_anchor_import_zh.json",
+        "c1_v3_1_core_import_zh.json",
+        "c1_v3_1_semi_import_zh.json"
+      ],
+      "vis_3d_base": "http://175.178.71.217:8000",
+      "intended_label_studio_entry": "175.178/http Chinese entry"
+    },
+    "foreign_https": {
+      "files": [
+        "c1_v3_1_anchor_import_foreign_https.json",
+        "c1_v3_1_core_import_foreign_https.json",
+        "c1_v3_1_semi_import_foreign_https.json"
+      ],
+      "vis_3d_base": "https://label.sparkle0825.top",
+      "intended_label_studio_entry": "https foreign entry"
+    },
+    "do_not_mix_entries": true,
+    "reason": "$vis_3d is fetched by the Label Studio frontend, so scheme/CORS must match the service entry."
+  },
+  "reserve_included": false,
+  "worker_facing_distribution_generated": false
+}
