@@ -214,6 +214,48 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
                 "subfamily": "assignment_mismatch",
                 "response_type": "assignment_mismatch",
             },
+            {
+                "round_id": "C1",
+                "task_id": "missing_ref1",
+                "base_task_id": "b6",
+                "dataset_group": "Calibration_core",
+                "condition": "manual",
+                "worker_id": "w1",
+                "canonical_annotation_id": "a6",
+                "task_final_scope": "in_scope",
+                "worker_scope_response": "correct_in_scope",
+                "geometry_reference_status": "",
+                "geometry_valid": "true",
+                "used_for_r_u": "true",
+                "assigned_expected": "true",
+                "active_time_source": "log",
+                "primary_active_time_eligible": "true",
+                "source_manifest_version": "m1",
+                "family": "geometry_quality_failure",
+                "subfamily": "normal_geometry_degraded",
+                "response_type": "geometry_ok",
+            },
+            {
+                "round_id": "C1",
+                "task_id": "ambiguous_scope1",
+                "base_task_id": "b7",
+                "dataset_group": "Calibration_core",
+                "condition": "manual",
+                "worker_id": "w1",
+                "canonical_annotation_id": "a7",
+                "task_final_scope": "scope_ambiguous",
+                "worker_scope_response": "correct_oos",
+                "geometry_reference_status": "scope_ambiguous",
+                "geometry_valid": "false",
+                "used_for_r_u": "false",
+                "assigned_expected": "true",
+                "active_time_source": "log",
+                "primary_active_time_eligible": "true",
+                "source_manifest_version": "m1",
+                "family": "scope_oos_failure",
+                "subfamily": "unresolved_scope_case",
+                "response_type": "not_evaluable",
+            },
         ],
     )
     worker_state = tmp_path / "worker.csv"
@@ -244,6 +286,11 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert by_task["u1"]["task_final_scope"] == "in_scope"
     assert by_task["proc1"]["included_in_process_reliability"] == "true"
     assert by_task["proc1"]["included_in_r_geometry"] == "false"
+    assert by_task["missing_ref1"]["geometry_reference_status"] == "unavailable"
+    assert by_task["missing_ref1"]["included_in_r_u_calib"] == "false"
+    assert by_task["missing_ref1"]["included_in_r_geometry"] == "false"
+    assert by_task["ambiguous_scope1"]["task_final_scope"] == "unknown"
+    assert by_task["ambiguous_scope1"]["included_in_r_scope"] == "false"
     assert by_task["m1"]["source_manifest_version"] == "m1"
     assert set(row["geometry_valid"] for row in evidence) <= {"true", "false"}
 
@@ -252,7 +299,7 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert main["profile_freeze_status"] == "C1_provisional"
     assert main["n_calib_support"] == "1"
     assert main["n_geometry_support"] == "2"
-    assert main["n_scope_support"] == "8"
+    assert main["n_scope_support"] == "9"
     assert main["n_undercoverage_support"] == "1"
     assert main["n_process_support"] == "1"
     assert any(row["family"] == "undercoverage_failure" and row["n_observed"] == "1" for row in family)
