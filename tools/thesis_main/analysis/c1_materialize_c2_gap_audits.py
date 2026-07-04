@@ -15,19 +15,29 @@ from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, safe
 
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
 
-CI_FIELDS = ["worker_id", "round_id", "n_calib_completed", "r_u_ci_low", "r_u_ci_high", "r_u_h", "epsilon_r", "needs_c2_ci_fill", "ci_fill_reason"]
-SCENE_FIELDS = ["worker_id", "scene_label", "round_id", "n_u_s", "n_u_s_min_candidate", "coverage_gap", "activation_candidate", "needs_c2_scene_fill", "scene_fill_reason"]
+CI_FIELDS = ["worker_id", "round_id", "n_calib_completed", "r_u_ci_low", "r_u_ci_high", "r_u_h", "epsilon_r", "ci_evaluable", "needs_c2_ci_fill", "ci_fill_reason"]
+SCENE_FIELDS = ["worker_id", "scene_label", "round_id", "n_u_s", "n_u_s_min_candidate", "coverage_gap", "activation_candidate", "scene_gap_evaluable", "needs_c2_scene_fill", "scene_fill_reason"]
 
 
 def _scene(row: dict[str, str]) -> str:
-    return safe(row.get("scene_label") or row.get("base_task_id") or row.get("task_id"))
+    for field in ("scene_label", "scene_bin", "scene_stratum", "room_type", "risk_bucket"):
+        value = safe(row.get(field))
+        if value:
+            return value
+    return ""
 
 
 def build_ci_rows(worker_rows: list[dict[str, str]], epsilon_r: float, min_calib: int) -> list[dict[str, Any]]:
     out = []
     for row in worker_rows:
         n = int(float(safe(row.get("n_calib_completed")) or 0))
-        needs = truthy(row.get("needs_c2_ci_fill")) or n < min_calib or not safe(row.get("r_u_ci_low")) or not safe(row.get("r_u_ci_high"))
+        ci_evaluable = bool(safe(row.get("r_u_ci_low")) and safe(row.get("r_u_ci_high")))
+        needs = truthy(row.get("needs_c2_ci_fill")) or n < min_calib
+        reason = ""
+        if needs:
+            reason = "insufficient_c1_reliability_support_dryrun_count"
+        elif not ci_evaluable:
+            reason = "not_evaluable_without_r_u_estimate"
         out.append(
             {
                 "worker_id": safe(row.get("worker_id")),
@@ -37,8 +47,9 @@ def build_ci_rows(worker_rows: list[dict[str, str]], epsilon_r: float, min_calib
                 "r_u_ci_high": safe(row.get("r_u_ci_high")),
                 "r_u_h": safe(row.get("r_u_h")),
                 "epsilon_r": epsilon_r,
+                "ci_evaluable": ci_evaluable,
                 "needs_c2_ci_fill": needs,
-                "ci_fill_reason": "insufficient_c1_reliability_support" if needs else "",
+                "ci_fill_reason": reason,
             }
         )
     return out
@@ -47,6 +58,22 @@ def build_ci_rows(worker_rows: list[dict[str, str]], epsilon_r: float, min_calib
 def build_scene_rows(quality_rows: list[dict[str, str]], worker_rows: list[dict[str, str]], min_scene: int) -> list[dict[str, Any]]:
     workers = sorted({safe(row.get("worker_id")) for row in worker_rows if safe(row.get("worker_id"))} | {safe(row.get("worker_id")) for row in quality_rows if safe(row.get("worker_id"))})
     scenes = sorted({_scene(row) for row in quality_rows if _scene(row)})
+    if not scenes:
+        return [
+            {
+                "worker_id": worker,
+                "scene_label": "",
+                "round_id": "C1",
+                "n_u_s": 0,
+                "n_u_s_min_candidate": min_scene,
+                "coverage_gap": "",
+                "activation_candidate": False,
+                "scene_gap_evaluable": False,
+                "needs_c2_scene_fill": False,
+                "scene_fill_reason": "scene_label_missing",
+            }
+            for worker in workers
+        ]
     counts = Counter((safe(row.get("worker_id")), _scene(row)) for row in quality_rows if truthy(row.get("used_for_r_u")) and _scene(row))
     out = []
     for worker in workers:
@@ -62,6 +89,7 @@ def build_scene_rows(quality_rows: list[dict[str, str]], worker_rows: list[dict[
                     "n_u_s_min_candidate": min_scene,
                     "coverage_gap": gap,
                     "activation_candidate": n >= min_scene,
+                    "scene_gap_evaluable": True,
                     "needs_c2_scene_fill": gap > 0,
                     "scene_fill_reason": "below_candidate_scene_support" if gap > 0 else "",
                 }

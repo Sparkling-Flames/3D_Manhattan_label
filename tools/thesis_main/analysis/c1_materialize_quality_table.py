@@ -17,12 +17,18 @@ from tools.thesis_main.registry.materialize_meta_label_consensus_summary import 
 
 DEFAULT_INPUT = Path("analysis_results/calibration_c1_closeout/c1_canonical_annotations.csv")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
+DEFAULT_CORE_DRAFT = Path("analysis_results/calibration_rebuild_20260702/calibration_core_draft_v3_1.csv")
 
 QUALITY_FIELDS = [
     "round_id",
     "task_id",
     "base_task_id",
     "dataset_group",
+    "scene_label",
+    "scene_bin",
+    "scene_stratum",
+    "room_type",
+    "risk_bucket",
     "condition",
     "worker_id",
     "annotator_id",
@@ -38,6 +44,7 @@ QUALITY_FIELDS = [
     "active_time_source",
     "primary_active_time_eligible",
     "used_for_r_u",
+    "used_for_r_u_source_status",
     "used_for_rq2",
     "assigned_expected",
 ]
@@ -82,6 +89,22 @@ def _geometry_valid(row: dict[str, Any]) -> bool:
     return bool(safe(row.get("geometry_hash"))) and n_corners >= 4 and not safe(row.get("parse_error"))
 
 
+def _key(row: dict[str, Any]) -> tuple[str, str, str]:
+    return safe(row.get("task_id")), safe(row.get("base_task_id")), safe(row.get("dataset_group"))
+
+
+def _inventory_flags(path: Path | None) -> dict[tuple[str, str, str], str]:
+    if path is None or not path.exists():
+        return {}
+    flags: dict[tuple[str, str, str], str] = {}
+    for row in read_csv(path):
+        group = safe(row.get("dataset_group")) or ("Calibration_" + safe(row.get("calibration_split")) if safe(row.get("calibration_split")) else "")
+        key = (safe(row.get("task_id")), safe(row.get("base_task_id")), group)
+        if key[0] and key[1] and key[2]:
+            flags[key] = safe(row.get("used_for_r_u"))
+    return flags
+
+
 def _used_for_r_u(row: dict[str, Any]) -> bool:
     group = safe(row.get("dataset_group"))
     source_flag = safe(row.get("used_for_r_u"))
@@ -91,7 +114,11 @@ def _used_for_r_u(row: dict[str, Any]) -> bool:
         return False
     if group == "Calibration_core" and source_flag and source_flag.lower() != "true":
         return False
-    return group in {"Calibration_anchor", "Calibration_core"} and truthy(row.get("assigned_expected", True))
+    if group == "Calibration_core" and source_flag.lower() == "true":
+        return truthy(row.get("assigned_expected", True))
+    if group == "Calibration_core" and not source_flag:
+        return False
+    return group == "Calibration_anchor" and truthy(row.get("assigned_expected", True))
 
 
 def _used_for_rq2(row: dict[str, Any]) -> bool:
@@ -102,9 +129,16 @@ def _used_for_rq2(row: dict[str, Any]) -> bool:
     return group in {"Calibration_anchor", "Calibration_core", "Calibration_semi"}
 
 
-def build_quality_rows(canonical_rows: list[dict[str, str]]) -> list[dict[str, Any]]:
+def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: dict[tuple[str, str, str], str] | None = None) -> list[dict[str, Any]]:
     out: list[dict[str, Any]] = []
+    inventory_flags = inventory_flags or {}
     for row in canonical_rows:
+        source_status = "from_canonical"
+        if not safe(row.get("used_for_r_u")) and _key(row) in inventory_flags:
+            row = {**row, "used_for_r_u": inventory_flags[_key(row)]}
+            source_status = "from_candidate_inventory"
+        elif safe(row.get("dataset_group")) == "Calibration_core" and not safe(row.get("used_for_r_u")):
+            source_status = "missing_core_used_for_r_u_flag"
         model_issue = _choice(row, "model_issue")
         out.append(
             {
@@ -112,6 +146,11 @@ def build_quality_rows(canonical_rows: list[dict[str, str]]) -> list[dict[str, A
                 "task_id": safe(row.get("task_id")),
                 "base_task_id": safe(row.get("base_task_id")),
                 "dataset_group": safe(row.get("dataset_group")),
+                "scene_label": safe(row.get("scene_label")),
+                "scene_bin": safe(row.get("scene_bin")),
+                "scene_stratum": safe(row.get("scene_stratum")),
+                "room_type": safe(row.get("room_type")),
+                "risk_bucket": safe(row.get("risk_bucket")),
                 "condition": safe(row.get("condition")),
                 "worker_id": safe(row.get("worker_id")),
                 "annotator_id": safe(row.get("worker_id")),
@@ -127,6 +166,7 @@ def build_quality_rows(canonical_rows: list[dict[str, str]]) -> list[dict[str, A
                 "active_time_source": safe(row.get("active_time_source")),
                 "primary_active_time_eligible": truthy(row.get("primary_active_time_eligible")),
                 "used_for_r_u": _used_for_r_u(row),
+                "used_for_r_u_source_status": source_status,
                 "used_for_rq2": _used_for_rq2(row),
                 "assigned_expected": truthy(row.get("assigned_expected", True)),
             }
@@ -134,8 +174,8 @@ def build_quality_rows(canonical_rows: list[dict[str, str]]) -> list[dict[str, A
     return out
 
 
-def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
-    rows = build_quality_rows(read_csv(canonical_csv))
+def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, candidate_inventory_csv: Path | None = DEFAULT_CORE_DRAFT) -> dict[str, Any]:
+    rows = build_quality_rows(read_csv(canonical_csv), _inventory_flags(candidate_inventory_csv))
     quality_csv = output_dir / "c1_quality_annotations.csv"
     write_csv(quality_csv, rows, QUALITY_FIELDS)
 
@@ -154,7 +194,10 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR) -> d
         "meta_label_consensus_audit_json": str(audit_json),
         "n_quality_rows": len(rows),
         "n_used_for_r_u": sum(truthy(row["used_for_r_u"]) for row in rows),
+        "n_missing_core_used_for_r_u_flag": sum(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows),
         "n_used_for_rq2": sum(truthy(row["used_for_rq2"]) for row in rows),
+        "candidate_inventory_csv": str(candidate_inventory_csv) if candidate_inventory_csv else "",
+        "blockers": ["missing_core_used_for_r_u_flag"] if any(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows) else [],
         "r_u_estimated": False,
         "dt_backflow": False,
     }
@@ -166,8 +209,9 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Materialize C1 quality table and meta-label sidecar from canonical annotations.")
     parser.add_argument("--canonical-csv", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    parser.add_argument("--candidate-inventory-csv", type=Path, default=DEFAULT_CORE_DRAFT)
     args = parser.parse_args(argv)
-    print(json.dumps(materialize(args.canonical_csv, args.output_dir), ensure_ascii=False, indent=2))
+    print(json.dumps(materialize(args.canonical_csv, args.output_dir, args.candidate_inventory_csv), ensure_ascii=False, indent=2))
     return 0
 
 
