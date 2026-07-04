@@ -159,7 +159,7 @@ def norm_scope(row: dict[str, str]) -> str:
     raw = safe(row.get("task_final_scope") or row.get("final_scope") or row.get("scope")).lower()
     if raw in {"in_scope", "in-scope", "inscope"}:
         return "in_scope"
-    if raw.startswith("oos") or raw in {"audit_only", "scope_ambiguous", "unresolved_mixed"}:
+    if raw.startswith("oos"):
         return "oos"
     return "unknown"
 
@@ -185,7 +185,7 @@ def is_oos(row: dict[str, str]) -> bool:
 
 
 def geometry_reference_status(row: dict[str, str]) -> str:
-    return safe(row.get("geometry_reference_status") or row.get("gold_status") or "consensus_reference")
+    return safe(row.get("geometry_reference_status") or row.get("gold_status") or "unavailable")
 
 
 def geometry_valid(row: dict[str, str]) -> bool:
