@@ -24,7 +24,7 @@
 - `tools/thesis_main/`
   - 论文主线工具。
   - `analysis/`：质量分析、active-time audit、stage-aware 分析、图表、统计汇总。
-    - `c1_live_collection_monitor.py`、`c1_canonicalize_exports.py`、`c1_materialize_quality_table.py`、`c1_materialize_worker_state.py`、`c1_materialize_c2_gap_audits.py` 与 `build_c2_assignment_manifest_from_c1_gaps.py`：C1 live raw-data 采集健康监控、正式 export canonicalization、quality/worker/gap sidecar 与 reserve-only C2 draft 入口；只生成 provisional / audit artifacts，不冻结 C1/C2 协议参数。
+    - `c1_live_collection_monitor.py`、`c1_canonicalize_exports.py`、`c1_materialize_quality_table.py`、`c1_materialize_worker_state.py`、`c1_materialize_worker_profile_sidecar.py`、`c1_materialize_c2_gap_audits.py` 与 `build_c2_assignment_manifest_from_c1_gaps.py`：C1 live raw-data 采集健康监控、正式 export canonicalization、quality/worker/profile/gap sidecar 与 reserve-only C2 draft 入口；只生成 provisional / audit artifacts，不冻结 C1/C2 协议参数。
     - `rebuild_stage1_chinese_completion_excel.py`：按最新 `标注人员.xlsx`、`退出标注.xlsx`、Stage 1 中文 LS JSON 导出和 active logs 重算中文 P1 完成情况工作簿。
   - `registry/`：registry、manifest、freeze、final-gold、trap/materialization、risk-rule、`d_t/g_t` dry-run、export inventory。
   - `data_prep/`：数据集准备和 MP3D smoke/import 生成。
@@ -56,7 +56,7 @@
 - `docs/PROJECT_MAP_CLEAN_20260308.md`：本文件，仓库地图。
 - `docs/thesis_main/`
   - 正式执行主线文档。
-  - 包括 protocol、assignment SOP、PreScreen、Calibration、Main(Test + Validation)、统计计划、字段合同、final-gold、registry、论文主线写作材料。
+  - 包括 protocol、assignment SOP、PreScreen、Calibration、Main(Test + Validation)、统计计划、字段合同、worker-profile sidecar contract、final-gold、registry、论文主线写作材料。
   - `manuscript/` 可保存 Overleaf 项目和主线论文写作资产，但按现有 `.gitignore` 默认不提交。
 - `docs/paper_a_manhattan/`
   - 包含 HRC stabilization、selection audit、scoring-layer contract、hypothesis feedback ledger schema 与 M15.20–M15.28 只读 dependency inventory；不实现训练、写回或 legacy 迁移。
