@@ -1,0 +1,175 @@
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+import pandas as pd
+
+_PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
+from tools.thesis_main.analysis.c1_live_collection_monitor import bool_text, read_csv, safe, truthy, write_csv, write_json
+from tools.thesis_main.registry.materialize_meta_label_consensus_summary import build_summary
+
+DEFAULT_INPUT = Path("analysis_results/calibration_c1_closeout/c1_canonical_annotations.csv")
+DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
+
+QUALITY_FIELDS = [
+    "round_id",
+    "task_id",
+    "base_task_id",
+    "dataset_group",
+    "condition",
+    "worker_id",
+    "annotator_id",
+    "canonical_annotation_id",
+    "scope",
+    "difficulty",
+    "model_issue",
+    "model_issue_primary",
+    "n_corners",
+    "geometry_hash",
+    "geometry_valid",
+    "active_time",
+    "active_time_source",
+    "primary_active_time_eligible",
+    "used_for_r_u",
+    "used_for_rq2",
+    "assigned_expected",
+]
+
+
+def _tokens(value: Any) -> str:
+    if value is None:
+        return ""
+    if isinstance(value, list):
+        return ";".join(safe(v) for v in value if safe(v))
+    text = safe(value)
+    if not text:
+        return ""
+    try:
+        parsed = json.loads(text)
+    except Exception:
+        return text.replace(",", ";")
+    return _tokens(parsed)
+
+
+def _choice(row: dict[str, Any], name: str) -> str:
+    if safe(row.get(name)):
+        return _tokens(row.get(name))
+    for source in ("choice_map", "quality_flags_json"):
+        raw = safe(row.get(source))
+        if not raw:
+            continue
+        try:
+            payload = json.loads(raw)
+        except Exception:
+            continue
+        if isinstance(payload, dict) and name in payload:
+            return _tokens(payload[name])
+    return ""
+
+
+def _geometry_valid(row: dict[str, Any]) -> bool:
+    try:
+        n_corners = int(float(safe(row.get("n_corners")) or 0))
+    except ValueError:
+        n_corners = 0
+    return bool(safe(row.get("geometry_hash"))) and n_corners >= 4 and not safe(row.get("parse_error"))
+
+
+def _used_for_r_u(row: dict[str, Any]) -> bool:
+    group = safe(row.get("dataset_group"))
+    source_flag = safe(row.get("used_for_r_u"))
+    if source_flag.lower().startswith("false"):
+        return False
+    if group == "Calibration_semi":
+        return False
+    if group == "Calibration_core" and source_flag and source_flag.lower() != "true":
+        return False
+    return group in {"Calibration_anchor", "Calibration_core"} and truthy(row.get("assigned_expected", True))
+
+
+def _used_for_rq2(row: dict[str, Any]) -> bool:
+    group = safe(row.get("dataset_group"))
+    source_flag = safe(row.get("used_for_rq2"))
+    if source_flag:
+        return truthy(source_flag)
+    return group in {"Calibration_anchor", "Calibration_core", "Calibration_semi"}
+
+
+def build_quality_rows(canonical_rows: list[dict[str, str]]) -> list[dict[str, Any]]:
+    out: list[dict[str, Any]] = []
+    for row in canonical_rows:
+        model_issue = _choice(row, "model_issue")
+        out.append(
+            {
+                "round_id": safe(row.get("round_id")) or "C1",
+                "task_id": safe(row.get("task_id")),
+                "base_task_id": safe(row.get("base_task_id")),
+                "dataset_group": safe(row.get("dataset_group")),
+                "condition": safe(row.get("condition")),
+                "worker_id": safe(row.get("worker_id")),
+                "annotator_id": safe(row.get("worker_id")),
+                "canonical_annotation_id": safe(row.get("canonical_annotation_id")),
+                "scope": _choice(row, "scope"),
+                "difficulty": _choice(row, "difficulty"),
+                "model_issue": model_issue,
+                "model_issue_primary": safe(row.get("model_issue_primary")) or model_issue.split(";")[0],
+                "n_corners": safe(row.get("n_corners")),
+                "geometry_hash": safe(row.get("geometry_hash")),
+                "geometry_valid": _geometry_valid(row),
+                "active_time": safe(row.get("active_time")),
+                "active_time_source": safe(row.get("active_time_source")),
+                "primary_active_time_eligible": truthy(row.get("primary_active_time_eligible")),
+                "used_for_r_u": _used_for_r_u(row),
+                "used_for_rq2": _used_for_rq2(row),
+                "assigned_expected": truthy(row.get("assigned_expected", True)),
+            }
+        )
+    return out
+
+
+def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR) -> dict[str, Any]:
+    rows = build_quality_rows(read_csv(canonical_csv))
+    quality_csv = output_dir / "c1_quality_annotations.csv"
+    write_csv(quality_csv, rows, QUALITY_FIELDS)
+
+    quality_df = pd.DataFrame(rows, columns=QUALITY_FIELDS)
+    consensus, audit = build_summary(quality_df)
+    consensus_csv = output_dir / "meta_label_consensus_summary_C1.csv"
+    audit_json = output_dir / "meta_label_consensus_summary_C1.audit.json"
+    consensus_csv.parent.mkdir(parents=True, exist_ok=True)
+    consensus.to_csv(consensus_csv, index=False, encoding="utf-8")
+    write_json(audit_json, {**audit, "sidecar_only_no_dt_backflow": True})
+
+    summary = {
+        "input_csv": str(canonical_csv),
+        "quality_csv": str(quality_csv),
+        "meta_label_consensus_csv": str(consensus_csv),
+        "meta_label_consensus_audit_json": str(audit_json),
+        "n_quality_rows": len(rows),
+        "n_used_for_r_u": sum(truthy(row["used_for_r_u"]) for row in rows),
+        "n_used_for_rq2": sum(truthy(row["used_for_rq2"]) for row in rows),
+        "r_u_estimated": False,
+        "dt_backflow": False,
+    }
+    write_json(output_dir / "c1_quality_table_summary.json", summary)
+    return summary
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Materialize C1 quality table and meta-label sidecar from canonical annotations.")
+    parser.add_argument("--canonical-csv", type=Path, default=DEFAULT_INPUT)
+    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    args = parser.parse_args(argv)
+    print(json.dumps(materialize(args.canonical_csv, args.output_dir), ensure_ascii=False, indent=2))
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

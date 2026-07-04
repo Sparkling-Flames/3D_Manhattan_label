@@ -24,7 +24,7 @@
 - `tools/thesis_main/`
   - 论文主线工具。
   - `analysis/`：质量分析、active-time audit、stage-aware 分析、图表、统计汇总。
-    - `c1_live_collection_monitor.py` 与 `c1_canonicalize_exports.py`：C1 live raw-data 采集健康监控与正式 export canonicalization 入口；只生成 provisional / audit artifacts，不冻结 C1/C2 协议参数。
+    - `c1_live_collection_monitor.py`、`c1_canonicalize_exports.py`、`c1_materialize_quality_table.py`、`c1_materialize_worker_state.py`、`c1_materialize_c2_gap_audits.py` 与 `build_c2_assignment_manifest_from_c1_gaps.py`：C1 live raw-data 采集健康监控、正式 export canonicalization、quality/worker/gap sidecar 与 reserve-only C2 draft 入口；只生成 provisional / audit artifacts，不冻结 C1/C2 协议参数。
     - `rebuild_stage1_chinese_completion_excel.py`：按最新 `标注人员.xlsx`、`退出标注.xlsx`、Stage 1 中文 LS JSON 导出和 active logs 重算中文 P1 完成情况工作簿。
   - `registry/`：registry、manifest、freeze、final-gold、trap/materialization、risk-rule、`d_t/g_t` dry-run、export inventory。
   - `data_prep/`：数据集准备和 MP3D smoke/import 生成。
