@@ -698,7 +698,7 @@ Required keys:
   "trigger_reasons": [],
   "excluded_from_primary_fields": [
     "r_u_calib",
-    "LCB(r_u)",
+    "LCB(r_u_calib)",
     "CI precision primary estimator"
   ],
   "allowed_uses": [
