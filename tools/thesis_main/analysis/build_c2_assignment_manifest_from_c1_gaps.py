@@ -17,7 +17,7 @@ DEFAULT_REBUILD_DIR = Path("analysis_results/calibration_rebuild_20260702")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c2_draft")
 
 MANIFEST_FIELDS = ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group", "assignment_batch", "fill_type", "fill_reason", "manifest_version"]
-AUDIT_FIELDS = ["worker_id", "fill_type", "n_reserve_tasks_assigned", "trigger_metric", "trigger_threshold", "task_side_pool_modified", "reserve_misuse_flag"]
+AUDIT_FIELDS = ["worker_id", "fill_type", "n_reserve_tasks_assigned", "reserve_capacity_shortfall", "trigger_metric", "trigger_threshold", "task_side_pool_modified", "reserve_misuse_flag"]
 
 
 def _reserve_rows(path: Path) -> list[dict[str, str]]:
@@ -45,18 +45,30 @@ def build_manifest(reserve_pool: Path, ci_audit: Path, scene_gap: Path, tasks_pe
     requests = [("ci_precision_fill", worker, reason) for worker, reason in _needs_ci(read_csv(ci_audit))]
     requests += [("scene_coverage_fill", worker, reason) for worker, reason in _needs_scene(read_csv(scene_gap))]
 
-    used_by_worker: dict[str, int] = defaultdict(int)
+    used_by_worker: dict[str, set[tuple[str, str]]] = defaultdict(set)
     manifest: list[dict[str, Any]] = []
     audit_counts: dict[tuple[str, str], int] = defaultdict(int)
+    shortfall: dict[tuple[str, str], int] = defaultdict(int)
     misuse: dict[tuple[str, str], bool] = defaultdict(bool)
     for fill_type, worker, reason in requests:
         if not worker:
             continue
         for _ in range(tasks_per_fill):
-            row = reserve[used_by_worker[worker] % len(reserve)]
-            used_by_worker[worker] += 1
+            row = next(
+                (
+                    candidate
+                    for candidate in reserve
+                    if (safe(candidate.get("task_id")), safe(candidate.get("base_task_id")) or safe(candidate.get("task_id"))) not in used_by_worker[worker]
+                ),
+                None,
+            )
+            if row is None:
+                shortfall[(worker, fill_type)] += 1
+                continue
             is_reserve = safe(row.get("calibration_split")) == "reserve" or safe(row.get("dataset_group")) == "Calibration_reserve"
             misuse[(worker, fill_type)] = misuse[(worker, fill_type)] or not is_reserve
+            key = (safe(row.get("task_id")), safe(row.get("base_task_id")) or safe(row.get("task_id")))
+            used_by_worker[worker].add(key)
             manifest.append(
                 {
                     "round_id": "C2",
@@ -72,18 +84,20 @@ def build_manifest(reserve_pool: Path, ci_audit: Path, scene_gap: Path, tasks_pe
             )
             audit_counts[(worker, fill_type)] += 1
 
-    audit = [
-        {
-            "worker_id": worker,
-            "fill_type": fill_type,
-            "n_reserve_tasks_assigned": count,
-            "trigger_metric": "needs_c2_ci_fill" if fill_type == "ci_precision_fill" else "needs_c2_scene_fill",
-            "trigger_threshold": "true",
-            "task_side_pool_modified": False,
-            "reserve_misuse_flag": misuse[(worker, fill_type)],
-        }
-        for (worker, fill_type), count in sorted(audit_counts.items())
-    ]
+    audit = []
+    for worker, fill_type in sorted(set(audit_counts) | set(shortfall)):
+        audit.append(
+            {
+                "worker_id": worker,
+                "fill_type": fill_type,
+                "n_reserve_tasks_assigned": audit_counts[(worker, fill_type)],
+                "reserve_capacity_shortfall": shortfall[(worker, fill_type)],
+                "trigger_metric": "needs_c2_ci_fill" if fill_type == "ci_precision_fill" else "needs_c2_scene_fill",
+                "trigger_threshold": "true",
+                "task_side_pool_modified": False,
+                "reserve_misuse_flag": misuse[(worker, fill_type)],
+            }
+        )
     return manifest, audit
 
 
@@ -97,6 +111,7 @@ def materialize(reserve_pool: Path, ci_audit: Path, scene_gap: Path, output_dir:
         "assignment_manifest_C2_draft": str(manifest_csv),
         "reserve_usage_audit_C2_draft": str(audit_csv),
         "n_assignments": len(manifest),
+        "reserve_capacity_shortfall_count": sum(int(row["reserve_capacity_shortfall"]) for row in audit),
         "reserve_only": all(not truthy(row["reserve_misuse_flag"]) for row in audit),
         "draft_only": True,
     }

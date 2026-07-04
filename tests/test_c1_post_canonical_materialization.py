@@ -29,6 +29,7 @@ def test_c1_quality_worker_gaps_and_c2_reserve_draft_chain(tmp_path: Path) -> No
         "task_id",
         "base_task_id",
         "dataset_group",
+        "scene_label",
         "condition",
         "worker_id",
         "canonical_annotation_id",
@@ -42,7 +43,6 @@ def test_c1_quality_worker_gaps_and_c2_reserve_draft_chain(tmp_path: Path) -> No
         "active_time_source",
         "primary_active_time_eligible",
         "assigned_expected",
-        "used_for_r_u",
     ]
     _csv(
         canonical,
@@ -53,6 +53,7 @@ def test_c1_quality_worker_gaps_and_c2_reserve_draft_chain(tmp_path: Path) -> No
                 "task_id": "a1",
                 "base_task_id": "scene_a",
                 "dataset_group": "Calibration_anchor",
+                "scene_label": "room_a",
                 "condition": "manual",
                 "worker_id": "w1",
                 "canonical_annotation_id": "ca1",
@@ -66,13 +67,13 @@ def test_c1_quality_worker_gaps_and_c2_reserve_draft_chain(tmp_path: Path) -> No
                 "active_time_source": "log",
                 "primary_active_time_eligible": "true",
                 "assigned_expected": "true",
-                "used_for_r_u": "true",
             },
             {
                 "round_id": "C1",
                 "task_id": "c1",
                 "base_task_id": "scene_b",
                 "dataset_group": "Calibration_core",
+                "scene_label": "room_b",
                 "condition": "manual",
                 "worker_id": "w1",
                 "canonical_annotation_id": "cc1",
@@ -86,13 +87,13 @@ def test_c1_quality_worker_gaps_and_c2_reserve_draft_chain(tmp_path: Path) -> No
                 "active_time_source": "log",
                 "primary_active_time_eligible": "true",
                 "assigned_expected": "true",
-                "used_for_r_u": "false_non_reliability_core",
             },
             {
                 "round_id": "C1",
                 "task_id": "s1",
                 "base_task_id": "scene_s",
                 "dataset_group": "Calibration_semi",
+                "scene_label": "room_s",
                 "condition": "semi",
                 "worker_id": "w1",
                 "canonical_annotation_id": "cs1",
@@ -106,13 +107,18 @@ def test_c1_quality_worker_gaps_and_c2_reserve_draft_chain(tmp_path: Path) -> No
                 "active_time_source": "log",
                 "primary_active_time_eligible": "true",
                 "assigned_expected": "true",
-                "used_for_r_u": "",
             },
         ],
     )
 
     out = tmp_path / "out"
-    quality_summary = materialize_quality(canonical, out)
+    inventory = tmp_path / "core.csv"
+    _csv(
+        inventory,
+        ["task_id", "base_task_id", "calibration_split", "used_for_r_u"],
+        [{"task_id": "c1", "base_task_id": "scene_b", "calibration_split": "core", "used_for_r_u": "false_non_reliability_core"}],
+    )
+    quality_summary = materialize_quality(canonical, out, inventory)
     quality = _rows(out / "c1_quality_annotations.csv")
     by_task = {row["task_id"]: row for row in quality}
     assert quality_summary["r_u_estimated"] is False
@@ -152,3 +158,92 @@ def test_c1_quality_worker_gaps_and_c2_reserve_draft_chain(tmp_path: Path) -> No
     assert c2_summary["reserve_only"] is True
     assert {row["dataset_group"] for row in manifest} == {"Calibration_reserve"}
     assert {row["reserve_misuse_flag"] for row in audit} == {"false"}
+
+
+def test_missing_core_used_for_r_u_flag_fails_closed(tmp_path: Path) -> None:
+    canonical = tmp_path / "c1_canonical_annotations.csv"
+    _csv(
+        canonical,
+        ["round_id", "task_id", "base_task_id", "dataset_group", "worker_id", "canonical_annotation_id", "n_corners", "geometry_hash", "assigned_expected"],
+        [
+            {
+                "round_id": "C1",
+                "task_id": "460",
+                "base_task_id": "X7Hy",
+                "dataset_group": "Calibration_core",
+                "worker_id": "w1",
+                "canonical_annotation_id": "c",
+                "n_corners": "4",
+                "geometry_hash": "h",
+                "assigned_expected": "true",
+            }
+        ],
+    )
+    inventory = tmp_path / "core.csv"
+    _csv(
+        inventory,
+        ["task_id", "base_task_id", "calibration_split", "used_for_r_u"],
+        [{"task_id": "460", "base_task_id": "X7Hy", "calibration_split": "core", "used_for_r_u": "false_non_reliability_core"}],
+    )
+
+    summary = materialize_quality(canonical, tmp_path / "out", inventory)
+    row = _rows(tmp_path / "out" / "c1_quality_annotations.csv")[0]
+
+    assert row["used_for_r_u"] == "false"
+    assert row["used_for_r_u_source_status"] == "from_candidate_inventory"
+    assert summary["blockers"] == []
+
+
+def test_missing_scene_label_does_not_fallback_to_base_task(tmp_path: Path) -> None:
+    quality = tmp_path / "quality.csv"
+    worker = tmp_path / "worker.csv"
+    _csv(
+        quality,
+        ["worker_id", "task_id", "base_task_id", "dataset_group", "used_for_r_u"],
+        [{"worker_id": "w1", "task_id": "t1", "base_task_id": "base_is_not_scene", "dataset_group": "Calibration_core", "used_for_r_u": "true"}],
+    )
+    _csv(worker, ["worker_id", "n_calib_completed", "needs_c2_ci_fill", "r_u_ci_low", "r_u_ci_high", "r_u_h"], [{"worker_id": "w1", "n_calib_completed": "5", "needs_c2_ci_fill": "false", "r_u_ci_low": "", "r_u_ci_high": "", "r_u_h": ""}])
+
+    summary = materialize_gaps(quality, worker, tmp_path / "out", min_scene=1, min_calib=5, epsilon_r=0.15)
+    scene = _rows(tmp_path / "out" / "scene_coverage_gap_C1.csv")[0]
+
+    assert summary["n_scene_fill_cells"] == 0
+    assert scene["scene_gap_evaluable"] == "false"
+    assert scene["needs_c2_scene_fill"] == "false"
+    assert scene["scene_fill_reason"] == "scene_label_missing"
+
+
+def test_empty_ci_is_not_formal_precision_failure_when_count_sufficient(tmp_path: Path) -> None:
+    quality = tmp_path / "quality.csv"
+    worker = tmp_path / "worker.csv"
+    _csv(quality, ["worker_id", "scene_label", "used_for_r_u"], [{"worker_id": "w1", "scene_label": "room", "used_for_r_u": "true"}])
+    _csv(worker, ["worker_id", "n_calib_completed", "needs_c2_ci_fill", "r_u_ci_low", "r_u_ci_high", "r_u_h"], [{"worker_id": "w1", "n_calib_completed": "5", "needs_c2_ci_fill": "false", "r_u_ci_low": "", "r_u_ci_high": "", "r_u_h": ""}])
+
+    materialize_gaps(quality, worker, tmp_path / "out", min_scene=1, min_calib=5, epsilon_r=0.15)
+    ci = _rows(tmp_path / "out" / "ci_precision_audit_C1.csv")[0]
+
+    assert ci["ci_evaluable"] == "false"
+    assert ci["needs_c2_ci_fill"] == "false"
+    assert ci["ci_fill_reason"] == "not_evaluable_without_r_u_estimate"
+
+
+def test_c2_draft_reports_reserve_capacity_shortfall_without_reuse(tmp_path: Path) -> None:
+    reserve = tmp_path / "reserve.csv"
+    ci = tmp_path / "ci.csv"
+    scene = tmp_path / "scene.csv"
+    _csv(reserve, ["task_id", "base_task_id", "dataset_group", "calibration_split"], [{"task_id": "r1", "base_task_id": "rb1", "dataset_group": "Calibration_reserve", "calibration_split": "reserve"}])
+    _csv(ci, ["worker_id", "needs_c2_ci_fill", "ci_fill_reason"], [{"worker_id": "w1", "needs_c2_ci_fill": "true", "ci_fill_reason": "count"}])
+    _csv(
+        scene,
+        ["worker_id", "scene_label", "needs_c2_scene_fill", "scene_fill_reason"],
+        [{"worker_id": "w1", "scene_label": "room", "needs_c2_scene_fill": "true", "scene_fill_reason": "gap"}],
+    )
+
+    summary = materialize_c2(reserve, ci, scene, tmp_path / "out", tasks_per_fill=1)
+    manifest = _rows(tmp_path / "out" / "assignment_manifest_C2_draft.csv")
+    audit = _rows(tmp_path / "out" / "reserve_usage_audit_C2_draft.csv")
+    worker_task_keys = {(row["worker_id"], row["task_id"], row["base_task_id"]) for row in manifest}
+
+    assert len(worker_task_keys) == len(manifest) == 1
+    assert summary["reserve_capacity_shortfall_count"] == 1
+    assert any(row["reserve_capacity_shortfall"] == "1" for row in audit)
