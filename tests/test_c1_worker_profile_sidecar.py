@@ -297,19 +297,94 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert main["r_u_calib"] == "0.8"
     assert main["r_u_calib_ci_low"] == "0.7"
     assert main["profile_freeze_status"] == "C1_provisional"
+    assert {"profile_confidence", "protocol_confidence", "diagnostic_profile_confidence", "profile_confidence_notes"} <= set(main)
     assert main["n_calib_support"] == "1"
     assert main["n_geometry_support"] == "2"
     assert main["n_scope_support"] == "9"
     assert main["n_undercoverage_support"] == "1"
     assert main["n_process_support"] == "1"
-    assert any(row["family"] == "undercoverage_failure" and row["n_observed"] == "1" for row in family)
-    assert any(row["subfamily"] == "minimal_space_bias" and row["interpretation_allowed"] == "false" for row in subfamily)
+    assert any(row["family"] == "undercoverage_failure" and row["n_observed"] == "1" and row["interpretation_level"] == "none" and row["interpretation_allowed"] == "false" for row in family)
+    assert any(row["subfamily"] == "minimal_space_bias" and row["interpretation_level"] == "none" and row["interpretation_allowed"] == "false" for row in subfamily)
     assert {row["support_status"] for row in predictive} == {"not_evaluable"}
     assert (tmp_path / "out" / "p1_to_c1_predictive_validity_report.md").exists()
     assert summary["r_u_calib_estimated"] is True
     assert summary_json["input_p1_artifacts"] == []
     assert summary_json["profile_freeze_status"] == "C1_provisional"
+    assert "family_interpretation_level_counts" in summary_json
+    assert "subfamily_interpretation_level_counts" in summary_json
     assert summary_json["warnings"] == ["p1_predictive_validity_not_evaluable_without_p1_artifacts"]
+
+
+def test_worker_profile_sidecar_confidence_and_interpretation_levels(tmp_path: Path) -> None:
+    fields = [
+        "round_id",
+        "task_id",
+        "base_task_id",
+        "dataset_group",
+        "condition",
+        "worker_id",
+        "canonical_annotation_id",
+        "task_final_scope",
+        "worker_scope_response",
+        "geometry_reference_status",
+        "geometry_valid",
+        "used_for_r_u",
+        "assigned_expected",
+        "family",
+        "subfamily",
+        "response_type",
+    ]
+
+    def row(i: int, family: str, subfamily: str, dataset_group: str, condition: str, response_type: str, used_for_r_u: str = "false", assigned_expected: str = "true") -> dict[str, str]:
+        return {
+            "round_id": "C1",
+            "task_id": f"t{i}",
+            "base_task_id": f"b{i}",
+            "dataset_group": dataset_group,
+            "condition": condition,
+            "worker_id": "w1",
+            "canonical_annotation_id": f"a{i}",
+            "task_final_scope": "in_scope",
+            "worker_scope_response": "correct_in_scope",
+            "geometry_reference_status": "expert_hard_single",
+            "geometry_valid": "true",
+            "used_for_r_u": used_for_r_u,
+            "assigned_expected": assigned_expected,
+            "family": family,
+            "subfamily": subfamily,
+            "response_type": response_type,
+        }
+
+    quality = tmp_path / "quality.csv"
+    rows = [
+        *(row(i, "geometry_quality_failure", "normal_geometry_degraded", "Calibration_anchor", "manual", "geometry_ok", "true") for i in range(10)),
+        *(row(20 + i, "semi_correction_failure", "successful_correction", "Calibration_semi", "semi", "semi_ok") for i in range(5)),
+        *(row(40 + i, "process_failure", "assignment_mismatch", "Calibration_core", "manual", "assignment_mismatch", assigned_expected="false") for i in range(3)),
+    ]
+    _csv(quality, fields, rows)
+    worker_state = tmp_path / "worker.csv"
+    _csv(worker_state, ["worker_id", "r_u_hat", "r_u_ci_low"], [{"worker_id": "w1", "r_u_hat": "", "r_u_ci_low": ""}])
+
+    materialize(quality, worker_state, tmp_path / "out")
+    main = _rows(tmp_path / "out" / "worker_profile_main_matrix_C1.csv")[0]
+    family = {row["family"]: row for row in _rows(tmp_path / "out" / "worker_failure_family_response_C1.csv")}
+    subfamily = {row["subfamily"]: row for row in _rows(tmp_path / "out" / "worker_subfamily_response_C1.csv")}
+    summary = json.loads((tmp_path / "out" / "worker_profile_sidecar_C1.summary.json").read_text(encoding="utf-8"))
+
+    assert main["protocol_confidence"] == "sufficient"
+    assert main["diagnostic_profile_confidence"] == "insufficient"
+    assert main["profile_confidence"] == "insufficient"
+    assert "diagnostic_profile_confidence_from_non_protocol_dimensions" in main["profile_confidence_notes"]
+    assert family["geometry_quality_failure"]["interpretation_level"] == "sufficient_descriptive"
+    assert family["semi_correction_failure"]["interpretation_level"] == "moderate_descriptive"
+    assert family["process_failure"]["interpretation_level"] == "weak_descriptive"
+    assert family["undercoverage_failure"]["interpretation_level"] == "none"
+    assert family["undercoverage_failure"]["interpretation_allowed"] == "false"
+    assert subfamily["normal_geometry_degraded"]["interpretation_level"] == "sufficient_descriptive"
+    assert subfamily["normal_geometry_degraded"]["interpretation_allowed"] == "false"
+    assert summary["family_interpretation_level_counts"]["sufficient_descriptive"] >= 1
+    assert summary["family_interpretation_level_counts"]["moderate_descriptive"] >= 1
+    assert summary["family_interpretation_level_counts"]["weak_descriptive"] >= 1
 
 
 def test_worker_profile_sidecar_reads_p1_artifacts_without_writeback(tmp_path: Path) -> None:

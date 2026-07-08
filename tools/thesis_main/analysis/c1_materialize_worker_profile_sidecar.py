@@ -97,6 +97,9 @@ MAIN_FIELDS = [
     "U_u",
     "process_reliability",
     "profile_confidence",
+    "protocol_confidence",
+    "diagnostic_profile_confidence",
+    "profile_confidence_notes",
     "n_calib_support",
     "n_geometry_support",
     "n_scope_support",
@@ -114,7 +117,7 @@ MAIN_FIELDS = [
     "notes",
 ]
 
-FAMILY_FIELDS = ["worker_id", "round_id", "family", "n_observed", "n_fail", "failure_rate", "support_status", "interpretation_allowed", "source_stages", "profile_version"]
+FAMILY_FIELDS = ["worker_id", "round_id", "family", "n_observed", "n_fail", "failure_rate", "support_status", "interpretation_level", "interpretation_allowed", "source_stages", "profile_version"]
 SUBFAMILY_FIELDS = [
     "worker_id",
     "round_id",
@@ -126,6 +129,7 @@ SUBFAMILY_FIELDS = [
     "task_count",
     "subfamily_global_worker_coverage",
     "support_status",
+    "interpretation_level",
     "interpretation_allowed",
     "source_stages",
     "profile_version",
@@ -139,6 +143,7 @@ P1_ALIASES = {
     "p1_undercoverage_watch": ["p1_undercoverage_watch", "undercoverage_watch", "undercoverage_risk_level"],
     "p1_process_warning": ["p1_process_warning", "process_warning", "active_time_process_warning"],
 }
+INTERPRETATION_LEVELS = ["none", "weak_descriptive", "moderate_descriptive", "sufficient_descriptive"]
 
 
 def support_status(n: int) -> str:
@@ -149,6 +154,15 @@ def support_status(n: int) -> str:
     if n < 10:
         return "moderate"
     return "sufficient"
+
+
+def interpretation_level(n: int) -> str:
+    return {
+        "insufficient": "none",
+        "weak": "weak_descriptive",
+        "moderate": "moderate_descriptive",
+        "sufficient": "sufficient_descriptive",
+    }[support_status(n)]
 
 
 def interpretation_allowed(n: int) -> bool:
@@ -423,8 +437,10 @@ def build_main_matrix(evidence_rows: list[dict[str, Any]], worker_state_rows: di
         n_semi = fail_by_flag["included_in_T_u"][1]
         n_under = fail_by_flag["included_in_U_u"][1]
         n_proc = fail_by_flag["included_in_process_reliability"][1]
-        statuses = [support_status(n) for n in (n_calib, n_geom, n_scope, n_semi, n_under, n_proc)]
-        confidence = "sufficient" if all(s in {"moderate", "sufficient"} for s in statuses[:3]) else min(statuses, key=["insufficient", "weak", "moderate", "sufficient"].index)
+        status_rank = ["insufficient", "weak", "moderate", "sufficient"]
+        protocol_confidence = support_status(n_calib)
+        diagnostic_profile_confidence = min((support_status(n) for n in (n_geom, n_scope, n_semi, n_under, n_proc)), key=status_rank.index)
+        confidence = min((protocol_confidence, diagnostic_profile_confidence), key=status_rank.index)
         rows.append(
             {
                 "worker_id": worker,
@@ -439,6 +455,9 @@ def build_main_matrix(evidence_rows: list[dict[str, Any]], worker_state_rows: di
                 "U_u": rate(*fail_by_flag["included_in_U_u"]),
                 "process_reliability": score(*fail_by_flag["included_in_process_reliability"]),
                 "profile_confidence": confidence,
+                "protocol_confidence": protocol_confidence,
+                "diagnostic_profile_confidence": diagnostic_profile_confidence,
+                "profile_confidence_notes": "protocol_confidence_from_calibration_support;diagnostic_profile_confidence_from_non_protocol_dimensions",
                 "n_calib_support": n_calib,
                 "n_geometry_support": n_geom,
                 "n_scope_support": n_scope,
@@ -480,6 +499,7 @@ def aggregate_family(evidence_rows: list[dict[str, Any]]) -> list[dict[str, Any]
                     "n_fail": fails,
                     "failure_rate": rate(fails, observed),
                     "support_status": support_status(observed),
+                    "interpretation_level": interpretation_level(observed),
                     "interpretation_allowed": interpretation_allowed(observed),
                     "source_stages": stages,
                     "profile_version": PROFILE_VERSION,
@@ -513,6 +533,7 @@ def aggregate_subfamily(evidence_rows: list[dict[str, Any]]) -> list[dict[str, A
                 "task_count": task_count,
                 "subfamily_global_worker_coverage": cover,
                 "support_status": support_status(observed),
+                "interpretation_level": interpretation_level(observed),
                 "interpretation_allowed": observed >= 8 and task_count >= 4 and cover >= 6,
                 "source_stages": stages,
                 "profile_version": PROFILE_VERSION,
@@ -657,6 +678,11 @@ def write_predictive_report(path: Path, predictive_rows: list[dict[str, Any]]) -
     )
 
 
+def _interpretation_level_counts(rows: list[dict[str, Any]]) -> dict[str, int]:
+    counts = Counter(safe(row.get("interpretation_level")) for row in rows)
+    return {level: counts[level] for level in INTERPRETATION_LEVELS}
+
+
 def materialize(quality_csv: Path, worker_state_csv: Path, output_dir: Path, p1_artifacts: list[Path] | None = None) -> dict[str, Any]:
     evidence = build_evidence_rows(read_csv(quality_csv))
     public_evidence = [{k: v for k, v in row.items() if not k.startswith("_")} for row in evidence]
@@ -698,6 +724,8 @@ def materialize(quality_csv: Path, worker_state_csv: Path, output_dir: Path, p1_
         "n_subfamily_rows": len(subfamily),
         "n_insufficient_family_cells": sum(row["support_status"] == "insufficient" for row in family),
         "n_insufficient_subfamily_cells": sum(row["support_status"] == "insufficient" for row in subfamily),
+        "family_interpretation_level_counts": _interpretation_level_counts(family),
+        "subfamily_interpretation_level_counts": _interpretation_level_counts(subfamily),
         "r_u_calib_estimated": any(safe(row.get("r_u_calib")) for row in main),
         "r_geometry_u_estimated": any(safe(row.get("r_geometry_u")) for row in main),
         "p1_predictive_validity_status": "evaluable" if predictive_evaluable else "not_evaluable",
