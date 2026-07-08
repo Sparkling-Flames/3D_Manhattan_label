@@ -310,3 +310,65 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert summary_json["input_p1_artifacts"] == []
     assert summary_json["profile_freeze_status"] == "C1_provisional"
     assert summary_json["warnings"] == ["p1_predictive_validity_not_evaluable_without_p1_artifacts"]
+
+
+def test_worker_profile_sidecar_reads_p1_artifacts_without_writeback(tmp_path: Path) -> None:
+    quality = tmp_path / "quality.csv"
+    _csv(
+        quality,
+        [
+            "round_id",
+            "task_id",
+            "base_task_id",
+            "dataset_group",
+            "condition",
+            "worker_id",
+            "canonical_annotation_id",
+            "task_final_scope",
+            "worker_scope_response",
+            "geometry_reference_status",
+            "geometry_valid",
+            "used_for_r_u",
+            "assigned_expected",
+            "family",
+            "subfamily",
+            "response_type",
+        ],
+        [
+            {
+                "round_id": "C1",
+                "task_id": "m1",
+                "base_task_id": "b1",
+                "dataset_group": "Calibration_anchor",
+                "condition": "manual",
+                "worker_id": "w1",
+                "canonical_annotation_id": "a1",
+                "task_final_scope": "in_scope",
+                "worker_scope_response": "correct_in_scope",
+                "geometry_reference_status": "expert_hard_single",
+                "geometry_valid": "true",
+                "used_for_r_u": "true",
+                "assigned_expected": "true",
+                "family": "geometry_quality_failure",
+                "subfamily": "normal_geometry_degraded",
+                "response_type": "geometry_ok",
+            }
+        ],
+    )
+    worker_state = tmp_path / "worker.csv"
+    p1 = tmp_path / "p1_artifact.csv"
+    _csv(worker_state, ["worker_id", "r_u_hat", "r_u_ci_low"], [{"worker_id": "w1", "r_u_hat": "0.8", "r_u_ci_low": "0.7"}])
+    _csv(p1, ["worker_id", "r_u_0", "p1_geometry_profile"], [{"worker_id": "w1", "r_u_0": "0.9", "p1_geometry_profile": "0.8"}])
+
+    summary = materialize(quality, worker_state, tmp_path / "out", [p1])
+    predictive = _rows(tmp_path / "out" / "p1_to_c1_predictive_validity.csv")
+    by_check = {row["check_name"]: row for row in predictive}
+    report = (tmp_path / "out" / "p1_to_c1_predictive_validity_report.md").read_text(encoding="utf-8")
+
+    assert summary["input_p1_artifacts"] == [str(p1)]
+    assert summary["p1_predictive_validity_status"] == "evaluable"
+    assert by_check["p1_r0_vs_c1_r_u_calib"]["p1_metric_value"] == "0.9"
+    assert by_check["p1_r0_vs_c1_r_u_calib"]["support_status"] == "weak_descriptive"
+    assert by_check["p1_r0_vs_c1_r_u_calib"]["directionally_consistent"] == "true"
+    assert by_check["p1_geometry_vs_c1_geometry"]["support_status"] == "weak_descriptive"
+    assert "P1 artifacts are read-only inputs" in report

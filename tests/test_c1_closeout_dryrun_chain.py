@@ -94,6 +94,18 @@ def test_dryrun_chain_generates_summary_markdown_and_reserve_only_c2_draft(tmp_p
     assert {row["dataset_group"] for row in manifest} == {"Calibration_reserve"}
 
 
+def test_dryrun_chain_passes_p1_artifacts_read_only_to_sidecar(tmp_path: Path) -> None:
+    canonical, assignment, reserve, inventory = _inputs(tmp_path)
+    p1 = tmp_path / "p1_artifact.csv"
+    _csv(p1, ["worker_id", "r_u_0"], [{"worker_id": "w1", "r_u_0": "0.9"}])
+
+    summary = materialize(canonical, assignment, reserve, tmp_path / "out", tmp_path / "c2", inventory, 2, 1, 2, 0.15, 1, [p1])
+    sidecar_summary = summary["worker_profile_sidecar_summary"]
+
+    assert sidecar_summary["input_p1_artifacts"] == [str(p1)]
+    assert summary["p1_predictive_validity_status"] == sidecar_summary["p1_predictive_validity_status"]
+
+
 def test_quality_table_blocker_blocks_launch(tmp_path: Path) -> None:
     canonical, assignment, reserve, inventory = _inputs(tmp_path)
     _csv(
