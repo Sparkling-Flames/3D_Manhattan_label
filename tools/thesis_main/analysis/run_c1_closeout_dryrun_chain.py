@@ -61,7 +61,7 @@ def build_gate_summary(
         "reserve_capacity_shortfall_count": int(c2_draft_summary.get("reserve_capacity_shortfall_count") or 0),
         "profile_sidecar_generated": profile_generated,
         "profile_freeze_status": safe(worker_profile_sidecar_summary.get("profile_freeze_status")),
-        "p1_predictive_validity_status": "not_evaluable",
+        "p1_predictive_validity_status": safe(worker_profile_sidecar_summary.get("p1_predictive_validity_status")) or "not_evaluable",
         "passed": True,
         "blocked_for_launch": False,
         "blockers": [],
@@ -118,6 +118,7 @@ def materialize(
     min_calib: int,
     epsilon_r: float,
     tasks_per_fill: int,
+    p1_artifacts: list[Path] | None = None,
 ) -> dict[str, Any]:
     quality_summary = c1_materialize_quality_table.materialize(canonical_csv, output_dir, candidate_inventory_csv)
     quality_csv = output_dir / "c1_quality_annotations.csv"
@@ -131,7 +132,7 @@ def materialize(
         c2_output_dir,
         tasks_per_fill,
     )
-    profile_summary = c1_materialize_worker_profile_sidecar.materialize(quality_csv, worker_state_csv, output_dir)
+    profile_summary = c1_materialize_worker_profile_sidecar.materialize(quality_csv, worker_state_csv, output_dir, p1_artifacts)
     profile_summary_path = output_dir / "worker_profile_sidecar_C1.summary.json"
     gate_summary = build_gate_summary(quality_summary, worker_summary, gap_summary, c2_summary, profile_summary, profile_summary_path)
     write_json(output_dir / "c1_closeout_dryrun_gate_summary.json", gate_summary)
@@ -152,6 +153,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--min-calib", type=int, required=True)
     parser.add_argument("--epsilon-r", type=float, required=True)
     parser.add_argument("--tasks-per-fill", type=int, required=True)
+    parser.add_argument("--p1-artifact", type=Path, action="append", default=[])
     args = parser.parse_args(argv)
     summary = materialize(
         args.canonical_csv,
@@ -165,6 +167,7 @@ def main(argv: list[str] | None = None) -> int:
         args.min_calib,
         args.epsilon_r,
         args.tasks_per_fill,
+        args.p1_artifact,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0

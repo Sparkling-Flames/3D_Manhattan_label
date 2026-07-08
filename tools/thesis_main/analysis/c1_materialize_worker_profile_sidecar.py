@@ -131,6 +131,14 @@ SUBFAMILY_FIELDS = [
     "profile_version",
 ]
 PREDICTIVE_FIELDS = ["worker_id", "check_name", "p1_metric_name", "p1_metric_value", "c1_metric_name", "c1_metric_value", "directionally_consistent", "support_status", "interpretation_allowed", "notes"]
+P1_ALIASES = {
+    "r0_prescreen": ["r0_prescreen", "r_u_0", "r_u0", "prescreen_r0"],
+    "p1_geometry_profile": ["p1_geometry_profile", "geometry_profile", "r_geometry_u"],
+    "p1_scope_profile": ["p1_scope_profile", "scope_profile", "r_scope_u"],
+    "p1_blind_trust_flag": ["p1_blind_trust_flag", "blind_trust_flag", "blind_trust_pre_flag"],
+    "p1_undercoverage_watch": ["p1_undercoverage_watch", "undercoverage_watch", "undercoverage_risk_level"],
+    "p1_process_warning": ["p1_process_warning", "process_warning", "active_time_process_warning"],
+}
 
 
 def support_status(n: int) -> str:
@@ -513,39 +521,135 @@ def aggregate_subfamily(evidence_rows: list[dict[str, Any]]) -> list[dict[str, A
     return out
 
 
-def build_predictive_rows(main_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def _simple_json_rows(data: Any) -> list[dict[str, Any]]:
+    if isinstance(data, list):
+        return [row for row in data if isinstance(row, dict)]
+    if isinstance(data, dict):
+        for value in data.values():
+            if isinstance(value, list):
+                return [row for row in value if isinstance(row, dict)]
+        return [data]
+    return []
+
+
+def load_p1_artifacts(paths: list[Path] | None) -> tuple[dict[str, dict[str, str]], list[str]]:
+    lookup: dict[str, dict[str, str]] = defaultdict(dict)
+    for path in paths or []:
+        if not path.exists():
+            continue
+        if path.suffix.lower() == ".csv":
+            rows = read_csv(path)
+        elif path.suffix.lower() == ".jsonl":
+            rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        elif path.suffix.lower() == ".json":
+            rows = _simple_json_rows(json.loads(path.read_text(encoding="utf-8")))
+        else:
+            continue
+        for row in rows:
+            worker = safe(row.get("worker_id") or row.get("annotator_id"))
+            if not worker:
+                continue
+            for key, value in row.items():
+                value_s = safe(value)
+                if value_s and not lookup[worker].get(key):
+                    lookup[worker][key] = value_s
+            for metric, aliases in P1_ALIASES.items():
+                if lookup[worker].get(metric):
+                    continue
+                for alias in aliases:
+                    value = safe(row.get(alias))
+                    if value:
+                        lookup[worker][metric] = value
+                        break
+    return dict(lookup), [str(path) for path in paths or []]
+
+
+def _numeric(value: str) -> float | None:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
+def _risk_bool(value: str) -> bool | None:
+    text = safe(value).lower()
+    if not text:
+        return None
+    if text in {"1", "true", "yes", "y", "high", "medium", "watch", "flag", "flagged", "risk", "warning"}:
+        return True
+    if text in {"0", "false", "no", "n", "low", "none", "clear", "ok"}:
+        return False
+    number = _numeric(text)
+    if number is not None:
+        return number >= 0.5
+    return None
+
+
+def directionally_consistent(p1_metric: str, p1_value: str, c1_value: str) -> str:
+    if not safe(p1_value) or not safe(c1_value):
+        return ""
+    c1_num = _numeric(c1_value)
+    if c1_num is None:
+        return ""
+    if p1_metric in {"p1_blind_trust_flag", "p1_undercoverage_watch", "p1_process_warning"}:
+        p1_risk = _risk_bool(p1_value)
+        if p1_risk is None:
+            return ""
+        if p1_metric == "p1_process_warning":
+            return str(p1_risk == (c1_num < 0.5)).lower()
+        return str(p1_risk == (c1_num >= 0.5)).lower()
+    p1_num = _numeric(p1_value)
+    if p1_num is None:
+        return ""
+    return str((p1_num >= 0.5) == (c1_num >= 0.5)).lower()
+
+
+def build_predictive_rows(main_rows: list[dict[str, Any]], p1_lookup: dict[str, dict[str, str]] | None = None) -> list[dict[str, Any]]:
     rows = []
+    p1_lookup = p1_lookup or {}
     for row in main_rows:
+        p1 = p1_lookup.get(row["worker_id"], {})
         for check_name, p1_metric, c1_metric in PREDICTIVE_CHECKS:
+            p1_value = safe(p1.get(p1_metric))
+            c1_value = safe(row.get(c1_metric))
+            consistency = directionally_consistent(p1_metric, p1_value, c1_value)
+            evaluable = bool(p1_value and c1_value and consistency)
             rows.append(
                 {
                     "worker_id": row["worker_id"],
                     "check_name": check_name,
                     "p1_metric_name": p1_metric,
-                    "p1_metric_value": "",
+                    "p1_metric_value": p1_value,
                     "c1_metric_name": c1_metric,
-                    "c1_metric_value": safe(row.get(c1_metric)),
-                    "directionally_consistent": "",
-                    "support_status": "not_evaluable",
+                    "c1_metric_value": c1_value,
+                    "directionally_consistent": consistency,
+                    "support_status": "weak_descriptive" if evaluable else "not_evaluable",
                     "interpretation_allowed": False,
-                    "notes": "p1_artifacts_not_provided;prescreen_chain_not_touched",
+                    "notes": "p1_artifact_read_only;prescreen_chain_not_touched" if evaluable else "p1_or_c1_metric_missing;prescreen_chain_not_touched",
                 }
             )
     return rows
 
 
 def write_predictive_report(path: Path, predictive_rows: list[dict[str, Any]]) -> None:
+    evaluable = [row for row in predictive_rows if row["support_status"] != "not_evaluable"]
+    consistent = sum(row["directionally_consistent"] == "true" for row in evaluable)
+    inconsistent = sum(row["directionally_consistent"] == "false" for row in evaluable)
+    status = "evaluable" if evaluable else "not_evaluable"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         "\n".join(
             [
                 "# P1-to-C1 Predictive Validity Report",
                 "",
-                "Status: not_evaluable in this minimal sidecar materialization.",
+                f"Status: {status}.",
                 "",
-                "Reason: P1 artifacts were not provided to this C1 sidecar run. The completed PreScreen chain was not read, rewritten, or re-materialized.",
+                "P1 artifacts are read-only inputs. The completed PreScreen chain is not rewritten or re-materialized.",
                 "",
-                f"Planned check rows: {len(predictive_rows)}",
+                f"Check rows: {len(predictive_rows)}",
+                f"Evaluable descriptive rows: {len(evaluable)}",
+                f"Directionally consistent rows: {consistent}",
+                f"Directionally inconsistent rows: {inconsistent}",
                 "",
             ]
         ),
@@ -553,13 +657,15 @@ def write_predictive_report(path: Path, predictive_rows: list[dict[str, Any]]) -
     )
 
 
-def materialize(quality_csv: Path, worker_state_csv: Path, output_dir: Path) -> dict[str, Any]:
+def materialize(quality_csv: Path, worker_state_csv: Path, output_dir: Path, p1_artifacts: list[Path] | None = None) -> dict[str, Any]:
     evidence = build_evidence_rows(read_csv(quality_csv))
     public_evidence = [{k: v for k, v in row.items() if not k.startswith("_")} for row in evidence]
     main = build_main_matrix(evidence, _worker_state_lookup(worker_state_csv))
     family = aggregate_family(evidence)
     subfamily = aggregate_subfamily(evidence)
-    predictive = build_predictive_rows(main)
+    p1_lookup, input_p1_artifacts = load_p1_artifacts(p1_artifacts)
+    predictive = build_predictive_rows(main, p1_lookup)
+    predictive_evaluable = any(row["support_status"] != "not_evaluable" for row in predictive)
 
     evidence_csv = output_dir / "worker_task_evidence_table_C1.csv"
     main_csv = output_dir / "worker_profile_main_matrix_C1.csv"
@@ -578,7 +684,7 @@ def materialize(quality_csv: Path, worker_state_csv: Path, output_dir: Path) -> 
         "profile_version": PROFILE_VERSION,
         "input_quality_csv": str(quality_csv),
         "input_worker_state_csv": str(worker_state_csv),
-        "input_p1_artifacts": [],
+        "input_p1_artifacts": input_p1_artifacts,
         "output_worker_task_evidence_table": str(evidence_csv),
         "output_worker_profile_main_matrix": str(main_csv),
         "output_worker_failure_family_response": str(family_csv),
@@ -594,9 +700,10 @@ def materialize(quality_csv: Path, worker_state_csv: Path, output_dir: Path) -> 
         "n_insufficient_subfamily_cells": sum(row["support_status"] == "insufficient" for row in subfamily),
         "r_u_calib_estimated": any(safe(row.get("r_u_calib")) for row in main),
         "r_geometry_u_estimated": any(safe(row.get("r_geometry_u")) for row in main),
+        "p1_predictive_validity_status": "evaluable" if predictive_evaluable else "not_evaluable",
         "profile_freeze_status": "C1_provisional",
         "blockers": [],
-        "warnings": ["p1_predictive_validity_not_evaluable_without_p1_artifacts"],
+        "warnings": [] if predictive_evaluable else ["p1_predictive_validity_not_evaluable_without_p1_artifacts" if not input_p1_artifacts else "p1_predictive_validity_not_evaluable_without_matching_p1_c1_metrics"],
     }
     write_json(summary_json, summary)
     return summary
@@ -607,8 +714,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--quality-csv", type=Path, default=DEFAULT_QUALITY)
     parser.add_argument("--worker-state-csv", type=Path, default=DEFAULT_WORKER_STATE)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    parser.add_argument("--p1-artifact", type=Path, action="append", default=[])
     args = parser.parse_args(argv)
-    print(json.dumps(materialize(args.quality_csv, args.worker_state_csv, args.output_dir), ensure_ascii=False, indent=2))
+    print(json.dumps(materialize(args.quality_csv, args.worker_state_csv, args.output_dir, args.p1_artifact), ensure_ascii=False, indent=2))
     return 0
 
 
