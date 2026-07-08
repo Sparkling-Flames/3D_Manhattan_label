@@ -30,12 +30,6 @@
 - `tools/label_studio/official/`：正式中文 annotator userscript。
 - 云端兼容 URL `/tools/vis_3d.html` 是部署路由，不代表源码仍在 `tools/` 根目录。
 
-## Paper A / Manhattan
-
-- `docs/paper_a_manhattan/`：Manhattan 方案、sandbox、expert review、OOS audit、3D geometry 兼容和 HRC contract。
-- `tools/paper_a_manhattan/`：Manhattan、sandbox、expert review、post-hoc audit-only 工具。
-- `tools/paper_a_manhattan/dev_only/`：Manhattan sandbox userscripts。
-
 ## Paper B
 
 - `docs/paper_b/`：Paper B 模型、ZInD mapping、B-line freeze/audit、训练计划。
