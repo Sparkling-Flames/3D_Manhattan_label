@@ -249,6 +249,26 @@ and subfamily_global_worker_coverage >= 6
 
 Threshold sensitivity may be reported, but raw evidence rows must not change.
 
+### 2.10 Interpretation level
+
+Allowed values:
+
+```text
+none
+weak_descriptive
+moderate_descriptive
+sufficient_descriptive
+```
+
+Default mapping:
+
+```text
+n_observed < 3:       none
+3 <= n_observed < 5:  weak_descriptive
+5 <= n_observed < 10: moderate_descriptive
+n_observed >= 10:     sufficient_descriptive
+```
+
 ---
 
 ## 3. Inclusion flags
@@ -484,6 +504,9 @@ T_u
 U_u
 process_reliability
 profile_confidence
+protocol_confidence
+diagnostic_profile_confidence
+profile_confidence_notes
 n_calib_support
 n_geometry_support
 n_scope_support
@@ -507,6 +530,8 @@ Rules:
 r_u_calib may remain empty in C1 if formal estimation has not yet run.
 r_geometry_u may remain empty in the first sidecar implementation if only support counts are materialized.
 profile_confidence must not hide insufficient support; it must be explainable from support counts and statuses.
+protocol_confidence reflects calibration / r_u_calib support only and must not be directly reduced by sparse semi, undercoverage, or process evidence.
+diagnostic_profile_confidence reflects multi-dimensional support across geometry, scope, semi, undercoverage, and process evidence.
 ```
 
 Recommended `profile_freeze_status` values:
@@ -538,6 +563,7 @@ n_observed
 n_fail
 failure_rate
 support_status
+interpretation_level
 interpretation_allowed
 source_stages
 profile_version
@@ -548,6 +574,7 @@ Rules:
 ```text
 failure_rate = n_fail / n_observed if n_observed > 0 else empty
 interpretation_allowed = false if support_status = insufficient
+interpretation_level = none if n_observed < 3
 ```
 
 This table must be long-format, not an ultra-wide matrix.
@@ -575,6 +602,7 @@ failure_rate
 task_count
 subfamily_global_worker_coverage
 support_status
+interpretation_level
 interpretation_allowed
 source_stages
 profile_version
@@ -585,7 +613,9 @@ Rules:
 ```text
 All observed subfamilies must be retained.
 Insufficient cells must not be deleted.
-Cells below reportable support must use interpretation_allowed=false unless explicitly framed as weak descriptive evidence.
+Cells below reportable support must use interpretation_allowed=false.
+interpretation_level = none if n_observed < 3.
+Second-level interpretation_allowed remains controlled by n_observed >= 8, task_count >= 4, and subfamily_global_worker_coverage >= 6.
 ```
 
 ---
@@ -617,6 +647,8 @@ Required keys:
   "n_subfamily_rows": 0,
   "n_insufficient_family_cells": 0,
   "n_insufficient_subfamily_cells": 0,
+  "family_interpretation_level_counts": {},
+  "subfamily_interpretation_level_counts": {},
   "r_u_calib_estimated": false,
   "r_geometry_u_estimated": false,
   "profile_freeze_status": "C1_provisional",
