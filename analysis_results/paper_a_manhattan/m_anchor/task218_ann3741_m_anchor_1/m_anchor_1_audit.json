@@ -1,0 +1,2856 @@
+{
+  "schema_version": "m_anchor_1_audit_v1",
+  "case_name": "task218_ann3741",
+  "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+  "input_sources": {
+    "baseline": {
+      "path": "analysis_results/paper_a_manhattan/segment_aware_manhattan_refit/task218_ann3741_joint_xy_search/_review_input.json",
+      "sha256": "8e888a8ea174f9fa37b6dfa548b734baa211b3f0f6c527d19f66b7a9cd254b4d"
+    },
+    "robust": {
+      "path": "analysis_results/paper_a_manhattan/segment_aware_manhattan_refit/task218_ann3741/segment_aware_manhattan_refit_3741.json",
+      "sha256": "82bb1be60a8bd2fddcb254b1ea32bc86390782f1b7790beec8bd3f0e8568e8ff"
+    },
+    "height_only": {
+      "path": "analysis_results/paper_a_manhattan/segment_aware_manhattan_refit/task218_ann3741_height_plane_preserving/segment_aware_manhattan_refit_3741_height_plane_preserving.json",
+      "sha256": "ee86f41b2a68e939d3e9a93497774184122fd4e22eacb5e120d4aaaaec3a1f9b"
+    },
+    "footprint_only": {
+      "path": "analysis_results/paper_a_manhattan/segment_aware_manhattan_refit/task218_ann3741_joint_xy_search/segment_aware_manhattan_refit_3741_joint_xy_search.json",
+      "sha256": "01446930b644115fa06f5ea17f99a27c67d2779079a107f8414b2e3ca342e9ef"
+    }
+  },
+  "id_semantics": {
+    "source_pair_id": "Label Studio / preview original pair number",
+    "solver_position": "one-based position after verified-order sorting",
+    "verified_order_source_id": "source_pair_id at each solver_position"
+  },
+  "pair_sid_order_seam_mapping_table": [
+    {
+      "source_pair_id": 2,
+      "solver_position": 1,
+      "verified_order_source_id": 2,
+      "original_preview_pair_id": 2,
+      "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "seam_before_pair": true,
+      "seam_after_pair": false
+    },
+    {
+      "source_pair_id": 1,
+      "solver_position": 2,
+      "verified_order_source_id": 1,
+      "original_preview_pair_id": 1,
+      "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "seam_before_pair": false,
+      "seam_after_pair": false
+    },
+    {
+      "source_pair_id": 3,
+      "solver_position": 3,
+      "verified_order_source_id": 3,
+      "original_preview_pair_id": 3,
+      "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "seam_before_pair": false,
+      "seam_after_pair": false
+    },
+    {
+      "source_pair_id": 4,
+      "solver_position": 4,
+      "verified_order_source_id": 4,
+      "original_preview_pair_id": 4,
+      "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "seam_before_pair": false,
+      "seam_after_pair": false
+    },
+    {
+      "source_pair_id": 6,
+      "solver_position": 5,
+      "verified_order_source_id": 6,
+      "original_preview_pair_id": 6,
+      "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "seam_before_pair": false,
+      "seam_after_pair": false
+    },
+    {
+      "source_pair_id": 5,
+      "solver_position": 6,
+      "verified_order_source_id": 5,
+      "original_preview_pair_id": 5,
+      "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "seam_before_pair": false,
+      "seam_after_pair": false
+    },
+    {
+      "source_pair_id": 8,
+      "solver_position": 7,
+      "verified_order_source_id": 8,
+      "original_preview_pair_id": 8,
+      "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "seam_before_pair": false,
+      "seam_after_pair": false
+    },
+    {
+      "source_pair_id": 7,
+      "solver_position": 8,
+      "verified_order_source_id": 7,
+      "original_preview_pair_id": 7,
+      "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "seam_before_pair": false,
+      "seam_after_pair": false
+    },
+    {
+      "source_pair_id": 9,
+      "solver_position": 9,
+      "verified_order_source_id": 9,
+      "original_preview_pair_id": 9,
+      "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "seam_before_pair": false,
+      "seam_after_pair": false
+    },
+    {
+      "source_pair_id": 10,
+      "solver_position": 10,
+      "verified_order_source_id": 10,
+      "original_preview_pair_id": 10,
+      "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "seam_before_pair": false,
+      "seam_after_pair": false
+    },
+    {
+      "source_pair_id": 12,
+      "solver_position": 11,
+      "verified_order_source_id": 12,
+      "original_preview_pair_id": 12,
+      "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "seam_before_pair": false,
+      "seam_after_pair": false
+    },
+    {
+      "source_pair_id": 11,
+      "solver_position": 12,
+      "verified_order_source_id": 11,
+      "original_preview_pair_id": 11,
+      "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
+      "seam_before_pair": false,
+      "seam_after_pair": true
+    }
+  ],
+  "expert_anchor_constraints_schema": {
+    "schema_version": "expert_anchor_constraints_v1",
+    "constraint_types": [
+      "point_axis_anchor"
+    ],
+    "false_visual_drift_policy": "fail_closed"
+  },
+  "expert_anchor_constraints": [
+    {
+      "constraint_id": "s2_top_x",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 2,
+      "solver_position": 1,
+      "verified_order_source_id": 2,
+      "endpoint": "top",
+      "axis": "x",
+      "anchor_value": 5.889724310776942,
+      "tolerance": 0.45,
+      "role": "pair2_occlusion_sensitive_visual_x",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s2_bottom_x",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 2,
+      "solver_position": 1,
+      "verified_order_source_id": 2,
+      "endpoint": "bottom",
+      "axis": "x",
+      "anchor_value": 5.889724310776942,
+      "tolerance": 0.45,
+      "role": "pair2_occlusion_sensitive_visual_x",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s2_top_y",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 2,
+      "solver_position": 1,
+      "verified_order_source_id": 2,
+      "endpoint": "top",
+      "axis": "y",
+      "anchor_value": 14.786967418546364,
+      "tolerance": 1.0,
+      "role": "pair2_visual_top_y",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s2_bottom_y",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 2,
+      "solver_position": 1,
+      "verified_order_source_id": 2,
+      "endpoint": "bottom",
+      "axis": "y",
+      "anchor_value": 91.47869674185463,
+      "tolerance": 1.0,
+      "role": "pair2_visual_bottom_y",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s11_top_x",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 11,
+      "solver_position": 12,
+      "verified_order_source_id": 11,
+      "endpoint": "top",
+      "axis": "x",
+      "anchor_value": 98.37092731829574,
+      "tolerance": 0.45,
+      "role": "right_seam_visual_x",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s11_bottom_x",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 11,
+      "solver_position": 12,
+      "verified_order_source_id": 11,
+      "endpoint": "bottom",
+      "axis": "x",
+      "anchor_value": 98.37092731829574,
+      "tolerance": 0.45,
+      "role": "right_seam_visual_x",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s11_top_y",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 11,
+      "solver_position": 12,
+      "verified_order_source_id": 11,
+      "endpoint": "top",
+      "axis": "y",
+      "anchor_value": 14.285714285714285,
+      "tolerance": 2.0,
+      "role": "right_seam_top_y_soft",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s11_bottom_y",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 11,
+      "solver_position": 12,
+      "verified_order_source_id": 11,
+      "endpoint": "bottom",
+      "axis": "y",
+      "anchor_value": 91.22807017543859,
+      "tolerance": 1.0,
+      "role": "right_seam_bottom_y",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s3_top_x",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 3,
+      "solver_position": 3,
+      "verified_order_source_id": 3,
+      "endpoint": "top",
+      "axis": "x",
+      "anchor_value": 8.9814453125,
+      "tolerance": 0.75,
+      "role": "strong_visual_anchor_3_4",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s3_top_y",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 3,
+      "solver_position": 3,
+      "verified_order_source_id": 3,
+      "endpoint": "top",
+      "axis": "y",
+      "anchor_value": 43.6015625,
+      "tolerance": 0.75,
+      "role": "strong_visual_anchor_3_4",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s3_bottom_x",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 3,
+      "solver_position": 3,
+      "verified_order_source_id": 3,
+      "endpoint": "bottom",
+      "axis": "x",
+      "anchor_value": 8.9814453125,
+      "tolerance": 0.75,
+      "role": "strong_visual_anchor_3_4",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s3_bottom_y",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 3,
+      "solver_position": 3,
+      "verified_order_source_id": 3,
+      "endpoint": "bottom",
+      "axis": "y",
+      "anchor_value": 55.833984375,
+      "tolerance": 0.75,
+      "role": "strong_visual_anchor_3_4",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s4_top_x",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 4,
+      "solver_position": 4,
+      "verified_order_source_id": 4,
+      "endpoint": "top",
+      "axis": "x",
+      "anchor_value": 27.7216796875,
+      "tolerance": 0.75,
+      "role": "strong_visual_anchor_3_4",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s4_top_y",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 4,
+      "solver_position": 4,
+      "verified_order_source_id": 4,
+      "endpoint": "top",
+      "axis": "y",
+      "anchor_value": 38.568359375,
+      "tolerance": 0.75,
+      "role": "strong_visual_anchor_3_4",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s4_bottom_x",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 4,
+      "solver_position": 4,
+      "verified_order_source_id": 4,
+      "endpoint": "bottom",
+      "axis": "x",
+      "anchor_value": 27.7216796875,
+      "tolerance": 0.75,
+      "role": "strong_visual_anchor_3_4",
+      "hard_fail_on_violation": true
+    },
+    {
+      "constraint_id": "s4_bottom_y",
+      "schema_version": "expert_anchor_constraints_v1",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 4,
+      "solver_position": 4,
+      "verified_order_source_id": 4,
+      "endpoint": "bottom",
+      "axis": "y",
+      "anchor_value": 60.4765625,
+      "tolerance": 0.75,
+      "role": "strong_visual_anchor_3_4",
+      "hard_fail_on_violation": true
+    }
+  ],
+  "baseline_per_wall_residual_diagnostic": {
+    "walls": [
+      {
+        "source_edge_ids": [
+          2,
+          1
+        ],
+        "solver_edge_positions": [
+          1,
+          2
+        ],
+        "seam_edge": false,
+        "length": 3.671759846124521,
+        "manhattan_residual_deg": 2.9859435986093956
+      },
+      {
+        "source_edge_ids": [
+          1,
+          3
+        ],
+        "solver_edge_positions": [
+          2,
+          3
+        ],
+        "seam_edge": false,
+        "length": 5.343903327547818,
+        "manhattan_residual_deg": 37.02045729278922
+      },
+      {
+        "source_edge_ids": [
+          3,
+          4
+        ],
+        "solver_edge_positions": [
+          3,
+          4
+        ],
+        "seam_edge": false,
+        "length": 8.090676558127493,
+        "manhattan_residual_deg": 0.0037644449238598554
+      },
+      {
+        "source_edge_ids": [
+          4,
+          6
+        ],
+        "solver_edge_positions": [
+          4,
+          5
+        ],
+        "seam_edge": false,
+        "length": 4.406478055271897,
+        "manhattan_residual_deg": 1.3534671272882068
+      },
+      {
+        "source_edge_ids": [
+          6,
+          5
+        ],
+        "solver_edge_positions": [
+          5,
+          6
+        ],
+        "seam_edge": false,
+        "length": 0.08701309343042758,
+        "manhattan_residual_deg": 26.65504741472192
+      },
+      {
+        "source_edge_ids": [
+          5,
+          8
+        ],
+        "solver_edge_positions": [
+          6,
+          7
+        ],
+        "seam_edge": false,
+        "length": 0.3172488871298551,
+        "manhattan_residual_deg": 3.8024969656892127
+      },
+      {
+        "source_edge_ids": [
+          8,
+          7
+        ],
+        "solver_edge_positions": [
+          7,
+          8
+        ],
+        "seam_edge": false,
+        "length": 0.7835697388865898,
+        "manhattan_residual_deg": 1.0477215155218857
+      },
+      {
+        "source_edge_ids": [
+          7,
+          9
+        ],
+        "solver_edge_positions": [
+          8,
+          9
+        ],
+        "seam_edge": false,
+        "length": 1.850294169028739,
+        "manhattan_residual_deg": 4.512919201351356
+      },
+      {
+        "source_edge_ids": [
+          9,
+          10
+        ],
+        "solver_edge_positions": [
+          9,
+          10
+        ],
+        "seam_edge": false,
+        "length": 2.780914593621163,
+        "manhattan_residual_deg": 0.4637305317104392
+      },
+      {
+        "source_edge_ids": [
+          10,
+          12
+        ],
+        "solver_edge_positions": [
+          10,
+          11
+        ],
+        "seam_edge": false,
+        "length": 1.8484970887385725,
+        "manhattan_residual_deg": 2.187490105703489
+      },
+      {
+        "source_edge_ids": [
+          12,
+          11
+        ],
+        "solver_edge_positions": [
+          11,
+          12
+        ],
+        "seam_edge": false,
+        "length": 0.6952814702806228,
+        "manhattan_residual_deg": 2.141440914799915
+      },
+      {
+        "source_edge_ids": [
+          11,
+          2
+        ],
+        "solver_edge_positions": [
+          12,
+          1
+        ],
+        "seam_edge": true,
+        "length": 0.20899841879234285,
+        "manhattan_residual_deg": 11.289822888032717
+      }
+    ],
+    "summary": {
+      "wall_count": 12,
+      "residual_sum": 93.4643020011416,
+      "residual_max": 37.02045729278922
+    }
+  },
+  "solver_prototypes": [
+    {
+      "candidate_id": "m_anchor_1_footprint_only_joint_xy",
+      "prototype_type": "footprint_only_constrained_solver_prototype",
+      "solver_scope": "footprint_only",
+      "source_pair_order": [
+        2,
+        1,
+        3,
+        4,
+        6,
+        5,
+        8,
+        7,
+        9,
+        10,
+        12,
+        11
+      ],
+      "pair_count": 12,
+      "anchor_audit": {
+        "constraints": [
+          {
+            "constraint_id": "s2_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 5.889724310776942,
+            "tolerance": 0.45,
+            "role": "pair2_occlusion_sensitive_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 5.889724310776942,
+            "delta": 0.0,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s2_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 5.889724310776942,
+            "tolerance": 0.45,
+            "role": "pair2_occlusion_sensitive_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 5.889724310776942,
+            "delta": 0.0,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s2_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 14.786967418546364,
+            "tolerance": 1.0,
+            "role": "pair2_visual_top_y",
+            "hard_fail_on_violation": true,
+            "candidate_value": 14.186967418546365,
+            "delta": -0.5999999999999996,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s2_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 91.47869674185463,
+            "tolerance": 1.0,
+            "role": "pair2_visual_bottom_y",
+            "hard_fail_on_violation": true,
+            "candidate_value": 91.47869674185463,
+            "delta": 0.0,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s11_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 98.37092731829574,
+            "tolerance": 0.45,
+            "role": "right_seam_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 98.37092731829574,
+            "delta": 0.0,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s11_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 98.37092731829574,
+            "tolerance": 0.45,
+            "role": "right_seam_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 98.37092731829574,
+            "delta": 0.0,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s11_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 14.285714285714285,
+            "tolerance": 2.0,
+            "role": "right_seam_top_y_soft",
+            "hard_fail_on_violation": true,
+            "candidate_value": 12.485714285714284,
+            "delta": -1.8000000000000007,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s11_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 91.22807017543859,
+            "tolerance": 1.0,
+            "role": "right_seam_bottom_y",
+            "hard_fail_on_violation": true,
+            "candidate_value": 91.82807017543858,
+            "delta": 0.5999999999999943,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s3_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 3,
+            "solver_position": 3,
+            "verified_order_source_id": 3,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 8.9814453125,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 9.128202368107015,
+            "delta": 0.14675705560701502,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s3_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 3,
+            "solver_position": 3,
+            "verified_order_source_id": 3,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 43.6015625,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 43.203167804940094,
+            "delta": -0.3983946950599062,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s3_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 3,
+            "solver_position": 3,
+            "verified_order_source_id": 3,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 8.9814453125,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 9.128202368107015,
+            "delta": 0.14675705560701502,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s3_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 3,
+            "solver_position": 3,
+            "verified_order_source_id": 3,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 55.833984375,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 56.19947248193613,
+            "delta": 0.36548810693612666,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s4_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 4,
+            "solver_position": 4,
+            "verified_order_source_id": 4,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 27.7216796875,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s4_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 4,
+            "solver_position": 4,
+            "verified_order_source_id": 4,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 38.568359375,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 39.058894298538,
+            "delta": 0.4905349235380001,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s4_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 4,
+            "solver_position": 4,
+            "verified_order_source_id": 4,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 27.7216796875,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s4_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 4,
+            "solver_position": 4,
+            "verified_order_source_id": 4,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 60.4765625,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 60.020336398089334,
+            "delta": -0.4562261019106657,
+            "satisfied": true
+          }
+        ],
+        "satisfied_count": 16,
+        "total_count": 16,
+        "anchor_satisfaction_rate": 1.0,
+        "violations": []
+      },
+      "per_wall_residual_diagnostic": {
+        "walls": [
+          {
+            "source_edge_ids": [
+              2,
+              1
+            ],
+            "solver_edge_positions": [
+              1,
+              2
+            ],
+            "seam_edge": false,
+            "length": 6.146744358487142,
+            "manhattan_residual_deg": 0.16269686644639592
+          },
+          {
+            "source_edge_ids": [
+              1,
+              3
+            ],
+            "solver_edge_positions": [
+              2,
+              3
+            ],
+            "seam_edge": false,
+            "length": 4.267610309410626,
+            "manhattan_residual_deg": 3.4558655762722594
+          },
+          {
+            "source_edge_ids": [
+              3,
+              4
+            ],
+            "solver_edge_positions": [
+              3,
+              4
+            ],
+            "seam_edge": false,
+            "length": 7.568379850793359,
+            "manhattan_residual_deg": 3.4558655762721457
+          },
+          {
+            "source_edge_ids": [
+              4,
+              6
+            ],
+            "solver_edge_positions": [
+              4,
+              5
+            ],
+            "seam_edge": false,
+            "length": 4.613254577102984,
+            "manhattan_residual_deg": 3.4558655762721373
+          },
+          {
+            "source_edge_ids": [
+              6,
+              5
+            ],
+            "solver_edge_positions": [
+              5,
+              6
+            ],
+            "seam_edge": false,
+            "length": 0.40270248411764276,
+            "manhattan_residual_deg": 3.455865576272089
+          },
+          {
+            "source_edge_ids": [
+              5,
+              8
+            ],
+            "solver_edge_positions": [
+              6,
+              7
+            ],
+            "seam_edge": false,
+            "length": 0.3118787993749672,
+            "manhattan_residual_deg": 3.455865576272007
+          },
+          {
+            "source_edge_ids": [
+              8,
+              7
+            ],
+            "solver_edge_positions": [
+              7,
+              8
+            ],
+            "seam_edge": false,
+            "length": 0.8094380901425745,
+            "manhattan_residual_deg": 3.4558655762721173
+          },
+          {
+            "source_edge_ids": [
+              7,
+              9
+            ],
+            "solver_edge_positions": [
+              8,
+              9
+            ],
+            "seam_edge": false,
+            "length": 1.7938608685987785,
+            "manhattan_residual_deg": 3.4558655762721435
+          },
+          {
+            "source_edge_ids": [
+              9,
+              10
+            ],
+            "solver_edge_positions": [
+              9,
+              10
+            ],
+            "seam_edge": false,
+            "length": 2.7079985882407507,
+            "manhattan_residual_deg": 3.4558655762721315
+          },
+          {
+            "source_edge_ids": [
+              10,
+              12
+            ],
+            "solver_edge_positions": [
+              10,
+              11
+            ],
+            "seam_edge": false,
+            "length": 1.9041436962084741,
+            "manhattan_residual_deg": 3.4558655762721173
+          },
+          {
+            "source_edge_ids": [
+              12,
+              11
+            ],
+            "solver_edge_positions": [
+              11,
+              12
+            ],
+            "seam_edge": false,
+            "length": 0.8486801150228688,
+            "manhattan_residual_deg": 3.0094258133120633
+          },
+          {
+            "source_edge_ids": [
+              11,
+              2
+            ],
+            "solver_edge_positions": [
+              12,
+              1
+            ],
+            "seam_edge": true,
+            "length": 0.20183027345383003,
+            "manhattan_residual_deg": 2.46588338631247
+          }
+        ],
+        "summary": {
+          "wall_count": 12,
+          "residual_sum": 36.74079625252007,
+          "residual_max": 3.4558655762722594
+        }
+      },
+      "metrics": {
+        "wall_residual_sum": 36.74079625252,
+        "turn_residual_max": 5.475309199624547,
+        "height_consistency_l1": 1.995144922207567,
+        "self_intersection": false
+      },
+      "false_visual_drift": false,
+      "decision": "review_available",
+      "candidate_available": true,
+      "explanation_card": {
+        "what_changed": "geometry consistency prototype under explicit human visual anchors",
+        "why_candidate_exists": "test whether human semantic anchors plus solver diagnostics produce a reviewable candidate",
+        "why_not_accepted": "M-Anchor.1 is audit-only and still requires human visual review",
+        "downgrade_rule": "any geometry-improving candidate that violates hard visual anchors is rejected as false_visual_drift"
+      },
+      "corrected_coordinates": [
+        {
+          "source_pair_id": 2,
+          "solver_position": 1,
+          "verified_order_source_id": 2,
+          "top": {
+            "x": 5.889724310776942,
+            "y": 14.186967418546365
+          },
+          "bottom": {
+            "x": 5.889724310776942,
+            "y": 91.47869674185463
+          },
+          "effective_pair_index": 1
+        },
+        {
+          "top": {
+            "x": 0.34290478814528647,
+            "y": 41.65898099154619
+          },
+          "bottom": {
+            "x": 0.34290478814528647,
+            "y": 57.61789006459336
+          },
+          "source_pair_id": 1,
+          "solver_position": 2,
+          "verified_order_source_id": 1,
+          "effective_pair_index": 2,
+          "source_preview_order_index": 1,
+          "point_ids": {
+            "top_id": "kp_6",
+            "bottom_id": "kp_7"
+          }
+        },
+        {
+          "top": {
+            "x": 9.128202368107015,
+            "y": 43.203167804940094
+          },
+          "bottom": {
+            "x": 9.128202368107015,
+            "y": 56.19947248193613
+          },
+          "source_pair_id": 3,
+          "solver_position": 3,
+          "verified_order_source_id": 3,
+          "effective_pair_index": 3,
+          "source_preview_order_index": 3,
+          "point_ids": {
+            "top_id": "kp_8",
+            "bottom_id": "kp_9"
+          }
+        },
+        {
+          "top": {
+            "x": 27.410957965652642,
+            "y": 39.058894298538
+          },
+          "bottom": {
+            "x": 27.410957965652642,
+            "y": 60.020336398089334
+          },
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "source_preview_order_index": 4,
+          "point_ids": {
+            "top_id": "kp_10",
+            "bottom_id": "kp_11"
+          }
+        },
+        {
+          "top": {
+            "x": 46.13663017821954,
+            "y": 17.137158536785712
+          },
+          "bottom": {
+            "x": 46.13663017821954,
+            "y": 81.50874592008077
+          },
+          "source_pair_id": 6,
+          "solver_position": 5,
+          "verified_order_source_id": 6,
+          "effective_pair_index": 5,
+          "source_preview_order_index": 6,
+          "point_ids": {
+            "top_id": "-4TzkLtjeO",
+            "bottom_id": "7R_vYvj4bN"
+          }
+        },
+        {
+          "top": {
+            "x": 44.36703866987801,
+            "y": 11.402412342834095
+          },
+          "bottom": {
+            "x": 44.36703866987801,
+            "y": 87.573459332818
+          },
+          "source_pair_id": 5,
+          "solver_position": 6,
+          "verified_order_source_id": 5,
+          "effective_pair_index": 6,
+          "source_preview_order_index": 5,
+          "point_ids": {
+            "top_id": "9Tiplq2Pvq",
+            "bottom_id": "zGbQgzhVWW"
+          }
+        },
+        {
+          "top": {
+            "x": 52.06679785137357,
+            "y": 11.137995288377079
+          },
+          "bottom": {
+            "x": 52.06679785137357,
+            "y": 87.85701134257397
+          },
+          "source_pair_id": 8,
+          "solver_position": 7,
+          "verified_order_source_id": 8,
+          "effective_pair_index": 7,
+          "source_preview_order_index": 8,
+          "point_ids": {
+            "top_id": "kp_12",
+            "bottom_id": "kp_13"
+          }
+        },
+        {
+          "top": {
+            "x": 50.378095580497586,
+            "y": 21.89033221150598
+          },
+          "bottom": {
+            "x": 50.378095580497586,
+            "y": 76.62127196977598
+          },
+          "source_pair_id": 7,
+          "solver_position": 8,
+          "verified_order_source_id": 7,
+          "effective_pair_index": 8,
+          "source_preview_order_index": 7,
+          "point_ids": {
+            "top_id": "kp_14",
+            "bottom_id": "kp_15"
+          }
+        },
+        {
+          "top": {
+            "x": 63.78090512564466,
+            "y": 31.6171875
+          },
+          "bottom": {
+            "x": 63.78090512564466,
+            "y": 68.74147895391475
+          },
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "source_preview_order_index": 9,
+          "point_ids": {
+            "top_id": "kp_0",
+            "bottom_id": "kp_1"
+          }
+        },
+        {
+          "top": {
+            "x": 83.34955092974104,
+            "y": 30.4453125
+          },
+          "bottom": {
+            "x": 83.34955092974104,
+            "y": 69.3659181657466
+          },
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "source_preview_order_index": 10,
+          "point_ids": {
+            "top_id": "kp_2",
+            "bottom_id": "kp_3"
+          }
+        },
+        {
+          "top": {
+            "x": 98.90149346547022,
+            "y": 20.55639097744361
+          },
+          "bottom": {
+            "x": 98.90149346547022,
+            "y": 78.66395669515278
+          },
+          "source_pair_id": 12,
+          "solver_position": 11,
+          "verified_order_source_id": 12,
+          "effective_pair_index": 11,
+          "source_preview_order_index": 12,
+          "point_ids": {
+            "top_id": "YzRMT1hSFI",
+            "bottom_id": "ejD1N6pEta"
+          }
+        },
+        {
+          "source_pair_id": 11,
+          "solver_position": 12,
+          "verified_order_source_id": 11,
+          "top": {
+            "x": 98.37092731829574,
+            "y": 12.485714285714284
+          },
+          "bottom": {
+            "x": 98.37092731829574,
+            "y": 91.82807017543858
+          },
+          "effective_pair_index": 12
+        }
+      ],
+      "audit_only": true,
+      "accepted": false,
+      "downstream_recommendation": false,
+      "candidate_preference_authorized": false,
+      "annotation_writeback": false,
+      "annotation_patch_generated": false,
+      "active_runner_role": false
+    },
+    {
+      "candidate_id": "m_anchor_1_height_only_plane_preserving",
+      "prototype_type": "height_only_constrained_solver_prototype",
+      "solver_scope": "height_only",
+      "source_pair_order": [
+        2,
+        1,
+        3,
+        4,
+        6,
+        5,
+        8,
+        7,
+        9,
+        10,
+        12,
+        11
+      ],
+      "pair_count": 12,
+      "anchor_audit": {
+        "constraints": [
+          {
+            "constraint_id": "s2_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 5.889724310776942,
+            "tolerance": 0.45,
+            "role": "pair2_occlusion_sensitive_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 5.889724310776942,
+            "delta": 0.0,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s2_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 5.889724310776942,
+            "tolerance": 0.45,
+            "role": "pair2_occlusion_sensitive_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 5.889724310776942,
+            "delta": 0.0,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s2_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 14.786967418546364,
+            "tolerance": 1.0,
+            "role": "pair2_visual_top_y",
+            "hard_fail_on_violation": true,
+            "candidate_value": 7.415727146463169,
+            "delta": -7.371240272083195,
+            "satisfied": false
+          },
+          {
+            "constraint_id": "s2_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 91.47869674185463,
+            "tolerance": 1.0,
+            "role": "pair2_visual_bottom_y",
+            "hard_fail_on_violation": true,
+            "candidate_value": 91.87869674185464,
+            "delta": 0.4000000000000057,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s11_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 98.37092731829574,
+            "tolerance": 0.45,
+            "role": "right_seam_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 98.37092731829574,
+            "delta": 0.0,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s11_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 98.37092731829574,
+            "tolerance": 0.45,
+            "role": "right_seam_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 98.37092731829574,
+            "delta": 0.0,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s11_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 14.285714285714285,
+            "tolerance": 2.0,
+            "role": "right_seam_top_y_soft",
+            "hard_fail_on_violation": true,
+            "candidate_value": 7.830485026098316,
+            "delta": -6.455229259615969,
+            "satisfied": false
+          },
+          {
+            "constraint_id": "s11_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 91.22807017543859,
+            "tolerance": 1.0,
+            "role": "right_seam_bottom_y",
+            "hard_fail_on_violation": true,
+            "candidate_value": 91.42807017543859,
+            "delta": 0.20000000000000284,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s3_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 3,
+            "solver_position": 3,
+            "verified_order_source_id": 3,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 8.9814453125,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 9.128202368107015,
+            "delta": 0.14675705560701502,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s3_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 3,
+            "solver_position": 3,
+            "verified_order_source_id": 3,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 43.6015625,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 43.203167804940094,
+            "delta": -0.3983946950599062,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s3_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 3,
+            "solver_position": 3,
+            "verified_order_source_id": 3,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 8.9814453125,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 9.128202368107015,
+            "delta": 0.14675705560701502,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s3_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 3,
+            "solver_position": 3,
+            "verified_order_source_id": 3,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 55.833984375,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 56.19947248193613,
+            "delta": 0.36548810693612666,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s4_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 4,
+            "solver_position": 4,
+            "verified_order_source_id": 4,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 27.7216796875,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s4_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 4,
+            "solver_position": 4,
+            "verified_order_source_id": 4,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 38.568359375,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 39.058894298538,
+            "delta": 0.4905349235380001,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s4_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 4,
+            "solver_position": 4,
+            "verified_order_source_id": 4,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 27.7216796875,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s4_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 4,
+            "solver_position": 4,
+            "verified_order_source_id": 4,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 60.4765625,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 60.020336398089334,
+            "delta": -0.4562261019106657,
+            "satisfied": true
+          }
+        ],
+        "satisfied_count": 14,
+        "total_count": 16,
+        "anchor_satisfaction_rate": 0.875,
+        "violations": [
+          {
+            "constraint_id": "s2_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 14.786967418546364,
+            "tolerance": 1.0,
+            "role": "pair2_visual_top_y",
+            "hard_fail_on_violation": true,
+            "candidate_value": 7.415727146463169,
+            "delta": -7.371240272083195,
+            "satisfied": false
+          },
+          {
+            "constraint_id": "s11_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 14.285714285714285,
+            "tolerance": 2.0,
+            "role": "right_seam_top_y_soft",
+            "hard_fail_on_violation": true,
+            "candidate_value": 7.830485026098316,
+            "delta": -6.455229259615969,
+            "satisfied": false
+          }
+        ]
+      },
+      "per_wall_residual_diagnostic": {
+        "walls": [
+          {
+            "source_edge_ids": [
+              2,
+              1
+            ],
+            "solver_edge_positions": [
+              1,
+              2
+            ],
+            "seam_edge": false,
+            "length": 6.4459012484046445,
+            "manhattan_residual_deg": 0.032422750108182186
+          },
+          {
+            "source_edge_ids": [
+              1,
+              3
+            ],
+            "solver_edge_positions": [
+              2,
+              3
+            ],
+            "seam_edge": false,
+            "length": 4.253891764463491,
+            "manhattan_residual_deg": 0.29420949172859423
+          },
+          {
+            "source_edge_ids": [
+              3,
+              4
+            ],
+            "solver_edge_positions": [
+              3,
+              4
+            ],
+            "seam_edge": false,
+            "length": 7.568379850793359,
+            "manhattan_residual_deg": 3.4558655762721457
+          },
+          {
+            "source_edge_ids": [
+              4,
+              6
+            ],
+            "solver_edge_positions": [
+              4,
+              5
+            ],
+            "seam_edge": false,
+            "length": 4.613254577102984,
+            "manhattan_residual_deg": 3.4558655762721373
+          },
+          {
+            "source_edge_ids": [
+              6,
+              5
+            ],
+            "solver_edge_positions": [
+              5,
+              6
+            ],
+            "seam_edge": false,
+            "length": 0.40270248411764276,
+            "manhattan_residual_deg": 3.455865576272089
+          },
+          {
+            "source_edge_ids": [
+              5,
+              8
+            ],
+            "solver_edge_positions": [
+              6,
+              7
+            ],
+            "seam_edge": false,
+            "length": 0.3118787993749672,
+            "manhattan_residual_deg": 3.455865576272007
+          },
+          {
+            "source_edge_ids": [
+              8,
+              7
+            ],
+            "solver_edge_positions": [
+              7,
+              8
+            ],
+            "seam_edge": false,
+            "length": 0.8094380901425745,
+            "manhattan_residual_deg": 3.4558655762721173
+          },
+          {
+            "source_edge_ids": [
+              7,
+              9
+            ],
+            "solver_edge_positions": [
+              8,
+              9
+            ],
+            "seam_edge": false,
+            "length": 1.7938608685987785,
+            "manhattan_residual_deg": 3.4558655762721435
+          },
+          {
+            "source_edge_ids": [
+              9,
+              10
+            ],
+            "solver_edge_positions": [
+              9,
+              10
+            ],
+            "seam_edge": false,
+            "length": 2.7079985882407507,
+            "manhattan_residual_deg": 3.4558655762721315
+          },
+          {
+            "source_edge_ids": [
+              10,
+              12
+            ],
+            "solver_edge_positions": [
+              10,
+              11
+            ],
+            "seam_edge": false,
+            "length": 1.9041436962084741,
+            "manhattan_residual_deg": 3.4558655762721173
+          },
+          {
+            "source_edge_ids": [
+              12,
+              11
+            ],
+            "solver_edge_positions": [
+              11,
+              12
+            ],
+            "seam_edge": false,
+            "length": 0.8271434429015075,
+            "manhattan_residual_deg": 2.935018838230107
+          },
+          {
+            "source_edge_ids": [
+              11,
+              2
+            ],
+            "solver_edge_positions": [
+              12,
+              1
+            ],
+            "seam_edge": true,
+            "length": 0.20238462052594824,
+            "manhattan_residual_deg": 14.368173873592838
+          }
+        ],
+        "summary": {
+          "wall_count": 12,
+          "residual_sum": 45.2767495638366,
+          "residual_max": 14.368173873592838
+        }
+      },
+      "metrics": {
+        "wall_residual_sum": 45.276749563836546,
+        "turn_residual_max": 17.30319271182293,
+        "height_consistency_l1": 1.199040866595169e-14,
+        "self_intersection": false
+      },
+      "false_visual_drift": true,
+      "decision": "rejected_false_visual_drift",
+      "candidate_available": false,
+      "explanation_card": {
+        "what_changed": "geometry consistency prototype under explicit human visual anchors",
+        "why_candidate_exists": "test whether human semantic anchors plus solver diagnostics produce a reviewable candidate",
+        "why_not_accepted": "M-Anchor.1 is audit-only and still requires human visual review",
+        "downgrade_rule": "any geometry-improving candidate that violates hard visual anchors is rejected as false_visual_drift"
+      },
+      "corrected_coordinates": [
+        {
+          "top": {
+            "x": 5.889724310776942,
+            "y": 7.415727146463169
+          },
+          "bottom": {
+            "x": 5.889724310776942,
+            "y": 91.87869674185464
+          },
+          "source_pair_id": 2,
+          "solver_position": 1,
+          "verified_order_source_id": 2,
+          "effective_pair_index": 1,
+          "source_preview_order_index": 2,
+          "point_ids": {
+            "top_id": "g2wZbu2QeF",
+            "bottom_id": "VLVcY19Ief"
+          }
+        },
+        {
+          "top": {
+            "x": 0.34290478814528647,
+            "y": 41.98507512297742
+          },
+          "bottom": {
+            "x": 0.34290478814528647,
+            "y": 57.317890064593364
+          },
+          "source_pair_id": 1,
+          "solver_position": 2,
+          "verified_order_source_id": 1,
+          "effective_pair_index": 2,
+          "source_preview_order_index": 1,
+          "point_ids": {
+            "top_id": "kp_6",
+            "bottom_id": "kp_7"
+          }
+        },
+        {
+          "top": {
+            "x": 9.128202368107015,
+            "y": 43.203167804940094
+          },
+          "bottom": {
+            "x": 9.128202368107015,
+            "y": 56.19947248193613
+          },
+          "source_pair_id": 3,
+          "solver_position": 3,
+          "verified_order_source_id": 3,
+          "effective_pair_index": 3,
+          "source_preview_order_index": 3,
+          "point_ids": {
+            "top_id": "kp_8",
+            "bottom_id": "kp_9"
+          }
+        },
+        {
+          "top": {
+            "x": 27.410957965652642,
+            "y": 39.058894298538
+          },
+          "bottom": {
+            "x": 27.410957965652642,
+            "y": 60.020336398089334
+          },
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "source_preview_order_index": 4,
+          "point_ids": {
+            "top_id": "kp_10",
+            "bottom_id": "kp_11"
+          }
+        },
+        {
+          "top": {
+            "x": 46.13663017821954,
+            "y": 17.137158536785712
+          },
+          "bottom": {
+            "x": 46.13663017821954,
+            "y": 81.50874592008077
+          },
+          "source_pair_id": 6,
+          "solver_position": 5,
+          "verified_order_source_id": 6,
+          "effective_pair_index": 5,
+          "source_preview_order_index": 6,
+          "point_ids": {
+            "top_id": "-4TzkLtjeO",
+            "bottom_id": "7R_vYvj4bN"
+          }
+        },
+        {
+          "top": {
+            "x": 44.36703866987801,
+            "y": 11.402412342834095
+          },
+          "bottom": {
+            "x": 44.36703866987801,
+            "y": 87.573459332818
+          },
+          "source_pair_id": 5,
+          "solver_position": 6,
+          "verified_order_source_id": 5,
+          "effective_pair_index": 6,
+          "source_preview_order_index": 5,
+          "point_ids": {
+            "top_id": "9Tiplq2Pvq",
+            "bottom_id": "zGbQgzhVWW"
+          }
+        },
+        {
+          "top": {
+            "x": 52.06679785137357,
+            "y": 11.137995288377079
+          },
+          "bottom": {
+            "x": 52.06679785137357,
+            "y": 87.85701134257397
+          },
+          "source_pair_id": 8,
+          "solver_position": 7,
+          "verified_order_source_id": 8,
+          "effective_pair_index": 7,
+          "source_preview_order_index": 8,
+          "point_ids": {
+            "top_id": "kp_12",
+            "bottom_id": "kp_13"
+          }
+        },
+        {
+          "top": {
+            "x": 50.378095580497586,
+            "y": 21.89033221150598
+          },
+          "bottom": {
+            "x": 50.378095580497586,
+            "y": 76.62127196977598
+          },
+          "source_pair_id": 7,
+          "solver_position": 8,
+          "verified_order_source_id": 7,
+          "effective_pair_index": 8,
+          "source_preview_order_index": 7,
+          "point_ids": {
+            "top_id": "kp_14",
+            "bottom_id": "kp_15"
+          }
+        },
+        {
+          "top": {
+            "x": 63.78090512564466,
+            "y": 29.844209694526825
+          },
+          "bottom": {
+            "x": 63.78090512564466,
+            "y": 68.74147895391475
+          },
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "source_preview_order_index": 9,
+          "point_ids": {
+            "top_id": "kp_0",
+            "bottom_id": "kp_1"
+          }
+        },
+        {
+          "top": {
+            "x": 83.34955092974104,
+            "y": 29.20039203920648
+          },
+          "bottom": {
+            "x": 83.34955092974104,
+            "y": 69.3659181657466
+          },
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "source_preview_order_index": 10,
+          "point_ids": {
+            "top_id": "kp_2",
+            "bottom_id": "kp_3"
+          }
+        },
+        {
+          "top": {
+            "x": 98.90149346547022,
+            "y": 19.887922704594597
+          },
+          "bottom": {
+            "x": 98.90149346547022,
+            "y": 78.66395669515278
+          },
+          "source_pair_id": 12,
+          "solver_position": 11,
+          "verified_order_source_id": 12,
+          "effective_pair_index": 11,
+          "source_preview_order_index": 12,
+          "point_ids": {
+            "top_id": "YzRMT1hSFI",
+            "bottom_id": "ejD1N6pEta"
+          }
+        },
+        {
+          "top": {
+            "x": 98.37092731829574,
+            "y": 7.830485026098316
+          },
+          "bottom": {
+            "x": 98.37092731829574,
+            "y": 91.42807017543859
+          },
+          "source_pair_id": 11,
+          "solver_position": 12,
+          "verified_order_source_id": 11,
+          "effective_pair_index": 12,
+          "source_preview_order_index": 11,
+          "point_ids": {
+            "top_id": "KsPc0VPM8v",
+            "bottom_id": "Q7vTL8-tKi"
+          }
+        }
+      ],
+      "audit_only": true,
+      "accepted": false,
+      "downstream_recommendation": false,
+      "candidate_preference_authorized": false,
+      "annotation_writeback": false,
+      "annotation_patch_generated": false,
+      "active_runner_role": false
+    },
+    {
+      "candidate_id": "m_anchor_1_false_drift_reference_robust_all_long_edges",
+      "prototype_type": "diagnostic_false_visual_drift_reference",
+      "solver_scope": "diagnostic_reference",
+      "source_pair_order": [
+        2,
+        1,
+        3,
+        4,
+        6,
+        5,
+        8,
+        7,
+        9,
+        10,
+        12,
+        11
+      ],
+      "pair_count": 12,
+      "anchor_audit": {
+        "constraints": [
+          {
+            "constraint_id": "s2_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 5.889724310776942,
+            "tolerance": 0.45,
+            "role": "pair2_occlusion_sensitive_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 13.024981892474225,
+            "delta": 7.1352575816972825,
+            "satisfied": false
+          },
+          {
+            "constraint_id": "s2_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 5.889724310776942,
+            "tolerance": 0.45,
+            "role": "pair2_occlusion_sensitive_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 13.024981892474225,
+            "delta": 7.1352575816972825,
+            "satisfied": false
+          },
+          {
+            "constraint_id": "s2_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 14.786967418546364,
+            "tolerance": 1.0,
+            "role": "pair2_visual_top_y",
+            "hard_fail_on_violation": true,
+            "candidate_value": 12.001682686845056,
+            "delta": -2.7852847317013083,
+            "satisfied": false
+          },
+          {
+            "constraint_id": "s2_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 91.47869674185463,
+            "tolerance": 1.0,
+            "role": "pair2_visual_bottom_y",
+            "hard_fail_on_violation": true,
+            "candidate_value": 86.93199203774216,
+            "delta": -4.5467047041124715,
+            "satisfied": false
+          },
+          {
+            "constraint_id": "s11_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 98.37092731829574,
+            "tolerance": 0.45,
+            "role": "right_seam_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 98.64473778205918,
+            "delta": 0.2738104637634393,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s11_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 98.37092731829574,
+            "tolerance": 0.45,
+            "role": "right_seam_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 98.64473778205918,
+            "delta": 0.2738104637634393,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s11_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 14.285714285714285,
+            "tolerance": 2.0,
+            "role": "right_seam_top_y_soft",
+            "hard_fail_on_violation": true,
+            "candidate_value": 7.881127384398312,
+            "delta": -6.404586901315973,
+            "satisfied": false
+          },
+          {
+            "constraint_id": "s11_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 91.22807017543859,
+            "tolerance": 1.0,
+            "role": "right_seam_bottom_y",
+            "hard_fail_on_violation": true,
+            "candidate_value": 91.37308675226664,
+            "delta": 0.14501657682805558,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s3_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 3,
+            "solver_position": 3,
+            "verified_order_source_id": 3,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 8.9814453125,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 9.128202368107015,
+            "delta": 0.14675705560701502,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s3_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 3,
+            "solver_position": 3,
+            "verified_order_source_id": 3,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 43.6015625,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 43.203167804940094,
+            "delta": -0.3983946950599062,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s3_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 3,
+            "solver_position": 3,
+            "verified_order_source_id": 3,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 8.9814453125,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 9.128202368107015,
+            "delta": 0.14675705560701502,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s3_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 3,
+            "solver_position": 3,
+            "verified_order_source_id": 3,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 55.833984375,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 56.19947248193613,
+            "delta": 0.36548810693612666,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s4_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 4,
+            "solver_position": 4,
+            "verified_order_source_id": 4,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 27.7216796875,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s4_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 4,
+            "solver_position": 4,
+            "verified_order_source_id": 4,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 38.568359375,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 39.058894298538,
+            "delta": 0.4905349235380001,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s4_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 4,
+            "solver_position": 4,
+            "verified_order_source_id": 4,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 27.7216796875,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
+            "satisfied": true
+          },
+          {
+            "constraint_id": "s4_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 4,
+            "solver_position": 4,
+            "verified_order_source_id": 4,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 60.4765625,
+            "tolerance": 0.75,
+            "role": "strong_visual_anchor_3_4",
+            "hard_fail_on_violation": true,
+            "candidate_value": 60.020336398089334,
+            "delta": -0.4562261019106657,
+            "satisfied": true
+          }
+        ],
+        "satisfied_count": 11,
+        "total_count": 16,
+        "anchor_satisfaction_rate": 0.6875,
+        "violations": [
+          {
+            "constraint_id": "s2_top_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "top",
+            "axis": "x",
+            "anchor_value": 5.889724310776942,
+            "tolerance": 0.45,
+            "role": "pair2_occlusion_sensitive_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 13.024981892474225,
+            "delta": 7.1352575816972825,
+            "satisfied": false
+          },
+          {
+            "constraint_id": "s2_bottom_x",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "bottom",
+            "axis": "x",
+            "anchor_value": 5.889724310776942,
+            "tolerance": 0.45,
+            "role": "pair2_occlusion_sensitive_visual_x",
+            "hard_fail_on_violation": true,
+            "candidate_value": 13.024981892474225,
+            "delta": 7.1352575816972825,
+            "satisfied": false
+          },
+          {
+            "constraint_id": "s2_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 14.786967418546364,
+            "tolerance": 1.0,
+            "role": "pair2_visual_top_y",
+            "hard_fail_on_violation": true,
+            "candidate_value": 12.001682686845056,
+            "delta": -2.7852847317013083,
+            "satisfied": false
+          },
+          {
+            "constraint_id": "s2_bottom_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 2,
+            "solver_position": 1,
+            "verified_order_source_id": 2,
+            "endpoint": "bottom",
+            "axis": "y",
+            "anchor_value": 91.47869674185463,
+            "tolerance": 1.0,
+            "role": "pair2_visual_bottom_y",
+            "hard_fail_on_violation": true,
+            "candidate_value": 86.93199203774216,
+            "delta": -4.5467047041124715,
+            "satisfied": false
+          },
+          {
+            "constraint_id": "s11_top_y",
+            "schema_version": "expert_anchor_constraints_v1",
+            "constraint_type": "point_axis_anchor",
+            "source_pair_id": 11,
+            "solver_position": 12,
+            "verified_order_source_id": 11,
+            "endpoint": "top",
+            "axis": "y",
+            "anchor_value": 14.285714285714285,
+            "tolerance": 2.0,
+            "role": "right_seam_top_y_soft",
+            "hard_fail_on_violation": true,
+            "candidate_value": 7.881127384398312,
+            "delta": -6.404586901315973,
+            "satisfied": false
+          }
+        ]
+      },
+      "per_wall_residual_diagnostic": {
+        "walls": [
+          {
+            "source_edge_ids": [
+              2,
+              1
+            ],
+            "solver_edge_positions": [
+              1,
+              2
+            ],
+            "seam_edge": false,
+            "length": 6.090997333291638,
+            "manhattan_residual_deg": 3.45586557627216
+          },
+          {
+            "source_edge_ids": [
+              1,
+              3
+            ],
+            "solver_edge_positions": [
+              2,
+              3
+            ],
+            "seam_edge": false,
+            "length": 4.267610309410626,
+            "manhattan_residual_deg": 3.4558655762722594
+          },
+          {
+            "source_edge_ids": [
+              3,
+              4
+            ],
+            "solver_edge_positions": [
+              3,
+              4
+            ],
+            "seam_edge": false,
+            "length": 7.568379850793359,
+            "manhattan_residual_deg": 3.4558655762721457
+          },
+          {
+            "source_edge_ids": [
+              4,
+              6
+            ],
+            "solver_edge_positions": [
+              4,
+              5
+            ],
+            "seam_edge": false,
+            "length": 4.613254577102984,
+            "manhattan_residual_deg": 3.4558655762721373
+          },
+          {
+            "source_edge_ids": [
+              6,
+              5
+            ],
+            "solver_edge_positions": [
+              5,
+              6
+            ],
+            "seam_edge": false,
+            "length": 0.40270248411764276,
+            "manhattan_residual_deg": 3.455865576272089
+          },
+          {
+            "source_edge_ids": [
+              5,
+              8
+            ],
+            "solver_edge_positions": [
+              6,
+              7
+            ],
+            "seam_edge": false,
+            "length": 0.3118787993749672,
+            "manhattan_residual_deg": 3.455865576272007
+          },
+          {
+            "source_edge_ids": [
+              8,
+              7
+            ],
+            "solver_edge_positions": [
+              7,
+              8
+            ],
+            "seam_edge": false,
+            "length": 0.8094380901425745,
+            "manhattan_residual_deg": 3.4558655762721173
+          },
+          {
+            "source_edge_ids": [
+              7,
+              9
+            ],
+            "solver_edge_positions": [
+              8,
+              9
+            ],
+            "seam_edge": false,
+            "length": 1.7938608685987785,
+            "manhattan_residual_deg": 3.4558655762721435
+          },
+          {
+            "source_edge_ids": [
+              9,
+              10
+            ],
+            "solver_edge_positions": [
+              9,
+              10
+            ],
+            "seam_edge": false,
+            "length": 2.7079985882407507,
+            "manhattan_residual_deg": 3.4558655762721315
+          },
+          {
+            "source_edge_ids": [
+              10,
+              12
+            ],
+            "solver_edge_positions": [
+              10,
+              11
+            ],
+            "seam_edge": false,
+            "length": 1.9041436962084741,
+            "manhattan_residual_deg": 3.4558655762721173
+          },
+          {
+            "source_edge_ids": [
+              12,
+              11
+            ],
+            "solver_edge_positions": [
+              11,
+              12
+            ],
+            "seam_edge": false,
+            "length": 0.823880464714107,
+            "manhattan_residual_deg": 3.4558655762722026
+          },
+          {
+            "source_edge_ids": [
+              11,
+              2
+            ],
+            "solver_edge_positions": [
+              12,
+              1
+            ],
+            "seam_edge": true,
+            "length": 0.5472402394576291,
+            "manhattan_residual_deg": 3.4558655762721457
+          }
+        ],
+        "summary": {
+          "wall_count": 12,
+          "residual_sum": 41.47038691526566,
+          "residual_max": 3.4558655762722594
+        }
+      },
+      "metrics": {
+        "wall_residual_sum": 41.47038691526561,
+        "turn_residual_max": 1.1368683772161603e-13,
+        "height_consistency_l1": 1.1102230246251565e-14,
+        "self_intersection": false
+      },
+      "false_visual_drift": true,
+      "decision": "rejected_false_visual_drift",
+      "candidate_available": false,
+      "explanation_card": {
+        "what_changed": "geometry consistency prototype under explicit human visual anchors",
+        "why_candidate_exists": "test whether human semantic anchors plus solver diagnostics produce a reviewable candidate",
+        "why_not_accepted": "M-Anchor.1 is audit-only and still requires human visual review",
+        "downgrade_rule": "any geometry-improving candidate that violates hard visual anchors is rejected as false_visual_drift"
+      },
+      "corrected_coordinates": [
+        {
+          "top": {
+            "x": 13.024981892474225,
+            "y": 12.001682686845056
+          },
+          "bottom": {
+            "x": 13.024981892474225,
+            "y": 86.93199203774216
+          },
+          "source_pair_id": 2,
+          "solver_position": 1,
+          "verified_order_source_id": 2,
+          "effective_pair_index": 1,
+          "source_preview_order_index": 2,
+          "point_ids": {
+            "top_id": "g2wZbu2QeF",
+            "bottom_id": "VLVcY19Ief"
+          }
+        },
+        {
+          "top": {
+            "x": 0.34290478814528647,
+            "y": 41.65898099154619
+          },
+          "bottom": {
+            "x": 0.34290478814528647,
+            "y": 57.61789006459336
+          },
+          "source_pair_id": 1,
+          "solver_position": 2,
+          "verified_order_source_id": 1,
+          "effective_pair_index": 2,
+          "source_preview_order_index": 1,
+          "point_ids": {
+            "top_id": "kp_6",
+            "bottom_id": "kp_7"
+          }
+        },
+        {
+          "top": {
+            "x": 9.128202368107015,
+            "y": 43.203167804940094
+          },
+          "bottom": {
+            "x": 9.128202368107015,
+            "y": 56.19947248193613
+          },
+          "source_pair_id": 3,
+          "solver_position": 3,
+          "verified_order_source_id": 3,
+          "effective_pair_index": 3,
+          "source_preview_order_index": 3,
+          "point_ids": {
+            "top_id": "kp_8",
+            "bottom_id": "kp_9"
+          }
+        },
+        {
+          "top": {
+            "x": 27.410957965652642,
+            "y": 39.058894298538
+          },
+          "bottom": {
+            "x": 27.410957965652642,
+            "y": 60.020336398089334
+          },
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "source_preview_order_index": 4,
+          "point_ids": {
+            "top_id": "kp_10",
+            "bottom_id": "kp_11"
+          }
+        },
+        {
+          "top": {
+            "x": 46.13663017821954,
+            "y": 17.137158536785712
+          },
+          "bottom": {
+            "x": 46.13663017821954,
+            "y": 81.50874592008077
+          },
+          "source_pair_id": 6,
+          "solver_position": 5,
+          "verified_order_source_id": 6,
+          "effective_pair_index": 5,
+          "source_preview_order_index": 6,
+          "point_ids": {
+            "top_id": "-4TzkLtjeO",
+            "bottom_id": "7R_vYvj4bN"
+          }
+        },
+        {
+          "top": {
+            "x": 44.36703866987801,
+            "y": 11.402412342834095
+          },
+          "bottom": {
+            "x": 44.36703866987801,
+            "y": 87.573459332818
+          },
+          "source_pair_id": 5,
+          "solver_position": 6,
+          "verified_order_source_id": 5,
+          "effective_pair_index": 6,
+          "source_preview_order_index": 5,
+          "point_ids": {
+            "top_id": "9Tiplq2Pvq",
+            "bottom_id": "zGbQgzhVWW"
+          }
+        },
+        {
+          "top": {
+            "x": 52.06679785137357,
+            "y": 11.137995288377079
+          },
+          "bottom": {
+            "x": 52.06679785137357,
+            "y": 87.85701134257397
+          },
+          "source_pair_id": 8,
+          "solver_position": 7,
+          "verified_order_source_id": 8,
+          "effective_pair_index": 7,
+          "source_preview_order_index": 8,
+          "point_ids": {
+            "top_id": "kp_12",
+            "bottom_id": "kp_13"
+          }
+        },
+        {
+          "top": {
+            "x": 50.378095580497586,
+            "y": 21.89033221150598
+          },
+          "bottom": {
+            "x": 50.378095580497586,
+            "y": 76.62127196977598
+          },
+          "source_pair_id": 7,
+          "solver_position": 8,
+          "verified_order_source_id": 7,
+          "effective_pair_index": 8,
+          "source_preview_order_index": 7,
+          "point_ids": {
+            "top_id": "kp_14",
+            "bottom_id": "kp_15"
+          }
+        },
+        {
+          "top": {
+            "x": 63.78090512564466,
+            "y": 29.844209694526825
+          },
+          "bottom": {
+            "x": 63.78090512564466,
+            "y": 68.74147895391475
+          },
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "source_preview_order_index": 9,
+          "point_ids": {
+            "top_id": "kp_0",
+            "bottom_id": "kp_1"
+          }
+        },
+        {
+          "top": {
+            "x": 83.34955092974104,
+            "y": 29.20039203920648
+          },
+          "bottom": {
+            "x": 83.34955092974104,
+            "y": 69.3659181657466
+          },
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "source_preview_order_index": 10,
+          "point_ids": {
+            "top_id": "kp_2",
+            "bottom_id": "kp_3"
+          }
+        },
+        {
+          "top": {
+            "x": 98.90149346547022,
+            "y": 19.887922704594597
+          },
+          "bottom": {
+            "x": 98.90149346547022,
+            "y": 78.66395669515278
+          },
+          "source_pair_id": 12,
+          "solver_position": 11,
+          "verified_order_source_id": 12,
+          "effective_pair_index": 11,
+          "source_preview_order_index": 12,
+          "point_ids": {
+            "top_id": "YzRMT1hSFI",
+            "bottom_id": "ejD1N6pEta"
+          }
+        },
+        {
+          "top": {
+            "x": 98.64473778205918,
+            "y": 7.881127384398312
+          },
+          "bottom": {
+            "x": 98.64473778205918,
+            "y": 91.37308675226664
+          },
+          "source_pair_id": 11,
+          "solver_position": 12,
+          "verified_order_source_id": 11,
+          "effective_pair_index": 12,
+          "source_preview_order_index": 11,
+          "point_ids": {
+            "top_id": "KsPc0VPM8v",
+            "bottom_id": "Q7vTL8-tKi"
+          }
+        }
+      ],
+      "audit_only": true,
+      "accepted": false,
+      "downstream_recommendation": false,
+      "candidate_preference_authorized": false,
+      "annotation_writeback": false,
+      "annotation_patch_generated": false,
+      "active_runner_role": false
+    }
+  ],
+  "candidate_explanation_cards": [
+    {
+      "candidate_id": "m_anchor_1_footprint_only_joint_xy",
+      "solver_scope": "footprint_only",
+      "anchor_satisfaction_rate": 1.0,
+      "wall_residual_sum": 36.74079625252,
+      "height_consistency_l1": 1.995144922207567,
+      "decision": "review_available",
+      "false_visual_drift": false,
+      "why_not_accepted": "M-Anchor.1 is audit-only and still requires human visual review"
+    },
+    {
+      "candidate_id": "m_anchor_1_height_only_plane_preserving",
+      "solver_scope": "height_only",
+      "anchor_satisfaction_rate": 0.875,
+      "wall_residual_sum": 45.276749563836546,
+      "height_consistency_l1": 1.199040866595169e-14,
+      "decision": "rejected_false_visual_drift",
+      "false_visual_drift": true,
+      "why_not_accepted": "M-Anchor.1 is audit-only and still requires human visual review"
+    },
+    {
+      "candidate_id": "m_anchor_1_false_drift_reference_robust_all_long_edges",
+      "solver_scope": "diagnostic_reference",
+      "anchor_satisfaction_rate": 0.6875,
+      "wall_residual_sum": 41.47038691526561,
+      "height_consistency_l1": 1.1102230246251565e-14,
+      "decision": "rejected_false_visual_drift",
+      "false_visual_drift": true,
+      "why_not_accepted": "M-Anchor.1 is audit-only and still requires human visual review"
+    }
+  ],
+  "acceptance_metrics": {
+    "anchor_satisfaction_rate": 0.8541666666666666,
+    "candidate_available_rate": 0.3333333333333333,
+    "expert_accept_at_3": null,
+    "expert_accept_at_3_status": "pending_human_review",
+    "false_visual_drift_rate": 0.0,
+    "false_visual_drift_rejected_count": 2
+  },
+  "safety_flags": {
+    "audit_only": true,
+    "accepted": false,
+    "downstream_recommendation": false,
+    "candidate_preference_authorized": false,
+    "annotation_writeback": false,
+    "annotation_patch_generated": false,
+    "active_runner_role": false
+  },
+  "audit_only": true,
+  "accepted": false,
+  "downstream_recommendation": false,
+  "candidate_preference_authorized": false,
+  "annotation_writeback": false,
+  "annotation_patch_generated": false,
+  "active_runner_role": false
+}

@@ -37,6 +37,7 @@ C6.5a.9.3 已记录 `robust_all_long_edges` 被人工 2D review 否决，并物�
 C6.5a.9.4 已记录 `pair2_anchored_height_clamped` 为 partially improved but human-rejected，并物化 s2/s11 baseline-x anchored、bottom_y/top_y targeted 的 deterministic review candidates；不启动 C7 optimizer，所有结果继续保持 audit-only。
 C6.5a.9.5 已记录 `s2_s11_height_pair_repair` 为 human-rejected，并以 `robust_all_long_edges` 的统一高度趋势和 baseline continuity references 估计 dominant height plane，物化 s2/s11 baseline-x constrained、bottom-y sensitivity-guided deterministic candidates；不构成 acceptance、C4 image evidence 或 writeback。
 C6.5a.9.6 已记录 `height_plane_preserved_s2_s11_s1_adapter` 为 human-rejected，并运行 task218_ann3741 专用、bounded deterministic joint X-Y family search；该 expert-side search 不进入 C7，不修改 active runner/ranking/portfolio，结果仅供人工 review。
+M-Anchor.1 已物化 task218_ann3741 的 expert-anchor constraints、source_pair_id/solver_position/seam mapping、per-wall residual diagnostics、footprint-only / height-only prototype cards 与 feedback ledger row；`false_visual_drift_rate=0` 仅表示 drift 候选已 fail-closed，不表示自动接受。
 
 `candidate_set.recommended_review_candidate` 只表示 diagnostic/bucket selection，不具有下游授权语义。下游必须同时读取 `overall_verdict.recommended_review_candidate_available`、bucket `accepted` 与 `downstream_recommendation`；当前仍保持 `accepted=false`、`downstream_recommendation=false`，0017 不是 accepted final fix。
 
