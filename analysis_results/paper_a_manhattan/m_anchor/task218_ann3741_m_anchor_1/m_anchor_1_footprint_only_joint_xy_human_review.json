@@ -1,0 +1,37 @@
+{
+  "schema_version": "m_anchor_1_1_human_review_v1",
+  "case_name": "task218_ann3741",
+  "candidate_id": "m_anchor_1_footprint_only_joint_xy",
+  "reviewer": "human_expert",
+  "reviewed_at": "2026-07-09",
+  "review_scope": "manual_visual_review_only",
+  "verdict": "slight_improvement_needs_refinement",
+  "human_findings": {
+    "overall": "slightly improved",
+    "s6_bottom_y": "should be increased slightly",
+    "s7_to_s12_top_y": "may be slightly too high",
+    "s2": "looks acceptable, but ceiling occlusion prevents precise confirmation of the true wall corner",
+    "occlusion_note": "ceiling mask/occlusion makes s2 top corner precision uncertain"
+  },
+  "candidate_status_after_review": {
+    "review_available": true,
+    "accepted": false,
+    "downstream_recommendation": false,
+    "candidate_preference_authorized": false,
+    "annotation_writeback": false,
+    "annotation_patch_generated": false,
+    "active_runner_role": false
+  },
+  "allowed_next_diagnostic_only": {
+    "description": "If explicitly requested, run a bounded review-only refinement around the reviewed candidate.",
+    "suggested_axes": [
+      "s6 bottom y small positive delta",
+      "s7-s12 top y small negative delta"
+    ],
+    "guardrails": [
+      "do not treat s2 top as precisely confirmed because of ceiling occlusion",
+      "do not accept or write back without a later explicit human decision",
+      "keep M-Anchor as audit/filter layer, not optimizer"
+    ]
+  }
+}

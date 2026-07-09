@@ -128,6 +128,7 @@ def test_hard_anchor_violation_fails_closed_without_geometry_improvement():
         (lambda payload: payload.update({"case_name": "wrong"}), "case_name"),
         (lambda payload: payload.update({"source_annotation_id": 9999}), "source_annotation_id"),
         (lambda payload: payload.update({"coordinate_space": "pixels"}), "coordinate_space"),
+        (lambda payload: payload["constraints"][0].update({"constraint_type": "line_anchor"}), "constraint_type"),
         (lambda payload: payload["constraints"][0].update({"constraint_id": "bad"}), "constraint_id"),
         (lambda payload: payload["constraints"][0].update({"endpoint": "middle"}), "endpoint"),
         (lambda payload: payload["constraints"][0].update({"axis": "z"}), "axis"),

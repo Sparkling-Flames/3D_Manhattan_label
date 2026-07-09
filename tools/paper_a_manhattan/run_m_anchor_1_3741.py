@@ -1,4 +1,8 @@
-"""Materialize M-Anchor.1.1 audit artifacts for task218_ann3741."""
+"""Materialize M-Anchor.1.1 audit artifacts for task218_ann3741.
+
+M-Anchor.1.2 only hardens sidecar input validation; it does not change
+the emitted M-Anchor.1.1 artifact schema.
+"""
 
 from __future__ import annotations
 
@@ -114,8 +118,11 @@ def _anchor_constraints(sidecar: Mapping[str, Any]) -> list[dict[str, Any]]:
         endpoint = raw["endpoint"]
         axis = raw["axis"]
         constraint_id = raw["constraint_id"]
+        constraint_type = raw["constraint_type"]
         if source_id not in VERIFIED_ORDER_SOURCE_IDS:
             raise ValueError(f"unknown source_pair_id in anchor sidecar: {source_id}")
+        if constraint_type != "point_axis_anchor":
+            raise ValueError(f"unsupported anchor constraint_type: {constraint_type}")
         if strength not in allowed_strengths:
             raise ValueError(f"unsupported anchor_strength: {strength}")
         if endpoint not in allowed_endpoints:
