@@ -74,9 +74,209 @@
       "wall_residual_sum_after": 36.03958463768751,
       "wall_residual_max_before": 3.4558655762722594,
       "wall_residual_max_after": 3.4558655762722594,
+      "per_wall_residual_diagnostic": {
+        "walls": [
+          {
+            "source_edge_ids": [
+              2,
+              1
+            ],
+            "seam_edge": false,
+            "length_before": 6.146744358487142,
+            "length_after": 6.146744358487142,
+            "manhattan_residual_before_deg": 0.16269686644639592,
+            "manhattan_residual_after_deg": 0.16269686644639592,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              1,
+              3
+            ],
+            "seam_edge": false,
+            "length_before": 4.267610309410626,
+            "length_after": 4.267610309410626,
+            "manhattan_residual_before_deg": 3.4558655762722594,
+            "manhattan_residual_after_deg": 3.4558655762722594,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              3,
+              4
+            ],
+            "seam_edge": false,
+            "length_before": 7.568379850793359,
+            "length_after": 7.568379850793359,
+            "manhattan_residual_before_deg": 3.4558655762721457,
+            "manhattan_residual_after_deg": 3.4558655762721457,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              4,
+              6
+            ],
+            "seam_edge": false,
+            "length_before": 4.613254577102984,
+            "length_after": 4.616533682014872,
+            "manhattan_residual_before_deg": 3.4558655762721373,
+            "manhattan_residual_after_deg": 3.237513728837828,
+            "residual_delta_deg": -0.21835184743430913
+          },
+          {
+            "source_edge_ids": [
+              6,
+              5
+            ],
+            "seam_edge": false,
+            "length_before": 0.40270248411764276,
+            "length_after": 0.38512278379981607,
+            "manhattan_residual_before_deg": 3.455865576272089,
+            "manhattan_residual_after_deg": 2.973005808873907,
+            "residual_delta_deg": -0.4828597673981818
+          },
+          {
+            "source_edge_ids": [
+              5,
+              8
+            ],
+            "seam_edge": false,
+            "length_before": 0.3118787993749672,
+            "length_after": 0.3118787993749672,
+            "manhattan_residual_before_deg": 3.455865576272007,
+            "manhattan_residual_after_deg": 3.455865576272007,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              8,
+              7
+            ],
+            "seam_edge": false,
+            "length_before": 0.8094380901425745,
+            "length_after": 0.8094380901425745,
+            "manhattan_residual_before_deg": 3.4558655762721173,
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              7,
+              9
+            ],
+            "seam_edge": false,
+            "length_before": 1.7938608685987785,
+            "length_after": 1.7938608685987785,
+            "manhattan_residual_before_deg": 3.4558655762721435,
+            "manhattan_residual_after_deg": 3.4558655762721435,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              9,
+              10
+            ],
+            "seam_edge": false,
+            "length_before": 2.7079985882407507,
+            "length_after": 2.7079985882407507,
+            "manhattan_residual_before_deg": 3.4558655762721315,
+            "manhattan_residual_after_deg": 3.4558655762721315,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              10,
+              12
+            ],
+            "seam_edge": false,
+            "length_before": 1.9041436962084741,
+            "length_after": 1.9041436962084741,
+            "manhattan_residual_before_deg": 3.4558655762721173,
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              12,
+              11
+            ],
+            "seam_edge": false,
+            "length_before": 0.8486801150228688,
+            "length_after": 0.8486801150228688,
+            "manhattan_residual_before_deg": 3.0094258133120633,
+            "manhattan_residual_after_deg": 3.0094258133120633,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              11,
+              2
+            ],
+            "seam_edge": true,
+            "length_before": 0.20183027345383003,
+            "length_after": 0.20183027345383003,
+            "manhattan_residual_before_deg": 2.46588338631247,
+            "manhattan_residual_after_deg": 2.46588338631247,
+            "residual_delta_deg": 0.0
+          }
+        ],
+        "summary": {
+          "wall_count": 12,
+          "residual_sum_before_deg": 36.74079625252007,
+          "residual_sum_after_deg": 36.03958463768758,
+          "residual_max_before_deg": 3.4558655762722594,
+          "residual_max_after_deg": 3.4558655762722594,
+          "worst_edge_after": [
+            1,
+            3
+          ]
+        }
+      },
       "turn_residual_max_before": 5.475309199624547,
       "turn_residual_max_after": 5.475309199624547,
       "short_wall_preservation": true,
+      "local_topology_metrics": {
+        "edges": [
+          {
+            "source_edge_ids": [
+              4,
+              6
+            ],
+            "edge_length_before": 4.613254577102984,
+            "edge_length_after": 4.616533682014872,
+            "ratio": 1.0007108007713608
+          },
+          {
+            "source_edge_ids": [
+              6,
+              5
+            ],
+            "edge_length_before": 0.40270248411764276,
+            "edge_length_after": 0.38512278379981607,
+            "ratio": 0.956345686924814
+          },
+          {
+            "source_edge_ids": [
+              5,
+              8
+            ],
+            "edge_length_before": 0.3118787993749672,
+            "edge_length_after": 0.3118787993749672,
+            "ratio": 1.0
+          },
+          {
+            "source_edge_ids": [
+              8,
+              7
+            ],
+            "edge_length_before": 0.8094380901425745,
+            "edge_length_after": 0.8094380901425745,
+            "ratio": 1.0
+          }
+        ],
+        "local_min_edge_length": 0.3118787993749672
+      },
       "keep_distinct_margin_5_6": {
         "before": 0.40270248411764276,
         "after": 0.38512278379981607
@@ -343,9 +543,209 @@
       "wall_residual_sum_after": 35.300322080533846,
       "wall_residual_max_before": 3.4558655762722594,
       "wall_residual_max_after": 3.4558655762722594,
+      "per_wall_residual_diagnostic": {
+        "walls": [
+          {
+            "source_edge_ids": [
+              2,
+              1
+            ],
+            "seam_edge": false,
+            "length_before": 6.146744358487142,
+            "length_after": 6.146744358487142,
+            "manhattan_residual_before_deg": 0.16269686644639592,
+            "manhattan_residual_after_deg": 0.16269686644639592,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              1,
+              3
+            ],
+            "seam_edge": false,
+            "length_before": 4.267610309410626,
+            "length_after": 4.267610309410626,
+            "manhattan_residual_before_deg": 3.4558655762722594,
+            "manhattan_residual_after_deg": 3.4558655762722594,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              3,
+              4
+            ],
+            "seam_edge": false,
+            "length_before": 7.568379850793359,
+            "length_after": 7.568379850793359,
+            "manhattan_residual_before_deg": 3.4558655762721457,
+            "manhattan_residual_after_deg": 3.4558655762721457,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              4,
+              6
+            ],
+            "seam_edge": false,
+            "length_before": 4.613254577102984,
+            "length_after": 4.619845658640852,
+            "manhattan_residual_before_deg": 3.4558655762721373,
+            "manhattan_residual_after_deg": 3.0216724551150556,
+            "residual_delta_deg": -0.43419312115708175
+          },
+          {
+            "source_edge_ids": [
+              6,
+              5
+            ],
+            "seam_edge": false,
+            "length_before": 0.40270248411764276,
+            "length_after": 0.36774988476407977,
+            "manhattan_residual_before_deg": 3.455865576272089,
+            "manhattan_residual_after_deg": 2.4495845254429582,
+            "residual_delta_deg": -1.0062810508291307
+          },
+          {
+            "source_edge_ids": [
+              5,
+              8
+            ],
+            "seam_edge": false,
+            "length_before": 0.3118787993749672,
+            "length_after": 0.3118787993749672,
+            "manhattan_residual_before_deg": 3.455865576272007,
+            "manhattan_residual_after_deg": 3.455865576272007,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              8,
+              7
+            ],
+            "seam_edge": false,
+            "length_before": 0.8094380901425745,
+            "length_after": 0.8094380901425745,
+            "manhattan_residual_before_deg": 3.4558655762721173,
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              7,
+              9
+            ],
+            "seam_edge": false,
+            "length_before": 1.7938608685987785,
+            "length_after": 1.7938608685987785,
+            "manhattan_residual_before_deg": 3.4558655762721435,
+            "manhattan_residual_after_deg": 3.4558655762721435,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              9,
+              10
+            ],
+            "seam_edge": false,
+            "length_before": 2.7079985882407507,
+            "length_after": 2.7079985882407507,
+            "manhattan_residual_before_deg": 3.4558655762721315,
+            "manhattan_residual_after_deg": 3.4558655762721315,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              10,
+              12
+            ],
+            "seam_edge": false,
+            "length_before": 1.9041436962084741,
+            "length_after": 1.9041436962084741,
+            "manhattan_residual_before_deg": 3.4558655762721173,
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              12,
+              11
+            ],
+            "seam_edge": false,
+            "length_before": 0.8486801150228688,
+            "length_after": 0.8486801150228688,
+            "manhattan_residual_before_deg": 3.0094258133120633,
+            "manhattan_residual_after_deg": 3.0094258133120633,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              11,
+              2
+            ],
+            "seam_edge": true,
+            "length_before": 0.20183027345383003,
+            "length_after": 0.20183027345383003,
+            "manhattan_residual_before_deg": 2.46588338631247,
+            "manhattan_residual_after_deg": 2.46588338631247,
+            "residual_delta_deg": 0.0
+          }
+        ],
+        "summary": {
+          "wall_count": 12,
+          "residual_sum_before_deg": 36.74079625252007,
+          "residual_sum_after_deg": 35.30032208053386,
+          "residual_max_before_deg": 3.4558655762722594,
+          "residual_max_after_deg": 3.4558655762722594,
+          "worst_edge_after": [
+            1,
+            3
+          ]
+        }
+      },
       "turn_residual_max_before": 5.475309199624547,
       "turn_residual_max_after": 5.475309199624547,
       "short_wall_preservation": true,
+      "local_topology_metrics": {
+        "edges": [
+          {
+            "source_edge_ids": [
+              4,
+              6
+            ],
+            "edge_length_before": 4.613254577102984,
+            "edge_length_after": 4.619845658640852,
+            "ratio": 1.0014287270359155
+          },
+          {
+            "source_edge_ids": [
+              6,
+              5
+            ],
+            "edge_length_before": 0.40270248411764276,
+            "edge_length_after": 0.36774988476407977,
+            "ratio": 0.9132049075134283
+          },
+          {
+            "source_edge_ids": [
+              5,
+              8
+            ],
+            "edge_length_before": 0.3118787993749672,
+            "edge_length_after": 0.3118787993749672,
+            "ratio": 1.0
+          },
+          {
+            "source_edge_ids": [
+              8,
+              7
+            ],
+            "edge_length_before": 0.8094380901425745,
+            "edge_length_after": 0.8094380901425745,
+            "ratio": 1.0
+          }
+        ],
+        "local_min_edge_length": 0.3118787993749672
+      },
       "keep_distinct_margin_5_6": {
         "before": 0.40270248411764276,
         "after": 0.36774988476407977
@@ -612,9 +1012,209 @@
       "wall_residual_sum_after": 33.68520922588473,
       "wall_residual_max_before": 3.4558655762722594,
       "wall_residual_max_after": 3.4558655762722594,
+      "per_wall_residual_diagnostic": {
+        "walls": [
+          {
+            "source_edge_ids": [
+              2,
+              1
+            ],
+            "seam_edge": false,
+            "length_before": 6.146744358487142,
+            "length_after": 6.146744358487142,
+            "manhattan_residual_before_deg": 0.16269686644639592,
+            "manhattan_residual_after_deg": 0.16269686644639592,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              1,
+              3
+            ],
+            "seam_edge": false,
+            "length_before": 4.267610309410626,
+            "length_after": 4.267610309410626,
+            "manhattan_residual_before_deg": 3.4558655762722594,
+            "manhattan_residual_after_deg": 3.4558655762722594,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              3,
+              4
+            ],
+            "seam_edge": false,
+            "length_before": 7.568379850793359,
+            "length_after": 7.568379850793359,
+            "manhattan_residual_before_deg": 3.4558655762721457,
+            "manhattan_residual_after_deg": 3.4558655762721457,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              4,
+              6
+            ],
+            "seam_edge": false,
+            "length_before": 4.613254577102984,
+            "length_after": 4.626563469036088,
+            "manhattan_residual_before_deg": 3.4558655762721373,
+            "manhattan_residual_after_deg": 2.5972705603491746,
+            "residual_delta_deg": -0.8585950159229627
+          },
+          {
+            "source_edge_ids": [
+              6,
+              5
+            ],
+            "seam_edge": false,
+            "length_before": 0.40270248411764276,
+            "length_after": 0.333619825019116,
+            "manhattan_residual_before_deg": 3.455865576272089,
+            "manhattan_residual_after_deg": 1.2588735655597105,
+            "residual_delta_deg": -2.1969920107123784
+          },
+          {
+            "source_edge_ids": [
+              5,
+              8
+            ],
+            "seam_edge": false,
+            "length_before": 0.3118787993749672,
+            "length_after": 0.3118787993749672,
+            "manhattan_residual_before_deg": 3.455865576272007,
+            "manhattan_residual_after_deg": 3.455865576272007,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              8,
+              7
+            ],
+            "seam_edge": false,
+            "length_before": 0.8094380901425745,
+            "length_after": 0.8094380901425745,
+            "manhattan_residual_before_deg": 3.4558655762721173,
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              7,
+              9
+            ],
+            "seam_edge": false,
+            "length_before": 1.7938608685987785,
+            "length_after": 1.7938608685987785,
+            "manhattan_residual_before_deg": 3.4558655762721435,
+            "manhattan_residual_after_deg": 3.4558655762721435,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              9,
+              10
+            ],
+            "seam_edge": false,
+            "length_before": 2.7079985882407507,
+            "length_after": 2.7079985882407507,
+            "manhattan_residual_before_deg": 3.4558655762721315,
+            "manhattan_residual_after_deg": 3.4558655762721315,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              10,
+              12
+            ],
+            "seam_edge": false,
+            "length_before": 1.9041436962084741,
+            "length_after": 1.9041436962084741,
+            "manhattan_residual_before_deg": 3.4558655762721173,
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              12,
+              11
+            ],
+            "seam_edge": false,
+            "length_before": 0.8486801150228688,
+            "length_after": 0.8486801150228688,
+            "manhattan_residual_before_deg": 3.0094258133120633,
+            "manhattan_residual_after_deg": 3.0094258133120633,
+            "residual_delta_deg": 0.0
+          },
+          {
+            "source_edge_ids": [
+              11,
+              2
+            ],
+            "seam_edge": true,
+            "length_before": 0.20183027345383003,
+            "length_after": 0.20183027345383003,
+            "manhattan_residual_before_deg": 2.46588338631247,
+            "manhattan_residual_after_deg": 2.46588338631247,
+            "residual_delta_deg": 0.0
+          }
+        ],
+        "summary": {
+          "wall_count": 12,
+          "residual_sum_before_deg": 36.74079625252007,
+          "residual_sum_after_deg": 33.68520922588473,
+          "residual_max_before_deg": 3.4558655762722594,
+          "residual_max_after_deg": 3.4558655762722594,
+          "worst_edge_after": [
+            1,
+            3
+          ]
+        }
+      },
       "turn_residual_max_before": 5.475309199624547,
       "turn_residual_max_after": 5.475309199624547,
       "short_wall_preservation": true,
+      "local_topology_metrics": {
+        "edges": [
+          {
+            "source_edge_ids": [
+              4,
+              6
+            ],
+            "edge_length_before": 4.613254577102984,
+            "edge_length_after": 4.626563469036089,
+            "ratio": 1.002884924668836
+          },
+          {
+            "source_edge_ids": [
+              6,
+              5
+            ],
+            "edge_length_before": 0.40270248411764276,
+            "edge_length_after": 0.333619825019116,
+            "ratio": 0.828452364156896
+          },
+          {
+            "source_edge_ids": [
+              5,
+              8
+            ],
+            "edge_length_before": 0.3118787993749672,
+            "edge_length_after": 0.3118787993749672,
+            "ratio": 1.0
+          },
+          {
+            "source_edge_ids": [
+              8,
+              7
+            ],
+            "edge_length_before": 0.8094380901425745,
+            "edge_length_after": 0.8094380901425745,
+            "ratio": 1.0
+          }
+        ],
+        "local_min_edge_length": 0.3118787993749672
+      },
       "keep_distinct_margin_5_6": {
         "before": 0.40270248411764276,
         "after": 0.333619825019116

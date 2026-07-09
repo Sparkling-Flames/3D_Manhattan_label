@@ -65,6 +65,21 @@ def _check_m2(verdict: Mapping[str, Any]) -> None:
             raise ValueError(f"M-Anchor.3 blocked by M-Anchor.2 {key}={verdict.get(key)!r}")
     if verdict.get("expert_verdict") == "reject":
         raise ValueError("M-Anchor.3 blocked by rejected M-Anchor.2 verdict")
+    authorization = verdict.get("next_stage_authorization", {})
+    required_authorization = {
+        "m_anchor_3_footprint_solver_allowed": True,
+        "allowed_variables": ["bottom_y"],
+        "top_y_policy": "fixed_for_m_anchor_3",
+        "writeback_allowed": False,
+        "ranking_entry_allowed": False,
+        "solver_scope": "footprint_only",
+    }
+    for key, value in required_authorization.items():
+        if authorization.get(key) != value:
+            raise ValueError(
+                f"M-Anchor.3 blocked by M-Anchor.2 next_stage_authorization "
+                f"{key}={authorization.get(key)!r}"
+            )
 
 
 def _move_range(sidecar: Mapping[str, Any]) -> dict[str, Any]:
@@ -79,6 +94,11 @@ def _move_range(sidecar: Mapping[str, Any]) -> dict[str, Any]:
     if len(ranges) != 1:
         raise ValueError("M-Anchor.3 requires exactly one s6 bottom_y field_move_range")
     return ranges[0]
+
+
+def _assert_delta_in_range(delta: float, move_range: Mapping[str, Any]) -> None:
+    if not float(move_range["min_delta"]) <= delta <= float(move_range["max_delta"]):
+        raise ValueError(f"M-Anchor.3 delta out of range: {delta}")
 
 
 def _geometry(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
@@ -97,13 +117,73 @@ def _edge_length(rows: Sequence[Mapping[str, Any]], source_a: int, source_b: int
     return ((float(a["x"]) - float(b["x"])) ** 2 + (float(a["z"]) - float(b["z"])) ** 2) ** 0.5
 
 
+def _local_topology_metrics(
+    before_rows: Sequence[Mapping[str, Any]],
+    after_rows: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    edges = [(4, 6), (6, 5), (5, 8), (8, 7)]
+    rows = []
+    for source_a, source_b in edges:
+        before = _edge_length(before_rows, source_a, source_b)
+        after = _edge_length(after_rows, source_a, source_b)
+        rows.append(
+            {
+                "source_edge_ids": [source_a, source_b],
+                "edge_length_before": before,
+                "edge_length_after": after,
+                "ratio": after / before if before else None,
+            }
+        )
+    return {
+        "edges": rows,
+        "local_min_edge_length": min(row["edge_length_after"] for row in rows),
+    }
+
+
+def _per_wall_residual_delta(
+    before_rows: Sequence[Mapping[str, Any]],
+    after_rows: Sequence[Mapping[str, Any]],
+) -> dict[str, Any]:
+    before = _per_wall_residuals(_ordered(_by_source(before_rows)))
+    after = _per_wall_residuals(_ordered(_by_source(after_rows)))
+    walls = []
+    for before_wall, after_wall in zip(before["walls"], after["walls"]):
+        residual_before = before_wall["manhattan_residual_deg"]
+        residual_after = after_wall["manhattan_residual_deg"]
+        walls.append(
+            {
+                "source_edge_ids": before_wall["source_edge_ids"],
+                "seam_edge": before_wall["seam_edge"],
+                "length_before": before_wall["length"],
+                "length_after": after_wall["length"],
+                "manhattan_residual_before_deg": residual_before,
+                "manhattan_residual_after_deg": residual_after,
+                "residual_delta_deg": residual_after - residual_before,
+            }
+        )
+    worst = max(walls, key=lambda row: row["manhattan_residual_after_deg"])
+    return {
+        "walls": walls,
+        "summary": {
+            "wall_count": len(walls),
+            "residual_sum_before_deg": before["summary"]["residual_sum"],
+            "residual_sum_after_deg": after["summary"]["residual_sum"],
+            "residual_max_before_deg": before["summary"]["residual_max"],
+            "residual_max_after_deg": after["summary"]["residual_max"],
+            "worst_edge_after": worst["source_edge_ids"],
+        },
+    }
+
+
 def _candidate(
     delta: float,
     before_rows: Sequence[Mapping[str, Any]],
     constraints: Sequence[Mapping[str, Any]],
     before_geometry: Mapping[str, Any],
     before_keep_distinct_margin: float,
+    move_range: Mapping[str, Any],
 ) -> dict[str, Any]:
+    _assert_delta_in_range(delta, move_range)
     rows = copy.deepcopy(list(before_rows))
     for row in rows:
         if int(row["source_pair_id"]) == 6:
@@ -115,6 +195,8 @@ def _candidate(
     x_rows = [row for row in anchor["constraints"] if row["axis"] == "x"]
     x_satisfied = sum(row["satisfied"] for row in x_rows)
     after_margin = _edge_length(rows, 5, 6)
+    local_topology = _local_topology_metrics(before_rows, rows)
+    per_wall = _per_wall_residual_delta(before_rows, rows)
     before_wall = before_geometry["floorprint"]["summary"]
     after_wall = after_geometry["floorprint"]["summary"]
     before_turn = before_geometry["corner_turns"]["summary"]
@@ -153,9 +235,11 @@ def _candidate(
         "wall_residual_sum_after": after_wall["wall_residual_sum_deg"],
         "wall_residual_max_before": before_wall["wall_residual_max_deg"],
         "wall_residual_max_after": after_wall["wall_residual_max_deg"],
+        "per_wall_residual_diagnostic": per_wall,
         "turn_residual_max_before": before_turn["corner_residual_max_deg"],
         "turn_residual_max_after": after_turn["corner_residual_max_deg"],
         "short_wall_preservation": keep_distinct_ok,
+        "local_topology_metrics": local_topology,
         "keep_distinct_margin_5_6": {
             "before": before_keep_distinct_margin,
             "after": after_margin,
@@ -217,7 +301,7 @@ def run(out_dir: Path = OUT_DIR) -> dict[str, Path]:
     min_delta = float(move_range["min_delta"])
     max_delta = float(move_range["max_delta"])
     candidates = [
-        _candidate(delta, before_rows, constraints, before_geometry, before_margin)
+        _candidate(delta, before_rows, constraints, before_geometry, before_margin, move_range)
         for delta in DELTAS
         if min_delta <= delta <= max_delta
     ][:5]
