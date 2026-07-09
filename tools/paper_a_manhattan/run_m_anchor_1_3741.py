@@ -1,4 +1,4 @@
-"""Materialize M-Anchor.1 audit artifacts for task218_ann3741."""
+"""Materialize M-Anchor.1.1 audit artifacts for task218_ann3741."""
 
 from __future__ import annotations
 
@@ -38,6 +38,9 @@ JOINT_PATH = (
 )
 OUT_DIR = Path("analysis_results/paper_a_manhattan/m_anchor/task218_ann3741_m_anchor_1")
 ANCHOR_SIDECAR_PATH = OUT_DIR / "expert_anchor_constraints_sidecar.json"
+EXPECTED_CASE_NAME = "task218_ann3741"
+EXPECTED_SOURCE_ANNOTATION_ID = 3741
+EXPECTED_COORDINATE_SPACE = "ls_percent"
 SAFETY = {
     "audit_only": True,
     "accepted": False,
@@ -88,19 +91,43 @@ def _load_anchor_sidecar(path: Path = ANCHOR_SIDECAR_PATH) -> dict[str, Any]:
     payload = _load(path)
     if payload.get("schema_version") != "expert_anchor_constraints_sidecar_v1":
         raise ValueError(f"unsupported anchor sidecar schema: {path}")
+    expected = {
+        "case_name": EXPECTED_CASE_NAME,
+        "source_annotation_id": EXPECTED_SOURCE_ANNOTATION_ID,
+        "coordinate_space": EXPECTED_COORDINATE_SPACE,
+    }
+    for key, value in expected.items():
+        if payload.get(key) != value:
+            raise ValueError(f"invalid anchor sidecar {key}: {payload.get(key)!r}")
     return payload
 
 
 def _anchor_constraints(sidecar: Mapping[str, Any]) -> list[dict[str, Any]]:
     allowed_strengths = {"hard", "soft", "preferred"}
+    allowed_endpoints = {"top", "bottom"}
+    allowed_axes = {"x", "y"}
     constraints = []
+    seen_ids = set()
     for raw in sidecar["constraints"]:
         source_id = int(raw["source_pair_id"])
         strength = raw["anchor_strength"]
+        endpoint = raw["endpoint"]
+        axis = raw["axis"]
+        constraint_id = raw["constraint_id"]
         if source_id not in VERIFIED_ORDER_SOURCE_IDS:
             raise ValueError(f"unknown source_pair_id in anchor sidecar: {source_id}")
         if strength not in allowed_strengths:
             raise ValueError(f"unsupported anchor_strength: {strength}")
+        if endpoint not in allowed_endpoints:
+            raise ValueError(f"unsupported anchor endpoint: {endpoint}")
+        if axis not in allowed_axes:
+            raise ValueError(f"unsupported anchor axis: {axis}")
+        if constraint_id in seen_ids:
+            raise ValueError(f"duplicate anchor constraint_id: {constraint_id}")
+        expected_id = f"s{source_id}_{endpoint}_{axis}"
+        if constraint_id != expected_id:
+            raise ValueError(f"invalid anchor constraint_id: {constraint_id}, expected {expected_id}")
+        seen_ids.add(constraint_id)
         constraints.append(
             {
                 **copy.deepcopy(raw),
@@ -233,7 +260,7 @@ def _candidate(
         "explanation_card": {
             "what_changed": "geometry consistency prototype under explicit human visual anchors",
             "why_candidate_exists": "test whether human semantic anchors plus solver diagnostics produce a reviewable candidate",
-            "why_not_accepted": "M-Anchor.1 is audit-only and still requires human visual review",
+            "why_not_accepted": "M-Anchor.1.1 is audit-only and still requires human visual review",
             "downgrade_rule": "hard anchor violations fail closed; geometry-improving candidates that violate soft/preferred anchors are rejected as false_visual_drift",
         },
         "corrected_coordinates": _ordered(rows_by_source),
@@ -244,7 +271,7 @@ def _candidate(
 def _summary(payload: Mapping[str, Any]) -> str:
     metrics = payload["acceptance_metrics"]
     lines = [
-        "# M-Anchor.1 task218_ann3741",
+        "# M-Anchor.1.1 task218_ann3741",
         "",
         "- Mode: human visual semantics anchor the layout; solver only fills geometry consistency.",
         f"- anchor_satisfaction_rate: `{metrics['anchor_satisfaction_rate']:.4f}`",

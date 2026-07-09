@@ -3,6 +3,8 @@ import json
 import copy
 from pathlib import Path
 
+import pytest
+
 from tools.paper_a_manhattan.run_m_anchor_1_3741 import (
     BASELINE_PATH,
     _anchor_constraints,
@@ -118,3 +120,28 @@ def test_hard_anchor_violation_fails_closed_without_geometry_improvement():
     assert candidate["hard_anchor_violation"] is True
     assert candidate["candidate_available"] is False
     assert candidate["decision"] == "rejected_hard_anchor_violation"
+
+
+@pytest.mark.parametrize(
+    ("mutate", "message"),
+    [
+        (lambda payload: payload.update({"case_name": "wrong"}), "case_name"),
+        (lambda payload: payload.update({"source_annotation_id": 9999}), "source_annotation_id"),
+        (lambda payload: payload.update({"coordinate_space": "pixels"}), "coordinate_space"),
+        (lambda payload: payload["constraints"][0].update({"constraint_id": "bad"}), "constraint_id"),
+        (lambda payload: payload["constraints"][0].update({"endpoint": "middle"}), "endpoint"),
+        (lambda payload: payload["constraints"][0].update({"axis": "z"}), "axis"),
+    ],
+)
+def test_anchor_sidecar_schema_hardening_rejects_bad_fields(tmp_path, mutate, message):
+    sidecar = copy.deepcopy(_load_anchor_sidecar())
+    mutate(sidecar)
+    sidecar_path = tmp_path / "bad_anchor_sidecar.json"
+    sidecar_path.write_text(json.dumps(sidecar), encoding="utf-8")
+
+    if message in {"case_name", "source_annotation_id", "coordinate_space"}:
+        with pytest.raises(ValueError, match=message):
+            _load_anchor_sidecar(sidecar_path)
+    else:
+        with pytest.raises(ValueError, match=message):
+            _anchor_constraints(sidecar)

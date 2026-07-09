@@ -1,4 +1,4 @@
-# M-Anchor.1 task218_ann3741
+# M-Anchor.1.1 task218_ann3741
 
 - Mode: human visual semantics anchor the layout; solver only fills geometry consistency.
 - anchor_satisfaction_rate: `0.8542`
