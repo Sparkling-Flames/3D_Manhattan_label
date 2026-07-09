@@ -1,0 +1,186 @@
+{
+  "schema_version": "expert_anchor_constraints_sidecar_v1",
+  "case_name": "task218_ann3741",
+  "source_annotation_id": 3741,
+  "reviewer": "human_expert",
+  "coordinate_space": "ls_percent",
+  "note": "Independent visual anchor sidecar. Anchors are expressed by source_pair_id; solver_position is derived from verified order at audit time.",
+  "constraints": [
+    {
+      "constraint_id": "s2_top_x",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 2,
+      "endpoint": "top",
+      "axis": "x",
+      "anchor_value": 5.889724310776942,
+      "tolerance": 0.45,
+      "anchor_strength": "hard",
+      "role": "pair2_occlusion_sensitive_visual_x"
+    },
+    {
+      "constraint_id": "s2_bottom_x",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 2,
+      "endpoint": "bottom",
+      "axis": "x",
+      "anchor_value": 5.889724310776942,
+      "tolerance": 0.45,
+      "anchor_strength": "hard",
+      "role": "pair2_occlusion_sensitive_visual_x"
+    },
+    {
+      "constraint_id": "s2_top_y",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 2,
+      "endpoint": "top",
+      "axis": "y",
+      "anchor_value": 14.786967418546364,
+      "tolerance": 1.0,
+      "anchor_strength": "preferred",
+      "role": "pair2_visual_top_y"
+    },
+    {
+      "constraint_id": "s2_bottom_y",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 2,
+      "endpoint": "bottom",
+      "axis": "y",
+      "anchor_value": 91.47869674185463,
+      "tolerance": 1.0,
+      "anchor_strength": "preferred",
+      "role": "pair2_visual_bottom_y"
+    },
+    {
+      "constraint_id": "s11_top_x",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 11,
+      "endpoint": "top",
+      "axis": "x",
+      "anchor_value": 98.37092731829574,
+      "tolerance": 0.45,
+      "anchor_strength": "hard",
+      "role": "right_seam_visual_x"
+    },
+    {
+      "constraint_id": "s11_bottom_x",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 11,
+      "endpoint": "bottom",
+      "axis": "x",
+      "anchor_value": 98.37092731829574,
+      "tolerance": 0.45,
+      "anchor_strength": "hard",
+      "role": "right_seam_visual_x"
+    },
+    {
+      "constraint_id": "s11_top_y",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 11,
+      "endpoint": "top",
+      "axis": "y",
+      "anchor_value": 14.285714285714285,
+      "tolerance": 2.0,
+      "anchor_strength": "soft",
+      "role": "right_seam_top_y_soft"
+    },
+    {
+      "constraint_id": "s11_bottom_y",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 11,
+      "endpoint": "bottom",
+      "axis": "y",
+      "anchor_value": 91.22807017543859,
+      "tolerance": 1.0,
+      "anchor_strength": "preferred",
+      "role": "right_seam_bottom_y"
+    },
+    {
+      "constraint_id": "s3_top_x",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 3,
+      "endpoint": "top",
+      "axis": "x",
+      "anchor_value": 8.9814453125,
+      "tolerance": 0.75,
+      "anchor_strength": "hard",
+      "role": "strong_visual_anchor_3_4"
+    },
+    {
+      "constraint_id": "s3_top_y",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 3,
+      "endpoint": "top",
+      "axis": "y",
+      "anchor_value": 43.6015625,
+      "tolerance": 0.75,
+      "anchor_strength": "hard",
+      "role": "strong_visual_anchor_3_4"
+    },
+    {
+      "constraint_id": "s3_bottom_x",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 3,
+      "endpoint": "bottom",
+      "axis": "x",
+      "anchor_value": 8.9814453125,
+      "tolerance": 0.75,
+      "anchor_strength": "hard",
+      "role": "strong_visual_anchor_3_4"
+    },
+    {
+      "constraint_id": "s3_bottom_y",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 3,
+      "endpoint": "bottom",
+      "axis": "y",
+      "anchor_value": 55.833984375,
+      "tolerance": 0.75,
+      "anchor_strength": "hard",
+      "role": "strong_visual_anchor_3_4"
+    },
+    {
+      "constraint_id": "s4_top_x",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 4,
+      "endpoint": "top",
+      "axis": "x",
+      "anchor_value": 27.7216796875,
+      "tolerance": 0.75,
+      "anchor_strength": "hard",
+      "role": "strong_visual_anchor_3_4"
+    },
+    {
+      "constraint_id": "s4_top_y",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 4,
+      "endpoint": "top",
+      "axis": "y",
+      "anchor_value": 38.568359375,
+      "tolerance": 0.75,
+      "anchor_strength": "hard",
+      "role": "strong_visual_anchor_3_4"
+    },
+    {
+      "constraint_id": "s4_bottom_x",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 4,
+      "endpoint": "bottom",
+      "axis": "x",
+      "anchor_value": 27.7216796875,
+      "tolerance": 0.75,
+      "anchor_strength": "hard",
+      "role": "strong_visual_anchor_3_4"
+    },
+    {
+      "constraint_id": "s4_bottom_y",
+      "constraint_type": "point_axis_anchor",
+      "source_pair_id": 4,
+      "endpoint": "bottom",
+      "axis": "y",
+      "anchor_value": 60.4765625,
+      "tolerance": 0.75,
+      "anchor_strength": "hard",
+      "role": "strong_visual_anchor_3_4"
+    }
+  ]
+}

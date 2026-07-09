@@ -37,6 +37,7 @@ JOINT_PATH = (
     "segment_aware_manhattan_refit_3741_joint_xy_search.json"
 )
 OUT_DIR = Path("analysis_results/paper_a_manhattan/m_anchor/task218_ann3741_m_anchor_1")
+ANCHOR_SIDECAR_PATH = OUT_DIR / "expert_anchor_constraints_sidecar.json"
 SAFETY = {
     "audit_only": True,
     "accepted": False,
@@ -54,6 +55,10 @@ def _sha(path: Path) -> str:
 
 def _load(path: Path) -> dict[str, Any]:
     return json.loads(path.read_text(encoding="utf-8"))
+
+
+def _write_text_lf(path: Path, text: str) -> None:
+    path.write_bytes(text.encode("utf-8"))
 
 
 def _by_source(rows: Sequence[Mapping[str, Any]]) -> dict[int, dict[str, Any]]:
@@ -79,38 +84,33 @@ def _mapping_table(source_image: str) -> list[dict[str, Any]]:
     ]
 
 
-def _anchor_constraints(baseline: Mapping[int, Mapping[str, Any]]) -> list[dict[str, Any]]:
-    specs = [
-        (2, "top", "x", 0.45, "pair2_occlusion_sensitive_visual_x"),
-        (2, "bottom", "x", 0.45, "pair2_occlusion_sensitive_visual_x"),
-        (2, "top", "y", 1.00, "pair2_visual_top_y"),
-        (2, "bottom", "y", 1.00, "pair2_visual_bottom_y"),
-        (11, "top", "x", 0.45, "right_seam_visual_x"),
-        (11, "bottom", "x", 0.45, "right_seam_visual_x"),
-        (11, "top", "y", 2.00, "right_seam_top_y_soft"),
-        (11, "bottom", "y", 1.00, "right_seam_bottom_y"),
-    ]
-    for source_id in (3, 4):
-        for endpoint in ("top", "bottom"):
-            for axis in ("x", "y"):
-                specs.append((source_id, endpoint, axis, 0.75, "strong_visual_anchor_3_4"))
-    return [
-        {
-            "constraint_id": f"s{source_id}_{endpoint}_{axis}",
-            "schema_version": "expert_anchor_constraints_v1",
-            "constraint_type": "point_axis_anchor",
-            "source_pair_id": source_id,
-            "solver_position": VERIFIED_ORDER_SOURCE_IDS.index(source_id) + 1,
-            "verified_order_source_id": source_id,
-            "endpoint": endpoint,
-            "axis": axis,
-            "anchor_value": float(baseline[source_id][endpoint][axis]),
-            "tolerance": tolerance,
-            "role": role,
-            "hard_fail_on_violation": True,
-        }
-        for source_id, endpoint, axis, tolerance, role in specs
-    ]
+def _load_anchor_sidecar(path: Path = ANCHOR_SIDECAR_PATH) -> dict[str, Any]:
+    payload = _load(path)
+    if payload.get("schema_version") != "expert_anchor_constraints_sidecar_v1":
+        raise ValueError(f"unsupported anchor sidecar schema: {path}")
+    return payload
+
+
+def _anchor_constraints(sidecar: Mapping[str, Any]) -> list[dict[str, Any]]:
+    allowed_strengths = {"hard", "soft", "preferred"}
+    constraints = []
+    for raw in sidecar["constraints"]:
+        source_id = int(raw["source_pair_id"])
+        strength = raw["anchor_strength"]
+        if source_id not in VERIFIED_ORDER_SOURCE_IDS:
+            raise ValueError(f"unknown source_pair_id in anchor sidecar: {source_id}")
+        if strength not in allowed_strengths:
+            raise ValueError(f"unsupported anchor_strength: {strength}")
+        constraints.append(
+            {
+                **copy.deepcopy(raw),
+                "schema_version": "expert_anchor_constraints_v1",
+                "solver_position": VERIFIED_ORDER_SOURCE_IDS.index(source_id) + 1,
+                "verified_order_source_id": source_id,
+                "hard_fail_on_violation": strength == "hard",
+            }
+        )
+    return constraints
 
 
 def _geometry(rows: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
@@ -160,14 +160,26 @@ def _anchor_audit(
             candidate[int(constraint["source_pair_id"])][constraint["endpoint"]][constraint["axis"]]
         )
         delta = value - float(constraint["anchor_value"])
-        rows.append({**constraint, "candidate_value": value, "delta": delta, "satisfied": abs(delta) <= float(constraint["tolerance"])})
+        rows.append(
+            {
+                **constraint,
+                "candidate_value": value,
+                "delta": delta,
+                "satisfied": abs(delta) <= float(constraint["tolerance"]),
+            }
+        )
     satisfied = sum(row["satisfied"] for row in rows)
+    hard_violations = [
+        row for row in rows if not row["satisfied"] and row["anchor_strength"] == "hard"
+    ]
     return {
         "constraints": rows,
         "satisfied_count": satisfied,
         "total_count": len(rows),
         "anchor_satisfaction_rate": satisfied / len(rows),
         "violations": [row for row in rows if not row["satisfied"]],
+        "hard_violations": hard_violations,
+        "hard_violation_count": len(hard_violations),
     }
 
 
@@ -183,8 +195,15 @@ def _candidate(
     anchor = _anchor_audit(rows_by_source, constraints)
     geometry = _geometry(_ordered(rows_by_source))
     wall = geometry["floorprint"]["summary"]["wall_residual_sum_deg"]
-    false_drift = wall < baseline_wall_residual and anchor["violations"]
-    decision = "rejected_false_visual_drift" if false_drift else "review_available"
+    geometry_improved = wall < baseline_wall_residual
+    false_drift = bool(geometry_improved and anchor["violations"])
+    hard_violation = bool(anchor["hard_violations"])
+    if hard_violation:
+        decision = "rejected_hard_anchor_violation"
+    elif false_drift:
+        decision = "rejected_false_visual_drift"
+    else:
+        decision = "review_available"
     solver_scope = (
         "footprint_only"
         if prototype_type.startswith("footprint")
@@ -206,6 +225,8 @@ def _candidate(
             "height_consistency_l1": geometry["heights"]["summary"]["height_residual_sum"],
             "self_intersection": geometry["floorprint"]["self_intersection"],
         },
+        "geometry_improved_vs_baseline": bool(geometry_improved),
+        "hard_anchor_violation": bool(hard_violation),
         "false_visual_drift": bool(false_drift),
         "decision": decision,
         "candidate_available": decision == "review_available",
@@ -213,7 +234,7 @@ def _candidate(
             "what_changed": "geometry consistency prototype under explicit human visual anchors",
             "why_candidate_exists": "test whether human semantic anchors plus solver diagnostics produce a reviewable candidate",
             "why_not_accepted": "M-Anchor.1 is audit-only and still requires human visual review",
-            "downgrade_rule": "any geometry-improving candidate that violates hard visual anchors is rejected as false_visual_drift",
+            "downgrade_rule": "hard anchor violations fail closed; geometry-improving candidates that violate soft/preferred anchors are rejected as false_visual_drift",
         },
         "corrected_coordinates": _ordered(rows_by_source),
         **SAFETY,
@@ -229,7 +250,8 @@ def _summary(payload: Mapping[str, Any]) -> str:
         f"- anchor_satisfaction_rate: `{metrics['anchor_satisfaction_rate']:.4f}`",
         f"- candidate_available_rate: `{metrics['candidate_available_rate']:.4f}`",
         f"- expert_accept@3: `{metrics['expert_accept_at_3']}` ({metrics['expert_accept_at_3_status']})",
-        f"- false_visual_drift_rate: `{metrics['false_visual_drift_rate']:.4f}`",
+        f"- rejected_false_drift_rate: `{metrics['rejected_false_drift_rate']:.4f}`",
+        f"- available_false_drift_rate: `{metrics['available_false_drift_rate']:.4f}`",
         "",
         "| candidate | scope | anchor rate | wall sum | height L1 | decision |",
         "| --- | --- | ---: | ---: | ---: | --- |",
@@ -251,9 +273,10 @@ def run(out_dir: Path = OUT_DIR) -> dict[str, Path]:
     robust_payload = _load(ROBUST_PATH)
     height_payload = _load(HEIGHT_PATH)
     joint_payload = _load(JOINT_PATH)
+    anchor_sidecar = _load_anchor_sidecar()
     baseline_rows = baseline_payload["ordered_pairs"]
     baseline = _by_source(baseline_rows)
-    constraints = _anchor_constraints(baseline)
+    constraints = _anchor_constraints(anchor_sidecar)
     baseline_geometry = _geometry(baseline_rows)
     baseline_wall = baseline_geometry["floorprint"]["summary"]["wall_residual_sum_deg"]
     candidates = [
@@ -283,7 +306,10 @@ def run(out_dir: Path = OUT_DIR) -> dict[str, Path]:
         ),
     ]
     available = [row for row in candidates if row["candidate_available"]]
-    unresolved_false_drift = [row for row in available if row["false_visual_drift"]]
+    rejected_false_drift = [
+        row for row in candidates if row["false_visual_drift"] and not row["candidate_available"]
+    ]
+    available_false_drift = [row for row in available if row["false_visual_drift"]]
     aggregate = {
         "anchor_satisfaction_rate": sum(
             row["anchor_audit"]["satisfied_count"] for row in candidates
@@ -292,13 +318,12 @@ def run(out_dir: Path = OUT_DIR) -> dict[str, Path]:
         "candidate_available_rate": len(available) / len(candidates),
         "expert_accept_at_3": None,
         "expert_accept_at_3_status": "pending_human_review",
-        "false_visual_drift_rate": len(unresolved_false_drift) / max(1, len(available)),
-        "false_visual_drift_rejected_count": sum(
-            row["false_visual_drift"] and not row["candidate_available"] for row in candidates
-        ),
+        "rejected_false_drift_rate": len(rejected_false_drift) / len(candidates),
+        "available_false_drift_rate": len(available_false_drift) / max(1, len(available)),
+        "false_visual_drift_rejected_count": len(rejected_false_drift),
     }
     payload = {
-        "schema_version": "m_anchor_1_audit_v1",
+        "schema_version": "m_anchor_1_1_audit_v1",
         "case_name": "task218_ann3741",
         "source_image": joint_payload["source_image"],
         "input_sources": {
@@ -306,13 +331,23 @@ def run(out_dir: Path = OUT_DIR) -> dict[str, Path]:
             "robust": {"path": ROBUST_PATH.as_posix(), "sha256": _sha(ROBUST_PATH)},
             "height_only": {"path": HEIGHT_PATH.as_posix(), "sha256": _sha(HEIGHT_PATH)},
             "footprint_only": {"path": JOINT_PATH.as_posix(), "sha256": _sha(JOINT_PATH)},
+            "expert_anchor_constraints_sidecar": {
+                "path": ANCHOR_SIDECAR_PATH.as_posix(),
+                "sha256": _sha(ANCHOR_SIDECAR_PATH),
+            },
         },
         "id_semantics": joint_payload["id_semantics"],
         "pair_sid_order_seam_mapping_table": _mapping_table(joint_payload["source_image"]),
         "expert_anchor_constraints_schema": {
             "schema_version": "expert_anchor_constraints_v1",
             "constraint_types": ["point_axis_anchor"],
+            "anchor_strengths": ["hard", "soft", "preferred"],
+            "source": "independent_sidecar",
             "false_visual_drift_policy": "fail_closed",
+        },
+        "expert_anchor_constraints_sidecar": {
+            "path": ANCHOR_SIDECAR_PATH.as_posix(),
+            "schema_version": anchor_sidecar["schema_version"],
         },
         "expert_anchor_constraints": constraints,
         "baseline_per_wall_residual_diagnostic": _per_wall_residuals(baseline_rows),
@@ -325,6 +360,7 @@ def run(out_dir: Path = OUT_DIR) -> dict[str, Path]:
                 "wall_residual_sum": row["metrics"]["wall_residual_sum"],
                 "height_consistency_l1": row["metrics"]["height_consistency_l1"],
                 "decision": row["decision"],
+                "hard_anchor_violation": row["hard_anchor_violation"],
                 "false_visual_drift": row["false_visual_drift"],
                 "why_not_accepted": row["explanation_card"]["why_not_accepted"],
             }
@@ -335,7 +371,7 @@ def run(out_dir: Path = OUT_DIR) -> dict[str, Path]:
         **SAFETY,
     }
     ledger_row = {
-        "schema_version": "m_anchor_1_feedback_ledger_row_v1",
+        "schema_version": "m_anchor_1_1_feedback_ledger_row_v1",
         "case_name": payload["case_name"],
         "candidate_set": [row["candidate_id"] for row in candidates],
         "shown_rank": [row["candidate_id"] for row in candidates[:3]],
@@ -349,9 +385,9 @@ def run(out_dir: Path = OUT_DIR) -> dict[str, Path]:
     json_path = out_dir / "m_anchor_1_audit.json"
     summary_path = out_dir / "m_anchor_1_summary.md"
     ledger_path = out_dir / "m_anchor_1_feedback_ledger_row.jsonl"
-    json_path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    summary_path.write_text(_summary(payload), encoding="utf-8")
-    ledger_path.write_text(json.dumps(ledger_row, ensure_ascii=False) + "\n", encoding="utf-8")
+    _write_text_lf(json_path, json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+    _write_text_lf(summary_path, _summary(payload))
+    _write_text_lf(ledger_path, json.dumps(ledger_row, ensure_ascii=False) + "\n")
     return {"json": json_path, "summary": summary_path, "ledger": ledger_path}
 
 

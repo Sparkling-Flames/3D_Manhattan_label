@@ -1,8 +1,17 @@
 import hashlib
 import json
+import copy
 from pathlib import Path
 
-from tools.paper_a_manhattan.run_m_anchor_1_3741 import run
+from tools.paper_a_manhattan.run_m_anchor_1_3741 import (
+    BASELINE_PATH,
+    _anchor_constraints,
+    _by_source,
+    _candidate,
+    _load,
+    _load_anchor_sidecar,
+    run,
+)
 
 
 PROTECTED = (
@@ -23,10 +32,20 @@ def test_m_anchor_1_materializes_fail_closed_anchor_contract(tmp_path):
     payload = json.loads(paths["json"].read_text(encoding="utf-8"))
     ledger = json.loads(paths["ledger"].read_text(encoding="utf-8"))
 
-    assert payload["schema_version"] == "m_anchor_1_audit_v1"
+    assert payload["schema_version"] == "m_anchor_1_1_audit_v1"
     assert payload["expert_anchor_constraints_schema"]["schema_version"] == (
         "expert_anchor_constraints_v1"
     )
+    assert payload["expert_anchor_constraints_schema"]["source"] == "independent_sidecar"
+    assert set(payload["expert_anchor_constraints_schema"]["anchor_strengths"]) == {
+        "hard",
+        "soft",
+        "preferred",
+    }
+    assert payload["input_sources"]["expert_anchor_constraints_sidecar"]["sha256"]
+    assert {
+        row["anchor_strength"] for row in payload["expert_anchor_constraints"]
+    } == {"hard", "soft", "preferred"}
     assert {row["source_pair_id"]: row["solver_position"] for row in payload["pair_sid_order_seam_mapping_table"]}[2] == 1
     assert {row["source_pair_id"]: row["solver_position"] for row in payload["pair_sid_order_seam_mapping_table"]}[11] == 12
     assert any(row["seam_before_pair"] for row in payload["pair_sid_order_seam_mapping_table"])
@@ -40,12 +59,12 @@ def test_m_anchor_1_materializes_fail_closed_anchor_contract(tmp_path):
         "m_anchor_1_false_drift_reference_robust_all_long_edges",
     } <= set(cards)
     assert cards["m_anchor_1_footprint_only_joint_xy"]["decision"] == "review_available"
-    assert cards["m_anchor_1_height_only_plane_preserving"]["decision"] == (
-        "rejected_false_visual_drift"
+    assert cards["m_anchor_1_height_only_plane_preserving"]["decision"].startswith(
+        "rejected_"
     )
     assert cards["m_anchor_1_false_drift_reference_robust_all_long_edges"][
         "decision"
-    ] == "rejected_false_visual_drift"
+    ].startswith("rejected_")
     assert cards["m_anchor_1_false_drift_reference_robust_all_long_edges"][
         "solver_scope"
     ] == "diagnostic_reference"
@@ -55,14 +74,16 @@ def test_m_anchor_1_materializes_fail_closed_anchor_contract(tmp_path):
     assert 0.0 < metrics["candidate_available_rate"] < 1.0
     assert metrics["expert_accept_at_3"] is None
     assert metrics["expert_accept_at_3_status"] == "pending_human_review"
-    assert metrics["false_visual_drift_rate"] == 0.0
+    assert "false_visual_drift_rate" not in metrics
+    assert 0.0 <= metrics["rejected_false_drift_rate"] <= 1.0
+    assert metrics["available_false_drift_rate"] == 0.0
     assert metrics["false_visual_drift_rejected_count"] >= 1
 
-    assert ledger["schema_version"] == "m_anchor_1_feedback_ledger_row_v1"
+    assert ledger["schema_version"] == "m_anchor_1_1_feedback_ledger_row_v1"
     assert ledger["expert_selected_candidate"] is None
-    assert ledger["candidate_verdicts"][
-        "m_anchor_1_height_only_plane_preserving"
-    ] == "rejected_false_visual_drift"
+    assert ledger["candidate_verdicts"]["m_anchor_1_height_only_plane_preserving"].startswith(
+        "rejected_"
+    )
     for field in (
         "accepted",
         "downstream_recommendation",
@@ -74,3 +95,26 @@ def test_m_anchor_1_materializes_fail_closed_anchor_contract(tmp_path):
         assert payload[field] is False
         assert ledger[field] is False
     assert {path: _sha(path) for path in PROTECTED} == before
+
+
+def test_hard_anchor_violation_fails_closed_without_geometry_improvement():
+    baseline_rows = _load(BASELINE_PATH)["ordered_pairs"]
+    rows = copy.deepcopy(baseline_rows)
+    for row in rows:
+        if int(row["source_pair_id"]) == 2:
+            row["top"]["x"] += 2.0
+            break
+
+    candidate = _candidate(
+        "hard_violation_no_geometry_improvement_negative",
+        "footprint_only_constrained_solver_prototype",
+        rows,
+        _by_source(baseline_rows),
+        _anchor_constraints(_load_anchor_sidecar()),
+        baseline_wall_residual=-1.0,
+    )
+
+    assert candidate["geometry_improved_vs_baseline"] is False
+    assert candidate["hard_anchor_violation"] is True
+    assert candidate["candidate_available"] is False
+    assert candidate["decision"] == "rejected_hard_anchor_violation"
