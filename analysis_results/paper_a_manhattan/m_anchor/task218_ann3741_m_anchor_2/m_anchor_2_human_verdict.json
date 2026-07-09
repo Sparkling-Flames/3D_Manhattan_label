@@ -1,0 +1,36 @@
+{
+  "schema_version": "m_anchor_2_human_verdict_v1",
+  "case_name": "task218_ann3741",
+  "reviewed_candidate": "m_anchor_1_footprint_only_joint_xy",
+  "source_review_artifact": "analysis_results/paper_a_manhattan/m_anchor/task218_ann3741_m_anchor_1/m_anchor_1_footprint_only_joint_xy_human_review.json",
+  "reviewer": "human_expert",
+  "reviewed_at": "2026-07-09",
+  "expert_verdict": "partial_accept_directionally_useful",
+  "accept_for_next_stage": true,
+  "accepted_as_final_fix": false,
+  "downstream_recommendation": false,
+  "candidate_preference_authorized": false,
+  "annotation_writeback": false,
+  "annotation_patch_generated": false,
+  "active_runner_role": false,
+  "reason": "Human review found the footprint-only candidate slightly improved and directionally useful, while height remains unresolved. s6 bottom_y should increase slightly and s7-s12 top_y may be high; s2 looks acceptable but ceiling occlusion prevents precise corner confirmation.",
+  "visual_findings": {
+    "s2_visual_anchor_ok": true,
+    "s2_precision_limited_by_occlusion": true,
+    "s11_visual_anchor_ok": true,
+    "pillar_5_6_7_8_preserved": true,
+    "footprint_direction_improved": true,
+    "height_still_unresolved": true
+  },
+  "next_stage_authorization": {
+    "m_anchor_3_footprint_solver_allowed": true,
+    "allowed_variables": [
+      "bottom_y"
+    ],
+    "x_policy": "stay_within_anchor_range",
+    "top_y_policy": "fixed_for_m_anchor_3",
+    "writeback_allowed": false,
+    "ranking_entry_allowed": false,
+    "solver_scope": "footprint_only"
+  }
+}

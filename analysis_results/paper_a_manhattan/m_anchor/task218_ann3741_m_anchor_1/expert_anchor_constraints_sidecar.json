@@ -182,5 +182,17 @@
       "anchor_strength": "hard",
       "role": "strong_visual_anchor_3_4"
     }
+  ],
+  "move_ranges": [
+    {
+      "constraint_type": "field_move_range",
+      "source_pair_id": 6,
+      "endpoint": "bottom",
+      "axis": "y",
+      "min_delta": -1.0,
+      "max_delta": 1.0,
+      "anchor_strength": "soft",
+      "reason": "M-Anchor.2 human review: s6 bottom_y should increase slightly."
+    }
   ]
 }
