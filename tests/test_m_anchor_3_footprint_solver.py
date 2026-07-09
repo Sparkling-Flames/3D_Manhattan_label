@@ -144,7 +144,15 @@ def test_m_anchor_3_rejects_missing_or_duplicate_move_range():
         _move_range(sidecar)
 
     sidecar = copy.deepcopy(_load_anchor_sidecar())
-    sidecar["move_ranges"].append(copy.deepcopy(sidecar["move_ranges"][0]))
+    sidecar["move_ranges"].append(
+        copy.deepcopy(
+            next(
+                row
+                for row in sidecar["move_ranges"]
+                if int(row["source_pair_id"]) == 6 and row["endpoint"] == "bottom" and row["axis"] == "y"
+            )
+        )
+    )
     with pytest.raises(ValueError, match="exactly one"):
         _move_range(sidecar)
 
