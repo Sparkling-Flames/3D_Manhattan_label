@@ -12,7 +12,10 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from tools.paper_a_manhattan.run_local_3d_projection_review import run_local_review
+from tools.paper_a_manhattan.run_local_3d_projection_review import (
+    canonical_review_out_dir,
+    run_local_review,
+)
 from tools.paper_a_manhattan.run_single_image_manhattan_assist import (
     build_single_image_assist,
 )
@@ -22,6 +25,7 @@ from tools.paper_a_manhattan.segment_aware_manhattan_refit import (
 )
 
 GT_PATH = Path("export_label/groudTruth.json")
+GT_FALLBACK_PATTERNS = ("groudTruth(prescreen*.json",)
 DEFAULT_OUT_DIR = Path(
     "analysis_results/paper_a_manhattan/segment_aware_manhattan_refit/"
     "task218_ann3741"
@@ -41,11 +45,21 @@ def _sha256(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def _source_record() -> tuple[dict[str, Any], dict[str, Any]]:
-    for task in json.loads(GT_PATH.read_text(encoding="utf-8")):
-        for annotation in task.get("annotations", []):
-            if annotation.get("id") == 3741:
-                return task, annotation
+def _gt_source_paths() -> list[Path]:
+    paths = [GT_PATH]
+    for pattern in GT_FALLBACK_PATTERNS:
+        paths.extend(sorted(Path("export_label").glob(pattern)))
+    return paths
+
+
+def _source_record() -> tuple[Path, dict[str, Any], dict[str, Any]]:
+    for source_path in _gt_source_paths():
+        if not source_path.exists():
+            continue
+        for task in json.loads(source_path.read_text(encoding="utf-8")):
+            for annotation in task.get("annotations", []):
+                if annotation.get("id") == 3741:
+                    return source_path, task, annotation
     raise ValueError("annotation 3741 not found")
 
 
@@ -172,8 +186,9 @@ def _local_server_root(out_dir: Path) -> Path | None:
 
 
 def run(out_dir: Path = DEFAULT_OUT_DIR) -> dict[str, Path]:
-    source_sha_before = _sha256(GT_PATH)
-    task, annotation = _source_record()
+    primary_gt_sha_before = _sha256(GT_PATH)
+    source_path, task, annotation = _source_record()
+    source_sha_before = _sha256(source_path)
     assist = _assist(task, annotation)
     pairs = _attach_id_semantics(assist["ordered_pairs"])
     if len(pairs) != 12:
@@ -192,7 +207,7 @@ def run(out_dir: Path = DEFAULT_OUT_DIR) -> dict[str, Path]:
         "case_name": "task218_ann3741",
         "source_annotation_id": 3741,
         "source_task_id": task["id"],
-        "source_gt": {"path": GT_PATH.as_posix(), "sha256": source_sha_before},
+        "source_gt": {"path": source_path.as_posix(), "sha256": source_sha_before},
         "id_semantics": result["id_semantics"],
         "verified_order_source_ids": result["verified_order_source_ids"],
         "source_pair_to_solver_position": result[
@@ -217,7 +232,12 @@ def run(out_dir: Path = DEFAULT_OUT_DIR) -> dict[str, Path]:
     }
     json_path = out_dir / "segment_aware_manhattan_refit_3741.json"
     summary_path = out_dir / "segment_aware_manhattan_refit_3741_summary.md"
-    review_path = out_dir / "segment_aware_manhattan_refit_3741_review.html"
+    review_out_dir = (
+        canonical_review_out_dir("task218_ann3741_segment_refit")
+        if out_dir == DEFAULT_OUT_DIR
+        else out_dir
+    )
+    review_path = review_out_dir / "segment_aware_manhattan_refit_3741_review.html"
     copy_path = out_dir / "corrected_points_for_manual_copy_3741.json"
     json_path.write_bytes(
         (json.dumps(payload, ensure_ascii=False, indent=2) + "\n").encode("utf-8")
@@ -326,18 +346,20 @@ def run(out_dir: Path = DEFAULT_OUT_DIR) -> dict[str, Path]:
         input_path=input_manifest,
         candidate_json=candidate_manifest,
         candidate_limit=1,
-        out_dir=out_dir,
+        out_dir=review_out_dir,
         image_root=Path("data/mp3d_layout/img_v"),
         case_name="task218_ann3741_segment_refit",
         width=1024,
         height=512,
         coordinate_mode="ls_percent",
         camera_height=1.6,
-        local_server_root=_local_server_root(out_dir),
+        local_server_root=_local_server_root(review_out_dir),
     )
     review_path.write_bytes(_review_wrapper().encode("utf-8"))
-    if _sha256(GT_PATH) != source_sha_before:
+    if _sha256(GT_PATH) != primary_gt_sha_before:
         raise RuntimeError("source GT changed during audit-only run")
+    if _sha256(source_path) != source_sha_before:
+        raise RuntimeError("selected source GT changed during audit-only run")
     return {
         "json": json_path,
         "summary": summary_path,

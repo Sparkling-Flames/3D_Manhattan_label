@@ -15,6 +15,7 @@ from tools.paper_a_manhattan.run_local_3d_projection_review import (
     apply_m1522_candidate,
     apply_candidate_row,
     build_projection_variant,
+    canonical_review_out_dir,
     extract_m1522_candidate_rows,
     extract_ordered_pairs,
     resolve_local_image,
@@ -98,11 +99,17 @@ def test_asset_urls_use_the_consumer_document_or_server_root(tmp_path):
 
 
 def test_local_launcher_is_portable_and_server_is_loopback_only(tmp_path):
-    output = REPO_ROOT / "analysis_results" / "paper_a_manhattan" / "local_3d_projection" / "case"
+    output = (
+        REPO_ROOT
+        / "analysis_results"
+        / "paper_a_manhattan"
+        / "hypothesis_local_review"
+        / "case"
+    )
     launcher = _windows_launcher_text(output, output / "local_3d_review.html")
     assert "serve_local_3d_projection_review.py" in launcher
     assert '--repo-root "%REPO_ROOT%"' in launcher
-    assert "analysis_results\\paper_a_manhattan\\local_3d_projection\\case\\local_3d_review.html" in launcher
+    assert "analysis_results\\paper_a_manhattan\\hypothesis_local_review\\case\\local_3d_review.html" in launcher
     assert str(REPO_ROOT) not in launcher
 
     root = tmp_path / "repo"
@@ -128,6 +135,56 @@ def test_review_html_has_collapsible_original_panorama_contract():
     assert 'id="original-panorama-image"' in source
     assert "activeAssets.imageUrl" in source
     assert "Original panorama unavailable; 3D geometry remains available." in source
+
+
+def test_local_3d_review_policy_and_focus_ui_contract():
+    policy = Path(
+        "docs/paper_a_manhattan/LOCAL_3D_REVIEW_ARTIFACT_POLICY_v1.md"
+    ).read_text(encoding="utf-8")
+    source = Path("tools/paper_a_manhattan/run_local_3d_projection_review.py").read_text(
+        encoding="utf-8"
+    )
+
+    assert "analysis_results/paper_a_manhattan/hypothesis_local_review/" in policy
+    assert "local_3d_projection/" in policy
+    assert "must not be treated as a human 3D entrypoint" in policy
+    for token in (
+        "Focus 2D/3D Review",
+        "focus-resize-handle",
+        "focus-coordinate-readout",
+        "focus-2d-viewbox",
+        "placementFromPointer",
+        "sizeFocus2DViewbox",
+    ):
+        assert token in source
+    assert canonical_review_out_dir("case").as_posix() == (
+        "analysis_results/paper_a_manhattan/hypothesis_local_review/case"
+    )
+
+
+def test_canonical_review_artifact_layout_and_archived_legacy_entries():
+    canonical_root = Path("analysis_results/paper_a_manhattan/hypothesis_local_review")
+    archive_root = Path("analysis_results/paper_a_manhattan/_deprecated_3d_review_archive")
+    projection_root = Path("analysis_results/paper_a_manhattan/local_3d_projection")
+    paper_a_root = Path("analysis_results/paper_a_manhattan")
+
+    assert (canonical_root / "index.html").exists()
+    assert archive_root.exists()
+    assert list(archive_root.rglob("local_3d_review.html"))
+    assert list(archive_root.rglob("open_local_3d_review.cmd"))
+
+    noncanonical_entries = [
+        path
+        for pattern in ("local_3d_review.html", "open_local_3d_review.cmd")
+        for path in paper_a_root.rglob(pattern)
+        if canonical_root not in path.parents and archive_root not in path.parents
+    ]
+    assert noncanonical_entries == []
+
+    for case_name in ("task218_ann2369", "task218_ann3741", "task238_ann2389"):
+        assert (projection_root / case_name / "projection_metrics.json").exists()
+        assert not (projection_root / case_name / "local_3d_review.html").exists()
+        assert not (projection_root / case_name / "open_local_3d_review.cmd").exists()
 
 
 def test_inspection_metadata_has_authoritative_corner_wall_and_issue_metrics():

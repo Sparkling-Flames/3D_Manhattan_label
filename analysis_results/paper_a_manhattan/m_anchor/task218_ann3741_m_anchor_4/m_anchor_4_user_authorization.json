@@ -1,0 +1,46 @@
+{
+  "schema_version": "m_anchor_4_user_authorization_v1",
+  "case_name": "task218_ann3741",
+  "allowed_source_pair_ids": [
+    1,
+    2,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12
+  ],
+  "protected_source_pair_ids": [
+    3
+  ],
+  "stage_order": [
+    "footprint_vertical_wall_direction",
+    "height_top_y"
+  ],
+  "footprint_variables": [
+    "x",
+    "bottom_y"
+  ],
+  "height_variables": [
+    "top_y"
+  ],
+  "forbidden": [
+    "reorder",
+    "merge",
+    "delete",
+    "new_corner",
+    "writeback",
+    "ranking"
+  ],
+  "audit_only": true,
+  "accepted": false,
+  "downstream_recommendation": false,
+  "candidate_preference_authorized": false,
+  "annotation_writeback": false,
+  "annotation_patch_generated": false,
+  "active_runner_role": false
+}

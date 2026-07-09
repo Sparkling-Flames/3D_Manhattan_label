@@ -18,7 +18,10 @@ from tools.paper_a_manhattan.manhattan_3d_projection import (
     compute_all_geometry_metrics,
     project_layout_to_3d,
 )
-from tools.paper_a_manhattan.run_local_3d_projection_review import run_local_review
+from tools.paper_a_manhattan.run_local_3d_projection_review import (
+    canonical_review_out_dir,
+    run_local_review,
+)
 from tools.paper_a_manhattan.run_segment_aware_manhattan_refit_3741_2d_guarded import (
     _changes,
     _local_server_root,
@@ -443,8 +446,14 @@ def run(out_dir: Path = OUT_DIR) -> dict[str, Path]:
     overlay_path = (
         out_dir / "segment_aware_manhattan_refit_3741_y_targeted_overlay.html"
     )
+    default_out_dir = ROOT / "task218_ann3741_y_targeted"
+    review_out_dir = (
+        canonical_review_out_dir("task218_ann3741_y_targeted")
+        if out_dir == default_out_dir
+        else out_dir
+    )
     review_path = (
-        out_dir / "segment_aware_manhattan_refit_3741_y_targeted_review.html"
+        review_out_dir / "segment_aware_manhattan_refit_3741_y_targeted_review.html"
     )
     manual_path = (
         out_dir / "corrected_points_for_manual_copy_3741_y_targeted.json"
@@ -552,11 +561,11 @@ def run(out_dir: Path = OUT_DIR) -> dict[str, Path]:
         input_path=review_input,
         candidate_json=review_candidates,
         candidate_limit=2,
-        out_dir=out_dir,
+        out_dir=review_out_dir,
         image_root=Path("data/mp3d_layout/img_v"),
         case_name="task218_ann3741_y_targeted",
         coordinate_mode="ls_percent",
-        local_server_root=_local_server_root(out_dir),
+        local_server_root=_local_server_root(review_out_dir),
     )
     review_path.write_text(_review_wrapper(payload), encoding="utf-8")
     if _sha(GT_PATH) != gt_sha:

@@ -13,7 +13,10 @@ REPO_ROOT = Path(__file__).resolve().parents[2]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from tools.paper_a_manhattan.run_local_3d_projection_review import run_local_review
+from tools.paper_a_manhattan.run_local_3d_projection_review import (
+    canonical_review_out_dir,
+    run_local_review,
+)
 from tools.paper_a_manhattan.segment_aware_manhattan_refit import (
     PAIR2_GUARD,
     RIGHT_TOP_Y_GUARDS,
@@ -358,8 +361,14 @@ def run(out_dir: Path = OUT_DIR) -> dict[str, Path]:
     overlay_html = (
         out_dir / "segment_aware_manhattan_refit_3741_2d_guarded_overlay.html"
     )
+    default_out_dir = ROOT / "task218_ann3741_2d_guarded"
+    review_out_dir = (
+        canonical_review_out_dir("task218_ann3741_2d_guarded")
+        if out_dir == default_out_dir
+        else out_dir
+    )
     review_html = (
-        out_dir / "segment_aware_manhattan_refit_3741_2d_guarded_review.html"
+        review_out_dir / "segment_aware_manhattan_refit_3741_2d_guarded_review.html"
     )
     manual_path = (
         out_dir / "corrected_points_for_manual_copy_3741_2d_guarded.json"
@@ -458,11 +467,11 @@ def run(out_dir: Path = OUT_DIR) -> dict[str, Path]:
         input_path=input_path,
         candidate_json=candidates_path,
         candidate_limit=2,
-        out_dir=out_dir,
+        out_dir=review_out_dir,
         image_root=Path("data/mp3d_layout/img_v"),
         case_name="task218_ann3741_2d_guarded",
         coordinate_mode="ls_percent",
-        local_server_root=_local_server_root(out_dir),
+        local_server_root=_local_server_root(review_out_dir),
     )
     review_html.write_text(_review_wrapper(), encoding="utf-8")
     if _sha(GT_PATH) != gt_sha:

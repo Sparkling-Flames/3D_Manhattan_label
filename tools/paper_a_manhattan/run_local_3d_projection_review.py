@@ -34,6 +34,9 @@ from tools.paper_a_manhattan.run_single_image_manhattan_assist import (  # noqa:
 REVIEW_SCHEMA_VERSION = "local_3d_projection_review_m15_27_1_bridge_v1"
 INSPECTION_SCHEMA_VERSION = "local_3d_inspection_m15_23_4_v1"
 HYPOTHESIS_CORE_SCHEMA_VERSION = "manhattan_constrained_hypothesis_ranking_core_v1"
+CANONICAL_REVIEW_ROOT = Path(
+    "analysis_results/paper_a_manhattan/hypothesis_local_review"
+)
 MAX_EMBEDDED_IMAGE_BYTES = 8 * 1024 * 1024
 SAFETY_BOUNDARY = {
     "expert_side": True,
@@ -46,6 +49,10 @@ SAFETY_BOUNDARY = {
     "worker_facing": False,
     "formal_artifact": False,
 }
+
+
+def canonical_review_out_dir(case_or_stage: str) -> Path:
+    return CANONICAL_REVIEW_ROOT / case_or_stage
 
 
 def _read_json(path: Path) -> dict[str, Any]:
@@ -374,6 +381,20 @@ def extract_hypothesis_core_candidate_rows(
         evaluation = evaluations.get(candidate_id, {})
         evidence = evaluation.get("evidence_consistency", {}) if isinstance(evaluation, Mapping) else {}
         plausibility = evaluation.get("layout_plausibility", {}) if isinstance(evaluation, Mapping) else {}
+        evidence_status = evidence.get("evidence_status") if isinstance(evidence, Mapping) else None
+        missing_fields = evidence.get("missing_fields", []) if isinstance(evidence, Mapping) else []
+        image_evidence_missing = (
+            isinstance(missing_fields, list)
+            and "image_edge_support_optional" in missing_fields
+        ) or (
+            isinstance(evidence, Mapping)
+            and evidence.get("image_edge_support_optional") is None
+        )
+        evidence_warning = (
+            "evidence unavailable; expert visual confirmation required"
+            if evidence_status == "unavailable" or image_evidence_missing
+            else None
+        )
         row = copy.deepcopy(dict(candidate))
         row.update(
             {
@@ -389,12 +410,8 @@ def extract_hypothesis_core_candidate_rows(
                 "ls_trial_candidate": False,
                 "primary_unresolved_edges": [],
                 "short_wall_edges_after": [],
-                "evidence_status": evidence.get("evidence_status") if isinstance(evidence, Mapping) else None,
-                "evidence_warning": (
-                    "evidence unavailable; expert visual confirmation required"
-                    if isinstance(evidence, Mapping) and evidence.get("evidence_status") == "unavailable"
-                    else None
-                ),
+                "evidence_status": evidence_status,
+                "evidence_warning": evidence_warning,
                 "short_wall_deficit_delta": plausibility.get("short_wall_deficit_delta") if isinstance(plausibility, Mapping) else None,
                 "short_wall_plausibility_warning": (
                     "metric worsened; expert visual confirmation required"
@@ -1193,6 +1210,33 @@ def render_review_html(
             if isinstance(coordinate_changes, list)
             else []
         )
+        overlay_pairs = []
+        for raw_pair, projected_pair in zip(
+            variant["ordered_pairs"], variant["projection"]["pairs"]
+        ):
+            normalized = projected_pair["normalized"]
+            effective_pair_index = int(projected_pair["effective_pair_index"])
+            source_pair_id = (
+                raw_pair.get("source_pair_id")
+                or raw_pair.get("source_preview_order_index")
+                or projected_pair.get("source_preview_order_index")
+                or effective_pair_index
+            )
+            overlay_pairs.append(
+                {
+                    "source_pair_id": int(source_pair_id),
+                    "solver_position": int(raw_pair.get("solver_position") or effective_pair_index),
+                    "effective_pair_index": effective_pair_index,
+                    "top": {
+                        "x": float(normalized["top_x"]) / float(payload["width"]) * 100.0,
+                        "y": float(normalized["top_y"]) / float(payload["height"]) * 100.0,
+                    },
+                    "bottom": {
+                        "x": float(normalized["bottom_x"]) / float(payload["width"]) * 100.0,
+                        "y": float(normalized["bottom_y"]) / float(payload["height"]) * 100.0,
+                    },
+                }
+            )
         corners = [
             {
                 "x": pair["normalized"]["x"],
@@ -1215,6 +1259,7 @@ def render_review_html(
                 "changedPairIndices": changed_pair_indices,
                 "changedWallIndices": changed_wall_indices,
                 "corners": corners,
+                "overlayPairs": overlay_pairs,
                 "summary": variant["summary"],
                 "triage": {
                     key: candidate_row.get(key)
@@ -1302,6 +1347,34 @@ def render_review_html(
     #original-panorama summary {{ cursor:pointer; padding:8px; font-weight:700; }}
     #original-panorama img {{ display:block; width:100%; max-height:240px; object-fit:contain; background:#020617; }}
     #original-panorama-status {{ display:block; padding:6px 8px; }}
+    #focus-review {{ display:none; position:fixed; inset:0; z-index:50; background:#020617; color:#e5e7eb; flex-direction:column; }}
+    #focus-review.open {{ display:flex; }}
+    #focus-toolbar {{ flex:0 0 auto; display:flex; gap:8px; align-items:center; flex-wrap:wrap; padding:10px 12px; border-bottom:1px solid #334155; background:#0f172a; }}
+    #focus-overlay-controls {{ display:flex; flex-wrap:wrap; gap:6px 10px; font-size:11px; }}
+    #focus-stage {{ --focus-2d-size:50%; flex:1 1 auto; min-height:0; display:grid; gap:8px; padding:8px; }}
+    #focus-stage[data-placement="right"] {{ grid-template-columns:minmax(0,calc(100% - var(--focus-2d-size))) 8px minmax(0,var(--focus-2d-size)); grid-template-areas:"three resize two"; }}
+    #focus-stage[data-placement="left"] {{ grid-template-columns:minmax(0,var(--focus-2d-size)) 8px minmax(0,calc(100% - var(--focus-2d-size))); grid-template-areas:"two resize three"; }}
+    #focus-stage[data-placement="top"] {{ grid-template-rows:minmax(0,var(--focus-2d-size)) 8px minmax(0,calc(100% - var(--focus-2d-size))); grid-template-areas:"two" "resize" "three"; }}
+    #focus-stage[data-placement="bottom"] {{ grid-template-rows:minmax(0,calc(100% - var(--focus-2d-size))) 8px minmax(0,var(--focus-2d-size)); grid-template-areas:"three" "resize" "two"; }}
+    #focus-stage.drag-over {{ outline:2px dashed #facc15; outline-offset:-6px; }}
+    .focus-pane {{ min-width:0; min-height:0; display:grid; grid-template-rows:auto minmax(0,1fr) auto; border:1px solid #334155; border-radius:8px; overflow:hidden; background:#0f172a; }}
+    #focus-3d-pane {{ grid-area:three; }}
+    #focus-2d-pane {{ grid-area:two; }}
+    #focus-resize-handle {{ grid-area:resize; border-radius:8px; background:#334155; cursor:col-resize; }}
+    #focus-stage[data-placement="top"] #focus-resize-handle,
+    #focus-stage[data-placement="bottom"] #focus-resize-handle {{ cursor:row-resize; }}
+    .focus-drag-handle {{ padding:7px 9px; background:#172033; cursor:grab; user-select:none; font-weight:700; }}
+    .focus-drag-handle:active {{ cursor:grabbing; }}
+    .focus-2d-shell {{ min-height:0; display:grid; place-items:center; overflow:hidden; background:#020617; }}
+    #focus-2d-viewbox {{ aspect-ratio:2/1; background:#111; }}
+    #focus-3d-frame, #focus-2d-canvas {{ width:100%; height:100%; min-height:0; border:0; display:block; background:#111; }}
+    #focus-2d-canvas {{ cursor:crosshair; }}
+    #focus-2d-status, #focus-drop-hint {{ padding:5px 8px; }}
+    .overlay-baseline {{ stroke:#e5e7eb; fill:#111827; stroke-dasharray:.9 .7; vector-effect:non-scaling-stroke; }}
+    .overlay-candidate {{ stroke:#22d3ee; fill:#fde047; vector-effect:non-scaling-stroke; }}
+    .overlay-changed {{ stroke:#f472b6; fill:#fb7185; vector-effect:non-scaling-stroke; }}
+    .overlay-arrow {{ stroke:#fb7185; stroke-dasharray:.8 .6; vector-effect:non-scaling-stroke; }}
+    .overlay-label {{ fill:#fff; paint-order:stroke; stroke:#000; stroke-width:.35; font-size:1.55px; }}
     table {{ width:100%; border-collapse:collapse; font-size:11px; }}
     th, td {{ border:1px solid #334155; padding:4px; text-align:left; vertical-align:top; }}
     pre {{ white-space:pre-wrap; overflow-wrap:anywhere; font-size:12px; }}
@@ -1321,6 +1394,7 @@ def render_review_html(
     <button id="ghost" class="active" type="button">Ghost original</button>
     <button id="measure" type="button">Measure</button>
     <button id="next-issue" type="button">Next issue</button>
+    <button id="open-2d-review" type="button">2D Review</button>
     <span class="toolbar-group">
       <button data-camera="top" type="button">Top</button>
       <button data-camera="isometric" type="button">Isometric</button>
@@ -1372,6 +1446,47 @@ def render_review_html(
       <p class="muted">Read-only local diagnostic. Open this HTML directly to use its embedded local texture, or double-click <code>open_local_3d_review.cmd</code> for localhost mode.</p>
     </aside>
   </main>
+  <div id="focus-review" aria-hidden="true">
+    <div id="focus-toolbar">
+      <strong>Focus 2D/3D Review</strong>
+      <span id="focus-variant-name" class="muted"></span>
+      <span id="focus-coordinate-readout" class="muted">Click 2D to show LS/pixel coordinates.</span>
+      <button id="close-2d-review" type="button">Close</button>
+      <button id="focus-layout-cycle" type="button">Move 2D</button>
+      <div id="focus-overlay-controls">
+        <label><input id="overlay-show-baseline" type="checkbox" checked> baseline</label>
+        <label><input id="overlay-show-candidate" type="checkbox" checked> candidate</label>
+        <label><input id="overlay-show-labels" type="checkbox" checked> labels</label>
+        <label><input id="overlay-show-arrows" type="checkbox" checked> arrows</label>
+        <label><input id="overlay-show-top" type="checkbox" checked> top</label>
+        <label><input id="overlay-show-bottom" type="checkbox" checked> bottom</label>
+        <label><input id="overlay-show-vertical" type="checkbox" checked> vertical</label>
+        <label>point size <input id="overlay-point-size" type="range" min=".35" max="1.6" step=".05" value=".75"></label>
+      </div>
+    </div>
+    <div id="focus-stage" data-placement="right">
+      <section id="focus-3d-pane" class="focus-pane">
+        <div class="focus-drag-handle" data-focus-pane="3d">3D preview · drag here to reposition</div>
+        <iframe id="focus-3d-frame" title="focused candidate geometry panel"></iframe>
+        <span class="muted">Read-only 3D preview; display only.</span>
+      </section>
+      <div id="focus-resize-handle" title="Drag to resize 2D/3D panes"></div>
+      <section id="focus-2d-pane" class="focus-pane">
+        <div class="focus-drag-handle" data-focus-pane="2d">2D annotation overlay · drag here to dock left/right/top/bottom</div>
+        <div class="focus-2d-shell">
+          <div id="focus-2d-viewbox">
+            <svg id="focus-2d-canvas" viewBox="0 0 100 100" preserveAspectRatio="none" role="img" aria-label="read-only focused 2D image point overlay">
+              <defs><marker id="overlay-arrowhead" markerWidth="5" markerHeight="5" refX="4" refY="2.5" orient="auto"><path d="M0,0 L5,2.5 L0,5z" fill="#fb7185"></path></marker></defs>
+              <image id="focus-2d-panorama" x="0" y="0" width="100" height="100" preserveAspectRatio="none"></image>
+              <g id="focus-2d-root"></g>
+            </svg>
+          </div>
+        </div>
+        <span id="focus-2d-status" class="muted">Read-only 2D overlay.</span>
+      </section>
+    </div>
+    <span id="focus-drop-hint" class="muted">Drag either pane title toward left/right/top/bottom to rearrange the 2D/3D layout.</span>
+  </div>
   <script>
     const REVIEW = {encoded};
     const views = document.getElementById('views');
@@ -1389,6 +1504,17 @@ def render_review_html(
     const provenance = document.getElementById('provenance');
     const originalPanoramaImage = document.getElementById('original-panorama-image');
     const originalPanoramaStatus = document.getElementById('original-panorama-status');
+    const focusReview = document.getElementById('focus-review');
+    const focusStage = document.getElementById('focus-stage');
+    const focusFrame = document.getElementById('focus-3d-frame');
+    const focusVariantName = document.getElementById('focus-variant-name');
+    const focusCoordinateReadout = document.getElementById('focus-coordinate-readout');
+    const focusOverlayCanvas = document.getElementById('focus-2d-canvas');
+    const focus2DViewbox = document.getElementById('focus-2d-viewbox');
+    const focusOverlayPanorama = document.getElementById('focus-2d-panorama');
+    const focusOverlayRoot = document.getElementById('focus-2d-root');
+    const focusOverlayStatus = document.getElementById('focus-2d-status');
+    const focusDropHint = document.getElementById('focus-drop-hint');
     const activeMode = window.location.protocol === 'file:' ? 'file' : 'server';
     const activeAssets = REVIEW.assets[activeMode];
     const MAX_COMPARE_PANELS = 6;
@@ -1402,6 +1528,10 @@ def render_review_html(
     let ghostVisible = true;
     let measureMode = false;
     let issueCursor = -1;
+    let focusVariantIndex = 0;
+    let focusViewerReady = false;
+    let focusDraggingPane = null;
+    let focusResizing = false;
 
     if (activeAssets.imageUrl) {{
       originalPanoramaImage.src = activeAssets.imageUrl;
@@ -1413,8 +1543,14 @@ def render_review_html(
         originalPanoramaImage.hidden = true;
         originalPanoramaStatus.textContent = 'Original panorama failed to load; 3D geometry remains available.';
       }});
+      focusOverlayPanorama.setAttribute('href', activeAssets.imageUrl);
+      focusOverlayPanorama.addEventListener('load', renderFocus2DOverlay);
+      focusOverlayPanorama.addEventListener('error', () => {{
+        focusOverlayStatus.textContent = '2D overlay image failed to load; point geometry remains available.';
+      }});
     }} else {{
       originalPanoramaStatus.textContent = 'Original panorama unavailable; 3D geometry remains available.';
+      focusOverlayStatus.textContent = '2D overlay image unavailable; point geometry remains available.';
     }}
 
     function defaultPanelAssignments() {{
@@ -1430,6 +1566,197 @@ def render_review_html(
 
     function activePanel() {{ return panels[activePanelIndex] || panels[0] || null; }}
     function panelVariant(panel) {{ return REVIEW.variants[panel.variantIndex] || REVIEW.variants[0]; }}
+    function activeVariant() {{ return panelVariant(activePanel()); }}
+    function focusVariant() {{ return REVIEW.variants[focusVariantIndex] || activeVariant(); }}
+    function overlayEnabled(id) {{
+      const node = document.getElementById(id);
+      return !node || node.checked;
+    }}
+    function overlayPointRadius() {{
+      return Number(document.getElementById('overlay-point-size')?.value || 0.75);
+    }}
+    function sourceLabel(pair) {{
+      return 's' + pair.source_pair_id + ' / p' + pair.solver_position;
+    }}
+    function endpointDistance(a, b) {{
+      return Math.hypot(Number(a.x) - Number(b.x), Number(a.y) - Number(b.y));
+    }}
+    function overlayPath(pairs, endpoint) {{
+      let d = '';
+      pairs.forEach((pair, index) => {{
+        const point = pair[endpoint];
+        const previous = index ? pairs[index - 1][endpoint] : null;
+        const command = index && previous && Math.abs(point.x - previous.x) <= 50 ? ' L' : ' M';
+        d += command + point.x + ' ' + point.y;
+      }});
+      return d.trim();
+    }}
+    function svgNode(tag, attrs = {{}}) {{
+      const node = document.createElementNS('http://www.w3.org/2000/svg', tag);
+      Object.entries(attrs).forEach(([key, value]) => node.setAttribute(key, value));
+      return node;
+    }}
+    function appendOverlayPath(target, pairs, endpoint, className) {{
+      const d = overlayPath(pairs, endpoint);
+      if (d) target.root.appendChild(svgNode('path', {{d, class: className, fill: 'none', 'stroke-width': 0.35}}));
+    }}
+    function appendOverlayPair(target, pair, className, changed) {{
+      const radius = overlayPointRadius();
+      const markerClass = changed ? 'overlay-changed' : className;
+      if (overlayEnabled('overlay-show-vertical')) {{
+        target.root.appendChild(svgNode('line', {{
+          x1: pair.top.x, y1: pair.top.y, x2: pair.bottom.x, y2: pair.bottom.y,
+          class: markerClass, 'stroke-width': 0.3
+        }}));
+      }}
+      ['top', 'bottom'].forEach((endpoint) => {{
+        const point = pair[endpoint];
+        target.root.appendChild(svgNode('circle', {{
+          cx: point.x, cy: point.y, r: radius,
+          class: markerClass, 'stroke-width': 0.35
+        }}));
+      }});
+      if (overlayEnabled('overlay-show-labels')) {{
+        const label = svgNode('text', {{
+          x: Number(pair.top.x) + 0.8, y: Number(pair.top.y) - 0.8,
+          class: 'overlay-label'
+        }});
+        label.textContent = sourceLabel(pair);
+        target.root.appendChild(label);
+      }}
+    }}
+    function render2DOverlayTarget(target, variant) {{
+      if (!target?.root) return;
+      target.root.replaceChildren();
+      const baseline = REVIEW.variants[0];
+      if (!variant || !baseline?.overlayPairs?.length) return;
+      const candidatePairs = variant.overlayPairs || [];
+      const baselinePairs = baseline.overlayPairs || [];
+      const changed = new Set(variant.changedPairIndices || []);
+      if (overlayEnabled('overlay-show-top')) {{
+        if (overlayEnabled('overlay-show-baseline')) appendOverlayPath(target, baselinePairs, 'top', 'overlay-baseline');
+        if (overlayEnabled('overlay-show-candidate')) appendOverlayPath(target, candidatePairs, 'top', 'overlay-candidate');
+      }}
+      if (overlayEnabled('overlay-show-bottom')) {{
+        if (overlayEnabled('overlay-show-baseline')) appendOverlayPath(target, baselinePairs, 'bottom', 'overlay-baseline');
+        if (overlayEnabled('overlay-show-candidate')) appendOverlayPath(target, candidatePairs, 'bottom', 'overlay-candidate');
+      }}
+      if (overlayEnabled('overlay-show-baseline')) {{
+        baselinePairs.forEach((pair) => appendOverlayPair(target, pair, 'overlay-baseline', false));
+      }}
+      candidatePairs.forEach((pair, index) => {{
+        const isChanged = changed.has(pair.effective_pair_index);
+        if (overlayEnabled('overlay-show-candidate')) appendOverlayPair(target, pair, 'overlay-candidate', isChanged);
+        const base = baselinePairs[index];
+        if (base && overlayEnabled('overlay-show-arrows') && variant.name !== 'original') {{
+          ['top', 'bottom'].forEach((endpoint) => {{
+            if (endpointDistance(base[endpoint], pair[endpoint]) <= 0.01) return;
+            target.root.appendChild(svgNode('line', {{
+              x1: base[endpoint].x, y1: base[endpoint].y, x2: pair[endpoint].x, y2: pair[endpoint].y,
+              class: 'overlay-arrow', 'stroke-width': 0.28, 'marker-end': 'url(#overlay-arrowhead)'
+            }}));
+          }});
+        }}
+      }});
+      if (target.status) target.status.textContent = '2D overlay: ' + variant.name + ' | read-only | click image for LS-percent coordinates.';
+    }}
+    function renderFocus2DOverlay() {{
+      render2DOverlayTarget({{root:focusOverlayRoot, status:focusOverlayStatus}}, focusVariant());
+      requestAnimationFrame(sizeFocus2DViewbox);
+    }}
+    function pointToLsPercent(event, canvas = focusOverlayCanvas) {{
+      const rect = canvas.getBoundingClientRect();
+      return {{
+        x: Math.max(0, Math.min(100, (event.clientX - rect.left) / rect.width * 100)),
+        y: Math.max(0, Math.min(100, (event.clientY - rect.top) / rect.height * 100)),
+      }};
+    }}
+    function nearestEndpoint(x, y, variant = activeVariant()) {{
+      let best = null;
+      (variant?.overlayPairs || []).forEach((pair) => {{
+        ['top', 'bottom'].forEach((endpoint) => {{
+          const point = pair[endpoint];
+          const distance = Math.hypot(point.x - x, point.y - y);
+          if (!best || distance < best.distance) {{
+            best = {{
+              source_pair_id: pair.source_pair_id,
+              solver_position: pair.solver_position,
+              effective_pair_index: pair.effective_pair_index,
+              endpoint,
+              distance_ls_percent: distance,
+              point,
+            }};
+          }}
+        }});
+      }});
+      return best;
+    }}
+    function inspect2DOverlayClick(event, canvas, variant) {{
+      const point = pointToLsPercent(event, canvas);
+      const nearest = nearestEndpoint(point.x, point.y, variant);
+      const payload = {{
+        type: '2d_image_overlay_click',
+        variant: variant?.name || null,
+        ls_percent: {{x: Number(point.x.toFixed(4)), y: Number(point.y.toFixed(4))}},
+        pixel: {{
+          x_px: Number((point.x / 100 * REVIEW.width).toFixed(2)),
+          y_px: Number((point.y / 100 * REVIEW.height).toFixed(2)),
+        }},
+        nearest_endpoint: nearest ? {{
+          ...nearest,
+          distance_ls_percent: Number(nearest.distance_ls_percent.toFixed(4)),
+        }} : null,
+        read_only: true,
+      }};
+      inspector.textContent = JSON.stringify(payload, null, 2);
+      focusCoordinateReadout.textContent =
+        'LS x=' + payload.ls_percent.x + ', y=' + payload.ls_percent.y +
+        ' | px x=' + payload.pixel.x_px + ', y=' + payload.pixel.y_px +
+        (payload.nearest_endpoint
+          ? ' | nearest s' + payload.nearest_endpoint.source_pair_id + ' ' + payload.nearest_endpoint.endpoint +
+            ' d=' + payload.nearest_endpoint.distance_ls_percent
+          : '');
+    }}
+    focusOverlayCanvas.addEventListener('click', (event) => {{
+      inspect2DOverlayClick(event, focusOverlayCanvas, focusVariant());
+    }});
+    function oppositePlacement(placement) {{
+      return {{left:'right', right:'left', top:'bottom', bottom:'top'}}[placement] || 'right';
+    }}
+    function placementFromPointer(event) {{
+      const rect = focusStage.getBoundingClientRect();
+      const x = (event.clientX - rect.left) / Math.max(1, rect.width);
+      const y = (event.clientY - rect.top) / Math.max(1, rect.height);
+      if (y < 0.25) return 'top';
+      if (y > 0.75) return 'bottom';
+      return x < 0.5 ? 'left' : 'right';
+    }}
+    function setFocusPlacement(placement, draggedPane = '2d') {{
+      const next = draggedPane === '3d' ? oppositePlacement(placement) : placement;
+      focusStage.dataset.placement = next;
+      focusDropHint.textContent = '2D is docked ' + next + ' of the 3D preview. Drag either pane title to rearrange.';
+      sizeFocus2DViewbox();
+    }}
+    function sizeFocus2DViewbox() {{
+      const shell = focus2DViewbox.parentElement;
+      const width = Math.max(1, shell.clientWidth);
+      const height = Math.max(1, shell.clientHeight);
+      const viewWidth = Math.min(width, height * 2);
+      focus2DViewbox.style.width = viewWidth + 'px';
+      focus2DViewbox.style.height = (viewWidth / 2) + 'px';
+    }}
+    function resizeFocusFromPointer(event) {{
+      const rect = focusStage.getBoundingClientRect();
+      const placement = focusStage.dataset.placement || 'right';
+      let ratio = 0.5;
+      if (placement === 'left') ratio = (event.clientX - rect.left) / Math.max(1, rect.width);
+      if (placement === 'right') ratio = (rect.right - event.clientX) / Math.max(1, rect.width);
+      if (placement === 'top') ratio = (event.clientY - rect.top) / Math.max(1, rect.height);
+      if (placement === 'bottom') ratio = (rect.bottom - event.clientY) / Math.max(1, rect.height);
+      ratio = Math.max(0.2, Math.min(0.8, ratio));
+      focusStage.style.setProperty('--focus-2d-size', (ratio * 100).toFixed(1) + '%');
+      sizeFocus2DViewbox();
+    }}
     function updatePanelHeader(panel) {{
       const variant = panelVariant(panel);
       const triage = variant.triage || {{}};
@@ -1492,6 +1819,22 @@ def render_review_html(
     window.addEventListener('message', (event) => {{
       const data = event.data;
       if (!data || typeof data !== 'object') return;
+      if (event.source === focusFrame.contentWindow) {{
+        if (data.type === 'hohonet_viewer_ready') {{
+          focusViewerReady = true;
+          sendFocusLayout();
+          return;
+        }}
+        if (data.type === 'hohonet_geometry_selection') {{
+          inspector.textContent = JSON.stringify(data.selection || {{}}, null, 2);
+          return;
+        }}
+        if (data.type === 'hohonet_measurement_status') {{
+          measurement.textContent = JSON.stringify(data.measurement || {{}}, null, 2);
+          return;
+        }}
+        return;
+      }}
       const panel = panels.find((row) => event.source === row.frame.contentWindow);
       if (!panel) return;
       if (data.type === 'hohonet_viewer_ready') {{
@@ -1594,9 +1937,29 @@ def render_review_html(
       updatePanelHeader(panel);
       updateTextureUi();
     }}
+    function sendFocusLayout() {{
+      const variant = focusVariant();
+      if (!focusFrame.contentWindow || !focusViewerReady) return;
+      focusFrame.contentWindow.postMessage({{
+        type: 'update_layout', corners: variant.corners, baseCorners: variant.corners,
+        previewOrder: variant.corners.map((_, i) => i), previewOrderActive: true,
+        preserveOrder: true, width: REVIEW.width, height: REVIEW.height,
+        imageUrl: activeAssets.imageUrl, previewSignature: 'm15-23-7-focus-' + variant.name,
+        variantName: variant.name, inspectionMode: true,
+        inspectionMetadata: variant.inspection,
+        changedPairIndices: variant.changedPairIndices || [],
+        changedWallIndices: variant.changedWallIndices || [],
+        ghostCorners: ghostVisible && variant.name !== 'original' ? REVIEW.variants[0].corners : null,
+        displayOptions: {{ghost:ghostVisible, measureMode:false, texture:textureVisible}}
+      }}, '*');
+      focusFrame.contentWindow.postMessage({{type:'set_label_visibility', visible:labelsVisible}}, '*');
+      focusVariantName.textContent = variant.name + ' | drag pane titles to dock left/right/top/bottom';
+      renderFocus2DOverlay();
+    }}
     function refreshAllPanels() {{
       panels.forEach((panel) => sendLayout(panel));
       updateActiveUi();
+      sendFocusLayout();
     }}
     function layoutPanels() {{
       const count = panels.length;
@@ -1681,11 +2044,66 @@ def render_review_html(
         updateCompareTable(); updateTextureUi();
       }}
     }}
+    function setFocusReviewOpen(open) {{
+      focusReview.classList.toggle('open', open);
+      focusReview.setAttribute('aria-hidden', open ? 'false' : 'true');
+      if (!open) return;
+      const panel = activePanel();
+      focusVariantIndex = panel ? panel.variantIndex : 0;
+      focusVariantName.textContent = focusVariant().name + ' | drag pane titles to dock left/right/top/bottom';
+      focusCoordinateReadout.textContent = 'Click 2D to show LS/pixel coordinates.';
+      renderFocus2DOverlay();
+      if (!focusFrame.getAttribute('src')) focusFrame.src = activeAssets.viewerUrl;
+      sendFocusLayout();
+      requestAnimationFrame(sizeFocus2DViewbox);
+    }}
+    function cycleFocusPlacement() {{
+      const order = ['right', 'bottom', 'left', 'top'];
+      const current = focusStage.dataset.placement || 'right';
+      setFocusPlacement(order[(order.indexOf(current) + 1) % order.length] || 'right');
+    }}
     addPanelButton.addEventListener('click', addPanel);
     window.addEventListener('resize', layoutPanels);
+    window.addEventListener('resize', sizeFocus2DViewbox);
+    document.getElementById('open-2d-review').addEventListener('click', () => setFocusReviewOpen(true));
+    document.getElementById('close-2d-review').addEventListener('click', () => setFocusReviewOpen(false));
+    document.getElementById('focus-layout-cycle').addEventListener('click', cycleFocusPlacement);
+    document.addEventListener('keydown', (event) => {{
+      if (event.key === 'Escape' && focusReview.classList.contains('open')) setFocusReviewOpen(false);
+    }});
+    document.querySelectorAll('.focus-drag-handle').forEach((handle) => {{
+      handle.addEventListener('pointerdown', (event) => {{
+        focusDraggingPane = handle.dataset.focusPane || '2d';
+        handle.setPointerCapture(event.pointerId);
+        focusStage.classList.add('drag-over');
+      }});
+      handle.addEventListener('pointermove', (event) => {{
+        if (!focusDraggingPane) return;
+        setFocusPlacement(placementFromPointer(event), focusDraggingPane);
+      }});
+      handle.addEventListener('pointerup', (event) => {{
+        if (handle.hasPointerCapture(event.pointerId)) handle.releasePointerCapture(event.pointerId);
+        focusStage.classList.remove('drag-over');
+        focusDraggingPane = null;
+      }});
+    }});
+    const focusResizeHandle = document.getElementById('focus-resize-handle');
+    focusResizeHandle.addEventListener('pointerdown', (event) => {{
+      focusResizing = true;
+      focusResizeHandle.setPointerCapture(event.pointerId);
+      resizeFocusFromPointer(event);
+    }});
+    focusResizeHandle.addEventListener('pointermove', (event) => {{
+      if (focusResizing) resizeFocusFromPointer(event);
+    }});
+    focusResizeHandle.addEventListener('pointerup', (event) => {{
+      if (focusResizeHandle.hasPointerCapture(event.pointerId)) focusResizeHandle.releasePointerCapture(event.pointerId);
+      focusResizing = false;
+    }});
     document.getElementById('labels').addEventListener('click', (event) => {{
       labelsVisible = !labelsVisible; event.currentTarget.textContent = labelsVisible ? 'Hide corners' : 'Show corners';
       panels.forEach((panel) => {{ if (panel.viewerState === 'ready') panel.frame.contentWindow.postMessage({{type:'set_label_visibility', visible:labelsVisible}}, '*'); }});
+      if (focusViewerReady) focusFrame.contentWindow.postMessage({{type:'set_label_visibility', visible:labelsVisible}}, '*');
     }});
     document.getElementById('texture').addEventListener('click', (event) => {{
       textureVisible = !textureVisible;
@@ -1708,6 +2126,7 @@ def render_review_html(
     document.querySelectorAll('[data-camera]').forEach((button) => button.addEventListener('click', () => {{
       broadcastInspectionCommand('camera_preset', {{preset:button.dataset.camera}});
     }}));
+    document.querySelectorAll('#focus-overlay-controls input').forEach((input) => input.addEventListener('input', renderFocus2DOverlay));
     for (let index = 0; index < defaultPanelCount; index += 1) {{
       createPanel(panelAssignments[index] ?? index);
     }}
