@@ -11,7 +11,7 @@
     "m_anchor_4_1_1_staged_constraints": {
       "path": "analysis_results/paper_a_manhattan/m_anchor/task218_ann3741_m_anchor_4/m_anchor_4_1_1_staged_constraints.json",
       "schema_version": "m_anchor_4_1_1_staged_constraints_v1",
-      "sha256": "951ac0f037449ab9efd96e2a5f8b117f45e48c5361dccc156b575a8ca612fabc"
+      "sha256": "bdf03bf619108519cb458bd6715ac4675ba02753371a32feca73148d22056028"
     },
     "m_anchor_1_audit": {
       "path": "analysis_results/paper_a_manhattan/m_anchor/task218_ann3741_m_anchor_1/m_anchor_1_audit.json",
@@ -39,16 +39,42 @@
     "expansion_policy": "fail_closed_staged_escalation"
   },
   "beam_pruning": {
-    "core_beam": 10,
-    "one_action_beam": 5,
-    "two_actions_per_beam": 10,
+    "max_raw_evaluations": 1200,
     "stage_evaluation_budget": {
       "A": 110,
       "B": 370,
       "C": 720
     },
-    "max_raw_evaluations": 1200,
-    "sort": "class, local max, local/global sum, movement, candidate id"
+    "core_beam": 10,
+    "one_action_beam": 5,
+    "two_actions_per_beam": 10,
+    "effective_beam_by_stage": {
+      "A": {
+        "configured_core_beam": 10,
+        "effective_core_beam": 1,
+        "configured_one_action_beam": 5,
+        "effective_one_action_beam": 1,
+        "configured_two_actions_per_beam": 10,
+        "effective_two_actions_per_beam": 10
+      },
+      "B": {
+        "configured_core_beam": 10,
+        "effective_core_beam": 1,
+        "configured_one_action_beam": 5,
+        "effective_one_action_beam": 1,
+        "configured_two_actions_per_beam": 10,
+        "effective_two_actions_per_beam": 10
+      },
+      "C": {
+        "configured_core_beam": 10,
+        "effective_core_beam": 1,
+        "configured_one_action_beam": 5,
+        "effective_one_action_beam": 1,
+        "configured_two_actions_per_beam": 10,
+        "effective_two_actions_per_beam": 10
+      }
+    },
+    "sort": "review: stage A/B/C, then class, local max, local/global sum, movement, candidate id"
   },
   "residual_semantics": {
     "legacy_alias_for": "floor_heading_residual",
@@ -75,9 +101,9 @@
     "C": 714
   },
   "hard_gate_pass_count_by_stage": {
-    "A": 109,
-    "B": 370,
-    "C": 646
+    "A": 107,
+    "B": 365,
+    "C": 639
   },
   "geometry_improved_count_by_stage": {
     "A": 0,
@@ -92,8 +118,8 @@
   ],
   "review_candidates": [
     {
-      "candidate_id": "m_anchor_4_1_1_c_0487",
-      "search_stage": "C",
+      "candidate_id": "m_anchor_4_1_1_a_0003",
+      "search_stage": "A",
       "candidate_class": "neutral_geometry_tradeoff",
       "decision": "neutral_geometry_tradeoff",
       "directional_core": {
@@ -106,7 +132,7 @@
           "bottom_y": 0.0
         },
         "10": {
-          "x": 0.5,
+          "x": 0.15,
           "bottom_y": 0.0
         }
       },
@@ -126,12 +152,12 @@
           "bottom_y": 0.0
         },
         "10": {
-          "x": 0.5,
+          "x": 0.15,
           "bottom_y": 0.0
         }
       },
-      "maximum_absolute_delta": 0.5,
-      "visual_anchor_movement_cost": 1.8,
+      "maximum_absolute_delta": 0.15,
+      "visual_anchor_movement_cost": 0.75,
       "affected_edges": [
         [
           3,
@@ -178,14 +204,14 @@
           9
         ]
       ],
-      "floor_heading_residual_sum_deg": 34.56629730132238,
+      "floor_heading_residual_sum_deg": 36.442754808954874,
       "floor_heading_residual_max_deg": 3.6482977136283807,
-      "local_floor_heading_residual_sum_deg": 15.104828930163077,
+      "local_floor_heading_residual_sum_deg": 16.981286437795557,
       "local_floor_heading_residual_max_deg": 3.648297713628465,
       "floor_heading_residual_sum_before_deg": 36.74079625252,
       "local_floor_heading_residual_sum_before_deg": 17.279327881360675,
       "local_floor_heading_residual_max_before_deg": 3.4558655762721457,
-      "wall_residual_sum_deg": 34.56629730132238,
+      "wall_residual_sum_deg": 36.442754808954874,
       "wall_residual_max_deg": 3.6482977136283807,
       "legacy_alias_for": "floor_heading_residual",
       "per_wall_residual_diagnostic": {
@@ -293,10 +319,10 @@
             ],
             "seam_edge": false,
             "length_before": 2.7079985882407507,
-            "length_after": 2.7737766713895904,
+            "length_after": 2.732012108511866,
             "manhattan_residual_before_deg": 3.4558655762721315,
-            "manhattan_residual_after_deg": 2.7070241806868154,
-            "residual_delta_deg": -0.7488413955853161
+            "manhattan_residual_after_deg": 3.2984460175993036,
+            "residual_delta_deg": -0.15741955867282797
           },
           {
             "source_edge_ids": [
@@ -305,10 +331,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.9041436962084741,
-            "length_after": 1.8643105629859467,
+            "length_after": 1.8921907536417235,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 1.625973378126048,
-            "residual_delta_deg": -1.8298921981460694
+            "manhattan_residual_after_deg": 2.91100904884604,
+            "residual_delta_deg": -0.5448565274260773
           },
           {
             "source_edge_ids": [
@@ -338,7 +364,7 @@
         "summary": {
           "wall_count": 12,
           "residual_sum_before_deg": 36.74079625252007,
-          "residual_sum_after_deg": 34.56629730132248,
+          "residual_sum_after_deg": 36.44275480895496,
           "residual_max_before_deg": 3.4558655762722594,
           "residual_max_after_deg": 3.648297713628465,
           "worst_edge_after": [
@@ -872,11 +898,11 @@
         },
         {
           "top": {
-            "x": 83.84955092974104,
+            "x": 83.49955092974105,
             "y": 30.4453125
           },
           "bottom": {
-            "x": 83.84955092974104,
+            "x": 83.49955092974105,
             "y": 69.3659181657466
           },
           "source_pair_id": 10,
@@ -968,13 +994,13 @@
           "fields": {
             "top_x": {
               "before": 83.34955092974104,
-              "after": 83.84955092974104,
-              "delta": 0.5
+              "after": 83.49955092974105,
+              "delta": 0.15000000000000568
             },
             "bottom_x": {
               "before": 83.34955092974104,
-              "after": 83.84955092974104,
-              "delta": 0.5
+              "after": 83.49955092974105,
+              "delta": 0.15000000000000568
             }
           }
         }
@@ -990,8 +1016,8 @@
       "active_runner_role": false
     },
     {
-      "candidate_id": "m_anchor_4_1_1_c_1136",
-      "search_stage": "C",
+      "candidate_id": "m_anchor_4_1_1_a_0082",
+      "search_stage": "A",
       "candidate_class": "neutral_geometry_tradeoff",
       "decision": "neutral_geometry_tradeoff",
       "directional_core": {
@@ -1004,7 +1030,7 @@
           "bottom_y": 0.0
         },
         "10": {
-          "x": 0.5,
+          "x": 0.15,
           "bottom_y": 0.0
         }
       },
@@ -1012,7 +1038,7 @@
         {
           "source_pair_id": 7,
           "axis": "bottom_y",
-          "delta": -0.5
+          "delta": -0.15
         }
       ],
       "changed_pairs": [
@@ -1031,16 +1057,16 @@
           "bottom_y": 0.0
         },
         "10": {
-          "x": 0.5,
+          "x": 0.15,
           "bottom_y": 0.0
         },
         "7": {
           "x": 0.0,
-          "bottom_y": -0.5
+          "bottom_y": -0.15
         }
       },
-      "maximum_absolute_delta": 0.5,
-      "visual_anchor_movement_cost": 2.3,
+      "maximum_absolute_delta": 0.15,
+      "visual_anchor_movement_cost": 0.9,
       "affected_edges": [
         [
           3,
@@ -1095,14 +1121,14 @@
           6
         ]
       ],
-      "floor_heading_residual_sum_deg": 32.82654210266878,
+      "floor_heading_residual_sum_deg": 35.92363542903627,
       "floor_heading_residual_max_deg": 3.643232149472169,
-      "local_floor_heading_residual_sum_deg": 16.820939307781458,
+      "local_floor_heading_residual_sum_deg": 19.918032634149018,
       "local_floor_heading_residual_max_deg": 3.6432321494722077,
       "floor_heading_residual_sum_before_deg": 36.74079625252,
       "local_floor_heading_residual_sum_before_deg": 20.735193457632793,
       "local_floor_heading_residual_max_before_deg": 3.4558655762721457,
-      "wall_residual_sum_deg": 32.82654210266878,
+      "wall_residual_sum_deg": 35.92363542903627,
       "wall_residual_max_deg": 3.643232149472169,
       "legacy_alias_for": "floor_heading_residual",
       "per_wall_residual_diagnostic": {
@@ -1186,10 +1212,10 @@
             ],
             "seam_edge": false,
             "length_before": 0.8094380901425745,
-            "length_after": 0.8555695058257486,
+            "length_after": 0.8231366635716092,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 3.1955726944544267,
-            "residual_delta_deg": -0.2602928818176906
+            "manhattan_residual_after_deg": 3.375516606141076,
+            "residual_delta_deg": -0.08034897013104114
           },
           {
             "source_edge_ids": [
@@ -1198,10 +1224,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.7938608685987785,
-            "length_after": 1.7858922701237425,
+            "length_after": 1.7881907340269663,
             "manhattan_residual_before_deg": 3.4558655762721435,
-            "manhattan_residual_after_deg": 2.168835396792423,
-            "residual_delta_deg": -1.2870301794797205
+            "manhattan_residual_after_deg": 3.2095273038408503,
+            "residual_delta_deg": -0.24633827243129325
           },
           {
             "source_edge_ids": [
@@ -1210,10 +1236,10 @@
             ],
             "seam_edge": false,
             "length_before": 2.7079985882407507,
-            "length_after": 2.7737766713895904,
+            "length_after": 2.732012108511866,
             "manhattan_residual_before_deg": 3.4558655762721315,
-            "manhattan_residual_after_deg": 2.7070241806868154,
-            "residual_delta_deg": -0.7488413955853161
+            "manhattan_residual_after_deg": 3.2984460175993036,
+            "residual_delta_deg": -0.15741955867282797
           },
           {
             "source_edge_ids": [
@@ -1222,10 +1248,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.9041436962084741,
-            "length_after": 1.8643105629859467,
+            "length_after": 1.8921907536417235,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 1.625973378126048,
-            "residual_delta_deg": -1.8298921981460694
+            "manhattan_residual_after_deg": 2.91100904884604,
+            "residual_delta_deg": -0.5448565274260773
           },
           {
             "source_edge_ids": [
@@ -1255,7 +1281,7 @@
         "summary": {
           "wall_count": 12,
           "residual_sum_before_deg": 36.74079625252007,
-          "residual_sum_after_deg": 32.826542102668746,
+          "residual_sum_after_deg": 35.9236354290363,
           "residual_max_before_deg": 3.4558655762722594,
           "residual_max_after_deg": 3.6432321494722077,
           "worst_edge_after": [
@@ -1299,8 +1325,8 @@
               7
             ],
             "edge_length_before": 0.8094380901425745,
-            "edge_length_after": 0.8555695058257486,
-            "ratio": 1.0569919012274904
+            "edge_length_after": 0.8231366635716092,
+            "ratio": 1.0169235591898347
           }
         ],
         "local_min_edge_length": 0.3118787993749672
@@ -1756,7 +1782,7 @@
           },
           "bottom": {
             "x": 50.378095580497586,
-            "y": 76.12127196977598
+            "y": 76.47127196977597
           },
           "source_pair_id": 7,
           "solver_position": 8,
@@ -1789,11 +1815,11 @@
         },
         {
           "top": {
-            "x": 83.84955092974104,
+            "x": 83.49955092974105,
             "y": 30.4453125
           },
           "bottom": {
-            "x": 83.84955092974104,
+            "x": 83.49955092974105,
             "y": 69.3659181657466
           },
           "source_pair_id": 10,
@@ -1867,8 +1893,8 @@
           "fields": {
             "bottom_y": {
               "before": 76.62127196977598,
-              "after": 76.12127196977598,
-              "delta": -0.5
+              "after": 76.47127196977597,
+              "delta": -0.15000000000000568
             }
           }
         },
@@ -1898,13 +1924,13 @@
           "fields": {
             "top_x": {
               "before": 83.34955092974104,
-              "after": 83.84955092974104,
-              "delta": 0.5
+              "after": 83.49955092974105,
+              "delta": 0.15000000000000568
             },
             "bottom_x": {
               "before": 83.34955092974104,
-              "after": 83.84955092974104,
-              "delta": 0.5
+              "after": 83.49955092974105,
+              "delta": 0.15000000000000568
             }
           }
         }
@@ -1920,8 +1946,8 @@
       "active_runner_role": false
     },
     {
-      "candidate_id": "m_anchor_4_1_1_c_1192",
-      "search_stage": "C",
+      "candidate_id": "m_anchor_4_1_1_a_0102",
+      "search_stage": "A",
       "candidate_class": "neutral_geometry_tradeoff",
       "decision": "neutral_geometry_tradeoff",
       "directional_core": {
@@ -1934,7 +1960,7 @@
           "bottom_y": 0.0
         },
         "10": {
-          "x": 0.5,
+          "x": 0.15,
           "bottom_y": 0.0
         }
       },
@@ -1942,16 +1968,16 @@
         {
           "source_pair_id": 7,
           "axis": "bottom_y",
-          "delta": -0.5
+          "delta": -0.15
         },
         {
-          "source_pair_id": 1,
-          "axis": "x",
-          "delta": 0.05
+          "source_pair_id": 2,
+          "axis": "bottom_y",
+          "delta": -0.15
         }
       ],
       "changed_pairs": [
-        1,
+        2,
         4,
         7,
         9,
@@ -1967,30 +1993,26 @@
           "bottom_y": 0.0
         },
         "10": {
-          "x": 0.5,
+          "x": 0.15,
           "bottom_y": 0.0
         },
         "7": {
           "x": 0.0,
-          "bottom_y": -0.5
+          "bottom_y": -0.15
         },
-        "1": {
-          "x": 0.05,
-          "bottom_y": 0.0
+        "2": {
+          "x": 0.0,
+          "bottom_y": -0.15
         }
       },
-      "maximum_absolute_delta": 0.5,
-      "visual_anchor_movement_cost": 2.4499999999999997,
+      "maximum_absolute_delta": 0.15,
+      "visual_anchor_movement_cost": 1.05,
       "affected_edges": [
         [
           2,
           1
         ],
         [
-          1,
-          3
-        ],
-        [
           3,
           4
         ],
@@ -2013,36 +2035,40 @@
         [
           10,
           12
+        ],
+        [
+          11,
+          2
         ]
       ],
       "improved_edges": [
+        [
+          8,
+          7
+        ],
+        [
+          7,
+          9
+        ],
+        [
+          9,
+          10
+        ],
+        [
+          10,
+          12
+        ],
+        [
+          11,
+          2
+        ]
+      ],
+      "worsened_edges": [
         [
           2,
           1
         ],
         [
-          8,
-          7
-        ],
-        [
-          7,
-          9
-        ],
-        [
-          9,
-          10
-        ],
-        [
-          10,
-          12
-        ]
-      ],
-      "worsened_edges": [
-        [
-          1,
-          3
-        ],
-        [
           3,
           4
         ],
@@ -2051,14 +2077,14 @@
           6
         ]
       ],
-      "floor_heading_residual_sum_deg": 32.71628525131578,
+      "floor_heading_residual_sum_deg": 33.79777598269868,
       "floor_heading_residual_max_deg": 3.643232149472169,
-      "local_floor_heading_residual_sum_deg": 20.329244899147113,
+      "local_floor_heading_residual_sum_deg": 20.420753440570312,
       "local_floor_heading_residual_max_deg": 3.6432321494722077,
       "floor_heading_residual_sum_before_deg": 36.74079625252,
-      "local_floor_heading_residual_sum_before_deg": 24.353755900351448,
-      "local_floor_heading_residual_max_before_deg": 3.4558655762722594,
-      "wall_residual_sum_deg": 32.71628525131578,
+      "local_floor_heading_residual_sum_before_deg": 23.36377371039166,
+      "local_floor_heading_residual_max_before_deg": 3.4558655762721457,
+      "wall_residual_sum_deg": 33.79777598269868,
       "wall_residual_max_deg": 3.643232149472169,
       "legacy_alias_for": "floor_heading_residual",
       "per_wall_residual_diagnostic": {
@@ -2070,10 +2096,10 @@
             ],
             "seam_edge": false,
             "length_before": 6.146744358487142,
-            "length_after": 6.146244214340912,
+            "length_after": 6.139185335048948,
             "manhattan_residual_before_deg": 0.16269686644639592,
-            "manhattan_residual_after_deg": 0.029279743310837603,
-            "residual_delta_deg": -0.1334171231355583
+            "manhattan_residual_after_deg": 0.19029777221034294,
+            "residual_delta_deg": 0.027600905763947026
           },
           {
             "source_edge_ids": [
@@ -2082,10 +2108,10 @@
             ],
             "seam_edge": false,
             "length_before": 4.267610309410626,
-            "length_after": 4.247081661641118,
+            "length_after": 4.267610309410626,
             "manhattan_residual_before_deg": 3.4558655762722594,
-            "manhattan_residual_after_deg": 3.4790258480548175,
-            "residual_delta_deg": 0.023160271782558084
+            "manhattan_residual_after_deg": 3.4558655762722594,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -2142,10 +2168,10 @@
             ],
             "seam_edge": false,
             "length_before": 0.8094380901425745,
-            "length_after": 0.8555695058257486,
+            "length_after": 0.8231366635716092,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 3.1955726944544267,
-            "residual_delta_deg": -0.2602928818176906
+            "manhattan_residual_after_deg": 3.375516606141076,
+            "residual_delta_deg": -0.08034897013104114
           },
           {
             "source_edge_ids": [
@@ -2154,10 +2180,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.7938608685987785,
-            "length_after": 1.7858922701237425,
+            "length_after": 1.7881907340269663,
             "manhattan_residual_before_deg": 3.4558655762721435,
-            "manhattan_residual_after_deg": 2.168835396792423,
-            "residual_delta_deg": -1.2870301794797205
+            "manhattan_residual_after_deg": 3.2095273038408503,
+            "residual_delta_deg": -0.24633827243129325
           },
           {
             "source_edge_ids": [
@@ -2166,10 +2192,10 @@
             ],
             "seam_edge": false,
             "length_before": 2.7079985882407507,
-            "length_after": 2.7737766713895904,
+            "length_after": 2.732012108511866,
             "manhattan_residual_before_deg": 3.4558655762721315,
-            "manhattan_residual_after_deg": 2.7070241806868154,
-            "residual_delta_deg": -0.7488413955853161
+            "manhattan_residual_after_deg": 3.2984460175993036,
+            "residual_delta_deg": -0.15741955867282797
           },
           {
             "source_edge_ids": [
@@ -2178,10 +2204,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.9041436962084741,
-            "length_after": 1.8643105629859467,
+            "length_after": 1.8921907536417235,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 1.625973378126048,
-            "residual_delta_deg": -1.8298921981460694
+            "manhattan_residual_after_deg": 2.91100904884604,
+            "residual_delta_deg": -0.5448565274260773
           },
           {
             "source_edge_ids": [
@@ -2202,16 +2228,16 @@
             ],
             "seam_edge": true,
             "length_before": 0.20183027345383003,
-            "length_after": 0.20183027345383003,
+            "length_after": 0.20458235436429267,
             "manhattan_residual_before_deg": 2.46588338631247,
-            "manhattan_residual_after_deg": 2.46588338631247,
-            "residual_delta_deg": 0.0
+            "manhattan_residual_after_deg": 0.3124230342109513,
+            "residual_delta_deg": -2.1534603521015185
           }
         ],
         "summary": {
           "wall_count": 12,
           "residual_sum_before_deg": 36.74079625252007,
-          "residual_sum_after_deg": 32.716285251315746,
+          "residual_sum_after_deg": 33.79777598269873,
           "residual_max_before_deg": 3.4558655762722594,
           "residual_max_after_deg": 3.6432321494722077,
           "worst_edge_after": [
@@ -2255,8 +2281,8 @@
               7
             ],
             "edge_length_before": 0.8094380901425745,
-            "edge_length_after": 0.8555695058257486,
-            "ratio": 1.0569919012274904
+            "edge_length_after": 0.8231366635716092,
+            "ratio": 1.0169235591898347
           }
         ],
         "local_min_edge_length": 0.3118787993749672
@@ -2331,8 +2357,8 @@
             "solver_position": 1,
             "verified_order_source_id": 2,
             "hard_fail_on_violation": false,
-            "candidate_value": 91.47869674185463,
-            "delta": 0.0,
+            "candidate_value": 91.32869674185463,
+            "delta": -0.15000000000000568,
             "satisfied": true
           },
           {
@@ -2587,17 +2613,17 @@
           },
           "bottom": {
             "x": 5.889724310776942,
-            "y": 91.47869674185463
+            "y": 91.32869674185463
           },
           "effective_pair_index": 1
         },
         {
           "top": {
-            "x": 0.39290478814528645,
+            "x": 0.34290478814528647,
             "y": 41.65898099154619
           },
           "bottom": {
-            "x": 0.39290478814528645,
+            "x": 0.34290478814528647,
             "y": 57.61789006459336
           },
           "source_pair_id": 1,
@@ -2712,7 +2738,7 @@
           },
           "bottom": {
             "x": 50.378095580497586,
-            "y": 76.12127196977598
+            "y": 76.47127196977597
           },
           "source_pair_id": 7,
           "solver_position": 8,
@@ -2745,11 +2771,11 @@
         },
         {
           "top": {
-            "x": 83.84955092974104,
+            "x": 83.49955092974105,
             "y": 30.4453125
           },
           "bottom": {
-            "x": 83.84955092974104,
+            "x": 83.49955092974105,
             "y": 69.3659181657466
           },
           "source_pair_id": 10,
@@ -2798,20 +2824,15 @@
       ],
       "coordinate_changes": [
         {
-          "source_pair_id": 1,
-          "solver_position": 2,
-          "verified_order_source_id": 1,
-          "effective_pair_index": 2,
+          "source_pair_id": 2,
+          "solver_position": 1,
+          "verified_order_source_id": 2,
+          "effective_pair_index": 1,
           "fields": {
-            "top_x": {
-              "before": 0.34290478814528647,
-              "after": 0.39290478814528645,
-              "delta": 0.04999999999999999
-            },
-            "bottom_x": {
-              "before": 0.34290478814528647,
-              "after": 0.39290478814528645,
-              "delta": 0.04999999999999999
+            "bottom_y": {
+              "before": 91.47869674185463,
+              "after": 91.32869674185463,
+              "delta": -0.15000000000000568
             }
           }
         },
@@ -2841,8 +2862,8 @@
           "fields": {
             "bottom_y": {
               "before": 76.62127196977598,
-              "after": 76.12127196977598,
-              "delta": -0.5
+              "after": 76.47127196977597,
+              "delta": -0.15000000000000568
             }
           }
         },
@@ -2872,13 +2893,13 @@
           "fields": {
             "top_x": {
               "before": 83.34955092974104,
-              "after": 83.84955092974104,
-              "delta": 0.5
+              "after": 83.49955092974105,
+              "delta": 0.15000000000000568
             },
             "bottom_x": {
               "before": 83.34955092974104,
-              "after": 83.84955092974104,
-              "delta": 0.5
+              "after": 83.49955092974105,
+              "delta": 0.15000000000000568
             }
           }
         }
@@ -2894,7 +2915,7 @@
       "active_runner_role": false
     },
     {
-      "candidate_id": "m_anchor_4_1_1_a_0106",
+      "candidate_id": "m_anchor_4_1_1_a_0104",
       "search_stage": "A",
       "candidate_class": "neutral_geometry_tradeoff",
       "decision": "neutral_geometry_tradeoff",
@@ -3863,8 +3884,8 @@
       "active_runner_role": false
     },
     {
-      "candidate_id": "m_anchor_4_1_1_c_1071",
-      "search_stage": "C",
+      "candidate_id": "m_anchor_4_1_1_a_0106",
+      "search_stage": "A",
       "candidate_class": "neutral_geometry_tradeoff",
       "decision": "neutral_geometry_tradeoff",
       "directional_core": {
@@ -3877,20 +3898,26 @@
           "bottom_y": 0.0
         },
         "10": {
-          "x": 0.5,
+          "x": 0.15,
           "bottom_y": 0.0
         }
       },
       "micro_actions": [
         {
-          "source_pair_id": 3,
+          "source_pair_id": 7,
+          "axis": "bottom_y",
+          "delta": -0.15
+        },
+        {
+          "source_pair_id": 2,
           "axis": "x",
-          "delta": 0.5
+          "delta": -0.15
         }
       ],
       "changed_pairs": [
-        3,
+        2,
         4,
+        7,
         9,
         10
       ],
@@ -3904,20 +3931,24 @@
           "bottom_y": 0.0
         },
         "10": {
-          "x": 0.5,
+          "x": 0.15,
           "bottom_y": 0.0
         },
-        "3": {
-          "x": 0.5,
+        "7": {
+          "x": 0.0,
+          "bottom_y": -0.15
+        },
+        "2": {
+          "x": -0.15,
           "bottom_y": 0.0
         }
       },
-      "maximum_absolute_delta": 0.5,
-      "visual_anchor_movement_cost": 3.3,
+      "maximum_absolute_delta": 0.15,
+      "visual_anchor_movement_cost": 1.35,
       "affected_edges": [
         [
-          1,
-          3
+          2,
+          1
         ],
         [
           3,
@@ -3926,6 +3957,10 @@
         [
           4,
           6
+        ],
+        [
+          8,
+          7
         ],
         [
           7,
@@ -3938,16 +3973,24 @@
         [
           10,
           12
+        ],
+        [
+          11,
+          2
         ]
       ],
       "improved_edges": [
         [
-          1,
-          3
+          2,
+          1
         ],
         [
-          3,
-          4
+          8,
+          7
+        ],
+        [
+          7,
+          9
         ],
         [
           9,
@@ -3956,27 +3999,31 @@
         [
           10,
           12
+        ],
+        [
+          11,
+          2
         ]
       ],
       "worsened_edges": [
         [
-          4,
-          6
+          3,
+          4
         ],
         [
-          7,
-          9
+          4,
+          6
         ]
       ],
-      "floor_heading_residual_sum_deg": 31.021494548632035,
-      "floor_heading_residual_max_deg": 3.6482977136283807,
-      "local_floor_heading_residual_sum_deg": 15.015891753744992,
-      "local_floor_heading_residual_max_deg": 3.648297713628465,
+      "floor_heading_residual_sum_deg": 35.508356010591484,
+      "floor_heading_residual_max_deg": 3.643232149472169,
+      "local_floor_heading_residual_sum_deg": 22.1313334684631,
+      "local_floor_heading_residual_max_deg": 3.6432321494722077,
       "floor_heading_residual_sum_before_deg": 36.74079625252,
-      "local_floor_heading_residual_sum_before_deg": 20.735193457632935,
-      "local_floor_heading_residual_max_before_deg": 3.4558655762722594,
-      "wall_residual_sum_deg": 31.021494548632035,
-      "wall_residual_max_deg": 3.6482977136283807,
+      "local_floor_heading_residual_sum_before_deg": 23.36377371039166,
+      "local_floor_heading_residual_max_before_deg": 3.4558655762721457,
+      "wall_residual_sum_deg": 35.508356010591484,
+      "wall_residual_max_deg": 3.643232149472169,
       "legacy_alias_for": "floor_heading_residual",
       "per_wall_residual_diagnostic": {
         "walls": [
@@ -3987,10 +4034,10 @@
             ],
             "seam_edge": false,
             "length_before": 6.146744358487142,
-            "length_after": 6.146744358487142,
+            "length_after": 6.145256855681044,
             "manhattan_residual_before_deg": 0.16269686644639592,
-            "manhattan_residual_after_deg": 0.16269686644639592,
-            "residual_delta_deg": 0.0
+            "manhattan_residual_after_deg": 0.1267175972087955,
+            "residual_delta_deg": -0.03597926923760042
           },
           {
             "source_edge_ids": [
@@ -3999,10 +4046,10 @@
             ],
             "seam_edge": false,
             "length_before": 4.267610309410626,
-            "length_after": 4.4731785932552794,
+            "length_after": 4.267610309410626,
             "manhattan_residual_before_deg": 3.4558655762722594,
-            "manhattan_residual_after_deg": 1.4814412188449069,
-            "residual_delta_deg": -1.9744243574273526
+            "manhattan_residual_after_deg": 3.4558655762722594,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -4011,10 +4058,10 @@
             ],
             "seam_edge": false,
             "length_before": 7.568379850793359,
-            "length_after": 7.401861192720721,
+            "length_after": 7.553283852231685,
             "manhattan_residual_before_deg": 3.4558655762721457,
-            "manhattan_residual_after_deg": 1.9099231129865473,
-            "residual_delta_deg": -1.5459424632855985
+            "manhattan_residual_after_deg": 3.480301508249539,
+            "residual_delta_deg": 0.024435931977393466
           },
           {
             "source_edge_ids": [
@@ -4059,10 +4106,10 @@
             ],
             "seam_edge": false,
             "length_before": 0.8094380901425745,
-            "length_after": 0.8094380901425745,
+            "length_after": 0.8231366635716092,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 3.4558655762721173,
-            "residual_delta_deg": 0.0
+            "manhattan_residual_after_deg": 3.375516606141076,
+            "residual_delta_deg": -0.08034897013104114
           },
           {
             "source_edge_ids": [
@@ -4071,10 +4118,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.7938608685987785,
-            "length_after": 1.7893386272948686,
+            "length_after": 1.7881907340269663,
             "manhattan_residual_before_deg": 3.4558655762721435,
-            "manhattan_residual_after_deg": 3.648297713628465,
-            "residual_delta_deg": 0.1924321373563216
+            "manhattan_residual_after_deg": 3.2095273038408503,
+            "residual_delta_deg": -0.24633827243129325
           },
           {
             "source_edge_ids": [
@@ -4083,10 +4130,10 @@
             ],
             "seam_edge": false,
             "length_before": 2.7079985882407507,
-            "length_after": 2.7737766713895904,
+            "length_after": 2.732012108511866,
             "manhattan_residual_before_deg": 3.4558655762721315,
-            "manhattan_residual_after_deg": 2.7070241806868154,
-            "residual_delta_deg": -0.7488413955853161
+            "manhattan_residual_after_deg": 3.2984460175993036,
+            "residual_delta_deg": -0.15741955867282797
           },
           {
             "source_edge_ids": [
@@ -4095,10 +4142,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.9041436962084741,
-            "length_after": 1.8643105629859467,
+            "length_after": 1.8921907536417235,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 1.625973378126048,
-            "residual_delta_deg": -1.8298921981460694
+            "manhattan_residual_after_deg": 2.91100904884604,
+            "residual_delta_deg": -0.5448565274260773
           },
           {
             "source_edge_ids": [
@@ -4119,21 +4166,21 @@
             ],
             "seam_edge": true,
             "length_before": 0.20183027345383003,
-            "length_after": 0.20183027345383003,
+            "length_after": 0.19791144109576791,
             "manhattan_residual_before_deg": 2.46588338631247,
-            "manhattan_residual_after_deg": 2.46588338631247,
-            "residual_delta_deg": 0.0
+            "manhattan_residual_after_deg": 2.0865832371052875,
+            "residual_delta_deg": -0.37930014920718236
           }
         ],
         "summary": {
           "wall_count": 12,
           "residual_sum_before_deg": 36.74079625252007,
-          "residual_sum_after_deg": 31.021494548632134,
+          "residual_sum_after_deg": 35.50835601059152,
           "residual_max_before_deg": 3.4558655762722594,
-          "residual_max_after_deg": 3.648297713628465,
+          "residual_max_after_deg": 3.6432321494722077,
           "worst_edge_after": [
-            7,
-            9
+            4,
+            6
           ]
         }
       },
@@ -4172,8 +4219,8 @@
               7
             ],
             "edge_length_before": 0.8094380901425745,
-            "edge_length_after": 0.8094380901425745,
-            "ratio": 1.0
+            "edge_length_after": 0.8231366635716092,
+            "ratio": 1.0169235591898347
           }
         ],
         "local_min_edge_length": 0.3118787993749672
@@ -4194,8 +4241,8 @@
             "solver_position": 1,
             "verified_order_source_id": 2,
             "hard_fail_on_violation": true,
-            "candidate_value": 5.889724310776942,
-            "delta": 0.0,
+            "candidate_value": 5.739724310776942,
+            "delta": -0.15000000000000036,
             "satisfied": true
           },
           {
@@ -4212,8 +4259,8 @@
             "solver_position": 1,
             "verified_order_source_id": 2,
             "hard_fail_on_violation": true,
-            "candidate_value": 5.889724310776942,
-            "delta": 0.0,
+            "candidate_value": 5.739724310776942,
+            "delta": -0.15000000000000036,
             "satisfied": true
           },
           {
@@ -4338,8 +4385,8 @@
             "solver_position": 3,
             "verified_order_source_id": 3,
             "hard_fail_on_violation": true,
-            "candidate_value": 9.628202368107015,
-            "delta": 0.646757055607015,
+            "candidate_value": 9.128202368107015,
+            "delta": 0.14675705560701502,
             "satisfied": true
           },
           {
@@ -4374,8 +4421,8 @@
             "solver_position": 3,
             "verified_order_source_id": 3,
             "hard_fail_on_violation": true,
-            "candidate_value": 9.628202368107015,
-            "delta": 0.646757055607015,
+            "candidate_value": 9.128202368107015,
+            "delta": 0.14675705560701502,
             "satisfied": true
           },
           {
@@ -4499,11 +4546,11 @@
           "solver_position": 1,
           "verified_order_source_id": 2,
           "top": {
-            "x": 5.889724310776942,
+            "x": 5.739724310776942,
             "y": 14.186967418546365
           },
           "bottom": {
-            "x": 5.889724310776942,
+            "x": 5.739724310776942,
             "y": 91.47869674185463
           },
           "effective_pair_index": 1
@@ -4529,11 +4576,11 @@
         },
         {
           "top": {
-            "x": 9.628202368107015,
+            "x": 9.128202368107015,
             "y": 43.203167804940094
           },
           "bottom": {
-            "x": 9.628202368107015,
+            "x": 9.128202368107015,
             "y": 56.19947248193613
           },
           "source_pair_id": 3,
@@ -4629,7 +4676,7 @@
           },
           "bottom": {
             "x": 50.378095580497586,
-            "y": 76.62127196977598
+            "y": 76.47127196977597
           },
           "source_pair_id": 7,
           "solver_position": 8,
@@ -4662,11 +4709,11 @@
         },
         {
           "top": {
-            "x": 83.84955092974104,
+            "x": 83.49955092974105,
             "y": 30.4453125
           },
           "bottom": {
-            "x": 83.84955092974104,
+            "x": 83.49955092974105,
             "y": 69.3659181657466
           },
           "source_pair_id": 10,
@@ -4715,20 +4762,20 @@
       ],
       "coordinate_changes": [
         {
-          "source_pair_id": 3,
-          "solver_position": 3,
-          "verified_order_source_id": 3,
-          "effective_pair_index": 3,
+          "source_pair_id": 2,
+          "solver_position": 1,
+          "verified_order_source_id": 2,
+          "effective_pair_index": 1,
           "fields": {
             "top_x": {
-              "before": 9.128202368107015,
-              "after": 9.628202368107015,
-              "delta": 0.5
+              "before": 5.889724310776942,
+              "after": 5.739724310776942,
+              "delta": -0.15000000000000036
             },
             "bottom_x": {
-              "before": 9.128202368107015,
-              "after": 9.628202368107015,
-              "delta": 0.5
+              "before": 5.889724310776942,
+              "after": 5.739724310776942,
+              "delta": -0.15000000000000036
             }
           }
         },
@@ -4747,6 +4794,19 @@
               "before": 27.410957965652642,
               "after": 27.36095796565264,
               "delta": -0.05000000000000071
+            }
+          }
+        },
+        {
+          "source_pair_id": 7,
+          "solver_position": 8,
+          "verified_order_source_id": 7,
+          "effective_pair_index": 8,
+          "fields": {
+            "bottom_y": {
+              "before": 76.62127196977598,
+              "after": 76.47127196977597,
+              "delta": -0.15000000000000568
             }
           }
         },
@@ -4776,13 +4836,13 @@
           "fields": {
             "top_x": {
               "before": 83.34955092974104,
-              "after": 83.84955092974104,
-              "delta": 0.5
+              "after": 83.49955092974105,
+              "delta": 0.15000000000000568
             },
             "bottom_x": {
               "before": 83.34955092974104,
-              "after": 83.84955092974104,
-              "delta": 0.5
+              "after": 83.49955092974105,
+              "delta": 0.15000000000000568
             }
           }
         }

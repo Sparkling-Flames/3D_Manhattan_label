@@ -9,6 +9,13 @@
   "intermediate_micro_cap": 0.3,
   "maximum_micro_cap": 0.5,
   "expansion_policy": "fail_closed_staged_escalation",
+  "search_config": {
+    "max_raw_evaluations": 1200,
+    "stage_evaluation_budget": {"A": 110, "B": 370, "C": 720},
+    "core_beam": 10,
+    "one_action_beam": 5,
+    "two_actions_per_beam": 10
+  },
   "stage_candidate_deltas": {
     "A": {
       "min_delta": -0.15,

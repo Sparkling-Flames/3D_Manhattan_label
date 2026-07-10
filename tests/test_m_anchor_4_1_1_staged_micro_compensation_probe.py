@@ -6,7 +6,7 @@ import pytest
 
 from tools.paper_a_manhattan.run_m_anchor_3_footprint_solver import M1_AUDIT_PATH, M2_VERDICT_PATH
 from tools.paper_a_manhattan.run_m_anchor_4_1_1_staged_micro_compensation_probe import (
-    FEEDBACK_PATH, _constraints, _geometry, _geometry_improved, _load,
+    CONSTRAINTS_PATH, FEEDBACK_PATH, _geometry, _geometry_improved, _load,
     _validate_constraints, run,
 )
 
@@ -17,8 +17,11 @@ def _baseline_rows():
 
 
 def test_staged_probe_is_bounded_deterministic_and_audit_only(tmp_path: Path) -> None:
-    one = run(tmp_path / "one", tmp_path / "review_one", tmp_path / "one_constraints.json")
-    two = run(tmp_path / "two", tmp_path / "review_two", tmp_path / "two_constraints.json")
+    one_constraints = tmp_path / "one_constraints.json"; one_constraints.write_bytes(CONSTRAINTS_PATH.read_bytes())
+    two_constraints = tmp_path / "two_constraints.json"; two_constraints.write_bytes(CONSTRAINTS_PATH.read_bytes())
+    sidecar_before = one_constraints.read_bytes()
+    one = run(tmp_path / "one", tmp_path / "review_one", one_constraints)
+    two = run(tmp_path / "two", tmp_path / "review_two", two_constraints)
     first = json.loads(one["audit"].read_text(encoding="utf-8"))
     second = json.loads(two["audit"].read_text(encoding="utf-8"))
     assert first["stages_executed"] == ["A", "B", "C"]
@@ -26,7 +29,8 @@ def test_staged_probe_is_bounded_deterministic_and_audit_only(tmp_path: Path) ->
     assert first["candidate_count_by_stage"]["A"] > 0
     assert first["geometry_improved_count_by_stage"]["A"] == 0
     assert first["expansion_trigger_reason"]["B"] == "prior_stage_has_no_geometry_improved_candidate"
-    assert [row["candidate_id"] for row in first["review_candidates"]] == [row["candidate_id"] for row in second["review_candidates"]]
+    assert first["review_candidates"] == second["review_candidates"]
+    assert first["beam_pruning"]["effective_beam_by_stage"]
     assert any(row["micro_actions"] for row in first["review_candidates"])
     for row in first["review_candidates"]:
         moves = {int(k): value for k, value in row["movement_by_axis"].items()}
@@ -37,6 +41,26 @@ def test_staged_probe_is_bounded_deterministic_and_audit_only(tmp_path: Path) ->
         assert all(row["hard_gate"].values())
         assert row["annotation_writeback"] is False and row["active_runner_role"] is False
     assert first["m_anchor_4_2_height_completion_authorized"] is False
+    first_bytes = {key: path.read_bytes() for key, path in one.items() if key in {"audit", "cards", "summary", "ledger", "review_manifest"}}
+    rerun = run(tmp_path / "one", tmp_path / "review_one", one_constraints)
+    assert sidecar_before == one_constraints.read_bytes()
+    assert first_bytes == {key: path.read_bytes() for key, path in rerun.items() if key in first_bytes}
+
+
+@pytest.mark.parametrize(("improved_stage", "expected"), [("A", ["A"]), ("B", ["A", "B"])])
+def test_positive_stage_stop_fixtures(monkeypatch, tmp_path: Path, improved_stage: str, expected: list[str]) -> None:
+    import tools.paper_a_manhattan.run_m_anchor_4_1_1_staged_micro_compensation_probe as probe
+
+    original = probe._stage
+    def staged(*args, **kwargs):
+        cards, beam = original(*args, **kwargs)
+        if args[1] == improved_stage:
+            cards[0]["candidate_class"] = "review_available_geometry_improved"
+        return cards, beam
+    monkeypatch.setattr(probe, "_stage", staged)
+    constraints = tmp_path / "constraints.json"; constraints.write_bytes(CONSTRAINTS_PATH.read_bytes())
+    paths = probe.run(tmp_path / "out", tmp_path / "review", constraints)
+    assert json.loads(paths["audit"].read_text(encoding="utf-8"))["stages_executed"] == expected
 
 
 def test_stage_expansion_only_follows_absence_of_geometry_improvement() -> None:
@@ -53,7 +77,7 @@ def test_constraints_fail_closed() -> None:
         (lambda c: c.update(micro_adjustment_pairs=[1, 2, 3, 4, 5, 7, 8]), "overlap"),
         (lambda c: c.update(locked_source_pair_ids=[4, 6, 11, 12]), "locked pair"),
     ):
-        value = copy.deepcopy(_constraints()); mutate(value)
+        value = copy.deepcopy(_load(CONSTRAINTS_PATH)); mutate(value)
         with pytest.raises(ValueError, match=text):
             _validate_constraints(value, feedback)
 
