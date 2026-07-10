@@ -1,0 +1,63 @@
+{
+  "schema_version": "m_anchor_4_1_human_guidance_constraints_v1",
+  "case_name": "task218_ann3741",
+  "source_annotation_id": 3741,
+  "coordinate_space": "ls_percent",
+  "reviewer": "human_expert",
+  "derived_from_feedback": "m_anchor_4_human_feedback_20260709.json",
+  "allowed_variables": ["x", "bottom_y"],
+  "forbidden_variables": ["top_y", "reorder", "merge", "delete", "new_corner", "writeback", "ranking", "portfolio"],
+  "directional_pair_ranges": [
+    {
+      "source_pair_id": 4,
+      "endpoint": "both",
+      "axis": "x",
+      "direction": "left",
+      "min_delta": -0.3,
+      "max_delta": -0.05,
+      "candidate_deltas": [-0.3, -0.15, -0.05]
+    },
+    {
+      "source_pair_id": 9,
+      "endpoint": "both",
+      "axis": "x",
+      "direction": "left",
+      "min_delta": -0.3,
+      "max_delta": -0.05,
+      "candidate_deltas": [-0.3, -0.15, -0.05]
+    },
+    {
+      "source_pair_id": 10,
+      "endpoint": "both",
+      "axis": "x",
+      "direction": "right",
+      "min_delta": 0.05,
+      "max_delta": 0.15,
+      "candidate_deltas": [0.05, 0.1, 0.15]
+    }
+  ],
+  "micro_adjustment_ranges": [
+    {"source_pair_id": 1, "endpoint": "both", "axis": "x", "min_delta": -0.1, "max_delta": 0.1, "candidate_deltas": [-0.1, 0.0, 0.1]},
+    {"source_pair_id": 1, "endpoint": "bottom", "axis": "y", "min_delta": -0.25, "max_delta": 0.25, "candidate_deltas": [-0.25, 0.0, 0.25]},
+    {"source_pair_id": 2, "endpoint": "both", "axis": "x", "min_delta": -0.1, "max_delta": 0.1, "candidate_deltas": [-0.1, 0.0, 0.1]},
+    {"source_pair_id": 2, "endpoint": "bottom", "axis": "y", "min_delta": -0.25, "max_delta": 0.25, "candidate_deltas": [-0.25, 0.0, 0.25]},
+    {"source_pair_id": 3, "endpoint": "both", "axis": "x", "min_delta": -0.1, "max_delta": 0.1, "candidate_deltas": [-0.1, 0.0, 0.1]},
+    {"source_pair_id": 3, "endpoint": "bottom", "axis": "y", "min_delta": -0.25, "max_delta": 0.25, "candidate_deltas": [-0.25, 0.0, 0.25]},
+    {"source_pair_id": 5, "endpoint": "both", "axis": "x", "min_delta": -0.1, "max_delta": 0.1, "candidate_deltas": [-0.1, 0.0, 0.1]},
+    {"source_pair_id": 5, "endpoint": "bottom", "axis": "y", "min_delta": -0.25, "max_delta": 0.25, "candidate_deltas": [-0.25, 0.0, 0.25]},
+    {"source_pair_id": 7, "endpoint": "both", "axis": "x", "min_delta": -0.1, "max_delta": 0.1, "candidate_deltas": [-0.1, 0.0, 0.1]},
+    {"source_pair_id": 7, "endpoint": "bottom", "axis": "y", "min_delta": -0.25, "max_delta": 0.25, "candidate_deltas": [-0.25, 0.0, 0.25]},
+    {"source_pair_id": 8, "endpoint": "both", "axis": "x", "min_delta": -0.1, "max_delta": 0.1, "candidate_deltas": [-0.1, 0.0, 0.1]},
+    {"source_pair_id": 8, "endpoint": "bottom", "axis": "y", "min_delta": -0.25, "max_delta": 0.25, "candidate_deltas": [-0.25, 0.0, 0.25]}
+  ],
+  "locked_source_pair_ids": [6, 11, 12],
+  "safety_boundary": {
+    "audit_only": true,
+    "accepted": false,
+    "downstream_recommendation": false,
+    "candidate_preference_authorized": false,
+    "annotation_writeback": false,
+    "annotation_patch_generated": false,
+    "active_runner_role": false
+  }
+}
