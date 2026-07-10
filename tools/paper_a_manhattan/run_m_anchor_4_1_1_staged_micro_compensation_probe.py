@@ -54,6 +54,12 @@ def _validate_constraints(value: Mapping[str, Any], feedback: Mapping[str, Any])
         raise ValueError("unsupported staged constraints schema")
     if value.get("numeric_range_status") != "human_approved" or value.get("expansion_policy") != "fail_closed_staged_escalation":
         raise ValueError("staged numeric authorization missing")
+    if value.get("case_name") != "task218_ann3741" or value.get("source_annotation_id") != 3741 or value.get("coordinate_space") != "ls_percent":
+        raise ValueError("sidecar identity mismatch")
+    if value.get("derived_from_feedback") != FEEDBACK_PATH.name:
+        raise ValueError("sidecar feedback provenance mismatch")
+    if value.get("allowed_variables") != ["x", "bottom_y"] or "top_y" not in value.get("forbidden_variables", []):
+        raise ValueError("sidecar variable permission mismatch")
     caps = (value.get("preferred_micro_cap"), value.get("intermediate_micro_cap"), value.get("maximum_micro_cap"))
     if caps != (0.15, 0.30, 0.50):
         raise ValueError("invalid staged caps")
@@ -63,6 +69,8 @@ def _validate_constraints(value: Mapping[str, Any], feedback: Mapping[str, Any])
             raise ValueError("min_delta exceeds max_delta")
         if any(abs(float(delta)) > float(cap) for delta in row.get("candidate_deltas", [])):
             raise ValueError("candidate_deltas exceed stage cap")
+        if any(not float(row["min_delta"]) <= float(delta) <= float(row["max_delta"]) for delta in row.get("candidate_deltas", [])):
+            raise ValueError("candidate_deltas outside declared interval")
     config = value.get("search_config", {})
     budgets = config.get("stage_evaluation_budget", {})
     if set(budgets) != {"A", "B", "C"} or any(int(budgets[stage]) <= 0 for stage in budgets):
@@ -154,6 +162,7 @@ def _candidate(index: int, stage: str, stage_cap: float, core: Mapping[int, Mapp
     old, new = _by_source(before), _by_source(rows); anchor = _anchor_audit(new, anchor_constraints)
     max_delta = max(abs(v) for pair in deltas.values() for v in pair.values())
     micro_actions = [{"source_pair_id": sid, "axis": axis, "delta": delta} for sid, axis, delta in actions]
+    action_keys = {(sid, axis) for sid, axis, _ in actions}
     gates = {
         "human_direction_satisfied": all(deltas[sid]["x"] < 0 if direction == "left" else deltas[sid]["x"] > 0 for sid, direction in DIRECTIONAL.items()),
         "pair_specific_range_satisfied": all(abs(v) <= stage_cap + 1e-12 for pair in deltas.values() for v in pair.values()),
@@ -161,6 +170,7 @@ def _candidate(index: int, stage: str, stage_cap: float, core: Mapping[int, Mapp
         "stage_cap_satisfied": max_delta <= stage_cap + 1e-12,
         "maximum_absolute_delta_le_0_5": max_delta <= .5 + 1e-12,
         "at_most_two_micro_actions": len(actions) <= 2,
+        "no_duplicate_micro_action": len(action_keys) == len(actions),
         "order_unchanged": [row["source_pair_id"] for row in rows] == list(VERIFIED_ORDER_SOURCE_IDS),
         "top_y_unchanged": all(float(old[sid]["top"]["y"]) == float(new[sid]["top"]["y"]) for sid in old),
         "no_self_intersection": not wall_after["self_intersection"], "no_pair_collapse": wall_after["minimum_wall_length"] >= MIN_WALL_LENGTH,
@@ -208,7 +218,7 @@ def _stage(sidecar: Mapping[str, Any], stage: str, before: Sequence[Mapping[str,
     for row in one_beam:
         core = {int(k): v for k, v in row["directional_core"].items()}; first = tuple(row["micro_actions"][0][key] for key in ("source_pair_id", "axis", "delta"))
         same_core = [candidate for candidate in evaluated if candidate["directional_core"] == row["directional_core"] and len(candidate["micro_actions"]) == 1]
-        remaining = [candidate for candidate in sorted(same_core, key=_beam_key) if tuple(candidate["micro_actions"][0][key] for key in ("source_pair_id", "axis", "delta")) != first]
+        remaining = [candidate for candidate in sorted(same_core, key=_beam_key) if tuple(candidate["micro_actions"][0][key] for key in ("source_pair_id", "axis")) != first[:2]]
         for candidate in remaining[:int(config["two_actions_per_beam"])]:
             action = tuple(candidate["micro_actions"][0][key] for key in ("source_pair_id", "axis", "delta"))
             evaluated.append(_candidate(start + len(evaluated), stage, stage_cap, core, (first, action), before, constraints))
@@ -218,23 +228,25 @@ def _stage(sidecar: Mapping[str, Any], stage: str, before: Sequence[Mapping[str,
 
 def _review(cards: Sequence[Mapping[str, Any]]) -> tuple[list[dict[str, Any]], list[str]]:
     passed = [dict(row) for row in cards if row["hard_gate_passed"]]; selected = []; reasons = []
-    predicates = [lambda r: r["candidate_class"] == "review_available_geometry_improved", lambda r: not r["micro_actions"], lambda r: len(r["micro_actions"]) == 1, lambda r: len(r["micro_actions"]) == 2]
-    for slot, predicate in enumerate(predicates, 1):
-        item = next((row for row in sorted(passed, key=_review_key) if predicate(row) and row["candidate_id"] not in {x["candidate_id"] for x in selected}), None)
-        if item: selected.append(item)
-        else: reasons.append(f"slot_{slot}_unavailable")
-    signatures = {tuple((a["source_pair_id"], a["axis"]) for a in row["micro_actions"]) for row in selected}
-    for row in sorted(passed, key=_review_key):
-        signature = tuple((a["source_pair_id"], a["axis"]) for a in row["micro_actions"])
-        if len(selected) >= REVIEW_LIMIT: break
-        if row["candidate_id"] not in {x["candidate_id"] for x in selected} and signature not in signatures:
-            selected.append(row); signatures.add(signature)
+    for stage, limit in (("A", 3), ("B", 1), ("C", 1)):
+        rows = [row for row in sorted(passed, key=_beam_key) if row["search_stage"] == stage]
+        if not rows:
+            reasons.append(f"stage_{stage}_contrast_unavailable")
+        selected.extend(rows[:limit])
     for row in sorted(passed, key=_review_key):
         if len(selected) >= REVIEW_LIMIT: break
-        if row["candidate_id"] not in {x["candidate_id"] for x in selected}: selected.append(row)
+        if row["candidate_id"] not in {item["candidate_id"] for item in selected}: selected.append(row)
     if any(row["micro_actions"] for row in passed) and not any(row["micro_actions"] for row in selected): raise ValueError("review set omitted micro candidate")
     if sum(bool(row["micro_actions"]) for row in [r for r in passed if r["candidate_class"] == "review_available_geometry_improved"]) >= 2 and sum(bool(row["micro_actions"]) for row in selected) < 2: reasons.append("geometry_improved_micro_candidates_exceed_review_capacity")
     return selected, reasons
+
+
+def _failure_reason_counts(cards: Sequence[Mapping[str, Any]]) -> dict[str, int]:
+    counts: dict[str, int] = {}
+    for card in cards:
+        for reason in card["hard_gate_failure_reasons"]:
+            counts[reason] = counts.get(reason, 0) + 1
+    return dict(sorted(counts.items()))
 
 
 def _geometry_improved(cards: Sequence[Mapping[str, Any]]) -> bool:
@@ -263,7 +275,8 @@ def run(out_dir: Path = OUT_DIR, review_out_dir: Path = REVIEW_OUT_DIR, constrai
         if _geometry_improved(cards): break
     review, missing = _review(all_cards)
     provenance = {"m_anchor_4_human_feedback": {"path": FEEDBACK_PATH.as_posix(), "schema_version": feedback["schema_version"], "sha256": _sha(FEEDBACK_PATH)}, "m_anchor_4_1_1_staged_constraints": {"path": constraints_path.as_posix(), "schema_version": constraints_doc["schema_version"], "sha256": _sha(constraints_path)}, "m_anchor_1_audit": {"path": M1_AUDIT_PATH.as_posix(), "sha256": _sha(M1_AUDIT_PATH)}, "m_anchor_2_human_verdict": {"path": M2_VERDICT_PATH.as_posix(), "sha256": _sha(M2_VERDICT_PATH)}, "expert_anchor_sidecar": {"path": ANCHOR_SIDECAR_PATH.as_posix(), "sha256": _sha(ANCHOR_SIDECAR_PATH)}, "m_anchor_4_1_audit": {"path": M41_AUDIT_PATH.as_posix(), "sha256": _sha(M41_AUDIT_PATH)}, "baseline_review_candidate": m2["reviewed_candidate"]}
-    payload = {"schema_version": "m_anchor_4_1_1_staged_micro_compensation_probe_audit_v1", "case_name": "task218_ann3741", "before_state": m2["reviewed_candidate"], "input_provenance": provenance, "numeric_contract": {k: constraints_doc[k] for k in ("numeric_range_status", "preferred_micro_cap", "intermediate_micro_cap", "maximum_micro_cap", "expansion_policy")}, "beam_pruning": {**constraints_doc["search_config"], "effective_beam_by_stage": effective_beam, "sort": "review: stage A/B/C, then class, local max, local/global sum, movement, candidate id"}, "residual_semantics": {"legacy_alias_for": "floor_heading_residual", "top_y_cannot_repair_floor_heading_residual": True}, "stages_executed": list(stats), "expansion_trigger_by_stage": triggers, "expansion_trigger_reason": triggers, "candidate_count_by_stage": {k: v["raw"] for k, v in stats.items()}, "hard_gate_pass_count_by_stage": {k: v["hard_gate_pass"] for k, v in stats.items()}, "geometry_improved_count_by_stage": {k: v["geometry_improved"] for k, v in stats.items()}, "raw_candidates_evaluated": len(all_cards), "requested_review_slots": REVIEW_LIMIT, "realized_review_slots": len(review), "missing_slot_reasons": missing, "review_candidates": review, "m_anchor_4_2_height_completion_authorized": False, "accepted_as_final_fix": False, **SAFETY}
+    by_stage = {stage: [card for card in all_cards if card["search_stage"] == stage] for stage in stats}
+    payload = {"schema_version": "m_anchor_4_1_1_staged_micro_compensation_probe_audit_v1", "case_name": "task218_ann3741", "before_state": m2["reviewed_candidate"], "input_provenance": provenance, "numeric_contract": {k: constraints_doc[k] for k in ("numeric_range_status", "preferred_micro_cap", "intermediate_micro_cap", "maximum_micro_cap", "expansion_policy")}, "beam_pruning": {**constraints_doc["search_config"], "effective_beam_by_stage": effective_beam, "sort": "review: stage A-primary (3), B/C contrast (1 each), then class and metrics"}, "residual_semantics": {"legacy_alias_for": "floor_heading_residual", "top_y_cannot_repair_floor_heading_residual": True}, "stages_executed": list(stats), "expansion_trigger_by_stage": triggers, "expansion_trigger_reason": triggers, "candidate_count_by_stage": {k: v["raw"] for k, v in stats.items()}, "hard_gate_pass_count_by_stage": {k: v["hard_gate_pass"] for k, v in stats.items()}, "hard_gate_fail_count_by_stage": {stage: len(cards) - sum(card["hard_gate_passed"] for card in cards) for stage, cards in by_stage.items()}, "hard_gate_failure_reason_count_by_stage": {stage: _failure_reason_counts(cards) for stage, cards in by_stage.items()}, "geometry_improved_count_by_stage": {k: v["geometry_improved"] for k, v in stats.items()}, "raw_candidates_evaluated": len(all_cards), "requested_review_slots": REVIEW_LIMIT, "realized_review_slots": len(review), "missing_slot_reasons": missing, "review_candidates": review, "m_anchor_4_2_height_completion_authorized": False, "accepted_as_final_fix": False, **SAFETY}
     ledger = {"schema_version": "m_anchor_4_1_1_feedback_ledger_stub_v1", "case_name": payload["case_name"], "candidate_ids": [r["candidate_id"] for r in review], "expert_selected_candidate": None, "expert_verdict": None, "accepted_as_final_fix": False, "m_anchor_4_2_height_completion_authorized": False, **SAFETY}
     out_dir.mkdir(parents=True, exist_ok=True); audit = out_dir / "m_anchor_4_1_1_staged_probe_audit.json"; cards = out_dir / "m_anchor_4_1_1_candidate_cards.jsonl"; summary = out_dir / "m_anchor_4_1_1_summary.md"; ledger_path = out_dir / "m_anchor_4_1_1_feedback_ledger_stub.jsonl"
     _write_text_lf(audit, json.dumps(payload, ensure_ascii=False, indent=2) + "\n"); _write_text_lf(cards, "".join(json.dumps(r, ensure_ascii=False) + "\n" for r in review)); _write_text_lf(summary, _summary(payload)); _write_text_lf(ledger_path, json.dumps(ledger, ensure_ascii=False) + "\n")
