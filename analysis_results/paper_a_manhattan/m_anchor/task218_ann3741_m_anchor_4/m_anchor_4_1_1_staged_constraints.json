@@ -1,0 +1,111 @@
+{
+  "schema_version": "m_anchor_4_1_1_staged_constraints_v1",
+  "case_name": "task218_ann3741",
+  "source_annotation_id": 3741,
+  "coordinate_space": "ls_percent",
+  "derived_from_feedback": "m_anchor_4_human_feedback_20260709.json",
+  "numeric_range_status": "human_approved",
+  "preferred_micro_cap": 0.15,
+  "intermediate_micro_cap": 0.3,
+  "maximum_micro_cap": 0.5,
+  "expansion_policy": "fail_closed_staged_escalation",
+  "stage_candidate_deltas": {
+    "A": {
+      "min_delta": -0.15,
+      "max_delta": 0.15,
+      "candidate_deltas": [
+        -0.15,
+        -0.1,
+        -0.05,
+        0.0,
+        0.05,
+        0.1,
+        0.15
+      ]
+    },
+    "B": {
+      "min_delta": -0.3,
+      "max_delta": 0.3,
+      "candidate_deltas": [
+        -0.3,
+        -0.25,
+        -0.2,
+        -0.15,
+        -0.1,
+        -0.05,
+        0.0,
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3
+      ]
+    },
+    "C": {
+      "min_delta": -0.5,
+      "max_delta": 0.5,
+      "candidate_deltas": [
+        -0.5,
+        -0.4,
+        -0.3,
+        -0.25,
+        -0.2,
+        -0.15,
+        -0.1,
+        -0.05,
+        0.0,
+        0.05,
+        0.1,
+        0.15,
+        0.2,
+        0.25,
+        0.3,
+        0.4,
+        0.5
+      ]
+    }
+  },
+  "allowed_variables": [
+    "x",
+    "bottom_y"
+  ],
+  "forbidden_variables": [
+    "top_y",
+    "height",
+    "reorder",
+    "merge",
+    "delete",
+    "new_corner",
+    "writeback",
+    "ranking",
+    "portfolio"
+  ],
+  "directional_pairs": {
+    "4": "left",
+    "9": "left",
+    "10": "right"
+  },
+  "micro_adjustment_pairs": [
+    1,
+    2,
+    3,
+    5,
+    7,
+    8
+  ],
+  "locked_source_pair_ids": [
+    6,
+    11,
+    12
+  ],
+  "safety_boundary": {
+    "audit_only": true,
+    "accepted": false,
+    "downstream_recommendation": false,
+    "candidate_preference_authorized": false,
+    "annotation_writeback": false,
+    "annotation_patch_generated": false,
+    "active_runner_role": false
+  }
+}
