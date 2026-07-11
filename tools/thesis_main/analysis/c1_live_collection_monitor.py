@@ -16,7 +16,7 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
-from tools.thesis_main.analysis.quality_core.active_time import load_active_logs, lookup_active_log_entry
+from tools.thesis_main.analysis.quality_core.active_time import load_active_logs, lookup_active_log_entry, lookup_unknown_active_time_audit
 
 DEFAULT_REBUILD_DIR = Path("analysis_results/calibration_rebuild_20260702")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_live_monitor")
@@ -94,6 +94,12 @@ REALIZED_FIELDS = [
     "active_time_source_file",
     "active_time_session_count",
     "active_time_event_count",
+    "unassigned_active_time_seconds",
+    "unknown_annotation_event_count",
+    "unknown_annotation_session_count",
+    "known_unknown_oscillation_flag",
+    "active_time_exclusion_reason",
+    "audit_only",
     "assigned_expected",
     "appears_in_internal_distribution",
     "outside_assignment_submission",
@@ -321,8 +327,6 @@ def assignment_sets(manual_path: Path, semi_path: Path, internal_path: Path) -> 
 def active_time_policy(source: str, status: str, session_count: int = 0, duplicate_time_ambiguous: bool = False) -> tuple[bool, bool]:
     if source == "log" and status == PRIMARY_ACTIVE_TIME_STATUS_ANNOTATION:
         return True, True
-    if source == "log" and status == PRIMARY_ACTIVE_TIME_STATUS_TASK and session_count == 1 and not duplicate_time_ambiguous:
-        return True, True
     if source in {"log", "lead_time_fallback"}:
         return False, True
     return False, False
@@ -337,6 +341,7 @@ def active_time_for_annotation(
     lead_time_seconds: float,
 ) -> dict[str, Any]:
     entry, status = lookup_active_log_entry(active_times, project_id, runtime_task_id, worker, annotation_id=ann_id)
+    audit = lookup_unknown_active_time_audit(active_times, project_id, runtime_task_id, worker)
     source = "missing"
     value: str | float = ""
     session_count = 0
@@ -364,6 +369,12 @@ def active_time_for_annotation(
         "active_time_event_count": event_count,
         "primary_active_time_eligible": primary,
         "sensitivity_active_time_eligible": sensitivity,
+        "unassigned_active_time_seconds": audit.get("unassigned_active_time_seconds", 0.0),
+        "unknown_annotation_event_count": audit.get("unknown_annotation_event_count", 0),
+        "unknown_annotation_session_count": audit.get("unknown_annotation_session_count", 0),
+        "known_unknown_oscillation_flag": audit.get("known_unknown_oscillation_flag", False),
+        "active_time_exclusion_reason": audit.get("active_time_exclusion_reason", ""),
+        "audit_only": bool(audit) and not entry,
     }
 
 
@@ -385,7 +396,7 @@ def build_realized_rows(
     assigned: set[tuple[str, str, str, str]],
     internal: set[tuple[str, str, str, str]],
 ) -> list[dict[str, Any]]:
-    active_times = load_active_logs(str(active_log_path), annotation_owner_map=build_annotation_owner_map(export_paths)) if active_log_path else {}
+    active_times = load_active_logs(str(active_log_path), annotation_owner_map=build_annotation_owner_map(export_paths), policy="calibration") if active_log_path else {}
     rows: list[dict[str, Any]] = []
     for export_path in export_paths:
         for task_index, task in enumerate(load_export(export_path), start=1):
@@ -691,7 +702,7 @@ def build_monitor(
             )
             if count
         ],
-        "primary_active_time_policy": "log with project+task+worker+annotation or unambiguous project+task+worker direct match; lead_time never primary",
+        "primary_active_time_policy": "owner-validated project+task+worker+annotation exact log match only; task fallback and lead_time never primary",
     }
     write_json(output_dir / "c1_live_monitor_summary.json", summary)
     return summary
