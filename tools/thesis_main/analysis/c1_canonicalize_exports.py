@@ -29,6 +29,7 @@ from tools.thesis_main.analysis.c1_live_collection_monitor import (
     assignment_sets,
     bool_text,
     _active_counts,
+    active_time_audit_summary,
     build_annotation_owner_map,
     build_runtime_task_mapping,
     is_reserve,
@@ -85,6 +86,10 @@ CANONICAL_FIELDS = [
     "unknown_annotation_event_count",
     "unknown_annotation_session_count",
     "known_unknown_oscillation_flag",
+    "unassigned_audit_present",
+    "unassigned_active_time_exclusion_reason",
+    "active_time_integrity_status",
+    "system_collection_issue",
     "active_time_exclusion_reason",
     "audit_only",
     "reserve_realized_submission",
@@ -107,6 +112,10 @@ ACTIVE_AUDIT_FIELDS = [
     "unknown_annotation_event_count",
     "unknown_annotation_session_count",
     "known_unknown_oscillation_flag",
+    "unassigned_audit_present",
+    "unassigned_active_time_exclusion_reason",
+    "active_time_integrity_status",
+    "system_collection_issue",
     "active_time_exclusion_reason",
     "audit_only",
     "primary_active_time_eligible",
@@ -318,6 +327,10 @@ def build_canonicalization(
             "unknown_annotation_event_count": active_override.get("unknown_annotation_event_count", 0),
             "unknown_annotation_session_count": active_override.get("unknown_annotation_session_count", 0),
             "known_unknown_oscillation_flag": bool_text(bool(active_override.get("known_unknown_oscillation_flag"))),
+            "unassigned_audit_present": bool_text(bool(active_override.get("unassigned_audit_present"))),
+            "unassigned_active_time_exclusion_reason": active_override.get("unassigned_active_time_exclusion_reason", ""),
+            "active_time_integrity_status": active_override.get("active_time_integrity_status", "missing"),
+            "system_collection_issue": bool_text(bool(active_override.get("system_collection_issue"))),
             "active_time_exclusion_reason": active_override.get("active_time_exclusion_reason", ""),
             "audit_only": bool_text(bool(active_override.get("audit_only"))),
             "reserve_realized_submission": bool_text(is_reserve(info)),
@@ -371,6 +384,7 @@ def build_canonicalization(
     duplicate_count = sum(row["duplicate_worker_task_submission"] == "true" for row in canonical_rows)
     reserve_count = sum(row["reserve_realized_submission"] == "true" for row in canonical_rows)
     active_counts = _active_counts(canonical_rows)
+    active_audit_counts = active_time_audit_summary(canonical_rows)
     planned_missing_count = sum(row["planned_mapping_status"] == "planned_mapping_missing" for row in runtime_rows)
     missing_submission_count = sum(row["missing_submission"] == "true" for row in realized_rows)
     structural_integrity_passed = outside_count == 0 and duplicate_count == 0 and reserve_count == 0 and not collision_rows and not planned_missing_count
@@ -389,6 +403,7 @@ def build_canonicalization(
         "runtime_key_collision_count": len(collision_rows),
         "planned_mapping_missing_count": planned_missing_count,
         **active_counts,
+        **active_audit_counts,
         "active_log_primary_missing_count": active_counts["active_time_primary_ineligible_count"],
         "active_log_missing_count": active_counts["active_time_log_missing_count"],
         "active_log_missing_rate": round(active_counts["active_time_log_missing_count"] / len(canonical_rows), 6) if canonical_rows else 0.0,
@@ -412,6 +427,7 @@ def build_canonicalization(
             )
             if count
         ],
+        "warnings": ["unknown_annotation_audit_present"] if active_audit_counts["rows_with_unknown_audit_count"] else [],
     }
     write_json(output_dir / "c1_canonicalization_summary.json", summary)
     return summary

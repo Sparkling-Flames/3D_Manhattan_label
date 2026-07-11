@@ -16,7 +16,7 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
-from tools.thesis_main.analysis.quality_core.active_time import load_active_logs, lookup_active_log_entry, lookup_unknown_active_time_audit
+from tools.thesis_main.analysis.quality_core.active_time import is_unknown_annotation_id, load_active_logs, lookup_active_log_entry, lookup_unknown_active_time_audit
 
 DEFAULT_REBUILD_DIR = Path("analysis_results/calibration_rebuild_20260702")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_live_monitor")
@@ -98,6 +98,10 @@ REALIZED_FIELDS = [
     "unknown_annotation_event_count",
     "unknown_annotation_session_count",
     "known_unknown_oscillation_flag",
+    "unassigned_audit_present",
+    "unassigned_active_time_exclusion_reason",
+    "active_time_integrity_status",
+    "system_collection_issue",
     "active_time_exclusion_reason",
     "audit_only",
     "assigned_expected",
@@ -340,7 +344,8 @@ def active_time_for_annotation(
     ann_id: str,
     lead_time_seconds: float,
 ) -> dict[str, Any]:
-    entry, status = lookup_active_log_entry(active_times, project_id, runtime_task_id, worker, annotation_id=ann_id)
+    unknown_annotation = is_unknown_annotation_id(ann_id)
+    entry, status = (None, "unknown_annotation_audit_only") if unknown_annotation else lookup_active_log_entry(active_times, project_id, runtime_task_id, worker, annotation_id=ann_id)
     audit = lookup_unknown_active_time_audit(active_times, project_id, runtime_task_id, worker)
     source = "missing"
     value: str | float = ""
@@ -351,7 +356,7 @@ def active_time_for_annotation(
         session_count = int(entry.get("active_time_session_count", 0) or 0)
         source_file = safe(entry.get("active_time_source_file"))
         event_count = int(entry.get("active_time_event_count", 0) or 0)
-    elif lead_time_seconds > 0:
+    elif lead_time_seconds > 0 and not unknown_annotation:
         source = "lead_time_fallback"
         value = float(lead_time_seconds)
         source_file = ""
@@ -360,6 +365,21 @@ def active_time_for_annotation(
         source_file = ""
         event_count = 0
     primary, sensitivity = active_time_policy(source, status, session_count)
+    audit_present = bool(audit) or unknown_annotation
+    if source == "log" and status == PRIMARY_ACTIVE_TIME_STATUS_ANNOTATION:
+        integrity_status = "exact_annotation_valid"
+    elif source == "log" and status == PRIMARY_ACTIVE_TIME_STATUS_TASK:
+        integrity_status = "task_level_fallback"
+    elif source == "lead_time_fallback":
+        integrity_status = "lead_time_fallback"
+    elif audit_present and source == "missing":
+        integrity_status = "unknown_audit_only"
+    elif "ambiguous" in status:
+        integrity_status = "ambiguous"
+    elif "mismatch" in status:
+        integrity_status = "owner_mismatch"
+    else:
+        integrity_status = "missing"
     return {
         "active_time": value,
         "active_time_source": source,
@@ -373,8 +393,12 @@ def active_time_for_annotation(
         "unknown_annotation_event_count": audit.get("unknown_annotation_event_count", 0),
         "unknown_annotation_session_count": audit.get("unknown_annotation_session_count", 0),
         "known_unknown_oscillation_flag": audit.get("known_unknown_oscillation_flag", False),
-        "active_time_exclusion_reason": audit.get("active_time_exclusion_reason", ""),
-        "audit_only": bool(audit) and not entry,
+        "unassigned_audit_present": audit_present,
+        "unassigned_active_time_exclusion_reason": audit.get("unassigned_active_time_exclusion_reason", "unknown_annotation_audit_only" if unknown_annotation else ""),
+        "active_time_integrity_status": integrity_status,
+        "system_collection_issue": audit_present,
+        "active_time_exclusion_reason": "unknown_annotation_audit_only" if integrity_status == "unknown_audit_only" else "",
+        "audit_only": audit_present and source == "missing",
     }
 
 
@@ -615,6 +639,27 @@ def _active_counts(group: list[dict[str, Any]]) -> dict[str, int]:
     }
 
 
+def active_time_audit_summary(rows: list[dict[str, Any]]) -> dict[str, int | float]:
+    buckets: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for row in rows:
+        if not truthy(row.get("unassigned_audit_present")):
+            continue
+        key = (safe(row.get("project_id")), safe(row.get("ls_runtime_task_id") or row.get("runtime_task_id")), safe(row.get("worker_id")))
+        buckets.setdefault(key, row)
+    audited = list(buckets.values())
+    return {
+        "unassigned_active_time_seconds_total": sum(float(row.get("unassigned_active_time_seconds") or 0) for row in audited),
+        "unknown_annotation_event_count_total": sum(int(row.get("unknown_annotation_event_count") or 0) for row in audited),
+        "unknown_annotation_session_count_total": sum(int(row.get("unknown_annotation_session_count") or 0) for row in audited),
+        "rows_with_unknown_audit_count": sum(truthy(row.get("unassigned_audit_present")) for row in rows),
+        "workers_with_unknown_audit_count": len({safe(row.get("worker_id")) for row in audited if safe(row.get("worker_id"))}),
+        "known_unknown_oscillation_row_count": sum(truthy(row.get("known_unknown_oscillation_flag")) for row in rows),
+        "system_collection_issue_row_count": sum(truthy(row.get("system_collection_issue")) for row in rows),
+        "exact_annotation_primary_count": sum(safe(row.get("active_time_integrity_status")) == "exact_annotation_valid" and truthy(row.get("primary_active_time_eligible")) for row in rows),
+        "task_level_sensitivity_count": sum(safe(row.get("active_time_integrity_status")) == "task_level_fallback" and truthy(row.get("sensitivity_active_time_eligible")) for row in rows),
+    }
+
+
 def active_health(rows: list[dict[str, Any]], key: str) -> list[dict[str, Any]]:
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in rows:
@@ -657,6 +702,7 @@ def build_monitor(
     outside_rows = [row for row in realized_rows if row["outside_assignment_submission"]]
     reserve_rows = [row for row in realized_rows if row["reserve_realized_submission"]]
     active_counts = _active_counts(realized_rows)
+    active_audit_counts = active_time_audit_summary(realized_rows)
     planned_missing_count = sum(row["planned_mapping_status"] == "planned_mapping_missing" for row in runtime_rows)
     missing_submission_count = sum(row["missing_submission"] for row in realized_audit_rows)
     structural_integrity_passed = len(outside_rows) == 0 and len(duplicate_rows) == 0 and len(reserve_rows) == 0 and not collision_rows and not planned_missing_count
@@ -685,6 +731,7 @@ def build_monitor(
         "runtime_key_collision_count": len(collision_rows),
         "planned_mapping_missing_count": planned_missing_count,
         **active_counts,
+        **active_audit_counts,
         "active_log_missing_count": active_counts["active_time_log_missing_count"],
         "active_log_missing_rate": _rate(active_counts["active_time_log_missing_count"], len(realized_rows)),
         "structural_integrity_passed": structural_integrity_passed,
@@ -702,9 +749,11 @@ def build_monitor(
             )
             if count
         ],
+        "warnings": ["unknown_annotation_audit_present"] if active_audit_counts["rows_with_unknown_audit_count"] else [],
         "primary_active_time_policy": "owner-validated project+task+worker+annotation exact log match only; task fallback and lead_time never primary",
     }
     write_json(output_dir / "c1_live_monitor_summary.json", summary)
+    write_json(output_dir / "c1_live_collection_summary.json", summary)
     return summary
 
 

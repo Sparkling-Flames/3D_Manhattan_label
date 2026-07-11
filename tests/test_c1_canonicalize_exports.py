@@ -86,6 +86,7 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
         "\n".join(
             [
                 json.dumps({"project_id": "66", "task_id": "200", "annotator_id": "w1", "annotation_id": "a1", "session_id": "s1", "active_seconds": 12}),
+                json.dumps({"project_id": "66", "task_id": "200", "annotator_id": "w1", "annotation_id": "unknown", "session_id": "s1", "active_seconds": 4}),
                 json.dumps({"project_id": "66", "task_id": "201", "annotator_id": "w2", "session_id": "single", "active_seconds": 7}),
                 json.dumps({"project_id": "66", "task_id": "203", "annotator_id": "w1", "session_id": "single", "active_seconds": 5}),
             ]
@@ -121,6 +122,13 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
     assert all(row["round_id"] == "C1" for row in rows)
     assert all(row["canonical_annotation_id"] for row in rows)
     assert by_runtime["200"]["primary_active_time_eligible"] == "true"
+    assert by_runtime["200"]["active_time"] == "12.0"
+    assert by_runtime["200"]["active_time_integrity_status"] == "exact_annotation_valid"
+    assert by_runtime["200"]["unassigned_audit_present"] == "true"
+    assert by_runtime["200"]["system_collection_issue"] == "true"
+    assert by_runtime["200"]["audit_only"] == "false"
+    assert by_runtime["200"]["active_time_exclusion_reason"] == ""
+    assert by_runtime["200"]["unassigned_active_time_exclusion_reason"] == "unknown_annotation_audit_only"
     assert by_runtime["201"]["active_time_match_status"] == "project+task+annotator"
     assert by_runtime["201"]["primary_active_time_eligible"] == "false"
     assert by_runtime["202"]["active_time_source"] == "lead_time_fallback"
@@ -135,6 +143,12 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
     assert any(row["task_id"] == "missing" and row["worker_id"] == "w4" and row["missing_submission"] == "true" for row in realized_audit)
     assert (out / "raw_inputs" / "raw_input_snapshot_manifest.csv").exists()
     assert (out / "c1_runtime_task_mapping.csv").exists()
+    assert summary["unassigned_active_time_seconds_total"] == 4.0
+    assert summary["unknown_annotation_event_count_total"] == 1
+    assert summary["unknown_annotation_session_count_total"] == 1
+    assert summary["workers_with_unknown_audit_count"] == 1
+    assert summary["exact_annotation_primary_count"] == 1
+    assert "unknown_annotation_audit_present" not in summary["blockers"]
 
 
 def test_c1_canonicalization_runtime_collision_blocks(tmp_path: Path) -> None:

@@ -42,6 +42,16 @@ def test_c1_quality_worker_gaps_and_c2_reserve_draft_chain(tmp_path: Path) -> No
         "active_time",
         "active_time_source",
         "primary_active_time_eligible",
+        "sensitivity_active_time_eligible",
+        "unassigned_active_time_seconds",
+        "unknown_annotation_event_count",
+        "unknown_annotation_session_count",
+        "known_unknown_oscillation_flag",
+        "unassigned_audit_present",
+        "unassigned_active_time_exclusion_reason",
+        "active_time_integrity_status",
+        "system_collection_issue",
+        "audit_only",
         "assigned_expected",
     ]
     _csv(
@@ -66,6 +76,16 @@ def test_c1_quality_worker_gaps_and_c2_reserve_draft_chain(tmp_path: Path) -> No
                 "active_time": "10",
                 "active_time_source": "log",
                 "primary_active_time_eligible": "true",
+                "sensitivity_active_time_eligible": "true",
+                "unassigned_active_time_seconds": "4",
+                "unknown_annotation_event_count": "1",
+                "unknown_annotation_session_count": "1",
+                "known_unknown_oscillation_flag": "true",
+                "unassigned_audit_present": "true",
+                "unassigned_active_time_exclusion_reason": "unknown_annotation_audit_only",
+                "active_time_integrity_status": "exact_annotation_valid",
+                "system_collection_issue": "true",
+                "audit_only": "false",
                 "assigned_expected": "true",
             },
             {
@@ -123,6 +143,11 @@ def test_c1_quality_worker_gaps_and_c2_reserve_draft_chain(tmp_path: Path) -> No
     by_task = {row["task_id"]: row for row in quality}
     assert quality_summary["r_u_estimated"] is False
     assert by_task["a1"]["geometry_valid"] == "true"
+    assert by_task["a1"]["unassigned_active_time_seconds"] == "4"
+    assert by_task["a1"]["active_time_integrity_status"] == "exact_annotation_valid"
+    assert by_task["a1"]["system_collection_issue"] == "true"
+    assert quality_summary["unassigned_active_time_seconds_total"] == 4.0
+    assert quality_summary["system_collection_issue_row_count"] == 1
     assert by_task["c1"]["geometry_valid"] == "false"
     assert by_task["c1"]["used_for_r_u"] == "false"
     assert by_task["s1"]["used_for_r_u"] == "false"

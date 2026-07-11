@@ -78,6 +78,11 @@ EVIDENCE_FIELDS = [
     "exclusion_reason",
     "active_time_source",
     "primary_active_time_eligible",
+    "active_time_integrity_status",
+    "system_collection_issue",
+    "unassigned_audit_present",
+    "unassigned_active_time_seconds",
+    "active_time_worker_process_failure",
     "assignment_expected",
     "canonical_annotation_id",
     "source_manifest_version",
@@ -245,7 +250,7 @@ def stage(row: dict[str, str]) -> str:
 
 def family_for(row: dict[str, str]) -> str:
     explicit = safe(row.get("family"))
-    if explicit:
+    if explicit and (explicit != "process_failure" or process_fail(row)):
         return explicit
     sub = safe(row.get("subfamily")).lower()
     response = safe(row.get("response_type") or row.get("worker_scope_response")).lower()
@@ -291,14 +296,20 @@ def response_type(row: dict[str, str], family: str, subfamily: str) -> str:
     return "geometry_ok" if geometry_valid(row) else "geometry_fail"
 
 
+def active_time_worker_process_fail(row: dict[str, str]) -> bool:
+    if safe(row.get("active_time_integrity_status")) == "unknown_audit_only":
+        return False
+    return safe(row.get("active_time_source")) in {"missing", "mismatch"} or safe(row.get("active_time_integrity_status")) in {"owner_mismatch", "ambiguous"}
+
+
 def process_fail(row: dict[str, str]) -> bool:
     return (
         truthy(row.get("process_invalid"))
-        or safe(row.get("subfamily")) in PROCESS_SUBFAMILIES
-        or safe(row.get("response_type")) in PROCESS_SUBFAMILIES
+        or (safe(row.get("subfamily")) in PROCESS_SUBFAMILIES and not (truthy(row.get("system_collection_issue")) and safe(row.get("subfamily")) == "active_time_missing_or_ineligible"))
+        or (safe(row.get("response_type")) in PROCESS_SUBFAMILIES and not (truthy(row.get("system_collection_issue")) and safe(row.get("response_type")) == "active_time_missing_or_ineligible"))
         or truthy(row.get("outside_assignment_submission"))
         or truthy(row.get("duplicate_worker_task_submission"))
-        or safe(row.get("active_time_source")) in {"missing", "mismatch"}
+        or active_time_worker_process_fail(row)
         or (safe(row.get("assigned_expected")) and not truthy(row.get("assigned_expected")))
     )
 
@@ -352,7 +363,7 @@ def inclusion_flags(row: dict[str, str], family: str) -> dict[str, bool]:
         "included_in_r_scope": norm_scope(row) in {"in_scope", "oos"} and worker_scope in VALID_SCOPE_RESPONSES,
         "included_in_T_u": group in T_U_GROUPS and cond == "semi" and process_ok,
         "included_in_U_u": is_in_scope(row) and geom_ok and usable_ref and response in UNDERCOVERAGE_RESPONSES,
-        "included_in_process_reliability": family == "process_failure" or safe(row.get("subfamily")) in PROCESS_SUBFAMILIES or invalid,
+        "included_in_process_reliability": invalid,
     }
 
 
@@ -399,6 +410,11 @@ def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, An
                 "exclusion_reason": ";".join(exclusion),
                 "active_time_source": safe(row.get("active_time_source")),
                 "primary_active_time_eligible": truthy(row.get("primary_active_time_eligible")),
+                "active_time_integrity_status": safe(row.get("active_time_integrity_status")),
+                "system_collection_issue": truthy(row.get("system_collection_issue")),
+                "unassigned_audit_present": truthy(row.get("unassigned_audit_present")),
+                "unassigned_active_time_seconds": safe(row.get("unassigned_active_time_seconds")),
+                "active_time_worker_process_failure": active_time_worker_process_fail(row),
                 "assignment_expected": truthy(row.get("assigned_expected", True)),
                 "canonical_annotation_id": safe(row.get("canonical_annotation_id")),
                 "source_manifest_version": safe(row.get("source_manifest_version") or row.get("manifest_version")),
@@ -722,6 +738,9 @@ def materialize(quality_csv: Path, worker_state_csv: Path, output_dir: Path, p1_
         "n_profile_rows": len(main),
         "n_family_rows": len(family),
         "n_subfamily_rows": len(subfamily),
+        "unassigned_active_time_seconds_total": sum(float(row.get("unassigned_active_time_seconds") or 0) for row in evidence),
+        "rows_with_unknown_audit_count": sum(truthy(row.get("unassigned_audit_present")) for row in evidence),
+        "system_collection_issue_row_count": sum(truthy(row.get("system_collection_issue")) for row in evidence),
         "n_insufficient_family_cells": sum(row["support_status"] == "insufficient" for row in family),
         "n_insufficient_subfamily_cells": sum(row["support_status"] == "insufficient" for row in subfamily),
         "family_interpretation_level_counts": _interpretation_level_counts(family),

@@ -8,6 +8,10 @@ import os
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
 
 
+def is_unknown_annotation_id(value) -> bool:
+    return value is None or str(value).strip().casefold() in {"", "unknown", "unknown_annotation", "none", "null"}
+
+
 def _parse_cli_datetime(value, *, is_end=False):
     """Parse an ISO date/datetime CLI bound for active-log filtering."""
     if value is None or str(value).strip() == "":
@@ -55,7 +59,7 @@ def _parse_active_time_key(value):
 
 
 def _annotation_owner(annotation_owner_map, project_id, task_id, annotation_id):
-    if not annotation_owner_map or not annotation_id or annotation_id == 'unknown_annotation':
+    if not annotation_owner_map or is_unknown_annotation_id(annotation_id):
         return None
     for key in (
         (project_id, task_id, annotation_id),
@@ -152,14 +156,17 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
                     s_id = str(data.get('session_id', 'default'))
                     p_id = str(data.get('project_id', '') or '').strip()
                     sec = float(data.get('active_seconds', 0))
-                    ann_id = str(data.get('annotation_id', '') or '').strip()
+                    annotation_present = 'annotation_id' in data
+                    raw_ann_id = data.get('annotation_id')
+                    annotation_unknown = annotation_present and is_unknown_annotation_id(raw_ann_id)
+                    ann_id = 'unknown_annotation' if annotation_unknown else str(raw_ann_id or '').strip()
                     alias_from = _parse_active_time_key(data.get('active_time_alias_from'))
                     alias_reason = str(data.get('active_time_alias_reason', '') or '').strip()
                     late_status = str(data.get('late_binding_status', '') or '').strip()
                     owner = _annotation_owner(annotation_owner_map, p_id, t_id, ann_id)
                     if not _same_or_unknown_owner(annotation_owner_map, p_id, t_id, ann_id, a_id):
                         continue
-                    if calibration and ann_id and ann_id != 'unknown_annotation' and owner != a_id:
+                    if calibration and ann_id and not annotation_unknown and owner != a_id:
                         continue
 
                     event = {
@@ -167,6 +174,7 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
                         'task_id': t_id,
                         'annotator_id': a_id,
                         'annotation_id': ann_id,
+                        'annotation_unknown': annotation_unknown,
                         'session_id': s_id,
                         'seconds': sec,
                         'source_file': os.path.basename(fpath),
@@ -176,9 +184,9 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
                         'event_dt': event_dt,
                     }
                     parsed_events.append(event)
-                    if ann_id and ann_id != 'unknown_annotation':
+                    if ann_id and not annotation_unknown:
                         actual_annotations_by_context[(p_id, t_id, a_id, s_id)].add(ann_id)
-                    elif ann_id == 'unknown_annotation':
+                    else:
                         unknown_events_by_context[(p_id, t_id, a_id, s_id)].append(event)
                 except Exception:
                     pass
@@ -217,7 +225,7 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
 
     for event in parsed_events:
         try:
-            if calibration and event['annotation_id'] == 'unknown_annotation':
+            if calibration and event['annotation_unknown']:
                 continue
             key = _event_key(event)
             if not calibration and _is_short_bootstrap_alias(event):
@@ -243,7 +251,7 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
     unknown_audit = defaultdict(lambda: {'seconds_by_session': defaultdict(float), 'event_count': 0, 'known_sessions': set()})
     for event in parsed_events:
         context = (event['project_id'], event['task_id'], event['annotator_id'])
-        if event['annotation_id'] == 'unknown_annotation':
+        if event['annotation_unknown']:
             audit = unknown_audit[context]
             audit['seconds_by_session'][event['session_id']] = max(audit['seconds_by_session'][event['session_id']], event['seconds'])
             audit['event_count'] += 1
@@ -284,7 +292,8 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
             'unknown_annotation_event_count': int(audit['event_count']),
             'unknown_annotation_session_count': len(unknown_sessions),
             'known_unknown_oscillation_flag': bool(unknown_sessions & audit['known_sessions']),
-            'active_time_exclusion_reason': 'unknown_annotation_audit_only' if unknown_sessions else '',
+            'unassigned_audit_present': bool(unknown_sessions),
+            'unassigned_active_time_exclusion_reason': 'unknown_annotation_audit_only' if unknown_sessions else '',
         }
 
     for context, audit in unknown_audit.items():
@@ -296,7 +305,8 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
             'unknown_annotation_event_count': int(audit['event_count']),
             'unknown_annotation_session_count': len(unknown_sessions),
             'known_unknown_oscillation_flag': bool(unknown_sessions & audit['known_sessions']),
-            'active_time_exclusion_reason': 'unknown_annotation_audit_only',
+            'unassigned_audit_present': True,
+            'unassigned_active_time_exclusion_reason': 'unknown_annotation_audit_only',
             'audit_only': True,
         }
 
