@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL = ROOT / "tools" / "label_studio" / "official" / "ls_userscript_annotator.js"
 FOREIGN = ROOT / "tools" / "thesis_main" / "foreign_recruitment" / "ls_userscript_annotator_https_en.user.js"
-VERSION = "stage3_active_time_page_gate_20260711_v1"
+VERSION = "stage3_active_time_page_gate_20260711_v2"
 
 
 def _script(path: Path) -> str:
@@ -33,6 +33,7 @@ def test_page_gate_requires_route_labeling_editor_main_view_and_task_identity():
         assert ".lsf-current-task__task-id" in gate
         assert ".lsf-main-content > .lsf-main-view" in gate
         assert "route_dom_task_mismatch" in gate
+        assert "task_route_conflict" in gate
         assert "route_store_task_mismatch" not in gate
         assert "dom_task_identity_not_ready" in gate
         assert "findMainImage" not in gate
@@ -58,6 +59,7 @@ def test_store_is_audit_only_and_page_context_is_captured_in_the_gate():
         ):
             assert field in gate
         assert "gate.reason = \"route_store_task_mismatch\"" not in gate
+        assert "queryTaskId && pathTaskId && queryTaskId !== pathTaskId" in gate
         assert "location_path: report.pageGate?.locationPath || \"\"" in source
         assert "location_search: report.pageGate?.sanitizedLocationSearch || \"\"" in source
 

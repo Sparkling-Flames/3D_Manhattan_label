@@ -299,7 +299,11 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
         if event['dom_task_id']:
             gate_audit['dom_task_ids'].add(event['dom_task_id'])
         if event['store_task_ids']:
-            gate_audit['store_task_ids'].add(event['store_task_ids'])
+            gate_audit['store_task_ids'].update(
+                task_id.strip()
+                for task_id in event['store_task_ids'].split(';')
+                if task_id.strip()
+            )
         if event['store_task_match_status']:
             gate_audit['store_match_statuses'].add(event['store_task_match_status'])
         if _is_explicit_false(event['store_mismatch_present']):

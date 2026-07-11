@@ -679,7 +679,7 @@ def test_load_active_logs_preserves_stage3_page_gate_audit_fields(tmp_path: Path
                         "page_gate_eligible": True,
                         "page_gate_reason": "eligible",
                         "page_gate_sources": "url.query.task;dom.lsf-editor",
-                        "script_version": "stage3_active_time_page_gate_20260711_v1",
+                        "script_version": "stage3_active_time_page_gate_20260711_v2",
                         "location_path": "/projects/69/data",
                         "resolved_route_task_id": "3305",
                         "resolved_dom_task_id": "3305",
@@ -724,12 +724,12 @@ def test_load_active_logs_preserves_stage3_page_gate_audit_fields(tmp_path: Path
     assert entry["active_time_value"] == 12.0
     assert entry["active_time_page_gate_reasons"] == "eligible;route_dom_task_mismatch"
     assert entry["active_time_page_gate_sources"] == "url.query.task;dom.lsf-editor"
-    assert entry["active_time_script_versions"] == "stage3_active_time_page_gate_20260711_v1"
+    assert entry["active_time_script_versions"] == "stage3_active_time_page_gate_20260711_v2"
     assert entry["active_time_page_gate_ineligible_event_count"] == 1
     assert entry["active_time_location_paths"] == "/projects/69/data"
     assert entry["active_time_route_task_ids"] == "3305"
     assert entry["active_time_dom_task_ids"] == "3304;3305"
-    assert entry["active_time_store_task_ids"] == "3304;3304;3305"
+    assert entry["active_time_store_task_ids"] == "3304;3305"
     assert entry["active_time_store_match_statuses"] == "mismatch_only;mixed_with_route_match"
     assert entry["active_time_store_mismatch_event_count"] == 2
     assert entry["active_time_labeling_root_missing_event_count"] == 1
