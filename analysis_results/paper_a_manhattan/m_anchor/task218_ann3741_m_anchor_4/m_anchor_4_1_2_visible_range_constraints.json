@@ -1,0 +1,23 @@
+{
+  "schema_version": "m_anchor_4_1_2_visible_range_constraints_v1",
+  "case_name": "task218_ann3741",
+  "source_annotation_id": 3741,
+  "coordinate_space": "ls_percent",
+  "derived_from_feedback": "m_anchor_4_human_feedback_20260709.json",
+  "allowed_variables": ["x", "bottom_y"],
+  "forbidden_variables": ["top_y", "height", "reorder", "merge", "delete", "new_corner", "writeback", "ranking", "portfolio"],
+  "stage_candidate_deltas": {
+    "A": {"min_delta": -0.15, "max_delta": 0.15, "candidate_deltas": [-0.15, -0.10, -0.05, 0, 0.05, 0.10, 0.15]},
+    "B": {"min_delta": -0.30, "max_delta": 0.30, "candidate_deltas": [-0.30, -0.25, -0.20, -0.15, -0.10, -0.05, 0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30]},
+    "C": {"min_delta": -0.50, "max_delta": 0.50, "candidate_deltas": [-0.50, -0.40, -0.30, -0.25, -0.20, -0.15, -0.10, -0.05, 0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50]},
+    "D": {"min_delta": -1.0, "max_delta": 1.0, "candidate_deltas": [-1.0, -0.75, -0.50, -0.40, -0.30, -0.25, -0.20, -0.15, -0.10, -0.05, 0, 0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.40, 0.50, 0.75, 1.0]}
+  },
+  "extended_sensitivity_cap": 1.0,
+  "stage_d_role": "extended_visual_sensitivity_only",
+  "stage_d_requires_prior_failure": true,
+  "pair_axis_ranges": {"4:x": {"direction": "left"}, "9:x": {"direction": "left"}, "10:x": {"direction": "right"}, "1:x": {}, "1:bottom_y": {}, "2:x": {}, "2:bottom_y": {}, "3:x": {}, "3:bottom_y": {}, "5:x": {}, "5:bottom_y": {}, "7:x": {}, "7:bottom_y": {}, "8:x": {}, "8:bottom_y": {}},
+  "locked_source_pair_ids": [6, 11, 12],
+  "hard_anchor_clipping_policy": "fail_closed_clip_or_reject",
+  "search_config": {"max_raw_evaluations": 5000, "stage_evaluation_budget": {"A": 400, "B": 850, "C": 1400, "D": 2350}, "core_beam": 3, "one_action_beam": 3, "two_actions_per_beam": 10},
+  "safety_boundary": {"audit_only": true, "accepted": false, "downstream_recommendation": false, "candidate_preference_authorized": false, "annotation_writeback": false, "annotation_patch_generated": false, "active_runner_role": false}
+}

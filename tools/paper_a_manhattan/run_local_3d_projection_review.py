@@ -851,9 +851,18 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
             for change in row["coordinate_changes"]:
                 fields = change.get("fields", {})
                 changed_fields = [
-                    f"{field} {_fmt(values.get('before'))}→{_fmt(values.get('after'))}"
+                    f"{field} {_fmt(values.get('before'))}→{_fmt(values.get('after'))} (Δ {_fmt(values.get('delta'))})"
                     for field, values in fields.items()
-                    if isinstance(values, Mapping) and values.get("changed")
+                    if isinstance(values, Mapping)
+                    and (
+                        bool(values["changed"])
+                        if "changed" in values
+                        else (
+                            abs(float(values["delta"])) > 1e-12
+                            if isinstance(values.get("delta"), (int, float))
+                            else values.get("before") != values.get("after")
+                        )
+                    )
                 ]
                 source_pair_id = change.get("source_pair_id")
                 solver_position = change.get(
