@@ -28,12 +28,38 @@ def test_page_gate_requires_route_labeling_editor_main_view_and_task_identity():
         assert 'params.get("task")' in gate
         assert "window.location.pathname.match(/\\/tasks\\/" in gate
         assert ".lsf-root.lsf-root_mode_labeling" in gate
+        assert ".lsf-label-view" in gate
         assert "#label-studio-dm.lsf-label-view__lsf-container > .lsf-editor" in gate
         assert ".lsf-current-task__task-id" in gate
+        assert ".lsf-main-content > .lsf-main-view" in gate
         assert "route_dom_task_mismatch" in gate
-        assert "route_store_task_mismatch" in gate
+        assert "route_store_task_mismatch" not in gate
         assert "dom_task_identity_not_ready" in gate
         assert "findMainImage" not in gate
+
+
+def test_store_is_audit_only_and_page_context_is_captured_in_the_gate():
+    for path in (OFFICIAL, FOREIGN):
+        source = _script(path)
+        start = source.index("function resolveAnnotationPageGate()")
+        end = source.index("function isLikelyAnnotationPage()", start)
+        gate = source[start:end]
+
+        for field in (
+            "storeTaskIds",
+            "storeTaskMatchStatus",
+            "storeMismatchPresent",
+            "locationPath",
+            "sanitizedLocationSearch",
+            "capturedAt",
+            "matches_route",
+            "mixed_with_route_match",
+            "mismatch_only",
+        ):
+            assert field in gate
+        assert "gate.reason = \"route_store_task_mismatch\"" not in gate
+        assert "location_path: report.pageGate?.locationPath || \"\"" in source
+        assert "location_search: report.pageGate?.sanitizedLocationSearch || \"\"" in source
 
 
 def test_page_gate_payload_audits_without_uploading_full_query_string():
@@ -42,6 +68,7 @@ def test_page_gate_payload_audits_without_uploading_full_query_string():
         for field in (
             "location_path",
             "location_search",
+            "page_gate_captured_at",
             "page_gate_eligible",
             "page_gate_reason",
             "page_gate_sources",
@@ -53,7 +80,7 @@ def test_page_gate_payload_audits_without_uploading_full_query_string():
             "annotation_main_view_dom_present",
         ):
             assert field in source
-        assert "`?task=${encodeURIComponent(report.pageGate.routeTaskId)}`" in source
+        assert "location_search: report.pageGate?.sanitizedLocationSearch || \"\"" in source
 
 
 def test_formal_scripts_keep_deployment_and_localized_non_counting_ui():

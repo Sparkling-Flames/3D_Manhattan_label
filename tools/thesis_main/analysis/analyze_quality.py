@@ -254,6 +254,15 @@ def main():
                 active_time_page_gate_sources = ''
                 active_time_script_versions = ''
                 active_time_page_gate_ineligible_event_count = 0
+                active_time_location_paths = ''
+                active_time_route_task_ids = ''
+                active_time_dom_task_ids = ''
+                active_time_store_task_ids = ''
+                active_time_store_match_statuses = ''
+                active_time_store_mismatch_event_count = 0
+                active_time_labeling_root_missing_event_count = 0
+                active_time_editor_missing_event_count = 0
+                active_time_main_view_missing_event_count = 0
                 lead_time_seconds = float(ann.get('lead_time', 0) or 0)
                 if active_log_entry:
                     active_time = float(active_log_entry.get('active_time_value', 0.0))
@@ -266,6 +275,15 @@ def main():
                     active_time_page_gate_sources = str(active_log_entry.get('active_time_page_gate_sources', ''))
                     active_time_script_versions = str(active_log_entry.get('active_time_script_versions', ''))
                     active_time_page_gate_ineligible_event_count = int(active_log_entry.get('active_time_page_gate_ineligible_event_count', 0))
+                    active_time_location_paths = str(active_log_entry.get('active_time_location_paths', ''))
+                    active_time_route_task_ids = str(active_log_entry.get('active_time_route_task_ids', ''))
+                    active_time_dom_task_ids = str(active_log_entry.get('active_time_dom_task_ids', ''))
+                    active_time_store_task_ids = str(active_log_entry.get('active_time_store_task_ids', ''))
+                    active_time_store_match_statuses = str(active_log_entry.get('active_time_store_match_statuses', ''))
+                    active_time_store_mismatch_event_count = int(active_log_entry.get('active_time_store_mismatch_event_count', 0))
+                    active_time_labeling_root_missing_event_count = int(active_log_entry.get('active_time_labeling_root_missing_event_count', 0))
+                    active_time_editor_missing_event_count = int(active_log_entry.get('active_time_editor_missing_event_count', 0))
+                    active_time_main_view_missing_event_count = int(active_log_entry.get('active_time_main_view_missing_event_count', 0))
                 elif lead_time_seconds > 0:
                     active_time = lead_time_seconds
                     active_time_source = 'lead_time_fallback'
@@ -466,6 +484,15 @@ def main():
                     'active_time_page_gate_sources': active_time_page_gate_sources,
                     'active_time_script_versions': active_time_script_versions,
                     'active_time_page_gate_ineligible_event_count': active_time_page_gate_ineligible_event_count,
+                    'active_time_location_paths': active_time_location_paths,
+                    'active_time_route_task_ids': active_time_route_task_ids,
+                    'active_time_dom_task_ids': active_time_dom_task_ids,
+                    'active_time_store_task_ids': active_time_store_task_ids,
+                    'active_time_store_match_statuses': active_time_store_match_statuses,
+                    'active_time_store_mismatch_event_count': active_time_store_mismatch_event_count,
+                    'active_time_labeling_root_missing_event_count': active_time_labeling_root_missing_event_count,
+                    'active_time_editor_missing_event_count': active_time_editor_missing_event_count,
+                    'active_time_main_view_missing_event_count': active_time_main_view_missing_event_count,
                     'lead_time_seconds': lead_time_seconds,
                     'iou': iou_primary,          # For compatibility
                     'iou_manual': iou_manual,    # Explicit Manual IoU
