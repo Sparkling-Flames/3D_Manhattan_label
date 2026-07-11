@@ -1,6 +1,6 @@
 {
-  "schema_version": "m_anchor_4_1_2_review_bridge_v1",
-  "case_name": "task218_ann3741_m_anchor_4_1_2",
+  "schema_version": "m_anchor_4_1_2_1_closure_review_bridge_v1",
+  "case_name": "task218_ann3741_m_anchor_4_1_2_1",
   "source_image": "https://label-images-1389474327.cos.ap-guangzhou.myqcloud.com/data/mp3d_layout/img_v/q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4.jpg",
   "ordered_pairs": [
     {
@@ -564,10 +564,25 @@
       "m_anchor_4_2_input_eligible": false,
       "accepted": false,
       "annotation_writeback": false
-    },
+    }
+  ],
+  "safety_boundary": {
+    "audit_only": true,
+    "accepted": false,
+    "downstream_recommendation": false,
+    "candidate_preference_authorized": false,
+    "annotation_writeback": false,
+    "annotation_patch_generated": false,
+    "active_runner_role": false,
+    "preview_only": true
+  },
+  "stage_id": "M-Anchor.4.1.2.1",
+  "source_stage": "M-Anchor.4.1.2",
+  "preserves_source_artifacts": true,
+  "visibility_candidates": [
     {
       "candidate_id": "m_anchor_4_1_2_d_3426",
-      "family": "m_anchor_4_1_2_visible_range",
+      "family": "m_anchor_4_1_2_1_directional_visibility",
       "decision_class": "neutral_geometry_tradeoff",
       "coordinate_changes": [
         {
@@ -662,11 +677,12 @@
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
       "accepted": false,
-      "annotation_writeback": false
+      "annotation_writeback": false,
+      "review_bucket": "visibility_only"
     },
     {
       "candidate_id": "m_anchor_4_1_2_d_2886",
-      "family": "m_anchor_4_1_2_visible_range",
+      "family": "m_anchor_4_1_2_1_directional_visibility",
       "decision_class": "neutral_geometry_tradeoff",
       "coordinate_changes": [
         {
@@ -743,17 +759,491 @@
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
       "accepted": false,
-      "annotation_writeback": false
+      "annotation_writeback": false,
+      "review_bucket": "visibility_only"
+    },
+    {
+      "candidate_id": "m_anchor_4_1_2_1_visibility_s4_0_15",
+      "family": "m_anchor_4_1_2_1_directional_visibility",
+      "decision_class": "diagnostic_human_direction_only",
+      "coordinate_changes": [
+        {
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "fields": {
+            "top_x": {
+              "before": 27.410957965652642,
+              "after": 27.260957965652644,
+              "delta": -0.14999999999999858
+            },
+            "bottom_x": {
+              "before": 27.410957965652642,
+              "after": 27.260957965652644,
+              "delta": -0.14999999999999858
+            }
+          }
+        },
+        {
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "fields": {
+            "top_x": {
+              "before": 63.78090512564466,
+              "after": 63.73090512564466,
+              "delta": -0.04999999999999716
+            },
+            "bottom_x": {
+              "before": 63.78090512564466,
+              "after": 63.73090512564466,
+              "delta": -0.04999999999999716
+            }
+          }
+        },
+        {
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "fields": {
+            "top_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            },
+            "bottom_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            }
+          }
+        }
+      ],
+      "sensitivity_only": true,
+      "final_refinement_eligible": false,
+      "requires_explicit_human_visual_verdict": true,
+      "direct_ls_trial_allowed": false,
+      "m_anchor_4_2_input_eligible": false,
+      "accepted": false,
+      "annotation_writeback": false,
+      "review_bucket": "visibility_only"
+    },
+    {
+      "candidate_id": "m_anchor_4_1_2_1_visibility_s4_0_30",
+      "family": "m_anchor_4_1_2_1_directional_visibility",
+      "decision_class": "diagnostic_human_direction_only",
+      "coordinate_changes": [
+        {
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "fields": {
+            "top_x": {
+              "before": 27.410957965652642,
+              "after": 27.11095796565264,
+              "delta": -0.3000000000000007
+            },
+            "bottom_x": {
+              "before": 27.410957965652642,
+              "after": 27.11095796565264,
+              "delta": -0.3000000000000007
+            }
+          }
+        },
+        {
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "fields": {
+            "top_x": {
+              "before": 63.78090512564466,
+              "after": 63.73090512564466,
+              "delta": -0.04999999999999716
+            },
+            "bottom_x": {
+              "before": 63.78090512564466,
+              "after": 63.73090512564466,
+              "delta": -0.04999999999999716
+            }
+          }
+        },
+        {
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "fields": {
+            "top_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            },
+            "bottom_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            }
+          }
+        }
+      ],
+      "sensitivity_only": true,
+      "final_refinement_eligible": false,
+      "requires_explicit_human_visual_verdict": true,
+      "direct_ls_trial_allowed": false,
+      "m_anchor_4_2_input_eligible": false,
+      "accepted": false,
+      "annotation_writeback": false,
+      "review_bucket": "visibility_only"
+    },
+    {
+      "candidate_id": "m_anchor_4_1_2_1_visibility_s4_0_40",
+      "family": "m_anchor_4_1_2_1_directional_visibility",
+      "decision_class": "diagnostic_human_direction_only",
+      "coordinate_changes": [
+        {
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "fields": {
+            "top_x": {
+              "before": 27.410957965652642,
+              "after": 27.010957965652644,
+              "delta": -0.3999999999999986
+            },
+            "bottom_x": {
+              "before": 27.410957965652642,
+              "after": 27.010957965652644,
+              "delta": -0.3999999999999986
+            }
+          }
+        },
+        {
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "fields": {
+            "top_x": {
+              "before": 63.78090512564466,
+              "after": 63.73090512564466,
+              "delta": -0.04999999999999716
+            },
+            "bottom_x": {
+              "before": 63.78090512564466,
+              "after": 63.73090512564466,
+              "delta": -0.04999999999999716
+            }
+          }
+        },
+        {
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "fields": {
+            "top_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            },
+            "bottom_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            }
+          }
+        }
+      ],
+      "sensitivity_only": true,
+      "final_refinement_eligible": false,
+      "requires_explicit_human_visual_verdict": true,
+      "direct_ls_trial_allowed": false,
+      "m_anchor_4_2_input_eligible": false,
+      "accepted": false,
+      "annotation_writeback": false,
+      "review_bucket": "visibility_only"
+    },
+    {
+      "candidate_id": "m_anchor_4_1_2_1_visibility_s9_0_15",
+      "family": "m_anchor_4_1_2_1_directional_visibility",
+      "decision_class": "diagnostic_human_direction_only",
+      "coordinate_changes": [
+        {
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "fields": {
+            "top_x": {
+              "before": 27.410957965652642,
+              "after": 27.36095796565264,
+              "delta": -0.05000000000000071
+            },
+            "bottom_x": {
+              "before": 27.410957965652642,
+              "after": 27.36095796565264,
+              "delta": -0.05000000000000071
+            }
+          }
+        },
+        {
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "fields": {
+            "top_x": {
+              "before": 63.78090512564466,
+              "after": 63.63090512564466,
+              "delta": -0.14999999999999858
+            },
+            "bottom_x": {
+              "before": 63.78090512564466,
+              "after": 63.63090512564466,
+              "delta": -0.14999999999999858
+            }
+          }
+        },
+        {
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "fields": {
+            "top_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            },
+            "bottom_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            }
+          }
+        }
+      ],
+      "sensitivity_only": true,
+      "final_refinement_eligible": false,
+      "requires_explicit_human_visual_verdict": true,
+      "direct_ls_trial_allowed": false,
+      "m_anchor_4_2_input_eligible": false,
+      "accepted": false,
+      "annotation_writeback": false,
+      "review_bucket": "visibility_only"
+    },
+    {
+      "candidate_id": "m_anchor_4_1_2_1_visibility_s9_0_30",
+      "family": "m_anchor_4_1_2_1_directional_visibility",
+      "decision_class": "diagnostic_human_direction_only",
+      "coordinate_changes": [
+        {
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "fields": {
+            "top_x": {
+              "before": 27.410957965652642,
+              "after": 27.36095796565264,
+              "delta": -0.05000000000000071
+            },
+            "bottom_x": {
+              "before": 27.410957965652642,
+              "after": 27.36095796565264,
+              "delta": -0.05000000000000071
+            }
+          }
+        },
+        {
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "fields": {
+            "top_x": {
+              "before": 63.78090512564466,
+              "after": 63.48090512564466,
+              "delta": -0.29999999999999716
+            },
+            "bottom_x": {
+              "before": 63.78090512564466,
+              "after": 63.48090512564466,
+              "delta": -0.29999999999999716
+            }
+          }
+        },
+        {
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "fields": {
+            "top_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            },
+            "bottom_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            }
+          }
+        }
+      ],
+      "sensitivity_only": true,
+      "final_refinement_eligible": false,
+      "requires_explicit_human_visual_verdict": true,
+      "direct_ls_trial_allowed": false,
+      "m_anchor_4_2_input_eligible": false,
+      "accepted": false,
+      "annotation_writeback": false,
+      "review_bucket": "visibility_only"
+    },
+    {
+      "candidate_id": "m_anchor_4_1_2_1_visibility_s9_0_50",
+      "family": "m_anchor_4_1_2_1_directional_visibility",
+      "decision_class": "diagnostic_human_direction_only",
+      "coordinate_changes": [
+        {
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "fields": {
+            "top_x": {
+              "before": 27.410957965652642,
+              "after": 27.36095796565264,
+              "delta": -0.05000000000000071
+            },
+            "bottom_x": {
+              "before": 27.410957965652642,
+              "after": 27.36095796565264,
+              "delta": -0.05000000000000071
+            }
+          }
+        },
+        {
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "fields": {
+            "top_x": {
+              "before": 63.78090512564466,
+              "after": 63.28090512564466,
+              "delta": -0.5
+            },
+            "bottom_x": {
+              "before": 63.78090512564466,
+              "after": 63.28090512564466,
+              "delta": -0.5
+            }
+          }
+        },
+        {
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "fields": {
+            "top_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            },
+            "bottom_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            }
+          }
+        }
+      ],
+      "sensitivity_only": true,
+      "final_refinement_eligible": false,
+      "requires_explicit_human_visual_verdict": true,
+      "direct_ls_trial_allowed": false,
+      "m_anchor_4_2_input_eligible": false,
+      "accepted": false,
+      "annotation_writeback": false,
+      "review_bucket": "visibility_only"
+    },
+    {
+      "candidate_id": "m_anchor_4_1_2_1_visibility_s9_1_00",
+      "family": "m_anchor_4_1_2_1_directional_visibility",
+      "decision_class": "diagnostic_human_direction_only",
+      "coordinate_changes": [
+        {
+          "source_pair_id": 4,
+          "solver_position": 4,
+          "verified_order_source_id": 4,
+          "effective_pair_index": 4,
+          "fields": {
+            "top_x": {
+              "before": 27.410957965652642,
+              "after": 27.36095796565264,
+              "delta": -0.05000000000000071
+            },
+            "bottom_x": {
+              "before": 27.410957965652642,
+              "after": 27.36095796565264,
+              "delta": -0.05000000000000071
+            }
+          }
+        },
+        {
+          "source_pair_id": 9,
+          "solver_position": 9,
+          "verified_order_source_id": 9,
+          "effective_pair_index": 9,
+          "fields": {
+            "top_x": {
+              "before": 63.78090512564466,
+              "after": 62.78090512564466,
+              "delta": -1.0
+            },
+            "bottom_x": {
+              "before": 63.78090512564466,
+              "after": 62.78090512564466,
+              "delta": -1.0
+            }
+          }
+        },
+        {
+          "source_pair_id": 10,
+          "solver_position": 10,
+          "verified_order_source_id": 10,
+          "effective_pair_index": 10,
+          "fields": {
+            "top_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            },
+            "bottom_x": {
+              "before": 83.34955092974104,
+              "after": 83.39955092974104,
+              "delta": 0.04999999999999716
+            }
+          }
+        }
+      ],
+      "sensitivity_only": true,
+      "final_refinement_eligible": false,
+      "requires_explicit_human_visual_verdict": true,
+      "direct_ls_trial_allowed": false,
+      "m_anchor_4_2_input_eligible": false,
+      "accepted": false,
+      "annotation_writeback": false,
+      "review_bucket": "visibility_only"
     }
-  ],
-  "safety_boundary": {
-    "audit_only": true,
-    "accepted": false,
-    "downstream_recommendation": false,
-    "candidate_preference_authorized": false,
-    "annotation_writeback": false,
-    "annotation_patch_generated": false,
-    "active_runner_role": false,
-    "preview_only": true
-  }
+  ]
 }

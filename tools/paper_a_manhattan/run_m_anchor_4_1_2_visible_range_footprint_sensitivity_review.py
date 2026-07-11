@@ -21,7 +21,15 @@ REVIEW_OUT_DIR = Path("analysis_results/paper_a_manhattan/hypothesis_local_revie
 def _validate(doc: Mapping[str, Any]) -> None:
     if doc.get("schema_version") != "m_anchor_4_1_2_visible_range_constraints_v1": raise ValueError("unsupported M4.1.2 sidecar")
     if doc.get("case_name") != "task218_ann3741" or doc.get("source_annotation_id") != 3741 or doc.get("coordinate_space") != "ls_percent": raise ValueError("sidecar identity mismatch")
+    if doc.get("derived_from_feedback") != "m_anchor_4_human_feedback_20260709.json": raise ValueError("sidecar feedback provenance mismatch")
     if doc.get("allowed_variables") != ["x", "bottom_y"] or set(doc.get("locked_source_pair_ids", [])) != {6, 11, 12}: raise ValueError("sidecar permissions mismatch")
+    forbidden = {"top_y", "height", "reorder", "merge", "delete", "new_corner", "writeback", "ranking", "portfolio"}
+    if not forbidden <= set(doc.get("forbidden_variables", [])): raise ValueError("sidecar forbidden-variable contract mismatch")
+    ranges = doc.get("pair_axis_ranges")
+    expected = {"4:x", "9:x", "10:x", *{f"{sid}:{axis}" for sid in (1, 2, 3, 5, 7, 8) for axis in ("x", "bottom_y")}}
+    if not isinstance(ranges, Mapping) or set(ranges) != expected or ranges["4:x"].get("direction") != "left" or ranges["9:x"].get("direction") != "left" or ranges["10:x"].get("direction") != "right": raise ValueError("sidecar pair-axis contract mismatch")
+    if doc.get("hard_anchor_clipping_policy") != "fail_closed_clip_or_reject": raise ValueError("sidecar hard-anchor policy mismatch")
+    if doc.get("safety_boundary") != SAFETY: raise ValueError("sidecar safety boundary mismatch")
     if set(doc.get("stage_candidate_deltas", {})) != {"A", "B", "C", "D"}: raise ValueError("missing stage")
     caps = {"A": .15, "B": .30, "C": .50, "D": 1.0}
     previous: set[float] = set()
@@ -31,8 +39,8 @@ def _validate(doc: Mapping[str, Any]) -> None:
         if any(-v not in values for v in values): raise ValueError("delta symmetry mismatch")
         previous = values
     if doc.get("extended_sensitivity_cap") != 1.0 or doc.get("stage_d_role") != "extended_visual_sensitivity_only" or doc.get("stage_d_requires_prior_failure") is not True: raise ValueError("missing Stage D safety contract")
-    budget = doc["search_config"]["stage_evaluation_budget"]
-    if sum(int(v) for v in budget.values()) > int(doc["search_config"]["max_raw_evaluations"]) or min(int(doc["search_config"][k]) for k in ("core_beam", "one_action_beam")) < 3: raise ValueError("insufficient search budget")
+    config = doc.get("search_config", {}); budget = config.get("stage_evaluation_budget", {})
+    if set(budget) != set(caps) or sum(int(v) for v in budget.values()) > int(config.get("max_raw_evaluations", 0)) or int(config.get("core_beam", 0)) < 3 or int(config.get("one_action_beam", 0)) < 3 or int(config.get("two_actions_per_beam", 0)) != 10: raise ValueError("insufficient search budget")
 
 
 def _range(doc: Mapping[str, Any], stage: str, sid: int, axis: str, baseline: Mapping[int, Mapping[str, Any]], anchors: Sequence[Mapping[str, Any]]) -> tuple[float, float, list[str]]:
@@ -60,12 +68,13 @@ def _candidate(index: int, stage: str, doc: Mapping[str, Any], core: Mapping[int
     pair_ok = all(key in ranges and ranges[key][0]-1e-12 <= value <= ranges[key][1]+1e-12 and value in values for sid, vals in m._add_actions(core, actions).items() for axis, value in vals.items() if abs(value)>1e-12 for key in [f"{sid}:{axis}"])
     row.update(sensitivity_only=stage == "D", final_refinement_eligible=stage != "D", requires_explicit_human_visual_verdict=stage == "D", direct_ls_trial_allowed=False, m_anchor_4_2_input_eligible=False)
     row["hard_gate"].update({"pair_axis_range_satisfied": pair_ok, "hard_anchor_satisfied": not row["anchor_audit"]["hard_violations"], "candidate_delta_belongs_to_sidecar_values": pair_ok, "changed_pair_axis_is_authorized": pair_ok, "maximum_absolute_delta_le_stage_cap": row["maximum_absolute_delta"] <= cap+1e-12, "stage_d_sensitivity_flag_present": stage != "D" or row["sensitivity_only"], "stage_d_not_final_refinement": stage != "D" or not row["final_refinement_eligible"], "stage_d_does_not_override_hard_anchor": stage != "D" or not row["anchor_audit"]["hard_violations"]})
-    if stage == "D": row["hard_gate"]["maximum_absolute_delta_le_0_5"] = True
+    if stage == "D": row["hard_gate"].pop("maximum_absolute_delta_le_0_5", None)
     row["hard_gate_passed"] = all(row["hard_gate"].values()); row["hard_gate_failure_reasons"] = [k for k,v in row["hard_gate"].items() if not v]
     improved = row["hard_gate_passed"] and row["local_floor_heading_residual_max_deg"] <= row["local_floor_heading_residual_max_before_deg"]+.05 and (row["local_floor_heading_residual_sum_before_deg"]-row["local_floor_heading_residual_sum_deg"] >= .05 or row["floor_heading_residual_sum_before_deg"]-row["floor_heading_residual_sum_deg"] >= .05)
     local_gain = row["local_floor_heading_residual_sum_before_deg"]-row["local_floor_heading_residual_sum_deg"]
     global_gain = row["floor_heading_residual_sum_before_deg"]-row["floor_heading_residual_sum_deg"]
     row["candidate_class"] = "review_available_geometry_improved" if improved else ("rejected_hard_gate" if not row["hard_gate_passed"] else ("neutral_geometry_tradeoff" if max(local_gain, global_gain) >= .05 else "diagnostic_human_direction_only"))
+    row["decision"] = row["candidate_class"]
     return row
 
 

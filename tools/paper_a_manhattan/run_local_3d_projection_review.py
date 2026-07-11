@@ -838,6 +838,13 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
                     f"### {_candidate_display_label(row, f'candidate_{index}')}",
                     "",
                     f"- decision_class: `{row.get('decision_class')}`",
+                    *(
+                        [
+                            "> **SENSITIVITY ONLY:** not a micro-refinement candidate; final_refinement_eligible=`False`; cannot enter M4.2.",
+                        ]
+                        if row.get("sensitivity_only")
+                        else []
+                    ),
                     f"- improves: `{row.get('improves', [])}`",
                     f"- fails_because: `{row.get('fails_because', [])}`",
                     f"- direct_ls_trial_allowed: `{row.get('direct_ls_trial_allowed')}`",
@@ -1290,6 +1297,10 @@ def render_review_html(
                         "ls_trial_candidate",
                         "short_wall_deficit_delta",
                         "short_wall_plausibility_warning",
+                        "sensitivity_only",
+                        "final_refinement_eligible",
+                        "requires_explicit_human_visual_verdict",
+                        "m_anchor_4_2_input_eligible",
                     )
                     if candidate_row.get(key) is not None
                 },
@@ -1541,6 +1552,11 @@ def render_review_html(
     let focusViewerReady = false;
     let focusDraggingPane = null;
     let focusResizing = false;
+
+    if (REVIEW.variants.some((variant) => variant.triage?.sensitivity_only)) {{
+      warning.textContent = 'SENSITIVITY ONLY candidates are display diagnostics, not final refinements and cannot enter M4.2.';
+      warning.hidden = false;
+    }}
 
     if (activeAssets.imageUrl) {{
       originalPanoramaImage.src = activeAssets.imageUrl;
@@ -2186,7 +2202,12 @@ def run_local_review(
             extract_hypothesis_core_candidate_rows(candidate_payload, limit=candidate_limit)
             if hypothesis_core_candidates
             else (
-                extract_m1522_candidate_rows(candidate_payload, limit=candidate_limit)
+                extract_m1522_candidate_rows(
+                    {**candidate_payload, "candidates": [
+                        *candidate_payload.get("candidates", []),
+                        *candidate_payload.get("visibility_candidates", []),
+                    ]}, limit=candidate_limit
+                )
                 if m1522_candidates
                 else extract_candidate_rows(candidate_payload, limit=candidate_limit)
             )
@@ -2345,12 +2366,11 @@ def run_local_review(
     }
 
     json_path.write_text(
-        json.dumps(review_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+        json.dumps(review_payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8", newline="\n"
     )
-    report_path.write_text(render_markdown_report(review_payload), encoding="utf-8")
+    report_path.write_text(render_markdown_report(review_payload), encoding="utf-8", newline="\n")
     html_path.write_text(
-        render_review_html(review_payload, file_image_data_url=file_image_data_url),
-        encoding="utf-8",
+        render_review_html(review_payload, file_image_data_url=file_image_data_url), encoding="utf-8", newline="\n"
     )
     output_paths = {
         "json": json_path,

@@ -1,3 +1,3 @@
-# M-Anchor.4.1.2
+# M-Anchor.4.1.2.1
 
-Stage D is sensitivity-only, not a final refinement.
+Stage D and directional visibility slices are sensitivity-only, not final refinements, and cannot enter M4.2.
