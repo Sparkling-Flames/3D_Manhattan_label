@@ -12,6 +12,10 @@ def is_unknown_annotation_id(value) -> bool:
     return value is None or str(value).strip().casefold() in {"", "unknown", "unknown_annotation", "none", "null"}
 
 
+def _is_explicit_false(value) -> bool:
+    return value is False or str(value).strip().casefold() in {"false", "0"}
+
+
 def _parse_cli_datetime(value, *, is_end=False):
     """Parse an ISO date/datetime CLI bound for active-log filtering."""
     if value is None or str(value).strip() == "":
@@ -186,6 +190,15 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
                         'page_gate_reason': str(data.get('page_gate_reason', '') or '').strip(),
                         'page_gate_sources': str(data.get('page_gate_sources', '') or '').strip(),
                         'script_version': str(data.get('script_version', '') or '').strip(),
+                        'location_path': str(data.get('location_path', '') or '').strip(),
+                        'route_task_id': str(data.get('resolved_route_task_id', '') or '').strip(),
+                        'dom_task_id': str(data.get('resolved_dom_task_id', '') or '').strip(),
+                        'store_task_ids': str(data.get('store_task_ids', '') or '').strip(),
+                        'store_task_match_status': str(data.get('store_task_match_status', '') or '').strip(),
+                        'store_mismatch_present': data.get('store_mismatch_present'),
+                        'labeling_root_present': data.get('labeling_root_present'),
+                        'editor_dom_present': data.get('annotation_editor_dom_present'),
+                        'main_view_dom_present': data.get('annotation_main_view_dom_present'),
                     }
                     parsed_events.append(event)
                     if ann_id and not annotation_unknown:
@@ -258,6 +271,15 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
         'sources': set(),
         'script_versions': set(),
         'ineligible_events': 0,
+        'location_paths': set(),
+        'route_task_ids': set(),
+        'dom_task_ids': set(),
+        'store_task_ids': set(),
+        'store_match_statuses': set(),
+        'store_mismatch_events': 0,
+        'labeling_root_missing_events': 0,
+        'editor_missing_events': 0,
+        'main_view_missing_events': 0,
     })
     for event in parsed_events:
         context = (event['project_id'], event['task_id'], event['annotator_id'])
@@ -268,8 +290,28 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
             gate_audit['sources'].add(event['page_gate_sources'])
         if event['script_version']:
             gate_audit['script_versions'].add(event['script_version'])
-        if str(event['page_gate_eligible']).strip().casefold() in {'false', '0'}:
+        if _is_explicit_false(event['page_gate_eligible']):
             gate_audit['ineligible_events'] += 1
+        if event['location_path']:
+            gate_audit['location_paths'].add(event['location_path'])
+        if event['route_task_id']:
+            gate_audit['route_task_ids'].add(event['route_task_id'])
+        if event['dom_task_id']:
+            gate_audit['dom_task_ids'].add(event['dom_task_id'])
+        if event['store_task_ids']:
+            gate_audit['store_task_ids'].add(event['store_task_ids'])
+        if event['store_task_match_status']:
+            gate_audit['store_match_statuses'].add(event['store_task_match_status'])
+        if _is_explicit_false(event['store_mismatch_present']):
+            pass
+        elif event['store_mismatch_present'] is not None:
+            gate_audit['store_mismatch_events'] += 1
+        if _is_explicit_false(event['labeling_root_present']):
+            gate_audit['labeling_root_missing_events'] += 1
+        if _is_explicit_false(event['editor_dom_present']):
+            gate_audit['editor_missing_events'] += 1
+        if _is_explicit_false(event['main_view_dom_present']):
+            gate_audit['main_view_missing_events'] += 1
         if event['annotation_unknown']:
             audit = unknown_audit[context]
             audit['seconds_by_session'][event['session_id']] = max(audit['seconds_by_session'][event['session_id']], event['seconds'])
@@ -318,6 +360,15 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
             'active_time_page_gate_sources': ';'.join(sorted(gate_audit['sources'])),
             'active_time_script_versions': ';'.join(sorted(gate_audit['script_versions'])),
             'active_time_page_gate_ineligible_event_count': int(gate_audit['ineligible_events']),
+            'active_time_location_paths': ';'.join(sorted(gate_audit['location_paths'])),
+            'active_time_route_task_ids': ';'.join(sorted(gate_audit['route_task_ids'])),
+            'active_time_dom_task_ids': ';'.join(sorted(gate_audit['dom_task_ids'])),
+            'active_time_store_task_ids': ';'.join(sorted(gate_audit['store_task_ids'])),
+            'active_time_store_match_statuses': ';'.join(sorted(gate_audit['store_match_statuses'])),
+            'active_time_store_mismatch_event_count': int(gate_audit['store_mismatch_events']),
+            'active_time_labeling_root_missing_event_count': int(gate_audit['labeling_root_missing_events']),
+            'active_time_editor_missing_event_count': int(gate_audit['editor_missing_events']),
+            'active_time_main_view_missing_event_count': int(gate_audit['main_view_missing_events']),
         }
 
     for context, audit in unknown_audit.items():
@@ -336,6 +387,15 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
             'active_time_page_gate_sources': ';'.join(sorted(page_gate_audit[context]['sources'])),
             'active_time_script_versions': ';'.join(sorted(page_gate_audit[context]['script_versions'])),
             'active_time_page_gate_ineligible_event_count': int(page_gate_audit[context]['ineligible_events']),
+            'active_time_location_paths': ';'.join(sorted(page_gate_audit[context]['location_paths'])),
+            'active_time_route_task_ids': ';'.join(sorted(page_gate_audit[context]['route_task_ids'])),
+            'active_time_dom_task_ids': ';'.join(sorted(page_gate_audit[context]['dom_task_ids'])),
+            'active_time_store_task_ids': ';'.join(sorted(page_gate_audit[context]['store_task_ids'])),
+            'active_time_store_match_statuses': ';'.join(sorted(page_gate_audit[context]['store_match_statuses'])),
+            'active_time_store_mismatch_event_count': int(page_gate_audit[context]['store_mismatch_events']),
+            'active_time_labeling_root_missing_event_count': int(page_gate_audit[context]['labeling_root_missing_events']),
+            'active_time_editor_missing_event_count': int(page_gate_audit[context]['editor_missing_events']),
+            'active_time_main_view_missing_event_count': int(page_gate_audit[context]['main_view_missing_events']),
         }
 
     by_legacy_pair = defaultdict(list)

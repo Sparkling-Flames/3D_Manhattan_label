@@ -50,6 +50,12 @@
       routeTaskId: "",
       domTaskId: "",
       storeTaskId: "",
+      storeTaskIds: [],
+      storeTaskMatchStatus: "unavailable",
+      storeMismatchPresent: false,
+      locationPath: window.location.pathname || "",
+      sanitizedLocationSearch: "",
+      capturedAt: Date.now(),
       labelingRootPresent: false,
       editorDomPresent: false,
       mainViewDomPresent: false,
@@ -63,11 +69,10 @@
       const queryTaskId = String(params.get("task") || "").trim();
       const pathMatch = window.location.pathname.match(/\/tasks\/([^/?#]+)/);
       const pathTaskId = pathMatch ? String(pathMatch[1]).trim() : "";
-      if (queryTaskId && pathTaskId && queryTaskId !== pathTaskId) {
-        gate.reason = "task_route_conflict";
-        return gate;
-      }
       gate.routeTaskId = queryTaskId || pathTaskId;
+      gate.sanitizedLocationSearch = gate.routeTaskId
+        ? `?task=${encodeURIComponent(gate.routeTaskId)}`
+        : "";
       if (!gate.routeTaskId) return gate;
       gate.sources.push(queryTaskId ? "url.query.task" : "url.path.tasks");
 
@@ -78,16 +83,19 @@
         return gate;
       }
       gate.sources.push("dom.lsf-root_mode_labeling");
-      const editor =
-        labelingRoot.querySelector("#label-studio-dm.lsf-label-view__lsf-container > .lsf-editor") ||
-        labelingRoot.querySelector(".lsf-label-view__lsf-container > .lsf-editor");
+      const labelView = labelingRoot.querySelector(".lsf-label-view");
+      const editor = labelView?.querySelector(
+        "#label-studio-dm.lsf-label-view__lsf-container > .lsf-editor",
+      );
       gate.editorDomPresent = Boolean(editor);
       if (!editor) {
         gate.reason = "annotation_editor_not_ready";
         return gate;
       }
       gate.sources.push("dom.lsf-editor");
-      gate.mainViewDomPresent = Boolean(editor.querySelector(".lsf-main-view, .ls-main-view"));
+      gate.mainViewDomPresent = Boolean(
+        editor.querySelector(".lsf-main-content > .lsf-main-view"),
+      );
       if (!gate.mainViewDomPresent) {
         gate.reason = "annotation_main_view_not_ready";
         return gate;
@@ -103,20 +111,23 @@
         gate.reason = "route_dom_task_mismatch";
         return gate;
       }
-      const store = getStore?.();
-      const storeCandidates = [
-        store?.task?.id,
-        store?.taskStore?.selected?.id,
-        store?.annotationStore?.selected?.task?.id,
-      ];
-      const storeTaskId = storeCandidates.find((value) => value !== undefined && value !== null && String(value).trim());
-      gate.storeTaskId = storeTaskId === undefined ? "" : String(storeTaskId).trim();
-      if (gate.storeTaskId) {
-        gate.sources.push("store.task");
-        if (gate.storeTaskId !== gate.routeTaskId) {
-          gate.reason = "route_store_task_mismatch";
-          return gate;
-        }
+      try {
+        const store = getStore?.();
+        gate.storeTaskIds = Array.from(new Set([
+          store?.task?.id,
+          store?.taskStore?.selected?.id,
+          store?.annotationStore?.selected?.task?.id,
+        ].filter((value) => value !== undefined && value !== null && String(value).trim())
+          .map((value) => String(value).trim())));
+      } catch (e) {}
+      gate.storeTaskId = gate.storeTaskIds[0] || "";
+      if (gate.storeTaskIds.length) {
+        gate.sources.push("store.task.audit");
+        const hasRouteMatch = gate.storeTaskIds.includes(gate.routeTaskId);
+        gate.storeMismatchPresent = gate.storeTaskIds.some((id) => id !== gate.routeTaskId);
+        gate.storeTaskMatchStatus = hasRouteMatch
+          ? (gate.storeMismatchPresent ? "mixed_with_route_match" : "matches_route")
+          : "mismatch_only";
       }
       gate.taskIdentityMatched = true;
       gate.eligible = true;
@@ -3188,8 +3199,9 @@
       is_manual_flush: manualFlush,
       script_version: SCRIPT_VERSION,
       page_type: report.pageType,
-      location_path: window.location.pathname || "",
-      location_search: report.pageGate?.routeTaskId ? `?task=${encodeURIComponent(report.pageGate.routeTaskId)}` : "",
+      location_path: report.pageGate?.locationPath || "",
+      location_search: report.pageGate?.sanitizedLocationSearch || "",
+      page_gate_captured_at: report.pageGate?.capturedAt || null,
       page_gate_eligible: Boolean(report.pageGate?.eligible),
       page_gate_reason: report.pageGate?.reason || "unknown",
       page_gate_sources: (report.pageGate?.sources || []).join(";"),
@@ -3197,6 +3209,9 @@
       resolved_route_task_id: report.pageGate?.routeTaskId || "",
       resolved_dom_task_id: report.pageGate?.domTaskId || "",
       resolved_store_task_id: report.pageGate?.storeTaskId || "",
+      store_task_ids: (report.pageGate?.storeTaskIds || []).join(";"),
+      store_task_match_status: report.pageGate?.storeTaskMatchStatus || "unavailable",
+      store_mismatch_present: Boolean(report.pageGate?.storeMismatchPresent),
       labeling_root_present: Boolean(report.pageGate?.labelingRootPresent),
       annotation_editor_dom_present: Boolean(report.pageGate?.editorDomPresent),
       annotation_main_view_dom_present: Boolean(report.pageGate?.mainViewDomPresent),
