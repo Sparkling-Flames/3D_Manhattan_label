@@ -447,3 +447,26 @@ def test_worker_profile_sidecar_reads_p1_artifacts_without_writeback(tmp_path: P
     assert by_check["p1_r0_vs_c1_r_u_calib"]["directionally_consistent"] == "true"
     assert by_check["p1_geometry_vs_c1_geometry"]["support_status"] == "weak_descriptive"
     assert "P1 artifacts are read-only inputs" in report
+
+
+def test_system_collection_issue_is_not_worker_process_failure(tmp_path: Path) -> None:
+    fields = ["round_id", "task_id", "base_task_id", "dataset_group", "condition", "worker_id", "canonical_annotation_id", "geometry_valid", "assigned_expected", "active_time_source", "active_time_integrity_status", "system_collection_issue", "unassigned_audit_present", "unassigned_active_time_seconds", "audit_only", "outside_assignment_submission", "duplicate_worker_task_submission"]
+    quality = tmp_path / "quality.csv"
+    _csv(quality, fields, [
+        {"round_id": "C1", "task_id": "unknown_only", "base_task_id": "b1", "dataset_group": "Calibration_core", "condition": "manual", "worker_id": "w1", "canonical_annotation_id": "a1", "geometry_valid": "true", "assigned_expected": "true", "active_time_source": "missing", "active_time_integrity_status": "unknown_audit_only", "system_collection_issue": "true", "unassigned_audit_present": "true", "unassigned_active_time_seconds": "4", "audit_only": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"},
+        {"round_id": "C1", "task_id": "known_plus_unknown", "base_task_id": "b2", "dataset_group": "Calibration_core", "condition": "manual", "worker_id": "w1", "canonical_annotation_id": "a2", "geometry_valid": "true", "assigned_expected": "true", "active_time_source": "log", "active_time_integrity_status": "exact_annotation_valid", "system_collection_issue": "true", "unassigned_audit_present": "true", "unassigned_active_time_seconds": "3", "audit_only": "false", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"},
+        {"round_id": "C1", "task_id": "outside", "base_task_id": "b3", "dataset_group": "Calibration_core", "condition": "manual", "worker_id": "w1", "canonical_annotation_id": "a3", "geometry_valid": "true", "assigned_expected": "false", "active_time_source": "missing", "active_time_integrity_status": "unknown_audit_only", "system_collection_issue": "true", "unassigned_audit_present": "true", "unassigned_active_time_seconds": "2", "audit_only": "true", "outside_assignment_submission": "true", "duplicate_worker_task_submission": "false"},
+    ])
+    worker_state = tmp_path / "worker.csv"
+    _csv(worker_state, ["worker_id"], [{"worker_id": "w1"}])
+
+    summary = materialize(quality, worker_state, tmp_path / "out")
+    evidence = {row["task_id"]: row for row in _rows(tmp_path / "out" / "worker_task_evidence_table_C1.csv")}
+
+    assert evidence["unknown_only"]["active_time_worker_process_failure"] == "false"
+    assert evidence["unknown_only"]["process_invalid"] == "false"
+    assert evidence["known_plus_unknown"]["active_time_worker_process_failure"] == "false"
+    assert evidence["outside"]["process_invalid"] == "true"
+    assert evidence["outside"]["active_time_integrity_status"] == "unknown_audit_only"
+    assert summary["unassigned_active_time_seconds_total"] == 9.0
+    assert summary["system_collection_issue_row_count"] == 3

@@ -86,7 +86,8 @@ def test_live_monitor_audits_assignment_duplicates_reserve_and_log_policy(tmp_pa
     (logs / "active_times_2026-07-03.jsonl").write_text(
         "\n".join(
             [
-                json.dumps({"project_id": "65", "task_id": "100", "annotator_id": "w1", "annotation_id": "a1", "session_id": "s1", "active_seconds": 12}),
+                    json.dumps({"project_id": "65", "task_id": "100", "annotator_id": "w1", "annotation_id": "a1", "session_id": "s1", "active_seconds": 12}),
+                    json.dumps({"project_id": "65", "task_id": "100", "annotator_id": "w1", "annotation_id": "none", "session_id": "s1", "active_seconds": 4}),
                 json.dumps({"project_id": "65", "task_id": "101", "annotator_id": "w2", "session_id": "single", "active_seconds": 7}),
                 json.dumps({"project_id": "65", "task_id": "104", "annotator_id": "w1", "session_id": "dup", "active_seconds": 5}),
             ]
@@ -113,6 +114,11 @@ def test_live_monitor_audits_assignment_duplicates_reserve_and_log_policy(tmp_pa
     snapshot_rows = list(csv.DictReader((out / "c1_live_snapshot_manifest.csv").open(encoding="utf-8")))
     assert {row["source_kind"] for row in snapshot_rows} == {"label_studio_export_snapshot", "active_log_snapshot"}
     assert all(row["sha256"] for row in snapshot_rows)
+    assert (out / "c1_live_collection_summary.json").exists()
+    assert summary["unassigned_active_time_seconds_total"] == 4.0
+    assert summary["unknown_annotation_event_count_total"] == 1
+    assert summary["system_collection_issue_row_count"] >= 1
+    assert "unknown_annotation_audit_present" not in summary["blockers"]
 
     health = {row["worker_id"]: row for row in csv.DictReader((out / "c1_live_active_log_health_by_worker.csv").open(encoding="utf-8"))}
     assert health["w2"]["active_log_missing_count"] == "0"

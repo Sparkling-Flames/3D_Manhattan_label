@@ -2,7 +2,8 @@ import json
 from pathlib import Path
 
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
-from tools.thesis_main.analysis.quality_core.active_time import load_active_logs, lookup_active_log_entry, lookup_unknown_active_time_audit
+from tools.thesis_main.analysis.quality_core.active_time import is_unknown_annotation_id, load_active_logs, lookup_active_log_entry, lookup_unknown_active_time_audit
+from tools.thesis_main.analysis.c1_live_collection_monitor import active_time_for_annotation
 
 
 def test_resolve_active_log_files_prefers_new_server_and_ignores_legacy(tmp_path: Path):
@@ -558,6 +559,13 @@ def test_calibration_unknown_is_audit_only_and_not_task_time(tmp_path: Path):
     assert audit["unknown_annotation_event_count"] == 1
     assert audit["unknown_annotation_session_count"] == 1
     assert audit["audit_only"] is True
+    row = active_time_for_annotation(logs, "65", "1", "w1", "a1", 0)
+    assert row["active_time"] == ""
+    assert row["primary_active_time_eligible"] is False
+    assert row["sensitivity_active_time_eligible"] is False
+    assert row["audit_only"] is True
+    assert row["system_collection_issue"] is True
+    assert row["active_time_integrity_status"] == "unknown_audit_only"
 
 
 def test_calibration_known_and_unknown_counts_only_owner_validated_known(tmp_path: Path):
@@ -612,3 +620,43 @@ def test_calibration_owner_mismatch_remains_unmatched(tmp_path: Path):
     entry, status = lookup_active_log_entry(logs, "65", "4", "w2", "a1")
     assert entry is None
     assert status == "missing"
+
+
+def test_unknown_like_annotation_values_are_calibration_audit_only(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+    values = [None, "", "unknown", "null", "none"]
+    lines = [json.dumps({"project_id": "65", "task_id": "5", "annotator_id": "w1", "annotation_id": value, "session_id": "s1", "active_seconds": index + 1}) for index, value in enumerate(values)]
+    (active_logs / "active_times_2026-07-03.jsonl").write_text("\n".join(lines) + "\n", encoding="utf-8")
+
+    logs = load_active_logs(str(active_logs), policy="calibration")
+    audit = lookup_unknown_active_time_audit(logs, "65", "5", "w1")
+
+    assert all(is_unknown_annotation_id(value) for value in values)
+    assert ("65", "5", "w1") not in logs
+    assert audit["unassigned_active_time_seconds"] == 5.0
+    assert audit["unknown_annotation_event_count"] == 5
+    assert audit["unknown_annotation_session_count"] == 1
+
+
+def test_calibration_task_fallback_excludes_unknown_seconds(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+    (active_logs / "active_times_2026-07-03.jsonl").write_text(
+        "\n".join([
+            json.dumps({"project_id": "65", "task_id": "6", "annotator_id": "w1", "annotation_id": "unknown", "session_id": "s1", "active_seconds": 4}),
+            json.dumps({"project_id": "65", "task_id": "6", "annotator_id": "w1", "session_id": "s2", "active_seconds": 9}),
+        ]) + "\n",
+        encoding="utf-8",
+    )
+    logs = load_active_logs(str(active_logs), policy="calibration")
+    entry, status = lookup_active_log_entry(logs, "65", "6", "w1", annotation_id="a1")
+
+    assert status == "project+task+annotator"
+    assert entry["active_time_value"] == 9.0
+    assert entry["unassigned_active_time_seconds"] == 4.0
+    row = active_time_for_annotation(logs, "65", "6", "w1", "a1", 0)
+    assert row["active_time"] == 9.0
+    assert row["primary_active_time_eligible"] is False
+    assert row["sensitivity_active_time_eligible"] is True
+    assert row["active_time_integrity_status"] == "task_level_fallback"
