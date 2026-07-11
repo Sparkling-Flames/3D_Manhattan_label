@@ -33,12 +33,17 @@ def test_m_anchor_4_1_2_1_closure_materializes_visibility_slices(tmp_path: Path)
     assert audit["schema_version"] == "m_anchor_4_1_2_1_closure_audit_v1"
     assert audit["stage_id"] == "M-Anchor.4.1.2.1"
     assert len(audit["review_candidates"]) == 4 and len(audit["visibility_candidates"]) == 9
-    assert all(row["hard_gate_passed"] and row["m_anchor_4_2_input_eligible"] is False for row in audit["visibility_candidates"])
+    slices = [row for row in audit["visibility_candidates"] if row["visibility_slice"]]
+    assert all(set(row["changed_pairs"]) == ({4} if "_s4_" in row["candidate_id"] else {9}) for row in slices)
+    assert all(row["candidate_kind"] == "directional_visibility_slice" and row["m_anchor_4_2_input_eligible"] is False for row in slices)
     assert manifest["case_name"] == "task218_ann3741_m_anchor_4_1_2_1"
     assert len(manifest["candidates"]) == 4 and len(manifest["visibility_candidates"]) == 9
     report = paths["review_report"].read_text(encoding="utf-8")
     html = paths["review_html"].read_text(encoding="utf-8")
-    assert "SENSITIVITY ONLY" in report and "SENSITIVITY ONLY" in html
+    assert "SENSITIVITY ONLY" in report and "const sensitivityOnly = data.sensitivity_only === true;" in html
+    assert "SENSITIVITY ONLY — not a micro-refinement candidate; cannot enter M4.2." in html
+    assert "triageWarning.textContent = sensitivityOnly" in html
+    assert "sensitivityOnly || manualReview || blocked" in html
     assert manifest["visibility_candidates"][-1]["candidate_id"] in report
 
 

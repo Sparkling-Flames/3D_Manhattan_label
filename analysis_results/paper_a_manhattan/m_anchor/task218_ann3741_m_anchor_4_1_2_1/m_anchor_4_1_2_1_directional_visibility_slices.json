@@ -4,6 +4,7 @@
   "audit_only": true,
   "not_solver_candidates": true,
   "m_anchor_4_2_input_eligible": false,
+  "slice_mode": "pure_single_variable",
   "s4_x": [
     -0.15,
     -0.3,
@@ -15,9 +16,7 @@
     -0.5,
     -1.0
   ],
-  "candidate_ids": [
-    "m_anchor_4_1_2_d_3426",
-    "m_anchor_4_1_2_d_2886",
+  "directional_visibility_candidate_ids": [
     "m_anchor_4_1_2_1_visibility_s4_0_15",
     "m_anchor_4_1_2_1_visibility_s4_0_30",
     "m_anchor_4_1_2_1_visibility_s4_0_40",
@@ -25,6 +24,10 @@
     "m_anchor_4_1_2_1_visibility_s9_0_30",
     "m_anchor_4_1_2_1_visibility_s9_0_50",
     "m_anchor_4_1_2_1_visibility_s9_1_00"
+  ],
+  "stage_d_candidate_ids": [
+    "m_anchor_4_1_2_d_3426",
+    "m_anchor_4_1_2_d_2886"
   ],
   "same_baseline": "m_anchor_1_footprint_only_joint_xy"
 }

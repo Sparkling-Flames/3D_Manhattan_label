@@ -4894,6 +4894,7 @@
       "requires_explicit_human_visual_verdict": true,
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
+      "candidate_kind": "stage_d_search_sensitivity",
       "visibility_slice": false,
       "review_bucket": "stage_d_sensitivity_only"
     },
@@ -5839,50 +5840,41 @@
       "requires_explicit_human_visual_verdict": true,
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
+      "candidate_kind": "stage_d_search_sensitivity",
       "visibility_slice": false,
       "review_bucket": "stage_d_sensitivity_only"
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s4_0_15",
       "search_stage": "D",
-      "candidate_class": "diagnostic_human_direction_only",
-      "decision": "diagnostic_human_direction_only",
+      "candidate_class": "rejected_hard_gate",
+      "decision": "rejected_hard_gate",
       "directional_core": {
         "4": {
           "x": -0.15,
           "bottom_y": 0
         },
         "9": {
-          "x": -0.05,
+          "x": 0,
           "bottom_y": 0
         },
         "10": {
-          "x": 0.05,
+          "x": 0,
           "bottom_y": 0
         }
       },
       "micro_actions": [],
       "changed_pairs": [
-        4,
-        9,
-        10
+        4
       ],
       "movement_by_axis": {
         "4": {
           "x": -0.15,
           "bottom_y": 0
-        },
-        "9": {
-          "x": -0.05,
-          "bottom_y": 0
-        },
-        "10": {
-          "x": 0.05,
-          "bottom_y": 0
         }
       },
       "maximum_absolute_delta": 0.15,
-      "visual_anchor_movement_cost": 0.75,
+      "visual_anchor_movement_cost": 0.44999999999999996,
       "affected_edges": [
         [
           3,
@@ -5891,26 +5883,9 @@
         [
           4,
           6
-        ],
-        [
-          7,
-          9
-        ],
-        [
-          9,
-          10
-        ],
-        [
-          10,
-          12
         ]
       ],
-      "improved_edges": [
-        [
-          10,
-          12
-        ]
-      ],
+      "improved_edges": [],
       "worsened_edges": [
         [
           3,
@@ -5919,24 +5894,16 @@
         [
           4,
           6
-        ],
-        [
-          7,
-          9
-        ],
-        [
-          9,
-          10
         ]
       ],
-      "floor_heading_residual_sum_deg": 37.39754118718952,
+      "floor_heading_residual_sum_deg": 37.37500361193872,
       "floor_heading_residual_max_deg": 4.017554894738851,
-      "local_floor_heading_residual_sum_deg": 17.93607281603018,
+      "local_floor_heading_residual_sum_deg": 7.545938511962948,
       "local_floor_heading_residual_max_deg": 4.0175548947388116,
       "floor_heading_residual_sum_before_deg": 36.74079625252,
-      "local_floor_heading_residual_sum_before_deg": 17.279327881360675,
+      "local_floor_heading_residual_sum_before_deg": 6.911731152544283,
       "local_floor_heading_residual_max_before_deg": 3.4558655762721457,
-      "wall_residual_sum_deg": 37.39754118718952,
+      "wall_residual_sum_deg": 37.37500361193872,
       "wall_residual_max_deg": 4.017554894738851,
       "legacy_alias_for": "floor_heading_residual",
       "per_wall_residual_diagnostic": {
@@ -6032,10 +5999,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.7938608685987785,
-            "length_after": 1.7893386272948686,
+            "length_after": 1.7938608685987785,
             "manhattan_residual_before_deg": 3.4558655762721435,
-            "manhattan_residual_after_deg": 3.648297713628465,
-            "residual_delta_deg": 0.1924321373563216
+            "manhattan_residual_after_deg": 3.4558655762721435,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -6044,10 +6011,10 @@
             ],
             "seam_edge": false,
             "length_before": 2.7079985882407507,
-            "length_after": 2.7200187183126956,
+            "length_after": 2.7079985882407507,
             "manhattan_residual_before_deg": 3.4558655762721315,
-            "manhattan_residual_after_deg": 3.4672056346955173,
-            "residual_delta_deg": 0.011340058423385813
+            "manhattan_residual_after_deg": 3.4558655762721315,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -6056,10 +6023,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.9041436962084741,
-            "length_after": 1.9001592187921164,
+            "length_after": 1.9041436962084741,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 3.2746309557432483,
-            "residual_delta_deg": -0.18123462052886907
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -6089,7 +6056,7 @@
         "summary": {
           "wall_count": 12,
           "residual_sum_before_deg": 36.74079625252007,
-          "residual_sum_after_deg": 37.39754118718958,
+          "residual_sum_after_deg": 37.37500361193874,
           "residual_max_before_deg": 3.4558655762722594,
           "residual_max_after_deg": 4.0175548947388116,
           "worst_edge_after": [
@@ -6438,7 +6405,7 @@
         "hard_violation_count": 0
       },
       "hard_gate": {
-        "human_direction_satisfied": true,
+        "human_direction_satisfied": false,
         "pair_specific_range_satisfied": true,
         "unauthorized_pairs_unchanged": true,
         "stage_cap_satisfied": true,
@@ -6460,8 +6427,10 @@
         "stage_d_not_final_refinement": true,
         "stage_d_does_not_override_hard_anchor": true
       },
-      "hard_gate_passed": true,
-      "hard_gate_failure_reasons": [],
+      "hard_gate_passed": false,
+      "hard_gate_failure_reasons": [
+        "human_direction_satisfied"
+      ],
       "corrected_coordinates": [
         {
           "source_pair_id": 2,
@@ -6612,11 +6581,11 @@
         },
         {
           "top": {
-            "x": 63.73090512564466,
+            "x": 63.78090512564466,
             "y": 31.6171875
           },
           "bottom": {
-            "x": 63.73090512564466,
+            "x": 63.78090512564466,
             "y": 68.74147895391475
           },
           "source_pair_id": 9,
@@ -6631,11 +6600,11 @@
         },
         {
           "top": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 30.4453125
           },
           "bottom": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 69.3659181657466
           },
           "source_pair_id": 10,
@@ -6700,42 +6669,6 @@
               "delta": -0.14999999999999858
             }
           }
-        },
-        {
-          "source_pair_id": 9,
-          "solver_position": 9,
-          "verified_order_source_id": 9,
-          "effective_pair_index": 9,
-          "fields": {
-            "top_x": {
-              "before": 63.78090512564466,
-              "after": 63.73090512564466,
-              "delta": -0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 63.78090512564466,
-              "after": 63.73090512564466,
-              "delta": -0.04999999999999716
-            }
-          }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            }
-          }
         }
       ],
       "top_y_changed": false,
@@ -6752,50 +6685,41 @@
       "requires_explicit_human_visual_verdict": true,
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
+      "candidate_kind": "directional_visibility_slice",
       "visibility_slice": true,
       "review_bucket": "visibility_only"
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s4_0_30",
       "search_stage": "D",
-      "candidate_class": "diagnostic_human_direction_only",
-      "decision": "diagnostic_human_direction_only",
+      "candidate_class": "rejected_hard_gate",
+      "decision": "rejected_hard_gate",
       "directional_core": {
         "4": {
           "x": -0.3,
           "bottom_y": 0
         },
         "9": {
-          "x": -0.05,
+          "x": 0,
           "bottom_y": 0
         },
         "10": {
-          "x": 0.05,
+          "x": 0,
           "bottom_y": 0
         }
       },
       "micro_actions": [],
       "changed_pairs": [
-        4,
-        9,
-        10
+        4
       ],
       "movement_by_axis": {
         "4": {
           "x": -0.3,
           "bottom_y": 0
-        },
-        "9": {
-          "x": -0.05,
-          "bottom_y": 0
-        },
-        "10": {
-          "x": 0.05,
-          "bottom_y": 0
         }
       },
       "maximum_absolute_delta": 0.3,
-      "visual_anchor_movement_cost": 1.1999999999999997,
+      "visual_anchor_movement_cost": 0.8999999999999999,
       "affected_edges": [
         [
           3,
@@ -6804,26 +6728,9 @@
         [
           4,
           6
-        ],
-        [
-          7,
-          9
-        ],
-        [
-          9,
-          10
-        ],
-        [
-          10,
-          12
         ]
       ],
-      "improved_edges": [
-        [
-          10,
-          12
-        ]
-      ],
+      "improved_edges": [],
       "worsened_edges": [
         [
           3,
@@ -6832,24 +6739,16 @@
         [
           4,
           6
-        ],
-        [
-          7,
-          9
-        ],
-        [
-          9,
-          10
         ]
       ],
-      "floor_heading_residual_sum_deg": 38.02812500946584,
+      "floor_heading_residual_sum_deg": 38.005587434215045,
       "floor_heading_residual_max_deg": 4.578016153581075,
-      "local_floor_heading_residual_sum_deg": 18.56665663830652,
+      "local_floor_heading_residual_sum_deg": 8.176522334239287,
       "local_floor_heading_residual_max_deg": 4.578016153581069,
       "floor_heading_residual_sum_before_deg": 36.74079625252,
-      "local_floor_heading_residual_sum_before_deg": 17.279327881360675,
+      "local_floor_heading_residual_sum_before_deg": 6.911731152544283,
       "local_floor_heading_residual_max_before_deg": 3.4558655762721457,
-      "wall_residual_sum_deg": 38.02812500946584,
+      "wall_residual_sum_deg": 38.005587434215045,
       "wall_residual_max_deg": 4.578016153581075,
       "legacy_alias_for": "floor_heading_residual",
       "per_wall_residual_diagnostic": {
@@ -6945,10 +6844,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.7938608685987785,
-            "length_after": 1.7893386272948686,
+            "length_after": 1.7938608685987785,
             "manhattan_residual_before_deg": 3.4558655762721435,
-            "manhattan_residual_after_deg": 3.648297713628465,
-            "residual_delta_deg": 0.1924321373563216
+            "manhattan_residual_after_deg": 3.4558655762721435,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -6957,10 +6856,10 @@
             ],
             "seam_edge": false,
             "length_before": 2.7079985882407507,
-            "length_after": 2.7200187183126956,
+            "length_after": 2.7079985882407507,
             "manhattan_residual_before_deg": 3.4558655762721315,
-            "manhattan_residual_after_deg": 3.4672056346955173,
-            "residual_delta_deg": 0.011340058423385813
+            "manhattan_residual_after_deg": 3.4558655762721315,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -6969,10 +6868,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.9041436962084741,
-            "length_after": 1.9001592187921164,
+            "length_after": 1.9041436962084741,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 3.2746309557432483,
-            "residual_delta_deg": -0.18123462052886907
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -7002,7 +6901,7 @@
         "summary": {
           "wall_count": 12,
           "residual_sum_before_deg": 36.74079625252007,
-          "residual_sum_after_deg": 38.028125009465924,
+          "residual_sum_after_deg": 38.00558743421508,
           "residual_max_before_deg": 3.4558655762722594,
           "residual_max_after_deg": 4.578016153581069,
           "worst_edge_after": [
@@ -7351,7 +7250,7 @@
         "hard_violation_count": 0
       },
       "hard_gate": {
-        "human_direction_satisfied": true,
+        "human_direction_satisfied": false,
         "pair_specific_range_satisfied": true,
         "unauthorized_pairs_unchanged": true,
         "stage_cap_satisfied": true,
@@ -7373,8 +7272,10 @@
         "stage_d_not_final_refinement": true,
         "stage_d_does_not_override_hard_anchor": true
       },
-      "hard_gate_passed": true,
-      "hard_gate_failure_reasons": [],
+      "hard_gate_passed": false,
+      "hard_gate_failure_reasons": [
+        "human_direction_satisfied"
+      ],
       "corrected_coordinates": [
         {
           "source_pair_id": 2,
@@ -7525,11 +7426,11 @@
         },
         {
           "top": {
-            "x": 63.73090512564466,
+            "x": 63.78090512564466,
             "y": 31.6171875
           },
           "bottom": {
-            "x": 63.73090512564466,
+            "x": 63.78090512564466,
             "y": 68.74147895391475
           },
           "source_pair_id": 9,
@@ -7544,11 +7445,11 @@
         },
         {
           "top": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 30.4453125
           },
           "bottom": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 69.3659181657466
           },
           "source_pair_id": 10,
@@ -7613,42 +7514,6 @@
               "delta": -0.3000000000000007
             }
           }
-        },
-        {
-          "source_pair_id": 9,
-          "solver_position": 9,
-          "verified_order_source_id": 9,
-          "effective_pair_index": 9,
-          "fields": {
-            "top_x": {
-              "before": 63.78090512564466,
-              "after": 63.73090512564466,
-              "delta": -0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 63.78090512564466,
-              "after": 63.73090512564466,
-              "delta": -0.04999999999999716
-            }
-          }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            }
-          }
         }
       ],
       "top_y_changed": false,
@@ -7665,50 +7530,41 @@
       "requires_explicit_human_visual_verdict": true,
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
+      "candidate_kind": "directional_visibility_slice",
       "visibility_slice": true,
       "review_bucket": "visibility_only"
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s4_0_40",
       "search_stage": "D",
-      "candidate_class": "diagnostic_human_direction_only",
-      "decision": "diagnostic_human_direction_only",
+      "candidate_class": "rejected_hard_gate",
+      "decision": "rejected_hard_gate",
       "directional_core": {
         "4": {
           "x": -0.4,
           "bottom_y": 0
         },
         "9": {
-          "x": -0.05,
+          "x": 0,
           "bottom_y": 0
         },
         "10": {
-          "x": 0.05,
+          "x": 0,
           "bottom_y": 0
         }
       },
       "micro_actions": [],
       "changed_pairs": [
-        4,
-        9,
-        10
+        4
       ],
       "movement_by_axis": {
         "4": {
           "x": -0.4,
           "bottom_y": 0
-        },
-        "9": {
-          "x": -0.05,
-          "bottom_y": 0
-        },
-        "10": {
-          "x": 0.05,
-          "bottom_y": 0
         }
       },
       "maximum_absolute_delta": 0.4,
-      "visual_anchor_movement_cost": 1.5,
+      "visual_anchor_movement_cost": 1.2000000000000002,
       "affected_edges": [
         [
           3,
@@ -7717,26 +7573,9 @@
         [
           4,
           6
-        ],
-        [
-          7,
-          9
-        ],
-        [
-          9,
-          10
-        ],
-        [
-          10,
-          12
         ]
       ],
-      "improved_edges": [
-        [
-          10,
-          12
-        ]
-      ],
+      "improved_edges": [],
       "worsened_edges": [
         [
           3,
@@ -7745,24 +7584,16 @@
         [
           4,
           6
-        ],
-        [
-          7,
-          9
-        ],
-        [
-          9,
-          10
         ]
       ],
-      "floor_heading_residual_sum_deg": 38.44648034443054,
+      "floor_heading_residual_sum_deg": 38.423942769179746,
       "floor_heading_residual_max_deg": 4.9509775595468,
-      "local_floor_heading_residual_sum_deg": 18.985011973271263,
+      "local_floor_heading_residual_sum_deg": 8.594877669204031,
       "local_floor_heading_residual_max_deg": 4.950977559546863,
       "floor_heading_residual_sum_before_deg": 36.74079625252,
-      "local_floor_heading_residual_sum_before_deg": 17.279327881360675,
+      "local_floor_heading_residual_sum_before_deg": 6.911731152544283,
       "local_floor_heading_residual_max_before_deg": 3.4558655762721457,
-      "wall_residual_sum_deg": 38.44648034443054,
+      "wall_residual_sum_deg": 38.423942769179746,
       "wall_residual_max_deg": 4.9509775595468,
       "legacy_alias_for": "floor_heading_residual",
       "per_wall_residual_diagnostic": {
@@ -7858,10 +7689,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.7938608685987785,
-            "length_after": 1.7893386272948686,
+            "length_after": 1.7938608685987785,
             "manhattan_residual_before_deg": 3.4558655762721435,
-            "manhattan_residual_after_deg": 3.648297713628465,
-            "residual_delta_deg": 0.1924321373563216
+            "manhattan_residual_after_deg": 3.4558655762721435,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -7870,10 +7701,10 @@
             ],
             "seam_edge": false,
             "length_before": 2.7079985882407507,
-            "length_after": 2.7200187183126956,
+            "length_after": 2.7079985882407507,
             "manhattan_residual_before_deg": 3.4558655762721315,
-            "manhattan_residual_after_deg": 3.4672056346955173,
-            "residual_delta_deg": 0.011340058423385813
+            "manhattan_residual_after_deg": 3.4558655762721315,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -7882,10 +7713,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.9041436962084741,
-            "length_after": 1.9001592187921164,
+            "length_after": 1.9041436962084741,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 3.2746309557432483,
-            "residual_delta_deg": -0.18123462052886907
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -7915,7 +7746,7 @@
         "summary": {
           "wall_count": 12,
           "residual_sum_before_deg": 36.74079625252007,
-          "residual_sum_after_deg": 38.44648034443067,
+          "residual_sum_after_deg": 38.423942769179824,
           "residual_max_before_deg": 3.4558655762722594,
           "residual_max_after_deg": 4.950977559546863,
           "worst_edge_after": [
@@ -8264,7 +8095,7 @@
         "hard_violation_count": 0
       },
       "hard_gate": {
-        "human_direction_satisfied": true,
+        "human_direction_satisfied": false,
         "pair_specific_range_satisfied": true,
         "unauthorized_pairs_unchanged": true,
         "stage_cap_satisfied": true,
@@ -8286,8 +8117,10 @@
         "stage_d_not_final_refinement": true,
         "stage_d_does_not_override_hard_anchor": true
       },
-      "hard_gate_passed": true,
-      "hard_gate_failure_reasons": [],
+      "hard_gate_passed": false,
+      "hard_gate_failure_reasons": [
+        "human_direction_satisfied"
+      ],
       "corrected_coordinates": [
         {
           "source_pair_id": 2,
@@ -8438,11 +8271,11 @@
         },
         {
           "top": {
-            "x": 63.73090512564466,
+            "x": 63.78090512564466,
             "y": 31.6171875
           },
           "bottom": {
-            "x": 63.73090512564466,
+            "x": 63.78090512564466,
             "y": 68.74147895391475
           },
           "source_pair_id": 9,
@@ -8457,11 +8290,11 @@
         },
         {
           "top": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 30.4453125
           },
           "bottom": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 69.3659181657466
           },
           "source_pair_id": 10,
@@ -8526,42 +8359,6 @@
               "delta": -0.3999999999999986
             }
           }
-        },
-        {
-          "source_pair_id": 9,
-          "solver_position": 9,
-          "verified_order_source_id": 9,
-          "effective_pair_index": 9,
-          "fields": {
-            "top_x": {
-              "before": 63.78090512564466,
-              "after": 63.73090512564466,
-              "delta": -0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 63.78090512564466,
-              "after": 63.73090512564466,
-              "delta": -0.04999999999999716
-            }
-          }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            }
-          }
         }
       ],
       "top_y_changed": false,
@@ -8578,17 +8375,18 @@
       "requires_explicit_human_visual_verdict": true,
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
+      "candidate_kind": "directional_visibility_slice",
       "visibility_slice": true,
       "review_bucket": "visibility_only"
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s9_0_15",
       "search_stage": "D",
-      "candidate_class": "diagnostic_human_direction_only",
-      "decision": "diagnostic_human_direction_only",
+      "candidate_class": "rejected_hard_gate",
+      "decision": "rejected_hard_gate",
       "directional_core": {
         "4": {
-          "x": -0.05,
+          "x": 0,
           "bottom_y": 0
         },
         "9": {
@@ -8596,70 +8394,35 @@
           "bottom_y": 0
         },
         "10": {
-          "x": 0.05,
+          "x": 0,
           "bottom_y": 0
         }
       },
       "micro_actions": [],
       "changed_pairs": [
-        4,
-        9,
-        10
+        9
       ],
       "movement_by_axis": {
-        "4": {
-          "x": -0.05,
-          "bottom_y": 0
-        },
         "9": {
           "x": -0.15,
-          "bottom_y": 0
-        },
-        "10": {
-          "x": 0.05,
           "bottom_y": 0
         }
       },
       "maximum_absolute_delta": 0.15,
-      "visual_anchor_movement_cost": 0.75,
+      "visual_anchor_movement_cost": 0.44999999999999996,
       "affected_edges": [
         [
-          3,
-          4
-        ],
-        [
-          4,
-          6
-        ],
-        [
           7,
           9
         ],
         [
           9,
           10
-        ],
-        [
-          10,
-          12
         ]
       ],
-      "improved_edges": [
-        [
-          10,
-          12
-        ]
-      ],
+      "improved_edges": [],
       "worsened_edges": [
         [
-          3,
-          4
-        ],
-        [
-          4,
-          6
-        ],
-        [
           7,
           9
         ],
@@ -8668,14 +8431,14 @@
           10
         ]
       ],
-      "floor_heading_residual_sum_deg": 37.55280176979767,
+      "floor_heading_residual_sum_deg": 37.606626057007475,
       "floor_heading_residual_max_deg": 4.034722767573953,
-      "local_floor_heading_residual_sum_deg": 18.091333398638277,
+      "local_floor_heading_residual_sum_deg": 7.77756095703172,
       "local_floor_heading_residual_max_deg": 4.034722767573949,
       "floor_heading_residual_sum_before_deg": 36.74079625252,
-      "local_floor_heading_residual_sum_before_deg": 17.279327881360675,
-      "local_floor_heading_residual_max_before_deg": 3.4558655762721457,
-      "wall_residual_sum_deg": 37.55280176979767,
+      "local_floor_heading_residual_sum_before_deg": 6.9117311525442755,
+      "local_floor_heading_residual_max_before_deg": 3.4558655762721435,
+      "wall_residual_sum_deg": 37.606626057007475,
       "wall_residual_max_deg": 4.034722767573953,
       "legacy_alias_for": "floor_heading_residual",
       "per_wall_residual_diagnostic": {
@@ -8711,10 +8474,10 @@
             ],
             "seam_edge": false,
             "length_before": 7.568379850793359,
-            "length_after": 7.553283852231685,
+            "length_after": 7.568379850793359,
             "manhattan_residual_before_deg": 3.4558655762721457,
-            "manhattan_residual_after_deg": 3.480301508249539,
-            "residual_delta_deg": 0.024435931977393466
+            "manhattan_residual_after_deg": 3.4558655762721457,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -8723,10 +8486,10 @@
             ],
             "seam_edge": false,
             "length_before": 4.613254577102984,
-            "length_after": 4.616500642254365,
+            "length_after": 4.613254577102984,
             "manhattan_residual_before_deg": 3.4558655762721373,
-            "manhattan_residual_after_deg": 3.6432321494722077,
-            "residual_delta_deg": 0.18736657320007044
+            "manhattan_residual_after_deg": 3.4558655762721373,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -8783,10 +8546,10 @@
             ],
             "seam_edge": false,
             "length_before": 2.7079985882407507,
-            "length_after": 2.732012108511863,
+            "length_after": 2.726018763387895,
             "manhattan_residual_before_deg": 3.4558655762721315,
-            "manhattan_residual_after_deg": 3.6584460175993314,
-            "residual_delta_deg": 0.20258044132719988
+            "manhattan_residual_after_deg": 3.742838189457771,
+            "residual_delta_deg": 0.2869726131856396
           },
           {
             "source_edge_ids": [
@@ -8795,10 +8558,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.9041436962084741,
-            "length_after": 1.9001592187921164,
+            "length_after": 1.9041436962084741,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 3.2746309557432483,
-            "residual_delta_deg": -0.18123462052886907
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -8828,7 +8591,7 @@
         "summary": {
           "wall_count": 12,
           "residual_sum_before_deg": 36.74079625252007,
-          "residual_sum_after_deg": 37.55280176979768,
+          "residual_sum_after_deg": 37.60662605700752,
           "residual_max_before_deg": 3.4558655762722594,
           "residual_max_after_deg": 4.034722767573949,
           "worst_edge_after": [
@@ -8845,8 +8608,8 @@
               6
             ],
             "edge_length_before": 4.613254577102984,
-            "edge_length_after": 4.616500642254365,
-            "ratio": 1.0007036388512986
+            "edge_length_after": 4.613254577102984,
+            "ratio": 1.0
           },
           {
             "source_edge_ids": [
@@ -9110,8 +8873,8 @@
             "solver_position": 4,
             "verified_order_source_id": 4,
             "hard_fail_on_violation": true,
-            "candidate_value": 27.36095796565264,
-            "delta": -0.3607217218473586,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
             "satisfied": true
           },
           {
@@ -9146,8 +8909,8 @@
             "solver_position": 4,
             "verified_order_source_id": 4,
             "hard_fail_on_violation": true,
-            "candidate_value": 27.36095796565264,
-            "delta": -0.3607217218473586,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
             "satisfied": true
           },
           {
@@ -9177,7 +8940,7 @@
         "hard_violation_count": 0
       },
       "hard_gate": {
-        "human_direction_satisfied": true,
+        "human_direction_satisfied": false,
         "pair_specific_range_satisfied": true,
         "unauthorized_pairs_unchanged": true,
         "stage_cap_satisfied": true,
@@ -9199,8 +8962,10 @@
         "stage_d_not_final_refinement": true,
         "stage_d_does_not_override_hard_anchor": true
       },
-      "hard_gate_passed": true,
-      "hard_gate_failure_reasons": [],
+      "hard_gate_passed": false,
+      "hard_gate_failure_reasons": [
+        "human_direction_satisfied"
+      ],
       "corrected_coordinates": [
         {
           "source_pair_id": 2,
@@ -9256,11 +9021,11 @@
         },
         {
           "top": {
-            "x": 27.36095796565264,
+            "x": 27.410957965652642,
             "y": 39.058894298538
           },
           "bottom": {
-            "x": 27.36095796565264,
+            "x": 27.410957965652642,
             "y": 60.020336398089334
           },
           "source_pair_id": 4,
@@ -9370,11 +9135,11 @@
         },
         {
           "top": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 30.4453125
           },
           "bottom": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 69.3659181657466
           },
           "source_pair_id": 10,
@@ -9423,24 +9188,6 @@
       ],
       "coordinate_changes": [
         {
-          "source_pair_id": 4,
-          "solver_position": 4,
-          "verified_order_source_id": 4,
-          "effective_pair_index": 4,
-          "fields": {
-            "top_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            },
-            "bottom_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            }
-          }
-        },
-        {
           "source_pair_id": 9,
           "solver_position": 9,
           "verified_order_source_id": 9,
@@ -9455,24 +9202,6 @@
               "before": 63.78090512564466,
               "after": 63.63090512564466,
               "delta": -0.14999999999999858
-            }
-          }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
             }
           }
         }
@@ -9491,17 +9220,18 @@
       "requires_explicit_human_visual_verdict": true,
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
+      "candidate_kind": "directional_visibility_slice",
       "visibility_slice": true,
       "review_bucket": "visibility_only"
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s9_0_30",
       "search_stage": "D",
-      "candidate_class": "diagnostic_human_direction_only",
-      "decision": "diagnostic_human_direction_only",
+      "candidate_class": "rejected_hard_gate",
+      "decision": "rejected_hard_gate",
       "directional_core": {
         "4": {
-          "x": -0.05,
+          "x": 0,
           "bottom_y": 0
         },
         "9": {
@@ -9509,70 +9239,35 @@
           "bottom_y": 0
         },
         "10": {
-          "x": 0.05,
+          "x": 0,
           "bottom_y": 0
         }
       },
       "micro_actions": [],
       "changed_pairs": [
-        4,
-        9,
-        10
+        9
       ],
       "movement_by_axis": {
-        "4": {
-          "x": -0.05,
-          "bottom_y": 0
-        },
         "9": {
           "x": -0.3,
-          "bottom_y": 0
-        },
-        "10": {
-          "x": 0.05,
           "bottom_y": 0
         }
       },
       "maximum_absolute_delta": 0.3,
-      "visual_anchor_movement_cost": 1.1999999999999997,
+      "visual_anchor_movement_cost": 0.8999999999999999,
       "affected_edges": [
         [
-          3,
-          4
-        ],
-        [
-          4,
-          6
-        ],
-        [
           7,
           9
         ],
         [
           9,
           10
-        ],
-        [
-          10,
-          12
         ]
       ],
-      "improved_edges": [
-        [
-          10,
-          12
-        ]
-      ],
+      "improved_edges": [],
       "worsened_edges": [
         [
-          3,
-          4
-        ],
-        [
-          4,
-          6
-        ],
-        [
           7,
           9
         ],
@@ -9581,14 +9276,14 @@
           10
         ]
       ],
-      "floor_heading_residual_sum_deg": 38.423075713747494,
+      "floor_heading_residual_sum_deg": 38.47697304927425,
       "floor_heading_residual_max_deg": 4.618319697769039,
-      "local_floor_heading_residual_sum_deg": 18.961607342588135,
+      "local_floor_heading_residual_sum_deg": 8.647907949298556,
       "local_floor_heading_residual_max_deg": 4.618319697769095,
       "floor_heading_residual_sum_before_deg": 36.74079625252,
-      "local_floor_heading_residual_sum_before_deg": 17.279327881360675,
-      "local_floor_heading_residual_max_before_deg": 3.4558655762721457,
-      "wall_residual_sum_deg": 38.423075713747494,
+      "local_floor_heading_residual_sum_before_deg": 6.9117311525442755,
+      "local_floor_heading_residual_max_before_deg": 3.4558655762721435,
+      "wall_residual_sum_deg": 38.47697304927425,
       "wall_residual_max_deg": 4.618319697769039,
       "legacy_alias_for": "floor_heading_residual",
       "per_wall_residual_diagnostic": {
@@ -9624,10 +9319,10 @@
             ],
             "seam_edge": false,
             "length_before": 7.568379850793359,
-            "length_after": 7.553283852231685,
+            "length_after": 7.568379850793359,
             "manhattan_residual_before_deg": 3.4558655762721457,
-            "manhattan_residual_after_deg": 3.480301508249539,
-            "residual_delta_deg": 0.024435931977393466
+            "manhattan_residual_after_deg": 3.4558655762721457,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -9636,10 +9331,10 @@
             ],
             "seam_edge": false,
             "length_before": 4.613254577102984,
-            "length_after": 4.616500642254365,
+            "length_after": 4.613254577102984,
             "manhattan_residual_before_deg": 3.4558655762721373,
-            "manhattan_residual_after_deg": 3.6432321494722077,
-            "residual_delta_deg": 0.18736657320007044
+            "manhattan_residual_after_deg": 3.4558655762721373,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -9696,10 +9391,10 @@
             ],
             "seam_edge": false,
             "length_before": 2.7079985882407507,
-            "length_after": 2.7499517946654892,
+            "length_after": 2.743978639083486,
             "manhattan_residual_before_deg": 3.4558655762721315,
-            "manhattan_residual_after_deg": 3.9451230313540435,
-            "residual_delta_deg": 0.489257455081912
+            "manhattan_residual_after_deg": 4.029588251529461,
+            "residual_delta_deg": 0.5737226752573292
           },
           {
             "source_edge_ids": [
@@ -9708,10 +9403,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.9041436962084741,
-            "length_after": 1.9001592187921164,
+            "length_after": 1.9041436962084741,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 3.2746309557432483,
-            "residual_delta_deg": -0.18123462052886907
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -9741,7 +9436,7 @@
         "summary": {
           "wall_count": 12,
           "residual_sum_before_deg": 36.74079625252007,
-          "residual_sum_after_deg": 38.42307571374754,
+          "residual_sum_after_deg": 38.476973049274356,
           "residual_max_before_deg": 3.4558655762722594,
           "residual_max_after_deg": 4.618319697769095,
           "worst_edge_after": [
@@ -9758,8 +9453,8 @@
               6
             ],
             "edge_length_before": 4.613254577102984,
-            "edge_length_after": 4.616500642254365,
-            "ratio": 1.0007036388512986
+            "edge_length_after": 4.613254577102984,
+            "ratio": 1.0
           },
           {
             "source_edge_ids": [
@@ -10023,8 +9718,8 @@
             "solver_position": 4,
             "verified_order_source_id": 4,
             "hard_fail_on_violation": true,
-            "candidate_value": 27.36095796565264,
-            "delta": -0.3607217218473586,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
             "satisfied": true
           },
           {
@@ -10059,8 +9754,8 @@
             "solver_position": 4,
             "verified_order_source_id": 4,
             "hard_fail_on_violation": true,
-            "candidate_value": 27.36095796565264,
-            "delta": -0.3607217218473586,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
             "satisfied": true
           },
           {
@@ -10090,7 +9785,7 @@
         "hard_violation_count": 0
       },
       "hard_gate": {
-        "human_direction_satisfied": true,
+        "human_direction_satisfied": false,
         "pair_specific_range_satisfied": true,
         "unauthorized_pairs_unchanged": true,
         "stage_cap_satisfied": true,
@@ -10112,8 +9807,10 @@
         "stage_d_not_final_refinement": true,
         "stage_d_does_not_override_hard_anchor": true
       },
-      "hard_gate_passed": true,
-      "hard_gate_failure_reasons": [],
+      "hard_gate_passed": false,
+      "hard_gate_failure_reasons": [
+        "human_direction_satisfied"
+      ],
       "corrected_coordinates": [
         {
           "source_pair_id": 2,
@@ -10169,11 +9866,11 @@
         },
         {
           "top": {
-            "x": 27.36095796565264,
+            "x": 27.410957965652642,
             "y": 39.058894298538
           },
           "bottom": {
-            "x": 27.36095796565264,
+            "x": 27.410957965652642,
             "y": 60.020336398089334
           },
           "source_pair_id": 4,
@@ -10283,11 +9980,11 @@
         },
         {
           "top": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 30.4453125
           },
           "bottom": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 69.3659181657466
           },
           "source_pair_id": 10,
@@ -10336,24 +10033,6 @@
       ],
       "coordinate_changes": [
         {
-          "source_pair_id": 4,
-          "solver_position": 4,
-          "verified_order_source_id": 4,
-          "effective_pair_index": 4,
-          "fields": {
-            "top_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            },
-            "bottom_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            }
-          }
-        },
-        {
           "source_pair_id": 9,
           "solver_position": 9,
           "verified_order_source_id": 9,
@@ -10368,24 +10047,6 @@
               "before": 63.78090512564466,
               "after": 63.48090512564466,
               "delta": -0.29999999999999716
-            }
-          }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
             }
           }
         }
@@ -10404,17 +10065,18 @@
       "requires_explicit_human_visual_verdict": true,
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
+      "candidate_kind": "directional_visibility_slice",
       "visibility_slice": true,
       "review_bucket": "visibility_only"
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s9_0_50",
       "search_stage": "D",
-      "candidate_class": "diagnostic_human_direction_only",
-      "decision": "diagnostic_human_direction_only",
+      "candidate_class": "rejected_hard_gate",
+      "decision": "rejected_hard_gate",
       "directional_core": {
         "4": {
-          "x": -0.05,
+          "x": 0,
           "bottom_y": 0
         },
         "9": {
@@ -10422,70 +10084,35 @@
           "bottom_y": 0
         },
         "10": {
-          "x": 0.05,
+          "x": 0,
           "bottom_y": 0
         }
       },
       "micro_actions": [],
       "changed_pairs": [
-        4,
-        9,
-        10
+        9
       ],
       "movement_by_axis": {
-        "4": {
-          "x": -0.05,
-          "bottom_y": 0
-        },
         "9": {
           "x": -0.5,
-          "bottom_y": 0
-        },
-        "10": {
-          "x": 0.05,
           "bottom_y": 0
         }
       },
       "maximum_absolute_delta": 0.5,
-      "visual_anchor_movement_cost": 1.7999999999999998,
+      "visual_anchor_movement_cost": 1.5,
       "affected_edges": [
         [
-          3,
-          4
-        ],
-        [
-          4,
-          6
-        ],
-        [
           7,
           9
         ],
         [
           9,
           10
-        ],
-        [
-          10,
-          12
         ]
       ],
-      "improved_edges": [
-        [
-          10,
-          12
-        ]
-      ],
+      "improved_edges": [],
       "worsened_edges": [
         [
-          3,
-          4
-        ],
-        [
-          4,
-          6
-        ],
-        [
           7,
           9
         ],
@@ -10494,14 +10121,14 @@
           10
         ]
       ],
-      "floor_heading_residual_sum_deg": 39.59066082323824,
+      "floor_heading_residual_sum_deg": 39.64465298553603,
       "floor_heading_residual_max_deg": 5.404003657926978,
-      "local_floor_heading_residual_sum_deg": 20.129192452078897,
+      "local_floor_heading_residual_sum_deg": 9.815587885560321,
       "local_floor_heading_residual_max_deg": 5.404003657927051,
       "floor_heading_residual_sum_before_deg": 36.74079625252,
-      "local_floor_heading_residual_sum_before_deg": 17.279327881360675,
-      "local_floor_heading_residual_max_before_deg": 3.4558655762721457,
-      "wall_residual_sum_deg": 39.59066082323824,
+      "local_floor_heading_residual_sum_before_deg": 6.9117311525442755,
+      "local_floor_heading_residual_max_before_deg": 3.4558655762721435,
+      "wall_residual_sum_deg": 39.64465298553603,
       "wall_residual_max_deg": 5.404003657926978,
       "legacy_alias_for": "floor_heading_residual",
       "per_wall_residual_diagnostic": {
@@ -10537,10 +10164,10 @@
             ],
             "seam_edge": false,
             "length_before": 7.568379850793359,
-            "length_after": 7.553283852231685,
+            "length_after": 7.568379850793359,
             "manhattan_residual_before_deg": 3.4558655762721457,
-            "manhattan_residual_after_deg": 3.480301508249539,
-            "residual_delta_deg": 0.024435931977393466
+            "manhattan_residual_after_deg": 3.4558655762721457,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -10549,10 +10176,10 @@
             ],
             "seam_edge": false,
             "length_before": 4.613254577102984,
-            "length_after": 4.616500642254365,
+            "length_after": 4.613254577102984,
             "manhattan_residual_before_deg": 3.4558655762721373,
-            "manhattan_residual_after_deg": 3.6432321494722077,
-            "residual_delta_deg": 0.18736657320007044
+            "manhattan_residual_after_deg": 3.4558655762721373,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -10609,10 +10236,10 @@
             ],
             "seam_edge": false,
             "length_before": 2.7079985882407507,
-            "length_after": 2.7737766713895895,
+            "length_after": 2.7678306437866365,
             "manhattan_residual_before_deg": 3.4558655762721315,
-            "manhattan_residual_after_deg": 4.327024180686848,
-            "residual_delta_deg": 0.8711586044147168
+            "manhattan_residual_after_deg": 4.41158422763327,
+            "residual_delta_deg": 0.9557186513611384
           },
           {
             "source_edge_ids": [
@@ -10621,10 +10248,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.9041436962084741,
-            "length_after": 1.9001592187921164,
+            "length_after": 1.9041436962084741,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 3.2746309557432483,
-            "residual_delta_deg": -0.18123462052886907
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -10654,7 +10281,7 @@
         "summary": {
           "wall_count": 12,
           "residual_sum_before_deg": 36.74079625252007,
-          "residual_sum_after_deg": 39.590660823238295,
+          "residual_sum_after_deg": 39.64465298553612,
           "residual_max_before_deg": 3.4558655762722594,
           "residual_max_after_deg": 5.404003657927051,
           "worst_edge_after": [
@@ -10671,8 +10298,8 @@
               6
             ],
             "edge_length_before": 4.613254577102984,
-            "edge_length_after": 4.616500642254365,
-            "ratio": 1.0007036388512986
+            "edge_length_after": 4.613254577102984,
+            "ratio": 1.0
           },
           {
             "source_edge_ids": [
@@ -10936,8 +10563,8 @@
             "solver_position": 4,
             "verified_order_source_id": 4,
             "hard_fail_on_violation": true,
-            "candidate_value": 27.36095796565264,
-            "delta": -0.3607217218473586,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
             "satisfied": true
           },
           {
@@ -10972,8 +10599,8 @@
             "solver_position": 4,
             "verified_order_source_id": 4,
             "hard_fail_on_violation": true,
-            "candidate_value": 27.36095796565264,
-            "delta": -0.3607217218473586,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
             "satisfied": true
           },
           {
@@ -11003,7 +10630,7 @@
         "hard_violation_count": 0
       },
       "hard_gate": {
-        "human_direction_satisfied": true,
+        "human_direction_satisfied": false,
         "pair_specific_range_satisfied": true,
         "unauthorized_pairs_unchanged": true,
         "stage_cap_satisfied": true,
@@ -11025,8 +10652,10 @@
         "stage_d_not_final_refinement": true,
         "stage_d_does_not_override_hard_anchor": true
       },
-      "hard_gate_passed": true,
-      "hard_gate_failure_reasons": [],
+      "hard_gate_passed": false,
+      "hard_gate_failure_reasons": [
+        "human_direction_satisfied"
+      ],
       "corrected_coordinates": [
         {
           "source_pair_id": 2,
@@ -11082,11 +10711,11 @@
         },
         {
           "top": {
-            "x": 27.36095796565264,
+            "x": 27.410957965652642,
             "y": 39.058894298538
           },
           "bottom": {
-            "x": 27.36095796565264,
+            "x": 27.410957965652642,
             "y": 60.020336398089334
           },
           "source_pair_id": 4,
@@ -11196,11 +10825,11 @@
         },
         {
           "top": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 30.4453125
           },
           "bottom": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 69.3659181657466
           },
           "source_pair_id": 10,
@@ -11249,24 +10878,6 @@
       ],
       "coordinate_changes": [
         {
-          "source_pair_id": 4,
-          "solver_position": 4,
-          "verified_order_source_id": 4,
-          "effective_pair_index": 4,
-          "fields": {
-            "top_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            },
-            "bottom_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            }
-          }
-        },
-        {
           "source_pair_id": 9,
           "solver_position": 9,
           "verified_order_source_id": 9,
@@ -11281,24 +10892,6 @@
               "before": 63.78090512564466,
               "after": 63.28090512564466,
               "delta": -0.5
-            }
-          }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
             }
           }
         }
@@ -11317,17 +10910,18 @@
       "requires_explicit_human_visual_verdict": true,
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
+      "candidate_kind": "directional_visibility_slice",
       "visibility_slice": true,
       "review_bucket": "visibility_only"
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s9_1_00",
       "search_stage": "D",
-      "candidate_class": "diagnostic_human_direction_only",
-      "decision": "diagnostic_human_direction_only",
+      "candidate_class": "rejected_hard_gate",
+      "decision": "rejected_hard_gate",
       "directional_core": {
         "4": {
-          "x": -0.05,
+          "x": 0,
           "bottom_y": 0
         },
         "9": {
@@ -11335,70 +10929,35 @@
           "bottom_y": 0
         },
         "10": {
-          "x": 0.05,
+          "x": 0,
           "bottom_y": 0
         }
       },
       "micro_actions": [],
       "changed_pairs": [
-        4,
-        9,
-        10
+        9
       ],
       "movement_by_axis": {
-        "4": {
-          "x": -0.05,
-          "bottom_y": 0
-        },
         "9": {
           "x": -1.0,
-          "bottom_y": 0
-        },
-        "10": {
-          "x": 0.05,
           "bottom_y": 0
         }
       },
       "maximum_absolute_delta": 1.0,
-      "visual_anchor_movement_cost": 3.3,
+      "visual_anchor_movement_cost": 3.0,
       "affected_edges": [
         [
-          3,
-          4
-        ],
-        [
-          4,
-          6
-        ],
-        [
           7,
           9
         ],
         [
           9,
           10
-        ],
-        [
-          10,
-          12
         ]
       ],
-      "improved_edges": [
-        [
-          10,
-          12
-        ]
-      ],
+      "improved_edges": [],
       "worsened_edges": [
         [
-          3,
-          4
-        ],
-        [
-          4,
-          6
-        ],
-        [
           7,
           9
         ],
@@ -11407,14 +10966,14 @@
           10
         ]
       ],
-      "floor_heading_residual_sum_deg": 42.54740025238874,
+      "floor_heading_residual_sum_deg": 42.60161732298266,
       "floor_heading_residual_max_deg": 7.407594464158819,
-      "local_floor_heading_residual_sum_deg": 23.08593188122941,
+      "local_floor_heading_residual_sum_deg": 12.772552223006954,
       "local_floor_heading_residual_max_deg": 7.407594464158875,
       "floor_heading_residual_sum_before_deg": 36.74079625252,
-      "local_floor_heading_residual_sum_before_deg": 17.279327881360675,
-      "local_floor_heading_residual_max_before_deg": 3.4558655762721457,
-      "wall_residual_sum_deg": 42.54740025238874,
+      "local_floor_heading_residual_sum_before_deg": 6.9117311525442755,
+      "local_floor_heading_residual_max_before_deg": 3.4558655762721435,
+      "wall_residual_sum_deg": 42.60161732298266,
       "wall_residual_max_deg": 7.407594464158819,
       "legacy_alias_for": "floor_heading_residual",
       "per_wall_residual_diagnostic": {
@@ -11450,10 +11009,10 @@
             ],
             "seam_edge": false,
             "length_before": 7.568379850793359,
-            "length_after": 7.553283852231685,
+            "length_after": 7.568379850793359,
             "manhattan_residual_before_deg": 3.4558655762721457,
-            "manhattan_residual_after_deg": 3.480301508249539,
-            "residual_delta_deg": 0.024435931977393466
+            "manhattan_residual_after_deg": 3.4558655762721457,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -11462,10 +11021,10 @@
             ],
             "seam_edge": false,
             "length_before": 4.613254577102984,
-            "length_after": 4.616500642254365,
+            "length_after": 4.613254577102984,
             "manhattan_residual_before_deg": 3.4558655762721373,
-            "manhattan_residual_after_deg": 3.6432321494722077,
-            "residual_delta_deg": 0.18736657320007044
+            "manhattan_residual_after_deg": 3.4558655762721373,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -11522,10 +11081,10 @@
             ],
             "seam_edge": false,
             "length_before": 2.7079985882407507,
-            "length_after": 2.832859457604951,
+            "length_after": 2.8269822856123246,
             "manhattan_residual_before_deg": 3.4558655762721315,
-            "manhattan_residual_after_deg": 5.280172803605538,
-            "residual_delta_deg": 1.8243072273334064
+            "manhattan_residual_after_deg": 5.364957758848078,
+            "residual_delta_deg": 1.9090921825759466
           },
           {
             "source_edge_ids": [
@@ -11534,10 +11093,10 @@
             ],
             "seam_edge": false,
             "length_before": 1.9041436962084741,
-            "length_after": 1.9001592187921164,
+            "length_after": 1.9041436962084741,
             "manhattan_residual_before_deg": 3.4558655762721173,
-            "manhattan_residual_after_deg": 3.2746309557432483,
-            "residual_delta_deg": -0.18123462052886907
+            "manhattan_residual_after_deg": 3.4558655762721173,
+            "residual_delta_deg": 0.0
           },
           {
             "source_edge_ids": [
@@ -11567,7 +11126,7 @@
         "summary": {
           "wall_count": 12,
           "residual_sum_before_deg": 36.74079625252007,
-          "residual_sum_after_deg": 42.54740025238881,
+          "residual_sum_after_deg": 42.601617322982754,
           "residual_max_before_deg": 3.4558655762722594,
           "residual_max_after_deg": 7.407594464158875,
           "worst_edge_after": [
@@ -11584,8 +11143,8 @@
               6
             ],
             "edge_length_before": 4.613254577102984,
-            "edge_length_after": 4.616500642254365,
-            "ratio": 1.0007036388512986
+            "edge_length_after": 4.613254577102984,
+            "ratio": 1.0
           },
           {
             "source_edge_ids": [
@@ -11849,8 +11408,8 @@
             "solver_position": 4,
             "verified_order_source_id": 4,
             "hard_fail_on_violation": true,
-            "candidate_value": 27.36095796565264,
-            "delta": -0.3607217218473586,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
             "satisfied": true
           },
           {
@@ -11885,8 +11444,8 @@
             "solver_position": 4,
             "verified_order_source_id": 4,
             "hard_fail_on_violation": true,
-            "candidate_value": 27.36095796565264,
-            "delta": -0.3607217218473586,
+            "candidate_value": 27.410957965652642,
+            "delta": -0.3107217218473579,
             "satisfied": true
           },
           {
@@ -11916,7 +11475,7 @@
         "hard_violation_count": 0
       },
       "hard_gate": {
-        "human_direction_satisfied": true,
+        "human_direction_satisfied": false,
         "pair_specific_range_satisfied": true,
         "unauthorized_pairs_unchanged": true,
         "stage_cap_satisfied": true,
@@ -11938,8 +11497,10 @@
         "stage_d_not_final_refinement": true,
         "stage_d_does_not_override_hard_anchor": true
       },
-      "hard_gate_passed": true,
-      "hard_gate_failure_reasons": [],
+      "hard_gate_passed": false,
+      "hard_gate_failure_reasons": [
+        "human_direction_satisfied"
+      ],
       "corrected_coordinates": [
         {
           "source_pair_id": 2,
@@ -11995,11 +11556,11 @@
         },
         {
           "top": {
-            "x": 27.36095796565264,
+            "x": 27.410957965652642,
             "y": 39.058894298538
           },
           "bottom": {
-            "x": 27.36095796565264,
+            "x": 27.410957965652642,
             "y": 60.020336398089334
           },
           "source_pair_id": 4,
@@ -12109,11 +11670,11 @@
         },
         {
           "top": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 30.4453125
           },
           "bottom": {
-            "x": 83.39955092974104,
+            "x": 83.34955092974104,
             "y": 69.3659181657466
           },
           "source_pair_id": 10,
@@ -12162,24 +11723,6 @@
       ],
       "coordinate_changes": [
         {
-          "source_pair_id": 4,
-          "solver_position": 4,
-          "verified_order_source_id": 4,
-          "effective_pair_index": 4,
-          "fields": {
-            "top_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            },
-            "bottom_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            }
-          }
-        },
-        {
           "source_pair_id": 9,
           "solver_position": 9,
           "verified_order_source_id": 9,
@@ -12194,24 +11737,6 @@
               "before": 63.78090512564466,
               "after": 62.78090512564466,
               "delta": -1.0
-            }
-          }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
             }
           }
         }
@@ -12230,6 +11755,7 @@
       "requires_explicit_human_visual_verdict": true,
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
+      "candidate_kind": "directional_visibility_slice",
       "visibility_slice": true,
       "review_bucket": "visibility_only"
     }

@@ -5,7 +5,7 @@
 - Review schema: `local_3d_projection_review_m15_27_1_bridge_v1`
 - Projection schema: `local_3d_projection_m15_19_v1`
 - Input file: `hypothesis_review_bridge_manifest.json`
-- Input SHA-256: `f46be5660c3906e63aaf51f6c6e3712a8f5b0d9ce23d8b8e1bc9dc97f89a1575`
+- Input SHA-256: `99c8a53f7fc1d41ec7bd6e6820d2592b9d8aff5a7652c424b4b3d5e9cd43d39d`
 - Ordered-pair source: `input.ordered_pairs`
 - coordinate_mode requested/effective: `ls_percent` / `ls_percent`
 - W / H / CAM_H: `1024` / `512` / `1.6`
@@ -99,7 +99,7 @@ No annotation patch or Label Studio writeback is produced.
 - wall residual sum: 36.741 -> 29.282
 - Preview only; this is not correctness evidence and cannot write back.
 
-### m_anchor_4_1_2_d_3426 | m_anchor_4_1_2_1_directional_visibility | neutral_geometry_tradeoff
+### m_anchor_4_1_2_d_3426 | m_anchor_4_1_2_visible_range | neutral_geometry_tradeoff
 
 - decision_class: `neutral_geometry_tradeoff`
 > **SENSITIVITY ONLY:** not a micro-refinement candidate; final_refinement_eligible=`False`; cannot enter M4.2.
@@ -119,7 +119,7 @@ No annotation patch or Label Studio writeback is produced.
 - wall residual sum: 36.741 -> 25.285
 - Preview only; this is not correctness evidence and cannot write back.
 
-### m_anchor_4_1_2_d_2886 | m_anchor_4_1_2_1_directional_visibility | neutral_geometry_tradeoff
+### m_anchor_4_1_2_d_2886 | m_anchor_4_1_2_visible_range | neutral_geometry_tradeoff
 
 - decision_class: `neutral_geometry_tradeoff`
 > **SENSITIVITY ONLY:** not a micro-refinement candidate; final_refinement_eligible=`False`; cannot enter M4.2.
@@ -138,9 +138,9 @@ No annotation patch or Label Studio writeback is produced.
 - wall residual sum: 36.741 -> 28.830
 - Preview only; this is not correctness evidence and cannot write back.
 
-### m_anchor_4_1_2_1_visibility_s4_0_15 | m_anchor_4_1_2_1_directional_visibility | diagnostic_human_direction_only
+### m_anchor_4_1_2_1_visibility_s4_0_15 | m_anchor_4_1_2_1_directional_visibility | rejected_hard_gate
 
-- decision_class: `diagnostic_human_direction_only`
+- decision_class: `rejected_hard_gate`
 > **SENSITIVITY ONLY:** not a micro-refinement candidate; final_refinement_eligible=`False`; cannot enter M4.2.
 - improves: `[]`
 - fails_because: `[]`
@@ -151,14 +151,12 @@ No annotation patch or Label Studio writeback is produced.
 - short_wall_edges_after: `[]`
 - Applied coordinate changes:
   - source pair 4 (solver position 4): top_x 27.411→27.261 (Δ -0.150), bottom_x 27.411→27.261 (Δ -0.150)
-  - source pair 9 (solver position 9): top_x 63.781→63.731 (Δ -0.050), bottom_x 63.781→63.731 (Δ -0.050)
-  - source pair 10 (solver position 10): top_x 83.350→83.400 (Δ 0.050), bottom_x 83.350→83.400 (Δ 0.050)
-- wall residual sum: 36.741 -> 37.398
+- wall residual sum: 36.741 -> 37.375
 - Preview only; this is not correctness evidence and cannot write back.
 
-### m_anchor_4_1_2_1_visibility_s4_0_30 | m_anchor_4_1_2_1_directional_visibility | diagnostic_human_direction_only
+### m_anchor_4_1_2_1_visibility_s4_0_30 | m_anchor_4_1_2_1_directional_visibility | rejected_hard_gate
 
-- decision_class: `diagnostic_human_direction_only`
+- decision_class: `rejected_hard_gate`
 > **SENSITIVITY ONLY:** not a micro-refinement candidate; final_refinement_eligible=`False`; cannot enter M4.2.
 - improves: `[]`
 - fails_because: `[]`
@@ -169,14 +167,12 @@ No annotation patch or Label Studio writeback is produced.
 - short_wall_edges_after: `[]`
 - Applied coordinate changes:
   - source pair 4 (solver position 4): top_x 27.411→27.111 (Δ -0.300), bottom_x 27.411→27.111 (Δ -0.300)
-  - source pair 9 (solver position 9): top_x 63.781→63.731 (Δ -0.050), bottom_x 63.781→63.731 (Δ -0.050)
-  - source pair 10 (solver position 10): top_x 83.350→83.400 (Δ 0.050), bottom_x 83.350→83.400 (Δ 0.050)
-- wall residual sum: 36.741 -> 38.028
+- wall residual sum: 36.741 -> 38.006
 - Preview only; this is not correctness evidence and cannot write back.
 
-### m_anchor_4_1_2_1_visibility_s4_0_40 | m_anchor_4_1_2_1_directional_visibility | diagnostic_human_direction_only
+### m_anchor_4_1_2_1_visibility_s4_0_40 | m_anchor_4_1_2_1_directional_visibility | rejected_hard_gate
 
-- decision_class: `diagnostic_human_direction_only`
+- decision_class: `rejected_hard_gate`
 > **SENSITIVITY ONLY:** not a micro-refinement candidate; final_refinement_eligible=`False`; cannot enter M4.2.
 - improves: `[]`
 - fails_because: `[]`
@@ -187,14 +183,12 @@ No annotation patch or Label Studio writeback is produced.
 - short_wall_edges_after: `[]`
 - Applied coordinate changes:
   - source pair 4 (solver position 4): top_x 27.411→27.011 (Δ -0.400), bottom_x 27.411→27.011 (Δ -0.400)
-  - source pair 9 (solver position 9): top_x 63.781→63.731 (Δ -0.050), bottom_x 63.781→63.731 (Δ -0.050)
-  - source pair 10 (solver position 10): top_x 83.350→83.400 (Δ 0.050), bottom_x 83.350→83.400 (Δ 0.050)
-- wall residual sum: 36.741 -> 38.446
+- wall residual sum: 36.741 -> 38.424
 - Preview only; this is not correctness evidence and cannot write back.
 
-### m_anchor_4_1_2_1_visibility_s9_0_15 | m_anchor_4_1_2_1_directional_visibility | diagnostic_human_direction_only
+### m_anchor_4_1_2_1_visibility_s9_0_15 | m_anchor_4_1_2_1_directional_visibility | rejected_hard_gate
 
-- decision_class: `diagnostic_human_direction_only`
+- decision_class: `rejected_hard_gate`
 > **SENSITIVITY ONLY:** not a micro-refinement candidate; final_refinement_eligible=`False`; cannot enter M4.2.
 - improves: `[]`
 - fails_because: `[]`
@@ -204,15 +198,13 @@ No annotation patch or Label Studio writeback is produced.
 - primary_unresolved_edges: `[]`
 - short_wall_edges_after: `[]`
 - Applied coordinate changes:
-  - source pair 4 (solver position 4): top_x 27.411→27.361 (Δ -0.050), bottom_x 27.411→27.361 (Δ -0.050)
   - source pair 9 (solver position 9): top_x 63.781→63.631 (Δ -0.150), bottom_x 63.781→63.631 (Δ -0.150)
-  - source pair 10 (solver position 10): top_x 83.350→83.400 (Δ 0.050), bottom_x 83.350→83.400 (Δ 0.050)
-- wall residual sum: 36.741 -> 37.553
+- wall residual sum: 36.741 -> 37.607
 - Preview only; this is not correctness evidence and cannot write back.
 
-### m_anchor_4_1_2_1_visibility_s9_0_30 | m_anchor_4_1_2_1_directional_visibility | diagnostic_human_direction_only
+### m_anchor_4_1_2_1_visibility_s9_0_30 | m_anchor_4_1_2_1_directional_visibility | rejected_hard_gate
 
-- decision_class: `diagnostic_human_direction_only`
+- decision_class: `rejected_hard_gate`
 > **SENSITIVITY ONLY:** not a micro-refinement candidate; final_refinement_eligible=`False`; cannot enter M4.2.
 - improves: `[]`
 - fails_because: `[]`
@@ -222,15 +214,13 @@ No annotation patch or Label Studio writeback is produced.
 - primary_unresolved_edges: `[]`
 - short_wall_edges_after: `[]`
 - Applied coordinate changes:
-  - source pair 4 (solver position 4): top_x 27.411→27.361 (Δ -0.050), bottom_x 27.411→27.361 (Δ -0.050)
   - source pair 9 (solver position 9): top_x 63.781→63.481 (Δ -0.300), bottom_x 63.781→63.481 (Δ -0.300)
-  - source pair 10 (solver position 10): top_x 83.350→83.400 (Δ 0.050), bottom_x 83.350→83.400 (Δ 0.050)
-- wall residual sum: 36.741 -> 38.423
+- wall residual sum: 36.741 -> 38.477
 - Preview only; this is not correctness evidence and cannot write back.
 
-### m_anchor_4_1_2_1_visibility_s9_0_50 | m_anchor_4_1_2_1_directional_visibility | diagnostic_human_direction_only
+### m_anchor_4_1_2_1_visibility_s9_0_50 | m_anchor_4_1_2_1_directional_visibility | rejected_hard_gate
 
-- decision_class: `diagnostic_human_direction_only`
+- decision_class: `rejected_hard_gate`
 > **SENSITIVITY ONLY:** not a micro-refinement candidate; final_refinement_eligible=`False`; cannot enter M4.2.
 - improves: `[]`
 - fails_because: `[]`
@@ -240,15 +230,13 @@ No annotation patch or Label Studio writeback is produced.
 - primary_unresolved_edges: `[]`
 - short_wall_edges_after: `[]`
 - Applied coordinate changes:
-  - source pair 4 (solver position 4): top_x 27.411→27.361 (Δ -0.050), bottom_x 27.411→27.361 (Δ -0.050)
   - source pair 9 (solver position 9): top_x 63.781→63.281 (Δ -0.500), bottom_x 63.781→63.281 (Δ -0.500)
-  - source pair 10 (solver position 10): top_x 83.350→83.400 (Δ 0.050), bottom_x 83.350→83.400 (Δ 0.050)
-- wall residual sum: 36.741 -> 39.591
+- wall residual sum: 36.741 -> 39.645
 - Preview only; this is not correctness evidence and cannot write back.
 
-### m_anchor_4_1_2_1_visibility_s9_1_00 | m_anchor_4_1_2_1_directional_visibility | diagnostic_human_direction_only
+### m_anchor_4_1_2_1_visibility_s9_1_00 | m_anchor_4_1_2_1_directional_visibility | rejected_hard_gate
 
-- decision_class: `diagnostic_human_direction_only`
+- decision_class: `rejected_hard_gate`
 > **SENSITIVITY ONLY:** not a micro-refinement candidate; final_refinement_eligible=`False`; cannot enter M4.2.
 - improves: `[]`
 - fails_because: `[]`
@@ -258,10 +246,8 @@ No annotation patch or Label Studio writeback is produced.
 - primary_unresolved_edges: `[]`
 - short_wall_edges_after: `[]`
 - Applied coordinate changes:
-  - source pair 4 (solver position 4): top_x 27.411→27.361 (Δ -0.050), bottom_x 27.411→27.361 (Δ -0.050)
   - source pair 9 (solver position 9): top_x 63.781→62.781 (Δ -1.000), bottom_x 63.781→62.781 (Δ -1.000)
-  - source pair 10 (solver position 10): top_x 83.350→83.400 (Δ 0.050), bottom_x 83.350→83.400 (Δ 0.050)
-- wall residual sum: 36.741 -> 42.547
+- wall residual sum: 36.741 -> 42.602
 - Preview only; this is not correctness evidence and cannot write back.
 
 ## Candidate Metric Summary
@@ -275,13 +261,13 @@ No annotation patch or Label Studio writeback is produced.
 | m_anchor_4_1_2_c_1976 | 29.282 | 16.062 | 2.051 | 0.000 | 0.202 | False |
 | m_anchor_4_1_2_d_3426 | 25.285 | 21.165 | 2.110 | 0.000 | 0.202 | False |
 | m_anchor_4_1_2_d_2886 | 28.830 | 21.165 | 2.110 | 0.000 | 0.202 | False |
-| m_anchor_4_1_2_1_visibility_s4_0_15 | 37.398 | 13.352 | 1.995 | 0.000 | 0.202 | False |
-| m_anchor_4_1_2_1_visibility_s4_0_30 | 38.028 | 14.473 | 1.995 | 0.000 | 0.202 | False |
-| m_anchor_4_1_2_1_visibility_s4_0_40 | 38.446 | 15.219 | 1.995 | 0.000 | 0.202 | False |
-| m_anchor_4_1_2_1_visibility_s9_0_15 | 37.553 | 13.376 | 1.995 | 0.000 | 0.202 | False |
-| m_anchor_4_1_2_1_visibility_s9_0_30 | 38.423 | 14.543 | 1.995 | 0.000 | 0.202 | False |
-| m_anchor_4_1_2_1_visibility_s9_0_50 | 39.591 | 16.115 | 1.995 | 0.000 | 0.202 | False |
-| m_anchor_4_1_2_1_visibility_s9_1_00 | 42.547 | 20.122 | 1.995 | 0.000 | 0.202 | False |
+| m_anchor_4_1_2_1_visibility_s4_0_15 | 37.375 | 12.967 | 1.995 | 0.000 | 0.202 | False |
+| m_anchor_4_1_2_1_visibility_s4_0_30 | 38.006 | 14.088 | 1.995 | 0.000 | 0.202 | False |
+| m_anchor_4_1_2_1_visibility_s4_0_40 | 38.424 | 14.834 | 1.995 | 0.000 | 0.202 | False |
+| m_anchor_4_1_2_1_visibility_s9_0_15 | 37.607 | 13.001 | 1.995 | 0.000 | 0.202 | False |
+| m_anchor_4_1_2_1_visibility_s9_0_30 | 38.477 | 14.168 | 1.995 | 0.000 | 0.202 | False |
+| m_anchor_4_1_2_1_visibility_s9_0_50 | 39.645 | 15.740 | 1.995 | 0.000 | 0.202 | False |
+| m_anchor_4_1_2_1_visibility_s9_1_00 | 42.602 | 19.747 | 1.995 | 0.000 | 0.202 | False |
 
 ## Pair 3D Coordinates — original
 
@@ -652,8 +638,8 @@ No annotation patch or Label Studio writeback is produced.
 | 6 | 5 | (-0.228, -1.600, -0.618) | (-0.228, 1.759, -0.618) | 3.359 | 0.000 | none |
 | 7 | 8 | (0.083, -1.600, -0.636) | (0.083, 1.759, -0.636) | 3.359 | -0.000 | none |
 | 8 | 7 | (0.034, -1.600, -1.444) | (0.034, 1.759, -1.444) | 3.359 | 0.000 | none |
-| 9 | 9 | (1.820, -1.600, -1.558) | (1.820, 1.561, -1.558) | 3.161 | -0.197 | none |
-| 10 | 10 | (1.985, -1.600, 1.157) | (1.985, 1.620, 1.157) | 3.220 | -0.138 | none |
+| 9 | 9 | (1.825, -1.600, -1.553) | (1.825, 1.561, -1.553) | 3.161 | -0.197 | none |
+| 10 | 10 | (1.988, -1.600, 1.151) | (1.988, 1.620, 1.151) | 3.220 | -0.138 | none |
 | 11 | 12 | (0.087, -1.600, 1.265) | (0.087, 1.683, 1.265) | 3.283 | -0.076 | none |
 | 12 | None | (0.043, -1.600, 0.418) | (0.043, 1.015, 0.418) | 2.615 | -0.743 | none |
 
@@ -668,9 +654,9 @@ No annotation patch or Label Studio writeback is produced.
 | 5 | 5-6 | 0.403 | 86.544 | 90.000 | 3.456 | False |
 | 6 | 6-7 | 0.312 | 356.544 | 0.000 | 3.456 | True |
 | 7 | 7-8 | 0.809 | 266.544 | 270.000 | 3.456 | False |
-| 8 | 8-9 | 1.789 | 356.352 | 0.000 | 3.648 | False |
-| 9 | 9-10 | 2.720 | 86.533 | 90.000 | 3.467 | False |
-| 10 | 10-11 | 1.900 | 176.725 | 180.000 | 3.275 | False |
+| 8 | 8-9 | 1.794 | 356.544 | 0.000 | 3.456 | False |
+| 9 | 9-10 | 2.708 | 86.544 | 90.000 | 3.456 | False |
+| 10 | 10-11 | 1.904 | 176.544 | 180.000 | 3.456 | False |
 | 11 | 11-12 | 0.849 | 266.991 | 270.000 | 3.009 | False |
 | 12 | 12-1 | 0.202 | 182.466 | 180.000 | 2.466 | True |
 
@@ -685,10 +671,10 @@ No annotation patch or Label Studio writeback is produced.
 | 5 | 4 | 5 | 89.438 | 0.562 | False |
 | 6 | 5 | 6 | 90.000 | 0.000 | False |
 | 7 | 6 | 7 | 90.000 | 0.000 | False |
-| 8 | 7 | 8 | 90.192 | 0.192 | False |
-| 9 | 8 | 9 | 89.819 | 0.181 | False |
-| 10 | 9 | 10 | 89.807 | 0.193 | False |
-| 11 | 10 | 11 | 89.735 | 0.265 | False |
+| 8 | 7 | 8 | 90.000 | 0.000 | False |
+| 9 | 8 | 9 | 90.000 | 0.000 | False |
+| 10 | 9 | 10 | 90.000 | 0.000 | False |
+| 11 | 10 | 11 | 89.554 | 0.446 | False |
 | 12 | 11 | 12 | 95.475 | 5.475 | False |
 
 ## Pair 3D Coordinates — m_anchor_4_1_2_1_visibility_s4_0_30
@@ -703,8 +689,8 @@ No annotation patch or Label Studio writeback is produced.
 | 6 | 5 | (-0.228, -1.600, -0.618) | (-0.228, 1.759, -0.618) | 3.359 | 0.000 | none |
 | 7 | 8 | (0.083, -1.600, -0.636) | (0.083, 1.759, -0.636) | 3.359 | -0.000 | none |
 | 8 | 7 | (0.034, -1.600, -1.444) | (0.034, 1.759, -1.444) | 3.359 | 0.000 | none |
-| 9 | 9 | (1.820, -1.600, -1.558) | (1.820, 1.561, -1.558) | 3.161 | -0.197 | none |
-| 10 | 10 | (1.985, -1.600, 1.157) | (1.985, 1.620, 1.157) | 3.220 | -0.138 | none |
+| 9 | 9 | (1.825, -1.600, -1.553) | (1.825, 1.561, -1.553) | 3.161 | -0.197 | none |
+| 10 | 10 | (1.988, -1.600, 1.151) | (1.988, 1.620, 1.151) | 3.220 | -0.138 | none |
 | 11 | 12 | (0.087, -1.600, 1.265) | (0.087, 1.683, 1.265) | 3.283 | -0.076 | none |
 | 12 | None | (0.043, -1.600, 0.418) | (0.043, 1.015, 0.418) | 2.615 | -0.743 | none |
 
@@ -719,9 +705,9 @@ No annotation patch or Label Studio writeback is produced.
 | 5 | 5-6 | 0.403 | 86.544 | 90.000 | 3.456 | False |
 | 6 | 6-7 | 0.312 | 356.544 | 0.000 | 3.456 | True |
 | 7 | 7-8 | 0.809 | 266.544 | 270.000 | 3.456 | False |
-| 8 | 8-9 | 1.789 | 356.352 | 0.000 | 3.648 | False |
-| 9 | 9-10 | 2.720 | 86.533 | 90.000 | 3.467 | False |
-| 10 | 10-11 | 1.900 | 176.725 | 180.000 | 3.275 | False |
+| 8 | 8-9 | 1.794 | 356.544 | 0.000 | 3.456 | False |
+| 9 | 9-10 | 2.708 | 86.544 | 90.000 | 3.456 | False |
+| 10 | 10-11 | 1.904 | 176.544 | 180.000 | 3.456 | False |
 | 11 | 11-12 | 0.849 | 266.991 | 270.000 | 3.009 | False |
 | 12 | 12-1 | 0.202 | 182.466 | 180.000 | 2.466 | True |
 
@@ -736,10 +722,10 @@ No annotation patch or Label Studio writeback is produced.
 | 5 | 4 | 5 | 88.878 | 1.122 | False |
 | 6 | 5 | 6 | 90.000 | 0.000 | False |
 | 7 | 6 | 7 | 90.000 | 0.000 | False |
-| 8 | 7 | 8 | 90.192 | 0.192 | False |
-| 9 | 8 | 9 | 89.819 | 0.181 | False |
-| 10 | 9 | 10 | 89.807 | 0.193 | False |
-| 11 | 10 | 11 | 89.735 | 0.265 | False |
+| 8 | 7 | 8 | 90.000 | 0.000 | False |
+| 9 | 8 | 9 | 90.000 | 0.000 | False |
+| 10 | 9 | 10 | 90.000 | 0.000 | False |
+| 11 | 10 | 11 | 89.554 | 0.446 | False |
 | 12 | 11 | 12 | 95.475 | 5.475 | False |
 
 ## Pair 3D Coordinates — m_anchor_4_1_2_1_visibility_s4_0_40
@@ -754,8 +740,8 @@ No annotation patch or Label Studio writeback is produced.
 | 6 | 5 | (-0.228, -1.600, -0.618) | (-0.228, 1.759, -0.618) | 3.359 | 0.000 | none |
 | 7 | 8 | (0.083, -1.600, -0.636) | (0.083, 1.759, -0.636) | 3.359 | -0.000 | none |
 | 8 | 7 | (0.034, -1.600, -1.444) | (0.034, 1.759, -1.444) | 3.359 | 0.000 | none |
-| 9 | 9 | (1.820, -1.600, -1.558) | (1.820, 1.561, -1.558) | 3.161 | -0.197 | none |
-| 10 | 10 | (1.985, -1.600, 1.157) | (1.985, 1.620, 1.157) | 3.220 | -0.138 | none |
+| 9 | 9 | (1.825, -1.600, -1.553) | (1.825, 1.561, -1.553) | 3.161 | -0.197 | none |
+| 10 | 10 | (1.988, -1.600, 1.151) | (1.988, 1.620, 1.151) | 3.220 | -0.138 | none |
 | 11 | 12 | (0.087, -1.600, 1.265) | (0.087, 1.683, 1.265) | 3.283 | -0.076 | none |
 | 12 | None | (0.043, -1.600, 0.418) | (0.043, 1.015, 0.418) | 2.615 | -0.743 | none |
 
@@ -770,9 +756,9 @@ No annotation patch or Label Studio writeback is produced.
 | 5 | 5-6 | 0.403 | 86.544 | 90.000 | 3.456 | False |
 | 6 | 6-7 | 0.312 | 356.544 | 0.000 | 3.456 | True |
 | 7 | 7-8 | 0.809 | 266.544 | 270.000 | 3.456 | False |
-| 8 | 8-9 | 1.789 | 356.352 | 0.000 | 3.648 | False |
-| 9 | 9-10 | 2.720 | 86.533 | 90.000 | 3.467 | False |
-| 10 | 10-11 | 1.900 | 176.725 | 180.000 | 3.275 | False |
+| 8 | 8-9 | 1.794 | 356.544 | 0.000 | 3.456 | False |
+| 9 | 9-10 | 2.708 | 86.544 | 90.000 | 3.456 | False |
+| 10 | 10-11 | 1.904 | 176.544 | 180.000 | 3.456 | False |
 | 11 | 11-12 | 0.849 | 266.991 | 270.000 | 3.009 | False |
 | 12 | 12-1 | 0.202 | 182.466 | 180.000 | 2.466 | True |
 
@@ -787,10 +773,10 @@ No annotation patch or Label Studio writeback is produced.
 | 5 | 4 | 5 | 88.505 | 1.495 | False |
 | 6 | 5 | 6 | 90.000 | 0.000 | False |
 | 7 | 6 | 7 | 90.000 | 0.000 | False |
-| 8 | 7 | 8 | 90.192 | 0.192 | False |
-| 9 | 8 | 9 | 89.819 | 0.181 | False |
-| 10 | 9 | 10 | 89.807 | 0.193 | False |
-| 11 | 10 | 11 | 89.735 | 0.265 | False |
+| 8 | 7 | 8 | 90.000 | 0.000 | False |
+| 9 | 8 | 9 | 90.000 | 0.000 | False |
+| 10 | 9 | 10 | 90.000 | 0.000 | False |
+| 11 | 10 | 11 | 89.554 | 0.446 | False |
 | 12 | 11 | 12 | 95.475 | 5.475 | False |
 
 ## Pair 3D Coordinates — m_anchor_4_1_2_1_visibility_s9_0_15
@@ -800,13 +786,13 @@ No annotation patch or Label Studio writeback is produced.
 | 1 | None | (-0.159, -1.600, 0.409) | (-0.159, 0.919, 0.409) | 2.519 | -0.840 | none |
 | 2 | 1 | (-0.141, -1.600, 6.556) | (-0.141, 1.759, 6.556) | 3.359 | 0.000 | none |
 | 3 | 3 | (-4.401, -1.600, 6.813) | (-4.401, 1.759, 6.813) | 3.359 | 0.000 | none |
-| 4 | 4 | (-4.860, -1.600, -0.726) | (-4.860, 1.759, -0.726) | 3.359 | 0.000 | none |
+| 4 | 4 | (-4.857, -1.600, -0.741) | (-4.857, 1.759, -0.741) | 3.359 | 0.000 | none |
 | 5 | 6 | (-0.252, -1.600, -1.020) | (-0.252, 1.759, -1.020) | 3.359 | 0.000 | none |
 | 6 | 5 | (-0.228, -1.600, -0.618) | (-0.228, 1.759, -0.618) | 3.359 | 0.000 | none |
 | 7 | 8 | (0.083, -1.600, -0.636) | (0.083, 1.759, -0.636) | 3.359 | -0.000 | none |
 | 8 | 7 | (0.034, -1.600, -1.444) | (0.034, 1.759, -1.444) | 3.359 | 0.000 | none |
 | 9 | 9 | (1.810, -1.600, -1.570) | (1.810, 1.561, -1.570) | 3.161 | -0.197 | none |
-| 10 | 10 | (1.985, -1.600, 1.157) | (1.985, 1.620, 1.157) | 3.220 | -0.138 | none |
+| 10 | 10 | (1.988, -1.600, 1.151) | (1.988, 1.620, 1.151) | 3.220 | -0.138 | none |
 | 11 | 12 | (0.087, -1.600, 1.265) | (0.087, 1.683, 1.265) | 3.283 | -0.076 | none |
 | 12 | None | (0.043, -1.600, 0.418) | (0.043, 1.015, 0.418) | 2.615 | -0.743 | none |
 
@@ -816,14 +802,14 @@ No annotation patch or Label Studio writeback is produced.
 | ---: | --- | ---: | ---: | ---: | ---: | --- |
 | 1 | 1-2 | 6.147 | 89.837 | 90.000 | 0.163 | False |
 | 2 | 2-3 | 4.268 | 176.544 | 180.000 | 3.456 | False |
-| 3 | 3-4 | 7.553 | 266.520 | 270.000 | 3.480 | False |
-| 4 | 4-5 | 4.617 | 356.357 | 0.000 | 3.643 | False |
+| 3 | 3-4 | 7.568 | 266.544 | 270.000 | 3.456 | False |
+| 4 | 4-5 | 4.613 | 356.544 | 0.000 | 3.456 | False |
 | 5 | 5-6 | 0.403 | 86.544 | 90.000 | 3.456 | False |
 | 6 | 6-7 | 0.312 | 356.544 | 0.000 | 3.456 | True |
 | 7 | 7-8 | 0.809 | 266.544 | 270.000 | 3.456 | False |
 | 8 | 8-9 | 1.780 | 355.965 | 0.000 | 4.035 | False |
-| 9 | 9-10 | 2.732 | 86.342 | 90.000 | 3.658 | False |
-| 10 | 10-11 | 1.900 | 176.725 | 180.000 | 3.275 | False |
+| 9 | 9-10 | 2.726 | 86.257 | 90.000 | 3.743 | False |
+| 10 | 10-11 | 1.904 | 176.544 | 180.000 | 3.456 | False |
 | 11 | 11-12 | 0.849 | 266.991 | 270.000 | 3.009 | False |
 | 12 | 12-1 | 0.202 | 182.466 | 180.000 | 2.466 | True |
 
@@ -833,15 +819,15 @@ No annotation patch or Label Studio writeback is produced.
 | ---: | ---: | ---: | ---: | ---: | --- |
 | 1 | 12 | 1 | 87.371 | 2.629 | False |
 | 2 | 1 | 2 | 93.293 | 3.293 | False |
-| 3 | 2 | 3 | 90.024 | 0.024 | False |
-| 4 | 3 | 4 | 90.163 | 0.163 | False |
-| 5 | 4 | 5 | 89.813 | 0.187 | False |
+| 3 | 2 | 3 | 90.000 | 0.000 | False |
+| 4 | 3 | 4 | 90.000 | 0.000 | False |
+| 5 | 4 | 5 | 90.000 | 0.000 | False |
 | 6 | 5 | 6 | 90.000 | 0.000 | False |
 | 7 | 6 | 7 | 90.000 | 0.000 | False |
 | 8 | 7 | 8 | 90.579 | 0.579 | False |
-| 9 | 8 | 9 | 89.624 | 0.376 | False |
-| 10 | 9 | 10 | 89.616 | 0.384 | False |
-| 11 | 10 | 11 | 89.735 | 0.265 | False |
+| 9 | 8 | 9 | 89.708 | 0.292 | False |
+| 10 | 9 | 10 | 89.713 | 0.287 | False |
+| 11 | 10 | 11 | 89.554 | 0.446 | False |
 | 12 | 11 | 12 | 95.475 | 5.475 | False |
 
 ## Pair 3D Coordinates — m_anchor_4_1_2_1_visibility_s9_0_30
@@ -851,13 +837,13 @@ No annotation patch or Label Studio writeback is produced.
 | 1 | None | (-0.159, -1.600, 0.409) | (-0.159, 0.919, 0.409) | 2.519 | -0.840 | none |
 | 2 | 1 | (-0.141, -1.600, 6.556) | (-0.141, 1.759, 6.556) | 3.359 | 0.000 | none |
 | 3 | 3 | (-4.401, -1.600, 6.813) | (-4.401, 1.759, 6.813) | 3.359 | 0.000 | none |
-| 4 | 4 | (-4.860, -1.600, -0.726) | (-4.860, 1.759, -0.726) | 3.359 | 0.000 | none |
+| 4 | 4 | (-4.857, -1.600, -0.741) | (-4.857, 1.759, -0.741) | 3.359 | 0.000 | none |
 | 5 | 6 | (-0.252, -1.600, -1.020) | (-0.252, 1.759, -1.020) | 3.359 | 0.000 | none |
 | 6 | 5 | (-0.228, -1.600, -0.618) | (-0.228, 1.759, -0.618) | 3.359 | 0.000 | none |
 | 7 | 8 | (0.083, -1.600, -0.636) | (0.083, 1.759, -0.636) | 3.359 | -0.000 | none |
 | 8 | 7 | (0.034, -1.600, -1.444) | (0.034, 1.759, -1.444) | 3.359 | 0.000 | none |
 | 9 | 9 | (1.795, -1.600, -1.587) | (1.795, 1.561, -1.587) | 3.161 | -0.197 | none |
-| 10 | 10 | (1.985, -1.600, 1.157) | (1.985, 1.620, 1.157) | 3.220 | -0.138 | none |
+| 10 | 10 | (1.988, -1.600, 1.151) | (1.988, 1.620, 1.151) | 3.220 | -0.138 | none |
 | 11 | 12 | (0.087, -1.600, 1.265) | (0.087, 1.683, 1.265) | 3.283 | -0.076 | none |
 | 12 | None | (0.043, -1.600, 0.418) | (0.043, 1.015, 0.418) | 2.615 | -0.743 | none |
 
@@ -867,14 +853,14 @@ No annotation patch or Label Studio writeback is produced.
 | ---: | --- | ---: | ---: | ---: | ---: | --- |
 | 1 | 1-2 | 6.147 | 89.837 | 90.000 | 0.163 | False |
 | 2 | 2-3 | 4.268 | 176.544 | 180.000 | 3.456 | False |
-| 3 | 3-4 | 7.553 | 266.520 | 270.000 | 3.480 | False |
-| 4 | 4-5 | 4.617 | 356.357 | 0.000 | 3.643 | False |
+| 3 | 3-4 | 7.568 | 266.544 | 270.000 | 3.456 | False |
+| 4 | 4-5 | 4.613 | 356.544 | 0.000 | 3.456 | False |
 | 5 | 5-6 | 0.403 | 86.544 | 90.000 | 3.456 | False |
 | 6 | 6-7 | 0.312 | 356.544 | 0.000 | 3.456 | True |
 | 7 | 7-8 | 0.809 | 266.544 | 270.000 | 3.456 | False |
 | 8 | 8-9 | 1.767 | 355.382 | 0.000 | 4.618 | False |
-| 9 | 9-10 | 2.750 | 86.055 | 90.000 | 3.945 | False |
-| 10 | 10-11 | 1.900 | 176.725 | 180.000 | 3.275 | False |
+| 9 | 9-10 | 2.744 | 85.970 | 90.000 | 4.030 | False |
+| 10 | 10-11 | 1.904 | 176.544 | 180.000 | 3.456 | False |
 | 11 | 11-12 | 0.849 | 266.991 | 270.000 | 3.009 | False |
 | 12 | 12-1 | 0.202 | 182.466 | 180.000 | 2.466 | True |
 
@@ -884,15 +870,15 @@ No annotation patch or Label Studio writeback is produced.
 | ---: | ---: | ---: | ---: | ---: | --- |
 | 1 | 12 | 1 | 87.371 | 2.629 | False |
 | 2 | 1 | 2 | 93.293 | 3.293 | False |
-| 3 | 2 | 3 | 90.024 | 0.024 | False |
-| 4 | 3 | 4 | 90.163 | 0.163 | False |
-| 5 | 4 | 5 | 89.813 | 0.187 | False |
+| 3 | 2 | 3 | 90.000 | 0.000 | False |
+| 4 | 3 | 4 | 90.000 | 0.000 | False |
+| 5 | 4 | 5 | 90.000 | 0.000 | False |
 | 6 | 5 | 6 | 90.000 | 0.000 | False |
 | 7 | 6 | 7 | 90.000 | 0.000 | False |
 | 8 | 7 | 8 | 91.162 | 1.162 | False |
-| 9 | 8 | 9 | 89.327 | 0.673 | False |
-| 10 | 9 | 10 | 89.330 | 0.670 | False |
-| 11 | 10 | 11 | 89.735 | 0.265 | False |
+| 9 | 8 | 9 | 89.411 | 0.589 | False |
+| 10 | 9 | 10 | 89.426 | 0.574 | False |
+| 11 | 10 | 11 | 89.554 | 0.446 | False |
 | 12 | 11 | 12 | 95.475 | 5.475 | False |
 
 ## Pair 3D Coordinates — m_anchor_4_1_2_1_visibility_s9_0_50
@@ -902,13 +888,13 @@ No annotation patch or Label Studio writeback is produced.
 | 1 | None | (-0.159, -1.600, 0.409) | (-0.159, 0.919, 0.409) | 2.519 | -0.840 | none |
 | 2 | 1 | (-0.141, -1.600, 6.556) | (-0.141, 1.759, 6.556) | 3.359 | 0.000 | none |
 | 3 | 3 | (-4.401, -1.600, 6.813) | (-4.401, 1.759, 6.813) | 3.359 | 0.000 | none |
-| 4 | 4 | (-4.860, -1.600, -0.726) | (-4.860, 1.759, -0.726) | 3.359 | 0.000 | none |
+| 4 | 4 | (-4.857, -1.600, -0.741) | (-4.857, 1.759, -0.741) | 3.359 | 0.000 | none |
 | 5 | 6 | (-0.252, -1.600, -1.020) | (-0.252, 1.759, -1.020) | 3.359 | 0.000 | none |
 | 6 | 5 | (-0.228, -1.600, -0.618) | (-0.228, 1.759, -0.618) | 3.359 | 0.000 | none |
 | 7 | 8 | (0.083, -1.600, -0.636) | (0.083, 1.759, -0.636) | 3.359 | -0.000 | none |
 | 8 | 7 | (0.034, -1.600, -1.444) | (0.034, 1.759, -1.444) | 3.359 | 0.000 | none |
 | 9 | 9 | (1.775, -1.600, -1.609) | (1.775, 1.561, -1.609) | 3.161 | -0.197 | none |
-| 10 | 10 | (1.985, -1.600, 1.157) | (1.985, 1.620, 1.157) | 3.220 | -0.138 | none |
+| 10 | 10 | (1.988, -1.600, 1.151) | (1.988, 1.620, 1.151) | 3.220 | -0.138 | none |
 | 11 | 12 | (0.087, -1.600, 1.265) | (0.087, 1.683, 1.265) | 3.283 | -0.076 | none |
 | 12 | None | (0.043, -1.600, 0.418) | (0.043, 1.015, 0.418) | 2.615 | -0.743 | none |
 
@@ -918,14 +904,14 @@ No annotation patch or Label Studio writeback is produced.
 | ---: | --- | ---: | ---: | ---: | ---: | --- |
 | 1 | 1-2 | 6.147 | 89.837 | 90.000 | 0.163 | False |
 | 2 | 2-3 | 4.268 | 176.544 | 180.000 | 3.456 | False |
-| 3 | 3-4 | 7.553 | 266.520 | 270.000 | 3.480 | False |
-| 4 | 4-5 | 4.617 | 356.357 | 0.000 | 3.643 | False |
+| 3 | 3-4 | 7.568 | 266.544 | 270.000 | 3.456 | False |
+| 4 | 4-5 | 4.613 | 356.544 | 0.000 | 3.456 | False |
 | 5 | 5-6 | 0.403 | 86.544 | 90.000 | 3.456 | False |
 | 6 | 6-7 | 0.312 | 356.544 | 0.000 | 3.456 | True |
 | 7 | 7-8 | 0.809 | 266.544 | 270.000 | 3.456 | False |
 | 8 | 8-9 | 1.749 | 354.596 | 0.000 | 5.404 | False |
-| 9 | 9-10 | 2.774 | 85.673 | 90.000 | 4.327 | False |
-| 10 | 10-11 | 1.900 | 176.725 | 180.000 | 3.275 | False |
+| 9 | 9-10 | 2.768 | 85.588 | 90.000 | 4.412 | False |
+| 10 | 10-11 | 1.904 | 176.544 | 180.000 | 3.456 | False |
 | 11 | 11-12 | 0.849 | 266.991 | 270.000 | 3.009 | False |
 | 12 | 12-1 | 0.202 | 182.466 | 180.000 | 2.466 | True |
 
@@ -935,15 +921,15 @@ No annotation patch or Label Studio writeback is produced.
 | ---: | ---: | ---: | ---: | ---: | --- |
 | 1 | 12 | 1 | 87.371 | 2.629 | False |
 | 2 | 1 | 2 | 93.293 | 3.293 | False |
-| 3 | 2 | 3 | 90.024 | 0.024 | False |
-| 4 | 3 | 4 | 90.163 | 0.163 | False |
-| 5 | 4 | 5 | 89.813 | 0.187 | False |
+| 3 | 2 | 3 | 90.000 | 0.000 | False |
+| 4 | 3 | 4 | 90.000 | 0.000 | False |
+| 5 | 4 | 5 | 90.000 | 0.000 | False |
 | 6 | 5 | 6 | 90.000 | 0.000 | False |
 | 7 | 6 | 7 | 90.000 | 0.000 | False |
 | 8 | 7 | 8 | 91.948 | 1.948 | False |
-| 9 | 8 | 9 | 88.923 | 1.077 | False |
-| 10 | 9 | 10 | 88.948 | 1.052 | False |
-| 11 | 10 | 11 | 89.735 | 0.265 | False |
+| 9 | 8 | 9 | 89.008 | 0.992 | False |
+| 10 | 9 | 10 | 89.044 | 0.956 | False |
+| 11 | 10 | 11 | 89.554 | 0.446 | False |
 | 12 | 11 | 12 | 95.475 | 5.475 | False |
 
 ## Pair 3D Coordinates — m_anchor_4_1_2_1_visibility_s9_1_00
@@ -953,13 +939,13 @@ No annotation patch or Label Studio writeback is produced.
 | 1 | None | (-0.159, -1.600, 0.409) | (-0.159, 0.919, 0.409) | 2.519 | -0.840 | none |
 | 2 | 1 | (-0.141, -1.600, 6.556) | (-0.141, 1.759, 6.556) | 3.359 | 0.000 | none |
 | 3 | 3 | (-4.401, -1.600, 6.813) | (-4.401, 1.759, 6.813) | 3.359 | 0.000 | none |
-| 4 | 4 | (-4.860, -1.600, -0.726) | (-4.860, 1.759, -0.726) | 3.359 | 0.000 | none |
+| 4 | 4 | (-4.857, -1.600, -0.741) | (-4.857, 1.759, -0.741) | 3.359 | 0.000 | none |
 | 5 | 6 | (-0.252, -1.600, -1.020) | (-0.252, 1.759, -1.020) | 3.359 | 0.000 | none |
 | 6 | 5 | (-0.228, -1.600, -0.618) | (-0.228, 1.759, -0.618) | 3.359 | 0.000 | none |
 | 7 | 8 | (0.083, -1.600, -0.636) | (0.083, 1.759, -0.636) | 3.359 | -0.000 | none |
 | 8 | 7 | (0.034, -1.600, -1.444) | (0.034, 1.759, -1.444) | 3.359 | 0.000 | none |
 | 9 | 9 | (1.724, -1.600, -1.664) | (1.724, 1.561, -1.664) | 3.161 | -0.197 | none |
-| 10 | 10 | (1.985, -1.600, 1.157) | (1.985, 1.620, 1.157) | 3.220 | -0.138 | none |
+| 10 | 10 | (1.988, -1.600, 1.151) | (1.988, 1.620, 1.151) | 3.220 | -0.138 | none |
 | 11 | 12 | (0.087, -1.600, 1.265) | (0.087, 1.683, 1.265) | 3.283 | -0.076 | none |
 | 12 | None | (0.043, -1.600, 0.418) | (0.043, 1.015, 0.418) | 2.615 | -0.743 | none |
 
@@ -969,14 +955,14 @@ No annotation patch or Label Studio writeback is produced.
 | ---: | --- | ---: | ---: | ---: | ---: | --- |
 | 1 | 1-2 | 6.147 | 89.837 | 90.000 | 0.163 | False |
 | 2 | 2-3 | 4.268 | 176.544 | 180.000 | 3.456 | False |
-| 3 | 3-4 | 7.553 | 266.520 | 270.000 | 3.480 | False |
-| 4 | 4-5 | 4.617 | 356.357 | 0.000 | 3.643 | False |
+| 3 | 3-4 | 7.568 | 266.544 | 270.000 | 3.456 | False |
+| 4 | 4-5 | 4.613 | 356.544 | 0.000 | 3.456 | False |
 | 5 | 5-6 | 0.403 | 86.544 | 90.000 | 3.456 | False |
 | 6 | 6-7 | 0.312 | 356.544 | 0.000 | 3.456 | True |
 | 7 | 7-8 | 0.809 | 266.544 | 270.000 | 3.456 | False |
 | 8 | 8-9 | 1.704 | 352.592 | 0.000 | 7.408 | False |
-| 9 | 9-10 | 2.833 | 84.720 | 90.000 | 5.280 | False |
-| 10 | 10-11 | 1.900 | 176.725 | 180.000 | 3.275 | False |
+| 9 | 9-10 | 2.827 | 84.635 | 90.000 | 5.365 | False |
+| 10 | 10-11 | 1.904 | 176.544 | 180.000 | 3.456 | False |
 | 11 | 11-12 | 0.849 | 266.991 | 270.000 | 3.009 | False |
 | 12 | 12-1 | 0.202 | 182.466 | 180.000 | 2.466 | True |
 
@@ -986,15 +972,15 @@ No annotation patch or Label Studio writeback is produced.
 | ---: | ---: | ---: | ---: | ---: | --- |
 | 1 | 12 | 1 | 87.371 | 2.629 | False |
 | 2 | 1 | 2 | 93.293 | 3.293 | False |
-| 3 | 2 | 3 | 90.024 | 0.024 | False |
-| 4 | 3 | 4 | 90.163 | 0.163 | False |
-| 5 | 4 | 5 | 89.813 | 0.187 | False |
+| 3 | 2 | 3 | 90.000 | 0.000 | False |
+| 4 | 3 | 4 | 90.000 | 0.000 | False |
+| 5 | 4 | 5 | 90.000 | 0.000 | False |
 | 6 | 5 | 6 | 90.000 | 0.000 | False |
 | 7 | 6 | 7 | 90.000 | 0.000 | False |
 | 8 | 7 | 8 | 93.952 | 3.952 | False |
-| 9 | 8 | 9 | 87.873 | 2.127 | False |
-| 10 | 9 | 10 | 87.994 | 2.006 | False |
-| 11 | 10 | 11 | 89.735 | 0.265 | False |
+| 9 | 8 | 9 | 87.957 | 2.043 | False |
+| 10 | 9 | 10 | 88.091 | 1.909 | False |
+| 11 | 10 | 11 | 89.554 | 0.446 | False |
 | 12 | 11 | 12 | 95.475 | 5.475 | False |
 
 ## Safety Boundary

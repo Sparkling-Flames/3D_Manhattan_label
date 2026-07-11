@@ -582,7 +582,10 @@
   "visibility_candidates": [
     {
       "candidate_id": "m_anchor_4_1_2_d_3426",
-      "family": "m_anchor_4_1_2_1_directional_visibility",
+      "family": "m_anchor_4_1_2_visible_range",
+      "candidate_kind": "stage_d_search_sensitivity",
+      "visibility_slice": false,
+      "review_bucket": "stage_d_sensitivity_only",
       "decision_class": "neutral_geometry_tradeoff",
       "coordinate_changes": [
         {
@@ -677,12 +680,14 @@
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
       "accepted": false,
-      "annotation_writeback": false,
-      "review_bucket": "visibility_only"
+      "annotation_writeback": false
     },
     {
       "candidate_id": "m_anchor_4_1_2_d_2886",
-      "family": "m_anchor_4_1_2_1_directional_visibility",
+      "family": "m_anchor_4_1_2_visible_range",
+      "candidate_kind": "stage_d_search_sensitivity",
+      "visibility_slice": false,
+      "review_bucket": "stage_d_sensitivity_only",
       "decision_class": "neutral_geometry_tradeoff",
       "coordinate_changes": [
         {
@@ -759,13 +764,15 @@
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
       "accepted": false,
-      "annotation_writeback": false,
-      "review_bucket": "visibility_only"
+      "annotation_writeback": false
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s4_0_15",
       "family": "m_anchor_4_1_2_1_directional_visibility",
-      "decision_class": "diagnostic_human_direction_only",
+      "candidate_kind": "directional_visibility_slice",
+      "visibility_slice": true,
+      "review_bucket": "visibility_only",
+      "decision_class": "rejected_hard_gate",
       "coordinate_changes": [
         {
           "source_pair_id": 4,
@@ -784,42 +791,6 @@
               "delta": -0.14999999999999858
             }
           }
-        },
-        {
-          "source_pair_id": 9,
-          "solver_position": 9,
-          "verified_order_source_id": 9,
-          "effective_pair_index": 9,
-          "fields": {
-            "top_x": {
-              "before": 63.78090512564466,
-              "after": 63.73090512564466,
-              "delta": -0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 63.78090512564466,
-              "after": 63.73090512564466,
-              "delta": -0.04999999999999716
-            }
-          }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            }
-          }
         }
       ],
       "sensitivity_only": true,
@@ -828,13 +799,15 @@
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
       "accepted": false,
-      "annotation_writeback": false,
-      "review_bucket": "visibility_only"
+      "annotation_writeback": false
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s4_0_30",
       "family": "m_anchor_4_1_2_1_directional_visibility",
-      "decision_class": "diagnostic_human_direction_only",
+      "candidate_kind": "directional_visibility_slice",
+      "visibility_slice": true,
+      "review_bucket": "visibility_only",
+      "decision_class": "rejected_hard_gate",
       "coordinate_changes": [
         {
           "source_pair_id": 4,
@@ -853,42 +826,6 @@
               "delta": -0.3000000000000007
             }
           }
-        },
-        {
-          "source_pair_id": 9,
-          "solver_position": 9,
-          "verified_order_source_id": 9,
-          "effective_pair_index": 9,
-          "fields": {
-            "top_x": {
-              "before": 63.78090512564466,
-              "after": 63.73090512564466,
-              "delta": -0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 63.78090512564466,
-              "after": 63.73090512564466,
-              "delta": -0.04999999999999716
-            }
-          }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            }
-          }
         }
       ],
       "sensitivity_only": true,
@@ -897,13 +834,15 @@
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
       "accepted": false,
-      "annotation_writeback": false,
-      "review_bucket": "visibility_only"
+      "annotation_writeback": false
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s4_0_40",
       "family": "m_anchor_4_1_2_1_directional_visibility",
-      "decision_class": "diagnostic_human_direction_only",
+      "candidate_kind": "directional_visibility_slice",
+      "visibility_slice": true,
+      "review_bucket": "visibility_only",
+      "decision_class": "rejected_hard_gate",
       "coordinate_changes": [
         {
           "source_pair_id": 4,
@@ -922,42 +861,6 @@
               "delta": -0.3999999999999986
             }
           }
-        },
-        {
-          "source_pair_id": 9,
-          "solver_position": 9,
-          "verified_order_source_id": 9,
-          "effective_pair_index": 9,
-          "fields": {
-            "top_x": {
-              "before": 63.78090512564466,
-              "after": 63.73090512564466,
-              "delta": -0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 63.78090512564466,
-              "after": 63.73090512564466,
-              "delta": -0.04999999999999716
-            }
-          }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            }
-          }
         }
       ],
       "sensitivity_only": true,
@@ -966,32 +869,16 @@
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
       "accepted": false,
-      "annotation_writeback": false,
-      "review_bucket": "visibility_only"
+      "annotation_writeback": false
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s9_0_15",
       "family": "m_anchor_4_1_2_1_directional_visibility",
-      "decision_class": "diagnostic_human_direction_only",
+      "candidate_kind": "directional_visibility_slice",
+      "visibility_slice": true,
+      "review_bucket": "visibility_only",
+      "decision_class": "rejected_hard_gate",
       "coordinate_changes": [
-        {
-          "source_pair_id": 4,
-          "solver_position": 4,
-          "verified_order_source_id": 4,
-          "effective_pair_index": 4,
-          "fields": {
-            "top_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            },
-            "bottom_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            }
-          }
-        },
         {
           "source_pair_id": 9,
           "solver_position": 9,
@@ -1009,24 +896,6 @@
               "delta": -0.14999999999999858
             }
           }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            }
-          }
         }
       ],
       "sensitivity_only": true,
@@ -1035,32 +904,16 @@
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
       "accepted": false,
-      "annotation_writeback": false,
-      "review_bucket": "visibility_only"
+      "annotation_writeback": false
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s9_0_30",
       "family": "m_anchor_4_1_2_1_directional_visibility",
-      "decision_class": "diagnostic_human_direction_only",
+      "candidate_kind": "directional_visibility_slice",
+      "visibility_slice": true,
+      "review_bucket": "visibility_only",
+      "decision_class": "rejected_hard_gate",
       "coordinate_changes": [
-        {
-          "source_pair_id": 4,
-          "solver_position": 4,
-          "verified_order_source_id": 4,
-          "effective_pair_index": 4,
-          "fields": {
-            "top_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            },
-            "bottom_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            }
-          }
-        },
         {
           "source_pair_id": 9,
           "solver_position": 9,
@@ -1078,24 +931,6 @@
               "delta": -0.29999999999999716
             }
           }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            }
-          }
         }
       ],
       "sensitivity_only": true,
@@ -1104,32 +939,16 @@
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
       "accepted": false,
-      "annotation_writeback": false,
-      "review_bucket": "visibility_only"
+      "annotation_writeback": false
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s9_0_50",
       "family": "m_anchor_4_1_2_1_directional_visibility",
-      "decision_class": "diagnostic_human_direction_only",
+      "candidate_kind": "directional_visibility_slice",
+      "visibility_slice": true,
+      "review_bucket": "visibility_only",
+      "decision_class": "rejected_hard_gate",
       "coordinate_changes": [
-        {
-          "source_pair_id": 4,
-          "solver_position": 4,
-          "verified_order_source_id": 4,
-          "effective_pair_index": 4,
-          "fields": {
-            "top_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            },
-            "bottom_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            }
-          }
-        },
         {
           "source_pair_id": 9,
           "solver_position": 9,
@@ -1147,24 +966,6 @@
               "delta": -0.5
             }
           }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            }
-          }
         }
       ],
       "sensitivity_only": true,
@@ -1173,32 +974,16 @@
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
       "accepted": false,
-      "annotation_writeback": false,
-      "review_bucket": "visibility_only"
+      "annotation_writeback": false
     },
     {
       "candidate_id": "m_anchor_4_1_2_1_visibility_s9_1_00",
       "family": "m_anchor_4_1_2_1_directional_visibility",
-      "decision_class": "diagnostic_human_direction_only",
+      "candidate_kind": "directional_visibility_slice",
+      "visibility_slice": true,
+      "review_bucket": "visibility_only",
+      "decision_class": "rejected_hard_gate",
       "coordinate_changes": [
-        {
-          "source_pair_id": 4,
-          "solver_position": 4,
-          "verified_order_source_id": 4,
-          "effective_pair_index": 4,
-          "fields": {
-            "top_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            },
-            "bottom_x": {
-              "before": 27.410957965652642,
-              "after": 27.36095796565264,
-              "delta": -0.05000000000000071
-            }
-          }
-        },
         {
           "source_pair_id": 9,
           "solver_position": 9,
@@ -1216,24 +1001,6 @@
               "delta": -1.0
             }
           }
-        },
-        {
-          "source_pair_id": 10,
-          "solver_position": 10,
-          "verified_order_source_id": 10,
-          "effective_pair_index": 10,
-          "fields": {
-            "top_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            },
-            "bottom_x": {
-              "before": 83.34955092974104,
-              "after": 83.39955092974104,
-              "delta": 0.04999999999999716
-            }
-          }
         }
       ],
       "sensitivity_only": true,
@@ -1242,8 +1009,7 @@
       "direct_ls_trial_allowed": false,
       "m_anchor_4_2_input_eligible": false,
       "accepted": false,
-      "annotation_writeback": false,
-      "review_bucket": "visibility_only"
+      "annotation_writeback": false
     }
   ]
 }

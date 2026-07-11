@@ -1892,13 +1892,16 @@ def render_review_html(
       const data = variant.triage || {{}};
       triage.textContent = JSON.stringify(data, null, 2);
       const manualReview = data.manual_review_candidate === true;
+      const sensitivityOnly = data.sensitivity_only === true;
       const blocked = data.decision_class === 'partial_diagnostic' || data.direct_ls_trial_allowed === false;
-      triageWarning.textContent = manualReview
+      triageWarning.textContent = sensitivityOnly
+        ? 'SENSITIVITY ONLY — not a micro-refinement candidate; cannot enter M4.2.'
+        : manualReview
         ? 'MANUAL-REVIEW CANDIDATE — visual review required; no automatic fix is claimed.'
         : blocked
           ? 'PARTIAL DIAGNOSTIC ONLY — do not apply directly in LS. Primary unresolved edges: ' + JSON.stringify(data.primary_unresolved_edges || [])
           : '';
-      triageWarning.style.display = manualReview || blocked ? 'block' : 'none';
+      triageWarning.style.display = sensitivityOnly || manualReview || blocked ? 'block' : 'none';
     }}
     function updateActiveUi() {{
       const panel = activePanel(); if (!panel) return;
