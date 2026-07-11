@@ -161,9 +161,12 @@ def resolve_local_image(
             resolved = direct
         elif root.is_dir():
             matches = list(root.rglob(basename))
+            if not matches:
+                # 2D originals are PNG while the matching 3D texture is often JPEG.
+                matches = [path for path in root.rglob(f"{Path(basename).stem}.*") if path.suffix.lower() in {".jpg", ".jpeg", ".png", ".webp"}]
             if matches:
-                method = "image_root_recursive_basename"
-                resolved = matches[0].resolve()
+                method = "image_root_recursive_basename" if matches[0].name == basename else "image_root_stem_extension_match"
+                resolved = sorted(matches)[0].resolve()
                 if len(matches) > 1:
                     warnings.append("multiple_local_images_match_basename_first_used")
             else:
@@ -776,6 +779,7 @@ def _wall_residual(variant: Mapping[str, Any], from_pair: int, to_pair: int) -> 
 def render_markdown_report(payload: Mapping[str, Any]) -> str:
     provenance = payload["input_provenance"]
     image_info = provenance["image"]
+    overlay_info = provenance.get("overlay_image", image_info)
     assets = payload.get("local_review_assets", {})
     variants = payload["variants"]
     original = variants[0]
@@ -800,6 +804,8 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         f"- Local image: `{image_info.get('image_path')}`",
         f"- Image exists: `{image_info.get('image_exists')}`",
         f"- Image SHA-256: `{image_info.get('image_sha256')}`",
+        f"- 2D overlay image: `{overlay_info.get('image_path')}`",
+        f"- 2D overlay SHA-256: `{overlay_info.get('image_sha256')}`",
         f"- Viewer URL: `{assets.get('viewer_url')}`",
         f"- Image URL for viewer: `{assets.get('image_url_for_viewer')}`",
         f"- Texture expected: `{assets.get('texture_expected')}`",
@@ -817,6 +823,7 @@ def render_markdown_report(payload: Mapping[str, Any]) -> str:
         "",
         "This is an expert-side local visual review.",
         "Candidate previews are diagnostic only.",
+        "This review is audit-only; no candidate is accepted and M4.2 remains blocked.",
         "No automatic fix is claimed.",
         "Texture toggle and ghost are display controls only.",
         "No annotation patch or Label Studio writeback is produced.",
@@ -1209,6 +1216,7 @@ def render_review_html(
     payload: Mapping[str, Any],
     *,
     file_image_data_url: str | None,
+    file_overlay_data_url: str | None = None,
 ) -> str:
     minimal_variants = []
     for variant in payload["variants"]:
@@ -1301,6 +1309,8 @@ def render_review_html(
                         "final_refinement_eligible",
                         "requires_explicit_human_visual_verdict",
                         "m_anchor_4_2_input_eligible",
+                        "candidate_id", "search_stage", "candidate_kind", "review_bucket",
+                        "coordinate_changes", "expert_evidence",
                     )
                     if candidate_row.get(key) is not None
                 },
@@ -1315,11 +1325,13 @@ def render_review_html(
             "server": {
                 "viewerUrl": assets["server"]["viewer_url"],
                 "imageUrl": assets["server"]["image_url_for_viewer"],
+                "overlayImageUrl": assets["server"].get("overlay_image_url") or assets["server"]["image_url_for_viewer"],
                 "textureExpected": assets["server"]["texture_expected"],
             },
             "file": {
                 "viewerUrl": assets["file"]["viewer_url"],
                 "imageUrl": file_image_data_url,
+                "overlayImageUrl": file_overlay_data_url or file_image_data_url,
                 "textureExpected": bool(file_image_data_url),
                 "embed": assets["file"]["embed"],
             },
@@ -1445,6 +1457,8 @@ def render_review_html(
       <h3>Inspector</h3><pre id="inspector">Click a corner or wall.</pre>
       <h3>Measurement</h3><pre id="measurement">Measure mode is off.</pre>
       <div id="triage-warning"></div>
+      <h3>Active candidate changes</h3><pre id="candidate-changes"></pre>
+      <h3>Expert Evidence</h3><pre id="expert-evidence"></pre>
       <h3>Candidate triage</h3><pre id="triage"></pre>
       <h3>Metric summary</h3><pre id="metrics"></pre>
       <h3>Viewer / texture status</h3><pre id="texture-status"></pre>
@@ -1481,7 +1495,7 @@ def render_review_html(
         <label><input id="overlay-show-top" type="checkbox" checked> top</label>
         <label><input id="overlay-show-bottom" type="checkbox" checked> bottom</label>
         <label><input id="overlay-show-vertical" type="checkbox" checked> vertical</label>
-        <label>point size <input id="overlay-point-size" type="range" min=".35" max="1.6" step=".05" value=".75"></label>
+        <label>point size <input id="overlay-point-size" type="range" min=".25" max="1.6" step=".05" value=".35"></label>
       </div>
     </div>
     <div id="focus-stage" data-placement="right">
@@ -1517,6 +1531,8 @@ def render_review_html(
     const metrics = document.getElementById('metrics');
     const triage = document.getElementById('triage');
     const triageWarning = document.getElementById('triage-warning');
+    const candidateChanges = document.getElementById('candidate-changes');
+    const expertEvidence = document.getElementById('expert-evidence');
     const inspector = document.getElementById('inspector');
     const measurement = document.getElementById('measurement');
     const warning = document.getElementById('warning');
@@ -1558,8 +1574,8 @@ def render_review_html(
       warning.hidden = false;
     }}
 
-    if (activeAssets.imageUrl) {{
-      originalPanoramaImage.src = activeAssets.imageUrl;
+    if (activeAssets.overlayImageUrl) {{
+      originalPanoramaImage.src = activeAssets.overlayImageUrl;
       originalPanoramaImage.hidden = false;
       originalPanoramaStatus.textContent = activeMode === 'file'
         ? 'Embedded local panorama · read-only'
@@ -1568,7 +1584,7 @@ def render_review_html(
         originalPanoramaImage.hidden = true;
         originalPanoramaStatus.textContent = 'Original panorama failed to load; 3D geometry remains available.';
       }});
-      focusOverlayPanorama.setAttribute('href', activeAssets.imageUrl);
+      focusOverlayPanorama.setAttribute('href', activeAssets.overlayImageUrl);
       focusOverlayPanorama.addEventListener('load', renderFocus2DOverlay);
       focusOverlayPanorama.addEventListener('error', () => {{
         focusOverlayStatus.textContent = '2D overlay image failed to load; point geometry remains available.';
@@ -1891,6 +1907,17 @@ def render_review_html(
     function updateTriageUi(variant) {{
       const data = variant.triage || {{}};
       triage.textContent = JSON.stringify(data, null, 2);
+      const radius = overlayPointRadius(), diameter = radius * 2;
+      const markerX = diameter / 100 * REVIEW.width, markerY = diameter / 100 * REVIEW.height;
+      const changes = data.coordinate_changes || [];
+      const lines = [`candidate: ${{data.candidate_id || variant.name}}`, `stage: ${{data.search_stage || 'baseline'}}`, `point radius: ${{radius.toFixed(2)}} LS%; diameter: ${{diameter.toFixed(2)}} LS% (${{markerX.toFixed(2)}}px x / ${{markerY.toFixed(2)}}px y)`];
+      if (!changes.length) lines.push('no numeric change');
+      changes.forEach((change) => Object.entries(change.fields || {{}}).forEach(([field, values]) => {{
+        const delta = Number(values.delta || 0), horizontal = field.endsWith('_x'), pixels = Math.abs(delta) / 100 * (horizontal ? REVIEW.width : REVIEW.height), marker = horizontal ? markerX : markerY;
+        lines.push(`s${{change.source_pair_id}} ${{field}}: ${{Number(values.before).toFixed(3)}} → ${{Number(values.after).toFixed(3)}} (Δ ${{delta.toFixed(3)}} LS%; ${{pixels.toFixed(2)}}px; ${{(pixels / Math.max(marker, 1e-12)).toFixed(2)}}× marker diameter, display-only)`);
+      }}));
+      candidateChanges.textContent = lines.join('\n');
+      expertEvidence.textContent = data.expert_evidence ? JSON.stringify(data.expert_evidence, null, 2) : 'No expert evidence entry for baseline.';
       const manualReview = data.manual_review_candidate === true;
       const sensitivityOnly = data.sensitivity_only === true;
       const blocked = data.decision_class === 'partial_diagnostic' || data.direct_ls_trial_allowed === false;
@@ -2154,7 +2181,7 @@ def render_review_html(
     document.querySelectorAll('[data-camera]').forEach((button) => button.addEventListener('click', () => {{
       broadcastInspectionCommand('camera_preset', {{preset:button.dataset.camera}});
     }}));
-    document.querySelectorAll('#focus-overlay-controls input').forEach((input) => input.addEventListener('input', renderFocus2DOverlay));
+    document.querySelectorAll('#focus-overlay-controls input').forEach((input) => input.addEventListener('input', () => {{ renderFocus2DOverlay(); updateActiveUi(); }}));
     for (let index = 0; index < defaultPanelCount; index += 1) {{
       createPanel(panelAssignments[index] ?? index);
     }}
@@ -2170,6 +2197,8 @@ def run_local_review(
     input_path: Path,
     out_dir: Path,
     image_root: Path | None = None,
+    image_root_2d: Path | None = None,
+    image_root_3d: Path | None = None,
     image_path: Path | None = None,
     candidate_json: Path | None = None,
     candidate_report: Path | None = None,
@@ -2186,9 +2215,8 @@ def run_local_review(
     input_path = input_path.resolve()
     payload = _read_json(input_path)
     ordered_pairs, pair_source = extract_ordered_pairs(payload)
-    image_info, resolved_image = resolve_local_image(
-        payload, image_root=image_root, image_path=image_path
-    )
+    image_info, resolved_image = resolve_local_image(payload, image_root=image_root_3d or image_root, image_path=image_path)
+    overlay_info, resolved_overlay = resolve_local_image(payload, image_root=image_root_2d or image_root, image_path=image_path)
 
     candidate_rows: list[dict[str, Any]] = []
     m1522_candidates = False
@@ -2311,6 +2339,7 @@ def run_local_review(
             "candidate": candidate_provenance,
             "candidate_sources": candidate_sources,
             "image": image_info,
+            "overlay_image": overlay_info,
         },
         "safety_boundary": SAFETY_BOUNDARY,
         "variants": variants,
@@ -2340,6 +2369,7 @@ def run_local_review(
         out_dir=out_dir,
         local_server_root=local_server_root,
     )
+    _, server_overlay_url = _build_review_asset_urls(viewer_path=viewer_path, resolved_image=resolved_overlay, out_dir=out_dir, local_server_root=local_server_root)
     file_viewer_url, _ = _build_review_asset_urls(
         viewer_path=viewer_path,
         resolved_image=resolved_image,
@@ -2347,6 +2377,7 @@ def run_local_review(
         local_server_root=None,
     )
     file_image_data_url, embed_info = _embedded_image_data_url(resolved_image)
+    file_overlay_data_url, overlay_embed_info = _embedded_image_data_url(resolved_overlay)
     if resolved_image is not None and server_image_url is None:
         review_payload["input_provenance"]["image"]["warnings"].append(
             "resolved_image_outside_local_server_root_texture_unavailable"
@@ -2364,8 +2395,9 @@ def run_local_review(
             "viewer_url": server_viewer_url,
             "image_url_for_viewer": server_image_url,
             "texture_expected": server_texture_expected,
+            "overlay_image_url": server_overlay_url,
         },
-        "file": {"viewer_url": file_viewer_url, "embed": embed_info},
+        "file": {"viewer_url": file_viewer_url, "embed": embed_info, "overlay_embed": overlay_embed_info},
     }
 
     json_path.write_text(
@@ -2373,7 +2405,7 @@ def run_local_review(
     )
     report_path.write_text(render_markdown_report(review_payload), encoding="utf-8", newline="\n")
     html_path.write_text(
-        render_review_html(review_payload, file_image_data_url=file_image_data_url), encoding="utf-8", newline="\n"
+        render_review_html(review_payload, file_image_data_url=file_image_data_url, file_overlay_data_url=file_overlay_data_url), encoding="utf-8", newline="\n"
     )
     output_paths = {
         "json": json_path,
@@ -2395,6 +2427,8 @@ def _build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--input", required=True, type=Path)
     parser.add_argument("--out-dir", required=True, type=Path)
     parser.add_argument("--image-root", type=Path)
+    parser.add_argument("--image-root-2d", type=Path)
+    parser.add_argument("--image-root-3d", type=Path)
     parser.add_argument("--image-path", type=Path)
     parser.add_argument("--candidate-json", type=Path)
     parser.add_argument("--candidate-report", type=Path)
@@ -2418,6 +2452,8 @@ def main(argv: Sequence[str] | None = None) -> int:
         input_path=args.input,
         out_dir=args.out_dir,
         image_root=args.image_root,
+        image_root_2d=args.image_root_2d,
+        image_root_3d=args.image_root_3d,
         image_path=args.image_path,
         candidate_json=args.candidate_json,
         candidate_report=args.candidate_report,

@@ -20,7 +20,14 @@ The supported review UI is the current `local_3d_review.html` focus review:
 - resizable 2D/3D panes;
 - 2D panorama shown with fixed 2:1 aspect ratio;
 - click-to-inspect LS percent and pixel coordinates;
+- clicking any candidate image must update the side status panel with the selected candidate ID, stage, decision/sensitivity status, changed source pairs, changed axis, and each actual before/after/delta value; baseline must explicitly show `no numeric change`;
 - read-only only: no drag-point editing, annotation patch, Label Studio writeback, ranking, or portfolio selection.
+
+## Image-source and lifecycle rule
+
+- The 2D review overlay must use the original panorama from `data/mp3d_layout/test/img/`.
+- The 3D viewer texture may use the compressed panorama from `data/mp3d_layout/img_v/`.
+- When a future canonical 3D review is superseded, delete its obsolete 3D review artifact rather than creating or retaining a deprecated-preview archive. Do not retroactively delete completed or explicitly retained review artifacts.
 
 ## Directory rule
 
@@ -29,10 +36,6 @@ The supported review UI is the current `local_3d_review.html` focus review:
 - `local_3d_projection/` may keep projection evidence such as `projection_metrics.json`, but must not be treated as a human 3D entrypoint directory.
 - Solver/audit folders such as `segment_aware_manhattan_refit/` and `m_anchor/` may keep JSON, JSONL, Markdown, and 2D diagnostic overlays, but should not host canonical 3D review entrypoints.
 
-## Deprecated preview archive
+## Historical exception
 
-Old scattered 3D preview files are archived under:
-
-`analysis_results/paper_a_manhattan/_deprecated_3d_review_archive/`
-
-The archive is for traceability only. Do not link it from current status docs or use it for human review unless explicitly inspecting historical output.
+Existing completed or explicitly retained review artifacts are historical records. This policy does not alter them retroactively.

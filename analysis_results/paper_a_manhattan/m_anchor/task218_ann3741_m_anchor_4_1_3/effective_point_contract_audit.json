@@ -1,0 +1,72 @@
+{
+  "effective_contract_schema": "m_anchor_4_1_3_effective_point_contract_v1",
+  "base_sidecar_path": "analysis_results/paper_a_manhattan/m_anchor/task218_ann3741_m_anchor_1/expert_anchor_constraints_sidecar.json",
+  "base_sidecar_sha256": "77b316bcdf41a1593757d842b490fbb6b22c201a6d29b7d874fa66213497caae",
+  "evidence_sidecar_path": "analysis_results/paper_a_manhattan/m_anchor/task218_ann3741_m_anchor_4_1_3/expert_point_evidence_sidecar_v1.json",
+  "evidence_sidecar_sha256": "2b063f4847b5a1adff6a7c50523d99f1c508e356b30d974104f07f85434879e6",
+  "inherited_variables": [
+    "s2_top_x",
+    "s2_bottom_x",
+    "s2_top_y",
+    "s2_bottom_y",
+    "s11_top_x",
+    "s11_bottom_x",
+    "s11_top_y",
+    "s11_bottom_y",
+    "s4_top_x",
+    "s4_top_y",
+    "s4_bottom_x",
+    "s4_bottom_y"
+  ],
+  "overridden_variables": [
+    "s3_pair_x",
+    "s3_bottom_y",
+    "s3_top_y"
+  ],
+  "superseded_constraints": [
+    {
+      "constraint_id": "s3_top_x",
+      "old_role": "hard_anchor",
+      "new_role": "latent_completion",
+      "reason": "current human evidence marks both s3 endpoints unobservable",
+      "source_artifact": "analysis_results/paper_a_manhattan/m_anchor/task218_ann3741_m_anchor_1/expert_anchor_constraints_sidecar.json",
+      "source_sha256": "77b316bcdf41a1593757d842b490fbb6b22c201a6d29b7d874fa66213497caae"
+    },
+    {
+      "constraint_id": "s3_top_y",
+      "old_role": "hard_anchor",
+      "new_role": "latent_completion_but_future_height_only",
+      "reason": "current human evidence marks both s3 endpoints unobservable",
+      "source_artifact": "analysis_results/paper_a_manhattan/m_anchor/task218_ann3741_m_anchor_1/expert_anchor_constraints_sidecar.json",
+      "source_sha256": "77b316bcdf41a1593757d842b490fbb6b22c201a6d29b7d874fa66213497caae"
+    },
+    {
+      "constraint_id": "s3_bottom_x",
+      "old_role": "hard_anchor",
+      "new_role": "latent_completion",
+      "reason": "current human evidence marks both s3 endpoints unobservable",
+      "source_artifact": "analysis_results/paper_a_manhattan/m_anchor/task218_ann3741_m_anchor_1/expert_anchor_constraints_sidecar.json",
+      "source_sha256": "77b316bcdf41a1593757d842b490fbb6b22c201a6d29b7d874fa66213497caae"
+    },
+    {
+      "constraint_id": "s3_bottom_y",
+      "old_role": "hard_anchor",
+      "new_role": "latent_completion",
+      "reason": "current human evidence marks both s3 endpoints unobservable",
+      "source_artifact": "analysis_results/paper_a_manhattan/m_anchor/task218_ann3741_m_anchor_1/expert_anchor_constraints_sidecar.json",
+      "source_sha256": "77b316bcdf41a1593757d842b490fbb6b22c201a6d29b7d874fa66213497caae"
+    }
+  ],
+  "unresolved_conflicts": [],
+  "fail_closed": false,
+  "current_stage_authorized_variables": [
+    "s3_pair_x",
+    "s3_bottom_y",
+    "s7_bottom_y",
+    "s10_pair_x"
+  ],
+  "future_height_only_variables": [
+    "s3_top_y",
+    "s7_top_y"
+  ]
+}
