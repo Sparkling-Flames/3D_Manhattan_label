@@ -182,6 +182,10 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
                         'alias_reason': alias_reason,
                         'late_status': late_status,
                         'event_dt': event_dt,
+                        'page_gate_eligible': data.get('page_gate_eligible'),
+                        'page_gate_reason': str(data.get('page_gate_reason', '') or '').strip(),
+                        'page_gate_sources': str(data.get('page_gate_sources', '') or '').strip(),
+                        'script_version': str(data.get('script_version', '') or '').strip(),
                     }
                     parsed_events.append(event)
                     if ann_id and not annotation_unknown:
@@ -249,8 +253,23 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
         'active_time_project_ids': set(),
     })
     unknown_audit = defaultdict(lambda: {'seconds_by_session': defaultdict(float), 'event_count': 0, 'known_sessions': set()})
+    page_gate_audit = defaultdict(lambda: {
+        'reasons': set(),
+        'sources': set(),
+        'script_versions': set(),
+        'ineligible_events': 0,
+    })
     for event in parsed_events:
         context = (event['project_id'], event['task_id'], event['annotator_id'])
+        gate_audit = page_gate_audit[context]
+        if event['page_gate_reason']:
+            gate_audit['reasons'].add(event['page_gate_reason'])
+        if event['page_gate_sources']:
+            gate_audit['sources'].add(event['page_gate_sources'])
+        if event['script_version']:
+            gate_audit['script_versions'].add(event['script_version'])
+        if str(event['page_gate_eligible']).strip().casefold() in {'false', '0'}:
+            gate_audit['ineligible_events'] += 1
         if event['annotation_unknown']:
             audit = unknown_audit[context]
             audit['seconds_by_session'][event['session_id']] = max(audit['seconds_by_session'][event['session_id']], event['seconds'])
@@ -281,6 +300,7 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
     for key, value in final_logs.items():
         context = key[:3]
         audit = unknown_audit[context]
+        gate_audit = page_gate_audit[context]
         unknown_sessions = set(audit['seconds_by_session'])
         serialized[key] = {
             'active_time_value': float(value['active_time_value']),
@@ -294,6 +314,10 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
             'known_unknown_oscillation_flag': bool(unknown_sessions & audit['known_sessions']),
             'unassigned_audit_present': bool(unknown_sessions),
             'unassigned_active_time_exclusion_reason': 'unknown_annotation_audit_only' if unknown_sessions else '',
+            'active_time_page_gate_reasons': ';'.join(sorted(gate_audit['reasons'])),
+            'active_time_page_gate_sources': ';'.join(sorted(gate_audit['sources'])),
+            'active_time_script_versions': ';'.join(sorted(gate_audit['script_versions'])),
+            'active_time_page_gate_ineligible_event_count': int(gate_audit['ineligible_events']),
         }
 
     for context, audit in unknown_audit.items():
@@ -308,6 +332,10 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
             'unassigned_audit_present': True,
             'unassigned_active_time_exclusion_reason': 'unknown_annotation_audit_only',
             'audit_only': True,
+            'active_time_page_gate_reasons': ';'.join(sorted(page_gate_audit[context]['reasons'])),
+            'active_time_page_gate_sources': ';'.join(sorted(page_gate_audit[context]['sources'])),
+            'active_time_script_versions': ';'.join(sorted(page_gate_audit[context]['script_versions'])),
+            'active_time_page_gate_ineligible_event_count': int(page_gate_audit[context]['ineligible_events']),
         }
 
     by_legacy_pair = defaultdict(list)

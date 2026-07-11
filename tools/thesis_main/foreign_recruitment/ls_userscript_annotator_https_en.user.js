@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator HTTPS EN
 // @namespace    https://label.sparkle0825.top/
-// @version      stage1_active_time_annotation_hardening_20260701_v1
+// @version      stage3_active_time_page_gate_20260711_v1
 // @description  Self-contained HTTPS helper for foreign HoHoNet Stage 1 annotators. Based on the official annotator helper; adds same-origin HTTPS defaults and optional CloudResearch worker-id metadata.
 // @author       HoHoNet
 // @match        https://label.sparkle0825.top/*
@@ -41,20 +41,91 @@
     return false;
   }
 
-  // 区分“进入了 LS 网站” vs “正在标注任务页面”
-  function isLikelyAnnotationPage() {
+  function resolveAnnotationPageGate() {
+    const gate = {
+      routeTaskId: "",
+      domTaskId: "",
+      storeTaskId: "",
+      labelingRootPresent: false,
+      editorDomPresent: false,
+      mainViewDomPresent: false,
+      taskIdentityMatched: false,
+      eligible: false,
+      reason: "no_task_route",
+      sources: [],
+    };
     try {
-      // URL 带 task 参数，或路径包含 /tasks/<id>
-      const taskIdentity = getTaskIdentity?.();
-      if (taskIdentity && taskIdentity.id !== "unknown") return true;
       const params = new URLSearchParams(window.location.search);
-      if (params.get("task")) return true;
-      if (/\/tasks\/\d+/.test(window.location.pathname)) return true;
-      // 有主标注图像也认为是标注页
-      const img = findMainImage?.();
-      if (img) return true;
-    } catch (e) {}
-    return false;
+      const queryTaskId = String(params.get("task") || "").trim();
+      const pathMatch = window.location.pathname.match(/\/tasks\/([^/?#]+)/);
+      const pathTaskId = pathMatch ? String(pathMatch[1]).trim() : "";
+      if (queryTaskId && pathTaskId && queryTaskId !== pathTaskId) {
+        gate.reason = "task_route_conflict";
+        return gate;
+      }
+      gate.routeTaskId = queryTaskId || pathTaskId;
+      if (!gate.routeTaskId) return gate;
+      gate.sources.push(queryTaskId ? "url.query.task" : "url.path.tasks");
+
+      const labelingRoot = document.querySelector(".lsf-root.lsf-root_mode_labeling");
+      gate.labelingRootPresent = Boolean(labelingRoot);
+      if (!labelingRoot) {
+        gate.reason = "labeling_mode_not_ready";
+        return gate;
+      }
+      gate.sources.push("dom.lsf-root_mode_labeling");
+      const editor =
+        labelingRoot.querySelector("#label-studio-dm.lsf-label-view__lsf-container > .lsf-editor") ||
+        labelingRoot.querySelector(".lsf-label-view__lsf-container > .lsf-editor");
+      gate.editorDomPresent = Boolean(editor);
+      if (!editor) {
+        gate.reason = "annotation_editor_not_ready";
+        return gate;
+      }
+      gate.sources.push("dom.lsf-editor");
+      gate.mainViewDomPresent = Boolean(editor.querySelector(".lsf-main-view, .ls-main-view"));
+      if (!gate.mainViewDomPresent) {
+        gate.reason = "annotation_main_view_not_ready";
+        return gate;
+      }
+      gate.sources.push("dom.lsf-main-view");
+      gate.domTaskId = String(editor.querySelector(".lsf-current-task__task-id")?.textContent || "").trim();
+      if (!gate.domTaskId) {
+        gate.reason = "dom_task_identity_not_ready";
+        return gate;
+      }
+      gate.sources.push("dom.lsf-current-task__task-id");
+      if (gate.domTaskId !== gate.routeTaskId) {
+        gate.reason = "route_dom_task_mismatch";
+        return gate;
+      }
+      const store = getStore?.();
+      const storeCandidates = [
+        store?.task?.id,
+        store?.taskStore?.selected?.id,
+        store?.annotationStore?.selected?.task?.id,
+      ];
+      const storeTaskId = storeCandidates.find((value) => value !== undefined && value !== null && String(value).trim());
+      gate.storeTaskId = storeTaskId === undefined ? "" : String(storeTaskId).trim();
+      if (gate.storeTaskId) {
+        gate.sources.push("store.task");
+        if (gate.storeTaskId !== gate.routeTaskId) {
+          gate.reason = "route_store_task_mismatch";
+          return gate;
+        }
+      }
+      gate.taskIdentityMatched = true;
+      gate.eligible = true;
+      gate.reason = "eligible";
+      return gate;
+    } catch (e) {
+      gate.reason = "annotation_editor_not_ready";
+      return gate;
+    }
+  }
+
+  function isLikelyAnnotationPage() {
+    return resolveAnnotationPageGate().eligible;
   }
 
   // v0.20 修复: 不在此处做早期检查，让 tick 自己决定是否运行
@@ -259,7 +330,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "stage1_active_time_annotation_hardening_20260701_v1";
+  const SCRIPT_VERSION = "stage3_active_time_page_gate_20260711_v1";
   window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;
   window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en";
   console.log(`HoHoNet Helper: loaded (v${SCRIPT_VERSION})`);
@@ -575,13 +646,14 @@
     container.appendChild(row);
   }
 
-  function updateActiveTimePanels(report = null, uploadStatus = lastActiveTimeUploadStatus) {
+  function updateActiveTimePanels(report = null, uploadStatus = lastActiveTimeUploadStatus, explicitPageGate = null) {
     lastActiveTimeUploadStatus = uploadStatus || lastActiveTimeUploadStatus;
     const tokenPanel = ensureActiveTimePanel(ACTIVE_TIME_TOKEN_PANEL_ID, 12);
     const statusPanel = ensureActiveTimePanel(ACTIVE_TIME_STATUS_PANEL_ID, 92);
     const token = getLogToken();
     const tokenOk = Boolean(token);
-    const metadata = report || resolveActiveTimeMetadata();
+    const pageGate = explicitPageGate || report?.pageGate || resolveAnnotationPageGate();
+    const metadata = report || (pageGate.eligible ? resolveActiveTimeMetadata(pageGate.routeTaskId) : {});
     const mode = getActiveTimePanelMode();
     const forcedOpen = isActiveTimePanelForcedOpen(metadata, lastActiveTimeUploadStatus, tokenOk);
     const showDetails = mode === "details" || forcedOpen;
@@ -599,7 +671,16 @@
     tokenPanel.style.maxWidth = "420px";
     tokenPanel.style.width = "min(420px, calc(100vw - 24px))";
     tokenPanel.style.boxShadow = "0 6px 20px rgba(15,23,42,0.18)";
-    const tokenState = getActiveTimeTokenUiState(lastActiveTimeUploadStatus, token);
+    let tokenState = getActiveTimeTokenUiState(lastActiveTimeUploadStatus, token);
+    if (tokenOk && pageGate.reason !== "eligible" && !["forbidden_403", "fetch_failed"].includes(lastActiveTimeUploadStatus) && !String(lastActiveTimeUploadStatus).startsWith("http_")) {
+      tokenState = {
+        title: "Active-Time: Not counting",
+        body: "This is not a task labeling page.",
+        border: "#94a3b8",
+        action: "Change token",
+        primary: false,
+      };
+    }
     tokenPanel.style.border = `1px solid ${tokenState.border}`;
     if (minimized) {
       tokenPanel.style.padding = "6px";
@@ -607,6 +688,12 @@
       tokenPanel.style.maxWidth = "none";
       tokenPanel.style.border = "1px solid #e5e7eb";
       tokenPanel.style.boxShadow = "0 4px 14px rgba(15,23,42,0.14)";
+      if (!pageGate.eligible) {
+        const compactStatus = document.createElement("span");
+        compactStatus.textContent = "Active-Time: Not counting (not a task labeling page)";
+        compactStatus.style.cssText = "font-size: 12px; color: #475569; margin: 0 8px;";
+        tokenPanel.appendChild(compactStatus);
+      }
       appendActiveTimePanelButton(tokenPanel, "Details", () => {
         setActiveTimePanelMode("details");
         updateActiveTimePanels(report, lastActiveTimeUploadStatus);
@@ -641,7 +728,7 @@
       });
     }
     tokenPanel.appendChild(actions);
-    const seconds = report && report.reportSeconds !== undefined ? report.reportSeconds : activeSeconds;
+    const seconds = pageGate.eligible ? (report && report.reportSeconds !== undefined ? report.reportSeconds : activeSeconds) : 0;
     statusPanel.textContent = "";
     statusPanel.style.background = "#fff";
     statusPanel.style.color = "#111827";
@@ -661,9 +748,10 @@
     appendActiveTimeDetailRow(statusPanel, "Task Source", metadata.taskIdSource || "unknown");
     appendActiveTimeDetailRow(statusPanel, "Project Source", metadata.projectIdSource || "unknown");
     appendActiveTimeDetailRow(statusPanel, "Annotation Source", metadata.annotationIdSource || "unknown");
+    appendActiveTimeDetailRow(statusPanel, "Page Gate", pageGate.reason || "unknown");
     appendActiveTimeDetailRow(statusPanel, "Late-binding", metadata.lateBindingStatus || "none");
     appendActiveTimeDetailRow(statusPanel, "Seconds", seconds);
-    statusPanel.style.border = metadata.annotationMatchStatus === "unknown_annotation" ? "1px solid #f59e0b" : "1px solid #e5e7eb";
+    statusPanel.style.border = pageGate.eligible && metadata.annotationMatchStatus === "unknown_annotation" ? "1px solid #f59e0b" : "1px solid #e5e7eb";
   }
 
   function getLabelsVisible() {
@@ -2554,9 +2642,6 @@
     // v0.20 修复: 每次 tick 都检查是否在标注页面
     // 这样可以应对 SPA 导航和延迟加载
     if (!isLikelyLabelStudioPage()) {
-      if (wasOnAnnotationPageForActiveTime) {
-        closeActiveTimeSegment("PAGE_EXIT");
-      }
       // 非 LS 页面：清理UI但继续运行（以便后续页面切换时能恢复）
       const wrapper = document.getElementById(WRAPPER_ID);
       if (wrapper) wrapper.style.display = "none";
@@ -2566,9 +2651,6 @@
     }
 
     if (!isLikelyAnnotationPage()) {
-      if (wasOnAnnotationPageForActiveTime) {
-        closeActiveTimeSegment("ANNOTATION_EXIT");
-      }
       // 在 LS 网站内，但不是标注页面：隐藏UI
       const wrapper = document.getElementById(WRAPPER_ID);
       if (wrapper) wrapper.style.display = "none";
@@ -2578,8 +2660,6 @@
       updateDebug(status);
       return;
     }
-
-    wasOnAnnotationPageForActiveTime = true;
 
     // 确保wrapper可见（可能之前被隐藏了）
     const existingWrapper = document.getElementById(WRAPPER_ID);
@@ -2968,10 +3048,22 @@
   let pageHiddenTime = null;
   const PAGE_HIDDEN_THRESHOLD = 6 * 1000; // 页面被切出超过6秒后才停止计时（可调整此参数）
   let wasOnAnnotationPageForActiveTime = false;
+  let annotationGateUnavailableTicks = 0;
 
   function resetCurrentActiveTimeSegment() {
     activeSeconds = 0;
     lastActivityTime = 0;
+  }
+
+  function clearActiveTimeTaskContext() {
+    currentTaskId = null;
+    currentActiveTimeKey = null;
+    currentActiveTimeMetadata = null;
+    wasOnAnnotationPageForActiveTime = false;
+    for (const key of ACTIVE_TIME_METADATA_KEYS) {
+      if (key !== "annotatorId") lastKnownActiveTimeMetadata[key] = null;
+    }
+    lastKnownActiveTimeMetadata.updatedAt = 0;
   }
 
   function hasActiveTimeSegmentToReport(
@@ -3083,6 +3175,7 @@
   }
 
   function resolveActiveTimeMetadata(preferredTaskId = null) {
+    const pageGate = resolveAnnotationPageGate();
     const live = captureCurrentActiveTimeMetadata(preferredTaskId);
     cacheLastKnownActiveTimeMetadata(live);
 
@@ -3123,6 +3216,7 @@
       selectedAnnotationOwnerId: String(live.selectedAnnotationOwnerId || ""),
       selectedAnnotationOwnerSource: String(live.selectedAnnotationOwnerSource || ""),
       lateBindingStatus: "",
+      pageGate,
     };
     noteActualAnnotationForContext(resolved);
     resolved.activeTimeKey = buildActiveTimeKey(resolved);
@@ -3156,6 +3250,7 @@
       activeTimeAliasFrom: metadata.activeTimeAliasFrom || "",
       activeTimeAliasReason: metadata.activeTimeAliasReason || "",
       lateBindingStatus: metadata.lateBindingStatus || "",
+      pageGate: metadata.pageGate || resolveAnnotationPageGate(),
       projectId: metadata.projectId,
       taskIdSource: metadata.taskIdSource || "unknown",
       projectIdSource: metadata.projectIdSource || "unknown",
@@ -3168,7 +3263,7 @@
       currentFragment,
       reportSeconds,
       pageType:
-        wasOnAnnotationPageForActiveTime || isLikelyAnnotationPage()
+        metadata.pageGate?.eligible || wasOnAnnotationPageForActiveTime
           ? "annotation"
           : "other",
     };
@@ -3199,6 +3294,18 @@
       is_manual_flush: manualFlush,
       script_version: SCRIPT_VERSION,
       page_type: report.pageType,
+      location_path: window.location.pathname || "",
+      location_search: report.pageGate?.routeTaskId ? `?task=${encodeURIComponent(report.pageGate.routeTaskId)}` : "",
+      page_gate_eligible: Boolean(report.pageGate?.eligible),
+      page_gate_reason: report.pageGate?.reason || "unknown",
+      page_gate_sources: (report.pageGate?.sources || []).join(";"),
+      task_route_present: Boolean(report.pageGate?.routeTaskId),
+      resolved_route_task_id: report.pageGate?.routeTaskId || "",
+      resolved_dom_task_id: report.pageGate?.domTaskId || "",
+      resolved_store_task_id: report.pageGate?.storeTaskId || "",
+      labeling_root_present: Boolean(report.pageGate?.labelingRootPresent),
+      annotation_editor_dom_present: Boolean(report.pageGate?.editorDomPresent),
+      annotation_main_view_dom_present: Boolean(report.pageGate?.mainViewDomPresent),
       ...getForeignRecruitmentMetadataForPayload(),
     };
   }
@@ -3417,10 +3524,8 @@
   ) {
     const report = buildActiveTimeReport(currentTaskId || getTaskId(), activeSeconds, currentActiveTimeMetadata);
     resetCurrentActiveTimeSegment();
-    currentTaskId = null;
-    currentActiveTimeKey = null;
-    currentActiveTimeMetadata = null;
-    wasOnAnnotationPageForActiveTime = false;
+    clearActiveTimeTaskContext();
+    annotationGateUnavailableTicks = 0;
 
     if (!report) return;
 
@@ -3459,12 +3564,12 @@
   });
 
   // 监听用户活动（只在页面可见时更新）
-  function isActiveTimeCountingPage() {
-    return isPageVisible && isWindowFocused && isLikelyAnnotationPage();
+  function isActiveTimeCountingPage(pageGate = resolveAnnotationPageGate()) {
+    return isPageVisible && isWindowFocused && pageGate.eligible;
   }
 
-  function shouldFlushActiveTimeOnCountingStop() {
-    return !isPageVisible || !isLikelyAnnotationPage();
+  function shouldFlushActiveTimeOnCountingStop(pageGate = resolveAnnotationPageGate()) {
+    return !isPageVisible || !pageGate.eligible;
   }
 
   ["mousemove", "keydown", "click", "scroll", "wheel"].forEach((evt) => {
@@ -3482,19 +3587,30 @@
   // 累积活动时间的计时器
   // v0.21 修复: 仅在「页面可见 + 标注任务页面 + 有近期交互」时累积
   setInterval(() => {
-    const onCountingPage = isActiveTimeCountingPage();
+    const pageGate = resolveAnnotationPageGate();
+    const onCountingPage = isActiveTimeCountingPage(pageGate);
     if (onCountingPage) {
-      handleActiveTimeKeyChange(resolveActiveTimeMetadata());
+      annotationGateUnavailableTicks = 0;
+      handleActiveTimeKeyChange(resolveActiveTimeMetadata(pageGate.routeTaskId));
     } else {
-      updateActiveTimePanels(null, lastActiveTimeUploadStatus);
+      updateActiveTimePanels(null, lastActiveTimeUploadStatus, pageGate);
     }
     if (!onCountingPage) {
-      const shouldFlush = shouldFlushActiveTimeOnCountingStop();
-      if (shouldFlush && wasOnAnnotationPageForActiveTime && activeSeconds > 0) {
+      const transientEditorState = pageGate.routeTaskId && [
+        "labeling_mode_not_ready",
+        "annotation_editor_not_ready",
+        "annotation_main_view_not_ready",
+        "dom_task_identity_not_ready",
+      ].includes(pageGate.reason);
+      annotationGateUnavailableTicks = transientEditorState
+        ? annotationGateUnavailableTicks + 1
+        : 2;
+      const shouldFlush = shouldFlushActiveTimeOnCountingStop(pageGate);
+      if (shouldFlush && wasOnAnnotationPageForActiveTime && activeSeconds > 0 && annotationGateUnavailableTicks >= 2) {
         closeActiveTimeSegment("LEAVE_ANNOTATION_PAGE");
       }
       lastActivityTime = 0;
-      if (shouldFlush) {
+      if (shouldFlush && annotationGateUnavailableTicks >= 2) {
         wasOnAnnotationPageForActiveTime = false;
       }
     }
@@ -3510,9 +3626,9 @@
 
     // 更新 UI
     const totalForTask =
-      currentActiveTimeKey && taskCumulativeSeconds.has(currentActiveTimeKey)
+      onCountingPage && currentActiveTimeKey && taskCumulativeSeconds.has(currentActiveTimeKey)
         ? taskCumulativeSeconds.get(currentActiveTimeKey) + activeSeconds
-        : activeSeconds;
+        : onCountingPage ? activeSeconds : 0;
     if (isDebugPanelEnabled()) {
       const debugPanel = document.getElementById(DEBUG_ID);
       if (debugPanel) {
@@ -3653,10 +3769,6 @@
     forceTaskId = null,
     forcedActiveSeconds = null,
   ) {
-    if (!isLikelyAnnotationPage()) {
-      return;
-    }
-
     const report = buildActiveTimeReport(forceTaskId, forcedActiveSeconds);
     if (!report) {
       return;
@@ -3691,11 +3803,12 @@
   // 【独立的任务切换检测器】每秒检测一次任务ID变化，立即上报
   // 这是一个独立的机制，不依赖30秒周期，保证任务切换时立即上报
   setInterval(() => {
-    if (!isActiveTimeCountingPage()) {
+    const pageGate = resolveAnnotationPageGate();
+    if (!isActiveTimeCountingPage(pageGate)) {
       return;
     }
 
-    const taskId = getTaskId();
+    const taskId = pageGate.routeTaskId;
 
     if (taskId === "unknown") {
       return;
@@ -3733,11 +3846,12 @@
   // 每 30 秒发送一次日志 (从 10 秒修改以减少流量)
   setInterval(() => {
     // 只在“标注页面”尝试记日志，避免在项目列表/首页等页面误计时/误上报。
-    if (!isActiveTimeCountingPage()) {
+    const pageGate = resolveAnnotationPageGate();
+    if (!isActiveTimeCountingPage(pageGate)) {
       return;
     }
 
-    const taskId = getTaskId();
+    const taskId = pageGate.routeTaskId;
     const projectId = getProjectId();
 
     // 配置:

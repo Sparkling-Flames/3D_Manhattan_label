@@ -660,3 +660,51 @@ def test_calibration_task_fallback_excludes_unknown_seconds(tmp_path: Path):
     assert row["primary_active_time_eligible"] is False
     assert row["sensitivity_active_time_eligible"] is True
     assert row["active_time_integrity_status"] == "task_level_fallback"
+
+
+def test_load_active_logs_preserves_stage3_page_gate_audit_fields(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+    (active_logs / "active_times_2026-07-11.jsonl").write_text(
+        "\n".join(
+            [
+                json.dumps(
+                    {
+                        "project_id": "69",
+                        "task_id": "3305",
+                        "annotator_id": "8",
+                        "annotation_id": "a1",
+                        "session_id": "s1",
+                        "active_seconds": 12,
+                        "page_gate_eligible": True,
+                        "page_gate_reason": "eligible",
+                        "page_gate_sources": "url.query.task;dom.lsf-editor",
+                        "script_version": "stage3_active_time_page_gate_20260711_v1",
+                    }
+                ),
+                json.dumps(
+                    {
+                        "project_id": "69",
+                        "task_id": "3305",
+                        "annotator_id": "8",
+                        "annotation_id": "a1",
+                        "session_id": "s1",
+                        "active_seconds": 12,
+                        "page_gate_eligible": False,
+                        "page_gate_reason": "route_dom_task_mismatch",
+                    }
+                ),
+            ]
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+
+    logs = load_active_logs(str(active_logs))
+    entry = logs[("69", "3305", "8", "a1")]
+
+    assert entry["active_time_value"] == 12.0
+    assert entry["active_time_page_gate_reasons"] == "eligible;route_dom_task_mismatch"
+    assert entry["active_time_page_gate_sources"] == "url.query.task;dom.lsf-editor"
+    assert entry["active_time_script_versions"] == "stage3_active_time_page_gate_20260711_v1"
+    assert entry["active_time_page_gate_ineligible_event_count"] == 1

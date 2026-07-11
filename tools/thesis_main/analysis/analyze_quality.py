@@ -250,6 +250,10 @@ def main():
                 active_time_project_ids = ''
                 active_time_session_count = 0
                 active_time_event_count = 0
+                active_time_page_gate_reasons = ''
+                active_time_page_gate_sources = ''
+                active_time_script_versions = ''
+                active_time_page_gate_ineligible_event_count = 0
                 lead_time_seconds = float(ann.get('lead_time', 0) or 0)
                 if active_log_entry:
                     active_time = float(active_log_entry.get('active_time_value', 0.0))
@@ -258,6 +262,10 @@ def main():
                     active_time_project_ids = str(active_log_entry.get('active_time_project_ids', ''))
                     active_time_session_count = int(active_log_entry.get('active_time_session_count', 0))
                     active_time_event_count = int(active_log_entry.get('active_time_event_count', 0))
+                    active_time_page_gate_reasons = str(active_log_entry.get('active_time_page_gate_reasons', ''))
+                    active_time_page_gate_sources = str(active_log_entry.get('active_time_page_gate_sources', ''))
+                    active_time_script_versions = str(active_log_entry.get('active_time_script_versions', ''))
+                    active_time_page_gate_ineligible_event_count = int(active_log_entry.get('active_time_page_gate_ineligible_event_count', 0))
                 elif lead_time_seconds > 0:
                     active_time = lead_time_seconds
                     active_time_source = 'lead_time_fallback'
@@ -454,6 +462,10 @@ def main():
                     'active_time_match_status': active_time_match_status,
                     'active_time_session_count': active_time_session_count,
                     'active_time_event_count': active_time_event_count,
+                    'active_time_page_gate_reasons': active_time_page_gate_reasons,
+                    'active_time_page_gate_sources': active_time_page_gate_sources,
+                    'active_time_script_versions': active_time_script_versions,
+                    'active_time_page_gate_ineligible_event_count': active_time_page_gate_ineligible_event_count,
                     'lead_time_seconds': lead_time_seconds,
                     'iou': iou_primary,          # For compatibility
                     'iou_manual': iou_manual,    # Explicit Manual IoU
