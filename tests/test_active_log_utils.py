@@ -2,7 +2,7 @@ import json
 from pathlib import Path
 
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
-from tools.thesis_main.analysis.quality_core.active_time import load_active_logs, lookup_active_log_entry
+from tools.thesis_main.analysis.quality_core.active_time import load_active_logs, lookup_active_log_entry, lookup_unknown_active_time_audit
 
 
 def test_resolve_active_log_files_prefers_new_server_and_ignores_legacy(tmp_path: Path):
@@ -541,3 +541,74 @@ def test_annotation_owner_map_none_keeps_legacy_annotation_log_behavior(tmp_path
 
     assert status == "project+task+annotator+annotation"
     assert entry["active_time_value"] == 20.0
+
+
+def test_calibration_unknown_is_audit_only_and_not_task_time(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+    (active_logs / "active_times_2026-07-03.jsonl").write_text(
+        json.dumps({"project_id": "65", "task_id": "1", "annotator_id": "w1", "annotation_id": "unknown_annotation", "session_id": "s1", "active_seconds": 7}) + "\n",
+        encoding="utf-8",
+    )
+    logs = load_active_logs(str(active_logs), policy="calibration")
+
+    assert ("65", "1", "w1") not in logs
+    audit = lookup_unknown_active_time_audit(logs, "65", "1", "w1")
+    assert audit["unassigned_active_time_seconds"] == 7.0
+    assert audit["unknown_annotation_event_count"] == 1
+    assert audit["unknown_annotation_session_count"] == 1
+    assert audit["audit_only"] is True
+
+
+def test_calibration_known_and_unknown_counts_only_owner_validated_known(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+    (active_logs / "active_times_2026-07-03.jsonl").write_text(
+        "\n".join([
+            json.dumps({"project_id": "65", "task_id": "2", "annotator_id": "w1", "annotation_id": "unknown_annotation", "session_id": "s1", "active_seconds": 4}),
+            json.dumps({"project_id": "65", "task_id": "2", "annotator_id": "w1", "annotation_id": "a1", "session_id": "s1", "active_seconds": 10}),
+        ]) + "\n",
+        encoding="utf-8",
+    )
+    logs = load_active_logs(
+        str(active_logs), annotation_owner_map={("65", "2", "a1"): "w1"}, policy="calibration"
+    )
+
+    assert logs[("65", "2", "w1")]["active_time_value"] == 10.0
+    assert logs[("65", "2", "w1", "a1")]["active_time_value"] == 10.0
+    assert logs[("65", "2", "w1", "a1")]["known_unknown_oscillation_flag"] is True
+    assert logs[("65", "2", "w1", "a1")]["unassigned_active_time_seconds"] == 4.0
+
+
+def test_calibration_does_not_merge_short_unknown_bootstrap(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+    (active_logs / "active_times_2026-07-03.jsonl").write_text(
+        "\n".join([
+            json.dumps({"project_id": "65", "task_id": "3", "annotator_id": "w1", "annotation_id": "unknown_annotation", "session_id": "s1", "active_seconds": 4, "server_received_at": "2026-07-03T00:00:00"}),
+            json.dumps({"project_id": "65", "task_id": "3", "annotator_id": "w1", "annotation_id": "a1", "session_id": "s1", "active_seconds": 4, "server_received_at": "2026-07-03T00:00:05", "active_time_alias_from": "65|3|w1|unknown_annotation", "active_time_alias_reason": "short_unknown_bootstrap", "late_binding_status": "short_unknown_bootstrap_merged"}),
+        ]) + "\n",
+        encoding="utf-8",
+    )
+    logs = load_active_logs(
+        str(active_logs), annotation_owner_map={("65", "3", "a1"): "w1"}, policy="calibration"
+    )
+
+    assert logs[("65", "3", "w1", "a1")]["active_time_value"] == 4.0
+    assert lookup_unknown_active_time_audit(logs, "65", "3", "w1")["unassigned_active_time_seconds"] == 4.0
+
+
+def test_calibration_owner_mismatch_remains_unmatched(tmp_path: Path):
+    active_logs = tmp_path / "active_logs"
+    active_logs.mkdir()
+    (active_logs / "active_times_2026-07-03.jsonl").write_text(
+        json.dumps({"project_id": "65", "task_id": "4", "annotator_id": "w2", "annotation_id": "a1", "session_id": "s1", "active_seconds": 10}) + "\n",
+        encoding="utf-8",
+    )
+    logs = load_active_logs(
+        str(active_logs), annotation_owner_map={("65", "4", "a1"): "w1"}, policy="calibration"
+    )
+
+    entry, status = lookup_active_log_entry(logs, "65", "4", "w2", "a1")
+    assert entry is None
+    assert status == "missing"

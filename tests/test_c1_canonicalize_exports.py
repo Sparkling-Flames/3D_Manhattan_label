@@ -110,9 +110,9 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
     assert summary["n_canonical_rows"] == 4
     assert summary["outside_assignment_submission_count"] == 0
     assert summary["duplicate_worker_task_submission_count"] == 1
-    assert summary["active_time_primary_ineligible_count"] == 2
+    assert summary["active_time_primary_ineligible_count"] == 3
     assert summary["active_time_log_missing_count"] == 0
-    assert summary["active_time_task_level_fallback_count"] == 1
+    assert summary["active_time_task_level_fallback_count"] == 2
     assert summary["active_time_lead_time_fallback_count"] == 1
     assert summary["active_time_sensitivity_eligible_count"] == 4
     assert summary["structural_integrity_passed"] is False
@@ -122,7 +122,7 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
     assert all(row["canonical_annotation_id"] for row in rows)
     assert by_runtime["200"]["primary_active_time_eligible"] == "true"
     assert by_runtime["201"]["active_time_match_status"] == "project+task+annotator"
-    assert by_runtime["201"]["primary_active_time_eligible"] == "true"
+    assert by_runtime["201"]["primary_active_time_eligible"] == "false"
     assert by_runtime["202"]["active_time_source"] == "lead_time_fallback"
     assert by_runtime["202"]["primary_active_time_eligible"] == "false"
     assert by_runtime["202"]["sensitivity_active_time_eligible"] == "true"

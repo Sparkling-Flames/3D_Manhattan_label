@@ -91,7 +91,7 @@ def _is_short_bootstrap_alias(event):
     )
 
 
-def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_map=None):
+def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_map=None, policy='general'):
     """
     Load active time logs from a directory of JSONL files.
     Logic: max within a session, sum across sessions.
@@ -120,6 +120,7 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
     actual_annotations_by_context = defaultdict(set)
     unknown_events_by_context = defaultdict(list)
     parsed_events = []
+    calibration = policy == 'calibration'
     start_dt = _parse_cli_datetime(start_time) if start_time else None
     end_dt = _parse_cli_datetime(end_time, is_end=True) if end_time else None
 
@@ -155,7 +156,10 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
                     alias_from = _parse_active_time_key(data.get('active_time_alias_from'))
                     alias_reason = str(data.get('active_time_alias_reason', '') or '').strip()
                     late_status = str(data.get('late_binding_status', '') or '').strip()
+                    owner = _annotation_owner(annotation_owner_map, p_id, t_id, ann_id)
                     if not _same_or_unknown_owner(annotation_owner_map, p_id, t_id, ann_id, a_id):
+                        continue
+                    if calibration and ann_id and ann_id != 'unknown_annotation' and owner != a_id:
                         continue
 
                     event = {
@@ -213,8 +217,10 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
 
     for event in parsed_events:
         try:
+            if calibration and event['annotation_id'] == 'unknown_annotation':
+                continue
             key = _event_key(event)
-            if _is_short_bootstrap_alias(event):
+            if not calibration and _is_short_bootstrap_alias(event):
                 alias_p, alias_t, alias_a, alias_ann = event['alias_from']
                 if can_merge_short_unknown(event):
                     alias_superseded_session_keys.add((alias_p, alias_t, alias_a, alias_ann, event['session_id']))
@@ -234,6 +240,15 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
         'active_time_event_count': 0,
         'active_time_project_ids': set(),
     })
+    unknown_audit = defaultdict(lambda: {'seconds_by_session': defaultdict(float), 'event_count': 0, 'known_sessions': set()})
+    for event in parsed_events:
+        context = (event['project_id'], event['task_id'], event['annotator_id'])
+        if event['annotation_id'] == 'unknown_annotation':
+            audit = unknown_audit[context]
+            audit['seconds_by_session'][event['session_id']] = max(audit['seconds_by_session'][event['session_id']], event['seconds'])
+            audit['event_count'] += 1
+        else:
+            unknown_audit[context]['known_sessions'].add(event['session_id'])
     for (p_id, t_id, a_id, ann_id, _s_id), max_sec in session_maxes.items():
         if (p_id, t_id, a_id, ann_id, _s_id) in alias_superseded_session_keys:
             continue
@@ -256,12 +271,33 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
 
     serialized = {}
     for key, value in final_logs.items():
+        context = key[:3]
+        audit = unknown_audit[context]
+        unknown_sessions = set(audit['seconds_by_session'])
         serialized[key] = {
             'active_time_value': float(value['active_time_value']),
             'active_time_source_file': ";".join(sorted(value['active_time_source_file'])),
             'active_time_session_count': int(value['active_time_session_count']),
             'active_time_event_count': int(value['active_time_event_count']),
             'active_time_project_ids': ";".join(sorted(value['active_time_project_ids'])),
+            'unassigned_active_time_seconds': float(sum(audit['seconds_by_session'].values())),
+            'unknown_annotation_event_count': int(audit['event_count']),
+            'unknown_annotation_session_count': len(unknown_sessions),
+            'known_unknown_oscillation_flag': bool(unknown_sessions & audit['known_sessions']),
+            'active_time_exclusion_reason': 'unknown_annotation_audit_only' if unknown_sessions else '',
+        }
+
+    for context, audit in unknown_audit.items():
+        unknown_sessions = set(audit['seconds_by_session'])
+        if not unknown_sessions:
+            continue
+        serialized[("__unknown_audit__", *context)] = {
+            'unassigned_active_time_seconds': float(sum(audit['seconds_by_session'].values())),
+            'unknown_annotation_event_count': int(audit['event_count']),
+            'unknown_annotation_session_count': len(unknown_sessions),
+            'known_unknown_oscillation_flag': bool(unknown_sessions & audit['known_sessions']),
+            'active_time_exclusion_reason': 'unknown_annotation_audit_only',
+            'audit_only': True,
         }
 
     by_legacy_pair = defaultdict(list)
@@ -327,3 +363,7 @@ def lookup_active_log_entry(active_times, project_id, task_id, annotator_id, ann
     if active_times.get(("__ambiguous__", t_id, a_id)):
         return None, 'ambiguous_project_log_no_match'
     return None, 'missing'
+
+
+def lookup_unknown_active_time_audit(active_times, project_id, task_id, annotator_id):
+    return active_times.get(("__unknown_audit__", str(project_id or '').strip(), str(task_id), str(annotator_id)), {})

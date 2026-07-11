@@ -81,6 +81,12 @@ CANONICAL_FIELDS = [
     "active_time_source_file",
     "active_time_session_count",
     "active_time_event_count",
+    "unassigned_active_time_seconds",
+    "unknown_annotation_event_count",
+    "unknown_annotation_session_count",
+    "known_unknown_oscillation_flag",
+    "active_time_exclusion_reason",
+    "audit_only",
     "reserve_realized_submission",
 ]
 
@@ -97,6 +103,12 @@ ACTIVE_AUDIT_FIELDS = [
     "active_time_source_file",
     "active_time_session_count",
     "active_time_event_count",
+    "unassigned_active_time_seconds",
+    "unknown_annotation_event_count",
+    "unknown_annotation_session_count",
+    "known_unknown_oscillation_flag",
+    "active_time_exclusion_reason",
+    "audit_only",
     "primary_active_time_eligible",
     "sensitivity_active_time_eligible",
 ]
@@ -227,7 +239,7 @@ def build_canonicalization(
     assigned, internal = assignment_sets(manual_assignment, semi_assignment, worker_distribution)
     runtime_rows, runtime_lookup, collision_rows = build_runtime_task_mapping(export_paths, planned_task_mapping)
     canonical_base, duplicate_base, base_summary = build_canonical_tables(export_paths, active_log)
-    active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths)) if active_log else {}
+    active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths), policy="calibration") if active_log else {}
 
     worker_task_counts = Counter(
         (
@@ -253,24 +265,12 @@ def build_canonicalization(
             session_count = int(row.get("active_time_session_count") or 0)
         except (TypeError, ValueError):
             session_count = 0
-        primary, sensitivity = active_time_policy(
-            safe(row.get("active_time_source")),
-            safe(row.get("active_time_match_status")),
-            session_count,
-            str(row.get("duplicate_time_ambiguous", "")).lower() == "true" or row.get("duplicate_time_ambiguous") is True,
-        )
         duplicate_time_ambiguous = str(row.get("duplicate_time_ambiguous", "")).lower() == "true" or row.get("duplicate_time_ambiguous") is True
-        active_override: dict[str, Any] = {}
-        if duplicate_time_ambiguous and active_times:
-            task_level_active = active_time_for_annotation(active_times, project_id, runtime_task_id, worker_id, raw_annotation_id, 0.0)
-            if task_level_active["active_time_source"] == "log":
-                active_override = task_level_active
-                primary, sensitivity = active_time_policy(
-                    safe(task_level_active.get("active_time_source")),
-                    safe(task_level_active.get("active_time_match_status")),
-                    int(task_level_active.get("active_time_session_count") or 0),
-                    duplicate_time_ambiguous=True,
-                )
+        active_override = active_time_for_annotation(active_times, project_id, runtime_task_id, worker_id, raw_annotation_id, float(row.get("lead_time_seconds") or 0))
+        primary, sensitivity = active_time_policy(
+            safe(active_override.get("active_time_source")), safe(active_override.get("active_time_match_status")),
+            int(active_override.get("active_time_session_count") or 0), duplicate_time_ambiguous=duplicate_time_ambiguous,
+        )
         try:
             duplicate_group_size = int(row.get("duplicate_group_size") or 1)
         except (TypeError, ValueError):
@@ -314,6 +314,12 @@ def build_canonicalization(
             "active_time_source_file": active_override.get("active_time_source_file", row.get("active_time_source_file", "")),
             "active_time_session_count": active_override.get("active_time_session_count", row.get("active_time_session_count", "")),
             "active_time_event_count": active_override.get("active_time_event_count", row.get("active_time_event_count", "")),
+            "unassigned_active_time_seconds": active_override.get("unassigned_active_time_seconds", 0),
+            "unknown_annotation_event_count": active_override.get("unknown_annotation_event_count", 0),
+            "unknown_annotation_session_count": active_override.get("unknown_annotation_session_count", 0),
+            "known_unknown_oscillation_flag": bool_text(bool(active_override.get("known_unknown_oscillation_flag"))),
+            "active_time_exclusion_reason": active_override.get("active_time_exclusion_reason", ""),
+            "audit_only": bool_text(bool(active_override.get("audit_only"))),
             "reserve_realized_submission": bool_text(is_reserve(info)),
         }
         canonical_rows.append(c_row)
@@ -388,7 +394,7 @@ def build_canonicalization(
         "active_log_missing_rate": round(active_counts["active_time_log_missing_count"] / len(canonical_rows), 6) if canonical_rows else 0.0,
         "canonical_csv": str(output_dir / "c1_canonical_annotations.csv"),
         "raw_input_manifest": str(raw_manifest),
-        "primary_active_time_policy": "log with project+task+worker+annotation or unambiguous project+task+worker direct match; lead_time never primary",
+        "primary_active_time_policy": "owner-validated project+task+worker+annotation exact log match only; task fallback and lead_time never primary",
         "structural_integrity_passed": structural_integrity_passed,
         "collection_completeness_passed": collection_completeness_passed,
         "require_complete": require_complete,
