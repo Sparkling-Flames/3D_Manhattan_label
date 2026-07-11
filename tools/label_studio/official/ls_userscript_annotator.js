@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator
 // @namespace    http://tampermonkey.net/
-// @version      stage3_active_time_page_gate_20260711_v1
+// @version      stage3_active_time_page_gate_20260711_v2
 // @description  正式标注版：连接 Label Studio 与 HoHoNet 3D 查看器，并强制记录 active_time
 // @author       HoHoNet
 // @match        http://175.178.71.217:8080/*
@@ -69,6 +69,10 @@
       const queryTaskId = String(params.get("task") || "").trim();
       const pathMatch = window.location.pathname.match(/\/tasks\/([^/?#]+)/);
       const pathTaskId = pathMatch ? String(pathMatch[1]).trim() : "";
+      if (queryTaskId && pathTaskId && queryTaskId !== pathTaskId) {
+        gate.reason = "task_route_conflict";
+        return gate;
+      }
       gate.routeTaskId = queryTaskId || pathTaskId;
       gate.sanitizedLocationSearch = gate.routeTaskId
         ? `?task=${encodeURIComponent(gate.routeTaskId)}`
@@ -265,7 +269,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "stage3_active_time_page_gate_20260711_v1";
+  const SCRIPT_VERSION = "stage3_active_time_page_gate_20260711_v2";
   console.log(`HoHoNet Helper: 已加载 (v${SCRIPT_VERSION})`);
   console.log(
     "HoHoNet viewer base: set localStorage.HOHONET_VIEWER_BASE_URL = location.origin when /tools is reverse-proxied on LS origin",

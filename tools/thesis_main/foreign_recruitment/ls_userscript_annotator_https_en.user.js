@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator HTTPS EN
 // @namespace    https://label.sparkle0825.top/
-// @version      stage3_active_time_page_gate_20260711_v1
+// @version      stage3_active_time_page_gate_20260711_v2
 // @description  Self-contained HTTPS helper for foreign HoHoNet Stage 1 annotators. Based on the official annotator helper; adds same-origin HTTPS defaults and optional CloudResearch worker-id metadata.
 // @author       HoHoNet
 // @match        https://label.sparkle0825.top/*
@@ -65,6 +65,10 @@
       const queryTaskId = String(params.get("task") || "").trim();
       const pathMatch = window.location.pathname.match(/\/tasks\/([^/?#]+)/);
       const pathTaskId = pathMatch ? String(pathMatch[1]).trim() : "";
+      if (queryTaskId && pathTaskId && queryTaskId !== pathTaskId) {
+        gate.reason = "task_route_conflict";
+        return gate;
+      }
       gate.routeTaskId = queryTaskId || pathTaskId;
       gate.sanitizedLocationSearch = gate.routeTaskId
         ? `?task=${encodeURIComponent(gate.routeTaskId)}`
@@ -341,7 +345,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "stage3_active_time_page_gate_20260711_v1";
+  const SCRIPT_VERSION = "stage3_active_time_page_gate_20260711_v2";
   window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;
   window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en";
   console.log(`HoHoNet Helper: loaded (v${SCRIPT_VERSION})`);
