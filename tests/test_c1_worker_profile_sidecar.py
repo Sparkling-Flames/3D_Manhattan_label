@@ -31,6 +31,7 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
         "task_final_scope",
         "worker_scope_response",
         "geometry_reference_status",
+        "geometry_score_gate_passed",
         "geometry_valid",
         "used_for_r_u",
         "assigned_expected",
@@ -299,7 +300,7 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert main["profile_freeze_status"] == "C1_provisional"
     assert {"profile_confidence", "protocol_confidence", "diagnostic_profile_confidence", "profile_confidence_notes"} <= set(main)
     assert main["n_calib_support"] == "1"
-    assert main["n_geometry_support"] == "2"
+    assert main["n_geometry_support"] == "0"
     assert main["n_scope_support"] == "9"
     assert main["n_undercoverage_support"] == "1"
     assert main["blind_trust_or_correction_failure_rate"] == "1.000000"
@@ -332,6 +333,7 @@ def test_worker_profile_sidecar_confidence_and_interpretation_levels(tmp_path: P
         "task_final_scope",
         "worker_scope_response",
         "geometry_reference_status",
+        "geometry_score_gate_passed",
         "geometry_valid",
         "used_for_r_u",
         "assigned_expected",
@@ -352,6 +354,7 @@ def test_worker_profile_sidecar_confidence_and_interpretation_levels(tmp_path: P
             "task_final_scope": "in_scope",
             "worker_scope_response": "correct_in_scope",
             "geometry_reference_status": "expert_hard_single",
+            "geometry_score_gate_passed": "true",
             "geometry_valid": "true",
             "used_for_r_u": used_for_r_u,
             "assigned_expected": assigned_expected,
@@ -501,3 +504,33 @@ def test_system_collection_issue_is_not_worker_process_failure(tmp_path: Path) -
     assert evidence["attributable"]["process_invalid"] == "true"
     assert summary["unassigned_active_time_seconds_total"] == 11.0
     assert summary["system_collection_issue_row_count"] == 5
+
+
+def test_geometry_audit_rows_do_not_enter_family_denominator_without_scorer_gate(tmp_path: Path) -> None:
+    quality = tmp_path / "quality.csv"
+    _csv(quality, ["round_id", "worker_id", "task_id", "canonical_annotation_id", "dataset_group", "condition", "task_final_scope", "geometry_reference_status", "geometry_valid", "used_for_r_u", "assigned_expected"], [{"round_id": "C1", "worker_id": "w1", "task_id": "t1", "canonical_annotation_id": "a1", "dataset_group": "Calibration_anchor", "condition": "manual", "task_final_scope": "in_scope", "geometry_reference_status": "expert_hard_single", "geometry_valid": "true", "used_for_r_u": "true", "assigned_expected": "true"}])
+    worker = tmp_path / "worker.csv"
+    _csv(worker, ["worker_id"], [{"worker_id": "w1"}])
+    materialize(quality, worker, tmp_path / "out")
+    evidence = _rows(tmp_path / "out" / "worker_task_evidence_table_C1.csv")[0]
+    family = next(row for row in _rows(tmp_path / "out" / "worker_failure_family_response_C1.csv") if row["family"] == "geometry_quality_failure")
+    assert evidence["family_evaluable"] == "false"
+    assert evidence["family_included_in_denominator"] == "false"
+    assert family["n_observed"] == "0"
+
+
+def test_geometry_reliability_rejects_lower_direction_and_accepts_compatible_higher_components(tmp_path: Path) -> None:
+    from tools.thesis_main.analysis.c1_materialize_worker_profile_sidecar import build_main_matrix
+
+    lower = [
+        {"worker_id": "w1", "stage": "P1", "pool": "a", "included_in_r_geometry": True, "quality_metric_value": "1", "quality_metric_name": "rmse", "geometry_metric_direction": "lower_is_better", "geometry_normalization_rule": "raw", "task_id": "a", "canonical_annotation_id": "a"},
+        {"worker_id": "w1", "stage": "C1", "pool": "b", "included_in_r_geometry": True, "quality_metric_value": "2", "quality_metric_name": "rmse", "geometry_metric_direction": "lower_is_better", "geometry_normalization_rule": "raw", "task_id": "b", "canonical_annotation_id": "b"},
+    ]
+    lower_main = build_main_matrix(lower, {"w1": {}})[0]
+    assert lower_main["r_geometry_u"] == ""
+    assert lower_main["geometry_reliability_exclusion_reason"] == "geometry_component_direction_not_higher_is_better"
+    higher = [
+        {**row, "quality_metric_name": "iou", "quality_metric_value": "0.8", "geometry_metric_direction": "higher_is_better", "geometry_normalization_rule": "unit_interval"}
+        for row in lower
+    ]
+    assert build_main_matrix(higher, {"w1": {}})[0]["r_geometry_u"] == "0.800000"

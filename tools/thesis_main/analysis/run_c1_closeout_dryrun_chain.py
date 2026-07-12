@@ -10,8 +10,6 @@ _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
-from tools.thesis_main.analysis import build_c2_assignment_manifest_from_c1_gaps
-from tools.thesis_main.analysis import c1_materialize_c2_gap_audits
 from tools.thesis_main.analysis import c1_materialize_quality_table
 from tools.thesis_main.analysis import c1_materialize_worker_profile_sidecar
 from tools.thesis_main.analysis import c1_materialize_worker_state
@@ -24,16 +22,11 @@ def _blockers(summary: dict[str, Any]) -> list[str]:
         blockers.append("quality_table_blockers")
     if summary["dt_backflow"]:
         blockers.append("dt_backflow")
-    if summary["c2_direct_assignment"]:
-        blockers.append("c2_direct_assignment")
-    if not summary["reserve_only"]:
-        blockers.append("reserve_only_false")
-    if summary["reserve_capacity_shortfall_count"] > 0:
-        blockers.append("reserve_capacity_shortfall")
     if not summary["profile_sidecar_generated"]:
         blockers.append("profile_sidecar_missing")
     if summary["profile_freeze_status"] != "C1_provisional":
         blockers.append("profile_freeze_status_not_C1_provisional")
+    blockers.extend(["thesis_facing_closeout_blocked_pending_p1_integrity_review", "c2_decision_chain_blocked_pending_formal_closeout"])
     return blockers
 
 
@@ -56,9 +49,9 @@ def build_gate_summary(
         "r_u_estimated": truthy(quality_table_summary.get("r_u_estimated")) or truthy(worker_state_summary.get("r_u_estimated")) or truthy(worker_profile_sidecar_summary.get("r_u_calib_estimated")),
         "dt_backflow": truthy(quality_table_summary.get("dt_backflow")),
         "worker_state_provisional": truthy(worker_state_summary.get("provisional")),
-        "c2_direct_assignment": truthy(c2_gap_summary.get("direct_assignment")),
-        "reserve_only": truthy(c2_draft_summary.get("reserve_only")),
-        "reserve_capacity_shortfall_count": int(c2_draft_summary.get("reserve_capacity_shortfall_count") or 0),
+        "c2_direct_assignment": False,
+        "reserve_only": False,
+        "reserve_capacity_shortfall_count": 0,
         "profile_sidecar_generated": profile_generated,
         "profile_freeze_status": safe(worker_profile_sidecar_summary.get("profile_freeze_status")),
         "p1_predictive_validity_status": safe(worker_profile_sidecar_summary.get("p1_predictive_validity_status")) or "not_evaluable",
@@ -67,11 +60,19 @@ def build_gate_summary(
         "full_diagnostic_profile_ready": truthy(worker_profile_sidecar_summary.get("full_diagnostic_profile_ready")),
         "p1_bundle_structurally_complete": truthy(worker_profile_sidecar_summary.get("p1_bundle_structurally_complete")),
         "pending_adjudication_count": int(worker_profile_sidecar_summary.get("pending_adjudication_count") or 0),
-        "passed": True,
-        "blocked_for_launch": False,
+        "raw_pipeline_ready": profile_generated and not quality_table_summary.get("blockers"),
+        "provisional_sidecar_ready": (
+            profile_generated
+            and not quality_table_summary.get("blockers")
+            and safe(worker_profile_sidecar_summary.get("profile_freeze_status")) == "C1_provisional"
+        ),
+        "thesis_facing_closeout_ready": False,
+        "c2_decision_chain_ready": False,
+        "passed": False,
+        "blocked_for_launch": True,
         "blockers": [],
         "warnings": list(worker_profile_sidecar_summary.get("warnings") or []),
-        "passed_semantics": "dryrun_chain_structure_only_not_official_c1_closeout",
+        "passed_semantics": "provisional_pipeline_only_formal_closeout_and_c2_decisions_blocked",
     }
     summary["blockers"] = _blockers(summary)
     summary["blocked_for_launch"] = bool(summary["blockers"])
@@ -98,6 +99,10 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- reserve_capacity_shortfall_count: {summary['reserve_capacity_shortfall_count']}",
         f"- profile_sidecar_generated: {str(summary['profile_sidecar_generated']).lower()}",
         f"- profile_freeze_status: {summary['profile_freeze_status']}",
+        f"- raw_pipeline_ready: {str(summary['raw_pipeline_ready']).lower()}",
+        f"- provisional_sidecar_ready: {str(summary['provisional_sidecar_ready']).lower()}",
+        f"- thesis_facing_closeout_ready: false",
+        f"- c2_decision_chain_ready: false",
         "",
         "## Blockers",
         *(f"- {item}" for item in summary["blockers"]),
@@ -133,14 +138,9 @@ def materialize(
     quality_csv = output_dir / "c1_quality_annotations.csv"
     worker_summary = c1_materialize_worker_state.materialize(quality_csv, [assignment_manifest], output_dir, min_r_u_tasks)
     worker_state_csv = output_dir / "worker_state_snapshot_C1.csv"
-    gap_summary = c1_materialize_c2_gap_audits.materialize(quality_csv, worker_state_csv, output_dir, min_scene_support, min_calib, epsilon_r)
-    c2_summary = build_c2_assignment_manifest_from_c1_gaps.materialize(
-        reserve_pool_csv,
-        Path(gap_summary["ci_precision_audit_csv"]),
-        Path(gap_summary["scene_coverage_gap_csv"]),
-        c2_output_dir,
-        tasks_per_fill,
-    )
+    # C2 gap and assignment materialization are deliberately blocked until formal closeout.
+    gap_summary = {"materialization_blocked": True, "direct_assignment": False}
+    c2_summary = {"materialization_blocked": True, "reserve_only": False, "reserve_capacity_shortfall_count": 0}
     profile_summary = c1_materialize_worker_profile_sidecar.materialize(
         quality_csv,
         worker_state_csv,

@@ -80,7 +80,8 @@ def materialize(
         "canonical_csv": canonical["canonical_csv"],
         "gate_summary_json": str(output_dir / "c1_closeout_dryrun_gate_summary.json"),
         "gate_summary_md": str(output_dir / "c1_closeout_dryrun_gate_summary.md"),
-        "c2_draft_manifest": gate["c2_draft_summary"]["assignment_manifest_C2_draft"],
+            "c2_draft_manifest": "",
+            "c2_materialization_blocked": True,
         "worker_profile_sidecar_summary": str(output_dir / "worker_profile_sidecar_C1.summary.json"),
         "passed_semantics": "raw_to_closeout_dryrun_only_not_official_c1_closeout",
     }

@@ -75,23 +75,25 @@ def _inputs(tmp_path: Path) -> tuple[Path, Path, Path, Path]:
     return canonical, assignment, reserve, inventory
 
 
-def test_dryrun_chain_generates_summary_markdown_and_reserve_only_c2_draft(tmp_path: Path) -> None:
+def test_dryrun_chain_generates_provisional_summary_and_blocks_c2_draft(tmp_path: Path) -> None:
     canonical, assignment, reserve, inventory = _inputs(tmp_path)
     out = tmp_path / "out"
     c2 = tmp_path / "c2"
 
     summary = materialize(canonical, assignment, reserve, out, c2, inventory, 2, 1, 2, 0.15, 1)
-    manifest = _rows(c2 / "assignment_manifest_C2_draft.csv")
     summary_json = json.loads((out / "c1_closeout_dryrun_gate_summary.json").read_text(encoding="utf-8"))
     md = (out / "c1_closeout_dryrun_gate_summary.md").read_text(encoding="utf-8")
 
-    assert summary["passed"] is True
-    assert summary["blocked_for_launch"] is False
+    assert summary["passed"] is False
+    assert summary["raw_pipeline_ready"] is True
+    assert summary["provisional_sidecar_ready"] is True
+    assert summary["thesis_facing_closeout_ready"] is False
+    assert summary["c2_decision_chain_ready"] is False
     assert summary["p1_predictive_validity_status"] == "not_evaluable"
     assert summary_json["profile_sidecar_generated"] is True
     assert (out / "worker_profile_sidecar_C1.summary.json").exists()
     assert "# C1 Closeout Dryrun Gate Summary" in md
-    assert {row["dataset_group"] for row in manifest} == {"Calibration_reserve"}
+    assert not (c2 / "assignment_manifest_C2_draft.csv").exists()
 
 
 def test_dryrun_chain_passes_p1_artifacts_read_only_to_sidecar(tmp_path: Path) -> None:
@@ -133,17 +135,17 @@ def test_quality_table_blocker_blocks_launch(tmp_path: Path) -> None:
     assert "quality_table_blockers" in summary["blockers"]
 
 
-def test_reserve_capacity_shortfall_blocks_launch(tmp_path: Path) -> None:
+def test_c2_materialization_is_blocked_before_capacity_evaluation(tmp_path: Path) -> None:
     canonical, assignment, reserve, inventory = _inputs(tmp_path)
 
     summary = materialize(canonical, assignment, reserve, tmp_path / "out", tmp_path / "c2", inventory, 3, 2, 3, 0.15, 1)
 
-    assert summary["reserve_capacity_shortfall_count"] > 0
+    assert summary["c2_draft_summary"]["materialization_blocked"] is True
     assert summary["blocked_for_launch"] is True
-    assert "reserve_capacity_shortfall" in summary["blockers"]
+    assert "c2_decision_chain_blocked_pending_formal_closeout" in summary["blockers"]
 
 
-def test_gate_blocks_when_reserve_only_false(tmp_path: Path) -> None:
+def test_gate_blocks_formal_closeout_even_when_c2_inputs_are_present(tmp_path: Path) -> None:
     summary = build_gate_summary(
         {"blockers": [], "r_u_estimated": False, "dt_backflow": False},
         {"r_u_estimated": False, "provisional": True},
@@ -154,7 +156,7 @@ def test_gate_blocks_when_reserve_only_false(tmp_path: Path) -> None:
     )
 
     assert summary["blocked_for_launch"] is True
-    assert "reserve_only_false" in summary["blockers"]
+    assert "c2_decision_chain_blocked_pending_formal_closeout" in summary["blockers"]
 
 
 def test_gate_blocks_when_profile_sidecar_missing_or_not_provisional(tmp_path: Path) -> None:

@@ -149,6 +149,51 @@ def test_exact_timing_accepts_real_p1_annotator_only_schema(tmp_path: Path) -> N
     assert rows[0]["active_time_integrity_status"] == "exact_annotation_valid"
 
 
+def test_non_independent_exact_time_is_forensic_even_without_lead_time(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([{"id": "t1", "project": "p1", "annotations": [_ann("parent", "w1", "2026-07-01T00:00:00Z"), _ann("confirmed", "w2", "2026-07-01T00:01:00Z", parent="parent"), _ann("suspected", "w3", "2026-07-01T00:02:00Z", parent="parent", points=POINTS[:2])]}]), encoding="utf-8")
+    confirmed = _canonical("confirmed", "w2")
+    suspected = _canonical("suspected", "w3")
+    for row in (confirmed, suspected):
+        row.update({"active_time_source": "log", "active_time_match_status": "annotation_exact", "active_time": "20", "lead_time_seconds": ""})
+    canonical = tmp_path / "canonical.csv"
+    _csv(canonical, list(confirmed), [confirmed, suspected])
+    admission = tmp_path / "admission.csv"
+    _csv(admission, ["worker_id"], [{"worker_id": "w2"}, {"worker_id": "w3"}])
+    rows, _, summary = build_correction(canonical, [export], admission)
+    assert {row["timing_evidence_status"] for row in rows} == {"parent_derived_forensic_only"}
+    assert all(not row["primary_active_time_eligible"] and not row["sensitivity_active_time_eligible"] and row["forensic_timing_audit_eligible"] for row in rows)
+    assert summary["n_primary_active_time"] == 0
+    assert summary["n_sensitivity_active_time"] == 0
+    assert summary["forensic_timing_audit_count"] == 2
+
+
+def test_parent_audit_summary_covers_all_workers_and_not_evaluable_parent(tmp_path: Path) -> None:
+    tasks = [
+        {"id": "confirmed", "project": "p1", "annotations": [_ann("p", "w0", "2026-07-01T00:00:00Z"), _ann("c", "w1", "2026-07-01T00:01:00Z", parent="p")]},
+        {"id": "suspected", "project": "p1", "annotations": [_ann("p2", "w0", "2026-07-01T00:00:00Z"), _ann("s", "w2", "2026-07-01T00:01:00Z", parent="p2", points=POINTS[:2])]},
+        {"id": "revision", "project": "p1", "annotations": [_ann("r0", "w3", "2026-07-01T00:00:00Z"), _ann("r1", "w3", "2026-07-01T00:01:00Z", parent="r0")]},
+        {"id": "solo", "project": "p1", "annotations": [_ann("i", "w4", "2026-07-01T00:00:00Z")]},
+        {"id": "missing", "project": "p1", "annotations": [_ann("m", "w5", "2026-07-01T00:00:00Z", parent="gone")]},
+    ]
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps(tasks), encoding="utf-8")
+    rows = [_canonical("c", "w1", "confirmed"), _canonical("s", "w2", "suspected"), _canonical("r1", "w3", "revision"), _canonical("i", "w4", "solo"), _canonical("m", "w5", "missing")]
+    canonical = tmp_path / "canonical.csv"
+    _csv(canonical, list(rows[0]), rows)
+    admission = tmp_path / "admission.csv"
+    _csv(admission, ["worker_id"], [{"worker_id": f"w{i}"} for i in range(1, 6)])
+    _, _, summary = build_correction(canonical, [export], admission)
+    assert summary["n_workers_audited"] == 5
+    assert summary["n_annotations_audited"] == 5
+    assert summary["n_independent"] == 2
+    assert summary["n_non_independent_confirmed"] == 1
+    assert summary["n_non_independent_suspected"] == 1
+    assert summary["n_parent_not_evaluable"] == 1
+    assert summary["workers_with_confirmed_non_independence"] == ["w1"]
+    assert summary["workers_with_suspected_non_independence"] == ["w2"]
+
+
 def test_formal_scope_semi_undercoverage_sources_gate_capability(tmp_path: Path) -> None:
     model_choice = {"type": "choices", "from_name": "model_issue", "value": {"choices": ["acceptable"]}}
     export = tmp_path / "export.json"
@@ -172,7 +217,8 @@ def test_formal_scope_semi_undercoverage_sources_gate_capability(tmp_path: Path)
     assert row["included_in_r_scope"] is True
     assert row["semi_response_type"] == "blind_trust"
     assert row["semi_correction_failure_observed"] is True
-    assert row["included_in_T_u"] is True
+    assert row["semi_issue_recognition_evaluable"] is True
+    assert row["included_in_T_u"] is False
     assert row["undercoverage_evidence_status"] == "candidate_only_pending_adjudication"
     assert row["undercoverage_response"] == ""
     assert row["undercoverage_interpretation_allowed"] is False
@@ -486,7 +532,7 @@ def test_confirmed_copy_stays_process_family_and_suppresses_capability_predictiv
 
     materialize_sidecar(quality, worker_state, tmp_path / "out", [p1_profile], p1, status)
     evidence = list(csv.DictReader((tmp_path / "out" / "worker_task_evidence_table_C1.csv").open(encoding="utf-8")))
-    copy_row = next(row for row in evidence if row["task_id"] == "p1")
+    copy_row = next(row for row in evidence if row["task_id"] == "p1" and row["family"] == "process_failure")
     assert copy_row["family"] == "process_failure"
     assert copy_row["subfamily"] == "non_independent_submission"
     assert copy_row["included_in_r_geometry"] == "false"
