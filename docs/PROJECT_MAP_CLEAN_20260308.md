@@ -45,6 +45,7 @@
 - `docs/thesis_main/`
   - 正式执行主线文档。
   - 包括 protocol、assignment SOP、PreScreen、Calibration、Main(Test + Validation)、统计计划、字段合同、worker-profile sidecar contract、final-gold、registry、论文主线写作材料。
+  - `THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.md` 是 Paper A 写作/审计合同，配套 `.tex` 是最终 LaTeX 提纲载体；`THESIS_MANUSCRIPT_MIGRATION_MAP_v1.md` 记录旧 Overleaf section 到新章节的迁移关系。
   - `manuscript/` 可保存 Overleaf 项目和主线论文写作资产，但按现有 `.gitignore` 默认不提交。
 - `docs/paper_b/`
   - Paper B 支线文档。
