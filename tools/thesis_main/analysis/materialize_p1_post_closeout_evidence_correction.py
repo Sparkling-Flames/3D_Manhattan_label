@@ -62,6 +62,8 @@ TASK_FIELDS = [
     "audit_only",
     "long_open_draft_flag",
     "capability_evidence_eligible",
+    "geometry_capability_candidate",
+    "geometry_score_status",
     "process_evaluable",
     "process_failure_observed",
     "process_failure_subfamily",
@@ -75,6 +77,8 @@ TASK_FIELDS = [
     "semi_evidence_status",
     "semi_issue_recognition_ready",
     "semi_geometry_correction_evidence_status",
+    "semi_issue_recognition_evaluable",
+    "semi_geometry_correction_evaluable",
     "semi_correction_failure_observed",
     "coverage_response",
     "undercoverage_response",
@@ -301,7 +305,7 @@ def _timing(row: dict[str, str], independence_status: str, raw_owner: str) -> tu
         "annotation_exact",
         "exact_annotation_valid",
     } and _safe(row.get("active_time")) and owner_valid
-    if independence_status != "independent" and _safe(row.get("lead_time_seconds")):
+    if independence_status != "independent":
         return "parent_derived_forensic_only", False, "parent_derived_timing"
     if exact:
         return "primary_exact_owner_valid", True, ""
@@ -318,6 +322,8 @@ def _timing_integrity_status(row: dict[str, str], timing_status: str, primary: b
     worker = _safe(row.get("worker_id") or row.get("annotator_id"))
     aliases_conflict = bool(_safe(row.get("worker_id")) and _safe(row.get("annotator_id")) and _safe(row.get("worker_id")) != _safe(row.get("annotator_id")))
     exact_match = source == "log" and match in {"project+task+annotator+annotation", "annotation_exact", "exact_annotation_valid"}
+    if timing_status == "parent_derived_forensic_only":
+        return "parent_derived_forensic_only"
     if exact_match and not primary:
         return "owner_mismatch" if aliases_conflict or (worker and raw_owner and worker != raw_owner) else "ambiguous"
     explicit = _safe(row.get("active_time_integrity_status"))
@@ -409,6 +415,8 @@ def _semi_evidence(row: dict[str, str] | None, choice_map: dict[str, Any]) -> di
         "semi_evidence_status": "evaluable" if response and failure != "" else "not_evaluable_incomplete_response",
         "semi_issue_recognition_ready": bool(response and failure != ""),
         "semi_geometry_correction_evidence_status": _safe(row.get("semi_geometry_correction_evidence_status")) or "not_evaluable_missing_geometry_comparison",
+        "semi_issue_recognition_evaluable": bool(response and failure != ""),
+        "semi_geometry_correction_evaluable": _safe(row.get("semi_geometry_correction_evidence_status")) == "evaluable",
         "semi_correction_failure_observed": failure,
     }
 
@@ -577,6 +585,8 @@ def build_correction(
                 "audit_only": _truthy(row.get("audit_only")) or independence != "independent",
                 "long_open_draft_flag": long_flag,
                 "capability_evidence_eligible": capable,
+                "geometry_capability_candidate": capable and _safe(row.get("condition")).lower() == "manual",
+                "geometry_score_status": "pending_geometry_scorer" if capable and _safe(row.get("condition")).lower() == "manual" else "not_eligible",
                 "process_evaluable": process_evaluable,
                 "process_failure_observed": process_failure,
                 "process_failure_subfamily": process_subfamily,
@@ -584,9 +594,9 @@ def build_correction(
                 **semi_values,
                 **under_values,
                 "included_in_r_u_calib": False,
-                "included_in_r_geometry": capable,
+                "included_in_r_geometry": False,
                 "included_in_r_scope": capable and scope_evaluable,
-                "included_in_T_u": capable and _safe(row.get("dataset_group")) == "PreScreen_semi" and semi_evaluable,
+                "included_in_T_u": capable and _safe(row.get("dataset_group")) == "PreScreen_semi" and _truthy(semi_values.get("semi_geometry_correction_evaluable")),
                 "included_in_U_u": capable and _safe(row.get("condition")).lower() == "manual" and scope_values.get("task_final_scope") == "in_scope" and under_values.get("undercoverage_evidence_status") == "evaluable_expert_adjudicated",
                 "included_in_p1_predictive_capability": capable,
                 "included_in_process_reliability": process_evaluable,
@@ -614,7 +624,7 @@ def build_correction(
         independent = sum(row["independence_status"] == "independent" for row in rows)
         capable = sum(_truthy(row["capability_evidence_eligible"]) for row in rows)
         timing = [row for row in rows if row["primary_active_time_eligible"]]
-        if confirmed and not timing:
+        if (confirmed or suspected) and not timing:
             timing_status = "contaminated_by_non_independence"
         elif timing:
             timing_status = "primary_sufficient" if len(timing) == len(rows) else "primary_partial"
@@ -660,11 +670,19 @@ def build_correction(
         "rule_version": RULE_VERSION,
         "n_task_rows": len(task_rows),
         "n_workers": len(worker_rows),
+        "n_workers_audited": len({row["worker_id"] for row in task_rows if row["worker_id"]}),
+        "n_annotations_audited": len(task_rows),
+        "n_independent": sum(row["independence_status"] == "independent" for row in task_rows),
         "n_non_independent_confirmed": sum(row["independence_status"] == "non_independent_confirmed" for row in task_rows),
         "n_non_independent_suspected": sum(row["independence_status"] == "non_independent_suspected" for row in task_rows),
+        "n_parent_not_evaluable": sum(row["independence_status"] == "not_evaluable" for row in task_rows),
+        "workers_with_confirmed_non_independence": sorted({row["worker_id"] for row in task_rows if row["independence_status"] == "non_independent_confirmed"}),
+        "workers_with_suspected_non_independence": sorted({row["worker_id"] for row in task_rows if row["independence_status"] == "non_independent_suspected"}),
         "n_process_evaluable": sum(_truthy(row["process_evaluable"]) for row in task_rows),
         "n_process_failures": sum(_truthy(row["process_failure_observed"]) for row in task_rows),
         "n_primary_active_time": sum(_truthy(row["primary_active_time_eligible"]) for row in task_rows),
+        "n_sensitivity_active_time": sum(_truthy(row["sensitivity_active_time_eligible"]) for row in task_rows),
+        "forensic_timing_audit_count": sum(_truthy(row["forensic_timing_audit_eligible"]) for row in task_rows),
         "n_long_open_draft_flags": sum(_truthy(row["long_open_draft_flag"]) for row in task_rows),
         "source_exports": source_hashes,
         "source_canonical_sha256": canonical_sha,

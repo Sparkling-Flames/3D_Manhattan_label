@@ -23,7 +23,7 @@ def _kp(x: float, y: float) -> dict:
     return {"type": "keypointlabels", "value": {"x": x, "y": y, "keypointlabels": ["Corner"]}}
 
 
-def test_raw_to_closeout_dryrun_smoke_generates_gate_c2_sidecar_and_p1_readonly(tmp_path: Path) -> None:
+def test_raw_to_closeout_dryrun_smoke_generates_provisional_gate_and_p1_readonly(tmp_path: Path) -> None:
     fields = ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group"]
     manual = tmp_path / "manual.csv"
     semi = tmp_path / "semi.csv"
@@ -89,13 +89,13 @@ def test_raw_to_closeout_dryrun_smoke_generates_gate_c2_sidecar_and_p1_readonly(
 
     gate = json.loads((out / "c1_closeout_dryrun_gate_summary.json").read_text(encoding="utf-8"))
     sidecar = json.loads((out / "worker_profile_sidecar_C1.summary.json").read_text(encoding="utf-8"))
-    manifest = _rows(c2 / "assignment_manifest_C2_draft.csv")
 
     assert summary["canonical_csv"] == str(out / "c1_canonical_annotations.csv")
     assert (out / "c1_closeout_dryrun_gate_summary.md").exists()
-    assert gate["passed"] is True
-    assert gate["c2_draft_summary"]["reserve_only"] is True
-    assert {row["dataset_group"] for row in manifest} == {"Calibration_reserve"}
+    assert gate["passed"] is False
+    assert gate["raw_pipeline_ready"] is True
+    assert gate["c2_decision_chain_ready"] is False
+    assert not (c2 / "assignment_manifest_C2_draft.csv").exists()
     assert sidecar["profile_freeze_status"] == "C1_provisional"
     assert sidecar["input_p1_artifacts"] == [str(p1)]
     assert (out / "c1_raw_to_closeout_dryrun_summary.json").exists()
