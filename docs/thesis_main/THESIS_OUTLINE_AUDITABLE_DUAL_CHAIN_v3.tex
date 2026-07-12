@@ -1,8 +1,10 @@
-% Paper A formal outline source
+% Paper A standalone outline prototype
 % Version: 2026-07-12
-% Status: writing outline only; not a migrated manuscript.
+% Status: standalone LaTeX outline prototype; not the migrated manuscript.
 % Boundary: does not rewrite historical preregistration, protocol, assignment,
 % routing, analysis artifacts, or the current Overleaf body.
+% The actual manuscript source is the local main.tex plus sections/*.tex.
+% This file is not directly input-able into that manuscript project.
 \documentclass[UTF8,a4paper,12pt]{ctexart}
 \usepackage[a4paper,margin=2.4cm]{geometry}
 \usepackage{amsmath,amssymb,booktabs,longtable,array,enumitem,hyperref}
@@ -20,7 +22,7 @@
 \maketitle
 
 \begin{quote}
-本文件是 Paper A 的 LaTeX 写作载体；Markdown 版本是审计与迁移合同。正式主线固定为
+本文件是 Paper A 的独立 LaTeX 结构原型；Markdown 版本是章节与主张审计合同。实际正文真源是本地 manuscript 的 `main.tex + sections/*.tex`，本文件不能代替或直接输入正文。正式主线固定为
 \texttt{Pilot -> PreScreen -> Calibration -> Main(Test + Validation)}，轮次固定为
 \texttt{P1 -> C1 -> C2 -> T1 -> V1}。本文件不回写历史预注册、protocol freeze、assignment、routing、统计执行参数或任何原始工件；当前 Overleaf 正文尚未迁移。
 \end{quote}
@@ -48,7 +50,7 @@ support-aware 场景可靠度与 Global fallback、加权共识消融、failure-
 \subsection{研究缺口与本文路线}
 \contract{现有方法为何不足以支持冻结前可审计的 worker state 与预算路由}{相关工作对比与本文证据链}{双链路和冻结路线}{历史方案与失败案例}{正文已完成迁移}
 \subsection{研究问题与贡献层级}
-\contract{四个 RQ 如何对应后文}{RQ 合同与贡献清单}{三项一级贡献}{二级创新}{把二级创新写成一级贡献}
+\contract{三个一级 RQ 及 RQ3a/RQ3b 子问题如何对应后文}{RQ 合同与贡献清单}{三项一级贡献}{二级创新}{把二级创新写成一级贡献}
 \subsection{研究范围与禁止主张}
 \contract{Paper A 明确不研究什么}{协议边界与支线材料}{范围声明}{附录/未来工作}{把支线写成主实验}
 
@@ -149,8 +151,8 @@ P_u=1-\text{process failure rate}.
 \contract{模型重训练、Bi-Layout、Manhattan、自动 OOS 和 worker-facing correction 放在哪里}{支线材料与工程审计}{未来工作}{附录说明}{将其写成 Paper A 一级贡献}
 
 \section{结论}
-\subsection{四个 RQ 的证据边界}
-\contract{逐项回答 RQ1、RQ2、RQ3a、RQ3b}{第6章 primary/sensitivity/audit}{不超证据的结论}{降级规则}{将 audit 当 primary}
+\subsection{三个一级 RQ 及 RQ3a/RQ3b 子问题的证据边界}
+\contract{逐项回答 RQ1、RQ2、RQ3（分别报告 RQ3a 与 RQ3b）}{第6章 primary/sensitivity/audit}{不超证据的结论}{降级规则}{将 audit 当 primary}
 \subsection{一级贡献与不主张事项}
 \contract{本文最终贡献是什么}{协议、双链路、冻结路由}{三项一级贡献}{二级创新}{支线升级}
 

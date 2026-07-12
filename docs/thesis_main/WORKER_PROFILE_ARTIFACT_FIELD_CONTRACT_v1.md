@@ -1,63 +1,157 @@
-# Worker profile artifact field contract v1
+# WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1
 
-> 版本日期：2026-07-12
-> 状态：Paper A 写作展示层与 artifact 语义合同；不改变既有代码、CSV/JSON 物理 schema、测试或原始工件。
-> 运行真源：`export_label/`、`active_logs/`、现有 analysis artifacts。
-> 论文真源：`THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.md`。
-> 不回写：本合同不回写历史预注册、protocol freeze、P1 admission、C1/C2 assignment、routing、统计执行参数或任何历史工件。
+> Status: thesis-facing artifact field contract
+> Scope: Paper A worker-profile sidecar / C1-C2 closeout
+> Date: 2026-07-04
+> Intended repository path: `docs/thesis_main/WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md`
 
-## 0. Contract purpose
+## 0. Purpose
 
-本合同规定 worker-task evidence、worker profile main matrix、failure-family 长表和 predictive-validity 输出在 Paper A 中如何解释。它区分：
+This document is the field-level companion contract for:
 
-1. Calibration-only protocol reliability `R_u`；
-2. P1-informed multi-dimensional diagnostic profile `D_u`；
-3. raw risk rates；
-4. provenance、validity、support 和 inclusion flags。
+```text
+docs/thesis_main/WORKER_PROFILE_AND_THESIS_OUTLINE_AMENDMENT_v1.md
+```
 
-物理字段可继续使用历史名称；论文不能因此混淆符号方向或证据资格。
+The amendment document defines the thesis-outline and analysis logic. This document defines the concrete artifact schemas, inclusion flags, support-status rules, and required tests.
 
-## 1. Required artifact families
+This file does not authorize any change to the already-launched C1 distribution.
 
-以下是论文合同要求的 artifact family；已有实现与历史文件名保持兼容，未实现项不得被写成已生成：
+---
+
+## 1. Required artifacts
+
+C1 sidecar outputs:
 
 ```text
 worker_task_evidence_table_C1.csv
 worker_profile_main_matrix_C1.csv
 worker_failure_family_response_C1.csv
 worker_subfamily_response_C1.csv
+worker_profile_sidecar_C1.summary.json
 p1_to_c1_predictive_validity.csv
 p1_to_c1_predictive_validity_report.md
+```
+
+C2 final outputs:
+
+```text
+worker_task_evidence_table_C2_final.csv
+worker_profile_main_matrix_C2_final.csv
+worker_failure_family_response_C2_final.csv
+worker_subfamily_response_C2_final.csv
+worker_profile_sidecar_C2_final.summary.json
+```
+
+Optional C2b diagnostic-extension outputs:
+
+```text
+assignment_manifest_C2b_diagnostic_extension.csv
 worker_profile_c2b_extension_audit.csv
 c2b_exclusion_from_primary_r_u_calib_audit.json
 ```
 
-若生成 C2 final 版本，文件名可沿用既有 `*_C2_final.*` 约定。P1 post-closeout correction/geometry artifacts 仍是只读 diagnostic/provenance 层，不得回写 admission 或 `R_u`。
+---
 
 ## 2. Vocabulary contracts
 
 ### 2.1 Stage
 
-允许值：`P1`、`C1`、`C2`、`T1`、`V1`；必要时保留 `Pilot` 或 extension/replication 标记。论文主线固定为 `P1 → C1 → C2 → T1 → V1`。
-
-### 2.2 Pool and condition
-
-保留现有 pool/condition 枚举及其物理字段。论文必须区分 `Calibration_manual`、`Calibration_semi`、`Calibration_reserve/C2b`、`Main-Test`、`Main-Validation`；不能将不同 pool 合并成一个未声明的 reliability denominator。
-
-### 2.3 Independence status
+Allowed values:
 
 ```text
-independent
-confirmed_non_independent
-suspected
+P1
+C1
+C2
+C2b
+T1
+V1
+```
+
+For this contract, C1 sidecar generation should only consume:
+
+```text
+P1
+C1
+```
+
+C2 final sidecar may consume:
+
+```text
+P1
+C1
+C2
+```
+
+C2b may be appended only as diagnostic evidence and must not enter primary `r_u^calib`.
+
+### 2.2 Dataset group
+
+Allowed values:
+
+```text
+PreScreen_manual
+PreScreen_semi
+PreScreen_oos
+Calibration_anchor
+Calibration_core
+Calibration_reserve
+Calibration_semi
+C2b_diagnostic_extension
+```
+
+### 2.3 Condition
+
+Allowed values:
+
+```text
+manual
+semi
+oos_gate
+diagnostic_extension
+unknown
+```
+
+### 2.4 Scope binary
+
+Allowed values:
+
+```text
+in_scope
+oos
+unknown
+```
+
+OOS subtype is expert audit metadata only and must not be used as the worker main correctness target.
+
+Allowed OOS subtype metadata:
+
+```text
+oos_geometry
+oos_open_boundary
+oos_split_level
+oos_insufficient
+oos_unspecified
+none
+unknown
+```
+
+### 2.5 Worker scope response
+
+Allowed values:
+
+```text
+correct_in_scope
+correct_oos
+scope_false_positive
+scope_false_negative
+unknown_or_missing
 not_evaluable
 ```
 
-只有同 task、跨 owner、parent 先于 child、exact geometry hash 一致时，才可自动确认 `confirmed_non_independent`。`suspected` 需 expert review，不能自动记作 worker failure；`not_evaluable` 不是 success。
+### 2.6 Geometry reference status
 
-### 2.4 Scope and reference status
-
-保留 scope response 和现有 OOS subtype。reference status 至少区分：
+Allowed values:
 
 ```text
 expert_hard_single
@@ -69,11 +163,9 @@ audit_only
 unavailable
 ```
 
-`expert_hard_single` 使用单 reference；`expert_hard_multi` 使用 max-over-reference；`soft_ambiguous`、`scope_ambiguous`、`audit_only`、`unavailable` 不能进入 hard geometry primary。OOS subtype 是 expert audit metadata，不改变 worker main scope correctness。
+### 2.7 Failure family
 
-### 2.5 Failure family
-
-一级 family 固定为：
+First-level vocabulary is frozen:
 
 ```text
 geometry_quality_failure
@@ -83,231 +175,669 @@ undercoverage_failure
 process_failure
 ```
 
-failure family 是诊断链，不等于 `R_u`。同一 worker-task 可以有多个 evidence signals；undercoverage 不属于 OOS；process issue 不自动成为 geometry failure。
+### 2.8 Subfamily
 
-### 2.6 Support and interpretation
-
-允许值：`sufficient`、`insufficient`、`not_evaluable`。所有 insufficient cells 必须保留，且 `interpretation_allowed=false`。support 阈值可做 sensitivity，但不得修改 raw evidence rows。
-
-## 3. Evidence validity gate
-
-每一行 evidence 至少记录以下语义（实际字段名按现有 artifact 兼容）：
+Allowed second-level subfamily vocabulary:
 
 ```text
-stage
-pool
-condition
-worker_id / task_id / canonical_annotation_id
-source_artifact_path
-source_artifact_sha256
-rule_version
-independence_status
-geometry_reference_status
-geometry_valid
-scope_valid / scope_adjudicated
-process_evaluable
-failure_family / failure_subfamily
-support_status
-interpretation_allowed
+normal_geometry_degraded
+occlusion_geometry_degraded
+seam_or_stretch_geometry_degraded
+low_texture_geometry_degraded
+open_boundary_geometry_degraded
+topology_or_pairing_failure
+dense_corner_or_short_wall_failure
+
+scope_false_positive
+scope_false_negative
+mixed_scope_disagreement
+unresolved_scope_case
+
+blind_trust
+failed_correction
+semi_corner_drift_not_fixed
+semi_corner_duplicate_not_fixed
+semi_overextend_not_fixed
+semi_over_parsing_not_fixed
+semi_underextend_not_fixed
+successful_correction
+
+partial_undercoverage
+inner_space_only
+minimal_space_bias
+full_room_compliance_failure
+overextended_adjacent_when_in_scope
+
+active_time_missing_or_ineligible
+duplicate_same_geometry
+revision_time_ambiguous
+schema_invalid
+assignment_mismatch
+outside_manifest_submission
+```
+
+Additional subfamilies may be added only with a contract update and must be marked as exploratory unless frozen before C1 closeout.
+
+2026-07-12 contract amendment adds `non_independent_submission` to `process_failure`. Process reliability uses all worker-attributable `process_evaluable` tasks as its denominator and `process_failure_observed` as its numerator; zero denominator is NA. System collection issues and unattributable timing gaps are excluded from the denominator.
+
+P1 task evidence additionally carries formal scope, semi-response and undercoverage provenance plus their SHA-256 values. Missing dimension artifacts are `not_evaluable` and never implicit success. P1 geometry components must declare metric name, direction and normalization; only compatible stage/pool components may be combined, and fewer than two compatible components leaves the integrated geometry reliability empty.
+
+2026-07-12 follow-up: `undercoverage_risk_level` is a dry-run candidate/audit proxy only. It cannot create `undercoverage_response`, `undercoverage_subfamily`, `undercoverage_failure_observed`, or `included_in_U_u` without an explicit expert verdict. Allowed verdicts are `confirmed_full_room_attempt`, `confirmed_partial_undercoverage`, `confirmed_inner_space_only`, `confirmed_minimal_space_bias`, `confirmed_overextended_adjacent`, `rejected_proxy_false_positive`, `pending_review`, and `not_evaluable`.
+
+Main-matrix directions are fixed: `r_geometry_u`, `r_scope_u`, `correction_reliability_u`, `coverage_reliability_u`, and `process_reliability` are higher-is-better. `blind_trust_or_correction_failure_rate` and `undercoverage_failure_rate` are higher-is-worse. Legacy `T_u` and `U_u` retain the latter risk-rate meaning and emit explicit direction fields; they are not components of the all-positive diagnostic vector.
+
+`process_ok` is permitted only as a process-evaluable success label in the evidence/subfamily output. It is not a failure taxonomy member and never increments `n_fail`.
+
+### 2.9 Support status
+
+Allowed values:
+
+```text
+insufficient
+weak
+moderate
+sufficient
+not_evaluable
+```
+
+Default thresholds:
+
+```text
+insufficient: n_observed < 3
+weak:         3 <= n_observed < 5
+moderate:     5 <= n_observed < 10
+sufficient:   n_observed >= 10
+```
+
+Second-level subfamily reportable condition:
+
+```text
+n_observed >= 8
+and task_count >= 4
+and subfamily_global_worker_coverage >= 6
+```
+
+Threshold sensitivity may be reported, but raw evidence rows must not change.
+
+### 2.10 Interpretation level
+
+Allowed values:
+
+```text
+none
+weak_descriptive
+moderate_descriptive
+sufficient_descriptive
+```
+
+Default mapping:
+
+```text
+n_observed < 3:       none
+3 <= n_observed < 5:  weak_descriptive
+5 <= n_observed < 10: moderate_descriptive
+n_observed >= 10:     sufficient_descriptive
+```
+
+---
+
+## 3. Inclusion flags
+
+Every worker-task evidence row must explicitly state whether it contributes to each estimator/profile dimension.
+
+Fields:
+
+```text
 included_in_r_u_calib
 included_in_r_geometry
-included_in_D_u
-included_in_T_u_raw_risk
-included_in_U_u_raw_risk
+included_in_r_scope
+included_in_T_u
+included_in_U_u
 included_in_process_reliability
 ```
 
-Evidence gate 必须同时检查：annotation independence、owner-valid active-time identity、scope/final-gold provenance、reference cardinality/pairing、process/system issue 分离、dry-run proxy、expert-adjudicated undercoverage 和 missing evidence。缺任何关键证据时写 `not_evaluable`，不能隐式补成功。
-
-## 4. Chain A: `R_u` contract
-
-### 4.1 Primary inclusion
-
-`included_in_r_u_calib=true` 当且仅当：
-
-- `stage in {C1,C2}`；
-- `pool/condition = Calibration_manual`；
-- 通过 independence、scope/reference、geometry validity 和 canonical artifact gate；
-- 不属于 C2b extension、P1、Calibration_semi、T1 或 V1；
-- 任务和 worker support 可计算。
-
-P1、`Calibration_semi`、C2b、Main/Test、Main/Validation 必须为 false 或明确 diagnostic/audit-only。
-
-### 4.2 Estimator and freeze
-
-合同层只要求记录当前冻结 estimator、CI、LCB、support 和 rule version；不得在文档中擅自选择未注册的新 estimator。C1 只能形成 provisional；C2 结束后冻结：
-
-- `R_u` estimator；
-- CI/LCB 和 support 规则；
-- `R_{u,s}` activation/degeneration/fallback；
-- worker tier、Score、`tau_d` 和 Validation routing contract 的引用版本。
-
-Main/Test/Validation 结果不回流修改 `R_u`。
-
-## 5. Chain B: `D_u` contract
-
-主画像方向统一为越高越好：
-
-| 画像维度 | 符号 | 正式定义 | 主要证据 | raw risk-rate |
-|---|---|---|---|---|
-| geometry reliability | `G_u` | 兼容 reference-gated geometry success | hard-single/hard-multi 或兼容 consensus evidence | geometry failure rate |
-| scope reliability | `S_u` | scope decision success | scope/final-gold/adjudication | scope/OOS failure rate |
-| correction reliability | `C_u` | `1 - semi correction failure rate` | semi initialization 与最终 geometry 的独立对照 | blind-trust/correction failure rate |
-| coverage reliability | `V_u` | `1 - undercoverage failure rate` | expert-adjudicated full-room compliance | undercoverage failure rate |
-| process reliability | `P_u` | `1 - process failure rate` | `process_evaluable` denominator | process failure rate |
-
-`D_u=(G_u,S_u,C_u,V_u,P_u)` 的每一维都必须带 `n_observed`、`n_fail`、support status、stage/pool breakdown 和 inclusion flags。
-
-### 5.1 Correction boundary
-
-若当前数据只支持 issue recognition，则只生成 `issue_recognition_reliability` 或 audit field；不能把 `model_issue` 的选择写成 geometry correction 完成。`C_u` 只有在存在独立 correction evidence 时才可计算。
-
-### 5.2 Process denominator
-
-`process_evaluable=true` 的 worker-attributable rows 进入 `P_u` denominator；system collection issue、unknown-page evidence、无法归因的 timing missingness 为 false，不惩罚 worker。denominator 为零时 `P_u` 为空并标记 `not_evaluable`。
-
-## 6. Raw risk-rate compatibility
-
-现有物理字段 `T_u/U_u` 不删除、不静默改义。论文展示层必须明确：
-
-- `T_u/U_u` 是 raw risk-rate 或 legacy aliases，不是 `D_u` reliability dimensions；
-- raw risk-rate 越低越好；
-- `C_u/V_u/P_u` 越高越好；
-- 任何表格不能用同一列标题同时表示 failure rate 和 reliability；
-- 若需要兼容旧输出，使用显式 derived display mapping，不声称物理 schema 已迁移。
-
-## 7. Active-time field contract
+All inclusion flags must be serialized as lowercase strings:
 
 ```text
-exact owner-valid annotation-level browser log   primary
-known-only but integrity-suspect session          sensitivity
-task-level fallback                               sensitivity/audit
-lead_time fallback                                sensitivity/audit
-unknown_annotation                                audit-only, unassigned
-parent-derived timing                             forensic audit-only
-system collection bug                             system issue
+true
+false
 ```
 
-必须保留 `active_time_source`、`primary_active_time_eligible`、source identity、script version、fallback reason、parent-derived flag 和 missingness status。active-time 是 RQ1 cost/efficiency evidence，不是 worker quality 字段。
+### 3.1 `included_in_r_u_calib`
 
-## 8. Geometry metric contract
+True only if:
 
-P1 post-closeout geometry metric 是 diagnostic、post-closeout、reference-gated metric：
+```text
+stage in {C1, C2}
+dataset_group in {Calibration_anchor, Calibration_core, Calibration_reserve}
+condition = manual
+task_final_scope = in_scope
+geometry_reference_status in {consensus_reference, expert_hard_single, expert_hard_multi}
+geometry_valid = true
+process_invalid = false
+used_for_r_u = true
+```
 
-- hard-single 使用 single reference；
-- hard-multi 使用 max-over-reference；
-- pairing、范围、奇数点、歧义和 reference cardinality 必须过 gate；
-- metric name、direction、normalization 必须随 component 记录；
-- 不兼容 metric/direction/normalization 不合并；
-- integrated `G_u` 只有在有足够兼容 stage/pool components 时才形成；
-- geometry score 不是 GT correctness 的唯一替代；
-- A-line Manhattan 几何工具不进入 Paper A 正式主实验。
+False if:
 
-## 9. Failure-family and subfamily tables
+```text
+dataset_group = Calibration_semi
+dataset_group in {PreScreen_manual, PreScreen_semi, PreScreen_oos}
+stage = C2b
+task_final_scope = oos
+condition != manual
+process_invalid = true
+geometry_reference_status in {soft_ambiguous, scope_ambiguous, audit_only, unavailable}
+```
 
-### 9.1 First-level response table
+### 3.2 `included_in_r_geometry`
 
-`worker_failure_family_response_C1.csv`（及 C2 final 版本）至少包含：
+True only if:
+
+```text
+dataset_group in {PreScreen_manual, Calibration_anchor, Calibration_core, Calibration_reserve}
+condition = manual
+task_final_scope = in_scope
+geometry_reference_status in {expert_hard_single, expert_hard_multi, consensus_reference}
+geometry_valid = true
+process_invalid = false
+```
+
+False if:
+
+```text
+dataset_group in {PreScreen_semi, Calibration_semi, PreScreen_oos}
+condition in {semi, oos_gate}
+task_final_scope = oos
+```
+
+C2b may contribute only to diagnostic extension fields, not to the main C1/C2 `r_geometry_u`, unless an explicit extension-only output is produced.
+
+### 3.3 `included_in_r_scope`
+
+True if the row contains a valid worker scope response and a final binary scope adjudication:
+
+```text
+task_final_scope in {in_scope, oos}
+worker_scope_response in {
+  correct_in_scope,
+  correct_oos,
+  scope_false_positive,
+  scope_false_negative
+}
+```
+
+OOS subtype must not affect correctness.
+
+### 3.4 `included_in_T_u`
+
+True for semi-auto correction and blind-trust evidence:
+
+```text
+dataset_group in {PreScreen_semi, Calibration_semi}
+condition = semi
+process_invalid = false
+```
+
+Typical response types:
+
+```text
+blind_trust
+failed_correction
+successful_correction
+semi_corner_drift_not_fixed
+semi_corner_duplicate_not_fixed
+semi_overextend_not_fixed
+semi_over_parsing_not_fixed
+semi_underextend_not_fixed
+```
+
+### 3.5 `included_in_U_u`
+
+True only for in-scope undercoverage behavior:
+
+```text
+task_final_scope = in_scope
+geometry_valid = true
+geometry_reference_status in {expert_hard_single, expert_hard_multi, consensus_reference}
+response_type in {
+  partial_undercoverage,
+  inner_space_only,
+  minimal_space_bias,
+  full_room_compliance_failure,
+  overextended_adjacent_when_in_scope
+}
+```
+
+Undercoverage must not be encoded as OOS.
+
+### 3.6 `included_in_process_reliability`
+
+True for process-integrity evidence:
+
+```text
+active_time_missing_or_ineligible
+duplicate_same_geometry
+revision_time_ambiguous
+schema_invalid
+assignment_mismatch
+outside_manifest_submission
+```
+
+Process evidence can affect `process_reliability`, but it must not be silently converted into geometry failure.
+
+---
+
+## 4. `worker_task_evidence_table_C1.csv`
+
+Row grain:
+
+```text
+one row per worker-task-evidence signal
+```
+
+If one submission contributes to multiple failure-family signals, it may generate multiple rows. Each row must be traceable to the same `canonical_annotation_id`.
+
+Required fields:
 
 ```text
 worker_id
-stage / pool / condition
-failure_family
+round_id
+task_id
+base_task_id
+dataset_group
+condition
+stage
+pool
+task_final_scope
+task_oos_subtype
+worker_scope_response
+geometry_reference_status
+geometry_valid
+process_invalid
+quality_metric_name
+quality_metric_value
+family
+subfamily
+response_type
+failure_observed
+included_in_r_u_calib
+included_in_r_geometry
+included_in_r_scope
+included_in_T_u
+included_in_U_u
+included_in_process_reliability
+exclusion_reason
+active_time_source
+primary_active_time_eligible
+assignment_expected
+canonical_annotation_id
+source_manifest_version
+profile_rule_version
+```
+
+Type rules:
+
+```text
+failure_observed: true / false
+geometry_valid: true / false
+process_invalid: true / false
+primary_active_time_eligible: true / false
+assignment_expected: true / false
+quality_metric_value: numeric string or empty if not applicable
+```
+
+No row should be dropped merely because it is insufficient for interpretation. Insufficiency is handled at the aggregated table level.
+
+---
+
+## 5. `worker_profile_main_matrix_C1.csv`
+
+Row grain:
+
+```text
+one row per worker
+```
+
+Required fields:
+
+```text
+worker_id
+round_id
+r_u_calib
+r_u_calib_lcb
+r_u_calib_ci_low
+r_u_calib_ci_high
+r_geometry_u
+r_scope_u
+T_u
+U_u
+process_reliability
+profile_confidence
+protocol_confidence
+diagnostic_profile_confidence
+profile_confidence_notes
+n_calib_support
+n_geometry_support
+n_scope_support
+n_semi_support
+n_undercoverage_support
+n_process_support
+calib_support_status
+geometry_support_status
+scope_support_status
+semi_support_status
+undercoverage_support_status
+process_support_status
+profile_version
+profile_freeze_status
+notes
+```
+
+Rules:
+
+```text
+r_u_calib may remain empty in C1 if formal estimation has not yet run.
+r_geometry_u may remain empty in the first sidecar implementation if only support counts are materialized.
+profile_confidence must not hide insufficient support; it must be explainable from support counts and statuses.
+protocol_confidence reflects calibration / r_u_calib support only and must not be directly reduced by sparse semi, undercoverage, or process evidence.
+diagnostic_profile_confidence reflects multi-dimensional support across geometry, scope, semi, undercoverage, and process evidence.
+```
+
+Recommended `profile_freeze_status` values:
+
+```text
+C1_provisional
+C2_final
+C2b_diagnostic_extension_only
+not_freezable
+```
+
+---
+
+## 6. `worker_failure_family_response_C1.csv`
+
+Row grain:
+
+```text
+one row per worker × first-level family
+```
+
+Required fields:
+
+```text
+worker_id
+round_id
+family
 n_observed
 n_fail
 failure_rate
 support_status
+interpretation_level
 interpretation_allowed
-source_manifest_version
+source_stages
+profile_version
 ```
 
-`failure_rate = n_fail / n_observed`，分母为零时为空并标记 `not_evaluable`。同一 submission 的多个 family signal 不得强制互斥。
+Rules:
 
-### 9.2 Subfamily table
+```text
+failure_rate = n_fail / n_observed if n_observed > 0 else empty
+interpretation_allowed = false if support_status = insufficient
+interpretation_level = none if n_observed < 3
+```
 
-subfamily 允许保留现有枚举（geometry degradation、scope subtype、correction、undercoverage、process integrity 等），但 support 不足时只做 audit/sensitivity。`non_independent_submission` 属于 process integrity subfamily，不得 relabel 为 geometry failure。
+This table must be long-format, not an ultra-wide matrix.
 
-### 9.3 Counterexample bank
+---
 
-自动候选必须记录 candidate path、SHA、rule version、failure family 和 review status；只有 expert review 通过后才可成为 final counterexample。counterexample bank 是二级创新与解释性结果，不是唯一核心贡献。
+## 7. `worker_subfamily_response_C1.csv`
 
-## 10. Worker profile main matrix
+Row grain:
 
-`worker_profile_main_matrix_C1.csv`（及 C2 final 版本）的论文正式列为：
+```text
+one row per worker × family × subfamily
+```
+
+Required fields:
 
 ```text
 worker_id
-G_u / S_u / C_u / V_u / P_u
-raw_geometry_failure_rate
-raw_scope_oos_failure_rate
-raw_blind_trust_or_correction_failure_rate
-raw_undercoverage_failure_rate
-raw_process_failure_rate
-n_geometry_support / n_scope_support / n_correction_support
-n_coverage_support / n_process_support
-geometry_support_status / scope_support_status
-correction_support_status / coverage_support_status / process_support_status
-stage_pool_component_summary
-diagnostic_profile_confidence
-included_stage_pool_flags
-freeze_stage
-source_manifest_version
-```
-
-若当前物理文件仍使用 `r_geometry_u`、`r_scope_u`、`T_u`、`U_u` 等旧列，迁移表必须显式标注其展示层映射；不得把未实现的新列写成已经存在。
-
-## 11. Predictive-validity output
-
-`p1_to_c1_predictive_validity.csv` 至少记录：
-
-```text
-worker_id
-p1_profile_component
-target_stage / target_pool / target_component
-independence_status
-process_validity_status
-n_predictor_support / n_target_support
+round_id
+family
+subfamily
+n_observed
+n_fail
+failure_rate
+task_count
+subfamily_global_worker_coverage
 support_status
-effect_or_prediction_estimate
-ci_or_uncertainty
+interpretation_level
+interpretation_allowed
+source_stages
+profile_version
+```
+
+Rules:
+
+```text
+All observed subfamilies must be retained.
+Insufficient cells must not be deleted.
+Cells below reportable support must use interpretation_allowed=false.
+interpretation_level = none if n_observed < 3.
+Second-level interpretation_allowed remains controlled by n_observed >= 8, task_count >= 4, and subfamily_global_worker_coverage >= 6.
+```
+
+---
+
+## 8. Summary JSON
+
+File:
+
+```text
+worker_profile_sidecar_C1.summary.json
+```
+
+Required keys:
+
+```json
+{
+  "profile_version": "worker_profile_sidecar_C1_v1",
+  "input_quality_csv": "",
+  "input_worker_state_csv": "",
+  "input_p1_artifacts": [],
+  "output_worker_task_evidence_table": "",
+  "output_worker_profile_main_matrix": "",
+  "output_worker_failure_family_response": "",
+  "output_worker_subfamily_response": "",
+  "n_workers": 0,
+  "n_evidence_rows": 0,
+  "n_profile_rows": 0,
+  "n_family_rows": 0,
+  "n_subfamily_rows": 0,
+  "n_insufficient_family_cells": 0,
+  "n_insufficient_subfamily_cells": 0,
+  "family_interpretation_level_counts": {},
+  "subfamily_interpretation_level_counts": {},
+  "r_u_calib_estimated": false,
+  "r_geometry_u_estimated": false,
+  "profile_freeze_status": "C1_provisional",
+  "blockers": [],
+  "warnings": []
+}
+```
+
+---
+
+## 9. Predictive-validity outputs
+
+### 9.1 `p1_to_c1_predictive_validity.csv`
+
+Row grain:
+
+```text
+one row per worker × predictive check
+```
+
+Required fields:
+
+```text
+worker_id
+check_name
+p1_metric_name
+p1_metric_value
+c1_metric_name
+c1_metric_value
+directionally_consistent
+support_status
 interpretation_allowed
 notes
 ```
 
-`confirmed_non_independent` 不进入 capability predictor；`suspected` 保留 pending；`not_evaluable` 不形成 success。predictive validity 是跨阶段验证，不是 P1 自证，也不是 routing utility。
+Required checks:
 
-## 12. C2b extension exclusion
+```text
+p1_r0_vs_c1_r_u_calib
+p1_geometry_vs_c1_geometry
+p1_scope_vs_c1_scope
+p1_blind_trust_vs_calibration_semi
+p1_undercoverage_watch_vs_c1_undercoverage
+p1_process_warning_vs_c1_process_reliability
+```
 
-C2b 可以输出 diagnostic extension audit，但必须有明确排除记录：
+### 9.2 `p1_to_c1_predictive_validity_report.md`
+
+Must report:
+
+```text
+rank correlation where support permits
+directional consistency
+watch-flag persistence
+discrepancy workers
+insufficient support warnings
+```
+
+Do not report unsupported predictive claims as stable worker types.
+
+---
+
+## 10. C2b exclusion audit
+
+If C2b is used, produce:
+
+```text
+c2b_exclusion_from_primary_r_u_calib_audit.json
+```
+
+Required keys:
 
 ```json
 {
+  "c2b_used": true,
   "primary_r_u_calib_excludes_c2b": true,
-  "c2b_role": "diagnostic_extension_only",
+  "c2b_assignment_manifest": "",
+  "n_c2b_assignments": 0,
+  "trigger_reasons": [],
   "excluded_from_primary_fields": [
-    "R_u estimator",
-    "LCB/CI primary evidence",
-    "worker tier freeze",
-    "Validation routing freeze"
+    "r_u_calib",
+    "LCB(r_u_calib)",
+    "CI precision primary estimator"
+  ],
+  "allowed_uses": [
+    "diagnostic worker profile extension",
+    "support shortage analysis",
+    "P1-C1 discrepancy follow-up",
+    "Validation routing diagnostic support if frozen before use"
+  ],
+  "forbidden_uses": [
+    "retroactive P1 admission change",
+    "C1 assignment rewrite",
+    "primary calibration-only r_u estimator",
+    "post-Validation rule selection"
   ]
 }
 ```
 
-## 13. Required consistency checks
+---
 
-文档/实现审计至少检查：
+## 11. Required tests
 
-1. `R_u` 只来自 C1/C2 `Calibration_manual`；
-2. P1、Calibration_semi、C2b、Main 不进入 primary `R_u`；
-3. `D_u` 五维均越高越好；
-4. raw risk-rate 独立保留且越低越好；
-5. OOS gate 不混入 manual geometry reliability；
-6. undercoverage 不归入 OOS；
-7. process/system issue 分离；
-8. insufficient cell 保留且 `interpretation_allowed=false`；
-9. missing evidence 为 `not_evaluable`；
-10. 所有主张带 artifact path、SHA、rule version 和 inclusion flags。
+Add or update:
 
-## 14. Implementation status and non-goals
+```text
+tests/test_c1_worker_profile_sidecar.py
+tests/test_c1_closeout_dryrun_chain.py
+```
 
-本次只更新写作与字段语义合同，不实现新的 materializer、schema migration、predictive model、routing service 或 geometry scorer。代码、测试、数据、分析结果、P1/C1/C2/T1/V1 协议和原始工件均不在本次范围内。
+Minimum test cases:
+
+```text
+1. Calibration_semi is excluded from r_u_calib and r_geometry.
+2. PreScreen_semi is excluded from r_geometry and included only in T_u when appropriate.
+3. OOS gate contributes only to r_scope / scope_oos_failure.
+4. OOS subtype does not change worker main scope correctness.
+5. Undercoverage is not treated as OOS.
+6. Insufficient subfamily cells are retained with interpretation_allowed=false.
+7. First-level family response table includes n_observed, n_fail, support_status.
+8. Worker-task evidence table preserves stage, pool, condition, inclusion flags, and source_manifest_version.
+9. C2b diagnostic rows are excluded from primary r_u_calib.
+10. All boolean fields serialize as lowercase true / false.
+```
+
+---
+
+## 12. Implementation order
+
+Recommended implementation order:
+
+```text
+1. Add `WORKER_PROFILE_AND_THESIS_OUTLINE_AMENDMENT_v1.md`.
+2. Add this artifact field contract.
+3. Add `c1_materialize_worker_profile_sidecar.py`.
+4. Add sidecar tests.
+5. Add or extend `run_c1_closeout_dryrun_chain.py`.
+6. Add chain tests.
+7. Run existing C1 post-canonical materialization tests.
+8. Wait for real C1 export/logs before generating official thesis-facing C1 closeout artifacts.
+```
+
+Do not implement advanced `r_geometry_u` modeling before the evidence table and support-aware summaries are stable.
+
+---
+
+## 13. Versioned P1 post-closeout artifact amendment (2026-07-12)
+
+The following contract is an additive post-closeout correction layer. It does not revise the original P1 admission contract.
+
+### 13.1 New P1 artifacts
+
+```text
+p1_task_evidence_correction_v1.csv
+p1_worker_evidence_status_v1.csv
+p1_post_closeout_correction_summary_v1.json
+p1_post_closeout_correction_report_v1.md
+p1_geometry_task_scores_v1.csv
+p1_worker_geometry_profile_v1.csv
+p1_geometry_score_summary_v1.json
+p1_geometry_score_audit_v1.md
+```
+
+Each task row retains `source_export` and `source_sha256`. Geometry rows additionally retain final-gold and canonical source SHA-256 values, reference status/id/count, raw mask-IoU, within-task mid-rank percentile, inclusion flag, exclusion reason, and scoring rule version.
+
+### 13.2 Required evidence semantics
+
+`independence_status` is one of `independent`, `non_independent_confirmed`, `non_independent_suspected`, or `not_evaluable`. Only same-task, cross-owner, parent-precedes-child, exact-geometry-hash evidence can be confirmed automatically. Suspected evidence is pending review and cannot automatically create a process failure.
+
+For confirmed non-independent rows, capability flags are false and `process_evaluable=true`, `process_failure_observed=true`, and `process_failure_subfamily=non_independent_submission`. Independent rows follow the existing stage/pool/condition/reference gates. All P1 rows have `included_in_r_u_calib=false`.
+
+### 13.3 Timing fields
+
+`primary_active_time_eligible` is true only for owner-valid exact annotation-level browser logs. `task_level_fallback` and `lead_time_fallback` remain sensitivity/audit-only. The worker summary must include `n_total_tasks`, `n_primary_active_time_tasks`, `n_fallback_tasks`, `n_missing_time_tasks`, `primary_active_time_coverage`, `fallback_only_flag`, `long_open_draft_count`, `parent_derived_timing_count`, and `timing_evidence_status`.
+
+### 13.4 Process reliability fields
+
+`process_evaluable` defines the denominator. Both `process_failure_observed=true` and `false` rows enter that denominator. System collection issue, unknown-page evidence, and un-attributable active-time missingness are `process_evaluable=false`. The materializer reports an empty reliability value when the denominator is zero. `non_independent_submission` is a process-integrity subfamily and must not be relabeled as geometry failure.
+
+### 13.5 Profile and predictive gate
+
+P1 geometry profiles report stage/pool component medians and require at least two valid components for a combined diagnostic component. For a worker whose P1 capability evidence is invalid, P1 geometry/scope/semi/undercoverage predictive rows are `support_status=not_evaluable`, `interpretation_allowed=false`, and `notes` include `p1_non_independent_submission`; the P1 process-warning versus C1 process-reliability row remains separately auditable. No P1 value is routed into C1/C2 assignment or `r_u_calib`.
