@@ -37,6 +37,7 @@ TASK_FIELDS = [
     "parent_annotation_id",
     "parent_owner_id",
     "parent_same_task",
+    "parent_same_owner",
     "parent_cross_owner",
     "parent_precedes_child",
     "geometry_relation",
@@ -244,6 +245,8 @@ def _load_exports(paths: list[Path]) -> tuple[dict[tuple[str, str, str], dict[st
                 geometry_hash, choice_map = _raw_annotation_data(annotation)
                 annotations[(project_id, task_id, annotation_id)] = {
                     "annotation": annotation,
+                    "project_id": project_id,
+                    "task_id": task_id,
                     "source_export": str(path),
                     "source_sha256": hashes[str(path)],
                     "geometry_hash": geometry_hash,
@@ -267,16 +270,19 @@ def _status_for_parent(
     child: dict[str, Any],
     parent: dict[str, Any] | None,
     child_geometry_hash: str,
-) -> tuple[str, str, str, bool, bool, bool, str]:
+    child_project_id: str,
+    child_task_id: str,
+) -> tuple[str, str, str, bool, bool, bool, bool, str]:
     child_worker = _worker_id(child)
     parent_id = _parent_id(child)
     if not parent_id:
-        return "independent", "no_parent_annotation", "", False, False, False, "not_required"
+        return "independent", "no_parent_annotation", "", False, False, False, False, "not_required"
     if parent is None:
-        return "not_evaluable", "parent_annotation_not_found", "", False, False, False, "source_review_required"
+        return "not_evaluable", "parent_annotation_not_found", "", False, False, False, False, "source_review_required"
     parent_annotation = parent["annotation"]
     parent_worker = _worker_id(parent_annotation)
     same_owner = bool(child_worker and parent_worker and child_worker == parent_worker)
+    same_task = bool(parent.get("project_id") == child_project_id and parent.get("task_id") == child_task_id)
     parent_time = _parse_time(parent_annotation.get("created_at"))
     child_time = _parse_time(child.get("created_at"))
     precedes = bool(parent_time and child_time and parent_time < child_time)
@@ -284,12 +290,12 @@ def _status_for_parent(
     identical = bool(child_geometry_hash and parent_hash and child_geometry_hash == parent_hash)
     relation = "identical" if identical else "different" if child_geometry_hash and parent_hash else "unavailable"
     if same_owner:
-        return "independent", "same_worker_revision", parent_worker, True, False, precedes, "not_required"
+        return "independent", "same_worker_revision", parent_worker, same_task, True, False, precedes, "not_required"
     if not parent_worker:
-        return "not_evaluable", "parent_owner_missing", "", True, False, precedes, "source_review_required"
+        return "not_evaluable", "parent_owner_missing", "", same_task, False, False, precedes, "source_review_required"
     if precedes and identical:
-        return "non_independent_confirmed", "cross_worker_prior_parent_exact_geometry", parent_worker, False, True, True, "auto_confirmed"
-    return "non_independent_suspected", "cross_worker_parent_evidence_incomplete", parent_worker, False, True, precedes, "pending_review"
+        return "non_independent_confirmed", "cross_worker_prior_parent_exact_geometry", parent_worker, same_task, False, True, True, "auto_confirmed"
+    return "non_independent_suspected", "cross_worker_parent_evidence_incomplete", parent_worker, same_task, False, True, precedes, "pending_review"
 
 
 def _timing(row: dict[str, str], independence_status: str, raw_owner: str) -> tuple[str, bool, str]:
@@ -522,7 +528,7 @@ def build_correction(
         if raw and parent_id:
             parent = annotations.get((project, task_id, parent_id))
         child_hash = _safe(row.get("geometry_hash")) or _safe(raw.get("geometry_hash") if raw else "")
-        independence, reason, parent_owner, parent_same_task, parent_cross_owner, parent_precedes, adjudication = _status_for_parent(annotation, parent, child_hash) if raw else ("not_evaluable", "raw_annotation_not_found", "", False, False, False, "source_review_required")
+        independence, reason, parent_owner, parent_same_task, parent_same_owner, parent_cross_owner, parent_precedes, adjudication = _status_for_parent(annotation, parent, child_hash, project, task_id) if raw else ("not_evaluable", "raw_annotation_not_found", "", False, False, False, False, "source_review_required")
         timing_status, primary, timing_reason = _timing(row, independence, raw_owner)
         try:
             lead = float(_safe(row.get("lead_time_seconds")) or 0)
@@ -559,7 +565,8 @@ def build_correction(
                 "annotation_id": annotation_id,
                 "parent_annotation_id": parent_id,
                 "parent_owner_id": parent_owner,
-                "parent_same_task": bool(parent is not None),
+                "parent_same_task": parent_same_task,
+                "parent_same_owner": parent_same_owner,
                 "parent_cross_owner": parent_cross_owner,
                 "parent_precedes_child": parent_precedes,
                 "geometry_relation": "identical" if parent and child_hash and child_hash == _safe(parent.get("geometry_hash")) else "different" if parent else "unavailable",

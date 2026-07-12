@@ -75,6 +75,7 @@ def test_cross_worker_exact_parent_is_confirmed_and_capability_excluded(tmp_path
     row = task_rows[0]
     assert row["independence_status"] == "non_independent_confirmed"
     assert row["parent_same_task"] is True
+    assert row["parent_same_owner"] is False
     assert row["parent_cross_owner"] is True
     assert row["parent_precedes_child"] is True
     assert row["geometry_relation"] == "identical"
@@ -542,7 +543,7 @@ def test_confirmed_copy_stays_process_family_and_suppresses_capability_predictiv
     assert subfamily["n_fail"] == "1"
     assert subfamily["failure_rate"] == "1.000000"
 
-    predictive = {row["check_name"]: row for row in csv.DictReader((tmp_path / "out" / "p1_to_c1_predictive_validity.csv").open(encoding="utf-8"))}
+    predictive = {row["check_name"]: row for row in csv.DictReader((tmp_path / "out" / "p1_to_c1_descriptive_directional_check.csv").open(encoding="utf-8"))}
     assert predictive["p1_geometry_vs_c1_geometry"]["support_status"] == "not_evaluable"
     assert predictive["p1_scope_vs_c1_scope"]["support_status"] == "not_evaluable"
     assert predictive["p1_process_warning_vs_c1_process_reliability"]["support_status"] != "not_evaluable"
