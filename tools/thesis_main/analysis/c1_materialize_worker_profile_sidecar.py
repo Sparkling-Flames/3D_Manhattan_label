@@ -67,6 +67,9 @@ EVIDENCE_FIELDS = [
     "process_invalid",
     "quality_metric_name",
     "quality_metric_value",
+    "geometry_metric_direction",
+    "geometry_normalization_rule",
+    "geometry_component_name",
     "family",
     "subfamily",
     "response_type",
@@ -112,6 +115,7 @@ EVIDENCE_FIELDS = [
     "canonical_annotation_id",
     "source_manifest_version",
     "profile_rule_version",
+    "interpretation_allowed",
 ]
 
 MAIN_FIELDS = [
@@ -459,6 +463,9 @@ def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, An
                 "process_invalid": process_fail(row),
                 "quality_metric_name": safe(row.get("quality_metric_name")),
                 "quality_metric_value": safe(row.get("quality_metric_value")),
+                "geometry_metric_direction": safe(row.get("geometry_metric_direction")),
+                "geometry_normalization_rule": safe(row.get("geometry_normalization_rule")),
+                "geometry_component_name": safe(row.get("geometry_component_name")),
                 "family": family,
                 "subfamily": subfamily,
                 "response_type": response,
@@ -549,6 +556,18 @@ def build_p1_evidence_rows(
             family = "process_failure"
             subfamily = "non_independent_suspected"
             response = "not_evaluable"
+        elif safe(row.get("semi_evidence_status")) == "evaluable":
+            family = "semi_correction_failure"
+            subfamily = safe(row.get("semi_response_type"))
+            response = subfamily
+        elif safe(row.get("undercoverage_evidence_status")) == "evaluable":
+            family = "undercoverage_failure"
+            subfamily = safe(row.get("undercoverage_subfamily")) or "full_room_attempt"
+            response = safe(row.get("undercoverage_response"))
+        elif safe(row.get("scope_evidence_status")) == "evaluable":
+            family = "scope_oos_failure"
+            subfamily = safe(row.get("task_oos_subtype")) or "scope_classification"
+            response = safe(row.get("worker_scope_response"))
         else:
             family = "geometry_quality_failure"
             subfamily = "normal_geometry_degraded"
@@ -563,18 +582,21 @@ def build_p1_evidence_rows(
                 "condition": condition(row),
                 "stage": "P1",
                 "pool": safe(row.get("pool")) or safe(row.get("dataset_group")),
-                "task_final_scope": "unknown",
-                "task_oos_subtype": "unknown",
-                "worker_scope_response": "",
+                "task_final_scope": safe(row.get("task_final_scope")) or "unknown",
+                "task_oos_subtype": safe(row.get("task_oos_subtype")),
+                "worker_scope_response": safe(row.get("worker_scope_response")),
                 "geometry_reference_status": safe(score_row.get("geometry_reference_status")) or "unavailable",
                 "geometry_valid": geometry_ok,
                 "process_invalid": process_failure,
                 "quality_metric_name": safe(score_row.get("geometry_metric_name")),
                 "quality_metric_value": score_value,
+                "geometry_metric_direction": safe(score_row.get("geometry_metric_direction")),
+                "geometry_normalization_rule": safe(score_row.get("geometry_normalization_rule")),
+                "geometry_component_name": safe(score_row.get("geometry_component_name")),
                 "family": family,
                 "subfamily": subfamily,
                 "response_type": response,
-                "failure_observed": False,
+                "failure_observed": process_failure if family == "process_failure" else truthy(row.get("semi_correction_failure_observed")) if family == "semi_correction_failure" else truthy(row.get("undercoverage_failure_observed")) if family == "undercoverage_failure" else response in {"scope_false_positive", "scope_false_negative"},
                 "included_in_r_u_calib": False,
                 "included_in_r_geometry": geometry_included,
                 "included_in_r_scope": truthy(row.get("included_in_r_scope")),
@@ -616,7 +638,8 @@ def build_p1_evidence_rows(
                 "canonical_annotation_id": safe(row.get("annotation_id")),
                 "source_manifest_version": "P1_post_closeout_correction_v1",
                 "profile_rule_version": PROFILE_VERSION,
-                "_is_fail": False,
+                "interpretation_allowed": truthy(row.get("interpretation_allowed")),
+                "_is_fail": process_failure if family == "process_failure" else truthy(row.get("semi_correction_failure_observed")) if family == "semi_correction_failure" else truthy(row.get("undercoverage_failure_observed")) if family == "undercoverage_failure" else response in {"scope_false_positive", "scope_false_negative"},
                 "_process_fail": process_failure,
             }
         )
@@ -628,34 +651,37 @@ def _worker_state_lookup(path: Path) -> dict[str, dict[str, str]]:
 
 
 def _geometry_metric_summary(group: list[dict[str, Any]]) -> str:
-    components: dict[tuple[str, str], list[float]] = defaultdict(list)
+    components: dict[tuple[str, str, str, str, str], list[float]] = defaultdict(list)
     for row in group:
         if not truthy(row.get("included_in_r_geometry")):
             continue
         value = _numeric_value(row.get("quality_metric_value"))
         if value is not None:
-            components[(safe(row.get("stage")), safe(row.get("pool")))].append(value)
-    if components:
-        values = [median(scores) for scores in components.values() if scores]
-        return f"{median(values):.6f}" if len(values) >= 2 else ""
-
-    failure_components: dict[tuple[str, str], list[bool]] = defaultdict(list)
-    for row in group:
-        if truthy(row.get("included_in_r_geometry")):
-            failure_components[(safe(row.get("stage")), safe(row.get("pool")))].append(dimension_fail(row, "included_in_r_geometry"))
-    values = [1.0 - (sum(fails) / len(fails)) for fails in failure_components.values() if fails]
-    return f"{median(values):.6f}" if len(values) >= 2 else ""
+            key = (
+                safe(row.get("quality_metric_name")),
+                safe(row.get("geometry_metric_direction")),
+                safe(row.get("geometry_normalization_rule")),
+                safe(row.get("stage")),
+                safe(row.get("pool")),
+            )
+            if all(key[:3]):
+                components[key].append(value)
+    compatible: dict[tuple[str, str, str], list[float]] = defaultdict(list)
+    for (metric, direction, normalization, _stage_name, _pool), scores in components.items():
+        compatible[(metric, direction, normalization)].append(median(scores))
+    eligible = [values for values in compatible.values() if len(values) >= 2]
+    return f"{median(eligible[0]):.6f}" if len(eligible) == 1 else ""
 
 
 def _timing_summary(group: list[dict[str, Any]]) -> tuple[int, int, int, int, str]:
-    total = len({(safe(row.get("task_id")), safe(row.get("canonical_annotation_id"))) for row in group if safe(row.get("task_id"))})
-    primary = sum(truthy(row.get("primary_active_time_eligible")) for row in group)
-    fallback = sum(
-        safe(row.get("active_time_source")) == "lead_time_fallback"
-        or safe(row.get("timing_evidence_status")).endswith("sensitivity_only")
-        for row in group
-    )
-    missing = sum(safe(row.get("active_time_source")) == "missing" or safe(row.get("timing_evidence_status")) == "unavailable" for row in group)
+    by_task: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    for row in group:
+        if safe(row.get("task_id")):
+            by_task[(safe(row.get("task_id")), safe(row.get("canonical_annotation_id")))].append(row)
+    total = len(by_task)
+    primary = sum(any(truthy(row.get("primary_active_time_eligible")) for row in rows) for rows in by_task.values())
+    fallback = sum(any(safe(row.get("active_time_source")) == "lead_time_fallback" or safe(row.get("timing_evidence_status")).endswith("sensitivity_only") for row in rows) for rows in by_task.values())
+    missing = sum(all(safe(row.get("active_time_source")) == "missing" or safe(row.get("timing_evidence_status")) == "unavailable" for row in rows) for rows in by_task.values())
     parent = any(safe(row.get("timing_evidence_status")) == "parent_derived_not_independent" for row in group)
     non_independent = any(safe(row.get("independence_status")) in {"non_independent_confirmed", "non_independent_suspected"} for row in group)
     if non_independent and not primary:
@@ -669,6 +695,27 @@ def _timing_summary(group: list[dict[str, Any]]) -> tuple[int, int, int, int, st
     else:
         status = "unavailable"
     return total, primary, fallback, missing, status
+
+
+def _task_evidence_key(row: dict[str, Any]) -> tuple[str, str, str, str]:
+    return (
+        safe(row.get("worker_id")),
+        safe(row.get("stage")),
+        safe(row.get("task_id")),
+        safe(row.get("canonical_annotation_id")),
+    )
+
+
+def _unique_process_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    unique: dict[tuple[str, str, str, str], dict[str, Any]] = {}
+    for row in rows:
+        if not truthy(row.get("process_evaluable")):
+            continue
+        key = _task_evidence_key(row)
+        current = unique.get(key)
+        if current is None or truthy(row.get("process_failure_observed")):
+            unique[key] = row
+    return list(unique.values())
 
 
 def build_main_matrix(
@@ -698,7 +745,7 @@ def build_main_matrix(
         n_scope = fail_by_flag["included_in_r_scope"][1]
         n_semi = fail_by_flag["included_in_T_u"][1]
         n_under = fail_by_flag["included_in_U_u"][1]
-        process_rows = [row for row in group if truthy(row.get("process_evaluable"))]
+        process_rows = _unique_process_rows(group)
         process_failures = sum(truthy(row.get("process_failure_observed")) for row in process_rows)
         n_proc = len(process_rows)
         n_total, n_primary, n_fallback, n_missing, timing_status = _timing_summary(group)
@@ -736,8 +783,8 @@ def build_main_matrix(
                 "n_missing_time_tasks": n_missing,
                 "primary_active_time_coverage": "" if not n_total else f"{n_primary / n_total:.6f}",
                 "fallback_only_flag": n_primary == 0 and n_fallback > 0,
-                "long_open_draft_count": sum(truthy(row.get("long_open_draft_flag")) for row in group),
-                "parent_derived_timing_count": sum(safe(row.get("timing_evidence_status")) == "parent_derived_not_independent" for row in group),
+                "long_open_draft_count": len({_task_evidence_key(row) for row in group if truthy(row.get("long_open_draft_flag"))}),
+                "parent_derived_timing_count": len({_task_evidence_key(row) for row in group if safe(row.get("timing_evidence_status")) == "parent_derived_not_independent"}),
                 "timing_evidence_status": timing_status,
                 "p1_geometry_iou_median": safe(p1_profile.get("p1_geometry_iou_median")),
                 "p1_geometry_component": safe(p1_profile.get("p1_geometry_component")),
@@ -758,12 +805,12 @@ def build_main_matrix(
 
 def aggregate_family(evidence_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     grouped: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    for row in _unique_process_rows(evidence_rows):
+        process_row = dict(row)
+        process_row["family"] = "process_failure"
+        process_row["_is_fail"] = truthy(row.get("process_failure_observed"))
+        grouped[(row["worker_id"], "process_failure")].append(process_row)
     for row in evidence_rows:
-        if truthy(row.get("process_evaluable")):
-            process_row = dict(row)
-            process_row["family"] = "process_failure"
-            process_row["_is_fail"] = truthy(row.get("process_failure_observed"))
-            grouped[(row["worker_id"], "process_failure")].append(process_row)
         if row.get("family") != "process_failure":
             grouped[(row["worker_id"], row["family"])].append(row)
     workers = sorted({row["worker_id"] for row in evidence_rows})
@@ -793,15 +840,13 @@ def aggregate_family(evidence_rows: list[dict[str, Any]]) -> list[dict[str, Any]
 
 
 def aggregate_subfamily(evidence_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    aggregation_rows = []
-    for row in evidence_rows:
-        if truthy(row.get("process_evaluable")) and row.get("family") != "process_failure":
-            process_row = dict(row)
-            process_row["family"] = "process_failure"
-            process_row["subfamily"] = safe(row.get("process_failure_subfamily")) or "process_ok"
-            process_row["_is_fail"] = truthy(row.get("process_failure_observed"))
-            aggregation_rows.append(process_row)
-        aggregation_rows.append(row)
+    aggregation_rows = [row for row in evidence_rows if row.get("family") != "process_failure"]
+    for row in _unique_process_rows(evidence_rows):
+        process_row = dict(row)
+        process_row["family"] = "process_failure"
+        process_row["subfamily"] = safe(row.get("process_failure_subfamily")) or "process_ok"
+        process_row["_is_fail"] = truthy(row.get("process_failure_observed"))
+        aggregation_rows.append(process_row)
     grouped: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
     coverage = Counter((row["family"], row["subfamily"], row["worker_id"]) for row in aggregation_rows)
     global_worker_coverage = Counter((family, subfamily) for family, subfamily, _worker in coverage)
@@ -1017,6 +1062,51 @@ def _sum_numeric_field(rows: list[dict[str, Any]], field: str) -> float:
     return total
 
 
+def validate_p1_bundle(
+    task_path: Path | None,
+    worker_path: Path | None,
+    score_path: Path | None,
+    profile_path: Path | None,
+) -> tuple[str, list[str], int]:
+    paths = [task_path, worker_path, score_path, profile_path]
+    present = [bool(path and path.exists()) for path in paths]
+    if not any(present):
+        return "incomplete", ["p1_informed_artifact_bundle_missing"], 0
+    warnings = []
+    if not all(present):
+        warnings.append("p1_informed_artifact_bundle_partial")
+        return "incomplete", warnings, 0
+    task_rows = read_csv(task_path)  # type: ignore[arg-type]
+    worker_rows = read_csv(worker_path)  # type: ignore[arg-type]
+    score_rows = read_csv(score_path)  # type: ignore[arg-type]
+    profile_rows = read_csv(profile_path)  # type: ignore[arg-type]
+    correction_rules = {safe(row.get("rule_version")) for row in task_rows if safe(row.get("rule_version"))}
+    worker_rules = {safe(row.get("rule_version")) for row in worker_rows if safe(row.get("rule_version"))}
+    scoring_rules = {safe(row.get("scoring_rule_version")) for row in score_rows if safe(row.get("scoring_rule_version"))}
+    profile_rules = {safe(row.get("scoring_rule_version")) for row in profile_rows if safe(row.get("scoring_rule_version"))}
+    if len(correction_rules) != 1 or worker_rules != correction_rules:
+        warnings.append("p1_correction_rule_version_mismatch")
+    if len(scoring_rules) != 1 or profile_rules != scoring_rules:
+        warnings.append("p1_geometry_scoring_rule_version_mismatch")
+    correction_sha = {safe(row.get("source_canonical_sha256")) for row in task_rows if safe(row.get("source_canonical_sha256"))}
+    score_sha = {safe(row.get("source_canonical_sha256")) for row in score_rows if safe(row.get("source_canonical_sha256"))}
+    profile_sha = {safe(row.get("source_canonical_sha256")) for row in profile_rows if safe(row.get("source_canonical_sha256"))}
+    if len(correction_sha) != 1 or score_sha != correction_sha or profile_sha != correction_sha:
+        warnings.append("p1_canonical_snapshot_sha256_mismatch")
+    final_gold_score = {safe(row.get("source_final_gold_sha256")) for row in score_rows if safe(row.get("source_final_gold_sha256"))}
+    final_gold_profile = {safe(row.get("source_final_gold_sha256")) for row in profile_rows if safe(row.get("source_final_gold_sha256"))}
+    if len(final_gold_score) != 1 or final_gold_profile != final_gold_score:
+        warnings.append("p1_final_gold_sha256_mismatch")
+    key = lambda row: (safe(row.get("worker_id")), safe(row.get("task_id")), safe(row.get("annotation_id")))
+    if {key(row) for row in task_rows} != {key(row) for row in score_rows}:
+        warnings.append("p1_task_annotation_key_coverage_mismatch")
+    task_workers = {safe(row.get("worker_id")) for row in task_rows}
+    if not {safe(row.get("worker_id")) for row in profile_rows}.issubset(task_workers):
+        warnings.append("p1_worker_geometry_profile_coverage_mismatch")
+    pending = sum(safe(row.get("adjudication_status")) == "pending_review" for row in task_rows)
+    return ("complete" if not warnings else "incomplete"), warnings, pending
+
+
 def materialize(
     quality_csv: Path,
     worker_state_csv: Path,
@@ -1027,6 +1117,12 @@ def materialize(
     p1_geometry_task_scores: Path | None = None,
     p1_worker_geometry_profile: Path | None = None,
 ) -> dict[str, Any]:
+    p1_bundle_status, p1_bundle_warnings, pending_adjudication = validate_p1_bundle(
+        p1_task_evidence_csv,
+        p1_worker_status_csv,
+        p1_geometry_task_scores,
+        p1_worker_geometry_profile,
+    )
     evidence = build_evidence_rows(read_csv(quality_csv))
     geometry_scores = _load_geometry_scores(p1_geometry_task_scores)
     if p1_task_evidence_csv and p1_task_evidence_csv.exists():
@@ -1096,9 +1192,12 @@ def materialize(
         "r_u_calib_estimated": any(safe(row.get("r_u_calib")) for row in main),
         "r_geometry_u_estimated": any(safe(row.get("r_geometry_u")) for row in main),
         "p1_predictive_validity_status": "evaluable" if predictive_evaluable else "not_evaluable",
+        "p1_informed_diagnostic_profile_status": p1_bundle_status,
+        "full_profile_ready": p1_bundle_status == "complete",
+        "pending_adjudication_count": pending_adjudication,
         "profile_freeze_status": "C1_provisional",
         "blockers": [],
-        "warnings": [] if predictive_evaluable else ["p1_predictive_validity_not_evaluable_without_p1_artifacts" if not input_p1_artifacts else "p1_predictive_validity_not_evaluable_without_matching_p1_c1_metrics"],
+        "warnings": p1_bundle_warnings + ([] if predictive_evaluable else ["p1_predictive_validity_not_evaluable_without_p1_artifacts" if not input_p1_artifacts else "p1_predictive_validity_not_evaluable_without_matching_p1_c1_metrics"]),
     }
     write_json(summary_json, summary)
     return summary

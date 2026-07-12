@@ -312,7 +312,7 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert summary_json["profile_freeze_status"] == "C1_provisional"
     assert "family_interpretation_level_counts" in summary_json
     assert "subfamily_interpretation_level_counts" in summary_json
-    assert summary_json["warnings"] == ["p1_predictive_validity_not_evaluable_without_p1_artifacts"]
+    assert summary_json["warnings"] == ["p1_informed_artifact_bundle_missing", "p1_predictive_validity_not_evaluable_without_p1_artifacts"]
 
 
 def test_worker_profile_sidecar_confidence_and_interpretation_levels(tmp_path: Path) -> None:

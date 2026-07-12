@@ -20,6 +20,12 @@ Add a P1-informed worker-profile chain and explicitly amend the thesis outline t
 
 This document should be treated as an analysis and writing contract. It does not authorize any change to the C1 task pool, C1 worker-facing distribution, C1 assignment manifest, or P1 admission decision.
 
+## 2026-07-12 post-closeout amendment
+
+The authoritative thesis structure is now `THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.md`. The paper's primary axis is protocol evidence -> evidence-validity gate -> dual-chain worker state -> freeze -> predictive validity and routing evaluation.
+
+This amendment is retrospective. P1 capability evidence requires an independence/process-validity gate before entering geometry, scope, correction or coverage profiles. Confirmed cross-worker parent-derived submissions are excluded from capability dimensions and retained as `non_independent_submission` process evidence; suspected rows remain pending review. This correction does not rewrite P1 admission or frozen C1 assignment. Owner-valid exact browser logs are primary timing evidence; task-level and `lead_time` fallbacks remain sensitivity/audit only.
+
 ---
 
 ## 1. Non-negotiable protocol boundaries
