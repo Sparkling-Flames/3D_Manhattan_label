@@ -40,6 +40,10 @@ def materialize(
     active_log: Path | None = ACTIVE_LOG_DEFAULT,
     assignment_manifest: Path | None = None,
     p1_artifacts: list[Path] | None = None,
+    p1_task_evidence_csv: Path | None = None,
+    p1_worker_status_csv: Path | None = None,
+    p1_geometry_task_scores: Path | None = None,
+    p1_worker_geometry_profile: Path | None = None,
     require_complete: bool = False,
 ) -> dict[str, Any]:
     canonical = c1_canonicalize_exports.build_canonicalization(
@@ -65,6 +69,10 @@ def materialize(
         epsilon_r,
         tasks_per_fill,
         p1_artifacts,
+        p1_task_evidence_csv,
+        p1_worker_status_csv,
+        p1_geometry_task_scores,
+        p1_worker_geometry_profile,
     )
     summary = {
         "canonicalization_summary": canonical,
@@ -99,6 +107,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--epsilon-r", type=float, required=True)
     parser.add_argument("--tasks-per-fill", type=int, required=True)
     parser.add_argument("--p1-artifact", type=Path, action="append", default=[])
+    parser.add_argument("--p1-task-evidence-csv", type=Path)
+    parser.add_argument("--p1-worker-status-csv", type=Path)
+    parser.add_argument("--p1-geometry-task-scores", type=Path)
+    parser.add_argument("--p1-worker-geometry-profile", type=Path)
     parser.add_argument("--require-complete", action="store_true")
     args = parser.parse_args(argv)
     summary = materialize(
@@ -119,6 +131,10 @@ def main(argv: list[str] | None = None) -> int:
         active_log=args.active_log,
         assignment_manifest=args.assignment_manifest,
         p1_artifacts=args.p1_artifact,
+        p1_task_evidence_csv=args.p1_task_evidence_csv,
+        p1_worker_status_csv=args.p1_worker_status_csv,
+        p1_geometry_task_scores=args.p1_geometry_task_scores,
+        p1_worker_geometry_profile=args.p1_worker_geometry_profile,
         require_complete=args.require_complete,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))

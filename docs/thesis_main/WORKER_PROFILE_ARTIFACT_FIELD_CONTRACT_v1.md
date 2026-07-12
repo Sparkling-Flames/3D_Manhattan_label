@@ -792,3 +792,42 @@ Recommended implementation order:
 ```
 
 Do not implement advanced `r_geometry_u` modeling before the evidence table and support-aware summaries are stable.
+
+---
+
+## 13. Versioned P1 post-closeout artifact amendment (2026-07-12)
+
+The following contract is an additive post-closeout correction layer. It does not revise the original P1 admission contract.
+
+### 13.1 New P1 artifacts
+
+```text
+p1_task_evidence_correction_v1.csv
+p1_worker_evidence_status_v1.csv
+p1_post_closeout_correction_summary_v1.json
+p1_post_closeout_correction_report_v1.md
+p1_geometry_task_scores_v1.csv
+p1_worker_geometry_profile_v1.csv
+p1_geometry_score_summary_v1.json
+p1_geometry_score_audit_v1.md
+```
+
+Each task row retains `source_export` and `source_sha256`. Geometry rows additionally retain final-gold and canonical source SHA-256 values, reference status/id/count, raw mask-IoU, within-task mid-rank percentile, inclusion flag, exclusion reason, and scoring rule version.
+
+### 13.2 Required evidence semantics
+
+`independence_status` is one of `independent`, `non_independent_confirmed`, `non_independent_suspected`, or `not_evaluable`. Only same-task, cross-owner, parent-precedes-child, exact-geometry-hash evidence can be confirmed automatically. Suspected evidence is pending review and cannot automatically create a process failure.
+
+For confirmed non-independent rows, capability flags are false and `process_evaluable=true`, `process_failure_observed=true`, and `process_failure_subfamily=non_independent_submission`. Independent rows follow the existing stage/pool/condition/reference gates. All P1 rows have `included_in_r_u_calib=false`.
+
+### 13.3 Timing fields
+
+`primary_active_time_eligible` is true only for owner-valid exact annotation-level browser logs. `task_level_fallback` and `lead_time_fallback` remain sensitivity/audit-only. The worker summary must include `n_total_tasks`, `n_primary_active_time_tasks`, `n_fallback_tasks`, `n_missing_time_tasks`, `primary_active_time_coverage`, `fallback_only_flag`, `long_open_draft_count`, `parent_derived_timing_count`, and `timing_evidence_status`.
+
+### 13.4 Process reliability fields
+
+`process_evaluable` defines the denominator. Both `process_failure_observed=true` and `false` rows enter that denominator. System collection issue, unknown-page evidence, and un-attributable active-time missingness are `process_evaluable=false`. The materializer reports an empty reliability value when the denominator is zero. `non_independent_submission` is a process-integrity subfamily and must not be relabeled as geometry failure.
+
+### 13.5 Profile and predictive gate
+
+P1 geometry profiles report stage/pool component medians and require at least two valid components for a combined diagnostic component. For a worker whose P1 capability evidence is invalid, P1 geometry/scope/semi/undercoverage predictive rows are `support_status=not_evaluable`, `interpretation_allowed=false`, and `notes` include `p1_non_independent_submission`; the P1 process-warning versus C1 process-reliability row remains separately auditable. No P1 value is routed into C1/C2 assignment or `r_u_calib`.

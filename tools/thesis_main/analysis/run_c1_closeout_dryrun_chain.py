@@ -119,6 +119,10 @@ def materialize(
     epsilon_r: float,
     tasks_per_fill: int,
     p1_artifacts: list[Path] | None = None,
+    p1_task_evidence_csv: Path | None = None,
+    p1_worker_status_csv: Path | None = None,
+    p1_geometry_task_scores: Path | None = None,
+    p1_worker_geometry_profile: Path | None = None,
 ) -> dict[str, Any]:
     quality_summary = c1_materialize_quality_table.materialize(canonical_csv, output_dir, candidate_inventory_csv)
     quality_csv = output_dir / "c1_quality_annotations.csv"
@@ -132,7 +136,16 @@ def materialize(
         c2_output_dir,
         tasks_per_fill,
     )
-    profile_summary = c1_materialize_worker_profile_sidecar.materialize(quality_csv, worker_state_csv, output_dir, p1_artifacts)
+    profile_summary = c1_materialize_worker_profile_sidecar.materialize(
+        quality_csv,
+        worker_state_csv,
+        output_dir,
+        p1_artifacts,
+        p1_task_evidence_csv,
+        p1_worker_status_csv,
+        p1_geometry_task_scores,
+        p1_worker_geometry_profile,
+    )
     profile_summary_path = output_dir / "worker_profile_sidecar_C1.summary.json"
     gate_summary = build_gate_summary(quality_summary, worker_summary, gap_summary, c2_summary, profile_summary, profile_summary_path)
     write_json(output_dir / "c1_closeout_dryrun_gate_summary.json", gate_summary)
@@ -154,6 +167,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--epsilon-r", type=float, required=True)
     parser.add_argument("--tasks-per-fill", type=int, required=True)
     parser.add_argument("--p1-artifact", type=Path, action="append", default=[])
+    parser.add_argument("--p1-task-evidence-csv", type=Path)
+    parser.add_argument("--p1-worker-status-csv", type=Path)
+    parser.add_argument("--p1-geometry-task-scores", type=Path)
+    parser.add_argument("--p1-worker-geometry-profile", type=Path)
     args = parser.parse_args(argv)
     summary = materialize(
         args.canonical_csv,
@@ -168,6 +185,10 @@ def main(argv: list[str] | None = None) -> int:
         args.epsilon_r,
         args.tasks_per_fill,
         args.p1_artifact,
+        args.p1_task_evidence_csv,
+        args.p1_worker_status_csv,
+        args.p1_geometry_task_scores,
+        args.p1_worker_geometry_profile,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0
