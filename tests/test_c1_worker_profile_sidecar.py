@@ -267,15 +267,15 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     main = _rows(tmp_path / "out" / "worker_profile_main_matrix_C1.csv")[0]
     family = _rows(tmp_path / "out" / "worker_failure_family_response_C1.csv")
     subfamily = _rows(tmp_path / "out" / "worker_subfamily_response_C1.csv")
-    predictive = _rows(tmp_path / "out" / "p1_to_c1_predictive_validity.csv")
+    predictive = _rows(tmp_path / "out" / "p1_to_c1_descriptive_directional_check.csv")
     summary_json = json.loads((tmp_path / "out" / "worker_profile_sidecar_C1.summary.json").read_text(encoding="utf-8"))
 
     by_task = {row["task_id"]: row for row in evidence}
     assert by_task["s1"]["included_in_r_u_calib"] == "false"
     assert by_task["s1"]["included_in_r_geometry"] == "false"
-    assert by_task["s1"]["included_in_T_u"] == "true"
+    assert by_task["s1"]["included_in_T_u"] == "false"
     assert by_task["psemi1"]["included_in_r_geometry"] == "false"
-    assert by_task["psemi1"]["included_in_T_u"] == "true"
+    assert by_task["psemi1"]["included_in_T_u"] == "false"
     assert by_task["poos1"]["task_final_scope"] == "oos"
     assert by_task["poos1"]["task_oos_subtype"] == "oos_open_boundary"
     assert by_task["poos1"]["included_in_r_scope"] == "true"
@@ -283,7 +283,7 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert by_task["c2b1"]["included_in_r_u_calib"] == "false"
     assert by_task["o1"]["included_in_r_scope"] == "true"
     assert by_task["o1"]["included_in_r_geometry"] == "false"
-    assert by_task["u1"]["included_in_U_u"] == "true"
+    assert by_task["u1"]["included_in_U_u"] == "false"
     assert by_task["u1"]["task_final_scope"] == "in_scope"
     assert by_task["proc1"]["included_in_process_reliability"] == "true"
     assert by_task["proc1"]["included_in_r_geometry"] == "false"
@@ -302,23 +302,23 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert main["n_calib_support"] == "1"
     assert main["n_geometry_support"] == "0"
     assert main["n_scope_support"] == "9"
-    assert main["n_undercoverage_support"] == "1"
-    assert main["blind_trust_or_correction_failure_rate"] == "1.000000"
-    assert main["correction_reliability_u"] == "0.000000"
-    assert main["undercoverage_failure_rate"] == "1.000000"
-    assert main["coverage_reliability_u"] == "0.000000"
+    assert main["n_undercoverage_support"] == "0"
+    assert main["blind_trust_or_correction_failure_rate"] == ""
+    assert main["correction_reliability_u"] == ""
+    assert main["undercoverage_failure_rate"] == ""
+    assert main["coverage_reliability_u"] == ""
     assert main["T_u_direction"] == "higher_is_worse_failure_rate"
     assert main["n_process_support"] == "10"
-    assert any(row["family"] == "undercoverage_failure" and row["n_observed"] == "1" and row["interpretation_level"] == "none" and row["interpretation_allowed"] == "false" for row in family)
-    assert any(row["subfamily"] == "minimal_space_bias" and row["interpretation_level"] == "none" and row["interpretation_allowed"] == "false" for row in subfamily)
+    assert any(row["family"] == "undercoverage_failure" and row["n_observed"] == "0" and row["interpretation_level"] == "none" and row["interpretation_allowed"] == "false" for row in family)
+    assert not any(row["subfamily"] == "minimal_space_bias" for row in subfamily)
     assert {row["support_status"] for row in predictive} == {"not_evaluable"}
-    assert (tmp_path / "out" / "p1_to_c1_predictive_validity_report.md").exists()
+    assert (tmp_path / "out" / "p1_to_c1_descriptive_directional_check_report.md").exists()
     assert summary["r_u_calib_estimated"] is True
     assert summary_json["input_p1_artifacts"] == []
     assert summary_json["profile_freeze_status"] == "C1_provisional"
     assert "family_interpretation_level_counts" in summary_json
     assert "subfamily_interpretation_level_counts" in summary_json
-    assert summary_json["warnings"] == ["p1_informed_artifact_bundle_missing", "p1_predictive_validity_not_evaluable_without_p1_artifacts"]
+    assert summary_json["warnings"] == ["p1_informed_artifact_bundle_missing", "p1_descriptive_directional_check_not_evaluable_without_p1_artifacts"]
 
 
 def test_worker_profile_sidecar_confidence_and_interpretation_levels(tmp_path: Path) -> None:
@@ -383,15 +383,14 @@ def test_worker_profile_sidecar_confidence_and_interpretation_levels(tmp_path: P
     assert main["diagnostic_profile_confidence"] == "insufficient"
     assert main["profile_confidence"] == "insufficient"
     assert "diagnostic_profile_confidence_from_non_protocol_dimensions" in main["profile_confidence_notes"]
-    assert family["geometry_quality_failure"]["interpretation_level"] == "sufficient_descriptive"
-    assert family["semi_correction_failure"]["interpretation_level"] == "moderate_descriptive"
+    assert family["geometry_quality_failure"]["interpretation_level"] == "none"
+    assert family["semi_correction_failure"]["interpretation_level"] == "none"
     assert family["process_failure"]["interpretation_level"] == "weak_descriptive"
     assert family["undercoverage_failure"]["interpretation_level"] == "none"
     assert family["undercoverage_failure"]["interpretation_allowed"] == "false"
-    assert subfamily["normal_geometry_degraded"]["interpretation_level"] == "sufficient_descriptive"
-    assert subfamily["normal_geometry_degraded"]["interpretation_allowed"] == "false"
-    assert summary["family_interpretation_level_counts"]["sufficient_descriptive"] >= 1
-    assert summary["family_interpretation_level_counts"]["moderate_descriptive"] >= 1
+    assert "normal_geometry_degraded" not in subfamily
+    assert summary["family_interpretation_level_counts"]["sufficient_descriptive"] == 0
+    assert summary["family_interpretation_level_counts"]["moderate_descriptive"] == 0
     assert summary["family_interpretation_level_counts"]["weak_descriptive"] >= 1
 
 
@@ -444,15 +443,15 @@ def test_worker_profile_sidecar_reads_p1_artifacts_without_writeback(tmp_path: P
     _csv(p1, ["worker_id", "r_u_0", "p1_geometry_profile"], [{"worker_id": "w1", "r_u_0": "0.9", "p1_geometry_profile": "0.8"}])
 
     summary = materialize(quality, worker_state, tmp_path / "out", [p1])
-    predictive = _rows(tmp_path / "out" / "p1_to_c1_predictive_validity.csv")
+    predictive = _rows(tmp_path / "out" / "p1_to_c1_descriptive_directional_check.csv")
     by_check = {row["check_name"]: row for row in predictive}
-    report = (tmp_path / "out" / "p1_to_c1_predictive_validity_report.md").read_text(encoding="utf-8")
+    report = (tmp_path / "out" / "p1_to_c1_descriptive_directional_check_report.md").read_text(encoding="utf-8")
 
     assert summary["input_p1_artifacts"] == [str(p1)]
-    assert summary["p1_predictive_validity_status"] == "evaluable"
+    assert summary["p1_descriptive_directional_check_status"] == "evaluable"
     assert by_check["p1_r0_vs_c1_r_u_calib"]["p1_metric_value"] == "0.9"
     assert by_check["p1_r0_vs_c1_r_u_calib"]["support_status"] == "weak_descriptive"
-    assert by_check["p1_r0_vs_c1_r_u_calib"]["directionally_consistent"] == "true"
+    assert by_check["p1_r0_vs_c1_r_u_calib"]["descriptive_directional_alignment"] == "true"
     assert by_check["p1_geometry_vs_c1_geometry"]["support_status"] == "not_evaluable"
     assert "P1 artifacts are read-only inputs" in report
 
@@ -463,7 +462,7 @@ def test_structural_p1_bundle_is_not_full_without_expert_undercoverage_or_semi_g
     _csv(quality, ["worker_id"], [])
     _csv(worker, ["worker_id"], [{"worker_id": "w1"}])
     correction = tmp_path / "correction.csv"
-    _csv(correction, ["worker_id", "project_id", "task_id", "annotation_id", "rule_version", "source_canonical_sha256", "source_scope_sha256", "source_semi_sha256", "source_undercoverage_sha256", "scope_evidence_status", "semi_issue_recognition_ready", "semi_geometry_correction_evidence_status", "undercoverage_evidence_status", "process_evaluable", "adjudication_status"], [{"worker_id": "w1", "project_id": "p1", "task_id": "t1", "annotation_id": "a1", "rule_version": "r1", "source_canonical_sha256": "canon", "source_scope_sha256": "scope", "source_semi_sha256": "semi", "source_undercoverage_sha256": "under", "scope_evidence_status": "evaluable", "semi_issue_recognition_ready": "true", "semi_geometry_correction_evidence_status": "not_evaluable_missing_geometry_comparison", "undercoverage_evidence_status": "candidate_only_pending_adjudication", "process_evaluable": "true", "adjudication_status": "not_required"}])
+    _csv(correction, ["worker_id", "project_id", "task_id", "annotation_id", "rule_version", "source_canonical_sha256", "source_scope_sha256", "source_semi_sha256", "source_undercoverage_sha256", "dataset_group", "independence_status", "model_issue_primary", "scope_evidence_status", "semi_issue_recognition_ready", "semi_geometry_correction_evidence_status", "undercoverage_evidence_status", "process_evaluable", "adjudication_status"], [{"worker_id": "w1", "project_id": "p1", "task_id": "t1", "annotation_id": "a1", "rule_version": "r1", "source_canonical_sha256": "canon", "source_scope_sha256": "scope", "source_semi_sha256": "semi", "source_undercoverage_sha256": "under", "dataset_group": "PreScreen_semi", "independence_status": "independent", "model_issue_primary": "corner_drift", "scope_evidence_status": "evaluable", "semi_issue_recognition_ready": "true", "semi_geometry_correction_evidence_status": "not_evaluable_missing_geometry_comparison", "undercoverage_evidence_status": "candidate_only_pending_adjudication", "process_evaluable": "true", "adjudication_status": "not_required"}])
     status = tmp_path / "status.csv"
     _csv(status, ["worker_id", "rule_version"], [{"worker_id": "w1", "rule_version": "r1"}])
     scores = tmp_path / "scores.csv"
@@ -477,6 +476,50 @@ def test_structural_p1_bundle_is_not_full_without_expert_undercoverage_or_semi_g
     assert summary["p1_semi_issue_recognition_ready"] is True
     assert summary["p1_semi_geometry_correction_ready"] is False
     assert summary["full_diagnostic_profile_ready"] is False
+    readiness = {row["dimension"]: row for row in _rows(tmp_path / "out" / "p1_worker_dimension_readiness_C1.csv")}
+    assert readiness["semi_issue_recognition"]["expected_count"] == "1"
+    assert readiness["semi_issue_recognition"]["evaluable_count"] == "1"
+    assert readiness["semi_issue_recognition"]["support_ready"] == "false"
+    assert readiness["undercoverage"]["not_applicable_count"] == "1"
+
+
+def test_c1_geometry_components_stay_continuous_while_binary_and_expert_gates_apply(tmp_path: Path) -> None:
+    fields = [
+        "round_id", "task_id", "base_task_id", "dataset_group", "condition", "worker_id", "canonical_annotation_id",
+        "task_final_scope", "geometry_reference_status", "geometry_valid", "geometry_score_gate_passed", "quality_metric_name",
+        "quality_metric_value", "geometry_metric_direction", "geometry_normalization_rule", "geometry_failure_threshold_status",
+        "geometry_failure_family_evaluable", "geometry_failure_observed", "family", "undercoverage_evidence_status",
+        "undercoverage_expert_verdict", "undercoverage_subfamily", "undercoverage_failure_observed", "undercoverage_risk_level",
+        "semi_issue_recognition_evaluable", "semi_geometry_correction_evaluable", "semi_response_type", "semi_correction_failure_observed",
+    ]
+    common = {"round_id": "C1", "worker_id": "w1", "task_final_scope": "in_scope", "geometry_reference_status": "expert_hard_single", "geometry_valid": "true"}
+    rows = [
+        {**common, "task_id": "g1", "base_task_id": "g1", "dataset_group": "Calibration_anchor", "condition": "manual", "canonical_annotation_id": "g1", "geometry_score_gate_passed": "true", "quality_metric_name": "iou", "quality_metric_value": "0.8", "geometry_metric_direction": "higher_is_better", "geometry_normalization_rule": "identity_0_1", "geometry_failure_threshold_status": "not_frozen", "family": "geometry_quality_failure"},
+        {**common, "task_id": "g2", "base_task_id": "g2", "dataset_group": "Calibration_core", "condition": "manual", "canonical_annotation_id": "g2", "geometry_score_gate_passed": "true", "quality_metric_name": "iou", "quality_metric_value": "0.6", "geometry_metric_direction": "higher_is_better", "geometry_normalization_rule": "identity_0_1", "geometry_failure_threshold_status": "not_frozen", "family": "geometry_quality_failure"},
+        {**common, "task_id": "u1", "base_task_id": "u1", "dataset_group": "Calibration_core", "condition": "manual", "canonical_annotation_id": "u1", "family": "undercoverage_failure", "undercoverage_evidence_status": "evaluable_expert_adjudicated", "undercoverage_expert_verdict": "rejected_proxy_false_positive", "undercoverage_subfamily": "full_room_attempt", "undercoverage_failure_observed": "false"},
+        {**common, "task_id": "u2", "base_task_id": "u2", "dataset_group": "Calibration_core", "condition": "manual", "canonical_annotation_id": "u2", "family": "undercoverage_failure", "undercoverage_risk_level": "high"},
+        {**common, "task_id": "s1", "base_task_id": "s1", "dataset_group": "Calibration_semi", "condition": "semi", "canonical_annotation_id": "s1", "family": "semi_correction_failure", "semi_issue_recognition_evaluable": "true", "semi_geometry_correction_evaluable": "true", "semi_response_type": "successful_correction", "semi_correction_failure_observed": "false"},
+    ]
+    quality = tmp_path / "quality.csv"
+    worker = tmp_path / "worker.csv"
+    _csv(quality, fields, rows)
+    _csv(worker, ["worker_id"], [{"worker_id": "w1"}])
+
+    summary = materialize(quality, worker, tmp_path / "out")
+    evidence = _rows(tmp_path / "out" / "worker_task_evidence_table_C1.csv")
+    main = _rows(tmp_path / "out" / "worker_profile_main_matrix_C1.csv")[0]
+    family = {row["family"]: row for row in _rows(tmp_path / "out" / "worker_failure_family_response_C1.csv")}
+    semi = [row for row in evidence if row["task_id"] == "s1"]
+
+    assert main["r_geometry_u"] == "0.700000"
+    assert family["geometry_quality_failure"]["n_observed"] == "0"
+    assert family["undercoverage_failure"]["n_observed"] == "1"
+    assert family["undercoverage_failure"]["n_fail"] == "0"
+    assert {row["evidence_signal"] for row in semi} == {"semi_issue_recognition", "semi_geometry_correction"}
+    assert sum(row["included_in_T_u"] == "true" for row in semi) == 1
+    assert summary["formal_predictive_validity_status"] == "not_run_blocked"
+    assert (tmp_path / "out" / "p1_to_c1_predictive_validity.deprecated.json").exists()
+    assert not (tmp_path / "out" / "p1_to_c1_predictive_validity.csv").exists()
 
 
 def test_system_collection_issue_is_not_worker_process_failure(tmp_path: Path) -> None:

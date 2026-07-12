@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -25,6 +26,14 @@ R_GEOMETRY_GROUPS = {"PreScreen_manual", "Calibration_anchor", "Calibration_core
 T_U_GROUPS = {"PreScreen_semi", "Calibration_semi"}
 VALID_SCOPE_RESPONSES = {"correct_in_scope", "correct_oos", "scope_false_positive", "scope_false_negative"}
 UNDERCOVERAGE_RESPONSES = {"partial_undercoverage", "inner_space_only", "minimal_space_bias", "full_room_compliance_failure", "overextended_adjacent_when_in_scope"}
+UNDERCOVERAGE_EXPERT_VERDICTS = {
+    "confirmed_full_room_attempt",
+    "confirmed_partial_undercoverage",
+    "confirmed_inner_space_only",
+    "confirmed_minimal_space_bias",
+    "confirmed_overextended_adjacent",
+    "rejected_proxy_false_positive",
+}
 PROCESS_SUBFAMILIES = {
     "active_time_missing_or_ineligible",
     "duplicate_same_geometry",
@@ -71,6 +80,10 @@ EVIDENCE_FIELDS = [
     "geometry_normalization_rule",
     "geometry_component_name",
     "geometry_score_status",
+    "geometry_component_evaluable",
+    "geometry_failure_threshold_status",
+    "geometry_failure_family_evaluable",
+    "geometry_failure_observed",
     "family",
     "evidence_signal",
     "subfamily",
@@ -112,6 +125,8 @@ EVIDENCE_FIELDS = [
     "independence_status",
     "parent_annotation_id",
     "parent_owner_id",
+    "parent_same_task",
+    "parent_same_owner",
     "parent_cross_owner",
     "parent_precedes_child",
     "active_time_seconds",
@@ -126,6 +141,8 @@ EVIDENCE_FIELDS = [
     "undercoverage_proxy_reason",
     "undercoverage_manual_review_required",
     "undercoverage_expert_verdict",
+    "semi_issue_recognition_evaluable",
+    "semi_geometry_correction_evaluable",
 ]
 
 MAIN_FIELDS = [
@@ -156,12 +173,16 @@ MAIN_FIELDS = [
     "n_geometry_support",
     "n_scope_support",
     "n_semi_support",
+    "n_semi_issue_recognition_support",
+    "n_semi_geometry_correction_support",
     "n_undercoverage_support",
     "n_process_support",
     "calib_support_status",
     "geometry_support_status",
     "scope_support_status",
     "semi_support_status",
+    "semi_issue_recognition_support_status",
+    "semi_geometry_correction_support_status",
     "undercoverage_support_status",
     "process_support_status",
     "profile_version",
@@ -200,7 +221,21 @@ SUBFAMILY_FIELDS = [
     "source_stages",
     "profile_version",
 ]
-PREDICTIVE_FIELDS = ["worker_id", "check_name", "p1_metric_name", "p1_metric_value", "c1_metric_name", "c1_metric_value", "directionally_consistent", "support_status", "interpretation_allowed", "notes"]
+READINESS_FIELDS = [
+    "worker_id",
+    "dimension",
+    "artifact_available",
+    "expected_count",
+    "evaluable_count",
+    "pending_count",
+    "not_evaluable_count",
+    "not_applicable_count",
+    "support_status",
+    "has_evaluable_evidence",
+    "support_ready",
+    "worker_full_diagnostic_profile_ready",
+]
+PREDICTIVE_FIELDS = ["worker_id", "check_name", "p1_metric_name", "p1_metric_value", "c1_metric_name", "c1_metric_value", "descriptive_directional_alignment", "support_status", "interpretation_allowed", "notes"]
 P1_ALIASES = {
     "r0_prescreen": ["r0_prescreen", "r_u_0", "r_u0", "prescreen_r0"],
     "p1_geometry_profile": ["p1_geometry_profile", "p1_geometry_component", "p1_geometry_iou_median", "geometry_profile", "r_geometry_u"],
@@ -336,10 +371,36 @@ def subfamily_for(row: dict[str, str], family: str) -> str:
         text = safe(row.get("model_issue_primary") or row.get("model_issue"))
         return text if text and text != "acceptable" else "successful_correction"
     if family == "undercoverage_failure":
-        return safe(row.get("coverage_response")) or "undercoverage_case"
+        return safe(row.get("undercoverage_subfamily")) or safe(row.get("coverage_response")) or "undercoverage_case"
     if family == "process_failure":
         return "process_integrity"
     return "normal_geometry_degraded" if geometry_valid(row) else "topology_or_pairing_failure"
+
+
+def geometry_component_evaluable(row: dict[str, Any]) -> bool:
+    value = _numeric_value(row.get("quality_metric_value"))
+    return bool(
+        truthy(row.get("geometry_score_gate_passed"))
+        and value is not None
+        and math.isfinite(value)
+        and safe(row.get("geometry_metric_direction")) == "higher_is_better"
+        and safe(row.get("geometry_normalization_rule"))
+        and safe(row.get("quality_metric_name"))
+    )
+
+
+def geometry_failure_family_evaluable(row: dict[str, Any]) -> bool:
+    return bool(
+        truthy(row.get("geometry_failure_family_evaluable"))
+        and safe(row.get("geometry_failure_threshold_status")) in {"frozen", "threshold_frozen"}
+    )
+
+
+def undercoverage_expert_evaluable(row: dict[str, Any]) -> bool:
+    return bool(
+        safe(row.get("undercoverage_evidence_status")) == "evaluable_expert_adjudicated"
+        and safe(row.get("undercoverage_expert_verdict")) in UNDERCOVERAGE_EXPERT_VERDICTS
+    )
 
 
 def response_type(row: dict[str, str], family: str, subfamily: str) -> str:
@@ -351,10 +412,14 @@ def response_type(row: dict[str, str], family: str, subfamily: str) -> str:
     if family == "process_failure":
         return "process_failure" if process_fail(row) else "process_ok"
     if family == "undercoverage_failure":
-        return "undercoverage_fail" if subfamily != "full_room_attempt" else "undercoverage_ok"
+        if not undercoverage_expert_evaluable(row):
+            return "undercoverage_not_evaluable"
+        return "undercoverage_fail" if truthy(row.get("undercoverage_failure_observed")) else "undercoverage_ok"
     if family == "semi_correction_failure":
         return "semi_fail" if subfamily not in {"successful_correction", "acceptable"} else "semi_ok"
-    return "geometry_ok" if geometry_valid(row) else "geometry_fail"
+    if geometry_failure_family_evaluable(row):
+        return "geometry_fail" if truthy(row.get("geometry_failure_observed")) else "geometry_ok"
+    return "geometry_not_evaluable"
 
 
 def active_time_worker_process_fail(row: dict[str, str]) -> bool:
@@ -402,7 +467,9 @@ def is_fail(row: dict[str, str], family: str, response: str) -> bool:
     if any(token in text for token in ("fail", "false", "invalid", "missing", "mismatch", "blind_trust", "not_fixed")):
         return True
     if family == "geometry_quality_failure":
-        return not geometry_valid(row)
+        return geometry_failure_family_evaluable(row) and truthy(row.get("geometry_failure_observed"))
+    if family == "undercoverage_failure":
+        return undercoverage_expert_evaluable(row) and truthy(row.get("undercoverage_failure_observed"))
     if family == "process_failure":
         return process_fail(row)
     return False
@@ -420,7 +487,7 @@ def dimension_fail(evidence_row: dict[str, Any], field: str) -> bool:
     if field == "included_in_T_u":
         return any(token in response for token in ("blind_trust", "failed_correction", "not_fixed", "semi_fail"))
     if field == "included_in_U_u":
-        return evidence_row.get("family") == "undercoverage_failure" and safe(evidence_row.get("subfamily")) != "full_room_attempt"
+        return truthy(evidence_row.get("undercoverage_failure_observed"))
     if field == "included_in_process_reliability":
         return truthy(evidence_row.get("process_failure_observed"))
     return truthy(evidence_row.get("_is_fail"))
@@ -436,15 +503,15 @@ def inclusion_flags(row: dict[str, str], family: str) -> dict[str, bool]:
     row_stage = stage(row)
     manual = cond == "manual"
     usable_ref = ref in USABLE_GEOMETRY_REFERENCE
-    geometry_scoring_gate = truthy(row.get("geometry_score_gate_passed"))
-    response = safe(row.get("response_type"))
+    geometry_component_ok = geometry_component_evaluable(row)
+    undercoverage_ok = undercoverage_expert_evaluable(row)
     worker_scope = safe(row.get("worker_scope_response"))
     return {
         "included_in_r_u_calib": row_stage in {"C1", "C2"} and group in R_U_CALIB_GROUPS and truthy(row.get("used_for_r_u")) and manual and is_in_scope(row) and usable_ref and geom_ok and process_ok,
-        "included_in_r_geometry": group in R_GEOMETRY_GROUPS and manual and is_in_scope(row) and usable_ref and geom_ok and process_ok and geometry_scoring_gate,
+        "included_in_r_geometry": group in R_GEOMETRY_GROUPS and manual and is_in_scope(row) and usable_ref and geom_ok and process_ok and geometry_component_ok,
         "included_in_r_scope": norm_scope(row) in {"in_scope", "oos"} and worker_scope in VALID_SCOPE_RESPONSES,
-        "included_in_T_u": group in T_U_GROUPS and cond == "semi" and process_ok,
-        "included_in_U_u": is_in_scope(row) and geom_ok and usable_ref and response in UNDERCOVERAGE_RESPONSES,
+        "included_in_T_u": group in T_U_GROUPS and cond == "semi" and process_ok and truthy(row.get("semi_geometry_correction_evaluable")),
+        "included_in_U_u": is_in_scope(row) and geom_ok and usable_ref and undercoverage_ok,
         "included_in_process_reliability": process_evaluable(row),
     }
 
@@ -452,7 +519,7 @@ def inclusion_flags(row: dict[str, str], family: str) -> dict[str, bool]:
 def family_in_denominator(row: dict[str, Any]) -> bool:
     family = safe(row.get("family"))
     if family == "geometry_quality_failure":
-        return truthy(row.get("included_in_r_geometry"))
+        return geometry_failure_family_evaluable(row)
     if family == "scope_oos_failure":
         return truthy(row.get("included_in_r_scope"))
     if family == "semi_correction_failure":
@@ -483,8 +550,7 @@ def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, An
             exclusion.append("not_in_r_geometry")
             if condition(row) == "manual" and not truthy(row.get("geometry_score_gate_passed")):
                 exclusion.append("geometry_scorer_gate_not_passed")
-        out.append(
-            {
+        item = {
                 "worker_id": worker,
                 "round_id": safe(row.get("round_id")) or "C1",
                 "task_id": safe(row.get("task_id")),
@@ -505,12 +571,16 @@ def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, An
                 "geometry_normalization_rule": safe(row.get("geometry_normalization_rule")),
                 "geometry_component_name": safe(row.get("geometry_component_name")),
                 "geometry_score_status": safe(row.get("geometry_score_status")),
+                "geometry_component_evaluable": geometry_component_evaluable(row),
+                "geometry_failure_threshold_status": safe(row.get("geometry_failure_threshold_status")),
+                "geometry_failure_family_evaluable": geometry_failure_family_evaluable(row),
+                "geometry_failure_observed": safe(row.get("geometry_failure_observed")),
                 "family": family,
                 "subfamily": subfamily,
                 "response_type": response,
                 "failure_observed": is_fail(row, family, response),
-                "family_evaluable": family_in_denominator({"family": family, "process_evaluable": process_evaluable(row), **flags}),
-                "family_included_in_denominator": family_in_denominator({"family": family, "process_evaluable": process_evaluable(row), **flags}),
+                "family_evaluable": family_in_denominator({**row, "family": family, "process_evaluable": process_evaluable(row), **flags}),
+                "family_included_in_denominator": family_in_denominator({**row, "family": family, "process_evaluable": process_evaluable(row), **flags}),
                 **flags,
                 "included_in_p1_predictive_capability": truthy(row.get("included_in_p1_predictive_capability")),
                 "exclusion_reason": ";".join(exclusion),
@@ -539,6 +609,8 @@ def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, An
                 "independence_status": safe(row.get("independence_status")),
                 "parent_annotation_id": safe(row.get("parent_annotation_id")),
                 "parent_owner_id": safe(row.get("parent_owner_id")),
+                "parent_same_task": truthy(row.get("parent_same_task")),
+                "parent_same_owner": truthy(row.get("parent_same_owner")),
                 "parent_cross_owner": truthy(row.get("parent_cross_owner")),
                 "parent_precedes_child": truthy(row.get("parent_precedes_child")),
                 "active_time_seconds": safe(row.get("active_time_seconds") or row.get("active_time")),
@@ -548,10 +620,26 @@ def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, An
                 "canonical_annotation_id": safe(row.get("canonical_annotation_id")),
                 "source_manifest_version": safe(row.get("source_manifest_version") or row.get("manifest_version")),
                 "profile_rule_version": PROFILE_VERSION,
+                "semi_issue_recognition_evaluable": truthy(row.get("semi_issue_recognition_evaluable")),
+                "semi_geometry_correction_evaluable": truthy(row.get("semi_geometry_correction_evaluable")),
                 "_is_fail": is_fail(row, family, response),
                 "_process_fail": process_fail(row),
-            }
-        )
+        }
+        out.append(item)
+        if condition(row) == "semi":
+            issue = dict(item)
+            issue.update(
+                evidence_signal="semi_issue_recognition",
+                response_type="issue_recognized" if truthy(row.get("semi_issue_recognition_evaluable")) else "not_evaluable",
+                failure_observed=False,
+                family_evaluable=False,
+                family_included_in_denominator=False,
+                included_in_T_u=False,
+                included_in_r_scope=False,
+                _is_fail=False,
+            )
+            item["evidence_signal"] = "semi_geometry_correction"
+            out.append(issue)
     return out
 
 
@@ -643,6 +731,8 @@ def build_p1_evidence_rows(
                 "independence_status": safe(row.get("independence_status")),
                 "parent_annotation_id": safe(row.get("parent_annotation_id")),
                 "parent_owner_id": safe(row.get("parent_owner_id")),
+                "parent_same_task": truthy(row.get("parent_same_task")),
+                "parent_same_owner": truthy(row.get("parent_same_owner")),
                 "parent_cross_owner": truthy(row.get("parent_cross_owner")),
                 "parent_precedes_child": truthy(row.get("parent_precedes_child")),
                 "active_time_seconds": safe(row.get("active_time_seconds")),
@@ -862,6 +952,7 @@ def build_main_matrix(
         n_geom = fail_by_flag["included_in_r_geometry"][1]
         n_scope = fail_by_flag["included_in_r_scope"][1]
         n_semi = fail_by_flag["included_in_T_u"][1]
+        n_semi_issue = len({_task_evidence_key(row) for row in group if safe(row.get("evidence_signal")) == "semi_issue_recognition" and truthy(row.get("semi_issue_recognition_evaluable"))})
         n_under = fail_by_flag["included_in_U_u"][1]
         process_rows = _unique_process_rows(group)
         process_failures = sum(truthy(row.get("process_failure_observed")) for row in process_rows)
@@ -902,6 +993,8 @@ def build_main_matrix(
                 "n_geometry_support": n_geom,
                 "n_scope_support": n_scope,
                 "n_semi_support": n_semi,
+                "n_semi_issue_recognition_support": n_semi_issue,
+                "n_semi_geometry_correction_support": n_semi,
                 "n_undercoverage_support": n_under,
                 "n_process_support": n_proc,
                 "n_total_tasks": n_total,
@@ -922,6 +1015,8 @@ def build_main_matrix(
                 "geometry_support_status": support_status(n_geom),
                 "scope_support_status": support_status(n_scope),
                 "semi_support_status": support_status(n_semi),
+                "semi_issue_recognition_support_status": support_status(n_semi_issue),
+                "semi_geometry_correction_support_status": support_status(n_semi),
                 "undercoverage_support_status": support_status(n_under),
                 "process_support_status": support_status(n_proc),
                 "profile_version": PROFILE_VERSION,
@@ -1073,7 +1168,7 @@ def _risk_bool(value: str) -> bool | None:
     return None
 
 
-def directionally_consistent(p1_metric: str, p1_value: str, c1_value: str) -> str:
+def descriptive_directional_alignment(p1_metric: str, p1_value: str, c1_value: str) -> str:
     if not safe(p1_value) or not safe(c1_value):
         return ""
     c1_num = _numeric(c1_value)
@@ -1118,14 +1213,14 @@ def build_predictive_rows(
                         "p1_metric_value": "",
                         "c1_metric_name": c1_metric,
                         "c1_metric_value": c1_value,
-                        "directionally_consistent": "",
+                        "descriptive_directional_alignment": "",
                         "support_status": "not_evaluable",
                         "interpretation_allowed": False,
                         "notes": "p1_non_independent_submission;capability_predictive_check_suppressed",
                     }
                 )
                 continue
-            consistency = directionally_consistent(p1_metric, p1_value, c1_value)
+            consistency = descriptive_directional_alignment(p1_metric, p1_value, c1_value)
             evaluable = bool(p1_value and c1_value and consistency)
             rows.append(
                 {
@@ -1135,7 +1230,7 @@ def build_predictive_rows(
                     "p1_metric_value": p1_value,
                     "c1_metric_name": c1_metric,
                     "c1_metric_value": c1_value,
-                    "directionally_consistent": consistency,
+                    "descriptive_directional_alignment": consistency,
                     "support_status": "weak_descriptive" if evaluable else "not_evaluable",
                     "interpretation_allowed": False,
                     "notes": "p1_artifact_read_only;prescreen_chain_not_touched" if evaluable else "p1_or_c1_metric_missing;prescreen_chain_not_touched",
@@ -1144,16 +1239,16 @@ def build_predictive_rows(
     return rows
 
 
-def write_predictive_report(path: Path, predictive_rows: list[dict[str, Any]]) -> None:
+def write_descriptive_directional_report(path: Path, predictive_rows: list[dict[str, Any]]) -> None:
     evaluable = [row for row in predictive_rows if row["support_status"] != "not_evaluable"]
-    consistent = sum(row["directionally_consistent"] == "true" for row in evaluable)
-    inconsistent = sum(row["directionally_consistent"] == "false" for row in evaluable)
+    consistent = sum(row["descriptive_directional_alignment"] == "true" for row in evaluable)
+    inconsistent = sum(row["descriptive_directional_alignment"] == "false" for row in evaluable)
     status = "evaluable" if evaluable else "not_evaluable"
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(
         "\n".join(
             [
-                "# P1-to-C1 Predictive Validity Report",
+                "# P1-to-C1 Descriptive Directional Check",
                 "",
                 f"Status: {status}.",
                 "",
@@ -1191,6 +1286,71 @@ def _sum_numeric_field(rows: list[dict[str, Any]], field: str) -> float:
     return total
 
 
+def build_p1_worker_dimension_readiness(task_rows: list[dict[str, str]], score_rows: list[dict[str, str]], available: dict[str, bool]) -> list[dict[str, Any]]:
+    score_lookup = {(safe(row.get("worker_id")), safe(row.get("task_id")), safe(row.get("annotation_id"))): row for row in score_rows}
+    dimensions = ("geometry", "scope", "semi_issue_recognition", "semi_geometry_correction", "undercoverage", "process")
+    output: list[dict[str, Any]] = []
+    for worker in sorted({safe(row.get("worker_id")) for row in task_rows if safe(row.get("worker_id"))}):
+        worker_rows = [row for row in task_rows if safe(row.get("worker_id")) == worker]
+        worker_output: list[dict[str, Any]] = []
+        for name in dimensions:
+            expected = evaluable = pending = 0
+            for row in worker_rows:
+                independent_valid = safe(row.get("independence_status")) == "independent" and truthy(row.get("process_evaluable"))
+                manual_in_scope = independent_valid and safe(row.get("condition")) == "manual" and safe(row.get("task_final_scope")) == "in_scope"
+                semi_candidate = independent_valid and safe(row.get("dataset_group")) == "PreScreen_semi"
+                if name == "geometry":
+                    applicable = manual_in_scope
+                    score = score_lookup.get((worker, safe(row.get("task_id")), safe(row.get("annotation_id"))), {})
+                    is_evaluable = truthy(score.get("included_in_p1_geometry_profile"))
+                elif name == "scope":
+                    applicable = independent_valid and safe(row.get("task_final_scope")) in {"in_scope", "oos"}
+                    is_evaluable = safe(row.get("scope_evidence_status")) == "evaluable"
+                elif name == "semi_issue_recognition":
+                    applicable = semi_candidate
+                    is_evaluable = truthy(row.get("semi_issue_recognition_evaluable")) or truthy(row.get("semi_issue_recognition_ready"))
+                elif name == "semi_geometry_correction":
+                    applicable = semi_candidate and safe(row.get("model_issue_primary")) not in {"", "acceptable"}
+                    is_evaluable = truthy(row.get("semi_geometry_correction_evaluable"))
+                elif name == "undercoverage":
+                    applicable = manual_in_scope
+                    is_evaluable = safe(row.get("undercoverage_evidence_status")) == "evaluable_expert_adjudicated"
+                else:
+                    applicable = truthy(row.get("process_evaluable"))
+                    is_evaluable = applicable
+                if not applicable:
+                    continue
+                expected += 1
+                is_pending = (
+                    safe(row.get("adjudication_status")) == "pending_review"
+                    or (name == "undercoverage" and safe(row.get("undercoverage_evidence_status")) in {"candidate_only_pending_adjudication", "pending_review"})
+                    or (name == "semi_geometry_correction" and not is_evaluable)
+                )
+                if is_evaluable:
+                    evaluable += 1
+                elif is_pending:
+                    pending += 1
+            status = support_status(evaluable) if evaluable else "not_evaluable"
+            worker_output.append({
+                "worker_id": worker,
+                "dimension": name,
+                "artifact_available": available[name],
+                "expected_count": expected,
+                "evaluable_count": evaluable,
+                "pending_count": pending,
+                "not_evaluable_count": max(expected - evaluable - pending, 0),
+                "not_applicable_count": len(worker_rows) - expected,
+                "support_status": status,
+                "has_evaluable_evidence": available[name] and evaluable > 0,
+                "support_ready": available[name] and expected > 0 and status == "sufficient" and pending == 0,
+            })
+        full_ready = bool(worker_output) and all(row["support_ready"] for row in worker_output if row["expected_count"] > 0)
+        for row in worker_output:
+            row["worker_full_diagnostic_profile_ready"] = full_ready
+        output.extend(worker_output)
+    return output
+
+
 def validate_p1_bundle(
     task_path: Path | None,
     worker_path: Path | None,
@@ -1198,9 +1358,9 @@ def validate_p1_bundle(
     profile_path: Path | None,
 ) -> dict[str, Any]:
     def empty(warnings: list[str]) -> dict[str, Any]:
-        result: dict[str, Any] = {"p1_bundle_structurally_complete": False, "pending_adjudication_count": 0, "warnings": warnings}
+        result: dict[str, Any] = {"p1_bundle_structurally_complete": False, "pending_adjudication_count": 0, "worker_dimension_rows": [], "warnings": warnings}
         for name in ("geometry", "scope", "semi_issue_recognition", "semi_geometry_correction", "undercoverage", "process"):
-            result.update({f"p1_{name}_artifact_available": False, f"p1_{name}_has_evaluable_evidence": False, f"p1_{name}_support_ready": False, f"p1_{name}_expected_count": 0, f"p1_{name}_evaluable_count": 0, f"p1_{name}_pending_count": 0, f"p1_{name}_not_evaluable_count": 0, f"p1_{name}_support_status": "not_evaluable"})
+            result.update({f"p1_{name}_artifact_available": False, f"p1_{name}_has_evaluable_evidence": False, f"p1_{name}_support_ready": False, f"p1_{name}_expected_count": 0, f"p1_{name}_evaluable_count": 0, f"p1_{name}_pending_count": 0, f"p1_{name}_not_evaluable_count": 0, f"p1_{name}_not_applicable_count": 0, f"p1_{name}_support_status": "not_evaluable"})
         result.update(p1_geometry_dimension_ready=False, p1_scope_dimension_ready=False, p1_semi_issue_recognition_ready=False, p1_semi_geometry_correction_ready=False, p1_semi_dimension_ready=False, p1_undercoverage_dimension_ready=False, p1_process_dimension_ready=False, bundle_has_evaluable_evidence_in_all_dimensions=False, full_profile_ready_with_pending_adjudication=False, full_diagnostic_profile_ready=False)
         return result
 
@@ -1241,39 +1401,40 @@ def validate_p1_bundle(
         warnings.append("p1_worker_geometry_profile_coverage_mismatch")
     structurally_complete = not warnings
     has_sha = lambda field: any(safe(row.get(field)) for row in task_rows)
-    task_count = len(task_rows)
-    pending_keys = {
-        (safe(row.get("worker_id")), safe(row.get("task_id")), safe(row.get("annotation_id")))
-        for row in task_rows
-        if safe(row.get("adjudication_status")) == "pending_review"
-        or safe(row.get("independence_status")) == "not_evaluable"
-        or safe(row.get("undercoverage_evidence_status")) in {"candidate_only_pending_adjudication", "pending_review"}
-        or (truthy(row.get("semi_issue_recognition_evaluable")) and not truthy(row.get("semi_geometry_correction_evaluable")))
+    available = {
+        "geometry": bool(score_rows) and bool(final_gold_score),
+        "scope": has_sha("source_scope_sha256"),
+        "semi_issue_recognition": has_sha("source_semi_sha256"),
+        "semi_geometry_correction": has_sha("source_semi_sha256"),
+        "undercoverage": has_sha("source_undercoverage_sha256"),
+        "process": bool(task_rows),
     }
-    readiness: dict[str, Any] = {"p1_bundle_structurally_complete": structurally_complete, "pending_adjudication_count": len(pending_keys), "warnings": warnings}
-
-    def dimension(name: str, available: bool, evaluable: int, pending: int = 0) -> None:
-        status = support_status(evaluable) if evaluable else "not_evaluable"
+    worker_dimension_rows = build_p1_worker_dimension_readiness(task_rows, score_rows, available)
+    readiness: dict[str, Any] = {
+        "p1_bundle_structurally_complete": structurally_complete,
+        "pending_adjudication_count": sum(int(row["pending_count"]) for row in worker_dimension_rows),
+        "worker_dimension_rows": worker_dimension_rows,
+        "warnings": warnings,
+    }
+    for name in available:
+        rows = [row for row in worker_dimension_rows if row["dimension"] == name]
+        expected = sum(int(row["expected_count"]) for row in rows)
+        evaluable = sum(int(row["evaluable_count"]) for row in rows)
+        pending = sum(int(row["pending_count"]) for row in rows)
+        not_evaluable = sum(int(row["not_evaluable_count"]) for row in rows)
+        not_applicable = sum(int(row["not_applicable_count"]) for row in rows)
+        support_ready = bool(rows) and any(row["expected_count"] > 0 for row in rows) and all(row["support_ready"] for row in rows if row["expected_count"] > 0)
         readiness.update({
-            f"p1_{name}_artifact_available": available,
-            f"p1_{name}_expected_count": task_count,
+            f"p1_{name}_artifact_available": available[name],
+            f"p1_{name}_expected_count": expected,
             f"p1_{name}_evaluable_count": evaluable,
             f"p1_{name}_pending_count": pending,
-            f"p1_{name}_not_evaluable_count": max(task_count - evaluable - pending, 0),
-            f"p1_{name}_support_status": status,
-            f"p1_{name}_has_evaluable_evidence": available and evaluable > 0,
-            f"p1_{name}_support_ready": available and status == "sufficient" and pending == 0,
+            f"p1_{name}_not_evaluable_count": not_evaluable,
+            f"p1_{name}_not_applicable_count": not_applicable,
+            f"p1_{name}_support_status": support_status(evaluable) if evaluable else "not_evaluable",
+            f"p1_{name}_has_evaluable_evidence": available[name] and evaluable > 0,
+            f"p1_{name}_support_ready": support_ready,
         })
-
-    dimension("geometry", bool(score_rows) and bool(final_gold_score), sum(truthy(row.get("included_in_p1_geometry_profile")) for row in score_rows))
-    dimension("scope", has_sha("source_scope_sha256"), sum(safe(row.get("scope_evidence_status")) == "evaluable" for row in task_rows))
-    semi_issue = lambda row: truthy(row.get("semi_issue_recognition_evaluable")) or truthy(row.get("semi_issue_recognition_ready"))
-    dimension("semi_issue_recognition", has_sha("source_semi_sha256"), sum(semi_issue(row) for row in task_rows))
-    semi_pending = sum(semi_issue(row) and not truthy(row.get("semi_geometry_correction_evaluable")) for row in task_rows)
-    dimension("semi_geometry_correction", has_sha("source_semi_sha256"), sum(truthy(row.get("semi_geometry_correction_evaluable")) for row in task_rows), semi_pending)
-    under_pending = sum(safe(row.get("undercoverage_evidence_status")) in {"candidate_only_pending_adjudication", "pending_review"} for row in task_rows)
-    dimension("undercoverage", has_sha("source_undercoverage_sha256"), sum(safe(row.get("undercoverage_evidence_status")) == "evaluable_expert_adjudicated" for row in task_rows), under_pending)
-    dimension("process", bool(task_rows), sum(truthy(row.get("process_evaluable")) for row in task_rows))
     for name in ("geometry", "scope", "semi_issue_recognition", "semi_geometry_correction", "undercoverage", "process"):
         readiness[f"p1_{name}_dimension_ready"] = readiness[f"p1_{name}_support_ready"]
     readiness["p1_semi_issue_recognition_ready"] = readiness["p1_semi_issue_recognition_has_evaluable_evidence"]
@@ -1302,6 +1463,7 @@ def materialize(
         p1_geometry_task_scores,
         p1_worker_geometry_profile,
     )
+    worker_dimension_readiness = p1_readiness.pop("worker_dimension_rows", [])
     evidence = build_evidence_rows(read_csv(quality_csv))
     geometry_scores = _load_geometry_scores(p1_geometry_task_scores)
     if p1_task_evidence_csv and p1_task_evidence_csv.exists():
@@ -1323,15 +1485,24 @@ def materialize(
     main_csv = output_dir / "worker_profile_main_matrix_C1.csv"
     family_csv = output_dir / "worker_failure_family_response_C1.csv"
     subfamily_csv = output_dir / "worker_subfamily_response_C1.csv"
-    predictive_csv = output_dir / "p1_to_c1_predictive_validity.csv"
-    predictive_report = output_dir / "p1_to_c1_predictive_validity_report.md"
+    readiness_csv = output_dir / "p1_worker_dimension_readiness_C1.csv"
+    predictive_csv = output_dir / "p1_to_c1_descriptive_directional_check.csv"
+    predictive_report = output_dir / "p1_to_c1_descriptive_directional_check_report.md"
+    deprecated_mapping_json = output_dir / "p1_to_c1_predictive_validity.deprecated.json"
     summary_json = output_dir / "worker_profile_sidecar_C1.summary.json"
     write_csv(evidence_csv, public_evidence, EVIDENCE_FIELDS)
     write_csv(main_csv, main, MAIN_FIELDS)
     write_csv(family_csv, family, FAMILY_FIELDS)
     write_csv(subfamily_csv, subfamily, SUBFAMILY_FIELDS)
+    write_csv(readiness_csv, worker_dimension_readiness, READINESS_FIELDS)
     write_csv(predictive_csv, predictive, PREDICTIVE_FIELDS)
-    write_predictive_report(predictive_report, predictive)
+    write_descriptive_directional_report(predictive_report, predictive)
+    write_json(deprecated_mapping_json, {
+        "deprecated_artifacts": ["p1_to_c1_predictive_validity.csv", "p1_to_c1_predictive_validity_report.md"],
+        "replacement_artifacts": [str(predictive_csv), str(predictive_report)],
+        "semantic_change": "descriptive_directional_check_is_not_formal_predictive_validity",
+        "migration_version": "worker_profile_artifact_migration_v1",
+    })
     summary = {
         "profile_version": PROFILE_VERSION,
         "input_quality_csv": str(quality_csv),
@@ -1345,8 +1516,10 @@ def materialize(
         "output_worker_profile_main_matrix": str(main_csv),
         "output_worker_failure_family_response": str(family_csv),
         "output_worker_subfamily_response": str(subfamily_csv),
-        "output_p1_to_c1_predictive_validity": str(predictive_csv),
-        "output_p1_to_c1_predictive_validity_report": str(predictive_report),
+        "output_p1_worker_dimension_readiness": str(readiness_csv),
+        "output_p1_to_c1_descriptive_directional_check": str(predictive_csv),
+        "output_p1_to_c1_descriptive_directional_check_report": str(predictive_report),
+        "output_p1_to_c1_predictive_validity_deprecated_mapping": str(deprecated_mapping_json),
         "n_workers": len(main),
         "n_evidence_rows": len(public_evidence),
         "n_profile_rows": len(main),
@@ -1372,13 +1545,14 @@ def materialize(
         "subfamily_interpretation_level_counts": _interpretation_level_counts(subfamily),
         "r_u_calib_estimated": any(safe(row.get("r_u_calib")) for row in main),
         "r_geometry_u_estimated": any(safe(row.get("r_geometry_u")) for row in main),
-        "p1_predictive_validity_status": "evaluable" if predictive_evaluable else "not_evaluable",
+        "p1_descriptive_directional_check_status": "evaluable" if predictive_evaluable else "not_evaluable",
+        "formal_predictive_validity_status": "not_run_blocked",
         "p1_informed_diagnostic_profile_status": "complete" if p1_readiness.get("full_diagnostic_profile_ready") else "incomplete",
         **{key: value for key, value in p1_readiness.items() if key != "warnings"},
         "full_profile_ready": bool(p1_readiness.get("full_diagnostic_profile_ready")),
         "profile_freeze_status": "C1_provisional",
         "blockers": [],
-        "warnings": list(p1_readiness.get("warnings") or []) + ([] if predictive_evaluable else ["p1_predictive_validity_not_evaluable_without_p1_artifacts" if not input_p1_artifacts else "p1_predictive_validity_not_evaluable_without_matching_p1_c1_metrics"]),
+        "warnings": list(p1_readiness.get("warnings") or []) + ([] if predictive_evaluable else ["p1_descriptive_directional_check_not_evaluable_without_p1_artifacts" if not input_p1_artifacts else "p1_descriptive_directional_check_not_evaluable_without_matching_p1_c1_metrics"]),
     }
     write_json(summary_json, summary)
     return summary

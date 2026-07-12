@@ -89,7 +89,8 @@ def test_dryrun_chain_generates_provisional_summary_and_blocks_c2_draft(tmp_path
     assert summary["provisional_sidecar_ready"] is True
     assert summary["thesis_facing_closeout_ready"] is False
     assert summary["c2_decision_chain_ready"] is False
-    assert summary["p1_predictive_validity_status"] == "not_evaluable"
+    assert summary["p1_descriptive_directional_check_status"] == "not_evaluable"
+    assert summary["formal_predictive_validity_status"] == "not_run_blocked"
     assert summary_json["profile_sidecar_generated"] is True
     assert (out / "worker_profile_sidecar_C1.summary.json").exists()
     assert "# C1 Closeout Dryrun Gate Summary" in md
@@ -105,7 +106,7 @@ def test_dryrun_chain_passes_p1_artifacts_read_only_to_sidecar(tmp_path: Path) -
     sidecar_summary = summary["worker_profile_sidecar_summary"]
 
     assert sidecar_summary["input_p1_artifacts"] == [str(p1)]
-    assert summary["p1_predictive_validity_status"] == sidecar_summary["p1_predictive_validity_status"]
+    assert summary["p1_descriptive_directional_check_status"] == sidecar_summary["p1_descriptive_directional_check_status"]
 
 
 def test_quality_table_blocker_blocks_launch(tmp_path: Path) -> None:
