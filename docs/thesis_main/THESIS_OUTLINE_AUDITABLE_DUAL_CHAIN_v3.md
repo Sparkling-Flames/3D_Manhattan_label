@@ -1,10 +1,10 @@
 # Paper A 正式论文提纲与写作合同 v3
 
 > 版本日期：2026-07-12
-> 状态：正式写作主轴重构；本文件是 Paper A 的章节与主张合同真源。
+> 状态：正式写作主轴与章节审计合同；不是实际 manuscript 真源。
 > 边界：本文件不回写历史预注册、`ROUND_BASED_EXECUTION_PROTOCOL_v1.md`、`ROUND_BASED_ASSIGNMENT_SOP_v1.md`、P1 admission、C1/C2 assignment、routing、统计执行参数或任何原始工件。当前 Overleaf 正文尚未按本提纲迁移。
 
-最终写作载体为同目录 `THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.tex`；本 Markdown 用于审计、迁移和字段合同核对。
+实际 manuscript 的 LaTeX `main.tex + sections/*.tex` 是正文真源；本 Markdown 是章节与主张审计合同；同目录 `.tex` 只是 standalone LaTeX outline prototype，不可直接代替或输入当前 manuscript。展示符号另见 `WORKER_PROFILE_THESIS_DISPLAY_CONTRACT_v1.md`。
 
 ## 0. 核心判断与论文主轴
 
@@ -67,7 +67,11 @@ P1 -> C1 -> C2 -> T1 -> V1
 
 **禁止主张：**选择 `model_issue` 只能证明 issue recognition，不等于完成 geometry correction；undercoverage 不属于 OOS；process issue 不自动变成 geometry failure；加权共识不得成为主干预或唯一质量证据。
 
-### 2.3 RQ3a：画像效度
+### 2.3 RQ3：冻结 worker state 的效度与路由价值
+
+RQ3 是第三个一级研究问题，下设 RQ3a 与 RQ3b。`RQ3a predictive validity` 成立不等于 `RQ3b routing utility` 成立；二者使用不同的 evaluation unit、gate 和 estimand。
+
+#### 2.3.1 RQ3a：画像效度
 
 **问题：**经过 independence/process-validity gate 的 P1-informed diagnostic evidence 是否能解释或预测独立 C1/C2/Main 行为？
 
@@ -75,7 +79,7 @@ P1 -> C1 -> C2 -> T1 -> V1
 
 **禁止主张：**P1 不能自证 predictive validity；P1 不能生成正式 `R_u`；不能把 confirmed non-independent 记录自动转成 geometry failure。
 
-### 2.4 RQ3b：路由效用
+#### 2.3.2 RQ3b：路由效用
 
 **问题：**在固定预算下，C2 冻结后的 Full worker state 是否优于 Random 与 Calibration-only Global？
 
@@ -99,7 +103,7 @@ P1 -> C1 -> C2 -> T1 -> V1
 
 #### 1.3 研究问题与贡献
 
-回答：四个 RQ 如何对应后续章节。证据：RQ1/RQ2/RQ3a/RQ3b 合同和贡献层级。Primary：三项一级贡献。Sensitivity/audit：二级创新。禁止将 weighted consensus、Manhattan、重训练升级为一级贡献。
+回答：三个一级 RQ 及其 RQ3a/RQ3b 子问题如何对应后续章节。证据：RQ1/RQ2/RQ3 合同和贡献层级。Primary：三项一级贡献。Sensitivity/audit：二级创新。禁止将 weighted consensus、Manhattan、重训练升级为一级贡献。
 
 ### 第2章 相关工作
 
@@ -156,11 +160,29 @@ Gate 必须覆盖：
 - undercoverage 先经 expert adjudication 才能进入正式 `V_u/U` evidence；
 - missing evidence = `not_evaluable`，不是 success。
 
-Primary：进入 R_u/D_u 的资格。Sensitivity/audit：pending、system issue、forensic rows。禁止静默过滤、自动补成功或跨链路复用未经 gate 的 evidence。
+同一 submission 不使用一个总 validity flag 决定全部用途；必须逐一记录以下 estimand-specific flags：
+
+```text
+eligible_for_RQ1_time
+eligible_for_R_u
+eligible_for_G_u
+eligible_for_S_u
+eligible_for_C_u
+eligible_for_V_u
+eligible_for_P_u
+eligible_for_predictive_validity
+eligible_for_routing_feature
+```
+
+每个 flag 都要说明来源、inclusion/exclusion、missing/not_evaluable、primary/sensitivity/audit 和是否允许进入冻结画像。时间证据失效不自动使 geometry evidence 失效；scope 不可评价不自动使 process evidence 失效；process failure 不自动变成 geometry failure。Primary：进入各 estimand 的资格。Sensitivity/audit：pending、system issue、forensic rows。禁止静默过滤、自动补成功或跨链路复用未经 gate 的 evidence。
 
 #### 3.6 Post-closeout 修正与不回写边界
 
 回答：P1 closeout 后发现的 integrity evidence 如何处理。证据：只读 correction layer 和 audit report。Primary：P1 diagnostic validity。Sensitivity/audit：confirmed/suspected non-independence。禁止回写 admission、C1 assignment、reserve、routing、raw export、active-time server 或 userscript。
+
+当前状态必须如实报告：P1 已完成并冻结；C1 已开始；P1 canonical annotations 的跨 worker parent-derived 非独立风险在 C1 开始后被发现；retrospective amendment 不回改 P1 admission、`w_max` 或已启动的 C1 assignment。相关 P1 capability evidence 排除出画像，但 non-independent rows 保留为 process-integrity evidence；正式 `R_u` 仍由独立 C1/C2 evidence 决定。P1 审计范围是所有 P1 worker 和所有 P1 canonical annotations。
+
+C1 closeout 状态分为 `raw_pipeline_ready`、`provisional_sidecar_ready`、`thesis_facing_C1_closeout_ready`、`C2_decision_chain_ready`。在正式条件满足前，只允许 raw export、canonicalization、active-time audit、independence/process audit、provisional quality table 和 provisional sidecar；不得进行正式 C1 closeout pass、profile freeze、P1→C1 predictive-validity conclusion、C2 gap decision、C2 assignment materialization、Full profile readiness 或 routing freeze。
 
 ### 第4章 测量模型与双链路工人画像
 
@@ -170,7 +192,7 @@ Primary：进入 R_u/D_u 的资格。Sensitivity/audit：pending、system issue�
 
 #### 4.2 Reference-gated geometry metric
 
-回答：何时可以报告 P1 post-closeout geometry metric。证据：hard-single 单 reference、hard-multi max-over-reference、合法 pairing、范围、奇数点、歧义和 reference cardinality gate。Primary：满足兼容 gate 的诊断几何组件。Sensitivity/audit：soft/ambiguous、不可配对和不兼容 metric。禁止将几何分数作为 GT correctness 的唯一替代；A-line Manhattan 工具不进入主实验。
+回答：何时可以报告 P1 post-closeout geometry metric。证据：hard-single 单 reference、hard-multi max-over-reference、合法 pairing、范围、奇数点、歧义和 reference cardinality gate。Primary：满足兼容 gate 的连续、reference-gated `G_u` component；metric name、direction、normalization、stage/pool 和 support 必须记录。Sensitivity/audit：soft/ambiguous、不可配对和不兼容 metric。禁止未经预先冻结 threshold 把 geometry score 制造成二值 failure；禁止将几何分数作为 GT correctness 的唯一替代；A-line Manhattan 工具不进入主实验。
 
 #### 4.3 链路 A：Calibration-only protocol reliability `R_u`
 
@@ -220,9 +242,11 @@ Raw risk-rate 单独保留：blind-trust/correction failure rate、undercoverage
 
 回答：如何避免用真实标签造成 routing 比较泄漏。证据：`Calibration_manual` offline replay/shadow support 与 V1 frozen deployment logs。Primary：offline Random/Global/Full 比较。Sensitivity/audit：V1 deployment。禁止在 V1 临时并跑未注册 policy 来补主证据。
 
-#### 5.4 RQ1/RQ2/RQ3a/RQ3b 统计合同
+每个 evaluation unit 的真实 outcome 不能用于构造该 unit 的 routing decision。正式执行需在统计计划允许的方案中预先选择并记录 `leave-one-task-out`、`leave-one-image-out`、cross-fitting 或 worker-state estimation split/evaluation split 隔离；在方案未冻结前，不得声称 unbiased routing estimate。Full 使用的 `D_u` feature set、normalization、support threshold、fallback 和 sequential rule 必须在评价前冻结。不得看完 RQ3a 后挑选最有效 profile component，再在同一 evaluation unit 上宣称 RQ3b primary；post-hoc feature selection 只能是 exploratory sensitivity。
 
-回答：每个 RQ 的 data、estimand、统计方法和 downgrade rule 是什么。证据：STATISTICAL_ANALYSIS_PLAN_v1 与本提纲表 3。Primary：保持已冻结的配对、bootstrap、permutation、MDE 和 missingness 口径。Sensitivity/audit：task-level timing、K-S、weighted consensus、exploratory failure distribution。禁止改变冻结统计核心口径。
+#### 5.4 RQ1/RQ2/RQ3 统计合同（含 RQ3a/RQ3b 子合同）
+
+回答：三个一级 RQ 及 RQ3a/RQ3b 子合同的 data、estimand、统计方法和 downgrade rule 是什么。证据：STATISTICAL_ANALYSIS_PLAN_v1 与本提纲表 3。Primary：保持已冻结的配对、bootstrap、permutation、MDE 和 missingness 口径。Sensitivity/audit：task-level timing、K-S、weighted consensus、exploratory failure distribution。禁止改变冻结统计核心口径。
 
 ### 第6章 实验结果
 
@@ -274,9 +298,9 @@ Raw risk-rate 单独保留：blind-trust/correction failure rate、undercoverage
 
 ### 第8章 结论
 
-#### 8.1 四个 RQ 的证据边界
+#### 8.1 三个一级 RQ 及 RQ3a/RQ3b 子问题的证据边界
 
-逐项回答 RQ1、RQ2、RQ3a、RQ3b，明确哪些是 primary、sensitivity 或 audit。
+逐项回答 RQ1、RQ2、RQ3（分别报告 RQ3a 与 RQ3b），明确哪些是 primary、sensitivity 或 audit。
 
 #### 8.2 一级贡献与不主张事项
 

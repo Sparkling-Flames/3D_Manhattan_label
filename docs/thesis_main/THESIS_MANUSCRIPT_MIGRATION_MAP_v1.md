@@ -1,11 +1,11 @@
 # Paper A manuscript migration map v1
 
 > 版本日期：2026-07-12
-> 状态：旧稿到 Paper A 新主轴的写作施工合同；本次仅建立映射，不执行正文迁移。
+> 状态：旧稿到 Paper A 新主轴的写作施工合同；本轮执行真实 manuscript 迁移并另行记录 audit。
 > 旧稿真源：本地未纳入 Git 的 `docs/thesis_main/manuscript/overleaf_project/main.tex` 与 `sections/*.tex`。仓库内未发现整篇最新 PDF，因此本表以 TeX 源为可核验真源；PDF 差异须在正文迁移前补核。
 > 不回写：本表不修改历史预注册、protocol freeze、assignment、routing、统计执行参数、原始 export/log 或任何分析工件。
 
-最终写作交付以同目录 `THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.tex` 为 LaTeX outline source；Markdown 文件只承担合同和迁移审计，不替代 LaTeX。
+实际正文真源是本地 Overleaf `main.tex + sections/*.tex`；同目录 `.tex` 只是 standalone LaTeX outline prototype，不可直接输入正文。Markdown 文件承担章节、主张和迁移审计。
 
 ## 0. 迁移原则
 
@@ -141,3 +141,33 @@
 4. `R_u`、`D_u`、raw rates、RQ1/RQ2/RQ3a/RQ3b 方向和阶段边界全局一致；
 5. migration map 中所有旧 section 都有动作，不留未解释内容；
 6. 另行完成 TeX 编译和最新 PDF 对照；本次文档合同交付不宣称已满足以上正文迁移完成条件。
+
+## 5. 本轮实际迁移状态
+
+本轮已修改本地 ignored Overleaf 工程的 `main.tex`，并新增 8 个 active section：
+
+```text
+sections/01_引言.tex
+sections/02_相关工作.tex
+sections/03_研究协议与数据生命周期.tex
+sections/04_测量模型与双链路工人画像.tex
+sections/05_路由策略与统计分析.tex
+sections/06_实验结果.tex
+sections/07_讨论与局限.tex
+sections/08_结论.tex
+```
+
+旧 section 文件仍保留在本地目录作为未激活 legacy source，不再被 `main.tex` 输入：
+
+```text
+01_研究问题.tex       migrated -> 01_引言.tex
+02_方法.tex           split -> 03/04/05 新 section
+03_实验设置.tex       merged -> 05_路由策略与统计分析.tex
+04_报告与可审计输出.tex merged -> 06_实验结果.tex
+05_标注数据重训练.tex  downgraded -> 07_讨论与局限.tex
+06_讨论与局限性.tex    merged -> 07_讨论与局限.tex
+07_与审稿员预期批评的预设回答.tex absorbed -> 01/07/附录
+08_预期贡献总结.tex    absorbed -> 01/08
+```
+
+详细 source SHA、target SHA、PDF provenance、静态检查和编译阻断原因见 `THESIS_MANUSCRIPT_MIGRATION_AUDIT_v1.md`。本轮状态为 `partially_migrated`：实际章节输入已迁移，但本地缺少 LaTeX engine，尚未完成 compile/PDF 对照；不宣称 manuscript final。
