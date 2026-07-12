@@ -222,6 +222,12 @@ Additional subfamilies may be added only with a contract update and must be mark
 
 P1 task evidence additionally carries formal scope, semi-response and undercoverage provenance plus their SHA-256 values. Missing dimension artifacts are `not_evaluable` and never implicit success. P1 geometry components must declare metric name, direction and normalization; only compatible stage/pool components may be combined, and fewer than two compatible components leaves the integrated geometry reliability empty.
 
+2026-07-12 follow-up: `undercoverage_risk_level` is a dry-run candidate/audit proxy only. It cannot create `undercoverage_response`, `undercoverage_subfamily`, `undercoverage_failure_observed`, or `included_in_U_u` without an explicit expert verdict. Allowed verdicts are `confirmed_full_room_attempt`, `confirmed_partial_undercoverage`, `confirmed_inner_space_only`, `confirmed_minimal_space_bias`, `confirmed_overextended_adjacent`, `rejected_proxy_false_positive`, `pending_review`, and `not_evaluable`.
+
+Main-matrix directions are fixed: `r_geometry_u`, `r_scope_u`, `correction_reliability_u`, `coverage_reliability_u`, and `process_reliability` are higher-is-better. `blind_trust_or_correction_failure_rate` and `undercoverage_failure_rate` are higher-is-worse. Legacy `T_u` and `U_u` retain the latter risk-rate meaning and emit explicit direction fields; they are not components of the all-positive diagnostic vector.
+
+`process_ok` is permitted only as a process-evaluable success label in the evidence/subfamily output. It is not a failure taxonomy member and never increments `n_fail`.
+
 ### 2.9 Support status
 
 Allowed values:

@@ -64,6 +64,8 @@ def build_gate_summary(
         "p1_predictive_validity_status": safe(worker_profile_sidecar_summary.get("p1_predictive_validity_status")) or "not_evaluable",
         "p1_informed_diagnostic_profile_status": safe(worker_profile_sidecar_summary.get("p1_informed_diagnostic_profile_status")) or "incomplete",
         "full_profile_ready": truthy(worker_profile_sidecar_summary.get("full_profile_ready")),
+        "full_diagnostic_profile_ready": truthy(worker_profile_sidecar_summary.get("full_diagnostic_profile_ready")),
+        "p1_bundle_structurally_complete": truthy(worker_profile_sidecar_summary.get("p1_bundle_structurally_complete")),
         "pending_adjudication_count": int(worker_profile_sidecar_summary.get("pending_adjudication_count") or 0),
         "passed": True,
         "blocked_for_launch": False,

@@ -23,6 +23,7 @@ from tools.thesis_main.analysis.quality_core.geometry_metrics import analyze_lay
 
 
 RULE_VERSION = "p1_post_closeout_geometry_score_v1"
+MIN_FORMAL_VERTICAL_PAIRS = 4
 TASK_FIELDS = [
     "worker_id",
     "project_id",
@@ -44,11 +45,19 @@ TASK_FIELDS = [
     "worker_odd_points",
     "worker_unpaired_point_count",
     "worker_pairing_ambiguous",
+    "worker_pairing_best_cost",
+    "worker_pairing_second_best_cost",
+    "worker_pairing_optimal_matching_count",
+    "worker_pairing_ambiguity_reason",
     "reference_point_count",
     "reference_pair_count",
     "reference_pairing_coverage",
     "reference_odd_points",
     "reference_pairing_ambiguous",
+    "reference_pairing_best_cost",
+    "reference_pairing_second_best_cost",
+    "reference_pairing_optimal_matching_count",
+    "reference_pairing_ambiguity_reason",
     "geometry_score_gate_passed",
     "geometry_score_gate_reason",
     "reference_cardinality_valid",
@@ -212,12 +221,12 @@ def materialize_scores(
             and float(worker_pairing.get("coverage", 0)) == 1.0
             and int(worker_pairing.get("unpaired_point_count", 0)) == 0
             and not worker_pairing.get("pairing_ambiguous")
-            and len(worker_pairs) >= 2
+            and len(worker_pairs) >= MIN_FORMAL_VERTICAL_PAIRS
         )
         if not cardinality_valid:
             gate_reason = "hard_single_reference_cardinality_invalid" if ref_status == "expert_hard_single" else "hard_multi_reference_cardinality_invalid" if ref_status == "expert_hard_multi" else "reference_status_not_hard"
         elif not worker_gate:
-            gate_reason = "worker_geometry_pairing_invalid"
+            gate_reason = "worker_geometry_pairing_invalid" if len(worker_pairs) >= MIN_FORMAL_VERTICAL_PAIRS else "worker_geometry_insufficient_vertical_pairs"
         else:
             scored: list[tuple[float, str, dict[str, Any]]] = []
             for ref_identity, reference in reference_points:
@@ -230,7 +239,7 @@ def materialize_scores(
                     and float(ref_pairing.get("coverage", 0)) == 1.0
                     and int(ref_pairing.get("unpaired_point_count", 0)) == 0
                     and not ref_pairing.get("pairing_ambiguous")
-                    and len(ref_pairs) >= 2
+                    and len(ref_pairs) >= MIN_FORMAL_VERTICAL_PAIRS
                 )
                 if not ref_gate:
                     continue
@@ -279,11 +288,19 @@ def materialize_scores(
                 "worker_odd_points": worker_pairing.get("odd_points", False),
                 "worker_unpaired_point_count": worker_pairing.get("unpaired_point_count", 0),
                 "worker_pairing_ambiguous": worker_pairing.get("pairing_ambiguous", False),
+                "worker_pairing_best_cost": worker_pairing.get("best_cost", ""),
+                "worker_pairing_second_best_cost": worker_pairing.get("second_best_cost", ""),
+                "worker_pairing_optimal_matching_count": worker_pairing.get("optimal_matching_count", 0),
+                "worker_pairing_ambiguity_reason": worker_pairing.get("ambiguity_reason", ""),
                 "reference_point_count": winning_reference_pairing.get("n_points", 0),
                 "reference_pair_count": winning_reference_pairing.get("n_pairs", 0),
                 "reference_pairing_coverage": winning_reference_pairing.get("coverage", 0),
                 "reference_odd_points": winning_reference_pairing.get("odd_points", False),
                 "reference_pairing_ambiguous": winning_reference_pairing.get("pairing_ambiguous", False),
+                "reference_pairing_best_cost": winning_reference_pairing.get("best_cost", ""),
+                "reference_pairing_second_best_cost": winning_reference_pairing.get("second_best_cost", ""),
+                "reference_pairing_optimal_matching_count": winning_reference_pairing.get("optimal_matching_count", 0),
+                "reference_pairing_ambiguity_reason": winning_reference_pairing.get("ambiguity_reason", ""),
                 "geometry_score_gate_passed": gate_passed,
                 "geometry_score_gate_reason": gate_reason,
                 "reference_cardinality_valid": cardinality_valid,

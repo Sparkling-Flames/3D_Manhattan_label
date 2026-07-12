@@ -58,6 +58,7 @@ TASK_FIELDS = [
     "unassigned_audit_present",
     "unassigned_active_time_exclusion_reason",
     "sensitivity_active_time_eligible",
+    "forensic_timing_audit_eligible",
     "audit_only",
     "long_open_draft_flag",
     "capability_evidence_eligible",
@@ -72,12 +73,19 @@ TASK_FIELDS = [
     "model_issue_primary",
     "semi_response_type",
     "semi_evidence_status",
+    "semi_issue_recognition_ready",
+    "semi_geometry_correction_evidence_status",
     "semi_correction_failure_observed",
     "coverage_response",
     "undercoverage_response",
     "undercoverage_subfamily",
     "undercoverage_evidence_status",
     "undercoverage_failure_observed",
+    "undercoverage_risk_level",
+    "undercoverage_proxy_reason",
+    "undercoverage_manual_review_required",
+    "undercoverage_expert_verdict",
+    "undercoverage_interpretation_allowed",
     "included_in_r_u_calib",
     "included_in_r_geometry",
     "included_in_r_scope",
@@ -294,7 +302,7 @@ def _timing(row: dict[str, str], independence_status: str, raw_owner: str) -> tu
         "exact_annotation_valid",
     } and _safe(row.get("active_time")) and owner_valid
     if independence_status != "independent" and _safe(row.get("lead_time_seconds")):
-        return "parent_derived_not_independent", False, "parent_derived_timing"
+        return "parent_derived_forensic_only", False, "parent_derived_timing"
     if exact:
         return "primary_exact_owner_valid", True, ""
     if source == "log":
@@ -319,7 +327,7 @@ def _timing_integrity_status(row: dict[str, str], timing_status: str, primary: b
         return "exact_annotation_valid"
     if timing_status == "task_log_sensitivity_only":
         return "task_level_fallback"
-    if timing_status in {"lead_time_fallback_sensitivity_only", "parent_derived_not_independent"}:
+    if timing_status in {"lead_time_fallback_sensitivity_only", "parent_derived_forensic_only"}:
         return "lead_time_fallback"
     return "missing" if timing_status == "unavailable" else "ambiguous"
 
@@ -399,6 +407,8 @@ def _semi_evidence(row: dict[str, str] | None, choice_map: dict[str, Any]) -> di
         "model_issue_primary": selected_primary,
         "semi_response_type": response,
         "semi_evidence_status": "evaluable" if response and failure != "" else "not_evaluable_incomplete_response",
+        "semi_issue_recognition_ready": bool(response and failure != ""),
+        "semi_geometry_correction_evidence_status": _safe(row.get("semi_geometry_correction_evidence_status")) or "not_evaluable_missing_geometry_comparison",
         "semi_correction_failure_observed": failure,
     }
 
@@ -406,26 +416,41 @@ def _semi_evidence(row: dict[str, str] | None, choice_map: dict[str, Any]) -> di
 def _undercoverage_evidence(row: dict[str, str] | None) -> dict[str, Any]:
     if not row:
         return {"undercoverage_evidence_status": "not_evaluable_missing_artifact"}
-    explicit = _safe(row.get("undercoverage_response"))
-    explicit_failure = _safe(row.get("undercoverage_failure_observed"))
     level = _safe(row.get("undercoverage_risk_level")).lower()
-    minority_full = _truthy(row.get("minority_full_room_candidate"))
-    response = explicit
-    failure: bool | str = _truthy(explicit_failure) if explicit_failure else ""
-    coverage = _safe(row.get("coverage_response"))
-    subfamily = _safe(row.get("undercoverage_subfamily"))
-    if not response and level in {"high", "medium", "low", "none"}:
-        if level == "none" or minority_full:
-            coverage, response, subfamily, failure = "full_room_attempt", "full_room_attempt", "", False
-        else:
-            coverage, response, subfamily, failure = "undercoverage", "partial_undercoverage", "partial_undercoverage", True
-    return {
-        "coverage_response": coverage,
-        "undercoverage_response": response,
-        "undercoverage_subfamily": subfamily,
-        "undercoverage_evidence_status": "evaluable" if response and failure != "" else "not_evaluable_incomplete_response",
-        "undercoverage_failure_observed": failure,
+    verdict = _safe(row.get("undercoverage_expert_verdict") or row.get("expert_undercoverage_verdict")).lower()
+    values: dict[str, Any] = {
+        "coverage_response": "",
+        "undercoverage_response": "",
+        "undercoverage_subfamily": "",
+        "undercoverage_risk_level": level,
+        "undercoverage_proxy_reason": _safe(row.get("undercoverage_reason")),
+        "undercoverage_manual_review_required": _truthy(row.get("manual_review_required")),
+        "undercoverage_expert_verdict": verdict,
+        "undercoverage_evidence_status": "candidate_only_pending_adjudication" if level else "not_evaluable_incomplete_response",
+        "undercoverage_failure_observed": "",
+        "undercoverage_interpretation_allowed": False,
     }
+    verdict_map = {
+        "confirmed_full_room_attempt": ("full_room_attempt", "", False),
+        "confirmed_partial_undercoverage": ("partial_undercoverage", "partial_undercoverage", True),
+        "confirmed_inner_space_only": ("inner_space_only", "inner_space_only", True),
+        "confirmed_minimal_space_bias": ("minimal_space_bias", "minimal_space_bias", True),
+        "confirmed_overextended_adjacent": ("overextended_adjacent_when_in_scope", "overextended_adjacent_when_in_scope", True),
+        "rejected_proxy_false_positive": ("full_room_attempt", "", False),
+    }
+    if verdict in verdict_map:
+        response, subfamily, failure = verdict_map[verdict]
+        values.update(
+            coverage_response="undercoverage" if failure else "full_room_attempt",
+            undercoverage_response=response,
+            undercoverage_subfamily=subfamily,
+            undercoverage_failure_observed=failure,
+            undercoverage_evidence_status="evaluable_expert_adjudicated",
+            undercoverage_interpretation_allowed=True,
+        )
+    elif verdict in {"pending_review", "not_evaluable"}:
+        values["undercoverage_evidence_status"] = verdict
+    return values
 
 
 def build_correction(
@@ -547,7 +572,8 @@ def build_correction(
                 "known_unknown_oscillation_flag": _truthy(row.get("known_unknown_oscillation_flag")),
                 "unassigned_audit_present": _truthy(row.get("unassigned_audit_present")) or any(_safe(row.get(field)) for field in ("unassigned_active_time_seconds", "unknown_annotation_event_count", "unknown_annotation_session_count")),
                 "unassigned_active_time_exclusion_reason": _safe(row.get("unassigned_active_time_exclusion_reason")),
-                "sensitivity_active_time_eligible": timing_status in {"task_log_sensitivity_only", "lead_time_fallback_sensitivity_only", "parent_derived_not_independent"},
+                "sensitivity_active_time_eligible": timing_status in {"task_log_sensitivity_only", "lead_time_fallback_sensitivity_only"},
+                "forensic_timing_audit_eligible": timing_status == "parent_derived_forensic_only",
                 "audit_only": _truthy(row.get("audit_only")) or independence != "independent",
                 "long_open_draft_flag": long_flag,
                 "capability_evidence_eligible": capable,
@@ -561,7 +587,7 @@ def build_correction(
                 "included_in_r_geometry": capable,
                 "included_in_r_scope": capable and scope_evaluable,
                 "included_in_T_u": capable and _safe(row.get("dataset_group")) == "PreScreen_semi" and semi_evaluable,
-                "included_in_U_u": capable and _safe(row.get("condition")).lower() == "manual" and scope_values.get("task_final_scope") == "in_scope" and under_evaluable,
+                "included_in_U_u": capable and _safe(row.get("condition")).lower() == "manual" and scope_values.get("task_final_scope") == "in_scope" and under_values.get("undercoverage_evidence_status") == "evaluable_expert_adjudicated",
                 "included_in_p1_predictive_capability": capable,
                 "included_in_process_reliability": process_evaluable,
                 "exclusion_reason": ";".join(exclusion),
