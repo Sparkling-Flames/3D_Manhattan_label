@@ -17,6 +17,10 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from tools.thesis_main.analysis.audit_p1_exact_copy_low_time import canonical_geometry_hash
 from tools.thesis_main.analysis.analyze_quality import extract_data
+from tools.thesis_main.analysis.quality_core.choice_parser import (
+    _normalize_model_issue_values,
+    _pick_primary_model_issue,
+)
 
 
 RULE_VERSION = "p1_post_closeout_evidence_correction_v1"
@@ -60,6 +64,20 @@ TASK_FIELDS = [
     "process_evaluable",
     "process_failure_observed",
     "process_failure_subfamily",
+    "task_final_scope",
+    "task_oos_subtype",
+    "worker_scope_response",
+    "scope_evidence_status",
+    "model_issue",
+    "model_issue_primary",
+    "semi_response_type",
+    "semi_evidence_status",
+    "semi_correction_failure_observed",
+    "coverage_response",
+    "undercoverage_response",
+    "undercoverage_subfamily",
+    "undercoverage_evidence_status",
+    "undercoverage_failure_observed",
     "included_in_r_u_calib",
     "included_in_r_geometry",
     "included_in_r_scope",
@@ -68,8 +86,16 @@ TASK_FIELDS = [
     "included_in_p1_predictive_capability",
     "included_in_process_reliability",
     "exclusion_reason",
+    "interpretation_allowed",
     "source_export",
     "source_sha256",
+    "source_canonical_sha256",
+    "source_scope_artifact",
+    "source_scope_sha256",
+    "source_semi_artifact",
+    "source_semi_sha256",
+    "source_undercoverage_artifact",
+    "source_undercoverage_sha256",
     "rule_version",
 ]
 WORKER_FIELDS = [
@@ -92,6 +118,8 @@ WORKER_FIELDS = [
     "c1_r_u_calib_status",
     "routing_watch_status",
     "notes",
+    "rule_version",
+    "source_canonical_sha256",
 ]
 
 
@@ -172,12 +200,12 @@ def _parent_id(annotation: dict[str, Any]) -> str:
     return _safe(value)
 
 
-def _raw_geometry_hash(annotation: dict[str, Any]) -> str:
+def _raw_annotation_data(annotation: dict[str, Any]) -> tuple[str, dict[str, Any]]:
     try:
-        corners, _polygon, _choices, _quality = extract_data(annotation.get("result") or [])
-        return canonical_geometry_hash(corners)[0]
+        corners, _polygon, choices, _quality = extract_data(annotation.get("result") or [])
+        return canonical_geometry_hash(corners)[0], choices
     except Exception:
-        return ""
+        return "", {}
 
 
 def _load_exports(paths: list[Path]) -> tuple[dict[tuple[str, str, str], dict[str, Any]], dict[tuple[str, str], dict[str, Any]], dict[str, str]]:
@@ -201,11 +229,13 @@ def _load_exports(paths: list[Path]) -> tuple[dict[tuple[str, str, str], dict[st
                 if not isinstance(annotation, dict):
                     continue
                 annotation_id = _annotation_id(annotation, ann_index)
+                geometry_hash, choice_map = _raw_annotation_data(annotation)
                 annotations[(project_id, task_id, annotation_id)] = {
                     "annotation": annotation,
                     "source_export": str(path),
                     "source_sha256": hashes[str(path)],
-                    "geometry_hash": _raw_geometry_hash(annotation),
+                    "geometry_hash": geometry_hash,
+                    "choice_map": choice_map,
                 }
     return annotations, tasks, hashes
 
@@ -250,12 +280,14 @@ def _status_for_parent(
     return "non_independent_suspected", "cross_worker_parent_evidence_incomplete", parent_worker, False, True, precedes, "pending_review"
 
 
-def _timing(row: dict[str, str], independence_status: str) -> tuple[str, bool, str]:
+def _timing(row: dict[str, str], independence_status: str, raw_owner: str) -> tuple[str, bool, str]:
     source = _safe(row.get("active_time_source")).lower()
     match = _safe(row.get("active_time_match_status")).lower()
-    worker = _safe(row.get("worker_id"))
-    owner = _safe(row.get("annotator_id"))
-    owner_valid = bool(worker and owner and worker == owner)
+    worker_id = _safe(row.get("worker_id"))
+    annotator_id = _safe(row.get("annotator_id"))
+    worker = worker_id or annotator_id
+    alias_conflict = bool(worker_id and annotator_id and worker_id != annotator_id)
+    owner_valid = bool(worker and raw_owner and worker == raw_owner and not alias_conflict)
     exact = source == "log" and match in {
         "project+task+annotator+annotation",
         "annotation_exact",
@@ -272,14 +304,14 @@ def _timing(row: dict[str, str], independence_status: str) -> tuple[str, bool, s
     return "unavailable", False, "active_time_unavailable"
 
 
-def _timing_integrity_status(row: dict[str, str], timing_status: str, primary: bool) -> str:
+def _timing_integrity_status(row: dict[str, str], timing_status: str, primary: bool, raw_owner: str) -> str:
     source = _safe(row.get("active_time_source")).lower()
     match = _safe(row.get("active_time_match_status")).lower()
-    worker = _safe(row.get("worker_id"))
-    owner = _safe(row.get("annotator_id"))
+    worker = _safe(row.get("worker_id") or row.get("annotator_id"))
+    aliases_conflict = bool(_safe(row.get("worker_id")) and _safe(row.get("annotator_id")) and _safe(row.get("worker_id")) != _safe(row.get("annotator_id")))
     exact_match = source == "log" and match in {"project+task+annotator+annotation", "annotation_exact", "exact_annotation_valid"}
     if exact_match and not primary:
-        return "owner_mismatch" if worker and owner and worker != owner else "ambiguous"
+        return "owner_mismatch" if aliases_conflict or (worker and raw_owner and worker != raw_owner) else "ambiguous"
     explicit = _safe(row.get("active_time_integrity_status"))
     if explicit:
         return explicit
@@ -320,15 +352,113 @@ def _process_flags(row: dict[str, str], independence_status: str) -> tuple[bool,
     return True, False, ""
 
 
+def _optional_rows(path: Path | None) -> tuple[list[dict[str, str]], str]:
+    if not path or not path.exists():
+        return [], ""
+    return _read_csv(path), _sha256(path)
+
+
+def _scope_evidence(row: dict[str, str] | None) -> dict[str, Any]:
+    if not row:
+        return {"scope_evidence_status": "not_evaluable_missing_artifact"}
+    final_scope = _safe(row.get("task_final_scope")).lower()
+    response = _safe(row.get("worker_scope_response")).lower()
+    eligible = _truthy(row.get("scope_response_primary_eligible"))
+    evaluable = eligible and final_scope in {"in_scope", "oos", "out_of_scope"} and bool(response)
+    return {
+        "task_final_scope": "oos" if final_scope in {"oos", "out_of_scope"} else final_scope,
+        "task_oos_subtype": _safe(row.get("task_oos_subtype")) or (final_scope if final_scope.startswith("oos_") else ""),
+        "worker_scope_response": response,
+        "scope_evidence_status": "evaluable" if evaluable else "not_evaluable_incomplete_response",
+    }
+
+
+def _semi_evidence(row: dict[str, str] | None, choice_map: dict[str, Any]) -> dict[str, Any]:
+    if not row:
+        return {"semi_evidence_status": "not_evaluable_missing_artifact"}
+    selected = _normalize_model_issue_values(choice_map.get("model_issue") or [])
+    selected_primary = _pick_primary_model_issue([value for value in selected if value != "acceptable"])
+    explicit_response = _safe(row.get("semi_response_type"))
+    explicit_failure = _safe(row.get("semi_correction_failure_observed"))
+    expected = _safe(row.get("expert_realized_model_issue_primary") or row.get("model_issue_primary") or row.get("reviewed_primary_issue"))
+    secondary = {
+        value
+        for value in _safe(row.get("expert_realized_model_issue_secondary") or row.get("reviewed_secondary_issue")).split(";")
+        if value
+    }
+    response = explicit_response
+    failure: bool | str = _truthy(explicit_failure) if explicit_failure else ""
+    if not response and selected and expected:
+        selected_set = set(selected)
+        if selected_set == {"acceptable"}:
+            response, failure = "blind_trust", True
+        elif expected in selected_set or bool(secondary & selected_set):
+            response, failure = "issue_recognized", False
+    return {
+        "model_issue": ";".join(selected),
+        "model_issue_primary": selected_primary,
+        "semi_response_type": response,
+        "semi_evidence_status": "evaluable" if response and failure != "" else "not_evaluable_incomplete_response",
+        "semi_correction_failure_observed": failure,
+    }
+
+
+def _undercoverage_evidence(row: dict[str, str] | None) -> dict[str, Any]:
+    if not row:
+        return {"undercoverage_evidence_status": "not_evaluable_missing_artifact"}
+    explicit = _safe(row.get("undercoverage_response"))
+    explicit_failure = _safe(row.get("undercoverage_failure_observed"))
+    level = _safe(row.get("undercoverage_risk_level")).lower()
+    minority_full = _truthy(row.get("minority_full_room_candidate"))
+    response = explicit
+    failure: bool | str = _truthy(explicit_failure) if explicit_failure else ""
+    coverage = _safe(row.get("coverage_response"))
+    subfamily = _safe(row.get("undercoverage_subfamily"))
+    if not response and level in {"high", "medium", "low", "none"}:
+        if level == "none" or minority_full:
+            coverage, response, subfamily, failure = "full_room_attempt", "full_room_attempt", "", False
+        else:
+            coverage, response, subfamily, failure = "undercoverage", "partial_undercoverage", "partial_undercoverage", True
+    return {
+        "coverage_response": coverage,
+        "undercoverage_response": response,
+        "undercoverage_subfamily": subfamily,
+        "undercoverage_evidence_status": "evaluable" if response and failure != "" else "not_evaluable_incomplete_response",
+        "undercoverage_failure_observed": failure,
+    }
+
+
 def build_correction(
     canonical_csv: Path,
     export_json: list[Path],
     admission_csv: Path,
     c1_assignment_csv: Path | None = None,
     fallback_audit: list[Path] | None = None,
+    scope_evidence_csv: Path | None = None,
+    semi_evidence_csv: Path | None = None,
+    undercoverage_evidence_csv: Path | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     canonical = _read_csv(canonical_csv)
     annotations, _tasks, source_hashes = _load_exports(export_json)
+    canonical_sha = _sha256(canonical_csv)
+    scope_rows, scope_sha = _optional_rows(scope_evidence_csv)
+    semi_rows, semi_sha = _optional_rows(semi_evidence_csv)
+    under_rows, under_sha = _optional_rows(undercoverage_evidence_csv)
+    scope_lookup = {
+        (_safe(item.get("annotator_id") or item.get("worker_id")), _safe(item.get("project_id")), _safe(item.get("task_id"))): item
+        for item in scope_rows
+    }
+    semi_lookup: dict[tuple[str, str], dict[str, str]] = {}
+    for item in semi_rows:
+        worker_key = _safe(item.get("annotator_id") or item.get("worker_id"))
+        for task_key in (item.get("task_id"), item.get("runtime_task_id"), item.get("en_task_id"), item.get("zh_task_id")):
+            if _safe(task_key):
+                semi_lookup[(worker_key, _safe(task_key))] = item
+                semi_lookup[("", _safe(task_key))] = item
+    under_lookup = {
+        (_safe(item.get("annotator_id") or item.get("worker_id")), _safe(item.get("task_id"))): item
+        for item in under_rows
+    }
     admissions = {(_safe(row.get("worker_id") or row.get("annotator_id"))): row for row in _read_csv(admission_csv)} if admission_csv.exists() else {}
     assigned_workers = set()
     if c1_assignment_csv and c1_assignment_csv.exists():
@@ -352,22 +482,27 @@ def build_correction(
         annotation_id = _safe(row.get("annotation_id"))
         raw = annotations.get((project, task_id, annotation_id))
         annotation = raw["annotation"] if raw else {}
+        raw_owner = _worker_id(annotation)
+        choice_map = raw.get("choice_map", {}) if raw else {}
         parent = None
         parent_id = _parent_id(annotation)
         if raw and parent_id:
             parent = annotations.get((project, task_id, parent_id))
         child_hash = _safe(row.get("geometry_hash")) or _safe(raw.get("geometry_hash") if raw else "")
         independence, reason, parent_owner, parent_same_task, parent_cross_owner, parent_precedes, adjudication = _status_for_parent(annotation, parent, child_hash) if raw else ("not_evaluable", "raw_annotation_not_found", "", False, False, False, "source_review_required")
-        timing_status, primary, timing_reason = _timing(row, independence)
+        timing_status, primary, timing_reason = _timing(row, independence, raw_owner)
         try:
             lead = float(_safe(row.get("lead_time_seconds")) or 0)
         except ValueError:
             lead = 0.0
         process_evaluable, process_failure, process_subfamily = _process_flags(row, independence)
         capable = independence == "independent" and not process_failure
-        scope_evidence = any(_safe(row.get(field)) for field in ("worker_scope_response", "scope_response"))
-        semi_evidence = any(_safe(row.get(field)) for field in ("model_issue", "model_issue_primary", "response_type"))
-        undercoverage_evidence = any(_safe(row.get(field)) for field in ("coverage_response", "undercoverage_response", "undercoverage_subfamily"))
+        scope_values = _scope_evidence(scope_lookup.get((worker, project, task_id)))
+        semi_values = _semi_evidence(semi_lookup.get((worker, task_id)) or semi_lookup.get(("", task_id)), choice_map)
+        under_values = _undercoverage_evidence(under_lookup.get((worker, task_id)))
+        scope_evaluable = scope_values.get("scope_evidence_status") == "evaluable"
+        semi_evaluable = semi_values.get("semi_evidence_status") == "evaluable"
+        under_evaluable = under_values.get("undercoverage_evidence_status") == "evaluable"
         long_flag = _relative_outlier(lead_by_worker[worker], lead)
         exclusion = []
         if independence != "independent":
@@ -404,7 +539,7 @@ def build_correction(
                 "active_time_seconds": _safe(row.get("active_time")) if _safe(row.get("active_time_source")).lower() == "log" else "",
                 "lead_time_seconds": lead if lead else "",
                 "timing_evidence_status": timing_status,
-                "active_time_integrity_status": _timing_integrity_status(row, timing_status, primary),
+                "active_time_integrity_status": _timing_integrity_status(row, timing_status, primary, raw_owner),
                 "system_collection_issue": _truthy(row.get("system_collection_issue")),
                 "unassigned_active_time_seconds": _safe(row.get("unassigned_active_time_seconds")),
                 "unknown_annotation_event_count": _safe(row.get("unknown_annotation_event_count")),
@@ -419,16 +554,27 @@ def build_correction(
                 "process_evaluable": process_evaluable,
                 "process_failure_observed": process_failure,
                 "process_failure_subfamily": process_subfamily,
+                **scope_values,
+                **semi_values,
+                **under_values,
                 "included_in_r_u_calib": False,
                 "included_in_r_geometry": capable,
-                "included_in_r_scope": capable and scope_evidence,
-                "included_in_T_u": capable and _safe(row.get("condition")).lower() == "semi" and semi_evidence,
-                "included_in_U_u": capable and _safe(row.get("condition")).lower() == "manual" and undercoverage_evidence,
+                "included_in_r_scope": capable and scope_evaluable,
+                "included_in_T_u": capable and _safe(row.get("dataset_group")) == "PreScreen_semi" and semi_evaluable,
+                "included_in_U_u": capable and _safe(row.get("condition")).lower() == "manual" and scope_values.get("task_final_scope") == "in_scope" and under_evaluable,
                 "included_in_p1_predictive_capability": capable,
                 "included_in_process_reliability": process_evaluable,
                 "exclusion_reason": ";".join(exclusion),
+                "interpretation_allowed": capable,
                 "source_export": source_export,
                 "source_sha256": source_sha,
+                "source_canonical_sha256": canonical_sha,
+                "source_scope_artifact": str(scope_evidence_csv) if scope_rows else "",
+                "source_scope_sha256": scope_sha,
+                "source_semi_artifact": str(semi_evidence_csv) if semi_rows else "",
+                "source_semi_sha256": semi_sha,
+                "source_undercoverage_artifact": str(undercoverage_evidence_csv) if under_rows else "",
+                "source_undercoverage_sha256": under_sha,
                 "rule_version": RULE_VERSION,
             }
         )
@@ -457,6 +603,8 @@ def build_correction(
         else:
             capability_status = "eligible"
         admission = admissions.get(worker, {})
+        admitted = _safe(admission.get("admission_status")).lower() in {"pass", "pass_with_watch", "admitted"} or _truthy(admission.get("eligible_for_C1"))
+        r0_available = bool(_safe(admission.get("r_u_0") or admission.get("r0_prescreen")))
         worker_rows.append(
             {
                 "worker_id": worker,
@@ -468,16 +616,18 @@ def build_correction(
                 "n_non_independent_suspected": suspected,
                 "p1_capability_evidence_status": capability_status,
                 "p1_timing_evidence_status": timing_status,
-                "p1_r0_analysis_eligible": False,
+                "p1_r0_analysis_eligible": admitted and r0_available and bool(capable),
                 "p1_geometry_profile_eligible": bool(capable),
                 "p1_scope_profile_eligible": bool(capable),
                 "p1_T_u_eligible": any(_truthy(row["included_in_T_u"]) for row in rows),
                 "p1_U_u_eligible": any(_truthy(row["included_in_U_u"]) for row in rows),
                 "p1_predictive_capability_eligible": bool(capable),
                 "p1_process_warning": bool(confirmed or suspected or any(row["process_failure_observed"] for row in rows)),
-                "c1_r_u_calib_status": "pending_independent_calibration_evidence" if not independent else "independent_evidence_available",
+                "c1_r_u_calib_status": "pending_c1_calibration_evidence",
                 "routing_watch_status": "watch_only" if confirmed or suspected else "none",
                 "notes": "post_closeout_correction_only;admission_and_c1_assignment_unchanged",
+                "rule_version": RULE_VERSION,
+                "source_canonical_sha256": canonical_sha,
             }
         )
     summary = {
@@ -491,6 +641,19 @@ def build_correction(
         "n_primary_active_time": sum(_truthy(row["primary_active_time_eligible"]) for row in task_rows),
         "n_long_open_draft_flags": sum(_truthy(row["long_open_draft_flag"]) for row in task_rows),
         "source_exports": source_hashes,
+        "source_canonical_sha256": canonical_sha,
+        "scope_evidence_sha256": scope_sha,
+        "semi_evidence_sha256": semi_sha,
+        "undercoverage_evidence_sha256": under_sha,
+        "warnings": [
+            name
+            for name, present in (
+                ("p1_scope_evidence_missing", bool(scope_rows)),
+                ("p1_semi_evidence_missing", bool(semi_rows)),
+                ("p1_undercoverage_evidence_missing", bool(under_rows)),
+            )
+            if not present
+        ],
         "fallback_audit_provenance": {
             str(path): _sha256(path)
             for path in (fallback_audit or [])
@@ -510,8 +673,20 @@ def materialize(
     output_dir: Path,
     c1_assignment_csv: Path | None = None,
     fallback_audit: list[Path] | None = None,
+    scope_evidence_csv: Path | None = None,
+    semi_evidence_csv: Path | None = None,
+    undercoverage_evidence_csv: Path | None = None,
 ) -> dict[str, Any]:
-    task_rows, worker_rows, summary = build_correction(canonical_csv, export_json, admission_csv, c1_assignment_csv, fallback_audit)
+    task_rows, worker_rows, summary = build_correction(
+        canonical_csv,
+        export_json,
+        admission_csv,
+        c1_assignment_csv,
+        fallback_audit,
+        scope_evidence_csv,
+        semi_evidence_csv,
+        undercoverage_evidence_csv,
+    )
     task_path = output_dir / "p1_task_evidence_correction_v1.csv"
     worker_path = output_dir / "p1_worker_evidence_status_v1.csv"
     summary_path = output_dir / "p1_post_closeout_correction_summary_v1.json"
@@ -565,9 +740,22 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--admission-csv", type=Path, required=True)
     parser.add_argument("--c1-assignment-csv", type=Path)
     parser.add_argument("--fallback-audit", type=Path, action="append", default=[])
+    parser.add_argument("--scope-evidence-csv", type=Path)
+    parser.add_argument("--semi-evidence-csv", type=Path)
+    parser.add_argument("--undercoverage-evidence-csv", type=Path)
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args(argv)
-    print(json.dumps(materialize(args.canonical_csv, args.export_json, args.admission_csv, args.output_dir, args.c1_assignment_csv, args.fallback_audit), ensure_ascii=False, indent=2))
+    print(json.dumps(materialize(
+        args.canonical_csv,
+        args.export_json,
+        args.admission_csv,
+        args.output_dir,
+        args.c1_assignment_csv,
+        args.fallback_audit,
+        args.scope_evidence_csv,
+        args.semi_evidence_csv,
+        args.undercoverage_evidence_csv,
+    ), ensure_ascii=False, indent=2))
     return 0
 
 

@@ -19,7 +19,7 @@ from tools.thesis_main.analysis.prescreen_worker_gold_alignment_audit import (
     _load_final_gold,
     _points_from_final_gold,
 )
-from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou
+from tools.thesis_main.analysis.quality_core.geometry_metrics import analyze_layout_pairing, compute_layout_mask_iou
 
 
 RULE_VERSION = "p1_post_closeout_geometry_score_v1"
@@ -34,10 +34,32 @@ TASK_FIELDS = [
     "geometry_reference_status",
     "reference_id",
     "reference_count",
+    "winning_reference_id",
     "independence_status",
     "process_failure_observed",
     "worker_geometry_valid",
+    "worker_point_count",
+    "worker_pair_count",
+    "worker_pairing_coverage",
+    "worker_odd_points",
+    "worker_unpaired_point_count",
+    "worker_pairing_ambiguous",
+    "reference_point_count",
+    "reference_pair_count",
+    "reference_pairing_coverage",
+    "reference_odd_points",
+    "reference_pairing_ambiguous",
+    "geometry_score_gate_passed",
+    "geometry_score_gate_reason",
+    "reference_cardinality_valid",
     "geometry_metric_name",
+    "geometry_metric_direction",
+    "geometry_normalization_rule",
+    "geometry_component_name",
+    "geometry_component_value",
+    "geometry_component_support",
+    "geometry_component_stage",
+    "geometry_component_pool",
     "geometry_score_raw",
     "geometry_score_task_percentile",
     "included_in_p1_geometry_profile",
@@ -58,6 +80,16 @@ PROFILE_FIELDS = [
     "p1_geometry_component",
     "p1_geometry_support_status",
     "p1_geometry_excluded_count",
+    "geometry_component_name",
+    "geometry_metric_name",
+    "geometry_metric_direction",
+    "geometry_normalization_rule",
+    "geometry_component_value",
+    "geometry_component_support",
+    "geometry_component_stage",
+    "geometry_component_pool",
+    "source_canonical_sha256",
+    "source_final_gold_sha256",
     "scoring_rule_version",
 ]
 
@@ -153,24 +185,67 @@ def materialize_scores(
         ref_status = _reference_status(gold)
         reference_id = safe(gold.get("geometry_gold_task_id"))
         references = []
+        seen_references = set()
         for ref_key in ([reference_id] if ":" in reference_id else [f"task_id:{reference_id}", f"base_task_id:{reference_id}"]):
-            references.extend(final_gold.get(ref_key, []))
-        reference_points = []
-        for reference in references:
+            for reference in final_gold.get(ref_key, []):
+                identity = json.dumps(reference, sort_keys=True, ensure_ascii=False)
+                if identity not in seen_references:
+                    seen_references.add(identity)
+                    references.append(reference)
+        reference_points: list[tuple[str, list[tuple[float, float]]]] = []
+        for ref_index, reference in enumerate(references, start=1):
             points, reason = _points_from_final_gold(reference)
             if points and not reason:
-                reference_points.append(points)
+                ref_identity = safe(reference.get("reference_id") or reference.get("record_id") or reference.get("task_id") or f"{reference_id}#{ref_index}")
+                reference_points.append((ref_identity, points))
         worker_points = _points(safe(canonical_row.get("canonical_geometry")))
-        geometry_valid = bool(worker_points) and not safe(canonical_row.get("parse_error"))
+        worker_pairs, worker_pairing = analyze_layout_pairing(worker_points)
+        geometry_valid = bool(worker_points) and not safe(canonical_row.get("parse_error")) and bool(worker_pairing.get("finite_in_bounds"))
+        cardinality_valid = (ref_status == "expert_hard_single" and len(reference_points) == 1) or (ref_status == "expert_hard_multi" and len(reference_points) >= 2)
         raw_score = None
-        if geometry_valid and reference_points and ref_status in {"expert_hard_single", "expert_hard_multi"}:
-            scores = [compute_layout_mask_iou(worker_points, reference)[0] for reference in reference_points]
-            scores = [score for score in scores if score is not None]
-            raw_score = max(scores) if scores else None
+        winning_reference_id = ""
+        winning_reference_pairing: dict[str, Any] = {}
+        gate_reason = ""
+        worker_gate = (
+            geometry_valid
+            and not worker_pairing.get("odd_points")
+            and float(worker_pairing.get("coverage", 0)) == 1.0
+            and int(worker_pairing.get("unpaired_point_count", 0)) == 0
+            and not worker_pairing.get("pairing_ambiguous")
+            and len(worker_pairs) >= 2
+        )
+        if not cardinality_valid:
+            gate_reason = "hard_single_reference_cardinality_invalid" if ref_status == "expert_hard_single" else "hard_multi_reference_cardinality_invalid" if ref_status == "expert_hard_multi" else "reference_status_not_hard"
+        elif not worker_gate:
+            gate_reason = "worker_geometry_pairing_invalid"
+        else:
+            scored: list[tuple[float, str, dict[str, Any]]] = []
+            for ref_identity, reference in reference_points:
+                ref_pairs, ref_pairing = analyze_layout_pairing(reference)
+                if not winning_reference_pairing:
+                    winning_reference_pairing = ref_pairing
+                ref_gate = (
+                    bool(ref_pairing.get("finite_in_bounds"))
+                    and not ref_pairing.get("odd_points")
+                    and float(ref_pairing.get("coverage", 0)) == 1.0
+                    and int(ref_pairing.get("unpaired_point_count", 0)) == 0
+                    and not ref_pairing.get("pairing_ambiguous")
+                    and len(ref_pairs) >= 2
+                )
+                if not ref_gate:
+                    continue
+                score, _meta = compute_layout_mask_iou(worker_points, reference)
+                if score is not None:
+                    scored.append((score, ref_identity, ref_pairing))
+            if scored:
+                raw_score, winning_reference_id, winning_reference_pairing = max(scored, key=lambda value: value[0])
+            else:
+                gate_reason = "reference_geometry_pairing_invalid"
+        gate_passed = raw_score is not None and not gate_reason
         independent = safe(correction_row.get("independence_status")) == "independent"
         process_ok = not truthy(correction_row.get("process_failure_observed"))
         scope_ok = safe(gold.get("task_final_scope")).lower() == "in_scope"
-        eligible = bool(raw_score is not None and independent and process_ok and scope_ok and safe(correction_row.get("condition")).lower() == "manual")
+        eligible = bool(gate_passed and independent and process_ok and scope_ok and safe(correction_row.get("condition")).lower() == "manual")
         exclusion = []
         if raw_score is None:
             exclusion.append("geometry_score_unavailable")
@@ -194,10 +269,32 @@ def materialize_scores(
                 "geometry_reference_status": ref_status,
                 "reference_id": reference_id,
                 "reference_count": len(reference_points),
+                "winning_reference_id": winning_reference_id,
                 "independence_status": safe(correction_row.get("independence_status")),
                 "process_failure_observed": truthy(correction_row.get("process_failure_observed")),
                 "worker_geometry_valid": geometry_valid,
+                "worker_point_count": worker_pairing.get("n_points", 0),
+                "worker_pair_count": worker_pairing.get("n_pairs", 0),
+                "worker_pairing_coverage": worker_pairing.get("coverage", 0),
+                "worker_odd_points": worker_pairing.get("odd_points", False),
+                "worker_unpaired_point_count": worker_pairing.get("unpaired_point_count", 0),
+                "worker_pairing_ambiguous": worker_pairing.get("pairing_ambiguous", False),
+                "reference_point_count": winning_reference_pairing.get("n_points", 0),
+                "reference_pair_count": winning_reference_pairing.get("n_pairs", 0),
+                "reference_pairing_coverage": winning_reference_pairing.get("coverage", 0),
+                "reference_odd_points": winning_reference_pairing.get("odd_points", False),
+                "reference_pairing_ambiguous": winning_reference_pairing.get("pairing_ambiguous", False),
+                "geometry_score_gate_passed": gate_passed,
+                "geometry_score_gate_reason": gate_reason,
+                "reference_cardinality_valid": cardinality_valid,
                 "geometry_metric_name": "equirectangular_layout_mask_iou" if raw_score is not None else "",
+                "geometry_metric_direction": "higher_is_better" if raw_score is not None else "",
+                "geometry_normalization_rule": "unit_interval_identity" if raw_score is not None else "",
+                "geometry_component_name": "P1_expert_layout_mask_iou" if raw_score is not None else "",
+                "geometry_component_value": "" if raw_score is None else f"{raw_score:.8f}",
+                "geometry_component_support": 1 if raw_score is not None else 0,
+                "geometry_component_stage": "P1",
+                "geometry_component_pool": safe(correction_row.get("dataset_group")),
                 "geometry_score_raw": "" if raw_score is None else f"{raw_score:.8f}",
                 "geometry_score_task_percentile": "",
                 "included_in_p1_geometry_profile": eligible,
@@ -242,6 +339,16 @@ def materialize_scores(
                 "p1_geometry_component": f"{median(included):.8f}" if included else "",
                 "p1_geometry_support_status": _support(len(included)),
                 "p1_geometry_excluded_count": len(group) - len(included),
+                "geometry_component_name": "P1_expert_layout_mask_iou",
+                "geometry_metric_name": "equirectangular_layout_mask_iou",
+                "geometry_metric_direction": "higher_is_better",
+                "geometry_normalization_rule": "unit_interval_identity",
+                "geometry_component_value": f"{median(included):.8f}" if included else "",
+                "geometry_component_support": len(included),
+                "geometry_component_stage": "P1",
+                "geometry_component_pool": "PreScreen_manual",
+                "source_canonical_sha256": canonical_sha,
+                "source_final_gold_sha256": final_gold_sha,
                 "scoring_rule_version": RULE_VERSION,
             }
         )

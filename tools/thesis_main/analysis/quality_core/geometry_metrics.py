@@ -234,6 +234,99 @@ def _pair_keypoints_to_layout(corners: np.ndarray, width: int, threshold_ratio: 
     return paired, stats
 
 
+def analyze_layout_pairing(
+    corners: np.ndarray,
+    width: int = 1024,
+    height: int = 512,
+    threshold_ratio: float = 0.05,
+) -> tuple[list[dict[str, float]], dict[str, object]]:
+    """Return a strict, seam-aware pairing and diagnostics for formal scoring."""
+    try:
+        array = np.asarray(corners, dtype=np.float64)
+    except Exception:
+        array = np.empty((0, 2), dtype=np.float64)
+    n_points = int(array.shape[0]) if array.ndim == 2 and array.shape[1:] == (2,) else 0
+    finite_in_bounds = bool(
+        n_points
+        and np.isfinite(array).all()
+        and (array[:, 0] >= 0).all()
+        and (array[:, 0] < width).all()
+        and (array[:, 1] >= 0).all()
+        and (array[:, 1] < height).all()
+    )
+    base = {
+        "n_points": n_points,
+        "n_pairs": 0,
+        "coverage": 0.0,
+        "odd_points": bool(n_points % 2),
+        "unpaired_point_count": n_points,
+        "pairing_ambiguous": False,
+        "finite_in_bounds": finite_in_bounds,
+    }
+    if not finite_in_bounds or n_points < 2 or n_points % 2:
+        return [], base
+
+    threshold = float(width) * float(threshold_ratio)
+
+    def circular_dx(i: int, j: int) -> float:
+        delta = abs(float(array[i, 0]) - float(array[j, 0]))
+        return min(delta, float(width) - delta)
+
+    candidates = {
+        i: [j for j in range(n_points) if j != i and circular_dx(i, j) < threshold and array[i, 1] != array[j, 1]]
+        for i in range(n_points)
+    }
+    best_cost = float("inf")
+    best_matchings: list[list[tuple[int, int]]] = []
+
+    def search(remaining: tuple[int, ...], pairs: list[tuple[int, int]], cost: float) -> None:
+        nonlocal best_cost, best_matchings
+        if cost > best_cost + 1e-8 or len(best_matchings) > 1:
+            return
+        if not remaining:
+            if cost < best_cost - 1e-8:
+                best_cost, best_matchings = cost, [list(pairs)]
+            elif abs(cost - best_cost) <= 1e-8:
+                best_matchings.append(list(pairs))
+            return
+        i = min(remaining, key=lambda value: sum(candidate in remaining for candidate in candidates[value]))
+        rest = set(remaining)
+        rest.remove(i)
+        for j in candidates[i]:
+            if j not in rest:
+                continue
+            next_remaining = tuple(sorted(rest - {j}))
+            search(next_remaining, pairs + [(i, j)], cost + circular_dx(i, j))
+
+    search(tuple(range(n_points)), [], 0.0)
+    if not best_matchings:
+        greedy, greedy_stats = _pair_keypoints_to_layout(array, width=width, threshold_ratio=threshold_ratio, return_stats=True)
+        base.update(
+            n_pairs=int(greedy_stats["n_pairs"]),
+            coverage=float(greedy_stats["coverage"]),
+            unpaired_point_count=n_points - 2 * int(greedy_stats["n_pairs"]),
+        )
+        return greedy, base
+    matching = best_matchings[0]
+    pairs = []
+    for i, j in matching:
+        x1, x2 = float(array[i, 0]), float(array[j, 0])
+        if abs(x1 - x2) > width / 2:
+            low, high = sorted((x1, x2))
+            x = ((high + low + width) / 2.0) % width
+        else:
+            x = (x1 + x2) / 2.0
+        pairs.append({"x": x, "y_ceiling": min(float(array[i, 1]), float(array[j, 1])), "y_floor": max(float(array[i, 1]), float(array[j, 1]))})
+    pairs.sort(key=lambda item: item["x"])
+    base.update(
+        n_pairs=len(pairs),
+        coverage=1.0,
+        unpaired_point_count=0,
+        pairing_ambiguous=len(best_matchings) > 1,
+    )
+    return pairs, base
+
+
 def _interp_periodic(x_nodes: np.ndarray, y_nodes: np.ndarray, width: int) -> np.ndarray:
     """Periodic 1D interpolation to integer x grid [0, width)."""
     if x_nodes.size == 0:
@@ -277,15 +370,24 @@ def compute_layout_mask_iou(
     height: int = 512,
 ) -> tuple[float | None, dict[str, object]]:
     """Compute seam-aware 2D layout-region IoU from ceiling/floor corner pairs."""
-    pred_pairs, pred_stats = _pair_keypoints_to_layout(pred_corners, width=width, return_stats=True)
-    ref_pairs, ref_stats = _pair_keypoints_to_layout(ref_corners, width=width, return_stats=True)
+    pred_pairs, pred_stats = analyze_layout_pairing(pred_corners, width=width, height=height)
+    ref_pairs, ref_stats = analyze_layout_pairing(ref_corners, width=width, height=height)
     meta: dict[str, object] = {
         "pred_pair_count": int(pred_stats.get("n_pairs", 0)),
         "ref_pair_count": int(ref_stats.get("n_pairs", 0)),
         "width": int(width),
         "height": int(height),
+        "pred_pairing": pred_stats,
+        "ref_pairing": ref_stats,
     }
-    if len(pred_pairs) < 2 or len(ref_pairs) < 2:
+    if (
+        len(pred_pairs) < 2
+        or len(ref_pairs) < 2
+        or pred_stats.get("pairing_ambiguous")
+        or ref_stats.get("pairing_ambiguous")
+        or float(pred_stats.get("coverage", 0)) < 1.0
+        or float(ref_stats.get("coverage", 0)) < 1.0
+    ):
         meta["reason"] = "insufficient_pairs"
         return None, meta
 

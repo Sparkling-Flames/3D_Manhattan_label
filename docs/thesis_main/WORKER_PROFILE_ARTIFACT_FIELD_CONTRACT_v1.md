@@ -218,6 +218,10 @@ outside_manifest_submission
 
 Additional subfamilies may be added only with a contract update and must be marked as exploratory unless frozen before C1 closeout.
 
+2026-07-12 contract amendment adds `non_independent_submission` to `process_failure`. Process reliability uses all worker-attributable `process_evaluable` tasks as its denominator and `process_failure_observed` as its numerator; zero denominator is NA. System collection issues and unattributable timing gaps are excluded from the denominator.
+
+P1 task evidence additionally carries formal scope, semi-response and undercoverage provenance plus their SHA-256 values. Missing dimension artifacts are `not_evaluable` and never implicit success. P1 geometry components must declare metric name, direction and normalization; only compatible stage/pool components may be combined, and fewer than two compatible components leaves the integrated geometry reliability empty.
+
 ### 2.9 Support status
 
 Allowed values:
