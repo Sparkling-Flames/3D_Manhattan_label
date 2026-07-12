@@ -1,0 +1,323 @@
+from __future__ import annotations
+
+import csv
+import json
+from pathlib import Path
+
+from tools.thesis_main.analysis.c1_materialize_worker_profile_sidecar import materialize as materialize_sidecar
+from tools.thesis_main.analysis.materialize_p1_post_closeout_evidence_correction import build_correction
+from tools.thesis_main.analysis.materialize_p1_post_closeout_geometry_scores import materialize_scores
+from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou
+
+
+POINTS = [
+    {"type": "keypointlabels", "value": {"x": 10, "y": 20, "keypointlabels": ["Corner"]}},
+    {"type": "keypointlabels", "value": {"x": 10, "y": 80, "keypointlabels": ["Corner"]}},
+    {"type": "keypointlabels", "value": {"x": 60, "y": 20, "keypointlabels": ["Corner"]}},
+    {"type": "keypointlabels", "value": {"x": 60, "y": 80, "keypointlabels": ["Corner"]}},
+]
+
+
+def _csv(path: Path, fields: list[str], rows: list[dict]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as handle:
+        writer = csv.DictWriter(handle, fieldnames=fields)
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def _ann(annotation_id: str, worker: str, created_at: str, *, parent: str | None = None, points=None) -> dict:
+    return {
+        "id": annotation_id,
+        "completed_by": {"id": worker},
+        "created_at": created_at,
+        "parent_annotation": parent,
+        "lead_time": 30,
+        "result": points or POINTS,
+    }
+
+
+def _canonical(annotation_id: str, worker: str, task_id: str = "t1", *, geometry=None) -> dict[str, str]:
+    return {
+        "project_id": "p1",
+        "task_id": task_id,
+        "base_task_id": f"base-{task_id}",
+        "dataset_group": "PreScreen_manual",
+        "condition": "manual",
+        "worker_id": worker,
+        "annotator_id": worker,
+        "annotation_id": annotation_id,
+        "geometry_hash": geometry or "",
+        "canonical_geometry": json.dumps([[102.4, 102.4], [102.4, 409.6], [614.4, 102.4], [614.4, 409.6]]),
+        "n_corners": "4",
+        "active_time_source": "lead_time_fallback",
+        "active_time_match_status": "fallback_no_direct_log",
+        "lead_time_seconds": "30",
+        "active_time": "30",
+    }
+
+
+def test_cross_worker_exact_parent_is_confirmed_and_capability_excluded(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([{"id": "t1", "project": "p1", "data": {}, "annotations": [
+        _ann("parent", "w1", "2026-07-01T00:00:00Z"),
+        _ann("child", "w2", "2026-07-01T00:01:00Z", parent="parent"),
+    ]}]), encoding="utf-8")
+    canonical = tmp_path / "canonical.csv"
+    _csv(canonical, list(_canonical("child", "w2")), [_canonical("child", "w2")])
+    admission = tmp_path / "admission.csv"
+    _csv(admission, ["worker_id", "admission_status"], [{"worker_id": "w2", "admission_status": "pass"}])
+    assignment = tmp_path / "c1.csv"
+    _csv(assignment, ["worker_id"], [{"worker_id": "w2"}])
+
+    task_rows, worker_rows, summary = build_correction(canonical, [export], admission, assignment)
+
+    row = task_rows[0]
+    assert row["independence_status"] == "non_independent_confirmed"
+    assert row["parent_same_task"] is True
+    assert row["parent_cross_owner"] is True
+    assert row["parent_precedes_child"] is True
+    assert row["geometry_relation"] == "identical"
+    assert row["capability_evidence_eligible"] is False
+    assert row["included_in_r_geometry"] is False
+    assert row["included_in_process_reliability"] is True
+    assert row["process_failure_observed"] is True
+    assert row["process_failure_subfamily"] == "non_independent_submission"
+    assert worker_rows[0]["p1_capability_evidence_status"] == "invalid_non_independent_submission"
+    assert worker_rows[0]["operational_c1_assignment_status"] == "unchanged_existing_assignment"
+    assert summary["n_non_independent_confirmed"] == 1
+
+
+def test_same_worker_revision_is_independent_and_cross_worker_uncertain_is_suspected(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([{"id": "t1", "project": "p1", "data": {}, "annotations": [
+        _ann("parent", "w1", "2026-07-01T00:00:00Z"),
+        _ann("same", "w1", "2026-07-01T00:01:00Z", parent="parent"),
+        _ann("different", "w2", "2026-07-01T00:02:00Z", parent="parent", points=POINTS[:2]),
+    ]}]), encoding="utf-8")
+    canonical = tmp_path / "canonical.csv"
+    fields = list(_canonical("same", "w1"))
+    _csv(canonical, fields, [_canonical("same", "w1"), _canonical("different", "w2")])
+    admission = tmp_path / "admission.csv"
+    _csv(admission, ["worker_id", "admission_status"], [{"worker_id": "w1"}, {"worker_id": "w2"}])
+
+    task_rows, _, _ = build_correction(canonical, [export], admission)
+
+    by_annotation = {row["annotation_id"]: row for row in task_rows}
+    assert by_annotation["same"]["independence_status"] == "independent"
+    assert by_annotation["same"]["parent_cross_owner"] is False
+    assert by_annotation["different"]["independence_status"] == "non_independent_suspected"
+    assert by_annotation["different"]["process_failure_observed"] is False
+    assert by_annotation["different"]["adjudication_status"] == "pending_review"
+
+
+def test_exact_timing_requires_owner_match_and_task_fallback_keeps_audit_value(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([{"id": "t1", "project": "p1", "data": {}, "annotations": [_ann("a1", "w1", "2026-07-01T00:00:00Z")]}]), encoding="utf-8")
+    canonical = _canonical("a1", "w1")
+    canonical.update({"active_time_source": "log", "active_time_match_status": "project+task+annotator+annotation", "active_time": "20", "lead_time_seconds": "20", "annotator_id": "w2"})
+    canonical_csv = tmp_path / "canonical.csv"
+    _csv(canonical_csv, list(canonical), [canonical])
+    admission = tmp_path / "admission.csv"
+    _csv(admission, ["worker_id", "admission_status"], [{"worker_id": "w1", "admission_status": "pass"}])
+
+    rows, _, _ = build_correction(canonical_csv, [export], admission)
+    row = rows[0]
+    assert row["primary_active_time_eligible"] is False
+    assert row["timing_evidence_status"] == "task_log_sensitivity_only"
+    assert row["active_time_integrity_status"] == "owner_mismatch"
+    assert row["active_time_seconds"] == "20"
+
+
+def test_long_open_flag_is_relative_and_lead_time_never_becomes_primary(tmp_path: Path) -> None:
+    tasks = []
+    canonical_rows = []
+    for index, lead in enumerate([10, 12, 11, 13, 1000]):
+        task_id = f"t{index}"
+        annotation_id = f"a{index}"
+        tasks.append({"id": task_id, "project": "p1", "data": {}, "annotations": [_ann(annotation_id, "w1", f"2026-07-01T00:0{index}:00Z")]})
+        row = _canonical(annotation_id, "w1", task_id=task_id)
+        row.update({"active_time_source": "lead_time_fallback", "active_time_match_status": "fallback_no_direct_log", "active_time": "", "lead_time_seconds": str(lead)})
+        canonical_rows.append(row)
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps(tasks), encoding="utf-8")
+    canonical = tmp_path / "canonical.csv"
+    _csv(canonical, list(canonical_rows[0]), canonical_rows)
+    admission = tmp_path / "admission.csv"
+    _csv(admission, ["worker_id", "admission_status"], [{"worker_id": "w1", "admission_status": "pass"}])
+
+    rows, _, _ = build_correction(canonical, [export], admission)
+    outlier = next(row for row in rows if row["task_id"] == "t4")
+    assert outlier["long_open_draft_flag"] is True
+    assert outlier["primary_active_time_eligible"] is False
+    assert outlier["active_time_seconds"] == ""
+    assert outlier["lead_time_seconds"] == 1000.0
+
+
+def test_layout_mask_iou_is_one_for_identical_and_handles_seam() -> None:
+    points = [[0, 100], [0, 400], [512, 100], [512, 400]]
+    score, meta = compute_layout_mask_iou(points, points)
+    assert score == 1.0
+    assert meta["reason"] == ""
+
+    seam_points = [[1020, 100], [1020, 400], [10, 100], [10, 400]]
+    seam_score, _ = compute_layout_mask_iou(seam_points, seam_points)
+    assert seam_score == 1.0
+
+
+def test_process_reliability_uses_successes_and_excludes_system_only_rows(tmp_path: Path) -> None:
+    quality = tmp_path / "quality.csv"
+    _csv(
+        quality,
+        ["round_id", "task_id", "base_task_id", "dataset_group", "condition", "worker_id", "geometry_valid", "assigned_expected", "active_time_source", "system_collection_issue", "active_time_integrity_status"],
+        [{"round_id": "C1", "task_id": "system", "base_task_id": "b0", "dataset_group": "Calibration_core", "condition": "manual", "worker_id": "w1", "geometry_valid": "true", "assigned_expected": "true", "active_time_source": "missing", "system_collection_issue": "true", "active_time_integrity_status": "unknown_audit_only"}],
+    )
+    p1 = tmp_path / "p1.csv"
+    fields = ["worker_id", "task_id", "base_task_id", "dataset_group", "condition", "annotation_id", "independence_status", "process_evaluable", "process_failure_observed", "process_failure_subfamily", "active_time_source", "timing_evidence_status", "primary_active_time_eligible", "capability_evidence_eligible"]
+    rows = []
+    for index in range(57):
+        rows.append({"worker_id": "w1", "task_id": f"p{index}", "base_task_id": f"b{index}", "dataset_group": "PreScreen_manual", "condition": "manual", "annotation_id": f"a{index}", "independence_status": "non_independent_confirmed" if index == 0 else "independent", "process_evaluable": "true", "process_failure_observed": "true" if index == 0 else "false", "process_failure_subfamily": "non_independent_submission" if index == 0 else "process_ok", "active_time_source": "lead_time_fallback", "timing_evidence_status": "lead_time_fallback_sensitivity_only", "primary_active_time_eligible": "false", "capability_evidence_eligible": "false" if index == 0 else "true"})
+    _csv(p1, fields, rows)
+    worker_state = tmp_path / "worker.csv"
+    _csv(worker_state, ["worker_id"], [{"worker_id": "w1"}])
+
+    materialize_sidecar(quality, worker_state, tmp_path / "out", p1_task_evidence_csv=p1)
+    main = next(csv.DictReader((tmp_path / "out" / "worker_profile_main_matrix_C1.csv").open(encoding="utf-8")))
+
+    assert main["n_process_support"] == "57"
+    assert main["process_reliability"] == "0.982456"
+
+
+def test_geometry_score_uses_final_gold_and_keeps_correction_gate(tmp_path: Path) -> None:
+    canonical = tmp_path / "canonical.csv"
+    canonical_row = _canonical("a1", "w1", task_id="t1")
+    _csv(canonical, list(canonical_row), [canonical_row])
+    correction = tmp_path / "correction.csv"
+    _csv(
+        correction,
+        ["worker_id", "project_id", "task_id", "base_task_id", "dataset_group", "condition", "annotation_id", "independence_status", "process_failure_observed"],
+        [{"worker_id": "w1", "project_id": "p1", "task_id": "t1", "base_task_id": "base-t1", "dataset_group": "PreScreen_manual", "condition": "manual", "annotation_id": "a1", "independence_status": "independent", "process_failure_observed": "false"}],
+    )
+    gold_status = tmp_path / "gold.csv"
+    _csv(
+        gold_status,
+        ["task_id", "task_final_scope", "gold_status_for_alignment", "validation_status", "geometry_gold_task_id", "gold_reference_role"],
+        [{"task_id": "t1", "task_final_scope": "in_scope", "gold_status_for_alignment": "ready_for_alignment", "validation_status": "final_gold_geometry_checked", "geometry_gold_task_id": "task_id:g1", "gold_reference_role": "expert_hard_single"}],
+    )
+    final_gold = tmp_path / "gold.jsonl"
+    final_gold.write_text(json.dumps({"task_id": "g1", "runtime_pairs_1024x512": [{"x": 102.4, "y_ceiling": 102.4, "y_floor": 409.6}, {"x": 614.4, "y_ceiling": 102.4, "y_floor": 409.6}]}) + "\n", encoding="utf-8")
+
+    summary = materialize_scores(correction, canonical, gold_status, final_gold, tmp_path / "out")
+    score = next(csv.DictReader((tmp_path / "out" / "p1_geometry_task_scores_v1.csv").open(encoding="utf-8")))
+    profile = next(csv.DictReader((tmp_path / "out" / "p1_worker_geometry_profile_v1.csv").open(encoding="utf-8")))
+
+    assert score["geometry_metric_name"] == "equirectangular_layout_mask_iou"
+    assert float(score["geometry_score_raw"]) == 1.0
+    assert score["included_in_p1_geometry_profile"] == "true"
+    assert score["geometry_score_task_percentile"] == ""
+    assert profile["p1_geometry_support_status"] == "insufficient"
+    assert summary["n_included_scores"] == 1
+
+
+def test_geometry_score_invalid_geometry_is_retained_as_excluded_audit(tmp_path: Path) -> None:
+    canonical = tmp_path / "canonical.csv"
+    canonical_row = _canonical("a1", "w1", task_id="t1")
+    canonical_row.update({"canonical_geometry": "not-json", "parse_error": "invalid_geometry"})
+    _csv(canonical, list(canonical_row), [canonical_row])
+    correction = tmp_path / "correction.csv"
+    _csv(correction, ["worker_id", "project_id", "task_id", "base_task_id", "dataset_group", "condition", "annotation_id", "independence_status", "process_failure_observed"], [{"worker_id": "w1", "project_id": "p1", "task_id": "t1", "base_task_id": "base-t1", "dataset_group": "PreScreen_manual", "condition": "manual", "annotation_id": "a1", "independence_status": "independent", "process_failure_observed": "false"}])
+    gold_status = tmp_path / "gold.csv"
+    _csv(gold_status, ["task_id", "task_final_scope", "gold_status_for_alignment", "validation_status", "geometry_gold_task_id"], [{"task_id": "t1", "task_final_scope": "in_scope", "gold_status_for_alignment": "ready_for_alignment", "validation_status": "final_gold_geometry_checked", "geometry_gold_task_id": "task_id:g1"}])
+    final_gold = tmp_path / "gold.jsonl"
+    final_gold.write_text(json.dumps({"task_id": "g1", "runtime_pairs_1024x512": [{"x": 100, "y_ceiling": 100, "y_floor": 400}, {"x": 600, "y_ceiling": 100, "y_floor": 400}]}) + "\n", encoding="utf-8")
+
+    materialize_scores(correction, canonical, gold_status, final_gold, tmp_path / "out")
+    row = next(csv.DictReader((tmp_path / "out" / "p1_geometry_task_scores_v1.csv").open(encoding="utf-8")))
+    assert row["geometry_score_raw"] == ""
+    assert row["included_in_p1_geometry_profile"] == "false"
+    assert "geometry_score_unavailable" in row["exclusion_reason"]
+
+
+def test_process_reliability_handles_all_failures_and_zero_denominator(tmp_path: Path) -> None:
+    quality = tmp_path / "quality.csv"
+    _csv(
+        quality,
+        ["round_id", "task_id", "base_task_id", "dataset_group", "condition", "worker_id", "geometry_valid", "assigned_expected", "active_time_source", "system_collection_issue", "active_time_integrity_status"],
+        [{"round_id": "C1", "task_id": "system", "base_task_id": "b0", "dataset_group": "Calibration_core", "condition": "manual", "worker_id": "w1", "geometry_valid": "true", "assigned_expected": "true", "active_time_source": "missing", "system_collection_issue": "true", "active_time_integrity_status": "unknown_audit_only"}],
+    )
+    p1 = tmp_path / "all_failures.csv"
+    p1_fields = ["worker_id", "task_id", "base_task_id", "dataset_group", "condition", "annotation_id", "independence_status", "process_evaluable", "process_failure_observed", "process_failure_subfamily", "active_time_source", "timing_evidence_status", "primary_active_time_eligible", "capability_evidence_eligible"]
+    _csv(
+        p1,
+        p1_fields,
+        [
+            {"worker_id": "w1", "task_id": f"p{i}", "base_task_id": f"b{i}", "dataset_group": "PreScreen_manual", "condition": "manual", "annotation_id": f"a{i}", "independence_status": "non_independent_confirmed", "process_evaluable": "true", "process_failure_observed": "true", "process_failure_subfamily": "non_independent_submission", "active_time_source": "lead_time_fallback", "timing_evidence_status": "parent_derived_not_independent", "primary_active_time_eligible": "false", "capability_evidence_eligible": "false"}
+            for i in range(57)
+        ],
+    )
+    worker_state = tmp_path / "worker.csv"
+    _csv(worker_state, ["worker_id"], [{"worker_id": "w1"}])
+
+    materialize_sidecar(quality, worker_state, tmp_path / "all_fail_out", p1_task_evidence_csv=p1)
+    all_fail = next(csv.DictReader((tmp_path / "all_fail_out" / "worker_profile_main_matrix_C1.csv").open(encoding="utf-8")))
+    assert all_fail["n_process_support"] == "57"
+    assert all_fail["process_reliability"] == "0.000000"
+
+    materialize_sidecar(quality, worker_state, tmp_path / "zero_out")
+    zero = next(csv.DictReader((tmp_path / "zero_out" / "worker_profile_main_matrix_C1.csv").open(encoding="utf-8")))
+    assert zero["n_process_support"] == "0"
+    assert zero["process_reliability"] == ""
+
+
+def test_confirmed_copy_stays_process_family_and_suppresses_capability_predictive_checks(tmp_path: Path) -> None:
+    quality = tmp_path / "quality.csv"
+    _csv(
+        quality,
+        ["round_id", "task_id", "base_task_id", "dataset_group", "condition", "worker_id", "geometry_valid", "used_for_r_u", "assigned_expected", "active_time_source", "family", "subfamily", "response_type"],
+        [{"round_id": "C1", "task_id": "c1", "base_task_id": "b1", "dataset_group": "Calibration_anchor", "condition": "manual", "worker_id": "w1", "geometry_valid": "true", "used_for_r_u": "true", "assigned_expected": "true", "active_time_source": "lead_time_fallback", "family": "geometry_quality_failure", "subfamily": "normal_geometry_degraded", "response_type": "geometry_ok"}],
+    )
+    p1 = tmp_path / "correction.csv"
+    _csv(
+        p1,
+        ["worker_id", "task_id", "base_task_id", "dataset_group", "condition", "annotation_id", "independence_status", "process_evaluable", "process_failure_observed", "process_failure_subfamily", "included_in_r_geometry", "included_in_r_scope", "included_in_T_u", "included_in_U_u", "included_in_p1_predictive_capability", "active_time_source", "primary_active_time_eligible", "capability_evidence_eligible"],
+        [{"worker_id": "w1", "task_id": "p1", "base_task_id": "pb1", "dataset_group": "PreScreen_manual", "condition": "manual", "annotation_id": "pa1", "independence_status": "non_independent_confirmed", "process_evaluable": "true", "process_failure_observed": "true", "process_failure_subfamily": "non_independent_submission", "included_in_r_geometry": "false", "included_in_r_scope": "false", "included_in_T_u": "false", "included_in_U_u": "false", "included_in_p1_predictive_capability": "false", "active_time_source": "lead_time_fallback", "primary_active_time_eligible": "false", "capability_evidence_eligible": "false"}],
+    )
+    status = tmp_path / "status.csv"
+    _csv(status, ["worker_id", "p1_capability_evidence_status", "p1_predictive_capability_eligible", "p1_process_warning"], [{"worker_id": "w1", "p1_capability_evidence_status": "invalid_non_independent_submission", "p1_predictive_capability_eligible": "false", "p1_process_warning": "true"}])
+    p1_profile = tmp_path / "p1_profile.csv"
+    _csv(p1_profile, ["worker_id", "p1_geometry_profile", "p1_process_warning"], [{"worker_id": "w1", "p1_geometry_profile": "0.8", "p1_process_warning": "true"}])
+    worker_state = tmp_path / "worker.csv"
+    _csv(worker_state, ["worker_id"], [{"worker_id": "w1"}])
+
+    materialize_sidecar(quality, worker_state, tmp_path / "out", [p1_profile], p1, status)
+    evidence = list(csv.DictReader((tmp_path / "out" / "worker_task_evidence_table_C1.csv").open(encoding="utf-8")))
+    copy_row = next(row for row in evidence if row["task_id"] == "p1")
+    assert copy_row["family"] == "process_failure"
+    assert copy_row["subfamily"] == "non_independent_submission"
+    assert copy_row["included_in_r_geometry"] == "false"
+    assert copy_row["included_in_process_reliability"] == "true"
+
+    predictive = {row["check_name"]: row for row in csv.DictReader((tmp_path / "out" / "p1_to_c1_predictive_validity.csv").open(encoding="utf-8"))}
+    assert predictive["p1_geometry_vs_c1_geometry"]["support_status"] == "not_evaluable"
+    assert predictive["p1_scope_vs_c1_scope"]["support_status"] == "not_evaluable"
+    assert predictive["p1_process_warning_vs_c1_process_reliability"]["support_status"] != "not_evaluable"
+
+
+def test_primary_timing_summary_excludes_fallback_from_primary_coverage(tmp_path: Path) -> None:
+    fields = ["round_id", "task_id", "base_task_id", "dataset_group", "condition", "worker_id", "canonical_annotation_id", "geometry_valid", "assigned_expected", "active_time_source", "active_time_integrity_status", "primary_active_time_eligible", "lead_time_seconds"]
+    rows = []
+    for i in range(57):
+        fallback = i == 56
+        rows.append({"round_id": "P1", "task_id": f"t{i}", "base_task_id": f"b{i}", "dataset_group": "PreScreen_manual", "condition": "manual", "worker_id": "w1", "canonical_annotation_id": f"a{i}", "geometry_valid": "true", "assigned_expected": "true", "active_time_source": "lead_time_fallback" if fallback else "log", "active_time_integrity_status": "missing" if fallback else "exact_annotation_valid", "primary_active_time_eligible": "false" if fallback else "true", "lead_time_seconds": "30" if fallback else ""})
+    quality = tmp_path / "quality.csv"
+    _csv(quality, fields, rows)
+    worker_state = tmp_path / "worker.csv"
+    _csv(worker_state, ["worker_id"], [{"worker_id": "w1"}])
+
+    materialize_sidecar(quality, worker_state, tmp_path / "out")
+    main = next(csv.DictReader((tmp_path / "out" / "worker_profile_main_matrix_C1.csv").open(encoding="utf-8")))
+    assert main["n_total_tasks"] == "57"
+    assert main["n_primary_active_time_tasks"] == "56"
+    assert main["n_fallback_tasks"] == "1"
+    assert main["primary_active_time_coverage"] == f"{56 / 57:.6f}"
+    assert main["fallback_only_flag"] == "false"

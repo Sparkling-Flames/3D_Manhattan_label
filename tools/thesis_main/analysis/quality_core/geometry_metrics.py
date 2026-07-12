@@ -270,6 +270,48 @@ def _interp_periodic(x_nodes: np.ndarray, y_nodes: np.ndarray, width: int) -> np
     return np.interp(xq, x_nodes, y_nodes, period=float(width)).astype(np.float32)
 
 
+def compute_layout_mask_iou(
+    pred_corners: np.ndarray,
+    ref_corners: np.ndarray,
+    width: int = 1024,
+    height: int = 512,
+) -> tuple[float | None, dict[str, object]]:
+    """Compute seam-aware 2D layout-region IoU from ceiling/floor corner pairs."""
+    pred_pairs, pred_stats = _pair_keypoints_to_layout(pred_corners, width=width, return_stats=True)
+    ref_pairs, ref_stats = _pair_keypoints_to_layout(ref_corners, width=width, return_stats=True)
+    meta: dict[str, object] = {
+        "pred_pair_count": int(pred_stats.get("n_pairs", 0)),
+        "ref_pair_count": int(ref_stats.get("n_pairs", 0)),
+        "width": int(width),
+        "height": int(height),
+    }
+    if len(pred_pairs) < 2 or len(ref_pairs) < 2:
+        meta["reason"] = "insufficient_pairs"
+        return None, meta
+
+    def _mask(pairs: list[dict[str, float]]) -> np.ndarray:
+        xs = np.asarray([p["x"] for p in pairs], dtype=np.float32)
+        y_ceil = np.asarray([p["y_ceiling"] for p in pairs], dtype=np.float32)
+        y_floor = np.asarray([p["y_floor"] for p in pairs], dtype=np.float32)
+        dense_ceil = np.clip(np.rint(_interp_periodic(xs, y_ceil, width)), 0, height - 1).astype(np.int32)
+        dense_floor = np.clip(np.rint(_interp_periodic(xs, y_floor, width)), 0, height - 1).astype(np.int32)
+        mask = np.zeros((height, width), dtype=bool)
+        for x, (top, bottom) in enumerate(zip(dense_ceil, dense_floor)):
+            if bottom < top:
+                top, bottom = bottom, top
+            mask[top : bottom + 1, x] = True
+        return mask
+
+    pred_mask = _mask(pred_pairs)
+    ref_mask = _mask(ref_pairs)
+    union = np.logical_or(pred_mask, ref_mask).sum()
+    if union == 0:
+        meta["reason"] = "empty_union"
+        return None, meta
+    meta["reason"] = ""
+    return float(np.logical_and(pred_mask, ref_mask).sum() / union), meta
+
+
 def _sort_xy_filter_unique(xs, ys, y_small_first: bool = True):
     xs = np.array(xs, dtype=np.float32)
     ys = np.array(ys, dtype=np.float32)

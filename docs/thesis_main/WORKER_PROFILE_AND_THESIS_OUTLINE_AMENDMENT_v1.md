@@ -1100,3 +1100,43 @@ The next change should be documentation-first:
 ```
 
 Do not implement final advanced `r_geometry_u` modeling before the sidecar evidence layer is stable.
+
+---
+
+## 13. Versioned P1 post-closeout integrity amendment (2026-07-12)
+
+This section is a post-closeout amendment. It records a newly discovered evidence-validity issue and is not presented as an original P1 admission rule.
+
+### 13.1 Independence and provenance gate
+
+P1 task evidence is corrected in a read-only layer before it enters diagnostic worker profiling. A cross-worker parent-derived submission is `non_independent_confirmed` only when the parent is on the same task, belongs to another worker, precedes the child, and has an exact geometry-hash match. Incomplete cross-worker parent evidence is `non_independent_suspected` and requires expert adjudication. A same-worker revision is not cross-worker copying.
+
+Confirmed non-independent rows are excluded from geometry, scope, semi-correction, undercoverage, and P1 predictive capability evidence. They remain process-integrity evidence under the `non_independent_submission` subfamily. Suspected rows remain audit evidence and do not automatically become process failures. No row from P1 is written into `r_u_calib`.
+
+### 13.2 Timing and process denominator
+
+Primary timing uses only owner-valid, annotation-level browser active logs. Task-level log matching and `lead_time` are sensitivity/audit evidence; they are never mixed into primary worker totals or speed/routing inputs. Long-open draft flags use a worker-relative rule (`Q3 + 3*IQR` and at least three times the worker median), are listed for review, and do not automatically constitute a process failure.
+
+Process reliability uses all process-evaluable tasks as its denominator, including process-ok rows:
+
+```text
+process_reliability = 1 - attributable_process_failures / process_evaluable_tasks
+```
+
+System collection problems, unknown-page evidence, and otherwise un-attributable active-time missingness are excluded from this denominator. A zero denominator is reported as unavailable, not as zero or one.
+
+### 13.3 Geometry correction artifact
+
+The post-closeout P1 geometry artifact uses a seam-aware `1024 x 512` layout-mask IoU against hard expert references. Hard-multi references use max-over-reference. Raw scores for non-independent rows are retained for forensic audit but excluded from worker capability profiles. Worker geometry components are summarized by stage/pool medians and require at least two valid components before a combined diagnostic component is materialized. This layer is descriptive and does not alter admission, frozen assignment, reserve policy, C1 routing, `tau_d`, worker tier, or `r_u_calib`.
+
+The provenance chain is:
+
+```text
+P1 original admission
+  -> post-closeout evidence correction
+  -> task-level inclusion flags and timing status
+  -> P1 geometry audit/profile
+  -> C1/C2 diagnostic profile sidecar
+```
+
+The correction outputs are `p1_task_evidence_correction_v1.csv`, `p1_worker_evidence_status_v1.csv`, `p1_post_closeout_correction_summary_v1.json`, `p1_post_closeout_correction_report_v1.md`, `p1_geometry_task_scores_v1.csv`, `p1_worker_geometry_profile_v1.csv`, and their corresponding summary/audit files. None of these artifacts writes back to P1 admission, C1 assignment, worker-facing distribution, reserve manifests, raw exports, the active-time server, or the userscript.
