@@ -4,7 +4,7 @@ import csv
 import json
 from pathlib import Path
 
-from tools.thesis_main.analysis.c1_materialize_worker_profile_sidecar import materialize
+from tools.thesis_main.analysis.c1_materialize_worker_profile_sidecar import build_p1_worker_dimension_readiness, materialize
 
 
 def _csv(path: Path, fields: list[str], rows: list[dict]) -> None:
@@ -481,6 +481,8 @@ def test_structural_p1_bundle_is_not_full_without_expert_undercoverage_or_semi_g
     assert readiness["semi_issue_recognition"]["evaluable_count"] == "1"
     assert readiness["semi_issue_recognition"]["support_ready"] == "false"
     assert readiness["undercoverage"]["not_applicable_count"] == "1"
+    assert summary["pending_dimension_cell_count"] == 1
+    assert summary["unique_pending_annotation_count"] == 1
 
 
 def test_c1_geometry_components_stay_continuous_while_binary_and_expert_gates_apply(tmp_path: Path) -> None:
@@ -520,6 +522,50 @@ def test_c1_geometry_components_stay_continuous_while_binary_and_expert_gates_ap
     assert summary["formal_predictive_validity_status"] == "not_run_blocked"
     assert (tmp_path / "out" / "p1_to_c1_predictive_validity.deprecated.json").exists()
     assert not (tmp_path / "out" / "p1_to_c1_predictive_validity.csv").exists()
+
+
+def test_missing_failure_outcomes_do_not_become_successes(tmp_path: Path) -> None:
+    fields = [
+        "round_id", "task_id", "base_task_id", "dataset_group", "condition", "worker_id", "canonical_annotation_id", "task_final_scope",
+        "geometry_reference_status", "geometry_valid", "geometry_score_gate_passed", "geometry_failure_threshold_status", "geometry_failure_family_evaluable", "geometry_failure_observed",
+        "family", "undercoverage_evidence_status", "undercoverage_expert_verdict", "undercoverage_failure_observed",
+        "semi_issue_recognition_evaluable", "semi_geometry_correction_evaluable", "semi_response_type", "semi_correction_failure_observed",
+    ]
+    common = {"round_id": "C1", "worker_id": "w1", "task_final_scope": "in_scope", "geometry_reference_status": "expert_hard_single", "geometry_valid": "true"}
+    rows = [
+        {**common, "task_id": "g", "base_task_id": "g", "dataset_group": "Calibration_anchor", "condition": "manual", "canonical_annotation_id": "g", "geometry_score_gate_passed": "true", "geometry_failure_threshold_status": "frozen", "geometry_failure_family_evaluable": "true", "geometry_failure_observed": "", "family": "geometry_quality_failure"},
+        {**common, "task_id": "u", "base_task_id": "u", "dataset_group": "Calibration_core", "condition": "manual", "canonical_annotation_id": "u", "family": "undercoverage_failure", "undercoverage_evidence_status": "evaluable_expert_adjudicated", "undercoverage_expert_verdict": "confirmed_partial_undercoverage", "undercoverage_failure_observed": ""},
+        {**common, "task_id": "s", "base_task_id": "s", "dataset_group": "Calibration_semi", "condition": "semi", "canonical_annotation_id": "s", "family": "semi_correction_failure", "semi_issue_recognition_evaluable": "true", "semi_geometry_correction_evaluable": "true", "semi_response_type": "successful_correction", "semi_correction_failure_observed": ""},
+    ]
+    quality = tmp_path / "quality.csv"
+    worker = tmp_path / "worker.csv"
+    _csv(quality, fields, rows)
+    _csv(worker, ["worker_id"], [{"worker_id": "w1"}])
+    materialize(quality, worker, tmp_path / "out")
+    evidence = _rows(tmp_path / "out" / "worker_task_evidence_table_C1.csv")
+    family = {row["family"]: row for row in _rows(tmp_path / "out" / "worker_failure_family_response_C1.csv")}
+
+    assert next(row for row in evidence if row["task_id"] == "g")["response_type"] == "geometry_not_evaluable"
+    assert next(row for row in evidence if row["task_id"] == "u")["included_in_U_u"] == "false"
+    assert next(row for row in evidence if row["task_id"] == "s" and row["evidence_signal"] == "semi_geometry_correction")["included_in_T_u"] == "false"
+    assert family["geometry_quality_failure"]["n_observed"] == "0"
+    assert family["undercoverage_failure"]["n_observed"] == "0"
+    assert family["semi_correction_failure"]["n_observed"] == "0"
+
+
+def test_system_collection_issue_does_not_remove_capability_candidates_from_readiness() -> None:
+    task = {
+        "worker_id": "w1", "task_id": "t1", "annotation_id": "a1", "independence_status": "independent",
+        "process_evaluable": "false", "process_failure_observed": "false", "system_collection_issue": "true",
+        "condition": "manual", "task_final_scope": "in_scope", "scope_evidence_status": "evaluable",
+    }
+    score = {"worker_id": "w1", "task_id": "t1", "annotation_id": "a1", "included_in_p1_geometry_profile": "true"}
+    readiness = {row["dimension"]: row for row in build_p1_worker_dimension_readiness([task], [score], {name: True for name in ("geometry", "scope", "semi_issue_recognition", "semi_geometry_correction", "undercoverage", "process")})}
+
+    assert readiness["geometry"]["expected_count"] == 1
+    assert readiness["scope"]["expected_count"] == 1
+    assert readiness["undercoverage"]["expected_count"] == 1
+    assert readiness["process"]["expected_count"] == 0
 
 
 def test_system_collection_issue_is_not_worker_process_failure(tmp_path: Path) -> None:

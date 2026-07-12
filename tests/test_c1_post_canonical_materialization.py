@@ -7,6 +7,7 @@ from pathlib import Path
 from tools.thesis_main.analysis.build_c2_assignment_manifest_from_c1_gaps import materialize as materialize_c2
 from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import materialize as materialize_gaps
 from tools.thesis_main.analysis.c1_materialize_quality_table import materialize as materialize_quality
+from tools.thesis_main.analysis.c1_materialize_worker_profile_sidecar import materialize as materialize_sidecar
 from tools.thesis_main.analysis.c1_materialize_worker_state import materialize as materialize_worker_state
 
 
@@ -250,6 +251,41 @@ def test_empty_ci_is_not_formal_precision_failure_when_count_sufficient(tmp_path
     assert ci["ci_evaluable"] == "false"
     assert ci["needs_c2_ci_fill"] == "false"
     assert ci["ci_fill_reason"] == "not_evaluable_without_r_u_estimate"
+
+
+def test_canonical_quality_sidecar_preserves_inclusion_contract_fields(tmp_path: Path) -> None:
+    canonical = tmp_path / "canonical.csv"
+    fields = [
+        "round_id", "task_id", "base_task_id", "dataset_group", "condition", "worker_id", "canonical_annotation_id",
+        "task_final_scope", "task_oos_subtype", "worker_scope_response", "geometry_reference_status", "n_corners", "geometry_hash",
+        "process_evaluable", "process_failure_observed", "process_failure_subfamily", "family", "subfamily", "response_type",
+        "geometry_score_gate_passed", "quality_metric_name", "quality_metric_value", "geometry_metric_direction", "geometry_normalization_rule",
+        "geometry_failure_threshold_status", "geometry_failure_family_evaluable", "geometry_failure_observed",
+        "semi_issue_recognition_evaluable", "semi_geometry_correction_evaluable", "semi_response_type", "semi_correction_failure_observed",
+        "undercoverage_evidence_status", "undercoverage_expert_verdict", "undercoverage_response", "undercoverage_subfamily", "undercoverage_failure_observed",
+    ]
+    _csv(canonical, fields, [{
+        "round_id": "C1", "task_id": "t1", "base_task_id": "b1", "dataset_group": "Calibration_semi", "condition": "semi", "worker_id": "w1", "canonical_annotation_id": "a1",
+        "task_final_scope": "in_scope", "task_oos_subtype": "", "worker_scope_response": "correct_in_scope", "geometry_reference_status": "expert_hard_single", "n_corners": "4", "geometry_hash": "h1",
+        "process_evaluable": "true", "process_failure_observed": "false", "process_failure_subfamily": "", "family": "semi_correction_failure", "subfamily": "corner_drift", "response_type": "legacy_ignored",
+        "geometry_score_gate_passed": "true", "quality_metric_name": "iou", "quality_metric_value": "0.8", "geometry_metric_direction": "higher_is_better", "geometry_normalization_rule": "identity_0_1",
+        "geometry_failure_threshold_status": "not_frozen", "geometry_failure_family_evaluable": "false", "geometry_failure_observed": "",
+        "semi_issue_recognition_evaluable": "true", "semi_geometry_correction_evaluable": "true", "semi_response_type": "successful_correction", "semi_correction_failure_observed": "false",
+        "undercoverage_evidence_status": "", "undercoverage_expert_verdict": "", "undercoverage_response": "", "undercoverage_subfamily": "", "undercoverage_failure_observed": "",
+    }])
+    out = tmp_path / "out"
+    materialize_quality(canonical, out, candidate_inventory_csv=None)
+    quality = _rows(out / "c1_quality_annotations.csv")[0]
+    worker = tmp_path / "worker.csv"
+    _csv(worker, ["worker_id"], [{"worker_id": "w1"}])
+    materialize_sidecar(out / "c1_quality_annotations.csv", worker, out)
+    evidence = [row for row in _rows(out / "worker_task_evidence_table_C1.csv") if row["task_id"] == "t1"]
+
+    assert quality["task_final_scope"] == "in_scope"
+    assert quality["process_evaluable"] == "true"
+    assert quality["family"] == "semi_correction_failure"
+    assert {row["evidence_signal"] for row in evidence} == {"semi_issue_recognition", "semi_geometry_correction"}
+    assert any(row["included_in_T_u"] == "true" and row["response_type"] == "successful_correction" for row in evidence)
 
 
 def test_c2_draft_reports_reserve_capacity_shortfall_without_reuse(tmp_path: Path) -> None:
