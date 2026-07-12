@@ -216,9 +216,9 @@ def test_formal_scope_semi_undercoverage_sources_gate_capability(tmp_path: Path)
     rows, workers, summary = build_correction(canonical, [export], admission, scope_evidence_csv=scope, semi_evidence_csv=semi, undercoverage_evidence_csv=under)
     row = rows[0]
     assert row["included_in_r_scope"] is True
-    assert row["semi_response_type"] == "blind_trust"
-    assert row["semi_correction_failure_observed"] is True
-    assert row["semi_issue_recognition_evaluable"] is True
+    assert row["semi_response_type"] == ""
+    assert row["semi_correction_failure_observed"] == ""
+    assert row["semi_issue_recognition_evaluable"] is False
     assert row["included_in_T_u"] is False
     assert row["undercoverage_evidence_status"] == "candidate_only_pending_adjudication"
     assert row["undercoverage_response"] == ""

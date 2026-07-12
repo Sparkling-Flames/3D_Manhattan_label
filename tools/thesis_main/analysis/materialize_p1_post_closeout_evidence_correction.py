@@ -400,20 +400,8 @@ def _semi_evidence(row: dict[str, str] | None, choice_map: dict[str, Any]) -> di
     selected_primary = _pick_primary_model_issue([value for value in selected if value != "acceptable"])
     explicit_response = _safe(row.get("semi_response_type"))
     explicit_failure = _safe(row.get("semi_correction_failure_observed"))
-    expected = _safe(row.get("expert_realized_model_issue_primary") or row.get("model_issue_primary") or row.get("reviewed_primary_issue"))
-    secondary = {
-        value
-        for value in _safe(row.get("expert_realized_model_issue_secondary") or row.get("reviewed_secondary_issue")).split(";")
-        if value
-    }
     response = explicit_response
-    failure: bool | str = _truthy(explicit_failure) if explicit_failure else ""
-    if not response and selected and expected:
-        selected_set = set(selected)
-        if selected_set == {"acceptable"}:
-            response, failure = "blind_trust", True
-        elif expected in selected_set or bool(secondary & selected_set):
-            response, failure = "issue_recognized", False
+    failure: bool | str = True if explicit_failure.lower() == "true" else False if explicit_failure.lower() == "false" else ""
     return {
         "model_issue": ";".join(selected),
         "model_issue_primary": selected_primary,
