@@ -4,7 +4,7 @@ import csv
 import json
 from pathlib import Path
 
-from tools.thesis_main.analysis.c1_materialize_worker_profile_sidecar import _geometry_metric_summary, build_p1_evidence_rows, materialize as materialize_sidecar
+from tools.thesis_main.analysis.c1_materialize_worker_profile_sidecar import _geometry_metric_summary, build_main_matrix, build_p1_evidence_rows, materialize as materialize_sidecar
 from tools.thesis_main.analysis.materialize_p1_post_closeout_evidence_correction import build_correction
 from tools.thesis_main.analysis.materialize_p1_post_closeout_geometry_scores import materialize_scores
 from tools.thesis_main.analysis.quality_core.geometry_metrics import analyze_layout_pairing, compute_layout_mask_iou
@@ -86,6 +86,10 @@ def test_cross_worker_exact_parent_is_confirmed_and_capability_excluded(tmp_path
     assert worker_rows[0]["p1_capability_evidence_status"] == "invalid_non_independent_submission"
     assert worker_rows[0]["operational_c1_assignment_status"] == "unchanged_existing_assignment"
     assert summary["n_non_independent_confirmed"] == 1
+    assert row["primary_active_time_eligible"] is False
+    assert row["sensitivity_active_time_eligible"] is False
+    assert row["forensic_timing_audit_eligible"] is True
+    assert row["timing_evidence_status"] == "parent_derived_forensic_only"
 
 
 def test_same_worker_revision_is_independent_and_cross_worker_uncertain_is_suspected(tmp_path: Path) -> None:
@@ -169,7 +173,9 @@ def test_formal_scope_semi_undercoverage_sources_gate_capability(tmp_path: Path)
     assert row["semi_response_type"] == "blind_trust"
     assert row["semi_correction_failure_observed"] is True
     assert row["included_in_T_u"] is True
-    assert row["undercoverage_response"] == "partial_undercoverage"
+    assert row["undercoverage_evidence_status"] == "candidate_only_pending_adjudication"
+    assert row["undercoverage_response"] == ""
+    assert row["undercoverage_interpretation_allowed"] is False
     assert row["included_in_U_u"] is False  # semi rows never enter manual coverage support
     assert workers[0]["p1_r0_analysis_eligible"] is True
     assert workers[0]["c1_r_u_calib_status"] == "pending_c1_calibration_evidence"
@@ -183,6 +189,8 @@ def test_missing_dimension_artifacts_are_not_evaluable_not_success(tmp_path: Pat
     _csv(canonical, list(_canonical("a1", "w1")), [_canonical("a1", "w1")])
     admission = tmp_path / "admission.csv"
     _csv(admission, ["worker_id"], [{"worker_id": "w1"}])
+    scope = tmp_path / "scope.csv"
+    _csv(scope, ["annotator_id", "project_id", "task_id", "task_final_scope", "worker_scope_response", "scope_response_primary_eligible"], [{"annotator_id": "w1", "project_id": "p1", "task_id": "t1", "task_final_scope": "in_scope", "worker_scope_response": "correct_in_scope", "scope_response_primary_eligible": "true"}])
     rows, _, summary = build_correction(canonical, [export], admission)
     assert rows[0]["included_in_r_scope"] is False
     assert rows[0]["included_in_T_u"] is False
@@ -190,17 +198,65 @@ def test_missing_dimension_artifacts_are_not_evaluable_not_success(tmp_path: Pat
     assert set(summary["warnings"]) == {"p1_scope_evidence_missing", "p1_semi_evidence_missing", "p1_undercoverage_evidence_missing"}
 
 
+def test_undercoverage_proxy_needs_expert_verdict_before_u_u(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([{"id": "t1", "project": "p1", "annotations": [_ann("a1", "w1", "2026-07-01T00:00:00Z")]}]), encoding="utf-8")
+    canonical = tmp_path / "canonical.csv"
+    _csv(canonical, list(_canonical("a1", "w1")), [_canonical("a1", "w1")])
+    admission = tmp_path / "admission.csv"
+    _csv(admission, ["worker_id"], [{"worker_id": "w1"}])
+    scope = tmp_path / "scope.csv"
+    _csv(scope, ["annotator_id", "project_id", "task_id", "task_final_scope", "worker_scope_response", "scope_response_primary_eligible"], [{"annotator_id": "w1", "project_id": "p1", "task_id": "t1", "task_final_scope": "in_scope", "worker_scope_response": "correct_in_scope", "scope_response_primary_eligible": "true"}])
+    under = tmp_path / "under.csv"
+    _csv(under, ["annotator_id", "task_id", "undercoverage_risk_level", "undercoverage_expert_verdict"], [{"annotator_id": "w1", "task_id": "t1", "undercoverage_risk_level": "high", "undercoverage_expert_verdict": "confirmed_partial_undercoverage"}])
+    rows, _, _ = build_correction(canonical, [export], admission, scope_evidence_csv=scope, undercoverage_evidence_csv=under)
+    assert rows[0]["undercoverage_evidence_status"] == "evaluable_expert_adjudicated"
+    assert rows[0]["undercoverage_failure_observed"] is True
+    assert rows[0]["included_in_U_u"] is True
+
+
+def test_rejected_undercoverage_proxy_is_evaluable_nonfailure(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([{"id": "t1", "project": "p1", "annotations": [_ann("a1", "w1", "2026-07-01T00:00:00Z")]}]), encoding="utf-8")
+    canonical = tmp_path / "canonical.csv"
+    _csv(canonical, list(_canonical("a1", "w1")), [_canonical("a1", "w1")])
+    admission = tmp_path / "admission.csv"
+    _csv(admission, ["worker_id"], [{"worker_id": "w1"}])
+    scope = tmp_path / "scope.csv"
+    _csv(scope, ["annotator_id", "project_id", "task_id", "task_final_scope", "worker_scope_response", "scope_response_primary_eligible"], [{"annotator_id": "w1", "project_id": "p1", "task_id": "t1", "task_final_scope": "in_scope", "worker_scope_response": "correct_in_scope", "scope_response_primary_eligible": "true"}])
+    under = tmp_path / "under.csv"
+    _csv(under, ["annotator_id", "task_id", "undercoverage_risk_level", "undercoverage_expert_verdict"], [{"annotator_id": "w1", "task_id": "t1", "undercoverage_risk_level": "high", "undercoverage_expert_verdict": "rejected_proxy_false_positive"}])
+    rows, _, _ = build_correction(canonical, [export], admission, scope_evidence_csv=scope, undercoverage_evidence_csv=under)
+    assert rows[0]["included_in_U_u"] is True
+    assert rows[0]["undercoverage_failure_observed"] is False
+
+
 def test_sidecar_ingests_p1_scope_semi_and_undercoverage_evidence() -> None:
     base = {"worker_id": "w1", "project_id": "p1", "base_task_id": "b", "annotation_id": "a", "independence_status": "independent", "process_evaluable": "true", "process_failure_observed": "false", "capability_evidence_eligible": "true"}
     rows = build_p1_evidence_rows([
         {**base, "task_id": "scope", "dataset_group": "PreScreen_oos", "condition": "oos_gate", "scope_evidence_status": "evaluable", "task_final_scope": "oos", "worker_scope_response": "scope_false_negative", "included_in_r_scope": "true"},
         {**base, "task_id": "semi", "dataset_group": "PreScreen_semi", "condition": "semi", "semi_evidence_status": "evaluable", "semi_response_type": "blind_trust", "semi_correction_failure_observed": "true", "included_in_T_u": "true"},
-        {**base, "task_id": "under", "dataset_group": "PreScreen_manual", "condition": "manual", "undercoverage_evidence_status": "evaluable", "undercoverage_response": "partial_undercoverage", "undercoverage_subfamily": "partial_undercoverage", "undercoverage_failure_observed": "true", "included_in_U_u": "true"},
+        {**base, "task_id": "under", "dataset_group": "PreScreen_manual", "condition": "manual", "undercoverage_evidence_status": "evaluable_expert_adjudicated", "undercoverage_response": "partial_undercoverage", "undercoverage_subfamily": "partial_undercoverage", "undercoverage_failure_observed": "true", "included_in_U_u": "true"},
     ])
-    by_task = {row["task_id"]: row for row in rows}
-    assert by_task["scope"]["family"] == "scope_oos_failure" and by_task["scope"]["_is_fail"] is True
-    assert by_task["semi"]["family"] == "semi_correction_failure" and by_task["semi"]["_is_fail"] is True
-    assert by_task["under"]["family"] == "undercoverage_failure" and by_task["under"]["_is_fail"] is True
+    assert any(row["task_id"] == "scope" and row["family"] == "scope_oos_failure" and row["_is_fail"] is True for row in rows)
+    assert any(row["task_id"] == "semi" and row["family"] == "semi_correction_failure" and row["_is_fail"] is True for row in rows)
+    assert any(row["task_id"] == "under" and row["family"] == "undercoverage_failure" and row["_is_fail"] is True for row in rows)
+
+
+def test_one_p1_submission_keeps_multiple_signals_without_process_denominator_duplication() -> None:
+    correction = {
+        "worker_id": "w1", "project_id": "p1", "task_id": "t1", "base_task_id": "b1", "annotation_id": "a1",
+        "dataset_group": "PreScreen_manual", "condition": "manual", "independence_status": "independent",
+        "process_evaluable": "true", "process_failure_observed": "false", "capability_evidence_eligible": "true",
+        "scope_evidence_status": "evaluable", "worker_scope_response": "correct_in_scope", "included_in_r_scope": "true",
+        "semi_evidence_status": "evaluable", "semi_response_type": "blind_trust", "semi_correction_failure_observed": "true", "included_in_T_u": "true",
+        "undercoverage_evidence_status": "evaluable_expert_adjudicated", "undercoverage_response": "partial_undercoverage", "undercoverage_subfamily": "partial_undercoverage", "undercoverage_failure_observed": "true", "included_in_U_u": "true",
+    }
+    score = {("w1", "t1", "a1"): {"geometry_score_raw": "0.9", "included_in_p1_geometry_profile": "true", "geometry_metric_name": "iou", "geometry_metric_direction": "higher_is_better", "geometry_normalization_rule": "unit_interval", "geometry_component_name": "p1_iou"}}
+    rows = build_p1_evidence_rows([correction], score)
+    assert {row["evidence_signal"] for row in rows} == {"geometry", "scope", "semi", "undercoverage", "process"}
+    main = build_main_matrix(rows, {"w1": {}})[0]
+    assert main["n_process_support"] == 1
 
 
 def test_long_open_flag_is_relative_and_lead_time_never_becomes_primary(tmp_path: Path) -> None:
@@ -249,6 +305,16 @@ def test_strict_pairing_rejects_odd_partial_and_dense_ambiguous_layouts() -> Non
     assert ambiguous["pairing_ambiguous"] is True
 
 
+def test_pairing_search_keeps_later_unique_best_and_marks_near_tie() -> None:
+    _, unique = analyze_layout_pairing([[0, 10], [10, 20], [20, 30], [30, 40]])
+    assert unique["optimal_matching_count"] == 1
+    assert unique["best_cost"] == 20.0
+    assert unique["second_best_cost"] == 40.0
+    _, near = analyze_layout_pairing([[0, 10], [10, 20], [10.01, 30], [20, 40]])
+    assert near["pairing_ambiguous"] is True
+    assert near["ambiguity_reason"] == "near_equivalent_matching"
+
+
 def test_incompatible_geometry_metrics_do_not_form_combined_profile() -> None:
     rows = [
         {"included_in_r_geometry": True, "quality_metric_value": "0.9", "quality_metric_name": "iou", "geometry_metric_direction": "higher_is_better", "geometry_normalization_rule": "unit_interval", "stage": "P1", "pool": "PreScreen_manual"},
@@ -283,6 +349,7 @@ def test_process_reliability_uses_successes_and_excludes_system_only_rows(tmp_pa
 def test_geometry_score_uses_final_gold_and_keeps_correction_gate(tmp_path: Path) -> None:
     canonical = tmp_path / "canonical.csv"
     canonical_row = _canonical("a1", "w1", task_id="t1")
+    canonical_row["canonical_geometry"] = json.dumps([[100, 100], [100, 400], [300, 100], [300, 400], [600, 100], [600, 400], [800, 100], [800, 400]])
     _csv(canonical, list(canonical_row), [canonical_row])
     correction = tmp_path / "correction.csv"
     _csv(
@@ -297,7 +364,7 @@ def test_geometry_score_uses_final_gold_and_keeps_correction_gate(tmp_path: Path
         [{"task_id": "t1", "task_final_scope": "in_scope", "gold_status_for_alignment": "ready_for_alignment", "validation_status": "final_gold_geometry_checked", "geometry_gold_task_id": "task_id:g1", "gold_reference_role": "expert_hard_single"}],
     )
     final_gold = tmp_path / "gold.jsonl"
-    final_gold.write_text(json.dumps({"task_id": "g1", "runtime_pairs_1024x512": [{"x": 102.4, "y_ceiling": 102.4, "y_floor": 409.6}, {"x": 614.4, "y_ceiling": 102.4, "y_floor": 409.6}]}) + "\n", encoding="utf-8")
+    final_gold.write_text(json.dumps({"task_id": "g1", "runtime_pairs_1024x512": [{"x": 100, "y_ceiling": 100, "y_floor": 400}, {"x": 300, "y_ceiling": 100, "y_floor": 400}, {"x": 600, "y_ceiling": 100, "y_floor": 400}, {"x": 800, "y_ceiling": 100, "y_floor": 400}]}) + "\n", encoding="utf-8")
 
     summary = materialize_scores(correction, canonical, gold_status, final_gold, tmp_path / "out")
     score = next(csv.DictReader((tmp_path / "out" / "p1_geometry_task_scores_v1.csv").open(encoding="utf-8")))
@@ -328,6 +395,22 @@ def test_geometry_score_invalid_geometry_is_retained_as_excluded_audit(tmp_path:
     assert row["geometry_score_raw"] == ""
     assert row["included_in_p1_geometry_profile"] == "false"
     assert "geometry_score_unavailable" in row["exclusion_reason"]
+
+
+def test_geometry_score_with_fewer_than_four_vertical_pairs_is_audit_only(tmp_path: Path) -> None:
+    canonical = tmp_path / "canonical.csv"
+    canonical_row = _canonical("a1", "w1", task_id="t1")
+    _csv(canonical, list(canonical_row), [canonical_row])
+    correction = tmp_path / "correction.csv"
+    _csv(correction, ["worker_id", "project_id", "task_id", "base_task_id", "dataset_group", "condition", "annotation_id", "independence_status", "process_failure_observed"], [{"worker_id": "w1", "project_id": "p1", "task_id": "t1", "base_task_id": "b1", "dataset_group": "PreScreen_manual", "condition": "manual", "annotation_id": "a1", "independence_status": "independent", "process_failure_observed": "false"}])
+    gold = tmp_path / "gold.csv"
+    _csv(gold, ["task_id", "task_final_scope", "geometry_reference_status", "geometry_gold_task_id"], [{"task_id": "t1", "task_final_scope": "in_scope", "geometry_reference_status": "expert_hard_single", "geometry_gold_task_id": "task_id:g1"}])
+    final = tmp_path / "gold.jsonl"
+    final.write_text(json.dumps({"task_id": "g1", "runtime_pairs_1024x512": [{"x": 100, "y_ceiling": 100, "y_floor": 400}, {"x": 600, "y_ceiling": 100, "y_floor": 400}]}) + "\n", encoding="utf-8")
+    materialize_scores(correction, canonical, gold, final, tmp_path / "out")
+    score = next(csv.DictReader((tmp_path / "out" / "p1_geometry_task_scores_v1.csv").open(encoding="utf-8")))
+    assert score["geometry_score_gate_reason"] == "worker_geometry_insufficient_vertical_pairs"
+    assert score["included_in_p1_geometry_profile"] == "false"
 
 
 def test_geometry_hard_single_rejects_multiple_references(tmp_path: Path) -> None:

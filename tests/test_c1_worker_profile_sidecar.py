@@ -302,6 +302,11 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert main["n_geometry_support"] == "2"
     assert main["n_scope_support"] == "9"
     assert main["n_undercoverage_support"] == "1"
+    assert main["blind_trust_or_correction_failure_rate"] == "1.000000"
+    assert main["correction_reliability_u"] == "0.000000"
+    assert main["undercoverage_failure_rate"] == "1.000000"
+    assert main["coverage_reliability_u"] == "0.000000"
+    assert main["T_u_direction"] == "higher_is_worse_failure_rate"
     assert main["n_process_support"] == "10"
     assert any(row["family"] == "undercoverage_failure" and row["n_observed"] == "1" and row["interpretation_level"] == "none" and row["interpretation_allowed"] == "false" for row in family)
     assert any(row["subfamily"] == "minimal_space_bias" and row["interpretation_level"] == "none" and row["interpretation_allowed"] == "false" for row in subfamily)
@@ -447,6 +452,28 @@ def test_worker_profile_sidecar_reads_p1_artifacts_without_writeback(tmp_path: P
     assert by_check["p1_r0_vs_c1_r_u_calib"]["directionally_consistent"] == "true"
     assert by_check["p1_geometry_vs_c1_geometry"]["support_status"] == "not_evaluable"
     assert "P1 artifacts are read-only inputs" in report
+
+
+def test_structural_p1_bundle_is_not_full_without_expert_undercoverage_or_semi_geometry(tmp_path: Path) -> None:
+    quality = tmp_path / "quality.csv"
+    worker = tmp_path / "worker.csv"
+    _csv(quality, ["worker_id"], [])
+    _csv(worker, ["worker_id"], [{"worker_id": "w1"}])
+    correction = tmp_path / "correction.csv"
+    _csv(correction, ["worker_id", "project_id", "task_id", "annotation_id", "rule_version", "source_canonical_sha256", "source_scope_sha256", "source_semi_sha256", "source_undercoverage_sha256", "scope_evidence_status", "semi_issue_recognition_ready", "semi_geometry_correction_evidence_status", "undercoverage_evidence_status", "process_evaluable", "adjudication_status"], [{"worker_id": "w1", "project_id": "p1", "task_id": "t1", "annotation_id": "a1", "rule_version": "r1", "source_canonical_sha256": "canon", "source_scope_sha256": "scope", "source_semi_sha256": "semi", "source_undercoverage_sha256": "under", "scope_evidence_status": "evaluable", "semi_issue_recognition_ready": "true", "semi_geometry_correction_evidence_status": "not_evaluable_missing_geometry_comparison", "undercoverage_evidence_status": "candidate_only_pending_adjudication", "process_evaluable": "true", "adjudication_status": "not_required"}])
+    status = tmp_path / "status.csv"
+    _csv(status, ["worker_id", "rule_version"], [{"worker_id": "w1", "rule_version": "r1"}])
+    scores = tmp_path / "scores.csv"
+    _csv(scores, ["worker_id", "task_id", "annotation_id", "scoring_rule_version", "source_canonical_sha256", "source_final_gold_sha256", "included_in_p1_geometry_profile"], [{"worker_id": "w1", "task_id": "t1", "annotation_id": "a1", "scoring_rule_version": "g1", "source_canonical_sha256": "canon", "source_final_gold_sha256": "gold", "included_in_p1_geometry_profile": "true"}])
+    profile = tmp_path / "profile.csv"
+    _csv(profile, ["worker_id", "scoring_rule_version", "source_canonical_sha256", "source_final_gold_sha256"], [{"worker_id": "w1", "scoring_rule_version": "g1", "source_canonical_sha256": "canon", "source_final_gold_sha256": "gold"}])
+
+    summary = materialize(quality, worker, tmp_path / "out", p1_task_evidence_csv=correction, p1_worker_status_csv=status, p1_geometry_task_scores=scores, p1_worker_geometry_profile=profile)
+    assert summary["p1_bundle_structurally_complete"] is True
+    assert summary["p1_undercoverage_dimension_ready"] is False
+    assert summary["p1_semi_issue_recognition_ready"] is True
+    assert summary["p1_semi_geometry_correction_ready"] is False
+    assert summary["full_diagnostic_profile_ready"] is False
 
 
 def test_system_collection_issue_is_not_worker_process_failure(tmp_path: Path) -> None:

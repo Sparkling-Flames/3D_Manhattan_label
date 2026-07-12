@@ -38,8 +38,8 @@ PREDICTIVE_CHECKS = [
     ("p1_r0_vs_c1_r_u_calib", "r0_prescreen", "r_u_calib"),
     ("p1_geometry_vs_c1_geometry", "p1_geometry_profile", "r_geometry_u"),
     ("p1_scope_vs_c1_scope", "p1_scope_profile", "r_scope_u"),
-    ("p1_blind_trust_vs_calibration_semi", "p1_blind_trust_flag", "T_u"),
-    ("p1_undercoverage_watch_vs_c1_undercoverage", "p1_undercoverage_watch", "U_u"),
+    ("p1_blind_trust_vs_calibration_semi", "p1_blind_trust_flag", "blind_trust_or_correction_failure_rate"),
+    ("p1_undercoverage_watch_vs_c1_undercoverage", "p1_undercoverage_watch", "undercoverage_failure_rate"),
     ("p1_process_warning_vs_c1_process_reliability", "p1_process_warning", "process_reliability"),
 ]
 FAMILIES = [
@@ -71,6 +71,7 @@ EVIDENCE_FIELDS = [
     "geometry_normalization_rule",
     "geometry_component_name",
     "family",
+    "evidence_signal",
     "subfamily",
     "response_type",
     "failure_observed",
@@ -93,6 +94,7 @@ EVIDENCE_FIELDS = [
     "known_unknown_oscillation_flag",
     "unassigned_active_time_exclusion_reason",
     "sensitivity_active_time_eligible",
+    "forensic_timing_audit_eligible",
     "active_time_worker_process_failure",
     "process_evaluable",
     "process_failure_observed",
@@ -116,6 +118,10 @@ EVIDENCE_FIELDS = [
     "source_manifest_version",
     "profile_rule_version",
     "interpretation_allowed",
+    "undercoverage_risk_level",
+    "undercoverage_proxy_reason",
+    "undercoverage_manual_review_required",
+    "undercoverage_expert_verdict",
 ]
 
 MAIN_FIELDS = [
@@ -127,8 +133,14 @@ MAIN_FIELDS = [
     "r_u_calib_ci_high",
     "r_geometry_u",
     "r_scope_u",
+    "correction_reliability_u",
+    "coverage_reliability_u",
+    "blind_trust_or_correction_failure_rate",
+    "undercoverage_failure_rate",
     "T_u",
     "U_u",
+    "T_u_direction",
+    "U_u_direction",
     "process_reliability",
     "profile_confidence",
     "protocol_confidence",
@@ -535,7 +547,7 @@ def build_p1_evidence_rows(
     geometry_scores: dict[tuple[str, str, str], dict[str, str]] | None = None,
 ) -> list[dict[str, Any]]:
     geometry_scores = geometry_scores or {}
-    out = []
+    out: list[dict[str, Any]] = []
     for row in correction_rows:
         worker = safe(row.get("worker_id"))
         if not worker:
@@ -547,33 +559,7 @@ def build_p1_evidence_rows(
         process_eval = truthy(row.get("process_evaluable"))
         process_failure = truthy(row.get("process_failure_observed"))
         geometry_ok = bool(score_value) and not process_failure
-        independence = safe(row.get("independence_status"))
-        if independence == "non_independent_confirmed":
-            family = "process_failure"
-            subfamily = "non_independent_submission"
-            response = "process_failure"
-        elif independence == "non_independent_suspected":
-            family = "process_failure"
-            subfamily = "non_independent_suspected"
-            response = "not_evaluable"
-        elif safe(row.get("semi_evidence_status")) == "evaluable":
-            family = "semi_correction_failure"
-            subfamily = safe(row.get("semi_response_type"))
-            response = subfamily
-        elif safe(row.get("undercoverage_evidence_status")) == "evaluable":
-            family = "undercoverage_failure"
-            subfamily = safe(row.get("undercoverage_subfamily")) or "full_room_attempt"
-            response = safe(row.get("undercoverage_response"))
-        elif safe(row.get("scope_evidence_status")) == "evaluable":
-            family = "scope_oos_failure"
-            subfamily = safe(row.get("task_oos_subtype")) or "scope_classification"
-            response = safe(row.get("worker_scope_response"))
-        else:
-            family = "geometry_quality_failure"
-            subfamily = "normal_geometry_degraded"
-            response = "geometry_ok" if geometry_ok else "not_evaluable"
-        out.append(
-            {
+        base = {
                 "worker_id": worker,
                 "round_id": "P1",
                 "task_id": safe(row.get("task_id")),
@@ -593,17 +579,13 @@ def build_p1_evidence_rows(
                 "geometry_metric_direction": safe(score_row.get("geometry_metric_direction")),
                 "geometry_normalization_rule": safe(score_row.get("geometry_normalization_rule")),
                 "geometry_component_name": safe(score_row.get("geometry_component_name")),
-                "family": family,
-                "subfamily": subfamily,
-                "response_type": response,
-                "failure_observed": process_failure if family == "process_failure" else truthy(row.get("semi_correction_failure_observed")) if family == "semi_correction_failure" else truthy(row.get("undercoverage_failure_observed")) if family == "undercoverage_failure" else response in {"scope_false_positive", "scope_false_negative"},
                 "included_in_r_u_calib": False,
-                "included_in_r_geometry": geometry_included,
-                "included_in_r_scope": truthy(row.get("included_in_r_scope")),
-                "included_in_T_u": truthy(row.get("included_in_T_u")),
-                "included_in_U_u": truthy(row.get("included_in_U_u")),
-                "included_in_process_reliability": process_eval,
-                "included_in_p1_predictive_capability": truthy(row.get("included_in_p1_predictive_capability")),
+                "included_in_r_geometry": False,
+                "included_in_r_scope": False,
+                "included_in_T_u": False,
+                "included_in_U_u": False,
+                "included_in_process_reliability": False,
+                "included_in_p1_predictive_capability": False,
                 "exclusion_reason": safe(row.get("exclusion_reason")) or ("geometry_score_not_materialized" if not geometry_included else ""),
                 "active_time_source": safe(row.get("active_time_source")),
                 "primary_active_time_eligible": truthy(row.get("primary_active_time_eligible")),
@@ -616,13 +598,14 @@ def build_p1_evidence_rows(
                 "known_unknown_oscillation_flag": truthy(row.get("known_unknown_oscillation_flag")),
                 "unassigned_active_time_exclusion_reason": safe(row.get("unassigned_active_time_exclusion_reason")),
                 "sensitivity_active_time_eligible": truthy(row.get("sensitivity_active_time_eligible")),
+                "forensic_timing_audit_eligible": truthy(row.get("forensic_timing_audit_eligible")),
                 "active_time_worker_process_failure": False,
                 "process_evaluable": process_eval,
                 "process_failure_observed": process_failure,
                 "process_failure_subfamily": safe(row.get("process_failure_subfamily")) or ("process_ok" if not process_failure else "process_integrity"),
                 "timing_evidence_status": safe(row.get("timing_evidence_status")),
                 "long_open_draft_flag": truthy(row.get("long_open_draft_flag")),
-                "parent_derived_timing": safe(row.get("timing_evidence_status")) == "parent_derived_not_independent",
+                "parent_derived_timing": safe(row.get("timing_evidence_status")) == "parent_derived_forensic_only",
                 "source_export": safe(row.get("source_export")),
                 "source_sha256": safe(row.get("source_sha256")),
                 "capability_evidence_eligible": truthy(row.get("capability_evidence_eligible")),
@@ -638,11 +621,87 @@ def build_p1_evidence_rows(
                 "canonical_annotation_id": safe(row.get("annotation_id")),
                 "source_manifest_version": "P1_post_closeout_correction_v1",
                 "profile_rule_version": PROFILE_VERSION,
-                "interpretation_allowed": truthy(row.get("interpretation_allowed")),
-                "_is_fail": process_failure if family == "process_failure" else truthy(row.get("semi_correction_failure_observed")) if family == "semi_correction_failure" else truthy(row.get("undercoverage_failure_observed")) if family == "undercoverage_failure" else response in {"scope_false_positive", "scope_false_negative"},
+                "undercoverage_risk_level": safe(row.get("undercoverage_risk_level")),
+                "undercoverage_proxy_reason": safe(row.get("undercoverage_proxy_reason")),
+                "undercoverage_manual_review_required": truthy(row.get("undercoverage_manual_review_required")),
+                "undercoverage_expert_verdict": safe(row.get("undercoverage_expert_verdict")),
                 "_process_fail": process_failure,
-            }
-        )
+        }
+
+        def add_signal(
+            family: str,
+            subfamily: str,
+            response: str,
+            failed: bool,
+            signal: str,
+            **flags: bool,
+        ) -> None:
+            item = dict(base)
+            item.update(
+                family=family,
+                evidence_signal=signal,
+                subfamily=subfamily,
+                response_type=response,
+                failure_observed=failed,
+                interpretation_allowed=truthy(row.get("interpretation_allowed")) and signal != "process" or signal == "process",
+                _is_fail=failed,
+                **flags,
+            )
+            out.append(item)
+
+        if score_row:
+            geometry_failure = safe(row.get("independence_status")) == "independent" and not process_failure and not geometry_ok and bool(score_value)
+            add_signal(
+                "geometry_quality_failure",
+                "normal_geometry_degraded",
+                "geometry_ok" if geometry_ok else "not_evaluable",
+                geometry_failure,
+                "geometry",
+                included_in_r_geometry=geometry_included,
+                included_in_p1_predictive_capability=geometry_included,
+            )
+        if safe(row.get("scope_evidence_status")) == "evaluable":
+            response = safe(row.get("worker_scope_response"))
+            add_signal(
+                "scope_oos_failure",
+                safe(row.get("task_oos_subtype")) or "scope_classification",
+                response,
+                response in {"scope_false_positive", "scope_false_negative"},
+                "scope",
+                included_in_r_scope=truthy(row.get("included_in_r_scope")),
+                included_in_p1_predictive_capability=truthy(row.get("included_in_r_scope")),
+            )
+        if safe(row.get("semi_evidence_status")) == "evaluable":
+            response = safe(row.get("semi_response_type"))
+            add_signal(
+                "semi_correction_failure",
+                response,
+                response,
+                truthy(row.get("semi_correction_failure_observed")),
+                "semi",
+                included_in_T_u=truthy(row.get("included_in_T_u")),
+                included_in_p1_predictive_capability=truthy(row.get("included_in_T_u")),
+            )
+        if safe(row.get("undercoverage_evidence_status")) == "evaluable_expert_adjudicated":
+            response = safe(row.get("undercoverage_response"))
+            add_signal(
+                "undercoverage_failure",
+                safe(row.get("undercoverage_subfamily")) or "full_room_attempt",
+                response,
+                truthy(row.get("undercoverage_failure_observed")),
+                "undercoverage",
+                included_in_U_u=truthy(row.get("included_in_U_u")),
+                included_in_p1_predictive_capability=truthy(row.get("included_in_U_u")),
+            )
+        if process_eval:
+            add_signal(
+                "process_failure",
+                safe(row.get("process_failure_subfamily")) or "process_ok",
+                "process_failure" if process_failure else "process_ok",
+                process_failure,
+                "process",
+                included_in_process_reliability=True,
+            )
     return out
 
 
@@ -764,8 +823,14 @@ def build_main_matrix(
                 "r_u_calib_ci_high": safe(state.get("r_u_ci_high")),
                 "r_geometry_u": _geometry_metric_summary(group),
                 "r_scope_u": score(*fail_by_flag["included_in_r_scope"]),
+                "correction_reliability_u": score(*fail_by_flag["included_in_T_u"]),
+                "coverage_reliability_u": score(*fail_by_flag["included_in_U_u"]),
+                "blind_trust_or_correction_failure_rate": rate(*fail_by_flag["included_in_T_u"]),
+                "undercoverage_failure_rate": rate(*fail_by_flag["included_in_U_u"]),
                 "T_u": rate(*fail_by_flag["included_in_T_u"]),
                 "U_u": rate(*fail_by_flag["included_in_U_u"]),
+                "T_u_direction": "higher_is_worse_failure_rate",
+                "U_u_direction": "higher_is_worse_failure_rate",
                 "process_reliability": score(process_failures, n_proc),
                 "profile_confidence": confidence,
                 "protocol_confidence": protocol_confidence,
@@ -1067,15 +1132,15 @@ def validate_p1_bundle(
     worker_path: Path | None,
     score_path: Path | None,
     profile_path: Path | None,
-) -> tuple[str, list[str], int]:
+) -> dict[str, Any]:
     paths = [task_path, worker_path, score_path, profile_path]
     present = [bool(path and path.exists()) for path in paths]
     if not any(present):
-        return "incomplete", ["p1_informed_artifact_bundle_missing"], 0
+        return {"p1_bundle_structurally_complete": False, "warnings": ["p1_informed_artifact_bundle_missing"], "pending_adjudication_count": 0}
     warnings = []
     if not all(present):
         warnings.append("p1_informed_artifact_bundle_partial")
-        return "incomplete", warnings, 0
+        return {"p1_bundle_structurally_complete": False, "warnings": warnings, "pending_adjudication_count": 0}
     task_rows = read_csv(task_path)  # type: ignore[arg-type]
     worker_rows = read_csv(worker_path)  # type: ignore[arg-type]
     score_rows = read_csv(score_path)  # type: ignore[arg-type]
@@ -1104,7 +1169,35 @@ def validate_p1_bundle(
     if not {safe(row.get("worker_id")) for row in profile_rows}.issubset(task_workers):
         warnings.append("p1_worker_geometry_profile_coverage_mismatch")
     pending = sum(safe(row.get("adjudication_status")) == "pending_review" for row in task_rows)
-    return ("complete" if not warnings else "incomplete"), warnings, pending
+    structurally_complete = not warnings
+    has_sha = lambda field: any(safe(row.get(field)) for row in task_rows)
+    readiness = {
+        "p1_bundle_structurally_complete": structurally_complete,
+        "p1_geometry_dimension_ready": structurally_complete and any(truthy(row.get("included_in_p1_geometry_profile")) for row in score_rows),
+        "p1_scope_dimension_ready": structurally_complete and has_sha("source_scope_sha256") and any(safe(row.get("scope_evidence_status")) == "evaluable" for row in task_rows),
+        "p1_semi_issue_recognition_ready": structurally_complete and has_sha("source_semi_sha256") and any(truthy(row.get("semi_issue_recognition_ready")) for row in task_rows),
+        "p1_semi_geometry_correction_ready": structurally_complete and any(safe(row.get("semi_geometry_correction_evidence_status")) == "evaluable" for row in task_rows),
+        "p1_undercoverage_dimension_ready": structurally_complete and has_sha("source_undercoverage_sha256") and any(safe(row.get("undercoverage_evidence_status")) == "evaluable_expert_adjudicated" for row in task_rows),
+        "p1_process_dimension_ready": structurally_complete and any(truthy(row.get("process_evaluable")) for row in task_rows),
+        "pending_adjudication_count": pending,
+        "warnings": warnings,
+    }
+    readiness["p1_semi_dimension_ready"] = readiness["p1_semi_issue_recognition_ready"] and readiness["p1_semi_geometry_correction_ready"]
+    dimensions_ready = all(
+        readiness[key]
+        for key in (
+            "p1_bundle_structurally_complete",
+            "p1_geometry_dimension_ready",
+            "p1_scope_dimension_ready",
+            "p1_semi_issue_recognition_ready",
+            "p1_semi_geometry_correction_ready",
+            "p1_undercoverage_dimension_ready",
+            "p1_process_dimension_ready",
+        )
+    )
+    readiness["full_profile_ready_with_pending_adjudication"] = dimensions_ready and pending > 0
+    readiness["full_diagnostic_profile_ready"] = dimensions_ready and pending == 0
+    return readiness
 
 
 def materialize(
@@ -1117,7 +1210,7 @@ def materialize(
     p1_geometry_task_scores: Path | None = None,
     p1_worker_geometry_profile: Path | None = None,
 ) -> dict[str, Any]:
-    p1_bundle_status, p1_bundle_warnings, pending_adjudication = validate_p1_bundle(
+    p1_readiness = validate_p1_bundle(
         p1_task_evidence_csv,
         p1_worker_status_csv,
         p1_geometry_task_scores,
@@ -1138,6 +1231,7 @@ def materialize(
     p1_lookup, input_p1_artifacts = load_p1_artifacts(artifact_paths)
     predictive = build_predictive_rows(main, p1_lookup, _optional_worker_lookup(p1_worker_status_csv))
     predictive_evaluable = any(row["support_status"] != "not_evaluable" for row in predictive)
+    unique_process_evidence = _unique_process_rows(evidence)
 
     evidence_csv = output_dir / "worker_task_evidence_table_C1.csv"
     main_csv = output_dir / "worker_profile_main_matrix_C1.csv"
@@ -1181,8 +1275,8 @@ def materialize(
         "system_collection_issue_row_count": sum(truthy(row.get("system_collection_issue")) for row in evidence),
         "exact_annotation_primary_count": sum(truthy(row.get("primary_active_time_eligible")) and safe(row.get("active_time_integrity_status")) == "exact_annotation_valid" for row in evidence),
         "task_level_sensitivity_count": sum(truthy(row.get("sensitivity_active_time_eligible")) and not truthy(row.get("primary_active_time_eligible")) and safe(row.get("active_time_source")) == "log" for row in evidence),
-        "process_evaluable_row_count": sum(truthy(row.get("process_evaluable")) for row in evidence),
-        "process_failure_observed_row_count": sum(truthy(row.get("process_failure_observed")) for row in evidence),
+        "process_evaluable_row_count": len(unique_process_evidence),
+        "process_failure_observed_row_count": sum(truthy(row.get("process_failure_observed")) for row in unique_process_evidence),
         "long_open_draft_row_count": sum(truthy(row.get("long_open_draft_flag")) for row in evidence),
         "parent_derived_timing_row_count": sum(truthy(row.get("parent_derived_timing")) for row in evidence),
         "n_insufficient_family_cells": sum(row["support_status"] == "insufficient" for row in family),
@@ -1192,12 +1286,12 @@ def materialize(
         "r_u_calib_estimated": any(safe(row.get("r_u_calib")) for row in main),
         "r_geometry_u_estimated": any(safe(row.get("r_geometry_u")) for row in main),
         "p1_predictive_validity_status": "evaluable" if predictive_evaluable else "not_evaluable",
-        "p1_informed_diagnostic_profile_status": p1_bundle_status,
-        "full_profile_ready": p1_bundle_status == "complete",
-        "pending_adjudication_count": pending_adjudication,
+        "p1_informed_diagnostic_profile_status": "complete" if p1_readiness.get("full_diagnostic_profile_ready") else "incomplete",
+        **{key: value for key, value in p1_readiness.items() if key != "warnings"},
+        "full_profile_ready": bool(p1_readiness.get("full_diagnostic_profile_ready")),
         "profile_freeze_status": "C1_provisional",
         "blockers": [],
-        "warnings": p1_bundle_warnings + ([] if predictive_evaluable else ["p1_predictive_validity_not_evaluable_without_p1_artifacts" if not input_p1_artifacts else "p1_predictive_validity_not_evaluable_without_matching_p1_c1_metrics"]),
+        "warnings": list(p1_readiness.get("warnings") or []) + ([] if predictive_evaluable else ["p1_predictive_validity_not_evaluable_without_p1_artifacts" if not input_p1_artifacts else "p1_predictive_validity_not_evaluable_without_matching_p1_c1_metrics"]),
     }
     write_json(summary_json, summary)
     return summary

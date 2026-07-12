@@ -239,6 +239,9 @@ def analyze_layout_pairing(
     width: int = 1024,
     height: int = 512,
     threshold_ratio: float = 0.05,
+    min_vertical_separation: float = 1.0,
+    ambiguity_abs_epsilon: float = 1e-6,
+    ambiguity_relative_margin: float = 0.01,
 ) -> tuple[list[dict[str, float]], dict[str, object]]:
     """Return a strict, seam-aware pairing and diagnostics for formal scoring."""
     try:
@@ -261,6 +264,10 @@ def analyze_layout_pairing(
         "odd_points": bool(n_points % 2),
         "unpaired_point_count": n_points,
         "pairing_ambiguous": False,
+        "best_cost": None,
+        "second_best_cost": None,
+        "optimal_matching_count": 0,
+        "ambiguity_reason": "",
         "finite_in_bounds": finite_in_bounds,
     }
     if not finite_in_bounds or n_points < 2 or n_points % 2:
@@ -273,21 +280,14 @@ def analyze_layout_pairing(
         return min(delta, float(width) - delta)
 
     candidates = {
-        i: [j for j in range(n_points) if j != i and circular_dx(i, j) < threshold and array[i, 1] != array[j, 1]]
+        i: [j for j in range(n_points) if j != i and circular_dx(i, j) < threshold and abs(array[i, 1] - array[j, 1]) >= min_vertical_separation]
         for i in range(n_points)
     }
-    best_cost = float("inf")
-    best_matchings: list[list[tuple[int, int]]] = []
+    matchings: list[tuple[float, list[tuple[int, int]]]] = []
 
     def search(remaining: tuple[int, ...], pairs: list[tuple[int, int]], cost: float) -> None:
-        nonlocal best_cost, best_matchings
-        if cost > best_cost + 1e-8 or len(best_matchings) > 1:
-            return
         if not remaining:
-            if cost < best_cost - 1e-8:
-                best_cost, best_matchings = cost, [list(pairs)]
-            elif abs(cost - best_cost) <= 1e-8:
-                best_matchings.append(list(pairs))
+            matchings.append((cost, list(pairs)))
             return
         i = min(remaining, key=lambda value: sum(candidate in remaining for candidate in candidates[value]))
         rest = set(remaining)
@@ -299,7 +299,7 @@ def analyze_layout_pairing(
             search(next_remaining, pairs + [(i, j)], cost + circular_dx(i, j))
 
     search(tuple(range(n_points)), [], 0.0)
-    if not best_matchings:
+    if not matchings:
         greedy, greedy_stats = _pair_keypoints_to_layout(array, width=width, threshold_ratio=threshold_ratio, return_stats=True)
         base.update(
             n_pairs=int(greedy_stats["n_pairs"]),
@@ -307,7 +307,14 @@ def analyze_layout_pairing(
             unpaired_point_count=n_points - 2 * int(greedy_stats["n_pairs"]),
         )
         return greedy, base
-    matching = best_matchings[0]
+    matchings.sort(key=lambda item: item[0])
+    best_cost = matchings[0][0]
+    optimal = [item for item in matchings if abs(item[0] - best_cost) <= ambiguity_abs_epsilon]
+    second_cost = next((cost for cost, _pairs in matchings if cost > best_cost + ambiguity_abs_epsilon), None)
+    near_margin = max(ambiguity_abs_epsilon, abs(best_cost) * ambiguity_relative_margin)
+    ambiguous = len(optimal) > 1 or (second_cost is not None and second_cost - best_cost <= near_margin)
+    reason = "exact_tied_optimum" if len(optimal) > 1 else "near_equivalent_matching" if ambiguous else ""
+    matching = optimal[0][1]
     pairs = []
     for i, j in matching:
         x1, x2 = float(array[i, 0]), float(array[j, 0])
@@ -322,7 +329,11 @@ def analyze_layout_pairing(
         n_pairs=len(pairs),
         coverage=1.0,
         unpaired_point_count=0,
-        pairing_ambiguous=len(best_matchings) > 1,
+        pairing_ambiguous=ambiguous,
+        best_cost=best_cost,
+        second_best_cost=second_cost,
+        optimal_matching_count=len(optimal),
+        ambiguity_reason=reason,
     )
     return pairs, base
 
