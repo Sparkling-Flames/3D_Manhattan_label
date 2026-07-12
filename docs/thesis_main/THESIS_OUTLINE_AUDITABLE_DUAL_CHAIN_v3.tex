@@ -1,0 +1,173 @@
+% Paper A formal outline source
+% Version: 2026-07-12
+% Status: writing outline only; not a migrated manuscript.
+% Boundary: does not rewrite historical preregistration, protocol, assignment,
+% routing, analysis artifacts, or the current Overleaf body.
+\documentclass[UTF8,a4paper,12pt]{ctexart}
+\usepackage[a4paper,margin=2.4cm]{geometry}
+\usepackage{amsmath,amssymb,booktabs,longtable,array,enumitem,hyperref}
+\hypersetup{hidelinks}
+\setlist{nosep}
+\newcommand{\contract}[5]{\paragraph{写作合同。}问题：#1；证据：#2；primary：#3；sensitivity/audit：#4；禁止主张：#5。}
+\newcommand{\primary}{\textbf{primary}}
+\newcommand{\sensitivity}{\textbf{sensitivity/audit}}
+
+\title{Paper A 正式论文提纲：\texorpdfstring{$R_u$}{Ru}--\texorpdfstring{$D_u$}{Du} 双链路与冻结路由}
+\author{写作合同 v3}
+\date{2026-07-12}
+
+\begin{document}
+\maketitle
+
+\begin{quote}
+本文件是 Paper A 的 LaTeX 写作载体；Markdown 版本是审计与迁移合同。正式主线固定为
+\texttt{Pilot -> PreScreen -> Calibration -> Main(Test + Validation)}，轮次固定为
+\texttt{P1 -> C1 -> C2 -> T1 -> V1}。本文件不回写历史预注册、protocol freeze、assignment、routing、统计执行参数或任何原始工件；当前 Overleaf 正文尚未迁移。
+\end{quote}
+
+\section*{核心主轴与贡献边界}
+
+\[
+\text{协议证据}\to\text{evidence validity gate}\to
+\{R_u^{\mathrm{calib}},D_u\}\to\text{C2 frozen worker state}
+\to\text{predictive validity}\to\text{Random/Global/Full}.
+\]
+
+一级贡献仅为：
+\begin{enumerate}
+  \item 阶段化、轮次化、可审计的半自动全景布局标注协议；
+  \item 双链路 worker modeling：Calibration-only protocol reliability $R_u$ 与 P1-informed 多维诊断画像 $D_u$；
+  \item Validation 前冻结 worker state 后的预算感知路由评价。
+\end{enumerate}
+
+support-aware 场景可靠度与 Global fallback、加权共识消融、failure-family/counterexample bank、predictive validity、active-time integrity audit 为二级创新。模型重训练、Bi-Layout、A-line Manhattan、自动 OOS、worker-facing Manhattan correction 和数据集重标注模型只能进入讨论、附录或未来工作。
+
+\section{引言}
+\subsection{问题背景与现实约束}
+\contract{全景布局标注为何需要同时处理效率、质量和审计性}{任务成本、模型初始化、worker 行为与 provenance}{协议问题定义}{工程背景与收集限制}{模型重训练或 Manhattan 是本文问题核心}
+\subsection{研究缺口与本文路线}
+\contract{现有方法为何不足以支持冻结前可审计的 worker state 与预算路由}{相关工作对比与本文证据链}{双链路和冻结路线}{历史方案与失败案例}{正文已完成迁移}
+\subsection{研究问题与贡献层级}
+\contract{四个 RQ 如何对应后文}{RQ 合同与贡献清单}{三项一级贡献}{二级创新}{把二级创新写成一级贡献}
+\subsection{研究范围与禁止主张}
+\contract{Paper A 明确不研究什么}{协议边界与支线材料}{范围声明}{附录/未来工作}{把支线写成主实验}
+
+\section{相关工作}
+\subsection{全景布局估计与布局标注}
+\contract{本文任务与布局标注文献的关系}{任务定义与文献}{Paper A 定位}{指标兼容性}{A-line 工具是本文主方法}
+\subsection{模型辅助标注与 automation bias}
+\contract{blind trust、issue recognition 与 correction 为什么分开}{相关 bias 与 assisted annotation 文献}{RQ2 概念基础}{model\_issue 标签审计}{选择 model\_issue 即完成几何纠错}
+\subsection{众包可靠度与 worker modeling}
+\contract{为什么拆分 protocol reliability 与 diagnostic profile}{可靠度、画像和 consensus 文献}{双链路定位}{weighted consensus}{P1 或 semi 直接生成 $R_u$}
+\subsection{自适应冗余、路由与预算评价}
+\contract{为什么使用固定预算 offline replay}{routing 与 sequential redundancy 文献}{RQ3b 方法学基础}{V1 shadow/deployment}{V1 单独承担主比较}
+\subsection{Provenance、完整性与可审计协议}
+\contract{evidence validity 为何是测量前提}{provenance 与审计文献}{gate 合同}{post-closeout audit}{missing evidence 是 success}
+
+\section{研究协议与数据生命周期}
+\subsection{阶段、轮次与冻结点}
+\contract{P1/C1/C2/T1/V1 各自允许什么}{protocol 与 assignment SOP}{主线、职责、freeze points}{extension/replication cohort}{改变 protocol freeze}
+\subsection{任务池、条件、worker 与数据流}
+\contract{pool/condition/assignment 如何隔离}{manifest、task pool、provenance}{阶段--数据--用途矩阵}{降级路径}{改变 assignment 或 routing}
+\subsection{Scope、reference 与 final-gold provenance}
+\contract{哪些任务可进入 hard geometry 或 scope evidence}{scope、final-gold、reference path/SHA}{reference gate}{soft ambiguous/unavailable}{把单一 reference 强行当唯一真值}
+\subsection{Active-time identity 与时间降级}
+\contract{哪些时间证据可进入 RQ1 primary}{owner-valid exact annotation-level browser logs}{exact active time}{known-only、task-level、lead\_time、unknown、parent-derived}{active-time 是 worker quality}
+\subsection{Evidence validity and post-closeout integrity gate}
+\contract{每行 evidence 可进入哪条链路}{independence、timing、scope/final-gold、reference、process/system、expert adjudication、artifact path/SHA/rule version}{纳入 $R_u$ 或 $D_u$ 的资格}{pending、system issue、forensic rows}{missing evidence 补成 success}
+\subsection{Post-closeout 修正与不回写边界}
+\contract{P1 closeout 后 integrity evidence 如何使用}{只读 correction/provenance layer}{诊断与 predictive validity}{confirmed/suspected non-independence}{回写 admission、assignment、routing 或原始工件}
+
+\section{测量模型与双链路工人画像}
+\subsection{指标层级与方向}
+\contract{工作量、质量、可靠度和风险率分别测什么}{指标字典与 inclusion gate}{每一 estimand 的方向、分母、support、freeze stage}{不可合并指标的审计}{把 failure rate 当 reliability}
+\subsection{Reference-gated post-closeout geometry metric}
+\contract{何时可报告诊断性几何 metric}{hard-single、hard-multi、pairing、范围、奇数点、歧义和 cardinality gate}{兼容组件的诊断几何}{soft/不兼容组件}{geometry score 是 GT correctness 唯一替代；A-line Manhattan 进主实验}
+\subsection{链路 A：Calibration-only protocol reliability $R_u$}
+\contract{正式 Calibration protocol 中 worker 的可靠度是多少}{仅 C1/C2 Calibration\_manual}{$R_u$、LCB、CI、support、freeze}{候选 $R_{u,s}$ 与 precision audit}{P1、Calibration\_semi、C2b、Main 回流}
+\subsection{场景特异 $R_{u,s}$ 与 Global fallback}
+\contract{何时启用场景特异 reliability}{C1/C2 scene support 与 CI}{support 达标的 $R_{u,s}$}{activation/degeneration}{support 不足时静默启用}
+\subsection{链路 B：多维诊断画像 $D_u$}
+\contract{worker 的可解释行为维度是什么}{经过 gate 的 P1-informed 与独立后续 evidence}{越高越好的五维画像}{component/support audit}{失败率与 reliability 共用符号}
+
+\[
+D_u=(G_u,S_u,C_u,V_u,P_u),\quad
+C_u=1-\text{semi correction failure rate},\quad
+V_u=1-\text{undercoverage failure rate},\quad
+P_u=1-\text{process failure rate}.
+\]
+
+\subsection{Issue recognition 与 geometry correction}
+\contract{识别问题是否等于完成几何纠错}{model\_issue 与最终 geometry 的独立对照}{有 geometry evidence 时的 $C_u$}{仅 issue-recognition rows}{把 model\_issue 选择写成 correction 完成}
+\subsection{Failure-family 与 counterexample bank}
+\contract{如何解释失败而不污染 $R_u$}{worker-task evidence 与 expert-reviewed candidates}{五个一级 family 长表}{subfamily、insufficient cell、counterexample audit}{failure-family 等同 $R_u$ 或作为唯一贡献}
+\subsection{Predictive-validity gate}
+\contract{P1-informed profile 是否预测独立后续行为}{跨阶段独立 C1/C2/Main rows}{RQ3a predictive validity}{suspected/not-evaluable}{P1 自证或把 predictive validity 当 routing utility}
+
+\section{路由策略与统计分析}
+\subsection{冻结 worker state 与 task risk}
+\contract{C2 后哪些 state 固定}{C2 snapshot、scene contract、risk manifest}{worker state、support、fallback、stop rule}{activation/degeneration}{V1 改 tier、Score、$\tau_d$、$k_0/k_{\max}$ 或 stop rule}
+\subsection{Random、Calibration-only Global 与 Full}
+\contract{三种 policy 如何在同一预算下比较}{同一 candidate pool、预算和 sequential rule}{三策略主比较}{diagnostic-feature-assisted Full 的 calibration-only sensitivity}{未过 gate 的 P1 profile 直接 routing}
+\subsection{Calibration\_manual offline replay 与 V1 隔离}
+\contract{如何避免真实标签造成泄漏}{offline replay/shadow support 与 V1 frozen deployment logs}{offline 主比较}{V1 deployment/audit}{V1 临时并跑未注册策略}
+\subsection{RQ1：效率统计}
+\contract{半自动是否降低 owner-valid exact active time}{T1 paired condition 与 exact logs}{已冻结 RQ1 estimand、CI、配对/cluster-aware inference}{fallback、lead\_time、coverage audit}{把 lead\_time 混入 primary 或把快解释为可靠}
+\subsection{RQ2：质量、纠错与行为统计}
+\contract{半自动如何影响 quality、correction 和 failures}{T1/C1/C2 quality、reference、failure-family}{已冻结 quality/IAA inference}{weighted consensus、failure distribution、counterexamples}{weighted consensus 成为主轴}
+\subsection{RQ3a：画像效度统计}
+\contract{P1 profile 是否解释后续独立行为}{P1→C1/C2/Main gated rows}{跨阶段 predictive estimand}{support/pending audit}{P1 自证}
+\subsection{RQ3b：路由效用统计}
+\contract{Full 是否优于 Random/Global}{Calibration\_manual offline replay}{固定预算策略差异}{V1 deployment、fallback、activation}{V1 作为主因果比较场}
+\subsection{Missingness、sensitivity 与 audit}
+\contract{缺失证据如何影响解释}{missingness、fallback、system issue、not\_evaluable}{主估计保持冻结}{降级与审计}{静默过滤或把 NA 当 success}
+
+\section{实验结果}
+\subsection{Evidence completeness 与 validity-gate 流量}
+\contract{有多少证据真正可用}{各阶段/池 evidence count、status、path/SHA/rule version}{纳入主分析的 rows}{pending、system issue、not\_evaluable}{未过 gate 计为 success}
+\subsection{RQ1：效率结果}
+\contract{效率差异是否成立且质量未下降}{exact active-time、coverage、condition、quality-adjusted checks}{primary exact estimate}{fallback 与 fast-low-quality/blind-trust audit}{更快等于更可靠}
+\subsection{RQ2：质量、纠错与 failure-family 结果}
+\contract{质量和行为是否变化}{geometry、IAAt、issue recognition、correction、blind trust、undercoverage、family}{主质量/行为结果}{weighted consensus 与 counterexample}{失败 family 取代 $R_u$}
+\subsection{RQ3a：跨阶段画像效度结果}
+\contract{画像能否预测独立后续行为}{gated P1 与 C1/C2/Main}{predictive validity}{support/pending}{P1 自证}
+\subsection{RQ3b：Random/Global/Full 路由结果}
+\contract{固定预算下 Full 是否有用}{Calibration replay 与 V1 frozen deployment}{offline 主比较}{V1 audit/fallback/activation}{V1 重新调参}
+\subsection{二级创新与审计结果}
+\contract{辅助机制如何解释主结果}{scene fallback、weighted consensus、failure/counterexample、active-time audit}{补充解释}{sensitivity/audit}{把辅助结果升级一级贡献}
+
+\section{讨论与局限}
+\subsection{主要发现与协议意义}
+\contract{哪些结论由 primary evidence 支持}{第6章 primary 结果}{主结论}{审计与降级}{超出 support 做强主张}
+\subsection{双链路边界与 predictive validity}
+\contract{$R_u$ 与 $D_u$ 如何互补且不可互换}{第4章 gate 与第6章 predictive 结果}{概念边界}{pending/insufficient}{把画像当正式 reliability}
+\subsection{路由效用与部署解释}
+\contract{offline replay 与 V1 各自能说明什么}{Calibration replay、V1 deployment}{RQ3b 解释}{shadow/fallback}{V1 反推 C2}
+\subsection{支持度、缺失与外部效度}
+\contract{support 和 missingness 如何限制结论}{support、not\_evaluable、fallback}{局限边界}{sensitivity/audit}{缺失等于成功}
+\subsection{支线内容与未来工作}
+\contract{模型重训练、Bi-Layout、Manhattan、自动 OOS 和 worker-facing correction 放在哪里}{支线材料与工程审计}{未来工作}{附录说明}{将其写成 Paper A 一级贡献}
+
+\section{结论}
+\subsection{四个 RQ 的证据边界}
+\contract{逐项回答 RQ1、RQ2、RQ3a、RQ3b}{第6章 primary/sensitivity/audit}{不超证据的结论}{降级规则}{将 audit 当 primary}
+\subsection{一级贡献与不主张事项}
+\contract{本文最终贡献是什么}{协议、双链路、冻结路由}{三项一级贡献}{二级创新}{支线升级}
+
+\appendix
+\section{附录合同}
+保留 artifact field contract、完整指标字典、阶段--用途矩阵、统计细节、failure subfamily、场景启用门槛、counterexample provenance、文件版本与复现入口。A-line Manhattan、模型重训练和其他支线只能作为明确标记的附录/未来工作内容。
+
+\section*{正式图表清单}
+\begin{itemize}
+  \item 图1：\texttt{Pilot -> P1 -> C1 -> C2 -> T1 -> V1} 与 freeze points。
+  \item 图2：evidence source $\to$ validity gate $\to R_u/D_u \to$ frozen worker state $\to$ routing。
+  \item 图3：Random/Global/Full、Calibration replay、T1、V1 数据隔离。
+  \item 表1：阶段--数据--允许用途矩阵。
+  \item 表2：指标字典（名称、符号、方向、分子/分母、来源、gate、support、primary/sensitivity/audit、freeze stage）。
+  \item 表3：RQ--数据--估计量--统计方法--降级规则。
+  \item 表4：worker profile main matrix、$G_u/S_u/C_u/V_u/P_u$、raw rates、support、legacy aliases 与 freeze stage。
+  \item 表5：failure-family/subfamily 长表、support、\texttt{interpretation\_allowed} 与 expert-review status。
+\end{itemize}
+
+\end{document}
