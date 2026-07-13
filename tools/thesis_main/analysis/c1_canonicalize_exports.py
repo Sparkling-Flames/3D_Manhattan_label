@@ -81,6 +81,10 @@ CANONICAL_FIELDS = [
     "independence_audit_status",
     "independence_audit_reason",
     "independence_audit_source",
+    "independence_audit_source_sha256",
+    "independence_audit_snapshot_path",
+    "independence_audit_snapshot_sha256",
+    "independence_audit_identity",
     "parent_annotation_id",
     "parent_owner_id",
     "parent_same_task",
@@ -267,13 +271,26 @@ def build_canonicalization(
     runtime_rows, runtime_lookup, collision_rows = build_runtime_task_mapping(export_paths, planned_task_mapping)
     canonical_base, duplicate_base, base_summary = build_canonical_tables(export_paths, active_log)
     active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths), policy="calibration") if active_log else {}
+    raw_manifest = snapshot_inputs_unique(
+        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []),
+        output_dir,
+        completion_basis="c1_closeout_canonicalization_snapshot",
+    )
+    snapshot_rows = read_csv(raw_manifest)
+    audit_snapshot = next((item for item in snapshot_rows if independence_audit_csv and Path(item.get("source_path", "")).resolve() == independence_audit_csv.resolve()), {})
+    amendment_snapshot = next((item for item in snapshot_rows if retrospective_provenance_amendment_csv and Path(item.get("source_path", "")).resolve() == retrospective_provenance_amendment_csv.resolve()), {})
     independence_audit: dict[tuple[str, str, str, str], dict[str, str]] = {}
     independence_duplicates: set[tuple[str, str, str, str]] = set()
-    if independence_audit_csv and independence_audit_csv.exists():
-        with independence_audit_csv.open("r", newline="", encoding="utf-8-sig") as handle:
+    independence_audit_row_count = 0
+    independence_audit_missing_identity_count = 0
+    audit_input = Path(audit_snapshot["snapshot_path"]) if audit_snapshot.get("snapshot_path") else None
+    if audit_input and audit_input.exists():
+        with audit_input.open("r", newline="", encoding="utf-8-sig") as handle:
             for audit in csv.DictReader(handle):
+                independence_audit_row_count += 1
                 key = (safe(audit.get("project_id")), safe(audit.get("ls_runtime_task_id") or audit.get("runtime_task_id")), safe(audit.get("worker_id") or audit.get("annotator_id")), safe(audit.get("raw_annotation_id") or audit.get("raw_canonical_annotation_id") or audit.get("annotation_id")))
                 if not all(key):
+                    independence_audit_missing_identity_count += 1
                     continue
                 if key in independence_audit:
                     independence_duplicates.add(key)
@@ -357,6 +374,10 @@ def build_canonicalization(
             "independence_audit_status": audit_status,
             "independence_audit_reason": audit_reason,
             "independence_audit_source": str(independence_audit_csv) if audit else "",
+            "independence_audit_source_sha256": audit_snapshot.get("sha256", ""),
+            "independence_audit_snapshot_path": audit_snapshot.get("snapshot_path", ""),
+            "independence_audit_snapshot_sha256": sha256_file(Path(audit_snapshot["snapshot_path"])) if audit_snapshot.get("snapshot_path") else "",
+            "independence_audit_identity": "|".join(identity),
             "parent_annotation_id": safe(audit.get("parent_annotation_id") or row.get("parent_annotation_id")),
             "parent_owner_id": safe(row.get("parent_owner_id")),
             "parent_same_task": bool_text(row.get("parent_same_task")),
@@ -416,12 +437,6 @@ def build_canonicalization(
         )
 
     duplicate_rows = _enhance_duplicate_rows(duplicate_base, runtime_lookup, round_id)
-    raw_manifest = snapshot_inputs_unique(
-        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []),
-        output_dir,
-        completion_basis="c1_closeout_canonicalization_snapshot",
-    )
-
     write_csv(output_dir / "c1_runtime_task_mapping.csv", runtime_rows, RUNTIME_MAPPING_FIELDS)
     write_csv(output_dir / "c1_runtime_key_collision_audit.csv", collision_rows, RUNTIME_COLLISION_FIELDS)
     write_csv(output_dir / "c1_canonical_annotations.csv", canonical_rows, CANONICAL_FIELDS)
@@ -446,7 +461,7 @@ def build_canonicalization(
         output_dir / "c1_canonical_geometry.jsonl",
         output_dir,
         input_status=input_status,
-        retrospective_amendment_csv=retrospective_provenance_amendment_csv,
+        retrospective_amendment_csv=Path(amendment_snapshot["snapshot_path"]) if amendment_snapshot.get("snapshot_path") else None,
     )
 
     outside_count = sum(row["outside_assignment_submission"] == "true" for row in canonical_rows)
@@ -478,6 +493,20 @@ def build_canonicalization(
         "active_log_missing_rate": round(active_counts["active_time_log_missing_count"] / len(canonical_rows), 6) if canonical_rows else 0.0,
         "canonical_csv": str(output_dir / "c1_canonical_annotations.csv"),
         "raw_input_manifest": str(raw_manifest),
+        "raw_input_manifest_sha256": sha256_file(raw_manifest),
+        "independence_audit_source_path": str(independence_audit_csv or ""),
+        "independence_audit_source_sha256": audit_snapshot.get("sha256", ""),
+        "independence_audit_snapshot_path": audit_snapshot.get("snapshot_path", ""),
+        "independence_audit_snapshot_sha256": sha256_file(Path(audit_snapshot["snapshot_path"])) if audit_snapshot.get("snapshot_path") else "",
+        "independence_audit_row_count": independence_audit_row_count,
+        "independence_audit_valid_count": sum(row["independence_status"] in {"independent", "non_independent_confirmed"} for row in canonical_rows),
+        "independence_audit_duplicate_count": len(independence_duplicates),
+        "independence_audit_missing_identity_count": independence_audit_missing_identity_count,
+        "independence_audit_unresolved_count": sum(row["independence_status"] == "not_evaluable" for row in canonical_rows),
+        "retrospective_amendment_source_path": str(retrospective_provenance_amendment_csv or ""),
+        "retrospective_amendment_source_sha256": amendment_snapshot.get("sha256", ""),
+        "retrospective_amendment_snapshot_path": amendment_snapshot.get("snapshot_path", ""),
+        "retrospective_amendment_snapshot_sha256": sha256_file(Path(amendment_snapshot["snapshot_path"])) if amendment_snapshot.get("snapshot_path") else "",
         "primary_active_time_policy": "owner-validated project+task+worker+annotation exact log match only; task fallback and lead_time never primary",
         "structural_integrity_passed": structural_integrity_passed,
         "collection_completeness_passed": collection_completeness_passed,
@@ -498,6 +527,9 @@ def build_canonicalization(
                 ("reserve_realized_submission_detected", reserve_count),
                 ("runtime_key_collision_detected", len(collision_rows)),
                 ("planned_mapping_missing", planned_missing_count),
+                ("duplicate_independence_audit_identity", len(independence_duplicates)),
+                ("independence_audit_missing_identity", independence_audit_missing_identity_count),
+                ("independence_not_evaluable", sum(row["independence_status"] == "not_evaluable" for row in canonical_rows)),
             )
             if count
         ],

@@ -12,6 +12,7 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, safe, truthy, write_csv, write_json
+from tools.thesis_main.analysis.vfinal_artifact_utils import eligible_independent_evidence
 
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
 DEFAULT_QUALITY = DEFAULT_OUTPUT_DIR / "c1_quality_annotations.csv"
@@ -53,9 +54,10 @@ def build_worker_state(quality_rows: list[dict[str, str]], assignment_paths: lis
     out: list[dict[str, Any]] = []
     for worker in sorted(workers):
         rows = by_worker.get(worker, [])
-        anchor = sum(row.get("dataset_group") == "Calibration_anchor" for row in rows)
-        core = sum(row.get("dataset_group") == "Calibration_core" for row in rows)
-        calib = sum(truthy(row.get("used_for_r_u")) for row in rows)
+        eligible = [row for row in rows if eligible_independent_evidence(row)]
+        anchor = sum(row.get("dataset_group") == "Calibration_anchor" for row in eligible)
+        core = sum(row.get("dataset_group") == "Calibration_core" for row in eligible)
+        calib = sum(truthy(row.get("used_for_r_u")) for row in eligible)
         out.append(
             {
                 "worker_id": worker,

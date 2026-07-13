@@ -53,6 +53,8 @@ def _assertion(row: dict[str, Any], field: str, tag: str) -> tuple[str, str]:
         return "NA", reason
     if not _field_present(row, field):
         return "NA", "n_missing"
+    if field == "model_issue" and _text(row.get("assertion_source")) in {"legacy_behavior_inferred", "not_evaluable"} and _text(row.get("harmonization_validity_status")) != "valid_behavior_inferred":
+        return "NA", "n_invalid"
     selected = _tokens(row.get(field))
     allowed = set(DIFFICULTY_TAGS if field == "difficulty" else MODEL_ISSUE_TAGS)
     negative = "trivial" if field == "difficulty" else "acceptable"

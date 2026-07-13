@@ -12,6 +12,10 @@ from tools.thesis_main.analysis.c1_materialize_worker_state import materialize a
 
 
 def _csv(path: Path, fields: list[str], rows: list[dict]) -> None:
+    if path.name in {"c1_canonical_annotations.csv", "canonical.csv"}:
+        eligibility = ["canonical_eligibility_status", "independence_status", "assigned_expected", "outside_assignment_submission", "duplicate_worker_task_submission", "schema_interpretable"]
+        fields = fields + [field for field in eligibility if field not in fields]
+        rows = [{"canonical_eligibility_status": "valid", "independence_status": "independent", "assigned_expected": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false", "schema_interpretable": "true", **row} for row in rows]
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fields)

@@ -44,3 +44,10 @@ def test_historical_xml_sha_is_frozen_in_manifest() -> None:
     for key, path in (("chinese_sha256", CHINESE), ("english_sha256", ENGLISH)):
         assert hashlib.sha256(path.read_bytes()).hexdigest() == manifest["historical_c1"][key]
     assert manifest["formal_c1_data_present"] is False
+    historical = manifest["historical_c1"]
+    assert historical["chinese_instruction_version"] != historical["english_instruction_version"]
+    assert historical["bilingual_semantics_identical"] is False
+    assert historical["chinese_source_git_blob_sha"] == "fa083fbdbaecede42fc6c92486496a2b69441537"
+    assert historical["english_source_git_blob_sha"] == "cd7cfeff16d5ec59c14758b8b9c5d825598d6282"
+    assert any("authoritative OOS signal" in item for item in historical["known_semantic_differences"])
+    assert manifest["future_c2_stage3"]["semantic_version"] == "c2_future_explicit_acceptable_v1"

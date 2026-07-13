@@ -13,7 +13,7 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis.c1_live_collection_monitor import bool_text, read_csv, safe, truthy, write_csv, write_json
-from tools.thesis_main.analysis.vfinal_artifact_utils import dependency_bundle, sha256_file
+from tools.thesis_main.analysis.vfinal_artifact_utils import dependency_bundle, eligible_independent_evidence, sha256_file
 from tools.thesis_main.registry.materialize_meta_label_consensus_summary import build_summary
 from tools.thesis_main.registry.materialize_meta_label_three_state_sidecars import materialize_meta_label_three_state
 
@@ -102,6 +102,9 @@ QUALITY_FIELDS = [
     "used_for_r_u_source_status",
     "used_for_rq2",
     "assigned_expected",
+    "outside_assignment_submission",
+    "duplicate_worker_task_submission",
+    "eligible_independent_evidence",
     "canonical_source_sha256",
     "canonical_eligibility_status",
     "canonical_eligibility_reason",
@@ -120,6 +123,13 @@ QUALITY_FIELDS = [
     "ui_schema_version",
     "model_artifact_id",
     "provenance_status",
+    "original_provenance_status",
+    "retrospective_amendment_status",
+    "effective_provenance_status",
+    "harmonization_validity_status",
+    "harmonization_reason",
+    "retrospective_amendment_source",
+    "retrospective_amendment_sha256",
     "prediction_selection_status",
     "exclusion_reason",
     "independence_status",
@@ -187,6 +197,8 @@ def _inventory_flags(path: Path | None) -> dict[tuple[str, str, str], str]:
 
 
 def _used_for_r_u(row: dict[str, Any]) -> bool:
+    if not eligible_independent_evidence(row):
+        return False
     group = safe(row.get("dataset_group"))
     source_flag = safe(row.get("used_for_r_u"))
     if source_flag.lower().startswith("false"):
@@ -203,6 +215,8 @@ def _used_for_r_u(row: dict[str, Any]) -> bool:
 
 
 def _used_for_rq2(row: dict[str, Any]) -> bool:
+    if not eligible_independent_evidence(row):
+        return False
     group = safe(row.get("dataset_group"))
     source_flag = safe(row.get("used_for_rq2"))
     if source_flag:
@@ -301,6 +315,9 @@ def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: di
                 "used_for_r_u_source_status": source_status,
                 "used_for_rq2": _used_for_rq2(row),
                 "assigned_expected": truthy(row.get("assigned_expected", True)),
+                "outside_assignment_submission": truthy(row.get("outside_assignment_submission")),
+                "duplicate_worker_task_submission": truthy(row.get("duplicate_worker_task_submission")),
+                "eligible_independent_evidence": eligible_independent_evidence(row),
                 "canonical_source_sha256": safe(row.get("source_sha256")),
                 "canonical_eligibility_status": safe(row.get("canonical_eligibility_status")) or "not_evaluable",
                 "canonical_eligibility_reason": safe(row.get("canonical_eligibility_reason")),
@@ -370,7 +387,10 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
             continue
         row["harmonized_state"] = safe(item.get("harmonized_issue"))
         row["assertion_source"] = safe(item.get("assertion_source"))
-        if safe(item.get("assertion_source")) in {"explicit_worker_label", "legacy_behavior_inferred"}:
+        for field in ("original_provenance_status", "retrospective_amendment_status", "effective_provenance_status", "harmonization_validity_status", "retrospective_amendment_source", "retrospective_amendment_sha256"):
+            row[field] = safe(item.get(field))
+        row["harmonization_reason"] = safe(item.get("inference_reason"))
+        if safe(item.get("harmonization_validity_status")) in {"valid", "valid_behavior_inferred"} and safe(item.get("assertion_source")) in {"explicit_worker_label", "legacy_behavior_inferred"}:
             row["model_issue"] = safe(item.get("harmonized_issue"))
             row["model_issue_primary"] = safe(item.get("harmonized_issue")).split(";")[0]
             row["model_issue_present"] = "true"
@@ -382,7 +402,10 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
     for row in rows:
         row["source_artifact"] = str(canonical_meta_csv)
         row["source_sha256"] = quality_source_sha
-        row.update(dependency_bundle([canonical_meta_csv, harmonization_csv], rule_version=RULE_VERSION))
+        dependencies = [canonical_meta_csv, harmonization_csv, canonical_csv]
+        if candidate_inventory_csv:
+            dependencies.append(candidate_inventory_csv)
+        row.update(dependency_bundle(dependencies, rule_version=RULE_VERSION))
         row["validity_status"] = "dry_run" if input_status != "formal" else ("valid" if row.get("canonical_eligibility_status") == "valid" else "not_evaluable")
     quality_csv = output_dir / "c1_quality_annotations.csv"
     write_csv(quality_csv, rows, QUALITY_FIELDS)

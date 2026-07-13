@@ -32,14 +32,20 @@ def _core_stability(records: list[dict[str, Any]], *, grid: int = 256) -> dict[s
     boundary_margin = wallwall_margin = None
     if not boundary or not wallwall:
         status = "not_evaluable"
-        medoid_worker = ""
+        boundary_medoid = wallwall_medoid = ""
+        boundary_ambiguous = wallwall_ambiguous = False
+        score_table = []
     else:
         def scores(index: int, channel: str) -> float:
             values = [item[channel] for left, right, item in pairwise if index in {left, right} and item.get(channel) is not None]
             return float(np.mean(values)) if values else float("-inf")
         boundary_scores = sorted([(scores(index, "boundary_similarity"), record.get("worker_id", "")) for index, record in enumerate(valid)], reverse=True)
         wallwall_scores = sorted([(scores(index, "wallwall_similarity"), record.get("worker_id", "")) for index, record in enumerate(valid)], reverse=True)
-        medoid_worker = boundary_scores[0][1]
+        boundary_ambiguous = len(boundary_scores) > 1 and abs(boundary_scores[0][0] - boundary_scores[1][0]) <= 1e-12
+        wallwall_ambiguous = len(wallwall_scores) > 1 and abs(wallwall_scores[0][0] - wallwall_scores[1][0]) <= 1e-12
+        boundary_medoid = "" if boundary_ambiguous else boundary_scores[0][1]
+        wallwall_medoid = "" if wallwall_ambiguous else wallwall_scores[0][1]
+        score_table = [{"worker_id": record.get("worker_id", ""), "boundary_score": scores(index, "boundary_similarity"), "wallwall_score": scores(index, "wallwall_similarity")} for index, record in enumerate(valid)]
         boundary_mode_count, boundary_largest_gap = _mode_summary(boundary)
         wallwall_mode_count, wallwall_largest_gap = _mode_summary(wallwall)
         status = "multimodal_candidate" if boundary_mode_count > 1 or wallwall_mode_count > 1 else "stable_candidate"
@@ -58,7 +64,10 @@ def _core_stability(records: list[dict[str, Any]], *, grid: int = 256) -> dict[s
         "boundary_mode_count": boundary_mode_count if boundary else 0, "wallwall_mode_count": wallwall_mode_count if wallwall else 0,
         "boundary_largest_gap": boundary_largest_gap if boundary else None, "wallwall_largest_gap": wallwall_largest_gap if wallwall else None,
         "medoid_margin_boundary": boundary_margin if boundary else None, "medoid_margin_wallwall": wallwall_margin if wallwall else None,
-        "medoid_worker_id": medoid_worker, "stability_status": status, "interpretation_allowed": False,
+        "medoid_boundary_worker_id": boundary_medoid, "medoid_wallwall_worker_id": wallwall_medoid,
+        "medoid_ambiguous": boundary_ambiguous or wallwall_ambiguous, "medoid_boundary_ambiguous": boundary_ambiguous, "medoid_wallwall_ambiguous": wallwall_ambiguous,
+        "medoid_score_table_json": __import__("json").dumps(score_table, sort_keys=True),
+        "medoid_worker_id": boundary_medoid if boundary_medoid == wallwall_medoid else "", "stability_status": status, "interpretation_allowed": False,
     }
 
 

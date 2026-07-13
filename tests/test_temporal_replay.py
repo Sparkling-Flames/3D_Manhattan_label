@@ -12,11 +12,14 @@ def _policy(eval_fold: int, tmp_path) -> dict:
 
 
 def test_temporal_replay_uses_only_prior_arrivals_and_base_folds(tmp_path) -> None:
-    rows = replay_temporal_events([
-        {"event_id": "e2", "arrived_at": "2026-01-01T00:02:00Z", "task_id": "t2", "base_task_id": "b", "canonical_annotation_id": "a2"},
-        {"event_id": "e1", "arrived_at": "2026-01-01T00:01:00Z", "task_id": "t1", "base_task_id": "b", "canonical_annotation_id": "a1"},
-    ], policy_by_fold={0: _policy(0, tmp_path), 1: _policy(1, tmp_path)})
+    events = [
+        {"event_id": "e2", "arrived_at": "2026-01-01T00:02:00Z", "task_id": "t2", "base_task_id": "b", "canonical_annotation_id": "a2", "worker_id": "w2", "condition": "semi"},
+        {"event_id": "e1", "arrived_at": "2026-01-01T00:01:00Z", "task_id": "t1", "base_task_id": "b", "canonical_annotation_id": "a1", "worker_id": "w1", "condition": "semi"},
+    ]
+    evidence = {event["canonical_annotation_id"]: {**event, "canonical_eligibility_status": "valid", "independence_status": "independent", "assigned_expected": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false", "schema_interpretable": "true", "assertion": "+"} for event in events}
+    rows = replay_temporal_events(events, policy_by_fold={0: _policy(0, tmp_path), 1: _policy(1, tmp_path)}, evidence_by_id=evidence)
     assert [row["prior_legal_arrivals"] for row in rows] == [0, 1]
+    assert [row["a"] for row in rows] == [0, 1]
     assert {row["crossfit_fold"] for row in rows} == {rows[0]["crossfit_fold"]}
     assert all(row["policy_fit_excludes_fold"] is True for row in rows)
 

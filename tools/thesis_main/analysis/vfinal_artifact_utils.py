@@ -58,11 +58,29 @@ def canonical_path(path: str | Path) -> Path:
 def dependency_bundle(paths: Iterable[str | Path], *, rule_version: str) -> dict[str, str]:
     """Hash every declared file dependency, not just the direct source."""
     items = []
+    seen: set[str] = set()
     for raw_path in paths:
         path = canonical_path(raw_path)
+        if str(path) in seen:
+            raise ValueError(f"duplicate dependency: {path}")
+        seen.add(str(path))
         items.append({"path": str(path), "sha256": sha256_file(path)})
     payload = sorted(items, key=lambda item: item["path"])
     return {"dependency_bundle_id": sha256_json({"rule_version": rule_version, "dependencies": payload}), "dependency_bundle_json": json_text(payload)}
+
+
+def eligible_independent_evidence(row: dict[str, Any]) -> bool:
+    """Single eligibility contract for C1 capability and routing evidence."""
+    return (
+        str(row.get("canonical_eligibility_status", "")).strip().lower() == "valid"
+        and str(row.get("independence_status", "")).strip().lower() == "independent"
+        and parse_bool(row.get("assigned_expected"))
+        and str(row.get("outside_assignment_submission", "")).strip().lower() == "false"
+        and str(row.get("duplicate_worker_task_submission", "")).strip().lower() == "false"
+        and not str(row.get("parse_error", "")).strip()
+        and str(row.get("schema_interpretable", "")).strip().lower() == "true"
+        and not str(row.get("schema_error", "")).strip()
+    )
 
 
 def sidecar_common(
