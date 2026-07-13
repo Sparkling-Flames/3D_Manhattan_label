@@ -45,6 +45,8 @@ def materialize(
     p1_geometry_task_scores: Path | None = None,
     p1_worker_geometry_profile: Path | None = None,
     require_complete: bool = False,
+    input_status: str = "dry_run",
+    independence_audit_csv: Path | None = None,
 ) -> dict[str, Any]:
     canonical = c1_canonicalize_exports.build_canonicalization(
         export_json,
@@ -55,6 +57,8 @@ def materialize(
         active_log=active_log,
         output_dir=output_dir,
         require_complete=require_complete,
+        input_status=input_status,
+        independence_audit_csv=independence_audit_csv,
     )
     gate = run_c1_closeout_dryrun_chain.materialize(
         Path(canonical["canonical_csv"]),
@@ -73,6 +77,7 @@ def materialize(
         p1_worker_status_csv,
         p1_geometry_task_scores,
         p1_worker_geometry_profile,
+        input_status,
     )
     summary = {
         "canonicalization_summary": canonical,
@@ -113,6 +118,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--p1-geometry-task-scores", type=Path)
     parser.add_argument("--p1-worker-geometry-profile", type=Path)
     parser.add_argument("--require-complete", action="store_true")
+    parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
+    parser.add_argument("--independence-audit-csv", type=Path)
     args = parser.parse_args(argv)
     summary = materialize(
         args.export_json,
@@ -137,6 +144,8 @@ def main(argv: list[str] | None = None) -> int:
         p1_geometry_task_scores=args.p1_geometry_task_scores,
         p1_worker_geometry_profile=args.p1_worker_geometry_profile,
         require_complete=args.require_complete,
+        input_status=args.input_status,
+        independence_audit_csv=args.independence_audit_csv,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0

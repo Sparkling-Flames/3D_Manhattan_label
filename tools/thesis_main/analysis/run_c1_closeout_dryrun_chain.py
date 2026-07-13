@@ -18,7 +18,7 @@ from tools.thesis_main.analysis.materialize_worker_scene_profile_candidates impo
 from tools.thesis_main.analysis.routing.evidence_snapshot import materialize_evidence_snapshot
 from tools.thesis_main.analysis.routing.offline_replay_v2 import offline_replay_v2
 from tools.thesis_main.analysis.routing.temporal_replay import materialize_temporal_replay
-from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
+from tools.thesis_main.analysis.vfinal_artifact_utils import canonical_path, sha256_file, sha256_json
 
 
 REQUIRED_C1_ARTIFACTS = (
@@ -50,11 +50,16 @@ def _artifact_freshness(output_dir: Path, *, input_status: str) -> dict[str, Any
         if any(not str(row.get("source_sha256", "")).strip() or not str(row.get("dependency_bundle_id", "")).strip() for row in rows):
             stale.append(name)
         for row in rows:
-            source = Path(str(row.get("source_artifact", "")))
-            if not source.is_absolute():
-                source = output_dir / source
+            source = canonical_path(row.get("source_artifact", ""))
             declared = str(row.get("source_sha256", ""))
             if not source.exists() or sha256_file(source) != declared:
+                stale.append(name)
+            try:
+                dependencies = json.loads(row.get("dependency_bundle_json") or "[]")
+                expected = sha256_json({"rule_version": row.get("rule_version", ""), "dependencies": sorted(dependencies, key=lambda item: item["path"])})
+                if expected != row.get("dependency_bundle_id") or any(not Path(item["path"]).exists() or sha256_file(Path(item["path"])) != item.get("sha256") for item in dependencies):
+                    stale.append(name)
+            except (TypeError, ValueError, KeyError):
                 stale.append(name)
     return {"fresh": not missing and not empty and not stale, "missing": missing, "empty": empty, "stale": sorted(set(stale)), "input_status": input_status}
 
@@ -142,7 +147,7 @@ def build_gate_summary(
         "dry_run_is_formal_data": input_status == "formal",
         "closeout_input_bundle": artifact_bundle or {},
     }
-    summary["formal_closeout_ready"] = bool(summary["structural_contract_valid"] and summary["formal_inputs_present"] and summary["artifacts_fresh"] and not summary["quality_table_blockers"])
+    summary["formal_closeout_ready"] = False  # C1 closeout remains fail-closed until a separately adjudicated formal bundle is supplied.
     summary["thesis_facing_closeout_ready"] = summary["formal_closeout_ready"]
     summary["c2_decision_chain_ready"] = summary["formal_closeout_ready"] and not summary["dt_backflow"]
     summary["r_u_freeze"] = summary["formal_closeout_ready"] and truthy(worker_state_summary.get("r_u_freeze"))
@@ -244,17 +249,16 @@ def materialize(
         min_task_support=min_scene_support,
     )
     routing_snapshot_summary = materialize_evidence_snapshot(
-        quality_csv,
-        output_dir / "routing_evidence_snapshot_C1.csv",
+        quality_csv, output_dir / "routing_evidence_snapshot_C1.csv", input_status=input_status,
     )
     scaffold_summary = offline_replay_v2(
         output_dir / "routing_evidence_snapshot_C1.csv",
-        output_dir / "routing_replay_scaffold_C1.csv",
+        output_dir / "routing_replay_scaffold_C1.csv", input_status=input_status,
     )
     temporal_summary = materialize_temporal_replay(
         output_dir / "routing_arrival_events_C1.csv",
         output_dir / "routing_temporal_replay_C1.csv",
-        policy_by_fold={0: {}, 1: {}},
+        policy_by_fold=None, input_status=input_status,
     )
     artifact_freshness = _artifact_freshness(output_dir, input_status=input_status)
     vfinal_sidecars = {
@@ -263,7 +267,7 @@ def materialize(
         "routing_replay_scaffold": scaffold_summary,
         "routing_temporal_replay": temporal_summary,
         "geometry_sidecars_present": (output_dir / "geometry_worker_task_loo_C1.csv").exists(),
-        "formal_c1_annotation_data_present": input_status == "formal" and bool(quality_table_summary.get("canonical_meta_fresh")),
+        "formal_c1_annotation_data_present": input_status == "formal" and bool(quality_summary.get("canonical_meta_fresh")),
     }
     profile_summary_path = output_dir / "worker_profile_sidecar_C1.summary.json"
     bundle_paths = [canonical_csv, assignment_manifest, reserve_pool_csv, candidate_inventory_csv, output_dir / "c1_export_merge_manifest.csv", output_dir / "c1_runtime_task_mapping.csv", output_dir / "c1_canonical_meta_observations.csv", output_dir / "c1_canonical_geometry.jsonl", output_dir / "c1_model_artifact_provenance.csv", quality_csv, output_dir / "worker_task_tag_observations_C1.csv", output_dir / "task_tag_three_state_summary_C1.csv", output_dir / "model_issue_harmonization_C1.csv", output_dir / "geometry_worker_task_loo_C1.csv", Path("docs/thesis_main/meta_label_three_state_rule_manifest_v1.json"), Path("docs/thesis_main/model_issue_harmonization_rule_manifest_v1.json"), Path("docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json"), Path("docs/thesis_main/sequential_routing_candidate_rule_manifest_v1.json")]

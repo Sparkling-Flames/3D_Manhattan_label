@@ -20,6 +20,32 @@ def _circular_distance(a: float, b: float, width: float) -> float:
     return min(delta, width - delta)
 
 
+def cyclic_order_correspondence(left: dict[str, Any], right: dict[str, Any]) -> tuple[bool, str, list[tuple[int, int]]]:
+    """Require one monotone cyclic pairing; ties and reverse/topology breaks fail closed."""
+    width = float(left.get("width", 0))
+    left_x = [float(value) % width for value in left.get("x_event_positions") or []] if width else []
+    right_x = [float(value) % width for value in right.get("x_event_positions") or []] if width else []
+    if len(left_x) < 2 or len(right_x) < 2 or len(set(left_x)) != len(left_x) or len(set(right_x)) != len(right_x):
+        return False, "invalid_or_duplicate_events", []
+    def monotone(xs: list[float]) -> bool:
+        return sum(xs[index] > xs[index + 1] for index in range(len(xs) - 1)) <= 1
+    if not monotone(left_x) or not monotone(right_x):
+        return False, "cyclic_order_reversed_or_topology_invalid", []
+    # A single nearest counterpart per event permits variable point counts, but not ambiguous seams.
+    pairs = []
+    for index, x in enumerate(left_x):
+        distances = [_circular_distance(x, y, width) for y in right_x]
+        best = min(distances)
+        if distances.count(best) != 1:
+            return False, "cyclic_correspondence_ambiguous", []
+        pairs.append((index, distances.index(best)))
+    mapped = [right for _, right in pairs]
+    wraps = sum(mapped[index] > mapped[index + 1] for index in range(len(mapped) - 1))
+    if wraps > 1:
+        return False, "cyclic_topology_mismatch", []
+    return True, "unique_cyclic_correspondence", pairs
+
+
 def boundary_similarity(left: dict[str, Any], right: dict[str, Any], *, grid: int = 256) -> float | None:
     if not left.get("valid") or not right.get("valid"):
         return None
@@ -48,17 +74,15 @@ def wallwall_similarity(left: dict[str, Any], right: dict[str, Any]) -> float | 
 
 
 def pairwise_similarity(left: dict[str, Any], right: dict[str, Any], *, grid: int = 256) -> dict[str, Any]:
-    def cyclic_order_valid(geometry: dict[str, Any]) -> bool:
-        xs = [float(value) for value in geometry.get("x_event_positions") or []]
-        return len(xs) >= 2 and len(xs) == len(set(xs))
-
-    order_compatible = bool(cyclic_order_valid(left) and cyclic_order_valid(right) and left.get("width") == right.get("width") and left.get("height") == right.get("height"))
+    order_compatible, order_reason, correspondence = cyclic_order_correspondence(left, right) if left.get("width") == right.get("width") and left.get("height") == right.get("height") else (False, "geometry_context_mismatch", [])
     compatible = bool(left.get("valid") and right.get("valid") and order_compatible)
     boundary = boundary_similarity(left, right, grid=grid) if compatible else None
     wallwall = wallwall_similarity(left, right) if compatible else None
     return {
         "metric_compatible": compatible,
         "order_compatible": order_compatible,
+        "order_reason": order_reason,
+        "cyclic_correspondence": correspondence,
         "boundary_similarity": boundary,
         "wallwall_similarity": wallwall,
         "q_boundary": boundary,

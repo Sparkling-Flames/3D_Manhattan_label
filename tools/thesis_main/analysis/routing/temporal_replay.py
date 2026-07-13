@@ -20,10 +20,13 @@ def _fold_for_base(base_task_id: str, n_folds: int) -> int:
 
 
 def _validate_policy(policy: dict[str, Any], eval_fold: int, n_folds: int) -> dict[str, Any]:
-    required = ("policy_artifact_id", "policy_artifact_sha256", "rule_version", "fit_folds", "fit_base_task_ids")
+    required = ("policy_artifact_id", "policy_artifact_sha256", "policy_artifact_path", "rule_version", "fit_folds", "fit_base_task_ids")
     missing = [key for key in required if not policy.get(key)]
     if missing:
         raise ValueError(f"policy is missing audit fields: {', '.join(missing)}")
+    artifact = Path(str(policy["policy_artifact_path"])).expanduser().resolve()
+    if not artifact.exists() or sha256_file(artifact) != str(policy["policy_artifact_sha256"]):
+        raise ValueError("policy artifact SHA256 does not match its declared file")
     fit_folds = {int(value) for value in policy["fit_folds"]}
     fit_base_ids = {str(value).strip() for value in policy["fit_base_task_ids"] if str(value).strip()}
     if eval_fold in fit_folds or any(_fold_for_base(base_id, n_folds) == eval_fold for base_id in fit_base_ids):
@@ -49,11 +52,12 @@ def replay_temporal_events(events: Iterable[dict[str, Any]], *, policy_by_fold: 
             raise ValueError("event_id must be unique")
         seen_ids.add(row["event_id"])
     rows.sort(key=lambda row: (str(row["arrived_at"]), str(row["event_id"])))
-    observed: dict[tuple[str, str], int] = defaultdict(int)
+    observed: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
     traces = []
     for row in rows:
         group_key = (str(row["base_task_id"]), str(row.get("condition", "")))
-        prior_k = observed[group_key]
+        prior = observed[group_key]
+        prior_k = len(prior)
         eval_fold = int(row["crossfit_fold"])
         policy = policy_by_fold[eval_fold]
         policy_audit = _validate_policy(policy, eval_fold, n_folds)
@@ -61,10 +65,10 @@ def replay_temporal_events(events: Iterable[dict[str, Any]], *, policy_by_fold: 
         decision = decide_candidate_action({"n_independent_workers": prior_k, "support_gap_candidate": row.get("support_gap_candidate", "false")}, candidate_rule_config(risk_bucket))
         traces.append({
             **sidecar_common(source_artifact=str(row.get("source_artifact", "")), source_sha256=str(row.get("source_sha256", "")), stage=str(row.get("stage", "C1")), pool=str(row.get("pool", "")), condition=str(row.get("condition", "")), validity_status="dry_run" if input_status != "formal" else "candidate_only", rule_version=RULE_VERSION, interpretation_allowed=False),
-            "crossfit_fold": row["crossfit_fold"], **policy_audit, "policy_artifact_id": policy["policy_artifact_id"], "policy_artifact_sha256": policy["policy_artifact_sha256"], "policy_artifact_path": policy.get("policy_artifact_path", ""), "policy_rule_version": policy["rule_version"], "policy_fit_folds_json": json.dumps(sorted({int(value) for value in policy["fit_folds"]})), "policy_fit_base_task_ids_json": json.dumps(sorted({str(value) for value in policy["fit_base_task_ids"]})), "policy_fit_base_task_count": len(policy["fit_base_task_ids"]), "prior_legal_arrivals": prior_k, "a": row.get("a", ""), "e": row.get("e", ""), "u": row.get("u", ""), "replicated_explicit_conflict": row.get("replicated_explicit_conflict", ""), "geometry_disagreement": row.get("geometry_disagreement", ""), "provenance_status": row.get("provenance_status", ""), "fallback": row.get("fallback", ""), "candidate_worker_id": row.get("candidate_worker_id", ""), "action": decision["action"], "action_reason": decision["action"], "formal_assignment_generated": "false",
+            "event_id": row["event_id"], "arrived_at": row["arrived_at"], "task_id": row.get("task_id", ""), "base_task_id": row["base_task_id"], "condition": row.get("condition", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""), "crossfit_fold": row["crossfit_fold"], **policy_audit, "policy_artifact_id": policy["policy_artifact_id"], "policy_artifact_sha256": policy["policy_artifact_sha256"], "policy_artifact_path": policy.get("policy_artifact_path", ""), "policy_rule_version": policy["rule_version"], "policy_fit_folds_json": json.dumps(sorted({int(value) for value in policy["fit_folds"]})), "policy_fit_base_task_ids_json": json.dumps(sorted({str(value) for value in policy["fit_base_task_ids"]})), "policy_fit_base_task_count": len(policy["fit_base_task_ids"]), "prior_legal_arrivals": prior_k, "prior_evidence_json": json.dumps(prior, sort_keys=True), "a": row.get("a", ""), "e": row.get("e", ""), "u": row.get("u", ""), "replicated_explicit_conflict": row.get("replicated_explicit_conflict", ""), "geometry_disagreement": row.get("geometry_disagreement", ""), "provenance_status": row.get("provenance_status", ""), "fallback": row.get("fallback", ""), "candidate_worker_id": row.get("candidate_worker_id", ""), "selected_worker_id": row.get("selected_worker_id") or row.get("candidate_worker_id", ""), "action": decision["action"], "action_reason": decision["action"], "formal_assignment_generated": "false",
         })
         if str(row.get("legal_arrival", "true")).lower() == "true":
-            observed[group_key] += 1
+            observed[group_key].append({"event_id": str(row["event_id"]), "canonical_annotation_id": str(row.get("canonical_annotation_id", "")), "worker_id": str(row.get("candidate_worker_id", ""))})
     return traces
 
 
@@ -72,9 +76,12 @@ def materialize_temporal_replay(event_csv: Path | None, output_csv: Path, *, pol
     if input_status != "formal" or event_csv is None or not event_csv.exists():
         write_csv_rows(output_csv, [], COMMON_SIDEcar_FIELDS + ["event_id", "arrived_at", "task_id", "base_task_id", "condition", "canonical_annotation_id", "crossfit_fold", "policy_fit_excludes_fold", "policy_validation_status", "policy_artifact_id", "policy_artifact_sha256", "policy_artifact_path", "policy_rule_version", "policy_fit_folds_json", "policy_fit_base_task_ids_json", "policy_fit_base_task_count", "prior_legal_arrivals", "a", "e", "u", "replicated_explicit_conflict", "geometry_disagreement", "provenance_status", "fallback", "candidate_worker_id", "action", "action_reason", "formal_assignment_generated"])
         return {"status": "not_evaluable_missing_formal_c1", "n_events": 0, "formal_assignment_generated": False}
+    if not policy_by_fold:
+        write_csv_rows(output_csv, [], COMMON_SIDEcar_FIELDS + ["event_id", "arrived_at", "task_id", "base_task_id", "condition", "canonical_annotation_id", "candidate_worker_id", "selected_worker_id", "prior_evidence_json", "action", "action_reason"])
+        return {"status": "not_evaluable_missing_policy_artifact", "n_events": 0, "formal_assignment_generated": False}
     with event_csv.open("r", newline="", encoding="utf-8-sig") as handle:
-        traces = replay_temporal_events(csv.DictReader(handle), policy_by_fold=policy_by_fold or {}, input_status=input_status)
-    write_csv_rows(output_csv, traces, COMMON_SIDEcar_FIELDS + ["event_id", "arrived_at", "task_id", "base_task_id", "condition", "canonical_annotation_id", "crossfit_fold", "policy_fit_excludes_fold", "policy_validation_status", "policy_artifact_id", "policy_artifact_sha256", "policy_artifact_path", "policy_rule_version", "policy_fit_folds_json", "policy_fit_base_task_ids_json", "policy_fit_base_task_count", "prior_legal_arrivals", "a", "e", "u", "replicated_explicit_conflict", "geometry_disagreement", "provenance_status", "fallback", "candidate_worker_id", "action", "action_reason", "formal_assignment_generated"])
+        traces = replay_temporal_events(csv.DictReader(handle), policy_by_fold=policy_by_fold, input_status=input_status)
+    write_csv_rows(output_csv, traces, COMMON_SIDEcar_FIELDS + ["event_id", "arrived_at", "task_id", "base_task_id", "condition", "canonical_annotation_id", "crossfit_fold", "policy_fit_excludes_fold", "policy_validation_status", "policy_artifact_id", "policy_artifact_sha256", "policy_artifact_path", "policy_rule_version", "policy_fit_folds_json", "policy_fit_base_task_ids_json", "policy_fit_base_task_count", "prior_legal_arrivals", "prior_evidence_json", "a", "e", "u", "replicated_explicit_conflict", "geometry_disagreement", "provenance_status", "fallback", "candidate_worker_id", "selected_worker_id", "action", "action_reason", "formal_assignment_generated"])
     return {"status": "candidate_only", "n_events": len(traces), "source_sha256": sha256_file(event_csv), "formal_assignment_generated": False}
 
 

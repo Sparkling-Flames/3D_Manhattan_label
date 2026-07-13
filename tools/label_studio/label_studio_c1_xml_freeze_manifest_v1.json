@@ -2,11 +2,16 @@
   "manifest_id": "label_studio_c1_xml_freeze_manifest_v1",
   "historical_c1": {
     "status": "frozen_historical_semantics",
+    "restoration_source_commit": "61acb0cdbc70ba38b9ae9c3ba005b50450cef770",
+    "restoration_source_snapshot": "repository C1-pre-reconstruction configuration",
     "chinese_path": "tools/label_studio/label_studio_view_config.xml",
-    "chinese_sha256": "a7ceacb4833c8676ee33863fa994dba780a5a561195b8b6e5f841a49593e03db",
+    "chinese_sha256": "200cbe629c5c7d0cb57d75146b785728c29a2970fc52c5c84ed0973d0c2668d5",
+    "chinese_source_git_blob_sha": "fa083fbdbaecede42fc6c92486496a2b69441537",
     "english_path": "tools/thesis_main/foreign_recruitment/label_studio_view_config_en.xml",
-    "english_sha256": "c2fc18acddc0eb8b732ae867dabe96160da943e5cb39cece93f84a0e62d87cdf",
-    "semantic_role": "historical_c1_only"
+    "english_sha256": "0418d4a241ce178375c6616d9f52371a64b117e99e137981ce27875fac94abce",
+    "english_source_git_blob_sha": "cd7cfeff16d5ec59c14758b8b9c5d825598d6282",
+    "semantic_role": "historical_c1_only",
+    "semantic_version": "c1_historical_pre_future_acceptable_v1"
   },
   "future_c2_stage3": {
     "status": "separate_future_semantics_not_c1",
@@ -14,7 +19,8 @@
     "chinese_sha256": "4e6df3d0f61e5a87345f20f53ade99de62e35e09e7d701e1fa4d24fcc30eba4e",
     "english_path": "tools/thesis_main/foreign_recruitment/label_studio_view_config_c2_future_en.xml",
     "english_sha256": "ee71dfe951eaa2f78af37d7cac2a9a888f95da11ab5d21c6832a6076afaf07df",
-    "semantic_role": "future_c2_stage3_only"
+    "semantic_role": "future_c2_stage3_only",
+    "semantic_version": "c2_future_explicit_acceptable_v1"
   },
   "formal_c1_data_present": false,
   "interpretation_allowed": false
