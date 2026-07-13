@@ -8,6 +8,10 @@ from tools.thesis_main.analysis.c1_materialize_worker_profile_sidecar import bui
 
 
 def _csv(path: Path, fields: list[str], rows: list[dict]) -> None:
+    if path.name == "quality.csv":
+        eligibility = ["canonical_eligibility_status", "independence_status", "assigned_expected", "outside_assignment_submission", "duplicate_worker_task_submission", "schema_interpretable"]
+        fields = fields + [field for field in eligibility if field not in fields]
+        rows = [{"canonical_eligibility_status": "valid", "independence_status": "independent", "assigned_expected": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false", "schema_interpretable": "true", **row} for row in rows]
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8", newline="") as f:
         writer = csv.DictWriter(f, fieldnames=fields)
@@ -285,7 +289,7 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert by_task["o1"]["included_in_r_geometry"] == "false"
     assert by_task["u1"]["included_in_U_u"] == "false"
     assert by_task["u1"]["task_final_scope"] == "in_scope"
-    assert by_task["proc1"]["included_in_process_reliability"] == "true"
+    assert by_task["proc1"]["included_in_process_reliability"] == "false"
     assert by_task["proc1"]["included_in_r_geometry"] == "false"
     assert by_task["missing_ref1"]["geometry_reference_status"] == "unavailable"
     assert by_task["missing_ref1"]["included_in_r_u_calib"] == "false"
@@ -301,7 +305,7 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert {"profile_confidence", "protocol_confidence", "diagnostic_profile_confidence", "profile_confidence_notes"} <= set(main)
     assert main["n_calib_support"] == "1"
     assert main["n_geometry_support"] == "0"
-    assert main["n_scope_support"] == "9"
+    assert main["n_scope_support"] == "8"
     assert main["n_undercoverage_support"] == "0"
     assert main["blind_trust_or_correction_failure_rate"] == ""
     assert main["correction_reliability_u"] == ""
@@ -473,15 +477,15 @@ def test_structural_p1_bundle_is_not_full_without_expert_undercoverage_or_semi_g
     summary = materialize(quality, worker, tmp_path / "out", p1_task_evidence_csv=correction, p1_worker_status_csv=status, p1_geometry_task_scores=scores, p1_worker_geometry_profile=profile)
     assert summary["p1_bundle_structurally_complete"] is True
     assert summary["p1_undercoverage_dimension_ready"] is False
-    assert summary["p1_semi_issue_recognition_ready"] is True
+    assert summary["p1_semi_issue_recognition_ready"] is False
     assert summary["p1_semi_geometry_correction_ready"] is False
     assert summary["full_diagnostic_profile_ready"] is False
     readiness = {row["dimension"]: row for row in _rows(tmp_path / "out" / "p1_worker_dimension_readiness_C1.csv")}
-    assert readiness["semi_issue_recognition"]["expected_count"] == "1"
-    assert readiness["semi_issue_recognition"]["evaluable_count"] == "1"
+    assert readiness["semi_issue_recognition"]["expected_count"] == "0"
+    assert readiness["semi_issue_recognition"]["evaluable_count"] == "0"
     assert readiness["semi_issue_recognition"]["support_ready"] == "false"
     assert readiness["undercoverage"]["not_applicable_count"] == "1"
-    assert summary["pending_dimension_cell_count"] == 1
+    assert summary["pending_dimension_cell_count"] == 0
     assert summary["unique_pending_annotation_count"] == 1
 
 
@@ -556,6 +560,7 @@ def test_missing_failure_outcomes_do_not_become_successes(tmp_path: Path) -> Non
 def test_system_collection_issue_does_not_remove_capability_candidates_from_readiness() -> None:
     task = {
         "worker_id": "w1", "task_id": "t1", "annotation_id": "a1", "independence_status": "independent",
+        "canonical_eligibility_status": "valid", "assigned_expected": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false", "schema_interpretable": "true",
         "process_evaluable": "false", "process_failure_observed": "false", "system_collection_issue": "true",
         "condition": "manual", "task_final_scope": "in_scope", "scope_evidence_status": "evaluable",
     }

@@ -14,6 +14,7 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, safe, truthy, write_csv, write_json
+from tools.thesis_main.analysis.vfinal_artifact_utils import eligible_independent_evidence
 
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
 DEFAULT_QUALITY = DEFAULT_OUTPUT_DIR / "c1_quality_annotations.csv"
@@ -510,6 +511,7 @@ def dimension_fail(evidence_row: dict[str, Any], field: str) -> bool:
 
 
 def inclusion_flags(row: dict[str, str], family: str) -> dict[str, bool]:
+    legal = eligible_independent_evidence(row)
     cond = condition(row)
     ref = geometry_reference_status(row)
     geom_ok = geometry_valid(row)
@@ -523,12 +525,12 @@ def inclusion_flags(row: dict[str, str], family: str) -> dict[str, bool]:
     undercoverage_ok = undercoverage_expert_evaluable(row)
     worker_scope = safe(row.get("worker_scope_response"))
     return {
-        "included_in_r_u_calib": row_stage in {"C1", "C2"} and group in R_U_CALIB_GROUPS and truthy(row.get("used_for_r_u")) and manual and is_in_scope(row) and usable_ref and geom_ok and process_ok,
-        "included_in_r_geometry": group in R_GEOMETRY_GROUPS and manual and is_in_scope(row) and usable_ref and geom_ok and process_ok and geometry_component_ok,
-        "included_in_r_scope": norm_scope(row) in {"in_scope", "oos"} and worker_scope in VALID_SCOPE_RESPONSES,
-        "included_in_T_u": group in T_U_GROUPS and cond == "semi" and process_ok and truthy(row.get("semi_geometry_correction_evaluable")) and outcome_bool(row.get("semi_correction_failure_observed")) is not None,
-        "included_in_U_u": is_in_scope(row) and geom_ok and usable_ref and undercoverage_ok,
-        "included_in_process_reliability": process_evaluable(row),
+        "included_in_r_u_calib": legal and row_stage in {"C1", "C2"} and group in R_U_CALIB_GROUPS and truthy(row.get("used_for_r_u")) and manual and is_in_scope(row) and usable_ref and geom_ok and process_ok,
+        "included_in_r_geometry": legal and group in R_GEOMETRY_GROUPS and manual and is_in_scope(row) and usable_ref and geom_ok and process_ok and geometry_component_ok,
+        "included_in_r_scope": legal and norm_scope(row) in {"in_scope", "oos"} and worker_scope in VALID_SCOPE_RESPONSES,
+        "included_in_T_u": legal and group in T_U_GROUPS and cond == "semi" and process_ok and truthy(row.get("semi_geometry_correction_evaluable")) and outcome_bool(row.get("semi_correction_failure_observed")) is not None,
+        "included_in_U_u": legal and is_in_scope(row) and geom_ok and usable_ref and undercoverage_ok,
+        "included_in_process_reliability": legal and process_evaluable(row),
     }
 
 
@@ -1313,7 +1315,7 @@ def build_p1_worker_dimension_readiness(task_rows: list[dict[str, str]], score_r
         for name in dimensions:
             expected = evaluable = pending = 0
             for row in worker_rows:
-                capability_valid = safe(row.get("independence_status")) == "independent" and outcome_bool(row.get("process_failure_observed")) is not True
+                capability_valid = eligible_independent_evidence(row) and outcome_bool(row.get("process_failure_observed")) is not True
                 manual_in_scope = capability_valid and safe(row.get("condition")) == "manual" and safe(row.get("task_final_scope")) == "in_scope"
                 semi_candidate = capability_valid and safe(row.get("dataset_group")) == "PreScreen_semi"
                 if name == "geometry":

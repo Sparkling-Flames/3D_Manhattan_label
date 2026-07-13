@@ -22,11 +22,11 @@ def test_loo_excludes_held_out_worker_and_requires_three_for_candidate() -> None
     assert stability_summary([_record("w1"), _record("w2", 1), _record("w3", 2)])["valid_k"] == 3
 
 
-def test_loo_allows_variable_point_counts_when_cyclic_order_is_compatible() -> None:
+def test_loo_rejects_variable_point_counts_until_alignment_contract_is_frozen() -> None:
     rows = leave_one_out([_record("w1"), _record("w2", 1), {"task_id": "t1", "worker_id": "w3", "geometry": normalize_geometry([[100, 100], [100, 400], [500, 100], [500, 400], [800, 100], [800, 400]])}])
     w1 = next(row for row in rows if row["worker_id"] == "w1")
-    assert w1["peer_count_excluding_self"] == 2
-    assert w1["validity_status"] == "candidate_only"
+    assert w1["peer_count_excluding_self"] == 1
+    assert w1["validity_status"] == "not_evaluable"
 
 
 def test_geometry_materializer_emits_candidate_sidecars_with_common_fields(tmp_path: Path) -> None:

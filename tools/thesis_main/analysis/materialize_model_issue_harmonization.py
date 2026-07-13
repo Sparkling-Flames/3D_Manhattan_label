@@ -2,19 +2,62 @@ from __future__ import annotations
 
 import argparse
 import csv
+import re
 import json
+from collections import Counter
 from pathlib import Path
 from typing import Any
 
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
 from tools.thesis_main.analysis.quality_core.choice_parser import extract_data
-from tools.thesis_main.analysis.vfinal_artifact_utils import COMMON_SIDEcar_FIELDS, dependency_bundle, sha256_file, sidecar_common, write_csv_rows
+from tools.thesis_main.analysis.vfinal_artifact_utils import COMMON_SIDEcar_FIELDS, sha256_file, sha256_json, sidecar_common, write_csv_rows
 
 
 RULE_VERSION = "model_issue_harmonization_v3"
 JITTER_TOLERANCE = 0.002
 FUTURE_SCHEMA_FAMILIES = {"c2_future_explicit_acceptable_v1"}
 FUTURE_INSTRUCTION_VERSIONS = {"c2_future_explicit_acceptable_v1"}
+SHA256_RE = re.compile(r"^[0-9a-fA-F]{64}$")
+
+
+def _amendment_key(row: dict[str, Any]) -> tuple[str, str, str, str]:
+    return tuple(str(row.get(field, "")).strip() for field in ("source_export_sha256", "project_id", "ls_runtime_task_id", "initialization_artifact_id"))  # type: ignore[return-value]
+
+
+def _validate_amendments(rows: list[dict[str, str]]) -> tuple[dict[tuple[str, str, str, str], dict[str, Any]], Counter[str]]:
+    counts = Counter(_amendment_key(row) for row in rows)
+    valid: dict[tuple[str, str, str, str], dict[str, Any]] = {}
+    blockers: Counter[str] = Counter()
+    for row in rows:
+        key = _amendment_key(row)
+        status = "valid"
+        payload: Any = None
+        if not all(key):
+            status = "missing_identity"
+        elif counts[key] != 1:
+            status = "duplicate_key"
+        elif any(not SHA256_RE.fullmatch(str(row.get(field, ""))) for field in ("checkpoint_sha256", "inference_config_sha256", "preprocess_postprocess_sha256", "prediction_payload_sha256")):
+            status = "malformed_sha256"
+        else:
+            try:
+                payload = json.loads(row.get("prediction_payload_json", ""))
+            except (TypeError, json.JSONDecodeError):
+                status = "invalid_prediction_payload_json"
+            if status == "valid" and sha256_json(payload) != row["prediction_payload_sha256"].lower():
+                status = "prediction_payload_sha256_mismatch"
+            if status == "valid":
+                result_payload = payload.get("result", []) if isinstance(payload, dict) else payload
+                try:
+                    corners = extract_data(result_payload)[0]
+                    if not normalize_geometry(corners).get("valid"):
+                        status = "prediction_payload_geometry_invalid"
+                except (TypeError, ValueError, KeyError):
+                    status = "prediction_payload_geometry_invalid"
+        if status != "valid":
+            blockers[status] += 1
+        if status == "valid":
+            valid[key] = {**row, "parsed_payload": payload, "validation_status": status}
+    return valid, blockers
 
 
 def _distance(worker: dict[str, Any], initial: dict[str, Any]) -> tuple[float | None, str]:
@@ -68,17 +111,18 @@ def materialize_model_issue_harmonization(export_paths: list[Path], geometry_jso
     meta = list(csv.DictReader(meta_path.open(encoding="utf-8-sig"))) if meta_path.exists() else []
     provenance = list(csv.DictReader(provenance_path.open(encoding="utf-8-sig"))) if provenance_path.exists() else []
     amendments = list(csv.DictReader(retrospective_amendment_csv.open(encoding="utf-8-sig"))) if retrospective_amendment_csv and retrospective_amendment_csv.exists() else []
-    amendment_by_key = {(item.get("project_id", ""), item.get("ls_runtime_task_id", ""), item.get("initialization_artifact_id", "")): item for item in amendments}
+    amendment_by_key, amendment_blockers = _validate_amendments(amendments)
     geometry = [json.loads(line) for line in geometry_jsonl.read_text(encoding="utf-8").splitlines() if line.strip()] if geometry_jsonl.exists() else []
     geometry_by_annotation = {row.get("canonical_annotation_id", ""): row for row in geometry}
-    predictions_by_runtime_task: dict[str, list[dict[str, Any]]] = {}
+    predictions_by_identity: dict[tuple[str, str, str], list[dict[str, Any]]] = {}
     for export_path in export_paths:
         payload = json.loads(export_path.read_text(encoding="utf-8"))
         for task in payload if isinstance(payload, list) else []:
             predictions = [item for item in task.get("predictions") or [] if isinstance(item, dict)]
             if predictions:
-                predictions_by_runtime_task[str(task.get("id", ""))] = predictions
-    dependency_paths = [meta_path, geometry_jsonl, provenance_path, *export_paths, *([retrospective_amendment_csv] if retrospective_amendment_csv else [])]
+                predictions_by_identity[(sha256_file(export_path), str(task.get("project", "")), str(task.get("id", "")))] = predictions
+    rule_manifest = Path("docs/thesis_main/model_issue_harmonization_rule_manifest_v1.json")
+    dependency_paths = [meta_path, geometry_jsonl, provenance_path, *export_paths, rule_manifest, *([retrospective_amendment_csv] if retrospective_amendment_csv else [])]
     rows = []
     for row in meta:
         choices = json.loads(row.get("choice_map_json") or "{}")
@@ -86,19 +130,23 @@ def materialize_model_issue_harmonization(export_paths: list[Path], geometry_jso
         explicit = ";".join(selected)
         source = geometry_by_annotation.get(row.get("canonical_annotation_id", ""), {})
         prov = next((item for item in provenance if item.get("canonical_annotation_id") == row.get("canonical_annotation_id") or ((item.get("logical_task_id") or item.get("task_id")) == row.get("task_id") and item.get("ls_runtime_task_id") == row.get("ls_runtime_task_id") and item.get("project_id") == row.get("project_id"))), {})
-        prov_complete = prov.get("provenance_status") == "complete" and prov.get("prediction_selection_status") not in {"ambiguous_multiple_predictions", "missing"}
-        amendment = amendment_by_key.get((row.get("project_id", ""), row.get("ls_runtime_task_id", ""), prov.get("initialization_artifact_id", "")), {})
+        original_provenance_status = prov.get("provenance_status", "missing")
+        prov_complete = original_provenance_status == "complete" and prov.get("prediction_selection_status") not in {"ambiguous_multiple_predictions", "missing"}
+        amendment_key = (row.get("source_export_sha256", ""), row.get("project_id", ""), row.get("ls_runtime_task_id", ""), prov.get("initialization_artifact_id", ""))
+        amendment = amendment_by_key.get(amendment_key, {})
         if amendment:
-            required = ("model_version", "checkpoint_sha256", "inference_config_sha256", "preprocess_postprocess_sha256", "prediction_payload_json")
-            prov_complete = all(amendment.get(field, "") for field in required)
-        candidates = predictions_by_runtime_task.get(row.get("ls_runtime_task_id", ""), [])
+            prov_complete = True
+        candidates = predictions_by_identity.get((row.get("source_export_sha256", ""), row.get("project_id", ""), row.get("ls_runtime_task_id", "")), [])
         selected_prediction = next((item for item in candidates if str(item.get("initialization_artifact_id") or item.get("id")) == prov.get("initialization_artifact_id")), None) if prov.get("initialization_artifact_id") else (candidates[0] if len(candidates) == 1 else None)
-        initial_payload = json.loads(amendment["prediction_payload_json"]) if amendment.get("prediction_payload_json") else (selected_prediction.get("result", []) if selected_prediction else [])
+        amended_payload = amendment.get("parsed_payload")
+        initial_payload = (amended_payload.get("result", []) if isinstance(amended_payload, dict) else amended_payload) if amendment else (selected_prediction.get("result", []) if selected_prediction else [])
         initial = extract_data(initial_payload)[0]
         result = harmonize_model_issue(source.get("corners_px", []), initial, explicit_issue=explicit, condition=row.get("condition", ""), provenance_complete=prov_complete, schema_family=row.get("schema_family", "legacy"), ui_schema_version=row.get("ui_schema_version") or row.get("ui_version") or row.get("schema_version", ""), instruction_version=row.get("instruction_version", ""))
-        rows.append({**sidecar_common(source_artifact=str(meta_path), source_sha256=sha256_file(meta_path), stage="C1", pool=row.get("dataset_group", ""), condition=row.get("condition", ""), validity_status="dry_run" if input_status != "formal" else ("valid" if result["assertion_source"] == "explicit_worker_label" else "not_evaluable"), rule_version=RULE_VERSION, interpretation_allowed=False, dependency_paths=dependency_paths), "task_id": row.get("task_id", ""), "base_task_id": row.get("base_task_id", ""), "project_id": row.get("project_id", ""), "ls_runtime_task_id": row.get("ls_runtime_task_id", ""), "worker_id": row.get("worker_id", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""), "raw_model_issue_json": json.dumps(selected), "initialization_artifact_id": prov.get("initialization_artifact_id", ""), "retrospective_amendment_status": "joined_exact_project_runtime_artifact" if amendment else "not_joined", "retrospective_amendment_source": str(retrospective_amendment_csv) if amendment else "", **result})
-    write_csv_rows(output_dir / "model_issue_harmonization_C1.csv", rows, COMMON_SIDEcar_FIELDS + ["task_id", "base_task_id", "project_id", "ls_runtime_task_id", "worker_id", "canonical_annotation_id", "raw_model_issue_json", "initialization_artifact_id", "retrospective_amendment_status", "retrospective_amendment_source", "assertion_source", "harmonized_issue", "inference_reason", "provenance_gate", "order_gate", "max_endpoint_chebyshev_normalized"])
-    return {"n_rows": len(rows), "n_behavior_inferred": sum(row["assertion_source"] == "legacy_behavior_inferred" for row in rows), "n_retrospective_amendments_joined": sum(bool(row["retrospective_amendment_source"]) for row in rows), "dry_run": input_status != "formal", "interpretation_allowed": False}
+        formal_validity = "valid" if result["assertion_source"] == "explicit_worker_label" else "valid_behavior_inferred" if result["assertion_source"] == "legacy_behavior_inferred" and result["provenance_gate"] == "passed" and result["order_gate"] == "passed" else "not_evaluable"
+        effective_provenance_status = "complete_retrospective_amendment" if amendment else original_provenance_status
+        rows.append({**sidecar_common(source_artifact=str(meta_path), source_sha256=sha256_file(meta_path), stage="C1", pool=row.get("dataset_group", ""), condition=row.get("condition", ""), validity_status="dry_run" if input_status != "formal" else formal_validity, rule_version=RULE_VERSION, interpretation_allowed=False, dependency_paths=dependency_paths), "task_id": row.get("task_id", ""), "base_task_id": row.get("base_task_id", ""), "project_id": row.get("project_id", ""), "ls_runtime_task_id": row.get("ls_runtime_task_id", ""), "worker_id": row.get("worker_id", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""), "raw_model_issue_json": json.dumps(selected), "initialization_artifact_id": prov.get("initialization_artifact_id", ""), "original_provenance_status": original_provenance_status, "retrospective_amendment_status": "joined_exact_identity" if amendment else "not_joined", "retrospective_amendment_source": str(retrospective_amendment_csv) if amendment else "", "retrospective_amendment_sha256": sha256_file(retrospective_amendment_csv) if amendment else "", "effective_provenance_status": effective_provenance_status, "harmonization_validity_status": formal_validity, **result})
+    write_csv_rows(output_dir / "model_issue_harmonization_C1.csv", rows, COMMON_SIDEcar_FIELDS + ["task_id", "base_task_id", "project_id", "ls_runtime_task_id", "worker_id", "canonical_annotation_id", "raw_model_issue_json", "initialization_artifact_id", "original_provenance_status", "retrospective_amendment_status", "retrospective_amendment_source", "retrospective_amendment_sha256", "effective_provenance_status", "harmonization_validity_status", "assertion_source", "harmonized_issue", "inference_reason", "provenance_gate", "order_gate", "max_endpoint_chebyshev_normalized"])
+    return {"n_rows": len(rows), "n_behavior_inferred": sum(row["assertion_source"] == "legacy_behavior_inferred" for row in rows), "n_retrospective_amendments_joined": sum(bool(row["retrospective_amendment_source"]) for row in rows), "amendment_blockers": dict(amendment_blockers), "dry_run": input_status != "formal", "interpretation_allowed": False}
 
 
 if __name__ == "__main__":

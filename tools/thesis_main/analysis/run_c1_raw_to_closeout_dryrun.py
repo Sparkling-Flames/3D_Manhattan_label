@@ -50,6 +50,7 @@ def materialize(
     retrospective_provenance_amendment_csv: Path | None = None,
     temporal_event_csv: Path | None = None,
     temporal_policy_manifest: Path | None = None,
+    formal_closeout_adjudication_manifest: Path | None = None,
 ) -> dict[str, Any]:
     canonical = c1_canonicalize_exports.build_canonicalization(
         export_json,
@@ -86,6 +87,7 @@ def materialize(
         retrospective_provenance_amendment_csv,
         temporal_event_csv,
         temporal_policy_manifest,
+        formal_closeout_adjudication_manifest,
     )
     summary = {
         "canonicalization_summary": canonical,
@@ -131,6 +133,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--retrospective-provenance-amendment-csv", type=Path)
     parser.add_argument("--temporal-event-csv", type=Path)
     parser.add_argument("--temporal-policy-manifest", type=Path)
+    parser.add_argument("--formal-closeout-adjudication-manifest", type=Path)
     args = parser.parse_args(argv)
     summary = materialize(
         args.export_json,
@@ -160,6 +163,7 @@ def main(argv: list[str] | None = None) -> int:
         retrospective_provenance_amendment_csv=args.retrospective_provenance_amendment_csv,
         temporal_event_csv=args.temporal_event_csv,
         temporal_policy_manifest=args.temporal_policy_manifest,
+        formal_closeout_adjudication_manifest=args.formal_closeout_adjudication_manifest,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0
