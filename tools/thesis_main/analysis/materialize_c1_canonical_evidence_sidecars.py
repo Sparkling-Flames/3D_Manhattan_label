@@ -62,8 +62,10 @@ def _eligibility(rows: list[dict[str, str]]) -> tuple[str, str, dict[str, str]]:
     parent_derived = str(row.get("parent_derived", "")).strip().lower() == "true"
     parent_cross_owner = str(row.get("parent_cross_owner", "")).strip().lower() == "true"
     copy_risk = str(row.get("copy_risk_status", "")).strip().lower()
-    if independence != "independent" or parent_derived or parent_cross_owner or copy_risk in {"confirmed", "high", "non_independent_confirmed"}:
-        return "excluded", "nonindependent_or_parent_derived", row
+    if independence == "non_independent_confirmed" or parent_derived or parent_cross_owner or copy_risk in {"confirmed", "high", "non_independent_confirmed"}:
+        return "excluded", "non_independent_confirmed", row
+    if independence != "independent":
+        return "invalid", "independence_not_evaluable", row
     return "valid", "", row
 
 

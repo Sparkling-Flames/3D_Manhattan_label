@@ -13,7 +13,7 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis.c1_live_collection_monitor import bool_text, read_csv, safe, truthy, write_csv, write_json
-from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
+from tools.thesis_main.analysis.vfinal_artifact_utils import dependency_bundle, sha256_file
 from tools.thesis_main.registry.materialize_meta_label_consensus_summary import build_summary
 from tools.thesis_main.registry.materialize_meta_label_three_state_sidecars import materialize_meta_label_three_state
 
@@ -26,6 +26,7 @@ QUALITY_FIELDS = [
     "source_artifact",
     "source_sha256",
     "dependency_bundle_id",
+    "dependency_bundle_json",
     "stage",
     "pool",
     "validity_status",
@@ -358,11 +359,30 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
     meta_rows = read_csv(canonical_meta_csv) if canonical_meta_csv.exists() else []
     meta_fresh, meta_freshness_reasons = _canonical_meta_freshness(canonical_csv, meta_rows)
     rows = build_quality_rows(meta_rows if meta_fresh else read_csv(canonical_csv), _inventory_flags(candidate_inventory_csv))
+    harmonization_csv = output_dir / "model_issue_harmonization_C1.csv"
+    harmonization_rows = read_csv(harmonization_csv) if harmonization_csv.exists() else []
+    harmonized = {safe(item.get("canonical_annotation_id")): item for item in harmonization_rows if safe(item.get("canonical_annotation_id"))}
+    harmonization_ids = [safe(item.get("canonical_annotation_id")) for item in harmonization_rows if safe(item.get("canonical_annotation_id"))]
+    harmonization_fresh = bool(harmonization_rows) and len(harmonization_ids) == len(set(harmonization_ids)) and set(harmonization_ids) == {safe(row.get("canonical_annotation_id")) for row in rows if safe(row.get("canonical_annotation_id"))}
+    for row in rows:
+        item = harmonized.get(safe(row.get("canonical_annotation_id")))
+        if not item:
+            continue
+        row["harmonized_state"] = safe(item.get("harmonized_issue"))
+        row["assertion_source"] = safe(item.get("assertion_source"))
+        if safe(item.get("assertion_source")) in {"explicit_worker_label", "legacy_behavior_inferred"}:
+            row["model_issue"] = safe(item.get("harmonized_issue"))
+            row["model_issue_primary"] = safe(item.get("harmonized_issue")).split(";")[0]
+            row["model_issue_present"] = "true"
+        elif safe(item.get("assertion_source")) == "not_evaluable":
+            row["model_issue"] = ""
+            row["model_issue_primary"] = ""
+            row["model_issue_present"] = "false"
     quality_source_sha = sha256_file(canonical_meta_csv) if canonical_meta_csv.exists() else ""
     for row in rows:
         row["source_artifact"] = str(canonical_meta_csv)
         row["source_sha256"] = quality_source_sha
-        row["dependency_bundle_id"] = __import__("hashlib").sha256(f"{canonical_meta_csv}|{quality_source_sha}|C1|{RULE_VERSION}".encode("utf-8")).hexdigest()
+        row.update(dependency_bundle([canonical_meta_csv, harmonization_csv], rule_version=RULE_VERSION))
         row["validity_status"] = "dry_run" if input_status != "formal" else ("valid" if row.get("canonical_eligibility_status") == "valid" else "not_evaluable")
     quality_csv = output_dir / "c1_quality_annotations.csv"
     write_csv(quality_csv, rows, QUALITY_FIELDS)
@@ -381,6 +401,7 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         "canonical_meta_csv": str(canonical_meta_csv),
         "canonical_meta_fresh": meta_fresh,
         "canonical_meta_freshness_reasons": meta_freshness_reasons,
+        "harmonization_fresh": harmonization_fresh,
         "input_status": input_status,
         "quality_csv": str(quality_csv),
         "meta_label_consensus_csv": str(consensus_csv),
@@ -400,7 +421,7 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         "exact_annotation_primary_count": sum(safe(row.get("active_time_integrity_status")) == "exact_annotation_valid" and truthy(row.get("primary_active_time_eligible")) for row in rows),
         "task_level_sensitivity_count": sum(safe(row.get("active_time_integrity_status")) == "task_level_fallback" and truthy(row.get("sensitivity_active_time_eligible")) for row in rows),
         "candidate_inventory_csv": str(candidate_inventory_csv) if candidate_inventory_csv else "",
-        "blockers": (["canonical_meta_missing_or_stale"] if not meta_fresh else []) + (["missing_core_used_for_r_u_flag"] if any(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows) else []),
+        "blockers": (["canonical_meta_missing_or_stale"] if not meta_fresh else []) + (["harmonization_missing_or_stale"] if meta_fresh and not harmonization_fresh else []) + (["missing_core_used_for_r_u_flag"] if any(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows) else []),
         "r_u_estimated": False,
         "dt_backflow": False,
     }

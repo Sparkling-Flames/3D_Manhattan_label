@@ -20,6 +20,7 @@ COMMON_SIDECAR_FIELDS = [
     "source_artifact",
     "source_sha256",
     "dependency_bundle_id",
+    "dependency_bundle_json",
     "stage",
     "pool",
     "condition",
@@ -49,6 +50,21 @@ def json_text(value: Any) -> str:
     return json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
 
 
+def canonical_path(path: str | Path) -> Path:
+    """Use one stable path spelling in manifests and freshness checks."""
+    return Path(path).expanduser().resolve()
+
+
+def dependency_bundle(paths: Iterable[str | Path], *, rule_version: str) -> dict[str, str]:
+    """Hash every declared file dependency, not just the direct source."""
+    items = []
+    for raw_path in paths:
+        path = canonical_path(raw_path)
+        items.append({"path": str(path), "sha256": sha256_file(path)})
+    payload = sorted(items, key=lambda item: item["path"])
+    return {"dependency_bundle_id": sha256_json({"rule_version": rule_version, "dependencies": payload}), "dependency_bundle_json": json_text(payload)}
+
+
 def sidecar_common(
     *,
     source_artifact: str,
@@ -60,13 +76,15 @@ def sidecar_common(
     schema_version: str = "paper_a_vfinal_sidecar_v1",
     rule_version: str = "paper_a_vfinal_v1",
     interpretation_allowed: bool = False,
+    dependency_paths: Iterable[str | Path] | None = None,
 ) -> dict[str, Any]:
+    bundle = dependency_bundle(dependency_paths or [source_artifact], rule_version=rule_version)
     return {
         "schema_version": schema_version,
         "rule_version": rule_version,
         "source_artifact": source_artifact,
         "source_sha256": source_sha256,
-        "dependency_bundle_id": hashlib.sha256(f"{source_artifact}|{source_sha256}|{stage}|{rule_version}".encode("utf-8")).hexdigest(),
+        **bundle,
         "stage": stage,
         "pool": pool,
         "condition": condition,

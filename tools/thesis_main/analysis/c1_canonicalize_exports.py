@@ -78,6 +78,9 @@ CANONICAL_FIELDS = [
     "missing_submission",
     "duplicate_worker_task_submission",
     "independence_status",
+    "independence_audit_status",
+    "independence_audit_reason",
+    "independence_audit_source",
     "parent_annotation_id",
     "parent_owner_id",
     "parent_same_task",
@@ -256,12 +259,24 @@ def build_canonicalization(
     round_id: str = "C1",
     require_complete: bool = False,
     input_status: str = "dry_run",
+    independence_audit_csv: Path | None = None,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     assigned, internal = assignment_sets(manual_assignment, semi_assignment, worker_distribution)
     runtime_rows, runtime_lookup, collision_rows = build_runtime_task_mapping(export_paths, planned_task_mapping)
     canonical_base, duplicate_base, base_summary = build_canonical_tables(export_paths, active_log)
     active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths), policy="calibration") if active_log else {}
+    independence_audit: dict[tuple[str, str, str, str], dict[str, str]] = {}
+    independence_duplicates: set[tuple[str, str, str, str]] = set()
+    if independence_audit_csv and independence_audit_csv.exists():
+        with independence_audit_csv.open("r", newline="", encoding="utf-8-sig") as handle:
+            for audit in csv.DictReader(handle):
+                key = (safe(audit.get("project_id")), safe(audit.get("ls_runtime_task_id") or audit.get("runtime_task_id")), safe(audit.get("worker_id") or audit.get("annotator_id")), safe(audit.get("raw_annotation_id") or audit.get("raw_canonical_annotation_id") or audit.get("annotation_id")))
+                if not all(key):
+                    continue
+                if key in independence_audit:
+                    independence_duplicates.add(key)
+                independence_audit[key] = audit
 
     worker_task_counts = Counter(
         (
@@ -281,6 +296,15 @@ def build_canonicalization(
         runtime_task_id = safe(row.get("task_id"))
         worker_id = safe(row.get("annotator_id"))
         raw_annotation_id = safe(row.get("raw_canonical_annotation_id") or row.get("annotation_id"))
+        identity = (project_id, runtime_task_id, worker_id, raw_annotation_id)
+        audit = independence_audit.get(identity, {})
+        audit_status = safe(audit.get("independence_status")).lower()
+        if identity in independence_duplicates:
+            audit_status, audit_reason = "not_evaluable", "duplicate_independence_audit_identity"
+        elif audit_status in {"independent", "non_independent_confirmed"}:
+            audit_reason = "audit_joined"
+        else:
+            audit_status, audit_reason = "not_evaluable", "missing_or_unresolved_independence_audit"
         info = runtime_lookup.get((project_id, runtime_task_id), {})
         key = (worker_id, safe(info.get("task_id")), safe(info.get("base_task_id")), safe(info.get("dataset_group")))
         try:
@@ -328,15 +352,18 @@ def build_canonicalization(
             "duplicate_worker_task_submission": bool_text(
                 duplicate_group_size > 1 or worker_task_counts[(project_id, runtime_task_id, worker_id)] > 1
             ),
-            "independence_status": safe(row.get("independence_status")) or "not_evaluable",
-            "parent_annotation_id": safe(row.get("parent_annotation_id")),
+            "independence_status": audit_status,
+            "independence_audit_status": audit_status,
+            "independence_audit_reason": audit_reason,
+            "independence_audit_source": str(independence_audit_csv) if audit else "",
+            "parent_annotation_id": safe(audit.get("parent_annotation_id") or row.get("parent_annotation_id")),
             "parent_owner_id": safe(row.get("parent_owner_id")),
             "parent_same_task": bool_text(row.get("parent_same_task")),
             "parent_cross_owner": bool_text(row.get("parent_cross_owner")),
             "parent_precedes": bool_text(row.get("parent_precedes")),
             "parent_geometry_hash_match": bool_text(row.get("parent_geometry_hash_match")),
-            "parent_derived": bool_text(row.get("parent_derived")),
-            "copy_risk_status": safe(row.get("copy_risk_status")),
+            "parent_derived": bool_text(audit.get("parent_derived") or row.get("parent_derived")),
+            "copy_risk_status": safe(audit.get("copy_risk_status") or row.get("copy_risk_status")),
             "source_export": row.get("source_export", ""),
             "raw_canonical_annotation_id": raw_annotation_id,
             "duplicate_annotation_ids": row.get("duplicate_annotation_ids", ""),
@@ -490,6 +517,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--round-id", default="C1")
     parser.add_argument("--require-complete", action="store_true")
     parser.add_argument("--input-status", choices=["dry_run", "formal"], default="dry_run")
+    parser.add_argument("--independence-audit-csv", type=Path)
     args = parser.parse_args(argv)
     summary = build_canonicalization(
         args.export_json,
@@ -502,6 +530,7 @@ def main(argv: list[str] | None = None) -> int:
         round_id=args.round_id,
         require_complete=args.require_complete,
         input_status=args.input_status,
+        independence_audit_csv=args.independence_audit_csv,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if summary["passed"] else 1

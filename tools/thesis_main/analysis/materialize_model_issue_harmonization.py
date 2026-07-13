@@ -8,11 +8,13 @@ from typing import Any
 
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
 from tools.thesis_main.analysis.quality_core.choice_parser import extract_data
-from tools.thesis_main.analysis.vfinal_artifact_utils import COMMON_SIDEcar_FIELDS, sha256_file, sidecar_common, write_csv_rows
+from tools.thesis_main.analysis.vfinal_artifact_utils import COMMON_SIDEcar_FIELDS, dependency_bundle, sha256_file, sidecar_common, write_csv_rows
 
 
 RULE_VERSION = "model_issue_harmonization_v3"
 JITTER_TOLERANCE = 0.002
+FUTURE_SCHEMA_FAMILIES = {"c2_future_explicit_acceptable_v1"}
+FUTURE_INSTRUCTION_VERSIONS = {"c2_future_explicit_acceptable_v1"}
 
 
 def _distance(worker: dict[str, Any], initial: dict[str, Any]) -> tuple[float | None, str]:
@@ -30,8 +32,7 @@ def _distance(worker: dict[str, Any], initial: dict[str, Any]) -> tuple[float | 
 
 
 def _is_future_schema(schema_family: str = "", ui_schema_version: str = "", instruction_version: str = "") -> bool:
-    text = " ".join(str(value).lower() for value in (schema_family, ui_schema_version, instruction_version))
-    return any(token in text for token in ("future", "c2", "stage3", "v2", "v3", "v4"))
+    return str(schema_family).strip().lower() in FUTURE_SCHEMA_FAMILIES or str(instruction_version).strip().lower() in FUTURE_INSTRUCTION_VERSIONS
 
 
 def _result(*, source: str, issue: str = "", reason: str, provenance: str, order: str, distance: float | None = None) -> dict[str, Any]:
@@ -75,6 +76,8 @@ def materialize_model_issue_harmonization(export_paths: list[Path], geometry_jso
             predictions = [item for item in task.get("predictions") or [] if isinstance(item, dict)]
             if predictions:
                 predictions_by_runtime_task[str(task.get("id", ""))] = predictions
+    dependency_paths = [meta_path, geometry_jsonl, provenance_path, *export_paths]
+    bundle = dependency_bundle(dependency_paths, rule_version=RULE_VERSION)
     rows = []
     for row in meta:
         choices = json.loads(row.get("choice_map_json") or "{}")
@@ -87,7 +90,7 @@ def materialize_model_issue_harmonization(export_paths: list[Path], geometry_jso
         selected_prediction = next((item for item in candidates if str(item.get("initialization_artifact_id") or item.get("id")) == prov.get("initialization_artifact_id")), None) if prov.get("initialization_artifact_id") else (candidates[0] if len(candidates) == 1 else None)
         initial = extract_data(selected_prediction.get("result", []))[0] if selected_prediction else []
         result = harmonize_model_issue(source.get("corners_px", []), initial, explicit_issue=explicit, condition=row.get("condition", ""), provenance_complete=prov_complete, schema_family=row.get("schema_family", "legacy"), ui_schema_version=row.get("ui_schema_version") or row.get("ui_version") or row.get("schema_version", ""), instruction_version=row.get("instruction_version", ""))
-        rows.append({**sidecar_common(source_artifact=str(meta_path), source_sha256=sha256_file(meta_path), stage="C1", pool=row.get("dataset_group", ""), condition=row.get("condition", ""), validity_status="dry_run" if input_status != "formal" else ("valid" if result["assertion_source"] == "explicit_worker_label" else "not_evaluable"), rule_version=RULE_VERSION, interpretation_allowed=False), "task_id": row.get("task_id", ""), "base_task_id": row.get("base_task_id", ""), "worker_id": row.get("worker_id", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""), "raw_model_issue_json": json.dumps(selected), "initialization_artifact_id": prov.get("initialization_artifact_id", ""), **result})
+        rows.append({**sidecar_common(source_artifact=str(meta_path), source_sha256=sha256_file(meta_path), stage="C1", pool=row.get("dataset_group", ""), condition=row.get("condition", ""), validity_status="dry_run" if input_status != "formal" else ("valid" if result["assertion_source"] == "explicit_worker_label" else "not_evaluable"), rule_version=RULE_VERSION, interpretation_allowed=False, dependency_paths=dependency_paths), "task_id": row.get("task_id", ""), "base_task_id": row.get("base_task_id", ""), "worker_id": row.get("worker_id", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""), "raw_model_issue_json": json.dumps(selected), "initialization_artifact_id": prov.get("initialization_artifact_id", ""), **result})
     write_csv_rows(output_dir / "model_issue_harmonization_C1.csv", rows, COMMON_SIDEcar_FIELDS + ["task_id", "base_task_id", "worker_id", "canonical_annotation_id", "raw_model_issue_json", "initialization_artifact_id", "assertion_source", "harmonized_issue", "inference_reason", "provenance_gate", "order_gate", "max_endpoint_chebyshev_normalized"])
     return {"n_rows": len(rows), "n_behavior_inferred": sum(row["assertion_source"] == "legacy_behavior_inferred" for row in rows), "dry_run": input_status != "formal", "interpretation_allowed": False}
 

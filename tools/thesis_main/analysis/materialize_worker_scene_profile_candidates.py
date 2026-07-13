@@ -86,7 +86,7 @@ def materialize_worker_scene_profile_candidates(
         geometry_status = "eligible_diagnostic" if valid_loo else "insufficient_peer_support"
         support_status = "supported" if len(tasks) >= min_task_support else "insufficient_support"
         profiles.append({
-            **sidecar_common(source_artifact=str(task_tag_observations_csv), source_sha256=sha256_file(task_tag_observations_csv), stage="C1", pool=rows[0].get("dataset_group", ""), condition=rows[0].get("condition", ""), validity_status="dry_run" if input_status != "formal" else "not_evaluable", rule_version=RULE_VERSION, interpretation_allowed=False),
+            **sidecar_common(source_artifact=str(task_tag_observations_csv), source_sha256=sha256_file(task_tag_observations_csv), stage="C1", pool=rows[0].get("dataset_group", ""), condition=rows[0].get("condition", ""), validity_status="dry_run" if input_status != "formal" else "not_evaluable", rule_version=RULE_VERSION, interpretation_allowed=False, dependency_paths=[task_tag_observations_csv, geometry_loo_csv] if geometry_loo_csv else [task_tag_observations_csv]),
             "worker_id": worker_id, "scene_id": scene_id, "tag_family": family, "tag_name": tag, "condition": condition,
             "n_legal_tasks": len(tasks), "n_positive": len(worker_positive), "n_negative": sum(row.get("assertion") == "-" for row in legal), "n_unasserted": sum(row.get("assertion") == "0" for row in legal),
             "n_task_broad": len(broad_tasks), "n_task_strict": len(strict_tasks), "n_task_conflict": len(conflict_tasks),

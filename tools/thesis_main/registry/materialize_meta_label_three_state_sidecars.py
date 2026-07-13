@@ -34,7 +34,7 @@ def _tokens(value: Any) -> set[str]:
 def _na_reason(row: dict[str, Any]) -> str:
     if "canonical_eligibility_status" in row and _text(row.get("canonical_eligibility_status")).lower() not in {"valid", "eligible"}:
         reason = _text(row.get("canonical_eligibility_reason") or row.get("exclusion_reason")).lower()
-        return "n_nonindependent_excluded" if any(token in reason for token in ("independent", "parent", "copy")) else "n_invalid"
+        return "n_nonindependent_excluded" if "non_independent_confirmed" in reason else "n_invalid"
     if _text(row.get("parse_error")) or _text(row.get("schema_error")) or _text(row.get("schema_interpretable")).lower() == "false":
         return "n_schema_uninterpretable"
     if _text(row.get("assigned_expected")).lower() == "false" or _text(row.get("outside_assignment_submission")).lower() == "true":
@@ -104,13 +104,12 @@ def build_three_state_summary(observations: Iterable[dict[str, Any]]) -> list[di
         u = sum(row["assertion"] == "0" for row in rows)
         k = a + e + u
         conflict = a >= 2 and e >= 2
-        loo_positive = [a - (1 if row["assertion"] == "+" else 0) for row in rows if row["assertion"] != "NA"]
         first = rows[0]
         summaries.append({
             **{key: first.get(key, "") for key in COMMON_SIDEcar_FIELDS}, "task_id": first["task_id"], "base_task_id": first["base_task_id"], "scene_id": first["scene_id"], "dataset_group": first["dataset_group"], "tag_family": first["tag_family"], "tag_name": first["tag_name"], "a": a, "e": e, "u": u, "k": k,
             "canonical_annotation_ids_json": json.dumps(sorted({row.get("canonical_annotation_id", "") for row in rows if row.get("canonical_annotation_id", "")}), ensure_ascii=False), "raw_responses_json": json.dumps([row.get("raw_response", "") for row in rows], ensure_ascii=False), "assertion_sources_json": json.dumps(sorted({row.get("assertion_source", "") for row in rows if row.get("assertion_source", "")}), ensure_ascii=False), "ui_schema_versions_json": json.dumps(sorted({row.get("ui_schema_version", "") for row in rows if row.get("ui_schema_version", "")}), ensure_ascii=False), "model_artifact_ids_json": json.dumps(sorted({row.get("model_artifact_id", "") for row in rows if row.get("model_artifact_id", "")}), ensure_ascii=False), "exclusion_reasons_json": json.dumps(sorted({row.get("exclusion_reason", "") for row in rows if row.get("exclusion_reason", "")}), ensure_ascii=False),
             **{name: sum(row["na_reason"] == name for row in rows) for name in NA_BUCKETS}, "coverage": round((a + e) / k, 6) if k else 0.0, "positive_coverage": round(a / k, 6) if k else 0.0, "explicit_negative_coverage": round(e / k, 6) if k else 0.0, "unasserted_rate": round(u / k, 6) if k else 0.0, "explicit_balance": round(a / (a + e), 6) if a + e else 0.0,
-            "positive_replication_state": _replication_state(a), "explicit_negative_replication_state": _replication_state(e), "explicit_conflict_state": "replicated_conflict" if conflict else "none", "task_tag_state": _state(a, e), "replicated_explicit_conflict": str(conflict).lower(), "loo_positive_nonempty": str(any(value > 0 for value in loo_positive)).lower(), "loo_positive_replicated": str(any(value >= 2 for value in loo_positive)).lower(), "coverage_design_group": first.get("dataset_group", ""), "profile_rule_id": RULE_VERSION, "descriptive": str(a >= 1).lower(), "broad": str(a >= 2 and e < 2).lower(), "strict": str(a >= 3 and e <= 1).lower(), "routing_eligible": "false", "scene_profile_primary": "false",
+            "positive_replication_state": _replication_state(a), "explicit_negative_replication_state": _replication_state(e), "explicit_conflict_state": "replicated_conflict" if conflict else "none", "task_tag_state": _state(a, e), "replicated_explicit_conflict": str(conflict).lower(), "loo_positive_nonempty": str(a >= 2).lower(), "loo_positive_replicated": str(a >= 3).lower(), "coverage_design_group": first.get("dataset_group", ""), "profile_rule_id": RULE_VERSION, "descriptive": str(a >= 1).lower(), "broad": str(a >= 2 and e < 2).lower(), "strict": str(a >= 3 and e <= 1).lower(), "routing_eligible": "false", "scene_profile_primary": "false",
         })
     return summaries
 

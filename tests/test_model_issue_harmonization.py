@@ -12,7 +12,7 @@ def test_historical_acceptable_in_semi_is_behavior_harmonized() -> None:
 
 
 def test_future_acceptable_and_concrete_issue_remain_explicit() -> None:
-    future = harmonize_model_issue(_geometry(), _geometry(), explicit_issue="acceptable", condition="semi", provenance_complete=False, schema_family="future_c2")
+    future = harmonize_model_issue(_geometry(), _geometry(), explicit_issue="acceptable", condition="semi", provenance_complete=False, schema_family="c2_future_explicit_acceptable_v1")
     concrete = harmonize_model_issue(_geometry(), _geometry(), explicit_issue="underextend", condition="semi", provenance_complete=False, schema_family="legacy")
     assert future["harmonized_issue"] == "acceptable"
     assert future["assertion_source"] == "explicit_worker_label"
