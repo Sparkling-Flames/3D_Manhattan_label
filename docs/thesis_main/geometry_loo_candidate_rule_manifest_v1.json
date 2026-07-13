@@ -1,10 +1,10 @@
 {
   "manifest_id": "geometry_loo_candidate_rule_manifest_v1",
-  "schema_version": "v1",
+  "schema_version": "v2",
   "rule_version": "geometry_loo_candidate_v2",
   "status": "candidate_only",
   "pairing": {"seam_aware": true, "periodic_x": true, "minimum_pairs": 2, "require_complete_unambiguous": true},
-  "metrics": {"boundary_grid": 256, "channels": ["q_boundary", "q_wallwall"], "cross_channel_aggregation": "forbidden", "multimodal_similarity_cutoff": 0.8},
+  "metrics": {"boundary_grid": 256, "channels": ["q_boundary", "q_wallwall"], "cross_channel_aggregation": "forbidden", "multimodal_similarity_cutoff": 0.8, "variable_point_counts": true, "cyclic_order_gate": "required"},
   "loo": {"exclude_self": true, "minimum_compatible_peers": 2, "minimum_valid_k_for_candidate": 3, "two_worker_mode": "pairwise_only", "leave_two_out": "stability_only"},
   "validity": ["finite", "in_range", "even_keypoint_count", "closed_non_self_intersecting", "top_floor_order", "no_duplicate_events"],
   "interpretation_allowed": false

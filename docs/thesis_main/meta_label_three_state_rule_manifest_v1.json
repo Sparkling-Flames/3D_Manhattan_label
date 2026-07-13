@@ -1,7 +1,7 @@
 {
   "manifest_id": "meta_label_three_state_rule_manifest_v1",
   "schema_version": "v2",
-  "rule_version": "meta_label_three_state_v2",
+  "rule_version": "meta_label_three_state_v3",
   "status": "candidate_only",
   "states": ["+", "-", "0", "NA"],
   "concrete_tags": {
@@ -22,6 +22,8 @@
     "C1_semi": "semi_core"
   },
   "na_buckets": ["n_missing", "n_invalid", "n_nonindependent_excluded", "n_schema_uninterpretable"],
-  "state_ladder": ["none_observed", "isolated_positive", "convergent_positive", "high_replication_positive", "replicated_explicit_conflict"],
+  "state_ladder": ["none_observed", "isolated_positive", "replicated_positive", "convergent_positive", "high_replication_positive", "replicated_explicit_conflict"],
+  "explicit_balance": "a/(a+e)",
+  "routing_evidence": "concrete_tag_three_state_only",
   "interpretation_allowed": false
 }

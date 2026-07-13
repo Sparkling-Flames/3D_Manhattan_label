@@ -13,5 +13,5 @@ def build_crossfit_folds(rows: Iterable[dict[str, Any]], *, n_folds: int = 2) ->
         if not base_task_id:
             raise ValueError("base_task_id is required for crossfit folds")
         fold = int(hashlib.sha256(base_task_id.encode("utf-8")).hexdigest()[:8], 16) % n_folds
-        out.append({**row, "crossfit_fold": fold, "crossfit_group_key": base_task_id, "crossfit_role": "candidate_replay_only", "interpretation_allowed": False})
+        out.append({**row, "crossfit_fold": fold, "crossfit_group_key": base_task_id, "crossfit_role": "static_scaffold_only", "interpretation_allowed": False})
     return out

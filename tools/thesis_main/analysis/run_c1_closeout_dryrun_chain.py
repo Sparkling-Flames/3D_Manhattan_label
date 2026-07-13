@@ -17,7 +17,46 @@ from tools.thesis_main.analysis.c1_live_collection_monitor import safe, truthy, 
 from tools.thesis_main.analysis.materialize_worker_scene_profile_candidates import materialize_worker_scene_profile_candidates
 from tools.thesis_main.analysis.routing.evidence_snapshot import materialize_evidence_snapshot
 from tools.thesis_main.analysis.routing.offline_replay_v2 import offline_replay_v2
+from tools.thesis_main.analysis.routing.temporal_replay import materialize_temporal_replay
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
+
+
+REQUIRED_C1_ARTIFACTS = (
+    "c1_canonical_meta_observations.csv", "c1_canonical_geometry.jsonl", "c1_model_artifact_provenance.csv", "c1_quality_annotations.csv",
+    "worker_task_tag_observations_C1.csv", "task_tag_three_state_summary_C1.csv", "worker_response_style_C1.csv",
+    "model_issue_harmonization_C1.csv", "geometry_pairwise_similarity_C1.csv", "geometry_worker_task_loo_C1.csv",
+    "geometry_stability_C1.csv", "geometry_metric_coverage_C1.csv", "worker_scene_profile_candidates_C1.csv",
+    "routing_evidence_snapshot_C1.csv", "routing_replay_scaffold_C1.csv", "routing_temporal_replay_C1.csv",
+)
+
+
+def _artifact_freshness(output_dir: Path, *, input_status: str) -> dict[str, Any]:
+    missing, empty, stale = [], [], []
+    for name in REQUIRED_C1_ARTIFACTS:
+        path = output_dir / name
+        if not path.exists():
+            missing.append(name)
+            continue
+        try:
+            if path.suffix == ".jsonl":
+                rows = [json.loads(line) for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+            else:
+                rows = list(__import__("csv").DictReader(path.open(encoding="utf-8-sig")))
+        except (OSError, UnicodeError, ValueError):
+            stale.append(name)
+            continue
+        if not rows:
+            empty.append(name)
+        if any(not str(row.get("source_sha256", "")).strip() or not str(row.get("dependency_bundle_id", "")).strip() for row in rows):
+            stale.append(name)
+        for row in rows:
+            source = Path(str(row.get("source_artifact", "")))
+            if not source.is_absolute():
+                source = output_dir / source
+            declared = str(row.get("source_sha256", ""))
+            if not source.exists() or sha256_file(source) != declared:
+                stale.append(name)
+    return {"fresh": not missing and not empty and not stale, "missing": missing, "empty": empty, "stale": sorted(set(stale)), "input_status": input_status}
 
 
 def _blockers(summary: dict[str, Any]) -> list[str]:
@@ -34,7 +73,12 @@ def _blockers(summary: dict[str, Any]) -> list[str]:
         blockers.append("closeout_artifacts_missing_or_stale")
     if not summary["formal_inputs_present"]:
         blockers.append("formal_c1_annotation_data_missing")
-    blockers.extend(["thesis_facing_closeout_blocked_pending_p1_integrity_review", "c2_decision_chain_blocked_pending_formal_closeout"])
+    if not summary["artifacts_fresh"]:
+        blockers.append("artifact_freshness_blocked")
+    if not summary["formal_closeout_ready"]:
+        blockers.append("thesis_facing_closeout_blocked_pending_formal_closeout")
+    if not summary["c2_decision_chain_ready"]:
+        blockers.append("c2_decision_chain_blocked_pending_formal_closeout")
     return blockers
 
 
@@ -47,6 +91,9 @@ def build_gate_summary(
     profile_summary_path: Path,
     vfinal_sidecar_summaries: dict[str, Any] | None = None,
     artifact_bundle: dict[str, Any] | None = None,
+    *,
+    input_status: str = "dry_run",
+    artifact_freshness: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     profile_generated = profile_summary_path.exists() and bool(worker_profile_sidecar_summary)
     summary = {
@@ -59,9 +106,9 @@ def build_gate_summary(
         "r_u_estimated": truthy(quality_table_summary.get("r_u_estimated")) or truthy(worker_state_summary.get("r_u_estimated")) or truthy(worker_profile_sidecar_summary.get("r_u_calib_estimated")),
         "dt_backflow": truthy(quality_table_summary.get("dt_backflow")),
         "worker_state_provisional": truthy(worker_state_summary.get("provisional")),
-        "c2_direct_assignment": False,
-        "reserve_only": False,
-        "reserve_capacity_shortfall_count": 0,
+        "c2_direct_assignment": truthy(c2_gap_summary.get("direct_assignment")),
+        "reserve_only": truthy(c2_draft_summary.get("reserve_only")),
+        "reserve_capacity_shortfall_count": int(c2_draft_summary.get("reserve_capacity_shortfall_count") or 0),
         "profile_sidecar_generated": profile_generated,
         "profile_freeze_status": safe(worker_profile_sidecar_summary.get("profile_freeze_status")),
         "p1_descriptive_directional_check_status": safe(worker_profile_sidecar_summary.get("p1_descriptive_directional_check_status")) or "not_evaluable",
@@ -72,14 +119,18 @@ def build_gate_summary(
         "p1_bundle_structurally_complete": truthy(worker_profile_sidecar_summary.get("p1_bundle_structurally_complete")),
         "pending_adjudication_count": int(worker_profile_sidecar_summary.get("pending_adjudication_count") or 0),
         "structural_contract_valid": bool(quality_table_summary.get("canonical_meta_fresh")) and not quality_table_summary.get("blockers"),
-        "formal_inputs_present": False,
-        "artifacts_fresh": bool(quality_table_summary.get("canonical_meta_fresh")),
-        "dry_run_contract_exercised": True,
-        "raw_pipeline_ready": False,
+        "formal_inputs_present": input_status == "formal" and bool(quality_table_summary.get("canonical_meta_fresh")),
+        "artifacts_fresh": bool((artifact_freshness or {}).get("fresh")),
+        "artifact_freshness": artifact_freshness or {},
+        "dry_run_contract_exercised": input_status != "formal",
+        "raw_pipeline_ready": bool(quality_table_summary.get("canonical_meta_fresh")) and not quality_table_summary.get("blockers") and input_status == "formal",
         "provisional_sidecar_ready": False,
         "formal_closeout_ready": False,
         "thesis_facing_closeout_ready": False,
         "c2_decision_chain_ready": False,
+        "r_u_freeze": False,
+        "c2_freeze": False,
+        "formal_routing_conclusion_allowed": False,
         "passed": False,
         "blocked_for_launch": True,
         "blockers": [],
@@ -87,10 +138,19 @@ def build_gate_summary(
         "passed_semantics": "provisional_pipeline_only_formal_closeout_and_c2_decisions_blocked",
         "vfinal_sidecars": vfinal_sidecar_summaries or {},
         "analysis_contract_ready": False,
-        "formal_c1_annotation_data_present": False,
-        "dry_run_is_formal_data": False,
+        "formal_c1_annotation_data_present": input_status == "formal" and bool(quality_table_summary.get("canonical_meta_fresh")),
+        "dry_run_is_formal_data": input_status == "formal",
         "closeout_input_bundle": artifact_bundle or {},
     }
+    summary["formal_closeout_ready"] = bool(summary["structural_contract_valid"] and summary["formal_inputs_present"] and summary["artifacts_fresh"] and not summary["quality_table_blockers"])
+    summary["thesis_facing_closeout_ready"] = summary["formal_closeout_ready"]
+    summary["c2_decision_chain_ready"] = summary["formal_closeout_ready"] and not summary["dt_backflow"]
+    summary["r_u_freeze"] = summary["formal_closeout_ready"] and truthy(worker_state_summary.get("r_u_freeze"))
+    summary["c2_freeze"] = summary["c2_decision_chain_ready"] and truthy(c2_draft_summary.get("c2_freeze"))
+    summary["formal_routing_conclusion_allowed"] = summary["c2_freeze"]
+    summary["passed"] = summary["formal_closeout_ready"]
+    summary["analysis_contract_ready"] = summary["formal_closeout_ready"]
+    summary["passed_semantics"] = "formal_closeout_ready" if summary["formal_closeout_ready"] else ("non_formal_dry_run" if input_status != "formal" else "formal_closeout_blocked")
     summary["blockers"] = _blockers(summary)
     summary["blocked_for_launch"] = bool(summary["blockers"])
     return summary
@@ -121,9 +181,12 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- formal_inputs_present: {str(summary['formal_inputs_present']).lower()}",
         f"- artifacts_fresh: {str(summary['artifacts_fresh']).lower()}",
         f"- dry_run_contract_exercised: {str(summary['dry_run_contract_exercised']).lower()}",
-        f"- formal_closeout_ready: false",
-        f"- thesis_facing_closeout_ready: false",
-        f"- c2_decision_chain_ready: false",
+        f"- formal_closeout_ready: {str(summary['formal_closeout_ready']).lower()}",
+        f"- thesis_facing_closeout_ready: {str(summary['thesis_facing_closeout_ready']).lower()}",
+        f"- c2_decision_chain_ready: {str(summary['c2_decision_chain_ready']).lower()}",
+        f"- r_u_freeze: {str(summary['r_u_freeze']).lower()}",
+        f"- c2_freeze: {str(summary['c2_freeze']).lower()}",
+        f"- formal_routing_conclusion_allowed: {str(summary['formal_routing_conclusion_allowed']).lower()}",
         "",
         "## Blockers",
         *(f"- {item}" for item in summary["blockers"]),
@@ -154,8 +217,9 @@ def materialize(
     p1_worker_status_csv: Path | None = None,
     p1_geometry_task_scores: Path | None = None,
     p1_worker_geometry_profile: Path | None = None,
+    input_status: str = "dry_run",
 ) -> dict[str, Any]:
-    quality_summary = c1_materialize_quality_table.materialize(canonical_csv, output_dir, candidate_inventory_csv)
+    quality_summary = c1_materialize_quality_table.materialize(canonical_csv, output_dir, candidate_inventory_csv, input_status=input_status)
     quality_csv = output_dir / "c1_quality_annotations.csv"
     worker_summary = c1_materialize_worker_state.materialize(quality_csv, [assignment_manifest], output_dir, min_r_u_tasks)
     worker_state_csv = output_dir / "worker_state_snapshot_C1.csv"
@@ -176,6 +240,8 @@ def materialize(
         output_dir / "worker_task_tag_observations_C1.csv",
         output_dir,
         geometry_loo_csv=output_dir / "geometry_worker_task_loo_C1.csv",
+        input_status=input_status,
+        min_task_support=min_scene_support,
     )
     routing_snapshot_summary = materialize_evidence_snapshot(
         quality_csv,
@@ -185,17 +251,24 @@ def materialize(
         output_dir / "routing_evidence_snapshot_C1.csv",
         output_dir / "routing_replay_scaffold_C1.csv",
     )
+    temporal_summary = materialize_temporal_replay(
+        output_dir / "routing_arrival_events_C1.csv",
+        output_dir / "routing_temporal_replay_C1.csv",
+        policy_by_fold={0: {}, 1: {}},
+    )
+    artifact_freshness = _artifact_freshness(output_dir, input_status=input_status)
     vfinal_sidecars = {
         "worker_scene_profile_candidates": scene_summary,
         "routing_evidence_snapshot": routing_snapshot_summary,
         "routing_replay_scaffold": scaffold_summary,
+        "routing_temporal_replay": temporal_summary,
         "geometry_sidecars_present": (output_dir / "geometry_worker_task_loo_C1.csv").exists(),
-        "formal_c1_annotation_data_present": False,
+        "formal_c1_annotation_data_present": input_status == "formal" and bool(quality_table_summary.get("canonical_meta_fresh")),
     }
     profile_summary_path = output_dir / "worker_profile_sidecar_C1.summary.json"
-    bundle_paths = [canonical_csv, assignment_manifest, reserve_pool_csv, candidate_inventory_csv, output_dir / "c1_canonical_meta_observations.csv", quality_csv, output_dir / "task_tag_three_state_summary_C1.csv"]
+    bundle_paths = [canonical_csv, assignment_manifest, reserve_pool_csv, candidate_inventory_csv, output_dir / "c1_export_merge_manifest.csv", output_dir / "c1_runtime_task_mapping.csv", output_dir / "c1_canonical_meta_observations.csv", output_dir / "c1_canonical_geometry.jsonl", output_dir / "c1_model_artifact_provenance.csv", quality_csv, output_dir / "worker_task_tag_observations_C1.csv", output_dir / "task_tag_three_state_summary_C1.csv", output_dir / "model_issue_harmonization_C1.csv", output_dir / "geometry_worker_task_loo_C1.csv", Path("docs/thesis_main/meta_label_three_state_rule_manifest_v1.json"), Path("docs/thesis_main/model_issue_harmonization_rule_manifest_v1.json"), Path("docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json"), Path("docs/thesis_main/sequential_routing_candidate_rule_manifest_v1.json")]
     artifact_bundle = {"bundle_version": "c1_closeout_input_bundle_v1", "artifacts": [{"path": str(path), "exists": path.exists(), "sha256": sha256_file(path) if path.exists() else ""} for path in bundle_paths]}
-    gate_summary = build_gate_summary(quality_summary, worker_summary, gap_summary, c2_summary, profile_summary, profile_summary_path, vfinal_sidecars, artifact_bundle)
+    gate_summary = build_gate_summary(quality_summary, worker_summary, gap_summary, c2_summary, profile_summary, profile_summary_path, vfinal_sidecars, artifact_bundle, input_status=input_status, artifact_freshness=artifact_freshness)
     artifact_bundle["bundle_sha256"] = __import__("hashlib").sha256(json.dumps(artifact_bundle["artifacts"], sort_keys=True).encode("utf-8")).hexdigest()
     gate_summary["closeout_input_bundle"] = artifact_bundle
     (output_dir / "c1_closeout_input_bundle.json").write_text(json.dumps(artifact_bundle, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -222,6 +295,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--p1-worker-status-csv", type=Path)
     parser.add_argument("--p1-geometry-task-scores", type=Path)
     parser.add_argument("--p1-worker-geometry-profile", type=Path)
+    parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
     args = parser.parse_args(argv)
     summary = materialize(
         args.canonical_csv,
@@ -240,6 +314,7 @@ def main(argv: list[str] | None = None) -> int:
         args.p1_worker_status_csv,
         args.p1_geometry_task_scores,
         args.p1_worker_geometry_profile,
+        args.input_status,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0

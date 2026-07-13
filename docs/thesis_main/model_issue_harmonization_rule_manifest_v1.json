@@ -1,11 +1,13 @@
 {
   "manifest_id": "model_issue_harmonization_rule_manifest_v1",
   "schema_version": "v2",
-  "rule_version": "model_issue_harmonization_v2",
+  "rule_version": "model_issue_harmonization_v3",
   "status": "candidate_only",
   "jitter_tolerance": {"metric": "max_endpoint_chebyshev_normalized", "value": 0.002},
   "rules": {
-    "explicit_worker_label_precedence": true,
+    "historical_acceptable_only": "semi_behavior_calibration",
+    "future_acceptable": "explicit_worker_label",
+    "concrete_issue_precedence": "explicit_worker_label",
     "acceptable_is_mutually_exclusive": true,
     "behavior_inference_condition": "Calibration_semi_only",
     "required_provenance": ["initialization_artifact_id", "checkpoint_sha256", "inference_config_sha256", "preprocess_postprocess_sha256", "prediction_payload_hash"],

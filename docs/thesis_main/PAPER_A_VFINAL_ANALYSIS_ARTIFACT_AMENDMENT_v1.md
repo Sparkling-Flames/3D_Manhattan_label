@@ -18,7 +18,7 @@
 
 以下既有 artifact 保留且继续输出：`c1_canonical_annotations.csv`、`c1_quality_annotations.csv`、`meta_label_consensus_summary_C1.csv`、`worker_state_snapshot_C1.csv`、`worker_profile_sidecar_C1.csv`、`worker_task_evidence_table_C1.csv`、`worker_failure_family_response_C1.csv`。legacy consensus 增加显式 `artifact_role=legacy_descriptive_proxy`、`routing_eligible=false`、`scene_profile_primary=false`，不重命名、不删除、不作为新 scene profile 真源。
 
-所有新增表格必须携带 `schema_version`、`rule_version`、`source_artifact`、`source_sha256`、`stage`、`pool`、`condition`、`validity_status`、`interpretation_allowed`。多源表可额外携带 `source_artifacts_json`。
+所有新增表格必须携带 `schema_version`、`rule_version`、`source_artifact`、`source_sha256`、`dependency_bundle_id`、`stage`、`pool`、`condition`、`validity_status`、`interpretation_allowed`。多源表可额外携带 `source_artifacts_json`。
 
 ## 新增 sidecar
 

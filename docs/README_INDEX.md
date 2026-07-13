@@ -82,6 +82,7 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - [COS_上传与导入中文说明.md](label_studio/COS_%E4%B8%8A%E4%BC%A0%E4%B8%8E%E5%AF%BC%E5%85%A5%E4%B8%AD%E6%96%87%E8%AF%B4%E6%98%8E.md)
 - [README_ANNOTATOR.md](label_studio/README_ANNOTATOR.md)
 - [README_DEVELOPER.md](label_studio/README_DEVELOPER.md)
+- `tools/label_studio/label_studio_c1_xml_freeze_manifest_v1.json` 记录历史 C1 XML 冻结 SHA 与未来 XML 版本边界。
 - [SOP_labelstudio_experiment.md](label_studio/SOP_labelstudio_experiment.md)
 
 对应工具：`tools/label_studio/`
