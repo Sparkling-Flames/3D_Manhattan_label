@@ -14,6 +14,9 @@ from tools.thesis_main.analysis import c1_materialize_quality_table
 from tools.thesis_main.analysis import c1_materialize_worker_profile_sidecar
 from tools.thesis_main.analysis import c1_materialize_worker_state
 from tools.thesis_main.analysis.c1_live_collection_monitor import safe, truthy, write_json
+from tools.thesis_main.analysis.materialize_worker_scene_profile_candidates import materialize_worker_scene_profile_candidates
+from tools.thesis_main.analysis.routing.evidence_snapshot import materialize_evidence_snapshot
+from tools.thesis_main.analysis.routing.offline_replay_v2 import offline_replay_v2
 
 
 def _blockers(summary: dict[str, Any]) -> list[str]:
@@ -37,6 +40,7 @@ def build_gate_summary(
     c2_draft_summary: dict[str, Any],
     worker_profile_sidecar_summary: dict[str, Any],
     profile_summary_path: Path,
+    vfinal_sidecar_summaries: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     profile_generated = profile_summary_path.exists() and bool(worker_profile_sidecar_summary)
     summary = {
@@ -74,6 +78,10 @@ def build_gate_summary(
         "blockers": [],
         "warnings": list(worker_profile_sidecar_summary.get("warnings") or []),
         "passed_semantics": "provisional_pipeline_only_formal_closeout_and_c2_decisions_blocked",
+        "vfinal_sidecars": vfinal_sidecar_summaries or {},
+        "analysis_contract_ready": bool(vfinal_sidecar_summaries),
+        "formal_c1_annotation_data_present": False,
+        "dry_run_is_formal_data": False,
     }
     summary["blockers"] = _blockers(summary)
     summary["blocked_for_launch"] = bool(summary["blockers"])
@@ -153,8 +161,28 @@ def materialize(
         p1_geometry_task_scores,
         p1_worker_geometry_profile,
     )
+    scene_summary = materialize_worker_scene_profile_candidates(
+        quality_csv,
+        output_dir,
+        geometry_loo_csv=output_dir / "geometry_worker_task_loo_C1.csv",
+    )
+    routing_snapshot_summary = materialize_evidence_snapshot(
+        quality_csv,
+        output_dir / "routing_evidence_snapshot_C1.csv",
+    )
+    replay_summary = offline_replay_v2(
+        output_dir / "routing_evidence_snapshot_C1.csv",
+        output_dir / "routing_offline_replay_v2_C1.csv",
+    )
+    vfinal_sidecars = {
+        "worker_scene_profile_candidates": scene_summary,
+        "routing_evidence_snapshot": routing_snapshot_summary,
+        "routing_offline_replay_v2": replay_summary,
+        "geometry_sidecars_present": (output_dir / "geometry_worker_task_loo_C1.csv").exists(),
+        "formal_c1_annotation_data_present": False,
+    }
     profile_summary_path = output_dir / "worker_profile_sidecar_C1.summary.json"
-    gate_summary = build_gate_summary(quality_summary, worker_summary, gap_summary, c2_summary, profile_summary, profile_summary_path)
+    gate_summary = build_gate_summary(quality_summary, worker_summary, gap_summary, c2_summary, profile_summary, profile_summary_path, vfinal_sidecars)
     write_json(output_dir / "c1_closeout_dryrun_gate_summary.json", gate_summary)
     write_markdown(output_dir / "c1_closeout_dryrun_gate_summary.md", gate_summary)
     return gate_summary

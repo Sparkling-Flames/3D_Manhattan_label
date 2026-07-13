@@ -29,6 +29,21 @@
 - [THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.md](thesis_main/THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.md)
 - [THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.tex](thesis_main/THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.tex)：Paper A standalone LaTeX 结构原型（非正文真源）
 - [THESIS_MANUSCRIPT_MIGRATION_MAP_v1.md](thesis_main/THESIS_MANUSCRIPT_MIGRATION_MAP_v1.md)
+- [THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v4.md](thesis_main/THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v4.md)：Paper A 三状态证据、Geometry LOO 与时序路由提纲（当前写作合同）
+- [THESIS_MANUSCRIPT_MIGRATION_MAP_v2.md](thesis_main/THESIS_MANUSCRIPT_MIGRATION_MAP_v2.md)：v4 active manuscript 迁移映射
+- [THESIS_MANUSCRIPT_MIGRATION_AUDIT_v2.md](thesis_main/THESIS_MANUSCRIPT_MIGRATION_AUDIT_v2.md)：v4 兼容性、实现状态与 SHA 审计
+- [PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md](thesis_main/PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md)：Paper A vFinal sidecar、dry-run 与正式数据边界
+- [PAPER_A_VFINAL_CODE_MIGRATION_AUDIT_v1.md](thesis_main/PAPER_A_VFINAL_CODE_MIGRATION_AUDIT_v1.md)：代码迁移清单与验证记录
+- [meta_label_three_state_rule_manifest_v1.json](thesis_main/meta_label_three_state_rule_manifest_v1.json)：三状态 meta-label 候选规则
+- [geometry_loo_candidate_rule_manifest_v1.json](thesis_main/geometry_loo_candidate_rule_manifest_v1.json)：Geometry LOO 候选规则
+- [sequential_routing_candidate_rule_manifest_v1.json](thesis_main/sequential_routing_candidate_rule_manifest_v1.json)：时序 routing 候选规则
+- [model_issue_harmonization_rule_manifest_v1.json](thesis_main/model_issue_harmonization_rule_manifest_v1.json)：model issue 抖动容忍与 harmonization 候选规则
+- [PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md](thesis_main/PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md)：Paper A vFinal sidecar、dry-run 与正式数据边界
+- [PAPER_A_VFINAL_CODE_MIGRATION_AUDIT_v1.md](thesis_main/PAPER_A_VFINAL_CODE_MIGRATION_AUDIT_v1.md)：代码迁移清单与验证记录
+- [meta_label_three_state_rule_manifest_v1.json](thesis_main/meta_label_three_state_rule_manifest_v1.json)：三状态 meta-label 候选规则
+- [geometry_loo_candidate_rule_manifest_v1.json](thesis_main/geometry_loo_candidate_rule_manifest_v1.json)：Geometry LOO 候选规则
+- [sequential_routing_candidate_rule_manifest_v1.json](thesis_main/sequential_routing_candidate_rule_manifest_v1.json)：时序 routing 候选规则
+- [model_issue_harmonization_rule_manifest_v1.json](thesis_main/model_issue_harmonization_rule_manifest_v1.json)：model issue 抖动容忍与 harmonization 候选规则
 - [RQ3_MINIMAL_EVIDENCE_CHAIN_CONTRACT_v1.md](thesis_main/RQ3_MINIMAL_EVIDENCE_CHAIN_CONTRACT_v1.md)
 - [STATISTICAL_ANALYSIS_PLAN_v1.md](thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md)
 - [ANALYSIS_DATA_FLOW.md](thesis_main/ANALYSIS_DATA_FLOW.md)

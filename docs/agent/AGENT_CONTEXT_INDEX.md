@@ -72,6 +72,16 @@
 注意事项：
 
 - Paired subset、paired permutation/bootstrap、meta-label consensus sidecar 的字段含义不得静默漂移。
+- Paper A vFinal 另有三状态 meta-label sidecar；其候选规则见 `docs/thesis_main/meta_label_three_state_rule_manifest_v1.json`，没有正式 C1 标注时只能输出 `dry_run`/`not_evaluable`。
+
+## Paper A vFinal / canonical evidence / geometry LOO
+
+- `docs/thesis_main/PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md`
+- `docs/thesis_main/PAPER_A_VFINAL_CODE_MIGRATION_AUDIT_v1.md`
+- `docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json`
+- `docs/thesis_main/model_issue_harmonization_rule_manifest_v1.json`
+
+注意事项：canonical evidence、model issue harmonization、Geometry LOO、worker scene profile 与 sequential routing 都是 sidecar/candidate 层；没有正式 C1 export 时不得写入正式 closeout、C2 assignment 或 thesis-facing claim。
 
 ## RQ3 / routing / replay
 

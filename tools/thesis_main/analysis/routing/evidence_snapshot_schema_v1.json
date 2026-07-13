@@ -1,0 +1,7 @@
+{
+  "schema_version": "routing_evidence_snapshot_v1",
+  "required_common_fields": ["schema_version", "rule_version", "source_artifact", "source_sha256", "stage", "pool", "condition", "validity_status", "interpretation_allowed"],
+  "required_fields": ["task_id", "snapshot_id", "n_independent_workers", "geometry_valid_k", "support_gap_candidate", "routing_eligible"],
+  "routing_eligible_default": false,
+  "formal_assignment_generation": "forbidden_in_offline_replay"
+}

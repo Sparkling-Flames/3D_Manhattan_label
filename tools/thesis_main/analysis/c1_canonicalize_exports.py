@@ -42,6 +42,9 @@ from tools.thesis_main.analysis.c1_live_collection_monitor import (
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
 from tools.thesis_main.analysis.quality_core.active_time import load_active_logs
 from tools.thesis_main.analysis.prescreen_canonicalize_export import build_canonical_tables
+from tools.thesis_main.analysis.materialize_c1_canonical_evidence_sidecars import materialize_canonical_evidence
+from tools.thesis_main.analysis.geometry_consensus.materialize import materialize_geometry_consensus
+from tools.thesis_main.analysis.materialize_model_issue_harmonization import materialize_model_issue_harmonization
 
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
 
@@ -243,6 +246,7 @@ def build_canonicalization(
     output_dir: Path = DEFAULT_OUTPUT_DIR,
     round_id: str = "C1",
     require_complete: bool = False,
+    input_status: str = "dry_run",
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     assigned, internal = assignment_sets(manual_assignment, semi_assignment, worker_distribution)
@@ -379,6 +383,24 @@ def build_canonicalization(
     write_csv(output_dir / "c1_active_time_binding_audit.csv", active_rows, ACTIVE_AUDIT_FIELDS)
     write_csv(output_dir / "c1_realized_vs_assigned_audit.csv", realized_rows, REALIZED_AUDIT_FIELDS)
     write_csv(output_dir / "c1_export_merge_manifest.csv", _merge_manifest(export_paths, runtime_rows))
+    canonical_evidence_summary = materialize_canonical_evidence(
+        export_paths,
+        output_dir / "c1_canonical_annotations.csv",
+        output_dir,
+        stage=round_id,
+        input_status=input_status,
+    )
+    geometry_summary = materialize_geometry_consensus(
+        output_dir / "c1_canonical_geometry.jsonl",
+        output_dir,
+        input_status=input_status,
+    )
+    harmonization_summary = materialize_model_issue_harmonization(
+        export_paths,
+        output_dir / "c1_canonical_geometry.jsonl",
+        output_dir,
+        input_status=input_status,
+    )
 
     outside_count = sum(row["outside_assignment_submission"] == "true" for row in canonical_rows)
     duplicate_count = sum(row["duplicate_worker_task_submission"] == "true" for row in canonical_rows)
@@ -416,6 +438,11 @@ def build_canonicalization(
         "passed": passed,
         "passed_semantics": "structural_only_not_collection_complete" if not require_complete else "structural_and_collection_complete",
         "collision_output_use": "debug_only_do_not_use_downstream" if collision_rows else "downstream_eligible_if_other_blockers_absent",
+        "canonical_evidence_sidecars": canonical_evidence_summary,
+        "geometry_sidecars": geometry_summary,
+        "model_issue_harmonization": harmonization_summary,
+        "formal_c1_annotation_data_present": bool(input_status == "formal" and canonical_rows),
+        "interpretation_allowed": False,
         "blockers": [
             name
             for name, count in (
@@ -444,6 +471,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--round-id", default="C1")
     parser.add_argument("--require-complete", action="store_true")
+    parser.add_argument("--input-status", choices=["dry_run", "formal"], default="dry_run")
     args = parser.parse_args(argv)
     summary = build_canonicalization(
         args.export_json,
@@ -455,6 +483,7 @@ def main(argv: list[str] | None = None) -> int:
         output_dir=args.output_dir,
         round_id=args.round_id,
         require_complete=args.require_complete,
+        input_status=args.input_status,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if summary["passed"] else 1

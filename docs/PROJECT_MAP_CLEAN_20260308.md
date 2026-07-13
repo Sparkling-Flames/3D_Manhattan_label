@@ -45,8 +45,10 @@
 - `docs/thesis_main/`
   - 正式执行主线文档。
   - 包括 protocol、assignment SOP、PreScreen、Calibration、Main(Test + Validation)、统计计划、字段合同、worker-profile sidecar contract、final-gold、registry、论文主线写作材料。
-  - `THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.md` 是 Paper A 章节/主张审计合同；配套 `.tex` 是 standalone LaTeX 结构原型，不是正文真源。`WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 保留物理 schema 真源，`WORKER_PROFILE_ARTIFACT_MIGRATION_AMENDMENT_v1.md` 记录 artifact 命名迁移，`WORKER_PROFILE_THESIS_DISPLAY_CONTRACT_v1.md` 负责展示符号，`THESIS_MANUSCRIPT_MIGRATION_MAP_v1.md` 与 `THESIS_MANUSCRIPT_MIGRATION_AUDIT_v1.md` 记录实际 Overleaf section 迁移和 provenance。
+  - `THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.md/.tex` 保留为历史审计版本；`THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v4.md` 是当前 Paper A 三状态证据、Geometry LOO 与时序路由写作合同。standalone `.tex` 不是正文真源。`WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 保留物理 schema 真源，`WORKER_PROFILE_ARTIFACT_MIGRATION_AMENDMENT_v1.md` 记录 artifact 命名迁移，`WORKER_PROFILE_THESIS_DISPLAY_CONTRACT_v1.md` 负责展示符号，`THESIS_MANUSCRIPT_MIGRATION_MAP_v1.md`/`THESIS_MANUSCRIPT_MIGRATION_AUDIT_v1.md` 保留上一轮记录，v2 文件记录本轮 active Overleaf 迁移、兼容性与 provenance。
   - `manuscript/` 可保存 Overleaf 项目和主线论文写作资产，但按现有 `.gitignore` 默认不提交。
+  - Paper A vFinal 代码迁移合同、四个候选 rule manifest 与审计记录保存在该目录；这些文件只定义可审计的结构和候选规则，不把 dry-run 产物升级为正式 C1 数据。
+  - Paper A vFinal 代码迁移合同、四个候选 rule manifest 与审计记录保存在该目录；这些文件只定义可审计的结构和候选规则，不把 dry-run 产物升级为正式 C1 数据。
 - `docs/paper_b/`
   - Paper B 支线文档。
   - 包括 ambiguity-aware HoHoNet、ZInD mapping、B-line freeze/audit、模型架构和后续训练计划。

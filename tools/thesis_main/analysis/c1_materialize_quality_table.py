@@ -14,6 +14,7 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from tools.thesis_main.analysis.c1_live_collection_monitor import bool_text, read_csv, safe, truthy, write_csv, write_json
 from tools.thesis_main.registry.materialize_meta_label_consensus_summary import build_summary
+from tools.thesis_main.registry.materialize_meta_label_three_state_sidecars import materialize_meta_label_three_state
 
 DEFAULT_INPUT = Path("analysis_results/calibration_c1_closeout/c1_canonical_annotations.csv")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
@@ -272,12 +273,14 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
     consensus_csv.parent.mkdir(parents=True, exist_ok=True)
     consensus.to_csv(consensus_csv, index=False, encoding="utf-8")
     write_json(audit_json, {**audit, "sidecar_only_no_dt_backflow": True})
+    three_state_summary = materialize_meta_label_three_state(quality_csv, output_dir)
 
     summary = {
         "input_csv": str(canonical_csv),
         "quality_csv": str(quality_csv),
         "meta_label_consensus_csv": str(consensus_csv),
         "meta_label_consensus_audit_json": str(audit_json),
+        "three_state_sidecars": three_state_summary,
         "n_quality_rows": len(rows),
         "n_used_for_r_u": sum(truthy(row["used_for_r_u"]) for row in rows),
         "n_missing_core_used_for_r_u_flag": sum(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows),

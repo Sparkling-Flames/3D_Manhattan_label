@@ -1,0 +1,24 @@
+{
+  "manifest_id": "meta_label_three_state_rule_manifest_v1",
+  "schema_version": "v1",
+  "rule_version": "meta_label_three_state_v1",
+  "status": "candidate_only",
+  "states": ["positive_assertion", "explicit_negative", "unasserted", "not_evaluable"],
+  "thresholds": {
+    "core_broad": {"a_min": 2, "e_max": 1},
+    "core_strict": {"a_min": 3, "e_max": 1},
+    "high_k_broad": {"a_min": 2, "positive_coverage_min": 0.4, "explicit_negative_coverage_max_exclusive": 0.4, "unasserted_rate_max": 0.6},
+    "high_k_strict": {"a_min": 3, "positive_coverage_min": 0.6, "explicit_negative_coverage_max": 0.2, "unasserted_rate_max": 0.4}
+  },
+  "design_groups": {
+    "Calibration_anchor": "high_k_common_anchor",
+    "C1_anchor": "high_k_common_anchor",
+    "Calibration_core": "core_k5",
+    "C1_core": "core_k5",
+    "Calibration_semi": "semi_core",
+    "C1_semi": "semi_core"
+  },
+  "missing_policy": "not_evaluable",
+  "replicated_conflict_policy": "not_evaluable",
+  "interpretation_allowed": false
+}

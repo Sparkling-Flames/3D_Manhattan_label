@@ -1,6 +1,6 @@
 % Paper A standalone outline prototype
-% Version: 2026-07-12
-% Status: standalone LaTeX outline prototype; not the migrated manuscript.
+% Version: 2026-07-13
+% Status: standalone LaTeX outline prototype; local Overleaf has an eight-chapter input skeleton, but full prose/results migration is not claimed.
 % Boundary: does not rewrite historical preregistration, protocol, assignment,
 % routing, analysis artifacts, or the current Overleaf body.
 % The actual manuscript source is the local main.tex plus sections/*.tex.
@@ -16,7 +16,7 @@
 
 \title{Paper A 正式论文提纲：\texorpdfstring{$R_u$}{Ru}--\texorpdfstring{$D_u$}{Du} 双链路与冻结路由}
 \author{写作合同 v3}
-\date{2026-07-12}
+\date{2026-07-13}
 
 \begin{document}
 \maketitle
@@ -24,8 +24,10 @@
 \begin{quote}
 本文件是 Paper A 的独立 LaTeX 结构原型；Markdown 版本是章节与主张审计合同。实际正文真源是本地 manuscript 的 `main.tex + sections/*.tex`，本文件不能代替或直接输入正文。正式主线固定为
 \texttt{Pilot -> PreScreen -> Calibration -> Main(Test + Validation)}，轮次固定为
-\texttt{P1 -> C1 -> C2 -> T1 -> V1}。本文件不回写历史预注册、protocol freeze、assignment、routing、统计执行参数或任何原始工件；当前 Overleaf 正文尚未迁移。
+\texttt{P1 -> C1 -> C2 -> T1 -> V1}。本文件不回写历史预注册、protocol freeze、assignment、routing、统计执行参数或任何原始工件；当前 Overleaf 仅建立八章输入骨架并完成限域修正，不声称正文、结果或 PDF 已全面迁移。
 \end{quote}
+
+展示层符号固定为：$R_u$ 为 Calibration-only protocol reliability；$D_u=(G_u,S_u,C_u,V_u,P_u)$ 为 P1-informed diagnostic profile，五维均 higher-is-better；$B_u/F_u/Q_u$ 分别为 blind-trust、condition-fragility、computability/geometry-gate risk，均 lower-is-better 且不属于 $D_u$；$T_u/U_u$ 仅作 raw-risk legacy aliases。
 
 \section*{核心主轴与贡献边界}
 
@@ -74,7 +76,7 @@ support-aware 场景可靠度与 Global fallback、加权共识消融、failure-
 \subsection{Scope、reference 与 final-gold provenance}
 \contract{哪些任务可进入 hard geometry 或 scope evidence}{scope、final-gold、reference path/SHA}{reference gate}{soft ambiguous/unavailable}{把单一 reference 强行当唯一真值}
 \subsection{Active-time identity 与时间降级}
-\contract{哪些时间证据可进入 RQ1 primary}{owner-valid exact annotation-level browser logs}{exact active time}{known-only、task-level、lead\_time、unknown、parent-derived}{active-time 是 worker quality}
+\contract{哪些时间证据可进入 RQ1 primary}{worker--task--annotation 的 owner-valid exact browser logs、independence、合法 script/version}{exact active time}{known-only、task-level、lead\_time、unknown、parent-derived；session 内 max、跨 session 合法分段累加}{active-time 是 worker quality；跨 worker 取最大 task time}
 \subsection{Evidence validity and post-closeout integrity gate}
 \contract{每行 evidence 可进入哪条链路}{independence、timing、scope/final-gold、reference、process/system、expert adjudication、artifact path/SHA/rule version}{纳入 $R_u$ 或 $D_u$ 的资格}{pending、system issue、forensic rows}{missing evidence 补成 success}
 \subsection{Post-closeout 修正与不回写边界}
@@ -90,7 +92,7 @@ support-aware 场景可靠度与 Global fallback、加权共识消融、failure-
 \subsection{场景特异 $R_{u,s}$ 与 Global fallback}
 \contract{何时启用场景特异 reliability}{C1/C2 scene support 与 CI}{support 达标的 $R_{u,s}$}{activation/degeneration}{support 不足时静默启用}
 \subsection{链路 B：多维诊断画像 $D_u$}
-\contract{worker 的可解释行为维度是什么}{经过 gate 的 P1-informed 与独立后续 evidence}{越高越好的五维画像}{component/support audit}{失败率与 reliability 共用符号}
+\contract{worker 的可解释行为维度是什么}{经过 gate 的 P1-informed 与独立后续 evidence}{越高越好的五维画像及可执行 $G_u$ component}{component/support audit、$B_u/F_u/Q_u$ raw risk}{失败率与 reliability 共用符号}
 
 \[
 D_u=(G_u,S_u,C_u,V_u,P_u),\quad
@@ -98,13 +100,17 @@ C_u=1-\text{semi correction failure rate},\quad
 V_u=1-\text{undercoverage failure rate},\quad
 P_u=1-\text{process failure rate}.
 \]
+\[
+B_u=\text{blind-trust risk},\qquad F_u=\text{condition fragility},\qquad Q_u=\text{computability/geometry-gate risk},
+\]
+三者均为 lower-is-better risk signatures，不进入 $D_u$；旧 $T_u/U_u$ 只保留为 legacy aliases。
 
 \subsection{Issue recognition 与 geometry correction}
 \contract{识别问题是否等于完成几何纠错}{model\_issue 与最终 geometry 的独立对照}{有 geometry evidence 时的 $C_u$}{仅 issue-recognition rows}{把 model\_issue 选择写成 correction 完成}
 \subsection{Failure-family 与 counterexample bank}
 \contract{如何解释失败而不污染 $R_u$}{worker-task evidence 与 expert-reviewed candidates}{五个一级 family 长表}{subfamily、insufficient cell、counterexample audit}{failure-family 等同 $R_u$ 或作为唯一贡献}
 \subsection{Predictive-validity gate}
-\contract{P1-informed profile 是否预测独立后续行为}{跨阶段独立 C1/C2/Main rows}{RQ3a predictive validity}{suspected/not-evaluable}{P1 自证或把 predictive validity 当 routing utility}
+\contract{P1-informed profile 是否与独立后续行为呈描述性预测关联}{三组 predictor--target：P1 geometry→C1/C2 geometry、P1 semi-correction→Calibration\_semi correction、P1 process warning→later process reliability}{有效 worker、support、Spearman/Kendall、worker bootstrap 95\% CI、directional consistency}{suspected/not-evaluable、discrepancy workers、missing、interpretation\_allowed}{P1 自证、directional check 冒充正式 RQ3a 或把 predictive validity 当 routing utility}
 
 \section{路由策略与统计分析}
 \subsection{冻结 worker state 与 task risk}
@@ -112,15 +118,16 @@ P_u=1-\text{process failure rate}.
 \subsection{Random、Calibration-only Global 与 Full}
 \contract{三种 policy 如何在同一预算下比较}{同一 candidate pool、预算和 sequential rule}{三策略主比较}{diagnostic-feature-assisted Full 的 calibration-only sensitivity}{未过 gate 的 P1 profile 直接 routing}
 \subsection{Calibration\_manual offline replay 与 V1 隔离}
-\contract{如何避免真实标签造成泄漏}{offline replay/shadow support 与 V1 frozen deployment logs}{offline 主比较}{V1 deployment/audit}{V1 临时并跑未注册策略}
+\contract{如何避免真实标签造成泄漏}{Calibration\_manual image-level cross-fitting、shadow support 与 V1 frozen deployment logs}{offline 主比较}{V1 deployment/audit}{V1 临时并跑未注册策略或把 replay 写成无偏在线效应}
+RQ3b 的 cross-fitting 按 \texttt{base\_task\_id/image\_id} 划分 folds；同一 base image 的全部 annotation 同 fold。评价 fold 不参与 worker state、Score、threshold、normalization、support gate、fallback 或 stopping-rule estimation，feature selection 只在训练 folds 完成；评价只在观测候选集合 $U_t$ 内进行并报告 policy support/unsupported。Operational frozen state 供 V1，cross-fitted shadow state 仅供 replay。
 \subsection{RQ1：效率统计}
 \contract{半自动是否降低 owner-valid exact active time}{T1 paired condition 与 exact logs}{已冻结 RQ1 estimand、CI、配对/cluster-aware inference}{fallback、lead\_time、coverage audit}{把 lead\_time 混入 primary 或把快解释为可靠}
 \subsection{RQ2：质量、纠错与行为统计}
 \contract{半自动如何影响 quality、correction 和 failures}{T1/C1/C2 quality、reference、failure-family}{已冻结 quality/IAA inference}{weighted consensus、failure distribution、counterexamples}{weighted consensus 成为主轴}
 \subsection{RQ3a：画像效度统计}
-\contract{P1 profile 是否解释后续独立行为}{P1→C1/C2/Main gated rows}{跨阶段 predictive estimand}{support/pending audit}{P1 自证}
+\contract{P1 profile 是否与后续独立行为呈描述性预测关联}{三组 gated P1→C1/C2/Main rows}{小样本 Spearman/Kendall 与 worker bootstrap CI}{support/pending/discrepancy audit；不进入 Bonferroni 六个主检验}{P1 自证}
 \subsection{RQ3b：路由效用统计}
-\contract{Full 是否优于 Random/Global}{Calibration\_manual offline replay}{固定预算策略差异}{V1 deployment、fallback、activation}{V1 作为主因果比较场}
+\contract{Full 是否优于 Random/Global}{Calibration\_manual image-level cross-fitted replay；fold 按 base\_task\_id/image\_id 且同图 annotation 同 fold}{RQ3b-1 首选 worker 条件性质量与 RQ3b-2 序贯预算/最终 medoid 或 LOO-compatible consensus}{policy support/unsupported、V1 deployment、fallback、activation；无独立 reference 时最终聚合仅 descriptive}{V1 作为主因果比较场；同一 submission 同时作输出和 reference}
 \subsection{Missingness、sensitivity 与 audit}
 \contract{缺失证据如何影响解释}{missingness、fallback、system issue、not\_evaluable}{主估计保持冻结}{降级与审计}{静默过滤或把 NA 当 success}
 
@@ -132,7 +139,7 @@ P_u=1-\text{process failure rate}.
 \subsection{RQ2：质量、纠错与 failure-family 结果}
 \contract{质量和行为是否变化}{geometry、IAAt、issue recognition、correction、blind trust、undercoverage、family}{主质量/行为结果}{weighted consensus 与 counterexample}{失败 family 取代 $R_u$}
 \subsection{RQ3a：跨阶段画像效度结果}
-\contract{画像能否预测独立后续行为}{gated P1 与 C1/C2/Main}{predictive validity}{support/pending}{P1 自证}
+\contract{画像能否与独立后续行为呈描述性预测关联}{gated P1 与 C1/C2/Main}{三组 association、CI、directional consistency}{support/pending/discrepancy}{P1 自证}
 \subsection{RQ3b：Random/Global/Full 路由结果}
 \contract{固定预算下 Full 是否有用}{Calibration replay 与 V1 frozen deployment}{offline 主比较}{V1 audit/fallback/activation}{V1 重新调参}
 \subsection{二级创新与审计结果}
@@ -168,7 +175,7 @@ P_u=1-\text{process failure rate}.
   \item 表1：阶段--数据--允许用途矩阵。
   \item 表2：指标字典（名称、符号、方向、分子/分母、来源、gate、support、primary/sensitivity/audit、freeze stage）。
   \item 表3：RQ--数据--估计量--统计方法--降级规则。
-  \item 表4：worker profile main matrix、$G_u/S_u/C_u/V_u/P_u$、raw rates、support、legacy aliases 与 freeze stage。
+  \item 表4：worker profile main matrix、$R_u$、$G_u/S_u/C_u/V_u/P_u$、$B_u/F_u/Q_u$、raw rates、support、legacy aliases 与 freeze stage。
   \item 表5：failure-family/subfamily 长表、support、\texttt{interpretation\_allowed} 与 expert-review status。
 \end{itemize}
 
