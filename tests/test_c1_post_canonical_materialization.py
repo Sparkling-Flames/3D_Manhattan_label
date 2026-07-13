@@ -217,7 +217,7 @@ def test_missing_core_used_for_r_u_flag_fails_closed(tmp_path: Path) -> None:
 
     assert row["used_for_r_u"] == "false"
     assert row["used_for_r_u_source_status"] == "from_candidate_inventory"
-    assert summary["blockers"] == []
+    assert summary["blockers"] == ["canonical_meta_missing_or_stale"]
 
 
 def test_missing_scene_label_does_not_fallback_to_base_task(tmp_path: Path) -> None:

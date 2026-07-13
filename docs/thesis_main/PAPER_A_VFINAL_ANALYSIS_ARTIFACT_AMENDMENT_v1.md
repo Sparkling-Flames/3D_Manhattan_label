@@ -23,10 +23,10 @@
 ## 新增 sidecar
 
 - canonical evidence：`c1_canonical_meta_observations.csv`、`c1_canonical_geometry.jsonl`、`c1_model_artifact_provenance.csv`；
-- meta-label / worker：`worker_task_tag_observations_C1.csv`、`task_tag_three_state_summary_C1.csv`、`worker_response_style_C1.csv`、`model_issue_harmonization_C1.csv`；
+- meta-label / worker：`worker_task_tag_observations_C1.csv`、`task_tag_three_state_summary_C1.csv`、`model_issue_harmonization_C1.csv`；三状态逐 concrete tag 输出 `+/-/0/NA` 和 NA 分类，不再输出可被误用的 worker response style；
 - geometry：`geometry_pairwise_similarity_C1.csv`、`geometry_worker_task_loo_C1.csv`、`geometry_stability_C1.csv`、`geometry_metric_coverage_C1.csv`；
-- scene / routing：`worker_scene_profile_candidates_C1.csv`、`worker_scene_pivotality_C1.csv`、`scene_definition_sensitivity_C1.csv`、`worker_scene_support_gap_candidates_C1.csv`，以及 routing evidence snapshot 和 offline replay v2。
+- scene / routing：`worker_scene_profile_candidates_C1.csv`、routing evidence snapshot、`routing_replay_scaffold_C1.csv` 与 temporal replay trace。profile 只能消费三状态 task-tag 与合法 Geometry LOO；旧 offline replay v2 仅保留兼容入口，不能称为 replay。
 
 ## 解释层级
 
-`dry_run` 是运行模式，不是正式数据状态；所有 dry-run 行必须 `validity_status=dry_run` 或更具体的 `not_evaluable`，且 `interpretation_allowed=false`。真实 C1 closeout 只有在 runtime export、active-time、独立 worker assignment 和 protocol gate 全部可验证后才可另行执行。
+`dry_run` 是运行模式，不是正式数据状态；所有 dry-run 行必须 `validity_status=dry_run` 或更具体的 `not_evaluable`，且 `interpretation_allowed=false`。closeout 另行报告 `structural_contract_valid`、`formal_inputs_present`、`artifacts_fresh` 与 `formal_closeout_ready`；缺任一正式证据或 SHA 失配均 fail-closed。

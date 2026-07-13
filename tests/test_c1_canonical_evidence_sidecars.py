@@ -46,8 +46,10 @@ def test_canonical_evidence_sidecars_keep_dry_run_explicit(tmp_path: Path) -> No
     assert summary["interpretation_allowed"] is False
     meta = list(csv.DictReader((tmp_path / "c1_canonical_meta_observations.csv").open(encoding="utf-8")))
     assert meta[0]["choice_map_json"]
+    assert meta[0]["raw_result_json"]
+    assert meta[0]["canonical_eligibility_status"] == "valid"
+    assert meta[0]["model_issue_present"] == "true"
     assert meta[0]["validity_status"] == "dry_run"
     provenance = list(csv.DictReader((tmp_path / "c1_model_artifact_provenance.csv").open(encoding="utf-8")))
-    assert provenance[0]["provenance_status"] == "legacy_missing"
+    assert provenance[0]["provenance_status"] == "incomplete"
     assert provenance[0]["checkpoint_sha256"] == ""
-

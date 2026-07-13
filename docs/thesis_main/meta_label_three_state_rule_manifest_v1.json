@@ -1,14 +1,17 @@
 {
   "manifest_id": "meta_label_three_state_rule_manifest_v1",
-  "schema_version": "v1",
-  "rule_version": "meta_label_three_state_v1",
+  "schema_version": "v2",
+  "rule_version": "meta_label_three_state_v2",
   "status": "candidate_only",
-  "states": ["positive_assertion", "explicit_negative", "unasserted", "not_evaluable"],
+  "states": ["+", "-", "0", "NA"],
+  "concrete_tags": {
+    "difficulty": ["occlusion", "low_texture", "seam", "reflection", "low_quality"],
+    "model_issue": ["overextend_adjacent", "underextend", "over_parsing", "corner_drift", "corner_duplicate", "topology_failure", "fail"]
+  },
   "thresholds": {
     "core_broad": {"a_min": 2, "e_max": 1},
     "core_strict": {"a_min": 3, "e_max": 1},
-    "high_k_broad": {"a_min": 2, "positive_coverage_min": 0.4, "explicit_negative_coverage_max_exclusive": 0.4, "unasserted_rate_max": 0.6},
-    "high_k_strict": {"a_min": 3, "positive_coverage_min": 0.6, "explicit_negative_coverage_max": 0.2, "unasserted_rate_max": 0.4}
+    "replicated_explicit_conflict": {"a_min": 2, "e_min": 2}
   },
   "design_groups": {
     "Calibration_anchor": "high_k_common_anchor",
@@ -18,7 +21,7 @@
     "Calibration_semi": "semi_core",
     "C1_semi": "semi_core"
   },
-  "missing_policy": "not_evaluable",
-  "replicated_conflict_policy": "not_evaluable",
+  "na_buckets": ["n_missing", "n_invalid", "n_nonindependent_excluded", "n_schema_uninterpretable"],
+  "state_ladder": ["none_observed", "isolated_positive", "convergent_positive", "high_replication_positive", "replicated_explicit_conflict"],
   "interpretation_allowed": false
 }

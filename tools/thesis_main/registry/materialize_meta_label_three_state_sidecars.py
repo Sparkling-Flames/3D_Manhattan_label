@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
 from collections import defaultdict
 from pathlib import Path
@@ -9,225 +10,135 @@ from typing import Any, Iterable
 from tools.thesis_main.analysis.vfinal_artifact_utils import COMMON_SIDEcar_FIELDS, sha256_file, sidecar_common, write_csv_rows
 
 
-RULE_VERSION = "meta_label_three_state_v1"
-DESIGN_GROUPS = {
-    "Calibration_anchor": "high_k_common_anchor",
-    "C1_anchor": "high_k_common_anchor",
-    "Calibration_core": "core_k5",
-    "C1_core": "core_k5",
-    "Calibration_semi": "semi_core",
-    "C1_semi": "semi_core",
-}
+RULE_VERSION = "meta_label_three_state_v2"
+DIFFICULTY_TAGS = ("occlusion", "low_texture", "seam", "reflection", "low_quality")
+MODEL_ISSUE_TAGS = ("overextend_adjacent", "underextend", "over_parsing", "corner_drift", "corner_duplicate", "topology_failure", "fail")
 
 
 def _text(value: Any) -> str:
     return "" if value is None else str(value).strip()
 
 
-def _tokens(value: Any) -> list[str]:
-    if isinstance(value, list):
-        raw = value
-    else:
-        text = _text(value)
-        if not text:
-            return []
-        try:
-            parsed = json.loads(text)
-        except Exception:
-            parsed = text.replace(",", ";").split(";")
-        raw = parsed if isinstance(parsed, list) else [parsed]
-    return [str(item).strip() for item in raw if str(item).strip() and str(item).strip().lower() not in {"nan", "none", "na"}]
+def _tokens(value: Any) -> set[str]:
+    text = _text(value)
+    if not text:
+        return set()
+    try:
+        value = json.loads(text)
+    except json.JSONDecodeError:
+        value = text.replace(",", ";").split(";")
+    return {str(item).strip().lower() for item in (value if isinstance(value, list) else [value]) if str(item).strip()}
 
 
-def _assertion(tag_name: str, value: Any, row: dict[str, Any]) -> tuple[str, bool, bool, bool]:
-    if _text(row.get("parse_error")) or _text(row.get("schema_error")):
-        return "not_evaluable", False, False, False
-    tokens = {token.lower() for token in _tokens(value)}
-    if not tokens:
-        return "unasserted", False, False, True
-    if tag_name == "model_issue":
-        negatives = {"acceptable", "none", "no_issue", "no issue"}
-    else:
-        negatives = {"trivial", "none", "no_difficulty", "no difficulty"}
-    if tokens & negatives and len(tokens) > 1:
-        return "not_evaluable", False, False, False
-    if tokens & negatives:
-        return "explicit_negative", False, True, False
-    return "positive_assertion", True, False, False
+def _na_reason(row: dict[str, Any]) -> str:
+    if _text(row.get("canonical_eligibility_status")).lower() not in {"", "valid", "eligible"}:
+        reason = _text(row.get("canonical_eligibility_reason")).lower()
+        return "n_nonindependent_excluded" if "independent" in reason else "n_invalid"
+    if _text(row.get("parse_error")) or _text(row.get("schema_error")) or _text(row.get("schema_interpretable")).lower() == "false":
+        return "n_schema_uninterpretable"
+    if _text(row.get("assigned_expected")).lower() == "false" or _text(row.get("outside_assignment_submission")).lower() == "true":
+        return "n_nonindependent_excluded"
+    return ""
 
 
-def _design_group(dataset_group: str) -> str:
-    return DESIGN_GROUPS.get(dataset_group, "unknown")
+def _field_present(row: dict[str, Any], field: str) -> bool:
+    marker = _text(row.get(f"{field}_present"))
+    return marker.lower() != "false"  # legacy flat CSV has no marker; retain its explicit blank as 0.
 
 
-def build_tag_observations(
-    rows: Iterable[dict[str, Any]],
-    *,
-    source_artifact: str,
-    source_sha256: str,
-    input_status: str = "dry_run",
-) -> list[dict[str, Any]]:
+def _assertion(row: dict[str, Any], field: str, tag: str) -> tuple[str, str]:
+    reason = _na_reason(row)
+    if reason:
+        return "NA", reason
+    if not _field_present(row, field):
+        return "NA", "n_missing"
+    selected = _tokens(row.get(field))
+    allowed = set(DIFFICULTY_TAGS if field == "difficulty" else MODEL_ISSUE_TAGS)
+    negative = "trivial" if field == "difficulty" else "acceptable"
+    if selected - allowed - {negative}:
+        return "NA", "n_schema_uninterpretable"
+    if negative in selected and len(selected) > 1:
+        return "NA", "n_schema_uninterpretable"
+    if tag in selected:
+        return "+", ""
+    if negative in selected:
+        return "-", ""
+    return "0", ""
+
+
+def _state(a: int, e: int, u: int) -> str:
+    if a >= 2 and e >= 2:
+        return "replicated_explicit_conflict"
+    if a >= 3 and e <= 1:
+        return "high_replication_positive"
+    if a >= 2:
+        return "convergent_positive"
+    if a == 1:
+        return "isolated_positive"
+    if e >= 3 and a <= 1:
+        return "high_replication_negative"
+    if e >= 2:
+        return "replicated_negative"
+    if e == 1:
+        return "isolated_negative"
+    return "none_observed"
+
+
+def build_tag_observations(rows: Iterable[dict[str, Any]], *, source_artifact: str, source_sha256: str, input_status: str = "dry_run") -> list[dict[str, Any]]:
     observations: list[dict[str, Any]] = []
     for row in rows:
-        for tag_name in ("difficulty", "model_issue"):
-            status, positive, explicit_negative, unasserted = _assertion(tag_name, row.get(tag_name, ""), row)
-            observations.append(
-                {
-                    **sidecar_common(source_artifact=source_artifact, source_sha256=source_sha256, stage="C1", pool=_text(row.get("dataset_group")), condition=_text(row.get("condition")), validity_status="dry_run" if input_status != "formal" else status, rule_version=RULE_VERSION),
-                    "task_id": _text(row.get("task_id")),
-                    "base_task_id": _text(row.get("base_task_id")),
-                    "dataset_group": _text(row.get("dataset_group")),
-                    "design_group": _design_group(_text(row.get("dataset_group"))),
-                    "worker_id": _text(row.get("worker_id") or row.get("annotator_id")),
-                    "canonical_annotation_id": _text(row.get("canonical_annotation_id")),
-                    "tag_name": tag_name,
-                    "tag_value": ";".join(_tokens(row.get(tag_name, ""))),
-                    "assertion_status": status,
-                    "positive_assertion": str(positive).lower(),
-                    "explicit_negative": str(explicit_negative).lower(),
-                    "unasserted": str(unasserted).lower(),
-                    "replicated_conflict": "false",
-                }
-            )
-    groups: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
-    for observation in observations:
-        groups[(observation["task_id"], observation["worker_id"], observation["tag_name"])].append(observation)
-    for group in groups.values():
-        states = {row["assertion_status"] for row in group}
-        if "positive_assertion" in states and "explicit_negative" in states:
-            for row in group:
-                row["assertion_status"] = "not_evaluable"
-                row["replicated_conflict"] = "true"
-                row["validity_status"] = "not_evaluable" if input_status == "formal" else "dry_run"
-                row["positive_assertion"] = "false"
-                row["explicit_negative"] = "false"
-                row["unasserted"] = "false"
+        for field, tags in (("difficulty", DIFFICULTY_TAGS), ("model_issue", MODEL_ISSUE_TAGS)):
+            for tag in tags:
+                symbol, reason = _assertion(row, field, tag)
+                observations.append({
+                    **sidecar_common(source_artifact=source_artifact, source_sha256=source_sha256, stage="C1", pool=_text(row.get("dataset_group")), condition=_text(row.get("condition")), validity_status="dry_run" if input_status != "formal" else ("valid" if symbol != "NA" else "not_evaluable"), rule_version=RULE_VERSION),
+                    "task_id": _text(row.get("task_id")), "base_task_id": _text(row.get("base_task_id")), "scene_id": _text(row.get("scene_id") or row.get("scene_label")),
+                    "dataset_group": _text(row.get("dataset_group")), "worker_id": _text(row.get("worker_id") or row.get("annotator_id")),
+                    "canonical_annotation_id": _text(row.get("canonical_annotation_id")), "tag_family": field, "tag_name": tag,
+                    "assertion": symbol, "assertion_status": {"+": "positive_assertion", "-": "explicit_negative", "0": "unasserted", "NA": "not_evaluable"}[symbol],
+                    "na_reason": reason, "positive_assertion": str(symbol == "+").lower(), "explicit_negative": str(symbol == "-").lower(),
+                    "unasserted": str(symbol == "0").lower(), "replicated_conflict": "false",
+                })
     return observations
 
 
-def _candidate_status(design_group: str, positive: int, negative: int, unasserted: int, conflicts: int) -> str:
-    if conflicts or design_group == "unknown":
-        return "not_evaluable"
-    total = positive + negative + unasserted
-    if total == 0:
-        return "not_evaluable"
-    positive_coverage = positive / total
-    negative_coverage = negative / total
-    unasserted_rate = unasserted / total
-    if design_group == "core_k5":
-        return "candidate_pass_broad" if positive >= 2 and negative <= 1 else "candidate_fail_broad"
-    if design_group == "high_k_common_anchor":
-        if positive >= 3 and positive_coverage >= 0.6 and negative_coverage <= 0.2 and unasserted_rate <= 0.4:
-            return "candidate_pass_strict"
-        if positive >= 2 and positive_coverage >= 0.4 and negative_coverage < 0.4 and unasserted_rate <= 0.6:
-            return "candidate_pass_broad"
-        return "candidate_fail"
-    return "candidate_descriptive_only"
-
-
 def build_three_state_summary(observations: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
-    groups: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    groups: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
     for row in observations:
-        groups[(row.get("task_id", ""), row.get("tag_name", ""))].append(row)
+        groups[(row["task_id"], row["tag_family"], row["tag_name"])].append(row)
     summaries = []
-    for (task_id, tag_name), rows in sorted(groups.items()):
-        positive = sum(row.get("assertion_status") == "positive_assertion" for row in rows)
-        negative = sum(row.get("assertion_status") == "explicit_negative" for row in rows)
-        unasserted = sum(row.get("assertion_status") == "unasserted" for row in rows)
-        not_eval = sum(row.get("assertion_status") == "not_evaluable" for row in rows)
-        conflicts = sum(row.get("replicated_conflict") == "true" for row in rows)
-        total = positive + negative + unasserted
-        if not_eval or conflicts or total == 0:
-            consensus = "not_evaluable"
-        elif positive == negative and positive > 0:
-            consensus = "not_evaluable"
-        elif positive > negative and positive > 0:
-            consensus = "positive_assertion"
-        elif negative > 0:
-            consensus = "explicit_negative"
-        else:
-            consensus = "unasserted"
+    for (_task_id, _family, _tag), rows in sorted(groups.items()):
+        a = sum(row["assertion"] == "+" for row in rows)
+        e = sum(row["assertion"] == "-" for row in rows)
+        u = sum(row["assertion"] == "0" for row in rows)
+        na = {name: sum(row["na_reason"] == name for row in rows) for name in ("n_missing", "n_invalid", "n_nonindependent_excluded", "n_schema_uninterpretable")}
+        conflict = a >= 2 and e >= 2
         first = rows[0]
-        summaries.append(
-            {
-                **{key: first.get(key, "") for key in COMMON_SIDEcar_FIELDS},
-                "task_id": task_id,
-                "base_task_id": first.get("base_task_id", ""),
-                "dataset_group": first.get("dataset_group", ""),
-                "design_group": first.get("design_group", ""),
-                "tag_name": tag_name,
-                "n_observations": len(rows),
-                "n_positive_assertions": positive,
-                "n_explicit_negatives": negative,
-                "n_unasserted": unasserted,
-                "n_not_evaluable": not_eval,
-                "n_replicated_conflicts": conflicts,
-                "positive_coverage": round(positive / total, 6) if total else 0.0,
-                "explicit_negative_coverage": round(negative / total, 6) if total else 0.0,
-                "unasserted_rate": round(unasserted / total, 6) if total else 0.0,
-                "consensus_three_state": consensus,
-                "candidate_status": _candidate_status(first.get("design_group", ""), positive, negative, unasserted, conflicts),
-                "routing_eligible": "false",
-                "scene_profile_primary": "false",
-            }
-        )
+        summaries.append({
+            **{key: first.get(key, "") for key in COMMON_SIDEcar_FIELDS},
+            "task_id": first["task_id"], "base_task_id": first["base_task_id"], "scene_id": first["scene_id"], "dataset_group": first["dataset_group"],
+            "tag_family": first["tag_family"], "tag_name": first["tag_name"], "a": a, "e": e, "u": u, "k": a + e + u,
+            **na, "coverage": round((a + e) / (a + e + u), 6) if a + e + u else 0.0,
+            "explicit_balance": round((a - e) / (a + e), 6) if a + e else 0.0,
+            "task_tag_state": _state(a, e, u), "replicated_explicit_conflict": str(conflict).lower(),
+            "descriptive": str(a >= 1).lower(), "broad": str(a >= 2 and e < 2).lower(), "strict": str(a >= 3 and e <= 1).lower(),
+            "routing_eligible": "false", "scene_profile_primary": "false",
+        })
     return summaries
 
 
-def build_worker_response_style(observations: Iterable[dict[str, Any]]) -> list[dict[str, Any]]:
-    groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    for row in observations:
-        groups[row.get("worker_id", "")].append(row)
-    rows = []
-    for worker_id, values in sorted(groups.items()):
-        positive = sum(row.get("assertion_status") == "positive_assertion" for row in values)
-        negative = sum(row.get("assertion_status") == "explicit_negative" for row in values)
-        unasserted = sum(row.get("assertion_status") == "unasserted" for row in values)
-        not_eval = sum(row.get("assertion_status") == "not_evaluable" for row in values)
-        denom = positive + negative + unasserted
-        style = "not_evaluable" if not denom else "assertive" if positive / denom >= 0.6 else "negative_explicit" if negative / denom >= 0.6 else "sparse_or_mixed"
-        first = values[0]
-        rows.append(
-            {
-                **{key: first.get(key, "") for key in COMMON_SIDEcar_FIELDS},
-                "worker_id": worker_id,
-                "n_task_tag_observations": len(values),
-                "n_positive_assertions": positive,
-                "n_explicit_negatives": negative,
-                "n_unasserted": unasserted,
-                "n_not_evaluable": not_eval,
-                "positive_rate": round(positive / denom, 6) if denom else 0.0,
-                "explicit_negative_rate": round(negative / denom, 6) if denom else 0.0,
-                "unasserted_rate": round(unasserted / denom, 6) if denom else 0.0,
-                "response_style_candidate": style,
-                "interpretation_allowed": "false",
-            }
-        )
-    return rows
-
-
-def materialize_meta_label_three_state(
-    quality_csv: Path,
-    output_dir: Path,
-    *,
-    input_status: str = "dry_run",
-) -> dict[str, Any]:
-    import csv
-
+def materialize_meta_label_three_state(quality_csv: Path, output_dir: Path, *, input_status: str = "dry_run") -> dict[str, Any]:
     with quality_csv.open("r", newline="", encoding="utf-8-sig") as handle:
-        rows = list(csv.DictReader(handle))
-    observations = build_tag_observations(rows, source_artifact=str(quality_csv), source_sha256=sha256_file(quality_csv), input_status=input_status)
+        observations = build_tag_observations(csv.DictReader(handle), source_artifact=str(quality_csv), source_sha256=sha256_file(quality_csv), input_status=input_status)
     summaries = build_three_state_summary(observations)
-    styles = build_worker_response_style(observations)
-    common = COMMON_SIDEcar_FIELDS
-    write_csv_rows(output_dir / "worker_task_tag_observations_C1.csv", observations, common + ["task_id", "base_task_id", "dataset_group", "design_group", "worker_id", "canonical_annotation_id", "tag_name", "tag_value", "assertion_status", "positive_assertion", "explicit_negative", "unasserted", "replicated_conflict"])
-    write_csv_rows(output_dir / "task_tag_three_state_summary_C1.csv", summaries, common + ["task_id", "base_task_id", "dataset_group", "design_group", "tag_name", "n_observations", "n_positive_assertions", "n_explicit_negatives", "n_unasserted", "n_not_evaluable", "n_replicated_conflicts", "positive_coverage", "explicit_negative_coverage", "unasserted_rate", "consensus_three_state", "candidate_status", "routing_eligible", "scene_profile_primary"])
-    write_csv_rows(output_dir / "worker_response_style_C1.csv", styles, common + ["worker_id", "n_task_tag_observations", "n_positive_assertions", "n_explicit_negatives", "n_unasserted", "n_not_evaluable", "positive_rate", "explicit_negative_rate", "unasserted_rate", "response_style_candidate"])
-    return {"n_observations": len(observations), "n_task_tag_summaries": len(summaries), "n_workers": len(styles), "dry_run": input_status != "formal", "interpretation_allowed": False}
+    fields = COMMON_SIDEcar_FIELDS
+    write_csv_rows(output_dir / "worker_task_tag_observations_C1.csv", observations, fields + ["task_id", "base_task_id", "scene_id", "dataset_group", "worker_id", "canonical_annotation_id", "tag_family", "tag_name", "assertion", "assertion_status", "na_reason", "positive_assertion", "explicit_negative", "unasserted", "replicated_conflict"])
+    write_csv_rows(output_dir / "task_tag_three_state_summary_C1.csv", summaries, fields + ["task_id", "base_task_id", "scene_id", "dataset_group", "tag_family", "tag_name", "a", "e", "u", "k", "n_missing", "n_invalid", "n_nonindependent_excluded", "n_schema_uninterpretable", "coverage", "explicit_balance", "task_tag_state", "replicated_explicit_conflict", "descriptive", "broad", "strict", "routing_eligible", "scene_profile_primary"])
+    return {"n_observations": len(observations), "n_task_tag_summaries": len(summaries), "dry_run": input_status != "formal", "interpretation_allowed": False}
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Materialize candidate-only three-state meta-label sidecars.")
+    parser = argparse.ArgumentParser(description="Materialize concrete-tag C1 three-state sidecars.")
     parser.add_argument("--quality-csv", required=True, type=Path)
     parser.add_argument("--output-dir", required=True, type=Path)
     args = parser.parse_args(argv)

@@ -9,11 +9,11 @@
 | 阶段 | 代码范围 | 完成条件 |
 |---|---|---|
 | P0 | contracts / manifests / index | manifest 可读、gitignore 精确放行、地图同步 |
-| P1 | canonical evidence | 旧 CSV 不变，新 meta/geometry/provenance 可追溯 |
-| P2 | three-state / harmonization | 正向、显式负向、未断言和不可评估不混淆 |
-| P3 | Geometry LOO / scene | strict geometry gate，LOO 自身排除，候选不升级 |
-| P4 | routing / replay | evidence snapshot 可重放，候选 rule 不生成 C2 assignment |
-| P5 | closeout | dry-run 标记贯穿，正式 gate 永远保持 blocked |
+| P1 | canonical evidence | 原始 response、registry SHA、annotation identity、合法性与 schema 绑定 |
+| P2 | three-state / harmonization | concrete-tag `+/-/0/NA` 与 explicit/semi/provenance/order gate |
+| P3 | Geometry LOO / scene | 双通道 LOO、base-task context、scene mapping fail-closed、候选不升级 |
+| P4 | routing / replay | 静态 scaffold 降名；事件驱动 replay 强制到达时间与 base-task fold |
+| P5 | closeout | input bundle/SHA stale 防护；无正式 C1 时 formal gate 保持 blocked |
 
 ## 当前边界
 

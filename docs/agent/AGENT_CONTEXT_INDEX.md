@@ -83,6 +83,8 @@
 
 注意事项：canonical evidence、model issue harmonization、Geometry LOO、worker scene profile 与 sequential routing 都是 sidecar/candidate 层；没有正式 C1 export 时不得写入正式 closeout、C2 assignment 或 thesis-facing claim。
 
+- `tools/thesis_main/analysis/routing/temporal_replay.py` 是事件驱动 candidate replay；`offline_replay_v2.py` 仅为静态 scaffold 兼容入口，二者均不得生成 assignment。
+
 ## RQ3 / routing / replay
 
 关键上下文：

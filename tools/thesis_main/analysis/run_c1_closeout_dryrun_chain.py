@@ -17,6 +17,7 @@ from tools.thesis_main.analysis.c1_live_collection_monitor import safe, truthy, 
 from tools.thesis_main.analysis.materialize_worker_scene_profile_candidates import materialize_worker_scene_profile_candidates
 from tools.thesis_main.analysis.routing.evidence_snapshot import materialize_evidence_snapshot
 from tools.thesis_main.analysis.routing.offline_replay_v2 import offline_replay_v2
+from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
 def _blockers(summary: dict[str, Any]) -> list[str]:
@@ -29,6 +30,10 @@ def _blockers(summary: dict[str, Any]) -> list[str]:
         blockers.append("profile_sidecar_missing")
     if summary["profile_freeze_status"] != "C1_provisional":
         blockers.append("profile_freeze_status_not_C1_provisional")
+    if not summary["artifacts_fresh"]:
+        blockers.append("closeout_artifacts_missing_or_stale")
+    if not summary["formal_inputs_present"]:
+        blockers.append("formal_c1_annotation_data_missing")
     blockers.extend(["thesis_facing_closeout_blocked_pending_p1_integrity_review", "c2_decision_chain_blocked_pending_formal_closeout"])
     return blockers
 
@@ -41,6 +46,7 @@ def build_gate_summary(
     worker_profile_sidecar_summary: dict[str, Any],
     profile_summary_path: Path,
     vfinal_sidecar_summaries: dict[str, Any] | None = None,
+    artifact_bundle: dict[str, Any] | None = None,
 ) -> dict[str, Any]:
     profile_generated = profile_summary_path.exists() and bool(worker_profile_sidecar_summary)
     summary = {
@@ -65,12 +71,13 @@ def build_gate_summary(
         "full_diagnostic_profile_ready": truthy(worker_profile_sidecar_summary.get("full_diagnostic_profile_ready")),
         "p1_bundle_structurally_complete": truthy(worker_profile_sidecar_summary.get("p1_bundle_structurally_complete")),
         "pending_adjudication_count": int(worker_profile_sidecar_summary.get("pending_adjudication_count") or 0),
-        "raw_pipeline_ready": profile_generated and not quality_table_summary.get("blockers"),
-        "provisional_sidecar_ready": (
-            profile_generated
-            and not quality_table_summary.get("blockers")
-            and safe(worker_profile_sidecar_summary.get("profile_freeze_status")) == "C1_provisional"
-        ),
+        "structural_contract_valid": bool(quality_table_summary.get("canonical_meta_fresh")) and not quality_table_summary.get("blockers"),
+        "formal_inputs_present": False,
+        "artifacts_fresh": bool(quality_table_summary.get("canonical_meta_fresh")),
+        "dry_run_contract_exercised": True,
+        "raw_pipeline_ready": False,
+        "provisional_sidecar_ready": False,
+        "formal_closeout_ready": False,
         "thesis_facing_closeout_ready": False,
         "c2_decision_chain_ready": False,
         "passed": False,
@@ -79,9 +86,10 @@ def build_gate_summary(
         "warnings": list(worker_profile_sidecar_summary.get("warnings") or []),
         "passed_semantics": "provisional_pipeline_only_formal_closeout_and_c2_decisions_blocked",
         "vfinal_sidecars": vfinal_sidecar_summaries or {},
-        "analysis_contract_ready": bool(vfinal_sidecar_summaries),
+        "analysis_contract_ready": False,
         "formal_c1_annotation_data_present": False,
         "dry_run_is_formal_data": False,
+        "closeout_input_bundle": artifact_bundle or {},
     }
     summary["blockers"] = _blockers(summary)
     summary["blocked_for_launch"] = bool(summary["blockers"])
@@ -109,8 +117,11 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- reserve_capacity_shortfall_count: {summary['reserve_capacity_shortfall_count']}",
         f"- profile_sidecar_generated: {str(summary['profile_sidecar_generated']).lower()}",
         f"- profile_freeze_status: {summary['profile_freeze_status']}",
-        f"- raw_pipeline_ready: {str(summary['raw_pipeline_ready']).lower()}",
-        f"- provisional_sidecar_ready: {str(summary['provisional_sidecar_ready']).lower()}",
+        f"- structural_contract_valid: {str(summary['structural_contract_valid']).lower()}",
+        f"- formal_inputs_present: {str(summary['formal_inputs_present']).lower()}",
+        f"- artifacts_fresh: {str(summary['artifacts_fresh']).lower()}",
+        f"- dry_run_contract_exercised: {str(summary['dry_run_contract_exercised']).lower()}",
+        f"- formal_closeout_ready: false",
         f"- thesis_facing_closeout_ready: false",
         f"- c2_decision_chain_ready: false",
         "",
@@ -162,7 +173,7 @@ def materialize(
         p1_worker_geometry_profile,
     )
     scene_summary = materialize_worker_scene_profile_candidates(
-        quality_csv,
+        output_dir / "worker_task_tag_observations_C1.csv",
         output_dir,
         geometry_loo_csv=output_dir / "geometry_worker_task_loo_C1.csv",
     )
@@ -170,19 +181,24 @@ def materialize(
         quality_csv,
         output_dir / "routing_evidence_snapshot_C1.csv",
     )
-    replay_summary = offline_replay_v2(
+    scaffold_summary = offline_replay_v2(
         output_dir / "routing_evidence_snapshot_C1.csv",
-        output_dir / "routing_offline_replay_v2_C1.csv",
+        output_dir / "routing_replay_scaffold_C1.csv",
     )
     vfinal_sidecars = {
         "worker_scene_profile_candidates": scene_summary,
         "routing_evidence_snapshot": routing_snapshot_summary,
-        "routing_offline_replay_v2": replay_summary,
+        "routing_replay_scaffold": scaffold_summary,
         "geometry_sidecars_present": (output_dir / "geometry_worker_task_loo_C1.csv").exists(),
         "formal_c1_annotation_data_present": False,
     }
     profile_summary_path = output_dir / "worker_profile_sidecar_C1.summary.json"
-    gate_summary = build_gate_summary(quality_summary, worker_summary, gap_summary, c2_summary, profile_summary, profile_summary_path, vfinal_sidecars)
+    bundle_paths = [canonical_csv, assignment_manifest, reserve_pool_csv, candidate_inventory_csv, output_dir / "c1_canonical_meta_observations.csv", quality_csv, output_dir / "task_tag_three_state_summary_C1.csv"]
+    artifact_bundle = {"bundle_version": "c1_closeout_input_bundle_v1", "artifacts": [{"path": str(path), "exists": path.exists(), "sha256": sha256_file(path) if path.exists() else ""} for path in bundle_paths]}
+    gate_summary = build_gate_summary(quality_summary, worker_summary, gap_summary, c2_summary, profile_summary, profile_summary_path, vfinal_sidecars, artifact_bundle)
+    artifact_bundle["bundle_sha256"] = __import__("hashlib").sha256(json.dumps(artifact_bundle["artifacts"], sort_keys=True).encode("utf-8")).hexdigest()
+    gate_summary["closeout_input_bundle"] = artifact_bundle
+    (output_dir / "c1_closeout_input_bundle.json").write_text(json.dumps(artifact_bundle, ensure_ascii=False, indent=2), encoding="utf-8")
     write_json(output_dir / "c1_closeout_dryrun_gate_summary.json", gate_summary)
     write_markdown(output_dir / "c1_closeout_dryrun_gate_summary.md", gate_summary)
     return gate_summary

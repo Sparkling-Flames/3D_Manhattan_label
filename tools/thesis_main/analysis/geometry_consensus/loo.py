@@ -2,6 +2,8 @@ from __future__ import annotations
 
 from typing import Any
 
+import statistics
+
 from .pairwise import pairwise_similarity
 
 
@@ -12,20 +14,23 @@ def leave_one_out(records: list[dict[str, Any]], *, grid: int = 256) -> list[dic
         held_out = record.get("geometry") or {}
         peers = [other for j, other in enumerate(records) if j != index and (other.get("geometry") or {}).get("valid")]
         similarities = [pairwise_similarity(held_out, other.get("geometry") or {}, grid=grid) for other in peers]
-        values = [row["overall_similarity"] for row in similarities if row.get("overall_similarity") is not None]
-        n_valid = len(values) + (1 if held_out.get("valid") else 0)
+        boundary = [row["boundary_similarity"] for row in similarities if row.get("boundary_similarity") is not None]
+        wallwall = [row["wallwall_similarity"] for row in similarities if row.get("wallwall_similarity") is not None]
+        compatible_peers = min(len(boundary), len(wallwall))
+        n_valid = compatible_peers + (1 if held_out.get("valid") else 0)
         out.append(
             {
                 "worker_id": record.get("worker_id", ""),
                 "task_id": record.get("task_id", ""),
                 "held_out_valid": bool(held_out.get("valid")),
-                "peer_count_excluding_self": len(peers),
+                "peer_count_excluding_self": compatible_peers,
                 "valid_k": n_valid,
-                "loo_similarity_mean": sum(values) / len(values) if values else None,
-                "loo_similarity_min": min(values) if values else None,
-                "loo_similarity_max": max(values) if values else None,
+                "loo_boundary_median": statistics.median(boundary) if boundary else None,
+                "loo_wallwall_median": statistics.median(wallwall) if wallwall else None,
+                "loo_boundary_values_json": boundary,
+                "loo_wallwall_values_json": wallwall,
                 "interpretation_allowed": False,
-                "validity_status": "candidate_only" if n_valid >= 3 and values else "not_evaluable",
+                "validity_status": "candidate_only" if held_out.get("valid") and len(boundary) >= 2 and len(wallwall) >= 2 else "not_evaluable",
             }
         )
     return out

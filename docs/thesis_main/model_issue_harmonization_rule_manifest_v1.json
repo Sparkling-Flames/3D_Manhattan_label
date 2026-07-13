@@ -1,15 +1,16 @@
 {
   "manifest_id": "model_issue_harmonization_rule_manifest_v1",
-  "schema_version": "v1",
-  "rule_version": "model_issue_harmonization_v1",
+  "schema_version": "v2",
+  "rule_version": "model_issue_harmonization_v2",
   "status": "candidate_only",
   "jitter_tolerance": {"metric": "max_endpoint_chebyshev_normalized", "value": 0.002},
   "rules": {
-    "same_count_valid_topology_moved": "behavior_inferred_corner_drift",
-    "same_count_valid_topology_within_tolerance": "harmonized_acceptable",
-    "count_topology_or_order_mismatch": "structural_edit_unresolved",
-    "missing_initial_geometry": "not_evaluable",
-    "explicit_issue_precedence": true
+    "explicit_worker_label_precedence": true,
+    "acceptable_is_mutually_exclusive": true,
+    "behavior_inference_condition": "Calibration_semi_only",
+    "required_provenance": ["initialization_artifact_id", "checkpoint_sha256", "inference_config_sha256", "preprocess_postprocess_sha256", "prediction_payload_hash"],
+    "order_gate": "unique_cyclic_order_correspondence",
+    "manual_or_missing_provenance": "not_applicable_or_not_evaluable"
   },
   "interpretation_allowed": false
 }

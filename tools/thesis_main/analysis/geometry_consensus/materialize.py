@@ -36,18 +36,22 @@ def materialize_geometry_consensus(
     height: int = 512,
 ) -> dict[str, Any]:
     source_sha = sha256_file(geometry_jsonl)
-    grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    grouped: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
     normalized_rows = []
     for row in _read_jsonl(geometry_jsonl):
         geometry = normalize_geometry(row.get("corners_px") or [], width=width, height=height)
         record = {**row, "geometry": geometry}
-        grouped[str(row.get("task_id", ""))].append(record)
+        if str(row.get("canonical_eligibility_status", "valid")) != "valid" or not str(row.get("base_task_id", "")).strip():
+            record["geometry"]["valid"] = False
+            record["geometry"]["reason"] = "canonical_or_base_task_invalid"
+        key = (str(row.get("base_task_id", "")), str(row.get("condition", "")), str(row.get("schema_version", "")))
+        grouped[key].append(record)
         normalized_rows.append(record)
     pairwise_rows = []
     loo_rows = []
     stability_rows = []
     coverage_rows = []
-    for task_id, records in sorted(grouped.items()):
+    for (base_task_id, condition, schema_version), records in sorted(grouped.items()):
         valid = [row for row in records if row["geometry"].get("valid")]
         task_pairwise_count = 0
         for index, left in enumerate(valid):
@@ -56,8 +60,8 @@ def materialize_geometry_consensus(
                 task_pairwise_count += 1
                 pairwise_rows.append(
                     {
-                        **sidecar_common(source_artifact=str(geometry_jsonl), source_sha256=source_sha, condition=left.get("condition", ""), pool=left.get("pool", ""), validity_status="dry_run" if input_status != "formal" else metrics["validity_status"], rule_version=RULE_VERSION),
-                        "task_id": task_id,
+                        **sidecar_common(source_artifact=str(geometry_jsonl), source_sha256=source_sha, condition=condition, pool=left.get("pool", ""), validity_status="dry_run" if input_status != "formal" else metrics["validity_status"], rule_version=RULE_VERSION),
+                        "base_task_id": base_task_id, "geometry_context_schema_version": schema_version,
                         "worker_id_left": left.get("worker_id", ""),
                         "worker_id_right": right.get("worker_id", ""),
                         **metrics,
@@ -67,22 +71,22 @@ def materialize_geometry_consensus(
         for row in loo:
             loo_rows.append(
                 {
-                    **sidecar_common(source_artifact=str(geometry_jsonl), source_sha256=source_sha, condition="", pool="", validity_status="dry_run" if input_status != "formal" else row["validity_status"], rule_version=RULE_VERSION),
-                    **row,
+                        **sidecar_common(source_artifact=str(geometry_jsonl), source_sha256=source_sha, condition=condition, pool="", validity_status="dry_run" if input_status != "formal" else row["validity_status"], rule_version=RULE_VERSION),
+                        "base_task_id": base_task_id, "geometry_context_schema_version": schema_version, **row,
                 }
             )
         summary = stability_summary(records)
         stability_rows.append(
             {
-                **sidecar_common(source_artifact=str(geometry_jsonl), source_sha256=source_sha, validity_status="dry_run" if input_status != "formal" else summary["stability_status"], rule_version=RULE_VERSION),
-                "task_id": task_id,
+                **sidecar_common(source_artifact=str(geometry_jsonl), source_sha256=source_sha, condition=condition, validity_status="dry_run" if input_status != "formal" else summary["stability_status"], rule_version=RULE_VERSION),
+                "base_task_id": base_task_id, "geometry_context_schema_version": schema_version,
                 **summary,
             }
         )
         coverage_rows.append(
             {
-                **sidecar_common(source_artifact=str(geometry_jsonl), source_sha256=source_sha, validity_status="dry_run" if input_status != "formal" else "valid", rule_version=RULE_VERSION),
-                "task_id": task_id,
+                **sidecar_common(source_artifact=str(geometry_jsonl), source_sha256=source_sha, condition=condition, validity_status="dry_run" if input_status != "formal" else "valid", rule_version=RULE_VERSION),
+                "base_task_id": base_task_id, "geometry_context_schema_version": schema_version,
                 "n_observations": len(records),
                 "valid_geometry_k": len(valid),
                 "invalid_geometry_k": len(records) - len(valid),
@@ -91,10 +95,10 @@ def materialize_geometry_consensus(
             }
         )
     fields = COMMON_SIDEcar_FIELDS
-    write_csv_rows(output_dir / "geometry_pairwise_similarity_C1.csv", pairwise_rows, fields + ["task_id", "worker_id_left", "worker_id_right", "metric_compatible", "boundary_similarity", "wallwall_similarity", "overall_similarity", "left_pair_count", "right_pair_count"])
-    write_csv_rows(output_dir / "geometry_worker_task_loo_C1.csv", loo_rows, fields + ["task_id", "worker_id", "held_out_valid", "peer_count_excluding_self", "valid_k", "loo_similarity_mean", "loo_similarity_min", "loo_similarity_max"])
-    write_csv_rows(output_dir / "geometry_stability_C1.csv", stability_rows, fields + ["task_id", "valid_k", "pairwise_similarity_mean", "pairwise_similarity_min", "pairwise_similarity_max", "medoid_worker_id", "stability_status"])
-    write_csv_rows(output_dir / "geometry_metric_coverage_C1.csv", coverage_rows, fields + ["task_id", "n_observations", "valid_geometry_k", "invalid_geometry_k", "pairwise_metric_coverage"])
+    write_csv_rows(output_dir / "geometry_pairwise_similarity_C1.csv", pairwise_rows, fields + ["base_task_id", "geometry_context_schema_version", "worker_id_left", "worker_id_right", "metric_compatible", "order_compatible", "boundary_similarity", "wallwall_similarity", "left_pair_count", "right_pair_count"])
+    write_csv_rows(output_dir / "geometry_worker_task_loo_C1.csv", loo_rows, fields + ["base_task_id", "geometry_context_schema_version", "task_id", "worker_id", "held_out_valid", "peer_count_excluding_self", "valid_k", "loo_boundary_median", "loo_wallwall_median", "loo_boundary_values_json", "loo_wallwall_values_json"])
+    write_csv_rows(output_dir / "geometry_stability_C1.csv", stability_rows, fields + ["base_task_id", "geometry_context_schema_version", "valid_k", "boundary_similarity_mean", "boundary_similarity_min", "wallwall_similarity_mean", "wallwall_similarity_min", "medoid_margin", "leave_two_out_status", "medoid_worker_id", "stability_status"])
+    write_csv_rows(output_dir / "geometry_metric_coverage_C1.csv", coverage_rows, fields + ["base_task_id", "geometry_context_schema_version", "n_observations", "valid_geometry_k", "invalid_geometry_k", "pairwise_metric_coverage"])
     return {"n_geometry_rows": len(normalized_rows), "n_tasks": len(grouped), "n_pairwise_rows": len(pairwise_rows), "dry_run": input_status != "formal", "interpretation_allowed": False}
 
 

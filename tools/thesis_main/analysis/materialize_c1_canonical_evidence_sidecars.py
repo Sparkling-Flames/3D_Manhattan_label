@@ -1,31 +1,22 @@
 from __future__ import annotations
 
 import argparse
+import csv
 import json
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from tools.thesis_main.analysis.prescreen_canonicalize_export import (
-    _annotation_id,
-    _data,
-    _project_id,
-    _safe_str,
-    _task_id,
-    _worker_id,
-)
+from tools.thesis_main.analysis.prescreen_canonicalize_export import _annotation_id, _data, _project_id, _safe_str, _task_id, _worker_id
 from tools.thesis_main.analysis.quality_core.choice_parser import extract_data
-from tools.thesis_main.analysis.vfinal_artifact_utils import (
-    COMMON_SIDEcar_FIELDS,
-    formal_status,
-    json_text,
-    sha256_file,
-    sha256_json,
-    sidecar_common,
-    write_csv_rows,
-)
+from tools.thesis_main.analysis.vfinal_artifact_utils import COMMON_SIDEcar_FIELDS, formal_status, json_text, sha256_file, sha256_json, sidecar_common, write_csv_rows
 
 
-RULE_VERSION = "c1_canonical_evidence_v1"
+RULE_VERSION = "c1_canonical_evidence_v2"
+_CHOICES = {
+    "difficulty": {"trivial", "occlusion", "low_texture", "seam", "reflection", "low_quality"},
+    "model_issue": {"acceptable", "overextend_adjacent", "underextend", "over_parsing", "corner_drift", "corner_duplicate", "topology_failure", "fail"},
+}
 
 
 def _load_tasks(path: Path) -> list[dict[str, Any]]:
@@ -35,238 +26,110 @@ def _load_tasks(path: Path) -> list[dict[str, Any]]:
     return [row for row in payload if isinstance(row, dict)]
 
 
-def _canonical_lookup(canonical_csv: Path) -> dict[tuple[str, str, str, str], dict[str, str]]:
-    import csv
-
-    with canonical_csv.open("r", newline="", encoding="utf-8-sig") as handle:
+def _canonical_rows(path: Path) -> dict[tuple[str, str, str, str, str], list[dict[str, str]]]:
+    with path.open("r", newline="", encoding="utf-8-sig") as handle:
         rows = list(csv.DictReader(handle))
-    return {
-        (
-            str(row.get("source_export", "")),
-            str(row.get("project_id", "")),
-            str(row.get("ls_runtime_task_id", "") or row.get("task_id", "")),
-            str(row.get("worker_id", "")),
-        ): row
-        for row in rows
-    }
-
-
-def _prediction_rows(task: dict[str, Any]) -> list[dict[str, Any]]:
-    predictions = task.get("predictions") or []
-    return [prediction for prediction in predictions if isinstance(prediction, dict)]
-
-
-def _model_provenance(
-    task: dict[str, Any],
-    *,
-    source_export: Path,
-    pool: str,
-    condition: str,
-    stage: str,
-    input_status: str,
-) -> list[dict[str, Any]]:
-    predictions = _prediction_rows(task)
-    if not predictions:
-        status, allowed = formal_status(input_status, valid=False)
-        return [
-            {
-                **sidecar_common(
-                    source_artifact=str(source_export),
-                    source_sha256=sha256_file(source_export),
-                    stage=stage,
-                    pool=pool,
-                    condition=condition,
-                    validity_status="not_applicable" if input_status == "formal" else status,
-                    rule_version=RULE_VERSION,
-                    interpretation_allowed=False,
-                ),
-                "task_id": _task_id(task, 0),
-                "artifact_kind": "manual_or_no_prediction",
-                "model_name": "",
-                "model_version": "",
-                "checkpoint_sha256": "",
-                "config_sha256": "",
-                "preprocess_sha256": "",
-                "run_id": "",
-                "prediction_payload_hash": "",
-                "provenance_status": "not_applicable",
-                "interpretation_allowed": str(bool(allowed and False)).lower(),
-            }
-        ]
-    rows = []
-    for index, prediction in enumerate(predictions, start=1):
-        result = prediction.get("result")
-        payload_hash = sha256_json(prediction)
-        model_name = _safe_str(prediction.get("model_name") or prediction.get("model"))
-        model_version = _safe_str(prediction.get("model_version") or prediction.get("version"))
-        checkpoint = _safe_str(prediction.get("checkpoint_sha256") or prediction.get("checkpoint_hash"))
-        config = _safe_str(prediction.get("config_sha256") or prediction.get("config_hash"))
-        preprocess = _safe_str(prediction.get("preprocess_sha256") or prediction.get("preprocess_hash"))
-        run_id = _safe_str(prediction.get("run_id") or prediction.get("id"))
-        has_explicit_model = bool(model_name or model_version)
-        has_hashes = bool(checkpoint and config and preprocess)
-        if has_hashes:
-            provenance_status = "complete"
-        else:
-            # A model/version without the immutable runtime hashes is still
-            # legacy/incomplete provenance; never upgrade it to formal.
-            provenance_status = "legacy_missing"
-        status, allowed = formal_status(input_status, valid=provenance_status == "complete")
-        rows.append(
-            {
-                **sidecar_common(
-                    source_artifact=str(source_export),
-                    source_sha256=sha256_file(source_export),
-                    stage=stage,
-                    pool=pool,
-                    condition=condition,
-                    validity_status=status if status != "valid" else "valid",
-                    rule_version=RULE_VERSION,
-                    interpretation_allowed=allowed,
-                ),
-                "task_id": _task_id(task, 0),
-                "prediction_index": index,
-                "artifact_kind": "prediction",
-                "model_name": model_name,
-                "model_version": model_version,
-                "checkpoint_sha256": checkpoint,
-                "config_sha256": config,
-                "preprocess_sha256": preprocess,
-                "run_id": run_id,
-                "prediction_payload_hash": payload_hash,
-                "prediction_result_present": str(isinstance(result, list)).lower(),
-                "provenance_status": provenance_status,
-                "interpretation_allowed": str(bool(allowed)).lower(),
-            }
+    indexed: dict[tuple[str, str, str, str, str], list[dict[str, str]]] = defaultdict(list)
+    for row in rows:
+        key = (
+            str(row.get("source_export", "")), str(row.get("project_id", "")),
+            str(row.get("ls_runtime_task_id") or row.get("task_id", "")), str(row.get("worker_id", "")),
+            str(row.get("raw_canonical_annotation_id") or row.get("annotation_id", "")),
         )
+        indexed[key].append(row)
+    return indexed
+
+
+def _truthy(value: Any) -> bool:
+    return str(value).strip().lower() in {"true", "1", "yes"}
+
+
+def _eligibility(rows: list[dict[str, str]]) -> tuple[str, str, dict[str, str]]:
+    if not rows:
+        return "invalid", "missing_canonical_registry", {}
+    if len(rows) != 1:
+        return "invalid", "duplicate_canonical_registry", rows[0]
+    row = rows[0]
+    if _truthy(row.get("duplicate_worker_task_submission")):
+        return "invalid", "duplicate_worker_task_submission", row
+    if _truthy(row.get("outside_assignment_submission")) or str(row.get("assigned_expected", "")).lower() == "false":
+        return "excluded", "nonindependent_or_unassigned", row
+    if str(row.get("planned_mapping_status", "")).endswith("missing") or str(row.get("runtime_binding_status", "")).endswith("collision"):
+        return "invalid", "runtime_mapping_invalid", row
+    if str(row.get("parse_error", "")).strip():
+        return "invalid", "canonical_parse_error", row
+    return "valid", "", row
+
+
+def _schema(choice_map: dict[str, list[str]]) -> tuple[bool, str]:
+    for field, allowed in _CHOICES.items():
+        values = {str(value).lower() for value in choice_map.get(field, [])}
+        if values - allowed:
+            return False, f"unknown_{field}_choice"
+        negative = "trivial" if field == "difficulty" else "acceptable"
+        if negative in values and len(values) > 1:
+            return False, f"conflicting_{field}_choice"
+    return True, ""
+
+
+def _provenance(task: dict[str, Any], export_path: Path, *, stage: str, pool: str, condition: str, input_status: str) -> list[dict[str, Any]]:
+    predictions = [item for item in task.get("predictions") or [] if isinstance(item, dict)]
+    if not predictions:
+        return [{**sidecar_common(source_artifact=str(export_path), source_sha256=sha256_file(export_path), stage=stage, pool=pool, condition=condition, validity_status="not_applicable", rule_version=RULE_VERSION, interpretation_allowed=False), "task_id": _task_id(task, 0), "artifact_kind": "manual_or_no_prediction", "provenance_status": "not_applicable"}]
+    rows = []
+    for index, prediction in enumerate(predictions, 1):
+        fields = {
+            "initialization_artifact_id": _safe_str(prediction.get("initialization_artifact_id") or prediction.get("id")),
+            "model_version": _safe_str(prediction.get("model_version") or prediction.get("version")),
+            "checkpoint_sha256": _safe_str(prediction.get("checkpoint_sha256") or prediction.get("checkpoint_hash")),
+            "inference_config_sha256": _safe_str(prediction.get("inference_config_sha256") or prediction.get("config_sha256") or prediction.get("config_hash")),
+            "preprocess_postprocess_sha256": _safe_str(prediction.get("preprocess_postprocess_sha256") or prediction.get("preprocess_sha256") or prediction.get("preprocess_hash")),
+            "prediction_payload_hash": sha256_json(prediction),
+        }
+        complete = all(fields.values())
+        status, allowed = formal_status(input_status, valid=complete)
+        rows.append({**sidecar_common(source_artifact=str(export_path), source_sha256=sha256_file(export_path), stage=stage, pool=pool, condition=condition, validity_status=status, rule_version=RULE_VERSION, interpretation_allowed=allowed), "task_id": _task_id(task, 0), "prediction_index": index, "artifact_kind": "prediction", "prediction_result_present": str(isinstance(prediction.get("result"), list)).lower(), "provenance_status": "complete" if complete else "incomplete", **fields})
     return rows
 
 
-def materialize_canonical_evidence(
-    export_paths: list[Path],
-    canonical_csv: Path,
-    output_dir: Path,
-    *,
-    stage: str = "C1",
-    input_status: str = "dry_run",
-) -> dict[str, Any]:
-    lookup = _canonical_lookup(canonical_csv)
+def materialize_canonical_evidence(export_paths: list[Path], canonical_csv: Path, output_dir: Path, *, stage: str = "C1", input_status: str = "dry_run") -> dict[str, Any]:
+    registry_sha = sha256_file(canonical_csv)
+    canonical = _canonical_rows(canonical_csv)
     meta_rows: list[dict[str, Any]] = []
     geometry_rows: list[dict[str, Any]] = []
     provenance_rows: list[dict[str, Any]] = []
     for export_path in export_paths:
         export_sha = sha256_file(export_path)
-        for task_index, task in enumerate(_load_tasks(export_path), start=1):
-            task_id = _task_id(task, task_index)
-            project_id = _project_id(task)
-            data = _data(task)
-            pool = _safe_str(data.get("dataset_group"))
-            condition = _safe_str(data.get("condition"))
-            for ann_index, annotation in enumerate(task.get("annotations") or [], start=1):
+        for task_index, task in enumerate(_load_tasks(export_path), 1):
+            task_id, project_id, data = _task_id(task, task_index), _project_id(task), _data(task)
+            for ann_index, annotation in enumerate(task.get("annotations") or [], 1):
                 if not isinstance(annotation, dict):
                     continue
-                worker_id = _worker_id(annotation)
-                annotation_id = _annotation_id(annotation, ann_index)
-                canonical = lookup.get((str(export_path), project_id, task_id, worker_id), {})
-                if canonical and canonical.get("raw_canonical_annotation_id") not in {"", annotation_id}:
-                    continue
+                worker_id, annotation_id = _worker_id(annotation), _annotation_id(annotation, ann_index)
+                status, reason, source = _eligibility(canonical.get((str(export_path), project_id, task_id, worker_id, annotation_id), []))
                 corners, polygon, choice_map, quality_all = extract_data(annotation.get("result", []))
-                status, allowed = formal_status(input_status, valid=not bool(canonical.get("parse_error")))
-                common = sidecar_common(
-                    source_artifact=str(export_path),
-                    source_sha256=export_sha,
-                    stage=stage,
-                    pool=pool,
-                    condition=condition,
-                    validity_status=status,
-                    rule_version=RULE_VERSION,
-                    interpretation_allowed=allowed,
-                )
-                common.update(
-                    {
-                        "task_id": task_id,
-                        "base_task_id": _safe_str(data.get("base_task_id") or data.get("task_id") or task_id),
-                        "project_id": project_id,
-                        "worker_id": worker_id,
-                        "annotation_id": annotation_id,
-                        "canonical_annotation_id": canonical.get("canonical_annotation_id", ""),
-                        "raw_canonical_annotation_id": canonical.get("raw_canonical_annotation_id", annotation_id),
-                        "choice_map_json": json_text(choice_map),
-                        "quality_all": quality_all,
-                        "geometry_hash": canonical.get("geometry_hash", ""),
-                        "parse_error": canonical.get("parse_error", ""),
-                        "n_corners": int(len(corners)),
-                        "n_polygon_points": int(len(polygon)),
-                    }
-                )
-                meta_rows.append(common)
-                geometry_rows.append(
-                    {
-                        **sidecar_common(
-                            source_artifact=str(export_path),
-                            source_sha256=export_sha,
-                            stage=stage,
-                            pool=pool,
-                            condition=condition,
-                            validity_status=status,
-                            rule_version=RULE_VERSION,
-                            interpretation_allowed=allowed,
-                        ),
-                        "task_id": task_id,
-                        "base_task_id": _safe_str(data.get("base_task_id") or data.get("task_id") or task_id),
-                        "project_id": project_id,
-                        "worker_id": worker_id,
-                        "annotation_id": annotation_id,
-                        "canonical_annotation_id": canonical.get("canonical_annotation_id", ""),
-                        "geometry_hash": canonical.get("geometry_hash", ""),
-                        "width": 1024,
-                        "height": 512,
-                        "corners_px": corners.tolist(),
-                        "polygon_points_px": polygon,
-                        "geometry_source": "label_studio_annotation_result",
-                    }
-                )
-            provenance_rows.extend(
-                _model_provenance(
-                    task,
-                    source_export=export_path,
-                    pool=pool,
-                    condition=condition,
-                    stage=stage,
-                    input_status=input_status,
-                )
-            )
-
-    ordered = COMMON_SIDEcar_FIELDS
-    write_csv_rows(output_dir / "c1_canonical_meta_observations.csv", meta_rows, ordered + [
-        "task_id", "base_task_id", "project_id", "worker_id", "annotation_id", "canonical_annotation_id",
-        "raw_canonical_annotation_id", "choice_map_json", "quality_all", "geometry_hash", "parse_error",
-        "n_corners", "n_polygon_points",
-    ])
+                schema_ok, schema_reason = _schema(choice_map)
+                if not schema_ok and status == "valid":
+                    status, reason = "invalid", schema_reason
+                validity, allowed = formal_status(input_status, valid=status == "valid" and schema_ok)
+                base_task_id = _safe_str(source.get("base_task_id") or data.get("base_task_id") or data.get("task_id") or task_id)
+                common = sidecar_common(source_artifact=str(export_path), source_sha256=export_sha, stage=stage, pool=_safe_str(source.get("dataset_group") or data.get("dataset_group")), condition=_safe_str(source.get("condition") or data.get("condition")), validity_status=validity, rule_version=RULE_VERSION, interpretation_allowed=allowed)
+                meta = {**common, "canonical_registry_sha256": registry_sha, "task_id": _safe_str(source.get("task_id") or data.get("task_id") or task_id), "base_task_id": base_task_id, "scene_id": _safe_str(source.get("scene_label") or data.get("scene_id") or data.get("scene_label")), "dataset_group": common["pool"], "scene_label": _safe_str(source.get("scene_label") or data.get("scene_label")), "assigned_expected": _safe_str(source.get("assigned_expected")), "outside_assignment_submission": _safe_str(source.get("outside_assignment_submission")), "parse_error": _safe_str(source.get("parse_error")), "active_time": _safe_str(source.get("active_time")), "active_time_source": _safe_str(source.get("active_time_source")), "primary_active_time_eligible": _safe_str(source.get("primary_active_time_eligible")), "task_final_scope": _safe_str(source.get("task_final_scope")), "project_id": project_id, "ls_runtime_task_id": task_id, "worker_id": worker_id, "annotation_id": annotation_id, "canonical_annotation_id": _safe_str(source.get("canonical_annotation_id")), "canonical_eligibility_status": status, "canonical_eligibility_reason": reason, "schema_interpretable": str(schema_ok).lower(), "schema_error": schema_reason, "schema_version": _safe_str(data.get("schema_version") or source.get("schema_version")), "ui_version": _safe_str(data.get("ui_version") or source.get("ui_version")), "instruction_version": _safe_str(data.get("instruction_version") or source.get("instruction_version")), "choice_map_json": json_text(choice_map), "raw_result_json": json_text(annotation.get("result", [])), "difficulty_present": str("difficulty" in choice_map).lower(), "model_issue_present": str("model_issue" in choice_map).lower(), "quality_all": quality_all, "geometry_hash": _safe_str(source.get("geometry_hash")), "n_corners": len(corners), "n_polygon_points": len(polygon), "raw_annotation_sha256": sha256_json(annotation)}
+                meta_rows.append(meta)
+                geometry_rows.append({**common, "task_id": meta["task_id"], "base_task_id": base_task_id, "scene_id": meta["scene_id"], "project_id": project_id, "worker_id": worker_id, "annotation_id": annotation_id, "canonical_annotation_id": meta["canonical_annotation_id"], "canonical_eligibility_status": status, "schema_version": meta["schema_version"], "geometry_hash": meta["geometry_hash"], "width": 1024, "height": 512, "corners_px": corners.tolist(), "polygon_points_px": polygon, "geometry_source": "label_studio_annotation_result"})
+            provenance_rows.extend(_provenance(task, export_path, stage=stage, pool=_safe_str(data.get("dataset_group")), condition=_safe_str(data.get("condition")), input_status=input_status))
+    meta_fields = ["canonical_registry_sha256", "task_id", "base_task_id", "scene_id", "dataset_group", "scene_label", "assigned_expected", "outside_assignment_submission", "parse_error", "active_time", "active_time_source", "primary_active_time_eligible", "task_final_scope", "project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "canonical_annotation_id", "canonical_eligibility_status", "canonical_eligibility_reason", "schema_interpretable", "schema_error", "schema_version", "ui_version", "instruction_version", "choice_map_json", "raw_result_json", "difficulty_present", "model_issue_present", "quality_all", "geometry_hash", "n_corners", "n_polygon_points", "raw_annotation_sha256"]
+    write_csv_rows(output_dir / "c1_canonical_meta_observations.csv", meta_rows, COMMON_SIDEcar_FIELDS + meta_fields)
     output_dir.mkdir(parents=True, exist_ok=True)
     with (output_dir / "c1_canonical_geometry.jsonl").open("w", encoding="utf-8") as handle:
         for row in geometry_rows:
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
-    write_csv_rows(output_dir / "c1_model_artifact_provenance.csv", provenance_rows, ordered + [
-        "task_id", "prediction_index", "artifact_kind", "model_name", "model_version", "checkpoint_sha256",
-        "config_sha256", "preprocess_sha256", "run_id", "prediction_payload_hash", "prediction_result_present",
-        "provenance_status",
-    ])
-    return {
-        "schema_version": "paper_a_vfinal_sidecar_v1",
-        "rule_version": RULE_VERSION,
-        "input_status": input_status,
-        "n_meta_observations": len(meta_rows),
-        "n_geometry_rows": len(geometry_rows),
-        "n_model_provenance_rows": len(provenance_rows),
-        "formal_c1_annotation_data_present": bool(meta_rows) and input_status == "formal",
-        "interpretation_allowed": False,
-        "dry_run": input_status != "formal",
-    }
+    write_csv_rows(output_dir / "c1_model_artifact_provenance.csv", provenance_rows, COMMON_SIDEcar_FIELDS + ["task_id", "prediction_index", "artifact_kind", "initialization_artifact_id", "model_version", "checkpoint_sha256", "inference_config_sha256", "preprocess_postprocess_sha256", "prediction_payload_hash", "prediction_result_present", "provenance_status"])
+    return {"schema_version": "paper_a_vfinal_sidecar_v2", "rule_version": RULE_VERSION, "input_status": input_status, "n_meta_observations": len(meta_rows), "n_geometry_rows": len(geometry_rows), "n_model_provenance_rows": len(provenance_rows), "formal_c1_annotation_data_present": bool(meta_rows) and input_status == "formal", "interpretation_allowed": False, "dry_run": input_status != "formal"}
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Materialize additive C1 canonical evidence sidecars.")
+    parser = argparse.ArgumentParser(description="Materialize C1 canonical evidence sidecars.")
     parser.add_argument("--export-json", action="append", required=True, type=Path)
     parser.add_argument("--canonical-csv", required=True, type=Path)
     parser.add_argument("--output-dir", required=True, type=Path)
