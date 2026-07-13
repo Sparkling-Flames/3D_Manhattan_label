@@ -180,6 +180,7 @@ MAIN_FIELDS = [
     "n_semi_geometry_correction_support",
     "n_undercoverage_support",
     "n_process_support",
+    "n_process_forensic_audit",
     "calib_support_status",
     "geometry_support_status",
     "scope_support_status",
@@ -850,7 +851,7 @@ def build_p1_evidence_rows(
                 "process_failure" if process_failure else "process_ok",
                 process_failure,
                 "process",
-                included_in_process_reliability=True,
+                included_in_process_reliability=eligible_independent_evidence(row),
             )
     return out
 
@@ -936,7 +937,7 @@ def _task_evidence_key(row: dict[str, Any]) -> tuple[str, str, str, str]:
 def _unique_process_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     unique: dict[tuple[str, str, str, str], dict[str, Any]] = {}
     for row in rows:
-        if not truthy(row.get("process_evaluable")):
+        if not truthy(row.get("process_evaluable")) or not truthy(row.get("included_in_process_reliability")) or not eligible_independent_evidence(row):
             continue
         key = _task_evidence_key(row)
         current = unique.get(key)
@@ -974,6 +975,7 @@ def build_main_matrix(
         n_semi_issue = len({_task_evidence_key(row) for row in group if safe(row.get("evidence_signal")) == "semi_issue_recognition" and truthy(row.get("semi_issue_recognition_evaluable"))})
         n_under = fail_by_flag["included_in_U_u"][1]
         process_rows = _unique_process_rows(group)
+        process_forensic_rows = {_task_evidence_key(row) for row in group if truthy(row.get("process_evaluable")) and not truthy(row.get("included_in_process_reliability"))}
         process_failures = sum(truthy(row.get("process_failure_observed")) for row in process_rows)
         n_proc = len(process_rows)
         n_total, n_primary, n_fallback, n_missing, timing_status = _timing_summary(group)
@@ -1016,6 +1018,7 @@ def build_main_matrix(
                 "n_semi_geometry_correction_support": n_semi,
                 "n_undercoverage_support": n_under,
                 "n_process_support": n_proc,
+                "n_process_forensic_audit": len(process_forensic_rows),
                 "n_total_tasks": n_total,
                 "n_primary_active_time_tasks": n_primary,
                 "n_fallback_tasks": n_fallback,
@@ -1508,6 +1511,7 @@ def materialize(
     predictive = build_predictive_rows(main, p1_lookup, _optional_worker_lookup(p1_worker_status_csv))
     predictive_evaluable = any(row["support_status"] != "not_evaluable" for row in predictive)
     unique_process_evidence = _unique_process_rows(evidence)
+    forensic_process_audit = {_task_evidence_key(row) for row in evidence if truthy(row.get("process_evaluable")) and not truthy(row.get("included_in_process_reliability"))}
 
     evidence_csv = output_dir / "worker_task_evidence_table_C1.csv"
     main_csv = output_dir / "worker_profile_main_matrix_C1.csv"
@@ -1565,6 +1569,7 @@ def materialize(
         "forensic_timing_audit_count": len({_task_evidence_key(row) for row in evidence if truthy(row.get("forensic_timing_audit_eligible"))}),
         "process_evaluable_row_count": len(unique_process_evidence),
         "process_failure_observed_row_count": sum(truthy(row.get("process_failure_observed")) for row in unique_process_evidence),
+        "forensic_process_audit_row_count": len(forensic_process_audit),
         "long_open_draft_row_count": sum(truthy(row.get("long_open_draft_flag")) for row in evidence),
         "parent_derived_timing_row_count": sum(truthy(row.get("parent_derived_timing")) for row in evidence),
         "n_insufficient_family_cells": sum(row["support_status"] == "insufficient" for row in family),

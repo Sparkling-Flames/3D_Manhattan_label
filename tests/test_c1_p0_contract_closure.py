@@ -10,7 +10,7 @@ from tools.thesis_main.analysis.geometry_consensus.representation import normali
 from tools.thesis_main.analysis.geometry_consensus.stability import stability_summary
 from tools.thesis_main.analysis.materialize_model_issue_harmonization import _validate_amendments
 from tools.thesis_main.analysis.routing.temporal_replay import _fold_for_base, _load_policy_manifest, _validate_policy
-from tools.thesis_main.analysis.run_c1_closeout_dryrun_chain import build_gate_summary
+from tools.thesis_main.analysis.run_c1_closeout_dryrun_chain import _formal_worker_state, build_gate_summary, finalize_existing_closeout
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file, sha256_json
 
 
@@ -78,10 +78,10 @@ def test_cyclic_alignment_unique_reverse_ambiguous_and_variable_count() -> None:
     assert variable["insertions"] == 1
 
 
-def _record(worker: str, offset: int = 0) -> dict:
+def _record(worker: str, offset: int = 0, x_offset: int = 0) -> dict:
     return {
         "worker_id": worker,
-        "geometry": normalize_geometry([[100, 100 + offset], [100, 400], [500, 100 + offset], [500, 400]]),
+        "geometry": normalize_geometry([[100 + x_offset, 100 + offset], [100 + x_offset, 400], [500 + x_offset, 100 + offset], [500 + x_offset, 400]]),
     }
 
 
@@ -90,8 +90,21 @@ def test_geometry_medoid_tie_and_high_k_is_non_recursive() -> None:
     assert tied["medoid_ambiguous"] is True
     assert tied["medoid_boundary_worker_id"] == ""
     started = time.monotonic()
-    result = stability_summary([_record(f"w{i}", i % 5) for i in range(22)], grid=32)
+    result = stability_summary([_record(f"w{i}", i % 5, i) for i in range(22)], grid=32)
     assert result["valid_k"] == 22
+    score_table = json.loads(result["medoid_score_table_json"])
+    assert len(score_table) == 22
+    boundary_best = max(score_table, key=lambda row: row["boundary_score"])
+    wallwall_best = max(score_table, key=lambda row: row["wallwall_score"])
+    if result["medoid_boundary_ambiguous"]:
+        assert result["medoid_boundary_worker_id"] == ""
+    else:
+        assert result["medoid_boundary_worker_id"] == boundary_best["worker_id"]
+    if result["medoid_wallwall_ambiguous"]:
+        assert result["medoid_wallwall_worker_id"] == ""
+    else:
+        assert result["medoid_wallwall_worker_id"] == wallwall_best["worker_id"]
+    assert result["leave_two_out_status"] in {"robust", "sensitive"}
     assert time.monotonic() - started < 30
 
 
@@ -128,3 +141,58 @@ def test_formal_gate_requires_separate_adjudication_manifest(tmp_path) -> None:
     assert summary["r_u_freeze"] is False
     assert summary["c2_freeze"] is False
     assert summary["formal_routing_conclusion_allowed"] is False
+
+
+def test_formal_worker_state_manifest_verifies_frozen_external_input(tmp_path) -> None:
+    state = tmp_path / "worker_state.csv"
+    state.write_text("worker_id,r_u_hat,r_u_ci_low,r_u_ci_high\nw1,0.5,0.4,0.6\n", encoding="utf-8")
+    dependency = tmp_path / "fit_input.csv"
+    dependency.write_text("base_task_id\nb1\n", encoding="utf-8")
+    dependencies = [{"path": str(dependency.resolve()), "sha256": sha256_file(dependency)}]
+    manifest = tmp_path / "worker_state_manifest.json"
+    manifest.write_text(json.dumps({
+        "worker_state_status": "formal", "rule_version": "external_worker_state_v1", "source_csv_sha256": sha256_file(state),
+        "dependency_bundle_id": sha256_json({"rule_version": "external_worker_state_v1", "dependencies": dependencies}),
+        "dependencies": dependencies, "r_u_estimated": True, "r_u_freeze": True, "eligible_support_count": 1,
+    }), encoding="utf-8")
+    assert _formal_worker_state(state, manifest)["valid"] is True
+
+
+def test_formal_gate_positive_contract_is_reachable_with_frozen_external_worker_state(tmp_path) -> None:
+    profile = tmp_path / "profile.json"
+    profile.write_text("{}", encoding="utf-8")
+    summary = build_gate_summary(
+        {"canonical_meta_fresh": True, "n_quality_rows": 2, "r_u_estimated": True, "amendment_blocker_count": 0, "blockers": []},
+        {"r_u_estimated": True, "r_u_freeze": True},
+        {},
+        {"c2_freeze": True},
+        {"full_profile_ready": True, "pending_adjudication_count": 0},
+        profile,
+        {"routing_temporal_replay": {"status": "candidate_only", "n_events": 3, "all_events_legal": True, "prior_state_monotonicity": True, "worker_identity_consistent": True, "policy_dependency_valid": True, "n_nonzero_assertions": 2, "illegal_event_reasons": {}}},
+        {"bundle_sha256": "bundle"},
+        input_status="formal",
+        artifact_freshness={"fresh": True},
+        canonicalization_summary={"structural_integrity_passed": True, "collection_completeness_passed": True, "blockers": []},
+        snapshot_manifest_fresh=True,
+        adjudication={"valid": True},
+        formal_worker_state={"valid": True},
+    )
+    assert summary["formal_closeout_ready"] is True
+    assert summary["r_u_freeze"] is True
+    assert summary["c2_freeze"] is True
+    assert summary["formal_routing_conclusion_allowed"] is True
+
+
+def test_finalize_existing_closeout_binds_adjudication_without_rerunning_inputs(tmp_path) -> None:
+    artifact = tmp_path / "input.csv"
+    artifact.write_text("x\n1\n", encoding="utf-8")
+    bundle = {"bundle_version": "v1", "artifacts": [{"path": str(artifact), "exists": True, "sha256": sha256_file(artifact)}]}
+    bundle["bundle_sha256"] = __import__("hashlib").sha256(json.dumps(bundle["artifacts"], sort_keys=True).encode("utf-8")).hexdigest()
+    (tmp_path / "c1_closeout_input_bundle.json").write_text(json.dumps(bundle), encoding="utf-8")
+    (tmp_path / "c1_closeout_dryrun_gate_summary.json").write_text(json.dumps({"input_status": "formal", "structural_contract_valid": True, "raw_snapshot_manifest_fresh": True, "artifacts_fresh": True, "quality_table_blockers": [], "canonicalization_summary": {"blockers": []}, "formal_worker_state": {"valid": True}, "r_u_estimated": True, "full_profile_ready": True, "pending_adjudication_count": 0, "worker_state_summary": {"r_u_freeze": True}, "c2_draft_summary": {"c2_freeze": True}, "dt_backflow": False, "vfinal_sidecars": {"routing_temporal_replay": {"status": "candidate_only", "n_events": 1, "all_events_legal": True, "prior_state_monotonicity": True, "worker_identity_consistent": True, "policy_dependency_valid": True, "n_nonzero_assertions": 1, "illegal_event_reasons": {}}}}), encoding="utf-8")
+    adjudication = {"status": "approved", "approved": True, "manifest_id": "m1", "approved_by": "reviewer", "approved_at": "2026-07-14T00:00:00Z", "input_bundle_sha256": bundle["bundle_sha256"]}
+    adjudication_path = tmp_path / "adjudication.json"
+    adjudication_path.write_text(json.dumps(adjudication), encoding="utf-8")
+    result = finalize_existing_closeout(tmp_path, adjudication_path)
+    assert result["finalization"]["bundle_sha256"] == bundle["bundle_sha256"]
+    assert result["formal_closeout_ready"] is True

@@ -303,7 +303,8 @@ def test_one_p1_submission_keeps_multiple_signals_without_process_denominator_du
     rows = build_p1_evidence_rows([correction], score)
     assert {row["evidence_signal"] for row in rows} == {"geometry", "scope", "semi", "undercoverage", "process"}
     main = build_main_matrix(rows, {"w1": {}})[0]
-    assert main["n_process_support"] == 1
+    assert main["n_process_support"] == 0
+    assert main["n_process_forensic_audit"] == 1
 
 
 def test_long_open_flag_is_relative_and_lead_time_never_becomes_primary(tmp_path: Path) -> None:
@@ -389,8 +390,8 @@ def test_process_reliability_uses_successes_and_excludes_system_only_rows(tmp_pa
     materialize_sidecar(quality, worker_state, tmp_path / "out", p1_task_evidence_csv=p1)
     main = next(csv.DictReader((tmp_path / "out" / "worker_profile_main_matrix_C1.csv").open(encoding="utf-8")))
 
-    assert main["n_process_support"] == "57"
-    assert main["process_reliability"] == "0.982456"
+    assert main["n_process_support"] == "0"
+    assert main["process_reliability"] == ""
 
 
 def test_geometry_score_uses_final_gold_and_keeps_correction_gate(tmp_path: Path) -> None:
@@ -502,8 +503,8 @@ def test_process_reliability_handles_all_failures_and_zero_denominator(tmp_path:
 
     materialize_sidecar(quality, worker_state, tmp_path / "all_fail_out", p1_task_evidence_csv=p1)
     all_fail = next(csv.DictReader((tmp_path / "all_fail_out" / "worker_profile_main_matrix_C1.csv").open(encoding="utf-8")))
-    assert all_fail["n_process_support"] == "57"
-    assert all_fail["process_reliability"] == "0.000000"
+    assert all_fail["n_process_support"] == "0"
+    assert all_fail["process_reliability"] == ""
 
     materialize_sidecar(quality, worker_state, tmp_path / "zero_out")
     zero = next(csv.DictReader((tmp_path / "zero_out" / "worker_profile_main_matrix_C1.csv").open(encoding="utf-8")))
@@ -537,16 +538,14 @@ def test_confirmed_copy_stays_process_family_and_suppresses_capability_predictiv
     assert copy_row["family"] == "process_failure"
     assert copy_row["subfamily"] == "non_independent_submission"
     assert copy_row["included_in_r_geometry"] == "false"
-    assert copy_row["included_in_process_reliability"] == "true"
-    subfamily = next(row for row in csv.DictReader((tmp_path / "out" / "worker_subfamily_response_C1.csv").open(encoding="utf-8")) if row["subfamily"] == "non_independent_submission")
-    assert subfamily["n_observed"] == "1"
-    assert subfamily["n_fail"] == "1"
-    assert subfamily["failure_rate"] == "1.000000"
+    assert copy_row["included_in_process_reliability"] == "false"
+    subfamily = next((row for row in csv.DictReader((tmp_path / "out" / "worker_subfamily_response_C1.csv").open(encoding="utf-8")) if row["subfamily"] == "non_independent_submission"), None)
+    assert subfamily is None
 
     predictive = {row["check_name"]: row for row in csv.DictReader((tmp_path / "out" / "p1_to_c1_descriptive_directional_check.csv").open(encoding="utf-8"))}
     assert predictive["p1_geometry_vs_c1_geometry"]["support_status"] == "not_evaluable"
     assert predictive["p1_scope_vs_c1_scope"]["support_status"] == "not_evaluable"
-    assert predictive["p1_process_warning_vs_c1_process_reliability"]["support_status"] != "not_evaluable"
+    assert predictive["p1_process_warning_vs_c1_process_reliability"]["support_status"] == "not_evaluable"
 
 
 def test_primary_timing_summary_excludes_fallback_from_primary_coverage(tmp_path: Path) -> None:
