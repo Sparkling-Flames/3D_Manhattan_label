@@ -85,20 +85,25 @@ def test_dryrun_chain_generates_provisional_summary_and_blocks_c2_draft(tmp_path
     md = (out / "c1_closeout_dryrun_gate_summary.md").read_text(encoding="utf-8")
 
     assert summary["passed"] is False
-    assert summary["raw_pipeline_ready"] is True
-    assert summary["provisional_sidecar_ready"] is True
+    assert summary["raw_pipeline_ready"] is False
+    assert summary["provisional_sidecar_ready"] is False
+    assert summary["structural_contract_valid"] is False
+    assert summary["formal_inputs_present"] is False
+    assert summary["artifacts_fresh"] is False
+    assert summary["formal_closeout_ready"] is False
     assert summary["thesis_facing_closeout_ready"] is False
     assert summary["c2_decision_chain_ready"] is False
     assert summary["p1_descriptive_directional_check_status"] == "not_evaluable"
     assert summary["formal_predictive_validity_status"] == "not_run_blocked"
     assert summary_json["profile_sidecar_generated"] is True
-    assert summary["analysis_contract_ready"] is True
+    assert summary["analysis_contract_ready"] is False
     assert summary["formal_c1_annotation_data_present"] is False
     assert summary["dry_run_is_formal_data"] is False
-    assert summary["vfinal_sidecars"]["routing_offline_replay_v2"]["formal_assignment_generated"] is False
+    assert summary["vfinal_sidecars"]["routing_replay_scaffold"]["formal_assignment_generated"] is False
     assert (out / "worker_scene_profile_candidates_C1.csv").exists()
     assert (out / "routing_evidence_snapshot_C1.csv").exists()
-    assert (out / "routing_offline_replay_v2_C1.csv").exists()
+    assert (out / "routing_replay_scaffold_C1.csv").exists()
+    assert (out / "c1_closeout_input_bundle.json").exists()
     assert (out / "worker_profile_sidecar_C1.summary.json").exists()
     assert "# C1 Closeout Dryrun Gate Summary" in md
     assert not (c2 / "assignment_manifest_C2_draft.csv").exists()

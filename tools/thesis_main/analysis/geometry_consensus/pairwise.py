@@ -48,15 +48,16 @@ def wallwall_similarity(left: dict[str, Any], right: dict[str, Any]) -> float | 
 
 
 def pairwise_similarity(left: dict[str, Any], right: dict[str, Any], *, grid: int = 256) -> dict[str, Any]:
-    boundary = boundary_similarity(left, right, grid=grid)
-    wallwall = wallwall_similarity(left, right)
-    metrics = [value for value in (boundary, wallwall) if value is not None]
+    compatible = bool(left.get("valid") and right.get("valid") and left.get("width") == right.get("width") and left.get("height") == right.get("height") and left.get("n_pairs") == right.get("n_pairs"))
+    boundary = boundary_similarity(left, right, grid=grid) if compatible else None
+    wallwall = wallwall_similarity(left, right) if compatible else None
     return {
-        "metric_compatible": bool(metrics),
+        "metric_compatible": compatible,
+        "order_compatible": compatible,
         "boundary_similarity": boundary,
         "wallwall_similarity": wallwall,
-        "overall_similarity": float(np.mean(metrics)) if metrics else None,
+        "overall_similarity": None,  # retained only as an empty compatibility column; channels must not be merged.
         "left_pair_count": int(left.get("n_pairs", 0)),
         "right_pair_count": int(right.get("n_pairs", 0)),
-        "validity_status": "valid" if metrics else "not_evaluable",
+        "validity_status": "valid" if compatible and boundary is not None and wallwall is not None else "not_evaluable",
     }

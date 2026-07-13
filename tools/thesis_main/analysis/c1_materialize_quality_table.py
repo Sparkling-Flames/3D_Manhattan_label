@@ -91,6 +91,14 @@ QUALITY_FIELDS = [
     "used_for_r_u_source_status",
     "used_for_rq2",
     "assigned_expected",
+    "canonical_source_sha256",
+    "canonical_eligibility_status",
+    "canonical_eligibility_reason",
+    "schema_interpretable",
+    "schema_error",
+    "difficulty_present",
+    "model_issue_present",
+    "choice_map_json",
 ]
 
 
@@ -112,7 +120,7 @@ def _tokens(value: Any) -> str:
 def _choice(row: dict[str, Any], name: str) -> str:
     if safe(row.get(name)):
         return _tokens(row.get(name))
-    for source in ("choice_map", "quality_flags_json"):
+    for source in ("choice_map_json", "choice_map", "quality_flags_json"):
         raw = safe(row.get(source))
         if not raw:
             continue
@@ -256,13 +264,25 @@ def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: di
                 "used_for_r_u_source_status": source_status,
                 "used_for_rq2": _used_for_rq2(row),
                 "assigned_expected": truthy(row.get("assigned_expected", True)),
+                "canonical_source_sha256": safe(row.get("source_sha256")),
+                "canonical_eligibility_status": safe(row.get("canonical_eligibility_status")) or "valid",
+                "canonical_eligibility_reason": safe(row.get("canonical_eligibility_reason")),
+                "schema_interpretable": safe(row.get("schema_interpretable")) or "true",
+                "schema_error": safe(row.get("schema_error")),
+                "difficulty_present": safe(row.get("difficulty_present")),
+                "model_issue_present": safe(row.get("model_issue_present")),
+                "choice_map_json": safe(row.get("choice_map_json")),
             }
         )
     return out
 
 
 def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, candidate_inventory_csv: Path | None = DEFAULT_CORE_DRAFT) -> dict[str, Any]:
-    rows = build_quality_rows(read_csv(canonical_csv), _inventory_flags(candidate_inventory_csv))
+    canonical_meta_csv = output_dir / "c1_canonical_meta_observations.csv"
+    canonical_sha = __import__("hashlib").sha256(canonical_csv.read_bytes()).hexdigest()
+    meta_rows = read_csv(canonical_meta_csv) if canonical_meta_csv.exists() else []
+    meta_fresh = bool(meta_rows) and all(safe(row.get("canonical_registry_sha256")) == canonical_sha for row in meta_rows)
+    rows = build_quality_rows(meta_rows if meta_fresh else read_csv(canonical_csv), _inventory_flags(candidate_inventory_csv))
     quality_csv = output_dir / "c1_quality_annotations.csv"
     write_csv(quality_csv, rows, QUALITY_FIELDS)
 
@@ -277,6 +297,8 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
 
     summary = {
         "input_csv": str(canonical_csv),
+        "canonical_meta_csv": str(canonical_meta_csv),
+        "canonical_meta_fresh": meta_fresh,
         "quality_csv": str(quality_csv),
         "meta_label_consensus_csv": str(consensus_csv),
         "meta_label_consensus_audit_json": str(audit_json),
@@ -295,7 +317,7 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         "exact_annotation_primary_count": sum(safe(row.get("active_time_integrity_status")) == "exact_annotation_valid" and truthy(row.get("primary_active_time_eligible")) for row in rows),
         "task_level_sensitivity_count": sum(safe(row.get("active_time_integrity_status")) == "task_level_fallback" and truthy(row.get("sensitivity_active_time_eligible")) for row in rows),
         "candidate_inventory_csv": str(candidate_inventory_csv) if candidate_inventory_csv else "",
-        "blockers": ["missing_core_used_for_r_u_flag"] if any(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows) else [],
+        "blockers": (["canonical_meta_missing_or_stale"] if not meta_fresh else []) + (["missing_core_used_for_r_u_flag"] if any(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows) else []),
         "r_u_estimated": False,
         "dt_backflow": False,
     }

@@ -1,13 +1,14 @@
 {
   "manifest_id": "sequential_routing_candidate_rule_manifest_v1",
   "schema_version": "v1",
-  "rule_version": "sequential_routing_candidate_v1",
+  "rule_version": "temporal_routing_replay_v1",
   "status": "candidate_only",
   "configs": {
     "low_risk": {"k_dispatch_initial": 2, "k_min_for_stop": 2, "standard_cap": 5, "escalation_cap": 7},
     "high_risk": {"k_dispatch_initial": 3, "k_min_for_stop": 3, "standard_cap": 5, "escalation_cap": 7},
     "stress": {"k_dispatch_initial": 3, "k_min_for_stop": 3, "standard_cap": 5, "escalation_cap": 7}
   },
-  "legacy_read_compatibility": {"k0_maps_to": ["k_dispatch_initial", "k_min_for_stop"], "k_max_maps_to": ["standard_cap", "escalation_cap"], "mode": "legacy_fixed_cap"},
+  "temporal_replay_contract": {"event_id_required": true, "arrival_time_required": true, "fold_group": "base_task_id", "policy_prefit_excludes_evaluation_fold": true, "future_evidence_forbidden": true},
+  "legacy_read_compatibility": {"mode": "static_evidence_scaffold_only"},
   "interpretation_allowed": false
 }

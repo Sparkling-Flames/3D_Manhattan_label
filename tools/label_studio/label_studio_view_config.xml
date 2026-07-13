@@ -27,7 +27,7 @@
         <!-- 选项卡片化设计 -->
         <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
           <Header value="1. 范围判定 (Scope)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
-          <Text name="scope_rule_text" value="总规则：先判断相机所在主房间的外包络，能否在不猜测的情况下形成唯一、可复现的闭合；若不能，再判断属于哪一类 OOS。"/>
+          <Text name="scope_rule_text" value="总规则：先判断相机所在主房间的外包络，能否在不猜测的情况下形成唯一、可复现的闭合；若不能，再判断属于哪一类 OOS。即使为 OOS，也必须完成所有必填的几何字段；Scope 是 OOS 的权威判定。"/>
           <Choices name="scope" toName="img" showInLine="true" choice="single" required="true" requiredMessage="Scope 必须选择 1 项">
           <Choice value="In-scope：只标相机房间 (Normal / Camera room only)" alias="normal" hint="主指标纳入。
 只标相机所在主房间，不跨门洞或相邻空间。
@@ -55,7 +55,7 @@
           <Header value="2. 困难因素 (Difficulty)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
           <Text name="difficulty_rule_text" value="填写规则：是因为以下的困难导致角点很难标注，而不是图片有这种问题但是对角点没任何影响。必须至少选择 1 项。若选择 &quot;trivial&quot;（非常简单），则不得同时选择其它困难标签；若存在任意困难因素，请不要选 trivial。" />
           <Choices name="difficulty" toName="img" showInLine="true" choice="multiple" required="true" requiredMessage="Difficulty 必须至少选择 1 项">
-            <Choice value="非常简单 (Trivial)" alias="trivial" hint="场景简单、几何清晰、无遮挡无干扰，标注几乎无困难"/>
+            <Choice value="非常简单 (Trivial)" alias="trivial" hint="场景简单、几何清晰，且没有任何会实际增加角点标注难度的困难因素；标注几乎无困难。"/>
             <Choice value="遮挡明显 (Occlusion)" alias="occlusion" hint="局部关键几何证据被挡住。家具、门扇、墙垛、前景墙体或其他结构都可造成遮挡。若只是局部被挡、但主房间外包络仍唯一闭合，归入本项；只有当主包络本身无法可复现闭合时，才考虑 oos_insufficient。"/>
             <Choice value="纹理弱/纯色墙 (Low texture)" alias="low_texture" hint="局部纹理或颜色变化弱，导致边界/角点主要依赖弱几何线索，而非明显外观变化。若主要困难来自遮挡、拼接缝、反光或低画质，不选本项。"/>
             <Choice value="拼接缝/拉伸明显 (Seam/Stretch)" alias="seam" hint="全景拼接/重投影导致直线断裂、错位或局部强拉伸/几何扭曲，使真实角点难以定位；它常表现为局部看似 corner drift 或墙线弯折，但根因仍是 seam/stretch（不一定只发生在一条明显拼接缝上）。"/>
@@ -66,9 +66,9 @@
 
         <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
           <Header value="3. 模型初始化问题 (Model Issue)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
-          <Text name="model_issue_rule_text" value="填写规则：必须至少选择 1 项。若选择 &quot;acceptable&quot;（模型质量好），则不得同时选择其它 issue；若存在任意 issue，请不要选 acceptable。" />
+          <Text name="model_issue_rule_text" value="填写规则：必须至少选择 1 项。&quot;acceptable&quot; 表示初始化几何无需有意修正；它与任何具体 issue 互斥。若存在任意 issue，请不要选 acceptable。" />
           <Choices name="model_issue" toName="img" showInLine="true" choice="multiple" required="true" requiredMessage="Model Issue 必须至少选择 1 项">
-            <Choice value="模型标注质量好 (Model quality acceptable)" alias="acceptable" hint="预测结果质量高，无需显著修改或仅需微调"/>
+            <Choice value="模型标注质量好 (Model quality acceptable)" alias="acceptable" hint="初始化几何合理，无需有意的几何修正。若需要指出任何具体问题，请改选相应 issue，不能同时选择 acceptable。"/>
             <Choice value="跨门扩张：包含相邻空间 (Over-extend to adjacent room)" alias="overextend_adjacent" hint="模型把门后或开口后的相邻空间当作同一 camera room 的一部分；人工按门框/墙垛停止后可修正。"/>
             <Choice value="漏标：只标了局部 (Under-extend / missing parts)" alias="underextend" hint="模型没有覆盖完整 camera room（漏掉部分墙角/边界）"/>
             <Choice value="过度解析：非结构细节误判 (Over-parsing / ghost geometry)" alias="over_parsing" hint="模型把柱体、墙面凸起、家具边缘或装饰凹凸等非布局结构误判为真实拐角/边界，导致角点冗余、需要人工做‘减法’。注意：若只是同一物理拐角附近一团点，请优先选 corner_duplicate。"/>

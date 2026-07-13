@@ -93,7 +93,9 @@ def test_raw_to_closeout_dryrun_smoke_generates_provisional_gate_and_p1_readonly
     assert summary["canonical_csv"] == str(out / "c1_canonical_annotations.csv")
     assert (out / "c1_closeout_dryrun_gate_summary.md").exists()
     assert gate["passed"] is False
-    assert gate["raw_pipeline_ready"] is True
+    assert gate["raw_pipeline_ready"] is False
+    assert gate["formal_closeout_ready"] is False
+    assert gate["formal_inputs_present"] is False
     assert gate["c2_decision_chain_ready"] is False
     assert not (c2 / "assignment_manifest_C2_draft.csv").exists()
     assert sidecar["profile_freeze_status"] == "C1_provisional"
