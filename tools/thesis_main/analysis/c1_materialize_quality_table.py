@@ -411,6 +411,8 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         "n_used_for_r_u": sum(truthy(row["used_for_r_u"]) for row in rows),
         "n_missing_core_used_for_r_u_flag": sum(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows),
         "n_used_for_rq2": sum(truthy(row["used_for_rq2"]) for row in rows),
+        "independence_not_evaluable_count": sum(safe(row.get("independence_status")) not in {"independent", "non_independent_confirmed"} for row in rows),
+        "non_independent_confirmed_count": sum(safe(row.get("independence_status")) == "non_independent_confirmed" for row in rows),
         "unassigned_active_time_seconds_total": sum(float(row.get("unassigned_active_time_seconds") or 0) for row in rows),
         "unknown_annotation_event_count_total": sum(int(row.get("unknown_annotation_event_count") or 0) for row in rows),
         "unknown_annotation_session_count_total": sum(int(row.get("unknown_annotation_session_count") or 0) for row in rows),
@@ -421,7 +423,7 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         "exact_annotation_primary_count": sum(safe(row.get("active_time_integrity_status")) == "exact_annotation_valid" and truthy(row.get("primary_active_time_eligible")) for row in rows),
         "task_level_sensitivity_count": sum(safe(row.get("active_time_integrity_status")) == "task_level_fallback" and truthy(row.get("sensitivity_active_time_eligible")) for row in rows),
         "candidate_inventory_csv": str(candidate_inventory_csv) if candidate_inventory_csv else "",
-        "blockers": (["canonical_meta_missing_or_stale"] if not meta_fresh else []) + (["harmonization_missing_or_stale"] if meta_fresh and not harmonization_fresh else []) + (["missing_core_used_for_r_u_flag"] if any(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows) else []),
+        "blockers": (["canonical_meta_missing_or_stale"] if not meta_fresh else []) + (["harmonization_missing_or_stale"] if meta_fresh and not harmonization_fresh else []) + (["independence_not_evaluable"] if any(safe(row.get("independence_status")) not in {"independent", "non_independent_confirmed"} for row in rows) else []) + (["missing_core_used_for_r_u_flag"] if any(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows) else []),
         "r_u_estimated": False,
         "dt_backflow": False,
     }

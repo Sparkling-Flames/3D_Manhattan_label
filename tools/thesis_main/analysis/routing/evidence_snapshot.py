@@ -36,7 +36,7 @@ def build_evidence_snapshot(
     source_text = ";".join(artifacts)
     rows = []
     for task_id, values in sorted(grouped.items()):
-        workers = {_text(row.get("worker_id") or row.get("annotator_id")) for row in values if _text(row.get("worker_id") or row.get("annotator_id"))}
+        workers = {_text(row.get("worker_id") or row.get("annotator_id")) for row in values if _text(row.get("worker_id") or row.get("annotator_id")) and _text(row.get("independence_status")) == "independent"}
         geometry_valid = sum(_truth(row.get("geometry_valid")) or (_text(row.get("geometry_hash")) and not _text(row.get("parse_error"))) for row in values)
         primary_active = sum(_truth(row.get("primary_active_time_eligible")) for row in values)
         explicit_issue = sum(bool(_text(row.get("model_issue_primary") or row.get("model_issue")) and _text(row.get("model_issue_primary") or row.get("model_issue")).lower() not in {"acceptable", "none"}) for row in values)
@@ -47,6 +47,8 @@ def build_evidence_snapshot(
             "condition": _text(values[0].get("condition")),
             "n_observations": len(values),
             "n_independent_workers": len(workers),
+            "n_independence_not_evaluable": sum(_text(row.get("independence_status")) not in {"independent", "non_independent_confirmed"} for row in values),
+            "n_non_independent_confirmed": sum(_text(row.get("independence_status")) == "non_independent_confirmed" for row in values),
             "geometry_valid_k": geometry_valid,
             "primary_active_time_k": primary_active,
             "explicit_issue_k": explicit_issue,
@@ -69,7 +71,7 @@ def materialize_evidence_snapshot(input_csv: Path, output_csv: Path, *, input_st
     with input_csv.open("r", newline="", encoding="utf-8-sig") as handle:
         rows = list(csv.DictReader(handle))
     snapshots = build_evidence_snapshot(rows, source_artifacts=[str(input_csv)], source_sha256=sha256_file(input_csv), input_status=input_status)
-    write_csv_rows(output_csv, snapshots, COMMON_SIDEcar_FIELDS + ["task_id", "base_task_id", "dataset_group", "condition", "n_observations", "n_independent_workers", "geometry_valid_k", "primary_active_time_k", "explicit_issue_k", "support_gap_candidate", "evidence_complete_candidate", "snapshot_id", "routing_eligible"])
+    write_csv_rows(output_csv, snapshots, COMMON_SIDEcar_FIELDS + ["task_id", "base_task_id", "dataset_group", "condition", "n_observations", "n_independent_workers", "n_independence_not_evaluable", "n_non_independent_confirmed", "geometry_valid_k", "primary_active_time_k", "explicit_issue_k", "support_gap_candidate", "evidence_complete_candidate", "snapshot_id", "routing_eligible"])
     return {"n_tasks": len(snapshots), "dry_run": input_status != "formal", "routing_eligible": False}
 
 

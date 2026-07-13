@@ -260,6 +260,7 @@ def build_canonicalization(
     require_complete: bool = False,
     input_status: str = "dry_run",
     independence_audit_csv: Path | None = None,
+    retrospective_provenance_amendment_csv: Path | None = None,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     assigned, internal = assignment_sets(manual_assignment, semi_assignment, worker_distribution)
@@ -416,7 +417,7 @@ def build_canonicalization(
 
     duplicate_rows = _enhance_duplicate_rows(duplicate_base, runtime_lookup, round_id)
     raw_manifest = snapshot_inputs_unique(
-        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping],
+        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []),
         output_dir,
         completion_basis="c1_closeout_canonicalization_snapshot",
     )
@@ -445,6 +446,7 @@ def build_canonicalization(
         output_dir / "c1_canonical_geometry.jsonl",
         output_dir,
         input_status=input_status,
+        retrospective_amendment_csv=retrospective_provenance_amendment_csv,
     )
 
     outside_count = sum(row["outside_assignment_submission"] == "true" for row in canonical_rows)
@@ -518,6 +520,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--require-complete", action="store_true")
     parser.add_argument("--input-status", choices=["dry_run", "formal"], default="dry_run")
     parser.add_argument("--independence-audit-csv", type=Path)
+    parser.add_argument("--retrospective-provenance-amendment-csv", type=Path)
     args = parser.parse_args(argv)
     summary = build_canonicalization(
         args.export_json,
@@ -531,6 +534,7 @@ def main(argv: list[str] | None = None) -> int:
         require_complete=args.require_complete,
         input_status=args.input_status,
         independence_audit_csv=args.independence_audit_csv,
+        retrospective_provenance_amendment_csv=args.retrospective_provenance_amendment_csv,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if summary["passed"] else 1

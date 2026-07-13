@@ -31,19 +31,26 @@ def cyclic_order_correspondence(left: dict[str, Any], right: dict[str, Any]) -> 
         return sum(xs[index] > xs[index + 1] for index in range(len(xs) - 1)) <= 1
     if not monotone(left_x) or not monotone(right_x):
         return False, "cyclic_order_reversed_or_topology_invalid", []
-    # A single nearest counterpart per event permits variable point counts, but not ambiguous seams.
-    pairs = []
-    for index, x in enumerate(left_x):
-        distances = [_circular_distance(x, y, width) for y in right_x]
-        best = min(distances)
-        if distances.count(best) != 1:
-            return False, "cyclic_correspondence_ambiguous", []
-        pairs.append((index, distances.index(best)))
-    mapped = [right for _, right in pairs]
-    wraps = sum(mapped[index] > mapped[index + 1] for index in range(len(mapped) - 1))
-    if wraps > 1:
-        return False, "cyclic_topology_mismatch", []
-    return True, "unique_cyclic_correspondence", pairs
+    if len(left_x) != len(right_x):
+        pairs = []
+        for index, x in enumerate(left_x):
+            distances = [_circular_distance(x, y, width) for y in right_x]
+            if distances.count(min(distances)) != 1:
+                return False, "variable_point_count_ambiguous", []
+            pairs.append((index, distances.index(min(distances))))
+        mapped = [right for _, right in pairs]
+        if sum(mapped[index] > mapped[index + 1] for index in range(len(mapped) - 1)) > 1:
+            return False, "variable_point_count_topology_mismatch", []
+        return True, "variable_point_count_monotone_correspondence", pairs
+    costs = []
+    for shift in range(len(left_x)):
+        cost = sum(_circular_distance(x, right_x[(index + shift) % len(right_x)], width) for index, x in enumerate(left_x))
+        costs.append(cost)
+    best = min(costs)
+    if costs.count(best) != 1:
+        return False, "cyclic_correspondence_ambiguous", []
+    shift = costs.index(best)
+    return True, "unique_cyclic_correspondence", [(index, (index + shift) % len(right_x)) for index in range(len(left_x))]
 
 
 def boundary_similarity(left: dict[str, Any], right: dict[str, Any], *, grid: int = 256) -> float | None:

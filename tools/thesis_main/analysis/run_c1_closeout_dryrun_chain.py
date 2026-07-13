@@ -223,6 +223,10 @@ def materialize(
     p1_geometry_task_scores: Path | None = None,
     p1_worker_geometry_profile: Path | None = None,
     input_status: str = "dry_run",
+    independence_audit_csv: Path | None = None,
+    retrospective_provenance_amendment_csv: Path | None = None,
+    temporal_event_csv: Path | None = None,
+    temporal_policy_manifest: Path | None = None,
 ) -> dict[str, Any]:
     quality_summary = c1_materialize_quality_table.materialize(canonical_csv, output_dir, candidate_inventory_csv, input_status=input_status)
     quality_csv = output_dir / "c1_quality_annotations.csv"
@@ -256,9 +260,9 @@ def materialize(
         output_dir / "routing_replay_scaffold_C1.csv", input_status=input_status,
     )
     temporal_summary = materialize_temporal_replay(
-        output_dir / "routing_arrival_events_C1.csv",
+        temporal_event_csv or output_dir / "routing_arrival_events_C1.csv",
         output_dir / "routing_temporal_replay_C1.csv",
-        policy_by_fold=None, input_status=input_status,
+        policy_manifest=temporal_policy_manifest, input_status=input_status,
     )
     artifact_freshness = _artifact_freshness(output_dir, input_status=input_status)
     vfinal_sidecars = {
@@ -270,7 +274,7 @@ def materialize(
         "formal_c1_annotation_data_present": input_status == "formal" and bool(quality_summary.get("canonical_meta_fresh")),
     }
     profile_summary_path = output_dir / "worker_profile_sidecar_C1.summary.json"
-    bundle_paths = [canonical_csv, assignment_manifest, reserve_pool_csv, candidate_inventory_csv, output_dir / "c1_export_merge_manifest.csv", output_dir / "c1_runtime_task_mapping.csv", output_dir / "c1_canonical_meta_observations.csv", output_dir / "c1_canonical_geometry.jsonl", output_dir / "c1_model_artifact_provenance.csv", quality_csv, output_dir / "worker_task_tag_observations_C1.csv", output_dir / "task_tag_three_state_summary_C1.csv", output_dir / "model_issue_harmonization_C1.csv", output_dir / "geometry_worker_task_loo_C1.csv", Path("docs/thesis_main/meta_label_three_state_rule_manifest_v1.json"), Path("docs/thesis_main/model_issue_harmonization_rule_manifest_v1.json"), Path("docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json"), Path("docs/thesis_main/sequential_routing_candidate_rule_manifest_v1.json")]
+    bundle_paths = [canonical_csv, assignment_manifest, reserve_pool_csv, candidate_inventory_csv, output_dir / "c1_export_merge_manifest.csv", output_dir / "c1_runtime_task_mapping.csv", output_dir / "c1_canonical_meta_observations.csv", output_dir / "c1_canonical_geometry.jsonl", output_dir / "c1_model_artifact_provenance.csv", quality_csv, output_dir / "worker_task_tag_observations_C1.csv", output_dir / "task_tag_three_state_summary_C1.csv", output_dir / "model_issue_harmonization_C1.csv", output_dir / "geometry_worker_task_loo_C1.csv", Path("docs/thesis_main/meta_label_three_state_rule_manifest_v1.json"), Path("docs/thesis_main/model_issue_harmonization_rule_manifest_v1.json"), Path("docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json"), Path("docs/thesis_main/sequential_routing_candidate_rule_manifest_v1.json"), *([independence_audit_csv] if independence_audit_csv else []), *([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []), *([temporal_event_csv] if temporal_event_csv else []), *([temporal_policy_manifest] if temporal_policy_manifest else [])]
     artifact_bundle = {"bundle_version": "c1_closeout_input_bundle_v1", "artifacts": [{"path": str(path), "exists": path.exists(), "sha256": sha256_file(path) if path.exists() else ""} for path in bundle_paths]}
     gate_summary = build_gate_summary(quality_summary, worker_summary, gap_summary, c2_summary, profile_summary, profile_summary_path, vfinal_sidecars, artifact_bundle, input_status=input_status, artifact_freshness=artifact_freshness)
     artifact_bundle["bundle_sha256"] = __import__("hashlib").sha256(json.dumps(artifact_bundle["artifacts"], sort_keys=True).encode("utf-8")).hexdigest()
@@ -300,6 +304,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--p1-geometry-task-scores", type=Path)
     parser.add_argument("--p1-worker-geometry-profile", type=Path)
     parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
+    parser.add_argument("--independence-audit-csv", type=Path)
+    parser.add_argument("--retrospective-provenance-amendment-csv", type=Path)
+    parser.add_argument("--temporal-event-csv", type=Path)
+    parser.add_argument("--temporal-policy-manifest", type=Path)
     args = parser.parse_args(argv)
     summary = materialize(
         args.canonical_csv,
@@ -319,6 +327,10 @@ def main(argv: list[str] | None = None) -> int:
         args.p1_geometry_task_scores,
         args.p1_worker_geometry_profile,
         args.input_status,
+        args.independence_audit_csv,
+        args.retrospective_provenance_amendment_csv,
+        args.temporal_event_csv,
+        args.temporal_policy_manifest,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0
