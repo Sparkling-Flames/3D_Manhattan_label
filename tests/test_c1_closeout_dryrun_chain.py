@@ -92,6 +92,13 @@ def test_dryrun_chain_generates_provisional_summary_and_blocks_c2_draft(tmp_path
     assert summary["p1_descriptive_directional_check_status"] == "not_evaluable"
     assert summary["formal_predictive_validity_status"] == "not_run_blocked"
     assert summary_json["profile_sidecar_generated"] is True
+    assert summary["analysis_contract_ready"] is True
+    assert summary["formal_c1_annotation_data_present"] is False
+    assert summary["dry_run_is_formal_data"] is False
+    assert summary["vfinal_sidecars"]["routing_offline_replay_v2"]["formal_assignment_generated"] is False
+    assert (out / "worker_scene_profile_candidates_C1.csv").exists()
+    assert (out / "routing_evidence_snapshot_C1.csv").exists()
+    assert (out / "routing_offline_replay_v2_C1.csv").exists()
     assert (out / "worker_profile_sidecar_C1.summary.json").exists()
     assert "# C1 Closeout Dryrun Gate Summary" in md
     assert not (c2 / "assignment_manifest_C2_draft.csv").exists()

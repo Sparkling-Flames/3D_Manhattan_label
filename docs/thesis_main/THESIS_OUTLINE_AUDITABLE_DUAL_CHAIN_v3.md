@@ -1,8 +1,8 @@
 # Paper A 正式论文提纲与写作合同 v3
 
-> 版本日期：2026-07-12
-> 状态：正式写作主轴与章节审计合同；不是实际 manuscript 真源。
-> 边界：本文件不回写历史预注册、`ROUND_BASED_EXECUTION_PROTOCOL_v1.md`、`ROUND_BASED_ASSIGNMENT_SOP_v1.md`、P1 admission、C1/C2 assignment、routing、统计执行参数或任何原始工件。当前 Overleaf 正文尚未按本提纲迁移。
+> 版本日期：2026-07-13
+> 状态：正式写作主轴与章节审计合同；不是实际 manuscript 真源。当前本地 Overleaf 已建立八章输入骨架并完成限域修正，但不声称正文已全面迁移或结果已完成。
+> 边界：本文件不回写历史预注册、`ROUND_BASED_EXECUTION_PROTOCOL_v1.md`、`ROUND_BASED_ASSIGNMENT_SOP_v1.md`、P1 admission、C1/C2 assignment、routing、统计执行参数或任何原始工件。
 
 实际 manuscript 的 LaTeX `main.tex + sections/*.tex` 是正文真源；本 Markdown 是章节与主张审计合同；同目录 `.tex` 只是 standalone LaTeX outline prototype，不可直接代替或输入当前 manuscript。展示符号另见 `WORKER_PROFILE_THESIS_DISPLAY_CONTRACT_v1.md`。
 
@@ -26,6 +26,8 @@ Paper A 的核心不是某个模型、几何工具或单一加权分数，而是
 Pilot -> PreScreen -> Calibration -> Main(Test + Validation)
 P1 -> C1 -> C2 -> T1 -> V1
 ```
+
+展示层符号固定为：`R_u` = Calibration-only protocol reliability；`D_u=(G_u,S_u,C_u,V_u,P_u)` = P1-informed multi-dimensional diagnostic profile，五维均 higher-is-better。风险签名另列为 `B_u`（blind-trust risk）、`F_u`（condition fragility）和 `Q_u`（computability/geometry-gate risk），均 lower-is-better 且不属于 `D_u`；`T_u/U_u` 仅为 legacy raw-risk aliases。
 
 论文不得把 P1 画像写成正式 routing profile，不得把 V1 结果回流 C2，不得将模型重训练、Bi-Layout 改造、A-line Manhattan 工具、自动 OOS 模型、worker-facing Manhattan correction 或“数据集重标注模型”写成 Paper A 一级贡献。
 
@@ -55,7 +57,7 @@ P1 -> C1 -> C2 -> T1 -> V1
 
 **问题：**半自动初始化是否降低 owner-valid exact active time，同时不以低质量、盲信或异常低编辑为代价？
 
-**证据与用途：**exact annotation-level owner-valid browser log 是 primary；known-only 但完整性可疑 session、task-level log 和 `lead_time` 是 sensitivity/audit；`unknown_annotation` 不分配给任务进入 primary；parent-derived timing 仅 forensic audit。必须报告 primary exact coverage、missing/fallback count、script version、condition-specific time、quality-adjusted interpretation，以及 fast-low-quality / fast-blind-trust 检查。
+**证据与用途：**分析单位是 worker-task-annotation。exact annotation-level owner-valid browser log 是 primary；`eligible_for_RQ1_time` 还必须满足 independent、合法 script/version、非 parent-derived、非 task-level fallback。known-only 但完整性可疑 session、task-level log 和 `lead_time` 是 sensitivity/audit；`unknown_annotation` 不分配给任务进入 primary；parent-derived timing 仅 forensic audit。同一 session 取最大累计值去重，同一 worker-task 跨 session 合法分段累加，不同 worker 不取最大值。必须报告 primary exact coverage、missing/fallback count、script version、condition-specific time、quality-adjusted interpretation，以及 fast-low-quality / fast-blind-trust 检查。
 
 **禁止主张：**active-time 不是 worker quality 本身；更快不能直接解释为更可靠；不得把 `lead_time` 静默混入 primary；system collection bug 不得惩罚 worker process reliability。
 
@@ -73,19 +75,19 @@ RQ3 是第三个一级研究问题，下设 RQ3a 与 RQ3b。`RQ3a predictive val
 
 #### 2.3.1 RQ3a：画像效度
 
-**问题：**经过 independence/process-validity gate 的 P1-informed diagnostic evidence 是否能解释或预测独立 C1/C2/Main 行为？
+**问题：**在小 worker 样本下，经过 independence/process-validity gate 的 P1-informed diagnostic evidence 是否与独立后续行为方向一致？本节是描述性预测关联，不拟合复杂模型。
 
-**证据与用途：**P1 capability 只有通过 independence gate 才能进入预测变量；`confirmed non-independent` 不进入 capability，`suspected` 保留 pending；独立 C1/C2/Main 行为是跨阶段验证目标。
+**证据与用途：**限定三组 predictor-target：P1 geometry component → C1/C2 geometry component；P1 semi-correction evidence → 后续 `Calibration_semi` correction；P1 process warning → 后续 process reliability。P1 capability 只有通过 independence gate 才能进入预测变量；`confirmed non-independent` 不进入 capability，`suspected` 保留 pending。每项报告有效 worker 数、predictor/target support、Spearman/Kendall、worker-level bootstrap 95% CI、directional consistency、discrepancy workers、missing/not_evaluable 和 `interpretation_allowed`。
 
-**禁止主张：**P1 不能自证 predictive validity；P1 不能生成正式 `R_u`；不能把 confirmed non-independent 记录自动转成 geometry failure。
+**禁止主张：**P1 不能自证 predictive validity；P1 内部相关和 directional check 不等于正式 RQ3a；P1 不能生成正式 `R_u`；不能把 confirmed non-independent 记录自动转成 geometry failure。当前 provisional artifact 为 `p1_to_c1_descriptive_directional_check.csv` 与 `p1_to_c1_descriptive_directional_check_report.md`，`formal_predictive_validity_status=not_run_blocked`，且不进入当前 Bonferroni 六个主检验。
 
 #### 2.3.2 RQ3b：路由效用
 
 **问题：**在固定预算下，C2 冻结后的 Full worker state 是否优于 Random 与 Calibration-only Global？
 
-**证据与用途：**Random / Global / Full 的主比较来自 `Calibration_manual` offline replay；V1 只评价已冻结 policy 的部署表现、fallback、activation、stop 和审计结果，不作为重新调参或主因果比较场。场景特异可靠度仅在 support 达标时启用，否则退化为 Global。
+**证据与用途：**Random / Global / Full 的主比较来自 `Calibration_manual` image-level cross-fitted offline replay；RQ3b-1 是首个被选 worker 的条件性质量，RQ3b-2 是序贯停止后的预算效率与最终聚合质量。V1 只评价已冻结 policy 的部署表现、fallback、activation、stop 和审计结果，不作为重新调参或主因果比较场。场景特异可靠度仅在 support 达标时启用，否则退化为 Global。
 
-**禁止主张：**不得用 V1 临时并跑未注册策略补主比较；不得以 V1 结果反推 C2；不得将场景-specific 结果推广到 support 不足的场景。
+**禁止主张：**不得用 V1 临时并跑未注册策略补主比较；不得以 V1 结果反推 C2；不得将场景-specific 结果推广到 support 不足的场景；不得把 cross-fitted replay 写成完整 worker pool 的无偏在线部署效应。最终输出使用 selected submissions 的未加权 medoid/LOO-compatible consensus；同一 submission 不能同时作为最终输出和 reference，无独立 reference 时最终聚合质量仅 descriptive。
 
 ## 3. 完整论文章节结构
 
@@ -213,6 +215,7 @@ C1 closeout 状态分为 `raw_pipeline_ready`、`provisional_sidecar_ready`、`t
 - `P_u = 1 - process failure rate`。
 
 Raw risk-rate 单独保留：blind-trust/correction failure rate、undercoverage failure rate、process failure rate，均越低越好。Primary：支持充分的五维画像。Sensitivity/audit：component、subfamily、support 不足。禁止把失败率和 reliability 使用同一符号。
+风险签名明确为 `B_u`（blind-trust risk）、`F_u`（condition fragility）和 `Q_u`（computability/geometry-gate risk），三者均 lower-is-better，不进入 `D_u`。`C_u` 只表示 semi geometry-correction reliability，`V_u` 只表示 in-scope coverage reliability，`P_u` 只表示 process reliability；旧 `T_u/U_u` 只能作为 legacy raw-risk aliases。
 
 #### 4.6 Issue recognition 与 geometry correction
 
@@ -226,7 +229,7 @@ Raw risk-rate 单独保留：blind-trust/correction failure rate、undercoverage
 
 #### 4.8 Predictive-validity gate
 
-回答：P1-informed profile 是否预测独立后续行为。证据：跨阶段独立 C1/C2/Main rows。Primary：通过 independence/process-validity gate 的 P1 capability。Sensitivity/audit：suspected rows、not evaluable rows。禁止 P1 自证、confirmed non-independent 入 capability 或把 predictive validity 当 routing utility。
+回答：P1-informed profile 是否与独立后续行为呈描述性预测关联。证据：三组预注册 predictor-target 对（P1 geometry→C1/C2 geometry、P1 semi-correction→Calibration_semi correction、P1 process warning→later process reliability）及其独立后续 rows。Primary：通过 independence/process-validity gate 的 P1 capability 及 worker-level association/CI。Sensitivity/audit：suspected rows、not evaluable rows、directional consistency 与 discrepancy workers。禁止 P1 自证、confirmed non-independent 入 capability 或把 predictive validity 当 routing utility。
 
 ### 第5章 路由策略与统计分析
 
@@ -242,11 +245,11 @@ Raw risk-rate 单独保留：blind-trust/correction failure rate、undercoverage
 
 回答：如何避免用真实标签造成 routing 比较泄漏。证据：`Calibration_manual` offline replay/shadow support 与 V1 frozen deployment logs。Primary：offline Random/Global/Full 比较。Sensitivity/audit：V1 deployment。禁止在 V1 临时并跑未注册 policy 来补主证据。
 
-每个 evaluation unit 的真实 outcome 不能用于构造该 unit 的 routing decision。正式执行需在统计计划允许的方案中预先选择并记录 `leave-one-task-out`、`leave-one-image-out`、cross-fitting 或 worker-state estimation split/evaluation split 隔离；在方案未冻结前，不得声称 unbiased routing estimate。Full 使用的 `D_u` feature set、normalization、support threshold、fallback 和 sequential rule 必须在评价前冻结。不得看完 RQ3a 后挑选最有效 profile component，再在同一 evaluation unit 上宣称 RQ3b primary；post-hoc feature selection 只能是 exploratory sensitivity。
+每个 evaluation unit 的真实 outcome 不能用于构造该 unit 的 routing decision。RQ3b 固定采用 image-level cross-fitting：按 `base_task_id/image_id` 划分 folds，同一 base image 的全部 annotation 同 fold；评价 fold 不参与该 fold 的 worker state、Score、threshold、normalization、support gate、fallback 或 stopping-rule estimation，feature selection 只在训练 folds 完成。评价只在实际已观测候选集合 `U_t` 内进行，并报告 policy support rate 与 unsupported rate；不得把结果写成完整 worker pool 的无偏在线部署效应。Operational frozen state 由完整合法 C1/C2 evidence 形成供 V1 部署，cross-fitted shadow state 仅用于 `Calibration_manual` replay。Full 使用的 `D_u` feature set、normalization、support threshold、fallback 和 sequential rule 必须在评价前冻结；post-hoc feature selection 只能是 exploratory sensitivity。
 
 #### 5.4 RQ1/RQ2/RQ3 统计合同（含 RQ3a/RQ3b 子合同）
 
-回答：三个一级 RQ 及 RQ3a/RQ3b 子合同的 data、estimand、统计方法和 downgrade rule 是什么。证据：STATISTICAL_ANALYSIS_PLAN_v1 与本提纲表 3。Primary：保持已冻结的配对、bootstrap、permutation、MDE 和 missingness 口径。Sensitivity/audit：task-level timing、K-S、weighted consensus、exploratory failure distribution。禁止改变冻结统计核心口径。
+回答：三个一级 RQ 及 RQ3a/RQ3b 子合同的 data、estimand、统计方法和 downgrade rule 是什么。证据：STATISTICAL_ANALYSIS_PLAN_v1 与本提纲表 3。Primary：RQ2 Calibration_manual/semi 每图固定有效冗余 4 vs 4；manual 4 份固定种子抽取，且同一 worker 不得同时看到同一 base image 的 manual/semi 版本；RQ3b 使用上述 image-level cross-fitting。Sensitivity/audit：重复 balanced subsampling、task-level timing、K-S、weighted consensus、exploratory failure distribution。RQ3a 描述性关联不进入当前 Bonferroni 六个主检验。禁止改变冻结统计核心口径。
 
 ### 第6章 实验结果
 
@@ -264,11 +267,11 @@ Raw risk-rate 单独保留：blind-trust/correction failure rate、undercoverage
 
 #### 6.4 RQ3a 结果
 
-报告 P1-informed D_u 对独立 C1/C2/Main 行为的跨阶段解释/预测，并按 support 和 validity 分层。
+报告三组 P1→后续 predictor-target 的有效 worker 数、predictor/target support、Spearman/Kendall、worker-level bootstrap 95% CI、directional consistency、discrepancy workers、missing/not_evaluable 与 `interpretation_allowed`。当前 artifact 状态为 `formal_predictive_validity_status=not_run_blocked`；没有足够 support 时不生成正式 predictive claim。
 
 #### 6.5 RQ3b 结果
 
-报告 Calibration_manual offline replay 的 Random/Global/Full 主比较，以及 V1 冻结 policy 的 deployment/audit；分别报告 fallback 与 activation。
+报告 Calibration_manual image-level cross-fitted offline replay 的 Random/Global/Full 主比较，以及 V1 冻结 policy 的 deployment/audit；分别报告 RQ3b-1 首选 worker 条件性质量、RQ3b-2 预算效率与最终 selected-submission medoid/LOO-compatible consensus、policy support/unsupported、fallback 与 activation。若无独立 reference，最终聚合质量降级为 descriptive。
 
 #### 6.6 二级创新与审计结果
 
@@ -314,12 +317,12 @@ Raw risk-rate 单独保留：blind-trust/correction failure rate、undercoverage
 - **表1：** 阶段—数据—允许用途矩阵，至少覆盖 P1 manual/semi/OOS、C1/C2 manual、C1 semi、C2b、T1、V1、admission、`R_u`、diagnostic、routing、primary/sensitivity/audit。
 - **表2：** 指标字典：名称、符号、趋势方向、分子/分母、来源、inclusion gate、support、primary/sensitivity/audit、freeze stage。
 - **表3：** RQ—数据—估计量—统计方法—降级规则。
-- **表4：** worker profile main matrix：`G_u/S_u/C_u/V_u/P_u`、raw risk rates、support、stage/pool、inclusion flags、freeze stage，以及 `T_u/U_u` legacy alias 映射。
+- **表4：** worker profile main matrix：`R_u`、`G_u/S_u/C_u/V_u/P_u`、`B_u/F_u/Q_u`、raw risk rates、support、stage/pool、inclusion flags、freeze stage，以及 `T_u/U_u` legacy alias 映射。
 - **表5：** failure-family/subfamily 长表、`n_observed`、`n_fail`、support status、`interpretation_allowed` 和 expert-review status。
 
 ## 5. 写作与字段兼容规则
 
-论文符号是展示层合同，现有 artifact 字段是兼容层合同。`T_u/U_u` 等旧物理字段不得删除或静默改义；在论文中标注为 raw risk-rate/legacy alias，必要时通过显式换算展示 `C_u/V_u/P_u`。本次不声称已有 CSV、sidecar 或代码已经完成 schema migration。
+论文符号是展示层合同，现有 artifact 字段是兼容层合同。`R_u` 在 artifact 层可由 `r_u_calib` 实现；`T_u/U_u` 等旧物理字段不得删除或静默改义，只能标注为 raw risk-rate/legacy alias。`B_u/F_u/Q_u` 不得与 `D_u` 的 `G_u/S_u/C_u/V_u/P_u` 共用字段语义；必要时通过显式换算展示 `C_u/V_u/P_u`。本次不声称已有 CSV、sidecar 或代码已经完成 schema migration。
 
 所有 evidence rows 保留 artifact path、SHA-256、rule version、stage、pool、condition、reference status、validity status 与 inclusion flags。缺失维度为 `not_evaluable`；不能用空值推断 success。
 
@@ -329,5 +332,6 @@ Raw risk-rate 单独保留：blind-trust/correction failure rate、undercoverage
 - 不把 P1 画像写入 C1/C2 assignment 或正式 routing profile。
 - 不把 V1 结果回流 C2。
 - 不修改历史预注册或原始工件。
-- 当前中文 Overleaf `main.tex` 和 section 文件仅作为迁移源，尚未实际迁移到本结构。
+- 当前中文 Overleaf `main.tex` 已输入八章新 section 骨架并完成本次限域修正；仍未声称旧稿全部正文、结果数值或 PDF 已完成全面迁移/编译。
+- 执行状态写作口径：planned worker range、P1 realized、C1 launched 与 C1 valid/completed 分开报告；当前 C1 launched=23、每人约至少 33 张 manual 任务、每图目标 $k\geq5$，C1 valid/completed 等待 closeout artifact。PreScreen_oos 主包 9 张，audit-only 1 张按附录口径不计入主包；主运行 unique=352，含 audit-only touched unique=353，剩余=105。
 - 旧稿逐节动作、保留内容和删除/降级决定见 `THESIS_MANUSCRIPT_MIGRATION_MAP_v1.md`。

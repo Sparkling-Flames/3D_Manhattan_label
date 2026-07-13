@@ -1,0 +1,15 @@
+{
+  "manifest_id": "model_issue_harmonization_rule_manifest_v1",
+  "schema_version": "v1",
+  "rule_version": "model_issue_harmonization_v1",
+  "status": "candidate_only",
+  "jitter_tolerance": {"metric": "max_endpoint_chebyshev_normalized", "value": 0.002},
+  "rules": {
+    "same_count_valid_topology_moved": "behavior_inferred_corner_drift",
+    "same_count_valid_topology_within_tolerance": "harmonized_acceptable",
+    "count_topology_or_order_mismatch": "structural_edit_unresolved",
+    "missing_initial_geometry": "not_evaluable",
+    "explicit_issue_precedence": true
+  },
+  "interpretation_allowed": false
+}
