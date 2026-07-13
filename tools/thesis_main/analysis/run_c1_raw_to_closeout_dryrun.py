@@ -47,6 +47,9 @@ def materialize(
     require_complete: bool = False,
     input_status: str = "dry_run",
     independence_audit_csv: Path | None = None,
+    retrospective_provenance_amendment_csv: Path | None = None,
+    temporal_event_csv: Path | None = None,
+    temporal_policy_manifest: Path | None = None,
 ) -> dict[str, Any]:
     canonical = c1_canonicalize_exports.build_canonicalization(
         export_json,
@@ -59,6 +62,7 @@ def materialize(
         require_complete=require_complete,
         input_status=input_status,
         independence_audit_csv=independence_audit_csv,
+        retrospective_provenance_amendment_csv=retrospective_provenance_amendment_csv,
     )
     gate = run_c1_closeout_dryrun_chain.materialize(
         Path(canonical["canonical_csv"]),
@@ -78,6 +82,10 @@ def materialize(
         p1_geometry_task_scores,
         p1_worker_geometry_profile,
         input_status,
+        independence_audit_csv,
+        retrospective_provenance_amendment_csv,
+        temporal_event_csv,
+        temporal_policy_manifest,
     )
     summary = {
         "canonicalization_summary": canonical,
@@ -120,6 +128,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--require-complete", action="store_true")
     parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
     parser.add_argument("--independence-audit-csv", type=Path)
+    parser.add_argument("--retrospective-provenance-amendment-csv", type=Path)
+    parser.add_argument("--temporal-event-csv", type=Path)
+    parser.add_argument("--temporal-policy-manifest", type=Path)
     args = parser.parse_args(argv)
     summary = materialize(
         args.export_json,
@@ -146,6 +157,9 @@ def main(argv: list[str] | None = None) -> int:
         require_complete=args.require_complete,
         input_status=args.input_status,
         independence_audit_csv=args.independence_audit_csv,
+        retrospective_provenance_amendment_csv=args.retrospective_provenance_amendment_csv,
+        temporal_event_csv=args.temporal_event_csv,
+        temporal_policy_manifest=args.temporal_policy_manifest,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0

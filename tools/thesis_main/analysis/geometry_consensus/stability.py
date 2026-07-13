@@ -21,12 +21,12 @@ def _mode_summary(values: list[float], *, gap_cutoff: float = 0.15) -> tuple[int
 def _core_stability(records: list[dict[str, Any]], *, grid: int = 256) -> dict[str, Any]:
     valid = [record for record in records if (record.get("geometry") or {}).get("valid")]
     pairwise = [
-        pairwise_similarity(valid[i]["geometry"], valid[j]["geometry"], grid=grid)
+        (i, j, pairwise_similarity(valid[i]["geometry"], valid[j]["geometry"], grid=grid))
         for i in range(len(valid))
         for j in range(i + 1, len(valid))
     ]
-    boundary = [value["boundary_similarity"] for value in pairwise if value.get("boundary_similarity") is not None]
-    wallwall = [value["wallwall_similarity"] for value in pairwise if value.get("wallwall_similarity") is not None]
+    boundary = [value["boundary_similarity"] for _, _, value in pairwise if value.get("boundary_similarity") is not None]
+    wallwall = [value["wallwall_similarity"] for _, _, value in pairwise if value.get("wallwall_similarity") is not None]
     boundary_mode_count = wallwall_mode_count = 0
     boundary_largest_gap = wallwall_largest_gap = None
     boundary_margin = wallwall_margin = None
@@ -34,15 +34,15 @@ def _core_stability(records: list[dict[str, Any]], *, grid: int = 256) -> dict[s
         status = "not_evaluable"
         medoid_worker = ""
     else:
-        medoid_worker = min(
-            valid,
-            key=lambda record: -float(np.mean([item["boundary_similarity"] for item in pairwise if item["boundary_similarity"] is not None])),
-        ).get("worker_id", "")
+        def scores(index: int, channel: str) -> float:
+            values = [item[channel] for left, right, item in pairwise if index in {left, right} and item.get(channel) is not None]
+            return float(np.mean(values)) if values else float("-inf")
+        boundary_scores = sorted([(scores(index, "boundary_similarity"), record.get("worker_id", "")) for index, record in enumerate(valid)], reverse=True)
+        wallwall_scores = sorted([(scores(index, "wallwall_similarity"), record.get("worker_id", "")) for index, record in enumerate(valid)], reverse=True)
+        medoid_worker = boundary_scores[0][1]
         boundary_mode_count, boundary_largest_gap = _mode_summary(boundary)
         wallwall_mode_count, wallwall_largest_gap = _mode_summary(wallwall)
         status = "multimodal_candidate" if boundary_mode_count > 1 or wallwall_mode_count > 1 else "stable_candidate"
-        boundary_scores = sorted([(float(np.mean([item["boundary_similarity"] for item in pairwise if item["boundary_similarity"] is not None])), record.get("worker_id", "")) for record in valid], reverse=True)
-        wallwall_scores = sorted([(float(np.mean([item["wallwall_similarity"] for item in pairwise if item["wallwall_similarity"] is not None])), record.get("worker_id", "")) for record in valid], reverse=True)
         boundary_margin = boundary_scores[0][0] - boundary_scores[1][0] if len(boundary_scores) > 1 else None
         wallwall_margin = wallwall_scores[0][0] - wallwall_scores[1][0] if len(wallwall_scores) > 1 else None
     return {

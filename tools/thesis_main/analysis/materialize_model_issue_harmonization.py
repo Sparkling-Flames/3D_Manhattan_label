@@ -63,10 +63,12 @@ def harmonize_model_issue(worker_corners: Any, initial_corners: Any, *, explicit
     return _result(source="legacy_behavior_inferred", issue="acceptable" if distance <= jitter_tolerance else "corner_drift", reason="within_jitter" if distance <= jitter_tolerance else "beyond_jitter", provenance="passed", order="passed", distance=distance)
 
 
-def materialize_model_issue_harmonization(export_paths: list[Path], geometry_jsonl: Path, output_dir: Path, *, quality_csv: Path | None = None, input_status: str = "dry_run") -> dict[str, Any]:
+def materialize_model_issue_harmonization(export_paths: list[Path], geometry_jsonl: Path, output_dir: Path, *, retrospective_amendment_csv: Path | None = None, quality_csv: Path | None = None, input_status: str = "dry_run") -> dict[str, Any]:
     meta_path, provenance_path = output_dir / "c1_canonical_meta_observations.csv", output_dir / "c1_model_artifact_provenance.csv"
     meta = list(csv.DictReader(meta_path.open(encoding="utf-8-sig"))) if meta_path.exists() else []
     provenance = list(csv.DictReader(provenance_path.open(encoding="utf-8-sig"))) if provenance_path.exists() else []
+    amendments = list(csv.DictReader(retrospective_amendment_csv.open(encoding="utf-8-sig"))) if retrospective_amendment_csv and retrospective_amendment_csv.exists() else []
+    amendment_by_key = {(item.get("project_id", ""), item.get("ls_runtime_task_id", ""), item.get("initialization_artifact_id", "")): item for item in amendments}
     geometry = [json.loads(line) for line in geometry_jsonl.read_text(encoding="utf-8").splitlines() if line.strip()] if geometry_jsonl.exists() else []
     geometry_by_annotation = {row.get("canonical_annotation_id", ""): row for row in geometry}
     predictions_by_runtime_task: dict[str, list[dict[str, Any]]] = {}
@@ -76,23 +78,27 @@ def materialize_model_issue_harmonization(export_paths: list[Path], geometry_jso
             predictions = [item for item in task.get("predictions") or [] if isinstance(item, dict)]
             if predictions:
                 predictions_by_runtime_task[str(task.get("id", ""))] = predictions
-    dependency_paths = [meta_path, geometry_jsonl, provenance_path, *export_paths]
-    bundle = dependency_bundle(dependency_paths, rule_version=RULE_VERSION)
+    dependency_paths = [meta_path, geometry_jsonl, provenance_path, *export_paths, *([retrospective_amendment_csv] if retrospective_amendment_csv else [])]
     rows = []
     for row in meta:
         choices = json.loads(row.get("choice_map_json") or "{}")
         selected = choices.get("model_issue", [])
         explicit = ";".join(selected)
         source = geometry_by_annotation.get(row.get("canonical_annotation_id", ""), {})
-        prov = next((item for item in provenance if item.get("canonical_annotation_id") == row.get("canonical_annotation_id") or (item.get("logical_task_id") == row.get("task_id") and item.get("ls_runtime_task_id") == row.get("ls_runtime_task_id") and item.get("project_id") == row.get("project_id"))), {})
+        prov = next((item for item in provenance if item.get("canonical_annotation_id") == row.get("canonical_annotation_id") or ((item.get("logical_task_id") or item.get("task_id")) == row.get("task_id") and item.get("ls_runtime_task_id") == row.get("ls_runtime_task_id") and item.get("project_id") == row.get("project_id"))), {})
         prov_complete = prov.get("provenance_status") == "complete" and prov.get("prediction_selection_status") not in {"ambiguous_multiple_predictions", "missing"}
+        amendment = amendment_by_key.get((row.get("project_id", ""), row.get("ls_runtime_task_id", ""), prov.get("initialization_artifact_id", "")), {})
+        if amendment:
+            required = ("model_version", "checkpoint_sha256", "inference_config_sha256", "preprocess_postprocess_sha256", "prediction_payload_json")
+            prov_complete = all(amendment.get(field, "") for field in required)
         candidates = predictions_by_runtime_task.get(row.get("ls_runtime_task_id", ""), [])
         selected_prediction = next((item for item in candidates if str(item.get("initialization_artifact_id") or item.get("id")) == prov.get("initialization_artifact_id")), None) if prov.get("initialization_artifact_id") else (candidates[0] if len(candidates) == 1 else None)
-        initial = extract_data(selected_prediction.get("result", []))[0] if selected_prediction else []
+        initial_payload = json.loads(amendment["prediction_payload_json"]) if amendment.get("prediction_payload_json") else (selected_prediction.get("result", []) if selected_prediction else [])
+        initial = extract_data(initial_payload)[0]
         result = harmonize_model_issue(source.get("corners_px", []), initial, explicit_issue=explicit, condition=row.get("condition", ""), provenance_complete=prov_complete, schema_family=row.get("schema_family", "legacy"), ui_schema_version=row.get("ui_schema_version") or row.get("ui_version") or row.get("schema_version", ""), instruction_version=row.get("instruction_version", ""))
-        rows.append({**sidecar_common(source_artifact=str(meta_path), source_sha256=sha256_file(meta_path), stage="C1", pool=row.get("dataset_group", ""), condition=row.get("condition", ""), validity_status="dry_run" if input_status != "formal" else ("valid" if result["assertion_source"] == "explicit_worker_label" else "not_evaluable"), rule_version=RULE_VERSION, interpretation_allowed=False, dependency_paths=dependency_paths), "task_id": row.get("task_id", ""), "base_task_id": row.get("base_task_id", ""), "worker_id": row.get("worker_id", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""), "raw_model_issue_json": json.dumps(selected), "initialization_artifact_id": prov.get("initialization_artifact_id", ""), **result})
-    write_csv_rows(output_dir / "model_issue_harmonization_C1.csv", rows, COMMON_SIDEcar_FIELDS + ["task_id", "base_task_id", "worker_id", "canonical_annotation_id", "raw_model_issue_json", "initialization_artifact_id", "assertion_source", "harmonized_issue", "inference_reason", "provenance_gate", "order_gate", "max_endpoint_chebyshev_normalized"])
-    return {"n_rows": len(rows), "n_behavior_inferred": sum(row["assertion_source"] == "legacy_behavior_inferred" for row in rows), "dry_run": input_status != "formal", "interpretation_allowed": False}
+        rows.append({**sidecar_common(source_artifact=str(meta_path), source_sha256=sha256_file(meta_path), stage="C1", pool=row.get("dataset_group", ""), condition=row.get("condition", ""), validity_status="dry_run" if input_status != "formal" else ("valid" if result["assertion_source"] == "explicit_worker_label" else "not_evaluable"), rule_version=RULE_VERSION, interpretation_allowed=False, dependency_paths=dependency_paths), "task_id": row.get("task_id", ""), "base_task_id": row.get("base_task_id", ""), "project_id": row.get("project_id", ""), "ls_runtime_task_id": row.get("ls_runtime_task_id", ""), "worker_id": row.get("worker_id", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""), "raw_model_issue_json": json.dumps(selected), "initialization_artifact_id": prov.get("initialization_artifact_id", ""), "retrospective_amendment_status": "joined_exact_project_runtime_artifact" if amendment else "not_joined", "retrospective_amendment_source": str(retrospective_amendment_csv) if amendment else "", **result})
+    write_csv_rows(output_dir / "model_issue_harmonization_C1.csv", rows, COMMON_SIDEcar_FIELDS + ["task_id", "base_task_id", "project_id", "ls_runtime_task_id", "worker_id", "canonical_annotation_id", "raw_model_issue_json", "initialization_artifact_id", "retrospective_amendment_status", "retrospective_amendment_source", "assertion_source", "harmonized_issue", "inference_reason", "provenance_gate", "order_gate", "max_endpoint_chebyshev_normalized"])
+    return {"n_rows": len(rows), "n_behavior_inferred": sum(row["assertion_source"] == "legacy_behavior_inferred" for row in rows), "n_retrospective_amendments_joined": sum(bool(row["retrospective_amendment_source"]) for row in rows), "dry_run": input_status != "formal", "interpretation_allowed": False}
 
 
 if __name__ == "__main__":

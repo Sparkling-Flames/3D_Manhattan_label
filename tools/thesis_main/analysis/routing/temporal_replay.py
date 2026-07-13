@@ -72,17 +72,20 @@ def replay_temporal_events(events: Iterable[dict[str, Any]], *, policy_by_fold: 
     return traces
 
 
-def materialize_temporal_replay(event_csv: Path | None, output_csv: Path, *, policy_by_fold: dict[int, dict[str, Any]] | None = None, input_status: str = "dry_run") -> dict[str, Any]:
+def materialize_temporal_replay(event_csv: Path | None, output_csv: Path, *, policy_manifest: Path | None = None, policy_by_fold: dict[int, dict[str, Any]] | None = None, input_status: str = "dry_run") -> dict[str, Any]:
     if input_status != "formal" or event_csv is None or not event_csv.exists():
         write_csv_rows(output_csv, [], COMMON_SIDEcar_FIELDS + ["event_id", "arrived_at", "task_id", "base_task_id", "condition", "canonical_annotation_id", "crossfit_fold", "policy_fit_excludes_fold", "policy_validation_status", "policy_artifact_id", "policy_artifact_sha256", "policy_artifact_path", "policy_rule_version", "policy_fit_folds_json", "policy_fit_base_task_ids_json", "policy_fit_base_task_count", "prior_legal_arrivals", "a", "e", "u", "replicated_explicit_conflict", "geometry_disagreement", "provenance_status", "fallback", "candidate_worker_id", "action", "action_reason", "formal_assignment_generated"])
         return {"status": "not_evaluable_missing_formal_c1", "n_events": 0, "formal_assignment_generated": False}
+    if policy_manifest:
+        payload = json.loads(policy_manifest.read_text(encoding="utf-8"))
+        policy_by_fold = {int(key): value for key, value in payload.items()}
     if not policy_by_fold:
         write_csv_rows(output_csv, [], COMMON_SIDEcar_FIELDS + ["event_id", "arrived_at", "task_id", "base_task_id", "condition", "canonical_annotation_id", "candidate_worker_id", "selected_worker_id", "prior_evidence_json", "action", "action_reason"])
         return {"status": "not_evaluable_missing_policy_artifact", "n_events": 0, "formal_assignment_generated": False}
     with event_csv.open("r", newline="", encoding="utf-8-sig") as handle:
         traces = replay_temporal_events(csv.DictReader(handle), policy_by_fold=policy_by_fold, input_status=input_status)
     write_csv_rows(output_csv, traces, COMMON_SIDEcar_FIELDS + ["event_id", "arrived_at", "task_id", "base_task_id", "condition", "canonical_annotation_id", "crossfit_fold", "policy_fit_excludes_fold", "policy_validation_status", "policy_artifact_id", "policy_artifact_sha256", "policy_artifact_path", "policy_rule_version", "policy_fit_folds_json", "policy_fit_base_task_ids_json", "policy_fit_base_task_count", "prior_legal_arrivals", "prior_evidence_json", "a", "e", "u", "replicated_explicit_conflict", "geometry_disagreement", "provenance_status", "fallback", "candidate_worker_id", "selected_worker_id", "action", "action_reason", "formal_assignment_generated"])
-    return {"status": "candidate_only", "n_events": len(traces), "source_sha256": sha256_file(event_csv), "formal_assignment_generated": False}
+    return {"status": "candidate_only", "n_events": len(traces), "source_sha256": sha256_file(event_csv), "policy_manifest_sha256": sha256_file(policy_manifest), "formal_assignment_generated": False}
 
 
 if __name__ == "__main__":
