@@ -312,7 +312,7 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert main["undercoverage_failure_rate"] == ""
     assert main["coverage_reliability_u"] == ""
     assert main["T_u_direction"] == "higher_is_worse_failure_rate"
-    assert main["n_process_support"] == "10"
+    assert main["n_process_support"] == "0"
     assert any(row["family"] == "undercoverage_failure" and row["n_observed"] == "0" and row["interpretation_level"] == "none" and row["interpretation_allowed"] == "false" for row in family)
     assert not any(row["subfamily"] == "minimal_space_bias" for row in subfamily)
     assert {row["support_status"] for row in predictive} == {"not_evaluable"}
@@ -389,13 +389,13 @@ def test_worker_profile_sidecar_confidence_and_interpretation_levels(tmp_path: P
     assert "diagnostic_profile_confidence_from_non_protocol_dimensions" in main["profile_confidence_notes"]
     assert family["geometry_quality_failure"]["interpretation_level"] == "none"
     assert family["semi_correction_failure"]["interpretation_level"] == "none"
-    assert family["process_failure"]["interpretation_level"] == "weak_descriptive"
+    assert family["process_failure"]["interpretation_level"] == "none"
     assert family["undercoverage_failure"]["interpretation_level"] == "none"
     assert family["undercoverage_failure"]["interpretation_allowed"] == "false"
     assert "normal_geometry_degraded" not in subfamily
     assert summary["family_interpretation_level_counts"]["sufficient_descriptive"] == 0
     assert summary["family_interpretation_level_counts"]["moderate_descriptive"] == 0
-    assert summary["family_interpretation_level_counts"]["weak_descriptive"] >= 1
+    assert summary["family_interpretation_level_counts"]["weak_descriptive"] == 0
 
 
 def test_worker_profile_sidecar_reads_p1_artifacts_without_writeback(tmp_path: Path) -> None:

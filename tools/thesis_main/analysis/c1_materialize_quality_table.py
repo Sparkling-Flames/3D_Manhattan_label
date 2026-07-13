@@ -116,6 +116,9 @@ QUALITY_FIELDS = [
     "choice_map_json",
     "canonical_registry_sha256",
     "source_export_sha256",
+    "annotation_created_at",
+    "created_at",
+    "arrived_at",
     "raw_result_json",
     "raw_response",
     "harmonized_state",
@@ -329,6 +332,9 @@ def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: di
                 "choice_map_json": safe(row.get("choice_map_json")),
                 "canonical_registry_sha256": safe(row.get("canonical_registry_sha256")),
                 "source_export_sha256": safe(row.get("source_export_sha256") or row.get("source_sha256")),
+                "annotation_created_at": safe(row.get("annotation_created_at")),
+                "created_at": safe(row.get("created_at")),
+                "arrived_at": safe(row.get("arrived_at")),
                 "raw_result_json": safe(row.get("raw_result_json")),
                 "raw_response": safe(row.get("raw_result_json") or row.get("choice_map_json")),
                 "harmonized_state": safe(row.get("harmonized_state")),
@@ -377,6 +383,8 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
     meta_fresh, meta_freshness_reasons = _canonical_meta_freshness(canonical_csv, meta_rows)
     rows = build_quality_rows(meta_rows if meta_fresh else read_csv(canonical_csv), _inventory_flags(candidate_inventory_csv))
     harmonization_csv = output_dir / "model_issue_harmonization_C1.csv"
+    harmonization_summary_path = output_dir / "model_issue_harmonization_C1.summary.json"
+    harmonization_summary = json.loads(harmonization_summary_path.read_text(encoding="utf-8")) if harmonization_summary_path.exists() else {}
     harmonization_rows = read_csv(harmonization_csv) if harmonization_csv.exists() else []
     harmonized = {safe(item.get("canonical_annotation_id")): item for item in harmonization_rows if safe(item.get("canonical_annotation_id"))}
     harmonization_ids = [safe(item.get("canonical_annotation_id")) for item in harmonization_rows if safe(item.get("canonical_annotation_id"))]
@@ -419,6 +427,12 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
     write_json(audit_json, {**audit, "sidecar_only_no_dt_backflow": True})
     three_state_summary = materialize_meta_label_three_state(quality_csv, output_dir, input_status=input_status)
 
+    blockers = (["canonical_meta_missing_or_stale"] if not meta_fresh else []) + (["harmonization_missing_or_stale"] if meta_fresh and not harmonization_fresh else [])
+    blockers += [f"amendment_{key}" for key in (harmonization_summary.get("amendment_blockers") or {})]
+    if any(safe(row.get("independence_status")) not in {"independent", "non_independent_confirmed"} for row in rows):
+        blockers.append("independence_not_evaluable")
+    if any(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows):
+        blockers.append("missing_core_used_for_r_u_flag")
     summary = {
         "input_csv": str(canonical_csv),
         "canonical_meta_csv": str(canonical_meta_csv),
@@ -446,7 +460,9 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         "exact_annotation_primary_count": sum(safe(row.get("active_time_integrity_status")) == "exact_annotation_valid" and truthy(row.get("primary_active_time_eligible")) for row in rows),
         "task_level_sensitivity_count": sum(safe(row.get("active_time_integrity_status")) == "task_level_fallback" and truthy(row.get("sensitivity_active_time_eligible")) for row in rows),
         "candidate_inventory_csv": str(candidate_inventory_csv) if candidate_inventory_csv else "",
-        "blockers": (["canonical_meta_missing_or_stale"] if not meta_fresh else []) + (["harmonization_missing_or_stale"] if meta_fresh and not harmonization_fresh else []) + (["independence_not_evaluable"] if any(safe(row.get("independence_status")) not in {"independent", "non_independent_confirmed"} for row in rows) else []) + (["missing_core_used_for_r_u_flag"] if any(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows) else []),
+        "harmonization_summary": harmonization_summary,
+        "amendment_blocker_count": sum(int(value or 0) for value in (harmonization_summary.get("amendment_blockers") or {}).values()),
+        "blockers": blockers,
         "r_u_estimated": False,
         "dt_backflow": False,
     }
