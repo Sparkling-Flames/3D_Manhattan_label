@@ -13,14 +13,24 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis.c1_live_collection_monitor import bool_text, read_csv, safe, truthy, write_csv, write_json
+from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 from tools.thesis_main.registry.materialize_meta_label_consensus_summary import build_summary
 from tools.thesis_main.registry.materialize_meta_label_three_state_sidecars import materialize_meta_label_three_state
 
 DEFAULT_INPUT = Path("analysis_results/calibration_c1_closeout/c1_canonical_annotations.csv")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
 DEFAULT_CORE_DRAFT = Path("analysis_results/calibration_rebuild_20260702/calibration_core_draft_v3_1.csv")
+RULE_VERSION = "c1_quality_table_v3"
 
 QUALITY_FIELDS = [
+    "source_artifact",
+    "source_sha256",
+    "dependency_bundle_id",
+    "stage",
+    "pool",
+    "validity_status",
+    "rule_version",
+    "interpretation_allowed",
     "round_id",
     "task_id",
     "base_task_id",
@@ -95,10 +105,28 @@ QUALITY_FIELDS = [
     "canonical_eligibility_status",
     "canonical_eligibility_reason",
     "schema_interpretable",
+    "schema_family",
     "schema_error",
     "difficulty_present",
     "model_issue_present",
     "choice_map_json",
+    "canonical_registry_sha256",
+    "source_export_sha256",
+    "raw_result_json",
+    "raw_response",
+    "harmonized_state",
+    "assertion_source",
+    "ui_schema_version",
+    "model_artifact_id",
+    "provenance_status",
+    "prediction_selection_status",
+    "exclusion_reason",
+    "independence_status",
+    "parent_annotation_id",
+    "parent_owner_id",
+    "parent_cross_owner",
+    "parent_derived",
+    "copy_risk_status",
 ]
 
 
@@ -194,6 +222,14 @@ def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: di
         model_issue = _choice(row, "model_issue")
         out.append(
             {
+                "source_artifact": "",
+                "source_sha256": "",
+                "dependency_bundle_id": "",
+                "stage": "C1",
+                "pool": safe(row.get("dataset_group")),
+                "validity_status": safe(row.get("validity_status")),
+                "rule_version": RULE_VERSION,
+                "interpretation_allowed": "false",
                 "round_id": safe(row.get("round_id")) or "C1",
                 "task_id": safe(row.get("task_id")),
                 "base_task_id": safe(row.get("base_task_id")),
@@ -265,24 +301,69 @@ def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: di
                 "used_for_rq2": _used_for_rq2(row),
                 "assigned_expected": truthy(row.get("assigned_expected", True)),
                 "canonical_source_sha256": safe(row.get("source_sha256")),
-                "canonical_eligibility_status": safe(row.get("canonical_eligibility_status")) or "valid",
+                "canonical_eligibility_status": safe(row.get("canonical_eligibility_status")) or "not_evaluable",
                 "canonical_eligibility_reason": safe(row.get("canonical_eligibility_reason")),
                 "schema_interpretable": safe(row.get("schema_interpretable")) or "true",
+                "schema_family": safe(row.get("schema_family")),
                 "schema_error": safe(row.get("schema_error")),
                 "difficulty_present": safe(row.get("difficulty_present")),
                 "model_issue_present": safe(row.get("model_issue_present")),
                 "choice_map_json": safe(row.get("choice_map_json")),
+                "canonical_registry_sha256": safe(row.get("canonical_registry_sha256")),
+                "source_export_sha256": safe(row.get("source_export_sha256") or row.get("source_sha256")),
+                "raw_result_json": safe(row.get("raw_result_json")),
+                "raw_response": safe(row.get("raw_result_json") or row.get("choice_map_json")),
+                "harmonized_state": safe(row.get("harmonized_state")),
+                "assertion_source": safe(row.get("assertion_source")),
+                "ui_schema_version": safe(row.get("ui_version") or row.get("schema_version")),
+                "model_artifact_id": safe(row.get("initialization_artifact_id") or row.get("model_artifact_id")),
+                "provenance_status": safe(row.get("provenance_status")),
+                "prediction_selection_status": safe(row.get("prediction_selection_status")),
+                "exclusion_reason": safe(row.get("canonical_eligibility_reason")),
+                "independence_status": safe(row.get("independence_status")) or "not_evaluable",
+                "parent_annotation_id": safe(row.get("parent_annotation_id")),
+                "parent_owner_id": safe(row.get("parent_owner_id")),
+                "parent_cross_owner": safe(row.get("parent_cross_owner")),
+                "parent_derived": safe(row.get("parent_derived")),
+                "copy_risk_status": safe(row.get("copy_risk_status")),
             }
         )
     return out
 
 
-def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, candidate_inventory_csv: Path | None = DEFAULT_CORE_DRAFT) -> dict[str, Any]:
+def _canonical_meta_freshness(canonical_csv: Path, meta_rows: list[dict[str, str]]) -> tuple[bool, list[str]]:
+    if not meta_rows:
+        return False, ["meta_missing"]
+    registry_rows = read_csv(canonical_csv)
+    registry_ids = [safe(row.get("canonical_annotation_id")) for row in registry_rows if safe(row.get("canonical_annotation_id"))]
+    meta_ids = [safe(row.get("canonical_annotation_id")) for row in meta_rows if safe(row.get("canonical_annotation_id"))]
+    reasons: list[str] = []
+    if len(registry_ids) != len(meta_ids) or set(registry_ids) != set(meta_ids) or len(set(meta_ids)) != len(meta_ids):
+        reasons.append("annotation_id_bijection_mismatch")
+    canonical_sha = sha256_file(canonical_csv)
+    for row in meta_rows:
+        if safe(row.get("canonical_registry_sha256")) != canonical_sha:
+            reasons.append("canonical_registry_sha_mismatch")
+        source = Path(safe(row.get("source_artifact")))
+        if not source.is_absolute():
+            source = canonical_csv.parent / source
+        source_sha = safe(row.get("source_sha256"))
+        if not source.exists() or not source_sha or sha256_file(source) != source_sha or (safe(row.get("source_export_sha256")) and safe(row.get("source_export_sha256")) != source_sha):
+            reasons.append("raw_export_sha_mismatch")
+    return not reasons, sorted(set(reasons))
+
+
+def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, candidate_inventory_csv: Path | None = DEFAULT_CORE_DRAFT, *, input_status: str = "dry_run") -> dict[str, Any]:
     canonical_meta_csv = output_dir / "c1_canonical_meta_observations.csv"
-    canonical_sha = __import__("hashlib").sha256(canonical_csv.read_bytes()).hexdigest()
     meta_rows = read_csv(canonical_meta_csv) if canonical_meta_csv.exists() else []
-    meta_fresh = bool(meta_rows) and all(safe(row.get("canonical_registry_sha256")) == canonical_sha for row in meta_rows)
+    meta_fresh, meta_freshness_reasons = _canonical_meta_freshness(canonical_csv, meta_rows)
     rows = build_quality_rows(meta_rows if meta_fresh else read_csv(canonical_csv), _inventory_flags(candidate_inventory_csv))
+    quality_source_sha = sha256_file(canonical_meta_csv) if canonical_meta_csv.exists() else ""
+    for row in rows:
+        row["source_artifact"] = str(canonical_meta_csv)
+        row["source_sha256"] = quality_source_sha
+        row["dependency_bundle_id"] = __import__("hashlib").sha256(f"{canonical_meta_csv}|{quality_source_sha}|C1|{RULE_VERSION}".encode("utf-8")).hexdigest()
+        row["validity_status"] = "dry_run" if input_status != "formal" else ("valid" if row.get("canonical_eligibility_status") == "valid" else "not_evaluable")
     quality_csv = output_dir / "c1_quality_annotations.csv"
     write_csv(quality_csv, rows, QUALITY_FIELDS)
 
@@ -293,12 +374,14 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
     consensus_csv.parent.mkdir(parents=True, exist_ok=True)
     consensus.to_csv(consensus_csv, index=False, encoding="utf-8")
     write_json(audit_json, {**audit, "sidecar_only_no_dt_backflow": True})
-    three_state_summary = materialize_meta_label_three_state(quality_csv, output_dir)
+    three_state_summary = materialize_meta_label_three_state(quality_csv, output_dir, input_status=input_status)
 
     summary = {
         "input_csv": str(canonical_csv),
         "canonical_meta_csv": str(canonical_meta_csv),
         "canonical_meta_fresh": meta_fresh,
+        "canonical_meta_freshness_reasons": meta_freshness_reasons,
+        "input_status": input_status,
         "quality_csv": str(quality_csv),
         "meta_label_consensus_csv": str(consensus_csv),
         "meta_label_consensus_audit_json": str(audit_json),

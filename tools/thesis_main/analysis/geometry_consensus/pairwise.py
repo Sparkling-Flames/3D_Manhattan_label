@@ -48,14 +48,21 @@ def wallwall_similarity(left: dict[str, Any], right: dict[str, Any]) -> float | 
 
 
 def pairwise_similarity(left: dict[str, Any], right: dict[str, Any], *, grid: int = 256) -> dict[str, Any]:
-    compatible = bool(left.get("valid") and right.get("valid") and left.get("width") == right.get("width") and left.get("height") == right.get("height") and left.get("n_pairs") == right.get("n_pairs"))
+    def cyclic_order_valid(geometry: dict[str, Any]) -> bool:
+        xs = [float(value) for value in geometry.get("x_event_positions") or []]
+        return len(xs) >= 2 and len(xs) == len(set(xs))
+
+    order_compatible = bool(cyclic_order_valid(left) and cyclic_order_valid(right) and left.get("width") == right.get("width") and left.get("height") == right.get("height"))
+    compatible = bool(left.get("valid") and right.get("valid") and order_compatible)
     boundary = boundary_similarity(left, right, grid=grid) if compatible else None
     wallwall = wallwall_similarity(left, right) if compatible else None
     return {
         "metric_compatible": compatible,
-        "order_compatible": compatible,
+        "order_compatible": order_compatible,
         "boundary_similarity": boundary,
         "wallwall_similarity": wallwall,
+        "q_boundary": boundary,
+        "q_wallwall": wallwall,
         "overall_similarity": None,  # retained only as an empty compatibility column; channels must not be merged.
         "left_pair_count": int(left.get("n_pairs", 0)),
         "right_pair_count": int(right.get("n_pairs", 0)),

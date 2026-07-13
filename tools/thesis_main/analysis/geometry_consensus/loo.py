@@ -12,7 +12,8 @@ def leave_one_out(records: list[dict[str, Any]], *, grid: int = 256) -> list[dic
     out = []
     for index, record in enumerate(records):
         held_out = record.get("geometry") or {}
-        peers = [other for j, other in enumerate(records) if j != index and (other.get("geometry") or {}).get("valid")]
+        held_out_worker = str(record.get("worker_id", ""))
+        peers = [other for j, other in enumerate(records) if j != index and str(other.get("worker_id", "")) != held_out_worker and (other.get("geometry") or {}).get("valid")]
         similarities = [pairwise_similarity(held_out, other.get("geometry") or {}, grid=grid) for other in peers]
         boundary = [row["boundary_similarity"] for row in similarities if row.get("boundary_similarity") is not None]
         wallwall = [row["wallwall_similarity"] for row in similarities if row.get("wallwall_similarity") is not None]
@@ -27,6 +28,8 @@ def leave_one_out(records: list[dict[str, Any]], *, grid: int = 256) -> list[dic
                 "valid_k": n_valid,
                 "loo_boundary_median": statistics.median(boundary) if boundary else None,
                 "loo_wallwall_median": statistics.median(wallwall) if wallwall else None,
+                "q_boundary_median": statistics.median(boundary) if boundary else None,
+                "q_wallwall_median": statistics.median(wallwall) if wallwall else None,
                 "loo_boundary_values_json": boundary,
                 "loo_wallwall_values_json": wallwall,
                 "interpretation_allowed": False,

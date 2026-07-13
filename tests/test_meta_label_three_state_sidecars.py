@@ -1,4 +1,4 @@
-from tools.thesis_main.registry.materialize_meta_label_three_state_sidecars import build_tag_observations, build_three_state_summary
+from tools.thesis_main.registry.materialize_meta_label_three_state_sidecars import build_response_style_diagnostics, build_tag_observations, build_three_state_summary
 
 
 def test_concrete_tags_distinguish_positive_negative_and_zero() -> None:
@@ -35,3 +35,21 @@ def test_missing_and_schema_errors_are_na_not_zero() -> None:
     observations = build_tag_observations(rows, source_artifact="fixture", source_sha256="sha")
     difficulty = [row for row in observations if row["tag_family"] == "difficulty" and row["tag_name"] == "occlusion"]
     assert {row["na_reason"] for row in difficulty} == {"n_missing", "n_schema_uninterpretable"}
+
+
+def test_state_ladder_and_explicit_balance_are_fixed() -> None:
+    rows = [{"task_id": "t1", "worker_id": f"p{index}", "difficulty": "occlusion"} for index in range(4)]
+    rows += [{"task_id": "t1", "worker_id": "n1", "difficulty": "trivial"}]
+    summary = build_three_state_summary(build_tag_observations(rows, source_artifact="fixture", source_sha256="sha"))
+    occlusion = next(row for row in summary if row["tag_name"] == "occlusion")
+    assert occlusion["task_tag_state"] == "high_replication_positive"
+    assert occlusion["explicit_balance"] == 0.8
+
+
+def test_response_style_is_family_specific_and_non_routing() -> None:
+    rows = [{"worker_id": "w1", "difficulty": "occlusion;seam", "model_issue": "acceptable"}, {"worker_id": "w1", "difficulty": "trivial", "model_issue": "corner_drift"}]
+    output = build_response_style_diagnostics(rows, source_artifact="fixture", source_sha256="sha")
+    by_family = {row["label_family"]: row for row in output}
+    assert by_family["difficulty"]["multi_select_rate_given_specific"] == 1.0
+    assert by_family["model_issue"]["acceptable_rate"] == 0.5
+    assert all(row["routing_eligible"] == "false" for row in output)

@@ -21,6 +21,9 @@ def test_profile_consumes_three_state_rows_and_requires_scene_id(tmp_path: Path)
     summary = materialize_worker_scene_profile_candidates(observations, tmp_path)
     profiles = list(csv.DictReader((tmp_path / "worker_scene_profile_candidates_C1.csv").open(encoding="utf-8")))
     assert summary["n_missing_scene_rows"] == 1
-    assert profiles[0]["scene_profile_candidate"] == "broad"
-    assert profiles[0]["profile_geometry_status"] == "fallback_global_reliability"
+    assert profiles[0]["scene_profile_candidate"] == "insufficient_support"
+    assert profiles[0]["support_status"] == "insufficient_support"
+    assert profiles[0]["n_task_broad"] == "0"
+    assert profiles[0]["profile_geometry_status"] == "insufficient_peer_support"
+    assert profiles[0]["fallback"] == "global_reliability"
     assert profiles[0]["routing_eligible"] == "false"

@@ -37,9 +37,9 @@ def test_canonical_evidence_sidecars_keep_dry_run_explicit(tmp_path: Path) -> No
     )
     canonical = tmp_path / "c1_canonical_annotations.csv"
     with canonical.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["source_export", "project_id", "ls_runtime_task_id", "worker_id", "raw_canonical_annotation_id", "canonical_annotation_id", "geometry_hash", "parse_error"])
+        writer = csv.DictWriter(handle, fieldnames=["source_export", "project_id", "ls_runtime_task_id", "worker_id", "raw_canonical_annotation_id", "canonical_annotation_id", "geometry_hash", "parse_error", "independence_status"])
         writer.writeheader()
-        writer.writerow({"source_export": str(export), "project_id": "2", "ls_runtime_task_id": "11", "worker_id": "7", "raw_canonical_annotation_id": "101", "canonical_annotation_id": "canon", "geometry_hash": "hash", "parse_error": ""})
+        writer.writerow({"source_export": str(export), "project_id": "2", "ls_runtime_task_id": "11", "worker_id": "7", "raw_canonical_annotation_id": "101", "canonical_annotation_id": "canon", "geometry_hash": "hash", "parse_error": "", "independence_status": "independent"})
 
     summary = materialize_canonical_evidence([export], canonical, tmp_path)
     assert summary["dry_run"] is True

@@ -32,7 +32,7 @@
 - `tools/paper_b/`
   - Paper B 工具。当前包括 `validate_b0_relabel_audit.py`；后续 B0/B1/B2 训练、cue、bilayout、审计脚本只进本目录。
 - `tools/label_studio/`
-  - 三条线共享的 Label Studio XML、3D viewer、server/CORS、COS/upload、import/build helper 和 `official/`。
+  - 三条线共享的 Label Studio XML、3D viewer、server/CORS、COS/upload、import/build helper 和 `official/`。历史 C1 XML 保持原语义；C2/Stage3 未来语义使用 `label_studio_view_config_c2_future.xml` 与英文对应文件；冻结 SHA 记录在 `tools/label_studio/label_studio_c1_xml_freeze_manifest_v1.json`。
   - `vis_3d_pre_m15_19_2_backup.html`：commit `f6d53b0` 的 viewer 原样备份，仅用于回滚/对照，不是运行时入口。
   - 云服务器运行时 URL `/tools/vis_3d.html` 保持兼容，这是部署路由，不代表源码仍在 `tools/` 根目录。
 - `tools/legacy/`、`tools/legacy_server/`、`tools/backups/`
