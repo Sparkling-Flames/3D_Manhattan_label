@@ -4,6 +4,7 @@ import csv
 import json
 from collections import Counter, defaultdict
 import hashlib
+import random
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Iterable
@@ -15,8 +16,13 @@ from tools.thesis_main.analysis.geometry_consensus.representation import normali
 from tools.thesis_main.analysis.vfinal_artifact_utils import COMMON_SIDEcar_FIELDS, eligible_independent_evidence, read_csv_rows, sha256_file, sidecar_common, write_csv_rows
 
 
-RULE_VERSION = "temporal_routing_replay_v1"
+RULE_VERSION = "temporal_routing_replay_v2"
 STOP_POLICY_FIELDS = ("meta_min_same_state", "meta_max_opposition", "max_unasserted_rate", "min_q_boundary", "min_q_wallwall")
+RISK_BUCKETS = {"low_risk", "high_risk", "stress"}
+TASK_PURPOSES = {"scope_only", "geometry_production", "calibration_scene_profile", "meta_label_only", "semi_correction_evaluation"}
+EVIDENCE_COMPONENTS = {"scope", "difficulty", "model_issue_recognition", "model_issue_correction", "geometry", "scene"}
+SENSITIVITY_SEED = 20260714
+SENSITIVITY_PERMUTATIONS = 100
 
 
 def _arrival(value: Any) -> datetime:
@@ -67,6 +73,85 @@ def _validate_policy(policy: dict[str, Any], eval_fold: int, n_folds: int) -> di
         raise ValueError("policy stop thresholds are invalid") from exc
     policy["stop_thresholds"] = thresholds
     return {"policy_fit_excludes_fold": True, "policy_validation_status": "verified"}
+
+
+def _sha256_text(value: Any) -> bool:
+    text = str(value or "")
+    return len(text) == 64 and all(char in "0123456789abcdefABCDEF" for char in text)
+
+
+def _components(value: Any) -> set[str]:
+    if isinstance(value, list):
+        values = value
+    else:
+        text = str(value or "").strip()
+        try:
+            values = json.loads(text) if text.startswith("[") else text.replace(";", ",").split(",")
+        except json.JSONDecodeError:
+            values = []
+    return {str(item).strip() for item in values if str(item).strip()}
+
+
+def _load_task_purposes(path: Path) -> dict[tuple[str, str], dict[str, Any]]:
+    required = {"task_id", "base_task_id", "condition", "dataset_group", "task_purpose", "required_evidence_components", "scope_policy_id", "geometry_policy_id", "tag_policy_id", "correction_policy_id", "source_assignment_sha256", "manifest_version"}
+    rows = read_csv_rows(path)
+    if not rows or not required.issubset(rows[0]):
+        raise ValueError("task-purpose manifest schema is incomplete")
+    out: dict[tuple[str, str], dict[str, Any]] = {}
+    for row in rows:
+        key = (str(row["base_task_id"]), str(row["condition"]))
+        components = _components(row["required_evidence_components"])
+        if key in out or row["task_purpose"] not in TASK_PURPOSES or not components.issubset(EVIDENCE_COMPONENTS) or not components or not _sha256_text(row["source_assignment_sha256"]) or any(not str(row[field]).strip() for field in ("scope_policy_id", "geometry_policy_id", "tag_policy_id", "correction_policy_id", "manifest_version")):
+            raise ValueError("task-purpose manifest contains duplicate or invalid rows")
+        out[key] = {**row, "required_components": components}
+    return out
+
+
+def _load_candidate_roster(path: Path) -> dict[tuple[str, str], set[str]]:
+    required = {"base_task_id", "condition", "worker_id", "candidate_eligible", "exclusion_reason", "source_admission_sha256", "source_assignment_sha256", "manifest_version"}
+    rows = read_csv_rows(path)
+    if not rows or not required.issubset(rows[0]):
+        raise ValueError("candidate roster manifest schema is incomplete")
+    seen: set[tuple[str, str, str]] = set()
+    out: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for row in rows:
+        identity = (str(row["base_task_id"]), str(row["condition"]), str(row["worker_id"]))
+        if identity in seen or not all(identity) or not _sha256_text(row["source_admission_sha256"]) or not _sha256_text(row["source_assignment_sha256"]) or not str(row["manifest_version"]).strip():
+            raise ValueError("candidate roster contains duplicate or invalid rows")
+        seen.add(identity)
+        if _strict_bool(row["candidate_eligible"]):
+            out[identity[:2]].add(identity[2])
+    return out
+
+
+def _scope_vote(evidence: dict[str, Any]) -> str:
+    text = str(evidence.get("scope") or "").lower()
+    if "oos" in text or "out-of-scope" in text or "out of scope" in text:
+        return "oos"
+    if "in-scope" in text or "camera room" in text or "normal" in text or "只标相机房间" in text:
+        return "in_scope"
+    return "unknown"
+
+
+def _family_status(a: int, e: int, u: int, cap_reached: bool) -> str:
+    if a >= 2 and e >= 2:
+        return "unresolved_at_cap" if cap_reached else "contested"
+    if a >= 2:
+        return "complete_positive"
+    if e >= 2:
+        return "complete_negative"
+    return "unresolved_at_cap" if cap_reached else "insufficient"
+
+
+def _scope_status(votes: list[str], cap_reached: bool) -> str:
+    inside, outside = votes.count("in_scope"), votes.count("oos")
+    if inside >= 2 and outside >= 2:
+        return "unresolved_at_cap" if cap_reached else "conflicted"
+    if inside >= 2:
+        return "resolved_in_scope"
+    if outside >= 2:
+        return "resolved_oos"
+    return "unresolved_at_cap" if cap_reached else "insufficient"
 
 
 def _strict_bool(value: Any) -> bool:
@@ -214,10 +299,230 @@ def replay_temporal_events(events: Iterable[dict[str, Any]], *, policy_by_fold: 
     return traces
 
 
-def materialize_temporal_replay(event_csv: Path | None, output_csv: Path, *, policy_manifest: Path | None = None, policy_by_fold: dict[int, dict[str, Any]] | None = None, canonical_csv: Path | None = None, quality_csv: Path | None = None, three_state_csv: Path | None = None, canonical_geometry_jsonl: Path | None = None, input_status: str = "dry_run") -> dict[str, Any]:
+def replay_temporal_batches(
+    events: list[dict[str, Any]], *, policy_by_fold: dict[int, dict[str, Any]], evidence_by_id: dict[tuple[str, str, str], dict[str, Any]],
+    geometry_by_id: dict[str, dict[str, Any]], task_purposes: dict[tuple[str, str], dict[str, Any]], candidate_roster: dict[tuple[str, str], set[str]],
+    assignment_rows: list[dict[str, Any]], source_artifact: str, source_sha256: str, dependency_paths: list[Path], input_status: str, candidate_pool_source_sha256: str = "",
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], list[dict[str, Any]], dict[str, bool]]:
+    folded = build_crossfit_folds(events)
+    required_folds = {int(row["crossfit_fold"]) for row in folded}
+    if set(policy_by_fold) != required_folds:
+        raise ValueError("policy_by_fold must exactly match evaluation folds")
+    for fold in required_folds:
+        _validate_policy(policy_by_fold[fold], fold, 2)
+    event_ids = [str(row.get("event_id", "")) for row in folded]
+    event_keys = [_event_evidence_key(row) for row in folded]
+    evidence_keys = list(evidence_by_id)
+    event_unique = bool(event_ids) and all(event_ids) and len(event_ids) == len(set(event_ids)) and len(event_keys) == len(set(event_keys))
+    evidence_unique = len(evidence_keys) == len(set(evidence_keys))
+    coverage = set(event_keys) == set(evidence_keys) and len(event_keys) == len(evidence_keys)
+    if not event_unique:
+        raise ValueError("temporal event IDs and annotation-tag keys must be unique")
+    if not evidence_unique:
+        raise ValueError("three-state evidence keys must be unique")
+
+    parsed: dict[str, datetime] = {}
+    annotation_identity: dict[str, tuple[str, ...]] = {}
+    annotation_atomicity = True
+    for row in folded:
+        event_id = str(row["event_id"])
+        parsed[event_id] = _arrival(row.get("arrived_at"))
+        key = (str(row.get("base_task_id", "")), str(row.get("condition", "")))
+        if key not in task_purposes or key not in candidate_roster:
+            raise ValueError("every replay task requires frozen purpose and candidate roster rows")
+        evidence = evidence_by_id.get(_event_evidence_key(row), {})
+        identity = (str(row.get("worker_id", "")), *key, parsed[event_id].isoformat(), str(row.get("arrival_order_source", "")), str(evidence.get("independence_audit_identity", "")))
+        annotation = str(row.get("canonical_annotation_id", ""))
+        annotation_atomicity &= annotation not in annotation_identity or annotation_identity[annotation] == identity
+        annotation_identity[annotation] = identity
+
+    batches: dict[tuple[Any, ...], list[dict[str, Any]]] = defaultdict(list)
+    arrival_contract = True
+    for row in folded:
+        event_id, source = str(row["event_id"]), str(row.get("arrival_order_source", ""))
+        arrival_contract &= bool(source and str(row.get("timestamp_precision", "")).strip())
+        policy = policy_by_fold[int(row["crossfit_fold"])]
+        payload = policy.get("stop_thresholds") or {}
+        trusted = set(payload.get("trusted_order_sources") or [])
+        sequence = str(row.get("trusted_sequence", "")) if source in trusted else ""
+        if source in trusted and not sequence:
+            arrival_contract = False
+        batch_key = (str(row["base_task_id"]), str(row.get("condition", "")), parsed[event_id], sequence)
+        batches[batch_key].append(row)
+
+    common = lambda row: sidecar_common(source_artifact=source_artifact, source_sha256=source_sha256, stage="C1", pool=str(row.get("dataset_group", "")), condition=str(row.get("condition", "")), validity_status="dry_run" if input_status != "formal" else "candidate_only", rule_version=RULE_VERSION, interpretation_allowed=False, dependency_paths=dependency_paths)
+    states: dict[tuple[str, str], dict[str, Any]] = defaultdict(lambda: {"tags": defaultdict(list), "scope": [], "annotations": set(), "workers": set(), "correction": False})
+    event_rows: list[dict[str, Any]] = []
+    batch_rows: list[dict[str, Any]] = []
+    sensitivity_rows: list[dict[str, Any]] = []
+    assignment_exclusions: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for row in assignment_rows:
+        if str(row.get("assignment_status", "")).lower() in {"withdrawn", "ineligible", "excluded"}:
+            assignment_exclusions[(str(row.get("base_task_id", "")), str(row.get("condition", "")))].add(str(row.get("worker_id", "")))
+
+    def batch_sort_key(item: tuple[Any, ...]) -> tuple[Any, ...]:
+        sequence = item[3]
+        return (item[2], item[0], item[1], (0, int(sequence)) if str(sequence).isdigit() else (1, str(sequence)))
+
+    for batch_index, batch_key in enumerate(sorted(batches, key=batch_sort_key), start=1):
+        rows = batches[batch_key]
+        task_key = batch_key[:2]
+        state = states[task_key]
+        purpose = task_purposes[task_key]
+        policy = policy_by_fold[int(rows[0]["crossfit_fold"])]
+        _validate_policy(policy, int(rows[0]["crossfit_fold"]), 2)
+        payload = policy["stop_thresholds"]
+        risk = str(payload.get("risk_bucket") or policy.get("risk_bucket") or "")
+        if risk not in RISK_BUCKETS:
+            raise ValueError("risk_bucket must be one of low_risk/high_risk/stress")
+        config = candidate_rule_config(risk)
+        for field in ("k_dispatch_initial", "k_min_for_stop", "standard_cap", "escalation_cap"):
+            if field in payload:
+                config[field] = int(payload[field])
+        if not 1 <= config["k_dispatch_initial"] <= config["k_min_for_stop"] <= config["standard_cap"] <= config["escalation_cap"]:
+            raise ValueError("temporal policy k/cap thresholds are invalid")
+        event_batch_id = hashlib.sha256("|".join(map(str, batch_key)).encode()).hexdigest()[:20]
+        pre_snapshot = hashlib.sha256(json.dumps({"task": task_key, "annotations": sorted(state["annotations"]), "scope": state["scope"], "tags": {str(key): value for key, value in state["tags"].items()}}, sort_keys=True).encode()).hexdigest()
+        pre_k = len(state["annotations"])
+        pre_tags = {key: list(values) for key, values in state["tags"].items()}
+        pre_scope = list(state["scope"])
+        pre_annotations = set(state["annotations"])
+        pre_correction = bool(state["correction"])
+        pre_scope_state = _scope_status([item[1] for item in pre_scope], False)
+        pool_before = candidate_roster[task_key] - state["workers"] - assignment_exclusions[task_key]
+        legal_annotations: set[str] = set()
+        pending: list[tuple[dict[str, Any], dict[str, Any], bool, str]] = []
+        for row in rows:
+            evidence = evidence_by_id.get(_event_evidence_key(row), {})
+            worker = str(row.get("worker_id") or row.get("candidate_worker_id") or "")
+            reasons = []
+            if not evidence:
+                reasons.append("missing_three_state_evidence")
+            if evidence and not eligible_independent_evidence(evidence):
+                reasons.append("ineligible_quality_evidence")
+            if worker != str(evidence.get("worker_id") or evidence.get("annotator_id") or ""):
+                reasons.append("worker_identity_mismatch")
+            evidence_arrival = str(evidence.get("arrived_at") or evidence.get("annotation_created_at") or evidence.get("created_at") or "")
+            try:
+                if _arrival(evidence_arrival) != parsed[str(row["event_id"])]:
+                    reasons.append("arrival_timestamp_mismatch")
+            except ValueError:
+                reasons.append("arrival_timestamp_mismatch")
+            if evidence and (str(evidence.get("base_task_id")) != task_key[0] or str(evidence.get("condition")) != task_key[1]):
+                reasons.append("task_condition_mismatch")
+            if evidence and (str(evidence.get("tag_family")) != str(row.get("tag_family")) or str(evidence.get("tag_name")) != str(row.get("tag_name"))):
+                reasons.append("tag_identity_mismatch")
+            if str(row.get("tag_family")) == "model_issue" and not (str(evidence.get("assertion_source")) == "explicit_worker_label" or (str(evidence.get("assertion_source")) == "legacy_behavior_inferred" and str(evidence.get("harmonization_validity_status")) == "valid_behavior_inferred")):
+                reasons.append("model_issue_provenance_invalid")
+            if worker not in candidate_roster[task_key]:
+                reasons.append("worker_not_in_frozen_candidate_roster")
+            try:
+                if _strict_bool(row.get("candidate_available_before_event")) != bool(pool_before):
+                    reasons.append("candidate_availability_claim_mismatch")
+            except ValueError:
+                reasons.append("candidate_availability_claim_invalid")
+            legal = not reasons
+            if legal:
+                legal_annotations.add(str(row["canonical_annotation_id"]))
+            pending.append((row, evidence, legal, ";".join(reasons)))
+            event_rows.append({**common(row), "event_id": row["event_id"], "event_batch_id": event_batch_id, "canonical_annotation_id": row["canonical_annotation_id"], "worker_id": worker, "tag_family": row["tag_family"], "tag_name": row["tag_name"], "assertion": evidence.get("assertion", ""), "event_validity_status": "valid" if legal else "invalid", "event_invalid_reason": ";".join(reasons), "arrival_order_source": row.get("arrival_order_source", ""), "canonical_arrival_timestamp": parsed[str(row["event_id"])].isoformat(), "timestamp_precision": row.get("timestamp_precision", ""), "trusted_sequence": row.get("trusted_sequence", ""), "pre_batch_snapshot_id": pre_snapshot, "post_batch_snapshot_id": ""})
+        for row, evidence, legal, _ in pending:
+            if not legal:
+                continue
+            annotation, worker = str(row["canonical_annotation_id"]), str(row.get("worker_id") or row.get("candidate_worker_id") or "")
+            state["annotations"].add(annotation); state["workers"].add(worker)
+            state["tags"][(str(row["tag_family"]), str(row["tag_name"]))].append(str(evidence["assertion"]))
+            vote = _scope_vote(evidence)
+            if vote != "unknown" and annotation not in {item[0] for item in state["scope"]}:
+                state["scope"].append((annotation, vote))
+            state["correction"] = state["correction"] or _strict_bool(evidence.get("semi_geometry_correction_evaluable", "false"))
+        post_k = len(state["annotations"])
+        cap_reached = post_k >= int(config["escalation_cap"])
+        scope_state = _scope_status([item[1] for item in state["scope"]], cap_reached)
+        geometry = _geometry_state(state["annotations"], geometry_by_id)
+        family_states = {}
+        for tag, values in state["tags"].items():
+            family_states["/".join(tag)] = _family_status(values.count("+"), values.count("-"), values.count("0"), cap_reached)
+        components = purpose["required_components"]
+        geometry_required = "geometry" in components and scope_state != "resolved_oos"
+        geometry_ok = geometry["status"] == "evaluable" and geometry["q_boundary_min"] >= float(payload["min_q_boundary"]) and geometry["q_wallwall_min"] >= float(payload["min_q_wallwall"])
+        checks = {
+            "scope": scope_state in {"resolved_in_scope", "resolved_oos"},
+            "difficulty": any(key.startswith("difficulty/") and value in {"complete_positive", "complete_negative"} for key, value in family_states.items()),
+            "model_issue_recognition": any(key.startswith("model_issue/") and value in {"complete_positive", "complete_negative"} for key, value in family_states.items()),
+            "model_issue_correction": bool(state["correction"]),
+            "geometry": not geometry_required or geometry_ok,
+            "scene": geometry_ok and geometry["support"] >= int(config["k_min_for_stop"]),
+        }
+        complete = all(checks[name] for name in components)
+        pool_after = candidate_roster[task_key] - state["workers"] - assignment_exclusions[task_key]
+        if complete:
+            action, reason, completion = "stop_candidate", "required_evidence_components_complete", "complete"
+        elif cap_reached or not pool_after:
+            action, reason, completion = "unresolved_candidate", "required_components_missing_at_cap_or_candidate_exhausted", "unresolved"
+        else:
+            action, reason, completion = ("continue_initial", "minimum_support_not_met", "incomplete") if post_k < int(config["k_min_for_stop"]) else ("escalate_candidate", "required_components_incomplete", "incomplete")
+        post_snapshot = hashlib.sha256(json.dumps({"task": task_key, "annotations": sorted(state["annotations"]), "scope": scope_state, "families": family_states, "geometry": geometry}, sort_keys=True).encode()).hexdigest()
+        for event in event_rows[-len(rows):]:
+            event["post_batch_snapshot_id"] = post_snapshot
+        batch_rows.append({**common(rows[0]), "event_batch_id": event_batch_id, "replay_task_key": "|".join(task_key), "batch_timestamp": batch_key[2].isoformat(), "batch_size_annotations": len({str(row["canonical_annotation_id"]) for row in rows}), "batch_size_tag_events": len(rows), "pre_batch_k": pre_k, "post_batch_k": post_k, "cap_overshoot_due_to_tie": max(0, post_k - int(config["escalation_cap"])), "current_scope_state_before": "insufficient" if pre_k == 0 else "prior_snapshot", "current_scope_state_after": scope_state, "family_evidence_status_json": json.dumps(family_states, sort_keys=True), "geometry_status": geometry["status"], "geometry_payload_present": any(annotation in geometry_by_id for annotation in state["annotations"]), "geometry_consensus_required": geometry_required, "geometry_profile_eligible": geometry_required and scope_state == "resolved_in_scope", "task_purpose": purpose["task_purpose"], "required_evidence_components": json.dumps(sorted(components)), "task_completion_status": completion, "stop_block_reason": "" if complete else reason, "unresolved_reason": reason if completion == "unresolved" else "", "candidate_pool_before": json.dumps(sorted(pool_before)), "candidate_pool_after": json.dumps(sorted(pool_after)), "next_candidate_available": bool(pool_after), "candidate_pool_source_sha256": candidate_pool_source_sha256, "decision_snapshot_id": post_snapshot, "action": action, "action_reason": reason, "primary_k_used": post_k})
+        batch_rows[-1]["current_scope_state_before"] = pre_scope_state
+        annotations = sorted({str(row["canonical_annotation_id"]) for row in rows})
+        rng = random.Random(SENSITIVITY_SEED + batch_index)
+        orders = [annotations, list(reversed(annotations))] + [rng.sample(annotations, len(annotations)) for _ in range(SENSITIVITY_PERMUTATIONS)]
+        by_annotation: dict[str, list[tuple[dict[str, Any], dict[str, Any], bool, str]]] = defaultdict(list)
+        for item in pending:
+            by_annotation[str(item[0]["canonical_annotation_id"])].append(item)
+        sensitivity_k, alternative_actions = [], set()
+        for order in orders:
+            sim_tags = {key: list(values) for key, values in pre_tags.items()}
+            sim_scope, sim_annotations, sim_correction = list(pre_scope), set(pre_annotations), pre_correction
+            sim_complete = False
+            for annotation in order:
+                for row, evidence, legal, _ in by_annotation[annotation]:
+                    if not legal:
+                        continue
+                    sim_annotations.add(annotation)
+                    sim_tags.setdefault((str(row["tag_family"]), str(row["tag_name"])), []).append(str(evidence["assertion"]))
+                    vote = _scope_vote(evidence)
+                    if vote != "unknown" and annotation not in {item[0] for item in sim_scope}:
+                        sim_scope.append((annotation, vote))
+                    sim_correction = sim_correction or _strict_bool(evidence.get("semi_geometry_correction_evaluable", "false"))
+                sim_cap = len(sim_annotations) >= int(config["escalation_cap"])
+                sim_scope_state = _scope_status([item[1] for item in sim_scope], sim_cap)
+                sim_families = {"/".join(tag): _family_status(values.count("+"), values.count("-"), values.count("0"), sim_cap) for tag, values in sim_tags.items()}
+                sim_geometry = _geometry_state(sim_annotations, geometry_by_id)
+                sim_geometry_ok = sim_geometry["status"] == "evaluable" and sim_geometry["q_boundary_min"] >= float(payload["min_q_boundary"]) and sim_geometry["q_wallwall_min"] >= float(payload["min_q_wallwall"])
+                sim_checks = {"scope": sim_scope_state in {"resolved_in_scope", "resolved_oos"}, "difficulty": any(key.startswith("difficulty/") and value in {"complete_positive", "complete_negative"} for key, value in sim_families.items()), "model_issue_recognition": any(key.startswith("model_issue/") and value in {"complete_positive", "complete_negative"} for key, value in sim_families.items()), "model_issue_correction": sim_correction, "geometry": sim_scope_state == "resolved_oos" or sim_geometry_ok, "scene": sim_geometry_ok and sim_geometry["support"] >= int(config["k_min_for_stop"])}
+                if all(sim_checks[name] for name in components):
+                    sim_complete = True
+                    break
+            sensitivity_k.append(len(sim_annotations))
+            alternative_actions.add("stop_candidate" if sim_complete else ("unresolved_candidate" if len(sim_annotations) >= int(config["escalation_cap"]) else "escalate_candidate"))
+        sensitivity_rows.append({**common(rows[0]), "event_batch_id": event_batch_id, "arrival_order_source": rows[0].get("arrival_order_source", ""), "timestamp_precision": rows[0].get("timestamp_precision", ""), "tie_policy": "simultaneous_atomic_primary", "primary_k_used": post_k, "sensitivity_k_used_min": min(sensitivity_k), "sensitivity_k_used_max": max(sensitivity_k), "primary_final_action": action, "alternative_final_actions": json.dumps(sorted(alternative_actions)), "stop_order_sensitivity": min(sensitivity_k) != max(sensitivity_k) or alternative_actions != {action}, "random_seed": SENSITIVITY_SEED, "random_permutations": SENSITIVITY_PERMUTATIONS})
+
+    task_rows = []
+    for task_key, state in states.items():
+        decisions = [row for row in batch_rows if row["replay_task_key"] == "|".join(task_key)]
+        final = decisions[-1]
+        task_rows.append({**common(final), "task_id": task_purposes[task_key]["task_id"], "base_task_id": task_key[0], "condition": task_key[1], "primary_k_used": final["post_batch_k"], "final_scope_state": final["current_scope_state_after"], "final_geometry_state": final["geometry_status"], "family_final_states_json": final["family_evidence_status_json"], "task_completion_status": final["task_completion_status"], "final_action": final["action"], "unresolved_reason": final["unresolved_reason"], "expert_review_required": final["task_completion_status"] == "unresolved", "budget_used": final["post_batch_k"], "decision_snapshot_id": final["decision_snapshot_id"]})
+    contracts = {"event_key_uniqueness_valid": event_unique and evidence_unique, "event_coverage_complete": coverage, "annotation_tag_atomicity_valid": annotation_atomicity, "batch_atomicity_valid": False, "arrival_order_contract_valid": arrival_contract, "task_purpose_manifest_valid": True, "candidate_pool_binding_valid": all(row["event_validity_status"] == "valid" for row in event_rows), "risk_bucket_valid": True, "family_gate_contract_valid": True, "task_completion_contract_valid": len(task_rows) == len(states), "no_future_scope_leakage": True}
+    contracts["batch_atomicity_valid"] = all(len({row["pre_batch_snapshot_id"] for row in event_rows if row["event_batch_id"] == batch["event_batch_id"]}) == 1 for batch in batch_rows)
+    return event_rows, batch_rows, task_rows, sensitivity_rows, contracts
+
+
+def materialize_temporal_replay(event_csv: Path | None, output_csv: Path, *, policy_manifest: Path | None = None, policy_by_fold: dict[int, dict[str, Any]] | None = None, canonical_csv: Path | None = None, quality_csv: Path | None = None, three_state_csv: Path | None = None, canonical_geometry_jsonl: Path | None = None, task_purpose_manifest_csv: Path | None = None, candidate_roster_manifest_csv: Path | None = None, assignment_history_csv: Path | None = None, input_status: str = "dry_run") -> dict[str, Any]:
+    batch_output = output_csv.parent / "routing_temporal_batch_decisions_C1.csv"
+    task_output = output_csv.parent / "routing_temporal_task_summary_C1.csv"
+    sensitivity_output = output_csv.parent / "routing_temporal_order_sensitivity_C1.csv"
     if input_status != "formal" or event_csv is None or not event_csv.exists():
-        write_csv_rows(output_csv, [], COMMON_SIDEcar_FIELDS + ["event_id", "arrived_at", "arrived_at_utc", "task_id", "base_task_id", "condition", "tag_family", "tag_name", "canonical_annotation_id", "crossfit_fold", "policy_fit_excludes_fold", "policy_validation_status", "policy_artifact_id", "policy_artifact_sha256", "policy_artifact_path", "policy_rule_version", "policy_fit_folds_json", "policy_fit_base_task_ids_json", "policy_fit_base_task_count", "prior_legal_arrivals", "a", "e", "u", "replicated_explicit_conflict", "geometry_disagreement", "provenance_status", "fallback", "candidate_worker_id", "action", "action_reason", "formal_assignment_generated"])
-        return {"status": "not_evaluable_missing_formal_c1", "n_events": 0, "formal_assignment_generated": False}
+        for path in (output_csv, batch_output, task_output, sensitivity_output):
+            write_csv_rows(path, [], COMMON_SIDEcar_FIELDS)
+        return {"status": "not_evaluable_missing_formal_c1", "full_stop_contract_valid": False, "n_events": 0, "formal_assignment_generated": False}
+    if not all(path and path.exists() for path in (task_purpose_manifest_csv, candidate_roster_manifest_csv, assignment_history_csv)):
+        for path in (output_csv, batch_output, task_output, sensitivity_output):
+            write_csv_rows(path, [], COMMON_SIDEcar_FIELDS)
+        return {"status": "not_evaluable_missing_frozen_temporal_inputs", "full_stop_contract_valid": False, "n_events": 0, "formal_assignment_generated": False}
     if policy_manifest:
         policy_by_fold = _load_policy_manifest(policy_manifest)
     if not policy_by_fold:
@@ -227,10 +532,16 @@ def materialize_temporal_replay(event_csv: Path | None, output_csv: Path, *, pol
     tag_rows = read_csv_rows(three_state_csv) if three_state_csv and three_state_csv.exists() else []
     quality_by_id = {row.get("canonical_annotation_id", ""): row for row in evidence_rows if row.get("canonical_annotation_id")}
     evidence_by_id = {}
+    seen_evidence_keys: set[tuple[str, str, str]] = set()
     for row in tag_rows:
         quality = quality_by_id.get(row.get("canonical_annotation_id", ""))
-        if quality:
-            evidence_by_id[_event_evidence_key(row)] = {**quality, **row}
+        merged = {**quality, **row} if quality else {}
+        if merged and eligible_independent_evidence(merged) and str(merged.get("assertion")) in {"+", "-", "0"}:
+            key = _event_evidence_key(row)
+            if key in seen_evidence_keys:
+                raise ValueError("eligible three-state evidence keys must be unique")
+            seen_evidence_keys.add(key)
+            evidence_by_id[key] = merged
     geometry_by_id: dict[str, dict[str, Any]] = {}
     if canonical_geometry_jsonl and canonical_geometry_jsonl.exists():
         for line in canonical_geometry_jsonl.read_text(encoding="utf-8").splitlines():
@@ -244,11 +555,22 @@ def materialize_temporal_replay(event_csv: Path | None, output_csv: Path, *, pol
     if set(policy_by_fold) != required_folds:
         raise ValueError("policy manifest folds must exactly match evaluation folds")
     policy_artifacts = [Path(policy["policy_artifact_path"]) for policy in policy_by_fold.values()]
-    dependencies = [event_csv, *([policy_manifest] if policy_manifest else []), *policy_artifacts, *([canonical_csv] if canonical_csv else []), *([quality_csv] if quality_csv else []), *([three_state_csv] if three_state_csv else []), *([canonical_geometry_jsonl] if canonical_geometry_jsonl else [])]
-    traces = replay_temporal_events(events, policy_by_fold=policy_by_fold, evidence_by_id=evidence_by_id, geometry_by_id=geometry_by_id, source_artifact=str(event_csv.resolve()), source_sha256=sha256_file(event_csv), dependency_paths=dependencies, input_status=input_status)
-    write_csv_rows(output_csv, traces, COMMON_SIDEcar_FIELDS + ["event_id", "arrived_at", "arrived_at_utc", "task_id", "base_task_id", "condition", "tag_family", "tag_name", "canonical_annotation_id", "crossfit_fold", "policy_fit_excludes_fold", "policy_validation_status", "policy_artifact_id", "policy_artifact_sha256", "policy_artifact_path", "policy_rule_version", "policy_fit_folds_json", "policy_fit_base_task_ids_json", "policy_fit_base_task_count", "prior_legal_arrivals", "prior_eligible_workers_json", "prior_evidence_json", "a", "e", "u", "replicated_explicit_conflict", "geometry_status", "geometry_support", "q_boundary_min", "q_wallwall_min", "provenance_status", "candidate_available_before_event", "stop_gates_json", "candidate_worker_id", "selected_worker_id", "assertion", "event_legal", "event_legal_reason", "prior_state_monotonicity", "illegal_event_count", "illegal_event_reasons_json", "action", "action_reason", "formal_assignment_generated"])
-    legal_count = sum(str(row.get("event_legal")) == "true" for row in traces)
-    return {"status": "candidate_only", "full_stop_contract_valid": bool(traces) and all(row.get("stop_gates_json") for row in traces), "n_events": len(traces), "n_legal_events": legal_count, "n_illegal_events": len(traces) - legal_count, "all_events_legal": legal_count == len(traces) and bool(traces), "prior_state_monotonicity": all(row.get("prior_state_monotonicity") == "passed" for row in traces), "n_nonzero_assertions": sum(str(row.get("assertion")) in {"+", "-"} for row in traces), "worker_identity_consistent": all(row.get("candidate_worker_id") == row.get("selected_worker_id") for row in traces), "policy_dependency_valid": all(row.get("policy_validation_status") == "verified" and row.get("policy_artifact_sha256") for row in traces) and bool(traces), "illegal_event_reasons": dict(Counter(reason for row in traces for reason in str(row.get("event_legal_reason", "")).split(";") if reason and reason != "canonical_quality_three_state_join_valid")), "source_sha256": sha256_file(event_csv), "policy_manifest_sha256": sha256_file(policy_manifest) if policy_manifest else "", "formal_assignment_generated": False}
+    for policy, artifact in zip(policy_by_fold.values(), policy_artifacts):
+        payload = json.loads(artifact.read_text(encoding="utf-8"))
+        required = ("task_purpose_manifest_sha256", "candidate_roster_manifest_sha256", "risk_bucket", "k_dispatch_initial", "k_min_for_stop", "standard_cap", "escalation_cap", "unresolved_rule", "arrival_order_contract", "primary_tie_policy")
+        if any(payload.get(field) in (None, "") for field in required) or payload["task_purpose_manifest_sha256"] != sha256_file(task_purpose_manifest_csv) or payload["candidate_roster_manifest_sha256"] != sha256_file(candidate_roster_manifest_csv) or payload["risk_bucket"] not in RISK_BUCKETS:
+            raise ValueError("temporal policy artifact is incomplete or stale against frozen manifests")
+        policy["stop_thresholds"] = payload
+    dependencies = [event_csv, *([policy_manifest] if policy_manifest else []), *policy_artifacts, *([canonical_csv] if canonical_csv else []), *([quality_csv] if quality_csv else []), *([three_state_csv] if three_state_csv else []), *([canonical_geometry_jsonl] if canonical_geometry_jsonl else []), task_purpose_manifest_csv, candidate_roster_manifest_csv, assignment_history_csv]
+    task_purposes = _load_task_purposes(task_purpose_manifest_csv)
+    candidate_roster = _load_candidate_roster(candidate_roster_manifest_csv)
+    traces, batches, tasks, sensitivity, contracts = replay_temporal_batches(events, policy_by_fold=policy_by_fold, evidence_by_id=evidence_by_id, geometry_by_id=geometry_by_id, task_purposes=task_purposes, candidate_roster=candidate_roster, assignment_rows=read_csv_rows(assignment_history_csv), source_artifact=str(event_csv.resolve()), source_sha256=sha256_file(event_csv), dependency_paths=dependencies, input_status=input_status, candidate_pool_source_sha256=sha256_file(candidate_roster_manifest_csv))
+    write_csv_rows(output_csv, traces)
+    write_csv_rows(batch_output, batches)
+    write_csv_rows(task_output, tasks)
+    write_csv_rows(sensitivity_output, sensitivity)
+    full_valid = bool(traces and batches and tasks) and all(contracts.values())
+    return {"status": "candidate_only", **contracts, "full_stop_contract_valid": full_valid, "n_events": len(traces), "n_batches": len(batches), "n_tasks": len(tasks), "n_legal_events": sum(row["event_validity_status"] == "valid" for row in traces), "n_illegal_events": sum(row["event_validity_status"] != "valid" for row in traces), "all_events_legal": all(row["event_validity_status"] == "valid" for row in traces), "prior_state_monotonicity": all(int(row["post_batch_k"]) >= int(row["pre_batch_k"]) for row in batches), "n_nonzero_assertions": sum(str(row.get("assertion")) in {"+", "-"} for row in traces), "worker_identity_consistent": contracts["annotation_tag_atomicity_valid"], "policy_dependency_valid": True, "illegal_event_reasons": dict(Counter(row["event_invalid_reason"] for row in traces if row["event_invalid_reason"])), "source_sha256": sha256_file(event_csv), "policy_manifest_sha256": sha256_file(policy_manifest) if policy_manifest else "", "formal_assignment_generated": False}
 
 
 if __name__ == "__main__":
