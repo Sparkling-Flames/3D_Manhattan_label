@@ -312,7 +312,8 @@ def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> N
     assert main["undercoverage_failure_rate"] == ""
     assert main["coverage_reliability_u"] == ""
     assert main["T_u_direction"] == "higher_is_worse_failure_rate"
-    assert main["n_process_support"] == "0"
+    assert main["n_process_support"] == "9"
+    assert main["process_reliability"] == "1.000000"
     assert any(row["family"] == "undercoverage_failure" and row["n_observed"] == "0" and row["interpretation_level"] == "none" and row["interpretation_allowed"] == "false" for row in family)
     assert not any(row["subfamily"] == "minimal_space_bias" for row in subfamily)
     assert {row["support_status"] for row in predictive} == {"not_evaluable"}
