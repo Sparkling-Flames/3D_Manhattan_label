@@ -170,7 +170,7 @@ def test_formal_worker_state_manifest_verifies_frozen_external_input(tmp_path) -
     assert _formal_worker_state(state, manifest, **kwargs)["valid"] is True
 
 
-def test_formal_gate_positive_contract_is_reachable_with_frozen_external_worker_state(tmp_path) -> None:
+def test_formal_gate_stays_blocked_until_profile_is_frozen(tmp_path) -> None:
     profile = tmp_path / "profile.json"
     profile.write_text("{}", encoding="utf-8")
     summary = build_gate_summary(
@@ -189,20 +189,22 @@ def test_formal_gate_positive_contract_is_reachable_with_frozen_external_worker_
         adjudication={"valid": True},
         formal_worker_state={"valid": True},
     )
-    assert summary["formal_closeout_ready"] is True
-    assert summary["r_u_freeze"] is True
-    assert summary["c2_freeze"] is True
-    assert summary["formal_routing_conclusion_allowed"] is True
+    assert summary["formal_closeout_ready"] is False
+    assert summary["r_u_freeze"] is False
+    assert summary["c2_freeze"] is False
+    assert summary["formal_routing_conclusion_allowed"] is False
 
 
 def test_finalize_existing_closeout_binds_adjudication_without_rerunning_inputs(tmp_path) -> None:
     state, manifest, evidence, kwargs = _formal_worker_fixture(tmp_path)
     verified = _formal_worker_state(state, manifest, **kwargs)
-    artifacts = [state, manifest, *evidence]
+    profile = tmp_path / "profile.json"; profile.write_text("{}", encoding="utf-8")
+    artifacts = [state, manifest, profile, *evidence]
     bundle = {"bundle_version": "v1", "artifacts": [{"path": str(path), "exists": True, "sha256": sha256_file(path)} for path in artifacts]}
     bundle["bundle_sha256"] = __import__("hashlib").sha256(json.dumps(bundle["artifacts"], sort_keys=True).encode("utf-8")).hexdigest()
     (tmp_path / "c1_closeout_input_bundle.json").write_text(json.dumps(bundle), encoding="utf-8")
-    (tmp_path / "c1_closeout_dryrun_gate_summary.json").write_text(json.dumps({"input_status": "formal", "raw_snapshot_manifest_fresh": True, "artifacts_fresh": True, "quality_table_blockers": [], "quality_table_summary": {"n_quality_rows": 1, "amendment_blocker_count": 0}, "canonicalization_summary": {"structural_integrity_passed": True, "collection_completeness_passed": True, "blockers": []}, "formal_worker_state": verified, "r_u_estimated": True, "full_profile_ready": True, "profile_sidecar_generated": True, "profile_freeze_status": "C1_provisional", "pending_adjudication_count": 0, "worker_state_summary": {"r_u_freeze": True}, "c2_draft_summary": {"c2_freeze": True}, "dt_backflow": False, "formal_inputs_present": True, "vfinal_sidecars": {"routing_temporal_replay": {"status": "candidate_only", "full_stop_contract_valid": True, "n_events": 1, "all_events_legal": True, "prior_state_monotonicity": True, "worker_identity_consistent": True, "policy_dependency_valid": True, "n_nonzero_assertions": 1, "illegal_event_reasons": {}}}}), encoding="utf-8")
+    temporal_contract = {field: True for field in ("event_key_uniqueness_valid", "event_coverage_complete", "annotation_tag_atomicity_valid", "batch_atomicity_valid", "arrival_order_contract_valid", "task_purpose_manifest_valid", "candidate_pool_binding_valid", "risk_bucket_valid", "family_gate_contract_valid", "task_completion_contract_valid", "no_future_scope_leakage")}
+    (tmp_path / "c1_closeout_dryrun_gate_summary.json").write_text(json.dumps({"input_status": "formal", "raw_snapshot_manifest_fresh": True, "artifacts_fresh": True, "quality_table_blockers": [], "quality_table_summary": {"n_quality_rows": 1, "amendment_blocker_count": 0}, "canonicalization_summary": {"structural_integrity_passed": True, "collection_completeness_passed": True, "blockers": []}, "formal_worker_state": verified, "r_u_estimated": True, "full_profile_ready": True, "profile_sidecar_generated": True, "profile_summary_path": str(profile), "profile_freeze_status": "C1_provisional", "pending_adjudication_count": 0, "worker_state_summary": {"r_u_freeze": True}, "c2_draft_summary": {"c2_freeze": True}, "dt_backflow": False, "formal_inputs_present": True, "vfinal_sidecars": {"routing_temporal_replay": {"status": "candidate_only", "full_stop_contract_valid": True, **temporal_contract, "n_events": 1, "all_events_legal": True, "prior_state_monotonicity": True, "worker_identity_consistent": True, "policy_dependency_valid": True, "n_nonzero_assertions": 1, "illegal_event_reasons": {}}}}), encoding="utf-8")
     adjudication = {"status": "approved", "approved": True, "manifest_id": "m1", "approved_by": "reviewer", "approved_at": "2026-07-14T00:00:00Z", "input_bundle_sha256": bundle["bundle_sha256"]}
     adjudication_path = tmp_path / "adjudication.json"
     adjudication_path.write_text(json.dumps(adjudication), encoding="utf-8")
@@ -211,3 +213,5 @@ def test_finalize_existing_closeout_binds_adjudication_without_rerunning_inputs(
     assert result["formal_closeout_ready"] is True
     assert result["blocked_for_launch"] is False
     assert result["blockers"] == []
+    assert result["profile_freeze_status"] == "C1_frozen"
+    assert (tmp_path / "worker_profile_freeze_C1.json").exists()

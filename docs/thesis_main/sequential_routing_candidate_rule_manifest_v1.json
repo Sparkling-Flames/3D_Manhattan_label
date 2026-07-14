@@ -1,14 +1,46 @@
 {
   "manifest_id": "sequential_routing_candidate_rule_manifest_v1",
-  "schema_version": "v1",
-  "rule_version": "temporal_routing_replay_v1",
+  "schema_version": "v2",
+  "rule_version": "temporal_routing_replay_v2",
   "status": "candidate_only",
   "configs": {
     "low_risk": {"k_dispatch_initial": 2, "k_min_for_stop": 2, "standard_cap": 5, "escalation_cap": 7},
     "high_risk": {"k_dispatch_initial": 3, "k_min_for_stop": 3, "standard_cap": 5, "escalation_cap": 7},
     "stress": {"k_dispatch_initial": 3, "k_min_for_stop": 3, "standard_cap": 5, "escalation_cap": 7}
   },
-  "temporal_replay_contract": {"event_id_required": true, "arrival_time_required": true, "fold_group": "base_task_id", "policy_prefit_excludes_evaluation_fold": true, "future_evidence_forbidden": true},
+  "temporal_replay_contract": {
+    "replay_task_key": ["base_task_id", "condition"],
+    "event_evidence_key": ["canonical_annotation_id", "tag_family", "tag_name"],
+    "arrival_order_contract": "same_trusted_timestamp_is_one_atomic_task_batch",
+    "trusted_order_sources": ["server_receive_sequence", "server_microsecond_timestamp", "monotonic_ingest_sequence", "message_queue_offset", "validated_active_log_sequence"],
+    "primary_tie_policy": "simultaneous_atomic_batch",
+    "sensitivity_tie_policies": ["annotation_id_ascending", "annotation_id_descending", "seeded_random_100"],
+    "sensitivity_seed": 20260714,
+    "fold_group": "base_task_id",
+    "policy_prefit_excludes_evaluation_fold": true,
+    "future_evidence_forbidden": true
+  },
+  "frozen_input_contract": {
+    "task_purpose_manifest_required": true,
+    "candidate_roster_manifest_required": true,
+    "assignment_history_required": true
+  },
+  "risk_bucket_enum": ["low_risk", "high_risk", "stress"],
+  "family_rules": {
+    "scope_family_rule": "independent_of_geometry",
+    "difficulty_family_rule": "three_state_independent_of_geometry",
+    "model_issue_recognition_rule": "semi_identity_plus_provenance_plus_three_state",
+    "model_issue_correction_rule": "initial_final_edit_reference_outcome",
+    "geometry_rule": "required_only_by_frozen_task_purpose"
+  },
+  "task_completion_rules": {
+    "scope_only": ["scope"],
+    "geometry_production": ["scope", "geometry"],
+    "calibration_scene_profile": ["scope", "geometry", "scene"],
+    "meta_label_only": ["declared_tag_family"],
+    "semi_correction_evaluation": ["scope", "model_issue_recognition", "model_issue_correction"]
+  },
+  "unresolved_rule": "required_component_missing_at_cap_or_candidate_exhaustion",
   "legacy_read_compatibility": {"mode": "static_evidence_scaffold_only"},
   "interpretation_allowed": false
 }

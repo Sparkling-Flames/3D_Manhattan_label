@@ -195,4 +195,4 @@ def test_gate_blocks_when_profile_sidecar_missing_or_not_provisional(tmp_path: P
     assert missing["blocked_for_launch"] is True
     assert "profile_sidecar_missing" in missing["blockers"]
     assert bad_status["blocked_for_launch"] is True
-    assert "profile_freeze_status_not_C1_provisional" in bad_status["blockers"]
+    assert "profile_prepare_status_not_C1_provisional" in bad_status["blockers"]

@@ -29,6 +29,13 @@ REQUIRED_C1_ARTIFACTS = (
     "model_issue_harmonization_C1.csv", "geometry_pairwise_similarity_C1.csv", "geometry_worker_task_loo_C1.csv",
     "geometry_stability_C1.csv", "geometry_metric_coverage_C1.csv", "worker_scene_profile_candidates_C1.csv",
     "routing_evidence_snapshot_C1.csv", "routing_replay_scaffold_C1.csv", "routing_temporal_replay_C1.csv",
+    "routing_temporal_batch_decisions_C1.csv", "routing_temporal_task_summary_C1.csv", "routing_temporal_order_sensitivity_C1.csv",
+)
+
+TEMPORAL_CONTRACT_FIELDS = (
+    "event_key_uniqueness_valid", "event_coverage_complete", "annotation_tag_atomicity_valid", "batch_atomicity_valid",
+    "arrival_order_contract_valid", "task_purpose_manifest_valid", "candidate_pool_binding_valid", "risk_bucket_valid",
+    "family_gate_contract_valid", "task_completion_contract_valid", "no_future_scope_leakage",
 )
 
 
@@ -82,7 +89,7 @@ def _formal_adjudication(path: Path | None, bundle_sha256: str) -> dict[str, Any
     except (OSError, json.JSONDecodeError):
         return {"valid": False, "reason": "invalid_formal_closeout_adjudication_manifest"}
     valid = payload.get("status") == "approved" and payload.get("approved") is True and all(payload.get(field) for field in ("manifest_id", "approved_by", "approved_at")) and payload.get("input_bundle_sha256") == bundle_sha256
-    return {"valid": bool(valid), "reason": "approved" if valid else "formal_closeout_adjudication_not_approved_or_stale", "sha256": sha256_file(path), "temporal_replay_not_required": bool(valid and payload.get("temporal_replay_status") == "not_required")}
+    return {"valid": bool(valid), "reason": "approved" if valid else "formal_closeout_adjudication_not_approved_or_stale", "sha256": sha256_file(path)}
 
 
 def _formal_worker_state(csv_path: Path | None, manifest_path: Path | None, *, canonical_csv: Path | None = None, quality_csv: Path | None = None, canonical_geometry_jsonl: Path | None = None, geometry_loo_csv: Path | None = None, geometry_stability_csv: Path | None = None, min_r_u_tasks: int = 1) -> dict[str, Any]:
@@ -151,13 +158,14 @@ def _expand_sidecar_dependencies(paths: list[Path]) -> list[Path]:
 def _refresh_gate_state(summary: dict[str, Any]) -> dict[str, Any]:
     temporal = summary.get("vfinal_sidecars", {}).get("routing_temporal_replay", {})
     adjudication = summary.get("formal_adjudication", {})
-    temporal_valid = bool(adjudication.get("temporal_replay_not_required") or (
+    temporal_valid = bool(
         temporal.get("status") == "candidate_only" and temporal.get("full_stop_contract_valid") is True
+        and all(temporal.get(field) is True for field in TEMPORAL_CONTRACT_FIELDS)
         and int(temporal.get("n_events") or 0) > 0 and temporal.get("all_events_legal") is True
         and temporal.get("prior_state_monotonicity") is True and temporal.get("worker_identity_consistent") is True
         and temporal.get("policy_dependency_valid") is True and int(temporal.get("n_nonzero_assertions") or 0) > 0
         and not temporal.get("illegal_event_reasons")
-    ))
+    )
     canonical = summary.get("canonicalization_summary", {})
     summary["formal_closeout_ready"] = bool(
         summary.get("input_status") == "formal" and canonical.get("structural_integrity_passed") is True
@@ -167,7 +175,7 @@ def _refresh_gate_state(summary: dict[str, Any]) -> dict[str, Any]:
         and int(summary.get("quality_table_summary", {}).get("n_quality_rows") or 0) > 0
         and int(summary.get("quality_table_summary", {}).get("independence_not_evaluable_count") or 0) == 0
         and summary.get("artifacts_fresh") and summary.get("pending_adjudication_count", 0) == 0 and temporal_valid
-        and summary.get("r_u_estimated") and summary.get("full_profile_ready")
+        and summary.get("r_u_estimated") and summary.get("full_profile_ready") and summary.get("profile_freeze_status") == "C1_frozen"
         and summary.get("formal_worker_state", {}).get("valid") and adjudication.get("valid")
     )
     summary["thesis_facing_closeout_ready"] = summary["formal_closeout_ready"]
@@ -209,6 +217,15 @@ def finalize_existing_closeout(output_dir: Path, formal_closeout_adjudication_ma
     adjudication = _formal_adjudication(formal_closeout_adjudication_manifest, bundle["bundle_sha256"])
     gate["formal_adjudication"] = adjudication
     gate["finalization"] = {"status": "finalized", "bundle_sha256": bundle["bundle_sha256"], "adjudication_sha256": adjudication.get("sha256", "")}
+    profile_path = Path(gate.get("profile_summary_path", ""))
+    freeze_probe = json.loads(json.dumps(gate))
+    freeze_probe["profile_freeze_status"] = "C1_frozen"
+    _refresh_gate_state(freeze_probe)
+    if freeze_probe["formal_closeout_ready"] and profile_path.exists():
+        envelope = {"profile_freeze_status": "C1_frozen", "profile_sha256": sha256_file(profile_path), "evidence_bundle_sha256": bundle["bundle_sha256"], "adjudication_sha256": adjudication["sha256"]}
+        write_json(output_dir / "worker_profile_freeze_C1.json", envelope)
+        gate["profile_freeze_status"] = "C1_frozen"
+        gate["profile_freeze_envelope"] = envelope
     _refresh_gate_state(gate)
     write_json(gate_path, gate)
     return gate
@@ -226,8 +243,10 @@ def _blockers(summary: dict[str, Any]) -> list[str]:
         blockers.append("dt_backflow")
     if not summary["profile_sidecar_generated"]:
         blockers.append("profile_sidecar_missing")
-    if summary["profile_freeze_status"] != "C1_provisional":
-        blockers.append("profile_freeze_status_not_C1_provisional")
+    if summary.get("formal_adjudication", {}).get("valid") and summary["profile_freeze_status"] != "C1_frozen":
+        blockers.append("profile_not_frozen_after_formal_adjudication")
+    elif not summary.get("formal_adjudication", {}).get("valid") and summary["profile_freeze_status"] != "C1_provisional":
+        blockers.append("profile_prepare_status_not_C1_provisional")
     if not summary["artifacts_fresh"]:
         blockers.append("closeout_artifacts_missing_or_stale")
     if not summary["formal_inputs_present"]:
@@ -276,6 +295,7 @@ def build_gate_summary(
         "reserve_only": truthy(c2_draft_summary.get("reserve_only")),
         "reserve_capacity_shortfall_count": int(c2_draft_summary.get("reserve_capacity_shortfall_count") or 0),
         "profile_sidecar_generated": profile_generated,
+        "profile_summary_path": str(profile_summary_path.resolve()),
         "profile_freeze_status": safe(worker_profile_sidecar_summary.get("profile_freeze_status")),
         "p1_descriptive_directional_check_status": safe(worker_profile_sidecar_summary.get("p1_descriptive_directional_check_status")) or "not_evaluable",
         "formal_predictive_validity_status": safe(worker_profile_sidecar_summary.get("formal_predictive_validity_status")) or "not_run_blocked",
@@ -381,6 +401,8 @@ def materialize(
     retrospective_provenance_amendment_csv: Path | None = None,
     temporal_event_csv: Path | None = None,
     temporal_policy_manifest: Path | None = None,
+    task_purpose_manifest_csv: Path | None = None,
+    candidate_roster_manifest_csv: Path | None = None,
     formal_closeout_adjudication_manifest: Path | None = None,
     formal_worker_state_csv: Path | None = None,
     formal_worker_state_manifest: Path | None = None,
@@ -429,7 +451,7 @@ def materialize(
     temporal_summary = materialize_temporal_replay(
         temporal_event_csv or output_dir / "routing_arrival_events_C1.csv",
         output_dir / "routing_temporal_replay_C1.csv",
-        policy_manifest=temporal_policy_manifest, canonical_csv=canonical_csv, quality_csv=quality_csv, three_state_csv=output_dir / "worker_task_tag_observations_C1.csv", canonical_geometry_jsonl=output_dir / "c1_canonical_geometry.jsonl", input_status=input_status,
+        policy_manifest=temporal_policy_manifest, canonical_csv=canonical_csv, quality_csv=quality_csv, three_state_csv=output_dir / "worker_task_tag_observations_C1.csv", canonical_geometry_jsonl=output_dir / "c1_canonical_geometry.jsonl", task_purpose_manifest_csv=task_purpose_manifest_csv, candidate_roster_manifest_csv=candidate_roster_manifest_csv, assignment_history_csv=assignment_manifest, input_status=input_status,
     )
     artifact_freshness = _artifact_freshness(output_dir, input_status=input_status)
     canonicalization_summary_path = output_dir / "c1_canonicalization_summary.json"
@@ -448,17 +470,12 @@ def materialize(
         "formal_c1_annotation_data_present": input_status == "formal" and bool(quality_summary.get("canonical_meta_fresh")),
     }
     profile_summary_path = output_dir / "worker_profile_sidecar_C1.summary.json"
-    bundle_paths = [canonical_csv, assignment_manifest, reserve_pool_csv, candidate_inventory_csv, raw_snapshot_manifest, Path("tools/label_studio/label_studio_c1_xml_freeze_manifest_v1.json"), output_dir / "c1_export_merge_manifest.csv", output_dir / "c1_runtime_task_mapping.csv", *[output_dir / name for name in REQUIRED_C1_ARTIFACTS], Path("docs/thesis_main/meta_label_three_state_rule_manifest_v1.json"), Path("docs/thesis_main/model_issue_harmonization_rule_manifest_v1.json"), Path("docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json"), Path("docs/thesis_main/sequential_routing_candidate_rule_manifest_v1.json"), *([independence_audit_csv] if independence_audit_csv else []), *([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []), *([temporal_event_csv] if temporal_event_csv else []), *([temporal_policy_manifest] if temporal_policy_manifest else []), *([formal_worker_state_csv] if formal_worker_state_csv else []), *([formal_worker_state_manifest] if formal_worker_state_manifest else [])]
-    bundle_paths.extend([output_dir / "model_issue_harmonization_C1.summary.json", *[Path(path) for path in formal_worker.get("dependency_paths", [])]])
+    bundle_paths = [canonical_csv, assignment_manifest, reserve_pool_csv, candidate_inventory_csv, raw_snapshot_manifest, Path("tools/label_studio/label_studio_c1_xml_freeze_manifest_v1.json"), output_dir / "c1_export_merge_manifest.csv", output_dir / "c1_runtime_task_mapping.csv", *[output_dir / name for name in REQUIRED_C1_ARTIFACTS], Path("docs/thesis_main/meta_label_three_state_rule_manifest_v1.json"), Path("docs/thesis_main/model_issue_harmonization_rule_manifest_v1.json"), Path("docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json"), Path("docs/thesis_main/sequential_routing_candidate_rule_manifest_v1.json"), *([independence_audit_csv] if independence_audit_csv else []), *([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []), *([temporal_event_csv] if temporal_event_csv else []), *([temporal_policy_manifest] if temporal_policy_manifest else []), *([task_purpose_manifest_csv] if task_purpose_manifest_csv else []), *([candidate_roster_manifest_csv] if candidate_roster_manifest_csv else []), *([formal_worker_state_csv] if formal_worker_state_csv else []), *([formal_worker_state_manifest] if formal_worker_state_manifest else [])]
+    bundle_paths.extend([profile_summary_path, output_dir / "model_issue_harmonization_C1.summary.json", *[Path(path) for path in formal_worker.get("dependency_paths", [])]])
     bundle_paths = _expand_sidecar_dependencies(bundle_paths)
     artifact_bundle = {"bundle_version": "c1_closeout_input_bundle_v1", "artifacts": [{"path": str(path), "exists": path.exists(), "sha256": sha256_file(path) if path.exists() else ""} for path in bundle_paths]}
     artifact_bundle["bundle_sha256"] = __import__("hashlib").sha256(json.dumps(artifact_bundle["artifacts"], sort_keys=True).encode("utf-8")).hexdigest()
     adjudication = _formal_adjudication(formal_closeout_adjudication_manifest, artifact_bundle["bundle_sha256"])
-    if adjudication.get("temporal_replay_not_required"):
-        vfinal_sidecars["routing_temporal_replay"]["status"] = "not_required_by_adjudication"
-        artifact_freshness["empty"] = [name for name in artifact_freshness.get("empty", []) if name != "routing_temporal_replay_C1.csv"]
-        artifact_freshness["stale"] = [name for name in artifact_freshness.get("stale", []) if name != "routing_temporal_replay_C1.csv"]
-        artifact_freshness["fresh"] = not artifact_freshness.get("missing") and not artifact_freshness.get("empty") and not artifact_freshness.get("stale")
     gate_summary = build_gate_summary(quality_summary, worker_summary, gap_summary, c2_summary, profile_summary, profile_summary_path, vfinal_sidecars, artifact_bundle, input_status=input_status, artifact_freshness=artifact_freshness, canonicalization_summary=canonicalization_summary, adjudication=adjudication, snapshot_manifest_fresh=_snapshot_manifest_fresh(raw_snapshot_manifest), formal_worker_state=formal_worker)
     gate_summary["closeout_input_bundle"] = artifact_bundle
     (output_dir / "c1_closeout_input_bundle.json").write_text(json.dumps(artifact_bundle, ensure_ascii=False, indent=2), encoding="utf-8")
@@ -490,6 +507,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--retrospective-provenance-amendment-csv", type=Path)
     parser.add_argument("--temporal-event-csv", type=Path)
     parser.add_argument("--temporal-policy-manifest", type=Path)
+    parser.add_argument("--task-purpose-manifest-csv", type=Path)
+    parser.add_argument("--candidate-roster-manifest-csv", type=Path)
     parser.add_argument("--formal-closeout-adjudication-manifest", type=Path)
     parser.add_argument("--formal-worker-state-csv", type=Path)
     parser.add_argument("--formal-worker-state-manifest", type=Path)
@@ -516,6 +535,8 @@ def main(argv: list[str] | None = None) -> int:
         args.retrospective_provenance_amendment_csv,
         args.temporal_event_csv,
         args.temporal_policy_manifest,
+        args.task_purpose_manifest_csv,
+        args.candidate_roster_manifest_csv,
         args.formal_closeout_adjudication_manifest,
         args.formal_worker_state_csv,
         args.formal_worker_state_manifest,

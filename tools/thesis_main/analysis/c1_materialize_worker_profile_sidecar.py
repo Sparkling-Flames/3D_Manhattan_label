@@ -553,7 +553,7 @@ def family_in_denominator(row: dict[str, Any]) -> bool:
     if family == "undercoverage_failure":
         return truthy(row.get("included_in_U_u"))
     if family == "process_failure":
-        return truthy(row.get("process_evaluable"))
+        return truthy(row.get("included_in_process_reliability"))
     return False
 
 
