@@ -39,6 +39,24 @@ def decide_candidate_action(evidence: dict[str, Any], config: dict[str, Any] | N
     standard_cap = int(config["standard_cap"])
     escalation_cap = int(config["escalation_cap"])
     high_risk = str(evidence.get("risk_bucket", "")).lower() in {"high", "high_risk", "stress"} or str(evidence.get("support_gap_candidate", "")).lower() == "true"
+    if evidence.get("decision_contract") == "three_state_geometry_v1":
+        candidate_available = evidence.get("candidate_available") is True
+        if k < min_stop:
+            action, reason = ("continue_initial", "minimum_support_not_met") if candidate_available else ("unresolved_candidate", "candidate_exhausted_before_minimum_support")
+        elif evidence.get("provenance_available") is False:
+            action, reason = "unresolved_candidate", "provenance_gate_failed"
+        elif evidence.get("stop_gates_pass") is True:
+            action, reason = "stop_candidate", "full_stop_contract_satisfied"
+        elif k >= escalation_cap or not candidate_available:
+            action, reason = "unresolved_candidate", "unstable_at_cap_or_candidate_exhausted"
+        else:
+            action, reason = "escalate_candidate", "full_stop_contract_not_satisfied"
+        return {
+            "action": action, "reason": reason, "observed_k": k,
+            "k_dispatch_initial": int(config["k_dispatch_initial"]), "k_min_for_stop": min_stop,
+            "standard_cap": standard_cap, "escalation_cap": escalation_cap,
+            "candidate_only": True, "routing_eligible": False, "interpretation_allowed": False,
+        }
     if k < min_stop:
         action = "continue_initial"
     elif high_risk and k < escalation_cap:
@@ -51,6 +69,7 @@ def decide_candidate_action(evidence: dict[str, Any], config: dict[str, Any] | N
         action = "stop_at_cap_candidate"
     return {
         "action": action,
+        "reason": action,
         "observed_k": k,
         "k_dispatch_initial": int(config["k_dispatch_initial"]),
         "k_min_for_stop": min_stop,

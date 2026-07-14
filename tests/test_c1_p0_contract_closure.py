@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import json
 import time
+from pathlib import Path
 
 import pytest
 
@@ -110,7 +111,7 @@ def test_geometry_medoid_tie_and_high_k_is_non_recursive() -> None:
 
 def test_policy_manifest_relative_path_and_tampering(tmp_path) -> None:
     artifact = tmp_path / "policy.json"
-    artifact.write_text("{}", encoding="utf-8")
+    artifact.write_text('{"meta_min_same_state":2,"meta_max_opposition":0,"max_unasserted_rate":0.25,"min_q_boundary":0.8,"min_q_wallwall":0.8}', encoding="utf-8")
     fit_base = next(value for value in (f"fit-{i}" for i in range(100)) if _fold_for_base(value, 2) == 1)
     manifest = tmp_path / "manifest.json"
     manifest.write_text(json.dumps({"0": {"policy_artifact_id": "p0", "policy_artifact_path": "policy.json", "policy_artifact_sha256": sha256_file(artifact), "rule_version": "r1", "fit_folds": [1], "fit_base_task_ids": [fit_base]}}), encoding="utf-8")
@@ -128,7 +129,7 @@ def test_formal_gate_requires_separate_adjudication_manifest(tmp_path) -> None:
         {"r_u_estimated": True, "r_u_freeze": True},
         {},
         {"c2_freeze": True},
-        {"full_profile_ready": True, "pending_adjudication_count": 0},
+        {"full_profile_ready": True, "pending_adjudication_count": 0, "profile_freeze_status": "C1_provisional"},
         tmp_path / "profile.json",
         {"routing_temporal_replay": {"status": "candidate_only"}},
         input_status="formal",
@@ -143,19 +144,30 @@ def test_formal_gate_requires_separate_adjudication_manifest(tmp_path) -> None:
     assert summary["formal_routing_conclusion_allowed"] is False
 
 
-def test_formal_worker_state_manifest_verifies_frozen_external_input(tmp_path) -> None:
+def _formal_worker_fixture(tmp_path: Path):
+    evidence = []
+    for name, body in {
+        "canonical.csv": "canonical_annotation_id\nA\n",
+        "quality.csv": "worker_id,used_for_r_u,canonical_eligibility_status,independence_status,assigned_expected,outside_assignment_submission,duplicate_worker_task_submission,schema_interpretable,parse_error,schema_error\nw1,true,valid,independent,true,false,false,true,,\n",
+        "geometry.jsonl": '{}\n', "loo.csv": "worker_id\nw1\n", "stability.csv": "worker_id\nw1\n",
+    }.items():
+        path = tmp_path / name; path.write_text(body, encoding="utf-8"); evidence.append(path)
     state = tmp_path / "worker_state.csv"
-    state.write_text("worker_id,r_u_hat,r_u_ci_low,r_u_ci_high\nw1,0.5,0.4,0.6\n", encoding="utf-8")
-    dependency = tmp_path / "fit_input.csv"
-    dependency.write_text("base_task_id\nb1\n", encoding="utf-8")
-    dependencies = [{"path": str(dependency.resolve()), "sha256": sha256_file(dependency)}]
+    state.write_text("worker_id,n_calib_completed,r_u_hat,r_u_ci_low,r_u_ci_high\nw1,1,0.5,0.4,0.6\n", encoding="utf-8")
+    dependencies = [{"path": str(path.resolve()), "sha256": sha256_file(path)} for path in evidence]
     manifest = tmp_path / "worker_state_manifest.json"
     manifest.write_text(json.dumps({
         "worker_state_status": "formal", "rule_version": "external_worker_state_v1", "source_csv_sha256": sha256_file(state),
-        "dependency_bundle_id": sha256_json({"rule_version": "external_worker_state_v1", "dependencies": dependencies}),
+        "dependency_bundle_id": sha256_json({"rule_version": "external_worker_state_v1", "dependencies": sorted(dependencies, key=lambda item: item["path"])}),
         "dependencies": dependencies, "r_u_estimated": True, "r_u_freeze": True, "eligible_support_count": 1,
     }), encoding="utf-8")
-    assert _formal_worker_state(state, manifest)["valid"] is True
+    kwargs = dict(canonical_csv=evidence[0], quality_csv=evidence[1], canonical_geometry_jsonl=evidence[2], geometry_loo_csv=evidence[3], geometry_stability_csv=evidence[4], min_r_u_tasks=1)
+    return state, manifest, evidence, kwargs
+
+
+def test_formal_worker_state_manifest_verifies_frozen_external_input(tmp_path) -> None:
+    state, manifest, _, kwargs = _formal_worker_fixture(tmp_path)
+    assert _formal_worker_state(state, manifest, **kwargs)["valid"] is True
 
 
 def test_formal_gate_positive_contract_is_reachable_with_frozen_external_worker_state(tmp_path) -> None:
@@ -166,9 +178,9 @@ def test_formal_gate_positive_contract_is_reachable_with_frozen_external_worker_
         {"r_u_estimated": True, "r_u_freeze": True},
         {},
         {"c2_freeze": True},
-        {"full_profile_ready": True, "pending_adjudication_count": 0},
+        {"full_profile_ready": True, "pending_adjudication_count": 0, "profile_freeze_status": "C1_provisional"},
         profile,
-        {"routing_temporal_replay": {"status": "candidate_only", "n_events": 3, "all_events_legal": True, "prior_state_monotonicity": True, "worker_identity_consistent": True, "policy_dependency_valid": True, "n_nonzero_assertions": 2, "illegal_event_reasons": {}}},
+        {"routing_temporal_replay": {"status": "candidate_only", "full_stop_contract_valid": True, "n_events": 3, "all_events_legal": True, "prior_state_monotonicity": True, "worker_identity_consistent": True, "policy_dependency_valid": True, "n_nonzero_assertions": 2, "illegal_event_reasons": {}}},
         {"bundle_sha256": "bundle"},
         input_status="formal",
         artifact_freshness={"fresh": True},
@@ -184,15 +196,18 @@ def test_formal_gate_positive_contract_is_reachable_with_frozen_external_worker_
 
 
 def test_finalize_existing_closeout_binds_adjudication_without_rerunning_inputs(tmp_path) -> None:
-    artifact = tmp_path / "input.csv"
-    artifact.write_text("x\n1\n", encoding="utf-8")
-    bundle = {"bundle_version": "v1", "artifacts": [{"path": str(artifact), "exists": True, "sha256": sha256_file(artifact)}]}
+    state, manifest, evidence, kwargs = _formal_worker_fixture(tmp_path)
+    verified = _formal_worker_state(state, manifest, **kwargs)
+    artifacts = [state, manifest, *evidence]
+    bundle = {"bundle_version": "v1", "artifacts": [{"path": str(path), "exists": True, "sha256": sha256_file(path)} for path in artifacts]}
     bundle["bundle_sha256"] = __import__("hashlib").sha256(json.dumps(bundle["artifacts"], sort_keys=True).encode("utf-8")).hexdigest()
     (tmp_path / "c1_closeout_input_bundle.json").write_text(json.dumps(bundle), encoding="utf-8")
-    (tmp_path / "c1_closeout_dryrun_gate_summary.json").write_text(json.dumps({"input_status": "formal", "structural_contract_valid": True, "raw_snapshot_manifest_fresh": True, "artifacts_fresh": True, "quality_table_blockers": [], "canonicalization_summary": {"blockers": []}, "formal_worker_state": {"valid": True}, "r_u_estimated": True, "full_profile_ready": True, "pending_adjudication_count": 0, "worker_state_summary": {"r_u_freeze": True}, "c2_draft_summary": {"c2_freeze": True}, "dt_backflow": False, "vfinal_sidecars": {"routing_temporal_replay": {"status": "candidate_only", "n_events": 1, "all_events_legal": True, "prior_state_monotonicity": True, "worker_identity_consistent": True, "policy_dependency_valid": True, "n_nonzero_assertions": 1, "illegal_event_reasons": {}}}}), encoding="utf-8")
+    (tmp_path / "c1_closeout_dryrun_gate_summary.json").write_text(json.dumps({"input_status": "formal", "raw_snapshot_manifest_fresh": True, "artifacts_fresh": True, "quality_table_blockers": [], "quality_table_summary": {"n_quality_rows": 1, "amendment_blocker_count": 0}, "canonicalization_summary": {"structural_integrity_passed": True, "collection_completeness_passed": True, "blockers": []}, "formal_worker_state": verified, "r_u_estimated": True, "full_profile_ready": True, "profile_sidecar_generated": True, "profile_freeze_status": "C1_provisional", "pending_adjudication_count": 0, "worker_state_summary": {"r_u_freeze": True}, "c2_draft_summary": {"c2_freeze": True}, "dt_backflow": False, "formal_inputs_present": True, "vfinal_sidecars": {"routing_temporal_replay": {"status": "candidate_only", "full_stop_contract_valid": True, "n_events": 1, "all_events_legal": True, "prior_state_monotonicity": True, "worker_identity_consistent": True, "policy_dependency_valid": True, "n_nonzero_assertions": 1, "illegal_event_reasons": {}}}}), encoding="utf-8")
     adjudication = {"status": "approved", "approved": True, "manifest_id": "m1", "approved_by": "reviewer", "approved_at": "2026-07-14T00:00:00Z", "input_bundle_sha256": bundle["bundle_sha256"]}
     adjudication_path = tmp_path / "adjudication.json"
     adjudication_path.write_text(json.dumps(adjudication), encoding="utf-8")
     result = finalize_existing_closeout(tmp_path, adjudication_path)
     assert result["finalization"]["bundle_sha256"] == bundle["bundle_sha256"]
     assert result["formal_closeout_ready"] is True
+    assert result["blocked_for_launch"] is False
+    assert result["blockers"] == []

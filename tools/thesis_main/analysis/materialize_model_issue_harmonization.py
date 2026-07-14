@@ -136,7 +136,7 @@ def materialize_model_issue_harmonization(export_paths: list[Path], geometry_jso
         prov_complete = original_provenance_status == "complete" and prov.get("prediction_selection_status") not in {"ambiguous_multiple_predictions", "missing"}
         amendment_key = (row.get("source_export_sha256", ""), row.get("project_id", ""), row.get("ls_runtime_task_id", ""), prov.get("initialization_artifact_id", ""))
         amendment = amendment_by_key.get(amendment_key, {})
-        if "acceptable" in {str(item).strip().lower() for item in selected} and row.get("condition", "") == "semi" and not _is_future_schema(row.get("schema_family", ""), row.get("ui_version", ""), row.get("instruction_version", "")):
+        if not prov_complete and "acceptable" in {str(item).strip().lower() for item in selected} and row.get("condition", "") == "semi" and not _is_future_schema(row.get("schema_family", ""), row.get("ui_version", ""), row.get("instruction_version", "")):
             needed_amendment_keys.add(amendment_key)
         if amendment:
             joined_amendment_keys.add(amendment_key)

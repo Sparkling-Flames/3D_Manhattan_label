@@ -62,6 +62,13 @@ FAMILIES = [
 
 EVIDENCE_FIELDS = [
     "worker_id",
+    "canonical_eligibility_status",
+    "assigned_expected",
+    "outside_assignment_submission",
+    "duplicate_worker_task_submission",
+    "parse_error",
+    "schema_interpretable",
+    "schema_error",
     "round_id",
     "task_id",
     "base_task_id",
@@ -571,6 +578,13 @@ def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, An
                 exclusion.append("geometry_scorer_gate_not_passed")
         item = {
                 "worker_id": worker,
+                "canonical_eligibility_status": safe(row.get("canonical_eligibility_status")),
+                "assigned_expected": safe(row.get("assigned_expected")),
+                "outside_assignment_submission": safe(row.get("outside_assignment_submission")),
+                "duplicate_worker_task_submission": safe(row.get("duplicate_worker_task_submission")),
+                "parse_error": safe(row.get("parse_error")),
+                "schema_interpretable": safe(row.get("schema_interpretable")),
+                "schema_error": safe(row.get("schema_error")),
                 "round_id": safe(row.get("round_id")) or "C1",
                 "task_id": safe(row.get("task_id")),
                 "base_task_id": safe(row.get("base_task_id")),
