@@ -162,12 +162,12 @@ def _formal_worker_fixture(tmp_path: Path):
     for name, body in {
         "canonical.csv": "canonical_annotation_id\nA\n",
         "quality.csv": "worker_id,used_for_r_u,canonical_eligibility_status,independence_status,assigned_expected,outside_assignment_submission,duplicate_worker_task_submission,schema_interpretable,parse_error,schema_error\nw1,true,valid,independent,true,false,false,true,,\n",
-        "r_u_evidence.csv": "worker_id,r_u_evidence_included\nw1,true\n",
+        "r_u_evidence.csv": "project_id,ls_runtime_task_id,worker_id,r_u_evidence_classification,r_u_evidence_included,r_u_metric_name,r_u_metric_value,r_u_metric_direction,r_u_normalization_rule,r_u_score_status,r_u_score_source\np1,t1,w1,included,true,iou_to_consensus_loo,0.5,higher_is_better,identity_0_1,valid,frozen-score.csv\n",
         "geometry.jsonl": '{}\n', "loo.csv": "worker_id\nw1\n", "stability.csv": "worker_id\nw1\n",
     }.items():
         path = tmp_path / name; path.write_text(body, encoding="utf-8"); evidence.append(path)
     state = tmp_path / "worker_state.csv"
-    state.write_text("worker_id,n_calib_completed,r_u_hat,r_u_ci_low,r_u_ci_high\nw1,1,0.5,0.4,0.6\n", encoding="utf-8")
+    state.write_text("worker_id,n_calib_completed,r_u_hat,r_u_ci_low,r_u_ci_high,r_u_status,support_status,interpretation_allowed\nw1,1,0.5,0.4,0.6,estimated,sufficient,true\n", encoding="utf-8")
     dependencies = [{"path": str(path.resolve()), "sha256": sha256_file(path)} for path in evidence]
     manifest = tmp_path / "worker_state_manifest.json"
     manifest.write_text(json.dumps({
@@ -240,6 +240,10 @@ def test_finalize_existing_closeout_binds_adjudication_without_rerunning_inputs(
     bundle["bundle_sha256"] = __import__("hashlib").sha256(json.dumps(bundle["artifacts"], sort_keys=True).encode("utf-8")).hexdigest()
     (tmp_path / "c1_closeout_input_bundle.json").write_text(json.dumps(bundle), encoding="utf-8")
     (tmp_path / "c1_closeout_dryrun_gate_summary.json").write_text(json.dumps({"input_status": "formal", "raw_snapshot_manifest_fresh": True, "artifacts_fresh": True, "quality_table_blockers": [], "quality_table_summary": {"n_quality_rows": 1, "amendment_blocker_count": 0}, "canonicalization_summary": {"structural_integrity_passed": True, "collection_completeness_passed": True, "blockers": []}, "formal_worker_state": verified, "r_u_estimated": True, "full_profile_ready": True, "c1_duplicate_review_complete": True, "c1_task_outcome_adjudication_complete": True, "c1_profile_evidence_classified": True, "r_u_support_consistent": True, "profile_sidecar_generated": True, "profile_summary_path": str(profile), "profile_freeze_status": "C1_provisional", "pending_adjudication_count": 0, "worker_state_summary": {"r_u_freeze": True}, "c2_draft_summary": {"c2_freeze": True}, "dt_backflow": False, "formal_inputs_present": True, "vfinal_sidecars": {"routing_temporal_replay": temporal_contract}}), encoding="utf-8")
+    gate_path = tmp_path / "c1_closeout_dryrun_gate_summary.json"
+    gate_payload = json.loads(gate_path.read_text(encoding="utf-8"))
+    gate_payload["c1_profile_evidence_complete"] = True
+    gate_path.write_text(json.dumps(gate_payload), encoding="utf-8")
     adjudication = {"status": "approved", "approved": True, "manifest_id": "m1", "approved_by": "reviewer", "approved_at": "2026-07-14T00:00:00Z", "input_bundle_sha256": bundle["bundle_sha256"]}
     adjudication_path = tmp_path / "adjudication.json"
     adjudication_path.write_text(json.dumps(adjudication), encoding="utf-8")

@@ -99,10 +99,10 @@ def test_dryrun_chain_generates_provisional_summary_and_blocks_c2_draft(tmp_path
     assert summary["analysis_contract_ready"] is False
     assert summary["formal_c1_annotation_data_present"] is False
     assert summary["dry_run_is_formal_data"] is False
-    assert summary["vfinal_sidecars"]["routing_replay_scaffold"]["formal_assignment_generated"] is False
+    assert "routing_replay_scaffold" not in summary["vfinal_sidecars"]
     assert (out / "worker_scene_profile_candidates_C1.csv").exists()
     assert (out / "routing_evidence_snapshot_C1.csv").exists()
-    assert (out / "routing_replay_scaffold_C1.csv").exists()
+    assert not (out / "routing_replay_scaffold_C1.csv").exists()
     assert (out / "c1_closeout_input_bundle.json").exists()
     assert (out / "worker_profile_sidecar_C1.summary.json").exists()
     assert "# C1 Closeout Dryrun Gate Summary" in md

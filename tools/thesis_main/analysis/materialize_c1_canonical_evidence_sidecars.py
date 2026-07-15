@@ -3,11 +3,10 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
-from tools.thesis_main.analysis.prescreen_canonicalize_export import _annotation_id, _data, _project_id, _safe_str, _task_id, _worker_id
+from tools.thesis_main.analysis.prescreen_canonicalize_export import _annotation_id, _data, _project_id, _safe_str, _task_id, _worker_id, annotation_version_id, annotation_version_identity
 from tools.thesis_main.analysis.quality_core.choice_parser import extract_data
 from tools.thesis_main.analysis.vfinal_artifact_utils import COMMON_SIDEcar_FIELDS, formal_status, json_text, sha256_file, sha256_json, sidecar_common, write_csv_rows
 
@@ -24,20 +23,6 @@ def _load_tasks(path: Path) -> list[dict[str, Any]]:
     if not isinstance(payload, list):
         raise ValueError(f"{path} must contain a Label Studio task-list export")
     return [row for row in payload if isinstance(row, dict)]
-
-
-def _canonical_rows(path: Path) -> dict[tuple[str, str, str, str, str], list[dict[str, str]]]:
-    with path.open("r", newline="", encoding="utf-8-sig") as handle:
-        rows = list(csv.DictReader(handle))
-    indexed: dict[tuple[str, str, str, str, str], list[dict[str, str]]] = defaultdict(list)
-    for row in rows:
-        key = (
-            str(row.get("source_export", "")), str(row.get("project_id", "")),
-            str(row.get("ls_runtime_task_id") or row.get("task_id", "")), str(row.get("worker_id", "")),
-            str(row.get("raw_canonical_annotation_id") or row.get("annotation_id", "")),
-        )
-        indexed[key].append(row)
-    return indexed
 
 
 def _truthy(value: Any) -> bool:
@@ -108,7 +93,7 @@ def _provenance(task: dict[str, Any], export_path: Path, *, stage: str, pool: st
     return rows
 
 
-def materialize_canonical_evidence(export_paths: list[Path], canonical_csv: Path, output_dir: Path, *, stage: str = "C1", input_status: str = "dry_run") -> dict[str, Any]:
+def materialize_canonical_evidence(export_paths: list[Path], canonical_csv: Path, output_dir: Path, *, stage: str = "C1", input_status: str = "dry_run", version_disposition_csv: Path | None = None) -> dict[str, Any]:
     registry_sha = sha256_file(canonical_csv)
     registry_rows = list(csv.DictReader(canonical_csv.open(encoding="utf-8-sig"))) if canonical_csv.exists() else []
     canonical_ids = [str(row.get("canonical_annotation_id", "")).strip() for row in registry_rows]
@@ -118,12 +103,10 @@ def materialize_canonical_evidence(export_paths: list[Path], canonical_csv: Path
     if len(canonical_ids) != len(set(canonical_ids)):
         binding_blockers.append("canonical_registry_duplicate_identity")
     records: dict[tuple[str, str, str, str, str, str], dict[str, Any]] = {}
-    task_records: dict[tuple[str, str, str], dict[str, Any]] = {}
     for export_path in export_paths:
         export_sha = sha256_file(export_path)
         for task_index, task in enumerate(_load_tasks(export_path), 1):
             task_id, project_id, data = _task_id(task, task_index), _project_id(task), _data(task)
-            task_records.setdefault((export_sha, project_id, task_id), {"task": task, "export_path": export_path, "data": data})
             for ann_index, annotation in enumerate(task.get("annotations") or [], 1):
                 if not isinstance(annotation, dict):
                     continue
@@ -155,22 +138,35 @@ def materialize_canonical_evidence(export_paths: list[Path], canonical_csv: Path
         binding_blockers.append("canonical_registry_raw_binding_not_bijective")
     if len({str(row.get("canonical_annotation_id", "")) for row, _record in selected_records}) != len(selected_records):
         binding_blockers.append("canonical_registry_selected_identity_not_unique")
-    selected_keys = {
-        (str(row.get("project_id", "")), str(row.get("ls_runtime_task_id") or row.get("task_id", "")), str(row.get("worker_id", "")), str(row.get("annotation_id") or row.get("raw_canonical_annotation_id", "")), str(row.get("response_hash", "")))
-        for row, _record in selected_records
+    disposition_rows = list(csv.DictReader(version_disposition_csv.open(encoding="utf-8-sig"))) if version_disposition_csv and version_disposition_csv.exists() else []
+    disposition_by_version: dict[str, dict[str, str]] = {}
+    allowed_dispositions = {"selected_canonical", "input_duplicate_folded", "unselected_forensic", "pending_review", "excluded_group", "forensic_only"}
+    for disposition in disposition_rows:
+        version_id = _safe_str(disposition.get("annotation_version_id"))
+        if not version_id or version_id in disposition_by_version:
+            binding_blockers.append("annotation_version_disposition_missing_or_duplicate")
+        elif _safe_str(disposition.get("version_disposition")) not in allowed_dispositions:
+            binding_blockers.append("annotation_version_disposition_invalid")
+        else:
+            disposition_by_version[version_id] = disposition
+    raw_version_ids = {
+        annotation_version_id(annotation_version_identity(stage, project, task, worker, annotation, response, export_sha))
+        for export_sha, project, task, worker, annotation, response in records
     }
-    duplicate_groups = {
-        (str(row.get("project_id", "")), str(row.get("ls_runtime_task_id") or row.get("task_id", "")), str(row.get("worker_id", "")))
-        for row, _record in selected_records
-        if int(row.get("duplicate_group_size") or 1) > 1
-    }
-    for raw_key in records:
-        _export_sha, project_id, task_id, worker_id, annotation_id, response_hash = raw_key
-        identity = (project_id, task_id, worker_id, annotation_id, response_hash)
-        group = (project_id, task_id, worker_id)
-        if identity not in selected_keys and group not in duplicate_groups:
+    if version_disposition_csv:
+        if raw_version_ids != set(disposition_by_version):
+            binding_blockers.append("annotation_version_disposition_raw_coverage_mismatch")
+        selected_version_ids = {_safe_str(row.get("annotation_version_id")) for row in registry_rows}
+        disposition_selected_ids = {key for key, row in disposition_by_version.items() if _safe_str(row.get("version_disposition")) == "selected_canonical"}
+        if selected_version_ids != disposition_selected_ids:
+            binding_blockers.append("annotation_version_disposition_selected_binding_mismatch")
+    else:
+        selected_raw_keys = {
+            (_safe_str(row.get("source_export_sha256")), _safe_str(row.get("project_id")), _safe_str(row.get("ls_runtime_task_id") or row.get("task_id")), _safe_str(row.get("worker_id")), _safe_str(row.get("annotation_id") or row.get("raw_canonical_annotation_id")), _safe_str(row.get("response_hash")))
+            for row in registry_rows
+        }
+        if set(records) != selected_raw_keys:
             binding_blockers.append("canonical_registry_raw_extra_row")
-            break
     meta_rows: list[dict[str, Any]] = []
     geometry_rows: list[dict[str, Any]] = []
     provenance_rows: list[dict[str, Any]] = []
@@ -186,7 +182,7 @@ def materialize_canonical_evidence(export_paths: list[Path], canonical_csv: Path
             status, reason = "invalid", schema_reason
         validity, allowed = formal_status(input_status, valid=status == "valid" and schema_ok and not binding_blockers)
         base_task_id = _safe_str(row.get("base_task_id") or data.get("base_task_id") or data.get("task_id") or task_id)
-        dependencies = [export_path, canonical_csv]
+        dependencies = [export_path, canonical_csv] + ([version_disposition_csv] if version_disposition_csv else [])
         if row.get("independence_audit_snapshot_path"):
             dependencies.append(Path(row["independence_audit_snapshot_path"]))
         common = sidecar_common(source_artifact=str(export_path), source_sha256=export_sha, stage=stage, pool=_safe_str(row.get("dataset_group") or data.get("dataset_group")), condition=_safe_str(row.get("condition") or data.get("condition")), validity_status=validity, rule_version=RULE_VERSION, interpretation_allowed=allowed, dependency_paths=dependencies)
@@ -222,7 +218,7 @@ def materialize_canonical_evidence(export_paths: list[Path], canonical_csv: Path
         for row in geometry_rows:
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
     write_csv_rows(output_dir / "c1_model_artifact_provenance.csv", provenance_rows, COMMON_SIDEcar_FIELDS + ["logical_task_id", "ls_runtime_task_id", "project_id", "task_id", "prediction_index", "artifact_kind", "prediction_selection_status", "initialization_artifact_id", "model_version", "checkpoint_sha256", "inference_config_sha256", "preprocess_postprocess_sha256", "prediction_payload_hash", "prediction_result_present", "provenance_status"])
-    return {"schema_version": "paper_a_vfinal_sidecar_v3", "rule_version": RULE_VERSION, "input_status": input_status, "n_meta_observations": len(meta_rows), "n_geometry_rows": len(geometry_rows), "n_model_provenance_rows": len(provenance_rows), "formal_c1_annotation_data_present": bool(meta_rows) and input_status == "formal", "interpretation_allowed": False, "dry_run": input_status != "formal", "canonical_registry_bijection_valid": not binding_blockers, "blockers": sorted(set(binding_blockers))}
+    return {"schema_version": "paper_a_vfinal_sidecar_v3", "rule_version": RULE_VERSION, "input_status": input_status, "n_meta_observations": len(meta_rows), "n_geometry_rows": len(geometry_rows), "n_model_provenance_rows": len(provenance_rows), "n_annotation_version_dispositions": len(disposition_rows), "annotation_version_disposition_csv": str(version_disposition_csv or ""), "annotation_version_disposition_sha256": sha256_file(version_disposition_csv) if version_disposition_csv and version_disposition_csv.exists() else "", "formal_c1_annotation_data_present": bool(meta_rows) and input_status == "formal", "interpretation_allowed": False, "dry_run": input_status != "formal", "canonical_registry_bijection_valid": not binding_blockers, "blockers": sorted(set(binding_blockers))}
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -231,8 +227,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--canonical-csv", required=True, type=Path)
     parser.add_argument("--output-dir", required=True, type=Path)
     parser.add_argument("--input-status", choices=["dry_run", "formal"], default="dry_run")
+    parser.add_argument("--version-disposition-csv", type=Path)
     args = parser.parse_args(argv)
-    print(json.dumps(materialize_canonical_evidence(args.export_json, args.canonical_csv, args.output_dir, input_status=args.input_status), ensure_ascii=False, indent=2))
+    print(json.dumps(materialize_canonical_evidence(args.export_json, args.canonical_csv, args.output_dir, input_status=args.input_status, version_disposition_csv=args.version_disposition_csv), ensure_ascii=False, indent=2))
     return 0
 
 
