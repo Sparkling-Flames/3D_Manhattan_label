@@ -61,6 +61,9 @@ CANONICAL_FIELDS = [
     "condition",
     "worker_id",
     "annotation_id",
+    "response_hash",
+    "source_export_sha256",
+    "annotation_version_id",
     "canonical_annotation_id",
     "active_time",
     "active_time_source",
@@ -100,6 +103,12 @@ CANONICAL_FIELDS = [
     "duplicate_geometry_type",
     "duplicate_review_status",
     "duplicate_decision",
+    "process_disposition",
+    "timing_disposition",
+    "reviewed_by",
+    "reviewed_at",
+    "selected_response_hash",
+    "selected_source_export_sha256",
     "active_time_source_file",
     "active_time_session_count",
     "active_time_event_count",
@@ -292,7 +301,7 @@ def build_canonicalization(
                 raise ValueError("duplicate adjudication identity must be complete and unique")
             duplicate_decisions[key] = decision
     canonical_base, duplicate_base, base_summary = build_canonical_tables(
-        export_paths, active_log, duplicate_review_mode=True, duplicate_decisions=duplicate_decisions
+        export_paths, active_log, duplicate_review_mode=True, duplicate_decisions=duplicate_decisions, round_id=round_id
     )
     active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths), policy="calibration") if active_log else {}
     raw_manifest = snapshot_inputs_unique(
@@ -390,6 +399,9 @@ def build_canonicalization(
             "condition": info.get("condition", safe(row.get("condition"))),
             "worker_id": worker_id,
             "annotation_id": raw_annotation_id,
+            "response_hash": row.get("response_hash", ""),
+            "source_export_sha256": row.get("source_export_sha256", ""),
+            "annotation_version_id": row.get("annotation_version_id", ""),
             "canonical_annotation_id": _canonical_id(round_id, project_id, runtime_task_id, worker_id, raw_annotation_id),
             "active_time": active_override.get("active_time", row.get("active_time", "")),
             "active_time_source": active_override.get("active_time_source", row.get("active_time_source", "")),
@@ -429,6 +441,12 @@ def build_canonicalization(
             "duplicate_geometry_type": row.get("duplicate_geometry_type", ""),
             "duplicate_review_status": row.get("duplicate_review_status", "not_required"),
             "duplicate_decision": row.get("duplicate_decision", ""),
+            "process_disposition": row.get("process_disposition", ""),
+            "timing_disposition": row.get("timing_disposition", ""),
+            "reviewed_by": row.get("reviewed_by", ""),
+            "reviewed_at": row.get("reviewed_at", ""),
+            "selected_response_hash": row.get("selected_response_hash", ""),
+            "selected_source_export_sha256": row.get("selected_source_export_sha256", ""),
             "active_time_source_file": active_override.get("active_time_source_file", row.get("active_time_source_file", "")),
             "active_time_session_count": active_override.get("active_time_session_count", row.get("active_time_session_count", "")),
             "active_time_event_count": active_override.get("active_time_event_count", row.get("active_time_event_count", "")),
@@ -480,11 +498,30 @@ def build_canonicalization(
         )
 
     duplicate_rows = _enhance_duplicate_rows(duplicate_base, runtime_lookup, round_id)
+    review_queue_rows: list[dict[str, Any]] = []
+    forensic_rows: list[dict[str, Any]] = []
+    for group in duplicate_rows:
+        versions = json.loads(group.get("version_rows_json") or "[]")
+        for version in versions:
+            review_queue_rows.append({
+                **version,
+                "round_id": round_id,
+                "ls_runtime_task_id": group.get("ls_runtime_task_id", ""),
+                "task_id": group.get("task_id", ""),
+                "base_task_id": group.get("base_task_id", ""),
+                "dataset_group": group.get("dataset_group", ""),
+                "worker_id": group.get("worker_id", ""),
+                "duplicate_group_type": group.get("duplicate_geometry_type", ""),
+                "current_review_status": group.get("duplicate_review_status", ""),
+                "manual_review_required": "true" if group.get("duplicate_review_status") == "pending" else "false",
+            })
+            if group.get("duplicate_review_status") in {"resolved", "auto_resolved_input_duplicate"} and version.get("annotation_id") != group.get("raw_canonical_annotation_id"):
+                forensic_rows.append({**version, "group_key": f"{group.get('project_id')}|{group.get('ls_runtime_task_id')}|{group.get('worker_id')}", "forensic_reason": "not_selected_canonical_version", "duplicate_review_status": group.get("duplicate_review_status", "")})
     duplicate_template_rows = [
         {
-            "project_id": row.get("project_id", ""), "ls_runtime_task_id": row.get("ls_runtime_task_id", ""), "worker_id": row.get("worker_id", ""),
-            "all_annotation_ids": row.get("all_annotation_ids", ""), "duplicate_geometry_type": row.get("duplicate_geometry_type", ""),
-            "current_review_status": row.get("duplicate_review_status", ""), "decision": "", "selected_annotation_id": "", "reviewed_by": "", "reviewed_at": "", "notes": "",
+            "round_id": row.get("round_id", round_id), "project_id": row.get("project_id", ""), "ls_runtime_task_id": row.get("ls_runtime_task_id", ""), "worker_id": row.get("worker_id", ""),
+            "all_annotation_ids": row.get("all_annotation_ids", ""), "duplicate_group_type": row.get("duplicate_geometry_type", ""),
+            "current_review_status": row.get("duplicate_review_status", ""), "decision": "", "selected_annotation_id": "", "selected_response_hash": "", "selected_source_export_sha256": "", "process_disposition": "", "timing_disposition": "", "reviewed_by": "", "reviewed_at": "", "review_notes": "",
         }
         for row in duplicate_rows if safe(row.get("duplicate_review_status")) == "pending"
     ]
@@ -492,7 +529,9 @@ def build_canonicalization(
     write_csv(output_dir / "c1_runtime_key_collision_audit.csv", collision_rows, RUNTIME_COLLISION_FIELDS)
     write_csv(output_dir / "c1_canonical_annotations.csv", canonical_rows, CANONICAL_FIELDS)
     write_csv(output_dir / "c1_duplicate_annotation_audit.csv", duplicate_rows)
-    write_csv(output_dir / "c1_duplicate_adjudication_template.csv", duplicate_template_rows, ["project_id", "ls_runtime_task_id", "worker_id", "all_annotation_ids", "duplicate_geometry_type", "current_review_status", "decision", "selected_annotation_id", "reviewed_by", "reviewed_at", "notes"])
+    write_csv(output_dir / "c1_duplicate_annotation_review_queue.csv", review_queue_rows)
+    write_csv(output_dir / "c1_duplicate_annotation_forensic_audit.csv", forensic_rows)
+    write_csv(output_dir / "c1_duplicate_adjudication_template.csv", duplicate_template_rows, ["round_id", "project_id", "ls_runtime_task_id", "worker_id", "all_annotation_ids", "duplicate_group_type", "current_review_status", "decision", "selected_annotation_id", "selected_response_hash", "selected_source_export_sha256", "process_disposition", "timing_disposition", "reviewed_by", "reviewed_at", "review_notes"])
     write_csv(output_dir / "c1_active_time_binding_audit.csv", active_rows, ACTIVE_AUDIT_FIELDS)
     write_csv(output_dir / "c1_realized_vs_assigned_audit.csv", realized_rows, REALIZED_AUDIT_FIELDS)
     write_csv(output_dir / "c1_export_merge_manifest.csv", _merge_manifest(export_paths, runtime_rows))
@@ -524,7 +563,8 @@ def build_canonicalization(
     active_audit_counts = active_time_audit_summary(canonical_rows)
     planned_missing_count = sum(row["planned_mapping_status"] == "planned_mapping_missing" for row in runtime_rows)
     missing_submission_count = sum(row["missing_submission"] == "true" for row in realized_rows)
-    structural_integrity_passed = outside_count == 0 and pending_duplicate_count == 0 and reserve_count == 0 and not collision_rows and not planned_missing_count
+    canonical_evidence_blocked = bool(canonical_evidence_summary.get("blockers"))
+    structural_integrity_passed = outside_count == 0 and pending_duplicate_count == 0 and reserve_count == 0 and not collision_rows and not planned_missing_count and not canonical_evidence_blocked
     collection_completeness_passed = missing_submission_count == 0
     passed = structural_integrity_passed and (collection_completeness_passed if require_complete else True)
     summary = {
@@ -539,7 +579,8 @@ def build_canonicalization(
         "duplicate_review_resolved_count": sum(safe(row.get("duplicate_review_status")) == "resolved" for row in duplicate_rows),
         "duplicate_input_repeat_count": sum(int(row.get("repeated_export_row_count") or 0) for row in duplicate_rows),
         "duplicate_adjudication_csv": str(duplicate_adjudication_csv or ""),
-        "duplicate_review_queue_csv": str(output_dir / "c1_duplicate_annotation_audit.csv"),
+        "duplicate_review_queue_csv": str(output_dir / "c1_duplicate_annotation_review_queue.csv"),
+        "duplicate_forensic_audit_csv": str(output_dir / "c1_duplicate_annotation_forensic_audit.csv"),
         "duplicate_adjudication_template_csv": str(output_dir / "c1_duplicate_adjudication_template.csv"),
         "reserve_realized_submission_count": reserve_count,
         "missing_submission_count": missing_submission_count,
@@ -590,6 +631,7 @@ def build_canonicalization(
                 ("independence_audit_missing_identity", independence_audit_missing_identity_count),
                 ("independence_not_evaluable", sum(row["independence_status"] == "not_evaluable" for row in canonical_rows)),
                 *[(f"amendment_{key}", count) for key, count in (harmonization_summary.get("amendment_blockers") or {}).items()],
+                *[(f"canonical_evidence_{blocker}", 1) for blocker in (canonical_evidence_summary.get("blockers") or [])],
             )
             if count
         ],

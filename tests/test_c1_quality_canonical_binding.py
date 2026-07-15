@@ -68,6 +68,32 @@ def test_worker_scope_never_becomes_task_final_scope_without_task_adjudication()
     assert row["worker_scope_response"] == "oos_open_boundary"
 
 
+def test_worker_scope_profile_consumes_adjudicated_outcome_not_raw_response() -> None:
+    evidence = build_evidence_rows([{
+        "round_id": "C1", "worker_id": "w1", "task_id": "t1", "base_task_id": "b1",
+        "dataset_group": "Calibration_anchor", "condition": "manual",
+        "task_final_scope": "in_scope", "worker_scope_response": "oos_open_boundary",
+        "worker_scope_outcome": "correct_in_scope", "canonical_eligibility_status": "valid",
+        "independence_status": "independent", "assigned_expected": "true",
+        "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false",
+        "schema_interpretable": "true", "process_evaluable": "true",
+        "geometry_valid": "true", "canonical_annotation_id": "a1",
+    }])
+    assert evidence[0]["worker_scope_outcome"] == "correct_in_scope"
+    assert evidence[0]["included_in_r_scope"] is True
+
+
+def test_duplicate_review_process_failure_is_preserved_in_quality_evidence() -> None:
+    row = build_quality_rows([{
+        "process_disposition": "worker_process_failure", "canonical_eligibility_status": "valid",
+        "independence_status": "independent", "assigned_expected": "true",
+        "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false",
+        "schema_interpretable": "true",
+    }])[0]
+    assert row["process_failure_observed"] == "true"
+    assert row["process_failure_subfamily"] == "duplicate_review_worker_process_failure"
+
+
 def test_task_outcome_drives_scope_outcome_and_oos_excludes_r_u() -> None:
     assert _scope_outcome("in_scope", "oos") == "scope_false_negative"
     included, reason = _r_u_evidence({
@@ -77,6 +103,23 @@ def test_task_outcome_drives_scope_outcome_and_oos_excludes_r_u() -> None:
     })
     assert included is False
     assert "not_in_scope" in reason
+
+
+def test_formal_r_u_accepts_worker_excluded_reference_only_with_explicit_exclusion() -> None:
+    base = {
+        "used_for_r_u": "true", "task_outcome_adjudication_status": "approved", "task_final_scope": "in_scope",
+        "condition": "manual", "geometry_reference_status": "worker_excluded_loo_consensus",
+        "geometry_valid": "true", "process_evaluable": "true", "process_failure_observed": "false",
+        "duplicate_review_status": "resolved", "eligible_independent_evidence": "true",
+        "reference_identity": "loo-ref", "reference_evidence_status": "evaluable",
+        "r_u_score_status": "evaluable", "r_u_metric_name": "score", "r_u_metric_value": "0.5",
+        "r_u_score_source": "frozen-score.csv",
+    }
+    included, reason = _r_u_evidence({**base, "reference_worker_excluded": "true"}, formal_score_required=True)
+    assert included is True, reason
+    included, reason = _r_u_evidence({**base, "reference_worker_excluded": "false"}, formal_score_required=True)
+    assert included is False
+    assert "reference_includes_worker" in reason
 
 
 def test_r_u_truth_count_matches_worker_state_and_profile_support(tmp_path: Path) -> None:
@@ -94,6 +137,14 @@ def test_r_u_truth_count_matches_worker_state_and_profile_support(tmp_path: Path
     assert worker_rows[0]["n_calib_completed"] == 1
     assert sum(row["r_u_evidence_included"] == "true" for row in quality) == 1
     assert profile["n_calib_support"] == 1
+
+
+def test_provisional_worker_state_uses_assignment_roster_not_forensic_quality_rows(tmp_path: Path) -> None:
+    assignment = tmp_path / "assignment.csv"
+    _write(assignment, ["worker_id"], [{"worker_id": "w1"}])
+    rows = [{"worker_id": "w1", "r_u_evidence_included": "false"}, {"worker_id": "forensic-w2", "r_u_evidence_included": "true"}]
+    worker_rows = build_worker_state(rows, [assignment], 1)
+    assert [row["worker_id"] for row in worker_rows] == ["w1"]
 
 
 def test_task_outcome_materialization_controls_scope_and_r_u_manifest(tmp_path: Path) -> None:

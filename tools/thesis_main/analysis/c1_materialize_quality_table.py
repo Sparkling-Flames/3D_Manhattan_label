@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
 from pathlib import Path
 from typing import Any
@@ -44,12 +45,21 @@ QUALITY_FIELDS = [
     "condition",
     "worker_id",
     "annotator_id",
+    "project_id",
+    "ls_runtime_task_id",
+    "annotation_id",
     "canonical_annotation_id",
+    "response_hash",
+    "annotation_version_id",
     "task_final_scope",
     "task_scope_resolution_status",
     "task_oos_subtype",
     "task_outcome_adjudication_status",
     "reference_identity",
+    "scope_reference_mode",
+    "geometry_reference_mode",
+    "reference_worker_excluded",
+    "reference_evidence_status",
     "worker_scope_response",
     "worker_scope_outcome",
     "geometry_reference_status",
@@ -107,7 +117,18 @@ QUALITY_FIELDS = [
     "r_u_evidence_included",
     "r_u_evidence_exclusion_reason",
     "r_u_score_or_outcome",
+    "r_u_metric_name",
+    "r_u_metric_value",
+    "r_u_metric_direction",
+    "r_u_normalization_rule",
+    "r_u_score_status",
+    "r_u_score_source",
     "duplicate_review_status",
+    "duplicate_decision",
+    "process_disposition",
+    "timing_disposition",
+    "reviewed_by",
+    "reviewed_at",
     "used_for_rq2",
     "assigned_expected",
     "outside_assignment_submission",
@@ -196,6 +217,20 @@ def _key(row: dict[str, Any]) -> tuple[str, str, str]:
     return safe(row.get("task_id")), safe(row.get("base_task_id")), safe(row.get("dataset_group"))
 
 
+def _outcome_exact_key(row: dict[str, Any]) -> tuple[str, str, str, str, str]:
+    return (
+        safe(row.get("project_id")),
+        safe(row.get("ls_runtime_task_id")),
+        safe(row.get("task_id")),
+        safe(row.get("base_task_id")),
+        safe(row.get("condition")),
+    )
+
+
+def _outcome_legacy_key(row: dict[str, Any]) -> tuple[str, str, str]:
+    return safe(row.get("task_id")), safe(row.get("base_task_id")), safe(row.get("condition"))
+
+
 def _inventory_flags(path: Path | None) -> dict[tuple[str, str, str], str]:
     if path is None or not path.exists():
         return {}
@@ -269,12 +304,21 @@ def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: di
                 "condition": safe(row.get("condition")),
                 "worker_id": safe(row.get("worker_id")),
                 "annotator_id": safe(row.get("worker_id")),
+                "project_id": safe(row.get("project_id")),
+                "ls_runtime_task_id": safe(row.get("ls_runtime_task_id") or row.get("task_id")),
+                "annotation_id": safe(row.get("annotation_id")),
                 "canonical_annotation_id": safe(row.get("canonical_annotation_id")),
+                "response_hash": safe(row.get("response_hash")),
+                "annotation_version_id": safe(row.get("annotation_version_id")),
                 "task_final_scope": safe(row.get("task_final_scope") or row.get("final_scope")),
                 "task_scope_resolution_status": safe(row.get("task_scope_resolution_status")),
                 "task_oos_subtype": safe(row.get("task_oos_subtype")),
                 "task_outcome_adjudication_status": safe(row.get("task_outcome_adjudication_status")),
                 "reference_identity": safe(row.get("reference_identity")),
+                "scope_reference_mode": safe(row.get("scope_reference_mode")),
+                "geometry_reference_mode": safe(row.get("geometry_reference_mode")),
+                "reference_worker_excluded": safe(row.get("reference_worker_excluded")),
+                "reference_evidence_status": safe(row.get("reference_evidence_status")),
                 "worker_scope_response": safe(row.get("worker_scope_response")),
                 "worker_scope_outcome": safe(row.get("worker_scope_outcome")),
                 "geometry_reference_status": safe(row.get("geometry_reference_status")),
@@ -332,7 +376,18 @@ def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: di
                 "r_u_evidence_included": False,
                 "r_u_evidence_exclusion_reason": "not_materialized",
                 "r_u_score_or_outcome": safe(row.get("r_u_score_or_outcome") or row.get("quality_metric_value")),
+                "r_u_metric_name": safe(row.get("r_u_metric_name")),
+                "r_u_metric_value": safe(row.get("r_u_metric_value")),
+                "r_u_metric_direction": safe(row.get("r_u_metric_direction")),
+                "r_u_normalization_rule": safe(row.get("r_u_normalization_rule")),
+                "r_u_score_status": safe(row.get("r_u_score_status")),
+                "r_u_score_source": safe(row.get("r_u_score_source")),
                 "duplicate_review_status": safe(row.get("duplicate_review_status")) or "not_required",
+                "duplicate_decision": safe(row.get("duplicate_decision")),
+                "process_disposition": safe(row.get("process_disposition")),
+                "timing_disposition": safe(row.get("timing_disposition")),
+                "reviewed_by": safe(row.get("reviewed_by")),
+                "reviewed_at": safe(row.get("reviewed_at")),
                 "used_for_rq2": _used_for_rq2(row),
                 "assigned_expected": truthy(row.get("assigned_expected", True)),
                 "outside_assignment_submission": truthy(row.get("outside_assignment_submission")),
@@ -370,6 +425,12 @@ def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: di
                 "copy_risk_status": safe(row.get("copy_risk_status")),
             }
         )
+        # A duplicate-review decision can explicitly identify a worker-level
+        # process failure.  Preserve that disposition in the shared evidence
+        # row; never infer a process failure merely from missing timing data.
+        if safe(row.get("process_disposition")) == "worker_process_failure":
+            out[-1]["process_failure_observed"] = "true"
+            out[-1]["process_failure_subfamily"] = "duplicate_review_worker_process_failure"
     return out
 
 
@@ -410,59 +471,154 @@ def _scope_outcome(worker_response: str, final_scope: str) -> str:
     return "not_evaluable"
 
 
-def _r_u_evidence(row: dict[str, Any]) -> tuple[bool, str]:
+def _r_u_evidence(row: dict[str, Any], *, formal_score_required: bool = False) -> tuple[bool, str]:
     checks = [
         (truthy(row.get("used_for_r_u")), "not_protocol_r_u_candidate"),
         (safe(row.get("task_outcome_adjudication_status")) in {"approved", "resolved"}, "task_outcome_pending"),
         (safe(row.get("task_final_scope")) == "in_scope", "not_in_scope"),
         (safe(row.get("condition")) == "manual", "not_manual"),
-        (safe(row.get("geometry_reference_status")) in {"expert_hard_single", "expert_hard_multi", "consensus_reference", "hard_single_gt", "hard_multi_gt"}, "geometry_reference_not_hard"),
+        (safe(row.get("geometry_reference_status")) in {"expert_hard_single", "expert_hard_multi", "hard_single_gt", "hard_multi_gt", "worker_excluded_loo_consensus", "global_consensus_fallback"}, "geometry_reference_not_hard"),
         (truthy(row.get("geometry_valid")), "geometry_invalid"),
         (truthy(row.get("process_evaluable")) and not truthy(row.get("process_failure_observed")), "process_not_valid"),
         (safe(row.get("duplicate_review_status")) in {"not_required", "resolved", "auto_resolved_input_duplicate"}, "duplicate_review_pending"),
         (truthy(row.get("eligible_independent_evidence")), "canonical_or_independence_ineligible"),
     ]
+    if formal_score_required:
+        reference_status = safe(row.get("geometry_reference_status"))
+        reference_excludes_worker = (
+            truthy(row.get("reference_worker_excluded"))
+            if reference_status in {"worker_excluded_loo_consensus", "global_consensus_fallback"}
+            else safe(row.get("reference_worker_excluded")) in {"false", "0", "no"}
+        )
+        checks.extend(
+            [
+                (reference_excludes_worker, "reference_includes_worker"),
+                (bool(safe(row.get("reference_identity"))), "reference_identity_missing"),
+                (safe(row.get("reference_evidence_status")) in {"evaluable", "valid", "adjudicated", "not_required"}, "reference_evidence_not_valid"),
+            ]
+        )
+        try:
+            score_finite = bool(safe(row.get("r_u_metric_value"))) and math.isfinite(float(row.get("r_u_metric_value")))
+        except (TypeError, ValueError):
+            score_finite = False
+        checks.extend(
+            [
+                (safe(row.get("r_u_score_status")) in {"evaluable", "valid"}, "r_u_score_not_evaluable"),
+                (bool(safe(row.get("r_u_metric_name")) and score_finite and safe(row.get("r_u_score_source"))), "r_u_score_missing_or_nonfinite"),
+            ]
+        )
     reasons = [reason for passed, reason in checks if not passed]
     return not reasons, ";".join(reasons)
 
 
-def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, candidate_inventory_csv: Path | None = DEFAULT_CORE_DRAFT, *, input_status: str = "dry_run", task_outcome_csv: Path | None = None) -> dict[str, Any]:
+def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, candidate_inventory_csv: Path | None = DEFAULT_CORE_DRAFT, *, input_status: str = "dry_run", task_outcome_csv: Path | None = None, r_u_scoring_evidence_csv: Path | None = None) -> dict[str, Any]:
     canonical_meta_csv = output_dir / "c1_canonical_meta_observations.csv"
     meta_rows = read_csv(canonical_meta_csv) if canonical_meta_csv.exists() else []
     meta_fresh, meta_freshness_reasons = _canonical_meta_freshness(canonical_csv, meta_rows)
-    rows = build_quality_rows(meta_rows if meta_fresh else read_csv(canonical_csv), _inventory_flags(candidate_inventory_csv))
-    outcomes: dict[tuple[str, str, str], dict[str, str]] = {}
+    # Dry-run keeps a descriptive compatibility view, but formal quality is
+    # strictly registry -> meta bound and never falls back to canonical CSV.
+    source_rows = meta_rows if meta_fresh else ([] if input_status == "formal" else read_csv(canonical_csv))
+    rows = build_quality_rows(source_rows, _inventory_flags(candidate_inventory_csv))
+    score_rows: dict[tuple[str, str, str, str, str, str], dict[str, str]] = {}
+    score_blockers: list[str] = []
+    if r_u_scoring_evidence_csv and r_u_scoring_evidence_csv.exists():
+        for score_row in read_csv(r_u_scoring_evidence_csv):
+            key = tuple(safe(score_row.get(field)) for field in ("project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "response_hash", "source_export_sha256"))
+            if not all(key):
+                score_blockers.append("r_u_score_identity_missing")
+                continue
+            if key in score_rows:
+                score_blockers.append("r_u_score_identity_duplicate")
+                continue
+            score_rows[key] = score_row
+    quality_identity_keys = {tuple(safe(row.get(field)) for field in ("project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "response_hash", "source_export_sha256")) for row in rows}
+    if score_rows and set(score_rows) - quality_identity_keys:
+        score_blockers.append("r_u_score_orphan_identity")
+    for row in rows:
+        key = tuple(safe(row.get(field)) for field in ("project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "response_hash", "source_export_sha256"))
+        score = score_rows.get(key, {})
+        if score:
+            row["r_u_metric_name"] = safe(score.get("r_u_metric_name") or score.get("metric_name"))
+            row["r_u_metric_value"] = safe(score.get("r_u_metric_value") or score.get("metric_value"))
+            row["r_u_metric_direction"] = safe(score.get("r_u_metric_direction") or score.get("metric_direction"))
+            row["r_u_normalization_rule"] = safe(score.get("r_u_normalization_rule") or score.get("normalization_rule"))
+            row["r_u_score_status"] = safe(score.get("r_u_score_status") or score.get("score_status"))
+            row["r_u_score_source"] = safe(score.get("r_u_score_source") or score.get("score_source") or r_u_scoring_evidence_csv)
+        elif input_status != "formal" and safe(row.get("quality_metric_name")) and safe(row.get("quality_metric_value")):
+            row["r_u_metric_name"] = safe(row.get("quality_metric_name"))
+            row["r_u_metric_value"] = safe(row.get("quality_metric_value"))
+            row["r_u_metric_direction"] = safe(row.get("geometry_metric_direction"))
+            row["r_u_normalization_rule"] = safe(row.get("geometry_normalization_rule"))
+            row["r_u_score_status"] = "evaluable"
+            row["r_u_score_source"] = "dry_run_geometry_score_proxy"
+        row["r_u_score_or_outcome"] = safe(row.get("r_u_metric_value"))
+    outcomes: dict[tuple[str, str, str, str, str], dict[str, str]] = {}
+    legacy_outcomes: dict[tuple[str, str, str], list[dict[str, str]]] = {}
     outcome_blockers: list[str] = []
     if task_outcome_csv and task_outcome_csv.exists():
         for outcome in read_csv(task_outcome_csv):
-            key = (safe(outcome.get("task_id")), safe(outcome.get("base_task_id")), safe(outcome.get("condition")))
-            if not all(key) or key in outcomes:
+            exact_key = _outcome_exact_key(outcome)
+            legacy_key = _outcome_legacy_key(outcome)
+            if not all(legacy_key):
+                outcome_blockers.append("task_outcome_identity_missing_or_duplicate")
+                continue
+            if all(exact_key[:2]) and exact_key in outcomes:
                 outcome_blockers.append("task_outcome_identity_missing_or_duplicate")
                 continue
             final_scope = safe(outcome.get("final_scope"))
             reference_status = safe(outcome.get("geometry_reference_status"))
+            reference_mode = safe(outcome.get("geometry_reference_mode") or outcome.get("scope_reference_mode"))
+            reference_excludes_worker = (
+                truthy(outcome.get("reference_worker_excluded"))
+                if reference_status in {"worker_excluded_loo_consensus", "global_consensus_fallback"}
+                else safe(outcome.get("reference_worker_excluded")) in {"false", "0", "no"}
+            )
+            reference_contract_valid = final_scope == "oos" or (
+                reference_status in {"expert_hard_single", "expert_hard_multi", "consensus_reference", "hard_single_gt", "hard_multi_gt", "worker_excluded_loo_consensus", "global_consensus_fallback"}
+                and safe(outcome.get("reference_identity"))
+                and (input_status != "formal" or (reference_excludes_worker and safe(outcome.get("reference_evidence_status")) in {"evaluable", "valid", "adjudicated", "not_required"} and reference_mode in {"expert_adjudicated", "expert_hard_gt", "worker_excluded_loo_consensus", "global_consensus_fallback"}))
+            )
             valid = (
                 final_scope in {"in_scope", "oos"}
                 and safe(outcome.get("scope_resolution_status")) == "resolved"
                 and safe(outcome.get("adjudication_status")) in {"approved", "resolved"}
                 and bool(safe(outcome.get("reviewed_by")) and safe(outcome.get("reviewed_at")))
-                and (final_scope == "oos" or (reference_status in {"expert_hard_single", "expert_hard_multi", "consensus_reference", "hard_single_gt", "hard_multi_gt"} and safe(outcome.get("reference_identity"))))
+                and reference_contract_valid
             )
             if not valid:
                 outcome_blockers.append("task_outcome_contract_invalid")
                 continue
-            outcomes[key] = outcome
+            if all(exact_key[:2]):
+                outcomes[exact_key] = outcome
+            legacy_outcomes.setdefault(legacy_key, []).append(outcome)
+    legacy_contexts: dict[tuple[str, str, str], set[tuple[str, str]]] = {}
     for row in rows:
-        outcome = outcomes.get((safe(row.get("task_id")), safe(row.get("base_task_id")), safe(row.get("condition"))), {})
+        legacy_contexts.setdefault(_outcome_legacy_key(row), set()).add((safe(row.get("project_id")), safe(row.get("ls_runtime_task_id"))))
+    for key, contexts in legacy_contexts.items():
+        if len(contexts) > 1 and key in legacy_outcomes and input_status == "formal":
+            outcome_blockers.append("task_outcome_legacy_identity_ambiguous")
+    for row in rows:
+        outcome = outcomes.get(_outcome_exact_key(row))
+        if outcome is None:
+            legacy_matches = legacy_outcomes.get(_outcome_legacy_key(row), [])
+            if len(legacy_matches) == 1:
+                outcome = legacy_matches[0]
+            elif len(legacy_matches) > 1:
+                outcome_blockers.append("task_outcome_legacy_identity_ambiguous")
+        outcome = outcome or {}
         row["task_final_scope"] = safe(outcome.get("final_scope"))
         row["task_scope_resolution_status"] = safe(outcome.get("scope_resolution_status"))
         row["task_oos_subtype"] = safe(outcome.get("oos_subtype"))
         row["geometry_reference_status"] = safe(outcome.get("geometry_reference_status"))
         row["reference_identity"] = safe(outcome.get("reference_identity"))
+        row["scope_reference_mode"] = safe(outcome.get("scope_reference_mode"))
+        row["geometry_reference_mode"] = safe(outcome.get("geometry_reference_mode"))
+        row["reference_worker_excluded"] = safe(outcome.get("reference_worker_excluded"))
+        row["reference_evidence_status"] = safe(outcome.get("reference_evidence_status"))
         row["task_outcome_adjudication_status"] = safe(outcome.get("adjudication_status")) or "pending"
         row["worker_scope_response"] = _choice(row, "scope")
         row["worker_scope_outcome"] = _scope_outcome(row["worker_scope_response"], row["task_final_scope"])
-        included, reason = _r_u_evidence(row)
+        included, reason = _r_u_evidence(row, formal_score_required=input_status == "formal")
         row["r_u_evidence_included"], row["r_u_evidence_exclusion_reason"] = included, reason
     harmonization_csv = output_dir / "model_issue_harmonization_C1.csv"
     harmonization_summary_path = output_dir / "model_issue_harmonization_C1.summary.json"
@@ -497,15 +653,26 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
             dependencies.append(task_outcome_csv)
         if candidate_inventory_csv:
             dependencies.append(candidate_inventory_csv)
+        if r_u_scoring_evidence_csv:
+            dependencies.append(r_u_scoring_evidence_csv)
         row.update(dependency_bundle(dependencies, rule_version=RULE_VERSION))
         row["validity_status"] = "dry_run" if input_status != "formal" else ("valid" if row.get("canonical_eligibility_status") == "valid" else "not_evaluable")
     quality_csv = output_dir / "c1_quality_annotations.csv"
     write_csv(quality_csv, rows, QUALITY_FIELDS)
     outcome_template_csv = output_dir / "c1_task_outcome_adjudication_template.csv"
-    pending_tasks = {(safe(row.get("task_id")), safe(row.get("base_task_id")), safe(row.get("condition"))) for row in rows if row["task_outcome_adjudication_status"] == "pending"}
-    write_csv(outcome_template_csv, [{"task_id": task, "base_task_id": base, "condition": condition, "final_scope": "", "scope_resolution_status": "", "oos_subtype": "", "geometry_reference_status": "", "reference_identity": "", "adjudication_status": "", "reviewed_by": "", "reviewed_at": "", "notes": ""} for task, base, condition in sorted(pending_tasks)], ["task_id", "base_task_id", "condition", "final_scope", "scope_resolution_status", "oos_subtype", "geometry_reference_status", "reference_identity", "adjudication_status", "reviewed_by", "reviewed_at", "notes"])
+    pending_tasks = {
+        (safe(row.get("project_id")), safe(row.get("ls_runtime_task_id")), safe(row.get("task_id")), safe(row.get("base_task_id")), safe(row.get("condition")))
+        for row in rows if row["task_outcome_adjudication_status"] == "pending"
+    }
+    outcome_fields = ["project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition", "final_scope", "scope_resolution_status", "oos_subtype", "scope_reference_mode", "geometry_reference_mode", "geometry_reference_status", "reference_identity", "reference_worker_excluded", "reference_evidence_status", "adjudication_status", "reviewed_by", "reviewed_at", "notes"]
+    write_csv(
+        outcome_template_csv,
+        [{field: (project if field == "project_id" else runtime if field == "ls_runtime_task_id" else task if field == "task_id" else base if field == "base_task_id" else condition if field == "condition" else "") for field in outcome_fields} for project, runtime, task, base, condition in sorted(pending_tasks)],
+        outcome_fields,
+    )
     r_u_evidence_csv = output_dir / "calibration_r_u_evidence_C1.csv"
-    write_csv(r_u_evidence_csv, rows, ["worker_id", "task_id", "base_task_id", "canonical_annotation_id", "r_u_evidence_included", "r_u_evidence_exclusion_reason", "duplicate_review_status", "task_final_scope", "geometry_reference_status", "process_evaluable", "independence_status", "r_u_score_or_outcome"])
+    r_u_fields = ["project_id", "ls_runtime_task_id", "worker_id", "task_id", "base_task_id", "annotation_id", "canonical_annotation_id", "response_hash", "annotation_version_id", "r_u_evidence_included", "r_u_evidence_exclusion_reason", "task_final_scope", "duplicate_review_status", "independence_status", "process_evaluable", "scope_reference_mode", "geometry_reference_mode", "reference_identity", "reference_worker_excluded", "geometry_reference_status", "reference_evidence_status", "r_u_metric_name", "r_u_metric_value", "r_u_metric_direction", "r_u_normalization_rule", "r_u_score_status", "r_u_score_source", "r_u_score_or_outcome"]
+    write_csv(r_u_evidence_csv, rows, r_u_fields)
 
     quality_df = pd.DataFrame(rows, columns=QUALITY_FIELDS)
     consensus, audit = build_summary(quality_df)
@@ -516,7 +683,7 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
     write_json(audit_json, {**audit, "sidecar_only_no_dt_backflow": True})
     three_state_summary = materialize_meta_label_three_state(quality_csv, output_dir, input_status=input_status)
 
-    blockers = (["canonical_meta_missing_or_stale"] if not meta_fresh else []) + (["harmonization_missing_or_stale"] if meta_fresh and not harmonization_fresh else []) + outcome_blockers
+    blockers = (["canonical_meta_missing_or_stale"] if not meta_fresh else []) + (["harmonization_missing_or_stale"] if meta_fresh and not harmonization_fresh else []) + outcome_blockers + score_blockers
     if input_status == "formal" and any(row["task_outcome_adjudication_status"] not in {"approved", "resolved", "not_applicable"} for row in rows):
         blockers.append("task_outcome_adjudication_pending")
     blockers += [f"amendment_{key}" for key in (harmonization_summary.get("amendment_blockers") or {})]
@@ -524,6 +691,10 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         blockers.append("independence_not_evaluable")
     if any(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows):
         blockers.append("missing_core_used_for_r_u_flag")
+    if input_status == "formal" and any(truthy(row.get("used_for_r_u")) and not truthy(row.get("r_u_evidence_included")) for row in rows):
+        blockers.append("formal_r_u_evidence_incomplete")
+    if input_status == "formal" and harmonization_summary.get("amendment_complete") is False:
+        blockers.append("amendment_contract_incomplete")
     summary = {
         "input_csv": str(canonical_csv),
         "canonical_meta_csv": str(canonical_meta_csv),
@@ -556,6 +727,8 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         "exact_annotation_primary_count": sum(safe(row.get("active_time_integrity_status")) == "exact_annotation_valid" and truthy(row.get("primary_active_time_eligible")) for row in rows),
         "task_level_sensitivity_count": sum(safe(row.get("active_time_integrity_status")) == "task_level_fallback" and truthy(row.get("sensitivity_active_time_eligible")) for row in rows),
         "candidate_inventory_csv": str(candidate_inventory_csv) if candidate_inventory_csv else "",
+        "r_u_scoring_evidence_csv": str(r_u_scoring_evidence_csv or ""),
+        "r_u_score_blockers": sorted(set(score_blockers)),
         "harmonization_summary": harmonization_summary,
         "amendment_blocker_count": sum(int(value or 0) for value in (harmonization_summary.get("amendment_blockers") or {}).values()),
         "blockers": blockers,
@@ -572,8 +745,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--candidate-inventory-csv", type=Path, default=DEFAULT_CORE_DRAFT)
     parser.add_argument("--task-outcome-csv", type=Path)
+    parser.add_argument("--r-u-scoring-evidence-csv", type=Path)
     args = parser.parse_args(argv)
-    print(json.dumps(materialize(args.canonical_csv, args.output_dir, args.candidate_inventory_csv, task_outcome_csv=args.task_outcome_csv), ensure_ascii=False, indent=2))
+    print(json.dumps(materialize(args.canonical_csv, args.output_dir, args.candidate_inventory_csv, task_outcome_csv=args.task_outcome_csv, r_u_scoring_evidence_csv=args.r_u_scoring_evidence_csv), ensure_ascii=False, indent=2))
     return 0
 
 

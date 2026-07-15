@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from tools.thesis_main.analysis.routing.temporal_replay import _fold_for_base, build_temporal_event_ledger
+from tools.thesis_main.analysis.c1_materialize_quality_table import materialize as materialize_quality
 from tools.thesis_main.analysis.run_c1_closeout_dryrun_chain import finalize_existing_closeout
 from tools.thesis_main.analysis.run_c1_raw_to_closeout_dryrun import materialize
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file, sha256_json
@@ -173,7 +174,7 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
     _csv(mapping, ["task_id", "base_task_id", "inner_id", "intended_project_group", "mapping_status"], [{"task_id": "a1", "base_task_id": "scene_a", "inner_id": "1", "intended_project_group": "Calibration_anchor", "mapping_status": "planned"}])
     _csv(reserve, ["task_id", "base_task_id", "dataset_group", "calibration_split"], [{"task_id": "r1", "base_task_id": "reserve_scene", "dataset_group": "Calibration_reserve", "calibration_split": "reserve"}])
     _csv(inventory, ["task_id", "base_task_id", "dataset_group", "used_for_r_u"], [])
-    _csv(task_outcome, ["task_id", "base_task_id", "condition", "final_scope", "scope_resolution_status", "oos_subtype", "geometry_reference_status", "reference_identity", "adjudication_status", "reviewed_by", "reviewed_at"], [{"task_id": "a1", "base_task_id": "scene_a", "condition": "manual", "final_scope": "in_scope", "scope_resolution_status": "resolved", "oos_subtype": "", "geometry_reference_status": "expert_hard_single", "reference_identity": "synthetic-ref", "adjudication_status": "approved", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
+    _csv(task_outcome, ["task_id", "base_task_id", "condition", "final_scope", "scope_resolution_status", "oos_subtype", "scope_reference_mode", "geometry_reference_mode", "geometry_reference_status", "reference_identity", "reference_worker_excluded", "reference_evidence_status", "adjudication_status", "reviewed_by", "reviewed_at"], [{"task_id": "a1", "base_task_id": "scene_a", "condition": "manual", "final_scope": "in_scope", "scope_resolution_status": "resolved", "oos_subtype": "", "scope_reference_mode": "expert_adjudicated", "geometry_reference_mode": "expert_hard_gt", "geometry_reference_status": "expert_hard_single", "reference_identity": "synthetic-ref", "reference_worker_excluded": "false", "reference_evidence_status": "evaluable", "adjudication_status": "approved", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
     annotations = []
     for index, worker in enumerate(workers, 1):
         annotations.append({
@@ -203,6 +204,11 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
     canonical_meta_header = next(csv.reader((out / "c1_canonical_meta_observations.csv").open(encoding="utf-8")))
     assert len(canonical_meta_header) == len(set(canonical_meta_header))
 
+    score = tmp_path / "r_u_scoring_evidence.csv"
+    score_fields = ["project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "response_hash", "source_export_sha256", "r_u_metric_name", "r_u_metric_value", "r_u_metric_direction", "r_u_normalization_rule", "r_u_score_status", "r_u_score_source"]
+    quality_rows = _rows(out / "c1_quality_annotations.csv")
+    _csv(score, score_fields, [{field: (row.get(field, "") if field in {"project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "response_hash", "source_export_sha256"} else "geometry_accuracy" if field == "r_u_metric_name" else "0.9" if field == "r_u_metric_value" else "higher_is_better" if field == "r_u_metric_direction" else "normalized_reference_score_v1" if field == "r_u_normalization_rule" else "valid" if field == "r_u_score_status" else "synthetic_external_score") for field in score_fields} for row in quality_rows])
+    materialize_quality(out / "c1_canonical_annotations.csv", out, inventory, input_status="formal", task_outcome_csv=task_outcome, r_u_scoring_evidence_csv=score)
     ledger = tmp_path / "temporal_event_ledger_frozen.csv"
     build_temporal_event_ledger(out / "c1_canonical_meta_observations.csv", out / "c1_quality_annotations.csv", out / "worker_task_tag_observations_C1.csv", ledger)
     admission = tmp_path / "p1_admission_frozen.csv"
@@ -257,7 +263,7 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
         temporal_event_csv=ledger, temporal_policy_manifest=policy_manifest, task_purpose_manifest_csv=purpose,
         candidate_roster_manifest_csv=roster, assignment_history_csv=history,
         formal_worker_state_csv=worker_state, formal_worker_state_manifest=worker_manifest,
-        task_outcome_csv=task_outcome,
+            task_outcome_csv=task_outcome, r_u_scoring_evidence_csv=score,
     )["gate_summary"]
     assert prepared["formal_closeout_ready"] is False
     assert prepared["formal_worker_state"]["valid"] is True

@@ -95,7 +95,7 @@ def _formal_adjudication(path: Path | None, bundle_sha256: str) -> dict[str, Any
     return {"valid": bool(valid), "reason": "approved" if valid else "formal_closeout_adjudication_not_approved_or_stale", "sha256": sha256_file(path)}
 
 
-def _formal_worker_state(csv_path: Path | None, manifest_path: Path | None, *, canonical_csv: Path | None = None, quality_csv: Path | None = None, r_u_evidence_csv: Path | None = None, canonical_geometry_jsonl: Path | None = None, geometry_loo_csv: Path | None = None, geometry_stability_csv: Path | None = None, min_r_u_tasks: int = 1) -> dict[str, Any]:
+def _formal_worker_state(csv_path: Path | None, manifest_path: Path | None, *, canonical_csv: Path | None = None, quality_csv: Path | None = None, r_u_evidence_csv: Path | None = None, canonical_geometry_jsonl: Path | None = None, geometry_loo_csv: Path | None = None, geometry_stability_csv: Path | None = None, min_r_u_tasks: int = 1, expected_worker_ids: set[str] | None = None) -> dict[str, Any]:
     if not csv_path or not manifest_path or not csv_path.exists() or not manifest_path.exists():
         return {"valid": False, "reason": "missing_formal_worker_state_or_manifest"}
     try:
@@ -119,13 +119,21 @@ def _formal_worker_state(csv_path: Path | None, manifest_path: Path | None, *, c
             worker = safe(row.get("worker_id"))
             expected_support[worker] = expected_support.get(worker, 0) + 1
     worker_ids = [safe(row.get("worker_id")) for row in rows]
-    roster_valid = bool(expected_support) and all(worker_ids) and len(worker_ids) == len(set(worker_ids)) and set(worker_ids) == set(expected_support)
+    expected_roster = ({safe(worker) for worker in expected_worker_ids if safe(worker)} if expected_worker_ids is not None else set(expected_support))
+    roster_valid = bool(expected_roster) and all(worker_ids) and len(worker_ids) == len(set(worker_ids)) and set(worker_ids) == expected_roster
     numeric_valid = True
     for row in rows:
         try:
             support = int(row.get("n_calib_completed") or -1)
-            low, estimate, high = (float(row[field]) for field in ("r_u_ci_low", "r_u_hat", "r_u_ci_high"))
-            numeric_valid &= support == expected_support.get(safe(row.get("worker_id"))) and support >= int(min_r_u_tasks) and all(math.isfinite(value) for value in (low, estimate, high)) and 0 <= low <= estimate <= high <= 1
+            worker = safe(row.get("worker_id"))
+            numeric_valid &= support == expected_support.get(worker, 0) and support >= 0
+            status = safe(row.get("support_status") or row.get("r_u_status"))
+            values = [safe(row.get(field)) for field in ("r_u_ci_low", "r_u_hat", "r_u_ci_high")]
+            if support >= int(min_r_u_tasks) or status in {"estimated", "evaluable"}:
+                low, estimate, high = (float(value) for value in values)
+                numeric_valid &= all(math.isfinite(value) for value in (low, estimate, high)) and 0 <= low <= estimate <= high <= 1
+            else:
+                numeric_valid &= all(value in {"", "NA", "na", "not_evaluable"} for value in values)
         except (TypeError, ValueError, KeyError):
             numeric_valid = False
     support_total = sum(expected_support.values())
@@ -144,7 +152,7 @@ def _formal_worker_state(csv_path: Path | None, manifest_path: Path | None, *, c
         and dependency_valid
         and roster_valid and numeric_valid
     )
-    return {"valid": valid, "reason": "verified" if valid else "formal_worker_state_not_verified", "manifest": manifest, "csv_path": str(canonical_path(csv_path)), "manifest_path": str(canonical_path(manifest_path)), "dependency_paths": dependency_keys, "validation_context": {"canonical_csv": str(canonical_path(canonical_csv)) if canonical_csv else "", "quality_csv": str(canonical_path(quality_csv)) if quality_csv else "", "r_u_evidence_csv": str(canonical_path(r_u_evidence_csv)) if r_u_evidence_csv else "", "canonical_geometry_jsonl": str(canonical_path(canonical_geometry_jsonl)) if canonical_geometry_jsonl else "", "geometry_loo_csv": str(canonical_path(geometry_loo_csv)) if geometry_loo_csv else "", "geometry_stability_csv": str(canonical_path(geometry_stability_csv)) if geometry_stability_csv else "", "min_r_u_tasks": min_r_u_tasks}, "expected_worker_ids": sorted(expected_support), "support_by_worker": expected_support, "eligible_support_count": support_total, "csv_sha256": sha256_file(csv_path), "manifest_sha256": sha256_file(manifest_path)}
+    return {"valid": valid, "reason": "verified" if valid else "formal_worker_state_not_verified", "manifest": manifest, "csv_path": str(canonical_path(csv_path)), "manifest_path": str(canonical_path(manifest_path)), "dependency_paths": dependency_keys, "validation_context": {"canonical_csv": str(canonical_path(canonical_csv)) if canonical_csv else "", "quality_csv": str(canonical_path(quality_csv)) if quality_csv else "", "r_u_evidence_csv": str(canonical_path(r_u_evidence_csv)) if r_u_evidence_csv else "", "canonical_geometry_jsonl": str(canonical_path(canonical_geometry_jsonl)) if canonical_geometry_jsonl else "", "geometry_loo_csv": str(canonical_path(geometry_loo_csv)) if geometry_loo_csv else "", "geometry_stability_csv": str(canonical_path(geometry_stability_csv)) if geometry_stability_csv else "", "min_r_u_tasks": min_r_u_tasks, "expected_worker_ids": sorted(expected_roster)}, "expected_worker_ids": sorted(expected_roster), "support_by_worker": {worker: expected_support.get(worker, 0) for worker in sorted(expected_roster)}, "eligible_support_count": support_total, "csv_sha256": sha256_file(csv_path), "manifest_sha256": sha256_file(manifest_path)}
 
 
 def _expand_sidecar_dependencies(paths: list[Path]) -> list[Path]:
@@ -164,6 +172,18 @@ def _expand_sidecar_dependencies(paths: list[Path]) -> list[Path]:
         resolved = canonical_path(path)
         unique[str(resolved)] = resolved
     return list(unique.values())
+
+
+def _assignment_roster(paths: list[Path]) -> set[str]:
+    workers: set[str] = set()
+    for path in paths:
+        if not path or not path.exists():
+            continue
+        try:
+            workers.update(safe(row.get("worker_id")) for row in csv.DictReader(path.open(encoding="utf-8-sig")) if safe(row.get("worker_id")))
+        except (OSError, UnicodeError, csv.Error):
+            continue
+    return workers
 
 
 def _temporal_valid(summary: dict[str, Any]) -> bool:
@@ -279,6 +299,7 @@ def finalize_existing_closeout(output_dir: Path, formal_closeout_adjudication_ma
         canonical_geometry_jsonl=context_paths["canonical_geometry_jsonl"], geometry_loo_csv=context_paths["geometry_loo_csv"],
         geometry_stability_csv=context_paths["geometry_stability_csv"],
         min_r_u_tasks=int(context.get("min_r_u_tasks") or 1),
+        expected_worker_ids=set(gate.get("formal_worker_state", {}).get("expected_worker_ids") or context.get("expected_worker_ids") or []),
     )
     gate["formal_worker_state"] = formal_worker
     temporal_contract_path = require_bundle_member(
@@ -396,7 +417,8 @@ def build_gate_summary(
         "c1_protocol_r_u_ready": truthy((formal_worker_state or {}).get("valid")),
         "c1_profile_evidence_classified": truthy(worker_profile_sidecar_summary.get("c1_profile_evidence_classified")),
         "c1_profile_support_sufficient": truthy(worker_profile_sidecar_summary.get("c1_support_sufficient")),
-        "r_u_support_consistent": (formal_worker_state or {}).get("support_by_worker", {}) == {worker: count for worker, count in worker_profile_sidecar_summary.get("r_u_support_by_worker", {}).items() if int(count or 0) > 0},
+        "c1_r_u_support_sufficient": truthy(worker_profile_sidecar_summary.get("c1_r_u_support_sufficient", worker_profile_sidecar_summary.get("c1_support_sufficient"))),
+        "r_u_support_consistent": (formal_worker_state or {}).get("support_by_worker", {}) == {worker: int(count or 0) for worker, count in worker_profile_sidecar_summary.get("r_u_support_by_worker", {}).items()},
         "pending_adjudication_count": int(worker_profile_sidecar_summary.get("pending_adjudication_count") or 0),
         "structural_contract_valid": bool(quality_table_summary.get("canonical_meta_fresh")) and not quality_table_summary.get("blockers"),
         "formal_inputs_present": input_status == "formal" and bool(quality_table_summary.get("canonical_meta_fresh")),
@@ -502,10 +524,15 @@ def materialize(
     formal_worker_state_csv: Path | None = None,
     formal_worker_state_manifest: Path | None = None,
     task_outcome_csv: Path | None = None,
+    assignment_manifests: list[Path] | None = None,
+    r_u_scoring_evidence_csv: Path | None = None,
+    semi_assignment_manifest: Path | None = None,
 ) -> dict[str, Any]:
-    quality_summary = c1_materialize_quality_table.materialize(canonical_csv, output_dir, candidate_inventory_csv, input_status=input_status, task_outcome_csv=task_outcome_csv)
+    assignment_paths = [path for path in (assignment_manifests or [assignment_manifest, semi_assignment_manifest]) if path]
+    expected_worker_ids = _assignment_roster(assignment_paths)
+    quality_summary = c1_materialize_quality_table.materialize(canonical_csv, output_dir, candidate_inventory_csv, input_status=input_status, task_outcome_csv=task_outcome_csv, r_u_scoring_evidence_csv=r_u_scoring_evidence_csv)
     quality_csv = output_dir / "c1_quality_annotations.csv"
-    worker_summary = c1_materialize_worker_state.materialize(quality_csv, [assignment_manifest], output_dir, min_r_u_tasks)
+    worker_summary = c1_materialize_worker_state.materialize(quality_csv, assignment_paths, output_dir, min_r_u_tasks)
     formal_worker = _formal_worker_state(
         formal_worker_state_csv, formal_worker_state_manifest,
         canonical_csv=canonical_csv, quality_csv=quality_csv,
@@ -514,7 +541,10 @@ def materialize(
         geometry_loo_csv=output_dir / "geometry_worker_task_loo_C1.csv",
         geometry_stability_csv=output_dir / "geometry_stability_C1.csv",
         min_r_u_tasks=min_r_u_tasks,
+        expected_worker_ids=expected_worker_ids,
     )
+    if input_status == "formal" and any(not path.exists() for path in assignment_paths):
+        formal_worker = {**formal_worker, "valid": False, "reason": "missing_formal_assignment_manifest"}
     worker_state_csv = formal_worker_state_csv if input_status == "formal" and formal_worker.get("valid") else output_dir / "worker_state_snapshot_C1.csv"
     if formal_worker.get("valid"):
         worker_summary = {**worker_summary, **formal_worker["manifest"], "r_u_estimated": True, "provisional": False}
@@ -571,7 +601,7 @@ def materialize(
         *(p1_artifacts or []),
         *[path for path in (p1_task_evidence_csv, p1_worker_status_csv, p1_geometry_task_scores, p1_worker_geometry_profile) if path],
     ]
-    bundle_paths = [canonical_csv, assignment_manifest, reserve_pool_csv, candidate_inventory_csv, raw_snapshot_manifest, Path("tools/label_studio/label_studio_c1_xml_freeze_manifest_v1.json"), output_dir / "c1_export_merge_manifest.csv", output_dir / "c1_runtime_task_mapping.csv", output_dir / "calibration_r_u_evidence_C1.csv", *[output_dir / name for name in REQUIRED_C1_ARTIFACTS], Path("docs/thesis_main/meta_label_three_state_rule_manifest_v1.json"), Path("docs/thesis_main/model_issue_harmonization_rule_manifest_v1.json"), Path("docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json"), Path("docs/thesis_main/sequential_routing_candidate_rule_manifest_v2.json"), *p1_inputs, *([independence_audit_csv] if independence_audit_csv else []), *([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []), *([task_outcome_csv] if task_outcome_csv else []), *([temporal_event_csv] if temporal_event_csv else []), *([temporal_policy_manifest] if temporal_policy_manifest else []), *([task_purpose_manifest_csv] if task_purpose_manifest_csv else []), *([candidate_roster_manifest_csv] if candidate_roster_manifest_csv else []), *([assignment_history_csv] if assignment_history_csv else []), *([formal_worker_state_csv] if formal_worker_state_csv else []), *([formal_worker_state_manifest] if formal_worker_state_manifest else [])]
+    bundle_paths = [canonical_csv, *assignment_paths, reserve_pool_csv, candidate_inventory_csv, raw_snapshot_manifest, Path("tools/label_studio/label_studio_c1_xml_freeze_manifest_v1.json"), output_dir / "c1_export_merge_manifest.csv", output_dir / "c1_runtime_task_mapping.csv", output_dir / "calibration_r_u_evidence_C1.csv", *[output_dir / name for name in REQUIRED_C1_ARTIFACTS], Path("docs/thesis_main/meta_label_three_state_rule_manifest_v1.json"), Path("docs/thesis_main/model_issue_harmonization_rule_manifest_v1.json"), Path("docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json"), Path("docs/thesis_main/sequential_routing_candidate_rule_manifest_v2.json"), *p1_inputs, *([independence_audit_csv] if independence_audit_csv else []), *([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []), *([task_outcome_csv] if task_outcome_csv else []), *([r_u_scoring_evidence_csv] if r_u_scoring_evidence_csv else []), *([temporal_event_csv] if temporal_event_csv else []), *([temporal_policy_manifest] if temporal_policy_manifest else []), *([task_purpose_manifest_csv] if task_purpose_manifest_csv else []), *([candidate_roster_manifest_csv] if candidate_roster_manifest_csv else []), *([assignment_history_csv] if assignment_history_csv else []), *([formal_worker_state_csv] if formal_worker_state_csv else []), *([formal_worker_state_manifest] if formal_worker_state_manifest else [])]
     bundle_paths.extend([profile_summary_path, output_dir / "model_issue_harmonization_C1.summary.json", *[Path(path) for path in formal_worker.get("dependency_paths", [])]])
     bundle_paths = _expand_sidecar_dependencies(bundle_paths)
     artifact_bundle = {"bundle_version": "c1_closeout_input_bundle_v1", "artifacts": [{"path": str(path), "exists": path.exists(), "sha256": sha256_file(path) if path.exists() else ""} for path in bundle_paths]}
@@ -589,6 +619,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Run C1 closeout dryrun materialization chain without official launch approval.")
     parser.add_argument("--canonical-csv", type=Path, required=True)
     parser.add_argument("--assignment-manifest", type=Path, required=True)
+    parser.add_argument("--semi-assignment-manifest", type=Path)
     parser.add_argument("--reserve-pool-csv", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--c2-output-dir", type=Path, required=True)
@@ -615,6 +646,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--formal-worker-state-csv", type=Path)
     parser.add_argument("--formal-worker-state-manifest", type=Path)
     parser.add_argument("--task-outcome-csv", type=Path)
+    parser.add_argument("--r-u-scoring-evidence-csv", type=Path)
     args = parser.parse_args(argv)
     summary = materialize(
         args.canonical_csv,
@@ -645,6 +677,8 @@ def main(argv: list[str] | None = None) -> int:
         args.formal_worker_state_csv,
         args.formal_worker_state_manifest,
         args.task_outcome_csv,
+        r_u_scoring_evidence_csv=args.r_u_scoring_evidence_csv,
+        semi_assignment_manifest=args.semi_assignment_manifest,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0

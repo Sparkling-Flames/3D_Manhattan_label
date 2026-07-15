@@ -29,6 +29,9 @@ FIELDS = [
     "r_u_hat",
     "r_u_ci_low",
     "r_u_ci_high",
+    "r_u_status",
+    "support_status",
+    "interpretation_allowed",
     "r_u_h",
     "needs_c2_ci_fill",
     "needs_c2_scene_fill",
@@ -46,7 +49,10 @@ def _assignment_workers(paths: list[Path]) -> set[str]:
 
 
 def build_worker_state(quality_rows: list[dict[str, str]], assignment_paths: list[Path], min_r_u_tasks: int) -> list[dict[str, Any]]:
-    workers = _assignment_workers(assignment_paths) | {safe(row.get("worker_id")) for row in quality_rows if safe(row.get("worker_id"))}
+    # The C1 roster is an assignment-manifest fact.  Evidence rows may contain
+    # forensic/out-of-roster identities, but they must not enlarge the formal
+    # worker-state roster.
+    workers = _assignment_workers(assignment_paths)
     by_worker: dict[str, list[dict[str, str]]] = {worker: [] for worker in workers}
     for row in quality_rows:
         by_worker.setdefault(safe(row.get("worker_id")), []).append(row)
@@ -71,6 +77,9 @@ def build_worker_state(quality_rows: list[dict[str, str]], assignment_paths: lis
                 "r_u_hat": "",
                 "r_u_ci_low": "",
                 "r_u_ci_high": "",
+                "r_u_status": "not_evaluable" if not calib else "insufficient_support" if calib < min_r_u_tasks else "estimated_external_required",
+                "support_status": "not_evaluable" if not calib else "insufficient" if calib < min_r_u_tasks else "sufficient_for_external_estimator",
+                "interpretation_allowed": calib >= min_r_u_tasks,
                 "r_u_h": "",
                 "needs_c2_ci_fill": calib < min_r_u_tasks,
                 "needs_c2_scene_fill": False,

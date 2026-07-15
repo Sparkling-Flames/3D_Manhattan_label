@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from tools.thesis_main.analysis.materialize_c1_canonical_evidence_sidecars import materialize_canonical_evidence
+from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file, sha256_json
 
 
 def _write(path: Path, value) -> None:
@@ -36,10 +37,15 @@ def test_canonical_evidence_sidecars_keep_dry_run_explicit(tmp_path: Path) -> No
         ],
     )
     canonical = tmp_path / "c1_canonical_annotations.csv"
+    result = [
+        {"type": "keypointlabels", "value": {"x": 10, "y": 20}},
+        {"type": "keypointlabels", "value": {"x": 10, "y": 80}},
+        {"type": "choices", "from_name": "model_issue", "value": {"choices": ["acceptable"]}},
+    ]
     with canonical.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=["source_export", "project_id", "ls_runtime_task_id", "worker_id", "raw_canonical_annotation_id", "canonical_annotation_id", "geometry_hash", "parse_error", "independence_status"])
+        writer = csv.DictWriter(handle, fieldnames=["source_export", "source_export_sha256", "project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "response_hash", "annotation_version_id", "raw_canonical_annotation_id", "canonical_annotation_id", "geometry_hash", "parse_error", "independence_status"])
         writer.writeheader()
-        writer.writerow({"source_export": str(export), "project_id": "2", "ls_runtime_task_id": "11", "worker_id": "7", "raw_canonical_annotation_id": "101", "canonical_annotation_id": "canon", "geometry_hash": "hash", "parse_error": "", "independence_status": "independent"})
+        writer.writerow({"source_export": str(export), "source_export_sha256": sha256_file(export), "project_id": "2", "ls_runtime_task_id": "11", "worker_id": "7", "annotation_id": "101", "response_hash": sha256_json(result), "annotation_version_id": "version-1", "raw_canonical_annotation_id": "101", "canonical_annotation_id": "canon", "geometry_hash": "hash", "parse_error": "", "independence_status": "independent"})
 
     summary = materialize_canonical_evidence([export], canonical, tmp_path)
     assert summary["dry_run"] is True
