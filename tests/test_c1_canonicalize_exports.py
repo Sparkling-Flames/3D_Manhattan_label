@@ -108,14 +108,15 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
 
     rows = list(csv.DictReader((out / "c1_canonical_annotations.csv").open(encoding="utf-8")))
     by_runtime = {row["ls_runtime_task_id"]: row for row in rows}
-    assert summary["n_canonical_rows"] == 4
+    assert summary["n_canonical_rows"] == 3
     assert summary["outside_assignment_submission_count"] == 0
-    assert summary["duplicate_worker_task_submission_count"] == 1
-    assert summary["active_time_primary_ineligible_count"] == 3
+    assert summary["duplicate_worker_task_submission_count"] == 0
+    assert summary["duplicate_review_pending_count"] == 1
+    assert summary["active_time_primary_ineligible_count"] == 2
     assert summary["active_time_log_missing_count"] == 0
-    assert summary["active_time_task_level_fallback_count"] == 2
+    assert summary["active_time_task_level_fallback_count"] == 1
     assert summary["active_time_lead_time_fallback_count"] == 1
-    assert summary["active_time_sensitivity_eligible_count"] == 4
+    assert summary["active_time_sensitivity_eligible_count"] == 3
     assert summary["structural_integrity_passed"] is False
     assert summary["collection_completeness_passed"] is False
     assert summary["passed_semantics"] == "structural_only_not_collection_complete"
@@ -134,11 +135,10 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
     assert by_runtime["202"]["active_time_source"] == "lead_time_fallback"
     assert by_runtime["202"]["primary_active_time_eligible"] == "false"
     assert by_runtime["202"]["sensitivity_active_time_eligible"] == "true"
-    assert by_runtime["203"]["duplicate_group_size"] == "2"
-    assert by_runtime["203"]["duplicate_worker_task_submission"] == "true"
-    assert by_runtime["203"]["active_time_match_status"] == "project+task+annotator"
-    assert by_runtime["203"]["primary_active_time_eligible"] == "false"
-    assert by_runtime["203"]["sensitivity_active_time_eligible"] == "true"
+    assert "203" not in by_runtime
+    duplicate = _read_csv(out / "c1_duplicate_annotation_audit.csv")[0]
+    assert duplicate["duplicate_review_status"] == "pending"
+    assert duplicate["duplicate_geometry_type"] == "distinct_ids_exact_match"
     realized_audit = _read_csv(out / "c1_realized_vs_assigned_audit.csv")
     assert any(row["task_id"] == "missing" and row["worker_id"] == "w4" and row["missing_submission"] == "true" for row in realized_audit)
     assert (out / "raw_inputs" / "raw_input_snapshot_manifest.csv").exists()
@@ -149,6 +149,55 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
     assert summary["workers_with_unknown_audit_count"] == 1
     assert summary["exact_annotation_primary_count"] == 1
     assert "unknown_annotation_audit_present" not in summary["blockers"]
+
+
+def test_same_annotation_id_across_exports_is_input_duplicate_not_worker_duplicate(tmp_path: Path) -> None:
+    fields = ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group"]
+    assignment = [{"round_id": "C1", "worker_id": "w1", "task_id": "t1", "base_task_id": "b1", "dataset_group": "Calibration_core"}]
+    manual, semi, internal, mapping = (tmp_path / name for name in ("manual.csv", "semi.csv", "internal.csv", "mapping.csv"))
+    _csv(manual, fields, assignment); _csv(semi, fields, []); _csv(internal, fields, assignment)
+    _csv(mapping, ["task_id", "base_task_id", "inner_id", "intended_project_group", "mapping_status"], [{"task_id": "t1", "base_task_id": "b1", "inner_id": "1", "intended_project_group": "Calibration_core", "mapping_status": "planned"}])
+    export_a, export_b = tmp_path / "a.json", tmp_path / "b.json"
+    payload = [_task("1", "t1", "b1", [_ann("ann", "w1", lead_time=99)])]
+    export_a.write_text(json.dumps(payload), encoding="utf-8"); export_b.write_text(json.dumps(payload), encoding="utf-8")
+    out = tmp_path / "out"
+    summary = build_canonicalization([export_a, export_b], manual, semi, internal, mapping, active_log=None, output_dir=out)
+    row = _read_csv(out / "c1_canonical_annotations.csv")[0]
+    review = _read_csv(out / "c1_duplicate_annotation_audit.csv")[0]
+    assert summary["duplicate_review_pending_count"] == 0
+    assert summary["duplicate_input_repeat_count"] == 1
+    assert row["duplicate_worker_task_submission"] == "false"
+    assert row["primary_active_time_eligible"] == "false"
+    assert review["duplicate_geometry_type"] == "repeated_export_same_annotation_id"
+
+
+def test_distinct_annotation_ids_require_review_and_selected_exact_time_follows_choice(tmp_path: Path) -> None:
+    fields = ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group"]
+    assignment = [{"round_id": "C1", "worker_id": "w1", "task_id": "t1", "base_task_id": "b1", "dataset_group": "Calibration_core"}]
+    manual, semi, internal, mapping = (tmp_path / name for name in ("manual.csv", "semi.csv", "internal.csv", "mapping.csv"))
+    _csv(manual, fields, assignment); _csv(semi, fields, []); _csv(internal, fields, assignment)
+    _csv(mapping, ["task_id", "base_task_id", "inner_id", "intended_project_group", "mapping_status"], [{"task_id": "t1", "base_task_id": "b1", "inner_id": "1", "intended_project_group": "Calibration_core", "mapping_status": "planned"}])
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_task("1", "t1", "b1", [_ann("a1", "w1", 100), _ann("a2", "w1", 1)])]), encoding="utf-8")
+    logs = tmp_path / "active.jsonl"
+    logs.write_text("\n".join(json.dumps({"project_id": "66", "task_id": "1", "annotator_id": "w1", "annotation_id": ann, "session_id": ann, "active_seconds": seconds}) for ann, seconds in (("a1", 5), ("a2", 17))) + "\n", encoding="utf-8")
+    pending = build_canonicalization([export], manual, semi, internal, mapping, active_log=logs, output_dir=tmp_path / "pending")
+    assert pending["duplicate_review_pending_count"] == 1
+    assert _read_csv(tmp_path / "pending" / "c1_canonical_annotations.csv") == []
+    decision = tmp_path / "decision.csv"
+    _csv(decision, ["project_id", "ls_runtime_task_id", "worker_id", "decision", "selected_annotation_id", "reviewed_by", "reviewed_at"], [{"project_id": "66", "ls_runtime_task_id": "1", "worker_id": "w1", "decision": "confirm_exact_duplicate", "selected_annotation_id": "a2", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
+    resolved = build_canonicalization([export], manual, semi, internal, mapping, active_log=logs, output_dir=tmp_path / "resolved", duplicate_adjudication_csv=decision)
+    row = _read_csv(tmp_path / "resolved" / "c1_canonical_annotations.csv")[0]
+    assert resolved["duplicate_review_pending_count"] == 0
+    assert row["annotation_id"] == "a2"
+    assert row["active_time"] == "17.0"
+    assert row["active_time_source"] == "log"
+    _csv(decision, ["project_id", "ls_runtime_task_id", "worker_id", "decision", "selected_annotation_id", "reviewed_by", "reviewed_at"], [{"project_id": "66", "ls_runtime_task_id": "1", "worker_id": "w1", "decision": "exclude_group", "selected_annotation_id": "", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
+    excluded = build_canonicalization([export], manual, semi, internal, mapping, active_log=logs, output_dir=tmp_path / "excluded", duplicate_adjudication_csv=decision, require_complete=True)
+    assert excluded["duplicate_review_pending_count"] == 0
+    assert excluded["missing_submission_count"] == 0
+    assert excluded["collection_completeness_passed"] is True
+    assert _read_csv(tmp_path / "excluded" / "c1_canonical_annotations.csv") == []
 
 
 def test_c1_canonicalization_runtime_collision_blocks(tmp_path: Path) -> None:

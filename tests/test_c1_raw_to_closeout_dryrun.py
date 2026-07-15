@@ -164,6 +164,7 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
     mapping = tmp_path / "mapping.csv"
     reserve = tmp_path / "reserve.csv"
     inventory = tmp_path / "inventory.csv"
+    task_outcome = tmp_path / "task_outcome.csv"
     audit = tmp_path / "independence_audit_frozen.csv"
     export = tmp_path / "raw_export.json"
     _csv(manual, assignment_fields, assignment_rows)
@@ -172,6 +173,7 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
     _csv(mapping, ["task_id", "base_task_id", "inner_id", "intended_project_group", "mapping_status"], [{"task_id": "a1", "base_task_id": "scene_a", "inner_id": "1", "intended_project_group": "Calibration_anchor", "mapping_status": "planned"}])
     _csv(reserve, ["task_id", "base_task_id", "dataset_group", "calibration_split"], [{"task_id": "r1", "base_task_id": "reserve_scene", "dataset_group": "Calibration_reserve", "calibration_split": "reserve"}])
     _csv(inventory, ["task_id", "base_task_id", "dataset_group", "used_for_r_u"], [])
+    _csv(task_outcome, ["task_id", "base_task_id", "condition", "final_scope", "scope_resolution_status", "oos_subtype", "geometry_reference_status", "reference_identity", "adjudication_status", "reviewed_by", "reviewed_at"], [{"task_id": "a1", "base_task_id": "scene_a", "condition": "manual", "final_scope": "in_scope", "scope_resolution_status": "resolved", "oos_subtype": "", "geometry_reference_status": "expert_hard_single", "reference_identity": "synthetic-ref", "adjudication_status": "approved", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
     annotations = []
     for index, worker in enumerate(workers, 1):
         annotations.append({
@@ -192,6 +194,7 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
         active_log=None, p1_task_evidence_csv=p1_task, p1_worker_status_csv=p1_status,
         p1_geometry_task_scores=p1_scores, p1_worker_geometry_profile=p1_profile,
         require_complete=True, input_status="formal", independence_audit_csv=audit,
+        task_outcome_csv=task_outcome,
     )
     assert first["canonicalization_summary"]["blockers"] == []
     canonical_rows = _rows(out / "c1_canonical_annotations.csv")
@@ -239,10 +242,11 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
 
     worker_state = tmp_path / "worker_state_frozen.csv"
     _csv(worker_state, ["worker_id", "n_calib_completed", "r_u_hat", "r_u_ci_low", "r_u_ci_high"], [{"worker_id": worker, "n_calib_completed": "1", "r_u_hat": "0.8", "r_u_ci_low": "0.7", "r_u_ci_high": "0.9"} for worker in workers])
-    worker_dependencies = [out / "c1_canonical_annotations.csv", out / "c1_quality_annotations.csv", out / "c1_canonical_geometry.jsonl", out / "geometry_worker_task_loo_C1.csv", out / "geometry_stability_C1.csv"]
+    r_u_evidence = out / "calibration_r_u_evidence_C1.csv"
+    worker_dependencies = [out / "c1_canonical_annotations.csv", out / "c1_quality_annotations.csv", r_u_evidence, out / "c1_canonical_geometry.jsonl", out / "geometry_worker_task_loo_C1.csv", out / "geometry_stability_C1.csv"]
     dependency_rows = [{"path": str(path.resolve()), "sha256": sha256_file(path)} for path in worker_dependencies]
     worker_manifest = tmp_path / "worker_state_manifest_frozen.json"
-    worker_manifest.write_text(json.dumps({"worker_state_status": "formal", "rule_version": "external-worker-state-v1", "source_csv_sha256": sha256_file(worker_state), "dependency_bundle_id": sha256_json({"rule_version": "external-worker-state-v1", "dependencies": sorted(dependency_rows, key=lambda item: item["path"])}), "dependencies": dependency_rows, "r_u_estimated": True, "r_u_freeze": True, "eligible_support_count": 3}), encoding="utf-8")
+    worker_manifest.write_text(json.dumps({"worker_state_status": "formal", "rule_version": "external-worker-state-v1", "source_csv_sha256": sha256_file(worker_state), "dependency_bundle_id": sha256_json({"rule_version": "external-worker-state-v1", "dependencies": sorted(dependency_rows, key=lambda item: item["path"])}), "dependencies": dependency_rows, "r_u_estimated": True, "r_u_freeze": True, "eligible_support_count": 3, "estimator_id": "external_protocol_r_u", "estimator_version": "v1", "ci_method": "bootstrap", "confidence_level": 0.95, "evidence_manifest_path": str(r_u_evidence.resolve()), "evidence_manifest_sha256": sha256_file(r_u_evidence)}), encoding="utf-8")
 
     prepared = materialize(
         [export], out, c2, reserve, inventory, 1, 1, 1, 0.15, 1,
@@ -253,6 +257,7 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
         temporal_event_csv=ledger, temporal_policy_manifest=policy_manifest, task_purpose_manifest_csv=purpose,
         candidate_roster_manifest_csv=roster, assignment_history_csv=history,
         formal_worker_state_csv=worker_state, formal_worker_state_manifest=worker_manifest,
+        task_outcome_csv=task_outcome,
     )["gate_summary"]
     assert prepared["formal_closeout_ready"] is False
     assert prepared["formal_worker_state"]["valid"] is True

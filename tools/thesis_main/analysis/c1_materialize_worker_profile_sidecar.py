@@ -66,6 +66,9 @@ EVIDENCE_FIELDS = [
     "assigned_expected",
     "outside_assignment_submission",
     "duplicate_worker_task_submission",
+    "duplicate_review_status",
+    "r_u_evidence_included",
+    "r_u_evidence_exclusion_reason",
     "parse_error",
     "schema_interpretable",
     "schema_error",
@@ -77,6 +80,7 @@ EVIDENCE_FIELDS = [
     "stage",
     "pool",
     "task_final_scope",
+    "task_outcome_adjudication_status",
     "task_oos_subtype",
     "worker_scope_response",
     "geometry_reference_status",
@@ -533,7 +537,7 @@ def inclusion_flags(row: dict[str, str], family: str) -> dict[str, bool]:
     undercoverage_ok = undercoverage_expert_evaluable(row)
     worker_scope = safe(row.get("worker_scope_response"))
     return {
-        "included_in_r_u_calib": legal and row_stage in {"C1", "C2"} and group in R_U_CALIB_GROUPS and truthy(row.get("used_for_r_u")) and manual and is_in_scope(row) and usable_ref and geom_ok and process_ok,
+        "included_in_r_u_calib": truthy(row.get("r_u_evidence_included")) if "r_u_evidence_included" in row else legal and row_stage in {"C1", "C2"} and group in R_U_CALIB_GROUPS and truthy(row.get("used_for_r_u")) and manual and is_in_scope(row) and usable_ref and geom_ok and process_ok,
         "included_in_r_geometry": legal and group in R_GEOMETRY_GROUPS and manual and is_in_scope(row) and usable_ref and geom_ok and process_ok and geometry_component_ok,
         "included_in_r_scope": legal and norm_scope(row) in {"in_scope", "oos"} and worker_scope in VALID_SCOPE_RESPONSES,
         "included_in_T_u": legal and group in T_U_GROUPS and cond == "semi" and process_ok and truthy(row.get("semi_geometry_correction_evaluable")) and outcome_bool(row.get("semi_correction_failure_observed")) is not None,
@@ -582,6 +586,9 @@ def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, An
                 "assigned_expected": safe(row.get("assigned_expected")),
                 "outside_assignment_submission": safe(row.get("outside_assignment_submission")),
                 "duplicate_worker_task_submission": safe(row.get("duplicate_worker_task_submission")),
+                "duplicate_review_status": safe(row.get("duplicate_review_status")),
+                "r_u_evidence_included": truthy(row.get("r_u_evidence_included")),
+                "r_u_evidence_exclusion_reason": safe(row.get("r_u_evidence_exclusion_reason")),
                 "parse_error": safe(row.get("parse_error")),
                 "schema_interpretable": safe(row.get("schema_interpretable")),
                 "schema_error": safe(row.get("schema_error")),
@@ -593,6 +600,7 @@ def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, An
                 "stage": stage(row),
                 "pool": safe(row.get("pool")) or safe(row.get("dataset_group")),
                 "task_final_scope": norm_scope(row) or "unknown",
+                "task_outcome_adjudication_status": safe(row.get("task_outcome_adjudication_status")),
                 "task_oos_subtype": oos_subtype(row),
                 "worker_scope_response": safe(row.get("worker_scope_response")),
                 "geometry_reference_status": geometry_reference_status(row),
@@ -1517,6 +1525,14 @@ def materialize(
     )
     worker_dimension_readiness = p1_readiness.pop("worker_dimension_rows", [])
     evidence = build_evidence_rows(read_csv(quality_csv))
+    c1_rows = [row for row in evidence if safe(row.get("stage")) == "C1"]
+    c1_pending = {
+        _task_evidence_key(row)
+        for row in c1_rows
+        if safe(row.get("task_outcome_adjudication_status")) not in {"approved", "resolved", "not_applicable"}
+        or safe(row.get("duplicate_review_status")) == "pending"
+    }
+    c1_profile_evidence_classified = bool(c1_rows) and not c1_pending
     geometry_scores = _load_geometry_scores(p1_geometry_task_scores)
     if p1_task_evidence_csv and p1_task_evidence_csv.exists():
         evidence.extend(build_p1_evidence_rows(read_csv(p1_task_evidence_csv), geometry_scores))
@@ -1598,12 +1614,18 @@ def materialize(
         "family_interpretation_level_counts": _interpretation_level_counts(family),
         "subfamily_interpretation_level_counts": _interpretation_level_counts(subfamily),
         "r_u_calib_estimated": any(safe(row.get("r_u_calib")) for row in main),
+        "r_u_support_by_worker": {safe(row.get("worker_id")): int(row.get("n_calib_support") or 0) for row in main},
         "r_geometry_u_estimated": any(safe(row.get("r_geometry_u")) for row in main),
         "p1_descriptive_directional_check_status": "evaluable" if predictive_evaluable else "not_evaluable",
         "formal_predictive_validity_status": "not_run_blocked",
         "p1_informed_diagnostic_profile_status": "complete" if p1_readiness.get("full_diagnostic_profile_ready") else "incomplete",
         **{key: value for key, value in p1_readiness.items() if key != "warnings"},
-        "full_profile_ready": bool(p1_readiness.get("full_diagnostic_profile_ready")),
+        "p1_diagnostic_evidence_complete": bool(p1_readiness.get("full_diagnostic_profile_ready")),
+        "c1_profile_evidence_classified": c1_profile_evidence_classified,
+        "c1_profile_pending_adjudication_count": len(c1_pending),
+        "pending_adjudication_count": int(p1_readiness.get("pending_adjudication_count") or 0) + len(c1_pending),
+        "c1_support_sufficient": all(row.get("calib_support_status") != "insufficient" for row in main),
+        "full_profile_ready": c1_profile_evidence_classified,
         "profile_freeze_status": "C1_provisional",
         "blockers": [],
         "warnings": list(p1_readiness.get("warnings") or []) + ([] if predictive_evaluable else ["p1_descriptive_directional_check_not_evaluable_without_p1_artifacts" if not input_p1_artifacts else "p1_descriptive_directional_check_not_evaluable_without_matching_p1_c1_metrics"]),

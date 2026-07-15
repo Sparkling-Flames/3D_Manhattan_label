@@ -88,7 +88,7 @@ def _frozen_temporal_inputs(tmp_path: Path) -> dict[str, Path]:
     _write_csv(roster, roster_rows)
     history = tmp_path / "assignment_history.csv"
     history_fields = ["base_task_id", "condition", "worker_id", "assignment_status", "effective_at", "source_manifest_path", "source_manifest_sha256", "manifest_version"]
-    _write_csv(history, [{"base_task_id": "b", "condition": "manual", "worker_id": "w1", "assignment_status": "available", "effective_at": "2025-12-31T00:00:00Z", "source_manifest_path": str(assignment_source), "source_manifest_sha256": sha256_file(assignment_source), "manifest_version": "assignment_history_v1"}], history_fields)
+    _write_csv(history, [{"base_task_id": "b", "condition": "manual", "worker_id": worker, "assignment_status": "available", "effective_at": "2025-12-31T00:00:00Z", "source_manifest_path": str(assignment_source), "source_manifest_sha256": sha256_file(assignment_source), "manifest_version": "assignment_history_v1"} for worker in workers], history_fields)
     ledger = tmp_path / "temporal_event_ledger.csv"
     build_temporal_event_ledger(canonical, quality, three, ledger)
     geometry = tmp_path / "geometry.jsonl"
@@ -589,6 +589,10 @@ def test_formal_assignment_history_cannot_be_empty(tmp_path) -> None:
 def test_formal_assignment_history_requires_pre_event_task_baseline_and_roster_worker(tmp_path) -> None:
     paths = _frozen_temporal_inputs(tmp_path)
     base = {"base_task_id": "b", "condition": "manual", "worker_id": "w1", "assignment_status": "available", "effective_at": "2026-01-02T00:00:00Z", "source_manifest_path": str(paths["history_source"]), "source_manifest_sha256": sha256_file(paths["history_source"]), "manifest_version": "assignment_history_v1"}
+    _replace_history(paths, [base])
+    summary = materialize_temporal_replay(paths["ledger"], tmp_path / "routing_temporal_replay_C1.csv", policy_manifest=paths["policy_manifest"], canonical_csv=paths["canonical"], quality_csv=paths["quality"], three_state_csv=paths["three"], canonical_geometry_jsonl=paths["geometry"], task_purpose_manifest_csv=paths["purpose"], candidate_roster_manifest_csv=paths["roster"], assignment_history_csv=paths["history"], input_status="formal")
+    assert summary["full_stop_contract_valid"] is False
+    base.update(effective_at="2025-12-31T00:00:00Z")
     _replace_history(paths, [base])
     summary = materialize_temporal_replay(paths["ledger"], tmp_path / "routing_temporal_replay_C1.csv", policy_manifest=paths["policy_manifest"], canonical_csv=paths["canonical"], quality_csv=paths["quality"], three_state_csv=paths["three"], canonical_geometry_jsonl=paths["geometry"], task_purpose_manifest_csv=paths["purpose"], candidate_roster_manifest_csv=paths["roster"], assignment_history_csv=paths["history"], input_status="formal")
     assert summary["full_stop_contract_valid"] is False

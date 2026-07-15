@@ -214,7 +214,10 @@ def build_canonical_tables(
     active_log_path: Path | None = None,
     *,
     geometry_round_px: float = 0.5,
+    duplicate_review_mode: bool = False,
+    duplicate_decisions: dict[tuple[str, str, str], dict[str, str]] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
+    duplicate_decisions = duplicate_decisions or {}
     exports = [(path, _load_export(path)) for path in export_paths]
     owner_map = _build_annotation_owner_map(exports)
     active_times = load_active_logs(str(active_log_path), annotation_owner_map=owner_map) if active_log_path else {}
@@ -247,6 +250,7 @@ def build_canonical_tables(
                     "condition": _safe_str(data.get("condition")),
                     "annotator_id": worker_id,
                     "annotation_id": annotation_id,
+                    "response_hash": hashlib.sha256(json.dumps(ann.get("result", []), sort_keys=True, ensure_ascii=False).encode("utf-8")).hexdigest(),
                     "annotation_match_status": _annotation_match_status(annotation_id),
                     "active_time_key": _active_time_key(project_id, task_id, worker_id, annotation_id),
                     "annotation_sort_key": "|".join(_sort_value(ann, ann_index)),
@@ -271,53 +275,80 @@ def build_canonical_tables(
     duplicate_rows: list[dict[str, Any]] = []
     for (project_id, task_id, worker_id), rows in sorted(groups.items()):
         rows = sorted(rows, key=lambda r: r["annotation_sort_key"])
+        by_annotation: dict[str, list[dict[str, Any]]] = defaultdict(list)
+        for row in rows:
+            by_annotation[row["annotation_id"]].append(row)
+        repeated_export_count = sum(max(0, len(items) - 1) for items in by_annotation.values()) if duplicate_review_mode else 0
+        annotation_id_payload_conflict = duplicate_review_mode and any(len({item["response_hash"] for item in items}) > 1 for items in by_annotation.values())
+        if duplicate_review_mode:
+            rows = [items[0] for items in by_annotation.values()]
         hashes = {r["geometry_hash"] for r in rows if r["geometry_hash"]}
         group_size = len(rows)
         duplicate_type = "single"
-        if group_size > 1:
-            duplicate_type = "revision" if len(hashes) > 1 else "duplicate_same_geometry"
+        if annotation_id_payload_conflict:
+            duplicate_type = "annotation_id_payload_conflict"
+        elif group_size > 1:
+            response_hashes = {r["response_hash"] for r in rows}
+            duplicate_type = (
+                "suspected_revision" if len(hashes) > 1 else "distinct_ids_exact_match" if len(response_hashes) == 1 else "same_geometry_label_conflict"
+            ) if duplicate_review_mode else ("revision" if len(hashes) > 1 else "duplicate_same_geometry")
             for row in rows:
                 _set_active_fields(row, active_times, allow_task_level_fallback=False)
-        if duplicate_type == "duplicate_same_geometry":
+        review_required = duplicate_review_mode and (group_size > 1 or annotation_id_payload_conflict)
+        decision = duplicate_decisions.get((project_id, task_id, worker_id), {})
+        decision_name = _safe_str(decision.get("decision")).lower()
+        selected_id = _safe_str(decision.get("selected_annotation_id"))
+        human_reviewed = bool(_safe_str(decision.get("reviewed_by")) and _safe_str(decision.get("reviewed_at")))
+        resolved = human_reviewed and not annotation_id_payload_conflict and decision_name in {"keep_annotation", "confirm_exact_duplicate", "confirm_revision_keep_final"} and selected_id in by_annotation
+        excluded = human_reviewed and decision_name in {"exclude_group", "forensic_only"}
+        if review_required and not (resolved or excluded):
+            canonical = None
+        elif excluded:
+            canonical = None
+        elif resolved:
+            canonical = by_annotation[selected_id][0].copy()
+        elif duplicate_type in {"distinct_ids_exact_match", "same_geometry_label_conflict", "duplicate_same_geometry"}:
             canonical = max(rows, key=lambda r: (_lead_time_value(r), r["annotation_sort_key"])).copy()
         else:
             canonical = rows[-1].copy()
-        duplicate_ids = [r["annotation_id"] for r in rows if r["annotation_id"] != canonical["annotation_id"]]
-        duplicate_time_ambiguous = (
-            group_size > 1
-            and canonical.get("active_time_match_status") != "project+task+annotator+annotation"
-        )
+        canonical_id = _canonical_id(project_id, task_id, worker_id)
+        duplicate_ids = [r["annotation_id"] for r in rows if canonical and r["annotation_id"] != canonical["annotation_id"]]
+        review_status = "resolved" if resolved or excluded else "pending" if review_required else "not_required"
+        if duplicate_review_mode and repeated_export_count and group_size == 1 and not annotation_id_payload_conflict:
+            review_status = "auto_resolved_input_duplicate"
+            duplicate_type = "repeated_export_same_annotation_id"
+        time_ambiguous = (review_required if duplicate_review_mode else group_size > 1) and (not canonical or canonical.get("active_time_match_status") != "project+task+annotator+annotation")
+        if group_size > 1 or annotation_id_payload_conflict or repeated_export_count:
+            duplicate_rows.append(
+                {
+                    "project_id": project_id, "task_id": task_id, "task_key": rows[0]["task_key"], "annotator_id": worker_id,
+                    "canonical_annotation_id": canonical_id if canonical else "", "raw_canonical_annotation_id": canonical["annotation_id"] if canonical else "",
+                    "all_annotation_ids": ";".join(sorted(by_annotation)), "duplicate_annotation_ids": ";".join(duplicate_ids),
+                    "duplicate_group_size": group_size, "duplicate_geometry_type": duplicate_type, "n_distinct_geometry_hashes": len(hashes),
+                    "n_distinct_response_hashes": len({r["response_hash"] for r in rows}), "repeated_export_row_count": repeated_export_count,
+                    "duplicate_review_status": review_status, "duplicate_decision": decision_name, "selected_annotation_id": selected_id,
+                    "reviewed_by": _safe_str(decision.get("reviewed_by")), "reviewed_at": _safe_str(decision.get("reviewed_at")),
+                    "duplicate_time_ambiguous": time_ambiguous, "lead_time_policy": "never_selects_or_merges_in_manual_review_mode" if duplicate_review_mode else "canonical_only_not_summed",
+                }
+            )
+        if canonical is None:
+            continue
+        duplicate_time_ambiguous = time_ambiguous
         canonical.update(
             {
-                "canonical_annotation_id": _canonical_id(project_id, task_id, worker_id),
+                "canonical_annotation_id": canonical_id,
                 "raw_canonical_annotation_id": canonical["annotation_id"],
                 "duplicate_annotation_ids": ";".join(duplicate_ids),
                 "duplicate_group_size": group_size,
                 "duplicate_geometry_type": duplicate_type,
                 "duplicate_time_ambiguous": duplicate_time_ambiguous,
-                "eligible_for_primary_analysis": True,
-                "exclusion_reason": "",
+                "duplicate_review_status": review_status,
+                "duplicate_decision": decision_name,
+                "eligible_for_primary_analysis": not review_required or resolved,
+                "exclusion_reason": "" if not review_required or resolved else "duplicate_review_pending",
             }
         )
         canonical_rows.append(canonical)
-        if group_size > 1:
-            duplicate_rows.append(
-                {
-                    "project_id": project_id,
-                    "task_id": task_id,
-                    "task_key": canonical["task_key"],
-                    "annotator_id": worker_id,
-                    "canonical_annotation_id": canonical["canonical_annotation_id"],
-                    "raw_canonical_annotation_id": canonical["raw_canonical_annotation_id"],
-                    "all_annotation_ids": ";".join(r["annotation_id"] for r in rows),
-                    "duplicate_annotation_ids": ";".join(duplicate_ids),
-                    "duplicate_group_size": group_size,
-                    "duplicate_geometry_type": duplicate_type,
-                    "n_distinct_geometry_hashes": len(hashes),
-                    "duplicate_time_ambiguous": duplicate_time_ambiguous,
-                    "lead_time_policy": "canonical_only_not_summed",
-                }
-            )
 
     summary = {
         "n_exports": len(export_paths),
@@ -325,8 +356,10 @@ def build_canonical_tables(
         "n_raw_annotation_rows": sum(len(v) for v in groups.values()),
         "n_canonical_rows": len(canonical_rows),
         "n_duplicate_groups": len(duplicate_rows),
-        "n_duplicate_same_geometry_groups": sum(r["duplicate_geometry_type"] == "duplicate_same_geometry" for r in duplicate_rows),
-        "n_revision_groups": sum(r["duplicate_geometry_type"] == "revision" for r in duplicate_rows),
+        "n_duplicate_same_geometry_groups": sum(r["duplicate_geometry_type"] in {"distinct_ids_exact_match", "same_geometry_label_conflict"} for r in duplicate_rows),
+        "n_revision_groups": sum(r["duplicate_geometry_type"] == "suspected_revision" for r in duplicate_rows),
+        "n_input_duplicate_rows": sum(int(r.get("repeated_export_row_count") or 0) for r in duplicate_rows),
+        "n_pending_duplicate_review_groups": sum(r.get("duplicate_review_status") == "pending" for r in duplicate_rows),
     }
     return canonical_rows, duplicate_rows, summary
 

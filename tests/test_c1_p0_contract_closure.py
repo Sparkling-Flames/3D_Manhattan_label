@@ -162,6 +162,7 @@ def _formal_worker_fixture(tmp_path: Path):
     for name, body in {
         "canonical.csv": "canonical_annotation_id\nA\n",
         "quality.csv": "worker_id,used_for_r_u,canonical_eligibility_status,independence_status,assigned_expected,outside_assignment_submission,duplicate_worker_task_submission,schema_interpretable,parse_error,schema_error\nw1,true,valid,independent,true,false,false,true,,\n",
+        "r_u_evidence.csv": "worker_id,r_u_evidence_included\nw1,true\n",
         "geometry.jsonl": '{}\n', "loo.csv": "worker_id\nw1\n", "stability.csv": "worker_id\nw1\n",
     }.items():
         path = tmp_path / name; path.write_text(body, encoding="utf-8"); evidence.append(path)
@@ -173,8 +174,10 @@ def _formal_worker_fixture(tmp_path: Path):
         "worker_state_status": "formal", "rule_version": "external_worker_state_v1", "source_csv_sha256": sha256_file(state),
         "dependency_bundle_id": sha256_json({"rule_version": "external_worker_state_v1", "dependencies": sorted(dependencies, key=lambda item: item["path"])}),
         "dependencies": dependencies, "r_u_estimated": True, "r_u_freeze": True, "eligible_support_count": 1,
+        "estimator_id": "external_protocol_r_u", "estimator_version": "v1", "ci_method": "bootstrap", "confidence_level": 0.95,
+        "evidence_manifest_path": str(evidence[2].resolve()), "evidence_manifest_sha256": sha256_file(evidence[2]),
     }), encoding="utf-8")
-    kwargs = dict(canonical_csv=evidence[0], quality_csv=evidence[1], canonical_geometry_jsonl=evidence[2], geometry_loo_csv=evidence[3], geometry_stability_csv=evidence[4], min_r_u_tasks=1)
+    kwargs = dict(canonical_csv=evidence[0], quality_csv=evidence[1], r_u_evidence_csv=evidence[2], canonical_geometry_jsonl=evidence[3], geometry_loo_csv=evidence[4], geometry_stability_csv=evidence[5], min_r_u_tasks=1)
     return state, manifest, evidence, kwargs
 
 
@@ -187,6 +190,7 @@ def test_formal_worker_state_resolves_dependency_paths_from_manifest_directory(t
     state, manifest, evidence, kwargs = _formal_worker_fixture(tmp_path)
     payload = json.loads(manifest.read_text(encoding="utf-8"))
     payload["dependencies"] = [{"path": path.name, "sha256": sha256_file(path)} for path in evidence]
+    payload["evidence_manifest_path"] = evidence[2].name
     payload["dependency_bundle_id"] = sha256_json({"rule_version": payload["rule_version"], "dependencies": sorted(payload["dependencies"], key=lambda item: item["path"])})
     manifest.write_text(json.dumps(payload), encoding="utf-8")
     assert _formal_worker_state(state, manifest, **kwargs)["valid"] is True
@@ -230,7 +234,7 @@ def test_finalize_existing_closeout_binds_adjudication_without_rerunning_inputs(
     bundle = {"bundle_version": "v1", "artifacts": [{"path": str(path), "exists": True, "sha256": sha256_file(path)} for path in artifacts]}
     bundle["bundle_sha256"] = __import__("hashlib").sha256(json.dumps(bundle["artifacts"], sort_keys=True).encode("utf-8")).hexdigest()
     (tmp_path / "c1_closeout_input_bundle.json").write_text(json.dumps(bundle), encoding="utf-8")
-    (tmp_path / "c1_closeout_dryrun_gate_summary.json").write_text(json.dumps({"input_status": "formal", "raw_snapshot_manifest_fresh": True, "artifacts_fresh": True, "quality_table_blockers": [], "quality_table_summary": {"n_quality_rows": 1, "amendment_blocker_count": 0}, "canonicalization_summary": {"structural_integrity_passed": True, "collection_completeness_passed": True, "blockers": []}, "formal_worker_state": verified, "r_u_estimated": True, "full_profile_ready": True, "profile_sidecar_generated": True, "profile_summary_path": str(profile), "profile_freeze_status": "C1_provisional", "pending_adjudication_count": 0, "worker_state_summary": {"r_u_freeze": True}, "c2_draft_summary": {"c2_freeze": True}, "dt_backflow": False, "formal_inputs_present": True, "vfinal_sidecars": {"routing_temporal_replay": temporal_contract}}), encoding="utf-8")
+    (tmp_path / "c1_closeout_dryrun_gate_summary.json").write_text(json.dumps({"input_status": "formal", "raw_snapshot_manifest_fresh": True, "artifacts_fresh": True, "quality_table_blockers": [], "quality_table_summary": {"n_quality_rows": 1, "amendment_blocker_count": 0}, "canonicalization_summary": {"structural_integrity_passed": True, "collection_completeness_passed": True, "blockers": []}, "formal_worker_state": verified, "r_u_estimated": True, "full_profile_ready": True, "c1_duplicate_review_complete": True, "c1_task_outcome_adjudication_complete": True, "c1_profile_evidence_classified": True, "r_u_support_consistent": True, "profile_sidecar_generated": True, "profile_summary_path": str(profile), "profile_freeze_status": "C1_provisional", "pending_adjudication_count": 0, "worker_state_summary": {"r_u_freeze": True}, "c2_draft_summary": {"c2_freeze": True}, "dt_backflow": False, "formal_inputs_present": True, "vfinal_sidecars": {"routing_temporal_replay": temporal_contract}}), encoding="utf-8")
     adjudication = {"status": "approved", "approved": True, "manifest_id": "m1", "approved_by": "reviewer", "approved_at": "2026-07-14T00:00:00Z", "input_bundle_sha256": bundle["bundle_sha256"]}
     adjudication_path = tmp_path / "adjudication.json"
     adjudication_path.write_text(json.dumps(adjudication), encoding="utf-8")
