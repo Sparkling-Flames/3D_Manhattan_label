@@ -42,6 +42,19 @@ def test_p1_process_capability_preserves_unified_eligibility_fields() -> None:
     assert _unique_process_rows(forensic) == []
 
 
+def test_c1_evidence_can_be_complete_with_insufficient_support(tmp_path: Path) -> None:
+    quality = tmp_path / "quality.csv"
+    _csv(quality, ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group", "condition", "task_outcome_adjudication_status", "duplicate_review_status", "r_u_evidence_included"], [{"round_id": "C1", "worker_id": "w1", "task_id": "t1", "base_task_id": "b1", "dataset_group": "Calibration_anchor", "condition": "manual", "task_outcome_adjudication_status": "approved", "duplicate_review_status": "resolved", "r_u_evidence_included": "false"}])
+    worker = tmp_path / "worker.csv"
+    _csv(worker, ["worker_id"], [{"worker_id": "w1"}])
+    summary = materialize(quality, worker, tmp_path / "out")
+    main = _rows(tmp_path / "out" / "worker_profile_main_matrix_C1.csv")[0]
+    assert summary["c1_profile_evidence_classified"] is True
+    assert summary["full_profile_ready"] is True
+    assert summary["c1_support_sufficient"] is False
+    assert main["calib_support_status"] == "insufficient"
+
+
 def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> None:
     fields = [
         "round_id",

@@ -56,6 +56,8 @@ def materialize(
     formal_closeout_adjudication_manifest: Path | None = None,
     formal_worker_state_csv: Path | None = None,
     formal_worker_state_manifest: Path | None = None,
+    duplicate_adjudication_csv: Path | None = None,
+    task_outcome_csv: Path | None = None,
 ) -> dict[str, Any]:
     canonical = c1_canonicalize_exports.build_canonicalization(
         export_json,
@@ -69,6 +71,7 @@ def materialize(
         input_status=input_status,
         independence_audit_csv=independence_audit_csv,
         retrospective_provenance_amendment_csv=retrospective_provenance_amendment_csv,
+        duplicate_adjudication_csv=duplicate_adjudication_csv,
     )
     gate = run_c1_closeout_dryrun_chain.materialize(
         Path(canonical["canonical_csv"]),
@@ -98,6 +101,7 @@ def materialize(
         formal_closeout_adjudication_manifest,
         formal_worker_state_csv,
         formal_worker_state_manifest,
+        task_outcome_csv,
     )
     summary = {
         "canonicalization_summary": canonical,
@@ -149,6 +153,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--formal-closeout-adjudication-manifest", type=Path)
     parser.add_argument("--formal-worker-state-csv", type=Path)
     parser.add_argument("--formal-worker-state-manifest", type=Path)
+    parser.add_argument("--duplicate-adjudication-csv", type=Path)
+    parser.add_argument("--task-outcome-csv", type=Path)
     args = parser.parse_args(argv)
     summary = materialize(
         args.export_json,
@@ -184,6 +190,8 @@ def main(argv: list[str] | None = None) -> int:
         formal_closeout_adjudication_manifest=args.formal_closeout_adjudication_manifest,
         formal_worker_state_csv=args.formal_worker_state_csv,
         formal_worker_state_manifest=args.formal_worker_state_manifest,
+        duplicate_adjudication_csv=args.duplicate_adjudication_csv,
+        task_outcome_csv=args.task_outcome_csv,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0

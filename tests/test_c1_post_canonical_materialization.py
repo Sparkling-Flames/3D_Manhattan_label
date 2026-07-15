@@ -168,7 +168,7 @@ def test_c1_quality_worker_gaps_and_c2_reserve_draft_chain(tmp_path: Path) -> No
     worker_summary = materialize_worker_state(out / "c1_quality_annotations.csv", [assignment], out, min_r_u_tasks=2)
     worker = _rows(out / "worker_state_snapshot_C1.csv")[0]
     assert worker_summary["r_u_estimated"] is False
-    assert worker["n_calib_completed"] == "1"
+    assert worker["n_calib_completed"] == "0"
     assert worker["needs_c2_ci_fill"] == "true"
 
     gap_summary = materialize_gaps(out / "c1_quality_annotations.csv", out / "worker_state_snapshot_C1.csv", out, min_scene=1, min_calib=2, epsilon_r=0.15)
@@ -285,7 +285,7 @@ def test_canonical_quality_sidecar_preserves_inclusion_contract_fields(tmp_path:
     materialize_sidecar(out / "c1_quality_annotations.csv", worker, out)
     evidence = [row for row in _rows(out / "worker_task_evidence_table_C1.csv") if row["task_id"] == "t1"]
 
-    assert quality["task_final_scope"] == "in_scope"
+    assert quality["task_final_scope"] == ""
     assert quality["process_evaluable"] == "true"
     assert quality["family"] == "semi_correction_failure"
     assert {row["evidence_signal"] for row in evidence} == {"semi_issue_recognition", "semi_geometry_correction"}

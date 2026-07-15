@@ -278,8 +278,9 @@ def _validate_assignment_history_for_replay(
         arrived = _arrival(event.get("canonical_arrival_timestamp"))
         first_arrival[task] = min(first_arrival.get(task, arrived), arrived)
     for task, arrived in first_arrival.items():
-        if not any(_task_key(row) == task and row["_effective_at"] <= arrived for row in rows):
-            raise ValueError("assignment history lacks a trusted baseline for replay task")
+        for worker in roster.get(task, {}):
+            if not any(_task_key(row) == task and str(row["worker_id"]) == worker and row["_effective_at"] <= arrived for row in rows):
+                raise ValueError("assignment history lacks a trusted task-worker baseline")
 
 
 def _load_policy_manifest(path: Path) -> dict[int, dict[str, Any]]:

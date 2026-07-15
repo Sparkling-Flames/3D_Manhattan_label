@@ -46,8 +46,12 @@ QUALITY_FIELDS = [
     "annotator_id",
     "canonical_annotation_id",
     "task_final_scope",
+    "task_scope_resolution_status",
     "task_oos_subtype",
+    "task_outcome_adjudication_status",
+    "reference_identity",
     "worker_scope_response",
+    "worker_scope_outcome",
     "geometry_reference_status",
     "process_evaluable",
     "process_failure_observed",
@@ -100,6 +104,10 @@ QUALITY_FIELDS = [
     "undercoverage_failure_observed",
     "used_for_r_u",
     "used_for_r_u_source_status",
+    "r_u_evidence_included",
+    "r_u_evidence_exclusion_reason",
+    "r_u_score_or_outcome",
+    "duplicate_review_status",
     "used_for_rq2",
     "assigned_expected",
     "outside_assignment_submission",
@@ -262,12 +270,16 @@ def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: di
                 "worker_id": safe(row.get("worker_id")),
                 "annotator_id": safe(row.get("worker_id")),
                 "canonical_annotation_id": safe(row.get("canonical_annotation_id")),
-                "task_final_scope": safe(row.get("task_final_scope") or row.get("final_scope") or row.get("scope")),
+                "task_final_scope": safe(row.get("task_final_scope") or row.get("final_scope")),
+                "task_scope_resolution_status": safe(row.get("task_scope_resolution_status")),
                 "task_oos_subtype": safe(row.get("task_oos_subtype")),
+                "task_outcome_adjudication_status": safe(row.get("task_outcome_adjudication_status")),
+                "reference_identity": safe(row.get("reference_identity")),
                 "worker_scope_response": safe(row.get("worker_scope_response")),
+                "worker_scope_outcome": safe(row.get("worker_scope_outcome")),
                 "geometry_reference_status": safe(row.get("geometry_reference_status")),
-                "process_evaluable": safe(row.get("process_evaluable")),
-                "process_failure_observed": safe(row.get("process_failure_observed")),
+                "process_evaluable": safe(row.get("process_evaluable")) or bool_text(eligible_independent_evidence(row)),
+                "process_failure_observed": safe(row.get("process_failure_observed")) or "false",
                 "process_failure_subfamily": safe(row.get("process_failure_subfamily")),
                 "family": safe(row.get("family")),
                 "subfamily": safe(row.get("subfamily")),
@@ -317,6 +329,10 @@ def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: di
                 "undercoverage_failure_observed": safe(row.get("undercoverage_failure_observed")),
                 "used_for_r_u": _used_for_r_u(row),
                 "used_for_r_u_source_status": source_status,
+                "r_u_evidence_included": False,
+                "r_u_evidence_exclusion_reason": "not_materialized",
+                "r_u_score_or_outcome": safe(row.get("r_u_score_or_outcome") or row.get("quality_metric_value")),
+                "duplicate_review_status": safe(row.get("duplicate_review_status")) or "not_required",
                 "used_for_rq2": _used_for_rq2(row),
                 "assigned_expected": truthy(row.get("assigned_expected", True)),
                 "outside_assignment_submission": truthy(row.get("outside_assignment_submission")),
@@ -379,11 +395,75 @@ def _canonical_meta_freshness(canonical_csv: Path, meta_rows: list[dict[str, str
     return not reasons, sorted(set(reasons))
 
 
-def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, candidate_inventory_csv: Path | None = DEFAULT_CORE_DRAFT, *, input_status: str = "dry_run") -> dict[str, Any]:
+def _scope_outcome(worker_response: str, final_scope: str) -> str:
+    response = worker_response.lower()
+    worker_oos = "oos" in response or "out" in response
+    worker_in = "in_scope" in response or "in-scope" in response or response in {"normal", "acceptable"}
+    if final_scope == "in_scope" and worker_in:
+        return "correct_in_scope"
+    if final_scope == "oos" and worker_oos:
+        return "correct_oos"
+    if final_scope == "in_scope" and worker_oos:
+        return "scope_false_positive"
+    if final_scope == "oos" and worker_in:
+        return "scope_false_negative"
+    return "not_evaluable"
+
+
+def _r_u_evidence(row: dict[str, Any]) -> tuple[bool, str]:
+    checks = [
+        (truthy(row.get("used_for_r_u")), "not_protocol_r_u_candidate"),
+        (safe(row.get("task_outcome_adjudication_status")) in {"approved", "resolved"}, "task_outcome_pending"),
+        (safe(row.get("task_final_scope")) == "in_scope", "not_in_scope"),
+        (safe(row.get("condition")) == "manual", "not_manual"),
+        (safe(row.get("geometry_reference_status")) in {"expert_hard_single", "expert_hard_multi", "consensus_reference", "hard_single_gt", "hard_multi_gt"}, "geometry_reference_not_hard"),
+        (truthy(row.get("geometry_valid")), "geometry_invalid"),
+        (truthy(row.get("process_evaluable")) and not truthy(row.get("process_failure_observed")), "process_not_valid"),
+        (safe(row.get("duplicate_review_status")) in {"not_required", "resolved", "auto_resolved_input_duplicate"}, "duplicate_review_pending"),
+        (truthy(row.get("eligible_independent_evidence")), "canonical_or_independence_ineligible"),
+    ]
+    reasons = [reason for passed, reason in checks if not passed]
+    return not reasons, ";".join(reasons)
+
+
+def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, candidate_inventory_csv: Path | None = DEFAULT_CORE_DRAFT, *, input_status: str = "dry_run", task_outcome_csv: Path | None = None) -> dict[str, Any]:
     canonical_meta_csv = output_dir / "c1_canonical_meta_observations.csv"
     meta_rows = read_csv(canonical_meta_csv) if canonical_meta_csv.exists() else []
     meta_fresh, meta_freshness_reasons = _canonical_meta_freshness(canonical_csv, meta_rows)
     rows = build_quality_rows(meta_rows if meta_fresh else read_csv(canonical_csv), _inventory_flags(candidate_inventory_csv))
+    outcomes: dict[tuple[str, str, str], dict[str, str]] = {}
+    outcome_blockers: list[str] = []
+    if task_outcome_csv and task_outcome_csv.exists():
+        for outcome in read_csv(task_outcome_csv):
+            key = (safe(outcome.get("task_id")), safe(outcome.get("base_task_id")), safe(outcome.get("condition")))
+            if not all(key) or key in outcomes:
+                outcome_blockers.append("task_outcome_identity_missing_or_duplicate")
+                continue
+            final_scope = safe(outcome.get("final_scope"))
+            reference_status = safe(outcome.get("geometry_reference_status"))
+            valid = (
+                final_scope in {"in_scope", "oos"}
+                and safe(outcome.get("scope_resolution_status")) == "resolved"
+                and safe(outcome.get("adjudication_status")) in {"approved", "resolved"}
+                and bool(safe(outcome.get("reviewed_by")) and safe(outcome.get("reviewed_at")))
+                and (final_scope == "oos" or (reference_status in {"expert_hard_single", "expert_hard_multi", "consensus_reference", "hard_single_gt", "hard_multi_gt"} and safe(outcome.get("reference_identity"))))
+            )
+            if not valid:
+                outcome_blockers.append("task_outcome_contract_invalid")
+                continue
+            outcomes[key] = outcome
+    for row in rows:
+        outcome = outcomes.get((safe(row.get("task_id")), safe(row.get("base_task_id")), safe(row.get("condition"))), {})
+        row["task_final_scope"] = safe(outcome.get("final_scope"))
+        row["task_scope_resolution_status"] = safe(outcome.get("scope_resolution_status"))
+        row["task_oos_subtype"] = safe(outcome.get("oos_subtype"))
+        row["geometry_reference_status"] = safe(outcome.get("geometry_reference_status"))
+        row["reference_identity"] = safe(outcome.get("reference_identity"))
+        row["task_outcome_adjudication_status"] = safe(outcome.get("adjudication_status")) or "pending"
+        row["worker_scope_response"] = _choice(row, "scope")
+        row["worker_scope_outcome"] = _scope_outcome(row["worker_scope_response"], row["task_final_scope"])
+        included, reason = _r_u_evidence(row)
+        row["r_u_evidence_included"], row["r_u_evidence_exclusion_reason"] = included, reason
     harmonization_csv = output_dir / "model_issue_harmonization_C1.csv"
     harmonization_summary_path = output_dir / "model_issue_harmonization_C1.summary.json"
     harmonization_summary = json.loads(harmonization_summary_path.read_text(encoding="utf-8")) if harmonization_summary_path.exists() else {}
@@ -413,12 +493,19 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         row["source_artifact"] = str(canonical_meta_csv)
         row["source_sha256"] = quality_source_sha
         dependencies = [canonical_meta_csv, harmonization_csv, canonical_csv]
+        if task_outcome_csv:
+            dependencies.append(task_outcome_csv)
         if candidate_inventory_csv:
             dependencies.append(candidate_inventory_csv)
         row.update(dependency_bundle(dependencies, rule_version=RULE_VERSION))
         row["validity_status"] = "dry_run" if input_status != "formal" else ("valid" if row.get("canonical_eligibility_status") == "valid" else "not_evaluable")
     quality_csv = output_dir / "c1_quality_annotations.csv"
     write_csv(quality_csv, rows, QUALITY_FIELDS)
+    outcome_template_csv = output_dir / "c1_task_outcome_adjudication_template.csv"
+    pending_tasks = {(safe(row.get("task_id")), safe(row.get("base_task_id")), safe(row.get("condition"))) for row in rows if row["task_outcome_adjudication_status"] == "pending"}
+    write_csv(outcome_template_csv, [{"task_id": task, "base_task_id": base, "condition": condition, "final_scope": "", "scope_resolution_status": "", "oos_subtype": "", "geometry_reference_status": "", "reference_identity": "", "adjudication_status": "", "reviewed_by": "", "reviewed_at": "", "notes": ""} for task, base, condition in sorted(pending_tasks)], ["task_id", "base_task_id", "condition", "final_scope", "scope_resolution_status", "oos_subtype", "geometry_reference_status", "reference_identity", "adjudication_status", "reviewed_by", "reviewed_at", "notes"])
+    r_u_evidence_csv = output_dir / "calibration_r_u_evidence_C1.csv"
+    write_csv(r_u_evidence_csv, rows, ["worker_id", "task_id", "base_task_id", "canonical_annotation_id", "r_u_evidence_included", "r_u_evidence_exclusion_reason", "duplicate_review_status", "task_final_scope", "geometry_reference_status", "process_evaluable", "independence_status", "r_u_score_or_outcome"])
 
     quality_df = pd.DataFrame(rows, columns=QUALITY_FIELDS)
     consensus, audit = build_summary(quality_df)
@@ -429,7 +516,9 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
     write_json(audit_json, {**audit, "sidecar_only_no_dt_backflow": True})
     three_state_summary = materialize_meta_label_three_state(quality_csv, output_dir, input_status=input_status)
 
-    blockers = (["canonical_meta_missing_or_stale"] if not meta_fresh else []) + (["harmonization_missing_or_stale"] if meta_fresh and not harmonization_fresh else [])
+    blockers = (["canonical_meta_missing_or_stale"] if not meta_fresh else []) + (["harmonization_missing_or_stale"] if meta_fresh and not harmonization_fresh else []) + outcome_blockers
+    if input_status == "formal" and any(row["task_outcome_adjudication_status"] not in {"approved", "resolved", "not_applicable"} for row in rows):
+        blockers.append("task_outcome_adjudication_pending")
     blockers += [f"amendment_{key}" for key in (harmonization_summary.get("amendment_blockers") or {})]
     if any(safe(row.get("independence_status")) not in {"independent", "non_independent_confirmed"} for row in rows):
         blockers.append("independence_not_evaluable")
@@ -448,6 +537,11 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         "three_state_sidecars": three_state_summary,
         "n_quality_rows": len(rows),
         "n_used_for_r_u": sum(truthy(row["used_for_r_u"]) for row in rows),
+        "r_u_evidence_csv": str(r_u_evidence_csv),
+        "n_r_u_evidence_included": sum(truthy(row["r_u_evidence_included"]) for row in rows),
+        "task_outcome_pending_count": sum(row["task_outcome_adjudication_status"] not in {"approved", "resolved", "not_applicable"} for row in rows),
+        "task_outcome_csv": str(task_outcome_csv or ""),
+        "task_outcome_adjudication_template_csv": str(outcome_template_csv),
         "n_missing_core_used_for_r_u_flag": sum(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows),
         "n_used_for_rq2": sum(truthy(row["used_for_rq2"]) for row in rows),
         "independence_not_evaluable_count": sum(safe(row.get("independence_status")) not in {"independent", "non_independent_confirmed"} for row in rows),
@@ -477,8 +571,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--canonical-csv", type=Path, default=DEFAULT_INPUT)
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--candidate-inventory-csv", type=Path, default=DEFAULT_CORE_DRAFT)
+    parser.add_argument("--task-outcome-csv", type=Path)
     args = parser.parse_args(argv)
-    print(json.dumps(materialize(args.canonical_csv, args.output_dir, args.candidate_inventory_csv), ensure_ascii=False, indent=2))
+    print(json.dumps(materialize(args.canonical_csv, args.output_dir, args.candidate_inventory_csv, task_outcome_csv=args.task_outcome_csv), ensure_ascii=False, indent=2))
     return 0
 
 

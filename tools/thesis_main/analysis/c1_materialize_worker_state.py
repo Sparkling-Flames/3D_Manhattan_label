@@ -57,7 +57,7 @@ def build_worker_state(quality_rows: list[dict[str, str]], assignment_paths: lis
         eligible = [row for row in rows if eligible_independent_evidence(row)]
         anchor = sum(row.get("dataset_group") == "Calibration_anchor" for row in eligible)
         core = sum(row.get("dataset_group") == "Calibration_core" for row in eligible)
-        calib = sum(truthy(row.get("used_for_r_u")) for row in eligible)
+        calib = sum(truthy(row.get("r_u_evidence_included")) if "r_u_evidence_included" in row else truthy(row.get("used_for_r_u")) for row in eligible)
         out.append(
             {
                 "worker_id": worker,

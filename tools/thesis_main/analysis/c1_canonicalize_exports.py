@@ -98,6 +98,8 @@ CANONICAL_FIELDS = [
     "duplicate_annotation_ids",
     "duplicate_group_size",
     "duplicate_geometry_type",
+    "duplicate_review_status",
+    "duplicate_decision",
     "active_time_source_file",
     "active_time_session_count",
     "active_time_event_count",
@@ -277,14 +279,24 @@ def build_canonicalization(
     input_status: str = "dry_run",
     independence_audit_csv: Path | None = None,
     retrospective_provenance_amendment_csv: Path | None = None,
+    duplicate_adjudication_csv: Path | None = None,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     assigned, internal = assignment_sets(manual_assignment, semi_assignment, worker_distribution)
     runtime_rows, runtime_lookup, collision_rows = build_runtime_task_mapping(export_paths, planned_task_mapping)
-    canonical_base, duplicate_base, base_summary = build_canonical_tables(export_paths, active_log)
+    duplicate_decisions: dict[tuple[str, str, str], dict[str, str]] = {}
+    if duplicate_adjudication_csv and duplicate_adjudication_csv.exists():
+        for decision in read_csv(duplicate_adjudication_csv):
+            key = (safe(decision.get("project_id")), safe(decision.get("ls_runtime_task_id") or decision.get("runtime_task_id")), safe(decision.get("worker_id")))
+            if not all(key) or key in duplicate_decisions:
+                raise ValueError("duplicate adjudication identity must be complete and unique")
+            duplicate_decisions[key] = decision
+    canonical_base, duplicate_base, base_summary = build_canonical_tables(
+        export_paths, active_log, duplicate_review_mode=True, duplicate_decisions=duplicate_decisions
+    )
     active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths), policy="calibration") if active_log else {}
     raw_manifest = snapshot_inputs_unique(
-        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []),
+        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []) + ([duplicate_adjudication_csv] if duplicate_adjudication_csv else []),
         output_dir,
         completion_basis="c1_closeout_canonicalization_snapshot",
     )
@@ -308,6 +320,17 @@ def build_canonicalization(
                     independence_duplicates.add(key)
                 independence_audit[key] = audit
 
+    duplicate_group_risk: dict[tuple[str, str, str], str] = {}
+    for duplicate in duplicate_base:
+        group = (safe(duplicate.get("project_id")), safe(duplicate.get("task_id")), safe(duplicate.get("annotator_id")))
+        audits = [independence_audit.get((*group, annotation_id), {}) for annotation_id in safe(duplicate.get("all_annotation_ids")).split(";") if annotation_id]
+        if any(safe(item.get("independence_status")) == "non_independent_confirmed" for item in audits):
+            duplicate_group_risk[group] = "non_independent_confirmed"
+            duplicate["duplicate_geometry_type"] = "parent_copy_non_independence_related"
+        elif any(_frozen_audit_bool(item.get("parent_derived")) == "true" or safe(item.get("copy_risk_status")).lower() not in {"", "cleared", "none", "no_risk"} for item in audits):
+            duplicate_group_risk[group] = "not_evaluable"
+            duplicate["duplicate_geometry_type"] = "parent_copy_non_independence_related"
+
     worker_task_counts = Counter(
         (
             safe(row.get("project_id")),
@@ -329,7 +352,10 @@ def build_canonicalization(
         identity = (project_id, runtime_task_id, worker_id, raw_annotation_id)
         audit = independence_audit.get(identity, {})
         audit_status = safe(audit.get("independence_status")).lower()
-        if identity in independence_duplicates:
+        group_risk = duplicate_group_risk.get((project_id, runtime_task_id, worker_id))
+        if group_risk:
+            audit_status, audit_reason = group_risk, "duplicate_group_parent_copy_or_independence_risk"
+        elif identity in independence_duplicates:
             audit_status, audit_reason = "not_evaluable", "duplicate_independence_audit_identity"
         elif audit_status in {"independent", "non_independent_confirmed"}:
             audit_reason = "audit_joined"
@@ -379,9 +405,7 @@ def build_canonicalization(
             "appears_in_internal_distribution": bool_text(key in internal),
             "outside_assignment_submission": bool_text(key not in assigned),
             "missing_submission": "false",
-            "duplicate_worker_task_submission": bool_text(
-                duplicate_group_size > 1 or worker_task_counts[(project_id, runtime_task_id, worker_id)] > 1
-            ),
+            "duplicate_worker_task_submission": bool_text(safe(row.get("duplicate_review_status")) == "pending"),
             "independence_status": audit_status,
             "independence_audit_status": audit_status,
             "independence_audit_reason": audit_reason,
@@ -403,6 +427,8 @@ def build_canonicalization(
             "duplicate_annotation_ids": row.get("duplicate_annotation_ids", ""),
             "duplicate_group_size": row.get("duplicate_group_size", ""),
             "duplicate_geometry_type": row.get("duplicate_geometry_type", ""),
+            "duplicate_review_status": row.get("duplicate_review_status", "not_required"),
+            "duplicate_decision": row.get("duplicate_decision", ""),
             "active_time_source_file": active_override.get("active_time_source_file", row.get("active_time_source_file", "")),
             "active_time_session_count": active_override.get("active_time_session_count", row.get("active_time_session_count", "")),
             "active_time_event_count": active_override.get("active_time_event_count", row.get("active_time_event_count", "")),
@@ -422,7 +448,12 @@ def build_canonicalization(
         active_rows.append({field: c_row.get(field, "") for field in ACTIVE_AUDIT_FIELDS})
         realized_rows.append({field: c_row.get(field, "") for field in REALIZED_AUDIT_FIELDS})
 
-    realized_assigned_keys = {assignment_key(row) for row in realized_rows if assignment_key(row) in assigned}
+    resolved_excluded_keys = set()
+    for duplicate in duplicate_base:
+        if safe(duplicate.get("duplicate_review_status")) == "resolved" and safe(duplicate.get("duplicate_decision")) in {"exclude_group", "forensic_only"}:
+            info = runtime_lookup.get((safe(duplicate.get("project_id")), safe(duplicate.get("task_id"))), {})
+            resolved_excluded_keys.add((safe(duplicate.get("annotator_id")), safe(info.get("task_id")), safe(info.get("base_task_id")), safe(info.get("dataset_group"))))
+    realized_assigned_keys = {assignment_key(row) for row in realized_rows if assignment_key(row) in assigned} | resolved_excluded_keys
     for worker, task_id, base_task_id, dataset_group in sorted(assigned - realized_assigned_keys):
         key = (worker, task_id, base_task_id, dataset_group)
         realized_rows.append(
@@ -449,10 +480,19 @@ def build_canonicalization(
         )
 
     duplicate_rows = _enhance_duplicate_rows(duplicate_base, runtime_lookup, round_id)
+    duplicate_template_rows = [
+        {
+            "project_id": row.get("project_id", ""), "ls_runtime_task_id": row.get("ls_runtime_task_id", ""), "worker_id": row.get("worker_id", ""),
+            "all_annotation_ids": row.get("all_annotation_ids", ""), "duplicate_geometry_type": row.get("duplicate_geometry_type", ""),
+            "current_review_status": row.get("duplicate_review_status", ""), "decision": "", "selected_annotation_id": "", "reviewed_by": "", "reviewed_at": "", "notes": "",
+        }
+        for row in duplicate_rows if safe(row.get("duplicate_review_status")) == "pending"
+    ]
     write_csv(output_dir / "c1_runtime_task_mapping.csv", runtime_rows, RUNTIME_MAPPING_FIELDS)
     write_csv(output_dir / "c1_runtime_key_collision_audit.csv", collision_rows, RUNTIME_COLLISION_FIELDS)
     write_csv(output_dir / "c1_canonical_annotations.csv", canonical_rows, CANONICAL_FIELDS)
     write_csv(output_dir / "c1_duplicate_annotation_audit.csv", duplicate_rows)
+    write_csv(output_dir / "c1_duplicate_adjudication_template.csv", duplicate_template_rows, ["project_id", "ls_runtime_task_id", "worker_id", "all_annotation_ids", "duplicate_geometry_type", "current_review_status", "decision", "selected_annotation_id", "reviewed_by", "reviewed_at", "notes"])
     write_csv(output_dir / "c1_active_time_binding_audit.csv", active_rows, ACTIVE_AUDIT_FIELDS)
     write_csv(output_dir / "c1_realized_vs_assigned_audit.csv", realized_rows, REALIZED_AUDIT_FIELDS)
     write_csv(output_dir / "c1_export_merge_manifest.csv", _merge_manifest(export_paths, runtime_rows))
@@ -478,12 +518,13 @@ def build_canonicalization(
 
     outside_count = sum(row["outside_assignment_submission"] == "true" for row in canonical_rows)
     duplicate_count = sum(row["duplicate_worker_task_submission"] == "true" for row in canonical_rows)
+    pending_duplicate_count = sum(safe(row.get("duplicate_review_status")) == "pending" for row in duplicate_rows)
     reserve_count = sum(row["reserve_realized_submission"] == "true" for row in canonical_rows)
     active_counts = _active_counts(canonical_rows)
     active_audit_counts = active_time_audit_summary(canonical_rows)
     planned_missing_count = sum(row["planned_mapping_status"] == "planned_mapping_missing" for row in runtime_rows)
     missing_submission_count = sum(row["missing_submission"] == "true" for row in realized_rows)
-    structural_integrity_passed = outside_count == 0 and duplicate_count == 0 and reserve_count == 0 and not collision_rows and not planned_missing_count
+    structural_integrity_passed = outside_count == 0 and pending_duplicate_count == 0 and reserve_count == 0 and not collision_rows and not planned_missing_count
     collection_completeness_passed = missing_submission_count == 0
     passed = structural_integrity_passed and (collection_completeness_passed if require_complete else True)
     summary = {
@@ -494,6 +535,12 @@ def build_canonicalization(
         "n_canonical_rows": len(canonical_rows),
         "outside_assignment_submission_count": outside_count,
         "duplicate_worker_task_submission_count": duplicate_count,
+        "duplicate_review_pending_count": pending_duplicate_count,
+        "duplicate_review_resolved_count": sum(safe(row.get("duplicate_review_status")) == "resolved" for row in duplicate_rows),
+        "duplicate_input_repeat_count": sum(int(row.get("repeated_export_row_count") or 0) for row in duplicate_rows),
+        "duplicate_adjudication_csv": str(duplicate_adjudication_csv or ""),
+        "duplicate_review_queue_csv": str(output_dir / "c1_duplicate_annotation_audit.csv"),
+        "duplicate_adjudication_template_csv": str(output_dir / "c1_duplicate_adjudication_template.csv"),
         "reserve_realized_submission_count": reserve_count,
         "missing_submission_count": missing_submission_count,
         "runtime_key_collision_count": len(collision_rows),
@@ -535,7 +582,7 @@ def build_canonicalization(
             name
             for name, count in (
                 ("outside_assignment_submission_detected", outside_count),
-                ("duplicate_worker_task_submission_detected", duplicate_count),
+                ("duplicate_review_pending", pending_duplicate_count),
                 ("reserve_realized_submission_detected", reserve_count),
                 ("runtime_key_collision_detected", len(collision_rows)),
                 ("planned_mapping_missing", planned_missing_count),
@@ -566,6 +613,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--input-status", choices=["dry_run", "formal"], default="dry_run")
     parser.add_argument("--independence-audit-csv", type=Path)
     parser.add_argument("--retrospective-provenance-amendment-csv", type=Path)
+    parser.add_argument("--duplicate-adjudication-csv", type=Path)
     args = parser.parse_args(argv)
     summary = build_canonicalization(
         args.export_json,
@@ -580,6 +628,7 @@ def main(argv: list[str] | None = None) -> int:
         input_status=args.input_status,
         independence_audit_csv=args.independence_audit_csv,
         retrospective_provenance_amendment_csv=args.retrospective_provenance_amendment_csv,
+        duplicate_adjudication_csv=args.duplicate_adjudication_csv,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if summary["passed"] else 1
