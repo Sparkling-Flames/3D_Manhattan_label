@@ -162,7 +162,7 @@ def _formal_worker_fixture(tmp_path: Path):
     for name, body in {
         "canonical.csv": "canonical_annotation_id\nA\n",
         "quality.csv": "worker_id,used_for_r_u,canonical_eligibility_status,independence_status,assigned_expected,outside_assignment_submission,duplicate_worker_task_submission,schema_interpretable,parse_error,schema_error\nw1,true,valid,independent,true,false,false,true,,\n",
-        "r_u_evidence.csv": "project_id,ls_runtime_task_id,worker_id,r_u_evidence_classification,r_u_evidence_included,r_u_metric_name,r_u_metric_value,r_u_metric_direction,r_u_normalization_rule,r_u_score_status,r_u_score_source\np1,t1,w1,included,true,iou_to_consensus_loo,0.5,higher_is_better,identity_0_1,valid,frozen-score.csv\n",
+        "r_u_evidence.csv": "project_id,ls_runtime_task_id,worker_id,r_u_evidence_classification,r_u_evidence_included,r_u_metric_name,r_u_metric_value,r_u_metric_direction,r_u_normalization_rule,r_u_score_status,r_u_score_source,r_u_reference_mode,r_u_reference_identity,r_u_reference_sha256,r_u_reference_excludes_worker,r_u_reference_support\np1,t1,w1,included,true,iou_to_consensus_loo,0.5,higher_is_better,identity_0_1,valid,frozen-score.csv,worker_excluded_loo_consensus,loo-w1-t1,aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa,true,2\n",
         "geometry.jsonl": '{}\n', "loo.csv": "worker_id\nw1\n", "stability.csv": "worker_id\nw1\n",
     }.items():
         path = tmp_path / name; path.write_text(body, encoding="utf-8"); evidence.append(path)
@@ -243,6 +243,9 @@ def test_finalize_existing_closeout_binds_adjudication_without_rerunning_inputs(
     gate_path = tmp_path / "c1_closeout_dryrun_gate_summary.json"
     gate_payload = json.loads(gate_path.read_text(encoding="utf-8"))
     gate_payload["c1_profile_evidence_complete"] = True
+    gate_payload["pending_adjudication_count"] = 3
+    gate_payload["p1_pending_adjudication_count"] = 3
+    gate_payload["c1_pending_adjudication_count"] = 0
     gate_path.write_text(json.dumps(gate_payload), encoding="utf-8")
     adjudication = {"status": "approved", "approved": True, "manifest_id": "m1", "approved_by": "reviewer", "approved_at": "2026-07-14T00:00:00Z", "input_bundle_sha256": bundle["bundle_sha256"]}
     adjudication_path = tmp_path / "adjudication.json"

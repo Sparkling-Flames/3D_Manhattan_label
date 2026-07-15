@@ -124,6 +124,11 @@ QUALITY_FIELDS = [
     "r_u_normalization_rule",
     "r_u_score_status",
     "r_u_score_source",
+    "r_u_reference_mode",
+    "r_u_reference_identity",
+    "r_u_reference_sha256",
+    "r_u_reference_excludes_worker",
+    "r_u_reference_support",
     "duplicate_review_status",
     "duplicate_decision",
     "process_disposition",
@@ -496,13 +501,18 @@ def _classify_r_u_evidence(row: dict[str, Any], *, formal_score_required: bool =
     if base_reasons:
         return "excluded", base_reasons
     if formal_score_required:
-        reference_status = safe(row.get("geometry_reference_status"))
-        reference_excludes_worker = (
-            truthy(row.get("reference_worker_excluded"))
-            if reference_status in {"worker_excluded_loo_consensus", "global_consensus_fallback"}
-            else safe(row.get("reference_worker_excluded")) in {"false", "0", "no"}
-        )
-        score_checks = [(reference_excludes_worker, "reference_includes_worker"), (bool(safe(row.get("reference_identity"))), "reference_identity_missing"), (safe(row.get("reference_evidence_status")) in {"evaluable", "valid", "adjudicated", "not_required"}, "reference_evidence_not_valid")]
+        try:
+            reference_support_valid = int(row.get("r_u_reference_support") or 0) >= 2
+        except (TypeError, ValueError):
+            reference_support_valid = False
+        reference_sha = safe(row.get("r_u_reference_sha256")).lower()
+        score_checks = [
+            (safe(row.get("r_u_reference_mode")) == "worker_excluded_loo_consensus", "r_u_reference_mode_invalid"),
+            (bool(safe(row.get("r_u_reference_identity"))), "r_u_reference_identity_missing"),
+            (len(reference_sha) == 64 and all(char in "0123456789abcdef" for char in reference_sha), "r_u_reference_sha256_invalid"),
+            (truthy(row.get("r_u_reference_excludes_worker")), "r_u_reference_includes_worker"),
+            (reference_support_valid, "r_u_reference_support_insufficient"),
+        ]
         try:
             score_finite = bool(safe(row.get("r_u_metric_value"))) and math.isfinite(float(row.get("r_u_metric_value")))
         except (TypeError, ValueError):
@@ -555,6 +565,8 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
             row["r_u_normalization_rule"] = safe(score.get("r_u_normalization_rule") or score.get("normalization_rule"))
             row["r_u_score_status"] = safe(score.get("r_u_score_status") or score.get("score_status"))
             row["r_u_score_source"] = safe(score.get("r_u_score_source") or score.get("score_source") or r_u_scoring_evidence_csv)
+            for field in ("r_u_reference_mode", "r_u_reference_identity", "r_u_reference_sha256", "r_u_reference_excludes_worker", "r_u_reference_support"):
+                row[field] = safe(score.get(field))
         elif input_status != "formal" and safe(row.get("quality_metric_name")) and safe(row.get("quality_metric_value")):
             row["r_u_metric_name"] = safe(row.get("quality_metric_name"))
             row["r_u_metric_value"] = safe(row.get("quality_metric_value"))
@@ -685,6 +697,7 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
     )
     r_u_evidence_csv = output_dir / "calibration_r_u_evidence_C1.csv"
     r_u_fields = ["round_id", "project_id", "ls_runtime_task_id", "worker_id", "task_id", "base_task_id", "condition", "dataset_group", "annotation_id", "canonical_annotation_id", "response_hash", "source_export_sha256", "annotation_version_id", "assigned_expected", "outside_assignment_submission", "canonical_eligibility_status", "eligible_independent_evidence", "r_u_evidence_classification", "r_u_evidence_included", "r_u_evidence_exclusion_reason", "task_final_scope", "task_outcome_adjudication_status", "duplicate_review_status", "duplicate_decision", "independence_status", "process_evaluable", "process_failure_observed", "geometry_valid", "scope_reference_mode", "geometry_reference_mode", "reference_identity", "reference_worker_excluded", "geometry_reference_status", "reference_evidence_status", "r_u_metric_name", "r_u_metric_value", "r_u_metric_direction", "r_u_normalization_rule", "r_u_score_status", "r_u_score_source", "r_u_score_or_outcome"]
+    r_u_fields += ["r_u_reference_mode", "r_u_reference_identity", "r_u_reference_sha256", "r_u_reference_excludes_worker", "r_u_reference_support"]
     write_csv(r_u_evidence_csv, rows, r_u_fields)
 
     quality_df = pd.DataFrame(rows, columns=QUALITY_FIELDS)
@@ -709,6 +722,9 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
     included_worker_tasks = [(safe(row.get("project_id")), safe(row.get("ls_runtime_task_id")), safe(row.get("worker_id"))) for row in rows if truthy(row.get("r_u_evidence_included"))]
     if len(included_worker_tasks) != len(set(included_worker_tasks)):
         blockers.append("formal_r_u_included_worker_task_duplicate")
+    included_references = [(safe(row.get("project_id")), safe(row.get("ls_runtime_task_id")), safe(row.get("r_u_reference_identity"))) for row in rows if truthy(row.get("r_u_evidence_included"))]
+    if len(included_references) != len(set(included_references)):
+        blockers.append("formal_r_u_reference_not_worker_specific")
     if input_status == "formal" and harmonization_summary.get("amendment_complete") is False:
         blockers.append("amendment_contract_incomplete")
     summary = {
