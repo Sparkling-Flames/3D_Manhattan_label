@@ -1,0 +1,40 @@
+{
+  "manifest_id": "sequential_routing_candidate_rule_manifest_v2",
+  "schema_version": "v2",
+  "rule_version": "temporal_routing_replay_v3",
+  "status": "candidate_only",
+  "replay_task_key": ["base_task_id", "condition"],
+  "event_evidence_key": ["canonical_annotation_id", "tag_family", "tag_name"],
+  "event_ledger_version": "temporal_event_ledger_v2",
+  "task_states": ["OPEN", "COMPLETE", "UNRESOLVED"],
+  "terminal_state_rule": "first_terminal_batch_freezes_primary_state;later_events_are_audit_only",
+  "primary_support_unit": "unique_eligible_independent_worker",
+  "arrival_order_contract": "task_condition_canonical_utc_timestamp_plus_only_policy_trusted_sequence",
+  "primary_tie_policy": "simultaneous_atomic_batch",
+  "sensitivity_tie_policies": ["annotation_id_ascending", "annotation_id_descending", "seeded_random_100"],
+  "sensitivity_seed": 20260714,
+  "frozen_inputs": ["event_ledger", "task_purpose_manifest", "candidate_roster_manifest", "assignment_history", "fold_policy_manifest", "family_policy_artifacts"],
+  "risk_bucket_enum": ["low_risk", "high_risk", "stress"],
+  "required_contracts": [
+    "event_key_uniqueness_valid",
+    "event_coverage_complete",
+    "annotation_tag_atomicity_valid",
+    "batch_atomicity_valid",
+    "arrival_order_contract_valid",
+    "task_purpose_manifest_valid",
+    "candidate_pool_binding_valid",
+    "risk_bucket_valid",
+    "family_gate_contract_valid",
+    "task_completion_contract_valid",
+    "no_future_scope_leakage"
+  ],
+  "formal_outputs": [
+    "routing_temporal_event_audit_C1.csv",
+    "routing_temporal_batch_decisions_C1.csv",
+    "routing_temporal_task_summary_C1.csv",
+    "routing_temporal_order_sensitivity_C1.csv",
+    "routing_temporal_contract_summary_C1.json"
+  ],
+  "formal_assignment_generated": false,
+  "interpretation_allowed": false
+}

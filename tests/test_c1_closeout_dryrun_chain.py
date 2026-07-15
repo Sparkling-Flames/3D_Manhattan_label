@@ -119,6 +119,8 @@ def test_dryrun_chain_passes_p1_artifacts_read_only_to_sidecar(tmp_path: Path) -
 
     assert sidecar_summary["input_p1_artifacts"] == [str(p1)]
     assert summary["p1_descriptive_directional_check_status"] == sidecar_summary["p1_descriptive_directional_check_status"]
+    bundled = {Path(item["path"]).resolve() for item in summary["closeout_input_bundle"]["artifacts"]}
+    assert p1.resolve() in bundled
 
 
 def test_quality_table_blocker_blocks_launch(tmp_path: Path) -> None:

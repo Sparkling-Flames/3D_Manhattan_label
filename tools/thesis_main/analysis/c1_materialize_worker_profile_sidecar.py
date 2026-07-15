@@ -714,6 +714,13 @@ def build_p1_evidence_rows(
         geometry_ok = bool(score_value) and not process_failure
         base = {
                 "worker_id": worker,
+                "canonical_eligibility_status": safe(row.get("canonical_eligibility_status")),
+                "assigned_expected": safe(row.get("assigned_expected")),
+                "outside_assignment_submission": safe(row.get("outside_assignment_submission")),
+                "duplicate_worker_task_submission": safe(row.get("duplicate_worker_task_submission")),
+                "parse_error": safe(row.get("parse_error")),
+                "schema_interpretable": safe(row.get("schema_interpretable")),
+                "schema_error": safe(row.get("schema_error")),
                 "round_id": "P1",
                 "task_id": safe(row.get("task_id")),
                 "base_task_id": safe(row.get("base_task_id")),

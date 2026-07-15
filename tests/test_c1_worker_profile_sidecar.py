@@ -4,7 +4,7 @@ import csv
 import json
 from pathlib import Path
 
-from tools.thesis_main.analysis.c1_materialize_worker_profile_sidecar import build_p1_worker_dimension_readiness, materialize
+from tools.thesis_main.analysis.c1_materialize_worker_profile_sidecar import _unique_process_rows, build_p1_evidence_rows, build_p1_worker_dimension_readiness, materialize
 
 
 def _csv(path: Path, fields: list[str], rows: list[dict]) -> None:
@@ -21,6 +21,25 @@ def _csv(path: Path, fields: list[str], rows: list[dict]) -> None:
 
 def _rows(path: Path) -> list[dict[str, str]]:
     return list(csv.DictReader(path.open(encoding="utf-8")))
+
+
+def test_p1_process_capability_preserves_unified_eligibility_fields() -> None:
+    base = {
+        "worker_id": "w1", "task_id": "t1", "annotation_id": "a1", "process_evaluable": "true",
+        "process_failure_observed": "false", "canonical_eligibility_status": "valid", "independence_status": "independent",
+        "assigned_expected": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false",
+        "schema_interpretable": "true", "parse_error": "", "schema_error": "",
+    }
+    eligible = build_p1_evidence_rows([base])
+    process = next(row for row in eligible if row["family"] == "process_failure")
+    assert process["included_in_process_reliability"] is True
+    assert process["family_included_in_denominator"] is True
+    assert len(_unique_process_rows(eligible)) == 1
+    forensic = build_p1_evidence_rows([{**base, "independence_status": "non_independent_confirmed"}])
+    forensic_process = next(row for row in forensic if row["family"] == "process_failure")
+    assert forensic_process["included_in_process_reliability"] is False
+    assert forensic_process["family_included_in_denominator"] is False
+    assert _unique_process_rows(forensic) == []
 
 
 def test_worker_profile_sidecar_keeps_dual_chain_boundaries(tmp_path: Path) -> None:

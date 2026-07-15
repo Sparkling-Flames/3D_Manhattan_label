@@ -6,12 +6,12 @@ from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.geometry_consensus.pairwise import cyclic_order_correspondence
+from tools.thesis_main.analysis.geometry_consensus.pairwise import cyclic_order_correspondence, pairwise_similarity
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
 from tools.thesis_main.analysis.geometry_consensus.stability import stability_summary
 from tools.thesis_main.analysis.materialize_model_issue_harmonization import _validate_amendments
 from tools.thesis_main.analysis.routing.temporal_replay import _fold_for_base, _load_policy_manifest, _validate_policy
-from tools.thesis_main.analysis.run_c1_closeout_dryrun_chain import _formal_worker_state, build_gate_summary, finalize_existing_closeout
+from tools.thesis_main.analysis.run_c1_closeout_dryrun_chain import _formal_worker_state, _temporal_valid, build_gate_summary, finalize_existing_closeout
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file, sha256_json
 
 
@@ -95,6 +95,12 @@ def test_geometry_medoid_tie_and_high_k_is_non_recursive() -> None:
     assert result["valid_k"] == 22
     score_table = json.loads(result["medoid_score_table_json"])
     assert len(score_table) == 22
+    records = [_record(f"w{i}", i % 5, i) for i in range(22)]
+    worker = records[7]
+    pair_scores = [pairwise_similarity(worker["geometry"], peer["geometry"], grid=32) for peer in records if peer["worker_id"] != worker["worker_id"]]
+    score = next(row for row in score_table if row["worker_id"] == worker["worker_id"])
+    assert score["boundary_score"] == pytest.approx(sum(row["boundary_similarity"] for row in pair_scores) / len(pair_scores))
+    assert score["wallwall_score"] == pytest.approx(sum(row["wallwall_similarity"] for row in pair_scores) / len(pair_scores))
     boundary_best = max(score_table, key=lambda row: row["boundary_score"])
     wallwall_best = max(score_table, key=lambda row: row["wallwall_score"])
     if result["medoid_boundary_ambiguous"]:
@@ -111,16 +117,23 @@ def test_geometry_medoid_tie_and_high_k_is_non_recursive() -> None:
 
 def test_policy_manifest_relative_path_and_tampering(tmp_path) -> None:
     artifact = tmp_path / "policy.json"
-    artifact.write_text('{"meta_min_same_state":2,"meta_max_opposition":0,"max_unasserted_rate":0.25,"min_q_boundary":0.8,"min_q_wallwall":0.8}', encoding="utf-8")
+    artifact.write_text('{"trusted_order_sources":[]}', encoding="utf-8")
     fit_base = next(value for value in (f"fit-{i}" for i in range(100)) if _fold_for_base(value, 2) == 1)
     manifest = tmp_path / "manifest.json"
     manifest.write_text(json.dumps({"0": {"policy_artifact_id": "p0", "policy_artifact_path": "policy.json", "policy_artifact_sha256": sha256_file(artifact), "rule_version": "r1", "fit_folds": [1], "fit_base_task_ids": [fit_base]}}), encoding="utf-8")
     policy = _load_policy_manifest(manifest)[0]
     assert policy["policy_artifact_path"] == str(artifact.resolve())
-    assert _validate_policy(policy, 0, 2)["policy_validation_status"] == "verified"
+    assert _validate_policy(policy, 0, 2)["trusted_order_sources"] == []
     artifact.write_text('{"tampered":true}', encoding="utf-8")
-    with pytest.raises(ValueError, match="SHA256"):
+    with pytest.raises(ValueError, match="SHA"):
         _validate_policy(policy, 0, 2)
+
+
+def test_policy_manifest_rejects_equivalent_numeric_fold_keys(tmp_path) -> None:
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text('{"0": {}, "00": {}}', encoding="utf-8")
+    with pytest.raises(ValueError, match="duplicate numeric fold"):
+        _load_policy_manifest(manifest)
 
 
 def test_formal_gate_requires_separate_adjudication_manifest(tmp_path) -> None:
@@ -170,6 +183,15 @@ def test_formal_worker_state_manifest_verifies_frozen_external_input(tmp_path) -
     assert _formal_worker_state(state, manifest, **kwargs)["valid"] is True
 
 
+def test_formal_worker_state_resolves_dependency_paths_from_manifest_directory(tmp_path) -> None:
+    state, manifest, evidence, kwargs = _formal_worker_fixture(tmp_path)
+    payload = json.loads(manifest.read_text(encoding="utf-8"))
+    payload["dependencies"] = [{"path": path.name, "sha256": sha256_file(path)} for path in evidence]
+    payload["dependency_bundle_id"] = sha256_json({"rule_version": payload["rule_version"], "dependencies": sorted(payload["dependencies"], key=lambda item: item["path"])})
+    manifest.write_text(json.dumps(payload), encoding="utf-8")
+    assert _formal_worker_state(state, manifest, **kwargs)["valid"] is True
+
+
 def test_formal_gate_stays_blocked_until_profile_is_frozen(tmp_path) -> None:
     profile = tmp_path / "profile.json"
     profile.write_text("{}", encoding="utf-8")
@@ -199,12 +221,16 @@ def test_finalize_existing_closeout_binds_adjudication_without_rerunning_inputs(
     state, manifest, evidence, kwargs = _formal_worker_fixture(tmp_path)
     verified = _formal_worker_state(state, manifest, **kwargs)
     profile = tmp_path / "profile.json"; profile.write_text("{}", encoding="utf-8")
-    artifacts = [state, manifest, profile, *evidence]
+    contract_fields = ("event_key_uniqueness_valid", "event_coverage_complete", "annotation_tag_atomicity_valid", "batch_atomicity_valid", "arrival_order_contract_valid", "task_purpose_manifest_valid", "candidate_pool_binding_valid", "risk_bucket_valid", "family_gate_contract_valid", "task_completion_contract_valid", "no_future_scope_leakage")
+    contract_results = {field: {"valid": True, "checked_count": 1, "failure_count": 0, "failure_reasons": {}, "evidence_artifact": "ledger.csv"} for field in contract_fields}
+    temporal_contract = {"status": "formal_replay_audit_complete", "full_stop_contract_valid": True, **{field: True for field in contract_fields}, "contract_results": contract_results, "n_events": 1, "n_primary_annotations": 1, "all_events_legal": True, "prior_state_monotonicity": True, "worker_identity_consistent": True, "policy_dependency_valid": True, "n_nonzero_assertions": 1, "illegal_event_reasons": {}}
+    temporal_path = tmp_path / "routing_temporal_contract_summary_C1.json"
+    temporal_path.write_text(json.dumps(temporal_contract), encoding="utf-8")
+    artifacts = [state, manifest, profile, temporal_path, *evidence]
     bundle = {"bundle_version": "v1", "artifacts": [{"path": str(path), "exists": True, "sha256": sha256_file(path)} for path in artifacts]}
     bundle["bundle_sha256"] = __import__("hashlib").sha256(json.dumps(bundle["artifacts"], sort_keys=True).encode("utf-8")).hexdigest()
     (tmp_path / "c1_closeout_input_bundle.json").write_text(json.dumps(bundle), encoding="utf-8")
-    temporal_contract = {field: True for field in ("event_key_uniqueness_valid", "event_coverage_complete", "annotation_tag_atomicity_valid", "batch_atomicity_valid", "arrival_order_contract_valid", "task_purpose_manifest_valid", "candidate_pool_binding_valid", "risk_bucket_valid", "family_gate_contract_valid", "task_completion_contract_valid", "no_future_scope_leakage")}
-    (tmp_path / "c1_closeout_dryrun_gate_summary.json").write_text(json.dumps({"input_status": "formal", "raw_snapshot_manifest_fresh": True, "artifacts_fresh": True, "quality_table_blockers": [], "quality_table_summary": {"n_quality_rows": 1, "amendment_blocker_count": 0}, "canonicalization_summary": {"structural_integrity_passed": True, "collection_completeness_passed": True, "blockers": []}, "formal_worker_state": verified, "r_u_estimated": True, "full_profile_ready": True, "profile_sidecar_generated": True, "profile_summary_path": str(profile), "profile_freeze_status": "C1_provisional", "pending_adjudication_count": 0, "worker_state_summary": {"r_u_freeze": True}, "c2_draft_summary": {"c2_freeze": True}, "dt_backflow": False, "formal_inputs_present": True, "vfinal_sidecars": {"routing_temporal_replay": {"status": "candidate_only", "full_stop_contract_valid": True, **temporal_contract, "n_events": 1, "all_events_legal": True, "prior_state_monotonicity": True, "worker_identity_consistent": True, "policy_dependency_valid": True, "n_nonzero_assertions": 1, "illegal_event_reasons": {}}}}), encoding="utf-8")
+    (tmp_path / "c1_closeout_dryrun_gate_summary.json").write_text(json.dumps({"input_status": "formal", "raw_snapshot_manifest_fresh": True, "artifacts_fresh": True, "quality_table_blockers": [], "quality_table_summary": {"n_quality_rows": 1, "amendment_blocker_count": 0}, "canonicalization_summary": {"structural_integrity_passed": True, "collection_completeness_passed": True, "blockers": []}, "formal_worker_state": verified, "r_u_estimated": True, "full_profile_ready": True, "profile_sidecar_generated": True, "profile_summary_path": str(profile), "profile_freeze_status": "C1_provisional", "pending_adjudication_count": 0, "worker_state_summary": {"r_u_freeze": True}, "c2_draft_summary": {"c2_freeze": True}, "dt_backflow": False, "formal_inputs_present": True, "vfinal_sidecars": {"routing_temporal_replay": temporal_contract}}), encoding="utf-8")
     adjudication = {"status": "approved", "approved": True, "manifest_id": "m1", "approved_by": "reviewer", "approved_at": "2026-07-14T00:00:00Z", "input_bundle_sha256": bundle["bundle_sha256"]}
     adjudication_path = tmp_path / "adjudication.json"
     adjudication_path.write_text(json.dumps(adjudication), encoding="utf-8")
@@ -213,5 +239,30 @@ def test_finalize_existing_closeout_binds_adjudication_without_rerunning_inputs(
     assert result["formal_closeout_ready"] is True
     assert result["blocked_for_launch"] is False
     assert result["blockers"] == []
+    assert result["analysis_contract_ready"] is True
+    assert result["passed_semantics"] == "formal_closeout_ready"
+    assert result["finalization"]["status"] == "approved_frozen"
+    assert result["finalization"]["blockers"] == []
     assert result["profile_freeze_status"] == "C1_frozen"
     assert (tmp_path / "worker_profile_freeze_C1.json").exists()
+
+
+def test_temporal_formal_gate_accepts_scope_only_primary_evidence() -> None:
+    contract_fields = (
+        "event_key_uniqueness_valid", "event_coverage_complete", "annotation_tag_atomicity_valid",
+        "batch_atomicity_valid", "arrival_order_contract_valid", "task_purpose_manifest_valid",
+        "candidate_pool_binding_valid", "risk_bucket_valid", "family_gate_contract_valid",
+        "task_completion_contract_valid", "no_future_scope_leakage",
+    )
+    contract_results = {
+        field: {"valid": True, "checked_count": 1, "failure_count": 0, "failure_reasons": {}, "evidence_artifact": "ledger.csv"}
+        for field in contract_fields
+    }
+    temporal = {
+        "status": "formal_replay_audit_complete", "full_stop_contract_valid": True,
+        **{field: True for field in contract_fields}, "contract_results": contract_results,
+        "n_events": 1, "n_primary_annotations": 1, "n_tag_state_events": 0,
+        "n_nonzero_assertions": 0, "all_events_legal": True, "prior_state_monotonicity": True,
+        "worker_identity_consistent": True, "policy_dependency_valid": True, "illegal_event_reasons": {},
+    }
+    assert _temporal_valid({"vfinal_sidecars": {"routing_temporal_replay": temporal}}) is True
