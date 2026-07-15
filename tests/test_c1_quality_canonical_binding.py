@@ -115,12 +115,16 @@ def test_formal_r_u_accepts_worker_excluded_reference_only_with_explicit_exclusi
         "r_u_score_status": "valid", "r_u_metric_name": "iou_to_consensus_loo", "r_u_metric_value": "0.5",
         "r_u_metric_direction": "higher_is_better", "r_u_normalization_rule": "identity_0_1",
         "r_u_score_source": "frozen-score.csv",
+        "r_u_reference_mode": "worker_excluded_loo_consensus", "r_u_reference_identity": "loo-w1-t1",
+        "r_u_reference_sha256": "a" * 64, "r_u_reference_excludes_worker": "true", "r_u_reference_support": "2",
     }
     included, reason = _r_u_evidence({**base, "reference_worker_excluded": "true"}, formal_score_required=True)
     assert included is True, reason
     included, reason = _r_u_evidence({**base, "reference_worker_excluded": "false"}, formal_score_required=True)
+    assert included is True, reason  # task-level expert reference is independent of the R_u LOO reference
+    included, reason = _r_u_evidence({**base, "r_u_reference_excludes_worker": "false"}, formal_score_required=True)
     assert included is False
-    assert "reference_includes_worker" in reason
+    assert "r_u_reference_includes_worker" in reason
 
 
 def test_formal_r_u_legal_exclusions_are_classified_without_score_blocker() -> None:

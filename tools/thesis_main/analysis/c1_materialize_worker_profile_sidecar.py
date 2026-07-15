@@ -1699,6 +1699,8 @@ def materialize(
         "p1_diagnostic_evidence_complete": not bool(p1_readiness.get("pending_adjudication_count")),
         "c1_profile_evidence_classified": c1_profile_evidence_classified,
         "c1_profile_pending_adjudication_count": len(c1_pending),
+        "c1_pending_adjudication_count": len(c1_pending),
+        "p1_pending_adjudication_count": int(p1_readiness.get("pending_adjudication_count") or 0),
         "pending_adjudication_count": int(p1_readiness.get("pending_adjudication_count") or 0) + len(c1_pending),
         "c1_support_sufficient": all(row.get("calib_support_status") != "insufficient" for row in main),  # deprecated compatibility alias
         "c1_r_u_support_sufficient": all(row.get("calib_support_status") != "insufficient" for row in main),

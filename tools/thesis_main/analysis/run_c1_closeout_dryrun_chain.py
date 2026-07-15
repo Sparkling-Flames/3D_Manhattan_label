@@ -117,19 +117,25 @@ def _formal_worker_state(csv_path: Path | None, manifest_path: Path | None, *, c
     evidence_rows = list(csv.DictReader(r_u_evidence_csv.open(encoding="utf-8-sig"))) if r_u_evidence_csv and r_u_evidence_csv.exists() else []
     expected_support: dict[str, int] = {}
     included_identities: list[tuple[str, str, str]] = []
+    included_reference_identities: list[tuple[str, str, str]] = []
     evidence_contract_valid = True
     for row in evidence_rows:
         if truthy(row.get("r_u_evidence_included")):
             worker = safe(row.get("worker_id"))
             expected_support[worker] = expected_support.get(worker, 0) + 1
             included_identities.append((safe(row.get("project_id")), safe(row.get("ls_runtime_task_id")), worker))
+            included_reference_identities.append((safe(row.get("project_id")), safe(row.get("ls_runtime_task_id")), safe(row.get("r_u_reference_identity"))))
             try:
                 value = float(row.get("r_u_metric_value"))
                 evidence_contract_valid &= math.isfinite(value) and 0 <= value <= 1
+                reference_support = int(row.get("r_u_reference_support") or 0)
             except (TypeError, ValueError):
                 evidence_contract_valid = False
-            evidence_contract_valid &= all(included_identities[-1]) and safe(row.get("r_u_evidence_classification")) == "included" and safe(row.get("r_u_metric_name")) == "iou_to_consensus_loo" and safe(row.get("r_u_metric_direction")) == "higher_is_better" and safe(row.get("r_u_normalization_rule")) == "identity_0_1" and safe(row.get("r_u_score_status")) == "valid" and bool(safe(row.get("r_u_score_source")))
+                reference_support = 0
+            reference_sha = safe(row.get("r_u_reference_sha256")).lower()
+            evidence_contract_valid &= all(included_identities[-1]) and safe(row.get("r_u_evidence_classification")) == "included" and safe(row.get("r_u_metric_name")) == "iou_to_consensus_loo" and safe(row.get("r_u_metric_direction")) == "higher_is_better" and safe(row.get("r_u_normalization_rule")) == "identity_0_1" and safe(row.get("r_u_score_status")) == "valid" and bool(safe(row.get("r_u_score_source"))) and safe(row.get("r_u_reference_mode")) == "worker_excluded_loo_consensus" and bool(safe(row.get("r_u_reference_identity"))) and len(reference_sha) == 64 and all(char in "0123456789abcdef" for char in reference_sha) and truthy(row.get("r_u_reference_excludes_worker")) and reference_support >= 2
     evidence_contract_valid &= len(included_identities) == len(set(included_identities))
+    evidence_contract_valid &= len(included_reference_identities) == len(set(included_reference_identities))
     worker_ids = [safe(row.get("worker_id")) for row in rows]
     expected_roster = ({safe(worker) for worker in expected_worker_ids if safe(worker)} if expected_worker_ids is not None else set(expected_support))
     roster_valid = bool(expected_roster) and all(worker_ids) and len(worker_ids) == len(set(worker_ids)) and set(worker_ids) == expected_roster
@@ -242,7 +248,7 @@ def _profile_freeze_preconditions(summary: dict[str, Any]) -> bool:
         and summary.get("c1_duplicate_review_complete") and summary.get("c1_task_outcome_adjudication_complete")
         and summary.get("c1_profile_evidence_classified")
         and summary.get("r_u_support_consistent")
-        and summary.get("artifacts_fresh") and summary.get("pending_adjudication_count", 0) == 0 and _temporal_valid(summary)
+        and summary.get("artifacts_fresh") and summary.get("c1_pending_adjudication_count", 0) == 0 and _temporal_valid(summary)
         and summary.get("r_u_estimated") and summary.get("c1_profile_evidence_complete") and summary.get("profile_sidecar_generated")
         and summary.get("formal_worker_state", {}).get("valid") and adjudication.get("valid") and profile_path.exists() and profile_bound
     )
@@ -375,7 +381,7 @@ def _blockers(summary: dict[str, Any]) -> list[str]:
             blockers.append("formal_temporal_contract_invalid")
         if not summary.get("c1_profile_evidence_complete"):
             blockers.append("worker_profile_preconditions_incomplete")
-        if int(summary.get("pending_adjudication_count") or 0):
+        if int(summary.get("c1_pending_adjudication_count") or 0):
             blockers.append("pending_profile_adjudication")
     if not summary.get("formal_adjudication", {}).get("valid"):
         blockers.append("formal_closeout_adjudication_missing_invalid_or_stale")
@@ -437,6 +443,8 @@ def build_gate_summary(
         "c1_r_u_support_sufficient": truthy(worker_profile_sidecar_summary.get("c1_r_u_support_sufficient", worker_profile_sidecar_summary.get("c1_support_sufficient"))),
         "r_u_support_consistent": (formal_worker_state or {}).get("support_by_worker", {}) == {worker: int(count or 0) for worker, count in worker_profile_sidecar_summary.get("r_u_support_by_worker", {}).items()},
         "pending_adjudication_count": int(worker_profile_sidecar_summary.get("pending_adjudication_count") or 0),
+        "c1_pending_adjudication_count": int(worker_profile_sidecar_summary.get("c1_pending_adjudication_count") or 0),
+        "p1_pending_adjudication_count": int(worker_profile_sidecar_summary.get("p1_pending_adjudication_count") or 0),
         "structural_contract_valid": bool(quality_table_summary.get("canonical_meta_fresh")) and not quality_table_summary.get("blockers"),
         "formal_inputs_present": input_status == "formal" and bool(quality_table_summary.get("canonical_meta_fresh")),
         "artifacts_fresh": bool((artifact_freshness or {}).get("fresh")),
