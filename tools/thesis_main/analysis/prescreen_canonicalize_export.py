@@ -227,11 +227,6 @@ def _geometry(annotation: dict[str, Any], round_px: float) -> tuple[str, str, in
         return "", "", 0, str(exc)
 
 
-def _canonical_id(project_id: str, task_id: str, worker_id: str) -> str:
-    payload = f"{project_id}|{task_id}|{worker_id}".encode("utf-8")
-    return hashlib.sha1(payload).hexdigest()[:16]
-
-
 def _lead_time_value(row: dict[str, Any]) -> float:
     try:
         return float(row.get("lead_time_seconds") or 0)
@@ -339,8 +334,17 @@ def build_canonical_tables(
             for row in candidates:
                 _set_active_fields(row, active_times, allow_task_level_fallback=False)
         distinct_annotation_ids = len({r["annotation_id"] for r in candidates}) > 1
-        distinct_versions = len({(r["annotation_id"], r["response_hash"]) for r in candidates}) > 1
         review_required = duplicate_review_mode and (distinct_annotation_ids or annotation_id_payload_conflict)
+        for item in rows:
+            item["annotation_version_id"] = annotation_version_id(
+                annotation_version_identity(
+                    round_id, project_id, task_id, worker_id, item["annotation_id"],
+                    item["response_hash"], item["source_export_sha256"],
+                )
+            )
+        duplicate_version_set_sha256 = hashlib.sha256(
+            json.dumps(sorted({item["annotation_version_id"] for item in rows}), separators=(",", ":")).encode("utf-8")
+        ).hexdigest()
         decision = duplicate_decisions.get((project_id, task_id, worker_id), {})
         decision_name = _safe_str(decision.get("decision")).lower()
         selected_id = _safe_str(decision.get("selected_annotation_id"))
@@ -353,6 +357,7 @@ def build_canonical_tables(
         decision_contract_valid = not human_reviewed or (
             _safe_str(decision.get("round_id")) == round_id
             and decision_group_ids == set(by_annotation)
+            and _safe_str(decision.get("duplicate_version_set_sha256")) == duplicate_version_set_sha256
             and process_disposition in {"no_process_penalty", "warning_only", "worker_process_failure", "forensic_only", "not_evaluable"}
             and timing_disposition in {"selected_annotation_exact_time", "annotation_level_exact_time", "timing_not_evaluable"}
         )
@@ -392,10 +397,11 @@ def build_canonical_tables(
                     "n_distinct_response_hashes": len({r["response_hash"] for r in candidates}), "repeated_export_row_count": repeated_export_count,
                     "duplicate_review_status": review_status, "duplicate_decision": decision_name, "selected_annotation_id": selected_id,
                     "selected_response_hash": selected_hash, "selected_source_export_sha256": selected_export_sha,
+                    "duplicate_version_set_sha256": duplicate_version_set_sha256,
                     "reviewed_by": _safe_str(decision.get("reviewed_by")), "reviewed_at": _safe_str(decision.get("reviewed_at")),
                     "process_disposition": process_disposition, "timing_disposition": timing_disposition,
                         "decision_contract_valid": "true" if decision_contract_valid else "false",
-                    "version_rows_json": json.dumps([{key: item.get(key, "") for key in ("round_id", "project_id", "task_id", "worker_id", "annotation_id", "response_hash", "source_export", "source_export_sha256", "geometry_hash", "n_corners", "active_time", "active_time_match_status", "lead_time_seconds")} for item in rows], ensure_ascii=False, sort_keys=True),
+                    "version_rows_json": json.dumps([{key: item.get(key, "") for key in ("round_id", "project_id", "task_id", "worker_id", "annotation_id", "response_hash", "source_export", "source_export_sha256", "annotation_version_id", "geometry_hash", "n_corners", "active_time", "active_time_match_status", "lead_time_seconds")} for item in rows], ensure_ascii=False, sort_keys=True),
                     "duplicate_time_ambiguous": time_ambiguous, "lead_time_policy": "never_selects_or_merges_in_manual_review_mode" if duplicate_review_mode else "canonical_only_not_summed",
                 }
             )
@@ -413,6 +419,10 @@ def build_canonical_tables(
                 "duplicate_time_ambiguous": duplicate_time_ambiguous,
                 "duplicate_review_status": review_status,
                 "duplicate_decision": decision_name,
+                "process_disposition": process_disposition,
+                "timing_disposition": timing_disposition,
+                "reviewed_by": _safe_str(decision.get("reviewed_by")),
+                "reviewed_at": _safe_str(decision.get("reviewed_at")),
                 "selected_response_hash": selected_hash,
                 "selected_source_export_sha256": selected_export_sha,
                 "eligible_for_primary_analysis": not review_required or resolved,

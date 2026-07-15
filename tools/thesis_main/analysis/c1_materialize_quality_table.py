@@ -115,6 +115,7 @@ QUALITY_FIELDS = [
     "used_for_r_u",
     "used_for_r_u_source_status",
     "r_u_evidence_included",
+    "r_u_evidence_classification",
     "r_u_evidence_exclusion_reason",
     "r_u_score_or_outcome",
     "r_u_metric_name",
@@ -472,8 +473,14 @@ def _scope_outcome(worker_response: str, final_scope: str) -> str:
 
 
 def _r_u_evidence(row: dict[str, Any], *, formal_score_required: bool = False) -> tuple[bool, str]:
-    checks = [
-        (truthy(row.get("used_for_r_u")), "not_protocol_r_u_candidate"),
+    classification, reasons = _classify_r_u_evidence(row, formal_score_required=formal_score_required)
+    return classification == "included", ";".join(reasons)
+
+
+def _classify_r_u_evidence(row: dict[str, Any], *, formal_score_required: bool = False) -> tuple[str, list[str]]:
+    if not truthy(row.get("used_for_r_u")):
+        return "excluded", ["not_protocol_r_u_candidate"]
+    base_checks = [
         (safe(row.get("task_outcome_adjudication_status")) in {"approved", "resolved"}, "task_outcome_pending"),
         (safe(row.get("task_final_scope")) == "in_scope", "not_in_scope"),
         (safe(row.get("condition")) == "manual", "not_manual"),
@@ -483,6 +490,11 @@ def _r_u_evidence(row: dict[str, Any], *, formal_score_required: bool = False) -
         (safe(row.get("duplicate_review_status")) in {"not_required", "resolved", "auto_resolved_input_duplicate"}, "duplicate_review_pending"),
         (truthy(row.get("eligible_independent_evidence")), "canonical_or_independence_ineligible"),
     ]
+    base_reasons = [reason for passed, reason in base_checks if not passed]
+    if "task_outcome_pending" in base_reasons or "duplicate_review_pending" in base_reasons:
+        return "pending_adjudication", base_reasons
+    if base_reasons:
+        return "excluded", base_reasons
     if formal_score_required:
         reference_status = safe(row.get("geometry_reference_status"))
         reference_excludes_worker = (
@@ -490,25 +502,24 @@ def _r_u_evidence(row: dict[str, Any], *, formal_score_required: bool = False) -
             if reference_status in {"worker_excluded_loo_consensus", "global_consensus_fallback"}
             else safe(row.get("reference_worker_excluded")) in {"false", "0", "no"}
         )
-        checks.extend(
-            [
-                (reference_excludes_worker, "reference_includes_worker"),
-                (bool(safe(row.get("reference_identity"))), "reference_identity_missing"),
-                (safe(row.get("reference_evidence_status")) in {"evaluable", "valid", "adjudicated", "not_required"}, "reference_evidence_not_valid"),
-            ]
-        )
+        score_checks = [(reference_excludes_worker, "reference_includes_worker"), (bool(safe(row.get("reference_identity"))), "reference_identity_missing"), (safe(row.get("reference_evidence_status")) in {"evaluable", "valid", "adjudicated", "not_required"}, "reference_evidence_not_valid")]
         try:
             score_finite = bool(safe(row.get("r_u_metric_value"))) and math.isfinite(float(row.get("r_u_metric_value")))
         except (TypeError, ValueError):
             score_finite = False
-        checks.extend(
-            [
-                (safe(row.get("r_u_score_status")) in {"evaluable", "valid"}, "r_u_score_not_evaluable"),
-                (bool(safe(row.get("r_u_metric_name")) and score_finite and safe(row.get("r_u_score_source"))), "r_u_score_missing_or_nonfinite"),
-            ]
-        )
-    reasons = [reason for passed, reason in checks if not passed]
-    return not reasons, ";".join(reasons)
+        score_value_in_range = score_finite and 0 <= float(row.get("r_u_metric_value")) <= 1
+        score_checks.extend([
+            (safe(row.get("r_u_score_status")) == "valid", "r_u_score_not_valid"),
+            (safe(row.get("r_u_metric_name")) == "iou_to_consensus_loo", "r_u_metric_name_invalid"),
+            (safe(row.get("r_u_metric_direction")) == "higher_is_better", "r_u_metric_direction_invalid"),
+            (safe(row.get("r_u_normalization_rule")) == "identity_0_1", "r_u_normalization_rule_invalid"),
+            (score_value_in_range, "r_u_score_missing_nonfinite_or_out_of_range"),
+            (bool(safe(row.get("r_u_score_source"))), "r_u_score_source_missing"),
+        ])
+        score_reasons = [reason for passed, reason in score_checks if not passed]
+        if score_reasons:
+            return "invalid_score_contract", score_reasons
+    return "included", []
 
 
 def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, candidate_inventory_csv: Path | None = DEFAULT_CORE_DRAFT, *, input_status: str = "dry_run", task_outcome_csv: Path | None = None, r_u_scoring_evidence_csv: Path | None = None) -> dict[str, Any]:
@@ -601,9 +612,9 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         outcome = outcomes.get(_outcome_exact_key(row))
         if outcome is None:
             legacy_matches = legacy_outcomes.get(_outcome_legacy_key(row), [])
-            if len(legacy_matches) == 1:
+            if input_status != "formal" and len(legacy_matches) == 1:
                 outcome = legacy_matches[0]
-            elif len(legacy_matches) > 1:
+            elif legacy_matches:
                 outcome_blockers.append("task_outcome_legacy_identity_ambiguous")
         outcome = outcome or {}
         row["task_final_scope"] = safe(outcome.get("final_scope"))
@@ -618,8 +629,10 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         row["task_outcome_adjudication_status"] = safe(outcome.get("adjudication_status")) or "pending"
         row["worker_scope_response"] = _choice(row, "scope")
         row["worker_scope_outcome"] = _scope_outcome(row["worker_scope_response"], row["task_final_scope"])
-        included, reason = _r_u_evidence(row, formal_score_required=input_status == "formal")
+        classification, reasons = _classify_r_u_evidence(row, formal_score_required=input_status == "formal")
+        included, reason = classification == "included", ";".join(reasons)
         row["r_u_evidence_included"], row["r_u_evidence_exclusion_reason"] = included, reason
+        row["r_u_evidence_classification"] = classification
     harmonization_csv = output_dir / "model_issue_harmonization_C1.csv"
     harmonization_summary_path = output_dir / "model_issue_harmonization_C1.summary.json"
     harmonization_summary = json.loads(harmonization_summary_path.read_text(encoding="utf-8")) if harmonization_summary_path.exists() else {}
@@ -671,7 +684,7 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         outcome_fields,
     )
     r_u_evidence_csv = output_dir / "calibration_r_u_evidence_C1.csv"
-    r_u_fields = ["project_id", "ls_runtime_task_id", "worker_id", "task_id", "base_task_id", "annotation_id", "canonical_annotation_id", "response_hash", "annotation_version_id", "r_u_evidence_included", "r_u_evidence_exclusion_reason", "task_final_scope", "duplicate_review_status", "independence_status", "process_evaluable", "scope_reference_mode", "geometry_reference_mode", "reference_identity", "reference_worker_excluded", "geometry_reference_status", "reference_evidence_status", "r_u_metric_name", "r_u_metric_value", "r_u_metric_direction", "r_u_normalization_rule", "r_u_score_status", "r_u_score_source", "r_u_score_or_outcome"]
+    r_u_fields = ["round_id", "project_id", "ls_runtime_task_id", "worker_id", "task_id", "base_task_id", "condition", "dataset_group", "annotation_id", "canonical_annotation_id", "response_hash", "source_export_sha256", "annotation_version_id", "assigned_expected", "outside_assignment_submission", "canonical_eligibility_status", "eligible_independent_evidence", "r_u_evidence_classification", "r_u_evidence_included", "r_u_evidence_exclusion_reason", "task_final_scope", "task_outcome_adjudication_status", "duplicate_review_status", "duplicate_decision", "independence_status", "process_evaluable", "process_failure_observed", "geometry_valid", "scope_reference_mode", "geometry_reference_mode", "reference_identity", "reference_worker_excluded", "geometry_reference_status", "reference_evidence_status", "r_u_metric_name", "r_u_metric_value", "r_u_metric_direction", "r_u_normalization_rule", "r_u_score_status", "r_u_score_source", "r_u_score_or_outcome"]
     write_csv(r_u_evidence_csv, rows, r_u_fields)
 
     quality_df = pd.DataFrame(rows, columns=QUALITY_FIELDS)
@@ -691,8 +704,11 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         blockers.append("independence_not_evaluable")
     if any(row["used_for_r_u_source_status"] == "missing_core_used_for_r_u_flag" for row in rows):
         blockers.append("missing_core_used_for_r_u_flag")
-    if input_status == "formal" and any(truthy(row.get("used_for_r_u")) and not truthy(row.get("r_u_evidence_included")) for row in rows):
+    if input_status == "formal" and any(safe(row.get("r_u_evidence_classification")) in {"pending_adjudication", "invalid_score_contract"} for row in rows):
         blockers.append("formal_r_u_evidence_incomplete")
+    included_worker_tasks = [(safe(row.get("project_id")), safe(row.get("ls_runtime_task_id")), safe(row.get("worker_id"))) for row in rows if truthy(row.get("r_u_evidence_included"))]
+    if len(included_worker_tasks) != len(set(included_worker_tasks)):
+        blockers.append("formal_r_u_included_worker_task_duplicate")
     if input_status == "formal" and harmonization_summary.get("amendment_complete") is False:
         blockers.append("amendment_contract_incomplete")
     summary = {

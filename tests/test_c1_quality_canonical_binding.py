@@ -112,7 +112,8 @@ def test_formal_r_u_accepts_worker_excluded_reference_only_with_explicit_exclusi
         "geometry_valid": "true", "process_evaluable": "true", "process_failure_observed": "false",
         "duplicate_review_status": "resolved", "eligible_independent_evidence": "true",
         "reference_identity": "loo-ref", "reference_evidence_status": "evaluable",
-        "r_u_score_status": "evaluable", "r_u_metric_name": "score", "r_u_metric_value": "0.5",
+        "r_u_score_status": "valid", "r_u_metric_name": "iou_to_consensus_loo", "r_u_metric_value": "0.5",
+        "r_u_metric_direction": "higher_is_better", "r_u_normalization_rule": "identity_0_1",
         "r_u_score_source": "frozen-score.csv",
     }
     included, reason = _r_u_evidence({**base, "reference_worker_excluded": "true"}, formal_score_required=True)
@@ -120,6 +121,19 @@ def test_formal_r_u_accepts_worker_excluded_reference_only_with_explicit_exclusi
     included, reason = _r_u_evidence({**base, "reference_worker_excluded": "false"}, formal_score_required=True)
     assert included is False
     assert "reference_includes_worker" in reason
+
+
+def test_formal_r_u_legal_exclusions_are_classified_without_score_blocker() -> None:
+    included, reason = _r_u_evidence({"used_for_r_u": "false", "task_outcome_adjudication_status": "pending"}, formal_score_required=True)
+    assert included is False
+    assert reason == "not_protocol_r_u_candidate"
+    included, reason = _r_u_evidence({
+        "used_for_r_u": "true", "task_outcome_adjudication_status": "approved", "task_final_scope": "oos",
+        "condition": "manual", "geometry_reference_status": "not_applicable", "duplicate_review_status": "resolved",
+    }, formal_score_required=True)
+    assert included is False
+    assert "not_in_scope" in reason
+    assert "r_u_score" not in reason
 
 
 def test_r_u_truth_count_matches_worker_state_and_profile_support(tmp_path: Path) -> None:

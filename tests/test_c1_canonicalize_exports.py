@@ -137,6 +137,10 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
     assert by_runtime["202"]["primary_active_time_eligible"] == "false"
     assert by_runtime["202"]["sensitivity_active_time_eligible"] == "true"
     assert "203" not in by_runtime
+    assert summary["canonical_evidence_sidecars"]["n_meta_observations"] == 3
+    dispositions = _read_csv(out / "c1_annotation_version_disposition.csv")
+    assert sum(row["version_disposition"] == "pending_review" for row in dispositions) == 2
+    assert summary["canonical_evidence_sidecars"]["canonical_registry_bijection_valid"] is True
     duplicate = _read_csv(out / "c1_duplicate_annotation_audit.csv")[0]
     assert duplicate["duplicate_review_status"] == "pending"
     assert duplicate["duplicate_geometry_type"] == "distinct_ids_exact_match"
@@ -170,6 +174,8 @@ def test_same_annotation_id_across_exports_is_input_duplicate_not_worker_duplica
     assert row["duplicate_worker_task_submission"] == "false"
     assert row["primary_active_time_eligible"] == "false"
     assert review["duplicate_geometry_type"] == "repeated_export_same_annotation_id"
+    dispositions = _read_csv(out / "c1_annotation_version_disposition.csv")
+    assert {row["version_disposition"] for row in dispositions} == {"selected_canonical"}
 
 
 def test_distinct_annotation_ids_require_review_and_selected_exact_time_follows_choice(tmp_path: Path) -> None:
@@ -187,15 +193,22 @@ def test_distinct_annotation_ids_require_review_and_selected_exact_time_follows_
     assert _read_csv(tmp_path / "pending" / "c1_canonical_annotations.csv") == []
     decision = tmp_path / "decision.csv"
     selected_response_hash = sha256_json(_ann("a2", "w1")["result"])
-    decision_fields = ["round_id", "project_id", "ls_runtime_task_id", "worker_id", "all_annotation_ids", "decision", "selected_annotation_id", "selected_response_hash", "selected_source_export_sha256", "process_disposition", "timing_disposition", "reviewed_by", "reviewed_at"]
-    _csv(decision, decision_fields, [{"round_id": "C1", "project_id": "66", "ls_runtime_task_id": "1", "worker_id": "w1", "all_annotation_ids": "a1;a2", "decision": "confirm_exact_duplicate", "selected_annotation_id": "a2", "selected_response_hash": selected_response_hash, "selected_source_export_sha256": sha256_file(export), "process_disposition": "no_process_penalty", "timing_disposition": "selected_annotation_exact_time", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
+    version_digest = _read_csv(tmp_path / "pending" / "c1_duplicate_annotation_audit.csv")[0]["duplicate_version_set_sha256"]
+    decision_fields = ["round_id", "project_id", "ls_runtime_task_id", "worker_id", "all_annotation_ids", "duplicate_version_set_sha256", "decision", "selected_annotation_id", "selected_response_hash", "selected_source_export_sha256", "process_disposition", "timing_disposition", "reviewed_by", "reviewed_at"]
+    _csv(decision, decision_fields, [{"round_id": "C1", "project_id": "66", "ls_runtime_task_id": "1", "worker_id": "w1", "all_annotation_ids": "a1;a2", "duplicate_version_set_sha256": version_digest, "decision": "confirm_exact_duplicate", "selected_annotation_id": "a2", "selected_response_hash": selected_response_hash, "selected_source_export_sha256": sha256_file(export), "process_disposition": "no_process_penalty", "timing_disposition": "selected_annotation_exact_time", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
     resolved = build_canonicalization([export], manual, semi, internal, mapping, active_log=logs, output_dir=tmp_path / "resolved", duplicate_adjudication_csv=decision)
     row = _read_csv(tmp_path / "resolved" / "c1_canonical_annotations.csv")[0]
     assert resolved["duplicate_review_pending_count"] == 0
     assert row["annotation_id"] == "a2"
     assert row["active_time"] == "17.0"
     assert row["active_time_source"] == "log"
-    _csv(decision, decision_fields, [{"round_id": "C1", "project_id": "66", "ls_runtime_task_id": "1", "worker_id": "w1", "all_annotation_ids": "a1;a2", "decision": "exclude_group", "selected_annotation_id": "", "selected_response_hash": "", "selected_source_export_sha256": "", "process_disposition": "forensic_only", "timing_disposition": "timing_not_evaluable", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
+    changed_payload = [_task("1", "t1", "b1", [_ann("a1", "w1", 100), _ann("a2", "w1", 1)])]
+    changed_payload[0]["annotations"][1]["result"].append({"type": "choices", "from_name": "difficulty", "value": {"choices": ["reflection"]}})
+    export.write_text(json.dumps(changed_payload), encoding="utf-8")
+    stale_decision = build_canonicalization([export], manual, semi, internal, mapping, active_log=logs, output_dir=tmp_path / "stale-decision", duplicate_adjudication_csv=decision)
+    assert stale_decision["duplicate_review_pending_count"] == 1
+    export.write_text(json.dumps([_task("1", "t1", "b1", [_ann("a1", "w1", 100), _ann("a2", "w1", 1)])]), encoding="utf-8")
+    _csv(decision, decision_fields, [{"round_id": "C1", "project_id": "66", "ls_runtime_task_id": "1", "worker_id": "w1", "all_annotation_ids": "a1;a2", "duplicate_version_set_sha256": version_digest, "decision": "exclude_group", "selected_annotation_id": "", "selected_response_hash": "", "selected_source_export_sha256": "", "process_disposition": "forensic_only", "timing_disposition": "timing_not_evaluable", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
     excluded = build_canonicalization([export], manual, semi, internal, mapping, active_log=logs, output_dir=tmp_path / "excluded", duplicate_adjudication_csv=decision, require_complete=True)
     assert excluded["duplicate_review_pending_count"] == 0
     assert excluded["missing_submission_count"] == 0

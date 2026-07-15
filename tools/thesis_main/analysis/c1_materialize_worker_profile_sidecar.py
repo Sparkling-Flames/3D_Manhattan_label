@@ -979,7 +979,7 @@ def _task_evidence_key(row: dict[str, Any]) -> tuple[str, str, str, str]:
 def _unique_process_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
     unique: dict[tuple[str, str, str, str], dict[str, Any]] = {}
     for row in rows:
-        if not truthy(row.get("process_evaluable")) or not truthy(row.get("included_in_process_reliability")) or not eligible_independent_evidence(row):
+        if not truthy(row.get("process_evaluable")) or not truthy(row.get("included_in_process_reliability")) or (not truthy(row.get("process_only_evidence")) and not eligible_independent_evidence(row)):
             continue
         key = _task_evidence_key(row)
         current = unique.get(key)
@@ -1575,6 +1575,7 @@ def materialize(
     p1_worker_status_csv: Path | None = None,
     p1_geometry_task_scores: Path | None = None,
     p1_worker_geometry_profile: Path | None = None,
+    duplicate_process_evidence_csv: Path | None = None,
 ) -> dict[str, Any]:
     p1_readiness = validate_p1_bundle(
         p1_task_evidence_csv,
@@ -1584,13 +1585,26 @@ def materialize(
     )
     worker_dimension_readiness = p1_readiness.pop("worker_dimension_rows", [])
     evidence = build_evidence_rows(read_csv(quality_csv))
+    process_path = duplicate_process_evidence_csv or output_dir / "c1_duplicate_process_evidence.csv"
+    if process_path.exists():
+        for row in read_csv(process_path):
+            disposition = safe(row.get("process_disposition"))
+            if disposition not in {"worker_process_failure", "no_process_penalty"}:
+                continue
+            evidence.append({
+                **row, "stage": "C1", "family": "process_failure", "subfamily": "duplicate_review_process_only",
+                "canonical_annotation_id": "process-only:" + safe(row.get("duplicate_version_set_sha256")),
+                "process_only_evidence": True, "process_evaluable": True, "included_in_process_reliability": True,
+                "family_evaluable": True, "family_included_in_denominator": True,
+                "process_failure_observed": disposition == "worker_process_failure", "failure_observed": disposition == "worker_process_failure",
+            })
     c1_rows = [row for row in evidence if safe(row.get("stage")) == "C1"]
     c1_pending = {
         _task_evidence_key(row)
         for row in c1_rows
-        if safe(row.get("task_outcome_adjudication_status")) not in {"approved", "resolved", "not_applicable"}
+        if not truthy(row.get("process_only_evidence")) and (safe(row.get("task_outcome_adjudication_status")) not in {"approved", "resolved", "not_applicable"}
         or safe(row.get("duplicate_review_status")) == "pending"
-        or (safe(row.get("canonical_annotation_id")) and not safe(row.get("r_u_evidence_exclusion_reason")) and not truthy(row.get("r_u_evidence_included")))
+        or (safe(row.get("canonical_annotation_id")) and not truthy(row.get("process_only_evidence")) and not safe(row.get("r_u_evidence_exclusion_reason")) and not truthy(row.get("r_u_evidence_included"))))
     }
     c1_profile_evidence_classified = bool(c1_rows) and not c1_pending
     geometry_scores = _load_geometry_scores(p1_geometry_task_scores)
@@ -1680,11 +1694,13 @@ def materialize(
         "formal_predictive_validity_status": "not_run_blocked",
         "p1_informed_diagnostic_profile_status": "complete" if p1_readiness.get("full_diagnostic_profile_ready") else "incomplete",
         **{key: value for key, value in p1_readiness.items() if key != "warnings"},
-        "p1_diagnostic_evidence_complete": bool(p1_readiness.get("full_diagnostic_profile_ready")),
+        "p1_diagnostic_evidence_classified": not bool(p1_readiness.get("pending_adjudication_count")),
+        "p1_diagnostic_support_sufficient": bool(p1_readiness.get("full_diagnostic_profile_ready")),
+        "p1_diagnostic_evidence_complete": not bool(p1_readiness.get("pending_adjudication_count")),
         "c1_profile_evidence_classified": c1_profile_evidence_classified,
         "c1_profile_pending_adjudication_count": len(c1_pending),
         "pending_adjudication_count": int(p1_readiness.get("pending_adjudication_count") or 0) + len(c1_pending),
-        "c1_support_sufficient": all(row.get("calib_support_status") != "insufficient" for row in main),
+        "c1_support_sufficient": all(row.get("calib_support_status") != "insufficient" for row in main),  # deprecated compatibility alias
         "c1_r_u_support_sufficient": all(row.get("calib_support_status") != "insufficient" for row in main),
         "c1_profile_evidence_complete": c1_profile_evidence_classified,
         "c1_profile_freeze_ready": c1_profile_evidence_classified and not c1_pending,
