@@ -229,7 +229,9 @@ def _load_candidate_roster(path: Path) -> tuple[dict[tuple[str, str], dict[str, 
 def _load_assignment_history(path: Path) -> tuple[list[dict[str, Any]], list[Path]]:
     rows = read_csv_rows(path)
     required = {"base_task_id", "condition", "worker_id", "assignment_status", "effective_at", "source_manifest_path", "source_manifest_sha256", "manifest_version"}
-    if rows and not required.issubset(rows[0]):
+    if not rows:
+        raise ValueError("assignment history has no semantic baseline rows")
+    if not required.issubset(rows[0]):
         raise ValueError("assignment history schema is incomplete")
     allowed = {"eligible", "available", "unassigned", "assigned", "completed", "excluded", "withdrawn", "ineligible"}
     seen: set[tuple[str, str, str, str]] = set()
@@ -243,7 +245,41 @@ def _load_assignment_history(path: Path) -> tuple[list[dict[str, Any]], list[Pat
         seen.add(identity)
         output.append({**row, "assignment_status": str(row["assignment_status"]).lower(), "_effective_at": _arrival(row["effective_at"])})
         dependencies.append(source)
+    allowed_transitions = {
+        "eligible": {"eligible", "available", "unassigned", "assigned", "excluded", "withdrawn", "ineligible"},
+        "available": {"available", "eligible", "unassigned", "assigned", "excluded", "withdrawn", "ineligible"},
+        "unassigned": {"unassigned", "eligible", "available", "assigned", "excluded", "withdrawn", "ineligible"},
+        "assigned": {"assigned", "available", "unassigned", "completed", "excluded", "withdrawn", "ineligible"},
+        "completed": {"completed"},
+        "excluded": {"excluded", "eligible", "available", "unassigned"},
+        "withdrawn": {"withdrawn", "eligible", "available", "unassigned"},
+        "ineligible": {"ineligible", "eligible", "available", "unassigned"},
+    }
+    histories: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
+    for row in output:
+        histories[(*_task_key(row), str(row["worker_id"]))].append(row)
+    for history in histories.values():
+        ordered = sorted(history, key=lambda row: row["_effective_at"])
+        for previous, current in zip(ordered, ordered[1:]):
+            if current["assignment_status"] not in allowed_transitions[previous["assignment_status"]]:
+                raise ValueError("assignment history contains illegal state transition")
     return output, dependencies
+
+
+def _validate_assignment_history_for_replay(
+    rows: list[dict[str, Any]], events: list[dict[str, Any]], roster: dict[tuple[str, str], dict[str, dict[str, Any]]]
+) -> None:
+    roster_keys = {(task, worker) for task, workers in roster.items() for worker in workers}
+    if any((_task_key(row), str(row["worker_id"])) not in roster_keys for row in rows):
+        raise ValueError("assignment history worker is absent from candidate roster")
+    first_arrival: dict[tuple[str, str], datetime] = {}
+    for event in events:
+        task = _task_key(event)
+        arrived = _arrival(event.get("canonical_arrival_timestamp"))
+        first_arrival[task] = min(first_arrival.get(task, arrived), arrived)
+    for task, arrived in first_arrival.items():
+        if not any(_task_key(row) == task and row["_effective_at"] <= arrived for row in rows):
+            raise ValueError("assignment history lacks a trusted baseline for replay task")
 
 
 def _load_policy_manifest(path: Path) -> dict[int, dict[str, Any]]:
@@ -447,8 +483,14 @@ def _risk_config(purpose: dict[str, Any], fallback: dict[str, Any]) -> dict[str,
 
 
 def _correction_complete(evidence: dict[str, Any], annotation: str, geometry_by_id: dict[str, dict[str, Any]], policy: dict[str, Any]) -> bool:
-    provenance = str(evidence.get("effective_provenance_status") or evidence.get("provenance_status") or "")
-    initial_ok = provenance in {"complete", "valid", "complete_via_retrospective_amendment"} and str(evidence.get("prediction_selection_status", "")).startswith("selected")
+    original = str(evidence.get("original_provenance_status") or evidence.get("provenance_status") or "")
+    effective = str(evidence.get("effective_provenance_status") or original)
+    original_ok = original == "complete" or (not evidence.get("original_provenance_status") and effective in {"complete", "valid"})
+    amendment_ok = (
+        str(evidence.get("retrospective_amendment_status", "")) == "joined_exact_identity"
+        and effective == "complete_retrospective_amendment"
+    )
+    initial_ok = original_ok or amendment_ok
     final_ok = annotation in geometry_by_id and str(evidence.get("geometry_valid", "")).lower() == "true"
     edit_ok = str(evidence.get("semi_geometry_correction_evaluable", "")).lower() == "true" and str(evidence.get("semi_evidence_status", "")).lower() in {"complete", "valid", "evaluable"}
     outcome = str(evidence.get("semi_correction_failure_observed", "")).lower()
@@ -529,6 +571,27 @@ def _evaluate_state(state: dict[str, Any], purpose: dict[str, Any], fallback_pol
         "component_checks": checks,
         "complete": complete,
     }
+
+
+def _derive_task_action(
+    state: dict[str, Any], evaluation: dict[str, Any], pool: set[str], pending: set[str], risk: dict[str, Any], *, terminal_before: bool = False
+) -> tuple[str, str, str]:
+    if terminal_before:
+        return state["task_state"], "post_terminal_audit_only", "task_already_terminal"
+    if evaluation["complete"]:
+        return "COMPLETE", "stop_candidate", "required_evidence_components_complete"
+    k = len(state["workers"])
+    if k >= int(risk["escalation_cap"]) or (not pool and not pending):
+        return "UNRESOLVED", "unresolved_candidate", "required_components_missing_at_cap_or_candidate_exhausted"
+    if pending and not pool:
+        return "OPEN", "await_pending_assignments_candidate", "assigned_workers_pending"
+    if k < int(risk["k_dispatch_initial"]):
+        return "OPEN", "continue_initial", "minimum_support_not_met"
+    if k < int(risk["k_min_for_stop"]):
+        return "OPEN", "continue_to_stop_support_candidate", "stop_support_not_yet_reached"
+    if k < int(risk["standard_cap"]):
+        return "OPEN", "continue_standard_candidate", "required_components_incomplete_before_standard_cap"
+    return "OPEN", "escalate_candidate", "required_components_incomplete_at_or_after_standard_cap"
 
 
 def _contract(checked: int, failures: Counter[str], artifact: str) -> dict[str, Any]:
@@ -805,22 +868,9 @@ def replay_temporal_batches(
         excluded_after = {worker for worker, status in statuses_after.items() if status in {"assigned", "completed", "excluded", "withdrawn", "ineligible"}}
         pending_after = {worker for worker, status in statuses_after.items() if status == "assigned"} - state["workers"]
         pool_after = roster - state["workers"] - excluded_after
-        if terminal_before:
-            action, reason = "post_terminal_audit_only", "task_already_terminal"
-        elif evaluation["complete"]:
-            state["task_state"], action, reason = "COMPLETE", "stop_candidate", "required_evidence_components_complete"
-        elif post_k >= int(risk["escalation_cap"]) or (not pool_after and not pending_after):
-            state["task_state"], action, reason = "UNRESOLVED", "unresolved_candidate", "required_components_missing_at_cap_or_candidate_exhausted"
-        elif pending_after and not pool_after:
-            action, reason = "await_pending_assignments_candidate", "assigned_workers_pending"
-        elif post_k < int(risk["k_dispatch_initial"]):
-            action, reason = "continue_initial", "minimum_support_not_met"
-        elif post_k < int(risk["k_min_for_stop"]):
-            action, reason = "continue_to_stop_support_candidate", "stop_support_not_yet_reached"
-        elif post_k < int(risk["standard_cap"]):
-            action, reason = "continue_standard_candidate", "required_components_incomplete_before_standard_cap"
-        else:
-            action, reason = "escalate_candidate", "required_components_incomplete_at_or_after_standard_cap"
+        state["task_state"], action, reason = _derive_task_action(
+            state, evaluation, pool_after, pending_after, risk, terminal_before=terminal_before
+        )
         post_snapshot = _snapshot(state, task)
         if not terminal_before and state["task_state"] in TERMINAL_STATES:
             state["terminal_batch_id"] = event_batch_id
@@ -874,6 +924,16 @@ def replay_temporal_batches(
         if state["task_state"] in TERMINAL_STATES and task not in terminal_rows:
             terminal_rows[task] = batch
 
+        if terminal_before:
+            sensitivity_rows.append({
+                **common(rows[0]), "event_batch_id": event_batch_id, "replay_task_key": "|".join(task), "tie_policy": "simultaneous_atomic_primary",
+                "primary_k_used": post_k, "sensitivity_k_used_min": post_k, "sensitivity_k_used_max": post_k,
+                "primary_final_action": action, "alternative_final_actions": json.dumps([action]),
+                "stop_order_sensitivity": False, "sensitivity_not_applicable_post_terminal": True,
+                "random_seed": SENSITIVITY_SEED, "random_permutations": 0,
+            })
+            continue
+
         annotations = sorted({annotation for annotation, _, _ in primary_groups})
         rng = random.Random(SENSITIVITY_SEED + batch_index)
         orders = [annotations, list(reversed(annotations))] + [rng.sample(annotations, len(annotations)) for _ in range(SENSITIVITY_PERMUTATIONS)] if annotations else [[]]
@@ -890,25 +950,25 @@ def replay_temporal_batches(
                 values.pop(worker, None)
         for order in orders:
             simulated = _clone_state(pre_state)
-            simulated_action = "escalate_candidate"
+            simulated_action = ""
             for annotation in order:
                 worker, items = by_annotation[annotation]
                 _apply_annotation(simulated, annotation, worker, items, geometry_by_id, correction_policy, batch_key[2])
                 result = _evaluate_state(simulated, purpose, fallback, geometry_by_id)
-                if result["complete"]:
-                    simulated_action = "stop_candidate"
+                simulated_pending = {worker for worker, status in statuses_after.items() if status == "assigned"} - simulated["workers"]
+                simulated_pool = roster - simulated["workers"] - excluded_after
+                simulated["task_state"], simulated_action, _ = _derive_task_action(
+                    simulated, result, simulated_pool, simulated_pending, risk
+                )
+                if simulated["task_state"] in TERMINAL_STATES:
                     break
-                if len(simulated["workers"]) >= int(risk["escalation_cap"]):
-                    simulated_action = "unresolved_candidate"
-                    break
-            else:
-                simulated_k = len(simulated["workers"])
-                if simulated_k < int(risk["k_dispatch_initial"]):
-                    simulated_action = "continue_initial"
-                elif simulated_k < int(risk["k_min_for_stop"]):
-                    simulated_action = "continue_to_stop_support_candidate"
-                elif simulated_k < int(risk["standard_cap"]):
-                    simulated_action = "continue_standard_candidate"
+            if not simulated_action:
+                result = _evaluate_state(simulated, purpose, fallback, geometry_by_id)
+                simulated_pending = {worker for worker, status in statuses_after.items() if status == "assigned"} - simulated["workers"]
+                simulated_pool = roster - simulated["workers"] - excluded_after
+                simulated["task_state"], simulated_action, _ = _derive_task_action(
+                    simulated, result, simulated_pool, simulated_pending, risk
+                )
             sensitivity_k.append(len(simulated["workers"]))
             sensitivity_actions.add(simulated_action)
         sensitivity_rows.append({
@@ -916,6 +976,7 @@ def replay_temporal_batches(
             "primary_k_used": post_k, "sensitivity_k_used_min": min(sensitivity_k), "sensitivity_k_used_max": max(sensitivity_k),
             "primary_final_action": action, "alternative_final_actions": json.dumps(sorted(sensitivity_actions)),
             "stop_order_sensitivity": min(sensitivity_k) != max(sensitivity_k) or sensitivity_actions != {action},
+            "sensitivity_not_applicable_post_terminal": False,
             "random_seed": SENSITIVITY_SEED, "random_permutations": SENSITIVITY_PERMUTATIONS,
         })
 
@@ -1007,6 +1068,7 @@ def materialize_temporal_replay(
         purposes, purpose_dependencies = _load_task_purposes(task_purpose_manifest_csv)
         roster, roster_dependencies = _load_candidate_roster(candidate_roster_manifest_csv)
         assignments, assignment_dependencies = _load_assignment_history(assignment_history_csv)
+        _validate_assignment_history_for_replay(assignments, events, roster)
         geometry_by_id: dict[str, dict[str, Any]] = {}
         if canonical_geometry_jsonl and canonical_geometry_jsonl.exists():
             for line in canonical_geometry_jsonl.read_text(encoding="utf-8").splitlines():

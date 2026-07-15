@@ -5,6 +5,8 @@ from pathlib import Path
 from tools.thesis_main.analysis.c1_canonicalize_exports import build_canonicalization
 from tools.thesis_main.analysis.c1_materialize_quality_table import materialize as materialize_quality
 from tools.thesis_main.analysis.materialize_model_issue_harmonization import harmonize_model_issue, materialize_model_issue_harmonization
+from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
+from tools.thesis_main.analysis.routing.temporal_replay import _correction_complete
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_json
 
 
@@ -108,7 +110,7 @@ def test_raw_export_to_quality_three_state_consumes_historical_amendment(tmp_pat
     export.write_text(json.dumps([{
         "id": "100", "project": 66,
         "data": {"task_id": "task-1", "base_task_id": "base-1", "dataset_group": "Calibration_semi", "condition": "semi", "initialization_artifact_id": "init-1"},
-        "predictions": [{"id": "init-1", "model_version": "m1", "checkpoint_sha256": "b" * 64, "inference_config_sha256": "c" * 64, "preprocess_postprocess_sha256": "d" * 64, "result": points(100)}],
+        "predictions": [{"id": "init-1", "result": points(100)}],
         "annotations": [{"id": "ann-1", "completed_by": {"id": "worker-1"}, "created_at": "2026-07-14T00:00:00Z", "result": points(120) + [{"type": "choices", "from_name": "model_issue", "value": {"choices": ["acceptable"]}}]}],
     }]), encoding="utf-8")
     assignment_fields = ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group"]
@@ -132,6 +134,22 @@ def test_raw_export_to_quality_three_state_consumes_historical_amendment(tmp_pat
     quality_row = next(csv.DictReader((out / "c1_quality_annotations.csv").open(encoding="utf-8")))
     assert quality_row["harmonized_state"] == "corner_drift"
     assert quality_row["assertion_source"] == "legacy_behavior_inferred"
+    assert quality_row["original_provenance_status"] != "complete"
+    assert quality_row["retrospective_amendment_status"] == "joined_exact_identity"
+    assert quality_row["effective_provenance_status"] == "complete_retrospective_amendment"
+    correction_evidence = {
+        **quality_row,
+        "prediction_selection_status": "missing",
+        "geometry_valid": "true",
+        "semi_geometry_correction_evaluable": "true",
+        "semi_evidence_status": "complete",
+        "semi_response_type": "successful_correction",
+        "semi_correction_failure_observed": "false",
+        "geometry_reference_status": "expert_hard_single",
+    }
+    geometry_by_id = {quality_row["canonical_annotation_id"]: normalize_geometry([[100, 120], [100, 400], [500, 120], [500, 400]])}
+    correction_policy = {field: "true" for field in ("require_initialization_provenance", "require_final_geometry", "require_edit_metrics", "require_reference_outcome")}
+    assert _correction_complete(correction_evidence, quality_row["canonical_annotation_id"], geometry_by_id, correction_policy) is True
     observation = next(row for row in csv.DictReader((out / "worker_task_tag_observations_C1.csv").open(encoding="utf-8")) if row["tag_name"] == "corner_drift")
     assert observation["assertion"] == "+"
 

@@ -5,7 +5,7 @@ from pathlib import Path
 import pytest
 
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
-from tools.thesis_main.analysis.routing.temporal_replay import _fold_for_base, build_temporal_event_ledger, materialize_temporal_replay, replay_temporal_batches, replay_temporal_events
+from tools.thesis_main.analysis.routing.temporal_replay import _fold_for_base, _load_assignment_history, build_temporal_event_ledger, materialize_temporal_replay, replay_temporal_batches, replay_temporal_events
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
@@ -87,7 +87,8 @@ def _frozen_temporal_inputs(tmp_path: Path) -> dict[str, Path]:
     } for worker in workers]
     _write_csv(roster, roster_rows)
     history = tmp_path / "assignment_history.csv"
-    _write_csv(history, [], ["base_task_id", "condition", "worker_id", "assignment_status", "effective_at", "source_manifest_path", "source_manifest_sha256", "manifest_version"])
+    history_fields = ["base_task_id", "condition", "worker_id", "assignment_status", "effective_at", "source_manifest_path", "source_manifest_sha256", "manifest_version"]
+    _write_csv(history, [{"base_task_id": "b", "condition": "manual", "worker_id": "w1", "assignment_status": "available", "effective_at": "2025-12-31T00:00:00Z", "source_manifest_path": str(assignment_source), "source_manifest_sha256": sha256_file(assignment_source), "manifest_version": "assignment_history_v1"}], history_fields)
     ledger = tmp_path / "temporal_event_ledger.csv"
     build_temporal_event_ledger(canonical, quality, three, ledger)
     geometry = tmp_path / "geometry.jsonl"
@@ -107,7 +108,18 @@ def _frozen_temporal_inputs(tmp_path: Path) -> dict[str, Path]:
         "policy_artifact_id": "temporal-v2", "policy_artifact_path": temporal_policy.name, "policy_artifact_sha256": sha256_file(temporal_policy),
         "rule_version": "temporal-v2", "fit_folds": [1 - fold], "fit_base_task_ids": [fit_base],
     }}), encoding="utf-8")
-    return {"canonical": canonical, "quality": quality, "three": three, "purpose": purpose, "roster": roster, "history": history, "ledger": ledger, "geometry": geometry, "policy_manifest": policy_manifest}
+    return {"canonical": canonical, "quality": quality, "three": three, "purpose": purpose, "roster": roster, "history": history, "history_source": assignment_source, "ledger": ledger, "geometry": geometry, "temporal_policy": temporal_policy, "policy_manifest": policy_manifest}
+
+
+def _replace_history(paths: dict[str, Path], rows: list[dict[str, str]]) -> None:
+    fields = ["base_task_id", "condition", "worker_id", "assignment_status", "effective_at", "source_manifest_path", "source_manifest_sha256", "manifest_version"]
+    _write_csv(paths["history"], rows, fields)
+    policy = json.loads(paths["temporal_policy"].read_text(encoding="utf-8"))
+    policy["assignment_history_sha256"] = sha256_file(paths["history"])
+    paths["temporal_policy"].write_text(json.dumps(policy), encoding="utf-8")
+    manifest = json.loads(paths["policy_manifest"].read_text(encoding="utf-8"))
+    next(iter(manifest.values()))["policy_artifact_sha256"] = sha256_file(paths["temporal_policy"])
+    paths["policy_manifest"].write_text(json.dumps(manifest), encoding="utf-8")
 
 
 def test_legacy_event_entry_is_only_a_batch_engine_wrapper(tmp_path) -> None:
@@ -222,7 +234,7 @@ def test_first_terminal_batch_freezes_task_state(tmp_path) -> None:
     ]
     evidence, purposes, roster = _batch_inputs(events)
     fold = _fold_for_base("b", 2)
-    event_rows, batches, tasks, _, contracts = replay_temporal_batches(events, policy_by_fold={fold: _policy(fold, tmp_path)}, evidence_by_id=evidence, geometry_by_id={}, task_purposes=purposes, candidate_roster=roster, assignment_rows=[], source_artifact="events.csv", source_sha256="a" * 64, dependency_paths=[], input_status="formal")
+    event_rows, batches, tasks, sensitivity, contracts = replay_temporal_batches(events, policy_by_fold={fold: _policy(fold, tmp_path)}, evidence_by_id=evidence, geometry_by_id={}, task_purposes=purposes, candidate_roster=roster, assignment_rows=[], source_artifact="events.csv", source_sha256="a" * 64, dependency_paths=[], input_status="formal")
     assert batches[1]["task_state_after"] == "COMPLETE"
     assert batches[2]["action"] == "post_terminal_audit_only"
     assert batches[2]["task_state_before"] == "COMPLETE"
@@ -230,6 +242,8 @@ def test_first_terminal_batch_freezes_task_state(tmp_path) -> None:
     assert next(row for row in event_rows if row["event_id"] == "e3")["post_terminal_audit_only"] is True
     assert tasks[0]["terminal_batch_id"] == batches[1]["event_batch_id"]
     assert contracts["task_completion_contract_valid"]["valid"] is True
+    assert sensitivity[2]["sensitivity_not_applicable_post_terminal"] is True
+    assert sensitivity[2]["stop_order_sensitivity"] is False
 
 
 def test_primary_k_and_tag_counts_use_unique_independent_workers(tmp_path) -> None:
@@ -548,3 +562,48 @@ def test_order_sensitivity_is_fixed_and_does_not_replace_primary(tmp_path) -> No
     _, batches, _, sensitivity, _ = replay_temporal_batches(events, policy_by_fold={fold: _policy(fold, tmp_path)}, evidence_by_id=evidence, geometry_by_id={}, task_purposes=purposes, candidate_roster=roster, assignment_rows=[], source_artifact="events.csv", source_sha256="a" * 64, dependency_paths=[], input_status="formal")
     assert sensitivity[0]["random_seed"] == 20260714 and sensitivity[0]["random_permutations"] == 100
     assert sensitivity[0]["primary_k_used"] == batches[0]["post_batch_k"] == 3
+
+
+@pytest.mark.parametrize(("pending", "expected"), [(True, "await_pending_assignments_candidate"), (False, "unresolved_candidate")])
+def test_order_sensitivity_reuses_candidate_and_pending_action_contract(tmp_path, pending, expected) -> None:
+    event = {"event_id": "e1", "arrived_at": "2026-01-01T00:00:00Z", "arrival_order_source": "second_precision_export", "timestamp_precision": "second", "task_id": "t", "base_task_id": "b", "condition": "manual", "canonical_annotation_id": "a1", "worker_id": "w1", "tag_family": "difficulty", "tag_name": "occlusion"}
+    evidence, purposes, roster = _batch_inputs([event])
+    assignments = []
+    if pending:
+        roster[("b", "manual")].add("w2")
+        assignments = [{"base_task_id": "b", "condition": "manual", "worker_id": "w2", "assignment_status": "assigned", "effective_at": "2025-12-31T00:00:00Z"}]
+    fold = _fold_for_base("b", 2)
+    _, batches, _, sensitivity, _ = replay_temporal_batches([event], policy_by_fold={fold: _policy(fold, tmp_path)}, evidence_by_id=evidence, geometry_by_id={}, task_purposes=purposes, candidate_roster=roster, assignment_rows=assignments, source_artifact="events.csv", source_sha256="a" * 64, dependency_paths=[], input_status="formal")
+    assert batches[0]["action"] == expected
+    assert json.loads(sensitivity[0]["alternative_final_actions"]) == [expected]
+
+
+def test_formal_assignment_history_cannot_be_empty(tmp_path) -> None:
+    paths = _frozen_temporal_inputs(tmp_path)
+    _replace_history(paths, [])
+    summary = materialize_temporal_replay(paths["ledger"], tmp_path / "routing_temporal_replay_C1.csv", policy_manifest=paths["policy_manifest"], canonical_csv=paths["canonical"], quality_csv=paths["quality"], three_state_csv=paths["three"], canonical_geometry_jsonl=paths["geometry"], task_purpose_manifest_csv=paths["purpose"], candidate_roster_manifest_csv=paths["roster"], assignment_history_csv=paths["history"], input_status="formal")
+    assert summary["status"] == "not_evaluable_missing_frozen_dependency"
+    assert summary["full_stop_contract_valid"] is False
+
+
+def test_formal_assignment_history_requires_pre_event_task_baseline_and_roster_worker(tmp_path) -> None:
+    paths = _frozen_temporal_inputs(tmp_path)
+    base = {"base_task_id": "b", "condition": "manual", "worker_id": "w1", "assignment_status": "available", "effective_at": "2026-01-02T00:00:00Z", "source_manifest_path": str(paths["history_source"]), "source_manifest_sha256": sha256_file(paths["history_source"]), "manifest_version": "assignment_history_v1"}
+    _replace_history(paths, [base])
+    summary = materialize_temporal_replay(paths["ledger"], tmp_path / "routing_temporal_replay_C1.csv", policy_manifest=paths["policy_manifest"], canonical_csv=paths["canonical"], quality_csv=paths["quality"], three_state_csv=paths["three"], canonical_geometry_jsonl=paths["geometry"], task_purpose_manifest_csv=paths["purpose"], candidate_roster_manifest_csv=paths["roster"], assignment_history_csv=paths["history"], input_status="formal")
+    assert summary["full_stop_contract_valid"] is False
+    base.update(worker_id="not-in-roster", effective_at="2025-12-31T00:00:00Z")
+    _replace_history(paths, [base])
+    summary = materialize_temporal_replay(paths["ledger"], tmp_path / "routing_temporal_replay_C1.csv", policy_manifest=paths["policy_manifest"], canonical_csv=paths["canonical"], quality_csv=paths["quality"], three_state_csv=paths["three"], canonical_geometry_jsonl=paths["geometry"], task_purpose_manifest_csv=paths["purpose"], candidate_roster_manifest_csv=paths["roster"], assignment_history_csv=paths["history"], input_status="formal")
+    assert summary["full_stop_contract_valid"] is False
+
+
+def test_assignment_history_rejects_illegal_state_transition(tmp_path) -> None:
+    source = tmp_path / "assignment.csv"
+    source.write_text("worker_id\nw1\n", encoding="utf-8")
+    fields = ["base_task_id", "condition", "worker_id", "assignment_status", "effective_at", "source_manifest_path", "source_manifest_sha256", "manifest_version"]
+    common = {"base_task_id": "b", "condition": "manual", "worker_id": "w1", "source_manifest_path": str(source), "source_manifest_sha256": sha256_file(source), "manifest_version": "assignment_history_v1"}
+    history = tmp_path / "history.csv"
+    _write_csv(history, [{**common, "assignment_status": "completed", "effective_at": "2026-01-01T00:00:00Z"}, {**common, "assignment_status": "assigned", "effective_at": "2026-01-02T00:00:00Z"}], fields)
+    with pytest.raises(ValueError, match="transition"):
+        _load_assignment_history(history)
