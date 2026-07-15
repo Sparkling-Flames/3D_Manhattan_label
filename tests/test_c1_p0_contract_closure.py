@@ -186,6 +186,11 @@ def test_formal_worker_state_manifest_verifies_frozen_external_input(tmp_path) -
     assert _formal_worker_state(state, manifest, **kwargs)["valid"] is True
 
 
+def test_formal_worker_state_rejects_roster_not_equal_to_c1_roster(tmp_path) -> None:
+    state, manifest, _, kwargs = _formal_worker_fixture(tmp_path)
+    assert _formal_worker_state(state, manifest, expected_worker_ids={"w1", "w2"}, **kwargs)["valid"] is False
+
+
 def test_formal_worker_state_resolves_dependency_paths_from_manifest_directory(tmp_path) -> None:
     state, manifest, evidence, kwargs = _formal_worker_fixture(tmp_path)
     payload = json.loads(manifest.read_text(encoding="utf-8"))

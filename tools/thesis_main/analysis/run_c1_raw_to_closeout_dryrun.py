@@ -58,6 +58,7 @@ def materialize(
     formal_worker_state_manifest: Path | None = None,
     duplicate_adjudication_csv: Path | None = None,
     task_outcome_csv: Path | None = None,
+    r_u_scoring_evidence_csv: Path | None = None,
 ) -> dict[str, Any]:
     canonical = c1_canonicalize_exports.build_canonicalization(
         export_json,
@@ -102,6 +103,8 @@ def materialize(
         formal_worker_state_csv,
         formal_worker_state_manifest,
         task_outcome_csv,
+        assignment_manifests=[manual_assignment, semi_assignment],
+        r_u_scoring_evidence_csv=r_u_scoring_evidence_csv,
     )
     summary = {
         "canonicalization_summary": canonical,
@@ -155,6 +158,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--formal-worker-state-manifest", type=Path)
     parser.add_argument("--duplicate-adjudication-csv", type=Path)
     parser.add_argument("--task-outcome-csv", type=Path)
+    parser.add_argument("--r-u-scoring-evidence-csv", type=Path)
     args = parser.parse_args(argv)
     summary = materialize(
         args.export_json,
@@ -192,6 +196,7 @@ def main(argv: list[str] | None = None) -> int:
         formal_worker_state_manifest=args.formal_worker_state_manifest,
         duplicate_adjudication_csv=args.duplicate_adjudication_csv,
         task_outcome_csv=args.task_outcome_csv,
+        r_u_scoring_evidence_csv=args.r_u_scoring_evidence_csv,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0

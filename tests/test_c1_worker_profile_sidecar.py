@@ -422,11 +422,11 @@ def test_worker_profile_sidecar_confidence_and_interpretation_levels(tmp_path: P
     assert "diagnostic_profile_confidence_from_non_protocol_dimensions" in main["profile_confidence_notes"]
     assert family["geometry_quality_failure"]["interpretation_level"] == "none"
     assert family["semi_correction_failure"]["interpretation_level"] == "none"
-    assert family["process_failure"]["interpretation_level"] == "none"
+    assert family["process_failure"]["interpretation_level"] == "sufficient_descriptive"
     assert family["undercoverage_failure"]["interpretation_level"] == "none"
     assert family["undercoverage_failure"]["interpretation_allowed"] == "false"
     assert "normal_geometry_degraded" not in subfamily
-    assert summary["family_interpretation_level_counts"]["sufficient_descriptive"] == 0
+    assert summary["family_interpretation_level_counts"]["sufficient_descriptive"] == 1
     assert summary["family_interpretation_level_counts"]["moderate_descriptive"] == 0
     assert summary["family_interpretation_level_counts"]["weak_descriptive"] == 0
 

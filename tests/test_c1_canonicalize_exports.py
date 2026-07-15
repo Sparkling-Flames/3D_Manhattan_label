@@ -5,6 +5,7 @@ import json
 from pathlib import Path
 
 from tools.thesis_main.analysis.c1_canonicalize_exports import build_canonicalization
+from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file, sha256_json
 
 
 def _csv(path: Path, fields: list[str], rows: list[dict]) -> None:
@@ -185,14 +186,16 @@ def test_distinct_annotation_ids_require_review_and_selected_exact_time_follows_
     assert pending["duplicate_review_pending_count"] == 1
     assert _read_csv(tmp_path / "pending" / "c1_canonical_annotations.csv") == []
     decision = tmp_path / "decision.csv"
-    _csv(decision, ["project_id", "ls_runtime_task_id", "worker_id", "decision", "selected_annotation_id", "reviewed_by", "reviewed_at"], [{"project_id": "66", "ls_runtime_task_id": "1", "worker_id": "w1", "decision": "confirm_exact_duplicate", "selected_annotation_id": "a2", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
+    selected_response_hash = sha256_json(_ann("a2", "w1")["result"])
+    decision_fields = ["round_id", "project_id", "ls_runtime_task_id", "worker_id", "all_annotation_ids", "decision", "selected_annotation_id", "selected_response_hash", "selected_source_export_sha256", "process_disposition", "timing_disposition", "reviewed_by", "reviewed_at"]
+    _csv(decision, decision_fields, [{"round_id": "C1", "project_id": "66", "ls_runtime_task_id": "1", "worker_id": "w1", "all_annotation_ids": "a1;a2", "decision": "confirm_exact_duplicate", "selected_annotation_id": "a2", "selected_response_hash": selected_response_hash, "selected_source_export_sha256": sha256_file(export), "process_disposition": "no_process_penalty", "timing_disposition": "selected_annotation_exact_time", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
     resolved = build_canonicalization([export], manual, semi, internal, mapping, active_log=logs, output_dir=tmp_path / "resolved", duplicate_adjudication_csv=decision)
     row = _read_csv(tmp_path / "resolved" / "c1_canonical_annotations.csv")[0]
     assert resolved["duplicate_review_pending_count"] == 0
     assert row["annotation_id"] == "a2"
     assert row["active_time"] == "17.0"
     assert row["active_time_source"] == "log"
-    _csv(decision, ["project_id", "ls_runtime_task_id", "worker_id", "decision", "selected_annotation_id", "reviewed_by", "reviewed_at"], [{"project_id": "66", "ls_runtime_task_id": "1", "worker_id": "w1", "decision": "exclude_group", "selected_annotation_id": "", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
+    _csv(decision, decision_fields, [{"round_id": "C1", "project_id": "66", "ls_runtime_task_id": "1", "worker_id": "w1", "all_annotation_ids": "a1;a2", "decision": "exclude_group", "selected_annotation_id": "", "selected_response_hash": "", "selected_source_export_sha256": "", "process_disposition": "forensic_only", "timing_disposition": "timing_not_evaluable", "reviewed_by": "reviewer", "reviewed_at": "2026-07-15T00:00:00Z"}])
     excluded = build_canonicalization([export], manual, semi, internal, mapping, active_log=logs, output_dir=tmp_path / "excluded", duplicate_adjudication_csv=decision, require_complete=True)
     assert excluded["duplicate_review_pending_count"] == 0
     assert excluded["missing_submission_count"] == 0

@@ -83,6 +83,7 @@ EVIDENCE_FIELDS = [
     "task_outcome_adjudication_status",
     "task_oos_subtype",
     "worker_scope_response",
+    "worker_scope_outcome",
     "geometry_reference_status",
     "geometry_valid",
     "process_invalid",
@@ -302,6 +303,13 @@ def norm_scope(row: dict[str, str]) -> str:
     return "unknown"
 
 
+def worker_scope_outcome(row: dict[str, str]) -> str:
+    """Use the adjudicated worker outcome; raw scope is retained for audit only."""
+    if "worker_scope_outcome" in row:
+        return safe(row.get("worker_scope_outcome"))
+    return safe(row.get("worker_scope_response"))
+
+
 def oos_subtype(row: dict[str, str]) -> str:
     explicit = safe(row.get("task_oos_subtype") or row.get("oos_subtype")).lower()
     if explicit:
@@ -364,7 +372,7 @@ def family_for(row: dict[str, str]) -> str:
     if explicit and (explicit != "process_failure" or process_fail(row)):
         return explicit
     sub = safe(row.get("subfamily")).lower()
-    response = safe(row.get("response_type") or row.get("worker_scope_response")).lower()
+    response = safe(row.get("response_type") or worker_scope_outcome(row)).lower()
     if "undercoverage" in sub or "inner_space" in sub or "minimal_space" in sub:
         return "undercoverage_failure"
     if "blind_trust" in sub or "correction" in sub or "not_fixed" in sub or condition(row) == "semi":
@@ -381,7 +389,7 @@ def subfamily_for(row: dict[str, str], family: str) -> str:
     if explicit:
         return explicit
     if family == "scope_oos_failure":
-        return safe(row.get("worker_scope_response")) or ("oos_case" if is_oos(row) else "scope_case")
+        return worker_scope_outcome(row) or ("oos_case" if is_oos(row) else "scope_case")
     if family == "semi_correction_failure":
         text = safe(row.get("model_issue_primary") or row.get("model_issue"))
         return text if text and text != "acceptable" else "successful_correction"
@@ -437,7 +445,7 @@ def response_type(row: dict[str, str], family: str, subfamily: str) -> str:
     if explicit:
         return explicit
     if family == "scope_oos_failure":
-        return safe(row.get("worker_scope_response")) or ("correct_oos" if is_oos(row) else "correct_in_scope")
+        return worker_scope_outcome(row) or ("correct_oos" if is_oos(row) else "correct_in_scope")
     if family == "process_failure":
         return "process_failure" if process_fail(row) else "process_ok"
     if family == "undercoverage_failure":
@@ -468,9 +476,12 @@ def process_evaluable(row: dict[str, str]) -> bool:
     )
     if explicit:
         return True
-    if truthy(row.get("system_collection_issue")) or safe(row.get("active_time_integrity_status")) in {"unknown_audit_only", "missing", "owner_mismatch", "ambiguous"}:
+    if truthy(row.get("system_collection_issue")) or safe(row.get("active_time_integrity_status")) in {"unknown_audit_only", "owner_mismatch", "ambiguous"}:
         return False
-    if safe(row.get("active_time_source")) in {"", "missing"} and not safe(row.get("lead_time_seconds")):
+    # Exact active-time absence is a timing-evidence limitation, not a worker
+    # process failure.  Only an explicit worker-attributable timing failure is
+    # allowed to exclude otherwise valid capability/process evidence.
+    if safe(row.get("active_time_source")) in {"", "missing"} and truthy(row.get("active_time_worker_process_failure")):
         return False
     return True
 
@@ -511,7 +522,7 @@ def dimension_fail(evidence_row: dict[str, Any], field: str) -> bool:
     if field == "included_in_r_geometry":
         return "geometry_fail" in response or response in {"invalid", "geometry_invalid"}
     if field == "included_in_r_scope":
-        scope_response = safe(evidence_row.get("worker_scope_response")).lower()
+        scope_response = worker_scope_outcome(evidence_row).lower()
         return scope_response in {"scope_false_positive", "scope_false_negative", "unknown_or_missing"}
     if field == "included_in_T_u":
         return outcome_bool(evidence_row.get("semi_correction_failure_observed")) is True
@@ -535,7 +546,7 @@ def inclusion_flags(row: dict[str, str], family: str) -> dict[str, bool]:
     usable_ref = ref in USABLE_GEOMETRY_REFERENCE
     geometry_component_ok = geometry_component_evaluable(row)
     undercoverage_ok = undercoverage_expert_evaluable(row)
-    worker_scope = safe(row.get("worker_scope_response"))
+    worker_scope = worker_scope_outcome(row)
     return {
         "included_in_r_u_calib": truthy(row.get("r_u_evidence_included")) if "r_u_evidence_included" in row else legal and row_stage in {"C1", "C2"} and group in R_U_CALIB_GROUPS and truthy(row.get("used_for_r_u")) and manual and is_in_scope(row) and usable_ref and geom_ok and process_ok,
         "included_in_r_geometry": legal and group in R_GEOMETRY_GROUPS and manual and is_in_scope(row) and usable_ref and geom_ok and process_ok and geometry_component_ok,
@@ -603,6 +614,7 @@ def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, An
                 "task_outcome_adjudication_status": safe(row.get("task_outcome_adjudication_status")),
                 "task_oos_subtype": oos_subtype(row),
                 "worker_scope_response": safe(row.get("worker_scope_response")),
+                "worker_scope_outcome": worker_scope_outcome(row),
                 "geometry_reference_status": geometry_reference_status(row),
                 "geometry_valid": geometry_valid(row),
                 "process_invalid": process_fail(row),
@@ -665,6 +677,7 @@ def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, An
                 "semi_geometry_correction_evaluable": truthy(row.get("semi_geometry_correction_evaluable")),
                 "semi_response_type": safe(row.get("semi_response_type")),
                 "semi_correction_failure_observed": safe(row.get("semi_correction_failure_observed")),
+                "_multi_signal_contract": "worker_scope_outcome" in row or "reference_evidence_status" in row,
                 "_is_fail": is_fail(row, family, response),
                 "_process_fail": process_fail(row),
         }
@@ -841,7 +854,7 @@ def build_p1_evidence_rows(
                 "geometry",
             )
         if safe(row.get("scope_evidence_status")) == "evaluable":
-            response = safe(row.get("worker_scope_response"))
+            response = worker_scope_outcome(row)
             add_signal(
                 "scope_oos_failure",
                 safe(row.get("task_oos_subtype")) or "scope_classification",
@@ -1085,9 +1098,31 @@ def aggregate_family(evidence_rows: list[dict[str, Any]]) -> list[dict[str, Any]
         process_row["family"] = "process_failure"
         process_row["_is_fail"] = truthy(row.get("process_failure_observed"))
         grouped[(row["worker_id"], "process_failure")].append(process_row)
+    signal_fields = {
+        "geometry_quality_failure": "included_in_r_geometry",
+        "scope_oos_failure": "included_in_r_scope",
+        "semi_correction_failure": "included_in_T_u",
+        "undercoverage_failure": "included_in_U_u",
+    }
     for row in evidence_rows:
-        if row.get("family") != "process_failure" and truthy(row.get("family_included_in_denominator")):
+        if not truthy(row.get("_multi_signal_contract")) and row.get("family") != "process_failure" and truthy(row.get("family_included_in_denominator")):
             grouped[(row["worker_id"], row["family"])].append(row)
+            continue
+        for family, flag in signal_fields.items():
+            if not truthy(row.get("_multi_signal_contract")):
+                break
+            if not truthy(row.get(flag)):
+                continue
+            signal = dict(row)
+            signal["family"] = family
+            signal["subfamily"] = subfamily_for(signal, family)
+            signal["_is_fail"] = {
+                "scope_oos_failure": worker_scope_outcome(row) in {"scope_false_positive", "scope_false_negative"},
+                "semi_correction_failure": outcome_bool(row.get("semi_correction_failure_observed")) is True,
+                "undercoverage_failure": outcome_bool(row.get("undercoverage_failure_observed")) is True,
+                "geometry_quality_failure": outcome_bool(row.get("geometry_failure_observed")) is True,
+            }[family]
+            grouped[(row["worker_id"], family)].append(signal)
     workers = sorted({row["worker_id"] for row in evidence_rows})
     out = []
     for worker in workers:
@@ -1115,7 +1150,31 @@ def aggregate_family(evidence_rows: list[dict[str, Any]]) -> list[dict[str, Any]
 
 
 def aggregate_subfamily(evidence_rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    aggregation_rows = [row for row in evidence_rows if row.get("family") != "process_failure" and truthy(row.get("family_included_in_denominator"))]
+    aggregation_rows: list[dict[str, Any]] = []
+    signal_fields = {
+        "geometry_quality_failure": "included_in_r_geometry",
+        "scope_oos_failure": "included_in_r_scope",
+        "semi_correction_failure": "included_in_T_u",
+        "undercoverage_failure": "included_in_U_u",
+    }
+    for row in evidence_rows:
+        if not truthy(row.get("_multi_signal_contract")):
+            if row.get("family") != "process_failure" and truthy(row.get("family_included_in_denominator")):
+                aggregation_rows.append(row)
+            continue
+        for family, flag in signal_fields.items():
+            if not truthy(row.get(flag)):
+                continue
+            signal = dict(row)
+            signal["family"] = family
+            signal["subfamily"] = subfamily_for(signal, family)
+            signal["_is_fail"] = {
+                "scope_oos_failure": worker_scope_outcome(row) in {"scope_false_positive", "scope_false_negative"},
+                "semi_correction_failure": outcome_bool(row.get("semi_correction_failure_observed")) is True,
+                "undercoverage_failure": outcome_bool(row.get("undercoverage_failure_observed")) is True,
+                "geometry_quality_failure": outcome_bool(row.get("geometry_failure_observed")) is True,
+            }[family]
+            aggregation_rows.append(signal)
     for row in _unique_process_rows(evidence_rows):
         process_row = dict(row)
         process_row["family"] = "process_failure"
@@ -1531,6 +1590,7 @@ def materialize(
         for row in c1_rows
         if safe(row.get("task_outcome_adjudication_status")) not in {"approved", "resolved", "not_applicable"}
         or safe(row.get("duplicate_review_status")) == "pending"
+        or (safe(row.get("canonical_annotation_id")) and not safe(row.get("r_u_evidence_exclusion_reason")) and not truthy(row.get("r_u_evidence_included")))
     }
     c1_profile_evidence_classified = bool(c1_rows) and not c1_pending
     geometry_scores = _load_geometry_scores(p1_geometry_task_scores)
@@ -1625,7 +1685,10 @@ def materialize(
         "c1_profile_pending_adjudication_count": len(c1_pending),
         "pending_adjudication_count": int(p1_readiness.get("pending_adjudication_count") or 0) + len(c1_pending),
         "c1_support_sufficient": all(row.get("calib_support_status") != "insufficient" for row in main),
-        "full_profile_ready": c1_profile_evidence_classified,
+        "c1_r_u_support_sufficient": all(row.get("calib_support_status") != "insufficient" for row in main),
+        "c1_profile_evidence_complete": c1_profile_evidence_classified,
+        "c1_profile_freeze_ready": c1_profile_evidence_classified and not c1_pending,
+        "full_profile_ready": c1_profile_evidence_classified and not c1_pending,
         "profile_freeze_status": "C1_provisional",
         "blockers": [],
         "warnings": list(p1_readiness.get("warnings") or []) + ([] if predictive_evaluable else ["p1_descriptive_directional_check_not_evaluable_without_p1_artifacts" if not input_p1_artifacts else "p1_descriptive_directional_check_not_evaluable_without_matching_p1_c1_metrics"]),
