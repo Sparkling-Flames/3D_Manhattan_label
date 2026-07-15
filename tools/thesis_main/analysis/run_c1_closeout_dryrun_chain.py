@@ -249,20 +249,33 @@ def finalize_existing_closeout(output_dir: Path, formal_closeout_adjudication_ma
         raise ValueError("prepared closeout bundle is stale")
     gate = json.loads(gate_path.read_text(encoding="utf-8"))
     gate["closeout_input_bundle"] = bundle
+    bundle_by_path = {str(canonical_path(item["path"])): item for item in bundle.get("artifacts", [])}
+
+    def require_bundle_member(value: str, label: str) -> Path:
+        path = canonical_path(value)
+        item = bundle_by_path.get(str(path))
+        if not value or not item or item.get("sha256") != sha256_file(path):
+            raise ValueError(f"{label} is not bound to prepared bundle")
+        return path
+
     context = gate.get("formal_worker_state", {}).get("validation_context", {})
+    worker_csv = require_bundle_member(gate.get("formal_worker_state", {}).get("csv_path", ""), "worker-state CSV")
+    worker_manifest = require_bundle_member(gate.get("formal_worker_state", {}).get("manifest_path", ""), "worker-state manifest")
+    context_paths = {
+        key: require_bundle_member(context.get(key, ""), f"worker-state {key}")
+        for key in ("canonical_csv", "quality_csv", "canonical_geometry_jsonl", "geometry_loo_csv", "geometry_stability_csv")
+    }
     formal_worker = _formal_worker_state(
-        Path(gate.get("formal_worker_state", {}).get("csv_path", "")), Path(gate.get("formal_worker_state", {}).get("manifest_path", "")),
-        canonical_csv=Path(context["canonical_csv"]) if context.get("canonical_csv") else None,
-        quality_csv=Path(context["quality_csv"]) if context.get("quality_csv") else None,
-        canonical_geometry_jsonl=Path(context["canonical_geometry_jsonl"]) if context.get("canonical_geometry_jsonl") else None,
-        geometry_loo_csv=Path(context["geometry_loo_csv"]) if context.get("geometry_loo_csv") else None,
-        geometry_stability_csv=Path(context["geometry_stability_csv"]) if context.get("geometry_stability_csv") else None,
+        worker_csv, worker_manifest,
+        canonical_csv=context_paths["canonical_csv"], quality_csv=context_paths["quality_csv"],
+        canonical_geometry_jsonl=context_paths["canonical_geometry_jsonl"], geometry_loo_csv=context_paths["geometry_loo_csv"],
+        geometry_stability_csv=context_paths["geometry_stability_csv"],
         min_r_u_tasks=int(context.get("min_r_u_tasks") or 1),
     )
     gate["formal_worker_state"] = formal_worker
-    temporal_contract_path = output_dir / "routing_temporal_contract_summary_C1.json"
-    if not temporal_contract_path.exists():
-        raise ValueError("prepared temporal contract summary is required")
+    temporal_contract_path = require_bundle_member(
+        str(output_dir / "routing_temporal_contract_summary_C1.json"), "temporal contract summary"
+    )
     gate.setdefault("vfinal_sidecars", {})["routing_temporal_replay"] = json.loads(temporal_contract_path.read_text(encoding="utf-8"))
     adjudication = _formal_adjudication(formal_closeout_adjudication_manifest, bundle["bundle_sha256"])
     gate["formal_adjudication"] = adjudication

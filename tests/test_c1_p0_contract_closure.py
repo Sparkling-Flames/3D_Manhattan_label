@@ -246,6 +246,23 @@ def test_finalize_existing_closeout_binds_adjudication_without_rerunning_inputs(
     assert result["profile_freeze_status"] == "C1_frozen"
     assert (tmp_path / "worker_profile_freeze_C1.json").exists()
 
+    copied_state = tmp_path / "worker_state_unbound_copy.csv"
+    copied_state.write_bytes(state.read_bytes())
+    tampered_gate = dict(result)
+    tampered_gate["formal_worker_state"] = {**result["formal_worker_state"], "csv_path": str(copied_state)}
+    (tmp_path / "c1_closeout_dryrun_gate_summary.json").write_text(json.dumps(tampered_gate), encoding="utf-8")
+    with pytest.raises(ValueError, match="worker-state CSV.*bundle"):
+        finalize_existing_closeout(tmp_path, adjudication_path)
+
+    bundle_without_temporal = {**bundle, "artifacts": [item for item in bundle["artifacts"] if Path(item["path"]) != temporal_path]}
+    bundle_without_temporal["bundle_sha256"] = __import__("hashlib").sha256(json.dumps(bundle_without_temporal["artifacts"], sort_keys=True).encode("utf-8")).hexdigest()
+    (tmp_path / "c1_closeout_input_bundle.json").write_text(json.dumps(bundle_without_temporal), encoding="utf-8")
+    adjudication["input_bundle_sha256"] = bundle_without_temporal["bundle_sha256"]
+    adjudication_path.write_text(json.dumps(adjudication), encoding="utf-8")
+    (tmp_path / "c1_closeout_dryrun_gate_summary.json").write_text(json.dumps(result), encoding="utf-8")
+    with pytest.raises(ValueError, match="temporal contract summary.*bundle"):
+        finalize_existing_closeout(tmp_path, adjudication_path)
+
 
 def test_temporal_formal_gate_accepts_scope_only_primary_evidence() -> None:
     contract_fields = (

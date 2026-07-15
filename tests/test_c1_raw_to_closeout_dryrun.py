@@ -227,7 +227,9 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
     roster_rows = [{"base_task_id": "scene_a", "condition": "manual", "worker_id": worker, "candidate_eligible": "true", "exclusion_reason": "", "source_admission_path": str(admission), "source_admission_sha256": sha256_file(admission), "source_assignment_path": str(manual), "source_assignment_sha256": sha256_file(manual), "manifest_version": "candidate_roster_v1"} for worker in workers]
     _csv(roster, list(roster_rows[0]), roster_rows)
     history = tmp_path / "assignment_history_frozen.csv"
-    _csv(history, ["base_task_id", "condition", "worker_id", "assignment_status", "effective_at", "source_manifest_path", "source_manifest_sha256", "manifest_version"], [])
+    history_fields = ["base_task_id", "condition", "worker_id", "assignment_status", "effective_at", "source_manifest_path", "source_manifest_sha256", "manifest_version"]
+    history_rows = [{"base_task_id": "scene_a", "condition": "manual", "worker_id": worker, "assignment_status": "available", "effective_at": "2025-12-31T00:00:00Z", "source_manifest_path": str(manual), "source_manifest_sha256": sha256_file(manual), "manifest_version": "assignment_history_v1"} for worker in workers]
+    _csv(history, history_fields, history_rows)
     fold = _fold_for_base("scene_a", 2)
     fit_base = next(f"fit-{index}" for index in range(100) if _fold_for_base(f"fit-{index}", 2) != fold)
     temporal_policy = tmp_path / "temporal_policy_frozen.json"
