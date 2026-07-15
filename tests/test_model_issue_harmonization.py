@@ -68,6 +68,32 @@ def test_retrospective_amendment_joins_project_runtime_artifact(tmp_path) -> Non
     assert row["harmonization_validity_status"] == "valid_behavior_inferred"
 
 
+def test_complete_original_provenance_needs_no_retrospective_amendment(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    initial = [{"type": "keypointlabels", "value": {"x": x / 1024 * 100, "y": y / 512 * 100}} for x, y in _geometry(100)]
+    export.write_text(json.dumps([{"id": "T", "project": "P", "predictions": [{"id": "artifact", "result": initial}]}]), encoding="utf-8")
+    export_sha = __import__("hashlib").sha256(export.read_bytes()).hexdigest()
+    (tmp_path / "c1_canonical_meta_observations.csv").write_text(
+        "source_export_sha256,project_id,ls_runtime_task_id,canonical_annotation_id,task_id,base_task_id,worker_id,condition,choice_map_json\n"
+        + export_sha + ",P,T,A,t,b,w,semi,\"{\"\"model_issue\"\":[\"\"acceptable\"\"]}\"\n",
+        encoding="utf-8",
+    )
+    (tmp_path / "c1_model_artifact_provenance.csv").write_text(
+        "project_id,ls_runtime_task_id,task_id,initialization_artifact_id,provenance_status,prediction_selection_status\nP,T,t,artifact,complete,selected_unique\n",
+        encoding="utf-8",
+    )
+    geometry = tmp_path / "geometry.jsonl"
+    geometry.write_text(json.dumps({"canonical_annotation_id": "A", "corners_px": _geometry(120)}) + "\n", encoding="utf-8")
+    summary = materialize_model_issue_harmonization([export], geometry, tmp_path, input_status="formal")
+    row = next(csv.DictReader((tmp_path / "model_issue_harmonization_C1.csv").open(encoding="utf-8")))
+    assert summary["amendment_needed_rows"] == 0
+    assert summary["amendment_blockers"] == {}
+    assert row["retrospective_amendment_status"] == "not_needed_original_provenance_complete"
+    assert row["effective_provenance_status"] == "complete"
+    assert row["assertion_source"] == "legacy_behavior_inferred"
+    assert row["harmonized_issue"] == "corner_drift"
+
+
 def test_raw_export_to_quality_three_state_consumes_historical_amendment(tmp_path: Path) -> None:
     def write_csv(path: Path, fields: list[str], rows: list[dict[str, str]]) -> None:
         with path.open("w", newline="", encoding="utf-8") as handle:

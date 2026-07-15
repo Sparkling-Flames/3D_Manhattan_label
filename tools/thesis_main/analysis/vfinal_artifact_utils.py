@@ -121,6 +121,10 @@ def write_csv_rows(path: Path, rows: Iterable[dict[str, Any]], fieldnames: list[
                 if key not in keys:
                     keys.append(key)
         fieldnames = keys
+    else:
+        # A duplicated CSV header is an ambiguous schema even when DictReader
+        # happens to keep the last value.  Preserve the declared order once.
+        fieldnames = list(dict.fromkeys(fieldnames))
     with path.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames, extrasaction="ignore")
         writer.writeheader()

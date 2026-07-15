@@ -252,6 +252,18 @@ def _enhance_duplicate_rows(
     return out
 
 
+def _frozen_audit_bool(value: Any) -> str:
+    """Preserve a frozen audit boolean without treating the string 'false' as truthy."""
+    if isinstance(value, bool):
+        return bool_text(value)
+    text = safe(value).lower()
+    if text in {"true", "1", "yes"}:
+        return "true"
+    if text in {"false", "0", "no"}:
+        return "false"
+    return ""
+
+
 def build_canonicalization(
     export_paths: list[Path],
     manual_assignment: Path = MANUAL_ASSIGNMENT_DEFAULT,
@@ -380,11 +392,11 @@ def build_canonicalization(
             "independence_audit_identity": "|".join(identity),
             "parent_annotation_id": safe(audit.get("parent_annotation_id")) if audit else "",
             "parent_owner_id": safe(audit.get("parent_owner_id")) if audit else "",
-            "parent_same_task": bool_text(audit.get("parent_same_task")) if audit else "",
-            "parent_cross_owner": bool_text(audit.get("parent_cross_owner")) if audit else "",
-            "parent_precedes": bool_text(audit.get("parent_precedes")) if audit else "",
-            "parent_geometry_hash_match": bool_text(audit.get("parent_geometry_hash_match")) if audit else "",
-            "parent_derived": bool_text(audit.get("parent_derived")) if audit else "",
+            "parent_same_task": _frozen_audit_bool(audit.get("parent_same_task")) if audit else "",
+            "parent_cross_owner": _frozen_audit_bool(audit.get("parent_cross_owner")) if audit else "",
+            "parent_precedes": _frozen_audit_bool(audit.get("parent_precedes")) if audit else "",
+            "parent_geometry_hash_match": _frozen_audit_bool(audit.get("parent_geometry_hash_match")) if audit else "",
+            "parent_derived": _frozen_audit_bool(audit.get("parent_derived")) if audit else "",
             "copy_risk_status": safe(audit.get("copy_risk_status")) if audit else "",
             "source_export": row.get("source_export", ""),
             "raw_canonical_annotation_id": raw_annotation_id,

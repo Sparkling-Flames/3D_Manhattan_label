@@ -36,7 +36,8 @@
 - [PAPER_A_VFINAL_CODE_MIGRATION_AUDIT_v1.md](thesis_main/PAPER_A_VFINAL_CODE_MIGRATION_AUDIT_v1.md)：代码迁移清单与验证记录
 - [meta_label_three_state_rule_manifest_v1.json](thesis_main/meta_label_three_state_rule_manifest_v1.json)：三状态 meta-label 候选规则
 - [geometry_loo_candidate_rule_manifest_v1.json](thesis_main/geometry_loo_candidate_rule_manifest_v1.json)：Geometry LOO 候选规则
-- [sequential_routing_candidate_rule_manifest_v1.json](thesis_main/sequential_routing_candidate_rule_manifest_v1.json)：时序 routing 候选规则
+- [sequential_routing_candidate_rule_manifest_v1.json](thesis_main/sequential_routing_candidate_rule_manifest_v1.json)：历史冻结的时序 routing 候选规则
+- [sequential_routing_candidate_rule_manifest_v2.json](thesis_main/sequential_routing_candidate_rule_manifest_v2.json)：统一 temporal replay 状态机与候选规则合同
 - [model_issue_harmonization_rule_manifest_v1.json](thesis_main/model_issue_harmonization_rule_manifest_v1.json)：model issue 抖动容忍与 harmonization 候选规则
 - [RQ3_MINIMAL_EVIDENCE_CHAIN_CONTRACT_v1.md](thesis_main/RQ3_MINIMAL_EVIDENCE_CHAIN_CONTRACT_v1.md)
 - [STATISTICAL_ANALYSIS_PLAN_v1.md](thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md)

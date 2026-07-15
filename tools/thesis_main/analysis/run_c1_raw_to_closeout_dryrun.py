@@ -52,6 +52,7 @@ def materialize(
     temporal_policy_manifest: Path | None = None,
     task_purpose_manifest_csv: Path | None = None,
     candidate_roster_manifest_csv: Path | None = None,
+    assignment_history_csv: Path | None = None,
     formal_closeout_adjudication_manifest: Path | None = None,
     formal_worker_state_csv: Path | None = None,
     formal_worker_state_manifest: Path | None = None,
@@ -93,6 +94,7 @@ def materialize(
         temporal_policy_manifest,
         task_purpose_manifest_csv,
         candidate_roster_manifest_csv,
+        assignment_history_csv,
         formal_closeout_adjudication_manifest,
         formal_worker_state_csv,
         formal_worker_state_manifest,
@@ -103,8 +105,8 @@ def materialize(
         "canonical_csv": canonical["canonical_csv"],
         "gate_summary_json": str(output_dir / "c1_closeout_dryrun_gate_summary.json"),
         "gate_summary_md": str(output_dir / "c1_closeout_dryrun_gate_summary.md"),
-            "c2_draft_manifest": "",
-            "c2_materialization_blocked": True,
+        "c2_draft_manifest": "",
+        "c2_materialization_blocked": True,
         "worker_profile_sidecar_summary": str(output_dir / "worker_profile_sidecar_C1.summary.json"),
         "passed_semantics": "raw_to_closeout_dryrun_only_not_official_c1_closeout",
     }
@@ -143,6 +145,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--temporal-policy-manifest", type=Path)
     parser.add_argument("--task-purpose-manifest-csv", type=Path)
     parser.add_argument("--candidate-roster-manifest-csv", type=Path)
+    parser.add_argument("--assignment-history-csv", type=Path)
     parser.add_argument("--formal-closeout-adjudication-manifest", type=Path)
     parser.add_argument("--formal-worker-state-csv", type=Path)
     parser.add_argument("--formal-worker-state-manifest", type=Path)
@@ -177,6 +180,7 @@ def main(argv: list[str] | None = None) -> int:
         temporal_policy_manifest=args.temporal_policy_manifest,
         task_purpose_manifest_csv=args.task_purpose_manifest_csv,
         candidate_roster_manifest_csv=args.candidate_roster_manifest_csv,
+        assignment_history_csv=args.assignment_history_csv,
         formal_closeout_adjudication_manifest=args.formal_closeout_adjudication_manifest,
         formal_worker_state_csv=args.formal_worker_state_csv,
         formal_worker_state_manifest=args.formal_worker_state_manifest,
