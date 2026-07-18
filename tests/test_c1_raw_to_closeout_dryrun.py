@@ -167,6 +167,7 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
     inventory = tmp_path / "inventory.csv"
     task_outcome = tmp_path / "task_outcome.csv"
     audit = tmp_path / "independence_audit_frozen.csv"
+    failure_disposition = tmp_path / "failure_disposition.csv"
     export = tmp_path / "raw_export.json"
     _csv(manual, assignment_fields, assignment_rows)
     _csv(semi, assignment_fields, [])
@@ -184,6 +185,7 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
         })
     export.write_text(json.dumps([{"id": "100", "project": 66, "data": {"task_id": "a1", "base_task_id": "scene_a", "condition": "manual", "dataset_group": "Calibration_anchor", "scene_label": "room_a"}, "annotations": annotations}]), encoding="utf-8")
     _csv(audit, ["project_id", "ls_runtime_task_id", "worker_id", "raw_annotation_id", "independence_status", "parent_derived", "copy_risk_status"], [{"project_id": "66", "ls_runtime_task_id": "100", "worker_id": worker, "raw_annotation_id": f"ann-{index}", "independence_status": "independent", "parent_derived": "false", "copy_risk_status": "cleared"} for index, worker in enumerate(workers, 1)])
+    _csv(failure_disposition, ["project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "failure_attribution", "incident_evidence_status", "failure_disposition_reason"], [{"project_id": "66", "ls_runtime_task_id": "100", "worker_id": worker, "annotation_id": f"ann-{index}", "failure_attribution": "none", "incident_evidence_status": "not_applicable", "failure_disposition_reason": "no_failure_adjudication"} for index, worker in enumerate(workers, 1)])
     p1_task, p1_status, p1_scores, p1_profile = _complete_p1_fixture(tmp_path, workers)
     p1_hashes_before = {path: sha256_file(path) for path in (p1_task, p1_status, p1_scores, p1_profile)}
 
@@ -196,6 +198,7 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
         p1_geometry_task_scores=p1_scores, p1_worker_geometry_profile=p1_profile,
         require_complete=True, input_status="formal", independence_audit_csv=audit,
         task_outcome_csv=task_outcome,
+        failure_disposition_csv=failure_disposition,
     )
     assert first["canonicalization_summary"]["blockers"] == []
     canonical_rows = _rows(out / "c1_canonical_annotations.csv")
@@ -264,6 +267,7 @@ def test_raw_to_finalize_contract_positive_path_uses_only_materialized_intermedi
         candidate_roster_manifest_csv=roster, assignment_history_csv=history,
         formal_worker_state_csv=worker_state, formal_worker_state_manifest=worker_manifest,
             task_outcome_csv=task_outcome, r_u_scoring_evidence_csv=score,
+            failure_disposition_csv=failure_disposition,
     )["gate_summary"]
     assert prepared["formal_closeout_ready"] is False
     assert prepared["formal_worker_state"]["valid"] is True

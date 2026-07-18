@@ -333,6 +333,15 @@ def _c1_failure_fields(row: dict[str, Any]) -> dict[str, Any]:
     # descriptive but force formal callers to reject the resulting state.
     if not any(safe(row.get(field)) for field in _FAILURE_INPUT_FIELDS):
         row = {**row, "failure_attribution": "not_evaluable", "incident_evidence_status": "not_evaluable"}
+    if (
+        safe(row.get("failure_attribution")) == "external_system_failure"
+        and safe(row.get("failure_disposition_reason")) != "verified"
+    ):
+        row = {
+            **row,
+            "failure_attribution": "not_evaluable",
+            "incident_evidence_status": "not_evaluable",
+        }
     return c1_failure_fields(row)
 
 

@@ -171,23 +171,17 @@ def test_c1_quality_worker_gaps_and_c2_reserve_draft_chain(tmp_path: Path) -> No
     assert worker["n_calib_completed"] == "0"
     assert worker["needs_c2_ci_fill"] == "true"
 
-    gap_summary = materialize_gaps(out / "c1_quality_annotations.csv", out / "worker_state_snapshot_C1.csv", out, min_scene=1, min_calib=2, epsilon_r=0.15)
-    assert gap_summary["direct_assignment"] is False
-    assert _rows(out / "ci_precision_audit_C1.csv")[0]["needs_c2_ci_fill"] == "true"
-    assert any(row["needs_c2_scene_fill"] == "true" for row in _rows(out / "scene_coverage_gap_C1.csv"))
-
-    reserve = tmp_path / "reserve.csv"
-    _csv(
-        reserve,
-        ["task_id", "base_task_id", "dataset_group", "calibration_split"],
-        [{"task_id": "r1", "base_task_id": "reserve_scene", "dataset_group": "Calibration_reserve", "calibration_split": "reserve"}],
-    )
-    c2_summary = materialize_c2(reserve, out / "ci_precision_audit_C1.csv", out / "scene_coverage_gap_C1.csv", tmp_path / "c2", tasks_per_fill=1)
-    manifest = _rows(tmp_path / "c2" / "assignment_manifest_C2_draft.csv")
-    audit = _rows(tmp_path / "c2" / "reserve_usage_audit_C2_draft.csv")
-    assert c2_summary["reserve_only"] is True
-    assert {row["dataset_group"] for row in manifest} == {"Calibration_reserve"}
-    assert {row["reserve_misuse_flag"] for row in audit} == {"false"}
+    profile = tmp_path / "post_c2b_profile.csv"
+    _csv(profile, ["worker_id", "support", "ci_half_width"], [{"worker_id": "w1", "support": "4", "ci_half_width": "0.2"}])
+    design = tmp_path / "design.json"
+    design.write_text(json.dumps({
+        "manifest_version": "c2_design_v1",
+        "input_sha256": {"worker_profile_csv": __import__("hashlib").sha256(profile.read_bytes()).hexdigest()},
+        "precision": {"target_ci_half_width": 0.15, "max_additional_blocks": 3},
+    }), encoding="utf-8")
+    precision = materialize_gaps(profile, design, tmp_path / "c2")
+    assert precision["candidate_only"] is True
+    assert _rows(tmp_path / "c2" / "precision_plan_C2A_RP.csv")[0]["additional_blocks"] == "2"
 
 
 def test_missing_core_used_for_r_u_flag_fails_closed(tmp_path: Path) -> None:
@@ -224,37 +218,34 @@ def test_missing_core_used_for_r_u_flag_fails_closed(tmp_path: Path) -> None:
     assert summary["blockers"] == ["canonical_meta_missing_or_stale"]
 
 
-def test_missing_scene_label_does_not_fallback_to_base_task(tmp_path: Path) -> None:
-    quality = tmp_path / "quality.csv"
+def test_precision_plan_fails_closed_when_uncertainty_is_not_evaluable(tmp_path: Path) -> None:
     worker = tmp_path / "worker.csv"
-    _csv(
-        quality,
-        ["worker_id", "task_id", "base_task_id", "dataset_group", "used_for_r_u"],
-        [{"worker_id": "w1", "task_id": "t1", "base_task_id": "base_is_not_scene", "dataset_group": "Calibration_core", "used_for_r_u": "true"}],
-    )
-    _csv(worker, ["worker_id", "n_calib_completed", "needs_c2_ci_fill", "r_u_ci_low", "r_u_ci_high", "r_u_h"], [{"worker_id": "w1", "n_calib_completed": "5", "needs_c2_ci_fill": "false", "r_u_ci_low": "", "r_u_ci_high": "", "r_u_h": ""}])
-
-    summary = materialize_gaps(quality, worker, tmp_path / "out", min_scene=1, min_calib=5, epsilon_r=0.15)
-    scene = _rows(tmp_path / "out" / "scene_coverage_gap_C1.csv")[0]
-
-    assert summary["n_scene_fill_cells"] == 0
-    assert scene["scene_gap_evaluable"] == "false"
-    assert scene["needs_c2_scene_fill"] == "false"
-    assert scene["scene_fill_reason"] == "scene_label_missing"
+    _csv(worker, ["worker_id", "support", "ci_half_width"], [{"worker_id": "w1", "support": "", "ci_half_width": ""}])
+    design = tmp_path / "design.json"
+    design.write_text(json.dumps({
+        "manifest_version": "c2_design_v1",
+        "input_sha256": {"worker_profile_csv": __import__("hashlib").sha256(worker.read_bytes()).hexdigest()},
+        "precision": {"target_ci_half_width": 0.15, "max_additional_blocks": 3},
+    }), encoding="utf-8")
+    materialize_gaps(worker, design, tmp_path / "out")
+    row = _rows(tmp_path / "out" / "precision_plan_C2A_RP.csv")[0]
+    assert row["additional_blocks"] == "0"
+    assert row["unmet_reason"] == "precision_not_evaluable"
 
 
-def test_empty_ci_is_not_formal_precision_failure_when_count_sufficient(tmp_path: Path) -> None:
-    quality = tmp_path / "quality.csv"
+def test_precision_plan_does_not_add_tasks_when_target_is_met(tmp_path: Path) -> None:
     worker = tmp_path / "worker.csv"
-    _csv(quality, ["worker_id", "scene_label", "used_for_r_u"], [{"worker_id": "w1", "scene_label": "room", "used_for_r_u": "true"}])
-    _csv(worker, ["worker_id", "n_calib_completed", "needs_c2_ci_fill", "r_u_ci_low", "r_u_ci_high", "r_u_h"], [{"worker_id": "w1", "n_calib_completed": "5", "needs_c2_ci_fill": "false", "r_u_ci_low": "", "r_u_ci_high": "", "r_u_h": ""}])
-
-    materialize_gaps(quality, worker, tmp_path / "out", min_scene=1, min_calib=5, epsilon_r=0.15)
-    ci = _rows(tmp_path / "out" / "ci_precision_audit_C1.csv")[0]
-
-    assert ci["ci_evaluable"] == "false"
-    assert ci["needs_c2_ci_fill"] == "false"
-    assert ci["ci_fill_reason"] == "not_evaluable_without_r_u_estimate"
+    _csv(worker, ["worker_id", "support", "ci_half_width"], [{"worker_id": "w1", "support": "10", "ci_half_width": "0.1"}])
+    design = tmp_path / "design.json"
+    design.write_text(json.dumps({
+        "manifest_version": "c2_design_v1",
+        "input_sha256": {"worker_profile_csv": __import__("hashlib").sha256(worker.read_bytes()).hexdigest()},
+        "precision": {"target_ci_half_width": 0.15, "max_additional_blocks": 3},
+    }), encoding="utf-8")
+    materialize_gaps(worker, design, tmp_path / "out")
+    row = _rows(tmp_path / "out" / "precision_plan_C2A_RP.csv")[0]
+    assert row["additional_blocks"] == "0"
+    assert row["precision_target_met"] == "true"
 
 
 def test_canonical_quality_sidecar_preserves_inclusion_contract_fields(tmp_path: Path) -> None:
@@ -266,7 +257,8 @@ def test_canonical_quality_sidecar_preserves_inclusion_contract_fields(tmp_path:
         "geometry_score_gate_passed", "quality_metric_name", "quality_metric_value", "geometry_metric_direction", "geometry_normalization_rule",
         "geometry_failure_threshold_status", "geometry_failure_family_evaluable", "geometry_failure_observed",
         "semi_issue_recognition_evaluable", "semi_geometry_correction_evaluable", "semi_response_type", "semi_correction_failure_observed",
-        "undercoverage_evidence_status", "undercoverage_expert_verdict", "undercoverage_response", "undercoverage_subfamily", "undercoverage_failure_observed",
+            "undercoverage_evidence_status", "undercoverage_expert_verdict", "undercoverage_response", "undercoverage_subfamily", "undercoverage_failure_observed",
+            "failure_attribution", "incident_evidence_status",
     ]
     _csv(canonical, fields, [{
         "round_id": "C1", "task_id": "t1", "base_task_id": "b1", "dataset_group": "Calibration_semi", "condition": "semi", "worker_id": "w1", "canonical_annotation_id": "a1",
@@ -275,7 +267,8 @@ def test_canonical_quality_sidecar_preserves_inclusion_contract_fields(tmp_path:
         "geometry_score_gate_passed": "true", "quality_metric_name": "iou", "quality_metric_value": "0.8", "geometry_metric_direction": "higher_is_better", "geometry_normalization_rule": "identity_0_1",
         "geometry_failure_threshold_status": "not_frozen", "geometry_failure_family_evaluable": "false", "geometry_failure_observed": "",
         "semi_issue_recognition_evaluable": "true", "semi_geometry_correction_evaluable": "true", "semi_response_type": "successful_correction", "semi_correction_failure_observed": "false",
-        "undercoverage_evidence_status": "", "undercoverage_expert_verdict": "", "undercoverage_response": "", "undercoverage_subfamily": "", "undercoverage_failure_observed": "",
+            "undercoverage_evidence_status": "", "undercoverage_expert_verdict": "", "undercoverage_response": "", "undercoverage_subfamily": "", "undercoverage_failure_observed": "",
+            "failure_attribution": "none", "incident_evidence_status": "not_applicable",
     }])
     out = tmp_path / "out"
     materialize_quality(canonical, out, candidate_inventory_csv=None)
@@ -292,23 +285,21 @@ def test_canonical_quality_sidecar_preserves_inclusion_contract_fields(tmp_path:
     assert any(row["included_in_T_u"] == "true" and row["response_type"] == "successful_correction" for row in evidence)
 
 
-def test_c2_draft_reports_reserve_capacity_shortfall_without_reuse(tmp_path: Path) -> None:
-    reserve = tmp_path / "reserve.csv"
-    ci = tmp_path / "ci.csv"
-    scene = tmp_path / "scene.csv"
-    _csv(reserve, ["task_id", "base_task_id", "dataset_group", "calibration_split"], [{"task_id": "r1", "base_task_id": "rb1", "dataset_group": "Calibration_reserve", "calibration_split": "reserve"}])
-    _csv(ci, ["worker_id", "needs_c2_ci_fill", "ci_fill_reason"], [{"worker_id": "w1", "needs_c2_ci_fill": "true", "ci_fill_reason": "count"}])
-    _csv(
-        scene,
-        ["worker_id", "scene_label", "needs_c2_scene_fill", "scene_fill_reason"],
-        [{"worker_id": "w1", "scene_label": "room", "needs_c2_scene_fill": "true", "scene_fill_reason": "gap"}],
-    )
-
-    summary = materialize_c2(reserve, ci, scene, tmp_path / "out", tasks_per_fill=1)
-    manifest = _rows(tmp_path / "out" / "assignment_manifest_C2_draft.csv")
-    audit = _rows(tmp_path / "out" / "reserve_usage_audit_C2_draft.csv")
-    worker_task_keys = {(row["worker_id"], row["task_id"], row["base_task_id"]) for row in manifest}
-
-    assert len(worker_task_keys) == len(manifest) == 1
-    assert summary["reserve_capacity_shortfall_count"] == 1
-    assert any(row["reserve_capacity_shortfall"] == "1" for row in audit)
+def test_c2b_task_shortage_has_no_assignment_manifest_rows(tmp_path: Path) -> None:
+    pool = tmp_path / "pool.csv"
+    worker = tmp_path / "worker.csv"
+    _csv(pool, ["task_id", "anchor_eligible", "bridge_eligible", "task_stratum"], [{"task_id": "a1", "anchor_eligible": "true", "bridge_eligible": "false", "task_stratum": "ordinary"}])
+    _csv(worker, ["worker_id", "support", "ci_half_width"], [{"worker_id": "w1", "support": "10", "ci_half_width": "0.1"}])
+    design = tmp_path / "design.json"
+    design.write_text(json.dumps({
+        "manifest_version": "c2_design_v1",
+        "input_sha256": {
+            "worker_profile_csv": __import__("hashlib").sha256(worker.read_bytes()).hexdigest(),
+            "task_pool_csv": __import__("hashlib").sha256(pool.read_bytes()).hexdigest(),
+        },
+        "c2b_target_ci_half_width": 0.2,
+        "candidate_designs": [{"design_id": "d1", "common_anchor_count": 1, "bridge_per_worker": 1, "unique_bridge_tasks": 1, "min_task_support": 1}],
+    }), encoding="utf-8")
+    summary = materialize_c2(pool, worker, design, tmp_path / "out")
+    assert summary["c2b_design_ready"] is False
+    assert _rows(tmp_path / "out" / "assignment_manifest_C2B.csv") == []

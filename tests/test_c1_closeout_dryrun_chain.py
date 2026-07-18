@@ -156,6 +156,9 @@ def test_c2_materialization_is_blocked_before_capacity_evaluation(tmp_path: Path
     summary = materialize(canonical, assignment, reserve, tmp_path / "out", tmp_path / "c2", inventory, 3, 2, 3, 0.15, 1)
 
     assert summary["c2_draft_summary"]["materialization_blocked"] is True
+    assert summary["c2_design_ready"] is False
+    assert summary["c2b_ready"] is False
+    assert summary["c2a_rp_ready"] is False
     assert summary["blocked_for_launch"] is True
     assert "c2_decision_chain_blocked_pending_formal_closeout" in summary["blockers"]
 

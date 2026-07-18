@@ -14,7 +14,7 @@ def build_manifest(*, locked_round: str, contract_version: str) -> dict:
         "meta": {
             "contract_version": contract_version,
             "locked_round": locked_round,
-            "rule_version": "failure_disposition_v1",
+            "rule_version": "failure_disposition_v2",
             "external_incident_source": "active_logs/operational_incidents/",
         },
         "allowed_attributions": [
@@ -23,8 +23,26 @@ def build_manifest(*, locked_round: str, contract_version: str) -> dict:
             "external_system_failure",
         ],
         "external_evidence_requirements": {
-            "required_fields": ["incident_id", "immutable_evidence_reference", "occurred_at", "recovered_at", "affected_scope"],
+            "required_fields": [
+                "incident_id",
+                "incident_type",
+                "occurred_at",
+                "recovered_at",
+                "affected_project_ids",
+                "affected_task_ids_or_scope_rule",
+                "evidence_path",
+                "evidence_sha256",
+                "recorded_at",
+                "recorded_before_outcome_review",
+            ],
             "missing_evidence_disposition": "not_evaluable",
+            "validation": [
+                "incident_exists",
+                "evidence_sha256_matches",
+                "annotation_in_affected_scope",
+                "annotation_timestamp_in_incident_window",
+                "recorded_before_outcome_review_true",
+            ],
         },
         "t1_rerun_rule": "rerun_or_administratively_censor_whole_pair",
         "v1_rerun_rule": "same_policy_arm_same_frozen_version_symmetric_reserved_capacity",
@@ -42,7 +60,12 @@ def build_manifest(*, locked_round: str, contract_version: str) -> dict:
         },
         "external_system_failure": {
             "categories": ["platform_unavailable", "server_outage", "export_corruption"],
-            "evidence_required": ["incident_id", "immutable_evidence_reference", "occurred_at", "affected_scope"],
+            "evidence_required": [
+                "incident_id", "incident_type", "occurred_at", "recovered_at",
+                "affected_project_ids", "affected_task_ids_or_scope_rule",
+                "evidence_path", "evidence_sha256", "recorded_at",
+                "recorded_before_outcome_review",
+            ],
             "classification_timing": "before_condition_or_policy_outcome_review",
             "max_reruns": 1,
             "t1_pair_rule": "rerun_or_administratively_censor_whole_pair",

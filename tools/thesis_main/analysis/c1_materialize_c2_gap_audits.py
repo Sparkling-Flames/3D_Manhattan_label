@@ -2,8 +2,8 @@ from __future__ import annotations
 
 import argparse
 import json
+import math
 import sys
-from collections import Counter
 from pathlib import Path
 from typing import Any
 
@@ -12,119 +12,140 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, safe, truthy, write_csv, write_json
-
-DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
-
-CI_FIELDS = ["worker_id", "round_id", "n_calib_completed", "r_u_ci_low", "r_u_ci_high", "r_u_h", "epsilon_r", "ci_evaluable", "needs_c2_ci_fill", "ci_fill_reason"]
-SCENE_FIELDS = ["worker_id", "scene_label", "round_id", "n_u_s", "n_u_s_min_candidate", "coverage_gap", "activation_candidate", "scene_gap_evaluable", "needs_c2_scene_fill", "scene_fill_reason"]
+from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
-def _scene(row: dict[str, str]) -> str:
-    for field in ("scene_label", "scene_bin", "scene_stratum", "room_type", "risk_bucket"):
+PRECISION_FIELDS = [
+    "worker_id", "current_support", "current_ci_half_width", "target_ci_half_width",
+    "additional_blocks", "ordinary_tasks", "stress_tasks", "projected_ci_half_width",
+    "precision_target_met", "routing_eligibility", "unmet_reason", "design_manifest_sha256",
+]
+
+
+def _number(row: dict[str, str], *fields: str) -> float | None:
+    for field in fields:
         value = safe(row.get(field))
         if value:
-            return value
-    return ""
+            return float(value)
+    return None
 
 
-def build_ci_rows(worker_rows: list[dict[str, str]], epsilon_r: float, min_calib: int) -> list[dict[str, Any]]:
+def build_precision_plan(
+    worker_rows: list[dict[str, str]],
+    *,
+    target_half_width: float,
+    max_additional_blocks: int,
+    manifest_sha: str,
+) -> list[dict[str, Any]]:
     out = []
-    for row in worker_rows:
-        n = int(float(safe(row.get("n_calib_completed")) or 0))
-        ci_evaluable = bool(safe(row.get("r_u_ci_low")) and safe(row.get("r_u_ci_high")))
-        needs = truthy(row.get("needs_c2_ci_fill")) or n < min_calib
+    for row in sorted(worker_rows, key=lambda value: safe(value.get("worker_id"))):
+        worker = safe(row.get("worker_id"))
+        support_raw = _number(row, "support", "n_support", "n_calib_completed")
+        half_width = _number(row, "ci_half_width", "r_u_h")
+        blocked = truthy(row.get("process_blocker")) or truthy(row.get("independence_blocker"))
+        blocks = 0
+        projected = half_width
         reason = ""
-        if needs:
-            reason = "insufficient_c1_reliability_support_dryrun_count"
-        elif not ci_evaluable:
-            reason = "not_evaluable_without_r_u_estimate"
-        out.append(
-            {
-                "worker_id": safe(row.get("worker_id")),
-                "round_id": "C1",
-                "n_calib_completed": n,
-                "r_u_ci_low": safe(row.get("r_u_ci_low")),
-                "r_u_ci_high": safe(row.get("r_u_ci_high")),
-                "r_u_h": safe(row.get("r_u_h")),
-                "epsilon_r": epsilon_r,
-                "ci_evaluable": ci_evaluable,
-                "needs_c2_ci_fill": needs,
-                "ci_fill_reason": reason,
-            }
-        )
+        if blocked:
+            reason = "process_or_independence_blocker"
+        elif not worker or support_raw is None or support_raw <= 0 or half_width is None:
+            reason = "precision_not_evaluable"
+        else:
+            support = int(support_raw)
+            while projected > target_half_width and blocks < max_additional_blocks:
+                blocks += 1
+                projected = half_width * math.sqrt(support / (support + 2 * blocks))
+            if projected > target_half_width:
+                reason = "target_not_met_at_frozen_cap"
+        met = not reason and projected is not None and projected <= target_half_width
+        out.append({
+            "worker_id": worker,
+            "current_support": "" if support_raw is None else int(support_raw),
+            "current_ci_half_width": "" if half_width is None else half_width,
+            "target_ci_half_width": target_half_width,
+            "additional_blocks": blocks,
+            "ordinary_tasks": blocks,
+            "stress_tasks": blocks,
+            "projected_ci_half_width": "" if projected is None else projected,
+            "precision_target_met": met,
+            "routing_eligibility": "eligible" if met else "uncertain_fallback_global",
+            "unmet_reason": reason,
+            "design_manifest_sha256": manifest_sha,
+        })
     return out
 
 
-def build_scene_rows(quality_rows: list[dict[str, str]], worker_rows: list[dict[str, str]], min_scene: int) -> list[dict[str, Any]]:
-    workers = sorted({safe(row.get("worker_id")) for row in worker_rows if safe(row.get("worker_id"))} | {safe(row.get("worker_id")) for row in quality_rows if safe(row.get("worker_id"))})
-    scenes = sorted({_scene(row) for row in quality_rows if _scene(row)})
-    if not scenes:
-        return [
-            {
-                "worker_id": worker,
-                "scene_label": "",
-                "round_id": "C1",
-                "n_u_s": 0,
-                "n_u_s_min_candidate": min_scene,
-                "coverage_gap": "",
-                "activation_candidate": False,
-                "scene_gap_evaluable": False,
-                "needs_c2_scene_fill": False,
-                "scene_fill_reason": "scene_label_missing",
-            }
-            for worker in workers
-        ]
-    counts = Counter((safe(row.get("worker_id")), _scene(row)) for row in quality_rows if truthy(row.get("used_for_r_u")) and _scene(row))
-    out = []
-    for worker in workers:
-        for scene in scenes:
-            n = counts[(worker, scene)]
-            gap = max(0, min_scene - n)
-            out.append(
-                {
-                    "worker_id": worker,
-                    "scene_label": scene,
-                    "round_id": "C1",
-                    "n_u_s": n,
-                    "n_u_s_min_candidate": min_scene,
-                    "coverage_gap": gap,
-                    "activation_candidate": n >= min_scene,
-                    "scene_gap_evaluable": True,
-                    "needs_c2_scene_fill": gap > 0,
-                    "scene_fill_reason": "below_candidate_scene_support" if gap > 0 else "",
-                }
+def materialize(
+    worker_profile_csv: Path,
+    design_manifest: Path,
+    output_dir: Path,
+    *,
+    c2b_summary: Path | None = None,
+    input_status: str = "dry_run",
+) -> dict[str, Any]:
+    manifest = json.loads(design_manifest.read_text(encoding="utf-8"))
+    if manifest.get("manifest_version") != "c2_design_v1":
+        raise ValueError("unsupported C2 design manifest version")
+    manifest_sha = sha256_file(design_manifest)
+    expected = manifest.get("input_sha256") or {}
+    actual_profile_sha = sha256_file(worker_profile_csv)
+    binding_valid = expected.get("worker_profile_csv") == actual_profile_sha
+    c2b_valid = input_status != "formal"
+    if c2b_summary:
+        c2b = json.loads(c2b_summary.read_text(encoding="utf-8"))
+        c2b_valid = (
+            c2b.get("design_manifest_sha256") == manifest_sha
+            and bool(c2b.get("c2b_design_ready"))
+            and (
+                input_status != "formal"
+                or c2b.get("post_c2b_worker_profile_sha256") == actual_profile_sha
             )
-    return out
-
-
-def materialize(quality_csv: Path, worker_state_csv: Path, output_dir: Path, min_scene: int, min_calib: int, epsilon_r: float) -> dict[str, Any]:
-    quality_rows = read_csv(quality_csv)
-    worker_rows = read_csv(worker_state_csv)
-    ci_rows = build_ci_rows(worker_rows, epsilon_r, min_calib)
-    scene_rows = build_scene_rows(quality_rows, worker_rows, min_scene)
-    write_csv(output_dir / "ci_precision_audit_C1.csv", ci_rows, CI_FIELDS)
-    write_csv(output_dir / "scene_coverage_gap_C1.csv", scene_rows, SCENE_FIELDS)
+        )
+    precision = manifest.get("precision") or {}
+    target = float(precision["target_ci_half_width"])
+    max_blocks = int(precision["max_additional_blocks"])
+    if target <= 0 or max_blocks < 0:
+        raise ValueError("precision target must be positive and max_additional_blocks non-negative")
+    if not binding_valid or not c2b_valid:
+        if input_status == "formal":
+            raise ValueError("stale_or_unbound_c2a_rp_dependency")
+    rows = build_precision_plan(
+        read_csv(worker_profile_csv),
+        target_half_width=target,
+        max_additional_blocks=max_blocks,
+        manifest_sha=manifest_sha,
+    )
+    output_dir.mkdir(parents=True, exist_ok=True)
+    write_csv(output_dir / "precision_plan_C2A_RP.csv", rows, PRECISION_FIELDS)
     summary = {
-        "ci_precision_audit_csv": str(output_dir / "ci_precision_audit_C1.csv"),
-        "scene_coverage_gap_csv": str(output_dir / "scene_coverage_gap_C1.csv"),
-        "n_ci_fill_workers": sum(truthy(row["needs_c2_ci_fill"]) for row in ci_rows),
-        "n_scene_fill_cells": sum(truthy(row["needs_c2_scene_fill"]) for row in scene_rows),
-        "direct_assignment": False,
+        "design_manifest_sha256": manifest_sha,
+        "worker_profile_sha256": actual_profile_sha,
+        "dependency_binding_valid": binding_valid and c2b_valid,
+        "n_workers": len(rows),
+        "n_workers_with_precision_additions": sum(int(row["additional_blocks"]) > 0 for row in rows),
+        "n_workers_unmet_at_cap": sum(bool(row["unmet_reason"]) for row in rows),
+        "c2a_rp_ready": binding_valid and c2b_valid and bool(rows),
+        "candidate_only": input_status != "formal",
+        "launch_ready": input_status == "formal" and binding_valid and c2b_valid and bool(rows),
+        "searches_new_risk_family": False,
+        "modifies_c1": False,
     }
-    write_json(output_dir / "c2_gap_audits_C1.summary.json", summary)
+    write_json(output_dir / "precision_plan_C2A_RP.summary.json", summary)
     return summary
 
 
 def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Materialize C1 provisional C2 gap audits only.")
-    parser.add_argument("--quality-csv", type=Path, default=DEFAULT_OUTPUT_DIR / "c1_quality_annotations.csv")
-    parser.add_argument("--worker-state-csv", type=Path, default=DEFAULT_OUTPUT_DIR / "worker_state_snapshot_C1.csv")
-    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
-    parser.add_argument("--min-scene-support", type=int, default=1)
-    parser.add_argument("--min-calib", type=int, default=5)
-    parser.add_argument("--epsilon-r", type=float, default=0.15)
+    parser = argparse.ArgumentParser(description="Materialize C2-A-RP precision-only completion from post-C2-B worker uncertainty.")
+    parser.add_argument("--worker-profile-csv", type=Path, required=True)
+    parser.add_argument("--design-manifest", type=Path, required=True)
+    parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--c2b-summary", type=Path)
+    parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
     args = parser.parse_args(argv)
-    print(json.dumps(materialize(args.quality_csv, args.worker_state_csv, args.output_dir, args.min_scene_support, args.min_calib, args.epsilon_r), ensure_ascii=False, indent=2))
+    print(json.dumps(materialize(
+        args.worker_profile_csv, args.design_manifest, args.output_dir,
+        c2b_summary=args.c2b_summary, input_status=args.input_status,
+    ), ensure_ascii=False, indent=2))
     return 0
 
 

@@ -1,5 +1,17 @@
 # HOHONET 项目地图
 
+> 2026-07-18 vFinal 更新：Paper A 正式主线已改为 C1 设计 C2-B
+>（common anchor + diverse bridge）、C2-A-RP 精度补测、T1 2×2 条件试验，
+> 以及 Strong Global 对 Full-Integrated 的 V1 前瞻双臂政策试验。
+> `docs/thesis_main/manuscript/overleaf_project/main.tex` 是唯一论文入口；
+> 已删除该工程内未引用的旧版重复章节。C1 原始 export、assignment 和标注界面未改变。
+> 新正式实现位于 `tools/thesis_main/analysis/materialize_main_failure_outcomes.py`、
+> `build_c2_assignment_manifest_from_c1_gaps.py`、`c1_materialize_c2_gap_audits.py`
+> 和 `routing/v1_policy.py`；分别负责完整事故处置与 resolver、C2-B、C2-A-RP
+> 以及 Strong Global/Full-Integrated 的 V1 前瞻执行。
+> `tools/thesis_main/analysis/materialize_vfinal_main_analysis.py` 只消费 resolver
+> 最终表，生成 T1 pair estimand 与 V1 ITT/设计和生产标准化结果。
+
 更新时间：2026-06-08
 
 本地图记录当前仓库的主要目录边界。新增、删除、移动文件后必须检查本文档是否需要同步。

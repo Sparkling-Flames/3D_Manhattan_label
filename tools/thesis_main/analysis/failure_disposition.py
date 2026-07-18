@@ -1,12 +1,15 @@
 """Frozen failure attribution for C1, T1, and V1.
 
-This module deliberately contains only deterministic row-level rules.  It
-does not read Label Studio exports or decide whether an incident happened;
-callers must supply the immutable incident evidence they joined to a row.
+The row-level helpers stay deterministic; external attribution is accepted
+only after ``validate_external_incident`` verifies the immutable registry.
 """
 
 from __future__ import annotations
 
+import hashlib
+import json
+from datetime import datetime
+from pathlib import Path
 from typing import Any
 
 
@@ -34,6 +37,113 @@ def as_float(value: Any) -> float | None:
         return float(text(value))
     except ValueError:
         return None
+
+
+def parse_timestamp(value: Any) -> datetime | None:
+    value = text(value)
+    if not value:
+        return None
+    try:
+        return datetime.fromisoformat(value.replace("Z", "+00:00"))
+    except ValueError:
+        return None
+
+
+def parse_set(value: Any) -> set[str]:
+    value = text(value)
+    if not value:
+        return set()
+    if value.startswith("["):
+        parsed = json.loads(value)
+        if not isinstance(parsed, list):
+            raise ValueError("incident scope must be a JSON list")
+        return {text(item) for item in parsed if text(item)}
+    return {item.strip() for item in value.replace(";", ",").split(",") if item.strip()}
+
+
+def sha256_file(path: Path) -> str:
+    digest = hashlib.sha256()
+    with path.open("rb") as handle:
+        for chunk in iter(lambda: handle.read(1024 * 1024), b""):
+            digest.update(chunk)
+    return digest.hexdigest()
+
+
+def validate_external_incident(
+    annotation: dict[str, Any],
+    incident: dict[str, Any] | None,
+    *,
+    evidence_base_dir: Path,
+) -> tuple[bool, str]:
+    """Validate immutable incident evidence against one annotation."""
+    if not incident:
+        return False, "incident_not_found"
+    required = (
+        "incident_id", "incident_type", "occurred_at", "recovered_at",
+        "affected_project_ids", "evidence_path", "evidence_sha256", "recorded_at",
+        "recorded_before_outcome_review",
+    )
+    if any(not text(incident.get(field)) for field in required):
+        return False, "incident_required_field_missing"
+    if not truthy(incident.get("recorded_before_outcome_review")):
+        return False, "incident_recorded_after_outcome_review"
+
+    occurred = parse_timestamp(incident.get("occurred_at"))
+    recovered = parse_timestamp(incident.get("recovered_at"))
+    recorded = parse_timestamp(incident.get("recorded_at"))
+    annotated = parse_timestamp(
+        annotation.get("annotation_timestamp")
+        or annotation.get("completed_at")
+        or annotation.get("updated_at")
+        or annotation.get("created_at")
+    )
+    if None in {occurred, recovered, recorded, annotated}:
+        return False, "incident_timestamp_invalid"
+    assert occurred is not None and recovered is not None and recorded is not None and annotated is not None
+    try:
+        if occurred > recovered or not occurred <= annotated <= recovered:
+            return False, "annotation_outside_incident_window"
+    except TypeError:
+        return False, "incident_timestamp_timezone_mismatch"
+    reviewed = parse_timestamp(annotation.get("outcome_reviewed_at"))
+    if text(annotation.get("outcome_reviewed_at")):
+        if reviewed is None:
+            return False, "outcome_review_timestamp_invalid"
+        try:
+            if recorded >= reviewed:
+                return False, "incident_recorded_after_outcome_review"
+        except TypeError:
+            return False, "incident_timestamp_timezone_mismatch"
+
+    project_id = text(annotation.get("project_id"))
+    task_id = text(annotation.get("ls_runtime_task_id") or annotation.get("task_id"))
+    try:
+        projects = parse_set(incident.get("affected_project_ids"))
+        tasks = parse_set(incident.get("affected_task_ids"))
+    except (TypeError, ValueError, json.JSONDecodeError):
+        return False, "incident_scope_invalid"
+    scope_rule = text(incident.get("affected_scope_rule"))
+    if not tasks and not scope_rule:
+        return False, "incident_scope_missing"
+    if projects and project_id not in projects:
+        return False, "project_outside_incident_scope"
+    if tasks and task_id not in tasks:
+        return False, "task_outside_incident_scope"
+    if not tasks and scope_rule not in {"all_tasks_in_affected_projects", "all_tasks"}:
+        return False, "unsupported_incident_scope_rule"
+
+    evidence_path = Path(text(incident.get("evidence_path")))
+    if not evidence_path.is_absolute():
+        evidence_path = evidence_base_dir / evidence_path
+    if not evidence_path.is_file():
+        return False, "incident_evidence_missing"
+    try:
+        actual_sha256 = sha256_file(evidence_path).lower()
+    except OSError:
+        return False, "incident_evidence_unreadable"
+    if actual_sha256 != text(incident.get("evidence_sha256")).lower():
+        return False, "incident_evidence_sha256_mismatch"
+    return True, "verified"
 
 
 def normalize_attribution(value: Any) -> str:
