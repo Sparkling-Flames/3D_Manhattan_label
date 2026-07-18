@@ -34,6 +34,7 @@
 - [THESIS_MANUSCRIPT_MIGRATION_AUDIT_v2.md](thesis_main/THESIS_MANUSCRIPT_MIGRATION_AUDIT_v2.md)：v4 兼容性、实现状态与 SHA 审计
 - [PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md](thesis_main/PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md)：Paper A vFinal sidecar、dry-run 与正式数据边界
 - [PAPER_A_VFINAL_CODE_MIGRATION_AUDIT_v1.md](thesis_main/PAPER_A_VFINAL_CODE_MIGRATION_AUDIT_v1.md)：代码迁移清单与验证记录
+- `Paper_A_新版完整论文提纲_vFinal_Draft.md`：当前本地 vFinal 写作提纲，包含 C1→C2→T1/V1 的 failure-disposition、重跑与行政删失合同；按 `.gitignore` 默认不提交。
 - [meta_label_three_state_rule_manifest_v1.json](thesis_main/meta_label_three_state_rule_manifest_v1.json)：三状态 meta-label 候选规则
 - [geometry_loo_candidate_rule_manifest_v1.json](thesis_main/geometry_loo_candidate_rule_manifest_v1.json)：Geometry LOO 候选规则
 - [sequential_routing_candidate_rule_manifest_v1.json](thesis_main/sequential_routing_candidate_rule_manifest_v1.json)：历史冻结的时序 routing 候选规则

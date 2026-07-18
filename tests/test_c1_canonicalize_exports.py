@@ -44,6 +44,34 @@ def _read_csv(path: Path) -> list[dict[str, str]]:
     return list(csv.DictReader(path.open(encoding="utf-8")))
 
 
+def test_c1_failure_disposition_input_is_snapshot_joined_and_formal_unknown_is_blocked(tmp_path: Path) -> None:
+    assignment_fields = ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group"]
+    assignment = {"round_id": "C1", "worker_id": "w1", "task_id": "t1", "base_task_id": "b1", "dataset_group": "Calibration_core"}
+    manual, semi, internal = (tmp_path / name for name in ("manual.csv", "semi.csv", "internal.csv"))
+    _csv(manual, assignment_fields, [assignment])
+    _csv(semi, assignment_fields, [])
+    _csv(internal, assignment_fields, [assignment])
+    mapping = tmp_path / "mapping.csv"
+    _csv(mapping, ["task_id", "base_task_id", "inner_id", "intended_project_group", "mapping_status"], [{"task_id": "t1", "base_task_id": "b1", "inner_id": "1", "intended_project_group": "Calibration_core", "mapping_status": "planned"}])
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([_task("200", "t1", "b1", [_ann("a1", "w1")])]), encoding="utf-8")
+    dispositions = tmp_path / "failure_disposition.csv"
+    _csv(dispositions, ["project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "failure_attribution", "incident_id", "incident_evidence_status"], [{"project_id": "66", "ls_runtime_task_id": "200", "worker_id": "w1", "annotation_id": "a1", "failure_attribution": "external_system_failure", "incident_id": "inc-1", "incident_evidence_status": "verified"}])
+
+    out = tmp_path / "out"
+    summary = build_canonicalization([export], manual, semi, internal, mapping, active_log=None, output_dir=out, input_status="formal", failure_disposition_csv=dispositions)
+    row = _read_csv(out / "c1_canonical_annotations.csv")[0]
+    assert row["failure_attribution"] == "external_system_failure"
+    assert row["incident_id"] == "inc-1"
+    assert row["external_system_failure"] == "true"
+    assert _read_csv(out / "failure_disposition_audit_C1.csv")[0]["failure_attribution"] == "external_system_failure"
+    assert "failure_disposition_not_evaluable" not in summary["blockers"]
+
+    unknown = build_canonicalization([export], manual, semi, internal, mapping, active_log=None, output_dir=tmp_path / "unknown", input_status="formal")
+    assert "failure_disposition_not_evaluable" in unknown["blockers"]
+    assert unknown["passed"] is False
+
+
 def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_path: Path) -> None:
     fields = ["round_id", "worker_id", "task_id", "base_task_id", "dataset_group"]
     manual = tmp_path / "manual.csv"

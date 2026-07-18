@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 
 from tools.thesis_main.analysis.c1_materialize_quality_table import _r_u_evidence, _scope_outcome, build_quality_rows, materialize
-from tools.thesis_main.analysis.c1_materialize_worker_profile_sidecar import build_evidence_rows, build_main_matrix
+from tools.thesis_main.analysis.c1_materialize_worker_profile_sidecar import aggregate_family, build_evidence_rows, build_main_matrix
 from tools.thesis_main.analysis.c1_materialize_worker_state import build_worker_state
 
 
@@ -92,6 +92,38 @@ def test_duplicate_review_process_failure_is_preserved_in_quality_evidence() -> 
     }])[0]
     assert row["process_failure_observed"] == "true"
     assert row["process_failure_subfamily"] == "duplicate_review_worker_process_failure"
+
+
+def test_failure_attribution_keeps_worker_structural_failure_separate_from_system_and_policy() -> None:
+    common = {
+        "round_id": "C1", "worker_id": "w1", "task_id": "t", "base_task_id": "b",
+        "dataset_group": "Calibration_anchor", "condition": "manual", "canonical_eligibility_status": "valid",
+        "independence_status": "independent", "assigned_expected": "true", "outside_assignment_submission": "false",
+        "duplicate_worker_task_submission": "false", "schema_interpretable": "true", "geometry_valid": "true",
+        "process_evaluable": "true", "task_final_scope": "in_scope", "geometry_reference_status": "expert_hard_single",
+    }
+    quality = build_quality_rows([
+        {**common, "task_id": "worker", "failure_attribution": "worker_caused_structural_failure", "incident_evidence_status": "not_applicable"},
+        {**common, "task_id": "external", "failure_attribution": "external_system_failure", "incident_id": "inc-1", "incident_evidence_status": "verified"},
+        {**common, "task_id": "policy", "failure_attribution": "policy_caused_failure", "incident_evidence_status": "not_applicable"},
+        {**common, "task_id": "unknown"},
+    ])
+    by_task = {row["task_id"]: row for row in quality}
+    assert by_task["worker"]["worker_caused_structural_failure"] is True
+    assert by_task["worker"]["worker_reliability_eligible"] is True
+    assert by_task["external"]["external_system_failure"] is True
+    assert by_task["external"]["worker_reliability_eligible"] is False
+    assert by_task["policy"]["policy_failure"] is True
+    assert by_task["policy"]["worker_reliability_eligible"] is False
+    assert by_task["unknown"]["failure_attribution"] == "not_evaluable"
+    evidence = build_evidence_rows(quality)
+    by_task = {row["task_id"]: row for row in evidence}
+    assert by_task["worker"]["family"] == "worker_caused_structural_failure"
+    assert by_task["worker"]["family_included_in_denominator"] is True
+    assert all(not by_task[task]["included_in_process_reliability"] for task in ("external", "policy", "unknown"))
+    structural = next(row for row in aggregate_family(evidence) if row["family"] == "worker_caused_structural_failure")
+    assert structural["n_observed"] == 1
+    assert structural["n_fail"] == 1
 
 
 def test_task_outcome_drives_scope_outcome_and_oos_excludes_r_u() -> None:

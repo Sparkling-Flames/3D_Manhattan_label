@@ -841,3 +841,74 @@ For confirmed non-independent rows, capability flags are false and `process_eval
 ### 13.5 Profile and predictive gate
 
 P1 geometry profiles report stage/pool component medians and require at least two valid components for a combined diagnostic component. For a worker whose P1 capability evidence is invalid, P1 geometry/scope/semi/undercoverage predictive rows are `support_status=not_evaluable`, `interpretation_allowed=false`, and `notes` include `p1_non_independent_submission`; the P1 process-warning versus C1 process-reliability row remains separately auditable. No P1 value is routed into C1/C2 assignment or `r_u_calib`.
+
+### 13.6 Final closure: formal `R_u`, profile namespaces, and annotation identity
+
+The thesis-facing primary score is `iou_to_consensus_loo`, aggregated as the median of eligible Calibration task scores. A formal row must be stage `C1` or `C2`, belong to an eligible `Calibration_manual` pool, have `task_final_scope=in_scope`, pass independence/process/capability and geometry/reference gates, and set `used_for_R_u=true`. The worker-specific reference fields are mandatory: `r_u_reference_mode`, `r_u_reference_identity`, `r_u_reference_sha256`, `r_u_reference_excludes_worker`, `r_u_reference_support`, and `r_u_reference_status`. The current validated mode is `worker_excluded_loo_consensus`; the current minimum peer support is 2. `Calibration_semi`, P1, C2b, T1 and V1 are excluded from primary `r_u_calib`.
+
+`task_outcome_reference` is distinct from `r_u_worker_specific_loo_reference`. The former supports final scope, expert/final-gold adjudication and hard-single/hard-multi/soft-ambiguous status; the latter supports the worker-task `iou_to_consensus_loo` score and must exclude the evaluated worker. Existing field aliases are retained; this subsection adds semantic constraints and does not rename fields.
+
+P1 diagnostics use the namespace `D_u^{P1}` and cannot enter first routing or create C2 state. C1 may expose `D_u^{C1,provisional}` only as a provisional diagnostic snapshot with gap/evaluability flags; it is not a frozen routing profile. The C2-frozen operational namespace is `D_u^{C2}`; only components passing support, provenance, reference and interpretation gates may set `routing_eligible=true`, otherwise `fallback=global_reliability`. C1 is provisional; C2 is reserve-only gap filling and freeze. The only C2 assignment reasons remain CI precision insufficiency and core worker-scene support insufficiency; discrepancy/evaluability gaps are diagnostic unless explicitly mapped to those existing reasons.
+
+RQ1 timing identity is `project_id + ls_runtime_task_id + worker_id + annotation_id`. Multiple annotation IDs for one worker-task require adjudication before primary timing eligibility; automatic latest-version selection and automatic summation are prohibited. Geometry and timing must use the same selected annotation identity. These additions preserve all existing raw fields and do not authorize changes to C1 assignment, P1 admission, reserve policy or protocol semantics.
+
+### 13.7 Duplicate/revision, atomic arrival, and terminal audit fields
+
+Within one `annotation_id`, the same session uses the maximum valid cumulative value; multiple sessions may be summed only when they are valid, owner-matched, and non-overlapping. If one worker-task has multiple annotation IDs, do not automatically sum or select the latest version. The row enters multiple-annotation review and remains `eligible_for_RQ1_time=false` until adjudication. The selected identity must be shared by geometry/quality and active-time.
+
+The selected-annotation registry and any derived timing row preserve:
+
+```text
+selected_annotation_id
+selected_annotation_version
+multiple_annotation_review_required
+duplicate_disposition
+revision_disposition
+adjudication_source
+adjudication_reason
+active_time_annotation_identity
+```
+
+For temporal replay, all tags from one annotation are one atomic event. Annotations on the same task with the same trusted timestamp and no higher-precision server order form one atomic event batch. Required audit fields are `event_batch_id`, `event_batch_size`, `arrival_order_source`, `timestamp_precision`, `tie_policy`, `pre_batch_snapshot_id`, and `post_batch_snapshot_id`. Annotation ID is not a primary arrival-order claim; ascending, descending, and seeded-random permutations are sensitivity-only. Once a task is terminal at a decision snapshot, later evidence is `post_terminal_audit_only=true` and cannot change selected workers, `k_used`, stop reason, formal aggregate, or policy outcome.
+
+### 13.8 Reference separation and stop-family fields
+
+`task_outcome_reference` and `r_u_worker_specific_loo_reference` are separate objects. The former requires `type`, `identity`, `sha256`, `cardinality`, `source`, and `status`; the latter requires `worker_id`, `task_id`, `mode`, `identity`, `sha256`, `excludes_worker`, `peer_support`, and `status`. The worker-specific LOO reference must exclude the evaluated worker and is not a final-gold/scope reference.
+
+Temporal routing rows additionally preserve:
+
+```text
+family_evidence_stop_status
+geometry_consensus_required
+geometry_profile_eligible
+task_completion_status
+stop_block_reason
+```
+
+Geometry blocks stopping only for geometry-dependent evidence families: Model Issue correction, Geometry production, worker-scene geometry profile, and resolved in-scope whole-task completion. Scope-only, resolved OOS, Difficulty, and Model Issue recognition use their own evidence gates without a global Geometry requirement.
+
+### 13.9 Three-state and implementation-status closure
+
+The task-tag contract reports `unanimous_positive=(a=k)` and `unanimous_explicit_negative=(e=k)` as descriptive raw evidence, not primary estimands. `a>=2 and e>=2` is `replicated_explicit_conflict`; it does not activate a stable/strict positive scene set and may trigger conflict-resolution continuation. The task-tag `+/-/0/NA` state is distinct from worker-task failure outcome `true/false/not_evaluable`.
+
+Implementation status uses exactly three labels: `code_or_scaffold_implemented`, `candidate_dryrun_artifact_generated`, and `formal_thesis_artifact_generated`. Current code/scaffold does not imply a formal C1 closeout artifact or thesis-facing result. `N_R_min` remains prospective pending because the current materializers accept it as a command parameter; the current validated LOO peer-support minimum is 2. Bootstrap defaults are 1000 replicates, 95% percentile interval, seed=0 unless the manifest records an explicit override.
+
+### 13.10 Paper A v5 positioning: condition layers and state lifecycle
+
+The v5 manuscript distinguishes three non-interchangeable task-condition layers:
+
+1. objective or adjudicated task condition;
+2. worker-perceived Difficulty evidence;
+3. task-by-model-version Model Issue evidence.
+
+These layers must retain separate source, denominator, provenance and interpretation flags. A worker majority cannot silently become an objective task condition, and a Model Issue response cannot be treated as correction success.
+
+Worker-state reuse is conditional on `task_ontology_version`, `ui_instruction_version`, `dataset_domain`, `model_checkpoint`, `evidence_stage`, `freeze_version`, `last_refresh_time`, `support`, `validity_status` and `fallback`. `active`, `watch`, `refresh_required`, `suspended` and `re_admission` are prospective lifecycle states; they do not authorize data or production evidence to flow back into historical `R_u`, C2 freeze or evaluation folds.
+
+Counterexample evidence is layered as `candidate_audit`, `adjudicated_counterexample`, `frozen_challenge_regression` and `future_relabel_retraining`. Only adjudicated rows may enter current formal case analysis. Challenge and retraining layers require independent split/provenance controls and cannot automatically alter GT, worker state, routing thresholds or primary estimands. These additions are semantic and additive; existing artifact aliases and raw fields remain unchanged.
+
+### 13.11 Failure disposition across C1 and Main
+
+`failure_attribution` is one of `none`, `worker_caused_structural_failure`, `policy_caused_failure`, `external_system_failure`, or `not_evaluable`. It is distinct from every existing failure-family field. `incident_id` and `incident_evidence_status` record external-incident provenance; an external attribution requires immutable evidence and otherwise resolves to `not_evaluable`, never silently to `none`.
+
+`worker_caused_structural_failure`, `policy_failure`, `external_system_failure`, `structural_failure_evaluable`, and `worker_reliability_eligible` are derived fields. In C1, worker-caused structural failure is a structural-profile event rather than an IoU score; policy-caused and verified external failures are excluded from worker capability/reliability denominators. C2 freezes the corresponding Main rule manifest before T1/V1 outcomes exist. These fields are additive and do not modify P1 admission, C1 assignment, or historical raw exports.
