@@ -28,6 +28,23 @@ def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _closeout_dependencies(tmp_path: Path, manifest_data: dict) -> tuple[Path, Path, Path, Path]:
+    paths = [
+        tmp_path / "c1_closeout.json", tmp_path / "c2b_assignment.csv",
+        tmp_path / "worker_roster.csv", tmp_path / "rule_config.json",
+    ]
+    contents = ["{}", "task_id\nt1\n", "worker_id\nw1\n", "{}"]
+    for path, content in zip(paths, contents):
+        path.write_text(content, encoding="utf-8")
+    manifest_data.setdefault("input_sha256", {}).update({
+        "c1_closeout_summary": _sha(paths[0]),
+        "c2b_assignment_csv": _sha(paths[1]),
+        "worker_roster_csv": _sha(paths[2]),
+        "rule_config": _sha(paths[3]),
+    })
+    return tuple(paths)
+
+
 def _inputs(tmp_path: Path) -> tuple[Path, Path, Path]:
     workers = tmp_path / "workers.csv"
     pool = tmp_path / "pool.csv"
@@ -209,17 +226,19 @@ def test_formal_c2a_requires_bound_c2b_sha_and_real_task_pool(tmp_path: Path) ->
         "c2b_design_ready": True, "design_manifest_sha256": _sha(design),
     }), encoding="utf-8")
     profile_manifest = tmp_path / "post_profile.manifest.json"
-    profile_manifest.write_text(json.dumps({
+    profile_manifest_data = {
         "manifest_version": "c2b_post_profile_v1",
         "input_sha256": {
             "c2b_submissions_csv": _sha(submissions),
             "c2b_design_summary": _sha(design_summary),
         },
         "output_sha256": {"post_c2b_worker_profile_csv": _sha(profile)},
-    }), encoding="utf-8")
+    }
+    closeout_deps = _closeout_dependencies(tmp_path, profile_manifest_data)
+    profile_manifest.write_text(json.dumps(profile_manifest_data), encoding="utf-8")
     c2b = tmp_path / "c2b_closeout.summary.json"
     materialize_c2b_closeout(
-        submissions, profile, profile_manifest, design_summary, c2b
+        submissions, profile, profile_manifest, design_summary, *closeout_deps, c2b
     )
 
     with pytest.raises(ValueError, match="stale_or_unbound"):
@@ -250,20 +269,26 @@ def test_c2b_closeout_materializes_real_post_profile_sha_chain(tmp_path: Path) -
     design.write_text(json.dumps({
         "c2b_design_ready": True, "design_manifest_sha256": "a" * 64
     }), encoding="utf-8")
-    manifest.write_text(json.dumps({
+    manifest_data = {
         "manifest_version": "c2b_post_profile_v1",
         "input_sha256": {
             "c2b_submissions_csv": _sha(submissions),
             "c2b_design_summary": _sha(design),
         },
         "output_sha256": {"post_c2b_worker_profile_csv": _sha(profile)},
-    }), encoding="utf-8")
+    }
+    closeout_deps = _closeout_dependencies(tmp_path, manifest_data)
+    manifest.write_text(json.dumps(manifest_data), encoding="utf-8")
     output = tmp_path / "c2b_closeout.summary.json"
-    summary = materialize_c2b_closeout(submissions, profile, manifest, design, output)
+    summary = materialize_c2b_closeout(
+        submissions, profile, manifest, design, *closeout_deps, output
+    )
     assert summary["c2b_closeout_ready"] is True
     assert summary["post_c2b_worker_profile_sha256"] == _sha(profile)
     assert summary["post_c2b_profile_manifest_sha256"] == _sha(manifest)
 
     profile.write_text("tampered", encoding="utf-8")
     with pytest.raises(ValueError, match="stale_or_unbound"):
-        materialize_c2b_closeout(submissions, profile, manifest, design, output)
+        materialize_c2b_closeout(
+            submissions, profile, manifest, design, *closeout_deps, output
+        )

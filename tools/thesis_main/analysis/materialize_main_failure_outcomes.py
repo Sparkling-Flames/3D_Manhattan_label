@@ -24,7 +24,9 @@ from tools.thesis_main.analysis.failure_disposition import (
 
 C1_ID_FIELDS = ("project_id", "ls_runtime_task_id", "worker_id", "annotation_id")
 C1_FIELDS = [
-    *C1_ID_FIELDS, "failure_attribution", "incident_id", "incident_evidence_status",
+    *C1_ID_FIELDS, "task_id", "failure_attribution", "structural_validation_status",
+    "adjudication_source", "analysis_disposition", "reason_code", "rule_version",
+    "input_sha256", "incident_id", "incident_evidence_status",
     "failure_disposition_reason", "worker_caused_structural_failure", "policy_failure",
     "external_system_failure", "structural_failure_evaluable", "worker_reliability_eligible",
 ]
@@ -144,8 +146,12 @@ def materialize_complete_c1_dispositions(
     roster_rows: list[dict[str, Any]],
     adjudication_rows: list[dict[str, Any]],
     incident_rows: list[dict[str, Any]],
+    structural_rows: list[dict[str, Any]] | None = None,
     *,
     incident_base_dir: Path,
+    rule_version: str = "failure_disposition_v2",
+    input_sha256: str = "",
+    formal_closeout: bool = False,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     """Expand sparse adjudication to exactly one fail-closed row per annotation."""
     roster = _unique(roster_rows, C1_ID_FIELDS, "canonical annotation")
@@ -154,19 +160,35 @@ def materialize_complete_c1_dispositions(
     if extra:
         raise ValueError(f"adjudication references unknown canonical annotation: {sorted(extra)[0]}")
     incidents = _unique(incident_rows, ("incident_id",), "incident")
+    structural = (
+        _unique(structural_rows, C1_ID_FIELDS, "structural validation")
+        if structural_rows is not None else {}
+    )
     output: list[dict[str, Any]] = []
     reasons: Counter[str] = Counter()
 
     for identity, annotation in roster.items():
         adjudication = adjudications.get(identity)
         if adjudication is None:
-            failure = c1_failure_fields({"failure_attribution": "not_evaluable"})
-            reason = "adjudication_missing"
+            validation = structural.get(identity)
+            status = text((validation or {}).get("structural_validation_status")).lower()
+            attributable = text((validation or {}).get("worker_attributable")).lower() in {"true", "1", "yes"}
+            if status in {"passed", "valid"}:
+                failure = c1_failure_fields({"failure_attribution": "none"})
+                reason = "structural_validation_passed_no_exception"
+            elif status in {"failed", "invalid"} and attributable:
+                failure = c1_failure_fields({"failure_attribution": "worker_caused_structural_failure"})
+                reason = "structural_validation_failed_worker_attributable"
+            else:
+                failure = c1_failure_fields({"failure_attribution": "not_evaluable"})
+                reason = "structural_evidence_insufficient"
+            adjudication_source = "structural_validator"
         else:
             raw = text(adjudication.get("failure_attribution"))
             if not raw:
                 failure = c1_failure_fields({"failure_attribution": "not_evaluable"})
                 reason = "adjudication_missing_attribution"
+                adjudication_source = "human_adjudication"
             else:
                 attribution = normalize_attribution(raw)
                 incident_id = text(adjudication.get("incident_id"))
@@ -181,14 +203,27 @@ def materialize_complete_c1_dispositions(
                         "incident_id": incident_id,
                         "incident_evidence_status": "verified" if valid else "not_evaluable",
                     })
+                    adjudication_source = "human_adjudication+incident_registry"
                 else:
                     failure = c1_failure_fields({
                         "failure_attribution": attribution,
                         "incident_evidence_status": "not_applicable",
                     })
                     reason = "adjudicated"
+                    adjudication_source = "human_adjudication"
         reasons[reason] += 1
-        output.append({**annotation, **failure, "failure_disposition_reason": reason})
+        validation = structural.get(identity) or {}
+        output.append({
+            **annotation, **failure,
+            "task_id": text(annotation.get("task_id") or annotation.get("ls_runtime_task_id")),
+            "structural_validation_status": text(validation.get("structural_validation_status")) or "not_available",
+            "adjudication_source": adjudication_source,
+            "analysis_disposition": "not_evaluable" if failure["failure_attribution"] == "not_evaluable" else "included",
+            "reason_code": reason, "rule_version": rule_version, "input_sha256": input_sha256,
+            "failure_disposition_reason": reason,
+        })
+    if formal_closeout and any(row["failure_attribution"] == "not_evaluable" for row in output):
+        raise ValueError("formal C1 closeout blocked by not_evaluable disposition")
     return output, {"n_canonical_annotations": len(output), "reason_counts": dict(sorted(reasons.items()))}
 
 
@@ -524,6 +559,8 @@ def materialize(
     adjudication_csv: Path | None = None,
     incident_registry_csv: Path | None = None,
     reservation_registry_csv: Path | None = None,
+    structural_validator_csv: Path | None = None,
+    input_status: str = "dry_run",
 ) -> dict[str, Any]:
     normalized_stage = stage.upper()
     manifest = _load_manifest(rule_manifest)
@@ -534,12 +571,17 @@ def materialize(
             raise ValueError("C1 requires --adjudication-csv and --incident-registry-csv")
         output_rows, audit = materialize_complete_c1_dispositions(
             rows, _read_csv(adjudication_csv), _read_csv(incident_registry_csv),
+            _read_csv(structural_validator_csv) if structural_validator_csv else None,
             incident_base_dir=incident_registry_csv.parent,
+            rule_version=manifest["meta"]["rule_version"],
+            input_sha256=_sha256(input_csv),
+            formal_closeout=input_status == "formal",
         )
         output_csv, fields = output_dir / "failure_disposition.csv", C1_FIELDS
         dependencies.update({
             "adjudication_csv": _sha256(adjudication_csv),
             "incident_registry_csv": _sha256(incident_registry_csv),
+            **({"structural_validator_csv": _sha256(structural_validator_csv)} if structural_validator_csv else {}),
         })
     elif normalized_stage == "T1":
         incident_rows = _read_csv(incident_registry_csv) if incident_registry_csv else None
@@ -598,6 +640,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--adjudication-csv", type=Path)
     parser.add_argument("--incident-registry-csv", type=Path)
     parser.add_argument("--reservation-registry-csv", type=Path)
+    parser.add_argument("--structural-validator-csv", type=Path)
+    parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
     args = parser.parse_args(argv)
     print(json.dumps(materialize(
         args.stage, args.input_csv, args.output_dir,
@@ -605,6 +649,8 @@ def main(argv: list[str] | None = None) -> int:
         adjudication_csv=args.adjudication_csv,
         incident_registry_csv=args.incident_registry_csv,
         reservation_registry_csv=args.reservation_registry_csv,
+        structural_validator_csv=args.structural_validator_csv,
+        input_status=args.input_status,
     ), ensure_ascii=False, indent=2))
     return 0
 

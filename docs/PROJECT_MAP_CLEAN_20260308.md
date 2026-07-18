@@ -60,6 +60,7 @@
   - `THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.md/.tex` 保留为历史审计版本；`THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v4.md` 保留三状态证据、Geometry LOO 与时序路由的历史写作合同，当前本地 vFinal 提纲为 `Paper_A_新版完整论文提纲_vFinal_Draft.md`。standalone `.tex` 不是正文真源。`WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 保留物理 schema 真源，`WORKER_PROFILE_ARTIFACT_MIGRATION_AMENDMENT_v1.md` 记录 artifact 命名迁移，`WORKER_PROFILE_THESIS_DISPLAY_CONTRACT_v1.md` 负责展示符号，`THESIS_MANUSCRIPT_MIGRATION_MAP_v1.md`/`THESIS_MANUSCRIPT_MIGRATION_AUDIT_v1.md` 保留上一轮记录，v2 文件记录本轮 active Overleaf 迁移、兼容性与 provenance。
   - `manuscript/` 可保存 Overleaf 项目和主线论文写作资产，但按现有 `.gitignore` 默认不提交。
   - `tools/thesis_main/analysis/materialize_c2b_closeout.py` 绑定 C2-B submissions、post-C2-B profile、profile manifest 与 design summary，形成 C2-A-RP formal 所需的真实 SHA closeout。
+  - `tools/thesis_main/analysis/materialize_frozen_routing_profiles.py` 从 Manual GT submission、冻结 worker state 和跨阶段 component evidence 生成 Strong Global 与 Full component 冻结表。
   - Paper A vFinal 代码迁移合同、四个候选 rule manifest 与审计记录保存在该目录；这些文件只定义可审计的结构和候选规则，不把 dry-run 产物升级为正式 C1 数据。对应的 canonical→concrete-tag、Geometry LOO 与 temporal replay 代码位于 `tools/thesis_main/analysis/`，且无正式 export 时只能输出 dry-run/not-evaluable。
   - Paper A vFinal 代码迁移合同、四个候选 rule manifest 与审计记录保存在该目录；这些文件只定义可审计的结构和候选规则，不把 dry-run 产物升级为正式 C1 数据。
 - `docs/paper_b/`

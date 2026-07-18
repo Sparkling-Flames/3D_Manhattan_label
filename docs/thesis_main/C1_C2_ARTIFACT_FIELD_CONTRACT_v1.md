@@ -292,6 +292,10 @@ freeze_version
 
 ## 4. C2-A-RP precision-adaptive completion
 
+正式 C1 complete disposition 由 canonical roster、structural validator、sparse human
+adjudication 与 incident registry 合并；未 adjudicate 行只有在结构验证明确通过且无异常
+证据时才可写 `none`，formal closeout 中存在 `not_evaluable` 必须阻断。
+
 ### 4.1 `c2arp_precision_gap.csv`
 
 ```text
@@ -349,6 +353,14 @@ c2b_closeout_ready
 ```
 
 C2-A-RP formal 只能读取该 closeout，不接受测试或人工拼装 summary。
+
+### 4.4 冻结 routing profile
+
+`materialize_frozen_routing_profiles.py` 输出
+`strong_global_worker_table.csv`、`full_component_table.csv` 和
+`routing_profile_freeze_audit.json`。Strong Global 主排序仅使用 task-adjusted GT LCB；
+Full component 必须同时通过 P1 integrity、C1 predictive、C2-B confirmation、
+方向、LOTO/LOBO stability 与标注前 activation gate。
 
 ## 5. C2 最终冻结
 
