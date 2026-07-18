@@ -1,5 +1,12 @@
 # docs 目录索引
 
+> 2026-07-18：Paper A 正式文本已迁移到 vFinal。当前正文入口为
+> `thesis_main/manuscript/overleaf_project/main.tex`；正式执行合同为
+> `ROUND_BASED_EXECUTION_PROTOCOL_v1.md`、`ROUND_BASED_ASSIGNMENT_SOP_v1.md`
+> 与 `STATISTICAL_ANALYSIS_PLAN_v1.md`。旧提纲仅作历史审计，不再定义 C2/T1/V1。
+> 字段真源同步为 `C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md`、
+> `WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 与 `ANALYSIS_DATA_FLOW.md`。
+
 `docs/` 按论文线和共享运行层组织。根目录只保留本索引和项目地图；新增主题文档不要直接放在根目录。
 
 ## 根目录入口

@@ -2,7 +2,7 @@
 
 ## 目的
 
-本修订把 Paper A vFinal 所需的证据拆成可追溯 sidecar。它不改变既有主线 protocol、C1/C2 字段合同、routing 语义或 Label Studio CE-only 运行边界。
+本修订把 Paper A vFinal 所需的证据拆成可追溯 sidecar。它服从当前正式 protocol、C1/C2 字段合同和 routing 语义；不改变已经启动的 C1 assignment、原始 export 或 Label Studio CE-only 运行边界。
 
 ## C1 数据边界
 
@@ -12,7 +12,7 @@
 - 生成结构性 sidecar、schema 检查、候选规则和审计记录；
 - 把无法由真实独立标注支持的字段写为 `not_evaluable`。
 
-禁止：把 Calibration import JSON 当成标注结果、伪造 checkpoint/config/preprocess provenance、将 dry-run 数值写入正式分析结果、生成正式 C1 closeout、生成 C2 assignment、改变 `thesis_facing_closeout_ready=false` 和 `c2_decision_chain_ready=false`。
+禁止：把 Calibration import JSON 当成标注结果、伪造 checkpoint/config/preprocess provenance、将 dry-run 数值写入正式分析结果、在正式 C1 export 尚未到齐时生成正式 C1 closeout/C2 assignment，或把 readiness 标记改成 true。
 
 ## 兼容性
 
@@ -25,7 +25,7 @@
 - canonical evidence：`c1_canonical_meta_observations.csv`、`c1_canonical_geometry.jsonl`、`c1_model_artifact_provenance.csv`；
 - meta-label / worker：`worker_task_tag_observations_C1.csv`、`task_tag_three_state_summary_C1.csv`、`model_issue_harmonization_C1.csv`；三状态逐 concrete tag 输出 `+/-/0/NA` 和 NA 分类，不再输出可被误用的 worker response style；
 - geometry：`geometry_pairwise_similarity_C1.csv`、`geometry_worker_task_loo_C1.csv`、`geometry_stability_C1.csv`、`geometry_metric_coverage_C1.csv`；
-- scene / routing：`worker_scene_profile_candidates_C1.csv`、routing evidence snapshot、`routing_replay_scaffold_C1.csv` 与 temporal replay trace。profile 只能消费三状态 task-tag 与合法 Geometry LOO；旧 offline replay v2 仅保留兼容入口，不能称为 replay。
+- scene / routing：`worker_scene_profile_candidates_C1.csv`、routing evidence snapshot、`routing_replay_scaffold_C1.csv` 与 temporal replay trace。profile 可消费三状态 task-tag、外部 GT、合法 Geometry LOO 和结构失败派生证据，但三轴不得互相代填；旧 offline replay v2 仅保留兼容入口并标记 `legacy_diagnostic`，不能称为正式 V1。
 
 ## 解释层级
 

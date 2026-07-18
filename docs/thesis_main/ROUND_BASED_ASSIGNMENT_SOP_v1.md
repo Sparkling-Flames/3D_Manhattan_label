@@ -1,319 +1,303 @@
 # Round-Based Assignment SOP v1
 
-> Last updated: 2026-07-17
+## 0. 适用范围
 
-本 SOP 面向实际执行，逐轮说明：
+本文把 `ROUND_BASED_EXECUTION_PROTOCOL_v1.md` 转成可执行的分发、冻结和落盘步骤。阶段边界固定为：
 
-- 输入
-- 分发规则
-- 允许更新什么
-- 禁止更改什么
-- 必须落盘什么
-- 轮结束判据
+```text
+Pilot -> P1 -> C1 -> C2-B -> C2-A-RP -> T1 -> V1
+```
 
-若某轮未满足这些要求，则只能视为 exploratory operation，不进入 thesis-facing 主协议。
+所有阶段遵守 Label Studio CE-only 运营约束。planned assignment 以 `import_json/` 为真源，raw submission 以 `export_label/` 为真源，active-time 以 `active_logs/` 为真源，`analysis_results/` 只存派生与审计结果。
 
-## 0. CE-only 执行总原则
+C1 已开始且不返工：不得重建既有 C1 project、改变 assignment 或要求工人补字段。后续只从既有 raw export 重跑 canonicalization 和派生链。
 
-当前 Label Studio 采用 Community Edition 单实例运行，固定边界如下：
+## 1. 通用执行规则
 
-- LS 只承担展示与采集，不承担权限分发
-- 外部 `assignment manifest` 是唯一分发真源
-- LS 项目、tab、filter 只是执行视图，不是权威分发记录
-- 若 LS 页面状态与 manifest 冲突，以 manifest 为准
+### 1.1 每轮开始前
 
-当前单实例 CE-only 方案下，优先采用**项目切分**而不是复杂 tabs/filter 承载 round / batch：
+必须冻结并保存：
 
-- `P1_manual`
-- `P1_semi`
-- `P1_oos`
-- `C1_anchor_all`
-- `C1_core_batch_*`
-- `C2_reserve_batch_*`
-- `T1_manual`
-- `T1_semi`
-- `V1_full_batch_*`
+```text
+round_id
+assignment_manifest
+eligible_worker_roster
+task_roster
+seed
+code_commit
+rule_manifest
+input SHA
+```
 
-GT 项目可与 worker-facing 项目共实例存在，但只允许作为管理员维护项目，不进入 worker 日常路径。
+涉及事故、重跑和删失时还必须加载冻结的 incident/failure rule manifest，不得在结果可见后修改。
 
-Expected path assumes pass count `>= 18` and full participation through `P1 / C1 / C2 / T1 / V1`.
+### 1.2 完整 failure disposition
 
-The downgrade rules below are contingency rules for attrition, unexpected admission failure, or coverage failure. They do not alter the planned protocol.
+先生成 canonical annotation roster，再与 sparse incident registry、structural validator 和 adjudication 拼接，输出每条 annotation 一行的完整 disposition：
 
-每轮结束后，除本 SOP 原有工件外，还必须核对：
+```text
+annotation_id
+row_failure_attribution
+structurally_valid
+incident_id
+failure_reason
+evidence_status
+```
 
-- 实际导入项目名
-- 实际导入任务数
-- 实际参与 worker
-- manifest 预期 worker/task 映射
+正常记录显式写 `none`；异常不能静默丢弃。external 只有在以下验证全部通过时成立：
 
-### Failure disposition 执行规则
+- incident registry 中存在；
+- evidence file SHA 匹配；
+- project/task 位于影响范围；
+- annotation 时间位于 `occurred_at` 至 `recovered_at`；
+- `recorded_at` 早于 outcome review；
+- `recorded_before_outcome_review=true`。
 
-运行人员必须在结果不可见时登记事故证据。`C1` 仅记录原始证据和 provisional disposition；`C2` 在 Main 结果可见前冻结 `failure_disposition_rule_manifest_v1.json` 后固定派生分类。允许的归因仅为 `worker_caused_structural_failure`、`policy_caused_failure` 与有时间窗、影响范围、证据引用支持的 `external_system_failure`；证据不足只能记为 `not_evaluable`。不得因某条件或政策臂结果不利而改归因。
+否则写 `not_evaluable`。
 
-## 1. P1 — PreScreen
-
-### pass-count contingency
-
-- `pass >= 16`：完整执行 `RQ1 / RQ2 / RQ3` 计划
-- `12 <= pass <= 15`：保留 `RQ1 / RQ2`；`RQ3` 的 scene-specific 结果只在 activation support 达标场景中报告，不作全局强主张
-- `pass < 12`：`RQ3` 降级为 global / stress audit，不做稳定 worker subtype 或 scene-specific 主张
+## 2. P1 — PreScreen
 
 ### 输入
 
-- `import_json/stage1_prescreen_final_20260325/stage1_prescreen_manual_import_v2.json`
-- `import_json/stage1_prescreen_final_20260325/stage1_prescreen_semi_import_v5.json`
-- `import_json/stage1_prescreen_final_20260325/stage1_prescreen_oos_import_v2.json`
-- `analysis_results/phase1_progress_20260324/stage1_final_binding_audit_v6.json`
-- `analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl`
+Pilot 冻结任务、GT/reference、CE-only user/project、planned assignment 和 owner-valid active-time 配置。
 
-### 分发规则
+### 分发
 
-- `PreScreen_manual`：全员完成同一批任务
-- `PreScreen_semi`：全员完成同一批任务
-- OOS gate：单独成池，不并入主几何可靠度链
-- CE-only 执行视图默认对应三个独立项目：`P1_manual`、`P1_semi`、`P1_oos`
+- 只向预注册工人分发；
+- worker 不得接触 GT、他人结果或正式路由画像；
+- 保存 task-worker 映射、模式、顺序、seed 和暴露证据。
 
-### 允许更新
+### Closeout
 
-- admission 名单
-- `r_u^(0)`
-- `w_max`
-- blind-trust 前证据
-- scope-gate / meta-label / active-log 审计结果
+落盘 admission、pass-count contingency、process integrity、failure-family evidence、P1→C1/C2-B/T1 预测候选和 freeze manifest。
 
-### 禁止更改
+P1 component 此时只能标为 candidate，不能进入 Full。
 
-- 不得改三池定义
-- 不得把 `PreScreen` 输出升级为正式 routing profile
-- 不得提前计算正式 `r_u / r_u^(s)` 或 `tau_d`
+## 3. C1 — Calibration 主校准轮
 
-### 必须落盘
+### 输入与不返工规则
 
-- `prescreen_worker_admission.csv`
-- `prescreen_r0_snapshot.csv`
-- `w_max_locked.json`
-- `prescreen_blind_trust_audit.csv`
-- `prescreen_scope_gate_audit.csv`
-- `prescreen_round_report.md`
+继续使用已经冻结的 C1 import、assignment、Label Studio 项目和 raw export。禁止重新分配已经完成或正在执行的 C1 标注。
 
-### 结束判据
+### 派生处理顺序
 
-- admission 名单冻结
-- `w_max` 冻结
-- Stage 1 准入边界冻结
+```text
+raw export
+-> canonical annotation roster
+-> complete failure disposition
+-> task-adjusted GT quality
+-> Geometry LOO audit
+-> worker structural profile
+-> predictive validation
+-> C2 design simulation
+```
 
-## 2. C1 — Calibration 主校准轮
+每一步保存输入/输出 SHA、代码 commit、rule manifest 和 schema validation。
 
-### 输入
+### Closeout
 
-- 通过 `P1` 的 worker pool
-- `Calibration_anchor`
-- `Calibration_core`
+必须落盘：
 
-### 分发规则
+- `Q_u_GT_raw`、`Q_u_GT_task_adjusted`、CI/LCB 和 support；
+- `R_u_LOO_compatible`、LOO state 和 tie-break evidence；
+- `F_u_struct` 及可评价机会数；
+- P1 predictive validation；
+- `risk_assist`、`risk_route` 候选；
+- worker/task/building 方差；
+- C2-B 候选设计、功效与预算模拟。
 
-- `Calibration_anchor`：全员完成
-- `Calibration_core`：平衡分配，不要求全员覆盖
-- 本轮禁止调用 `Calibration_reserve`
-- CE-only 执行视图默认对应：
-  - `C1_anchor_all`
-  - `C1_core_batch_01`、`C1_core_batch_02`、...
-- `C1_core_batch_*` 只导入 manifest 指定的该批任务，不在同一大项目内依赖复杂 tab 分派
+## 4. C2-B — Common anchor + diverse bridge
 
-### 允许更新
+### 4.1 设计冻结
 
-- 第一版 `r_u`
-- 第一版 `LCB(r_u)`
-- 候选 `r_u^(s)`
-- scene 候选频率 / 一致性
-- `d_t` calibration reference basis
-- CI precision gaps
-- scene coverage gaps
+从 C1 simulation 选择一个设计，明确：
 
-### 禁止更改
+```text
+per_worker_count
+common_anchor_count
+diverse_bridge_count
+unique_task_count
+support_per_task
+worker_task_graph_rule
+ordinary_stress_balance
+```
 
-- 不得改 `Calibration_pool`
-- 不得新增 task-side pool
-- 不得因为中间结果好看而改 family taxonomy
-- 不得提前改写 Validation routing contract
+不得机械使用旧 reserve 配额。common anchor 由所有目标工人共同完成；diverse bridge 使用冻结的平衡不完全区组分发。
 
-### 必须落盘
+### 4.2 分发检查
 
-- `worker_state_snapshot_C1.csv`
-- `scene_candidate_summary_C1.csv`
-- `dt_reference_summary_C1.json`
-- `ci_precision_audit_C1.csv`
-- `scene_coverage_gap_C1.csv`
-- `assignment_manifest_C1.csv`
-- `failure_disposition_audit_C1.csv`
-- `calibration_round1_report.md`
+- 每个 worker 满足冻结的 ordinary/stress 配比；
+- common anchor 覆盖完整；
+- bridge 提升 unique task 覆盖且满足图连通规则；
+- 不依据工人当前结果有利与否更换任务；
+- 保存 planned split、实际领取、完成和偏差原因。
 
-### 结束判据
+### 4.3 Closeout
 
-- 形成 provisional `Score`
-- 形成 provisional `N_{u,s,min}`
-- 形成 provisional `tau_d`
-- 明确哪些 worker / scene 需要进入 `C2`
+更新 task-adjusted GT quality、LOO/structural 审计、层级收缩风险韧性、P1 component confirmation、`risk_route` confirmation 和 `d_cal^F` support。
 
-## 3. C2 — Calibration 补齐 / 冻结轮
+## 5. C2-A-RP — Precision-adaptive completion
 
-### 输入
+### 5.1 触发
 
-- `C1` 的 worker / scene / CI audit
-- 预注册固定的 `Calibration_reserve`
+只在冻结规则判定区间过宽且少量任务可能改变 routing eligibility 时触发。process/independence blocker 存在时不得通过补题“修复”。
 
-### 分发规则
+### 5.2 分发
 
-只允许两类补派：
+每个 block 固定为：
 
-- CI precision 补派
-- 核心场景覆盖补齐
+```text
+1 ordinary + 1 stress
+```
 
-两类都只能是 worker-side insufficiency correction。
+每人 0–3 个 block，具体上限使用 C1 后冻结值。每次追加只依据预期区间缩窄量，不依据 component 方向或对 Full 是否有利。
 
-CE-only 执行视图默认采用短时项目：
+### 5.3 停止
 
-- `C2_reserve_batch_01`
-- `C2_reserve_batch_02`
-- `...`
+- 达到精度目标：停止并冻结；
+- 达到上限仍不稳定：该 component 设为 unsupported，调整量为 0；
+- 不允许搜索新风险或新 P1 family。
 
-每个 reserve batch 完成即关闭，不保留常驻 reserve 池。
+## 6. Main freeze
 
-### 允许更新
+T1/V1 import 前必须生成一个版本一致的 freeze bundle：
 
-- `r_u` / `LCB(r_u)` 的最终版本
-- `r_u^(s)` 的最终启用 / 退化状态
-- `tau_d`
-- worker risk tier rule version
-- Validation routing contract
-- `failure_disposition_rule_manifest_v1.json`
+```text
+reference registry
+worker_state_version
+Strong Global policy
+Full-Integrated policy
+risk_assist / risk_route
+support / activation / fallback
+T1 allocation and pair contract
+V1 block randomization
+availability / quota / capacity ledger
+offer / timeout / replacement
+dynamic redundancy
+GT-blind aggregation
+terminal states
+incident / rerun / censor rules
+analysis plan
+code and input SHA
+```
 
-### 禁止更改
+运行政策差异可行性 gate。若 activation、首选差异或容量后差异未达到冻结阈值，停止 V1 创建并落盘“政策不可区分”审计；不得为了启动试验事后调 Full。
 
-- 不得改 `Calibration_pool`
-- 不得做 task-side 扩池
-- 不得把新任务塞入 reserve
-- 不得为“提升路由收益”而追加任务
-- 不得把 `C2` 变成新的选样轮
+## 7. T1 — Main-Test
 
-### 必须落盘
+### 7.1 分发
 
-- `worker_state_snapshot_C2_final.csv`
-- `scene_contract_locked_v1.json`
-- `task_risk_rule_manifest_v1.json`
-- `failure_disposition_rule_manifest_v1.json`
-- `assignment_manifest_C2.csv`
-- `reserve_usage_audit_C2.csv`
-- `calibration_freeze_report_v1.md`
+按 `Manual/Semi × ordinary/stress_assist` 执行。
 
-### 结束判据
+每图建立四个 slot：
 
-- `Score` 冻结
-- `N_{u,s,min}` 冻结
-- `tau_d` 冻结
-- activation / degeneration 规则冻结
-- high-risk bucket 规则冻结
-- Validation routing contract 冻结
+```text
+Manual pair A
+Semi   pair A
+Manual pair B
+Semi   pair B
+```
 
-若本轮后仍未满足覆盖或精度要求，必须按降级口径报告，不再无限补。
+因此每图为 `2 Manual + 2 Semi`，但每个 `pair_id` 必须恰好包含一条 Manual 和一条 Semi。分配必须满足：
 
-## 4. T1 — Main-Test
+- 同一工人不看同图两种模式；
+- worker 内 Manual/Semi 与 ordinary/stress 尽量平衡；
+- workload cap；
+- 保存 candidate set、seed、assignment probability 和 freeze version。
 
-### 输入
+### 7.2 运行中异常
 
-- 冻结后的 worker admission
-- 冻结后的 `Main-Test` task set
-- 冻结后的 timing contract
+行级只记录该 submission 的 `row_failure_attribution`。一行 external 不得把同 pair 的另一行改标 external。
 
-### 分发规则
+pair-level disposition：
 
-- `Manual_Test` 与 `SemiAuto_Test` 采用同图双条件设计
-- `Nimg = 100` 个唯一 base image，每个 base image 形成一个 `Manual` task instance 和一个 `SemiAuto` task instance
-- 同一 worker 不得同时看到同一 base image 的两个条件
-- 保持 worker mix 审计与条件平衡
-- 每位 worker 的 Manual / Semi 任务数尽量平衡
-- 任务顺序随机化
-- CE-only 执行视图默认对应 `T1_manual` 与 `T1_semi`
-- 若有 `external_system_failure`，仅可重跑一次同一 base image 的完整 Manual/SemiAuto 对；不能完整配对重跑时整对行政删失
+1. external 证据验证通过后，将完整 pair 标为 pending；
+2. 在原条件、原 freeze version 和 worker-image 隔离下最多完整重跑一次；
+3. 重跑 pair 仍须恰好一 Manual、一 Semi；
+4. 成功时 resolver 用重跑 pair 替代 original pair；
+5. 不能完整重跑时整对行政删失；
+6. 证据或关系不合法时整对 `not_evaluable`。
 
-### 允许更新
+### 7.3 Closeout
 
-- `active_time`
-- `IoUedit`
-- `Manual vs Semi` 条件比较
-- worker mix 平衡审计
+保存 original/rerun pair、行级归因、pair disposition、行政删失原因、owner-valid active-time 和最终 analysis pair。T1 outcome 不得修改任何 Calibration/V1 freeze。
 
-### 禁止更改
+## 8. V1 — Main-Validation
 
-- 不得更改 `w_max`
-- 不得更改 worker tier
-- 不得把 `T1` 结果回流修改 routing
-- 不得把 `T1` 写成 `RQ3` 主证据
+### 8.1 Block 创建
 
-### 必须落盘
+每个 block 在随机化前冻结同一个：
 
-- `test_condition_assignment_manifest.csv`
-- `rq1_active_time_analysis.csv`
-- `rq1_time_quality_audit.csv`
-- `t1_failure_disposition_audit.csv`
-- `rq1_test_round_report.md`
+```text
+availability_snapshot_id
+candidate_roster
+worker_total_capacity
+global_quota_per_worker
+full_quota_per_worker
+offer_timeout
+completion_timeout
+max_offer_attempts
+replacement_rule
+dynamic_redundancy_rule
+freeze_version
+```
 
-### 结束判据
+按冻结 seed 将 task/block 分配到 Strong Global 或 Full-Integrated。共享候选池但建立两套独立账本，禁止跨臂借容量。
 
-- `RQ1` primary estimand 分析完成
-- active-log coverage 与 fallback 比例完成审计
-- worker-caused structural failure 已在原条件计为 `structurally_valid = 0` 与 submission-level `delivery_adjusted_quality = 0`；外部事故的重跑/删失已按条件披露
+### 8.2 推荐与 offer
 
-## 5. V1 — Main-Validation
+两臂只允许推荐排序不同。执行顺序统一为：
 
-### 输入
+```text
+recommend
+-> offer
+-> accept/decline/timeout
+-> complete/incomplete
+-> validate
+-> replace or aggregate
+```
 
-- 冻结后的 `LCB(r_u)`
-- 冻结后的 `R0 / R1 / R2 / R3`
-- 冻结后的 `Score`
-- 冻结后的 `r_u^(s)` 启用规则
-- 冻结后的 `tau_d`
-- 冻结后的 `I_t^{OOD}` / `g_t`
-- 冻结后的 `k0 / kmax / stop rule`
+每次事件保存 candidate set、推荐 rank、offered/accepted/completed worker、offer sequence、replacement reason、capacity before/after 和 candidate exhaustion。
 
-### 分发规则
+### 8.3 动态冗余与 GT-blind 聚合
 
-- 只运行已冻结的主策略
-- 若部署时仅执行 `Full`，则 `Random / Global` 的主可比证据必须来自 `Calibration_manual` 上的 offline replay 或 shadow support set
-- CE-only 执行视图默认只开 `V1_full_batch_*`；`Random / Global` 不在 LS 内并跑补主证据
-- policy-caused failure 必须保留在其原政策臂 ITT；不得跨臂借用替补或容量
-- external system failure 仅可在同一政策臂、同一冻结版本、预留对称重跑容量内重跑一次；否则行政删失
+初始 `k`、追加条件、standard/exceptional cap 使用同一个冻结规则。聚合不得读取 GT，只能读取合法提交、冻结几何相似度、结构有效性、largest/second cluster、medoid margin 和多峰状态。
 
-### 允许更新
+- 稳定单一输出：`resolved`；
+- 有合法提交但到上限仍多峰/不稳定：`unresolved`；
+- 到上限仍无可交付合法输出：`severe_failure`。
 
-- routing event logs
-- assignment outcomes
-- stop-check results
-- activation / degeneration / fallback ratios
-- `Validation_OOD / Hard subset H` 审计结果
+### 8.4 External rerun
 
-### 禁止更改
+`external_system_failure_pending_disposition` 只是运行中状态。合法重跑必须：
 
-- 不得更改 worker tier rule
-- 不得更改 `tau_d`
-- 不得更改 `Score`
-- 不得更改 `k0 / kmax / stop rule`
-- 不得因 `V1` 结果不理想而反推修改 `C2` 冻结内容
+- original task 存在；
+- rerun 与 original 同 policy arm、同 freeze version；
+- `rerun_sequence=1` 且每个 original 最多一次；
+- reservation arm 与 policy arm 相同；
+- reservation ID 唯一且容量变化合法；
+- 使用预先对称预留容量。
 
-### 必须落盘
+成功后 resolver 用 rerun outcome 替代 original，同时保持 original randomization arm 的 ITT。不能合规重跑则行政删失；不得跨臂、跨版本或二次重跑。
 
-- `task_risk_snapshot_V1.csv`
-- `assignment_manifest_V1.csv`
-- `stopcheck_log_V1.csv`
-- `routing_event_log_V1.jsonl`
-- `validation_round_report.md`
-- `online_audit_summary_V1.json`
-- `v1_failure_disposition_audit.csv`
+### 8.5 Closeout
 
-### 结束判据
+落盘 recommendation/offer/completion 全事件、独立容量账本、worker/policy failure、original/rerun chain、最终任务终态、GT-blind 输出和 analysis-ready ITT 表。
 
-- 完成 `RQ3` 部署面审计
-- 完成 OOD / Hard subset / stress mode 报告
-- 明确区分“offline replay 主可比证据”与“V1 在线执行证据”
-- 已按政策臂报告 worker failure、policy failure、external rerun 与行政删失数量；`unresolved` / `severe_failure` 的交付调整质量为零
+## 9. 偏差与审计
+
+任何 schema drift、missing field、active-time source mismatch、capacity 透支、跨版本 rerun 或缺失 manifest SHA 必须 fail closed，不得静默忽略。
+
+每轮 closeout 保存：
+
+```text
+执行命令
+测试摘要
+code commit
+输入/输出 SHA
+冻结规则版本
+计划与实际偏差
+处置人和时间
+```
+
+Main 开始后的任何修改只能作为不改变主要合同的勘误或在 outcome 不可见时登记的 amendment；不得回流 P1/C1/C2。

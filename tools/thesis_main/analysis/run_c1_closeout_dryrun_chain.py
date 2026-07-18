@@ -275,8 +275,11 @@ def _refresh_gate_state(summary: dict[str, Any]) -> dict[str, Any]:
     )
     summary["thesis_facing_closeout_ready"] = summary["formal_closeout_ready"]
     summary["c2_decision_chain_ready"] = summary["formal_closeout_ready"] and not summary.get("dt_backflow")
+    summary["c2b_ready"] = summary["c2_decision_chain_ready"] and truthy(summary.get("c2_draft_summary", {}).get("c2b_design_ready"))
+    summary["c2a_rp_ready"] = summary["c2b_ready"] and truthy(summary.get("c2_gap_summary", {}).get("c2a_rp_ready"))
+    summary["c2_design_ready"] = summary["c2b_ready"] and summary["c2a_rp_ready"]
     summary["r_u_freeze"] = summary["formal_closeout_ready"] and truthy(summary.get("worker_state_summary", {}).get("r_u_freeze"))
-    summary["c2_freeze"] = summary["c2_decision_chain_ready"] and truthy(summary.get("c2_draft_summary", {}).get("c2_freeze"))
+    summary["c2_freeze"] = summary["c2_design_ready"]
     summary["formal_routing_conclusion_allowed"] = summary["c2_freeze"]
     summary["passed"] = summary["analysis_contract_ready"] = summary["formal_closeout_ready"]
     summary["passed_semantics"] = "formal_closeout_ready" if summary["formal_closeout_ready"] else ("non_formal_dry_run" if summary.get("input_status") != "formal" else "formal_closeout_blocked")
@@ -421,9 +424,6 @@ def build_gate_summary(
         "r_u_estimated": truthy(quality_table_summary.get("r_u_estimated")) or truthy(worker_state_summary.get("r_u_estimated")) or truthy(worker_profile_sidecar_summary.get("r_u_calib_estimated")),
         "dt_backflow": truthy(quality_table_summary.get("dt_backflow")),
         "worker_state_provisional": truthy(worker_state_summary.get("provisional")),
-        "c2_direct_assignment": truthy(c2_gap_summary.get("direct_assignment")),
-        "reserve_only": truthy(c2_draft_summary.get("reserve_only")),
-        "reserve_capacity_shortfall_count": int(c2_draft_summary.get("reserve_capacity_shortfall_count") or 0),
         "profile_sidecar_generated": profile_generated,
         "profile_summary_path": str(profile_summary_path.resolve()),
         "profile_freeze_status": safe(worker_profile_sidecar_summary.get("profile_freeze_status")),
@@ -455,6 +455,9 @@ def build_gate_summary(
         "formal_closeout_ready": False,
         "thesis_facing_closeout_ready": False,
         "c2_decision_chain_ready": False,
+        "c2_design_ready": False,
+        "c2b_ready": False,
+        "c2a_rp_ready": False,
         "r_u_freeze": False,
         "c2_freeze": False,
         "formal_routing_conclusion_allowed": False,
@@ -492,9 +495,6 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- r_u_estimated: {str(summary['r_u_estimated']).lower()}",
         f"- dt_backflow: {str(summary['dt_backflow']).lower()}",
         f"- worker_state_provisional: {str(summary['worker_state_provisional']).lower()}",
-        f"- c2_direct_assignment: {str(summary['c2_direct_assignment']).lower()}",
-        f"- reserve_only: {str(summary['reserve_only']).lower()}",
-        f"- reserve_capacity_shortfall_count: {summary['reserve_capacity_shortfall_count']}",
         f"- profile_sidecar_generated: {str(summary['profile_sidecar_generated']).lower()}",
         f"- profile_freeze_status: {summary['profile_freeze_status']}",
         f"- structural_contract_valid: {str(summary['structural_contract_valid']).lower()}",
@@ -504,6 +504,9 @@ def write_markdown(path: Path, summary: dict[str, Any]) -> None:
         f"- formal_closeout_ready: {str(summary['formal_closeout_ready']).lower()}",
         f"- thesis_facing_closeout_ready: {str(summary['thesis_facing_closeout_ready']).lower()}",
         f"- c2_decision_chain_ready: {str(summary['c2_decision_chain_ready']).lower()}",
+        f"- c2_design_ready: {str(summary['c2_design_ready']).lower()}",
+        f"- c2b_ready: {str(summary['c2b_ready']).lower()}",
+        f"- c2a_rp_ready: {str(summary['c2a_rp_ready']).lower()}",
         f"- r_u_freeze: {str(summary['r_u_freeze']).lower()}",
         f"- c2_freeze: {str(summary['c2_freeze']).lower()}",
         f"- formal_routing_conclusion_allowed: {str(summary['formal_routing_conclusion_allowed']).lower()}",
@@ -574,8 +577,8 @@ def materialize(
     if formal_worker.get("valid"):
         worker_summary = {**worker_summary, **formal_worker["manifest"], "r_u_estimated": True, "provisional": False}
     # C2 gap and assignment materialization are deliberately blocked until formal closeout.
-    gap_summary = {"materialization_blocked": True, "direct_assignment": False}
-    c2_summary = {"materialization_blocked": True, "reserve_only": False, "reserve_capacity_shortfall_count": 0}
+    gap_summary = {"materialization_blocked": True, "c2a_rp_ready": False}
+    c2_summary = {"materialization_blocked": True, "c2b_design_ready": False}
     profile_summary = c1_materialize_worker_profile_sidecar.materialize(
         quality_csv,
         worker_state_csv,

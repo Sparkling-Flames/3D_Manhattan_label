@@ -56,7 +56,7 @@ def test_c1_failure_disposition_input_is_snapshot_joined_and_formal_unknown_is_b
     export = tmp_path / "export.json"
     export.write_text(json.dumps([_task("200", "t1", "b1", [_ann("a1", "w1")])]), encoding="utf-8")
     dispositions = tmp_path / "failure_disposition.csv"
-    _csv(dispositions, ["project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "failure_attribution", "incident_id", "incident_evidence_status"], [{"project_id": "66", "ls_runtime_task_id": "200", "worker_id": "w1", "annotation_id": "a1", "failure_attribution": "external_system_failure", "incident_id": "inc-1", "incident_evidence_status": "verified"}])
+    _csv(dispositions, ["project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "failure_attribution", "incident_id", "incident_evidence_status", "failure_disposition_reason"], [{"project_id": "66", "ls_runtime_task_id": "200", "worker_id": "w1", "annotation_id": "a1", "failure_attribution": "external_system_failure", "incident_id": "inc-1", "incident_evidence_status": "verified", "failure_disposition_reason": "verified"}])
 
     out = tmp_path / "out"
     summary = build_canonicalization([export], manual, semi, internal, mapping, active_log=None, output_dir=out, input_status="formal", failure_disposition_csv=dispositions)
@@ -66,6 +66,10 @@ def test_c1_failure_disposition_input_is_snapshot_joined_and_formal_unknown_is_b
     assert row["external_system_failure"] == "true"
     assert _read_csv(out / "failure_disposition_audit_C1.csv")[0]["failure_attribution"] == "external_system_failure"
     assert "failure_disposition_not_evaluable" not in summary["blockers"]
+
+    _csv(dispositions, ["project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "failure_attribution", "incident_id", "incident_evidence_status"], [{"project_id": "66", "ls_runtime_task_id": "200", "worker_id": "w1", "annotation_id": "a1", "failure_attribution": "external_system_failure", "incident_id": "inc-1", "incident_evidence_status": "verified"}])
+    unverified = build_canonicalization([export], manual, semi, internal, mapping, active_log=None, output_dir=tmp_path / "unverified", input_status="formal", failure_disposition_csv=dispositions)
+    assert "failure_disposition_not_evaluable" in unverified["blockers"]
 
     unknown = build_canonicalization([export], manual, semi, internal, mapping, active_log=None, output_dir=tmp_path / "unknown", input_status="formal")
     assert "failure_disposition_not_evaluable" in unknown["blockers"]

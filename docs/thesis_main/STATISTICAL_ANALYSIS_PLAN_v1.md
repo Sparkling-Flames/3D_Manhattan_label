@@ -1,270 +1,298 @@
 # Statistical Analysis Plan v1
 
-## 0. Scope
+## 0. 适用范围与替代声明
 
-This document only records statistical planning details that are already compatible with the current thesis outline and the round-based execution protocol.
+本文覆盖 P1/C1/C2、T1 和 V1 的正式分析。它以 `Paper_A_新版完整论文提纲_vFinal_Draft.md` 为设计真源，并替换旧的：
 
-It does not:
+- Calibration_manual 上 Random/Global/Full 离线 replay 作为 RQ3 主比较；
+- reserve-only C2；
+- 单臂 Full deployment V1；
+- Geometry LOO 单独决定正式 Global。
 
-- change the four-stage main line
-- change `P1 / C1 / C2 / T1 / V1` freeze boundaries
-- rewrite the thesis-facing framework
-- use Main/Test/Validation results to redefine admission, `w_max`, routing freeze, or protocol core
+Replay 只用于开发、消融、设计和功效，不替代前瞻 V1。
 
-The expected execution path assumes `18-20` workers pass `P1` and continue through `C1 / C2 / T1 / V1`.
+## 1. 通用原则
 
----
+### 1.1 阶段隔离
 
-## 1. General Principles
+- P1：admission、高信息诊断和预测候选；
+- C1：基础能力、任务调整、C2/T1/V1 设计参数；
+- C2：共同桥接、层级收缩、精度补齐和最终冻结；
+- T1：RQ1 Semi 条件效应；
+- V1：RQ3 Strong Global vs Full-Integrated 前瞻政策效应。
 
-### 1.1 Separation of roles across rounds
+T1/V1 结果不得修改任何 Calibration 参数、policy、risk、threshold、capacity、stop rule 或分析计划。
 
-- `P1 / PreScreen` provides admission, `r_u^(0)`, `w_max`, blind-trust pre-evidence, and prescreen audit outputs.
-- `C1 / C2` provide the main quality, reliability, worker-scene support, and routing-side evidence needed for `RQ2` and `RQ3`.
-- `T1 / Main-Test` is primarily an efficiency round for `RQ1`.
-- `V1 / Main-Validation` reports the frozen deployment strategy under the locked protocol.
+### 1.2 分析资格
 
-### 1.2 MDE policy
+active-time、GT quality、LOO、structural failure、predictive validity 和 routing feature 分别使用自己的 eligibility。不得使用单一 `valid` 过滤全部分析。
 
-- MDE values must not be set using Main/Test/Validation outcomes.
-- MDE inputs should come from Pilot, smoke-test evidence, historical exports, or engineering-interpretability thresholds.
-- If a post-`P1` amendment is needed, it must be logged as a protocol amendment and must not flow back to change admission, `w_max`, routing freeze, or the protocol boundary.
+### 1.3 Failure 与 missingness
 
-### 1.3 Missingness and logging
+行级 failure attribution 与 pair/task analysis disposition 分开。
 
-- `lead_time` is not part of the primary estimand for `RQ1`.
-- Any fallback from `active_time` to `lead_time` must be reported as sensitivity support, not as a silent merge into the primary estimand.
-- Annotation-level active logs must preserve `active_time_alias_from`, `active_time_alias_reason`, `late_binding_status`, `task_id_source`, `project_id_source`, and `annotation_id_source`; `unknown_annotation` may merge only as `short_unknown_bootstrap_merged` when the segment is short, timestamp-continuous, and has a single same-owner actual annotation in the same session/project/task/annotator context. Longer, discontinuous, owner-mismatched, or multi-actual unknown segments remain unassigned/audit evidence.
-- For post-`P1` duplicate same-geometry submissions, the default timing value is `max_reliable_active_time`; `sum_segments` is audit/sensitivity-only and is allowed only when logs show explicit non-overlapping continuous segments.
-- Different-geometry duplicate submissions remain manual-review cases and must not be automatically merged.
+- worker-caused structural failure：保留在原 worker/condition/arm 的结构机会中。
+- policy-caused failure：保留在原政策臂 ITT。
+- external system failure：只有不可变证据、SHA、范围、事故窗口和结果可见前登记均验证通过才成立。
+- not evaluable：证据不足或关系验证失败，不得静默改作 complete case。
 
-### 1.4 Failure disposition and analysis eligibility
+每项分析同时报告原始、worker failure、policy failure、external rerun、行政删失、not-evaluable 和最终可分析数量及两臂/条件分布。
 
-`C2` must freeze `failure_disposition_rule_manifest_v1.json` before `T1/V1` results are visible. It fixes allowed attribution categories, required external-incident evidence, one-rerun limit, rerun symmetry, and administrative-censoring rules.
+### 1.4 功效与 MDE
 
-- Worker-caused structural failure remains in its assigned condition/policy arm. In `T1`, it has `structurally_valid = 0` and submission-level `delivery_adjusted_quality = 0`.
-- Policy-caused failure remains in its assigned `V1` policy arm ITT with `policy_failure = 1`; an `unresolved` or `severe_failure` task has delivery-adjusted quality `0`.
-- External system failure is neither worker nor policy failure. It is eligible only for the pre-frozen, result-blind rerun rule; otherwise it is administratively censored and excluded from the delivery-adjusted quality denominator. Counts and arm/condition distributions remain mandatory reporting items.
+C1 closeout 后使用 worker/image/building 方差、结构有效率、active-time missingness、policy divergence、capacity 和 timeout 模拟 C2、T1、V1。MDE、gate 和样本量在 Main outcome 可见前冻结。
 
-An unsupported historical anomaly is `not_evaluable`, not an external system failure. Attribution, rerun, and censoring decisions must be auditable from immutable incident evidence and must not be revised after outcome inspection.
+## 2. C1/C2 worker state 与预测证据
 
----
+### 2.1 三轴状态
 
-## 2. RQ1 Plan
+正式基础状态为：
 
-### 2.1 Design
+```text
+Q_u_GT_task_adjusted
+R_u_LOO_compatible
+F_u_struct
+```
 
-`RQ1` targets efficiency under the `Main-Test` round.
+GT quality 使用交叉分类模型校正 worker 的任务组成，例如：
 
-Planned design:
+```text
+Q_GT(t,u) = mu + worker_u + task_t + stage + error
+```
 
-- `Manual_Test` and `SemiAuto_Test` use a same-image dual-condition design
-- `Nimg = 100`
-- each base image appears exactly twice at the task-instance level:
-  - one `Manual` task instance
-  - one `SemiAuto` task instance
-- total task instances are approximately `200`
-- `k = 1` per condition at the task-instance level
+报告 raw 中位数、task-adjusted estimate、CI/LCB、support 和 worker-task 图审计。
 
-### 2.2 Allocation constraints
+LOO 使用排除工人自身的 reference，报告 peer support、medoid margin、最大/第二簇、leave-one/two-out sensitivity 和 `stable/weak/multimodal/insufficient/metric_incompatible` 状态。LOO 是一致性审计和 tie-break，不替代外部 GT quality。
 
-- the same worker must not see both conditions of the same base image
-- each worker's Manual and Semi task counts should be kept as balanced as possible
-- task order should be randomized
-- worker allocation and condition assignment should be retained in the analysis object, not discarded after export
+结构失败率为：
 
-### 2.3 Primary estimand
+```text
+worker-caused invalid geometry
+/
+structural-evaluable opportunities
+```
 
-The primary estimand is active-time efficiency under the same-image dual-condition design.
+external、reference failure、OOS 和未知归因不进入分母。
 
-Primary outcome:
+### 2.2 P1 predictive chain
 
-- `active_time`
+P1 component 分别评估 `P1 -> C1`、`P1 -> C2-B` 和 `P1 -> T1`：
 
-Primary contrast:
+- Spearman/Kendall；
+- worker bootstrap CI；
+- 方向一致性；
+- discrepancy worker；
+- support；
+- range restriction。
 
-- Manual versus SemiAuto active-time difference on the same base-image pool
+只有 C1 predictive validation 和 C2-B confirmation 均通过、support 达标且可由标注前特征激活的 component 才进入 Full。C2-A-RP 只补精度，不用于发现或挑选新 component。
 
-The companion delivery-adjusted quality audit retains worker-caused structural failures as zero-quality submissions. An external-system incident affecting either member of an image pair requires a complete paired rerun; if that cannot occur, the whole pair is administratively censored from the paired delivery-adjusted quality denominator and disclosed by condition.
+### 2.3 C2-B simulation 与层级模型
 
-### 2.4 Primary inference
+C1 后模拟 common anchor、diverse bridge、unique task、每图 support、worker-task 图连通性和风险韧性区间宽度，以冻结 C2-B 设计。
 
-Primary inference should use a design-respecting procedure:
+风险韧性使用层级收缩模型：
 
-- restricted permutation, or
-- cluster-aware bootstrap
+```text
+Q_GT(u,t)
+= global_worker_u
++ route_risk_t
++ worker_specific_route_slope_u
++ stage
++ task_effect
++ error
+```
 
-The resampling or permutation procedure must preserve:
+输出收缩 estimate、interval、leave-one-task/block-out stability 和 routing eligibility。达到 C2-A-RP 上限仍不稳定时，该调整为 0 并 fallback Strong Global。
 
-- image pairing
-- worker allocation structure
-- condition assignment structure
+## 3. Strong Global 与 Full 选择合同
 
-This is the main inferential path.
+### 3.1 Strong Global
 
-### 2.5 Auxiliary model
+正式 Global 的 eligibility 基于 process/independence、GT support、结构失败 gate 和 task-adjusted GT quality floor。排序分数为：
 
-As a model-based secondary analysis, fit a crossed mixed-effects model with:
+```text
+S_Global(u) = LCB(Q_u_GT_task_adjusted)
+```
 
-- fixed effect: `condition`
-- random intercept: `worker`
-- random intercept: `image`
+LOO 仅用于冻结 tie-break 或 compatibility 审计。
 
-This model is supplementary and should be interpreted as a supporting analysis rather than the only inferential basis.
+### 3.2 Full-Integrated
 
-### 2.6 Effect reporting
+Full 在 Global 基线之上增加：
 
-Report:
+- `risk_route` 激活的收缩 worker risk-resilience；
+- 经 P1→C1→C2-B 验证、且由标注前任务 family 唯一激活的 P1 component。
 
-- median difference in `active_time`
-- proportional time saving
-- bootstrap confidence interval
+权重只在 image/base-task 分 fold 的 nested cross-fitting 中选择，使用小型离散集合、总调整上限和 one-standard-error 原则。评价 fold 不得参与 feature、weight、support、fallback 或 stopping 的选择。
 
-`Mann-Whitney U` may be reported only as supplementary or descriptive analysis. It must not serve as the sole primary test.
+### 3.3 政策差异可行性 gate
 
-### 2.7 Why `k = 1` is acceptable for RQ1
+Main 前报告 activation、fallback、推荐首选不同率、初始 worker 集不同率、supported candidate count 和 capacity 后差异。若未达到预注册阈值，V1 不启动并报告政策不可区分；不得用 V1 outcome 放宽阈值。
 
-`k = 1` is acceptable for `RQ1` because the target is efficiency, not the full quality/reliability evidence chain.
+## 4. RQ1：T1 Semi-Auto 条件效应
 
-The main quality and reliability evidence does not rely on `Main-Test k = 1`. Instead, those responsibilities are carried by:
+### 4.1 设计
 
-- `Calibration_manual`
-- `Calibration_semi` paired subset
-- Validation-side audit outputs
+```text
+Manual / Semi
+x
+ordinary / stress_assist
+```
 
-### 2.8 Active-log downgrade rule
+每图 `2 Manual + 2 Semi`。分析 `pair_id` 恰好包含一条 Manual 和一条 Semi；同一图两条 pair 均进入 image-level 汇总。工人不得看到同图两种模式，worker 内平衡 mode/risk，并保存 assignment probability。
 
-If either condition below occurs:
+### 4.2 Primary outcomes
 
-- active-log coverage `< 90%`, or
-- Manual and Semi coverage differ by more than `5` percentage points
+submission-level delivery-adjusted quality：
 
-then the `RQ1` primary conclusion must be downgraded to a sensitivity-supported conclusion.
+```text
+U(t,u) = I(structurally_valid) * IoU(annotation, GT)
+```
 
-In that case, report at minimum:
+worker-caused structural failure 的 `U=0`。
 
-- `lead_time` fallback summary
-- coverage bias audit
-- unknown / missing rate
-- missing-reason distribution
+每个 image-condition 的两条合法 submission 取均值：
 
-`lead_time` must not be merged into the primary estimand.
+```text
+U_bar(t,c) = mean_u U(t,u,c)
+D(t) = U_bar(t,Semi) - U_bar(t,Manual)
+```
 
----
+主要质量 estimand 是 image-level paired `D(t)`。两名工人没有天然多数；未冻结融合算法时，不把双标注聚合 IoU 作为主结果。
 
-## 3. RQ2 Plan
+### 4.3 External pair resolver
 
-### 3.1 Core design
+若 pair 中任一行有合规 external incident：
 
-`RQ2` keeps the thesis-outline main design:
+- 未受影响行仍保持 `row_failure_attribution=none`；
+- 完整 Manual/Semi pair 在原条件、原 freeze version 和 worker-image 隔离下最多重跑一次；
+- resolver 使用合法 rerun pair 替代 original pair；
+- 无法完整重跑时整对行政删失；
+- 非法证据/关系则整对 `not_evaluable`。
 
-- a same-image paired subset with `Nimg = 25`
-- comparison between Manual and SemiAuto on that paired subset
+行政删失不是零值，且不得只删除某一条件。所有决定在条件 outcome 可见前冻结。
 
-### 3.2 Primary inference
+### 4.4 推断层级
 
-Primary inference should remain:
+1. 结构有效率与 delivery-adjusted quality 的非劣/安全门；
+2. owner-valid active time；
+3. mode × `risk_assist` interaction；
+4. blind trust、correction failure、over-correction、Model Issue recognition。
 
-- paired permutation, or
-- paired bootstrap
+主推断尊重 image pairing，并用 worker/image/building 层级 bootstrap、permutation 或相应 mixed model；不得把 naive annotation-level 独立样本检验作为唯一主检验。
 
-### 3.3 Interpretation scope
+### 4.5 Active-time downgrade
 
-This subset is primarily powered to detect moderate-to-large effects.
+Primary 只使用 owner-valid active time，不使用 Label Studio `lead_time`，不固定扣除估算的 Model Issue 时间。
 
-Therefore:
+若某 mode/risk cell 的 owner-valid coverage 未达到冻结阈值：
 
-- it is suitable for identifying meaningful shifts in quality, agreement, or failure behavior
-- it is not suitable for making a strong "no difference" claim when only very small differences are observed
+- active-time 从确认性降为 descriptive/sensitivity；
+- 不影响质量与结构主分析；
+- 报告 coverage、缺失模式和 downgrade 原因。
 
-### 3.4 Counterexample / failure-type distribution
+## 5. RQ2：P1 跨阶段预测效度
 
-Counterexample-type or failure-type distributions should not use ordinary `chi-square` as the main test.
+RQ2 以 worker-level 预测关联、效应量、方向一致性和支持为主，不把 exploratory family 结果升级为因果结论。
 
-Main reporting should use:
+如果保留预先冻结的 paired counterexample subset，使用 image-paired permutation/bootstrap；反例类型分布使用 paired/multilevel 方法，不用普通 chi-square 作为唯一主检验。
 
-- descriptive summaries
-- paired/bootstrap summaries, or
-- exact paired summaries when appropriate
+支持不足、range restriction 或 multiple-testing 风险必须报告。未经 C1 和 C2-B 双重验证的 P1 component 保持 diagnostic-only。
 
-If `chi-square` is included at all, it should be appendix-only sensitivity material rather than the main inferential claim.
+## 6. RQ3：V1 前瞻政策试验
 
----
+### 6.1 设计与 ITT
 
-## 4. RQ3 Interpretation Contract
+V1 在 task/block 层将任务随机分配至 Strong Global 或 Full-Integrated。原始随机化任务是 ITT 单位。
 
-### 4.1 Expected execution path
+两臂共享 worker pool、候选 roster 和 availability snapshot，使用对称 worker quota 与独立容量账本。offer、timeout、replacement、candidate exhaustion、dynamic redundancy、GT-blind aggregation 完全相同；唯一差异是推荐排序。
 
-If `18-20` workers pass `PreScreen`, the expected path is full execution of:
+### 6.2 Rerun resolver
 
-- `P1`
-- `C1`
-- `C2`
-- `T1`
-- `V1`
+external task 可在同 policy arm、同 freeze version、对称预留容量下最多重跑一次。必须关系验证 original/rerun task、reservation ID、reservation arm、sequence 和 capacity before/after。
 
-### 4.2 What still governs scene-specific routing
+- 合法 rerun outcome 替代 original outcome，但仍归原随机化臂 ITT；
+- 无法合规 rerun 时行政删失，不进入质量分母；
+- `external_system_failure_pending_disposition` 不能作为最终政策终态；
+- policy-caused failure 保留原臂 ITT；
+- worker invalid 后若按相同替补规则 resolved，不把最终任务质量改为 0。
 
-Even with sufficient worker count, scene-specific routing still depends on post-`C1/C2` support conditions, including:
+### 6.3 Outcomes
 
-- `(worker, scene)` support
-- `N_{u,s}`
-- CI precision
-- activation support
+最终终态为 `resolved`、`unresolved`、`severe_failure`。
 
-### 4.3 Evidence-source contract
+主要指标：
 
-- the primary comparative evidence for `Random / Global / Full` comes from `Calibration_manual` offline replay
-- `V1` normally reports only the frozen main strategy, typically the `Full` policy
-- if `Random / Global` are reported in `V1`, they must be support-set shadow or replay outputs, and support rate must be reported explicitly
+```text
+severe failure
+unresolved + severe failure
+delivery-adjusted quality
+resolved-only GT quality
+k_used
+owner-valid active time
+completion time
+policy x risk_route interaction
+```
 
-### 4.4 Interpretation rule
+delivery-adjusted quality：
 
-Interpretation is fixed as follows:
+```text
+U_task = I(resolved) * IoU(policy_output, GT)
+```
 
-- global reliability plus OOD/stress sequential redundancy is the robust backbone
-- scene-specific routing is a conditional module
-- scene-specific routing is only credited as a main implementation mechanism when activation support is sufficient
-- otherwise it must be reported as an audit / explanatory mechanism rather than a global main claim
+unresolved/severe failure 的 `U_task=0`，表示未交付正式布局，不声称真实几何 IoU 为零。
 
-### 4.5 Validation failure analysis
+### 6.4 检验层级
 
-`V1` deployment reporting distinguishes worker-level events, policy failures, and external administrative censoring without changing the frozen strategy.
+1. severe failure 不劣；
+2. unresolved + severe failure 不劣；
+3. delivery-adjusted policy quality；
+4. resolved-only output quality；
+5. `k_used`、active time、completion time；
+6. policy × `risk_route` interaction。
 
-- The policy-arm ITT population retains candidate exhaustion, replacement failure, and capacity exhaustion in the original arm; these are `policy_failure = 1`.
-- A worker-caused invalid submission is retained as a worker-level event. A replacement-resolved task is not rewritten to zero; only an ultimately unserved task has task-level delivery-adjusted quality `0`.
-- An external system failure may rerun once only within the original arm, the same frozen version, and pre-reserved symmetric capacity. Otherwise it is administratively censored, excluded from the delivery-adjusted quality denominator, and reported by arm.
+同时报告 recommendation、offer、accept、timeout、replacement、candidate exhaustion、worker failure、policy failure 和 capacity 流程。事后专家审查不得替换冻结政策输出。
 
-These deployment outcomes do not make `V1` the causal comparison for `Random / Global / Full`, and cannot modify `C2` parameters or routing rules.
+## 7. 实验分布与生产标准化
 
----
+ordinary/stress 分层报告后，计算：
 
-## 5. Contingency and Downgrade Notes
+```text
+V_design = 0.5 * V_ordinary + 0.5 * V_stress
+```
 
-### 5.1 Worker pass-count contingency
+该结果只代表 50:50 balanced experimental mixture。
 
-Worker pass-count downgrade is a contingency rule for attrition, unexpected admission failure, or coverage failure.
+生产标准化使用独立自然任务池给出的 `p_ordinary` 和 `p_stress`：
 
-It does not alter the planned protocol and does not replace the expected path of full participation.
+```text
+V_prod = p_ordinary * V_ordinary + p_stress * V_stress
+```
 
-预期路径假设 pass count `>= 18`。
+不得从 50:50 试验样本估计生产比例。没有唯一比例时，报告预注册情景分析，例如 80:20、60:40、50:50 和 30:70。
 
-Contingency 阈值：
+## 8. Replay、缺失与稳健性
 
-- `pass >= 16`：完整执行 `RQ1 / RQ2 / RQ3` 计划。
-- `12 <= pass <= 15`：保留 `RQ1 / RQ2`；`RQ3` scene-specific 只在 activation support 达标场景报告。
-- `pass < 12`：`RQ3` 降级为 global / stress audit，不做稳定 worker subtype 或 scene-specific 主张。
+- Cross-fitted replay 用于 policy development、消融、C2/T1/V1 功效和可行性，不替代 V1。
+- 报告 complete-case 与冻结 missingness sensitivity；行政删失不能编码为零。
+- 对层级 bootstrap/permutation 固定 seed，并保存 fold、cluster unit、抽样次数和代码 commit。
+- 对 worker pass-count 不足使用预注册 contingency：缩减 interaction/family 解释或停止 V1，而不是降低准入后宣称同等证据。
+- 任何 schema drift、缺失 manifest SHA、active-time source mismatch 或事故证据失败均 fail closed。
 
-这是 contingency 解释规则，不代表预期失败。
+## 9. 正式报告清单
 
-### 5.2 Protocol boundary
+正式表格必须至少包含：
 
-Any contingency-triggered downgrade affects interpretation scope and claim strength only.
+- 各轮 planned/actual task、worker、submission；
+- 三轴 worker state 与 support；
+- C2-B 设计和 C2-A-RP 停止情况；
+- P1 component validation/confirmation；
+- Global/Full activation、fallback 和政策差异；
+- T1 原始、rerun、删失、not-evaluable 和最终 pair；
+- V1 两臂 ITT、终态、质量、容量、流程失败和 rerun；
+- external incident 数量、原因和两臂/条件分布；
+- 50:50 与生产标准化结果；
+- 所有 downgrade、deviation、freeze version、manifest SHA 和 code commit。
 
-It does not authorize:
-
-- changing four-stage structure
-- changing `P1 / C1 / C2 / T1 / V1` freeze boundaries
-- redefining admission
-- redefining `w_max`
-- rewriting the routing contract after the fact
+不得虚构、插补或提前填写尚未产生的正式 C1/T1/V1 结果。

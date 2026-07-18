@@ -57,6 +57,7 @@ def materialize(
     formal_worker_state_csv: Path | None = None,
     formal_worker_state_manifest: Path | None = None,
     duplicate_adjudication_csv: Path | None = None,
+    failure_disposition_csv: Path | None = None,
     task_outcome_csv: Path | None = None,
     r_u_scoring_evidence_csv: Path | None = None,
 ) -> dict[str, Any]:
@@ -73,6 +74,7 @@ def materialize(
         independence_audit_csv=independence_audit_csv,
         retrospective_provenance_amendment_csv=retrospective_provenance_amendment_csv,
         duplicate_adjudication_csv=duplicate_adjudication_csv,
+        failure_disposition_csv=failure_disposition_csv,
     )
     gate = run_c1_closeout_dryrun_chain.materialize(
         Path(canonical["canonical_csv"]),
@@ -157,6 +159,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--formal-worker-state-csv", type=Path)
     parser.add_argument("--formal-worker-state-manifest", type=Path)
     parser.add_argument("--duplicate-adjudication-csv", type=Path)
+    parser.add_argument("--failure-disposition-csv", type=Path)
     parser.add_argument("--task-outcome-csv", type=Path)
     parser.add_argument("--r-u-scoring-evidence-csv", type=Path)
     args = parser.parse_args(argv)
@@ -195,6 +198,7 @@ def main(argv: list[str] | None = None) -> int:
         formal_worker_state_csv=args.formal_worker_state_csv,
         formal_worker_state_manifest=args.formal_worker_state_manifest,
         duplicate_adjudication_csv=args.duplicate_adjudication_csv,
+        failure_disposition_csv=args.failure_disposition_csv,
         task_outcome_csv=args.task_outcome_csv,
         r_u_scoring_evidence_csv=args.r_u_scoring_evidence_csv,
     )
