@@ -108,6 +108,35 @@ def test_formal_task_shortage_fails_closed(tmp_path: Path) -> None:
         materialize_c2b(pool, workers, design, tmp_path / "out", input_status="formal", c1_closeout_summary=closeout)
 
 
+def test_formal_c2b_uses_c1_risk_slope_simulation(tmp_path: Path) -> None:
+    pool, workers, design = _inputs(tmp_path)
+    rows = _rows(workers)
+    _csv(workers, list(rows[0]) + ["risk_slope_estimate", "risk_slope_se", "risk_slope_support"], [
+        {**row, "risk_slope_estimate": 0.1, "risk_slope_se": 0.05, "risk_slope_support": 8}
+        for row in rows
+    ])
+    closeout = tmp_path / "closeout.json"
+    closeout.write_text(json.dumps({
+        "formal_closeout_ready": True, "profile_freeze_status": "C1_frozen"
+    }), encoding="utf-8")
+    data = json.loads(design.read_text(encoding="utf-8"))
+    data["input_sha256"] = {
+        "worker_profile_csv": _sha(workers),
+        "task_pool_csv": _sha(pool),
+        "c1_closeout_summary": _sha(closeout),
+    }
+    data["simulation"] = {"seed": 17, "draws": 500}
+    design.write_text(json.dumps(data), encoding="utf-8")
+
+    summary = materialize_c2b(
+        pool, workers, design, tmp_path / "out",
+        input_status="formal", c1_closeout_summary=closeout,
+    )
+    audits = _rows(tmp_path / "out" / "c2b_design_candidates.csv")
+    assert summary["launch_ready"] is True
+    assert {row["design_method"] for row in audits} == {"c1_risk_slope_simulation"}
+
+
 def test_precision_adds_only_needed_paired_blocks_and_caps_uncertain(tmp_path: Path) -> None:
     profile = tmp_path / "post_c2b.csv"
     _csv(profile, ["worker_id", "support", "ci_half_width"], [
@@ -121,13 +150,65 @@ def test_precision_adds_only_needed_paired_blocks_and_caps_uncertain(tmp_path: P
         "input_sha256": {"worker_profile_csv": _sha(profile)},
         "precision": {"target_ci_half_width": 0.15, "max_additional_blocks": 3},
     }), encoding="utf-8")
-    summary = materialize_c2a(profile, design, tmp_path / "out")
+    pool = tmp_path / "c2a_pool.csv"
+    _csv(pool, ["task_id", "base_task_id", "task_stratum", "c2a_rp_eligible"], [
+        {"task_id": f"{stratum}-{index}", "base_task_id": f"{stratum}-{index}",
+         "task_stratum": stratum, "c2a_rp_eligible": "true"}
+        for stratum in ("ordinary", "stress") for index in range(1, 4)
+    ])
+    summary = materialize_c2a(profile, design, tmp_path / "out", task_pool_csv=pool)
     rows = {row["worker_id"]: row for row in _rows(tmp_path / "out" / "precision_plan_C2A_RP.csv")}
+    assignments = _rows(tmp_path / "out" / "assignment_manifest_C2A_RP.csv")
 
     assert rows["met"]["additional_blocks"] == "0"
     assert rows["fillable"]["ordinary_tasks"] == rows["fillable"]["stress_tasks"] == "2"
     assert rows["capped"]["additional_blocks"] == "3"
     assert rows["capped"]["routing_eligibility"] == "uncertain_fallback_global"
     assert rows["capped"]["unmet_reason"] == "target_not_met_at_frozen_cap"
+    assert len(assignments) == 10
+    assert {(row["worker_id"], row["task_stratum"]) for row in assignments} == {
+        ("fillable", "ordinary"), ("fillable", "stress"),
+        ("capped", "ordinary"), ("capped", "stress"),
+    }
+    assert all(row["task_id"] for row in assignments)
     assert summary["searches_new_risk_family"] is False
     assert summary["modifies_c1"] is False
+
+
+def test_formal_c2a_requires_bound_c2b_sha_and_real_task_pool(tmp_path: Path) -> None:
+    profile = tmp_path / "post_c2b.csv"
+    _csv(profile, ["worker_id", "support", "ci_half_width"], [
+        {"worker_id": "w1", "support": 8, "ci_half_width": 0.18},
+    ])
+    pool = tmp_path / "pool.csv"
+    _csv(pool, ["task_id", "base_task_id", "task_stratum"], [
+        {"task_id": "o1", "base_task_id": "o1", "task_stratum": "ordinary"},
+        {"task_id": "s1", "base_task_id": "s1", "task_stratum": "stress"},
+    ])
+    design = tmp_path / "design.json"
+    design.write_text(json.dumps({
+        "manifest_version": "c2_design_v1",
+        "input_sha256": {
+            "worker_profile_csv": _sha(profile),
+            "c2a_task_pool_csv": _sha(pool),
+        },
+        "precision": {"target_ci_half_width": 0.17, "max_additional_blocks": 1},
+    }), encoding="utf-8")
+    c2b = tmp_path / "c2b.json"
+    c2b.write_text(json.dumps({
+        "design_manifest_sha256": _sha(design),
+        "c2b_design_ready": True,
+        "post_c2b_worker_profile_sha256": _sha(profile),
+    }), encoding="utf-8")
+
+    with pytest.raises(ValueError, match="stale_or_unbound"):
+        materialize_c2a(
+            profile, design, tmp_path / "bad", c2b_summary=c2b,
+            c2b_summary_sha256="0" * 64, task_pool_csv=pool, input_status="formal",
+        )
+    summary = materialize_c2a(
+        profile, design, tmp_path / "good", c2b_summary=c2b,
+        c2b_summary_sha256=_sha(c2b), task_pool_csv=pool, input_status="formal",
+    )
+    assert summary["launch_ready"] is True
+    assert summary["n_assignments"] == 2

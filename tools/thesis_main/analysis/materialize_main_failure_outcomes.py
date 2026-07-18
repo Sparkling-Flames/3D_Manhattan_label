@@ -34,16 +34,21 @@ T1_FIELDS = [
     "original_row_failure_attribution", "original_incident_id",
     "pair_analysis_disposition", "source_pair_id", "source_task_id", "rerun_sequence",
     "frozen_rule_version", "iou_to_gt", "structurally_valid",
-    "delivery_adjusted_quality", "quality_evaluable",
+    "delivery_adjusted_quality", "quality_evaluable", "risk_assist",
+    "active_time_integrity_status", "owner_valid_active_time", "active_time_seconds",
+    "inference_cluster_id",
 ]
 V1_FIELDS = [
-    "task_id", "original_task_id", "resolved_task_id", "policy_arm", "freeze_version",
+    "task_id", "original_task_id", "resolved_task_id", "block_id", "policy_arm", "freeze_version",
     "failure_attribution", "incident_id", "incident_evidence_status",
     "original_failure_attribution", "original_incident_id",
     "analysis_disposition", "policy_terminal_status", "iou_to_gt", "rerun_task_id",
     "rerun_sequence", "reservation_id", "reservation_arm",
     "reservation_capacity_before", "reservation_capacity_after",
     "itt_included", "policy_failure", "delivery_adjusted_quality",
+    "risk_route", "k_used", "active_time_seconds", "completion_time_seconds",
+    "non_delivery", "policy_failure_reason", "selected_worker_id",
+    "selected_annotation_id", "selected_geometry_sha256",
 ]
 
 
@@ -155,8 +160,8 @@ def materialize_complete_c1_dispositions(
     for identity, annotation in roster.items():
         adjudication = adjudications.get(identity)
         if adjudication is None:
-            failure = c1_failure_fields({"failure_attribution": "none"})
-            reason = "no_failure_adjudication"
+            failure = c1_failure_fields({"failure_attribution": "not_evaluable"})
+            reason = "adjudication_missing"
         else:
             raw = text(adjudication.get("failure_attribution"))
             if not raw:
@@ -231,6 +236,17 @@ def materialize_t1_rows(source_rows: list[dict[str, Any]]) -> tuple[list[dict[st
     for pair_id, rows in pairs.items():
         _validate_t1_pair(rows, pair_id)
 
+    original_by_image: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for rows in pairs.values():
+        if not text(rows[0].get("rerun_of_pair_id")):
+            original_by_image[text(rows[0].get("image_id"))].extend(rows)
+    for image_id, rows in original_by_image.items():
+        by_worker: dict[str, set[str]] = defaultdict(set)
+        for row in rows:
+            by_worker[text(row.get("worker_id"))].add(text(row.get("condition")).lower())
+        if any(len(conditions) > 1 for conditions in by_worker.values()):
+            raise ValueError(f"T1 image {image_id} assigns one worker across conditions")
+
     reruns: dict[str, str] = {}
     for pair_id, rows in pairs.items():
         original = text(rows[0].get("rerun_of_pair_id"))
@@ -262,7 +278,10 @@ def materialize_t1_rows(source_rows: list[dict[str, Any]]) -> tuple[list[dict[st
             else:
                 selected_rows = pairs[rerun_pair_id]
                 source_pair_id = rerun_pair_id
-                _validate_t1_rerun(original_rows, selected_rows, pair_id)
+                _validate_t1_rerun(
+                    original_rows, selected_rows, pair_id,
+                    original_image_rows=original_by_image[text(original_rows[0].get("image_id"))],
+                )
                 if _t1_pair_disposition(selected_rows, rerun_pair_id) != "included":
                     raise ValueError(f"T1 rerun pair {rerun_pair_id} must be included")
                 resolved_originals.add(pair_id)
@@ -312,6 +331,8 @@ def _validate_t1_rerun(
     originals: list[dict[str, Any]],
     reruns: list[dict[str, Any]],
     original_pair_id: str,
+    *,
+    original_image_rows: list[dict[str, Any]] | None = None,
 ) -> None:
     original_by_condition = {text(row.get("condition")).lower(): row for row in originals}
     rerun_by_condition = {text(row.get("condition")).lower(): row for row in reruns}
@@ -325,6 +346,12 @@ def _validate_t1_rerun(
             raise ValueError(f"T1 rerun pair {original_pair_id} violates worker-image isolation")
         if text(original.get("frozen_rule_version")) != text(rerun.get("frozen_rule_version")):
             raise ValueError(f"T1 rerun pair {original_pair_id} changed freeze version")
+    original_workers = {
+        text(row.get("worker_id")) for row in (original_image_rows or originals)
+    }
+    rerun_workers = {text(row.get("worker_id")) for row in reruns}
+    if original_workers & rerun_workers:
+        raise ValueError(f"T1 rerun pair {original_pair_id} violates full-image worker isolation")
 
 
 def _capacity(value: Any, field: str) -> int:
@@ -337,10 +364,17 @@ def _capacity(value: Any, field: str) -> int:
     return parsed
 
 
-def materialize_v1_rows(source_rows: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+def materialize_v1_rows(
+    source_rows: list[dict[str, Any]],
+    reservation_rows: list[dict[str, Any]] | None = None,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     originals: dict[str, dict[str, Any]] = {}
     reruns: dict[str, dict[str, Any]] = {}
     reservations: set[str] = set()
+    reservation_registry = (
+        _unique(reservation_rows, ("reservation_id",), "V1 reservation")
+        if reservation_rows is not None else {}
+    )
     for row in source_rows:
         task_id = text(row.get("task_id"))
         _required(row, "task_id", "policy_arm", "failure_attribution", "analysis_disposition", "freeze_version")
@@ -364,7 +398,22 @@ def materialize_v1_rows(source_rows: list[dict[str, Any]]) -> tuple[list[dict[st
         if reservation_id in reservations:
             raise ValueError(f"duplicate V1 reservation_id: {reservation_id}")
         reservations.add(reservation_id)
+        if reservation_rows is not None:
+            registered = reservation_registry.get((reservation_id,))
+            if registered is None:
+                raise ValueError(f"V1 reservation_id not found in reservation registry: {reservation_id}")
+            checks = {
+                "reservation_arm": row.get("reservation_arm"),
+                "reservation_capacity_before": row.get("reservation_capacity_before"),
+                "reservation_capacity_after": row.get("reservation_capacity_after"),
+            }
+            if any(text(registered.get(field)) != text(value) for field, value in checks.items()):
+                raise ValueError(f"V1 reservation registry mismatch: {reservation_id}")
+            if text(registered.get("reservation_status")) != "consumed":
+                raise ValueError(f"V1 reservation is not consumed: {reservation_id}")
         reruns[original_id] = row
+    if reruns and reservation_rows is None:
+        raise ValueError("V1 rerun requires reservation registry")
 
     output: list[dict[str, Any]] = []
     policy_failure_by_arm: Counter[str] = Counter()
@@ -457,6 +506,7 @@ def materialize(
     rule_manifest: Path,
     adjudication_csv: Path | None = None,
     incident_registry_csv: Path | None = None,
+    reservation_registry_csv: Path | None = None,
 ) -> dict[str, Any]:
     normalized_stage = stage.upper()
     manifest = _load_manifest(rule_manifest)
@@ -490,8 +540,12 @@ def materialize(
             incident_base_dir=incident_registry_csv.parent if incident_registry_csv else input_csv.parent,
             stage="V1",
         )
-        output_rows, audit = materialize_v1_rows(rows)
+        output_rows, audit = materialize_v1_rows(
+            rows, _read_csv(reservation_registry_csv) if reservation_registry_csv else None
+        )
         output_csv, fields = output_dir / "v1_itt_outcome_disposition.csv", V1_FIELDS
+        if reservation_registry_csv:
+            dependencies["reservation_registry_csv"] = _sha256(reservation_registry_csv)
     else:
         raise ValueError("stage must be C1, T1, or V1")
     if incident_registry_csv:
@@ -526,12 +580,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--rule-manifest", required=True, type=Path)
     parser.add_argument("--adjudication-csv", type=Path)
     parser.add_argument("--incident-registry-csv", type=Path)
+    parser.add_argument("--reservation-registry-csv", type=Path)
     args = parser.parse_args(argv)
     print(json.dumps(materialize(
         args.stage, args.input_csv, args.output_dir,
         rule_manifest=args.rule_manifest,
         adjudication_csv=args.adjudication_csv,
         incident_registry_csv=args.incident_registry_csv,
+        reservation_registry_csv=args.reservation_registry_csv,
     ), ensure_ascii=False, indent=2))
     return 0
 

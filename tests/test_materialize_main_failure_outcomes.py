@@ -67,7 +67,11 @@ def test_sparse_c1_adjudication_expands_to_complete_fail_closed_table(tmp_path: 
         incident_base_dir=tmp_path,
     )
 
-    assert [row["failure_attribution"] for row in rows] == ["external_system_failure", "none"]
+    assert [row["failure_attribution"] for row in rows] == [
+        "external_system_failure", "not_evaluable"
+    ]
+    assert rows[1]["failure_disposition_reason"] == "adjudication_missing"
+    assert rows[1]["worker_reliability_eligible"] is False
     assert audit["n_canonical_annotations"] == 2
 
 
@@ -180,6 +184,18 @@ def test_t1_rejects_duplicate_condition_and_same_worker_rerun() -> None:
         materialize_t1_rows(original + _t1_pair("p1-r1", disposition="included", rerun_of="p1"))
 
 
+def test_t1_rerun_isolated_from_every_worker_on_image_across_pairs() -> None:
+    first = _t1_pair("p1", disposition="rerun", workers=("w1", "w2"))
+    first[0].update({
+        "row_failure_attribution": "external_system_failure",
+        "incident_id": "inc-1", "incident_evidence_status": "verified",
+    })
+    second = _t1_pair("p2", disposition="included", workers=("w3", "w4"))
+    rerun = _t1_pair("p1-r1", disposition="included", rerun_of="p1", workers=("w5", "w3"))
+    with pytest.raises(ValueError, match="full-image worker isolation"):
+        materialize_t1_rows(first + second + rerun)
+
+
 def _v1_original(**updates: str) -> dict[str, str]:
     row = {
         "task_id": "v1", "original_task_id": "", "policy_arm": "Full",
@@ -201,8 +217,20 @@ def _v1_rerun(**updates: str) -> dict[str, str]:
     return {**row, **updates}
 
 
+def _reservation(rerun: dict[str, str] | None = None) -> dict[str, str]:
+    rerun = rerun or _v1_rerun()
+    return {
+        "reservation_id": rerun["reservation_id"],
+        "reservation_arm": rerun["reservation_arm"],
+        "reservation_capacity_before": rerun["reservation_capacity_before"],
+        "reservation_capacity_after": rerun["reservation_capacity_after"],
+        "reservation_status": "consumed",
+    }
+
+
 def test_v1_valid_rerun_resolves_original_randomization_unit() -> None:
-    rows, audit = materialize_v1_rows([_v1_original(), _v1_rerun()])
+    rerun = _v1_rerun()
+    rows, audit = materialize_v1_rows([_v1_original(), rerun], [_reservation(rerun)])
 
     assert rows[0]["task_id"] == "v1"
     assert rows[0]["resolved_task_id"] == "v1-r1"
@@ -224,8 +252,19 @@ def test_v1_valid_rerun_resolves_original_randomization_unit() -> None:
     ],
 )
 def test_v1_rejects_invalid_rerun_relation(updates: dict[str, str], message: str) -> None:
+    rerun = _v1_rerun(**updates)
     with pytest.raises(ValueError, match=message):
-        materialize_v1_rows([_v1_original(), _v1_rerun(**updates)])
+        materialize_v1_rows([_v1_original(), rerun], [_reservation(rerun)])
+
+
+def test_v1_rerun_requires_matching_consumed_reservation_registry() -> None:
+    with pytest.raises(ValueError, match="requires reservation registry"):
+        materialize_v1_rows([_v1_original(), _v1_rerun()])
+    with pytest.raises(ValueError, match="not found"):
+        materialize_v1_rows(
+            [_v1_original(), _v1_rerun()],
+            [{**_reservation(), "reservation_id": "other"}],
+        )
 
 
 def test_v1_rejects_second_rerun_duplicate_reservation_and_pending_terminal() -> None:

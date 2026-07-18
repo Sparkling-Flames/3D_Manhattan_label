@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import random
 import sys
 from collections import Counter, defaultdict, deque
 from pathlib import Path
@@ -23,7 +24,8 @@ ASSIGNMENT_FIELDS = [
 DESIGN_AUDIT_FIELDS = [
     "design_id", "common_anchor_count", "bridge_per_worker", "unique_bridge_tasks",
     "min_task_support", "n_assignments", "projected_max_ci_half_width",
-    "worker_task_graph_connected", "stratum_balance_valid", "feasible", "failure_reason",
+    "worker_task_graph_connected", "stratum_balance_valid", "design_method",
+    "feasible", "failure_reason",
 ]
 GRAPH_AUDIT_FIELDS = [
     "design_id", "n_workers", "n_tasks", "n_edges", "n_connected_components",
@@ -204,14 +206,40 @@ def _graph_audit(
     }
 
 
-def _projected_max_half_width(worker_rows: list[dict[str, str]], added: int) -> float:
+def _projected_max_half_width(
+    worker_rows: list[dict[str, str]],
+    selected_tasks: list[dict[str, str]],
+    *,
+    seed: int,
+    draws: int,
+    require_c1_slopes: bool,
+) -> float:
+    if require_c1_slopes and draws < 200:
+        raise ValueError("formal C2-B simulation requires at least 200 draws")
+    added_information = sum(
+        _float(task, "risk_information_weight", default=1.0)
+        for task in selected_tasks
+    )
+    if added_information <= 0:
+        return math.inf
     projected = []
     for row in worker_rows:
+        worker = safe(row.get("worker_id"))
+        slope_se = _float(row, "risk_slope_se", default=math.inf)
+        slope_support = _int(row, "risk_slope_support", "support", "n_support")
+        if math.isfinite(slope_se) and slope_se > 0 and slope_support > 0:
+            projected_se = 1.0 / math.sqrt((1.0 / slope_se ** 2) + added_information)
+            rng = random.Random(f"{seed}|{worker}|{added_information:.12g}")
+            errors = sorted(abs(rng.gauss(0.0, projected_se)) for _ in range(draws))
+            projected.append(errors[min(draws - 1, math.ceil(0.95 * draws) - 1)])
+            continue
+        if require_c1_slopes:
+            return math.inf
         support = _int(row, "support", "n_calib_completed", "n_support")
         half_width = _float(row, "ci_half_width", "r_u_h")
         if support <= 0 or not math.isfinite(half_width):
             return math.inf
-        projected.append(half_width * math.sqrt(support / (support + added)))
+        projected.append(half_width * math.sqrt(support / (support + len(selected_tasks))))
     return max(projected, default=math.inf)
 
 
@@ -268,6 +296,9 @@ def materialize(
     anchors, bridges = _anchor_pool(pool), _bridge_pool(pool)
     audits: list[dict[str, Any]] = []
     candidates: list[tuple[int, str, list[dict[str, Any]], dict[str, Any]]] = []
+    simulation = manifest.get("simulation") or {}
+    simulation_seed = int(simulation.get("seed", 0))
+    simulation_draws = int(simulation.get("draws", 1000))
 
     for raw in designs:
         design_id = safe(raw.get("design_id"))
@@ -310,7 +341,13 @@ def materialize(
                     "design_manifest_sha256": manifest_sha,
                 })
         graph = _graph_audit(design_id, workers, rows, {_task_id(task) for task in selected_bridges})
-        projected = _projected_max_half_width(workers_rows, common_n + bridge_per_worker)
+        projected = _projected_max_half_width(
+            workers_rows,
+            [*selected_anchors, *selected_bridges[:bridge_per_worker]],
+            seed=simulation_seed,
+            draws=simulation_draws,
+            require_c1_slopes=input_status == "formal",
+        )
         target = float(manifest.get("c2b_target_ci_half_width", math.inf))
         if not reason and projected > target:
             reason = "projected_ci_half_width_above_target"
@@ -325,6 +362,7 @@ def materialize(
             "projected_max_ci_half_width": "" if not math.isfinite(projected) else projected,
             "worker_task_graph_connected": graph["worker_task_graph_connected"],
             "stratum_balance_valid": graph["max_worker_stratum_imbalance"] <= max_imbalance,
+            "design_method": "c1_risk_slope_simulation" if input_status == "formal" else "candidate_simulation_or_dryrun_fallback",
             "feasible": not reason, "failure_reason": reason,
         }
         audits.append(audit)

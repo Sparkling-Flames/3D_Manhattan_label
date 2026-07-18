@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
+import itertools
 import json
 import random
 from collections import defaultdict
@@ -182,17 +183,14 @@ def _components(records: list[dict[str, Any]], aggregation: dict[str, Any]) -> t
     components: list[list[int]] = []
     unseen = set(adjacency)
     while unseen:
-        start = min(unseen)
-        stack, component = [start], []
-        unseen.remove(start)
-        while stack:
-            current = stack.pop()
-            component.append(current)
-            for neighbour in adjacency[current]:
-                if neighbour in unseen:
-                    unseen.remove(neighbour)
-                    stack.append(neighbour)
-        components.append(sorted(component))
+        clique = next(
+            list(group)
+            for size in range(len(unseen), 0, -1)
+            for group in itertools.combinations(sorted(unseen), size)
+            if all(right in adjacency[left] for left, right in itertools.combinations(group, 2))
+        )
+        components.append(clique)
+        unseen.difference_update(clique)
     return sorted(components, key=lambda value: (-len(value), value)), similarities
 
 
@@ -261,6 +259,11 @@ def aggregate_submissions(
     return {
         "terminal_status": terminal,
         "selected_worker_id": str(selected.get("worker_id", "")) if selected else "",
+        "selected_annotation_id": str(selected.get("annotation_id", "")) if selected else "",
+        "selected_geometry_sha256": (
+            hashlib.sha256(json.dumps(selected["_geometry"], sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+            if selected else ""
+        ),
         "valid_k": len(legal),
         "largest_cluster_support": len(largest),
         "second_cluster_support": second_size,
@@ -305,14 +308,16 @@ def feasibility_report(
 
 def _capacity_divergence(tasks: list[dict[str, Any]], rankings: list[dict[str, Any]], manifest: dict[str, Any]) -> float:
     quota = int(manifest["scheduler"]["per_worker_arm_quota"])
-    ledgers = {arm: defaultdict(lambda: quota) for arm in ARMS}
+    ledgers: dict[tuple[str, str], defaultdict[str, int]] = {}
     choices: list[tuple[str, str]] = []
     for task, ranking in zip(tasks, rankings):
+        block = str(task["block_id"])
         pair = []
         for arm in ARMS:
-            worker = next((worker for worker in ranking[arm] if ledgers[arm][worker] > 0), "")
+            ledger = ledgers.setdefault((block, arm), defaultdict(lambda: quota))
+            worker = next((worker for worker in ranking[arm] if ledger[worker] > 0), "")
             if worker:
-                ledgers[arm][worker] -= 1
+                ledger[worker] -= 1
             pair.append(worker)
         choices.append((pair[0], pair[1]))
     return sum(left != right for left, right in choices) / len(choices) if choices else 0.0
@@ -336,6 +341,8 @@ def run_v1_trial(
     candidates_by_task: dict[str, list[dict[str, Any]]],
     outcomes_by_task_worker: dict[tuple[str, str], dict[str, Any]],
     manifest: dict[str, Any],
+    *,
+    allow_preassigned_arms: bool = False,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     task_rows = list(tasks)
     task_ids = [str(task.get("task_id", "")) for task in task_rows]
@@ -354,15 +361,23 @@ def run_v1_trial(
             raise ValueError(f"candidate identities must be non-empty and unique within task {task_id}")
     assignments = _randomized_arms(task_rows, int(manifest["scheduler"]["seed"]))
     quota = int(manifest["scheduler"]["per_worker_arm_quota"])
-    ledgers = {arm: defaultdict(lambda: quota) for arm in ARMS}
+    ledgers: dict[tuple[str, str], defaultdict[str, int]] = {}
+    for block_id in snapshots:
+        for arm in ARMS:
+            ledgers[block_id, arm] = defaultdict(lambda: quota)
     offer_rows: list[dict[str, Any]] = []
     summaries: list[dict[str, Any]] = []
     for task in task_rows:
         task_id = str(task["task_id"])
-        arm = str(task.get("arm") or assignments[task_id])
+        block_id = str(task["block_id"])
+        arm = str(task.get("arm") or assignments[task_id]) if allow_preassigned_arms else assignments[task_id]
         if arm not in ARMS:
             raise ValueError(f"unknown V1 arm: {arm}")
-        ranking = rank_candidates(candidates_by_task.get(task_id, []), task, manifest)
+        realtime_candidates = [
+            row for row in candidates_by_task.get(task_id, [])
+            if ledgers[block_id, arm][str(row.get("worker_id", ""))] > 0
+        ]
+        ranking = rank_candidates(realtime_candidates, task, manifest)
         candidate_set = ranking[arm]
         submissions: list[dict[str, Any]] = []
         completed_workers: set[str] = set()
@@ -374,17 +389,17 @@ def run_v1_trial(
         for worker in candidate_set:
             if final["terminal_status"] == "resolved" or offer_sequence >= max_attempts or len(submissions) >= cap:
                 break
-            if ledgers[arm][worker] <= 0:
+            if ledgers[block_id, arm][worker] <= 0:
                 continue
             offer_sequence += 1
             attempted_workers.add(worker)
-            before = ledgers[arm][worker]
+            before = ledgers[block_id, arm][worker]
             outcome = dict(outcomes_by_task_worker.get((task_id, worker), {"outcome": "no_response"}))
             outcome_name = str(outcome.get("outcome", "no_response"))
             accepted = worker if outcome_name not in {"declined", "no_response"} else ""
             completed = worker if outcome_name.startswith("completed_") or outcome_name == "external_system_failure_pending_disposition" else ""
             if accepted:
-                ledgers[arm][worker] -= 1
+                ledgers[block_id, arm][worker] -= 1
             if completed:
                 completed_workers.add(worker)
             if outcome_name == "completed_valid":
@@ -401,7 +416,7 @@ def run_v1_trial(
                 "freeze_version": manifest["freeze_version"],
                 "block_id": task["block_id"],
                 "task_id": task_id,
-                "arm": arm,
+                "policy_arm": arm,
                 "candidate_set": json.dumps(candidate_set),
                 "availability_snapshot_id": task["availability_snapshot_id"],
                 "policy_recommended_worker": candidate_set[0] if candidate_set else "",
@@ -423,8 +438,8 @@ def run_v1_trial(
                 "offer_timeout": manifest["scheduler"]["offer_timeout"],
                 "completion_timeout": manifest["scheduler"]["completion_timeout"],
                 "capacity_before": before,
-                "capacity_after": ledgers[arm][worker],
-                "capacity_remaining": ledgers[arm][worker],
+                "capacity_after": ledgers[block_id, arm][worker],
+                "capacity_remaining": ledgers[block_id, arm][worker],
             })
             at_cap = len(submissions) >= cap or offer_sequence >= max_attempts
             final = aggregate_submissions(submissions, manifest, at_cap=at_cap, seed_key=task_id)
@@ -433,13 +448,13 @@ def run_v1_trial(
         if final["terminal_status"] == "needs_more":
             final = aggregate_submissions(submissions, manifest, at_cap=True, seed_key=task_id)
         remaining_candidate = any(
-            worker not in attempted_workers and ledgers[arm][worker] > 0
+            worker not in attempted_workers and ledgers[block_id, arm][worker] > 0
             for worker in candidate_set
         )
         candidate_exhausted = final["terminal_status"] != "resolved" and not remaining_candidate
         policy_failure_reason = ""
         if final["terminal_status"] != "resolved":
-            if candidate_set and all(ledgers[arm][worker] <= 0 for worker in candidate_set):
+            if candidate_set and all(ledgers[block_id, arm][worker] <= 0 for worker in candidate_set):
                 policy_failure_reason = "capacity_exhaustion"
             elif offer_sequence >= max_attempts:
                 policy_failure_reason = "replacement_failure"
@@ -450,14 +465,20 @@ def run_v1_trial(
             "freeze_version": manifest["freeze_version"],
             "block_id": task["block_id"],
             "task_id": task_id,
-            "arm": arm,
+            "policy_arm": arm,
+            "risk_route": "stress_route" if _truth(task.get("risk_route")) else "ordinary",
             "availability_snapshot_id": task["availability_snapshot_id"],
             "candidate_set": json.dumps(candidate_set),
             "full_fallback": ranking["full_fallback"],
             "fallback_reasons": json.dumps(ranking["fallback_reasons"]),
             "candidate_exhausted": candidate_exhausted,
+            "non_delivery": final["terminal_status"] != "resolved",
             "policy_failure": bool(policy_failure_reason),
             "policy_failure_reason": policy_failure_reason,
+            "failure_attribution": "policy_caused_failure" if policy_failure_reason else "none",
+            "analysis_disposition": "included",
+            "policy_terminal_status": final["terminal_status"],
+            "k_used": final["valid_k"],
             "offers_used": offer_sequence,
             "completed_workers": json.dumps(sorted(completed_workers)),
             **final,
@@ -492,6 +513,12 @@ def materialize_v1_policy(
     if feasibility["launch_status"] != "launchable":
         return {**feasibility, "formal_assignment_generated": False}
     offers, summaries = run_v1_trial(tasks, candidates_by_task, outcomes, manifest)
+    if input_status == "formal" and any(
+        row["terminal_status"] == "resolved"
+        and (not row.get("selected_annotation_id") or not row.get("selected_geometry_sha256"))
+        for row in summaries
+    ):
+        raise ValueError("formal resolved V1 output requires annotation and geometry identity")
     write_csv_rows(output_dir / "v1_policy_offer_ledger.csv", offers)
     write_csv_rows(output_dir / "v1_policy_task_summary.csv", summaries)
     audit = {

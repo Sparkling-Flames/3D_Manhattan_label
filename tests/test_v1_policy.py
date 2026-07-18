@@ -133,7 +133,10 @@ def test_scheduler_rules_are_arm_symmetric_and_capacity_is_not_borrowed() -> Non
         ("tf", "w1"): _valid(),
         ("tf", "w2"): _valid(),
     }
-    offers, _ = run_v1_trial([_task("tg", "strong_global"), _task("tf", "full_integrated")], candidates, outcomes, manifest)
+    offers, _ = run_v1_trial(
+        [_task("tg", "strong_global"), _task("tf", "full_integrated")],
+        candidates, outcomes, manifest, allow_preassigned_arms=True,
+    )
     first_by_task = {task: next(row for row in offers if row["task_id"] == task) for task in ("tg", "tf")}
     assert first_by_task["tg"]["offered_worker"] == first_by_task["tf"]["offered_worker"] == "w1"
     assert first_by_task["tg"]["offer_timeout"] == first_by_task["tf"]["offer_timeout"] == 60
@@ -151,7 +154,7 @@ def test_accepted_not_completed_consumes_only_its_own_arm_capacity() -> None:
         ("tf", "w1"): _valid(),
         ("tf", "w2"): _valid(),
     }
-    offers, _ = run_v1_trial(tasks, candidates, outcomes, manifest)
+    offers, _ = run_v1_trial(tasks, candidates, outcomes, manifest, allow_preassigned_arms=True)
     global_first = next(row for row in offers if row["task_id"] == "tg")
     full_first = next(row for row in offers if row["task_id"] == "tf")
     assert global_first["capacity_after"] == 0
@@ -180,6 +183,15 @@ def test_scheduler_is_reproducible_for_fixed_seed() -> None:
     candidates = {task["task_id"]: [_candidate("w1", 1.0), _candidate("w2", 0.9)] for task in tasks}
     outcomes = {(task["task_id"], worker): _valid() for task in tasks for worker in ("w1", "w2")}
     assert run_v1_trial(tasks, candidates, outcomes, manifest) == run_v1_trial(tasks, candidates, outcomes, manifest)
+
+
+def test_formal_scheduler_ignores_prepopulated_arm() -> None:
+    manifest = _manifest()
+    tasks = [_task(f"t{index}", "strong_global") for index in range(4)]
+    candidates = {task["task_id"]: [_candidate("w1", 1.0), _candidate("w2", 0.9)] for task in tasks}
+    outcomes = {(task["task_id"], worker): _valid(annotation_id=f"{task['task_id']}-{worker}") for task in tasks for worker in ("w1", "w2")}
+    _, summaries = run_v1_trial(tasks, candidates, outcomes, manifest)
+    assert {row["policy_arm"] for row in summaries} == {"strong_global", "full_integrated"}
 
 
 def test_gt_fields_do_not_change_routing_or_aggregation() -> None:
@@ -251,8 +263,8 @@ def test_csv_materializer_parses_geometry_json_and_writes_formal_outputs(tmp_pat
     write_csv(candidates, [{**_candidate("w1", 1.0), "task_id": "t1"}, {**_candidate("w2", 0.9), "task_id": "t1"}])
     corners = json.dumps([[100, 100], [100, 400], [600, 100], [600, 400]])
     write_csv(outcomes, [
-        {"task_id": "t1", "worker_id": "w1", "outcome": "completed_valid", "structurally_valid": "true", "corners_px": corners},
-        {"task_id": "t1", "worker_id": "w2", "outcome": "completed_valid", "structurally_valid": "true", "corners_px": corners},
+        {"task_id": "t1", "worker_id": "w1", "annotation_id": "a1", "outcome": "completed_valid", "structurally_valid": "true", "corners_px": corners},
+        {"task_id": "t1", "worker_id": "w2", "annotation_id": "a2", "outcome": "completed_valid", "structurally_valid": "true", "corners_px": corners},
     ])
     output = tmp_path / "out"
     audit = materialize_v1_policy(
@@ -264,4 +276,7 @@ def test_csv_materializer_parses_geometry_json_and_writes_formal_outputs(tmp_pat
     assert audit["formal_assignment_generated"] is True
     assert (output / "v1_policy_offer_ledger.csv").exists()
     with (output / "v1_policy_task_summary.csv").open(encoding="utf-8") as handle:
-        assert list(csv.DictReader(handle))[0]["terminal_status"] == "resolved"
+        row = list(csv.DictReader(handle))[0]
+        assert row["terminal_status"] == "resolved"
+        assert row["selected_annotation_id"] in {"a1", "a2"}
+        assert len(row["selected_geometry_sha256"]) == 64
