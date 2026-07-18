@@ -4,6 +4,7 @@ import argparse
 import json
 import math
 import sys
+from collections import defaultdict
 from pathlib import Path
 from typing import Any
 
@@ -22,7 +23,9 @@ PRECISION_FIELDS = [
 ]
 C2A_ASSIGNMENT_FIELDS = [
     "round_id", "worker_id", "task_id", "base_task_id", "task_stratum",
-    "assignment_sequence", "c2_component", "design_manifest_sha256",
+    "assignment_sequence", "c2_component", "target_component", "gap_reason",
+    "precision_before", "support_before", "support_after", "selection_probability",
+    "design_manifest_sha256",
     "c2b_summary_sha256", "post_c2b_worker_profile_sha256",
 ]
 
@@ -65,6 +68,8 @@ def build_precision_plan(
         met = not reason and projected is not None and projected <= target_half_width
         out.append({
             "worker_id": worker,
+            "target_component": safe(row.get("target_component") or row.get("component_id")) or "risk_slope",
+            "gap_reason": safe(row.get("gap_reason")) or ("target_not_met" if blocks else "target_already_met"),
             "current_support": "" if support_raw is None else int(support_raw),
             "current_ci_half_width": "" if half_width is None else half_width,
             "target_ci_half_width": target_half_width,
@@ -87,6 +92,8 @@ def build_precision_assignments(
     manifest_sha: str,
     c2b_sha: str,
     profile_sha: str,
+    history_rows: list[dict[str, str]] | None = None,
+    max_task_support: int = 2,
 ) -> list[dict[str, Any]]:
     pools: dict[str, list[dict[str, str]]] = {"ordinary": [], "stress": []}
     for task in task_rows:
@@ -100,19 +107,34 @@ def build_precision_assignments(
 
     assignments: list[dict[str, Any]] = []
     offsets = {"ordinary": 0, "stress": 0}
+    seen_by_worker = defaultdict(set)
+    for history in history_rows or []:
+        worker = safe(history.get("worker_id"))
+        seen_by_worker[worker].update(filter(None, (
+            safe(history.get("task_id")), safe(history.get("base_task_id")),
+        )))
+    task_support: dict[str, int] = defaultdict(int)
     for plan in precision_rows:
         worker = safe(plan.get("worker_id"))
         sequence = 0
         for stratum, count_field in (("ordinary", "ordinary_tasks"), ("stress", "stress_tasks")):
             count = int(plan[count_field])
-            if count > len(pools[stratum]):
+            eligible = [
+                task for task in pools[stratum]
+                if safe(task.get("task_id")) not in seen_by_worker[worker]
+                and safe(task.get("base_task_id")) not in seen_by_worker[worker]
+                and task_support[safe(task.get("task_id"))] < max_task_support
+            ]
+            if count > len(eligible):
                 raise ValueError(f"insufficient C2-A-RP {stratum} tasks for worker {worker}")
             if not count:
                 continue
-            start = offsets[stratum] % len(pools[stratum])
-            chosen = [pools[stratum][(start + index) % len(pools[stratum])] for index in range(count)]
+            start = offsets[stratum] % len(eligible)
+            chosen = [eligible[(start + index) % len(eligible)] for index in range(count)]
             offsets[stratum] += count
             for task in chosen:
+                task_id = safe(task.get("task_id"))
+                task_support[task_id] += 1
                 sequence += 1
                 assignments.append({
                     "round_id": "C2-A-RP", "worker_id": worker,
@@ -120,6 +142,12 @@ def build_precision_assignments(
                     "base_task_id": safe(task.get("base_task_id")) or safe(task.get("task_id")),
                     "task_stratum": stratum, "assignment_sequence": sequence,
                     "c2_component": "precision_completion",
+                    "target_component": plan["target_component"],
+                    "gap_reason": plan["gap_reason"],
+                    "precision_before": plan["current_ci_half_width"],
+                    "support_before": plan["current_support"],
+                    "support_after": int(plan["current_support"]) + sequence,
+                    "selection_probability": count / len(eligible),
                     "design_manifest_sha256": manifest_sha,
                     "c2b_summary_sha256": c2b_sha,
                     "post_c2b_worker_profile_sha256": profile_sha,
@@ -135,6 +163,7 @@ def materialize(
     c2b_summary: Path | None = None,
     c2b_summary_sha256: str | None = None,
     task_pool_csv: Path | None = None,
+    assignment_history_csv: Path | None = None,
     input_status: str = "dry_run",
 ) -> dict[str, Any]:
     manifest = json.loads(design_manifest.read_text(encoding="utf-8"))
@@ -154,6 +183,8 @@ def materialize(
             and
             c2b.get("design_manifest_sha256") == manifest_sha
             and bool(c2b.get("c2b_design_ready"))
+            and bool(c2b.get("c2b_closeout_ready"))
+            and bool(c2b.get("post_c2b_profile_manifest_sha256"))
             and (
                 input_status != "formal"
                 or c2b.get("post_c2b_worker_profile_sha256") == actual_profile_sha
@@ -184,8 +215,15 @@ def materialize(
             assignments = build_precision_assignments(
                 rows, read_csv(task_pool_csv), manifest_sha=manifest_sha,
                 c2b_sha=c2b_sha, profile_sha=actual_profile_sha,
+                history_rows=read_csv(assignment_history_csv) if assignment_history_csv else None,
+                max_task_support=int(precision.get("max_task_support", 2)),
             )
-    if input_status == "formal" and (not task_pool_csv or not task_pool_valid):
+    history_valid = input_status != "formal"
+    if assignment_history_csv:
+        history_valid = input_status != "formal" or (
+            safe(expected.get("assignment_history_csv")) == sha256_file(assignment_history_csv)
+        )
+    if input_status == "formal" and (not task_pool_csv or not task_pool_valid or not assignment_history_csv or not history_valid):
         raise ValueError("stale_or_unbound_c2a_rp_task_pool")
     output_dir.mkdir(parents=True, exist_ok=True)
     write_csv(output_dir / "precision_plan_C2A_RP.csv", rows, PRECISION_FIELDS)
@@ -193,16 +231,16 @@ def materialize(
     summary = {
         "design_manifest_sha256": manifest_sha,
         "worker_profile_sha256": actual_profile_sha,
-        "dependency_binding_valid": binding_valid and c2b_valid and task_pool_valid,
+        "dependency_binding_valid": binding_valid and c2b_valid and task_pool_valid and history_valid,
         "c2b_summary_sha256": c2b_sha,
         "task_pool_sha256": sha256_file(task_pool_csv) if task_pool_csv else "",
         "n_workers": len(rows),
         "n_workers_with_precision_additions": sum(int(row["additional_blocks"]) > 0 for row in rows),
         "n_workers_unmet_at_cap": sum(bool(row["unmet_reason"]) for row in rows),
         "n_assignments": len(assignments),
-        "c2a_rp_ready": binding_valid and c2b_valid and task_pool_valid and bool(rows),
+        "c2a_rp_ready": binding_valid and c2b_valid and task_pool_valid and history_valid and bool(rows),
         "candidate_only": input_status != "formal",
-        "launch_ready": input_status == "formal" and binding_valid and c2b_valid and task_pool_valid and bool(rows),
+        "launch_ready": input_status == "formal" and binding_valid and c2b_valid and task_pool_valid and history_valid and bool(rows),
         "searches_new_risk_family": False,
         "modifies_c1": False,
     }
@@ -218,12 +256,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--c2b-summary", type=Path)
     parser.add_argument("--c2b-summary-sha256")
     parser.add_argument("--task-pool-csv", type=Path)
+    parser.add_argument("--assignment-history-csv", type=Path)
     parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
     args = parser.parse_args(argv)
     print(json.dumps(materialize(
         args.worker_profile_csv, args.design_manifest, args.output_dir,
         c2b_summary=args.c2b_summary, c2b_summary_sha256=args.c2b_summary_sha256,
         task_pool_csv=args.task_pool_csv, input_status=args.input_status,
+        assignment_history_csv=args.assignment_history_csv,
     ), ensure_ascii=False, indent=2))
     return 0
 

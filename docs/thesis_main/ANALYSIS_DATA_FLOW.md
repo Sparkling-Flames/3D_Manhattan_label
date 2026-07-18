@@ -61,6 +61,7 @@ P1 candidate components
 -> freeze C2-B design
 -> C2-B common anchor + diverse bridge
 -> C2-B confirmation + hierarchical shrinkage B_u
+-> C2-B submissions -> post-C2-B worker profile -> profile manifest -> C2-B closeout SHA
 -> C2-A-RP precision-adaptive completion
 -> C2 final worker/policy freeze
 ```

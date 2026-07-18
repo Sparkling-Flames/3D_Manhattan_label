@@ -180,7 +180,7 @@ def test_t1_rejects_duplicate_condition_and_same_worker_rerun() -> None:
         "row_failure_attribution": "external_system_failure",
         "incident_id": "inc-1", "incident_evidence_status": "verified",
     })
-    with pytest.raises(ValueError, match="worker-image isolation"):
+    with pytest.raises(ValueError, match="at most once"):
         materialize_t1_rows(original + _t1_pair("p1-r1", disposition="included", rerun_of="p1"))
 
 
@@ -192,13 +192,20 @@ def test_t1_rerun_isolated_from_every_worker_on_image_across_pairs() -> None:
     })
     second = _t1_pair("p2", disposition="included", workers=("w3", "w4"))
     rerun = _t1_pair("p1-r1", disposition="included", rerun_of="p1", workers=("w5", "w3"))
-    with pytest.raises(ValueError, match="full-image worker isolation"):
+    with pytest.raises(ValueError, match="at most once"):
         materialize_t1_rows(first + second + rerun)
+
+    same_new_worker = _t1_pair(
+        "p1-r1", disposition="included", rerun_of="p1", workers=("w5", "w5")
+    )
+    with pytest.raises(ValueError, match="at most once"):
+        materialize_t1_rows(first + same_new_worker)
 
 
 def _v1_original(**updates: str) -> dict[str, str]:
     row = {
         "task_id": "v1", "original_task_id": "", "policy_arm": "Full",
+        "block_id": "b1", "availability_snapshot_id": "snap-1",
         "freeze_version": "freeze-1", "failure_attribution": "external_system_failure",
         "incident_id": "inc-1", "incident_evidence_status": "verified",
         "analysis_disposition": "rerun", "policy_terminal_status": "",
@@ -209,6 +216,7 @@ def _v1_original(**updates: str) -> dict[str, str]:
 def _v1_rerun(**updates: str) -> dict[str, str]:
     row = {
         "task_id": "v1-r1", "original_task_id": "v1", "rerun_task_id": "v1-r1",
+        "block_id": "b1", "availability_snapshot_id": "snap-1",
         "policy_arm": "Full", "freeze_version": "freeze-1", "failure_attribution": "none",
         "analysis_disposition": "included", "policy_terminal_status": "resolved", "iou_to_gt": "0.9",
         "rerun_sequence": "1", "reservation_id": "res-1", "reservation_arm": "Full",
@@ -225,6 +233,13 @@ def _reservation(rerun: dict[str, str] | None = None) -> dict[str, str]:
         "reservation_capacity_before": rerun["reservation_capacity_before"],
         "reservation_capacity_after": rerun["reservation_capacity_after"],
         "reservation_status": "consumed",
+        "original_task_id": rerun["original_task_id"],
+        "rerun_task_id": rerun["rerun_task_id"],
+        "block_id": rerun["block_id"],
+        "freeze_version": rerun["freeze_version"],
+        "availability_snapshot_id": rerun["availability_snapshot_id"],
+        "reserved_at": "2026-01-01T00:00:00Z",
+        "consumed_at": "2026-01-01T00:01:00Z",
     }
 
 
@@ -296,3 +311,15 @@ def test_v1_policy_failure_stays_in_itt_with_zero_quality() -> None:
     assert rows[0]["itt_included"] is True
     assert rows[0]["delivery_adjusted_quality"] == 0.0
     assert audit["policy_failure_by_arm"] == {"Full": 1}
+
+
+def test_v1_non_delivery_does_not_imply_policy_attribution() -> None:
+    rows, audit = materialize_v1_rows([_v1_original(
+        failure_attribution="none",
+        analysis_disposition="included",
+        policy_terminal_status="unresolved",
+    )])
+    assert rows[0]["non_delivery"] is True
+    assert rows[0]["policy_failure"] is False
+    assert rows[0]["delivery_adjusted_quality"] == 0.0
+    assert audit["policy_failure_by_arm"] == {}

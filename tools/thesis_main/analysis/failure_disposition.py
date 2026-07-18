@@ -232,11 +232,12 @@ def v1_outcome_fields(row: dict[str, Any]) -> dict[str, Any]:
     if terminal not in {"resolved", "unresolved", "severe_failure", ""}:
         raise ValueError(f"unknown policy_terminal_status: {terminal}")
     if disposition != "included":
-        return {"analysis_disposition": disposition, "itt_included": False, "policy_failure": False, "delivery_adjusted_quality": ""}
-    policy_failure = attribution == "policy_caused_failure" or terminal in {"unresolved", "severe_failure"}
-    if policy_failure:
-        return {"analysis_disposition": disposition, "itt_included": True, "policy_failure": True, "delivery_adjusted_quality": 0.0}
+        return {"analysis_disposition": disposition, "itt_included": False, "non_delivery": False, "policy_failure": False, "delivery_adjusted_quality": ""}
+    non_delivery = terminal in {"unresolved", "severe_failure"}
+    policy_failure = attribution == "policy_caused_failure"
+    if non_delivery:
+        return {"analysis_disposition": disposition, "itt_included": True, "non_delivery": True, "policy_failure": policy_failure, "delivery_adjusted_quality": 0.0}
     iou = as_float(row.get("iou_to_gt"))
     if terminal != "resolved" or iou is None:
-        return {"analysis_disposition": "not_evaluable", "itt_included": False, "policy_failure": False, "delivery_adjusted_quality": ""}
-    return {"analysis_disposition": disposition, "itt_included": True, "policy_failure": False, "delivery_adjusted_quality": iou}
+        return {"analysis_disposition": "not_evaluable", "itt_included": False, "non_delivery": False, "policy_failure": False, "delivery_adjusted_quality": ""}
+    return {"analysis_disposition": disposition, "itt_included": True, "non_delivery": False, "policy_failure": policy_failure, "delivery_adjusted_quality": iou}

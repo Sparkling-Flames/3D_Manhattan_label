@@ -237,15 +237,21 @@ def materialize_t1_rows(source_rows: list[dict[str, Any]]) -> tuple[list[dict[st
         _validate_t1_pair(rows, pair_id)
 
     original_by_image: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    all_runs_by_image: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for rows in pairs.values():
+        image_ids = {text(row.get("image_id")) for row in rows}
+        if len(image_ids) != 1 or not next(iter(image_ids), ""):
+            raise ValueError("T1 pair must bind exactly one non-empty image_id")
+        all_runs_by_image[next(iter(image_ids))].extend(rows)
         if not text(rows[0].get("rerun_of_pair_id")):
             original_by_image[text(rows[0].get("image_id"))].extend(rows)
-    for image_id, rows in original_by_image.items():
-        by_worker: dict[str, set[str]] = defaultdict(set)
+    for image_id, rows in all_runs_by_image.items():
+        worker_counts: Counter[str] = Counter()
         for row in rows:
-            by_worker[text(row.get("worker_id"))].add(text(row.get("condition")).lower())
-        if any(len(conditions) > 1 for conditions in by_worker.values()):
-            raise ValueError(f"T1 image {image_id} assigns one worker across conditions")
+            _required(row, "worker_id")
+            worker_counts[text(row.get("worker_id"))] += 1
+        if any(count > 1 for count in worker_counts.values()):
+            raise ValueError(f"T1 image {image_id} must use each worker at most once across all runs")
 
     reruns: dict[str, str] = {}
     for pair_id, rows in pairs.items():
@@ -402,15 +408,26 @@ def materialize_v1_rows(
             registered = reservation_registry.get((reservation_id,))
             if registered is None:
                 raise ValueError(f"V1 reservation_id not found in reservation registry: {reservation_id}")
+            _required(
+                registered, "original_task_id", "rerun_task_id", "block_id", "freeze_version",
+                "availability_snapshot_id", "reserved_at", "consumed_at",
+            )
             checks = {
                 "reservation_arm": row.get("reservation_arm"),
                 "reservation_capacity_before": row.get("reservation_capacity_before"),
                 "reservation_capacity_after": row.get("reservation_capacity_after"),
+                "original_task_id": original_id,
+                "rerun_task_id": task_id,
+                "block_id": row.get("block_id"),
+                "freeze_version": row.get("freeze_version"),
+                "availability_snapshot_id": row.get("availability_snapshot_id"),
             }
             if any(text(registered.get(field)) != text(value) for field, value in checks.items()):
                 raise ValueError(f"V1 reservation registry mismatch: {reservation_id}")
             if text(registered.get("reservation_status")) != "consumed":
                 raise ValueError(f"V1 reservation is not consumed: {reservation_id}")
+            if text(registered.get("consumed_at")) < text(registered.get("reserved_at")):
+                raise ValueError(f"V1 reservation consumed before it was reserved: {reservation_id}")
         reruns[original_id] = row
     if reruns and reservation_rows is None:
         raise ValueError("V1 rerun requires reservation registry")

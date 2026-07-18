@@ -362,7 +362,7 @@ def materialize(
             "projected_max_ci_half_width": "" if not math.isfinite(projected) else projected,
             "worker_task_graph_connected": graph["worker_task_graph_connected"],
             "stratum_balance_valid": graph["max_worker_stratum_imbalance"] <= max_imbalance,
-            "design_method": "c1_risk_slope_simulation" if input_status == "formal" else "candidate_simulation_or_dryrun_fallback",
+            "design_method": "c1_risk_slope_precision_projection" if input_status == "formal" else "candidate_projection_or_dryrun_fallback",
             "feasible": not reason, "failure_reason": reason,
         }
         audits.append(audit)
