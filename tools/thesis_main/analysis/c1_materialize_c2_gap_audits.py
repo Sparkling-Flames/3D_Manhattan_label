@@ -20,6 +20,11 @@ PRECISION_FIELDS = [
     "additional_blocks", "ordinary_tasks", "stress_tasks", "projected_ci_half_width",
     "precision_target_met", "routing_eligibility", "unmet_reason", "design_manifest_sha256",
 ]
+C2A_ASSIGNMENT_FIELDS = [
+    "round_id", "worker_id", "task_id", "base_task_id", "task_stratum",
+    "assignment_sequence", "c2_component", "design_manifest_sha256",
+    "c2b_summary_sha256", "post_c2b_worker_profile_sha256",
+]
 
 
 def _number(row: dict[str, str], *fields: str) -> float | None:
@@ -75,12 +80,61 @@ def build_precision_plan(
     return out
 
 
+def build_precision_assignments(
+    precision_rows: list[dict[str, Any]],
+    task_rows: list[dict[str, str]],
+    *,
+    manifest_sha: str,
+    c2b_sha: str,
+    profile_sha: str,
+) -> list[dict[str, Any]]:
+    pools: dict[str, list[dict[str, str]]] = {"ordinary": [], "stress": []}
+    for task in task_rows:
+        stratum = safe(task.get("task_stratum") or task.get("risk_bucket")).lower()
+        task_id = safe(task.get("task_id"))
+        eligible = task.get("c2a_rp_eligible")
+        if task_id and stratum in pools and (eligible is None or safe(eligible) == "" or truthy(eligible)):
+            pools[stratum].append(task)
+    for rows in pools.values():
+        rows.sort(key=lambda row: safe(row.get("task_id")))
+
+    assignments: list[dict[str, Any]] = []
+    offsets = {"ordinary": 0, "stress": 0}
+    for plan in precision_rows:
+        worker = safe(plan.get("worker_id"))
+        sequence = 0
+        for stratum, count_field in (("ordinary", "ordinary_tasks"), ("stress", "stress_tasks")):
+            count = int(plan[count_field])
+            if count > len(pools[stratum]):
+                raise ValueError(f"insufficient C2-A-RP {stratum} tasks for worker {worker}")
+            if not count:
+                continue
+            start = offsets[stratum] % len(pools[stratum])
+            chosen = [pools[stratum][(start + index) % len(pools[stratum])] for index in range(count)]
+            offsets[stratum] += count
+            for task in chosen:
+                sequence += 1
+                assignments.append({
+                    "round_id": "C2-A-RP", "worker_id": worker,
+                    "task_id": safe(task.get("task_id")),
+                    "base_task_id": safe(task.get("base_task_id")) or safe(task.get("task_id")),
+                    "task_stratum": stratum, "assignment_sequence": sequence,
+                    "c2_component": "precision_completion",
+                    "design_manifest_sha256": manifest_sha,
+                    "c2b_summary_sha256": c2b_sha,
+                    "post_c2b_worker_profile_sha256": profile_sha,
+                })
+    return assignments
+
+
 def materialize(
     worker_profile_csv: Path,
     design_manifest: Path,
     output_dir: Path,
     *,
     c2b_summary: Path | None = None,
+    c2b_summary_sha256: str | None = None,
+    task_pool_csv: Path | None = None,
     input_status: str = "dry_run",
 ) -> dict[str, Any]:
     manifest = json.loads(design_manifest.read_text(encoding="utf-8"))
@@ -91,9 +145,13 @@ def materialize(
     actual_profile_sha = sha256_file(worker_profile_csv)
     binding_valid = expected.get("worker_profile_csv") == actual_profile_sha
     c2b_valid = input_status != "formal"
+    c2b_sha = ""
     if c2b_summary:
+        c2b_sha = sha256_file(c2b_summary)
         c2b = json.loads(c2b_summary.read_text(encoding="utf-8"))
         c2b_valid = (
+            (input_status != "formal" or c2b_sha == safe(c2b_summary_sha256).lower())
+            and
             c2b.get("design_manifest_sha256") == manifest_sha
             and bool(c2b.get("c2b_design_ready"))
             and (
@@ -101,6 +159,8 @@ def materialize(
                 or c2b.get("post_c2b_worker_profile_sha256") == actual_profile_sha
             )
         )
+    if input_status == "formal" and (not c2b_summary or not c2b_summary_sha256):
+        c2b_valid = False
     precision = manifest.get("precision") or {}
     target = float(precision["target_ci_half_width"])
     max_blocks = int(precision["max_additional_blocks"])
@@ -115,18 +175,34 @@ def materialize(
         max_additional_blocks=max_blocks,
         manifest_sha=manifest_sha,
     )
+    assignments: list[dict[str, Any]] = []
+    task_pool_valid = input_status != "formal"
+    if task_pool_csv:
+        expected_task_sha = safe(expected.get("c2a_task_pool_csv"))
+        task_pool_valid = input_status != "formal" or expected_task_sha == sha256_file(task_pool_csv)
+        if task_pool_valid:
+            assignments = build_precision_assignments(
+                rows, read_csv(task_pool_csv), manifest_sha=manifest_sha,
+                c2b_sha=c2b_sha, profile_sha=actual_profile_sha,
+            )
+    if input_status == "formal" and (not task_pool_csv or not task_pool_valid):
+        raise ValueError("stale_or_unbound_c2a_rp_task_pool")
     output_dir.mkdir(parents=True, exist_ok=True)
     write_csv(output_dir / "precision_plan_C2A_RP.csv", rows, PRECISION_FIELDS)
+    write_csv(output_dir / "assignment_manifest_C2A_RP.csv", assignments, C2A_ASSIGNMENT_FIELDS)
     summary = {
         "design_manifest_sha256": manifest_sha,
         "worker_profile_sha256": actual_profile_sha,
-        "dependency_binding_valid": binding_valid and c2b_valid,
+        "dependency_binding_valid": binding_valid and c2b_valid and task_pool_valid,
+        "c2b_summary_sha256": c2b_sha,
+        "task_pool_sha256": sha256_file(task_pool_csv) if task_pool_csv else "",
         "n_workers": len(rows),
         "n_workers_with_precision_additions": sum(int(row["additional_blocks"]) > 0 for row in rows),
         "n_workers_unmet_at_cap": sum(bool(row["unmet_reason"]) for row in rows),
-        "c2a_rp_ready": binding_valid and c2b_valid and bool(rows),
+        "n_assignments": len(assignments),
+        "c2a_rp_ready": binding_valid and c2b_valid and task_pool_valid and bool(rows),
         "candidate_only": input_status != "formal",
-        "launch_ready": input_status == "formal" and binding_valid and c2b_valid and bool(rows),
+        "launch_ready": input_status == "formal" and binding_valid and c2b_valid and task_pool_valid and bool(rows),
         "searches_new_risk_family": False,
         "modifies_c1": False,
     }
@@ -140,11 +216,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--design-manifest", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--c2b-summary", type=Path)
+    parser.add_argument("--c2b-summary-sha256")
+    parser.add_argument("--task-pool-csv", type=Path)
     parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
     args = parser.parse_args(argv)
     print(json.dumps(materialize(
         args.worker_profile_csv, args.design_manifest, args.output_dir,
-        c2b_summary=args.c2b_summary, input_status=args.input_status,
+        c2b_summary=args.c2b_summary, c2b_summary_sha256=args.c2b_summary_sha256,
+        task_pool_csv=args.task_pool_csv, input_status=args.input_status,
     ), ensure_ascii=False, indent=2))
     return 0
 

@@ -308,19 +308,19 @@ stop_reason
 max_additional_tasks
 ```
 
-### 4.2 `assignment_manifest_C2ARP.csv`
+### 4.2 `assignment_manifest_C2A_RP.csv`
 
 ```text
 round_id
 worker_id
 task_id
 base_task_id
-component_id
-target_estimand
+task_stratum
 assignment_sequence
-assignment_reason
-precision_before
-manifest_version
+c2_component
+design_manifest_sha256
+c2b_summary_sha256
+post_c2b_worker_profile_sha256
 ```
 
 `assignment_reason` 只允许已由 C1/C2-B 定义的 precision gap；C2-A-RP 不搜索新 risk、failure family 或 P1 component。达到冻结上限仍不稳定时，对应调整归零并 fallback Strong Global。
@@ -438,6 +438,10 @@ t1_pair_analysis_disposition.csv:
 ### V1
 
 ```text
+v1_reservation_registry.csv:
+  reservation_id, reservation_arm, reservation_capacity_before,
+  reservation_capacity_after, reservation_status
+
 v1_rerun_chain.csv:
   original_task_id, rerun_task_id, policy_arm, freeze_version,
   rerun_sequence, reservation_id, reservation_arm,
@@ -449,15 +453,17 @@ v1_analysis_resolved_itt.csv:
   delivery_adjusted_quality, provenance_status
 
 v1_policy_task_summary.csv:
-  block_id, task_id, arm, availability_snapshot_id,
+  block_id, task_id, policy_arm, risk_route, availability_snapshot_id,
   candidate_set, full_fallback, fallback_reasons,
   offers_used, completed_workers, candidate_exhausted,
   policy_failure, policy_failure_reason,
-  terminal_status, selected_worker_id, valid_k,
+  terminal_status, policy_terminal_status, non_delivery,
+  selected_worker_id, selected_annotation_id, selected_geometry_sha256, valid_k,
   largest_cluster_support, second_cluster_support, medoid_margin
 ```
 
-合法 rerun outcome 替代 original outcome 但保留原随机化臂；`external_system_failure_pending_disposition` 不能成为最终政策终态。
+合法 rerun outcome 必须绑定已消费的真实 reservation registry 行，替代 original
+outcome 但保留原随机化臂；`external_system_failure_pending_disposition` 不能成为最终政策终态。
 
 `materialize_vfinal_main_analysis.py` 只读取上述 resolver-finalized 表，并输出
 `t1_pair_analysis.csv`、`t1_summary.csv`、`v1_itt_tasks.csv`、`v1_summary.csv`
