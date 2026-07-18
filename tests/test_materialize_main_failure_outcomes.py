@@ -70,9 +70,32 @@ def test_sparse_c1_adjudication_expands_to_complete_fail_closed_table(tmp_path: 
     assert [row["failure_attribution"] for row in rows] == [
         "external_system_failure", "not_evaluable"
     ]
-    assert rows[1]["failure_disposition_reason"] == "adjudication_missing"
+    assert rows[1]["failure_disposition_reason"] == "structural_evidence_insufficient"
     assert rows[1]["worker_reliability_eligible"] is False
     assert audit["n_canonical_annotations"] == 2
+
+
+def test_c1_sparse_adjudication_uses_explicit_structural_validator_and_formal_blocks_unknown(tmp_path: Path) -> None:
+    structural = [
+        {**row, "structural_validation_status": status, "worker_attributable": attributable}
+        for row, status, attributable in zip(
+            _c1_roster(), ("passed", "failed"), ("false", "true")
+        )
+    ]
+    rows, _ = materialize_complete_c1_dispositions(
+        _c1_roster(), [], [], structural, incident_base_dir=tmp_path,
+        formal_closeout=True,
+    )
+    assert [row["failure_attribution"] for row in rows] == [
+        "none", "worker_caused_structural_failure"
+    ]
+    assert all(row["adjudication_source"] == "structural_validator" for row in rows)
+
+    with pytest.raises(ValueError, match="not_evaluable"):
+        materialize_complete_c1_dispositions(
+            _c1_roster(), [], [], [], incident_base_dir=tmp_path,
+            formal_closeout=True,
+        )
 
 
 @pytest.mark.parametrize(

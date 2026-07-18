@@ -15,6 +15,10 @@ def materialize(
     post_profile_csv: Path,
     profile_manifest: Path,
     design_summary: Path,
+    c1_closeout_summary: Path,
+    assignment_csv: Path,
+    worker_roster_csv: Path,
+    rule_config: Path,
     output_summary: Path,
 ) -> dict[str, Any]:
     manifest = json.loads(profile_manifest.read_text(encoding="utf-8"))
@@ -28,6 +32,10 @@ def materialize(
         "c2b_submissions_csv": sha256_file(submissions_csv),
         "post_c2b_worker_profile_csv": sha256_file(post_profile_csv),
         "c2b_design_summary": sha256_file(design_summary),
+        "c1_closeout_summary": sha256_file(c1_closeout_summary),
+        "c2b_assignment_csv": sha256_file(assignment_csv),
+        "worker_roster_csv": sha256_file(worker_roster_csv),
+        "rule_config": sha256_file(rule_config),
     }
     declared = {
         **(manifest.get("input_sha256") or {}),
@@ -44,6 +52,10 @@ def materialize(
         "design_manifest_sha256": design.get("design_manifest_sha256"),
         "c2b_design_summary_path": str(design_summary),
         "c2b_design_summary_sha256": actual["c2b_design_summary"],
+        "c1_closeout_sha256": actual["c1_closeout_summary"],
+        "c2b_assignment_sha256": actual["c2b_assignment_csv"],
+        "worker_roster_sha256": actual["worker_roster_csv"],
+        "rule_config_sha256": actual["rule_config"],
         "c2b_submissions_path": str(submissions_csv),
         "c2b_submissions_sha256": actual["c2b_submissions_csv"],
         "post_c2b_worker_profile_path": str(post_profile_csv),
@@ -65,11 +77,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--post-profile-csv", type=Path, required=True)
     parser.add_argument("--profile-manifest", type=Path, required=True)
     parser.add_argument("--design-summary", type=Path, required=True)
+    parser.add_argument("--c1-closeout-summary", type=Path, required=True)
+    parser.add_argument("--assignment-csv", type=Path, required=True)
+    parser.add_argument("--worker-roster-csv", type=Path, required=True)
+    parser.add_argument("--rule-config", type=Path, required=True)
     parser.add_argument("--output-summary", type=Path, required=True)
     args = parser.parse_args(argv)
     print(json.dumps(materialize(
         args.submissions_csv, args.post_profile_csv, args.profile_manifest,
-        args.design_summary, args.output_summary,
+        args.design_summary, args.c1_closeout_summary, args.assignment_csv,
+        args.worker_roster_csv, args.rule_config, args.output_summary,
     ), ensure_ascii=False, indent=2))
     return 0
 
