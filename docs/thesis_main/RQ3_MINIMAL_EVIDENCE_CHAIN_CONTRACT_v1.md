@@ -1,6 +1,6 @@
 # RQ3 Minimal Evidence-Chain Contract v1
 
-> Last updated: 2026-03-28
+> Last updated: 2026-07-17
 
 ## 0. Purpose
 
@@ -31,6 +31,7 @@ The waiting-window minimum is the set below:
 2. `meta_label_consensus_summary_v1.csv`
 3. `offline_replay_run_config_v1.json`
 4. `task_risk_rule_manifest_v1.json`
+5. `failure_disposition_rule_manifest_v1.json`
 
 ## 3. `dt_reference_summary_C1.json`
 
@@ -192,15 +193,42 @@ Required `fallback_rule` keys:
 - `dt_unavailable_action`
 - `g_unavailable_action`
 
-## 7. What Is Ready After This Document
+## 7. `failure_disposition_rule_manifest_v1.json`
+
+Purpose:
+
+- freeze the pre-result rule that distinguishes worker-caused structural failure, policy-caused failure, and external system failure across `C1/C2/T1/V1`
+- make rerun and administrative-censoring decisions reproducible rather than outcome-selected
+
+Required keys:
+
+- `meta`
+- `allowed_attributions`
+- `external_evidence_requirements`
+- `t1_rerun_rule`
+- `v1_rerun_rule`
+- `administrative_censor_rule`
+
+`allowed_attributions` must contain exactly:
+
+- `worker_caused_structural_failure`
+- `policy_caused_failure`
+- `external_system_failure`
+
+`external_evidence_requirements` must require an incident identifier, occurrence/recovery time window, affected task/project scope, immutable evidence reference or digest, and record timestamp before outcome inspection. Missing evidence must resolve to `not_evaluable`, never silently to external failure.
+
+`t1_rerun_rule` must require at most one rerun of the complete same-image `Manual/SemiAuto` pair; an incomplete pair is administratively censored as a pair. `v1_rerun_rule` must require at most one rerun in the same policy arm, same frozen version, and pre-reserved symmetric capacity. `administrative_censor_rule` must exclude qualifying external incidents from the delivery-adjusted quality denominator while requiring counts, reruns, censoring, and arm distributions in the audit output.
+
+## 8. What Is Ready After This Document
 
 After these contracts and templates exist, the repo is ready for:
 
 - filling `C1` artifacts once calibration data arrives
 - materializing replay config without changing protocol core
 - building `task_risk_rule_manifest_v1.json` in `C2`
+- freezing failure attribution, rerun, and censoring before Main outcomes exist
 
-## 8. What Is Still Intentionally Deferred
+## 9. What Is Still Intentionally Deferred
 
 Still deferred:
 

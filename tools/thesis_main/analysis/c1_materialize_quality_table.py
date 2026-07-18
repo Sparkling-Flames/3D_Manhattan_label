@@ -17,6 +17,7 @@ from tools.thesis_main.analysis.c1_live_collection_monitor import bool_text, rea
 from tools.thesis_main.analysis.vfinal_artifact_utils import dependency_bundle, eligible_independent_evidence, sha256_file
 from tools.thesis_main.registry.materialize_meta_label_consensus_summary import build_summary
 from tools.thesis_main.registry.materialize_meta_label_three_state_sidecars import materialize_meta_label_three_state
+from tools.thesis_main.analysis.failure_disposition import c1_failure_fields
 
 DEFAULT_INPUT = Path("analysis_results/calibration_c1_closeout/c1_canonical_annotations.csv")
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
@@ -177,7 +178,32 @@ QUALITY_FIELDS = [
     "parent_cross_owner",
     "parent_derived",
     "copy_risk_status",
+    "failure_attribution",
+    "incident_id",
+    "incident_evidence_status",
+    "worker_caused_structural_failure",
+    "policy_failure",
+    "external_system_failure",
+    "structural_failure_evaluable",
+    "worker_reliability_eligible",
 ]
+
+FAILURE_FIELDS = [
+    "failure_attribution",
+    "incident_id",
+    "incident_evidence_status",
+    "worker_caused_structural_failure",
+    "policy_failure",
+    "external_system_failure",
+    "structural_failure_evaluable",
+    "worker_reliability_eligible",
+]
+
+
+def _c1_failure_fields(row: dict[str, Any]) -> dict[str, Any]:
+    if not any(safe(row.get(field)) for field in ("failure_attribution", "incident_id", "incident_evidence_status")):
+        row = {**row, "failure_attribution": "not_evaluable", "incident_evidence_status": "not_evaluable"}
+    return c1_failure_fields(row)
 
 
 def _tokens(value: Any) -> str:
@@ -281,6 +307,7 @@ def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: di
     out: list[dict[str, Any]] = []
     inventory_flags = inventory_flags or {}
     for row in canonical_rows:
+        failure = _c1_failure_fields(row)
         source_status = "from_canonical"
         if not safe(row.get("used_for_r_u")) and _key(row) in inventory_flags:
             row = {**row, "used_for_r_u": inventory_flags[_key(row)]}
@@ -429,6 +456,7 @@ def build_quality_rows(canonical_rows: list[dict[str, str]], inventory_flags: di
                 "parent_cross_owner": safe(row.get("parent_cross_owner")),
                 "parent_derived": safe(row.get("parent_derived")),
                 "copy_risk_status": safe(row.get("copy_risk_status")),
+                **failure,
             }
         )
         # A duplicate-review decision can explicitly identify a worker-level
@@ -494,6 +522,7 @@ def _classify_r_u_evidence(row: dict[str, Any], *, formal_score_required: bool =
         (truthy(row.get("process_evaluable")) and not truthy(row.get("process_failure_observed")), "process_not_valid"),
         (safe(row.get("duplicate_review_status")) in {"not_required", "resolved", "auto_resolved_input_duplicate"}, "duplicate_review_pending"),
         (truthy(row.get("eligible_independent_evidence")), "canonical_or_independence_ineligible"),
+        (safe(row.get("incident_evidence_status")) == "not_evaluable" or (safe(row.get("failure_attribution")) not in {"worker_caused_structural_failure", "policy_caused_failure", "external_system_failure", "not_evaluable"} and safe(row.get("worker_reliability_eligible")) != "false"), "failure_disposition_not_worker_reliability_eligible"),
     ]
     base_reasons = [reason for passed, reason in base_checks if not passed]
     if "task_outcome_pending" in base_reasons or "duplicate_review_pending" in base_reasons:
@@ -538,7 +567,17 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
     meta_fresh, meta_freshness_reasons = _canonical_meta_freshness(canonical_csv, meta_rows)
     # Dry-run keeps a descriptive compatibility view, but formal quality is
     # strictly registry -> meta bound and never falls back to canonical CSV.
+    canonical_failure_by_id = {
+        safe(row.get("canonical_annotation_id")): row
+        for row in read_csv(canonical_csv)
+        if safe(row.get("canonical_annotation_id"))
+    }
     source_rows = meta_rows if meta_fresh else ([] if input_status == "formal" else read_csv(canonical_csv))
+    if meta_fresh:
+        source_rows = [
+            {**row, **{field: canonical_failure_by_id.get(safe(row.get("canonical_annotation_id")), {}).get(field, row.get(field, "")) for field in FAILURE_FIELDS}}
+            for row in source_rows
+        ]
     rows = build_quality_rows(source_rows, _inventory_flags(candidate_inventory_csv))
     score_rows: dict[tuple[str, str, str, str, str, str], dict[str, str]] = {}
     score_blockers: list[str] = []
@@ -719,6 +758,8 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         blockers.append("missing_core_used_for_r_u_flag")
     if input_status == "formal" and any(safe(row.get("r_u_evidence_classification")) in {"pending_adjudication", "invalid_score_contract"} for row in rows):
         blockers.append("formal_r_u_evidence_incomplete")
+    if input_status == "formal" and any(safe(row.get("failure_attribution")) == "not_evaluable" for row in rows):
+        blockers.append("failure_disposition_not_evaluable")
     included_worker_tasks = [(safe(row.get("project_id")), safe(row.get("ls_runtime_task_id")), safe(row.get("worker_id"))) for row in rows if truthy(row.get("r_u_evidence_included"))]
     if len(included_worker_tasks) != len(set(included_worker_tasks)):
         blockers.append("formal_r_u_included_worker_task_duplicate")
@@ -756,6 +797,7 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
         "workers_with_unknown_audit_count": len({safe(row.get("worker_id")) for row in rows if truthy(row.get("unassigned_audit_present")) and safe(row.get("worker_id"))}),
         "known_unknown_oscillation_row_count": sum(truthy(row.get("known_unknown_oscillation_flag")) for row in rows),
         "system_collection_issue_row_count": sum(truthy(row.get("system_collection_issue")) for row in rows),
+        "failure_attribution_counts": {name: sum(safe(row.get("failure_attribution")) == name for row in rows) for name in ("none", "worker_caused_structural_failure", "policy_caused_failure", "external_system_failure", "not_evaluable")},
         "exact_annotation_primary_count": sum(safe(row.get("active_time_integrity_status")) == "exact_annotation_valid" and truthy(row.get("primary_active_time_eligible")) for row in rows),
         "task_level_sensitivity_count": sum(safe(row.get("active_time_integrity_status")) == "task_level_fallback" and truthy(row.get("sensitivity_active_time_eligible")) for row in rows),
         "candidate_inventory_csv": str(candidate_inventory_csv) if candidate_inventory_csv else "",

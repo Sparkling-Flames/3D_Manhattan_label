@@ -53,6 +53,7 @@ PREDICTIVE_CHECKS = [
     ("p1_process_warning_vs_c1_process_reliability", "p1_process_warning", "process_reliability"),
 ]
 FAMILIES = [
+    "worker_caused_structural_failure",
     "geometry_quality_failure",
     "scope_oos_failure",
     "semi_correction_failure",
@@ -158,6 +159,14 @@ EVIDENCE_FIELDS = [
     "semi_geometry_correction_evaluable",
     "semi_response_type",
     "semi_correction_failure_observed",
+    "failure_attribution",
+    "incident_id",
+    "incident_evidence_status",
+    "worker_caused_structural_failure",
+    "policy_failure",
+    "external_system_failure",
+    "structural_failure_evaluable",
+    "worker_reliability_eligible",
 ]
 
 MAIN_FIELDS = [
@@ -368,6 +377,8 @@ def stage(row: dict[str, str]) -> str:
 
 
 def family_for(row: dict[str, str]) -> str:
+    if truthy(row.get("worker_caused_structural_failure")) or safe(row.get("failure_attribution")) == "worker_caused_structural_failure":
+        return "worker_caused_structural_failure"
     explicit = safe(row.get("family"))
     if explicit and (explicit != "process_failure" or process_fail(row)):
         return explicit
@@ -397,6 +408,8 @@ def subfamily_for(row: dict[str, str], family: str) -> str:
         return safe(row.get("undercoverage_subfamily")) or safe(row.get("coverage_response")) or "undercoverage_case"
     if family == "process_failure":
         return "process_integrity"
+    if family == "worker_caused_structural_failure":
+        return "worker_caused_structural_failure"
     return "normal_geometry_degraded" if geometry_valid(row) else "topology_or_pairing_failure"
 
 
@@ -438,6 +451,8 @@ def undercoverage_expert_evaluable(row: dict[str, Any]) -> bool:
 
 
 def response_type(row: dict[str, str], family: str, subfamily: str) -> str:
+    if family == "worker_caused_structural_failure":
+        return "worker_caused_structural_failure"
     if family == "semi_correction_failure":
         response = safe(row.get("semi_response_type"))
         return response if response and outcome_bool(row.get("semi_correction_failure_observed")) is not None else "semi_not_evaluable"
@@ -462,6 +477,8 @@ def active_time_worker_process_fail(row: dict[str, str]) -> bool:
 
 
 def process_evaluable(row: dict[str, str]) -> bool:
+    if safe(row.get("failure_attribution")) in {"worker_caused_structural_failure", "policy_caused_failure", "external_system_failure", "not_evaluable"} or safe(row.get("worker_reliability_eligible")) == "false":
+        return False
     explicit_taxonomy = {"duplicate_same_geometry", "schema_invalid", "assignment_mismatch", "outside_manifest_submission", "non_independent_submission"}
     explicit = (
         truthy(row.get("outside_assignment_submission"))
@@ -487,6 +504,8 @@ def process_evaluable(row: dict[str, str]) -> bool:
 
 
 def process_fail(row: dict[str, str]) -> bool:
+    if safe(row.get("failure_attribution")) in {"worker_caused_structural_failure", "policy_caused_failure", "external_system_failure", "not_evaluable"} or safe(row.get("worker_reliability_eligible")) == "false":
+        return False
     return (
         truthy(row.get("process_invalid"))
         or (safe(row.get("subfamily")) in PROCESS_SUBFAMILIES and not (truthy(row.get("system_collection_issue")) and safe(row.get("subfamily")) == "active_time_missing_or_ineligible"))
@@ -499,6 +518,8 @@ def process_fail(row: dict[str, str]) -> bool:
 
 
 def is_fail(row: dict[str, str], family: str, response: str) -> bool:
+    if family == "worker_caused_structural_failure":
+        return True
     text = response.lower()
     if text.startswith("correct") or text.endswith("_ok"):
         return False
@@ -534,7 +555,7 @@ def dimension_fail(evidence_row: dict[str, Any], field: str) -> bool:
 
 
 def inclusion_flags(row: dict[str, str], family: str) -> dict[str, bool]:
-    legal = eligible_independent_evidence(row)
+    legal = eligible_independent_evidence(row) and safe(row.get("worker_reliability_eligible")) != "false"
     cond = condition(row)
     ref = geometry_reference_status(row)
     geom_ok = geometry_valid(row)
@@ -559,6 +580,8 @@ def inclusion_flags(row: dict[str, str], family: str) -> dict[str, bool]:
 
 def family_in_denominator(row: dict[str, Any]) -> bool:
     family = safe(row.get("family"))
+    if family == "worker_caused_structural_failure":
+        return truthy(row.get("worker_caused_structural_failure")) and truthy(row.get("structural_failure_evaluable"))
     if family == "geometry_quality_failure":
         return geometry_failure_family_evaluable(row)
     if family == "scope_oos_failure":
@@ -677,6 +700,14 @@ def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, An
                 "semi_geometry_correction_evaluable": truthy(row.get("semi_geometry_correction_evaluable")),
                 "semi_response_type": safe(row.get("semi_response_type")),
                 "semi_correction_failure_observed": safe(row.get("semi_correction_failure_observed")),
+                "failure_attribution": safe(row.get("failure_attribution")),
+                "incident_id": safe(row.get("incident_id")),
+                "incident_evidence_status": safe(row.get("incident_evidence_status")),
+                "worker_caused_structural_failure": truthy(row.get("worker_caused_structural_failure")),
+                "policy_failure": truthy(row.get("policy_failure")),
+                "external_system_failure": truthy(row.get("external_system_failure")),
+                "structural_failure_evaluable": truthy(row.get("structural_failure_evaluable")),
+                "worker_reliability_eligible": safe(row.get("worker_reliability_eligible")) != "false",
                 "_multi_signal_contract": "worker_scope_outcome" in row or "reference_evidence_status" in row,
                 "_is_fail": is_fail(row, family, response),
                 "_process_fail": process_fail(row),
@@ -1105,6 +1136,9 @@ def aggregate_family(evidence_rows: list[dict[str, Any]]) -> list[dict[str, Any]
         "undercoverage_failure": "included_in_U_u",
     }
     for row in evidence_rows:
+        if row.get("family") == "worker_caused_structural_failure" and truthy(row.get("family_included_in_denominator")):
+            grouped[(row["worker_id"], "worker_caused_structural_failure")].append(row)
+            continue
         if not truthy(row.get("_multi_signal_contract")) and row.get("family") != "process_failure" and truthy(row.get("family_included_in_denominator")):
             grouped[(row["worker_id"], row["family"])].append(row)
             continue
@@ -1158,6 +1192,9 @@ def aggregate_subfamily(evidence_rows: list[dict[str, Any]]) -> list[dict[str, A
         "undercoverage_failure": "included_in_U_u",
     }
     for row in evidence_rows:
+        if row.get("family") == "worker_caused_structural_failure" and truthy(row.get("family_included_in_denominator")):
+            aggregation_rows.append(row)
+            continue
         if not truthy(row.get("_multi_signal_contract")):
             if row.get("family") != "process_failure" and truthy(row.get("family_included_in_denominator")):
                 aggregation_rows.append(row)

@@ -1,6 +1,6 @@
 # Round-Based Execution Protocol v1
 
-> Last updated: 2026-03-28
+> Last updated: 2026-07-17
 
 ## 0. 定位
 
@@ -50,6 +50,16 @@
 - 本轮必须落盘什么
 
 若缺其中任一项，该轮只能视为 exploratory operation，不得计入 thesis-facing 主协议。
+
+### 1.3 Failure disposition 与外部事故边界
+
+`C1` 起必须记录未完成、结构无效和运行事故的原始证据及 provisional disposition；`C2` 在 `T1/V1` 结果可见前冻结 `failure_disposition_rule_manifest_v1.json`，并据此固定 `C1` 的派生 disposition。`T1/V1` 必须按该 manifest 分类，不得在查看条件或政策臂结果后改写归因。类别固定为：
+
+- `worker_caused_structural_failure`：工人造成的结构性失败；进入其原条件或原政策臂的审计。
+- `policy_caused_failure`：候选耗尽、替补规则失败、容量耗尽等由冻结政策或其执行资源导致的失败；不得改归为 worker failure。
+- `external_system_failure`：服务器整体宕机、平台不可用、导出损坏等不归责工人或政策的事故；必须有冻结清单要求的时间窗、影响范围和不可变证据支持。
+
+只有在事故证据于结果不可见时已记录、且满足 manifest 的证据字段时，才可分类为 `external_system_failure`。证据不足的历史异常只可标为 `not_evaluable` 并单列审计，不能事后称为系统事故。原始事故日志是运行输入真源；分析输出只保存其派生 disposition 与审计摘要。
 
 ## 2. Round P1 — PreScreen
 
@@ -150,6 +160,7 @@
 - `ci_precision_audit_C1.csv`
 - `scene_coverage_gap_C1.csv`
 - `assignment_manifest_C1.csv`
+- `failure_disposition_audit_C1.csv`
 - `calibration_round1_report.md`
 
 ### 3.7 本轮后状态
@@ -161,6 +172,8 @@
 - provisional `tau_d`
 
 但这些都只是冻结候选，不是最终正式版本。
+
+`C1` 冻结时必须从未改写的原始导出重新 materialize 派生审计；这不要求标注员返工，也不得修改 `export_label/`。
 
 ## 4. Round C2 — Calibration 补齐/冻结轮
 
@@ -201,12 +214,14 @@
 - high-risk bucket 启用规则
 - worker risk tier rule version
 - Validation routing contract
+- `failure_disposition_rule_manifest_v1.json`
 
 ### 4.5 必须落盘
 
 - `worker_state_snapshot_C2_final.csv`
 - `scene_contract_locked_v1.json`
 - `task_risk_rule_manifest_v1.json`
+- `failure_disposition_rule_manifest_v1.json`
 - `assignment_manifest_C2.csv`
 - `reserve_usage_audit_C2.csv`
 - `calibration_freeze_report_v1.md`
@@ -252,7 +267,14 @@
 - `test_condition_assignment_manifest.csv`
 - `rq1_active_time_analysis.csv`
 - `rq1_time_quality_audit.csv`
+- `t1_failure_disposition_audit.csv`
 - `rq1_test_round_report.md`
+
+### 5.6 Failure disposition
+
+- `worker_caused_structural_failure` 必须计入原 `Manual` 或 `SemiAuto` 条件，写为 `structurally_valid = 0` 且 submission-level `delivery_adjusted_quality = 0`。
+- 若 `external_system_failure` 影响同图双条件中的任一任务，只可按 manifest 重跑一次同一 base image 的完整 `Manual/SemiAuto` 对；不能完整配对重跑时，整对行政删失，不计入交付调整质量分母。
+- `T1` 的行政删失、重跑和三类归因必须按条件披露；不得用外部事故重跑改变条件或 worker/tier 冻结内容。
 
 ## 6. Round V1 — Main-Validation
 
@@ -309,6 +331,13 @@ Validation 正式执行时只运行已冻结的主策略。
 - `routing_event_log_V1.jsonl`
 - `validation_round_report.md`
 - `online_audit_summary_V1.json`
+- `v1_failure_disposition_audit.csv`
+
+### 6.7 Failure disposition
+
+- `worker_caused_structural_failure` 作为 worker-level event 保留在原政策臂；仅当任务终态未交付时，任务级 `delivery_adjusted_quality = 0`。
+- `policy_caused_failure`（包括 candidate exhaustion、replacement failure、capacity exhaustion）必须保留在原政策臂 ITT，写为 `policy_failure = 1`；`unresolved` 或 `severe_failure` 的交付调整质量为 `0`。
+- `external_system_failure` 不归责 worker 或政策。仅可在同一政策臂、同一冻结版本和预留的对称重跑容量内重跑一次；否则行政删失。行政删失不进入交付调整质量分母，但必须报告原始任务数、重跑数、删失数及两臂分布。
 
 ## 7. 最小配置与未来扩展
 

@@ -45,6 +45,7 @@ from tools.thesis_main.analysis.prescreen_canonicalize_export import build_canon
 from tools.thesis_main.analysis.materialize_c1_canonical_evidence_sidecars import materialize_canonical_evidence
 from tools.thesis_main.analysis.geometry_consensus.materialize import materialize_geometry_consensus
 from tools.thesis_main.analysis.materialize_model_issue_harmonization import materialize_model_issue_harmonization
+from tools.thesis_main.analysis.failure_disposition import c1_failure_fields
 
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
 
@@ -123,6 +124,14 @@ CANONICAL_FIELDS = [
     "active_time_exclusion_reason",
     "audit_only",
     "reserve_realized_submission",
+    "failure_attribution",
+    "incident_id",
+    "incident_evidence_status",
+    "worker_caused_structural_failure",
+    "policy_failure",
+    "external_system_failure",
+    "structural_failure_evaluable",
+    "worker_reliability_eligible",
 ]
 
 ACTIVE_AUDIT_FIELDS = [
@@ -171,6 +180,23 @@ REALIZED_AUDIT_FIELDS = [
     "missing_submission",
     "duplicate_worker_task_submission",
     "reserve_realized_submission",
+]
+
+FAILURE_AUDIT_FIELDS = [
+    "round_id",
+    "project_id",
+    "ls_runtime_task_id",
+    "worker_id",
+    "annotation_id",
+    "canonical_annotation_id",
+    "failure_attribution",
+    "incident_id",
+    "incident_evidence_status",
+    "worker_caused_structural_failure",
+    "policy_failure",
+    "external_system_failure",
+    "structural_failure_evaluable",
+    "worker_reliability_eligible",
 ]
 
 
@@ -276,6 +302,40 @@ def _frozen_audit_bool(value: Any) -> str:
     return ""
 
 
+_FAILURE_INPUT_FIELDS = ("failure_attribution", "incident_id", "incident_evidence_status")
+
+
+def _failure_key(row: dict[str, Any]) -> tuple[str, str, str, str]:
+    return (
+        safe(row.get("project_id")),
+        safe(row.get("ls_runtime_task_id") or row.get("runtime_task_id") or row.get("task_id")),
+        safe(row.get("worker_id") or row.get("annotator_id")),
+        safe(row.get("annotation_id") or row.get("raw_annotation_id") or row.get("raw_canonical_annotation_id")),
+    )
+
+
+def _load_failure_dispositions(path: Path | None) -> dict[tuple[str, str, str, str], dict[str, str]]:
+    if not path or not path.exists():
+        return {}
+    rows: dict[tuple[str, str, str, str], dict[str, str]] = {}
+    for row in read_csv(path):
+        key = _failure_key(row)
+        if not all(key) or key in rows:
+            raise ValueError("failure disposition identity must be complete and unique")
+        if not any(safe(row.get(field)) for field in _FAILURE_INPUT_FIELDS):
+            raise ValueError("failure disposition row must contain attribution or incident evidence")
+        rows[key] = row
+    return rows
+
+
+def _c1_failure_fields(row: dict[str, Any]) -> dict[str, Any]:
+    # Missing evidence is never evidence of no incident.  Keep dry-run rows
+    # descriptive but force formal callers to reject the resulting state.
+    if not any(safe(row.get(field)) for field in _FAILURE_INPUT_FIELDS):
+        row = {**row, "failure_attribution": "not_evaluable", "incident_evidence_status": "not_evaluable"}
+    return c1_failure_fields(row)
+
+
 def build_canonicalization(
     export_paths: list[Path],
     manual_assignment: Path = MANUAL_ASSIGNMENT_DEFAULT,
@@ -290,6 +350,7 @@ def build_canonicalization(
     independence_audit_csv: Path | None = None,
     retrospective_provenance_amendment_csv: Path | None = None,
     duplicate_adjudication_csv: Path | None = None,
+    failure_disposition_csv: Path | None = None,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     assigned, internal = assignment_sets(manual_assignment, semi_assignment, worker_distribution)
@@ -301,12 +362,13 @@ def build_canonicalization(
             if not all(key) or key in duplicate_decisions:
                 raise ValueError("duplicate adjudication identity must be complete and unique")
             duplicate_decisions[key] = decision
+    failure_dispositions = _load_failure_dispositions(failure_disposition_csv)
     canonical_base, duplicate_base, base_summary = build_canonical_tables(
         export_paths, active_log, duplicate_review_mode=True, duplicate_decisions=duplicate_decisions, round_id=round_id
     )
     active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths), policy="calibration") if active_log else {}
     raw_manifest = snapshot_inputs_unique(
-        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []) + ([duplicate_adjudication_csv] if duplicate_adjudication_csv else []),
+        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []) + ([duplicate_adjudication_csv] if duplicate_adjudication_csv else []) + ([failure_disposition_csv] if failure_disposition_csv else []),
         output_dir,
         completion_basis="c1_closeout_canonicalization_snapshot",
     )
@@ -353,6 +415,7 @@ def build_canonicalization(
     canonical_rows: list[dict[str, Any]] = []
     active_rows: list[dict[str, Any]] = []
     realized_rows: list[dict[str, Any]] = []
+    failure_rows: list[dict[str, Any]] = []
 
     for row in canonical_base:
         project_id = safe(row.get("project_id"))
@@ -387,6 +450,7 @@ def build_canonicalization(
             duplicate_group_size = int(row.get("duplicate_group_size") or 1)
         except (TypeError, ValueError):
             duplicate_group_size = 1
+        failure = _c1_failure_fields({**row, **failure_dispositions.get(identity, {})})
         c_row = {
             "round_id": round_id,
             "planned_project_name": info.get("planned_project_name", ""),
@@ -462,10 +526,12 @@ def build_canonicalization(
             "active_time_exclusion_reason": active_override.get("active_time_exclusion_reason", ""),
             "audit_only": bool_text(bool(active_override.get("audit_only"))),
             "reserve_realized_submission": bool_text(is_reserve(info)),
+            **{key: bool_text(value) if isinstance(value, bool) else value for key, value in failure.items()},
         }
         canonical_rows.append(c_row)
         active_rows.append({field: c_row.get(field, "") for field in ACTIVE_AUDIT_FIELDS})
         realized_rows.append({field: c_row.get(field, "") for field in REALIZED_AUDIT_FIELDS})
+        failure_rows.append({field: c_row.get(field, "") for field in FAILURE_AUDIT_FIELDS})
 
     resolved_excluded_keys = set()
     for duplicate in duplicate_base:
@@ -573,6 +639,8 @@ def build_canonicalization(
     write_csv(output_dir / "c1_runtime_task_mapping.csv", runtime_rows, RUNTIME_MAPPING_FIELDS)
     write_csv(output_dir / "c1_runtime_key_collision_audit.csv", collision_rows, RUNTIME_COLLISION_FIELDS)
     write_csv(output_dir / "c1_canonical_annotations.csv", canonical_rows, CANONICAL_FIELDS)
+    failure_audit_csv = output_dir / "failure_disposition_audit_C1.csv"
+    write_csv(failure_audit_csv, failure_rows, FAILURE_AUDIT_FIELDS)
     write_csv(output_dir / "c1_duplicate_annotation_audit.csv", duplicate_rows)
     write_csv(output_dir / "c1_duplicate_annotation_review_queue.csv", review_queue_rows)
     write_csv(output_dir / "c1_duplicate_annotation_forensic_audit.csv", forensic_rows)
@@ -613,7 +681,8 @@ def build_canonicalization(
     planned_missing_count = sum(row["planned_mapping_status"] == "planned_mapping_missing" for row in runtime_rows)
     missing_submission_count = sum(row["missing_submission"] == "true" for row in realized_rows)
     canonical_evidence_blocked = bool(canonical_evidence_summary.get("blockers"))
-    structural_integrity_passed = outside_count == 0 and pending_duplicate_count == 0 and reserve_count == 0 and not collision_rows and not planned_missing_count and not canonical_evidence_blocked
+    failure_disposition_complete = input_status != "formal" or all(row["failure_attribution"] != "not_evaluable" for row in canonical_rows)
+    structural_integrity_passed = outside_count == 0 and pending_duplicate_count == 0 and reserve_count == 0 and not collision_rows and not planned_missing_count and not canonical_evidence_blocked and failure_disposition_complete
     collection_completeness_passed = missing_submission_count == 0
     passed = structural_integrity_passed and (collection_completeness_passed if require_complete else True)
     summary = {
@@ -672,6 +741,9 @@ def build_canonicalization(
         "geometry_sidecars": geometry_summary,
         "model_issue_harmonization": harmonization_summary,
         "formal_c1_annotation_data_present": bool(input_status == "formal" and canonical_rows),
+        "failure_disposition_csv": str(failure_disposition_csv or ""),
+        "failure_disposition_audit_csv": str(failure_audit_csv),
+        "failure_attribution_counts": dict(sorted(Counter(safe(row.get("failure_attribution")) for row in canonical_rows).items())),
         "interpretation_allowed": False,
         "blockers": [
             name
@@ -684,6 +756,7 @@ def build_canonicalization(
                 ("duplicate_independence_audit_identity", len(independence_duplicates)),
                 ("independence_audit_missing_identity", independence_audit_missing_identity_count),
                 ("independence_not_evaluable", sum(row["independence_status"] == "not_evaluable" for row in canonical_rows)),
+                ("failure_disposition_not_evaluable", sum(row["failure_attribution"] == "not_evaluable" for row in canonical_rows) if input_status == "formal" else 0),
                 *[(f"amendment_{key}", count) for key, count in (harmonization_summary.get("amendment_blockers") or {}).items()],
                 *[(f"canonical_evidence_{blocker}", 1) for blocker in (canonical_evidence_summary.get("blockers") or [])],
             )
@@ -710,6 +783,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--independence-audit-csv", type=Path)
     parser.add_argument("--retrospective-provenance-amendment-csv", type=Path)
     parser.add_argument("--duplicate-adjudication-csv", type=Path)
+    parser.add_argument("--failure-disposition-csv", type=Path)
     args = parser.parse_args(argv)
     summary = build_canonicalization(
         args.export_json,
@@ -725,6 +799,7 @@ def main(argv: list[str] | None = None) -> int:
         independence_audit_csv=args.independence_audit_csv,
         retrospective_provenance_amendment_csv=args.retrospective_provenance_amendment_csv,
         duplicate_adjudication_csv=args.duplicate_adjudication_csv,
+        failure_disposition_csv=args.failure_disposition_csv,
     )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
     return 0 if summary["passed"] else 1

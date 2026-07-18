@@ -1,6 +1,6 @@
 # Round-Based Assignment SOP v1
 
-> Last updated: 2026-03-28
+> Last updated: 2026-07-17
 
 本 SOP 面向实际执行，逐轮说明：
 
@@ -46,6 +46,10 @@ The downgrade rules below are contingency rules for attrition, unexpected admiss
 - 实际导入任务数
 - 实际参与 worker
 - manifest 预期 worker/task 映射
+
+### Failure disposition 执行规则
+
+运行人员必须在结果不可见时登记事故证据。`C1` 仅记录原始证据和 provisional disposition；`C2` 在 Main 结果可见前冻结 `failure_disposition_rule_manifest_v1.json` 后固定派生分类。允许的归因仅为 `worker_caused_structural_failure`、`policy_caused_failure` 与有时间窗、影响范围、证据引用支持的 `external_system_failure`；证据不足只能记为 `not_evaluable`。不得因某条件或政策臂结果不利而改归因。
 
 ## 1. P1 — PreScreen
 
@@ -142,6 +146,7 @@ The downgrade rules below are contingency rules for attrition, unexpected admiss
 - `ci_precision_audit_C1.csv`
 - `scene_coverage_gap_C1.csv`
 - `assignment_manifest_C1.csv`
+- `failure_disposition_audit_C1.csv`
 - `calibration_round1_report.md`
 
 ### 结束判据
@@ -182,6 +187,7 @@ CE-only 执行视图默认采用短时项目：
 - `tau_d`
 - worker risk tier rule version
 - Validation routing contract
+- `failure_disposition_rule_manifest_v1.json`
 
 ### 禁止更改
 
@@ -196,6 +202,7 @@ CE-only 执行视图默认采用短时项目：
 - `worker_state_snapshot_C2_final.csv`
 - `scene_contract_locked_v1.json`
 - `task_risk_rule_manifest_v1.json`
+- `failure_disposition_rule_manifest_v1.json`
 - `assignment_manifest_C2.csv`
 - `reserve_usage_audit_C2.csv`
 - `calibration_freeze_report_v1.md`
@@ -228,6 +235,7 @@ CE-only 执行视图默认采用短时项目：
 - 每位 worker 的 Manual / Semi 任务数尽量平衡
 - 任务顺序随机化
 - CE-only 执行视图默认对应 `T1_manual` 与 `T1_semi`
+- 若有 `external_system_failure`，仅可重跑一次同一 base image 的完整 Manual/SemiAuto 对；不能完整配对重跑时整对行政删失
 
 ### 允许更新
 
@@ -248,12 +256,14 @@ CE-only 执行视图默认采用短时项目：
 - `test_condition_assignment_manifest.csv`
 - `rq1_active_time_analysis.csv`
 - `rq1_time_quality_audit.csv`
+- `t1_failure_disposition_audit.csv`
 - `rq1_test_round_report.md`
 
 ### 结束判据
 
 - `RQ1` primary estimand 分析完成
 - active-log coverage 与 fallback 比例完成审计
+- worker-caused structural failure 已在原条件计为 `structurally_valid = 0` 与 submission-level `delivery_adjusted_quality = 0`；外部事故的重跑/删失已按条件披露
 
 ## 5. V1 — Main-Validation
 
@@ -272,6 +282,8 @@ CE-only 执行视图默认采用短时项目：
 - 只运行已冻结的主策略
 - 若部署时仅执行 `Full`，则 `Random / Global` 的主可比证据必须来自 `Calibration_manual` 上的 offline replay 或 shadow support set
 - CE-only 执行视图默认只开 `V1_full_batch_*`；`Random / Global` 不在 LS 内并跑补主证据
+- policy-caused failure 必须保留在其原政策臂 ITT；不得跨臂借用替补或容量
+- external system failure 仅可在同一政策臂、同一冻结版本、预留对称重跑容量内重跑一次；否则行政删失
 
 ### 允许更新
 
@@ -297,9 +309,11 @@ CE-only 执行视图默认采用短时项目：
 - `routing_event_log_V1.jsonl`
 - `validation_round_report.md`
 - `online_audit_summary_V1.json`
+- `v1_failure_disposition_audit.csv`
 
 ### 结束判据
 
 - 完成 `RQ3` 部署面审计
 - 完成 OOD / Hard subset / stress mode 报告
 - 明确区分“offline replay 主可比证据”与“V1 在线执行证据”
+- 已按政策臂报告 worker failure、policy failure、external rerun 与行政删失数量；`unresolved` / `severe_failure` 的交付调整质量为零

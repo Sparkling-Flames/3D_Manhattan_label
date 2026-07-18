@@ -38,6 +38,16 @@ The expected execution path assumes `18-20` workers pass `P1` and continue throu
 - For post-`P1` duplicate same-geometry submissions, the default timing value is `max_reliable_active_time`; `sum_segments` is audit/sensitivity-only and is allowed only when logs show explicit non-overlapping continuous segments.
 - Different-geometry duplicate submissions remain manual-review cases and must not be automatically merged.
 
+### 1.4 Failure disposition and analysis eligibility
+
+`C2` must freeze `failure_disposition_rule_manifest_v1.json` before `T1/V1` results are visible. It fixes allowed attribution categories, required external-incident evidence, one-rerun limit, rerun symmetry, and administrative-censoring rules.
+
+- Worker-caused structural failure remains in its assigned condition/policy arm. In `T1`, it has `structurally_valid = 0` and submission-level `delivery_adjusted_quality = 0`.
+- Policy-caused failure remains in its assigned `V1` policy arm ITT with `policy_failure = 1`; an `unresolved` or `severe_failure` task has delivery-adjusted quality `0`.
+- External system failure is neither worker nor policy failure. It is eligible only for the pre-frozen, result-blind rerun rule; otherwise it is administratively censored and excluded from the delivery-adjusted quality denominator. Counts and arm/condition distributions remain mandatory reporting items.
+
+An unsupported historical anomaly is `not_evaluable`, not an external system failure. Attribution, rerun, and censoring decisions must be auditable from immutable incident evidence and must not be revised after outcome inspection.
+
 ---
 
 ## 2. RQ1 Plan
@@ -74,6 +84,8 @@ Primary outcome:
 Primary contrast:
 
 - Manual versus SemiAuto active-time difference on the same base-image pool
+
+The companion delivery-adjusted quality audit retains worker-caused structural failures as zero-quality submissions. An external-system incident affecting either member of an image pair requires a complete paired rerun; if that cannot occur, the whole pair is administratively censored from the paired delivery-adjusted quality denominator and disclosed by condition.
 
 ### 2.4 Primary inference
 
@@ -214,6 +226,16 @@ Interpretation is fixed as follows:
 - scene-specific routing is a conditional module
 - scene-specific routing is only credited as a main implementation mechanism when activation support is sufficient
 - otherwise it must be reported as an audit / explanatory mechanism rather than a global main claim
+
+### 4.5 Validation failure analysis
+
+`V1` deployment reporting distinguishes worker-level events, policy failures, and external administrative censoring without changing the frozen strategy.
+
+- The policy-arm ITT population retains candidate exhaustion, replacement failure, and capacity exhaustion in the original arm; these are `policy_failure = 1`.
+- A worker-caused invalid submission is retained as a worker-level event. A replacement-resolved task is not rewritten to zero; only an ultimately unserved task has task-level delivery-adjusted quality `0`.
+- An external system failure may rerun once only within the original arm, the same frozen version, and pre-reserved symmetric capacity. Otherwise it is administratively censored, excluded from the delivery-adjusted quality denominator, and reported by arm.
+
+These deployment outcomes do not make `V1` the causal comparison for `Random / Global / Full`, and cannot modify `C2` parameters or routing rules.
 
 ---
 

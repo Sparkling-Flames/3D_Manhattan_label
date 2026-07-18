@@ -11,7 +11,7 @@
 - `import_json/`：planned import / planned split 真源。
   - `stage1_prescreen_foreign_https_20260609/`：Stage 1 / P1 外国标注员 HTTPS Label Studio 导入包；仅将正式中文包的 `data.vis_3d` base URL 改为 `https://label.sparkle0825.top`，任务池、顺序、metadata、proposal 与图片 URL 保持不变。
 - `export_label/`：Label Studio 运行时标注导出真源，不作为脚本写入目标。
-- `active_logs/`：原始 `active_time` 日志真源。
+- `active_logs/`：原始 `active_time` 日志真源；`operational_incidents/` 保存 C1 起不可变的运行事故证据，不与分析输出混用。
 - `analysis_results/`：生成结果、审计、manifest、图表和中间分析产物。
 - `tests/`：tools 与字段合同的 pytest 覆盖。
 - `data/`：数据资产。
@@ -24,9 +24,9 @@
 - `tools/thesis_main/`
   - 论文主线工具。
   - `analysis/`：质量分析、active-time audit、stage-aware 分析、图表、统计汇总。
-    - `c1_live_collection_monitor.py`、`c1_canonicalize_exports.py`、`run_c1_raw_to_closeout_dryrun.py`、`c1_materialize_quality_table.py`、`c1_materialize_worker_state.py`、`c1_materialize_worker_profile_sidecar.py`、`c1_materialize_c2_gap_audits.py`、`build_c2_assignment_manifest_from_c1_gaps.py`、`materialize_p1_post_closeout_evidence_correction.py` 与 `materialize_p1_post_closeout_geometry_scores.py`：C1 live raw-data 采集健康监控、正式 export canonicalization、raw-to-closeout dryrun、quality/worker/profile/gap sidecar、reserve-only C2 draft，以及只读 P1 post-closeout evidence/geometry correction；只生成 provisional / audit artifacts，不冻结 C1/C2 协议参数。
+    - `c1_live_collection_monitor.py`、`c1_canonicalize_exports.py`、`failure_disposition.py`、`materialize_main_failure_outcomes.py`、`run_c1_raw_to_closeout_dryrun.py`、`c1_materialize_quality_table.py`、`c1_materialize_worker_state.py`、`c1_materialize_worker_profile_sidecar.py`、`c1_materialize_c2_gap_audits.py`、`build_c2_assignment_manifest_from_c1_gaps.py`、`materialize_p1_post_closeout_evidence_correction.py` 与 `materialize_p1_post_closeout_geometry_scores.py`：C1 live raw-data 采集健康监控、正式 export canonicalization、跨 C1/T1/V1 的失败归因和 Main outcome 审计、raw-to-closeout dryrun、quality/worker/profile/gap sidecar、reserve-only C2 draft，以及只读 P1 post-closeout evidence/geometry correction；只生成 provisional / audit artifacts，不冻结 C1/C2 协议参数。
     - `rebuild_stage1_chinese_completion_excel.py`：按最新 `标注人员.xlsx`、`退出标注.xlsx`、Stage 1 中文 LS JSON 导出和 active logs 重算中文 P1 完成情况工作簿。
-  - `registry/`：registry、manifest、freeze、final-gold、trap/materialization、risk-rule、`d_t/g_t` dry-run、export inventory。
+  - `registry/`：registry、manifest、freeze、final-gold、trap/materialization、risk-rule、C2 failure-disposition manifest、`d_t/g_t` dry-run、export inventory。
   - `data_prep/`：数据集准备和 MP3D smoke/import 生成。
   - `foreign_recruitment/`：P1/PreScreen 外国标注员 HTTPS 英文适配包。
 - `tools/paper_b/`
@@ -45,7 +45,7 @@
 - `docs/thesis_main/`
   - 正式执行主线文档。
   - 包括 protocol、assignment SOP、PreScreen、Calibration、Main(Test + Validation)、统计计划、字段合同、worker-profile sidecar contract、final-gold、registry、论文主线写作材料。
-  - `THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.md/.tex` 保留为历史审计版本；`THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v4.md` 是当前 Paper A 三状态证据、Geometry LOO 与时序路由写作合同。standalone `.tex` 不是正文真源。`WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 保留物理 schema 真源，`WORKER_PROFILE_ARTIFACT_MIGRATION_AMENDMENT_v1.md` 记录 artifact 命名迁移，`WORKER_PROFILE_THESIS_DISPLAY_CONTRACT_v1.md` 负责展示符号，`THESIS_MANUSCRIPT_MIGRATION_MAP_v1.md`/`THESIS_MANUSCRIPT_MIGRATION_AUDIT_v1.md` 保留上一轮记录，v2 文件记录本轮 active Overleaf 迁移、兼容性与 provenance。
+  - `THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.md/.tex` 保留为历史审计版本；`THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v4.md` 保留三状态证据、Geometry LOO 与时序路由的历史写作合同，当前本地 vFinal 提纲为 `Paper_A_新版完整论文提纲_vFinal_Draft.md`。standalone `.tex` 不是正文真源。`WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 保留物理 schema 真源，`WORKER_PROFILE_ARTIFACT_MIGRATION_AMENDMENT_v1.md` 记录 artifact 命名迁移，`WORKER_PROFILE_THESIS_DISPLAY_CONTRACT_v1.md` 负责展示符号，`THESIS_MANUSCRIPT_MIGRATION_MAP_v1.md`/`THESIS_MANUSCRIPT_MIGRATION_AUDIT_v1.md` 保留上一轮记录，v2 文件记录本轮 active Overleaf 迁移、兼容性与 provenance。
   - `manuscript/` 可保存 Overleaf 项目和主线论文写作资产，但按现有 `.gitignore` 默认不提交。
   - Paper A vFinal 代码迁移合同、四个候选 rule manifest 与审计记录保存在该目录；这些文件只定义可审计的结构和候选规则，不把 dry-run 产物升级为正式 C1 数据。对应的 canonical→concrete-tag、Geometry LOO 与 temporal replay 代码位于 `tools/thesis_main/analysis/`，且无正式 export 时只能输出 dry-run/not-evaluable。
   - Paper A vFinal 代码迁移合同、四个候选 rule manifest 与审计记录保存在该目录；这些文件只定义可审计的结构和候选规则，不把 dry-run 产物升级为正式 C1 数据。
@@ -66,7 +66,7 @@
 
 - `import_json/` 是 planned import / planned split 真源。
 - `export_label/` 是 Label Studio 运行时导出真源；本次 tools/docs 迁移不写入、不移动、不重命名。
-- `active_logs/` 是原始 active-time 日志真源。
+- `active_logs/` 是原始 active-time 日志真源；`active_logs/operational_incidents/` 是 C1 起外部系统事故的原始证据源。
   - 云服务器端仍应位于仓库根下，例如 `/home/ubuntu/workspace/HoHoNet/active_logs/`。
   - 若云端设置 `ACTIVE_LOG_DIR="active_logs/new_server"`，新日志应进入 `/home/ubuntu/workspace/HoHoNet/active_logs/new_server/`。
   - `tools/label_studio/cors_server.py` 的源码迁移不应改变日志存储根目录。
