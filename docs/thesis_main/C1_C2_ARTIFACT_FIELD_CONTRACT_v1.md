@@ -318,12 +318,37 @@ base_task_id
 task_stratum
 assignment_sequence
 c2_component
+target_component
+gap_reason
+precision_before
+support_before
+support_after
+selection_probability
 design_manifest_sha256
 c2b_summary_sha256
 post_c2b_worker_profile_sha256
 ```
 
 `assignment_reason` 只允许已由 C1/C2-B 定义的 precision gap；C2-A-RP 不搜索新 risk、failure family 或 P1 component。达到冻结上限仍不稳定时，对应调整归零并 fallback Strong Global。
+
+正式生成还必须绑定完整 C1/C2-B assignment history，排除同一 worker 已见的
+`task_id` 和 `base_task_id`，并执行冻结的 task support 上限。
+
+### 4.3 `c2b_closeout.summary.json`
+
+由 `materialize_c2b_closeout.py` 将 C2-B submissions、post-C2-B worker profile、
+profile manifest 和 C2-B design summary 绑定为：
+
+```text
+c2b_submissions_sha256
+post_c2b_worker_profile_path
+post_c2b_worker_profile_sha256
+post_c2b_profile_manifest_sha256
+c2b_design_summary_sha256
+c2b_closeout_ready
+```
+
+C2-A-RP formal 只能读取该 closeout，不接受测试或人工拼装 summary。
 
 ## 5. C2 最终冻结
 
@@ -439,8 +464,9 @@ t1_pair_analysis_disposition.csv:
 
 ```text
 v1_reservation_registry.csv:
-  reservation_id, reservation_arm, reservation_capacity_before,
-  reservation_capacity_after, reservation_status
+  reservation_id, original_task_id, rerun_task_id, block_id, freeze_version,
+  availability_snapshot_id, reservation_arm, reservation_capacity_before,
+  reservation_capacity_after, reservation_status, reserved_at, consumed_at
 
 v1_rerun_chain.csv:
   original_task_id, rerun_task_id, policy_arm, freeze_version,
