@@ -33,7 +33,12 @@ def _closeout_dependencies(tmp_path: Path, manifest_data: dict) -> tuple[Path, P
         tmp_path / "c1_closeout.json", tmp_path / "c2b_assignment.csv",
         tmp_path / "worker_roster.csv", tmp_path / "rule_config.json",
     ]
-    contents = ["{}", "task_id\nt1\n", "worker_id\nw1\n", "{}"]
+    contents = [
+        json.dumps({"formal_closeout_ready": True, "profile_freeze_status": "C1_frozen"}),
+        "task_id,worker_id,c2_component\nt1,w1,common_anchor\n",
+        "worker_id\nw1\n",
+        json.dumps({"min_common_anchor_per_worker": 1, "min_bridge_per_worker": 0, "min_task_support": 1}),
+    ]
     for path, content in zip(paths, contents):
         path.write_text(content, encoding="utf-8")
     manifest_data.setdefault("input_sha256", {}).update({
@@ -223,7 +228,8 @@ def test_formal_c2a_requires_bound_c2b_sha_and_real_task_pool(tmp_path: Path) ->
     submissions.write_text("task_id,worker_id\nt1,w1\n", encoding="utf-8")
     design_summary = tmp_path / "c2b_design.summary.json"
     design_summary.write_text(json.dumps({
-        "c2b_design_ready": True, "design_manifest_sha256": _sha(design),
+        "c2b_design_ready": True, "launch_ready": True, "candidate_only": False,
+        "design_manifest_sha256": _sha(design),
     }), encoding="utf-8")
     profile_manifest = tmp_path / "post_profile.manifest.json"
     profile_manifest_data = {
@@ -267,7 +273,8 @@ def test_c2b_closeout_materializes_real_post_profile_sha_chain(tmp_path: Path) -
     submissions.write_text("task_id,worker_id\nt1,w1\n", encoding="utf-8")
     profile.write_text("worker_id,risk_slope_se\nw1,0.1\n", encoding="utf-8")
     design.write_text(json.dumps({
-        "c2b_design_ready": True, "design_manifest_sha256": "a" * 64
+        "c2b_design_ready": True, "launch_ready": True, "candidate_only": False,
+        "design_manifest_sha256": "a" * 64
     }), encoding="utf-8")
     manifest_data = {
         "manifest_version": "c2b_post_profile_v1",

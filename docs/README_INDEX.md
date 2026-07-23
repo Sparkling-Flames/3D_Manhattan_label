@@ -122,3 +122,9 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 目录：[legacy/](legacy/)
 
 历史材料默认不迁移、不修订。路径检查和乱码修复默认排除该目录。
+## 2026-07-24 代码入口补充
+
+- C1 不可变 pre-closeout rehearsal：`tools/thesis_main/analysis/run_c1_precloseout_rehearsal.py`
+- C1 人工 task outcome / 单一 GT reference：`tools/thesis_main/analysis/materialize_c1_operational_reference.py`
+- P1→C1→C2-B component evidence：`tools/thesis_main/analysis/materialize_routing_component_evidence.py`
+- T1/V1 正式推断：`tools/thesis_main/analysis/materialize_main_inference.py`

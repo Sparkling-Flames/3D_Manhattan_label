@@ -1,0 +1,167 @@
+{
+  "created_at": "2026-07-01",
+  "run_id": "p1_closeout_consolidated_final_gold_v2_20260701",
+  "status": "materialized_consistency_gate_passed",
+  "supersedes": [
+    {
+      "run_id": "p1_closeout_full_rerun_20260701",
+      "old_path": "analysis_results/prescreen_closeout",
+      "archived_path": "analysis_results/legacy/prescreen_closeout_superseded_20260701/original_p1_closeout",
+      "role": "original P1 closeout"
+    },
+    {
+      "run_id": "p1_closeout_full_dag_gtfix_20260701",
+      "old_path": "analysis_results/prescreen_closeout_gtfix_20260701",
+      "archived_path": "analysis_results/legacy/prescreen_closeout_superseded_20260701/gt106_only_gtfix",
+      "role": "GT106-only gtfix run"
+    }
+  ],
+  "driver": {
+    "formal_p1_closeout_starts_from": "tools/thesis_main/analysis/prescreen_canonicalize_export.py",
+    "not_formal_driver": "tools/thesis_main/analysis/analyze_quality.py",
+    "note": "analyze_quality.py remains a legacy-compatible helper/reference entrypoint, not the P1 closeout driver."
+  },
+  "inputs": {
+    "label_studio_exports": [
+      {
+        "path": "export_label/stage1_chinese/project-28-at-2026-07-01-07-14-56a198ba.json",
+        "sha256": "A40EA344C04CC6259C5841F40A427CC82FA44258916DEE672B4A7599D2CF8C69",
+        "supersedes_path": "export_label/stage1_chinese/legacy/project-28-at-2026-06-30-08-59-94dcf30a.json",
+        "supersedes_sha256": "EC312B396FC388DC958455BB05FF0875017A5B52E0DE5FDC62AC6440CE40C80C"
+      },
+      {
+        "path": "export_label/stage1_chinese/project-29-at-2026-06-30-09-00-e7ea6931.json",
+        "sha256": "63B34E8ADCE3790C76F41F1E77302EA926DFDCBB0BC2950F6258A8D90D8CCDD1"
+      },
+      {
+        "path": "export_label/stage1_chinese/project-30-at-2026-06-30-09-00-69d8051b.json",
+        "sha256": "2F274F31C2AC9DD48128593357F1D0F4CAE98DFC8FC62CF77A40E7DF2641C4D7"
+      },
+      {
+        "path": "export_label/stage1_English/project-39-at-2026-06-28-05-14-65ca3316.json",
+        "sha256": "F79FB49AE72195C4FBEA4934F17AC6235D75DA513FA8FBFC11C993AD726A84AE"
+      },
+      {
+        "path": "export_label/stage1_English/project-40-at-2026-06-28-05-14-bb74a057.json",
+        "sha256": "1CE8A32E5708AA87C11F4E9957EFEBCCD183B60E6D12066CEEE69CE87D763305"
+      },
+      {
+        "path": "export_label/stage1_English/project-41-at-2026-06-28-05-13-8641854f.json",
+        "sha256": "307F6E6974A836A21193AF64E93E72A0A907D7193BE3BFF6729F386AEAC12FE2"
+      }
+    ],
+    "active_logs": {
+      "path": "active_logs/prescreen",
+      "file_count": 60,
+      "aggregate_sha256": "116f44bc568df7099ac14c2e6052002709ad648cee7e32922aa44e833b1b173f",
+      "status": "final_with_fallback_watch",
+      "hash_algorithm": "prescreen_canonicalize_export._directory_sha256: sorted relative path + file size + per-file sha256 over frozen copied active_times_*.jsonl snapshot",
+      "snapshot_path": "analysis_results\\prescreen_closeout_final_gold_v2_20260701\\raw_inputs\\prescreen",
+      "snapshot_manifest_sha256_source": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/raw_input_snapshot_manifest.csv"
+    },
+    "geometry_gt": {
+      "path": "export_label/groudTruth.json",
+      "sha256": "39B1868DA0B5B7C0F5B89689F0350148B8FAF7AA19A0D42667FD633E33BA0950",
+      "supersedes_path": "export_label/groudTruth.json",
+      "supersedes_sha256": "39B1868DA0B5B7C0F5B89689F0350148B8FAF7AA19A0D42667FD633E33BA0950"
+    },
+    "final_gold": {
+      "source_path": "analysis_results/final_gold_layer_20260325/final_gold_records_v1.jsonl",
+      "source_sha256": "06692CC9163D0118D9558EE1A9C2EE96770720E53DD45CD50F5CAB34D4F57DD7",
+      "gt106_only_corrected_path": "analysis_results/prescreen_closeout_gtfix_20260701/final_gold_records_v1_corrected.jsonl",
+      "gt106_only_corrected_sha256": "3E0E3074A84E9D448D1B2084E3DC0577120205B973668B9ACE855CF7186159A2",
+      "corrected_v2_path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/final_gold_records_v2_p1_closeout_corrected.jsonl",
+      "corrected_v2_sha256": "82DBCB1D08754476E4F2A447B70550BD297689C2C50DF9F96AEB270B37F163D6",
+      "correction_audit_path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_final_gold_v2_correction_audit.json"
+    },
+    "worker_roster": {
+      "path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/prescreen_worker_roster.csv",
+      "sha256": "D25A7002B10D90C3501A2C7CC46D45FD3C54EFB453244FF7E70C278CED4185E2"
+    },
+    "manual_override_sidecar": {
+      "path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/prescreen_manual_overrides_20260701.json"
+    },
+    "semi_synthetic_trap_issue_review_sidecar": {
+      "path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/raw_inputs/prescreen_semi_synthetic_trap_issue_review.csv",
+      "role": "mirror_pair_level_actual_issue_family_source"
+    }
+  },
+  "corrections": [
+    {
+      "task_id": "564",
+      "correction_type": "geometry_contract",
+      "old_pair_count": 8,
+      "new_pair_count": 4,
+      "old_keypoint_count": 16,
+      "new_keypoint_count": 8,
+      "affected_runtime_tasks": [
+        "3065",
+        "3137"
+      ]
+    },
+    {
+      "task_id": "696",
+      "correction_type": "scope_contract",
+      "old_final_scope_binary": "in_scope",
+      "old_final_scope_alias": "normal",
+      "new_final_scope_binary": "oos",
+      "new_final_scope_subtype": "oos_insufficient",
+      "new_final_scope_alias": "oos_insufficient",
+      "old_geometry_gold_ready": true,
+      "new_geometry_gold_ready": false,
+      "affected_runtime_tasks": [
+        "3077",
+        "3149"
+      ]
+    }
+  ],
+  "gtfix_564": {
+    "final_gold_task_id": "564",
+    "gt_task_id": "2590",
+    "gt_inner_id": "106",
+    "expected_pair_count": 4,
+    "expected_keypoint_count": 8,
+    "final_gold_n_corners": 4,
+    "old_564_pair_count": 8,
+    "new_564_pair_count": 4,
+    "old_564_keypoint_count": 16,
+    "new_564_keypoint_count": 8
+  },
+  "scopefix_696": {
+    "final_gold_task_id": "696",
+    "old_final_scope_binary": "in_scope",
+    "old_final_scope_alias": "normal",
+    "new_final_scope_binary": "oos",
+    "new_final_scope_subtype": "oos_insufficient",
+    "new_final_scope_alias": "oos_insufficient",
+    "affected_runtime_tasks": [
+      "3077",
+      "3149"
+    ],
+    "worker_scope_scoring": "binary_scope_only_oos_subtype_expert_audit_only"
+  },
+  "policies": {
+    "duplicate_same_geometry": "keep_longest_lead_time_tie_latest",
+    "revision": "latest_plus_audit_or_manual_override",
+    "revision_manual_override": "worker_36_task_3129_final_annotation_4595",
+    "active_time_primary": "userscript_log_only",
+    "lead_time_fallback": "sensitivity_only_not_primary",
+    "missing_or_ambiguous_time": "no_primary_time_evidence",
+    "owner_mismatch_annotation_log": "exclude_from_exact_and_task_level_fallback_buckets",
+    "fallback_worker_admission": "not_auto_exclusion",
+    "undercoverage": "p1_nonblocking_watch",
+    "task_majority_undercoverage": "exclude_from_worker_level_penalty",
+    "semi_synthetic_issue_family": "use_reviewed_actual_issue_fields_not_planned_operator",
+    "scope_correctness": "binary_in_scope_vs_oos_only",
+    "oos_subtype": "expert_audit_only_not_worker_correctness",
+    "admission_stability": "reported_result_not_premise_review_c1_roster_w_max_if_changed"
+  },
+  "formal_rerun_entrypoint": {
+    "script": "tools/thesis_main/analysis/prescreen_canonicalize_export.py",
+    "output_dir": "analysis_results/prescreen_closeout_final_gold_v2_20260701",
+    "data_complete": true,
+    "completion_basis": "formal_prescreen_20260701_consolidated_final_gold_v2"
+  },
+  "consistency_gate_path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_closeout_consistency_gate_final_gold_v2.json",
+  "legacy_archive_manifest": "analysis_results/legacy/prescreen_closeout_superseded_20260701/archive_manifest.json"
+}

@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import random
 import sys
 from collections import defaultdict
 from pathlib import Path
@@ -25,6 +26,9 @@ C2A_ASSIGNMENT_FIELDS = [
     "round_id", "worker_id", "task_id", "base_task_id", "task_stratum",
     "assignment_sequence", "c2_component", "target_component", "gap_reason",
     "precision_before", "support_before", "support_after", "selection_probability",
+    "conditional_inclusion_probability", "selection_seed", "selection_draw_id", "eligible_count_at_draw",
+    "task_support_before", "task_support_after", "paired_block_support_before", "paired_block_support_after",
+    "effective_risk_slope_support_before", "effective_risk_slope_support_after",
     "design_manifest_sha256",
     "c2b_summary_sha256", "post_c2b_worker_profile_sha256",
 ]
@@ -94,6 +98,7 @@ def build_precision_assignments(
     profile_sha: str,
     history_rows: list[dict[str, str]] | None = None,
     max_task_support: int = 2,
+    selection_seed: int = 0,
 ) -> list[dict[str, Any]]:
     pools: dict[str, list[dict[str, str]]] = {"ordinary": [], "stress": []}
     for task in task_rows:
@@ -106,7 +111,6 @@ def build_precision_assignments(
         rows.sort(key=lambda row: safe(row.get("task_id")))
 
     assignments: list[dict[str, Any]] = []
-    offsets = {"ordinary": 0, "stress": 0}
     seen_by_worker = defaultdict(set)
     for history in history_rows or []:
         worker = safe(history.get("worker_id"))
@@ -129,9 +133,8 @@ def build_precision_assignments(
                 raise ValueError(f"insufficient C2-A-RP {stratum} tasks for worker {worker}")
             if not count:
                 continue
-            start = offsets[stratum] % len(eligible)
-            chosen = [eligible[(start + index) % len(eligible)] for index in range(count)]
-            offsets[stratum] += count
+            rng = random.Random(f"{selection_seed}|{worker}|{stratum}")
+            chosen = rng.sample(eligible, count)
             for task in chosen:
                 task_id = safe(task.get("task_id"))
                 task_support[task_id] += 1
@@ -148,6 +151,16 @@ def build_precision_assignments(
                     "support_before": plan["current_support"],
                     "support_after": int(plan["current_support"]) + sequence,
                     "selection_probability": count / len(eligible),
+                    "conditional_inclusion_probability": count / len(eligible),
+                    "selection_seed": selection_seed,
+                    "selection_draw_id": f"{worker}:{stratum}:{sequence}",
+                    "eligible_count_at_draw": len(eligible),
+                    "task_support_before": int(plan["current_support"]),
+                    "task_support_after": int(plan["current_support"]) + sequence,
+                    "paired_block_support_before": int(plan.get("paired_block_support_before") or 0),
+                    "paired_block_support_after": int(plan.get("paired_block_support_before") or 0) + int(plan["additional_blocks"]),
+                    "effective_risk_slope_support_before": int(plan["current_support"]),
+                    "effective_risk_slope_support_after": int(plan["current_support"]) + int(plan["additional_blocks"]),
                     "design_manifest_sha256": manifest_sha,
                     "c2b_summary_sha256": c2b_sha,
                     "post_c2b_worker_profile_sha256": profile_sha,
@@ -217,6 +230,7 @@ def materialize(
                 c2b_sha=c2b_sha, profile_sha=actual_profile_sha,
                 history_rows=read_csv(assignment_history_csv) if assignment_history_csv else None,
                 max_task_support=int(precision.get("max_task_support", 2)),
+                selection_seed=int(precision.get("selection_seed", 0)),
             )
     history_valid = input_status != "formal"
     if assignment_history_csv:

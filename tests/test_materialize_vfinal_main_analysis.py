@@ -20,13 +20,14 @@ def _t1(pair="p1", disposition="included", source="p1", risk="ordinary"):
         "pair_analysis_disposition": disposition,
         "source_pair_id": source,
         "risk_assist": risk,
+        "image_id": "img1",
         "quality_evaluable": "true" if disposition == "included" else "false",
     }
     return [
-        {**base, "condition": "manual", "delivery_adjusted_quality": "0", "structurally_valid": "false",
+        {**base, "worker_id": f"{pair}-m", "condition": "manual", "delivery_adjusted_quality": "0", "structurally_valid": "false",
          "iou_to_gt": "0", "row_failure_attribution": "worker_caused_structural_failure",
          "active_time_seconds": "12", "active_time_integrity_status": "exact_annotation_valid"},
-        {**base, "condition": "semi", "delivery_adjusted_quality": "0.8", "structurally_valid": "true",
+        {**base, "worker_id": f"{pair}-s", "condition": "semi", "delivery_adjusted_quality": "0.8", "structurally_valid": "true",
          "iou_to_gt": "0.8", "row_failure_attribution": "none",
          "active_time_seconds": "8", "active_time_integrity_status": "exact_annotation_valid"},
     ]
@@ -138,7 +139,7 @@ def test_formal_manifest_and_input_hashes_fail_closed_when_stale(tmp_path: Path)
 
 def test_dryrun_prints_audit_without_writing_output(tmp_path: Path, monkeypatch, capsys):
     source = tmp_path / "resolved.csv"
-    rows = _t1()
+    rows = _t1() + _t1("p2")
     with source.open("w", newline="", encoding="utf-8") as handle:
         writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
         writer.writeheader()

@@ -657,7 +657,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--p1-worker-status-csv", type=Path)
     parser.add_argument("--p1-geometry-task-scores", type=Path)
     parser.add_argument("--p1-worker-geometry-profile", type=Path)
-    parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
+    parser.add_argument("--input-status", choices=("dry_run", "precloseout_rehearsal", "formal"), default="dry_run")
     parser.add_argument("--independence-audit-csv", type=Path)
     parser.add_argument("--retrospective-provenance-amendment-csv", type=Path)
     parser.add_argument("--temporal-event-csv", type=Path)

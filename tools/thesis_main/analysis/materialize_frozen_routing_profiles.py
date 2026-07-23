@@ -6,11 +6,16 @@ import argparse
 import csv
 import hashlib
 import json
-import math
 from collections import defaultdict
 from pathlib import Path
 from statistics import fmean
 from typing import Any
+
+import pandas as pd
+import statsmodels.formula.api as smf
+
+
+MODEL_VERSION = "two_way_worker_task_fe_task_cluster_v2"
 
 
 def _read(path: Path) -> list[dict[str, str]]:
@@ -31,9 +36,21 @@ def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _truth(value: Any) -> bool:
+    return str(value).strip().lower() in {"true", "1", "yes"}
+
+
+def _number(value: Any) -> float | None:
+    try:
+        return float(value)
+    except (TypeError, ValueError):
+        return None
+
+
 def build_global(
-    submissions: list[dict[str, str]], worker_state: list[dict[str, str]], *, profile_version: str
-) -> list[dict[str, Any]]:
+    submissions: list[dict[str, str]], worker_state: list[dict[str, str]], *, profile_version: str,
+    estimator: dict[str, Any] | None = None, input_status: str = "dry_run",
+) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     usable = [
         row for row in submissions
         if row.get("quality_evaluable", "").lower() in {"true", "1"}
@@ -41,43 +58,94 @@ def build_global(
     ]
     if not usable:
         raise ValueError("no evaluable Manual GT submissions")
-    task_values: dict[str, list[float]] = defaultdict(list)
-    for row in usable:
-        task_values[row["task_id"]].append(float(row["iou_to_gt"]))
-    task_mean = {task: fmean(values) for task, values in task_values.items()}
-    grand = fmean([float(row["iou_to_gt"]) for row in usable])
-    by_worker: dict[str, list[float]] = defaultdict(list)
-    raw: dict[str, list[float]] = defaultdict(list)
-    for row in usable:
-        worker, value = row["worker_id"], float(row["iou_to_gt"])
-        raw[worker].append(value)
-        by_worker[worker].append(value - task_mean[row["task_id"]] + grand)
+    frame = pd.DataFrame(usable).copy()
+    for field in ("worker_id", "task_id"):
+        if frame[field].fillna("").astype(str).eq("").any():
+            raise ValueError(f"evaluable Manual rows require {field}")
+        frame[field] = frame[field].astype(str)
+    frame["iou_to_gt"] = pd.to_numeric(frame["iou_to_gt"], errors="raise")
+    if frame.worker_id.nunique() < 2 or frame.task_id.nunique() < 2:
+        raise ValueError("task-adjusted Global requires at least two workers and two tasks")
+    formula = "iou_to_gt ~ C(worker_id) + C(task_id)"
+    fitted = smf.ols(formula, frame).fit(
+        cov_type="cluster", cov_kwds={"groups": frame["task_id"], "use_correction": True}
+    )
+    workers = sorted(frame.worker_id.unique())
+    reference = frame.copy()
+    adjusted: dict[str, float] = {}
+    adjusted_se: dict[str, float] = {}
+    design_info = fitted.model.data.design_info
+    from patsy import build_design_matrices
+    for worker in workers:
+        reference["worker_id"] = worker
+        matrix = build_design_matrices([design_info], reference, return_type="dataframe")[0]
+        contrast = matrix.mean(axis=0).to_numpy()
+        adjusted[worker] = float(contrast @ fitted.params.to_numpy())
+        adjusted_se[worker] = float((contrast @ fitted.cov_params().to_numpy() @ contrast) ** .5)
+    task_mean = frame.groupby("task_id")["iou_to_gt"].mean().to_dict()
+    grand = float(frame["iou_to_gt"].mean())
+    centered: dict[str, list[float]] = defaultdict(list)
+    for row in frame.to_dict("records"):
+        centered[row["worker_id"]].append(float(row["iou_to_gt"]) - task_mean[row["task_id"]] + grand)
+    config = estimator or {}
+    confidence = float(config.get("confidence_level", .95))
+    z = 1.959963984540054 if abs(confidence - .95) < 1e-9 else 1.959963984540054
+    min_gt = int(config.get("min_gt_support", 1))
+    min_tasks = int(config.get("min_task_support", 1))
+    max_struct = float(config.get("max_f_struct", float("inf")))
+    quality_floor = float(config.get("quality_lcb_floor", float("-inf")))
     states = {row["worker_id"]: row for row in worker_state}
     output = []
-    for worker, values in sorted(by_worker.items()):
+    for worker in workers:
         state = states.get(worker, {})
-        adjusted = fmean(values)
-        se = math.sqrt(sum((value - adjusted) ** 2 for value in values) / (len(values) * (len(values) - 1))) if len(values) > 1 else math.inf
-        process = state.get("process_eligible", "").lower() in {"true", "1"}
-        independence = state.get("independence_eligible", "").lower() in {"true", "1"}
-        struct = float(state.get("F_struct") or 0)
-        eligible = process and independence and math.isfinite(se)
+        estimate, se = adjusted[worker], adjusted_se[worker]
+        lower, upper = estimate - z * se, estimate + z * se
+        process, independence = _truth(state.get("process_eligible")), _truth(state.get("independence_eligible"))
+        reference_ok = _truth(state.get("reference_evaluable", "true"))
+        struct = _number(state.get("F_struct"))
+        subset = frame[frame.worker_id == worker]
+        support, task_support = len(subset), subset.task_id.nunique()
+        gates = {
+            "process": process,
+            "independence": independence,
+            "minimum_gt_support": support >= min_gt,
+            "minimum_task_support": task_support >= min_tasks,
+            "reference_evaluable": reference_ok,
+            "structural_failure": struct is not None and struct <= max_struct,
+            "quality_lcb": lower >= quality_floor,
+        }
+        eligible = all(gates.values())
         output.append({
-            "worker_id": worker, "Q_GT_raw": fmean(raw[worker]),
-            "Q_GT_task_adjusted": adjusted, "Q_GT_standard_error": se,
-            "Q_GT_LCB": adjusted - 1.96 * se if math.isfinite(se) else "",
+            "worker_id": worker, "Q_GT_raw": float(subset.iou_to_gt.mean()),
+            "Q_GT_task_adjusted": estimate, "Q_GT_standard_error": se,
+            "Q_GT_CI_lower": lower, "Q_GT_CI_upper": upper, "Q_GT_LCB": lower,
+            "Q_GT_centering_sensitivity": fmean(centered[worker]),
             "R_LOO_compatible": state.get("R_LOO_compatible", ""),
-            "F_struct": struct, "GT_support": len(values),
+            "F_struct": "" if struct is None else struct, "GT_support": support,
+            "task_support": task_support,
             "LOO_support": state.get("LOO_support", ""),
             "process_eligible": process, "independence_eligible": independence,
-            "global_eligible": eligible, "exclusion_reason": "" if eligible else "process_independence_or_support",
+            "reference_evaluable": reference_ok,
+            "global_eligible": eligible, "exclusion_reason": "" if eligible else ";".join(name for name, passed in gates.items() if not passed),
+            "model_version": MODEL_VERSION,
             "profile_version": profile_version,
         })
-    ranked = sorted((row for row in output if row["global_eligible"]), key=lambda row: (-float(row["Q_GT_LCB"]), row["worker_id"]))
+    ranked = sorted(
+        (row for row in output if row["global_eligible"] or input_status != "formal"),
+        key=lambda row: (-float(row["Q_GT_LCB"]), row["worker_id"]),
+    )
     ranks = {row["worker_id"]: index + 1 for index, row in enumerate(ranked)}
     for row in output:
-        row["global_rank"] = ranks.get(row["worker_id"], "")
-    return output
+        row["global_rank"] = ranks.get(row["worker_id"], "") if input_status == "formal" else ""
+        row["provisional_rank"] = ranks.get(row["worker_id"], "") if input_status != "formal" else ""
+    task_rows = [{"task_id": task, "task_fixed_effect": task_mean[task] - grand, "model_version": MODEL_VERSION} for task in sorted(task_mean)]
+    audit = {
+        "model_version": MODEL_VERSION, "formula": formula, "covariance": "task_cluster_robust",
+        "same_task_rows_independent": False, "n_rows": len(frame), "n_workers": len(workers),
+        "n_tasks": frame.task_id.nunique(),
+        "optional_context_adjustment": "absorbed_by_task_fixed_effect",
+    }
+    return output, task_rows, audit
 
 
 def build_full_components(rows: list[dict[str, str]], *, profile_version: str) -> list[dict[str, Any]]:
@@ -105,7 +173,7 @@ def build_full_components(rows: list[dict[str, str]], *, profile_version: str) -
 
 def materialize(
     submissions_csv: Path, worker_state_csv: Path, component_evidence_csv: Path,
-    freeze_manifest: Path, output_dir: Path,
+    freeze_manifest: Path, output_dir: Path, *, input_status: str = "dry_run",
 ) -> dict[str, Any]:
     manifest = json.loads(freeze_manifest.read_text(encoding="utf-8"))
     expected = manifest.get("input_sha256") or {}
@@ -118,9 +186,17 @@ def materialize(
         if expected.get(name) != _sha(path):
             raise ValueError(f"stale_or_unbound:{name}")
     version = str(manifest["profile_version"])
-    global_rows = build_global(_read(submissions_csv), _read(worker_state_csv), profile_version=version)
+    estimator = manifest.get("global_estimator") or {}
+    required_gates = {"min_gt_support", "min_task_support", "max_f_struct", "quality_lcb_floor", "confidence_level", "min_global_eligible_workers"}
+    if input_status == "formal" and not required_gates.issubset(estimator):
+        raise ValueError("formal Strong Global requires frozen estimator gates")
+    global_rows, task_rows, model_audit = build_global(
+        _read(submissions_csv), _read(worker_state_csv), profile_version=version,
+        estimator=estimator, input_status=input_status,
+    )
     components = build_full_components(_read(component_evidence_csv), profile_version=version)
     _write(output_dir / "strong_global_worker_table.csv", global_rows)
+    _write(output_dir / "strong_global_task_effects.csv", task_rows)
     _write(output_dir / "full_component_table.csv", components)
     summary = {
         "profile_version": version,
@@ -128,7 +204,9 @@ def materialize(
         "input_sha256": {name: _sha(path) for name, path in inputs.items()},
         "n_global_eligible": sum(bool(row["global_eligible"]) for row in global_rows),
         "n_full_components": sum(bool(row["full_component_eligible"]) for row in components),
-        "formal_ready": bool(global_rows),
+        "input_status": input_status,
+        "model_audit": model_audit,
+        "formal_ready": input_status == "formal" and sum(bool(row["global_eligible"]) for row in global_rows) >= int(estimator["min_global_eligible_workers"]),
     }
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "routing_profile_freeze_audit.json").write_text(
@@ -144,10 +222,11 @@ def main() -> None:
     parser.add_argument("--component-evidence-csv", type=Path, required=True)
     parser.add_argument("--freeze-manifest", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--input-status", choices=("dry_run", "precloseout_rehearsal", "formal"), default="dry_run")
     args = parser.parse_args()
     print(json.dumps(materialize(
         args.submissions_csv, args.worker_state_csv, args.component_evidence_csv,
-        args.freeze_manifest, args.output_dir,
+        args.freeze_manifest, args.output_dir, input_status=args.input_status,
     ), indent=2))
 
 

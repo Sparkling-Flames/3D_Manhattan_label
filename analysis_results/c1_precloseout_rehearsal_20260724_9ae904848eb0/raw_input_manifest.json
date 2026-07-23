@@ -1,0 +1,930 @@
+{
+  "schema_version": "c1_precloseout_raw_snapshot_v1",
+  "created_at": "2026-07-24T02:27:21.588130+08:00",
+  "input_status": "precloseout_partial_c1",
+  "aggregate_export_sha256": "9ae904848eb0311ef2747a77825575e5ef011d5baf245a325ddcf07d26911a1c",
+  "head": "cf8cc6385bd49acab055e5c043cfc2d298c82783",
+  "git_status": " M docs/PROJECT_MAP_CLEAN_20260308.md\n M docs/README_INDEX.md\n M docs/thesis_main/C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md\n M docs/thesis_main/WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md\n M tests/test_c2_vfinal_design.py\n M tests/test_materialize_vfinal_main_analysis.py\n M tests/test_v1_policy.py\n M tools/thesis_main/analysis/build_c2_assignment_manifest_from_c1_gaps.py\n M tools/thesis_main/analysis/c1_canonicalize_exports.py\n M tools/thesis_main/analysis/c1_materialize_c2_gap_audits.py\n M tools/thesis_main/analysis/c1_materialize_quality_table.py\n M tools/thesis_main/analysis/materialize_c2b_closeout.py\n M tools/thesis_main/analysis/materialize_frozen_routing_profiles.py\n M tools/thesis_main/analysis/materialize_main_failure_outcomes.py\n M tools/thesis_main/analysis/materialize_vfinal_main_analysis.py\n M tools/thesis_main/analysis/routing/v1_policy.py\n M tools/thesis_main/analysis/run_c1_closeout_dryrun_chain.py\n M tools/thesis_main/analysis/run_c1_raw_to_closeout_dryrun.py\n?? analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/\n?? export_label/stage2_Chinese/\n?? export_label/stage2_English/\n?? tests/test_materialize_c1_operational_reference.py\n?? tests/test_materialize_main_inference.py\n?? tests/test_materialize_routing_component_evidence.py\n?? tools/thesis_main/analysis/materialize_c1_operational_reference.py\n?? tools/thesis_main/analysis/materialize_main_inference.py\n?? tools/thesis_main/analysis/materialize_routing_component_evidence.py\n?? tools/thesis_main/analysis/run_c1_precloseout_rehearsal.py\n",
+  "worktree_diff_sha256": "9075319f758f67c89a7330e432a8ac9c44186f4960aa7694c08f33ff96098848",
+  "command": "tools/thesis_main/analysis/run_c1_precloseout_rehearsal.py --export-dir export_label/stage2_Chinese --export-dir export_label/stage2_English --active-log active_logs/new_server --manual-assignment analysis_results/calibration_rebuild_20260702/assignment_manifest_C1_manual_draft_v3_1.csv --semi-assignment analysis_results/calibration_rebuild_20260702/assignment_manifest_C1_semi_draft_v3_1.csv --worker-distribution analysis_results/calibration_rebuild_20260702/worker_distribution_internal_manifest_v3_1.csv --gt-export export_label/groudTruth.json --p1-closeout-dir analysis_results/prescreen_closeout_final_gold_v2_20260701 --output-root analysis_results --input-status precloseout_rehearsal",
+  "tool_version": "run_c1_precloseout_rehearsal_v1",
+  "inputs": [
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-04-20.jsonl",
+      "size": 53948,
+      "sha256": "7bc2267e6ae1e302e5dd43b9c0e4c7848c3f5e69625606dcdee3541139164ae6",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-04-20.jsonl",
+      "snapshot_sha256": "7bc2267e6ae1e302e5dd43b9c0e4c7848c3f5e69625606dcdee3541139164ae6"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-04-21.jsonl",
+      "size": 67989,
+      "sha256": "f6668fdf9993518a7b3886a4e4b395651717e3624ebd6246a01fcc0ea65de385",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-04-21.jsonl",
+      "snapshot_sha256": "f6668fdf9993518a7b3886a4e4b395651717e3624ebd6246a01fcc0ea65de385"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-04-22.jsonl",
+      "size": 29646,
+      "sha256": "80f966a152b48a424c6f30ecf1e2ad6b37fa637a75ce5ac03234d6710f8f0f57",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-04-22.jsonl",
+      "snapshot_sha256": "80f966a152b48a424c6f30ecf1e2ad6b37fa637a75ce5ac03234d6710f8f0f57"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-04-23.jsonl",
+      "size": 27084,
+      "sha256": "69c9aee6890722c086c6bcc3e6dd01343111ee1f46dc62be04583aa8954ea91e",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-04-23.jsonl",
+      "snapshot_sha256": "69c9aee6890722c086c6bcc3e6dd01343111ee1f46dc62be04583aa8954ea91e"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-04-25.jsonl",
+      "size": 54900,
+      "sha256": "52ed5890e9cca054e06293f37b44f7f5d8cbe565f67d45d43a2f5993e52e561c",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-04-25.jsonl",
+      "snapshot_sha256": "52ed5890e9cca054e06293f37b44f7f5d8cbe565f67d45d43a2f5993e52e561c"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-04-26.jsonl",
+      "size": 27446,
+      "sha256": "3ac9887ea75b937720024484b9d1ebeccbc8842a505bf81118c58c004e9f5af2",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-04-26.jsonl",
+      "snapshot_sha256": "3ac9887ea75b937720024484b9d1ebeccbc8842a505bf81118c58c004e9f5af2"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-04-27.jsonl",
+      "size": 31302,
+      "sha256": "60493f01e792bcc235cb337b5ca6adfe2b6d8c4a75bd0e6d69517e8aa0d6c894",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-04-27.jsonl",
+      "snapshot_sha256": "60493f01e792bcc235cb337b5ca6adfe2b6d8c4a75bd0e6d69517e8aa0d6c894"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-04-28.jsonl",
+      "size": 47946,
+      "sha256": "6cbd1315014d6c297ce20b896e9bf03bb81905940c57c90e9eb4205cf8f0558c",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-04-28.jsonl",
+      "snapshot_sha256": "6cbd1315014d6c297ce20b896e9bf03bb81905940c57c90e9eb4205cf8f0558c"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-04-29.jsonl",
+      "size": 23686,
+      "sha256": "f95938a109f79ed9c4dccf3501f5ad0f407a4f444dbb835dc497d6b60e7fe502",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-04-29.jsonl",
+      "snapshot_sha256": "f95938a109f79ed9c4dccf3501f5ad0f407a4f444dbb835dc497d6b60e7fe502"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-04-30.jsonl",
+      "size": 25278,
+      "sha256": "b1d123f40ad346fb62b0c3b0da1fcf5482f7e8600d2caa863adeca207c94f6df",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-04-30.jsonl",
+      "snapshot_sha256": "b1d123f40ad346fb62b0c3b0da1fcf5482f7e8600d2caa863adeca207c94f6df"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-01.jsonl",
+      "size": 178119,
+      "sha256": "b4b683b5a73acc18e3f80f59a4ce56068fa0118c7f0c443285a180678e8c9749",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-01.jsonl",
+      "snapshot_sha256": "b4b683b5a73acc18e3f80f59a4ce56068fa0118c7f0c443285a180678e8c9749"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-02.jsonl",
+      "size": 8785,
+      "sha256": "d4789204b4dd0273fba7361306de87dd2e4cf35690206d0914c848d3cf9c248b",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-02.jsonl",
+      "snapshot_sha256": "d4789204b4dd0273fba7361306de87dd2e4cf35690206d0914c848d3cf9c248b"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-03.jsonl",
+      "size": 47165,
+      "sha256": "b1acadcd11b2894f236679a19acf0b5c65ebab0e3db7e5bfcdc9f6b85924e6b7",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-03.jsonl",
+      "snapshot_sha256": "b1acadcd11b2894f236679a19acf0b5c65ebab0e3db7e5bfcdc9f6b85924e6b7"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-04.jsonl",
+      "size": 13499,
+      "sha256": "a36f1b129db5a478842ce8212340d54a27414ea2b3e7b44b42837711c8c79083",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-04.jsonl",
+      "snapshot_sha256": "a36f1b129db5a478842ce8212340d54a27414ea2b3e7b44b42837711c8c79083"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-05.jsonl",
+      "size": 77174,
+      "sha256": "878e40ad0855f4c4f39d7c90811c48678834c01529c1830dff6a5fb2eca941ae",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-05.jsonl",
+      "snapshot_sha256": "878e40ad0855f4c4f39d7c90811c48678834c01529c1830dff6a5fb2eca941ae"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-06.jsonl",
+      "size": 151033,
+      "sha256": "a489ec27096215b38a002352a57d66d5d10f5872006bb8645119ae590873073f",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-06.jsonl",
+      "snapshot_sha256": "a489ec27096215b38a002352a57d66d5d10f5872006bb8645119ae590873073f"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-07.jsonl",
+      "size": 1826,
+      "sha256": "e952c82e84a1aaa6d7b27aaf2344865989a1042a1da8e1816bf509c4e57ba00c",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-07.jsonl",
+      "snapshot_sha256": "e952c82e84a1aaa6d7b27aaf2344865989a1042a1da8e1816bf509c4e57ba00c"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-10.jsonl",
+      "size": 32009,
+      "sha256": "8157e1a7b85953bafb567f4d503800d407e03783648cf5ef56867f8b8a5e123e",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-10.jsonl",
+      "snapshot_sha256": "8157e1a7b85953bafb567f4d503800d407e03783648cf5ef56867f8b8a5e123e"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-11.jsonl",
+      "size": 26284,
+      "sha256": "2c0c79f776e2773a5308eb89fbf2d7183fe2c80a8e6e45cbdd06d9a792db2494",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-11.jsonl",
+      "snapshot_sha256": "2c0c79f776e2773a5308eb89fbf2d7183fe2c80a8e6e45cbdd06d9a792db2494"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-12.jsonl",
+      "size": 100754,
+      "sha256": "99dfbd8900140c8fb46e6915bb1d207ab11d5db4df3f9e6d9b3e95a3fbcb45d4",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-12.jsonl",
+      "snapshot_sha256": "99dfbd8900140c8fb46e6915bb1d207ab11d5db4df3f9e6d9b3e95a3fbcb45d4"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-13.jsonl",
+      "size": 363,
+      "sha256": "383648a9f6eb1fda6d31dfd5c43a925455b5adb47d6a1091dbf75ca4479975fb",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-13.jsonl",
+      "snapshot_sha256": "383648a9f6eb1fda6d31dfd5c43a925455b5adb47d6a1091dbf75ca4479975fb"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-14.jsonl",
+      "size": 10269,
+      "sha256": "0b3f82426f99de10ba11a273d2a7c3dc1eabdd56c3511591a2f786d999f79e72",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-14.jsonl",
+      "snapshot_sha256": "0b3f82426f99de10ba11a273d2a7c3dc1eabdd56c3511591a2f786d999f79e72"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-17.jsonl",
+      "size": 76767,
+      "sha256": "62ddc9fc04c45bf4ba69a6dabe6f869dc8017f59eca9083f343116db5c5ac57a",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-17.jsonl",
+      "snapshot_sha256": "62ddc9fc04c45bf4ba69a6dabe6f869dc8017f59eca9083f343116db5c5ac57a"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-19.jsonl",
+      "size": 220545,
+      "sha256": "56357321b328c162ad244e37ab43926bf022fdf673c60c67fa507b5e6ca94178",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-19.jsonl",
+      "snapshot_sha256": "56357321b328c162ad244e37ab43926bf022fdf673c60c67fa507b5e6ca94178"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-20.jsonl",
+      "size": 57435,
+      "sha256": "9da02d6a0129932b12234756d73b1b4fd83804948f23daff34f71dc463cc542e",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-20.jsonl",
+      "snapshot_sha256": "9da02d6a0129932b12234756d73b1b4fd83804948f23daff34f71dc463cc542e"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-21.jsonl",
+      "size": 220859,
+      "sha256": "3b546f07203fcf50c209bada22b1938b537ea4d56b02e90d2fe2eeffc123507e",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-21.jsonl",
+      "snapshot_sha256": "3b546f07203fcf50c209bada22b1938b537ea4d56b02e90d2fe2eeffc123507e"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-22.jsonl",
+      "size": 122397,
+      "sha256": "cb561cdb3ffa5dbb4f8391e95f92a87ae1f998951a90badd7cea9f053032d9b5",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-22.jsonl",
+      "snapshot_sha256": "cb561cdb3ffa5dbb4f8391e95f92a87ae1f998951a90badd7cea9f053032d9b5"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-23.jsonl",
+      "size": 10203,
+      "sha256": "d0007031bec6db5dd0eec2abb93a9a0c2c50549747a9bc5efb856f816c1e49e1",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-23.jsonl",
+      "snapshot_sha256": "d0007031bec6db5dd0eec2abb93a9a0c2c50549747a9bc5efb856f816c1e49e1"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-24.jsonl",
+      "size": 45438,
+      "sha256": "9a0ba147bb57af90ee713a5b08bbfec2ff91dc50a023028bcf84ab51571ee394",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-24.jsonl",
+      "snapshot_sha256": "9a0ba147bb57af90ee713a5b08bbfec2ff91dc50a023028bcf84ab51571ee394"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-25.jsonl",
+      "size": 268780,
+      "sha256": "bd417108892d7e72edfefacbadb26a408ae0bb8d66a4c19f40b483456acfa795",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-25.jsonl",
+      "snapshot_sha256": "bd417108892d7e72edfefacbadb26a408ae0bb8d66a4c19f40b483456acfa795"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-26.jsonl",
+      "size": 673963,
+      "sha256": "fab6820db5e620a6d4e189256643b5a3c2230c0ca57c854fb15634f18fcfbc4a",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-26.jsonl",
+      "snapshot_sha256": "fab6820db5e620a6d4e189256643b5a3c2230c0ca57c854fb15634f18fcfbc4a"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-28.jsonl",
+      "size": 1536,
+      "sha256": "915ce5ef0d4a12539dedd431e7b942499d284be64e93a9ade1ddf15e5ab03cab",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-28.jsonl",
+      "snapshot_sha256": "915ce5ef0d4a12539dedd431e7b942499d284be64e93a9ade1ddf15e5ab03cab"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-29.jsonl",
+      "size": 56008,
+      "sha256": "71a72807522bb1c7b5331ffd948b04fb761ac53e7297a74f2738c80b76810067",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-29.jsonl",
+      "snapshot_sha256": "71a72807522bb1c7b5331ffd948b04fb761ac53e7297a74f2738c80b76810067"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-05-31.jsonl",
+      "size": 234386,
+      "sha256": "7afbcd11c89df865719c6d729a77410f0bbbca0c4236549f7793c2ec905a7a2c",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-05-31.jsonl",
+      "snapshot_sha256": "7afbcd11c89df865719c6d729a77410f0bbbca0c4236549f7793c2ec905a7a2c"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-01.jsonl",
+      "size": 115698,
+      "sha256": "10703f7915c9d9f198de56a7ce4007c7c22890846a222834d28af2dd9d37beae",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-01.jsonl",
+      "snapshot_sha256": "10703f7915c9d9f198de56a7ce4007c7c22890846a222834d28af2dd9d37beae"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-03.jsonl",
+      "size": 57013,
+      "sha256": "4594048281b2afdb1135bd1cd4eb5653513847b250365e11cfdd6e3886036d84",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-03.jsonl",
+      "snapshot_sha256": "4594048281b2afdb1135bd1cd4eb5653513847b250365e11cfdd6e3886036d84"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-04.jsonl",
+      "size": 129383,
+      "sha256": "244fc98ecbc40248ea7c998fcad84dde01140e068eca30aaa2732ad0951ae644",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-04.jsonl",
+      "snapshot_sha256": "244fc98ecbc40248ea7c998fcad84dde01140e068eca30aaa2732ad0951ae644"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-05.jsonl",
+      "size": 33530,
+      "sha256": "2989fe6f9719f7d1b89d1f148998048962fb9d1dade6d1abcc5aae5d006c91e6",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-05.jsonl",
+      "snapshot_sha256": "2989fe6f9719f7d1b89d1f148998048962fb9d1dade6d1abcc5aae5d006c91e6"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-06.jsonl",
+      "size": 7869,
+      "sha256": "44bcc672bda24f636d5a17fc025c986c75e8fef4d5a611d5ceb2cab662403e62",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-06.jsonl",
+      "snapshot_sha256": "44bcc672bda24f636d5a17fc025c986c75e8fef4d5a611d5ceb2cab662403e62"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-07.jsonl",
+      "size": 1799,
+      "sha256": "2bb2d39a50e0e1db914dde90df66184525c6d85f40f9605ead07b333f8c7d279",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-07.jsonl",
+      "snapshot_sha256": "2bb2d39a50e0e1db914dde90df66184525c6d85f40f9605ead07b333f8c7d279"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-09.jsonl",
+      "size": 2712,
+      "sha256": "ecee5748bdecde254984c56343c48e334c92387bbeff00c7d3a1435b76a91a16",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-09.jsonl",
+      "snapshot_sha256": "ecee5748bdecde254984c56343c48e334c92387bbeff00c7d3a1435b76a91a16"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-11.jsonl",
+      "size": 107713,
+      "sha256": "0727385b0af9b44a38c39e71d717ace1a3de5098b2181dd586ec6a4a53041d35",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-11.jsonl",
+      "snapshot_sha256": "0727385b0af9b44a38c39e71d717ace1a3de5098b2181dd586ec6a4a53041d35"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-12.jsonl",
+      "size": 101792,
+      "sha256": "9fba33f0c42df98ea21c4830455c8e25424c9a9f79af376a44b7bbeb8cba5076",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-12.jsonl",
+      "snapshot_sha256": "9fba33f0c42df98ea21c4830455c8e25424c9a9f79af376a44b7bbeb8cba5076"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-13.jsonl",
+      "size": 12384,
+      "sha256": "6412fc539b974202c0bfac8f33cb0c5d54d1343d05f569b2352bc38a3edd0ad3",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-13.jsonl",
+      "snapshot_sha256": "6412fc539b974202c0bfac8f33cb0c5d54d1343d05f569b2352bc38a3edd0ad3"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-14.jsonl",
+      "size": 13111,
+      "sha256": "39b672d655edecfbae1c0f81ad5fb83457426393589e9dbeb7e57d57fe83ea9e",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-14.jsonl",
+      "snapshot_sha256": "39b672d655edecfbae1c0f81ad5fb83457426393589e9dbeb7e57d57fe83ea9e"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-15.jsonl",
+      "size": 8934,
+      "sha256": "7e25c38e079a71f6e02a5cff812b454e4acceca54d351de56deb33d794e96c5d",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-15.jsonl",
+      "snapshot_sha256": "7e25c38e079a71f6e02a5cff812b454e4acceca54d351de56deb33d794e96c5d"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-16.jsonl",
+      "size": 486143,
+      "sha256": "6d8369a41ce04956de8748f608f4194cbd9521ddc0c1e62940cb63839252c37d",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-16.jsonl",
+      "snapshot_sha256": "6d8369a41ce04956de8748f608f4194cbd9521ddc0c1e62940cb63839252c37d"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-17.jsonl",
+      "size": 1048268,
+      "sha256": "e2b3f52e55a391ae834d3432f9de82a1ff9659a6744515447494ca8ce028b8ae",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-17.jsonl",
+      "snapshot_sha256": "e2b3f52e55a391ae834d3432f9de82a1ff9659a6744515447494ca8ce028b8ae"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-18.jsonl",
+      "size": 40956,
+      "sha256": "67a17c3db5e40d775679ad0d31f0fcde11ac7b751b54c6860cb03e7b56670e56",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-18.jsonl",
+      "snapshot_sha256": "67a17c3db5e40d775679ad0d31f0fcde11ac7b751b54c6860cb03e7b56670e56"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-20.jsonl",
+      "size": 421852,
+      "sha256": "d221aeae9901fdf39ad1df8a88873b3ed6022e980cdca25cee01de48eed09109",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-20.jsonl",
+      "snapshot_sha256": "d221aeae9901fdf39ad1df8a88873b3ed6022e980cdca25cee01de48eed09109"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-21.jsonl",
+      "size": 599756,
+      "sha256": "411733b41862b6fe8da5d167c134be9a6eb3abbb14822880cdefef887618963d",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-21.jsonl",
+      "snapshot_sha256": "411733b41862b6fe8da5d167c134be9a6eb3abbb14822880cdefef887618963d"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-22.jsonl",
+      "size": 458053,
+      "sha256": "ed20d40ad5d23442dad6d8306f54256842fd8077b5400e55993437abbd1ceacb",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-22.jsonl",
+      "snapshot_sha256": "ed20d40ad5d23442dad6d8306f54256842fd8077b5400e55993437abbd1ceacb"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-23.jsonl",
+      "size": 647103,
+      "sha256": "fa2229cf848c6413e6d8a004fe2c5e42b918fb300e579c3397695563a7ddb63a",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-23.jsonl",
+      "snapshot_sha256": "fa2229cf848c6413e6d8a004fe2c5e42b918fb300e579c3397695563a7ddb63a"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-24.jsonl",
+      "size": 138440,
+      "sha256": "9d59d6de25c2de13e4f97df52984032593eba56bdc8606b78311066182543c02",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-24.jsonl",
+      "snapshot_sha256": "9d59d6de25c2de13e4f97df52984032593eba56bdc8606b78311066182543c02"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-25.jsonl",
+      "size": 230487,
+      "sha256": "0f0eedf02fa2e292b4b4959b678330d131d72ea0cee9e33c767f0626e0c106ad",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-25.jsonl",
+      "snapshot_sha256": "0f0eedf02fa2e292b4b4959b678330d131d72ea0cee9e33c767f0626e0c106ad"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-26.jsonl",
+      "size": 165813,
+      "sha256": "9fe51cd4498cf60a5fad27b915439496741d74cfa8de13b9d0cea17a3b668f92",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-26.jsonl",
+      "snapshot_sha256": "9fe51cd4498cf60a5fad27b915439496741d74cfa8de13b9d0cea17a3b668f92"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-27.jsonl",
+      "size": 479965,
+      "sha256": "dcbec89cbfa83439b481f569563b4e4599da9ca4991c07a5e318a134def69f8a",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-27.jsonl",
+      "snapshot_sha256": "dcbec89cbfa83439b481f569563b4e4599da9ca4991c07a5e318a134def69f8a"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-28.jsonl",
+      "size": 419594,
+      "sha256": "1058a96d023fd835971dab074664d2783ddaf62e8f6906367fe432a03f02a174",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-28.jsonl",
+      "snapshot_sha256": "1058a96d023fd835971dab074664d2783ddaf62e8f6906367fe432a03f02a174"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-29.jsonl",
+      "size": 266050,
+      "sha256": "99487adba99aabb2a2a6b0a45fc3ece1351beb20595769557207fb2a1486d425",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-29.jsonl",
+      "snapshot_sha256": "99487adba99aabb2a2a6b0a45fc3ece1351beb20595769557207fb2a1486d425"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-06-30.jsonl",
+      "size": 121010,
+      "sha256": "92614ed8e512fed226675393d1fb2a961d5e89accfe999e0b0d98f22068ea9f0",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-06-30.jsonl",
+      "snapshot_sha256": "92614ed8e512fed226675393d1fb2a961d5e89accfe999e0b0d98f22068ea9f0"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-01.jsonl",
+      "size": 113171,
+      "sha256": "462f440a7d88bd4d86ca8bdc347638f3a39ef0d963ca9b9b1669f011400b2e94",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-01.jsonl",
+      "snapshot_sha256": "462f440a7d88bd4d86ca8bdc347638f3a39ef0d963ca9b9b1669f011400b2e94"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-03.jsonl",
+      "size": 376521,
+      "sha256": "f4948e635b2e2b4ef2f5de2ba71f8c9f9fc7d42add2fe0d6e0470425868b1369",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-03.jsonl",
+      "snapshot_sha256": "f4948e635b2e2b4ef2f5de2ba71f8c9f9fc7d42add2fe0d6e0470425868b1369"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-04.jsonl",
+      "size": 926162,
+      "sha256": "df7223e21590f44bd31d72f944bf15c51ba55538b749b07277c8b0745e1bc4c0",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-04.jsonl",
+      "snapshot_sha256": "df7223e21590f44bd31d72f944bf15c51ba55538b749b07277c8b0745e1bc4c0"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-05.jsonl",
+      "size": 1064009,
+      "sha256": "de72a1503cc1a0fe28360ce93e308ccb6d6ccd417fd40b4c0eef545348b7e6c0",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-05.jsonl",
+      "snapshot_sha256": "de72a1503cc1a0fe28360ce93e308ccb6d6ccd417fd40b4c0eef545348b7e6c0"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-06.jsonl",
+      "size": 260166,
+      "sha256": "008e25ea2c5912b203ed0f215d0ae552c5e7bcc8d1205a0ed852d2bcb5163cc2",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-06.jsonl",
+      "snapshot_sha256": "008e25ea2c5912b203ed0f215d0ae552c5e7bcc8d1205a0ed852d2bcb5163cc2"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-07.jsonl",
+      "size": 1605226,
+      "sha256": "7015de659279e862c9d940a206b0caec2dffe98be7d3702eb461c284705f4ac8",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-07.jsonl",
+      "snapshot_sha256": "7015de659279e862c9d940a206b0caec2dffe98be7d3702eb461c284705f4ac8"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-08.jsonl",
+      "size": 59286,
+      "sha256": "dac01113c76175a1f11ba01586e3187a61bc57e5ce71f91e453b0fecb28abbc7",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-08.jsonl",
+      "snapshot_sha256": "dac01113c76175a1f11ba01586e3187a61bc57e5ce71f91e453b0fecb28abbc7"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-09.jsonl",
+      "size": 285766,
+      "sha256": "853a0716337adae1a771404b93ddd6d5e5914eb96a594df383413bd2f32a2996",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-09.jsonl",
+      "snapshot_sha256": "853a0716337adae1a771404b93ddd6d5e5914eb96a594df383413bd2f32a2996"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-10.jsonl",
+      "size": 899682,
+      "sha256": "41318eaedc2e73c5207be1a7f702a092c1d57ae651fba9875370e617471cd653",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-10.jsonl",
+      "snapshot_sha256": "41318eaedc2e73c5207be1a7f702a092c1d57ae651fba9875370e617471cd653"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-11.jsonl",
+      "size": 118183,
+      "sha256": "c8d6e4c3c007924efcdbd2847475aa2a2586676d20bace0a9f807c0f48bf5e6d",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-11.jsonl",
+      "snapshot_sha256": "c8d6e4c3c007924efcdbd2847475aa2a2586676d20bace0a9f807c0f48bf5e6d"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-12.jsonl",
+      "size": 770883,
+      "sha256": "a0e49b64bd16cd62f22a4bb52fbf6f79c800c49cd8bf352169af9946aa24d964",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-12.jsonl",
+      "snapshot_sha256": "a0e49b64bd16cd62f22a4bb52fbf6f79c800c49cd8bf352169af9946aa24d964"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-13.jsonl",
+      "size": 227237,
+      "sha256": "65137f0dc828d44d020b89647ce3f6176bf37bc9863c8edeb4fc2be23d1cf683",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-13.jsonl",
+      "snapshot_sha256": "65137f0dc828d44d020b89647ce3f6176bf37bc9863c8edeb4fc2be23d1cf683"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-14.jsonl",
+      "size": 471,
+      "sha256": "cbad356bff3a20301d0c979e9028d7dd62eb30aec4ec262f4209206711c62bc5",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-14.jsonl",
+      "snapshot_sha256": "cbad356bff3a20301d0c979e9028d7dd62eb30aec4ec262f4209206711c62bc5"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-15.jsonl",
+      "size": 167289,
+      "sha256": "01258653dc46d243be026d9ab472d91e4e6508699643a9d9412a7ecd6406a635",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-15.jsonl",
+      "snapshot_sha256": "01258653dc46d243be026d9ab472d91e4e6508699643a9d9412a7ecd6406a635"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-16.jsonl",
+      "size": 604766,
+      "sha256": "7249dc80990017c12605490ba22a714c4e019132c24d09f72fec23ca109fe176",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-16.jsonl",
+      "snapshot_sha256": "7249dc80990017c12605490ba22a714c4e019132c24d09f72fec23ca109fe176"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-17.jsonl",
+      "size": 461153,
+      "sha256": "23e8b7b0fd48df663fe089a1f97b5da0eb3593fe9bddfe61d63a1eca949caede",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-17.jsonl",
+      "snapshot_sha256": "23e8b7b0fd48df663fe089a1f97b5da0eb3593fe9bddfe61d63a1eca949caede"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-18.jsonl",
+      "size": 165260,
+      "sha256": "739ee91c2154a9a9001a03051962ce602ff65643cdde18bc472b7522903716db",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-18.jsonl",
+      "snapshot_sha256": "739ee91c2154a9a9001a03051962ce602ff65643cdde18bc472b7522903716db"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-19.jsonl",
+      "size": 148274,
+      "sha256": "999676342155b8661c38a04a2f592dbb41cd67ba5fce9eac82a93e8efca536b5",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-19.jsonl",
+      "snapshot_sha256": "999676342155b8661c38a04a2f592dbb41cd67ba5fce9eac82a93e8efca536b5"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-20.jsonl",
+      "size": 206950,
+      "sha256": "9d586e8f9a7ccda242ce24984cd1aad07a3560c719da7832b118b803451414bd",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-20.jsonl",
+      "snapshot_sha256": "9d586e8f9a7ccda242ce24984cd1aad07a3560c719da7832b118b803451414bd"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-21.jsonl",
+      "size": 230228,
+      "sha256": "49fad99bf376e99a6b84ca1e4f109db956c6d11e448357f3bef3f3a0d15da1f6",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-21.jsonl",
+      "snapshot_sha256": "49fad99bf376e99a6b84ca1e4f109db956c6d11e448357f3bef3f3a0d15da1f6"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-22.jsonl",
+      "size": 1755,
+      "sha256": "9ea5bd582c9a097cfb36c2a6654cfea1d43f9e9f0c8f7875860ceb909903dea0",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-22.jsonl",
+      "snapshot_sha256": "9ea5bd582c9a097cfb36c2a6654cfea1d43f9e9f0c8f7875860ceb909903dea0"
+    },
+    {
+      "path": "D:/Work/HOHONET/active_logs/new_server/active_times_2026-07-23.jsonl",
+      "size": 70738,
+      "sha256": "be0bb503fc57f7f0b5658d539ba98e61033fa96f68ea2e2159a2ab2940a14570",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/active_logs/active_times_2026-07-23.jsonl",
+      "snapshot_sha256": "be0bb503fc57f7f0b5658d539ba98e61033fa96f68ea2e2159a2ab2940a14570"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/calibration_rebuild_20260702/assignment_manifest_C1_manual_draft_v3_1.csv",
+      "size": 99958,
+      "sha256": "2953929d2ded1e7600fc35c46f805d8c61fdbe76a98a9f218e1777b141cfaa52",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/contracts/2953929d2ded_assignment_manifest_C1_manual_draft_v3_1.csv",
+      "snapshot_sha256": "2953929d2ded1e7600fc35c46f805d8c61fdbe76a98a9f218e1777b141cfaa52"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/calibration_rebuild_20260702/assignment_manifest_C1_semi_draft_v3_1.csv",
+      "size": 16844,
+      "sha256": "82c9a778c8852adf55cb27b3dff75b673668d75c83a7e9b87718f69ffb3abbc9",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/contracts/82c9a778c885_assignment_manifest_C1_semi_draft_v3_1.csv",
+      "snapshot_sha256": "82c9a778c8852adf55cb27b3dff75b673668d75c83a7e9b87718f69ffb3abbc9"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/calibration_rebuild_20260702/calibration_full_candidate_inventory_v3.csv",
+      "size": 364198,
+      "sha256": "d6d4a454e6a25a9e12e9142707598c3094509263f00fd3d6b912470ea049a244",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/contracts/d6d4a454e6a2_calibration_full_candidate_inventory_v3.csv",
+      "snapshot_sha256": "d6d4a454e6a25a9e12e9142707598c3094509263f00fd3d6b912470ea049a244"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/calibration_rebuild_20260702/calibration_reserve_draft_v3_1.csv",
+      "size": 12099,
+      "sha256": "4666c167ec831f3b7b3c045652f64b4ed8878dfffbb98c9851f561079b795bc7",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/contracts/4666c167ec83_calibration_reserve_draft_v3_1.csv",
+      "snapshot_sha256": "4666c167ec831f3b7b3c045652f64b4ed8878dfffbb98c9851f561079b795bc7"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/calibration_rebuild_20260702/ls_project_mapping_audit_v3_1.csv",
+      "size": 25932,
+      "sha256": "d1010292288e8019695912e8d3c3c6e5ae9f113ed180b62e1f682c3f3c4aa182",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/contracts/d1010292288e_ls_project_mapping_audit_v3_1.csv",
+      "snapshot_sha256": "d1010292288e8019695912e8d3c3c6e5ae9f113ed180b62e1f682c3f3c4aa182"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/calibration_rebuild_20260702/worker_distribution_internal_manifest_v3_1.csv",
+      "size": 138575,
+      "sha256": "d6d8e96df2666d0a5b4f2f727edeb27690826a7dc2251b677c84bad8a759c1c4",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/contracts/d6d8e96df266_worker_distribution_internal_manifest_v3_1.csv",
+      "snapshot_sha256": "d6d8e96df2666d0a5b4f2f727edeb27690826a7dc2251b677c84bad8a759c1c4"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/final_gold_records_v2_p1_closeout_corrected.jsonl",
+      "size": 121490,
+      "sha256": "82dbcb1d08754476e4f2a447b70550bd297689c2c50df9f96aeb270b37f163d6",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/82dbcb1d0875_final_gold_records_v2_p1_closeout_corrected.jsonl",
+      "snapshot_sha256": "82dbcb1d08754476e4f2a447b70550bd297689c2c50df9f96aeb270b37f163d6"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/p1_combined_exports_for_exact_copy_audit.json",
+      "size": 7113002,
+      "sha256": "6ce1b4d3a38f3dbe7ce8fb0f0b3e4f56dca051f661f6c8bd3ae4abd106c25b7a",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/6ce1b4d3a38f_p1_combined_exports_for_exact_copy_audit.json",
+      "snapshot_sha256": "6ce1b4d3a38f3dbe7ce8fb0f0b3e4f56dca051f661f6c8bd3ae4abd106c25b7a"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_active_time_fallback_case_audit.md",
+      "size": 6884,
+      "sha256": "b56f856e41a8e400600abf4e5236d5500f68c35a27a77556be0887df7a56ba34",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/b56f856e41a8_prescreen_active_time_fallback_case_audit.md",
+      "snapshot_sha256": "b56f856e41a8e400600abf4e5236d5500f68c35a27a77556be0887df7a56ba34"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_active_time_source_audit.csv",
+      "size": 4171,
+      "sha256": "bba6c52cfa421388abeb50272be4d0eccbb518f9f3129120be2d3532a4ba3046",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/bba6c52cfa42_prescreen_active_time_source_audit.csv",
+      "snapshot_sha256": "bba6c52cfa421388abeb50272be4d0eccbb518f9f3129120be2d3532a4ba3046"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_canonical_annotations.csv",
+      "size": 899248,
+      "sha256": "ac216312875fd79a72efe0141a4a5dc88c3b0618e9720efdffe4b30331f8776d",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/ac216312875f_prescreen_canonical_annotations.csv",
+      "snapshot_sha256": "ac216312875fd79a72efe0141a4a5dc88c3b0618e9720efdffe4b30331f8776d"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_canonicalize_summary.json",
+      "size": 643,
+      "sha256": "e469a0a55bae5dea127347acb0e3af862d23f1b07db9e749e9aba0ae70099607",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/e469a0a55bae_prescreen_canonicalize_summary.json",
+      "snapshot_sha256": "e469a0a55bae5dea127347acb0e3af862d23f1b07db9e749e9aba0ae70099607"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_closeout_consistency_gate_final_gold_v2.json",
+      "size": 9834,
+      "sha256": "e81607405ce3c344d0de080197546122c429aedae46fcb0cf7bccd66f1660079",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/e81607405ce3_prescreen_closeout_consistency_gate_final_gold_v2.json",
+      "snapshot_sha256": "e81607405ce3c344d0de080197546122c429aedae46fcb0cf7bccd66f1660079"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_closeout_run_config_final_gold_v2_20260701.json",
+      "size": 8076,
+      "sha256": "e0bc3e0fe27ce5bbaea5f4e2c33b0154632198abf2f379854996de6dc983ae40",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/e0bc3e0fe27c_prescreen_closeout_run_config_final_gold_v2_20260701.json",
+      "snapshot_sha256": "e0bc3e0fe27ce5bbaea5f4e2c33b0154632198abf2f379854996de6dc983ae40"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_completion_audit.csv",
+      "size": 4076,
+      "sha256": "11cf06c285da0bf9be7b644e1b28741bf9d8521d2d776acf1231ab820b577b49",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/11cf06c285da_prescreen_completion_audit.csv",
+      "snapshot_sha256": "11cf06c285da0bf9be7b644e1b28741bf9d8521d2d776acf1231ab820b577b49"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_consensus_guard_audit.csv",
+      "size": 14175,
+      "sha256": "a2217817b00c38b5fd82c77875d914355d8d9cb5c72e1724f631e06a229a12fe",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/a2217817b00c_prescreen_consensus_guard_audit.csv",
+      "snapshot_sha256": "a2217817b00c38b5fd82c77875d914355d8d9cb5c72e1724f631e06a229a12fe"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_consensus_guard_summary.json",
+      "size": 637,
+      "sha256": "7e373ac056d48d766c66839cad0ba8f87a551456edf618790ac3090c8ed32565",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/7e373ac056d4_prescreen_consensus_guard_summary.json",
+      "snapshot_sha256": "7e373ac056d48d766c66839cad0ba8f87a551456edf618790ac3090c8ed32565"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_duplicate_annotation_audit.csv",
+      "size": 700,
+      "sha256": "728c2de92d4459c7e64f4ae8c30fcf0f33e9e324534f590e842d7a52571ee357",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/728c2de92d44_prescreen_duplicate_annotation_audit.csv",
+      "snapshot_sha256": "728c2de92d4459c7e64f4ae8c30fcf0f33e9e324534f590e842d7a52571ee357"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_final_gold_v2_correction_audit.json",
+      "size": 1016,
+      "sha256": "13c5ac6b3ef96e9daa3084686e032cfea7b4f8a08aaa4fe529576740b8507af9",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/13c5ac6b3ef9_prescreen_final_gold_v2_correction_audit.json",
+      "snapshot_sha256": "13c5ac6b3ef96e9daa3084686e032cfea7b4f8a08aaa4fe529576740b8507af9"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_geometry_eligibility_audit.csv",
+      "size": 526850,
+      "sha256": "84661e917070cedd6276e41248c8f3f8445aa782d416782e7473b6aec62c7e4a",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/84661e917070_prescreen_geometry_eligibility_audit.csv",
+      "snapshot_sha256": "84661e917070cedd6276e41248c8f3f8445aa782d416782e7473b6aec62c7e4a"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_geometry_gold_alignment_audit.csv",
+      "size": 41168,
+      "sha256": "52f245ceaafcf98bf638c45684cbaea1f3c93d5bacae27df59abae197bb55fbe",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/52f245ceaafc_prescreen_geometry_gold_alignment_audit.csv",
+      "snapshot_sha256": "52f245ceaafcf98bf638c45684cbaea1f3c93d5bacae27df59abae197bb55fbe"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_gold_alignment_summary.json",
+      "size": 1336,
+      "sha256": "d73e3ba2a26af554bc120127144e7c5885151ef19f2d2f40fbfae9dad1241ce6",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/d73e3ba2a26a_prescreen_gold_alignment_summary.json",
+      "snapshot_sha256": "d73e3ba2a26af554bc120127144e7c5885151ef19f2d2f40fbfae9dad1241ce6"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_gold_status_audit.csv",
+      "size": 47364,
+      "sha256": "983c4c7a879997286f308a5530c97847b4e39f660ffec5065cf6edfa6bdf47ff",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/983c4c7a8799_prescreen_gold_status_audit.csv",
+      "snapshot_sha256": "983c4c7a879997286f308a5530c97847b4e39f660ffec5065cf6edfa6bdf47ff"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_gold_status_summary.json",
+      "size": 1019,
+      "sha256": "d095411c4a7e629d923163f62a21d81dd543c15594a46d85881ea70fadfb88e6",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/d095411c4a7e_prescreen_gold_status_summary.json",
+      "snapshot_sha256": "d095411c4a7e629d923163f62a21d81dd543c15594a46d85881ea70fadfb88e6"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_pass_count_decision.json",
+      "size": 2585,
+      "sha256": "d93e02f3efe1a4112953421e0d090abd85e26120072244560bf2fcc49c7bb161",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/d93e02f3efe1_prescreen_pass_count_decision.json",
+      "snapshot_sha256": "d93e02f3efe1a4112953421e0d090abd85e26120072244560bf2fcc49c7bb161"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_r0_snapshot.csv",
+      "size": 8969,
+      "sha256": "68dde2b5f4ebf09515956e0e99198b43107e223e84795e875c4f0c9383955c35",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/68dde2b5f4eb_prescreen_r0_snapshot.csv",
+      "snapshot_sha256": "68dde2b5f4ebf09515956e0e99198b43107e223e84795e875c4f0c9383955c35"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_round_report.md",
+      "size": 1239,
+      "sha256": "801ad001c518f2a3c67f6c0c3d3857e7ae4c2d1cb93aabd67f003a7d76d951d6",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/801ad001c518_prescreen_round_report.md",
+      "snapshot_sha256": "801ad001c518f2a3c67f6c0c3d3857e7ae4c2d1cb93aabd67f003a7d76d951d6"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_scope_adjudication.csv",
+      "size": 25962,
+      "sha256": "69ea453ff928424606e9ccedb225132c410386bf1359fd3e4ff578ade6a981d5",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/69ea453ff928_prescreen_scope_adjudication.csv",
+      "snapshot_sha256": "69ea453ff928424606e9ccedb225132c410386bf1359fd3e4ff578ade6a981d5"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_scope_mixed_task_audit.csv",
+      "size": 12953,
+      "sha256": "e651ec5addb2c5e2473e04e6b2b46989b9c544c09996e60fcbd04c875ea2d66a",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/e651ec5addb2_prescreen_scope_mixed_task_audit.csv",
+      "snapshot_sha256": "e651ec5addb2c5e2473e04e6b2b46989b9c544c09996e60fcbd04c875ea2d66a"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_scope_response_audit.csv",
+      "size": 222391,
+      "sha256": "87eed3bf22091693d8a861ade040d5d6416476a6d497146c78d6b0a1ae037faa",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/87eed3bf2209_prescreen_scope_response_audit.csv",
+      "snapshot_sha256": "87eed3bf22091693d8a861ade040d5d6416476a6d497146c78d6b0a1ae037faa"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_scope_summary.json",
+      "size": 3929,
+      "sha256": "f42ecbee33a6161f82c0c0cce8553df21bc4bf16fd8536416436185841a69988",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/f42ecbee33a6_prescreen_scope_summary.json",
+      "snapshot_sha256": "f42ecbee33a6161f82c0c0cce8553df21bc4bf16fd8536416436185841a69988"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_scope_unknown_gold_audit.csv",
+      "size": 138,
+      "sha256": "c9803f98535392cc9c4bfb0d059d3f4c8aef083e3b6f5f4ad5fee5a87631ccee",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/c9803f985353_prescreen_scope_unknown_gold_audit.csv",
+      "snapshot_sha256": "c9803f98535392cc9c4bfb0d059d3f4c8aef083e3b6f5f4ad5fee5a87631ccee"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_synthetic_geometry_gt_binding_audit.csv",
+      "size": 5790,
+      "sha256": "13a893759e7bbd58170bbaaec79fc7a2a2b21729c8dcd6948c7fb9c0b1508a3e",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/13a893759e7b_prescreen_synthetic_geometry_gt_binding_audit.csv",
+      "snapshot_sha256": "13a893759e7bbd58170bbaaec79fc7a2a2b21729c8dcd6948c7fb9c0b1508a3e"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_synthetic_scope_binding_audit.csv",
+      "size": 8263,
+      "sha256": "41d63aa0cb1f50e258851a89c8151f80d893b69ed401c5919298e77e5ff0c4d2",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/41d63aa0cb1f_prescreen_synthetic_scope_binding_audit.csv",
+      "snapshot_sha256": "41d63aa0cb1f50e258851a89c8151f80d893b69ed401c5919298e77e5ff0c4d2"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_undercoverage_risk_audit.csv",
+      "size": 273519,
+      "sha256": "0e14c358ba53bdea2cc36390a8030329745e7f052c1525e228340146ccc02120",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/0e14c358ba53_prescreen_undercoverage_risk_audit.csv",
+      "snapshot_sha256": "0e14c358ba53bdea2cc36390a8030329745e7f052c1525e228340146ccc02120"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_undercoverage_risk_summary.json",
+      "size": 729,
+      "sha256": "d68a19c8a97af029f5da006e89a1b24f5dc9cc8a516ef6354ce1c62d88c5f926",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/d68a19c8a97a_prescreen_undercoverage_risk_summary.json",
+      "snapshot_sha256": "d68a19c8a97af029f5da006e89a1b24f5dc9cc8a516ef6354ce1c62d88c5f926"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_worker_admission.csv",
+      "size": 10638,
+      "sha256": "8a8575d1229aab6e2cea4e49af7fab39de7aa308923c73875019bbba99b3b554",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/8a8575d1229a_prescreen_worker_admission.csv",
+      "snapshot_sha256": "8a8575d1229aab6e2cea4e49af7fab39de7aa308923c73875019bbba99b3b554"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_worker_gold_alignment_audit.csv",
+      "size": 313921,
+      "sha256": "359f2edeee1317add51da7fc407708de8cbf350b8214f816e16964842716e25e",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/359f2edeee13_prescreen_worker_gold_alignment_audit.csv",
+      "snapshot_sha256": "359f2edeee1317add51da7fc407708de8cbf350b8214f816e16964842716e25e"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_worker_gold_alignment_summary.json",
+      "size": 894,
+      "sha256": "80b8eb5544dc2a018160a4cc000140396981520122c79224e9b2868d5163e375",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/80b8eb5544dc_prescreen_worker_gold_alignment_summary.json",
+      "snapshot_sha256": "80b8eb5544dc2a018160a4cc000140396981520122c79224e9b2868d5163e375"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_worker_scope_summary.csv",
+      "size": 1221,
+      "sha256": "402872b80cb4fb82637bf2de0517bdb1291819ed196daf1895d080e9b228df50",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/402872b80cb4_prescreen_worker_scope_summary.csv",
+      "snapshot_sha256": "402872b80cb4fb82637bf2de0517bdb1291819ed196daf1895d080e9b228df50"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_worker_screening_rollup.csv",
+      "size": 7124,
+      "sha256": "07bd598dd424c0a522ee1d67616008cfed61dad7ac940ed0c14ffba3d0d49b16",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/07bd598dd424_prescreen_worker_screening_rollup.csv",
+      "snapshot_sha256": "07bd598dd424c0a522ee1d67616008cfed61dad7ac940ed0c14ffba3d0d49b16"
+    },
+    {
+      "path": "D:/Work/HOHONET/analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_worker_screening_summary.json",
+      "size": 1923,
+      "sha256": "b9c6e750a5977d2e4ca18d4db29dd6f30a2f69e821921909b5a7f02110e216aa",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/p1_closeout/b9c6e750a597_prescreen_worker_screening_summary.json",
+      "snapshot_sha256": "b9c6e750a5977d2e4ca18d4db29dd6f30a2f69e821921909b5a7f02110e216aa"
+    },
+    {
+      "path": "D:/Work/HOHONET/export_label/groudTruth.json",
+      "size": 1865730,
+      "sha256": "5ead984f15bdff3f08b31755a6017d007aa2fc33fbd0302b8cfcbc12a41604e0",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/contracts/5ead984f15bd_groudTruth.json",
+      "snapshot_sha256": "5ead984f15bdff3f08b31755a6017d007aa2fc33fbd0302b8cfcbc12a41604e0"
+    },
+    {
+      "path": "D:/Work/HOHONET/export_label/stage2_Chinese/project-69-at-2026-07-23-17-22-8bc6c5a7.json",
+      "size": 416440,
+      "sha256": "6fcb4b352790a5235130ca362f286eaa9c4da0bdad390681eb46566333cd95bf",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/exports/6fcb4b352790_project-69-at-2026-07-23-17-22-8bc6c5a7.json",
+      "snapshot_sha256": "6fcb4b352790a5235130ca362f286eaa9c4da0bdad390681eb46566333cd95bf"
+    },
+    {
+      "path": "D:/Work/HOHONET/export_label/stage2_Chinese/project-71-at-2026-07-23-17-22-45ab62d2.json",
+      "size": 662120,
+      "sha256": "3487402b2e6c87c47b819661f8ef26de1989aa0d027806adc38bf61408f360e2",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/exports/3487402b2e6c_project-71-at-2026-07-23-17-22-45ab62d2.json",
+      "snapshot_sha256": "3487402b2e6c87c47b819661f8ef26de1989aa0d027806adc38bf61408f360e2"
+    },
+    {
+      "path": "D:/Work/HOHONET/export_label/stage2_Chinese/project-72-at-2026-07-23-17-22-3f6bf429.json",
+      "size": 288218,
+      "sha256": "fbb2ccc52e3dc005ae44f2879e7652ef536f8cbf7228ae9f6a2892a71fde7aff",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/exports/fbb2ccc52e3d_project-72-at-2026-07-23-17-22-3f6bf429.json",
+      "snapshot_sha256": "fbb2ccc52e3dc005ae44f2879e7652ef536f8cbf7228ae9f6a2892a71fde7aff"
+    },
+    {
+      "path": "D:/Work/HOHONET/export_label/stage2_English/project-66-at-2026-07-23-11-47-c569aec7.json",
+      "size": 494795,
+      "sha256": "9f8b6051f52a44a3e1a3bfdb9ce94d7b670f959a35e4c6fb4d3a7deb192f2954",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/exports/9f8b6051f52a_project-66-at-2026-07-23-11-47-c569aec7.json",
+      "snapshot_sha256": "9f8b6051f52a44a3e1a3bfdb9ce94d7b670f959a35e4c6fb4d3a7deb192f2954"
+    },
+    {
+      "path": "D:/Work/HOHONET/export_label/stage2_English/project-67-at-2026-07-23-11-48-4ad2a7cf.json",
+      "size": 778436,
+      "sha256": "63f4f8b2087fa1787f9fc7be6699310fdbd6e423c60b8ddf052fb3ba9eb29264",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/exports/63f4f8b2087f_project-67-at-2026-07-23-11-48-4ad2a7cf.json",
+      "snapshot_sha256": "63f4f8b2087fa1787f9fc7be6699310fdbd6e423c60b8ddf052fb3ba9eb29264"
+    },
+    {
+      "path": "D:/Work/HOHONET/export_label/stage2_English/project-68-at-2026-07-23-11-48-58fa3be4.json",
+      "size": 405833,
+      "sha256": "30d67f4f6d44be3f27c344993a268688ee11c24a8672f1b911c9efb14035842d",
+      "snapshot_path": "D:/Work/HOHONET/analysis_results/c1_precloseout_rehearsal_20260724_9ae904848eb0/raw_snapshots/exports/30d67f4f6d44_project-68-at-2026-07-23-11-48-58fa3be4.json",
+      "snapshot_sha256": "30d67f4f6d44be3f27c344993a268688ee11c24a8672f1b911c9efb14035842d"
+    }
+  ]
+}

@@ -1,0 +1,179 @@
+"""Bind frozen C1 task labels and GT geometry without inventing missing review."""
+
+from __future__ import annotations
+
+import argparse
+import csv
+import hashlib
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+import numpy as np
+
+_PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(_PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(_PROJECT_ROOT))
+
+from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou
+
+
+OUTCOME_FIELDS = [
+    "project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition",
+    "final_scope", "scope_resolution_status", "oos_subtype", "scope_reference_mode",
+    "geometry_reference_mode", "geometry_reference_status", "reference_identity",
+    "reference_sha256", "reference_worker_excluded", "reference_evidence_status",
+    "adjudication_status", "reviewed_by", "reviewed_at", "notes",
+]
+
+
+def _read_csv(path: Path) -> list[dict[str, str]]:
+    with path.open(encoding="utf-8-sig", newline="") as stream:
+        return list(csv.DictReader(stream))
+
+
+def _write(path: Path, rows: list[dict[str, Any]], fields: list[str]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore")
+        writer.writeheader()
+        writer.writerows(rows)
+
+
+def _sha_payload(value: Any) -> str:
+    return hashlib.sha256(json.dumps(value, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+
+
+def _scope(inventory: dict[str, str]) -> tuple[str, str, str, str]:
+    status = inventory.get("expert_review_status", "")
+    if status == "latest_human_reviewed":
+        raw, reviewer = inventory.get("expert_scope_confirmed", "").strip().lower(), "latest_human_reviewed"
+        return ("in_scope", "", "expert_adjudicated", reviewer) if raw.startswith("inscope") else (
+            ("oos", raw, "expert_adjudicated", reviewer) if raw.startswith("oos") else ("", "", "", "")
+        )
+    if status == "legacy_labeled_proxy":
+        labels = [part.strip().lower() for part in inventory.get("old_manual_scope_raw", "").split(";") if part.strip()]
+        if labels == ["normal"]:
+            return "in_scope", "", "legacy_human_label_frozen", "legacy_human_label"
+        if len(labels) == 1 and labels[0].startswith("oos_"):
+            return "oos", labels[0], "legacy_human_label_frozen", "legacy_human_label"
+    return "", "", "", ""
+
+
+def _gt_references(path: Path) -> dict[str, dict[str, Any]]:
+    references = {}
+    for task in json.loads(path.read_text(encoding="utf-8-sig")):
+        stem = Path(str((task.get("data") or {}).get("title") or (task.get("data") or {}).get("image", ""))).stem
+        annotations = [row for row in task.get("annotations", []) if row.get("ground_truth")]
+        if not stem or len(annotations) != 1:
+            continue
+        annotation = annotations[0]
+        points = []
+        for result in annotation.get("result", []):
+            if result.get("type") != "keypointlabels":
+                continue
+            value = result.get("value") or {}
+            points.append([float(value["x"]) * 10.24, float(value["y"]) * 5.12])
+        references[stem] = {
+            "identity": f"gt:{task.get('project')}:{task.get('id')}:{annotation.get('id')}",
+            "points": points,
+            "sha256": _sha_payload(annotation.get("result", [])),
+        }
+    return references
+
+
+def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, gt_export: Path, output_dir: Path) -> dict[str, Any]:
+    canonical = _read_csv(canonical_csv)
+    inventory = {row.get("base_task_id", ""): row for row in _read_csv(inventory_csv)}
+    geometry = {
+        row.get("canonical_annotation_id", ""): row
+        for line in geometry_jsonl.read_text(encoding="utf-8").splitlines() if line.strip()
+        for row in [json.loads(line)]
+    }
+    references = _gt_references(gt_export)
+    contexts = {}
+    audit = []
+    for row in canonical:
+        key = tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"))
+        if key in contexts:
+            continue
+        item = inventory.get(row.get("base_task_id", ""), {})
+        final_scope, oos_subtype, scope_mode, reviewer = _scope(item)
+        reference = references.get(row.get("base_task_id", ""), {})
+        status = "resolved" if final_scope and (final_scope == "oos" or reference.get("points")) else "pending"
+        audit.append({
+            **dict(zip(("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"), key)),
+            "inventory_review_status": item.get("expert_review_status", "missing"),
+            "scope_source": scope_mode, "task_outcome_status": status,
+            "gt_reference_present": bool(reference),
+            "pending_reason": "" if status == "resolved" else "unreviewed_or_ambiguous_scope",
+        })
+        if status == "resolved":
+            contexts[key] = {
+                **dict(zip(("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"), key)),
+                "final_scope": final_scope, "scope_resolution_status": "resolved",
+                "oos_subtype": oos_subtype, "scope_reference_mode": scope_mode,
+                "geometry_reference_mode": "expert_hard_gt" if reference else "not_required_oos",
+                "geometry_reference_status": "expert_hard_single" if reference else "",
+                "reference_identity": reference.get("identity", ""),
+                "reference_sha256": reference.get("sha256", ""),
+                "reference_worker_excluded": "false", "reference_evidence_status": "evaluable" if reference else "not_required",
+                "adjudication_status": "resolved", "reviewed_by": reviewer,
+                "reviewed_at": "", "notes": "review time absent in frozen candidate inventory; formal mode must fail closed",
+            }
+    quality = []
+    outcomes_by_key = contexts
+    for row in canonical:
+        key = tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"))
+        outcome = outcomes_by_key.get(key, {})
+        geom = geometry.get(row.get("canonical_annotation_id", ""), {})
+        reference = references.get(row.get("base_task_id", ""), {})
+        score, meta = None, {"reason": "task_outcome_pending"}
+        if outcome.get("final_scope") == "in_scope" and geom.get("corners_px") and reference.get("points"):
+            score, meta = compute_layout_mask_iou(np.asarray(geom["corners_px"], dtype=float), np.asarray(reference["points"], dtype=float))
+        quality.append({
+            "project_id": row.get("project_id", ""), "ls_runtime_task_id": row.get("ls_runtime_task_id", ""),
+            "task_id": row.get("task_id", ""), "base_task_id": row.get("base_task_id", ""),
+            "worker_id": row.get("worker_id", ""), "annotation_id": row.get("annotation_id", ""),
+            "canonical_annotation_id": row.get("canonical_annotation_id", ""), "condition": row.get("condition", ""),
+            "dataset_group": row.get("dataset_group", ""), "iou_to_gt": "" if score is None else score,
+            "quality_evaluable": score is not None, "structurally_valid": score is not None,
+            "independence_status": row.get("independence_status", ""),
+            "failure_attribution": row.get("failure_attribution", ""),
+            "outside_assignment_submission": row.get("outside_assignment_submission", ""),
+            "duplicate_worker_task_submission": row.get("duplicate_worker_task_submission", ""),
+            "worker_caused_structural_failure": row.get("worker_caused_structural_failure", ""),
+            "task_outcome_status": outcome.get("adjudication_status", "pending"),
+            "reference_identity": reference.get("identity", ""), "reference_sha256": reference.get("sha256", ""),
+            "score_reason": "" if score is not None else meta.get("reason", "not_evaluable"),
+        })
+    outcome_rows = list(contexts.values())
+    _write(output_dir / "c1_task_outcome_reference.csv", outcome_rows, OUTCOME_FIELDS)
+    audit_fields = list(audit[0]) if audit else ["task_id"]
+    _write(output_dir / "c1_task_outcome_reference_audit.csv", audit, audit_fields)
+    quality_fields = list(quality[0]) if quality else ["task_id"]
+    _write(output_dir / "c1_gt_quality_evidence.csv", quality, quality_fields)
+    summary = {
+        "n_task_contexts": len(audit), "n_resolved_contexts": len(outcome_rows),
+        "n_pending_contexts": sum(row["task_outcome_status"] == "pending" for row in audit),
+        "n_gt_quality_evaluable": sum(bool(row["quality_evaluable"]) for row in quality),
+        "formal_ready": False, "formal_blocker": "reviewed_at_not_recorded_in_candidate_inventory",
+    }
+    (output_dir / "c1_operational_reference_audit.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    return summary
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--canonical-csv", type=Path, required=True)
+    parser.add_argument("--geometry-jsonl", type=Path, required=True)
+    parser.add_argument("--inventory-csv", type=Path, required=True)
+    parser.add_argument("--gt-export", type=Path, required=True)
+    parser.add_argument("--output-dir", type=Path, required=True)
+    args = parser.parse_args()
+    print(json.dumps(materialize(args.canonical_csv, args.geometry_jsonl, args.inventory_csv, args.gt_export, args.output_dir), indent=2))
+
+
+if __name__ == "__main__":
+    main()

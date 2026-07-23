@@ -1,0 +1,39 @@
+{
+  "manifest_version": "c2_design_v1",
+  "artifact_role": "precloseout_candidate_enumeration_only",
+  "input_sha256": {
+    "worker_profile_csv": "2a7bfa44f3e138a78743df677868529e2aa14692a5d55a528277fd4b0eba5490",
+    "task_pool_csv": "95561398fdba4927a46cc25bc2677081cde78eb5e6df796e9329dfec045f1376"
+  },
+  "candidate_designs": [
+    {
+      "design_id": "rehearsal_a2_b2_u6",
+      "common_anchor_count": 2,
+      "bridge_per_worker": 2,
+      "unique_bridge_tasks": 6,
+      "min_task_support": 2,
+      "max_worker_stratum_imbalance": 2
+    },
+    {
+      "design_id": "rehearsal_a3_b3_u9",
+      "common_anchor_count": 3,
+      "bridge_per_worker": 3,
+      "unique_bridge_tasks": 9,
+      "min_task_support": 2,
+      "max_worker_stratum_imbalance": 2
+    },
+    {
+      "design_id": "rehearsal_a4_b4_u9",
+      "common_anchor_count": 4,
+      "bridge_per_worker": 4,
+      "unique_bridge_tasks": 9,
+      "min_task_support": 2,
+      "max_worker_stratum_imbalance": 2
+    }
+  ],
+  "c2b_target_ci_half_width": 1.0,
+  "simulation": {
+    "seed": 20260724,
+    "draws": 1000
+  }
+}

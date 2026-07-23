@@ -96,3 +96,13 @@
 - Agent 规则和 playbook 进入 `docs/agent/`。
 - legacy 默认不迁移、不修订。
 - 不改变 protocol、schema、routing、SOP 语义。
+## 2026-07-24 Paper A 分析链收口补充
+
+- `tools/thesis_main/analysis/run_c1_precloseout_rehearsal.py`：六份 C1 export 的不可变快照与
+  candidate-only rehearsal 入口；不修改 export、assignment、Label Studio 或正式结果。
+- `tools/thesis_main/analysis/materialize_c1_operational_reference.py`：把冻结 candidate inventory 中已存在的
+  人工 scope 标签和 `groudTruth.json` 单一几何 reference 接入 C1；未复核/冲突任务保持 pending。
+- `tools/thesis_main/analysis/materialize_routing_component_evidence.py`：P1→C1→C2-B component evidence
+  分层物化；缺 C2-B 时 Full 自动禁用。
+- `tools/thesis_main/analysis/materialize_main_inference.py`：T1 image-level 与 V1 ITT 的 manifest/SHA 绑定
+  cluster bootstrap 推断入口。

@@ -27,6 +27,11 @@ DESIGN_AUDIT_FIELDS = [
     "worker_task_graph_connected", "stratum_balance_valid", "design_method",
     "feasible", "failure_reason",
 ]
+WORKER_PROJECTION_FIELDS = [
+    "design_id", "worker_id", "current_interval_half_width", "projected_interval_half_width",
+    "ordinary_support", "stress_support", "common_anchor_support", "bridge_support",
+    "unique_image_coverage", "building_coverage", "common_bridge_with_other_min",
+]
 GRAPH_AUDIT_FIELDS = [
     "design_id", "n_workers", "n_tasks", "n_edges", "n_connected_components",
     "worker_task_graph_connected", "duplicate_worker_task_count", "min_bridge_task_support",
@@ -71,7 +76,7 @@ def _task_id(row: dict[str, str]) -> str:
 
 def _anchor_pool(rows: list[dict[str, str]]) -> list[dict[str, str]]:
     return sorted(
-        [row for row in rows if _task_id(row) and truthy(row.get("anchor_eligible") or row.get("is_common_anchor"))],
+        [row for row in rows if _task_id(row) and truthy(row.get("anchor_eligible") or row.get("is_common_anchor") or row.get("eligible_for_anchor_candidate"))],
         key=lambda row: (_task_stratum(row), _task_id(row)),
     )
 
@@ -81,8 +86,8 @@ def _bridge_pool(rows: list[dict[str, str]]) -> list[dict[str, str]]:
         [
             row for row in rows
             if _task_id(row)
-            and truthy(row.get("bridge_eligible") or row.get("is_diverse_bridge"))
-            and not truthy(row.get("anchor_eligible") or row.get("is_common_anchor"))
+            and truthy(row.get("bridge_eligible") or row.get("is_diverse_bridge") or row.get("eligible_for_reserve_candidate"))
+            and not truthy(row.get("anchor_eligible") or row.get("is_common_anchor") or row.get("eligible_for_anchor_candidate"))
         ],
         key=lambda row: (_task_stratum(row), _task_id(row)),
     )
@@ -206,41 +211,64 @@ def _graph_audit(
     }
 
 
-def _projected_max_half_width(
+def _projected_worker_intervals(
     worker_rows: list[dict[str, str]],
-    selected_tasks: list[dict[str, str]],
+    assignments: list[dict[str, Any]],
+    task_by_id: dict[str, dict[str, str]],
     *,
     seed: int,
     draws: int,
     require_c1_slopes: bool,
-) -> float:
+) -> tuple[float, list[dict[str, Any]]]:
     if require_c1_slopes and draws < 200:
         raise ValueError("formal C2-B simulation requires at least 200 draws")
-    added_information = sum(
-        _float(task, "risk_information_weight", default=1.0)
-        for task in selected_tasks
-    )
-    if added_information <= 0:
-        return math.inf
-    projected = []
+    assignments_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    worker_sets: dict[str, set[str]] = defaultdict(set)
+    for edge in assignments:
+        assignments_by_worker[safe(edge.get("worker_id"))].append(edge)
+        if safe(edge.get("c2_component")) == "diverse_bridge":
+            worker_sets[safe(edge.get("worker_id"))].add(safe(edge.get("task_id")))
+    projected, audits = [], []
     for row in worker_rows:
         worker = safe(row.get("worker_id"))
+        edges = assignments_by_worker.get(worker, [])
+        tasks = [task_by_id[safe(edge.get("task_id"))] for edge in edges if safe(edge.get("task_id")) in task_by_id]
+        added_information = sum(_float(task, "risk_information_weight", default=1.0) for task in tasks)
         slope_se = _float(row, "risk_slope_se", default=math.inf)
         slope_support = _int(row, "risk_slope_support", "support", "n_support")
         if math.isfinite(slope_se) and slope_se > 0 and slope_support > 0:
             projected_se = 1.0 / math.sqrt((1.0 / slope_se ** 2) + added_information)
             rng = random.Random(f"{seed}|{worker}|{added_information:.12g}")
             errors = sorted(abs(rng.gauss(0.0, projected_se)) for _ in range(draws))
-            projected.append(errors[min(draws - 1, math.ceil(0.95 * draws) - 1)])
-            continue
-        if require_c1_slopes:
-            return math.inf
-        support = _int(row, "support", "n_calib_completed", "n_support")
-        half_width = _float(row, "ci_half_width", "r_u_h")
-        if support <= 0 or not math.isfinite(half_width):
-            return math.inf
-        projected.append(half_width * math.sqrt(support / (support + len(selected_tasks))))
-    return max(projected, default=math.inf)
+            value = errors[min(draws - 1, math.ceil(0.95 * draws) - 1)]
+            current = 1.96 * slope_se
+        elif require_c1_slopes:
+            value, current = math.inf, ""
+        else:
+            support = _int(row, "support", "n_calib_completed", "n_support")
+            half_width = _float(row, "ci_half_width", "r_u_h")
+            if not math.isfinite(half_width):
+                # Candidate-only rehearsal uses a conservative Bernoulli bound;
+                # formal design still requires the frozen C1 slope estimator.
+                half_width = 1.96 * 0.5 / math.sqrt(max(support, 1))
+            value = half_width * math.sqrt(max(support, 1) / (max(support, 1) + len(tasks)))
+            current = half_width
+        projected.append(value)
+        strata = Counter(_task_stratum(task) for task in tasks)
+        base_ids = {safe(task.get("base_task_id")) or _task_id(task) for task in tasks}
+        buildings = {safe(task.get("building_id") or task.get("building")) for task in tasks} - {""}
+        worker_bridge_set = worker_sets.get(worker, set())
+        overlaps = [len(worker_bridge_set & values) for other, values in list(worker_sets.items()) if other != worker]
+        audits.append({
+            "design_id": safe(edges[0].get("design_id")) if edges else "", "worker_id": worker,
+            "current_interval_half_width": current,
+            "projected_interval_half_width": "" if not math.isfinite(value) else value,
+            "ordinary_support": strata["ordinary"], "stress_support": strata["stress"],
+            "common_anchor_support": sum(safe(edge.get("c2_component")) == "common_anchor" for edge in edges),
+            "bridge_support": len(worker_sets[worker]), "unique_image_coverage": len(base_ids),
+            "building_coverage": len(buildings), "common_bridge_with_other_min": min(overlaps, default=0),
+        })
+    return max(projected, default=math.inf), audits
 
 
 def _dependencies_valid(
@@ -296,6 +324,7 @@ def materialize(
     anchors, bridges = _anchor_pool(pool), _bridge_pool(pool)
     audits: list[dict[str, Any]] = []
     candidates: list[tuple[int, str, list[dict[str, Any]], dict[str, Any]]] = []
+    worker_projections: list[dict[str, Any]] = []
     simulation = manifest.get("simulation") or {}
     simulation_seed = int(simulation.get("seed", 0))
     simulation_draws = int(simulation.get("draws", 1000))
@@ -341,13 +370,15 @@ def materialize(
                     "design_manifest_sha256": manifest_sha,
                 })
         graph = _graph_audit(design_id, workers, rows, {_task_id(task) for task in selected_bridges})
-        projected = _projected_max_half_width(
+        projected, projection_rows = _projected_worker_intervals(
             workers_rows,
-            [*selected_anchors, *selected_bridges[:bridge_per_worker]],
+            rows,
+            {_task_id(task): task for task in [*selected_anchors, *selected_bridges]},
             seed=simulation_seed,
             draws=simulation_draws,
             require_c1_slopes=input_status == "formal",
         )
+        worker_projections.extend(projection_rows)
         target = float(manifest.get("c2b_target_ci_half_width", math.inf))
         if not reason and projected > target:
             reason = "projected_ci_half_width_above_target"
@@ -380,8 +411,16 @@ def materialize(
     }
     output_dir.mkdir(parents=True, exist_ok=True)
     write_csv(output_dir / "c2b_design_candidates.csv", audits, DESIGN_AUDIT_FIELDS)
-    write_csv(output_dir / "assignment_manifest_C2B.csv", chosen_rows, ASSIGNMENT_FIELDS)
-    write_csv(output_dir / "c2b_worker_task_graph_audit.csv", [chosen_graph], GRAPH_AUDIT_FIELDS)
+    write_csv(output_dir / "c2b_worker_projection_audit.csv", worker_projections, WORKER_PROJECTION_FIELDS)
+    if input_status == "precloseout_rehearsal":
+        candidate_edges = [row for _count, _design, rows, _graph in candidates for row in rows]
+        write_csv(output_dir / "c2b_candidate_worker_task_edges.csv", candidate_edges, ASSIGNMENT_FIELDS)
+        write_csv(output_dir / "c2b_worker_task_graph_audit.csv", [item[3] for item in candidates], GRAPH_AUDIT_FIELDS)
+        chosen = None
+        chosen_rows = []
+    else:
+        write_csv(output_dir / "assignment_manifest_C2B.csv", chosen_rows, ASSIGNMENT_FIELDS)
+        write_csv(output_dir / "c2b_worker_task_graph_audit.csv", [chosen_graph], GRAPH_AUDIT_FIELDS)
     summary = {
         "design_manifest": str(design_manifest),
         "design_manifest_sha256": manifest_sha,
@@ -395,8 +434,14 @@ def materialize(
         "n_assignments": len(chosen_rows),
         "c2b_design_ready": bool(chosen),
         "candidate_only": input_status != "formal",
+        "input_status": input_status,
         "launch_ready": bool(chosen) and input_status == "formal",
-        "failure_reason": "" if chosen else (dependency_reason or "no_feasible_c2b_design"),
+        "failure_reason": (
+            "precloseout_candidate_only_no_selection"
+            if input_status == "precloseout_rehearsal" and candidates
+            else "" if chosen else (dependency_reason or "no_feasible_c2b_design")
+        ),
+        "n_feasible_candidate_designs": len(candidates),
     }
     write_json(output_dir / "c2b_design.summary.json", summary)
     if not chosen and input_status == "formal":
@@ -410,7 +455,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--worker-profile-csv", type=Path, required=True)
     parser.add_argument("--design-manifest", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
+    parser.add_argument("--input-status", choices=("dry_run", "precloseout_rehearsal", "formal"), default="dry_run")
     parser.add_argument("--c1-closeout-summary", type=Path)
     args = parser.parse_args(argv)
     print(json.dumps(materialize(

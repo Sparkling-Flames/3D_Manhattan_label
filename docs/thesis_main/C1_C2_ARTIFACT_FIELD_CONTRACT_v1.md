@@ -515,3 +515,31 @@ rule manifest 及可选 production-weights CSV 的 SHA-256。
 - 旧 `C2b_diagnostic_extension` 映射到历史探索标签，不得与正式 `C2-B` 混用。
 - 旧 Random/Global/Full offline replay 仅可标记 `legacy_diagnostic`；它不是正式 RQ3，也不能替代 V1。
 - 不生成正式 C1/C2 数值，直到真实 C1 export、reference、事故/disposition 和 freshness gate 齐全。
+## 追加：pre-closeout rehearsal 与 operational reference 工件（2026-07-24）
+
+`run_c1_precloseout_rehearsal.py` 只生成 `precloseout_partial_c1` 审计工件。其
+`formal_closeout_ready`、`profile_frozen`、`c2_launch_ready` 必须固定为 `false`，不得生成正式
+`assignment_manifest_C2B.csv`。
+
+`c1_task_outcome_reference.csv` 以
+`project_id + ls_runtime_task_id + task_id + base_task_id + condition` 为键，保存已存在的人工 scope
+标签及单一 GT geometry reference。`unreviewed_pool` 或混合/冲突 scope 不写入已解决表，只进入
+`c1_task_outcome_reference_audit.csv` 的 `pending` 状态。冻结候选清单未记录 `reviewed_at` 时，rehearsal
+可以恢复既有标签用于描述性计算，但正式 closeout 必须 fail-closed。
+
+`c1_gt_quality_evidence.csv` 每行一个 canonical submission，至少包含：
+
+```text
+project_id, ls_runtime_task_id, task_id, base_task_id
+worker_id, annotation_id, canonical_annotation_id, condition, dataset_group
+iou_to_gt, quality_evaluable, structurally_valid
+task_outcome_status, reference_identity, reference_sha256, score_reason
+```
+
+`quality_evaluable` 只表示任务 reference 和几何分数可计算；worker 的正式 routing eligibility 仍须
+独立通过 process、independence、failure disposition、support 与冻结 LCB gate。
+
+正式 C1 closeout 不得直接读取持续写入的 `active_logs/new_server`。收集结束后必须先把 C1 对应日志
+复制到新的阶段专用冻结目录，按规范化相对路径排序的 `{path,size,sha256}` 清单计算 aggregate SHA，
+随后只读该目录全量重跑。冻结后进入旧 project 产生的日志不得增量写回旧 closeout；如需纳入，必须
+建立新快照和新 aggregate SHA 并从 raw export 重跑全链。

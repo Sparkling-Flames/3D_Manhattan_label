@@ -788,7 +788,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
     parser.add_argument("--round-id", default="C1")
     parser.add_argument("--require-complete", action="store_true")
-    parser.add_argument("--input-status", choices=["dry_run", "formal"], default="dry_run")
+    parser.add_argument("--input-status", choices=["dry_run", "precloseout_rehearsal", "formal"], default="dry_run")
     parser.add_argument("--independence-audit-csv", type=Path)
     parser.add_argument("--retrospective-provenance-amendment-csv", type=Path)
     parser.add_argument("--duplicate-adjudication-csv", type=Path)
