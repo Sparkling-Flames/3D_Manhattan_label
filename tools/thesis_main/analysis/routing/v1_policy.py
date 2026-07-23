@@ -71,7 +71,7 @@ def load_frozen_manifest(path: Path, declared_sha256: str, *, input_status: str)
     scheduler = manifest["scheduler"]
     if not {
         "offer_timeout", "completion_timeout", "max_offer_attempts", "k_initial",
-        "standard_cap", "exceptional_cap", "per_worker_arm_quota", "seed",
+        "standard_cap", "exceptional_cap", "seed",
     }.issubset(scheduler):
         raise ValueError("scheduler contract is incomplete")
     if int(scheduler["exceptional_cap"]) < int(scheduler["standard_cap"]) or int(scheduler["standard_cap"]) < int(scheduler["k_initial"]):
@@ -202,8 +202,13 @@ def aggregate_submissions(
     seed_key: str = "",
 ) -> dict[str, Any]:
     aggregation = manifest["aggregation"]
+    submission_rows = list(submissions)
+    external_pending = any(
+        str(row.get("outcome", "")) == "external_system_failure_pending_disposition"
+        for row in submission_rows
+    )
     legal: list[dict[str, Any]] = []
-    for submission in submissions:
+    for submission in submission_rows:
         if str(submission.get("outcome", "")) != "completed_valid" or not _truth(submission.get("structurally_valid", True)):
             continue
         geometry = _mapping(submission.get("geometry"))
@@ -223,7 +228,10 @@ def aggregate_submissions(
             legal.append({**submission, "_geometry": geometry})
     if not legal:
         return {
-            "terminal_status": "severe_failure" if at_cap else "needs_more",
+            "terminal_status": (
+                "external_system_failure_pending_disposition"
+                if external_pending else "severe_failure" if at_cap else "needs_more"
+            ),
             "selected_worker_id": "", "valid_k": 0, "largest_cluster_support": 0,
             "second_cluster_support": 0, "medoid_margin": "", "multimodal": False,
         }
@@ -276,6 +284,7 @@ def feasibility_report(
     tasks: Iterable[dict[str, Any]],
     candidates_by_task: dict[str, list[dict[str, Any]]],
     manifest: dict[str, Any],
+    capacity_rows: Iterable[dict[str, Any]] | None = None,
 ) -> dict[str, Any]:
     task_rows = list(tasks)
     reports = [
@@ -290,7 +299,9 @@ def feasibility_report(
         "first_choice_divergence": sum(row["strong_global"][:1] != row["full_integrated"][:1] for row in reports) / total if total else 0.0,
         "initial_set_divergence": sum(set(row["strong_global"][:initial_k]) != set(row["full_integrated"][:initial_k]) for row in reports) / total if total else 0.0,
     }
-    rates["capacity_adjusted_divergence"] = _capacity_divergence(task_rows, reports, manifest)
+    rates["capacity_adjusted_divergence"] = _capacity_divergence(
+        task_rows, reports, manifest, capacity_rows=capacity_rows
+    )
     thresholds = manifest["feasibility"]
     passed = (
         rates["activation_rate"] >= _number(thresholds["min_activation_rate"])
@@ -306,9 +317,23 @@ def feasibility_report(
     }
 
 
-def _capacity_divergence(tasks: list[dict[str, Any]], rankings: list[dict[str, Any]], manifest: dict[str, Any]) -> float:
-    quota = int(manifest["scheduler"]["per_worker_arm_quota"])
+def _capacity_divergence(
+    tasks: list[dict[str, Any]],
+    rankings: list[dict[str, Any]],
+    manifest: dict[str, Any],
+    *,
+    capacity_rows: Iterable[dict[str, Any]] | None = None,
+) -> float:
+    quota = int(manifest["scheduler"].get("per_worker_arm_quota", 0))
     ledgers: dict[tuple[str, str], defaultdict[str, int]] = {}
+    if capacity_rows is not None:
+        for row in capacity_rows:
+            block = str(row["block_id"])
+            worker = str(row["worker_id"])
+            for arm, field in (("strong_global", "strong_global_quota"), ("full_integrated", "full_integrated_quota")):
+                ledgers.setdefault((block, arm), defaultdict(int))[worker] = (
+                    int(row[field]) if _truth(row.get("available")) else 0
+                )
     choices: list[tuple[str, str]] = []
     for task, ranking in zip(tasks, rankings):
         block = str(task["block_id"])
@@ -343,6 +368,7 @@ def run_v1_trial(
     manifest: dict[str, Any],
     *,
     allow_preassigned_arms: bool = False,
+    capacity_rows: Iterable[dict[str, Any]] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]]]:
     task_rows = list(tasks)
     task_ids = [str(task.get("task_id", "")) for task in task_rows]
@@ -360,11 +386,27 @@ def run_v1_trial(
         if not all(worker_ids) or len(worker_ids) != len(set(worker_ids)):
             raise ValueError(f"candidate identities must be non-empty and unique within task {task_id}")
     assignments = _randomized_arms(task_rows, int(manifest["scheduler"]["seed"]))
-    quota = int(manifest["scheduler"]["per_worker_arm_quota"])
-    ledgers: dict[tuple[str, str], defaultdict[str, int]] = {}
-    for block_id in snapshots:
-        for arm in ARMS:
-            ledgers[block_id, arm] = defaultdict(lambda: quota)
+    quota = int(manifest["scheduler"].get("per_worker_arm_quota", 0))
+    ledgers: dict[tuple[str, str], defaultdict[str, int]] = {
+        (block_id, arm): defaultdict(lambda: quota) for block_id in snapshots for arm in ARMS
+    }
+    available: dict[tuple[str, str], bool] = defaultdict(lambda: capacity_rows is None)
+    if capacity_rows is not None:
+        seen_capacity = set()
+        for row in capacity_rows:
+            block, worker, snapshot = (str(row.get(field, "")) for field in ("block_id", "worker_id", "availability_snapshot_id"))
+            key = (block, worker)
+            if not all((block, worker, snapshot)) or key in seen_capacity or block not in snapshots or snapshot not in snapshots[block]:
+                raise ValueError("V1 capacity manifest has duplicate, missing, or mismatched identity")
+            seen_capacity.add(key)
+            global_quota = int(row.get("strong_global_quota", 0))
+            full_quota = int(row.get("full_integrated_quota", 0))
+            total = int(row.get("total_capacity", 0))
+            if min(global_quota, full_quota, total) < 0 or global_quota != full_quota or total < global_quota + full_quota:
+                raise ValueError("V1 formal capacity must be nonnegative, arm-symmetric, and within total capacity")
+            available[key] = _truth(row.get("available"))
+            ledgers[block, "strong_global"][worker] = global_quota
+            ledgers[block, "full_integrated"][worker] = full_quota
     offer_rows: list[dict[str, Any]] = []
     summaries: list[dict[str, Any]] = []
     for task in task_rows:
@@ -375,7 +417,8 @@ def run_v1_trial(
             raise ValueError(f"unknown V1 arm: {arm}")
         realtime_candidates = [
             row for row in candidates_by_task.get(task_id, [])
-            if ledgers[block_id, arm][str(row.get("worker_id", ""))] > 0
+            if available[block_id, str(row.get("worker_id", ""))]
+            and ledgers[block_id, arm][str(row.get("worker_id", ""))] > 0
         ]
         ranking = rank_candidates(realtime_candidates, task, manifest)
         candidate_set = ranking[arm]
@@ -386,11 +429,22 @@ def run_v1_trial(
         cap = int(manifest["scheduler"]["exceptional_cap"] if _truth(task.get("exceptional_cap_eligible")) else manifest["scheduler"]["standard_cap"])
         max_attempts = int(manifest["scheduler"]["max_offer_attempts"])
         offer_sequence = 0
-        for worker in candidate_set:
+        external_pending = False
+        worker_structural_failures = 0
+        while True:
             if final["terminal_status"] == "resolved" or offer_sequence >= max_attempts or len(submissions) >= cap:
                 break
-            if ledgers[block_id, arm][worker] <= 0:
-                continue
+            current_candidates = [
+                row for row in candidates_by_task.get(task_id, [])
+                if str(row.get("worker_id", "")) not in attempted_workers
+                and available[block_id, str(row.get("worker_id", ""))]
+                and ledgers[block_id, arm][str(row.get("worker_id", ""))] > 0
+            ]
+            ranking = rank_candidates(current_candidates, task, manifest)
+            candidate_set = ranking[arm]
+            if not candidate_set:
+                break
+            worker = candidate_set[0]
             offer_sequence += 1
             attempted_workers.add(worker)
             before = ledgers[block_id, arm][worker]
@@ -404,6 +458,10 @@ def run_v1_trial(
                 completed_workers.add(worker)
             if outcome_name == "completed_valid":
                 submissions.append({**outcome, "worker_id": worker, "global_lcb": next((_number(row.get("global_lcb")) for row in candidates_by_task[task_id] if str(row.get("worker_id")) == worker), 0.0)})
+            elif outcome_name == "completed_invalid":
+                worker_structural_failures += 1
+            elif outcome_name == "external_system_failure_pending_disposition":
+                external_pending = True
             replacement_reason = {
                 "declined": "offered_declined",
                 "no_response": "offer_timeout",
@@ -417,10 +475,12 @@ def run_v1_trial(
                 "block_id": task["block_id"],
                 "task_id": task_id,
                 "policy_arm": arm,
+                "decision_id": f"{task_id}:{offer_sequence}",
                 "candidate_set": json.dumps(candidate_set),
+                "candidate_set_at_decision": json.dumps(candidate_set),
                 "availability_snapshot_id": task["availability_snapshot_id"],
                 "policy_recommended_worker": candidate_set[0] if candidate_set else "",
-                "recommendation_rank": candidate_set.index(worker) + 1,
+                "recommendation_rank": 1,
                 "offered_worker": worker,
                 "offer_sequence": offer_sequence,
                 "accepted_worker": accepted,
@@ -447,19 +507,30 @@ def run_v1_trial(
                 final["terminal_status"] = "needs_more" if not at_cap else ("unresolved" if submissions else "severe_failure")
         if final["terminal_status"] == "needs_more":
             final = aggregate_submissions(submissions, manifest, at_cap=True, seed_key=task_id)
+        if external_pending and final["terminal_status"] != "resolved":
+            final["terminal_status"] = "external_system_failure_pending_disposition"
         remaining_candidate = any(
-            worker not in attempted_workers and ledgers[block_id, arm][worker] > 0
-            for worker in candidate_set
+            str(row.get("worker_id", "")) not in attempted_workers
+            and available[block_id, str(row.get("worker_id", ""))]
+            and ledgers[block_id, arm][str(row.get("worker_id", ""))] > 0
+            for row in candidates_by_task.get(task_id, [])
         )
-        candidate_exhausted = final["terminal_status"] != "resolved" and not remaining_candidate
+        candidate_exhausted = final["terminal_status"] not in {"resolved", "external_system_failure_pending_disposition"} and not remaining_candidate
         policy_failure_reason = ""
-        if final["terminal_status"] != "resolved":
-            if candidate_set and all(ledgers[block_id, arm][worker] <= 0 for worker in candidate_set):
-                policy_failure_reason = "capacity_exhaustion"
+        legal_shortfall = len(submissions) < int(manifest["scheduler"]["k_initial"])
+        if final["terminal_status"] not in {"resolved", "external_system_failure_pending_disposition"} and legal_shortfall:
+            task_workers = [str(row.get("worker_id", "")) for row in candidates_by_task.get(task_id, [])]
+            if task_workers and all(ledgers[block_id, arm][worker] <= 0 for worker in task_workers):
+                policy_failure_reason = "policy_capacity_exhaustion"
             elif offer_sequence >= max_attempts:
-                policy_failure_reason = "replacement_failure"
+                policy_failure_reason = "policy_replacement_exhaustion"
             elif candidate_exhausted:
-                policy_failure_reason = "candidate_exhaustion"
+                policy_failure_reason = "policy_candidate_exhaustion"
+        non_delivery_reason = (
+            "external_system_failure" if final["terminal_status"] == "external_system_failure_pending_disposition"
+            else policy_failure_reason
+            or ("multimodal_at_cap" if final.get("multimodal") else "worker_structural_failure_exhaustion" if worker_structural_failures and legal_shortfall else "non_delivery")
+        ) if final["terminal_status"] != "resolved" else ""
         summaries.append({
             "rule_version": RULE_VERSION,
             "freeze_version": manifest["freeze_version"],
@@ -475,8 +546,10 @@ def run_v1_trial(
             "non_delivery": final["terminal_status"] != "resolved",
             "policy_failure": bool(policy_failure_reason),
             "policy_failure_reason": policy_failure_reason,
-            "failure_attribution": "policy_caused_failure" if policy_failure_reason else "none",
-            "analysis_disposition": "included",
+            "non_delivery_reason": non_delivery_reason,
+            "worker_structural_failure_count": worker_structural_failures,
+            "failure_attribution": "external_system_failure" if final["terminal_status"] == "external_system_failure_pending_disposition" else "policy_caused_failure" if policy_failure_reason else "none",
+            "analysis_disposition": "rerun" if final["terminal_status"] == "external_system_failure_pending_disposition" else "included",
             "policy_terminal_status": final["terminal_status"],
             "k_used": final["valid_k"],
             "offers_used": offer_sequence,
@@ -500,6 +573,7 @@ def materialize_v1_policy(
     freeze_manifest: Path,
     freeze_manifest_sha256: str,
     input_status: str,
+    capacity_manifest_csv: Path | None = None,
 ) -> dict[str, Any]:
     manifest = load_frozen_manifest(freeze_manifest, freeze_manifest_sha256, input_status=input_status)
     tasks = _read_csv(tasks_csv)
@@ -507,12 +581,15 @@ def materialize_v1_policy(
     for row in _read_csv(candidates_csv):
         candidates_by_task[str(row["task_id"])].append(row)
     outcomes = {(str(row["task_id"]), str(row["worker_id"])): row for row in _read_csv(outcomes_csv)}
-    feasibility = feasibility_report(tasks, candidates_by_task, manifest)
+    if input_status == "formal" and capacity_manifest_csv is None:
+        raise ValueError("formal V1 requires a frozen block-capacity manifest")
+    capacity_rows = _read_csv(capacity_manifest_csv) if capacity_manifest_csv else None
+    feasibility = feasibility_report(tasks, candidates_by_task, manifest, capacity_rows=capacity_rows)
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "v1_policy_feasibility.json").write_text(json.dumps(feasibility, ensure_ascii=False, indent=2, sort_keys=True), encoding="utf-8")
     if feasibility["launch_status"] != "launchable":
         return {**feasibility, "formal_assignment_generated": False}
-    offers, summaries = run_v1_trial(tasks, candidates_by_task, outcomes, manifest)
+    offers, summaries = run_v1_trial(tasks, candidates_by_task, outcomes, manifest, capacity_rows=capacity_rows)
     if input_status == "formal" and any(
         row["terminal_status"] == "resolved"
         and (not row.get("selected_annotation_id") or not row.get("selected_geometry_sha256"))
@@ -521,6 +598,21 @@ def materialize_v1_policy(
         raise ValueError("formal resolved V1 output requires annotation and geometry identity")
     write_csv_rows(output_dir / "v1_policy_offer_ledger.csv", offers)
     write_csv_rows(output_dir / "v1_policy_task_summary.csv", summaries)
+    if capacity_rows is not None:
+        last_capacity = {
+            (str(row["block_id"]), str(row["policy_arm"]), str(row["offered_worker"])): row["capacity_after"]
+            for row in offers
+        }
+        capacity_audit = []
+        for row in capacity_rows:
+            for arm, field in (("strong_global", "strong_global_quota"), ("full_integrated", "full_integrated_quota")):
+                key = (str(row["block_id"]), arm, str(row["worker_id"]))
+                capacity_audit.append({
+                    "block_id": row["block_id"], "worker_id": row["worker_id"], "policy_arm": arm,
+                    "availability_snapshot_id": row["availability_snapshot_id"], "available": row["available"],
+                    "capacity_at_block_start": row[field], "capacity_at_block_end": last_capacity.get(key, row[field]),
+                })
+        write_csv_rows(output_dir / "v1_capacity_audit.csv", capacity_audit)
     audit = {
         **feasibility,
         "formal_assignment_generated": True,
@@ -528,6 +620,7 @@ def materialize_v1_policy(
         "tasks_sha256": sha256_file(tasks_csv),
         "candidates_sha256": sha256_file(candidates_csv),
         "outcomes_sha256": sha256_file(outcomes_csv),
+        **({"capacity_manifest_sha256": sha256_file(capacity_manifest_csv)} if capacity_manifest_csv else {}),
         "n_offer_events": len(offers),
         "n_tasks_materialized": len(summaries),
     }
@@ -543,6 +636,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--freeze-manifest", type=Path, required=True)
     parser.add_argument("--freeze-manifest-sha256", required=True)
+    parser.add_argument("--capacity-manifest-csv", type=Path)
     parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
     args = parser.parse_args(argv)
     print(json.dumps(materialize_v1_policy(
@@ -550,6 +644,7 @@ def main(argv: list[str] | None = None) -> int:
         freeze_manifest=args.freeze_manifest,
         freeze_manifest_sha256=args.freeze_manifest_sha256,
         input_status=args.input_status,
+        capacity_manifest_csv=args.capacity_manifest_csv,
     ), ensure_ascii=False, indent=2))
     return 0
 

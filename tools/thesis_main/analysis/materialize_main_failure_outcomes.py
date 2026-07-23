@@ -32,12 +32,15 @@ C1_FIELDS = [
 ]
 T1_FIELDS = [
     "task_id", "pair_id", "analysis_unit_pair_id", "condition", "worker_id", "image_id",
+    "building_id", "block_id", "risk_route", "risk_bucket", "risk_score",
     "row_failure_attribution", "incident_id", "incident_evidence_status",
     "original_row_failure_attribution", "original_incident_id",
     "pair_analysis_disposition", "source_pair_id", "source_task_id", "rerun_sequence",
-    "frozen_rule_version", "iou_to_gt", "structurally_valid",
+    "original_task_id", "rerun_task_id", "frozen_rule_version", "freeze_version",
+    "iou_to_gt", "structurally_valid",
     "delivery_adjusted_quality", "quality_evaluable", "risk_assist",
-    "active_time_integrity_status", "owner_valid_active_time", "active_time_seconds",
+    "active_time_integrity_status", "active_time_source", "active_time_source_file",
+    "active_time_annotation_id", "owner_valid_active_time", "active_time_seconds",
     "inference_cluster_id",
 ]
 V1_FIELDS = [

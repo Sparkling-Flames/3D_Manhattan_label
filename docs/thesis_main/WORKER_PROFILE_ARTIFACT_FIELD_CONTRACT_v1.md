@@ -472,3 +472,25 @@ warnings
 7. C2-A-RP 不产生新 component。
 8. Full fallback 时排序逐项等于 Strong Global。
 9. T1/V1 outcome 不回流 profile。
+## 追加：Strong Global 与 component evidence（2026-07-24）
+
+`strong_global_worker_table.csv` 的正式主估计来自 Manual、GT-quality-evaluable submission 的
+worker/task 交叉分类模型；同 task 记录采用 task-cluster covariance。最小字段为：
+
+```text
+worker_id
+Q_GT_raw, Q_GT_task_adjusted, Q_GT_standard_error
+Q_GT_CI_lower, Q_GT_CI_upper, Q_GT_LCB
+Q_GT_centering_sensitivity
+GT_support, task_support, F_struct
+process_eligible, independence_eligible, reference_evaluable
+global_eligible, exclusion_reason, model_version, profile_version
+provisional_rank, global_rank
+```
+
+非正式 rehearsal 只允许写 `provisional_rank`；正式 `global_rank` 仅在冻结 manifest、模型、全部 gate
+及 eligible worker 下限均通过后写入。
+
+`routing_component_evidence.csv` 以 `worker_id + component_family` 为键，分列保存 P1 raw、P1
+integrity-filtered、P1→C1 predictive、C2-B confirmatory 与 validated component。没有正式 C2-B 时必须为
+`pending_c2b_confirmation`，且 `c2b_confirmed=false`、`full_component_eligible=false`。

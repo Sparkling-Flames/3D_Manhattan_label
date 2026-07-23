@@ -174,7 +174,7 @@ def test_invalid_decline_and_candidate_exhaustion_use_the_same_replacement_path(
     assert [row["replacement_reason"] for row in offers[:2]] == ["offered_declined", "completed_invalid"]
     assert summaries[0]["terminal_status"] == "unresolved"
     assert summaries[0]["candidate_exhausted"] is True
-    assert summaries[0]["policy_failure_reason"] == "candidate_exhaustion"
+    assert summaries[0]["policy_failure_reason"] == "policy_candidate_exhaustion"
 
 
 def test_scheduler_is_reproducible_for_fixed_seed() -> None:
@@ -219,7 +219,7 @@ def test_multimodal_is_unresolved_and_no_legal_submission_is_severe() -> None:
     assert result["terminal_status"] == "unresolved"
     assert result["multimodal"] is True
     assert aggregate_submissions([{"outcome": "completed_invalid"}], manifest, at_cap=True)["terminal_status"] == "severe_failure"
-    assert aggregate_submissions([{"outcome": "external_system_failure_pending_disposition"}], manifest, at_cap=True)["terminal_status"] == "severe_failure"
+    assert aggregate_submissions([{"outcome": "external_system_failure_pending_disposition"}], manifest, at_cap=True)["terminal_status"] == "external_system_failure_pending_disposition"
 
 
 def test_feasibility_gate_blocks_indistinguishable_policy() -> None:
@@ -259,6 +259,7 @@ def test_csv_materializer_parses_geometry_json_and_writes_formal_outputs(tmp_pat
     tasks = tmp_path / "tasks.csv"
     candidates = tmp_path / "candidates.csv"
     outcomes = tmp_path / "outcomes.csv"
+    capacity = tmp_path / "capacity.csv"
     write_csv(tasks, [_task("t1", "strong_global")])
     write_csv(candidates, [{**_candidate("w1", 1.0), "task_id": "t1"}, {**_candidate("w2", 0.9), "task_id": "t1"}])
     corners = json.dumps([[100, 100], [100, 400], [600, 100], [600, 400]])
@@ -266,13 +267,19 @@ def test_csv_materializer_parses_geometry_json_and_writes_formal_outputs(tmp_pat
         {"task_id": "t1", "worker_id": "w1", "annotation_id": "a1", "outcome": "completed_valid", "structurally_valid": "true", "corners_px": corners},
         {"task_id": "t1", "worker_id": "w2", "annotation_id": "a2", "outcome": "completed_valid", "structurally_valid": "true", "corners_px": corners},
     ])
+    write_csv(capacity, [
+        {"block_id": "b1", "worker_id": worker, "availability_snapshot_id": "snap-1", "available": "true",
+         "total_capacity": "2", "strong_global_quota": "1", "full_integrated_quota": "1"}
+        for worker in ("w1", "w2")
+    ])
     output = tmp_path / "out"
     audit = materialize_v1_policy(
         tasks, candidates, outcomes, output,
         freeze_manifest=manifest_path,
-        freeze_manifest_sha256=sha256_file(manifest_path),
-        input_status="formal",
-    )
+            freeze_manifest_sha256=sha256_file(manifest_path),
+            input_status="formal",
+            capacity_manifest_csv=capacity,
+        )
     assert audit["formal_assignment_generated"] is True
     assert (output / "v1_policy_offer_ledger.csv").exists()
     with (output / "v1_policy_task_summary.csv").open(encoding="utf-8") as handle:

@@ -1,0 +1,1048 @@
+{
+  "input_status": "precloseout_rehearsal",
+  "quality_table_summary": {
+    "input_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_canonical_annotations.csv",
+    "canonical_meta_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_canonical_meta_observations.csv",
+    "canonical_meta_fresh": true,
+    "canonical_meta_freshness_reasons": [],
+    "harmonization_fresh": true,
+    "input_status": "precloseout_rehearsal",
+    "quality_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_quality_annotations.csv",
+    "meta_label_consensus_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\meta_label_consensus_summary_C1.csv",
+    "meta_label_consensus_audit_json": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\meta_label_consensus_summary_C1.audit.json",
+    "three_state_sidecars": {
+      "n_observations": 7788,
+      "n_task_tag_summaries": 1044,
+      "n_response_style_rows": 40,
+      "dry_run": true,
+      "interpretation_allowed": false
+    },
+    "n_quality_rows": 649,
+    "n_used_for_r_u": 0,
+    "r_u_evidence_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\calibration_r_u_evidence_C1.csv",
+    "n_r_u_evidence_included": 0,
+    "task_outcome_pending_count": 126,
+    "task_outcome_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_task_outcome_reference.csv",
+    "task_outcome_adjudication_template_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_task_outcome_adjudication_template.csv",
+    "n_missing_core_used_for_r_u_flag": 329,
+    "n_used_for_rq2": 0,
+    "independence_not_evaluable_count": 649,
+    "non_independent_confirmed_count": 0,
+    "unassigned_active_time_seconds_total": 0.0,
+    "unknown_annotation_event_count_total": 0,
+    "unknown_annotation_session_count_total": 0,
+    "rows_with_unknown_audit_count": 0,
+    "workers_with_unknown_audit_count": 0,
+    "known_unknown_oscillation_row_count": 0,
+    "system_collection_issue_row_count": 0,
+    "failure_attribution_counts": {
+      "none": 0,
+      "worker_caused_structural_failure": 0,
+      "policy_caused_failure": 0,
+      "external_system_failure": 0,
+      "not_evaluable": 649
+    },
+    "exact_annotation_primary_count": 0,
+    "task_level_sensitivity_count": 0,
+    "candidate_inventory_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\contracts\\d6d4a454e6a2_calibration_full_candidate_inventory_v3.csv",
+    "r_u_scoring_evidence_csv": "",
+    "r_u_score_blockers": [],
+    "harmonization_summary": {
+      "n_rows": 649,
+      "n_behavior_inferred": 0,
+      "n_retrospective_amendments_joined": 0,
+      "amendment_total_rows": 0,
+      "amendment_valid_unique_rows": 0,
+      "amendment_needed_rows": 32,
+      "amendment_matched_rows": 0,
+      "amendment_joined_rows": 0,
+      "amendment_orphan_rows": 0,
+      "amendment_missing_rows": 32,
+      "amendment_blockers": {
+        "historical_acceptable_missing_amendment": 32
+      },
+      "amendment_complete": false,
+      "dry_run": true,
+      "interpretation_allowed": false
+    },
+    "amendment_blocker_count": 32,
+    "blockers": [
+      "amendment_historical_acceptable_missing_amendment",
+      "independence_not_evaluable",
+      "missing_core_used_for_r_u_flag"
+    ],
+    "r_u_estimated": false,
+    "dt_backflow": false
+  },
+  "worker_state_summary": {
+    "worker_state_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\worker_state_snapshot_C1.csv",
+    "n_workers": 23,
+    "min_r_u_tasks_for_ci_fill": 5,
+    "n_needs_c2_ci_fill": 23,
+    "r_u_estimated": false,
+    "provisional": true
+  },
+  "c2_gap_summary": {
+    "materialization_blocked": true,
+    "c2a_rp_ready": false
+  },
+  "c2_draft_summary": {
+    "materialization_blocked": true,
+    "c2b_design_ready": false
+  },
+  "worker_profile_sidecar_summary": {
+    "profile_version": "worker_profile_sidecar_C1_v1",
+    "input_quality_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_quality_annotations.csv",
+    "input_worker_state_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\worker_state_snapshot_C1.csv",
+    "input_p1_artifacts": [
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\82dbcb1d0875_final_gold_records_v2_p1_closeout_corrected.jsonl",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\6ce1b4d3a38f_p1_combined_exports_for_exact_copy_audit.json",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\bba6c52cfa42_prescreen_active_time_source_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\ac216312875f_prescreen_canonical_annotations.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\e469a0a55bae_prescreen_canonicalize_summary.json",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\e81607405ce3_prescreen_closeout_consistency_gate_final_gold_v2.json",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\e0bc3e0fe27c_prescreen_closeout_run_config_final_gold_v2_20260701.json",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\11cf06c285da_prescreen_completion_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\a2217817b00c_prescreen_consensus_guard_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\7e373ac056d4_prescreen_consensus_guard_summary.json",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\728c2de92d44_prescreen_duplicate_annotation_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\13c5ac6b3ef9_prescreen_final_gold_v2_correction_audit.json",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\84661e917070_prescreen_geometry_eligibility_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\52f245ceaafc_prescreen_geometry_gold_alignment_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\d73e3ba2a26a_prescreen_gold_alignment_summary.json",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\983c4c7a8799_prescreen_gold_status_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\d095411c4a7e_prescreen_gold_status_summary.json",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\d93e02f3efe1_prescreen_pass_count_decision.json",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\68dde2b5f4eb_prescreen_r0_snapshot.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\69ea453ff928_prescreen_scope_adjudication.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\e651ec5addb2_prescreen_scope_mixed_task_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\87eed3bf2209_prescreen_scope_response_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\f42ecbee33a6_prescreen_scope_summary.json",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\c9803f985353_prescreen_scope_unknown_gold_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\13a893759e7b_prescreen_synthetic_geometry_gt_binding_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\41d63aa0cb1f_prescreen_synthetic_scope_binding_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\0e14c358ba53_prescreen_undercoverage_risk_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\d68a19c8a97a_prescreen_undercoverage_risk_summary.json",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\8a8575d1229a_prescreen_worker_admission.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\359f2edeee13_prescreen_worker_gold_alignment_audit.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\80b8eb5544dc_prescreen_worker_gold_alignment_summary.json",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\402872b80cb4_prescreen_worker_scope_summary.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\07bd598dd424_prescreen_worker_screening_rollup.csv",
+      "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\b9c6e750a597_prescreen_worker_screening_summary.json"
+    ],
+    "input_p1_task_evidence_csv": "",
+    "input_p1_worker_status_csv": "",
+    "input_p1_geometry_task_scores": "",
+    "input_p1_worker_geometry_profile": "",
+    "output_worker_task_evidence_table": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\worker_task_evidence_table_C1.csv",
+    "output_worker_profile_main_matrix": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\worker_profile_main_matrix_C1.csv",
+    "output_worker_failure_family_response": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\worker_failure_family_response_C1.csv",
+    "output_worker_subfamily_response": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\worker_subfamily_response_C1.csv",
+    "output_p1_worker_dimension_readiness": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\p1_worker_dimension_readiness_C1.csv",
+    "output_p1_to_c1_descriptive_directional_check": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\p1_to_c1_descriptive_directional_check.csv",
+    "output_p1_to_c1_descriptive_directional_check_report": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\p1_to_c1_descriptive_directional_check_report.md",
+    "output_p1_to_c1_predictive_validity_deprecated_mapping": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\p1_to_c1_predictive_validity.deprecated.json",
+    "n_workers": 23,
+    "n_evidence_rows": 732,
+    "n_profile_rows": 23,
+    "n_family_rows": 120,
+    "n_subfamily_rows": 0,
+    "unassigned_active_time_seconds_total": 0.0,
+    "unknown_annotation_event_count_total": 0.0,
+    "unknown_annotation_session_count_total": 0.0,
+    "rows_with_unknown_audit_count": 0,
+    "workers_with_unknown_audit_count": 0,
+    "known_unknown_oscillation_row_count": 0,
+    "system_collection_issue_row_count": 0,
+    "exact_annotation_primary_count": 0,
+    "task_level_sensitivity_count": 0,
+    "forensic_timing_audit_count": 0,
+    "process_evaluable_row_count": 0,
+    "process_failure_observed_row_count": 0,
+    "forensic_process_audit_row_count": 0,
+    "long_open_draft_row_count": 0,
+    "parent_derived_timing_row_count": 0,
+    "n_insufficient_family_cells": 120,
+    "n_insufficient_subfamily_cells": 0,
+    "family_interpretation_level_counts": {
+      "none": 120,
+      "weak_descriptive": 0,
+      "moderate_descriptive": 0,
+      "sufficient_descriptive": 0
+    },
+    "subfamily_interpretation_level_counts": {
+      "none": 0,
+      "weak_descriptive": 0,
+      "moderate_descriptive": 0,
+      "sufficient_descriptive": 0
+    },
+    "r_u_calib_estimated": false,
+    "r_u_support_by_worker": {
+      "1": 0,
+      "10": 0,
+      "11": 0,
+      "12": 0,
+      "13": 0,
+      "14": 0,
+      "15": 0,
+      "17": 0,
+      "18": 0,
+      "2": 0,
+      "27": 0,
+      "28": 0,
+      "29": 0,
+      "30": 0,
+      "31": 0,
+      "32": 0,
+      "33": 0,
+      "34": 0,
+      "35": 0,
+      "36": 0,
+      "37": 0,
+      "6": 0,
+      "8": 0
+    },
+    "r_geometry_u_estimated": false,
+    "p1_descriptive_directional_check_status": "not_evaluable",
+    "formal_predictive_validity_status": "not_run_blocked",
+    "p1_informed_diagnostic_profile_status": "incomplete",
+    "p1_bundle_structurally_complete": false,
+    "pending_adjudication_count": 126,
+    "p1_geometry_artifact_available": false,
+    "p1_geometry_has_evaluable_evidence": false,
+    "p1_geometry_support_ready": false,
+    "p1_geometry_expected_count": 0,
+    "p1_geometry_evaluable_count": 0,
+    "p1_geometry_pending_count": 0,
+    "p1_geometry_not_evaluable_count": 0,
+    "p1_geometry_not_applicable_count": 0,
+    "p1_geometry_support_status": "not_evaluable",
+    "p1_scope_artifact_available": false,
+    "p1_scope_has_evaluable_evidence": false,
+    "p1_scope_support_ready": false,
+    "p1_scope_expected_count": 0,
+    "p1_scope_evaluable_count": 0,
+    "p1_scope_pending_count": 0,
+    "p1_scope_not_evaluable_count": 0,
+    "p1_scope_not_applicable_count": 0,
+    "p1_scope_support_status": "not_evaluable",
+    "p1_semi_issue_recognition_artifact_available": false,
+    "p1_semi_issue_recognition_has_evaluable_evidence": false,
+    "p1_semi_issue_recognition_support_ready": false,
+    "p1_semi_issue_recognition_expected_count": 0,
+    "p1_semi_issue_recognition_evaluable_count": 0,
+    "p1_semi_issue_recognition_pending_count": 0,
+    "p1_semi_issue_recognition_not_evaluable_count": 0,
+    "p1_semi_issue_recognition_not_applicable_count": 0,
+    "p1_semi_issue_recognition_support_status": "not_evaluable",
+    "p1_semi_geometry_correction_artifact_available": false,
+    "p1_semi_geometry_correction_has_evaluable_evidence": false,
+    "p1_semi_geometry_correction_support_ready": false,
+    "p1_semi_geometry_correction_expected_count": 0,
+    "p1_semi_geometry_correction_evaluable_count": 0,
+    "p1_semi_geometry_correction_pending_count": 0,
+    "p1_semi_geometry_correction_not_evaluable_count": 0,
+    "p1_semi_geometry_correction_not_applicable_count": 0,
+    "p1_semi_geometry_correction_support_status": "not_evaluable",
+    "p1_undercoverage_artifact_available": false,
+    "p1_undercoverage_has_evaluable_evidence": false,
+    "p1_undercoverage_support_ready": false,
+    "p1_undercoverage_expected_count": 0,
+    "p1_undercoverage_evaluable_count": 0,
+    "p1_undercoverage_pending_count": 0,
+    "p1_undercoverage_not_evaluable_count": 0,
+    "p1_undercoverage_not_applicable_count": 0,
+    "p1_undercoverage_support_status": "not_evaluable",
+    "p1_process_artifact_available": false,
+    "p1_process_has_evaluable_evidence": false,
+    "p1_process_support_ready": false,
+    "p1_process_expected_count": 0,
+    "p1_process_evaluable_count": 0,
+    "p1_process_pending_count": 0,
+    "p1_process_not_evaluable_count": 0,
+    "p1_process_not_applicable_count": 0,
+    "p1_process_support_status": "not_evaluable",
+    "p1_geometry_dimension_ready": false,
+    "p1_scope_dimension_ready": false,
+    "p1_semi_issue_recognition_ready": false,
+    "p1_semi_geometry_correction_ready": false,
+    "p1_semi_dimension_ready": false,
+    "p1_undercoverage_dimension_ready": false,
+    "p1_process_dimension_ready": false,
+    "bundle_has_evaluable_evidence_in_all_dimensions": false,
+    "full_profile_ready_with_pending_adjudication": false,
+    "full_diagnostic_profile_ready": false,
+    "p1_diagnostic_evidence_classified": true,
+    "p1_diagnostic_support_sufficient": false,
+    "p1_diagnostic_evidence_complete": true,
+    "c1_profile_evidence_classified": false,
+    "c1_profile_pending_adjudication_count": 126,
+    "c1_pending_adjudication_count": 126,
+    "p1_pending_adjudication_count": 0,
+    "c1_support_sufficient": false,
+    "c1_r_u_support_sufficient": false,
+    "c1_profile_evidence_complete": false,
+    "c1_profile_freeze_ready": false,
+    "full_profile_ready": false,
+    "profile_freeze_status": "C1_provisional",
+    "blockers": [],
+    "warnings": [
+      "p1_informed_artifact_bundle_missing",
+      "p1_descriptive_directional_check_not_evaluable_without_matching_p1_c1_metrics"
+    ]
+  },
+  "quality_table_blockers": [
+    "amendment_historical_acceptable_missing_amendment",
+    "independence_not_evaluable",
+    "missing_core_used_for_r_u_flag"
+  ],
+  "r_u_estimated": false,
+  "dt_backflow": false,
+  "worker_state_provisional": true,
+  "profile_sidecar_generated": true,
+  "profile_summary_path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\worker_profile_sidecar_C1.summary.json",
+  "profile_freeze_status": "C1_provisional",
+  "p1_descriptive_directional_check_status": "not_evaluable",
+  "formal_predictive_validity_status": "not_run_blocked",
+  "p1_informed_diagnostic_profile_status": "incomplete",
+  "full_profile_ready": false,
+  "c1_profile_evidence_complete": false,
+  "full_diagnostic_profile_ready": false,
+  "p1_bundle_structurally_complete": false,
+  "p1_diagnostic_evidence_complete": true,
+  "c1_duplicate_review_complete": false,
+  "c1_task_outcome_adjudication_complete": false,
+  "c1_protocol_r_u_ready": false,
+  "c1_profile_evidence_classified": false,
+  "c1_profile_support_sufficient": false,
+  "c1_r_u_support_sufficient": false,
+  "r_u_support_consistent": false,
+  "pending_adjudication_count": 126,
+  "c1_pending_adjudication_count": 126,
+  "p1_pending_adjudication_count": 0,
+  "structural_contract_valid": false,
+  "formal_inputs_present": false,
+  "artifacts_fresh": false,
+  "artifact_freshness": {
+    "fresh": false,
+    "missing": [],
+    "empty": [
+      "geometry_pairwise_similarity_C1.csv",
+      "worker_scene_profile_candidates_C1.csv",
+      "routing_temporal_event_audit_C1.csv",
+      "routing_temporal_batch_decisions_C1.csv",
+      "routing_temporal_task_summary_C1.csv",
+      "routing_temporal_order_sensitivity_C1.csv"
+    ],
+    "stale": [
+      "routing_temporal_contract_summary_C1.json"
+    ],
+    "input_status": "precloseout_rehearsal"
+  },
+  "dry_run_contract_exercised": true,
+  "raw_pipeline_ready": false,
+  "provisional_sidecar_ready": false,
+  "formal_closeout_ready": false,
+  "thesis_facing_closeout_ready": false,
+  "c2_decision_chain_ready": false,
+  "c2_design_ready": false,
+  "c2b_ready": false,
+  "c2a_rp_ready": false,
+  "r_u_freeze": false,
+  "c2_freeze": false,
+  "formal_routing_conclusion_allowed": false,
+  "passed": false,
+  "blocked_for_launch": true,
+  "blockers": [
+    "quality_table_blockers",
+    "canonicalization_blockers",
+    "amendment_blockers",
+    "closeout_artifacts_missing_or_stale",
+    "formal_c1_annotation_data_missing",
+    "formal_closeout_adjudication_missing_invalid_or_stale",
+    "thesis_facing_closeout_blocked_pending_formal_closeout",
+    "c2_decision_chain_blocked_pending_formal_closeout"
+  ],
+  "warnings": [
+    "p1_informed_artifact_bundle_missing",
+    "p1_descriptive_directional_check_not_evaluable_without_matching_p1_c1_metrics"
+  ],
+  "passed_semantics": "non_formal_dry_run",
+  "vfinal_sidecars": {
+    "worker_scene_profile_candidates": {
+      "n_profile_rows": 0,
+      "n_missing_scene_rows": 7788,
+      "dry_run": true,
+      "interpretation_allowed": false,
+      "routing_eligible": false
+    },
+    "routing_evidence_snapshot": {
+      "n_tasks": 87,
+      "dry_run": true,
+      "routing_eligible": false
+    },
+    "routing_temporal_replay": {
+      "status": "not_evaluable_missing_formal_c1",
+      "contract_results": {
+        "event_key_uniqueness_valid": {
+          "valid": false,
+          "checked_count": 0,
+          "failure_count": 1,
+          "failure_reasons": {
+            "input_status_not_formal": 1
+          },
+          "evidence_artifact": ""
+        },
+        "event_coverage_complete": {
+          "valid": false,
+          "checked_count": 0,
+          "failure_count": 1,
+          "failure_reasons": {
+            "input_status_not_formal": 1
+          },
+          "evidence_artifact": ""
+        },
+        "annotation_tag_atomicity_valid": {
+          "valid": false,
+          "checked_count": 0,
+          "failure_count": 1,
+          "failure_reasons": {
+            "input_status_not_formal": 1
+          },
+          "evidence_artifact": ""
+        },
+        "batch_atomicity_valid": {
+          "valid": false,
+          "checked_count": 0,
+          "failure_count": 1,
+          "failure_reasons": {
+            "input_status_not_formal": 1
+          },
+          "evidence_artifact": ""
+        },
+        "arrival_order_contract_valid": {
+          "valid": false,
+          "checked_count": 0,
+          "failure_count": 1,
+          "failure_reasons": {
+            "input_status_not_formal": 1
+          },
+          "evidence_artifact": ""
+        },
+        "task_purpose_manifest_valid": {
+          "valid": false,
+          "checked_count": 0,
+          "failure_count": 1,
+          "failure_reasons": {
+            "input_status_not_formal": 1
+          },
+          "evidence_artifact": ""
+        },
+        "candidate_pool_binding_valid": {
+          "valid": false,
+          "checked_count": 0,
+          "failure_count": 1,
+          "failure_reasons": {
+            "input_status_not_formal": 1
+          },
+          "evidence_artifact": ""
+        },
+        "risk_bucket_valid": {
+          "valid": false,
+          "checked_count": 0,
+          "failure_count": 1,
+          "failure_reasons": {
+            "input_status_not_formal": 1
+          },
+          "evidence_artifact": ""
+        },
+        "family_gate_contract_valid": {
+          "valid": false,
+          "checked_count": 0,
+          "failure_count": 1,
+          "failure_reasons": {
+            "input_status_not_formal": 1
+          },
+          "evidence_artifact": ""
+        },
+        "task_completion_contract_valid": {
+          "valid": false,
+          "checked_count": 0,
+          "failure_count": 1,
+          "failure_reasons": {
+            "input_status_not_formal": 1
+          },
+          "evidence_artifact": ""
+        },
+        "no_future_scope_leakage": {
+          "valid": false,
+          "checked_count": 0,
+          "failure_count": 1,
+          "failure_reasons": {
+            "input_status_not_formal": 1
+          },
+          "evidence_artifact": ""
+        }
+      },
+      "event_key_uniqueness_valid": false,
+      "event_coverage_complete": false,
+      "annotation_tag_atomicity_valid": false,
+      "batch_atomicity_valid": false,
+      "arrival_order_contract_valid": false,
+      "task_purpose_manifest_valid": false,
+      "candidate_pool_binding_valid": false,
+      "risk_bucket_valid": false,
+      "family_gate_contract_valid": false,
+      "task_completion_contract_valid": false,
+      "no_future_scope_leakage": false,
+      "full_stop_contract_valid": false,
+      "n_events": 0,
+      "n_primary_annotations": 0,
+      "n_tag_state_events": 0,
+      "n_nonzero_assertions": 0,
+      "formal_assignment_generated": false
+    },
+    "geometry_sidecars_present": true,
+    "formal_c1_annotation_data_present": false
+  },
+  "analysis_contract_ready": false,
+  "formal_c1_annotation_data_present": false,
+  "dry_run_is_formal_data": false,
+  "closeout_input_bundle": {
+    "bundle_version": "c1_closeout_input_bundle_v1",
+    "artifacts": [
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_canonical_annotations.csv",
+        "exists": true,
+        "sha256": "28f8e13eb58b02452d56b9c6bb155d9969a2fb9a0a096ddddea8abcd35a225f9"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\contracts\\2953929d2ded_assignment_manifest_C1_manual_draft_v3_1.csv",
+        "exists": true,
+        "sha256": "2953929d2ded1e7600fc35c46f805d8c61fdbe76a98a9f218e1777b141cfaa52"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\contracts\\82c9a778c885_assignment_manifest_C1_semi_draft_v3_1.csv",
+        "exists": true,
+        "sha256": "82c9a778c8852adf55cb27b3dff75b673668d75c83a7e9b87718f69ffb3abbc9"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\contracts\\4666c167ec83_calibration_reserve_draft_v3_1.csv",
+        "exists": true,
+        "sha256": "4666c167ec831f3b7b3c045652f64b4ed8878dfffbb98c9851f561079b795bc7"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\contracts\\d6d4a454e6a2_calibration_full_candidate_inventory_v3.csv",
+        "exists": true,
+        "sha256": "d6d4a454e6a25a9e12e9142707598c3094509263f00fd3d6b912470ea049a244"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_inputs\\raw_input_snapshot_manifest.csv",
+        "exists": true,
+        "sha256": "0ca16fbb316b4cd9c8c482bb90edeb7033cd42359e19d646d285e2d389d11a6f"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\tools\\label_studio\\label_studio_c1_xml_freeze_manifest_v1.json",
+        "exists": true,
+        "sha256": "7d1a5f6ab19adf067ca3b8ed9db2d4da816ca6e15f60e6a7941ff89b2cdc601e"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_export_merge_manifest.csv",
+        "exists": true,
+        "sha256": "1f21a026e732009868073e69ac41edbfeb98c599f4082be65997b61bc1d28213"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_runtime_task_mapping.csv",
+        "exists": true,
+        "sha256": "3066f7fd3bc397232a99ff77e70bbf689d70baf07b346d57eb500c8f5dd6b63a"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_annotation_version_disposition.csv",
+        "exists": true,
+        "sha256": "a7623230d9fcdd68b5ac08f10b6bb0d976d1ce1e48a4269211870fb0aed0458e"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_duplicate_process_evidence.csv",
+        "exists": true,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\calibration_r_u_evidence_C1.csv",
+        "exists": true,
+        "sha256": "d39d190ba5984ae8d93c2f698fc9776b03222837ac905875893930050462d276"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_canonical_meta_observations.csv",
+        "exists": true,
+        "sha256": "818c35ce6d74b7e40ceac3cc6474ef422f7e005df641a7f6d864371cee8b0096"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_canonical_geometry.jsonl",
+        "exists": true,
+        "sha256": "6a038da1e7b30eff1fbea975f6e8dc4cf8fb2d22b262794f0c699aaf7cd22fac"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_model_artifact_provenance.csv",
+        "exists": true,
+        "sha256": "6c77eb2ef297046ff15fced47b5ce005f6fa4fdca4d37b5826ffbf24aa227a3c"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_quality_annotations.csv",
+        "exists": true,
+        "sha256": "7cf8746643d227de8c2e6482d6161bf187d25eec6567c363d8f0fdd7bb0e9be7"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\worker_task_tag_observations_C1.csv",
+        "exists": true,
+        "sha256": "cb0e5ba5c86d9b5b6a28fe1da89cc589fab1e8b198fa2aca31c312962c9c5bdc"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\task_tag_three_state_summary_C1.csv",
+        "exists": true,
+        "sha256": "89f7ea32369eea53367e8e76403bd8b9a6bb9a96093d10e5b5902ebffcaca6cc"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\worker_response_style_C1.csv",
+        "exists": true,
+        "sha256": "e3e26cc036872c56d495d976e645cd986b662119adf558e6975d37f7aee17e8c"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\model_issue_harmonization_C1.csv",
+        "exists": true,
+        "sha256": "3b8688ab268e9e74e0136b5962bc3d32d650f4fa15f4176d40fe643dc05bef71"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\geometry_pairwise_similarity_C1.csv",
+        "exists": true,
+        "sha256": "02c32e9d93eb20cc0e69db7ffa9de89f88a3b96643170ff9f24a12c84331479d"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\geometry_worker_task_loo_C1.csv",
+        "exists": true,
+        "sha256": "5a7ee652129fef5b280fc657c03626f32080993107613f6a045fc578d73b670d"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\geometry_stability_C1.csv",
+        "exists": true,
+        "sha256": "0c9d7f82326bbf03e3ab3d749e74ae4e8c57fbcd266a69d5d4035d4e68480de1"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\geometry_metric_coverage_C1.csv",
+        "exists": true,
+        "sha256": "782081d7c6f6093cd1b5e607aefeb5251880a1247219615cfd6bed0988ae25e7"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\worker_scene_profile_candidates_C1.csv",
+        "exists": true,
+        "sha256": "f9fd061f3bb9316cea0580145d6f6d6ee6dabdf8684de05aad57c317a187ee95"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\routing_evidence_snapshot_C1.csv",
+        "exists": true,
+        "sha256": "884d41869365dfe54f4d6ba006e905a2589173c7050807d3c56fed544dfb61bc"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\routing_temporal_event_audit_C1.csv",
+        "exists": true,
+        "sha256": "3ad9210c6b1c2e775893983090ea81fff87d7ccf22541ba1a44bb55d8e7e6d60"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\routing_temporal_batch_decisions_C1.csv",
+        "exists": true,
+        "sha256": "3ad9210c6b1c2e775893983090ea81fff87d7ccf22541ba1a44bb55d8e7e6d60"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\routing_temporal_task_summary_C1.csv",
+        "exists": true,
+        "sha256": "3ad9210c6b1c2e775893983090ea81fff87d7ccf22541ba1a44bb55d8e7e6d60"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\routing_temporal_order_sensitivity_C1.csv",
+        "exists": true,
+        "sha256": "3ad9210c6b1c2e775893983090ea81fff87d7ccf22541ba1a44bb55d8e7e6d60"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\routing_temporal_contract_summary_C1.json",
+        "exists": true,
+        "sha256": "b68cda2889bc9287fdca77c918a0e5f973479fc6fefac1c4710a2b0f212b5e9e"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\docs\\thesis_main\\meta_label_three_state_rule_manifest_v1.json",
+        "exists": true,
+        "sha256": "2d9752c74950d87d61a510236075e13e69c5fea2a989043bdfe715aabbbcb593"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\docs\\thesis_main\\model_issue_harmonization_rule_manifest_v1.json",
+        "exists": true,
+        "sha256": "ef70c5fbff0e7b5e76b37749c9e4a2e69f6cd4571740d3cc1f2585fb14afaad1"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\docs\\thesis_main\\geometry_loo_candidate_rule_manifest_v1.json",
+        "exists": true,
+        "sha256": "1a5aca5404cf22b4b5c0f9164e665a9db7f915b41bb8021ff9f9fb5ff1820356"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\docs\\thesis_main\\sequential_routing_candidate_rule_manifest_v2.json",
+        "exists": true,
+        "sha256": "bfc532befe4e82cd47338b043a602b14124e1e86bef4dfca35da9d38a0f0d0d5"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\82dbcb1d0875_final_gold_records_v2_p1_closeout_corrected.jsonl",
+        "exists": true,
+        "sha256": "82dbcb1d08754476e4f2a447b70550bd297689c2c50df9f96aeb270b37f163d6"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\6ce1b4d3a38f_p1_combined_exports_for_exact_copy_audit.json",
+        "exists": true,
+        "sha256": "6ce1b4d3a38f3dbe7ce8fb0f0b3e4f56dca051f661f6c8bd3ae4abd106c25b7a"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\bba6c52cfa42_prescreen_active_time_source_audit.csv",
+        "exists": true,
+        "sha256": "bba6c52cfa421388abeb50272be4d0eccbb518f9f3129120be2d3532a4ba3046"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\ac216312875f_prescreen_canonical_annotations.csv",
+        "exists": true,
+        "sha256": "ac216312875fd79a72efe0141a4a5dc88c3b0618e9720efdffe4b30331f8776d"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\e469a0a55bae_prescreen_canonicalize_summary.json",
+        "exists": true,
+        "sha256": "e469a0a55bae5dea127347acb0e3af862d23f1b07db9e749e9aba0ae70099607"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\e81607405ce3_prescreen_closeout_consistency_gate_final_gold_v2.json",
+        "exists": true,
+        "sha256": "e81607405ce3c344d0de080197546122c429aedae46fcb0cf7bccd66f1660079"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\e0bc3e0fe27c_prescreen_closeout_run_config_final_gold_v2_20260701.json",
+        "exists": true,
+        "sha256": "e0bc3e0fe27ce5bbaea5f4e2c33b0154632198abf2f379854996de6dc983ae40"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\11cf06c285da_prescreen_completion_audit.csv",
+        "exists": true,
+        "sha256": "11cf06c285da0bf9be7b644e1b28741bf9d8521d2d776acf1231ab820b577b49"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\a2217817b00c_prescreen_consensus_guard_audit.csv",
+        "exists": true,
+        "sha256": "a2217817b00c38b5fd82c77875d914355d8d9cb5c72e1724f631e06a229a12fe"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\7e373ac056d4_prescreen_consensus_guard_summary.json",
+        "exists": true,
+        "sha256": "7e373ac056d48d766c66839cad0ba8f87a551456edf618790ac3090c8ed32565"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\728c2de92d44_prescreen_duplicate_annotation_audit.csv",
+        "exists": true,
+        "sha256": "728c2de92d4459c7e64f4ae8c30fcf0f33e9e324534f590e842d7a52571ee357"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\13c5ac6b3ef9_prescreen_final_gold_v2_correction_audit.json",
+        "exists": true,
+        "sha256": "13c5ac6b3ef96e9daa3084686e032cfea7b4f8a08aaa4fe529576740b8507af9"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\84661e917070_prescreen_geometry_eligibility_audit.csv",
+        "exists": true,
+        "sha256": "84661e917070cedd6276e41248c8f3f8445aa782d416782e7473b6aec62c7e4a"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\52f245ceaafc_prescreen_geometry_gold_alignment_audit.csv",
+        "exists": true,
+        "sha256": "52f245ceaafcf98bf638c45684cbaea1f3c93d5bacae27df59abae197bb55fbe"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\d73e3ba2a26a_prescreen_gold_alignment_summary.json",
+        "exists": true,
+        "sha256": "d73e3ba2a26af554bc120127144e7c5885151ef19f2d2f40fbfae9dad1241ce6"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\983c4c7a8799_prescreen_gold_status_audit.csv",
+        "exists": true,
+        "sha256": "983c4c7a879997286f308a5530c97847b4e39f660ffec5065cf6edfa6bdf47ff"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\d095411c4a7e_prescreen_gold_status_summary.json",
+        "exists": true,
+        "sha256": "d095411c4a7e629d923163f62a21d81dd543c15594a46d85881ea70fadfb88e6"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\d93e02f3efe1_prescreen_pass_count_decision.json",
+        "exists": true,
+        "sha256": "d93e02f3efe1a4112953421e0d090abd85e26120072244560bf2fcc49c7bb161"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\68dde2b5f4eb_prescreen_r0_snapshot.csv",
+        "exists": true,
+        "sha256": "68dde2b5f4ebf09515956e0e99198b43107e223e84795e875c4f0c9383955c35"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\69ea453ff928_prescreen_scope_adjudication.csv",
+        "exists": true,
+        "sha256": "69ea453ff928424606e9ccedb225132c410386bf1359fd3e4ff578ade6a981d5"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\e651ec5addb2_prescreen_scope_mixed_task_audit.csv",
+        "exists": true,
+        "sha256": "e651ec5addb2c5e2473e04e6b2b46989b9c544c09996e60fcbd04c875ea2d66a"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\87eed3bf2209_prescreen_scope_response_audit.csv",
+        "exists": true,
+        "sha256": "87eed3bf22091693d8a861ade040d5d6416476a6d497146c78d6b0a1ae037faa"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\f42ecbee33a6_prescreen_scope_summary.json",
+        "exists": true,
+        "sha256": "f42ecbee33a6161f82c0c0cce8553df21bc4bf16fd8536416436185841a69988"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\c9803f985353_prescreen_scope_unknown_gold_audit.csv",
+        "exists": true,
+        "sha256": "c9803f98535392cc9c4bfb0d059d3f4c8aef083e3b6f5f4ad5fee5a87631ccee"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\13a893759e7b_prescreen_synthetic_geometry_gt_binding_audit.csv",
+        "exists": true,
+        "sha256": "13a893759e7bbd58170bbaaec79fc7a2a2b21729c8dcd6948c7fb9c0b1508a3e"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\41d63aa0cb1f_prescreen_synthetic_scope_binding_audit.csv",
+        "exists": true,
+        "sha256": "41d63aa0cb1f50e258851a89c8151f80d893b69ed401c5919298e77e5ff0c4d2"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\0e14c358ba53_prescreen_undercoverage_risk_audit.csv",
+        "exists": true,
+        "sha256": "0e14c358ba53bdea2cc36390a8030329745e7f052c1525e228340146ccc02120"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\d68a19c8a97a_prescreen_undercoverage_risk_summary.json",
+        "exists": true,
+        "sha256": "d68a19c8a97af029f5da006e89a1b24f5dc9cc8a516ef6354ce1c62d88c5f926"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\8a8575d1229a_prescreen_worker_admission.csv",
+        "exists": true,
+        "sha256": "8a8575d1229aab6e2cea4e49af7fab39de7aa308923c73875019bbba99b3b554"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\359f2edeee13_prescreen_worker_gold_alignment_audit.csv",
+        "exists": true,
+        "sha256": "359f2edeee1317add51da7fc407708de8cbf350b8214f816e16964842716e25e"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\80b8eb5544dc_prescreen_worker_gold_alignment_summary.json",
+        "exists": true,
+        "sha256": "80b8eb5544dc2a018160a4cc000140396981520122c79224e9b2868d5163e375"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\402872b80cb4_prescreen_worker_scope_summary.csv",
+        "exists": true,
+        "sha256": "402872b80cb4fb82637bf2de0517bdb1291819ed196daf1895d080e9b228df50"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\07bd598dd424_prescreen_worker_screening_rollup.csv",
+        "exists": true,
+        "sha256": "07bd598dd424c0a522ee1d67616008cfed61dad7ac940ed0c14ffba3d0d49b16"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\p1_closeout\\b9c6e750a597_prescreen_worker_screening_summary.json",
+        "exists": true,
+        "sha256": "b9c6e750a5977d2e4ca18d4db29dd6f30a2f69e821921909b5a7f02110e216aa"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_task_outcome_reference.csv",
+        "exists": true,
+        "sha256": "c52eb161885de31addf1bac608ecb013fdf33707c2bcd4c6f27662856fb6008e"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\worker_profile_sidecar_C1.summary.json",
+        "exists": true,
+        "sha256": "5c058d68d3b683d2fc7b75161780d29f6f2cc6a7c024b9fb16e501859dcdebab"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\model_issue_harmonization_C1.summary.json",
+        "exists": true,
+        "sha256": "0e4608ce62de72548fd4371e1b8bd65c8d5b7a9081ae9b40418f1d8e3b9a70bb"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\exports\\9f8b6051f52a_project-66-at-2026-07-23-11-47-c569aec7.json",
+        "exists": true,
+        "sha256": "9f8b6051f52a44a3e1a3bfdb9ce94d7b670f959a35e4c6fb4d3a7deb192f2954"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\exports\\63f4f8b2087f_project-67-at-2026-07-23-11-48-4ad2a7cf.json",
+        "exists": true,
+        "sha256": "63f4f8b2087fa1787f9fc7be6699310fdbd6e423c60b8ddf052fb3ba9eb29264"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\exports\\30d67f4f6d44_project-68-at-2026-07-23-11-48-58fa3be4.json",
+        "exists": true,
+        "sha256": "30d67f4f6d44be3f27c344993a268688ee11c24a8672f1b911c9efb14035842d"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\exports\\6fcb4b352790_project-69-at-2026-07-23-17-22-8bc6c5a7.json",
+        "exists": true,
+        "sha256": "6fcb4b352790a5235130ca362f286eaa9c4da0bdad390681eb46566333cd95bf"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\exports\\3487402b2e6c_project-71-at-2026-07-23-17-22-45ab62d2.json",
+        "exists": true,
+        "sha256": "3487402b2e6c87c47b819661f8ef26de1989aa0d027806adc38bf61408f360e2"
+      },
+      {
+        "path": "D:\\Work\\HOHONET\\analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_snapshots\\exports\\fbb2ccc52e3d_project-72-at-2026-07-23-17-22-3f6bf429.json",
+        "exists": true,
+        "sha256": "fbb2ccc52e3dc005ae44f2879e7652ef536f8cbf7228ae9f6a2892a71fde7aff"
+      }
+    ],
+    "bundle_sha256": "3236a9fed21b8601d8f9def0e16751d69e3aa600c2b5922d152a794fa1332adb"
+  },
+  "canonicalization_summary": {
+    "n_exports": 6,
+    "n_tasks_seen": 206,
+    "n_raw_annotation_rows": 662,
+    "n_canonical_rows": 649,
+    "n_duplicate_groups": 5,
+    "n_duplicate_same_geometry_groups": 2,
+    "n_revision_groups": 3,
+    "n_input_duplicate_rows": 0,
+    "n_pending_duplicate_review_groups": 5,
+    "created_at": "2026-07-23T18:27:47.468521+00:00",
+    "round_id": "C1",
+    "runtime_task_count": 206,
+    "outside_assignment_submission_count": 9,
+    "duplicate_worker_task_submission_count": 0,
+    "duplicate_review_pending_count": 5,
+    "duplicate_review_resolved_count": 0,
+    "duplicate_input_repeat_count": 0,
+    "duplicate_adjudication_csv": "",
+    "duplicate_review_queue_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_duplicate_annotation_review_queue.csv",
+    "duplicate_forensic_audit_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_duplicate_annotation_forensic_audit.csv",
+    "annotation_version_disposition_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_annotation_version_disposition.csv",
+    "annotation_version_disposition_sha256": "a7623230d9fcdd68b5ac08f10b6bb0d976d1ce1e48a4269211870fb0aed0458e",
+    "annotation_version_disposition_count": 662,
+    "duplicate_process_evidence_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_duplicate_process_evidence.csv",
+    "duplicate_process_evidence_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "duplicate_adjudication_template_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_duplicate_adjudication_template.csv",
+    "reserve_realized_submission_count": 0,
+    "missing_submission_count": 111,
+    "runtime_key_collision_count": 0,
+    "planned_mapping_missing_count": 0,
+    "active_time_primary_ineligible_count": 649,
+    "active_time_log_missing_count": 0,
+    "active_time_task_level_fallback_count": 68,
+    "active_time_lead_time_fallback_count": 581,
+    "active_time_ambiguous_count": 0,
+    "active_time_sensitivity_eligible_count": 649,
+    "unassigned_active_time_seconds_total": 9355.0,
+    "unknown_annotation_event_count_total": 1602,
+    "unknown_annotation_session_count_total": 453,
+    "rows_with_unknown_audit_count": 418,
+    "workers_with_unknown_audit_count": 17,
+    "known_unknown_oscillation_row_count": 0,
+    "system_collection_issue_row_count": 418,
+    "exact_annotation_primary_count": 0,
+    "task_level_sensitivity_count": 68,
+    "active_log_primary_missing_count": 649,
+    "active_log_missing_count": 0,
+    "active_log_missing_rate": 0.0,
+    "canonical_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_canonical_annotations.csv",
+    "raw_input_manifest": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\raw_inputs\\raw_input_snapshot_manifest.csv",
+    "raw_input_manifest_sha256": "0ca16fbb316b4cd9c8c482bb90edeb7033cd42359e19d646d285e2d389d11a6f",
+    "independence_audit_source_path": "",
+    "independence_audit_source_sha256": "",
+    "independence_audit_snapshot_path": "",
+    "independence_audit_snapshot_sha256": "",
+    "independence_audit_row_count": 0,
+    "independence_audit_valid_count": 0,
+    "independence_audit_duplicate_count": 0,
+    "independence_audit_missing_identity_count": 0,
+    "independence_audit_unresolved_count": 649,
+    "retrospective_amendment_source_path": "",
+    "retrospective_amendment_source_sha256": "",
+    "retrospective_amendment_snapshot_path": "",
+    "retrospective_amendment_snapshot_sha256": "",
+    "primary_active_time_policy": "owner-validated project+task+worker+annotation exact log match only; task fallback and lead_time never primary",
+    "structural_integrity_passed": false,
+    "collection_completeness_passed": false,
+    "require_complete": false,
+    "passed": false,
+    "passed_semantics": "structural_only_not_collection_complete",
+    "collision_output_use": "downstream_eligible_if_other_blockers_absent",
+    "canonical_evidence_sidecars": {
+      "schema_version": "paper_a_vfinal_sidecar_v3",
+      "rule_version": "c1_canonical_evidence_v2",
+      "input_status": "precloseout_rehearsal",
+      "n_meta_observations": 649,
+      "n_geometry_rows": 649,
+      "n_model_provenance_rows": 206,
+      "n_annotation_version_dispositions": 662,
+      "annotation_version_disposition_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\c1_annotation_version_disposition.csv",
+      "annotation_version_disposition_sha256": "a7623230d9fcdd68b5ac08f10b6bb0d976d1ce1e48a4269211870fb0aed0458e",
+      "formal_c1_annotation_data_present": false,
+      "interpretation_allowed": false,
+      "dry_run": true,
+      "canonical_registry_bijection_valid": true,
+      "blockers": []
+    },
+    "geometry_sidecars": {
+      "n_geometry_rows": 649,
+      "n_tasks": 112,
+      "n_pairwise_rows": 0,
+      "dry_run": true,
+      "interpretation_allowed": false
+    },
+    "model_issue_harmonization": {
+      "n_rows": 649,
+      "n_behavior_inferred": 0,
+      "n_retrospective_amendments_joined": 0,
+      "amendment_total_rows": 0,
+      "amendment_valid_unique_rows": 0,
+      "amendment_needed_rows": 32,
+      "amendment_matched_rows": 0,
+      "amendment_joined_rows": 0,
+      "amendment_orphan_rows": 0,
+      "amendment_missing_rows": 32,
+      "amendment_blockers": {
+        "historical_acceptable_missing_amendment": 32
+      },
+      "amendment_complete": false,
+      "dry_run": true,
+      "interpretation_allowed": false
+    },
+    "formal_c1_annotation_data_present": false,
+    "failure_disposition_csv": "",
+    "failure_disposition_audit_csv": "analysis_results\\c1_precloseout_rehearsal_20260724_9ae904848eb0\\failure_disposition_audit_C1.csv",
+    "failure_attribution_counts": {
+      "not_evaluable": 649
+    },
+    "interpretation_allowed": false,
+    "blockers": [
+      "outside_assignment_submission_detected",
+      "duplicate_review_pending",
+      "independence_not_evaluable",
+      "amendment_historical_acceptable_missing_amendment"
+    ],
+    "warnings": [
+      "unknown_annotation_audit_present"
+    ]
+  },
+  "formal_adjudication": {
+    "valid": false,
+    "reason": "missing_formal_closeout_adjudication_manifest"
+  },
+  "raw_snapshot_manifest_fresh": true,
+  "formal_worker_state": {
+    "valid": false,
+    "reason": "missing_formal_worker_state_or_manifest"
+  },
+  "profile_freeze_preconditions_satisfied": false,
+  "profile_freeze_envelope_valid": false
+}

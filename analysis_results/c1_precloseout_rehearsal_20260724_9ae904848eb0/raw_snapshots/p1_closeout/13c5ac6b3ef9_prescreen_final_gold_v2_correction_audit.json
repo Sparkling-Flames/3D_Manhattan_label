@@ -1,0 +1,34 @@
+{
+  "status": "applied",
+  "source_final_gold_sha256": "06692cc9163d0118d9558ee1a9c2ee96770720e53dd45cd50f5cab34d4f57dd7",
+  "corrected_final_gold_v2_sha256": "82dbcb1d08754476e4f2a447b70550bd297689c2c50df9f96aeb270b37f163d6",
+  "corrections": [
+    {
+      "task_id": "564",
+      "correction_type": "geometry_contract",
+      "old_pair_count": 8,
+      "new_pair_count": 4,
+      "old_keypoint_count": 16,
+      "new_keypoint_count": 8,
+      "affected_runtime_tasks": [
+        "3065",
+        "3137"
+      ]
+    },
+    {
+      "task_id": "696",
+      "correction_type": "scope_contract",
+      "old_final_scope_binary": "in_scope",
+      "old_final_scope_alias": "normal",
+      "new_final_scope_binary": "oos",
+      "new_final_scope_subtype": "oos_insufficient",
+      "new_final_scope_alias": "oos_insufficient",
+      "old_geometry_gold_ready": true,
+      "new_geometry_gold_ready": false,
+      "affected_runtime_tasks": [
+        "3077",
+        "3149"
+      ]
+    }
+  ]
+}

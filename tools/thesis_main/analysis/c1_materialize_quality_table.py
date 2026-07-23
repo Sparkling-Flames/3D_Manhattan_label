@@ -483,7 +483,7 @@ def _canonical_meta_freshness(canonical_csv: Path, meta_rows: list[dict[str, str
             reasons.append("canonical_registry_sha_mismatch")
         source = Path(safe(row.get("source_artifact")))
         if not source.is_absolute():
-            source = canonical_csv.parent / source
+            source = source if source.exists() else canonical_csv.parent / source
         source_sha = safe(row.get("source_sha256"))
         if not source.exists() or not source_sha or sha256_file(source) != source_sha or (safe(row.get("source_export_sha256")) and safe(row.get("source_export_sha256")) != source_sha):
             reasons.append("raw_export_sha_mismatch")
@@ -640,11 +640,14 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
                 and safe(outcome.get("reference_identity"))
                 and (input_status != "formal" or (reference_excludes_worker and safe(outcome.get("reference_evidence_status")) in {"evaluable", "valid", "adjudicated", "not_required"} and reference_mode in {"expert_adjudicated", "expert_hard_gt", "worker_excluded_loo_consensus", "global_consensus_fallback"}))
             )
+            review_provenance_valid = input_status != "formal" or bool(
+                safe(outcome.get("reviewed_by")) and safe(outcome.get("reviewed_at"))
+            )
             valid = (
                 final_scope in {"in_scope", "oos"}
                 and safe(outcome.get("scope_resolution_status")) == "resolved"
                 and safe(outcome.get("adjudication_status")) in {"approved", "resolved"}
-                and bool(safe(outcome.get("reviewed_by")) and safe(outcome.get("reviewed_at")))
+                and review_provenance_valid
                 and reference_contract_valid
             )
             if not valid:
