@@ -63,14 +63,14 @@ def _raw_order_pairs(array: np.ndarray, width: int, threshold_ratio: float) -> l
         return []
     threshold = float(width) * float(threshold_ratio)
     pairs = []
-    for top, bottom in array.reshape(-1, 2, 2):
-        dx = abs(float(top[0]) - float(bottom[0])) % float(width)
+    for first, second in array.reshape(-1, 2, 2):
+        dx = abs(float(first[0]) - float(second[0])) % float(width)
         dx = min(dx, float(width) - dx)
-        if dx >= threshold or float(top[1]) >= float(bottom[1]):
+        if dx >= threshold or abs(float(first[1]) - float(second[1])) < 1.0:
             return []
-        x1, x2 = float(top[0]), float(bottom[0])
+        x1, x2 = float(first[0]), float(second[0])
         x = ((max(x1, x2) + min(x1, x2) + width) / 2.0) % width if abs(x1 - x2) > width / 2 else (x1 + x2) / 2.0
-        pairs.append({"x": x, "y_ceiling": float(top[1]), "y_floor": float(bottom[1])})
+        pairs.append({"x": x, "y_ceiling": min(float(first[1]), float(second[1])), "y_floor": max(float(first[1]), float(second[1]))})
     xs = [row["x"] % width for row in pairs]
     if any(min(abs(x - y), width - abs(x - y)) < 1e-6 for index, x in enumerate(xs) for y in xs[index + 1 :]):
         return []

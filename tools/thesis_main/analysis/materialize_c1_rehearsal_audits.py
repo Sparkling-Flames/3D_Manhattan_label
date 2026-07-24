@@ -162,7 +162,11 @@ def materialize_completion_support(
     }
 
 
-def materialize_structural_validation(canonical_csv: Path, geometry_jsonl: Path, output_dir: Path, *, parser_amendment: Path = Path("docs/thesis_main/c1_geometry_parser_amendment_v1.json")) -> dict[str, Any]:
+def materialize_structural_validation(
+    canonical_csv: Path, geometry_jsonl: Path, output_dir: Path, *,
+    parser_amendment: Path = Path("docs/thesis_main/c1_geometry_parser_amendment_v1.json"),
+    disposition_csv: Path | None = None,
+) -> dict[str, Any]:
     canonical = {row["canonical_annotation_id"]: row for row in read_csv(canonical_csv)}
     amendment_sha = hashlib.sha256(parser_amendment.read_bytes()).hexdigest()
     rows = []
@@ -196,6 +200,42 @@ def materialize_structural_validation(canonical_csv: Path, geometry_jsonl: Path,
             "analysis_inclusion": "geometry_and_structural" if status == "passed" else "structural_only" if status == "failed_confirmed_worker_submission" else "excluded_with_reason",
             "worker_reliability_eligibility": status == "passed" and annotation.get("independence_status") == "independent",
         })
+    preliminary = output_dir / "c1_structural_validation_pre_disposition.csv"
+    write_csv(preliminary, rows)
+    source_sha = hashlib.sha256(preliminary.read_bytes()).hexdigest()
+    dispositions = {row.get("canonical_annotation_id", ""): row for row in read_csv(disposition_csv)} if disposition_csv and disposition_csv.exists() else {}
+    applied = invalid = 0
+    required = (
+        "canonical_annotation_id", "source_structural_audit_sha256", "final_scope", "detected_issue",
+        "final_failure_attribution", "structural_denominator_eligible", "worker_failure_numerator",
+        "reviewed_by", "reviewed_at", "reason",
+    )
+    for row in rows:
+        disposition = dispositions.get(row["canonical_annotation_id"])
+        if not disposition:
+            continue
+        valid = (
+            all(str(disposition.get(field, "")).strip() for field in required)
+            and disposition["source_structural_audit_sha256"] == source_sha
+            and disposition["detected_issue"] == row["structural_failure_reason"]
+            and disposition["final_failure_attribution"] in {"worker_caused_structural_failure", "not_evaluable"}
+        )
+        if not valid:
+            invalid += 1
+            continue
+        attribution = disposition["final_failure_attribution"]
+        row.update({
+            "final_scope": disposition["final_scope"], "failure_attribution": attribution,
+            "structural_validation_status": "failed_confirmed_worker_submission" if attribution == "worker_caused_structural_failure" else "not_evaluable",
+            "worker_attributable": attribution == "worker_caused_structural_failure",
+            "analysis_inclusion": "structural_only" if attribution == "worker_caused_structural_failure" else "excluded_with_reason",
+            "structural_denominator_eligible": _truth(disposition["structural_denominator_eligible"]),
+            "worker_structural_failure_numerator": _truth(disposition["worker_failure_numerator"]),
+            "structural_disposition_applied": True, "structural_disposition_source_sha256": source_sha,
+            "structural_disposition_reviewed_by": disposition["reviewed_by"], "structural_disposition_reviewed_at": disposition["reviewed_at"],
+            "structural_disposition_reason": disposition["reason"],
+        })
+        applied += 1
     write_csv(output_dir / "structural_validation_audit.csv", rows)
     write_csv(output_dir / "c1_parser_amendment_application_audit.csv", [
         {**row, "regression_identity": ":".join(str(row.get(field, "")) for field in ("project_id", "ls_runtime_task_id", "task_id", "worker_id", "annotation_id"))}
@@ -203,7 +243,7 @@ def materialize_structural_validation(canonical_csv: Path, geometry_jsonl: Path,
     ])
     counts = Counter(row["structural_validation_status"] for row in rows)
     failures = Counter(row["failure_attribution"] for row in rows)
-    return {"n_rows": len(rows), "structural_status_counts": dict(counts), "failure_attribution_counts": dict(failures), "parser_amendment_sha256": amendment_sha, "parser_amendment_application_count": sum(row.get("pairing_method") == "raw_order_pairing" and _truth(row.get("unordered_pairing_ambiguous")) for row in rows)}
+    return {"n_rows": len(rows), "structural_status_counts": dict(counts), "failure_attribution_counts": dict(failures), "parser_amendment_sha256": amendment_sha, "parser_amendment_application_count": sum(row.get("pairing_method") == "raw_order_pairing" and _truth(row.get("unordered_pairing_ambiguous")) for row in rows), "structural_pre_disposition_sha256": source_sha, "applied_disposition_count": applied, "invalid_disposition_count": invalid}
 
 
 def _raw_points(raw_result: Any) -> list[list[float]]:
@@ -548,15 +588,25 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
     return summary
 
 
-def materialize_independence(meta_csv: Path, output_dir: Path, *, disposition_csv: Path | None = None) -> dict[str, Any]:
+def materialize_independence(
+    meta_csv: Path, output_dir: Path, *, disposition_csv: Path | None = None,
+    project_disposition_csv: Path | None = None,
+) -> dict[str, Any]:
     source_sha = hashlib.sha256(meta_csv.read_bytes()).hexdigest()
     disposition_rows = read_csv(disposition_csv) if disposition_csv and disposition_csv.exists() else []
     dispositions = {row.get("canonical_annotation_id", ""): row for row in disposition_rows}
+    project_rows = read_csv(project_disposition_csv) if project_disposition_csv and project_disposition_csv.exists() else []
+    projects = {(row.get("project_id", ""), row.get("condition", "")): row for row in project_rows}
     rows, queue = [], []
     for row in read_csv(meta_csv):
         disposition = dispositions.get(row.get("canonical_annotation_id", ""), {})
         disposition_valid = bool(disposition) and all(str(disposition.get(field, "")).strip() for field in ("canonical_annotation_id", "provenance_status", "copy_risk_status", "parent_annotation_id", "parent_owner_id", "parent_cross_owner", "independence_status", "reviewed_by", "reviewed_at", "source_meta_sha256")) and disposition.get("source_meta_sha256") == source_sha
-        effective = {**row, **disposition} if disposition_valid else row
+        project = projects.get((row.get("project_id", ""), row.get("condition", "")), {})
+        project_valid = bool(project) and all(str(project.get(field, "")).strip() for field in (
+            "project_id", "condition", "source_meta_sha256", "provenance_status", "copy_risk_status",
+            "parent_field_coverage_complete", "cross_owner_parent_count", "reviewed_by", "reviewed_at",
+        )) and project.get("source_meta_sha256") == source_sha and _truth(project.get("parent_field_coverage_complete")) and int(project.get("cross_owner_parent_count") or -1) == 0
+        effective = {**row, **project, **disposition} if disposition_valid else {**row, **project} if project_valid else row
         identity_complete = all(str(row.get(field, "")).strip() for field in ("project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "canonical_annotation_id"))
         cross_owner = _truth(effective.get("parent_cross_owner"))
         copy_risk = effective.get("copy_risk_status") in {"confirmed_copy", "cross_owner_parent"}
@@ -574,6 +624,7 @@ def materialize_independence(meta_csv: Path, output_dir: Path, *, disposition_cs
             "parent_annotation_id": effective.get("parent_annotation_id", ""), "parent_owner_id": effective.get("parent_owner_id", ""),
             "parent_cross_owner": cross_owner, "copy_risk_status": effective.get("copy_risk_status", ""),
             "provenance_status": effective.get("provenance_status", ""), "disposition_joined": disposition_valid,
+            "project_disposition_joined": project_valid,
             "disposition_source_sha256": source_sha if disposition_valid else "", "reviewed_by": disposition.get("reviewed_by", ""), "reviewed_at": disposition.get("reviewed_at", ""),
             "independence_status": status, "independence_basis": basis, "worker_wide_contamination": False,
         }
@@ -581,7 +632,7 @@ def materialize_independence(meta_csv: Path, output_dir: Path, *, disposition_cs
         if status == "not_evaluable": queue.append(evidence)
     write_csv(output_dir / "c1_independence_evidence.csv", rows)
     write_csv(output_dir / "c1_independence_review_queue.csv", queue)
-    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "n_review": len(queue), "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
+    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "n_review": len(queue), "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "project_disposition_manifest_sha256": hashlib.sha256(project_disposition_csv.read_bytes()).hexdigest() if project_disposition_csv and project_disposition_csv.exists() else "", "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
     (output_dir / "c1_independence_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
 
@@ -594,6 +645,16 @@ def apply_independence(canonical_csv: Path, independence_csv: Path) -> None:
         row["independence_status"] = item.get("independence_status", "not_evaluable")
         row["independence_audit_status"] = item.get("independence_basis", "missing_independence_evidence")
     write_csv(canonical_csv, rows, list(rows[0]) if rows else None)
+
+
+def rebind_canonical_meta_registry(canonical_csv: Path, meta_csv: Path) -> str:
+    """Rebind meta rows after deterministic derived columns change canonical bytes."""
+    canonical_sha = hashlib.sha256(canonical_csv.read_bytes()).hexdigest()
+    rows = read_csv(meta_csv)
+    for row in rows:
+        row["canonical_registry_sha256"] = canonical_sha
+    write_csv(meta_csv, rows, list(rows[0]) if rows else None)
+    return canonical_sha
 
 
 def materialize_row_analysis_eligibility(
@@ -631,6 +692,7 @@ def materialize_row_analysis_eligibility(
         loo_reasons = [*common_reasons]
         if structural_status != "passed": loo_reasons.append("structural_not_passed")
         if loo.get(identity, {}).get("q_LOO_tu", "") in {"", None}: loo_reasons.append("loo_consensus_not_evaluable")
+        if loo.get(identity, {}).get("task_consensus_status", "") not in {"", "stable"}: loo_reasons.append("task_consensus_not_stable")
         structural_reasons = [*common_reasons]
         if structural_status not in {"passed", "failed_confirmed_worker_submission"}: structural_reasons.append("structural_attribution_not_evaluable")
         output.append({
@@ -749,17 +811,18 @@ def materialize_three_track_worker_state(
     for completion in read_csv(completion_csv):
         worker = completion["worker_id"]
         task_values = loo_by_worker[worker]
-        values = [value for _task, value in task_values]
+        by_task = defaultdict(list)
+        for task, value in task_values:
+            by_task[task].append(value)
+        task_means = {task: sum(items) / len(items) for task, items in by_task.items()}
+        values = list(task_means.values())
         bootstrap = []
         if values:
             rng = random.Random(f"c1-loo-{worker}-20260724")
-            by_task = defaultdict(list)
-            for task, value in task_values:
-                by_task[task].append(value)
-            tasks = sorted(by_task)
+            tasks = sorted(task_means)
             for _ in range(2000):
                 sampled = [rng.choice(tasks) for _task in tasks]
-                bootstrap.append(sum(sum(by_task[task]) / len(by_task[task]) for task in sampled) / len(sampled))
+                bootstrap.append(sum(task_means[task] for task in sampled) / len(sampled))
             bootstrap.sort()
         opportunity = struct[worker]["opportunity"]
         global_row = globals_.get(worker, {})

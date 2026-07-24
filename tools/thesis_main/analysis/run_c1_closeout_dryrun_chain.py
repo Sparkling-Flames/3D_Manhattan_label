@@ -300,6 +300,8 @@ def finalize_existing_closeout(output_dir: Path, formal_closeout_adjudication_ma
     if any(not item.get("exists") or not Path(item["path"]).exists() or sha256_file(Path(item["path"])) != item.get("sha256") for item in bundle.get("artifacts", [])):
         raise ValueError("prepared closeout bundle is stale")
     gate = json.loads(gate_path.read_text(encoding="utf-8"))
+    if gate.get("input_status") != "formal":
+        raise ValueError("day1-finalize refuses rehearsal bundles; run day1-formal-audit first")
     gate["closeout_input_bundle"] = bundle
     bundle_by_path = {str(canonical_path(item["path"])): item for item in bundle.get("artifacts", [])}
 

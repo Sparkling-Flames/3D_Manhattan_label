@@ -402,6 +402,21 @@ def compute_layout_mask_iou(
         meta["reason"] = "insufficient_pairs"
         return None, meta
 
+    return compute_layout_mask_iou_from_normalized_pairs(pred_pairs, ref_pairs, width=width, height=height)
+
+
+def compute_layout_mask_iou_from_normalized_pairs(
+    pred_pairs: list[dict[str, float]],
+    ref_pairs: list[dict[str, float]],
+    width: int = 1024,
+    height: int = 512,
+) -> tuple[float | None, dict[str, object]]:
+    """Compute layout IoU from already validated pairs without pairing again."""
+    meta: dict[str, object] = {"pred_pair_count": len(pred_pairs), "ref_pair_count": len(ref_pairs), "width": width, "height": height}
+    if len(pred_pairs) < 2 or len(ref_pairs) < 2:
+        meta["reason"] = "insufficient_pairs"
+        return None, meta
+
     def _mask(pairs: list[dict[str, float]]) -> np.ndarray:
         xs = np.asarray([p["x"] for p in pairs], dtype=np.float32)
         y_ceil = np.asarray([p["y_ceiling"] for p in pairs], dtype=np.float32)

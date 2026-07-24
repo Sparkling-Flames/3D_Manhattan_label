@@ -651,7 +651,6 @@ def materialize(canonical_csv: Path, output_dir: Path = DEFAULT_OUTPUT_DIR, cand
                 and reference_contract_valid
             )
             if not valid:
-                outcome_blockers.append("task_outcome_contract_invalid")
                 continue
             if all(exact_key[:2]):
                 outcomes[exact_key] = outcome

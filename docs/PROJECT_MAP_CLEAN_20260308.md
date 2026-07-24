@@ -105,6 +105,6 @@
   分层物化；缺 C2-B 时 Full 自动禁用。
 - `tools/thesis_main/analysis/materialize_main_inference.py`：T1 image-level 与 V1 ITT 的 manifest/SHA 绑定
   cluster bootstrap 推断入口。
-- `tools/thesis_main/analysis/materialize_c2_task_risk.py`：固定 HoHoNet/LHFeat、结构输出与 C1-only `d_cal_A` 的候选任务风险入口；缺少冻结依赖时 fail-closed。
+- `tools/thesis_main/analysis/materialize_c2_task_risk.py`：固定 HoHoNet/LHFeat、结构输出、C1-only `d_cal_A` 与综合风险 Q75 的候选任务风险入口；缺少冻结依赖时 assignment fail-closed。
 - `tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`：P1→C1 Spearman/Kendall、worker bootstrap 与 range-restriction 审计入口。
-- `tools/thesis_main/analysis/run_c1_closeout_launch.py`：C1 Day 1 审计/冻结与 C2-B Day 2 设计、分发、import smoke 的两日入口。
+- `tools/thesis_main/analysis/run_c1_closeout_launch.py`：C1 Day 1 rehearsal、formal-audit、冻结与 C2-B Day 2 设计、分发、import smoke 的两日入口。

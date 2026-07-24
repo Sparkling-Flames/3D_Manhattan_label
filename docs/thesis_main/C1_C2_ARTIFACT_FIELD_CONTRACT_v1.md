@@ -1,5 +1,11 @@
 # C1/C2 工件字段合同 v1
 
+## 2026-07-24 风险与旧 Reserve 复用补充
+
+- 四个风险通道按冻结 C1 分布转换为经验 percentile，`max(percentile) >= Q75` 定义 stress；任一通道、layout 或冻结 C1 risk reference 缺失时 `assignment_eligible=false`。
+- 旧 `Calibration_reserve` 13 图只作为 `legacy_human_curated_candidate` 来源标记进入完整 inventory，并保留原 rank/reason/manifest SHA；它不构成必选任务包，也不得复用旧 assignment/import。
+- 正式入口为 `day1-audit -> day1-formal-audit -> day1-finalize -> day2-build`。formal audit 只接受 SHA 验证通过的 raw snapshot manifest；finalize 拒绝 rehearsal bundle；Day 2 task pool 必须与冻结 risk summary 的输出 SHA 一致。
+
 > 状态：Paper A vFinal 正式字段合同
 > 更新：2026-07-18
 > 上位真源：`ROUND_BASED_EXECUTION_PROTOCOL_v1.md`、`ROUND_BASED_ASSIGNMENT_SOP_v1.md`、`STATISTICAL_ANALYSIS_PLAN_v1.md`

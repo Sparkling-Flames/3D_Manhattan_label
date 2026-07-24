@@ -84,20 +84,51 @@ def _knn(candidate: np.ndarray, reference: np.ndarray, k: int = 5) -> float:
     return float(np.mean(np.partition(distances, min(k, len(distances)) - 1)[:min(k, len(distances))]))
 
 
+def _composite_q75_bucket(values: dict[str, float], references: dict[str, list[float]]) -> tuple[str, dict[str, float]]:
+    percentiles = {
+        name: sum(reference <= values[name] for reference in refs) / len(refs)
+        for name, refs in references.items() if refs and name in values
+    }
+    return ("stress" if len(percentiles) == 4 and max(percentiles.values()) >= .75 else "ordinary"), percentiles
+
+
 def materialize(
     inventory_csv: Path, layout_dir: Path, c1_geometry_jsonl: Path, output_dir: Path, *,
     input_status: str, checkpoint: Path | None = None, reference_dir: Path | None = None,
-    extract_lhfeat: bool = False,
+    extract_lhfeat: bool = False, c1_risk_reference_csv: Path | None = None,
 ) -> dict[str, Any]:
     inventory = _read(inventory_csv)
     c1_scores = []
+    c1_channels: dict[str, list[float]] = {name: [] for name in ("d_model_feat", "d_model_feat_local_max", "g_model_struct", "d_cal_A")}
     for line in c1_geometry_jsonl.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
         row = json.loads(line); geometry = normalize_geometry(row.get("corners_px") or [])
         if geometry["valid"]:
-            c1_scores.append(min(1.0, abs(int(geometry["n_pairs"]) - 6) / 8))
+            g_score = min(1.0, abs(int(geometry["n_pairs"]) - 6) / 8)
+            c1_scores.append(g_score)
+            c1_channels["g_model_struct"].append(g_score)
+        for name in c1_channels:
+            try:
+                if name != "g_model_struct":
+                    c1_channels[name].append(float(row[name]))
+            except (KeyError, TypeError, ValueError):
+                pass
     c1_scores.sort()
+    if c1_risk_reference_csv:
+        reference_rows = _read(c1_risk_reference_csv)
+        c1_channels = {name: [] for name in c1_channels}
+        for row in reference_rows:
+            for name in c1_channels:
+                try: c1_channels[name].append(float(row[name]))
+                except (KeyError, TypeError, ValueError): pass
+    support_names = ("d_model_feat", "d_model_feat_local_max", "g_model_struct")
+    support_matrix = np.asarray(list(zip(*(c1_channels[name] for name in support_names))), dtype=float) if all(c1_channels[name] for name in support_names) and len({len(c1_channels[name]) for name in support_names}) == 1 else np.empty((0, 3))
+    support_scale = support_matrix.std(axis=0) if len(support_matrix) else np.ones(3)
+    support_scale[support_scale == 0] = 1.0
+    if len(support_matrix) and not c1_channels["d_cal_A"]:
+        normalized = support_matrix / support_scale
+        c1_channels["d_cal_A"] = [float(np.min(np.linalg.norm(np.delete(normalized, index, axis=0) - normalized[index], axis=1))) if len(normalized) > 1 else 0.0 for index in range(len(normalized))]
     feature_status = "not_requested"
     candidate_features: dict[str, tuple[np.ndarray, np.ndarray]] = {}
     reference_features: dict[str, tuple[np.ndarray, np.ndarray]] = {}
@@ -120,23 +151,34 @@ def materialize(
     for item in inventory:
         task = item.get("task_id", ""); layout = _layout_features(layout_dir / f"{task}.json")
         g = layout.get("g_model_struct")
-        d_cal = (sum(value <= float(g) for value in c1_scores) / len(c1_scores)) if c1_scores and g != "" else ""
+        d_cal = ""
         feature = candidate_features.get(Path(item.get("source_path", "")).stem)
         global_distance = _knn(feature[0], ref_global) if feature and ref_global is not None else ""
         local_distance = _knn(feature[1], ref_local) if feature and ref_local is not None else ""
-        route = float(d_cal) if d_cal != "" else ""
+        if global_distance != "" and local_distance != "" and g != "" and len(support_matrix):
+            vector = np.asarray([global_distance, local_distance, g], dtype=float) / support_scale
+            d_cal = _knn(vector, support_matrix / support_scale)
+        channels = {"d_model_feat": global_distance, "d_model_feat_local_max": local_distance, "g_model_struct": g, "d_cal_A": d_cal}
+        numeric = {name: float(value) for name, value in channels.items() if value != ""}
+        bucket, percentiles = _composite_q75_bucket(numeric, c1_channels)
+        complete = len(numeric) == 4 and all(c1_channels.values()) and layout.get("postprocess_valid") is True
         rows.append({
             **item, **layout, "d_model_feat": global_distance, "d_model_feat_local_max": local_distance,
-            "d_cal_A": d_cal, "risk_assist_candidate": route, "risk_route_candidate": route,
+            "d_cal_A": d_cal, "risk_assist_candidate": bucket if complete else "", "risk_route_candidate": bucket if complete else "",
+            "risk_channel_percentiles_json": json.dumps(percentiles, sort_keys=True), "risk_bucket_rule": "max_frozen_c1_channel_percentile_q75",
+            "assignment_eligible": complete,
             "feature_status": feature_status, "checkpoint_sha256": sha256_file(checkpoint) if checkpoint and checkpoint.exists() else "",
             "risk_status": "candidate_only" if input_status != "formal" else "frozen",
         })
-    _write(output_dir / "c2_task_risk_inventory.csv", rows)
+    inventory_output = output_dir / "c2_task_risk_inventory.csv"
+    _write(inventory_output, rows)
     summary = {
         "input_status": input_status, "n_tasks": len(rows), "n_c1_calibration_tasks": len(c1_scores),
-        "feature_status": feature_status, "formal_ready": input_status == "formal" and feature_status == "ready",
+        "feature_status": feature_status, "formal_ready": input_status == "formal" and feature_status == "ready" and bool(rows) and all(row["assignment_eligible"] for row in rows),
         "checkpoint_sha256": sha256_file(checkpoint) if checkpoint and checkpoint.exists() else "",
         "inventory_sha256": sha256_file(inventory_csv), "c1_geometry_sha256": sha256_file(c1_geometry_jsonl),
+        "c1_risk_reference_sha256": sha256_file(c1_risk_reference_csv) if c1_risk_reference_csv else "",
+        "output_inventory_sha256": sha256_file(inventory_output),
     }
     (output_dir / "c2_task_risk.summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
@@ -152,8 +194,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--checkpoint", type=Path)
     parser.add_argument("--reference-dir", type=Path)
     parser.add_argument("--extract-lhfeat", action="store_true")
+    parser.add_argument("--c1-risk-reference-csv", type=Path)
     args = parser.parse_args(argv)
-    print(json.dumps(materialize(args.inventory_csv, args.layout_dir, args.c1_geometry_jsonl, args.output_dir, input_status=args.input_status, checkpoint=args.checkpoint, reference_dir=args.reference_dir, extract_lhfeat=args.extract_lhfeat), indent=2))
+    print(json.dumps(materialize(args.inventory_csv, args.layout_dir, args.c1_geometry_jsonl, args.output_dir, input_status=args.input_status, checkpoint=args.checkpoint, reference_dir=args.reference_dir, extract_lhfeat=args.extract_lhfeat, c1_risk_reference_csv=args.c1_risk_reference_csv), indent=2))
     return 0
 
 

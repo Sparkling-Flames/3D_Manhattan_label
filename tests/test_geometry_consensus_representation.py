@@ -36,6 +36,20 @@ def test_raw_alternating_order_resolves_an_unordered_pairing_tie() -> None:
     assert geometry["pairing_stats"]["unordered_pairing_ambiguous"] is True
 
 
+def test_raw_adjacent_pairs_accept_reversed_floor_ceiling_direction() -> None:
+    geometry = normalize_geometry([[100, 400], [100, 100], [500, 100], [500, 400]])
+    assert geometry["valid"] is True
+    assert geometry["pairing_method"] == "raw_order_pairing"
+    assert geometry["pairs"][0]["y_ceiling"] < geometry["pairs"][0]["y_floor"]
+
+
+def test_raw_adjacent_pairs_accept_reversed_floor_ceiling_direction() -> None:
+    geometry = normalize_geometry([[100, 400], [100, 100], [500, 100], [500, 400]])
+    assert geometry["valid"] is True
+    assert geometry["pairing_method"] == "raw_order_pairing"
+    assert geometry["pairs"][0]["y_ceiling"] < geometry["pairs"][0]["y_floor"]
+
+
 def test_variable_corner_counts_keep_boundary_and_wall_diagnostics() -> None:
     metrics = pairwise_similarity(
         normalize_geometry(_rectangle()),
