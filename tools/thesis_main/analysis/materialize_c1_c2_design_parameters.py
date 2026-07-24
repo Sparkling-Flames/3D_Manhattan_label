@@ -31,7 +31,9 @@ def materialize(quality_csv: Path, risk_csv: Path, structural_csv: Path, complet
     by_worker: dict[str, list[tuple[float, float, str, str]]] = defaultdict(list)
     for row in _read(quality_csv):
         task = row.get("base_task_id", ""); risk_row = risk.get(task, {})
-        x = _number(risk_row, "risk_route_score", "risk_assist_score", "d_cal_A", "g_model_struct")
+        # C2-B is designed from C1-only risk_design_A.  Assist and route risk
+        # belong to later T1/V1 decisions and cannot be a prerequisite here.
+        x = _number(risk_row, "risk_design_A", "d_cal_A")
         y = _number(row, "Q_GT_raw", "iou_2d", "iou")
         if x is not None and y is not None and str(row.get("global_analysis_eligible", "")).lower() in {"true", "1"}:
             by_worker[row.get("worker_id", "")].append((x, y, task, risk_row.get("building_id", "")))

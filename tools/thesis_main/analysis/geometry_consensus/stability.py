@@ -8,6 +8,7 @@ import json
 import numpy as np
 
 from .pairwise import pairwise_similarity
+from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou_from_normalized_pairs
 
 
 def _mode_summary(values: list[float], *, gap_cutoff: float = 0.15) -> tuple[int, float | None]:
@@ -135,7 +136,7 @@ def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimo
     result["medoid_margin"] = medoid_scores[0][0][0] - medoid_scores[1][0][0] if len(medoid_scores) > 1 else None
     result["primary_eligible"] = result["consensus_status"] == "stable"
     result["sensitivity_eligible"] = result["consensus_status"] in {"stable", "weak"}
-    def subset_signature(indices: tuple[int, ...]) -> tuple[str, str, int, float | None]:
+    def subset_signature(indices: tuple[int, ...]) -> tuple[str, str, int, float | None, float | None]:
         sub_pairs = {key: value for key, value in similarities.items() if key[0] in indices and key[1] in indices}
         sub_compatible = bool(sub_pairs) and all(value is not None for value in sub_pairs.values())
         sub_largest = _complete_link_cluster(indices, sub_pairs, multimodal_cutoff) if sub_compatible else tuple()
@@ -154,15 +155,33 @@ def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimo
         medoid_index = scores[0][2] if scores else None
         medoid_id = (valid[medoid_index].get("canonical_annotation_id") or valid[medoid_index].get("annotation_id", "")) if medoid_index is not None else ""
         margin = scores[0][0][0] - scores[1][0][0] if len(scores) > 1 else None
-        return sub_status, medoid_id, len(sub_largest), margin
+        geometry_iou = None
+        if medoid_index is not None and medoid:
+            try:
+                geometry_iou, _ = compute_layout_mask_iou_from_normalized_pairs(
+                    medoid["geometry"]["pairs"], valid[medoid_index]["geometry"]["pairs"],
+                    width=int(medoid["geometry"]["width"]), height=int(medoid["geometry"]["height"]),
+                )
+            except (KeyError, TypeError, ValueError):
+                geometry_iou = None
+        return sub_status, medoid_id, len(sub_largest), margin, geometry_iou
 
     baseline_status = result["consensus_status"]
-    baseline_medoid = result.get("medoid_annotation_id", "")
     baseline_support = result["largest_cluster_support"]
     loo = [subset_signature(tuple(j for j in range(len(valid)) if j != index)) for index in range(len(valid))] if _resample and len(valid) >= 4 else []
     lto = [subset_signature(tuple(j for j in range(len(valid)) if j not in removed)) for removed in itertools.combinations(range(len(valid)), 2)] if _resample and len(valid) >= 5 else []
-    result["leave_one_out_stability"] = "not_evaluable" if not loo else "robust" if all(item[0] == baseline_status and (not baseline_medoid or item[1] == baseline_medoid) and item[2] >= max(0, baseline_support - 1) for item in loo) else "sensitive"
-    result["leave_two_out_stability"] = "not_evaluable" if not lto else "robust" if all(item[0] == baseline_status and (not baseline_medoid or item[1] == baseline_medoid) and item[2] >= max(0, baseline_support - 2) for item in lto) else "sensitive"
+    # A removed medoid may be replaced by another member of the same mode.  The
+    # robustness contract is status, expected support loss and consensus geometry,
+    # never literal annotation-id persistence.
+    def robust(items: list[tuple[str, str, int, float | None, float | None]], removed: int) -> bool:
+        return all(
+            item[0] == baseline_status
+            and item[2] >= max(0, baseline_support - removed)
+            and item[4] is not None and item[4] >= multimodal_cutoff
+            for item in items
+        )
+    result["leave_one_out_stability"] = "not_evaluable" if not loo else "robust" if robust(loo, 1) else "sensitive"
+    result["leave_two_out_stability"] = "not_evaluable" if not lto else "robust" if robust(lto, 2) else "sensitive"
     result["leave_two_out_status"] = result["leave_two_out_stability"]
     result["metric_compatibility"] = "compatible" if compatible else "incompatible"
     return result

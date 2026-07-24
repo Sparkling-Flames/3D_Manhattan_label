@@ -94,7 +94,7 @@ def test_stable_medoid_tie_uses_geometry_sha_tiebreak_and_keeps_q_loo(monkeypatc
     assert all(row["tied_medoid_count"] == 2 for row in rows)
 
 
-def test_overlapping_maximum_peer_cliques_use_deterministic_cluster(monkeypatch) -> None:
+def test_overlapping_maximum_peer_cliques_are_never_primary(monkeypatch) -> None:
     records = [{"worker_id": str(i), "canonical_annotation_id": f"c{i}", "geometry": {"valid": True, "width": 10, "height": 5, "pairs": [{"x": 1, "y_ceiling": 1, "y_floor": 4}], "tag": i}} for i in range(4)]
     def similarity(left, right, **_kwargs):
         pair = {left["tag"], right["tag"]}
@@ -103,8 +103,9 @@ def test_overlapping_maximum_peer_cliques_use_deterministic_cluster(monkeypatch)
     monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.loo.pairwise_similarity", similarity)
     monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.loo.compute_layout_mask_iou_from_normalized_pairs", lambda *_args, **_kwargs: (.8, {}))
     row = leave_one_out(records)[0]
-    assert row["loo_consensus_status"] == "evaluable"
-    assert row["q_LOO_tu"] == .8
+    assert row["loo_consensus_status"] == "multiple_maximum_cliques_sensitivity"
+    assert row["q_LOO_primary"] is None
+    assert row["tie_sensitivity_only"] is True
 
 
 def test_tied_medoid_iou_range_is_retained_as_sensitivity(monkeypatch) -> None:
@@ -113,5 +114,6 @@ def test_tied_medoid_iou_range_is_retained_as_sensitivity(monkeypatch) -> None:
     monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.loo.compute_layout_mask_iou_from_normalized_pairs", lambda held, peer, **_kwargs: ((held[0]["x"] + peer[0]["x"]) / 10, {}))
     row = leave_one_out(records, tie_iou_range_cutoff=.01)[0]
     assert row["loo_consensus_status"] == "tied_medoid_sensitivity"
-    assert row["q_LOO_tu"] is not None
+    assert row["q_LOO_tu"] is None
+    assert row["q_LOO_tie_mean"] is not None
     assert row["validity_status"] == "sensitivity_only"

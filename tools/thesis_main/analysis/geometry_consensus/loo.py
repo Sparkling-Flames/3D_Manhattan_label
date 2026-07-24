@@ -42,11 +42,10 @@ def leave_one_out(
                 boundary_value, wall_value = metrics.get("boundary_similarity"), metrics.get("wallwall_similarity")
                 compatible_edges[(left, right)] = 1.0 if boundary_value is not None and wall_value is not None and boundary_value >= similarity_cutoff and wall_value >= similarity_cutoff else None
         cliques = _maximum_complete_link_clusters(tuple(range(len(peers))), compatible_edges, 1.0) if len(peers) >= 2 else []
-        disjoint_maxima = any(set(left).isdisjoint(right) for left, right in itertools.combinations(cliques, 2))
-        cluster = min(
-            cliques,
-            key=lambda group: tuple(sorted(hashlib.sha256(json.dumps(peers[item]["geometry"], sort_keys=True, separators=(",", ":")).encode()).hexdigest() for item in group)),
-        ) if cliques and not disjoint_maxima and len(cliques[0]) >= 2 else tuple()
+        # A formal peer reference exists only for one maximum complete-link
+        # cluster.  Overlap is not a licence to select one maximum clique.
+        unique_maximum_cluster = len(cliques) == 1 and len(cliques[0]) >= 2
+        cluster = cliques[0] if unique_maximum_cluster else tuple()
         medoid_scores = []
         for peer_index in cluster:
             metrics = [peer_metrics[tuple(sorted((peer_index, other)))] for other in cluster if other != peer_index]
@@ -68,10 +67,19 @@ def leave_one_out(
         tied_range = max(tied_ious) - min(tied_ious) if tied_ious else None
         tie_unstable = tied_range is not None and tied_range > tie_iou_range_cutoff
         if tie_unstable:
-            q_loo = float(np.mean(tied_ious))
+            q_loo = None
         consensus_geometry = medoid.get("geometry", {})
         consensus_sha = hashlib.sha256(json.dumps(consensus_geometry, sort_keys=True, separators=(",", ":")).encode()).hexdigest() if consensus_geometry else ""
-        status = "multimodal" if disjoint_maxima else "tied_medoid_sensitivity" if tie_unstable else "evaluable" if q_loo is not None else "insufficient_peer_support"
+        if not cliques:
+            status = "insufficient_peer_support"
+        elif not unique_maximum_cluster:
+            status = "multiple_maximum_cliques_sensitivity"
+        elif tie_unstable:
+            status = "tied_medoid_sensitivity"
+        elif q_loo is not None:
+            status = "evaluable"
+        else:
+            status = "insufficient_peer_support"
         out.append(
             {
                 "worker_id": record.get("worker_id", ""),
@@ -86,7 +94,14 @@ def leave_one_out(
                 "q_wallwall_median": statistics.median(wallwall) if wallwall else None,
                 "loo_boundary_values_json": boundary,
                 "loo_wallwall_values_json": wallwall,
+                # q_LOO_tu remains the compatibility alias; only the explicit
+                # primary field may enter R_LOO_compatible.
                 "q_LOO_tu": q_loo,
+                "q_LOO_primary": q_loo,
+                "q_LOO_tie_min": min(tied_ious) if tied_ious else None,
+                "q_LOO_tie_max": max(tied_ious) if tied_ious else None,
+                "q_LOO_tie_mean": float(np.mean(tied_ious)) if tied_ious else None,
+                "tie_sensitivity_only": tie_unstable or not unique_maximum_cluster,
                 "loo_consensus_status": status,
                 "loo_consensus_annotation_id": medoid.get("canonical_annotation_id") or medoid.get("annotation_id", ""),
                 "loo_consensus_worker_id": medoid.get("worker_id", ""),
@@ -97,8 +112,8 @@ def leave_one_out(
                 "held_out_tied_medoid_iou_min": min(tied_ious) if tied_ious else None,
                 "held_out_tied_medoid_iou_max": max(tied_ious) if tied_ious else None,
                 "held_out_tied_medoid_iou_range": tied_range,
-                "interpretation_allowed": q_loo is not None,
-                "validity_status": "sensitivity_only" if tie_unstable else "valid" if q_loo is not None else "not_evaluable",
+                "interpretation_allowed": q_loo is not None and unique_maximum_cluster,
+                "validity_status": "sensitivity_only" if tie_unstable or not unique_maximum_cluster else "valid" if q_loo is not None else "not_evaluable",
             }
         )
     return out

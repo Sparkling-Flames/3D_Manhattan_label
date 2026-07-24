@@ -17,6 +17,7 @@ if str(_PROJECT_ROOT) not in sys.path:
 from tools.thesis_main.analysis import build_c2_assignment_manifest_from_c1_gaps as c2b
 from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import materialize as rehearse
 from tools.thesis_main.analysis.materialize_c2_task_risk import materialize as materialize_task_risk
+from tools.thesis_main.analysis.c1_c2_mainline import formal_git_state
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
@@ -39,6 +40,7 @@ def day1_audit(args: argparse.Namespace) -> dict[str, Any]:
         args.export_dir, args.active_log_snapshot, args.manual_assignment, args.semi_assignment,
         args.worker_distribution, args.gt_export, args.p1_closeout_dir, args.output_root,
         input_status="precloseout_rehearsal",
+        c1_preannotation_feature_csv=getattr(args, "c1_preannotation_feature_csv", None),
     )
     return {"day": 1, "phase": "audit", "output_dir": summary["output_dir"], "formal_closeout_ready": False, "review_required": True}
 
@@ -68,6 +70,9 @@ def day1_formal_audit(args: argparse.Namespace) -> dict[str, Any]:
     p1 = next((path.parent for path in snapshots if path.parent.name == "p1_closeout"), None)
     if not exports or not active or not p1:
         raise ValueError("raw snapshot manifest lacks export, active-log, or P1 snapshot")
+    feature_snapshot = getattr(args, "c1_preannotation_feature_snapshot", None)
+    if feature_snapshot is not None and feature_snapshot.resolve() not in {path.resolve() for path in snapshots}:
+        raise ValueError("pre-annotation feature evidence must be a file in the immutable raw snapshot bundle")
     summary = rehearse(
         exports, active, by_name[required["manual_assignment"]], by_name[required["semi_assignment"]],
         by_name[required["worker_distribution"]], by_name[required["gt_export"]], p1, args.output_root,
@@ -79,6 +84,7 @@ def day1_formal_audit(args: argparse.Namespace) -> dict[str, Any]:
         reference_amendment=args.reference_amendment,
         outside_assignment_disposition=args.outside_assignment_disposition,
         completion_disposition=args.completion_disposition,
+        c1_preannotation_feature_csv=feature_snapshot,
     )
     return {"day": 1, "phase": "formal-audit", "output_dir": summary["output_dir"], "formal_closeout_ready": False, "blockers": summary["blockers"]}
 
@@ -86,34 +92,38 @@ def day1_formal_audit(args: argparse.Namespace) -> dict[str, Any]:
 def day1_finalize(args: argparse.Namespace) -> dict[str, Any]:
     audit_path = args.output_dir / "formal_audit_summary.json"
     final_path = args.output_dir / "c1_final_canonical_closeout_summary.json"
-    state_path = args.output_dir / "c1_three_track_worker_state_formal.csv"
-    state_manifest_path = args.output_dir / "c1_three_track_worker_state_manifest.json"
-    if not all(path.exists() for path in (audit_path, final_path, state_path, state_manifest_path)):
+    measurement_path = args.output_dir / "c1_measurement_freeze_manifest.json"
+    if not all(path.exists() for path in (audit_path, final_path, measurement_path)):
         raise ValueError("day1-finalize requires a complete formal audit bundle")
-    audit, final, state_manifest = (json.loads(path.read_text(encoding="utf-8")) for path in (audit_path, final_path, state_manifest_path))
+    audit, final, measurement = (json.loads(path.read_text(encoding="utf-8")) for path in (audit_path, final_path, measurement_path))
     adjudication = json.loads(args.adjudication_manifest.read_text(encoding="utf-8"))
     bundle_sha = audit.get("full_dependency_bundle_sha256", "")
     approved = adjudication.get("approved") is True and adjudication.get("input_bundle_sha256") == bundle_sha
-    blockers = [*final.get("blockers", [])]
+    canonical_ready = bool(audit.get("C1_CANONICAL_CLOSED")) and bool(final.get("C1_CANONICAL_CLOSED", True))
+    blockers = []
     if audit.get("input_status") != "formal": blockers.append("rehearsal_bundle_refused")
-    if state_manifest.get("worker_state_sha256") != sha256_file(state_path): blockers.append("three_track_worker_state_stale")
+    if not canonical_ready: blockers.extend(final.get("canonical_blockers", []) or ["c1_canonical_not_closed"])
+    if not measurement.get("C1_MEASUREMENT_FROZEN"): blockers.append("c1_measurement_not_frozen")
     if not approved: blockers.append("formal_closeout_adjudication_missing_invalid_or_stale")
-    freeze = {"schema_version": "c1_evidence_freeze_manifest_v1", "c1_evidence_freeze_status": "C1_closed" if not blockers else "blocked", "routing_profile_frozen": False, "formal_closeout_ready": not blockers, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers}
+    measurement_ready = canonical_ready and not blockers
+    freeze = {"schema_version": "c1_measurement_freeze_envelope_v1", "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": measurement_ready, "C2B_DESIGN_READY": bool(measurement.get("C2B_DESIGN_READY")) and measurement_ready, "routing_profile_frozen": False, "formal_closeout_ready": measurement_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers}
     (args.output_dir / "c1_evidence_freeze_manifest.json").write_text(json.dumps(freeze, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    return {"day": 1, "phase": "finalize", "formal_closeout_ready": not blockers, "c1_evidence_freeze_status": freeze["c1_evidence_freeze_status"], "routing_profile_frozen": False, "blockers": blockers}
+    return {"day": 1, "phase": "measurement-freeze", "formal_closeout_ready": not blockers, "C1_CANONICAL_CLOSED": freeze["C1_CANONICAL_CLOSED"], "C1_MEASUREMENT_FROZEN": freeze["C1_MEASUREMENT_FROZEN"], "C2B_DESIGN_READY": freeze["C2B_DESIGN_READY"], "routing_profile_frozen": False, "blockers": blockers}
 
 
 def day2_risk_plan(args: argparse.Namespace) -> dict[str, Any]:
+    if not formal_git_state(_PROJECT_ROOT)["clean"]:
+        raise ValueError("formal C2-B design requires a committed clean worktree")
     closeout = json.loads(args.c1_closeout_summary.read_text(encoding="utf-8"))
-    if not closeout.get("formal_closeout_ready"):
-        raise ValueError("C1 evidence is not formally frozen")
+    if not closeout.get("C1_MEASUREMENT_FROZEN"):
+        raise ValueError("C1 measurement evidence is not formally frozen")
     source_rows, holdout_rows = _read(args.source_split_manifest), _read(args.future_holdout_manifest)
     c2_images = {row.get("image_id") for row in source_rows if row.get("allocation") == "C2"}
     held_images = {row.get("image_id") for row in holdout_rows}
     if c2_images & held_images:
         raise ValueError("C2 source split overlaps future holdout")
     risk = materialize_task_risk(
-        args.inventory_csv, args.layout_dir, args.c1_geometry_jsonl, args.output_dir,
+        args.inventory_csv, args.layout_dir, args.c1_task_feature_csv, args.output_dir,
         input_status="formal", checkpoint=args.checkpoint, reference_dir=args.reference_dir,
         extract_lhfeat=True, c1_risk_reference_csv=args.c1_risk_reference_csv,
     )
@@ -123,20 +133,36 @@ def day2_risk_plan(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def day2_build(args: argparse.Namespace) -> dict[str, Any]:
+    if not formal_git_state(_PROJECT_ROOT)["clean"]:
+        raise ValueError("formal C2-B build requires a committed clean worktree")
     closeout = json.loads(args.c1_closeout_summary.read_text(encoding="utf-8"))
     risk = json.loads(args.risk_summary.read_text(encoding="utf-8"))
-    if not closeout.get("formal_closeout_ready") or closeout.get("profile_freeze_status") != "C1_frozen":
-        raise ValueError("C1 closeout is not formally frozen")
+    if not closeout.get("C1_MEASUREMENT_FROZEN") or not closeout.get("C2B_DESIGN_READY"):
+        raise ValueError("C1 measurement or C2-B design inputs are not formally frozen")
     if not risk.get("formal_ready"):
         raise ValueError("C2 task risk is not formally frozen")
-    approvals = [json.loads(path.read_text(encoding="utf-8")) for path in (args.selected_task_reference_manifest, args.future_holdout_manifest, args.source_split_manifest)]
+    approvals = [json.loads(path.read_text(encoding="utf-8")) for path in (args.selected_task_reference_manifest, args.future_holdout_manifest, args.source_split_manifest, args.selected_design_approval)]
     if any(item.get("approved") is not True for item in approvals):
         raise ValueError("approved task/reference/holdout manifests are required")
     if risk.get("output_inventory_sha256") != sha256_file(args.task_pool):
         raise ValueError("C2 task pool is not the inventory bound by the frozen risk summary")
+    design_approval = approvals[-1]
+    if design_approval.get("design_manifest_sha256") != sha256_file(args.design_manifest):
+        raise ValueError("selected C2-B design approval is stale or bound to another manifest")
+    capacities = {row.get("worker_id", ""): row for row in _read(args.capacity_manifest)}
+    if not capacities or len(capacities) != len(_read(args.capacity_manifest)):
+        raise ValueError("C2-B capacity manifest requires unique worker rows")
     design = c2b.materialize(args.task_pool, args.worker_profile, args.design_manifest, args.output_dir, input_status="formal", c1_closeout_summary=args.c1_closeout_summary)
     assignment_path = args.output_dir / "assignment_manifest_C2B.csv"
     assignments, tasks = _read(assignment_path), {row["task_id"]: row for row in _read(args.task_pool)}
+    assigned_by_worker = Counter(row["worker_id"] for row in assignments)
+    for worker, count in assigned_by_worker.items():
+        try:
+            available = int(float(capacities[worker]["c2b_capacity"]))
+        except (KeyError, TypeError, ValueError):
+            raise ValueError(f"C2-B capacity is missing or invalid for worker {worker}")
+        if count > available:
+            raise ValueError(f"C2-B assignment exceeds frozen capacity for worker {worker}")
     distribution = [{**row, "image_path": tasks.get(row["task_id"], {}).get("image_path", "")} for row in assignments]
     _write(args.output_dir / "worker_distribution_C2B.csv", distribution)
     worker_dir = args.output_dir / "worker_facing_distribution_C2B"; worker_dir.mkdir(parents=True, exist_ok=True)
@@ -152,6 +178,7 @@ def day2_build(args: argparse.Namespace) -> dict[str, Any]:
         "n_tasks": len(support), "min_task_support": min(support.values(), default=0),
         "duplicate_worker_task_count": len(assignments) - len({(row["worker_id"], row["task_id"]) for row in assignments}),
         "import_smoke_passed": isinstance(json.loads(import_path.read_text(encoding="utf-8")), list),
+        "capacity_manifest_sha256": sha256_file(args.capacity_manifest),
     }
     audit["launch_ready"] = bool(design.get("launch_ready")) and audit["duplicate_worker_task_count"] == 0 and audit["import_smoke_passed"]
     (args.output_dir / "c2b_launch_ready_report.json").write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -161,27 +188,29 @@ def day2_build(args: argparse.Namespace) -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command", required=True)
-    audit = sub.add_parser("day1-audit")
+    audit = sub.add_parser("day1-canonical-audit")
     audit.add_argument("--export-dir", action="append", type=Path, required=True)
     audit.add_argument("--active-log-snapshot", type=Path, required=True)
     for name in ("manual-assignment", "semi-assignment", "worker-distribution", "gt-export"):
         audit.add_argument(f"--{name}", type=Path, required=True)
     audit.add_argument("--p1-closeout-dir", type=Path, required=True); audit.add_argument("--output-root", type=Path, required=True)
+    audit.add_argument("--c1-preannotation-feature-csv", type=Path)
     formal = sub.add_parser("day1-formal-audit")
     formal.add_argument("--raw-snapshot-manifest", type=Path, required=True)
     formal.add_argument("--output-root", type=Path, required=True)
+    formal.add_argument("--c1-preannotation-feature-snapshot", type=Path)
     formal.add_argument("--annotation-independence-disposition", dest="independence_disposition", type=Path)
     for name in ("duplicate-adjudication", "structural-disposition", "project-independence-provenance", "scope-adjudication", "reference-amendment", "outside-assignment-disposition", "completion-disposition"):
         formal.add_argument(f"--{name}", type=Path, required=True)
-    finalize = sub.add_parser("day1-finalize"); finalize.add_argument("--output-dir", type=Path, required=True); finalize.add_argument("--adjudication-manifest", type=Path, required=True)
-    plan = sub.add_parser("day2-risk-plan")
-    for name in ("c1-closeout-summary", "inventory-csv", "layout-dir", "c1-geometry-jsonl", "checkpoint", "reference-dir", "c1-risk-reference-csv", "source-split-manifest", "future-holdout-manifest", "output-dir"):
+    finalize = sub.add_parser("day1-measurement-freeze"); finalize.add_argument("--output-dir", type=Path, required=True); finalize.add_argument("--adjudication-manifest", type=Path, required=True)
+    plan = sub.add_parser("day2-c2b-design")
+    for name in ("c1-closeout-summary", "inventory-csv", "layout-dir", "c1-task-feature-csv", "checkpoint", "reference-dir", "c1-risk-reference-csv", "source-split-manifest", "future-holdout-manifest", "output-dir"):
         plan.add_argument(f"--{name}", type=Path, required=True)
-    build = sub.add_parser("day2-build")
-    for name in ("c1-closeout-summary", "risk-summary", "task-pool", "worker-profile", "design-manifest", "selected-task-reference-manifest", "future-holdout-manifest", "source-split-manifest", "output-dir"):
+    build = sub.add_parser("day2-c2b-build")
+    for name in ("c1-closeout-summary", "risk-summary", "task-pool", "worker-profile", "design-manifest", "selected-task-reference-manifest", "future-holdout-manifest", "source-split-manifest", "selected-design-approval", "capacity-manifest", "output-dir"):
         build.add_argument(f"--{name}", type=Path, required=True)
     args = parser.parse_args(argv)
-    result = {"day1-audit": day1_audit, "day1-formal-audit": day1_formal_audit, "day1-finalize": day1_finalize, "day2-risk-plan": day2_risk_plan, "day2-build": day2_build}[args.command](args)
+    result = {"day1-canonical-audit": day1_audit, "day1-formal-audit": day1_formal_audit, "day1-measurement-freeze": day1_finalize, "day2-c2b-design": day2_risk_plan, "day2-c2b-build": day2_build}[args.command](args)
     print(json.dumps(result, ensure_ascii=False, indent=2)); return 0
 
 
