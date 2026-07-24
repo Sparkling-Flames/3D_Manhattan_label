@@ -204,11 +204,11 @@ def test_formal_c2a_requires_bound_c2b_sha_and_real_task_pool(tmp_path: Path) ->
         {"worker_id": "w1", "support": 8, "ci_half_width": 0.18},
     ])
     pool = tmp_path / "pool.csv"
-    _csv(pool, ["task_id", "base_task_id", "task_stratum"], [
-        {"task_id": "o1", "base_task_id": "o1", "task_stratum": "ordinary"},
-        {"task_id": "o2", "base_task_id": "o2", "task_stratum": "ordinary"},
-        {"task_id": "s1", "base_task_id": "s1", "task_stratum": "stress"},
-        {"task_id": "s2", "base_task_id": "s2", "task_stratum": "stress"},
+    _csv(pool, ["task_id", "base_task_id", "task_stratum", "c2a_rp_eligible"], [
+        {"task_id": "o1", "base_task_id": "o1", "task_stratum": "ordinary", "c2a_rp_eligible": "true"},
+        {"task_id": "o2", "base_task_id": "o2", "task_stratum": "ordinary", "c2a_rp_eligible": "true"},
+        {"task_id": "s1", "base_task_id": "s1", "task_stratum": "stress", "c2a_rp_eligible": "true"},
+        {"task_id": "s2", "base_task_id": "s2", "task_stratum": "stress", "c2a_rp_eligible": "true"},
     ])
     history = tmp_path / "history.csv"
     _csv(history, ["worker_id", "task_id", "base_task_id"], [

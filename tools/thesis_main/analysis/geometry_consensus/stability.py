@@ -3,6 +3,8 @@ from __future__ import annotations
 from typing import Any
 
 import itertools
+import hashlib
+import json
 import numpy as np
 
 from .pairwise import pairwise_similarity
@@ -18,7 +20,7 @@ def _mode_summary(values: list[float], *, gap_cutoff: float = 0.15) -> tuple[int
     return (2 if largest >= gap_cutoff and pivot >= 2 and len(ordered) - pivot >= 2 else 1), largest
 
 
-def _core_stability(records: list[dict[str, Any]], *, grid: int = 256) -> dict[str, Any]:
+def _core_stability(records: list[dict[str, Any]], *, grid: int = 256, gap_cutoff: float = 0.15) -> dict[str, Any]:
     valid = [record for record in records if (record.get("geometry") or {}).get("valid")]
     pairwise = [
         (i, j, pairwise_similarity(valid[i]["geometry"], valid[j]["geometry"], grid=grid))
@@ -46,8 +48,8 @@ def _core_stability(records: list[dict[str, Any]], *, grid: int = 256) -> dict[s
         boundary_medoid = "" if boundary_ambiguous else boundary_scores[0][1]
         wallwall_medoid = "" if wallwall_ambiguous else wallwall_scores[0][1]
         score_table = [{"worker_id": record.get("worker_id", ""), "boundary_score": scores(index, "boundary_similarity"), "wallwall_score": scores(index, "wallwall_similarity")} for index, record in enumerate(valid)]
-        boundary_mode_count, boundary_largest_gap = _mode_summary(boundary)
-        wallwall_mode_count, wallwall_largest_gap = _mode_summary(wallwall)
+        boundary_mode_count, boundary_largest_gap = _mode_summary(boundary, gap_cutoff=gap_cutoff)
+        wallwall_mode_count, wallwall_largest_gap = _mode_summary(wallwall, gap_cutoff=gap_cutoff)
         status = "multimodal_candidate" if boundary_mode_count > 1 or wallwall_mode_count > 1 else "stable_candidate"
         boundary_margin = boundary_scores[0][0] - boundary_scores[1][0] if len(boundary_scores) > 1 else None
         wallwall_margin = wallwall_scores[0][0] - wallwall_scores[1][0] if len(wallwall_scores) > 1 else None
@@ -71,13 +73,81 @@ def _core_stability(records: list[dict[str, Any]], *, grid: int = 256) -> dict[s
     }
 
 
-def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimodal_cutoff: float = 0.8) -> dict[str, Any]:
-    result = _core_stability(records, grid=grid)
+def _complete_link_cluster(indices: tuple[int, ...], similarities: dict[tuple[int, int], float | None], cutoff: float) -> tuple[int, ...]:
+    """Deterministic maximal clique without exponential maximum-clique search."""
+    def compatible(left: int, right: int) -> bool:
+        value = similarities.get(tuple(sorted((left, right))))
+        return value is not None and value >= cutoff
+    degree = {index: sum(compatible(index, other) for other in indices if other != index) for index in indices}
+    candidates = []
+    for seed in sorted(indices, key=lambda index: (-degree[index], index)):
+        cluster = [seed]
+        for index in sorted((value for value in indices if value != seed), key=lambda value: (-degree[value], value)):
+            if all(compatible(index, member) for member in cluster):
+                cluster.append(index)
+        candidates.append(tuple(sorted(cluster)))
+    return max(candidates, key=lambda group: (len(group), tuple(-value for value in group)), default=tuple())
+
+
+def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimodal_cutoff: float = 0.8, _resample: bool = True) -> dict[str, Any]:
     valid = [record for record in records if (record.get("geometry") or {}).get("valid")]
-    subset_statuses = []
-    if len(valid) >= 4:
-        for left, right in itertools.combinations(range(len(valid)), 2):
-            subset = [record for index, record in enumerate(valid) if index not in {left, right}]
-            subset_statuses.append(_core_stability(subset, grid=grid)["stability_status"])
-    result["leave_two_out_status"] = "not_evaluable" if len(valid) < 4 else "robust" if subset_statuses and all(value == result["stability_status"] for value in subset_statuses) else "sensitive"
+    gap_cutoff = 1 - multimodal_cutoff
+    result = _core_stability(valid, grid=grid, gap_cutoff=gap_cutoff)
+    similarities: dict[tuple[int, int], float | None] = {}
+    for left, right in itertools.combinations(range(len(valid)), 2):
+        metrics = pairwise_similarity(valid[left]["geometry"], valid[right]["geometry"], grid=grid)
+        values = (metrics.get("boundary_similarity"), metrics.get("wallwall_similarity"))
+        similarities[(left, right)] = min(values) if all(value is not None for value in values) else None
+
+    compatible = bool(similarities) and all(value is not None for value in similarities.values())
+    largest = _complete_link_cluster(tuple(range(len(valid))), similarities, multimodal_cutoff) if compatible else tuple()
+    remainder = tuple(index for index in range(len(valid)) if index not in largest)
+    second_support = len(_complete_link_cluster(remainder, similarities, multimodal_cutoff)) if len(remainder) >= 2 else 0
+    multimodal = second_support >= 2
+    all_values = [value for value in similarities.values() if value is not None]
+    result["consensus_status"] = "insufficient" if len(valid) < 3 else "metric_incompatible" if not compatible else "multimodal" if multimodal else "stable" if len(largest) == len(valid) else "weak"
+    result["peer_support"] = len(valid)
+    result["largest_cluster_support"] = len(largest)
+    result["second_mode_support"] = second_support
+    medoid_index = None
+    medoid_scores: list[tuple[float, int]] = []
+    for index in largest:
+        peers = [similarities[tuple(sorted((index, other)))] for other in largest if other != index]
+        medoid_scores.append((float(np.mean(peers)) if peers else 1.0, index))
+    medoid_scores.sort(reverse=True)
+    if medoid_scores and (len(medoid_scores) == 1 or medoid_scores[0][0] > medoid_scores[1][0] + 1e-12):
+        medoid_index = medoid_scores[0][1]
+    medoid = valid[medoid_index] if medoid_index is not None else {}
+    result["medoid_annotation_id"] = medoid.get("canonical_annotation_id") or medoid.get("annotation_id", "")
+    result["medoid_geometry_sha256"] = hashlib.sha256(json.dumps(medoid.get("geometry", {}), sort_keys=True, separators=(",", ":")).encode()).hexdigest() if medoid else ""
+    result["medoid_worker_id"] = medoid.get("worker_id", "")
+    result["medoid_margin"] = medoid_scores[0][0] - medoid_scores[1][0] if len(medoid_scores) > 1 else None
+    result["primary_eligible"] = result["consensus_status"] == "stable"
+    result["sensitivity_eligible"] = result["consensus_status"] in {"stable", "weak"}
+    def subset_signature(indices: tuple[int, ...]) -> tuple[str, str, int, float | None]:
+        sub_pairs = {key: value for key, value in similarities.items() if key[0] in indices and key[1] in indices}
+        sub_compatible = bool(sub_pairs) and all(value is not None for value in sub_pairs.values())
+        sub_largest = _complete_link_cluster(indices, sub_pairs, multimodal_cutoff) if sub_compatible else tuple()
+        sub_remainder = tuple(index for index in indices if index not in sub_largest)
+        sub_second = len(_complete_link_cluster(sub_remainder, sub_pairs, multimodal_cutoff)) if len(sub_remainder) >= 2 else 0
+        sub_status = "insufficient" if len(indices) < 3 else "metric_incompatible" if not sub_compatible else "multimodal" if sub_second >= 2 else "stable" if len(sub_largest) == len(indices) else "weak"
+        scores = []
+        for index in sub_largest:
+            peers = [sub_pairs[tuple(sorted((index, other)))] for other in sub_largest if other != index]
+            scores.append((float(np.mean(peers)) if peers else 1.0, index))
+        scores.sort(reverse=True)
+        medoid_index = scores[0][1] if scores and (len(scores) == 1 or scores[0][0] > scores[1][0] + 1e-12) else None
+        medoid_id = (valid[medoid_index].get("canonical_annotation_id") or valid[medoid_index].get("annotation_id", "")) if medoid_index is not None else ""
+        margin = scores[0][0] - scores[1][0] if len(scores) > 1 else None
+        return sub_status, medoid_id, len(sub_largest), margin
+
+    baseline_status = result["consensus_status"]
+    baseline_medoid = result.get("medoid_annotation_id", "")
+    baseline_support = result["largest_cluster_support"]
+    loo = [subset_signature(tuple(j for j in range(len(valid)) if j != index)) for index in range(len(valid))] if _resample and len(valid) >= 4 else []
+    lto = [subset_signature(tuple(j for j in range(len(valid)) if j not in removed)) for removed in itertools.combinations(range(len(valid)), 2)] if _resample and len(valid) >= 5 else []
+    result["leave_one_out_stability"] = "not_evaluable" if not loo else "robust" if all(item[0] == baseline_status and (not baseline_medoid or item[1] in {baseline_medoid, ""}) and item[2] >= max(0, baseline_support - 1) for item in loo) else "sensitive"
+    result["leave_two_out_stability"] = "not_evaluable" if not lto else "robust" if all(item[0] == baseline_status and (not baseline_medoid or item[1] in {baseline_medoid, ""}) and item[2] >= max(0, baseline_support - 2) for item in lto) else "sensitive"
+    result["leave_two_out_status"] = result["leave_two_out_stability"]
+    result["metric_compatibility"] = "compatible" if compatible else "incompatible"
     return result

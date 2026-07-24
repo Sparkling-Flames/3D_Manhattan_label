@@ -11,7 +11,7 @@ from tools.thesis_main.analysis.geometry_consensus.stability import stability_su
 
 def _record(worker: str, offset: int = 0):
     corners = [[100, 100 + offset], [100, 400], [500, 100 + offset], [500, 400]]
-    return {"task_id": "t1", "worker_id": worker, "geometry": normalize_geometry(corners)}
+    return {"task_id": "t1", "worker_id": worker, "annotation_id": f"a-{worker}", "canonical_annotation_id": f"c-{worker}", "geometry": normalize_geometry(corners)}
 
 
 def test_loo_excludes_held_out_worker_and_requires_three_for_candidate() -> None:
@@ -19,7 +19,10 @@ def test_loo_excludes_held_out_worker_and_requires_three_for_candidate() -> None
     assert all(row["peer_count_excluding_self"] == 2 for row in rows)
     assert all(row["valid_k"] == 3 for row in rows)
     assert all(row["interpretation_allowed"] is False for row in rows)
-    assert stability_summary([_record("w1"), _record("w2", 1), _record("w3", 2)])["valid_k"] == 3
+    stability = stability_summary([_record("w1"), _record("w2", 1), _record("w3", 2)])
+    assert stability["valid_k"] == 3
+    assert stability["medoid_annotation_id"]
+    assert len(stability["medoid_geometry_sha256"]) == 64
 
 
 def test_loo_rejects_variable_point_counts_until_alignment_contract_is_frozen() -> None:

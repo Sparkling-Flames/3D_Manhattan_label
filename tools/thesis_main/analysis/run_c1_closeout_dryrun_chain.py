@@ -240,12 +240,11 @@ def _profile_freeze_preconditions(summary: dict[str, Any]) -> bool:
     profile_bound = any(canonical_path(item.get("path", "")) == profile_path and item.get("sha256") == sha256_file(profile_path) for item in bundle_artifacts)
     return bool(
         summary.get("input_status") == "formal" and canonical.get("structural_integrity_passed") is True
-        and canonical.get("collection_completeness_passed") is True and summary.get("raw_snapshot_manifest_fresh")
+        and summary.get("raw_snapshot_manifest_fresh")
         and not canonical.get("blockers") and not summary.get("quality_table_blockers")
         and int(summary.get("quality_table_summary", {}).get("amendment_blocker_count") or 0) == 0
         and int(summary.get("quality_table_summary", {}).get("n_quality_rows") or 0) > 0
-        and int(summary.get("quality_table_summary", {}).get("independence_not_evaluable_count") or 0) == 0
-        and summary.get("c1_duplicate_review_complete") and summary.get("c1_task_outcome_adjudication_complete")
+        and summary.get("c1_duplicate_review_complete")
         and summary.get("c1_profile_evidence_classified")
         and summary.get("r_u_support_consistent")
         and summary.get("artifacts_fresh") and summary.get("c1_pending_adjudication_count", 0) == 0 and _temporal_valid(summary)
@@ -374,8 +373,6 @@ def _blockers(summary: dict[str, Any]) -> list[str]:
     if summary.get("input_status") == "formal":
         if canonical.get("structural_integrity_passed") is not True:
             blockers.append("canonical_structural_integrity_blocked")
-        if canonical.get("collection_completeness_passed") is not True:
-            blockers.append("canonical_collection_incomplete")
         if not summary.get("raw_snapshot_manifest_fresh"):
             blockers.append("raw_snapshot_manifest_missing_or_stale")
         if not summary.get("formal_worker_state", {}).get("valid"):

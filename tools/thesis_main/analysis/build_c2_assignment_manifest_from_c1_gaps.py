@@ -31,6 +31,8 @@ WORKER_PROJECTION_FIELDS = [
     "design_id", "worker_id", "current_interval_half_width", "projected_interval_half_width",
     "ordinary_support", "stress_support", "common_anchor_support", "bridge_support",
     "unique_image_coverage", "building_coverage", "common_bridge_with_other_min",
+    "missing_rate", "structural_failure_rate", "effective_information",
+    "expected_fallback_rate", "expected_global_full_divergence", "v1_usable_support",
 ]
 GRAPH_AUDIT_FIELDS = [
     "design_id", "n_workers", "n_tasks", "n_edges", "n_connected_components",
@@ -87,7 +89,6 @@ def _bridge_pool(rows: list[dict[str, str]]) -> list[dict[str, str]]:
             row for row in rows
             if _task_id(row)
             and truthy(row.get("bridge_eligible") or row.get("is_diverse_bridge") or row.get("eligible_for_reserve_candidate"))
-            and not truthy(row.get("anchor_eligible") or row.get("is_common_anchor") or row.get("eligible_for_anchor_candidate"))
         ],
         key=lambda row: (_task_stratum(row), _task_id(row)),
     )
@@ -233,7 +234,14 @@ def _projected_worker_intervals(
         worker = safe(row.get("worker_id"))
         edges = assignments_by_worker.get(worker, [])
         tasks = [task_by_id[safe(edge.get("task_id"))] for edge in edges if safe(edge.get("task_id")) in task_by_id]
-        added_information = sum(_float(task, "risk_information_weight", default=1.0) for task in tasks)
+        raw_information = sum(_float(task, "risk_information_weight", default=1.0) for task in tasks)
+        assigned = _int(row, "assigned_total_count", default=0)
+        observed = _int(row, "observed_total_count", default=assigned)
+        missing_rate = _float(row, "missing_rate", default=(max(0, assigned - observed) / assigned if assigned else 0.0))
+        structural_rate = _float(row, "F_struct", default=0.0)
+        buildings = {safe(task.get("building_id") or task.get("building")) for task in tasks} - {""}
+        cluster_factor = math.sqrt(len(buildings) / len(tasks)) if tasks and buildings else 1.0
+        added_information = raw_information * max(0.0, 1 - missing_rate) * max(0.0, 1 - structural_rate) * cluster_factor
         slope_se = _float(row, "risk_slope_se", default=math.inf)
         slope_support = _int(row, "risk_slope_support", "support", "n_support")
         if math.isfinite(slope_se) and slope_se > 0 and slope_support > 0:
@@ -256,7 +264,6 @@ def _projected_worker_intervals(
         projected.append(value)
         strata = Counter(_task_stratum(task) for task in tasks)
         base_ids = {safe(task.get("base_task_id")) or _task_id(task) for task in tasks}
-        buildings = {safe(task.get("building_id") or task.get("building")) for task in tasks} - {""}
         worker_bridge_set = worker_sets.get(worker, set())
         overlaps = [len(worker_bridge_set & values) for other, values in list(worker_sets.items()) if other != worker]
         audits.append({
@@ -267,6 +274,11 @@ def _projected_worker_intervals(
             "common_anchor_support": sum(safe(edge.get("c2_component")) == "common_anchor" for edge in edges),
             "bridge_support": len(worker_sets[worker]), "unique_image_coverage": len(base_ids),
             "building_coverage": len(buildings), "common_bridge_with_other_min": min(overlaps, default=0),
+            "missing_rate": missing_rate, "structural_failure_rate": structural_rate,
+            "effective_information": added_information,
+            "expected_fallback_rate": missing_rate ** len(tasks) if tasks else 1.0,
+            "expected_global_full_divergence": abs(_float(row, "risk_slope", "risk_slope_mean", default=0.0)) * (max((_float(task, "d_cal_A", default=0.0) for task in tasks), default=0.0) - min((_float(task, "d_cal_A", default=0.0) for task in tasks), default=0.0)),
+            "v1_usable_support": len(tasks) * max(0.0, 1 - missing_rate) * max(0.0, 1 - structural_rate),
         })
     return max(projected, default=math.inf), audits
 
@@ -339,7 +351,8 @@ def materialize(
         if min(common_n, bridge_per_worker, unique_bridge_n, min_support) < 1 or max_imbalance < 0:
             raise ValueError(f"invalid positive design counts: {design_id}")
         selected_anchors = _balanced_tasks(anchors, common_n)
-        selected_bridges = _balanced_tasks(bridges, unique_bridge_n)
+        anchor_ids = {_task_id(task) for task in selected_anchors}
+        selected_bridges = _balanced_tasks([task for task in bridges if _task_id(task) not in anchor_ids], unique_bridge_n)
         bridge_edges = _assign_bridges(workers, selected_bridges, bridge_per_worker, min_support)
         rows: list[dict[str, Any]] = []
         reason = dependency_reason
@@ -415,6 +428,11 @@ def materialize(
     if input_status == "precloseout_rehearsal":
         candidate_edges = [row for _count, _design, rows, _graph in candidates for row in rows]
         write_csv(output_dir / "c2b_candidate_worker_task_edges.csv", candidate_edges, ASSIGNMENT_FIELDS)
+        candidate_assignment = [
+            {**row, "input_status": "precloseout_partial_c1", "formal_closeout_ready": False, "assignment_launch_allowed": False}
+            for row in (candidates[0][2] if candidates else [])
+        ]
+        write_csv(output_dir / "candidate_C2B_assignment.csv", candidate_assignment, ASSIGNMENT_FIELDS + ["input_status", "formal_closeout_ready", "assignment_launch_allowed"])
         write_csv(output_dir / "c2b_worker_task_graph_audit.csv", [item[3] for item in candidates], GRAPH_AUDIT_FIELDS)
         chosen = None
         chosen_rows = []
@@ -442,6 +460,7 @@ def materialize(
             else "" if chosen else (dependency_reason or "no_feasible_c2b_design")
         ),
         "n_feasible_candidate_designs": len(candidates),
+        "candidate_assignment_rows": len(candidates[0][2]) if input_status == "precloseout_rehearsal" and candidates else 0,
     }
     write_json(output_dir / "c2b_design.summary.json", summary)
     if not chosen and input_status == "formal":

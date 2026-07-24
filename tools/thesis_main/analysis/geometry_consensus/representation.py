@@ -38,6 +38,26 @@ def _simple_wall_polygon(pairs: list[dict[str, float]]) -> bool:
     return True
 
 
+def _circular_pairs(pairs: list[dict[str, float]], width: int) -> list[dict[str, float]]:
+    """Cut the panorama at its largest empty arc before planar checks."""
+    ordered = sorted(pairs, key=lambda row: row["x"] % width)
+    if len(ordered) < 2:
+        return ordered
+    xs = [float(row["x"]) % width for row in ordered]
+    gaps = [xs[index + 1] - xs[index] for index in range(len(xs) - 1)] + [xs[0] + width - xs[-1]]
+    start = (max(range(len(gaps)), key=gaps.__getitem__) + 1) % len(ordered)
+    rotated = ordered[start:] + ordered[:start]
+    unwrapped = []
+    previous = None
+    for row in rotated:
+        x = float(row["x"]) % width
+        if previous is not None and x <= previous:
+            x += width
+        previous = x
+        unwrapped.append({**row, "x": x})
+    return unwrapped
+
+
 def normalize_geometry(
     corners: Any,
     *,
@@ -60,6 +80,20 @@ def normalize_geometry(
         "n_pairs": 0,
         "pairs": [],
         "x_event_positions": [],
+        "geometry_parse_valid": False,
+        "coordinate_range_valid": False,
+        "corner_count_valid": False,
+        "pair_count_valid": False,
+        "pairing_valid": False,
+        "top_bottom_order_valid": False,
+        "pair_fold_absent": False,
+        "duplicate_corner_absent": False,
+        "polygon_closed": False,
+        "polygon_simple": False,
+        "topology_valid": False,
+        "seam_representation_valid": False,
+        "seam_crossing_detected": False,
+        "pairing_method": "circular_x_pairing",
     }
     if array.ndim != 2 or array.shape[1:] != (2,):
         result["reason"] = "shape_invalid"
@@ -67,14 +101,21 @@ def normalize_geometry(
     if not np.isfinite(array).all():
         result["reason"] = "non_finite"
         return result
-    if (array[:, 0] < 0).any() or (array[:, 0] > width).any() or (array[:, 1] < 0).any() or (array[:, 1] >= height).any():
+    result["geometry_parse_valid"] = True
+    result["coordinate_range_valid"] = not ((array[:, 0] < 0).any() or (array[:, 0] > width).any() or (array[:, 1] < 0).any() or (array[:, 1] >= height).any())
+    if not result["coordinate_range_valid"]:
         result["reason"] = "out_of_range"
         return result
+    result["corner_count_valid"] = len(array) >= 4 and len(array) % 2 == 0
+    result["duplicate_corner_absent"] = len({(round(float(x), 9), round(float(y), 9)) for x, y in array}) == len(array)
+    result["seam_crossing_detected"] = bool(len(array) and np.ptp(array[:, 0]) > width / 2)
+    result["seam_representation_valid"] = True
     array = array.copy()
     array[:, 0] %= float(width)
     pairs, stats = analyze_layout_pairing(array, width=width, height=height, threshold_ratio=threshold_ratio)
     result["pairing_stats"] = stats
     result["n_pairs"] = len(pairs)
+    result["pair_count_valid"] = int(stats.get("n_pairs", 0)) >= 2 and int(stats.get("unpaired_point_count", 0)) == 0
     if int(stats.get("n_points", 0)) % 2:
         result["reason"] = "odd_keypoint_count"
         return result
@@ -84,17 +125,23 @@ def normalize_geometry(
     if bool(stats.get("pairing_ambiguous")):
         result["reason"] = "ambiguous_pairing"
         return result
-    pairs = sorted(pairs, key=lambda row: row["x"])
+    result["pairing_valid"] = True
+    pairs = _circular_pairs(pairs, width)
     xs = [float(row["x"]) % float(width) for row in pairs]
     if any(abs(xs[i] - xs[i - 1]) < 1e-6 for i in range(1, len(xs))):
         result["reason"] = "duplicate_event_positions"
         return result
-    if any(float(row["y_floor"]) <= float(row["y_ceiling"]) for row in pairs):
+    result["top_bottom_order_valid"] = not any(float(row["y_floor"]) <= float(row["y_ceiling"]) for row in pairs)
+    result["pair_fold_absent"] = result["top_bottom_order_valid"] and result["duplicate_corner_absent"]
+    if not result["top_bottom_order_valid"]:
         result["reason"] = "top_floor_order_invalid"
         return result
-    if not _simple_wall_polygon(pairs):
+    result["polygon_closed"] = len(pairs) >= 2
+    result["polygon_simple"] = _simple_wall_polygon(pairs)
+    if not result["polygon_simple"]:
         result["reason"] = "self_intersecting_or_open_topology"
         return result
+    result["topology_valid"] = True
     result.update(
         {
             "valid": True,

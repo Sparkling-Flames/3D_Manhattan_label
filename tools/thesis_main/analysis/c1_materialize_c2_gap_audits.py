@@ -99,13 +99,14 @@ def build_precision_assignments(
     history_rows: list[dict[str, str]] | None = None,
     max_task_support: int = 2,
     selection_seed: int = 0,
+    require_explicit_eligibility: bool = False,
 ) -> list[dict[str, Any]]:
     pools: dict[str, list[dict[str, str]]] = {"ordinary": [], "stress": []}
     for task in task_rows:
         stratum = safe(task.get("task_stratum") or task.get("risk_bucket")).lower()
         task_id = safe(task.get("task_id"))
         eligible = task.get("c2a_rp_eligible")
-        if task_id and stratum in pools and (eligible is None or safe(eligible) == "" or truthy(eligible)):
+        if task_id and stratum in pools and (truthy(eligible) if require_explicit_eligibility else eligible is None or safe(eligible) == "" or truthy(eligible)):
             pools[stratum].append(task)
     for rows in pools.values():
         rows.sort(key=lambda row: safe(row.get("task_id")))
@@ -134,9 +135,11 @@ def build_precision_assignments(
             if not count:
                 continue
             rng = random.Random(f"{selection_seed}|{worker}|{stratum}")
-            chosen = rng.sample(eligible, count)
-            for task in chosen:
+            for draw in range(count):
+                eligible_count = len(eligible)
+                task = eligible.pop(rng.randrange(eligible_count))
                 task_id = safe(task.get("task_id"))
+                support_before = task_support[task_id]
                 task_support[task_id] += 1
                 sequence += 1
                 assignments.append({
@@ -150,13 +153,13 @@ def build_precision_assignments(
                     "precision_before": plan["current_ci_half_width"],
                     "support_before": plan["current_support"],
                     "support_after": int(plan["current_support"]) + sequence,
-                    "selection_probability": count / len(eligible),
-                    "conditional_inclusion_probability": count / len(eligible),
+                    "selection_probability": 1 / eligible_count,
+                    "conditional_inclusion_probability": 1 / eligible_count,
                     "selection_seed": selection_seed,
                     "selection_draw_id": f"{worker}:{stratum}:{sequence}",
-                    "eligible_count_at_draw": len(eligible),
-                    "task_support_before": int(plan["current_support"]),
-                    "task_support_after": int(plan["current_support"]) + sequence,
+                    "eligible_count_at_draw": eligible_count,
+                    "task_support_before": support_before,
+                    "task_support_after": support_before + 1,
                     "paired_block_support_before": int(plan.get("paired_block_support_before") or 0),
                     "paired_block_support_after": int(plan.get("paired_block_support_before") or 0) + int(plan["additional_blocks"]),
                     "effective_risk_slope_support_before": int(plan["current_support"]),
@@ -231,6 +234,7 @@ def materialize(
                 history_rows=read_csv(assignment_history_csv) if assignment_history_csv else None,
                 max_task_support=int(precision.get("max_task_support", 2)),
                 selection_seed=int(precision.get("selection_seed", 0)),
+                require_explicit_eligibility=input_status == "formal",
             )
     history_valid = input_status != "formal"
     if assignment_history_csv:

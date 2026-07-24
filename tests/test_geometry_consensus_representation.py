@@ -20,3 +20,10 @@ def test_representation_is_seam_aware_and_pairwise_metric_is_compatible() -> Non
 def test_representation_rejects_odd_or_out_of_range_points() -> None:
     assert normalize_geometry([[0, 10], [0, 400], [500, 10]])["valid"] is False
     assert normalize_geometry([[0, 10], [0, 400], [1025, 10], [1025, 400]])["reason"] == "out_of_range"
+
+
+def test_legal_seam_polygon_is_not_planar_self_intersection() -> None:
+    geometry = normalize_geometry([[1000, 100], [1000, 400], [20, 100], [20, 400]])
+    assert geometry["seam_crossing_detected"] is True
+    assert geometry["polygon_simple"] is True
+    assert geometry["topology_valid"] is True

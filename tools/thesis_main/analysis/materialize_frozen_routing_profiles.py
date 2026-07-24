@@ -9,6 +9,7 @@ import json
 from collections import defaultdict
 from pathlib import Path
 from statistics import fmean
+from statistics import NormalDist
 from typing import Any
 
 import pandas as pd
@@ -89,7 +90,9 @@ def build_global(
         centered[row["worker_id"]].append(float(row["iou_to_gt"]) - task_mean[row["task_id"]] + grand)
     config = estimator or {}
     confidence = float(config.get("confidence_level", .95))
-    z = 1.959963984540054 if abs(confidence - .95) < 1e-9 else 1.959963984540054
+    if not 0 < confidence < 1:
+        raise ValueError("confidence_level must be between zero and one")
+    z = NormalDist().inv_cdf((1 + confidence) / 2)
     min_gt = int(config.get("min_gt_support", 1))
     min_tasks = int(config.get("min_task_support", 1))
     max_struct = float(config.get("max_f_struct", float("inf")))
@@ -105,6 +108,7 @@ def build_global(
         struct = _number(state.get("F_struct"))
         subset = frame[frame.worker_id == worker]
         support, task_support = len(subset), subset.task_id.nunique()
+        groups = subset.get("dataset_group", pd.Series([], dtype=str)).astype(str) if "dataset_group" in subset else pd.Series([], dtype=str)
         gates = {
             "process": process,
             "independence": independence,
@@ -123,6 +127,8 @@ def build_global(
             "R_LOO_compatible": state.get("R_LOO_compatible", ""),
             "F_struct": "" if struct is None else struct, "GT_support": support,
             "task_support": task_support,
+            "anchor_support": int(groups.str.contains("anchor", case=False).sum()),
+            "core_support": int(groups.str.contains("core", case=False).sum()),
             "LOO_support": state.get("LOO_support", ""),
             "process_eligible": process, "independence_eligible": independence,
             "reference_evaluable": reference_ok,
@@ -143,6 +149,7 @@ def build_global(
         "model_version": MODEL_VERSION, "formula": formula, "covariance": "task_cluster_robust",
         "same_task_rows_independent": False, "n_rows": len(frame), "n_workers": len(workers),
         "n_tasks": frame.task_id.nunique(),
+        "confidence_level": confidence, "normal_quantile": z,
         "optional_context_adjustment": "absorbed_by_task_fixed_effect",
     }
     return output, task_rows, audit
