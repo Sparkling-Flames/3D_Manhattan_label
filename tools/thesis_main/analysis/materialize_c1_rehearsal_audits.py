@@ -636,18 +636,19 @@ def materialize_independence(
         disposition_valid = bool(disposition) and all(str(disposition.get(field, "")).strip() for field in ("canonical_annotation_id", "provenance_status", "copy_risk_status", "parent_annotation_id", "parent_owner_id", "parent_cross_owner", "independence_status", "reviewed_by", "reviewed_at", "source_meta_sha256")) and disposition.get("source_meta_sha256") == source_sha
         project = projects.get((row.get("project_id", ""), row.get("condition", "")), {})
         project_valid = bool(project) and all(str(project.get(field, "")).strip() for field in (
-            "project_id", "condition", "source_meta_sha256", "provenance_status", "copy_risk_status",
-            "parent_field_coverage_complete", "cross_owner_parent_count", "reviewed_by", "reviewed_at",
-        )) and project.get("source_meta_sha256") == source_sha and _truth(project.get("parent_field_coverage_complete")) and int(project.get("cross_owner_parent_count") or -1) == 0
+            "project_id", "condition", "source_project_evidence_sha256", "raw_export_sha256_set",
+            "project_config_sha256", "annotation_visibility_contract", "prior_annotation_visibility",
+            "raw_parent_schema_coverage", "cross_owner_parent_count", "unresolved_parent_count",
+            "reviewed_by", "reviewed_at",
+        )) and project.get("source_project_evidence_sha256") == project.get("project_evidence_sha256", "")
         effective = {**row, **project, **disposition} if disposition_valid else {**row, **project} if project_valid else row
         identity_complete = all(str(row.get(field, "")).strip() for field in ("project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "canonical_annotation_id"))
         cross_owner = _truth(row.get("parent_cross_owner")) or _truth(effective.get("parent_cross_owner"))
         copy_risk = row.get("copy_risk_status") in {"confirmed_copy", "cross_owner_parent"} or effective.get("copy_risk_status") in {"confirmed_copy", "cross_owner_parent"}
         if cross_owner or copy_risk:
             status, basis = "non_independent_confirmed", "cross_owner_parent_or_confirmed_copy"
-        elif identity_complete and effective.get("provenance_status") == "complete" and effective.get("copy_risk_status") == "cleared" and (not disposition or disposition_valid):
-            status = "independent" if disposition_valid else "independent_by_observed_provenance"
-            basis = "annotation_reviewed_clearance" if disposition_valid else "project_observed_provenance_clearance"
+        elif identity_complete and disposition_valid and effective.get("provenance_status") == "complete" and effective.get("copy_risk_status") == "cleared" and project_valid:
+            status, basis = "independent", "annotation_and_project_reviewed_clearance"
         else:
             status, basis = "not_evaluable", "identity_or_explicit_provenance_clearance_incomplete"
         if disposition_valid and disposition.get("independence_status") != status:
@@ -681,11 +682,13 @@ def materialize_project_independence_provenance(meta_csv: Path, output_dir: Path
     for (project, condition), members in sorted(grouped.items()):
         parent_nonnull = [row for row in members if str(row.get("parent_annotation_id", "")).strip()]
         unresolved = [row for row in parent_nonnull if not str(row.get("parent_owner_id", "")).strip()]
+        raw_parent_schema_coverage = sum(_truth(row.get("raw_parent_field_present")) for row in members) / len(members) if members else 0.0
         item = {
             "project_id": project, "condition": condition, "source_meta_sha256": source_sha,
             "raw_export_sha256_set": ";".join(sorted({row.get("source_sha256", "") for row in members if row.get("source_sha256")})),
             "annotation_count": len(members),
-            "parent_field_schema_present": all("parent_annotation_id" in row and "parent_owner_id" in row for row in members),
+            "parent_field_schema_present": all("raw_parent_field_present" in row for row in members),
+            "raw_parent_schema_coverage": raw_parent_schema_coverage,
             "parent_field_parse_coverage_count": sum("parent_annotation_id" in row and "parent_owner_id" in row for row in members),
             "parent_non_null_count": len(parent_nonnull),
             "parent_owner_resolution_count": len(parent_nonnull) - len(unresolved),
@@ -695,7 +698,9 @@ def materialize_project_independence_provenance(meta_csv: Path, output_dir: Path
             "unresolved_parent_count": len(unresolved),
         }
         evidence.append(item)
-        template.append({**item, "provenance_status": "", "copy_risk_status": "", "parent_field_coverage_complete": "", "reviewed_by": "", "reviewed_at": ""})
+        evidence_sha = hashlib.sha256(json.dumps(item, sort_keys=True).encode("utf-8")).hexdigest()
+        item["project_evidence_sha256"] = evidence_sha
+        template.append({**item, "source_project_evidence_sha256": evidence_sha, "project_config_sha256": "", "annotation_visibility_contract": "", "prior_annotation_visibility": "", "provenance_status": "", "copy_risk_status": "", "parent_field_coverage_complete": "", "reviewed_by": "", "reviewed_at": ""})
     write_csv(output_dir / "c1_project_independence_provenance_evidence.csv", evidence)
     write_csv(output_dir / "c1_project_independence_provenance_template.csv", template)
     summary = {"project_condition_count": len(evidence), "annotation_count": len(rows), "source_meta_sha256": source_sha, "pending_project_count": len(evidence)}
@@ -726,8 +731,14 @@ def rebind_canonical_meta_registry(canonical_csv: Path, meta_csv: Path) -> str:
 def materialize_row_analysis_eligibility(
     canonical_csv: Path, version_csv: Path, quality_csv: Path, loo_csv: Path,
     structural_csv: Path, reference_csv: Path, output_dir: Path,
+    *, independence_csv: Path | None = None,
 ) -> dict[str, Any]:
-    """Materialize the three estimand-specific row gates once and reuse them downstream."""
+    """Materialize the three estimand-specific row gates as an immutable sidecar.
+
+    Canonical annotations and measurement evidence are upstream artifacts.  This
+    materializer may read them, but must never rewrite them: downstream consumers
+    join on ``canonical_annotation_id``.
+    """
     canonical = read_csv(canonical_csv)
     versions = {row.get("annotation_id", ""): row.get("version_disposition", "") for row in read_csv(version_csv)}
     references = {
@@ -737,11 +748,17 @@ def materialize_row_analysis_eligibility(
     quality = {row.get("canonical_annotation_id", ""): row for row in read_csv(quality_csv)}
     loo = {row.get("canonical_annotation_id", ""): row for row in read_csv(loo_csv)}
     structural = {row.get("canonical_annotation_id", ""): row for row in read_csv(structural_csv)}
+    independence = {
+        row.get("canonical_annotation_id", ""): row
+        for row in read_csv(independence_csv)
+    } if independence_csv and independence_csv.exists() else {}
     output = []
     for row in canonical:
         identity = row.get("canonical_annotation_id", "")
         reference = references.get(tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition")), {})
-        structural_status = structural.get(identity, {}).get("structural_validation_status", "not_evaluable")
+        structural_row = structural.get(identity, {})
+        structural_status = structural_row.get("structural_validation_status", "not_evaluable")
+        independence_status = independence.get(identity, {}).get("independence_status", "not_evaluable")
         process_reasons = []
         if not _truth(row.get("assigned_expected")): process_reasons.append("outside_assignment")
         if _truth(row.get("outside_assignment_submission")): process_reasons.append("outside_assignment")
@@ -749,7 +766,7 @@ def materialize_row_analysis_eligibility(
         if versions.get(row.get("annotation_id", "")) != "selected_canonical": process_reasons.append("canonical_version_not_disposed")
         process_reasons = list(dict.fromkeys(process_reasons))
         common_reasons = [*process_reasons]
-        if row.get("independence_status") not in {"independent", "independent_by_observed_provenance"}: common_reasons.append("independence_not_evaluable")
+        if independence_status != "independent": common_reasons.append("independence_not_evaluable")
         if reference.get("final_scope") != "in_scope": common_reasons.append("scope_not_resolved_in_scope")
         global_reasons = [*common_reasons]
         if row.get("condition", "").lower() != "manual": global_reasons.append("not_manual")
@@ -757,8 +774,8 @@ def materialize_row_analysis_eligibility(
         if not _truth(quality.get(identity, {}).get("quality_evaluable")): global_reasons.append("gt_quality_not_evaluable")
         loo_reasons = [*common_reasons]
         if structural_status != "passed": loo_reasons.append("structural_not_passed")
-        if loo.get(identity, {}).get("q_LOO_tu", "") in {"", None}: loo_reasons.append("loo_consensus_not_evaluable")
-        if loo.get(identity, {}).get("task_consensus_status", "") not in {"", "stable"}: loo_reasons.append("task_consensus_not_stable")
+        if loo.get(identity, {}).get("q_LOO_primary", loo.get(identity, {}).get("q_LOO_tu", "")) in {"", None}: loo_reasons.append("loo_consensus_not_evaluable")
+        if not _truth(loo.get(identity, {}).get("primary_loo_eligible")): loo_reasons.append("loo_consensus_not_primary")
         structural_reasons = [*common_reasons]
         if structural_status not in {"passed", "failed_confirmed_worker_submission"}: structural_reasons.append("structural_attribution_not_evaluable")
         output.append({
@@ -767,17 +784,12 @@ def materialize_row_analysis_eligibility(
             "loo_analysis_eligible": not loo_reasons, "loo_analysis_exclusion_reason": ";".join(loo_reasons),
             "structural_opportunity_eligible": not structural_reasons, "structural_opportunity_exclusion_reason": ";".join(structural_reasons),
         })
-    by_id = {row["canonical_annotation_id"]: row for row in output}
-    for path, rows in ((canonical_csv, canonical), (quality_csv, list(quality.values())), (loo_csv, list(loo.values())), (structural_csv, list(structural.values()))):
-        for row in rows:
-            row.update(by_id.get(row.get("canonical_annotation_id", ""), {}))
-        write_csv(path, rows, list(rows[0]) if rows else None)
     write_csv(output_dir / "c1_row_analysis_eligibility.csv", output)
     return {field: sum(_truth(row[field]) for row in output) for field in ("global_analysis_eligible", "loo_analysis_eligible", "structural_opportunity_eligible")}
 
 
 def materialize_final_canonical_closeout_summary(output_dir: Path, completion_summary: dict[str, Any]) -> dict[str, Any]:
-    """Recompute the formal gate after every row-level disposition has been applied."""
+    """Separate immutable canonical closure from later measurement readiness."""
     structural = read_csv(output_dir / "structural_validation_audit.csv")
     eligibility = read_csv(output_dir / "c1_row_analysis_eligibility.csv")
     versions = read_csv(output_dir / "c1_annotation_version_disposition.csv")
@@ -796,13 +808,20 @@ def materialize_final_canonical_closeout_summary(output_dir: Path, completion_su
         field: sum(_truth(row.get(field)) for row in eligibility)
         for field in ("global_analysis_eligible", "loo_analysis_eligible", "structural_opportunity_eligible")
     }
-    blockers = []
-    if int(completion_summary.get("missing_other_count") or 0): blockers.append("unclassified_missing")
-    if unreviewed_structural: blockers.append("unreviewed_structural_rows")
+    canonical_blockers = []
+    if int(completion_summary.get("missing_other_count") or 0): canonical_blockers.append("unclassified_missing")
     resolved_versions = {"selected_canonical", "input_duplicate_folded", "unselected_forensic", "excluded_group", "forensic_only"}
-    if any(row.get("version_disposition") not in resolved_versions for row in versions): blockers.append("unresolved_duplicate_or_version")
-    if any(not count for count in supports.values()): blockers.append("support_after_exclusion_insufficient")
-    scope_pending = sum(row.get("final_scope") != "in_scope" for row in references)
+    if any(row.get("version_disposition") not in resolved_versions for row in versions): canonical_blockers.append("unresolved_duplicate_or_version")
+    measurement_blockers = [*canonical_blockers]
+    if unreviewed_structural: measurement_blockers.append("unreviewed_structural_rows")
+    if any(not count for count in supports.values()): measurement_blockers.append("support_after_exclusion_insufficient")
+    pending_scope = [row for row in references if row.get("final_scope") not in {"in_scope", "oos"}]
+    oos_contexts = [row for row in references if row.get("final_scope") == "oos"]
+    pending_scope_base_tasks = {row.get("base_task_id", "") for row in pending_scope if row.get("base_task_id", "")}
+    pending_scope_annotation_rows = sum(
+        "scope_not_resolved_in_scope" in row.get("global_analysis_exclusion_reason", "")
+        for row in eligibility
+    )
     summary = {
         "schema_version": "c1_final_canonical_closeout_summary_v1",
         "completion_disposition": {
@@ -815,11 +834,17 @@ def materialize_final_canonical_closeout_summary(output_dir: Path, completion_su
         "reviewed_local_exclusions": reviewed_local_exclusions,
         "support_after_exclusion": supports,
         "independence_pending_rows": sum("independence_not_evaluable" in row.get("global_analysis_exclusion_reason", "") for row in eligibility),
-        "scope_pending_but_excluded": scope_pending,
+        "pending_scope_base_tasks": len(pending_scope_base_tasks),
+        "pending_scope_contexts": len(pending_scope),
+        "pending_scope_annotation_rows": pending_scope_annotation_rows,
+        "oos_contexts": len(oos_contexts),
+        "scope_pending_but_excluded": len(pending_scope),
         "scope_pending_leaking_to_estimand": 0,
-        "formal_audit_complete": not blockers,
-        "formal_closeout_ready": not blockers,
-        "blockers": blockers,
+        "C1_CANONICAL_CLOSED": not canonical_blockers,
+        "canonical_blockers": canonical_blockers,
+        "formal_audit_complete": not measurement_blockers,
+        "formal_closeout_ready": not measurement_blockers,
+        "blockers": measurement_blockers,
     }
     (output_dir / "c1_final_canonical_closeout_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary

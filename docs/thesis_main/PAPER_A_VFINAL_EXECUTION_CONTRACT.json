@@ -1,0 +1,71 @@
+{
+  "schema_version": "paper_a_vfinal_execution_contract_v1",
+  "method_version": "Paper_A_vFinal_C1_C2_mainline",
+  "truth_sources": [
+    "Paper_A_新版完整论文提纲_vFinal_Draft.md",
+    "ROUND_BASED_EXECUTION_PROTOCOL_v1.md",
+    "ROUND_BASED_ASSIGNMENT_SOP_v1.md",
+    "STATISTICAL_ANALYSIS_PLAN_v1.md"
+  ],
+  "stage_order": ["Pilot", "P1", "C1", "C2-B", "C2-A-RP", "T1", "V1"],
+  "immutable_c1_artifacts": {
+    "owner": "c1_canonical_bundle",
+    "artifacts": [
+      "c1_canonical_annotations.csv",
+      "c1_canonical_geometry.jsonl",
+      "c1_canonical_meta_observations.csv",
+      "c1_gt_quality_evidence.csv",
+      "geometry_worker_task_loo_C1.csv",
+      "structural_validation_audit.csv"
+    ],
+    "rule": "下游资格、画像和设计仅可通过 canonical_annotation_id sidecar join；不得回写这些工件。"
+  },
+  "formal_evidence": {
+    "C1": ["c1_canonical_bundle", "c1_row_analysis_eligibility", "c1_gt_quality", "geometry_worker_task_loo", "structural_validation", "c1_three_axis_worker_state"],
+    "C2-B": ["c1_measurement_freeze_manifest", "c1_preannotation_task_features", "c2_task_risk_inventory", "c2b_design_worker_profile", "c2b_design_candidates", "c2b_simulation_draw_summary"],
+    "C2-A-RP": ["C2-B closeout", "frozen sequential draw manifest", "task and paired-block support audit"],
+    "T1": ["frozen assignment and resolver outputs", "image-level primary inference"],
+    "V1": ["frozen scheduling/resolver outputs", "ITT and administrative-censor inference"]
+  },
+  "gates": {
+    "C1_CANONICAL_CLOSED": "identity, assignment/version/duplicate disposition and raw snapshot binding are complete; it does not assert measurement support.",
+    "C1_MEASUREMENT_FROZEN": "canonical closure plus evaluable Q_GT, held-out LOO and structural axes by worker/task/building and connected usable graph.",
+    "C2B_DESIGN_READY": "measurement freeze plus SHA-bound pre-annotation C1 risk features and formal C2-B design inputs."
+  },
+  "risk_channels": {
+    "risk_design_A": "pre-annotation model/layout evidence and C1 feature-space calibration only; required for C2-B design.",
+    "risk_assist": "T1 assistance analysis only.",
+    "risk_route": "V1 routing only after C2-B confirmation; never a C2-B assignment prerequisite."
+  },
+  "disposition_requirements": {
+    "identity_key": "canonical_annotation_id",
+    "required_fields": ["disposition", "reviewed_by", "reviewed_at", "source_sha256"],
+    "failure_mode": "missing, stale, conflicting or unmatched disposition is not_evaluable and blocks the affected formal estimand."
+  },
+  "forbidden_feedback": [
+    "T1/V1 outcomes cannot alter C1 eligibility, C2-B risk, thresholds, worker profiles or assignment selection.",
+    "crowd canonical geometry cannot supply C1 pre-annotation risk features.",
+    "rehearsal artifacts, worktree patches and candidate assignments cannot be finalized or imported as formal assignments."
+  ],
+  "legacy_diagnostic_only": [
+    "run_c1_closeout_dryrun_chain",
+    "worker_state_snapshot_C1",
+    "calibration_r_u_evidence_C1",
+    "worker_profile_sidecar_C1",
+    "worker_scene_profile_candidates_C1",
+    "routing_temporal_*_C1",
+    "r_u and legacy profile freeze artifacts"
+  ],
+  "formal_entrypoints": [
+    "run_c1_closeout_launch.py day1-canonical-audit",
+    "run_c1_closeout_launch.py day1-measurement-freeze",
+    "run_c1_closeout_launch.py day2-c2b-design",
+    "run_c1_closeout_launch.py day2-c2b-build"
+  ],
+  "owners": {
+    "canonical": "C1 data closeout owner",
+    "dispositions_and_reference": "designated expert reviewer",
+    "risk_and_design": "C2-B design owner",
+    "formal_freeze": "study execution owner"
+  }
+}

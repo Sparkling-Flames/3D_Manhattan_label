@@ -21,18 +21,14 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from tools.thesis_main.analysis import build_c2_assignment_manifest_from_c1_gaps as c2b
 from tools.thesis_main.analysis import c1_canonicalize_exports
-from tools.thesis_main.analysis import run_c1_closeout_dryrun_chain
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, write_csv, write_json
 from tools.thesis_main.analysis.materialize_c1_operational_reference import materialize as materialize_operational_reference
 from tools.thesis_main.analysis.materialize_c1_canonical_evidence_sidecars import materialize_canonical_evidence
 from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
-    apply_independence,
-    apply_structural_dispositions,
     materialize_active_log_audits,
     materialize_active_time_ledgers,
     materialize_analysis_rosters,
-    materialize_c2_eligible_roster,
     materialize_completion_support,
     materialize_geometry_anomaly_root_causes,
     materialize_final_canonical_closeout_summary,
@@ -40,10 +36,17 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_project_independence_provenance,
     materialize_outside_assignment,
     materialize_row_analysis_eligibility,
-    rebind_canonical_meta_registry,
     materialize_structural_validation,
     materialize_three_track_worker_state,
 )
+from tools.thesis_main.analysis.c1_c2_mainline import (
+    formal_git_state,
+    materialize_analysis_views,
+    materialize_c2b_design_worker_profile,
+    materialize_measurement_readiness,
+)
+from tools.thesis_main.analysis.materialize_c1_preannotation_task_features import materialize as materialize_preannotation_features
+from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import materialize as materialize_design_parameters
 from tools.thesis_main.analysis.materialize_frozen_routing_profiles import build_global
 from tools.thesis_main.analysis.materialize_c2_task_risk import materialize as materialize_task_risk
 from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import materialize as materialize_predictive_association
@@ -127,24 +130,38 @@ def _candidate_design_manifest(task_pool: Path, worker_profile: Path, output: Pa
         str(row.get("bridge_eligible") or row.get("is_diverse_bridge") or row.get("eligible_for_reserve_candidate", "")).lower() in {"true", "1"}
         for row in tasks
     )
+    worker_count = sum(str(row.get("c2_candidate_eligible", "")).lower() in {"true", "1"} for row in read_csv(worker_profile))
+    def levels(low: int, high: int) -> list[int]:
+        if high < low:
+            return []
+        span = high - low
+        return sorted({low, low + (span + 2) // 3, low + (2 * span + 2) // 3, high})
+
     candidates = []
-    for common, per_worker, unique in ((2, 2, 6), (3, 3, 9), (4, 4, 12)):
-        if common <= anchors and per_worker <= bridges:
-            candidates.append({
-                "design_id": f"rehearsal_a{common}_b{per_worker}_u{min(unique, bridges)}",
-                "common_anchor_count": common,
-                "bridge_per_worker": per_worker,
-                "unique_bridge_tasks": min(unique, bridges),
-                "min_task_support": 2,
-                "max_worker_stratum_imbalance": 2,
-            })
+    # Enumerate from the realized pool rather than privileging an historical
+    # a2/b2/u6-style design.  The simulation decides whether any candidate is
+    # admissible; rehearsal never selects one.
+    max_common = min(anchors, max(1, worker_count))
+    max_per_worker = min(bridges, max(1, 2 * ((bridges + max(worker_count, 1) - 1) // max(worker_count, 1))))
+    for common in levels(1, max_common):
+        for per_worker in levels(1, max_per_worker):
+            min_unique = max(1, (worker_count * per_worker + 1) // 2)
+            for unique in levels(min_unique, min(bridges, worker_count * per_worker)):
+                candidates.append({
+                    "design_id": f"candidate_a{common}_b{per_worker}_u{unique}",
+                    "common_anchor_count": common,
+                    "bridge_per_worker": per_worker,
+                    "unique_bridge_tasks": unique,
+                    "min_task_support": 2,
+                    "max_worker_stratum_imbalance": 2,
+                })
     manifest = {
         "manifest_version": "c2_design_v1",
         "artifact_role": "precloseout_candidate_enumeration_only",
         "input_sha256": {"worker_profile_csv": sha256_file(worker_profile), "task_pool_csv": sha256_file(task_pool)},
         "candidate_designs": candidates,
         "c2b_target_ci_half_width": 1.0,
-        "simulation": {"seed": 20260724, "draws": 1000},
+        "simulation": {"seed": 20260724, "draws": 1000, "resampling": "C1 empirical building/task/worker bootstrap"},
     }
     write_json(output, manifest)
     return output
@@ -209,6 +226,7 @@ def materialize(
     semi_assignment: Path, worker_distribution: Path, gt_export: Path,
     p1_closeout_dir: Path, output_root: Path, *, input_status: str,
     run_date: str | None = None,
+    c1_preannotation_feature_csv: Path | None = None,
     independence_disposition: Path | None = None,
     project_independence_disposition: Path | None = None,
     structural_disposition: Path | None = None,
@@ -219,6 +237,9 @@ def materialize(
     if input_status not in {"precloseout_rehearsal", "formal"}:
         raise ValueError("input_status must be precloseout_rehearsal or formal")
     formal = input_status == "formal"
+    git_state = formal_git_state(_PROJECT_ROOT)
+    if formal and not git_state["clean"]:
+        raise ValueError("formal mode requires a committed clean worktree")
     export_files = [item for directory in export_dirs for item in _files(directory) if item.suffix.lower() == ".json"]
     if not export_files:
         raise ValueError("no C1 export JSON files found")
@@ -233,6 +254,8 @@ def materialize(
         "planned_mapping": PLANNED_MAPPING, "reserve_pool": RESERVE_POOL,
         "candidate_inventory": CANDIDATE_INVENTORY,
     }
+    if c1_preannotation_feature_csv is not None:
+        fixed_sources["c1_preannotation_feature"] = c1_preannotation_feature_csv
     p1_source_files = sorted((path for path in p1_closeout_dir.iterdir() if path.is_file()), key=lambda path: path.name.lower())
     review_sources = {name: path for name, path in {
         "duplicate_adjudication": duplicate_adjudication, "structural_disposition": structural_disposition,
@@ -258,6 +281,9 @@ def materialize(
     review_snapshots = {name: _snapshot(path, snapshots, "dispositions") for name, path in review_sources.items()}
     all_sources = [*export_files, *active_source_files, *fixed_sources.values(), *p1_source_files, *review_sources.values()]
     source_rows = _manifest_rows(all_sources)
+    input_roles = {path.resolve(): name for name, path in fixed_sources.items()}
+    for row in source_rows:
+        row["input_role"] = input_roles.get(Path(row["path"]).resolve(), "")
     all_snapshots = [*snapshot_exports, *snapshot_active, *fixed_snapshots.values(), *p1_snapshots, *review_snapshots.values()]
     snapshot_by_identity = {
         (sha256_file(path), path.name if path.parent.name == "active_logs" else path.name.split("_", 1)[-1]): path
@@ -268,6 +294,10 @@ def materialize(
         row["snapshot_path"] = snap.resolve().as_posix() if snap else ""
         row["snapshot_sha256"] = sha256_file(snap) if snap else ""
     diff = _git(["diff", "--binary", "HEAD"])
+    untracked = _git(["ls-files", "--others", "--exclude-standard"]).splitlines()
+    if not formal:
+        (output_dir / "worktree.patch").write_text(diff, encoding="utf-8")
+        write_json(output_dir / "untracked_file_manifest.json", {"files": untracked, "sha256": hashlib.sha256("\n".join(untracked).encode("utf-8")).hexdigest()})
     raw_manifest = {
         "schema_version": "c1_precloseout_raw_snapshot_v1",
         "created_at": datetime.now().astimezone().isoformat(),
@@ -275,11 +305,13 @@ def materialize(
         "aggregate_export_sha256": export_sha,
         "code_pipeline_sha256": code_pipeline_sha,
         "analysis_input_bundle_sha256": analysis_input_bundle_sha,
-        "head": _git(["rev-parse", "HEAD"]).strip(),
+        "head": git_state["git_commit_sha"],
         "git_status": _git(["status", "--short"]),
         "worktree_diff_sha256": hashlib.sha256(diff.encode("utf-8")).hexdigest(),
+        "worktree_patch_sha256": hashlib.sha256(diff.encode("utf-8")).hexdigest() if not formal else "",
+        "untracked_file_manifest_sha256": hashlib.sha256("\n".join(untracked).encode("utf-8")).hexdigest() if not formal else "",
         "command": " ".join(sys.argv),
-        "tool_version": "run_c1_precloseout_rehearsal_v2",
+        "tool_version": "run_c1_precloseout_rehearsal_v3",
         "inputs": source_rows,
     }
     write_json(output_dir / "raw_input_manifest.json", raw_manifest)
@@ -295,6 +327,10 @@ def materialize(
         require_complete=False, input_status=input_status,
         duplicate_adjudication_csv=review_snapshots.get("duplicate_adjudication"),
     )
+    materialize_canonical_evidence(
+        snapshot_exports, output_dir / "c1_canonical_annotations.csv", output_dir,
+        input_status=input_status, version_disposition_csv=output_dir / "c1_annotation_version_disposition.csv",
+    )
     project_independence_evidence_summary = materialize_project_independence_provenance(
         output_dir / "c1_canonical_meta_observations.csv", output_dir,
     )
@@ -303,22 +339,13 @@ def materialize(
         disposition_csv=review_snapshots.get("annotation_independence_disposition"),
         project_disposition_csv=review_snapshots.get("project_independence_provenance"),
     )
-    apply_independence(output_dir / "c1_canonical_annotations.csv", output_dir / "c1_independence_evidence.csv")
     structural_summary = materialize_structural_validation(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_geometry.jsonl", output_dir,
         disposition_csv=review_snapshots.get("structural_disposition"),
     )
-    apply_structural_dispositions(
-        output_dir / "c1_canonical_annotations.csv", output_dir / "structural_validation_audit.csv",
-    )
     canonical_summary["failure_attribution_counts"] = structural_summary["failure_attribution_counts"]
     canonical_summary["structural_validation_summary"] = structural_summary
     write_json(output_dir / "c1_canonicalization_summary.json", canonical_summary)
-    materialize_canonical_evidence(
-        snapshot_exports, output_dir / "c1_canonical_annotations.csv", output_dir,
-        input_status=input_status,
-        version_disposition_csv=output_dir / "c1_annotation_version_disposition.csv",
-    )
     materialize_geometry_consensus(
         output_dir / "c1_canonical_geometry.jsonl", output_dir, input_status=input_status,
     )
@@ -344,41 +371,34 @@ def materialize(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_annotation_version_disposition.csv",
         output_dir / "c1_gt_quality_evidence.csv", output_dir / "geometry_worker_task_loo_C1.csv",
         output_dir / "structural_validation_audit.csv", output_dir / "c1_task_outcome_reference.csv", output_dir,
+        independence_csv=output_dir / "c1_independence_evidence.csv",
     )
     final_canonical_summary = materialize_final_canonical_closeout_summary(output_dir, completion_summary)
-    rebind_canonical_meta_registry(
-        output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_meta_observations.csv",
+    analysis_views = materialize_analysis_views(
+        output_dir / "c1_gt_quality_evidence.csv", output_dir / "geometry_worker_task_loo_C1.csv",
+        output_dir / "structural_validation_audit.csv", output_dir / "c1_row_analysis_eligibility.csv", output_dir,
     )
     anomaly_summary = materialize_geometry_anomaly_root_causes(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_meta_observations.csv",
         output_dir / "c1_canonical_geometry.jsonl", output_dir / "structural_validation_audit.csv", output_dir,
         reference_csv=output_dir / "c1_task_outcome_reference.csv",
     )
-    gate = run_c1_closeout_dryrun_chain.materialize(
-        output_dir / "c1_canonical_annotations.csv", fixed_snapshots["manual_assignment"],
-        fixed_snapshots["reserve_pool"], output_dir, output_dir / "c2_candidates",
-        fixed_snapshots["candidate_inventory"], 5, 1, 2, .15, 1,
-        p1_artifacts=p1_artifacts, input_status=input_status,
-        task_outcome_csv=output_dir / "c1_task_outcome_reference.csv",
-        assignment_manifests=[fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
-    )
     # The closeout chain consumes canonicalizer binding evidence; publish the richer
     # event/session ledger only after that contract has been evaluated.
     active_ledger_summary = materialize_active_time_ledgers(
         output_dir / "c1_canonical_meta_observations.csv", snapshots / "active_logs", output_dir,
     )
-    chain = {"canonicalization_summary": canonical_summary, "gate_summary": gate, "operational_reference_summary": reference_summary, "row_eligibility_summary": row_eligibility_summary}
+    chain = {"canonicalization_summary": canonical_summary, "operational_reference_summary": reference_summary, "row_eligibility_summary": row_eligibility_summary, "analysis_views": analysis_views}
     predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"
     predictive_summary = materialize_predictive_association(predictive_path, output_dir) if predictive_path.exists() else {"component_status": "not_evaluable", "reason": "p1_to_c1_source_missing"}
 
     canonical = read_csv(output_dir / "c1_canonical_annotations.csv")
-    quality = read_csv(output_dir / "c1_gt_quality_evidence.csv")
-    worker_state = read_csv(output_dir / "worker_state_snapshot_C1.csv")
+    quality = read_csv(output_dir / "c1_gt_quality_analysis.csv")
     completion_rows = read_csv(output_dir / "c1_worker_completion_audit.csv")
     roster = {row["worker_id"] for row in completion_rows}
     observed = {row["worker_id"] for row in completion_rows if int(row["observed_total_count"]) > 0}
     missing_workers = [row["worker_id"] for row in completion_rows if row["completion_status"] == "nonstarter"]
-    not_evaluable = [row for row in canonical if row.get("failure_attribution") == "not_evaluable"]
+    not_evaluable = [row for row in read_csv(output_dir / "structural_validation_audit.csv") if row.get("failure_attribution") == "not_evaluable"]
 
     _copy_alias(output_dir / "c1_canonicalization_summary.json", output_dir / "canonicalization_audit.json")
     _copy_alias(output_dir / "c1_runtime_key_collision_audit.csv", output_dir / "identity_collision_audit.csv")
@@ -392,7 +412,6 @@ def materialize(
     write_csv(output_dir / "not_evaluable_queue.csv", not_evaluable, list(canonical[0]) if canonical else ["worker_id"])
     _copy_alias(output_dir / "c1_gt_quality_evidence.csv", output_dir / "GT_quality_audit.csv")
     _copy_alias(output_dir / "geometry_worker_task_loo_C1.csv", output_dir / "LOO_status_audit.csv")
-    _copy_alias(output_dir / "worker_state_snapshot_C1.csv", output_dir / "provisional_worker_state.csv")
 
     loo_rows = read_csv(output_dir / "geometry_worker_task_loo_C1.csv")
     pairwise_rows = read_csv(output_dir / "geometry_pairwise_similarity_C1.csv")
@@ -402,7 +421,7 @@ def materialize(
 
     try:
         globals_, task_effects, model_audit = build_global(
-            quality, _derived_worker_gates(quality, worker_state),
+            quality, _derived_worker_gates(quality, completion_rows),
             profile_version="precloseout_partial_c1", input_status=input_status,
         )
         write_csv(output_dir / "provisional_strong_global.csv", globals_, list(globals_[0]))
@@ -412,29 +431,42 @@ def materialize(
         write_csv(output_dir / "provisional_strong_global.csv", [], ["worker_id", "provisional_rank"])
 
     three_track_summary = materialize_three_track_worker_state(
-        output_dir / "provisional_strong_global.csv", output_dir / "geometry_worker_task_loo_C1.csv",
-        output_dir / "structural_validation_audit.csv", output_dir / "c1_worker_completion_audit.csv", output_dir,
-        quality_csv=output_dir / "c1_gt_quality_evidence.csv",
+        output_dir / "provisional_strong_global.csv", output_dir / "geometry_worker_task_loo_analysis.csv",
+        output_dir / "structural_validation_analysis.csv", output_dir / "c1_worker_completion_audit.csv", output_dir,
+        quality_csv=output_dir / "c1_gt_quality_analysis.csv",
         formal=formal,
     )
-
-    c2_roster_summary = materialize_c2_eligible_roster(
-        output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_canonical_annotations.csv",
-        output_dir / "c1_gt_quality_evidence.csv", output_dir / "geometry_worker_task_loo_C1.csv", output_dir,
+    preannotation_summary = materialize_preannotation_features(
+        [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]], fixed_snapshots["candidate_inventory"], output_dir,
+        frozen_feature_csv=fixed_snapshots.get("c1_preannotation_feature"),
     )
-    profile = output_dir / "c2_eligible_roster_C1.csv"
+    readiness = materialize_measurement_readiness(
+        output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_gt_quality_analysis.csv",
+        output_dir / "geometry_worker_task_loo_analysis.csv", output_dir / "structural_validation_analysis.csv", output_dir,
+        canonical_closed=bool(final_canonical_summary.get("C1_CANONICAL_CLOSED")),
+        preannotation_feature_ready=bool(preannotation_summary.get("n_ready")),
+    )
     raw_task_pool = _candidate_task_pool(
         fixed_snapshots["candidate_inventory"], [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
         output_dir / "c2b_candidate_task_pool_raw.csv", fixed_snapshots["reserve_pool"],
     )
     risk_summary = materialize_task_risk(
-        raw_task_pool, Path("output/layout_json"), output_dir / "c1_canonical_geometry.jsonl", output_dir,
+        raw_task_pool, Path("output/layout_json"), output_dir / "c1_preannotation_task_features.csv", output_dir,
         input_status=input_status,
         checkpoint=Path("ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth"),
         reference_dir=Path("data/mp3d_layout/train_no_occ/img"), extract_lhfeat=False,
     )
     task_pool = output_dir / "c2_task_risk_inventory.csv"
     shutil.copy2(task_pool, output_dir / "c2b_candidate_task_pool.csv")
+    parameter_summary = materialize_design_parameters(
+        output_dir / "c1_gt_quality_analysis.csv", task_pool, output_dir / "structural_validation_analysis.csv",
+        output_dir / "c1_worker_completion_audit.csv", output_dir,
+    )
+    profile_summary = materialize_c2b_design_worker_profile(
+        output_dir / "c1_worker_completion_audit.csv", output_dir / ("c1_three_track_worker_state_formal.csv" if formal else "c1_three_track_worker_state.csv"),
+        output_dir / "c1_c2_design_parameters.csv", output_dir / "c1_measurement_readiness_by_worker.csv", output_dir,
+    )
+    profile = output_dir / "c2b_design_worker_profile.csv"
     design_manifest = _candidate_design_manifest(task_pool, profile, output_dir / "c2b_candidate_design_manifest.json")
     if not json.loads(design_manifest.read_text(encoding="utf-8")).get("candidate_designs"):
         c2_summary = {"candidate_only": True, "launch_ready": False, "failure_reason": "risk_pool_insufficient_no_assignment_eligible_tasks", "n_feasible_candidate_designs": 0}
@@ -498,7 +530,10 @@ def materialize(
         "active_time_ledger_summary": active_ledger_summary,
         "outside_assignment_summary": outside_summary,
         "geometry_loo_summary": {"n_pairwise_rows": len(pairwise_rows), "n_loo_rows": len(loo_rows)},
-        "c2_eligible_roster_summary": c2_roster_summary,
+        "c2b_design_worker_profile_summary": profile_summary,
+        "c1_c2_design_parameter_summary": parameter_summary,
+        "c1_preannotation_feature_summary": preannotation_summary,
+        "c1_measurement_readiness": readiness,
         "three_track_worker_state_summary": three_track_summary,
         "c2_candidate_pool_summary": {
             "n_inventory_tasks": len(read_csv(fixed_snapshots["candidate_inventory"])),
@@ -508,11 +543,14 @@ def materialize(
         },
         "c2_task_risk_summary": risk_summary,
         "p1_to_c1_predictive_summary": predictive_summary,
-        "formal_closeout_ready": formal and final_canonical_summary["formal_closeout_ready"], "profile_frozen": False, "c2_launch_ready": False,
-        "formal_mode_executed": formal, "formal_audit_complete": formal and final_canonical_summary["formal_audit_complete"],
+        "C1_CANONICAL_CLOSED": bool(readiness["C1_CANONICAL_CLOSED"]),
+        "C1_MEASUREMENT_FROZEN": bool(readiness["C1_MEASUREMENT_FROZEN"]),
+        "C2B_DESIGN_READY": bool(readiness["C2B_DESIGN_READY"]),
+        "formal_closeout_ready": formal and bool(readiness["C1_MEASUREMENT_FROZEN"]), "profile_frozen": False, "c2_launch_ready": False,
+        "formal_mode_executed": formal, "formal_audit_complete": formal and bool(readiness["C1_CANONICAL_CLOSED"]),
         "c1_evidence_frozen": False, "c2_design_frozen": False, "c2_assignment_materialized": False,
         "formal_results_materialized": formal and final_canonical_summary["formal_audit_complete"], "c2_candidate_only": not formal,
-        "chain_gate": chain.get("gate_summary", {}),
+        "chain_gate": {"legacy_diagnostic_chain_consumed": False},
         "operational_reference_summary": chain.get("operational_reference_summary", {}),
         "strong_global_model_audit": model_audit,
         "c2b_candidate_summary": c2_summary,
@@ -534,11 +572,14 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--p1-closeout-dir", type=Path, required=True)
     parser.add_argument("--output-root", type=Path, required=True)
     parser.add_argument("--input-status", choices=("precloseout_rehearsal",), required=True)
+    parser.add_argument("--run-date", help="immutable output label, e.g. 20260724_r2")
+    parser.add_argument("--c1-preannotation-feature-csv", type=Path, help="frozen pre-annotation C1 model feature table")
     args = parser.parse_args(argv)
     print(json.dumps(materialize(
         args.export_dir, args.active_log, args.manual_assignment, args.semi_assignment,
         args.worker_distribution, args.gt_export, args.p1_closeout_dir,
-        args.output_root, input_status=args.input_status,
+        args.output_root, input_status=args.input_status, run_date=args.run_date,
+        c1_preannotation_feature_csv=args.c1_preannotation_feature_csv,
     ), ensure_ascii=False, indent=2))
     return 0
 

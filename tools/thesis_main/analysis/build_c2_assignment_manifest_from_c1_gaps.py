@@ -40,6 +40,12 @@ GRAPH_AUDIT_FIELDS = [
     "worker_task_graph_connected", "duplicate_worker_task_count", "min_bridge_task_support",
     "max_worker_stratum_imbalance",
 ]
+SIMULATION_FIELDS = [
+    "design_id", "seed", "draws", "max_ci_half_width", "median_ci_half_width",
+    "rank_stability", "risk_slope_direction_stability", "minimum_worker_support",
+    "minimum_task_support", "graph_connectivity_probability", "building_coverage",
+    "expected_assignment_count", "simulation_status",
+]
 
 
 def _int(row: dict[str, Any], *fields: str, default: int = 0) -> int:
@@ -316,6 +322,72 @@ def _projected_worker_intervals(
     return max(projected, default=math.inf), audits
 
 
+def _empirical_cluster_bootstrap(
+    design_id: str, worker_rows: list[dict[str, str]], assignments: list[dict[str, Any]],
+    task_by_id: dict[str, dict[str, str]], graph: dict[str, Any], *, seed: int, draws: int,
+) -> dict[str, Any]:
+    """C1-empirical bootstrap over building, task and realized worker response.
+
+    The available C1 estimates supply worker slopes/missingness/structural rates;
+    selected C2 tasks supply building and risk-design support.  This remains a
+    design simulation, not a substitute for C2-B confirmation.
+    """
+    if not assignments or not worker_rows or draws < 1:
+        return {field: "" for field in SIMULATION_FIELDS} | {"design_id": design_id, "seed": seed, "draws": draws, "simulation_status": "insufficient_design_input"}
+    rng = random.Random(f"c1-empirical-bootstrap|{seed}|{design_id}")
+    edges_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for edge in assignments:
+        edges_by_worker[safe(edge["worker_id"])].append(edge)
+    baseline = {safe(row.get("worker_id")): _float(row, "Q_GT_task_adjusted", default=0.0) for row in worker_rows}
+    baseline_rank = sorted(baseline, key=lambda worker: (-baseline[worker], worker))
+    max_half_widths: list[float] = []
+    median_half_widths: list[float] = []
+    rank_stable = slope_stable = connected = 0
+    min_worker_supports: list[int] = []
+    min_task_supports: list[int] = []
+    buildings = {safe(task.get("building_id")) for task in task_by_id.values() if safe(task.get("building_id"))}
+    for _ in range(draws):
+        sampled_buildings = {rng.choice(sorted(buildings)) for _ in range(len(buildings))} if buildings else set()
+        rank_score, half_widths, signs, support = {}, [], [], Counter()
+        for row in worker_rows:
+            worker = safe(row.get("worker_id"))
+            slope, slope_se = _float(row, "risk_slope", default=0.0), _float(row, "risk_slope_se", default=math.inf)
+            missing, structural = _float(row, "missing_rate", default=0.0), _float(row, "F_struct", default=0.0)
+            delivered = []
+            for edge in edges_by_worker.get(worker, []):
+                task = task_by_id.get(safe(edge.get("task_id")), {})
+                if sampled_buildings and safe(task.get("building_id")) not in sampled_buildings:
+                    continue
+                if rng.random() >= missing and rng.random() >= structural:
+                    delivered.append(task); support[safe(edge.get("task_id"))] += 1
+            risk_values = [_float(task, "risk_design_A", "d_cal_A", default=0.0) for task in delivered]
+            sampled_slope = rng.gauss(slope, slope_se) if math.isfinite(slope_se) and slope_se > 0 else slope
+            signs.append((slope == 0) or (sampled_slope == 0) or (slope * sampled_slope > 0))
+            information = max(1, len(delivered))
+            half_width = math.inf if not math.isfinite(slope_se) else 1.96 * slope_se / math.sqrt(information)
+            half_widths.append(half_width)
+            rank_score[worker] = baseline.get(worker, 0.0) + sampled_slope * (sum(risk_values) / len(risk_values) if risk_values else 0.0)
+        if half_widths:
+            max_half_widths.append(max(half_widths)); median_half_widths.append(sorted(half_widths)[len(half_widths) // 2])
+        draw_rank = sorted(rank_score, key=lambda worker: (-rank_score[worker], worker))
+        rank_stable += draw_rank == baseline_rank
+        slope_stable += all(signs)
+        connected += bool(graph.get("worker_task_graph_connected"))
+        min_worker_supports.append(min((sum(1 for task in edges_by_worker.get(worker, []) if safe(task.get("task_id")) in support) for worker in edges_by_worker), default=0))
+        min_task_supports.append(min(support.values(), default=0))
+    finite_max = [value for value in max_half_widths if math.isfinite(value)]
+    finite_median = [value for value in median_half_widths if math.isfinite(value)]
+    return {
+        "design_id": design_id, "seed": seed, "draws": draws,
+        "max_ci_half_width": max(finite_max) if finite_max else "",
+        "median_ci_half_width": sorted(finite_median)[len(finite_median) // 2] if finite_median else "",
+        "rank_stability": rank_stable / draws, "risk_slope_direction_stability": slope_stable / draws,
+        "minimum_worker_support": min(min_worker_supports, default=0), "minimum_task_support": min(min_task_supports, default=0),
+        "graph_connectivity_probability": connected / draws, "building_coverage": len(buildings),
+        "expected_assignment_count": len(assignments), "simulation_status": "estimated",
+    }
+
+
 def _dependencies_valid(
     manifest: dict[str, Any],
     worker_profile_csv: Path,
@@ -336,8 +408,10 @@ def _dependencies_valid(
     if not c1_closeout_summary or not c1_closeout_summary.exists():
         return False, "formal_c1_closeout_missing"
     closeout = json.loads(c1_closeout_summary.read_text(encoding="utf-8"))
-    if not closeout.get("formal_closeout_ready") or closeout.get("profile_freeze_status") != "C1_frozen":
-        return False, "formal_c1_closeout_not_frozen"
+    if not closeout.get("C1_MEASUREMENT_FROZEN"):
+        return False, "c1_measurement_not_frozen"
+    if not closeout.get("C2B_DESIGN_READY"):
+        return False, "c2b_design_inputs_not_ready"
     if expected.get("c1_closeout_summary") != sha256_file(c1_closeout_summary):
         return False, "stale_or_unbound:c1_closeout_summary"
     return True, ""
@@ -370,6 +444,7 @@ def materialize(
     audits: list[dict[str, Any]] = []
     candidates: list[tuple[int, str, list[dict[str, Any]], dict[str, Any]]] = []
     worker_projections: list[dict[str, Any]] = []
+    simulation_rows: list[dict[str, Any]] = []
     simulation = manifest.get("simulation") or {}
     simulation_seed = int(simulation.get("seed", 0))
     simulation_draws = int(simulation.get("draws", 1000))
@@ -427,8 +502,14 @@ def materialize(
             require_c1_slopes=input_status == "formal",
         )
         worker_projections.extend(projection_rows)
+        simulation_row = _empirical_cluster_bootstrap(
+            design_id, workers_rows, rows, {_task_id(task): task for task in [*selected_anchors, *selected_bridges]}, graph,
+            seed=simulation_seed, draws=simulation_draws,
+        )
+        simulation_rows.append(simulation_row)
         target = float(manifest.get("c2b_target_ci_half_width", math.inf))
-        if not reason and projected > target:
+        simulated_half_width = _float(simulation_row, "max_ci_half_width", default=projected)
+        if not reason and (projected > target or simulated_half_width > target):
             reason = "projected_ci_half_width_above_target"
         if not reason and not graph["worker_task_graph_connected"]:
             reason = "worker_task_graph_disconnected"
@@ -438,7 +519,7 @@ def materialize(
             "design_id": design_id, "common_anchor_count": common_n,
             "bridge_per_worker": bridge_per_worker, "unique_bridge_tasks": unique_bridge_n,
             "min_task_support": min_support, "n_assignments": len(rows),
-            "projected_max_ci_half_width": "" if not math.isfinite(projected) else projected,
+            "projected_max_ci_half_width": "" if not math.isfinite(simulated_half_width) else simulated_half_width,
             "worker_task_graph_connected": graph["worker_task_graph_connected"],
             "stratum_balance_valid": graph["max_worker_stratum_imbalance"] <= max_imbalance,
             "design_method": "c1_risk_slope_precision_projection" if input_status == "formal" else "candidate_projection_or_dryrun_fallback",
@@ -460,7 +541,7 @@ def materialize(
     output_dir.mkdir(parents=True, exist_ok=True)
     write_csv(output_dir / "c2b_design_candidates.csv", audits, DESIGN_AUDIT_FIELDS)
     write_csv(output_dir / "c2b_worker_projection_audit.csv", worker_projections, WORKER_PROJECTION_FIELDS)
-    write_csv(output_dir / "c2b_simulation_draw_summary.csv", worker_projections, WORKER_PROJECTION_FIELDS)
+    write_csv(output_dir / "c2b_simulation_draw_summary.csv", simulation_rows, SIMULATION_FIELDS)
     write_csv(output_dir / "c2b_loto_lobo_audit.csv", [{"design_id": row["design_id"], "worker_id": row["worker_id"], "loto_support_after_one_task": max(0, int(row["unique_image_coverage"]) - 1), "lobo_support_after_one_building": max(0, int(row["building_coverage"]) - 1)} for row in worker_projections])
     write_csv(output_dir / "c2b_policy_feasibility_audit.csv", audits, DESIGN_AUDIT_FIELDS)
     if input_status == "precloseout_rehearsal":

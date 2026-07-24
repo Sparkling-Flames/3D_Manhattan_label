@@ -181,27 +181,31 @@ def test_independence_requires_explicit_cleared_provenance(tmp_path: Path) -> No
     base = {"project_id": "66", "ls_runtime_task_id": "10", "task_id": "t1", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1", "provenance_status": "", "copy_risk_status": "", "parent_cross_owner": ""}
     _csv(meta, [base, {**base, "annotation_id": "a2", "canonical_annotation_id": "c2", "provenance_status": "complete", "copy_risk_status": "cleared"}, {**base, "annotation_id": "a3", "canonical_annotation_id": "c3", "parent_cross_owner": "true"}])
     summary = materialize_independence(meta, tmp_path)
-    assert summary["status_counts"] == {"not_evaluable": 1, "independent_by_observed_provenance": 1, "non_independent_confirmed": 1}
+    assert summary["status_counts"] == {"not_evaluable": 2, "non_independent_confirmed": 1}
 
 
 def test_sha_bound_independence_disposition_can_clear_a_row(tmp_path: Path) -> None:
     meta = tmp_path / "meta.csv"; disposition = tmp_path / "disposition.csv"
-    _csv(meta, [{"project_id": "66", "ls_runtime_task_id": "10", "task_id": "t1", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1", "provenance_status": "", "copy_risk_status": ""}])
+    _csv(meta, [{"project_id": "66", "condition": "manual", "ls_runtime_task_id": "10", "task_id": "t1", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1", "provenance_status": "", "copy_risk_status": ""}])
     source_sha = __import__("hashlib").sha256(meta.read_bytes()).hexdigest()
     _csv(disposition, [{"canonical_annotation_id": "c1", "provenance_status": "complete", "copy_risk_status": "cleared", "parent_annotation_id": "none", "parent_owner_id": "none", "parent_cross_owner": "false", "independence_status": "independent", "reviewed_by": "reviewer", "reviewed_at": "2026-07-24T00:00:00Z", "source_meta_sha256": source_sha}])
-    summary = materialize_independence(meta, tmp_path, disposition_csv=disposition)
+    evidence = tmp_path / "project_evidence.csv"
+    _csv(evidence, [{"project_id": "66", "condition": "manual", "raw_parent_schema_coverage": "1", "raw_export_sha256_set": "a" * 64, "cross_owner_parent_count": "0", "unresolved_parent_count": "0", "project_evidence_sha256": "evidence"}])
+    project = tmp_path / "project.csv"
+    _csv(project, [{"project_id": "66", "condition": "manual", "source_project_evidence_sha256": "evidence", "project_evidence_sha256": "evidence", "raw_export_sha256_set": "a" * 64, "project_config_sha256": "b" * 64, "annotation_visibility_contract": "restricted", "prior_annotation_visibility": "none", "raw_parent_schema_coverage": "1", "cross_owner_parent_count": "0", "unresolved_parent_count": "0", "reviewed_by": "reviewer", "reviewed_at": "2026"}])
+    summary = materialize_independence(meta, tmp_path, disposition_csv=disposition, project_disposition_csv=project)
     assert summary["status_counts"] == {"independent": 1}
     assert summary["disposition_manifest_sha256"] == __import__("hashlib").sha256(disposition.read_bytes()).hexdigest()
 
 
-def test_project_provenance_manifest_expands_independence_without_649_row_reviews(tmp_path: Path) -> None:
+def test_project_provenance_manifest_does_not_clear_rows_without_annotation_disposition(tmp_path: Path) -> None:
     meta = tmp_path / "meta.csv"; project = tmp_path / "project.csv"
     rows = [{"project_id": "66", "condition": "manual", "ls_runtime_task_id": str(i), "task_id": f"t{i}", "worker_id": "1", "annotation_id": f"a{i}", "canonical_annotation_id": f"c{i}"} for i in range(2)]
     _csv(meta, rows)
     source_sha = __import__("hashlib").sha256(meta.read_bytes()).hexdigest()
     _csv(project, [{"project_id": "66", "condition": "manual", "source_meta_sha256": source_sha, "provenance_status": "complete", "copy_risk_status": "cleared", "parent_field_coverage_complete": "true", "cross_owner_parent_count": "0", "reviewed_by": "reviewer", "reviewed_at": "2026-07-24T00:00:00Z"}])
     summary = materialize_independence(meta, tmp_path, project_disposition_csv=project)
-    assert summary["status_counts"] == {"independent_by_observed_provenance": 2}
+    assert summary["status_counts"] == {"not_evaluable": 2}
 
 
 def test_project_clearance_does_not_override_adverse_row_evidence(tmp_path: Path) -> None:

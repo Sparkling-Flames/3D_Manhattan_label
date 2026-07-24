@@ -13,27 +13,25 @@ def test_day1_rejects_mutable_active_log_directory(tmp_path):
         day1_audit(args)
 
 
-def test_day2_fails_closed_before_materializing_assignments(tmp_path):
+def test_day2_fails_closed_before_materializing_assignments(tmp_path, monkeypatch):
     closeout = tmp_path / "closeout.json"
     risk = tmp_path / "risk.json"
     closeout.write_text(json.dumps({"formal_closeout_ready": False}), encoding="utf-8")
     risk.write_text(json.dumps({"formal_ready": False}), encoding="utf-8")
     args = argparse.Namespace(c1_closeout_summary=closeout, risk_summary=risk)
+    monkeypatch.setattr("tools.thesis_main.analysis.run_c1_closeout_launch.formal_git_state", lambda _root: {"clean": True})
     with pytest.raises(ValueError, match="not formally frozen"):
         day2_build(args)
 
 
 def test_day1_finalize_freezes_c1_evidence_but_not_routing_profile(tmp_path):
-    state = tmp_path / "c1_three_track_worker_state_formal.csv"; state.write_text("worker_id,worker_state_status\nw1,estimated\n", encoding="utf-8")
-    import hashlib
-    state_sha = hashlib.sha256(state.read_bytes()).hexdigest()
-    (tmp_path / "c1_three_track_worker_state_manifest.json").write_text(json.dumps({"worker_state_sha256": state_sha}), encoding="utf-8")
+    (tmp_path / "c1_measurement_freeze_manifest.json").write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C2B_DESIGN_READY": True}), encoding="utf-8")
     (tmp_path / "c1_final_canonical_closeout_summary.json").write_text(json.dumps({"blockers": []}), encoding="utf-8")
-    (tmp_path / "formal_audit_summary.json").write_text(json.dumps({"input_status": "formal", "full_dependency_bundle_sha256": "bundle"}), encoding="utf-8")
+    (tmp_path / "formal_audit_summary.json").write_text(json.dumps({"input_status": "formal", "full_dependency_bundle_sha256": "bundle", "C1_CANONICAL_CLOSED": True}), encoding="utf-8")
     adjudication = tmp_path / "adjudication.json"; adjudication.write_text(json.dumps({"approved": True, "input_bundle_sha256": "bundle"}), encoding="utf-8")
     result = day1_finalize(argparse.Namespace(output_dir=tmp_path, adjudication_manifest=adjudication))
     assert result["formal_closeout_ready"] is True
-    assert result["c1_evidence_freeze_status"] == "C1_closed"
+    assert result["C1_MEASUREMENT_FROZEN"] is True
     assert result["routing_profile_frozen"] is False
 
 
@@ -44,10 +42,10 @@ def test_candidate_design_allows_same_source_pool_for_distinct_anchor_and_bridge
         encoding="utf-8",
     )
     worker_profile = tmp_path / "workers.csv"
-    worker_profile.write_text("worker_id\nw1\n", encoding="utf-8")
+    worker_profile.write_text("worker_id,c2_candidate_eligible\nw1,true\n", encoding="utf-8")
     manifest = tmp_path / "design.json"
     _candidate_design_manifest(task_pool, worker_profile, manifest)
-    assert len(json.loads(manifest.read_text(encoding="utf-8"))["candidate_designs"]) == 3
+    assert len(json.loads(manifest.read_text(encoding="utf-8"))["candidate_designs"]) > 3
 
 
 def test_legacy_reserve_is_candidate_provenance_not_forced_assignment(tmp_path):

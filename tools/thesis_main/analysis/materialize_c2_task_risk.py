@@ -93,28 +93,32 @@ def _composite_q75_bucket(values: dict[str, float], references: dict[str, list[f
 
 
 def materialize(
-    inventory_csv: Path, layout_dir: Path, c1_geometry_jsonl: Path, output_dir: Path, *,
+    inventory_csv: Path, layout_dir: Path, c1_task_feature_csv: Path, output_dir: Path, *,
     input_status: str, checkpoint: Path | None = None, reference_dir: Path | None = None,
     extract_lhfeat: bool = False, c1_risk_reference_csv: Path | None = None,
 ) -> dict[str, Any]:
     inventory = _read(inventory_csv)
-    c1_scores = []
+    # C1 calibration support is a task-side, pre-annotation feature table.  Do
+    # not derive a model-risk channel from crowd canonical geometry.
     c1_channels: dict[str, list[float]] = {name: [] for name in ("d_model_feat", "d_model_feat_local_max", "g_model_struct", "d_cal_A")}
     c1_by_task: dict[str, dict[str, Any]] = {}
-    for line in c1_geometry_jsonl.read_text(encoding="utf-8").splitlines():
-        if not line.strip():
+    for row in _read(c1_task_feature_csv):
+        task = str(row.get("base_task_id") or row.get("task_id") or "")
+        if not task or task in c1_by_task or str(row.get("preannotation_feature_ready", "")).lower() not in {"true", "1"}:
             continue
-        row = json.loads(line); task = str(row.get("base_task_id") or row.get("task_id") or "")
-        if not task or task in c1_by_task:
+        if any(not str(row.get(field, "")).strip() for field in ("checkpoint_sha256", "inference_config_sha256", "layout_output_sha256")):
             continue
-        geometry = normalize_geometry(row.get("corners_px") or [])
-        if geometry["valid"]:
-            c1_by_task[task] = {"base_task_id": task, "image_id": row.get("image_id", ""), "building_id": row.get("building_id", ""), "g_model_struct": min(1.0, abs(int(geometry["n_pairs"]) - 6) / 8), **{name: row.get(name, "") for name in ("d_model_feat", "d_model_feat_local_max", "d_cal_A")}}
+        try:
+            pair_count = float(row.get("g_pair_count", ""))
+            g_model_struct = min(1.0, abs(pair_count - 6) / 8 + .35 * float(str(row.get("g_topology_invalid", "")).lower() in {"true", "1"}) + .35 * float(str(row.get("g_duplicate_peak", "")).lower() in {"true", "1"}) + .15 * float(row.get("g_seam_instability", "0") or 0) + .15 * float(str(row.get("g_postprocess_invalid", "")).lower() in {"true", "1"}))
+            c1_by_task[task] = {"base_task_id": task, "image_id": row.get("image_id", ""), "building_id": row.get("building_id", ""), "g_model_struct": g_model_struct, "d_model_feat": row.get("d_model_feat", ""), "d_model_feat_local_max": row.get("d_model_feat_local", ""), "d_cal_A": row.get("d_cal_A", "")}
+        except (TypeError, ValueError):
+            continue
     c1_reference_output = output_dir / "c1_task_risk_reference.csv"
     _write(c1_reference_output, list(c1_by_task.values()))
     (output_dir / "c1_task_risk_reference_manifest.json").write_text(json.dumps({
         "schema_version": "c1_task_risk_reference_v1", "unit": "base_task_id",
-        "n_base_tasks": len(c1_by_task), "source_geometry_sha256": sha256_file(c1_geometry_jsonl),
+        "n_base_tasks": len(c1_by_task), "source_preannotation_feature_sha256": sha256_file(c1_task_feature_csv),
         "reference_sha256": sha256_file(c1_reference_output),
     }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     reference_rows = list(c1_by_task.values())
@@ -174,13 +178,13 @@ def materialize(
         assist_ready = len(numeric) == 4 and all(c1_channels.values()) and layout.get("postprocess_valid") is True
         route_score = ""  # Requires cross-fitted C1 outcomes; model-only Q75 must never impersonate routing risk.
         source_holdout_ready = all(str(item.get(field, "")).lower() in {"true", "1"} for field in ("source_split_allowed", "history_clear", "future_holdout_clear"))
-        complete = assist_ready and route_score != "" and source_holdout_ready and bool(item.get("building_id"))
+        risk_design_ready = len(numeric) == 4 and layout.get("postprocess_valid") is True and source_holdout_ready and bool(item.get("building_id"))
         rows.append({
             **item, **layout, "d_model_feat": global_distance, "d_model_feat_local_max": local_distance,
-            "d_cal_A": d_cal, "risk_assist_candidate": bucket if assist_ready else "", "risk_route_candidate": route_score,
-            "risk_assist_status": "ready" if assist_ready else "not_evaluable", "risk_route_status": "pending_crossfitted_c1_outcome_calibration",
+            "d_cal_A": d_cal, "risk_design_A": d_cal, "risk_assist_candidate": bucket if assist_ready else "", "risk_route_candidate": route_score,
+            "risk_design_A_status": "ready" if risk_design_ready else "not_evaluable", "risk_assist_status": "ready" if assist_ready else "not_evaluable", "risk_route_status": "pending_c2b_confirmation",
             "risk_channel_percentiles_json": json.dumps(percentiles, sort_keys=True), "risk_bucket_rule": "max_frozen_c1_channel_percentile_q75",
-            "assignment_eligible": complete,
+            "assignment_eligible": risk_design_ready,
             "feature_status": feature_status, "checkpoint_sha256": sha256_file(checkpoint) if checkpoint and checkpoint.exists() else "",
             "risk_status": "candidate_only" if input_status != "formal" else "frozen",
         })
@@ -194,7 +198,7 @@ def materialize(
         "n_assignment_eligible": len(eligible_rows), "eligible_building_count": len(eligible_buildings),
         "feature_status": feature_status, "formal_ready": input_status == "formal" and feature_status == "ready" and len(eligible_rows) >= 12 and len(eligible_buildings) >= 2 and eligible_strata >= {"ordinary", "stress"},
         "checkpoint_sha256": sha256_file(checkpoint) if checkpoint and checkpoint.exists() else "",
-        "inventory_sha256": sha256_file(inventory_csv), "c1_geometry_sha256": sha256_file(c1_geometry_jsonl),
+        "inventory_sha256": sha256_file(inventory_csv), "c1_preannotation_feature_sha256": sha256_file(c1_task_feature_csv),
         "c1_risk_reference_sha256": sha256_file(c1_risk_reference_csv) if c1_risk_reference_csv else "",
         "output_inventory_sha256": sha256_file(inventory_output),
         "c1_task_risk_reference_path": str(c1_reference_output), "c1_task_risk_reference_sha256": sha256_file(c1_reference_output),
@@ -207,7 +211,7 @@ def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--inventory-csv", type=Path, required=True)
     parser.add_argument("--layout-dir", type=Path, required=True)
-    parser.add_argument("--c1-geometry-jsonl", type=Path, required=True)
+    parser.add_argument("--c1-task-feature-csv", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--input-status", choices=("precloseout_rehearsal", "formal"), required=True)
     parser.add_argument("--checkpoint", type=Path)
@@ -215,7 +219,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--extract-lhfeat", action="store_true")
     parser.add_argument("--c1-risk-reference-csv", type=Path)
     args = parser.parse_args(argv)
-    print(json.dumps(materialize(args.inventory_csv, args.layout_dir, args.c1_geometry_jsonl, args.output_dir, input_status=args.input_status, checkpoint=args.checkpoint, reference_dir=args.reference_dir, extract_lhfeat=args.extract_lhfeat, c1_risk_reference_csv=args.c1_risk_reference_csv), indent=2))
+    print(json.dumps(materialize(args.inventory_csv, args.layout_dir, args.c1_task_feature_csv, args.output_dir, input_status=args.input_status, checkpoint=args.checkpoint, reference_dir=args.reference_dir, extract_lhfeat=args.extract_lhfeat, c1_risk_reference_csv=args.c1_risk_reference_csv), indent=2))
     return 0
 
 
