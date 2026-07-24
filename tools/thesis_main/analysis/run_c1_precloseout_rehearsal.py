@@ -24,7 +24,17 @@ from tools.thesis_main.analysis import run_c1_closeout_dryrun_chain
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, write_csv, write_json
 from tools.thesis_main.analysis.materialize_c1_operational_reference import materialize as materialize_operational_reference
+from tools.thesis_main.analysis.materialize_c1_canonical_evidence_sidecars import materialize_canonical_evidence
+from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
+    apply_structural_dispositions,
+    materialize_active_log_audits,
+    materialize_c2_eligible_roster,
+    materialize_completion_support,
+    materialize_outside_assignment,
+    materialize_structural_validation,
+)
 from tools.thesis_main.analysis.materialize_frozen_routing_profiles import build_global
+from tools.thesis_main.analysis.geometry_consensus.materialize import materialize_geometry_consensus
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
@@ -163,8 +173,10 @@ def materialize(
         raise ValueError("no C1 export JSON files found")
     export_rows = _manifest_rows(export_files)
     export_sha = _aggregate_sha(export_rows)
+    pipeline_files = [Path(__file__), Path(materialize_completion_support.__code__.co_filename), Path(materialize_operational_reference.__code__.co_filename)]
+    pipeline_sha = _aggregate_sha(_manifest_rows(pipeline_files))
     run_date = run_date or datetime.now().strftime("%Y%m%d")
-    output_dir = output_root / f"c1_precloseout_rehearsal_{run_date}_{export_sha[:12]}"
+    output_dir = output_root / f"c1_precloseout_rehearsal_{run_date}_{export_sha[:12]}_{pipeline_sha[:8]}"
     if output_dir.exists():
         raise FileExistsError(f"immutable rehearsal output already exists: {output_dir}")
     snapshots = output_dir / "raw_snapshots"
@@ -205,11 +217,12 @@ def materialize(
         "created_at": datetime.now().astimezone().isoformat(),
         "input_status": "precloseout_partial_c1",
         "aggregate_export_sha256": export_sha,
+        "pipeline_sha256": pipeline_sha,
         "head": _git(["rev-parse", "HEAD"]).strip(),
         "git_status": _git(["status", "--short"]),
         "worktree_diff_sha256": hashlib.sha256(diff.encode("utf-8")).hexdigest(),
         "command": " ".join(sys.argv),
-        "tool_version": "run_c1_precloseout_rehearsal_v1",
+        "tool_version": "run_c1_precloseout_rehearsal_v2",
         "inputs": source_rows,
     }
     write_json(output_dir / "raw_input_manifest.json", raw_manifest)
@@ -223,6 +236,32 @@ def materialize(
         planned_task_mapping=fixed_snapshots["planned_mapping"],
         active_log=snapshots / "active_logs", output_dir=output_dir,
         require_complete=False, input_status=input_status,
+    )
+    structural_summary = materialize_structural_validation(
+        output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_geometry.jsonl", output_dir,
+    )
+    apply_structural_dispositions(
+        output_dir / "c1_canonical_annotations.csv", output_dir / "structural_validation_audit.csv",
+    )
+    canonical_summary["failure_attribution_counts"] = structural_summary["failure_attribution_counts"]
+    canonical_summary["structural_validation_summary"] = structural_summary
+    write_json(output_dir / "c1_canonicalization_summary.json", canonical_summary)
+    materialize_canonical_evidence(
+        snapshot_exports, output_dir / "c1_canonical_annotations.csv", output_dir,
+        input_status=input_status,
+        version_disposition_csv=output_dir / "c1_annotation_version_disposition.csv",
+    )
+    materialize_geometry_consensus(
+        output_dir / "c1_canonical_geometry.jsonl", output_dir, input_status=input_status,
+    )
+    completion_summary = materialize_completion_support(
+        snapshot_exports, [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
+        output_dir / "c1_runtime_task_mapping.csv", output_dir / "c1_canonical_annotations.csv",
+        output_dir / "c1_canonical_geometry.jsonl", output_dir,
+    )
+    outside_summary = materialize_outside_assignment(output_dir / "c1_canonical_annotations.csv", output_dir)
+    active_summary = materialize_active_log_audits(
+        output_dir / "c1_canonical_meta_observations.csv", snapshots / "active_logs", output_dir,
     )
     reference_summary = materialize_operational_reference(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_geometry.jsonl",
@@ -241,19 +280,17 @@ def materialize(
     canonical = read_csv(output_dir / "c1_canonical_annotations.csv")
     quality = read_csv(output_dir / "c1_gt_quality_evidence.csv")
     worker_state = read_csv(output_dir / "worker_state_snapshot_C1.csv")
-    roster = {row.get("worker_id", "") for row in read_csv(fixed_snapshots["manual_assignment"])} | {
-        row.get("worker_id", "") for row in read_csv(fixed_snapshots["semi_assignment"])
-    }
-    observed = {row.get("worker_id", "") or row.get("annotator_id", "") for row in canonical}
-    missing_workers = sorted(worker for worker in roster - observed if worker)
+    completion_rows = read_csv(output_dir / "c1_worker_completion_audit.csv")
+    roster = {row["worker_id"] for row in completion_rows}
+    observed = {row["worker_id"] for row in completion_rows if int(row["observed_total_count"]) > 0}
+    missing_workers = [row["worker_id"] for row in completion_rows if row["completion_status"] == "nonstarter"]
     not_evaluable = [row for row in canonical if row.get("failure_attribution") == "not_evaluable"]
 
     _copy_alias(output_dir / "c1_canonicalization_summary.json", output_dir / "canonicalization_audit.json")
     _copy_alias(output_dir / "c1_runtime_key_collision_audit.csv", output_dir / "identity_collision_audit.csv")
     _copy_alias(output_dir / "c1_duplicate_annotation_audit.csv", output_dir / "duplicate_revision_audit.csv")
     _copy_alias(output_dir / "c1_active_time_binding_audit.csv", output_dir / "active_time_join_audit.csv")
-    _copy_alias(output_dir / "failure_disposition_audit_C1.csv", output_dir / "structural_validation_audit.csv")
-    _copy_alias(output_dir / "failure_disposition_audit_C1.csv", output_dir / "failure_disposition.csv")
+    _copy_alias(output_dir / "structural_validation_audit.csv", output_dir / "failure_disposition.csv")
     write_json(output_dir / "failure_disposition_audit.json", {
         "n_rows": len(canonical), "n_not_evaluable": len(not_evaluable),
         "none_imputed_for_unadjudicated": False,
@@ -262,6 +299,12 @@ def materialize(
     _copy_alias(output_dir / "c1_gt_quality_evidence.csv", output_dir / "GT_quality_audit.csv")
     _copy_alias(output_dir / "geometry_worker_task_loo_C1.csv", output_dir / "LOO_status_audit.csv")
     _copy_alias(output_dir / "worker_state_snapshot_C1.csv", output_dir / "provisional_worker_state.csv")
+
+    loo_rows = read_csv(output_dir / "geometry_worker_task_loo_C1.csv")
+    pairwise_rows = read_csv(output_dir / "geometry_pairwise_similarity_C1.csv")
+    valid_geometry = sum(row.get("structural_validation_status") == "passed" for row in canonical)
+    if valid_geometry >= 2 and not pairwise_rows:
+        raise RuntimeError("geometry LOO pipeline produced zero pairwise rows despite valid geometry")
 
     try:
         globals_, task_effects, model_audit = build_global(
@@ -274,7 +317,11 @@ def materialize(
         model_audit = {"status": "not_evaluable", "reason": str(exc)}
         write_csv(output_dir / "provisional_strong_global.csv", [], ["worker_id", "provisional_rank"])
 
-    profile = output_dir / "worker_profile_main_matrix_C1.csv"
+    c2_roster_summary = materialize_c2_eligible_roster(
+        output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_canonical_annotations.csv",
+        output_dir / "c1_gt_quality_evidence.csv", output_dir / "geometry_worker_task_loo_C1.csv", output_dir,
+    )
+    profile = output_dir / "c2_eligible_roster_C1.csv"
     task_pool = _candidate_task_pool(fixed_snapshots["reserve_pool"], output_dir / "c2b_candidate_task_pool.csv")
     design_manifest = _candidate_design_manifest(task_pool, profile, output_dir / "c2b_candidate_design_manifest.json")
     try:
@@ -291,11 +338,18 @@ def materialize(
         "input_status": "precloseout_partial_c1",
         "output_dir": str(output_dir.resolve()),
         "aggregate_export_sha256": export_sha,
+        "pipeline_sha256": pipeline_sha,
         "n_export_files": len(export_files), "roster_size": len(roster),
         "observed_worker_count": len(roster & observed),
         "missing_worker_ids": missing_workers,
         "missing_workers": [f"W{int(worker):03d}" if worker.isdigit() else worker for worker in missing_workers],
         "n_not_evaluable": len(not_evaluable),
+        "completion_summary": completion_summary,
+        "structural_validation_summary": structural_summary,
+        "active_log_summary": active_summary,
+        "outside_assignment_summary": outside_summary,
+        "geometry_loo_summary": {"n_pairwise_rows": len(pairwise_rows), "n_loo_rows": len(loo_rows)},
+        "c2_eligible_roster_summary": c2_roster_summary,
         "formal_closeout_ready": False, "profile_frozen": False, "c2_launch_ready": False,
         "formal_results_materialized": False, "c2_candidate_only": True,
         "chain_gate": chain.get("gate_summary", {}),

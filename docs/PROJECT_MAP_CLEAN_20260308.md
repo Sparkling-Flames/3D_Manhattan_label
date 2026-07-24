@@ -57,7 +57,7 @@
 - `docs/thesis_main/`
   - 正式执行主线文档。
   - 包括 protocol、assignment SOP、PreScreen、Calibration、Main(Test + Validation)、统计计划、字段合同、worker-profile sidecar contract、final-gold、registry、论文主线写作材料。
-  - `THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v3.md/.tex` 保留为历史审计版本；`THESIS_OUTLINE_AUDITABLE_DUAL_CHAIN_v4.md` 保留三状态证据、Geometry LOO 与时序路由的历史写作合同，当前本地 vFinal 提纲为 `Paper_A_新版完整论文提纲_vFinal_Draft.md`。standalone `.tex` 不是正文真源。`WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 保留物理 schema 真源，`WORKER_PROFILE_ARTIFACT_MIGRATION_AMENDMENT_v1.md` 记录 artifact 命名迁移，`WORKER_PROFILE_THESIS_DISPLAY_CONTRACT_v1.md` 负责展示符号，`THESIS_MANUSCRIPT_MIGRATION_MAP_v1.md`/`THESIS_MANUSCRIPT_MIGRATION_AUDIT_v1.md` 保留上一轮记录，v2 文件记录本轮 active Overleaf 迁移、兼容性与 provenance。
+  - Paper A 当前唯一提纲真源为 `Paper_A_新版完整论文提纲_vFinal_Draft.md`。v3-v5 提纲、迁移 map/audit 与 standalone `.tex` 已归档到 `docs/legacy/paper_a_pre_vfinal_20260724/`；`WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 等字段合同继续保留。
   - `manuscript/` 可保存 Overleaf 项目和主线论文写作资产，但按现有 `.gitignore` 默认不提交。
   - `tools/thesis_main/analysis/materialize_c2b_closeout.py` 绑定 C2-B submissions、post-C2-B profile、profile manifest 与 design summary，形成 C2-A-RP formal 所需的真实 SHA closeout。
   - `tools/thesis_main/analysis/materialize_frozen_routing_profiles.py` 从 Manual GT submission、冻结 worker state 和跨阶段 component evidence 生成 Strong Global 与 Full component 冻结表。
@@ -98,8 +98,7 @@
 - 不改变 protocol、schema、routing、SOP 语义。
 ## 2026-07-24 Paper A 分析链收口补充
 
-- `tools/thesis_main/analysis/run_c1_precloseout_rehearsal.py`：六份 C1 export 的不可变快照与
-  candidate-only rehearsal 入口；不修改 export、assignment、Label Studio 或正式结果。
+- `tools/thesis_main/analysis/run_c1_precloseout_rehearsal.py`：六份 C1 export 的不可变快照，以及 completion/support、结构验证、active-log 来源、Geometry LOO、operational reference、严格 C2 roster 的 candidate-only rehearsal 入口；不修改 export、assignment、Label Studio 或正式结果。旧 pipeline-smoke C1/T1/V1 入口已归档到 `tools/legacy/paper_a_pre_vfinal_smoke_20260724/`。
 - `tools/thesis_main/analysis/materialize_c1_operational_reference.py`：把冻结 candidate inventory 中已存在的
   人工 scope 标签和 `groudTruth.json` 单一几何 reference 接入 C1；未复核/冲突任务保持 pending。
 - `tools/thesis_main/analysis/materialize_routing_component_evidence.py`：P1→C1→C2-B component evidence

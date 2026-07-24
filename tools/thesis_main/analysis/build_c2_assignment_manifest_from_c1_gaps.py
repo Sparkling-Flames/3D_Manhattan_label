@@ -59,9 +59,9 @@ def _eligible_workers(rows: list[dict[str, str]]) -> list[dict[str, str]]:
     out = []
     for row in rows:
         worker = safe(row.get("worker_id"))
-        eligible = safe(row.get("c2_eligible") or row.get("eligible"))
+        eligible = safe(row.get("c2_candidate_eligible") or row.get("c2_eligible") or row.get("eligible"))
         blocked = truthy(row.get("process_blocker")) or truthy(row.get("independence_blocker"))
-        if worker and not blocked and (not eligible or truthy(eligible)):
+        if worker and not blocked and truthy(eligible):
             out.append(row)
     return sorted(out, key=lambda row: safe(row.get("worker_id")))
 
