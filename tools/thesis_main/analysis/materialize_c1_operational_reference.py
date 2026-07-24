@@ -83,7 +83,10 @@ def _gt_references(path: Path) -> dict[str, dict[str, Any]]:
     return references
 
 
-def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, gt_export: Path, output_dir: Path) -> dict[str, Any]:
+def materialize(
+    canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, gt_export: Path, output_dir: Path,
+    *, scope_adjudication_csv: Path | None = None, reference_amendment: Path | None = None,
+) -> dict[str, Any]:
     canonical = _read_csv(canonical_csv)
     inventory = {row.get("base_task_id", ""): row for row in _read_csv(inventory_csv)}
     geometry = {
@@ -94,12 +97,16 @@ def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, 
     references = _gt_references(gt_export)
     contexts = {}
     audit = []
+    scope_decisions = {row.get("base_task_id", ""): row for row in _read_csv(scope_adjudication_csv)} if scope_adjudication_csv and scope_adjudication_csv.exists() else {}
     for row in canonical:
         key = tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"))
         if key in contexts:
             continue
         item = inventory.get(row.get("base_task_id", ""), {})
         final_scope, oos_subtype, scope_mode, reviewer = _scope(item)
+        decision = scope_decisions.get(key[3], {})
+        if decision and decision.get("final_scope", "").lower() in {"in_scope", "oos"} and all(decision.get(field) for field in ("reviewed_by", "reviewed_at")):
+            final_scope, oos_subtype, scope_mode, reviewer = decision["final_scope"].lower(), decision.get("oos_subtype", ""), "sha_bound_base_task_adjudication", decision["reviewed_by"]
         reference = references.get(row.get("base_task_id", ""), {})
         status = "resolved" if final_scope else "pending"
         geometry_ready = bool(reference.get("points"))
@@ -170,7 +177,21 @@ def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, 
     for row in audit:
         if row["task_outcome_status"] == "pending":
             pending_by_base.setdefault(row["base_task_id"], {"base_task_id": row["base_task_id"], "pending_reason": row["pending_reason"], "inventory_review_status": row["inventory_review_status"]})
-    _write(output_dir / "c1_scope_review_queue.csv", list(pending_by_base.values()), ["base_task_id", "pending_reason", "inventory_review_status"])
+    scope_queue = list(pending_by_base.values())
+    queue_path = output_dir / "c1_scope_base_task_review_queue.csv"
+    _write(output_dir / "c1_scope_review_queue.csv", scope_queue, ["base_task_id", "pending_reason", "inventory_review_status"])
+    _write(queue_path, scope_queue, ["base_task_id", "pending_reason", "inventory_review_status"])
+    queue_sha = hashlib.sha256(queue_path.read_bytes()).hexdigest()
+    _write(output_dir / "c1_scope_adjudication_template.csv", [
+        {**row, "final_scope": "", "oos_subtype": "", "reviewed_by": "", "reviewed_at": "", "source_queue_sha256": queue_sha}
+        for row in scope_queue
+    ], ["base_task_id", "pending_reason", "inventory_review_status", "final_scope", "oos_subtype", "reviewed_by", "reviewed_at", "source_queue_sha256"])
+    support_after_exclusion = [{
+        "worker_id": worker,
+        "resolved_in_scope_support": sum(row.get("worker_id") == worker and row.get("task_outcome_status") == "resolved" for row in quality),
+        "pending_scope_excluded_support": sum(row.get("worker_id") == worker and row.get("task_outcome_status") == "pending" for row in quality),
+    } for worker in sorted({row.get("worker_id", "") for row in quality})]
+    _write(output_dir / "c1_scope_support_after_exclusion_audit.csv", support_after_exclusion, ["worker_id", "resolved_in_scope_support", "pending_scope_excluded_support"])
     status_counts = {status: sum(row.get("operational_reference_status") == status for row in outcome_rows) for status in ("reference_ready", "reference_corrected", "pending_adjudication", "oos_geometry_not_applicable")}
     unresolved = status_counts["pending_adjudication"]
     summary = {

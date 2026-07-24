@@ -3,7 +3,7 @@ import json
 
 import pytest
 
-from tools.thesis_main.analysis.run_c1_closeout_launch import day1_audit, day2_build
+from tools.thesis_main.analysis.run_c1_closeout_launch import day1_audit, day1_finalize, day2_build
 from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _candidate_design_manifest, _candidate_task_pool
 
 
@@ -21,6 +21,20 @@ def test_day2_fails_closed_before_materializing_assignments(tmp_path):
     args = argparse.Namespace(c1_closeout_summary=closeout, risk_summary=risk)
     with pytest.raises(ValueError, match="not formally frozen"):
         day2_build(args)
+
+
+def test_day1_finalize_freezes_c1_evidence_but_not_routing_profile(tmp_path):
+    state = tmp_path / "c1_three_track_worker_state_formal.csv"; state.write_text("worker_id,worker_state_status\nw1,estimated\n", encoding="utf-8")
+    import hashlib
+    state_sha = hashlib.sha256(state.read_bytes()).hexdigest()
+    (tmp_path / "c1_three_track_worker_state_manifest.json").write_text(json.dumps({"worker_state_sha256": state_sha}), encoding="utf-8")
+    (tmp_path / "c1_final_canonical_closeout_summary.json").write_text(json.dumps({"blockers": []}), encoding="utf-8")
+    (tmp_path / "formal_audit_summary.json").write_text(json.dumps({"input_status": "formal", "full_dependency_bundle_sha256": "bundle"}), encoding="utf-8")
+    adjudication = tmp_path / "adjudication.json"; adjudication.write_text(json.dumps({"approved": True, "input_bundle_sha256": "bundle"}), encoding="utf-8")
+    result = day1_finalize(argparse.Namespace(output_dir=tmp_path, adjudication_manifest=adjudication))
+    assert result["formal_closeout_ready"] is True
+    assert result["c1_evidence_freeze_status"] == "C1_closed"
+    assert result["routing_profile_frozen"] is False
 
 
 def test_candidate_design_allows_same_source_pool_for_distinct_anchor_and_bridge_roles(tmp_path):
