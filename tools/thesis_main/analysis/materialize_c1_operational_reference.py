@@ -26,6 +26,7 @@ OUTCOME_FIELDS = [
     "reference_sha256", "reference_worker_excluded", "reference_evidence_status",
     "adjudication_status", "reviewed_by", "reviewed_at", "notes",
     "operational_reference_status", "submission_informed_reference_revision",
+    "geometry_reference_ready", "task_outcome_reference_ready", "estimand_specific_closeout_ready",
 ]
 
 
@@ -122,6 +123,9 @@ def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, 
                 "adjudication_status": status, "reviewed_by": reviewer,
                 "operational_reference_status": reference_status,
                 "submission_informed_reference_revision": "false",
+                "geometry_reference_ready": geometry_ready or final_scope == "oos",
+                "task_outcome_reference_ready": status == "resolved",
+                "estimand_specific_closeout_ready": status == "resolved" and (geometry_ready or final_scope == "oos"),
                 "reviewed_at": "", "notes": "review time absent in frozen candidate inventory; formal mode must fail closed",
             }
     quality = []
@@ -162,6 +166,11 @@ def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, 
     _write(output_dir / "c1_task_outcome_reference_audit.csv", audit, audit_fields)
     quality_fields = list(quality[0]) if quality else ["task_id"]
     _write(output_dir / "c1_gt_quality_evidence.csv", quality, quality_fields)
+    pending_by_base = {}
+    for row in audit:
+        if row["task_outcome_status"] == "pending":
+            pending_by_base.setdefault(row["base_task_id"], {"base_task_id": row["base_task_id"], "pending_reason": row["pending_reason"], "inventory_review_status": row["inventory_review_status"]})
+    _write(output_dir / "c1_scope_review_queue.csv", list(pending_by_base.values()), ["base_task_id", "pending_reason", "inventory_review_status"])
     status_counts = {status: sum(row.get("operational_reference_status") == status for row in outcome_rows) for status in ("reference_ready", "reference_corrected", "pending_adjudication", "oos_geometry_not_applicable")}
     unresolved = status_counts["pending_adjudication"]
     summary = {
@@ -169,8 +178,12 @@ def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, 
         "n_pending_contexts": sum(row["task_outcome_status"] == "pending" for row in audit),
         "n_gt_quality_evaluable": sum(bool(row["quality_evaluable"]) for row in quality),
         "reference_status_counts": status_counts,
-        "formal_ready": unresolved == 0,
-        "formal_blocker": "" if unresolved == 0 else "pending_reference_adjudication",
+        "geometry_reference_ready": bool(outcome_rows) and all(bool(row["geometry_reference_ready"]) for row in outcome_rows),
+        "task_outcome_reference_ready": bool(outcome_rows) and all(bool(row["task_outcome_reference_ready"]) for row in outcome_rows),
+        "estimand_specific_closeout_ready": bool(outcome_rows) and all(bool(row["estimand_specific_closeout_ready"]) for row in outcome_rows),
+        "n_pending_base_tasks": len(pending_by_base),
+        "formal_ready": bool(outcome_rows) and all(bool(row["estimand_specific_closeout_ready"]) for row in outcome_rows),
+        "formal_blocker": "" if outcome_rows and all(bool(row["estimand_specific_closeout_ready"]) for row in outcome_rows) else "pending_scope_or_geometry_reference",
     }
     (output_dir / "c1_operational_reference_audit.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     return summary

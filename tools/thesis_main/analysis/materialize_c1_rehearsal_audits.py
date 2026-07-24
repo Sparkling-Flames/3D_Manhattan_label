@@ -5,6 +5,7 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import random
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
@@ -12,7 +13,12 @@ from typing import Any
 
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
 from tools.thesis_main.analysis.failure_disposition import c1_failure_fields
-from tools.thesis_main.analysis.quality_core.active_time import is_unknown_annotation_id, _parse_active_log_event_time
+from tools.thesis_main.analysis.quality_core.active_time import (
+    _parse_active_log_event_time,
+    cumulative_active_intervals,
+    is_unknown_annotation_id,
+    merged_interval_seconds,
+)
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -156,8 +162,9 @@ def materialize_completion_support(
     }
 
 
-def materialize_structural_validation(canonical_csv: Path, geometry_jsonl: Path, output_dir: Path) -> dict[str, Any]:
+def materialize_structural_validation(canonical_csv: Path, geometry_jsonl: Path, output_dir: Path, *, parser_amendment: Path = Path("docs/thesis_main/c1_geometry_parser_amendment_v1.json")) -> dict[str, Any]:
     canonical = {row["canonical_annotation_id"]: row for row in read_csv(canonical_csv)}
+    amendment_sha = hashlib.sha256(parser_amendment.read_bytes()).hexdigest()
     rows = []
     for line in geometry_jsonl.read_text(encoding="utf-8").splitlines():
         if not line.strip():
@@ -165,7 +172,7 @@ def materialize_structural_validation(canonical_csv: Path, geometry_jsonl: Path,
         geometry = json.loads(line); annotation = canonical.get(geometry.get("canonical_annotation_id", ""), {})
         parsed = normalize_geometry(geometry.get("corners_px") or [], width=int(geometry.get("width") or 1024), height=int(geometry.get("height") or 512))
         reason = parsed["reason"]
-        worker_reason = reason in {"odd_keypoint_count", "incomplete_pairing", "duplicate_event_positions", "top_floor_order_invalid", "self_intersecting_or_open_topology"}
+        worker_reason = reason in {"duplicate_event_positions", "top_floor_order_invalid", "self_intersecting_or_open_topology"}
         system_reason = reason in {"shape_invalid", "non_finite", "out_of_range", "ambiguous_pairing"} or bool(annotation.get("parse_error"))
         status = "passed" if parsed["valid"] else "failed_confirmed_worker_submission" if worker_reason else "failed_system_or_parser" if system_reason else "not_evaluable"
         rows.append({
@@ -179,6 +186,8 @@ def materialize_structural_validation(canonical_csv: Path, geometry_jsonl: Path,
                 "polygon_closed", "polygon_simple", "topology_valid", "seam_representation_valid",
             )},
             "polygon_valid": parsed["polygon_closed"] and parsed["polygon_simple"],
+            "pairing_method": parsed.get("pairing_method", ""), "parser_amendment_sha256": amendment_sha,
+            "unordered_pairing_ambiguous": parsed.get("pairing_stats", {}).get("unordered_pairing_ambiguous", False),
             "structural_validation_status": status, "structural_failure_reason": parsed["reason"],
             "detected_structural_issue": not parsed["valid"],
             "worker_attributable": status == "failed_confirmed_worker_submission",
@@ -188,9 +197,13 @@ def materialize_structural_validation(canonical_csv: Path, geometry_jsonl: Path,
             "worker_reliability_eligibility": status == "passed" and annotation.get("independence_status") == "independent",
         })
     write_csv(output_dir / "structural_validation_audit.csv", rows)
+    write_csv(output_dir / "c1_parser_amendment_application_audit.csv", [
+        {**row, "regression_identity": ":".join(str(row.get(field, "")) for field in ("project_id", "ls_runtime_task_id", "task_id", "worker_id", "annotation_id"))}
+        for row in rows if row.get("pairing_method") == "raw_order_pairing" and _truth(row.get("unordered_pairing_ambiguous"))
+    ])
     counts = Counter(row["structural_validation_status"] for row in rows)
     failures = Counter(row["failure_attribution"] for row in rows)
-    return {"n_rows": len(rows), "structural_status_counts": dict(counts), "failure_attribution_counts": dict(failures)}
+    return {"n_rows": len(rows), "structural_status_counts": dict(counts), "failure_attribution_counts": dict(failures), "parser_amendment_sha256": amendment_sha, "parser_amendment_application_count": sum(row.get("pairing_method") == "raw_order_pairing" and _truth(row.get("unordered_pairing_ambiguous")) for row in rows)}
 
 
 def _raw_points(raw_result: Any) -> list[list[float]]:
@@ -212,8 +225,8 @@ def _raw_points(raw_result: Any) -> list[list[float]]:
 
 def _root_cause(reason: str) -> tuple[str, str, bool]:
     mapping = {
-        "odd_keypoint_count": ("worker_invalid_pair_count", "worker_caused_structural_failure", False),
-        "incomplete_pairing": ("worker_invalid_pair_count", "worker_caused_structural_failure", False),
+        "odd_keypoint_count": ("invalid_pair_count_pending_row_disposition", "not_evaluable", True),
+        "incomplete_pairing": ("invalid_pair_count_pending_row_disposition", "not_evaluable", True),
         "duplicate_event_positions": ("worker_duplicate_corner", "worker_caused_structural_failure", False),
         "top_floor_order_invalid": ("worker_pair_fold", "worker_caused_structural_failure", False),
         "self_intersecting_or_open_topology": ("worker_self_intersection", "worker_caused_structural_failure", False),
@@ -424,7 +437,8 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
         (row.get("project_id", ""), row.get("ls_runtime_task_id", ""), row.get("worker_id", ""), row.get("annotation_id", "")): row
         for row in canonical
     }
-    events, payload_seen = [], set()
+    canonical_contexts = {key[:3] for key in canonical_ids}
+    all_events, payload_seen = [], set()
     for path in sorted(active_log_dir.rglob("*.jsonl")):
         for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
             if not line.strip():
@@ -440,7 +454,8 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
             project = str(event.get("project_id") or "").strip()
             task = str(event.get("task_id") or "").strip()
             worker = str(event.get("annotator_id") or "").strip()
-            annotation = str(event.get("server_annotation_id") or event.get("annotation_id") or "").strip()
+            server_annotation = str(event.get("server_annotation_id") or "").strip()
+            annotation = str(server_annotation or event.get("annotation_id") or "").strip()
             session = str(event.get("session_id") or "default")
             script = str(event.get("script_version") or "")
             unknown = is_unknown_annotation_id(annotation)
@@ -451,21 +466,26 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
                 seconds = 0.0
             schema = "cumulative" if "active_seconds" in event else "incremental" if "active_seconds_fragment" in event else "unknown"
             event_dt = _parse_active_log_event_time(event)
-            events.append({
+            context_eligible = (project, task, worker) in canonical_contexts
+            all_events.append({
                 "source_file": path.name, "source_line": line_number, "payload_sha256": payload_sha,
                 "network_retry_duplicate": duplicate_retry, "project_id": project, "runtime_task_id": task,
                 "worker_id": worker, "annotation_id": annotation or "unknown_annotation", "session_id": session, "script_version": script,
+                "c1_context_eligible": context_eligible, "context_exclusion_reason": "" if context_eligible else "project_task_worker_not_in_c1_canonical",
                 "active_seconds": seconds, "active_seconds_fragment": event.get("active_seconds_fragment", ""),
                 "event_schema": schema,
                 "unknown_annotation": unknown, "parent_derived": parent_derived,
                 "client_annotation_id": event.get("client_annotation_id", event.get("selected_annotation_id", "")),
-                "server_annotation_id": event.get("server_annotation_id", event.get("annotation_id", "")),
+                "server_annotation_id": server_annotation,
                 "selected_annotation_id": event.get("selected_annotation_id", ""), "annotation_id_source": event.get("annotation_id_source", ""),
                 "active_time_alias_from": event.get("active_time_alias_from", ""), "late_binding_status": event.get("late_binding_status", ""),
                 "annotation_match_status": event.get("annotation_match_status", ""), "page_gate_reason": event.get("page_gate_reason", ""),
                 "event_time": event_dt.isoformat() if event_dt else "",
             })
-    write_csv(output_dir / "c1_active_time_event_ledger.csv", events)
+    write_csv(output_dir / "c1_active_time_event_ledger.csv", all_events)
+    excluded_events = [row for row in all_events if not row["c1_context_eligible"]]
+    write_csv(output_dir / "c1_active_time_context_exclusion_audit.csv", excluded_events)
+    events = [row for row in all_events if row["c1_context_eligible"]]
     grouped: dict[tuple[str, ...], list[dict[str, Any]]] = defaultdict(list)
     for row in events:
         grouped[(row["project_id"], row["runtime_task_id"], row["worker_id"], row["session_id"], row["script_version"])].append(row)
@@ -480,15 +500,17 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
         unsafe_mixed = len(schemas) != 1 or "unknown" in schemas
         known_annotations = {row["annotation_id"] for row in known_rows}
         mixed_known_unknown = bool(unknown_rows and known_rows)
-        exact = len(known_annotations) == 1 and (key[0], key[1], key[2], next(iter(known_annotations))) in canonical_ids
+        exact = len(known_annotations) == 1 and all(row.get("server_annotation_id") for row in known_rows) and (key[0], key[1], key[2], next(iter(known_annotations))) in canonical_ids
         status = "audit_only_unknown" if unknown else "forensic_parent_derived" if parent else "audit_only_mixed_schema" if unsafe_mixed else "audit_only_mixed_known_unknown" if mixed_known_unknown else "not_evaluable_annotation_identity" if not exact else "eligible_cumulative_session"
-        seconds = max((float(row["active_seconds"]) for row in known_rows), default=0.0) if status == "eligible_cumulative_session" else 0.0
-        unknown_seconds = max((float(row["active_seconds"]) for row in unknown_rows), default=0.0)
+        intervals = cumulative_active_intervals(known_rows) if status == "eligible_cumulative_session" else []
+        seconds = merged_interval_seconds(intervals)
+        duration_not_allocatable = bool(unknown_rows or status != "eligible_cumulative_session")
         sessions.append({
             "project_id": key[0], "runtime_task_id": key[1], "worker_id": key[2], "annotation_id": next(iter(known_annotations)) if len(known_annotations) == 1 else "",
             "annotation_ids": json.dumps(sorted(known_annotations)), "session_id": key[3], "script_version": key[4],
             "raw_event_count": len(rows), "deduplicated_event_count": len(unique), "network_retry_duplicate_count": len(rows) - len(unique),
-            "session_active_seconds": seconds, "unknown_active_seconds": unknown_seconds, "session_status": status, "unknown_annotation": unknown,
+            "session_active_seconds": seconds, "unknown_active_seconds": "", "duration_not_allocatable": duration_not_allocatable,
+            "active_intervals_json": json.dumps(intervals), "session_status": status, "unknown_annotation": unknown,
             "parent_derived": parent, "known_to_unknown_transition_count": int(mixed_known_unknown), "unknown_to_known_transition_count": int(mixed_known_unknown),
             "possible_non_task_page_flag": any(row["page_gate_reason"] and row["page_gate_reason"] != "eligible" for row in unique),
         })
@@ -500,22 +522,24 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
     for key, rows in sorted(by_annotation.items()):
         exact_identity = key in canonical_ids
         eligible = [row for row in rows if row["session_status"] == "eligible_cumulative_session" and exact_identity]
+        intervals = [tuple(interval) for row in eligible for interval in json.loads(row.get("active_intervals_json") or "[]")]
         annotations.append({
             "project_id": key[0], "runtime_task_id": key[1], "worker_id": key[2], "annotation_id": key[3],
-            "session_count": len(rows), "eligible_session_count": len(eligible), "active_seconds": sum(float(row["session_active_seconds"]) for row in eligible),
+            "session_count": len(rows), "eligible_session_count": len(eligible), "active_seconds": merged_interval_seconds(intervals),
             "binding_status": "exact_annotation" if eligible else "unknown_audit_only" if all(_truth(row["unknown_annotation"]) for row in rows) else "not_evaluable",
             "primary_active_time_eligible": bool(eligible), "exclusion_reason": "" if eligible else ";".join(sorted({row["session_status"] for row in rows})),
         })
     write_csv(output_dir / "c1_active_time_annotation_summary.csv", annotations)
     write_csv(output_dir / "c1_active_time_binding_audit.csv", annotations)
-    unknown_sessions = [row for row in sessions if float(row.get("unknown_active_seconds") or 0) > 0]
+    unknown_sessions = [row for row in sessions if row.get("duration_not_allocatable")]
     write_csv(output_dir / "c1_active_time_unknown_audit.csv", unknown_sessions)
     summary = {
-        "raw_event_count": len(events), "deduplicated_event_count": sum(not row["network_retry_duplicate"] for row in events),
+        "raw_event_count": len(all_events), "c1_context_event_count": len(events), "excluded_event_count": len(excluded_events),
+        "deduplicated_event_count": sum(not row["network_retry_duplicate"] for row in events),
         "session_count": len(sessions), "exact_annotation_count": sum(row["binding_status"] == "exact_annotation" for row in annotations),
-        "task_sensitivity_annotation_count": sum(row["binding_status"] != "unknown_audit_only" for row in annotations),
+        "task_sensitivity_annotation_count": sum(row["binding_status"] == "exact_annotation" for row in annotations),
         "unknown_event_count": sum(row["unknown_annotation"] for row in events), "unknown_session_count": len(unknown_sessions),
-        "unknown_active_seconds": sum(float(row["unknown_active_seconds"]) for row in unknown_sessions),
+        "unknown_active_seconds": None,
         "parent_derived_session_count": sum(row["session_status"] == "forensic_parent_derived" for row in sessions),
         "primary_active_time_status": "available" if any(row["primary_active_time_eligible"] for row in annotations) else "unavailable",
         "blocks_c2": False, "session_status_counts": dict(Counter(row["session_status"] for row in sessions)),
@@ -524,30 +548,40 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
     return summary
 
 
-def materialize_independence(meta_csv: Path, output_dir: Path) -> dict[str, Any]:
+def materialize_independence(meta_csv: Path, output_dir: Path, *, disposition_csv: Path | None = None) -> dict[str, Any]:
+    source_sha = hashlib.sha256(meta_csv.read_bytes()).hexdigest()
+    disposition_rows = read_csv(disposition_csv) if disposition_csv and disposition_csv.exists() else []
+    dispositions = {row.get("canonical_annotation_id", ""): row for row in disposition_rows}
     rows, queue = [], []
     for row in read_csv(meta_csv):
+        disposition = dispositions.get(row.get("canonical_annotation_id", ""), {})
+        disposition_valid = bool(disposition) and all(str(disposition.get(field, "")).strip() for field in ("canonical_annotation_id", "provenance_status", "copy_risk_status", "parent_annotation_id", "parent_owner_id", "parent_cross_owner", "independence_status", "reviewed_by", "reviewed_at", "source_meta_sha256")) and disposition.get("source_meta_sha256") == source_sha
+        effective = {**row, **disposition} if disposition_valid else row
         identity_complete = all(str(row.get(field, "")).strip() for field in ("project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "canonical_annotation_id"))
-        cross_owner = _truth(row.get("parent_cross_owner"))
-        copy_risk = row.get("copy_risk_status") in {"confirmed_copy", "cross_owner_parent"}
+        cross_owner = _truth(effective.get("parent_cross_owner"))
+        copy_risk = effective.get("copy_risk_status") in {"confirmed_copy", "cross_owner_parent"}
         if cross_owner or copy_risk:
             status, basis = "non_independent_confirmed", "cross_owner_parent_or_confirmed_copy"
-        elif identity_complete:
-            status, basis = "independent", "independent_by_observed_provenance"
+        elif identity_complete and effective.get("provenance_status") == "complete" and effective.get("copy_risk_status") == "cleared" and (not disposition or disposition_valid):
+            status, basis = "independent", "explicit_complete_provenance_and_copy_risk_cleared"
         else:
-            status, basis = "not_evaluable", "identity_or_provenance_incomplete"
+            status, basis = "not_evaluable", "identity_or_explicit_provenance_clearance_incomplete"
+        if disposition_valid and disposition.get("independence_status") != status:
+            status, basis, disposition_valid = "not_evaluable", "disposition_fields_status_mismatch", False
         evidence = {
             "project_id": row.get("project_id", ""), "runtime_task_id": row.get("ls_runtime_task_id", ""), "task_id": row.get("task_id", ""),
             "worker_id": row.get("worker_id", ""), "annotation_id": row.get("annotation_id", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""),
-            "parent_annotation_id": row.get("parent_annotation_id", ""), "parent_owner_id": row.get("parent_owner_id", ""),
-            "parent_cross_owner": cross_owner, "copy_risk_status": row.get("copy_risk_status", ""),
+            "parent_annotation_id": effective.get("parent_annotation_id", ""), "parent_owner_id": effective.get("parent_owner_id", ""),
+            "parent_cross_owner": cross_owner, "copy_risk_status": effective.get("copy_risk_status", ""),
+            "provenance_status": effective.get("provenance_status", ""), "disposition_joined": disposition_valid,
+            "disposition_source_sha256": source_sha if disposition_valid else "", "reviewed_by": disposition.get("reviewed_by", ""), "reviewed_at": disposition.get("reviewed_at", ""),
             "independence_status": status, "independence_basis": basis, "worker_wide_contamination": False,
         }
         rows.append(evidence)
         if status == "not_evaluable": queue.append(evidence)
     write_csv(output_dir / "c1_independence_evidence.csv", rows)
     write_csv(output_dir / "c1_independence_review_queue.csv", queue)
-    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "n_review": len(queue)}
+    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "n_review": len(queue), "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
     (output_dir / "c1_independence_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
 
@@ -562,6 +596,58 @@ def apply_independence(canonical_csv: Path, independence_csv: Path) -> None:
     write_csv(canonical_csv, rows, list(rows[0]) if rows else None)
 
 
+def materialize_row_analysis_eligibility(
+    canonical_csv: Path, version_csv: Path, quality_csv: Path, loo_csv: Path,
+    structural_csv: Path, reference_csv: Path, output_dir: Path,
+) -> dict[str, Any]:
+    """Materialize the three estimand-specific row gates once and reuse them downstream."""
+    canonical = read_csv(canonical_csv)
+    versions = {row.get("annotation_id", ""): row.get("version_disposition", "") for row in read_csv(version_csv)}
+    references = {
+        tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition")): row
+        for row in read_csv(reference_csv)
+    }
+    quality = {row.get("canonical_annotation_id", ""): row for row in read_csv(quality_csv)}
+    loo = {row.get("canonical_annotation_id", ""): row for row in read_csv(loo_csv)}
+    structural = {row.get("canonical_annotation_id", ""): row for row in read_csv(structural_csv)}
+    output = []
+    for row in canonical:
+        identity = row.get("canonical_annotation_id", "")
+        reference = references.get(tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition")), {})
+        structural_status = structural.get(identity, {}).get("structural_validation_status", "not_evaluable")
+        process_reasons = []
+        if not _truth(row.get("assigned_expected")): process_reasons.append("outside_assignment")
+        if _truth(row.get("outside_assignment_submission")): process_reasons.append("outside_assignment")
+        if _truth(row.get("duplicate_worker_task_submission")): process_reasons.append("duplicate_or_revision")
+        if versions.get(row.get("annotation_id", "")) != "selected_canonical": process_reasons.append("canonical_version_not_disposed")
+        process_reasons = list(dict.fromkeys(process_reasons))
+        common_reasons = [*process_reasons]
+        if row.get("independence_status") != "independent": common_reasons.append("independence_not_evaluable")
+        if reference.get("final_scope") != "in_scope": common_reasons.append("scope_not_resolved_in_scope")
+        global_reasons = [*common_reasons]
+        if row.get("condition", "").lower() != "manual": global_reasons.append("not_manual")
+        if not _truth(reference.get("geometry_reference_ready")): global_reasons.append("geometry_reference_not_ready")
+        if not _truth(quality.get(identity, {}).get("quality_evaluable")): global_reasons.append("gt_quality_not_evaluable")
+        loo_reasons = [*common_reasons]
+        if structural_status != "passed": loo_reasons.append("structural_not_passed")
+        if loo.get(identity, {}).get("q_LOO_tu", "") in {"", None}: loo_reasons.append("loo_consensus_not_evaluable")
+        structural_reasons = [*common_reasons]
+        if structural_status not in {"passed", "failed_confirmed_worker_submission"}: structural_reasons.append("structural_attribution_not_evaluable")
+        output.append({
+            "canonical_annotation_id": identity, "annotation_id": row.get("annotation_id", ""), "worker_id": row.get("worker_id", ""),
+            "global_analysis_eligible": not global_reasons, "global_analysis_exclusion_reason": ";".join(global_reasons),
+            "loo_analysis_eligible": not loo_reasons, "loo_analysis_exclusion_reason": ";".join(loo_reasons),
+            "structural_opportunity_eligible": not structural_reasons, "structural_opportunity_exclusion_reason": ";".join(structural_reasons),
+        })
+    by_id = {row["canonical_annotation_id"]: row for row in output}
+    for path, rows in ((canonical_csv, canonical), (quality_csv, list(quality.values())), (loo_csv, list(loo.values())), (structural_csv, list(structural.values()))):
+        for row in rows:
+            row.update(by_id.get(row.get("canonical_annotation_id", ""), {}))
+        write_csv(path, rows, list(rows[0]) if rows else None)
+    write_csv(output_dir / "c1_row_analysis_eligibility.csv", output)
+    return {field: sum(_truth(row[field]) for row in output) for field in ("global_analysis_eligible", "loo_analysis_eligible", "structural_opportunity_eligible")}
+
+
 def materialize_c2_eligible_roster(
     completion_csv: Path, canonical_csv: Path, quality_csv: Path,
     geometry_loo_csv: Path, output_dir: Path, *, min_observed_support: int = 5,
@@ -574,18 +660,18 @@ def materialize_c2_eligible_roster(
         by_worker[row.get("worker_id", "")].append(row)
     quality = Counter(
         row.get("worker_id", "") for row in read_csv(quality_csv)
-        if _truth(row.get("quality_evaluable"))
+        if (_truth(row.get("global_analysis_eligible")) if "global_analysis_eligible" in row else _truth(row.get("quality_evaluable")))
     )
     loo = Counter(
         row.get("worker_id", "") for row in read_csv(geometry_loo_csv)
-        if int(float(row.get("peer_count_excluding_self") or 0)) > 0
+        if (_truth(row.get("loo_analysis_eligible")) if "loo_analysis_eligible" in row else int(float(row.get("peer_count_excluding_self") or 0)) > 0)
     )
     output = []
     for worker, completed in sorted(completion.items(), key=lambda item: (0, int(item[0])) if item[0].isdigit() else (1, item[0])):
         rows = by_worker.get(worker, [])
         process_valid = [row for row in rows if not _truth(row.get("outside_assignment_submission")) and not _truth(row.get("duplicate_worker_task_submission"))]
         independence_valid = [row for row in process_valid if row.get("independence_status") == "independent"]
-        structural_evaluable = sum(row.get("structural_validation_status") in {"passed", "failed_confirmed_worker_submission"} for row in independence_valid)
+        structural_evaluable = sum((_truth(row.get("structural_opportunity_eligible")) if "structural_opportunity_eligible" in row else row.get("structural_validation_status") in {"passed", "failed_confirmed_worker_submission"}) for row in independence_valid)
         observed = int(completed.get("observed_total_count") or 0)
         blockers = []
         if completed.get("completion_status") == "nonstarter": blockers.append("nonstarter")
@@ -634,23 +720,24 @@ def materialize_three_track_worker_state(
     completion_csv: Path, output_dir: Path, quality_csv: Path | None = None,
 ) -> dict[str, Any]:
     globals_ = {row.get("worker_id", ""): row for row in read_csv(global_csv)}
-    loo_by_worker: dict[str, list[float]] = defaultdict(list)
+    loo_by_worker: dict[str, list[tuple[str, float]]] = defaultdict(list)
     for row in read_csv(geometry_loo_csv):
-        for field in ("loo_boundary_median", "loo_wallwall_median"):
-            try:
-                loo_by_worker[row.get("worker_id", "")].append(float(row[field]))
-            except (TypeError, ValueError):
-                pass
+        if not _truth(row.get("loo_analysis_eligible")):
+            continue
+        try:
+            loo_by_worker[row.get("worker_id", "")].append((row.get("base_task_id", ""), float(row["q_LOO_tu"])))
+        except (TypeError, ValueError):
+            pass
     struct = defaultdict(lambda: {"opportunity": 0, "failure": 0})
     for row in read_csv(structural_csv):
         worker = row.get("worker_id", "")
-        if row.get("structural_validation_status") in {"passed", "failed_confirmed_worker_submission"}:
+        if _truth(row.get("structural_opportunity_eligible")):
             struct[worker]["opportunity"] += 1
-        if row.get("failure_attribution") == "worker_caused_structural_failure":
+        if _truth(row.get("structural_opportunity_eligible")) and row.get("failure_attribution") == "worker_caused_structural_failure":
             struct[worker]["failure"] += 1
     raw_quality: dict[str, list[float]] = defaultdict(list)
     for row in read_csv(quality_csv) if quality_csv else []:
-        if not _truth(row.get("quality_evaluable")):
+        if not _truth(row.get("global_analysis_eligible")):
             continue
         for field in ("Q_GT_raw", "iou_2d", "iou"):
             try:
@@ -661,7 +748,19 @@ def materialize_three_track_worker_state(
     rows = []
     for completion in read_csv(completion_csv):
         worker = completion["worker_id"]
-        values = loo_by_worker[worker]
+        task_values = loo_by_worker[worker]
+        values = [value for _task, value in task_values]
+        bootstrap = []
+        if values:
+            rng = random.Random(f"c1-loo-{worker}-20260724")
+            by_task = defaultdict(list)
+            for task, value in task_values:
+                by_task[task].append(value)
+            tasks = sorted(by_task)
+            for _ in range(2000):
+                sampled = [rng.choice(tasks) for _task in tasks]
+                bootstrap.append(sum(sum(by_task[task]) / len(by_task[task]) for task in sampled) / len(sampled))
+            bootstrap.sort()
         opportunity = struct[worker]["opportunity"]
         global_row = globals_.get(worker, {})
         rows.append({
@@ -670,7 +769,11 @@ def materialize_three_track_worker_state(
             "standard_error": global_row.get("Q_GT_standard_error", ""), "CI_lower": global_row.get("Q_GT_CI_lower", ""),
             "CI_upper": global_row.get("Q_GT_CI_upper", ""), "LCB": global_row.get("Q_GT_LCB", ""),
             "GT_support": global_row.get("GT_support", 0), "task_support": global_row.get("task_support", 0),
-            "R_LOO_compatible": sum(values) / len(values) if values else "", "LOO_support": len(values) // 2,
+            "R_LOO_compatible": sum(values) / len(values) if values else "", "LOO_support": len(values),
+            "R_LOO_CI_lower": bootstrap[int(.025 * (len(bootstrap) - 1))] if bootstrap else "",
+            "R_LOO_CI_upper": bootstrap[int(.975 * (len(bootstrap) - 1))] if bootstrap else "",
+            "R_LOO_LCB": bootstrap[int(.025 * (len(bootstrap) - 1))] if bootstrap else "",
+            "R_LOO_bootstrap_replicates": 2000 if bootstrap else 0,
             "F_struct": struct[worker]["failure"] / opportunity if opportunity else "",
             "F_struct_numerator": struct[worker]["failure"], "F_struct_denominator": opportunity,
             "worker_state_status": "provisional" if completion.get("completion_status") != "nonstarter" else "not_generated_nonstarter",

@@ -37,6 +37,7 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_geometry_anomaly_root_causes,
     materialize_independence,
     materialize_outside_assignment,
+    materialize_row_analysis_eligibility,
     materialize_structural_validation,
     materialize_three_track_worker_state,
 )
@@ -298,6 +299,11 @@ def materialize(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_geometry.jsonl",
         fixed_snapshots["candidate_inventory"], fixed_snapshots["gt_export"], output_dir,
     )
+    row_eligibility_summary = materialize_row_analysis_eligibility(
+        output_dir / "c1_canonical_annotations.csv", output_dir / "c1_annotation_version_disposition.csv",
+        output_dir / "c1_gt_quality_evidence.csv", output_dir / "geometry_worker_task_loo_C1.csv",
+        output_dir / "structural_validation_audit.csv", output_dir / "c1_task_outcome_reference.csv", output_dir,
+    )
     anomaly_summary = materialize_geometry_anomaly_root_causes(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_meta_observations.csv",
         output_dir / "c1_canonical_geometry.jsonl", output_dir / "structural_validation_audit.csv", output_dir,
@@ -316,7 +322,7 @@ def materialize(
     active_ledger_summary = materialize_active_time_ledgers(
         output_dir / "c1_canonical_meta_observations.csv", snapshots / "active_logs", output_dir,
     )
-    chain = {"canonicalization_summary": canonical_summary, "gate_summary": gate, "operational_reference_summary": reference_summary}
+    chain = {"canonicalization_summary": canonical_summary, "gate_summary": gate, "operational_reference_summary": reference_summary, "row_eligibility_summary": row_eligibility_summary}
     predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"
     predictive_summary = materialize_predictive_association(predictive_path, output_dir) if predictive_path.exists() else {"component_status": "not_evaluable", "reason": "p1_to_c1_source_missing"}
 

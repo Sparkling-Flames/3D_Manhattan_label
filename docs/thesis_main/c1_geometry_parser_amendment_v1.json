@@ -1,0 +1,14 @@
+{
+  "amendment_id": "c1_geometry_parser_raw_order_pairing_v1",
+  "effective_stage": "C1 derived-chain rerun",
+  "rule": "When the raw point sequence is alternating top/bottom and each adjacent pair uniquely forms distinct valid wall events, raw-order pairing precedes unordered matching; circular handling changes only x representation.",
+  "regression_canonical_identities": [
+    "66:3189:482:32:6354",
+    "71:3309:700:8:6130",
+    "71:3322:665:1:6312",
+    "71:3354:541:1:6336",
+    "72:3388:460:1:6286"
+  ],
+  "changes_raw_export": false,
+  "changes_failure_attribution": false
+}

@@ -90,13 +90,20 @@ def wallwall_similarity(left: dict[str, Any], right: dict[str, Any]) -> float | 
 
 
 def pairwise_similarity(left: dict[str, Any], right: dict[str, Any], *, grid: int = 256) -> dict[str, Any]:
-    alignment = cyclic_order_correspondence(left, right) if left.get("width") == right.get("width") and left.get("height") == right.get("height") else {"compatible": False, "reason": "geometry_context_mismatch", "pairs": [], "direction": "", "rotation": "", "insertions": 0, "deletions": 0, "ambiguous": False}
+    same_context = left.get("width") == right.get("width") and left.get("height") == right.get("height")
+    alignment = cyclic_order_correspondence(left, right) if same_context else {"compatible": False, "reason": "geometry_context_mismatch", "pairs": [], "direction": "", "rotation": "", "insertions": 0, "deletions": 0, "ambiguous": False}
     order_compatible, order_reason, correspondence = alignment["compatible"], alignment["reason"], alignment["pairs"]
-    compatible = bool(left.get("valid") and right.get("valid") and order_compatible)
-    boundary = boundary_similarity(left, right, grid=grid) if compatible else None
-    wallwall = wallwall_similarity(left, right) if compatible else None
+    geometry_compatible = bool(left.get("valid") and right.get("valid") and same_context)
+    pointwise_compatible = bool(geometry_compatible and order_compatible)
+    boundary_compatible = geometry_compatible
+    wall_compatible = geometry_compatible
+    boundary = boundary_similarity(left, right, grid=grid) if boundary_compatible else None
+    wallwall = wallwall_similarity(left, right) if wall_compatible else None
     return {
-        "metric_compatible": compatible,
+        "metric_compatible": boundary_compatible and wall_compatible,
+        "boundary_metric_compatible": boundary_compatible,
+        "wall_event_metric_compatible": wall_compatible,
+        "pointwise_correspondence_compatible": pointwise_compatible,
         "order_compatible": order_compatible,
         "order_reason": order_reason,
         "cyclic_correspondence": correspondence,
@@ -113,5 +120,5 @@ def pairwise_similarity(left: dict[str, Any], right: dict[str, Any], *, grid: in
         "overall_similarity": None,  # retained only as an empty compatibility column; channels must not be merged.
         "left_pair_count": int(left.get("n_pairs", 0)),
         "right_pair_count": int(right.get("n_pairs", 0)),
-        "validity_status": "valid" if compatible and boundary is not None and wallwall is not None else "not_evaluable",
+        "validity_status": "valid" if boundary_compatible and wall_compatible and boundary is not None and wallwall is not None else "not_evaluable",
     }
