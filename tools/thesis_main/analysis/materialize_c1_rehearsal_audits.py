@@ -53,6 +53,7 @@ def _assignment_key(row: dict[str, Any]) -> tuple[str, str, str, str]:
 def materialize_completion_support(
     export_paths: list[Path], assignment_paths: list[Path], runtime_mapping_csv: Path,
     canonical_csv: Path, geometry_jsonl: Path, output_dir: Path, *, min_valid_k: int = 3,
+    completion_disposition_csv: Path | None = None,
 ) -> dict[str, Any]:
     assignments: dict[tuple[str, str, str, str], dict[str, Any]] = {}
     for path in assignment_paths:
@@ -141,13 +142,17 @@ def materialize_completion_support(
             "affected_missing_workers": ";".join(key[0] for key in keys if key not in observed), "support_status": status,
         })
 
-    write_csv(output_dir / "c1_worker_completion_audit.csv", completion_rows)
-    completion_source_sha = hashlib.sha256((output_dir / "c1_worker_completion_audit.csv").read_bytes()).hexdigest()
+    preliminary_completion = output_dir / "c1_worker_completion_pre_disposition_audit.csv"
+    write_csv(preliminary_completion, completion_rows)
+    completion_source_sha = hashlib.sha256(preliminary_completion.read_bytes()).hexdigest()
     write_csv(output_dir / "c1_completion_disposition_template.csv", [{
         "worker_id": row["worker_id"], "computed_completion_status": row["completion_status"],
         "final_completion_disposition": row["completion_status"] if row["completion_status"] in {"completed", "partial_noncompletion", "nonstarter"} else "",
         "source_completion_audit_sha256": completion_source_sha, "reviewed_by": "", "reviewed_at": "", "reason": "",
     } for row in completion_rows])
+    disposition_summary = apply_completion_disposition(preliminary_completion, completion_disposition_csv, output_dir)
+    completion_rows = read_csv(output_dir / "c1_worker_completion_disposition_evidence.csv")
+    write_csv(output_dir / "c1_worker_completion_audit.csv", completion_rows)
     write_csv(output_dir / "c1_assignment_realization_audit.csv", realization_rows)
     write_csv(output_dir / "c1_missing_submission_by_worker.csv", missing_rows)
     condition_rows = [{"condition": condition, "assigned_count": sum(row["condition"] == condition for row in realization_rows), "observed_count": sum(row["condition"] == condition and row["observed_submission"] for row in realization_rows), "missing_count": sum(row["condition"] == condition and row["missing_submission"] for row in realization_rows)} for condition in ("manual", "semi")]
@@ -165,7 +170,92 @@ def materialize_completion_support(
         "missing_partial_count": sum(row["missing_reason"] == "worker_partial_noncompletion" for row in missing_rows),
         "missing_other_count": sum(row["missing_reason"] not in {"worker_nonstarter", "worker_partial_noncompletion"} for row in missing_rows),
         "task_support_counts": dict(Counter(row["support_status"] for row in task_rows)),
+        "completion_disposition": disposition_summary,
     }
+
+
+def apply_completion_disposition(completion_audit_csv: Path, disposition_csv: Path | None, output_dir: Path) -> dict[str, Any]:
+    """Consume SHA-bound worker completion dispositions without mutating raw audit."""
+    rows = read_csv(completion_audit_csv)
+    source_sha = hashlib.sha256(completion_audit_csv.read_bytes()).hexdigest()
+    dispositions = read_csv(disposition_csv) if disposition_csv and disposition_csv.exists() else []
+    by_worker: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for disposition in dispositions:
+        by_worker[disposition.get("worker_id", "")].append(disposition)
+    known_workers = {row.get("worker_id", "") for row in rows}
+    allowed = {"completed", "partial_noncompletion", "nonstarter", "administrative_exclusion"}
+    applied = invalid = unmatched = pending = 0
+    output = []
+    for row in rows:
+        matches = by_worker.get(row.get("worker_id", ""), [])
+        disposition = matches[0] if len(matches) == 1 else {}
+        valid = bool(disposition) and all(str(disposition.get(field, "")).strip() for field in ("worker_id", "source_completion_audit_sha256", "final_completion_disposition", "reviewed_by", "reviewed_at", "reason")) and disposition.get("source_completion_audit_sha256") == source_sha and disposition.get("final_completion_disposition") in allowed
+        if len(matches) > 1:
+            invalid += 1
+        elif disposition and not valid:
+            invalid += 1
+        elif not disposition:
+            pending += 1
+        if valid:
+            applied += 1
+        output.append({
+            **row,
+            "computed_completion_status": row.get("completion_status", ""),
+            "completion_status": disposition.get("final_completion_disposition", row.get("completion_status", "")) if valid else row.get("completion_status", ""),
+            "completion_disposition_applied": valid,
+            "completion_disposition_valid": valid,
+            "completion_disposition_source_sha256": source_sha if valid else "",
+            "completion_disposition_reviewed_by": disposition.get("reviewed_by", "") if valid else "",
+            "completion_disposition_reviewed_at": disposition.get("reviewed_at", "") if valid else "",
+            "completion_disposition_reason": disposition.get("reason", "") if valid else "",
+        })
+    unmatched = sum(1 for worker in by_worker if worker not in known_workers)
+    write_csv(output_dir / "c1_worker_completion_disposition_evidence.csv", output)
+    summary = {"source_completion_audit_sha256": source_sha, "applied_count": applied, "invalid_count": invalid, "unmatched_count": unmatched, "pending_count": pending}
+    (output_dir / "c1_completion_disposition_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return summary
+
+
+def apply_outside_assignment_disposition(outside_audit_csv: Path, disposition_csv: Path | None, output_dir: Path) -> dict[str, Any]:
+    """Consume SHA-bound outside-assignment dispositions as a process sidecar."""
+    rows = read_csv(outside_audit_csv)
+    source_sha = hashlib.sha256(outside_audit_csv.read_bytes()).hexdigest()
+    dispositions = read_csv(disposition_csv) if disposition_csv and disposition_csv.exists() else []
+    by_identity: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for disposition in dispositions:
+        by_identity[disposition.get("canonical_annotation_id", "")].append(disposition)
+    known = {row.get("canonical_annotation_id", "") for row in rows}
+    allowed = {"true_unassigned_forensic", "assignment_mapping_error", "valid_authorized_exception", "excluded"}
+    applied = invalid = pending = 0
+    output = []
+    for row in rows:
+        matches = by_identity.get(row.get("canonical_annotation_id", ""), [])
+        disposition = matches[0] if len(matches) == 1 else {}
+        valid = bool(disposition) and all(str(disposition.get(field, "")).strip() for field in ("canonical_annotation_id", "source_outside_assignment_audit_sha256", "final_process_disposition", "reviewed_by", "reviewed_at", "reason")) and disposition.get("source_outside_assignment_audit_sha256") == source_sha and disposition.get("final_process_disposition") in allowed
+        if len(matches) > 1:
+            invalid += 1
+        elif disposition and not valid:
+            invalid += 1
+        elif not disposition:
+            pending += 1
+        if valid:
+            applied += 1
+        final = disposition.get("final_process_disposition", "") if valid else ""
+        output.append({
+            **row,
+            "outside_assignment_disposition_applied": valid,
+            "outside_assignment_disposition_valid": valid,
+            "outside_assignment_disposition_source_sha256": source_sha if valid else "",
+            "final_process_disposition": final,
+            "process_eligible_override": final == "valid_authorized_exception",
+            "outside_assignment_disposition_reviewed_by": disposition.get("reviewed_by", "") if valid else "",
+            "outside_assignment_disposition_reviewed_at": disposition.get("reviewed_at", "") if valid else "",
+            "outside_assignment_disposition_reason": disposition.get("reason", "") if valid else "",
+        })
+    summary = {"source_outside_assignment_audit_sha256": source_sha, "applied_count": applied, "invalid_count": invalid, "unmatched_count": sum(1 for identity in by_identity if identity not in known), "pending_count": pending}
+    write_csv(output_dir / "c1_outside_assignment_disposition_evidence.csv", output)
+    (output_dir / "c1_outside_assignment_disposition_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return summary
 
 
 def materialize_structural_validation(
@@ -375,7 +465,7 @@ def apply_structural_dispositions(canonical_csv: Path, structural_csv: Path) -> 
     write_csv(canonical_csv, rows, list(rows[0]) if rows else None)
 
 
-def materialize_outside_assignment(canonical_csv: Path, output_dir: Path) -> dict[str, Any]:
+def materialize_outside_assignment(canonical_csv: Path, output_dir: Path, *, disposition_csv: Path | None = None) -> dict[str, Any]:
     rows = []
     for row in read_csv(canonical_csv):
         if not _truth(row.get("outside_assignment_submission")):
@@ -398,21 +488,24 @@ def materialize_outside_assignment(canonical_csv: Path, output_dir: Path) -> dic
         else:
             classification = "unknown"
         rows.append({
-            "annotation_id": row.get("annotation_id", ""), "worker_id": row.get("worker_id", ""),
+            "canonical_annotation_id": row.get("canonical_annotation_id", ""), "annotation_id": row.get("annotation_id", ""), "worker_id": row.get("worker_id", ""),
             "runtime_task_id": row.get("ls_runtime_task_id", ""), "base_task_id": row.get("base_task_id", ""),
             "project_id": row.get("project_id", ""), "condition": row.get("condition", ""),
             "expected_assignment": False, "mapping_status": f"{row.get('planned_mapping_status', '')};{row.get('runtime_binding_status', '')}",
             "classification": classification,
             "recommended_disposition": "forensic_process_audit_exclude_quality" if classification in {"true_unassigned_submission", "test_annotation"} else "fold_duplicate_or_revision" if classification in {"duplicate_export", "legitimate_revision"} else "pending_manual_mapping_review",
         })
+    preliminary = output_dir / "c1_outside_assignment_pre_disposition_audit.csv"
+    write_csv(preliminary, rows)
     write_csv(output_dir / "c1_outside_assignment_classification_audit.csv", rows)
-    source_sha = hashlib.sha256((output_dir / "c1_outside_assignment_classification_audit.csv").read_bytes()).hexdigest()
+    source_sha = hashlib.sha256(preliminary.read_bytes()).hexdigest()
     write_csv(output_dir / "c1_outside_assignment_disposition_template.csv", [{
         **row, "final_process_disposition": "", "source_outside_assignment_audit_sha256": source_sha,
         "reviewed_by": "", "reviewed_at": "", "reason": "",
     } for row in rows])
     write_csv(output_dir / "c1_outside_assignment_adjudication_queue.csv", [row for row in rows if row["classification"] != "true_unassigned_submission"])
-    return {"count": len(rows), "classification_counts": dict(Counter(row["classification"] for row in rows))}
+    disposition_summary = apply_outside_assignment_disposition(preliminary, disposition_csv, output_dir)
+    return {"count": len(rows), "classification_counts": dict(Counter(row["classification"] for row in rows)), "disposition": disposition_summary}
 
 
 def _timestamp(value: Any) -> datetime | None:
@@ -731,7 +824,7 @@ def rebind_canonical_meta_registry(canonical_csv: Path, meta_csv: Path) -> str:
 def materialize_row_analysis_eligibility(
     canonical_csv: Path, version_csv: Path, quality_csv: Path, loo_csv: Path,
     structural_csv: Path, reference_csv: Path, output_dir: Path,
-    *, independence_csv: Path | None = None,
+    *, independence_csv: Path | None = None, outside_disposition_csv: Path | None = None,
 ) -> dict[str, Any]:
     """Materialize the three estimand-specific row gates as an immutable sidecar.
 
@@ -752,6 +845,10 @@ def materialize_row_analysis_eligibility(
         row.get("canonical_annotation_id", ""): row
         for row in read_csv(independence_csv)
     } if independence_csv and independence_csv.exists() else {}
+    outside = {
+        row.get("canonical_annotation_id", ""): row
+        for row in read_csv(outside_disposition_csv)
+    } if outside_disposition_csv and outside_disposition_csv.exists() else {}
     output = []
     for row in canonical:
         identity = row.get("canonical_annotation_id", "")
@@ -759,9 +856,10 @@ def materialize_row_analysis_eligibility(
         structural_row = structural.get(identity, {})
         structural_status = structural_row.get("structural_validation_status", "not_evaluable")
         independence_status = independence.get(identity, {}).get("independence_status", "not_evaluable")
+        outside_override = _truth(outside.get(identity, {}).get("process_eligible_override"))
         process_reasons = []
-        if not _truth(row.get("assigned_expected")): process_reasons.append("outside_assignment")
-        if _truth(row.get("outside_assignment_submission")): process_reasons.append("outside_assignment")
+        if not _truth(row.get("assigned_expected")) and not outside_override: process_reasons.append("outside_assignment")
+        if _truth(row.get("outside_assignment_submission")) and not outside_override: process_reasons.append("outside_assignment")
         if _truth(row.get("duplicate_worker_task_submission")): process_reasons.append("duplicate_or_revision")
         if versions.get(row.get("annotation_id", "")) != "selected_canonical": process_reasons.append("canonical_version_not_disposed")
         process_reasons = list(dict.fromkeys(process_reasons))
@@ -780,6 +878,7 @@ def materialize_row_analysis_eligibility(
         if structural_status not in {"passed", "failed_confirmed_worker_submission"}: structural_reasons.append("structural_attribution_not_evaluable")
         output.append({
             "canonical_annotation_id": identity, "annotation_id": row.get("annotation_id", ""), "worker_id": row.get("worker_id", ""),
+            "outside_assignment_disposition_applied": _truth(outside.get(identity, {}).get("outside_assignment_disposition_applied")), "outside_assignment_process_override": outside_override,
             "global_analysis_eligible": not global_reasons, "global_analysis_exclusion_reason": ";".join(global_reasons),
             "loo_analysis_eligible": not loo_reasons, "loo_analysis_exclusion_reason": ";".join(loo_reasons),
             "structural_opportunity_eligible": not structural_reasons, "structural_opportunity_exclusion_reason": ";".join(structural_reasons),
@@ -788,7 +887,13 @@ def materialize_row_analysis_eligibility(
     return {field: sum(_truth(row[field]) for row in output) for field in ("global_analysis_eligible", "loo_analysis_eligible", "structural_opportunity_eligible")}
 
 
-def materialize_final_canonical_closeout_summary(output_dir: Path, completion_summary: dict[str, Any]) -> dict[str, Any]:
+def materialize_final_canonical_closeout_summary(
+    output_dir: Path,
+    completion_summary: dict[str, Any],
+    *,
+    outside_summary: dict[str, Any] | None = None,
+    formal: bool = False,
+) -> dict[str, Any]:
     """Separate immutable canonical closure from later measurement readiness."""
     structural = read_csv(output_dir / "structural_validation_audit.csv")
     eligibility = read_csv(output_dir / "c1_row_analysis_eligibility.csv")
@@ -812,6 +917,12 @@ def materialize_final_canonical_closeout_summary(output_dir: Path, completion_su
     if int(completion_summary.get("missing_other_count") or 0): canonical_blockers.append("unclassified_missing")
     resolved_versions = {"selected_canonical", "input_duplicate_folded", "unselected_forensic", "excluded_group", "forensic_only"}
     if any(row.get("version_disposition") not in resolved_versions for row in versions): canonical_blockers.append("unresolved_duplicate_or_version")
+    completion_disposition = completion_summary.get("completion_disposition", {})
+    outside_disposition = (outside_summary or {}).get("disposition", {})
+    if formal and any(int(completion_disposition.get(field) or 0) for field in ("pending_count", "invalid_count", "unmatched_count")):
+        canonical_blockers.append("completion_disposition_missing_invalid_or_orphan")
+    if formal and any(int(outside_disposition.get(field) or 0) for field in ("pending_count", "invalid_count", "unmatched_count")):
+        canonical_blockers.append("outside_assignment_disposition_missing_invalid_or_orphan")
     measurement_blockers = [*canonical_blockers]
     if unreviewed_structural: measurement_blockers.append("unreviewed_structural_rows")
     if any(not count for count in supports.values()): measurement_blockers.append("support_after_exclusion_insufficient")
@@ -829,7 +940,9 @@ def materialize_final_canonical_closeout_summary(output_dir: Path, completion_su
             "partial_worker_count": completion_summary.get("partial_noncompletion_worker_count", 0),
             "nonstarter_count": completion_summary.get("nonstarter_worker_count", 0),
             "unclassified_missing": completion_summary.get("missing_other_count", 0),
+            "evidence": completion_disposition,
         },
+        "outside_assignment_disposition": outside_disposition,
         "unreviewed_structural_rows": unreviewed_structural,
         "reviewed_local_exclusions": reviewed_local_exclusions,
         "support_after_exclusion": supports,

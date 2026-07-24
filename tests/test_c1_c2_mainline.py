@@ -46,16 +46,17 @@ def test_measurement_freeze_requires_three_axes_but_not_active_time(tmp_path: Pa
 
 def test_c2b_design_does_not_require_risk_route(tmp_path: Path) -> None:
     workers = tmp_path / "workers.csv"; tasks = tmp_path / "tasks.csv"; manifest = tmp_path / "design.json"; closeout = tmp_path / "closeout.json"
+    contract_sha = hashlib.sha256(c2b.RISK_CONTRACT.read_bytes()).hexdigest()
     _write(workers, [
         {"worker_id": "w1", "c2_candidate_eligible": "true", "risk_slope": "0.1", "risk_slope_se": "0.1", "risk_slope_support": "3", "Q_GT_task_adjusted": ".8", "missing_rate": "0", "F_struct": "0"},
         {"worker_id": "w2", "c2_candidate_eligible": "true", "risk_slope": "0.2", "risk_slope_se": "0.1", "risk_slope_support": "3", "Q_GT_task_adjusted": ".7", "missing_rate": "0", "F_struct": "0"},
     ])
     _write(tasks, [
-        {"task_id": f"t{i}", "base_task_id": f"b{i}", "assignment_eligible": "true", "anchor_eligible": "true", "bridge_eligible": "true", "task_stratum": "ordinary" if i % 2 else "stress", "building_id": f"h{i % 2}", "risk_design_A": str(i / 10), "risk_route_status": "pending_c2b_confirmation"}
+        {"task_id": f"t{i}", "base_task_id": f"b{i}", "assignment_eligible": "true", "anchor_eligible": "true", "bridge_eligible": "true", "risk_design_stratum": "ordinary" if i % 2 else "stress", "risk_design_stratum_status": "frozen_from_C1", "risk_contract_sha256": contract_sha, "building_id": f"h{i % 2}", "risk_design_A": str(i / 10), "risk_route_status": "pending_c2b_confirmation"}
         for i in range(1, 5)
     ])
     closeout.write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C2B_DESIGN_READY": True}), encoding="utf-8")
-    manifest.write_text(json.dumps({"manifest_version": "c2_design_v1", "input_sha256": {"worker_profile_csv": hashlib.sha256(workers.read_bytes()).hexdigest(), "task_pool_csv": hashlib.sha256(tasks.read_bytes()).hexdigest(), "c1_closeout_summary": hashlib.sha256(closeout.read_bytes()).hexdigest()}, "candidate_designs": [{"design_id": "d", "common_anchor_count": 1, "bridge_per_worker": 1, "unique_bridge_tasks": 2, "min_task_support": 1, "max_worker_stratum_imbalance": 2}], "c2b_target_ci_half_width": 10, "simulation": {"seed": 1, "draws": 200}}), encoding="utf-8")
+    manifest.write_text(json.dumps({"manifest_version": "c2_design_v1", "risk_contract_sha256": contract_sha, "input_sha256": {"worker_profile_csv": hashlib.sha256(workers.read_bytes()).hexdigest(), "task_pool_csv": hashlib.sha256(tasks.read_bytes()).hexdigest(), "c1_closeout_summary": hashlib.sha256(closeout.read_bytes()).hexdigest()}, "candidate_designs": [{"design_id": "d", "common_anchor_count": 1, "bridge_per_worker": 2, "unique_bridge_tasks": 2, "min_task_support": 2, "max_worker_stratum_imbalance": 2}], "simulation": {"seed": 1, "draws": 200}}), encoding="utf-8")
     result = c2b.materialize(tasks, workers, manifest, tmp_path / "out", input_status="formal", c1_closeout_summary=closeout)
     assert result["launch_ready"] is True
     assert (tmp_path / "out" / "assignment_manifest_C2B.csv").exists()

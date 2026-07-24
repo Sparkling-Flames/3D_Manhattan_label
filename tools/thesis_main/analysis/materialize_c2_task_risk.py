@@ -19,6 +19,22 @@ from tools.thesis_main.analysis.geometry_consensus.representation import normali
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
+DEFAULT_RISK_CONTRACT = _PROJECT_ROOT / "docs" / "thesis_main" / "C2B_RISK_DESIGN_CONTRACT_v1.json"
+
+
+def _risk_contract(path: Path | None) -> tuple[dict[str, Any], Path]:
+    contract_path = path or DEFAULT_RISK_CONTRACT
+    try:
+        contract = json.loads(contract_path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError) as exc:
+        raise ValueError(f"C2-B risk design contract unavailable: {contract_path}") from exc
+    if contract.get("schema_version") != "paper_a_c2b_risk_design_contract_v1":
+        raise ValueError("unsupported C2-B risk design contract")
+    if contract.get("stratum_rule", {}).get("forbid_legacy_proxies") is None:
+        raise ValueError("C2-B risk design contract lacks legacy-proxy guard")
+    return contract, contract_path
+
+
 def _read(path: Path) -> list[dict[str, str]]:
     with path.open(encoding="utf-8-sig", newline="") as stream:
         return list(csv.DictReader(stream))
@@ -84,19 +100,24 @@ def _knn(candidate: np.ndarray, reference: np.ndarray, k: int = 5) -> float:
     return float(np.mean(np.partition(distances, min(k, len(distances)) - 1)[:min(k, len(distances))]))
 
 
-def _composite_q75_bucket(values: dict[str, float], references: dict[str, list[float]]) -> tuple[str, dict[str, float]]:
+def _composite_q75_bucket(
+    values: dict[str, float], references: dict[str, list[float]], *, stress_quantile: float = .75,
+) -> tuple[str, dict[str, float]]:
     percentiles = {
         name: sum(reference <= values[name] for reference in refs) / len(refs)
         for name, refs in references.items() if refs and name in values
     }
-    return ("stress" if len(percentiles) == 4 and max(percentiles.values()) >= .75 else "ordinary"), percentiles
+    return ("stress" if len(percentiles) == 4 and max(percentiles.values()) >= stress_quantile else "ordinary"), percentiles
 
 
 def materialize(
     inventory_csv: Path, layout_dir: Path, c1_task_feature_csv: Path, output_dir: Path, *,
     input_status: str, checkpoint: Path | None = None, reference_dir: Path | None = None,
     extract_lhfeat: bool = False, c1_risk_reference_csv: Path | None = None,
+    risk_contract: Path | None = None,
 ) -> dict[str, Any]:
+    contract, contract_path = _risk_contract(risk_contract)
+    stress_quantile = float(contract["stratum_rule"]["stress_quantile"])
     inventory = _read(inventory_csv)
     # C1 calibration support is a task-side, pre-annotation feature table.  Do
     # not derive a model-risk channel from crowd canonical geometry.
@@ -114,6 +135,26 @@ def materialize(
             c1_by_task[task] = {"base_task_id": task, "image_id": row.get("image_id", ""), "building_id": row.get("building_id", ""), "g_model_struct": g_model_struct, "d_model_feat": row.get("d_model_feat", ""), "d_model_feat_local_max": row.get("d_model_feat_local", ""), "d_cal_A": row.get("d_cal_A", "")}
         except (TypeError, ValueError):
             continue
+    # d_cal_A is a leave-one-C1-task-out distance in the frozen C1 feature
+    # space.  It is derived before the reference table is written, so the C1
+    # slope fit can never be fed future C2 candidate distances.
+    c1_feature_names = ("d_model_feat", "d_model_feat_local_max", "g_model_struct")
+    c1_feature_rows = []
+    for task, row in c1_by_task.items():
+        try:
+            c1_feature_rows.append((task, np.asarray([float(row[name]) for name in c1_feature_names], dtype=float)))
+        except (KeyError, TypeError, ValueError):
+            continue
+    if c1_feature_rows:
+        c1_matrix = np.stack([vector for _task, vector in c1_feature_rows])
+        c1_scale = c1_matrix.std(axis=0); c1_scale[c1_scale == 0] = 1.0
+        normalized = c1_matrix / c1_scale
+        for index, (task, _vector) in enumerate(c1_feature_rows):
+            try:
+                float(c1_by_task[task].get("d_cal_A", ""))
+            except (TypeError, ValueError):
+                peers = np.delete(normalized, index, axis=0)
+                c1_by_task[task]["d_cal_A"] = float(np.min(np.linalg.norm(peers - normalized[index], axis=1))) if len(peers) else 0.0
     c1_reference_output = output_dir / "c1_task_risk_reference.csv"
     _write(c1_reference_output, list(c1_by_task.values()))
     (output_dir / "c1_task_risk_reference_manifest.json").write_text(json.dumps({
@@ -174,34 +215,57 @@ def materialize(
             d_cal = _knn(vector, support_matrix / support_scale)
         channels = {"d_model_feat": global_distance, "d_model_feat_local_max": local_distance, "g_model_struct": g, "d_cal_A": d_cal}
         numeric = {name: float(value) for name, value in channels.items() if value != ""}
-        bucket, percentiles = _composite_q75_bucket(numeric, c1_channels)
+        bucket, percentiles = _composite_q75_bucket(numeric, c1_channels, stress_quantile=stress_quantile)
         assist_ready = len(numeric) == 4 and all(c1_channels.values()) and layout.get("postprocess_valid") is True
         route_score = ""  # Requires cross-fitted C1 outcomes; model-only Q75 must never impersonate routing risk.
         source_holdout_ready = all(str(item.get(field, "")).lower() in {"true", "1"} for field in ("source_split_allowed", "history_clear", "future_holdout_clear"))
-        risk_design_ready = len(numeric) == 4 and layout.get("postprocess_valid") is True and source_holdout_ready and bool(item.get("building_id"))
+        reference_ready = str(item.get("reference_status") or item.get("geometry_gold_ready") or "").lower() in {"reference_ready", "true", "1"}
+        scope_ready = str(item.get("scope_status") or item.get("final_scope") or "").lower() in {"in_scope", "included", "true", "1"}
+        risk_design_ready = len(numeric) == 4 and layout.get("postprocess_valid") is True and source_holdout_ready and reference_ready and scope_ready and bool(item.get("building_id"))
+        design_frozen = input_status == "formal" and risk_design_ready and feature_status == "ready"
         rows.append({
             **item, **layout, "d_model_feat": global_distance, "d_model_feat_local_max": local_distance,
-            "d_cal_A": d_cal, "risk_design_A": d_cal, "risk_assist_candidate": bucket if assist_ready else "", "risk_route_candidate": route_score,
-            "risk_design_A_status": "ready" if risk_design_ready else "not_evaluable", "risk_assist_status": "ready" if assist_ready else "not_evaluable", "risk_route_status": "pending_c2b_confirmation",
-            "risk_channel_percentiles_json": json.dumps(percentiles, sort_keys=True), "risk_bucket_rule": "max_frozen_c1_channel_percentile_q75",
-            "assignment_eligible": risk_design_ready,
+            "d_cal_A": d_cal, "d_cal_F": "", "d_cal_F_status": "post_c2_only",
+            "risk_design_A": d_cal,
+            "risk_design_A_status": "frozen_from_C1" if design_frozen else "pending_complete_C1" if input_status != "formal" else "not_evaluable",
+            "risk_design_stratum": bucket if design_frozen else "",
+            "risk_design_stratum_status": "frozen_from_C1" if design_frozen else "provisional_not_frozen" if input_status != "formal" else "not_evaluable",
+            "risk_assist_candidate": bucket if assist_ready else "", "risk_route_candidate": route_score,
+            "risk_assist_status": "ready" if assist_ready else "not_evaluable", "risk_route_status": "pending_c2b_confirmation",
+            "risk_channel_percentiles_json": json.dumps(percentiles, sort_keys=True), "risk_bucket_rule": contract["stratum_rule"]["name"],
+            "assignment_eligible": design_frozen,
+            "reference_ready": reference_ready, "scope_ready": scope_ready, "source_holdout_ready": source_holdout_ready,
             "feature_status": feature_status, "checkpoint_sha256": sha256_file(checkpoint) if checkpoint and checkpoint.exists() else "",
-            "risk_status": "candidate_only" if input_status != "formal" else "frozen",
+            "risk_contract_sha256": sha256_file(contract_path),
+            "risk_status": "candidate_only" if input_status != "formal" else "frozen" if design_frozen else "not_evaluable",
         })
     inventory_output = output_dir / "c2_task_risk_inventory.csv"
     _write(inventory_output, rows)
     eligible_rows = [row for row in rows if row["assignment_eligible"]]
     eligible_buildings = {row.get("building_id") for row in eligible_rows if row.get("building_id")}
-    eligible_strata = {row.get("risk_assist_candidate") for row in eligible_rows}
+    eligible_strata = {row.get("risk_design_stratum") for row in eligible_rows}
     summary = {
-        "input_status": input_status, "n_tasks": len(rows), "n_c1_calibration_tasks": len(reference_rows),
+        "input_status": input_status, "method_contract": contract["method_contract"], "n_tasks": len(rows), "n_c1_calibration_tasks": len(reference_rows),
         "n_assignment_eligible": len(eligible_rows), "eligible_building_count": len(eligible_buildings),
         "feature_status": feature_status, "formal_ready": input_status == "formal" and feature_status == "ready" and len(eligible_rows) >= 12 and len(eligible_buildings) >= 2 and eligible_strata >= {"ordinary", "stress"},
+        "risk_design_A_status": "frozen_from_C1" if input_status == "formal" and feature_status == "ready" else "pending_complete_C1" if input_status != "formal" else "not_evaluable",
+        "risk_design_stratum_status": "frozen_from_C1" if input_status == "formal" and feature_status == "ready" else "provisional_not_frozen" if input_status != "formal" else "not_evaluable",
+        "risk_contract_path": str(contract_path), "risk_contract_sha256": sha256_file(contract_path),
         "checkpoint_sha256": sha256_file(checkpoint) if checkpoint and checkpoint.exists() else "",
+        "config_sha256": sha256_file(_PROJECT_ROOT / contract["feature_freeze"]["config"]) if (_PROJECT_ROOT / contract["feature_freeze"]["config"]).exists() else "",
         "inventory_sha256": sha256_file(inventory_csv), "c1_preannotation_feature_sha256": sha256_file(c1_task_feature_csv),
         "c1_risk_reference_sha256": sha256_file(c1_risk_reference_csv) if c1_risk_reference_csv else "",
         "output_inventory_sha256": sha256_file(inventory_output),
         "c1_task_risk_reference_path": str(c1_reference_output), "c1_task_risk_reference_sha256": sha256_file(c1_reference_output),
+    }
+    summary["state_machine"] = {
+        "C1_COLLECTION_INCOMPLETE": input_status != "formal",
+        "C1_CANONICAL_CLOSED": input_status == "formal",
+        "C1_MEASUREMENT_FROZEN": input_status == "formal",
+        "C2B_RISK_DESIGN_FROZEN": input_status == "formal" and feature_status == "ready",
+        "C2B_DESIGN_FROZEN": False,
+        "C2B_ASSIGNMENT_MATERIALIZED": False,
+        "C2B_LAUNCH_READY": False,
     }
     (output_dir / "c2_task_risk.summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
@@ -218,8 +282,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--reference-dir", type=Path)
     parser.add_argument("--extract-lhfeat", action="store_true")
     parser.add_argument("--c1-risk-reference-csv", type=Path)
+    parser.add_argument("--risk-contract", type=Path)
     args = parser.parse_args(argv)
-    print(json.dumps(materialize(args.inventory_csv, args.layout_dir, args.c1_task_feature_csv, args.output_dir, input_status=args.input_status, checkpoint=args.checkpoint, reference_dir=args.reference_dir, extract_lhfeat=args.extract_lhfeat, c1_risk_reference_csv=args.c1_risk_reference_csv), indent=2))
+    print(json.dumps(materialize(args.inventory_csv, args.layout_dir, args.c1_task_feature_csv, args.output_dir, input_status=args.input_status, checkpoint=args.checkpoint, reference_dir=args.reference_dir, extract_lhfeat=args.extract_lhfeat, c1_risk_reference_csv=args.c1_risk_reference_csv, risk_contract=args.risk_contract), indent=2))
     return 0
 
 

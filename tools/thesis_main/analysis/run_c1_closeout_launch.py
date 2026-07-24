@@ -102,19 +102,25 @@ def day1_finalize(args: argparse.Namespace) -> dict[str, Any]:
     canonical_ready = bool(audit.get("C1_CANONICAL_CLOSED")) and bool(final.get("C1_CANONICAL_CLOSED", True))
     blockers = []
     if audit.get("input_status") != "formal": blockers.append("rehearsal_bundle_refused")
+    if audit.get("method_contract") != "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1" or not audit.get("git_commit_sha") or not audit.get("worktree_clean"):
+        blockers.append("formal_method_contract_or_clean_commit_missing")
     if not canonical_ready: blockers.extend(final.get("canonical_blockers", []) or ["c1_canonical_not_closed"])
     if not measurement.get("C1_MEASUREMENT_FROZEN"): blockers.append("c1_measurement_not_frozen")
     if not approved: blockers.append("formal_closeout_adjudication_missing_invalid_or_stale")
     measurement_ready = canonical_ready and not blockers
-    freeze = {"schema_version": "c1_measurement_freeze_envelope_v1", "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": measurement_ready, "C2B_DESIGN_READY": bool(measurement.get("C2B_DESIGN_READY")) and measurement_ready, "routing_profile_frozen": False, "formal_closeout_ready": measurement_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers}
+    freeze = {"schema_version": "c1_measurement_freeze_envelope_v1", "method_contract": audit.get("method_contract", ""), "git_commit_sha": audit.get("git_commit_sha", ""), "C1_COLLECTION_INCOMPLETE": not measurement_ready, "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": measurement_ready, "C2B_DESIGN_READY": bool(measurement.get("C2B_DESIGN_READY")) and measurement_ready, "C2B_RISK_DESIGN_FROZEN": False, "C2B_DESIGN_FROZEN": False, "C2B_ASSIGNMENT_MATERIALIZED": False, "C2B_LAUNCH_READY": False, "routing_profile_frozen": False, "formal_closeout_ready": measurement_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers}
+    freeze["state_machine"] = {name: bool(freeze[name]) for name in ("C1_COLLECTION_INCOMPLETE", "C1_CANONICAL_CLOSED", "C1_MEASUREMENT_FROZEN", "C2B_RISK_DESIGN_FROZEN", "C2B_DESIGN_FROZEN", "C2B_ASSIGNMENT_MATERIALIZED", "C2B_LAUNCH_READY")}
     (args.output_dir / "c1_evidence_freeze_manifest.json").write_text(json.dumps(freeze, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return {"day": 1, "phase": "measurement-freeze", "formal_closeout_ready": not blockers, "C1_CANONICAL_CLOSED": freeze["C1_CANONICAL_CLOSED"], "C1_MEASUREMENT_FROZEN": freeze["C1_MEASUREMENT_FROZEN"], "C2B_DESIGN_READY": freeze["C2B_DESIGN_READY"], "routing_profile_frozen": False, "blockers": blockers}
 
 
 def day2_risk_plan(args: argparse.Namespace) -> dict[str, Any]:
-    if not formal_git_state(_PROJECT_ROOT)["clean"]:
+    git_state = formal_git_state(_PROJECT_ROOT)
+    if not git_state["clean"]:
         raise ValueError("formal C2-B design requires a committed clean worktree")
     closeout = json.loads(args.c1_closeout_summary.read_text(encoding="utf-8"))
+    if closeout.get("method_contract") != "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1" or not closeout.get("git_commit_sha"):
+        raise ValueError("C1 freeze lacks the vFinal method contract or clean commit identity")
     if not closeout.get("C1_MEASUREMENT_FROZEN"):
         raise ValueError("C1 measurement evidence is not formally frozen")
     source_rows, holdout_rows = _read(args.source_split_manifest), _read(args.future_holdout_manifest)
@@ -127,9 +133,12 @@ def day2_risk_plan(args: argparse.Namespace) -> dict[str, Any]:
         input_status="formal", checkpoint=args.checkpoint, reference_dir=args.reference_dir,
         extract_lhfeat=True, c1_risk_reference_csv=args.c1_risk_reference_csv,
     )
+    risk["git_commit_sha"] = git_state["git_commit_sha"]
+    risk["worktree_clean"] = True
+    (args.output_dir / "c2_task_risk.summary.json").write_text(json.dumps(risk, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     rows = _read(args.output_dir / "c2_task_risk_inventory.csv")
     _write(args.output_dir / "c2_selected_task_review_queue.csv", [row for row in rows if row.get("assignment_eligible", "").lower() in {"true", "1"}])
-    return {"day": 2, "phase": "risk-plan", "risk_pool_formal_ready": risk["formal_ready"], "assignment_materialized": False, "blockers": [] if risk["formal_ready"] else ["risk_pool_insufficient"]}
+    return {"day": 2, "phase": "risk-plan", "risk_pool_formal_ready": risk["formal_ready"], "assignment_materialized": False, "state_machine": risk["state_machine"], "blockers": [] if risk["formal_ready"] else ["risk_pool_insufficient"]}
 
 
 def day2_build(args: argparse.Namespace) -> dict[str, Any]:
@@ -139,7 +148,9 @@ def day2_build(args: argparse.Namespace) -> dict[str, Any]:
     risk = json.loads(args.risk_summary.read_text(encoding="utf-8"))
     if not closeout.get("C1_MEASUREMENT_FROZEN") or not closeout.get("C2B_DESIGN_READY"):
         raise ValueError("C1 measurement or C2-B design inputs are not formally frozen")
-    if not risk.get("formal_ready"):
+    if risk.get("method_contract") != "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1" or not risk.get("git_commit_sha") or not risk.get("worktree_clean"):
+        raise ValueError("C2 task risk lacks the vFinal method contract or clean commit identity")
+    if not risk.get("formal_ready") or not risk.get("state_machine", {}).get("C2B_RISK_DESIGN_FROZEN"):
         raise ValueError("C2 task risk is not formally frozen")
     approvals = [json.loads(path.read_text(encoding="utf-8")) for path in (args.selected_task_reference_manifest, args.future_holdout_manifest, args.source_split_manifest, args.selected_design_approval)]
     if any(item.get("approved") is not True for item in approvals):
@@ -173,6 +184,7 @@ def day2_build(args: argparse.Namespace) -> dict[str, Any]:
     import_path.write_text(json.dumps(imports, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     support = Counter(row["task_id"] for row in assignments)
     audit = {
+        "method_contract": risk["method_contract"], "git_commit_sha": risk["git_commit_sha"],
         "assignment_sha256": sha256_file(assignment_path), "import_sha256": sha256_file(import_path),
         "n_assignments": len(assignments), "n_workers": len({row["worker_id"] for row in assignments}),
         "n_tasks": len(support), "min_task_support": min(support.values(), default=0),
@@ -182,7 +194,7 @@ def day2_build(args: argparse.Namespace) -> dict[str, Any]:
     }
     audit["launch_ready"] = bool(design.get("launch_ready")) and audit["duplicate_worker_task_count"] == 0 and audit["import_smoke_passed"]
     (args.output_dir / "c2b_launch_ready_report.json").write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    return {"day": 2, "phase": "build", **audit}
+    return {"day": 2, "phase": "build", "state_machine": design.get("state_machine", {}), **audit}
 
 
 def main(argv: list[str] | None = None) -> int:

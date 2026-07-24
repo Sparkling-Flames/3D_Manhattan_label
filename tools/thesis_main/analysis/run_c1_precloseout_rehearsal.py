@@ -58,6 +58,7 @@ REBUILD = Path("analysis_results/calibration_rebuild_20260702")
 PLANNED_MAPPING = REBUILD / "ls_project_mapping_audit_v3_1.csv"
 RESERVE_POOL = REBUILD / "calibration_reserve_draft_v3_1.csv"
 CANDIDATE_INVENTORY = REBUILD / "calibration_full_candidate_inventory_v3.csv"
+RISK_DESIGN_CONTRACT = _PROJECT_ROOT / "docs" / "thesis_main" / "C2B_RISK_DESIGN_CONTRACT_v1.json"
 
 
 def _files(path: Path) -> list[Path]:
@@ -159,9 +160,10 @@ def _candidate_design_manifest(task_pool: Path, worker_profile: Path, output: Pa
         "manifest_version": "c2_design_v1",
         "artifact_role": "precloseout_candidate_enumeration_only",
         "input_sha256": {"worker_profile_csv": sha256_file(worker_profile), "task_pool_csv": sha256_file(task_pool)},
+        "risk_contract_sha256": sha256_file(RISK_DESIGN_CONTRACT),
         "candidate_designs": candidates,
-        "c2b_target_ci_half_width": 1.0,
         "simulation": {"seed": 20260724, "draws": 1000, "resampling": "C1 empirical building/task/worker bootstrap"},
+        "selection_rule": "report_pareto_candidates_only_until_frozen_post_C1_selection",
     }
     write_json(output, manifest)
     return output
@@ -184,11 +186,14 @@ def _candidate_task_pool(inventory: Path, assignments: list[Path], output: Path,
     candidate_rows = []
     for row in rows:
         task, base = row.get("task_id", ""), row.get("base_task_id", "")
-        excluded = task in history or base in history or str(row.get("hard_exclude", "")).lower() in {"true", "1"}
+        legacy = reserve.get(task) or reserve.get(base) or {}
+        history_overlap = task in history or base in history
+        # The old reverse set remains visible to the complete candidate pool;
+        # source/holdout gates later decide whether any item may be assigned.
+        excluded = (history_overlap and not legacy) or str(row.get("hard_exclude", "")).lower() in {"true", "1"}
         if excluded or str(row.get("eligible_after_exclusion", "")).lower() not in {"true", "1"}:
             continue
         pair_count = int(float(row.get("gt_pair_count") or 0))
-        legacy = reserve.get(task) or reserve.get(base) or {}
         candidate_rows.append({
             **row,
             "legacy_human_curated_candidate": bool(reserve.get(task) or reserve.get(base)),
@@ -202,22 +207,31 @@ def _candidate_task_pool(inventory: Path, assignments: list[Path], output: Path,
             "legacy_curated_original_pool": legacy.get("original_pool", legacy.get("source_pool", "unknown_not_recorded" if legacy else "")),
             "building_id": (row.get("image_id") or base).split("_", 1)[0],
             "source_split": row.get("source_pool", ""),
-            "ordinary_stress": "stress" if pair_count >= 7 or pair_count <= 3 else "ordinary",
-            "d_model_feat": "", "g_model_struct": pair_count,
-            "d_cal_A": "", "risk_assist_candidate": "pending_c1_risk_freeze", "risk_route_candidate": "pending_c1_risk_freeze",
+            "g_model_struct_input_pair_count": pair_count,
+            "d_model_feat": "", "g_model_struct": "", "d_cal_A": "",
+            "risk_design_A": "", "risk_design_A_status": "pending_complete_C1",
+            "risk_design_stratum": "", "risk_design_stratum_status": "provisional_not_frozen",
+            "risk_assist_candidate": "pending_c1_risk_freeze", "risk_route_candidate": "pending_c2b_confirmation",
             # Common-anchor is a C2-B assignment role. The legacy inventory has
             # no anchor flags, so every reference-ready remaining task may be
             # considered by the frozen design simulation.
             "anchor_eligible": str(row.get("geometry_gold_ready", "")).lower() in {"true", "1"},
             "bridge_eligible": str(row.get("eligible_for_reserve_candidate", "")).lower() in {"true", "1"},
-            "task_stratum": "stress" if pair_count >= 7 or pair_count <= 3 else "ordinary",
             "reference_status": "reference_ready" if str(row.get("geometry_gold_ready", "")).lower() in {"true", "1"} else "pending_adjudication",
             "scope_status": row.get("expert_review_status", ""), "history_exclusion": False,
-            "p1_c1_overlap": False, "future_t1_v1_exclusion": False,
+            "p1_c1_overlap": history_overlap, "future_t1_v1_exclusion": False,
             "future_holdout_manifest_status": "not_provided_rehearsal_only",
             "candidate_role_source": "legacy_human_curated_candidate" if reserve.get(task) or reserve.get(base) else "full_candidate_inventory_precloseout",
         })
     write_csv(output, candidate_rows, list(candidate_rows[0]) if candidate_rows else ["task_id"])
+    legacy_audit = [{
+        "task_id": row.get("task_id", ""), "base_task_id": row.get("base_task_id", ""), "image_id": row.get("image_id", ""), "building_id": row.get("building_id", ""),
+        "legacy_curated_rank": row.get("legacy_curated_rank", ""), "legacy_curated_reason": row.get("legacy_curated_reason", ""), "legacy_selected_at": row.get("legacy_curated_selected_at", ""), "legacy_selector": row.get("legacy_curated_selector", ""), "legacy_curated_manifest_sha256": row.get("legacy_curated_manifest_sha256", ""),
+        "latest_human_reviewed": row.get("latest_human_reviewed", ""), "legacy_proxy": row.get("legacy_proxy", ""), "unreviewed": row.get("unreviewed", ""),
+        "history_overlap": row.get("p1_c1_overlap", ""), "feature_readiness": row.get("risk_design_A_status", ""), "risk_design_A": row.get("risk_design_A", ""), "risk_design_stratum": row.get("risk_design_stratum", ""),
+        "anchor_eligible": row.get("anchor_eligible", ""), "bridge_eligible": row.get("bridge_eligible", ""), "selected": False, "not_selected_reason": "candidate_only_precloseout",
+    } for row in candidate_rows if str(row.get("legacy_human_curated_candidate", "")).lower() in {"true", "1"}]
+    write_csv(output.parent / "c2_legacy_reverse_candidate_audit.csv", legacy_audit, list(legacy_audit[0]) if legacy_audit else ["task_id"])
     return output
 
 
@@ -353,11 +367,15 @@ def materialize(
         snapshot_exports, [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
         output_dir / "c1_runtime_task_mapping.csv", output_dir / "c1_canonical_annotations.csv",
         output_dir / "c1_canonical_geometry.jsonl", output_dir,
+        completion_disposition_csv=review_snapshots.get("completion_disposition"),
     )
     roster_summary = materialize_analysis_rosters(
         output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_canonical_annotations.csv", output_dir,
     )
-    outside_summary = materialize_outside_assignment(output_dir / "c1_canonical_annotations.csv", output_dir)
+    outside_summary = materialize_outside_assignment(
+        output_dir / "c1_canonical_annotations.csv", output_dir,
+        disposition_csv=review_snapshots.get("outside_assignment_disposition"),
+    )
     active_summary = materialize_active_log_audits(
         output_dir / "c1_canonical_meta_observations.csv", snapshots / "active_logs", output_dir,
     )
@@ -372,8 +390,11 @@ def materialize(
         output_dir / "c1_gt_quality_evidence.csv", output_dir / "geometry_worker_task_loo_C1.csv",
         output_dir / "structural_validation_audit.csv", output_dir / "c1_task_outcome_reference.csv", output_dir,
         independence_csv=output_dir / "c1_independence_evidence.csv",
+        outside_disposition_csv=output_dir / "c1_outside_assignment_disposition_evidence.csv",
     )
-    final_canonical_summary = materialize_final_canonical_closeout_summary(output_dir, completion_summary)
+    final_canonical_summary = materialize_final_canonical_closeout_summary(
+        output_dir, completion_summary, outside_summary=outside_summary, formal=formal,
+    )
     analysis_views = materialize_analysis_views(
         output_dir / "c1_gt_quality_evidence.csv", output_dir / "geometry_worker_task_loo_C1.csv",
         output_dir / "structural_validation_audit.csv", output_dir / "c1_row_analysis_eligibility.csv", output_dir,
@@ -446,6 +467,10 @@ def materialize(
         canonical_closed=bool(final_canonical_summary.get("C1_CANONICAL_CLOSED")),
         preannotation_feature_ready=bool(preannotation_summary.get("n_ready")),
     )
+    readiness["method_contract"] = "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1"
+    readiness["git_commit_sha"] = git_state["git_commit_sha"]
+    readiness["worktree_clean"] = bool(git_state["clean"])
+    write_json(output_dir / "c1_measurement_freeze_manifest.json", readiness)
     raw_task_pool = _candidate_task_pool(
         fixed_snapshots["candidate_inventory"], [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
         output_dir / "c2b_candidate_task_pool_raw.csv", fixed_snapshots["reserve_pool"],
@@ -455,11 +480,12 @@ def materialize(
         input_status=input_status,
         checkpoint=Path("ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth"),
         reference_dir=Path("data/mp3d_layout/train_no_occ/img"), extract_lhfeat=False,
+        risk_contract=RISK_DESIGN_CONTRACT,
     )
     task_pool = output_dir / "c2_task_risk_inventory.csv"
     shutil.copy2(task_pool, output_dir / "c2b_candidate_task_pool.csv")
     parameter_summary = materialize_design_parameters(
-        output_dir / "c1_gt_quality_analysis.csv", task_pool, output_dir / "structural_validation_analysis.csv",
+        output_dir / "c1_gt_quality_analysis.csv", output_dir / "c1_task_risk_reference.csv", output_dir / "structural_validation_analysis.csv",
         output_dir / "c1_worker_completion_audit.csv", output_dir,
     )
     profile_summary = materialize_c2b_design_worker_profile(
@@ -490,6 +516,7 @@ def materialize(
         Path("docs/thesis_main/c1_geometry_parser_amendment_v1.json"),
         Path("docs/thesis_main/C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md"),
         Path("docs/thesis_main/C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md"),
+        RISK_DESIGN_CONTRACT,
         Path("config/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34.yaml"),
         Path("ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth"),
     ]
@@ -510,6 +537,8 @@ def materialize(
 
     summary = {
         "input_status": input_status,
+        "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1",
+        "git_commit_sha": git_state["git_commit_sha"], "worktree_clean": bool(git_state["clean"]),
         "output_dir": str(output_dir.resolve()),
         "aggregate_export_sha256": export_sha,
         "code_pipeline_sha256": code_pipeline_sha,
@@ -545,6 +574,10 @@ def materialize(
         "p1_to_c1_predictive_summary": predictive_summary,
         "C1_CANONICAL_CLOSED": bool(readiness["C1_CANONICAL_CLOSED"]),
         "C1_MEASUREMENT_FROZEN": bool(readiness["C1_MEASUREMENT_FROZEN"]),
+        "C2B_RISK_DESIGN_FROZEN": False,
+        "C2B_DESIGN_FROZEN": False,
+        "C2B_ASSIGNMENT_MATERIALIZED": False,
+        "C2B_LAUNCH_READY": False,
         "C2B_DESIGN_READY": bool(readiness["C2B_DESIGN_READY"]),
         "formal_closeout_ready": formal and bool(readiness["C1_MEASUREMENT_FROZEN"]), "profile_frozen": False, "c2_launch_ready": False,
         "formal_mode_executed": formal, "formal_audit_complete": formal and bool(readiness["C1_CANONICAL_CLOSED"]),
@@ -556,6 +589,13 @@ def materialize(
         "c2b_candidate_summary": c2_summary,
         "final_canonical_closeout_summary": final_canonical_summary,
         "blockers": [*(["partial_c1_collection"] if not formal else []), *final_canonical_summary["blockers"], "c2b_not_confirmed"],
+    }
+    summary["state_machine"] = {
+        "C1_COLLECTION_INCOMPLETE": bool(readiness["C1_COLLECTION_INCOMPLETE"]),
+        **{name: bool(summary[name]) for name in (
+            "C1_CANONICAL_CLOSED", "C1_MEASUREMENT_FROZEN", "C2B_RISK_DESIGN_FROZEN",
+            "C2B_DESIGN_FROZEN", "C2B_ASSIGNMENT_MATERIALIZED", "C2B_LAUNCH_READY",
+        )},
     }
     write_json(output_dir / ("formal_audit_summary.json" if formal else "rehearsal_summary.json"), summary)
     return summary

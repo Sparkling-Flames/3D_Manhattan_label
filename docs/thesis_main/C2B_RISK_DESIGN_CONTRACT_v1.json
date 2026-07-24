@@ -1,0 +1,38 @@
+{
+  "schema_version": "paper_a_c2b_risk_design_contract_v1",
+  "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1",
+  "risk_channels": {
+    "d_model_feat": "frozen HoHoNet LHFeat global distance",
+    "g_model_struct": "frozen pre-annotation layout structural flag score",
+    "d_cal_A": "candidate distance to frozen C1 risk-design feature space; C1-only reference",
+    "d_cal_F": "post-C2 confirmation distance; forbidden from C2-B selection"
+  },
+  "channel_use": {
+    "risk_design_A": "C2-B selection and simulation only; derived from d_model_feat, local LHFeat, g_model_struct and d_cal_A",
+    "risk_assist": "T1 assistance analysis only",
+    "risk_route": "V1 only after confirmed C2-B evidence"
+  },
+  "stratum_rule": {
+    "name": "max_frozen_c1_channel_percentile_q75",
+    "stress_quantile": 0.75,
+    "allowed_values": ["ordinary", "stress"],
+    "forbid_legacy_proxies": ["pair_count", "gt_pair_count", "task_stratum", "risk_assist"]
+  },
+  "feature_freeze": {
+    "checkpoint": "ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth",
+    "config": "config/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34.yaml",
+    "preprocess": "RGB/255, HoHoNet.extract_feat(), frozen reference PCA/whitening cache",
+    "layout_requirements": ["ceiling_floor_curve_present", "topology_valid", "seam_stability", "postprocess_valid"]
+  },
+  "simulation": {
+    "minimum_draws": 200,
+    "top_k": 3,
+    "minimum_task_support": 2,
+    "max_q_gt_ci_half_width": null,
+    "selection": "minimum non-dominated design satisfying approved post-C1 thresholds; no default CI cutoff"
+  },
+  "states": {
+    "incomplete_c1": "risk_design_A_status=pending_complete_C1; risk_design_stratum_status=provisional_not_frozen",
+    "closed_c1": "risk_design_A_status=frozen_from_C1; risk_design_stratum_status=frozen_from_C1"
+  }
+}

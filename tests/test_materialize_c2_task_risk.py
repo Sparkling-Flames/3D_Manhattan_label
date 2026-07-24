@@ -43,6 +43,7 @@ def test_c1_risk_reference_has_one_row_per_base_task(tmp_path):
     summary = materialize(inventory, layouts, c1, tmp_path / "out", input_status="precloseout_rehearsal")
     rows = list(csv.DictReader((tmp_path / "out" / "c1_task_risk_reference.csv").open(encoding="utf-8")))
     assert len(rows) == summary["n_c1_calibration_tasks"] == 1
+    assert rows[0]["d_cal_A"] == "0.0"
 
 
 def test_risk_assist_does_not_impersonate_risk_route(tmp_path):
@@ -53,3 +54,21 @@ def test_risk_assist_does_not_impersonate_risk_route(tmp_path):
     row = next(csv.DictReader((tmp_path / "out" / "c2_task_risk_inventory.csv").open(encoding="utf-8")))
     assert row["risk_route_candidate"] == ""
     assert row["risk_route_status"] == "pending_c2b_confirmation"
+
+
+def test_precloseout_never_materializes_a_risk_design_stratum(tmp_path):
+    inventory = tmp_path / "inventory.csv"
+    inventory.write_text("task_id,building_id,source_path,source_split_allowed,history_clear,future_holdout_clear\nt1,b1,missing.jpg,true,true,true\n", encoding="utf-8")
+    layouts = tmp_path / "layouts"; layouts.mkdir()
+    (layouts / "t1.json").write_text(json.dumps({"layout": {"corners": [
+        {"x": 10, "y_ceiling": 100, "y_floor": 400}, {"x": 300, "y_ceiling": 100, "y_floor": 400},
+        {"x": 600, "y_ceiling": 100, "y_floor": 400}, {"x": 900, "y_ceiling": 100, "y_floor": 400},
+    ]}}), encoding="utf-8")
+    c1 = tmp_path / "c1_features.csv"
+    c1.write_text("base_task_id,preannotation_feature_ready\n", encoding="utf-8")
+    summary = materialize(inventory, layouts, c1, tmp_path / "out", input_status="precloseout_rehearsal")
+    row = next(csv.DictReader((tmp_path / "out" / "c2_task_risk_inventory.csv").open(encoding="utf-8")))
+    assert summary["risk_design_A_status"] == "pending_complete_C1"
+    assert row["risk_design_stratum"] == ""
+    assert row["risk_design_stratum_status"] == "provisional_not_frozen"
+    assert row["assignment_eligible"].lower() == "false"
