@@ -694,7 +694,10 @@ def build_canonicalization(
     missing_submission_count = sum(row["missing_submission"] == "true" for row in realized_rows)
     canonical_evidence_blocked = bool(canonical_evidence_summary.get("blockers"))
     failure_disposition_complete = input_status != "formal" or all(row["failure_attribution"] != "not_evaluable" for row in canonical_rows)
-    structural_integrity_passed = outside_count == 0 and pending_duplicate_count == 0 and reserve_count == 0 and not collision_rows and not planned_missing_count and not canonical_evidence_blocked and failure_disposition_complete
+    # Estimand-specific exclusions (outside assignment, reserve realization,
+    # independence/reference not-evaluable) are row dispositions, not global
+    # closeout failures. Only unresolved identities/versions block the stage.
+    structural_integrity_passed = pending_duplicate_count == 0 and not collision_rows and not planned_missing_count and not canonical_evidence_blocked and failure_disposition_complete
     collection_completeness_passed = missing_submission_count == 0
     passed = structural_integrity_passed and (collection_completeness_passed if require_complete else True)
     summary = {
@@ -760,14 +763,11 @@ def build_canonicalization(
         "blockers": [
             name
             for name, count in (
-                ("outside_assignment_submission_detected", outside_count),
                 ("duplicate_review_pending", pending_duplicate_count),
-                ("reserve_realized_submission_detected", reserve_count),
                 ("runtime_key_collision_detected", len(collision_rows)),
                 ("planned_mapping_missing", planned_missing_count),
                 ("duplicate_independence_audit_identity", len(independence_duplicates)),
                 ("independence_audit_missing_identity", independence_audit_missing_identity_count),
-                ("independence_not_evaluable", sum(row["independence_status"] == "not_evaluable" for row in canonical_rows)),
                 ("failure_disposition_not_evaluable", sum(row["failure_attribution"] == "not_evaluable" for row in canonical_rows) if input_status == "formal" else 0),
                 *[(f"amendment_{key}", count) for key, count in (harmonization_summary.get("amendment_blockers") or {}).items()],
                 *[(f"canonical_evidence_{blocker}", 1) for blocker in (canonical_evidence_summary.get("blockers") or [])],

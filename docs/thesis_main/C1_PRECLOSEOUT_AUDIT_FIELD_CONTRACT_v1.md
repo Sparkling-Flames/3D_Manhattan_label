@@ -25,3 +25,10 @@
 公共冻结 GT 几何可在 task outcome 仍为 pending 时计算 provisional quality；不得借此把 legacy scope proxy 提升为已裁决 task outcome。
 
 `c2_eligible_roster_C1.csv` 必须显式输出 `c2_candidate_eligible`。空值不得解释为 eligible；nonstarter、支持不足、process 未清、independence 未冻结或 structural profile 不可评价均 fail-closed。
+
+## 2026-07-24 最终收口字段
+
+- `c1_geometry_anomaly_root_cause_audit.csv` 分离检测、验证状态、归因和 estimand inclusion；系统、解析、转换、seam、reference、OOS 与未知归因不得进入工人结构失败分子或分母。
+- `c1_active_time_event_ledger.csv`、`c1_active_time_session_ledger.csv` 与 `c1_active_time_annotation_summary.csv` 使用 session 内累计最大值、多 session 求和；unknown 和 mixed known/unknown 永不进入 primary。
+- `C1_assigned_roster.csv`、`C1_observed_roster.csv`、`C1_analysis_roster.csv` 与 `c2_eligible_roster_C1.csv` 分开保存。partial 按局部有效 support 判断，nonstarter 不生成画像。
+- `c1_three_track_worker_state.csv` 的唯一三轨为 `Q_GT_task_adjusted`、`R_LOO_compatible`、`F_struct`；active time 不属于三轨，也不阻断 C2。

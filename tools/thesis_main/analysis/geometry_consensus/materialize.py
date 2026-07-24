@@ -34,7 +34,11 @@ def materialize_geometry_consensus(
     input_status: str = "dry_run",
     width: int = 1024,
     height: int = 512,
+    rule_manifest: Path = Path("docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json"),
 ) -> dict[str, Any]:
+    rules = json.loads(rule_manifest.read_text(encoding="utf-8"))
+    grid = int(rules["metrics"]["boundary_grid"])
+    cutoff = float(rules["metrics"]["multimodal_similarity_cutoff"])
     source_sha = sha256_file(geometry_jsonl)
     grouped: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
     normalized_rows = []
@@ -57,7 +61,7 @@ def materialize_geometry_consensus(
         task_pairwise_count = 0
         for index, left in enumerate(valid):
             for right in valid[index + 1 :]:
-                metrics = pairwise_similarity(left["geometry"], right["geometry"])
+                metrics = pairwise_similarity(left["geometry"], right["geometry"], grid=grid)
                 task_pairwise_count += 1
                 pairwise_rows.append(
                     {
@@ -68,7 +72,7 @@ def materialize_geometry_consensus(
                         "worker_id_right": right.get("worker_id", ""),
                     }
                 )
-        loo = leave_one_out(records)
+        loo = leave_one_out(records, grid=grid)
         for row in loo:
             loo_rows.append(
                 {
@@ -77,7 +81,7 @@ def materialize_geometry_consensus(
                         "base_task_id": base_task_id, "geometry_context_schema_version": schema_version, "geometry_context_provenance": provenance_context,
                 }
             )
-        summary = stability_summary(records)
+        summary = stability_summary(records, grid=grid, multimodal_cutoff=cutoff)
         stability_rows.append(
             {
                 **sidecar_common(source_artifact=str(geometry_jsonl), source_sha256=source_sha, condition=condition, validity_status="dry_run" if input_status != "formal" else summary["stability_status"], rule_version=RULE_VERSION),
@@ -99,9 +103,9 @@ def materialize_geometry_consensus(
     fields = COMMON_SIDEcar_FIELDS
     write_csv_rows(output_dir / "geometry_pairwise_similarity_C1.csv", pairwise_rows, fields + ["base_task_id", "geometry_context_schema_version", "geometry_context_provenance", "worker_id_left", "worker_id_right", "metric_compatible", "order_compatible", "order_reason", "cyclic_correspondence_json", "alignment_direction", "alignment_rotation", "alignment_insertion_count", "alignment_deletion_count", "alignment_ambiguous", "boundary_similarity", "wallwall_similarity", "q_boundary", "q_wallwall", "left_pair_count", "right_pair_count"])
     write_csv_rows(output_dir / "geometry_worker_task_loo_C1.csv", loo_rows, fields + ["base_task_id", "geometry_context_schema_version", "geometry_context_provenance", "task_id", "worker_id", "held_out_valid", "peer_count_excluding_self", "valid_k", "loo_boundary_median", "loo_wallwall_median", "q_boundary_median", "q_wallwall_median", "loo_boundary_values_json", "loo_wallwall_values_json"])
-    write_csv_rows(output_dir / "geometry_stability_C1.csv", stability_rows, fields + ["base_task_id", "geometry_context_schema_version", "geometry_context_provenance", "valid_k", "boundary_similarity_mean", "boundary_similarity_min", "wallwall_similarity_mean", "wallwall_similarity_min", "q_boundary_mean", "q_boundary_min", "q_wallwall_mean", "q_wallwall_min", "boundary_mode_count", "wallwall_mode_count", "boundary_largest_gap", "wallwall_largest_gap", "medoid_margin_boundary", "medoid_margin_wallwall", "leave_two_out_status", "medoid_boundary_worker_id", "medoid_wallwall_worker_id", "medoid_ambiguous", "medoid_boundary_ambiguous", "medoid_wallwall_ambiguous", "medoid_score_table_json", "medoid_worker_id", "stability_status", "interpretation_allowed"])
+    write_csv_rows(output_dir / "geometry_stability_C1.csv", stability_rows, fields + ["base_task_id", "geometry_context_schema_version", "geometry_context_provenance", "valid_k", "boundary_similarity_mean", "boundary_similarity_min", "wallwall_similarity_mean", "wallwall_similarity_min", "q_boundary_mean", "q_boundary_min", "q_wallwall_mean", "q_wallwall_min", "boundary_mode_count", "wallwall_mode_count", "boundary_largest_gap", "wallwall_largest_gap", "medoid_margin_boundary", "medoid_margin_wallwall", "leave_two_out_status", "medoid_boundary_worker_id", "medoid_wallwall_worker_id", "medoid_ambiguous", "medoid_boundary_ambiguous", "medoid_wallwall_ambiguous", "medoid_score_table_json", "medoid_worker_id", "stability_status", "peer_support", "medoid_annotation_id", "medoid_geometry_sha256", "medoid_margin", "largest_cluster_support", "second_mode_support", "leave_one_out_stability", "leave_two_out_stability", "metric_compatibility", "consensus_status", "primary_eligible", "sensitivity_eligible", "interpretation_allowed"])
     write_csv_rows(output_dir / "geometry_metric_coverage_C1.csv", coverage_rows, fields + ["base_task_id", "geometry_context_schema_version", "geometry_context_provenance", "n_observations", "valid_geometry_k", "invalid_geometry_k", "pairwise_metric_coverage"])
-    return {"n_geometry_rows": len(normalized_rows), "n_tasks": len(grouped), "n_pairwise_rows": len(pairwise_rows), "dry_run": input_status != "formal", "interpretation_allowed": False}
+    return {"n_geometry_rows": len(normalized_rows), "n_tasks": len(grouped), "n_pairwise_rows": len(pairwise_rows), "dry_run": input_status != "formal", "interpretation_allowed": False, "rule_manifest": str(rule_manifest), "rule_manifest_sha256": sha256_file(rule_manifest)}
 
 
 def main(argv: list[str] | None = None) -> int:

@@ -2,7 +2,7 @@ import csv
 import hashlib
 import json
 
-from tools.thesis_main.analysis.materialize_frozen_routing_profiles import materialize
+from tools.thesis_main.analysis.materialize_frozen_routing_profiles import build_global, materialize
 
 
 def _csv(path, rows):
@@ -56,3 +56,14 @@ def test_task_adjusted_global_and_full_gates_are_frozen(tmp_path):
     assert summary["n_full_components"] == 1
     rows = list(csv.DictReader((tmp_path / "out" / "full_component_table.csv").open()))
     assert rows[1]["disable_reason"] == "c2b_confirmed"
+
+
+def test_confidence_level_changes_task_cluster_interval():
+    submissions = [
+        {"worker_id": worker, "task_id": task, "condition": "manual", "iou_to_gt": str(value), "quality_evaluable": "true"}
+        for worker, task, value in [("w1", "t1", .9), ("w1", "t2", .4), ("w2", "t1", .7), ("w2", "t2", .6)]
+    ]
+    states = [{"worker_id": worker, "process_eligible": "true", "independence_eligible": "true", "reference_evaluable": "true", "F_struct": "0"} for worker in ("w1", "w2")]
+    low, _, _ = build_global(submissions, states, profile_version="p", estimator={"confidence_level": .8})
+    high, _, _ = build_global(submissions, states, profile_version="p", estimator={"confidence_level": .99})
+    assert float(high[0]["Q_GT_CI_upper"]) - float(high[0]["Q_GT_CI_lower"]) > float(low[0]["Q_GT_CI_upper"]) - float(low[0]["Q_GT_CI_lower"])

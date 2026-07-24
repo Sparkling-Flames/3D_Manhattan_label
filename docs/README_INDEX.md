@@ -119,3 +119,6 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - C1 人工 task outcome / 单一 GT reference：`tools/thesis_main/analysis/materialize_c1_operational_reference.py`
 - P1→C1→C2-B component evidence：`tools/thesis_main/analysis/materialize_routing_component_evidence.py`
 - T1/V1 正式推断：`tools/thesis_main/analysis/materialize_main_inference.py`
+- C2 task-risk materializer：`tools/thesis_main/analysis/materialize_c2_task_risk.py`
+- P1→C1 predictive association：`tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`
+- C1 closeout / C2 launch 两日入口：`tools/thesis_main/analysis/run_c1_closeout_launch.py`

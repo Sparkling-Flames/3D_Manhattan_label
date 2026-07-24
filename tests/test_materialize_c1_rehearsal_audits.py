@@ -8,6 +8,7 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     apply_structural_dispositions,
     materialize_c2_eligible_roster,
     materialize_completion_support,
+    materialize_active_time_ledgers,
     materialize_structural_validation,
 )
 
@@ -70,4 +71,41 @@ def test_c2_roster_fails_closed_on_unknown_independence(tmp_path: Path) -> None:
     assert summary["n_eligible"] == 0
     row = next(csv.DictReader((tmp_path / "c2_eligible_roster_C1.csv").open(encoding="utf-8")))
     assert row["c2_candidate_eligible"] == "False"
-    assert "independence_not_frozen" in row["candidate_exclusion_reason"]
+    assert "no_independence_valid_support" in row["candidate_exclusion_reason"]
+
+
+def test_cumulative_events_retry_and_unknown_are_not_double_counted_or_bound(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"
+    logs = tmp_path / "logs"; logs.mkdir()
+    _csv(meta, [{"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1"}])
+    base = {"project_id": "66", "task_id": "10", "annotator_id": "1", "annotation_id": "a1", "session_id": "s1", "script_version": "v1", "active_seconds_fragment": 1}
+    events = [
+        {**base, "active_seconds": 2, "timestamp": 1},
+        {**base, "active_seconds": 5, "timestamp": 2, "server_received_at": "2026-01-01T00:00:00"},
+        {**base, "active_seconds": 5, "timestamp": 2, "server_received_at": "2026-01-01T00:00:01"},
+        {**base, "annotation_id": "unknown_annotation", "active_seconds": 3, "timestamp": 3},
+    ]
+    (logs / "active.jsonl").write_text("\n".join(json.dumps(row) for row in events), encoding="utf-8")
+
+    summary = materialize_active_time_ledgers(meta, logs, tmp_path)
+
+    assert summary["deduplicated_event_count"] == 3
+    assert summary["exact_annotation_count"] == 0
+    assert summary["unknown_active_seconds"] == 3
+    session = next(csv.DictReader((tmp_path / "c1_active_time_session_ledger.csv").open(encoding="utf-8")))
+    assert session["session_status"] == "audit_only_mixed_known_unknown"
+    assert session["session_active_seconds"] == "0.0"
+
+
+def test_partial_worker_uses_local_valid_support(tmp_path: Path) -> None:
+    completion = tmp_path / "completion.csv"; canonical = tmp_path / "canonical.csv"
+    quality = tmp_path / "quality.csv"; loo = tmp_path / "loo.csv"
+    _csv(completion, [{"worker_id": "1", "observed_total_count": "5", "completion_status": "partial_noncompletion"}])
+    _csv(canonical, [
+        {"worker_id": "1", "independence_status": "independent", "structural_validation_status": "passed", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"},
+        {"worker_id": "1", "independence_status": "not_evaluable", "structural_validation_status": "not_evaluable", "outside_assignment_submission": "true", "duplicate_worker_task_submission": "false"},
+    ])
+    _csv(quality, [{"worker_id": "1", "quality_evaluable": "true"}] * 3)
+    _csv(loo, [{"worker_id": "1", "peer_count_excluding_self": "2"}] * 3)
+    summary = materialize_c2_eligible_roster(completion, canonical, quality, loo, tmp_path)
+    assert summary["n_eligible"] == 1

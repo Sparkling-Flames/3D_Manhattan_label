@@ -25,6 +25,7 @@ OUTCOME_FIELDS = [
     "geometry_reference_mode", "geometry_reference_status", "reference_identity",
     "reference_sha256", "reference_worker_excluded", "reference_evidence_status",
     "adjudication_status", "reviewed_by", "reviewed_at", "notes",
+    "operational_reference_status", "submission_informed_reference_revision",
 ]
 
 
@@ -101,6 +102,7 @@ def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, 
         reference = references.get(row.get("base_task_id", ""), {})
         status = "resolved" if final_scope else "pending"
         geometry_ready = bool(reference.get("points"))
+        reference_status = "oos_geometry_not_applicable" if final_scope == "oos" else "reference_ready" if geometry_ready else "pending_adjudication"
         audit.append({
             **dict(zip(("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"), key)),
             "inventory_review_status": item.get("expert_review_status", "missing"),
@@ -118,6 +120,8 @@ def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, 
                 "reference_sha256": reference.get("sha256", ""),
                 "reference_worker_excluded": "false", "reference_evidence_status": "evaluable" if reference else "not_required" if final_scope == "oos" else "not_evaluable",
                 "adjudication_status": status, "reviewed_by": reviewer,
+                "operational_reference_status": reference_status,
+                "submission_informed_reference_revision": "false",
                 "reviewed_at": "", "notes": "review time absent in frozen candidate inventory; formal mode must fail closed",
             }
     quality = []
@@ -158,11 +162,15 @@ def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, 
     _write(output_dir / "c1_task_outcome_reference_audit.csv", audit, audit_fields)
     quality_fields = list(quality[0]) if quality else ["task_id"]
     _write(output_dir / "c1_gt_quality_evidence.csv", quality, quality_fields)
+    status_counts = {status: sum(row.get("operational_reference_status") == status for row in outcome_rows) for status in ("reference_ready", "reference_corrected", "pending_adjudication", "oos_geometry_not_applicable")}
+    unresolved = status_counts["pending_adjudication"]
     summary = {
         "n_task_contexts": len(audit), "n_resolved_contexts": sum(row["adjudication_status"] == "resolved" for row in outcome_rows),
         "n_pending_contexts": sum(row["task_outcome_status"] == "pending" for row in audit),
         "n_gt_quality_evaluable": sum(bool(row["quality_evaluable"]) for row in quality),
-        "formal_ready": False, "formal_blocker": "reviewed_at_not_recorded_in_candidate_inventory",
+        "reference_status_counts": status_counts,
+        "formal_ready": unresolved == 0,
+        "formal_blocker": "" if unresolved == 0 else "pending_reference_adjudication",
     }
     (output_dir / "c1_operational_reference_audit.json").write_text(json.dumps(summary, indent=2), encoding="utf-8")
     return summary
