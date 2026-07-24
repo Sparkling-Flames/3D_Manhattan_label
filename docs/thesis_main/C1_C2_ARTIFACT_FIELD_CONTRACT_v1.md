@@ -555,4 +555,4 @@ task_outcome_status, reference_identity, reference_sha256, score_reason
 - `c2_task_risk_inventory.csv` 保存 `d_model_feat`、`d_model_feat_local_max`、`g_model_struct`、`d_cal_A`、`risk_assist_candidate`、`risk_route_candidate` 及 checkpoint/layout SHA。
 - rehearsal 缺少 LHFeat 运行依赖时必须写明 `feature_status=dependency_unavailable|not_requested`，并保持 `formal_ready=false`；不得用结构风险替代 LHFeat 后冒充正式冻结。
 - `candidate_C2B_assignment.csv` 只能在 rehearsal 中出现，并固定 `assignment_launch_allowed=false`。
-- 正式两日入口为 `run_c1_closeout_launch.py day1-audit|day1-finalize|day2-build`；Day 1 禁止读取仍持续增长的 `active_logs/new_server`。
+- 正式两日入口为 `run_c1_closeout_launch.py day1-audit|day1-formal-audit|day1-finalize|day2-risk-plan|day2-build`；Day 1 禁止读取仍持续增长的 `active_logs/new_server`。C1 freeze 只写 `c1_evidence_freeze_status=C1_closed`，不得写成最终 routing profile frozen。

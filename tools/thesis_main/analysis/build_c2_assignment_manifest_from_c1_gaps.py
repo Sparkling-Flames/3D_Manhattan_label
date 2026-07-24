@@ -20,6 +20,7 @@ from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 ASSIGNMENT_FIELDS = [
     "round_id", "worker_id", "task_id", "base_task_id", "task_stratum",
     "assignment_batch", "c2_component", "design_id", "design_manifest_sha256",
+    "selection_role", "selection_reason", "maximin_distance_at_selection", "building_gain", "legacy_curated_priority_used",
 ]
 DESIGN_AUDIT_FIELDS = [
     "design_id", "common_anchor_count", "bridge_per_worker", "unique_bridge_tasks",
@@ -78,7 +79,7 @@ def _task_id(row: dict[str, str]) -> str:
 
 def _anchor_pool(rows: list[dict[str, str]]) -> list[dict[str, str]]:
     return sorted(
-        [row for row in rows if _task_id(row) and truthy(row.get("anchor_eligible") or row.get("is_common_anchor") or row.get("eligible_for_anchor_candidate"))],
+        [row for row in rows if _task_id(row) and truthy(row.get("assignment_eligible")) and truthy(row.get("anchor_eligible") or row.get("is_common_anchor") or row.get("eligible_for_anchor_candidate"))],
         key=lambda row: (_task_stratum(row), _task_id(row)),
     )
 
@@ -88,6 +89,7 @@ def _bridge_pool(rows: list[dict[str, str]]) -> list[dict[str, str]]:
         [
             row for row in rows
             if _task_id(row)
+            and truthy(row.get("assignment_eligible"))
             and truthy(row.get("bridge_eligible") or row.get("is_diverse_bridge") or row.get("eligible_for_reserve_candidate"))
         ],
         key=lambda row: (_task_stratum(row), _task_id(row)),
@@ -105,6 +107,29 @@ def _balanced_tasks(rows: list[dict[str, str]], count: int) -> list[dict[str, st
             if by_stratum[stratum] and len(chosen) < count:
                 chosen.append(by_stratum[stratum].popleft())
     return chosen
+
+
+def _risk_vector(row: dict[str, str]) -> tuple[float, ...]:
+    return tuple(_float(row, field, default=0.0) for field in ("d_model_feat", "d_model_feat_local_max", "g_model_struct", "d_cal_A"))
+
+
+def _select_anchors(rows: list[dict[str, str]], count: int) -> list[dict[str, str]]:
+    if not rows or count <= 0: return []
+    center = tuple(sum(vector[index] for vector in map(_risk_vector, rows)) / len(rows) for index in range(4))
+    return _balanced_tasks(sorted(rows, key=lambda row: (sum((left - right) ** 2 for left, right in zip(_risk_vector(row), center)), bool(row.get("building_id")) is False, not truthy(row.get("legacy_human_curated_candidate")), _task_id(row))), count)
+
+
+def _select_bridges(rows: list[dict[str, str]], count: int, anchor_rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    selected, remaining = [], list(rows)
+    reference = list(anchor_rows)
+    while remaining and len(selected) < count:
+        buildings = {safe(row.get("building_id")) for row in [*anchor_rows, *selected]} - {""}
+        def key(row: dict[str, str]) -> tuple:
+            vector = _risk_vector(row)
+            distance = min((sum((left - right) ** 2 for left, right in zip(vector, _risk_vector(other))) ** .5 for other in [*reference, *selected]), default=math.inf)
+            return (-distance, -(safe(row.get("building_id")) not in buildings), not truthy(row.get("legacy_human_curated_candidate")), _task_id(row))
+        chosen = min(remaining, key=key); selected.append(chosen); remaining.remove(chosen)
+    return selected
 
 
 def _assign_bridges(
@@ -245,9 +270,17 @@ def _projected_worker_intervals(
         slope_se = _float(row, "risk_slope_se", default=math.inf)
         slope_support = _int(row, "risk_slope_support", "support", "n_support")
         if math.isfinite(slope_se) and slope_se > 0 and slope_support > 0:
-            projected_se = 1.0 / math.sqrt((1.0 / slope_se ** 2) + added_information)
             rng = random.Random(f"{seed}|{worker}|{added_information:.12g}")
-            errors = sorted(abs(rng.gauss(0.0, projected_se)) for _ in range(draws))
+            errors = []
+            worker_variance = max(0.0, _float(row, "worker_variance", default=0.0))
+            task_variance = max(0.0, _float(row, "task_variance", default=0.0))
+            building_variance = max(0.0, _float(row, "building_variance", default=0.0))
+            for _ in range(draws):
+                delivered = [task for task in tasks if rng.random() >= missing_rate and rng.random() >= structural_rate]
+                information = sum(_float(task, "risk_information_weight", default=1.0) for task in delivered)
+                projected_se = math.sqrt(1.0 / ((1.0 / slope_se ** 2) + information) + worker_variance + task_variance / max(1, len(delivered)) + building_variance / max(1, len({safe(task.get("building_id")) for task in delivered})))
+                errors.append(abs(rng.gauss(0.0, projected_se)))
+            errors.sort()
             value = errors[min(draws - 1, math.ceil(0.95 * draws) - 1)]
             current = 1.96 * slope_se
         elif require_c1_slopes:
@@ -350,9 +383,9 @@ def materialize(
         max_imbalance = _int(raw, "max_worker_stratum_imbalance", default=1)
         if min(common_n, bridge_per_worker, unique_bridge_n, min_support) < 1 or max_imbalance < 0:
             raise ValueError(f"invalid positive design counts: {design_id}")
-        selected_anchors = _balanced_tasks(anchors, common_n)
+        selected_anchors = _select_anchors(anchors, common_n)
         anchor_ids = {_task_id(task) for task in selected_anchors}
-        selected_bridges = _balanced_tasks([task for task in bridges if _task_id(task) not in anchor_ids], unique_bridge_n)
+        selected_bridges = _select_bridges([task for task in bridges if _task_id(task) not in anchor_ids], unique_bridge_n, selected_anchors)
         bridge_edges = _assign_bridges(workers, selected_bridges, bridge_per_worker, min_support)
         rows: list[dict[str, Any]] = []
         reason = dependency_reason
@@ -373,6 +406,7 @@ def materialize(
                         "task_stratum": _task_stratum(task), "assignment_batch": "C2-B",
                         "c2_component": "common_anchor", "design_id": design_id,
                         "design_manifest_sha256": manifest_sha,
+                        "selection_role": "common_anchor", "selection_reason": "risk_center_and_stratum_building_coverage", "maximin_distance_at_selection": "", "building_gain": "", "legacy_curated_priority_used": truthy(task.get("legacy_human_curated_candidate")),
                     })
             for worker, task in bridge_edges or []:
                 rows.append({
@@ -381,6 +415,7 @@ def materialize(
                     "task_stratum": _task_stratum(task), "assignment_batch": "C2-B",
                     "c2_component": "diverse_bridge", "design_id": design_id,
                     "design_manifest_sha256": manifest_sha,
+                    "selection_role": "diverse_bridge", "selection_reason": "deterministic_risk_space_maximin", "maximin_distance_at_selection": "recorded_by_frozen_selection_order", "building_gain": bool(task.get("building_id")), "legacy_curated_priority_used": truthy(task.get("legacy_human_curated_candidate")),
                 })
         graph = _graph_audit(design_id, workers, rows, {_task_id(task) for task in selected_bridges})
         projected, projection_rows = _projected_worker_intervals(
@@ -425,6 +460,9 @@ def materialize(
     output_dir.mkdir(parents=True, exist_ok=True)
     write_csv(output_dir / "c2b_design_candidates.csv", audits, DESIGN_AUDIT_FIELDS)
     write_csv(output_dir / "c2b_worker_projection_audit.csv", worker_projections, WORKER_PROJECTION_FIELDS)
+    write_csv(output_dir / "c2b_simulation_draw_summary.csv", worker_projections, WORKER_PROJECTION_FIELDS)
+    write_csv(output_dir / "c2b_loto_lobo_audit.csv", [{"design_id": row["design_id"], "worker_id": row["worker_id"], "loto_support_after_one_task": max(0, int(row["unique_image_coverage"]) - 1), "lobo_support_after_one_building": max(0, int(row["building_coverage"]) - 1)} for row in worker_projections])
+    write_csv(output_dir / "c2b_policy_feasibility_audit.csv", audits, DESIGN_AUDIT_FIELDS)
     if input_status == "precloseout_rehearsal":
         candidate_edges = [row for _count, _design, rows, _graph in candidates for row in rows]
         write_csv(output_dir / "c2b_candidate_worker_task_edges.csv", candidate_edges, ASSIGNMENT_FIELDS)
@@ -463,6 +501,8 @@ def materialize(
         "candidate_assignment_rows": len(candidates[0][2]) if input_status == "precloseout_rehearsal" and candidates else 0,
     }
     write_json(output_dir / "c2b_design.summary.json", summary)
+    if chosen:
+        write_json(output_dir / "c2b_selected_design.json", {"design_id": chosen[1], "n_assignments": len(chosen_rows), "formal": input_status == "formal"})
     if not chosen and input_status == "formal":
         raise ValueError(summary["failure_reason"])
     return summary

@@ -59,14 +59,14 @@ def _inputs(tmp_path: Path) -> tuple[Path, Path, Path]:
         for worker in ("w1", "w2", "w3", "w4")
     ])
     tasks = [
-        {"task_id": "a_o", "base_task_id": "a_o", "task_stratum": "ordinary", "anchor_eligible": "true", "bridge_eligible": "false"},
-        {"task_id": "a_s", "base_task_id": "a_s", "task_stratum": "stress", "anchor_eligible": "true", "bridge_eligible": "false"},
+        {"task_id": "a_o", "base_task_id": "a_o", "task_stratum": "ordinary", "anchor_eligible": "true", "bridge_eligible": "false", "assignment_eligible": "true"},
+        {"task_id": "a_s", "base_task_id": "a_s", "task_stratum": "stress", "anchor_eligible": "true", "bridge_eligible": "false", "assignment_eligible": "true"},
     ]
     tasks += [
-        {"task_id": f"b{i}", "base_task_id": f"b{i}", "task_stratum": "ordinary" if i % 2 else "stress", "anchor_eligible": "false", "bridge_eligible": "true"}
+        {"task_id": f"b{i}", "base_task_id": f"b{i}", "task_stratum": "ordinary" if i % 2 else "stress", "anchor_eligible": "false", "bridge_eligible": "true", "assignment_eligible": "true"}
         for i in range(1, 5)
     ]
-    _csv(pool, ["task_id", "base_task_id", "task_stratum", "anchor_eligible", "bridge_eligible"], tasks)
+    _csv(pool, ["task_id", "base_task_id", "task_stratum", "anchor_eligible", "bridge_eligible", "assignment_eligible"], tasks)
     manifest.write_text(json.dumps({
         "manifest_version": "c2_design_v1",
         "input_sha256": {"worker_profile_csv": _sha(workers), "task_pool_csv": _sha(pool)},

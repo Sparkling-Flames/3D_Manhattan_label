@@ -106,5 +106,6 @@
 - `tools/thesis_main/analysis/materialize_main_inference.py`：T1 image-level 与 V1 ITT 的 manifest/SHA 绑定
   cluster bootstrap 推断入口。
 - `tools/thesis_main/analysis/materialize_c2_task_risk.py`：固定 HoHoNet/LHFeat、结构输出、C1-only `d_cal_A` 与综合风险 Q75 的候选任务风险入口；缺少冻结依赖时 assignment fail-closed。
+- `tools/thesis_main/analysis/materialize_c1_c2_design_parameters.py`：从 C1 三轨 eligibility、task-level risk 与 completion 估计 C2-B 模拟所需的 worker risk slope、SE、missing 与结构失败参数；不生成 routing profile。
 - `tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`：P1→C1 Spearman/Kendall、worker bootstrap 与 range-restriction 审计入口。
-- `tools/thesis_main/analysis/run_c1_closeout_launch.py`：C1 Day 1 rehearsal、formal-audit、冻结与 C2-B Day 2 设计、分发、import smoke 的两日入口。
+- `tools/thesis_main/analysis/run_c1_closeout_launch.py`：C1 Day 1 rehearsal/formal-audit/evidence freeze 与 C2-B Day 2 risk-plan/build 入口；Day 2 build 必须消费已批准的 task/reference、source split、holdout 和 design 工件。

@@ -105,76 +105,48 @@ def _formal_worker_state(csv_path: Path | None, manifest_path: Path | None, *, c
         rows = list(csv.DictReader(csv_path.open(encoding="utf-8-sig")))
     except (OSError, UnicodeError, ValueError, json.JSONDecodeError):
         return {"valid": False, "reason": "invalid_formal_worker_state_manifest_or_csv"}
-    required = ("worker_state_status", "rule_version", "source_csv_sha256", "dependency_bundle_id", "r_u_estimated", "r_u_freeze", "estimator_id", "estimator_version", "ci_method", "confidence_level", "evidence_manifest_path", "evidence_manifest_sha256")
-    dependencies = manifest.get("dependencies") or []
-    dependency_paths = []
-    for item in dependencies:
-        declared = Path(str(item.get("path", "")))
-        dependency_paths.append(canonical_path(declared if declared.is_absolute() else manifest_path.parent / declared))
-    dependency_keys = [str(path) for path in dependency_paths]
-    required_paths = [canonical_path(path) for path in (canonical_csv, quality_csv, r_u_evidence_csv, canonical_geometry_jsonl, geometry_loo_csv, geometry_stability_csv) if path]
-    dependency_valid = bool(dependencies) and len(dependency_keys) == len(set(dependency_keys)) and manifest.get("dependency_bundle_id") == sha256_json({"rule_version": manifest.get("rule_version", ""), "dependencies": sorted(dependencies, key=lambda item: item.get("path", ""))}) and all(path.exists() and sha256_file(path) == item.get("sha256") for path, item in zip(dependency_paths, dependencies)) and all(str(path) in dependency_keys for path in required_paths)
-    evidence_rows = list(csv.DictReader(r_u_evidence_csv.open(encoding="utf-8-sig"))) if r_u_evidence_csv and r_u_evidence_csv.exists() else []
-    expected_support: dict[str, int] = {}
-    included_identities: list[tuple[str, str, str]] = []
-    included_reference_identities: list[tuple[str, str, str]] = []
-    evidence_contract_valid = True
-    for row in evidence_rows:
-        if truthy(row.get("r_u_evidence_included")):
-            worker = safe(row.get("worker_id"))
-            expected_support[worker] = expected_support.get(worker, 0) + 1
-            included_identities.append((safe(row.get("project_id")), safe(row.get("ls_runtime_task_id")), worker))
-            included_reference_identities.append((safe(row.get("project_id")), safe(row.get("ls_runtime_task_id")), safe(row.get("r_u_reference_identity"))))
-            try:
-                value = float(row.get("r_u_metric_value"))
-                evidence_contract_valid &= math.isfinite(value) and 0 <= value <= 1
-                reference_support = int(row.get("r_u_reference_support") or 0)
-            except (TypeError, ValueError):
-                evidence_contract_valid = False
-                reference_support = 0
-            reference_sha = safe(row.get("r_u_reference_sha256")).lower()
-            evidence_contract_valid &= all(included_identities[-1]) and safe(row.get("r_u_evidence_classification")) == "included" and safe(row.get("r_u_metric_name")) == "iou_to_consensus_loo" and safe(row.get("r_u_metric_direction")) == "higher_is_better" and safe(row.get("r_u_normalization_rule")) == "identity_0_1" and safe(row.get("r_u_score_status")) == "valid" and bool(safe(row.get("r_u_score_source"))) and safe(row.get("r_u_reference_mode")) == "worker_excluded_loo_consensus" and bool(safe(row.get("r_u_reference_identity"))) and len(reference_sha) == 64 and all(char in "0123456789abcdef" for char in reference_sha) and truthy(row.get("r_u_reference_excludes_worker")) and reference_support >= 2
-    evidence_contract_valid &= len(included_identities) == len(set(included_identities))
-    evidence_contract_valid &= len(included_reference_identities) == len(set(included_reference_identities))
+    if manifest.get("r_u_freeze") is True:
+        dependencies = manifest.get("dependencies") or []
+        dependency_paths = [canonical_path(Path(item["path"]) if Path(item["path"]).is_absolute() else manifest_path.parent / item["path"]) for item in dependencies]
+        legacy_valid = (
+            manifest.get("source_csv_sha256") == sha256_file(csv_path)
+            and bool(dependencies)
+            and all(path.exists() and sha256_file(path) == item.get("sha256") for path, item in zip(dependency_paths, dependencies))
+            and all(safe(row.get("r_u_status")) in {"estimated", "insufficient_support", "not_evaluable"} for row in rows)
+            and (expected_worker_ids is None or {safe(row.get("worker_id")) for row in rows} == {safe(worker) for worker in expected_worker_ids})
+        )
+        context = {"canonical_csv": str(canonical_path(canonical_csv)) if canonical_csv else "", "quality_csv": str(canonical_path(quality_csv)) if quality_csv else "", "r_u_evidence_csv": str(canonical_path(r_u_evidence_csv)) if r_u_evidence_csv else "", "canonical_geometry_jsonl": str(canonical_path(canonical_geometry_jsonl)) if canonical_geometry_jsonl else "", "geometry_loo_csv": str(canonical_path(geometry_loo_csv)) if geometry_loo_csv else "", "geometry_stability_csv": str(canonical_path(geometry_stability_csv)) if geometry_stability_csv else "", "min_r_u_tasks": min_r_u_tasks, "expected_worker_ids": sorted(expected_worker_ids or set())}
+        support = {safe(row.get("worker_id")): int(float(row.get("n_calib_completed") or 0)) for row in rows}
+        return {"valid": legacy_valid, "reason": "verified_legacy_diagnostic_only" if legacy_valid else "legacy_worker_state_not_verified", "legacy_diagnostic_only": True, "manifest": manifest, "csv_path": str(canonical_path(csv_path)), "manifest_path": str(canonical_path(manifest_path)), "validation_context": context, "expected_worker_ids": sorted(expected_worker_ids or support), "support_by_worker": support, "csv_sha256": sha256_file(csv_path), "manifest_sha256": sha256_file(manifest_path)}
     worker_ids = [safe(row.get("worker_id")) for row in rows]
-    expected_roster = ({safe(worker) for worker in expected_worker_ids if safe(worker)} if expected_worker_ids is not None else set(expected_support))
+    expected_roster = ({safe(worker) for worker in expected_worker_ids if safe(worker)} if expected_worker_ids is not None else set(worker_ids))
     roster_valid = bool(expected_roster) and all(worker_ids) and len(worker_ids) == len(set(worker_ids)) and set(worker_ids) == expected_roster
-    numeric_valid = True
+    allowed_status = {"estimated", "insufficient_support", "not_evaluable", "not_evaluable_pending_independence", "nonstarter"}
+    numeric_valid = bool(rows)
     for row in rows:
         try:
-            support = int(row.get("n_calib_completed") or -1)
-            worker = safe(row.get("worker_id"))
-            numeric_valid &= support == expected_support.get(worker, 0) and support >= 0
-            support_status = safe(row.get("support_status"))
-            r_u_status = safe(row.get("r_u_status"))
-            interpretation_allowed = truthy(row.get("interpretation_allowed"))
-            values = [safe(row.get(field)) for field in ("r_u_ci_low", "r_u_hat", "r_u_ci_high")]
-            if support == 0:
-                numeric_valid &= r_u_status == "not_evaluable" and support_status == "not_evaluable" and not interpretation_allowed and all(value in {"", "NA", "na", "not_evaluable"} for value in values)
-            elif support < int(min_r_u_tasks):
-                numeric_valid &= r_u_status == "insufficient_support" and support_status == "insufficient" and not interpretation_allowed and all(value in {"", "NA", "na", "not_evaluable"} for value in values)
-            else:
-                low, estimate, high = (float(value) for value in values)
-                numeric_valid &= r_u_status == "estimated" and support_status == "sufficient" and interpretation_allowed and all(math.isfinite(value) for value in (low, estimate, high)) and 0 <= low <= estimate <= high <= 1
+            status = safe(row.get("worker_state_status"))
+            numeric_valid &= status in allowed_status
+            for field in ("GT_support", "LOO_support", "F_struct_numerator", "F_struct_denominator", "process_eligible_support", "independence_support", "scope_reference_support"):
+                numeric_valid &= int(float(row.get(field) or 0)) >= 0
+            if status == "estimated":
+                q, q_low, q_high = (float(row[field]) for field in ("Q_GT_task_adjusted", "CI_lower", "CI_upper"))
+                r, r_low, r_high = (float(row[field]) for field in ("R_LOO_compatible", "R_LOO_CI_lower", "R_LOO_CI_upper"))
+                f = float(row["F_struct"])
+                numeric_valid &= 0 <= q_low <= q <= q_high <= 1 and 0 <= r_low <= r <= r_high <= 1 and 0 <= f <= 1
         except (TypeError, ValueError, KeyError):
             numeric_valid = False
-    support_total = sum(expected_support.values())
-    declared_evidence = Path(str(manifest.get("evidence_manifest_path", "")))
-    declared_evidence = canonical_path(declared_evidence if declared_evidence.is_absolute() else manifest_path.parent / declared_evidence)
+    dependencies = manifest.get("dependencies") or []
+    dependency_paths = [canonical_path(Path(item["path"]) if Path(item["path"]).is_absolute() else manifest_path.parent / item["path"]) for item in dependencies]
+    dependency_valid = bool(dependencies) and all(path.exists() and sha256_file(path) == item.get("sha256") for path, item in zip(dependency_paths, dependencies))
     valid = (
-        manifest.get("worker_state_status") == "formal"
-        and all(manifest.get(key) not in (None, "") for key in required if key != "r_u_estimated")
-        and manifest.get("r_u_estimated") is True
-        and manifest.get("r_u_freeze") is True
-        and int(manifest.get("eligible_support_count") or manifest.get("n_eligible_independent_evidence") or 0) == support_total > 0
-        and manifest.get("source_csv_sha256") == sha256_file(csv_path)
-        and r_u_evidence_csv is not None
-        and declared_evidence == canonical_path(r_u_evidence_csv)
-        and manifest.get("evidence_manifest_sha256") == sha256_file(r_u_evidence_csv)
+        manifest.get("c1_evidence_freeze_status") == "C1_closed"
+        and manifest.get("routing_profile_frozen") is False
+        and manifest.get("worker_state_sha256") == sha256_file(csv_path)
         and dependency_valid
-        and roster_valid and numeric_valid and evidence_contract_valid
+        and roster_valid and numeric_valid
     )
-    return {"valid": valid, "reason": "verified" if valid else "formal_worker_state_not_verified", "manifest": manifest, "csv_path": str(canonical_path(csv_path)), "manifest_path": str(canonical_path(manifest_path)), "dependency_paths": dependency_keys, "validation_context": {"canonical_csv": str(canonical_path(canonical_csv)) if canonical_csv else "", "quality_csv": str(canonical_path(quality_csv)) if quality_csv else "", "r_u_evidence_csv": str(canonical_path(r_u_evidence_csv)) if r_u_evidence_csv else "", "canonical_geometry_jsonl": str(canonical_path(canonical_geometry_jsonl)) if canonical_geometry_jsonl else "", "geometry_loo_csv": str(canonical_path(geometry_loo_csv)) if geometry_loo_csv else "", "geometry_stability_csv": str(canonical_path(geometry_stability_csv)) if geometry_stability_csv else "", "min_r_u_tasks": min_r_u_tasks, "expected_worker_ids": sorted(expected_roster)}, "expected_worker_ids": sorted(expected_roster), "support_by_worker": {worker: expected_support.get(worker, 0) for worker in sorted(expected_roster)}, "eligible_support_count": support_total, "csv_sha256": sha256_file(csv_path), "manifest_sha256": sha256_file(manifest_path)}
+    return {"valid": valid, "reason": "verified" if valid else "formal_three_track_worker_state_not_verified", "manifest": manifest, "csv_path": str(canonical_path(csv_path)), "manifest_path": str(canonical_path(manifest_path)), "dependency_paths": [str(path) for path in dependency_paths], "validation_context": {"expected_worker_ids": sorted(expected_roster)}, "expected_worker_ids": sorted(expected_roster), "support_by_worker": {row["worker_id"]: int(float(row.get("LOO_support") or 0)) for row in rows}, "csv_sha256": sha256_file(csv_path), "manifest_sha256": sha256_file(manifest_path)}
 
 
 def _expand_sidecar_dependencies(paths: list[Path]) -> list[Path]:

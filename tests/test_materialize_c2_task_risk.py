@@ -32,3 +32,25 @@ def test_candidate_risk_uses_c1_only_and_layout_structure(tmp_path):
     assert not row["d_cal_A"]
     assert row["feature_status"] == "not_requested"
     assert row["assignment_eligible"].lower() == "false"
+
+
+def test_c1_risk_reference_has_one_row_per_base_task(tmp_path):
+    inventory = tmp_path / "inventory.csv"
+    inventory.write_text("task_id,source_path\nt1,missing.jpg\n", encoding="utf-8")
+    layouts = tmp_path / "layouts"; layouts.mkdir()
+    c1 = tmp_path / "c1.jsonl"
+    geometry = {"base_task_id": "b1", "corners_px": [[10, 100], [10, 400], [500, 100], [500, 400]]}
+    c1.write_text("\n".join(json.dumps(geometry) for _ in range(3)) + "\n", encoding="utf-8")
+    summary = materialize(inventory, layouts, c1, tmp_path / "out", input_status="precloseout_rehearsal")
+    rows = list(csv.DictReader((tmp_path / "out" / "c1_task_risk_reference.csv").open(encoding="utf-8")))
+    assert len(rows) == summary["n_c1_calibration_tasks"] == 1
+
+
+def test_risk_assist_does_not_impersonate_risk_route(tmp_path):
+    inventory = tmp_path / "inventory.csv"
+    inventory.write_text("task_id,source_path\nt1,missing.jpg\n", encoding="utf-8")
+    layouts = tmp_path / "layouts"; layouts.mkdir(); c1 = tmp_path / "c1.jsonl"; c1.write_text("", encoding="utf-8")
+    materialize(inventory, layouts, c1, tmp_path / "out", input_status="precloseout_rehearsal")
+    row = next(csv.DictReader((tmp_path / "out" / "c2_task_risk_inventory.csv").open(encoding="utf-8")))
+    assert row["risk_route_candidate"] == ""
+    assert row["risk_route_status"] == "pending_crossfitted_c1_outcome_calibration"

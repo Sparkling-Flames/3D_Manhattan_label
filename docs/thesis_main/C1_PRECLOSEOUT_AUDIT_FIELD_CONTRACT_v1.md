@@ -37,4 +37,5 @@
 - `c1_geometry_anomaly_root_cause_audit.csv` 分离检测、验证状态、归因和 estimand inclusion；系统、解析、转换、seam、reference、OOS 与未知归因不得进入工人结构失败分子或分母。
 - `c1_active_time_event_ledger.csv`、`c1_active_time_session_ledger.csv` 与 `c1_active_time_annotation_summary.csv` 使用 session 内累计最大值、多 session 求和；unknown 和 mixed known/unknown 永不进入 primary。
 - `C1_assigned_roster.csv`、`C1_observed_roster.csv`、`C1_analysis_roster.csv` 与 `c2_eligible_roster_C1.csv` 分开保存。partial 按局部有效 support 判断，nonstarter 不生成画像。
-- `c1_three_track_worker_state.csv` 的唯一三轨为 `Q_GT_task_adjusted`、`R_LOO_compatible`、`F_struct`；active time 不属于三轨，也不阻断 C2。
+- `c1_three_track_worker_state.csv`（rehearsal）与 `c1_three_track_worker_state_formal.csv`（formal）的唯一三轨为 `Q_GT_task_adjusted`、`R_LOO_compatible`、`F_struct`；状态仅允许 `estimated`、`insufficient_support`、`not_evaluable_pending_independence`、`nonstarter`。active time 不属于三轨，也不阻断 C2。
+- `c1_final_canonical_closeout_summary.json` 必须在 completion、version、independence、structural、Scope/reference 和 row eligibility 全部应用后重算；reviewed estimand-specific exclusion 不是全局 blocker。

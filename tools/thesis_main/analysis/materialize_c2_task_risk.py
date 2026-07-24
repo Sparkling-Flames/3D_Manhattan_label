@@ -37,7 +37,7 @@ def _layout_features(path: Path) -> dict[str, Any]:
         return {"layout_status": "missing", "g_model_struct": "", "pair_count": "", "postprocess_valid": False}
     payload = json.loads(path.read_text(encoding="utf-8"))
     corners = (payload.get("layout") or {}).get("corners") or []
-    points = [[float(row["x"]), float(row["y_ceiling"])] for row in corners] + [[float(row["x"]), float(row["y_floor"])] for row in corners]
+    points = [point for row in corners for point in ([float(row["x"]), float(row["y_ceiling"])], [float(row["x"]), float(row["y_floor"])])]
     normalized = normalize_geometry(points)
     xs = sorted(float(row["x"]) % 1024 for row in corners)
     gaps = [xs[index + 1] - xs[index] for index in range(len(xs) - 1)] + ([xs[0] + 1024 - xs[-1]] if xs else [])
@@ -75,7 +75,7 @@ def _lhfeat_descriptors(paths: list[Path], checkpoint: Path) -> dict[str, tuple[
             rgb = np.asarray(Image.open(path).convert("RGB"), dtype=np.float32) / 255.0
             tensor = torch.from_numpy(rgb).permute(2, 0, 1)[None]
             feature = net.extract_feat(tensor)["1D"][0].cpu().numpy()
-            output[path.stem] = (np.concatenate([feature.mean(1), feature.std(1)]), feature.max(1))
+            output[path.resolve().as_posix()] = (np.concatenate([feature.mean(1), feature.std(1)]), feature.max(1))
     return output
 
 
@@ -100,28 +100,37 @@ def materialize(
     inventory = _read(inventory_csv)
     c1_scores = []
     c1_channels: dict[str, list[float]] = {name: [] for name in ("d_model_feat", "d_model_feat_local_max", "g_model_struct", "d_cal_A")}
+    c1_by_task: dict[str, dict[str, Any]] = {}
     for line in c1_geometry_jsonl.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
-        row = json.loads(line); geometry = normalize_geometry(row.get("corners_px") or [])
+        row = json.loads(line); task = str(row.get("base_task_id") or row.get("task_id") or "")
+        if not task or task in c1_by_task:
+            continue
+        geometry = normalize_geometry(row.get("corners_px") or [])
         if geometry["valid"]:
-            g_score = min(1.0, abs(int(geometry["n_pairs"]) - 6) / 8)
-            c1_scores.append(g_score)
-            c1_channels["g_model_struct"].append(g_score)
-        for name in c1_channels:
-            try:
-                if name != "g_model_struct":
-                    c1_channels[name].append(float(row[name]))
-            except (KeyError, TypeError, ValueError):
-                pass
-    c1_scores.sort()
+            c1_by_task[task] = {"base_task_id": task, "image_id": row.get("image_id", ""), "building_id": row.get("building_id", ""), "g_model_struct": min(1.0, abs(int(geometry["n_pairs"]) - 6) / 8), **{name: row.get(name, "") for name in ("d_model_feat", "d_model_feat_local_max", "d_cal_A")}}
+    c1_reference_output = output_dir / "c1_task_risk_reference.csv"
+    _write(c1_reference_output, list(c1_by_task.values()))
+    (output_dir / "c1_task_risk_reference_manifest.json").write_text(json.dumps({
+        "schema_version": "c1_task_risk_reference_v1", "unit": "base_task_id",
+        "n_base_tasks": len(c1_by_task), "source_geometry_sha256": sha256_file(c1_geometry_jsonl),
+        "reference_sha256": sha256_file(c1_reference_output),
+    }, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    reference_rows = list(c1_by_task.values())
     if c1_risk_reference_csv:
         reference_rows = _read(c1_risk_reference_csv)
-        c1_channels = {name: [] for name in c1_channels}
-        for row in reference_rows:
-            for name in c1_channels:
-                try: c1_channels[name].append(float(row[name]))
-                except (KeyError, TypeError, ValueError): pass
+    c1_channels = {name: [] for name in c1_channels}
+    complete_reference_rows = []
+    for row in reference_rows:
+        vector = {}
+        for name in c1_channels:
+            try: vector[name] = float(row[name])
+            except (KeyError, TypeError, ValueError): pass
+        if len(vector) >= 3:
+            complete_reference_rows.append({"base_task_id": row.get("base_task_id", ""), **vector})
+            for name, value in vector.items(): c1_channels[name].append(value)
+    c1_scores = sorted(row["g_model_struct"] for row in complete_reference_rows if "g_model_struct" in row)
     support_names = ("d_model_feat", "d_model_feat_local_max", "g_model_struct")
     support_matrix = np.asarray(list(zip(*(c1_channels[name] for name in support_names))), dtype=float) if all(c1_channels[name] for name in support_names) and len({len(c1_channels[name]) for name in support_names}) == 1 else np.empty((0, 3))
     support_scale = support_matrix.std(axis=0) if len(support_matrix) else np.ones(3)
@@ -152,7 +161,8 @@ def materialize(
         task = item.get("task_id", ""); layout = _layout_features(layout_dir / f"{task}.json")
         g = layout.get("g_model_struct")
         d_cal = ""
-        feature = candidate_features.get(Path(item.get("source_path", "")).stem)
+        source_path = Path(item.get("source_path", ""))
+        feature = candidate_features.get(source_path.resolve().as_posix()) if source_path.exists() else None
         global_distance = _knn(feature[0], ref_global) if feature and ref_global is not None else ""
         local_distance = _knn(feature[1], ref_local) if feature and ref_local is not None else ""
         if global_distance != "" and local_distance != "" and g != "" and len(support_matrix):
@@ -161,10 +171,14 @@ def materialize(
         channels = {"d_model_feat": global_distance, "d_model_feat_local_max": local_distance, "g_model_struct": g, "d_cal_A": d_cal}
         numeric = {name: float(value) for name, value in channels.items() if value != ""}
         bucket, percentiles = _composite_q75_bucket(numeric, c1_channels)
-        complete = len(numeric) == 4 and all(c1_channels.values()) and layout.get("postprocess_valid") is True
+        assist_ready = len(numeric) == 4 and all(c1_channels.values()) and layout.get("postprocess_valid") is True
+        route_score = ""  # Requires cross-fitted C1 outcomes; model-only Q75 must never impersonate routing risk.
+        source_holdout_ready = all(str(item.get(field, "")).lower() in {"true", "1"} for field in ("source_split_allowed", "history_clear", "future_holdout_clear"))
+        complete = assist_ready and route_score != "" and source_holdout_ready and bool(item.get("building_id"))
         rows.append({
             **item, **layout, "d_model_feat": global_distance, "d_model_feat_local_max": local_distance,
-            "d_cal_A": d_cal, "risk_assist_candidate": bucket if complete else "", "risk_route_candidate": bucket if complete else "",
+            "d_cal_A": d_cal, "risk_assist_candidate": bucket if assist_ready else "", "risk_route_candidate": route_score,
+            "risk_assist_status": "ready" if assist_ready else "not_evaluable", "risk_route_status": "pending_crossfitted_c1_outcome_calibration",
             "risk_channel_percentiles_json": json.dumps(percentiles, sort_keys=True), "risk_bucket_rule": "max_frozen_c1_channel_percentile_q75",
             "assignment_eligible": complete,
             "feature_status": feature_status, "checkpoint_sha256": sha256_file(checkpoint) if checkpoint and checkpoint.exists() else "",
@@ -172,13 +186,18 @@ def materialize(
         })
     inventory_output = output_dir / "c2_task_risk_inventory.csv"
     _write(inventory_output, rows)
+    eligible_rows = [row for row in rows if row["assignment_eligible"]]
+    eligible_buildings = {row.get("building_id") for row in eligible_rows if row.get("building_id")}
+    eligible_strata = {row.get("risk_assist_candidate") for row in eligible_rows}
     summary = {
-        "input_status": input_status, "n_tasks": len(rows), "n_c1_calibration_tasks": len(c1_scores),
-        "feature_status": feature_status, "formal_ready": input_status == "formal" and feature_status == "ready" and bool(rows) and all(row["assignment_eligible"] for row in rows),
+        "input_status": input_status, "n_tasks": len(rows), "n_c1_calibration_tasks": len(reference_rows),
+        "n_assignment_eligible": len(eligible_rows), "eligible_building_count": len(eligible_buildings),
+        "feature_status": feature_status, "formal_ready": input_status == "formal" and feature_status == "ready" and len(eligible_rows) >= 12 and len(eligible_buildings) >= 2 and eligible_strata >= {"ordinary", "stress"},
         "checkpoint_sha256": sha256_file(checkpoint) if checkpoint and checkpoint.exists() else "",
         "inventory_sha256": sha256_file(inventory_csv), "c1_geometry_sha256": sha256_file(c1_geometry_jsonl),
         "c1_risk_reference_sha256": sha256_file(c1_risk_reference_csv) if c1_risk_reference_csv else "",
         "output_inventory_sha256": sha256_file(inventory_output),
+        "c1_task_risk_reference_path": str(c1_reference_output), "c1_task_risk_reference_sha256": sha256_file(c1_reference_output),
     }
     (output_dir / "c2_task_risk.summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
