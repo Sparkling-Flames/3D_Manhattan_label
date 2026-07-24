@@ -105,7 +105,8 @@ def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimo
     largest = largest_candidates[0] if largest_candidates else tuple()
     remainder = tuple(index for index in range(len(valid)) if index not in largest)
     second_support = len(_complete_link_cluster(remainder, similarities, multimodal_cutoff)) if len(remainder) >= 2 else 0
-    multimodal = len(largest_candidates) > 1 or second_support >= 2
+    disjoint_maxima = any(set(left).isdisjoint(right) for left, right in itertools.combinations(largest_candidates, 2))
+    multimodal = disjoint_maxima or second_support >= 2
     all_values = [value for value in similarities.values() if value is not None]
     result["consensus_status"] = "insufficient" if len(valid) < 3 else "metric_incompatible" if not compatible else "multimodal" if multimodal else "stable" if len(largest) == len(valid) else "weak"
     result["peer_support"] = len(valid)
@@ -148,8 +149,8 @@ def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimo
     baseline_support = result["largest_cluster_support"]
     loo = [subset_signature(tuple(j for j in range(len(valid)) if j != index)) for index in range(len(valid))] if _resample and len(valid) >= 4 else []
     lto = [subset_signature(tuple(j for j in range(len(valid)) if j not in removed)) for removed in itertools.combinations(range(len(valid)), 2)] if _resample and len(valid) >= 5 else []
-    result["leave_one_out_stability"] = "not_evaluable" if not loo else "robust" if all(item[0] == baseline_status and (not baseline_medoid or item[1] in {baseline_medoid, ""}) and item[2] >= max(0, baseline_support - 1) for item in loo) else "sensitive"
-    result["leave_two_out_stability"] = "not_evaluable" if not lto else "robust" if all(item[0] == baseline_status and (not baseline_medoid or item[1] in {baseline_medoid, ""}) and item[2] >= max(0, baseline_support - 2) for item in lto) else "sensitive"
+    result["leave_one_out_stability"] = "not_evaluable" if not loo else "robust" if all(item[0] == baseline_status and (not baseline_medoid or item[1] == baseline_medoid) and item[2] >= max(0, baseline_support - 1) for item in loo) else "sensitive"
+    result["leave_two_out_stability"] = "not_evaluable" if not lto else "robust" if all(item[0] == baseline_status and (not baseline_medoid or item[1] == baseline_medoid) and item[2] >= max(0, baseline_support - 2) for item in lto) else "sensitive"
     result["leave_two_out_status"] = result["leave_two_out_stability"]
     result["metric_compatibility"] = "compatible" if compatible else "incompatible"
     return result

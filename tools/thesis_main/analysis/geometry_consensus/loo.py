@@ -7,7 +7,7 @@ import json
 import numpy as np
 import statistics
 
-from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou
+from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou_from_normalized_pairs
 
 from .pairwise import pairwise_similarity
 from .stability import _maximum_complete_link_clusters
@@ -17,7 +17,7 @@ def _corners(geometry: dict[str, Any]) -> np.ndarray:
     return np.asarray([[row["x"] % geometry["width"], row["y_ceiling"]] for row in geometry.get("pairs", [])] + [[row["x"] % geometry["width"], row["y_floor"]] for row in geometry.get("pairs", [])], dtype=float)
 
 
-def leave_one_out(records: list[dict[str, Any]], *, grid: int = 256) -> list[dict[str, Any]]:
+def leave_one_out(records: list[dict[str, Any]], *, grid: int = 256, similarity_cutoff: float = 0.8) -> list[dict[str, Any]]:
     """Compute worker/task LOO similarity with the held-out worker excluded."""
     out = []
     for index, record in enumerate(records):
@@ -35,7 +35,7 @@ def leave_one_out(records: list[dict[str, Any]], *, grid: int = 256) -> list[dic
                 metrics = pairwise_similarity(peers[left]["geometry"], peers[right]["geometry"], grid=grid)
                 values = metrics.get("boundary_similarity"), metrics.get("wallwall_similarity")
                 peer_similarities[(left, right)] = min(values) if all(value is not None for value in values) else None
-        cliques = _maximum_complete_link_clusters(tuple(range(len(peers))), peer_similarities, .8) if len(peers) >= 2 else []
+        cliques = _maximum_complete_link_clusters(tuple(range(len(peers))), peer_similarities, similarity_cutoff) if len(peers) >= 2 else []
         cluster = cliques[0] if len(cliques) == 1 and len(cliques[0]) >= 2 else tuple()
         medoid_scores = []
         for peer_index in cluster:
@@ -46,7 +46,7 @@ def leave_one_out(records: list[dict[str, Any]], *, grid: int = 256) -> list[dic
         medoid = peers[medoid_index] if medoid_index is not None else {}
         q_loo = None
         if held_out.get("valid") and medoid:
-            q_loo, _ = compute_layout_mask_iou(_corners(held_out), _corners(medoid["geometry"]), width=int(held_out["width"]), height=int(held_out["height"]))
+            q_loo, _ = compute_layout_mask_iou_from_normalized_pairs(held_out["pairs"], medoid["geometry"]["pairs"], width=int(held_out["width"]), height=int(held_out["height"]))
         consensus_geometry = medoid.get("geometry", {})
         consensus_sha = hashlib.sha256(json.dumps(consensus_geometry, sort_keys=True, separators=(",", ":")).encode()).hexdigest() if consensus_geometry else ""
         status = "evaluable" if q_loo is not None else "multimodal" if len(cliques) > 1 else "medoid_tie" if cluster and medoid_index is None else "insufficient_peer_support"

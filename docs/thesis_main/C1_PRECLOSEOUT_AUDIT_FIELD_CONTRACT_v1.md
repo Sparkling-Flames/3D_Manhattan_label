@@ -1,5 +1,11 @@
 # C1 Pre-closeout 审计字段合同
 
+## 2026-07-24 SHA 处置与 LOO 修订
+
+- `c1_structural_validation_pre_disposition.csv` 是逐行结构裁决的输入快照；结构 disposition 必须以 `canonical_annotation_id + source_structural_audit_sha256` 绑定，并保存 Scope、最终归因、分母/分子资格、复核人和时间。
+- independence 可由 annotation-level disposition 或 project-level provenance manifest 解锁。project manifest 必须绑定 `source_meta_sha256`，证明 parent 字段覆盖完整、跨 owner parent 数为零且 copy risk 已清除；否则保持 `not_evaluable`。
+- `q_LOO_tu` 直接使用已规范化 pair 计算 held-out 与唯一 peer medoid 的 layout-mask IoU，不得再次配对。只有 `task_consensus_status=stable` 可进入 primary；worker 点估计和 2000 次 bootstrap 均以 base task 为单位并使用 mean。
+
 状态：仅适用于 `precloseout_partial_c1` rehearsal；不得作为正式 closeout、冻结画像或 C2 启动依据。
 
 ## 完成度与任务支持

@@ -1,7 +1,14 @@
 import csv
 import json
 
-from tools.thesis_main.analysis.materialize_c2_task_risk import materialize
+from tools.thesis_main.analysis.materialize_c2_task_risk import _composite_q75_bucket, materialize
+
+
+def test_composite_q75_uses_frozen_c1_channel_percentiles() -> None:
+    refs = {name: [0.0, 1.0, 2.0, 3.0] for name in ("d_model_feat", "d_model_feat_local_max", "g_model_struct", "d_cal_A")}
+    bucket, percentiles = _composite_q75_bucket({name: 3.0 for name in refs}, refs)
+    assert bucket == "stress"
+    assert max(percentiles.values()) >= .75
 
 
 def test_candidate_risk_uses_c1_only_and_layout_structure(tmp_path):
@@ -22,5 +29,6 @@ def test_candidate_risk_uses_c1_only_and_layout_structure(tmp_path):
     assert summary["formal_ready"] is False
     row = next(csv.DictReader((tmp_path / "out" / "c2_task_risk_inventory.csv").open(encoding="utf-8")))
     assert row["g_model_struct"]
-    assert row["d_cal_A"]
+    assert not row["d_cal_A"]
     assert row["feature_status"] == "not_requested"
+    assert row["assignment_eligible"].lower() == "false"

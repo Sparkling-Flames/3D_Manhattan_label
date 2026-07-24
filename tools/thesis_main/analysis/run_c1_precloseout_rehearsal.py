@@ -38,6 +38,7 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_independence,
     materialize_outside_assignment,
     materialize_row_analysis_eligibility,
+    rebind_canonical_meta_registry,
     materialize_structural_validation,
     materialize_three_track_worker_state,
 )
@@ -118,7 +119,7 @@ def _derived_worker_gates(quality_rows: list[dict[str, str]], workers: list[dict
 
 
 def _candidate_design_manifest(task_pool: Path, worker_profile: Path, output: Path) -> Path:
-    tasks = read_csv(task_pool)
+    tasks = [row for row in read_csv(task_pool) if str(row.get("assignment_eligible", "")).lower() in {"true", "1"}]
     anchors = sum(str(row.get("anchor_eligible") or row.get("is_common_anchor") or row.get("eligible_for_anchor_candidate", "")).lower() in {"true", "1"} for row in tasks)
     bridges = sum(
         str(row.get("bridge_eligible") or row.get("is_diverse_bridge") or row.get("eligible_for_reserve_candidate", "")).lower() in {"true", "1"}
@@ -147,10 +148,14 @@ def _candidate_design_manifest(task_pool: Path, worker_profile: Path, output: Pa
     return output
 
 
-def _candidate_task_pool(inventory: Path, assignments: list[Path], output: Path) -> Path:
+def _candidate_task_pool(inventory: Path, assignments: list[Path], output: Path, reserve_pool: Path | None = None) -> Path:
     history = {
         value
         for path in assignments for row in read_csv(path)
+        for value in (row.get("task_id", ""), row.get("base_task_id", "")) if value
+    }
+    reserve = {
+        value: row for row in (read_csv(reserve_pool) if reserve_pool else [])
         for value in (row.get("task_id", ""), row.get("base_task_id", "")) if value
     }
     rows = sorted(
@@ -166,6 +171,10 @@ def _candidate_task_pool(inventory: Path, assignments: list[Path], output: Path)
         pair_count = int(float(row.get("gt_pair_count") or 0))
         candidate_rows.append({
             **row,
+            "legacy_human_curated_candidate": bool(reserve.get(task) or reserve.get(base)),
+            "legacy_curated_rank": (reserve.get(task) or reserve.get(base) or {}).get("reserve_rank", (reserve.get(task) or reserve.get(base) or {}).get("selection_rank", "")),
+            "legacy_curated_reason": (reserve.get(task) or reserve.get(base) or {}).get("selection_reason", (reserve.get(task) or reserve.get(base) or {}).get("notes", "")),
+            "legacy_curated_manifest_sha256": sha256_file(reserve_pool) if reserve_pool and (reserve.get(task) or reserve.get(base)) else "",
             "building_id": (row.get("image_id") or base).split("_", 1)[0],
             "source_split": row.get("source_pool", ""),
             "ordinary_stress": "stress" if pair_count >= 7 or pair_count <= 3 else "ordinary",
@@ -181,7 +190,7 @@ def _candidate_task_pool(inventory: Path, assignments: list[Path], output: Path)
             "scope_status": row.get("expert_review_status", ""), "history_exclusion": False,
             "p1_c1_overlap": False, "future_t1_v1_exclusion": False,
             "future_holdout_manifest_status": "not_provided_rehearsal_only",
-            "candidate_role_source": "full_candidate_inventory_precloseout",
+            "candidate_role_source": "legacy_human_curated_candidate" if reserve.get(task) or reserve.get(base) else "full_candidate_inventory_precloseout",
         })
     write_csv(output, candidate_rows, list(candidate_rows[0]) if candidate_rows else ["task_id"])
     return output
@@ -192,9 +201,13 @@ def materialize(
     semi_assignment: Path, worker_distribution: Path, gt_export: Path,
     p1_closeout_dir: Path, output_root: Path, *, input_status: str,
     run_date: str | None = None,
+    independence_disposition: Path | None = None,
+    project_independence_disposition: Path | None = None,
+    structural_disposition: Path | None = None,
 ) -> dict[str, Any]:
-    if input_status != "precloseout_rehearsal":
-        raise ValueError("rehearsal requires input_status=precloseout_rehearsal")
+    if input_status not in {"precloseout_rehearsal", "formal"}:
+        raise ValueError("input_status must be precloseout_rehearsal or formal")
+    formal = input_status == "formal"
     export_files = [item for directory in export_dirs for item in _files(directory) if item.suffix.lower() == ".json"]
     if not export_files:
         raise ValueError("no C1 export JSON files found")
@@ -203,7 +216,8 @@ def materialize(
     pipeline_files = sorted((Path(__file__).parent.rglob("*.py")), key=lambda path: path.as_posix())
     pipeline_sha = _aggregate_sha(_manifest_rows(pipeline_files))
     run_date = run_date or datetime.now().strftime("%Y%m%d")
-    output_dir = output_root / f"c1_precloseout_rehearsal_{run_date}_{export_sha[:12]}_{pipeline_sha[:8]}"
+    prefix = "c1_formal_audit" if formal else "c1_precloseout_rehearsal"
+    output_dir = output_root / f"{prefix}_{run_date}_{export_sha[:12]}_{pipeline_sha[:8]}"
     if output_dir.exists():
         raise FileExistsError(f"immutable rehearsal output already exists: {output_dir}")
     snapshots = output_dir / "raw_snapshots"
@@ -242,7 +256,7 @@ def materialize(
     raw_manifest = {
         "schema_version": "c1_precloseout_raw_snapshot_v1",
         "created_at": datetime.now().astimezone().isoformat(),
-        "input_status": "precloseout_partial_c1",
+        "input_status": input_status,
         "aggregate_export_sha256": export_sha,
         "pipeline_sha256": pipeline_sha,
         "head": _git(["rev-parse", "HEAD"]).strip(),
@@ -262,12 +276,17 @@ def materialize(
         worker_distribution=fixed_snapshots["worker_distribution"],
         planned_task_mapping=fixed_snapshots["planned_mapping"],
         active_log=snapshots / "active_logs", output_dir=output_dir,
-        require_complete=False, input_status=input_status,
+        require_complete=formal, input_status=input_status,
     )
-    independence_summary = materialize_independence(output_dir / "c1_canonical_meta_observations.csv", output_dir)
+    independence_summary = materialize_independence(
+        output_dir / "c1_canonical_meta_observations.csv", output_dir,
+        disposition_csv=independence_disposition,
+        project_disposition_csv=project_independence_disposition,
+    )
     apply_independence(output_dir / "c1_canonical_annotations.csv", output_dir / "c1_independence_evidence.csv")
     structural_summary = materialize_structural_validation(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_geometry.jsonl", output_dir,
+        disposition_csv=structural_disposition,
     )
     apply_structural_dispositions(
         output_dir / "c1_canonical_annotations.csv", output_dir / "structural_validation_audit.csv",
@@ -303,6 +322,9 @@ def materialize(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_annotation_version_disposition.csv",
         output_dir / "c1_gt_quality_evidence.csv", output_dir / "geometry_worker_task_loo_C1.csv",
         output_dir / "structural_validation_audit.csv", output_dir / "c1_task_outcome_reference.csv", output_dir,
+    )
+    rebind_canonical_meta_registry(
+        output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_meta_observations.csv",
     )
     anomaly_summary = materialize_geometry_anomaly_root_causes(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_meta_observations.csv",
@@ -379,7 +401,7 @@ def materialize(
     profile = output_dir / "c2_eligible_roster_C1.csv"
     raw_task_pool = _candidate_task_pool(
         fixed_snapshots["candidate_inventory"], [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
-        output_dir / "c2b_candidate_task_pool_raw.csv",
+        output_dir / "c2b_candidate_task_pool_raw.csv", fixed_snapshots["reserve_pool"],
     )
     risk_summary = materialize_task_risk(
         raw_task_pool, Path("output/layout_json"), output_dir / "c1_canonical_geometry.jsonl", output_dir,
@@ -422,7 +444,7 @@ def materialize(
     write_json(output_dir / "analysis_dependency_manifest.json", dependency_manifest)
 
     summary = {
-        "input_status": "precloseout_partial_c1",
+        "input_status": input_status,
         "output_dir": str(output_dir.resolve()),
         "aggregate_export_sha256": export_sha,
         "pipeline_sha256": pipeline_sha,
@@ -451,14 +473,14 @@ def materialize(
         "c2_task_risk_summary": risk_summary,
         "p1_to_c1_predictive_summary": predictive_summary,
         "formal_closeout_ready": False, "profile_frozen": False, "c2_launch_ready": False,
-        "formal_results_materialized": False, "c2_candidate_only": True,
+        "formal_results_materialized": formal, "c2_candidate_only": not formal,
         "chain_gate": chain.get("gate_summary", {}),
         "operational_reference_summary": chain.get("operational_reference_summary", {}),
         "strong_global_model_audit": model_audit,
         "c2b_candidate_summary": c2_summary,
-        "blockers": ["partial_c1_collection", *(["missing_workers"] if missing_workers else []), *(["not_evaluable_rows"] if not_evaluable else []), "c2b_not_confirmed"],
+        "blockers": [*(["partial_c1_collection"] if not formal else []), *(["missing_workers"] if missing_workers else []), *(["not_evaluable_rows"] if not_evaluable else []), "c2b_not_confirmed"],
     }
-    write_json(output_dir / "rehearsal_summary.json", summary)
+    write_json(output_dir / ("formal_audit_summary.json" if formal else "rehearsal_summary.json"), summary)
     return summary
 
 

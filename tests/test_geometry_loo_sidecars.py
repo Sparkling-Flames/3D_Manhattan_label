@@ -7,6 +7,7 @@ from tools.thesis_main.analysis.geometry_consensus.materialize import materializ
 from tools.thesis_main.analysis.geometry_consensus.loo import leave_one_out
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
 from tools.thesis_main.analysis.geometry_consensus.stability import _maximum_complete_link_clusters, stability_summary
+from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou_from_normalized_pairs
 
 
 def _record(worker: str, offset: int = 0):
@@ -42,6 +43,32 @@ def test_complete_link_enumerates_true_maximum_and_exposes_ties() -> None:
         (0, 3): .9, (1, 3): .9, (2, 3): .1,
     }
     assert _maximum_complete_link_clusters((0, 1, 2, 3), similarities, .8) == [(0, 1, 2), (0, 1, 3)]
+
+
+def test_normalized_pair_iou_does_not_repair_or_repair_pairs() -> None:
+    left = normalize_geometry([[100, 400], [100, 100], [500, 100], [500, 400]])
+    right = normalize_geometry([[100, 110], [100, 390], [500, 110], [500, 390]])
+    value, meta = compute_layout_mask_iou_from_normalized_pairs(left["pairs"], right["pairs"])
+    assert value is not None
+    assert meta["reason"] == ""
+
+
+def test_overlapping_maximum_cliques_are_cluster_tie_not_multimodal(monkeypatch) -> None:
+    records = [_record(f"w{i}", i) for i in range(4)]
+    similarities = {
+        frozenset((0, 1)): .9,
+        frozenset((0, 2)): .9,
+        frozenset((1, 2)): .9,
+        frozenset((0, 3)): .9,
+        frozenset((1, 3)): .9,
+        frozenset((2, 3)): .1,
+    }
+    def fake(left, right, **_kwargs):
+        score = similarities[frozenset((round(left["top_y"][0] - 100), round(right["top_y"][0] - 100)))]
+        return {"boundary_similarity": score, "wallwall_similarity": score}
+    monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.stability.pairwise_similarity", fake)
+    summary = stability_summary(records)
+    assert summary["consensus_status"] == "weak"
 
 
 def test_geometry_materializer_emits_candidate_sidecars_with_common_fields(tmp_path: Path) -> None:

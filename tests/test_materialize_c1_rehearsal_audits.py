@@ -11,6 +11,8 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_active_time_ledgers,
     materialize_independence,
     materialize_row_analysis_eligibility,
+    rebind_canonical_meta_registry,
+    rebind_canonical_meta_registry,
     materialize_structural_validation,
 )
 
@@ -68,6 +70,25 @@ def test_invalid_pair_count_stays_pending_without_row_disposition(tmp_path: Path
     row = next(csv.DictReader((tmp_path / "structural_validation_audit.csv").open(encoding="utf-8")))
     assert row["structural_validation_status"] == "not_evaluable"
     assert row["failure_attribution"] == "not_evaluable"
+
+
+def test_sha_bound_structural_disposition_confirms_worker_failure(tmp_path: Path) -> None:
+    canonical = tmp_path / "canonical.csv"; geometry = tmp_path / "geometry.jsonl"
+    _csv(canonical, [{"canonical_annotation_id": "c1", "project_id": "66", "ls_runtime_task_id": "1", "annotation_id": "a1", "worker_id": "1", "independence_status": "independent"}])
+    geometry.write_text(json.dumps({"canonical_annotation_id": "c1", "worker_id": "1", "task_id": "t1", "corners_px": [[10, 10], [10, 400], [700, 10]], "width": 1024, "height": 512}) + "\n", encoding="utf-8")
+    materialize_structural_validation(canonical, geometry, tmp_path)
+    source = tmp_path / "c1_structural_validation_pre_disposition.csv"
+    disposition = tmp_path / "disposition.csv"
+    _csv(disposition, [{
+        "canonical_annotation_id": "c1", "source_structural_audit_sha256": __import__("hashlib").sha256(source.read_bytes()).hexdigest(),
+        "final_scope": "in_scope", "detected_issue": "odd_keypoint_count", "final_failure_attribution": "worker_caused_structural_failure",
+        "structural_denominator_eligible": "true", "worker_failure_numerator": "true", "reviewed_by": "reviewer",
+        "reviewed_at": "2026-07-24T00:00:00Z", "reason": "confirmed missing point",
+    }])
+    summary = materialize_structural_validation(canonical, geometry, tmp_path, disposition_csv=disposition)
+    row = next(csv.DictReader((tmp_path / "structural_validation_audit.csv").open(encoding="utf-8")))
+    assert summary["applied_disposition_count"] == 1
+    assert row["failure_attribution"] == "worker_caused_structural_failure"
 
 
 def test_c2_roster_fails_closed_on_unknown_independence(tmp_path: Path) -> None:
@@ -141,6 +162,16 @@ def test_sha_bound_independence_disposition_can_clear_a_row(tmp_path: Path) -> N
     assert summary["disposition_manifest_sha256"] == __import__("hashlib").sha256(disposition.read_bytes()).hexdigest()
 
 
+def test_project_provenance_manifest_expands_independence_without_649_row_reviews(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"; project = tmp_path / "project.csv"
+    rows = [{"project_id": "66", "condition": "manual", "ls_runtime_task_id": str(i), "task_id": f"t{i}", "worker_id": "1", "annotation_id": f"a{i}", "canonical_annotation_id": f"c{i}"} for i in range(2)]
+    _csv(meta, rows)
+    source_sha = __import__("hashlib").sha256(meta.read_bytes()).hexdigest()
+    _csv(project, [{"project_id": "66", "condition": "manual", "source_meta_sha256": source_sha, "provenance_status": "complete", "copy_risk_status": "cleared", "parent_field_coverage_complete": "true", "cross_owner_parent_count": "0", "reviewed_by": "reviewer", "reviewed_at": "2026-07-24T00:00:00Z"}])
+    summary = materialize_independence(meta, tmp_path, project_disposition_csv=project)
+    assert summary["status_counts"] == {"independent": 2}
+
+
 def test_partial_worker_uses_local_valid_support(tmp_path: Path) -> None:
     completion = tmp_path / "completion.csv"; canonical = tmp_path / "canonical.csv"
     quality = tmp_path / "quality.csv"; loo = tmp_path / "loo.csv"
@@ -169,3 +200,19 @@ def test_row_eligibility_excludes_outside_assignment_from_all_tracks(tmp_path: P
     assert result["global_analysis_eligible"] == "False"
     assert result["loo_analysis_eligible"] == "False"
     assert result["structural_opportunity_eligible"] == "False"
+
+
+def test_canonical_meta_rebinds_after_derived_gate_columns_are_added(tmp_path: Path) -> None:
+    canonical = tmp_path / "canonical.csv"; meta = tmp_path / "meta.csv"
+    _csv(canonical, [{"canonical_annotation_id": "c1", "derived_gate": "true"}])
+    _csv(meta, [{"canonical_annotation_id": "c1", "canonical_registry_sha256": "old"}])
+    sha = rebind_canonical_meta_registry(canonical, meta)
+    assert next(csv.DictReader(meta.open(encoding="utf-8")))["canonical_registry_sha256"] == sha
+
+
+def test_canonical_meta_rebinds_after_derived_gate_columns_are_added(tmp_path: Path) -> None:
+    canonical = tmp_path / "canonical.csv"; meta = tmp_path / "meta.csv"
+    _csv(canonical, [{"canonical_annotation_id": "c1", "derived_gate": "true"}])
+    _csv(meta, [{"canonical_annotation_id": "c1", "canonical_registry_sha256": "old"}])
+    sha = rebind_canonical_meta_registry(canonical, meta)
+    assert next(csv.DictReader(meta.open(encoding="utf-8")))["canonical_registry_sha256"] == sha
