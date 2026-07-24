@@ -56,6 +56,7 @@ def build_global(
         row for row in submissions
         if row.get("quality_evaluable", "").lower() in {"true", "1"}
         and row.get("condition", "").lower() == "manual"
+        and ("global_analysis_eligible" not in row or _truth(row.get("global_analysis_eligible")))
     ]
     if not usable:
         raise ValueError("no evaluable Manual GT submissions")

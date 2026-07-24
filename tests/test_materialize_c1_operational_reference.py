@@ -35,5 +35,10 @@ def test_operational_reference_preserves_reviewed_and_leaves_unreviewed_pending(
     assert summary["n_resolved_contexts"] == 1
     assert summary["n_pending_contexts"] == 1
     assert summary["n_gt_quality_evaluable"] == 1
+    assert summary["geometry_reference_ready"] is False
+    assert summary["task_outcome_reference_ready"] is False
+    assert summary["estimand_specific_closeout_ready"] is False
     with (tmp_path / "c1_task_outcome_reference.csv").open(encoding="utf-8") as stream:
         assert list(csv.DictReader(stream))[0]["final_scope"] == "in_scope"
+    queue = list(csv.DictReader((tmp_path / "c1_scope_review_queue.csv").open(encoding="utf-8")))
+    assert [row["base_task_id"] for row in queue] == ["pending"]

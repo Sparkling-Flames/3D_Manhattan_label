@@ -73,20 +73,21 @@ def _core_stability(records: list[dict[str, Any]], *, grid: int = 256, gap_cutof
     }
 
 
-def _complete_link_cluster(indices: tuple[int, ...], similarities: dict[tuple[int, int], float | None], cutoff: float) -> tuple[int, ...]:
-    """Deterministic maximal clique without exponential maximum-clique search."""
+def _maximum_complete_link_clusters(indices: tuple[int, ...], similarities: dict[tuple[int, int], float | None], cutoff: float) -> list[tuple[int, ...]]:
+    """Enumerate all maximum cliques; C1 peer groups are deliberately small."""
     def compatible(left: int, right: int) -> bool:
         value = similarities.get(tuple(sorted((left, right))))
         return value is not None and value >= cutoff
-    degree = {index: sum(compatible(index, other) for other in indices if other != index) for index in indices}
-    candidates = []
-    for seed in sorted(indices, key=lambda index: (-degree[index], index)):
-        cluster = [seed]
-        for index in sorted((value for value in indices if value != seed), key=lambda value: (-degree[value], value)):
-            if all(compatible(index, member) for member in cluster):
-                cluster.append(index)
-        candidates.append(tuple(sorted(cluster)))
-    return max(candidates, key=lambda group: (len(group), tuple(-value for value in group)), default=tuple())
+    for size in range(len(indices), 0, -1):
+        cliques = [group for group in itertools.combinations(indices, size) if all(compatible(left, right) for left, right in itertools.combinations(group, 2))]
+        if cliques:
+            return cliques
+    return []
+
+
+def _complete_link_cluster(indices: tuple[int, ...], similarities: dict[tuple[int, int], float | None], cutoff: float) -> tuple[int, ...]:
+    clusters = _maximum_complete_link_clusters(indices, similarities, cutoff)
+    return clusters[0] if clusters else tuple()
 
 
 def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimodal_cutoff: float = 0.8, _resample: bool = True) -> dict[str, Any]:
@@ -100,10 +101,11 @@ def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimo
         similarities[(left, right)] = min(values) if all(value is not None for value in values) else None
 
     compatible = bool(similarities) and all(value is not None for value in similarities.values())
-    largest = _complete_link_cluster(tuple(range(len(valid))), similarities, multimodal_cutoff) if compatible else tuple()
+    largest_candidates = _maximum_complete_link_clusters(tuple(range(len(valid))), similarities, multimodal_cutoff) if compatible else []
+    largest = largest_candidates[0] if largest_candidates else tuple()
     remainder = tuple(index for index in range(len(valid)) if index not in largest)
     second_support = len(_complete_link_cluster(remainder, similarities, multimodal_cutoff)) if len(remainder) >= 2 else 0
-    multimodal = second_support >= 2
+    multimodal = len(largest_candidates) > 1 or second_support >= 2
     all_values = [value for value in similarities.values() if value is not None]
     result["consensus_status"] = "insufficient" if len(valid) < 3 else "metric_incompatible" if not compatible else "multimodal" if multimodal else "stable" if len(largest) == len(valid) else "weak"
     result["peer_support"] = len(valid)

@@ -58,6 +58,25 @@ def _circular_pairs(pairs: list[dict[str, float]], width: int) -> list[dict[str,
     return unwrapped
 
 
+def _raw_order_pairs(array: np.ndarray, width: int, threshold_ratio: float) -> list[dict[str, float]]:
+    if len(array) < 4 or len(array) % 2:
+        return []
+    threshold = float(width) * float(threshold_ratio)
+    pairs = []
+    for top, bottom in array.reshape(-1, 2, 2):
+        dx = abs(float(top[0]) - float(bottom[0])) % float(width)
+        dx = min(dx, float(width) - dx)
+        if dx >= threshold or float(top[1]) >= float(bottom[1]):
+            return []
+        x1, x2 = float(top[0]), float(bottom[0])
+        x = ((max(x1, x2) + min(x1, x2) + width) / 2.0) % width if abs(x1 - x2) > width / 2 else (x1 + x2) / 2.0
+        pairs.append({"x": x, "y_ceiling": float(top[1]), "y_floor": float(bottom[1])})
+    xs = [row["x"] % width for row in pairs]
+    if any(min(abs(x - y), width - abs(x - y)) < 1e-6 for index, x in enumerate(xs) for y in xs[index + 1 :]):
+        return []
+    return pairs
+
+
 def normalize_geometry(
     corners: Any,
     *,
@@ -94,6 +113,9 @@ def normalize_geometry(
         "seam_representation_valid": False,
         "seam_crossing_detected": False,
         "pairing_method": "circular_x_pairing",
+        "raw_points": array.tolist() if array.ndim == 2 and array.shape[1:] == (2,) else [],
+        "canonical_points": [],
+        "coordinate_transform": "none",
     }
     if array.ndim != 2 or array.shape[1:] != (2,):
         result["reason"] = "shape_invalid"
@@ -112,7 +134,17 @@ def normalize_geometry(
     result["seam_representation_valid"] = True
     array = array.copy()
     array[:, 0] %= float(width)
-    pairs, stats = analyze_layout_pairing(array, width=width, height=height, threshold_ratio=threshold_ratio)
+    result["canonical_points"] = array.tolist()
+    result["coordinate_transform"] = "x_modulo_panorama_width_only"
+    unordered_pairs, stats = analyze_layout_pairing(array, width=width, height=height, threshold_ratio=threshold_ratio)
+    raw_pairs = _raw_order_pairs(array, width, threshold_ratio)
+    stats = {**stats, "raw_order_pairing_valid": bool(raw_pairs), "unordered_pairing_ambiguous": bool(stats.get("pairing_ambiguous"))}
+    pairs = raw_pairs or unordered_pairs
+    if raw_pairs:
+        stats.update(n_pairs=len(raw_pairs), coverage=1.0, unpaired_point_count=0, pairing_ambiguous=False, ambiguity_reason="")
+        result["pairing_method"] = "raw_order_pairing"
+    else:
+        result["pairing_method"] = "circular_x_pairing"
     result["pairing_stats"] = stats
     result["n_pairs"] = len(pairs)
     result["pair_count_valid"] = int(stats.get("n_pairs", 0)) >= 2 and int(stats.get("unpaired_point_count", 0)) == 0

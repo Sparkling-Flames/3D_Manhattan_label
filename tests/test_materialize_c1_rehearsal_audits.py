@@ -9,6 +9,8 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_c2_eligible_roster,
     materialize_completion_support,
     materialize_active_time_ledgers,
+    materialize_independence,
+    materialize_row_analysis_eligibility,
     materialize_structural_validation,
 )
 
@@ -58,6 +60,16 @@ def test_structural_pass_is_geometry_eligible_but_not_worker_reliability_without
     assert row["worker_reliability_eligible"] == "false"
 
 
+def test_invalid_pair_count_stays_pending_without_row_disposition(tmp_path: Path) -> None:
+    canonical = tmp_path / "canonical.csv"; geometry = tmp_path / "geometry.jsonl"
+    _csv(canonical, [{"canonical_annotation_id": "c1", "project_id": "66", "ls_runtime_task_id": "1", "annotation_id": "a1", "worker_id": "1", "independence_status": "independent"}])
+    geometry.write_text(json.dumps({"canonical_annotation_id": "c1", "worker_id": "1", "task_id": "t1", "corners_px": [[10, 10], [10, 400], [700, 10]], "width": 1024, "height": 512}) + "\n", encoding="utf-8")
+    materialize_structural_validation(canonical, geometry, tmp_path)
+    row = next(csv.DictReader((tmp_path / "structural_validation_audit.csv").open(encoding="utf-8")))
+    assert row["structural_validation_status"] == "not_evaluable"
+    assert row["failure_attribution"] == "not_evaluable"
+
+
 def test_c2_roster_fails_closed_on_unknown_independence(tmp_path: Path) -> None:
     completion = tmp_path / "completion.csv"; canonical = tmp_path / "canonical.csv"
     quality = tmp_path / "quality.csv"; loo = tmp_path / "loo.csv"
@@ -91,10 +103,42 @@ def test_cumulative_events_retry_and_unknown_are_not_double_counted_or_bound(tmp
 
     assert summary["deduplicated_event_count"] == 3
     assert summary["exact_annotation_count"] == 0
-    assert summary["unknown_active_seconds"] == 3
+    assert summary["unknown_active_seconds"] is None
+    assert summary["task_sensitivity_annotation_count"] == 0
     session = next(csv.DictReader((tmp_path / "c1_active_time_session_ledger.csv").open(encoding="utf-8")))
     assert session["session_status"] == "audit_only_mixed_known_unknown"
     assert session["session_active_seconds"] == "0.0"
+    assert session["duration_not_allocatable"] == "True"
+
+
+def test_active_time_excludes_non_c1_context_before_session_aggregation(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"; logs = tmp_path / "logs"; logs.mkdir()
+    _csv(meta, [{"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1"}])
+    current = {"project_id": "66", "task_id": "10", "annotator_id": "1", "annotation_id": "a1", "session_id": "s1", "active_seconds": 5, "timestamp": 1}
+    historical = {**current, "project_id": "1", "task_id": "999", "session_id": "old"}
+    (logs / "active.jsonl").write_text("\n".join(json.dumps(row) for row in (current, historical)), encoding="utf-8")
+    summary = materialize_active_time_ledgers(meta, logs, tmp_path)
+    assert summary["raw_event_count"] == 2
+    assert summary["c1_context_event_count"] == 1
+    assert summary["excluded_event_count"] == 1
+
+
+def test_independence_requires_explicit_cleared_provenance(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"
+    base = {"project_id": "66", "ls_runtime_task_id": "10", "task_id": "t1", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1", "provenance_status": "", "copy_risk_status": "", "parent_cross_owner": ""}
+    _csv(meta, [base, {**base, "annotation_id": "a2", "canonical_annotation_id": "c2", "provenance_status": "complete", "copy_risk_status": "cleared"}, {**base, "annotation_id": "a3", "canonical_annotation_id": "c3", "parent_cross_owner": "true"}])
+    summary = materialize_independence(meta, tmp_path)
+    assert summary["status_counts"] == {"not_evaluable": 1, "independent": 1, "non_independent_confirmed": 1}
+
+
+def test_sha_bound_independence_disposition_can_clear_a_row(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"; disposition = tmp_path / "disposition.csv"
+    _csv(meta, [{"project_id": "66", "ls_runtime_task_id": "10", "task_id": "t1", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1", "provenance_status": "", "copy_risk_status": ""}])
+    source_sha = __import__("hashlib").sha256(meta.read_bytes()).hexdigest()
+    _csv(disposition, [{"canonical_annotation_id": "c1", "provenance_status": "complete", "copy_risk_status": "cleared", "parent_annotation_id": "none", "parent_owner_id": "none", "parent_cross_owner": "false", "independence_status": "independent", "reviewed_by": "reviewer", "reviewed_at": "2026-07-24T00:00:00Z", "source_meta_sha256": source_sha}])
+    summary = materialize_independence(meta, tmp_path, disposition_csv=disposition)
+    assert summary["status_counts"] == {"independent": 1}
+    assert summary["disposition_manifest_sha256"] == __import__("hashlib").sha256(disposition.read_bytes()).hexdigest()
 
 
 def test_partial_worker_uses_local_valid_support(tmp_path: Path) -> None:
@@ -109,3 +153,19 @@ def test_partial_worker_uses_local_valid_support(tmp_path: Path) -> None:
     _csv(loo, [{"worker_id": "1", "peer_count_excluding_self": "2"}] * 3)
     summary = materialize_c2_eligible_roster(completion, canonical, quality, loo, tmp_path)
     assert summary["n_eligible"] == 1
+
+
+def test_row_eligibility_excludes_outside_assignment_from_all_tracks(tmp_path: Path) -> None:
+    canonical = tmp_path / "canonical.csv"; versions = tmp_path / "versions.csv"; quality = tmp_path / "quality.csv"
+    loo = tmp_path / "loo.csv"; structural = tmp_path / "structural.csv"; reference = tmp_path / "reference.csv"
+    row = {"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1", "assigned_expected": "true", "outside_assignment_submission": "true", "duplicate_worker_task_submission": "false", "independence_status": "independent"}
+    _csv(canonical, [row]); _csv(versions, [{"annotation_id": "a1", "version_disposition": "selected_canonical"}])
+    _csv(quality, [{"canonical_annotation_id": "c1", "quality_evaluable": "true"}])
+    _csv(loo, [{"canonical_annotation_id": "c1", "q_LOO_tu": ".9"}])
+    _csv(structural, [{"canonical_annotation_id": "c1", "structural_validation_status": "passed"}])
+    _csv(reference, [{"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "final_scope": "in_scope", "geometry_reference_ready": "true"}])
+    materialize_row_analysis_eligibility(canonical, versions, quality, loo, structural, reference, tmp_path)
+    result = next(csv.DictReader((tmp_path / "c1_row_analysis_eligibility.csv").open(encoding="utf-8")))
+    assert result["global_analysis_eligible"] == "False"
+    assert result["loo_analysis_eligible"] == "False"
+    assert result["structural_opportunity_eligible"] == "False"

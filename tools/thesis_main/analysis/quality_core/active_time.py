@@ -55,6 +55,36 @@ def _parse_active_log_event_time(data):
     return None
 
 
+def cumulative_active_intervals(events):
+    """Allocate only monotone adjacent cumulative deltas with one stable annotation."""
+    ordered = sorted((row for row in events if row.get("event_time")), key=lambda row: row["event_time"])
+    intervals = []
+    for previous, current in zip(ordered, ordered[1:]):
+        if previous.get("annotation_id") != current.get("annotation_id"):
+            continue
+        if any(str(row.get("page_gate_reason") or "").strip() not in {"", "eligible"} for row in (previous, current)):
+            continue
+        before, after = float(previous.get("active_seconds") or 0), float(current.get("active_seconds") or 0)
+        delta = after - before
+        if delta <= 0:
+            continue
+        end = datetime.fromisoformat(current["event_time"])
+        intervals.append((end.timestamp() - delta, end.timestamp()))
+    return intervals
+
+
+def merged_interval_seconds(intervals):
+    total, end = 0.0, None
+    for start, stop in sorted(intervals):
+        if end is None or start > end:
+            total += stop - start
+            end = stop
+        elif stop > end:
+            total += stop - end
+            end = stop
+    return total
+
+
 def _parse_active_time_key(value):
     parts = str(value or '').split('|')
     if len(parts) != 4:
