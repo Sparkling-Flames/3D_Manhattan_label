@@ -45,11 +45,9 @@ Do not generate geometry score, admission, `r0`, `r_u`, `wmax`, `w_max`, routing
 
 `tools/thesis_main/analysis/p1_closeout_readiness_audit.py` is a dry-run readiness gate before any formal P1 materialization. It reports blockers from existing closeout artifacts; it is not a formal P1 output, admission decision, reliability estimate, routing input, or C1 handoff.
 
-## Internal Smoke Runner
+## Retired Smoke Runner
 
-Run `python tools/thesis_main/analysis/pipeline_smoke_runner.py` to rerun the local provisional pipeline smoke chain.
-The runner should read the current formal closeout at `analysis_results/prescreen_closeout_final_gold_v2_20260701/` and writes stage outputs under `analysis_results/pipeline_smoke/`.
-The only root-level runner state is `analysis_results/pipeline_smoke/pipeline_smoke_state.json`; all outputs remain dry-run/provisional only.
+The old cross-stage table-shape smoke runner was retired on 2026-07-24. Its code and generated outputs are preserved under `tools/legacy/` and `analysis_results/legacy/`; it is not an active execution entry. Use the stage-specific audited materializers instead.
 
 ## Terminology Boundary
 

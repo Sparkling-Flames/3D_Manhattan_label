@@ -53,11 +53,9 @@ def _scope(inventory: dict[str, str]) -> tuple[str, str, str, str]:
             ("oos", raw, "expert_adjudicated", reviewer) if raw.startswith("oos") else ("", "", "", "")
         )
     if status == "legacy_labeled_proxy":
-        labels = [part.strip().lower() for part in inventory.get("old_manual_scope_raw", "").split(";") if part.strip()]
-        if labels == ["normal"]:
-            return "in_scope", "", "legacy_human_label_frozen", "legacy_human_label"
-        if len(labels) == 1 and labels[0].startswith("oos_"):
-            return "oos", labels[0], "legacy_human_label_frozen", "legacy_human_label"
+        # Historical labels are useful migration evidence, but are not the frozen
+        # operational task-outcome reference required by the current protocol.
+        return "", "", "legacy_proxy_pending_review", "legacy_human_label"
     return "", "", "", ""
 
 
@@ -101,25 +99,25 @@ def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, 
         item = inventory.get(row.get("base_task_id", ""), {})
         final_scope, oos_subtype, scope_mode, reviewer = _scope(item)
         reference = references.get(row.get("base_task_id", ""), {})
-        status = "resolved" if final_scope and (final_scope == "oos" or reference.get("points")) else "pending"
+        status = "resolved" if final_scope else "pending"
+        geometry_ready = bool(reference.get("points"))
         audit.append({
             **dict(zip(("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"), key)),
             "inventory_review_status": item.get("expert_review_status", "missing"),
             "scope_source": scope_mode, "task_outcome_status": status,
-            "gt_reference_present": bool(reference),
+            "gt_reference_present": bool(reference), "geometry_reference_ready": geometry_ready,
             "pending_reason": "" if status == "resolved" else "unreviewed_or_ambiguous_scope",
         })
-        if status == "resolved":
-            contexts[key] = {
+        contexts[key] = {
                 **dict(zip(("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"), key)),
-                "final_scope": final_scope, "scope_resolution_status": "resolved",
+                "final_scope": final_scope, "scope_resolution_status": status,
                 "oos_subtype": oos_subtype, "scope_reference_mode": scope_mode,
-                "geometry_reference_mode": "expert_hard_gt" if reference else "not_required_oos",
-                "geometry_reference_status": "expert_hard_single" if reference else "",
+                "geometry_reference_mode": "public_frozen_gt" if reference else "not_required_oos" if final_scope == "oos" else "",
+                "geometry_reference_status": "reference_ready_public_gt" if reference else "not_required" if final_scope == "oos" else "reference_missing",
                 "reference_identity": reference.get("identity", ""),
                 "reference_sha256": reference.get("sha256", ""),
-                "reference_worker_excluded": "false", "reference_evidence_status": "evaluable" if reference else "not_required",
-                "adjudication_status": "resolved", "reviewed_by": reviewer,
+                "reference_worker_excluded": "false", "reference_evidence_status": "evaluable" if reference else "not_required" if final_scope == "oos" else "not_evaluable",
+                "adjudication_status": status, "reviewed_by": reviewer,
                 "reviewed_at": "", "notes": "review time absent in frozen candidate inventory; formal mode must fail closed",
             }
     quality = []
@@ -129,8 +127,12 @@ def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, 
         outcome = outcomes_by_key.get(key, {})
         geom = geometry.get(row.get("canonical_annotation_id", ""), {})
         reference = references.get(row.get("base_task_id", ""), {})
-        score, meta = None, {"reason": "task_outcome_pending"}
-        if outcome.get("final_scope") == "in_scope" and geom.get("corners_px") and reference.get("points"):
+        score, meta = None, {"reason": "reference_geometry_missing"}
+        structural_status = row.get("structural_validation_status", "")
+        structurally_valid = structural_status == "passed" or (not structural_status and bool(geom.get("corners_px")))
+        if not structurally_valid:
+            meta = {"reason": "annotation_geometry_invalid"}
+        elif geom.get("corners_px") and reference.get("points"):
             score, meta = compute_layout_mask_iou(np.asarray(geom["corners_px"], dtype=float), np.asarray(reference["points"], dtype=float))
         quality.append({
             "project_id": row.get("project_id", ""), "ls_runtime_task_id": row.get("ls_runtime_task_id", ""),
@@ -138,13 +140,15 @@ def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, 
             "worker_id": row.get("worker_id", ""), "annotation_id": row.get("annotation_id", ""),
             "canonical_annotation_id": row.get("canonical_annotation_id", ""), "condition": row.get("condition", ""),
             "dataset_group": row.get("dataset_group", ""), "iou_to_gt": "" if score is None else score,
-            "quality_evaluable": score is not None, "structurally_valid": score is not None,
+            "quality_evaluable": score is not None, "structurally_valid": structurally_valid,
             "independence_status": row.get("independence_status", ""),
             "failure_attribution": row.get("failure_attribution", ""),
             "outside_assignment_submission": row.get("outside_assignment_submission", ""),
             "duplicate_worker_task_submission": row.get("duplicate_worker_task_submission", ""),
             "worker_caused_structural_failure": row.get("worker_caused_structural_failure", ""),
             "task_outcome_status": outcome.get("adjudication_status", "pending"),
+            "geometry_reference_status": outcome.get("geometry_reference_status", "reference_missing"),
+            "quality_interpretation_status": "provisional_pending_task_outcome" if score is not None and outcome.get("adjudication_status") != "resolved" else "resolved" if score is not None else "not_evaluable",
             "reference_identity": reference.get("identity", ""), "reference_sha256": reference.get("sha256", ""),
             "score_reason": "" if score is not None else meta.get("reason", "not_evaluable"),
         })
@@ -155,7 +159,7 @@ def materialize(canonical_csv: Path, geometry_jsonl: Path, inventory_csv: Path, 
     quality_fields = list(quality[0]) if quality else ["task_id"]
     _write(output_dir / "c1_gt_quality_evidence.csv", quality, quality_fields)
     summary = {
-        "n_task_contexts": len(audit), "n_resolved_contexts": len(outcome_rows),
+        "n_task_contexts": len(audit), "n_resolved_contexts": sum(row["adjudication_status"] == "resolved" for row in outcome_rows),
         "n_pending_contexts": sum(row["task_outcome_status"] == "pending" for row in audit),
         "n_gt_quality_evaluable": sum(bool(row["quality_evaluable"]) for row in quality),
         "formal_ready": False, "formal_blocker": "reviewed_at_not_recorded_in_candidate_inventory",

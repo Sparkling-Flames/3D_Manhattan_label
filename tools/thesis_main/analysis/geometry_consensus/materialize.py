@@ -41,7 +41,7 @@ def materialize_geometry_consensus(
     for row in _read_jsonl(geometry_jsonl):
         geometry = normalize_geometry(row.get("corners_px") or [], width=width, height=height)
         record = {**row, "geometry": geometry}
-        if str(row.get("canonical_eligibility_status", "valid")) != "valid" or not str(row.get("base_task_id", "")).strip():
+        if str(row.get("eligible_for_geometry_loo", "true")).lower() not in {"true", "1"} or not str(row.get("base_task_id", "")).strip():
             record["geometry"]["valid"] = False
             record["geometry"]["reason"] = "canonical_or_base_task_invalid"
         provenance_context = str(row.get("provenance_context") or row.get("initialization_artifact_id") or row.get("reference_semantics_version") or "").strip()

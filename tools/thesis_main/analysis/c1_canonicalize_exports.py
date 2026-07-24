@@ -542,12 +542,15 @@ def build_canonicalization(
         realized_rows.append({field: c_row.get(field, "") for field in REALIZED_AUDIT_FIELDS})
         failure_rows.append({field: c_row.get(field, "") for field in FAILURE_AUDIT_FIELDS})
 
+    duplicate_submission_keys = set()
     resolved_excluded_keys = set()
     for duplicate in duplicate_base:
+        info = runtime_lookup.get((safe(duplicate.get("project_id")), safe(duplicate.get("task_id"))), {})
+        duplicate_submission_keys.add((safe(duplicate.get("annotator_id")), safe(info.get("task_id")), safe(info.get("base_task_id")), safe(info.get("dataset_group"))))
         if safe(duplicate.get("duplicate_review_status")) == "resolved" and safe(duplicate.get("duplicate_decision")) in {"exclude_group", "forensic_only"}:
-            info = runtime_lookup.get((safe(duplicate.get("project_id")), safe(duplicate.get("task_id"))), {})
             resolved_excluded_keys.add((safe(duplicate.get("annotator_id")), safe(info.get("task_id")), safe(info.get("base_task_id")), safe(info.get("dataset_group"))))
-    realized_assigned_keys = {assignment_key(row) for row in realized_rows if assignment_key(row) in assigned} | resolved_excluded_keys
+    # Pending duplicate adjudication affects analysis eligibility, not whether a submission exists.
+    realized_assigned_keys = {assignment_key(row) for row in realized_rows if assignment_key(row) in assigned} | duplicate_submission_keys | resolved_excluded_keys
     for worker, task_id, base_task_id, dataset_group in sorted(assigned - realized_assigned_keys):
         key = (worker, task_id, base_task_id, dataset_group)
         realized_rows.append(

@@ -222,6 +222,8 @@ def test_distinct_annotation_ids_require_review_and_selected_exact_time_follows_
     logs.write_text("\n".join(json.dumps({"project_id": "66", "task_id": "1", "annotator_id": "w1", "annotation_id": ann, "session_id": ann, "active_seconds": seconds}) for ann, seconds in (("a1", 5), ("a2", 17))) + "\n", encoding="utf-8")
     pending = build_canonicalization([export], manual, semi, internal, mapping, active_log=logs, output_dir=tmp_path / "pending")
     assert pending["duplicate_review_pending_count"] == 1
+    assert pending["missing_submission_count"] == 0
+    assert pending["collection_completeness_passed"] is True
     assert _read_csv(tmp_path / "pending" / "c1_canonical_annotations.csv") == []
     decision = tmp_path / "decision.csv"
     selected_response_hash = sha256_json(_ann("a2", "w1")["result"])
