@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator HTTPS EN
 // @namespace    https://label.sparkle0825.top/
-// @version      stage3_active_time_identity_20260725_v3
+// @version      stage3_active_time_page_gate_20260711_v2
 // @description  Self-contained HTTPS helper for foreign HoHoNet Stage 1 annotators. Based on the official annotator helper; adds same-origin HTTPS defaults and optional CloudResearch worker-id metadata.
 // @author       HoHoNet
 // @match        https://label.sparkle0825.top/*
@@ -128,10 +128,6 @@
         gate.storeTaskMatchStatus = hasRouteMatch
           ? (gate.storeMismatchPresent ? "mixed_with_route_match" : "matches_route")
           : "mismatch_only";
-        if (gate.storeTaskMatchStatus === "mismatch_only") {
-          gate.reason = "route_store_task_mismatch";
-          return gate;
-        }
       }
       gate.taskIdentityMatched = true;
       gate.eligible = true;
@@ -349,7 +345,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "stage3_active_time_identity_20260725_v3";
+  const SCRIPT_VERSION = "stage3_active_time_page_gate_20260711_v2";
   window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;
   window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en";
   console.log(`HoHoNet Helper: loaded (v${SCRIPT_VERSION})`);
@@ -616,9 +612,6 @@
     if (metadata?.annotationMatchStatus === "unknown_annotation") {
       return "Annotation is not confirmed yet. Time will remain unassigned unless it can be safely matched.";
     }
-    if (metadata?.annotationMatchStatus === "client_annotation_id_only") {
-      return "Only a temporary browser annotation ID is available. It binds after save and stays out of formal active-time until then.";
-    }
     return "";
   }
 
@@ -704,18 +697,21 @@
       };
     }
     tokenPanel.style.border = `1px solid ${tokenState.border}`;
+    const seconds = pageGate.eligible ? (report && report.reportSeconds !== undefined ? report.reportSeconds : activeSeconds) : 0;
     if (minimized) {
       tokenPanel.style.padding = "6px";
       tokenPanel.style.width = "auto";
       tokenPanel.style.maxWidth = "none";
-      tokenPanel.style.border = "1px solid #e5e7eb";
+      const uploadFailed = ["missing_token", "forbidden_403", "fetch_failed"].includes(lastActiveTimeUploadStatus)
+        || String(lastActiveTimeUploadStatus).startsWith("http_");
+      tokenPanel.style.border = `1px solid ${uploadFailed ? "#ef4444" : pageGate.eligible ? "#22c55e" : "#f59e0b"}`;
       tokenPanel.style.boxShadow = "0 4px 14px rgba(15,23,42,0.14)";
-      if (!pageGate.eligible) {
-        const compactStatus = document.createElement("span");
-        compactStatus.textContent = "Active-Time: Not counting (not a task labeling page)";
-        compactStatus.style.cssText = "font-size: 12px; color: #475569; margin: 0 8px;";
-        tokenPanel.appendChild(compactStatus);
-      }
+      const compactStatus = document.createElement("span");
+      compactStatus.textContent = pageGate.eligible
+        ? `Active-Time: Counting · Task ${pageGate.routeTaskId || "?"} · ${Math.round(seconds)}s · Upload ${lastActiveTimeUploadStatus}`
+        : `Active-Time: Not counting · ${pageGate.reason || "page not ready"}`;
+      compactStatus.style.cssText = "font-size: 12px; color: #475569; margin: 0 8px;";
+      tokenPanel.appendChild(compactStatus);
       appendActiveTimePanelButton(tokenPanel, "Details", () => {
         setActiveTimePanelMode("details");
         updateActiveTimePanels(report, lastActiveTimeUploadStatus);
@@ -750,7 +746,6 @@
       });
     }
     tokenPanel.appendChild(actions);
-    const seconds = pageGate.eligible ? (report && report.reportSeconds !== undefined ? report.reportSeconds : activeSeconds) : 0;
     statusPanel.textContent = "";
     statusPanel.style.background = "#fff";
     statusPanel.style.color = "#111827";
@@ -1368,10 +1363,10 @@
         selectedJson = selected?.toJSON?.();
       } catch (e) {}
       const annotation = firstIdentityCandidate([
+        [selected?.id, "store.annotationStore.selected.id"],
         [selected?.pk, "store.annotationStore.selected.pk"],
         [selected?.annotation?.id, "store.annotationStore.selected.annotation.id"],
         [selectedJson?.id, "store.annotationStore.selected.toJSON.id"],
-        [selected?.id, "store.annotationStore.selected.id"],
       ], "unknown_annotation", "unknown");
       if (annotation.id === "unknown_annotation") return annotation;
 
@@ -1403,8 +1398,6 @@
       }
       return {
         ...annotation,
-        serverAnnotationId: /^\d+$/.test(annotation.id) && annotation.source !== "store.annotationStore.selected.id" ? annotation.id : "",
-        clientAnnotationId: getIdentityValue(selected?.id) || "",
         selectedAnnotationId: annotation.id,
         selectedAnnotationOwnerId: owner.id || "",
         selectedAnnotationOwnerSource: owner.source || "",
@@ -3141,8 +3134,6 @@
       annotatorId: getAnnotatorId(),
       annotationId: annotationIdentity.id,
       annotationIdSource: annotationIdentity.source,
-      serverAnnotationId: annotationIdentity.serverAnnotationId || "",
-      clientAnnotationId: annotationIdentity.clientAnnotationId || "",
       selectedAnnotationId: annotationIdentity.selectedAnnotationId || "",
       selectedAnnotationOwnerId: annotationIdentity.selectedAnnotationOwnerId || "",
       selectedAnnotationOwnerSource: annotationIdentity.selectedAnnotationOwnerSource || "",
@@ -3228,11 +3219,7 @@
         ? String(live.annotatorId).trim()
         : lastKnownActiveTimeMetadata.annotatorId || "unknown",
       annotationId,
-      annotationMatchStatus: annotationId === "unknown_annotation"
-        ? "unknown_annotation"
-        : live.serverAnnotationId ? "annotation_id_present" : "client_annotation_id_only",
-      serverAnnotationId: String(live.serverAnnotationId || ""),
-      clientAnnotationId: String(live.clientAnnotationId || ""),
+      annotationMatchStatus: annotationMatchStatus(annotationId),
       taskIdSource: isKnownActiveTimeMetadataValue(live.taskIdSource)
         ? String(live.taskIdSource).trim()
         : lastKnownActiveTimeMetadata.taskIdSource || "unknown",
@@ -3285,8 +3272,6 @@
       taskIdSource: metadata.taskIdSource || "unknown",
       projectIdSource: metadata.projectIdSource || "unknown",
       annotationIdSource: metadata.annotationIdSource || "unknown",
-      serverAnnotationId: metadata.serverAnnotationId || "",
-      clientAnnotationId: metadata.clientAnnotationId || "",
       selectedAnnotationId: metadata.selectedAnnotationId || "",
       selectedAnnotationOwnerId: metadata.selectedAnnotationOwnerId || "",
       selectedAnnotationOwnerSource: metadata.selectedAnnotationOwnerSource || "",
@@ -3307,8 +3292,6 @@
       task_id_source: report.taskIdSource,
       annotation_id: report.annotationId,
       annotation_id_source: report.annotationIdSource,
-      server_annotation_id: report.serverAnnotationId,
-      client_annotation_id: report.clientAnnotationId,
       selected_annotation_id: report.selectedAnnotationId,
       selected_annotation_owner_id: report.selectedAnnotationOwnerId,
       selected_annotation_owner_source: report.selectedAnnotationOwnerSource,
@@ -3461,12 +3444,12 @@
       let reportMetadata = currentActiveTimeMetadata;
       let secondsForReport = activeSeconds;
       const unknownCumulativeSeconds = (taskCumulativeSeconds.get(currentActiveTimeKey) || 0) + activeSeconds;
-      if (lateBindingStatus === "single_actual_annotation" && nextMetadata.serverAnnotationId) {
+      if (lateBindingStatus === "single_actual_annotation" && unknownCumulativeSeconds <= 5) {
         reportMetadata = {
           ...nextMetadata,
           activeTimeAliasFrom: currentActiveTimeKey,
-          activeTimeAliasReason: "unknown_annotation_late_bound",
-          lateBindingStatus: "single_actual_annotation",
+          activeTimeAliasReason: "short_unknown_bootstrap",
+          lateBindingStatus: "short_unknown_bootstrap_merged",
         };
         secondsForReport = unknownCumulativeSeconds;
         taskCumulativeSeconds.delete(currentActiveTimeKey);

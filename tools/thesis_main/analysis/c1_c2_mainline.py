@@ -192,14 +192,13 @@ def materialize_measurement_readiness(
         if building:
             buildings[building].append(row)
     building_rows = [{"building_id": building, "task_coverage": len(rows), "three_axis_ready_task_count": sum(_truth(row["measurement_ready"]) for row in rows), "measurement_ready": any(_truth(row["measurement_ready"]) for row in rows)} for building, rows in sorted(buildings.items())]
-    axis_graphs_ready = all(item["edge_count"] and item["connected"] for item in axis_graphs.values())
     estimand_freeze = {
         "Q_GT": bool(canonical_closed and collection_window_closed and axis_graphs["gt"]["edge_count"] and axis_graphs["gt"]["connected"]),
         "R_LOO": bool(canonical_closed and collection_window_closed and axis_graphs["loo"]["edge_count"] and axis_graphs["loo"]["connected"]),
         "F_struct": bool(canonical_closed and collection_window_closed and axis_graphs["structural"]["edge_count"] and axis_graphs["structural"]["connected"]),
     }
-    measurement_frozen = bool(canonical_closed and collection_window_closed and any(estimand_freeze.values()))
-    c2b_ready = bool(estimand_freeze["Q_GT"] and preannotation_feature_ready)
+    measurement_frozen = bool(canonical_closed and collection_window_closed and all(estimand_freeze.values()))
+    c2b_ready = bool(measurement_frozen and preannotation_feature_ready)
     write_csv(output_dir / "c1_measurement_readiness_by_worker.csv", worker_rows)
     write_csv(output_dir / "c1_measurement_readiness_by_task.csv", task_rows)
     write_csv(output_dir / "c1_measurement_readiness_by_building.csv", building_rows)
@@ -255,9 +254,10 @@ def materialize_c2b_design_worker_profile(
         process_support = _int(r.get("process_support")) if str(r.get("process_support", "")).strip() else _int(s.get("process_eligible_support"))
         independence_support = _int(r.get("independence_support")) if str(r.get("independence_support", "")).strip() else _int(s.get("independence_support"))
         administrative = _truth(c.get("administrative_exclusion")) or completion_status == "administrative_exclusion"
-        eligible = completion_status != "nonstarter" and completion_valid and not administrative and q_support > 0 and process_support > 0 and independence_support > 0
+        eligible = completion_status not in {"nonstarter", "closed_partial_insufficient"} and completion_valid and not administrative and q_support > 0 and process_support > 0 and independence_support > 0
         reasons = []
         if completion_status == "nonstarter": reasons.append("nonstarter")
+        if completion_status == "closed_partial_insufficient": reasons.append("closed_partial_support_insufficient")
         if not completion_valid: reasons.append("completion_disposition_not_valid")
         if administrative: reasons.append("administrative_or_safety_exclusion")
         if not q_support: reasons.append("missing_q_gt_baseline_support")
@@ -273,15 +273,26 @@ def materialize_c2b_design_worker_profile(
             "process_support": process_support, "independence_support": independence_support, "scope_reference_support": r.get("scope_reference_support", ""),
             "risk_slope": p.get("risk_slope", ""), "risk_slope_se": p.get("risk_slope_se", ""), "risk_slope_support": p.get("risk_support", ""), "c1_risk_slope_status": slope_status,
             "group_prior_slope": p.get("group_prior_slope", ""), "group_prior_scale": p.get("group_prior_scale", ""), "risk_slope_for_simulation": p.get("risk_slope_for_simulation", p.get("risk_slope", "")), "risk_slope_scale_for_simulation": p.get("risk_slope_scale_for_simulation", p.get("risk_slope_se", "")),
+            "group_slope_mean": p.get("group_slope_mean", ""), "between_worker_slope_sd": p.get("between_worker_slope_sd", ""),
+            "outcome_residual_sd": p.get("outcome_residual_sd", ""), "worker_intercept_sd": p.get("worker_intercept_sd", ""),
+            "task_sd": p.get("task_sd", ""), "building_sd": p.get("building_sd", ""), "Q_GT_baseline_se": p.get("Q_GT_baseline_se", ""),
             "missing_rate": p.get("missing_rate", ""), "c2_candidate_eligible": eligible, "exclusion_reason": ";".join(filter(None, reasons)),
         })
-    write_csv(output_dir / "c2b_design_worker_profile.csv", rows)
+    profile_path = output_dir / "c2b_design_worker_profile.csv"
+    roster_path = output_dir / "c2_eligible_roster_C1.csv"
+    write_csv(profile_path, rows)
+    write_csv(roster_path, [row for row in rows if _truth(row["c2b_baseline_eligible"])])
     graph_source = readiness_csv.parent / "c1_gt_worker_task_graph.csv"
     if graph_source.exists():
         eligible_workers = {row["worker_id"] for row in rows if _truth(row["c2b_baseline_eligible"])}
         graph_rows = [{**row, "c2b_baseline_eligible": True} for row in read_csv(graph_source) if row.get("worker_id") in eligible_workers]
         write_csv(output_dir / "c1_c2b_design_usable_graph.csv", graph_rows, ["axis", "canonical_annotation_id", "worker_id", "base_task_id", "building_id", "edge_evaluable", "c2b_baseline_eligible"])
-    return {"n_workers": len(rows), "n_eligible": sum(_truth(row["c2_candidate_eligible"]) for row in rows), "worker_profile_sha256": sha256_file(output_dir / "c2b_design_worker_profile.csv")}
+    return {
+        "n_workers": len(rows),
+        "n_eligible": sum(_truth(row["c2_candidate_eligible"]) for row in rows),
+        "worker_profile_sha256": sha256_file(profile_path),
+        "eligible_roster_sha256": sha256_file(roster_path),
+    }
 
 
 def formal_git_state(project_root: Path) -> dict[str, Any]:

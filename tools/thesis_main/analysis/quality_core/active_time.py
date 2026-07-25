@@ -282,8 +282,15 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
 
     for event in parsed_events:
         try:
-            if calibration and (event['annotation_unknown'] or not _is_explicit_true(event['page_gate_eligible'])):
-                continue
+            if calibration:
+                context = (event['project_id'], event['task_id'], event['annotator_id'], event['session_id'])
+                if (
+                    event['annotation_unknown']
+                    or not _is_explicit_true(event['page_gate_eligible'])
+                    or unknown_events_by_context.get(context)
+                    or event['alias_from']
+                ):
+                    continue
             key = _event_key(event)
             if not calibration and _is_short_bootstrap_alias(event):
                 alias_p, alias_t, alias_a, alias_ann = event['alias_from']

@@ -1,8 +1,7 @@
-"""Run an immutable, candidate-only C1 pre-closeout rehearsal."""
+"""Materialize immutable C1 evidence bundles for the public closeout CLI."""
 
 from __future__ import annotations
 
-import argparse
 import csv
 import hashlib
 import json
@@ -19,7 +18,6 @@ _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
-from tools.thesis_main.analysis import build_c2_assignment_manifest_from_c1_gaps as c2b
 from tools.thesis_main.analysis import c1_canonicalize_exports
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files, validate_active_log_freeze_manifest
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, write_csv, write_json
@@ -42,13 +40,10 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
 from tools.thesis_main.analysis.c1_c2_mainline import (
     formal_git_state,
     materialize_analysis_views,
-    materialize_c2b_design_worker_profile,
     materialize_measurement_readiness,
 )
 from tools.thesis_main.analysis.materialize_c1_preannotation_task_features import materialize as materialize_preannotation_features
-from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import materialize as materialize_design_parameters
 from tools.thesis_main.analysis.materialize_frozen_routing_profiles import build_global
-from tools.thesis_main.analysis.materialize_c2_task_risk import materialize as materialize_task_risk
 from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import build_source as build_p1_c1_source, materialize as materialize_predictive_association
 from tools.thesis_main.analysis.geometry_consensus.materialize import materialize_geometry_consensus
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
@@ -56,9 +51,7 @@ from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 REBUILD = Path("analysis_results/calibration_rebuild_20260702")
 PLANNED_MAPPING = REBUILD / "ls_project_mapping_audit_v3_1.csv"
-RESERVE_POOL = REBUILD / "calibration_reserve_draft_v3_1.csv"
 CANDIDATE_INVENTORY = REBUILD / "calibration_full_candidate_inventory_v3.csv"
-RISK_DESIGN_CONTRACT = _PROJECT_ROOT / "docs" / "thesis_main" / "C2B_RISK_DESIGN_CONTRACT_v1.json"
 
 
 def _files(path: Path) -> list[Path]:
@@ -84,17 +77,18 @@ def _content_aggregate_sha(paths: Iterable[Path]) -> str:
 
 def _validate_collection_closure(
     path: Path | None, *, formal: bool, export_sha: str, active_freeze_manifest: Path | None,
-    assignment_paths: list[Path], export_paths: list[Path],
+    assignment_paths: list[Path], export_paths: list[Path], assignment_sha_override: str | None = None,
 ) -> tuple[bool, dict[str, Any]]:
     if not path:
         if formal:
             raise ValueError("formal mode requires --collection-closure-manifest")
         return False, {"status": "not_provided_rehearsal_only"}
     payload = json.loads(path.read_text(encoding="utf-8"))
-    assignment_sha = _aggregate_sha(_manifest_rows(assignment_paths))
+    assignment_sha = assignment_sha_override or _aggregate_sha(_manifest_rows(assignment_paths))
     assignment_content_sha = _content_aggregate_sha(assignment_paths)
     export_content_sha = _content_aggregate_sha(export_paths)
     freeze_sha = sha256_file(active_freeze_manifest) if active_freeze_manifest and active_freeze_manifest.exists() else ""
+    freeze_payload = json.loads(active_freeze_manifest.read_text(encoding="utf-8")) if active_freeze_manifest and active_freeze_manifest.exists() else {}
     expected = {
         "c1_export_aggregate_sha256": export_sha,
         "c1_active_log_freeze_manifest_sha256": freeze_sha,
@@ -106,6 +100,14 @@ def _validate_collection_closure(
     if "c1_export_aggregate_sha256" in mismatches and payload.get("c1_export_aggregate_sha256") == export_content_sha:
         mismatches.remove("c1_export_aggregate_sha256")
     required = ("closure_time", "operator", "late_submission_policy")
+    try:
+        closure_time = datetime.fromisoformat(str(payload.get("closure_time", "")).replace("Z", "+00:00"))
+        cutoff_time = datetime.fromisoformat(str(freeze_payload.get("collection_cutoff_server_time", "")).replace("Z", "+00:00"))
+        cutoff_matches = closure_time == cutoff_time
+    except ValueError:
+        cutoff_matches = False
+    if not cutoff_matches:
+        mismatches.append("closure_time_vs_active_log_cutoff")
     if payload.get("collection_window_closed") is not True or mismatches or any(not str(payload.get(name, "")).strip() for name in required):
         if formal:
             raise ValueError(f"invalid collection closure manifest: {mismatches or 'missing closure fields'}")
@@ -130,6 +132,14 @@ def _stage_active_log_provenance(p1_closeout_dir: Path, c1_active_log: Path) -> 
             resolved = _PROJECT_ROOT / resolved
         configured_resolved = resolved.resolve()
         c1_resolved = c1_active_log.resolve()
+        snapshot = Path(str(active.get("snapshot_path") or ""))
+        if snapshot and not snapshot.is_absolute():
+            snapshot = _PROJECT_ROOT / snapshot
+        immutable_snapshot = bool(
+            active.get("aggregate_sha256") and snapshot.is_dir()
+            and snapshot.resolve().is_relative_to(p1_closeout_dir.resolve())
+        )
+        valid_prescreen_source = configured_resolved == (_PROJECT_ROOT / "active_logs" / "prescreen").resolve() or immutable_snapshot
         return {
             "prescreen": {
                 "stage": "PreScreen",
@@ -139,7 +149,7 @@ def _stage_active_log_provenance(p1_closeout_dir: Path, c1_active_log: Path) -> 
                 "aggregate_sha256": str(active.get("aggregate_sha256") or ""),
                 "source_config": config.resolve().as_posix(),
                 "source_config_sha256": sha256_file(config),
-                "validated": resolved.is_dir() or bool(active.get("snapshot_path")),
+                "validated": valid_prescreen_source,
             },
             "c1": {
                 "stage": "C1",
@@ -204,174 +214,9 @@ def _derived_worker_gates(quality_rows: list[dict[str, str]], workers: list[dict
     return output
 
 
-def _candidate_design_manifest(task_pool: Path, worker_profile: Path, output: Path) -> Path:
-    tasks = [row for row in read_csv(task_pool) if str(row.get("assignment_eligible", "")).lower() in {"true", "1"}]
-    anchors = sum(str(row.get("anchor_eligible") or row.get("is_common_anchor") or row.get("eligible_for_anchor_candidate", "")).lower() in {"true", "1"} for row in tasks)
-    bridges = sum(
-        str(row.get("bridge_eligible") or row.get("is_diverse_bridge") or row.get("eligible_for_reserve_candidate", "")).lower() in {"true", "1"}
-        for row in tasks
-    )
-    worker_count = sum(str(row.get("c2_candidate_eligible", "")).lower() in {"true", "1"} for row in read_csv(worker_profile))
-    def levels(low: int, high: int) -> list[int]:
-        if high < low:
-            return []
-        span = high - low
-        return sorted({low, low + (span + 2) // 3, low + (2 * span + 2) // 3, high})
-
-    candidates = []
-    # Enumerate from the realized pool rather than privileging an historical
-    # a2/b2/u6-style design.  The simulation decides whether any candidate is
-    # admissible; rehearsal never selects one.
-    max_common = min(anchors, max(1, worker_count))
-    max_per_worker = min(bridges, max(1, 2 * ((bridges + max(worker_count, 1) - 1) // max(worker_count, 1))))
-    for common in levels(1, max_common):
-        for per_worker in levels(1, max_per_worker):
-            min_unique = max(1, (worker_count * per_worker + 1) // 2)
-            for unique in levels(min_unique, min(bridges, worker_count * per_worker)):
-                candidates.append({
-                    "design_id": f"candidate_a{common}_b{per_worker}_u{unique}",
-                    "common_anchor_count": common,
-                    "bridge_per_worker": per_worker,
-                    "unique_bridge_tasks": unique,
-                    "min_task_support": 2,
-                    "max_worker_stratum_imbalance": 2,
-                })
-    manifest = {
-        "manifest_version": "c2_design_v1",
-        "artifact_role": "precloseout_candidate_enumeration_only",
-        "input_sha256": {"worker_profile_csv": sha256_file(worker_profile), "task_pool_csv": sha256_file(task_pool)},
-        "risk_contract_sha256": sha256_file(RISK_DESIGN_CONTRACT),
-        "threshold_manifest_sha256": sha256_file(_PROJECT_ROOT / "docs" / "thesis_main" / "C2B_DESIGN_SELECTION_THRESHOLDS.json"),
-        "candidate_designs": candidates,
-        "simulation": {"seed": 20260724, "draws": 1000, "resampling": "C1 empirical building/task/worker bootstrap"},
-        "selection_rule": "report_pareto_candidates_only_until_frozen_post_C1_selection",
-    }
-    write_json(output, manifest)
-    return output
-
-
-def _candidate_task_pool(inventory: Path, assignments: list[Path], output: Path, reserve_pool: Path | None = None) -> Path:
-    history = {
-        value
-        for path in assignments for row in read_csv(path)
-        for value in (row.get("task_id", ""), row.get("base_task_id", "")) if value
-    }
-    reserve = {
-        value: row for row in (read_csv(reserve_pool) if reserve_pool else [])
-        for value in (row.get("task_id", ""), row.get("base_task_id", "")) if value
-    }
-    rows = sorted(
-        read_csv(inventory),
-        key=lambda row: (int(row.get("full_pool_order") or 10**9), row.get("task_id", "")),
-    )
-    candidate_rows = []
-    legacy_audit_rows = []
-    for row in rows:
-        task, base = row.get("task_id", ""), row.get("base_task_id", "")
-        legacy = reserve.get(task) or reserve.get(base) or {}
-        history_overlap = task in history or base in history
-        excluded = history_overlap or str(row.get("hard_exclude", "")).lower() in {"true", "1"}
-        if legacy:
-            legacy_audit_rows.append({
-                "task_id": task, "base_task_id": base, "image_id": row.get("image_id", ""), "building_id": row.get("building_id", ""),
-                "legacy_curated_rank": legacy.get("reserve_rank", legacy.get("selection_rank", "")), "legacy_curated_reason": legacy.get("selection_reason", legacy.get("notes", "")),
-                "legacy_curated_manifest_sha256": sha256_file(reserve_pool) if reserve_pool else "", "history_overlap": history_overlap,
-                "selected": False, "not_selected_reason": "history_overlap_hard_exclusion" if history_overlap else "candidate_only_precloseout",
-            })
-        if excluded or str(row.get("eligible_after_exclusion", "")).lower() not in {"true", "1"}:
-            continue
-        pair_count = int(float(row.get("gt_pair_count") or 0))
-        candidate_rows.append({
-            **row,
-            "legacy_human_curated_candidate": bool(reserve.get(task) or reserve.get(base)),
-            "legacy_curated_rank": (reserve.get(task) or reserve.get(base) or {}).get("reserve_rank", (reserve.get(task) or reserve.get(base) or {}).get("selection_rank", "")),
-            "legacy_curated_reason": (reserve.get(task) or reserve.get(base) or {}).get("selection_reason", (reserve.get(task) or reserve.get(base) or {}).get("notes", "")),
-            "legacy_curated_manifest_sha256": sha256_file(reserve_pool) if reserve_pool and (reserve.get(task) or reserve.get(base)) else "",
-            "legacy_curated_selected_at": legacy.get("selected_at", "unknown_not_recorded" if legacy else ""),
-            "legacy_curated_selection_stage": legacy.get("selection_stage", "legacy_c2_reverse_manual_screen" if legacy else ""),
-            "legacy_curated_selection_blind_to_c1_outcomes": legacy.get("selection_blind_to_c1_outcomes", "not_evaluable" if legacy else ""),
-            "legacy_curated_selector": legacy.get("selector", "unknown_not_recorded" if legacy else ""),
-            "legacy_curated_original_pool": legacy.get("original_pool", legacy.get("source_pool", "unknown_not_recorded" if legacy else "")),
-            "building_id": row.get("building_id", ""),
-            "source_split": row.get("source_pool", ""),
-            "g_model_struct_input_pair_count": pair_count,
-            "d_model_feat": "", "g_model_struct": "", "d_cal_A": "",
-            "risk_design_A": "", "risk_design_A_status": "pending_complete_C1",
-            "risk_design_stratum": "", "risk_design_stratum_status": "provisional_not_frozen",
-            "risk_assist_candidate": "pending_c1_risk_freeze", "risk_route_candidate": "pending_c2b_confirmation",
-            # Common-anchor is a C2-B assignment role. The legacy inventory has
-            # no anchor flags, so every reference-ready remaining task may be
-            # considered by the frozen design simulation.
-            "anchor_eligible": str(row.get("geometry_gold_ready", "")).lower() in {"true", "1"},
-            "bridge_eligible": str(row.get("eligible_for_reserve_candidate", "")).lower() in {"true", "1"},
-            "reference_status": "reference_ready" if str(row.get("geometry_gold_ready", "")).lower() in {"true", "1"} else "pending_adjudication",
-            "scope_status": row.get("expert_review_status", ""), "history_exclusion": False,
-            "p1_c1_overlap": history_overlap, "future_t1_v1_exclusion": False,
-            "future_holdout_manifest_status": "not_provided_rehearsal_only",
-            "candidate_role_source": "legacy_human_curated_candidate" if reserve.get(task) or reserve.get(base) else "full_candidate_inventory_precloseout",
-        })
-    write_csv(output, candidate_rows, list(candidate_rows[0]) if candidate_rows else ["task_id"])
-    write_csv(output.parent / "c2_legacy_reverse_candidate_audit.csv", legacy_audit_rows, list(legacy_audit_rows[0]) if legacy_audit_rows else ["task_id"])
-    return output
-
-
-def materialize_c2b_task_eligibility_evidence(
-    inventory_csv: Path, task_risk_csv: Path, reference_csv: Path, assignment_paths: list[Path], output_csv: Path,
-    *, source_split_evidence_csv: Path | None = None, future_holdout_evidence_csv: Path | None = None,
-    history_overlap_audit_csv: Path | None = None, scope_registry_csv: Path | None = None,
-    reference_registry_csv: Path | None = None, feature_manifest: Path | None = None,
-) -> dict[str, Any]:
-    """Join every C2-B gate on image/base_task identity with immutable source SHAs."""
-    inventory = read_csv(inventory_csv)
-    risk = {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(task_risk_csv)}
-    reference = {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(reference_csv)}
-    history = {value for path in assignment_paths for row in read_csv(path) for value in (row.get("task_id", ""), row.get("base_task_id", "")) if value}
-    if history_overlap_audit_csv and history_overlap_audit_csv.exists():
-        history = {value for row in read_csv(history_overlap_audit_csv) if str(row.get("history_overlap", row.get("overlap", ""))).lower() in {"true", "1"} for value in (row.get("task_id", ""), row.get("base_task_id", ""), row.get("image_id", "")) if value}
-    sidecars = {
-        "source": {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(source_split_evidence_csv)} if source_split_evidence_csv and source_split_evidence_csv.exists() else {},
-        "holdout": {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(future_holdout_evidence_csv)} if future_holdout_evidence_csv and future_holdout_evidence_csv.exists() else {},
-        "scope": {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(scope_registry_csv)} if scope_registry_csv and scope_registry_csv.exists() else {},
-        "reference": {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(reference_registry_csv)} if reference_registry_csv and reference_registry_csv.exists() else {},
-    }
-    rows = []
-    for item in inventory:
-        key = (item.get("image_id", ""), item.get("base_task_id", ""))
-        task = item.get("task_id", "")
-        risk_row, reference_row = risk.get(key, {}), reference.get(key, {})
-        source_row, holdout_row = sidecars["source"].get(key, {}), sidecars["holdout"].get(key, {})
-        scope_row, registry_reference_row = sidecars["scope"].get(key, {}), sidecars["reference"].get(key, {})
-        history_overlap = task in history or item.get("base_task_id", "") in history
-        source_ok = str((source_row or item).get("source_split_allowed", (source_row or item).get("allocation", ""))).lower() in {"true", "1", "c2", "allowed"}
-        holdout_ok = str((holdout_row or item).get("future_holdout_clear", (holdout_row or item).get("clear", ""))).lower() in {"true", "1", "clear", "allowed"}
-        scope_ok = str((scope_row or reference_row or item).get("final_scope") or (scope_row or reference_row or item).get("scope_status") or "").lower() == "in_scope"
-        reference_ok = str((registry_reference_row or reference_row or item).get("geometry_reference_ready") or (registry_reference_row or reference_row or item).get("reference_status") or "").lower() in {"true", "1", "reference_ready"}
-        feature_ok = bool(risk_row.get("risk_design_vector_A")) and bool(risk_row.get("risk_design_score_A"))
-        risk_ok = str(risk_row.get("risk_status", "")) == "frozen"
-        reasons = []
-        if history_overlap: reasons.append("history_overlap")
-        if not source_ok: reasons.append("source_split_not_clear")
-        if not holdout_ok: reasons.append("future_holdout_not_clear")
-        if not scope_ok: reasons.append("scope_not_in_scope")
-        if not reference_ok: reasons.append("reference_not_ready")
-        if not feature_ok: reasons.append("risk_feature_not_ready")
-        if not risk_ok: reasons.append("risk_not_frozen")
-        rows.append({
-            "image_id": item.get("image_id", ""), "base_task_id": item.get("base_task_id", ""), "task_id": task,
-            "building_id": item.get("building_id", ""), "source_split_allowed": source_ok, "future_holdout_clear": holdout_ok,
-            "history_overlap": history_overlap, "scope_ready": scope_ok, "reference_ready": reference_ok,
-            "feature_ready": feature_ok, "risk_ready": risk_ok, "assignment_eligible": not reasons,
-            "exclusion_reason": ";".join(reasons), "inventory_sha256": sha256_file(inventory_csv),
-            "task_risk_sha256": sha256_file(task_risk_csv), "reference_sha256": sha256_file(reference_csv),
-            "source_split_evidence_sha256": sha256_file(source_split_evidence_csv) if source_split_evidence_csv and source_split_evidence_csv.exists() else "",
-            "future_holdout_evidence_sha256": sha256_file(future_holdout_evidence_csv) if future_holdout_evidence_csv and future_holdout_evidence_csv.exists() else "",
-            "history_overlap_audit_sha256": sha256_file(history_overlap_audit_csv) if history_overlap_audit_csv and history_overlap_audit_csv.exists() else "",
-            "scope_registry_sha256": sha256_file(scope_registry_csv) if scope_registry_csv and scope_registry_csv.exists() else "",
-            "reference_registry_sha256": sha256_file(reference_registry_csv) if reference_registry_csv and reference_registry_csv.exists() else "",
-            "feature_manifest_sha256": sha256_file(feature_manifest) if feature_manifest and feature_manifest.exists() else "",
-        })
-    write_csv(output_csv, rows)
-    return {"n_tasks": len(rows), "n_eligible": sum(str(row["assignment_eligible"]).lower() == "true" for row in rows), "sha256": sha256_file(output_csv)}
+def _c1_closeout_blockers(formal: bool, blockers: list[str]) -> list[str]:
+    """C2 confirmation is downstream and can never block the C1 freeze owner."""
+    return [*([] if formal else ["partial_c1_collection"]), *blockers]
 
 
 def materialize(
@@ -387,6 +232,9 @@ def materialize(
     reference_amendment: Path | None = None, outside_assignment_disposition: Path | None = None,
     completion_disposition: Path | None = None, c1_active_log_freeze_manifest: Path | None = None,
     collection_closure_manifest: Path | None = None,
+    active_log_snapshot_bound: bool = False,
+    source_export_aggregate_sha: str | None = None,
+    source_assignment_aggregate_sha: str | None = None,
 ) -> dict[str, Any]:
     if input_status not in {"precloseout_rehearsal", "formal"}:
         raise ValueError("input_status must be precloseout_rehearsal or formal")
@@ -398,23 +246,28 @@ def materialize(
     if not export_files:
         raise ValueError("no C1 export JSON files found")
     export_rows = _manifest_rows(export_files)
-    export_sha = _aggregate_sha(export_rows)
+    export_sha = source_export_aggregate_sha or _aggregate_sha(export_rows)
     pipeline_files = sorted((Path(__file__).parent.rglob("*.py")), key=lambda path: path.as_posix())
     code_pipeline_sha = _aggregate_sha(_manifest_rows(pipeline_files))
     _active_root, active_source_files = resolve_active_log_files(active_log)
     fixed_sources = {
         "manual_assignment": manual_assignment, "semi_assignment": semi_assignment,
         "worker_distribution": worker_distribution, "gt_export": gt_export,
-        "planned_mapping": PLANNED_MAPPING, "reserve_pool": RESERVE_POOL,
+        "planned_mapping": PLANNED_MAPPING,
         "candidate_inventory": CANDIDATE_INVENTORY,
     }
     if c1_preannotation_feature_csv is not None:
         fixed_sources["c1_preannotation_feature"] = c1_preannotation_feature_csv
     p1_source_files = sorted((path for path in p1_closeout_dir.iterdir() if path.is_file()), key=lambda path: path.name.lower())
     stage_active_log_provenance = _stage_active_log_provenance(p1_closeout_dir, active_log)
+    if formal and (
+        not stage_active_log_provenance["prescreen"].get("validated")
+        or not stage_active_log_provenance.get("prescreen_not_substituted")
+    ):
+        raise ValueError("formal C1 requires the PreScreen active_logs/prescreen source or its immutable closeout snapshot")
     review_sources = {name: path for name, path in {
         "duplicate_adjudication": duplicate_adjudication, "structural_disposition": structural_disposition,
-        "project_independence_provenance": project_independence_disposition,
+        "project_independence_disposition": project_independence_disposition,
         "annotation_independence_disposition": independence_disposition, "scope_adjudication": scope_adjudication,
         "reference_amendment": reference_amendment, "outside_assignment_disposition": outside_assignment_disposition,
         "completion_disposition": completion_disposition,
@@ -426,11 +279,15 @@ def materialize(
     if formal:
         if not c1_active_log_freeze_manifest or not c1_active_log_freeze_manifest.exists():
             raise ValueError("formal mode requires c1_active_log_freeze_manifest")
-        validate_active_log_freeze_manifest(c1_active_log_freeze_manifest, active_log)
+        validate_active_log_freeze_manifest(
+            c1_active_log_freeze_manifest, active_log,
+            allow_immutable_copy=active_log_snapshot_bound,
+        )
     collection_window_closed, collection_closure = _validate_collection_closure(
         collection_closure_manifest, formal=formal, export_sha=export_sha,
         active_freeze_manifest=c1_active_log_freeze_manifest,
         assignment_paths=[manual_assignment, semi_assignment], export_paths=export_files,
+        assignment_sha_override=source_assignment_aggregate_sha,
     )
     run_date = run_date or datetime.now().strftime("%Y%m%d")
     prefix = "c1_formal_audit" if formal else "c1_precloseout_rehearsal"
@@ -505,7 +362,7 @@ def materialize(
     independence_summary = materialize_independence(
         output_dir / "c1_canonical_meta_observations.csv", output_dir,
         disposition_csv=review_snapshots.get("annotation_independence_disposition"),
-        project_disposition_csv=review_snapshots.get("project_independence_provenance"),
+        project_disposition_csv=review_snapshots.get("project_independence_disposition"),
         project_evidence_csv=output_dir / "c1_project_independence_provenance_evidence.csv",
     )
     structural_summary = materialize_structural_validation(
@@ -627,67 +484,25 @@ def materialize(
         canonical_closed=bool(final_canonical_summary.get("C1_CANONICAL_CLOSED")),
         collection_window_closed=collection_window_closed,
         eligibility_csv=output_dir / "c1_row_analysis_eligibility.csv",
-        preannotation_feature_ready=bool(preannotation_summary.get("n_ready")),
+        preannotation_feature_ready=bool(preannotation_summary.get("n_tasks")) and preannotation_summary.get("n_ready") == preannotation_summary.get("n_tasks"),
     )
     readiness["method_contract"] = "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1"
     readiness["git_commit_sha"] = git_state["git_commit_sha"]
     readiness["worktree_clean"] = bool(git_state["clean"])
     write_json(output_dir / "c1_measurement_freeze_manifest.json", readiness)
-    raw_task_pool = _candidate_task_pool(
-        fixed_snapshots["candidate_inventory"], [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
-        output_dir / "c2b_candidate_task_pool_raw.csv", fixed_snapshots["reserve_pool"],
-    )
-    risk_summary = materialize_task_risk(
-        raw_task_pool, Path("output/layout_json"), output_dir / "c1_preannotation_task_features.csv", output_dir,
-        input_status=input_status,
-        checkpoint=Path("ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth"),
-        reference_dir=Path("data/mp3d_layout/train_no_occ/img"), extract_lhfeat=False,
-        risk_contract=RISK_DESIGN_CONTRACT,
-        c1_freeze_manifest=output_dir / "c1_measurement_freeze_manifest.json",
-    )
-    task_pool = output_dir / "c2_task_risk_inventory.csv"
-    shutil.copy2(task_pool, output_dir / "c2b_candidate_task_pool.csv")
-    c2b_evidence_summary = materialize_c2b_task_eligibility_evidence(
-        fixed_snapshots["candidate_inventory"], task_pool, output_dir / "c1_task_outcome_reference.csv",
-        [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]], output_dir / "c2b_task_eligibility_evidence.csv",
-    )
-    parameter_summary = materialize_design_parameters(
-        output_dir / "c1_gt_quality_analysis.csv", output_dir / "c1_task_risk_reference.csv", output_dir / "structural_validation_analysis.csv",
-        output_dir / "c1_worker_completion_audit.csv", output_dir,
-    )
-    profile_summary = materialize_c2b_design_worker_profile(
-        output_dir / "c1_worker_completion_audit.csv", output_dir / ("c1_three_track_worker_state_formal.csv" if formal else "c1_three_track_worker_state.csv"),
-        output_dir / "c1_c2_design_parameters.csv", output_dir / "c1_measurement_readiness_by_worker.csv", output_dir,
-    )
-    profile = output_dir / "c2b_design_worker_profile.csv"
-    design_manifest = _candidate_design_manifest(task_pool, profile, output_dir / "c2b_candidate_design_manifest.json")
-    if not json.loads(design_manifest.read_text(encoding="utf-8")).get("candidate_designs"):
-        c2_summary = {"candidate_only": True, "launch_ready": False, "failure_reason": "risk_pool_insufficient_no_assignment_eligible_tasks", "n_feasible_candidate_designs": 0}
-        write_csv(output_dir / "c2_candidates" / "c2b_design_candidates.csv", [], ["design_id", "feasible", "failure_reason"])
-        write_csv(output_dir / "c2_candidates" / "c2b_worker_task_graph_audit.csv", [], ["design_id", "worker_task_graph_connected"])
-        write_csv(output_dir / "c2_candidates" / "candidate_C2B_assignment.csv", [], ["worker_id", "task_id", "assignment_launch_allowed"])
-    else:
-        try:
-            c2_summary = c2b.materialize(
-                task_pool, profile, design_manifest,
-                output_dir / "c2_candidates", input_status=input_status,
-                eligibility_evidence_csv=output_dir / "c2b_task_eligibility_evidence.csv",
-            )
-        except ValueError as exc:
-            c2_summary = {"candidate_only": True, "launch_ready": False, "failure_reason": str(exc)}
-    _copy_alias(output_dir / "c2_candidates" / "c2b_design_candidates.csv", output_dir / "c2b_candidate_designs.csv")
-    _copy_alias(output_dir / "c2_candidates" / "c2b_worker_task_graph_audit.csv", output_dir / "c2b_worker_task_graph_audit.csv")
-    _copy_alias(output_dir / "c2_candidates" / "candidate_C2B_assignment.csv", output_dir / "candidate_C2B_assignment.csv")
+    c2_summary = {
+        "status": "not_run_in_c1_stage",
+        "candidate_only": True,
+        "launch_ready": False,
+        "n_feasible_candidate_designs": 0,
+        "failure_reason": "C2-B design is owned by design-c2b after C1 freeze",
+    }
 
     dependency_contracts = [
         Path("docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json"),
         Path("docs/thesis_main/c1_geometry_parser_amendment_v1.json"),
         Path("docs/thesis_main/C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md"),
         Path("docs/thesis_main/C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md"),
-        RISK_DESIGN_CONTRACT,
-        Path("docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json"),
-        Path("config/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34.yaml"),
-        Path("ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth"),
     ]
     dependency_rows = _manifest_rows([*pipeline_files, *fixed_snapshots.values(), *snapshot_exports, *snapshot_active, *p1_snapshots, *review_snapshots.values(), *(path for path in dependency_contracts if path.exists())])
     versions = {}
@@ -731,19 +546,18 @@ def materialize(
         "active_time_ledger_summary": active_ledger_summary,
         "outside_assignment_summary": outside_summary,
         "geometry_loo_summary": {"n_pairwise_rows": len(pairwise_rows), "n_loo_rows": len(loo_rows)},
-        "c2b_design_worker_profile_summary": profile_summary,
-        "c1_c2_design_parameter_summary": parameter_summary,
+        "c2b_design_worker_profile_summary": {"status": "owned_by_design_c2b"},
+        "c1_c2_design_parameter_summary": {"status": "owned_by_design_c2b"},
         "c1_preannotation_feature_summary": preannotation_summary,
         "c1_measurement_readiness": readiness,
         "three_track_worker_state_summary": three_track_summary,
         "c2_candidate_pool_summary": {
             "n_inventory_tasks": len(read_csv(fixed_snapshots["candidate_inventory"])),
-            "n_tasks": len(read_csv(task_pool)),
-            "source": "full_candidate_inventory_precloseout",
-            "future_holdout_manifest_status": "not_provided_rehearsal_only",
+            "n_tasks": 0,
+            "source": "not_materialized_in_c1_stage",
         },
-        "c2_task_risk_summary": risk_summary,
-        "c2b_task_eligibility_evidence_summary": c2b_evidence_summary,
+        "c2_task_risk_summary": {"status": "not_run_in_c1_stage"},
+        "c2b_task_eligibility_evidence_summary": {"status": "not_run_in_c1_stage"},
         "p1_to_c1_predictive_summary": predictive_summary,
         "C1_CANONICAL_CLOSED": bool(readiness["C1_CANONICAL_CLOSED"]),
         "C1_MEASUREMENT_FROZEN": bool(readiness["C1_MEASUREMENT_FROZEN"]),
@@ -752,8 +566,8 @@ def materialize(
         "C2B_ASSIGNMENT_MATERIALIZED": False,
         "C2B_LAUNCH_READY": False,
         "C2B_DESIGN_READY": bool(readiness["C2B_DESIGN_READY"]),
-        "formal_closeout_ready": formal and bool(readiness["C1_MEASUREMENT_FROZEN"]), "profile_frozen": False, "c2_launch_ready": False,
-        "formal_mode_executed": formal, "formal_audit_complete": formal and bool(readiness["C1_CANONICAL_CLOSED"]),
+        "formal_closeout_ready": formal and bool(readiness["C1_MEASUREMENT_FROZEN"]) and bool(final_canonical_summary["formal_closeout_ready"]), "profile_frozen": False, "c2_launch_ready": False,
+        "formal_mode_executed": formal, "formal_audit_complete": formal and bool(final_canonical_summary["formal_audit_complete"]),
         "c1_evidence_frozen": False, "c2_design_frozen": False, "c2_assignment_materialized": False,
         "formal_results_materialized": formal and final_canonical_summary["formal_audit_complete"], "c2_candidate_only": not formal,
         "chain_gate": {"legacy_diagnostic_chain_consumed": False},
@@ -761,7 +575,8 @@ def materialize(
         "strong_global_model_audit": model_audit,
         "c2b_candidate_summary": c2_summary,
         "final_canonical_closeout_summary": final_canonical_summary,
-        "blockers": [*(["partial_c1_collection"] if not formal else []), *final_canonical_summary["blockers"], "c2b_not_confirmed"],
+        "blockers": _c1_closeout_blockers(formal, final_canonical_summary["blockers"]),
+        "downstream_blockers": ["c2b_not_confirmed"],
     }
     summary["state_machine"] = {
         "C1_COLLECTION_INCOMPLETE": bool(readiness["C1_COLLECTION_INCOMPLETE"]),
@@ -772,34 +587,3 @@ def materialize(
     }
     write_json(output_dir / ("formal_audit_summary.json" if formal else "rehearsal_summary.json"), summary)
     return summary
-
-
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser(description="Run immutable C1 pre-closeout rehearsal from raw exports.")
-    parser.add_argument("--export-dir", action="append", type=Path, required=True)
-    parser.add_argument("--active-log", type=Path, required=True)
-    parser.add_argument("--manual-assignment", type=Path, required=True)
-    parser.add_argument("--semi-assignment", type=Path, required=True)
-    parser.add_argument("--worker-distribution", type=Path, required=True)
-    parser.add_argument("--gt-export", type=Path, required=True)
-    parser.add_argument("--p1-closeout-dir", type=Path, required=True)
-    parser.add_argument("--output-root", type=Path, required=True)
-    parser.add_argument("--input-status", choices=("precloseout_rehearsal",), required=True)
-    parser.add_argument("--run-date", help="immutable output label, e.g. 20260724_r2")
-    parser.add_argument("--c1-preannotation-feature-csv", type=Path, help="frozen pre-annotation C1 model feature table")
-    parser.add_argument("--c1-active-log-freeze-manifest", type=Path)
-    parser.add_argument("--collection-closure-manifest", type=Path)
-    args = parser.parse_args(argv)
-    print(json.dumps(materialize(
-        args.export_dir, args.active_log, args.manual_assignment, args.semi_assignment,
-        args.worker_distribution, args.gt_export, args.p1_closeout_dir,
-        args.output_root, input_status=args.input_status, run_date=args.run_date,
-        c1_preannotation_feature_csv=args.c1_preannotation_feature_csv,
-        c1_active_log_freeze_manifest=args.c1_active_log_freeze_manifest,
-        collection_closure_manifest=args.collection_closure_manifest,
-    ), ensure_ascii=False, indent=2))
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())

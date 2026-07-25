@@ -21,8 +21,12 @@ def main() -> int:
     parser.add_argument("--config", type=Path, required=True)
     parser.add_argument("--cache", type=Path, required=True)
     parser.add_argument("--manifest", type=Path, required=True)
+    parser.add_argument("--device", default="auto", help="auto, cpu, cuda, or a torch device such as cuda:0")
     args = parser.parse_args()
-    print(json.dumps(freeze_feature_reference(args.reference_dir, args.checkpoint, args.config, args.cache, args.manifest), indent=2))
+    print(json.dumps(freeze_feature_reference(
+        args.reference_dir, args.checkpoint, args.config, args.cache, args.manifest,
+        device=args.device,
+    ), indent=2))
     return 0
 
 

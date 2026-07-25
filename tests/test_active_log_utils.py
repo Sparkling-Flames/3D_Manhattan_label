@@ -568,7 +568,7 @@ def test_calibration_unknown_is_audit_only_and_not_task_time(tmp_path: Path):
     assert row["active_time_integrity_status"] == "unknown_audit_only"
 
 
-def test_calibration_known_and_unknown_counts_only_owner_validated_known(tmp_path: Path):
+def test_calibration_mixed_session_is_entirely_unavailable(tmp_path: Path):
     active_logs = tmp_path / "active_logs"
     active_logs.mkdir()
     (active_logs / "active_times_2026-07-03.jsonl").write_text(
@@ -582,10 +582,11 @@ def test_calibration_known_and_unknown_counts_only_owner_validated_known(tmp_pat
         str(active_logs), annotation_owner_map={("65", "2", "a1"): "w1"}, policy="calibration"
     )
 
-    assert logs[("65", "2", "w1")]["active_time_value"] == 10.0
-    assert logs[("65", "2", "w1", "a1")]["active_time_value"] == 10.0
-    assert logs[("65", "2", "w1", "a1")]["known_unknown_oscillation_flag"] is True
-    assert logs[("65", "2", "w1", "a1")]["unassigned_active_time_seconds"] == 4.0
+    assert ("65", "2", "w1") not in logs
+    assert ("65", "2", "w1", "a1") not in logs
+    audit = lookup_unknown_active_time_audit(logs, "65", "2", "w1")
+    assert audit["known_unknown_oscillation_flag"] is True
+    assert audit["unassigned_active_time_seconds"] == 4.0
 
 
 def test_calibration_does_not_merge_short_unknown_bootstrap(tmp_path: Path):
@@ -602,7 +603,7 @@ def test_calibration_does_not_merge_short_unknown_bootstrap(tmp_path: Path):
         str(active_logs), annotation_owner_map={("65", "3", "a1"): "w1"}, policy="calibration"
     )
 
-    assert logs[("65", "3", "w1", "a1")]["active_time_value"] == 4.0
+    assert ("65", "3", "w1", "a1") not in logs
     assert lookup_unknown_active_time_audit(logs, "65", "3", "w1")["unassigned_active_time_seconds"] == 4.0
 
 

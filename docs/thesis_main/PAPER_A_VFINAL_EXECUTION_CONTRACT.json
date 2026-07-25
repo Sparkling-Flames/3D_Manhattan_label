@@ -21,19 +21,20 @@
     "rule": "下游资格、画像和设计仅可通过 canonical_annotation_id sidecar join；不得回写这些工件。"
   },
   "formal_evidence": {
-    "C1": ["c1_canonical_bundle", "c1_row_analysis_eligibility", "c1_gt_quality", "geometry_worker_task_loo", "structural_validation", "c1_three_axis_worker_state"],
-    "C2-B": ["c1_measurement_freeze_manifest", "c1_preannotation_task_features", "c2_task_risk_inventory", "c2b_design_worker_profile", "c2b_design_candidates", "c2b_simulation_draw_summary"],
+    "C1": ["c1_active_log_freeze_manifest", "c1_collection_closure_manifest", "c1_canonical_bundle", "c1_row_analysis_eligibility", "c1_gt_quality", "geometry_worker_task_loo", "structural_validation", "c1_three_axis_worker_state", "c1_evidence_freeze_manifest"],
+    "C2-B": ["c1_preannotation_task_features", "feature_freeze_manifest", "building_registry", "source_split_evidence_and_approval", "future_holdout_evidence_and_approval", "history_scope_reference_evidence", "c2_task_risk_inventory", "c2b_task_eligibility_evidence", "c2b_design_worker_profile", "c2b_candidate_design_manifest", "c2b_simulation_draw_summary", "selected_design_approval", "selected_task_reference_approval", "capacity_manifest"],
     "C2-A-RP": ["C2-B closeout", "frozen sequential draw manifest", "task and paired-block support audit"],
     "T1": ["frozen assignment and resolver outputs", "image-level primary inference"],
     "V1": ["frozen scheduling/resolver outputs", "ITT and administrative-censor inference"]
   },
   "gates": {
     "C1_CANONICAL_CLOSED": "identity, assignment/version/duplicate disposition and raw snapshot binding are complete; it does not assert measurement support.",
-    "C1_MEASUREMENT_FROZEN": "canonical closure plus evaluable Q_GT, held-out LOO and structural axes by worker/task/building and connected usable graph.",
-    "C2B_DESIGN_READY": "measurement freeze plus SHA-bound pre-annotation C1 risk features and formal C2-B design inputs."
+    "C1_MEASUREMENT_FROZEN": "collection closure plus canonical closure and separately evaluable Q_GT, held-out LOO and structural axes; no axis may substitute another.",
+    "C2B_DESIGN_READY": "C1 measurement freeze plus complete SHA-bound pre-annotation C1 model/layout features; it does not freeze risk, design, assignment or routing."
   },
   "risk_channels": {
-    "risk_design_A": "pre-annotation model/layout evidence and C1 feature-space calibration only; required for C2-B design.",
+    "risk_design_vector_A": "the sole ordered four-channel C2-B exposure from frozen pre-annotation model/layout evidence and C1 support distance.",
+    "risk_design_score_A": "the sole continuous scalar derived from risk_design_vector_A; it owns stratum, worker slope, bridge maximin and simulation exposure.",
     "risk_assist": "T1 assistance analysis only.",
     "risk_route": "V1 routing only after C2-B confirmation; never a C2-B assignment prerequisite."
   },
@@ -48,7 +49,6 @@
     "rehearsal artifacts, worktree patches and candidate assignments cannot be finalized or imported as formal assignments."
   ],
   "legacy_diagnostic_only": [
-    "run_c1_closeout_dryrun_chain",
     "worker_state_snapshot_C1",
     "calibration_r_u_evidence_C1",
     "worker_profile_sidecar_C1",
@@ -57,15 +57,21 @@
     "r_u and legacy profile freeze artifacts"
   ],
   "formal_entrypoints": [
-    "run_c1_closeout_launch.py day1-canonical-audit",
-    "run_c1_closeout_launch.py day1-measurement-freeze",
-    "run_c1_closeout_launch.py day2-c2b-design",
-    "run_c1_closeout_launch.py day2-c2b-build"
+    "run_c1_closeout_launch.py rehearse-c1",
+    "run_c1_closeout_launch.py freeze-c1",
+    "run_c1_closeout_launch.py audit-c1",
+    "run_c1_closeout_launch.py finalize-c1",
+    "run_c1_closeout_launch.py design-c2b",
+    "run_c1_closeout_launch.py build-c2b"
   ],
   "owners": {
-    "canonical": "C1 data closeout owner",
-    "dispositions_and_reference": "designated expert reviewer",
-    "risk_and_design": "C2-B design owner",
-    "formal_freeze": "study execution owner"
+    "active_log_freeze": "C1 collection operator",
+    "collection_closure": "C1 study execution owner",
+    "canonical_and_estimand_evidence": "C1 analysis chain",
+    "dispositions_reference_and_building_registry": "designated expert reviewer",
+    "risk_freeze": "C2-B risk materializer",
+    "design_candidate_simulation": "C2-B design materializer",
+    "design_and_task_approval": "designated C2-B approver",
+    "formal_assignment": "C2-B build entrypoint"
   }
 }

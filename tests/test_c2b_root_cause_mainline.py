@@ -66,12 +66,12 @@ def test_completion_and_outside_dispositions_change_consumed_evidence(tmp_path: 
 
 def test_hierarchical_simulation_rebuilds_graph_after_delivery() -> None:
     workers = [
-        {"worker_id": "w1", "Q_GT_task_adjusted": ".8", "risk_slope_for_simulation": ".1", "group_prior_scale": ".1", "missing_rate": "0", "F_struct": "1"},
-        {"worker_id": "w2", "Q_GT_task_adjusted": ".7", "risk_slope_for_simulation": ".1", "group_prior_scale": ".1", "missing_rate": "0", "F_struct": "0"},
+        {"worker_id": "w1", "Q_GT_task_adjusted": ".8", "risk_slope_for_simulation": ".1", "between_worker_slope_sd": ".1", "outcome_residual_sd": ".1", "worker_intercept_sd": ".02", "task_sd": ".03", "building_sd": ".04", "Q_GT_baseline_se": ".05", "missing_rate": "0", "F_struct": "1"},
+        {"worker_id": "w2", "Q_GT_task_adjusted": ".7", "risk_slope_for_simulation": ".1", "between_worker_slope_sd": ".1", "outcome_residual_sd": ".1", "worker_intercept_sd": ".02", "task_sd": ".03", "building_sd": ".04", "Q_GT_baseline_se": ".05", "missing_rate": "0", "F_struct": "0"},
     ]
     tasks = {
-        "t1": {"task_id": "t1", "building_id": "b1", "risk_design_A": ".1", "risk_design_stratum": "ordinary"},
-        "t2": {"task_id": "t2", "building_id": "b2", "risk_design_A": ".9", "risk_design_stratum": "stress"},
+        "t1": {"task_id": "t1", "building_id": "b1", "risk_design_score_A": ".1", "risk_design_stratum": "ordinary"},
+        "t2": {"task_id": "t2", "building_id": "b2", "risk_design_score_A": ".9", "risk_design_stratum": "stress"},
     }
     assignments = [{"worker_id": worker, "task_id": task} for worker in ("w1", "w2") for task in tasks]
     result = _empirical_cluster_bootstrap("d", workers, assignments, tasks, {"worker_task_graph_connected": True}, seed=7, draws=30)

@@ -107,7 +107,9 @@ def materialize_completion_support(
         assigned_counts = Counter(row["condition"] for _key, row in rows)
         observed_counts = Counter(row["condition"] for key, row in rows if key in observed)
         total, complete = len(rows), sum(key in observed for key, _row in rows)
-        status = "nonstarter" if complete == 0 else "completed" if complete == total else ("closed_partial_usable" if collection_window_closed and complete > 0 else "closed_partial_insufficient" if collection_window_closed else "partial_noncompletion")
+        # Collection closure alone cannot certify estimand support. A reviewer
+        # may promote this to closed_partial_usable after row-level gates exist.
+        status = "nonstarter" if complete == 0 else "completed" if complete == total else "closed_partial_insufficient" if collection_window_closed else "partial_noncompletion"
         worker_status[worker] = status
         completion_rows.append({
             "worker_id": worker,
@@ -170,9 +172,13 @@ def materialize_completion_support(
         "collection_window_closed": collection_window_closed,
         "roster_count": len(completion_rows), "assigned_submission_count": len(realization_rows),
         "observed_submission_count": sum(row["observed_submission"] for row in realization_rows), "missing_submission_count": len(missing_rows),
-        "completed_worker_count": counts["completed"], "partial_noncompletion_worker_count": counts["partial_noncompletion"], "nonstarter_worker_count": counts["nonstarter"],
+        "completed_worker_count": counts["completed"],
+        "partial_noncompletion_worker_count": counts["partial_noncompletion"] + counts["closed_partial_usable"] + counts["closed_partial_insufficient"],
+        "closed_partial_usable_worker_count": counts["closed_partial_usable"],
+        "closed_partial_insufficient_worker_count": counts["closed_partial_insufficient"],
+        "nonstarter_worker_count": counts["nonstarter"],
         "completed_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] == "completed"],
-        "partial_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] == "partial_noncompletion"],
+        "partial_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] in {"partial_noncompletion", "closed_partial_usable", "closed_partial_insufficient"}],
         "nonstarter_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] == "nonstarter"],
         "missing_nonstarter_count": sum(row["missing_reason"] == "worker_nonstarter" for row in missing_rows),
         "missing_partial_count": sum(row["missing_reason"] == "worker_partial_noncompletion" for row in missing_rows),
@@ -612,14 +618,19 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
         for row in canonical
     }
     canonical_contexts = {key[:3] for key in canonical_ids}
-    all_events, payload_seen = [], set()
+    all_events, payload_seen, parse_errors = [], set(), []
     for path in sorted(active_log_dir.rglob("*.jsonl")):
         for line_number, line in enumerate(path.read_text(encoding="utf-8").splitlines(), 1):
             if not line.strip():
                 continue
             try:
                 event = json.loads(line)
-            except json.JSONDecodeError:
+            except json.JSONDecodeError as exc:
+                parse_errors.append({
+                    "source_file": path.name, "source_line": line_number,
+                    "line_sha256": hashlib.sha256(line.encode()).hexdigest(),
+                    "error": str(exc),
+                })
                 continue
             payload = {key: value for key, value in event.items() if key != "server_received_at"}
             payload_sha = hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
@@ -628,8 +639,7 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
             project = str(event.get("project_id") or "").strip()
             task = str(event.get("task_id") or "").strip()
             worker = str(event.get("annotator_id") or "").strip()
-            server_annotation = str(event.get("server_annotation_id") or "").strip()
-            annotation = str(server_annotation or event.get("annotation_id") or "").strip()
+            annotation = str(event.get("annotation_id") or "").strip()
             session = str(event.get("session_id") or "default")
             script = str(event.get("script_version") or "")
             unknown = is_unknown_annotation_id(annotation)
@@ -650,7 +660,6 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
                 "event_schema": schema,
                 "unknown_annotation": unknown, "parent_derived": parent_derived,
                 "client_annotation_id": event.get("client_annotation_id", event.get("selected_annotation_id", "")),
-                "server_annotation_id": server_annotation,
                 "selected_annotation_id": event.get("selected_annotation_id", ""), "annotation_id_source": event.get("annotation_id_source", ""),
                 "active_time_alias_from": event.get("active_time_alias_from", ""), "active_time_alias_reason": event.get("active_time_alias_reason", ""), "late_binding_status": event.get("late_binding_status", ""),
                 "annotation_match_status": event.get("annotation_match_status", ""), "page_gate_reason": event.get("page_gate_reason", ""),
@@ -658,6 +667,7 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
                 "event_time": event_dt.isoformat() if event_dt else "",
             })
     write_csv(output_dir / "c1_active_time_event_ledger.csv", all_events)
+    write_csv(output_dir / "c1_active_time_parse_error_audit.csv", parse_errors, ["source_file", "source_line", "line_sha256", "error"])
     excluded_events = [row for row in all_events if not row["c1_context_eligible"]]
     write_csv(output_dir / "c1_active_time_context_exclusion_audit.csv", excluded_events)
     events = [row for row in all_events if row["c1_context_eligible"]]
@@ -675,16 +685,11 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
         unsafe_mixed = len(schemas) != 1 or "unknown" in schemas
         known_annotations = {row["annotation_id"] for row in known_rows}
         mixed_known_unknown = bool(unknown_rows and known_rows)
+        self_declared_alias = any(row.get("active_time_alias_from") for row in known_rows)
         gate_verified = bool(unique) and all(_truth(row.get("page_gate_eligible")) and row.get("page_gate_reason") == "eligible" for row in unique)
-        exact = len(known_annotations) == 1 and all(row.get("server_annotation_id") for row in known_rows) and (key[0], key[1], key[2], next(iter(known_annotations))) in canonical_ids
-        late_bound = mixed_known_unknown and exact and any(
-            row.get("active_time_alias_from") == f"{key[0]}|{key[1]}|{key[2]}|unknown_annotation"
-            and row.get("active_time_alias_reason") == "unknown_annotation_late_bound"
-            and row.get("late_binding_status") == "single_actual_annotation"
-            for row in known_rows
-        )
-        status = "audit_only_unknown" if unknown else "forensic_parent_derived" if parent else "audit_only_mixed_schema" if unsafe_mixed else "not_evaluable_page_gate" if not gate_verified else "eligible_late_bound_session" if late_bound else "audit_only_mixed_known_unknown" if mixed_known_unknown else "not_evaluable_annotation_identity" if not exact else "eligible_cumulative_session"
-        intervals = cumulative_active_intervals(known_rows, include_initial=True) if status in {"eligible_cumulative_session", "eligible_late_bound_session"} else []
+        exact = len(known_annotations) == 1 and (key[0], key[1], key[2], next(iter(known_annotations))) in canonical_ids
+        status = "audit_only_unknown" if unknown else "forensic_parent_derived" if parent else "audit_only_mixed_schema" if unsafe_mixed else "not_evaluable_page_gate" if not gate_verified else "audit_only_mixed_known_unknown" if mixed_known_unknown else "not_evaluable_unfrozen_alias" if self_declared_alias else "not_evaluable_annotation_identity" if not exact else "eligible_cumulative_session"
+        intervals = cumulative_active_intervals(known_rows, include_initial=True) if status == "eligible_cumulative_session" else []
         seconds = merged_interval_seconds(intervals)
         duration_not_allocatable = bool(unknown_rows or status != "eligible_cumulative_session")
         sessions.append({
@@ -703,7 +708,7 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
     annotations = []
     for key, rows in sorted(by_annotation.items()):
         exact_identity = key in canonical_ids
-        eligible = [row for row in rows if row["session_status"] in {"eligible_cumulative_session", "eligible_late_bound_session"} and exact_identity]
+        eligible = [row for row in rows if row["session_status"] == "eligible_cumulative_session" and exact_identity]
         intervals = [tuple(interval) for row in eligible for interval in json.loads(row.get("active_intervals_json") or "[]")]
         annotations.append({
             "project_id": key[0], "runtime_task_id": key[1], "worker_id": key[2], "annotation_id": key[3],
@@ -716,7 +721,7 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
     unknown_sessions = [row for row in sessions if row.get("duration_not_allocatable")]
     write_csv(output_dir / "c1_active_time_unknown_audit.csv", unknown_sessions)
     summary = {
-        "raw_event_count": len(all_events), "c1_context_event_count": len(events), "excluded_event_count": len(excluded_events),
+        "raw_event_count": len(all_events), "parse_error_count": len(parse_errors), "c1_context_event_count": len(events), "excluded_event_count": len(excluded_events),
         "deduplicated_event_count": sum(not row["network_retry_duplicate"] for row in events),
         "session_count": len(sessions), "exact_annotation_count": sum(row["binding_status"] == "exact_annotation" for row in annotations),
         "task_sensitivity_annotation_count": sum(row["binding_status"] == "exact_annotation" for row in annotations),
@@ -740,6 +745,10 @@ def materialize_independence(
 ) -> dict[str, Any]:
     source_sha = hashlib.sha256(meta_csv.read_bytes()).hexdigest()
     project_evidence_sha = hashlib.sha256(project_evidence_csv.read_bytes()).hexdigest() if project_evidence_csv and project_evidence_csv.exists() else ""
+    project_evidence_rows = {
+        (row.get("project_id", ""), row.get("condition", "")): row
+        for row in (read_csv(project_evidence_csv) if project_evidence_csv and project_evidence_csv.exists() else [])
+    }
     disposition_rows = read_csv(disposition_csv) if disposition_csv and disposition_csv.exists() else []
     dispositions = {row.get("canonical_annotation_id", ""): row for row in disposition_rows}
     project_rows = read_csv(project_disposition_csv) if project_disposition_csv and project_disposition_csv.exists() else []
@@ -757,13 +766,24 @@ def materialize_independence(
             "project_config_sha256", "annotation_visibility_contract", "prior_annotation_visibility",
             "raw_parent_schema_coverage", "cross_owner_parent_count", "unresolved_parent_count",
             "reviewed_by", "reviewed_at",
-        )) and project.get("source_project_evidence_sha256") == project.get("project_evidence_sha256", "")
+        ))
+        project_key = (row.get("project_id", ""), row.get("condition", ""))
+        evidence_row = project_evidence_rows.get(project_key, {})
+        if project_evidence_csv:
+            numeric_match = all(
+                _int(project.get(field)) == _int(evidence_row.get(field))
+                for field in ("annotation_count", "cross_owner_parent_count", "unresolved_parent_count", "copy_risk_evidence_count")
+            )
+            try:
+                coverage_match = abs(float(project.get("raw_parent_schema_coverage", "")) - float(evidence_row.get("raw_parent_schema_coverage", ""))) < 1e-12
+            except (TypeError, ValueError):
+                coverage_match = False
+            project_valid = project_valid and bool(evidence_row) and project.get("source_project_evidence_sha256") == project_evidence_sha and numeric_match and coverage_match and project.get("raw_export_sha256_set") == evidence_row.get("raw_export_sha256_set")
+        else:
+            project_valid = project_valid and project.get("source_project_evidence_sha256") == project.get("project_evidence_sha256", "")
         project_clear = project_valid and str(project.get("provenance_status", "")).strip() == "complete" and str(project.get("copy_risk_status", "")).strip() == "cleared" and _int(project.get("cross_owner_parent_count")) == 0 and _int(project.get("unresolved_parent_count")) == 0 and str(project.get("parent_field_coverage_complete", "true")).lower() in {"true", "1"}
         if project_evidence_csv and project_clear:
-            project_clear = (
-                project.get("source_project_evidence_sha256") == project_evidence_sha
-                and _int(project.get("annotation_count")) == project_counts[(row.get("project_id", ""), row.get("condition", ""))]
-            )
+            project_clear = _int(project.get("annotation_count")) == project_counts[project_key]
         effective = {**project, **row, **disposition} if disposition_valid else {**project, **row} if project_valid else row
         identity_complete = all(str(row.get(field, "")).strip() for field in ("project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "canonical_annotation_id"))
         cross_owner = _truth(row.get("parent_cross_owner")) or _truth(effective.get("parent_cross_owner"))
@@ -831,10 +851,13 @@ def materialize_project_independence_provenance(meta_csv: Path, output_dir: Path
         evidence.append(item)
         evidence_sha = hashlib.sha256(json.dumps(item, sort_keys=True).encode("utf-8")).hexdigest()
         item["project_evidence_sha256"] = evidence_sha
-        template.append({**item, "source_project_evidence_sha256": evidence_sha, "project_config_sha256": "", "annotation_visibility_contract": "", "prior_annotation_visibility": "", "provenance_status": "", "copy_risk_status": "", "parent_field_coverage_complete": "", "reviewed_by": "", "reviewed_at": ""})
+        template.append({**item, "project_evidence_row_sha256": evidence_sha, "source_project_evidence_sha256": "", "project_config_sha256": "", "annotation_visibility_contract": "", "prior_annotation_visibility": "", "provenance_status": "", "copy_risk_status": "", "parent_field_coverage_complete": "", "reviewed_by": "", "reviewed_at": ""})
     write_csv(output_dir / "c1_project_independence_provenance_evidence.csv", evidence)
+    evidence_file_sha = hashlib.sha256((output_dir / "c1_project_independence_provenance_evidence.csv").read_bytes()).hexdigest()
+    for row in template:
+        row["source_project_evidence_sha256"] = evidence_file_sha
     write_csv(output_dir / "c1_project_independence_provenance_template.csv", template)
-    summary = {"project_condition_count": len(evidence), "annotation_count": len(rows), "source_meta_sha256": source_sha, "pending_project_count": len(evidence)}
+    summary = {"project_condition_count": len(evidence), "annotation_count": len(rows), "source_meta_sha256": source_sha, "project_evidence_sha256": evidence_file_sha, "pending_project_count": len(evidence)}
     (output_dir / "c1_project_independence_provenance_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
 

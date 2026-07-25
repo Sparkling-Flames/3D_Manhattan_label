@@ -17,6 +17,7 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou
+from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
 
 
 OUTCOME_FIELDS = [
@@ -95,9 +96,62 @@ def materialize(
         for row in [json.loads(line)]
     }
     references = _gt_references(gt_export)
+    amendments: dict[str, dict[str, Any]] = {}
+    invalid_amendments = 0
+    canonical_ids_by_base = {
+        base: {row.get("canonical_annotation_id", "") for row in canonical if row.get("base_task_id", "") == base}
+        for base in {row.get("base_task_id", "") for row in canonical}
+    }
+    for row in _read_csv(reference_amendment) if reference_amendment and reference_amendment.exists() else []:
+        base = row.get("base_task_id", "")
+        try:
+            points = json.loads(row.get("corrected_points_json", ""))
+            triggers = set(json.loads(row.get("triggering_canonical_annotation_ids_json", "[]") or "[]"))
+        except (json.JSONDecodeError, TypeError):
+            invalid_amendments += 1
+            continue
+        public_sha = references.get(base, {}).get("sha256", "")
+        expected_public_sha = row.get("source_public_gt_sha256", "")
+        valid = (
+            bool(base and isinstance(points, list) and points)
+            and base not in amendments
+            and row.get("reference_status") == "reference_corrected"
+            and all(row.get(field, "").strip() for field in ("reviewed_by", "reviewed_at"))
+            and expected_public_sha == public_sha
+            and triggers.issubset(canonical_ids_by_base.get(base, set()))
+            and normalize_geometry(points)["valid"]
+        )
+        if not valid:
+            invalid_amendments += 1
+            continue
+        reference_sha = _sha_payload(points)
+        references[base] = {"identity": row.get("reference_identity") or f"corrected_gt:{base}:{reference_sha[:12]}", "points": points, "sha256": reference_sha}
+        amendments[base] = {**row, "triggers": triggers}
     contexts = {}
     audit = []
-    scope_decisions = {row.get("base_task_id", ""): row for row in _read_csv(scope_adjudication_csv)} if scope_adjudication_csv and scope_adjudication_csv.exists() else {}
+    scope_queue_by_base = {}
+    for row in canonical:
+        base = row.get("base_task_id", "")
+        item = inventory.get(base, {})
+        final_scope, _oos, _mode, _reviewer = _scope(item)
+        if base and not final_scope:
+            scope_queue_by_base.setdefault(base, {
+                "base_task_id": base,
+                "pending_reason": "unreviewed_or_ambiguous_scope",
+                "inventory_review_status": item.get("expert_review_status", "missing"),
+            })
+    scope_queue = list(scope_queue_by_base.values())
+    queue_path = output_dir / "c1_scope_base_task_review_queue.csv"
+    _write(output_dir / "c1_scope_review_queue.csv", scope_queue, ["base_task_id", "pending_reason", "inventory_review_status"])
+    _write(queue_path, scope_queue, ["base_task_id", "pending_reason", "inventory_review_status"])
+    queue_sha = hashlib.sha256(queue_path.read_bytes()).hexdigest()
+    _write(output_dir / "c1_scope_adjudication_template.csv", [
+        {**row, "final_scope": "", "oos_subtype": "", "reviewed_by": "", "reviewed_at": "", "source_queue_sha256": queue_sha}
+        for row in scope_queue
+    ], ["base_task_id", "pending_reason", "inventory_review_status", "final_scope", "oos_subtype", "reviewed_by", "reviewed_at", "source_queue_sha256"])
+    raw_scope_decisions = _read_csv(scope_adjudication_csv) if scope_adjudication_csv and scope_adjudication_csv.exists() else []
+    valid_scope_decisions = [row for row in raw_scope_decisions if row.get("source_queue_sha256") == queue_sha]
+    scope_decisions = {row.get("base_task_id", ""): row for row in valid_scope_decisions}
     for row in canonical:
         key = tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"))
         if key in contexts:
@@ -108,9 +162,10 @@ def materialize(
         if decision and decision.get("final_scope", "").lower() in {"in_scope", "oos"} and all(decision.get(field) for field in ("reviewed_by", "reviewed_at")):
             final_scope, oos_subtype, scope_mode, reviewer = decision["final_scope"].lower(), decision.get("oos_subtype", ""), "sha_bound_base_task_adjudication", decision["reviewed_by"]
         reference = references.get(row.get("base_task_id", ""), {})
+        amendment = amendments.get(row.get("base_task_id", ""), {})
         status = "resolved" if final_scope else "pending"
         geometry_ready = bool(reference.get("points"))
-        reference_status = "oos_geometry_not_applicable" if final_scope == "oos" else "reference_ready" if geometry_ready else "pending_adjudication"
+        reference_status = "oos_geometry_not_applicable" if final_scope == "oos" else "reference_corrected" if amendment else "reference_ready" if geometry_ready else "pending_adjudication"
         audit.append({
             **dict(zip(("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"), key)),
             "inventory_review_status": item.get("expert_review_status", "missing"),
@@ -122,18 +177,18 @@ def materialize(
                 **dict(zip(("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"), key)),
                 "final_scope": final_scope, "scope_resolution_status": status,
                 "oos_subtype": oos_subtype, "scope_reference_mode": scope_mode,
-                "geometry_reference_mode": "public_frozen_gt" if reference else "not_required_oos" if final_scope == "oos" else "",
-                "geometry_reference_status": "reference_ready_public_gt" if reference else "not_required" if final_scope == "oos" else "reference_missing",
+                "geometry_reference_mode": "expert_corrected_frozen_gt" if amendment else "public_frozen_gt" if reference else "not_required_oos" if final_scope == "oos" else "",
+                "geometry_reference_status": "reference_ready_corrected_gt" if amendment else "reference_ready_public_gt" if reference else "not_required" if final_scope == "oos" else "reference_missing",
                 "reference_identity": reference.get("identity", ""),
                 "reference_sha256": reference.get("sha256", ""),
                 "reference_worker_excluded": "false", "reference_evidence_status": "evaluable" if reference else "not_required" if final_scope == "oos" else "not_evaluable",
-                "adjudication_status": status, "reviewed_by": reviewer,
+                "adjudication_status": status, "reviewed_by": amendment.get("reviewed_by", reviewer),
                 "operational_reference_status": reference_status,
-                "submission_informed_reference_revision": "false",
+                "submission_informed_reference_revision": bool(amendment.get("triggers")),
                 "geometry_reference_ready": geometry_ready or final_scope == "oos",
                 "task_outcome_reference_ready": status == "resolved",
                 "estimand_specific_closeout_ready": status == "resolved" and (geometry_ready or final_scope == "oos"),
-                "reviewed_at": "", "notes": "review time absent in frozen candidate inventory; formal mode must fail closed",
+                "reviewed_at": amendment.get("reviewed_at", ""), "notes": amendment.get("notes", "review time absent in frozen candidate inventory; formal mode must fail closed"),
             }
     quality = []
     outcomes_by_key = contexts
@@ -142,10 +197,13 @@ def materialize(
         outcome = outcomes_by_key.get(key, {})
         geom = geometry.get(row.get("canonical_annotation_id", ""), {})
         reference = references.get(row.get("base_task_id", ""), {})
+        amendment = amendments.get(row.get("base_task_id", ""), {})
         score, meta = None, {"reason": "reference_geometry_missing"}
         structural_status = row.get("structural_validation_status", "")
         structurally_valid = structural_status == "passed" or (not structural_status and bool(geom.get("corners_px")))
-        if not structurally_valid:
+        if row.get("canonical_annotation_id", "") in amendment.get("triggers", set()):
+            meta = {"reason": "submission_informed_reference_revision"}
+        elif not structurally_valid:
             meta = {"reason": "annotation_geometry_invalid"}
         elif geom.get("corners_px") and reference.get("points"):
             score, meta = compute_layout_mask_iou(np.asarray(geom["corners_px"], dtype=float), np.asarray(reference["points"], dtype=float))
@@ -165,6 +223,7 @@ def materialize(
             "geometry_reference_status": outcome.get("geometry_reference_status", "reference_missing"),
             "quality_interpretation_status": "provisional_pending_task_outcome" if score is not None and outcome.get("adjudication_status") != "resolved" else "resolved" if score is not None else "not_evaluable",
             "reference_identity": reference.get("identity", ""), "reference_sha256": reference.get("sha256", ""),
+            "submission_informed_reference_revision": row.get("canonical_annotation_id", "") in amendment.get("triggers", set()),
             "score_reason": "" if score is not None else meta.get("reason", "not_evaluable"),
         })
     outcome_rows = list(contexts.values())
@@ -177,15 +236,12 @@ def materialize(
     for row in audit:
         if row["task_outcome_status"] == "pending":
             pending_by_base.setdefault(row["base_task_id"], {"base_task_id": row["base_task_id"], "pending_reason": row["pending_reason"], "inventory_review_status": row["inventory_review_status"]})
-    scope_queue = list(pending_by_base.values())
-    queue_path = output_dir / "c1_scope_base_task_review_queue.csv"
-    _write(output_dir / "c1_scope_review_queue.csv", scope_queue, ["base_task_id", "pending_reason", "inventory_review_status"])
-    _write(queue_path, scope_queue, ["base_task_id", "pending_reason", "inventory_review_status"])
-    queue_sha = hashlib.sha256(queue_path.read_bytes()).hexdigest()
-    _write(output_dir / "c1_scope_adjudication_template.csv", [
-        {**row, "final_scope": "", "oos_subtype": "", "reviewed_by": "", "reviewed_at": "", "source_queue_sha256": queue_sha}
-        for row in scope_queue
-    ], ["base_task_id", "pending_reason", "inventory_review_status", "final_scope", "oos_subtype", "reviewed_by", "reviewed_at", "source_queue_sha256"])
+    amendment_candidates = sorted({row["base_task_id"] for row in audit if not row["gt_reference_present"]})
+    _write(output_dir / "c1_reference_amendment_template.csv", [{
+        "base_task_id": base, "reference_status": "", "corrected_points_json": "",
+        "triggering_canonical_annotation_ids_json": "[]", "source_public_gt_sha256": "",
+        "reference_identity": "", "reviewed_by": "", "reviewed_at": "", "notes": "",
+    } for base in amendment_candidates], ["base_task_id", "reference_status", "corrected_points_json", "triggering_canonical_annotation_ids_json", "source_public_gt_sha256", "reference_identity", "reviewed_by", "reviewed_at", "notes"])
     support_after_exclusion = [{
         "worker_id": worker,
         "resolved_in_scope_support": sum(row.get("worker_id") == worker and row.get("task_outcome_status") == "resolved" for row in quality),
@@ -203,6 +259,10 @@ def materialize(
         "task_outcome_reference_ready": bool(outcome_rows) and all(bool(row["task_outcome_reference_ready"]) for row in outcome_rows),
         "estimand_specific_closeout_ready": bool(outcome_rows) and all(bool(row["estimand_specific_closeout_ready"]) for row in outcome_rows),
         "n_pending_base_tasks": len(pending_by_base),
+        "reference_amendment_sha256": hashlib.sha256(reference_amendment.read_bytes()).hexdigest() if reference_amendment and reference_amendment.exists() else "",
+        "scope_adjudication_sha256": hashlib.sha256(scope_adjudication_csv.read_bytes()).hexdigest() if scope_adjudication_csv and scope_adjudication_csv.exists() else "",
+        "invalid_or_stale_scope_adjudication_count": len(raw_scope_decisions) - len(valid_scope_decisions),
+        "applied_reference_amendment_count": len(amendments), "invalid_reference_amendment_count": invalid_amendments,
         "formal_ready": bool(outcome_rows) and all(bool(row["estimand_specific_closeout_ready"]) for row in outcome_rows),
         "formal_blocker": "" if outcome_rows and all(bool(row["estimand_specific_closeout_ready"]) for row in outcome_rows) else "pending_scope_or_geometry_reference",
     }
@@ -217,8 +277,10 @@ def main() -> None:
     parser.add_argument("--inventory-csv", type=Path, required=True)
     parser.add_argument("--gt-export", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--scope-adjudication-csv", type=Path)
+    parser.add_argument("--reference-amendment", type=Path)
     args = parser.parse_args()
-    print(json.dumps(materialize(args.canonical_csv, args.geometry_jsonl, args.inventory_csv, args.gt_export, args.output_dir), indent=2))
+    print(json.dumps(materialize(args.canonical_csv, args.geometry_jsonl, args.inventory_csv, args.gt_export, args.output_dir, scope_adjudication_csv=args.scope_adjudication_csv, reference_amendment=args.reference_amendment), indent=2))
 
 
 if __name__ == "__main__":

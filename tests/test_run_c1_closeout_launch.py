@@ -1,16 +1,74 @@
 import argparse
 import json
+import subprocess
 
 import pytest
 
-from tools.thesis_main.analysis.run_c1_closeout_launch import day1_audit, day1_finalize, day2_build
-from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _candidate_design_manifest, _candidate_task_pool
+from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _future_heldout_images, _source_identity_aggregate, build_c2b, finalize_c1, freeze_c1, main, rehearse_c1
+from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _aggregate_sha, _c1_closeout_blockers
 
 
-def test_day1_rejects_mutable_active_log_directory(tmp_path):
-    args = argparse.Namespace(active_log_snapshot=tmp_path / "new_server")
-    with pytest.raises(ValueError, match="frozen C1 active-log snapshot"):
-        day1_audit(args)
+def test_rehearsal_can_read_live_logs_but_cannot_be_formal(monkeypatch, tmp_path):
+    captured = {}
+    monkeypatch.setattr(
+        "tools.thesis_main.analysis.run_c1_closeout_launch.materialize_c1",
+        lambda *args, **kwargs: captured.update(kwargs) or {"output_dir": str(tmp_path)},
+    )
+    args = argparse.Namespace(
+        export_dir=[], active_log=tmp_path / "new_server", manual_assignment=tmp_path / "m.csv",
+        semi_assignment=tmp_path / "s.csv", worker_distribution=tmp_path / "w.csv",
+        gt_export=tmp_path / "gt.json", p1_closeout_dir=tmp_path / "p1",
+        output_root=tmp_path, c1_preannotation_feature_csv=None,
+    )
+    result = rehearse_c1(args)
+    assert captured["input_status"] == "precloseout_rehearsal"
+    assert result["formal_closeout_ready"] is False
+
+
+def test_public_cli_exposes_only_the_six_stage_commands(capsys):
+    with pytest.raises(SystemExit):
+        main(["--help"])
+    help_text = capsys.readouterr().out
+    for command in ("rehearse-c1", "freeze-c1", "audit-c1", "finalize-c1", "design-c2b", "build-c2b"):
+        assert command in help_text
+    for removed in ("day1-canonical-audit", "day1-formal-audit", "day2-c2b-build", "freeze-c1-active-log"):
+        assert removed not in help_text
+
+
+def test_formal_stage_outputs_are_ignored_so_the_next_clean_git_gate_can_run():
+    for path in (
+        "analysis_results/c1_formal_audit_sha/result.csv",
+        "analysis_results/c1_reviews_sha/disposition.csv",
+        "analysis_results/c2b_design_sha/result.csv",
+        "analysis_results/c2b_build_sha/result.csv",
+    ):
+        assert subprocess.run(["git", "check-ignore", "-q", path]).returncode == 0
+
+
+def test_freeze_c1_atomically_creates_active_log_and_collection_contracts(tmp_path):
+    live, frozen, exports = tmp_path / "new_server", tmp_path / "c1", tmp_path / "exports"
+    live.mkdir(); exports.mkdir()
+    (live / "active_times_2026-07-25.jsonl").write_text(
+        json.dumps({"server_received_at": "2026-07-25T01:00:00Z", "task_id": "1"}) + "\n",
+        encoding="utf-8",
+    )
+    (exports / "c1.json").write_text("[]", encoding="utf-8")
+    manual, semi = tmp_path / "manual.csv", tmp_path / "semi.csv"
+    manual.write_text("worker_id,task_id\nW001,1\n", encoding="utf-8")
+    semi.write_text("worker_id,task_id\nW001,2\n", encoding="utf-8")
+    active_manifest, closure_manifest = tmp_path / "active.json", tmp_path / "closure.json"
+
+    result = freeze_c1(argparse.Namespace(
+        source_live_root=live, frozen_root=frozen,
+        collection_cutoff_server_time="2026-07-25T02:00:00Z", operator="operator",
+        late_submission_policy="exclude_after_cutoff", active_log_freeze_manifest=active_manifest,
+        collection_closure_manifest=closure_manifest, export_dir=[exports],
+        manual_assignment=manual, semi_assignment=semi,
+    ))
+
+    assert result["active_log"]["source_aggregate_sha256"] == result["active_log"]["frozen_aggregate_sha256"]
+    assert result["collection_closure"]["collection_window_closed"] is True
+    assert result["collection_closure"]["c1_active_log_freeze_manifest_sha256"]
 
 
 def test_day2_fails_closed_before_materializing_assignments(tmp_path, monkeypatch):
@@ -21,40 +79,43 @@ def test_day2_fails_closed_before_materializing_assignments(tmp_path, monkeypatc
     args = argparse.Namespace(c1_closeout_summary=closeout, risk_summary=risk)
     monkeypatch.setattr("tools.thesis_main.analysis.run_c1_closeout_launch.formal_git_state", lambda _root: {"clean": True})
     with pytest.raises(ValueError, match="not formally frozen"):
-        day2_build(args)
+        build_c2b(args)
 
 
 def test_day1_finalize_freezes_c1_evidence_but_not_routing_profile(tmp_path):
     (tmp_path / "c1_measurement_freeze_manifest.json").write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C2B_DESIGN_READY": True}), encoding="utf-8")
-    (tmp_path / "c1_final_canonical_closeout_summary.json").write_text(json.dumps({"blockers": []}), encoding="utf-8")
-    (tmp_path / "formal_audit_summary.json").write_text(json.dumps({"input_status": "formal", "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1", "git_commit_sha": "a" * 40, "worktree_clean": True, "full_dependency_bundle_sha256": "bundle", "C1_CANONICAL_CLOSED": True, "collection_closure": {"status": "validated"}}), encoding="utf-8")
+    (tmp_path / "c1_final_canonical_closeout_summary.json").write_text(json.dumps({"blockers": [], "formal_closeout_ready": True}), encoding="utf-8")
+    (tmp_path / "formal_audit_summary.json").write_text(json.dumps({"input_status": "formal", "formal_closeout_ready": True, "blockers": [], "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1", "git_commit_sha": "a" * 40, "worktree_clean": True, "full_dependency_bundle_sha256": "bundle", "C1_CANONICAL_CLOSED": True, "collection_closure": {"status": "validated"}}), encoding="utf-8")
     adjudication = tmp_path / "adjudication.json"; adjudication.write_text(json.dumps({"approved": True, "input_bundle_sha256": "bundle"}), encoding="utf-8")
-    result = day1_finalize(argparse.Namespace(output_dir=tmp_path, adjudication_manifest=adjudication))
+    result = finalize_c1(argparse.Namespace(output_dir=tmp_path, adjudication_manifest=adjudication))
     assert result["formal_closeout_ready"] is True
     assert result["C1_MEASUREMENT_FROZEN"] is True
     assert result["routing_profile_frozen"] is False
 
 
-def test_candidate_design_allows_same_source_pool_for_distinct_anchor_and_bridge_roles(tmp_path):
-    task_pool = tmp_path / "tasks.csv"
-    task_pool.write_text(
-        "task_id,anchor_eligible,bridge_eligible,assignment_eligible\n" + "\n".join(f"t{i},true,true,true" for i in range(12)) + "\n",
-        encoding="utf-8",
-    )
-    worker_profile = tmp_path / "workers.csv"
-    worker_profile.write_text("worker_id,c2_candidate_eligible\nw1,true\n", encoding="utf-8")
-    manifest = tmp_path / "design.json"
-    _candidate_design_manifest(task_pool, worker_profile, manifest)
-    assert len(json.loads(manifest.read_text(encoding="utf-8"))["candidate_designs"]) > 3
+def test_day1_finalize_refuses_unresolved_formal_blockers(tmp_path):
+    (tmp_path / "c1_measurement_freeze_manifest.json").write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C2B_DESIGN_READY": True}), encoding="utf-8")
+    (tmp_path / "c1_final_canonical_closeout_summary.json").write_text(json.dumps({"blockers": ["unreviewed_structural_rows"], "formal_closeout_ready": False}), encoding="utf-8")
+    (tmp_path / "formal_audit_summary.json").write_text(json.dumps({"input_status": "formal", "formal_closeout_ready": False, "blockers": ["unreviewed_structural_rows"], "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1", "git_commit_sha": "a" * 40, "worktree_clean": True, "full_dependency_bundle_sha256": "bundle", "C1_CANONICAL_CLOSED": True, "collection_closure": {"status": "validated"}}), encoding="utf-8")
+    adjudication = tmp_path / "adjudication.json"; adjudication.write_text(json.dumps({"approved": True, "input_bundle_sha256": "bundle"}), encoding="utf-8")
+    result = finalize_c1(argparse.Namespace(output_dir=tmp_path, adjudication_manifest=adjudication))
+    assert result["formal_closeout_ready"] is False
+    assert "formal_audit_or_closeout_blocked" in result["blockers"]
 
 
-def test_legacy_reserve_is_candidate_provenance_not_forced_assignment(tmp_path):
-    inventory = tmp_path / "inventory.csv"
-    inventory.write_text("task_id,base_task_id,eligible_after_exclusion,geometry_gold_ready,gt_pair_count\nt1,b1,true,true,4\nt2,b2,true,true,4\n", encoding="utf-8")
-    reserve = tmp_path / "reserve.csv"
-    reserve.write_text("task_id,base_task_id,selection_rank,selection_reason\nt1,b1,1,human curated\n", encoding="utf-8")
-    output = _candidate_task_pool(inventory, [], tmp_path / "pool.csv", reserve)
-    rows = list(__import__("csv").DictReader(output.open(encoding="utf-8")))
-    assert rows[0]["legacy_human_curated_candidate"] == "true"
-    assert rows[1]["legacy_human_curated_candidate"] == "false"
-    assert all("assignment" not in row for row in rows)
+def test_future_c2_confirmation_never_blocks_c1_closeout_owner():
+    assert _c1_closeout_blockers(True, []) == []
+    assert "c2b_not_confirmed" not in _c1_closeout_blockers(True, [])
+
+
+def test_holdout_clear_evidence_row_is_not_misread_as_a_heldout_image():
+    source = [{"image_id": "i1", "allocation": "C2"}]
+    holdout = [{"image_id": "i1", "future_holdout_clear": "true"}, {"image_id": "i2", "allocation": "future_holdout"}]
+    assert _c2_source_images(source) == {"i1"}
+    assert _future_heldout_images(holdout) == {"i2"}
+
+
+def test_raw_snapshot_metadata_does_not_change_source_assignment_identity():
+    source = [{"path": "D:/inputs/manual.csv", "size": 12, "sha256": "a" * 64}]
+    snapshot = [{**source[0], "input_role": "manual_assignment", "snapshot_path": "D:/snapshot/manual.csv", "snapshot_sha256": "a" * 64}]
+    assert _source_identity_aggregate(snapshot) == _aggregate_sha(source)

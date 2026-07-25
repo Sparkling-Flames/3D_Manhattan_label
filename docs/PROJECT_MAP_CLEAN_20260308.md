@@ -36,7 +36,7 @@
 - `tools/thesis_main/`
   - 论文主线工具。
   - `analysis/`：质量分析、active-time audit、stage-aware 分析、图表、统计汇总。
-    - `c1_live_collection_monitor.py`、`c1_canonicalize_exports.py`、`failure_disposition.py`、`materialize_main_failure_outcomes.py`、`run_c1_raw_to_closeout_dryrun.py`、`c1_materialize_quality_table.py`、`c1_materialize_worker_state.py`、`c1_materialize_worker_profile_sidecar.py`、`c1_materialize_c2_gap_audits.py`、`build_c2_assignment_manifest_from_c1_gaps.py`、`materialize_p1_post_closeout_evidence_correction.py` 与 `materialize_p1_post_closeout_geometry_scores.py`：C1 live raw-data 采集健康监控、正式 export canonicalization、跨 C1/T1/V1 的失败归因和 Main outcome 审计、raw-to-closeout dryrun、quality/worker/profile/gap sidecar、reserve-only C2 draft，以及只读 P1 post-closeout evidence/geometry correction；只生成 provisional / audit artifacts，不冻结 C1/C2 协议参数。
+    - `c1_live_collection_monitor.py`、`c1_canonicalize_exports.py`、`failure_disposition.py`、`materialize_main_failure_outcomes.py`、`c1_materialize_quality_table.py`、`c1_materialize_worker_state.py`、`c1_materialize_worker_profile_sidecar.py`、`c1_materialize_c2_gap_audits.py`、`build_c2_assignment_manifest_from_c1_gaps.py`、`materialize_c2b_task_eligibility.py`、`materialize_p1_post_closeout_evidence_correction.py` 与 `materialize_p1_post_closeout_geometry_scores.py`：C1 live 监控、canonicalization、失败归因、逐轴证据、C2-B 严格任务资格、候选设计与冻结 assignment 消费，以及只读 P1 post-closeout evidence/geometry correction。
     - `rebuild_stage1_chinese_completion_excel.py`：按最新 `标注人员.xlsx`、`退出标注.xlsx`、Stage 1 中文 LS JSON 导出和 active logs 重算中文 P1 完成情况工作簿。
   - `registry/`：registry、manifest、freeze、final-gold、trap/materialization、risk-rule、C2 failure-disposition manifest、`d_t/g_t` dry-run、export inventory。
   - `data_prep/`：数据集准备和 MP3D smoke/import 生成。
@@ -98,7 +98,7 @@
 - 不改变 protocol、schema、routing、SOP 语义。
 ## 2026-07-24 Paper A 分析链收口补充
 
-- `tools/thesis_main/analysis/run_c1_precloseout_rehearsal.py`：六份 C1 export 的不可变快照，以及 completion/support、结构验证、active-log 来源、Geometry LOO、operational reference、严格 C2 roster 的 candidate-only rehearsal 入口；不修改 export、assignment、Label Studio 或正式结果。旧 pipeline-smoke C1/T1/V1 入口已归档到 `tools/legacy/paper_a_pre_vfinal_smoke_20260724/`。
+- `tools/thesis_main/analysis/run_c1_closeout_launch.py`：Paper A C1→C2-B 唯一公开六阶段入口：`rehearse-c1`、`freeze-c1`、`audit-c1`、`finalize-c1`、`design-c2b`、`build-c2b`。`run_c1_precloseout_rehearsal.py` 仅保留为其内部 C1 证据物化器；正式 C2-B 资格由 `materialize_c2b_task_eligibility.py` 直接连接冻结证据。
 - `tools/thesis_main/analysis/materialize_c1_operational_reference.py`：把冻结 candidate inventory 中已存在的
   人工 scope 标签和 `groudTruth.json` 单一几何 reference 接入 C1；未复核/冲突任务保持 pending。
 - `tools/thesis_main/analysis/materialize_routing_component_evidence.py`：P1→C1→C2-B component evidence
@@ -109,5 +109,5 @@
 - `tools/thesis_main/analysis/freeze_c2_feature_reference.py`：一次性提取训练参考库 LHFeat，并冻结实际被 Day 2 消费的 PCA/whitening cache 与 circular/seam invariance audit；manifest 中只有声明而无匹配 cache 时不得 ready。
 - `tools/thesis_main/analysis/materialize_c1_c2_design_parameters.py`：从 C1 三轨 eligibility、task-level risk 与 completion 估计 C2-B 模拟所需的 worker risk slope、SE、missing 与结构失败参数；不生成 routing profile。
 - `tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`：P1→C1 Spearman/Kendall、worker bootstrap 与 range-restriction 审计入口。
-- `tools/thesis_main/analysis/run_c1_closeout_launch.py`：C1 Day 1 rehearsal/formal-audit/evidence freeze 与 C2-B Day 2 risk-plan/build 入口；Day 2 build 必须消费已批准的 task/reference、source split、holdout 和 design 工件。
+- `docs/thesis_main/PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md`：Paper A C1→C2-B 单一生产 DAG、stage active-log freeze、状态 owner、风险/模拟和人工审批边界；与 vFinal/Protocol/SOP/SAP 配套，不改变其设计语义。
 - `tools/thesis_main/analysis/c1_c2_mainline.py` 与 `materialize_c1_preannotation_task_features.py`：不可变 C1 row-eligibility sidecar join、estimand-specific worker/task/building/graph gates、唯一 C2-B worker design input，以及不读取 crowd geometry 的预标注 C1 task feature 合同；正式 DAG 由 `docs/thesis_main/PAPER_A_VFINAL_EXECUTION_CONTRACT.json` 固定，风险 exposure 由 `docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json` 固定，设计审批由 `docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json` 固定。

@@ -164,7 +164,25 @@ def test_cumulative_events_retry_and_unknown_are_not_double_counted_or_bound(tmp
     assert session["duration_not_allocatable"] == "True"
 
 
-def test_server_identity_late_binding_recovers_gated_cumulative_time(tmp_path: Path) -> None:
+def test_v2_identity_tuple_is_primary_without_server_annotation_extension(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"; logs = tmp_path / "logs"; logs.mkdir()
+    _csv(meta, [{"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1"}])
+    events = [
+        {"project_id": "66", "task_id": "10", "annotator_id": "1", "annotation_id": "a1", "session_id": "s1", "script_version": "stage3_active_time_page_gate_20260711_v2", "active_seconds": 2, "server_received_at": "2026-01-01T00:00:02", "page_gate_eligible": True, "page_gate_reason": "eligible"},
+        {"project_id": "66", "task_id": "10", "annotator_id": "1", "annotation_id": "a1", "session_id": "s1", "script_version": "stage3_active_time_page_gate_20260711_v2", "active_seconds": 5, "server_received_at": "2026-01-01T00:00:05", "page_gate_eligible": True, "page_gate_reason": "eligible"},
+    ]
+    (logs / "active.jsonl").write_text("\n".join(json.dumps(row) for row in events), encoding="utf-8")
+
+    summary = materialize_active_time_ledgers(meta, logs, tmp_path)
+
+    assert summary["exact_annotation_count"] == 1
+    assert summary["primary_active_time_status"] == "available"
+    annotation = next(csv.DictReader((tmp_path / "c1_active_time_annotation_summary.csv").open(encoding="utf-8")))
+    assert annotation["primary_active_time_eligible"] == "True"
+    assert float(annotation["active_seconds"]) == 5.0
+
+
+def test_self_declared_late_binding_stays_unavailable_without_frozen_alias_registry(tmp_path: Path) -> None:
     meta = tmp_path / "meta.csv"; logs = tmp_path / "logs"; logs.mkdir()
     _csv(meta, [{"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1"}])
     common = {"project_id": "66", "task_id": "10", "annotator_id": "1", "session_id": "s1", "script_version": "v3", "page_gate_eligible": True, "page_gate_reason": "eligible"}
@@ -176,10 +194,11 @@ def test_server_identity_late_binding_recovers_gated_cumulative_time(tmp_path: P
 
     summary = materialize_active_time_ledgers(meta, logs, tmp_path)
 
-    assert summary["exact_annotation_count"] == 1
+    assert summary["exact_annotation_count"] == 0
     session = next(csv.DictReader((tmp_path / "c1_active_time_session_ledger.csv").open(encoding="utf-8")))
-    assert session["session_status"] == "eligible_late_bound_session"
-    assert float(session["session_active_seconds"]) == 7
+    assert session["session_status"] == "audit_only_mixed_known_unknown"
+    assert float(session["session_active_seconds"]) == 0
+    assert session["duration_not_allocatable"] == "True"
 
 
 def test_active_time_excludes_non_c1_context_before_session_aggregation(tmp_path: Path) -> None:
@@ -192,6 +211,17 @@ def test_active_time_excludes_non_c1_context_before_session_aggregation(tmp_path
     assert summary["raw_event_count"] == 2
     assert summary["c1_context_event_count"] == 1
     assert summary["excluded_event_count"] == 1
+
+
+def test_active_time_malformed_json_is_audited_not_silently_dropped(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"; logs = tmp_path / "logs"; logs.mkdir()
+    _csv(meta, [{"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "1", "annotation_id": "a1"}])
+    (logs / "active.jsonl").write_text('{"project_id":"66"\n', encoding="utf-8")
+    summary = materialize_active_time_ledgers(meta, logs, tmp_path)
+    assert summary["parse_error_count"] == 1
+    error = next(csv.DictReader((tmp_path / "c1_active_time_parse_error_audit.csv").open(encoding="utf-8")))
+    assert error["source_line"] == "1"
+    assert len(error["line_sha256"]) == 64
 
 
 def test_independence_requires_explicit_cleared_provenance(tmp_path: Path) -> None:
