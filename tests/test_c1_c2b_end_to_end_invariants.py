@@ -268,7 +268,7 @@ def test_active_log_freeze_binds_root_sha_and_cutoff(tmp_path: Path) -> None:
 
 def test_active_log_freeze_rejects_post_cutoff_event(tmp_path: Path) -> None:
     live = tmp_path / "new_server"; live.mkdir()
-    (live / "active_times_1.jsonl").write_text(json.dumps({"server_time": "2026-07-02T00:00:00+00:00"}) + "\n", encoding="utf-8")
+    (live / "active_times_1.jsonl").write_text(json.dumps({"server_received_at": "2026-07-02T00:00:00+00:00"}) + "\n", encoding="utf-8")
     manifest = tmp_path / "freeze.json"
     frozen = tmp_path / "c1"
     payload = freeze_active_log_snapshot(live, frozen, "2026-07-01T00:00:00+00:00", "tester", manifest)

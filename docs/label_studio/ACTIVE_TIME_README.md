@@ -9,9 +9,9 @@
 **概览**
 
 - 组件：
-  - `tools/label_studio/official/ls_userscript_annotator.js`：正式标注员脚本。默认记录 active time，不提供本地停计时开关。
+  - `tools/label_studio/official/ls_userscript_annotator.js`：正式标注员脚本。`stage3_active_time_identity_20260725_v3` 仅在 route/DOM/store task 一致的标注页计时，优先记录 server annotation ID；保存前时间只有在同一 session/context 可唯一 late-bind 时才进入正式时间。
   - `tools/label_studio/official/ls_userscript_debug.js`：调试/巡检脚本。默认不记录 active time，只有显式设置 `HOHONET_ENABLE_DEBUG_ACTIVE_TIME=1` 才会开始上报。
-  - `tools/label_studio/cors_server.py`：接收 POST `/log_time` 请求，将日志按天写入 `ACTIVE_LOG_DIR` 指定目录；若未设置，则默认写入项目根目录下的 `active_logs/active_times_YYYY-MM-DD.jsonl`。
+  - `tools/label_studio/cors_server.py`：校验 POST `/log_time` 的身份字段、负值/非有限秒数与 payload 大小，写入 UTC `server_received_at`、event SHA 和 page-gate 验证状态，再按天落入 `ACTIVE_LOG_DIR`。
   - `tools/thesis_main/analysis/lead_time_stats.py`：统计脚本，支持读取 Label Studio 导出文件和 `active_logs/` 目录，提供 `--project` 过滤与 `--detail` 输出。
   - Nginx（在 Docker 容器中）：将浏览器发向 `http://<server>:8000/log_time` 的请求代理到宿主机 Python 服务（容器内通过 `172.17.0.1:8001` 访问宿主）。
 

@@ -49,7 +49,7 @@ from tools.thesis_main.analysis.materialize_c1_preannotation_task_features impor
 from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import materialize as materialize_design_parameters
 from tools.thesis_main.analysis.materialize_frozen_routing_profiles import build_global
 from tools.thesis_main.analysis.materialize_c2_task_risk import materialize as materialize_task_risk
-from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import materialize as materialize_predictive_association
+from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import build_source as build_p1_c1_source, materialize as materialize_predictive_association
 from tools.thesis_main.analysis.geometry_consensus.materialize import materialize_geometry_consensus
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
@@ -311,14 +311,7 @@ def _candidate_task_pool(inventory: Path, assignments: list[Path], output: Path,
             "candidate_role_source": "legacy_human_curated_candidate" if reserve.get(task) or reserve.get(base) else "full_candidate_inventory_precloseout",
         })
     write_csv(output, candidate_rows, list(candidate_rows[0]) if candidate_rows else ["task_id"])
-    legacy_audit = [*legacy_audit_rows, *[{
-        "task_id": row.get("task_id", ""), "base_task_id": row.get("base_task_id", ""), "image_id": row.get("image_id", ""), "building_id": row.get("building_id", ""),
-        "legacy_curated_rank": row.get("legacy_curated_rank", ""), "legacy_curated_reason": row.get("legacy_curated_reason", ""), "legacy_selected_at": row.get("legacy_curated_selected_at", ""), "legacy_selector": row.get("legacy_curated_selector", ""), "legacy_curated_manifest_sha256": row.get("legacy_curated_manifest_sha256", ""),
-        "latest_human_reviewed": row.get("latest_human_reviewed", ""), "legacy_proxy": row.get("legacy_proxy", ""), "unreviewed": row.get("unreviewed", ""),
-        "history_overlap": row.get("p1_c1_overlap", ""), "feature_readiness": row.get("risk_design_A_status", ""), "risk_design_A": "", "risk_design_stratum": row.get("risk_design_stratum", ""),
-        "anchor_eligible": row.get("anchor_eligible", ""), "bridge_eligible": row.get("bridge_eligible", ""), "selected": False, "not_selected_reason": "candidate_only_precloseout",
-    } for row in candidate_rows if str(row.get("legacy_human_curated_candidate", "")).lower() in {"true", "1"}]]
-    write_csv(output.parent / "c2_legacy_reverse_candidate_audit.csv", legacy_audit, list(legacy_audit[0]) if legacy_audit else ["task_id"])
+    write_csv(output.parent / "c2_legacy_reverse_candidate_audit.csv", legacy_audit_rows, list(legacy_audit_rows[0]) if legacy_audit_rows else ["task_id"])
     return output
 
 
@@ -575,8 +568,6 @@ def materialize(
         output_dir / "c1_canonical_meta_observations.csv", snapshots / "active_logs", output_dir,
     )
     chain = {"canonicalization_summary": canonical_summary, "operational_reference_summary": reference_summary, "row_eligibility_summary": row_eligibility_summary, "analysis_views": analysis_views}
-    predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"
-    predictive_summary = materialize_predictive_association(predictive_path, output_dir) if predictive_path.exists() else {"component_status": "not_evaluable", "reason": "p1_to_c1_source_missing"}
 
     canonical = read_csv(output_dir / "c1_canonical_annotations.csv")
     quality = read_csv(output_dir / "c1_gt_quality_analysis.csv")
@@ -622,6 +613,10 @@ def materialize(
         quality_csv=output_dir / "c1_gt_quality_analysis.csv",
         formal=formal,
     )
+    predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"
+    worker_state_path = output_dir / ("c1_three_track_worker_state_formal.csv" if formal else "c1_three_track_worker_state.csv")
+    predictive_source = build_p1_c1_source(snapshots / "p1_closeout", worker_state_path, predictive_path)
+    predictive_summary = {**materialize_predictive_association(predictive_path, output_dir), **predictive_source}
     preannotation_summary = materialize_preannotation_features(
         [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]], fixed_snapshots["candidate_inventory"], output_dir,
         frozen_feature_csv=fixed_snapshots.get("c1_preannotation_feature"),

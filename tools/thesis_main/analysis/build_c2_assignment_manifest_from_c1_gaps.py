@@ -764,11 +764,11 @@ def materialize(
             reason = "projected_ci_half_width_above_target"
         if not reason and not graph["worker_task_graph_connected"]:
             reason = "worker_task_graph_disconnected"
-            if not reason and graph["max_worker_stratum_imbalance"] > max_imbalance:
-                reason = "worker_stratum_imbalance"
-            threshold_failures = _threshold_failures(simulation_row, graph, threshold_payload)
-            if not reason and threshold_failures:
-                reason = "threshold_gate_failed:" + ";".join(threshold_failures)
+        if not reason and graph["max_worker_stratum_imbalance"] > max_imbalance:
+            reason = "worker_stratum_imbalance"
+        threshold_failures = _threshold_failures(simulation_row, graph, threshold_payload)
+        if not reason and threshold_failures:
+            reason = "threshold_gate_failed:" + ";".join(threshold_failures)
         audit = {
             "design_id": design_id, "common_anchor_count": common_n,
             "bridge_per_worker": bridge_per_worker, "unique_bridge_tasks": unique_bridge_n,

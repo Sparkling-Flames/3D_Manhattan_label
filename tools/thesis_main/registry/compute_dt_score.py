@@ -83,6 +83,13 @@ def l2_normalize(vector: np.ndarray) -> np.ndarray:
     return arr / norm
 
 
+def hohonet_shared_feature(output: Any) -> Any:
+    feature = output.get("1D") if isinstance(output, dict) else output
+    if feature is None:
+        raise ValueError("HoHoNet extract_feat output lacks 1D feature")
+    return feature
+
+
 @dataclass
 class ReferenceRecord:
     task_id: str
@@ -316,7 +323,7 @@ class DtScoreComputer:
         x = torch.from_numpy(np.asarray(rgb[..., :3])).permute(2, 0, 1)[None].float() / 255.0
         x = x.to(self._resolve_device())
         with torch.no_grad():
-            feat = self._model.extract_feat(x)
+            feat = hohonet_shared_feature(self._model.extract_feat(x))
         if feat.ndim != 3:
             raise ValueError(f"unexpected feature shape: {tuple(feat.shape)}")
         pooled = feat.mean(dim=-1).squeeze(0).detach().cpu().numpy()

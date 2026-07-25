@@ -652,8 +652,9 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
                 "client_annotation_id": event.get("client_annotation_id", event.get("selected_annotation_id", "")),
                 "server_annotation_id": server_annotation,
                 "selected_annotation_id": event.get("selected_annotation_id", ""), "annotation_id_source": event.get("annotation_id_source", ""),
-                "active_time_alias_from": event.get("active_time_alias_from", ""), "late_binding_status": event.get("late_binding_status", ""),
+                "active_time_alias_from": event.get("active_time_alias_from", ""), "active_time_alias_reason": event.get("active_time_alias_reason", ""), "late_binding_status": event.get("late_binding_status", ""),
                 "annotation_match_status": event.get("annotation_match_status", ""), "page_gate_reason": event.get("page_gate_reason", ""),
+                "page_gate_eligible": event.get("page_gate_eligible", ""),
                 "event_time": event_dt.isoformat() if event_dt else "",
             })
     write_csv(output_dir / "c1_active_time_event_ledger.csv", all_events)
@@ -674,9 +675,16 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
         unsafe_mixed = len(schemas) != 1 or "unknown" in schemas
         known_annotations = {row["annotation_id"] for row in known_rows}
         mixed_known_unknown = bool(unknown_rows and known_rows)
+        gate_verified = bool(unique) and all(_truth(row.get("page_gate_eligible")) and row.get("page_gate_reason") == "eligible" for row in unique)
         exact = len(known_annotations) == 1 and all(row.get("server_annotation_id") for row in known_rows) and (key[0], key[1], key[2], next(iter(known_annotations))) in canonical_ids
-        status = "audit_only_unknown" if unknown else "forensic_parent_derived" if parent else "audit_only_mixed_schema" if unsafe_mixed else "audit_only_mixed_known_unknown" if mixed_known_unknown else "not_evaluable_annotation_identity" if not exact else "eligible_cumulative_session"
-        intervals = cumulative_active_intervals(known_rows) if status == "eligible_cumulative_session" else []
+        late_bound = mixed_known_unknown and exact and any(
+            row.get("active_time_alias_from") == f"{key[0]}|{key[1]}|{key[2]}|unknown_annotation"
+            and row.get("active_time_alias_reason") == "unknown_annotation_late_bound"
+            and row.get("late_binding_status") == "single_actual_annotation"
+            for row in known_rows
+        )
+        status = "audit_only_unknown" if unknown else "forensic_parent_derived" if parent else "audit_only_mixed_schema" if unsafe_mixed else "not_evaluable_page_gate" if not gate_verified else "eligible_late_bound_session" if late_bound else "audit_only_mixed_known_unknown" if mixed_known_unknown else "not_evaluable_annotation_identity" if not exact else "eligible_cumulative_session"
+        intervals = cumulative_active_intervals(known_rows, include_initial=True) if status in {"eligible_cumulative_session", "eligible_late_bound_session"} else []
         seconds = merged_interval_seconds(intervals)
         duration_not_allocatable = bool(unknown_rows or status != "eligible_cumulative_session")
         sessions.append({
@@ -695,7 +703,7 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
     annotations = []
     for key, rows in sorted(by_annotation.items()):
         exact_identity = key in canonical_ids
-        eligible = [row for row in rows if row["session_status"] == "eligible_cumulative_session" and exact_identity]
+        eligible = [row for row in rows if row["session_status"] in {"eligible_cumulative_session", "eligible_late_bound_session"} and exact_identity]
         intervals = [tuple(interval) for row in eligible for interval in json.loads(row.get("active_intervals_json") or "[]")]
         annotations.append({
             "project_id": key[0], "runtime_task_id": key[1], "worker_id": key[2], "annotation_id": key[3],
@@ -714,7 +722,7 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
         "task_sensitivity_annotation_count": sum(row["binding_status"] == "exact_annotation" for row in annotations),
         "unknown_event_count": sum(row["unknown_annotation"] for row in events),
         "pure_unknown_session_count": sum(row["session_status"] == "audit_only_unknown" for row in sessions),
-        "mixed_known_unknown_session_count": sum(row["session_status"] == "audit_only_mixed_known_unknown" for row in sessions),
+        "mixed_known_unknown_session_count": sum(int(row.get("known_to_unknown_transition_count") or 0) > 0 for row in sessions),
         "annotation_identity_unresolved_session_count": sum(row["session_status"] == "not_evaluable_annotation_identity" for row in sessions),
         "unallocatable_session_count": len(unknown_sessions),
         "unknown_active_seconds": None,

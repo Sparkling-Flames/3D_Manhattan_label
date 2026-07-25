@@ -9,6 +9,7 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     apply_completion_disposition,
     apply_outside_assignment_disposition,
 )
+from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import build_source
 
 
 def _write(path: Path, rows: list[dict]) -> None:
@@ -78,3 +79,21 @@ def test_hierarchical_simulation_rebuilds_graph_after_delivery() -> None:
     assert result["graph_connectivity_probability"] == 0
     assert float(result["expected_assignment_count"]) < len(assignments)
     assert result["worker_rank_spearman"] != ""
+
+
+def test_p1_to_c1_source_is_built_from_closeout_and_independent_c1_axes(tmp_path: Path) -> None:
+    p1 = tmp_path / "p1"; p1.mkdir()
+    _write(p1 / "prescreen_r0_snapshot.csv", [{"worker_id": "w1", "admission_status": "pass", "r_u_0": ".8"}])
+    _write(p1 / "prescreen_worker_scope_summary.csv", [{"annotator_id": "w1", "scope_accuracy_on_adjudicated_tasks": ".9"}])
+    state = tmp_path / "state.csv"
+    _write(state, [{"worker_id": "w1", "Q_GT_task_adjusted": ".7", "R_LOO_compatible": ".6", "F_struct": ".1", "worker_state_status": "estimated"}])
+
+    summary = build_source(p1, state, tmp_path / "source.csv")
+    rows = list(csv.DictReader((tmp_path / "source.csv").open(encoding="utf-8")))
+
+    assert summary == {"n_join_rows": 4, "n_workers": 1, "n_evaluable_rows": 4}
+    assert {row["check_name"] for row in rows} == {
+        "p1_r_u_0_to_c1_q_gt", "p1_r_u_0_to_c1_loo",
+        "p1_scope_to_c1_q_gt", "p1_r_u_0_to_c1_structural_success",
+    }
+    assert next(row for row in rows if row["check_name"].endswith("structural_success"))["c1_metric_value"] == "0.9"

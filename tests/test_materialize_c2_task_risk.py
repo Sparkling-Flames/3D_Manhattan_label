@@ -1,7 +1,21 @@
 import csv
 import json
+import subprocess
+import sys
+from pathlib import Path
 
-from tools.thesis_main.analysis.materialize_c2_task_risk import _composite_q75_bucket, materialize
+import numpy as np
+
+from tools.thesis_main.analysis.materialize_c2_task_risk import _apply_whitener, _composite_q75_bucket, _feature_freeze_ready, _fit_whitener, materialize
+
+
+def test_feature_freeze_cli_is_directly_runnable() -> None:
+    root = Path(__file__).resolve().parents[1]
+    result = subprocess.run(
+        [sys.executable, str(root / "tools/thesis_main/analysis/freeze_c2_feature_reference.py"), "--help"],
+        cwd=root, capture_output=True, text=True, check=False,
+    )
+    assert result.returncode == 0, result.stderr
 
 
 def test_composite_q75_uses_frozen_c1_channel_percentiles() -> None:
@@ -9,6 +23,38 @@ def test_composite_q75_uses_frozen_c1_channel_percentiles() -> None:
     bucket, percentiles = _composite_q75_bucket({name: 3.0 for name in refs}, refs)
     assert bucket == "stress"
     assert max(percentiles.values()) >= .75
+
+
+def test_frozen_whitener_is_the_transform_consumed_by_candidates() -> None:
+    matrix = np.asarray([[1., 2., 4.], [2., 1., 3.], [4., 3., 1.], [5., 6., 2.]])
+    mean, components, scale, transformed = _fit_whitener(matrix)
+    reapplied = np.stack([_apply_whitener(row, mean, components, scale) for row in matrix])
+    assert np.allclose(reapplied, transformed)
+    assert np.allclose(transformed.mean(axis=0), 0, atol=1e-12)
+
+
+def test_feature_freeze_requires_the_actual_bound_cache(tmp_path) -> None:
+    checkpoint = tmp_path / "model.pth"; checkpoint.write_bytes(b"model")
+    config = tmp_path / "config.yaml"; config.write_text("model: fixed\n", encoding="utf-8")
+    cache = tmp_path / "features.npz"; np.savez(cache, reference_global=np.zeros((2, 1)))
+    import hashlib
+    cache_sha = hashlib.sha256(cache.read_bytes()).hexdigest()
+    audit = tmp_path / "feature_audit.json"; audit.write_text("{}\n", encoding="utf-8")
+    audit_sha = hashlib.sha256(audit.read_bytes()).hexdigest()
+    manifest = tmp_path / "freeze.json"
+    manifest.write_text(json.dumps({
+        "feature_cache_path": str(cache), "invariance_audit_path": str(audit),
+        "checkpoint_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
+        "config_sha256": hashlib.sha256(config.read_bytes()).hexdigest(), "reference_feature_sha256": cache_sha,
+        "pca_frozen": True, "whitening_frozen": True, "circular_shift_invariant": True, "seam_invariant": True,
+        "pca_frozen_sha256": cache_sha, "whitening_frozen_sha256": cache_sha,
+        "circular_shift_invariant_sha256": audit_sha, "seam_invariant_sha256": audit_sha,
+        "pca_sha256": cache_sha, "whitening_sha256": cache_sha,
+        "circular_shift_audit_sha256": audit_sha, "seam_audit_sha256": audit_sha,
+    }), encoding="utf-8")
+    assert _feature_freeze_ready(manifest, checkpoint=checkpoint, config=config)
+    cache.write_bytes(b"tampered")
+    assert not _feature_freeze_ready(manifest, checkpoint=checkpoint, config=config)
 
 
 def test_candidate_risk_uses_c1_only_and_layout_structure(tmp_path):
