@@ -123,14 +123,28 @@ def _score(vector: list[float] | None) -> float | None:
     return float(np.linalg.norm(np.asarray(vector, dtype=float))) if vector is not None else None
 
 
-def _feature_freeze_ready(path: Path | None) -> bool:
+def _feature_freeze_ready(
+    path: Path | None, *, checkpoint: Path | None = None, config: Path | None = None,
+    reference_feature: Path | None = None,
+) -> bool:
     if not path or not path.exists():
         return False
     try:
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return False
-    return all(bool(payload.get(flag)) and str(payload.get(f"{flag}_sha256", "")).strip() for flag in ("pca_frozen", "whitening_frozen", "circular_shift_invariant", "seam_invariant"))
+    required = ("pca_frozen", "whitening_frozen", "circular_shift_invariant", "seam_invariant")
+    if not all(bool(payload.get(flag)) and str(payload.get(f"{flag}_sha256", "")).strip() for flag in required):
+        return False
+    expected = {
+        "checkpoint_sha256": checkpoint,
+        "config_sha256": config,
+        "reference_feature_sha256": reference_feature,
+    }
+    for field, source in expected.items():
+        if source is not None and (not source.exists() or payload.get(field) != sha256_file(source)):
+            return False
+    return all(str(payload.get(field, "")).strip() for field in ("pca_sha256", "whitening_sha256", "circular_shift_audit_sha256", "seam_audit_sha256"))
 
 
 def materialize(
@@ -140,6 +154,7 @@ def materialize(
     risk_contract: Path | None = None, feature_freeze_manifest: Path | None = None,
     c1_freeze_manifest: Path | None = None,
 ) -> dict[str, Any]:
+    output_dir.mkdir(parents=True, exist_ok=True)
     contract, contract_path = _risk_contract(risk_contract)
     stress_quantile = float(contract["stratum_rule"]["stress_quantile"])
     inventory = _read(inventory_csv)
@@ -180,7 +195,6 @@ def materialize(
                 peers = np.delete(normalized, index, axis=0)
                 c1_by_task[task]["d_cal_A"] = float(np.min(np.linalg.norm(peers - normalized[index], axis=1))) if len(peers) else 0.0
     c1_reference_output = output_dir / "c1_task_risk_reference.csv"
-    _write(c1_reference_output, list(c1_by_task.values()))
     (output_dir / "c1_task_risk_reference_manifest.json").write_text(json.dumps({
         "schema_version": "c1_task_risk_reference_v1", "unit": "base_task_id",
         "n_base_tasks": len(c1_by_task), "source_preannotation_feature_sha256": sha256_file(c1_task_feature_csv),
@@ -196,9 +210,14 @@ def materialize(
         for name in c1_channels:
             try: vector[name] = float(row[name])
             except (KeyError, TypeError, ValueError): pass
-        if len(vector) >= 3:
+        if len(vector) == 4:
             complete_reference_rows.append({"base_task_id": row.get("base_task_id", ""), **vector})
             for name, value in vector.items(): c1_channels[name].append(value)
+    reference_rows = [
+        {**row, "reference_eligible": all(str(row.get(name, "")).strip() for name in RISK_VECTOR_FIELDS)}
+        for row in reference_rows
+    ]
+    _write(c1_reference_output, reference_rows)
     c1_scores = sorted(row["g_model_struct"] for row in complete_reference_rows if "g_model_struct" in row)
     support_names = ("d_model_feat", "d_model_feat_local_max", "g_model_struct")
     support_matrix = np.asarray(list(zip(*(c1_channels[name] for name in support_names))), dtype=float) if all(c1_channels[name] for name in support_names) and len({len(c1_channels[name]) for name in support_names}) == 1 else np.empty((0, 3))
@@ -207,7 +226,7 @@ def materialize(
     if len(support_matrix) and not c1_channels["d_cal_A"]:
         normalized = support_matrix / support_scale
         c1_channels["d_cal_A"] = [float(np.min(np.linalg.norm(np.delete(normalized, index, axis=0) - normalized[index], axis=1))) if len(normalized) > 1 else 0.0 for index in range(len(normalized))]
-    feature_status = "not_requested"
+    feature_status = "not_evaluable_feature_freeze_missing" if input_status == "formal" and not extract_lhfeat else "not_requested"
     candidate_features: dict[str, tuple[np.ndarray, np.ndarray]] = {}
     reference_features: dict[str, tuple[np.ndarray, np.ndarray]] = {}
     if extract_lhfeat:
@@ -218,7 +237,8 @@ def materialize(
             reference_paths = sorted(path for path in reference_dir.rglob("*") if path.suffix.lower() in {".jpg", ".jpeg", ".png"})
             reference_features = _lhfeat_descriptors(reference_paths, checkpoint)
             candidate_features = _lhfeat_descriptors(candidate_paths, checkpoint)
-            feature_status = "ready" if _feature_freeze_ready(feature_freeze_manifest) else "not_ready_feature_freeze_incomplete"
+            config_path = _PROJECT_ROOT / contract["feature_freeze"]["config"]
+            feature_status = "ready" if _feature_freeze_ready(feature_freeze_manifest, checkpoint=checkpoint, config=config_path, reference_feature=c1_task_feature_csv) else "not_ready_feature_freeze_incomplete"
         except RuntimeError:
             if input_status == "formal":
                 raise

@@ -728,16 +728,19 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
 
 def materialize_independence(
     meta_csv: Path, output_dir: Path, *, disposition_csv: Path | None = None,
-    project_disposition_csv: Path | None = None,
+    project_disposition_csv: Path | None = None, project_evidence_csv: Path | None = None,
 ) -> dict[str, Any]:
     source_sha = hashlib.sha256(meta_csv.read_bytes()).hexdigest()
+    project_evidence_sha = hashlib.sha256(project_evidence_csv.read_bytes()).hexdigest() if project_evidence_csv and project_evidence_csv.exists() else ""
     disposition_rows = read_csv(disposition_csv) if disposition_csv and disposition_csv.exists() else []
     dispositions = {row.get("canonical_annotation_id", ""): row for row in disposition_rows}
     project_rows = read_csv(project_disposition_csv) if project_disposition_csv and project_disposition_csv.exists() else []
     projects = {(row.get("project_id", ""), row.get("condition", "")): row for row in project_rows}
+    meta_rows = read_csv(meta_csv)
+    project_counts = Counter((item.get("project_id", ""), item.get("condition", "")) for item in meta_rows)
     rows, queue = [], []
     independent_statuses = {"independent", "independent_by_project_provenance", "independent_by_annotation_disposition"}
-    for row in read_csv(meta_csv):
+    for row in meta_rows:
         disposition = dispositions.get(row.get("canonical_annotation_id", ""), {})
         disposition_valid = bool(disposition) and all(str(disposition.get(field, "")).strip() for field in ("canonical_annotation_id", "provenance_status", "copy_risk_status", "parent_annotation_id", "parent_owner_id", "parent_cross_owner", "independence_status", "reviewed_by", "reviewed_at", "source_meta_sha256")) and disposition.get("source_meta_sha256") == source_sha
         project = projects.get((row.get("project_id", ""), row.get("condition", "")), {})
@@ -748,6 +751,11 @@ def materialize_independence(
             "reviewed_by", "reviewed_at",
         )) and project.get("source_project_evidence_sha256") == project.get("project_evidence_sha256", "")
         project_clear = project_valid and str(project.get("provenance_status", "")).strip() == "complete" and str(project.get("copy_risk_status", "")).strip() == "cleared" and _int(project.get("cross_owner_parent_count")) == 0 and _int(project.get("unresolved_parent_count")) == 0 and str(project.get("parent_field_coverage_complete", "true")).lower() in {"true", "1"}
+        if project_evidence_csv and project_clear:
+            project_clear = (
+                project.get("source_project_evidence_sha256") == project_evidence_sha
+                and _int(project.get("annotation_count")) == project_counts[(row.get("project_id", ""), row.get("condition", ""))]
+            )
         effective = {**project, **row, **disposition} if disposition_valid else {**project, **row} if project_valid else row
         identity_complete = all(str(row.get(field, "")).strip() for field in ("project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "canonical_annotation_id"))
         cross_owner = _truth(row.get("parent_cross_owner")) or _truth(effective.get("parent_cross_owner"))
@@ -782,7 +790,7 @@ def materialize_independence(
             queue.append(evidence)
     write_csv(output_dir / "c1_independence_evidence.csv", rows)
     write_csv(output_dir / "c1_independence_review_queue.csv", queue)
-    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "n_review": len(queue), "project_expansion_count": sum(row["independence_status"] == "independent_by_project_provenance" for row in rows), "row_adverse_override_count": sum(row["independence_basis"] == "row_adverse_evidence_overrides_project_clearance" for row in rows), "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "project_disposition_manifest_sha256": hashlib.sha256(project_disposition_csv.read_bytes()).hexdigest() if project_disposition_csv and project_disposition_csv.exists() else "", "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
+    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "n_review": len(queue), "project_expansion_count": sum(row["independence_status"] == "independent_by_project_provenance" for row in rows), "row_adverse_override_count": sum(row["independence_basis"] == "row_adverse_evidence_overrides_project_clearance" for row in rows), "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "project_disposition_manifest_sha256": hashlib.sha256(project_disposition_csv.read_bytes()).hexdigest() if project_disposition_csv and project_disposition_csv.exists() else "", "project_evidence_sha256": project_evidence_sha, "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
     (output_dir / "c1_independence_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
 

@@ -27,7 +27,7 @@ def test_day2_fails_closed_before_materializing_assignments(tmp_path, monkeypatc
 def test_day1_finalize_freezes_c1_evidence_but_not_routing_profile(tmp_path):
     (tmp_path / "c1_measurement_freeze_manifest.json").write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C2B_DESIGN_READY": True}), encoding="utf-8")
     (tmp_path / "c1_final_canonical_closeout_summary.json").write_text(json.dumps({"blockers": []}), encoding="utf-8")
-    (tmp_path / "formal_audit_summary.json").write_text(json.dumps({"input_status": "formal", "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1", "git_commit_sha": "a" * 40, "worktree_clean": True, "full_dependency_bundle_sha256": "bundle", "C1_CANONICAL_CLOSED": True}), encoding="utf-8")
+    (tmp_path / "formal_audit_summary.json").write_text(json.dumps({"input_status": "formal", "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1", "git_commit_sha": "a" * 40, "worktree_clean": True, "full_dependency_bundle_sha256": "bundle", "C1_CANONICAL_CLOSED": True, "collection_closure": {"status": "validated"}}), encoding="utf-8")
     adjudication = tmp_path / "adjudication.json"; adjudication.write_text(json.dumps({"approved": True, "input_bundle_sha256": "bundle"}), encoding="utf-8")
     result = day1_finalize(argparse.Namespace(output_dir=tmp_path, adjudication_manifest=adjudication))
     assert result["formal_closeout_ready"] is True

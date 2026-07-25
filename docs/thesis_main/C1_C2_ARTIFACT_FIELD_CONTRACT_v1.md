@@ -565,3 +565,6 @@ task_outcome_status, reference_identity, reference_sha256, score_reason
 - rehearsal 缺少 LHFeat 运行依赖时必须写明 `feature_status=dependency_unavailable|not_requested`，并保持 `formal_ready=false`；不得用结构风险替代 LHFeat 后冒充正式冻结。
 - `candidate_C2B_assignment.csv` 只能在 rehearsal 中出现，并固定 `assignment_launch_allowed=false`。
 - 正式两日入口为 `run_c1_closeout_launch.py day1-audit|day1-formal-audit|day1-finalize|day2-risk-plan|day2-build`；Day 1 禁止读取仍持续增长的 `active_logs/new_server`。C1 freeze 只写 `c1_evidence_freeze_status=C1_closed`，不得写成最终 routing profile frozen。
+### C1 active-log and collection closure freeze
+
+Formal C1 runs must bind `c1_active_log_freeze_manifest.json` and a collection-closure manifest. The former records `stage=C1`, live source root, immutable frozen root, server-time cutoff, source/frozen file manifests and aggregate SHA values; the latter binds export aggregate SHA, active-log freeze SHA, assignment SHA, closure time/operator and late-submission policy. PreScreen remains bound to `active_logs/prescreen` or its immutable P1 snapshot. A downstream stage may inherit these states but may not manufacture them from `input_status=formal`.

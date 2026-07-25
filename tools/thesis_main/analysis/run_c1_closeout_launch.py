@@ -15,7 +15,8 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis import build_c2_assignment_manifest_from_c1_gaps as c2b
-from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import materialize as rehearse
+from tools.thesis_main.analysis.active_log_utils import freeze_active_log_snapshot, validate_active_log_freeze_manifest
+from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _aggregate_sha, _manifest_rows, materialize as rehearse, materialize_c2b_task_eligibility_evidence
 from tools.thesis_main.analysis.materialize_c2_task_risk import materialize as materialize_task_risk
 from tools.thesis_main.analysis.c1_c2_mainline import formal_git_state
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
@@ -34,15 +35,34 @@ def _write(path: Path, rows: list[dict[str, Any]]) -> None:
 
 
 def day1_audit(args: argparse.Namespace) -> dict[str, Any]:
-    if args.active_log_snapshot.name.casefold() == "new_server":
-        raise ValueError("formal Day 1 requires a frozen C1 active-log snapshot, not active_logs/new_server")
+    if not getattr(args, "c1_active_log_freeze_manifest", None):
+        raise ValueError("frozen C1 active-log snapshot requires --c1-active-log-freeze-manifest")
+    validate_active_log_freeze_manifest(args.c1_active_log_freeze_manifest, args.active_log_snapshot)
     summary = rehearse(
         args.export_dir, args.active_log_snapshot, args.manual_assignment, args.semi_assignment,
         args.worker_distribution, args.gt_export, args.p1_closeout_dir, args.output_root,
         input_status="precloseout_rehearsal",
         c1_preannotation_feature_csv=getattr(args, "c1_preannotation_feature_csv", None),
+        c1_active_log_freeze_manifest=args.c1_active_log_freeze_manifest,
+        collection_closure_manifest=getattr(args, "collection_closure_manifest", None),
     )
     return {"day": 1, "phase": "audit", "output_dir": summary["output_dir"], "formal_closeout_ready": False, "review_required": True}
+
+
+def build_collection_closure(args: argparse.Namespace) -> dict[str, Any]:
+    export_files = [path for directory in args.export_dir for path in directory.rglob("*.json")]
+    assignment_files = [args.manual_assignment, args.semi_assignment]
+    payload = {
+        "schema_version": "paper_a_c1_collection_closure_v1",
+        "c1_export_aggregate_sha256": _aggregate_sha(_manifest_rows(export_files)),
+        "c1_active_log_freeze_manifest_sha256": sha256_file(args.c1_active_log_freeze_manifest),
+        "c1_assignment_sha256": _aggregate_sha(_manifest_rows(assignment_files)),
+        "collection_window_closed": True, "closure_time": args.closure_time,
+        "operator": args.operator, "late_submission_policy": args.late_submission_policy,
+    }
+    args.output.parent.mkdir(parents=True, exist_ok=True)
+    args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return payload
 
 
 def day1_formal_audit(args: argparse.Namespace) -> dict[str, Any]:
@@ -70,6 +90,7 @@ def day1_formal_audit(args: argparse.Namespace) -> dict[str, Any]:
     p1 = next((path.parent for path in snapshots if path.parent.name == "p1_closeout"), None)
     if not exports or not active or not p1:
         raise ValueError("raw snapshot manifest lacks export, active-log, or P1 snapshot")
+    validate_active_log_freeze_manifest(args.c1_active_log_freeze_manifest, active)
     feature_snapshot = getattr(args, "c1_preannotation_feature_snapshot", None)
     if feature_snapshot is not None and feature_snapshot.resolve() not in {path.resolve() for path in snapshots}:
         raise ValueError("pre-annotation feature evidence must be a file in the immutable raw snapshot bundle")
@@ -85,6 +106,8 @@ def day1_formal_audit(args: argparse.Namespace) -> dict[str, Any]:
         outside_assignment_disposition=args.outside_assignment_disposition,
         completion_disposition=args.completion_disposition,
         c1_preannotation_feature_csv=feature_snapshot,
+        c1_active_log_freeze_manifest=args.c1_active_log_freeze_manifest,
+        collection_closure_manifest=args.collection_closure_manifest,
     )
     return {"day": 1, "phase": "formal-audit", "output_dir": summary["output_dir"], "formal_closeout_ready": False, "blockers": summary["blockers"]}
 
@@ -106,6 +129,7 @@ def day1_finalize(args: argparse.Namespace) -> dict[str, Any]:
         blockers.append("formal_method_contract_or_clean_commit_missing")
     if not canonical_ready: blockers.extend(final.get("canonical_blockers", []) or ["c1_canonical_not_closed"])
     if not measurement.get("C1_MEASUREMENT_FROZEN"): blockers.append("c1_measurement_not_frozen")
+    if audit.get("collection_closure", {}).get("status") != "validated": blockers.append("collection_closure_missing_or_invalid")
     if not approved: blockers.append("formal_closeout_adjudication_missing_invalid_or_stale")
     measurement_ready = canonical_ready and not blockers
     freeze = {"schema_version": "c1_measurement_freeze_envelope_v1", "method_contract": audit.get("method_contract", ""), "git_commit_sha": audit.get("git_commit_sha", ""), "C1_COLLECTION_INCOMPLETE": not measurement_ready, "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": measurement_ready, "C2B_DESIGN_READY": bool(measurement.get("C2B_DESIGN_READY")) and measurement_ready, "C2B_RISK_DESIGN_FROZEN": False, "C2B_DESIGN_FROZEN": False, "C2B_ASSIGNMENT_MATERIALIZED": False, "C2B_LAUNCH_READY": False, "routing_profile_frozen": False, "formal_closeout_ready": measurement_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers}
@@ -123,7 +147,7 @@ def day2_risk_plan(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("C1 freeze lacks the vFinal method contract or clean commit identity")
     if not closeout.get("C1_MEASUREMENT_FROZEN"):
         raise ValueError("C1 measurement evidence is not formally frozen")
-    source_rows, holdout_rows = _read(args.source_split_manifest), _read(args.future_holdout_manifest)
+    source_rows, holdout_rows = _read(args.source_split_evidence), _read(args.future_holdout_evidence)
     c2_images = {row.get("image_id") for row in source_rows if row.get("allocation") == "C2"}
     held_images = {row.get("image_id") for row in holdout_rows}
     if c2_images & held_images:
@@ -132,13 +156,23 @@ def day2_risk_plan(args: argparse.Namespace) -> dict[str, Any]:
         args.inventory_csv, args.layout_dir, args.c1_task_feature_csv, args.output_dir,
         input_status="formal", checkpoint=args.checkpoint, reference_dir=args.reference_dir,
         extract_lhfeat=True, c1_risk_reference_csv=args.c1_risk_reference_csv,
-        c1_freeze_manifest=args.c1_closeout_summary,
+        c1_freeze_manifest=args.c1_closeout_summary, feature_freeze_manifest=args.feature_freeze_manifest,
     )
     risk["git_commit_sha"] = git_state["git_commit_sha"]
     risk["worktree_clean"] = True
     (args.output_dir / "c2_task_risk.summary.json").write_text(json.dumps(risk, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     rows = _read(args.output_dir / "c2_task_risk_inventory.csv")
     _write(args.output_dir / "c2_selected_task_review_queue.csv", [row for row in rows if row.get("assignment_eligible", "").lower() in {"true", "1"}])
+    materialize_c2b_task_eligibility_evidence(
+        args.inventory_csv, args.output_dir / "c2_task_risk_inventory.csv", args.reference_registry,
+        [], args.output_dir / "c2b_task_eligibility_evidence.csv",
+        source_split_evidence_csv=args.source_split_evidence,
+        future_holdout_evidence_csv=args.future_holdout_evidence,
+        history_overlap_audit_csv=args.history_overlap_audit,
+        scope_registry_csv=args.scope_registry,
+        reference_registry_csv=args.reference_registry,
+        feature_manifest=args.feature_freeze_manifest,
+    )
     return {"day": 2, "phase": "risk-plan", "risk_pool_formal_ready": risk["formal_ready"], "assignment_materialized": False, "state_machine": risk["state_machine"], "blockers": [] if risk["formal_ready"] else ["risk_pool_insufficient"]}
 
 
@@ -153,7 +187,7 @@ def day2_build(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("C2 task risk lacks the vFinal method contract or clean commit identity")
     if not risk.get("formal_ready") or not risk.get("state_machine", {}).get("C2B_RISK_DESIGN_FROZEN"):
         raise ValueError("C2 task risk is not formally frozen")
-    approvals = [json.loads(path.read_text(encoding="utf-8")) for path in (args.selected_task_reference_manifest, args.future_holdout_manifest, args.source_split_manifest, args.selected_design_approval)]
+    approvals = [json.loads(path.read_text(encoding="utf-8")) for path in (args.selected_task_reference_manifest, args.future_holdout_approval, args.source_split_approval, args.selected_design_approval)]
     if any(item.get("approved") is not True for item in approvals):
         raise ValueError("approved task/reference/holdout manifests are required")
     if risk.get("output_inventory_sha256") != sha256_file(args.task_pool):
@@ -164,7 +198,7 @@ def day2_build(args: argparse.Namespace) -> dict[str, Any]:
     capacities = {row.get("worker_id", ""): row for row in _read(args.capacity_manifest)}
     if not capacities or len(capacities) != len(_read(args.capacity_manifest)):
         raise ValueError("C2-B capacity manifest requires unique worker rows")
-    evidence = args.task_pool.parent / "c2b_task_eligibility_evidence.csv"
+    evidence = args.task_eligibility_evidence
     design = c2b.materialize(
         args.task_pool, args.worker_profile, args.design_manifest, args.output_dir,
         input_status="formal", c1_closeout_summary=args.c1_closeout_summary,
@@ -207,9 +241,26 @@ def day2_build(args: argparse.Namespace) -> dict[str, Any]:
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser()
     sub = parser.add_subparsers(dest="command", required=True)
+    freeze = sub.add_parser("freeze-c1-active-log")
+    freeze.add_argument("--source-live-root", type=Path, required=True)
+    freeze.add_argument("--frozen-root", type=Path, required=True)
+    freeze.add_argument("--collection-cutoff-server-time", required=True)
+    freeze.add_argument("--freeze-operator", required=True)
+    freeze.add_argument("--manifest", type=Path, required=True)
+    closure = sub.add_parser("build-c1-collection-closure")
+    closure.add_argument("--export-dir", action="append", type=Path, required=True)
+    closure.add_argument("--manual-assignment", type=Path, required=True)
+    closure.add_argument("--semi-assignment", type=Path, required=True)
+    closure.add_argument("--c1-active-log-freeze-manifest", type=Path, required=True)
+    closure.add_argument("--closure-time", required=True)
+    closure.add_argument("--operator", required=True)
+    closure.add_argument("--late-submission-policy", required=True)
+    closure.add_argument("--output", type=Path, required=True)
     audit = sub.add_parser("day1-canonical-audit")
     audit.add_argument("--export-dir", action="append", type=Path, required=True)
     audit.add_argument("--active-log-snapshot", type=Path, required=True)
+    audit.add_argument("--c1-active-log-freeze-manifest", type=Path, required=True)
+    audit.add_argument("--collection-closure-manifest", type=Path)
     for name in ("manual-assignment", "semi-assignment", "worker-distribution", "gt-export"):
         audit.add_argument(f"--{name}", type=Path, required=True)
     audit.add_argument("--p1-closeout-dir", type=Path, required=True); audit.add_argument("--output-root", type=Path, required=True)
@@ -218,18 +269,25 @@ def main(argv: list[str] | None = None) -> int:
     formal.add_argument("--raw-snapshot-manifest", type=Path, required=True)
     formal.add_argument("--output-root", type=Path, required=True)
     formal.add_argument("--c1-preannotation-feature-snapshot", type=Path)
+    formal.add_argument("--c1-active-log-freeze-manifest", type=Path, required=True)
+    formal.add_argument("--collection-closure-manifest", type=Path, required=True)
     formal.add_argument("--annotation-independence-disposition", dest="independence_disposition", type=Path)
     for name in ("duplicate-adjudication", "structural-disposition", "project-independence-provenance", "scope-adjudication", "reference-amendment", "outside-assignment-disposition", "completion-disposition"):
         formal.add_argument(f"--{name}", type=Path, required=True)
     finalize = sub.add_parser("day1-measurement-freeze"); finalize.add_argument("--output-dir", type=Path, required=True); finalize.add_argument("--adjudication-manifest", type=Path, required=True)
     plan = sub.add_parser("day2-c2b-design")
-    for name in ("c1-closeout-summary", "inventory-csv", "layout-dir", "c1-task-feature-csv", "checkpoint", "reference-dir", "c1-risk-reference-csv", "source-split-manifest", "future-holdout-manifest", "output-dir"):
+    for name in ("c1-closeout-summary", "inventory-csv", "layout-dir", "c1-task-feature-csv", "checkpoint", "reference-dir", "c1-risk-reference-csv", "source-split-evidence", "future-holdout-evidence", "history-overlap-audit", "scope-registry", "reference-registry", "feature-freeze-manifest", "output-dir"):
         plan.add_argument(f"--{name}", type=Path, required=True)
     build = sub.add_parser("day2-c2b-build")
-    for name in ("c1-closeout-summary", "risk-summary", "task-pool", "worker-profile", "design-manifest", "selected-task-reference-manifest", "future-holdout-manifest", "source-split-manifest", "selected-design-approval", "capacity-manifest", "output-dir"):
+    for name in ("c1-closeout-summary", "risk-summary", "task-pool", "task-eligibility-evidence", "worker-profile", "design-manifest", "selected-task-reference-manifest", "future-holdout-approval", "source-split-approval", "selected-design-approval", "capacity-manifest", "output-dir"):
         build.add_argument(f"--{name}", type=Path, required=True)
     args = parser.parse_args(argv)
-    result = {"day1-canonical-audit": day1_audit, "day1-formal-audit": day1_formal_audit, "day1-measurement-freeze": day1_finalize, "day2-c2b-design": day2_risk_plan, "day2-c2b-build": day2_build}[args.command](args)
+    if args.command == "freeze-c1-active-log":
+        result = freeze_active_log_snapshot(args.source_live_root, args.frozen_root, args.collection_cutoff_server_time, args.freeze_operator, args.manifest)
+    elif args.command == "build-c1-collection-closure":
+        result = build_collection_closure(args)
+    else:
+        result = {"day1-canonical-audit": day1_audit, "day1-formal-audit": day1_formal_audit, "day1-measurement-freeze": day1_finalize, "day2-c2b-design": day2_risk_plan, "day2-c2b-build": day2_build}[args.command](args)
     print(json.dumps(result, ensure_ascii=False, indent=2)); return 0
 
 
