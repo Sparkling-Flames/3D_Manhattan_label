@@ -1,0 +1,23 @@
+{
+  "schema_version": "paper_a_c2b_design_selection_thresholds_v1",
+  "status": "pending_external_approval",
+  "formal_selection_allowed": false,
+  "thresholds": {
+    "q_gt_ci_half_width": null,
+    "risk_slope_ci_half_width": null,
+    "rank_stability": null,
+    "minimum_worker_support": null,
+    "minimum_task_support": null,
+    "graph_connectivity_probability": null,
+    "minimum_building_coverage": null,
+    "building_coverage_probability": null,
+    "ordinary_coverage_probability": null,
+    "stress_coverage_probability": null
+  },
+  "common_anchor_requirements": {
+    "minimum_count": 2,
+    "required_strata": ["ordinary", "stress"]
+  },
+  "selection_rule": "select only an approved non-dominated design; never choose the smallest connected design",
+  "sha_binding": "all numeric values and selected task set must be SHA-bound"
+}

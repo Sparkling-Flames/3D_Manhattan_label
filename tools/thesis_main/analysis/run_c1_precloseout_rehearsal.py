@@ -21,7 +21,7 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from tools.thesis_main.analysis import build_c2_assignment_manifest_from_c1_gaps as c2b
 from tools.thesis_main.analysis import c1_canonicalize_exports
-from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
+from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files, validate_active_log_freeze_manifest
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, write_csv, write_json
 from tools.thesis_main.analysis.materialize_c1_operational_reference import materialize as materialize_operational_reference
 from tools.thesis_main.analysis.materialize_c1_canonical_evidence_sidecars import materialize_canonical_evidence
@@ -75,6 +75,42 @@ def _manifest_rows(paths: Iterable[Path]) -> list[dict[str, Any]]:
 def _aggregate_sha(rows: list[dict[str, Any]]) -> str:
     payload = json.dumps(rows, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _content_aggregate_sha(paths: Iterable[Path]) -> str:
+    rows = [{"size": path.stat().st_size, "sha256": sha256_file(path)} for path in paths]
+    return _aggregate_sha(sorted(rows, key=lambda row: (row["sha256"], row["size"])))
+
+
+def _validate_collection_closure(
+    path: Path | None, *, formal: bool, export_sha: str, active_freeze_manifest: Path | None,
+    assignment_paths: list[Path], export_paths: list[Path],
+) -> tuple[bool, dict[str, Any]]:
+    if not path:
+        if formal:
+            raise ValueError("formal mode requires --collection-closure-manifest")
+        return False, {"status": "not_provided_rehearsal_only"}
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    assignment_sha = _aggregate_sha(_manifest_rows(assignment_paths))
+    assignment_content_sha = _content_aggregate_sha(assignment_paths)
+    export_content_sha = _content_aggregate_sha(export_paths)
+    freeze_sha = sha256_file(active_freeze_manifest) if active_freeze_manifest and active_freeze_manifest.exists() else ""
+    expected = {
+        "c1_export_aggregate_sha256": export_sha,
+        "c1_active_log_freeze_manifest_sha256": freeze_sha,
+        "c1_assignment_sha256": assignment_sha,
+    }
+    mismatches = [name for name, value in expected.items() if payload.get(name) != value]
+    if "c1_assignment_sha256" in mismatches and payload.get("c1_assignment_sha256") == assignment_content_sha:
+        mismatches.remove("c1_assignment_sha256")
+    if "c1_export_aggregate_sha256" in mismatches and payload.get("c1_export_aggregate_sha256") == export_content_sha:
+        mismatches.remove("c1_export_aggregate_sha256")
+    required = ("closure_time", "operator", "late_submission_policy")
+    if payload.get("collection_window_closed") is not True or mismatches or any(not str(payload.get(name, "")).strip() for name in required):
+        if formal:
+            raise ValueError(f"invalid collection closure manifest: {mismatches or 'missing closure fields'}")
+        return False, {**payload, "status": "invalid_rehearsal_manifest", "mismatches": mismatches}
+    return True, {**payload, "status": "validated", "c1_assignment_sha256": assignment_sha}
 
 
 def _stage_active_log_provenance(p1_closeout_dir: Path, c1_active_log: Path) -> dict[str, Any]:
@@ -288,22 +324,35 @@ def _candidate_task_pool(inventory: Path, assignments: list[Path], output: Path,
 
 def materialize_c2b_task_eligibility_evidence(
     inventory_csv: Path, task_risk_csv: Path, reference_csv: Path, assignment_paths: list[Path], output_csv: Path,
+    *, source_split_evidence_csv: Path | None = None, future_holdout_evidence_csv: Path | None = None,
+    history_overlap_audit_csv: Path | None = None, scope_registry_csv: Path | None = None,
+    reference_registry_csv: Path | None = None, feature_manifest: Path | None = None,
 ) -> dict[str, Any]:
     """Join every C2-B gate on image/base_task identity with immutable source SHAs."""
     inventory = read_csv(inventory_csv)
     risk = {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(task_risk_csv)}
     reference = {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(reference_csv)}
     history = {value for path in assignment_paths for row in read_csv(path) for value in (row.get("task_id", ""), row.get("base_task_id", "")) if value}
+    if history_overlap_audit_csv and history_overlap_audit_csv.exists():
+        history = {value for row in read_csv(history_overlap_audit_csv) if str(row.get("history_overlap", row.get("overlap", ""))).lower() in {"true", "1"} for value in (row.get("task_id", ""), row.get("base_task_id", ""), row.get("image_id", "")) if value}
+    sidecars = {
+        "source": {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(source_split_evidence_csv)} if source_split_evidence_csv and source_split_evidence_csv.exists() else {},
+        "holdout": {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(future_holdout_evidence_csv)} if future_holdout_evidence_csv and future_holdout_evidence_csv.exists() else {},
+        "scope": {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(scope_registry_csv)} if scope_registry_csv and scope_registry_csv.exists() else {},
+        "reference": {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(reference_registry_csv)} if reference_registry_csv and reference_registry_csv.exists() else {},
+    }
     rows = []
     for item in inventory:
         key = (item.get("image_id", ""), item.get("base_task_id", ""))
         task = item.get("task_id", "")
         risk_row, reference_row = risk.get(key, {}), reference.get(key, {})
+        source_row, holdout_row = sidecars["source"].get(key, {}), sidecars["holdout"].get(key, {})
+        scope_row, registry_reference_row = sidecars["scope"].get(key, {}), sidecars["reference"].get(key, {})
         history_overlap = task in history or item.get("base_task_id", "") in history
-        source_ok = str(item.get("source_split_allowed", "")).lower() in {"true", "1"}
-        holdout_ok = str(item.get("future_holdout_clear", "")).lower() in {"true", "1"}
-        scope_ok = str(reference_row.get("final_scope") or item.get("scope_status") or item.get("final_scope", "")).lower() == "in_scope"
-        reference_ok = str(reference_row.get("geometry_reference_ready") or item.get("reference_status", "")).lower() in {"true", "1", "reference_ready"}
+        source_ok = str((source_row or item).get("source_split_allowed", (source_row or item).get("allocation", ""))).lower() in {"true", "1", "c2", "allowed"}
+        holdout_ok = str((holdout_row or item).get("future_holdout_clear", (holdout_row or item).get("clear", ""))).lower() in {"true", "1", "clear", "allowed"}
+        scope_ok = str((scope_row or reference_row or item).get("final_scope") or (scope_row or reference_row or item).get("scope_status") or "").lower() == "in_scope"
+        reference_ok = str((registry_reference_row or reference_row or item).get("geometry_reference_ready") or (registry_reference_row or reference_row or item).get("reference_status") or "").lower() in {"true", "1", "reference_ready"}
         feature_ok = bool(risk_row.get("risk_design_vector_A")) and bool(risk_row.get("risk_design_score_A"))
         risk_ok = str(risk_row.get("risk_status", "")) == "frozen"
         reasons = []
@@ -321,6 +370,12 @@ def materialize_c2b_task_eligibility_evidence(
             "feature_ready": feature_ok, "risk_ready": risk_ok, "assignment_eligible": not reasons,
             "exclusion_reason": ";".join(reasons), "inventory_sha256": sha256_file(inventory_csv),
             "task_risk_sha256": sha256_file(task_risk_csv), "reference_sha256": sha256_file(reference_csv),
+            "source_split_evidence_sha256": sha256_file(source_split_evidence_csv) if source_split_evidence_csv and source_split_evidence_csv.exists() else "",
+            "future_holdout_evidence_sha256": sha256_file(future_holdout_evidence_csv) if future_holdout_evidence_csv and future_holdout_evidence_csv.exists() else "",
+            "history_overlap_audit_sha256": sha256_file(history_overlap_audit_csv) if history_overlap_audit_csv and history_overlap_audit_csv.exists() else "",
+            "scope_registry_sha256": sha256_file(scope_registry_csv) if scope_registry_csv and scope_registry_csv.exists() else "",
+            "reference_registry_sha256": sha256_file(reference_registry_csv) if reference_registry_csv and reference_registry_csv.exists() else "",
+            "feature_manifest_sha256": sha256_file(feature_manifest) if feature_manifest and feature_manifest.exists() else "",
         })
     write_csv(output_csv, rows)
     return {"n_tasks": len(rows), "n_eligible": sum(str(row["assignment_eligible"]).lower() == "true" for row in rows), "sha256": sha256_file(output_csv)}
@@ -337,7 +392,8 @@ def materialize(
     structural_disposition: Path | None = None,
     duplicate_adjudication: Path | None = None, scope_adjudication: Path | None = None,
     reference_amendment: Path | None = None, outside_assignment_disposition: Path | None = None,
-    completion_disposition: Path | None = None,
+    completion_disposition: Path | None = None, c1_active_log_freeze_manifest: Path | None = None,
+    collection_closure_manifest: Path | None = None,
 ) -> dict[str, Any]:
     if input_status not in {"precloseout_rehearsal", "formal"}:
         raise ValueError("input_status must be precloseout_rehearsal or formal")
@@ -369,9 +425,20 @@ def materialize(
         "annotation_independence_disposition": independence_disposition, "scope_adjudication": scope_adjudication,
         "reference_amendment": reference_amendment, "outside_assignment_disposition": outside_assignment_disposition,
         "completion_disposition": completion_disposition,
+        "c1_active_log_freeze_manifest": c1_active_log_freeze_manifest,
+        "collection_closure_manifest": collection_closure_manifest,
     }.items() if path is not None}
     analysis_input_rows = _manifest_rows([*export_files, *active_source_files, *fixed_sources.values(), *p1_source_files, *review_sources.values()])
     analysis_input_bundle_sha = _aggregate_sha(analysis_input_rows)
+    if formal:
+        if not c1_active_log_freeze_manifest or not c1_active_log_freeze_manifest.exists():
+            raise ValueError("formal mode requires c1_active_log_freeze_manifest")
+        validate_active_log_freeze_manifest(c1_active_log_freeze_manifest, active_log)
+    collection_window_closed, collection_closure = _validate_collection_closure(
+        collection_closure_manifest, formal=formal, export_sha=export_sha,
+        active_freeze_manifest=c1_active_log_freeze_manifest,
+        assignment_paths=[manual_assignment, semi_assignment], export_paths=export_files,
+    )
     run_date = run_date or datetime.now().strftime("%Y%m%d")
     prefix = "c1_formal_audit" if formal else "c1_precloseout_rehearsal"
     output_dir = output_root / f"{prefix}_{run_date}_{export_sha[:12]}_{analysis_input_bundle_sha[:8]}_{code_pipeline_sha[:8]}"
@@ -419,6 +486,7 @@ def materialize(
         "command": " ".join(sys.argv),
         "tool_version": "run_c1_precloseout_rehearsal_v3",
         "stage_active_log_provenance": stage_active_log_provenance,
+        "collection_closure": collection_closure,
         "inputs": source_rows,
     }
     write_json(output_dir / "raw_input_manifest.json", raw_manifest)
@@ -445,6 +513,7 @@ def materialize(
         output_dir / "c1_canonical_meta_observations.csv", output_dir,
         disposition_csv=review_snapshots.get("annotation_independence_disposition"),
         project_disposition_csv=review_snapshots.get("project_independence_provenance"),
+        project_evidence_csv=output_dir / "c1_project_independence_provenance_evidence.csv",
     )
     structural_summary = materialize_structural_validation(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_geometry.jsonl", output_dir,
@@ -460,7 +529,7 @@ def materialize(
         snapshot_exports, [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
         output_dir / "c1_runtime_task_mapping.csv", output_dir / "c1_canonical_annotations.csv",
         output_dir / "c1_canonical_geometry.jsonl", output_dir,
-        completion_disposition_csv=review_snapshots.get("completion_disposition"),
+        completion_disposition_csv=review_snapshots.get("completion_disposition"), collection_window_closed=collection_window_closed,
     )
     roster_summary = materialize_analysis_rosters(
         output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_canonical_annotations.csv", output_dir,
@@ -561,7 +630,7 @@ def materialize(
         output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_gt_quality_analysis.csv",
         output_dir / "geometry_worker_task_loo_analysis.csv", output_dir / "structural_validation_analysis.csv", output_dir,
         canonical_closed=bool(final_canonical_summary.get("C1_CANONICAL_CLOSED")),
-        collection_window_closed=False,
+        collection_window_closed=collection_window_closed,
         eligibility_csv=output_dir / "c1_row_analysis_eligibility.csv",
         preannotation_feature_ready=bool(preannotation_summary.get("n_ready")),
     )
@@ -663,6 +732,7 @@ def materialize(
         "project_independence_evidence_summary": project_independence_evidence_summary,
         "active_log_summary": active_summary,
         "stage_active_log_provenance": stage_active_log_provenance,
+        "collection_closure": collection_closure,
         "active_time_ledger_summary": active_ledger_summary,
         "outside_assignment_summary": outside_summary,
         "geometry_loo_summary": {"n_pairwise_rows": len(pairwise_rows), "n_loo_rows": len(loo_rows)},
@@ -722,12 +792,16 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--input-status", choices=("precloseout_rehearsal",), required=True)
     parser.add_argument("--run-date", help="immutable output label, e.g. 20260724_r2")
     parser.add_argument("--c1-preannotation-feature-csv", type=Path, help="frozen pre-annotation C1 model feature table")
+    parser.add_argument("--c1-active-log-freeze-manifest", type=Path)
+    parser.add_argument("--collection-closure-manifest", type=Path)
     args = parser.parse_args(argv)
     print(json.dumps(materialize(
         args.export_dir, args.active_log, args.manual_assignment, args.semi_assignment,
         args.worker_distribution, args.gt_export, args.p1_closeout_dir,
         args.output_root, input_status=args.input_status, run_date=args.run_date,
         c1_preannotation_feature_csv=args.c1_preannotation_feature_csv,
+        c1_active_log_freeze_manifest=args.c1_active_log_freeze_manifest,
+        collection_closure_manifest=args.collection_closure_manifest,
     ), ensure_ascii=False, indent=2))
     return 0
 
