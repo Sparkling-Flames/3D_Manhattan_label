@@ -2,6 +2,15 @@
 
 ## 2026-07-24 风险与旧 Reserve 复用补充
 
+## 2026-07-25 根因收口补充
+
+- project-level provenance clearance 可展开为 `independent_by_project_provenance`；row-level adverse evidence 优先覆盖项目清除。
+- `collection_window_closed` 与 worker completion 分离；partial worker 使用 `closed_partial_usable` / `closed_partial_insufficient`，不自动阻断其他 estimand。
+- row eligibility 必须分别提供 `process_eligible`、`independence_eligible`、`scope_reference_eligible`、`global_analysis_eligible`、`loo_analysis_eligible`、`structural_opportunity_eligible`；support 不得由三轨最大值替代。
+- C2-B 唯一 exposure 为 `risk_design_vector_A` 与 `risk_design_score_A`；`risk_design_A` 不得作为活动输入。
+- `c2b_task_eligibility_evidence.csv` 以 `image_id + base_task_id` 连接 source/holdout/history/Scope/reference/feature/risk，并保存全部输入 SHA。
+- `C2B_DESIGN_SELECTION_THRESHOLDS.json` 未完成审批时只能输出 candidate，不能生成 formal assignment。
+
 - 四个风险通道按冻结 C1 分布转换为经验 percentile，`max(percentile) >= Q75` 定义 stress；任一通道、layout 或冻结 C1 risk reference 缺失时 `assignment_eligible=false`。
 - 旧 `Calibration_reserve` 13 图只作为 `legacy_human_curated_candidate` 来源标记进入完整 inventory，并保留原 rank/reason/manifest SHA；它不构成必选任务包，也不得复用旧 assignment/import。
 - 正式入口为 `day1-audit -> day1-formal-audit -> day1-finalize -> day2-build`。formal audit 只接受 SHA 验证通过的 raw snapshot manifest；finalize 拒绝 rehearsal bundle；Day 2 task pool 必须与冻结 risk summary 的输出 SHA 一致。

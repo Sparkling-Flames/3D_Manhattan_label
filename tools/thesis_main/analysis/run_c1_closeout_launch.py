@@ -132,6 +132,7 @@ def day2_risk_plan(args: argparse.Namespace) -> dict[str, Any]:
         args.inventory_csv, args.layout_dir, args.c1_task_feature_csv, args.output_dir,
         input_status="formal", checkpoint=args.checkpoint, reference_dir=args.reference_dir,
         extract_lhfeat=True, c1_risk_reference_csv=args.c1_risk_reference_csv,
+        c1_freeze_manifest=args.c1_closeout_summary,
     )
     risk["git_commit_sha"] = git_state["git_commit_sha"]
     risk["worktree_clean"] = True
@@ -163,7 +164,13 @@ def day2_build(args: argparse.Namespace) -> dict[str, Any]:
     capacities = {row.get("worker_id", ""): row for row in _read(args.capacity_manifest)}
     if not capacities or len(capacities) != len(_read(args.capacity_manifest)):
         raise ValueError("C2-B capacity manifest requires unique worker rows")
-    design = c2b.materialize(args.task_pool, args.worker_profile, args.design_manifest, args.output_dir, input_status="formal", c1_closeout_summary=args.c1_closeout_summary)
+    evidence = args.task_pool.parent / "c2b_task_eligibility_evidence.csv"
+    design = c2b.materialize(
+        args.task_pool, args.worker_profile, args.design_manifest, args.output_dir,
+        input_status="formal", c1_closeout_summary=args.c1_closeout_summary,
+        eligibility_evidence_csv=evidence if evidence.exists() else None,
+        selected_task_approval=args.selected_design_approval,
+    )
     assignment_path = args.output_dir / "assignment_manifest_C2B.csv"
     assignments, tasks = _read(assignment_path), {row["task_id"]: row for row in _read(args.task_pool)}
     assigned_by_worker = Counter(row["worker_id"] for row in assignments)

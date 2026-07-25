@@ -36,6 +36,7 @@
 - [PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md](thesis_main/PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md)：Paper A vFinal sidecar、dry-run 与正式数据边界
 - [PAPER_A_VFINAL_EXECUTION_CONTRACT.json](thesis_main/PAPER_A_VFINAL_EXECUTION_CONTRACT.json)：C1→C2 主线 DAG、三段 freeze gate、风险通道与 legacy 隔离合同
 - [C2B_RISK_DESIGN_CONTRACT_v1.json](thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json)：C2-B 唯一风险通道、分层、模拟与冻结状态合同
+- [C2B_DESIGN_SELECTION_THRESHOLDS.json](thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json)：C2-B 正式设计审批阈值；默认空值时仅允许 candidate 输出
 - `Paper_A_新版完整论文提纲_vFinal_Draft.md`：当前唯一 vFinal 提纲真源，包含 C1→C2→T1/V1 的 failure-disposition、重跑与行政删失合同。
 - [meta_label_three_state_rule_manifest_v1.json](thesis_main/meta_label_three_state_rule_manifest_v1.json)：三状态 meta-label 候选规则
 - [geometry_loo_candidate_rule_manifest_v1.json](thesis_main/geometry_loo_candidate_rule_manifest_v1.json)：Geometry LOO 候选规则

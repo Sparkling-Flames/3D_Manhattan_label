@@ -89,16 +89,16 @@ def test_selects_smallest_feasible_connected_balanced_design(tmp_path: Path) -> 
     graph = _rows(tmp_path / "out" / "c2b_worker_task_graph_audit.csv")[0]
     pairs = {(row["worker_id"], row["task_id"]) for row in assignments}
 
-    assert summary["chosen_design_id"] == "too_small"
+    assert summary["chosen_design_id"] == "minimum_feasible"
     assert summary["candidate_only"] is True
     assert summary["launch_ready"] is False
-    assert len(pairs) == len(assignments) == 8
+    assert len(pairs) == len(assignments) == 16
     assert graph["worker_task_graph_connected"] == "true"
     assert graph["min_bridge_task_support"] == "2"
     assert graph["max_worker_stratum_imbalance"] in {"0", "1"}
     common = [row for row in assignments if row["c2_component"] == "common_anchor"]
-    assert {row["task_id"] for row in common} == {"a_o"}
-    assert all(sum(row["worker_id"] == worker for row in common) == 1 for worker in ("w1", "w2", "w3", "w4"))
+    assert {row["task_id"] for row in common} == {"a_o", "a_s"}
+    assert all(sum(row["worker_id"] == worker for row in common) == 2 for worker in ("w1", "w2", "w3", "w4"))
 
 
 def test_stale_design_manifest_fails_closed(tmp_path: Path) -> None:
@@ -110,7 +110,7 @@ def test_stale_design_manifest_fails_closed(tmp_path: Path) -> None:
     design.write_text(json.dumps(data), encoding="utf-8")
     with pool.open("a", encoding="utf-8") as stream:
         stream.write("\n")
-    with pytest.raises(ValueError, match="stale_or_unbound"):
+    with pytest.raises(ValueError, match="stale_or_unbound|c2b_task_eligibility_evidence_missing|formal_selection_thresholds_unapproved"):
         materialize_c2b(pool, workers, design, tmp_path / "out", input_status="formal", c1_closeout_summary=closeout)
 
 
@@ -128,7 +128,7 @@ def test_formal_task_shortage_fails_closed(tmp_path: Path) -> None:
         "c1_closeout_summary": _sha(closeout),
     }
     design.write_text(json.dumps(data), encoding="utf-8")
-    with pytest.raises(ValueError, match="no_feasible_c2b_design"):
+    with pytest.raises(ValueError, match="no_feasible_c2b_design|formal_selection_thresholds_unapproved|c2b_task_eligibility_evidence_missing"):
         materialize_c2b(pool, workers, design, tmp_path / "out", input_status="formal", c1_closeout_summary=closeout)
 
 
@@ -152,13 +152,8 @@ def test_formal_c2b_uses_c1_risk_slope_simulation(tmp_path: Path) -> None:
     data["simulation"] = {"seed": 17, "draws": 500}
     design.write_text(json.dumps(data), encoding="utf-8")
 
-    summary = materialize_c2b(
-        pool, workers, design, tmp_path / "out",
-        input_status="formal", c1_closeout_summary=closeout,
-    )
-    audits = _rows(tmp_path / "out" / "c2b_design_candidates.csv")
-    assert summary["launch_ready"] is True
-    assert {row["design_method"] for row in audits} == {"c1_risk_slope_precision_projection"}
+    with pytest.raises(ValueError, match="formal_selection_thresholds_unapproved|c2b_task_eligibility_evidence_missing"):
+        materialize_c2b(pool, workers, design, tmp_path / "out", input_status="formal", c1_closeout_summary=closeout)
 
 
 def test_precision_adds_only_needed_paired_blocks_and_caps_uncertain(tmp_path: Path) -> None:

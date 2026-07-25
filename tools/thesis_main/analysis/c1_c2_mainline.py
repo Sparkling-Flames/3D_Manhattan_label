@@ -31,7 +31,7 @@ def _int(value: Any) -> int:
 
 
 def _building(row: dict[str, Any]) -> str:
-    return str(row.get("building_id") or row.get("building") or str(row.get("base_task_id", "")).split("_", 1)[0]).strip()
+    return str(row.get("building_id") or "").strip()
 
 
 def _join(rows: list[dict[str, str]], eligibility: dict[str, dict[str, str]]) -> list[dict[str, Any]]:
@@ -99,10 +99,14 @@ def materialize_analysis_views(
 def materialize_measurement_readiness(
     completion_csv: Path, quality_analysis_csv: Path, loo_analysis_csv: Path,
     structural_analysis_csv: Path, output_dir: Path, *, canonical_closed: bool,
+    collection_window_closed: bool | None = None, eligibility_csv: Path | None = None,
     preannotation_feature_ready: bool = False,
 ) -> dict[str, Any]:
     """Freeze three estimands separately; C2-B admission is not their intersection."""
     completion = {row.get("worker_id", ""): row for row in read_csv(completion_csv)}
+    eligibility = {row.get("canonical_annotation_id", ""): row for row in read_csv(eligibility_csv)} if eligibility_csv and eligibility_csv.exists() else {}
+    if collection_window_closed is None:
+        collection_window_closed = canonical_closed
     quality = read_csv(quality_analysis_csv)
     loo = read_csv(loo_analysis_csv)
     structural = read_csv(structural_analysis_csv)
@@ -124,7 +128,8 @@ def materialize_measurement_readiness(
         graph_rows = []
         edges: set[tuple[str, str, str]] = set()
         for row in rows:
-            if not _truth(row.get(gate)):
+            identity_row = eligibility.get(str(row.get("canonical_annotation_id", "")), {})
+            if not _truth(identity_row.get(gate, row.get(gate))):
                 continue
             identity, worker, task = _edge(row)
             if not worker or not task:
@@ -148,6 +153,17 @@ def materialize_measurement_readiness(
             "connected": _connected(edges),
             "sha256": sha256_file(graph_files[axis]),
         }
+    support_rows = list(eligibility.values()) if eligibility else [row for rows, _gate, _key in source_rows.values() for row in rows]
+    process_support_by_worker: dict[str, set[str]] = defaultdict(set)
+    independence_support_by_worker: dict[str, set[str]] = defaultdict(set)
+    scope_reference_support_by_worker: dict[str, set[str]] = defaultdict(set)
+    for row in support_rows:
+        worker, task = str(row.get("worker_id", "")), str(row.get("base_task_id", ""))
+        if not worker or not task:
+            continue
+        if _truth(row.get("process_eligible")): process_support_by_worker[worker].add(task)
+        if _truth(row.get("independence_eligible")): independence_support_by_worker[worker].add(task)
+        if _truth(row.get("scope_reference_eligible")): scope_reference_support_by_worker[worker].add(task)
     worker_rows: list[dict[str, Any]] = []
     for worker, completion_row in sorted(completion.items()):
         values = support[worker]
@@ -161,6 +177,7 @@ def materialize_measurement_readiness(
             "Q_GT_support": len(values["gt"]), "R_LOO_support": len(values["loo"]),
             "F_struct_opportunity_support": len(values["struct"]), "task_coverage": len(values["task"]),
             "building_coverage": len(values["building"]), "Q_GT_status": statuses["gt"], "R_LOO_status": statuses["loo"], "F_struct_status": statuses["struct"],
+            "process_support": len(process_support_by_worker[worker]) if eligibility else "", "independence_support": len(independence_support_by_worker[worker]) if eligibility else "", "scope_reference_support": len(scope_reference_support_by_worker[worker]) if eligibility else "",
             "three_axis_complete": three_axis_complete, "measurement_ready": three_axis_complete,
             "measurement_exclusion_reason": "nonstarter" if nonstarter else "" if three_axis_complete else "estimand_specific_support_incomplete",
         })
@@ -175,14 +192,14 @@ def materialize_measurement_readiness(
         if building:
             buildings[building].append(row)
     building_rows = [{"building_id": building, "task_coverage": len(rows), "three_axis_ready_task_count": sum(_truth(row["measurement_ready"]) for row in rows), "measurement_ready": any(_truth(row["measurement_ready"]) for row in rows)} for building, rows in sorted(buildings.items())]
-    collection_complete = all(
-        row.get("completion_status") in {"completed", "administrative_exclusion"}
-        and (_truth(row.get("completion_disposition_valid")) if "completion_disposition_valid" in row else row.get("completion_status") == "completed")
-        for row in completion.values()
-    )
     axis_graphs_ready = all(item["edge_count"] and item["connected"] for item in axis_graphs.values())
-    measurement_frozen = canonical_closed and collection_complete and axis_graphs_ready and bool(building_rows)
-    c2b_ready = measurement_frozen and preannotation_feature_ready
+    estimand_freeze = {
+        "Q_GT": bool(canonical_closed and collection_window_closed and axis_graphs["gt"]["edge_count"] and axis_graphs["gt"]["connected"]),
+        "R_LOO": bool(canonical_closed and collection_window_closed and axis_graphs["loo"]["edge_count"] and axis_graphs["loo"]["connected"]),
+        "F_struct": bool(canonical_closed and collection_window_closed and axis_graphs["structural"]["edge_count"] and axis_graphs["structural"]["connected"]),
+    }
+    measurement_frozen = bool(canonical_closed and collection_window_closed and any(estimand_freeze.values()))
+    c2b_ready = bool(estimand_freeze["Q_GT"] and preannotation_feature_ready)
     write_csv(output_dir / "c1_measurement_readiness_by_worker.csv", worker_rows)
     write_csv(output_dir / "c1_measurement_readiness_by_task.csv", task_rows)
     write_csv(output_dir / "c1_measurement_readiness_by_building.csv", building_rows)
@@ -197,7 +214,9 @@ def materialize_measurement_readiness(
         "C2B_LAUNCH_READY": False,
         "routing_profile_frozen": False,
         "preannotation_feature_ready": preannotation_feature_ready,
-        "C1_COLLECTION_INCOMPLETE": not collection_complete,
+        "collection_window_closed": bool(collection_window_closed),
+        "estimand_freeze": estimand_freeze,
+        "C1_COLLECTION_INCOMPLETE": not bool(collection_window_closed),
         "inputs": {name: sha256_file(path) for name, path in {"completion": completion_csv, "quality_analysis": quality_analysis_csv, "loo_analysis": loo_analysis_csv, "structural_analysis": structural_analysis_csv}.items()},
         "axis_graphs": axis_graphs,
     }
@@ -232,9 +251,9 @@ def materialize_c2b_design_worker_profile(
         c, s, p, r = completion.get(worker, {}), state.get(worker, {}), parameter.get(worker, {}), readiness.get(worker, {})
         completion_status = c.get("completion_status", "")
         completion_valid = _truth(c.get("completion_disposition_valid")) if "completion_disposition_valid" in c else completion_status in {"completed", "partial_noncompletion", "nonstarter"}
-        q_support = _int(s.get("GT_support") or r.get("Q_GT_support"))
-        process_support = _int(s.get("process_eligible_support"))
-        independence_support = _int(s.get("independence_support"))
+        q_support = _int(r.get("Q_GT_support"))
+        process_support = _int(r.get("process_support")) if str(r.get("process_support", "")).strip() else _int(s.get("process_eligible_support"))
+        independence_support = _int(r.get("independence_support")) if str(r.get("independence_support", "")).strip() else _int(s.get("independence_support"))
         administrative = _truth(c.get("administrative_exclusion")) or completion_status == "administrative_exclusion"
         eligible = completion_status != "nonstarter" and completion_valid and not administrative and q_support > 0 and process_support > 0 and independence_support > 0
         reasons = []
@@ -248,10 +267,10 @@ def materialize_c2b_design_worker_profile(
         rows.append({
             "worker_id": worker, "completion_status": completion_status, "C1_completion_status": completion_status,
             "completion_disposition_valid": completion_valid, "c2b_baseline_eligible": eligible,
-            "Q_GT_task_adjusted": s.get("Q_GT_task_adjusted", ""), "Q_GT_CI_lower": s.get("CI_lower", ""), "Q_GT_CI_upper": s.get("CI_upper", ""), "Q_GT_LCB": s.get("LCB", ""), "Q_GT_support": s.get("GT_support", ""),
+            "Q_GT_task_adjusted": s.get("Q_GT_task_adjusted", ""), "Q_GT_CI_lower": s.get("CI_lower", ""), "Q_GT_CI_upper": s.get("CI_upper", ""), "Q_GT_LCB": s.get("LCB", ""), "Q_GT_support": q_support,
             "R_LOO_compatible": s.get("R_LOO_compatible", ""), "R_LOO_CI_lower": s.get("R_LOO_CI_lower", ""), "R_LOO_CI_upper": s.get("R_LOO_CI_upper", ""), "R_LOO_support": s.get("LOO_support", r.get("R_LOO_support", "")), "R_LOO_status": r.get("R_LOO_status", "insufficient_support"),
             "F_struct": s.get("F_struct", ""), "F_struct_numerator": s.get("F_struct_numerator", ""), "F_struct_denominator": s.get("F_struct_denominator", ""), "F_struct_status": r.get("F_struct_status", "insufficient_support"),
-            "process_support": process_support, "independence_support": independence_support, "scope_reference_support": s.get("scope_reference_support", ""),
+            "process_support": process_support, "independence_support": independence_support, "scope_reference_support": r.get("scope_reference_support", ""),
             "risk_slope": p.get("risk_slope", ""), "risk_slope_se": p.get("risk_slope_se", ""), "risk_slope_support": p.get("risk_support", ""), "c1_risk_slope_status": slope_status,
             "group_prior_slope": p.get("group_prior_slope", ""), "group_prior_scale": p.get("group_prior_scale", ""), "risk_slope_for_simulation": p.get("risk_slope_for_simulation", p.get("risk_slope", "")), "risk_slope_scale_for_simulation": p.get("risk_slope_scale_for_simulation", p.get("risk_slope_se", "")),
             "missing_rate": p.get("missing_rate", ""), "c2_candidate_eligible": eligible, "exclusion_reason": ";".join(filter(None, reasons)),

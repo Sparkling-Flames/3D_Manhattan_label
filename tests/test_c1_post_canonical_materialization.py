@@ -298,7 +298,7 @@ def test_c2b_task_shortage_has_no_assignment_manifest_rows(tmp_path: Path) -> No
             "task_pool_csv": __import__("hashlib").sha256(pool.read_bytes()).hexdigest(),
         },
         "c2b_target_ci_half_width": 0.2,
-        "candidate_designs": [{"design_id": "d1", "common_anchor_count": 1, "bridge_per_worker": 1, "unique_bridge_tasks": 1, "min_task_support": 1}],
+        "candidate_designs": [{"design_id": "d1", "common_anchor_count": 1, "bridge_per_worker": 1, "unique_bridge_tasks": 1, "min_task_support": 2}],
     }), encoding="utf-8")
     summary = materialize_c2(pool, worker, design, tmp_path / "out")
     assert summary["c2b_design_ready"] is False
