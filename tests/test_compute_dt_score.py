@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 import pytest
 
-from tools.thesis_main.registry.compute_dt_score import BatchAbortError, DtScoreComputer, canonical_json_hash, l2_normalize
+from tools.thesis_main.registry.compute_dt_score import BatchAbortError, DtScoreComputer, canonical_json_hash, hohonet_shared_feature, l2_normalize
 
 
 class FakeDtScoreComputer(DtScoreComputer):
@@ -55,6 +55,13 @@ def _write_dt_summary(path: Path, refs: list[dict]) -> Path:
     }
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     return path
+
+
+def test_real_embedding_path_accepts_hohonet_feature_dict() -> None:
+    marker = object()
+    assert hohonet_shared_feature({"1D": marker}) is marker
+    with pytest.raises(ValueError, match="lacks 1D feature"):
+        hohonet_shared_feature({})
 
 
 def test_compute_dt_score_primary_path_and_threshold_from_dt_summary(tmp_path: Path) -> None:

@@ -161,9 +161,7 @@ def day2_risk_plan(args: argparse.Namespace) -> dict[str, Any]:
     risk["git_commit_sha"] = git_state["git_commit_sha"]
     risk["worktree_clean"] = True
     (args.output_dir / "c2_task_risk.summary.json").write_text(json.dumps(risk, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    rows = _read(args.output_dir / "c2_task_risk_inventory.csv")
-    _write(args.output_dir / "c2_selected_task_review_queue.csv", [row for row in rows if row.get("assignment_eligible", "").lower() in {"true", "1"}])
-    materialize_c2b_task_eligibility_evidence(
+    evidence = materialize_c2b_task_eligibility_evidence(
         args.inventory_csv, args.output_dir / "c2_task_risk_inventory.csv", args.reference_registry,
         [], args.output_dir / "c2b_task_eligibility_evidence.csv",
         source_split_evidence_csv=args.source_split_evidence,
@@ -173,7 +171,13 @@ def day2_risk_plan(args: argparse.Namespace) -> dict[str, Any]:
         reference_registry_csv=args.reference_registry,
         feature_manifest=args.feature_freeze_manifest,
     )
-    return {"day": 2, "phase": "risk-plan", "risk_pool_formal_ready": risk["formal_ready"], "assignment_materialized": False, "state_machine": risk["state_machine"], "blockers": [] if risk["formal_ready"] else ["risk_pool_insufficient"]}
+    evidence_rows = _read(args.output_dir / "c2b_task_eligibility_evidence.csv")
+    _write(args.output_dir / "c2_selected_task_review_queue.csv", [row for row in evidence_rows if row.get("assignment_eligible", "").lower() in {"true", "1"}])
+    ready = bool(risk["formal_ready"]) and evidence["n_eligible"] >= 12
+    risk["task_eligibility_evidence"] = evidence
+    risk["formal_ready"] = ready
+    (args.output_dir / "c2_task_risk.summary.json").write_text(json.dumps(risk, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return {"day": 2, "phase": "risk-plan", "risk_pool_formal_ready": ready, "assignment_materialized": False, "state_machine": risk["state_machine"], "blockers": [] if ready else ["risk_or_task_eligibility_pool_insufficient"]}
 
 
 def day2_build(args: argparse.Namespace) -> dict[str, Any]:

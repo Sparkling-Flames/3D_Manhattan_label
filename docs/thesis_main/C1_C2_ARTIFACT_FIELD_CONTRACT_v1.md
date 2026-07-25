@@ -563,8 +563,9 @@ task_outcome_status, reference_identity, reference_sha256, score_reason
 
 - `c2_task_risk_inventory.csv` 保存 `d_model_feat`、`d_model_feat_local_max`、`g_model_struct`、`d_cal_A`、`risk_assist_candidate`、`risk_route_candidate` 及 checkpoint/layout SHA。
 - rehearsal 缺少 LHFeat 运行依赖时必须写明 `feature_status=dependency_unavailable|not_requested`，并保持 `formal_ready=false`；不得用结构风险替代 LHFeat 后冒充正式冻结。
+- `freeze_c2_feature_reference.py` 生成的 NPZ 是 PCA/whitening 的唯一实际变换真源；feature freeze manifest 必须同时绑定 checkpoint、config、reference listing、NPZ 和 circular/seam audit SHA。仅填写 `pca_frozen=true` 等声明不能使任务 ready。
 - `candidate_C2B_assignment.csv` 只能在 rehearsal 中出现，并固定 `assignment_launch_allowed=false`。
-- 正式两日入口为 `run_c1_closeout_launch.py day1-audit|day1-formal-audit|day1-finalize|day2-risk-plan|day2-build`；Day 1 禁止读取仍持续增长的 `active_logs/new_server`。C1 freeze 只写 `c1_evidence_freeze_status=C1_closed`，不得写成最终 routing profile frozen。
+- 正式入口为 `run_c1_closeout_launch.py freeze-c1-active-log|build-c1-collection-closure|day1-canonical-audit|day1-formal-audit|day1-measurement-freeze|day2-c2b-design|day2-c2b-build`；Day 1 禁止直接分析仍持续增长的 `active_logs/new_server`。C1 freeze 只冻结 measurement evidence，不得写成最终 routing profile frozen。
 ### C1 active-log and collection closure freeze
 
 Formal C1 runs must bind `c1_active_log_freeze_manifest.json` and a collection-closure manifest. The former records `stage=C1`, live source root, immutable frozen root, server-time cutoff, source/frozen file manifests and aggregate SHA values; the latter binds export aggregate SHA, active-log freeze SHA, assignment SHA, closure time/operator and late-submission policy. PreScreen remains bound to `active_logs/prescreen` or its immutable P1 snapshot. A downstream stage may inherit these states but may not manufacture them from `input_status=formal`.

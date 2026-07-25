@@ -143,12 +143,12 @@ def test_cumulative_events_retry_and_unknown_are_not_double_counted_or_bound(tmp
     meta = tmp_path / "meta.csv"
     logs = tmp_path / "logs"; logs.mkdir()
     _csv(meta, [{"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1"}])
-    base = {"project_id": "66", "task_id": "10", "annotator_id": "1", "annotation_id": "a1", "session_id": "s1", "script_version": "v1", "active_seconds_fragment": 1}
+    base = {"project_id": "66", "task_id": "10", "annotator_id": "1", "annotation_id": "a1", "server_annotation_id": "a1", "session_id": "s1", "script_version": "v1", "active_seconds_fragment": 1, "page_gate_eligible": True, "page_gate_reason": "eligible"}
     events = [
         {**base, "active_seconds": 2, "timestamp": 1},
         {**base, "active_seconds": 5, "timestamp": 2, "server_received_at": "2026-01-01T00:00:00"},
         {**base, "active_seconds": 5, "timestamp": 2, "server_received_at": "2026-01-01T00:00:01"},
-        {**base, "annotation_id": "unknown_annotation", "active_seconds": 3, "timestamp": 3},
+        {**base, "annotation_id": "unknown_annotation", "server_annotation_id": "", "active_seconds": 3, "timestamp": 3},
     ]
     (logs / "active.jsonl").write_text("\n".join(json.dumps(row) for row in events), encoding="utf-8")
 
@@ -162,6 +162,24 @@ def test_cumulative_events_retry_and_unknown_are_not_double_counted_or_bound(tmp
     assert session["session_status"] == "audit_only_mixed_known_unknown"
     assert session["session_active_seconds"] == "0.0"
     assert session["duration_not_allocatable"] == "True"
+
+
+def test_server_identity_late_binding_recovers_gated_cumulative_time(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"; logs = tmp_path / "logs"; logs.mkdir()
+    _csv(meta, [{"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1"}])
+    common = {"project_id": "66", "task_id": "10", "annotator_id": "1", "session_id": "s1", "script_version": "v3", "page_gate_eligible": True, "page_gate_reason": "eligible"}
+    events = [
+        {**common, "annotation_id": "unknown_annotation", "active_seconds": 7, "server_received_at": "2026-01-01T00:00:07Z"},
+        {**common, "annotation_id": "a1", "server_annotation_id": "a1", "active_seconds": 7, "server_received_at": "2026-01-01T00:00:08Z", "active_time_alias_from": "66|10|1|unknown_annotation", "active_time_alias_reason": "unknown_annotation_late_bound", "late_binding_status": "single_actual_annotation"},
+    ]
+    (logs / "active.jsonl").write_text("\n".join(json.dumps(row) for row in events), encoding="utf-8")
+
+    summary = materialize_active_time_ledgers(meta, logs, tmp_path)
+
+    assert summary["exact_annotation_count"] == 1
+    session = next(csv.DictReader((tmp_path / "c1_active_time_session_ledger.csv").open(encoding="utf-8")))
+    assert session["session_status"] == "eligible_late_bound_session"
+    assert float(session["session_active_seconds"]) == 7
 
 
 def test_active_time_excludes_non_c1_context_before_session_aggregation(tmp_path: Path) -> None:

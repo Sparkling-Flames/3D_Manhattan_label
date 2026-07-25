@@ -573,8 +573,8 @@ def test_calibration_known_and_unknown_counts_only_owner_validated_known(tmp_pat
     active_logs.mkdir()
     (active_logs / "active_times_2026-07-03.jsonl").write_text(
         "\n".join([
-            json.dumps({"project_id": "65", "task_id": "2", "annotator_id": "w1", "annotation_id": "unknown_annotation", "session_id": "s1", "active_seconds": 4}),
-            json.dumps({"project_id": "65", "task_id": "2", "annotator_id": "w1", "annotation_id": "a1", "session_id": "s1", "active_seconds": 10}),
+            json.dumps({"project_id": "65", "task_id": "2", "annotator_id": "w1", "annotation_id": "unknown_annotation", "session_id": "s1", "active_seconds": 4, "page_gate_eligible": True}),
+            json.dumps({"project_id": "65", "task_id": "2", "annotator_id": "w1", "annotation_id": "a1", "session_id": "s1", "active_seconds": 10, "page_gate_eligible": True}),
         ]) + "\n",
         encoding="utf-8",
     )
@@ -593,8 +593,8 @@ def test_calibration_does_not_merge_short_unknown_bootstrap(tmp_path: Path):
     active_logs.mkdir()
     (active_logs / "active_times_2026-07-03.jsonl").write_text(
         "\n".join([
-            json.dumps({"project_id": "65", "task_id": "3", "annotator_id": "w1", "annotation_id": "unknown_annotation", "session_id": "s1", "active_seconds": 4, "server_received_at": "2026-07-03T00:00:00"}),
-            json.dumps({"project_id": "65", "task_id": "3", "annotator_id": "w1", "annotation_id": "a1", "session_id": "s1", "active_seconds": 4, "server_received_at": "2026-07-03T00:00:05", "active_time_alias_from": "65|3|w1|unknown_annotation", "active_time_alias_reason": "short_unknown_bootstrap", "late_binding_status": "short_unknown_bootstrap_merged"}),
+            json.dumps({"project_id": "65", "task_id": "3", "annotator_id": "w1", "annotation_id": "unknown_annotation", "session_id": "s1", "active_seconds": 4, "server_received_at": "2026-07-03T00:00:00", "page_gate_eligible": True}),
+            json.dumps({"project_id": "65", "task_id": "3", "annotator_id": "w1", "annotation_id": "a1", "session_id": "s1", "active_seconds": 4, "server_received_at": "2026-07-03T00:00:05", "active_time_alias_from": "65|3|w1|unknown_annotation", "active_time_alias_reason": "short_unknown_bootstrap", "late_binding_status": "short_unknown_bootstrap_merged", "page_gate_eligible": True}),
         ]) + "\n",
         encoding="utf-8",
     )
@@ -639,7 +639,7 @@ def test_unknown_like_annotation_values_are_calibration_audit_only(tmp_path: Pat
     assert audit["unknown_annotation_session_count"] == 1
 
 
-def test_calibration_task_fallback_excludes_unknown_seconds(tmp_path: Path):
+def test_calibration_unverified_task_fallback_is_not_formal_time(tmp_path: Path):
     active_logs = tmp_path / "active_logs"
     active_logs.mkdir()
     (active_logs / "active_times_2026-07-03.jsonl").write_text(
@@ -652,14 +652,13 @@ def test_calibration_task_fallback_excludes_unknown_seconds(tmp_path: Path):
     logs = load_active_logs(str(active_logs), policy="calibration")
     entry, status = lookup_active_log_entry(logs, "65", "6", "w1", annotation_id="a1")
 
-    assert status == "project+task+annotator"
-    assert entry["active_time_value"] == 9.0
-    assert entry["unassigned_active_time_seconds"] == 4.0
+    assert status == "missing"
+    assert entry is None
     row = active_time_for_annotation(logs, "65", "6", "w1", "a1", 0)
-    assert row["active_time"] == 9.0
+    assert row["active_time"] == ""
     assert row["primary_active_time_eligible"] is False
-    assert row["sensitivity_active_time_eligible"] is True
-    assert row["active_time_integrity_status"] == "task_level_fallback"
+    assert row["sensitivity_active_time_eligible"] is False
+    assert row["active_time_integrity_status"] == "unknown_audit_only"
 
 
 def test_load_active_logs_preserves_stage3_page_gate_audit_fields(tmp_path: Path):

@@ -16,6 +16,10 @@ def _is_explicit_false(value) -> bool:
     return value is False or str(value).strip().casefold() in {"false", "0"}
 
 
+def _is_explicit_true(value) -> bool:
+    return value is True or str(value).strip().casefold() in {"true", "1"}
+
+
 def _parse_cli_datetime(value, *, is_end=False):
     """Parse an ISO date/datetime CLI bound for active-log filtering."""
     if value is None or str(value).strip() == "":
@@ -55,10 +59,16 @@ def _parse_active_log_event_time(data):
     return None
 
 
-def cumulative_active_intervals(events):
-    """Allocate only monotone adjacent cumulative deltas with one stable annotation."""
+def cumulative_active_intervals(events, *, include_initial=False):
+    """Allocate gated cumulative intervals for one stable annotation."""
     ordered = sorted((row for row in events if row.get("event_time")), key=lambda row: row["event_time"])
     intervals = []
+    if include_initial and ordered:
+        first = ordered[0]
+        seconds = float(first.get("active_seconds") or 0)
+        if seconds > 0 and str(first.get("page_gate_reason") or "") == "eligible":
+            end = datetime.fromisoformat(first["event_time"])
+            intervals.append((end.timestamp() - seconds, end.timestamp()))
     for previous, current in zip(ordered, ordered[1:]):
         if previous.get("annotation_id") != current.get("annotation_id"):
             continue
@@ -272,7 +282,7 @@ def load_active_logs(log_dir, start_time=None, end_time=None, annotation_owner_m
 
     for event in parsed_events:
         try:
-            if calibration and event['annotation_unknown']:
+            if calibration and (event['annotation_unknown'] or not _is_explicit_true(event['page_gate_eligible'])):
                 continue
             key = _event_key(event)
             if not calibration and _is_short_bootstrap_alias(event):

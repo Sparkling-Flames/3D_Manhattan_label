@@ -53,14 +53,19 @@ def active_log_manifest(root: str | Path) -> dict[str, Any]:
 
 
 def _event_time(event: dict[str, Any]) -> datetime | None:
-    for key in ("server_time", "event_time", "timestamp", "time", "created_at"):
+    for key in ("server_received_at", "server_time", "event_time", "timestamp", "time", "created_at"):
         value = event.get(key)
-        if not value:
+        if value in (None, ""):
             continue
         try:
+            if isinstance(value, (int, float)) or str(value).replace(".", "", 1).isdigit():
+                seconds = float(value)
+                if seconds > 10_000_000_000:
+                    seconds /= 1000
+                return datetime.fromtimestamp(seconds, tz=timezone.utc)
             parsed = datetime.fromisoformat(str(value).replace("Z", "+00:00"))
             return parsed if parsed.tzinfo else parsed.replace(tzinfo=timezone.utc)
-        except ValueError:
+        except (OSError, OverflowError, ValueError):
             continue
     return None
 

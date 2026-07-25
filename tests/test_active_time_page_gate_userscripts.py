@@ -1,10 +1,14 @@
 from pathlib import Path
 
+import pytest
+
+from tools.label_studio.cors_server import validate_log_payload
+
 
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL = ROOT / "tools" / "label_studio" / "official" / "ls_userscript_annotator.js"
 FOREIGN = ROOT / "tools" / "thesis_main" / "foreign_recruitment" / "ls_userscript_annotator_https_en.user.js"
-VERSION = "stage3_active_time_page_gate_20260711_v2"
+VERSION = "stage3_active_time_identity_20260725_v3"
 
 
 def _script(path: Path) -> str:
@@ -34,12 +38,12 @@ def test_page_gate_requires_route_labeling_editor_main_view_and_task_identity():
         assert ".lsf-main-content > .lsf-main-view" in gate
         assert "route_dom_task_mismatch" in gate
         assert "task_route_conflict" in gate
-        assert "route_store_task_mismatch" not in gate
+        assert "route_store_task_mismatch" in gate
         assert "dom_task_identity_not_ready" in gate
         assert "findMainImage" not in gate
 
 
-def test_store_is_audit_only_and_page_context_is_captured_in_the_gate():
+def test_store_mismatch_is_rejected_and_page_context_is_captured_in_the_gate():
     for path in (OFFICIAL, FOREIGN):
         source = _script(path)
         start = source.index("function resolveAnnotationPageGate()")
@@ -58,7 +62,7 @@ def test_store_is_audit_only_and_page_context_is_captured_in_the_gate():
             "mismatch_only",
         ):
             assert field in gate
-        assert "gate.reason = \"route_store_task_mismatch\"" not in gate
+        assert "gate.reason = \"route_store_task_mismatch\"" in gate
         assert "queryTaskId && pathTaskId && queryTaskId !== pathTaskId" in gate
         assert "location_path: report.pageGate?.locationPath || \"\"" in source
         assert "location_search: report.pageGate?.sanitizedLocationSearch || \"\"" in source
@@ -95,3 +99,22 @@ def test_formal_scripts_keep_deployment_and_localized_non_counting_ui():
     assert "Active-Time: Not counting" in foreign
     assert "currentActiveTimeMetadata = null" in official
     assert "currentActiveTimeMetadata = null" in foreign
+
+
+def test_formal_scripts_prefer_server_annotation_identity_and_bind_unknown_time_after_save():
+    for path in (OFFICIAL, FOREIGN):
+        source = _script(path)
+        identity = source[source.index("function getAnnotationIdentity()"):source.index("function getCurrentAnnotationId()")]
+        assert identity.index("selected?.pk") < identity.index("selected?.id")
+        assert "server_annotation_id: report.serverAnnotationId" in source
+        assert "client_annotation_id: report.clientAnnotationId" in source
+        assert 'activeTimeAliasReason: "unknown_annotation_late_bound"' in source
+        assert 'lateBindingStatus: "single_actual_annotation"' in source
+        assert "unknownCumulativeSeconds <= 5" not in source
+
+
+def test_active_time_backend_validates_payload_without_discarding_legacy_audit_rows():
+    row = validate_log_payload({"project_id": "69", "task_id": "1", "annotator_id": "2", "session_id": "s", "active_seconds": 3})
+    assert row["server_validation_status"] == "legacy_or_unverified_page_gate"
+    with pytest.raises(ValueError):
+        validate_log_payload({"project_id": "69", "task_id": "1", "annotator_id": "2", "session_id": "s", "active_seconds": -1})
