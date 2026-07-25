@@ -2,10 +2,11 @@
 
 from __future__ import annotations
 
-import argparse
 import csv
 import hashlib
+import importlib
 import json
+import math
 import sys
 from pathlib import Path
 from typing import Any
@@ -61,47 +62,68 @@ def _layout_features(path: Path) -> dict[str, Any]:
     seam_stability = 1.0 - min(1.0, (gaps[-1] if gaps else 1024) / max(gaps or [1024]))
     pair_count = len(corners)
     duplicate_x = len({round(value, 6) for value in xs}) != len(xs)
-    g_score = min(1.0, abs(pair_count - 6) / 8 + (0.35 if duplicate_x else 0) + (0.35 if not normalized["topology_valid"] else 0) + 0.15 * seam_stability)
+    seam_instability = 1.0 - seam_stability
+    g_score = min(1.0, abs(pair_count - 6) / 8 + (0.35 if duplicate_x else 0) + (0.35 if not normalized["topology_valid"] else 0) + 0.15 * seam_instability)
     return {
         "layout_status": "ready", "g_model_struct": g_score, "pair_count": pair_count,
         "ceiling_floor_curve_present": bool(corners), "wall_peak_count": pair_count,
         "topology_valid": normalized["topology_valid"], "seam_stability": seam_stability,
+        "seam_instability": seam_instability,
         "postprocess_valid": normalized["valid"], "duplicate_wall_peak": duplicate_x,
         "layout_sha256": sha256_file(path),
     }
 
 
-def _lhfeat_descriptors(paths: list[Path], checkpoint: Path) -> dict[str, tuple[np.ndarray, np.ndarray]]:
+def _pool_lhfeat(feature: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
+    return np.concatenate([feature.mean(1), feature.std(1)]), feature.max(1)
+
+
+def _lhfeat_descriptors(
+    paths: list[Path], checkpoint: Path, *, config: Path, device: str = "auto",
+    invariance_audit: dict[str, Any] | None = None,
+) -> dict[str, tuple[np.ndarray, np.ndarray]]:
     try:
         import torch
+        import yaml
         from PIL import Image
-        from lib.model.hohonet import HoHoNet
     except ImportError as exc:
         raise RuntimeError(f"HoHoNet LHFeat dependencies unavailable: {exc}") from exc
-    net = HoHoNet(
-        input_hw=[512, 1024], emb_dim=256,
-        backbone_config={"module": "Resnet", "kwargs": {"backbone": "resnet34"}},
-        decode_config={"module": "EfficientHeightReduction"},
-        refine_config={"module": "TransEn", "kwargs": {"position_encode": 256, "nhead": 8, "num_layers": 1, "dim_feedforward": 2048}},
-        modalities_config={"LayoutEstimator": {"cor_weight": 1.0, "bon_weight": 1.0, "last_bias": False, "last_ks": 1}},
-    )
-    net.load_state_dict(torch.load(checkpoint, map_location="cpu")); net.eval()
+    model_config = (yaml.safe_load(config.read_text(encoding="utf-8")) or {}).get("model", {})
+    module_name, class_name = model_config.get("file"), model_config.get("modelclass")
+    if not module_name or not class_name:
+        raise ValueError("model config must contain model.file and model.modelclass")
+    model_class = getattr(importlib.import_module(str(module_name)), str(class_name))
+    net = model_class(**(model_config.get("kwargs") or {}))
+    target = "cuda" if device == "auto" and torch.cuda.is_available() else "cpu" if device == "auto" else device
+    net.load_state_dict(torch.load(checkpoint, map_location="cpu")); net.to(target); net.eval()
     output: dict[str, tuple[np.ndarray, np.ndarray]] = {}
     with torch.no_grad():
         for path in paths:
             rgb = np.asarray(Image.open(path).convert("RGB"), dtype=np.float32) / 255.0
-            tensor = torch.from_numpy(rgb).permute(2, 0, 1)[None]
+            tensor = torch.from_numpy(rgb).permute(2, 0, 1)[None].to(target)
             feature = net.extract_feat(tensor)["1D"][0].cpu().numpy()
-            output[path.resolve().as_posix()] = (np.concatenate([feature.mean(1), feature.std(1)]), feature.max(1))
+            pooled = _pool_lhfeat(feature)
+            output[path.resolve().as_posix()] = pooled
+            if invariance_audit is not None:
+                shifted_tensor = torch.roll(tensor, shifts=max(1, tensor.shape[-1] // 4), dims=-1)
+                shifted_feature = net.extract_feat(shifted_tensor)["1D"][0].cpu().numpy()
+                shifted = _pool_lhfeat(shifted_feature)
+                difference = max(float(np.max(np.abs(left - right))) for left, right in zip(pooled, shifted))
+                invariance_audit["max_abs_difference"] = max(float(invariance_audit.get("max_abs_difference", 0.0)), difference)
+                invariance_audit["feature_count"] = int(invariance_audit.get("feature_count", 0)) + 1
     return output
 
 
 def _fit_whitener(matrix: np.ndarray) -> tuple[np.ndarray, np.ndarray, np.ndarray, np.ndarray]:
+    if matrix.ndim != 2 or len(matrix) < 2 or not np.isfinite(matrix).all():
+        raise ValueError("feature reference matrix must contain at least two finite rows")
     mean = matrix.mean(axis=0)
     _u, singular, components = np.linalg.svd(matrix - mean, full_matrices=False)
     keep = singular > np.finfo(float).eps * max(matrix.shape) * singular[0]
     components = components[keep]
     scale = singular[keep] / np.sqrt(max(1, len(matrix) - 1))
+    if not len(components) or not np.isfinite(scale).all() or np.any(scale <= 0):
+        raise ValueError("feature reference PCA/whitening is degenerate")
     transformed = ((matrix - mean) @ components.T) / scale
     return mean, components, scale, transformed
 
@@ -110,11 +132,16 @@ def _apply_whitener(vector: np.ndarray, mean: np.ndarray, components: np.ndarray
     return ((vector - mean) @ components.T) / scale
 
 
-def freeze_feature_reference(reference_dir: Path, checkpoint: Path, config: Path, cache_path: Path, manifest_path: Path) -> dict[str, Any]:
+def freeze_feature_reference(
+    reference_dir: Path, checkpoint: Path, config: Path, cache_path: Path,
+    manifest_path: Path, *, device: str = "auto",
+) -> dict[str, Any]:
+    manifest_path.parent.mkdir(parents=True, exist_ok=True)
     paths = sorted(path for path in reference_dir.rglob("*") if path.suffix.lower() in {".jpg", ".jpeg", ".png"})
     if len(paths) < 2:
         raise ValueError("feature reference requires at least two images")
-    descriptors = _lhfeat_descriptors(paths, checkpoint)
+    invariance = {"max_abs_difference": 0.0, "feature_count": 0}
+    descriptors = _lhfeat_descriptors(paths, checkpoint, config=config, device=device, invariance_audit=invariance)
     global_matrix = np.stack([descriptors[path.resolve().as_posix()][0] for path in paths])
     local_matrix = np.stack([descriptors[path.resolve().as_posix()][1] for path in paths])
     global_mean, global_components, global_scale, reference_global = _fit_whitener(global_matrix)
@@ -127,10 +154,12 @@ def freeze_feature_reference(reference_dir: Path, checkpoint: Path, config: Path
     )
     reference_listing_sha = hashlib.sha256("\n".join(f"{path.resolve().as_posix()}|{path.stat().st_size}|{sha256_file(path)}" for path in paths).encode()).hexdigest()
     audit_path = manifest_path.with_name(f"{manifest_path.stem}.invariance_audit.json")
-    probe = np.arange(4 * 17, dtype=float).reshape(4, 17)
     audit = {
         "descriptor": "channelwise_mean_std_and_max_over_panorama_width",
-        "circular_shift_max_abs_difference": float(np.max(np.abs(np.r_[probe.mean(1), probe.std(1), probe.max(1)] - np.r_[np.roll(probe, 5, axis=1).mean(1), np.roll(probe, 5, axis=1).std(1), np.roll(probe, 5, axis=1).max(1)]))),
+        "audit_basis": "reference_images_end_to_end_circular_shift",
+        "audited_reference_image_count": invariance["feature_count"],
+        "circular_shift_max_abs_difference": invariance["max_abs_difference"],
+        "tolerance": 1e-6,
         "seam_operator": "circular_width_roll",
     }
     audit_path.write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -141,8 +170,8 @@ def freeze_feature_reference(reference_dir: Path, checkpoint: Path, config: Path
         "checkpoint_sha256": sha256_file(checkpoint), "config_sha256": sha256_file(config),
         "reference_feature_sha256": cache_sha, "reference_listing_sha256": reference_listing_sha,
         "reference_image_count": len(paths), "pca_frozen": True, "whitening_frozen": True,
-        "circular_shift_invariant": audit["circular_shift_max_abs_difference"] == 0,
-        "seam_invariant": audit["circular_shift_max_abs_difference"] == 0,
+        "circular_shift_invariant": audit["circular_shift_max_abs_difference"] <= audit["tolerance"],
+        "seam_invariant": audit["circular_shift_max_abs_difference"] <= audit["tolerance"],
         "pca_frozen_sha256": cache_sha, "whitening_frozen_sha256": cache_sha,
         "circular_shift_invariant_sha256": audit_sha, "seam_invariant_sha256": audit_sha,
         "pca_sha256": cache_sha, "whitening_sha256": cache_sha,
@@ -207,10 +236,20 @@ def _feature_freeze_ready(
         cache = path.parent / cache
     if not audit.is_absolute():
         audit = path.parent / audit
+    try:
+        audit_payload = json.loads(audit.read_text(encoding="utf-8")) if audit.exists() else {}
+        audit_ready = (
+            audit_payload.get("audit_basis") == "reference_images_end_to_end_circular_shift"
+            and int(audit_payload.get("audited_reference_image_count", 0)) == int(payload.get("reference_image_count", 0)) > 0
+            and float(audit_payload.get("circular_shift_max_abs_difference", math.inf)) <= float(audit_payload.get("tolerance", 0))
+        )
+    except (OSError, ValueError, TypeError, json.JSONDecodeError):
+        audit_ready = False
     return (
         cache.exists()
         and sha256_file(cache) == payload.get("reference_feature_sha256")
         and audit.exists()
+        and audit_ready
         and sha256_file(audit) == payload.get("circular_shift_audit_sha256") == payload.get("seam_audit_sha256")
         and all(str(payload.get(field, "")).strip() for field in ("pca_sha256", "whitening_sha256", "circular_shift_audit_sha256", "seam_audit_sha256"))
     )
@@ -218,24 +257,49 @@ def _feature_freeze_ready(
 
 def materialize(
     inventory_csv: Path, layout_dir: Path, c1_task_feature_csv: Path, output_dir: Path, *,
-    input_status: str, checkpoint: Path | None = None, reference_dir: Path | None = None,
-    extract_lhfeat: bool = False, c1_risk_reference_csv: Path | None = None,
+    input_status: str, checkpoint: Path | None = None,
+    extract_lhfeat: bool = False,
     risk_contract: Path | None = None, feature_freeze_manifest: Path | None = None,
-    c1_freeze_manifest: Path | None = None,
+    c1_freeze_manifest: Path | None = None, building_registry_csv: Path | None = None,
+    device: str = "auto",
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     contract, contract_path = _risk_contract(risk_contract)
     stress_quantile = float(contract["stratum_rule"]["stress_quantile"])
     inventory = _read(inventory_csv)
+    building_registry: dict[tuple[str, str], dict[str, str]] = {}
+    if building_registry_csv and building_registry_csv.exists():
+        for row in _read(building_registry_csv):
+            key = (str(row.get("image_id", "")).strip(), str(row.get("base_task_id", "")).strip())
+            if not all(key) or key in building_registry:
+                raise ValueError("building registry requires unique image_id + base_task_id")
+            building_registry[key] = row
+    for item in inventory:
+        key = (str(item.get("image_id", "")).strip(), str(item.get("base_task_id", "")).strip())
+        registry_row = building_registry.get(key, {})
+        approved = str(registry_row.get("registry_status", "")).lower() == "approved" and all(
+            str(registry_row.get(field, "")).strip() for field in ("building_id", "reviewed_by", "reviewed_at")
+        )
+        item["building_id"] = registry_row.get("building_id", "") if approved else "" if input_status == "formal" else item.get("building_id", "")
+        item["building_registry_status"] = "approved" if approved else "missing_or_unapproved"
     # C1 calibration support is a task-side, pre-annotation feature table.  Do
     # not derive a model-risk channel from crowd canonical geometry.
     c1_channels: dict[str, list[float]] = {name: [] for name in ("d_model_feat", "d_model_feat_local_max", "g_model_struct", "d_cal_A")}
     c1_by_task: dict[str, dict[str, Any]] = {}
+    config_path = _PROJECT_ROOT / contract["feature_freeze"]["config"]
+    formal_c1_identity = {
+        "checkpoint_sha256": sha256_file(checkpoint) if checkpoint and checkpoint.exists() else "",
+        "inference_config_sha256": sha256_file(config_path) if config_path.exists() else "",
+        "feature_freeze_manifest_sha256": sha256_file(feature_freeze_manifest) if feature_freeze_manifest and feature_freeze_manifest.exists() else "",
+        "building_registry_sha256": sha256_file(building_registry_csv) if building_registry_csv and building_registry_csv.exists() else "",
+    }
     for row in _read(c1_task_feature_csv):
         task = str(row.get("base_task_id") or row.get("task_id") or "")
         if not task or task in c1_by_task or str(row.get("preannotation_feature_ready", "")).lower() not in {"true", "1"}:
             continue
         if any(not str(row.get(field, "")).strip() for field in ("checkpoint_sha256", "inference_config_sha256", "layout_output_sha256")):
+            continue
+        if input_status == "formal" and any(not expected or row.get(field) != expected for field, expected in formal_c1_identity.items()):
             continue
         try:
             pair_count = float(row.get("g_pair_count", ""))
@@ -265,8 +329,6 @@ def materialize(
                 c1_by_task[task]["d_cal_A"] = float(np.min(np.linalg.norm(peers - normalized[index], axis=1))) if len(peers) else 0.0
     c1_reference_output = output_dir / "c1_task_risk_reference.csv"
     reference_rows = list(c1_by_task.values())
-    if c1_risk_reference_csv:
-        reference_rows = _read(c1_risk_reference_csv)
     c1_channels = {name: [] for name in c1_channels}
     complete_reference_rows = []
     for row in reference_rows:
@@ -302,12 +364,13 @@ def materialize(
     if extract_lhfeat:
         if not checkpoint:
             raise ValueError("checkpoint is required for LHFeat")
-        try:
+        feature_ready = _feature_freeze_ready(feature_freeze_manifest, checkpoint=checkpoint, config=config_path)
+        if not feature_ready:
+            feature_status = "not_ready_feature_freeze_incomplete"
+        else:
             candidate_paths = [Path(row.get("source_path", "")) for row in inventory if Path(row.get("source_path", "")).exists()]
-            candidate_features = _lhfeat_descriptors(candidate_paths, checkpoint)
-            config_path = _PROJECT_ROOT / contract["feature_freeze"]["config"]
-            feature_ready = _feature_freeze_ready(feature_freeze_manifest, checkpoint=checkpoint, config=config_path)
-            if feature_ready:
+            candidate_features = _lhfeat_descriptors(candidate_paths, checkpoint, config=config_path, device=device)
+            try:
                 freeze_payload = json.loads(feature_freeze_manifest.read_text(encoding="utf-8"))
                 cache_path = Path(freeze_payload["feature_cache_path"])
                 if not cache_path.is_absolute():
@@ -321,23 +384,17 @@ def materialize(
                         ) for name, value in candidate_features.items()
                     }
                 feature_status = "ready"
-            else:
-                if not reference_dir:
-                    raise ValueError("reference_dir is required when feature freeze is unavailable")
-                reference_paths = sorted(path for path in reference_dir.rglob("*") if path.suffix.lower() in {".jpg", ".jpeg", ".png"})
-                reference_features = _lhfeat_descriptors(reference_paths, checkpoint)
+            except (OSError, KeyError, ValueError, TypeError, json.JSONDecodeError):
                 feature_status = "not_ready_feature_freeze_incomplete"
-        except RuntimeError:
-            if input_status == "formal":
-                raise
-            feature_status = "dependency_unavailable"
     if reference_features:
         ref_global = np.stack([value[0] for value in reference_features.values()])
         ref_local = np.stack([value[1] for value in reference_features.values()])
     channel_scales = {name: (float(np.std(c1_channels[name])) if c1_channels[name] else 1.0) or 1.0 for name in RISK_VECTOR_FIELDS}
     rows = []
     for item in inventory:
-        task = item.get("task_id", ""); layout = _layout_features(layout_dir / f"{task}.json")
+        task = item.get("task_id", "")
+        layout_identity = item.get("base_task_id") or task
+        layout = _layout_features(layout_dir / f"{layout_identity}.json")
         g = layout.get("g_model_struct")
         d_cal = ""
         source_path = Path(item.get("source_path", ""))
@@ -407,9 +464,9 @@ def materialize(
         "risk_contract_path": str(contract_path), "risk_contract_sha256": sha256_file(contract_path),
         "checkpoint_sha256": sha256_file(checkpoint) if checkpoint and checkpoint.exists() else "",
         "feature_freeze_manifest_sha256": sha256_file(feature_freeze_manifest) if feature_freeze_manifest and feature_freeze_manifest.exists() else "",
+        "building_registry_sha256": sha256_file(building_registry_csv) if building_registry_csv and building_registry_csv.exists() else "",
         "config_sha256": sha256_file(_PROJECT_ROOT / contract["feature_freeze"]["config"]) if (_PROJECT_ROOT / contract["feature_freeze"]["config"]).exists() else "",
         "inventory_sha256": sha256_file(inventory_csv), "c1_preannotation_feature_sha256": sha256_file(c1_task_feature_csv),
-        "c1_risk_reference_sha256": sha256_file(c1_risk_reference_csv) if c1_risk_reference_csv else "",
         "output_inventory_sha256": sha256_file(inventory_output),
         "c1_task_risk_reference_path": str(c1_reference_output), "c1_task_risk_reference_sha256": sha256_file(c1_reference_output),
     }
@@ -426,24 +483,23 @@ def materialize(
     return summary
 
 
-def main(argv: list[str] | None = None) -> int:
-    parser = argparse.ArgumentParser()
-    parser.add_argument("--inventory-csv", type=Path, required=True)
-    parser.add_argument("--layout-dir", type=Path, required=True)
-    parser.add_argument("--c1-task-feature-csv", type=Path, required=True)
-    parser.add_argument("--output-dir", type=Path, required=True)
-    parser.add_argument("--input-status", choices=("precloseout_rehearsal", "formal"), required=True)
-    parser.add_argument("--checkpoint", type=Path)
-    parser.add_argument("--reference-dir", type=Path)
-    parser.add_argument("--extract-lhfeat", action="store_true")
-    parser.add_argument("--c1-risk-reference-csv", type=Path)
-    parser.add_argument("--risk-contract", type=Path)
-    parser.add_argument("--feature-freeze-manifest", type=Path)
-    parser.add_argument("--c1-freeze-manifest", type=Path)
-    args = parser.parse_args(argv)
-    print(json.dumps(materialize(args.inventory_csv, args.layout_dir, args.c1_task_feature_csv, args.output_dir, input_status=args.input_status, checkpoint=args.checkpoint, reference_dir=args.reference_dir, extract_lhfeat=args.extract_lhfeat, c1_risk_reference_csv=args.c1_risk_reference_csv, risk_contract=args.risk_contract, feature_freeze_manifest=args.feature_freeze_manifest, c1_freeze_manifest=args.c1_freeze_manifest), indent=2))
-    return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
+def materialize_formal(
+    inventory_csv: Path,
+    layout_dir: Path,
+    c1_task_feature_csv: Path,
+    output_dir: Path,
+    *,
+    checkpoint: Path,
+    feature_freeze_manifest: Path,
+    c1_freeze_manifest: Path,
+    building_registry_csv: Path,
+    device: str = "auto",
+) -> dict[str, Any]:
+    """Formal risk entry: every freeze dependency is explicit and mandatory."""
+    return materialize(
+        inventory_csv, layout_dir, c1_task_feature_csv, output_dir,
+        input_status="formal", checkpoint=checkpoint, extract_lhfeat=True,
+        feature_freeze_manifest=feature_freeze_manifest,
+        c1_freeze_manifest=c1_freeze_manifest,
+        building_registry_csv=building_registry_csv, device=device,
+    )

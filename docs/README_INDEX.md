@@ -27,6 +27,7 @@
 - [P1_PRESCREEN_LAUNCH_CHECKLIST_v1.md](thesis_main/P1_PRESCREEN_LAUNCH_CHECKLIST_v1.md)
 - [PRESCREEN_STAGE1_OPERATIONAL_GUIDE_20260327.md](thesis_main/PRESCREEN_STAGE1_OPERATIONAL_GUIDE_20260327.md)
 - [C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md](thesis_main/C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md)
+- [PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md](thesis_main/PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md)：C1 日志冻结、三轴证据、C2-B 风险/模拟/审批/assignment 的单一生产 DAG 与状态 owner
 - [C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md](thesis_main/C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md)
 - [WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md](thesis_main/WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md)
 - [WORKER_PROFILE_ARTIFACT_MIGRATION_AMENDMENT_v1.md](thesis_main/WORKER_PROFILE_ARTIFACT_MIGRATION_AMENDMENT_v1.md)
@@ -118,12 +119,11 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 历史材料默认不迁移、不修订。路径检查和乱码修复默认排除该目录。
 ## 2026-07-24 代码入口补充
 
-- C1 不可变 pre-closeout rehearsal：`tools/thesis_main/analysis/run_c1_precloseout_rehearsal.py`
+- C1→C2-B 唯一公开入口：`tools/thesis_main/analysis/run_c1_closeout_launch.py`（`rehearse-c1`、`freeze-c1`、`audit-c1`、`finalize-c1`、`design-c2b`、`build-c2b`）
 - C1 人工 task outcome / 单一 GT reference：`tools/thesis_main/analysis/materialize_c1_operational_reference.py`
 - P1→C1→C2-B component evidence：`tools/thesis_main/analysis/materialize_routing_component_evidence.py`
 - T1/V1 正式推断：`tools/thesis_main/analysis/materialize_main_inference.py`
-- C2 task-risk materializer：`tools/thesis_main/analysis/materialize_c2_task_risk.py`
+- C2 task-risk 与严格任务资格 materializer：`tools/thesis_main/analysis/materialize_c2_task_risk.py`、`tools/thesis_main/analysis/materialize_c2b_task_eligibility.py`
 - C2 LHFeat reference/PCA/whitening freeze：`tools/thesis_main/analysis/freeze_c2_feature_reference.py`
 - C1→C2-B 风险斜率/方差设计参数：`tools/thesis_main/analysis/materialize_c1_c2_design_parameters.py`
 - P1→C1 predictive association：`tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`
-- C1 closeout / C2 launch 两日入口：`tools/thesis_main/analysis/run_c1_closeout_launch.py`

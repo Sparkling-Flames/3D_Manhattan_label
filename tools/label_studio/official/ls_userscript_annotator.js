@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator
 // @namespace    http://tampermonkey.net/
-// @version      stage3_active_time_identity_20260725_v3
+// @version      stage3_active_time_page_gate_20260711_v2
 // @description  正式标注版：连接 Label Studio 与 HoHoNet 3D 查看器，并强制记录 active_time
 // @author       HoHoNet
 // @match        http://175.178.71.217:8080/*
@@ -132,10 +132,6 @@
         gate.storeTaskMatchStatus = hasRouteMatch
           ? (gate.storeMismatchPresent ? "mixed_with_route_match" : "matches_route")
           : "mismatch_only";
-        if (gate.storeTaskMatchStatus === "mismatch_only") {
-          gate.reason = "route_store_task_mismatch";
-          return gate;
-        }
       }
       gate.taskIdentityMatched = true;
       gate.eligible = true;
@@ -273,7 +269,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "stage3_active_time_identity_20260725_v3";
+  const SCRIPT_VERSION = "stage3_active_time_page_gate_20260711_v2";
   console.log(`HoHoNet Helper: 已加载 (v${SCRIPT_VERSION})`);
   console.log(
     "HoHoNet viewer base: set localStorage.HOHONET_VIEWER_BASE_URL = location.origin when /tools is reverse-proxied on LS origin",
@@ -514,9 +510,6 @@
     if (metadata?.annotationMatchStatus === "unknown_annotation") {
       return "当前 annotation 尚未确认；除非后续能安全匹配，否则时间会保留为未分配审计记录。";
     }
-    if (metadata?.annotationMatchStatus === "client_annotation_id_only") {
-      return "当前只有浏览器临时 annotation ID；保存后会自动绑定服务器 ID，在此之前不会进入正式 active-time。";
-    }
     return "";
   }
 
@@ -602,18 +595,21 @@
       };
     }
     tokenPanel.style.border = `1px solid ${tokenState.border}`;
+    const seconds = pageGate.eligible ? (report && report.reportSeconds !== undefined ? report.reportSeconds : activeSeconds) : 0;
     if (minimized) {
       tokenPanel.style.padding = "6px";
       tokenPanel.style.width = "auto";
       tokenPanel.style.maxWidth = "none";
-      tokenPanel.style.border = "1px solid #e5e7eb";
+      const uploadFailed = ["missing_token", "forbidden_403", "fetch_failed"].includes(lastActiveTimeUploadStatus)
+        || String(lastActiveTimeUploadStatus).startsWith("http_");
+      tokenPanel.style.border = `1px solid ${uploadFailed ? "#ef4444" : pageGate.eligible ? "#22c55e" : "#f59e0b"}`;
       tokenPanel.style.boxShadow = "0 4px 14px rgba(15,23,42,0.14)";
-      if (!pageGate.eligible) {
-        const compactStatus = document.createElement("span");
-        compactStatus.textContent = "Active-Time：未计时（当前不是任务标注页）";
-        compactStatus.style.cssText = "font-size: 12px; color: #475569; margin: 0 8px;";
-        tokenPanel.appendChild(compactStatus);
-      }
+      const compactStatus = document.createElement("span");
+      compactStatus.textContent = pageGate.eligible
+        ? `Active-Time：计时中 · Task ${pageGate.routeTaskId || "?"} · ${Math.round(seconds)} 秒 · 上传 ${lastActiveTimeUploadStatus}`
+        : `Active-Time：未计时 · ${pageGate.reason || "页面未就绪"}`;
+      compactStatus.style.cssText = "font-size: 12px; color: #475569; margin: 0 8px;";
+      tokenPanel.appendChild(compactStatus);
       appendActiveTimePanelButton(tokenPanel, "展开详情", () => {
         setActiveTimePanelMode("details");
         updateActiveTimePanels(report, lastActiveTimeUploadStatus);
@@ -648,7 +644,6 @@
       });
     }
     tokenPanel.appendChild(actions);
-    const seconds = pageGate.eligible ? (report && report.reportSeconds !== undefined ? report.reportSeconds : activeSeconds) : 0;
     statusPanel.textContent = "";
     statusPanel.style.background = "#fff";
     statusPanel.style.color = "#111827";
@@ -1266,10 +1261,10 @@
         selectedJson = selected?.toJSON?.();
       } catch (e) {}
       const annotation = firstIdentityCandidate([
+        [selected?.id, "store.annotationStore.selected.id"],
         [selected?.pk, "store.annotationStore.selected.pk"],
         [selected?.annotation?.id, "store.annotationStore.selected.annotation.id"],
         [selectedJson?.id, "store.annotationStore.selected.toJSON.id"],
-        [selected?.id, "store.annotationStore.selected.id"],
       ], "unknown_annotation", "unknown");
       if (annotation.id === "unknown_annotation") return annotation;
 
@@ -1301,8 +1296,6 @@
       }
       return {
         ...annotation,
-        serverAnnotationId: /^\d+$/.test(annotation.id) && annotation.source !== "store.annotationStore.selected.id" ? annotation.id : "",
-        clientAnnotationId: getIdentityValue(selected?.id) || "",
         selectedAnnotationId: annotation.id,
         selectedAnnotationOwnerId: owner.id || "",
         selectedAnnotationOwnerSource: owner.source || "",
@@ -3035,8 +3028,6 @@
       annotatorId: getAnnotatorId(),
       annotationId: annotationIdentity.id,
       annotationIdSource: annotationIdentity.source,
-      serverAnnotationId: annotationIdentity.serverAnnotationId || "",
-      clientAnnotationId: annotationIdentity.clientAnnotationId || "",
       selectedAnnotationId: annotationIdentity.selectedAnnotationId || "",
       selectedAnnotationOwnerId: annotationIdentity.selectedAnnotationOwnerId || "",
       selectedAnnotationOwnerSource: annotationIdentity.selectedAnnotationOwnerSource || "",
@@ -3122,11 +3113,7 @@
         ? String(live.annotatorId).trim()
         : lastKnownActiveTimeMetadata.annotatorId || "unknown",
       annotationId,
-      annotationMatchStatus: annotationId === "unknown_annotation"
-        ? "unknown_annotation"
-        : live.serverAnnotationId ? "annotation_id_present" : "client_annotation_id_only",
-      serverAnnotationId: String(live.serverAnnotationId || ""),
-      clientAnnotationId: String(live.clientAnnotationId || ""),
+      annotationMatchStatus: annotationMatchStatus(annotationId),
       taskIdSource: isKnownActiveTimeMetadataValue(live.taskIdSource)
         ? String(live.taskIdSource).trim()
         : lastKnownActiveTimeMetadata.taskIdSource || "unknown",
@@ -3179,8 +3166,6 @@
       taskIdSource: metadata.taskIdSource || "unknown",
       projectIdSource: metadata.projectIdSource || "unknown",
       annotationIdSource: metadata.annotationIdSource || "unknown",
-      serverAnnotationId: metadata.serverAnnotationId || "",
-      clientAnnotationId: metadata.clientAnnotationId || "",
       selectedAnnotationId: metadata.selectedAnnotationId || "",
       selectedAnnotationOwnerId: metadata.selectedAnnotationOwnerId || "",
       selectedAnnotationOwnerSource: metadata.selectedAnnotationOwnerSource || "",
@@ -3201,8 +3186,6 @@
       task_id_source: report.taskIdSource,
       annotation_id: report.annotationId,
       annotation_id_source: report.annotationIdSource,
-      server_annotation_id: report.serverAnnotationId,
-      client_annotation_id: report.clientAnnotationId,
       selected_annotation_id: report.selectedAnnotationId,
       selected_annotation_owner_id: report.selectedAnnotationOwnerId,
       selected_annotation_owner_source: report.selectedAnnotationOwnerSource,
@@ -3354,12 +3337,12 @@
       let reportMetadata = currentActiveTimeMetadata;
       let secondsForReport = activeSeconds;
       const unknownCumulativeSeconds = (taskCumulativeSeconds.get(currentActiveTimeKey) || 0) + activeSeconds;
-      if (lateBindingStatus === "single_actual_annotation" && nextMetadata.serverAnnotationId) {
+      if (lateBindingStatus === "single_actual_annotation" && unknownCumulativeSeconds <= 5) {
         reportMetadata = {
           ...nextMetadata,
           activeTimeAliasFrom: currentActiveTimeKey,
-          activeTimeAliasReason: "unknown_annotation_late_bound",
-          lateBindingStatus: "single_actual_annotation",
+          activeTimeAliasReason: "short_unknown_bootstrap",
+          lateBindingStatus: "short_unknown_bootstrap_merged",
         };
         secondsForReport = unknownCumulativeSeconds;
         taskCumulativeSeconds.delete(currentActiveTimeKey);

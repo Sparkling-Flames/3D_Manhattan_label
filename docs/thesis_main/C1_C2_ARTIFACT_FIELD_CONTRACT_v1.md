@@ -564,8 +564,39 @@ task_outcome_status, reference_identity, reference_sha256, score_reason
 - `c2_task_risk_inventory.csv` 保存 `d_model_feat`、`d_model_feat_local_max`、`g_model_struct`、`d_cal_A`、`risk_assist_candidate`、`risk_route_candidate` 及 checkpoint/layout SHA。
 - rehearsal 缺少 LHFeat 运行依赖时必须写明 `feature_status=dependency_unavailable|not_requested`，并保持 `formal_ready=false`；不得用结构风险替代 LHFeat 后冒充正式冻结。
 - `freeze_c2_feature_reference.py` 生成的 NPZ 是 PCA/whitening 的唯一实际变换真源；feature freeze manifest 必须同时绑定 checkpoint、config、reference listing、NPZ 和 circular/seam audit SHA。仅填写 `pca_frozen=true` 等声明不能使任务 ready。
-- `candidate_C2B_assignment.csv` 只能在 rehearsal 中出现，并固定 `assignment_launch_allowed=false`。
-- 正式入口为 `run_c1_closeout_launch.py freeze-c1-active-log|build-c1-collection-closure|day1-canonical-audit|day1-formal-audit|day1-measurement-freeze|day2-c2b-design|day2-c2b-build`；Day 1 禁止直接分析仍持续增长的 `active_logs/new_server`。C1 freeze 只冻结 measurement evidence，不得写成最终 routing profile frozen。
+- `c2b_candidate_worker_task_edges.csv` 是候选设计边的唯一工件；候选阶段不得写出 `assignment_manifest_C2B.csv`，正式 assignment 只能由 `build-c2b` 消费审批后的候选 bundle 生成。
+- 唯一公开入口为 `run_c1_closeout_launch.py rehearse-c1|freeze-c1|audit-c1|finalize-c1|design-c2b|build-c2b`；正式 `audit-c1` 禁止直接分析仍持续增长的 `active_logs/new_server`。C1 freeze 只冻结 measurement evidence，不得写成最终 routing profile frozen。
 ### C1 active-log and collection closure freeze
 
 Formal C1 runs must bind `c1_active_log_freeze_manifest.json` and a collection-closure manifest. The former records `stage=C1`, live source root, immutable frozen root, server-time cutoff, source/frozen file manifests and aggregate SHA values; the latter binds export aggregate SHA, active-log freeze SHA, assignment SHA, closure time/operator and late-submission policy. PreScreen remains bound to `active_logs/prescreen` or its immutable P1 snapshot. A downstream stage may inherit these states but may not manufacture them from `input_status=formal`.
+
+## 9. 2026-07-25 正式链收口合同
+
+- `source_live_aggregate_sha256` 保存 cutoff 时 live root 的原始字节；
+  `source_aggregate_sha256` 保存 cutoff-eligible source 字节，必须等于
+  `frozen_aggregate_sha256`。`post_cutoff_event_count` 必须为 0，排除数量另存
+  `source_post_cutoff_event_count`。
+- C1 active-time mixed known/unknown session 与任何未绑定冻结 alias registry 的
+  late-binding session 均不得进入 annotation-level primary time；解析失败行写入
+  `c1_active_time_parse_error_audit.csv`，不得静默丢弃。
+- `c1_frozen_preannotation_model_features.csv` 只能由 checkpoint、config、冻结
+  PCA/whitening reference、base-task layout 和已审批 building registry 生成；不得读取
+  crowd geometry。正式 ready 要求每个 assigned base task 均完整。
+- `c2_eligible_roster_C1.csv` 是 `c2b_design_worker_profile.csv` 的 eligible 子集；
+  admission 只读取 row eligibility 汇总出的 Q_GT/process/independence support。
+  `closed_partial_insufficient` 不得进入 C2-B。
+- `c2b_task_eligibility_evidence.csv` 是正式 task eligibility 的唯一 owner。提供正式
+  sidecar 后，缺 key 不得回退读取 candidate inventory 中的预填布尔值。
+- simulation 方差字段必须分别为 `between_worker_slope_sd`、
+  `outcome_residual_sd`、`worker_intercept_sd`、`task_sd`、`building_sd` 和
+  `Q_GT_baseline_se`；缺失时不得标为 estimated。
+- simulation 仅在 selected task set 内做 building/task 有放回抽样，并为每次
+  building draw 和 task slot 保存独立 instance；同名 task 的重复抽样不得覆盖 effect，
+  零交付 slot 必须进入 minimum support。
+- `design-c2b` 只输出 risk freeze、task eligibility、candidate designs、candidate edges 和模拟审计。
+  `build-c2b` 只消费冻结 candidate bundle，不重新抽样或重建设计，并需要四类独立审批：source split、future holdout、selected design、
+  selected task/reference；不得复用一个 approval 文件冒充另一类。
+- 数值阈值 manifest 必须显式 `status=approved` 且
+  `formal_selection_allowed=true`。Selected-design approval 必须指定一个非支配可行
+  `design_id`；selected-task approval 必须绑定实际 task set SHA。
+  Selected-design approval 还必须绑定候选 summary 与候选 edges 的 SHA，禁止审批后重算候选边。

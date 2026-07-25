@@ -5,11 +5,8 @@ import hashlib
 import json
 from pathlib import Path
 
-import pytest
-
-from tools.thesis_main.analysis import build_c2_assignment_manifest_from_c1_gaps as c2b
 from tools.thesis_main.analysis.c1_c2_mainline import materialize_analysis_views, materialize_measurement_readiness
-from tools.thesis_main.analysis.materialize_c1_preannotation_task_features import materialize as materialize_preannotation_features
+from tools.thesis_main.analysis.materialize_c1_preannotation_task_features import extract_frozen_model_features, materialize as materialize_preannotation_features
 from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import materialize_row_analysis_eligibility
 
 
@@ -46,21 +43,15 @@ def test_measurement_freeze_requires_three_axes_but_not_active_time(tmp_path: Pa
     assert result["C2B_DESIGN_READY"] is True
 
 
-def test_c2b_design_does_not_require_risk_route(tmp_path: Path) -> None:
-    workers = tmp_path / "workers.csv"; tasks = tmp_path / "tasks.csv"; manifest = tmp_path / "design.json"; closeout = tmp_path / "closeout.json"
-    contract_sha = hashlib.sha256(c2b.RISK_CONTRACT.read_bytes()).hexdigest()
-    _write(workers, [
-        {"worker_id": "w1", "c2_candidate_eligible": "true", "risk_slope": "0.1", "risk_slope_se": "0.1", "risk_slope_support": "3", "Q_GT_task_adjusted": ".8", "missing_rate": "0", "F_struct": "0"},
-        {"worker_id": "w2", "c2_candidate_eligible": "true", "risk_slope": "0.2", "risk_slope_se": "0.1", "risk_slope_support": "3", "Q_GT_task_adjusted": ".7", "missing_rate": "0", "F_struct": "0"},
-    ])
-    _write(tasks, [
-        {"task_id": f"t{i}", "base_task_id": f"b{i}", "assignment_eligible": "true", "anchor_eligible": "true", "bridge_eligible": "true", "risk_design_stratum": "ordinary" if i % 2 else "stress", "risk_design_stratum_status": "frozen_from_C1", "risk_contract_sha256": contract_sha, "building_id": f"h{i % 2}", "risk_design_A": str(i / 10), "risk_route_status": "pending_c2b_confirmation"}
-        for i in range(1, 5)
-    ])
-    closeout.write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C2B_DESIGN_READY": True}), encoding="utf-8")
-    manifest.write_text(json.dumps({"manifest_version": "c2_design_v1", "risk_contract_sha256": contract_sha, "input_sha256": {"worker_profile_csv": hashlib.sha256(workers.read_bytes()).hexdigest(), "task_pool_csv": hashlib.sha256(tasks.read_bytes()).hexdigest(), "c1_closeout_summary": hashlib.sha256(closeout.read_bytes()).hexdigest()}, "candidate_designs": [{"design_id": "d", "common_anchor_count": 1, "bridge_per_worker": 2, "unique_bridge_tasks": 2, "min_task_support": 2, "max_worker_stratum_imbalance": 2}], "simulation": {"seed": 1, "draws": 200}}), encoding="utf-8")
-    with pytest.raises(ValueError, match="formal_selection_thresholds_unapproved|c2b_task_eligibility_evidence_missing"):
-        c2b.materialize(tasks, workers, manifest, tmp_path / "out", input_status="formal", c1_closeout_summary=closeout)
+def test_measurement_freeze_does_not_promote_one_axis_to_full_c1(tmp_path: Path) -> None:
+    completion, quality, loo, structural = [tmp_path / name for name in ("completion.csv", "quality.csv", "loo.csv", "structural.csv")]
+    _write(completion, [{"worker_id": "w", "completion_status": "completed"}])
+    _write(quality, [{"worker_id": "w", "base_task_id": "b", "global_analysis_eligible": "true"}])
+    _write(loo, [{"worker_id": "w", "base_task_id": "b", "loo_analysis_eligible": "false"}])
+    _write(structural, [{"worker_id": "w", "base_task_id": "b", "structural_opportunity_eligible": "false"}])
+    result = materialize_measurement_readiness(completion, quality, loo, structural, tmp_path, canonical_closed=True, collection_window_closed=True)
+    assert result["estimand_freeze"] == {"Q_GT": True, "R_LOO": False, "F_struct": False}
+    assert result["C1_MEASUREMENT_FROZEN"] is False
 
 
 def test_preannotation_feature_requires_frozen_model_identity(tmp_path: Path) -> None:
@@ -69,3 +60,38 @@ def test_preannotation_feature_requires_frozen_model_identity(tmp_path: Path) ->
     _write(features, [{"base_task_id": "b1", "d_model_feat": "1", "d_model_feat_local": "2", "g_pair_count": "4", "g_topology_invalid": "false", "g_duplicate_peak": "false", "g_seam_instability": "0", "g_postprocess_invalid": "false"}])
     summary = materialize_preannotation_features([assignments], inventory, tmp_path, frozen_feature_csv=features)
     assert summary["n_ready"] == 0
+
+
+def test_preannotation_feature_producer_requires_authoritative_building_and_base_layout(tmp_path: Path, monkeypatch) -> None:
+    import numpy as np
+    assignments, inventory, buildings = tmp_path / "assignments.csv", tmp_path / "inventory.csv", tmp_path / "buildings.csv"
+    image = tmp_path / "scene.jpg"; image.write_bytes(b"image")
+    _write(assignments, [{"base_task_id": "scene", "task_id": "582"}])
+    _write(inventory, [{"base_task_id": "scene", "task_id": "582", "image_id": "i1", "source_path": str(image)}])
+    _write(buildings, [{"image_id": "i1", "base_task_id": "scene", "building_id": "house", "registry_status": "approved", "reviewed_by": "expert", "reviewed_at": "2026-07-25"}])
+    layouts = tmp_path / "layouts"; layouts.mkdir()
+    (layouts / "scene.json").write_text(json.dumps({"layout": {"corners": [
+        {"x": 10, "y_ceiling": 100, "y_floor": 400}, {"x": 300, "y_ceiling": 100, "y_floor": 400},
+        {"x": 600, "y_ceiling": 100, "y_floor": 400}, {"x": 900, "y_ceiling": 100, "y_floor": 400},
+    ]}}), encoding="utf-8")
+    checkpoint = tmp_path / "model.pth"; checkpoint.write_bytes(b"model")
+    config = tmp_path / "config.yaml"; config.write_text("model: fixed\n", encoding="utf-8")
+    cache = tmp_path / "cache.npz"
+    np.savez(cache, global_mean=np.zeros(1), global_components=np.eye(1), global_scale=np.ones(1), local_mean=np.zeros(1), local_components=np.eye(1), local_scale=np.ones(1), reference_global=np.asarray([[0.], [2.]]), reference_local=np.asarray([[0.], [2.]]))
+    audit = tmp_path / "audit.json"; audit.write_text(json.dumps({"audit_basis": "reference_images_end_to_end_circular_shift", "audited_reference_image_count": 2, "circular_shift_max_abs_difference": 0, "tolerance": 1e-6}), encoding="utf-8")
+    sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+    feature_manifest = tmp_path / "feature.json"
+    feature_manifest.write_text(json.dumps({
+        "feature_cache_path": str(cache), "invariance_audit_path": str(audit), "checkpoint_sha256": sha(checkpoint), "config_sha256": sha(config), "reference_feature_sha256": sha(cache), "reference_image_count": 2,
+        "pca_frozen": True, "whitening_frozen": True, "circular_shift_invariant": True, "seam_invariant": True,
+        "pca_frozen_sha256": sha(cache), "whitening_frozen_sha256": sha(cache), "circular_shift_invariant_sha256": sha(audit), "seam_invariant_sha256": sha(audit),
+        "pca_sha256": sha(cache), "whitening_sha256": sha(cache), "circular_shift_audit_sha256": sha(audit), "seam_audit_sha256": sha(audit),
+    }), encoding="utf-8")
+    monkeypatch.setattr("tools.thesis_main.analysis.materialize_c1_preannotation_task_features._lhfeat_descriptors", lambda paths, checkpoint, config, device="auto": {path.resolve().as_posix(): (np.asarray([1.]), np.asarray([1.])) for path in paths})
+    output = tmp_path / "features.csv"
+    summary = extract_frozen_model_features([assignments], inventory, buildings, layouts, checkpoint, config, feature_manifest, output)
+    row = next(csv.DictReader(output.open(encoding="utf-8")))
+    assert summary["n_ready"] == 1
+    assert row["building_id"] == "house"
+    assert row["layout_output_sha256"] == sha(layouts / "scene.json")
+    assert row["preannotation_feature_ready"].lower() == "true"

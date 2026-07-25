@@ -1,8 +1,6 @@
 import json
 import os
 import datetime
-import hashlib
-import math
 from pathlib import Path
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 import sys
@@ -19,21 +17,6 @@ LOG_TOKEN = os.environ.get("HOHONET_LOG_TOKEN", "")
 # Defaults keep backward compatibility.
 BIND_HOST = os.environ.get("CORS_SERVER_BIND", "0.0.0.0")
 PORT = int(os.environ.get("CORS_SERVER_PORT", "8001"))
-MAX_LOG_PAYLOAD_BYTES = 64 * 1024
-
-
-def validate_log_payload(data):
-    if not isinstance(data, dict):
-        raise ValueError("payload must be a JSON object")
-    missing = [field for field in ("project_id", "task_id", "annotator_id", "session_id", "active_seconds") if not str(data.get(field, "")).strip()]
-    if missing:
-        raise ValueError(f"missing fields: {','.join(missing)}")
-    seconds = float(data["active_seconds"])
-    if not math.isfinite(seconds) or not 0 <= seconds <= 7 * 24 * 60 * 60:
-        raise ValueError("active_seconds out of range")
-    data["active_seconds"] = seconds
-    data["server_validation_status"] = "page_gate_verified" if data.get("page_gate_eligible") is True and data.get("page_gate_reason") == "eligible" else "legacy_or_unverified_page_gate"
-    return data
 
 class CORSRequestHandler(SimpleHTTPRequestHandler):
     def end_headers(self):
@@ -59,11 +42,8 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                     self.wfile.write(b'{"status":"forbidden"}')
                     return
 
-            try:
-                content_length = int(self.headers.get('Content-Length', 0))
-            except ValueError:
-                content_length = 0
-            if content_length <= 0 or content_length > MAX_LOG_PAYLOAD_BYTES:
+            content_length = int(self.headers.get('Content-Length', 0))
+            if content_length == 0:
                 self.send_response(400)
                 self.send_header('Content-Type', 'application/json')
                 self.end_headers()
@@ -72,12 +52,10 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
 
             post_data = self.rfile.read(content_length)
             try:
-                data = validate_log_payload(json.loads(post_data.decode('utf-8')))
+                data = json.loads(post_data.decode('utf-8'))
                 
                 # v0.21: Add server-side timestamp for audit trail
-                now = datetime.datetime.now(datetime.timezone.utc)
-                data['server_received_at'] = now.isoformat()
-                data['server_event_sha256'] = hashlib.sha256(post_data).hexdigest()
+                data['server_received_at'] = datetime.datetime.now().isoformat()
                 
                 # Build logs directory and daily filename under the repository root.
                 # This file lives in tools/label_studio/, so parents[2] is repo root.
@@ -85,7 +63,7 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 logs_dir = base_dir / LOG_DIR_NAME
                 logs_dir.mkdir(parents=True, exist_ok=True)
 
-                today = now.strftime("%Y-%m-%d")
+                today = datetime.datetime.now().strftime("%Y-%m-%d")
                 log_path = logs_dir / f"active_times_{today}.jsonl"
 
                 # Append to daily log file inside logs_dir
@@ -98,12 +76,6 @@ class CORSRequestHandler(SimpleHTTPRequestHandler):
                 self.end_headers()
                 self.wfile.write(b'{"status": "ok"}')
                 print(f"Logged time for task {data.get('task_id')} (Project {data.get('project_id', 'N/A')}): {data.get('active_seconds')}s -> {log_path}")
-            except (UnicodeDecodeError, json.JSONDecodeError, TypeError, ValueError) as e:
-                print(f"Error logging time: {e}")
-                self.send_response(400)
-                self.send_header('Content-Type', 'application/json')
-                self.end_headers()
-                self.wfile.write(b'{"status":"bad_request"}')
             except Exception as e:
                 print(f"Error logging time: {e}")
                 self.send_response(500)

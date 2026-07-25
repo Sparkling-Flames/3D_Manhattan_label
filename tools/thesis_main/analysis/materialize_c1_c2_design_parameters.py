@@ -2,7 +2,6 @@
 
 from __future__ import annotations
 
-import argparse
 import csv
 import json
 from collections import defaultdict
@@ -47,14 +46,34 @@ def materialize(quality_csv: Path, risk_csv: Path, structural_csv: Path, complet
             failures[worker] += row.get("failure_attribution") == "worker_caused_structural_failure"
     completion = {row.get("worker_id", ""): row for row in _read(completion_csv)}
     all_observations = [item for values in by_worker.values() for item in values]
-    group_slope = group_residual_sd = ""
+    group_slope = outcome_residual_sd = worker_intercept_sd = task_sd = building_sd = ""
     worker_fits: dict[str, tuple[float, float, np.ndarray]] = {}
     if len(all_observations) >= 3 and len({item[0] for item in all_observations}) >= 2:
-        x_all = np.asarray([item[0] for item in all_observations]); y_all = np.asarray([item[1] for item in all_observations])
+        records = [
+            (worker, x, y, task, building)
+            for worker, values in by_worker.items() for x, y, task, building in values
+        ]
+        x_all = np.asarray([item[1] for item in records]); y_all = np.asarray([item[2] for item in records])
         design_all = np.column_stack([np.ones(len(x_all)), x_all]); beta_all = np.linalg.lstsq(design_all, y_all, rcond=None)[0]
         residual_all = y_all - design_all @ beta_all
         group_slope = float(beta_all[1])
-        group_residual_sd = float(np.std(residual_all, ddof=1)) if len(residual_all) > 1 else ""
+
+        def group_means(values: np.ndarray, keys: list[str]) -> dict[str, float]:
+            return {key: float(np.mean(values[[item == key for item in keys]])) for key in sorted(set(keys)) if key}
+
+        worker_keys = [item[0] for item in records]
+        worker_effects = group_means(residual_all, worker_keys)
+        worker_intercept_sd = float(np.std(list(worker_effects.values()), ddof=1)) if len(worker_effects) > 1 else ""
+        after_worker = residual_all - np.asarray([worker_effects.get(key, 0.0) for key in worker_keys])
+        building_keys = [item[4] for item in records]
+        building_effects = group_means(after_worker, building_keys)
+        building_sd = float(np.std(list(building_effects.values()), ddof=1)) if len(building_effects) > 1 else ""
+        after_building = after_worker - np.asarray([building_effects.get(key, 0.0) for key in building_keys])
+        task_keys = [item[3] for item in records]
+        task_effects = group_means(after_building, task_keys)
+        task_sd = float(np.std(list(task_effects.values()), ddof=1)) if len(task_effects) > 1 else ""
+        final_residual = after_building - np.asarray([task_effects.get(key, 0.0) for key in task_keys])
+        outcome_residual_sd = float(np.std(final_residual, ddof=1)) if len(final_residual) > 1 else ""
     rows = []
     for worker in sorted(completion):
         observations = by_worker[worker]
@@ -81,10 +100,10 @@ def materialize(quality_csv: Path, risk_csv: Path, structural_csv: Path, complet
             q_baseline_se = float(np.std(y_values, ddof=1) / np.sqrt(len(y_values)))
         rows.append({
             "worker_id": worker, "risk_slope": slope, "risk_slope_se": se, "risk_support": len(observations), "Q_GT_support_for_slope": qgt_support[worker], "building_support": len({item[3] for item in observations if item[3]}),
-            "group_prior_slope": group_slope, "group_prior_scale": group_residual_sd,
+            "group_prior_slope": group_slope, "group_prior_scale": "",
             "group_slope_mean": group_slope, "between_worker_slope_sd": "",
-            "group_slope_sd": "", "outcome_residual_sd": group_residual_sd,
-            "worker_intercept_sd": "", "task_sd": "", "building_sd": "", "Q_GT_baseline_se": q_baseline_se,
+            "group_slope_sd": "", "outcome_residual_sd": outcome_residual_sd,
+            "worker_intercept_sd": worker_intercept_sd, "task_sd": task_sd, "building_sd": building_sd, "Q_GT_baseline_se": q_baseline_se,
             "risk_slope_for_simulation": slope if slope != "" else group_slope,
             "risk_slope_scale_for_simulation": "",
             "c1_risk_slope_status": slope_status,
@@ -94,22 +113,27 @@ def materialize(quality_csv: Path, risk_csv: Path, structural_csv: Path, complet
     between_worker_slope_sd = float(np.std(worker_slope_values, ddof=1)) if len(worker_slope_values) > 1 else ""
     for row in rows:
         row["between_worker_slope_sd"] = between_worker_slope_sd
+        row["group_prior_scale"] = between_worker_slope_sd
         row["risk_slope_scale_for_simulation"] = between_worker_slope_sd
     output_dir.mkdir(parents=True, exist_ok=True)
     output = output_dir / "c1_c2_design_parameters.csv"
     with output.open("w", encoding="utf-8", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=list(rows[0]) if rows else ["worker_id"]); writer.writeheader(); writer.writerows(rows)
-    summary = {"n_workers": len(rows), "n_estimated": sum(row["parameter_status"] == "estimated" for row in rows), "group_prior_available": group_slope != "", "formal_design_input_ready": bool(rows) and group_slope != "" and group_residual_sd != "", "variance_status": "estimated" if group_slope != "" and group_residual_sd != "" else "insufficient"}
+    variance_fields = (between_worker_slope_sd, outcome_residual_sd, worker_intercept_sd, task_sd, building_sd)
+    formal_ready = bool(rows) and group_slope != "" and all(value != "" for value in variance_fields) and all(row["Q_GT_baseline_se"] != "" for row in rows)
+    summary = {
+        "n_workers": len(rows),
+        "n_estimated": sum(row["parameter_status"] == "estimated" for row in rows),
+        "group_prior_available": group_slope != "",
+        "formal_design_input_ready": formal_ready,
+        "variance_status": "estimated" if formal_ready else "insufficient",
+        "variance_components": {
+            "between_worker_slope_sd": between_worker_slope_sd,
+            "outcome_residual_sd": outcome_residual_sd,
+            "worker_intercept_sd": worker_intercept_sd,
+            "task_sd": task_sd,
+            "building_sd": building_sd,
+        },
+    }
     (output_dir / "c1_c2_design_parameters.summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
-
-
-def main() -> int:
-    parser = argparse.ArgumentParser()
-    for name in ("quality-csv", "risk-csv", "structural-csv", "completion-csv", "output-dir"):
-        parser.add_argument(f"--{name}", type=Path, required=True)
-    args = parser.parse_args(); print(json.dumps(materialize(args.quality_csv, args.risk_csv, args.structural_csv, args.completion_csv, args.output_dir), indent=2)); return 0
-
-
-if __name__ == "__main__":
-    raise SystemExit(main())
