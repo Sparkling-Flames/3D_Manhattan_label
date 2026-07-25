@@ -105,8 +105,8 @@
   分层物化；缺 C2-B 时 Full 自动禁用。
 - `tools/thesis_main/analysis/materialize_main_inference.py`：T1 image-level 与 V1 ITT 的 manifest/SHA 绑定
   cluster bootstrap 推断入口。
-- `tools/thesis_main/analysis/materialize_c2_task_risk.py`：固定 HoHoNet/LHFeat、结构输出、C1-only `d_cal_A` 与综合风险 Q75 的候选任务风险入口；缺少冻结依赖时 assignment fail-closed。
+- `tools/thesis_main/analysis/materialize_c2_task_risk.py`：固定 HoHoNet/LHFeat、结构输出、统一 `risk_design_vector_A`/`risk_design_score_A` 的候选任务风险入口；缺少 feature/C1 冻结依赖时 assignment fail-closed。
 - `tools/thesis_main/analysis/materialize_c1_c2_design_parameters.py`：从 C1 三轨 eligibility、task-level risk 与 completion 估计 C2-B 模拟所需的 worker risk slope、SE、missing 与结构失败参数；不生成 routing profile。
 - `tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`：P1→C1 Spearman/Kendall、worker bootstrap 与 range-restriction 审计入口。
 - `tools/thesis_main/analysis/run_c1_closeout_launch.py`：C1 Day 1 rehearsal/formal-audit/evidence freeze 与 C2-B Day 2 risk-plan/build 入口；Day 2 build 必须消费已批准的 task/reference、source split、holdout 和 design 工件。
-- `tools/thesis_main/analysis/c1_c2_mainline.py` 与 `materialize_c1_preannotation_task_features.py`：不可变 C1 evidence sidecar join、worker/task/building/graph measurement gate、唯一 C2-B worker design input，以及不读取 crowd geometry 的预标注 C1 task feature 合同；正式 DAG 由 `docs/thesis_main/PAPER_A_VFINAL_EXECUTION_CONTRACT.json` 固定，风险分层和模拟阈值由 `docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json` 冻结。
+- `tools/thesis_main/analysis/c1_c2_mainline.py` 与 `materialize_c1_preannotation_task_features.py`：不可变 C1 row-eligibility sidecar join、estimand-specific worker/task/building/graph gates、唯一 C2-B worker design input，以及不读取 crowd geometry 的预标注 C1 task feature 合同；正式 DAG 由 `docs/thesis_main/PAPER_A_VFINAL_EXECUTION_CONTRACT.json` 固定，风险 exposure 由 `docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json` 固定，设计审批由 `docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json` 固定。

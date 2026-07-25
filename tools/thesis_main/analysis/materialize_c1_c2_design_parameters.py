@@ -32,9 +32,8 @@ def materialize(quality_csv: Path, risk_csv: Path, structural_csv: Path, complet
     qgt_support: dict[str, int] = defaultdict(int)
     for row in _read(quality_csv):
         task = row.get("base_task_id", ""); risk_row = risk.get(task, {})
-        # C2-B is designed from C1-only risk_design_A.  Assist and route risk
-        # belong to later T1/V1 decisions and cannot be a prerequisite here.
-        x = _number(risk_row, "risk_design_A", "d_cal_A")
+        # C2-B uses only the frozen continuous risk_design_score_A exposure.
+        x = _number(risk_row, "risk_design_score_A")
         y = _number(row, "Q_GT_raw", "iou_2d", "iou")
         if y is not None and str(row.get("global_analysis_eligible", "")).lower() in {"true", "1"}:
             worker = row.get("worker_id", "")
@@ -76,6 +75,8 @@ def materialize(quality_csv: Path, risk_csv: Path, structural_csv: Path, complet
         rows.append({
             "worker_id": worker, "risk_slope": slope, "risk_slope_se": se, "risk_support": len(observations), "Q_GT_support_for_slope": qgt_support[worker], "building_support": len({item[3] for item in observations if item[3]}),
             "group_prior_slope": group_slope, "group_prior_scale": group_scale,
+            "group_slope_sd": group_scale, "outcome_residual_sd": group_scale,
+            "worker_variance": "", "task_variance": "", "building_variance": "", "Q_GT_baseline_se": "",
             "risk_slope_for_simulation": slope if slope != "" else group_slope,
             "risk_slope_scale_for_simulation": se if se != "" else group_scale,
             "c1_risk_slope_status": slope_status,

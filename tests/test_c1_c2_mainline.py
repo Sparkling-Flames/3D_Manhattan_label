@@ -5,6 +5,8 @@ import hashlib
 import json
 from pathlib import Path
 
+import pytest
+
 from tools.thesis_main.analysis import build_c2_assignment_manifest_from_c1_gaps as c2b
 from tools.thesis_main.analysis.c1_c2_mainline import materialize_analysis_views, materialize_measurement_readiness
 from tools.thesis_main.analysis.materialize_c1_preannotation_task_features import materialize as materialize_preannotation_features
@@ -57,9 +59,8 @@ def test_c2b_design_does_not_require_risk_route(tmp_path: Path) -> None:
     ])
     closeout.write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C2B_DESIGN_READY": True}), encoding="utf-8")
     manifest.write_text(json.dumps({"manifest_version": "c2_design_v1", "risk_contract_sha256": contract_sha, "input_sha256": {"worker_profile_csv": hashlib.sha256(workers.read_bytes()).hexdigest(), "task_pool_csv": hashlib.sha256(tasks.read_bytes()).hexdigest(), "c1_closeout_summary": hashlib.sha256(closeout.read_bytes()).hexdigest()}, "candidate_designs": [{"design_id": "d", "common_anchor_count": 1, "bridge_per_worker": 2, "unique_bridge_tasks": 2, "min_task_support": 2, "max_worker_stratum_imbalance": 2}], "simulation": {"seed": 1, "draws": 200}}), encoding="utf-8")
-    result = c2b.materialize(tasks, workers, manifest, tmp_path / "out", input_status="formal", c1_closeout_summary=closeout)
-    assert result["launch_ready"] is True
-    assert (tmp_path / "out" / "assignment_manifest_C2B.csv").exists()
+    with pytest.raises(ValueError, match="formal_selection_thresholds_unapproved|c2b_task_eligibility_evidence_missing"):
+        c2b.materialize(tasks, workers, manifest, tmp_path / "out", input_status="formal", c1_closeout_summary=closeout)
 
 
 def test_preannotation_feature_requires_frozen_model_identity(tmp_path: Path) -> None:

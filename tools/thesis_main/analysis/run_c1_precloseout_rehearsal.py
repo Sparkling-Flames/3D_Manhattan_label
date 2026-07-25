@@ -77,6 +77,50 @@ def _aggregate_sha(rows: list[dict[str, Any]]) -> str:
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
+def _stage_active_log_provenance(p1_closeout_dir: Path, c1_active_log: Path) -> dict[str, Any]:
+    """Record stage-specific log roots; never treat a later-stage root as PreScreen."""
+    configs = sorted(p1_closeout_dir.glob("*run_config*.json"), key=lambda path: path.name.lower())
+    for config in configs:
+        try:
+            payload = json.loads(config.read_text(encoding="utf-8"))
+            active = payload.get("inputs", {}).get("active_logs", {})
+        except (OSError, json.JSONDecodeError):
+            continue
+        if not isinstance(active, dict) or not active.get("path"):
+            continue
+        configured = str(active["path"])
+        resolved = Path(configured)
+        if not resolved.is_absolute():
+            resolved = _PROJECT_ROOT / resolved
+        configured_resolved = resolved.resolve()
+        c1_resolved = c1_active_log.resolve()
+        return {
+            "prescreen": {
+                "stage": "PreScreen",
+                "configured_root": configured,
+                "resolved_root": configured_resolved.as_posix() if resolved.exists() else "",
+                "snapshot_path": str(active.get("snapshot_path") or ""),
+                "aggregate_sha256": str(active.get("aggregate_sha256") or ""),
+                "source_config": config.resolve().as_posix(),
+                "source_config_sha256": sha256_file(config),
+                "validated": resolved.is_dir() or bool(active.get("snapshot_path")),
+            },
+            "c1": {
+                "stage": "C1",
+                "configured_root": str(c1_active_log),
+                "resolved_root": c1_active_log.resolve().as_posix() if c1_active_log.exists() else "",
+                "validated": c1_active_log.exists(),
+            },
+            "prescreen_not_substituted": configured_resolved != c1_resolved,
+        }
+    return {
+        "prescreen": {"stage": "PreScreen", "configured_root": "", "validated": False, "status": "not_evaluable"},
+        "c1": {"stage": "C1", "configured_root": str(c1_active_log), "validated": c1_active_log.exists()},
+        "prescreen_not_substituted": True,
+        "status": "prescreen_config_missing",
+    }
+
+
 def _git(command: list[str]) -> str:
     result = subprocess.run(["git", *command], cwd=_PROJECT_ROOT, check=True, capture_output=True)
     return result.stdout.decode("utf-8", errors="replace")
@@ -112,7 +156,7 @@ def _derived_worker_gates(quality_rows: list[dict[str, str]], workers: list[dict
         structural_evaluable = [row for row in manual if row.get("failure_attribution") not in {"", "not_evaluable"}]
         structural = [row for row in structural_evaluable if str(row.get("worker_caused_structural_failure", "")).lower() in {"true", "1"}]
         process_valid = [row for row in rows if str(row.get("outside_assignment_submission", "")).lower() not in {"true", "1"} and str(row.get("duplicate_worker_task_submission", "")).lower() not in {"true", "1"}]
-        independence_valid = [row for row in process_valid if row.get("independence_status") == "independent"]
+        independence_valid = [row for row in process_valid if row.get("independence_status") in {"independent", "independent_by_project_provenance", "independent_by_annotation_disposition"}]
         output.append({
             **state,
             "process_eligible": bool(process_valid),
@@ -161,6 +205,7 @@ def _candidate_design_manifest(task_pool: Path, worker_profile: Path, output: Pa
         "artifact_role": "precloseout_candidate_enumeration_only",
         "input_sha256": {"worker_profile_csv": sha256_file(worker_profile), "task_pool_csv": sha256_file(task_pool)},
         "risk_contract_sha256": sha256_file(RISK_DESIGN_CONTRACT),
+        "threshold_manifest_sha256": sha256_file(_PROJECT_ROOT / "docs" / "thesis_main" / "C2B_DESIGN_SELECTION_THRESHOLDS.json"),
         "candidate_designs": candidates,
         "simulation": {"seed": 20260724, "draws": 1000, "resampling": "C1 empirical building/task/worker bootstrap"},
         "selection_rule": "report_pareto_candidates_only_until_frozen_post_C1_selection",
@@ -184,13 +229,19 @@ def _candidate_task_pool(inventory: Path, assignments: list[Path], output: Path,
         key=lambda row: (int(row.get("full_pool_order") or 10**9), row.get("task_id", "")),
     )
     candidate_rows = []
+    legacy_audit_rows = []
     for row in rows:
         task, base = row.get("task_id", ""), row.get("base_task_id", "")
         legacy = reserve.get(task) or reserve.get(base) or {}
         history_overlap = task in history or base in history
-        # The old reverse set remains visible to the complete candidate pool;
-        # source/holdout gates later decide whether any item may be assigned.
-        excluded = (history_overlap and not legacy) or str(row.get("hard_exclude", "")).lower() in {"true", "1"}
+        excluded = history_overlap or str(row.get("hard_exclude", "")).lower() in {"true", "1"}
+        if legacy:
+            legacy_audit_rows.append({
+                "task_id": task, "base_task_id": base, "image_id": row.get("image_id", ""), "building_id": row.get("building_id", ""),
+                "legacy_curated_rank": legacy.get("reserve_rank", legacy.get("selection_rank", "")), "legacy_curated_reason": legacy.get("selection_reason", legacy.get("notes", "")),
+                "legacy_curated_manifest_sha256": sha256_file(reserve_pool) if reserve_pool else "", "history_overlap": history_overlap,
+                "selected": False, "not_selected_reason": "history_overlap_hard_exclusion" if history_overlap else "candidate_only_precloseout",
+            })
         if excluded or str(row.get("eligible_after_exclusion", "")).lower() not in {"true", "1"}:
             continue
         pair_count = int(float(row.get("gt_pair_count") or 0))
@@ -205,7 +256,7 @@ def _candidate_task_pool(inventory: Path, assignments: list[Path], output: Path,
             "legacy_curated_selection_blind_to_c1_outcomes": legacy.get("selection_blind_to_c1_outcomes", "not_evaluable" if legacy else ""),
             "legacy_curated_selector": legacy.get("selector", "unknown_not_recorded" if legacy else ""),
             "legacy_curated_original_pool": legacy.get("original_pool", legacy.get("source_pool", "unknown_not_recorded" if legacy else "")),
-            "building_id": (row.get("image_id") or base).split("_", 1)[0],
+            "building_id": row.get("building_id", ""),
             "source_split": row.get("source_pool", ""),
             "g_model_struct_input_pair_count": pair_count,
             "d_model_feat": "", "g_model_struct": "", "d_cal_A": "",
@@ -224,15 +275,55 @@ def _candidate_task_pool(inventory: Path, assignments: list[Path], output: Path,
             "candidate_role_source": "legacy_human_curated_candidate" if reserve.get(task) or reserve.get(base) else "full_candidate_inventory_precloseout",
         })
     write_csv(output, candidate_rows, list(candidate_rows[0]) if candidate_rows else ["task_id"])
-    legacy_audit = [{
+    legacy_audit = [*legacy_audit_rows, *[{
         "task_id": row.get("task_id", ""), "base_task_id": row.get("base_task_id", ""), "image_id": row.get("image_id", ""), "building_id": row.get("building_id", ""),
         "legacy_curated_rank": row.get("legacy_curated_rank", ""), "legacy_curated_reason": row.get("legacy_curated_reason", ""), "legacy_selected_at": row.get("legacy_curated_selected_at", ""), "legacy_selector": row.get("legacy_curated_selector", ""), "legacy_curated_manifest_sha256": row.get("legacy_curated_manifest_sha256", ""),
         "latest_human_reviewed": row.get("latest_human_reviewed", ""), "legacy_proxy": row.get("legacy_proxy", ""), "unreviewed": row.get("unreviewed", ""),
-        "history_overlap": row.get("p1_c1_overlap", ""), "feature_readiness": row.get("risk_design_A_status", ""), "risk_design_A": row.get("risk_design_A", ""), "risk_design_stratum": row.get("risk_design_stratum", ""),
+        "history_overlap": row.get("p1_c1_overlap", ""), "feature_readiness": row.get("risk_design_A_status", ""), "risk_design_A": "", "risk_design_stratum": row.get("risk_design_stratum", ""),
         "anchor_eligible": row.get("anchor_eligible", ""), "bridge_eligible": row.get("bridge_eligible", ""), "selected": False, "not_selected_reason": "candidate_only_precloseout",
-    } for row in candidate_rows if str(row.get("legacy_human_curated_candidate", "")).lower() in {"true", "1"}]
+    } for row in candidate_rows if str(row.get("legacy_human_curated_candidate", "")).lower() in {"true", "1"}]]
     write_csv(output.parent / "c2_legacy_reverse_candidate_audit.csv", legacy_audit, list(legacy_audit[0]) if legacy_audit else ["task_id"])
     return output
+
+
+def materialize_c2b_task_eligibility_evidence(
+    inventory_csv: Path, task_risk_csv: Path, reference_csv: Path, assignment_paths: list[Path], output_csv: Path,
+) -> dict[str, Any]:
+    """Join every C2-B gate on image/base_task identity with immutable source SHAs."""
+    inventory = read_csv(inventory_csv)
+    risk = {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(task_risk_csv)}
+    reference = {(row.get("image_id", ""), row.get("base_task_id", "")): row for row in read_csv(reference_csv)}
+    history = {value for path in assignment_paths for row in read_csv(path) for value in (row.get("task_id", ""), row.get("base_task_id", "")) if value}
+    rows = []
+    for item in inventory:
+        key = (item.get("image_id", ""), item.get("base_task_id", ""))
+        task = item.get("task_id", "")
+        risk_row, reference_row = risk.get(key, {}), reference.get(key, {})
+        history_overlap = task in history or item.get("base_task_id", "") in history
+        source_ok = str(item.get("source_split_allowed", "")).lower() in {"true", "1"}
+        holdout_ok = str(item.get("future_holdout_clear", "")).lower() in {"true", "1"}
+        scope_ok = str(reference_row.get("final_scope") or item.get("scope_status") or item.get("final_scope", "")).lower() == "in_scope"
+        reference_ok = str(reference_row.get("geometry_reference_ready") or item.get("reference_status", "")).lower() in {"true", "1", "reference_ready"}
+        feature_ok = bool(risk_row.get("risk_design_vector_A")) and bool(risk_row.get("risk_design_score_A"))
+        risk_ok = str(risk_row.get("risk_status", "")) == "frozen"
+        reasons = []
+        if history_overlap: reasons.append("history_overlap")
+        if not source_ok: reasons.append("source_split_not_clear")
+        if not holdout_ok: reasons.append("future_holdout_not_clear")
+        if not scope_ok: reasons.append("scope_not_in_scope")
+        if not reference_ok: reasons.append("reference_not_ready")
+        if not feature_ok: reasons.append("risk_feature_not_ready")
+        if not risk_ok: reasons.append("risk_not_frozen")
+        rows.append({
+            "image_id": item.get("image_id", ""), "base_task_id": item.get("base_task_id", ""), "task_id": task,
+            "building_id": item.get("building_id", ""), "source_split_allowed": source_ok, "future_holdout_clear": holdout_ok,
+            "history_overlap": history_overlap, "scope_ready": scope_ok, "reference_ready": reference_ok,
+            "feature_ready": feature_ok, "risk_ready": risk_ok, "assignment_eligible": not reasons,
+            "exclusion_reason": ";".join(reasons), "inventory_sha256": sha256_file(inventory_csv),
+            "task_risk_sha256": sha256_file(task_risk_csv), "reference_sha256": sha256_file(reference_csv),
+        })
+    write_csv(output_csv, rows)
+    return {"n_tasks": len(rows), "n_eligible": sum(str(row["assignment_eligible"]).lower() == "true" for row in rows), "sha256": sha256_file(output_csv)}
 
 
 def materialize(
@@ -271,6 +362,7 @@ def materialize(
     if c1_preannotation_feature_csv is not None:
         fixed_sources["c1_preannotation_feature"] = c1_preannotation_feature_csv
     p1_source_files = sorted((path for path in p1_closeout_dir.iterdir() if path.is_file()), key=lambda path: path.name.lower())
+    stage_active_log_provenance = _stage_active_log_provenance(p1_closeout_dir, active_log)
     review_sources = {name: path for name, path in {
         "duplicate_adjudication": duplicate_adjudication, "structural_disposition": structural_disposition,
         "project_independence_provenance": project_independence_disposition,
@@ -326,6 +418,7 @@ def materialize(
         "untracked_file_manifest_sha256": hashlib.sha256("\n".join(untracked).encode("utf-8")).hexdigest() if not formal else "",
         "command": " ".join(sys.argv),
         "tool_version": "run_c1_precloseout_rehearsal_v3",
+        "stage_active_log_provenance": stage_active_log_provenance,
         "inputs": source_rows,
     }
     write_json(output_dir / "raw_input_manifest.json", raw_manifest)
@@ -379,6 +472,9 @@ def materialize(
     active_summary = materialize_active_log_audits(
         output_dir / "c1_canonical_meta_observations.csv", snapshots / "active_logs", output_dir,
     )
+    active_summary["stage"] = "C1"
+    active_summary["source_root"] = str(active_log)
+    active_summary["stage_active_log_provenance"] = stage_active_log_provenance
     reference_summary = materialize_operational_reference(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_geometry.jsonl",
         fixed_snapshots["candidate_inventory"], fixed_snapshots["gt_export"], output_dir,
@@ -465,6 +561,8 @@ def materialize(
         output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_gt_quality_analysis.csv",
         output_dir / "geometry_worker_task_loo_analysis.csv", output_dir / "structural_validation_analysis.csv", output_dir,
         canonical_closed=bool(final_canonical_summary.get("C1_CANONICAL_CLOSED")),
+        collection_window_closed=False,
+        eligibility_csv=output_dir / "c1_row_analysis_eligibility.csv",
         preannotation_feature_ready=bool(preannotation_summary.get("n_ready")),
     )
     readiness["method_contract"] = "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1"
@@ -481,9 +579,14 @@ def materialize(
         checkpoint=Path("ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth"),
         reference_dir=Path("data/mp3d_layout/train_no_occ/img"), extract_lhfeat=False,
         risk_contract=RISK_DESIGN_CONTRACT,
+        c1_freeze_manifest=output_dir / "c1_measurement_freeze_manifest.json",
     )
     task_pool = output_dir / "c2_task_risk_inventory.csv"
     shutil.copy2(task_pool, output_dir / "c2b_candidate_task_pool.csv")
+    c2b_evidence_summary = materialize_c2b_task_eligibility_evidence(
+        fixed_snapshots["candidate_inventory"], task_pool, output_dir / "c1_task_outcome_reference.csv",
+        [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]], output_dir / "c2b_task_eligibility_evidence.csv",
+    )
     parameter_summary = materialize_design_parameters(
         output_dir / "c1_gt_quality_analysis.csv", output_dir / "c1_task_risk_reference.csv", output_dir / "structural_validation_analysis.csv",
         output_dir / "c1_worker_completion_audit.csv", output_dir,
@@ -504,6 +607,7 @@ def materialize(
             c2_summary = c2b.materialize(
                 task_pool, profile, design_manifest,
                 output_dir / "c2_candidates", input_status=input_status,
+                eligibility_evidence_csv=output_dir / "c2b_task_eligibility_evidence.csv",
             )
         except ValueError as exc:
             c2_summary = {"candidate_only": True, "launch_ready": False, "failure_reason": str(exc)}
@@ -517,6 +621,7 @@ def materialize(
         Path("docs/thesis_main/C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md"),
         Path("docs/thesis_main/C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md"),
         RISK_DESIGN_CONTRACT,
+        Path("docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json"),
         Path("config/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34.yaml"),
         Path("ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth"),
     ]
@@ -529,6 +634,7 @@ def materialize(
         "schema_version": "paper_a_analysis_dependency_manifest_v1", "git_head": raw_manifest["head"],
         "worktree_diff_sha256": raw_manifest["worktree_diff_sha256"], "exact_command": raw_manifest["command"],
         "python_version": sys.version, "package_versions": versions, "dependencies": dependency_rows,
+        "stage_active_log_provenance": stage_active_log_provenance,
     }
     dependency_manifest["code_pipeline_sha256"] = code_pipeline_sha
     dependency_manifest["analysis_input_bundle_sha256"] = analysis_input_bundle_sha
@@ -556,6 +662,7 @@ def materialize(
         "independence_summary": independence_summary,
         "project_independence_evidence_summary": project_independence_evidence_summary,
         "active_log_summary": active_summary,
+        "stage_active_log_provenance": stage_active_log_provenance,
         "active_time_ledger_summary": active_ledger_summary,
         "outside_assignment_summary": outside_summary,
         "geometry_loo_summary": {"n_pairwise_rows": len(pairwise_rows), "n_loo_rows": len(loo_rows)},
@@ -571,6 +678,7 @@ def materialize(
             "future_holdout_manifest_status": "not_provided_rehearsal_only",
         },
         "c2_task_risk_summary": risk_summary,
+        "c2b_task_eligibility_evidence_summary": c2b_evidence_summary,
         "p1_to_c1_predictive_summary": predictive_summary,
         "C1_CANONICAL_CLOSED": bool(readiness["C1_CANONICAL_CLOSED"]),
         "C1_MEASUREMENT_FROZEN": bool(readiness["C1_MEASUREMENT_FROZEN"]),

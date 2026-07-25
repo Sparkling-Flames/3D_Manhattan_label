@@ -39,6 +39,13 @@ def _truth(value: Any) -> bool:
     return str(value).strip().lower() in {"true", "1", "yes"}
 
 
+def _int(value: Any) -> int:
+    try:
+        return int(float(value or 0))
+    except (TypeError, ValueError):
+        return 0
+
+
 def _worker(annotation: dict[str, Any]) -> str:
     worker = annotation.get("completed_by")
     if isinstance(worker, dict):
@@ -53,7 +60,7 @@ def _assignment_key(row: dict[str, Any]) -> tuple[str, str, str, str]:
 def materialize_completion_support(
     export_paths: list[Path], assignment_paths: list[Path], runtime_mapping_csv: Path,
     canonical_csv: Path, geometry_jsonl: Path, output_dir: Path, *, min_valid_k: int = 3,
-    completion_disposition_csv: Path | None = None,
+    completion_disposition_csv: Path | None = None, collection_window_closed: bool = False,
 ) -> dict[str, Any]:
     assignments: dict[tuple[str, str, str, str], dict[str, Any]] = {}
     for path in assignment_paths:
@@ -100,7 +107,7 @@ def materialize_completion_support(
         assigned_counts = Counter(row["condition"] for _key, row in rows)
         observed_counts = Counter(row["condition"] for key, row in rows if key in observed)
         total, complete = len(rows), sum(key in observed for key, _row in rows)
-        status = "nonstarter" if complete == 0 else "completed" if complete == total else "partial_noncompletion"
+        status = "nonstarter" if complete == 0 else "completed" if complete == total else ("closed_partial_usable" if collection_window_closed and complete > 0 else "closed_partial_insufficient" if collection_window_closed else "partial_noncompletion")
         worker_status[worker] = status
         completion_rows.append({
             "worker_id": worker,
@@ -147,7 +154,7 @@ def materialize_completion_support(
     completion_source_sha = hashlib.sha256(preliminary_completion.read_bytes()).hexdigest()
     write_csv(output_dir / "c1_completion_disposition_template.csv", [{
         "worker_id": row["worker_id"], "computed_completion_status": row["completion_status"],
-        "final_completion_disposition": row["completion_status"] if row["completion_status"] in {"completed", "partial_noncompletion", "nonstarter"} else "",
+        "final_completion_disposition": row["completion_status"] if row["completion_status"] in {"completed", "partial_noncompletion", "closed_partial_usable", "closed_partial_insufficient", "nonstarter"} else "",
         "source_completion_audit_sha256": completion_source_sha, "reviewed_by": "", "reviewed_at": "", "reason": "",
     } for row in completion_rows])
     disposition_summary = apply_completion_disposition(preliminary_completion, completion_disposition_csv, output_dir)
@@ -160,6 +167,7 @@ def materialize_completion_support(
     write_csv(output_dir / "c1_task_support_deficit.csv", task_rows)
     counts = Counter(row["completion_status"] for row in completion_rows)
     return {
+        "collection_window_closed": collection_window_closed,
         "roster_count": len(completion_rows), "assigned_submission_count": len(realization_rows),
         "observed_submission_count": sum(row["observed_submission"] for row in realization_rows), "missing_submission_count": len(missing_rows),
         "completed_worker_count": counts["completed"], "partial_noncompletion_worker_count": counts["partial_noncompletion"], "nonstarter_worker_count": counts["nonstarter"],
@@ -183,7 +191,7 @@ def apply_completion_disposition(completion_audit_csv: Path, disposition_csv: Pa
     for disposition in dispositions:
         by_worker[disposition.get("worker_id", "")].append(disposition)
     known_workers = {row.get("worker_id", "") for row in rows}
-    allowed = {"completed", "partial_noncompletion", "nonstarter", "administrative_exclusion"}
+    allowed = {"completed", "partial_noncompletion", "closed_partial_usable", "closed_partial_insufficient", "nonstarter", "administrative_exclusion"}
     applied = invalid = unmatched = pending = 0
     output = []
     for row in rows:
@@ -295,6 +303,9 @@ def materialize_structural_validation(
             "failure_attribution": "none" if status == "passed" else "worker_caused_structural_failure" if status == "failed_confirmed_worker_submission" else "not_evaluable",
             "analysis_inclusion": "geometry_and_structural" if status == "passed" else "structural_only" if status == "failed_confirmed_worker_submission" else "excluded_with_reason",
             "worker_reliability_eligibility": status == "passed" and annotation.get("independence_status") == "independent",
+            "structural_denominator_eligible": status in {"passed", "failed_confirmed_worker_submission"},
+            "worker_failure_numerator": status == "failed_confirmed_worker_submission",
+            "worker_structural_failure_numerator": status == "failed_confirmed_worker_submission",
         })
     preliminary = output_dir / "c1_structural_validation_pre_disposition.csv"
     write_csv(preliminary, rows)
@@ -340,6 +351,7 @@ def materialize_structural_validation(
             "worker_attributable": attribution == "worker_caused_structural_failure",
             "analysis_inclusion": "structural_only" if attribution == "worker_caused_structural_failure" else "excluded_with_reason",
             "structural_denominator_eligible": _truth(disposition["structural_denominator_eligible"]),
+            "worker_failure_numerator": _truth(disposition["worker_failure_numerator"]),
             "worker_structural_failure_numerator": _truth(disposition["worker_failure_numerator"]),
             "structural_disposition_applied": True, "structural_disposition_source_sha256": source_sha,
             "structural_disposition_reviewed_by": disposition["reviewed_by"], "structural_disposition_reviewed_at": disposition["reviewed_at"],
@@ -724,6 +736,7 @@ def materialize_independence(
     project_rows = read_csv(project_disposition_csv) if project_disposition_csv and project_disposition_csv.exists() else []
     projects = {(row.get("project_id", ""), row.get("condition", "")): row for row in project_rows}
     rows, queue = [], []
+    independent_statuses = {"independent", "independent_by_project_provenance", "independent_by_annotation_disposition"}
     for row in read_csv(meta_csv):
         disposition = dispositions.get(row.get("canonical_annotation_id", ""), {})
         disposition_valid = bool(disposition) and all(str(disposition.get(field, "")).strip() for field in ("canonical_annotation_id", "provenance_status", "copy_risk_status", "parent_annotation_id", "parent_owner_id", "parent_cross_owner", "independence_status", "reviewed_by", "reviewed_at", "source_meta_sha256")) and disposition.get("source_meta_sha256") == source_sha
@@ -734,17 +747,23 @@ def materialize_independence(
             "raw_parent_schema_coverage", "cross_owner_parent_count", "unresolved_parent_count",
             "reviewed_by", "reviewed_at",
         )) and project.get("source_project_evidence_sha256") == project.get("project_evidence_sha256", "")
-        effective = {**row, **project, **disposition} if disposition_valid else {**row, **project} if project_valid else row
+        project_clear = project_valid and str(project.get("provenance_status", "")).strip() == "complete" and str(project.get("copy_risk_status", "")).strip() == "cleared" and _int(project.get("cross_owner_parent_count")) == 0 and _int(project.get("unresolved_parent_count")) == 0 and str(project.get("parent_field_coverage_complete", "true")).lower() in {"true", "1"}
+        effective = {**project, **row, **disposition} if disposition_valid else {**project, **row} if project_valid else row
         identity_complete = all(str(row.get(field, "")).strip() for field in ("project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "canonical_annotation_id"))
         cross_owner = _truth(row.get("parent_cross_owner")) or _truth(effective.get("parent_cross_owner"))
         copy_risk = row.get("copy_risk_status") in {"confirmed_copy", "cross_owner_parent"} or effective.get("copy_risk_status") in {"confirmed_copy", "cross_owner_parent"}
-        if cross_owner or copy_risk:
+        adverse = cross_owner or copy_risk or _truth(row.get("adverse_provenance_evidence")) or _truth(row.get("copy_risk_adverse"))
+        if adverse:
             status, basis = "non_independent_confirmed", "cross_owner_parent_or_confirmed_copy"
-        elif identity_complete and disposition_valid and effective.get("provenance_status") == "complete" and effective.get("copy_risk_status") == "cleared" and project_valid:
-            status, basis = "independent", "annotation_and_project_reviewed_clearance"
+        elif identity_complete and disposition_valid and effective.get("provenance_status") == "complete" and effective.get("copy_risk_status") == "cleared":
+            status, basis = "independent", "annotation_exception_clearance"
+        elif identity_complete and project_clear:
+            status, basis = "independent_by_project_provenance", "project_clearance_expansion"
         else:
             status, basis = "not_evaluable", "identity_or_explicit_provenance_clearance_incomplete"
-        if disposition_valid and disposition.get("independence_status") != status:
+        if adverse and project_clear:
+            basis = "row_adverse_evidence_overrides_project_clearance"
+        if disposition_valid and disposition.get("independence_status") not in {status, "independent", "independent_by_annotation_disposition", "non_independent_confirmed"}:
             status, basis, disposition_valid = "not_evaluable", "disposition_fields_status_mismatch", False
         evidence = {
             "project_id": row.get("project_id", ""), "runtime_task_id": row.get("ls_runtime_task_id", ""), "task_id": row.get("task_id", ""),
@@ -753,14 +772,17 @@ def materialize_independence(
             "parent_cross_owner": cross_owner, "copy_risk_status": effective.get("copy_risk_status", ""),
             "provenance_status": effective.get("provenance_status", ""), "disposition_joined": disposition_valid,
             "project_disposition_joined": project_valid,
+            "project_expansion_applied": status == "independent_by_project_provenance",
+            "row_adverse_evidence": adverse,
             "disposition_source_sha256": source_sha if disposition_valid else "", "reviewed_by": disposition.get("reviewed_by", ""), "reviewed_at": disposition.get("reviewed_at", ""),
             "independence_status": status, "independence_basis": basis, "worker_wide_contamination": False,
         }
         rows.append(evidence)
-        if status == "not_evaluable": queue.append(evidence)
+        if status == "not_evaluable" or adverse:
+            queue.append(evidence)
     write_csv(output_dir / "c1_independence_evidence.csv", rows)
     write_csv(output_dir / "c1_independence_review_queue.csv", queue)
-    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "n_review": len(queue), "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "project_disposition_manifest_sha256": hashlib.sha256(project_disposition_csv.read_bytes()).hexdigest() if project_disposition_csv and project_disposition_csv.exists() else "", "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
+    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "n_review": len(queue), "project_expansion_count": sum(row["independence_status"] == "independent_by_project_provenance" for row in rows), "row_adverse_override_count": sum(row["independence_basis"] == "row_adverse_evidence_overrides_project_clearance" for row in rows), "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "project_disposition_manifest_sha256": hashlib.sha256(project_disposition_csv.read_bytes()).hexdigest() if project_disposition_csv and project_disposition_csv.exists() else "", "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
     (output_dir / "c1_independence_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
 
@@ -863,9 +885,12 @@ def materialize_row_analysis_eligibility(
         if _truth(row.get("duplicate_worker_task_submission")): process_reasons.append("duplicate_or_revision")
         if versions.get(row.get("annotation_id", "")) != "selected_canonical": process_reasons.append("canonical_version_not_disposed")
         process_reasons = list(dict.fromkeys(process_reasons))
+        process_eligible = not process_reasons
+        independence_eligible = independence_status in {"independent", "independent_by_project_provenance", "independent_by_annotation_disposition"}
+        scope_reference_eligible = reference.get("final_scope") == "in_scope" and _truth(reference.get("geometry_reference_ready"))
         common_reasons = [*process_reasons]
-        if independence_status != "independent": common_reasons.append("independence_not_evaluable")
-        if reference.get("final_scope") != "in_scope": common_reasons.append("scope_not_resolved_in_scope")
+        if not independence_eligible: common_reasons.append("independence_not_evaluable")
+        if not scope_reference_eligible: common_reasons.append("scope_not_resolved_in_scope")
         global_reasons = [*common_reasons]
         if row.get("condition", "").lower() != "manual": global_reasons.append("not_manual")
         if not _truth(reference.get("geometry_reference_ready")): global_reasons.append("geometry_reference_not_ready")
@@ -879,6 +904,9 @@ def materialize_row_analysis_eligibility(
         output.append({
             "canonical_annotation_id": identity, "annotation_id": row.get("annotation_id", ""), "worker_id": row.get("worker_id", ""),
             "outside_assignment_disposition_applied": _truth(outside.get(identity, {}).get("outside_assignment_disposition_applied")), "outside_assignment_process_override": outside_override,
+            "process_eligible": process_eligible, "process_exclusion_reason": ";".join(process_reasons),
+            "independence_eligible": independence_eligible, "independence_exclusion_reason": "" if independence_eligible else "independence_not_evaluable",
+            "scope_reference_eligible": scope_reference_eligible, "scope_reference_exclusion_reason": "" if scope_reference_eligible else "scope_or_reference_not_ready",
             "global_analysis_eligible": not global_reasons, "global_analysis_exclusion_reason": ";".join(global_reasons),
             "loo_analysis_eligible": not loo_reasons, "loo_analysis_exclusion_reason": ";".join(loo_reasons),
             "structural_opportunity_eligible": not structural_reasons, "structural_opportunity_exclusion_reason": ";".join(structural_reasons),

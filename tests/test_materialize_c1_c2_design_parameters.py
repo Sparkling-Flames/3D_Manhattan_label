@@ -11,7 +11,7 @@ def _write(path, rows):
 def test_materializes_worker_risk_slope_from_eligible_c1_tasks(tmp_path):
     quality = tmp_path / "quality.csv"; risk = tmp_path / "risk.csv"; structural = tmp_path / "structural.csv"; completion = tmp_path / "completion.csv"
     _write(quality, [{"worker_id": "w1", "base_task_id": f"b{i}", "Q_GT_raw": 1 - i / 10, "global_analysis_eligible": "true"} for i in range(4)])
-    _write(risk, [{"base_task_id": f"b{i}", "d_cal_A": i / 10, "building_id": f"h{i % 2}"} for i in range(4)])
+    _write(risk, [{"base_task_id": f"b{i}", "risk_design_score_A": i / 10, "building_id": f"h{i % 2}"} for i in range(4)])
     _write(structural, [{"worker_id": "w1", "structural_opportunity_eligible": "true", "failure_attribution": "none"}])
     _write(completion, [{"worker_id": "w1", "assigned_total_count": 4, "observed_total_count": 4, "completion_status": "completed"}])
     summary = materialize(quality, risk, structural, completion, tmp_path / "out")

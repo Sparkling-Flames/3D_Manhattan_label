@@ -18,6 +18,7 @@ from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
 RISK_CONTRACT = _PROJECT_ROOT / "docs" / "thesis_main" / "C2B_RISK_DESIGN_CONTRACT_v1.json"
+DESIGN_THRESHOLDS = _PROJECT_ROOT / "docs" / "thesis_main" / "C2B_DESIGN_SELECTION_THRESHOLDS.json"
 
 
 def _load_risk_contract() -> tuple[dict[str, Any], str]:
@@ -28,6 +29,13 @@ def _load_risk_contract() -> tuple[dict[str, Any], str]:
     if contract.get("schema_version") != "paper_a_c2b_risk_design_contract_v1":
         raise ValueError("unsupported C2-B risk design contract")
     return contract, sha256_file(RISK_CONTRACT)
+
+
+def _load_thresholds(path: Path = DESIGN_THRESHOLDS) -> tuple[dict[str, Any], str]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "paper_a_c2b_design_selection_thresholds_v1":
+        raise ValueError("unsupported C2-B design threshold manifest")
+    return payload, sha256_file(path)
 
 
 ASSIGNMENT_FIELDS = [
@@ -55,7 +63,7 @@ GRAPH_AUDIT_FIELDS = [
 ]
 TASK_SELECTION_AUDIT_FIELDS = [
     "design_id", "selection_step", "task_id", "base_task_id", "selection_role",
-    "risk_design_A", "risk_design_stratum", "selection_distance", "building_gain",
+    "risk_design_vector_A", "risk_design_score_A", "risk_design_stratum", "selection_distance", "building_gain",
     "legacy_curated_priority_used", "selection_reason",
 ]
 SIMULATION_FIELDS = [
@@ -137,7 +145,52 @@ def _balanced_tasks(rows: list[dict[str, str]], count: int) -> list[dict[str, st
 
 
 def _risk_vector(row: dict[str, str]) -> tuple[float, ...]:
+    try:
+        vector = json.loads(row.get("risk_design_vector_A", ""))
+        if isinstance(vector, list) and len(vector) == 4:
+            return tuple(float(value) for value in vector)
+    except (TypeError, ValueError, json.JSONDecodeError):
+        pass
     return tuple(_float(row, field, default=0.0) for field in ("d_model_feat", "d_model_feat_local_max", "g_model_struct", "d_cal_A"))
+
+
+def _thresholds_allow_formal_selection(thresholds: dict[str, Any]) -> bool:
+    values = thresholds.get("thresholds", thresholds)
+    required = ("q_gt_ci_half_width", "risk_slope_ci_half_width", "rank_stability", "minimum_worker_support", "minimum_task_support", "graph_connectivity_probability", "minimum_building_coverage", "building_coverage_probability", "ordinary_coverage_probability", "stress_coverage_probability")
+    return all(values.get(name) not in {None, ""} for name in required)
+
+
+def _task_set_sha(task_ids: set[str]) -> str:
+    payload = json.dumps(sorted(task_ids), separators=(",", ":"), ensure_ascii=False)
+    return __import__("hashlib").sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _threshold_failures(simulation_row: dict[str, Any], graph: dict[str, Any], thresholds: dict[str, Any]) -> list[str]:
+    values = thresholds.get("thresholds", thresholds)
+    checks = {
+        "q_gt_ci_half_width": ("q_gt_max_ci_half_width", lambda actual, limit: actual <= limit),
+        "risk_slope_ci_half_width": ("risk_slope_max_ci_half_width", lambda actual, limit: actual <= limit),
+        "rank_stability": ("rank_stability", lambda actual, limit: actual >= limit),
+        "minimum_worker_support": ("minimum_worker_support", lambda actual, limit: actual >= limit),
+        "minimum_task_support": ("minimum_task_support", lambda actual, limit: actual >= limit),
+        "graph_connectivity_probability": ("graph_connectivity_probability", lambda actual, limit: actual >= limit),
+        "minimum_building_coverage": ("building_coverage", lambda actual, limit: actual >= limit),
+        "building_coverage_probability": ("building_coverage_probability", lambda actual, limit: actual >= limit),
+        "ordinary_coverage_probability": ("ordinary_coverage_probability", lambda actual, limit: actual >= limit),
+        "stress_coverage_probability": ("stress_coverage_probability", lambda actual, limit: actual >= limit),
+    }
+    failures = []
+    for name, (field, predicate) in checks.items():
+        limit = values.get(name)
+        if limit in {None, ""}:
+            continue
+        try:
+            actual = float(simulation_row.get(field, graph.get(field, "")))
+            if not predicate(actual, float(limit)):
+                failures.append(name)
+        except (TypeError, ValueError):
+            failures.append(f"{name}_not_evaluable")
+    return failures
 
 
 def _risk_distance(left: dict[str, str], right: dict[str, str]) -> float:
@@ -146,8 +199,16 @@ def _risk_distance(left: dict[str, str], right: dict[str, str]) -> float:
 
 def _select_anchors(rows: list[dict[str, str]], count: int) -> list[dict[str, str]]:
     if not rows or count <= 0: return []
+    if count < 2:
+        return []
+    strata = {"ordinary": [row for row in rows if _task_stratum(row) == "ordinary"], "stress": [row for row in rows if _task_stratum(row) == "stress"]}
+    if not strata["ordinary"] or not strata["stress"]:
+        return []
     center = tuple(sum(vector[index] for vector in map(_risk_vector, rows)) / len(rows) for index in range(4))
-    return _balanced_tasks(sorted(rows, key=lambda row: (sum((left - right) ** 2 for left, right in zip(_risk_vector(row), center)), bool(row.get("building_id")) is False, not truthy(row.get("legacy_human_curated_candidate")), _task_id(row))), count)
+    ranked = sorted(rows, key=lambda row: (sum((left - right) ** 2 for left, right in zip(_risk_vector(row), center)), bool(row.get("building_id")) is False, not truthy(row.get("legacy_human_curated_candidate")), _task_id(row)))
+    chosen = [min(strata[name], key=lambda row: (sum((left - right) ** 2 for left, right in zip(_risk_vector(row), center)), _task_id(row))) for name in ("ordinary", "stress")]
+    chosen_ids = {_task_id(row) for row in chosen}
+    return chosen + [row for row in _balanced_tasks([row for row in ranked if _task_id(row) not in chosen_ids], count - 2)]
 
 
 def _select_bridges(rows: list[dict[str, str]], count: int, anchor_rows: list[dict[str, str]]) -> list[dict[str, str]]:
@@ -334,7 +395,7 @@ def _projected_worker_intervals(
             "missing_rate": missing_rate, "structural_failure_rate": structural_rate,
             "effective_information": added_information,
             "expected_fallback_rate": missing_rate ** len(tasks) if tasks else 1.0,
-            "expected_global_full_divergence": abs(_float(row, "risk_slope_for_simulation", "risk_slope", default=0.0)) * (max((_float(task, "d_cal_A", default=0.0) for task in tasks), default=0.0) - min((_float(task, "d_cal_A", default=0.0) for task in tasks), default=0.0)),
+            "expected_global_full_divergence": abs(_float(row, "risk_slope_for_simulation", "risk_slope", default=0.0)) * (max((_float(task, "risk_design_score_A", default=0.0) for task in tasks), default=0.0) - min((_float(task, "risk_design_score_A", default=0.0) for task in tasks), default=0.0)),
             "v1_usable_support": len(tasks) * max(0.0, 1 - missing_rate) * max(0.0, 1 - structural_rate),
         })
     return max(projected, default=math.inf), audits
@@ -367,11 +428,13 @@ def _empirical_cluster_bootstrap(
             task_by_building[building].append(task)
     buildings = sorted(task_by_building)
     edges_by_building: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    edges_by_task: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for edge in assignments:
         task = task_by_id.get(safe(edge.get("task_id")), {})
         building = safe(task.get("building_id") or task.get("building"))
         if building:
             edges_by_building[building].append(edge)
+        edges_by_task[safe(edge.get("task_id"))].append(edge)
     q_half_widths: list[float] = []
     slope_half_widths: list[float] = []
     rank_stable = slope_stable = connected = ordinary = stress = full_building_coverage = 0
@@ -381,6 +444,7 @@ def _empirical_cluster_bootstrap(
     min_worker_supports: list[int] = []
     min_task_supports: list[int] = []
     delivered_counts: list[int] = []
+    sampled_task_edge_identity_violations = 0
 
     def _connected_delivered(delivered: list[tuple[str, str]]) -> bool:
         nodes = {f"w:{worker}" for worker in baseline}
@@ -412,8 +476,8 @@ def _empirical_cluster_bootstrap(
     for _ in range(draws):
         sampled_buildings = [rng.choice(buildings) for _ in range(len(buildings))] if buildings else []
         task_instances = [(building, rng.choice(task_by_building[building])) for building in sampled_buildings]
-        building_effect = {building: rng.gauss(0.0, 0.03) for building in buildings}
-        task_effect = {safe(task.get("task_id")): rng.gauss(0.0, 0.03) for _building, task in task_instances}
+        building_effect = {building: rng.gauss(0.0, _float(next((row for row in worker_rows if row.get("building_variance")), {}), "building_variance", default=0.0)) for building in buildings}
+        task_effect = {safe(task.get("task_id")): rng.gauss(0.0, _float(next(iter(worker_rows), {}), "task_variance", default=0.0)) for _building, task in task_instances}
         rank_score, q_widths, draw_slope_widths, signs, support = {}, [], [], [], Counter()
         worker_outcomes: dict[str, list[tuple[float, float]]] = defaultdict(list)
         delivered_edges: list[tuple[str, str]] = []
@@ -421,16 +485,20 @@ def _empirical_cluster_bootstrap(
         for row in worker_rows:
             worker = safe(row.get("worker_id"))
             slope = _float(row, "risk_slope_for_simulation", "risk_slope", "group_prior_slope", default=0.0)
-            slope_scale = _float(row, "risk_slope_scale_for_simulation", "risk_slope_se", "group_prior_scale", default=math.inf)
+            slope_scale = _float(row, "group_slope_sd", "risk_slope_scale_for_simulation", "risk_slope_se", default=math.inf)
             missing, structural = _float(row, "missing_rate", default=0.0), _float(row, "F_struct", default=0.0)
-            residual_scale = _float(row, "group_prior_scale", "risk_slope_scale_for_simulation", "risk_slope_se", default=math.inf)
+            residual_scale = _float(row, "outcome_residual_sd", default=math.inf)
             sampled_slope = rng.gauss(slope, slope_scale) if math.isfinite(slope_scale) and slope_scale > 0 else slope
             for building, task in task_instances:
-                for edge in edges_by_building.get(building, []):
+                sampled_task_id = safe(task.get("task_id"))
+                for edge in edges_by_task.get(sampled_task_id, []):
                     if safe(edge.get("worker_id")) != worker or rng.random() < missing or rng.random() < structural:
                         continue
-                    task_id = safe(task.get("task_id"))
-                    risk = _float(task, "risk_design_A", "d_cal_A", default=0.0)
+                    if safe(edge.get("task_id")) != sampled_task_id:
+                        sampled_task_edge_identity_violations += 1
+                        continue
+                    task_id = sampled_task_id
+                    risk = _float(task, "risk_design_score_A", default=0.0)
                     noise = rng.gauss(0.0, residual_scale) if math.isfinite(residual_scale) and residual_scale > 0 else 0.0
                     outcome = baseline.get(worker, 0.0) + sampled_slope * risk + building_effect[building] + task_effect[task_id] + noise
                     worker_outcomes[worker].append((risk, outcome))
@@ -439,11 +507,12 @@ def _empirical_cluster_bootstrap(
         for row in worker_rows:
             worker = safe(row.get("worker_id"))
             slope = _float(row, "risk_slope_for_simulation", "risk_slope", "group_prior_slope", default=0.0)
-            scale = _float(row, "risk_slope_scale_for_simulation", "risk_slope_se", "group_prior_scale", default=math.inf)
+            scale = _float(row, "group_slope_sd", "risk_slope_scale_for_simulation", "risk_slope_se", default=math.inf)
             delivered = worker_outcomes.get(worker, [])
             estimate, slope_width = _slope(delivered, slope, scale)
-            if math.isfinite(scale):
-                q_widths.append(1.96 * max(scale, 1e-9) / math.sqrt(max(1, len(delivered))))
+            q_se = _float(row, "Q_GT_baseline_se", default=math.inf)
+            if math.isfinite(q_se):
+                q_widths.append(1.96 * max(q_se, 1e-9) / math.sqrt(max(1, len(delivered))))
             draw_slope_widths.append(slope_width)
             signs.append((slope == 0) or (estimate == 0) or (slope * estimate > 0))
             rank_score[worker] = sum(value[1] for value in delivered) / len(delivered) if delivered else baseline.get(worker, 0.0)
@@ -479,6 +548,8 @@ def _empirical_cluster_bootstrap(
         "graph_connectivity_probability": connected / draws, "building_coverage": len(buildings), "building_coverage_probability": full_building_coverage / draws,
         "ordinary_coverage_probability": ordinary / draws, "stress_coverage_probability": stress / draws,
         "expected_assignment_count": sum(delivered_counts) / len(delivered_counts) if delivered_counts else 0,
+        "sampled_task_edge_identity_violations": sampled_task_edge_identity_violations,
+        "variance_fields_used": ["group_slope_sd", "outcome_residual_sd", "Q_GT_baseline_se"],
         "simulation_method": "hierarchical_building_task_resampling_with_c1_group_prior", "simulation_status": "estimated",
     }
 
@@ -520,12 +591,17 @@ def materialize(
     *,
     input_status: str = "dry_run",
     c1_closeout_summary: Path | None = None,
+    threshold_manifest: Path | None = None,
+    eligibility_evidence_csv: Path | None = None,
+    selected_task_approval: Path | None = None,
 ) -> dict[str, Any]:
     manifest = json.loads(design_manifest.read_text(encoding="utf-8"))
     if manifest.get("manifest_version") != "c2_design_v1":
         raise ValueError("unsupported C2 design manifest version")
     manifest_sha = sha256_file(design_manifest)
     risk_contract, risk_contract_sha = _load_risk_contract()
+    threshold_payload, threshold_sha = _load_thresholds(threshold_manifest or DESIGN_THRESHOLDS)
+    formal_thresholds_ready = _thresholds_allow_formal_selection(threshold_payload)
     designs = manifest.get("candidate_designs")
     design_ids = [safe(row.get("design_id")) for row in designs or []]
     if not designs or not all(design_ids) or len(design_ids) != len(set(design_ids)):
@@ -533,6 +609,15 @@ def materialize(
     dependency_valid, dependency_reason = _dependencies_valid(
         manifest, worker_profile_csv, task_pool_csv, c1_closeout_summary, input_status
     )
+    if input_status == "formal":
+        if not eligibility_evidence_csv or not eligibility_evidence_csv.exists():
+            if dependency_valid:
+                dependency_valid, dependency_reason = False, "c2b_task_eligibility_evidence_missing"
+        else:
+            evidence = {safe(row.get("task_id")): row for row in read_csv(eligibility_evidence_csv)}
+            pool_ids = {safe(row.get("task_id")) for row in read_csv(task_pool_csv)}
+            if pool_ids and not pool_ids.issubset(evidence):
+                dependency_valid, dependency_reason = False, "c2b_task_eligibility_evidence_not_covering_pool"
     if safe(manifest.get("risk_contract_sha256")) != risk_contract_sha:
         dependency_valid, dependency_reason = False, "stale_or_unbound:risk_design_contract"
     workers_rows = _eligible_workers(read_csv(worker_profile_csv))
@@ -569,13 +654,13 @@ def materialize(
         selected_anchors = _select_anchors(anchors, common_n)
         anchor_ids = {_task_id(task) for task in selected_anchors}
         selected_bridges = _select_bridges([task for task in bridges if _task_id(task) not in anchor_ids], unique_bridge_n, selected_anchors)
-        anchor_center = {name: sum(_risk_vector(task)[index] for task in selected_anchors) / len(selected_anchors) for index, name in enumerate(("d_model_feat", "d_model_feat_local_max", "g_model_struct", "d_cal_A"))} if selected_anchors else {}
+        anchor_center = {index: sum(_risk_vector(task)[index] for task in selected_anchors) / len(selected_anchors) for index in range(4)} if selected_anchors else {}
         prior = []
         for step, task in enumerate(selected_anchors, 1):
             task_selection_rows.append({
                 "design_id": design_id, "selection_step": step, "task_id": _task_id(task), "base_task_id": safe(task.get("base_task_id")) or _task_id(task), "selection_role": "common_anchor",
-                "risk_design_A": safe(task.get("risk_design_A") or task.get("d_cal_A")), "risk_design_stratum": _task_stratum(task),
-                "selection_distance": sum((_risk_vector(task)[index] - anchor_center[name]) ** 2 for index, name in enumerate(anchor_center)) ** .5 if anchor_center else "",
+                "risk_design_vector_A": task.get("risk_design_vector_A", ""), "risk_design_score_A": task.get("risk_design_score_A", ""), "risk_design_stratum": _task_stratum(task),
+                "selection_distance": sum((_risk_vector(task)[index] - anchor_center[index]) ** 2 for index in anchor_center) ** .5 if anchor_center else "",
                 "building_gain": safe(task.get("building_id")) not in {safe(item.get("building_id")) for item in prior}, "legacy_curated_priority_used": truthy(task.get("legacy_human_curated_candidate")), "selection_reason": "risk_center_scope_reference_feature_gate",
             })
             prior.append(task)
@@ -583,7 +668,7 @@ def materialize(
             reference = [*selected_anchors, *selected_bridges[:step - 1]]
             task_selection_rows.append({
                 "design_id": design_id, "selection_step": step, "task_id": _task_id(task), "base_task_id": safe(task.get("base_task_id")) or _task_id(task), "selection_role": "diverse_bridge",
-                "risk_design_A": safe(task.get("risk_design_A") or task.get("d_cal_A")), "risk_design_stratum": _task_stratum(task),
+                "risk_design_vector_A": task.get("risk_design_vector_A", ""), "risk_design_score_A": task.get("risk_design_score_A", ""), "risk_design_stratum": _task_stratum(task),
                 "selection_distance": min((_risk_distance(task, item) for item in reference), default=""),
                 "building_gain": safe(task.get("building_id")) not in {safe(item.get("building_id")) for item in reference}, "legacy_curated_priority_used": truthy(task.get("legacy_human_curated_candidate")), "selection_reason": "continuous_risk_maximin_building_gain",
             })
@@ -636,12 +721,17 @@ def materialize(
         target_raw = risk_contract["simulation"].get("max_q_gt_ci_half_width")
         target = float(target_raw) if target_raw not in {None, ""} else math.inf
         simulated_half_width = _float(simulation_row, "max_ci_half_width", default=projected)
+        if not reason and input_status == "formal" and not formal_thresholds_ready:
+            reason = "formal_selection_thresholds_unapproved"
         if not reason and (projected > target or simulated_half_width > target):
             reason = "projected_ci_half_width_above_target"
         if not reason and not graph["worker_task_graph_connected"]:
             reason = "worker_task_graph_disconnected"
-        if not reason and graph["max_worker_stratum_imbalance"] > max_imbalance:
-            reason = "worker_stratum_imbalance"
+            if not reason and graph["max_worker_stratum_imbalance"] > max_imbalance:
+                reason = "worker_stratum_imbalance"
+            threshold_failures = _threshold_failures(simulation_row, graph, threshold_payload)
+            if not reason and threshold_failures:
+                reason = "threshold_gate_failed:" + ";".join(threshold_failures)
         audit = {
             "design_id": design_id, "common_anchor_count": common_n,
             "bridge_per_worker": bridge_per_worker, "unique_bridge_tasks": unique_bridge_n,
@@ -657,7 +747,17 @@ def materialize(
             candidates.append((len(rows), design_id, rows, graph))
 
     candidates.sort(key=lambda item: (item[0], item[1]))
-    chosen = candidates[0] if candidates else None
+    chosen = candidates[0] if candidates and (input_status != "formal" or formal_thresholds_ready) else None
+    if input_status == "formal" and chosen and selected_task_approval:
+        approval = json.loads(selected_task_approval.read_text(encoding="utf-8"))
+        actual_task_ids = {safe(row.get("task_id")) for row in chosen[2]}
+        approved_ids = {safe(value) for value in approval.get("selected_task_ids", [])}
+        if approval.get("approved_task_set_sha256") != _task_set_sha(actual_task_ids) or approved_ids != actual_task_ids:
+            chosen = None
+            dependency_valid, dependency_reason = False, "selected_task_approval_task_set_mismatch"
+    elif input_status == "formal" and chosen and not selected_task_approval:
+        chosen = None
+        dependency_valid, dependency_reason = False, "selected_task_approval_missing"
     chosen_rows = chosen[2] if chosen else []
     chosen_graph = chosen[3] if chosen else {
         "design_id": "", "n_workers": len(workers), "n_tasks": 0, "n_edges": 0,
@@ -689,10 +789,13 @@ def materialize(
     summary = {
         "design_manifest": str(design_manifest),
         "design_manifest_sha256": manifest_sha,
+        "threshold_manifest_sha256": threshold_sha,
         "input_sha256": {
             "worker_profile_csv": sha256_file(worker_profile_csv),
             "task_pool_csv": sha256_file(task_pool_csv),
             **({"c1_closeout_summary": sha256_file(c1_closeout_summary)} if c1_closeout_summary and c1_closeout_summary.exists() else {}),
+            **({"eligibility_evidence_csv": sha256_file(eligibility_evidence_csv)} if eligibility_evidence_csv and eligibility_evidence_csv.exists() else {}),
+            **({"selected_task_approval": sha256_file(selected_task_approval)} if selected_task_approval and selected_task_approval.exists() else {}),
         },
         "dependency_binding_valid": dependency_valid,
         "chosen_design_id": chosen[1] if chosen else "",
@@ -700,10 +803,12 @@ def materialize(
         "c2b_design_ready": bool(chosen),
         "candidate_only": input_status != "formal",
         "input_status": input_status,
-        "launch_ready": bool(chosen) and input_status == "formal",
+        "launch_ready": bool(chosen) and input_status == "formal" and formal_thresholds_ready,
+        "formal_selection_allowed": formal_thresholds_ready,
         "failure_reason": (
             "precloseout_candidate_only_no_selection"
             if input_status == "precloseout_rehearsal" and candidates
+            else "formal_selection_thresholds_unapproved" if input_status == "formal" and not formal_thresholds_ready
             else "" if chosen else (dependency_reason or "no_feasible_c2b_design")
         ),
         "n_feasible_candidate_designs": len(candidates),
@@ -714,9 +819,9 @@ def materialize(
         "C1_CANONICAL_CLOSED": input_status == "formal",
         "C1_MEASUREMENT_FROZEN": input_status == "formal",
         "C2B_RISK_DESIGN_FROZEN": input_status == "formal" and dependency_valid,
-        "C2B_DESIGN_FROZEN": bool(chosen) and input_status == "formal",
+        "C2B_DESIGN_FROZEN": bool(chosen) and input_status == "formal" and formal_thresholds_ready,
         "C2B_ASSIGNMENT_MATERIALIZED": bool(chosen_rows) and input_status == "formal",
-        "C2B_LAUNCH_READY": bool(chosen) and input_status == "formal",
+        "C2B_LAUNCH_READY": bool(chosen) and input_status == "formal" and formal_thresholds_ready,
     }
     write_json(output_dir / "c2b_design.summary.json", summary)
     if chosen:
@@ -734,10 +839,13 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--input-status", choices=("dry_run", "precloseout_rehearsal", "formal"), default="dry_run")
     parser.add_argument("--c1-closeout-summary", type=Path)
+    parser.add_argument("--threshold-manifest", type=Path)
+    parser.add_argument("--eligibility-evidence-csv", type=Path)
+    parser.add_argument("--selected-task-approval", type=Path)
     args = parser.parse_args(argv)
     print(json.dumps(materialize(
         args.task_pool_csv, args.worker_profile_csv, args.design_manifest, args.output_dir,
-        input_status=args.input_status, c1_closeout_summary=args.c1_closeout_summary,
+        input_status=args.input_status, c1_closeout_summary=args.c1_closeout_summary, threshold_manifest=args.threshold_manifest, eligibility_evidence_csv=args.eligibility_evidence_csv, selected_task_approval=args.selected_task_approval,
     ), ensure_ascii=False, indent=2))
     return 0
 

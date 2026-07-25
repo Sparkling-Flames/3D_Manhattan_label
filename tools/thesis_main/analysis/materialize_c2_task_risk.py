@@ -110,11 +110,35 @@ def _composite_q75_bucket(
     return ("stress" if len(percentiles) == 4 and max(percentiles.values()) >= stress_quantile else "ordinary"), percentiles
 
 
+RISK_VECTOR_FIELDS = ("d_model_feat", "d_model_feat_local_max", "g_model_struct", "d_cal_A")
+
+
+def _frozen_vector(values: dict[str, float], scales: dict[str, float]) -> list[float] | None:
+    if any(name not in values for name in RISK_VECTOR_FIELDS):
+        return None
+    return [float(values[name]) / (float(scales.get(name) or 1.0) or 1.0) for name in RISK_VECTOR_FIELDS]
+
+
+def _score(vector: list[float] | None) -> float | None:
+    return float(np.linalg.norm(np.asarray(vector, dtype=float))) if vector is not None else None
+
+
+def _feature_freeze_ready(path: Path | None) -> bool:
+    if not path or not path.exists():
+        return False
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
+    return all(bool(payload.get(flag)) and str(payload.get(f"{flag}_sha256", "")).strip() for flag in ("pca_frozen", "whitening_frozen", "circular_shift_invariant", "seam_invariant"))
+
+
 def materialize(
     inventory_csv: Path, layout_dir: Path, c1_task_feature_csv: Path, output_dir: Path, *,
     input_status: str, checkpoint: Path | None = None, reference_dir: Path | None = None,
     extract_lhfeat: bool = False, c1_risk_reference_csv: Path | None = None,
-    risk_contract: Path | None = None,
+    risk_contract: Path | None = None, feature_freeze_manifest: Path | None = None,
+    c1_freeze_manifest: Path | None = None,
 ) -> dict[str, Any]:
     contract, contract_path = _risk_contract(risk_contract)
     stress_quantile = float(contract["stratum_rule"]["stress_quantile"])
@@ -194,13 +218,14 @@ def materialize(
             reference_paths = sorted(path for path in reference_dir.rglob("*") if path.suffix.lower() in {".jpg", ".jpeg", ".png"})
             reference_features = _lhfeat_descriptors(reference_paths, checkpoint)
             candidate_features = _lhfeat_descriptors(candidate_paths, checkpoint)
-            feature_status = "ready"
+            feature_status = "ready" if _feature_freeze_ready(feature_freeze_manifest) else "not_ready_feature_freeze_incomplete"
         except RuntimeError:
             if input_status == "formal":
                 raise
             feature_status = "dependency_unavailable"
     ref_global = np.stack([value[0] for value in reference_features.values()]) if reference_features else None
     ref_local = np.stack([value[1] for value in reference_features.values()]) if reference_features else None
+    channel_scales = {name: (float(np.std(c1_channels[name])) if c1_channels[name] else 1.0) or 1.0 for name in RISK_VECTOR_FIELDS}
     rows = []
     for item in inventory:
         task = item.get("task_id", ""); layout = _layout_features(layout_dir / f"{task}.json")
@@ -215,18 +240,32 @@ def materialize(
             d_cal = _knn(vector, support_matrix / support_scale)
         channels = {"d_model_feat": global_distance, "d_model_feat_local_max": local_distance, "g_model_struct": g, "d_cal_A": d_cal}
         numeric = {name: float(value) for name, value in channels.items() if value != ""}
-        bucket, percentiles = _composite_q75_bucket(numeric, c1_channels, stress_quantile=stress_quantile)
+        vector = _frozen_vector(numeric, channel_scales)
+        score = _score(vector)
+        reference_scores = [_score(_frozen_vector({name: float(reference.get(name, "")) for name in RISK_VECTOR_FIELDS}, channel_scales)) for reference in complete_reference_rows]
+        reference_scores = [value for value in reference_scores if value is not None]
+        score_percentile = sum(value <= score for value in reference_scores) / len(reference_scores) if score is not None and reference_scores else None
+        bucket = "stress" if score_percentile is not None and score_percentile >= stress_quantile else "ordinary"
+        percentiles = {"risk_design_score_A": score_percentile} if score_percentile is not None else {}
         assist_ready = len(numeric) == 4 and all(c1_channels.values()) and layout.get("postprocess_valid") is True
         route_score = ""  # Requires cross-fitted C1 outcomes; model-only Q75 must never impersonate routing risk.
         source_holdout_ready = all(str(item.get(field, "")).lower() in {"true", "1"} for field in ("source_split_allowed", "history_clear", "future_holdout_clear"))
         reference_ready = str(item.get("reference_status") or item.get("geometry_gold_ready") or "").lower() in {"reference_ready", "true", "1"}
         scope_ready = str(item.get("scope_status") or item.get("final_scope") or "").lower() in {"in_scope", "included", "true", "1"}
-        risk_design_ready = len(numeric) == 4 and layout.get("postprocess_valid") is True and source_holdout_ready and reference_ready and scope_ready and bool(item.get("building_id"))
-        design_frozen = input_status == "formal" and risk_design_ready and feature_status == "ready"
+        risk_design_ready = vector is not None and score is not None and layout.get("postprocess_valid") is True and source_holdout_ready and reference_ready and scope_ready and bool(item.get("building_id"))
+        c1_frozen = False
+        if c1_freeze_manifest and c1_freeze_manifest.exists():
+            try:
+                c1_frozen = bool(json.loads(c1_freeze_manifest.read_text(encoding="utf-8")).get("C1_MEASUREMENT_FROZEN"))
+            except (OSError, json.JSONDecodeError):
+                c1_frozen = False
+        design_frozen = input_status == "formal" and c1_frozen and risk_design_ready and feature_status == "ready"
         rows.append({
             **item, **layout, "d_model_feat": global_distance, "d_model_feat_local_max": local_distance,
             "d_cal_A": d_cal, "d_cal_F": "", "d_cal_F_status": "post_c2_only",
-            "risk_design_A": d_cal,
+            "risk_design_vector_A": json.dumps(vector, separators=(",", ":")) if vector is not None else "",
+            "risk_design_score_A": "" if score is None else score,
+            "risk_design_A": "",
             "risk_design_A_status": "frozen_from_C1" if design_frozen else "pending_complete_C1" if input_status != "formal" else "not_evaluable",
             "risk_design_stratum": bucket if design_frozen else "",
             "risk_design_stratum_status": "frozen_from_C1" if design_frozen else "provisional_not_frozen" if input_status != "formal" else "not_evaluable",
@@ -236,6 +275,7 @@ def materialize(
             "assignment_eligible": design_frozen,
             "reference_ready": reference_ready, "scope_ready": scope_ready, "source_holdout_ready": source_holdout_ready,
             "feature_status": feature_status, "checkpoint_sha256": sha256_file(checkpoint) if checkpoint and checkpoint.exists() else "",
+            "feature_freeze_manifest_sha256": sha256_file(feature_freeze_manifest) if feature_freeze_manifest and feature_freeze_manifest.exists() else "",
             "risk_contract_sha256": sha256_file(contract_path),
             "risk_status": "candidate_only" if input_status != "formal" else "frozen" if design_frozen else "not_evaluable",
         })
@@ -244,14 +284,19 @@ def materialize(
     eligible_rows = [row for row in rows if row["assignment_eligible"]]
     eligible_buildings = {row.get("building_id") for row in eligible_rows if row.get("building_id")}
     eligible_strata = {row.get("risk_design_stratum") for row in eligible_rows}
+    c1_state = {}
+    if c1_freeze_manifest and c1_freeze_manifest.exists():
+        try: c1_state = json.loads(c1_freeze_manifest.read_text(encoding="utf-8")).get("state_machine", {})
+        except (OSError, json.JSONDecodeError): c1_state = {}
     summary = {
         "input_status": input_status, "method_contract": contract["method_contract"], "n_tasks": len(rows), "n_c1_calibration_tasks": len(reference_rows),
         "n_assignment_eligible": len(eligible_rows), "eligible_building_count": len(eligible_buildings),
-        "feature_status": feature_status, "formal_ready": input_status == "formal" and feature_status == "ready" and len(eligible_rows) >= 12 and len(eligible_buildings) >= 2 and eligible_strata >= {"ordinary", "stress"},
+        "feature_status": feature_status, "formal_ready": input_status == "formal" and bool(c1_state.get("C1_MEASUREMENT_FROZEN")) and feature_status == "ready" and len(eligible_rows) >= 12 and len(eligible_buildings) >= 2 and eligible_strata >= {"ordinary", "stress"},
         "risk_design_A_status": "frozen_from_C1" if input_status == "formal" and feature_status == "ready" else "pending_complete_C1" if input_status != "formal" else "not_evaluable",
         "risk_design_stratum_status": "frozen_from_C1" if input_status == "formal" and feature_status == "ready" else "provisional_not_frozen" if input_status != "formal" else "not_evaluable",
         "risk_contract_path": str(contract_path), "risk_contract_sha256": sha256_file(contract_path),
         "checkpoint_sha256": sha256_file(checkpoint) if checkpoint and checkpoint.exists() else "",
+        "feature_freeze_manifest_sha256": sha256_file(feature_freeze_manifest) if feature_freeze_manifest and feature_freeze_manifest.exists() else "",
         "config_sha256": sha256_file(_PROJECT_ROOT / contract["feature_freeze"]["config"]) if (_PROJECT_ROOT / contract["feature_freeze"]["config"]).exists() else "",
         "inventory_sha256": sha256_file(inventory_csv), "c1_preannotation_feature_sha256": sha256_file(c1_task_feature_csv),
         "c1_risk_reference_sha256": sha256_file(c1_risk_reference_csv) if c1_risk_reference_csv else "",
@@ -259,9 +304,9 @@ def materialize(
         "c1_task_risk_reference_path": str(c1_reference_output), "c1_task_risk_reference_sha256": sha256_file(c1_reference_output),
     }
     summary["state_machine"] = {
-        "C1_COLLECTION_INCOMPLETE": input_status != "formal",
-        "C1_CANONICAL_CLOSED": input_status == "formal",
-        "C1_MEASUREMENT_FROZEN": input_status == "formal",
+        "C1_COLLECTION_INCOMPLETE": bool(c1_state.get("C1_COLLECTION_INCOMPLETE", False)),
+        "C1_CANONICAL_CLOSED": bool(c1_state.get("C1_CANONICAL_CLOSED", False)),
+        "C1_MEASUREMENT_FROZEN": bool(c1_state.get("C1_MEASUREMENT_FROZEN", False)),
         "C2B_RISK_DESIGN_FROZEN": input_status == "formal" and feature_status == "ready",
         "C2B_DESIGN_FROZEN": False,
         "C2B_ASSIGNMENT_MATERIALIZED": False,
@@ -283,8 +328,10 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--extract-lhfeat", action="store_true")
     parser.add_argument("--c1-risk-reference-csv", type=Path)
     parser.add_argument("--risk-contract", type=Path)
+    parser.add_argument("--feature-freeze-manifest", type=Path)
+    parser.add_argument("--c1-freeze-manifest", type=Path)
     args = parser.parse_args(argv)
-    print(json.dumps(materialize(args.inventory_csv, args.layout_dir, args.c1_task_feature_csv, args.output_dir, input_status=args.input_status, checkpoint=args.checkpoint, reference_dir=args.reference_dir, extract_lhfeat=args.extract_lhfeat, c1_risk_reference_csv=args.c1_risk_reference_csv, risk_contract=args.risk_contract), indent=2))
+    print(json.dumps(materialize(args.inventory_csv, args.layout_dir, args.c1_task_feature_csv, args.output_dir, input_status=args.input_status, checkpoint=args.checkpoint, reference_dir=args.reference_dir, extract_lhfeat=args.extract_lhfeat, c1_risk_reference_csv=args.c1_risk_reference_csv, risk_contract=args.risk_contract, feature_freeze_manifest=args.feature_freeze_manifest, c1_freeze_manifest=args.c1_freeze_manifest), indent=2))
     return 0
 
 
