@@ -260,23 +260,9 @@ class DtScoreComputer:
         if not cfg_path or not checkpoint_path:
             raise ValueError("cfg_path and checkpoint_path are required for real embedding extraction")
 
-        import torch
-        import yaml
+        from tools.thesis_main.registry.hohonet_feature_backend import load_model
 
-        cfg_payload = yaml.safe_load(Path(cfg_path).read_text(encoding="utf-8"))
-        model_cfg = cfg_payload.get("model") or {}
-        module_name = model_cfg.get("file")
-        class_name = model_cfg.get("modelclass")
-        kwargs = model_cfg.get("kwargs") or {}
-        if not module_name or not class_name:
-            raise ValueError("model config must contain model.file and model.modelclass")
-
-        module = importlib.import_module(str(module_name))
-        model_class = getattr(module, str(class_name))
-        model = model_class(**kwargs)
-        state_dict = torch.load(str(checkpoint_path), map_location=self._resolve_device())
-        model.load_state_dict(state_dict)
-        self._model = model.eval().to(self._resolve_device())
+        self._model, self._device = load_model(Path(checkpoint_path), Path(cfg_path), device=self._resolve_device())
 
     def _resolve_image_path(self, image_path: str) -> Path:
         text = str(image_path).strip()
@@ -322,8 +308,9 @@ class DtScoreComputer:
 
         x = torch.from_numpy(np.asarray(rgb[..., :3])).permute(2, 0, 1)[None].float() / 255.0
         x = x.to(self._resolve_device())
-        with torch.no_grad():
-            feat = hohonet_shared_feature(self._model.extract_feat(x))
+        from tools.thesis_main.registry.hohonet_feature_backend import shared_feature
+        with torch.inference_mode():
+            feat = shared_feature(self._model.extract_feat(x))
         if feat.ndim != 3:
             raise ValueError(f"unexpected feature shape: {tuple(feat.shape)}")
         pooled = feat.mean(dim=-1).squeeze(0).detach().cpu().numpy()

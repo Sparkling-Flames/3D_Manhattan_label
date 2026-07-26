@@ -209,15 +209,20 @@ def apply_completion_disposition(completion_audit_csv: Path, disposition_csv: Pa
         elif disposition and not valid:
             invalid += 1
         elif not disposition:
+            # Assignment and frozen export evidence own ordinary completion
+            # status.  The reviewer sidecar is exception-only (for example an
+            # administrative exclusion), not a 23-row approval checklist.
             pending += 1
         if valid:
             applied += 1
+        computed_valid = not matches
         output.append({
             **row,
             "computed_completion_status": row.get("completion_status", ""),
             "completion_status": disposition.get("final_completion_disposition", row.get("completion_status", "")) if valid else row.get("completion_status", ""),
             "completion_disposition_applied": valid,
-            "completion_disposition_valid": valid,
+            "completion_disposition_valid": valid or computed_valid,
+            "completion_disposition_basis": "sha_bound_exception" if valid else "computed_from_frozen_assignment_and_export" if computed_valid else "invalid_exception_disposition",
             "completion_disposition_source_sha256": source_sha if valid else "",
             "completion_disposition_reviewed_by": disposition.get("reviewed_by", "") if valid else "",
             "completion_disposition_reviewed_at": disposition.get("reviewed_at", "") if valid else "",
@@ -228,6 +233,46 @@ def apply_completion_disposition(completion_audit_csv: Path, disposition_csv: Pa
     summary = {"source_completion_audit_sha256": source_sha, "applied_count": applied, "invalid_count": invalid, "unmatched_count": unmatched, "pending_count": pending}
     (output_dir / "c1_completion_disposition_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
+
+
+def finalize_partial_completion_support(
+    completion_csv: Path, eligibility_csv: Path, output_dir: Path, summary: dict[str, Any], *,
+    collection_window_closed: bool,
+) -> dict[str, Any]:
+    """Classify closed partial workers from estimand rows, without cross-axis substitution."""
+    rows = read_csv(completion_csv)
+    support: dict[str, dict[str, int]] = defaultdict(lambda: {"Q_GT": 0, "R_LOO": 0, "F_struct": 0})
+    for row in read_csv(eligibility_csv):
+        worker = row.get("worker_id", "")
+        if not worker:
+            continue
+        support[worker]["Q_GT"] += int(str(row.get("global_analysis_eligible", "")).lower() in {"true", "1"})
+        support[worker]["R_LOO"] += int(str(row.get("loo_analysis_eligible", "")).lower() in {"true", "1"})
+        support[worker]["F_struct"] += int(str(row.get("structural_opportunity_eligible", "")).lower() in {"true", "1"})
+    for row in rows:
+        worker_support = support[row.get("worker_id", "")]
+        explicit = str(row.get("completion_disposition_applied", "")).lower() in {"true", "1"}
+        if collection_window_closed and not explicit and row.get("completion_status") == "closed_partial_insufficient":
+            row["completion_status"] = "closed_partial_usable" if any(worker_support.values()) else "closed_partial_insufficient"
+        row["Q_GT_eligible_row_support"] = worker_support["Q_GT"]
+        row["R_LOO_eligible_row_support"] = worker_support["R_LOO"]
+        row["F_struct_eligible_row_support"] = worker_support["F_struct"]
+        row["completion_support_basis"] = "estimand_specific_row_eligibility" if collection_window_closed else "collection_open"
+    write_csv(output_dir / "c1_worker_completion_audit.csv", rows)
+    counts = Counter(row.get("completion_status", "") for row in rows)
+    updated = {
+        **summary,
+        "completed_worker_count": counts["completed"],
+        "partial_noncompletion_worker_count": counts["partial_noncompletion"] + counts["closed_partial_usable"] + counts["closed_partial_insufficient"],
+        "closed_partial_usable_worker_count": counts["closed_partial_usable"],
+        "closed_partial_insufficient_worker_count": counts["closed_partial_insufficient"],
+        "nonstarter_worker_count": counts["nonstarter"],
+        "completed_worker_ids": [row["worker_id"] for row in rows if row.get("completion_status") == "completed"],
+        "partial_worker_ids": [row["worker_id"] for row in rows if row.get("completion_status") in {"partial_noncompletion", "closed_partial_usable", "closed_partial_insufficient"}],
+        "nonstarter_worker_ids": [row["worker_id"] for row in rows if row.get("completion_status") == "nonstarter"],
+    }
+    (output_dir / "c1_worker_completion_support_summary.json").write_text(json.dumps(updated, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return updated
 
 
 def apply_outside_assignment_disposition(outside_audit_csv: Path, disposition_csv: Path | None, output_dir: Path) -> dict[str, Any]:
@@ -986,8 +1031,8 @@ def materialize_final_canonical_closeout_summary(
     if any(row.get("version_disposition") not in resolved_versions for row in versions): canonical_blockers.append("unresolved_duplicate_or_version")
     completion_disposition = completion_summary.get("completion_disposition", {})
     outside_disposition = (outside_summary or {}).get("disposition", {})
-    if formal and any(int(completion_disposition.get(field) or 0) for field in ("pending_count", "invalid_count", "unmatched_count")):
-        canonical_blockers.append("completion_disposition_missing_invalid_or_orphan")
+    if formal and any(int(completion_disposition.get(field) or 0) for field in ("invalid_count", "unmatched_count")):
+        canonical_blockers.append("completion_exception_disposition_invalid_or_orphan")
     if formal and any(int(outside_disposition.get(field) or 0) for field in ("pending_count", "invalid_count", "unmatched_count")):
         canonical_blockers.append("outside_assignment_disposition_missing_invalid_or_orphan")
     measurement_blockers = [*canonical_blockers]
@@ -1099,7 +1144,8 @@ def materialize_analysis_rosters(completion_csv: Path, canonical_csv: Path, outp
 
 def materialize_three_track_worker_state(
     global_csv: Path, geometry_loo_csv: Path, structural_csv: Path,
-    completion_csv: Path, output_dir: Path, quality_csv: Path | None = None, *, formal: bool = False,
+    completion_csv: Path, output_dir: Path, quality_csv: Path | None = None, *,
+    eligibility_csv: Path | None = None, formal: bool = False,
 ) -> dict[str, Any]:
     globals_ = {row.get("worker_id", ""): row for row in read_csv(global_csv)}
     loo_by_worker: dict[str, list[tuple[str, float]]] = defaultdict(list)
@@ -1127,6 +1173,20 @@ def materialize_three_track_worker_state(
                 break
             except (KeyError, TypeError, ValueError):
                 continue
+    gate_support: dict[str, dict[str, set[str]]] = defaultdict(
+        lambda: {"process": set(), "independence": set(), "scope_reference": set()}
+    )
+    for row in read_csv(eligibility_csv) if eligibility_csv and eligibility_csv.exists() else []:
+        worker, task = row.get("worker_id", ""), row.get("base_task_id", "")
+        if not worker or not task:
+            continue
+        for field, key in (
+            ("process_eligible", "process"),
+            ("independence_eligible", "independence"),
+            ("scope_reference_eligible", "scope_reference"),
+        ):
+            if _truth(row.get(field)):
+                gate_support[worker][key].add(task)
     rows = []
     for completion in read_csv(completion_csv):
         worker = completion["worker_id"]
@@ -1169,9 +1229,9 @@ def materialize_three_track_worker_state(
             "R_LOO_bootstrap_replicates": 2000 if bootstrap else 0,
             "F_struct": struct[worker]["failure"] / opportunity if opportunity else "",
             "F_struct_numerator": struct[worker]["failure"], "F_struct_denominator": opportunity,
-            "process_eligible_support": max(gt_support, loo_support, opportunity),
-            "independence_support": max(gt_support, loo_support, opportunity),
-            "scope_reference_support": max(gt_support, loo_support, opportunity),
+            "process_eligible_support": len(gate_support[worker]["process"]),
+            "independence_support": len(gate_support[worker]["independence"]),
+            "scope_reference_support": len(gate_support[worker]["scope_reference"]),
             "worker_state_status": state_status,
             "formal_frozen": formal,
         })

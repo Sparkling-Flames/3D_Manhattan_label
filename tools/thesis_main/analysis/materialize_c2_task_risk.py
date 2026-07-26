@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import csv
 import hashlib
-import importlib
 import json
 import math
 import sys
@@ -19,6 +18,7 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
+from tools.thesis_main.registry.hohonet_feature_backend import extract_orbit_descriptors, pool_lhfeat
 
 
 DEFAULT_RISK_CONTRACT = _PROJECT_ROOT / "docs" / "thesis_main" / "C2B_RISK_DESIGN_CONTRACT_v1.json"
@@ -75,42 +75,19 @@ def _layout_features(path: Path) -> dict[str, Any]:
 
 
 def _pool_lhfeat(feature: np.ndarray) -> tuple[np.ndarray, np.ndarray]:
-    return np.concatenate([feature.mean(1), feature.std(1)]), feature.max(1)
+    return pool_lhfeat(feature)
 
 
 def _lhfeat_descriptors(
     paths: list[Path], checkpoint: Path, *, config: Path, device: str = "auto",
     invariance_audit: dict[str, Any] | None = None,
 ) -> dict[str, tuple[np.ndarray, np.ndarray]]:
-    try:
-        import torch
-        import yaml
-        from PIL import Image
-    except ImportError as exc:
-        raise RuntimeError(f"HoHoNet LHFeat dependencies unavailable: {exc}") from exc
-    model_config = (yaml.safe_load(config.read_text(encoding="utf-8")) or {}).get("model", {})
-    module_name, class_name = model_config.get("file"), model_config.get("modelclass")
-    if not module_name or not class_name:
-        raise ValueError("model config must contain model.file and model.modelclass")
-    model_class = getattr(importlib.import_module(str(module_name)), str(class_name))
-    net = model_class(**(model_config.get("kwargs") or {}))
-    target = "cuda" if device == "auto" and torch.cuda.is_available() else "cpu" if device == "auto" else device
-    net.load_state_dict(torch.load(checkpoint, map_location="cpu")); net.to(target); net.eval()
-    output: dict[str, tuple[np.ndarray, np.ndarray]] = {}
-    with torch.no_grad():
-        for path in paths:
-            rgb = np.asarray(Image.open(path).convert("RGB"), dtype=np.float32) / 255.0
-            tensor = torch.from_numpy(rgb).permute(2, 0, 1)[None].to(target)
-            feature = net.extract_feat(tensor)["1D"][0].cpu().numpy()
-            pooled = _pool_lhfeat(feature)
-            output[path.resolve().as_posix()] = pooled
-            if invariance_audit is not None:
-                shifted_tensor = torch.roll(tensor, shifts=max(1, tensor.shape[-1] // 4), dims=-1)
-                shifted_feature = net.extract_feat(shifted_tensor)["1D"][0].cpu().numpy()
-                shifted = _pool_lhfeat(shifted_feature)
-                difference = max(float(np.max(np.abs(left - right))) for left, right in zip(pooled, shifted))
-                invariance_audit["max_abs_difference"] = max(float(invariance_audit.get("max_abs_difference", 0.0)), difference)
-                invariance_audit["feature_count"] = int(invariance_audit.get("feature_count", 0)) + 1
+    output, audit = extract_orbit_descriptors(
+        paths, checkpoint, config, device=device, batch_size=4,
+        audit_seam=invariance_audit is not None,
+    )
+    if invariance_audit is not None:
+        invariance_audit.update(audit)
     return output
 
 
@@ -134,13 +111,13 @@ def _apply_whitener(vector: np.ndarray, mean: np.ndarray, components: np.ndarray
 
 def freeze_feature_reference(
     reference_dir: Path, checkpoint: Path, config: Path, cache_path: Path,
-    manifest_path: Path, *, device: str = "auto",
+    manifest_path: Path, *, device: str = "auto", audit_threshold_manifest: Path | None = None,
 ) -> dict[str, Any]:
     manifest_path.parent.mkdir(parents=True, exist_ok=True)
     paths = sorted(path for path in reference_dir.rglob("*") if path.suffix.lower() in {".jpg", ".jpeg", ".png"})
     if len(paths) < 2:
         raise ValueError("feature reference requires at least two images")
-    invariance = {"max_abs_difference": 0.0, "feature_count": 0}
+    invariance: dict[str, Any] = {}
     descriptors = _lhfeat_descriptors(paths, checkpoint, config=config, device=device, invariance_audit=invariance)
     global_matrix = np.stack([descriptors[path.resolve().as_posix()][0] for path in paths])
     local_matrix = np.stack([descriptors[path.resolve().as_posix()][1] for path in paths])
@@ -153,30 +130,89 @@ def freeze_feature_reference(
         reference_global=reference_global, reference_local=reference_local,
     )
     reference_listing_sha = hashlib.sha256("\n".join(f"{path.resolve().as_posix()}|{path.stat().st_size}|{sha256_file(path)}" for path in paths).encode()).hexdigest()
-    audit_path = manifest_path.with_name(f"{manifest_path.stem}.invariance_audit.json")
-    audit = {
-        "descriptor": "channelwise_mean_std_and_max_over_panorama_width",
-        "audit_basis": "reference_images_end_to_end_circular_shift",
-        "audited_reference_image_count": invariance["feature_count"],
-        "circular_shift_max_abs_difference": invariance["max_abs_difference"],
-        "tolerance": 1e-6,
-        "seam_operator": "circular_width_roll",
-    }
-    audit_path.write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    cache_sha, audit_sha = sha256_file(cache_path), sha256_file(audit_path)
+    circular_path = manifest_path.with_name(f"{manifest_path.stem}.circular_audit.json")
+    seam_path = manifest_path.with_name(f"{manifest_path.stem}.seam_audit.json")
+    circular = {key: value for key, value in invariance.items() if key.startswith("circular_") or key in {"device", "batch_size", "dtype", "orbit_fractions"}}
+    circular["audit_basis"] = "four_phase_orbit_aggregation"
+    seam = {key: value for key, value in invariance.items() if key.startswith("seam_") or key in {"device", "batch_size", "dtype"}}
+    seam["audit_basis"] = "small_seam_offset_sensitivity"
+    circular_path.write_text(json.dumps(circular, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    seam_path.write_text(json.dumps(seam, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    thresholds = json.loads(audit_threshold_manifest.read_text(encoding="utf-8")) if audit_threshold_manifest and audit_threshold_manifest.exists() else {}
+    values = thresholds.get("thresholds", {})
+    approved = thresholds.get("status") == "approved" and thresholds.get("formal_feature_freeze_allowed") is True
+    circular_limit, seam_limit = values.get("circular_relative_l2_max"), values.get("seam_relative_l2_q95")
+    circular_ready = approved and circular_limit not in {None, ""} and float(circular.get("circular_relative_l2_max", math.inf)) <= float(circular_limit)
+    seam_ready = approved and seam_limit not in {None, ""} and float(seam.get("seam_relative_l2_q95", math.inf)) <= float(seam_limit)
+    cache_sha, circular_sha, seam_sha = sha256_file(cache_path), sha256_file(circular_path), sha256_file(seam_path)
     payload = {
-        "schema_version": "paper_a_c2_feature_freeze_v1", "feature_cache_path": cache_path.resolve().as_posix(),
-        "invariance_audit_path": audit_path.resolve().as_posix(),
+        "schema_version": "paper_a_c2_feature_freeze_v2", "feature_cache_path": cache_path.resolve().as_posix(),
+        "circular_audit_path": circular_path.resolve().as_posix(), "seam_audit_path": seam_path.resolve().as_posix(),
         "checkpoint_sha256": sha256_file(checkpoint), "config_sha256": sha256_file(config),
         "reference_feature_sha256": cache_sha, "reference_listing_sha256": reference_listing_sha,
         "reference_image_count": len(paths), "pca_frozen": True, "whitening_frozen": True,
-        "circular_shift_invariant": audit["circular_shift_max_abs_difference"] <= audit["tolerance"],
-        "seam_invariant": audit["circular_shift_max_abs_difference"] <= audit["tolerance"],
+        "circular_shift_invariant": circular_ready, "seam_invariant": seam_ready,
         "pca_frozen_sha256": cache_sha, "whitening_frozen_sha256": cache_sha,
-        "circular_shift_invariant_sha256": audit_sha, "seam_invariant_sha256": audit_sha,
+        "circular_shift_invariant_sha256": circular_sha, "seam_invariant_sha256": seam_sha,
         "pca_sha256": cache_sha, "whitening_sha256": cache_sha,
-        "circular_shift_audit_sha256": audit_sha, "seam_audit_sha256": audit_sha,
+        "circular_shift_audit_sha256": circular_sha, "seam_audit_sha256": seam_sha,
+        "feature_audit_threshold_manifest_sha256": sha256_file(audit_threshold_manifest) if audit_threshold_manifest and audit_threshold_manifest.exists() else "",
+        "feature_audit_status": "approved" if circular_ready and seam_ready else "pending_threshold_approval_or_failed",
     }
+    manifest_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return payload
+
+
+def refresh_feature_freeze_approval(
+    manifest_path: Path, audit_threshold_manifest: Path, *, checkpoint: Path,
+    config: Path, reference_dir: Path, candidate_inventory: Path,
+) -> dict[str, Any]:
+    """Revalidate immutable caches and apply a threshold manifest without rerunning HoHoNet."""
+    payload = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") != "paper_a_c2_feature_freeze_v2":
+        raise ValueError("unsupported feature freeze manifest")
+
+    def artifact(field: str, sha_field: str) -> Path:
+        path = Path(str(payload.get(field, "")))
+        if not path.is_absolute():
+            path = manifest_path.parent / path
+        if not path.exists() or sha256_file(path) != payload.get(sha_field):
+            raise ValueError(f"stale feature artifact: {field}")
+        return path
+
+    artifact("feature_cache_path", "reference_feature_sha256")
+    artifact("candidate_descriptor_cache_path", "candidate_descriptor_cache_sha256")
+    circular_path = artifact("circular_audit_path", "circular_shift_audit_sha256")
+    seam_path = artifact("seam_audit_path", "seam_audit_sha256")
+    if payload.get("checkpoint_sha256") != sha256_file(checkpoint) or payload.get("config_sha256") != sha256_file(config):
+        raise ValueError("feature checkpoint/config identity mismatch")
+    if payload.get("candidate_inventory_sha256") != sha256_file(candidate_inventory):
+        raise ValueError("candidate inventory identity mismatch")
+    reference_paths = sorted(path for path in reference_dir.rglob("*") if path.suffix.lower() in {".jpg", ".jpeg", ".png"})
+    listing_sha = hashlib.sha256("\n".join(
+        f"{path.resolve().as_posix()}|{path.stat().st_size}|{sha256_file(path)}" for path in reference_paths
+    ).encode()).hexdigest()
+    if len(reference_paths) != int(payload.get("reference_image_count") or 0) or listing_sha != payload.get("reference_listing_sha256"):
+        raise ValueError("reference image listing identity mismatch")
+    thresholds = json.loads(audit_threshold_manifest.read_text(encoding="utf-8"))
+    values = thresholds.get("thresholds", {})
+    approved = (
+        thresholds.get("status") == "approved"
+        and thresholds.get("formal_feature_freeze_allowed") is True
+        and all(str(thresholds.get(field, "")).strip() for field in ("approved_by", "approved_at"))
+    )
+    circular = json.loads(circular_path.read_text(encoding="utf-8"))
+    seam = json.loads(seam_path.read_text(encoding="utf-8"))
+    circular_limit, seam_limit = values.get("circular_relative_l2_max"), values.get("seam_relative_l2_q95")
+    circular_ready = approved and circular_limit not in {None, ""} and float(circular.get("circular_relative_l2_max", math.inf)) <= float(circular_limit)
+    seam_ready = approved and seam_limit not in {None, ""} and float(seam.get("seam_relative_l2_q95", math.inf)) <= float(seam_limit)
+    payload.update({
+        "circular_shift_invariant": circular_ready,
+        "seam_invariant": seam_ready,
+        "feature_audit_threshold_manifest_sha256": sha256_file(audit_threshold_manifest),
+        "feature_audit_status": "approved" if circular_ready and seam_ready else "pending_threshold_approval_or_failed",
+        "cache_reused_without_model_inference": True,
+    })
     manifest_path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return payload
 
@@ -219,6 +255,8 @@ def _feature_freeze_ready(
         payload = json.loads(path.read_text(encoding="utf-8"))
     except (OSError, json.JSONDecodeError):
         return False
+    if payload.get("schema_version") != "paper_a_c2_feature_freeze_v2" or payload.get("feature_audit_status") != "approved":
+        return False
     required = ("pca_frozen", "whitening_frozen", "circular_shift_invariant", "seam_invariant")
     if not all(bool(payload.get(flag)) and str(payload.get(f"{flag}_sha256", "")).strip() for flag in required):
         return False
@@ -231,26 +269,22 @@ def _feature_freeze_ready(
         if source is not None and (not source.exists() or payload.get(field) != sha256_file(source)):
             return False
     cache = Path(str(payload.get("feature_cache_path", "")))
-    audit = Path(str(payload.get("invariance_audit_path", "")))
+    candidate_cache = Path(str(payload.get("candidate_descriptor_cache_path", "")))
+    circular = Path(str(payload.get("circular_audit_path", "")))
+    seam = Path(str(payload.get("seam_audit_path", "")))
     if not cache.is_absolute():
         cache = path.parent / cache
-    if not audit.is_absolute():
-        audit = path.parent / audit
-    try:
-        audit_payload = json.loads(audit.read_text(encoding="utf-8")) if audit.exists() else {}
-        audit_ready = (
-            audit_payload.get("audit_basis") == "reference_images_end_to_end_circular_shift"
-            and int(audit_payload.get("audited_reference_image_count", 0)) == int(payload.get("reference_image_count", 0)) > 0
-            and float(audit_payload.get("circular_shift_max_abs_difference", math.inf)) <= float(audit_payload.get("tolerance", 0))
-        )
-    except (OSError, ValueError, TypeError, json.JSONDecodeError):
-        audit_ready = False
+    if not candidate_cache.is_absolute(): candidate_cache = path.parent / candidate_cache
+    if not circular.is_absolute(): circular = path.parent / circular
+    if not seam.is_absolute(): seam = path.parent / seam
     return (
         cache.exists()
         and sha256_file(cache) == payload.get("reference_feature_sha256")
-        and audit.exists()
-        and audit_ready
-        and sha256_file(audit) == payload.get("circular_shift_audit_sha256") == payload.get("seam_audit_sha256")
+        and candidate_cache.exists()
+        and sha256_file(candidate_cache) == payload.get("candidate_descriptor_cache_sha256")
+        and circular.exists() and seam.exists() and circular != seam
+        and sha256_file(circular) == payload.get("circular_shift_audit_sha256")
+        and sha256_file(seam) == payload.get("seam_audit_sha256")
         and all(str(payload.get(field, "")).strip() for field in ("pca_sha256", "whitening_sha256", "circular_shift_audit_sha256", "seam_audit_sha256"))
     )
 
@@ -280,7 +314,10 @@ def materialize(
         approved = str(registry_row.get("registry_status", "")).lower() == "approved" and all(
             str(registry_row.get(field, "")).strip() for field in ("building_id", "reviewed_by", "reviewed_at")
         )
-        item["building_id"] = registry_row.get("building_id", "") if approved else "" if input_status == "formal" else item.get("building_id", "")
+        # Never infer or inherit a building from an inventory/task-name
+        # convention.  Rehearsal and formal runs use the same evidence rule;
+        # only an explicitly approved registry row can set building_id.
+        item["building_id"] = registry_row.get("building_id", "") if approved else ""
         item["building_registry_status"] = "approved" if approved else "missing_or_unapproved"
     # C1 calibration support is a task-side, pre-annotation feature table.  Do
     # not derive a model-risk channel from crowd canonical geometry.
@@ -339,10 +376,27 @@ def materialize(
         if len(vector) == 4:
             complete_reference_rows.append({"base_task_id": row.get("base_task_id", ""), **vector})
             for name, value in vector.items(): c1_channels[name].append(value)
-    reference_rows = [
-        {**row, "reference_eligible": all(str(row.get(name, "")).strip() for name in RISK_VECTOR_FIELDS)}
-        for row in reference_rows
-    ]
+    channel_scales = {name: (float(np.std(c1_channels[name])) if c1_channels[name] else 1.0) or 1.0 for name in RISK_VECTOR_FIELDS}
+    enriched_reference_rows = []
+    reference_score_values = []
+    for row in reference_rows:
+        try:
+            numeric = {name: float(row[name]) for name in RISK_VECTOR_FIELDS}
+        except (KeyError, TypeError, ValueError):
+            numeric = {}
+        vector = _frozen_vector(numeric, channel_scales)
+        score = _score(vector)
+        if score is not None: reference_score_values.append(score)
+        enriched_reference_rows.append({
+            **row, "reference_eligible": vector is not None,
+            "risk_design_vector_A": json.dumps(vector, separators=(",", ":")) if vector is not None else "",
+            "risk_design_score_A": "" if score is None else score,
+        })
+    q75 = float(np.quantile(reference_score_values, stress_quantile)) if reference_score_values else math.nan
+    reference_rows = [{
+        **row,
+        "risk_design_stratum": "stress" if row.get("risk_design_score_A") != "" and float(row["risk_design_score_A"]) >= q75 else "ordinary" if row.get("risk_design_score_A") != "" else "",
+    } for row in enriched_reference_rows]
     _write(c1_reference_output, reference_rows)
     (output_dir / "c1_task_risk_reference_manifest.json").write_text(json.dumps({
         "schema_version": "c1_task_risk_reference_v1", "unit": "base_task_id",
@@ -368,13 +422,18 @@ def materialize(
         if not feature_ready:
             feature_status = "not_ready_feature_freeze_incomplete"
         else:
-            candidate_paths = [Path(row.get("source_path", "")) for row in inventory if Path(row.get("source_path", "")).exists()]
-            candidate_features = _lhfeat_descriptors(candidate_paths, checkpoint, config=config_path, device=device)
             try:
                 freeze_payload = json.loads(feature_freeze_manifest.read_text(encoding="utf-8"))
                 cache_path = Path(freeze_payload["feature_cache_path"])
                 if not cache_path.is_absolute():
                     cache_path = feature_freeze_manifest.parent / cache_path
+                candidate_cache_path = Path(freeze_payload["candidate_descriptor_cache_path"])
+                if not candidate_cache_path.is_absolute(): candidate_cache_path = feature_freeze_manifest.parent / candidate_cache_path
+                with np.load(candidate_cache_path) as candidate_cache:
+                    candidate_features = {
+                        str(name): (global_value, local_value)
+                        for name, global_value, local_value in zip(candidate_cache["paths"], candidate_cache["global_descriptors"], candidate_cache["local_descriptors"])
+                    }
                 with np.load(cache_path) as cache:
                     ref_global, ref_local = cache["reference_global"], cache["reference_local"]
                     candidate_features = {
@@ -389,7 +448,6 @@ def materialize(
     if reference_features:
         ref_global = np.stack([value[0] for value in reference_features.values()])
         ref_local = np.stack([value[1] for value in reference_features.values()])
-    channel_scales = {name: (float(np.std(c1_channels[name])) if c1_channels[name] else 1.0) or 1.0 for name in RISK_VECTOR_FIELDS}
     rows = []
     for item in inventory:
         task = item.get("task_id", "")
@@ -422,7 +480,7 @@ def materialize(
         c1_frozen = False
         if c1_freeze_manifest and c1_freeze_manifest.exists():
             try:
-                c1_frozen = bool(json.loads(c1_freeze_manifest.read_text(encoding="utf-8")).get("C1_MEASUREMENT_FROZEN"))
+                c1_frozen = bool(json.loads(c1_freeze_manifest.read_text(encoding="utf-8")).get("C2B_BASELINE_INPUT_FROZEN"))
             except (OSError, json.JSONDecodeError):
                 c1_frozen = False
         design_frozen = input_status == "formal" and c1_frozen and risk_design_ready and feature_status == "ready"
@@ -452,13 +510,20 @@ def materialize(
     eligible_strata = {row.get("risk_design_stratum") for row in eligible_rows}
     c1_state = {}
     if c1_freeze_manifest and c1_freeze_manifest.exists():
-        try: c1_state = json.loads(c1_freeze_manifest.read_text(encoding="utf-8")).get("state_machine", {})
+        try:
+            c1_payload = json.loads(c1_freeze_manifest.read_text(encoding="utf-8"))
+            c1_state = {**c1_payload, **c1_payload.get("state_machine", {})}
         except (OSError, json.JSONDecodeError): c1_state = {}
-    formal_ready = input_status == "formal" and bool(c1_state.get("C1_MEASUREMENT_FROZEN")) and feature_status == "ready" and len(eligible_rows) >= 12 and len(eligible_buildings) >= 2 and eligible_strata >= {"ordinary", "stress"}
+    task_features_frozen = feature_status == "ready"
+    # Final pool readiness is owned by the post-eligibility join, not by this
+    # feature materializer.  This summary therefore never promotes it.
+    formal_ready = False
     summary = {
         "input_status": input_status, "method_contract": contract["method_contract"], "n_tasks": len(rows), "n_c1_calibration_tasks": len(reference_rows),
         "n_risk_design_ready": len(eligible_rows), "n_assignment_eligible": 0, "eligible_building_count": len(eligible_buildings),
         "feature_status": feature_status, "formal_ready": formal_ready,
+        "C2_TASK_FEATURES_FROZEN": task_features_frozen,
+        "C2B_ELIGIBLE_RISK_POOL_FROZEN": False,
         "risk_design_A_status": "frozen_from_C1" if input_status == "formal" and feature_status == "ready" else "pending_complete_C1" if input_status != "formal" else "not_evaluable",
         "risk_design_stratum_status": "frozen_from_C1" if input_status == "formal" and feature_status == "ready" else "provisional_not_frozen" if input_status != "formal" else "not_evaluable",
         "risk_contract_path": str(contract_path), "risk_contract_sha256": sha256_file(contract_path),
@@ -474,7 +539,10 @@ def materialize(
         "C1_COLLECTION_INCOMPLETE": bool(c1_state.get("C1_COLLECTION_INCOMPLETE", False)),
         "C1_CANONICAL_CLOSED": bool(c1_state.get("C1_CANONICAL_CLOSED", False)),
         "C1_MEASUREMENT_FROZEN": bool(c1_state.get("C1_MEASUREMENT_FROZEN", False)),
-        "C2B_RISK_DESIGN_FROZEN": formal_ready,
+        "C2B_BASELINE_INPUT_FROZEN": bool(c1_state.get("C2B_BASELINE_INPUT_FROZEN", False)),
+        "C2_TASK_FEATURES_FROZEN": task_features_frozen,
+        "C2B_ELIGIBLE_RISK_POOL_FROZEN": False,
+        "C2B_RISK_DESIGN_FROZEN": False,
         "C2B_DESIGN_FROZEN": False,
         "C2B_ASSIGNMENT_MATERIALIZED": False,
         "C2B_LAUNCH_READY": False,

@@ -50,7 +50,12 @@ C1 exports + assignments + active_logs/new_server
 | C1 active-log frozen | `c1_active_log_freeze_manifest.json` | 只校验路径、cutoff 和 SHA |
 | `collection_window_closed` | collection closure manifest | 不从完成率推断 |
 | `C1_CANONICAL_CLOSED` | formal C1 audit | 只反映 identity/version/disposition closure |
-| `C1_MEASUREMENT_FROZEN` | C1 evidence freeze envelope | 要求 Q_GT、LOO、F_struct 各自冻结，不互相替代 |
+| `Q_GT_FREEZE_STATUS` / `R_LOO_FREEZE_STATUS` / `F_STRUCT_FREEZE_STATUS` | C1 measurement owner | 每轴独立为 `frozen`、`support_limited` 或 `pending_collection_close`，不互相替代 |
+| `C1_EVIDENCE_BUNDLE_FROZEN` | C1 evidence freeze envelope | collection close 后三轴均已到达终态；不表示三轴都可估计 |
+| `C2B_BASELINE_INPUT_FROZEN` | C1 evidence freeze envelope | 只要求 Q_GT frozen 及合格 process/independence/Q_GT worker support |
+| `C1_MEASUREMENT_FROZEN` | C1 evidence freeze envelope | 兼容别名，等于 evidence bundle 终态，不再表示三轴全局 AND |
+| `C2_TASK_FEATURES_FROZEN` | feature freeze manifest | checkpoint/config/cache/PCA/whitening/circular/seam 均通过独立 SHA 审批 |
+| `C2B_ELIGIBLE_RISK_POOL_FROZEN` | C2-B eligibility owner | 最终 source/holdout/history/Scope/reference join 后重新验证任务、building 与 strata 门 |
 | `C2B_RISK_DESIGN_FROZEN` | `c2_task_risk.summary.json` | builder 只能继承 |
 | C2-B candidate feasibility | design simulation | 不等于设计获批 |
 | `C2B_DESIGN_FROZEN` | SHA 绑定的人工 design approval | 必须指定一个非支配可行 `design_id` |
@@ -103,13 +108,15 @@ risk_design_score_A
 ```
 
 stratum、worker slope、bridge maximin 和 simulation 都使用同一个 score/vector。
-正式特征必须绑定 checkpoint、config、reference feature、PCA、whitening、
+正式特征必须绑定 checkpoint、config、reference feature、candidate descriptor cache、PCA、whitening、
 circular-shift audit、seam audit 和 base-task layout SHA。
 Circular/seam audit 对原始参考图执行循环平移后重新运行 `extract_feat()`，不能只滚动
 已经提取的 feature；退化 PCA/whitening 不得冻结。C1 risk reference 由当前冻结的
-C1 pre-annotation feature table 在 risk materializer 内逐 task 生成，不接受旁路 CSV 覆盖。
+C1 pre-annotation feature table 只读取同一 SHA-bound descriptor cache，不重新推理或接受旁路 CSV 覆盖。circular 使用四相位 orbit aggregation；seam 使用独立的小位移 audit，二者禁止共用一个 audit SHA。
+重复执行静态准备时，只有 reference listing、candidate inventory、checkpoint、config、cache 与 audit SHA 全部一致才允许复用；复用路径只刷新 threshold approval 和环境 manifest，不再次运行模型。
 
 `building_id` 只来自经 reviewer/time 审批的 registry，不从文件名或 task 前缀猜测。
+`prepare-c2b-static` 预先生成的六份 `*.review_queue.csv` 只暴露待补证据；其 gate 字段必须为空或 `pending_review`，不得作为正式 registry 或 approval 使用。
 `c2b_task_eligibility_evidence.csv` 按 `image_id + base_task_id` 直接连接 source split、
 future holdout、history、Scope、reference、feature 和 risk。任一证据缺失即排除。
 

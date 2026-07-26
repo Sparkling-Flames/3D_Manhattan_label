@@ -110,6 +110,7 @@ celerybeat.pid
 # Environments
 .env
 .venv
+/.venv-paper-a-gpu/
 env/
 venv/
 ENV/
@@ -131,7 +132,9 @@ docs/thesis_main/*
 !docs/thesis_main/meta_label_three_state_rule_manifest_v1.json
 !docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json
 !docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json
+!docs/thesis_main/C2B_FEATURE_AUDIT_THRESHOLDS.json
 !docs/thesis_main/PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md
+!docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md
 !docs/thesis_main/c1_geometry_parser_amendment_v1.json
 !docs/thesis_main/sequential_routing_candidate_rule_manifest_v1.json
 !docs/thesis_main/sequential_routing_candidate_rule_manifest_v2.json
@@ -153,6 +156,8 @@ docs/AGENT_CONTEXT_INDEX.md
 # Do not upload ZIP or TXT files (repo-wide)
 *.zip
 *.txt
+!config/paper_a_analysis_requirements.lock.txt
+!config/paper_a_torch_requirements.lock.txt
 
 # Exceptions: keep these project folders tracked even if they contain txt/zip
 !export_label/**
@@ -258,4 +263,5 @@ analysis_results/c1_formal_audit_*/
 analysis_results/c1_reviews_*/
 analysis_results/c2b_design_*/
 analysis_results/c2b_build_*/
+analysis_results/c2b_static_*/
 !docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json

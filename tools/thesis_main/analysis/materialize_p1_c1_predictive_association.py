@@ -19,7 +19,9 @@ def _rows(path: Path) -> list[dict[str, str]]:
         return list(csv.DictReader(stream))
 
 
-def build_source(p1_closeout_dir: Path, c1_worker_state_csv: Path, output_csv: Path) -> dict[str, Any]:
+def build_source(
+    p1_closeout_dir: Path, c1_worker_state_csv: Path, output_csv: Path, *, correction_dir: Path | None = None,
+) -> dict[str, Any]:
     """Join frozen P1 worker evidence to the three independent C1 axes."""
     r0_path = next(iter(sorted(p1_closeout_dir.glob("*prescreen_r0_snapshot.csv"))), None)
     scope_path = next(iter(sorted(p1_closeout_dir.glob("*prescreen_worker_scope_summary.csv"))), None)
@@ -27,6 +29,22 @@ def build_source(p1_closeout_dir: Path, c1_worker_state_csv: Path, output_csv: P
         raise FileNotFoundError("P1 closeout lacks r0 or scope worker evidence")
     r0 = {row.get("worker_id", ""): row for row in _rows(r0_path) if str(row.get("admission_status", "")).startswith("pass")}
     scope = {row.get("annotator_id", ""): row for row in _rows(scope_path)}
+    integrity_status = {}
+    corrected_geometry = {}
+    if correction_dir:
+        status_path = correction_dir / "p1_worker_evidence_status_v1.csv"
+        geometry_path = correction_dir / "p1_worker_geometry_profile_v1.csv"
+        if status_path.exists(): integrity_status = {row.get("worker_id", ""): row for row in _rows(status_path)}
+        if geometry_path.exists(): corrected_geometry = {row.get("worker_id", ""): row for row in _rows(geometry_path)}
+        r0 = {
+            worker: {**row, "r_u_0": corrected_geometry.get(worker, {}).get("p1_geometry_component", "")}
+            for worker, row in r0.items()
+            if str(integrity_status.get(worker, {}).get("p1_predictive_capability_eligible", "")).lower() in {"true", "1"}
+            and corrected_geometry.get(worker, {}).get("p1_geometry_component", "") != ""
+        }
+        # No corrected numeric Scope component is currently materialized.  Do
+        # not let the legacy aggregate pass through the integrity amendment.
+        scope = {}
     c1 = {row.get("worker_id", ""): row for row in _rows(c1_worker_state_csv)}
     checks = (
         ("p1_r_u_0_to_c1_q_gt", r0, "r_u_0", "Q_GT_task_adjusted", False),
@@ -49,12 +67,13 @@ def build_source(p1_closeout_dir: Path, c1_worker_state_csv: Path, output_csv: P
                 "p1_metric_value": p1_rows[worker].get(p1_field, ""),
                 "c1_metric_value": value,
                 "c1_axis_status": c1.get(worker, {}).get("worker_state_status", "missing_c1_worker"),
+                "p1_integrity_source": "retrospective_correction" if correction_dir else "legacy_closeout_unamended",
             })
     output_csv.parent.mkdir(parents=True, exist_ok=True)
     with output_csv.open("w", encoding="utf-8", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=list(rows[0]) if rows else ["worker_id", "check_name", "p1_metric_value", "c1_metric_value", "c1_axis_status"])
         writer.writeheader(); writer.writerows(rows)
-    return {"n_join_rows": len(rows), "n_workers": len({row["worker_id"] for row in rows}), "n_evaluable_rows": sum(row["p1_metric_value"] not in (None, "") and row["c1_metric_value"] not in (None, "") for row in rows)}
+    return {"n_join_rows": len(rows), "n_workers": len({row["worker_id"] for row in rows}), "n_evaluable_rows": sum(row["p1_metric_value"] not in (None, "") and row["c1_metric_value"] not in (None, "") for row in rows), "p1_integrity_amendment_applied": correction_dir is not None}
 
 
 def materialize(source_csv: Path, output_dir: Path, *, seed: int = 20260724, draws: int = 2000) -> dict[str, Any]:

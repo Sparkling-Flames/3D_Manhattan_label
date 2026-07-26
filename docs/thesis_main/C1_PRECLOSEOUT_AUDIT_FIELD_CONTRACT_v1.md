@@ -39,3 +39,19 @@
 - `C1_assigned_roster.csv`、`C1_observed_roster.csv`、`C1_analysis_roster.csv` 与 `c2_eligible_roster_C1.csv` 分开保存。partial 按局部有效 support 判断，nonstarter 不生成画像。
 - `c1_three_track_worker_state.csv`（rehearsal）与 `c1_three_track_worker_state_formal.csv`（formal）的唯一三轨为 `Q_GT_task_adjusted`、`R_LOO_compatible`、`F_struct`；状态仅允许 `estimated`、`insufficient_support`、`not_evaluable_pending_independence`、`nonstarter`。active time 不属于三轨，也不阻断 C2。
 - `c1_final_canonical_closeout_summary.json` 必须在 completion、version、independence、structural、Scope/reference 和 row eligibility 全部应用后重算；reviewed estimand-specific exclusion 不是全局 blocker。
+# C1→C2-B estimand-specific freeze 补充
+
+- `Q_GT_FREEZE_STATUS`、`R_LOO_FREEZE_STATUS`、`F_STRUCT_FREEZE_STATUS` 分别记录 `frozen`、`support_limited` 或 `pending_collection_close`。
+- `C1_EVIDENCE_BUNDLE_FROZEN=true` 仅表示 collection 已关闭且三轴均到达终态；不得解释为所有轴均可估计。
+- `C2B_BASELINE_INPUT_FROZEN=true` 只由 Q_GT、process、independence 与对应 worker support 产生。
+- `c2b_baseline_eligible` 是 C2-B 参数模型和 simulation 的唯一 worker inclusion gate；nonstarter、行政排除和 `closed_partial_insufficient` 仍保留审计行但不参与模型。
+- `Q_GT_baseline_source` 正式值必须为 `strong_global_task_adjusted`；原始逐行 IoU 不能冒充 worker baseline SE。
+- `C2_TASK_FEATURES_FROZEN` 与 `C2B_ELIGIBLE_RISK_POOL_FROZEN` 分属 feature owner 和最终 eligibility owner，下游不得互相代写。
+- completion 状态默认由冻结 assignment 与 export 自动计算；completion disposition 只处理行政排除等例外。无例外行不得要求 23 份逐人审批，错误 SHA、重复或孤儿 exception disposition 仍须 fail-closed。
+- collection close 后，partial worker 按 row eligibility 转为 `closed_partial_usable` 或 `closed_partial_insufficient`；三轴 support 分列保存，不得以任一轴的数量替代其他 gate。
+
+## C2-B 静态 evidence review queue
+
+- `prepare-c2b-static` 输出 `authoritative_building_registry.review_queue.csv`、`source_split_evidence.review_queue.csv`、`future_holdout_evidence.review_queue.csv`、`history_overlap_audit.review_queue.csv`、`scope_registry.review_queue.csv` 和 `reference_registry.review_queue.csv`。
+- 六份 queue 以 `image_id + base_task_id` 唯一，包含 inventory identity、source path、legacy reverse membership 与明确标记为 diagnostic 的旧 inventory 字段；正式 gate 字段保持空值或 `pending_review`。
+- queue 的 `formal_evidence_ready=false`。正式证据必须另存于 evidence root，包含显式 reviewer/time/status，并由对应 approval manifest 绑定 SHA；仅改名或从 task/image 前缀推断 building 均不成立。

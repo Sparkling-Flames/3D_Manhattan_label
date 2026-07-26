@@ -43,7 +43,7 @@ def test_measurement_freeze_requires_three_axes_but_not_active_time(tmp_path: Pa
     assert result["C2B_DESIGN_READY"] is True
 
 
-def test_measurement_freeze_does_not_promote_one_axis_to_full_c1(tmp_path: Path) -> None:
+def test_measurement_bundle_closes_without_requiring_every_estimand_for_c2b(tmp_path: Path) -> None:
     completion, quality, loo, structural = [tmp_path / name for name in ("completion.csv", "quality.csv", "loo.csv", "structural.csv")]
     _write(completion, [{"worker_id": "w", "completion_status": "completed"}])
     _write(quality, [{"worker_id": "w", "base_task_id": "b", "global_analysis_eligible": "true"}])
@@ -51,7 +51,10 @@ def test_measurement_freeze_does_not_promote_one_axis_to_full_c1(tmp_path: Path)
     _write(structural, [{"worker_id": "w", "base_task_id": "b", "structural_opportunity_eligible": "false"}])
     result = materialize_measurement_readiness(completion, quality, loo, structural, tmp_path, canonical_closed=True, collection_window_closed=True)
     assert result["estimand_freeze"] == {"Q_GT": True, "R_LOO": False, "F_struct": False}
-    assert result["C1_MEASUREMENT_FROZEN"] is False
+    assert result["estimand_status"] == {"Q_GT": "frozen", "R_LOO": "support_limited", "F_struct": "support_limited"}
+    assert result["C1_EVIDENCE_BUNDLE_FROZEN"] is True
+    assert result["C2B_BASELINE_INPUT_FROZEN"] is True
+    assert result["C1_MEASUREMENT_FROZEN"] is True
 
 
 def test_preannotation_feature_requires_frozen_model_identity(tmp_path: Path) -> None:
@@ -78,16 +81,18 @@ def test_preannotation_feature_producer_requires_authoritative_building_and_base
     config = tmp_path / "config.yaml"; config.write_text("model: fixed\n", encoding="utf-8")
     cache = tmp_path / "cache.npz"
     np.savez(cache, global_mean=np.zeros(1), global_components=np.eye(1), global_scale=np.ones(1), local_mean=np.zeros(1), local_components=np.eye(1), local_scale=np.ones(1), reference_global=np.asarray([[0.], [2.]]), reference_local=np.asarray([[0.], [2.]]))
-    audit = tmp_path / "audit.json"; audit.write_text(json.dumps({"audit_basis": "reference_images_end_to_end_circular_shift", "audited_reference_image_count": 2, "circular_shift_max_abs_difference": 0, "tolerance": 1e-6}), encoding="utf-8")
+    candidate_cache = tmp_path / "candidate.npz"
+    np.savez(candidate_cache, paths=np.asarray([image.resolve().as_posix()]), global_descriptors=np.asarray([[1.]]), local_descriptors=np.asarray([[1.]]))
+    circular = tmp_path / "circular.json"; circular.write_text(json.dumps({"audit_basis": "four_phase_orbit_aggregation"}), encoding="utf-8")
+    seam = tmp_path / "seam.json"; seam.write_text(json.dumps({"audit_basis": "small_seam_offset_sensitivity"}), encoding="utf-8")
     sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
     feature_manifest = tmp_path / "feature.json"
     feature_manifest.write_text(json.dumps({
-        "feature_cache_path": str(cache), "invariance_audit_path": str(audit), "checkpoint_sha256": sha(checkpoint), "config_sha256": sha(config), "reference_feature_sha256": sha(cache), "reference_image_count": 2,
+        "schema_version": "paper_a_c2_feature_freeze_v2", "feature_audit_status": "approved", "feature_cache_path": str(cache), "candidate_descriptor_cache_path": str(candidate_cache), "candidate_descriptor_cache_sha256": sha(candidate_cache), "circular_audit_path": str(circular), "seam_audit_path": str(seam), "checkpoint_sha256": sha(checkpoint), "config_sha256": sha(config), "reference_feature_sha256": sha(cache), "reference_image_count": 2,
         "pca_frozen": True, "whitening_frozen": True, "circular_shift_invariant": True, "seam_invariant": True,
-        "pca_frozen_sha256": sha(cache), "whitening_frozen_sha256": sha(cache), "circular_shift_invariant_sha256": sha(audit), "seam_invariant_sha256": sha(audit),
-        "pca_sha256": sha(cache), "whitening_sha256": sha(cache), "circular_shift_audit_sha256": sha(audit), "seam_audit_sha256": sha(audit),
+        "pca_frozen_sha256": sha(cache), "whitening_frozen_sha256": sha(cache), "circular_shift_invariant_sha256": sha(circular), "seam_invariant_sha256": sha(seam),
+        "pca_sha256": sha(cache), "whitening_sha256": sha(cache), "circular_shift_audit_sha256": sha(circular), "seam_audit_sha256": sha(seam),
     }), encoding="utf-8")
-    monkeypatch.setattr("tools.thesis_main.analysis.materialize_c1_preannotation_task_features._lhfeat_descriptors", lambda paths, checkpoint, config, device="auto": {path.resolve().as_posix(): (np.asarray([1.]), np.asarray([1.])) for path in paths})
     output = tmp_path / "features.csv"
     summary = extract_frozen_model_features([assignments], inventory, buildings, layouts, checkpoint, config, feature_manifest, output)
     row = next(csv.DictReader(output.open(encoding="utf-8")))

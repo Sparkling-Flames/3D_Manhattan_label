@@ -3,13 +3,20 @@ import torch.nn as nn
 import torch.nn.functional as F
 import torchvision.models as models
 
+
 class Resnet(nn.Module):
-    def __init__(self, backbone='resnet50', coco='', input_extra=0, input_height=512):
+    def __init__(self, backbone='resnet50', coco='', input_extra=0, input_height=512, pretrained=True):
         super(Resnet, self).__init__()
-        self.encoder = getattr(models, backbone)(pretrained=True)
+        # Full HoHoNet checkpoints already contain encoder weights. Formal
+        # offline inference passes pretrained=False so model construction
+        # never downloads ImageNet weights before the local checkpoint loads.
+        self.encoder = getattr(models, backbone)(weights="DEFAULT" if pretrained else None)
         del self.encoder.fc, self.encoder.avgpool
         if coco:
-            coco_pretrain = getattr(models.segmentation, coco)(pretrained=True).backbone
+            # Keep the auxiliary COCO branch under the same explicit offline
+            # switch; a full local HoHoNet checkpoint must never trigger a
+            # hidden network download during model construction.
+            coco_pretrain = getattr(models.segmentation, coco)(pretrained=pretrained).backbone
             self.encoder.load_state_dict(coco_pretrain.state_dict())
         self.out_channels = [256, 512, 1024, 2048]
         self.feat_heights = [input_height//4//(2**i) for i in range(4)]
@@ -44,11 +51,14 @@ class Resnet(nn.Module):
 
         if self.pre_down is not None:
             x = self.pre_down(x)
-        x = self.encoder.layer1(x);
+        x = self.encoder.layer1(x)
         if self.post_down is not None:
             x = self.post_down(x)
         features.append(x)  # 1/4
-        x = self.encoder.layer2(x);  features.append(x)  # 1/8
-        x = self.encoder.layer3(x);  features.append(x)  # 1/16
-        x = self.encoder.layer4(x);  features.append(x)  # 1/32
+        x = self.encoder.layer2(x)
+        features.append(x)  # 1/8
+        x = self.encoder.layer3(x)
+        features.append(x)  # 1/16
+        x = self.encoder.layer4(x)
+        features.append(x)  # 1/32
         return features

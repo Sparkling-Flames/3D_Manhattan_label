@@ -197,8 +197,24 @@ def materialize_measurement_readiness(
         "R_LOO": bool(canonical_closed and collection_window_closed and axis_graphs["loo"]["edge_count"] and axis_graphs["loo"]["connected"]),
         "F_struct": bool(canonical_closed and collection_window_closed and axis_graphs["structural"]["edge_count"] and axis_graphs["structural"]["connected"]),
     }
-    measurement_frozen = bool(canonical_closed and collection_window_closed and all(estimand_freeze.values()))
-    c2b_ready = bool(measurement_frozen and preannotation_feature_ready)
+    terminal = bool(canonical_closed and collection_window_closed)
+    estimand_status = {
+        name: "frozen" if frozen else "support_limited" if terminal else "pending_collection_close"
+        for name, frozen in estimand_freeze.items()
+    }
+    evidence_bundle_frozen = terminal and all(status in {"frozen", "support_limited"} for status in estimand_status.values())
+    baseline_workers = [
+        worker for worker in completion
+        if support[worker]["gt"]
+        and process_support_by_worker[worker]
+        and independence_support_by_worker[worker]
+        and completion[worker].get("completion_status", "") not in {"nonstarter", "closed_partial_insufficient", "administrative_exclusion"}
+    ] if eligibility else [worker for worker in completion if support[worker]["gt"] and completion[worker].get("completion_status", "") not in {"nonstarter", "closed_partial_insufficient", "administrative_exclusion"}]
+    c2b_baseline_frozen = bool(terminal and estimand_freeze["Q_GT"] and baseline_workers)
+    # Compatibility alias: the C1 evidence bundle is frozen once every axis is
+    # terminal.  It does not claim that every estimand was estimable.
+    measurement_frozen = evidence_bundle_frozen
+    c2b_ready = bool(c2b_baseline_frozen and preannotation_feature_ready)
     write_csv(output_dir / "c1_measurement_readiness_by_worker.csv", worker_rows)
     write_csv(output_dir / "c1_measurement_readiness_by_task.csv", task_rows)
     write_csv(output_dir / "c1_measurement_readiness_by_building.csv", building_rows)
@@ -206,6 +222,11 @@ def materialize_measurement_readiness(
         "schema_version": "paper_a_c1_measurement_freeze_v1",
         "C1_CANONICAL_CLOSED": canonical_closed,
         "C1_MEASUREMENT_FROZEN": measurement_frozen,
+        "C1_EVIDENCE_BUNDLE_FROZEN": evidence_bundle_frozen,
+        "C2B_BASELINE_INPUT_FROZEN": c2b_baseline_frozen,
+        "Q_GT_FREEZE_STATUS": estimand_status["Q_GT"],
+        "R_LOO_FREEZE_STATUS": estimand_status["R_LOO"],
+        "F_STRUCT_FREEZE_STATUS": estimand_status["F_struct"],
         "C2B_DESIGN_READY": c2b_ready,
         "C2B_RISK_DESIGN_FROZEN": False,
         "C2B_DESIGN_FROZEN": False,
@@ -215,6 +236,8 @@ def materialize_measurement_readiness(
         "preannotation_feature_ready": preannotation_feature_ready,
         "collection_window_closed": bool(collection_window_closed),
         "estimand_freeze": estimand_freeze,
+        "estimand_status": estimand_status,
+        "c2b_baseline_worker_count": len(baseline_workers),
         "C1_COLLECTION_INCOMPLETE": not bool(collection_window_closed),
         "inputs": {name: sha256_file(path) for name, path in {"completion": completion_csv, "quality_analysis": quality_analysis_csv, "loo_analysis": loo_analysis_csv, "structural_analysis": structural_analysis_csv}.items()},
         "axis_graphs": axis_graphs,
@@ -223,6 +246,7 @@ def materialize_measurement_readiness(
         name: bool(manifest[name])
         for name in (
             "C1_COLLECTION_INCOMPLETE", "C1_CANONICAL_CLOSED", "C1_MEASUREMENT_FROZEN",
+            "C1_EVIDENCE_BUNDLE_FROZEN", "C2B_BASELINE_INPUT_FROZEN",
             "C2B_RISK_DESIGN_FROZEN", "C2B_DESIGN_FROZEN",
             "C2B_ASSIGNMENT_MATERIALIZED", "C2B_LAUNCH_READY",
         )
