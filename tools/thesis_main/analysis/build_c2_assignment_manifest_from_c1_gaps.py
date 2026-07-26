@@ -114,7 +114,7 @@ def _task_id(row: dict[str, str]) -> str:
 
 def _anchor_pool(rows: list[dict[str, str]]) -> list[dict[str, str]]:
     return sorted(
-        [row for row in rows if _task_id(row) and truthy(row.get("assignment_eligible")) and truthy(row.get("anchor_eligible") or row.get("is_common_anchor") or row.get("eligible_for_anchor_candidate"))],
+        [row for row in rows if _task_id(row) and truthy(row.get("assignment_eligible"))],
         key=lambda row: (_task_stratum(row), _task_id(row)),
     )
 
@@ -125,7 +125,6 @@ def _bridge_pool(rows: list[dict[str, str]]) -> list[dict[str, str]]:
             row for row in rows
             if _task_id(row)
             and truthy(row.get("assignment_eligible"))
-            and truthy(row.get("bridge_eligible") or row.get("is_diverse_bridge") or row.get("eligible_for_reserve_candidate"))
         ],
         key=lambda row: (_task_stratum(row), _task_id(row)),
     )
@@ -157,7 +156,14 @@ def _risk_vector(row: dict[str, str]) -> tuple[float, ...]:
 def _thresholds_allow_formal_selection(thresholds: dict[str, Any]) -> bool:
     values = thresholds.get("thresholds", thresholds)
     anchors = thresholds.get("common_anchor_requirements", {})
-    required = ("q_gt_ci_half_width", "risk_slope_ci_half_width", "rank_stability", "minimum_worker_support", "minimum_task_support", "graph_connectivity_probability", "minimum_building_coverage", "building_coverage_probability", "ordinary_coverage_probability", "stress_coverage_probability")
+    required = (
+        "q_gt_ci_half_width", "risk_slope_ci_half_width", "minimum_worker_rank_spearman",
+        "minimum_top_k_overlap", "maximum_mean_rank_displacement", "minimum_worker_support",
+        "minimum_task_support", "graph_connectivity_probability", "minimum_building_coverage",
+        "building_coverage_probability", "ordinary_coverage_probability", "stress_coverage_probability",
+        "minimum_eligible_task_count", "minimum_eligible_building_count",
+        "minimum_ordinary_task_count", "minimum_stress_task_count",
+    )
     return (
         thresholds.get("status") == "approved"
         and thresholds.get("formal_selection_allowed") is True
@@ -226,7 +232,9 @@ def _threshold_failures(simulation_row: dict[str, Any], graph: dict[str, Any], t
     checks = {
         "q_gt_ci_half_width": ("q_gt_max_ci_half_width", lambda actual, limit: actual <= limit),
         "risk_slope_ci_half_width": ("risk_slope_max_ci_half_width", lambda actual, limit: actual <= limit),
-        "rank_stability": ("rank_stability", lambda actual, limit: actual >= limit),
+        "minimum_worker_rank_spearman": ("worker_rank_spearman", lambda actual, limit: actual >= limit),
+        "minimum_top_k_overlap": ("top_k_overlap", lambda actual, limit: actual >= limit),
+        "maximum_mean_rank_displacement": ("mean_rank_displacement", lambda actual, limit: actual <= limit),
         "minimum_worker_support": ("minimum_worker_support", lambda actual, limit: actual >= limit),
         "minimum_task_support": ("minimum_task_support", lambda actual, limit: actual >= limit),
         "graph_connectivity_probability": ("graph_connectivity_probability", lambda actual, limit: actual >= limit),
@@ -261,7 +269,7 @@ def _select_anchors(rows: list[dict[str, str]], count: int) -> list[dict[str, st
     if not strata["ordinary"] or not strata["stress"]:
         return []
     center = tuple(sum(vector[index] for vector in map(_risk_vector, rows)) / len(rows) for index in range(4))
-    ranked = sorted(rows, key=lambda row: (sum((left - right) ** 2 for left, right in zip(_risk_vector(row), center)), bool(row.get("building_id")) is False, not truthy(row.get("legacy_human_curated_candidate")), _task_id(row)))
+    ranked = sorted(rows, key=lambda row: (sum((left - right) ** 2 for left, right in zip(_risk_vector(row), center)), bool(row.get("building_id")) is False, _task_id(row)))
     ordinary = min(strata["ordinary"], key=lambda row: (sum((left - right) ** 2 for left, right in zip(_risk_vector(row), center)), _task_id(row)))
     ordinary_building = safe(ordinary.get("building_id"))
     stress = min(strata["stress"], key=lambda row: (
@@ -282,7 +290,7 @@ def _select_bridges(rows: list[dict[str, str]], count: int, anchor_rows: list[di
         def key(row: dict[str, str]) -> tuple:
             vector = _risk_vector(row)
             distance = min((_risk_distance(row, other) for other in [*reference, *selected]), default=math.inf)
-            return (-distance, -(safe(row.get("building_id")) not in buildings), not truthy(row.get("legacy_human_curated_candidate")), _task_id(row))
+            return (-distance, -(safe(row.get("building_id")) not in buildings), _task_id(row))
         chosen = min(remaining, key=key); selected.append(chosen); remaining.remove(chosen)
     return selected
 
@@ -424,7 +432,10 @@ def _projected_worker_intervals(
         added_information = raw_information * max(0.0, 1 - missing_rate) * max(0.0, 1 - structural_rate) * cluster_factor
         slope_se = _float(row, "risk_slope_se", default=math.inf)
         slope_support = _int(row, "risk_slope_support", "support", "n_support")
-        if math.isfinite(slope_se) and slope_se > 0 and slope_support > 0:
+        prior_only = not (math.isfinite(slope_se) and slope_se > 0 and slope_support > 0)
+        if prior_only:
+            slope_se = _float(row, "between_worker_slope_sd", "group_prior_scale", default=math.inf)
+        if math.isfinite(slope_se) and slope_se > 0:
             rng = random.Random(f"{seed}|{worker}|{added_information:.12g}")
             errors = []
             worker_variance = max(0.0, _float(row, "worker_intercept_sd", default=0.0)) ** 2
@@ -439,8 +450,8 @@ def _projected_worker_intervals(
             value = errors[min(draws - 1, math.ceil(0.95 * draws) - 1)]
             current = 1.96 * slope_se
         else:
-            # No unbound Bernoulli/CI fallback is permitted.  A worker without
-            # an individual C1 slope uses only the frozen group-prior scale.
+            # Missing both individual precision and a frozen group-prior scale
+            # is genuinely not estimable and remains fail-closed.
             value, current = math.inf, ""
         projected.append(value)
         strata = Counter(_task_stratum(task) for task in tasks)
@@ -539,16 +550,21 @@ def _empirical_cluster_bootstrap(
             seen.add(node); pending.extend(graph_nodes[node] - seen)
         return seen == nodes
 
-    def _slope(values: list[tuple[float, float]], default: float, scale: float) -> tuple[float, float]:
+    def _slope(values: list[tuple[float, float]], prior_mean: float, prior_sd: float, residual_sd: float) -> tuple[float, float]:
+        if not math.isfinite(prior_sd) or prior_sd <= 0 or not math.isfinite(residual_sd) or residual_sd <= 0:
+            return prior_mean, math.inf
+        prior_precision = 1.0 / prior_sd ** 2
         if len(values) < 2:
-            return default, math.inf
+            return prior_mean, 1.96 * prior_sd
         mean_x = sum(value[0] for value in values) / len(values)
         mean_y = sum(value[1] for value in values) / len(values)
         denominator = sum((value[0] - mean_x) ** 2 for value in values)
         if denominator <= 0:
-            return default, math.inf
-        estimate = sum((x - mean_x) * (y - mean_y) for x, y in values) / denominator
-        return estimate, 1.96 * max(scale, 1e-9) / math.sqrt(denominator)
+            return prior_mean, 1.96 * prior_sd
+        likelihood_precision = denominator / residual_sd ** 2
+        observed = sum((x - mean_x) * (y - mean_y) for x, y in values) / denominator
+        posterior = (prior_precision * prior_mean + likelihood_precision * observed) / (prior_precision + likelihood_precision)
+        return posterior, 1.96 / math.sqrt(prior_precision + likelihood_precision)
 
     def _variance(field: str) -> float:
         values = [_float(row, field, default=math.nan) for row in worker_rows]
@@ -588,7 +604,7 @@ def _empirical_cluster_bootstrap(
         for row in worker_rows:
             worker = safe(row.get("worker_id"))
             slope = _float(row, "risk_slope_for_simulation", "risk_slope", "group_prior_slope", default=0.0)
-            slope_scale = _float(row, "between_worker_slope_sd", default=math.inf)
+            slope_scale = _float(row, "risk_slope_scale_for_simulation", "risk_slope_se", "between_worker_slope_sd", default=math.inf)
             missing, structural = _float(row, "missing_rate", default=0.0), _float(row, "F_struct", default=0.0)
             residual_scale = _float(row, "outcome_residual_sd", default=math.inf)
             sampled_slope = rng.gauss(slope, slope_scale) if math.isfinite(slope_scale) and slope_scale > 0 else slope
@@ -610,12 +626,16 @@ def _empirical_cluster_bootstrap(
         for row in worker_rows:
             worker = safe(row.get("worker_id"))
             slope = _float(row, "risk_slope_for_simulation", "risk_slope", "group_prior_slope", default=0.0)
-            scale = _float(row, "outcome_residual_sd", default=math.inf)
+            residual_scale = _float(row, "outcome_residual_sd", default=math.inf)
+            prior_scale = _float(row, "risk_slope_scale_for_simulation", "risk_slope_se", "between_worker_slope_sd", default=math.inf)
             delivered = worker_outcomes.get(worker, [])
-            estimate, slope_width = _slope(delivered, slope, scale)
+            estimate, slope_width = _slope(delivered, slope, prior_scale, residual_scale)
             q_se = _float(row, "Q_GT_baseline_se", default=math.inf)
             if math.isfinite(q_se):
-                q_widths.append(1.96 * max(q_se, 1e-9) / math.sqrt(max(1, len(delivered))))
+                c1_precision = 1.0 / max(q_se, 1e-9) ** 2
+                c2_variance = residual_scale ** 2 + task_sd ** 2 + building_sd ** 2
+                c2_precision = len(delivered) / c2_variance if delivered and math.isfinite(c2_variance) and c2_variance > 0 else 0.0
+                q_widths.append(1.96 / math.sqrt(c1_precision + c2_precision))
             draw_slope_widths.append(slope_width)
             signs.append((slope == 0) or (estimate == 0) or (slope * estimate > 0))
             rank_score[worker] = sum(value[1] for value in delivered) / len(delivered) if delivered else baseline.get(worker, 0.0)
@@ -680,10 +700,8 @@ def _dependencies_valid(
     if not c1_closeout_summary or not c1_closeout_summary.exists():
         return False, "formal_c1_closeout_missing"
     closeout = json.loads(c1_closeout_summary.read_text(encoding="utf-8"))
-    if not closeout.get("C1_MEASUREMENT_FROZEN"):
-        return False, "c1_measurement_not_frozen"
-    if not closeout.get("C2B_DESIGN_READY"):
-        return False, "c2b_design_inputs_not_ready"
+    if not closeout.get("C2B_BASELINE_INPUT_FROZEN"):
+        return False, "c2b_baseline_input_not_frozen"
     if expected.get("c1_closeout_summary") != sha256_file(c1_closeout_summary):
         return False, "stale_or_unbound:c1_closeout_summary"
     if not risk_summary or not risk_summary.exists():
@@ -788,7 +806,7 @@ def enumerate_candidates(
                 "design_id": design_id, "selection_step": step, "task_id": _task_id(task), "base_task_id": safe(task.get("base_task_id")) or _task_id(task), "selection_role": "common_anchor",
                 "risk_design_vector_A": task.get("risk_design_vector_A", ""), "risk_design_score_A": task.get("risk_design_score_A", ""), "risk_design_stratum": _task_stratum(task),
                 "selection_distance": sum((_risk_vector(task)[index] - anchor_center[index]) ** 2 for index in anchor_center) ** .5 if anchor_center else "",
-                "building_gain": safe(task.get("building_id")) not in {safe(item.get("building_id")) for item in prior}, "legacy_curated_priority_used": truthy(task.get("legacy_human_curated_candidate")), "selection_reason": "risk_center_scope_reference_feature_gate",
+                "building_gain": safe(task.get("building_id")) not in {safe(item.get("building_id")) for item in prior}, "legacy_curated_priority_used": False, "selection_reason": "risk_center_scope_reference_feature_gate",
             })
             prior.append(task)
         for step, task in enumerate(selected_bridges, 1):
@@ -797,7 +815,7 @@ def enumerate_candidates(
                 "design_id": design_id, "selection_step": step, "task_id": _task_id(task), "base_task_id": safe(task.get("base_task_id")) or _task_id(task), "selection_role": "diverse_bridge",
                 "risk_design_vector_A": task.get("risk_design_vector_A", ""), "risk_design_score_A": task.get("risk_design_score_A", ""), "risk_design_stratum": _task_stratum(task),
                 "selection_distance": min((_risk_distance(task, item) for item in reference), default=""),
-                "building_gain": safe(task.get("building_id")) not in {safe(item.get("building_id")) for item in reference}, "legacy_curated_priority_used": truthy(task.get("legacy_human_curated_candidate")), "selection_reason": "continuous_risk_maximin_building_gain",
+                "building_gain": safe(task.get("building_id")) not in {safe(item.get("building_id")) for item in reference}, "legacy_curated_priority_used": False, "selection_reason": "continuous_risk_maximin_building_gain",
             })
         bridge_edges = _assign_bridges(workers, selected_bridges, bridge_per_worker, min_support)
         rows: list[dict[str, Any]] = []
@@ -821,7 +839,7 @@ def enumerate_candidates(
                         "task_stratum": _task_stratum(task), "assignment_batch": "C2-B",
                         "c2_component": "common_anchor", "design_id": design_id,
                         "design_manifest_sha256": manifest_sha,
-                        "selection_role": "common_anchor", "selection_reason": "risk_center_and_stratum_building_coverage", "maximin_distance_at_selection": "", "building_gain": "", "legacy_curated_priority_used": truthy(task.get("legacy_human_curated_candidate")),
+                        "selection_role": "common_anchor", "selection_reason": "risk_center_and_stratum_building_coverage", "maximin_distance_at_selection": "", "building_gain": "", "legacy_curated_priority_used": False,
                     })
             for worker, task in bridge_edges or []:
                 rows.append({
@@ -832,7 +850,7 @@ def enumerate_candidates(
                     "task_stratum": _task_stratum(task), "assignment_batch": "C2-B",
                     "c2_component": "diverse_bridge", "design_id": design_id,
                     "design_manifest_sha256": manifest_sha,
-                    "selection_role": "diverse_bridge", "selection_reason": "deterministic_risk_space_maximin", "maximin_distance_at_selection": "recorded_by_frozen_selection_order", "building_gain": bool(task.get("building_id")), "legacy_curated_priority_used": truthy(task.get("legacy_human_curated_candidate")),
+                    "selection_role": "diverse_bridge", "selection_reason": "deterministic_risk_space_maximin", "maximin_distance_at_selection": "recorded_by_frozen_selection_order", "building_gain": bool(task.get("building_id")), "legacy_curated_priority_used": False,
                 })
         graph = _graph_audit(design_id, workers, rows, {_task_id(task) for task in selected_bridges})
         projected, projection_rows = _projected_worker_intervals(
@@ -927,6 +945,8 @@ def enumerate_candidates(
         "C1_COLLECTION_INCOMPLETE": bool(upstream_state.get("C1_COLLECTION_INCOMPLETE", False)),
         "C1_CANONICAL_CLOSED": bool(upstream_state.get("C1_CANONICAL_CLOSED", False)),
         "C1_MEASUREMENT_FROZEN": bool(upstream_state.get("C1_MEASUREMENT_FROZEN", False)),
+        "C1_EVIDENCE_BUNDLE_FROZEN": bool(upstream_state.get("C1_EVIDENCE_BUNDLE_FROZEN", False)),
+        "C2B_BASELINE_INPUT_FROZEN": bool(upstream_state.get("C2B_BASELINE_INPUT_FROZEN", False)),
         "C2B_RISK_DESIGN_FROZEN": bool(risk_state.get("state_machine", {}).get("C2B_RISK_DESIGN_FROZEN")),
         "C2B_DESIGN_FROZEN": False,
         "C2B_ASSIGNMENT_MATERIALIZED": False,
@@ -955,8 +975,8 @@ def materialize_approved_assignment(
 
     c1 = json.loads(c1_closeout_summary.read_text(encoding="utf-8"))
     risk = json.loads(risk_summary.read_text(encoding="utf-8"))
-    if not c1.get("C1_MEASUREMENT_FROZEN") or not c1.get("C2B_DESIGN_READY"):
-        raise ValueError("C1 measurement or C2-B design inputs are not formally frozen")
+    if not c1.get("C2B_BASELINE_INPUT_FROZEN"):
+        raise ValueError("C1 Q_GT/process/independence baseline is not formally frozen")
     if not risk.get("formal_ready") or not risk.get("state_machine", {}).get("C2B_RISK_DESIGN_FROZEN"):
         raise ValueError("C2 task risk is not formally frozen")
 
@@ -1031,8 +1051,10 @@ def materialize_approved_assignment(
         "state_machine": {
             "C1_COLLECTION_INCOMPLETE": bool(c1.get("C1_COLLECTION_INCOMPLETE", False)),
             "C1_CANONICAL_CLOSED": bool(c1.get("C1_CANONICAL_CLOSED")),
-            "C1_MEASUREMENT_FROZEN": True,
-            "C2B_RISK_DESIGN_FROZEN": True,
+            "C1_MEASUREMENT_FROZEN": bool(c1.get("C1_MEASUREMENT_FROZEN")),
+            "C1_EVIDENCE_BUNDLE_FROZEN": bool(c1.get("C1_EVIDENCE_BUNDLE_FROZEN")),
+            "C2B_BASELINE_INPUT_FROZEN": bool(c1.get("C2B_BASELINE_INPUT_FROZEN")),
+            "C2B_RISK_DESIGN_FROZEN": bool(risk.get("state_machine", {}).get("C2B_RISK_DESIGN_FROZEN")),
             "C2B_DESIGN_FROZEN": True,
             "C2B_ASSIGNMENT_MATERIALIZED": True,
             "C2B_LAUNCH_READY": True,

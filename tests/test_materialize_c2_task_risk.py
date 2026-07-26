@@ -3,11 +3,33 @@ import json
 import subprocess
 import sys
 from pathlib import Path
+from types import SimpleNamespace
 
 import numpy as np
 import pytest
 
-from tools.thesis_main.analysis.materialize_c2_task_risk import _apply_whitener, _composite_q75_bucket, _feature_freeze_ready, _fit_whitener, _layout_features, _pool_lhfeat, materialize
+from tools.thesis_main.analysis.materialize_c2_task_risk import _apply_whitener, _composite_q75_bucket, _feature_freeze_ready, _fit_whitener, _layout_features, _pool_lhfeat, materialize, refresh_feature_freeze_approval
+from tools.thesis_main.registry.hohonet_feature_backend import aggregate_orbit
+
+
+def test_full_checkpoint_constructor_disables_all_pretrained_download_paths(monkeypatch) -> None:
+    from lib.model.backbone import resnet as backbone_module
+
+    calls = {}
+    encoder = SimpleNamespace(
+        conv1="conv", inplanes=64, layer1="l1", layer2="l2", layer3="l3", layer4="l4",
+        fc="fc", avgpool="avgpool", state_dict=lambda: {}, load_state_dict=lambda _state: None,
+    )
+    monkeypatch.setattr(backbone_module.models, "resnet34", lambda *, weights: calls.setdefault("backbone_weights", weights) or encoder)
+    monkeypatch.setattr(
+        backbone_module.models.segmentation, "offline_coco",
+        lambda *, pretrained: calls.setdefault("coco_pretrained", pretrained) or SimpleNamespace(backbone=encoder),
+        raising=False,
+    )
+
+    backbone_module.Resnet(backbone="resnet34", coco="offline_coco", pretrained=False)
+
+    assert calls == {"backbone_weights": None, "coco_pretrained": False}
 
 
 def test_feature_freeze_cli_is_directly_runnable() -> None:
@@ -46,29 +68,80 @@ def test_lhfeat_pooling_is_circular_shift_invariant_on_real_feature_shape() -> N
     assert all(np.allclose(left, right) for left, right in zip(original, shifted))
 
 
+def test_four_phase_orbit_aggregation_is_order_invariant() -> None:
+    values = [(np.asarray([float(i)]), np.asarray([float(i * 2)])) for i in range(4)]
+    assert all(np.allclose(left, right) for left, right in zip(aggregate_orbit(values), aggregate_orbit(values[1:] + values[:1])))
+
+
 def test_feature_freeze_requires_the_actual_bound_cache(tmp_path) -> None:
     checkpoint = tmp_path / "model.pth"; checkpoint.write_bytes(b"model")
     config = tmp_path / "config.yaml"; config.write_text("model: fixed\n", encoding="utf-8")
     cache = tmp_path / "features.npz"; np.savez(cache, reference_global=np.zeros((2, 1)))
+    candidate_cache = tmp_path / "candidate.npz"; np.savez(candidate_cache, paths=np.asarray([]), global_descriptors=np.asarray([]), local_descriptors=np.asarray([]))
     import hashlib
     cache_sha = hashlib.sha256(cache.read_bytes()).hexdigest()
-    audit = tmp_path / "feature_audit.json"; audit.write_text(json.dumps({"audit_basis": "reference_images_end_to_end_circular_shift", "audited_reference_image_count": 2, "circular_shift_max_abs_difference": 0, "tolerance": 1e-6}), encoding="utf-8")
-    audit_sha = hashlib.sha256(audit.read_bytes()).hexdigest()
+    circular = tmp_path / "circular.json"; circular.write_text(json.dumps({"audit_basis": "four_phase_orbit_aggregation"}), encoding="utf-8")
+    seam = tmp_path / "seam.json"; seam.write_text(json.dumps({"audit_basis": "small_seam_offset_sensitivity"}), encoding="utf-8")
+    circular_sha = hashlib.sha256(circular.read_bytes()).hexdigest(); seam_sha = hashlib.sha256(seam.read_bytes()).hexdigest()
     manifest = tmp_path / "freeze.json"
     manifest.write_text(json.dumps({
-        "feature_cache_path": str(cache), "invariance_audit_path": str(audit),
+        "schema_version": "paper_a_c2_feature_freeze_v2", "feature_audit_status": "approved",
+        "feature_cache_path": str(cache), "candidate_descriptor_cache_path": str(candidate_cache), "candidate_descriptor_cache_sha256": hashlib.sha256(candidate_cache.read_bytes()).hexdigest(), "circular_audit_path": str(circular), "seam_audit_path": str(seam),
         "checkpoint_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
         "config_sha256": hashlib.sha256(config.read_bytes()).hexdigest(), "reference_feature_sha256": cache_sha,
         "reference_image_count": 2,
         "pca_frozen": True, "whitening_frozen": True, "circular_shift_invariant": True, "seam_invariant": True,
         "pca_frozen_sha256": cache_sha, "whitening_frozen_sha256": cache_sha,
-        "circular_shift_invariant_sha256": audit_sha, "seam_invariant_sha256": audit_sha,
+        "circular_shift_invariant_sha256": circular_sha, "seam_invariant_sha256": seam_sha,
         "pca_sha256": cache_sha, "whitening_sha256": cache_sha,
-        "circular_shift_audit_sha256": audit_sha, "seam_audit_sha256": audit_sha,
+        "circular_shift_audit_sha256": circular_sha, "seam_audit_sha256": seam_sha,
     }), encoding="utf-8")
     assert _feature_freeze_ready(manifest, checkpoint=checkpoint, config=config)
     cache.write_bytes(b"tampered")
     assert not _feature_freeze_ready(manifest, checkpoint=checkpoint, config=config)
+
+
+def test_frozen_feature_caches_can_refresh_approval_without_model_inference(tmp_path) -> None:
+    import hashlib
+
+    reference = tmp_path / "reference"; reference.mkdir()
+    for name, content in (("a.jpg", b"a"), ("b.jpg", b"b")):
+        (reference / name).write_bytes(content)
+    checkpoint = tmp_path / "model.pth"; checkpoint.write_bytes(b"model")
+    config = tmp_path / "config.yaml"; config.write_text("model: fixed\n", encoding="utf-8")
+    inventory = tmp_path / "inventory.csv"; inventory.write_text("image_id,base_task_id\ni,t\n", encoding="utf-8")
+    cache = tmp_path / "reference.npz"; cache.write_bytes(b"reference-cache")
+    candidate = tmp_path / "candidate.npz"; candidate.write_bytes(b"candidate-cache")
+    circular = tmp_path / "circular.json"; circular.write_text(json.dumps({"circular_relative_l2_max": 1e-8}), encoding="utf-8")
+    seam = tmp_path / "seam.json"; seam.write_text(json.dumps({"seam_relative_l2_q95": .02}), encoding="utf-8")
+    sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+    paths = sorted(reference.glob("*.jpg"))
+    listing_sha = hashlib.sha256("\n".join(
+        f"{path.resolve().as_posix()}|{path.stat().st_size}|{sha(path)}" for path in paths
+    ).encode()).hexdigest()
+    manifest = tmp_path / "manifest.json"
+    manifest.write_text(json.dumps({
+        "schema_version": "paper_a_c2_feature_freeze_v2",
+        "feature_cache_path": str(cache), "reference_feature_sha256": sha(cache),
+        "candidate_descriptor_cache_path": str(candidate), "candidate_descriptor_cache_sha256": sha(candidate),
+        "circular_audit_path": str(circular), "circular_shift_audit_sha256": sha(circular),
+        "seam_audit_path": str(seam), "seam_audit_sha256": sha(seam),
+        "checkpoint_sha256": sha(checkpoint), "config_sha256": sha(config),
+        "candidate_inventory_sha256": sha(inventory), "reference_image_count": 2,
+        "reference_listing_sha256": listing_sha,
+    }), encoding="utf-8")
+    thresholds = tmp_path / "thresholds.json"
+    thresholds.write_text(json.dumps({
+        "status": "approved", "formal_feature_freeze_allowed": True,
+        "approved_by": "reviewer", "approved_at": "2026-07-26T00:00:00Z",
+        "thresholds": {"circular_relative_l2_max": 1e-7, "seam_relative_l2_q95": .03},
+    }), encoding="utf-8")
+    refreshed = refresh_feature_freeze_approval(
+        manifest, thresholds, checkpoint=checkpoint, config=config,
+        reference_dir=reference, candidate_inventory=inventory,
+    )
+    assert refreshed["feature_audit_status"] == "approved"
+    assert refreshed["cache_reused_without_model_inference"] is True
 
 
 def test_candidate_risk_uses_c1_only_and_layout_structure(tmp_path):
@@ -156,3 +229,5 @@ def test_precloseout_never_materializes_a_risk_design_stratum(tmp_path):
     assert row["risk_design_stratum"] == ""
     assert row["risk_design_stratum_status"] == "provisional_not_frozen"
     assert row["assignment_eligible"].lower() == "false"
+    assert row["building_id"] == ""
+    assert row["building_registry_status"] == "missing_or_unapproved"

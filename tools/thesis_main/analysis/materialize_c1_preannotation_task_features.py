@@ -20,7 +20,6 @@ from tools.thesis_main.analysis.materialize_c2_task_risk import (
     _feature_freeze_ready,
     _knn,
     _layout_features,
-    _lhfeat_descriptors,
 )
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
@@ -82,7 +81,16 @@ def extract_frozen_model_features(
         paths.append(image_path)
         joined.append((base_task_id, item, building, image_path, layout_path))
 
-    descriptors = _lhfeat_descriptors(paths, checkpoint, config=config, device=device)
+    candidate_cache_path = Path(str(manifest["candidate_descriptor_cache_path"]))
+    if not candidate_cache_path.is_absolute(): candidate_cache_path = feature_freeze_manifest.parent / candidate_cache_path
+    with np.load(candidate_cache_path) as candidate_cache:
+        descriptors = {
+            str(name): (global_value, local_value)
+            for name, global_value, local_value in zip(candidate_cache["paths"], candidate_cache["global_descriptors"], candidate_cache["local_descriptors"])
+        }
+    missing_descriptors = [path.resolve().as_posix() for path in paths if path.resolve().as_posix() not in descriptors]
+    if missing_descriptors:
+        raise ValueError(f"candidate_feature_cache_missing_paths:{missing_descriptors[:3]}")
     rows: list[dict[str, Any]] = []
     with np.load(cache_path) as cache:
         for base_task_id, item, building, image_path, layout_path in joined:
@@ -138,7 +146,10 @@ def materialize(
     for base_task_id in task_ids:
         inventory_row, feature = inventory.get(base_task_id, {}), features.get(base_task_id, {})
         image_id = str(feature.get("image_id") or inventory_row.get("image_id") or "")
-        building_id = str(feature.get("building_id") or inventory_row.get("building_id") or "")
+        # Building identity is evidence, not a filename/inventory convenience.
+        # It may only flow from the SHA-bound pre-annotation feature row that
+        # was created with an approved authoritative registry.
+        building_id = str(feature.get("building_id") or "")
         complete = bool(feature) and all(str(feature.get(field, "")).strip() for field in (*REQUIRED, *FROZEN_IDENTITY)) and bool(image_id and building_id)
         rows.append({
             "base_task_id": base_task_id, "image_id": image_id, "building_id": building_id,

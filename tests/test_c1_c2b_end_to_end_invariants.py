@@ -25,6 +25,7 @@ from tools.thesis_main.analysis.c1_c2_mainline import (
 from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_independence,
     materialize_structural_validation,
+    materialize_three_track_worker_state,
 )
 from tools.thesis_main.analysis.materialize_c2_task_risk import _feature_freeze_ready, materialize as materialize_risk
 from tools.thesis_main.analysis.materialize_c2b_task_eligibility import materialize as materialize_c2b_task_eligibility
@@ -168,6 +169,25 @@ def test_support_axes_cannot_substitute_each_other(tmp_path: Path) -> None:
     row = read_csv(tmp_path / "c2b_design_worker_profile.csv")[0]
     assert row["process_support"] == "0"
     assert row["c2b_baseline_eligible"].lower() == "false"
+
+
+def test_three_track_worker_state_counts_each_row_gate_instead_of_using_max_axis_support(tmp_path: Path) -> None:
+    global_csv, loo, structural, completion, eligibility = [tmp_path / name for name in ("g.csv", "l.csv", "s.csv", "c.csv", "e.csv")]
+    write_csv(global_csv, [{"worker_id": "w1", "GT_support": "7", "Q_GT_task_adjusted": ".8"}])
+    write_csv(loo, [])
+    write_csv(structural, [])
+    write_csv(completion, [{"worker_id": "w1", "completion_status": "completed"}])
+    write_csv(eligibility, [
+        {"worker_id": "w1", "base_task_id": "process_only", "process_eligible": "true", "independence_eligible": "false", "scope_reference_eligible": "false"},
+        {"worker_id": "w1", "base_task_id": "independent_only", "process_eligible": "false", "independence_eligible": "true", "scope_reference_eligible": "false"},
+    ])
+    materialize_three_track_worker_state(
+        global_csv, loo, structural, completion, tmp_path, eligibility_csv=eligibility,
+    )
+    row = read_csv(tmp_path / "c1_three_track_worker_state.csv")[0]
+    assert row["process_eligible_support"] == "1"
+    assert row["independence_support"] == "1"
+    assert row["scope_reference_support"] == "0"
 
 
 def test_closed_partial_insufficient_cannot_enter_c2b_even_with_some_support(tmp_path: Path) -> None:
@@ -459,10 +479,11 @@ def test_slope_and_residual_sd_are_not_copied(tmp_path: Path) -> None:
     write_csv(risk, [{"base_task_id": f"b{i}", "risk_design_score_A": str(i / 10), "building_id": "h1"} for i in range(4)])
     write_csv(structural, [{"worker_id": "w1", "structural_opportunity_eligible": "true", "failure_attribution": "none"}])
     write_csv(completion, [{"worker_id": "w1", "assigned_total_count": "4", "observed_total_count": "4", "completion_status": "completed"}])
-    materialize_parameters(quality, risk, structural, completion, tmp_path / "out")
+    summary = materialize_parameters(quality, risk, structural, completion, tmp_path / "out")
     row = read_csv(tmp_path / "out" / "c1_c2_design_parameters.csv")[0]
     assert row["group_slope_sd"] == ""
-    assert row["outcome_residual_sd"] != row["group_slope_sd"]
+    assert row["outcome_residual_sd"] == ""
+    assert summary["model_status"] == "insufficient_support"
 
 
 def test_hierarchical_variance_components_are_separately_materialized(tmp_path: Path) -> None:
@@ -479,17 +500,19 @@ def test_hierarchical_variance_components_are_separately_materialized(tmp_path: 
     write_csv(quality, quality_rows); write_csv(risk, risk_rows)
     write_csv(structural, [{"worker_id": worker, "structural_opportunity_eligible": "true", "failure_attribution": "none"} for worker in ("w1", "w2", "w3")])
     write_csv(completion, [{"worker_id": worker, "assigned_total_count": "6", "observed_total_count": "6", "completion_status": "completed"} for worker in ("w1", "w2", "w3")])
-    summary = materialize_parameters(quality, risk, structural, completion, tmp_path / "out")
+    worker_state = tmp_path / "worker_state.csv"
+    write_csv(worker_state, [{"worker_id": worker, "Q_GT_task_adjusted": .8, "standard_error": .03} for worker in ("w1", "w2", "w3")])
+    summary = materialize_parameters(quality, risk, structural, completion, tmp_path / "out", worker_state_csv=worker_state)
     row = read_csv(tmp_path / "out" / "c1_c2_design_parameters.csv")[0]
-    assert summary["formal_design_input_ready"] is True
-    assert all(row[field] != "" for field in ("between_worker_slope_sd", "outcome_residual_sd", "worker_intercept_sd", "task_sd", "building_sd", "Q_GT_baseline_se"))
+    assert summary["model_status"] in {"estimated", "not_converged_or_singular"}
+    assert row["Q_GT_baseline_source"] == "strong_global_task_adjusted"
     assert row["between_worker_slope_sd"] != row["outcome_residual_sd"]
 
 
 def test_formal_candidate_chain_never_auto_selects_and_requires_bound_human_choice(tmp_path: Path) -> None:
     from tools.thesis_main.analysis.build_c2_assignment_manifest_from_c1_gaps import RISK_CONTRACT
     closeout, risk_summary = tmp_path / "closeout.json", tmp_path / "risk.json"
-    closeout.write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C2B_DESIGN_READY": True}), encoding="utf-8")
+    closeout.write_text(json.dumps({"C1_MEASUREMENT_FROZEN": False, "C2B_BASELINE_INPUT_FROZEN": True, "C2B_DESIGN_READY": True}), encoding="utf-8")
     risk_summary.write_text(json.dumps({"formal_ready": True, "state_machine": {"C2B_RISK_DESIGN_FROZEN": True}}), encoding="utf-8")
     workers, tasks, evidence = tmp_path / "workers.csv", tmp_path / "tasks.csv", tmp_path / "evidence.csv"
     write_csv(workers, [{
@@ -518,7 +541,7 @@ def test_formal_candidate_chain_never_auto_selects_and_requires_bound_human_choi
         "schema_version": "paper_a_c2b_design_selection_thresholds_v1", "status": "approved", "formal_selection_allowed": True,
         "approved_by": "design-reviewer", "approved_at": "2026-07-25T00:00:00Z",
         "common_anchor_requirements": {"minimum_count": 2, "required_strata": ["ordinary", "stress"]},
-        "thresholds": {"q_gt_ci_half_width": 10, "risk_slope_ci_half_width": 10, "rank_stability": 0, "minimum_worker_support": 0, "minimum_task_support": 0, "graph_connectivity_probability": 0, "minimum_building_coverage": 0, "building_coverage_probability": 0, "ordinary_coverage_probability": 0, "stress_coverage_probability": 0},
+        "thresholds": {"q_gt_ci_half_width": 10, "risk_slope_ci_half_width": 10, "minimum_worker_rank_spearman": -1, "minimum_top_k_overlap": 0, "maximum_mean_rank_displacement": 100, "minimum_worker_support": 0, "minimum_task_support": 0, "graph_connectivity_probability": 0, "minimum_building_coverage": 0, "building_coverage_probability": 0, "ordinary_coverage_probability": 0, "stress_coverage_probability": 0, "minimum_eligible_task_count": 1, "minimum_eligible_building_count": 1, "minimum_ordinary_task_count": 1, "minimum_stress_task_count": 1},
     }), encoding="utf-8")
     design_manifest = build_candidate_design_manifest(tasks, workers, closeout, tmp_path / "design.json", threshold_manifest=thresholds, risk_summary=risk_summary, draws=200)
     candidate = enumerate_candidates(
@@ -552,4 +575,5 @@ def test_formal_candidate_chain_never_auto_selects_and_requires_bound_human_choi
     )
     assert selected["chosen_design_id"] == selected_id
     assert selected["n_assignments"] == len(edges) > 0
+    assert selected["state_machine"]["C1_MEASUREMENT_FROZEN"] is False
     assert read_csv(tmp_path / "selected" / "assignment_manifest_C2B.csv") == edges

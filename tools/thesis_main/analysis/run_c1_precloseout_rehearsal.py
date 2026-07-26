@@ -22,12 +22,12 @@ from tools.thesis_main.analysis import c1_canonicalize_exports
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files, validate_active_log_freeze_manifest
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, write_csv, write_json
 from tools.thesis_main.analysis.materialize_c1_operational_reference import materialize as materialize_operational_reference
-from tools.thesis_main.analysis.materialize_c1_canonical_evidence_sidecars import materialize_canonical_evidence
 from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_active_log_audits,
     materialize_active_time_ledgers,
     materialize_analysis_rosters,
     materialize_completion_support,
+    finalize_partial_completion_support,
     materialize_geometry_anomaly_root_causes,
     materialize_final_canonical_closeout_summary,
     materialize_independence,
@@ -45,7 +45,6 @@ from tools.thesis_main.analysis.c1_c2_mainline import (
 from tools.thesis_main.analysis.materialize_c1_preannotation_task_features import materialize as materialize_preannotation_features
 from tools.thesis_main.analysis.materialize_frozen_routing_profiles import build_global
 from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import build_source as build_p1_c1_source, materialize as materialize_predictive_association
-from tools.thesis_main.analysis.geometry_consensus.materialize import materialize_geometry_consensus
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
@@ -232,6 +231,7 @@ def materialize(
     reference_amendment: Path | None = None, outside_assignment_disposition: Path | None = None,
     completion_disposition: Path | None = None, c1_active_log_freeze_manifest: Path | None = None,
     collection_closure_manifest: Path | None = None,
+    p1_integrity_dir: Path | None = None,
     active_log_snapshot_bound: bool = False,
     source_export_aggregate_sha: str | None = None,
     source_assignment_aggregate_sha: str | None = None,
@@ -259,6 +259,7 @@ def materialize(
     if c1_preannotation_feature_csv is not None:
         fixed_sources["c1_preannotation_feature"] = c1_preannotation_feature_csv
     p1_source_files = sorted((path for path in p1_closeout_dir.iterdir() if path.is_file()), key=lambda path: path.name.lower())
+    p1_integrity_files = sorted((path for path in p1_integrity_dir.iterdir() if path.is_file()), key=lambda path: path.name.lower()) if p1_integrity_dir else []
     stage_active_log_provenance = _stage_active_log_provenance(p1_closeout_dir, active_log)
     if formal and (
         not stage_active_log_provenance["prescreen"].get("validated")
@@ -274,7 +275,7 @@ def materialize(
         "c1_active_log_freeze_manifest": c1_active_log_freeze_manifest,
         "collection_closure_manifest": collection_closure_manifest,
     }.items() if path is not None}
-    analysis_input_rows = _manifest_rows([*export_files, *active_source_files, *fixed_sources.values(), *p1_source_files, *review_sources.values()])
+    analysis_input_rows = _manifest_rows([*export_files, *active_source_files, *fixed_sources.values(), *p1_source_files, *p1_integrity_files, *review_sources.values()])
     analysis_input_bundle_sha = _aggregate_sha(analysis_input_rows)
     if formal:
         if not c1_active_log_freeze_manifest or not c1_active_log_freeze_manifest.exists():
@@ -301,13 +302,14 @@ def materialize(
     snapshot_active = [_snapshot(path, snapshots, "active_logs") for path in active_source_files]
     fixed_snapshots = {name: _snapshot(path, snapshots, "contracts") for name, path in fixed_sources.items()}
     p1_snapshots = [_snapshot(path, snapshots, "p1_closeout") for path in p1_source_files]
+    p1_integrity_snapshots = [_snapshot(path, snapshots, "p1_integrity") for path in p1_integrity_files]
     review_snapshots = {name: _snapshot(path, snapshots, "dispositions") for name, path in review_sources.items()}
-    all_sources = [*export_files, *active_source_files, *fixed_sources.values(), *p1_source_files, *review_sources.values()]
+    all_sources = [*export_files, *active_source_files, *fixed_sources.values(), *p1_source_files, *p1_integrity_files, *review_sources.values()]
     source_rows = _manifest_rows(all_sources)
     input_roles = {path.resolve(): name for name, path in fixed_sources.items()}
     for row in source_rows:
         row["input_role"] = input_roles.get(Path(row["path"]).resolve(), "")
-    all_snapshots = [*snapshot_exports, *snapshot_active, *fixed_snapshots.values(), *p1_snapshots, *review_snapshots.values()]
+    all_snapshots = [*snapshot_exports, *snapshot_active, *fixed_snapshots.values(), *p1_snapshots, *p1_integrity_snapshots, *review_snapshots.values()]
     snapshot_by_identity = {
         (sha256_file(path), path.name if path.parent.name == "active_logs" else path.name.split("_", 1)[-1]): path
         for path in all_snapshots
@@ -352,10 +354,9 @@ def materialize(
         require_complete=False, input_status=input_status,
         duplicate_adjudication_csv=review_snapshots.get("duplicate_adjudication"),
     )
-    materialize_canonical_evidence(
-        snapshot_exports, output_dir / "c1_canonical_annotations.csv", output_dir,
-        input_status=input_status, version_disposition_csv=output_dir / "c1_annotation_version_disposition.csv",
-    )
+    # build_canonicalization owns canonical sidecars and geometry consensus.
+    # Re-running either here duplicates the most expensive C1 work and risks
+    # overwriting one logical artifact with a second execution.
     project_independence_evidence_summary = materialize_project_independence_provenance(
         output_dir / "c1_canonical_meta_observations.csv", output_dir,
     )
@@ -372,17 +373,11 @@ def materialize(
     canonical_summary["failure_attribution_counts"] = structural_summary["failure_attribution_counts"]
     canonical_summary["structural_validation_summary"] = structural_summary
     write_json(output_dir / "c1_canonicalization_summary.json", canonical_summary)
-    materialize_geometry_consensus(
-        output_dir / "c1_canonical_geometry.jsonl", output_dir, input_status=input_status,
-    )
     completion_summary = materialize_completion_support(
         snapshot_exports, [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
         output_dir / "c1_runtime_task_mapping.csv", output_dir / "c1_canonical_annotations.csv",
         output_dir / "c1_canonical_geometry.jsonl", output_dir,
         completion_disposition_csv=review_snapshots.get("completion_disposition"), collection_window_closed=collection_window_closed,
-    )
-    roster_summary = materialize_analysis_rosters(
-        output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_canonical_annotations.csv", output_dir,
     )
     outside_summary = materialize_outside_assignment(
         output_dir / "c1_canonical_annotations.csv", output_dir,
@@ -406,6 +401,13 @@ def materialize(
         output_dir / "structural_validation_audit.csv", output_dir / "c1_task_outcome_reference.csv", output_dir,
         independence_csv=output_dir / "c1_independence_evidence.csv",
         outside_disposition_csv=output_dir / "c1_outside_assignment_disposition_evidence.csv",
+    )
+    completion_summary = finalize_partial_completion_support(
+        output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_row_analysis_eligibility.csv",
+        output_dir, completion_summary, collection_window_closed=collection_window_closed,
+    )
+    roster_summary = materialize_analysis_rosters(
+        output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_canonical_annotations.csv", output_dir,
     )
     final_canonical_summary = materialize_final_canonical_closeout_summary(
         output_dir, completion_summary, outside_summary=outside_summary, formal=formal,
@@ -468,11 +470,12 @@ def materialize(
         output_dir / "provisional_strong_global.csv", output_dir / "geometry_worker_task_loo_analysis.csv",
         output_dir / "structural_validation_analysis.csv", output_dir / "c1_worker_completion_audit.csv", output_dir,
         quality_csv=output_dir / "c1_gt_quality_analysis.csv",
+        eligibility_csv=output_dir / "c1_row_analysis_eligibility.csv",
         formal=formal,
     )
     predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"
     worker_state_path = output_dir / ("c1_three_track_worker_state_formal.csv" if formal else "c1_three_track_worker_state.csv")
-    predictive_source = build_p1_c1_source(snapshots / "p1_closeout", worker_state_path, predictive_path)
+    predictive_source = build_p1_c1_source(snapshots / "p1_closeout", worker_state_path, predictive_path, correction_dir=snapshots / "p1_integrity" if p1_integrity_snapshots else None)
     predictive_summary = {**materialize_predictive_association(predictive_path, output_dir), **predictive_source}
     preannotation_summary = materialize_preannotation_features(
         [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]], fixed_snapshots["candidate_inventory"], output_dir,
@@ -495,6 +498,7 @@ def materialize(
         "candidate_only": True,
         "launch_ready": False,
         "n_feasible_candidate_designs": 0,
+        "assignment_row_count": 0,
         "failure_reason": "C2-B design is owned by design-c2b after C1 freeze",
     }
 
@@ -504,7 +508,11 @@ def materialize(
         Path("docs/thesis_main/C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md"),
         Path("docs/thesis_main/C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md"),
     ]
-    dependency_rows = _manifest_rows([*pipeline_files, *fixed_snapshots.values(), *snapshot_exports, *snapshot_active, *p1_snapshots, *review_snapshots.values(), *(path for path in dependency_contracts if path.exists())])
+    dependency_rows = _manifest_rows([
+        *pipeline_files, *fixed_snapshots.values(), *snapshot_exports, *snapshot_active,
+        *p1_snapshots, *p1_integrity_snapshots, *review_snapshots.values(),
+        *(path for path in dependency_contracts if path.exists()),
+    ])
     versions = {}
     for package in ("numpy", "pandas", "scipy", "statsmodels", "patsy"):
         try: versions[package] = importlib.metadata.version(package)
@@ -574,6 +582,7 @@ def materialize(
         "operational_reference_summary": chain.get("operational_reference_summary", {}),
         "strong_global_model_audit": model_audit,
         "c2b_candidate_summary": c2_summary,
+        "c2b_assignment_row_count": 0,
         "final_canonical_closeout_summary": final_canonical_summary,
         "blockers": _c1_closeout_blockers(formal, final_canonical_summary["blockers"]),
         "downstream_blockers": ["c2b_not_confirmed"],

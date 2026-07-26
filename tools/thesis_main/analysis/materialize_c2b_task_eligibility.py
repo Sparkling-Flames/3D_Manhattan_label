@@ -94,6 +94,12 @@ def materialize(
             "history_clear": history_ok, "scope_ready": scope_ok,
             "reference_ready": reference_ok, "feature_ready": feature_ok,
             "risk_ready": risk_ok, "assignment_eligible": not reasons,
+            "risk_design_vector_A": (risk_row or {}).get("risk_design_vector_A", ""),
+            "risk_design_score_A": (risk_row or {}).get("risk_design_score_A", ""),
+            "risk_design_stratum": (risk_row or {}).get("risk_design_stratum", ""),
+            "risk_design_stratum_status": (risk_row or {}).get("risk_design_stratum_status", ""),
+            "risk_contract_sha256": (risk_row or {}).get("risk_contract_sha256", ""),
+            "image_path": item.get("image_path") or item.get("source_path", ""),
             "exclusion_reason": ";".join(reasons), **input_shas,
         })
 

@@ -1,10 +1,11 @@
 import argparse
 import json
 import subprocess
+from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _future_heldout_images, _source_identity_aggregate, build_c2b, finalize_c1, freeze_c1, main, rehearse_c1
+from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, build_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1
 from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _aggregate_sha, _c1_closeout_blockers
 
 
@@ -25,14 +26,26 @@ def test_rehearsal_can_read_live_logs_but_cannot_be_formal(monkeypatch, tmp_path
     assert result["formal_closeout_ready"] is False
 
 
-def test_public_cli_exposes_only_the_six_stage_commands(capsys):
+def test_public_cli_exposes_the_eight_stage_commands(capsys):
     with pytest.raises(SystemExit):
         main(["--help"])
     help_text = capsys.readouterr().out
-    for command in ("rehearse-c1", "freeze-c1", "audit-c1", "finalize-c1", "design-c2b", "build-c2b"):
+    for command in (
+        "rehearse-c1", "prepare-c2b-static", "preflight-calibration", "freeze-c1",
+        "audit-c1", "finalize-c1", "design-c2b", "build-c2b",
+    ):
         assert command in help_text
     for removed in ("day1-canonical-audit", "day1-formal-audit", "day2-c2b-build", "freeze-c1-active-log"):
         assert removed not in help_text
+
+
+def test_canonicalizer_is_the_single_owner_of_geometry_and_sidecar_materialization():
+    runner = Path("tools/thesis_main/analysis/run_c1_precloseout_rehearsal.py").read_text(encoding="utf-8")
+    canonicalizer = Path("tools/thesis_main/analysis/c1_canonicalize_exports.py").read_text(encoding="utf-8")
+    assert "materialize_geometry_consensus(" not in runner
+    assert "materialize_canonical_evidence(" not in runner
+    assert canonicalizer.count("materialize_geometry_consensus(") == 1
+    assert canonicalizer.count("materialize_canonical_evidence(") == 1
 
 
 def test_formal_stage_outputs_are_ignored_so_the_next_clean_git_gate_can_run():
@@ -43,6 +56,85 @@ def test_formal_stage_outputs_are_ignored_so_the_next_clean_git_gate_can_run():
         "analysis_results/c2b_build_sha/result.csv",
     ):
         assert subprocess.run(["git", "check-ignore", "-q", path]).returncode == 0
+
+
+def test_fresh_checkout_keeps_both_numeric_threshold_contracts():
+    for path in (
+        "docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json",
+        "docs/thesis_main/C2B_FEATURE_AUDIT_THRESHOLDS.json",
+    ):
+        assert subprocess.run(["git", "check-ignore", "-q", path]).returncode != 0
+
+
+def test_final_risk_pool_freezes_only_after_building_and_both_strata_gates(tmp_path):
+    threshold = tmp_path / "threshold.json"
+    threshold.write_text(json.dumps({
+        "status": "approved", "formal_selection_allowed": True,
+        "thresholds": {
+            "minimum_eligible_task_count": 2, "minimum_eligible_building_count": 2,
+            "minimum_ordinary_task_count": 1, "minimum_stress_task_count": 1,
+        },
+    }), encoding="utf-8")
+    ordinary_only = [
+        {"assignment_eligible": "true", "building_id": "b1", "risk_design_stratum": "ordinary"},
+        {"assignment_eligible": "true", "building_id": "b2", "risk_design_stratum": "ordinary"},
+    ]
+    assert _final_risk_pool_gate(ordinary_only, threshold)["frozen"] is False
+    ordinary_only[1]["risk_design_stratum"] = "stress"
+    gate = _final_risk_pool_gate(ordinary_only, threshold)
+    assert gate["frozen"] is True
+    assert gate["observed"] == {
+        "minimum_eligible_task_count": 2, "minimum_eligible_building_count": 2,
+        "minimum_ordinary_task_count": 1, "minimum_stress_task_count": 1,
+    }
+
+
+def test_preflight_rejects_null_thresholds_and_unapproved_feature_freeze(tmp_path):
+    static = tmp_path / "static"; (static / "p1_integrity").mkdir(parents=True)
+    (static / "paper_a_analysis_environment_manifest.json").write_text(json.dumps({
+        "python": "3.11.7", "packages": {"torch": "2.11.0+cu128", "torchvision": "0.26.0+cu128"},
+        "cuda_available": True, "cuda_build": "12.8", "physical_batch_size": 4,
+        "nvidia_driver_version": "610.62", "dependency_lock_sha256": {"analysis": "a", "torch": "b"},
+    }), encoding="utf-8")
+    (static / "c2_feature_freeze_manifest.json").write_text(json.dumps({"feature_audit_status": "pending_threshold_approval_or_failed"}), encoding="utf-8")
+    for path in (
+        static / "p1_integrity" / "p1_post_closeout_correction_summary_v1.json",
+        static / "p1_integrity" / "p1_geometry_score_summary_v1.json",
+        static / "c2_legacy_reverse_candidate_audit.summary.json",
+        static / "c2b_static_evidence_review_queues.summary.json",
+    ):
+        path.write_text("{}", encoding="utf-8")
+    design = tmp_path / "design.json"; feature = tmp_path / "feature.json"
+    design.write_text(json.dumps({"status": "pending", "formal_selection_allowed": False, "thresholds": {}}), encoding="utf-8")
+    feature.write_text(json.dumps({"status": "pending", "formal_feature_freeze_allowed": False, "thresholds": {}}), encoding="utf-8")
+    result = preflight_calibration(argparse.Namespace(
+        static_dir=static, threshold_manifest=design, feature_audit_threshold_manifest=feature,
+        output=tmp_path / "preflight.json",
+    ))
+    assert result["ready"] is False
+    assert result["blockers"] == [
+        "unapproved_or_incomplete:design_thresholds",
+        "unapproved_or_incomplete:feature_thresholds",
+        "feature_freeze_not_approved",
+    ]
+
+
+def test_static_evidence_queues_do_not_promote_inventory_hints(tmp_path):
+    inventory = tmp_path / "inventory.csv"
+    inventory.write_text(
+        "task_id,base_task_id,image_id,source_path,source_pool,building_id,used_in_prescreen,scope_gold_ready\n"
+        "t1,b1,scene_uuid,image.jpg,pool,guessed_building,true,true\n",
+        encoding="utf-8",
+    )
+    legacy = tmp_path / "legacy.csv"
+    legacy.write_text("image_id,base_task_id\nscene_uuid,b1\n", encoding="utf-8")
+
+    result = _materialize_static_evidence_review_queues(inventory, legacy, tmp_path / "out")
+
+    assert result["formal_evidence_ready"] is False
+    queue = (tmp_path / "out" / "authoritative_building_registry.review_queue.csv").read_text(encoding="utf-8")
+    assert "guessed_building" not in queue
+    assert "pending_review" in queue
 
 
 def test_freeze_c1_atomically_creates_active_log_and_collection_contracts(tmp_path):
@@ -83,7 +175,7 @@ def test_day2_fails_closed_before_materializing_assignments(tmp_path, monkeypatc
 
 
 def test_day1_finalize_freezes_c1_evidence_but_not_routing_profile(tmp_path):
-    (tmp_path / "c1_measurement_freeze_manifest.json").write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C2B_DESIGN_READY": True}), encoding="utf-8")
+    (tmp_path / "c1_measurement_freeze_manifest.json").write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C1_EVIDENCE_BUNDLE_FROZEN": True, "C2B_BASELINE_INPUT_FROZEN": True, "Q_GT_FREEZE_STATUS": "frozen", "R_LOO_FREEZE_STATUS": "support_limited", "F_STRUCT_FREEZE_STATUS": "frozen"}), encoding="utf-8")
     (tmp_path / "c1_final_canonical_closeout_summary.json").write_text(json.dumps({"blockers": [], "formal_closeout_ready": True}), encoding="utf-8")
     (tmp_path / "formal_audit_summary.json").write_text(json.dumps({"input_status": "formal", "formal_closeout_ready": True, "blockers": [], "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1", "git_commit_sha": "a" * 40, "worktree_clean": True, "full_dependency_bundle_sha256": "bundle", "C1_CANONICAL_CLOSED": True, "collection_closure": {"status": "validated"}}), encoding="utf-8")
     adjudication = tmp_path / "adjudication.json"; adjudication.write_text(json.dumps({"approved": True, "input_bundle_sha256": "bundle"}), encoding="utf-8")

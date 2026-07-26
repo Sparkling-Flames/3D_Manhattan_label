@@ -53,9 +53,14 @@ def test_final_closeout_does_not_block_nonstarter_or_reviewed_local_exclusion(tm
     _csv(tmp_path / "c1_row_analysis_eligibility.csv", [{"global_analysis_eligible": "true", "loo_analysis_eligible": "true", "structural_opportunity_eligible": "true", "global_analysis_exclusion_reason": ""}])
     _csv(tmp_path / "c1_annotation_version_disposition.csv", [{"version_disposition": "selected_canonical"}])
     _csv(tmp_path / "c1_task_outcome_reference.csv", [{"final_scope": "in_scope"}])
-    summary = materialize_final_canonical_closeout_summary(tmp_path, {"completed_worker_count": 19, "partial_noncompletion_worker_count": 1, "nonstarter_worker_count": 3, "missing_other_count": 0})
+    summary = materialize_final_canonical_closeout_summary(tmp_path, {
+        "completed_worker_count": 19, "partial_noncompletion_worker_count": 1,
+        "nonstarter_worker_count": 3, "missing_other_count": 0,
+        "completion_disposition": {"pending_count": 23, "invalid_count": 0, "unmatched_count": 0},
+    }, formal=True)
     assert summary["formal_closeout_ready"] is True
     assert summary["reviewed_local_exclusions"] == 1
+    assert "completion_exception_disposition_invalid_or_orphan" not in summary["blockers"]
 
 
 def test_final_closeout_blocks_unclassified_missing(tmp_path: Path) -> None:
