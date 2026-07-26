@@ -12,6 +12,7 @@ import numpy as np
 
 
 ORBIT_FRACTIONS = (0.0, 0.25, 0.5, 0.75)
+OFF_GRID_ROTATION_FRACTIONS = (1 / 7, 2 / 7, 3 / 7)
 SEAM_PIXEL_OFFSETS = (-16, -8, 8, 16)
 
 
@@ -84,7 +85,7 @@ def _orbit_tensors(tensor):
 
 def extract_orbit_descriptors(
     paths: list[Path], checkpoint: Path, config: Path, *, device: str = "auto", batch_size: int = 4,
-    audit_seam: bool = False, seam_sample_count: int = 32,
+    audit_seam: bool = False, seam_sample_count: int = 32, off_grid_sample_count: int = 32,
 ) -> tuple[dict[str, tuple[np.ndarray, np.ndarray]], dict[str, Any]]:
     import torch
     from PIL import Image
@@ -93,7 +94,8 @@ def extract_orbit_descriptors(
         raise ValueError("formal LHFeat physical batch size is frozen at 4")
     model, target = load_model(checkpoint, config, device=device)
     output: dict[str, tuple[np.ndarray, np.ndarray]] = {}
-    circular_errors: list[float] = []
+    four_phase_permutation_diagnostic_errors: list[float] = []
+    off_grid_circular_errors: list[float] = []
     seam_errors: list[float] = []
     with torch.inference_mode():
         for index, path in enumerate(paths):
@@ -104,7 +106,14 @@ def extract_orbit_descriptors(
             pooled = [pool_lhfeat(feature) for feature in features]
             descriptor = aggregate_orbit(pooled)
             output[path.resolve().as_posix()] = descriptor
-            circular_errors.append(relative_l2(descriptor, aggregate_orbit(pooled[1:] + pooled[:1])))
+            four_phase_permutation_diagnostic_errors.append(relative_l2(descriptor, aggregate_orbit(pooled[1:] + pooled[:1])))
+            if index < off_grid_sample_count:
+                for fraction in OFF_GRID_ROTATION_FRACTIONS:
+                    shifted = tensor.roll(shifts=int(round(tensor.shape[-1] * fraction)), dims=-1)
+                    shifted_orbit = torch.cat(_orbit_tensors(shifted), dim=0).to(target)
+                    shifted_features = shared_feature(model.extract_feat(shifted_orbit)).detach().cpu().numpy()
+                    shifted_descriptor = aggregate_orbit([pool_lhfeat(feature) for feature in shifted_features])
+                    off_grid_circular_errors.append(relative_l2(descriptor, shifted_descriptor))
             if audit_seam and index < seam_sample_count:
                 for offset in SEAM_PIXEL_OFFSETS:
                     shifted = tensor.roll(shifts=offset, dims=-1)
@@ -115,8 +124,17 @@ def extract_orbit_descriptors(
     audit = {
         "device": target, "batch_size": batch_size, "dtype": "float32",
         "orbit_fractions": list(ORBIT_FRACTIONS),
-        "circular_relative_l2_max": max(circular_errors, default=math.nan),
-        "circular_audited_image_count": len(circular_errors),
+        "four_phase_permutation_diagnostic_relative_l2_max": max(four_phase_permutation_diagnostic_errors, default=math.nan),
+        "four_phase_permutation_diagnostic_image_count": len(four_phase_permutation_diagnostic_errors),
+        "off_grid_rotation_fractions": list(OFF_GRID_ROTATION_FRACTIONS),
+        "off_grid_circular_relative_l2_median": float(np.median(off_grid_circular_errors)) if off_grid_circular_errors else "",
+        "off_grid_circular_relative_l2_q95": float(np.quantile(off_grid_circular_errors, .95)) if off_grid_circular_errors else "",
+        "off_grid_circular_relative_l2_max": max(off_grid_circular_errors, default=math.nan),
+        "off_grid_circular_audited_image_count": min(len(paths), off_grid_sample_count),
+        # Backward-compatible metric key now points to the real off-grid audit,
+        # never to the four-phase permutation identity diagnostic.
+        "circular_relative_l2_max": max(off_grid_circular_errors, default=math.nan),
+        "circular_audited_image_count": min(len(paths), off_grid_sample_count),
         "seam_offsets_pixels": list(SEAM_PIXEL_OFFSETS),
         "seam_audited_image_count": min(len(paths), seam_sample_count) if audit_seam else 0,
         "seam_relative_l2_median": float(np.median(seam_errors)) if seam_errors else "",

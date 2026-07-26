@@ -1,12 +1,15 @@
 from __future__ import annotations
 
 import json
+import hashlib
 import math
 import random
 import sys
 from collections import Counter, defaultdict, deque
 from pathlib import Path
 from typing import Any
+
+import numpy as np
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(_PROJECT_ROOT) not in sys.path:
@@ -51,6 +54,7 @@ DESIGN_AUDIT_FIELDS = [
 ]
 WORKER_PROJECTION_FIELDS = [
     "design_id", "worker_id", "current_interval_half_width", "projected_interval_half_width",
+    "projection_status", "slope_precision_source",
     "ordinary_support", "stress_support", "common_anchor_support", "bridge_support",
     "unique_image_coverage", "building_coverage", "common_bridge_with_other_min",
     "missing_rate", "structural_failure_rate", "effective_information",
@@ -58,7 +62,8 @@ WORKER_PROJECTION_FIELDS = [
 ]
 GRAPH_AUDIT_FIELDS = [
     "design_id", "n_workers", "n_tasks", "n_edges", "n_connected_components",
-    "worker_task_graph_connected", "duplicate_worker_task_count", "min_bridge_task_support",
+    "worker_task_graph_connected", "bridge_only_n_connected_components", "bridge_only_graph_connected",
+    "duplicate_worker_task_count", "min_bridge_task_support",
     "max_worker_stratum_imbalance",
 ]
 TASK_SELECTION_AUDIT_FIELDS = [
@@ -71,8 +76,9 @@ SIMULATION_FIELDS = [
     "q_gt_max_ci_half_width", "risk_slope_max_ci_half_width",
     "rank_stability", "worker_rank_spearman", "top_k_overlap", "mean_rank_displacement",
     "risk_slope_direction_stability", "minimum_worker_support", "minimum_task_support",
-    "graph_connectivity_probability", "building_coverage", "building_coverage_probability",
+    "graph_connectivity_probability", "bridge_only_connectivity_probability", "building_coverage", "building_coverage_probability",
     "ordinary_coverage_probability", "stress_coverage_probability", "ordinary_coverage_probability_per_worker", "stress_coverage_probability_per_worker", "expected_assignment_count",
+    "uncertainty_fields_used", "known_c1_worker_intercept_sd_resampled", "population_worker_intercept_sd_recorded",
     "simulation_method", "simulation_status",
 ]
 
@@ -364,16 +370,22 @@ def _graph_audit(
     for worker, task in edges:
         graph[f"w:{worker}"].add(f"t:{task}")
         graph[f"t:{task}"].add(f"w:{worker}")
-    unseen = set(nodes)
-    components = 0
-    while unseen:
-        components += 1
-        queue = [unseen.pop()]
-        while queue:
-            for neighbor in graph[queue.pop()]:
-                if neighbor in unseen:
-                    unseen.remove(neighbor)
-                    queue.append(neighbor)
+    def components_for(edge_rows: list[tuple[str, str]]) -> tuple[int, bool]:
+        local_nodes = {f"w:{worker}" for worker in workers} | {f"t:{task}" for _, task in edge_rows}
+        local_graph: dict[str, set[str]] = defaultdict(set)
+        for worker, task in edge_rows:
+            local_graph[f"w:{worker}"].add(f"t:{task}"); local_graph[f"t:{task}"].add(f"w:{worker}")
+        unseen = set(local_nodes); count = 0
+        while unseen:
+            count += 1; queue = [unseen.pop()]
+            while queue:
+                for neighbor in local_graph[queue.pop()]:
+                    if neighbor in unseen:
+                        unseen.remove(neighbor); queue.append(neighbor)
+        return count, bool(local_nodes) and bool(edge_rows) and count == 1
+
+    components, connected = components_for(edges)
+    bridge_components, bridge_connected = components_for([(worker, task) for worker, task in edges if task in bridge_task_ids])
     duplicate_count = len(edges) - len(set(edges))
     support = Counter(task for _, task in edges if task in bridge_task_ids)
     by_worker_stratum: dict[str, Counter[str]] = defaultdict(Counter)
@@ -393,7 +405,9 @@ def _graph_audit(
         "n_tasks": len({task for _, task in edges}),
         "n_edges": len(edges),
         "n_connected_components": components,
-        "worker_task_graph_connected": bool(nodes) and components == 1,
+        "worker_task_graph_connected": connected,
+        "bridge_only_n_connected_components": bridge_components,
+        "bridge_only_graph_connected": bridge_connected,
         "duplicate_worker_task_count": duplicate_count,
         "min_bridge_task_support": min(support.values()) if support else 0,
         "max_worker_stratum_imbalance": max(imbalances, default=0),
@@ -425,26 +439,51 @@ def _projected_worker_intervals(
         raw_information = sum(_float(task, "risk_information_weight", default=1.0) for task in tasks)
         assigned = _int(row, "assigned_total_count", default=0)
         observed = _int(row, "observed_total_count", default=assigned)
-        missing_rate = _float(row, "missing_rate", default=(max(0, assigned - observed) / assigned if assigned else 0.0))
-        structural_rate = _float(row, "F_struct", default=0.0)
+        missing_rate = _float(row, "missing_rate", default=math.nan)
+        structural_rate = _float(row, "F_struct", default=math.nan)
+        rate_contract_valid = (
+            math.isfinite(missing_rate) and 0.0 <= missing_rate <= 1.0
+            and math.isfinite(structural_rate) and 0.0 <= structural_rate <= 1.0
+        )
         buildings = {safe(task.get("building_id") or task.get("building")) for task in tasks} - {""}
         cluster_factor = math.sqrt(len(buildings) / len(tasks)) if tasks and buildings else 1.0
-        added_information = raw_information * max(0.0, 1 - missing_rate) * max(0.0, 1 - structural_rate) * cluster_factor
+        added_information = (
+            raw_information * (1 - missing_rate) * (1 - structural_rate) * cluster_factor
+            if rate_contract_valid else 0.0
+        )
         slope_se = _float(row, "risk_slope_se", default=math.inf)
         slope_support = _int(row, "risk_slope_support", "support", "n_support")
         prior_only = not (math.isfinite(slope_se) and slope_se > 0 and slope_support > 0)
+        slope_precision_source = "worker_specific_slope_se"
         if prior_only:
-            slope_se = _float(row, "between_worker_slope_sd", "group_prior_scale", default=math.inf)
-        if math.isfinite(slope_se) and slope_se > 0:
+            between_worker_sd = _float(row, "between_worker_slope_sd", default=math.inf)
+            if math.isfinite(between_worker_sd) and between_worker_sd > 0:
+                slope_se = between_worker_sd
+                slope_precision_source = "between_worker_slope_sd"
+            elif between_worker_sd == 0:
+                slope_se = _float(row, "group_slope_se", default=math.inf)
+                slope_precision_source = "common_group_slope_se"
+            else:
+                slope_se = math.inf
+                slope_precision_source = "missing"
+        projection_status = "estimable"
+        if not rate_contract_valid:
+            projection_status = "not_estimable_missing_or_invalid_rate"
+        elif not (math.isfinite(slope_se) and slope_se > 0):
+            projection_status = "not_estimable_missing_slope_precision"
+        if projection_status == "estimable":
             rng = random.Random(f"{seed}|{worker}|{added_information:.12g}")
             errors = []
-            worker_variance = max(0.0, _float(row, "worker_intercept_sd", default=0.0)) ** 2
             task_variance = max(0.0, _float(row, "task_sd", default=0.0)) ** 2
             building_variance = max(0.0, _float(row, "building_sd", default=0.0)) ** 2
             for _ in range(draws):
                 delivered = [task for task in tasks if rng.random() >= missing_rate and rng.random() >= structural_rate]
                 information = sum(_float(task, "risk_information_weight", default=1.0) for task in delivered)
-                projected_se = math.sqrt(1.0 / ((1.0 / slope_se ** 2) + information) + worker_variance + task_variance / max(1, len(delivered)) + building_variance / max(1, len({safe(task.get("building_id")) for task in delivered})))
+                projected_se = math.sqrt(
+                    1.0 / ((1.0 / slope_se ** 2) + information)
+                    + task_variance / max(1, len(delivered))
+                    + building_variance / max(1, len({safe(task.get("building_id")) for task in delivered}))
+                )
                 errors.append(abs(rng.gauss(0.0, projected_se)))
             errors.sort()
             value = errors[min(draws - 1, math.ceil(0.95 * draws) - 1)]
@@ -462,17 +501,76 @@ def _projected_worker_intervals(
             "design_id": safe(edges[0].get("design_id")) if edges else "", "worker_id": worker,
             "current_interval_half_width": current,
             "projected_interval_half_width": "" if not math.isfinite(value) else value,
+            "projection_status": projection_status, "slope_precision_source": slope_precision_source,
             "ordinary_support": strata["ordinary"], "stress_support": strata["stress"],
             "common_anchor_support": sum(safe(edge.get("c2_component")) == "common_anchor" for edge in edges),
             "bridge_support": len(worker_sets[worker]), "unique_image_coverage": len(base_ids),
             "building_coverage": len(buildings), "common_bridge_with_other_min": min(overlaps, default=0),
             "missing_rate": missing_rate, "structural_failure_rate": structural_rate,
             "effective_information": added_information,
-            "expected_fallback_rate": missing_rate ** len(tasks) if tasks else 1.0,
+            "expected_fallback_rate": missing_rate ** len(tasks) if tasks and rate_contract_valid else "",
             "expected_global_full_divergence": abs(_float(row, "risk_slope_for_simulation", "risk_slope", default=0.0)) * (max((_float(task, "risk_design_score_A", default=0.0) for task in tasks), default=0.0) - min((_float(task, "risk_design_score_A", default=0.0) for task in tasks), default=0.0)),
-            "v1_usable_support": len(tasks) * max(0.0, 1 - missing_rate) * max(0.0, 1 - structural_rate),
+            "v1_usable_support": len(tasks) * (1 - missing_rate) * (1 - structural_rate) if rate_contract_valid else "",
         })
     return max(projected, default=math.inf), audits
+
+
+def _recompute_stability_audits(
+    design_id: str,
+    worker_rows: list[dict[str, str]],
+    assignments: list[dict[str, Any]],
+    task_by_id: dict[str, dict[str, str]],
+    *,
+    seed: int,
+    draws: int,
+) -> list[dict[str, Any]]:
+    """Physically remove task/building/anchor instances and recompute diagnostics."""
+    perturbations: list[tuple[str, str, set[str]]] = []
+    task_ids = sorted({safe(row.get("task_id")) for row in assignments})
+    for task_id in task_ids:
+        perturbations.append(("leave_one_task_out", task_id, {task_id}))
+    buildings: dict[str, set[str]] = defaultdict(set)
+    for task_id in task_ids:
+        building = safe(task_by_id.get(task_id, {}).get("building_id") or task_by_id.get(task_id, {}).get("building"))
+        if building:
+            buildings[building].add(task_id)
+    for building, members in sorted(buildings.items()):
+        perturbations.append(("leave_one_building_out", building, members))
+    anchor_ids = sorted({safe(row.get("task_id")) for row in assignments if safe(row.get("c2_component")) == "common_anchor"})
+    for task_id in anchor_ids:
+        perturbations.append(("leave_one_anchor_out", task_id, {task_id}))
+    workers = [safe(row.get("worker_id")) for row in worker_rows]
+    output: list[dict[str, Any]] = []
+    for kind, removed_id, removed_tasks in perturbations:
+        kept = [row for row in assignments if safe(row.get("task_id")) not in removed_tasks]
+        kept_tasks = {task_id: row for task_id, row in task_by_id.items() if task_id not in removed_tasks}
+        bridge_ids = {safe(row.get("task_id")) for row in kept if safe(row.get("c2_component")) == "diverse_bridge"}
+        graph = _graph_audit(design_id, workers, kept, bridge_ids)
+        projected, worker_projection = _projected_worker_intervals(
+            worker_rows, kept, kept_tasks, seed=seed, draws=draws, require_c1_slopes=False,
+        )
+        support_by_worker = Counter(safe(row.get("worker_id")) for row in kept)
+        support_by_task = Counter(safe(row.get("task_id")) for row in kept)
+        strata = {safe(kept_tasks.get(safe(row.get("task_id")), {}).get("risk_design_stratum")) for row in kept}
+        per_worker_strata = {
+            worker: {safe(kept_tasks.get(safe(row.get("task_id")), {}).get("risk_design_stratum")) for row in kept if safe(row.get("worker_id")) == worker}
+            for worker in workers
+        }
+        output.append({
+            "design_id": design_id, "perturbation": kind, "removed_id": removed_id,
+            "removed_task_count": len(removed_tasks), "remaining_edge_count": len(kept),
+            "minimum_worker_support": min((support_by_worker[worker] for worker in workers), default=0),
+            "minimum_task_support": min(support_by_task.values(), default=0),
+            "worker_task_graph_connected": graph["worker_task_graph_connected"],
+            "bridge_only_graph_connected": graph["bridge_only_graph_connected"],
+            "building_coverage": len({safe(row.get("building_id") or row.get("building")) for row in kept_tasks.values()} - {""}),
+            "ordinary_coverage": "ordinary" in strata, "stress_coverage": "stress" in strata,
+            "ordinary_coverage_all_workers": all("ordinary" in per_worker_strata[worker] for worker in workers),
+            "stress_coverage_all_workers": all("stress" in per_worker_strata[worker] for worker in workers),
+            "projected_max_ci_half_width": "" if not math.isfinite(projected) else projected,
+            "worker_projection_recomputed": bool(worker_projection),
+        })
+    return output
 
 
 def _empirical_cluster_bootstrap(
@@ -489,22 +587,74 @@ def _empirical_cluster_bootstrap(
     if not assignments or not worker_rows or draws < 1:
         return {field: "" for field in SIMULATION_FIELDS} | {"design_id": design_id, "seed": seed, "draws": draws, "simulation_status": "insufficient_design_input"}
     required_variances = (
-        "between_worker_slope_sd", "outcome_residual_sd", "worker_intercept_sd",
+        "group_slope_mean", "group_slope_se", "between_worker_slope_sd", "outcome_residual_sd", "worker_intercept_sd",
         "task_sd", "building_sd", "Q_GT_baseline_se",
     )
-    if any(not math.isfinite(_float(row, field, default=math.nan)) for row in worker_rows for field in required_variances):
+    nonnegative_fields = set(required_variances) - {"group_slope_mean"}
+    invalid_variance = any(
+        not math.isfinite(value) or (field in nonnegative_fields and value < 0)
+        for row in worker_rows for field in required_variances
+        for value in [_float(row, field, default=math.nan)]
+    )
+    if invalid_variance:
         return {field: "" for field in SIMULATION_FIELDS} | {
             "design_id": design_id, "seed": seed, "draws": draws,
             "variance_fields_used": list(required_variances),
             "simulation_status": "insufficient_variance_parameters",
         }
+    if any(
+        not math.isfinite(value) or value < 0 or value > 1
+        for row in worker_rows for value in [_float(row, "missing_rate", default=math.nan)]
+    ):
+        return {field: "" for field in SIMULATION_FIELDS} | {
+            "design_id": design_id, "seed": seed, "draws": draws,
+            "variance_fields_used": list(required_variances),
+            "simulation_status": "insufficient_missingness_parameters",
+        }
+    structural_values = [_float(row, "F_struct", default=math.nan) for row in worker_rows]
+    if any(math.isfinite(value) and not 0 <= value <= 1 for value in structural_values):
+        return {field: "" for field in SIMULATION_FIELDS} | {
+            "design_id": design_id, "seed": seed, "draws": draws,
+            "variance_fields_used": list(required_variances),
+            "simulation_status": "invalid_structural_failure_parameters",
+        }
+    supported_structural = [value for value in structural_values if math.isfinite(value) and 0 <= value <= 1]
+    if any(not math.isfinite(value) for value in structural_values) and len(supported_structural) < 2:
+        return {field: "" for field in SIMULATION_FIELDS} | {
+            "design_id": design_id, "seed": seed, "draws": draws,
+            "variance_fields_used": list(required_variances),
+            "simulation_status": "insufficient_structural_failure_model",
+        }
     rng = random.Random(f"c1-hierarchical-resampling|{seed}|{design_id}")
     edges_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for edge in assignments:
         edges_by_worker[safe(edge["worker_id"])].append(edge)
-    baseline = {safe(row.get("worker_id")): _float(row, "Q_GT_task_adjusted", default=0.0) for row in worker_rows}
+    baseline = {safe(row.get("worker_id")): _float(row, "Q_GT_task_adjusted", default=math.nan) for row in worker_rows}
+    if any(not math.isfinite(value) for value in baseline.values()):
+        return {field: "" for field in SIMULATION_FIELDS} | {"design_id": design_id, "seed": seed, "draws": draws, "simulation_status": "insufficient_q_gt_baseline"}
     baseline_rank = sorted(baseline, key=lambda worker: (-baseline[worker], worker))
     baseline_position = {worker: index + 1 for index, worker in enumerate(baseline_rank)}
+    covariance_rows: dict[str, dict[str, float]] = {}
+    try:
+        for row in worker_rows:
+            worker = safe(row.get("worker_id"))
+            covariance_rows[worker] = {key: float(value) for key, value in json.loads(safe(row.get("Q_GT_contrast_covariance_row_json"))).items()}
+        covariance = np.asarray([[covariance_rows[left][right] for right in baseline_rank] for left in baseline_rank], dtype=float)
+        if covariance.shape != (len(baseline_rank), len(baseline_rank)) or not np.isfinite(covariance).all() or not np.allclose(covariance, covariance.T, atol=1e-10) or np.linalg.eigvalsh(covariance).min() < -1e-10:
+            raise ValueError("invalid covariance")
+        declared_variance = np.asarray([
+            _float(next(row for row in worker_rows if safe(row.get("worker_id")) == worker), "Q_GT_baseline_se", default=math.nan) ** 2
+            for worker in baseline_rank
+        ])
+        if not np.allclose(np.diag(covariance), declared_variance, rtol=1e-6, atol=1e-12):
+            raise ValueError("covariance diagonal does not match Q_GT baseline SE")
+    except (KeyError, TypeError, ValueError, json.JSONDecodeError):
+        return {field: "" for field in SIMULATION_FIELDS} | {
+            "design_id": design_id, "seed": seed, "draws": draws,
+            "variance_fields_used": list(required_variances),
+            "simulation_status": "insufficient_q_gt_baseline_covariance",
+        }
+    np_rng = np.random.default_rng(int(hashlib.sha256(f"{seed}|{design_id}".encode()).hexdigest()[:16], 16))
     selected_task_ids = {safe(edge.get("task_id")) for edge in assignments}
     task_by_building: dict[str, list[dict[str, str]]] = defaultdict(list)
     for task_id in selected_task_ids:
@@ -523,7 +673,7 @@ def _empirical_cluster_bootstrap(
         edges_by_task[safe(edge.get("task_id"))].append(edge)
     q_half_widths: list[float] = []
     slope_half_widths: list[float] = []
-    rank_stable = slope_stable = connected = ordinary = stress = full_building_coverage = 0
+    rank_stable = slope_stable = connected = bridge_connected = ordinary = stress = full_building_coverage = 0
     ordinary_per_worker = stress_per_worker = 0.0
     spearman_values: list[float] = []
     top_k_values: list[float] = []
@@ -550,8 +700,10 @@ def _empirical_cluster_bootstrap(
             seen.add(node); pending.extend(graph_nodes[node] - seen)
         return seen == nodes
 
-    def _slope(values: list[tuple[float, float]], prior_mean: float, prior_sd: float, residual_sd: float) -> tuple[float, float]:
-        if not math.isfinite(prior_sd) or prior_sd <= 0 or not math.isfinite(residual_sd) or residual_sd <= 0:
+    def _slope(values: list[tuple[float, float]], prior_mean: float, prior_sd: float, residual_sd: float, common_slope_se: float) -> tuple[float, float]:
+        if prior_sd == 0 and math.isfinite(common_slope_se) and common_slope_se >= 0:
+            return prior_mean, 1.96 * common_slope_se
+        if not math.isfinite(prior_sd) or prior_sd < 0 or not math.isfinite(residual_sd) or residual_sd <= 0:
             return prior_mean, math.inf
         prior_precision = 1.0 / prior_sd ** 2
         if len(values) < 2:
@@ -566,14 +718,23 @@ def _empirical_cluster_bootstrap(
         posterior = (prior_precision * prior_mean + likelihood_precision * observed) / (prior_precision + likelihood_precision)
         return posterior, 1.96 / math.sqrt(prior_precision + likelihood_precision)
 
-    def _variance(field: str) -> float:
+    def _variance(field: str, *, nonnegative: bool = True) -> float:
         values = [_float(row, field, default=math.nan) for row in worker_rows]
-        values = [value for value in values if math.isfinite(value) and value >= 0]
+        values = [value for value in values if math.isfinite(value) and (value >= 0 or not nonnegative)]
         return sum(values) / len(values) if values else math.nan
 
     building_sd, task_sd = _variance("building_sd"), _variance("task_sd")
     worker_intercept_sd = _variance("worker_intercept_sd")
+    group_slope_mean, group_slope_se = _variance("group_slope_mean", nonnegative=False), _variance("group_slope_se")
+    between_worker_slope_sd = _variance("between_worker_slope_sd")
+    group_structural_rate = sum(supported_structural) / len(supported_structural) if supported_structural else math.nan
     for _ in range(draws):
+        sampled_group_slope = rng.gauss(group_slope_mean, group_slope_se) if group_slope_se > 0 else group_slope_mean
+        sampled_baseline_values = np_rng.multivariate_normal(
+            np.asarray([baseline[worker] for worker in baseline_rank], dtype=float), covariance,
+            check_valid="raise",
+        )
+        sampled_baseline = {worker: float(sampled_baseline_values[index]) for index, worker in enumerate(baseline_rank)}
         sampled_buildings = [rng.choice(buildings) for _ in range(len(buildings))] if buildings else []
         task_instances = [
             (
@@ -596,18 +757,17 @@ def _empirical_cluster_bootstrap(
         rank_score, q_widths, draw_slope_widths, signs, support = {}, [], [], [], Counter()
         worker_outcomes: dict[str, list[tuple[float, float]]] = defaultdict(list)
         delivered_edges: list[tuple[str, str]] = []
+        delivered_bridge_edges: list[tuple[str, str]] = []
         delivered_building_instances: set[str] = set()
         delivered_strata: set[str] = set()
         delivered_strata_by_worker: dict[str, set[str]] = defaultdict(set)
         instance_support = Counter({task_instance: 0 for _building_instance, task_instance, _building, _task in task_instances})
-        worker_intercepts = {safe(row.get("worker_id")): rng.gauss(0.0, worker_intercept_sd) for row in worker_rows}
         for row in worker_rows:
             worker = safe(row.get("worker_id"))
-            slope = _float(row, "risk_slope_for_simulation", "risk_slope", "group_prior_slope", default=0.0)
-            slope_scale = _float(row, "risk_slope_scale_for_simulation", "risk_slope_se", "between_worker_slope_sd", default=math.inf)
-            missing, structural = _float(row, "missing_rate", default=0.0), _float(row, "F_struct", default=0.0)
+            sampled_slope = rng.gauss(sampled_group_slope, between_worker_slope_sd) if between_worker_slope_sd > 0 else sampled_group_slope
+            missing = _float(row, "missing_rate", default=math.nan)
+            structural = _float(row, "F_struct", default=group_structural_rate)
             residual_scale = _float(row, "outcome_residual_sd", default=math.inf)
-            sampled_slope = rng.gauss(slope, slope_scale) if math.isfinite(slope_scale) and slope_scale > 0 else slope
             for building_instance, task_instance, building, task in task_instances:
                 sampled_task_id = safe(task.get("task_id"))
                 for edge in edges_by_task.get(sampled_task_id, []):
@@ -618,18 +778,18 @@ def _empirical_cluster_bootstrap(
                         continue
                     risk = _float(task, "risk_design_score_A", default=0.0)
                     noise = rng.gauss(0.0, residual_scale) if math.isfinite(residual_scale) and residual_scale > 0 else 0.0
-                    outcome = baseline.get(worker, 0.0) + worker_intercepts[worker] + sampled_slope * risk + building_effect[building_instance] + task_effect[task_instance] + noise
+                    outcome = sampled_baseline[worker] + sampled_slope * risk + building_effect[building_instance] + task_effect[task_instance] + noise
                     worker_outcomes[worker].append((risk, outcome))
                     delivered_edges.append((worker, task_instance)); instance_support[task_instance] += 1
+                    if safe(edge.get("c2_component")) == "diverse_bridge":
+                        delivered_bridge_edges.append((worker, task_instance))
                     delivered_building_instances.add(building_instance)
                     delivered_strata.add(_task_stratum(task)); delivered_strata_by_worker[worker].add(_task_stratum(task))
         for row in worker_rows:
             worker = safe(row.get("worker_id"))
-            slope = _float(row, "risk_slope_for_simulation", "risk_slope", "group_prior_slope", default=0.0)
             residual_scale = _float(row, "outcome_residual_sd", default=math.inf)
-            prior_scale = _float(row, "risk_slope_scale_for_simulation", "risk_slope_se", "between_worker_slope_sd", default=math.inf)
             delivered = worker_outcomes.get(worker, [])
-            estimate, slope_width = _slope(delivered, slope, prior_scale, residual_scale)
+            estimate, slope_width = _slope(delivered, sampled_group_slope, between_worker_slope_sd, residual_scale, group_slope_se)
             q_se = _float(row, "Q_GT_baseline_se", default=math.inf)
             if math.isfinite(q_se):
                 c1_precision = 1.0 / max(q_se, 1e-9) ** 2
@@ -637,8 +797,8 @@ def _empirical_cluster_bootstrap(
                 c2_precision = len(delivered) / c2_variance if delivered and math.isfinite(c2_variance) and c2_variance > 0 else 0.0
                 q_widths.append(1.96 / math.sqrt(c1_precision + c2_precision))
             draw_slope_widths.append(slope_width)
-            signs.append((slope == 0) or (estimate == 0) or (slope * estimate > 0))
-            rank_score[worker] = sum(value[1] for value in delivered) / len(delivered) if delivered else baseline.get(worker, 0.0)
+            signs.append((sampled_group_slope == 0) or (estimate == 0) or (sampled_group_slope * estimate > 0))
+            rank_score[worker] = sum(value[1] for value in delivered) / len(delivered) if delivered else sampled_baseline[worker]
         draw_rank = sorted(rank_score, key=lambda worker: (-rank_score[worker], worker))
         rank_stable += draw_rank == baseline_rank
         slope_stable += all(signs)
@@ -649,6 +809,7 @@ def _empirical_cluster_bootstrap(
         top_k_values.append(len(set(draw_rank[:top_k]) & set(baseline_rank[:top_k])) / top_k if top_k else 0.0)
         rank_displacements.append(sum(abs(baseline_position[worker] - positions[worker]) for worker in baseline_position) / max(1, count))
         connected += _connected_delivered(delivered_edges)
+        bridge_connected += _connected_delivered(delivered_bridge_edges)
         ordinary += "ordinary" in delivered_strata; stress += "stress" in delivered_strata
         ordinary_per_worker += sum("ordinary" in delivered_strata_by_worker.get(worker, set()) for worker in baseline) / max(1, len(baseline))
         stress_per_worker += sum("stress" in delivered_strata_by_worker.get(worker, set()) for worker in baseline) / max(1, len(baseline))
@@ -671,14 +832,17 @@ def _empirical_cluster_bootstrap(
         "top_k_overlap": sum(top_k_values) / len(top_k_values) if top_k_values else "", "mean_rank_displacement": sum(rank_displacements) / len(rank_displacements) if rank_displacements else "",
         "risk_slope_direction_stability": slope_stable / draws,
         "minimum_worker_support": min(min_worker_supports, default=0), "minimum_task_support": min(min_task_supports, default=0),
-        "graph_connectivity_probability": connected / draws, "building_coverage": min(delivered_building_counts, default=0), "building_coverage_probability": full_building_coverage / draws,
+        "graph_connectivity_probability": connected / draws, "bridge_only_connectivity_probability": bridge_connected / draws, "building_coverage": min(delivered_building_counts, default=0), "building_coverage_probability": full_building_coverage / draws,
         "ordinary_coverage_probability": ordinary / draws, "stress_coverage_probability": stress / draws,
         "ordinary_coverage_probability_per_worker": ordinary_per_worker / draws,
         "stress_coverage_probability_per_worker": stress_per_worker / draws,
         "expected_assignment_count": sum(delivered_counts) / len(delivered_counts) if delivered_counts else 0,
         "sampled_task_edge_identity_violations": sampled_task_edge_identity_violations,
         "variance_fields_used": list(required_variances),
-        "simulation_method": "hierarchical_building_task_resampling_with_c1_group_prior", "simulation_status": "estimated",
+        "uncertainty_fields_used": ["group_slope_mean", "group_slope_se", "between_worker_slope_sd", "Q_GT_contrast_covariance", "outcome_residual_sd", "task_sd", "building_sd", "missing_rate", "F_struct"],
+        "known_c1_worker_intercept_sd_resampled": False,
+        "population_worker_intercept_sd_recorded": worker_intercept_sd,
+        "simulation_method": "hierarchical_building_task_resampling_with_joint_qgt_and_separate_slope_uncertainty", "simulation_status": "estimated",
     }
 
 
@@ -780,6 +944,7 @@ def enumerate_candidates(
     candidates: list[tuple[int, str, list[dict[str, Any]], dict[str, Any], dict[str, Any]]] = []
     worker_projections: list[dict[str, Any]] = []
     simulation_rows: list[dict[str, Any]] = []
+    stability_rows: list[dict[str, Any]] = []
     task_selection_rows: list[dict[str, Any]] = []
     simulation = manifest.get("simulation") or {}
     simulation_seed = int(simulation.get("seed", 0))
@@ -867,6 +1032,11 @@ def enumerate_candidates(
             seed=simulation_seed, draws=simulation_draws,
         )
         simulation_rows.append(simulation_row)
+        stability_rows.extend(_recompute_stability_audits(
+            design_id, workers_rows, rows,
+            {_task_id(task): task for task in [*selected_anchors, *selected_bridges]},
+            seed=simulation_seed, draws=simulation_draws,
+        ))
         target_raw = risk_contract["simulation"].get("max_q_gt_ci_half_width")
         target = float(target_raw) if target_raw not in {None, ""} else math.inf
         simulated_half_width = _float(simulation_row, "max_ci_half_width", default=projected)
@@ -913,7 +1083,7 @@ def enumerate_candidates(
     write_csv(output_dir / "c2b_worker_projection_audit.csv", worker_projections, WORKER_PROJECTION_FIELDS)
     write_csv(output_dir / "c2b_task_selection_audit.csv", task_selection_rows, TASK_SELECTION_AUDIT_FIELDS)
     write_csv(output_dir / "c2b_simulation_draw_summary.csv", simulation_rows, SIMULATION_FIELDS)
-    write_csv(output_dir / "c2b_loto_lobo_audit.csv", [{"design_id": row["design_id"], "worker_id": row["worker_id"], "loto_support_after_one_task": max(0, int(row["unique_image_coverage"]) - 1), "lobo_support_after_one_building": max(0, int(row["building_coverage"]) - 1)} for row in worker_projections])
+    write_csv(output_dir / "c2b_loto_lobo_anchor_stability_audit.csv", stability_rows)
     write_csv(output_dir / "c2b_policy_feasibility_audit.csv", audits, DESIGN_AUDIT_FIELDS)
     candidate_edges = [row for _count, _design, rows, _graph, _simulation in candidates for row in rows]
     write_csv(output_dir / "c2b_candidate_worker_task_edges.csv", candidate_edges, ASSIGNMENT_FIELDS)

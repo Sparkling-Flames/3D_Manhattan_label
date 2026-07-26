@@ -59,9 +59,10 @@ def test_task_adjusted_global_and_full_gates_are_frozen(tmp_path):
 
 
 def test_confidence_level_changes_task_cluster_interval():
+    task_values = [("t1", .9, .7), ("t2", .4, .6), ("t3", .8, .65), ("t4", .55, .7), ("t5", .72, .61), ("t6", .48, .58)]
     submissions = [
         {"worker_id": worker, "task_id": task, "condition": "manual", "iou_to_gt": str(value), "quality_evaluable": "true"}
-        for worker, task, value in [("w1", "t1", .9), ("w1", "t2", .4), ("w2", "t1", .7), ("w2", "t2", .6)]
+        for task, w1, w2 in task_values for worker, value in (("w1", w1), ("w2", w2))
     ]
     states = [{"worker_id": worker, "process_eligible": "true", "independence_eligible": "true", "reference_evaluable": "true", "F_struct": "0"} for worker in ("w1", "w2")]
     low, _, _ = build_global(submissions, states, profile_version="p", estimator={"confidence_level": .8})

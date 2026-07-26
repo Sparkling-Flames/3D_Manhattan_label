@@ -1,0 +1,57 @@
+{
+  "schema_version": "paper_a_close_c1_plan_c2b_run_config_v1",
+  "runbook": "docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md",
+  "audit_c1": {
+    "export_dir": [
+      "export_label/stage2_Chinese",
+      "export_label/stage2_English"
+    ],
+    "active_log": "<frozen-c1-active-log-root>",
+    "manual_assignment": "analysis_results/calibration_rebuild_20260702/assignment_manifest_C1_manual_draft_v3_1.csv",
+    "semi_assignment": "analysis_results/calibration_rebuild_20260702/assignment_manifest_C1_semi_draft_v3_1.csv",
+    "worker_distribution": "analysis_results/calibration_rebuild_20260702/worker_distribution_internal_manifest_v3_1.csv",
+    "gt_export": "export_label/groudTruth.json",
+    "p1_closeout_dir": "analysis_results/prescreen_closeout_final_gold_v2_20260701",
+    "p1_integrity_dir": "<static-root>/p1_integrity",
+    "output_root": "analysis_results",
+    "c1_preannotation_feature_csv": "<static-root>/c1_preannotation_task_features.csv",
+    "c1_active_log_freeze_manifest": "<formal-root>/c1_active_log_freeze_manifest.json",
+    "collection_closure_manifest": "<formal-root>/c1_collection_closure_manifest.json",
+    "independence_disposition": null,
+    "duplicate_adjudication": "<review-root>/duplicate_adjudication.csv",
+    "structural_disposition": "<review-root>/structural_disposition.csv",
+    "project_independence_disposition": "<review-root>/project_independence_disposition.csv",
+    "scope_adjudication": "<review-root>/scope_adjudication.csv",
+    "reference_amendment": "<review-root>/reference_amendment.csv",
+    "outside_assignment_disposition": "<review-root>/outside_assignment_disposition.csv",
+    "completion_disposition": "<review-root>/completion_disposition.csv"
+  },
+  "finalize_c1": {
+    "adjudication_manifest": "<review-root>/c1_adjudication_manifest.json"
+  },
+  "design_c2b": {
+    "inventory_csv": "analysis_results/calibration_rebuild_20260702/calibration_full_candidate_inventory_v3.csv",
+    "layout_dir": "output/layout_json",
+    "c1_task_feature_csv": "<static-root>/c1_preannotation_task_features.csv",
+    "checkpoint": "ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth",
+    "building_registry": "<evidence-root>/authoritative_building_registry.csv",
+    "source_split_evidence": "<evidence-root>/source_split_evidence.csv",
+    "source_split_approval": "<approval-root>/source_split_approval.json",
+    "future_holdout_evidence": "<evidence-root>/future_holdout_evidence.csv",
+    "future_holdout_approval": "<approval-root>/future_holdout_approval.json",
+    "history_overlap_audit": "<static-root>/history_overlap_audit.csv",
+    "scope_registry": "<evidence-root>/scope_registry.csv",
+    "reference_registry": "<evidence-root>/reference_registry.csv",
+    "feature_freeze_manifest": "<static-root>/c2_feature_freeze_manifest.json",
+    "static_freeze_manifest": "<static-root>/c2b_static_freeze_manifest.json",
+    "threshold_manifest": "docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json",
+    "output_dir": "<c2b-design-root>",
+    "device": "cuda:0"
+  },
+  "build_c2b": {
+    "selected_task_reference_manifest": "<approval-root>/selected_task_reference_approval.json",
+    "selected_design_approval": "<approval-root>/selected_design_approval.json",
+    "capacity_manifest": "<approval-root>/c2b_capacity_manifest.csv",
+    "output_dir": "<c2b-build-root>"
+  }
+}

@@ -83,15 +83,18 @@ def test_preannotation_feature_producer_requires_authoritative_building_and_base
     np.savez(cache, global_mean=np.zeros(1), global_components=np.eye(1), global_scale=np.ones(1), local_mean=np.zeros(1), local_components=np.eye(1), local_scale=np.ones(1), reference_global=np.asarray([[0.], [2.]]), reference_local=np.asarray([[0.], [2.]]))
     candidate_cache = tmp_path / "candidate.npz"
     np.savez(candidate_cache, paths=np.asarray([image.resolve().as_posix()]), global_descriptors=np.asarray([[1.]]), local_descriptors=np.asarray([[1.]]))
-    circular = tmp_path / "circular.json"; circular.write_text(json.dumps({"audit_basis": "four_phase_orbit_aggregation"}), encoding="utf-8")
+    circular = tmp_path / "circular.json"; circular.write_text(json.dumps({"audit_basis": "off_grid_rotation_reinference", "four_phase_permutation_role": "diagnostic_only"}), encoding="utf-8")
     seam = tmp_path / "seam.json"; seam.write_text(json.dumps({"audit_basis": "small_seam_offset_sensitivity"}), encoding="utf-8")
     sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
+    leakage = tmp_path / "c2b_reference_candidate_leakage_audit.summary.json"
+    leakage.write_text(json.dumps({"status": "passed", "formal_feature_pool_allowed": True}), encoding="utf-8")
     feature_manifest = tmp_path / "feature.json"
     feature_manifest.write_text(json.dumps({
         "schema_version": "paper_a_c2_feature_freeze_v2", "feature_audit_status": "approved", "feature_cache_path": str(cache), "candidate_descriptor_cache_path": str(candidate_cache), "candidate_descriptor_cache_sha256": sha(candidate_cache), "circular_audit_path": str(circular), "seam_audit_path": str(seam), "checkpoint_sha256": sha(checkpoint), "config_sha256": sha(config), "reference_feature_sha256": sha(cache), "reference_image_count": 2,
-        "pca_frozen": True, "whitening_frozen": True, "circular_shift_invariant": True, "seam_invariant": True,
+        "pca_frozen": True, "whitening_frozen": True, "circular_shift_invariant": True, "off_grid_circular_robustness": True, "seam_invariant": True,
         "pca_frozen_sha256": sha(cache), "whitening_frozen_sha256": sha(cache), "circular_shift_invariant_sha256": sha(circular), "seam_invariant_sha256": sha(seam),
         "pca_sha256": sha(cache), "whitening_sha256": sha(cache), "circular_shift_audit_sha256": sha(circular), "seam_audit_sha256": sha(seam),
+        "reference_candidate_leakage_audit_sha256": sha(leakage),
     }), encoding="utf-8")
     output = tmp_path / "features.csv"
     summary = extract_frozen_model_features([assignments], inventory, buildings, layouts, checkpoint, config, feature_manifest, output)

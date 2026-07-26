@@ -98,7 +98,9 @@
 - 不改变 protocol、schema、routing、SOP 语义。
 ## 2026-07-24 Paper A 分析链收口补充
 
-- `tools/thesis_main/analysis/run_c1_closeout_launch.py`：Paper A C1→C2-B 唯一公开六阶段入口：`rehearse-c1`、`freeze-c1`、`audit-c1`、`finalize-c1`、`design-c2b`、`build-c2b`。`run_c1_precloseout_rehearsal.py` 仅保留为其内部 C1 证据物化器；正式 C2-B 资格由 `materialize_c2b_task_eligibility.py` 直接连接冻结证据。
+- `tools/thesis_main/analysis/run_c1_closeout_launch.py`：Paper A C1→C2-B 公开入口；保留 `rehearse-c1`、`freeze-c1`、`audit-c1`、`finalize-c1`、`design-c2b`、`build-c2b` 等细粒度审计命令，并提供可恢复的 `close-c1-and-plan-c2b` 薄入口、scene-building 展开与 runbook 命令合同检查。`run_c1_precloseout_rehearsal.py` 仅保留为其内部 C1 证据物化器；正式 C2-B 资格由 `materialize_c2b_task_eligibility.py` 直接连接冻结证据。
+- `tools/thesis_main/analysis/c1_task_adjusted_quality.py`：C1 唯一 task-adjusted Q_GT 估计器，固定 worker effect、task random intercept 与 task/building cluster bootstrap，只输出估计、CI/LCB、worker contrast covariance、task effect 和模型审计；排名仅由后续 routing freeze 生成。
+- `tools/thesis_main/analysis/c2b_static_evidence.py`：C2-B P1 integrity、reference/candidate path/content SHA 泄漏审计、P1/C1 history 推导、scene-building 显式映射展开、非支配 source/holdout 候选与 `c2b_static_freeze_manifest.json` 物化工具。
 - `tools/thesis_main/analysis/materialize_c1_operational_reference.py`：把冻结 candidate inventory 中已存在的
   人工 scope 标签和 `groudTruth.json` 单一几何 reference 接入 C1；未复核/冲突任务保持 pending。
 - `tools/thesis_main/analysis/materialize_routing_component_evidence.py`：P1→C1→C2-B component evidence
@@ -106,11 +108,12 @@
 - `tools/thesis_main/analysis/materialize_main_inference.py`：T1 image-level 与 V1 ITT 的 manifest/SHA 绑定
   cluster bootstrap 推断入口。
 - `tools/thesis_main/analysis/materialize_c2_task_risk.py`：固定 HoHoNet/LHFeat、结构输出、统一 `risk_design_vector_A`/`risk_design_score_A` 的候选任务风险入口；缺少 feature/C1 冻结依赖时 assignment fail-closed。
-- `tools/thesis_main/analysis/freeze_c2_feature_reference.py` 与 `tools/thesis_main/registry/hohonet_feature_backend.py`：一次性提取训练参考库和候选池 LHFeat，冻结 PCA/whitening cache、四相位 circular audit 与独立 seam audit；manifest 中只有声明而无匹配 cache 时不得 ready。
+- `tools/thesis_main/analysis/freeze_c2_feature_reference.py` 与 `tools/thesis_main/registry/hohonet_feature_backend.py`：一次性提取训练参考库和候选池 LHFeat，冻结 PCA/whitening cache、off-grid rotation reinference circular audit 与独立 seam audit；四相位置换仅为恒等性 diagnostic，manifest 中只有声明而无匹配 cache/leakage evidence 时不得 ready。
 - `tools/thesis_main/analysis/materialize_c1_c2_design_parameters.py`：从 C1 三轨 eligibility、task-level risk 与 completion 估计 C2-B 模拟所需的 worker risk slope、SE、missing 与结构失败参数；不生成 routing profile。
 - `tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`：P1→C1 Spearman/Kendall、worker bootstrap 与 range-restriction 审计入口。
 - `docs/thesis_main/PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md`：Paper A C1→C2-B 单一生产 DAG、stage active-log freeze、状态 owner、风险/模拟和人工审批边界；与 vFinal/Protocol/SOP/SAP 配套，不改变其设计语义。
 - `docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md`：隔离 GPU 环境、静态 feature/P1 integrity 准备、C1 freeze/audit/finalize 和 C2-B design/build 的正式命令。
+- `docs/thesis_main/PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json`：`close-c1-and-plan-c2b` 可恢复薄入口的路径配置模板；占位符不得直接用于正式运行。
 - `config/paper_a_analysis_requirements.lock.txt`、`config/paper_a_torch_requirements.lock.txt` 与 `docs/thesis_main/C2B_FEATURE_AUDIT_THRESHOLDS.json`：Paper A 隔离运行环境和 feature audit 审批真源；本地 `.venv-paper-a-gpu` 与静态缓存不提交。
 - `import_json/paper_a_c2b/legacy_reverse_v3_1_manifest.csv`：20260702 v3.1 13 张人工 reverse 图的只读 provenance；不授予 eligibility 或排序优先权。
 - `tools/thesis_main/analysis/c1_c2_mainline.py` 与 `materialize_c1_preannotation_task_features.py`：不可变 C1 row-eligibility sidecar join、estimand-specific worker/task/building/graph gates、唯一 C2-B worker design input，以及不读取 crowd geometry 的预标注 C1 task feature 合同；正式 DAG 由 `docs/thesis_main/PAPER_A_VFINAL_EXECUTION_CONTRACT.json` 固定，风险 exposure 由 `docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json` 固定，设计审批由 `docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json` 固定。

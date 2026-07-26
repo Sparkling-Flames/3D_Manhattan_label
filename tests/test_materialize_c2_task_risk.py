@@ -80,9 +80,11 @@ def test_feature_freeze_requires_the_actual_bound_cache(tmp_path) -> None:
     candidate_cache = tmp_path / "candidate.npz"; np.savez(candidate_cache, paths=np.asarray([]), global_descriptors=np.asarray([]), local_descriptors=np.asarray([]))
     import hashlib
     cache_sha = hashlib.sha256(cache.read_bytes()).hexdigest()
-    circular = tmp_path / "circular.json"; circular.write_text(json.dumps({"audit_basis": "four_phase_orbit_aggregation"}), encoding="utf-8")
+    circular = tmp_path / "circular.json"; circular.write_text(json.dumps({"audit_basis": "off_grid_rotation_reinference", "four_phase_permutation_role": "diagnostic_only"}), encoding="utf-8")
     seam = tmp_path / "seam.json"; seam.write_text(json.dumps({"audit_basis": "small_seam_offset_sensitivity"}), encoding="utf-8")
     circular_sha = hashlib.sha256(circular.read_bytes()).hexdigest(); seam_sha = hashlib.sha256(seam.read_bytes()).hexdigest()
+    leakage = tmp_path / "c2b_reference_candidate_leakage_audit.summary.json"
+    leakage.write_text(json.dumps({"status": "passed", "formal_feature_pool_allowed": True}), encoding="utf-8")
     manifest = tmp_path / "freeze.json"
     manifest.write_text(json.dumps({
         "schema_version": "paper_a_c2_feature_freeze_v2", "feature_audit_status": "approved",
@@ -90,11 +92,12 @@ def test_feature_freeze_requires_the_actual_bound_cache(tmp_path) -> None:
         "checkpoint_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
         "config_sha256": hashlib.sha256(config.read_bytes()).hexdigest(), "reference_feature_sha256": cache_sha,
         "reference_image_count": 2,
-        "pca_frozen": True, "whitening_frozen": True, "circular_shift_invariant": True, "seam_invariant": True,
+        "pca_frozen": True, "whitening_frozen": True, "circular_shift_invariant": True, "off_grid_circular_robustness": True, "seam_invariant": True,
         "pca_frozen_sha256": cache_sha, "whitening_frozen_sha256": cache_sha,
         "circular_shift_invariant_sha256": circular_sha, "seam_invariant_sha256": seam_sha,
         "pca_sha256": cache_sha, "whitening_sha256": cache_sha,
         "circular_shift_audit_sha256": circular_sha, "seam_audit_sha256": seam_sha,
+        "reference_candidate_leakage_audit_sha256": hashlib.sha256(leakage.read_bytes()).hexdigest(),
     }), encoding="utf-8")
     assert _feature_freeze_ready(manifest, checkpoint=checkpoint, config=config)
     cache.write_bytes(b"tampered")
@@ -112,7 +115,7 @@ def test_frozen_feature_caches_can_refresh_approval_without_model_inference(tmp_
     inventory = tmp_path / "inventory.csv"; inventory.write_text("image_id,base_task_id\ni,t\n", encoding="utf-8")
     cache = tmp_path / "reference.npz"; cache.write_bytes(b"reference-cache")
     candidate = tmp_path / "candidate.npz"; candidate.write_bytes(b"candidate-cache")
-    circular = tmp_path / "circular.json"; circular.write_text(json.dumps({"circular_relative_l2_max": 1e-8}), encoding="utf-8")
+    circular = tmp_path / "circular.json"; circular.write_text(json.dumps({"circular_relative_l2_max": 1e-8, "audit_basis": "off_grid_rotation_reinference", "four_phase_permutation_role": "diagnostic_only"}), encoding="utf-8")
     seam = tmp_path / "seam.json"; seam.write_text(json.dumps({"seam_relative_l2_q95": .02}), encoding="utf-8")
     sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
     paths = sorted(reference.glob("*.jpg"))

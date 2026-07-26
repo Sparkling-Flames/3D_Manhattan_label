@@ -7,6 +7,7 @@ from pathlib import Path
 from typing import Any
 
 from tools.thesis_main.analysis.prescreen_canonicalize_export import _annotation_id, _data, _project_id, _safe_str, _task_id, _worker_id, annotation_version_id, annotation_version_identity
+from tools.thesis_main.analysis.audit_p1_exact_copy_low_time import canonical_geometry_hash
 from tools.thesis_main.analysis.quality_core.choice_parser import extract_data
 from tools.thesis_main.analysis.vfinal_artifact_utils import COMMON_SIDEcar_FIELDS, formal_status, json_text, sha256_file, sha256_json, sidecar_common, write_csv_rows
 
@@ -77,6 +78,11 @@ def _provenance(task: dict[str, Any], export_path: Path, *, stage: str, pool: st
     if not selected:
         return [{**sidecar_common(source_artifact=str(export_path), source_sha256=sha256_file(export_path), stage=stage, pool=pool, condition=condition, validity_status="not_evaluable", rule_version=RULE_VERSION, interpretation_allowed=False), "logical_task_id": _safe_str(data.get("task_id") or data.get("base_task_id")), "ls_runtime_task_id": _task_id(task, 0), "project_id": _project_id(task), "task_id": _safe_str(data.get("task_id") or data.get("base_task_id")), "artifact_kind": "prediction", "prediction_selection_status": "ambiguous_multiple_predictions", "provenance_status": "incomplete"}]
     for index, prediction in enumerate(selected, 1):
+        try:
+            initial_corners, _polygon, _choices, _quality = extract_data(prediction.get("result", []))
+            initial_geometry_hash, _payload, _count = canonical_geometry_hash(initial_corners, round_px=0.5)
+        except Exception:
+            initial_geometry_hash = ""
         fields = {
             "initialization_artifact_id": _safe_str(prediction.get("initialization_artifact_id") or prediction.get("id")),
             "model_version": _safe_str(prediction.get("model_version") or prediction.get("version")),
@@ -84,6 +90,7 @@ def _provenance(task: dict[str, Any], export_path: Path, *, stage: str, pool: st
             "inference_config_sha256": _safe_str(prediction.get("inference_config_sha256") or prediction.get("config_sha256") or prediction.get("config_hash")),
             "preprocess_postprocess_sha256": _safe_str(prediction.get("preprocess_postprocess_sha256") or prediction.get("preprocess_sha256") or prediction.get("preprocess_hash")),
             "prediction_payload_hash": sha256_json(prediction),
+            "initial_geometry_hash": initial_geometry_hash,
         }
         complete = all(fields.values())
         status, allowed = formal_status(input_status, valid=complete)
@@ -223,7 +230,7 @@ def materialize_canonical_evidence(export_paths: list[Path], canonical_csv: Path
     with (output_dir / "c1_canonical_geometry.jsonl").open("w", encoding="utf-8") as handle:
         for row in geometry_rows:
             handle.write(json.dumps(row, ensure_ascii=False, sort_keys=True) + "\n")
-    write_csv_rows(output_dir / "c1_model_artifact_provenance.csv", provenance_rows, COMMON_SIDEcar_FIELDS + ["logical_task_id", "ls_runtime_task_id", "project_id", "task_id", "prediction_index", "artifact_kind", "prediction_selection_status", "initialization_artifact_id", "model_version", "checkpoint_sha256", "inference_config_sha256", "preprocess_postprocess_sha256", "prediction_payload_hash", "prediction_result_present", "provenance_status"])
+    write_csv_rows(output_dir / "c1_model_artifact_provenance.csv", provenance_rows, COMMON_SIDEcar_FIELDS + ["logical_task_id", "ls_runtime_task_id", "project_id", "task_id", "prediction_index", "artifact_kind", "prediction_selection_status", "initialization_artifact_id", "model_version", "checkpoint_sha256", "inference_config_sha256", "preprocess_postprocess_sha256", "prediction_payload_hash", "initial_geometry_hash", "prediction_result_present", "provenance_status"])
     return {"schema_version": "paper_a_vfinal_sidecar_v3", "rule_version": RULE_VERSION, "input_status": input_status, "n_meta_observations": len(meta_rows), "n_geometry_rows": len(geometry_rows), "n_model_provenance_rows": len(provenance_rows), "n_annotation_version_dispositions": len(disposition_rows), "annotation_version_disposition_csv": str(version_disposition_csv or ""), "annotation_version_disposition_sha256": sha256_file(version_disposition_csv) if version_disposition_csv and version_disposition_csv.exists() else "", "formal_c1_annotation_data_present": bool(meta_rows) and input_status == "formal", "interpretation_allowed": False, "dry_run": input_status != "formal", "canonical_registry_bijection_valid": not binding_blockers, "blockers": sorted(set(binding_blockers))}
 
 

@@ -32,8 +32,8 @@ def build_source(
     integrity_status = {}
     corrected_geometry = {}
     if correction_dir:
-        status_path = correction_dir / "p1_worker_evidence_status_v1.csv"
-        geometry_path = correction_dir / "p1_worker_geometry_profile_v1.csv"
+        status_path = next(iter(sorted(correction_dir.glob("*p1_worker_evidence_status_v1.csv"))), correction_dir / "p1_worker_evidence_status_v1.csv")
+        geometry_path = next(iter(sorted(correction_dir.glob("*p1_worker_geometry_profile_v1.csv"))), correction_dir / "p1_worker_geometry_profile_v1.csv")
         if status_path.exists(): integrity_status = {row.get("worker_id", ""): row for row in _rows(status_path)}
         if geometry_path.exists(): corrected_geometry = {row.get("worker_id", ""): row for row in _rows(geometry_path)}
         r0 = {

@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, build_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1
+from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, build_c2b, close_c1_and_plan_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1, validate_runbook_command_contract
 from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _aggregate_sha, _c1_closeout_blockers
 
 
@@ -14,6 +14,10 @@ def test_rehearsal_can_read_live_logs_but_cannot_be_formal(monkeypatch, tmp_path
     monkeypatch.setattr(
         "tools.thesis_main.analysis.run_c1_closeout_launch.materialize_c1",
         lambda *args, **kwargs: captured.update(kwargs) or {"output_dir": str(tmp_path)},
+    )
+    monkeypatch.setattr(
+        "tools.thesis_main.analysis.run_c1_closeout_launch._materialize_rehearsal_root_cause_report",
+        lambda _summary: {"state": {"formal_closeout_ready": False}},
     )
     args = argparse.Namespace(
         export_dir=[], active_log=tmp_path / "new_server", manual_assignment=tmp_path / "m.csv",
@@ -26,13 +30,14 @@ def test_rehearsal_can_read_live_logs_but_cannot_be_formal(monkeypatch, tmp_path
     assert result["formal_closeout_ready"] is False
 
 
-def test_public_cli_exposes_the_eight_stage_commands(capsys):
+def test_public_cli_exposes_the_auditable_and_thin_entry_commands(capsys):
     with pytest.raises(SystemExit):
         main(["--help"])
     help_text = capsys.readouterr().out
     for command in (
         "rehearse-c1", "prepare-c2b-static", "preflight-calibration", "freeze-c1",
         "audit-c1", "finalize-c1", "design-c2b", "build-c2b",
+        "expand-building-registry", "check-command-contract", "close-c1-and-plan-c2b",
     ):
         assert command in help_text
     for removed in ("day1-canonical-audit", "day1-formal-audit", "day2-c2b-build", "freeze-c1-active-log"):
@@ -112,11 +117,13 @@ def test_preflight_rejects_null_thresholds_and_unapproved_feature_freeze(tmp_pat
         output=tmp_path / "preflight.json",
     ))
     assert result["ready"] is False
-    assert result["blockers"] == [
+    assert {
         "unapproved_or_incomplete:design_thresholds",
         "unapproved_or_incomplete:feature_thresholds",
         "feature_freeze_not_approved",
-    ]
+        "missing:p1_integrity_bundle", "missing:leakage_audit",
+        "missing:split_proposals", "missing:static_freeze",
+    }.issubset(result["blockers"])
 
 
 def test_static_evidence_queues_do_not_promote_inventory_hints(tmp_path):
@@ -132,9 +139,29 @@ def test_static_evidence_queues_do_not_promote_inventory_hints(tmp_path):
     result = _materialize_static_evidence_review_queues(inventory, legacy, tmp_path / "out")
 
     assert result["formal_evidence_ready"] is False
-    queue = (tmp_path / "out" / "authoritative_building_registry.review_queue.csv").read_text(encoding="utf-8")
+    queue = (tmp_path / "out" / "authoritative_building_scene_mapping_pilot.review_queue.csv").read_text(encoding="utf-8")
     assert "guessed_building" not in queue
-    assert "pending_review" in queue
+    assert "pending_scene_mapping_review" in queue
+    assert result["building_scene_pilot_count"] <= 15
+
+
+def test_runbook_command_contract_matches_real_artifact_names() -> None:
+    result = validate_runbook_command_contract(Path("docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md"))
+    assert result["valid"] is True
+    assert result["violations"] == []
+    template = json.loads(Path("docs/thesis_main/PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json").read_text(encoding="utf-8"))
+    assert template["schema_version"] == "paper_a_close_c1_plan_c2b_run_config_v1"
+    assert set(template) >= {"audit_c1", "finalize_c1", "design_c2b", "build_c2b"}
+
+
+def test_close_entry_requires_every_resume_phase_config(tmp_path) -> None:
+    config = tmp_path / "run.json"
+    config.write_text(json.dumps({
+        "schema_version": "paper_a_close_c1_plan_c2b_run_config_v1",
+        "audit_c1": {}, "finalize_c1": {}, "design_c2b": {},
+    }), encoding="utf-8")
+    with pytest.raises(ValueError, match="build_c2b"):
+        close_c1_and_plan_c2b(argparse.Namespace(run_config=config, state_output=tmp_path / "state.json"))
 
 
 def test_freeze_c1_atomically_creates_active_log_and_collection_contracts(tmp_path):
@@ -175,7 +202,7 @@ def test_day2_fails_closed_before_materializing_assignments(tmp_path, monkeypatc
 
 
 def test_day1_finalize_freezes_c1_evidence_but_not_routing_profile(tmp_path):
-    (tmp_path / "c1_measurement_freeze_manifest.json").write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C1_EVIDENCE_BUNDLE_FROZEN": True, "C2B_BASELINE_INPUT_FROZEN": True, "Q_GT_FREEZE_STATUS": "frozen", "R_LOO_FREEZE_STATUS": "support_limited", "F_STRUCT_FREEZE_STATUS": "frozen"}), encoding="utf-8")
+    (tmp_path / "c1_measurement_freeze_manifest.json").write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C1_EVIDENCE_BUNDLE_FROZEN": True, "C2B_BASELINE_INPUT_FROZEN": True, "collection_window_closed": True, "Q_GT_FREEZE_STATUS": "frozen", "R_LOO_FREEZE_STATUS": "support_limited", "F_STRUCT_FREEZE_STATUS": "frozen"}), encoding="utf-8")
     (tmp_path / "c1_final_canonical_closeout_summary.json").write_text(json.dumps({"blockers": [], "formal_closeout_ready": True}), encoding="utf-8")
     (tmp_path / "formal_audit_summary.json").write_text(json.dumps({"input_status": "formal", "formal_closeout_ready": True, "blockers": [], "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1", "git_commit_sha": "a" * 40, "worktree_clean": True, "full_dependency_bundle_sha256": "bundle", "C1_CANONICAL_CLOSED": True, "collection_closure": {"status": "validated"}}), encoding="utf-8")
     adjudication = tmp_path / "adjudication.json"; adjudication.write_text(json.dumps({"approved": True, "input_bundle_sha256": "bundle"}), encoding="utf-8")
@@ -183,6 +210,29 @@ def test_day1_finalize_freezes_c1_evidence_but_not_routing_profile(tmp_path):
     assert result["formal_closeout_ready"] is True
     assert result["C1_MEASUREMENT_FROZEN"] is True
     assert result["routing_profile_frozen"] is False
+
+
+def test_collection_stays_closed_when_qgt_is_support_limited_and_only_c2b_is_blocked(tmp_path):
+    (tmp_path / "c1_measurement_freeze_manifest.json").write_text(json.dumps({
+        "C1_EVIDENCE_BUNDLE_FROZEN": True, "C2B_BASELINE_INPUT_FROZEN": False,
+        "collection_window_closed": True, "Q_GT_FREEZE_STATUS": "support_limited",
+        "R_LOO_FREEZE_STATUS": "frozen", "F_STRUCT_FREEZE_STATUS": "frozen",
+    }), encoding="utf-8")
+    (tmp_path / "c1_final_canonical_closeout_summary.json").write_text(json.dumps({"blockers": [], "formal_closeout_ready": True, "C1_CANONICAL_CLOSED": True}), encoding="utf-8")
+    (tmp_path / "formal_audit_summary.json").write_text(json.dumps({
+        "input_status": "formal", "formal_closeout_ready": True, "blockers": [],
+        "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1", "git_commit_sha": "a" * 40,
+        "worktree_clean": True, "full_dependency_bundle_sha256": "bundle", "C1_CANONICAL_CLOSED": True,
+        "collection_closure": {"status": "validated"},
+    }), encoding="utf-8")
+    adjudication = tmp_path / "adjudication.json"
+    adjudication.write_text(json.dumps({"approved": True, "input_bundle_sha256": "bundle"}), encoding="utf-8")
+    result = finalize_c1(argparse.Namespace(output_dir=tmp_path, adjudication_manifest=adjudication))
+    freeze = json.loads((tmp_path / "c1_evidence_freeze_manifest.json").read_text(encoding="utf-8"))
+    assert result["formal_closeout_ready"] is True
+    assert freeze["C1_COLLECTION_INCOMPLETE"] is False and freeze["C1_EVIDENCE_BUNDLE_FROZEN"] is True
+    assert result["C2B_DESIGN_READY"] is False
+    assert result["c2b_baseline_blockers"] == ["q_gt_baseline_support_limited_or_not_frozen"]
 
 
 def test_day1_finalize_refuses_unresolved_formal_blockers(tmp_path):

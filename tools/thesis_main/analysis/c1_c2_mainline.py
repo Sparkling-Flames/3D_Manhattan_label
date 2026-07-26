@@ -297,9 +297,11 @@ def materialize_c2b_design_worker_profile(
             "process_support": process_support, "independence_support": independence_support, "scope_reference_support": r.get("scope_reference_support", ""),
             "risk_slope": p.get("risk_slope", ""), "risk_slope_se": p.get("risk_slope_se", ""), "risk_slope_support": p.get("risk_support", ""), "c1_risk_slope_status": slope_status,
             "group_prior_slope": p.get("group_prior_slope", ""), "group_prior_scale": p.get("group_prior_scale", ""), "risk_slope_for_simulation": p.get("risk_slope_for_simulation", p.get("risk_slope", "")), "risk_slope_scale_for_simulation": p.get("risk_slope_scale_for_simulation", p.get("risk_slope_se", "")),
-            "group_slope_mean": p.get("group_slope_mean", ""), "between_worker_slope_sd": p.get("between_worker_slope_sd", ""),
+            "group_slope_mean": p.get("group_slope_mean", ""), "group_slope_se": p.get("group_slope_se", ""),
+            "between_worker_slope_sd": p.get("between_worker_slope_sd", ""), "slope_model_form": p.get("slope_model_form", ""),
             "outcome_residual_sd": p.get("outcome_residual_sd", ""), "worker_intercept_sd": p.get("worker_intercept_sd", ""),
             "task_sd": p.get("task_sd", ""), "building_sd": p.get("building_sd", ""), "Q_GT_baseline_se": p.get("Q_GT_baseline_se", ""),
+            "Q_GT_contrast_covariance_row_json": s.get("Q_GT_contrast_covariance_row_json", ""),
             "missing_rate": p.get("missing_rate", ""), "c2_candidate_eligible": eligible, "exclusion_reason": ";".join(filter(None, reasons)),
         })
     profile_path = output_dir / "c2b_design_worker_profile.csv"

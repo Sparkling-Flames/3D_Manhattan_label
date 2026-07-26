@@ -29,6 +29,7 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
 )
 from tools.thesis_main.analysis.materialize_c2_task_risk import _feature_freeze_ready, materialize as materialize_risk
 from tools.thesis_main.analysis.materialize_c2b_task_eligibility import materialize as materialize_c2b_task_eligibility
+from tools.thesis_main.analysis.c2b_static_evidence import materialize_reference_candidate_leakage
 from tools.thesis_main.analysis.active_log_utils import freeze_active_log_snapshot, validate_active_log_freeze_manifest
 from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import (
     _stage_active_log_provenance,
@@ -47,6 +48,35 @@ def write_csv(path: Path, rows: list[dict[str, object]]) -> None:
 def read_csv(path: Path) -> list[dict[str, str]]:
     with path.open(encoding="utf-8-sig", newline="") as stream:
         return list(csv.DictReader(stream))
+
+
+def bind_clear_leakage(feature: Path, inventory_rows: list[dict[str, object]]) -> str:
+    audit_rows: list[dict[str, object]] = []
+    seen_images: set[str] = set()
+    for row in inventory_rows:
+        normalized = Path(str(row.get("source_path", ""))).resolve().as_posix().casefold()
+        if normalized not in seen_images:
+            audit_rows.append({"role": "candidate_image", "normalized_path": normalized, "path": normalized, "sha256": "i" * 64, "leakage_clear": "true", "leakage_reason": ""})
+            seen_images.add(normalized)
+        base = str(row["base_task_id"])
+        audit_rows.append({"role": "candidate_layout", "normalized_path": f"layout/{base}.json", "path": f"layout/{base}.json", "sha256": (base * 64)[:64], "leakage_clear": "true", "leakage_reason": ""})
+    write_csv(feature.parent / "c2b_reference_candidate_leakage_audit.csv", audit_rows)
+    summary_path = feature.parent / "c2b_reference_candidate_leakage_audit.summary.json"
+    summary_path.write_text(json.dumps({"status": "passed", "formal_feature_pool_allowed": True}), encoding="utf-8")
+    summary_sha = hashlib.sha256(summary_path.read_bytes()).hexdigest()
+    feature.write_text(json.dumps({"reference_candidate_leakage_audit_sha256": summary_sha}), encoding="utf-8")
+    return hashlib.sha256(feature.read_bytes()).hexdigest()
+
+
+def simulation_worker(worker: str = "w1", *, missing: float = 0, baseline: float = .8) -> dict[str, object]:
+    return {
+        "worker_id": worker, "Q_GT_task_adjusted": baseline, "Q_GT_baseline_se": .05,
+        "Q_GT_contrast_covariance_row_json": json.dumps({worker: .0025}),
+        "group_slope_mean": .1, "group_slope_se": .02,
+        "risk_slope_for_simulation": .1, "between_worker_slope_sd": .1,
+        "outcome_residual_sd": .1, "worker_intercept_sd": .02,
+        "task_sd": .03, "building_sd": .04, "missing_rate": str(missing), "F_struct": "0",
+    }
 
 
 def test_stage_active_logs_are_not_substituted(tmp_path: Path) -> None:
@@ -209,18 +239,19 @@ def test_risk_vector_is_the_only_exposure_and_building_never_comes_from_prefix()
 
 
 def test_simulation_keeps_sampled_task_edges_and_separates_variance_fields() -> None:
-    workers = [{"worker_id": "w1", "Q_GT_task_adjusted": ".8", "risk_slope_for_simulation": ".1", "between_worker_slope_sd": ".1", "outcome_residual_sd": ".1", "worker_intercept_sd": ".02", "task_sd": ".03", "building_sd": ".04", "Q_GT_baseline_se": ".05", "missing_rate": "0", "F_struct": "0"}]
+    workers = [simulation_worker()]
     tasks = {"t1": {"task_id": "t1", "building_id": "b1", "risk_design_vector_A": "[0,0,0,0]", "risk_design_score_A": "0", "risk_design_stratum": "ordinary"}, "t2": {"task_id": "t2", "building_id": "b1", "risk_design_vector_A": "[1,1,1,1]", "risk_design_score_A": "2", "risk_design_stratum": "stress"}}
     assignments = [{"worker_id": "w1", "task_id": "t1"}, {"worker_id": "w1", "task_id": "t2"}]
     result = _empirical_cluster_bootstrap("d", workers, assignments, tasks, {}, seed=7, draws=20)
     assert result["sampled_task_edge_identity_violations"] == 0
     assert result["expected_assignment_count"] == 2
     assert result["building_coverage"] == 1
-    assert result["variance_fields_used"] == ["between_worker_slope_sd", "outcome_residual_sd", "worker_intercept_sd", "task_sd", "building_sd", "Q_GT_baseline_se"]
+    assert result["variance_fields_used"] == ["group_slope_mean", "group_slope_se", "between_worker_slope_sd", "outcome_residual_sd", "worker_intercept_sd", "task_sd", "building_sd", "Q_GT_baseline_se"]
+    assert result["known_c1_worker_intercept_sd_resampled"] is False
 
 
 def test_simulation_counts_zero_delivery_and_preserves_task_instances() -> None:
-    workers = [{"worker_id": "w1", "Q_GT_task_adjusted": ".8", "risk_slope_for_simulation": ".1", "between_worker_slope_sd": ".1", "outcome_residual_sd": ".1", "worker_intercept_sd": ".02", "task_sd": ".03", "building_sd": ".04", "Q_GT_baseline_se": ".05", "missing_rate": "1", "F_struct": "0"}]
+    workers = [simulation_worker(missing=1)]
     tasks = {"t1": {"task_id": "t1", "building_id": "b1", "risk_design_score_A": "0", "risk_design_stratum": "ordinary"}, "t2": {"task_id": "t2", "building_id": "b1", "risk_design_score_A": "1", "risk_design_stratum": "stress"}}
     result = _empirical_cluster_bootstrap("d", workers, [{"worker_id": "w1", "task_id": "t1"}, {"worker_id": "w1", "task_id": "t2"}], tasks, {}, seed=1, draws=4)
     assert result["minimum_task_support"] == 0
@@ -259,9 +290,10 @@ def test_null_threshold_cannot_formally_select() -> None:
 
 def test_history_overlap_blocks_task_and_legacy_reverse_has_no_formal_input(tmp_path: Path) -> None:
     inventory, risk, reference, source, holdout, history, scope = [tmp_path / name for name in ("inventory.csv", "risk.csv", "reference.csv", "source.csv", "holdout.csv", "history.csv", "scope.csv")]
-    feature = tmp_path / "feature.json"; feature.write_text("{}", encoding="utf-8")
-    feature_sha = hashlib.sha256(feature.read_bytes()).hexdigest()
-    write_csv(inventory, [{"task_id": "t1", "base_task_id": "b1", "image_id": "i1", "building_id": "h1", "source_split_allowed": "true", "future_holdout_clear": "true", "scope_status": "in_scope", "reference_status": "reference_ready", "eligible_after_exclusion": "true"}, {"task_id": "t2", "base_task_id": "b2", "image_id": "i2", "building_id": "h2", "source_split_allowed": "false", "future_holdout_clear": "true", "scope_status": "in_scope", "reference_status": "reference_ready", "eligible_after_exclusion": "true"}])
+    feature = tmp_path / "feature.json"
+    inventory_rows = [{"task_id": "t1", "base_task_id": "b1", "image_id": "i1", "building_id": "h1", "source_split_allowed": "true", "future_holdout_clear": "true", "scope_status": "in_scope", "reference_status": "reference_ready", "eligible_after_exclusion": "true"}, {"task_id": "t2", "base_task_id": "b2", "image_id": "i2", "building_id": "h2", "source_split_allowed": "false", "future_holdout_clear": "true", "scope_status": "in_scope", "reference_status": "reference_ready", "eligible_after_exclusion": "true"}]
+    write_csv(inventory, inventory_rows)
+    feature_sha = bind_clear_leakage(feature, inventory_rows)
     write_csv(risk, [{"task_id": "t1", "base_task_id": "b1", "image_id": "i1", "building_id": "h1", "risk_design_vector_A": "[1,1,1,1]", "risk_design_score_A": "2", "risk_status": "frozen", "feature_freeze_manifest_sha256": feature_sha}, {"task_id": "t2", "base_task_id": "b2", "image_id": "i2", "building_id": "h2", "risk_design_vector_A": "[1,1,1,1]", "risk_design_score_A": "2", "risk_status": "frozen", "feature_freeze_manifest_sha256": feature_sha}])
     write_csv(reference, [{"base_task_id": "b1", "image_id": "i1", "final_scope": "in_scope", "geometry_reference_ready": "true"}, {"base_task_id": "b2", "image_id": "i2", "final_scope": "in_scope", "geometry_reference_ready": "true"}])
     write_csv(source, [{"base_task_id": "b1", "image_id": "i1", "source_split_allowed": "true"}, {"base_task_id": "b2", "image_id": "i2", "source_split_allowed": "true"}])
@@ -278,10 +310,10 @@ def test_history_overlap_blocks_task_and_legacy_reverse_has_no_formal_input(tmp_
 
 def test_formal_task_eligibility_uses_joined_evidence_and_feature_sha(tmp_path: Path) -> None:
     paths = {name: tmp_path / f"{name}.csv" for name in ("inventory", "risk", "reference", "source", "holdout", "history", "scope")}
-    feature = tmp_path / "feature.json"; feature.write_text("{}", encoding="utf-8")
-    feature_sha = hashlib.sha256(feature.read_bytes()).hexdigest()
+    feature = tmp_path / "feature.json"
     identity = {"task_id": "t1", "base_task_id": "b1", "image_id": "i1"}
     write_csv(paths["inventory"], [identity])
+    feature_sha = bind_clear_leakage(feature, [identity])
     write_csv(paths["risk"], [{**identity, "building_id": "h1", "risk_design_vector_A": "[1,1,1,1]", "risk_design_score_A": "2", "risk_status": "frozen", "feature_freeze_manifest_sha256": feature_sha}])
     write_csv(paths["reference"], [{**identity, "reference_status": "reference_ready"}])
     write_csv(paths["source"], [{**identity, "source_split_allowed": "false"}])
@@ -517,6 +549,8 @@ def test_formal_candidate_chain_never_auto_selects_and_requires_bound_human_choi
     workers, tasks, evidence = tmp_path / "workers.csv", tmp_path / "tasks.csv", tmp_path / "evidence.csv"
     write_csv(workers, [{
         "worker_id": worker, "c2b_baseline_eligible": "true", "Q_GT_task_adjusted": .8,
+        "Q_GT_contrast_covariance_row_json": json.dumps({other: (.0009 if other == worker else .0001) for other in ("w1", "w2")}),
+        "group_slope_mean": -.05, "group_slope_se": .02,
         "risk_slope_for_simulation": -.05, "risk_slope_se": .05, "risk_slope_support": 6,
         "between_worker_slope_sd": .02, "outcome_residual_sd": .04,
         "worker_intercept_sd": .02, "task_sd": .02, "building_sd": .02,
