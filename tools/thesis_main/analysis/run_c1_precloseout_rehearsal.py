@@ -14,6 +14,8 @@ from datetime import datetime
 from pathlib import Path
 from typing import Any, Iterable
 
+import numpy as np
+
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
@@ -43,14 +45,22 @@ from tools.thesis_main.analysis.c1_c2_mainline import (
     materialize_measurement_readiness,
 )
 from tools.thesis_main.analysis.materialize_c1_preannotation_task_features import materialize as materialize_preannotation_features
-from tools.thesis_main.analysis.materialize_frozen_routing_profiles import build_global
+from tools.thesis_main.analysis.c1_task_adjusted_quality import estimate_task_adjusted_qgt
 from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import build_source as build_p1_c1_source, materialize as materialize_predictive_association
+from tools.thesis_main.analysis.c2b_static_evidence import validate_p1_integrity_bundle
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
 REBUILD = Path("analysis_results/calibration_rebuild_20260702")
 PLANNED_MAPPING = REBUILD / "ls_project_mapping_audit_v3_1.csv"
 CANDIDATE_INVENTORY = REBUILD / "calibration_full_candidate_inventory_v3.csv"
+
+
+def _validate_p1_integrity_for_mode(input_status: str, directory: Path | None) -> dict[str, Any]:
+    validation = validate_p1_integrity_bundle(directory)
+    if input_status == "formal" and not validation["valid"]:
+        raise ValueError(f"formal C1 requires SHA-bound P1 integrity bundle:{validation['reason']}")
+    return validation
 
 
 def _files(path: Path) -> list[Path]:
@@ -260,6 +270,7 @@ def materialize(
         fixed_sources["c1_preannotation_feature"] = c1_preannotation_feature_csv
     p1_source_files = sorted((path for path in p1_closeout_dir.iterdir() if path.is_file()), key=lambda path: path.name.lower())
     p1_integrity_files = sorted((path for path in p1_integrity_dir.iterdir() if path.is_file()), key=lambda path: path.name.lower()) if p1_integrity_dir else []
+    p1_integrity_validation = _validate_p1_integrity_for_mode(input_status, p1_integrity_dir)
     stage_active_log_provenance = _stage_active_log_provenance(p1_closeout_dir, active_log)
     if formal and (
         not stage_active_log_provenance["prescreen"].get("validated")
@@ -365,6 +376,7 @@ def materialize(
         disposition_csv=review_snapshots.get("annotation_independence_disposition"),
         project_disposition_csv=review_snapshots.get("project_independence_disposition"),
         project_evidence_csv=output_dir / "c1_project_independence_provenance_evidence.csv",
+        model_provenance_csv=output_dir / "c1_model_artifact_provenance.csv",
     )
     structural_summary = materialize_structural_validation(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_geometry.jsonl", output_dir,
@@ -455,19 +467,28 @@ def materialize(
     if valid_geometry >= 2 and not pairwise_rows:
         raise RuntimeError("geometry LOO pipeline produced zero pairwise rows despite valid geometry")
 
+    qgt_evidence_path = output_dir / "c1_task_adjusted_qgt_worker_evidence.csv"
     try:
-        globals_, task_effects, model_audit = build_global(
-            quality, _derived_worker_gates(quality, completion_rows),
-            profile_version="precloseout_partial_c1", input_status=input_status,
+        globals_, task_effects, model_audit = estimate_task_adjusted_qgt(
+            quality,
+            estimator_contract={
+                "bootstrap_replicates": 200 if formal else 80,
+                "bootstrap_seed": 20260726,
+                "adjust_stage": False,
+                "adjust_building": False,
+            },
         )
-        write_csv(output_dir / "provisional_strong_global.csv", globals_, list(globals_[0]))
-        write_csv(output_dir / "provisional_strong_global_task_effects.csv", task_effects, list(task_effects[0]))
-    except (ValueError, KeyError) as exc:
+        write_csv(qgt_evidence_path, globals_, list(globals_[0]))
+        write_csv(output_dir / "c1_task_adjusted_qgt_task_effects.csv", task_effects, list(task_effects[0]))
+        write_json(output_dir / "c1_task_adjusted_qgt_model_audit.json", model_audit)
+    except (ValueError, KeyError, np.linalg.LinAlgError) as exc:
         model_audit = {"status": "not_evaluable", "reason": str(exc)}
-        write_csv(output_dir / "provisional_strong_global.csv", [], ["worker_id", "provisional_rank"])
+        write_csv(qgt_evidence_path, [], ["worker_id", "Q_GT_task_adjusted"])
+        write_csv(output_dir / "c1_task_adjusted_qgt_task_effects.csv", [], ["base_task_id", "task_random_intercept"])
+        write_json(output_dir / "c1_task_adjusted_qgt_model_audit.json", model_audit)
 
     three_track_summary = materialize_three_track_worker_state(
-        output_dir / "provisional_strong_global.csv", output_dir / "geometry_worker_task_loo_analysis.csv",
+        qgt_evidence_path, output_dir / "geometry_worker_task_loo_analysis.csv",
         output_dir / "structural_validation_analysis.csv", output_dir / "c1_worker_completion_audit.csv", output_dir,
         quality_csv=output_dir / "c1_gt_quality_analysis.csv",
         eligibility_csv=output_dir / "c1_row_analysis_eligibility.csv",
@@ -475,8 +496,19 @@ def materialize(
     )
     predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"
     worker_state_path = output_dir / ("c1_three_track_worker_state_formal.csv" if formal else "c1_three_track_worker_state.csv")
-    predictive_source = build_p1_c1_source(snapshots / "p1_closeout", worker_state_path, predictive_path, correction_dir=snapshots / "p1_integrity" if p1_integrity_snapshots else None)
-    predictive_summary = {**materialize_predictive_association(predictive_path, output_dir), **predictive_source}
+    if p1_integrity_validation["valid"]:
+        predictive_source = build_p1_c1_source(
+            snapshots / "p1_closeout", worker_state_path, predictive_path,
+            correction_dir=snapshots / "p1_integrity",
+        )
+        predictive_summary = {**materialize_predictive_association(predictive_path, output_dir), **predictive_source, "p1_integrity": p1_integrity_validation}
+    else:
+        write_csv(predictive_path, [], ["worker_id", "check_name", "p1_metric_value", "c1_metric_value"])
+        predictive_summary = {
+            "status": "not_evaluable_missing_p1_integrity", "n_join_rows": 0,
+            "n_evaluable_rows": 0, "p1_integrity": p1_integrity_validation,
+            "legacy_p1_summary_fallback_used": False,
+        }
     preannotation_summary = materialize_preannotation_features(
         [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]], fixed_snapshots["candidate_inventory"], output_dir,
         frozen_feature_csv=fixed_snapshots.get("c1_preannotation_feature"),
@@ -567,6 +599,7 @@ def materialize(
         "c2_task_risk_summary": {"status": "not_run_in_c1_stage"},
         "c2b_task_eligibility_evidence_summary": {"status": "not_run_in_c1_stage"},
         "p1_to_c1_predictive_summary": predictive_summary,
+        "p1_integrity": p1_integrity_validation,
         "C1_CANONICAL_CLOSED": bool(readiness["C1_CANONICAL_CLOSED"]),
         "C1_MEASUREMENT_FROZEN": bool(readiness["C1_MEASUREMENT_FROZEN"]),
         "C2B_RISK_DESIGN_FROZEN": False,

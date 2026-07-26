@@ -787,6 +787,7 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
 def materialize_independence(
     meta_csv: Path, output_dir: Path, *, disposition_csv: Path | None = None,
     project_disposition_csv: Path | None = None, project_evidence_csv: Path | None = None,
+    model_provenance_csv: Path | None = None,
 ) -> dict[str, Any]:
     source_sha = hashlib.sha256(meta_csv.read_bytes()).hexdigest()
     project_evidence_sha = hashlib.sha256(project_evidence_csv.read_bytes()).hexdigest() if project_evidence_csv and project_evidence_csv.exists() else ""
@@ -799,12 +800,39 @@ def materialize_independence(
     project_rows = read_csv(project_disposition_csv) if project_disposition_csv and project_disposition_csv.exists() else []
     projects = {(row.get("project_id", ""), row.get("condition", "")): row for row in project_rows}
     meta_rows = read_csv(meta_csv)
+    provenance_rows = read_csv(model_provenance_csv) if model_provenance_csv and model_provenance_csv.exists() else []
+    provenance_by_task = {
+        (row.get("project_id", ""), row.get("ls_runtime_task_id", "")): row
+        for row in provenance_rows
+        if row.get("artifact_kind") == "prediction" and row.get("prediction_selection_status") in {"selected_unique", "selected_by_artifact_id"}
+    }
+    exact_groups: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
+    for row in meta_rows:
+        key = (row.get("base_task_id", ""), row.get("condition", "").lower(), row.get("geometry_hash", ""))
+        if all(key):
+            exact_groups[key].append(row)
+    exact_classification: dict[str, tuple[str, str, int]] = {}
+    for (task, condition, geometry_hash), members in exact_groups.items():
+        workers = {row.get("worker_id", "") for row in members if row.get("worker_id")}
+        if len(workers) < 2:
+            continue
+        group_id = hashlib.sha256(f"{task}|{condition}|{geometry_hash}".encode("utf-8")).hexdigest()
+        classification = "suspected_cross_worker_exact_geometry"
+        if condition == "semi":
+            initial_hashes = [
+                provenance_by_task.get((row.get("project_id", ""), row.get("ls_runtime_task_id", "")), {}).get("initial_geometry_hash", "")
+                for row in members
+            ]
+            if initial_hashes and all(value and value == geometry_hash for value in initial_hashes):
+                classification = "shared_initialization_match"
+        for row in members:
+            exact_classification[row.get("canonical_annotation_id", "")] = (classification, group_id, len(workers))
     project_counts = Counter((item.get("project_id", ""), item.get("condition", "")) for item in meta_rows)
     rows, queue = [], []
     independent_statuses = {"independent", "independent_by_project_provenance", "independent_by_annotation_disposition"}
     for row in meta_rows:
         disposition = dispositions.get(row.get("canonical_annotation_id", ""), {})
-        disposition_valid = bool(disposition) and all(str(disposition.get(field, "")).strip() for field in ("canonical_annotation_id", "provenance_status", "copy_risk_status", "parent_annotation_id", "parent_owner_id", "parent_cross_owner", "independence_status", "reviewed_by", "reviewed_at", "source_meta_sha256")) and disposition.get("source_meta_sha256") == source_sha
+        disposition_valid = bool(disposition) and all(str(disposition.get(field, "")).strip() for field in ("canonical_annotation_id", "provenance_status", "copy_risk_status", "independence_status", "reviewed_by", "reviewed_at", "source_meta_sha256")) and disposition.get("source_meta_sha256") == source_sha
         project = projects.get((row.get("project_id", ""), row.get("condition", "")), {})
         project_valid = bool(project) and all(str(project.get(field, "")).strip() for field in (
             "project_id", "condition", "source_project_evidence_sha256", "raw_export_sha256_set",
@@ -834,12 +862,18 @@ def materialize_independence(
         cross_owner = _truth(row.get("parent_cross_owner")) or _truth(effective.get("parent_cross_owner"))
         copy_risk = row.get("copy_risk_status") in {"confirmed_copy", "cross_owner_parent"} or effective.get("copy_risk_status") in {"confirmed_copy", "cross_owner_parent"}
         adverse = cross_owner or copy_risk or _truth(row.get("adverse_provenance_evidence")) or _truth(row.get("copy_risk_adverse"))
+        match_class, exact_group_id, exact_group_size = exact_classification.get(
+            row.get("canonical_annotation_id", ""), ("no_cross_worker_exact_match", "", 0),
+        )
+        suspected_exact_match = match_class == "suspected_cross_worker_exact_geometry"
         if adverse:
             status, basis = "non_independent_confirmed", "cross_owner_parent_or_confirmed_copy"
         elif identity_complete and disposition_valid and effective.get("provenance_status") == "complete" and effective.get("copy_risk_status") == "cleared":
             status, basis = "independent", "annotation_exception_clearance"
+        elif suspected_exact_match:
+            status, basis = "not_evaluable", "suspected_cross_worker_exact_geometry_pending_sha_adjudication"
         elif identity_complete and project_clear:
-            status, basis = "independent_by_project_provenance", "project_clearance_expansion"
+            status, basis = "independent_by_project_provenance", "shared_initialization_match" if match_class == "shared_initialization_match" else "project_clearance_expansion"
         else:
             status, basis = "not_evaluable", "identity_or_explicit_provenance_clearance_incomplete"
         if adverse and project_clear:
@@ -855,15 +889,21 @@ def materialize_independence(
             "project_disposition_joined": project_valid,
             "project_expansion_applied": status == "independent_by_project_provenance",
             "row_adverse_evidence": adverse,
+            "geometry_hash": row.get("geometry_hash", ""),
+            "initial_geometry_hash": provenance_by_task.get((row.get("project_id", ""), row.get("ls_runtime_task_id", "")), {}).get("initial_geometry_hash", ""),
+            "exact_geometry_match_classification": match_class,
+            "exact_geometry_match_group_id": exact_group_id,
+            "exact_geometry_match_worker_count": exact_group_size,
+            "suspected_requires_adjudication": suspected_exact_match and not disposition_valid,
             "disposition_source_sha256": source_sha if disposition_valid else "", "reviewed_by": disposition.get("reviewed_by", ""), "reviewed_at": disposition.get("reviewed_at", ""),
             "independence_status": status, "independence_basis": basis, "worker_wide_contamination": False,
         }
         rows.append(evidence)
-        if status == "not_evaluable" or adverse:
+        if status == "not_evaluable" or adverse or suspected_exact_match:
             queue.append(evidence)
     write_csv(output_dir / "c1_independence_evidence.csv", rows)
     write_csv(output_dir / "c1_independence_review_queue.csv", queue)
-    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "n_review": len(queue), "project_expansion_count": sum(row["independence_status"] == "independent_by_project_provenance" for row in rows), "row_adverse_override_count": sum(row["independence_basis"] == "row_adverse_evidence_overrides_project_clearance" for row in rows), "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "project_disposition_manifest_sha256": hashlib.sha256(project_disposition_csv.read_bytes()).hexdigest() if project_disposition_csv and project_disposition_csv.exists() else "", "project_evidence_sha256": project_evidence_sha, "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
+    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "exact_geometry_match_classification_counts": dict(Counter(row["exact_geometry_match_classification"] for row in rows)), "n_review": len(queue), "project_expansion_count": sum(row["independence_status"] == "independent_by_project_provenance" for row in rows), "row_adverse_override_count": sum(row["independence_basis"] == "row_adverse_evidence_overrides_project_clearance" for row in rows), "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "project_disposition_manifest_sha256": hashlib.sha256(project_disposition_csv.read_bytes()).hexdigest() if project_disposition_csv and project_disposition_csv.exists() else "", "project_evidence_sha256": project_evidence_sha, "model_provenance_sha256": hashlib.sha256(model_provenance_csv.read_bytes()).hexdigest() if model_provenance_csv and model_provenance_csv.exists() else "", "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
     (output_dir / "c1_independence_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
 
@@ -1037,7 +1077,6 @@ def materialize_final_canonical_closeout_summary(
         canonical_blockers.append("outside_assignment_disposition_missing_invalid_or_orphan")
     measurement_blockers = [*canonical_blockers]
     if unreviewed_structural: measurement_blockers.append("unreviewed_structural_rows")
-    if any(not count for count in supports.values()): measurement_blockers.append("support_after_exclusion_insufficient")
     pending_scope = [row for row in references if row.get("final_scope") not in {"in_scope", "oos"}]
     oos_contexts = [row for row in references if row.get("final_scope") == "oos"]
     pending_scope_base_tasks = {row.get("base_task_id", "") for row in pending_scope if row.get("base_task_id", "")}
@@ -1221,6 +1260,7 @@ def materialize_three_track_worker_state(
             "Q_GT_raw_median": __import__("statistics").median(raw_quality[worker]) if raw_quality[worker] else global_row.get("Q_GT_raw", ""), "Q_GT_task_adjusted": global_row.get("Q_GT_task_adjusted", ""),
             "standard_error": global_row.get("Q_GT_standard_error", ""), "CI_lower": global_row.get("Q_GT_CI_lower", ""),
             "CI_upper": global_row.get("Q_GT_CI_upper", ""), "LCB": global_row.get("Q_GT_LCB", ""),
+            "Q_GT_contrast_covariance_row_json": global_row.get("Q_GT_contrast_covariance_row_json", ""),
             "GT_support": gt_support, "task_support": global_row.get("task_support", 0),
             "R_LOO_compatible": sum(values) / len(values) if values else "", "LOO_support": loo_support,
             "R_LOO_CI_lower": bootstrap[int(.025 * (len(bootstrap) - 1))] if bootstrap else "",
@@ -1233,20 +1273,21 @@ def materialize_three_track_worker_state(
             "independence_support": len(gate_support[worker]["independence"]),
             "scope_reference_support": len(gate_support[worker]["scope_reference"]),
             "worker_state_status": state_status,
-            "formal_frozen": formal,
+            "formal_frozen": False,
+            "freeze_owner": "finalize-c1",
         })
     output_name = "c1_three_track_worker_state_formal.csv" if formal else "c1_three_track_worker_state.csv"
     output_csv = output_dir / output_name
     write_csv(output_csv, rows)
     status_counts = dict(Counter(row["worker_state_status"] for row in rows))
-    summary = {"n_workers": len(rows), "n_profile_rows": status_counts.get("estimated", 0), "status_counts": status_counts, "formal_frozen": formal}
+    summary = {"n_workers": len(rows), "n_profile_rows": status_counts.get("estimated", 0), "status_counts": status_counts, "formal_frozen": False, "freeze_owner": "finalize-c1"}
     (output_dir / "c1_three_track_worker_state.summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     if formal:
         manifest = {
             "schema_version": "c1_three_track_worker_state_manifest_v1",
             "worker_state_csv": output_csv.name,
             "worker_state_sha256": hashlib.sha256(output_csv.read_bytes()).hexdigest(),
-            "c1_evidence_freeze_status": "C1_closed",
+            "c1_evidence_freeze_status": "pending_finalize_c1",
             "routing_profile_frozen": False,
             "dependencies": [
                 {"path": str(path.resolve()), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
@@ -1255,5 +1296,4 @@ def materialize_three_track_worker_state(
             ],
         }
         (output_dir / "c1_three_track_worker_state_manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        (output_dir / "c1_evidence_freeze_manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary

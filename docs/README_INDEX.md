@@ -29,6 +29,7 @@
 - [C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md](thesis_main/C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md)
 - [PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md](thesis_main/PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md)：C1 日志冻结、三轴证据、C2-B 风险/模拟/审批/assignment 的单一生产 DAG 与状态 owner
 - [PAPER_A_C1_C2B_FORMAL_RUNBOOK.md](thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md)：GPU 静态特征准备、C1 collection freeze 与 C2-B 正式命令顺序
+- [PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json](thesis_main/PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json)：`close-c1-and-plan-c2b` 可恢复薄入口配置模板
 - [C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md](thesis_main/C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md)
 - [WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md](thesis_main/WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md)
 - [WORKER_PROFILE_ARTIFACT_MIGRATION_AMENDMENT_v1.md](thesis_main/WORKER_PROFILE_ARTIFACT_MIGRATION_AMENDMENT_v1.md)
@@ -120,7 +121,9 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 历史材料默认不迁移、不修订。路径检查和乱码修复默认排除该目录。
 ## 2026-07-24 代码入口补充
 
-- C1→C2-B 唯一公开入口：`tools/thesis_main/analysis/run_c1_closeout_launch.py`（`rehearse-c1`、`freeze-c1`、`audit-c1`、`finalize-c1`、`design-c2b`、`build-c2b`）
+- C1→C2-B 公开入口：`tools/thesis_main/analysis/run_c1_closeout_launch.py`（保留细粒度审计命令，并提供 `close-c1-and-plan-c2b` 薄入口、scene-building 展开与命令合同检查）
+- C1 唯一 task-adjusted Q_GT 估计器：`tools/thesis_main/analysis/c1_task_adjusted_quality.py`（worker fixed effect、task random intercept、task/building cluster bootstrap；不生成排名）
+- C2-B 静态 evidence/leakage/split 工具：`tools/thesis_main/analysis/c2b_static_evidence.py`（P1 integrity、reference/candidate SHA audit、history 推导、非支配 split 候选与静态冻结）
 - C1 人工 task outcome / 单一 GT reference：`tools/thesis_main/analysis/materialize_c1_operational_reference.py`
 - P1→C1→C2-B component evidence：`tools/thesis_main/analysis/materialize_routing_component_evidence.py`
 - T1/V1 正式推断：`tools/thesis_main/analysis/materialize_main_inference.py`

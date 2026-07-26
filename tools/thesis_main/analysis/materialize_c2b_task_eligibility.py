@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 from typing import Any
 
@@ -45,6 +46,20 @@ def materialize(
     scope = _keyed(scope_registry_csv, "scope registry")
     reference = _keyed(reference_registry_csv, "reference registry")
     feature_sha = sha256_file(feature_manifest)
+    feature_payload = json.loads(feature_manifest.read_text(encoding="utf-8"))
+    leakage_summary_path = feature_manifest.parent / "c2b_reference_candidate_leakage_audit.summary.json"
+    leakage_csv_path = feature_manifest.parent / "c2b_reference_candidate_leakage_audit.csv"
+    leakage_summary = json.loads(leakage_summary_path.read_text(encoding="utf-8")) if leakage_summary_path.exists() else {}
+    leakage_rows = read_csv(leakage_csv_path) if leakage_csv_path.exists() else []
+    leakage_by_path = {str(row.get("normalized_path", "")): row for row in leakage_rows}
+    leakage_layout_by_stem = {
+        Path(str(row.get("path", ""))).stem: row for row in leakage_rows if row.get("role") == "candidate_layout"
+    }
+    leakage_global_ok = (
+        leakage_summary.get("formal_feature_pool_allowed") is True
+        and leakage_summary.get("status") == "passed"
+        and feature_payload.get("reference_candidate_leakage_audit_sha256") == (sha256_file(leakage_summary_path) if leakage_summary_path.exists() else "")
+    )
     input_shas = {
         "inventory_sha256": sha256_file(inventory_csv),
         "task_risk_sha256": sha256_file(task_risk_csv),
@@ -65,6 +80,8 @@ def materialize(
         history_row = history.get(key)
         scope_row = scope.get(key)
         reference_row = reference.get(key)
+        image_leakage = leakage_by_path.get(Path(str(item.get("source_path", ""))).resolve().as_posix().casefold(), {})
+        layout_leakage = leakage_layout_by_stem.get(key[1], {})
         reasons: list[str] = []
 
         source_ok = bool(source_row) and str(source_row.get("allocation", source_row.get("source_split_allowed", ""))).lower() in {"c2", "true", "1", "allowed"}
@@ -75,6 +92,7 @@ def materialize(
         reference_ok = bool(reference_row) and _truth(reference_row.get("geometry_reference_ready", reference_row.get("reference_status")))
         feature_ok = bool(risk_row) and bool(risk_row.get("risk_design_vector_A")) and str(risk_row.get("risk_design_score_A", "")).strip() != "" and risk_row.get("feature_freeze_manifest_sha256") == feature_sha
         risk_ok = bool(risk_row) and risk_row.get("risk_status") == "frozen"
+        leakage_ok = leakage_global_ok and bool(image_leakage) and bool(layout_leakage) and _truth(image_leakage.get("leakage_clear")) and _truth(layout_leakage.get("leakage_clear"))
         building_id = str((risk_row or {}).get("building_id", "")).strip()
 
         if not risk_row: reasons.append("risk_row_missing")
@@ -85,6 +103,7 @@ def materialize(
         if not reference_ok: reasons.append("reference_not_ready")
         if not feature_ok: reasons.append("risk_feature_not_ready")
         if not risk_ok: reasons.append("risk_not_frozen")
+        if not leakage_ok: reasons.append("reference_candidate_leakage_not_clear")
         if not building_id: reasons.append("authoritative_building_missing")
 
         rows.append({
@@ -93,7 +112,9 @@ def materialize(
             "future_holdout_clear": holdout_ok, "history_overlap": history_overlap,
             "history_clear": history_ok, "scope_ready": scope_ok,
             "reference_ready": reference_ok, "feature_ready": feature_ok,
-            "risk_ready": risk_ok, "assignment_eligible": not reasons,
+            "risk_ready": risk_ok, "leakage_clear": leakage_ok, "assignment_eligible": not reasons,
+            "candidate_image_sha256": image_leakage.get("sha256", ""),
+            "candidate_layout_sha256": layout_leakage.get("sha256", ""),
             "risk_design_vector_A": (risk_row or {}).get("risk_design_vector_A", ""),
             "risk_design_score_A": (risk_row or {}).get("risk_design_score_A", ""),
             "risk_design_stratum": (risk_row or {}).get("risk_design_stratum", ""),

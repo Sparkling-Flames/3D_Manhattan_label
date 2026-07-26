@@ -1,20 +1,37 @@
 from __future__ import annotations
 
 import csv
+import json
 from pathlib import Path
+
+import pytest
 
 from tools.thesis_main.analysis.c1_c2_mainline import materialize_c2b_design_worker_profile, materialize_measurement_readiness
 from tools.thesis_main.analysis.build_c2_assignment_manifest_from_c1_gaps import (
     _anchor_pool,
     _empirical_cluster_bootstrap,
     _projected_worker_intervals,
+    _recompute_stability_audits,
     _select_anchors,
 )
 from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     apply_completion_disposition,
     apply_outside_assignment_disposition,
     finalize_partial_completion_support,
+    materialize_independence,
+    materialize_three_track_worker_state,
 )
+from tools.thesis_main.analysis.c1_task_adjusted_quality import estimate_task_adjusted_qgt
+from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import _variance_boundary_decision
+from tools.thesis_main.analysis.c2b_static_evidence import (
+    materialize_p1_integrity_bundle,
+    materialize_building_registry_from_scene_mapping,
+    materialize_reference_candidate_leakage,
+    materialize_split_proposals,
+    materialize_static_freeze_manifest,
+    validate_p1_integrity_bundle,
+)
+from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _validate_p1_integrity_for_mode
 from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import build_source
 from tools.thesis_main.analysis.materialize_c2b_legacy_provenance import EXPECTED_SOURCE_SHA256, materialize as materialize_legacy
 
@@ -22,6 +39,19 @@ from tools.thesis_main.analysis.materialize_c2b_legacy_provenance import EXPECTE
 def _write(path: Path, rows: list[dict]) -> None:
     with path.open("w", encoding="utf-8", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=list(rows[0])); writer.writeheader(); writer.writerows(rows)
+
+
+def _simulation_worker(worker: str, *, baseline: float, structural: float) -> dict[str, str]:
+    workers = ("w1", "w2")
+    covariance = {name: (.0025 if name == worker else .0005) for name in workers}
+    return {
+        "worker_id": worker, "Q_GT_task_adjusted": str(baseline),
+        "Q_GT_contrast_covariance_row_json": __import__("json").dumps(covariance),
+        "Q_GT_baseline_se": ".05", "group_slope_mean": ".1", "group_slope_se": ".02",
+        "risk_slope_for_simulation": ".1", "between_worker_slope_sd": ".1",
+        "outcome_residual_sd": ".1", "worker_intercept_sd": ".02",
+        "task_sd": ".03", "building_sd": ".04", "missing_rate": "0", "F_struct": str(structural),
+    }
 
 
 def test_three_axes_are_independent_and_qgt_baseline_admission_does_not_need_loo_or_slope(tmp_path: Path) -> None:
@@ -48,6 +78,96 @@ def test_three_axes_are_independent_and_qgt_baseline_admission_does_not_need_loo
     assert profile["c2b_baseline_eligible"].lower() == "true"
     assert profile["c2_candidate_eligible"].lower() == "true"
     assert profile["c1_risk_slope_status"] == "not_evaluable_but_C2B_eligible"
+
+
+def test_unique_qgt_estimator_emits_measurement_evidence_without_rank(tmp_path: Path) -> None:
+    rows = [
+        {
+            "worker_id": worker, "base_task_id": task, "condition": "manual",
+            "building_id": f"b{index % 3}", "Q_GT_raw": value,
+            "global_analysis_eligible": "true",
+        }
+        for index, (task, w1, w2) in enumerate((
+            ("t1", .90, .72), ("t2", .45, .61), ("t3", .82, .66),
+            ("t4", .53, .70), ("t5", .75, .63), ("t6", .49, .59),
+        ))
+        for worker, value in (("w1", w1), ("w2", w2))
+    ]
+    workers, tasks, audit = estimate_task_adjusted_qgt(
+        rows, estimator_contract={"bootstrap_replicates": 20, "minimum_successful_bootstrap_fraction": .5},
+    )
+    assert audit["status"] == "estimated" and audit["ranking_materialized"] is False
+    assert len(tasks) == 6
+    assert all(row["global_rank"] == "" and row["provisional_rank"] == "" for row in workers)
+    assert all(set(json.loads(row["Q_GT_contrast_covariance_row_json"])) == {"w1", "w2"} for row in workers)
+
+
+def test_p1_integrity_is_optional_only_for_rehearsal(tmp_path: Path) -> None:
+    rehearsal = _validate_p1_integrity_for_mode("precloseout_rehearsal", None)
+    assert rehearsal["status"] == "not_evaluable_missing_p1_integrity"
+    with pytest.raises(ValueError, match="SHA-bound P1 integrity bundle"):
+        _validate_p1_integrity_for_mode("formal", None)
+    for name in (
+        "p1_post_closeout_correction_summary_v1.json", "p1_geometry_score_summary_v1.json",
+        "p1_task_evidence_correction_v1.csv", "p1_worker_evidence_status_v1.csv",
+        "p1_geometry_task_scores_v1.csv", "p1_worker_geometry_profile_v1.csv",
+    ):
+        (tmp_path / name).write_text("{}\n" if name.endswith(".json") else "worker_id\nw1\n", encoding="utf-8")
+    materialize_p1_integrity_bundle(tmp_path)
+    assert validate_p1_integrity_bundle(tmp_path)["valid"] is True
+    (tmp_path / "p1_worker_geometry_profile_v1.csv").write_text("worker_id\nw2\n", encoding="utf-8")
+    assert validate_p1_integrity_bundle(tmp_path)["valid"] is False
+
+
+def test_cross_worker_exact_geometry_has_three_distinct_independence_classes(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"
+    rows = []
+    for condition, task, geometry in (("manual", "m", "gm"), ("semi", "initial", "gi"), ("semi", "copy", "gc")):
+        for index, worker in enumerate(("w1", "w2"), 1):
+            rows.append({
+                "project_id": f"p-{condition}-{task}", "condition": condition,
+                "ls_runtime_task_id": f"r-{task}-{index}", "worker_id": worker,
+                "annotation_id": f"a-{task}-{index}", "canonical_annotation_id": f"c-{task}-{index}",
+                "base_task_id": task, "geometry_hash": geometry,
+            })
+    _write(meta, rows)
+    provenance = tmp_path / "provenance.csv"
+    _write(provenance, [{
+        "project_id": row["project_id"], "ls_runtime_task_id": row["ls_runtime_task_id"],
+        "artifact_kind": "prediction", "prediction_selection_status": "selected_unique",
+        "initial_geometry_hash": row["geometry_hash"] if row["base_task_id"] == "initial" else "different",
+    } for row in rows if row["condition"] == "semi"])
+    materialize_independence(meta, tmp_path, model_provenance_csv=provenance)
+    evidence = {row["canonical_annotation_id"]: row for row in csv.DictReader((tmp_path / "c1_independence_evidence.csv").open(encoding="utf-8"))}
+    assert evidence["c-m-1"]["exact_geometry_match_classification"] == "suspected_cross_worker_exact_geometry"
+    assert evidence["c-m-1"]["independence_status"] == "not_evaluable"
+    assert evidence["c-initial-1"]["exact_geometry_match_classification"] == "shared_initialization_match"
+    assert evidence["c-copy-1"]["exact_geometry_match_classification"] == "suspected_cross_worker_exact_geometry"
+
+
+def test_formal_audit_cannot_write_the_final_c1_freeze_owner_artifact(tmp_path: Path) -> None:
+    global_csv, loo, structural, completion = [tmp_path / name for name in ("global.csv", "loo.csv", "structural.csv", "completion.csv")]
+    _write(global_csv, [{"worker_id": "w1", "GT_support": 1, "Q_GT_task_adjusted": .8}])
+    _write(loo, [{"worker_id": "w1", "base_task_id": "t", "q_LOO_tu": .7, "loo_analysis_eligible": "true"}])
+    _write(structural, [{"worker_id": "w1", "structural_opportunity_eligible": "true", "failure_attribution": "passed"}])
+    _write(completion, [{"worker_id": "w1", "completion_status": "completed"}])
+    materialize_three_track_worker_state(global_csv, loo, structural, completion, tmp_path, formal=True)
+    assert not (tmp_path / "c1_evidence_freeze_manifest.json").exists()
+    manifest = json.loads((tmp_path / "c1_three_track_worker_state_manifest.json").read_text(encoding="utf-8"))
+    assert manifest["c1_evidence_freeze_status"] == "pending_finalize_c1"
+
+
+def test_only_zero_worker_slope_variance_selects_common_slope_nested_form() -> None:
+    decision, boundary, tolerance = _variance_boundary_decision(
+        {"worker_slope": 0.0, "worker_intercept": .02, "task": .03, "building": .04}, .1,
+    )
+    assert decision == "refit_crossed_common_worker_slope"
+    assert boundary == ["worker_slope"] and tolerance == pytest.approx(1e-7)
+    unsupported, components, _ = _variance_boundary_decision(
+        {"worker_slope": 0.0, "worker_intercept": 0.0, "task": .03, "building": .04}, .1,
+    )
+    assert unsupported == "fail_unsupported_non_slope_boundary"
+    assert components == ["worker_intercept", "worker_slope"]
 
 
 def test_completion_and_outside_dispositions_change_consumed_evidence(tmp_path: Path) -> None:
@@ -99,8 +219,8 @@ def test_computed_completion_needs_only_exception_dispositions_and_partial_suppo
 
 def test_hierarchical_simulation_rebuilds_graph_after_delivery() -> None:
     workers = [
-        {"worker_id": "w1", "Q_GT_task_adjusted": ".8", "risk_slope_for_simulation": ".1", "between_worker_slope_sd": ".1", "outcome_residual_sd": ".1", "worker_intercept_sd": ".02", "task_sd": ".03", "building_sd": ".04", "Q_GT_baseline_se": ".05", "missing_rate": "0", "F_struct": "1"},
-        {"worker_id": "w2", "Q_GT_task_adjusted": ".7", "risk_slope_for_simulation": ".1", "between_worker_slope_sd": ".1", "outcome_residual_sd": ".1", "worker_intercept_sd": ".02", "task_sd": ".03", "building_sd": ".04", "Q_GT_baseline_se": ".05", "missing_rate": "0", "F_struct": "0"},
+        _simulation_worker("w1", baseline=.8, structural=1),
+        _simulation_worker("w2", baseline=.7, structural=0),
     ]
     tasks = {
         "t1": {"task_id": "t1", "building_id": "b1", "risk_design_score_A": ".1", "risk_design_stratum": "ordinary"},
@@ -108,10 +228,23 @@ def test_hierarchical_simulation_rebuilds_graph_after_delivery() -> None:
     }
     assignments = [{"worker_id": worker, "task_id": task} for worker in ("w1", "w2") for task in tasks]
     result = _empirical_cluster_bootstrap("d", workers, assignments, tasks, {"worker_task_graph_connected": True}, seed=7, draws=30)
-    assert result["simulation_method"] == "hierarchical_building_task_resampling_with_c1_group_prior"
+    assert result["simulation_method"] == "hierarchical_building_task_resampling_with_joint_qgt_and_separate_slope_uncertainty"
     assert result["graph_connectivity_probability"] == 0
     assert float(result["expected_assignment_count"]) < len(assignments)
     assert result["worker_rank_spearman"] != ""
+
+
+def test_simulation_never_replaces_missing_uncertainty_with_zero() -> None:
+    worker = _simulation_worker("w1", baseline=.8, structural=0)
+    worker["Q_GT_contrast_covariance_row_json"] = json.dumps({"w1": .0025})
+    tasks = {"t": {"task_id": "t", "building_id": "b", "risk_design_score_A": ".5", "risk_design_stratum": "ordinary"}}
+    assignments = [{"worker_id": "w1", "task_id": "t"}]
+    missing_slope = dict(worker); missing_slope.pop("group_slope_se")
+    assert _empirical_cluster_bootstrap("d", [missing_slope], assignments, tasks, {}, seed=1, draws=2)["simulation_status"] == "insufficient_variance_parameters"
+    missing_rate = dict(worker); missing_rate.pop("missing_rate")
+    assert _empirical_cluster_bootstrap("d", [missing_rate], assignments, tasks, {}, seed=1, draws=2)["simulation_status"] == "insufficient_missingness_parameters"
+    missing_covariance = dict(worker); missing_covariance.pop("Q_GT_contrast_covariance_row_json")
+    assert _empirical_cluster_bootstrap("d", [missing_covariance], assignments, tasks, {}, seed=1, draws=2)["simulation_status"] == "insufficient_q_gt_baseline_covariance"
 
 
 def test_group_prior_only_worker_has_finite_projection() -> None:
@@ -131,6 +264,30 @@ def test_group_prior_only_worker_has_finite_projection() -> None:
     assert rows[0]["projected_interval_half_width"] != ""
 
 
+def test_loto_lobo_and_anchor_audits_physically_remove_edges_and_recompute() -> None:
+    workers = [{
+        "worker_id": worker, "risk_slope_se": ".1", "risk_slope_support": "2",
+        "missing_rate": "0", "F_struct": "0", "task_sd": ".02", "building_sd": ".02",
+    } for worker in ("w1", "w2")]
+    tasks = {
+        "a": {"task_id": "a", "building_id": "b1", "risk_design_score_A": ".1", "risk_design_stratum": "ordinary"},
+        "s": {"task_id": "s", "building_id": "b2", "risk_design_score_A": ".9", "risk_design_stratum": "stress"},
+        "x": {"task_id": "x", "building_id": "b3", "risk_design_score_A": ".5", "risk_design_stratum": "ordinary"},
+    }
+    assignments = [
+        {"worker_id": worker, "task_id": task, "task_stratum": tasks[task]["risk_design_stratum"], "design_id": "d", "c2_component": "common_anchor" if task in {"a", "s"} else "diverse_bridge"}
+        for worker in ("w1", "w2") for task in tasks
+    ]
+    rows = _recompute_stability_audits("d", workers, assignments, tasks, seed=1, draws=20)
+    leave_task = next(row for row in rows if row["perturbation"] == "leave_one_task_out" and row["removed_id"] == "a")
+    leave_building = next(row for row in rows if row["perturbation"] == "leave_one_building_out" and row["removed_id"] == "b1")
+    leave_anchor = next(row for row in rows if row["perturbation"] == "leave_one_anchor_out" and row["removed_id"] == "a")
+    assert leave_task["remaining_edge_count"] == len(assignments) - 2
+    assert leave_building["remaining_edge_count"] == len(assignments) - 2
+    assert leave_anchor["remaining_edge_count"] == len(assignments) - 2
+    assert leave_task["minimum_worker_support"] == 2 and leave_task["building_coverage"] == 2
+
+
 def test_all_finally_eligible_tasks_can_be_anchor_candidates_without_legacy_flags() -> None:
     tasks = [
         {"task_id": "o", "assignment_eligible": "true", "risk_design_stratum": "ordinary", "risk_design_vector_A": "[0,0,0,0]", "building_id": "b1"},
@@ -140,6 +297,108 @@ def test_all_finally_eligible_tasks_can_be_anchor_candidates_without_legacy_flag
     selected = _select_anchors(pool, 2)
     assert {row["task_id"] for row in pool} == {"o", "s"}
     assert {row["risk_design_stratum"] for row in selected} == {"ordinary", "stress"}
+
+
+def test_reference_candidate_content_duplicate_fails_feature_pool(tmp_path: Path) -> None:
+    reference_images, reference_layouts, candidate_layouts = (tmp_path / name for name in ("reference_images", "reference_layouts", "candidate_layouts"))
+    for directory in (reference_images, reference_layouts, candidate_layouts):
+        directory.mkdir()
+    (reference_images / "ref.jpg").write_bytes(b"same-image")
+    (reference_layouts / "ref.json").write_text("{}", encoding="utf-8")
+    candidate_image = tmp_path / "candidate.jpg"; candidate_image.write_bytes(b"same-image")
+    (candidate_layouts / "task.json").write_text('{"layout": 1}', encoding="utf-8")
+    inventory = tmp_path / "inventory.csv"
+    _write(inventory, [{"image_id": "i", "base_task_id": "task", "task_id": "task", "source_path": str(candidate_image)}])
+    summary = materialize_reference_candidate_leakage(
+        reference_images, reference_layouts, inventory, candidate_layouts, tmp_path,
+    )
+    assert summary["status"] == "failed"
+    assert summary["formal_feature_pool_allowed"] is False
+
+
+def test_source_holdout_proposals_are_non_dominated_and_never_auto_approved(tmp_path: Path) -> None:
+    inventory, history, buildings, risk = [tmp_path / name for name in ("inventory.csv", "history.csv", "buildings.csv", "risk.csv")]
+    inventory_rows = [{
+        "image_id": f"i{index}", "base_task_id": f"t{index}", "task_id": f"t{index}",
+        "source_path": f"pool/scene{index % 4}/i{index}.jpg", "source_pool": "pool",
+    } for index in range(12)]
+    _write(inventory, inventory_rows)
+    _write(history, [{"image_id": row["image_id"], "base_task_id": row["base_task_id"], "history_overlap": "false"} for row in inventory_rows])
+    _write(buildings, [{
+        "image_id": row["image_id"], "base_task_id": row["base_task_id"],
+        "building_id": f"b{index % 4}", "registry_status": "approved",
+        "reviewed_by": "expert", "reviewed_at": "2026-07-26T00:00:00Z",
+    } for index, row in enumerate(inventory_rows)])
+    _write(risk, [{
+        "image_id": row["image_id"], "base_task_id": row["base_task_id"],
+        "static_model_risk_score": index / 11,
+    } for index, row in enumerate(inventory_rows)])
+    summary = materialize_split_proposals(inventory, history, buildings, risk, tmp_path)
+    assert summary["status"] == "candidate_only" and summary["approval_materialized"] is False
+    assert summary["proposal_count"] >= 2 and summary["all_candidates_non_dominated"] is True
+    assert not (tmp_path / "source_split_approval.json").exists()
+    audits = list(csv.DictReader((tmp_path / "c2b_source_holdout_split_disjointness_audit.csv").open(encoding="utf-8")))
+    assert all(row["non_dominated"].lower() == "true" and row["source_holdout_disjoint"].lower() == "true" for row in audits)
+
+
+def test_building_registry_expands_only_approved_scene_keys(tmp_path: Path) -> None:
+    inventory, mapping, output = tmp_path / "inventory.csv", tmp_path / "mapping.csv", tmp_path / "registry.csv"
+    inventory_rows = [
+        {"image_id": "i1", "base_task_id": "t1", "task_id": "t1", "scene_id": "scene-a", "source_pool": "pool", "source_path": "pool/scene-a/1.jpg"},
+        {"image_id": "i2", "base_task_id": "t2", "task_id": "t2", "scene_id": "scene-a", "source_pool": "pool", "source_path": "pool/scene-a/2.jpg"},
+        {"image_id": "i3", "base_task_id": "t3", "task_id": "t3", "scene_id": "scene-b", "source_pool": "pool", "source_path": "pool/scene-b/3.jpg"},
+    ]
+    _write(inventory, inventory_rows)
+    _write(mapping, [{
+        "scene_mapping_key": "pool|scene-a", "building_id": "building-a",
+        "registry_status": "approved", "reviewed_by": "expert", "reviewed_at": "2026-07-26T00:00:00Z",
+    }])
+    summary = materialize_building_registry_from_scene_mapping(inventory, mapping, output)
+    rows = list(csv.DictReader(output.open(encoding="utf-8")))
+    assert summary["n_approved"] == 2 and summary["n_unresolved"] == 1
+    assert [row["building_id"] for row in rows] == ["building-a", "building-a", ""]
+    assert summary["formal_registry_ready"] is False
+
+
+def test_static_freeze_requires_statuses_and_every_bound_listing(tmp_path: Path) -> None:
+    import hashlib
+
+    def write_json(name: str, payload: dict) -> Path:
+        path = tmp_path / name
+        path.write_text(json.dumps(payload), encoding="utf-8")
+        return path
+
+    p1 = write_json("p1.json", {"schema_version": "paper_a_p1_integrity_bundle_v1", "bundle_status": "frozen"})
+    leakage = write_json("leakage.json", {"status": "passed", "formal_feature_pool_allowed": True})
+    feature = write_json("feature.json", {
+        "schema_version": "paper_a_c2_feature_freeze_v2", "feature_audit_status": "approved",
+        "off_grid_circular_robustness": True,
+        "reference_candidate_leakage_audit_sha256": hashlib.sha256(leakage.read_bytes()).hexdigest(),
+    })
+    proposal_rows = tmp_path / "proposals.csv"; proposal_rows.write_text("proposal_id\np1\n", encoding="utf-8")
+    split_audit = tmp_path / "split_audit.csv"; split_audit.write_text("proposal_id\np1\n", encoding="utf-8")
+    split = write_json("split.json", {
+        "status": "candidate_only", "approval_materialized": False,
+        "proposal_rows_sha256": hashlib.sha256(proposal_rows.read_bytes()).hexdigest(),
+        "disjointness_audit_sha256": hashlib.sha256(split_audit.read_bytes()).hexdigest(),
+    })
+    artifacts = {
+        "p1_integrity": p1, "feature_freeze": feature, "leakage_audit": leakage,
+        "split_proposals": split, "split_proposal_rows": proposal_rows,
+        "split_disjointness_audit": split_audit,
+        "environment": write_json("environment.json", {"python": "3.11"}),
+    }
+    for name in (
+        "leakage_audit_rows", "reference_image_listing", "reference_layout_listing",
+        "candidate_image_listing", "candidate_layout_listing",
+    ):
+        path = tmp_path / f"{name}.csv"; path.write_text("status\nok\n", encoding="utf-8"); artifacts[name] = path
+    frozen = materialize_static_freeze_manifest(tmp_path, artifacts, code_sha256="c" * 64)
+    assert frozen["static_evidence_frozen"] is True and frozen["freeze_blockers"] == []
+    leakage.write_text(json.dumps({"status": "failed", "formal_feature_pool_allowed": False}), encoding="utf-8")
+    blocked = materialize_static_freeze_manifest(tmp_path, artifacts, code_sha256="c" * 64)
+    assert blocked["static_evidence_frozen"] is False
+    assert "reference_candidate_leakage_not_clear" in blocked["freeze_blockers"]
 
 
 def test_p1_to_c1_source_is_built_from_closeout_and_independent_c1_axes(tmp_path: Path) -> None:

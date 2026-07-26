@@ -32,8 +32,70 @@ from tools.thesis_main.analysis.materialize_c2_task_risk import freeze_feature_r
 from tools.thesis_main.analysis.materialize_c2b_legacy_provenance import materialize as materialize_legacy_provenance
 from tools.thesis_main.analysis.materialize_p1_post_closeout_evidence_correction import materialize as materialize_p1_correction
 from tools.thesis_main.analysis.materialize_p1_post_closeout_geometry_scores import materialize_scores as materialize_p1_geometry
+from tools.thesis_main.analysis.c2b_static_evidence import (
+    candidate_scene_mapping_key,
+    materialize_history_overlap,
+    materialize_building_registry_from_scene_mapping,
+    materialize_p1_integrity_bundle,
+    materialize_reference_candidate_leakage,
+    materialize_split_proposals,
+    materialize_static_freeze_manifest,
+    materialize_static_model_risk,
+    validate_p1_integrity_bundle,
+)
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 from tools.thesis_main.registry.hohonet_feature_backend import extract_orbit_descriptors
+
+
+COMMAND_ARTIFACT_CONTRACT = {
+    "expand-building-registry": {
+        "outputs": ("authoritative_building_registry.csv",),
+    },
+    "prepare-c2b-static": {
+        "outputs": ("c2b_static_freeze_manifest.json", "c2b_source_holdout_split_proposals.summary.json"),
+    },
+    "freeze-c1": {
+        "outputs": ("c1_active_log_freeze_manifest.json", "c1_collection_closure_manifest.json"),
+    },
+    "audit-c1": {
+        "requires": (("freeze-c1", "c1_active_log_freeze_manifest.json"), ("freeze-c1", "c1_collection_closure_manifest.json")),
+        "outputs": ("formal_audit_summary.json", "c1_measurement_freeze_manifest.json"),
+    },
+    "finalize-c1": {
+        "requires": (("audit-c1", "formal_audit_summary.json"), ("audit-c1", "c1_measurement_freeze_manifest.json")),
+        "outputs": ("c1_evidence_freeze_manifest.json",),
+    },
+    "design-c2b": {
+        "requires": (("prepare-c2b-static", "c2b_static_freeze_manifest.json"), ("finalize-c1", "c1_evidence_freeze_manifest.json")),
+        "outputs": ("c2_task_risk.summary.json", "c2b_evidence_freeze_envelope.json", "c2b_design.summary.json"),
+    },
+    "build-c2b": {
+        "requires": (("design-c2b", "c2_task_risk.summary.json"), ("design-c2b", "c2b_design.summary.json")),
+        "outputs": ("assignment_manifest_C2B.csv", "c2b_launch_ready_report.json"),
+    },
+    "close-c1-and-plan-c2b": {
+        "requires": (("finalize-c1", "c1_evidence_freeze_manifest.json"), ("prepare-c2b-static", "c2b_static_freeze_manifest.json")),
+        "outputs": ("close_c1_and_plan_c2b_state.json",),
+    },
+    "check-command-contract": {"outputs": ()},
+}
+
+
+def validate_runbook_command_contract(runbook: Path) -> dict[str, Any]:
+    text = runbook.read_text(encoding="utf-8")
+    missing = []
+    for command, contract in COMMAND_ARTIFACT_CONTRACT.items():
+        if command not in text:
+            missing.append(f"missing_command:{command}")
+        for artifact in contract.get("outputs", ()):
+            if artifact not in text:
+                missing.append(f"missing_output:{command}:{artifact}")
+        for producer, artifact in contract.get("requires", ()):
+            if producer not in COMMAND_ARTIFACT_CONTRACT or artifact not in COMMAND_ARTIFACT_CONTRACT[producer].get("outputs", ()):
+                missing.append(f"unproduced_input:{command}:{artifact}")
+    if "c2_task_risk_summary.json" in text:
+        missing.append("deprecated_artifact_name:c2_task_risk_summary.json")
+    return {"valid": not missing, "violations": missing, "command_count": len(COMMAND_ARTIFACT_CONTRACT)}
 
 
 def _read(path: Path) -> list[dict[str, str]]:
@@ -101,6 +163,97 @@ def _final_risk_pool_gate(rows: list[dict[str, str]], threshold_manifest: Path) 
     }
     failures = [name for name in required if not approved or observed[name] < int(values.get(name) or 0)]
     return {"frozen": approved and not failures, "approved_thresholds": approved, "observed": observed, "failures": failures}
+
+
+def _materialize_c2b_evidence_envelope(args: argparse.Namespace) -> dict[str, Any]:
+    static = json.loads(args.static_freeze_manifest.read_text(encoding="utf-8"))
+    source_approval = _require_approval(args.source_split_approval, args.source_split_evidence, "source_split_evidence_sha256")
+    holdout_approval = _require_approval(args.future_holdout_approval, args.future_holdout_evidence, "future_holdout_evidence_sha256")
+    split_summary_sha = static.get("artifacts", {}).get("split_proposals", {}).get("sha256", "")
+    selected_proposal_id = str(source_approval.get("selected_proposal_id", "")).strip()
+    split_approval_bound = (
+        bool(selected_proposal_id)
+        and selected_proposal_id == holdout_approval.get("selected_proposal_id")
+        and source_approval.get("split_proposal_summary_sha256") == split_summary_sha
+        and holdout_approval.get("split_proposal_summary_sha256") == split_summary_sha
+    )
+    artifacts = {
+        "static_freeze_manifest": args.static_freeze_manifest,
+        "feature_freeze_manifest": args.feature_freeze_manifest,
+        "building_registry": args.building_registry,
+        "source_split_evidence": args.source_split_evidence,
+        "source_split_approval": args.source_split_approval,
+        "future_holdout_evidence": args.future_holdout_evidence,
+        "future_holdout_approval": args.future_holdout_approval,
+        "history_overlap_audit": args.history_overlap_audit,
+        "scope_registry": args.scope_registry,
+        "reference_registry": args.reference_registry,
+        "leakage_audit": args.feature_freeze_manifest.parent / "c2b_reference_candidate_leakage_audit.summary.json",
+    }
+    missing = [name for name, path in artifacts.items() if not path.exists()]
+    static_feature = static.get("artifacts", {}).get("feature_freeze", {}).get("sha256", "")
+    proposal_rows_raw = str(static.get("artifacts", {}).get("split_proposal_rows", {}).get("path", ""))
+    proposal_rows_path = Path(proposal_rows_raw) if proposal_rows_raw else Path("__missing_split_proposal_rows__")
+    proposal_rows = _read(proposal_rows_path) if proposal_rows_path.is_file() else []
+    expected_allocations = {
+        (row.get("image_id", ""), row.get("base_task_id", "")): row.get("allocation", "")
+        for row in proposal_rows if row.get("proposal_id") == selected_proposal_id
+    }
+
+    def allocations(path: Path, *, holdout: bool = False) -> dict[tuple[str, str], str]:
+        output: dict[tuple[str, str], str] = {}
+        for row in _read(path):
+            key = (row.get("image_id", ""), row.get("base_task_id", ""))
+            allocation = str(row.get("allocation", "")).lower()
+            if allocation in {"c2", "c2_source", "source", "allowed"}:
+                normalized = "c2_source"
+            elif allocation in {"future_holdout", "holdout", "t1", "v1"}:
+                normalized = "future_holdout"
+            elif holdout:
+                normalized = "c2_source" if str(row.get("future_holdout_clear", "")).lower() in {"true", "1", "clear"} else "future_holdout"
+            else:
+                normalized = "c2_source" if str(row.get("source_split_allowed", "")).lower() in {"true", "1", "allowed"} else "future_holdout"
+            output[key] = normalized
+        return output
+
+    source_allocations = allocations(args.source_split_evidence)
+    holdout_allocations = allocations(args.future_holdout_evidence, holdout=True)
+    selected_split_exact = bool(expected_allocations) and source_allocations == expected_allocations and holdout_allocations == expected_allocations
+    bindings_ok = (
+        not missing and static.get("static_evidence_frozen") is True
+        and static_feature == sha256_file(args.feature_freeze_manifest)
+        and split_approval_bound and selected_split_exact
+    )
+    rows_complete = True
+    for path, status_fields in (
+        (args.building_registry, ("registry_status", "reviewed_by", "reviewed_at")),
+        (args.scope_registry, ("registry_status", "reviewed_by", "reviewed_at")),
+        (args.reference_registry, ("registry_status", "reviewed_by", "reviewed_at")),
+    ):
+        rows = _read(path) if path.exists() else []
+        rows_complete = rows_complete and bool(rows) and all(all(str(row.get(field, "")).strip() for field in status_fields) for row in rows)
+    payload = {
+        "schema_version": "paper_a_c2b_evidence_freeze_envelope_v1",
+        "artifact_owner": "design-c2b", "artifacts": {
+            name: {"path": path.resolve().as_posix(), "sha256": sha256_file(path)}
+            for name, path in artifacts.items() if path.exists()
+        },
+        "source_split_approval": source_approval,
+        "future_holdout_approval": holdout_approval,
+        "selected_proposal_id": selected_proposal_id,
+        "split_approval_bound": split_approval_bound,
+        "selected_split_exact": selected_split_exact,
+        "missing_artifacts": missing,
+        "registry_rows_complete": rows_complete,
+        "C2B_EVIDENCE_FROZEN": bindings_ok and rows_complete,
+        "selected_design_frozen": False,
+        "selected_task_reference_frozen": False,
+        "capacity_approved": False,
+    }
+    path = args.output_dir / "c2b_evidence_freeze_envelope.json"
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return payload
 
 
 def _environment_manifest(checkpoint: Path, config: Path) -> dict[str, Any]:
@@ -173,6 +326,7 @@ def _materialize_static_evidence_review_queues(
         identities.append({
             "image_id": key[0], "base_task_id": key[1], "task_id": row.get("task_id", ""),
             "source_path": row.get("source_path", ""), "source_pool": row.get("source_pool", ""),
+            "scene_id": row.get("scene_id", ""), "scene_key": row.get("scene_key", ""),
             "legacy_reverse_member": key in legacy_keys,
             "inventory_diagnostic_used_in_prescreen": row.get("used_in_prescreen", ""),
             "inventory_diagnostic_used_in_random_c1": row.get("used_in_random_c1_deprecated", ""),
@@ -180,37 +334,44 @@ def _materialize_static_evidence_review_queues(
             "inventory_diagnostic_scope_gold_ready": row.get("scope_gold_ready", ""),
         })
 
-    queue_specs = {
-        "authoritative_building_registry.review_queue.csv": {
-            "building_id": "", "registry_status": "pending_review", "reviewed_by": "", "reviewed_at": "",
-        },
-        "source_split_evidence.review_queue.csv": {
-            "allocation": "", "evidence_status": "pending_review", "reviewed_by": "", "reviewed_at": "",
-        },
-        "future_holdout_evidence.review_queue.csv": {
-            "future_holdout_clear": "", "evidence_status": "pending_review", "reviewed_by": "", "reviewed_at": "",
-        },
-        "history_overlap_audit.review_queue.csv": {
-            "history_overlap": "", "history_clear": "", "evidence_status": "pending_review", "reviewed_by": "", "reviewed_at": "",
-        },
-        "scope_registry.review_queue.csv": {
-            "final_scope": "", "registry_status": "pending_review", "reviewed_by": "", "reviewed_at": "",
-        },
-        "reference_registry.review_queue.csv": {
-            "geometry_reference_ready": "", "registry_status": "pending_review", "reviewed_by": "", "reviewed_at": "",
-        },
+    by_scene: dict[str, dict[str, Any]] = {}
+    for row in identities:
+        scene_key, scene_key_source = candidate_scene_mapping_key(row)
+        by_scene.setdefault(scene_key, {
+            **row, "scene_mapping_key": scene_key, "scene_key_source": scene_key_source,
+            "scene_key_status": "requires_human_validation", "building_id": "",
+            "registry_status": "pending_scene_mapping_review", "reviewed_by": "", "reviewed_at": "",
+        })
+    scene_pilot = [by_scene[key] for key in sorted(by_scene)[:15]]
+    scope_queue = [
+        {**row, "final_scope": "", "registry_status": "pending_missing_or_conflicting_scope", "reviewed_by": "", "reviewed_at": ""}
+        for row in identities
+        if str(row.get("inventory_diagnostic_scope_gold_ready", "")).lower() not in {"true", "1"}
+    ]
+    reference_queue = [
+        {**row, "geometry_reference_ready": "", "registry_status": "pending_missing_or_conflicting_reference", "reviewed_by": "", "reviewed_at": ""}
+        for row in identities
+        if str(row.get("inventory_diagnostic_geometry_gold_ready", "")).lower() not in {"true", "1"}
+    ]
+    queue_rows = {
+        "authoritative_building_scene_mapping_pilot.review_queue.csv": scene_pilot,
+        "scope_registry.minimal_review_queue.csv": scope_queue,
+        "reference_registry.minimal_review_queue.csv": reference_queue,
     }
     outputs: dict[str, str] = {}
-    for name, pending_fields in queue_specs.items():
+    for name, rows in queue_rows.items():
         path = output_dir / name
-        _write(path, [{**row, **pending_fields} for row in identities])
+        _write(path, rows)
         outputs[name] = sha256_file(path)
     summary = {
         "schema_version": "paper_a_c2b_static_evidence_review_queues_v1",
         "n_tasks": len(identities), "formal_evidence_ready": False,
+        "building_scene_pilot_count": len(scene_pilot),
+        "scope_manual_review_count": len(scope_queue),
+        "reference_manual_review_count": len(reference_queue),
         "inventory_sha256": sha256_file(inventory_csv),
         "legacy_manifest_sha256": sha256_file(legacy_manifest), "queue_sha256": outputs,
-        "contract": "review queues are non-authoritative and cannot be used as approvals",
+        "contract": "history is derived automatically; split proposals are generated separately; building review starts with at most 15 scene keys; scope/reference queues contain only missing/conflicting diagnostics; queues are non-authoritative",
     }
     (output_dir / "c2b_static_evidence_review_queues.summary.json").write_text(
         json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8",
@@ -232,6 +393,7 @@ def prepare_c2b_static(args: argparse.Namespace) -> dict[str, Any]:
         args.p1_closeout_dir / "prescreen_gold_status_audit.csv",
         args.p1_closeout_dir / "final_gold_records_v2_p1_closeout_corrected.jsonl", p1_dir,
     )
+    p1_bundle = materialize_p1_integrity_bundle(p1_dir)
     legacy = materialize_legacy_provenance(args.legacy_manifest, args.inventory_csv, args.output_dir)
     evidence_review = _materialize_static_evidence_review_queues(
         args.inventory_csv, args.legacy_manifest, args.output_dir,
@@ -281,14 +443,74 @@ def prepare_c2b_static(args: argparse.Namespace) -> dict[str, Any]:
             "cache_reused_without_model_inference": False,
         })
         feature_manifest.write_text(json.dumps(feature, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    leakage = materialize_reference_candidate_leakage(
+        args.reference_dir, args.reference_dir.parent / "label_cor",
+        args.inventory_csv, args.layout_dir, args.output_dir,
+    )
+    feature["reference_candidate_leakage_audit_sha256"] = sha256_file(args.output_dir / "c2b_reference_candidate_leakage_audit.summary.json")
+    feature["reference_candidate_leakage_status"] = leakage["status"]
+    if not leakage["formal_feature_pool_allowed"]:
+        feature["feature_audit_status"] = "failed_reference_candidate_leakage"
+    feature_manifest.write_text(json.dumps(feature, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    static_risk = materialize_static_model_risk(
+        feature_manifest, args.inventory_csv, args.output_dir / "c2b_static_model_risk.csv",
+    )
+    history = materialize_history_overlap(
+        args.inventory_csv,
+        args.p1_closeout_dir / "prescreen_canonical_annotations.csv",
+        args.c1_assignment,
+        args.output_dir / "history_overlap_audit.csv",
+    )
+    split: dict[str, Any] = {"status": "not_evaluable_missing_approved_building_registry"}
+    if args.building_registry and args.building_registry.exists():
+        split = materialize_split_proposals(
+            args.inventory_csv, args.output_dir / "history_overlap_audit.csv",
+            args.building_registry, args.output_dir / "c2b_static_model_risk.csv", args.output_dir,
+        )
     environment = _environment_manifest(args.checkpoint, args.config)
     (args.output_dir / "paper_a_analysis_environment_manifest.json").write_text(json.dumps(environment, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    static_manifest = materialize_static_freeze_manifest(
+        args.output_dir,
+        {
+            "p1_integrity": p1_dir / "p1_integrity_bundle_manifest.json",
+            "feature_freeze": feature_manifest,
+            "leakage_audit": args.output_dir / "c2b_reference_candidate_leakage_audit.summary.json",
+            "leakage_audit_rows": args.output_dir / "c2b_reference_candidate_leakage_audit.csv",
+            "reference_image_listing": args.output_dir / "c2b_reference_image_file_listing.csv",
+            "reference_layout_listing": args.output_dir / "c2b_reference_layout_file_listing.csv",
+            "candidate_image_listing": args.output_dir / "c2b_candidate_image_file_listing.csv",
+            "candidate_layout_listing": args.output_dir / "c2b_candidate_layout_file_listing.csv",
+            "history_overlap": args.output_dir / "history_overlap_audit.csv",
+            "static_model_risk": args.output_dir / "c2b_static_model_risk.csv",
+            "split_proposals": args.output_dir / "c2b_source_holdout_split_proposals.summary.json",
+            "split_proposal_rows": args.output_dir / "c2b_source_holdout_split_proposals.csv",
+            "split_disjointness_audit": args.output_dir / "c2b_source_holdout_split_disjointness_audit.csv",
+            "environment": args.output_dir / "paper_a_analysis_environment_manifest.json",
+        },
+        code_sha256=_aggregate_sha(_manifest_rows([
+            Path(__file__), _PROJECT_ROOT / "tools/thesis_main/analysis/c2b_static_evidence.py",
+            _PROJECT_ROOT / "tools/thesis_main/analysis/materialize_c2_task_risk.py",
+            _PROJECT_ROOT / "tools/thesis_main/registry/hohonet_feature_backend.py",
+        ])),
+    )
     return {
         "phase": "prepare-c2b-static", "p1_correction": correction,
-        "p1_geometry": geometry, "legacy": legacy,
+        "p1_geometry": geometry, "p1_integrity_bundle": p1_bundle, "legacy": legacy,
         "evidence_review": evidence_review, "feature": feature,
+        "leakage": leakage, "history": history, "static_risk": static_risk,
+        "split_proposals": split, "static_freeze": static_manifest,
         "environment": environment,
     }
+
+
+def expand_building_registry(args: argparse.Namespace) -> dict[str, Any]:
+    return materialize_building_registry_from_scene_mapping(
+        args.inventory_csv, args.approved_scene_mapping, args.output_csv,
+    )
+
+
+def check_command_contract(args: argparse.Namespace) -> dict[str, Any]:
+    return validate_runbook_command_contract(args.runbook)
 
 
 def preflight_calibration(args: argparse.Namespace) -> dict[str, Any]:
@@ -297,8 +519,12 @@ def preflight_calibration(args: argparse.Namespace) -> dict[str, Any]:
         "feature_freeze": args.static_dir / "c2_feature_freeze_manifest.json",
         "p1_correction": args.static_dir / "p1_integrity" / "p1_post_closeout_correction_summary_v1.json",
         "p1_geometry": args.static_dir / "p1_integrity" / "p1_geometry_score_summary_v1.json",
+        "p1_integrity_bundle": args.static_dir / "p1_integrity" / "p1_integrity_bundle_manifest.json",
         "legacy_audit": args.static_dir / "c2_legacy_reverse_candidate_audit.summary.json",
         "evidence_review": args.static_dir / "c2b_static_evidence_review_queues.summary.json",
+        "leakage_audit": args.static_dir / "c2b_reference_candidate_leakage_audit.summary.json",
+        "split_proposals": args.static_dir / "c2b_source_holdout_split_proposals.summary.json",
+        "static_freeze": args.static_dir / "c2b_static_freeze_manifest.json",
     }
     blockers = [f"missing:{name}" for name, path in required.items() if not path.exists()]
     try:
@@ -325,6 +551,20 @@ def preflight_calibration(args: argparse.Namespace) -> dict[str, Any]:
         feature_freeze = json.loads(required["feature_freeze"].read_text(encoding="utf-8"))
         if feature_freeze.get("feature_audit_status") != "approved":
             blockers.append("feature_freeze_not_approved")
+    if required["p1_integrity_bundle"].exists() and not validate_p1_integrity_bundle(args.static_dir / "p1_integrity")["valid"]:
+        blockers.append("p1_integrity_bundle_invalid")
+    if required["leakage_audit"].exists():
+        leakage = json.loads(required["leakage_audit"].read_text(encoding="utf-8"))
+        if leakage.get("status") != "passed" or leakage.get("formal_feature_pool_allowed") is not True:
+            blockers.append("reference_candidate_leakage_audit_failed")
+    if required["split_proposals"].exists():
+        split = json.loads(required["split_proposals"].read_text(encoding="utf-8"))
+        if split.get("status") != "candidate_only" or split.get("approval_materialized") is not False:
+            blockers.append("source_holdout_split_proposals_invalid")
+    if required["static_freeze"].exists():
+        static_freeze = json.loads(required["static_freeze"].read_text(encoding="utf-8"))
+        if static_freeze.get("static_evidence_frozen") is not True:
+            blockers.append("static_evidence_not_frozen")
     if required["environment"].exists():
         environment = json.loads(required["environment"].read_text(encoding="utf-8"))
         if not environment.get("cuda_available"): blockers.append("cuda_unavailable")
@@ -351,6 +591,56 @@ def preflight_calibration(args: argparse.Namespace) -> dict[str, Any]:
     return report
 
 
+def _materialize_rehearsal_root_cause_report(summary: dict[str, Any]) -> dict[str, Any]:
+    output_dir = Path(summary["output_dir"])
+    readiness = json.loads((output_dir / "c1_measurement_freeze_manifest.json").read_text(encoding="utf-8"))
+    closeout = json.loads((output_dir / "c1_final_canonical_closeout_summary.json").read_text(encoding="utf-8"))
+    independence = json.loads((output_dir / "c1_independence_summary.json").read_text(encoding="utf-8"))
+    model = json.loads((output_dir / "c1_task_adjusted_qgt_model_audit.json").read_text(encoding="utf-8"))
+    design_thresholds = json.loads((_PROJECT_ROOT / "docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json").read_text(encoding="utf-8"))
+    feature_thresholds = json.loads((_PROJECT_ROOT / "docs/thesis_main/C2B_FEATURE_AUDIT_THRESHOLDS.json").read_text(encoding="utf-8"))
+    payload = {
+        "schema_version": "paper_a_c1_c2b_root_cause_rehearsal_report_v1",
+        "input_export_count": summary.get("n_export_files", 0),
+        "state": {
+            "formal_closeout_ready": bool(summary.get("formal_closeout_ready")),
+            "profile_frozen": bool(summary.get("profile_frozen")),
+            "c2_launch_ready": bool(summary.get("c2_launch_ready")),
+            "assignment_rows": int(summary.get("c2b_assignment_row_count") or 0),
+        },
+        "owners": {
+            "collection_closure": "freeze-c1", "formal_audit": "audit-c1",
+            "c1_evidence_freeze_manifest.json": "finalize-c1",
+            "c2b_static_freeze_manifest.json": "prepare-c2b-static",
+            "c2b_evidence_freeze_envelope.json": "design-c2b",
+            "assignment_manifest_C2B.csv": "build-c2b",
+        },
+        "collection": summary.get("completion_summary", {}),
+        "three_axis_support_after_exclusion": closeout.get("support_after_exclusion", {}),
+        "three_axis_freeze_status": {
+            "Q_GT": readiness.get("Q_GT_FREEZE_STATUS"), "R_LOO": readiness.get("R_LOO_FREEZE_STATUS"),
+            "F_struct": readiness.get("F_STRUCT_FREEZE_STATUS"),
+        },
+        "p1_integrity": summary.get("p1_integrity", {}),
+        "independence": independence, "qgt_model": model,
+        "feature_leakage": {"feature": summary.get("c2_task_risk_summary", {}), "leakage": {"status": "not_run_in_c1_stage"}},
+        "split": {"status": "not_run_in_c1_stage", "approval_materialized": False},
+        "risk_model_boundary": {"status": "not_run_until_design_c2b", "slope_model_form": ""},
+        "design_threshold_blocker": {
+            "status": design_thresholds.get("status"), "formal_selection_allowed": design_thresholds.get("formal_selection_allowed"),
+            "null_thresholds": sorted(name for name, value in design_thresholds.get("thresholds", {}).items() if value is None),
+        },
+        "feature_threshold_blocker": {
+            "status": feature_thresholds.get("status"), "formal_feature_freeze_allowed": feature_thresholds.get("formal_feature_freeze_allowed"),
+            "null_thresholds": sorted(name for name, value in feature_thresholds.get("thresholds", {}).items() if value is None),
+        },
+        "closeout_blockers": summary.get("blockers", []),
+    }
+    path = output_dir / "c1_c2b_root_cause_rehearsal_report.json"
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return {"path": path.resolve().as_posix(), "sha256": sha256_file(path), **payload}
+
+
 def rehearse_c1(args: argparse.Namespace) -> dict[str, Any]:
     summary = materialize_c1(
         args.export_dir, args.active_log, args.manual_assignment, args.semi_assignment,
@@ -359,7 +649,8 @@ def rehearse_c1(args: argparse.Namespace) -> dict[str, Any]:
         c1_preannotation_feature_csv=getattr(args, "c1_preannotation_feature_csv", None),
         p1_integrity_dir=getattr(args, "p1_integrity_dir", None),
     )
-    return {"stage": "C1", "phase": "rehearsal", "output_dir": summary["output_dir"], "formal_closeout_ready": False, "review_required": True}
+    report = _materialize_rehearsal_root_cause_report(summary)
+    return {"stage": "C1", "phase": "rehearsal", "output_dir": summary["output_dir"], "formal_closeout_ready": False, "review_required": True, "root_cause_report": report}
 
 
 def freeze_c1(args: argparse.Namespace) -> dict[str, Any]:
@@ -447,16 +738,18 @@ def finalize_c1(args: argparse.Namespace) -> dict[str, Any]:
         blockers.append("formal_method_contract_or_clean_commit_missing")
     if not canonical_ready: blockers.extend(final.get("canonical_blockers", []) or ["c1_canonical_not_closed"])
     if not measurement.get("C1_EVIDENCE_BUNDLE_FROZEN"): blockers.append("c1_evidence_bundle_not_frozen")
-    if not measurement.get("C2B_BASELINE_INPUT_FROZEN"): blockers.append("c2b_baseline_input_not_frozen")
-    if audit.get("collection_closure", {}).get("status") != "validated": blockers.append("collection_closure_missing_or_invalid")
+    collection_closed = audit.get("collection_closure", {}).get("status") == "validated" and measurement.get("collection_window_closed") is True
+    if not collection_closed: blockers.append("collection_closure_missing_or_invalid")
     if audit.get("formal_closeout_ready") is not True or final.get("formal_closeout_ready") is not True or audit.get("blockers") or final.get("blockers"):
         blockers.append("formal_audit_or_closeout_blocked")
     if not approved: blockers.append("formal_closeout_adjudication_missing_invalid_or_stale")
-    measurement_ready = canonical_ready and not blockers
-    freeze = {"schema_version": "c1_measurement_freeze_envelope_v2", "method_contract": audit.get("method_contract", ""), "git_commit_sha": audit.get("git_commit_sha", ""), "C1_COLLECTION_INCOMPLETE": not measurement_ready, "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": measurement_ready, "C1_EVIDENCE_BUNDLE_FROZEN": bool(measurement.get("C1_EVIDENCE_BUNDLE_FROZEN")) and measurement_ready, "C2B_BASELINE_INPUT_FROZEN": bool(measurement.get("C2B_BASELINE_INPUT_FROZEN")) and measurement_ready, "Q_GT_FREEZE_STATUS": measurement.get("Q_GT_FREEZE_STATUS", "pending"), "R_LOO_FREEZE_STATUS": measurement.get("R_LOO_FREEZE_STATUS", "pending"), "F_STRUCT_FREEZE_STATUS": measurement.get("F_STRUCT_FREEZE_STATUS", "pending"), "C2B_DESIGN_READY": bool(measurement.get("C2B_BASELINE_INPUT_FROZEN")) and measurement_ready, "C2B_RISK_DESIGN_FROZEN": False, "C2B_DESIGN_FROZEN": False, "C2B_ASSIGNMENT_MATERIALIZED": False, "C2B_LAUNCH_READY": False, "routing_profile_frozen": False, "formal_closeout_ready": measurement_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers}
+    evidence_ready = canonical_ready and collection_closed and not blockers
+    c2b_baseline_ready = bool(measurement.get("C2B_BASELINE_INPUT_FROZEN")) and evidence_ready
+    c2b_blockers = [] if c2b_baseline_ready else ["q_gt_baseline_support_limited_or_not_frozen"]
+    freeze = {"schema_version": "c1_measurement_freeze_envelope_v2", "method_contract": audit.get("method_contract", ""), "git_commit_sha": audit.get("git_commit_sha", ""), "C1_COLLECTION_INCOMPLETE": not collection_closed, "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": evidence_ready, "C1_EVIDENCE_BUNDLE_FROZEN": bool(measurement.get("C1_EVIDENCE_BUNDLE_FROZEN")) and evidence_ready, "C2B_BASELINE_INPUT_FROZEN": c2b_baseline_ready, "Q_GT_FREEZE_STATUS": measurement.get("Q_GT_FREEZE_STATUS", "pending"), "R_LOO_FREEZE_STATUS": measurement.get("R_LOO_FREEZE_STATUS", "pending"), "F_STRUCT_FREEZE_STATUS": measurement.get("F_STRUCT_FREEZE_STATUS", "pending"), "C2B_DESIGN_READY": c2b_baseline_ready, "C2B_RISK_DESIGN_FROZEN": False, "C2B_DESIGN_FROZEN": False, "C2B_ASSIGNMENT_MATERIALIZED": False, "C2B_LAUNCH_READY": False, "routing_profile_frozen": False, "formal_closeout_ready": evidence_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers, "c2b_baseline_blockers": c2b_blockers}
     freeze["state_machine"] = {name: bool(freeze[name]) for name in ("C1_COLLECTION_INCOMPLETE", "C1_CANONICAL_CLOSED", "C1_MEASUREMENT_FROZEN", "C2B_RISK_DESIGN_FROZEN", "C2B_DESIGN_FROZEN", "C2B_ASSIGNMENT_MATERIALIZED", "C2B_LAUNCH_READY")}
     (args.output_dir / "c1_evidence_freeze_manifest.json").write_text(json.dumps(freeze, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    return {"day": 1, "phase": "measurement-freeze", "formal_closeout_ready": not blockers, "C1_CANONICAL_CLOSED": freeze["C1_CANONICAL_CLOSED"], "C1_MEASUREMENT_FROZEN": freeze["C1_MEASUREMENT_FROZEN"], "C2B_DESIGN_READY": freeze["C2B_DESIGN_READY"], "routing_profile_frozen": False, "blockers": blockers}
+    return {"day": 1, "phase": "measurement-freeze", "formal_closeout_ready": evidence_ready, "C1_CANONICAL_CLOSED": freeze["C1_CANONICAL_CLOSED"], "C1_MEASUREMENT_FROZEN": freeze["C1_MEASUREMENT_FROZEN"], "C2B_DESIGN_READY": freeze["C2B_DESIGN_READY"], "routing_profile_frozen": False, "blockers": blockers, "c2b_baseline_blockers": c2b_blockers}
 
 
 def design_c2b(args: argparse.Namespace) -> dict[str, Any]:
@@ -468,6 +761,14 @@ def design_c2b(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("C1 freeze lacks the vFinal method contract or clean commit identity")
     if not closeout.get("C2B_BASELINE_INPUT_FROZEN"):
         raise ValueError("C1 Q_GT/process/independence baseline is not formally frozen")
+    evidence_envelope = _materialize_c2b_evidence_envelope(args)
+    if not evidence_envelope["C2B_EVIDENCE_FROZEN"]:
+        return {
+            "day": 2, "phase": "risk-plan", "risk_pool_formal_ready": False,
+            "assignment_materialized": False, "design": {"candidate_only": True, "n_feasible_candidate_designs": 0},
+            "state_machine": {"C2B_EVIDENCE_FROZEN": False, "C2B_RISK_DESIGN_FROZEN": False},
+            "blockers": ["c2b_evidence_freeze_envelope_incomplete"],
+        }
     source_rows, holdout_rows = _read(args.source_split_evidence), _read(args.future_holdout_evidence)
     c2_images = _c2_source_images(source_rows)
     held_images = _future_heldout_images(holdout_rows)
@@ -481,6 +782,7 @@ def design_c2b(args: argparse.Namespace) -> dict[str, Any]:
     )
     risk["git_commit_sha"] = git_state["git_commit_sha"]
     risk["worktree_clean"] = True
+    risk["c2b_evidence_freeze_envelope_sha256"] = sha256_file(args.output_dir / "c2b_evidence_freeze_envelope.json")
     (args.output_dir / "c2_task_risk.summary.json").write_text(json.dumps(risk, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     evidence = materialize_c2b_task_eligibility(
         args.inventory_csv, args.output_dir / "c2_task_risk_inventory.csv",
@@ -529,7 +831,7 @@ def design_c2b(args: argparse.Namespace) -> dict[str, Any]:
             threshold_manifest=args.threshold_manifest,
             eligibility_evidence_csv=args.output_dir / "c2b_task_eligibility_evidence.csv",
         )
-    return {"day": 2, "phase": "risk-plan", "risk_pool_formal_ready": ready, "assignment_materialized": False, "design": design_summary, "state_machine": risk["state_machine"], "blockers": [] if ready else ["risk_or_task_eligibility_pool_insufficient"]}
+    return {"day": 2, "phase": "risk-plan", "risk_pool_formal_ready": ready, "assignment_materialized": False, "design": design_summary, "evidence_envelope": evidence_envelope, "state_machine": risk["state_machine"], "blockers": [] if ready else ["risk_or_task_eligibility_pool_insufficient"]}
 
 
 def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
@@ -543,8 +845,21 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("C2 task risk lacks the vFinal method contract or clean commit identity")
     if not risk.get("formal_ready") or not risk.get("state_machine", {}).get("C2B_RISK_DESIGN_FROZEN"):
         raise ValueError("C2 task risk is not formally frozen")
-    _require_approval(args.source_split_approval, args.source_split_evidence, "source_split_evidence_sha256")
-    _require_approval(args.future_holdout_approval, args.future_holdout_evidence, "future_holdout_evidence_sha256")
+    envelope_path = args.risk_summary.parent / "c2b_evidence_freeze_envelope.json"
+    if not envelope_path.exists() or risk.get("c2b_evidence_freeze_envelope_sha256") != sha256_file(envelope_path):
+        raise ValueError("C2 task risk lacks the bound evidence-freeze envelope")
+    envelope = json.loads(envelope_path.read_text(encoding="utf-8"))
+    if envelope.get("C2B_EVIDENCE_FROZEN") is not True:
+        raise ValueError("C2-B evidence freeze is not ready")
+    source_approval = _require_approval(args.source_split_approval, args.source_split_evidence, "source_split_evidence_sha256")
+    holdout_approval = _require_approval(args.future_holdout_approval, args.future_holdout_evidence, "future_holdout_evidence_sha256")
+    if (
+        source_approval.get("selected_proposal_id") != envelope.get("selected_proposal_id")
+        or holdout_approval.get("selected_proposal_id") != envelope.get("selected_proposal_id")
+        or sha256_file(args.source_split_approval) != envelope.get("artifacts", {}).get("source_split_approval", {}).get("sha256")
+        or sha256_file(args.future_holdout_approval) != envelope.get("artifacts", {}).get("future_holdout_approval", {}).get("sha256")
+    ):
+        raise ValueError("source/holdout approvals do not match the frozen evidence envelope")
     task_approval = _require_approval(
         args.selected_task_reference_manifest, args.task_eligibility_evidence,
         "task_eligibility_evidence_sha256",
@@ -601,6 +916,122 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
     return {"day": 2, "phase": "build", "state_machine": design.get("state_machine", {}), **audit}
 
 
+def _namespace_from_run_config(section: dict[str, Any]) -> argparse.Namespace:
+    values: dict[str, Any] = {}
+    for key, value in section.items():
+        if key == "device" or value is None:
+            values[key] = value
+        elif isinstance(value, list):
+            values[key] = [Path(item) for item in value]
+        else:
+            values[key] = Path(value)
+    return argparse.Namespace(**values)
+
+
+def close_c1_and_plan_c2b(args: argparse.Namespace) -> dict[str, Any]:
+    """Resume-safe thin entry; stop at manual approvals and print one rerun command."""
+    config = json.loads(args.run_config.read_text(encoding="utf-8"))
+    if config.get("schema_version") != "paper_a_close_c1_plan_c2b_run_config_v1":
+        raise ValueError("unsupported close-c1-and-plan-c2b run config")
+    for section in ("audit_c1", "finalize_c1", "design_c2b", "build_c2b"):
+        if not isinstance(config.get(section), dict):
+            raise ValueError(f"close-c1-and-plan-c2b run config missing object section: {section}")
+    runbook = Path(config.get("runbook") or (_PROJECT_ROOT / "docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md"))
+    contract = validate_runbook_command_contract(runbook)
+    if not contract["valid"]:
+        raise ValueError("runbook command contract invalid:" + ";".join(contract["violations"]))
+    state = json.loads(args.state_output.read_text(encoding="utf-8")) if args.state_output.exists() else {
+        "schema_version": "paper_a_close_c1_plan_c2b_state_v1", "phase": "not_started",
+    }
+    if state.get("schema_version") != "paper_a_close_c1_plan_c2b_state_v1":
+        raise ValueError("unsupported close-c1-and-plan-c2b state")
+    run_config_sha = sha256_file(args.run_config)
+    if state.get("run_config_sha256") and state.get("run_config_sha256") != run_config_sha:
+        raise ValueError("resume state is bound to a different run config SHA")
+    python_executable = Path(sys.executable).resolve()
+    rerun = (
+        f'"{python_executable}" tools/thesis_main/analysis/run_c1_closeout_launch.py close-c1-and-plan-c2b '
+        f'--run-config "{args.run_config}" --state-output "{args.state_output}"'
+    )
+
+    def build_preview() -> str:
+        build_config = config.get("build_c2b", {})
+        design_config = config.get("design_c2b", {})
+        design_root = Path(design_config["output_dir"])
+        values = {
+            "c1-closeout-summary": state.get("c1_evidence_freeze_manifest", "<c1-evidence-freeze>"),
+            "risk-summary": design_root / "c2_task_risk.summary.json",
+            "task-pool": design_root / "c2_task_risk_inventory.csv",
+            "task-eligibility-evidence": design_root / "c2b_task_eligibility_evidence.csv",
+            "candidate-dir": design_root / "c2_candidates",
+            "design-manifest": design_root / "c2b_candidate_design_manifest.json",
+            "threshold-manifest": design_config["threshold_manifest"],
+            "source-split-evidence": design_config["source_split_evidence"],
+            "source-split-approval": design_config["source_split_approval"],
+            "future-holdout-evidence": design_config["future_holdout_evidence"],
+            "future-holdout-approval": design_config["future_holdout_approval"],
+            "reference-registry": design_config["reference_registry"],
+            "selected-task-reference-manifest": build_config["selected_task_reference_manifest"],
+            "selected-design-approval": build_config["selected_design_approval"],
+            "capacity-manifest": build_config["capacity_manifest"],
+            "output-dir": build_config["output_dir"],
+        }
+        flags = " ".join(f'--{name} "{value}"' for name, value in values.items())
+        return f'"{python_executable}" tools/thesis_main/analysis/run_c1_closeout_launch.py build-c2b {flags}'
+
+    def persist(**updates: Any) -> dict[str, Any]:
+        state.update(updates)
+        state["run_config_sha256"] = run_config_sha
+        state["runbook_contract"] = contract
+        args.state_output.parent.mkdir(parents=True, exist_ok=True)
+        args.state_output.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        return state
+
+    if state.get("phase") == "formal_audit_blocked":
+        state["phase"] = "not_started"
+    if state.get("phase") == "not_started":
+        audit_args = _namespace_from_run_config(config.get("audit_c1", {}))
+        audit_result = audit_c1(audit_args)
+        formal_output = Path(audit_result["output_dir"])
+        if not audit_result["formal_closeout_ready"]:
+            return persist(
+                phase="formal_audit_blocked", formal_output_dir=formal_output.resolve().as_posix(),
+                blockers=audit_result["blockers"], next_command=rerun,
+            )
+        persist(phase="awaiting_c1_closeout_adjudication", formal_output_dir=formal_output.resolve().as_posix(), blockers=[])
+
+    if state.get("phase") in {"awaiting_c1_closeout_adjudication", "c1_evidence_freeze_blocked"}:
+        adjudication_raw = config.get("finalize_c1", {}).get("adjudication_manifest")
+        if not adjudication_raw or not Path(adjudication_raw).exists():
+            return persist(phase="awaiting_c1_closeout_adjudication", next_command=rerun)
+        finalize_args = _namespace_from_run_config({
+            **config.get("finalize_c1", {}), "output_dir": state["formal_output_dir"],
+        })
+        finalized = finalize_c1(finalize_args)
+        if not finalized["formal_closeout_ready"]:
+            return persist(phase="c1_evidence_freeze_blocked", blockers=finalized["blockers"], next_command=rerun)
+        persist(
+            phase="c1_evidence_frozen", blockers=[], next_command=rerun,
+            c1_evidence_freeze_manifest=(Path(state["formal_output_dir"]) / "c1_evidence_freeze_manifest.json").resolve().as_posix(),
+        )
+
+    if state.get("phase") in {"c1_evidence_frozen", "awaiting_split_approvals", "c2b_design_blocked"}:
+        design_config = config.get("design_c2b", {})
+        approvals = [design_config.get("source_split_approval"), design_config.get("future_holdout_approval")]
+        if not all(value and Path(value).exists() for value in approvals):
+            return persist(phase="awaiting_split_approvals", next_command=rerun)
+        design_args = _namespace_from_run_config({
+            **design_config, "c1_closeout_summary": state["c1_evidence_freeze_manifest"],
+        })
+        design = design_c2b(design_args)
+        candidates_ready = bool(design.get("risk_pool_formal_ready")) and int(design.get("design", {}).get("n_feasible_candidate_designs") or 0) > 0
+        return persist(
+            phase="c2b_candidates_materialized" if candidates_ready else "c2b_design_blocked",
+            design_result=design, next_command=build_preview() if candidates_ready else rerun,
+        )
+    return persist(next_command=state.get("next_command", ""))
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Paper A C1 closeout and C2-B launch")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -619,9 +1050,19 @@ def main(argv: list[str] | None = None) -> int:
     add_c1_inputs(rehearsal, active_name="--active-log")
 
     static = sub.add_parser("prepare-c2b-static")
-    for name in ("p1-closeout-dir", "inventory-csv", "legacy-manifest", "reference-dir", "checkpoint", "config", "feature-audit-threshold-manifest", "output-dir"):
+    for name in ("p1-closeout-dir", "inventory-csv", "legacy-manifest", "reference-dir", "layout-dir", "checkpoint", "config", "feature-audit-threshold-manifest", "output-dir"):
         static.add_argument(f"--{name}", type=Path, required=True)
+    static.add_argument("--c1-assignment", action="append", type=Path, required=True)
+    static.add_argument("--building-registry", type=Path)
     static.add_argument("--device", default="cuda:0")
+
+    expand = sub.add_parser("expand-building-registry")
+    expand.add_argument("--inventory-csv", type=Path, required=True)
+    expand.add_argument("--approved-scene-mapping", type=Path, required=True)
+    expand.add_argument("--output-csv", type=Path, required=True)
+
+    contract_check = sub.add_parser("check-command-contract")
+    contract_check.add_argument("--runbook", type=Path, required=True)
 
     preflight = sub.add_parser("preflight-calibration")
     for name in ("static-dir", "threshold-manifest", "feature-audit-threshold-manifest", "output"):
@@ -652,16 +1093,21 @@ def main(argv: list[str] | None = None) -> int:
     finalize.add_argument("--adjudication-manifest", type=Path, required=True)
 
     plan = sub.add_parser("design-c2b")
-    for name in ("c1-closeout-summary", "inventory-csv", "layout-dir", "c1-task-feature-csv", "checkpoint", "building-registry", "source-split-evidence", "future-holdout-evidence", "history-overlap-audit", "scope-registry", "reference-registry", "feature-freeze-manifest", "threshold-manifest", "output-dir"):
+    for name in ("c1-closeout-summary", "inventory-csv", "layout-dir", "c1-task-feature-csv", "checkpoint", "building-registry", "source-split-evidence", "source-split-approval", "future-holdout-evidence", "future-holdout-approval", "history-overlap-audit", "scope-registry", "reference-registry", "feature-freeze-manifest", "static-freeze-manifest", "threshold-manifest", "output-dir"):
         plan.add_argument(f"--{name}", type=Path, required=True)
     plan.add_argument("--device", default="auto")
 
     build = sub.add_parser("build-c2b")
     for name in ("c1-closeout-summary", "risk-summary", "task-pool", "task-eligibility-evidence", "candidate-dir", "design-manifest", "threshold-manifest", "source-split-evidence", "source-split-approval", "future-holdout-evidence", "future-holdout-approval", "reference-registry", "selected-task-reference-manifest", "selected-design-approval", "capacity-manifest", "output-dir"):
         build.add_argument(f"--{name}", type=Path, required=True)
+    close = sub.add_parser("close-c1-and-plan-c2b")
+    close.add_argument("--run-config", type=Path, required=True)
+    close.add_argument("--state-output", type=Path, required=True)
     args = parser.parse_args(argv)
     command = {
         "prepare-c2b-static": prepare_c2b_static,
+        "expand-building-registry": expand_building_registry,
+        "check-command-contract": check_command_contract,
         "preflight-calibration": preflight_calibration,
         "rehearse-c1": rehearse_c1,
         "freeze-c1": freeze_c1,
@@ -669,6 +1115,7 @@ def main(argv: list[str] | None = None) -> int:
         "finalize-c1": finalize_c1,
         "design-c2b": design_c2b,
         "build-c2b": build_c2b,
+        "close-c1-and-plan-c2b": close_c1_and_plan_c2b,
     }[args.command]
     print(json.dumps(command(args), ensure_ascii=False, indent=2))
     return 0

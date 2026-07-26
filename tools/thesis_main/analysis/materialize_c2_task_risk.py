@@ -132,8 +132,9 @@ def freeze_feature_reference(
     reference_listing_sha = hashlib.sha256("\n".join(f"{path.resolve().as_posix()}|{path.stat().st_size}|{sha256_file(path)}" for path in paths).encode()).hexdigest()
     circular_path = manifest_path.with_name(f"{manifest_path.stem}.circular_audit.json")
     seam_path = manifest_path.with_name(f"{manifest_path.stem}.seam_audit.json")
-    circular = {key: value for key, value in invariance.items() if key.startswith("circular_") or key in {"device", "batch_size", "dtype", "orbit_fractions"}}
-    circular["audit_basis"] = "four_phase_orbit_aggregation"
+    circular = {key: value for key, value in invariance.items() if key.startswith(("circular_", "off_grid_", "four_phase_")) or key in {"device", "batch_size", "dtype", "orbit_fractions"}}
+    circular["audit_basis"] = "off_grid_rotation_reinference"
+    circular["four_phase_permutation_role"] = "diagnostic_only"
     seam = {key: value for key, value in invariance.items() if key.startswith("seam_") or key in {"device", "batch_size", "dtype"}}
     seam["audit_basis"] = "small_seam_offset_sensitivity"
     circular_path.write_text(json.dumps(circular, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -151,7 +152,7 @@ def freeze_feature_reference(
         "checkpoint_sha256": sha256_file(checkpoint), "config_sha256": sha256_file(config),
         "reference_feature_sha256": cache_sha, "reference_listing_sha256": reference_listing_sha,
         "reference_image_count": len(paths), "pca_frozen": True, "whitening_frozen": True,
-        "circular_shift_invariant": circular_ready, "seam_invariant": seam_ready,
+        "circular_shift_invariant": circular_ready, "off_grid_circular_robustness": circular_ready, "seam_invariant": seam_ready,
         "pca_frozen_sha256": cache_sha, "whitening_frozen_sha256": cache_sha,
         "circular_shift_invariant_sha256": circular_sha, "seam_invariant_sha256": seam_sha,
         "pca_sha256": cache_sha, "whitening_sha256": cache_sha,
@@ -203,11 +204,14 @@ def refresh_feature_freeze_approval(
     )
     circular = json.loads(circular_path.read_text(encoding="utf-8"))
     seam = json.loads(seam_path.read_text(encoding="utf-8"))
+    if circular.get("audit_basis") != "off_grid_rotation_reinference" or circular.get("four_phase_permutation_role") != "diagnostic_only":
+        raise ValueError("feature circular audit is not the off-grid reinference contract")
     circular_limit, seam_limit = values.get("circular_relative_l2_max"), values.get("seam_relative_l2_q95")
     circular_ready = approved and circular_limit not in {None, ""} and float(circular.get("circular_relative_l2_max", math.inf)) <= float(circular_limit)
     seam_ready = approved and seam_limit not in {None, ""} and float(seam.get("seam_relative_l2_q95", math.inf)) <= float(seam_limit)
     payload.update({
         "circular_shift_invariant": circular_ready,
+        "off_grid_circular_robustness": circular_ready,
         "seam_invariant": seam_ready,
         "feature_audit_threshold_manifest_sha256": sha256_file(audit_threshold_manifest),
         "feature_audit_status": "approved" if circular_ready and seam_ready else "pending_threshold_approval_or_failed",
@@ -260,6 +264,8 @@ def _feature_freeze_ready(
     required = ("pca_frozen", "whitening_frozen", "circular_shift_invariant", "seam_invariant")
     if not all(bool(payload.get(flag)) and str(payload.get(f"{flag}_sha256", "")).strip() for flag in required):
         return False
+    if payload.get("off_grid_circular_robustness") is not True:
+        return False
     expected = {
         "checkpoint_sha256": checkpoint,
         "config_sha256": config,
@@ -277,6 +283,12 @@ def _feature_freeze_ready(
     if not candidate_cache.is_absolute(): candidate_cache = path.parent / candidate_cache
     if not circular.is_absolute(): circular = path.parent / circular
     if not seam.is_absolute(): seam = path.parent / seam
+    leakage = path.parent / "c2b_reference_candidate_leakage_audit.summary.json"
+    try:
+        circular_payload = json.loads(circular.read_text(encoding="utf-8"))
+        leakage_payload = json.loads(leakage.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return False
     return (
         cache.exists()
         and sha256_file(cache) == payload.get("reference_feature_sha256")
@@ -285,6 +297,11 @@ def _feature_freeze_ready(
         and circular.exists() and seam.exists() and circular != seam
         and sha256_file(circular) == payload.get("circular_shift_audit_sha256")
         and sha256_file(seam) == payload.get("seam_audit_sha256")
+        and circular_payload.get("audit_basis") == "off_grid_rotation_reinference"
+        and circular_payload.get("four_phase_permutation_role") == "diagnostic_only"
+        and leakage.exists()
+        and sha256_file(leakage) == payload.get("reference_candidate_leakage_audit_sha256")
+        and leakage_payload.get("formal_feature_pool_allowed") is True
         and all(str(payload.get(field, "")).strip() for field in ("pca_sha256", "whitening_sha256", "circular_shift_audit_sha256", "seam_audit_sha256"))
     )
 

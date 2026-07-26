@@ -6,17 +6,10 @@ import argparse
 import csv
 import hashlib
 import json
-from collections import defaultdict
 from pathlib import Path
-from statistics import fmean
-from statistics import NormalDist
 from typing import Any
 
-import pandas as pd
-import statsmodels.formula.api as smf
-
-
-MODEL_VERSION = "two_way_worker_task_fe_task_cluster_v2"
+from tools.thesis_main.analysis.c1_task_adjusted_quality import MODEL_VERSION, estimate_task_adjusted_qgt
 
 
 def _read(path: Path) -> list[dict[str, str]]:
@@ -52,64 +45,22 @@ def build_global(
     submissions: list[dict[str, str]], worker_state: list[dict[str, str]], *, profile_version: str,
     estimator: dict[str, Any] | None = None, input_status: str = "dry_run",
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
-    usable = [
-        row for row in submissions
-        if row.get("quality_evaluable", "").lower() in {"true", "1"}
-        and row.get("condition", "").lower() == "manual"
-        and ("global_analysis_eligible" not in row or _truth(row.get("global_analysis_eligible")))
-    ]
-    if not usable:
-        raise ValueError("no evaluable Manual GT submissions")
-    frame = pd.DataFrame(usable).copy()
-    for field in ("worker_id", "task_id"):
-        if frame[field].fillna("").astype(str).eq("").any():
-            raise ValueError(f"evaluable Manual rows require {field}")
-        frame[field] = frame[field].astype(str)
-    frame["iou_to_gt"] = pd.to_numeric(frame["iou_to_gt"], errors="raise")
-    if frame.worker_id.nunique() < 2 or frame.task_id.nunique() < 2:
-        raise ValueError("task-adjusted Global requires at least two workers and two tasks")
-    formula = "iou_to_gt ~ C(worker_id) + C(task_id)"
-    fitted = smf.ols(formula, frame).fit(
-        cov_type="cluster", cov_kwds={"groups": frame["task_id"], "use_correction": True}
-    )
-    workers = sorted(frame.worker_id.unique())
-    reference = frame.copy()
-    adjusted: dict[str, float] = {}
-    adjusted_se: dict[str, float] = {}
-    design_info = fitted.model.data.design_info
-    from patsy import build_design_matrices
-    for worker in workers:
-        reference["worker_id"] = worker
-        matrix = build_design_matrices([design_info], reference, return_type="dataframe")[0]
-        contrast = matrix.mean(axis=0).to_numpy()
-        adjusted[worker] = float(contrast @ fitted.params.to_numpy())
-        adjusted_se[worker] = float((contrast @ fitted.cov_params().to_numpy() @ contrast) ** .5)
-    task_mean = frame.groupby("task_id")["iou_to_gt"].mean().to_dict()
-    grand = float(frame["iou_to_gt"].mean())
-    centered: dict[str, list[float]] = defaultdict(list)
-    for row in frame.to_dict("records"):
-        centered[row["worker_id"]].append(float(row["iou_to_gt"]) - task_mean[row["task_id"]] + grand)
     config = estimator or {}
-    confidence = float(config.get("confidence_level", .95))
-    if not 0 < confidence < 1:
-        raise ValueError("confidence_level must be between zero and one")
-    z = NormalDist().inv_cdf((1 + confidence) / 2)
+    evidence_rows, task_rows, audit = estimate_task_adjusted_qgt(submissions, estimator_contract=config)
     min_gt = int(config.get("min_gt_support", 1))
     min_tasks = int(config.get("min_task_support", 1))
     max_struct = float(config.get("max_f_struct", float("inf")))
     quality_floor = float(config.get("quality_lcb_floor", float("-inf")))
     states = {row["worker_id"]: row for row in worker_state}
     output = []
-    for worker in workers:
+    for evidence in evidence_rows:
+        worker = evidence["worker_id"]
         state = states.get(worker, {})
-        estimate, se = adjusted[worker], adjusted_se[worker]
-        lower, upper = estimate - z * se, estimate + z * se
         process, independence = _truth(state.get("process_eligible")), _truth(state.get("independence_eligible"))
         reference_ok = _truth(state.get("reference_evaluable", "true"))
         struct = _number(state.get("F_struct"))
-        subset = frame[frame.worker_id == worker]
-        support, task_support = len(subset), subset.task_id.nunique()
-        groups = subset.get("dataset_group", pd.Series([], dtype=str)).astype(str) if "dataset_group" in subset else pd.Series([], dtype=str)
+        support, task_support = int(evidence["GT_support"]), int(evidence["task_support"])
+        subset = [row for row in submissions if str(row.get("worker_id", "")) == worker and str(row.get("condition", "")).lower() == "manual"]
         gates = {
             "process": process,
             "independence": independence,
@@ -117,24 +68,20 @@ def build_global(
             "minimum_task_support": task_support >= min_tasks,
             "reference_evaluable": reference_ok,
             "structural_failure": struct is not None and struct <= max_struct,
-            "quality_lcb": lower >= quality_floor,
+            "quality_lcb": float(evidence["Q_GT_LCB"]) >= quality_floor,
         }
         eligible = all(gates.values())
         output.append({
-            "worker_id": worker, "Q_GT_raw": float(subset.iou_to_gt.mean()),
-            "Q_GT_task_adjusted": estimate, "Q_GT_standard_error": se,
-            "Q_GT_CI_lower": lower, "Q_GT_CI_upper": upper, "Q_GT_LCB": lower,
-            "Q_GT_centering_sensitivity": fmean(centered[worker]),
+            **evidence,
             "R_LOO_compatible": state.get("R_LOO_compatible", ""),
             "F_struct": "" if struct is None else struct, "GT_support": support,
             "task_support": task_support,
-            "anchor_support": int(groups.str.contains("anchor", case=False).sum()),
-            "core_support": int(groups.str.contains("core", case=False).sum()),
+            "anchor_support": sum("anchor" in str(row.get("dataset_group", "")).lower() for row in subset),
+            "core_support": sum("core" in str(row.get("dataset_group", "")).lower() for row in subset),
             "LOO_support": state.get("LOO_support", ""),
             "process_eligible": process, "independence_eligible": independence,
             "reference_evaluable": reference_ok,
             "global_eligible": eligible, "exclusion_reason": "" if eligible else ";".join(name for name, passed in gates.items() if not passed),
-            "model_version": MODEL_VERSION,
             "profile_version": profile_version,
         })
     ranked = sorted(
@@ -145,14 +92,7 @@ def build_global(
     for row in output:
         row["global_rank"] = ranks.get(row["worker_id"], "") if input_status == "formal" else ""
         row["provisional_rank"] = ranks.get(row["worker_id"], "") if input_status != "formal" else ""
-    task_rows = [{"task_id": task, "task_fixed_effect": task_mean[task] - grand, "model_version": MODEL_VERSION} for task in sorted(task_mean)]
-    audit = {
-        "model_version": MODEL_VERSION, "formula": formula, "covariance": "task_cluster_robust",
-        "same_task_rows_independent": False, "n_rows": len(frame), "n_workers": len(workers),
-        "n_tasks": frame.task_id.nunique(),
-        "confidence_level": confidence, "normal_quantile": z,
-        "optional_context_adjustment": "absorbed_by_task_fixed_effect",
-    }
+    audit = {**audit, "ranking_materialized": input_status == "formal", "ranking_owner": "routing_profile_freeze"}
     return output, task_rows, audit
 
 
