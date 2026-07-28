@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Any
 
 from tools.thesis_main.analysis.c1_task_adjusted_quality import MODEL_VERSION, estimate_task_adjusted_qgt
+from tools.thesis_main.analysis.materialize_global_policy import build_global_policy
 
 
 def _read(path: Path) -> list[dict[str, str]]:
@@ -52,7 +53,7 @@ def build_global(
     max_struct = float(config.get("max_f_struct", float("inf")))
     quality_floor = float(config.get("quality_lcb_floor", float("-inf")))
     states = {row["worker_id"]: row for row in worker_state}
-    output = []
+    candidates = []
     for evidence in evidence_rows:
         worker = evidence["worker_id"]
         state = states.get(worker, {})
@@ -61,39 +62,39 @@ def build_global(
         struct = _number(state.get("F_struct"))
         support, task_support = int(evidence["GT_support"]), int(evidence["task_support"])
         subset = [row for row in submissions if str(row.get("worker_id", "")) == worker and str(row.get("condition", "")).lower() == "manual"]
-        gates = {
-            "process": process,
-            "independence": independence,
-            "minimum_gt_support": support >= min_gt,
-            "minimum_task_support": task_support >= min_tasks,
-            "reference_evaluable": reference_ok,
-            "structural_failure": struct is not None and struct <= max_struct,
-            "quality_eb": float(evidence["Q_GT_EB"]) >= quality_floor,
-        }
-        eligible = all(gates.values())
-        output.append({
+        candidates.append({
             **evidence,
             "R_peer_median": state.get("R_peer_median", ""), "R_LOO_medoid": state.get("R_LOO_medoid", ""),
             "R_LOO_compatible": state.get("R_LOO_compatible", ""),
-            "F_struct": "" if struct is None else struct, "GT_support": support,
+            "F_struct": "" if struct is None else struct, "F_struct_EB": "" if struct is None else struct, "GT_support": support, "Q_GT_support": support,
             "task_support": task_support,
+            "building_support": evidence.get("building_support", state.get("building_support", 0)),
             "anchor_support": sum("anchor" in str(row.get("dataset_group", "")).lower() for row in subset),
             "core_support": sum("core" in str(row.get("dataset_group", "")).lower() for row in subset),
             "LOO_support": state.get("LOO_support", ""),
             "process_eligible": process, "independence_eligible": independence,
             "reference_evaluable": reference_ok,
-            "global_eligible": eligible, "exclusion_reason": "" if eligible else ";".join(name for name, passed in gates.items() if not passed),
+            "serious_recurrent_failure_flag": state.get("serious_recurrent_failure_flag", False),
             "profile_version": profile_version,
         })
-    ranked = sorted(
-        (row for row in output if row["global_eligible"] or input_status != "formal"),
-        key=lambda row: (-float(row["Q_GT_EB"]), -float(row.get("R_LOO_medoid") or -1), -float(row.get("R_peer_median") or -1), row["worker_id"]),
-    )
-    ranks = {row["worker_id"]: index + 1 for index, row in enumerate(ranked)}
+    manifest = {
+        "status": "approved", "interpretation_allowed": True, "approved_by": "bound_freeze_manifest", "approved_at": "bound_freeze_manifest",
+        "thresholds": {
+            "minimum_GT_support": min_gt, "minimum_task_support": min_tasks,
+            "minimum_building_support": int(config.get("min_building_support", 0)),
+            "quality_floor": quality_floor, "maximum_structural_failure_eb": max_struct,
+            "require_process_eligible": True, "require_independence_eligible": True,
+            "frozen_random_seed": int(config.get("frozen_random_seed", 20260728)),
+        },
+    }
+    output = build_global_policy(candidates, manifest, formal=input_status == "formal")
     for row in output:
-        row["global_rank_EB"] = ranks.get(row["worker_id"], "") if input_status == "formal" else ""
-        row["global_rank"] = row["global_rank_EB"]
-        row["provisional_rank"] = ranks.get(row["worker_id"], "") if input_status != "formal" else ""
+        row["global_eligible"] = row["global_policy_eligible"]
+        row["exclusion_reason"] = row["global_exclusion_reason"]
+        row["global_rank"] = row["global_rank_LCB"] if input_status == "formal" else ""
+        row["provisional_rank"] = row["global_rank_LCB"] if input_status != "formal" else ""
+        if input_status != "formal":
+            row["global_rank_EB"] = row["global_rank_FE"] = row["global_rank_LCB"] = ""
     audit = {**audit, "ranking_materialized": input_status == "formal", "ranking_owner": "routing_profile_freeze"}
     return output, task_rows, audit
 

@@ -13,6 +13,8 @@ def peer_similarity_profiles(
     profiles: list[dict[str, Any]] = []
     for record in records:
         worker = str(record.get("worker_id", ""))
+        boundary_values: list[float] = []
+        wall_values: list[float] = []
         values: list[float] = []
         compatible = 0
         for peer in records:
@@ -23,17 +25,23 @@ def peer_similarity_profiles(
             if boundary is None or wall is None:
                 continue
             compatible += 1
+            boundary_values.append(float(boundary))
+            wall_values.append(float(wall))
             values.append(min(float(boundary), float(wall)))
         profiles.append({
             "worker_id": worker,
             "task_id": record.get("task_id", ""),
             "canonical_annotation_id": record.get("canonical_annotation_id", ""),
             "peer_similarity_values": values,
+            "R_peer_boundary_median": statistics.median(boundary_values) if boundary_values else None,
+            "R_peer_wall_median": statistics.median(wall_values) if wall_values else None,
+            "R_peer_conservative_median": statistics.median(values) if values else None,
             "R_peer_median": statistics.median(values) if values else None,
             "R_peer_mean": float(np.mean(values)) if values else None,
             "peer_count": len([peer for peer in records if str(peer.get("worker_id", "")) != worker]),
             "peer_metric_compatible_count": compatible,
             "peer_dispersion": float(np.std(values, ddof=1)) if len(values) > 1 else None,
+            "similarity_definition": "min_boundary_wall",
         })
     return profiles
 

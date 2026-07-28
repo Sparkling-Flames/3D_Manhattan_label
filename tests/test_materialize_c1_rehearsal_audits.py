@@ -49,6 +49,22 @@ def test_completion_counts_raw_pending_duplicate_as_observed(tmp_path: Path) -> 
     assert next(row for row in rows if row["worker_id"] == "1")["missing_reason"] == "duplicate_revision_pending"
 
 
+def test_completion_adds_replacement_load_without_expanding_original_task_target(tmp_path: Path) -> None:
+    assignment, mapping, canonical, geometry, export, replacement = [tmp_path / name for name in ("manual.csv", "mapping.csv", "canonical.csv", "geometry.jsonl", "export.json", "replacement.csv")]
+    _csv(assignment, [{"worker_id": "14", "task_id": "t", "base_task_id": "b", "dataset_group": "core"}, {"worker_id": "34", "task_id": "own", "base_task_id": "own", "dataset_group": "core"}])
+    _csv(mapping, [{"project_id": "66", "ls_runtime_task_id": "10", "task_id": "t", "base_task_id": "b", "dataset_group": "core", "condition": "manual"}])
+    _csv(canonical, [{"worker_id": "34", "task_id": "t", "base_task_id": "b", "dataset_group": "core"}])
+    geometry.write_text("", encoding="utf-8")
+    export.write_text(json.dumps([{"project": 66, "id": 10, "annotations": [{"id": 1, "completed_by": 34}]}]), encoding="utf-8")
+    _csv(replacement, [{"replacement_worker_id": "34", "displaced_worker_id": "14", "task_id": "t", "base_task_id": "b", "dataset_group": "core", "condition": "manual", "active_time_expected": "false"}])
+    summary = materialize_completion_support([export], [assignment], mapping, canonical, geometry, tmp_path, authorized_reassignment_csv=replacement)
+    rows = {row["worker_id"]: row for row in csv.DictReader((tmp_path / "c1_worker_completion_audit.csv").open(encoding="utf-8"))}
+    assert rows["34"]["assigned_total_count"] == "2"
+    task = next(csv.DictReader((tmp_path / "c1_task_support_deficit.csv").open(encoding="utf-8")))
+    assert task["planned_support"] == "1"
+    assert summary["authorized_reassignment_count"] == 1
+
+
 def test_final_closeout_does_not_block_nonstarter_or_reviewed_local_exclusion(tmp_path: Path) -> None:
     _csv(tmp_path / "structural_validation_audit.csv", [{"structural_validation_status": "not_evaluable", "failure_attribution": "not_evaluable", "structural_disposition_applied": "true"}])
     _csv(tmp_path / "c1_row_analysis_eligibility.csv", [{"global_analysis_eligible": "true", "loo_analysis_eligible": "true", "structural_opportunity_eligible": "true", "global_analysis_exclusion_reason": ""}])
@@ -289,6 +305,21 @@ def test_partial_worker_uses_local_valid_support(tmp_path: Path) -> None:
     ])
     _csv(quality, [{"worker_id": "1", "quality_evaluable": "true"}] * 3)
     _csv(loo, [{"worker_id": "1", "peer_count_excluding_self": "2"}] * 3)
+    summary = materialize_c2_eligible_roster(completion, canonical, quality, loo, tmp_path)
+    assert summary["n_eligible"] == 1
+
+
+def test_c2_roster_accepts_frozen_project_provenance_status(tmp_path: Path) -> None:
+    completion = tmp_path / "completion.csv"; canonical = tmp_path / "canonical.csv"
+    quality = tmp_path / "quality.csv"; loo = tmp_path / "loo.csv"
+    _csv(completion, [{"worker_id": "34", "observed_total_count": "5", "completion_status": "completed"}])
+    _csv(canonical, [{
+        "worker_id": "34", "independence_status": "independent_by_project_provenance",
+        "structural_validation_status": "passed", "outside_assignment_submission": "false",
+        "duplicate_worker_task_submission": "false",
+    }])
+    _csv(quality, [{"worker_id": "34", "quality_evaluable": "true"}] * 3)
+    _csv(loo, [{"worker_id": "34", "peer_count_excluding_self": "2"}] * 3)
     summary = materialize_c2_eligible_roster(completion, canonical, quality, loo, tmp_path)
     assert summary["n_eligible"] == 1
 

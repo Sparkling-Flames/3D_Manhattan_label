@@ -673,6 +673,8 @@ def rehearse_c1(args: argparse.Namespace) -> dict[str, Any]:
         input_status="precloseout_rehearsal",
         c1_preannotation_feature_csv=getattr(args, "c1_preannotation_feature_csv", None),
         p1_integrity_dir=getattr(args, "p1_integrity_dir", None),
+        authorized_reassignment_manifest=getattr(args, "authorized_reassignment_manifest", None),
+        building_registry=getattr(args, "building_registry", None),
     )
     report = _materialize_rehearsal_root_cause_report(summary)
     return {"stage": "C1", "phase": "rehearsal", "output_dir": summary["output_dir"], "formal_closeout_ready": False, "review_required": True, "root_cause_report": report}
@@ -723,6 +725,8 @@ def build_collection_closure(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def audit_c1(args: argparse.Namespace) -> dict[str, Any]:
+    if not getattr(args, "authorized_reassignment_manifest", None) or not getattr(args, "building_registry", None):
+        raise ValueError("formal C1 requires authorized reassignment manifest and authoritative building registry")
     validate_active_log_freeze_manifest(args.c1_active_log_freeze_manifest, args.active_log)
     summary = materialize_c1(
         args.export_dir, args.active_log, args.manual_assignment, args.semi_assignment,
@@ -739,6 +743,8 @@ def audit_c1(args: argparse.Namespace) -> dict[str, Any]:
         c1_active_log_freeze_manifest=args.c1_active_log_freeze_manifest,
         collection_closure_manifest=args.collection_closure_manifest,
         p1_integrity_dir=getattr(args, "p1_integrity_dir", None),
+        authorized_reassignment_manifest=args.authorized_reassignment_manifest,
+        building_registry=args.building_registry,
     )
     return {
         "stage": "C1", "phase": "audit", "output_dir": summary["output_dir"],
@@ -1126,6 +1132,8 @@ def main(argv: list[str] | None = None) -> int:
         command.add_argument("--p1-integrity-dir", type=Path)
         command.add_argument("--output-root", type=Path, required=True)
         command.add_argument("--c1-preannotation-feature-csv", type=Path)
+        command.add_argument("--authorized-reassignment-manifest", type=Path)
+        command.add_argument("--building-registry", type=Path)
 
     rehearsal = sub.add_parser("rehearse-c1")
     add_c1_inputs(rehearsal, active_name="--active-log")

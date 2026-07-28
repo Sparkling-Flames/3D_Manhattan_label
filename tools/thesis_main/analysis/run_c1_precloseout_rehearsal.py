@@ -31,8 +31,10 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_active_time_ledgers,
     materialize_analysis_rosters,
     materialize_completion_support,
+    materialize_effective_task_support,
     finalize_partial_completion_support,
     materialize_geometry_anomaly_root_causes,
+    materialize_geometry_pool_eligibility,
     materialize_final_canonical_closeout_summary,
     materialize_independence,
     materialize_project_independence_provenance,
@@ -45,6 +47,7 @@ from tools.thesis_main.analysis.c1_c2_mainline import (
     formal_git_state,
     materialize_analysis_views,
     materialize_measurement_readiness,
+    materialize_task_building_binding,
 )
 from tools.thesis_main.analysis.materialize_c1_preannotation_task_features import materialize as materialize_preannotation_features
 from tools.thesis_main.analysis.c1_task_adjusted_quality import _BootstrapSupportFailure, estimate_task_adjusted_qgt
@@ -243,6 +246,7 @@ def materialize(
     duplicate_adjudication: Path | None = None, scope_adjudication: Path | None = None,
     reference_amendment: Path | None = None, outside_assignment_disposition: Path | None = None,
     completion_disposition: Path | None = None, c1_active_log_freeze_manifest: Path | None = None,
+    authorized_reassignment_manifest: Path | None = None, building_registry: Path | None = None,
     collection_closure_manifest: Path | None = None,
     p1_integrity_dir: Path | None = None,
     active_log_snapshot_bound: bool = False,
@@ -271,6 +275,8 @@ def materialize(
     }
     if c1_preannotation_feature_csv is not None:
         fixed_sources["c1_preannotation_feature"] = c1_preannotation_feature_csv
+    if building_registry is not None:
+        fixed_sources["building_registry"] = building_registry
     p1_source_files = sorted((path for path in p1_closeout_dir.iterdir() if path.is_file()), key=lambda path: path.name.lower())
     p1_integrity_files = sorted((path for path in p1_integrity_dir.iterdir() if path.is_file()), key=lambda path: path.name.lower()) if p1_integrity_dir else []
     p1_integrity_validation = _validate_p1_integrity_for_mode(input_status, p1_integrity_dir)
@@ -286,6 +292,7 @@ def materialize(
         "annotation_independence_disposition": independence_disposition, "scope_adjudication": scope_adjudication,
         "reference_amendment": reference_amendment, "outside_assignment_disposition": outside_assignment_disposition,
         "completion_disposition": completion_disposition,
+        "authorized_reassignment_manifest": authorized_reassignment_manifest,
         "c1_active_log_freeze_manifest": c1_active_log_freeze_manifest,
         "collection_closure_manifest": collection_closure_manifest,
     }.items() if path is not None}
@@ -358,6 +365,11 @@ def materialize(
     write_json(output_dir / "raw_input_manifest.json", raw_manifest)
 
     p1_artifacts = [path for path in p1_snapshots if path.suffix.lower() in {".csv", ".json", ".jsonl"}]
+    def p1_snapshot(name: str) -> Path:
+        match = next((path for path in p1_snapshots if path.name.endswith(name)), None)
+        if match is None:
+            raise FileNotFoundError(f"P1 closeout lacks {name}")
+        return match
     canonical_summary = c1_canonicalize_exports.build_canonicalization(
         snapshot_exports,
         manual_assignment=fixed_snapshots["manual_assignment"],
@@ -367,10 +379,13 @@ def materialize(
         active_log=snapshots / "active_logs", output_dir=output_dir,
         require_complete=False, input_status=input_status,
         duplicate_adjudication_csv=review_snapshots.get("duplicate_adjudication"),
+        authorized_reassignment_manifest=review_snapshots.get("authorized_reassignment_manifest"),
+        candidate_inventory_csv=fixed_snapshots["candidate_inventory"],
+        p1_canonical_csv=p1_snapshot("prescreen_canonical_annotations.csv"),
+        p1_admission_csv=p1_snapshot("prescreen_worker_admission.csv"),
     )
-    # build_canonicalization owns canonical sidecars and geometry consensus.
-    # Re-running either here duplicates the most expensive C1 work and risks
-    # overwriting one logical artifact with a second execution.
+    # Canonicalization owns immutable row/meta evidence. Geometry is intentionally
+    # delayed until the legal peer pool has been frozen below.
     project_independence_evidence_summary = materialize_project_independence_provenance(
         output_dir / "c1_canonical_meta_observations.csv", output_dir,
     )
@@ -393,6 +408,7 @@ def materialize(
         output_dir / "c1_runtime_task_mapping.csv", output_dir / "c1_canonical_annotations.csv",
         output_dir / "c1_canonical_geometry.jsonl", output_dir,
         completion_disposition_csv=review_snapshots.get("completion_disposition"), collection_window_closed=collection_window_closed,
+        authorized_reassignment_csv=review_snapshots.get("authorized_reassignment_manifest"),
     )
     completion_rows_for_exclusion = read_csv(output_dir / "c1_worker_completion_audit.csv")
     administratively_excluded_workers = {
@@ -400,14 +416,6 @@ def materialize(
         for row in completion_rows_for_exclusion
         if row.get("completion_status", "").strip().lower() == "administrative_exclusion"
     }
-    if administratively_excluded_workers:
-        geometry_summary = materialize_geometry_consensus(
-            output_dir / "c1_canonical_geometry.jsonl", output_dir,
-            input_status=input_status,
-            excluded_worker_ids=administratively_excluded_workers,
-        )
-        canonical_summary["geometry_sidecars"] = geometry_summary
-        write_json(output_dir / "c1_canonicalization_summary.json", canonical_summary)
     outside_summary = materialize_outside_assignment(
         output_dir / "c1_canonical_annotations.csv", output_dir,
         disposition_csv=review_snapshots.get("outside_assignment_disposition"),
@@ -424,6 +432,31 @@ def materialize(
         scope_adjudication_csv=review_snapshots.get("scope_adjudication"),
         reference_amendment=review_snapshots.get("reference_amendment"),
     )
+    building_summary = materialize_task_building_binding(
+        output_dir / "c1_canonical_annotations.csv", fixed_snapshots.get("building_registry"), output_dir,
+        formal=formal,
+    )
+    geometry_pool_summary = materialize_geometry_pool_eligibility(
+        output_dir / "c1_canonical_annotations.csv", output_dir / "c1_annotation_version_disposition.csv",
+        output_dir / "structural_validation_audit.csv", output_dir / "c1_task_outcome_reference.csv", output_dir,
+        independence_csv=output_dir / "c1_independence_evidence.csv",
+        outside_disposition_csv=output_dir / "c1_outside_assignment_disposition_evidence.csv",
+        completion_csv=output_dir / "c1_worker_completion_audit.csv",
+    )
+    eligible_geometry_ids = {
+        row.get("canonical_annotation_id", "") for row in read_csv(output_dir / "c1_geometry_pool_eligibility.csv")
+        if str(row.get("geometry_pool_eligible", "")).lower() in {"true", "1"}
+    }
+    geometry_summary = materialize_geometry_consensus(
+        output_dir / "c1_canonical_geometry.jsonl", output_dir,
+        input_status=input_status, excluded_worker_ids=administratively_excluded_workers,
+        eligible_annotation_ids=eligible_geometry_ids,
+        building_binding_csv=output_dir / "c1_task_building_binding.csv",
+    )
+    canonical_summary["geometry_sidecars"] = geometry_summary
+    canonical_summary["geometry_pool"] = geometry_pool_summary
+    canonical_summary["building_binding"] = building_summary
+    write_json(output_dir / "c1_canonicalization_summary.json", canonical_summary)
     row_eligibility_summary = materialize_row_analysis_eligibility(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_annotation_version_disposition.csv",
         output_dir / "c1_gt_quality_evidence.csv", output_dir / "geometry_worker_task_loo_C1.csv",
@@ -436,6 +469,10 @@ def materialize(
         output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_row_analysis_eligibility.csv",
         output_dir, completion_summary, collection_window_closed=collection_window_closed,
     )
+    completion_summary["effective_task_support"] = materialize_effective_task_support(
+        [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
+        output_dir / "c1_canonical_annotations.csv", output_dir / "c1_geometry_pool_eligibility.csv", output_dir,
+    )
     roster_summary = materialize_analysis_rosters(
         output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_canonical_annotations.csv", output_dir,
     )
@@ -445,11 +482,14 @@ def materialize(
     analysis_views = materialize_analysis_views(
         output_dir / "c1_gt_quality_evidence.csv", output_dir / "geometry_worker_task_loo_C1.csv",
         output_dir / "structural_validation_audit.csv", output_dir / "c1_row_analysis_eligibility.csv", output_dir,
+        peer_csv=output_dir / "geometry_worker_task_peer_C1.csv",
+        building_binding_csv=output_dir / "c1_task_building_binding.csv",
     )
     materialize_gt_cluster_alignment(
         output_dir / "geometry_task_crowd_structure_C1.csv",
         output_dir / "geometry_worker_task_loo_C1.csv",
         output_dir / "c1_gt_quality_evidence.csv", output_dir,
+        reference_csv=output_dir / "c1_task_outcome_reference.csv", input_status=input_status,
     )
     materialize_structural_eb(
         output_dir / "structural_validation_analysis.csv",
@@ -457,16 +497,20 @@ def materialize(
         Path("docs/thesis_main/GLOBAL_POLICY_THRESHOLDS.json"),
     )
     counterexample_events = [
-        {"base_task_id": row.get("base_task_id", ""), "trigger": "gt_conflict"}
+        {"stage": "C1", "base_task_id": row.get("base_task_id", ""), "trigger": "gt_conflict", "trigger_rule_version": row.get("rule_version", ""), "source_artifact": "c1_gt_conflict_review_queue.csv", "source_artifact_sha256": sha256_file(output_dir / "c1_gt_conflict_review_queue.csv"), "evidence_identity": f"{row.get('base_task_id', '')}|{row.get('trigger', '')}", "evidence_sha256": row.get("source_sha256", ""), "denominator_definition": "GT conflict trigger over eligible task crowd"}
         for row in read_csv(output_dir / "c1_gt_conflict_review_queue.csv")
     ] + [
-        {"base_task_id": row.get("base_task_id", ""), "trigger": "supported_multimodality"}
+        {"stage": "C1", "base_task_id": row.get("base_task_id", ""), "trigger": "supported_multimodality", "trigger_rule_version": row.get("rule_version", ""), "source_artifact": "geometry_task_crowd_structure_C1.csv", "source_artifact_sha256": sha256_file(output_dir / "geometry_task_crowd_structure_C1.csv"), "evidence_identity": row.get("base_task_id", ""), "evidence_sha256": row.get("source_sha256", ""), "denominator_definition": "eligible unique-worker crowd geometry"}
         for row in read_csv(output_dir / "geometry_task_crowd_structure_C1.csv")
         if row.get("task_crowd_structure_status") == "supported_multimodal"
     ] + [
-        {"base_task_id": row.get("base_task_id", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""), "trigger": "worker_structural_failure"}
+        {"stage": "C1", "base_task_id": row.get("base_task_id", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""), "trigger": "worker_structural_failure", "trigger_rule_version": row.get("rule_version", ""), "source_artifact": "structural_validation_analysis.csv", "source_artifact_sha256": sha256_file(output_dir / "structural_validation_analysis.csv"), "evidence_identity": row.get("canonical_annotation_id", ""), "evidence_sha256": row.get("source_sha256", ""), "denominator_definition": "structural opportunities after process and independence gates"}
         for row in read_csv(output_dir / "structural_validation_analysis.csv")
         if row.get("failure_attribution") == "worker_caused_structural_failure"
+    ] + [
+        {"stage": "C1", "base_task_id": "", "canonical_annotation_id": f"worker:{row.get('worker_id', '')}", "evidence_identity": row.get("worker_id", ""), "trigger": "process_integrity", "trigger_rule_version": "c1_completion_disposition_v1", "source_artifact": "c1_worker_completion_audit.csv", "source_artifact_sha256": sha256_file(output_dir / "c1_worker_completion_audit.csv"), "denominator_definition": "administratively_excluded_worker"}
+        for row in read_csv(output_dir / "c1_worker_completion_audit.csv")
+        if row.get("completion_status", "").strip().lower() == "administrative_exclusion"
     ]
     materialize_counterexample_bank(counterexample_events, output_dir / "counterexample_bank")
     anomaly_summary = materialize_geometry_anomaly_root_causes(
@@ -516,9 +560,11 @@ def materialize(
                 "bootstrap_replicates": 200 if formal else 80,
                 "bootstrap_seed": 20260726,
                 "adjust_stage": False,
-                "adjust_building": False,
+                "adjust_building": bool(fixed_snapshots.get("building_registry")),
             },
         )
+        model_audit["building_registry_sha256"] = building_summary.get("registry_sha256", "")
+        model_audit["building_binding_sha256"] = building_summary.get("output_sha256", "")
         write_csv(qgt_evidence_path, globals_, list(globals_[0]))
         write_csv(output_dir / "c1_task_adjusted_qgt_task_effects.csv", task_effects, list(task_effects[0]))
         write_json(output_dir / "c1_task_adjusted_qgt_model_audit.json", model_audit)
@@ -538,7 +584,7 @@ def materialize(
         output_dir / "structural_validation_analysis.csv", output_dir / "c1_worker_completion_audit.csv", output_dir,
         quality_csv=output_dir / "c1_gt_quality_analysis.csv",
         eligibility_csv=output_dir / "c1_row_analysis_eligibility.csv",
-        peer_csv=output_dir / "geometry_worker_task_peer_C1.csv",
+        peer_csv=output_dir / "geometry_worker_task_peer_analysis.csv",
         structural_eb_csv=output_dir / "c1_structural_reliability_eb.csv",
         formal=formal,
     )

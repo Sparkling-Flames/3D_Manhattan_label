@@ -127,11 +127,38 @@ def crowd_structure(
             if item.get("boundary_similarity") is not None and item.get("wallwall_similarity") is not None:
                 values.append(min(float(item["boundary_similarity"]), float(item["wallwall_similarity"])))
         return float(np.mean(values)) if values else None
+    def medoid(indices: tuple[int, ...]) -> dict[str, str]:
+        candidates = []
+        for index in indices:
+            peer_metrics = [channels[tuple(sorted((index, other)))] for other in indices if other != index]
+            boundary = [float(item["boundary_similarity"]) for item in peer_metrics]
+            wall = [float(item["wallwall_similarity"]) for item in peer_metrics]
+            score = (
+                min(boundary, default=1.0), min(wall, default=1.0),
+                float(np.mean(boundary)) if boundary else 1.0,
+                float(np.mean(wall)) if wall else 1.0,
+            )
+            geometry_sha = hashlib.sha256(json.dumps(valid[index].get("geometry", {}), sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+            candidates.append((score, geometry_sha, index))
+        candidates.sort(key=lambda item: tuple(-value for value in item[0]) + (item[1],))
+        selected = valid[candidates[0][2]] if candidates else {}
+        return {
+            "annotation_id": str(selected.get("canonical_annotation_id") or selected.get("annotation_id") or ""),
+            "worker_id": str(selected.get("worker_id") or ""),
+            "geometry_sha256": candidates[0][1] if candidates else "",
+        }
+    largest_medoid, second_medoid = medoid(largest), medoid(second)
     return {
         "valid_k": len(valid), "cluster_count": (1 + int(bool(second)) + max(0, len(remainder) - len(second))) if largest else 0,
         "largest_cluster_support": len(largest), "second_cluster_support": len(second),
         "largest_cluster_worker_ids": ";".join(str(valid[i].get("worker_id", "")) for i in largest),
         "second_cluster_worker_ids": ";".join(str(valid[i].get("worker_id", "")) for i in second),
+        "largest_cluster_medoid_annotation_id": largest_medoid["annotation_id"],
+        "largest_cluster_medoid_worker_id": largest_medoid["worker_id"],
+        "largest_cluster_medoid_geometry_sha256": largest_medoid["geometry_sha256"],
+        "second_cluster_medoid_annotation_id": second_medoid["annotation_id"],
+        "second_cluster_medoid_worker_id": second_medoid["worker_id"],
+        "second_cluster_medoid_geometry_sha256": second_medoid["geometry_sha256"],
         "within_largest_cluster_similarity": within(largest),
         "within_second_cluster_similarity": within(second),
         "task_crowd_structure_status": status, "structure_reason": reason,

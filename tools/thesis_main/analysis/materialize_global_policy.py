@@ -10,42 +10,45 @@ import random
 from pathlib import Path
 from typing import Any
 
-import numpy as np
-
-
 def _truth(value: Any) -> bool: return str(value).strip().lower() in {"1", "true", "yes"}
 def _number(row: dict[str, Any], key: str) -> float | None:
     try: return float(row[key])
     except (KeyError, TypeError, ValueError): return None
 
 
+def _gate_signal(row: dict[str, Any], flag: str, support: str) -> bool:
+    if flag in row and str(row.get(flag, "")).strip() != "":
+        return _truth(row.get(flag))
+    value = _number(row, support)
+    return value is not None and value > 0
+
+
 def build_global_policy(rows: list[dict[str, Any]], manifest: dict[str, Any], *, formal: bool = False) -> list[dict[str, Any]]:
     approved = manifest.get("status") == "approved" and bool(manifest.get("interpretation_allowed")) and manifest.get("approved_by") and manifest.get("approved_at")
     if formal and not approved: raise ValueError("candidate GLOBAL_POLICY_THRESHOLDS cannot produce formal policy")
     thresholds = manifest["thresholds"]
-    eb = [_number(row, "Q_GT_EB") for row in rows]
-    finite = [value for value in eb if value is not None]
-    if len(finite) < 2: raise ValueError("formal Global requires estimable Q_GT_EB for at least two workers")
-    mean, sd = float(np.mean(finite)), float(np.std(finite, ddof=1))
-    if sd <= 0: raise ValueError("Q_GT_EB cannot be standardized")
+    finite = [_number(row, "Q_GT_EB_LCB") for row in rows if _number(row, "Q_GT_EB_LCB") is not None]
+    if len(finite) < 2: raise ValueError("Global requires estimable Q_GT_EB_LCB for at least two workers")
     rng = random.Random(int(thresholds["frozen_random_seed"])); random_keys = {str(row.get("worker_id", "")): rng.random() for row in sorted(rows, key=lambda item: str(item.get("worker_id", "")))}
     output = []
     for row in rows:
-        value = _number(row, "Q_GT_EB"); reasons = []
-        if value is None: reasons.append("q_gt_eb_missing")
+        value = _number(row, "Q_GT_EB_LCB"); reasons = []
+        if value is None: reasons.append("q_gt_eb_lcb_missing")
         if int(float(row.get("Q_GT_support") or 0)) < int(thresholds["minimum_GT_support"]): reasons.append("gt_support")
         if int(float(row.get("task_support") or 0)) < int(thresholds["minimum_task_support"]): reasons.append("task_support")
         if int(float(row.get("building_support") or 0)) < int(thresholds["minimum_building_support"]): reasons.append("building_support")
         if value is not None and value < float(thresholds["quality_floor"]): reasons.append("quality_floor")
         if _number(row, "F_struct_EB") is not None and float(row["F_struct_EB"]) > float(thresholds["maximum_structural_failure_eb"]): reasons.append("structural_safety")
-        if thresholds["require_process_eligible"] and not _truth(row.get("process_eligible", row.get("process_support"))): reasons.append("process")
-        if thresholds["require_independence_eligible"] and not _truth(row.get("independence_eligible", row.get("independence_support"))): reasons.append("independence")
-        output.append({**row, "S_G": "" if value is None else (value - mean) / sd, "global_policy_eligible": not reasons, "global_exclusion_reason": ";".join(reasons), "policy_status": "formal" if formal else "candidate", "formal_use_allowed": bool(formal and approved), "_random_key": random_keys[str(row.get("worker_id", ""))]})
+        if "reference_evaluable" in row and not _truth(row.get("reference_evaluable")): reasons.append("reference")
+        if thresholds["require_process_eligible"] and not _gate_signal(row, "process_eligible", "process_support"): reasons.append("process")
+        if thresholds["require_independence_eligible"] and not _gate_signal(row, "independence_eligible", "independence_support"): reasons.append("independence")
+        if _truth(row.get("serious_recurrent_failure_flag")): reasons.append("serious_recurrent_failure")
+        output.append({**row, "S_G": "" if value is None else value, "global_policy_eligible": not reasons, "global_exclusion_reason": ";".join(reasons), "policy_status": "formal" if formal else "candidate", "formal_use_allowed": bool(formal and approved), "_random_key": random_keys[str(row.get("worker_id", ""))]})
     def rank(field: str, target: str, ties: bool = False) -> None:
         eligible = [row for row in output if row["global_policy_eligible"] and _number(row, field) is not None]
-        eligible.sort(key=lambda row: (-float(row[field]), -float(row.get("R_LOO_medoid") or -1), -float(row.get("R_peer_median") or -1), -float(row.get("availability") or 0), -float(row.get("capacity") or 0), row["_random_key"]))
+        eligible.sort(key=lambda row: (-float(row[field]), -float(row.get("R_LOO_LCB") or row.get("R_LOO_medoid") or -1), -float(row.get("availability") or 0), -float(row.get("capacity") or 0), row["_random_key"]))
         for index, row in enumerate(eligible, 1): row[target] = index
-    rank("Q_GT_EB", "global_rank_EB"); rank("Q_GT_task_adjusted_FE", "global_rank_FE"); rank("Q_GT_EB_LCB", "global_rank_LCB")
+    rank("Q_GT_EB", "global_rank_EB"); rank("Q_GT_task_adjusted_FE", "global_rank_FE"); rank("S_G", "global_rank_LCB")
     for row in output:
         row.setdefault("global_rank_EB", ""); row.setdefault("global_rank_FE", ""); row.setdefault("global_rank_LCB", ""); row.pop("_random_key", None)
     return output
