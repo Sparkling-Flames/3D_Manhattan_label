@@ -61,6 +61,7 @@ def materialize_completion_support(
     export_paths: list[Path], assignment_paths: list[Path], runtime_mapping_csv: Path,
     canonical_csv: Path, geometry_jsonl: Path, output_dir: Path, *, min_valid_k: int = 3,
     completion_disposition_csv: Path | None = None, collection_window_closed: bool = False,
+    authorized_reassignment_csv: Path | None = None,
 ) -> dict[str, Any]:
     assignments: dict[tuple[str, str, str, str], dict[str, Any]] = {}
     for path in assignment_paths:
@@ -70,6 +71,15 @@ def materialize_completion_support(
             if key in assignments:
                 raise ValueError(f"duplicate assignment identity: {key}")
             assignments[key] = {**row, "condition": condition}
+    original_assignments = dict(assignments)
+    for row in read_csv(authorized_reassignment_csv) if authorized_reassignment_csv and authorized_reassignment_csv.exists() else []:
+        key = (
+            str(row.get("replacement_worker_id", "")).strip(), str(row.get("task_id", "")).strip(),
+            str(row.get("base_task_id", "")).strip(), str(row.get("dataset_group", "")).strip(),
+        )
+        if key in assignments:
+            raise ValueError(f"authorized replacement duplicates an existing assignment edge: {key}")
+        assignments[key] = {**row, "worker_id": key[0], "condition": str(row.get("condition", "")).strip().lower(), "assignment_provenance": "authorized_replacement_assignment"}
 
     runtime = {
         (row.get("project_id", ""), row.get("ls_runtime_task_id", "")):
@@ -130,6 +140,9 @@ def materialize_completion_support(
             reason = "duplicate_revision_pending"
         audit = {
             "worker_id": key[0], "task_id": key[1], "base_task_id": key[2], "condition": row["condition"], "dataset_group": key[3],
+            "assignment_provenance": row.get("assignment_provenance", "original_assignment"),
+            "displaced_worker_id": row.get("displaced_worker_id", ""),
+            "active_time_expected": row.get("active_time_expected", True),
             "expected_submission": True, "observed_submission": raw_seen, "canonical_selected_submission": selected,
             "missing_submission": not raw_seen, "missing_reason": reason,
         }
@@ -139,7 +152,7 @@ def materialize_completion_support(
 
     task_rows = []
     by_task: dict[tuple[str, str, str, str], list[tuple[str, str, str, str]]] = defaultdict(list)
-    for key, row in assignments.items():
+    for key, row in original_assignments.items():
         by_task[(key[1], key[2], row["condition"], key[3])].append(key)
     for (task, base, condition, group), keys in sorted(by_task.items()):
         planned = len(keys); seen = sum(key in observed for key in keys); valid = sum(key in geometry_valid for key in keys)
@@ -178,6 +191,7 @@ def materialize_completion_support(
         "closed_partial_insufficient_worker_count": counts["closed_partial_insufficient"],
         "nonstarter_worker_count": counts["nonstarter"],
         "administrative_exclusion_worker_count": counts["administrative_exclusion"],
+        "authorized_reassignment_count": len(assignments) - len(original_assignments),
         "completed_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] == "completed"],
         "partial_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] in {"partial_noncompletion", "closed_partial_usable", "closed_partial_insufficient"}],
         "nonstarter_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] == "nonstarter"],
@@ -1183,6 +1197,95 @@ def materialize_final_canonical_closeout_summary(
     return summary
 
 
+def materialize_geometry_pool_eligibility(
+    canonical_csv: Path, version_csv: Path, structural_csv: Path, reference_csv: Path,
+    output_dir: Path, *, independence_csv: Path, outside_disposition_csv: Path,
+    completion_csv: Path,
+) -> dict[str, Any]:
+    """Freeze the legal peer pool before any pairwise/LOO computation."""
+    versions = {row.get("annotation_id", ""): row.get("version_disposition", "") for row in read_csv(version_csv)}
+    structural = {row.get("canonical_annotation_id", ""): row for row in read_csv(structural_csv)}
+    independence = {row.get("canonical_annotation_id", ""): row for row in read_csv(independence_csv)}
+    outside = {row.get("canonical_annotation_id", ""): row for row in read_csv(outside_disposition_csv)}
+    references = {
+        tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition")): row
+        for row in read_csv(reference_csv)
+    }
+    excluded_workers = {
+        row.get("worker_id", "") for row in read_csv(completion_csv)
+        if row.get("completion_status", "").strip().lower() == "administrative_exclusion"
+    }
+    output = []
+    for row in read_csv(canonical_csv):
+        identity = row.get("canonical_annotation_id", "")
+        reasons = []
+        outside_override = _truth(outside.get(identity, {}).get("process_eligible_override"))
+        if row.get("worker_id", "") in excluded_workers: reasons.append("administrative_exclusion")
+        if (not _truth(row.get("assigned_expected")) or _truth(row.get("outside_assignment_submission"))) and not outside_override: reasons.append("outside_assignment")
+        if _truth(row.get("duplicate_worker_task_submission")): reasons.append("duplicate_or_revision")
+        if versions.get(row.get("annotation_id", "")) != "selected_canonical": reasons.append("canonical_version_not_disposed")
+        if independence.get(identity, {}).get("independence_status", "") not in {"independent", "independent_by_project_provenance", "independent_by_annotation_disposition"}: reasons.append("independence_not_evaluable")
+        key = tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"))
+        if references.get(key, {}).get("final_scope") != "in_scope": reasons.append("scope_not_resolved_in_scope")
+        if structural.get(identity, {}).get("structural_validation_status") != "passed": reasons.append("structural_not_passed")
+        reasons = list(dict.fromkeys(reasons))
+        output.append({
+            "canonical_annotation_id": identity, "worker_id": row.get("worker_id", ""),
+            "base_task_id": row.get("base_task_id", ""), "condition": row.get("condition", ""),
+            "geometry_pool_eligible": not reasons, "geometry_pool_exclusion_reason": ";".join(reasons),
+        })
+    path = output_dir / "c1_geometry_pool_eligibility.csv"
+    write_csv(path, output)
+    return {"n_rows": len(output), "n_eligible": sum(_truth(row["geometry_pool_eligible"]) for row in output), "n_excluded": sum(not _truth(row["geometry_pool_eligible"]) for row in output), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+
+
+def materialize_effective_task_support(
+    assignment_paths: list[Path], canonical_csv: Path, geometry_pool_csv: Path, output_dir: Path,
+) -> dict[str, Any]:
+    """Compare final unique eligible support with the immutable original target k."""
+    targets: dict[tuple[str, str], set[str]] = defaultdict(set)
+    task_ids: dict[tuple[str, str], set[str]] = defaultdict(set)
+    groups: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for path in assignment_paths:
+        inferred = "semi" if "semi" in path.name.lower() else "manual"
+        for row in read_csv(path):
+            condition = str(row.get("condition") or inferred).strip().lower()
+            key = (str(row.get("base_task_id", "")).strip(), condition)
+            targets[key].add(str(row.get("worker_id", "")).strip())
+            task_ids[key].add(str(row.get("task_id", "")).strip())
+            groups[key].add(str(row.get("dataset_group", "")).strip())
+    canonical = {row.get("canonical_annotation_id", ""): row for row in read_csv(canonical_csv)}
+    realized: dict[tuple[str, str], set[str]] = defaultdict(set)
+    for gate in read_csv(geometry_pool_csv):
+        if not _truth(gate.get("geometry_pool_eligible")):
+            continue
+        row = canonical.get(gate.get("canonical_annotation_id", ""), {})
+        key = (str(row.get("base_task_id", "")).strip(), str(row.get("condition", "")).strip().lower())
+        worker = str(row.get("worker_id", "")).strip()
+        if key[0] and worker:
+            realized[key].add(worker)
+    rows = []
+    for key in sorted(targets):
+        target, actual = targets[key], realized.get(key, set())
+        rows.append({
+            "base_task_id": key[0], "condition": key[1],
+            "task_id": ";".join(sorted(task_ids[key])), "dataset_group": ";".join(sorted(groups[key])),
+            "target_support": len(target), "realized_support": len(actual),
+            "support_deficit": max(0, len(target) - len(actual)),
+            "target_worker_ids": ";".join(sorted(target)),
+            "realized_eligible_worker_ids": ";".join(sorted(actual)),
+            "support_status": "complete" if len(actual) >= len(target) else "deficit",
+        })
+    path = output_dir / "c1_task_support_deficit.csv"
+    write_csv(path, rows)
+    return {
+        "n_task_conditions": len(rows),
+        "n_complete": sum(row["support_deficit"] == 0 for row in rows),
+        "n_deficit": sum(row["support_deficit"] > 0 for row in rows),
+        "sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+    }
+
+
 def materialize_c2_eligible_roster(
     completion_csv: Path, canonical_csv: Path, quality_csv: Path,
     geometry_loo_csv: Path, output_dir: Path, *, min_observed_support: int = 5,
@@ -1205,7 +1308,13 @@ def materialize_c2_eligible_roster(
     for worker, completed in sorted(completion.items(), key=lambda item: (0, int(item[0])) if item[0].isdigit() else (1, item[0])):
         rows = by_worker.get(worker, [])
         process_valid = [row for row in rows if not _truth(row.get("outside_assignment_submission")) and not _truth(row.get("duplicate_worker_task_submission"))]
-        independence_valid = [row for row in process_valid if row.get("independence_status") in {"independent", "independent_by_observed_provenance"}]
+        independence_valid = [
+            row for row in process_valid
+            if row.get("independence_status") in {
+                "independent", "independent_by_project_provenance",
+                "independent_by_annotation_disposition",
+            }
+        ]
         structural_evaluable = sum((_truth(row.get("structural_opportunity_eligible")) if "structural_opportunity_eligible" in row else row.get("structural_validation_status") in {"passed", "failed_confirmed_worker_submission"}) for row in independence_valid)
         observed = int(completed.get("observed_total_count") or 0)
         blockers = []
@@ -1363,6 +1472,7 @@ def materialize_three_track_worker_state(
             "CI_upper": global_row.get("Q_GT_CI_upper", ""), "LCB": global_row.get("Q_GT_LCB", ""),
             "Q_GT_contrast_covariance_row_json": global_row.get("Q_GT_contrast_covariance_row_json", ""),
             "GT_support": gt_support, "task_support": global_row.get("task_support", 0),
+            "building_support": global_row.get("building_support", 0),
             "R_LOO_compatible": sum(values) / len(values) if values else "", "LOO_support": loo_support,
             "R_LOO_CI_lower": bootstrap[int(.025 * (len(bootstrap) - 1))] if bootstrap else "",
             "R_LOO_CI_upper": bootstrap[int(.975 * (len(bootstrap) - 1))] if bootstrap else "",
@@ -1376,6 +1486,7 @@ def materialize_three_track_worker_state(
             "peer_decision_usable": peer_status == "estimated", "medoid_loo_decision_usable": medoid_status == "estimated",
             "F_struct": struct[worker]["failure"] / opportunity if opportunity else "",
             "F_struct_EB": structural_eb.get(worker, {}).get("F_struct_EB", ""),
+            "serious_recurrent_failure_flag": structural_eb.get(worker, {}).get("serious_recurrent_failure_flag", False),
             "F_struct_numerator": struct[worker]["failure"], "F_struct_denominator": opportunity,
             "process_eligible_support": len(gate_support[worker]["process"]),
             "independence_support": len(gate_support[worker]["independence"]),

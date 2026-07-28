@@ -34,9 +34,17 @@ OUTCOME_FIELDS = [
 def materialize_gt_cluster_alignment(
     crowd_structure_csv: Path, loo_csv: Path, quality_csv: Path,
     output_dir: Path, *, conflict_rule_manifest: Path = Path("docs/thesis_main/GT_CONFLICT_REVIEW_RULES.json"),
+    reference_csv: Path | None = None, input_status: str = "dry_run",
 ) -> dict[str, Any]:
     """Audit crowd/GT disagreement; candidates never mutate the reference."""
     rules = json.loads(conflict_rule_manifest.read_text(encoding="utf-8"))
+    approved = rules.get("status") == "approved" and rules.get("interpretation_allowed") is True and rules.get("approved_by") and rules.get("approved_at")
+    implemented_triggers = {"dominant_cluster_low_gt_alignment", "minority_cluster_better_gt_alignment", "public_gt_structurally_invalid"}
+    undefined_triggers = sorted(set(rules.get("supported_triggers", [])) - implemented_triggers - {"known_reference_issue"})
+    if input_status == "formal" and not approved:
+        raise ValueError("candidate GT conflict manifest cannot produce formal sidecars")
+    if input_status == "formal" and undefined_triggers:
+        raise ValueError("GT conflict manifest contains triggers without executable definitions:" + ";".join(undefined_triggers))
     thresholds = rules["thresholds"]
     quality = {row.get("canonical_annotation_id", ""): row for row in _read_csv(quality_csv)}
     loo_by_task: dict[str, list[dict[str, str]]] = {}
@@ -50,20 +58,21 @@ def materialize_gt_cluster_alignment(
         cluster_rows = []
         for cluster_id, worker_text in clusters:
             workers = {value for value in worker_text.split(";") if value}
-            members = [row for row in loo_by_task.get(base, []) if row.get("worker_id", "") in workers]
-            candidates = []
-            for member in members:
-                q = quality.get(member.get("canonical_annotation_id", ""), {})
-                try: candidates.append((float(q.get("iou_to_gt", "")), member))
-                except (TypeError, ValueError): pass
-            medoid_score, medoid = max(candidates, default=(None, {}), key=lambda item: item[0] if item[0] is not None else -1)
+            medoid_id = crowd.get(f"{cluster_id}_cluster_medoid_annotation_id", "")
+            medoid_worker = crowd.get(f"{cluster_id}_cluster_medoid_worker_id", "")
+            medoid_geometry_sha = crowd.get(f"{cluster_id}_cluster_medoid_geometry_sha256", "")
+            q = quality.get(medoid_id, {})
+            try: medoid_score = float(q.get("iou_to_gt", ""))
+            except (TypeError, ValueError): medoid_score = None
+            public_gt_status = q.get("public_gt_structural_status", "not_evaluable")
             row = {
                 "base_task_id": base, "cluster_id": cluster_id, "cluster_support": len(workers),
-                "cluster_medoid_annotation_id": medoid.get("canonical_annotation_id", ""),
-                "cluster_medoid_worker_id": medoid.get("worker_id", ""),
+                "cluster_medoid_annotation_id": medoid_id,
+                "cluster_medoid_worker_id": medoid_worker,
+                "cluster_medoid_geometry_sha256": medoid_geometry_sha,
                 "cluster_medoid_gt_iou": "" if medoid_score is None else medoid_score,
                 "largest_cluster_gt_iou": "", "second_cluster_gt_iou": "", "gt_alignment_margin": "",
-                "public_gt_status": "valid" if candidates else "not_evaluable",
+                "public_gt_status": public_gt_status,
             }
             alignment.append(row); cluster_rows.append(row)
         largest, second = cluster_rows
@@ -81,10 +90,12 @@ def materialize_gt_cluster_alignment(
         if margin is not None and margin < -float(thresholds["minority_cluster_better_gt_margin"]): triggers.append("minority_cluster_better_gt_alignment")
         if any(row["public_gt_status"] == "invalid" for row in cluster_rows): triggers.append("public_gt_structurally_invalid")
         for trigger in triggers:
-            queue.append({"base_task_id": base, "trigger": trigger, "candidate_only": True, "reference_modified": False, "rule_version": rules["rule_version"], "source_sha256": hashlib.sha256(crowd_structure_csv.read_bytes()).hexdigest()})
+            source_parts = [crowd_structure_csv, loo_csv, quality_csv, conflict_rule_manifest] + ([reference_csv] if reference_csv else [])
+            evidence_sha = hashlib.sha256("".join(hashlib.sha256(path.read_bytes()).hexdigest() for path in source_parts if path and path.exists()).encode()).hexdigest()
+            queue.append({"base_task_id": base, "trigger": trigger, "candidate_only": not approved, "interpretation_allowed": bool(input_status == "formal" and approved), "reference_modified": False, "rule_version": rules["rule_version"], "source_sha256": evidence_sha})
     _write(output_dir / "c1_gt_cluster_alignment.csv", alignment, list(alignment[0]) if alignment else ["base_task_id"])
     _write(output_dir / "c1_gt_conflict_review_queue.csv", queue, list(queue[0]) if queue else ["base_task_id", "trigger", "candidate_only", "reference_modified", "rule_version", "source_sha256"])
-    return {"alignment_rows": len(alignment), "conflict_candidates": len(queue), "reference_modified": False}
+    return {"alignment_rows": len(alignment), "conflict_candidates": len(queue), "reference_modified": False, "undefined_triggers": undefined_triggers, "interpretation_allowed": bool(input_status == "formal" and approved and not undefined_triggers)}
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:
@@ -136,6 +147,7 @@ def _gt_references(path: Path) -> dict[str, dict[str, Any]]:
             "identity": f"gt:{task.get('project')}:{task.get('id')}:{annotation.get('id')}",
             "points": points,
             "sha256": _sha_payload(annotation.get("result", [])),
+            "structural_status": "valid" if normalize_geometry(points)["valid"] else "invalid",
         }
     return references
 
@@ -181,7 +193,7 @@ def materialize(
             invalid_amendments += 1
             continue
         reference_sha = _sha_payload(points)
-        references[base] = {"identity": row.get("reference_identity") or f"corrected_gt:{base}:{reference_sha[:12]}", "points": points, "sha256": reference_sha}
+        references[base] = {"identity": row.get("reference_identity") or f"corrected_gt:{base}:{reference_sha[:12]}", "points": points, "sha256": reference_sha, "structural_status": "valid"}
         amendments[base] = {**row, "triggers": triggers}
     contexts = {}
     audit = []
@@ -220,7 +232,7 @@ def materialize(
         reference = references.get(row.get("base_task_id", ""), {})
         amendment = amendments.get(row.get("base_task_id", ""), {})
         status = "resolved" if final_scope else "pending"
-        geometry_ready = bool(reference.get("points"))
+        geometry_ready = bool(reference.get("points")) and reference.get("structural_status") == "valid"
         reference_status = "oos_geometry_not_applicable" if final_scope == "oos" else "reference_corrected" if amendment else "reference_ready" if geometry_ready else "pending_adjudication"
         audit.append({
             **dict(zip(("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"), key)),
@@ -234,7 +246,7 @@ def materialize(
                 "final_scope": final_scope, "scope_resolution_status": status,
                 "oos_subtype": oos_subtype, "scope_reference_mode": scope_mode,
                 "geometry_reference_mode": "expert_corrected_frozen_gt" if amendment else "public_frozen_gt" if reference else "not_required_oos" if final_scope == "oos" else "",
-                "geometry_reference_status": "reference_ready_corrected_gt" if amendment else "reference_ready_public_gt" if reference else "not_required" if final_scope == "oos" else "reference_missing",
+                "geometry_reference_status": "reference_ready_corrected_gt" if amendment else "reference_ready_public_gt" if geometry_ready else "reference_invalid" if reference else "not_required" if final_scope == "oos" else "reference_missing",
                 "reference_identity": reference.get("identity", ""),
                 "reference_sha256": reference.get("sha256", ""),
                 "reference_worker_excluded": "false", "reference_evidence_status": "evaluable" if reference else "not_required" if final_scope == "oos" else "not_evaluable",
@@ -261,7 +273,7 @@ def materialize(
             meta = {"reason": "submission_informed_reference_revision"}
         elif not structurally_valid:
             meta = {"reason": "annotation_geometry_invalid"}
-        elif geom.get("corners_px") and reference.get("points"):
+        elif geom.get("corners_px") and reference.get("points") and reference.get("structural_status") == "valid":
             score, meta = compute_layout_mask_iou(np.asarray(geom["corners_px"], dtype=float), np.asarray(reference["points"], dtype=float))
         quality.append({
             "project_id": row.get("project_id", ""), "ls_runtime_task_id": row.get("ls_runtime_task_id", ""),
@@ -270,7 +282,8 @@ def materialize(
             "canonical_annotation_id": row.get("canonical_annotation_id", ""), "condition": row.get("condition", ""),
             "dataset_group": row.get("dataset_group", ""), "iou_to_gt": "" if score is None else score,
             "quality_evaluable": score is not None, "quality_evaluable_legacy_alias": score is not None,
-            "gt_score_computable": score is not None, "gt_reference_resolved": bool(reference.get("points")),
+            "gt_score_computable": score is not None, "gt_reference_resolved": bool(reference.get("points")) and reference.get("structural_status") == "valid",
+            "public_gt_structural_status": reference.get("structural_status", "not_evaluable"),
             "gt_primary_analysis_eligible": bool(score is not None and row.get("condition", "").lower() == "manual" and outcome.get("adjudication_status") == "resolved" and row.get("canonical_annotation_id", "") not in amendment.get("triggers", set())),
             "structurally_valid": structurally_valid,
             "independence_status": row.get("independence_status", ""),

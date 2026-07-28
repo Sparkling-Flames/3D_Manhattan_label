@@ -38,6 +38,35 @@ def _join(rows: list[dict[str, str]], eligibility: dict[str, dict[str, str]]) ->
     return [{**row, **eligibility.get(str(row.get("canonical_annotation_id", "")), {})} for row in rows]
 
 
+def materialize_task_building_binding(
+    canonical_csv: Path, building_registry_csv: Path | None, output_dir: Path, *, formal: bool = False,
+) -> dict[str, Any]:
+    """Bind task identity to an approved building without mutating canonical rows."""
+    bases = sorted({row.get("base_task_id", "") for row in read_csv(canonical_csv) if row.get("base_task_id", "")})
+    grouped: dict[str, list[dict[str, str]]] = defaultdict(list)
+    for row in read_csv(building_registry_csv) if building_registry_csv and building_registry_csv.exists() else []:
+        grouped[row.get("base_task_id", "")].append(row)
+    output, blockers = [], []
+    for base in bases:
+        candidates = grouped.get(base, [])
+        approved = [row for row in candidates if row.get("registry_status", "").lower() == "approved" and all(row.get(field, "") for field in ("building_id", "reviewed_by", "reviewed_at"))]
+        building_ids = {row.get("building_id", "") for row in approved}
+        status = "approved" if len(approved) == 1 and len(building_ids) == 1 else "conflict" if len(building_ids) > 1 or len(approved) > 1 else "missing"
+        if status != "approved": blockers.append(f"building_binding_{status}:{base}")
+        output.append({
+            "base_task_id": base, "building_id": next(iter(building_ids), ""), "binding_status": status,
+            "registry_status": approved[0].get("registry_status", "") if len(approved) == 1 else "",
+            "reviewed_by": approved[0].get("reviewed_by", "") if len(approved) == 1 else "",
+            "reviewed_at": approved[0].get("reviewed_at", "") if len(approved) == 1 else "",
+            "building_registry_sha256": sha256_file(building_registry_csv) if building_registry_csv and building_registry_csv.exists() else "",
+        })
+    if formal and blockers:
+        raise ValueError("formal C1 building registry incomplete:" + ";".join(blockers[:5]))
+    path = output_dir / "c1_task_building_binding.csv"
+    write_csv(path, output, list(output[0]) if output else ["base_task_id", "building_id", "binding_status"])
+    return {"status": "validated" if not blockers else "not_evaluable", "n_tasks": len(output), "n_approved": len(output) - len(blockers), "blockers": blockers, "registry_sha256": sha256_file(building_registry_csv) if building_registry_csv and building_registry_csv.exists() else "", "output_sha256": sha256_file(path)}
+
+
 def _edge(row: dict[str, str]) -> tuple[str, str, str]:
     """Use a canonical row when present; otherwise retain the worker/task edge."""
     worker, task = str(row.get("worker_id", "")), str(row.get("base_task_id", ""))
@@ -66,10 +95,12 @@ def _connected(edges: set[tuple[str, str, str]]) -> bool:
 
 def materialize_analysis_views(
     quality_csv: Path, loo_csv: Path, structural_csv: Path, eligibility_csv: Path, output_dir: Path,
+    *, peer_csv: Path | None = None, building_binding_csv: Path | None = None,
 ) -> dict[str, Any]:
     """Create analysis joins without mutating any upstream evidence artifact."""
     eligibility_rows = read_csv(eligibility_csv)
     eligibility = {row.get("canonical_annotation_id", ""): row for row in eligibility_rows}
+    buildings = {row.get("base_task_id", ""): row.get("building_id", "") for row in read_csv(building_binding_csv)} if building_binding_csv and building_binding_csv.exists() else {}
     inputs = {
         "quality": quality_csv,
         "loo": loo_csv,
@@ -81,9 +112,26 @@ def materialize_analysis_views(
         "loo": output_dir / "geometry_worker_task_loo_analysis.csv",
         "structural": output_dir / "structural_validation_analysis.csv",
     }
-    for name, source in (("quality", quality_csv), ("loo", loo_csv), ("structural", structural_csv)):
+    if peer_csv is not None:
+        inputs["peer"] = peer_csv
+        outputs["peer"] = output_dir / "geometry_worker_task_peer_analysis.csv"
+    if building_binding_csv is not None:
+        inputs["building_binding"] = building_binding_csv
+    sources = [("quality", quality_csv), ("loo", loo_csv), ("structural", structural_csv)] + ([("peer", peer_csv)] if peer_csv is not None else [])
+    for name, source in sources:
         rows = _join(read_csv(source), eligibility)
-        write_csv(outputs[name], rows, list(rows[0]) if rows else ["canonical_annotation_id"])
+        rows = [{**row, "building_id": buildings.get(row.get("base_task_id", ""), row.get("building_id", ""))} for row in rows]
+        if name == "peer":
+            rows = [row for row in rows if _truth(row.get("peer_analysis_eligible"))]
+        if rows:
+            fields = list(rows[0])
+        else:
+            with source.open(encoding="utf-8-sig", newline="") as stream:
+                source_fields = list(csv.DictReader(stream).fieldnames or [])
+            with eligibility_csv.open(encoding="utf-8-sig", newline="") as stream:
+                eligibility_fields = list(csv.DictReader(stream).fieldnames or [])
+            fields = list(dict.fromkeys([*source_fields, *eligibility_fields, "building_id"])) or ["canonical_annotation_id"]
+        write_csv(outputs[name], rows, fields)
     manifest = {
         "schema_version": "paper_a_c1_analysis_views_v1",
         "artifact_owner": "c1_c2_mainline.materialize_analysis_views",

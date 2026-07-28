@@ -47,13 +47,15 @@ def test_public_cli_exposes_the_auditable_and_thin_entry_commands(capsys):
         assert removed not in help_text
 
 
-def test_canonicalizer_owns_initial_geometry_and_runner_only_rebuilds_for_administrative_exclusion():
+def test_runner_materializes_geometry_once_after_final_pool_gate():
     runner = Path("tools/thesis_main/analysis/run_c1_precloseout_rehearsal.py").read_text(encoding="utf-8")
     canonicalizer = Path("tools/thesis_main/analysis/c1_canonicalize_exports.py").read_text(encoding="utf-8")
     assert runner.count("materialize_geometry_consensus(") == 1
     assert "excluded_worker_ids=administratively_excluded_workers" in runner
+    assert "eligible_annotation_ids=eligible_geometry_ids" in runner
+    assert runner.index("materialize_geometry_pool_eligibility(") < runner.index("materialize_geometry_consensus(")
     assert "materialize_canonical_evidence(" not in runner
-    assert canonicalizer.count("materialize_geometry_consensus(") == 1
+    assert canonicalizer.count("materialize_geometry_consensus(") == 0
     assert canonicalizer.count("materialize_canonical_evidence(") == 1
 
 

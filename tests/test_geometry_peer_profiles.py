@@ -16,7 +16,10 @@ def test_crowd_structure_4_1_and_peer_profiles(monkeypatch):
     monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.pairwise.pairwise_similarity", _similarity)
     rows = _records([0, 0, 0, 0, 1])
     assert crowd_structure(rows)["task_crowd_structure_status"] == "dominant_with_dissent"
-    assert all(row["R_peer_median"] is not None for row in peer_similarity_profiles(rows))
+    profiles = peer_similarity_profiles(rows)
+    assert all(row["R_peer_median"] is not None for row in profiles)
+    assert all(row["R_peer_median"] == row["R_peer_conservative_median"] for row in profiles)
+    assert all(row["similarity_definition"] == "min_boundary_wall" for row in profiles)
 
 
 def test_crowd_structure_3_2_is_supported_multimodal(monkeypatch):

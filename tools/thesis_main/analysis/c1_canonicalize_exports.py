@@ -43,9 +43,9 @@ from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
 from tools.thesis_main.analysis.quality_core.active_time import load_active_logs
 from tools.thesis_main.analysis.prescreen_canonicalize_export import build_canonical_tables
 from tools.thesis_main.analysis.materialize_c1_canonical_evidence_sidecars import materialize_canonical_evidence
-from tools.thesis_main.analysis.geometry_consensus.materialize import materialize_geometry_consensus
 from tools.thesis_main.analysis.materialize_model_issue_harmonization import materialize_model_issue_harmonization
 from tools.thesis_main.analysis.failure_disposition import c1_failure_fields
+from tools.thesis_main.analysis.c1_authorized_reassignment import validate_authorized_reassignments
 
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
 
@@ -77,6 +77,11 @@ CANONICAL_FIELDS = [
     "planned_mapping_status",
     "runtime_binding_status",
     "assigned_expected",
+    "original_assignment_expected",
+    "authorized_replacement_assignment",
+    "assignment_provenance",
+    "displaced_worker_id",
+    "active_time_expected",
     "appears_in_internal_distribution",
     "outside_assignment_submission",
     "missing_submission",
@@ -360,10 +365,16 @@ def build_canonicalization(
     retrospective_provenance_amendment_csv: Path | None = None,
     duplicate_adjudication_csv: Path | None = None,
     failure_disposition_csv: Path | None = None,
+    authorized_reassignment_manifest: Path | None = None,
+    candidate_inventory_csv: Path | None = None,
+    p1_canonical_csv: Path | None = None,
+    p1_admission_csv: Path | None = None,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     assigned, internal = assignment_sets(manual_assignment, semi_assignment, worker_distribution)
     runtime_rows, runtime_lookup, collision_rows = build_runtime_task_mapping(export_paths, planned_task_mapping)
+    authorized_reassignments: dict[tuple[str, str, str], dict[str, str]] = {}
+    reassignment_summary = {"status": "not_provided", "valid": True, "row_count": 0}
     duplicate_decisions: dict[tuple[str, str, str], dict[str, str]] = {}
     if duplicate_adjudication_csv and duplicate_adjudication_csv.exists():
         for decision in read_csv(duplicate_adjudication_csv):
@@ -375,9 +386,28 @@ def build_canonicalization(
     canonical_base, duplicate_base, base_summary = build_canonical_tables(
         export_paths, active_log, duplicate_review_mode=True, duplicate_decisions=duplicate_decisions, round_id=round_id
     )
+    if authorized_reassignment_manifest is not None:
+        if not all(path and path.exists() for path in (candidate_inventory_csv, p1_canonical_csv, p1_admission_csv)):
+            raise ValueError("authorized reassignment requires inventory, P1 canonical and P1 admission evidence")
+        observed_exposures = []
+        for item in canonical_base:
+            runtime_item = runtime_lookup.get((safe(item.get("project_id")), safe(item.get("task_id"))), {})
+            observed_exposures.append({
+                "worker_id": safe(item.get("annotator_id")),
+                "project_id": safe(item.get("project_id")),
+                "ls_runtime_task_id": safe(item.get("task_id")),
+                "task_id": safe(runtime_item.get("task_id")),
+                "base_task_id": safe(runtime_item.get("base_task_id")),
+                "image_id": safe(runtime_item.get("image")),
+            })
+        authorized_reassignments, reassignment_summary = validate_authorized_reassignments(
+            authorized_reassignment_manifest, [manual_assignment, semi_assignment], runtime_rows,
+            candidate_inventory_csv, p1_canonical_csv, p1_admission_csv,
+            c1_observed_rows=observed_exposures,
+        )
     active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths), policy="calibration") if active_log else {}
     raw_manifest = snapshot_inputs_unique(
-        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []) + ([duplicate_adjudication_csv] if duplicate_adjudication_csv else []) + ([failure_disposition_csv] if failure_disposition_csv else []),
+        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []) + ([duplicate_adjudication_csv] if duplicate_adjudication_csv else []) + ([failure_disposition_csv] if failure_disposition_csv else []) + ([authorized_reassignment_manifest] if authorized_reassignment_manifest else []),
         output_dir,
         completion_basis="c1_closeout_canonicalization_snapshot",
     )
@@ -445,6 +475,9 @@ def build_canonicalization(
             audit_status, audit_reason = "not_evaluable", "missing_or_unresolved_independence_audit"
         info = runtime_lookup.get((project_id, runtime_task_id), {})
         key = (worker_id, safe(info.get("task_id")), safe(info.get("base_task_id")), safe(info.get("dataset_group")))
+        replacement = authorized_reassignments.get((project_id, runtime_task_id, worker_id), {})
+        original_assignment = key in assigned
+        authorized_assignment = bool(replacement)
         try:
             session_count = int(row.get("active_time_session_count") or 0)
         except (TypeError, ValueError):
@@ -455,6 +488,9 @@ def build_canonicalization(
             safe(active_override.get("active_time_source")), safe(active_override.get("active_time_match_status")),
             int(active_override.get("active_time_session_count") or 0), duplicate_time_ambiguous=duplicate_time_ambiguous,
         )
+        active_time_expected = not authorized_assignment or str(replacement.get("active_time_expected", "")).lower() in {"true", "1", "yes"}
+        if not active_time_expected:
+            primary = sensitivity = False
         try:
             duplicate_group_size = int(row.get("duplicate_group_size") or 1)
         except (TypeError, ValueError):
@@ -487,9 +523,14 @@ def build_canonicalization(
             "parse_error": row.get("parse_error", ""),
             "planned_mapping_status": info.get("planned_mapping_status", ""),
             "runtime_binding_status": info.get("runtime_binding_status", ""),
-            "assigned_expected": bool_text(key in assigned),
+            "assigned_expected": bool_text(original_assignment or authorized_assignment),
+            "original_assignment_expected": bool_text(original_assignment),
+            "authorized_replacement_assignment": bool_text(authorized_assignment),
+            "assignment_provenance": "authorized_reassignment_addendum" if authorized_assignment else "original_assignment" if original_assignment else "unassigned",
+            "displaced_worker_id": replacement.get("displaced_worker_id", ""),
+            "active_time_expected": bool_text(active_time_expected),
             "appears_in_internal_distribution": bool_text(key in internal),
-            "outside_assignment_submission": bool_text(key not in assigned),
+            "outside_assignment_submission": bool_text(not (original_assignment or authorized_assignment)),
             "missing_submission": "false",
             "duplicate_worker_task_submission": bool_text(safe(row.get("duplicate_review_status")) == "pending"),
             "independence_status": audit_status,
@@ -671,11 +712,11 @@ def build_canonicalization(
         input_status=input_status,
         version_disposition_csv=output_dir / "c1_annotation_version_disposition.csv",
     )
-    geometry_summary = materialize_geometry_consensus(
-        output_dir / "c1_canonical_geometry.jsonl",
-        output_dir,
-        input_status=input_status,
-    )
+    geometry_summary = {
+        "status": "pending_final_gate",
+        "artifact_owner": "run_c1_precloseout_rehearsal",
+        "reason": "geometry consensus is materialized only after completion, independence, scope, outside-assignment, and structural gates",
+    }
     harmonization_summary = materialize_model_issue_harmonization(
         export_paths,
         output_dir / "c1_canonical_geometry.jsonl",
@@ -754,6 +795,7 @@ def build_canonicalization(
         "collision_output_use": "debug_only_do_not_use_downstream" if collision_rows else "downstream_eligible_if_other_blockers_absent",
         "canonical_evidence_sidecars": canonical_evidence_summary,
         "geometry_sidecars": geometry_summary,
+        "authorized_reassignment": reassignment_summary,
         "model_issue_harmonization": harmonization_summary,
         "formal_c1_annotation_data_present": bool(input_status == "formal" and canonical_rows),
         "failure_disposition_csv": str(failure_disposition_csv or ""),
