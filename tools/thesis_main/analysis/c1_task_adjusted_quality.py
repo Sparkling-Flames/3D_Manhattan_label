@@ -11,16 +11,65 @@ import json
 import math
 import random
 import warnings
-from collections import defaultdict
+from collections import Counter, defaultdict
 from statistics import NormalDist
 from typing import Any
 
 import numpy as np
 import pandas as pd
 import statsmodels.formula.api as smf
+from scipy.optimize import minimize_scalar
 
 
-MODEL_VERSION = "c1_worker_fe_task_random_intercept_cluster_bootstrap_v2"
+MODEL_VERSION = "c1_worker_fe_task_random_intercept_cluster_bootstrap_v3"
+
+
+def normal_normal_empirical_bayes(
+    estimates: list[float], standard_errors: list[float], *, confidence_level: float = 0.95,
+) -> tuple[list[dict[str, float]], dict[str, Any]]:
+    """MLE normal-normal shrinkage with hyper-mean uncertainty retained."""
+    theta = np.asarray(estimates, dtype=float); se = np.asarray(standard_errors, dtype=float)
+    if len(theta) < 2 or theta.shape != se.shape or not np.isfinite(theta).all() or not np.isfinite(se).all() or np.any(se <= 0):
+        raise ValueError("empirical Bayes requires at least two finite estimates with positive SE")
+    s2 = se ** 2
+    def profile(tau2: float) -> tuple[float, float]:
+        variance = s2 + tau2
+        weights = 1 / variance
+        mu = float(np.sum(weights * theta) / np.sum(weights))
+        nll = .5 * float(np.sum(np.log(variance) + (theta - mu) ** 2 / variance))
+        return nll, mu
+    upper = max(float(np.var(theta, ddof=1)) * 100, float(np.max(s2)) * 100, 1e-6)
+    fitted = minimize_scalar(lambda value: profile(float(value))[0], bounds=(0.0, upper), method="bounded")
+    if not fitted.success or not math.isfinite(float(fitted.fun)):
+        raise ValueError("empirical Bayes marginal likelihood did not converge")
+    tau2 = max(0.0, float(fitted.x)); _, mu = profile(tau2)
+    hyper_variance = 1.0 / float(np.sum(1.0 / (s2 + tau2)))
+    z = NormalDist().inv_cdf(.5 + confidence_level / 2)
+    rows = []
+    for estimate, variance in zip(theta, s2):
+        shrinkage = tau2 / (tau2 + variance)
+        posterior = mu + shrinkage * (float(estimate) - mu)
+        posterior_variance = shrinkage * variance + (1 - shrinkage) ** 2 * hyper_variance
+        posterior_se = math.sqrt(max(posterior_variance, np.finfo(float).eps))
+        rows.append({"estimate": posterior, "standard_error": posterior_se, "lower": posterior - z * posterior_se, "upper": posterior + z * posterior_se, "shrinkage_factor": shrinkage})
+    return rows, {"eb_model_status": "estimated", "eb_mu": float(mu), "eb_tau_squared": float(tau2), "likelihood_converged": True, "workers_shrunk": int(sum(bool(row["shrinkage_factor"] < 1) for row in rows)), "maximum_shrinkage": float(max(row["shrinkage_factor"] for row in rows)), "minimum_shrinkage": float(min(row["shrinkage_factor"] for row in rows))}
+
+
+class _FitFailure(ValueError):
+    def __init__(self, reason: str, detail: str = "") -> None:
+        super().__init__(detail or reason)
+        self.reason = reason
+
+
+class _BootstrapSupportFailure(ValueError):
+    """Fail closed while preserving replicate-level diagnostics for the runner."""
+
+    def __init__(self, audit: dict[str, Any]) -> None:
+        super().__init__(
+            "insufficient successful task/building bootstrap fits:"
+            f"{audit['bootstrap_replicates_successful']}/{audit['bootstrap_replicates_requested']}"
+        )
+        self.audit = audit
 
 
 def _truth(value: Any) -> bool:
@@ -95,11 +144,18 @@ def _fit_once(frame: pd.DataFrame, contract: dict[str, Any]) -> dict[str, Any]:
         except (ValueError, np.linalg.LinAlgError) as exc:
             errors.append(f"{method}:{type(exc).__name__}")
     if fitted is None:
-        raise ValueError("task-adjusted mixed model failed:" + ";".join(errors))
+        if any("LinAlgError" in error for error in errors):
+            reason = "singular"
+        elif any("not_converged" in error for error in errors):
+            reason = "model_not_converged"
+        else:
+            reason = "model_fit_error"
+        raise _FitFailure(reason, "task-adjusted mixed model failed:" + ";".join(errors))
     fixed_names = list(fitted.fe_params.index)
     fixed_cov = fitted.cov_params().loc[fixed_names, fixed_names]
     if not fitted.converged or not np.isfinite(fitted.fe_params.to_numpy()).all() or not np.isfinite(fixed_cov.to_numpy()).all():
-        raise ValueError("task-adjusted mixed model did not converge to finite fixed effects/covariance")
+        reason = "model_not_converged" if not fitted.converged else "nonfinite"
+        raise _FitFailure(reason, "task-adjusted mixed model did not converge to finite fixed effects/covariance")
     from patsy import build_design_matrices
 
     design_info = fitted.model.data.design_info
@@ -179,22 +235,41 @@ def estimate_task_adjusted_qgt(
         raise ValueError("task/building cluster bootstrap requires at least 20 replicates")
     rng = random.Random(int(contract["bootstrap_seed"]))
     bootstrap: list[list[float]] = []
-    failed = 0
+    failure_reasons: Counter[str] = Counter()
     resampling = ""
     for _ in range(draws):
         sampled, resampling = _resample_frame(frame, rng)
         try:
             fitted = _fit_once(sampled, contract)
+            missing_workers = [worker for worker in workers if worker not in fitted["estimates"]]
+            if missing_workers:
+                failure_reasons["missing_worker_level"] += 1
+                continue
             values = [fitted["estimates"][worker] for worker in workers]
             if np.isfinite(values).all():
                 bootstrap.append(values)
             else:
-                failed += 1
-        except (ValueError, np.linalg.LinAlgError):
-            failed += 1
+                failure_reasons["nonfinite"] += 1
+        except _FitFailure as exc:
+            failure_reasons[exc.reason] += 1
+        except np.linalg.LinAlgError:
+            failure_reasons["singular"] += 1
+        except (KeyError, ValueError):
+            # A malformed or support-limited replicate is auditable but must
+            # never abort the whole model before the frozen success threshold.
+            failure_reasons["model_fit_error"] += 1
     minimum = max(20, math.ceil(draws * float(contract["minimum_successful_bootstrap_fraction"])))
     if len(bootstrap) < minimum:
-        raise ValueError(f"insufficient successful task/building bootstrap fits:{len(bootstrap)}/{draws}")
+        raise _BootstrapSupportFailure({
+            "reason": "insufficient_successful_bootstrap_fraction",
+            "bootstrap_replicates_requested": draws,
+            "bootstrap_replicates_successful": len(bootstrap),
+            "bootstrap_failures": sum(failure_reasons.values()),
+            "bootstrap_failure_reasons": dict(sorted(failure_reasons.items())),
+            "bootstrap_minimum_successful_replicates": minimum,
+            "bootstrap_successful_fraction": len(bootstrap) / draws,
+            "bootstrap_seed": int(contract["bootstrap_seed"]),
+        })
     samples = np.asarray(bootstrap, dtype=float)
     covariance = np.cov(samples, rowvar=False, ddof=1)
     if covariance.ndim == 0:
@@ -204,20 +279,31 @@ def estimate_task_adjusted_qgt(
     confidence = float(contract["confidence_level"])
     alpha = (1 - confidence) / 2
     worker_rows: list[dict[str, Any]] = []
+    fe_estimates = [point["estimates"][worker] for worker in workers]
+    fe_ses = [float(math.sqrt(max(0.0, covariance[index, index]))) for index in range(len(workers))]
+    eb_rows, eb_audit = normal_normal_empirical_bayes(fe_estimates, fe_ses, confidence_level=confidence)
     for index, worker in enumerate(workers):
         distribution = samples[:, index]
         estimate = point["estimates"][worker]
         lower, upper = float(np.quantile(distribution, alpha)), float(np.quantile(distribution, 1 - alpha))
         covariance_row = {other: float(covariance[index, other_index]) for other_index, other in enumerate(workers)}
         subset = frame[frame.worker_id == worker]
+        eb = eb_rows[index]
         worker_rows.append({
             "worker_id": worker,
             "Q_GT_raw": float(subset.quality.mean()),
             "Q_GT_task_adjusted": estimate,
+            "Q_GT_task_adjusted_FE": estimate,
             "Q_GT_standard_error": float(math.sqrt(max(0.0, covariance[index, index]))),
+            "Q_GT_FE_standard_error": float(math.sqrt(max(0.0, covariance[index, index]))),
             "Q_GT_CI_lower": lower,
             "Q_GT_CI_upper": upper,
             "Q_GT_LCB": lower,
+            "Q_GT_FE_CI_lower": lower, "Q_GT_FE_CI_upper": upper, "Q_GT_FE_LCB": lower,
+            "Q_GT_EB": eb["estimate"], "Q_GT_EB_standard_error": eb["standard_error"],
+            "Q_GT_EB_CI_lower": eb["lower"], "Q_GT_EB_CI_upper": eb["upper"], "Q_GT_EB_LCB": eb["lower"],
+            "Q_GT_shrinkage_factor": eb["shrinkage_factor"],
+            "Q_GT_support": len(subset),
             "GT_support": len(subset),
             "task_support": int(subset.base_task_id.nunique()),
             "building_support": int(subset.loc[subset.building_id.ne(""), "building_id"].nunique()),
@@ -244,7 +330,10 @@ def estimate_task_adjusted_qgt(
         "bootstrap_identifiability_condition": "at_least_two_distinct_outer_clusters",
         "bootstrap_replicates_requested": draws,
         "bootstrap_replicates_successful": len(bootstrap),
-        "bootstrap_failures": failed,
+        "bootstrap_failures": sum(failure_reasons.values()),
+        "bootstrap_failure_reasons": dict(sorted(failure_reasons.items())),
+        "bootstrap_minimum_successful_replicates": minimum,
+        "bootstrap_successful_fraction": len(bootstrap) / draws,
         "bootstrap_seed": int(contract["bootstrap_seed"]),
         "confidence_level": confidence,
         "worker_order": workers,
@@ -253,5 +342,6 @@ def estimate_task_adjusted_qgt(
         "task_intercept_variance": point["task_intercept_variance"],
         "warnings": point["warnings"],
         "ranking_materialized": False,
+        **eb_audit,
     }
     return worker_rows, task_rows, audit

@@ -1,0 +1,20 @@
+{
+  "schema_version": "paper_a_p1_component_support_v1",
+  "rule_version": "p1_component_candidate_v1",
+  "status": "candidate",
+  "approved_by": "",
+  "approved_at": "",
+  "source_evidence": ["Paper_A_method_amendment_peer_gt_shrinkage_v1"],
+  "thresholds": {
+    "minimum_worker_support": 5,
+    "minimum_task_support": 8,
+    "maximum_stage_interaction_absolute": 0.2,
+    "discrete_weight_set": [0.0, 0.25, 0.5]
+  },
+  "routable_families": [
+    "undercoverage",
+    "adjacent_space_overextension",
+    "corner_topology_instability"
+  ],
+  "interpretation_allowed": false
+}

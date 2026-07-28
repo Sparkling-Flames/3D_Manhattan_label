@@ -1,0 +1,21 @@
+{
+  "schema_version": "paper_a_global_policy_thresholds_v1",
+  "rule_version": "global_policy_candidate_v1",
+  "status": "candidate",
+  "approved_by": "",
+  "approved_at": "",
+  "source_evidence": ["Paper_A_method_amendment_peer_gt_shrinkage_v1"],
+  "thresholds": {
+    "minimum_GT_support": 3,
+    "minimum_task_support": 3,
+    "minimum_building_support": 2,
+    "quality_floor": 0.5,
+    "maximum_structural_failure_eb": 0.25,
+    "serious_recurrent_failure_minimum_count": 2,
+    "serious_recurrent_failure_minimum_rate": 0.25,
+    "require_process_eligible": true,
+    "require_independence_eligible": true,
+    "frozen_random_seed": 20260728
+  },
+  "interpretation_allowed": false
+}

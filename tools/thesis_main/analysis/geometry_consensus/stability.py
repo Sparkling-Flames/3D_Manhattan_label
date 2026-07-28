@@ -91,6 +91,53 @@ def _complete_link_cluster(indices: tuple[int, ...], similarities: dict[tuple[in
     return clusters[0] if clusters else tuple()
 
 
+def crowd_structure(
+    records: list[dict[str, Any]], *, grid: int = 256,
+    similarity_cutoff: float = 0.8, minimum_valid_k: int = 3,
+) -> dict[str, Any]:
+    """Describe task crowd shape without using GT or selecting a winning output."""
+    valid = [row for row in records if (row.get("geometry") or {}).get("valid")]
+    similarities: dict[tuple[int, int], float | None] = {}
+    channels: dict[tuple[int, int], dict[str, Any]] = {}
+    for left, right in itertools.combinations(range(len(valid)), 2):
+        metrics = pairwise_similarity(valid[left]["geometry"], valid[right]["geometry"], grid=grid)
+        channels[(left, right)] = metrics
+        boundary, wall = metrics.get("boundary_similarity"), metrics.get("wallwall_similarity")
+        similarities[(left, right)] = 1.0 if boundary is not None and wall is not None and boundary >= similarity_cutoff and wall >= similarity_cutoff else 0.0 if boundary is not None and wall is not None else None
+    compatible = len(valid) <= 1 or all(value is not None for value in similarities.values())
+    maxima = _maximum_complete_link_clusters(tuple(range(len(valid))), similarities, 1.0) if compatible and valid else []
+    unique_largest = len(maxima) == 1
+    largest = maxima[0] if maxima else tuple()
+    remainder = tuple(index for index in range(len(valid)) if index not in largest)
+    second = _complete_link_cluster(remainder, similarities, 1.0) if remainder else tuple()
+    if len(valid) < minimum_valid_k or not compatible or not largest:
+        status, reason = "insufficient_or_incompatible", "minimum_valid_k_or_metric_compatibility"
+    elif len(largest) == len(valid):
+        status, reason = "unimodal", "one_cluster_contains_all"
+    elif unique_largest and len(second) <= 1:
+        status, reason = "dominant_with_dissent", "unique_largest_and_no_supported_second_mode"
+    elif len(second) >= 2:
+        status, reason = "supported_multimodal", "second_cluster_support_at_least_two"
+    else:
+        status, reason = "insufficient_or_incompatible", "largest_cluster_not_unique"
+    def within(indices: tuple[int, ...]) -> float | None:
+        values = []
+        for left, right in itertools.combinations(indices, 2):
+            item = channels.get(tuple(sorted((left, right))), {})
+            if item.get("boundary_similarity") is not None and item.get("wallwall_similarity") is not None:
+                values.append(min(float(item["boundary_similarity"]), float(item["wallwall_similarity"])))
+        return float(np.mean(values)) if values else None
+    return {
+        "valid_k": len(valid), "cluster_count": (1 + int(bool(second)) + max(0, len(remainder) - len(second))) if largest else 0,
+        "largest_cluster_support": len(largest), "second_cluster_support": len(second),
+        "largest_cluster_worker_ids": ";".join(str(valid[i].get("worker_id", "")) for i in largest),
+        "second_cluster_worker_ids": ";".join(str(valid[i].get("worker_id", "")) for i in second),
+        "within_largest_cluster_similarity": within(largest),
+        "within_second_cluster_similarity": within(second),
+        "task_crowd_structure_status": status, "structure_reason": reason,
+    }
+
+
 def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimodal_cutoff: float = 0.8, _resample: bool = True) -> dict[str, Any]:
     valid = [record for record in records if (record.get("geometry") or {}).get("valid")]
     gap_cutoff = 1 - multimodal_cutoff

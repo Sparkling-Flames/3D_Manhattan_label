@@ -246,7 +246,7 @@ def test_simulation_keeps_sampled_task_edges_and_separates_variance_fields() -> 
     assert result["sampled_task_edge_identity_violations"] == 0
     assert result["expected_assignment_count"] == 2
     assert result["building_coverage"] == 1
-    assert result["variance_fields_used"] == ["group_slope_mean", "group_slope_se", "between_worker_slope_sd", "outcome_residual_sd", "worker_intercept_sd", "task_sd", "building_sd", "Q_GT_baseline_se"]
+    assert result["variance_fields_used"] == ["group_slope_mean", "group_slope_se", "between_worker_slope_sd", "outcome_residual_sd", "task_sd", "building_sd", "Q_GT_baseline_se"]
     assert result["known_c1_worker_intercept_sd_resampled"] is False
 
 
@@ -558,12 +558,12 @@ def test_formal_candidate_chain_never_auto_selects_and_requires_bound_human_choi
     } for worker in ("w1", "w2")])
     contract_sha = hashlib.sha256(RISK_CONTRACT.read_bytes()).hexdigest()
     task_rows = []
-    for index in range(6):
+    for index in range(16):
         stratum = "ordinary" if index % 2 == 0 else "stress"
         task_rows.append({
             "task_id": f"t{index}", "base_task_id": f"t{index}", "image_id": f"i{index}",
             "building_id": f"h{index % 2}", "assignment_eligible": "true",
-            "anchor_eligible": str(index < 2).lower(), "bridge_eligible": str(index >= 2).lower(),
+            "anchor_eligible": str(index < 6).lower(), "bridge_eligible": str(index >= 6).lower(),
             "risk_design_vector_A": json.dumps([index / 5] * 4), "risk_design_score_A": index / 5,
             "risk_design_stratum": stratum, "risk_design_stratum_status": "frozen_from_C1",
             "risk_contract_sha256": contract_sha,

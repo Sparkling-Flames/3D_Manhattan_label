@@ -1,0 +1,21 @@
+{
+  "schema_version": "paper_a_gt_conflict_review_v1",
+  "rule_version": "gt_conflict_candidate_v1",
+  "status": "candidate",
+  "approved_by": "",
+  "approved_at": "",
+  "source_evidence": ["Paper_A_method_amendment_peer_gt_shrinkage_v1"],
+  "thresholds": {
+    "dominant_cluster_low_gt_alignment": 0.5,
+    "minority_cluster_better_gt_margin": 0.05,
+    "high_worker_rank_influence": 3
+  },
+  "supported_triggers": [
+    "dominant_cluster_low_gt_alignment",
+    "minority_cluster_better_gt_alignment",
+    "public_gt_structurally_invalid",
+    "high_worker_rank_influence",
+    "known_reference_issue"
+  ],
+  "interpretation_allowed": false
+}

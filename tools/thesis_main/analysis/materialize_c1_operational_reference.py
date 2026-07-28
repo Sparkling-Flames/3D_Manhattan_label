@@ -31,6 +31,62 @@ OUTCOME_FIELDS = [
 ]
 
 
+def materialize_gt_cluster_alignment(
+    crowd_structure_csv: Path, loo_csv: Path, quality_csv: Path,
+    output_dir: Path, *, conflict_rule_manifest: Path = Path("docs/thesis_main/GT_CONFLICT_REVIEW_RULES.json"),
+) -> dict[str, Any]:
+    """Audit crowd/GT disagreement; candidates never mutate the reference."""
+    rules = json.loads(conflict_rule_manifest.read_text(encoding="utf-8"))
+    thresholds = rules["thresholds"]
+    quality = {row.get("canonical_annotation_id", ""): row for row in _read_csv(quality_csv)}
+    loo_by_task: dict[str, list[dict[str, str]]] = {}
+    for row in _read_csv(loo_csv):
+        loo_by_task.setdefault(row.get("base_task_id", ""), []).append(row)
+    alignment: list[dict[str, Any]] = []
+    queue: list[dict[str, Any]] = []
+    for crowd in _read_csv(crowd_structure_csv):
+        base = crowd.get("base_task_id", "")
+        clusters = [("largest", crowd.get("largest_cluster_worker_ids", "")), ("second", crowd.get("second_cluster_worker_ids", ""))]
+        cluster_rows = []
+        for cluster_id, worker_text in clusters:
+            workers = {value for value in worker_text.split(";") if value}
+            members = [row for row in loo_by_task.get(base, []) if row.get("worker_id", "") in workers]
+            candidates = []
+            for member in members:
+                q = quality.get(member.get("canonical_annotation_id", ""), {})
+                try: candidates.append((float(q.get("iou_to_gt", "")), member))
+                except (TypeError, ValueError): pass
+            medoid_score, medoid = max(candidates, default=(None, {}), key=lambda item: item[0] if item[0] is not None else -1)
+            row = {
+                "base_task_id": base, "cluster_id": cluster_id, "cluster_support": len(workers),
+                "cluster_medoid_annotation_id": medoid.get("canonical_annotation_id", ""),
+                "cluster_medoid_worker_id": medoid.get("worker_id", ""),
+                "cluster_medoid_gt_iou": "" if medoid_score is None else medoid_score,
+                "largest_cluster_gt_iou": "", "second_cluster_gt_iou": "", "gt_alignment_margin": "",
+                "public_gt_status": "valid" if candidates else "not_evaluable",
+            }
+            alignment.append(row); cluster_rows.append(row)
+        largest, second = cluster_rows
+        try:
+            largest_score, second_score = float(largest["cluster_medoid_gt_iou"]), float(second["cluster_medoid_gt_iou"])
+            margin = largest_score - second_score
+        except (TypeError, ValueError):
+            largest_score = second_score = margin = None
+        for row in cluster_rows:
+            row["largest_cluster_gt_iou"] = "" if largest_score is None else largest_score
+            row["second_cluster_gt_iou"] = "" if second_score is None else second_score
+            row["gt_alignment_margin"] = "" if margin is None else margin
+        triggers = []
+        if largest_score is not None and largest_score < float(thresholds["dominant_cluster_low_gt_alignment"]): triggers.append("dominant_cluster_low_gt_alignment")
+        if margin is not None and margin < -float(thresholds["minority_cluster_better_gt_margin"]): triggers.append("minority_cluster_better_gt_alignment")
+        if any(row["public_gt_status"] == "invalid" for row in cluster_rows): triggers.append("public_gt_structurally_invalid")
+        for trigger in triggers:
+            queue.append({"base_task_id": base, "trigger": trigger, "candidate_only": True, "reference_modified": False, "rule_version": rules["rule_version"], "source_sha256": hashlib.sha256(crowd_structure_csv.read_bytes()).hexdigest()})
+    _write(output_dir / "c1_gt_cluster_alignment.csv", alignment, list(alignment[0]) if alignment else ["base_task_id"])
+    _write(output_dir / "c1_gt_conflict_review_queue.csv", queue, list(queue[0]) if queue else ["base_task_id", "trigger", "candidate_only", "reference_modified", "rule_version", "source_sha256"])
+    return {"alignment_rows": len(alignment), "conflict_candidates": len(queue), "reference_modified": False}
+
+
 def _read_csv(path: Path) -> list[dict[str, str]]:
     with path.open(encoding="utf-8-sig", newline="") as stream:
         return list(csv.DictReader(stream))
@@ -213,7 +269,10 @@ def materialize(
             "worker_id": row.get("worker_id", ""), "annotation_id": row.get("annotation_id", ""),
             "canonical_annotation_id": row.get("canonical_annotation_id", ""), "condition": row.get("condition", ""),
             "dataset_group": row.get("dataset_group", ""), "iou_to_gt": "" if score is None else score,
-            "quality_evaluable": score is not None, "structurally_valid": structurally_valid,
+            "quality_evaluable": score is not None, "quality_evaluable_legacy_alias": score is not None,
+            "gt_score_computable": score is not None, "gt_reference_resolved": bool(reference.get("points")),
+            "gt_primary_analysis_eligible": bool(score is not None and row.get("condition", "").lower() == "manual" and outcome.get("adjudication_status") == "resolved" and row.get("canonical_annotation_id", "") not in amendment.get("triggers", set())),
+            "structurally_valid": structurally_valid,
             "independence_status": row.get("independence_status", ""),
             "failure_attribution": row.get("failure_attribution", ""),
             "outside_assignment_submission": row.get("outside_assignment_submission", ""),

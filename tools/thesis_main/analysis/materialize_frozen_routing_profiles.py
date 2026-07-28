@@ -68,11 +68,12 @@ def build_global(
             "minimum_task_support": task_support >= min_tasks,
             "reference_evaluable": reference_ok,
             "structural_failure": struct is not None and struct <= max_struct,
-            "quality_lcb": float(evidence["Q_GT_LCB"]) >= quality_floor,
+            "quality_eb": float(evidence["Q_GT_EB"]) >= quality_floor,
         }
         eligible = all(gates.values())
         output.append({
             **evidence,
+            "R_peer_median": state.get("R_peer_median", ""), "R_LOO_medoid": state.get("R_LOO_medoid", ""),
             "R_LOO_compatible": state.get("R_LOO_compatible", ""),
             "F_struct": "" if struct is None else struct, "GT_support": support,
             "task_support": task_support,
@@ -86,11 +87,12 @@ def build_global(
         })
     ranked = sorted(
         (row for row in output if row["global_eligible"] or input_status != "formal"),
-        key=lambda row: (-float(row["Q_GT_LCB"]), row["worker_id"]),
+        key=lambda row: (-float(row["Q_GT_EB"]), -float(row.get("R_LOO_medoid") or -1), -float(row.get("R_peer_median") or -1), row["worker_id"]),
     )
     ranks = {row["worker_id"]: index + 1 for index, row in enumerate(ranked)}
     for row in output:
-        row["global_rank"] = ranks.get(row["worker_id"], "") if input_status == "formal" else ""
+        row["global_rank_EB"] = ranks.get(row["worker_id"], "") if input_status == "formal" else ""
+        row["global_rank"] = row["global_rank_EB"]
         row["provisional_rank"] = ranks.get(row["worker_id"], "") if input_status != "formal" else ""
     audit = {**audit, "ranking_materialized": input_status == "formal", "ranking_owner": "routing_profile_freeze"}
     return output, task_rows, audit
@@ -124,6 +126,14 @@ def materialize(
     freeze_manifest: Path, output_dir: Path, *, input_status: str = "dry_run",
 ) -> dict[str, Any]:
     manifest = json.loads(freeze_manifest.read_text(encoding="utf-8"))
+    global_thresholds_path = Path("docs/thesis_main/GLOBAL_POLICY_THRESHOLDS.json")
+    global_thresholds = json.loads(global_thresholds_path.read_text(encoding="utf-8"))
+    if input_status == "formal" and not (
+        global_thresholds.get("status") == "approved"
+        and global_thresholds.get("interpretation_allowed") is True
+        and global_thresholds.get("approved_by") and global_thresholds.get("approved_at")
+    ):
+        raise ValueError("candidate GLOBAL_POLICY_THRESHOLDS cannot produce formal routing profile")
     expected = manifest.get("input_sha256") or {}
     inputs = {
         "submissions_csv": submissions_csv,
@@ -154,7 +164,8 @@ def materialize(
         "n_full_components": sum(bool(row["full_component_eligible"]) for row in components),
         "input_status": input_status,
         "model_audit": model_audit,
-        "formal_ready": input_status == "formal" and sum(bool(row["global_eligible"]) for row in global_rows) >= int(estimator["min_global_eligible_workers"]),
+        "global_policy_threshold_manifest_sha256": _sha(global_thresholds_path),
+        "formal_ready": input_status == "formal" and model_audit.get("eb_model_status") == "estimated" and sum(bool(row["global_eligible"]) for row in global_rows) >= int(estimator["min_global_eligible_workers"]),
     }
     output_dir.mkdir(parents=True, exist_ok=True)
     (output_dir / "routing_profile_freeze_audit.json").write_text(

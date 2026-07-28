@@ -1,8 +1,41 @@
 from __future__ import annotations
 
 from typing import Any
+import statistics
 
 import numpy as np
+
+
+def peer_similarity_profiles(
+    records: list[dict[str, Any]], *, grid: int = 256
+) -> list[dict[str, Any]]:
+    """Worker-specific peer summaries, excluding every record by that worker."""
+    profiles: list[dict[str, Any]] = []
+    for record in records:
+        worker = str(record.get("worker_id", ""))
+        values: list[float] = []
+        compatible = 0
+        for peer in records:
+            if str(peer.get("worker_id", "")) == worker:
+                continue
+            metrics = pairwise_similarity(record.get("geometry") or {}, peer.get("geometry") or {}, grid=grid)
+            boundary, wall = metrics.get("boundary_similarity"), metrics.get("wallwall_similarity")
+            if boundary is None or wall is None:
+                continue
+            compatible += 1
+            values.append(min(float(boundary), float(wall)))
+        profiles.append({
+            "worker_id": worker,
+            "task_id": record.get("task_id", ""),
+            "canonical_annotation_id": record.get("canonical_annotation_id", ""),
+            "peer_similarity_values": values,
+            "R_peer_median": statistics.median(values) if values else None,
+            "R_peer_mean": float(np.mean(values)) if values else None,
+            "peer_count": len([peer for peer in records if str(peer.get("worker_id", "")) != worker]),
+            "peer_metric_compatible_count": compatible,
+            "peer_dispersion": float(np.std(values, ddof=1)) if len(values) > 1 else None,
+        })
+    return profiles
 
 
 def _periodic_interp(xs: list[float], ys: list[float], width: int, grid: int) -> np.ndarray:

@@ -29,6 +29,8 @@
 - [C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md](thesis_main/C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md)
 - [PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md](thesis_main/PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md)：C1 日志冻结、三轴证据、C2-B 风险/模拟/审批/assignment 的单一生产 DAG 与状态 owner
 - [PAPER_A_C1_C2B_FORMAL_RUNBOOK.md](thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md)：GPU 静态特征准备、C1 collection freeze 与 C2-B 正式命令顺序
+- [PAPER_A_C1_C2B_ROOT_CAUSE_AMENDMENT_v1.md](thesis_main/PAPER_A_C1_C2B_ROOT_CAUSE_AMENDMENT_v1.md)：Q_GT bootstrap、risk boundary、联合 posterior、P1 integrity 与双层阈值的 dry-run 前置修订
+- [PAPER_A_METHOD_AMENDMENT_PEER_GT_SHRINKAGE_v1.md](thesis_main/PAPER_A_METHOD_AMENDMENT_PEER_GT_SHRINKAGE_v1.md)：estimand gate、同行结构、GT 冲突与 EB 收缩的候选方法修订；批准前禁止正式解释
 - [PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json](thesis_main/PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json)：`close-c1-and-plan-c2b` 可恢复薄入口配置模板
 - [C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md](thesis_main/C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md)
 - [WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md](thesis_main/WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md)
@@ -39,10 +41,11 @@
 - [PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md](thesis_main/PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md)：Paper A vFinal sidecar、dry-run 与正式数据边界
 - [PAPER_A_VFINAL_EXECUTION_CONTRACT.json](thesis_main/PAPER_A_VFINAL_EXECUTION_CONTRACT.json)：C1→C2 主线 DAG、三段 freeze gate、风险通道与 legacy 隔离合同
 - [C2B_RISK_DESIGN_CONTRACT_v1.json](thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json)：C2-B 唯一风险通道、分层、模拟与冻结状态合同
-- [C2B_DESIGN_SELECTION_THRESHOLDS.json](thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json)：C2-B 正式设计审批阈值；默认空值时仅允许 candidate 输出
+- [C2B_DESIGN_SELECTION_THRESHOLDS.json](thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json)：C1 closeout 前冻结的 C2-B design threshold 公式、常数、输入字段与方向合同；正式数值由 SHA 绑定输入机械派生
 - `Paper_A_新版完整论文提纲_vFinal_Draft.md`：当前唯一 vFinal 提纲真源，包含 C1→C2→T1/V1 的 failure-disposition、重跑与行政删失合同。
 - [meta_label_three_state_rule_manifest_v1.json](thesis_main/meta_label_three_state_rule_manifest_v1.json)：三状态 meta-label 候选规则
 - [geometry_loo_candidate_rule_manifest_v1.json](thesis_main/geometry_loo_candidate_rule_manifest_v1.json)：Geometry LOO 候选规则
+- [geometry_peer_candidate_rule_manifest_v1.json](thesis_main/geometry_peer_candidate_rule_manifest_v1.json)、[GLOBAL_POLICY_THRESHOLDS.json](thesis_main/GLOBAL_POLICY_THRESHOLDS.json)、[P1_COMPONENT_SUPPORT_THRESHOLDS.json](thesis_main/P1_COMPONENT_SUPPORT_THRESHOLDS.json)、[GT_CONFLICT_REVIEW_RULES.json](thesis_main/GT_CONFLICT_REVIEW_RULES.json)：同行、Global、P1 component 与 GT 冲突的 candidate-only 数值合同
 - [sequential_routing_candidate_rule_manifest_v1.json](thesis_main/sequential_routing_candidate_rule_manifest_v1.json)：历史冻结的时序 routing 候选规则
 - [sequential_routing_candidate_rule_manifest_v2.json](thesis_main/sequential_routing_candidate_rule_manifest_v2.json)：统一 temporal replay 状态机与候选规则合同
 - [model_issue_harmonization_rule_manifest_v1.json](thesis_main/model_issue_harmonization_rule_manifest_v1.json)：model issue 抖动容忍与 harmonization 候选规则
@@ -130,4 +133,6 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - C2 task-risk 与严格任务资格 materializer：`tools/thesis_main/analysis/materialize_c2_task_risk.py`、`tools/thesis_main/analysis/materialize_c2b_task_eligibility.py`
 - C2 LHFeat reference/PCA/whitening freeze：`tools/thesis_main/analysis/freeze_c2_feature_reference.py`
 - C1→C2-B 风险斜率/方差设计参数：`tools/thesis_main/analysis/materialize_c1_c2_design_parameters.py`
+- C2-B design threshold 机械派生器：`tools/thesis_main/analysis/derive_c2b_design_thresholds.py`
 - P1→C1 predictive association：`tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`
+- C1 结构失败 EB、Global/Full policy 与轻量反例库：`tools/thesis_main/analysis/c1_structural_reliability_eb.py`、`materialize_global_policy.py`、`materialize_full_policy.py`、`materialize_counterexample_bank.py`

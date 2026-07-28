@@ -121,3 +121,28 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
+ROUTABLE_FAMILIES = {"undercoverage", "adjacent_space_overextension", "corner_topology_instability"}
+
+
+def estimate_stage_stacked_components(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Small fixed-contract C1/C2 stacked association audit."""
+    grouped: dict[str, list[dict[str, Any]]] = {}
+    for row in rows: grouped.setdefault(str(row.get("component_family", "")), []).append(row)
+    output = []
+    for family, items in sorted(grouped.items()):
+        effects = []
+        stages: dict[str, list[float]] = {}
+        workers, tasks = set(), set()
+        for row in items:
+            try:
+                x, y, weight = float(row["p1_component_value"]), float(row["calibration_outcome"]), float(row.get("support_weight") or 1)
+            except (KeyError, TypeError, ValueError): continue
+            effect = x * y * weight; effects.append(effect); stages.setdefault(str(row.get("stage", "")), []).append(effect)
+            workers.add(str(row.get("worker_id", ""))); tasks.add(str(row.get("base_task_id", "")))
+        stage_means = {stage: sum(values) / len(values) for stage, values in stages.items() if values}
+        combined = sum(effects) / len(effects) if effects else None
+        interaction = max(stage_means.values()) - min(stage_means.values()) if len(stage_means) >= 2 else None
+        reversal = len(stage_means) >= 2 and min(stage_means.values()) < 0 < max(stage_means.values())
+        status = "insufficient" if not effects or len(stage_means) < 2 else "contradicted" if reversal else "cross_stage_supported"
+        output.append({"component_family": family, "combined_effect": "" if combined is None else combined, "combined_interval": "", "stage_interaction": "" if interaction is None else interaction, "stage_reversal_flag": reversal, "worker_support": len(workers), "task_support": len({task for task in tasks if task}), "component_status": status if status != "insufficient" else "diagnostic_candidate" if effects else "insufficient", "routable": family in ROUTABLE_FAMILIES and status == "cross_stage_supported"})
+    return output

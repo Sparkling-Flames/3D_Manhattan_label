@@ -23,7 +23,9 @@ if str(_PROJECT_ROOT) not in sys.path:
 from tools.thesis_main.analysis import c1_canonicalize_exports
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files, validate_active_log_freeze_manifest
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, write_csv, write_json
-from tools.thesis_main.analysis.materialize_c1_operational_reference import materialize as materialize_operational_reference
+from tools.thesis_main.analysis.materialize_c1_operational_reference import materialize as materialize_operational_reference, materialize_gt_cluster_alignment
+from tools.thesis_main.analysis.c1_structural_reliability_eb import materialize as materialize_structural_eb
+from tools.thesis_main.analysis.materialize_counterexample_bank import materialize_counterexample_bank
 from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_active_log_audits,
     materialize_active_time_ledgers,
@@ -45,7 +47,7 @@ from tools.thesis_main.analysis.c1_c2_mainline import (
     materialize_measurement_readiness,
 )
 from tools.thesis_main.analysis.materialize_c1_preannotation_task_features import materialize as materialize_preannotation_features
-from tools.thesis_main.analysis.c1_task_adjusted_quality import estimate_task_adjusted_qgt
+from tools.thesis_main.analysis.c1_task_adjusted_quality import _BootstrapSupportFailure, estimate_task_adjusted_qgt
 from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import build_source as build_p1_c1_source, materialize as materialize_predictive_association
 from tools.thesis_main.analysis.c2b_static_evidence import validate_p1_integrity_bundle
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
@@ -428,6 +430,29 @@ def materialize(
         output_dir / "c1_gt_quality_evidence.csv", output_dir / "geometry_worker_task_loo_C1.csv",
         output_dir / "structural_validation_audit.csv", output_dir / "c1_row_analysis_eligibility.csv", output_dir,
     )
+    materialize_gt_cluster_alignment(
+        output_dir / "geometry_task_crowd_structure_C1.csv",
+        output_dir / "geometry_worker_task_loo_C1.csv",
+        output_dir / "c1_gt_quality_evidence.csv", output_dir,
+    )
+    materialize_structural_eb(
+        output_dir / "structural_validation_analysis.csv",
+        output_dir / "c1_structural_reliability_eb.csv",
+        Path("docs/thesis_main/GLOBAL_POLICY_THRESHOLDS.json"),
+    )
+    counterexample_events = [
+        {"base_task_id": row.get("base_task_id", ""), "trigger": "gt_conflict"}
+        for row in read_csv(output_dir / "c1_gt_conflict_review_queue.csv")
+    ] + [
+        {"base_task_id": row.get("base_task_id", ""), "trigger": "supported_multimodality"}
+        for row in read_csv(output_dir / "geometry_task_crowd_structure_C1.csv")
+        if row.get("task_crowd_structure_status") == "supported_multimodal"
+    ] + [
+        {"base_task_id": row.get("base_task_id", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""), "trigger": "worker_structural_failure"}
+        for row in read_csv(output_dir / "structural_validation_analysis.csv")
+        if row.get("failure_attribution") == "worker_caused_structural_failure"
+    ]
+    materialize_counterexample_bank(counterexample_events, output_dir / "counterexample_bank")
     anomaly_summary = materialize_geometry_anomaly_root_causes(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_meta_observations.csv",
         output_dir / "c1_canonical_geometry.jsonl", output_dir / "structural_validation_audit.csv", output_dir,
@@ -481,6 +506,11 @@ def materialize(
         write_csv(qgt_evidence_path, globals_, list(globals_[0]))
         write_csv(output_dir / "c1_task_adjusted_qgt_task_effects.csv", task_effects, list(task_effects[0]))
         write_json(output_dir / "c1_task_adjusted_qgt_model_audit.json", model_audit)
+    except _BootstrapSupportFailure as exc:
+        model_audit = {"status": "not_evaluable", **exc.audit}
+        write_csv(qgt_evidence_path, [], ["worker_id", "Q_GT_task_adjusted"])
+        write_csv(output_dir / "c1_task_adjusted_qgt_task_effects.csv", [], ["base_task_id", "task_random_intercept"])
+        write_json(output_dir / "c1_task_adjusted_qgt_model_audit.json", model_audit)
     except (ValueError, KeyError, np.linalg.LinAlgError) as exc:
         model_audit = {"status": "not_evaluable", "reason": str(exc)}
         write_csv(qgt_evidence_path, [], ["worker_id", "Q_GT_task_adjusted"])
@@ -492,6 +522,8 @@ def materialize(
         output_dir / "structural_validation_analysis.csv", output_dir / "c1_worker_completion_audit.csv", output_dir,
         quality_csv=output_dir / "c1_gt_quality_analysis.csv",
         eligibility_csv=output_dir / "c1_row_analysis_eligibility.csv",
+        peer_csv=output_dir / "geometry_worker_task_peer_C1.csv",
+        structural_eb_csv=output_dir / "c1_structural_reliability_eb.csv",
         formal=formal,
     )
     predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"
