@@ -48,6 +48,7 @@ from tools.thesis_main.analysis.c1_c2_mainline import (
 )
 from tools.thesis_main.analysis.materialize_c1_preannotation_task_features import materialize as materialize_preannotation_features
 from tools.thesis_main.analysis.c1_task_adjusted_quality import _BootstrapSupportFailure, estimate_task_adjusted_qgt
+from tools.thesis_main.analysis.geometry_consensus.materialize import materialize_geometry_consensus
 from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import build_source as build_p1_c1_source, materialize as materialize_predictive_association
 from tools.thesis_main.analysis.c2b_static_evidence import validate_p1_integrity_bundle
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
@@ -393,6 +394,20 @@ def materialize(
         output_dir / "c1_canonical_geometry.jsonl", output_dir,
         completion_disposition_csv=review_snapshots.get("completion_disposition"), collection_window_closed=collection_window_closed,
     )
+    completion_rows_for_exclusion = read_csv(output_dir / "c1_worker_completion_audit.csv")
+    administratively_excluded_workers = {
+        row.get("worker_id", "")
+        for row in completion_rows_for_exclusion
+        if row.get("completion_status", "").strip().lower() == "administrative_exclusion"
+    }
+    if administratively_excluded_workers:
+        geometry_summary = materialize_geometry_consensus(
+            output_dir / "c1_canonical_geometry.jsonl", output_dir,
+            input_status=input_status,
+            excluded_worker_ids=administratively_excluded_workers,
+        )
+        canonical_summary["geometry_sidecars"] = geometry_summary
+        write_json(output_dir / "c1_canonicalization_summary.json", canonical_summary)
     outside_summary = materialize_outside_assignment(
         output_dir / "c1_canonical_annotations.csv", output_dir,
         disposition_csv=review_snapshots.get("outside_assignment_disposition"),
@@ -415,6 +430,7 @@ def materialize(
         output_dir / "structural_validation_audit.csv", output_dir / "c1_task_outcome_reference.csv", output_dir,
         independence_csv=output_dir / "c1_independence_evidence.csv",
         outside_disposition_csv=output_dir / "c1_outside_assignment_disposition_evidence.csv",
+        completion_csv=output_dir / "c1_worker_completion_audit.csv",
     )
     completion_summary = finalize_partial_completion_support(
         output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_row_analysis_eligibility.csv",

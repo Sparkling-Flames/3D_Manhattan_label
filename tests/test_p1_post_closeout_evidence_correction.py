@@ -116,6 +116,108 @@ def test_same_worker_revision_is_independent_and_cross_worker_uncertain_is_suspe
     assert by_annotation["different"]["adjudication_status"] == "pending_review"
 
 
+def test_no_parent_manual_cross_worker_exact_geometry_is_suspected_and_identity_is_recovered(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([{
+        "id": "t1", "project": "p1",
+        "data": {"base_task_id": "real-base", "image": "https://example.test/real-image.jpg", "condition": "manual"},
+        "annotations": [
+            _ann("a1", "w1", "2026-07-01T00:00:00Z"),
+            _ann("a2", "w2", "2026-07-01T00:01:00Z"),
+        ],
+    }]), encoding="utf-8")
+    canonical = tmp_path / "canonical.csv"
+    rows = [_canonical("a1", "w1"), _canonical("a2", "w2")]
+    for row in rows:
+        row["base_task_id"] = ""
+    _csv(canonical, list(rows[0]), rows)
+    admission = tmp_path / "admission.csv"
+    _csv(admission, ["worker_id"], [{"worker_id": "w1"}, {"worker_id": "w2"}])
+
+    corrected, _, summary = build_correction(canonical, [export], admission)
+
+    assert {row["base_task_id"] for row in corrected} == {"real-base"}
+    assert {row["image_id"] for row in corrected} == {"real-image"}
+    assert {row["independence_status"] for row in corrected} == {"non_independent_suspected"}
+    assert summary["n_no_parent_cross_worker_exact"] == 2
+
+
+def test_no_parent_semi_exact_initialization_is_shared_not_copy(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([{
+        "id": "t1", "project": "p1", "data": {"base_task_id": "base", "condition": "semi"},
+        "annotations": [
+            _ann("a1", "w1", "2026-07-01T00:00:00Z"),
+            _ann("a2", "w2", "2026-07-01T00:01:00Z"),
+        ],
+    }]), encoding="utf-8")
+    initialization = tmp_path / "semi_import.json"
+    initialization.write_text(json.dumps([{
+        "data": {"base_task_id": "base", "condition": "semi"},
+        "predictions": [{"result": POINTS}],
+    }]), encoding="utf-8")
+    canonical = tmp_path / "canonical.csv"
+    rows = [_canonical("a1", "w1"), _canonical("a2", "w2")]
+    for row in rows:
+        row.update({"base_task_id": "", "condition": "semi", "dataset_group": "PreScreen_semi"})
+    _csv(canonical, list(rows[0]), rows)
+    admission = tmp_path / "admission.csv"
+    _csv(admission, ["worker_id"], [{"worker_id": "w1"}, {"worker_id": "w2"}])
+
+    corrected, _, summary = build_correction(
+        canonical, [export], admission, initialization_import_json=[initialization],
+    )
+
+    assert {row["independence_status"] for row in corrected} == {"independent"}
+    assert {row["independence_reason"] for row in corrected} == {"shared_initialization_match"}
+    assert all(row["initialization_relation"] == "identical" for row in corrected)
+    assert summary["initialization_import_sha256"] == {str(initialization): __import__("hashlib").sha256(initialization.read_bytes()).hexdigest()}
+
+
+def test_no_parent_semi_cross_worker_exact_without_frozen_initialization_is_not_evaluable(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([{
+        "id": "t1", "project": "p1", "data": {"base_task_id": "base", "condition": "semi"},
+        "annotations": [
+            _ann("a1", "w1", "2026-07-01T00:00:00Z"),
+            _ann("a2", "w2", "2026-07-01T00:01:00Z"),
+        ],
+    }]), encoding="utf-8")
+    canonical = tmp_path / "canonical.csv"
+    rows = [_canonical("a1", "w1"), _canonical("a2", "w2")]
+    for row in rows:
+        row.update({"base_task_id": "", "condition": "semi", "dataset_group": "PreScreen_semi"})
+    _csv(canonical, list(rows[0]), rows)
+    admission = tmp_path / "admission.csv"
+    _csv(admission, ["worker_id"], [{"worker_id": "w1"}, {"worker_id": "w2"}])
+
+    corrected, _, summary = build_correction(canonical, [export], admission)
+
+    assert {row["independence_status"] for row in corrected} == {"not_evaluable"}
+    assert {row["independence_reason"] for row in corrected} == {"semi_cross_worker_exact_missing_initialization"}
+    assert summary["P1_PREDICTIVE_EVIDENCE_READY"] is False
+
+
+def test_no_parent_exact_geometry_is_compared_within_condition(tmp_path: Path) -> None:
+    export = tmp_path / "export.json"
+    export.write_text(json.dumps([
+        {"id": "manual", "project": "p1", "data": {"base_task_id": "base", "condition": "manual"},
+         "annotations": [_ann("a1", "w1", "2026-07-01T00:00:00Z")]},
+        {"id": "semi", "project": "p1", "data": {"base_task_id": "base", "condition": "semi"},
+         "annotations": [_ann("a2", "w2", "2026-07-01T00:01:00Z")]},
+    ]), encoding="utf-8")
+    canonical = tmp_path / "canonical.csv"
+    rows = [_canonical("a1", "w1", "manual"), _canonical("a2", "w2", "semi")]
+    _csv(canonical, list(rows[0]), rows)
+    admission = tmp_path / "admission.csv"
+    _csv(admission, ["worker_id"], [{"worker_id": "w1"}, {"worker_id": "w2"}])
+
+    corrected, _, summary = build_correction(canonical, [export], admission)
+
+    assert {row["independence_status"] for row in corrected} == {"independent"}
+    assert summary["n_no_parent_cross_worker_exact"] == 0
+
+
 def test_exact_timing_requires_owner_match_and_task_fallback_keeps_audit_value(tmp_path: Path) -> None:
     export = tmp_path / "export.json"
     export.write_text(json.dumps([{"id": "t1", "project": "p1", "data": {}, "annotations": [_ann("a1", "w1", "2026-07-01T00:00:00Z")]}]), encoding="utf-8")

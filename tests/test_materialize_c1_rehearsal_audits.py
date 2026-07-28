@@ -9,6 +9,7 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_c2_eligible_roster,
     materialize_completion_support,
     materialize_active_time_ledgers,
+    materialize_analysis_rosters,
     materialize_independence,
     materialize_project_independence_provenance,
     materialize_final_canonical_closeout_summary,
@@ -306,6 +307,45 @@ def test_row_eligibility_excludes_outside_assignment_from_all_tracks(tmp_path: P
     assert result["global_analysis_eligible"] == "False"
     assert result["loo_analysis_eligible"] == "False"
     assert result["structural_opportunity_eligible"] == "False"
+
+
+def test_row_eligibility_excludes_administratively_removed_worker_from_all_tracks(tmp_path: Path) -> None:
+    canonical = tmp_path / "canonical.csv"; versions = tmp_path / "versions.csv"; quality = tmp_path / "quality.csv"
+    loo = tmp_path / "loo.csv"; structural = tmp_path / "structural.csv"; reference = tmp_path / "reference.csv"
+    completion = tmp_path / "completion.csv"
+    row = {"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "worker_id": "14", "annotation_id": "a1", "canonical_annotation_id": "c1", "assigned_expected": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"}
+    _csv(canonical, [row]); _csv(versions, [{"annotation_id": "a1", "version_disposition": "selected_canonical"}])
+    _csv(quality, [{"canonical_annotation_id": "c1", "quality_evaluable": "true"}])
+    _csv(loo, [{"canonical_annotation_id": "c1", "q_LOO_tu": ".9", "primary_loo_eligible": "true"}])
+    _csv(structural, [{"canonical_annotation_id": "c1", "structural_validation_status": "passed"}])
+    _csv(reference, [{"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "final_scope": "in_scope", "geometry_reference_ready": "true"}])
+    _csv(completion, [{"worker_id": "14", "completion_status": "administrative_exclusion"}])
+
+    materialize_row_analysis_eligibility(canonical, versions, quality, loo, structural, reference, tmp_path, completion_csv=completion)
+
+    result = next(csv.DictReader((tmp_path / "c1_row_analysis_eligibility.csv").open(encoding="utf-8")))
+    assert result["process_exclusion_reason"] == "administrative_exclusion"
+    assert result["global_analysis_eligible"] == "False"
+    assert result["loo_analysis_eligible"] == "False"
+    assert result["structural_opportunity_eligible"] == "False"
+
+
+def test_analysis_roster_preserves_observed_but_excludes_administrative_removal(tmp_path: Path) -> None:
+    completion = tmp_path / "completion.csv"; canonical = tmp_path / "canonical.csv"
+    _csv(completion, [
+        {"worker_id": "14", "observed_total_count": "1", "completion_status": "administrative_exclusion"},
+        {"worker_id": "34", "observed_total_count": "1", "completion_status": "completed"},
+    ])
+    _csv(canonical, [
+        {"worker_id": "14", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"},
+        {"worker_id": "34", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"},
+    ])
+
+    summary = materialize_analysis_rosters(completion, canonical, tmp_path)
+
+    assert summary == {"assigned": 2, "observed": 2, "analysis": 1}
+    analysis = list(csv.DictReader((tmp_path / "C1_analysis_roster.csv").open(encoding="utf-8")))
+    assert [row["worker_id"] for row in analysis] == ["34"]
 
 
 def test_canonical_meta_rebinds_after_derived_gate_columns_are_added(tmp_path: Path) -> None:

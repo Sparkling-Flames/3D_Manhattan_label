@@ -8,7 +8,7 @@ from types import SimpleNamespace
 import numpy as np
 import pytest
 
-from tools.thesis_main.analysis.materialize_c2_task_risk import _apply_whitener, _composite_q75_bucket, _feature_freeze_ready, _fit_whitener, _layout_features, _pool_lhfeat, materialize, refresh_feature_freeze_approval
+from tools.thesis_main.analysis.materialize_c2_task_risk import _apply_whitener, _composite_q75_bucket, _feature_audit_passes, _feature_freeze_ready, _fit_whitener, _layout_features, _pool_lhfeat, materialize, refresh_feature_freeze_approval
 from tools.thesis_main.registry.hohonet_feature_backend import aggregate_orbit
 
 
@@ -115,8 +115,8 @@ def test_frozen_feature_caches_can_refresh_approval_without_model_inference(tmp_
     inventory = tmp_path / "inventory.csv"; inventory.write_text("image_id,base_task_id\ni,t\n", encoding="utf-8")
     cache = tmp_path / "reference.npz"; cache.write_bytes(b"reference-cache")
     candidate = tmp_path / "candidate.npz"; candidate.write_bytes(b"candidate-cache")
-    circular = tmp_path / "circular.json"; circular.write_text(json.dumps({"circular_relative_l2_max": 1e-8, "audit_basis": "off_grid_rotation_reinference", "four_phase_permutation_role": "diagnostic_only"}), encoding="utf-8")
-    seam = tmp_path / "seam.json"; seam.write_text(json.dumps({"seam_relative_l2_q95": .02}), encoding="utf-8")
+    circular = tmp_path / "circular.json"; circular.write_text(json.dumps({"circular_relative_l2_max": 1e-8, "circular_audited_image_count": 32, "audit_basis": "off_grid_rotation_reinference", "four_phase_permutation_role": "diagnostic_only"}), encoding="utf-8")
+    seam = tmp_path / "seam.json"; seam.write_text(json.dumps({"seam_relative_l2_q95": .02, "seam_audited_image_count": 32}), encoding="utf-8")
     sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
     paths = sorted(reference.glob("*.jpg"))
     listing_sha = hashlib.sha256("\n".join(
@@ -137,7 +137,7 @@ def test_frozen_feature_caches_can_refresh_approval_without_model_inference(tmp_
     thresholds.write_text(json.dumps({
         "status": "approved", "formal_feature_freeze_allowed": True,
         "approved_by": "reviewer", "approved_at": "2026-07-26T00:00:00Z",
-        "thresholds": {"circular_relative_l2_max": 1e-7, "seam_relative_l2_q95": .03},
+        "thresholds": {"circular_relative_l2_max": 1e-7, "seam_relative_l2_q95": .03, "minimum_circular_audited_image_count": 32, "minimum_seam_audited_image_count": 32},
     }), encoding="utf-8")
     refreshed = refresh_feature_freeze_approval(
         manifest, thresholds, checkpoint=checkpoint, config=config,
@@ -145,6 +145,25 @@ def test_frozen_feature_caches_can_refresh_approval_without_model_inference(tmp_
     )
     assert refreshed["feature_audit_status"] == "approved"
     assert refreshed["cache_reused_without_model_inference"] is True
+
+
+def test_feature_audit_fails_closed_on_zero_support_or_nonfinite_metrics() -> None:
+    thresholds = {
+        "status": "approved", "formal_feature_freeze_allowed": True,
+        "approved_by": "reviewer", "approved_at": "2026-07-26T00:00:00Z",
+        "thresholds": {
+            "circular_relative_l2_max": .3, "seam_relative_l2_q95": .05,
+            "minimum_circular_audited_image_count": 32, "minimum_seam_audited_image_count": 32,
+        },
+    }
+    audit = {
+        "circular_relative_l2_max": .2, "seam_relative_l2_q95": .04,
+        "circular_audited_image_count": 0, "seam_audited_image_count": 32,
+    }
+    assert _feature_audit_passes(audit, audit, thresholds) == (False, True)
+    audit["circular_audited_image_count"] = 32
+    audit["seam_relative_l2_q95"] = "nan"
+    assert _feature_audit_passes(audit, audit, thresholds) == (True, False)
 
 
 def test_candidate_risk_uses_c1_only_and_layout_structure(tmp_path):

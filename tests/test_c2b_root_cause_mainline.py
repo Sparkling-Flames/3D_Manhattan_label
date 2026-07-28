@@ -10,8 +10,10 @@ from tools.thesis_main.analysis.c1_c2_mainline import materialize_c2b_design_wor
 from tools.thesis_main.analysis.build_c2_assignment_manifest_from_c1_gaps import (
     _anchor_pool,
     _empirical_cluster_bootstrap,
+    _joint_qgt_posterior,
     _projected_worker_intervals,
     _recompute_stability_audits,
+    _resolve_slope_distribution,
     _select_anchors,
 )
 from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
@@ -21,9 +23,10 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_independence,
     materialize_three_track_worker_state,
 )
-from tools.thesis_main.analysis.c1_task_adjusted_quality import estimate_task_adjusted_qgt
-from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import _variance_boundary_decision
+from tools.thesis_main.analysis.c1_task_adjusted_quality import _BootstrapSupportFailure, estimate_task_adjusted_qgt
+from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import _risk_model_spec, _variance_boundary_decision
 from tools.thesis_main.analysis.c2b_static_evidence import (
+    materialize_history_overlap,
     materialize_p1_integrity_bundle,
     materialize_building_registry_from_scene_mapping,
     materialize_reference_candidate_leakage,
@@ -102,6 +105,63 @@ def test_unique_qgt_estimator_emits_measurement_evidence_without_rank(tmp_path: 
     assert all(set(json.loads(row["Q_GT_contrast_covariance_row_json"])) == {"w1", "w2"} for row in workers)
 
 
+def test_qgt_bootstrap_missing_worker_is_a_failed_replicate_not_a_model_abort(monkeypatch) -> None:
+    rows = [
+        {
+            "worker_id": worker, "base_task_id": task, "condition": "manual",
+            "building_id": "b1", "Q_GT_raw": value, "global_analysis_eligible": "true",
+        }
+        for task, values in (("t1", (.8, .7)), ("t2", (.6, .5)))
+        for worker, value in zip(("w1", "w2"), values)
+    ]
+    calls = {"count": 0}
+
+    def fake_fit(_frame, _contract):
+        calls["count"] += 1
+        estimates = {"w1": .8, "w2": .7}
+        if calls["count"] == 2:
+            estimates.pop("w2")
+        return {
+            "formula": "quality ~ 0 + C(worker_id)", "optimizer": "test",
+            "estimates": estimates, "task_effects": {}, "warnings": [],
+            "residual_variance": .01, "task_intercept_variance": .01,
+        }
+
+    monkeypatch.setattr("tools.thesis_main.analysis.c1_task_adjusted_quality._fit_once", fake_fit)
+    workers, _tasks, audit = estimate_task_adjusted_qgt(
+        rows,
+        estimator_contract={"bootstrap_replicates": 21, "minimum_successful_bootstrap_fraction": .5},
+    )
+    assert len(workers) == 2
+    assert audit["bootstrap_replicates_successful"] == 20
+    assert audit["bootstrap_failure_reasons"] == {"missing_worker_level": 1}
+
+
+def test_qgt_bootstrap_failure_below_threshold_keeps_structured_reason_audit(monkeypatch) -> None:
+    rows = [
+        {"worker_id": worker, "base_task_id": task, "building_id": building, "condition": "manual", "Q_GT_raw": value}
+        for worker, value in (("w1", .8), ("w2", .7))
+        for task, building in (("t1", "b1"), ("t2", "b2"))
+    ]
+    calls = {"value": 0}
+
+    def fake_fit(_frame, _contract):
+        calls["value"] += 1
+        estimates = {"w1": .8, "w2": .7} if calls["value"] <= 2 else {"w1": .8}
+        return {
+            "formula": "quality ~ C(worker_id)", "optimizer": "fake", "estimates": estimates,
+            "task_effects": {}, "warnings": [], "residual_variance": .01,
+            "task_intercept_variance": .01,
+        }
+
+    monkeypatch.setattr("tools.thesis_main.analysis.c1_task_adjusted_quality._fit_once", fake_fit)
+    with pytest.raises(_BootstrapSupportFailure) as captured:
+        estimate_task_adjusted_qgt(rows, estimator_contract={"bootstrap_replicates": 20})
+    assert captured.value.audit["bootstrap_replicates_successful"] == 1
+    assert captured.value.audit["bootstrap_failure_reasons"] == {"missing_worker_level": 19}
+    assert captured.value.audit["bootstrap_minimum_successful_replicates"] == 20
+
+
 def test_p1_integrity_is_optional_only_for_rehearsal(tmp_path: Path) -> None:
     rehearsal = _validate_p1_integrity_for_mode("precloseout_rehearsal", None)
     assert rehearsal["status"] == "not_evaluable_missing_p1_integrity"
@@ -114,9 +174,52 @@ def test_p1_integrity_is_optional_only_for_rehearsal(tmp_path: Path) -> None:
     ):
         (tmp_path / name).write_text("{}\n" if name.endswith(".json") else "worker_id\nw1\n", encoding="utf-8")
     materialize_p1_integrity_bundle(tmp_path)
-    assert validate_p1_integrity_bundle(tmp_path)["valid"] is True
+    validated = validate_p1_integrity_bundle(tmp_path)
+    assert validated["valid"] is True
+    assert validated["P1_INTEGRITY_BUNDLE_FROZEN"] is True
+    assert validated["P1_PREDICTIVE_EVIDENCE_READY"] is False
     (tmp_path / "p1_worker_geometry_profile_v1.csv").write_text("worker_id\nw2\n", encoding="utf-8")
     assert validate_p1_integrity_bundle(tmp_path)["valid"] is False
+
+
+def test_p1_predictive_ready_requires_three_legal_numeric_worker_components(tmp_path: Path) -> None:
+    for name in (
+        "p1_post_closeout_correction_summary_v1.json", "p1_geometry_score_summary_v1.json",
+        "p1_task_evidence_correction_v1.csv", "p1_geometry_task_scores_v1.csv",
+    ):
+        (tmp_path / name).write_text("{}\n" if name.endswith(".json") else "worker_id\nw1\n", encoding="utf-8")
+    _write(tmp_path / "p1_worker_evidence_status_v1.csv", [
+        {"worker_id": f"w{index}", "p1_predictive_capability_eligible": "true"}
+        for index in range(1, 4)
+    ])
+    _write(tmp_path / "p1_worker_geometry_profile_v1.csv", [
+        {"worker_id": f"w{index}", "p1_geometry_component": str(.8 + index / 100),
+         "p1_geometry_support_status": "sufficient"}
+        for index in range(1, 4)
+    ])
+
+    manifest = materialize_p1_integrity_bundle(tmp_path)
+
+    assert manifest["P1_INTEGRITY_BUNDLE_FROZEN"] is True
+    assert manifest["P1_PREDICTIVE_EVIDENCE_READY"] is True
+    assert manifest["p1_predictive_eligible_worker_count"] == 3
+
+
+def test_history_overlap_consumes_resolved_p1_identity_for_all_real_tasks(tmp_path: Path) -> None:
+    inventory = tmp_path / "inventory.csv"
+    p1 = tmp_path / "p1_corrected.csv"
+    output = tmp_path / "history.csv"
+    _write(inventory, [
+        {"task_id": f"c2-{index}", "base_task_id": f"base-{index}", "image_id": f"image-{index}"}
+        for index in range(57)
+    ])
+    _write(p1, [
+        {"task_id": f"runtime-{index}", "base_task_id": f"base-{index}", "image_id": f"image-{index}"}
+        for index in range(57)
+    ])
+    summary = materialize_history_overlap(inventory, p1, [], output)
+    assert summary["n_history_overlap"] == 57
+    assert all(row["history_overlap"].lower() == "true" for row in csv.DictReader(output.open(encoding="utf-8")))
 
 
 def test_cross_worker_exact_geometry_has_three_distinct_independence_classes(tmp_path: Path) -> None:
@@ -159,15 +262,33 @@ def test_formal_audit_cannot_write_the_final_c1_freeze_owner_artifact(tmp_path: 
 
 def test_only_zero_worker_slope_variance_selects_common_slope_nested_form() -> None:
     decision, boundary, tolerance = _variance_boundary_decision(
-        {"worker_slope": 0.0, "worker_intercept": .02, "task": .03, "building": .04}, .1,
+        {"worker_slope": 0.0, "task": .03, "building": .04}, .1,
     )
     assert decision == "refit_crossed_common_worker_slope"
     assert boundary == ["worker_slope"] and tolerance == pytest.approx(1e-7)
     unsupported, components, _ = _variance_boundary_decision(
-        {"worker_slope": 0.0, "worker_intercept": 0.0, "task": .03, "building": .04}, .1,
+        {"worker_slope": 0.0, "task": 0.0, "building": .04}, .1,
     )
-    assert unsupported == "fail_unsupported_non_slope_boundary"
-    assert components == ["worker_intercept", "worker_slope"]
+    assert unsupported == "fail_multiple_variance_boundaries"
+    assert components == ["task", "worker_slope"]
+
+
+def test_single_task_or_building_boundary_has_a_frozen_component_drop() -> None:
+    task_decision, task_boundary, _ = _variance_boundary_decision(
+        {"worker_slope": .02, "task": 0.0, "building": .04}, .1,
+    )
+    building_decision, building_boundary, _ = _variance_boundary_decision(
+        {"worker_slope": .02, "task": .03, "building": 0.0}, .1,
+    )
+    assert (task_decision, task_boundary) == ("refit_without_task_component", ["task"])
+    assert (building_decision, building_boundary) == ("refit_without_building_component", ["building"])
+
+
+def test_risk_model_uses_worker_fixed_intercepts_and_nested_task_identity() -> None:
+    formula, variance = _risk_model_spec({"worker_slope", "task", "building"})
+    assert "0 + C(worker_id)" in formula
+    assert "worker_intercept" not in variance
+    assert variance["task"] == "0 + C(task_within_building)"
 
 
 def test_completion_and_outside_dispositions_change_consumed_evidence(tmp_path: Path) -> None:
@@ -228,10 +349,32 @@ def test_hierarchical_simulation_rebuilds_graph_after_delivery() -> None:
     }
     assignments = [{"worker_id": worker, "task_id": task} for worker in ("w1", "w2") for task in tasks]
     result = _empirical_cluster_bootstrap("d", workers, assignments, tasks, {"worker_task_graph_connected": True}, seed=7, draws=30)
-    assert result["simulation_method"] == "hierarchical_building_task_resampling_with_joint_qgt_and_separate_slope_uncertainty"
+    assert result["simulation_method"] == "hierarchical_building_task_resampling_with_joint_qgt_and_unified_slope_posterior_v2"
     assert result["graph_connectivity_probability"] == 0
     assert float(result["expected_assignment_count"]) < len(assignments)
     assert result["worker_rank_spearman"] != ""
+
+
+def test_common_slope_simulation_uses_one_pooled_shared_posterior() -> None:
+    workers = [
+        _simulation_worker("w1", baseline=.8, structural=0),
+        _simulation_worker("w2", baseline=.7, structural=0),
+    ]
+    for worker in workers:
+        worker.update({
+            "slope_model_form": "crossed_common_worker_slope",
+            "between_worker_slope_sd": "0", "risk_slope_for_simulation": "-.9",
+            "risk_slope_se": ".8", "risk_slope_support": "6",
+        })
+    tasks = {
+        "t1": {"task_id": "t1", "building_id": "b1", "risk_design_score_A": ".1", "risk_design_stratum": "ordinary"},
+        "t2": {"task_id": "t2", "building_id": "b2", "risk_design_score_A": ".9", "risk_design_stratum": "stress"},
+    }
+    assignments = [{"worker_id": worker, "task_id": task} for worker in ("w1", "w2") for task in tasks]
+    result = _empirical_cluster_bootstrap("common", workers, assignments, tasks, {}, seed=11, draws=10)
+    assert result["simulation_status"] == "estimated"
+    assert set(result["worker_slope_distribution_sources"].values()) == {"common_group_posterior"}
+    assert result["risk_slope_posterior_method"] == "shared_common_slope_pooled_within_worker"
 
 
 def test_simulation_never_replaces_missing_uncertainty_with_zero() -> None:
@@ -250,7 +393,7 @@ def test_simulation_never_replaces_missing_uncertainty_with_zero() -> None:
 def test_group_prior_only_worker_has_finite_projection() -> None:
     workers = [{
         "worker_id": "w", "risk_slope_se": "", "risk_slope_support": "0",
-        "group_prior_slope": ".1", "between_worker_slope_sd": ".2",
+        "group_prior_slope": ".1", "group_slope_se": ".03", "between_worker_slope_sd": ".2",
         "outcome_residual_sd": ".1", "worker_intercept_sd": ".02",
         "task_sd": ".03", "building_sd": ".04", "missing_rate": "0", "F_struct": "0",
     }]
@@ -262,6 +405,52 @@ def test_group_prior_only_worker_has_finite_projection() -> None:
     projected, rows = _projected_worker_intervals(workers, assignments, tasks, seed=1, draws=30, require_c1_slopes=False)
     assert projected < float("inf")
     assert rows[0]["projected_interval_half_width"] != ""
+
+
+def test_projection_and_simulation_share_one_worker_slope_distribution_contract() -> None:
+    individual = _resolve_slope_distribution({
+        "risk_slope_for_simulation": "-.3", "risk_slope_se": ".04", "risk_slope_support": "6",
+        "group_slope_mean": "-.1", "group_slope_se": ".03", "between_worker_slope_sd": ".2",
+        "slope_model_form": "crossed_random_worker_slope",
+    })
+    prior = _resolve_slope_distribution({
+        "risk_slope_for_simulation": "", "risk_slope_se": "", "risk_slope_support": "0",
+        "group_slope_mean": "-.1", "group_slope_se": ".03", "between_worker_slope_sd": ".2",
+        "slope_model_form": "crossed_random_worker_slope",
+    })
+    common = _resolve_slope_distribution({
+        "risk_slope_for_simulation": "-.8", "risk_slope_se": ".9", "risk_slope_support": "6",
+        "group_slope_mean": "-.1", "group_slope_se": ".03", "between_worker_slope_sd": "0",
+        "slope_model_form": "crossed_common_worker_slope",
+    })
+    assert individual["source"] == "individual_posterior"
+    assert individual["mean"] == pytest.approx(-.3)
+    assert individual["total_sd"] == pytest.approx(.05)
+    assert prior["source"] == "group_prior" and prior["mean"] == pytest.approx(-.1)
+    assert prior["total_sd"] == pytest.approx((.03 ** 2 + .2 ** 2) ** .5)
+    assert common["source"] == "common_group_posterior"
+    assert common["mean"] == pytest.approx(-.1) and common["total_sd"] == pytest.approx(.03)
+
+
+def test_joint_qgt_posterior_partially_updates_c1_and_preserves_cross_worker_covariance() -> None:
+    prior_mean = __import__("numpy").asarray([.8, .7])
+    prior_covariance = __import__("numpy").asarray([[.04, .02], [.02, .04]])
+    design = __import__("numpy").asarray([[1.0, 0.0]])
+    posterior_mean, posterior_covariance = _joint_qgt_posterior(
+        prior_mean, prior_covariance, design,
+        risk_adjusted_outcomes=__import__("numpy").asarray([.2]),
+        likelihood_covariance=__import__("numpy").asarray([[.04]]),
+    )
+    assert .2 < posterior_mean[0] < .8
+    assert posterior_mean[1] < .7  # C1 cross-worker covariance propagates the update.
+    assert posterior_covariance[0, 0] < prior_covariance[0, 0]
+    unchanged_mean, unchanged_covariance = _joint_qgt_posterior(
+        prior_mean, prior_covariance, __import__("numpy").empty((0, 2)),
+        risk_adjusted_outcomes=__import__("numpy").empty(0),
+        likelihood_covariance=__import__("numpy").empty((0, 0)),
+    )
+    assert __import__("numpy").allclose(unchanged_mean, prior_mean)
+    assert __import__("numpy").allclose(unchanged_covariance, prior_covariance)
 
 
 def test_loto_lobo_and_anchor_audits_physically_remove_edges_and_recompute() -> None:
@@ -418,6 +607,37 @@ def test_p1_to_c1_source_is_built_from_closeout_and_independent_c1_axes(tmp_path
         "p1_scope_to_c1_q_gt", "p1_r_u_0_to_c1_structural_success",
     }
     assert next(row for row in rows if row["check_name"].endswith("structural_success"))["c1_metric_value"] == "0.9"
+
+
+def test_p1_to_c1_source_excludes_c1_administrative_exclusion(tmp_path: Path) -> None:
+    p1 = tmp_path / "p1"; p1.mkdir()
+    _write(p1 / "prescreen_r0_snapshot.csv", [
+        {"worker_id": "kept", "admission_status": "pass", "r_u_0": ".8"},
+        {"worker_id": "excluded", "admission_status": "pass_with_watch", "r_u_0": ".9"},
+    ])
+    _write(p1 / "prescreen_worker_scope_summary.csv", [
+        {"annotator_id": "kept", "scope_accuracy_on_adjudicated_tasks": ".7"},
+        {"annotator_id": "excluded", "scope_accuracy_on_adjudicated_tasks": ".8"},
+    ])
+    state = tmp_path / "state.csv"
+    _write(state, [
+        {
+            "worker_id": "kept", "completion_status": "completed",
+            "Q_GT_task_adjusted": ".6", "R_LOO_compatible": ".5", "F_struct": ".1",
+            "worker_state_status": "estimated",
+        },
+        {
+            "worker_id": "excluded", "completion_status": "administrative_exclusion",
+            "Q_GT_task_adjusted": ".9", "R_LOO_compatible": ".9", "F_struct": "0",
+            "worker_state_status": "administrative_exclusion",
+        },
+    ])
+
+    summary = build_source(p1, state, tmp_path / "source.csv")
+    rows = list(csv.DictReader((tmp_path / "source.csv").open(encoding="utf-8")))
+
+    assert summary["n_workers"] == 1
+    assert {row["worker_id"] for row in rows} == {"kept"}
 
 
 def test_p1_predictive_uses_retrospective_corrected_geometry_and_suppresses_legacy_scope(tmp_path: Path) -> None:

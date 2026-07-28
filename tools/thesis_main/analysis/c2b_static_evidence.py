@@ -73,9 +73,35 @@ def materialize_p1_integrity_bundle(directory: Path) -> dict[str, Any]:
         key=lambda path: path.name,
     )
     rows = [{"name": path.name, "size": path.stat().st_size, "sha256": sha256_file(path)} for path in files]
+    status_rows = {
+        str(row.get("worker_id", "")).strip(): row
+        for row in _read(directory / "p1_worker_evidence_status_v1.csv")
+        if str(row.get("worker_id", "")).strip()
+    }
+    predictive_workers: list[str] = []
+    for row in _read(directory / "p1_worker_geometry_profile_v1.csv"):
+        worker = str(row.get("worker_id", "")).strip()
+        try:
+            component = float(row.get("p1_geometry_component", ""))
+        except (TypeError, ValueError):
+            continue
+        if (
+            worker in status_rows and math.isfinite(component)
+            and str(status_rows[worker].get("p1_predictive_capability_eligible", "")).lower() in {"true", "1"}
+            and str(row.get("p1_geometry_support_status", "")).lower() == "sufficient"
+        ):
+            predictive_workers.append(worker)
+    predictive_workers = sorted(set(predictive_workers))
+    predictive_ready = len(predictive_workers) >= 3
     payload = {
         "schema_version": "paper_a_p1_integrity_bundle_v1",
         "bundle_status": "frozen",
+        "P1_INTEGRITY_BUNDLE_FROZEN": True,
+        "P1_PREDICTIVE_EVIDENCE_READY": predictive_ready,
+        "p1_predictive_eligible_worker_count": len(predictive_workers),
+        "p1_predictive_minimum_worker_count": 3,
+        "p1_predictive_ready_basis": "at_least_three_integrity_eligible_workers_with_sufficient_numeric_geometry_component",
+        "p1_predictive_not_ready_action": "disable_P1_predictive_component_without_blocking_risk_only_C2B" if not predictive_ready else "enabled",
         "required_files": sorted(required),
         "files": rows,
         "aggregate_sha256": _aggregate(rows),
@@ -109,6 +135,10 @@ def validate_p1_integrity_bundle(directory: Path | None) -> dict[str, Any]:
     return {
         "status": "validated", "valid": True, "manifest_sha256": sha256_file(manifest),
         "aggregate_sha256": payload["aggregate_sha256"], "file_count": len(actual),
+        "P1_INTEGRITY_BUNDLE_FROZEN": payload.get("P1_INTEGRITY_BUNDLE_FROZEN") is True,
+        "P1_PREDICTIVE_EVIDENCE_READY": payload.get("P1_PREDICTIVE_EVIDENCE_READY") is True,
+        "p1_predictive_eligible_worker_count": int(payload.get("p1_predictive_eligible_worker_count", 0)),
+        "p1_predictive_minimum_worker_count": int(payload.get("p1_predictive_minimum_worker_count", 3)),
     }
 
 
@@ -120,7 +150,7 @@ def materialize_history_overlap(
     for row in _read(p1_canonical_csv):
         key = (str(row.get("image_id") or row.get("base_task_id") or "").strip(), str(row.get("base_task_id") or row.get("task_id") or "").strip())
         if any(key):
-            history.add(key); sources[key].add("P1_raw_canonical")
+            history.add(key); sources[key].add("P1_resolved_identity")
     for path in c1_assignment_csvs:
         for row in _read(path):
             key = (str(row.get("image_id") or row.get("base_task_id") or "").strip(), str(row.get("base_task_id") or row.get("task_id") or "").strip())
@@ -142,7 +172,7 @@ def materialize_history_overlap(
     _write(output_csv, rows)
     return {
         "n_tasks": len(rows), "n_history_overlap": sum(bool(row["history_overlap"]) for row in rows),
-        "inventory_sha256": sha256_file(inventory_csv), "p1_canonical_sha256": sha256_file(p1_canonical_csv),
+        "inventory_sha256": sha256_file(inventory_csv), "p1_identity_evidence_sha256": sha256_file(p1_canonical_csv),
         "c1_assignment_sha256": {path.name: sha256_file(path) for path in c1_assignment_csvs},
         "output_sha256": sha256_file(output_csv),
     }

@@ -45,7 +45,11 @@ def build_source(
         # No corrected numeric Scope component is currently materialized.  Do
         # not let the legacy aggregate pass through the integrity amendment.
         scope = {}
-    c1 = {row.get("worker_id", ""): row for row in _rows(c1_worker_state_csv)}
+    c1 = {
+        row.get("worker_id", ""): row
+        for row in _rows(c1_worker_state_csv)
+        if str(row.get("completion_status", "")).strip().lower() != "administrative_exclusion"
+    }
     checks = (
         ("p1_r_u_0_to_c1_q_gt", r0, "r_u_0", "Q_GT_task_adjusted", False),
         ("p1_r_u_0_to_c1_loo", r0, "r_u_0", "R_LOO_compatible", False),

@@ -10,6 +10,7 @@ from datetime import datetime
 from pathlib import Path
 from statistics import median
 from typing import Any
+from urllib.parse import urlparse
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(_PROJECT_ROOT) not in sys.path:
@@ -29,6 +30,7 @@ TASK_FIELDS = [
     "project_id",
     "task_id",
     "base_task_id",
+    "image_id",
     "dataset_group",
     "condition",
     "stage",
@@ -41,6 +43,9 @@ TASK_FIELDS = [
     "parent_cross_owner",
     "parent_precedes_child",
     "geometry_relation",
+    "initial_geometry_hash",
+    "initialization_relation",
+    "initialization_source_sha256",
     "independence_status",
     "independence_reason",
     "adjudication_status",
@@ -221,6 +226,51 @@ def _raw_annotation_data(annotation: dict[str, Any]) -> tuple[str, dict[str, Any
         return "", {}
 
 
+def _task_identity(task: dict[str, Any], task_id: str) -> dict[str, str]:
+    data = _task_data(task)
+    image_value = _safe(data.get("image_id") or data.get("image") or data.get("title"))
+    if "://" in image_value:
+        image_value = Path(urlparse(image_value).path).stem
+    else:
+        image_value = Path(image_value).stem if image_value else ""
+    return {
+        "base_task_id": _safe(data.get("base_task_id") or data.get("source_task_id")),
+        "image_id": image_value,
+        "condition": _safe(data.get("condition")),
+        "dataset_group": _safe(data.get("dataset_group")),
+        "identity_key": _safe(data.get("base_task_id") or data.get("source_task_id")) or image_value or task_id,
+    }
+
+
+def _load_initializations(paths: list[Path]) -> tuple[dict[str, dict[str, str]], dict[str, str]]:
+    lookup: dict[str, dict[str, str]] = {}
+    hashes: dict[str, str] = {}
+    for path in paths:
+        source_sha = _sha256(path)
+        hashes[str(path)] = source_sha
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if isinstance(payload, dict):
+            payload = payload.get("tasks") or payload.get("data") or []
+        if not isinstance(payload, list):
+            raise ValueError(f"P1 initialization import must be a task list: {path}")
+        for index, task in enumerate(payload, start=1):
+            if not isinstance(task, dict):
+                continue
+            identity = _task_identity(task, _raw_task_id(task, index))
+            predictions = task.get("predictions") or []
+            if len(predictions) != 1 or not isinstance(predictions[0], dict):
+                continue
+            geometry_hash, _choices = _raw_annotation_data({"result": predictions[0].get("result") or []})
+            if not geometry_hash:
+                continue
+            value = {**identity, "geometry_hash": geometry_hash, "source_sha256": source_sha, "source_path": str(path)}
+            for key in {identity["base_task_id"], identity["image_id"], identity["identity_key"]} - {""}:
+                if key in lookup and lookup[key]["geometry_hash"] != geometry_hash:
+                    raise ValueError(f"conflicting P1 initialization geometry:{key}")
+                lookup[key] = value
+    return lookup, hashes
+
+
 def _load_exports(paths: list[Path]) -> tuple[dict[tuple[str, str, str], dict[str, Any]], dict[tuple[str, str], dict[str, Any]], dict[str, str]]:
     annotations: dict[tuple[str, str, str], dict[str, Any]] = {}
     tasks: dict[tuple[str, str], dict[str, Any]] = {}
@@ -237,7 +287,8 @@ def _load_exports(paths: list[Path]) -> tuple[dict[tuple[str, str, str], dict[st
                 continue
             project_id = _project_id(task)
             task_id = _raw_task_id(task, task_index)
-            tasks[(project_id, task_id)] = {"task": task, "source_export": str(path), "source_sha256": hashes[str(path)]}
+            identity = _task_identity(task, task_id)
+            tasks[(project_id, task_id)] = {"task": task, **identity, "source_export": str(path), "source_sha256": hashes[str(path)]}
             for ann_index, annotation in enumerate(task.get("annotations") or [], start=1):
                 if not isinstance(annotation, dict):
                     continue
@@ -251,6 +302,7 @@ def _load_exports(paths: list[Path]) -> tuple[dict[tuple[str, str, str], dict[st
                     "source_sha256": hashes[str(path)],
                     "geometry_hash": geometry_hash,
                     "choice_map": choice_map,
+                    **identity,
                 }
     return annotations, tasks, hashes
 
@@ -296,6 +348,28 @@ def _status_for_parent(
     if precedes and identical:
         return "non_independent_confirmed", "cross_worker_prior_parent_exact_geometry", parent_worker, same_task, False, True, True, "auto_confirmed"
     return "non_independent_suspected", "cross_worker_parent_evidence_incomplete", parent_worker, same_task, False, True, precedes, "pending_review"
+
+
+def _status_for_no_parent_exact_geometry(
+    condition: str,
+    *,
+    cross_worker_exact: bool,
+    child_geometry_hash: str,
+    initial_geometry_hash: str,
+) -> tuple[str, str, str, str]:
+    if not cross_worker_exact:
+        return "independent", "no_parent_or_cross_worker_exact_geometry", "unavailable", "not_required"
+    if condition.lower() == "semi":
+        if not initial_geometry_hash:
+            return "not_evaluable", "semi_cross_worker_exact_missing_initialization", "unavailable", "source_review_required"
+        if child_geometry_hash == initial_geometry_hash:
+            return "independent", "shared_initialization_match", "shared_initialization", "not_required"
+        return "non_independent_suspected", "semi_cross_worker_exact_not_initialization", "identical", "pending_review"
+    if condition.lower() == "manual":
+        reason = "manual_cross_worker_exact_geometry_no_parent"
+    else:
+        reason = "cross_worker_exact_geometry_no_parent"
+    return "non_independent_suspected", reason, "identical", "pending_review"
 
 
 def _timing(row: dict[str, str], independence_status: str, raw_owner: str) -> tuple[str, bool, str]:
@@ -464,9 +538,11 @@ def build_correction(
     scope_evidence_csv: Path | None = None,
     semi_evidence_csv: Path | None = None,
     undercoverage_evidence_csv: Path | None = None,
+    initialization_import_json: list[Path] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     canonical = _read_csv(canonical_csv)
     annotations, _tasks, source_hashes = _load_exports(export_json)
+    initialization_lookup, initialization_hashes = _load_initializations(initialization_import_json or [])
     canonical_sha = _sha256(canonical_csv)
     scope_rows, scope_sha = _optional_rows(scope_evidence_csv)
     semi_rows, semi_sha = _optional_rows(semi_evidence_csv)
@@ -490,6 +566,15 @@ def build_correction(
     assigned_workers = set()
     if c1_assignment_csv and c1_assignment_csv.exists():
         assigned_workers = {_safe(row.get("worker_id")) for row in _read_csv(c1_assignment_csv) if _safe(row.get("worker_id"))}
+
+    exact_workers: dict[tuple[str, str, str], set[str]] = defaultdict(set)
+    for raw in annotations.values():
+        identity = _safe(raw.get("identity_key"))
+        condition = _safe(raw.get("condition")).lower()
+        geometry_hash = _safe(raw.get("geometry_hash"))
+        owner = _worker_id(raw.get("annotation", {}))
+        if identity and condition and geometry_hash and owner:
+            exact_workers[(identity, condition, geometry_hash)].add(owner)
 
     lead_by_worker: dict[str, list[float]] = defaultdict(list)
     for row in canonical:
@@ -517,6 +602,22 @@ def build_correction(
             parent = annotations.get((project, task_id, parent_id))
         child_hash = _safe(row.get("geometry_hash")) or _safe(raw.get("geometry_hash") if raw else "")
         independence, reason, parent_owner, parent_same_task, parent_same_owner, parent_cross_owner, parent_precedes, adjudication = _status_for_parent(annotation, parent, child_hash, project, task_id) if raw else ("not_evaluable", "raw_annotation_not_found", "", False, False, False, False, "source_review_required")
+        base_task_id = _safe(raw.get("base_task_id") if raw else "") or _safe(row.get("base_task_id"))
+        image_id = _safe(raw.get("image_id") if raw else "") or _safe(row.get("image_id"))
+        condition = _safe(raw.get("condition") if raw else "") or _safe(row.get("condition"))
+        dataset_group = _safe(raw.get("dataset_group") if raw else "") or _safe(row.get("dataset_group"))
+        identity_key = _safe(raw.get("identity_key") if raw else "") or base_task_id or image_id or task_id
+        initialization = initialization_lookup.get(base_task_id) or initialization_lookup.get(image_id) or initialization_lookup.get(identity_key) or {}
+        initial_hash = _safe(initialization.get("geometry_hash"))
+        cross_worker_exact = len(exact_workers.get((identity_key, condition.lower(), child_hash), set()) - {raw_owner}) > 0
+        no_parent_relation = ""
+        if raw and not parent_id:
+            independence, reason, no_parent_relation, adjudication = _status_for_no_parent_exact_geometry(
+                condition,
+                cross_worker_exact=cross_worker_exact,
+                child_geometry_hash=child_hash,
+                initial_geometry_hash=initial_hash,
+            )
         timing_status, primary, timing_reason = _timing(row, independence, raw_owner)
         try:
             lead = float(_safe(row.get("lead_time_seconds")) or 0)
@@ -545,11 +646,12 @@ def build_correction(
                 "worker_id": worker,
                 "project_id": project,
                 "task_id": task_id,
-                "base_task_id": _safe(row.get("base_task_id")),
-                "dataset_group": _safe(row.get("dataset_group")),
-                "condition": _safe(row.get("condition")),
+                "base_task_id": base_task_id,
+                "image_id": image_id,
+                "dataset_group": dataset_group,
+                "condition": condition,
                 "stage": _stage(row),
-                "pool": _safe(row.get("dataset_group")),
+                "pool": dataset_group,
                 "annotation_id": annotation_id,
                 "parent_annotation_id": parent_id,
                 "parent_owner_id": parent_owner,
@@ -557,7 +659,10 @@ def build_correction(
                 "parent_same_owner": parent_same_owner,
                 "parent_cross_owner": parent_cross_owner,
                 "parent_precedes_child": parent_precedes,
-                "geometry_relation": "identical" if parent and child_hash and child_hash == _safe(parent.get("geometry_hash")) else "different" if parent else "unavailable",
+                "geometry_relation": no_parent_relation or ("identical" if parent and child_hash and child_hash == _safe(parent.get("geometry_hash")) else "different" if parent else "unavailable"),
+                "initial_geometry_hash": initial_hash,
+                "initialization_relation": "identical" if initial_hash and initial_hash == child_hash else "different" if initial_hash and child_hash else "unavailable",
+                "initialization_source_sha256": _safe(initialization.get("source_sha256")),
                 "independence_status": independence,
                 "independence_reason": reason,
                 "adjudication_status": adjudication,
@@ -580,8 +685,8 @@ def build_correction(
                 "audit_only": _truthy(row.get("audit_only")) or independence != "independent",
                 "long_open_draft_flag": long_flag,
                 "capability_evidence_eligible": capable,
-                "geometry_capability_candidate": capable and _safe(row.get("condition")).lower() == "manual",
-                "geometry_score_status": "pending_geometry_scorer" if capable and _safe(row.get("condition")).lower() == "manual" else "not_eligible",
+                "geometry_capability_candidate": capable and condition.lower() == "manual",
+                "geometry_score_status": "pending_geometry_scorer" if capable and condition.lower() == "manual" else "not_eligible",
                 "process_evaluable": process_evaluable,
                 "process_failure_observed": process_failure,
                 "process_failure_subfamily": process_subfamily,
@@ -591,8 +696,8 @@ def build_correction(
                 "included_in_r_u_calib": False,
                 "included_in_r_geometry": False,
                 "included_in_r_scope": capable and scope_evaluable,
-                "included_in_T_u": capable and _safe(row.get("dataset_group")) == "PreScreen_semi" and _truthy(semi_values.get("semi_geometry_correction_evaluable")),
-                "included_in_U_u": capable and _safe(row.get("condition")).lower() == "manual" and scope_values.get("task_final_scope") == "in_scope" and under_values.get("undercoverage_evidence_status") == "evaluable_expert_adjudicated",
+                "included_in_T_u": capable and dataset_group == "PreScreen_semi" and _truthy(semi_values.get("semi_geometry_correction_evaluable")),
+                "included_in_U_u": capable and condition.lower() == "manual" and scope_values.get("task_final_scope") == "in_scope" and under_values.get("undercoverage_evidence_status") == "evaluable_expert_adjudicated",
                 "included_in_p1_predictive_capability": capable,
                 "included_in_process_reliability": process_evaluable,
                 "exclusion_reason": ";".join(exclusion),
@@ -671,6 +776,13 @@ def build_correction(
         "n_non_independent_confirmed": sum(row["independence_status"] == "non_independent_confirmed" for row in task_rows),
         "n_non_independent_suspected": sum(row["independence_status"] == "non_independent_suspected" for row in task_rows),
         "n_parent_not_evaluable": sum(row["independence_status"] == "not_evaluable" for row in task_rows),
+        "n_no_parent_cross_worker_exact": sum(
+            row["independence_reason"] in {
+                "manual_cross_worker_exact_geometry_no_parent", "cross_worker_exact_geometry_no_parent", "shared_initialization_match",
+                "semi_cross_worker_exact_missing_initialization", "semi_cross_worker_exact_not_initialization",
+            }
+            for row in task_rows
+        ),
         "workers_with_confirmed_non_independence": sorted({row["worker_id"] for row in task_rows if row["independence_status"] == "non_independent_confirmed"}),
         "workers_with_suspected_non_independence": sorted({row["worker_id"] for row in task_rows if row["independence_status"] == "non_independent_suspected"}),
         "n_process_evaluable": sum(_truthy(row["process_evaluable"]) for row in task_rows),
@@ -684,6 +796,7 @@ def build_correction(
         "scope_evidence_sha256": scope_sha,
         "semi_evidence_sha256": semi_sha,
         "undercoverage_evidence_sha256": under_sha,
+        "initialization_import_sha256": initialization_hashes,
         "warnings": [
             name
             for name, present in (
@@ -702,6 +815,12 @@ def build_correction(
         "admission_writeback": False,
         "assignment_writeback": False,
     }
+    predictive_workers = sorted(
+        row["worker_id"] for row in worker_rows if _truthy(row["p1_predictive_capability_eligible"])
+    )
+    summary["p1_predictive_eligible_worker_count"] = len(predictive_workers)
+    summary["p1_predictive_minimum_worker_count"] = 3
+    summary["P1_PREDICTIVE_EVIDENCE_READY"] = len(predictive_workers) >= 3
     return task_rows, worker_rows, summary
 
 
@@ -715,6 +834,7 @@ def materialize(
     scope_evidence_csv: Path | None = None,
     semi_evidence_csv: Path | None = None,
     undercoverage_evidence_csv: Path | None = None,
+    initialization_import_json: list[Path] | None = None,
 ) -> dict[str, Any]:
     task_rows, worker_rows, summary = build_correction(
         canonical_csv,
@@ -725,6 +845,7 @@ def materialize(
         scope_evidence_csv,
         semi_evidence_csv,
         undercoverage_evidence_csv,
+        initialization_import_json,
     )
     task_path = output_dir / "p1_task_evidence_correction_v1.csv"
     worker_path = output_dir / "p1_worker_evidence_status_v1.csv"
@@ -782,6 +903,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--scope-evidence-csv", type=Path)
     parser.add_argument("--semi-evidence-csv", type=Path)
     parser.add_argument("--undercoverage-evidence-csv", type=Path)
+    parser.add_argument("--initialization-import-json", type=Path, action="append", default=[])
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args(argv)
     print(json.dumps(materialize(
@@ -794,6 +916,7 @@ def main(argv: list[str] | None = None) -> int:
         args.scope_evidence_csv,
         args.semi_evidence_csv,
         args.undercoverage_evidence_csv,
+        args.initialization_import_json,
     ), ensure_ascii=False, indent=2))
     return 0
 

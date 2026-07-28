@@ -47,7 +47,7 @@ def _completion_usable(row: dict[str, str]) -> bool:
 def _variance_boundary_decision(
     components: dict[str, float], residual_variance: float,
 ) -> tuple[str, list[str], float]:
-    """Return the sole permitted nested-model decision at a numeric variance boundary."""
+    """Return the preregistered nested-model decision at a numeric boundary."""
     tolerance = max(1e-10, 1e-6 * residual_variance) if math.isfinite(residual_variance) and residual_variance >= 0 else math.nan
     boundary = sorted(
         name for name, value in components.items()
@@ -57,13 +57,29 @@ def _variance_boundary_decision(
         decision = "crossed_random_worker_slope"
     elif boundary == ["worker_slope"]:
         decision = "refit_crossed_common_worker_slope"
+    elif boundary == ["task"]:
+        decision = "refit_without_task_component"
+    elif boundary == ["building"]:
+        decision = "refit_without_building_component"
     else:
-        decision = "fail_unsupported_non_slope_boundary"
+        decision = "fail_multiple_variance_boundaries"
     return decision, boundary, tolerance
 
 
+def _risk_model_spec(active_components: set[str]) -> tuple[str, dict[str, str]]:
+    """Worker FE are controls; Q_GT remains owned by its separate estimator."""
+    variance = {
+        "worker_slope": "0 + C(worker_id):risk_centered",
+        "task": "0 + C(task_within_building)",
+        "building": "0 + C(building_id)",
+    }
+    return "quality ~ 0 + C(worker_id) + risk_centered", {
+        name: expression for name, expression in variance.items() if name in active_components
+    }
+
+
 def _fit_crossed_model(records: list[dict[str, Any]]) -> dict[str, Any]:
-    """Fit the frozen crossed model and its one allowed nested boundary form."""
+    """Fit worker-FE/random-slope risk model and its frozen boundary chain."""
     support = {
         "worker_id": len({row["worker_id"] for row in records}),
         "base_task_id": len({row["base_task_id"] for row in records}),
@@ -79,68 +95,90 @@ def _fit_crossed_model(records: list[dict[str, Any]]) -> dict[str, Any]:
 
         frame = pd.DataFrame(records)
         frame["risk_centered"] = frame["risk"] - frame["risk"].mean()
+        frame["task_within_building"] = frame["building_id"].astype(str) + "|" + frame["base_task_id"].astype(str)
         frame["all_group"] = "all"
-        formula = "quality ~ risk_centered + C(stage)"
-        random_slope_variance = {
-            "worker_intercept": "0 + C(worker_id)",
-            "worker_slope": "0 + C(worker_id):risk_centered",
-            "task": "0 + C(base_task_id)",
-            "building": "0 + C(building_id)",
-        }
-        common_slope_variance = {name: value for name, value in random_slope_variance.items() if name != "worker_slope"}
+        active_components = {"worker_slope", "task", "building"}
+        optimizer_attempts: list[dict[str, Any]] = []
 
-        def fit(variance: dict[str, str]):
-            with warnings.catch_warnings(record=True) as caught:
-                warnings.simplefilter("always")
-                result = smf.mixedlm(
-                    formula, frame, groups=frame["all_group"], re_formula="0", vc_formula=variance,
-                ).fit(reml=True, method="lbfgs", maxiter=1000, disp=False)
-            return result, [str(item.message) for item in caught if issubclass(item.category, ConvergenceWarning)]
+        def fit(component_names: set[str]):
+            formula, variance = _risk_model_spec(component_names)
+            all_warnings: list[str] = []
+            last_result = None
+            for method in ("lbfgs", "powell"):
+                try:
+                    with warnings.catch_warnings(record=True) as caught:
+                        warnings.simplefilter("always")
+                        candidate = smf.mixedlm(
+                            formula, frame, groups=frame["all_group"], re_formula="0", vc_formula=variance,
+                        ).fit(reml=True, method=method, maxiter=1000, disp=False)
+                    messages = [str(item.message) for item in caught if issubclass(item.category, ConvergenceWarning)]
+                    all_warnings.extend(messages)
+                    optimizer_attempts.append({"optimizer": method, "converged": bool(candidate.converged), "warnings": messages})
+                    last_result = candidate
+                    if candidate.converged:
+                        return candidate, formula, variance, all_warnings, method
+                except (ValueError, np.linalg.LinAlgError) as exc:
+                    optimizer_attempts.append({"optimizer": method, "converged": False, "error": f"{type(exc).__name__}:{exc}"})
+            return last_result, formula, variance, all_warnings, ""
 
-        result, convergence_warnings = fit(random_slope_variance)
-        names = list(result.model.exog_vc.names)
-        components = {name: float(value) for name, value in zip(names, result.vcomp)}
-        fixed = float(result.fe_params["risk_centered"])
-        try:
-            fixed_variance = float(result.cov_params().loc["risk_centered", "risk_centered"])
-        except (KeyError, TypeError, ValueError):
-            fixed_variance = math.nan
-        residual_variance = float(result.scale)
-        boundary_decision, boundary, tolerance = _variance_boundary_decision(components, residual_variance)
+        result, formula, variance_spec, convergence_warnings, optimizer = fit(active_components)
+        if result is None or not bool(result.converged):
+            return {
+                "status": "not_converged_or_unidentifiable", "support": support, "converged": False,
+                "warnings": convergence_warnings, "optimizer_attempts": optimizer_attempts,
+            }
+
+        def estimates(candidate: Any) -> tuple[dict[str, float], float, float, float]:
+            names = list(candidate.model.exog_vc.names)
+            components = {name: float(value) for name, value in zip(names, candidate.vcomp)}
+            fixed = float(candidate.fe_params["risk_centered"])
+            try:
+                fixed_variance = float(candidate.cov_params().loc["risk_centered", "risk_centered"])
+            except (KeyError, TypeError, ValueError):
+                fixed_variance = math.nan
+            return components, fixed, fixed_variance, float(candidate.scale)
+
+        components, fixed, fixed_variance, residual_variance = estimates(result)
+        boundary_decision, initial_boundary, tolerance = _variance_boundary_decision(components, residual_variance)
         identifiable = math.isfinite(fixed) and math.isfinite(fixed_variance) and fixed_variance >= 0
-        if not bool(result.converged) or not identifiable or not math.isfinite(residual_variance) or residual_variance <= 0:
+        if not identifiable or not math.isfinite(residual_variance) or residual_variance <= 0:
             return {
                 "status": "not_converged_or_unidentifiable", "support": support,
                 "converged": bool(result.converged), "warnings": convergence_warnings,
-                "boundary_components": boundary, "boundary_tolerance": tolerance,
+                "boundary_components": initial_boundary, "boundary_tolerance": tolerance,
+                "optimizer_attempts": optimizer_attempts,
             }
-        slope_model_form = "crossed_random_worker_slope"
-        if boundary_decision == "refit_crossed_common_worker_slope":
-            result, nested_warnings = fit(common_slope_variance)
-            convergence_warnings.extend(nested_warnings)
-            names = list(result.model.exog_vc.names)
-            components = {name: float(value) for name, value in zip(names, result.vcomp)}
-            fixed = float(result.fe_params["risk_centered"])
-            residual_variance = float(result.scale)
-            _nested_decision, nested_boundary, tolerance = _variance_boundary_decision(components, residual_variance)
-            try:
-                fixed_variance = float(result.cov_params().loc["risk_centered", "risk_centered"])
-            except (KeyError, TypeError, ValueError):
-                fixed_variance = math.nan
-            if not bool(result.converged) or nested_boundary or not math.isfinite(fixed_variance) or fixed_variance < 0:
-                return {
-                    "status": "nested_common_slope_not_converged_or_singular", "support": support,
-                    "converged": bool(result.converged), "warnings": convergence_warnings,
-                    "boundary_components": nested_boundary, "boundary_tolerance": tolerance,
-                }
-            slope_model_form = "crossed_common_worker_slope"
-            boundary = ["worker_slope"]
-        elif boundary_decision == "fail_unsupported_non_slope_boundary":
+        if boundary_decision == "fail_multiple_variance_boundaries":
             return {
-                "status": "unsupported_non_slope_boundary", "support": support,
-                "converged": bool(result.converged), "warnings": convergence_warnings,
-                "boundary_components": boundary, "boundary_tolerance": tolerance,
+                "status": "multiple_variance_components_unidentifiable", "support": support,
+                "converged": True, "warnings": convergence_warnings,
+                "boundary_components": initial_boundary, "boundary_tolerance": tolerance,
+                "optimizer_attempts": optimizer_attempts,
             }
+
+        removed_components: list[str] = []
+        if boundary_decision.startswith("refit_"):
+            removed_components = list(initial_boundary)
+            active_components -= set(removed_components)
+            result, formula, variance_spec, nested_warnings, optimizer = fit(active_components)
+            convergence_warnings.extend(nested_warnings)
+            if result is None or not bool(result.converged):
+                return {
+                    "status": "nested_refit_not_converged", "support": support, "converged": False,
+                    "boundary_components": initial_boundary, "boundary_tolerance": tolerance,
+                    "warnings": convergence_warnings, "optimizer_attempts": optimizer_attempts,
+                }
+            components, fixed, fixed_variance, residual_variance = estimates(result)
+            _nested_decision, nested_boundary, tolerance = _variance_boundary_decision(components, residual_variance)
+            if nested_boundary or not math.isfinite(fixed_variance) or fixed_variance < 0 or not math.isfinite(residual_variance) or residual_variance <= 0:
+                return {
+                    "status": "nested_refit_additional_boundary_or_unidentifiable", "support": support,
+                    "converged": bool(result.converged), "warnings": convergence_warnings,
+                    "boundary_components": sorted(set(initial_boundary) | set(nested_boundary)),
+                    "boundary_tolerance": tolerance, "optimizer_attempts": optimizer_attempts,
+                }
+        slope_model_form = "crossed_common_worker_slope" if "worker_slope" in removed_components else "crossed_random_worker_slope"
+        boundary = initial_boundary
         random_effects = result.random_effects.get("all", {})
         random_effect_cov = result.random_effects_cov.get("all")
         worker_slopes: dict[str, float] = {}
@@ -164,23 +202,29 @@ def _fit_crossed_model(records: list[dict[str, Any]]) -> dict[str, Any]:
         return {
             "status": status,
             "formula": formula,
-            "optimizer": "lbfgs",
+            "optimizer": optimizer,
+            "optimizer_attempts": optimizer_attempts,
             "converged": bool(result.converged),
             "warnings": convergence_warnings,
             "support": support,
             "group_slope_mean": fixed,
             "group_slope_se": math.sqrt(fixed_variance),
             "between_worker_slope_sd": 0.0 if slope_model_form == "crossed_common_worker_slope" else math.sqrt(max(0.0, components.get("worker_slope", math.nan))),
-            "worker_intercept_sd": math.sqrt(max(0.0, components.get("worker_intercept", math.nan))),
-            "task_sd": math.sqrt(max(0.0, components.get("task", math.nan))),
-            "building_sd": math.sqrt(max(0.0, components.get("building", math.nan))),
+            "worker_intercept_sd": "",
+            "task_sd": 0.0 if "task" in removed_components else math.sqrt(max(0.0, components.get("task", math.nan))),
+            "building_sd": 0.0 if "building" in removed_components else math.sqrt(max(0.0, components.get("building", math.nan))),
             "outcome_residual_sd": math.sqrt(max(0.0, float(result.scale))),
             "worker_slopes": worker_slopes,
             "worker_slope_ses": worker_slope_ses,
             "slope_model_form": slope_model_form,
             "boundary_components": boundary,
             "boundary_tolerance": tolerance,
-            "boundary_rule_version": "worker_slope_numeric_boundary_v1",
+            "removed_variance_components": removed_components,
+            "worker_intercept_control": "fixed_effect",
+            "fixed_worker_intercept_count": support["worker_id"],
+            "task_identity": "task_within_building",
+            "downstream_cluster_uncertainty": "building_then_task_hierarchical_resampling",
+            "boundary_rule_version": "worker_slope_or_single_cluster_component_boundary_v2",
         }
     except Exception as exc:
         return {"status": "model_error", "support": support, "error": f"{type(exc).__name__}:{exc}"}
