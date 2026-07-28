@@ -35,7 +35,10 @@ def _load_risk_contract() -> tuple[dict[str, Any], str]:
 
 def _load_thresholds(path: Path = DESIGN_THRESHOLDS) -> tuple[dict[str, Any], str]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if payload.get("schema_version") != "paper_a_c2b_design_selection_thresholds_v1":
+    if payload.get("schema_version") not in {
+        "paper_a_c2b_design_selection_thresholds_v1",
+        "paper_a_c2b_design_selection_thresholds_v2",
+    }:
         raise ValueError("unsupported C2-B design threshold manifest")
     return payload, sha256_file(path)
 
@@ -170,7 +173,7 @@ def _thresholds_allow_formal_selection(thresholds: dict[str, Any]) -> bool:
         "minimum_eligible_task_count", "minimum_eligible_building_count",
         "minimum_ordinary_task_count", "minimum_stress_task_count",
     )
-    return (
+    base_ready = (
         thresholds.get("status") == "approved"
         and thresholds.get("formal_selection_allowed") is True
         and all(str(thresholds.get(field, "")).strip() for field in ("approved_by", "approved_at"))
@@ -178,6 +181,17 @@ def _thresholds_allow_formal_selection(thresholds: dict[str, Any]) -> bool:
         and set(anchors.get("required_strata", [])) >= {"ordinary", "stress"}
         and all(values.get(name) not in {None, ""} for name in required)
     )
+    if thresholds.get("schema_version") == "paper_a_c2b_design_selection_thresholds_v2":
+        derivation = thresholds.get("derivation", {})
+        return base_ready and (
+            derivation.get("derived_before_candidate_enumeration") is True
+            and derivation.get("post_feasibility_inputs_consumed") is False
+            and all(str(derivation.get(field, "")).strip() for field in (
+                "formula_contract_sha256", "c1_design_parameters_sha256",
+                "capacity_manifest_sha256", "reviewer_approval_sha256",
+            ))
+        )
+    return base_ready
 
 
 def _task_set_sha(task_ids: set[str]) -> str:
@@ -195,25 +209,13 @@ def build_candidate_design_manifest(
     workers = _eligible_workers(read_csv(worker_profile_csv))
     anchors, bridges = len(_anchor_pool(tasks)), len(_bridge_pool(tasks))
 
-    def levels(low: int, high: int) -> list[int]:
-        if high < low:
-            return []
-        span = high - low
-        return sorted({low, low + (span + 2) // 3, low + (2 * span + 2) // 3, high})
-
-    candidates = []
-    for common in levels(2, min(anchors, max(2, len(workers)))):
-        for per_worker in levels(1, min(bridges, max(1, 2 * math.ceil(bridges / max(1, len(workers)))))):
-            minimum_unique = max(1, math.ceil(len(workers) * per_worker / 2))
-            for unique in levels(minimum_unique, min(bridges, len(workers) * per_worker)):
-                candidates.append({
-                    "design_id": f"candidate_a{common}_b{per_worker}_u{unique}",
-                    "common_anchor_count": common,
-                    "bridge_per_worker": per_worker,
-                    "unique_bridge_tasks": unique,
-                    "min_task_support": 2,
-                    "max_worker_stratum_imbalance": 2,
-                })
+    fixed = (("D8", 4, 4), ("D10", 6, 4), ("D12", 6, 6))
+    candidates = [{
+        "design_id": design_id, "common_anchor_count": common,
+        "bridge_per_worker": per_worker,
+        "unique_bridge_tasks": min(bridges, max(1, math.ceil(len(workers) * per_worker / 2))),
+        "min_task_support": 2, "max_worker_stratum_imbalance": 2,
+    } for design_id, common, per_worker in fixed]
     manifest = {
         "manifest_version": "c2_design_v1",
         "artifact_role": "formal_candidate_enumeration_only",
@@ -227,7 +229,7 @@ def build_candidate_design_manifest(
         "threshold_manifest_sha256": sha256_file(threshold_manifest),
         "candidate_designs": candidates,
         "simulation": {"seed": seed, "draws": draws, "resampling": "C1 empirical building/task/worker bootstrap"},
-        "selection_rule": "human_approval_of_a_feasible_candidate_required",
+        "selection_rule": "first_minimum_design_meeting_graph_coverage_precision_budget_then_sha_bound_human_approval",
     }
     write_json(output, manifest)
     return output
@@ -414,6 +416,80 @@ def _graph_audit(
     }
 
 
+def _resolve_slope_distribution(row: dict[str, Any]) -> dict[str, Any]:
+    """Resolve the sole frozen worker-slope distribution used everywhere.
+
+    The group fixed-slope uncertainty is a shared draw.  The returned
+    ``independent_sd`` is the worker-specific posterior uncertainty for an
+    identified worker, or the between-worker prior scale for an unidentified
+    worker.  ``total_sd`` is used by analytic projections.
+    """
+    group_mean = _float(row, "group_slope_mean", "group_prior_slope", default=math.nan)
+    group_sd = _float(row, "group_slope_se", default=math.nan)
+    between_sd = _float(row, "between_worker_slope_sd", "group_prior_scale", default=math.nan)
+    model_form = safe(row.get("slope_model_form"))
+    common = model_form == "crossed_common_worker_slope" or between_sd == 0
+    if common:
+        mean, independent_sd, source = group_mean, 0.0, "common_group_posterior"
+    else:
+        individual_mean = _float(row, "risk_slope_for_simulation", "risk_slope", default=math.nan)
+        individual_sd = _float(row, "risk_slope_se", default=math.nan)
+        support = _int(row, "risk_slope_support", "risk_support", "support", "n_support")
+        if math.isfinite(individual_mean) and math.isfinite(individual_sd) and individual_sd >= 0 and support > 0:
+            mean, independent_sd, source = individual_mean, individual_sd, "individual_posterior"
+        else:
+            mean, independent_sd, source = group_mean, between_sd, "group_prior"
+    valid = (
+        math.isfinite(mean) and math.isfinite(group_sd) and group_sd >= 0
+        and math.isfinite(independent_sd) and independent_sd >= 0
+    )
+    total_sd = math.sqrt(group_sd ** 2 + independent_sd ** 2) if valid else math.inf
+    return {
+        "mean": mean, "group_sd": group_sd, "independent_sd": independent_sd,
+        "total_sd": total_sd, "source": source if valid else "missing", "common": common,
+        "valid": valid,
+    }
+
+
+def _joint_qgt_posterior(
+    prior_mean: np.ndarray,
+    prior_covariance: np.ndarray,
+    design: np.ndarray,
+    *,
+    risk_adjusted_outcomes: np.ndarray,
+    likelihood_covariance: np.ndarray,
+) -> tuple[np.ndarray, np.ndarray]:
+    """Gaussian C1/C2 update retaining the complete C1 worker covariance."""
+    mean = np.asarray(prior_mean, dtype=float)
+    covariance = np.asarray(prior_covariance, dtype=float)
+    matrix = np.asarray(design, dtype=float)
+    outcomes = np.asarray(risk_adjusted_outcomes, dtype=float)
+    likelihood = np.asarray(likelihood_covariance, dtype=float)
+    if matrix.shape == (0, len(mean)):
+        return mean.copy(), covariance.copy()
+    if (
+        covariance.shape != (len(mean), len(mean))
+        or matrix.ndim != 2 or matrix.shape[1] != len(mean)
+        or outcomes.shape != (matrix.shape[0],)
+        or likelihood.shape != (matrix.shape[0], matrix.shape[0])
+        or not all(np.isfinite(value).all() for value in (mean, covariance, matrix, outcomes, likelihood))
+    ):
+        raise ValueError("invalid joint Q_GT posterior inputs")
+    innovation_covariance = matrix @ covariance @ matrix.T + likelihood
+    residual = outcomes - matrix @ mean
+    try:
+        solved_residual = np.linalg.solve(innovation_covariance, residual)
+        solved_design_covariance = np.linalg.solve(innovation_covariance, matrix @ covariance)
+    except np.linalg.LinAlgError as exc:
+        raise ValueError("singular joint Q_GT posterior covariance") from exc
+    posterior_mean = mean + covariance @ matrix.T @ solved_residual
+    posterior_covariance = covariance - covariance @ matrix.T @ solved_design_covariance
+    posterior_covariance = (posterior_covariance + posterior_covariance.T) / 2
+    if not np.isfinite(posterior_mean).all() or not np.isfinite(posterior_covariance).all():
+        raise ValueError("nonfinite joint Q_GT posterior")
+    return posterior_mean, posterior_covariance
+
+
 def _projected_worker_intervals(
     worker_rows: list[dict[str, str]],
     assignments: list[dict[str, Any]],
@@ -451,21 +527,9 @@ def _projected_worker_intervals(
             raw_information * (1 - missing_rate) * (1 - structural_rate) * cluster_factor
             if rate_contract_valid else 0.0
         )
-        slope_se = _float(row, "risk_slope_se", default=math.inf)
-        slope_support = _int(row, "risk_slope_support", "support", "n_support")
-        prior_only = not (math.isfinite(slope_se) and slope_se > 0 and slope_support > 0)
-        slope_precision_source = "worker_specific_slope_se"
-        if prior_only:
-            between_worker_sd = _float(row, "between_worker_slope_sd", default=math.inf)
-            if math.isfinite(between_worker_sd) and between_worker_sd > 0:
-                slope_se = between_worker_sd
-                slope_precision_source = "between_worker_slope_sd"
-            elif between_worker_sd == 0:
-                slope_se = _float(row, "group_slope_se", default=math.inf)
-                slope_precision_source = "common_group_slope_se"
-            else:
-                slope_se = math.inf
-                slope_precision_source = "missing"
+        slope_distribution = _resolve_slope_distribution(row)
+        slope_se = float(slope_distribution["total_sd"])
+        slope_precision_source = str(slope_distribution["source"])
         projection_status = "estimable"
         if not rate_contract_valid:
             projection_status = "not_estimable_missing_or_invalid_rate"
@@ -509,7 +573,7 @@ def _projected_worker_intervals(
             "missing_rate": missing_rate, "structural_failure_rate": structural_rate,
             "effective_information": added_information,
             "expected_fallback_rate": missing_rate ** len(tasks) if tasks and rate_contract_valid else "",
-            "expected_global_full_divergence": abs(_float(row, "risk_slope_for_simulation", "risk_slope", default=0.0)) * (max((_float(task, "risk_design_score_A", default=0.0) for task in tasks), default=0.0) - min((_float(task, "risk_design_score_A", default=0.0) for task in tasks), default=0.0)),
+            "expected_global_full_divergence": abs(float(slope_distribution["mean"])) * (max((_float(task, "risk_design_score_A", default=0.0) for task in tasks), default=0.0) - min((_float(task, "risk_design_score_A", default=0.0) for task in tasks), default=0.0)) if slope_distribution["valid"] else "",
             "v1_usable_support": len(tasks) * (1 - missing_rate) * (1 - structural_rate) if rate_contract_valid else "",
         })
     return max(projected, default=math.inf), audits
@@ -587,7 +651,7 @@ def _empirical_cluster_bootstrap(
     if not assignments or not worker_rows or draws < 1:
         return {field: "" for field in SIMULATION_FIELDS} | {"design_id": design_id, "seed": seed, "draws": draws, "simulation_status": "insufficient_design_input"}
     required_variances = (
-        "group_slope_mean", "group_slope_se", "between_worker_slope_sd", "outcome_residual_sd", "worker_intercept_sd",
+        "group_slope_mean", "group_slope_se", "between_worker_slope_sd", "outcome_residual_sd",
         "task_sd", "building_sd", "Q_GT_baseline_se",
     )
     nonnegative_fields = set(required_variances) - {"group_slope_mean"}
@@ -718,6 +782,37 @@ def _empirical_cluster_bootstrap(
         posterior = (prior_precision * prior_mean + likelihood_precision * observed) / (prior_precision + likelihood_precision)
         return posterior, 1.96 / math.sqrt(prior_precision + likelihood_precision)
 
+    def _common_slope(
+        values_by_worker: dict[str, list[tuple[float, float]]], prior_mean: float, prior_sd: float,
+    ) -> tuple[float, float]:
+        if prior_sd == 0:
+            return prior_mean, 0.0
+        if not math.isfinite(prior_sd) or prior_sd < 0:
+            return prior_mean, math.inf
+        prior_precision = 1.0 / prior_sd ** 2
+        likelihood_precision = weighted_cross_product = 0.0
+        for worker, values in values_by_worker.items():
+            residual_sd = _float(
+                next(row for row in worker_rows if safe(row.get("worker_id")) == worker),
+                "outcome_residual_sd", default=math.inf,
+            )
+            if len(values) < 2 or not math.isfinite(residual_sd) or residual_sd <= 0:
+                continue
+            mean_x = sum(value[0] for value in values) / len(values)
+            mean_y = sum(value[1] for value in values) / len(values)
+            denominator = sum((value[0] - mean_x) ** 2 for value in values)
+            if denominator <= 0:
+                continue
+            likelihood_precision += denominator / residual_sd ** 2
+            weighted_cross_product += sum(
+                (x - mean_x) * (y - mean_y) for x, y in values
+            ) / residual_sd ** 2
+        if likelihood_precision <= 0:
+            return prior_mean, 1.96 * prior_sd
+        observed = weighted_cross_product / likelihood_precision
+        posterior = (prior_precision * prior_mean + likelihood_precision * observed) / (prior_precision + likelihood_precision)
+        return posterior, 1.96 / math.sqrt(prior_precision + likelihood_precision)
+
     def _variance(field: str, *, nonnegative: bool = True) -> float:
         values = [_float(row, field, default=math.nan) for row in worker_rows]
         values = [value for value in values if math.isfinite(value) and (value >= 0 or not nonnegative)]
@@ -727,9 +822,27 @@ def _empirical_cluster_bootstrap(
     worker_intercept_sd = _variance("worker_intercept_sd")
     group_slope_mean, group_slope_se = _variance("group_slope_mean", nonnegative=False), _variance("group_slope_se")
     between_worker_slope_sd = _variance("between_worker_slope_sd")
+    slope_distributions = {
+        safe(row.get("worker_id")): _resolve_slope_distribution(row)
+        for row in worker_rows
+    }
+    if any(not distribution["valid"] for distribution in slope_distributions.values()):
+        return {field: "" for field in SIMULATION_FIELDS} | {
+            "design_id": design_id, "seed": seed, "draws": draws,
+            "variance_fields_used": list(required_variances),
+            "simulation_status": "insufficient_worker_slope_distribution",
+        }
+    common_flags = {bool(distribution["common"]) for distribution in slope_distributions.values()}
+    if len(common_flags) != 1:
+        return {field: "" for field in SIMULATION_FIELDS} | {
+            "design_id": design_id, "seed": seed, "draws": draws,
+            "variance_fields_used": list(required_variances),
+            "simulation_status": "inconsistent_slope_model_form",
+        }
+    common_slope_model = common_flags == {True}
     group_structural_rate = sum(supported_structural) / len(supported_structural) if supported_structural else math.nan
     for _ in range(draws):
-        sampled_group_slope = rng.gauss(group_slope_mean, group_slope_se) if group_slope_se > 0 else group_slope_mean
+        shared_group_delta = rng.gauss(0.0, group_slope_se) if group_slope_se > 0 else 0.0
         sampled_baseline_values = np_rng.multivariate_normal(
             np.asarray([baseline[worker] for worker in baseline_rank], dtype=float), covariance,
             check_valid="raise",
@@ -756,6 +869,7 @@ def _empirical_cluster_bootstrap(
         }
         rank_score, q_widths, draw_slope_widths, signs, support = {}, [], [], [], Counter()
         worker_outcomes: dict[str, list[tuple[float, float]]] = defaultdict(list)
+        delivered_observations: list[dict[str, Any]] = []
         delivered_edges: list[tuple[str, str]] = []
         delivered_bridge_edges: list[tuple[str, str]] = []
         delivered_building_instances: set[str] = set()
@@ -764,7 +878,11 @@ def _empirical_cluster_bootstrap(
         instance_support = Counter({task_instance: 0 for _building_instance, task_instance, _building, _task in task_instances})
         for row in worker_rows:
             worker = safe(row.get("worker_id"))
-            sampled_slope = rng.gauss(sampled_group_slope, between_worker_slope_sd) if between_worker_slope_sd > 0 else sampled_group_slope
+            slope_distribution = slope_distributions[worker]
+            independent_sd = float(slope_distribution["independent_sd"])
+            sampled_slope = float(slope_distribution["mean"]) + shared_group_delta
+            if independent_sd > 0:
+                sampled_slope += rng.gauss(0.0, independent_sd)
             missing = _float(row, "missing_rate", default=math.nan)
             structural = _float(row, "F_struct", default=group_structural_rate)
             residual_scale = _float(row, "outcome_residual_sd", default=math.inf)
@@ -780,25 +898,67 @@ def _empirical_cluster_bootstrap(
                     noise = rng.gauss(0.0, residual_scale) if math.isfinite(residual_scale) and residual_scale > 0 else 0.0
                     outcome = sampled_baseline[worker] + sampled_slope * risk + building_effect[building_instance] + task_effect[task_instance] + noise
                     worker_outcomes[worker].append((risk, outcome))
+                    delivered_observations.append({
+                        "worker": worker, "risk": risk, "outcome": outcome,
+                        "building_instance": building_instance, "task_instance": task_instance,
+                        "residual_sd": residual_scale,
+                    })
                     delivered_edges.append((worker, task_instance)); instance_support[task_instance] += 1
                     if safe(edge.get("c2_component")) == "diverse_bridge":
                         delivered_bridge_edges.append((worker, task_instance))
                     delivered_building_instances.add(building_instance)
                     delivered_strata.add(_task_stratum(task)); delivered_strata_by_worker[worker].add(_task_stratum(task))
-        for row in worker_rows:
-            worker = safe(row.get("worker_id"))
-            residual_scale = _float(row, "outcome_residual_sd", default=math.inf)
-            delivered = worker_outcomes.get(worker, [])
-            estimate, slope_width = _slope(delivered, sampled_group_slope, between_worker_slope_sd, residual_scale, group_slope_se)
-            q_se = _float(row, "Q_GT_baseline_se", default=math.inf)
-            if math.isfinite(q_se):
-                c1_precision = 1.0 / max(q_se, 1e-9) ** 2
-                c2_variance = residual_scale ** 2 + task_sd ** 2 + building_sd ** 2
-                c2_precision = len(delivered) / c2_variance if delivered and math.isfinite(c2_variance) and c2_variance > 0 else 0.0
-                q_widths.append(1.96 / math.sqrt(c1_precision + c2_precision))
-            draw_slope_widths.append(slope_width)
-            signs.append((sampled_group_slope == 0) or (estimate == 0) or (sampled_group_slope * estimate > 0))
-            rank_score[worker] = sum(value[1] for value in delivered) / len(delivered) if delivered else sampled_baseline[worker]
+        if delivered_observations:
+            worker_index = {worker: index for index, worker in enumerate(baseline_rank)}
+            observation_count = len(delivered_observations)
+            posterior_design = np.zeros((observation_count, len(baseline_rank)), dtype=float)
+            risk_adjusted = np.zeros(observation_count, dtype=float)
+            likelihood_covariance = np.zeros((observation_count, observation_count), dtype=float)
+            for index, observation in enumerate(delivered_observations):
+                worker = observation["worker"]
+                risk = float(observation["risk"])
+                posterior_design[index, worker_index[worker]] = 1.0
+                risk_adjusted[index] = float(observation["outcome"]) - float(slope_distributions[worker]["mean"]) * risk
+                likelihood_covariance[index, index] += float(observation["residual_sd"]) ** 2
+                for other_index, other in enumerate(delivered_observations):
+                    other_risk = float(other["risk"])
+                    likelihood_covariance[index, other_index] += group_slope_se ** 2 * risk * other_risk
+                    if worker == other["worker"]:
+                        likelihood_covariance[index, other_index] += float(slope_distributions[worker]["independent_sd"]) ** 2 * risk * other_risk
+                    if observation["building_instance"] == other["building_instance"]:
+                        likelihood_covariance[index, other_index] += building_sd ** 2
+                    if observation["task_instance"] == other["task_instance"]:
+                        likelihood_covariance[index, other_index] += task_sd ** 2
+            posterior_mean, posterior_covariance = _joint_qgt_posterior(
+                np.asarray([baseline[worker] for worker in baseline_rank], dtype=float),
+                covariance,
+                posterior_design,
+                risk_adjusted_outcomes=risk_adjusted,
+                likelihood_covariance=likelihood_covariance,
+            )
+        else:
+            posterior_mean = np.asarray([baseline[worker] for worker in baseline_rank], dtype=float)
+            posterior_covariance = covariance.copy()
+        rank_score = {worker: float(posterior_mean[index]) for index, worker in enumerate(baseline_rank)}
+        q_widths.extend(1.96 * math.sqrt(max(0.0, float(posterior_covariance[index, index]))) for index in range(len(baseline_rank)))
+        if common_slope_model:
+            estimate, slope_width = _common_slope(worker_outcomes, group_slope_mean, group_slope_se)
+            draw_slope_widths.extend([slope_width] * len(worker_rows))
+            common_sign = (group_slope_mean == 0) or (estimate == 0) or (group_slope_mean * estimate > 0)
+            signs.extend([common_sign] * len(worker_rows))
+        else:
+            for row in worker_rows:
+                worker = safe(row.get("worker_id"))
+                residual_scale = _float(row, "outcome_residual_sd", default=math.inf)
+                delivered = worker_outcomes.get(worker, [])
+                slope_distribution = slope_distributions[worker]
+                estimate, slope_width = _slope(
+                    delivered, float(slope_distribution["mean"]), float(slope_distribution["total_sd"]),
+                    residual_scale, group_slope_se,
+                )
+                draw_slope_widths.append(slope_width)
+                prior_slope = float(slope_distribution["mean"])
+                signs.append((prior_slope == 0) or (estimate == 0) or (prior_slope * estimate > 0))
         draw_rank = sorted(rank_score, key=lambda worker: (-rank_score[worker], worker))
         rank_stable += draw_rank == baseline_rank
         slope_stable += all(signs)
@@ -839,10 +999,13 @@ def _empirical_cluster_bootstrap(
         "expected_assignment_count": sum(delivered_counts) / len(delivered_counts) if delivered_counts else 0,
         "sampled_task_edge_identity_violations": sampled_task_edge_identity_violations,
         "variance_fields_used": list(required_variances),
-        "uncertainty_fields_used": ["group_slope_mean", "group_slope_se", "between_worker_slope_sd", "Q_GT_contrast_covariance", "outcome_residual_sd", "task_sd", "building_sd", "missing_rate", "F_struct"],
+        "uncertainty_fields_used": ["risk_slope_for_simulation", "risk_slope_se", "risk_slope_support", "group_slope_mean", "group_slope_se", "between_worker_slope_sd", "Q_GT_contrast_covariance", "outcome_residual_sd", "task_sd", "building_sd", "missing_rate", "F_struct"],
+        "worker_slope_distribution_sources": dict(sorted((worker, value["source"]) for worker, value in slope_distributions.items())),
+        "risk_slope_posterior_method": "shared_common_slope_pooled_within_worker" if common_slope_model else "worker_specific_or_group_prior_posterior",
+        "rank_score_method": "joint_gaussian_C1_C2_posterior_mean_with_full_C1_covariance",
         "known_c1_worker_intercept_sd_resampled": False,
-        "population_worker_intercept_sd_recorded": worker_intercept_sd,
-        "simulation_method": "hierarchical_building_task_resampling_with_joint_qgt_and_separate_slope_uncertainty", "simulation_status": "estimated",
+        "population_worker_intercept_sd_recorded": worker_intercept_sd if math.isfinite(worker_intercept_sd) else "not_applicable_worker_fixed_intercepts",
+        "simulation_method": "hierarchical_building_task_resampling_with_joint_qgt_and_unified_slope_posterior_v2", "simulation_status": "estimated",
     }
 
 
@@ -901,6 +1064,8 @@ def enumerate_candidates(
     design_ids = [safe(row.get("design_id")) for row in designs or []]
     if not designs or not all(design_ids) or len(design_ids) != len(set(design_ids)):
         raise ValueError("candidate_designs require unique non-empty design_id values")
+    if design_ids != ["D8", "D10", "D12"]:
+        raise ValueError("C2-B candidate designs must be exactly ordered D8, D10, D12")
     dependency_valid, dependency_reason = _dependencies_valid(
         manifest, worker_profile_csv, task_pool_csv, c1_closeout_summary, risk_summary
     )
@@ -1101,6 +1266,8 @@ def enumerate_candidates(
         },
         "dependency_binding_valid": dependency_valid,
         "chosen_design_id": "",
+        "recommended_design_id": candidates[0][1] if candidates else "",
+        "recommendation_rule": "first minimum ordered design satisfying graph coverage precision and budget gates",
         "n_assignments": 0,
         "c2b_design_ready": False,
         "candidate_only": True,
@@ -1178,6 +1345,8 @@ def materialize_approved_assignment(
     selected_audit = audits.get(selected_id)
     if not selected_audit or not truthy(selected_audit.get("feasible")) or not truthy(selected_audit.get("non_dominated")):
         raise ValueError("selected design is not a feasible non-dominated candidate")
+    if selected_id != safe(candidate_summary.get("recommended_design_id")):
+        raise ValueError("selected design is not the first minimum feasible D8/D10/D12 design")
 
     candidate_edges = [row for row in read_csv(candidate_edges_path) if safe(row.get("design_id")) == selected_id]
     if not candidate_edges:

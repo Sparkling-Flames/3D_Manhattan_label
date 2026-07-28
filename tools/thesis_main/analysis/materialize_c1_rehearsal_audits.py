@@ -971,6 +971,8 @@ def materialize_row_analysis_eligibility(
     canonical_csv: Path, version_csv: Path, quality_csv: Path, loo_csv: Path,
     structural_csv: Path, reference_csv: Path, output_dir: Path,
     *, independence_csv: Path | None = None, outside_disposition_csv: Path | None = None,
+    peer_rule_manifest: Path = Path("docs/thesis_main/geometry_peer_candidate_rule_manifest_v1.json"),
+    formal: bool = False,
 ) -> dict[str, Any]:
     """Materialize the three estimand-specific row gates as an immutable sidecar.
 
@@ -995,6 +997,10 @@ def materialize_row_analysis_eligibility(
         row.get("canonical_annotation_id", ""): row
         for row in read_csv(outside_disposition_csv)
     } if outside_disposition_csv and outside_disposition_csv.exists() else {}
+    peer_rules = json.loads(peer_rule_manifest.read_text(encoding="utf-8"))
+    minimum_peer_count = int(peer_rules["thresholds"]["minimum_peer_count"])
+    rule_version = str(peer_rules["rule_version"])
+    source_sha = hashlib.sha256(canonical_csv.read_bytes()).hexdigest()
     output = []
     for row in canonical:
         identity = row.get("canonical_annotation_id", "")
@@ -1011,32 +1017,85 @@ def materialize_row_analysis_eligibility(
         process_reasons = list(dict.fromkeys(process_reasons))
         process_eligible = not process_reasons
         independence_eligible = independence_status in {"independent", "independent_by_project_provenance", "independent_by_annotation_disposition"}
-        scope_reference_eligible = reference.get("final_scope") == "in_scope" and _truth(reference.get("geometry_reference_ready"))
+        scope_eligible = reference.get("final_scope") == "in_scope"
+        gt_reference_eligible = scope_eligible and _truth(reference.get("geometry_reference_ready"))
+        structural_computable = structural_status in {"passed", "failed_confirmed_worker_submission"}
+        structural_attribution_eligible = structural_computable
+        quality_row = quality.get(identity, {})
+        gt_score_computable = _truth(quality_row.get("gt_score_computable", quality_row.get("quality_evaluable"))) and structural_computable
+        loo_row = loo.get(identity, {})
+        compatible_peer_count = _int(loo_row.get("peer_metric_compatible_count", loo_row.get("peer_count_excluding_self")))
+        peer_reference_eligible = compatible_peer_count >= minimum_peer_count
         common_reasons = [*process_reasons]
         if not independence_eligible: common_reasons.append("independence_not_evaluable")
-        if not scope_reference_eligible: common_reasons.append("scope_not_resolved_in_scope")
+        if not scope_eligible: common_reasons.append("scope_not_resolved_in_scope")
         global_reasons = [*common_reasons]
         if row.get("condition", "").lower() != "manual": global_reasons.append("not_manual")
-        if not _truth(reference.get("geometry_reference_ready")): global_reasons.append("geometry_reference_not_ready")
-        if not _truth(quality.get(identity, {}).get("quality_evaluable")): global_reasons.append("gt_quality_not_evaluable")
+        if not gt_reference_eligible: global_reasons.append("geometry_reference_not_ready")
+        if not gt_score_computable: global_reasons.append("gt_score_not_computable")
+        if _truth(quality_row.get("submission_informed_reference_revision")): global_reasons.append("submission_informed_reference_revision")
+        peer_reasons = [*common_reasons]
+        if not structural_computable: peer_reasons.append("geometry_not_computable")
+        if not peer_reference_eligible: peer_reasons.append("insufficient_compatible_peer_support")
+        peer_eligible = not peer_reasons
         loo_reasons = [*common_reasons]
         if structural_status != "passed": loo_reasons.append("structural_not_passed")
         if loo.get(identity, {}).get("q_LOO_primary", loo.get(identity, {}).get("q_LOO_tu", "")) in {"", None}: loo_reasons.append("loo_consensus_not_evaluable")
         if not _truth(loo.get(identity, {}).get("primary_loo_eligible")): loo_reasons.append("loo_consensus_not_primary")
-        structural_reasons = [*common_reasons]
-        if structural_status not in {"passed", "failed_confirmed_worker_submission"}: structural_reasons.append("structural_attribution_not_evaluable")
+        strict_loo_eligible = not loo_reasons
+        medoid_reasons = [*peer_reasons]
+        if not _truth(loo_row.get("worker_excluded_unique_dominant_cluster")): medoid_reasons.append("worker_excluded_cluster_not_unique")
+        if loo_row.get("task_crowd_structure_status") not in {"unimodal", "dominant_with_dissent"}: medoid_reasons.append("task_crowd_structure_not_primary")
+        if _truth(loo_row.get("medoid_tie_sensitive")): medoid_reasons.append("medoid_tie_sensitive")
+        if loo_row.get("q_LOO_tu", "") in {"", None}: medoid_reasons.append("medoid_score_not_evaluable")
+        structural_reasons = [*process_reasons]
+        if not independence_eligible: structural_reasons.append("independence_not_evaluable")
+        if not scope_eligible: structural_reasons.append("scope_not_resolved_in_scope")
+        if not structural_attribution_eligible: structural_reasons.append("structural_attribution_not_evaluable")
         output.append({
             "canonical_annotation_id": identity, "annotation_id": row.get("annotation_id", ""), "worker_id": row.get("worker_id", ""),
+            "base_task_id": row.get("base_task_id", ""), "condition": row.get("condition", ""), "canonical_eligible": True,
             "outside_assignment_disposition_applied": _truth(outside.get(identity, {}).get("outside_assignment_disposition_applied")), "outside_assignment_process_override": outside_override,
             "process_eligible": process_eligible, "process_exclusion_reason": ";".join(process_reasons),
             "independence_eligible": independence_eligible, "independence_exclusion_reason": "" if independence_eligible else "independence_not_evaluable",
-            "scope_reference_eligible": scope_reference_eligible, "scope_reference_exclusion_reason": "" if scope_reference_eligible else "scope_or_reference_not_ready",
+            "scope_eligible": scope_eligible, "scope_exclusion_reason": "" if scope_eligible else "scope_not_resolved_in_scope",
+            "gt_reference_eligible": gt_reference_eligible, "gt_reference_exclusion_reason": "" if gt_reference_eligible else "gt_reference_not_ready",
+            "peer_reference_eligible": peer_reference_eligible,
+            "structural_attribution_eligible": structural_attribution_eligible,
+            "geometry_structurally_computable": structural_computable, "gt_score_computable": gt_score_computable,
+            "scope_reference_eligible": gt_reference_eligible, "scope_reference_exclusion_reason": "" if gt_reference_eligible else "scope_or_reference_not_ready",
+            "gt_primary_analysis_eligible": not global_reasons,
             "global_analysis_eligible": not global_reasons, "global_analysis_exclusion_reason": ";".join(global_reasons),
-            "loo_analysis_eligible": not loo_reasons, "loo_analysis_exclusion_reason": ";".join(loo_reasons),
+            "peer_analysis_eligible": peer_eligible, "peer_analysis_exclusion_reason": ";".join(peer_reasons),
+            "loo_medoid_analysis_eligible": not medoid_reasons, "loo_medoid_analysis_exclusion_reason": ";".join(medoid_reasons),
+            "strict_loo_analysis_eligible": strict_loo_eligible,
+            "loo_analysis_eligible": strict_loo_eligible, "loo_analysis_exclusion_reason": ";".join(loo_reasons),
+            "legacy_role": "strict_sensitivity", "formal_use_allowed": False,
             "structural_opportunity_eligible": not structural_reasons, "structural_opportunity_exclusion_reason": ";".join(structural_reasons),
+            "rule_version": rule_version, "source_sha256": source_sha,
         })
     write_csv(output_dir / "c1_row_analysis_eligibility.csv", output)
-    return {field: sum(_truth(row[field]) for row in output) for field in ("global_analysis_eligible", "loo_analysis_eligible", "structural_opportunity_eligible")}
+    def waterfall(path: str, stages: list[tuple[str, str]]) -> None:
+        remaining = list(output); rows = []
+        for label, field in stages:
+            before = len(remaining); passed = [row for row in remaining if _truth(row.get(field))]
+            rows.append({"gate": label, "input_count": before, "passed_count": len(passed), "failed_count": before - len(passed), "failure_reason": "" if before == len(passed) else f"failed_{field}", "rule_version": rule_version, "source_sha256": source_sha})
+            remaining = passed
+        write_csv(output_dir / path, rows)
+    waterfall("c1_gt_gate_waterfall.csv", [("canonical", "canonical_eligible"), ("process", "process_eligible"), ("independence", "independence_eligible"), ("scope", "scope_eligible"), ("GT reference", "gt_reference_eligible"), ("GT score computable", "gt_score_computable"), ("primary GT eligible", "gt_primary_analysis_eligible")])
+    waterfall("c1_peer_gate_waterfall.csv", [("canonical", "canonical_eligible"), ("process", "process_eligible"), ("independence", "independence_eligible"), ("scope", "scope_eligible"), ("geometry computable", "geometry_structurally_computable"), ("peer support", "peer_reference_eligible"), ("peer eligible", "peer_analysis_eligible"), ("medoid LOO eligible", "loo_medoid_analysis_eligible"), ("strict LOO eligible", "strict_loo_analysis_eligible")])
+    waterfall("c1_structural_gate_waterfall.csv", [("canonical", "canonical_eligible"), ("process", "process_eligible"), ("independence", "independence_eligible"), ("scope", "scope_eligible"), ("structural attribution", "structural_attribution_eligible"), ("structural opportunity", "structural_opportunity_eligible")])
+    gate_fields = ["process_eligible", "independence_eligible", "scope_eligible", "gt_reference_eligible", "peer_reference_eligible", "structural_attribution_eligible"]
+    combos = Counter(";".join(field for field in gate_fields if not _truth(row.get(field))) or "none" for row in output)
+    write_csv(output_dir / "c1_gate_exclusion_combinations.csv", [{"exclusion_combination": key, "input_count": len(output), "passed_count": count if key == "none" else 0, "failed_count": count if key != "none" else 0, "failure_reason": key, "rule_version": rule_version, "source_sha256": source_sha} for key, count in sorted(combos.items())])
+    for grouping, path in (("worker_id", "c1_gate_support_by_worker.csv"), ("base_task_id", "c1_gate_support_by_task.csv")):
+        groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
+        for row in output: groups[str(row.get(grouping, ""))].append(row)
+        write_csv(output_dir / path, [{grouping: key, "input_count": len(rows), "passed_count": sum(_truth(row.get("gt_primary_analysis_eligible")) for row in rows), "failed_count": sum(not _truth(row.get("gt_primary_analysis_eligible")) for row in rows), "failure_reason": "gt_primary_ineligible", "rule_version": rule_version, "source_sha256": source_sha} for key, rows in sorted(groups.items())])
+    stored_ok = all(_truth(row["global_analysis_eligible"]) == _truth(row["gt_primary_analysis_eligible"]) and _truth(row["loo_analysis_eligible"]) == _truth(row["strict_loo_analysis_eligible"]) for row in output)
+    if formal and not stored_ok:
+        raise ValueError("stored eligibility differs from recomputed eligibility")
+    return {**{field: sum(_truth(row[field]) for row in output) for field in ("global_analysis_eligible", "peer_analysis_eligible", "loo_medoid_analysis_eligible", "loo_analysis_eligible", "structural_opportunity_eligible")}, "stored_eligibility_matches_recomputed": stored_ok}
 
 
 def materialize_final_canonical_closeout_summary(
@@ -1184,17 +1243,27 @@ def materialize_analysis_rosters(completion_csv: Path, canonical_csv: Path, outp
 def materialize_three_track_worker_state(
     global_csv: Path, geometry_loo_csv: Path, structural_csv: Path,
     completion_csv: Path, output_dir: Path, quality_csv: Path | None = None, *,
-    eligibility_csv: Path | None = None, formal: bool = False,
+    eligibility_csv: Path | None = None, peer_csv: Path | None = None,
+    structural_eb_csv: Path | None = None, formal: bool = False,
 ) -> dict[str, Any]:
     globals_ = {row.get("worker_id", ""): row for row in read_csv(global_csv)}
     loo_by_worker: dict[str, list[tuple[str, float]]] = defaultdict(list)
+    medoid_by_worker: dict[str, list[tuple[str, float]]] = defaultdict(list)
     for row in read_csv(geometry_loo_csv):
+        if _truth(row.get("loo_medoid_analysis_eligible")):
+            try: medoid_by_worker[row.get("worker_id", "")].append((row.get("base_task_id", ""), float(row["q_LOO_tu"])))
+            except (TypeError, ValueError): pass
         if not _truth(row.get("loo_analysis_eligible")):
             continue
         try:
             loo_by_worker[row.get("worker_id", "")].append((row.get("base_task_id", ""), float(row["q_LOO_tu"])))
         except (TypeError, ValueError):
             pass
+    peer_by_worker: dict[str, list[tuple[str, float]]] = defaultdict(list)
+    for row in read_csv(peer_csv) if peer_csv and peer_csv.exists() else []:
+        try: peer_by_worker[row.get("worker_id", "")].append((row.get("base_task_id", ""), float(row["R_peer_median"])))
+        except (TypeError, ValueError): pass
+    structural_eb = {row.get("worker_id", ""): row for row in read_csv(structural_eb_csv)} if structural_eb_csv and structural_eb_csv.exists() else {}
     struct = defaultdict(lambda: {"opportunity": 0, "failure": 0})
     for row in read_csv(structural_csv):
         worker = row.get("worker_id", "")
@@ -1236,7 +1305,7 @@ def materialize_three_track_worker_state(
         task_means = {task: sum(items) / len(items) for task, items in by_task.items()}
         values = list(task_means.values())
         bootstrap = []
-        if values:
+        if len(values) >= 3:
             rng = random.Random(f"c1-loo-{worker}-20260724")
             tasks = sorted(task_means)
             for _ in range(2000):
@@ -1244,6 +1313,26 @@ def materialize_three_track_worker_state(
                 bootstrap.append(sum(task_means[task] for task in sampled) / len(sampled))
             bootstrap.sort()
         opportunity = struct[worker]["opportunity"]
+        def aggregate(items: list[tuple[str, float]]) -> tuple[float | str, int]:
+            by = defaultdict(list)
+            for task, value in items: by[task].append(value)
+            values_ = [sum(group) / len(group) for group in by.values()]
+            return (sum(values_) / len(values_) if values_ else "", len(values_))
+        def interval(items: list[tuple[str, float]], label: str) -> tuple[float | str, float | str]:
+            by = defaultdict(list)
+            for task, value in items: by[task].append(value)
+            means = {task: sum(group) / len(group) for task, group in by.items()}
+            if len(means) < 3: return "", ""
+            rng = random.Random(f"c1-{label}-{worker}-20260728"); tasks = sorted(means); draws = []
+            for _ in range(2000):
+                sample = [rng.choice(tasks) for _task in tasks]; draws.append(sum(means[task] for task in sample) / len(sample))
+            draws.sort(); return draws[int(.025 * (len(draws) - 1))], draws[int(.975 * (len(draws) - 1))]
+        peer_value, peer_support = aggregate(peer_by_worker[worker])
+        medoid_value, medoid_support = aggregate(medoid_by_worker[worker])
+        peer_lower, peer_upper = interval(peer_by_worker[worker], "peer")
+        medoid_lower, medoid_upper = interval(medoid_by_worker[worker], "medoid")
+        peer_status = "insufficient_support" if peer_support < 3 else "weak_descriptive" if peer_support < 5 else "estimated"
+        medoid_status = "insufficient_support" if medoid_support < 3 else "weak_descriptive" if medoid_support < 5 else "estimated"
         global_row = globals_.get(worker, {})
         gt_support = int(float(global_row.get("GT_support") or 0))
         loo_support = len(values)
@@ -1258,6 +1347,7 @@ def materialize_three_track_worker_state(
         rows.append({
             "worker_id": worker, "completion_status": completion.get("completion_status", ""),
             "Q_GT_raw_median": __import__("statistics").median(raw_quality[worker]) if raw_quality[worker] else global_row.get("Q_GT_raw", ""), "Q_GT_task_adjusted": global_row.get("Q_GT_task_adjusted", ""),
+            "Q_GT_EB": global_row.get("Q_GT_EB", ""), "Q_GT_EB_LCB": global_row.get("Q_GT_EB_LCB", ""),
             "standard_error": global_row.get("Q_GT_standard_error", ""), "CI_lower": global_row.get("Q_GT_CI_lower", ""),
             "CI_upper": global_row.get("Q_GT_CI_upper", ""), "LCB": global_row.get("Q_GT_LCB", ""),
             "Q_GT_contrast_covariance_row_json": global_row.get("Q_GT_contrast_covariance_row_json", ""),
@@ -1267,7 +1357,14 @@ def materialize_three_track_worker_state(
             "R_LOO_CI_upper": bootstrap[int(.975 * (len(bootstrap) - 1))] if bootstrap else "",
             "R_LOO_LCB": bootstrap[int(.025 * (len(bootstrap) - 1))] if bootstrap else "",
             "R_LOO_bootstrap_replicates": 2000 if bootstrap else 0,
+            "R_peer_median": peer_value, "R_peer_CI_lower": peer_lower, "R_peer_CI_upper": peer_upper, "R_peer_support": peer_support,
+            "R_LOO_medoid": medoid_value, "R_LOO_medoid_CI_lower": medoid_lower, "R_LOO_medoid_CI_upper": medoid_upper, "R_LOO_medoid_support": medoid_support,
+            "R_LOO_strict": sum(values) / len(values) if values else "", "R_LOO_strict_support": loo_support,
+            "peer_profile_status": peer_status, "medoid_loo_status": medoid_status,
+            "strict_loo_status": "insufficient_support" if loo_support < 3 else "weak_descriptive" if loo_support < 5 else "estimated",
+            "peer_decision_usable": peer_status == "estimated", "medoid_loo_decision_usable": medoid_status == "estimated",
             "F_struct": struct[worker]["failure"] / opportunity if opportunity else "",
+            "F_struct_EB": structural_eb.get(worker, {}).get("F_struct_EB", ""),
             "F_struct_numerator": struct[worker]["failure"], "F_struct_denominator": opportunity,
             "process_eligible_support": len(gate_support[worker]["process"]),
             "independence_support": len(gate_support[worker]["independence"]),

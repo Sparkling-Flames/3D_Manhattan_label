@@ -114,7 +114,7 @@ def materialize_measurement_readiness(
     task_support: dict[str, dict[str, set[str]]] = defaultdict(lambda: {"gt": set(), "loo": set(), "struct": set(), "workers": set(), "buildings": set()})
     source_rows = {
         "gt": (quality, "global_analysis_eligible", "gt"),
-        "loo": (loo, "loo_analysis_eligible", "loo"),
+        "loo": (loo, "peer_analysis_eligible", "loo"),
         "structural": (structural, "structural_opportunity_eligible", "struct"),
     }
     channels: dict[str, set[tuple[str, str, str]]] = {}
@@ -129,7 +129,10 @@ def materialize_measurement_readiness(
         edges: set[tuple[str, str, str]] = set()
         for row in rows:
             identity_row = eligibility.get(str(row.get("canonical_annotation_id", "")), {})
-            if not _truth(identity_row.get(gate, row.get(gate))):
+            gate_value = identity_row.get(gate, row.get(gate))
+            if axis == "loo" and str(gate_value or "").strip() == "":
+                gate_value = identity_row.get("loo_analysis_eligible", row.get("loo_analysis_eligible"))
+            if not _truth(gate_value):
                 continue
             identity, worker, task = _edge(row)
             if not worker or not task:
@@ -163,7 +166,7 @@ def materialize_measurement_readiness(
             continue
         if _truth(row.get("process_eligible")): process_support_by_worker[worker].add(task)
         if _truth(row.get("independence_eligible")): independence_support_by_worker[worker].add(task)
-        if _truth(row.get("scope_reference_eligible")): scope_reference_support_by_worker[worker].add(task)
+        if _truth(row.get("gt_reference_eligible", row.get("scope_reference_eligible"))): scope_reference_support_by_worker[worker].add(task)
     worker_rows: list[dict[str, Any]] = []
     for worker, completion_row in sorted(completion.items()):
         values = support[worker]
@@ -291,6 +294,8 @@ def materialize_c2b_design_worker_profile(
         rows.append({
             "worker_id": worker, "completion_status": completion_status, "C1_completion_status": completion_status,
             "completion_disposition_valid": completion_valid, "c2b_baseline_eligible": eligible,
+            "Q_GT_EB": s.get("Q_GT_EB", ""), "Q_GT_EB_LCB": s.get("Q_GT_EB_LCB", ""),
+            "Q_GT_task_adjusted_FE": s.get("Q_GT_task_adjusted_FE", s.get("Q_GT_task_adjusted", "")),
             "Q_GT_task_adjusted": s.get("Q_GT_task_adjusted", ""), "Q_GT_CI_lower": s.get("CI_lower", ""), "Q_GT_CI_upper": s.get("CI_upper", ""), "Q_GT_LCB": s.get("LCB", ""), "Q_GT_support": q_support,
             "R_LOO_compatible": s.get("R_LOO_compatible", ""), "R_LOO_CI_lower": s.get("R_LOO_CI_lower", ""), "R_LOO_CI_upper": s.get("R_LOO_CI_upper", ""), "R_LOO_support": s.get("LOO_support", r.get("R_LOO_support", "")), "R_LOO_status": r.get("R_LOO_status", "insufficient_support"),
             "F_struct": s.get("F_struct", ""), "F_struct_numerator": s.get("F_struct_numerator", ""), "F_struct_denominator": s.get("F_struct_denominator", ""), "F_struct_status": r.get("F_struct_status", "insufficient_support"),

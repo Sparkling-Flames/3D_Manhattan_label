@@ -11,7 +11,7 @@ import statistics
 from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou_from_normalized_pairs
 
 from .pairwise import pairwise_similarity
-from .stability import _maximum_complete_link_clusters
+from .stability import _complete_link_cluster, _maximum_complete_link_clusters
 
 
 def _corners(geometry: dict[str, Any]) -> np.ndarray:
@@ -80,6 +80,8 @@ def leave_one_out(
             status = "evaluable"
         else:
             status = "insufficient_peer_support"
+        second = _complete_link_cluster(tuple(i for i in range(len(peers)) if i not in cluster), compatible_edges, 1.0) if cluster else tuple()
+        excluded_status = "unimodal" if cluster and len(cluster) == len(peers) else "dominant_with_dissent" if unique_maximum_cluster and len(second) <= 1 else "supported_multimodal" if len(second) >= 2 else "insufficient_or_incompatible"
         out.append(
             {
                 "worker_id": record.get("worker_id", ""),
@@ -107,6 +109,10 @@ def leave_one_out(
                 "loo_consensus_worker_id": medoid.get("worker_id", ""),
                 "loo_consensus_geometry_sha256": consensus_sha,
                 "loo_largest_cluster_support": len(cluster),
+                "worker_excluded_largest_cluster_support": len(cluster),
+                "worker_excluded_second_cluster_support": len(second),
+                "worker_excluded_unique_dominant_cluster": unique_maximum_cluster,
+                "worker_excluded_structure_status": excluded_status,
                 "loo_maximum_cluster_count": len(cliques),
                 "tied_medoid_count": tied_count,
                 "held_out_tied_medoid_iou_min": min(tied_ious) if tied_ious else None,
