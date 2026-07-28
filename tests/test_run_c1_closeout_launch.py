@@ -1,4 +1,6 @@
 import argparse
+import csv
+import hashlib
 import json
 import subprocess
 from pathlib import Path
@@ -7,6 +9,7 @@ import pytest
 
 from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, build_c2b, close_c1_and_plan_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1, validate_runbook_command_contract
 from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _aggregate_sha, _c1_closeout_blockers
+from tools.thesis_main.analysis.derive_c2b_design_thresholds import derive_threshold_manifest
 
 
 def test_rehearsal_can_read_live_logs_but_cannot_be_formal(monkeypatch, tmp_path):
@@ -44,10 +47,11 @@ def test_public_cli_exposes_the_auditable_and_thin_entry_commands(capsys):
         assert removed not in help_text
 
 
-def test_canonicalizer_is_the_single_owner_of_geometry_and_sidecar_materialization():
+def test_canonicalizer_owns_initial_geometry_and_runner_only_rebuilds_for_administrative_exclusion():
     runner = Path("tools/thesis_main/analysis/run_c1_precloseout_rehearsal.py").read_text(encoding="utf-8")
     canonicalizer = Path("tools/thesis_main/analysis/c1_canonicalize_exports.py").read_text(encoding="utf-8")
-    assert "materialize_geometry_consensus(" not in runner
+    assert runner.count("materialize_geometry_consensus(") == 1
+    assert "excluded_worker_ids=administratively_excluded_workers" in runner
     assert "materialize_canonical_evidence(" not in runner
     assert canonicalizer.count("materialize_geometry_consensus(") == 1
     assert canonicalizer.count("materialize_canonical_evidence(") == 1
@@ -69,6 +73,85 @@ def test_fresh_checkout_keeps_both_numeric_threshold_contracts():
         "docs/thesis_main/C2B_FEATURE_AUDIT_THRESHOLDS.json",
     ):
         assert subprocess.run(["git", "check-ignore", "-q", path]).returncode != 0
+
+
+def test_design_thresholds_are_mechanically_derived_from_sha_bound_c1_and_capacity(tmp_path):
+    contract = tmp_path / "formula.json"
+    contract.write_text(json.dumps({
+        "schema_version": "paper_a_c2b_design_threshold_formula_contract_v1",
+        "status": "frozen_before_c1_closeout", "formula_contract_frozen": True,
+        "frozen_by": "reviewer", "frozen_at": "2026-07-26T00:00:00Z",
+        "constants": {"normal_95_multiplier": 1.96, "minimum_worker_support_cap": 4},
+        "threshold_rules": {
+            "q_gt_ci_half_width": {"formula_id": "normal_95_max_worker_se", "direction": "maximum"},
+            "risk_slope_ci_half_width": {"formula_id": "normal_95_max_unified_slope_sd", "direction": "maximum"},
+            "minimum_worker_support": {"formula_id": "min_constant_and_min_capacity", "constant_key": "minimum_worker_support_cap", "direction": "minimum"},
+            **{
+                name: {"formula_id": "frozen_constant", "constant_key": name, "direction": direction}
+                for name, direction in {
+                    "minimum_worker_rank_spearman": "minimum", "minimum_top_k_overlap": "minimum",
+                    "maximum_mean_rank_displacement": "maximum", "minimum_task_support": "minimum",
+                    "graph_connectivity_probability": "minimum", "minimum_building_coverage": "minimum",
+                    "building_coverage_probability": "minimum", "ordinary_coverage_probability": "minimum",
+                    "stress_coverage_probability": "minimum", "minimum_eligible_task_count": "minimum",
+                    "minimum_eligible_building_count": "minimum", "minimum_ordinary_task_count": "minimum",
+                    "minimum_stress_task_count": "minimum",
+                }.items()
+            },
+        },
+        "common_anchor_requirements": {"minimum_count": 2, "required_strata": ["ordinary", "stress"]},
+    } | {"constants": {
+        "normal_95_multiplier": 1.96, "minimum_worker_support_cap": 4,
+        "minimum_worker_rank_spearman": .8, "minimum_top_k_overlap": 2 / 3,
+        "maximum_mean_rank_displacement": 1, "minimum_task_support": 2,
+        "graph_connectivity_probability": .9, "minimum_building_coverage": 2,
+        "building_coverage_probability": .9, "ordinary_coverage_probability": .9,
+        "stress_coverage_probability": .9, "minimum_eligible_task_count": 8,
+        "minimum_eligible_building_count": 3, "minimum_ordinary_task_count": 4,
+        "minimum_stress_task_count": 4,
+    }}), encoding="utf-8")
+    c1 = tmp_path / "c1.csv"
+    with c1.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=[
+            "worker_id", "c2b_baseline_eligible", "Q_GT_baseline_se", "risk_slope_for_simulation",
+            "risk_slope_se", "risk_support", "group_slope_mean", "group_slope_se",
+            "between_worker_slope_sd", "slope_model_form",
+        ])
+        writer.writeheader(); writer.writerows([
+            {"worker_id": "w1", "c2b_baseline_eligible": "true", "Q_GT_baseline_se": .05, "risk_slope_for_simulation": -.2, "risk_slope_se": .04, "risk_support": 6, "group_slope_mean": -.1, "group_slope_se": .03, "between_worker_slope_sd": .2, "slope_model_form": "crossed_random_worker_slope"},
+            {"worker_id": "w2", "c2b_baseline_eligible": "true", "Q_GT_baseline_se": .06, "risk_slope_for_simulation": -.1, "risk_slope_se": .02, "risk_support": 6, "group_slope_mean": -.1, "group_slope_se": .03, "between_worker_slope_sd": .2, "slope_model_form": "crossed_random_worker_slope"},
+        ])
+    capacity = tmp_path / "capacity.csv"
+    capacity.write_text("worker_id,c2b_capacity\nw1,5\nw2,4\n", encoding="utf-8")
+    approval = tmp_path / "approval.json"
+    approval.write_text(json.dumps({
+        "schema_version": "paper_a_c2b_threshold_input_approval_v1", "approved": True,
+        "formula_contract_sha256": hashlib.sha256(contract.read_bytes()).hexdigest(),
+        "c1_design_parameters_sha256": hashlib.sha256(c1.read_bytes()).hexdigest(),
+        "capacity_manifest_sha256": hashlib.sha256(capacity.read_bytes()).hexdigest(),
+        "reviewed_by": "reviewer", "reviewed_at": "2026-07-27T00:00:00Z",
+    }), encoding="utf-8")
+    output = tmp_path / "derived.json"
+
+    result = derive_threshold_manifest(contract, c1, capacity, approval, output)
+
+    assert result["status"] == "approved" and result["formal_selection_allowed"] is True
+    assert result["thresholds"]["q_gt_ci_half_width"] == pytest.approx(1.96 * .06)
+    assert result["thresholds"]["risk_slope_ci_half_width"] == pytest.approx(1.96 * .05)
+    assert result["thresholds"]["minimum_worker_support"] == 4
+    assert result["derivation"]["post_feasibility_inputs_consumed"] is False
+    rows = list(csv.DictReader(c1.open(encoding="utf-8")))
+    rows[0]["Q_GT_baseline_se"] = "nan"
+    with c1.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0])); writer.writeheader(); writer.writerows(rows)
+    approval_payload = json.loads(approval.read_text(encoding="utf-8"))
+    approval_payload["c1_design_parameters_sha256"] = hashlib.sha256(c1.read_bytes()).hexdigest()
+    approval.write_text(json.dumps(approval_payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="Q_GT baseline SE"):
+        derive_threshold_manifest(contract, c1, capacity, approval, output)
+    c1.write_text(c1.read_text(encoding="utf-8") + "\n", encoding="utf-8")
+    with pytest.raises(ValueError, match="stale"):
+        derive_threshold_manifest(contract, c1, capacity, approval, output)
 
 
 def test_final_risk_pool_freezes_only_after_building_and_both_strata_gates(tmp_path):

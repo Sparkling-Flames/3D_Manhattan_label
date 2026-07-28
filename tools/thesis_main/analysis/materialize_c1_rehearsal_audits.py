@@ -177,9 +177,11 @@ def materialize_completion_support(
         "closed_partial_usable_worker_count": counts["closed_partial_usable"],
         "closed_partial_insufficient_worker_count": counts["closed_partial_insufficient"],
         "nonstarter_worker_count": counts["nonstarter"],
+        "administrative_exclusion_worker_count": counts["administrative_exclusion"],
         "completed_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] == "completed"],
         "partial_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] in {"partial_noncompletion", "closed_partial_usable", "closed_partial_insufficient"}],
         "nonstarter_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] == "nonstarter"],
+        "administrative_exclusion_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] == "administrative_exclusion"],
         "missing_nonstarter_count": sum(row["missing_reason"] == "worker_nonstarter" for row in missing_rows),
         "missing_partial_count": sum(row["missing_reason"] == "worker_partial_noncompletion" for row in missing_rows),
         "missing_other_count": sum(row["missing_reason"] not in {"worker_nonstarter", "worker_partial_noncompletion"} for row in missing_rows),
@@ -971,6 +973,7 @@ def materialize_row_analysis_eligibility(
     canonical_csv: Path, version_csv: Path, quality_csv: Path, loo_csv: Path,
     structural_csv: Path, reference_csv: Path, output_dir: Path,
     *, independence_csv: Path | None = None, outside_disposition_csv: Path | None = None,
+    completion_csv: Path | None = None,
     peer_rule_manifest: Path = Path("docs/thesis_main/geometry_peer_candidate_rule_manifest_v1.json"),
     formal: bool = False,
 ) -> dict[str, Any]:
@@ -997,6 +1000,11 @@ def materialize_row_analysis_eligibility(
         row.get("canonical_annotation_id", ""): row
         for row in read_csv(outside_disposition_csv)
     } if outside_disposition_csv and outside_disposition_csv.exists() else {}
+    administratively_excluded_workers = {
+        row.get("worker_id", "")
+        for row in read_csv(completion_csv)
+        if row.get("completion_status", "").strip().lower() == "administrative_exclusion"
+    } if completion_csv and completion_csv.exists() else set()
     peer_rules = json.loads(peer_rule_manifest.read_text(encoding="utf-8"))
     minimum_peer_count = int(peer_rules["thresholds"]["minimum_peer_count"])
     rule_version = str(peer_rules["rule_version"])
@@ -1010,6 +1018,8 @@ def materialize_row_analysis_eligibility(
         independence_status = independence.get(identity, {}).get("independence_status", "not_evaluable")
         outside_override = _truth(outside.get(identity, {}).get("process_eligible_override"))
         process_reasons = []
+        if row.get("worker_id", "") in administratively_excluded_workers:
+            process_reasons.append("administrative_exclusion")
         if not _truth(row.get("assigned_expected")) and not outside_override: process_reasons.append("outside_assignment")
         if _truth(row.get("outside_assignment_submission")) and not outside_override: process_reasons.append("outside_assignment")
         if _truth(row.get("duplicate_worker_task_submission")): process_reasons.append("duplicate_or_revision")
@@ -1233,7 +1243,8 @@ def materialize_analysis_rosters(completion_csv: Path, canonical_csv: Path, outp
     support = Counter(row.get("worker_id", "") for row in read_csv(canonical_csv) if not _truth(row.get("outside_assignment_submission")) and not _truth(row.get("duplicate_worker_task_submission")))
     assigned = [{**row, "roster_role": "assigned"} for row in completion]
     observed = [{**row, "roster_role": "observed"} for row in completion if int(row.get("observed_total_count") or 0) > 0]
-    analysis = [{**row, "roster_role": "analysis", "local_process_valid_support": support[row["worker_id"]]} for row in completion if row.get("completion_status") != "nonstarter" and support[row["worker_id"]] > 0]
+    excluded_statuses = {"nonstarter", "administrative_exclusion"}
+    analysis = [{**row, "roster_role": "analysis", "local_process_valid_support": support[row["worker_id"]]} for row in completion if row.get("completion_status") not in excluded_statuses and support[row["worker_id"]] > 0]
     write_csv(output_dir / "C1_assigned_roster.csv", assigned)
     write_csv(output_dir / "C1_observed_roster.csv", observed)
     write_csv(output_dir / "C1_analysis_roster.csv", analysis)

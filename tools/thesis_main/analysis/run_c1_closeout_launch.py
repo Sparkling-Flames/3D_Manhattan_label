@@ -28,7 +28,8 @@ from tools.thesis_main.analysis.materialize_c2_task_risk import materialize_form
 from tools.thesis_main.analysis.c1_c2_mainline import formal_git_state
 from tools.thesis_main.analysis.c1_c2_mainline import materialize_c2b_design_worker_profile
 from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import materialize as materialize_design_parameters
-from tools.thesis_main.analysis.materialize_c2_task_risk import freeze_feature_reference, refresh_feature_freeze_approval
+from tools.thesis_main.analysis.derive_c2b_design_thresholds import derive_threshold_manifest, validate_formula_contract
+from tools.thesis_main.analysis.materialize_c2_task_risk import _feature_audit_passes, freeze_feature_reference, refresh_feature_freeze_approval
 from tools.thesis_main.analysis.materialize_c2b_legacy_provenance import materialize as materialize_legacy_provenance
 from tools.thesis_main.analysis.materialize_p1_post_closeout_evidence_correction import materialize as materialize_p1_correction
 from tools.thesis_main.analysis.materialize_p1_post_closeout_geometry_scores import materialize_scores as materialize_p1_geometry
@@ -386,6 +387,7 @@ def prepare_c2b_static(args: argparse.Namespace) -> dict[str, Any]:
         args.p1_closeout_dir / "prescreen_canonical_annotations.csv",
         [args.p1_closeout_dir / "p1_combined_exports_for_exact_copy_audit.json"],
         args.p1_closeout_dir / "prescreen_worker_admission.csv", p1_dir,
+        initialization_import_json=list(getattr(args, "p1_initialization_import", []) or []),
     )
     geometry = materialize_p1_geometry(
         p1_dir / "p1_task_evidence_correction_v1.csv",
@@ -427,7 +429,7 @@ def prepare_c2b_static(args: argparse.Namespace) -> dict[str, Any]:
             device=args.device, audit_threshold_manifest=args.feature_audit_threshold_manifest,
         )
         candidate_descriptors, candidate_audit = extract_orbit_descriptors(
-            candidate_paths, args.checkpoint, args.config, device=args.device, batch_size=4, audit_seam=False,
+            candidate_paths, args.checkpoint, args.config, device=args.device, batch_size=4, audit_seam=True,
         )
         ordered = [path.resolve().as_posix() for path in candidate_paths]
         np.savez_compressed(
@@ -442,7 +444,22 @@ def prepare_c2b_static(args: argparse.Namespace) -> dict[str, Any]:
             "candidate_descriptor_count": len(ordered), "candidate_extraction_audit": candidate_audit,
             "cache_reused_without_model_inference": False,
         })
-        feature_manifest.write_text(json.dumps(feature, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    feature_thresholds = json.loads(args.feature_audit_threshold_manifest.read_text(encoding="utf-8"))
+    candidate_circular_ready, candidate_seam_ready = _feature_audit_passes(
+        feature.get("candidate_extraction_audit", {}),
+        feature.get("candidate_extraction_audit", {}),
+        feature_thresholds,
+    )
+    feature["candidate_off_grid_circular_robustness"] = candidate_circular_ready
+    feature["candidate_seam_robustness"] = candidate_seam_ready
+    feature["feature_audit_status"] = (
+        "approved"
+        if feature.get("circular_shift_invariant") is True
+        and feature.get("seam_invariant") is True
+        and candidate_circular_ready and candidate_seam_ready
+        else "pending_threshold_approval_or_failed"
+    )
+    feature_manifest.write_text(json.dumps(feature, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     leakage = materialize_reference_candidate_leakage(
         args.reference_dir, args.reference_dir.parent / "label_cor",
         args.inventory_csv, args.layout_dir, args.output_dir,
@@ -457,7 +474,7 @@ def prepare_c2b_static(args: argparse.Namespace) -> dict[str, Any]:
     )
     history = materialize_history_overlap(
         args.inventory_csv,
-        args.p1_closeout_dir / "prescreen_canonical_annotations.csv",
+        p1_dir / "p1_task_evidence_correction_v1.csv",
         args.c1_assignment,
         args.output_dir / "history_overlap_audit.csv",
     )
@@ -529,9 +546,11 @@ def preflight_calibration(args: argparse.Namespace) -> dict[str, Any]:
     blockers = [f"missing:{name}" for name, path in required.items() if not path.exists()]
     try:
         design_thresholds = json.loads(args.threshold_manifest.read_text(encoding="utf-8"))
-        if not c2b._thresholds_allow_formal_selection(design_thresholds):
+        try:
+            validate_formula_contract(design_thresholds)
+        except ValueError:
             blockers.append("unapproved_or_incomplete:design_thresholds")
-    except (OSError, json.JSONDecodeError):
+    except (OSError, json.JSONDecodeError, ValueError):
         blockers.append("invalid:design_thresholds")
     try:
         feature_thresholds = json.loads(args.feature_audit_threshold_manifest.read_text(encoding="utf-8"))
@@ -540,7 +559,11 @@ def preflight_calibration(args: argparse.Namespace) -> dict[str, Any]:
             feature_thresholds.get("status") == "approved"
             and feature_thresholds.get("formal_feature_freeze_allowed") is True
             and all(str(feature_thresholds.get(field, "")).strip() for field in ("approved_by", "approved_at"))
-            and all(feature_values.get(field) not in {None, ""} for field in ("circular_relative_l2_max", "seam_relative_l2_q95"))
+            and all(feature_values.get(field) not in {None, ""} for field in (
+                "circular_relative_l2_max", "seam_relative_l2_q95",
+                "minimum_circular_audited_image_count", "minimum_seam_audited_image_count",
+            ))
+            and feature_thresholds.get("fail_closed_rules", {}).get("require_finite_metrics") is True
         )
         if not feature_thresholds_ready:
             blockers.append("unapproved_or_incomplete:feature_thresholds")
@@ -627,8 +650,10 @@ def _materialize_rehearsal_root_cause_report(summary: dict[str, Any]) -> dict[st
         "split": {"status": "not_run_in_c1_stage", "approval_materialized": False},
         "risk_model_boundary": {"status": "not_run_until_design_c2b", "slope_model_form": ""},
         "design_threshold_blocker": {
-            "status": design_thresholds.get("status"), "formal_selection_allowed": design_thresholds.get("formal_selection_allowed"),
-            "null_thresholds": sorted(name for name, value in design_thresholds.get("thresholds", {}).items() if value is None),
+            "status": design_thresholds.get("status"),
+            "formula_contract_frozen": bool(design_thresholds.get("formula_contract_frozen")),
+            "final_numeric_threshold_status": "pending_post_c1_sha_bound_derivation",
+            "reviewer_input_approval_required": True,
         },
         "feature_threshold_blocker": {
             "status": feature_thresholds.get("status"), "formal_feature_freeze_allowed": feature_thresholds.get("formal_feature_freeze_allowed"),
@@ -792,17 +817,13 @@ def design_c2b(args: argparse.Namespace) -> dict[str, Any]:
     )
     evidence_rows = _read(args.output_dir / "c2b_task_eligibility_evidence.csv")
     _write(args.output_dir / "c2_selected_task_review_queue.csv", [row for row in evidence_rows if row.get("assignment_eligible", "").lower() in {"true", "1"}])
-    pool_gate = _final_risk_pool_gate(evidence_rows, args.threshold_manifest)
-    ready = bool(risk.get("C2_TASK_FEATURES_FROZEN")) and bool(closeout.get("C2B_BASELINE_INPUT_FROZEN")) and pool_gate["frozen"]
-    risk["task_eligibility_evidence"] = evidence
-    risk["formal_ready"] = ready
-    risk["C2B_ELIGIBLE_RISK_POOL_FROZEN"] = ready
-    risk["eligible_pool_gate"] = pool_gate
-    risk["state_machine"]["C2B_ELIGIBLE_RISK_POOL_FROZEN"] = ready
-    risk["state_machine"]["C2B_RISK_DESIGN_FROZEN"] = ready
-    (args.output_dir / "c2_task_risk.summary.json").write_text(json.dumps(risk, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    design_summary: dict[str, Any] = {"candidate_only": True, "n_feasible_candidate_designs": 0}
-    if ready:
+    preliminary_ready = bool(risk.get("C2_TASK_FEATURES_FROZEN")) and bool(closeout.get("C2B_BASELINE_INPUT_FROZEN"))
+    parameter_summary: dict[str, Any] = {"formal_design_input_ready": False}
+    profile_summary: dict[str, Any] = {"n_eligible": 0}
+    derived_thresholds: dict[str, Any] = {}
+    pool_gate: dict[str, Any] = {"frozen": False, "approved_thresholds": False, "observed": {}, "failures": ["design_inputs_not_ready"]}
+    design_input_blocker = ""
+    if preliminary_ready:
         c1_dir = args.c1_closeout_summary.parent
         parameter_summary = materialize_design_parameters(
             c1_dir / "c1_gt_quality_analysis.csv", args.output_dir / "c1_task_risk_reference.csv",
@@ -814,8 +835,50 @@ def design_c2b(args: argparse.Namespace) -> dict[str, Any]:
             args.output_dir / "c1_c2_design_parameters.csv", c1_dir / "c1_measurement_readiness_by_worker.csv",
             args.output_dir,
         )
-        if not parameter_summary["formal_design_input_ready"] or not profile_summary["n_eligible"]:
-            return {"day": 2, "phase": "risk-plan", "risk_pool_formal_ready": True, "assignment_materialized": False, "design": design_summary, "state_machine": risk["state_machine"], "blockers": ["c1_design_parameters_or_worker_profile_insufficient"]}
+        if parameter_summary["formal_design_input_ready"] and profile_summary["n_eligible"]:
+            if not args.threshold_formula_contract.exists():
+                design_input_blocker = "threshold_formula_contract_missing"
+            elif not args.capacity_manifest.exists():
+                design_input_blocker = "capacity_manifest_missing_before_threshold_review"
+            else:
+                try:
+                    validate_formula_contract(json.loads(args.threshold_formula_contract.read_text(encoding="utf-8")))
+                except (OSError, ValueError, TypeError, json.JSONDecodeError):
+                    design_input_blocker = "threshold_formula_contract_invalid"
+            if not design_input_blocker:
+                threshold_review_request = {
+                    "schema_version": "paper_a_c2b_threshold_input_review_request_v1",
+                    "formula_contract_sha256": sha256_file(args.threshold_formula_contract),
+                    "c1_design_parameters_sha256": sha256_file(args.output_dir / "c1_c2_design_parameters.csv"),
+                    "capacity_manifest_sha256": sha256_file(args.capacity_manifest),
+                    "candidate_enumeration_started": False,
+                    "required_approval_schema_version": "paper_a_c2b_threshold_input_approval_v1",
+                }
+                (args.output_dir / "c2b_threshold_input_review_request.json").write_text(
+                    json.dumps(threshold_review_request, indent=2, sort_keys=True) + "\n", encoding="utf-8",
+                )
+                if args.threshold_input_approval.exists():
+                    derived_thresholds = derive_threshold_manifest(
+                        args.threshold_formula_contract,
+                        args.output_dir / "c1_c2_design_parameters.csv",
+                        args.capacity_manifest,
+                        args.threshold_input_approval,
+                        args.threshold_manifest,
+                    )
+                    pool_gate = _final_risk_pool_gate(evidence_rows, args.threshold_manifest)
+    ready = preliminary_ready and bool(parameter_summary["formal_design_input_ready"]) and bool(profile_summary["n_eligible"]) and pool_gate["frozen"]
+    risk["task_eligibility_evidence"] = evidence
+    risk["formal_ready"] = ready
+    risk["C2B_ELIGIBLE_RISK_POOL_FROZEN"] = ready
+    risk["eligible_pool_gate"] = pool_gate
+    risk["derived_threshold_manifest_sha256"] = sha256_file(args.threshold_manifest) if derived_thresholds else ""
+    risk["threshold_formula_contract_sha256"] = sha256_file(args.threshold_formula_contract) if args.threshold_formula_contract.exists() else ""
+    risk["threshold_input_approval_sha256"] = sha256_file(args.threshold_input_approval) if args.threshold_input_approval.exists() else ""
+    risk["state_machine"]["C2B_ELIGIBLE_RISK_POOL_FROZEN"] = ready
+    risk["state_machine"]["C2B_RISK_DESIGN_FROZEN"] = ready
+    (args.output_dir / "c2_task_risk.summary.json").write_text(json.dumps(risk, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    design_summary: dict[str, Any] = {"candidate_only": True, "n_feasible_candidate_designs": 0}
+    if ready:
         worker_profile = args.output_dir / "c2b_design_worker_profile.csv"
         design_manifest = c2b.build_candidate_design_manifest(
             args.output_dir / "c2b_task_eligibility_evidence.csv", worker_profile,
@@ -831,7 +894,17 @@ def design_c2b(args: argparse.Namespace) -> dict[str, Any]:
             threshold_manifest=args.threshold_manifest,
             eligibility_evidence_csv=args.output_dir / "c2b_task_eligibility_evidence.csv",
         )
-    return {"day": 2, "phase": "risk-plan", "risk_pool_formal_ready": ready, "assignment_materialized": False, "design": design_summary, "evidence_envelope": evidence_envelope, "state_machine": risk["state_machine"], "blockers": [] if ready else ["risk_or_task_eligibility_pool_insufficient"]}
+    if ready:
+        blockers = []
+    elif design_input_blocker:
+        blockers = [design_input_blocker]
+    elif preliminary_ready and parameter_summary["formal_design_input_ready"] and profile_summary["n_eligible"] and not args.threshold_input_approval.exists():
+        blockers = ["threshold_input_approval_missing_before_candidate_enumeration"]
+    elif preliminary_ready and (not parameter_summary["formal_design_input_ready"] or not profile_summary["n_eligible"]):
+        blockers = ["c1_design_parameters_or_worker_profile_insufficient"]
+    else:
+        blockers = ["risk_or_task_eligibility_pool_insufficient"]
+    return {"day": 2, "phase": "risk-plan", "risk_pool_formal_ready": ready, "assignment_materialized": False, "design": design_summary, "evidence_envelope": evidence_envelope, "state_machine": risk["state_machine"], "blockers": blockers}
 
 
 def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
@@ -845,6 +918,14 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("C2 task risk lacks the vFinal method contract or clean commit identity")
     if not risk.get("formal_ready") or not risk.get("state_machine", {}).get("C2B_RISK_DESIGN_FROZEN"):
         raise ValueError("C2 task risk is not formally frozen")
+    if risk.get("derived_threshold_manifest_sha256") != sha256_file(args.threshold_manifest):
+        raise ValueError("C2-B derived threshold manifest is stale or unbound")
+    threshold_payload = json.loads(args.threshold_manifest.read_text(encoding="utf-8"))
+    if (
+        threshold_payload.get("schema_version") != "paper_a_c2b_design_selection_thresholds_v2"
+        or threshold_payload.get("derivation", {}).get("capacity_manifest_sha256") != sha256_file(args.capacity_manifest)
+    ):
+        raise ValueError("C2-B thresholds were not mechanically derived from the frozen capacity")
     envelope_path = args.risk_summary.parent / "c2b_evidence_freeze_envelope.json"
     if not envelope_path.exists() or risk.get("c2b_evidence_freeze_envelope_sha256") != sha256_file(envelope_path):
         raise ValueError("C2 task risk lacks the bound evidence-freeze envelope")
@@ -1053,6 +1134,7 @@ def main(argv: list[str] | None = None) -> int:
     for name in ("p1-closeout-dir", "inventory-csv", "legacy-manifest", "reference-dir", "layout-dir", "checkpoint", "config", "feature-audit-threshold-manifest", "output-dir"):
         static.add_argument(f"--{name}", type=Path, required=True)
     static.add_argument("--c1-assignment", action="append", type=Path, required=True)
+    static.add_argument("--p1-initialization-import", action="append", type=Path, required=True)
     static.add_argument("--building-registry", type=Path)
     static.add_argument("--device", default="cuda:0")
 
@@ -1093,7 +1175,7 @@ def main(argv: list[str] | None = None) -> int:
     finalize.add_argument("--adjudication-manifest", type=Path, required=True)
 
     plan = sub.add_parser("design-c2b")
-    for name in ("c1-closeout-summary", "inventory-csv", "layout-dir", "c1-task-feature-csv", "checkpoint", "building-registry", "source-split-evidence", "source-split-approval", "future-holdout-evidence", "future-holdout-approval", "history-overlap-audit", "scope-registry", "reference-registry", "feature-freeze-manifest", "static-freeze-manifest", "threshold-manifest", "output-dir"):
+    for name in ("c1-closeout-summary", "inventory-csv", "layout-dir", "c1-task-feature-csv", "checkpoint", "building-registry", "source-split-evidence", "source-split-approval", "future-holdout-evidence", "future-holdout-approval", "history-overlap-audit", "scope-registry", "reference-registry", "feature-freeze-manifest", "static-freeze-manifest", "threshold-formula-contract", "threshold-input-approval", "threshold-manifest", "capacity-manifest", "output-dir"):
         plan.add_argument(f"--{name}", type=Path, required=True)
     plan.add_argument("--device", default="auto")
 

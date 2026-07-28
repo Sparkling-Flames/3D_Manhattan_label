@@ -35,6 +35,7 @@ def materialize_geometry_consensus(
     width: int = 1024,
     height: int = 512,
     rule_manifest: Path = Path("docs/thesis_main/geometry_peer_candidate_rule_manifest_v1.json"),
+    excluded_worker_ids: set[str] | None = None,
 ) -> dict[str, Any]:
     rules = json.loads(rule_manifest.read_text(encoding="utf-8"))
     thresholds = rules.get("thresholds", {})
@@ -42,9 +43,14 @@ def materialize_geometry_consensus(
     cutoff = float(thresholds.get("similarity_cutoff", rules.get("metrics", {}).get("multimodal_similarity_cutoff")))
     tie_iou_range_cutoff = float(thresholds.get("tied_medoid_iou_range_cutoff", rules.get("loo", {}).get("tied_medoid_iou_range_cutoff")))
     source_sha = sha256_file(geometry_jsonl)
+    excluded_worker_ids = {str(worker).strip() for worker in (excluded_worker_ids or set())}
     grouped: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
     normalized_rows = []
+    excluded_geometry_rows = 0
     for row in _read_jsonl(geometry_jsonl):
+        if str(row.get("worker_id", "")).strip() in excluded_worker_ids:
+            excluded_geometry_rows += 1
+            continue
         geometry = normalize_geometry(row.get("corners_px") or [], width=width, height=height)
         record = {**row, "geometry": geometry}
         if str(row.get("eligible_for_geometry_loo", "true")).lower() not in {"true", "1"} or not str(row.get("base_task_id", "")).strip():
@@ -140,7 +146,14 @@ def materialize_geometry_consensus(
     write_csv_rows(output_dir / "geometry_worker_task_loo_C1.csv", loo_rows, fields + ["base_task_id", "geometry_context_schema_version", "geometry_context_provenance", "task_id", "worker_id", "canonical_annotation_id", "held_out_valid", "peer_count_excluding_self", "valid_k", "loo_boundary_median", "loo_wallwall_median", "q_boundary_median", "q_wallwall_median", "loo_boundary_values_json", "loo_wallwall_values_json", "q_LOO_tu", "q_LOO_primary", "q_LOO_tie_min", "q_LOO_tie_max", "q_LOO_tie_mean", "tie_sensitivity_only", "loo_consensus_status", "task_consensus_status", "task_crowd_structure_status", "worker_excluded_largest_cluster_support", "worker_excluded_second_cluster_support", "worker_excluded_unique_dominant_cluster", "worker_excluded_structure_status", "medoid_tie_sensitive", "loo_medoid_analysis_eligible", "primary_loo_eligible", "sensitivity_loo_eligible", "loo_consensus_annotation_id", "loo_consensus_worker_id", "loo_consensus_geometry_sha256", "loo_largest_cluster_support", "loo_maximum_cluster_count", "tied_medoid_count", "held_out_tied_medoid_iou_min", "held_out_tied_medoid_iou_max", "held_out_tied_medoid_iou_range", "legacy_alias", "legacy_role", "formal_use_allowed"])
     write_csv_rows(output_dir / "geometry_stability_C1.csv", stability_rows, fields + ["base_task_id", "geometry_context_schema_version", "geometry_context_provenance", "valid_k", "boundary_similarity_mean", "boundary_similarity_min", "wallwall_similarity_mean", "wallwall_similarity_min", "q_boundary_mean", "q_boundary_min", "q_wallwall_mean", "q_wallwall_min", "boundary_mode_count", "wallwall_mode_count", "boundary_largest_gap", "wallwall_largest_gap", "medoid_margin_boundary", "medoid_margin_wallwall", "leave_two_out_status", "medoid_boundary_worker_id", "medoid_wallwall_worker_id", "medoid_ambiguous", "medoid_boundary_ambiguous", "medoid_wallwall_ambiguous", "medoid_score_table_json", "medoid_worker_id", "stability_status", "peer_support", "medoid_annotation_id", "medoid_geometry_sha256", "medoid_margin", "largest_cluster_support", "second_mode_support", "leave_one_out_stability", "leave_two_out_stability", "metric_compatibility", "consensus_status", "primary_eligible", "sensitivity_eligible", "interpretation_allowed"])
     write_csv_rows(output_dir / "geometry_metric_coverage_C1.csv", coverage_rows, fields + ["base_task_id", "geometry_context_schema_version", "geometry_context_provenance", "n_observations", "valid_geometry_k", "invalid_geometry_k", "pairwise_metric_coverage"])
-    return {"n_geometry_rows": len(normalized_rows), "n_tasks": len(grouped), "n_pairwise_rows": len(pairwise_rows), "n_peer_rows": len(peer_rows), "dry_run": input_status != "formal", "interpretation_allowed": False, "rule_manifest": str(rule_manifest), "rule_manifest_sha256": sha256_file(rule_manifest)}
+    return {
+        "n_geometry_rows": len(normalized_rows), "n_tasks": len(grouped),
+        "n_pairwise_rows": len(pairwise_rows), "n_peer_rows": len(peer_rows),
+        "excluded_worker_ids": sorted(excluded_worker_ids),
+        "excluded_geometry_row_count": excluded_geometry_rows,
+        "dry_run": input_status != "formal", "interpretation_allowed": False,
+        "rule_manifest": str(rule_manifest), "rule_manifest_sha256": sha256_file(rule_manifest),
+    }
 
 
 def main(argv: list[str] | None = None) -> int:

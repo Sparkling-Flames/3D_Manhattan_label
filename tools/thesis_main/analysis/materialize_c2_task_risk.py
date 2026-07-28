@@ -109,6 +109,32 @@ def _apply_whitener(vector: np.ndarray, mean: np.ndarray, components: np.ndarray
     return ((vector - mean) @ components.T) / scale
 
 
+def _feature_audit_passes(circular: dict[str, Any], seam: dict[str, Any], thresholds: dict[str, Any]) -> tuple[bool, bool]:
+    values = thresholds.get("thresholds", {})
+    approved = (
+        thresholds.get("status") == "approved"
+        and thresholds.get("formal_feature_freeze_allowed") is True
+        and all(str(thresholds.get(field, "")).strip() for field in ("approved_by", "approved_at"))
+    )
+    try:
+        circular_value = float(circular["circular_relative_l2_max"])
+        seam_value = float(seam["seam_relative_l2_q95"])
+        circular_limit = float(values["circular_relative_l2_max"])
+        seam_limit = float(values["seam_relative_l2_q95"])
+        circular_count = int(circular["circular_audited_image_count"])
+        seam_count = int(seam["seam_audited_image_count"])
+        minimum_circular = int(values["minimum_circular_audited_image_count"])
+        minimum_seam = int(values["minimum_seam_audited_image_count"])
+    except (KeyError, TypeError, ValueError, OverflowError):
+        return False, False
+    return (
+        approved and math.isfinite(circular_value) and math.isfinite(circular_limit)
+        and circular_count >= minimum_circular and circular_value <= circular_limit,
+        approved and math.isfinite(seam_value) and math.isfinite(seam_limit)
+        and seam_count >= minimum_seam and seam_value <= seam_limit,
+    )
+
+
 def freeze_feature_reference(
     reference_dir: Path, checkpoint: Path, config: Path, cache_path: Path,
     manifest_path: Path, *, device: str = "auto", audit_threshold_manifest: Path | None = None,
@@ -140,11 +166,7 @@ def freeze_feature_reference(
     circular_path.write_text(json.dumps(circular, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     seam_path.write_text(json.dumps(seam, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     thresholds = json.loads(audit_threshold_manifest.read_text(encoding="utf-8")) if audit_threshold_manifest and audit_threshold_manifest.exists() else {}
-    values = thresholds.get("thresholds", {})
-    approved = thresholds.get("status") == "approved" and thresholds.get("formal_feature_freeze_allowed") is True
-    circular_limit, seam_limit = values.get("circular_relative_l2_max"), values.get("seam_relative_l2_q95")
-    circular_ready = approved and circular_limit not in {None, ""} and float(circular.get("circular_relative_l2_max", math.inf)) <= float(circular_limit)
-    seam_ready = approved and seam_limit not in {None, ""} and float(seam.get("seam_relative_l2_q95", math.inf)) <= float(seam_limit)
+    circular_ready, seam_ready = _feature_audit_passes(circular, seam, thresholds)
     cache_sha, circular_sha, seam_sha = sha256_file(cache_path), sha256_file(circular_path), sha256_file(seam_path)
     payload = {
         "schema_version": "paper_a_c2_feature_freeze_v2", "feature_cache_path": cache_path.resolve().as_posix(),
@@ -196,19 +218,11 @@ def refresh_feature_freeze_approval(
     if len(reference_paths) != int(payload.get("reference_image_count") or 0) or listing_sha != payload.get("reference_listing_sha256"):
         raise ValueError("reference image listing identity mismatch")
     thresholds = json.loads(audit_threshold_manifest.read_text(encoding="utf-8"))
-    values = thresholds.get("thresholds", {})
-    approved = (
-        thresholds.get("status") == "approved"
-        and thresholds.get("formal_feature_freeze_allowed") is True
-        and all(str(thresholds.get(field, "")).strip() for field in ("approved_by", "approved_at"))
-    )
     circular = json.loads(circular_path.read_text(encoding="utf-8"))
     seam = json.loads(seam_path.read_text(encoding="utf-8"))
     if circular.get("audit_basis") != "off_grid_rotation_reinference" or circular.get("four_phase_permutation_role") != "diagnostic_only":
         raise ValueError("feature circular audit is not the off-grid reinference contract")
-    circular_limit, seam_limit = values.get("circular_relative_l2_max"), values.get("seam_relative_l2_q95")
-    circular_ready = approved and circular_limit not in {None, ""} and float(circular.get("circular_relative_l2_max", math.inf)) <= float(circular_limit)
-    seam_ready = approved and seam_limit not in {None, ""} and float(seam.get("seam_relative_l2_q95", math.inf)) <= float(seam_limit)
+    circular_ready, seam_ready = _feature_audit_passes(circular, seam, thresholds)
     payload.update({
         "circular_shift_invariant": circular_ready,
         "off_grid_circular_robustness": circular_ready,

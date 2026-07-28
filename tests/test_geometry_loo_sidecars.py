@@ -82,6 +82,20 @@ def test_geometry_materializer_emits_candidate_sidecars_with_common_fields(tmp_p
     loo = list(csv.DictReader((tmp_path / "geometry_worker_task_loo_C1.csv").open(encoding="utf-8")))
     assert all(row["loo_boundary_median"] for row in loo)
     assert all(row["loo_wallwall_median"] for row in loo)
+
+
+def test_geometry_materializer_excludes_administratively_removed_worker_from_peer_pool(tmp_path: Path) -> None:
+    geometry = tmp_path / "geometry.jsonl"
+    geometry.write_text("\n".join(json.dumps({"task_id": "t1", "base_task_id": "b1", "worker_id": worker, "condition": "manual", "schema_version": "v4", "corners_px": [[100, 100 + offset], [100, 400], [500, 100 + offset], [500, 400]]}) for worker, offset in [("w1", 0), ("w2", 1), ("w3", 2)]) + "\n", encoding="utf-8")
+
+    summary = materialize_geometry_consensus(geometry, tmp_path, excluded_worker_ids={"w3"})
+
+    assert summary["excluded_worker_ids"] == ["w3"]
+    assert summary["excluded_geometry_row_count"] == 1
+    pairs = list(csv.DictReader((tmp_path / "geometry_pairwise_similarity_C1.csv").open(encoding="utf-8")))
+    assert {(row["worker_id_left"], row["worker_id_right"]) for row in pairs} == {("w1", "w2")}
+    loo = list(csv.DictReader((tmp_path / "geometry_worker_task_loo_C1.csv").open(encoding="utf-8")))
+    assert {row["worker_id"] for row in loo} == {"w1", "w2"}
 def test_stable_medoid_tie_uses_geometry_sha_tiebreak_and_keeps_q_loo(monkeypatch) -> None:
     records = [
         {"worker_id": str(i), "task_id": "t", "canonical_annotation_id": f"c{i}", "geometry": {"valid": True, "width": 10, "height": 5, "pairs": [{"x": 1, "y_ceiling": 1, "y_floor": 4}], "tag": i}}
