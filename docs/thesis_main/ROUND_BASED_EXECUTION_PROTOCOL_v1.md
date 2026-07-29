@@ -401,3 +401,11 @@ V_prod = p_ordinary * V_ordinary + p_stress * V_stress
 4. 不用 T1/V1 结果选择版本。
 
 本次 vFinal 迁移是用户明确授权的正式协议替换，不是保留旧 RQ3 口径的兼容 amendment。
+
+## 9. C1 variable-k 与滚动招募 amendment
+
+Stage 1 为 P1，Stage 2 为 C1/C2-B/C2-A-RP，Stage 3 为 T1/V1。Stage 3 只能在 Calibration closure、最终 pooled worker profile、Strong Global/Full 参数及 Validation roster 同时冻结后启动；冻结后新增 worker、profile、threshold、weight 或 fallback 一律拒绝。
+
+正式 C1 evidence provenance 仅为 original assignment、SHA 绑定 authorized replacement、late-entry calibration assignment 与 outside submission。前三类仅在 canonical、assignment/estimand eligibility 通过后进入相应分析；outside 永不进入 primary。W014 永久 excluded；W034=original+17、W001=original+3；W034 B-004/B-022 与任何普通 outside 只作 exposure/process audit。每一 task-condition-estimand 独立计算 unique-worker k 与 support，不得以固定 k=5 或 pairwise edge 数替代。
+
+rolling enrollment 默认关闭。启用时仅在 Stage 3 前、按预注册窗口与冻结 workload template 生成 late-entry assignment；新人先通过同版本 P1，不得成为 W014 replacement，不得以结果选择任务，并保留 original-only/pooled sensitivity。W034 timing 需 owner-valid sentinel；未通过或早于验证的记录 timing not-evaluable，且不影响 capability 其他轴。

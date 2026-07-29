@@ -52,6 +52,8 @@ from tools.thesis_main.analysis.c1_c2_mainline import (
 from tools.thesis_main.analysis.materialize_c1_preannotation_task_features import materialize as materialize_preannotation_features
 from tools.thesis_main.analysis.c1_task_adjusted_quality import _BootstrapSupportFailure, estimate_task_adjusted_qgt
 from tools.thesis_main.analysis.geometry_consensus.materialize import materialize_geometry_consensus
+from tools.thesis_main.analysis.materialize_c1_estimand_specific_task_support import materialize as materialize_estimand_specific_task_support
+from tools.thesis_main.analysis.materialize_c1_three_state_task_tags import materialize as materialize_three_state_task_tags
 from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import build_source as build_p1_c1_source, materialize as materialize_predictive_association
 from tools.thesis_main.analysis.c2b_static_evidence import validate_p1_integrity_bundle
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
@@ -247,6 +249,8 @@ def materialize(
     reference_amendment: Path | None = None, outside_assignment_disposition: Path | None = None,
     completion_disposition: Path | None = None, c1_active_log_freeze_manifest: Path | None = None,
     authorized_reassignment_manifest: Path | None = None, building_registry: Path | None = None,
+    late_entry_assignment_manifest: Path | None = None,
+    w034_active_time_validation_manifest: Path | None = None,
     collection_closure_manifest: Path | None = None,
     p1_integrity_dir: Path | None = None,
     active_log_snapshot_bound: bool = False,
@@ -293,6 +297,8 @@ def materialize(
         "reference_amendment": reference_amendment, "outside_assignment_disposition": outside_assignment_disposition,
         "completion_disposition": completion_disposition,
         "authorized_reassignment_manifest": authorized_reassignment_manifest,
+        "late_entry_assignment_manifest": late_entry_assignment_manifest,
+        "w034_active_time_validation_manifest": w034_active_time_validation_manifest,
         "c1_active_log_freeze_manifest": c1_active_log_freeze_manifest,
         "collection_closure_manifest": collection_closure_manifest,
     }.items() if path is not None}
@@ -380,9 +386,14 @@ def materialize(
         require_complete=False, input_status=input_status,
         duplicate_adjudication_csv=review_snapshots.get("duplicate_adjudication"),
         authorized_reassignment_manifest=review_snapshots.get("authorized_reassignment_manifest"),
+        late_entry_assignment_manifest=review_snapshots.get("late_entry_assignment_manifest"),
+        w034_active_time_validation_manifest=review_snapshots.get("w034_active_time_validation_manifest"),
         candidate_inventory_csv=fixed_snapshots["candidate_inventory"],
         p1_canonical_csv=p1_snapshot("prescreen_canonical_annotations.csv"),
         p1_admission_csv=p1_snapshot("prescreen_worker_admission.csv"),
+    )
+    canonical_summary["three_state_task_tags"] = materialize_three_state_task_tags(
+        output_dir / "c1_canonical_meta_observations.csv", output_dir,
     )
     # Canonicalization owns immutable row/meta evidence. Geometry is intentionally
     # delayed until the legal peer pool has been frozen below.
@@ -409,6 +420,7 @@ def materialize(
         output_dir / "c1_canonical_geometry.jsonl", output_dir,
         completion_disposition_csv=review_snapshots.get("completion_disposition"), collection_window_closed=collection_window_closed,
         authorized_reassignment_csv=review_snapshots.get("authorized_reassignment_manifest"),
+        late_entry_assignment_csv=review_snapshots.get("late_entry_assignment_manifest"),
     )
     completion_rows_for_exclusion = read_csv(output_dir / "c1_worker_completion_audit.csv")
     administratively_excluded_workers = {
@@ -472,6 +484,12 @@ def materialize(
     completion_summary["effective_task_support"] = materialize_effective_task_support(
         [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_geometry_pool_eligibility.csv", output_dir,
+    )
+    completion_summary["estimand_specific_task_support"] = materialize_estimand_specific_task_support(
+        [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
+        output_dir / "c1_canonical_annotations.csv", output_dir / "c1_row_analysis_eligibility.csv", output_dir,
+        authorized_path=review_snapshots.get("authorized_reassignment_manifest"),
+        late_path=review_snapshots.get("late_entry_assignment_manifest"),
     )
     roster_summary = materialize_analysis_rosters(
         output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_canonical_annotations.csv", output_dir,

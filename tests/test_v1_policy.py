@@ -43,6 +43,7 @@ def _manifest() -> dict:
             "exceptional_cap": 4,
             "per_worker_arm_quota": 1,
             "seed": 73,
+            "formal_structure_min_k": 3,
         },
         "aggregation": {
             "min_q_boundary": 0.95,
@@ -205,6 +206,31 @@ def test_gt_fields_do_not_change_routing_or_aggregation() -> None:
     assert aggregate_submissions(base, manifest, at_cap=True) == aggregate_submissions(poisoned, manifest, at_cap=True)
 
 
+def test_gt_blind_medoid_tie_break_does_not_consume_global_quality() -> None:
+    manifest = _manifest()
+    geometry = _geometry()
+    base = [
+        _valid(geometry, worker_id="w1", annotation_id="a1", global_lcb=0.1),
+        _valid(geometry, worker_id="w2", annotation_id="a2", global_lcb=0.9),
+        _valid(geometry, worker_id="w3", annotation_id="a3", global_lcb=0.5),
+    ]
+    changed = [{**row, "global_lcb": 1.0 - float(row["global_lcb"])} for row in base]
+    first = aggregate_submissions(base, manifest, at_cap=True, seed_key="task-1")
+    second = aggregate_submissions(changed, manifest, at_cap=True, seed_key="task-1")
+    assert first["terminal_status"] == second["terminal_status"] == "resolved"
+    assert first["selected_annotation_id"] == second["selected_annotation_id"]
+
+
+def test_two_legal_submissions_cannot_formally_resolve() -> None:
+    manifest = _manifest()
+    rows = [_valid(_geometry(), worker_id="w1"), _valid(_geometry(), worker_id="w2")]
+    assert aggregate_submissions(rows, manifest, at_cap=False)["terminal_status"] == "needs_more"
+    assert aggregate_submissions(rows, manifest, at_cap=True)["terminal_status"] == "unresolved"
+    duplicate_worker = rows + [_valid(_geometry(), worker_id="w1")]
+    with pytest.raises(ValueError, match="canonical adjudication"):
+        aggregate_submissions(duplicate_worker, manifest, at_cap=True)
+
+
 def test_multimodal_is_unresolved_and_no_legal_submission_is_severe() -> None:
     manifest = _manifest()
     first = _geometry()
@@ -235,7 +261,12 @@ def test_formal_manifest_requires_sha_dependencies_and_rejects_dry_run(tmp_path)
     dependency = tmp_path / "profile.csv"
     dependency.write_text("worker_id\nw1\n", encoding="utf-8")
     manifest = _manifest()
-    manifest["dependencies"] = [{"path": dependency.name, "sha256": sha256_file(dependency)}]
+    stage3 = tmp_path / "stage3.json"
+    stage3.write_text(json.dumps({"schema_version": "paper_a_stage3_freeze_gate_v2", "STAGE3_LAUNCH_ALLOWED": True}), encoding="utf-8")
+    manifest["dependencies"] = [
+        {"path": dependency.name, "sha256": sha256_file(dependency)},
+        {"path": stage3.name, "sha256": sha256_file(stage3), "role": "stage3_freeze_gate"},
+    ]
     path = tmp_path / "freeze.json"
     path.write_text(json.dumps(manifest), encoding="utf-8")
     loaded = load_frozen_manifest(path, sha256_file(path), input_status="formal")
@@ -255,22 +286,31 @@ def test_csv_materializer_parses_geometry_json_and_writes_formal_outputs(tmp_pat
             writer.writerows(rows)
 
     manifest_path = tmp_path / "freeze.json"
-    manifest_path.write_text(json.dumps(_manifest()), encoding="utf-8")
+    manifest = _manifest()
+    stage3 = tmp_path / "stage3.json"
+    stage3.write_text(json.dumps({"schema_version": "paper_a_stage3_freeze_gate_v2", "STAGE3_LAUNCH_ALLOWED": True}), encoding="utf-8")
+    manifest["dependencies"] = [{"path": stage3.name, "sha256": sha256_file(stage3), "role": "stage3_freeze_gate"}]
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
     tasks = tmp_path / "tasks.csv"
     candidates = tmp_path / "candidates.csv"
     outcomes = tmp_path / "outcomes.csv"
     capacity = tmp_path / "capacity.csv"
     write_csv(tasks, [_task("t1", "strong_global")])
-    write_csv(candidates, [{**_candidate("w1", 1.0), "task_id": "t1"}, {**_candidate("w2", 0.9), "task_id": "t1"}])
+    write_csv(candidates, [
+        {**_candidate("w1", 1.0), "task_id": "t1"},
+        {**_candidate("w2", 0.9), "task_id": "t1"},
+        {**_candidate("w3", 0.8), "task_id": "t1"},
+    ])
     corners = json.dumps([[100, 100], [100, 400], [600, 100], [600, 400]])
     write_csv(outcomes, [
         {"task_id": "t1", "worker_id": "w1", "annotation_id": "a1", "outcome": "completed_valid", "structurally_valid": "true", "corners_px": corners},
         {"task_id": "t1", "worker_id": "w2", "annotation_id": "a2", "outcome": "completed_valid", "structurally_valid": "true", "corners_px": corners},
+        {"task_id": "t1", "worker_id": "w3", "annotation_id": "a3", "outcome": "completed_valid", "structurally_valid": "true", "corners_px": corners},
     ])
     write_csv(capacity, [
         {"block_id": "b1", "worker_id": worker, "availability_snapshot_id": "snap-1", "available": "true",
          "total_capacity": "2", "strong_global_quota": "1", "full_integrated_quota": "1"}
-        for worker in ("w1", "w2")
+        for worker in ("w1", "w2", "w3")
     ])
     output = tmp_path / "out"
     audit = materialize_v1_policy(

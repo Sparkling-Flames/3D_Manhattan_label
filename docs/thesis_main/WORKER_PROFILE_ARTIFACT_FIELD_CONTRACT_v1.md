@@ -494,3 +494,9 @@ provisional_rank, global_rank
 `routing_component_evidence.csv` 以 `worker_id + component_family` 为键，分列保存 P1 raw、P1
 integrity-filtered、P1→C1 predictive、C2-B confirmatory 与 validated component。没有正式 C2-B 时必须为
 `pending_c2b_confirmation`，且 `c2b_confirmed=false`、`full_component_eligible=false`。
+
+## 追加：variable-k、Strong Global 与 enrollment profile
+
+worker profile 必须按 task-condition-estimand-specific final unique-worker support 解释 Q_GT、peer、LOO、structural 与 timing，不得以单一固定 k 或 edge count 代替。peer profile 使用 task-level equal-weight aggregate，并保存 cluster support/share/normalized margin 与 stable/multimodal status。W014 的正式 profile 固定 excluded；W034 必须同时可审计 original-only 与 original+authorized（17 条）profile，W001 对应 original+authorized（3 条）；outside 不进入任何 primary component。
+
+`S_G` 必须为冻结 administratively eligible、Q_GT-estimable cohort 内 `z(Q_GT_EB)`，而非 LCB；LCB 仅为 gate/sensitivity。`F_struct_raw`、`F_struct_EB` 与 interval 必须分列。Full profile 只有完整 component evidence、support、weight、threshold、fallback、version 与 input SHA 时可 formal；否则 fail closed。若滚动招募开启，profile 明确标示 original-only/pooled cohort 与 late-entry provenance；Stage 3 roster freeze 后不可再改变。

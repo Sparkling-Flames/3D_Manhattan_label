@@ -301,3 +301,9 @@ code commit
 ```
 
 Main 开始后的任何修改只能作为不改变主要合同的勘误或在 outcome 不可见时登记的 amendment；不得回流 P1/C1/C2。
+
+## 追加：C1 assignment provenance 与 rolling enrollment
+
+C1 roster 的正式 assignment provenance 固定为 `original_assignment`、`authorized_replacement_assignment`、`late_entry_calibration_assignment`、`outside_assignment_submission`。授权 replacement 必须绑定 original manifest/row、授权记录、分发证据和 SHA；outside submission 只进入 raw/exposure ledger，不能因 generic authorized exception 进入 GT、peer、LOO、structural 或 time。W014 不生成 replacement；W034 仅接收 17 条 non-anchor 授权补充任务，W001 仅接收 3 条授权补充任务，W034 的 B-004/B-022 永不再次分配。
+
+每个 task-condition 按 estimand 计算 final unique-worker support；duplicate revision 只保留冻结 canonical row。active-time 仅在 owner-valid sentinel 和日志绑定通过后标记 expected/eligible，不回填既往缺失。rolling enrollment 默认关闭；启用时以独立 late-entry registry/manifest 记录 P1 pass、版本、窗口、seed、building/exposure，且仅新增行、不重排原 cohort。Stage 3 roster freeze 后停止一切招募与 assignment 变更。

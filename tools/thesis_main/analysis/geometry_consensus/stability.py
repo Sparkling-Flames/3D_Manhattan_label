@@ -148,9 +148,13 @@ def crowd_structure(
             "geometry_sha256": candidates[0][1] if candidates else "",
         }
     largest_medoid, second_medoid = medoid(largest), medoid(second)
+    valid_k = len(valid)
     return {
-        "valid_k": len(valid), "cluster_count": (1 + int(bool(second)) + max(0, len(remainder) - len(second))) if largest else 0,
+        "valid_k": valid_k, "cluster_count": (1 + int(bool(second)) + max(0, len(remainder) - len(second))) if largest else 0,
         "largest_cluster_support": len(largest), "second_cluster_support": len(second),
+        "largest_cluster_share": len(largest) / valid_k if valid_k else None,
+        "second_cluster_share": len(second) / valid_k if valid_k else None,
+        "normalized_cluster_margin": (len(largest) - len(second)) / valid_k if valid_k else None,
         "largest_cluster_worker_ids": ";".join(str(valid[i].get("worker_id", "")) for i in largest),
         "second_cluster_worker_ids": ";".join(str(valid[i].get("worker_id", "")) for i in second),
         "largest_cluster_medoid_annotation_id": largest_medoid["annotation_id"],

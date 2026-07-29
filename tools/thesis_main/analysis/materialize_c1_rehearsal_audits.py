@@ -62,6 +62,7 @@ def materialize_completion_support(
     canonical_csv: Path, geometry_jsonl: Path, output_dir: Path, *, min_valid_k: int = 3,
     completion_disposition_csv: Path | None = None, collection_window_closed: bool = False,
     authorized_reassignment_csv: Path | None = None,
+    late_entry_assignment_csv: Path | None = None,
 ) -> dict[str, Any]:
     assignments: dict[tuple[str, str, str, str], dict[str, Any]] = {}
     for path in assignment_paths:
@@ -80,6 +81,13 @@ def materialize_completion_support(
         if key in assignments:
             raise ValueError(f"authorized replacement duplicates an existing assignment edge: {key}")
         assignments[key] = {**row, "worker_id": key[0], "condition": str(row.get("condition", "")).strip().lower(), "assignment_provenance": "authorized_replacement_assignment"}
+    for row in read_csv(late_entry_assignment_csv) if late_entry_assignment_csv and late_entry_assignment_csv.exists() else []:
+        key = _assignment_key(row)
+        if key in assignments:
+            raise ValueError(f"late-entry assignment duplicates an existing assignment edge: {key}")
+        if row.get("assignment_provenance") != "late_entry_calibration_assignment":
+            raise ValueError("late-entry completion support requires frozen provenance")
+        assignments[key] = {**row, "condition": str(row.get("condition", "")).strip().lower()}
 
     runtime = {
         (row.get("project_id", ""), row.get("ls_runtime_task_id", "")):
@@ -1031,6 +1039,9 @@ def materialize_row_analysis_eligibility(
         structural_status = structural_row.get("structural_validation_status", "not_evaluable")
         independence_status = independence.get(identity, {}).get("independence_status", "not_evaluable")
         outside_override = _truth(outside.get(identity, {}).get("process_eligible_override"))
+        primary_assignment_reasons = []
+        if not _truth(row.get("assigned_expected")) or _truth(row.get("outside_assignment_submission")):
+            primary_assignment_reasons.append("outside_assignment")
         process_reasons = []
         if row.get("worker_id", "") in administratively_excluded_workers:
             process_reasons.append("administrative_exclusion")
@@ -1050,7 +1061,7 @@ def materialize_row_analysis_eligibility(
         loo_row = loo.get(identity, {})
         compatible_peer_count = _int(loo_row.get("peer_metric_compatible_count", loo_row.get("peer_count_excluding_self")))
         peer_reference_eligible = compatible_peer_count >= minimum_peer_count
-        common_reasons = [*process_reasons]
+        common_reasons = [*process_reasons, *primary_assignment_reasons]
         if not independence_eligible: common_reasons.append("independence_not_evaluable")
         if not scope_eligible: common_reasons.append("scope_not_resolved_in_scope")
         global_reasons = [*common_reasons]
@@ -1094,6 +1105,10 @@ def materialize_row_analysis_eligibility(
             "loo_medoid_analysis_eligible": not medoid_reasons, "loo_medoid_analysis_exclusion_reason": ";".join(medoid_reasons),
             "strict_loo_analysis_eligible": strict_loo_eligible,
             "loo_analysis_eligible": strict_loo_eligible, "loo_analysis_exclusion_reason": ";".join(loo_reasons),
+            "time_analysis_eligible": not common_reasons and _truth(row.get("active_time_expected")) and _truth(row.get("primary_active_time_eligible")),
+            "semi_correction_analysis_eligible": not common_reasons and row.get("condition", "").lower() == "semi",
+            "predictive_validity_analysis_eligible": not common_reasons,
+            "routing_feature_analysis_eligible": not common_reasons,
             "legacy_role": "strict_sensitivity", "formal_use_allowed": False,
             "structural_opportunity_eligible": not structural_reasons, "structural_opportunity_exclusion_reason": ";".join(structural_reasons),
             "rule_version": rule_version, "source_sha256": source_sha,
@@ -1219,9 +1234,8 @@ def materialize_geometry_pool_eligibility(
     for row in read_csv(canonical_csv):
         identity = row.get("canonical_annotation_id", "")
         reasons = []
-        outside_override = _truth(outside.get(identity, {}).get("process_eligible_override"))
         if row.get("worker_id", "") in excluded_workers: reasons.append("administrative_exclusion")
-        if (not _truth(row.get("assigned_expected")) or _truth(row.get("outside_assignment_submission"))) and not outside_override: reasons.append("outside_assignment")
+        if not _truth(row.get("assigned_expected")) or _truth(row.get("outside_assignment_submission")): reasons.append("outside_assignment")
         if _truth(row.get("duplicate_worker_task_submission")): reasons.append("duplicate_or_revision")
         if versions.get(row.get("annotation_id", "")) != "selected_canonical": reasons.append("canonical_version_not_disposed")
         if independence.get(identity, {}).get("independence_status", "") not in {"independent", "independent_by_project_provenance", "independent_by_annotation_disposition"}: reasons.append("independence_not_evaluable")
@@ -1379,9 +1393,9 @@ def materialize_three_track_worker_state(
             loo_by_worker[row.get("worker_id", "")].append((row.get("base_task_id", ""), float(row["q_LOO_tu"])))
         except (TypeError, ValueError):
             pass
-    peer_by_worker: dict[str, list[tuple[str, float]]] = defaultdict(list)
+    peer_by_worker: dict[str, list[tuple[str, float, str, str]]] = defaultdict(list)
     for row in read_csv(peer_csv) if peer_csv and peer_csv.exists() else []:
-        try: peer_by_worker[row.get("worker_id", "")].append((row.get("base_task_id", ""), float(row["R_peer_median"])))
+        try: peer_by_worker[row.get("worker_id", "")].append((row.get("base_task_id", ""), float(row["R_peer_median"]), row.get("dataset_group") or row.get("pool", ""), row.get("task_crowd_structure_status", "")))
         except (TypeError, ValueError): pass
     structural_eb = {row.get("worker_id", ""): row for row in read_csv(structural_eb_csv)} if structural_eb_csv and structural_eb_csv.exists() else {}
     struct = defaultdict(lambda: {"opportunity": 0, "failure": 0})
@@ -1433,11 +1447,13 @@ def materialize_three_track_worker_state(
                 bootstrap.append(sum(task_means[task] for task in sampled) / len(sampled))
             bootstrap.sort()
         opportunity = struct[worker]["opportunity"]
-        def aggregate(items: list[tuple[str, float]]) -> tuple[float | str, int]:
+        def aggregate(items: list[tuple]) -> tuple[float | str, int]:
             by = defaultdict(list)
-            for task, value in items: by[task].append(value)
-            values_ = [sum(group) / len(group) for group in by.values()]
-            return (sum(values_) / len(values_) if values_ else "", len(values_))
+            for item in items:
+                task, value = item[0], item[1]
+                by[task].append(value)
+            values_ = [__import__("statistics").median(group) for group in by.values()]
+            return (__import__("statistics").median(values_) if values_ else "", len(values_))
         def interval(items: list[tuple[str, float]], label: str) -> tuple[float | str, float | str]:
             by = defaultdict(list)
             for task, value in items: by[task].append(value)
@@ -1448,6 +1464,10 @@ def materialize_three_track_worker_state(
                 sample = [rng.choice(tasks) for _task in tasks]; draws.append(sum(means[task] for task in sample) / len(sample))
             draws.sort(); return draws[int(.025 * (len(draws) - 1))], draws[int(.975 * (len(draws) - 1))]
         peer_value, peer_support = aggregate(peer_by_worker[worker])
+        peer_anchor, _ = aggregate([item for item in peer_by_worker[worker] if "anchor" in item[2].lower()])
+        peer_core, _ = aggregate([item for item in peer_by_worker[worker] if "core" in item[2].lower()])
+        peer_semi, _ = aggregate([item for item in peer_by_worker[worker] if "semi" in item[2].lower()])
+        peer_stable, _ = aggregate([item for item in peer_by_worker[worker] if item[3] != "supported_multimodal"])
         medoid_value, medoid_support = aggregate(medoid_by_worker[worker])
         peer_lower, peer_upper = interval(peer_by_worker[worker], "peer")
         medoid_lower, medoid_upper = interval(medoid_by_worker[worker], "medoid")
@@ -1478,11 +1498,17 @@ def materialize_three_track_worker_state(
             "R_LOO_CI_upper": bootstrap[int(.975 * (len(bootstrap) - 1))] if bootstrap else "",
             "R_LOO_LCB": bootstrap[int(.025 * (len(bootstrap) - 1))] if bootstrap else "",
             "R_LOO_bootstrap_replicates": 2000 if bootstrap else 0,
-            "R_peer_median": peer_value, "R_peer_CI_lower": peer_lower, "R_peer_CI_upper": peer_upper, "R_peer_support": peer_support,
+            "R_peer_median": peer_value, "R_peer_all": peer_value, "R_peer_anchor": peer_anchor, "R_peer_core": peer_core, "R_peer_semi": peer_semi, "R_peer_stable": peer_stable,
+            "R_peer_CI_lower": peer_lower, "R_peer_CI_upper": peer_upper, "R_peer_support": peer_support,
             "R_LOO_medoid": medoid_value, "R_LOO_medoid_CI_lower": medoid_lower, "R_LOO_medoid_CI_upper": medoid_upper, "R_LOO_medoid_support": medoid_support,
             "R_LOO_strict": sum(values) / len(values) if values else "", "R_LOO_strict_support": loo_support,
             "peer_profile_status": peer_status, "medoid_loo_status": medoid_status,
             "strict_loo_status": "insufficient_support" if loo_support < 3 else "weak_descriptive" if loo_support < 5 else "estimated",
+            "Q_GT_status": "estimated" if gt_support else "not_evaluable",
+            "R_peer_status": peer_status,
+            "F_struct_status": "estimated" if opportunity else "not_evaluable",
+            "R_LOO_medoid_status": medoid_status,
+            "R_LOO_strict_status": "insufficient_support" if loo_support < 3 else "weak_descriptive" if loo_support < 5 else "estimated",
             "peer_decision_usable": peer_status == "estimated", "medoid_loo_decision_usable": medoid_status == "estimated",
             "F_struct": struct[worker]["failure"] / opportunity if opportunity else "",
             "F_struct_EB": structural_eb.get(worker, {}).get("F_struct_EB", ""),

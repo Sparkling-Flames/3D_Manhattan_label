@@ -296,3 +296,11 @@ V_prod = p_ordinary * V_ordinary + p_stress * V_stress
 - 所有 downgrade、deviation、freeze version、manifest SHA 和 code commit。
 
 不得虚构、插补或提前填写尚未产生的正式 C1/T1/V1 结果。
+
+## 10. C1 variable-k 与 Stage 3 分析 amendment
+
+Stage 1=P1，Stage 2=C1/C2-B/C2-A-RP，Stage 3=T1/V1。C1 正式分析仅使用 original、SHA-bound authorized replacement 或 registered late-entry calibration assignment 的 canonical evidence；outside submission（包括 W034 B-004/B-022）保留审计但排除 primary。W014 永久 excluded；W034=original+17、W001=original+3，尚未形成 canonical eligible submission 的补充任务不得提前贡献证据。
+
+所有 support、eligibility 与 k 按 `base_task_id × condition × estimand` 计算 final unique worker。GT、peer、LOO、structural 与 active-time 可有不同 k；duplicate 不重复计数。peer 先计算 task-level statistic，再对 task 等权汇总；cluster 同时报 absolute support、share、normalized margin，supported multimodal 不进入 stable peer。active-time 的 W034 补充任务须在 sentinel 后 owner-valid；旧缺失保持 timing ineligible，不得补零或影响其他 capability estimand。
+
+Strong Global 的正式 rank score 为冻结 cohort 内 `S_G=z(Q_GT_EB)`；`Q_GT_EB_LCB` 仅作 quality gate、区间和 sensitivity。Structural 正式解释使用 EB 及其区间，不得以 raw failure rate 冒充 EB。Full/V1 必须在 Stage 3 global freeze 前固定 whitelist、weights、support、cap、threshold、margin、profile/version、component status/interval、input SHA 及 formal minimum worker/cluster rule；GT-blind medoid tie 不读取 worker quality。rolling enrollment 默认关闭；激活时新人按既定 P1/C1/C2 规则进入并报告 pooled 与 original-only sensitivity。学习效应只报告顺序/版本/provenance，不加入复杂主模型。

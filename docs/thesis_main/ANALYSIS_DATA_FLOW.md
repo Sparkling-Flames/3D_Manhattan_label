@@ -140,8 +140,11 @@ C2 frozen worker profile
 Strong Global：
 
 ```text
-S_u_G = LCB(Q_u_GT_task_adjusted)
+在冻结的 administratively eligible、Q_GT-estimable cohort 上：
+S_u_G = z(Q_u_GT_EB)
 ```
+
+`Q_GT_EB_LCB` 仅用于 safety gate、不确定性和 sensitivity，不能作为正式排序。Structural 流必须区分 raw、EB 和 interval。
 
 Full：
 
@@ -225,3 +228,9 @@ downgrade / warning / not-evaluable counts
 ## 8. 兼容说明
 
 旧 `quality_report_*.csv`、`reliability_report_*.csv`、`r_u_calib`、`T_u/U_u` 可继续作为兼容/诊断字段读取；正式解释分别映射到 task-level quality、LOO compatibility 和 raw diagnostic risk。旧 notebook 中“按 r_u 重分配并与随机比较”的示例不是当前 RQ3 正式数据流。
+
+## 9. C1 provenance、variable-k 与滚动招募流
+
+`original_assignment`、SHA-bound `authorized_replacement_assignment` 与 registered `late_entry_calibration_assignment` 先经 canonicalization、duplicate resolution 和 estimand eligibility，再分别进入 GT/peer/LOO/structural/time；`outside_assignment_submission` 仅流向 raw/export、exposure 与 process audit。W014 永久在 primary 分支前排除；W034 的 17 条与 W001 的 3 条只在授权、提交及资格均齐备后加入，W034 B-004/B-022 仍停留 outside 分支。每个分析分支按 task-condition-estimand 形成 final unique-worker k，peer 先 task-level 后等权汇总，并输出 crowd support/share/normalized margin。
+
+W034 active-time 分支必须先消费 owner-valid sentinel validation manifest；未通过、早于验证或缺失的行只标为 timing not-evaluable，不得污染其他 capability 分支。rolling enrollment 默认关闭；启用时从 P1 pass 和冻结 workload template 生成独立 late-entry branch，不修改原 roster，并输出 original-only 与 pooled profile。最终将 quality、peer、LOO、row eligibility、structural EB、completion、building、provenance、active-time、enrollment 的 SHA 一并输入 Stage 3 freeze；V1 仅消费该冻结 roster/parameters，GT-blind aggregation 不读取政策质量分数。

@@ -24,7 +24,11 @@ def test_crowd_structure_4_1_and_peer_profiles(monkeypatch):
 
 def test_crowd_structure_3_2_is_supported_multimodal(monkeypatch):
     monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.stability.pairwise_similarity", _similarity)
-    assert crowd_structure(_records([0, 0, 0, 1, 1]))["task_crowd_structure_status"] == "supported_multimodal"
+    result = crowd_structure(_records([0, 0, 0, 1, 1]))
+    assert result["task_crowd_structure_status"] == "supported_multimodal"
+    assert result["largest_cluster_share"] == .6
+    assert result["second_cluster_share"] == .4
+    assert result["normalized_cluster_margin"] == .2
 
 
 def test_crowd_structure_3_1_1_has_no_supported_second_mode(monkeypatch):

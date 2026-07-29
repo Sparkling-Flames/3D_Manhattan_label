@@ -1791,3 +1791,13 @@ freeze version
 - 以离线 replay 替代前瞻 V1；
 - 旧的动态冗余固定参数；
 - 其他与当前新主线冲突的旧协议。
+
+## 追加：C1 variable-k、滚动招募与 Stage 3 冻结合同
+
+Stage 1=Pilot/PreScreen（P1），Stage 2=Calibration（C1、C2-B、C2-A-RP），Stage 3=Main（T1、V1）；Stage 3 不得提前启动。正式 C1 证据仅限 `original_assignment`、SHA 绑定的 `authorized_replacement_assignment`、预注册的 `late_entry_calibration_assignment` 和其 canonical submission；`outside_assignment_submission` 仅保留 raw、exposure 与 process-integrity 审计，永不进入 primary GT、peer、LOO、structural 或 timing。
+
+W014 保留 raw evidence 但永久排除正式 estimand；W034 的 capability 为 original 与 17 条授权任务并集，W001 为 original 与 3 条授权任务并集。W034 的 B-004/B-022 属 outside submission；普通 outside 不得因 generic exception 进入正式池。任务支持为 task-condition-estimand-specific 的变量 k，不以全局 k=5 替代；peer 先形成 task-level 指标、再对 task 等权汇总，pairwise edge 数不增加统计权重，并报告 cluster absolute support、share 与 normalized margin。
+
+W034 的 17 条任务仅在 owner-valid active-time sentinel 通过后提供 timing evidence，且不得回填旧缺失日志。rolling enrollment 默认 `activated=false`；若在 Stage 3 前激活，新人必须通过同版本 P1 并使用冻结 workload template，作为 late entry 而非 replacement，最终同时报告 original-only 与 pooled sensitivity。Stage 3 前一次性冻结 pooled profile、权重、阈值、fallback 与 Validation roster，之后禁止增补 worker 或修改这些对象。学习效应仅保留顺序、版本和 provenance 描述，不建立复杂主模型。
+
+Strong Global 在冻结的 administratively eligible、Q_GT-estimable cohort 上以 `S_G=z(Q_GT_EB)` 排序；LCB 仅用于 safety gate 和 sensitivity。Structural 同时报 raw、EB 与区间；Full/V1 的正式 manifest 必须完整绑定 component、support、threshold、weight、fallback、输入 SHA 和 formal minimum worker/cluster rule，缺失即 fail closed，GT-blind aggregation 不读取政策质量分数。

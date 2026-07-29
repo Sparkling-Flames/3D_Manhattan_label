@@ -1,180 +1,24 @@
-# 测试目录结构
+# Test suite classification
 
-此目录包含 HOHONET 标注分析工具链的测试代码。
+`tests/` 保持扁平布局，以兼容 `AGENTS.md`、CI 和本地定向 `pytest` 命令；分类通过文件名前缀和本索引完成，不为整理目录而移动仍在使用的测试。
 
-## 目录结构
+## Categories
 
-```
-tests/
-├── __init__.py
-├── conftest.py              # pytest 配置与共享 fixtures
-├── test_analyze_quality.py  # 核心分析脚本单元测试
-├── fixtures/                # 当前在库的测试用数据
-│   ├── sample_export_minimal.json
-│   └── README.json
-```
+- `test_c1_*`, `test_geometry_*`, `test_compute_dt_score.py`: C1 calibration、variable-k、peer/LOO、active-time 与 worker profile 合同。
+- `test_c2_*`, `test_c2b_*`, `test_*risk_rule*`: C2-A-RP、C2-B、risk-rule 与 final-gold 合同。
+- `test_global_*`, `test_materialize_frozen_routing_profiles.py`, `test_materialize_full_policy.py`, `test_v1_policy.py`: Stage 3、Strong Global、Full/T1/V1 routing 合同。
+- `test_label_studio_*`, `test_*assignment*`, `test_*registry*`: Label Studio、assignment、registry 与导入/导出链路。
+- `test_paper_b_*`, `test_b0_*`, `test_b1_*`, `test_b2_*`: Paper B 独立研究线。
+- 其余 `test_materialize_*`, `test_build_*`, `test_run_*`: 对应工具的 materializer、builder 或 workflow 集成测试。
 
-## 运行测试
+## Retention rules
 
-```bash
-# 在项目根目录执行
-cd d:/Work/HOHONET
+- 正式协议、字段合同和 freeze gate 的失败关闭测试必须保留。
+- 当前正式入口必须至少有一组成功路径和关键缺失字段/哈希不匹配的失败路径。
+- 仅验证已被后续版本完整替代、且无正式入口或文档引用的历史脚本测试可以与旧脚本一起删除。
+- 不因测试失败而降低断言、默认补字段或改成 fail-open。
+- 新增测试优先沿用上述前缀；只有形成稳定且独立的测试域时才考虑建立子目录。
 
-# 运行所有测试
-pytest tests/ -v
+## Retired version chains
 
-# 运行特定测试文件
-pytest tests/test_analyze_quality.py -v
-
-# 运行带覆盖率报告
-pytest tests/ --cov=tools --cov-report=html
-
-# 只运行回归测试
-pytest tests/ -v -k "regression"
-```
-
-## 测试设计原则
-
-1. **分层测试**: 单元测试 → 集成测试 → 端到端测试
-2. **Golden Files**: 使用预期输出文件验证可复现性
-3. **回归测试**: 确保历史 Bug 不复发
-4. **Fixtures**: 共享测试数据，避免重复创建
-
-## 测试覆盖度分析
-
-### 当前状态（2026-03-07）
-
-**当前有效测试入口**: `tests/test_analyze_quality.py`
-
-已验证：
-
-- `pytest tests/test_analyze_quality.py -q` 通过（32 passed）
-
-当前判断：
-
-- `tests/` 目录不是“没用”，它仍然能覆盖 `analyze_quality.py` 的核心单元逻辑。
-- 但 README 里此前写到的 `test_integration.py`、`golden/`、`sample_export_edge_cases.json`、`sample_active_logs/` 并不在当前仓库中，属于历史计划，不是现状。
-- 因此当前测试的价值主要是“核心计算与回归单测”，还不能视为完整端到端验证。
-
-| 维度       | 覆盖度 | 说明                  |
-| ---------- | ------ | --------------------- |
-| 功能正确性 | 85%    | 核心计算逻辑已覆盖    |
-| 边界条件   | 60%    | 缺少极端输入测试      |
-| 异常处理   | 50%    | 缺少并发/恢复场景     |
-| 可复现性   | 40%    | Golden Files 仍未实现 |
-
-### 缺失的关键测试场景
-
-#### 🔴 高优先级缺失（P0 - 需立即补充）
-
-| 用例ID    | 测试场景                 | 风险                                           | 实施成本 |
-| --------- | ------------------------ | ---------------------------------------------- | -------- |
-| TC-U009   | **Unicode/特殊字符处理** | 标注者ID包含中文/emoji导致编码错误             | 低       |
-| TC-G009   | **浮点精度边界**         | 极小/极大多边形（1e-10 vs 1e10）计算溢出       | 中       |
-| TC-U010   | **空值三态区分**         | `scope=""` vs `scope=None` vs `scope=np.nan`   | 低       |
-| TC-I007   | **重复数据检测**         | 相同 `(task_id, annotator_id)` 在JSON中出现2次 | 中       |
-| TC-REG004 | **Golden Files实现**     | fixtures存在但golden缺失，无法验证可复现性     | 高       |
-
-**示例代码**：
-
-```python
-# TC-U009: Unicode/特殊字符
-def test_unicode_annotator_id():
-    """标注者ID包含中文/emoji"""
-    result = parse_quality_flags_v2(
-        {'annotator_id': '用户A😊', 'scope': ['normal']},
-        mode='v2'
-    )
-    assert result['is_normal'] == True
-
-# TC-G009: 浮点精度边界
-def test_iou_extreme_scale():
-    """极小多边形vs极大多边形"""
-    tiny = [(0, 0), (1e-10, 0), (1e-10, 1e-10), (0, 1e-10)]
-    huge = [(0, 0), (1e10, 0), (1e10, 1e10), (0, 1e10)]
-    # 应能正常计算，不报错或溢出
-    iou_tiny = compute_iou(tiny, tiny)
-    iou_huge = compute_iou(huge, huge)
-    assert iou_tiny == pytest.approx(1.0)
-    assert iou_huge == pytest.approx(1.0)
-
-# TC-U010: 空值三态
-def test_scope_empty_vs_none_vs_nan():
-    """区分 "" / None / np.nan"""
-    r1 = parse_quality_flags_v2({'scope': ""}, mode='v2')
-    r2 = parse_quality_flags_v2({'scope': None}, mode='v2')
-    r3 = parse_quality_flags_v2({'scope': np.nan}, mode='v2')
-    # 都应标记为 scope_missing=True
-    assert r1['scope_missing'] == True
-    assert r2['scope_missing'] == True
-    assert r3['scope_missing'] == True
-```
-
-#### 🟡 中等优先级缺失（P1 - 建议补充）
-
-| 用例ID  | 测试场景         | 风险                                | 实施成本 |
-| ------- | ---------------- | ----------------------------------- | -------- |
-| TC-I006 | **时间戳跨界**   | active_logs session跨越午夜00:00    | 中       |
-| TC-I008 | **大规模数据集** | 10k+ 任务的内存/性能测试            | 高       |
-| TC-I009 | **异常恢复**     | CSV部分写入后中断，重新运行         | 中       |
-| TC-R007 | **LOO循环依赖**  | 构造A→B→C→A的循环medoid（理论验证） | 低       |
-
-#### 🟢 已覆盖但可增强（P2）
-
-| 场景             | 当前测试           | 可增强点                             |
-| ---------------- | ------------------ | ------------------------------------ |
-| **边界RMSE**     | TC-G005            | 增加cyclic alignment跨越拼接缝的验证 |
-| **Bootstrap CI** | TC-R001-R002       | 增加TC-R008: n=1000高斯分布收敛性    |
-| **Medoid确定性** | 已修复（str(uid)） | 增加tie-break测试用例                |
-
-### Fuzzy Testing 目标
-
-**目标覆盖度**: 90%+ (当前: 70%)
-
-**补充优先级**：
-
-1. **P0**: TC-U009, TC-G009, TC-U010, TC-I007, TC-REG004 (5个用例) → 达到80%
-2. **P1**: TC-I006, TC-I008, TC-I009 (3个用例) → 达到85%
-3. **P2**: 增强已有测试 (2个用例) → 达到90%+
-
-### 实施计划
-
-```bash
-# Phase 1: P0用例 (1周)
-1. 创建 tests/test_edge_cases.py
-2. 实现 TC-U009, TC-G009, TC-U010
-3. 创建 tests/golden/ 目录并生成基线文件
-4. 实现 TC-REG004 golden file 比对
-
-# Phase 2: P1用例 (1周)
-5. 创建 tests/test_integration_advanced.py
-6. 实现 TC-I006, TC-I007, TC-I009
-7. 性能基准测试 TC-I008
-
-# Phase 3: 增强测试 (3天)
-8. 增强 TC-G005 cyclic alignment
-9. 增强 TC-R001-R002 Bootstrap CI
-10. 全面覆盖率报告 (target: 90%+)
-```
-
-### 测试数据管理
-
-**Fixtures 命名约定**：
-
-```
-sample_export_minimal.json          # 3任务，2标注者，基础场景
-sample_export_edge_cases.json       # Unicode/空值/极端值
-sample_export_unicode.json          # 专门测试编码
-sample_export_large.json            # 1000+任务性能测试
-```
-
-**Golden Files 版本控制**：
-
-- 每次 analyze_quality.py 输出格式变更时，需更新 golden files
-- 使用 Git 跟踪，便于 diff 和回滚
-- 在 CHANGELOG.md 中记录 golden file 版本变化
-
-## 相关文档
-
-- [docs/thesis_main/TEST_PLAN_AND_REVIEW.md](../docs/thesis_main/TEST_PLAN_AND_REVIEW.md): 完整测试计划与用例设计（30+用例详细说明）
-- [docs/thesis_main/ANALYSIS_DATA_FLOW.md](../docs/thesis_main/ANALYSIS_DATA_FLOW.md): 数据流与门控逻辑（含已知问题追踪）
+- `revise_semi_selection_v7`, `v8`, `v9` 已由正式的 `revise_semi_selection_v10` 取代；旧脚本及其自引用测试不再参与当前仓库合同。

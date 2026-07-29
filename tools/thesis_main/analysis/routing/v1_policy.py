@@ -17,6 +17,7 @@ from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file, write_
 
 RULE_VERSION = "v1_policy_execution_v1"
 ARMS = ("strong_global", "full_integrated")
+FORMAL_STRUCTURE_MIN_K = 3
 
 
 def _truth(value: Any) -> bool:
@@ -53,6 +54,22 @@ def _mapping(value: Any) -> dict[str, Any]:
     return parsed if isinstance(parsed, dict) else {}
 
 
+def _geometry_sha256(row: dict[str, Any]) -> str:
+    return hashlib.sha256(
+        json.dumps(row["_geometry"], sort_keys=True, separators=(",", ":")).encode()
+    ).hexdigest()
+
+
+def _geometry_tie_key(row: dict[str, Any], *, seed: Any, seed_key: str) -> tuple[str, str, str]:
+    """Return a GT- and worker-quality-blind medoid tie-break key."""
+    geometry_sha = _geometry_sha256(row)
+    annotation_id = str(row.get("canonical_annotation_id") or row.get("annotation_id") or "")
+    frozen_seed = hashlib.sha256(
+        f"{seed}|{seed_key}|{geometry_sha}|{annotation_id}".encode()
+    ).hexdigest()
+    return geometry_sha, annotation_id, frozen_seed
+
+
 def load_frozen_manifest(path: Path, declared_sha256: str, *, input_status: str) -> dict[str, Any]:
     if input_status != "formal":
         raise ValueError("V1 execution requires input_status=formal; dry-run cannot launch")
@@ -68,6 +85,14 @@ def load_frozen_manifest(path: Path, declared_sha256: str, *, input_status: str)
             dependency_path = (path.parent / dependency_path).resolve()
         if not dependency_path.exists() or sha256_file(dependency_path) != str(dependency.get("sha256", "")).lower():
             raise ValueError(f"frozen dependency is missing or stale: {dependency_path}")
+        if dependency.get("role") == "stage3_freeze_gate":
+            gate = json.loads(dependency_path.read_text(encoding="utf-8"))
+            if gate.get("schema_version") != "paper_a_stage3_freeze_gate_v2" or gate.get("STAGE3_LAUNCH_ALLOWED") is not True:
+                raise ValueError("Stage 3 freeze gate is missing or closed")
+    if not any(item.get("role") == "stage3_freeze_gate" for item in manifest["dependencies"]):
+        raise ValueError("formal V1 requires a SHA-bound Stage 3 freeze gate")
+    if "formal_structure_min_k" not in manifest["scheduler"] or int(manifest["scheduler"]["formal_structure_min_k"]) < FORMAL_STRUCTURE_MIN_K:
+        raise ValueError("formal V1 requires a frozen formal_structure_min_k >= 3")
     scheduler = manifest["scheduler"]
     if not {
         "offer_timeout", "completion_timeout", "max_offer_attempts", "k_initial",
@@ -202,6 +227,9 @@ def aggregate_submissions(
     seed_key: str = "",
 ) -> dict[str, Any]:
     aggregation = manifest["aggregation"]
+    if "formal_structure_min_k" not in manifest["scheduler"]:
+        raise ValueError("formal_structure_min_k is not frozen")
+    formal_structure_min_k = max(FORMAL_STRUCTURE_MIN_K, int(manifest["scheduler"]["formal_structure_min_k"]))
     submission_rows = list(submissions)
     external_pending = any(
         str(row.get("outcome", "")) == "external_system_failure_pending_disposition"
@@ -226,6 +254,17 @@ def aggregate_submissions(
             )
         if geometry.get("valid"):
             legal.append({**submission, "_geometry": geometry})
+    unique_legal: list[dict[str, Any]] = []
+    seen_worker_ids: set[str] = set()
+    for row in legal:
+        worker_id = str(row.get("worker_id") or row.get("canonical_worker_id") or "")
+        if not worker_id:
+            continue
+        if worker_id in seen_worker_ids:
+            raise ValueError(f"duplicate legal worker submission requires canonical adjudication:{worker_id}")
+        seen_worker_ids.add(worker_id)
+        unique_legal.append(row)
+    legal = unique_legal
     if not legal:
         return {
             "terminal_status": (
@@ -233,6 +272,14 @@ def aggregate_submissions(
                 if external_pending else "severe_failure" if at_cap else "needs_more"
             ),
             "selected_worker_id": "", "valid_k": 0, "largest_cluster_support": 0,
+            "second_cluster_support": 0, "medoid_margin": "", "multimodal": False,
+        }
+    if len(legal) < formal_structure_min_k:
+        return {
+            "terminal_status": "unresolved" if at_cap else "needs_more",
+            "selected_worker_id": "", "selected_annotation_id": "",
+            "selected_geometry_sha256": "",
+            "valid_k": len(legal), "largest_cluster_support": len(legal),
             "second_cluster_support": 0, "medoid_margin": "", "multimodal": False,
         }
     components, similarities = _components(legal, aggregation)
@@ -246,7 +293,12 @@ def aggregate_submissions(
             if peer != index
         ]
         medoid_scores.append((sum(peer_scores) / len(peer_scores) if peer_scores else 1.0, index))
-    medoid_scores.sort(key=lambda item: (-item[0], -_number(legal[item[1]].get("global_lcb")), str(legal[item[1]].get("worker_id", ""))))
+    medoid_scores.sort(
+        key=lambda item: (
+            -item[0],
+            _geometry_tie_key(legal[item[1]], seed=manifest["scheduler"]["seed"], seed_key=seed_key),
+        )
+    )
     margin = medoid_scores[0][0] - medoid_scores[1][0] if len(medoid_scores) > 1 else 1.0
     multimodal = second_size == len(largest) or second_size >= int(aggregation["multimodal_second_cluster_min"])
     stable = (
@@ -256,10 +308,11 @@ def aggregate_submissions(
     )
     if stable:
         tied = [index for score, index in medoid_scores if abs(score - medoid_scores[0][0]) <= 1e-12]
-        best_global = max(_number(legal[index].get("global_lcb")) for index in tied)
-        tied = [index for index in tied if _number(legal[index].get("global_lcb")) == best_global]
-        if len(tied) > 1:
-            tied.sort(key=lambda index: hashlib.sha256(f"{manifest['scheduler']['seed']}|{seed_key}|{legal[index]['worker_id']}".encode()).hexdigest())
+        tied.sort(
+            key=lambda index: _geometry_tie_key(
+                legal[index], seed=manifest["scheduler"]["seed"], seed_key=seed_key
+            )
+        )
         selected = legal[tied[0]]
         terminal = "resolved"
     else:
@@ -267,9 +320,9 @@ def aggregate_submissions(
     return {
         "terminal_status": terminal,
         "selected_worker_id": str(selected.get("worker_id", "")) if selected else "",
-        "selected_annotation_id": str(selected.get("annotation_id", "")) if selected else "",
+        "selected_annotation_id": str(selected.get("canonical_annotation_id") or selected.get("annotation_id") or "") if selected else "",
         "selected_geometry_sha256": (
-            hashlib.sha256(json.dumps(selected["_geometry"], sort_keys=True, separators=(",", ":")).encode()).hexdigest()
+            _geometry_sha256(selected)
             if selected else ""
         ),
         "valid_k": len(legal),

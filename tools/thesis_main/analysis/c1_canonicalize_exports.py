@@ -79,9 +79,13 @@ CANONICAL_FIELDS = [
     "assigned_expected",
     "original_assignment_expected",
     "authorized_replacement_assignment",
+    "late_entry_calibration_assignment",
     "assignment_provenance",
     "displaced_worker_id",
     "active_time_expected",
+    "w034_active_time_validation_manifest_sha256",
+    "w034_active_time_validation_status",
+    "timing_not_evaluable_reason",
     "appears_in_internal_distribution",
     "outside_assignment_submission",
     "missing_submission",
@@ -208,6 +212,20 @@ FAILURE_AUDIT_FIELDS = [
 def _canonical_id(round_id: str, project_id: str, runtime_task_id: str, worker_id: str, annotation_id: str) -> str:
     payload = f"{round_id}|{project_id}|{runtime_task_id}|{worker_id}|{annotation_id}".encode("utf-8")
     return hashlib.sha1(payload).hexdigest()[:20]
+
+
+def _utc_timestamp(value: Any) -> datetime:
+    parsed = datetime.fromisoformat(safe(value).replace("Z", "+00:00"))
+    if parsed.tzinfo is None:
+        parsed = parsed.replace(tzinfo=timezone.utc)
+    return parsed.astimezone(timezone.utc)
+
+
+def _worker_number(value: Any) -> str:
+    normalized = safe(value).upper()
+    if normalized.startswith("W"):
+        normalized = normalized[1:]
+    return normalized.lstrip("0") or "0"
 
 
 def _merge_manifest(export_paths: list[Path], runtime_rows: list[dict[str, str]]) -> list[dict[str, Any]]:
@@ -366,6 +384,8 @@ def build_canonicalization(
     duplicate_adjudication_csv: Path | None = None,
     failure_disposition_csv: Path | None = None,
     authorized_reassignment_manifest: Path | None = None,
+    late_entry_assignment_manifest: Path | None = None,
+    w034_active_time_validation_manifest: Path | None = None,
     candidate_inventory_csv: Path | None = None,
     p1_canonical_csv: Path | None = None,
     p1_admission_csv: Path | None = None,
@@ -375,6 +395,10 @@ def build_canonicalization(
     runtime_rows, runtime_lookup, collision_rows = build_runtime_task_mapping(export_paths, planned_task_mapping)
     authorized_reassignments: dict[tuple[str, str, str], dict[str, str]] = {}
     reassignment_summary = {"status": "not_provided", "valid": True, "row_count": 0}
+    late_entry_runtime_assignments: dict[tuple[str, str, str], dict[str, str]] = {}
+    late_entry_planned_assignments: dict[tuple[str, str, str], dict[str, str]] = {}
+    late_entry_summary = {"status": "not_provided", "valid": True, "row_count": 0}
+    w034_time_validation: dict[str, Any] = {}
     duplicate_decisions: dict[tuple[str, str, str], dict[str, str]] = {}
     if duplicate_adjudication_csv and duplicate_adjudication_csv.exists():
         for decision in read_csv(duplicate_adjudication_csv):
@@ -405,9 +429,63 @@ def build_canonicalization(
             candidate_inventory_csv, p1_canonical_csv, p1_admission_csv,
             c1_observed_rows=observed_exposures,
         )
+    if late_entry_assignment_manifest is not None:
+        late_rows = read_csv(late_entry_assignment_manifest)
+        required = {
+            "round_id", "worker_id", "task_id", "base_task_id", "dataset_group", "condition",
+            "assignment_provenance", "enrollment_batch", "assignment_rule_version", "active_time_expected",
+        }
+        if late_rows and not required.issubset(late_rows[0]):
+            raise ValueError("late-entry assignment schema incomplete")
+        for late in late_rows:
+            if late.get("round_id") != "C1" or late.get("assignment_provenance") != "late_entry_calibration_assignment":
+                raise ValueError("invalid late-entry assignment provenance")
+            planned_identity = (
+                safe(late.get("worker_id")),
+                safe(late.get("task_id")),
+                safe(late.get("base_task_id")),
+            )
+            if not all(planned_identity) or planned_identity in late_entry_planned_assignments:
+                raise ValueError("late-entry planned identity must be complete and unique")
+            late_entry_planned_assignments[planned_identity] = late
+            runtime_identity = (
+                safe(late.get("project_id") or late.get("replacement_project_id")),
+                safe(late.get("ls_runtime_task_id") or late.get("runtime_task_id") or late.get("replacement_runtime_task_id")),
+                safe(late.get("worker_id")),
+            )
+            if any(runtime_identity):
+                if not all(runtime_identity) or runtime_identity in late_entry_runtime_assignments or runtime_identity in authorized_reassignments:
+                    raise ValueError("late-entry runtime identity must be complete and unique when supplied")
+                runtime_row = runtime_lookup.get((runtime_identity[0], runtime_identity[1]), {})
+                if any(safe(runtime_row.get(field)) != safe(late.get(field)) for field in ("task_id", "base_task_id", "dataset_group")):
+                    raise ValueError("late-entry runtime mapping mismatch")
+                late_entry_runtime_assignments[runtime_identity] = late
+        late_entry_summary = {
+            "status": "validated", "valid": True, "row_count": len(late_rows),
+            "manifest_sha256": sha256_file(late_entry_assignment_manifest),
+        }
+    if w034_active_time_validation_manifest is not None:
+        w034_time_validation = json.loads(w034_active_time_validation_manifest.read_text(encoding="utf-8"))
+        if w034_time_validation.get("schema_version") != "w034_active_time_validation_manifest_v1":
+            raise ValueError("unsupported W034 active-time validation manifest")
+        if _worker_number(w034_time_validation.get("worker_id")) != "34":
+            raise ValueError("W034 active-time validation manifest is bound to the wrong worker")
+        checks = w034_time_validation.get("validation_checks")
+        if not isinstance(checks, dict) or not checks or not all(value is True for value in checks.values()):
+            if input_status == "formal":
+                raise ValueError("formal W034 active-time validation checks did not all pass")
+        if w034_time_validation.get("validation_result") != "passed" and input_status == "formal":
+            raise ValueError("formal W034 active-time validation did not pass")
+        _utc_timestamp(w034_time_validation.get("validation_timestamp"))
+        log_sha = safe(w034_time_validation.get("log_source_sha256"))
+        if len(log_sha) != 64 or any(char not in "0123456789abcdefABCDEF" for char in log_sha):
+            raise ValueError("W034 active-time validation is not SHA-bound")
+        if active_log is not None and active_log.is_file() and sha256_file(active_log) != log_sha:
+            raise ValueError("W034 active-time validation source SHA does not match active log")
+        w034_time_validation["manifest_sha256"] = sha256_file(w034_active_time_validation_manifest)
     active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths), policy="calibration") if active_log else {}
     raw_manifest = snapshot_inputs_unique(
-        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []) + ([duplicate_adjudication_csv] if duplicate_adjudication_csv else []) + ([failure_disposition_csv] if failure_disposition_csv else []) + ([authorized_reassignment_manifest] if authorized_reassignment_manifest else []),
+        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []) + ([duplicate_adjudication_csv] if duplicate_adjudication_csv else []) + ([failure_disposition_csv] if failure_disposition_csv else []) + ([authorized_reassignment_manifest] if authorized_reassignment_manifest else []) + ([late_entry_assignment_manifest] if late_entry_assignment_manifest else []) + ([w034_active_time_validation_manifest] if w034_active_time_validation_manifest else []),
         output_dir,
         completion_basis="c1_closeout_canonicalization_snapshot",
     )
@@ -476,8 +554,12 @@ def build_canonicalization(
         info = runtime_lookup.get((project_id, runtime_task_id), {})
         key = (worker_id, safe(info.get("task_id")), safe(info.get("base_task_id")), safe(info.get("dataset_group")))
         replacement = authorized_reassignments.get((project_id, runtime_task_id, worker_id), {})
+        late_entry = late_entry_runtime_assignments.get((project_id, runtime_task_id, worker_id), {}) or late_entry_planned_assignments.get(
+            (worker_id, safe(info.get("task_id")), safe(info.get("base_task_id"))), {}
+        )
         original_assignment = key in assigned
         authorized_assignment = bool(replacement)
+        late_entry_assignment = bool(late_entry)
         try:
             session_count = int(row.get("active_time_session_count") or 0)
         except (TypeError, ValueError):
@@ -488,7 +570,26 @@ def build_canonicalization(
             safe(active_override.get("active_time_source")), safe(active_override.get("active_time_match_status")),
             int(active_override.get("active_time_session_count") or 0), duplicate_time_ambiguous=duplicate_time_ambiguous,
         )
-        active_time_expected = not authorized_assignment or str(replacement.get("active_time_expected", "")).lower() in {"true", "1", "yes"}
+        assignment_detail = replacement or late_entry
+        active_time_expected = not (authorized_assignment or late_entry_assignment) or str(assignment_detail.get("active_time_expected", "")).lower() in {"true", "1", "yes"}
+        timing_not_evaluable_reason = ""
+        if authorized_assignment and _worker_number(worker_id) == "34":
+            validation_passed = w034_time_validation.get("validation_result") == "passed"
+            validated_at = safe(w034_time_validation.get("validation_timestamp"))
+            task_started_at = safe(row.get("started_at") or row.get("created_at") or row.get("completed_at"))
+            timestamp_order_valid = False
+            if task_started_at and validated_at:
+                try:
+                    timestamp_order_valid = _utc_timestamp(task_started_at) >= _utc_timestamp(validated_at)
+                except ValueError:
+                    timestamp_order_valid = False
+            active_time_expected = bool(active_time_expected and validation_passed and timestamp_order_valid)
+            if not validation_passed:
+                timing_not_evaluable_reason = "w034_sentinel_not_passed"
+            elif not task_started_at:
+                timing_not_evaluable_reason = "w034_authorized_task_start_missing"
+            elif not timestamp_order_valid:
+                timing_not_evaluable_reason = "w034_authorized_task_not_after_sentinel"
         if not active_time_expected:
             primary = sensitivity = False
         try:
@@ -523,14 +624,18 @@ def build_canonicalization(
             "parse_error": row.get("parse_error", ""),
             "planned_mapping_status": info.get("planned_mapping_status", ""),
             "runtime_binding_status": info.get("runtime_binding_status", ""),
-            "assigned_expected": bool_text(original_assignment or authorized_assignment),
+            "assigned_expected": bool_text(original_assignment or authorized_assignment or late_entry_assignment),
             "original_assignment_expected": bool_text(original_assignment),
             "authorized_replacement_assignment": bool_text(authorized_assignment),
-            "assignment_provenance": "authorized_reassignment_addendum" if authorized_assignment else "original_assignment" if original_assignment else "unassigned",
+            "late_entry_calibration_assignment": bool_text(late_entry_assignment),
+            "assignment_provenance": "authorized_replacement_assignment" if authorized_assignment else "late_entry_calibration_assignment" if late_entry_assignment else "original_assignment" if original_assignment else "outside_assignment_submission",
             "displaced_worker_id": replacement.get("displaced_worker_id", ""),
             "active_time_expected": bool_text(active_time_expected),
+            "w034_active_time_validation_manifest_sha256": w034_time_validation.get("manifest_sha256", "") if _worker_number(worker_id) == "34" else "",
+            "w034_active_time_validation_status": w034_time_validation.get("validation_result", "not_provided") if _worker_number(worker_id) == "34" else "not_applicable",
+            "timing_not_evaluable_reason": timing_not_evaluable_reason,
             "appears_in_internal_distribution": bool_text(key in internal),
-            "outside_assignment_submission": bool_text(not (original_assignment or authorized_assignment)),
+            "outside_assignment_submission": bool_text(not (original_assignment or authorized_assignment or late_entry_assignment)),
             "missing_submission": "false",
             "duplicate_worker_task_submission": bool_text(safe(row.get("duplicate_review_status")) == "pending"),
             "independence_status": audit_status,
@@ -796,6 +901,8 @@ def build_canonicalization(
         "canonical_evidence_sidecars": canonical_evidence_summary,
         "geometry_sidecars": geometry_summary,
         "authorized_reassignment": reassignment_summary,
+        "late_entry_assignment": late_entry_summary,
+        "w034_active_time_validation": w034_time_validation,
         "model_issue_harmonization": harmonization_summary,
         "formal_c1_annotation_data_present": bool(input_status == "formal" and canonical_rows),
         "failure_disposition_csv": str(failure_disposition_csv or ""),

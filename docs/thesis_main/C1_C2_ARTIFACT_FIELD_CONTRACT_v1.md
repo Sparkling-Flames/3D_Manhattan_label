@@ -373,7 +373,7 @@ C2-A-RP formal 只能读取该 closeout，不接受测试或人工拼装 summary
 
 `materialize_frozen_routing_profiles.py` 输出
 `strong_global_worker_table.csv`、`full_component_table.csv` 和
-`routing_profile_freeze_audit.json`。Strong Global 主排序仅使用 task-adjusted GT LCB；
+`routing_profile_freeze_audit.json`。Strong Global 在 administratively eligible 且 `Q_GT` estimable 的冻结 cohort 上以 `S_u_G=z(Q_u_GT_EB)` 主排序；`Q_GT_EB_LCB` 仅作 safety gate、不确定性报告和 sensitivity；
 Full component 必须同时通过 P1 integrity、C1 predictive、C2-B confirmation、
 方向、LOTO/LOBO stability 与标注前 activation gate。
 
@@ -600,3 +600,11 @@ Formal C1 runs must bind `c1_active_log_freeze_manifest.json` and a collection-c
   `formal_selection_allowed=true`。Selected-design approval 必须指定一个非支配可行
   `design_id`；selected-task approval 必须绑定实际 task set SHA。
   Selected-design approval 还必须绑定候选 summary 与候选 edges 的 SHA，禁止审批后重算候选边。
+
+## 10. C1 variable-k、provenance 与 Stage 3 freeze 字段
+
+正式 row 必须携带 `assignment_provenance`（四值：`original_assignment`、`authorized_replacement_assignment`、`late_entry_calibration_assignment`、`outside_assignment_submission`）、`canonical_submission_id`、`base_task_id`、`condition`、各 estimand 的 final unique-worker k/support/deficit/excess，以及 `outside_primary_excluded`。outside 不得进入 primary；W014 固定 excluded，W034 B-004/B-022 固定 outside。W034/W001 的 authorized 行还须绑定 original/authorization/distribution SHA。
+
+peer/crowd 工件须输出 task-level statistic、equal-task-weight worker aggregate、cluster absolute support、share、normalized margin、cluster count、stable/multimodal status。structural 工件须区分 `F_struct_raw`、`F_struct_EB`、interval 与 serious/recurrent flag。active-time 工件须携带 W034 sentinel validation manifest SHA、owner-valid status、validation time 与 `timing_not_evaluable_reason`；不得以缺失补零。
+
+冻结 manifest 必须声明 `rolling_enrollment_activated`。为 false 时 late-entry registry/manifest/closure 可空且结果等价于无新人流程；为 true 时三者及 P1/version/window/seed/exposure binding 为必填。Stage 3 manifest 必须绑定 profile、Strong Global/Full 参数、V1 minimum worker/cluster rule、roster 和全部依赖 SHA；冻结后任何变更 fail closed。

@@ -674,6 +674,8 @@ def rehearse_c1(args: argparse.Namespace) -> dict[str, Any]:
         c1_preannotation_feature_csv=getattr(args, "c1_preannotation_feature_csv", None),
         p1_integrity_dir=getattr(args, "p1_integrity_dir", None),
         authorized_reassignment_manifest=getattr(args, "authorized_reassignment_manifest", None),
+        late_entry_assignment_manifest=getattr(args, "late_entry_assignment_manifest", None),
+        w034_active_time_validation_manifest=getattr(args, "w034_active_time_validation_manifest", None),
         building_registry=getattr(args, "building_registry", None),
     )
     report = _materialize_rehearsal_root_cause_report(summary)
@@ -725,8 +727,8 @@ def build_collection_closure(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def audit_c1(args: argparse.Namespace) -> dict[str, Any]:
-    if not getattr(args, "authorized_reassignment_manifest", None) or not getattr(args, "building_registry", None):
-        raise ValueError("formal C1 requires authorized reassignment manifest and authoritative building registry")
+    if not getattr(args, "authorized_reassignment_manifest", None) or not getattr(args, "building_registry", None) or not getattr(args, "w034_active_time_validation_manifest", None):
+        raise ValueError("formal C1 requires authorized reassignment, W034 active-time validation, and authoritative building registry")
     validate_active_log_freeze_manifest(args.c1_active_log_freeze_manifest, args.active_log)
     summary = materialize_c1(
         args.export_dir, args.active_log, args.manual_assignment, args.semi_assignment,
@@ -744,6 +746,8 @@ def audit_c1(args: argparse.Namespace) -> dict[str, Any]:
         collection_closure_manifest=args.collection_closure_manifest,
         p1_integrity_dir=getattr(args, "p1_integrity_dir", None),
         authorized_reassignment_manifest=args.authorized_reassignment_manifest,
+        late_entry_assignment_manifest=getattr(args, "late_entry_assignment_manifest", None),
+        w034_active_time_validation_manifest=args.w034_active_time_validation_manifest,
         building_registry=args.building_registry,
     )
     return {
@@ -1133,6 +1137,8 @@ def main(argv: list[str] | None = None) -> int:
         command.add_argument("--output-root", type=Path, required=True)
         command.add_argument("--c1-preannotation-feature-csv", type=Path)
         command.add_argument("--authorized-reassignment-manifest", type=Path)
+        command.add_argument("--late-entry-assignment-manifest", type=Path)
+        command.add_argument("--w034-active-time-validation-manifest", type=Path)
         command.add_argument("--building-registry", type=Path)
 
     rehearsal = sub.add_parser("rehearse-c1")

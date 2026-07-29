@@ -22,6 +22,8 @@ $py = ".\.venv-paper-a-gpu\Scripts\python.exe"
   --layout-dir output/layout_json `
   --c1-assignment analysis_results/calibration_rebuild_20260702/assignment_manifest_C1_manual_draft_v3_1.csv `
   --c1-assignment analysis_results/calibration_rebuild_20260702/assignment_manifest_C1_semi_draft_v3_1.csv `
+  --p1-initialization-import import_json/stage1_prescreen_final_20260325/stage1_prescreen_semi_import_v5.json `
+  --p1-initialization-import import_json/stage1_prescreen_foreign_https_20260609/stage1_prescreen_semi_import_v5_foreign_https.json `
   --building-registry <evidence-root>/authoritative_building_registry.csv `
   --checkpoint ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth `
   --config config/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34.yaml `
@@ -62,7 +64,9 @@ approval 文件分别绑定同一 `selected_proposal_id`、proposal summary SHA 
   --output analysis_results/c2b_static_<sha>/preflight_calibration.json
 ```
 
-设计阈值或 feature audit 阈值仍为 null 时，preflight 必须失败；不得在查看正式 C1 estimand 后补选阈值。
+此处的 `C2B_DESIGN_SELECTION_THRESHOLDS.json` 是 C1 结束前冻结的公式、常数、输入字段与方向合同，
+不是最终数值 manifest。feature audit 的数值阈值、最小 audit support 与 missing/nonfinite fail-closed
+规则也已在 C1 结束前冻结；任何合同缺项时 preflight 必须失败。
 
 feature audit 阈值获批后，先用同一 `prepare-c2b-static` 命令复用缓存并刷新 manifest，再从缓存生成 C1 任务侧特征：
 
@@ -117,6 +121,9 @@ feature audit 阈值获批后，先用同一 `prepare-c2b-static` 命令复用�
   --c1-preannotation-feature-csv <static-root>/c1_preannotation_task_features.csv `
   --c1-active-log-freeze-manifest <formal-root>/c1_active_log_freeze_manifest.json `
   --collection-closure-manifest <formal-root>/c1_collection_closure_manifest.json `
+  --authorized-reassignment-manifest <formal-root>/authorized_reassignment_manifest.csv `
+  --w034-active-time-validation-manifest <formal-root>/w034_active_time_validation_manifest.json `
+  --building-registry <evidence-root>/authoritative_building_registry.csv `
   --duplicate-adjudication <review-root>/duplicate_adjudication.csv `
   --structural-disposition <review-root>/structural_disposition.csv `
   --project-independence-disposition <review-root>/project_independence_disposition.csv `
@@ -146,9 +153,17 @@ feature audit 阈值获批后，先用同一 `prepare-c2b-static` 命令复用�
   --reference-registry <evidence-root>/reference_registry.csv `
   --feature-freeze-manifest <static-root>/c2_feature_freeze_manifest.json `
   --static-freeze-manifest <static-root>/c2b_static_freeze_manifest.json `
-  --threshold-manifest docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json `
+  --threshold-formula-contract docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json `
+  --threshold-input-approval <approval-root>/c2b_threshold_input_approval.json `
+  --threshold-manifest <c2b-design-root>/c2b_design_selection_thresholds.derived.json `
+  --capacity-manifest <approval-root>/c2b_capacity_manifest.csv `
   --output-dir <c2b-design-root> `
   --device cuda:0
+
+# 第一次运行若尚无 threshold input approval，只物化 C1 design parameters 和下列审核请求，绝不枚举候选：
+# <c2b-design-root>/c2b_threshold_input_review_request.json
+# reviewer 仅核对其中 formula contract、C1 design parameters、capacity 三个 SHA，按
+# paper_a_c2b_threshold_input_approval_v1 写入 approval 后，原样重跑 design-c2b。
 
 # 人工审批后才允许执行；审批文件必须绑定实际 selected design/task set SHA。
 & $py tools/thesis_main/analysis/run_c1_closeout_launch.py build-c2b `
@@ -158,7 +173,7 @@ feature audit 阈值获批后，先用同一 `prepare-c2b-static` 命令复用�
   --task-eligibility-evidence <c2b-design-root>/c2b_task_eligibility_evidence.csv `
   --candidate-dir <c2b-design-root>/c2_candidates `
   --design-manifest <c2b-design-root>/c2b_candidate_design_manifest.json `
-  --threshold-manifest docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json `
+  --threshold-manifest <c2b-design-root>/c2b_design_selection_thresholds.derived.json `
   --source-split-evidence <evidence-root>/source_split_evidence.csv `
   --source-split-approval <approval-root>/source_split_approval.json `
   --future-holdout-evidence <evidence-root>/future_holdout_evidence.csv `
@@ -173,9 +188,10 @@ feature audit 阈值获批后，先用同一 `prepare-c2b-static` 命令复用�
 正式产物所有权固定如下：`audit-c1` 只写 `formal_audit_summary.json`、
 `c1_measurement_freeze_manifest.json` 与待冻结 worker state；只有 `finalize-c1` 可以写
 `c1_evidence_freeze_manifest.json`。`design-c2b` 写 `c2_task_risk.summary.json`、
-`c2b_evidence_freeze_envelope.json`、`c2b_candidate_design_manifest.json`，并在
+`c2b_evidence_freeze_envelope.json`、`c2b_threshold_input_review_request.json`、
+`c2b_design_selection_thresholds.derived.json`、`c2b_candidate_design_manifest.json`，并在
 `c2_candidates/c2b_design.summary.json` 保存候选设计摘要。`build-c2b` 仅在 threshold、split、
-feature、selected-task/reference、selected-design 与 capacity 审批均有效时写
+feature、机械派生 threshold、selected-task/reference、selected-design 与 capacity 审批均有效时写
 `assignment_manifest_C2B.csv`；否则 assignment 必须为 0 行。
 成功构建后的独立启动审计为 `c2b_launch_ready_report.json`。
 
@@ -190,7 +206,7 @@ feature、selected-task/reference、selected-design 与 capacity 审批均有效
 `paper_a_close_c1_plan_c2b_run_config_v1` JSON（从
 `PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json` 复制并替换占位符）后使用可恢复薄入口；它会依次验证 collection、
 运行 formal audit、冻结 C1 evidence、校验 static/evidence envelope、生成 C2-B candidate designs，
-并在 C1 adjudication 或 split approval 缺失时停止，只返回一条重跑命令：
+并在 C1 adjudication、split approval 或 threshold input approval 缺失时停止，只返回一条重跑命令：
 
 ```powershell
 & $py tools/thesis_main/analysis/run_c1_closeout_launch.py close-c1-and-plan-c2b `
@@ -204,5 +220,11 @@ feature、selected-task/reference、selected-design 与 capacity 审批均有效
 
 - PreScreen active time 只绑定 `active_logs/prescreen` 或 P1 immutable snapshot；不得用 C1 日志替代。
 - rehearsal 可以读取 live C1 日志但 `collection_window_closed=false`；正式分析只能读取 `active_logs/c1/<cutoff>_<sha>`。
+- 原始 `v3_1` assignment/distribution 不回写；W034 17 行与 W001 3 行只通过独立 `authorized_reassignment_manifest.csv` 增量承认。
+- rolling enrollment 未激活时不传 `--late-entry-assignment-manifest`；激活时必须传入 Stage 3 前冻结且 SHA 绑定的 manifest。
+- W034 sentinel 未通过或验证晚于任务开始时，相应补充任务 timing fail closed，但不影响合资格 capability evidence。
+- `valid_authorized_exception` 只改变 process audit disposition，不能把普通 outside submission 提升为正式分析证据。
+- `VALIDATION_ROSTER_FROZEN=true` 后，新增 worker 或 enrollment/roster SHA 变化必须拒绝启动 Stage 3。
 - `support_limited` 不是失败，也不是成功估计；它只表示该 estimand 已终止但证据不足。
-- threshold、feature、source/holdout、selected design 或 selected task approval 任一缺失时，assignment 必须为 0。
+- threshold 公式合同、SHA 绑定 input approval、机械派生数值 manifest、feature、source/holdout、selected design 或 selected task approval 任一缺失时，assignment 必须为 0。
+- `P1_INTEGRITY_BUNDLE_FROZEN=true` 只表示文件及 SHA 已冻结；`P1_PREDICTIVE_EVIDENCE_READY=false` 时禁用 P1 predictive component，但不阻断 risk-only C2-B。

@@ -121,3 +121,10 @@
 - `config/paper_a_analysis_requirements.lock.txt`、`config/paper_a_torch_requirements.lock.txt` 与 `docs/thesis_main/C2B_FEATURE_AUDIT_THRESHOLDS.json`：Paper A 隔离运行环境和 feature audit 审批真源；本地 `.venv-paper-a-gpu` 与静态缓存不提交。
 - `import_json/paper_a_c2b/legacy_reverse_v3_1_manifest.csv`：20260702 v3.1 13 张人工 reverse 图的只读 provenance；不授予 eligibility 或排序优先权。
 - `tools/thesis_main/analysis/c1_c2_mainline.py` 与 `materialize_c1_preannotation_task_features.py`：不可变 C1 row-eligibility sidecar join、estimand-specific worker/task/building/graph gates、唯一 C2-B worker design input，以及不读取 crowd geometry 的预标注 C1 task feature 合同；正式 DAG 由 `docs/thesis_main/PAPER_A_VFINAL_EXECUTION_CONTRACT.json` 固定，风险 exposure 由 `docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json` 固定，设计阈值公式由 `docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json` 固定，正式数值由 SHA 绑定输入机械派生。
+- `tools/thesis_main/analysis/materialize_c1_estimand_specific_task_support.py`：按 task-condition 与 GT/peer/LOO/structural/time 等 estimand 分层物化 original、authorized、late、outside 和 final unique-worker support。
+- `tools/thesis_main/analysis/materialize_w034_active_time_validation.py`：W034 补充任务开始前的 owner/runtime/session/duration sentinel 验证与 SHA 绑定 manifest。
+- `tools/thesis_main/analysis/materialize_c1_authorized_reassignment_addendum.py` 与 `materialize_w034_authorized_extension_sensitivity.py`：从 W014 原分配、授权计划和 runtime mapping 机械生成 17+3 addendum，并比较 W034 original-only/augmented profile。
+- `tools/thesis_main/analysis/materialize_stage3_freeze_gate.py`：统一验证 Calibration closure、pooled profile、Strong Global/Full、Validation roster 与 SAP 的 Stage 3 fail-closed 门。
+- `tools/thesis_main/analysis/materialize_c1_three_state_task_tags.py`：按 task-tag 物化 positive、explicit negative、unasserted 与 not-evaluable 计数和比例。
+- `tools/thesis_main/registry/build_c1_late_entry_assignment_manifest.py`：默认关闭、结果盲、exposure-aware 的 late-entry C1 增量 assignment generator，不重排原 cohort。
+- `docs/thesis_main/PAPER_A_C1_ROLLING_ENROLLMENT_CONFIG.template.json`：rolling enrollment 默认关闭配置模板；激活时所有窗口、版本、seed 和 workload 字段必须显式冻结。

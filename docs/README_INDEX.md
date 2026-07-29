@@ -133,6 +133,8 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - C2 task-risk 与严格任务资格 materializer：`tools/thesis_main/analysis/materialize_c2_task_risk.py`、`tools/thesis_main/analysis/materialize_c2b_task_eligibility.py`
 - C2 LHFeat reference/PCA/whitening freeze：`tools/thesis_main/analysis/freeze_c2_feature_reference.py`
 - C1→C2-B 风险斜率/方差设计参数：`tools/thesis_main/analysis/materialize_c1_c2_design_parameters.py`
+- C1 variable-k / rolling enrollment：`materialize_c1_estimand_specific_task_support.py`、`materialize_w034_active_time_validation.py`、`materialize_stage3_freeze_gate.py` 与 `registry/build_c1_late_entry_assignment_manifest.py`
+- C1 authorized addendum / W034 sensitivity：`materialize_c1_authorized_reassignment_addendum.py`、`materialize_w034_authorized_extension_sensitivity.py`
 - C2-B design threshold 机械派生器：`tools/thesis_main/analysis/derive_c2b_design_thresholds.py`
 - P1→C1 predictive association：`tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`
 - C1 结构失败 EB、Global/Full policy 与轻量反例库：`tools/thesis_main/analysis/c1_structural_reliability_eb.py`、`materialize_global_policy.py`、`materialize_full_policy.py`、`materialize_counterexample_bank.py`
