@@ -228,3 +228,4 @@ feature、机械派生 threshold、selected-task/reference、selected-design 与
 - `support_limited` 不是失败，也不是成功估计；它只表示该 estimand 已终止但证据不足。
 - threshold 公式合同、SHA 绑定 input approval、机械派生数值 manifest、feature、source/holdout、selected design 或 selected task approval 任一缺失时，assignment 必须为 0。
 - `P1_INTEGRITY_BUNDLE_FROZEN=true` 只表示文件及 SHA 已冻结；`P1_PREDICTIVE_EVIDENCE_READY=false` 时禁用 P1 predictive component，但不阻断 risk-only C2-B。
+> Formal run 前必须校验 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260729_v2`；SHA-256 `d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44`）。旧字段或生成 MD、SAP、SOP 与 JSON 不一致时一律 fail closed。

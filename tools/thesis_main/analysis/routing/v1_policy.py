@@ -11,6 +11,9 @@ from pathlib import Path
 from typing import Any, Iterable
 
 from tools.thesis_main.analysis.geometry_consensus.pairwise import pairwise_similarity
+from tools.thesis_main.analysis.geometry_cluster_v2 import cluster_geometry_records
+from tools.thesis_main.analysis.paper_a_contracts import validate_serialized_record
+from tools.thesis_main.analysis.materialize_stage3_freeze_gate import validate_gate_file
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file, write_csv_rows
 
@@ -87,8 +90,7 @@ def load_frozen_manifest(path: Path, declared_sha256: str, *, input_status: str)
             raise ValueError(f"frozen dependency is missing or stale: {dependency_path}")
         if dependency.get("role") == "stage3_freeze_gate":
             gate = json.loads(dependency_path.read_text(encoding="utf-8"))
-            if gate.get("schema_version") != "paper_a_stage3_freeze_gate_v2" or gate.get("STAGE3_LAUNCH_ALLOWED") is not True:
-                raise ValueError("Stage 3 freeze gate is missing or closed")
+            validate_gate_file(dependency_path)
     if not any(item.get("role") == "stage3_freeze_gate" for item in manifest["dependencies"]):
         raise ValueError("formal V1 requires a SHA-bound Stage 3 freeze gate")
     if "formal_structure_min_k" not in manifest["scheduler"] or int(manifest["scheduler"]["formal_structure_min_k"]) < FORMAL_STRUCTURE_MIN_K:
@@ -101,6 +103,7 @@ def load_frozen_manifest(path: Path, declared_sha256: str, *, input_status: str)
         raise ValueError("scheduler contract is incomplete")
     if int(scheduler["exceptional_cap"]) < int(scheduler["standard_cap"]) or int(scheduler["standard_cap"]) < int(scheduler["k_initial"]):
         raise ValueError("scheduler caps are inconsistent")
+    manifest["_formal_input"] = input_status == "formal"
     return manifest
 
 
@@ -122,21 +125,23 @@ def rank_candidates(
     manifest: dict[str, Any],
 ) -> dict[str, Any]:
     scoring = manifest["scoring"]
+    candidate_rows = list(candidates)
+    if manifest.get("_formal_input"):
+        for candidate in candidate_rows:
+            validate_serialized_record("policy_candidate_v2", candidate)
     profile_version = str(manifest["profile_version"])
-    eligible = [
-        dict(candidate)
-        for candidate in candidates
-        if _truth(candidate.get("eligible", True)) and _truth(candidate.get("available", True))
-    ]
+    eligible = [dict(candidate) for candidate in candidate_rows if _truth(candidate.get("global_policy_eligible", candidate.get("eligible", False)))]
     for candidate in eligible:
-        candidate["_global"] = _number(candidate.get("global_lcb"), float("-inf"))
+        if "global_lcb" in candidate or "global_rank_LCB" in candidate:
+            raise ValueError("V1 rejects legacy Global fields")
+        candidate["_global"] = _number(candidate.get("S_G"), float("-inf"))
     tie_hash = lambda row: hashlib.sha256(f"{manifest['scheduler']['seed']}|{task.get('task_id')}|{row.get('worker_id')}".encode()).hexdigest()
     global_rank = sorted(
         eligible,
         key=lambda row: (
             -row["_global"],
-            -_number(row.get("loo_lcb")),
-            -_number(row.get("capacity_available")),
+            -_number(row.get("R_peer_stable")),
+            -_number(row.get("R_LOO_medoid")),
             tie_hash(row),
         ),
     )
@@ -171,7 +176,7 @@ def rank_candidates(
         cap = abs(_number(scoring["max_total_adjustment"]))
         candidate["_full"] = candidate["_global"] + max(-cap, min(cap, adjustment))
         full_rank.append(candidate)
-    full_rank.sort(key=lambda row: (-row["_full"], -row["_global"], -_number(row.get("loo_lcb")), tie_hash(row)))
+    full_rank.sort(key=lambda row: (-row["_full"], -row["_global"], -_number(row.get("R_peer_stable")), -_number(row.get("R_LOO_medoid")), tie_hash(row)))
     if len(full_rank) > 1 and full_rank[0]["_full"] - full_rank[1]["_full"] < _number(scoring["ranking_stability_margin"]):
         fallback_reasons.append("ranking_unstable")
     fallback = bool(fallback_reasons)
@@ -282,38 +287,19 @@ def aggregate_submissions(
             "valid_k": len(legal), "largest_cluster_support": len(legal),
             "second_cluster_support": 0, "medoid_margin": "", "multimodal": False,
         }
-    components, similarities = _components(legal, aggregation)
-    largest = components[0]
-    second_size = len(components[1]) if len(components) > 1 else 0
-    medoid_scores = []
-    for index in largest:
-        peer_scores = [
-            similarities[min(index, peer), max(index, peer)]
-            for peer in largest
-            if peer != index
-        ]
-        medoid_scores.append((sum(peer_scores) / len(peer_scores) if peer_scores else 1.0, index))
-    medoid_scores.sort(
-        key=lambda item: (
-            -item[0],
-            _geometry_tie_key(legal[item[1]], seed=manifest["scheduler"]["seed"], seed_key=seed_key),
-        )
-    )
-    margin = medoid_scores[0][0] - medoid_scores[1][0] if len(medoid_scores) > 1 else 1.0
-    multimodal = second_size == len(largest) or second_size >= int(aggregation["multimodal_second_cluster_min"])
+    cluster = cluster_geometry_records(legal, min_q_boundary=_number(aggregation["min_q_boundary"]), min_q_wallwall=_number(aggregation["min_q_wallwall"]), minimum_valid_k=formal_structure_min_k)
+    if cluster["partition_status"] != "unique":
+        return {"terminal_status": "unresolved" if at_cap else "needs_more", "selected_worker_id": "", "selected_annotation_id": "", "selected_geometry_sha256": "", "multimodal": True, **cluster}
+    largest_size = int(cluster["largest_cluster_support"])
+    second_size = int(cluster["second_cluster_support"])
+    medoid_index = cluster["largest_cluster_medoid_index"]
+    multimodal = second_size == largest_size or second_size >= int(aggregation["multimodal_second_cluster_min"])
     stable = (
-        len(largest) >= int(aggregation["min_cluster_size"])
+        largest_size >= int(aggregation["min_cluster_size"])
         and not multimodal
-        and margin >= _number(aggregation["min_medoid_margin"])
     )
     if stable:
-        tied = [index for score, index in medoid_scores if abs(score - medoid_scores[0][0]) <= 1e-12]
-        tied.sort(
-            key=lambda index: _geometry_tie_key(
-                legal[index], seed=manifest["scheduler"]["seed"], seed_key=seed_key
-            )
-        )
-        selected = legal[tied[0]]
+        selected = legal[medoid_index]
         terminal = "resolved"
     else:
         selected, terminal = None, "unresolved" if at_cap else "needs_more"
@@ -326,9 +312,10 @@ def aggregate_submissions(
             if selected else ""
         ),
         "valid_k": len(legal),
-        "largest_cluster_support": len(largest),
+        "largest_cluster_support": largest_size,
         "second_cluster_support": second_size,
-        "medoid_margin": margin,
+        "cluster_margin_all": cluster["cluster_margin_all"], "cluster_margin_top2": cluster["cluster_margin_top2"],
+        "cluster_membership_json": cluster["cluster_membership_json"], "partition_status": cluster["partition_status"],
         "multimodal": multimodal,
     }
 
@@ -510,7 +497,7 @@ def run_v1_trial(
             if completed:
                 completed_workers.add(worker)
             if outcome_name == "completed_valid":
-                submissions.append({**outcome, "worker_id": worker, "global_lcb": next((_number(row.get("global_lcb")) for row in candidates_by_task[task_id] if str(row.get("worker_id")) == worker), 0.0)})
+                submissions.append({**outcome, "worker_id": worker})
             elif outcome_name == "completed_invalid":
                 worker_structural_failures += 1
             elif outcome_name == "external_system_failure_pending_disposition":
@@ -668,7 +655,8 @@ def materialize_v1_policy(
         write_csv_rows(output_dir / "v1_capacity_audit.csv", capacity_audit)
     audit = {
         **feasibility,
-        "formal_assignment_generated": True,
+        "formal_assignment_generated": False,
+        "artifact_role": "deterministic_replay_audit",
         "freeze_manifest_sha256": freeze_manifest_sha256,
         "tasks_sha256": sha256_file(tasks_csv),
         "candidates_sha256": sha256_file(candidates_csv),

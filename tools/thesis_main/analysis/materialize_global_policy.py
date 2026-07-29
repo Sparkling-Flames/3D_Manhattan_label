@@ -12,6 +12,8 @@ from pathlib import Path
 from statistics import mean, stdev
 from typing import Any
 
+from tools.thesis_main.analysis.paper_a_contracts import validate_record, validate_serialized_record
+
 
 def _truth(value: Any) -> bool:
     return str(value).strip().lower() in {"1", "true", "yes"}
@@ -60,6 +62,8 @@ def _frozen_z_parameters(rows: list[dict[str, Any]]) -> tuple[float, float, int]
 
 
 def build_global_policy(rows: list[dict[str, Any]], manifest: dict[str, Any], *, formal: bool = False) -> list[dict[str, Any]]:
+    if formal:
+        rows = [validate_serialized_record("worker_profile_v2", row) for row in rows]
     approved = manifest.get("status") == "approved" and manifest.get("interpretation_allowed") is True and manifest.get("approved_by") and manifest.get("approved_at")
     if formal and not approved:
         raise ValueError("candidate GLOBAL_POLICY_THRESHOLDS cannot produce formal policy")
@@ -102,11 +106,12 @@ def build_global_policy(rows: list[dict[str, Any]], manifest: dict[str, Any], *,
             reasons.append("independence")
         if _truth(row.get("serious_recurrent_failure_flag")):
             reasons.append("serious_recurrent_failure")
-        output.append({**row, "S_G": "" if s_g is None else s_g, "S_G_z_center": z_center, "S_G_z_scale": z_spread, "S_G_z_cohort_n": z_n, "S_G_z_parameters_frozen_before_gates": True, "global_policy_eligible": not reasons, "global_exclusion_reason": ";".join(reasons), "policy_status": "formal" if formal else "candidate", "formal_use_allowed": bool(formal and approved), "_random_key": random_keys[str(row.get("worker_id", ""))]})
+        static_row = {key: value for key, value in row.items() if key not in {"available", "availability", "capacity", "capacity_available"}}
+        output.append({**static_row, "schema_version": "policy_candidate_v2", "S_G": "" if s_g is None else s_g, "S_G_z_center": z_center, "S_G_z_scale": z_spread, "S_G_z_cohort_n": z_n, "S_G_z_parameters_frozen_before_gates": True, "global_policy_eligible": not reasons, "global_exclusion_reason": ";".join(reasons), "policy_status": "formal" if formal else "candidate", "formal_use_allowed": bool(formal and approved), "_random_key": random_keys[str(row.get("worker_id", ""))]})
 
     def rank(field: str, target: str) -> None:
         eligible = [row for row in output if row["global_policy_eligible"] and _number(row, field) is not None]
-        eligible.sort(key=lambda row: (-float(row[field]), -float(row.get("Q_GT_EB") or float("-inf")), -float(row.get("R_LOO_LCB") or row.get("R_LOO_medoid") or -1), -float(row.get("availability") or 0), -float(row.get("capacity") or 0), row["_random_key"]))
+        eligible.sort(key=lambda row: (-float(row[field]), -float(row.get("R_peer_stable") or -1), -float(row.get("R_LOO_medoid") or -1), row["_random_key"]))
         for index, row in enumerate(eligible, 1):
             row[target] = index
 
@@ -117,8 +122,9 @@ def build_global_policy(rows: list[dict[str, Any]], manifest: dict[str, Any], *,
         row.setdefault("global_rank_EB", "")
         row.setdefault("global_rank_FE", "")
         row.setdefault("global_rank_S_G", "")
-        row["global_rank_LCB"] = row["global_rank_S_G"]
         row.pop("_random_key", None)
+        if row["global_policy_eligible"]:
+            validate_record("policy_candidate_v2", row)
     return output
 
 

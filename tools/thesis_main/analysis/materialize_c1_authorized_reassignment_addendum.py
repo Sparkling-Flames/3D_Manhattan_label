@@ -60,6 +60,9 @@ def build_rows(plan_rows: list[dict[str, str]], assignment_sources: list[tuple[P
             raise ValueError("duplicate replacement worker-base edge")
         seen.add(unique)
         condition = str(plan.get("condition") or mapped.get("condition") or ("semi" if "semi" in str(original.get("dataset_group", "")).lower() else "manual")).lower()
+        active_expected = str(plan.get("active_time_expected", "false")).lower()
+        if replacement == "34" and active_expected not in {"true", "1", "yes"}:
+            raise ValueError("W034 authorized extension requires active_time_expected=true for all 17 rows")
         row = {
             "round_id": "C1", "condition": condition,
             "dataset_group": str(original.get("dataset_group", "")), "task_id": str(original.get("task_id", "")),
@@ -69,7 +72,7 @@ def build_rows(plan_rows: list[dict[str, str]], assignment_sources: list[tuple[P
             "authorization_reason": str(plan.get("authorization_reason", "")),
             "authorized_by": str(plan.get("authorized_by", "")), "authorized_at": str(plan.get("authorized_at", "")),
             "replacement_project_id": project, "replacement_runtime_task_id": task,
-            "active_time_expected": str(plan.get("active_time_expected", "false")).lower(),
+            "active_time_expected": "true" if replacement == "34" else active_expected,
         }
         if any(not row[field] for field in FIELDS):
             raise ValueError("authorized addendum rows require every contract field")

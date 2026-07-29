@@ -121,7 +121,9 @@ def test_live_monitor_audits_assignment_duplicates_reserve_and_log_policy(tmp_pa
     assert "unknown_annotation_audit_present" not in summary["blockers"]
 
     health = {row["worker_id"]: row for row in csv.DictReader((out / "c1_live_active_log_health_by_worker.csv").open(encoding="utf-8"))}
-    assert health["w2"]["active_log_missing_count"] == "0"
+    # The only W2 event has no annotation_id, so it cannot satisfy the
+    # owner-bound formal active-time contract.
+    assert health["w2"]["active_log_missing_count"] == "1"
     assert health["w3"]["active_time_lead_time_fallback_count"] == "1"
     assert int(health["w3"]["active_time_primary_ineligible_count"]) >= 1
 

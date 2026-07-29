@@ -327,7 +327,7 @@ def test_c2_roster_accepts_frozen_project_provenance_status(tmp_path: Path) -> N
 def test_row_eligibility_excludes_outside_assignment_from_all_tracks(tmp_path: Path) -> None:
     canonical = tmp_path / "canonical.csv"; versions = tmp_path / "versions.csv"; quality = tmp_path / "quality.csv"
     loo = tmp_path / "loo.csv"; structural = tmp_path / "structural.csv"; reference = tmp_path / "reference.csv"
-    row = {"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1", "assigned_expected": "true", "outside_assignment_submission": "true", "duplicate_worker_task_submission": "false", "independence_status": "independent"}
+    row = {"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1", "assignment_provenance": "outside_observed_submission", "assigned_expected": "true", "outside_assignment_submission": "true", "duplicate_worker_task_submission": "false", "independence_status": "independent"}
     _csv(canonical, [row]); _csv(versions, [{"annotation_id": "a1", "version_disposition": "selected_canonical"}])
     _csv(quality, [{"canonical_annotation_id": "c1", "quality_evaluable": "true"}])
     _csv(loo, [{"canonical_annotation_id": "c1", "q_LOO_tu": ".9"}])
@@ -344,7 +344,7 @@ def test_row_eligibility_excludes_administratively_removed_worker_from_all_track
     canonical = tmp_path / "canonical.csv"; versions = tmp_path / "versions.csv"; quality = tmp_path / "quality.csv"
     loo = tmp_path / "loo.csv"; structural = tmp_path / "structural.csv"; reference = tmp_path / "reference.csv"
     completion = tmp_path / "completion.csv"
-    row = {"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "worker_id": "14", "annotation_id": "a1", "canonical_annotation_id": "c1", "assigned_expected": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"}
+    row = {"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "worker_id": "14", "annotation_id": "a1", "canonical_annotation_id": "c1", "assignment_provenance": "original_assignment", "assigned_expected": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"}
     _csv(canonical, [row]); _csv(versions, [{"annotation_id": "a1", "version_disposition": "selected_canonical"}])
     _csv(quality, [{"canonical_annotation_id": "c1", "quality_evaluable": "true"}])
     _csv(loo, [{"canonical_annotation_id": "c1", "q_LOO_tu": ".9", "primary_loo_eligible": "true"}])

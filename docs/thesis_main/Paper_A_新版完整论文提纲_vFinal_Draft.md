@@ -1801,3 +1801,6 @@ W014 保留 raw evidence 但永久排除正式 estimand；W034 的 capability �
 W034 的 17 条任务仅在 owner-valid active-time sentinel 通过后提供 timing evidence，且不得回填旧缺失日志。rolling enrollment 默认 `activated=false`；若在 Stage 3 前激活，新人必须通过同版本 P1 并使用冻结 workload template，作为 late entry 而非 replacement，最终同时报告 original-only 与 pooled sensitivity。Stage 3 前一次性冻结 pooled profile、权重、阈值、fallback 与 Validation roster，之后禁止增补 worker 或修改这些对象。学习效应仅保留顺序、版本和 provenance 描述，不建立复杂主模型。
 
 Strong Global 在冻结的 administratively eligible、Q_GT-estimable cohort 上以 `S_G=z(Q_GT_EB)` 排序；LCB 仅用于 safety gate 和 sensitivity。Structural 同时报 raw、EB 与区间；Full/V1 的正式 manifest 必须完整绑定 component、support、threshold、weight、fallback、输入 SHA 和 formal minimum worker/cluster rule，缺失即 fail closed，GT-blind aggregation 不读取政策质量分数。
+# SUPERSEDED：历史设计提纲
+
+> 当前唯一规范性方法真源为 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（`paper_a_method_20260729_v2`）及其 SHA。本文件不得再作为设计真源。

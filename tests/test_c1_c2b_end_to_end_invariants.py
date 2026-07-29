@@ -208,8 +208,8 @@ def test_three_track_worker_state_counts_each_row_gate_instead_of_using_max_axis
     write_csv(structural, [])
     write_csv(completion, [{"worker_id": "w1", "completion_status": "completed"}])
     write_csv(eligibility, [
-        {"worker_id": "w1", "base_task_id": "process_only", "process_eligible": "true", "independence_eligible": "false", "scope_reference_eligible": "false"},
-        {"worker_id": "w1", "base_task_id": "independent_only", "process_eligible": "false", "independence_eligible": "true", "scope_reference_eligible": "false"},
+        {"schema_version": "assignment_evidence_v2", "canonical_annotation_id": "a-process", "worker_id": "w1", "base_task_id": "process_only", "condition": "manual", "assignment_provenance": "original_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": False, "peer_analysis_eligible": False, "loo_medoid_analysis_eligible": False, "strict_loo_analysis_eligible": False, "structural_opportunity_eligible": False, "time_analysis_eligible": False, "process_eligible": "true", "independence_eligible": "false", "scope_reference_eligible": "false"},
+        {"schema_version": "assignment_evidence_v2", "canonical_annotation_id": "a-independent", "worker_id": "w1", "base_task_id": "independent_only", "condition": "manual", "assignment_provenance": "original_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": False, "peer_analysis_eligible": False, "loo_medoid_analysis_eligible": False, "strict_loo_analysis_eligible": False, "structural_opportunity_eligible": False, "time_analysis_eligible": False, "process_eligible": "false", "independence_eligible": "true", "scope_reference_eligible": "false"},
     ])
     materialize_three_track_worker_state(
         global_csv, loo, structural, completion, tmp_path, eligibility_csv=eligibility,

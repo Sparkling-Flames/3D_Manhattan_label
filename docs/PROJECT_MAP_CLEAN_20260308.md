@@ -1,4 +1,4 @@
-# HOHONET 项目地图
+﻿# HOHONET 项目地图
 
 > 2026-07-18 vFinal 更新：Paper A 正式主线已改为 C1 设计 C2-B
 >（common anchor + diverse bridge）、C2-A-RP 精度补测、T1 2×2 条件试验，
@@ -128,3 +128,6 @@
 - `tools/thesis_main/analysis/materialize_c1_three_state_task_tags.py`：按 task-tag 物化 positive、explicit negative、unasserted 与 not-evaluable 计数和比例。
 - `tools/thesis_main/registry/build_c1_late_entry_assignment_manifest.py`：默认关闭、结果盲、exposure-aware 的 late-entry C1 增量 assignment generator，不重排原 cohort。
 - `docs/thesis_main/PAPER_A_C1_ROLLING_ENROLLMENT_CONFIG.template.json`：rolling enrollment 默认关闭配置模板；激活时所有窗口、版本、seed 和 workload 字段必须显式冻结。
+## 2026-07-29 Paper A 方法合同 v2
+
+`docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json` 是唯一规范方法真源；同目录保存生成 MD 和五个 v2 schema。共享验证、geometry、Stage 3、T1/V1 online/replay 工具位于 `tools/thesis_main/analysis/`。

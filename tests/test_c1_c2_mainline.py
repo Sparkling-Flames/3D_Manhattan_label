@@ -17,7 +17,7 @@ def _write(path: Path, rows: list[dict]) -> None:
 
 def test_row_eligibility_is_sidecar_only_and_upstream_sha_is_immutable(tmp_path: Path) -> None:
     canonical, versions, quality, loo, structural, reference, independence = [tmp_path / name for name in ("canonical.csv", "versions.csv", "quality.csv", "loo.csv", "structural.csv", "reference.csv", "independence.csv")]
-    row = {"project_id": "p", "ls_runtime_task_id": "r", "task_id": "t", "base_task_id": "b", "condition": "manual", "worker_id": "w", "annotation_id": "a", "canonical_annotation_id": "c", "assigned_expected": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"}
+    row = {"project_id": "p", "ls_runtime_task_id": "r", "task_id": "t", "base_task_id": "b", "condition": "manual", "worker_id": "w", "annotation_id": "a", "canonical_annotation_id": "c", "assignment_provenance": "original_assignment", "assigned_expected": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"}
     _write(canonical, [row]); _write(versions, [{"annotation_id": "a", "version_disposition": "selected_canonical"}])
     _write(quality, [{"canonical_annotation_id": "c", "quality_evaluable": "true", "worker_id": "w", "base_task_id": "b"}])
     _write(loo, [{"canonical_annotation_id": "c", "q_LOO_primary": ".9", "primary_loo_eligible": "true", "worker_id": "w", "base_task_id": "b"}])

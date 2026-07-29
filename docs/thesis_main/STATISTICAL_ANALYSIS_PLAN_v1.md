@@ -1,5 +1,7 @@
 # Statistical Analysis Plan v1
 
+> 规范性方法字段只来自 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260729_v2`；SHA-256 `d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44`）。执行时必须核对自动生成 MD 所列 JSON SHA；本文不再独立定义冲突字段。
+
 ## 0. 适用范围与替代声明
 
 本文覆盖 P1/C1/C2、T1 和 V1 的正式分析。它以 `Paper_A_新版完整论文提纲_vFinal_Draft.md` 为设计真源，并替换旧的：

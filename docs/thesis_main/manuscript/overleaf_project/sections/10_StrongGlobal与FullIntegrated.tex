@@ -1,0 +1,102 @@
+% Paper A: Strong Global is the EB external-quality baseline.
+% Normative source: PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260729_v2 SHA-256 d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44
+\section{Strong Global 与 Support-aware Full}
+
+\subsection{Global 候选审计}
+
+Global-LOO、Global-GT 和 Global-GT-gated-LOO 仍可在 cross-fitted replay 中比较，
+报告排名重叠、discrepancy worker 和稳定性；这些只是审计和敏感性分析，不能替代正式
+Strong Global，也不能由 V1 outcome 选择。
+
+\subsection{Strong Global}
+
+\subsubsection{Eligibility}
+
+\begin{verbatim}
+process valid
+independence valid
+GT support sufficient
+building/task coverage sufficient
+no recurrent serious structural failure
+Q_GT_EB meets the production quality floor
+\end{verbatim}
+
+\subsubsection{正式分数与安全门}
+
+\[
+S^G_u=z\!\left(\widehat Q^{GT,EB}_u\right).
+\]
+
+其中 \(z(\cdot)\) 的均值和标准差只在冻结的、行政上具备资格且可估计
+\(Q^{GT}\) 的 capability cohort 上计算，并在质量 floor 与 structural gate 之前完成。
+通过质量 floor 或 structural gate 后不重新标准化；Strong Global 的正式排序不能借由
+筛选后的资格变化改写尺度。
+
+正式排序使用收缩后的外部正确性；LCB 只作为最低质量安全门、不确定性标记和保守敏感性
+排序。同行指标不进入正式分数，仅用于 tie-break、discrepancy worker、聚合稳定性和敏感性。
+
+\subsection{Support-aware Full}
+
+\[
+S^F_{u,t}=S^G_u
++I_{\mathrm{risk},t}B_u
++I_{f,t}H_{u,f}.
+\]
+
+其中 \(B_u\) 表示 ordinary/stress 风险韧性，\(H_{u,f}\) 表示一个已激活 failure-family
+的条件能力。每任务最多激活一个 family，总调整有上限；证据有限时向群体均值收缩，
+component 无支持时该项为零，任务超出 Calibration 支持范围时整体 fallback Strong Global。
+
+\subsection{可路由 family 与激活}
+
+正式 Full 只允许：
+
+\begin{enumerate}
+  \item undercoverage / underextension；
+  \item adjacent-space overextension；
+  \item corner / topology instability。
+\end{enumerate}
+
+\texttt{blind trust} 与 \texttt{correction failure} 仅作为 T1 机制结果；Scope 和
+process-integrity 不进入 V1 条件加权。任务侧 family 必须唯一激活；激活含糊则关闭该项。
+
+\subsection{支持、权重与 fallback}
+
+跨阶段 component support 是预声明的方法合同。对每一个预定义 component，使用任务级
+Calibration outcome 的 stage-stacked 回归或层级模型，包含 P1 worker component、stage、
+P1\(\times\)stage interaction，并按 task 与 worker 聚类或设置相应随机效应。模型输出
+方向、stage interaction、worker/task support 与收缩估计，并在 Main outcome 可见前冻结。
+若 C2 出现清晰的方向反转、支持不足或不稳定收缩，该 component 不进入 Full。
+
+只有当上述模型工件和独立 policy manifest 均有效时，component 才能通过 P1 integrity、
+C1 predictive validation 和 C2-B confirmation，并具备足够 worker/task support、方向稳定、
+收缩估计和标注前可激活性。权重与总调整上限不能为了增加政策差异而改变。
+
+\begin{verbatim}
+component unsupported        -> component adjustment = 0
+family activation ambiguous  -> component adjustment = 0
+d_cal_F out of support       -> overall fallback Strong Global
+profile version incompatible -> overall fallback Strong Global
+ranking unstable             -> overall fallback Strong Global
+\end{verbatim}
+
+整体 fallback 时，Full 的排序逐项等于 Strong Global。C2 closeout 后仅报告 activation、
+fallback、推荐不同率、supported candidate count 和 capacity 后差异，不能用 V1 结果放宽门槛。
+
+\subsection{Stage 3 formal manifest contract}
+
+Strong Global 的 \(z\)-score cohort 在 quality/structural gate 前冻结为 administratively eligible 且
+\(Q^{GT,EB}\) estimable 的 worker；cohort 少于两人、标准差为零、字段缺失或非有限值时 fail closed。
+LCB 只作 quality floor、区间和 sensitivity，不参与正式主排序。Full manifest 必须显式绑定
+component whitelist、worker/task support、weight、activation threshold/margin、symmetric cap、
+component interval、profile version、fallback、formal minimum worker/cluster rule 与全部输入 SHA。
+任何字段缺失、版本冲突、支持不足或 ranking endpoint 不稳定时，Full 整体排序精确回到 Strong Global。
+V1 freeze manifest 还必须消费开放且 SHA 匹配的 Stage 3 gate；GT-blind aggregation 不读取
+\(Q^{GT}\)、\(S^G\)、\(S^F\) 或 worker quality 作 medoid tie-break。
+
+\subsection{静态画像与运行时调度分离}
+
+Strong Global 的唯一静态顺序为
+\(S_G\rightarrow R_{\mathrm{peer,stable}}\rightarrow R_{\mathrm{LOO,medoid}}\rightarrow\)
+frozen random。availability 与 capacity 只在运行时 scheduler 过滤候选，不进入冻结画像或
+质量排序。V1 formal candidate 只消费 \(S_G\)，旧 \texttt{global\_lcb} 字段必须拒绝。

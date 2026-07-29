@@ -2,6 +2,10 @@ from __future__ import annotations
 
 import csv
 from pathlib import Path
+import json
+import hashlib
+import json
+import json
 
 import pytest
 
@@ -36,7 +40,8 @@ def test_estimand_specific_k_separates_original_authorized_late_outside_and_dupl
             "canonical_annotation_id": row["canonical_annotation_id"],
             "global_analysis_eligible": row["worker_id"] != "outside",
             "peer_analysis_eligible": row["worker_id"] not in {"outside", "w4"},
-            "loo_analysis_eligible": row["worker_id"] in {"w1", "w2", "w34"},
+                "loo_medoid_analysis_eligible": row["worker_id"] in {"w1", "w2", "w34"},
+                "strict_loo_analysis_eligible": row["worker_id"] in {"w1", "w2", "w34"},
             "structural_opportunity_eligible": row["worker_id"] != "outside",
             "time_analysis_eligible": row["worker_id"] in {"w1", "w34"},
         })
@@ -44,7 +49,7 @@ def test_estimand_specific_k_separates_original_authorized_late_outside_and_dupl
     assert row["k_target"] == 5 and row["k_outside_observed"] == 1
     assert row["k_original_GT"] == 4 and row["k_authorized_GT"] == 1 and row["k_late_GT"] == 1
     assert row["k_final_GT"] == 6 and row["pooled_support_excess_GT"] == 1
-    assert row["k_final_peer"] == 5 and row["k_final_LOO"] == 3 and row["k_final_time"] == 2
+    assert row["k_final_peer"] == 5 and row["k_LOO_medoid"] == 3 and row["k_LOO_strict"] == 3 and row["k_final_time"] == 2
     with pytest.raises(ValueError, match="duplicate canonical"):
         build_task_support_rows([original], authorized, late, canonical + [{**canonical[0], "canonical_annotation_id": "revision"}], eligibility)
 
@@ -81,17 +86,30 @@ def test_w034_sentinel_and_stage3_gate_fail_closed(tmp_path: Path) -> None:
     spec = {"worker_id": "34", "project_id": "p", "runtime_task_id": "t", "annotation_id": "a", "validation_timestamp": "2026-07-01T00:00:00Z", "reviewed_by": "owner"}
     active = [{"project_id": "p", "runtime_task_id": "t", "worker_id": "34", "annotation_id": "a", "owner_valid": "true", "session_count": "1", "started_at": "s", "completed_at": "e", "active_duration_seconds": "20", "duplicate_time_ambiguous": "false"}]
     runtime = [{"project_id": "p", "ls_runtime_task_id": "t"}]
-    assert validate_sentinel(spec, active, runtime, log_sha256="a" * 64)["validation_result"] == "passed"
-    assert validate_sentinel(spec, [{**active[0], "active_duration_seconds": "0"}], runtime, log_sha256="a" * 64)["validation_result"] == "failed"
-    assert validate_sentinel(spec, [{key: value for key, value in active[0].items() if key != "owner_valid"}], runtime, log_sha256="a" * 64)["validation_result"] == "failed"
-    state = {name: {"frozen": True, "sha256": name.lower()} for name in REQUIRED_GATES}
-    gate = build_gate(state, "r", "e")
-    assert gate["STAGE3_LAUNCH_ALLOWED"] is True
-    assert build_gate({**state, "C2_A_RP_CLOSED": False}, "r", "e")["STAGE3_LAUNCH_ALLOWED"] is False
+    assert validate_sentinel(spec, active, runtime, raw_log_bundle_sha256="a" * 64, derived_audit_sha256="b" * 64)["validation_result"] == "passed"
+    assert validate_sentinel(spec, [{**active[0], "active_duration_seconds": "0"}], runtime, raw_log_bundle_sha256="a" * 64, derived_audit_sha256="b" * 64)["validation_result"] == "failed"
+    assert validate_sentinel(spec, [{key: value for key, value in active[0].items() if key != "owner_valid"}], runtime, raw_log_bundle_sha256="a" * 64, derived_audit_sha256="b" * 64)["validation_result"] == "failed"
     roster = tmp_path / "roster.csv"; enrollment = tmp_path / "enrollment.csv"
     roster.write_text("x\n1\n", encoding="utf-8"); enrollment.write_text("x\n1\n", encoding="utf-8")
-    with pytest.raises(ValueError):
-        assert_frozen_roster(gate, roster, enrollment)
+    from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, sha256_file
+    child_items = []
+    for child_role in ("C1_ROW_ELIGIBILITY_FROZEN", "C1_PEER_EVIDENCE_FROZEN", "C1_STRUCTURAL_EB_FROZEN", "W034_SENSITIVITY_FROZEN"):
+        child = tmp_path / f"{child_role}.json"
+        child.write_text(json.dumps({"schema_version": "test_dependency_v2", "formal_ready": True, "profile_version": "p", "cohort_id": "c", "blockers": [], "dependencies": []}), encoding="utf-8")
+        child_items.append({"role": child_role, "frozen": True, "path": child.name, "sha256": sha256_file(child), "expected_schema": "test_dependency_v2", "required_status_field": "formal_ready", "required_status_value": True, "profile_version": "p", "cohort_id": "c"})
+    state = {}
+    for name in REQUIRED_GATES:
+        dependency = tmp_path / f"{name}.json"
+        payload = {"schema_version": "test_dependency_v2", "formal_ready": True, "profile_version": "p", "cohort_id": "c", "blockers": [], "dependencies": child_items if name == "C1_EVIDENCE_FROZEN" else []}
+        if name == "C1_EVIDENCE_FROZEN": payload["method_contract_sha256"] = sha256_file(METHOD_CONTRACT)
+        dependency.write_text(json.dumps(payload), encoding="utf-8")
+        state[name] = {"frozen": True, "path": dependency.name, "sha256": hashlib.sha256(dependency.read_bytes()).hexdigest(), "expected_schema": "test_dependency_v2", "required_status_field": "formal_ready", "required_status_value": True, "profile_version": "p", "cohort_id": "c"}
+    gate = build_gate(state, hashlib.sha256(roster.read_bytes()).hexdigest(), hashlib.sha256(enrollment.read_bytes()).hexdigest(), base_dir=tmp_path)
+    assert gate["STAGE3_LAUNCH_ALLOWED"] is True
+    assert build_gate({**state, "C2_A_RP_CLOSED": False}, "r", "e")["STAGE3_LAUNCH_ALLOWED"] is False
+    assert_frozen_roster(gate, roster, enrollment)
+    roster.write_text("x\n2\n", encoding="utf-8")
+    with pytest.raises(ValueError): assert_frozen_roster(gate, roster, enrollment)
 
 
 def test_three_state_counts_unique_workers_and_excludes_not_evaluable_from_denominator() -> None:
@@ -125,7 +143,7 @@ def test_authorized_addendum_is_additive_and_w034_sensitivity_is_thresholded(tmp
     ]
     _csv(source, originals)
     plan = [
-        {"displaced_worker_id": "14", "replacement_worker_id": "34", "base_task_id": "b1", "authorization_reason": "administrative replacement", "authorized_by": "owner", "authorized_at": "2026-07-01", "replacement_project_id": "p", "replacement_runtime_task_id": "1", "active_time_expected": "false"},
+        {"displaced_worker_id": "14", "replacement_worker_id": "34", "base_task_id": "b1", "authorization_reason": "administrative replacement", "authorized_by": "owner", "authorized_at": "2026-07-01", "replacement_project_id": "p", "replacement_runtime_task_id": "1", "active_time_expected": "true"},
         {"displaced_worker_id": "14", "replacement_worker_id": "1", "base_task_id": "b2", "authorization_reason": "administrative replacement", "authorized_by": "owner", "authorized_at": "2026-07-01", "replacement_project_id": "p", "replacement_runtime_task_id": "2", "active_time_expected": "false"},
     ]
     runtime = [

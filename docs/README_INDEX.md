@@ -1,4 +1,4 @@
-# docs 目录索引
+﻿# docs 目录索引
 
 > 2026-07-18：Paper A 正式文本已迁移到 vFinal。当前正文入口为
 > `thesis_main/manuscript/overleaf_project/main.tex`；正式执行合同为
@@ -138,3 +138,8 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - C2-B design threshold 机械派生器：`tools/thesis_main/analysis/derive_c2b_design_thresholds.py`
 - P1→C1 predictive association：`tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`
 - C1 结构失败 EB、Global/Full policy 与轻量反例库：`tools/thesis_main/analysis/c1_structural_reliability_eb.py`、`materialize_global_policy.py`、`materialize_full_policy.py`、`materialize_counterexample_bank.py`
+## Paper A 当前方法合同
+
+- `thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`：唯一规范性机器真源。
+- `thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.md`：由 JSON 自动生成并携带 SHA 的镜像。
+- `thesis_main/*_v2.json`：五个共享 record schema。

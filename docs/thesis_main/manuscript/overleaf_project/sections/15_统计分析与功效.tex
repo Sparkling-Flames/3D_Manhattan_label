@@ -1,0 +1,123 @@
+% Normative source: PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260729_v2 SHA-256 d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44
+\section{统计分析与功效}
+
+\subsection{C1 后模拟 C2-B}
+
+只模拟以下正式候选设计：
+\begin{verbatim}
+D8  = 4 common anchors + 4 diverse bridges
+D10 = 6 common anchors + 4 diverse bridges
+D12 = 6 common anchors + 6 diverse bridges
+\end{verbatim}
+
+模拟：
+\begin{itemize}
+  \item 每人任务数
+  \item 共同 anchor 数
+  \item 多样化 bridge 数
+  \item unique image 数
+  \item worker--task graph
+  \item \(B_u\) interval width
+  \item routing activation rate
+  \item fallback rate
+\end{itemize}
+
+决定 C2-B 的最终结构。
+
+\subsection{T1 功效}
+
+模拟：
+\begin{itemize}
+  \item worker/image/building 方差；
+  \item structurally valid rate；
+  \item delivery-adjusted quality；
+  \item Manual/Semi correlation；
+  \item active-time missingness；
+  \item risk interaction。
+\end{itemize}
+
+\subsection{V1 功效}
+
+模拟：
+\begin{itemize}
+  \item profile activation；
+  \item policy divergence（仅作可识别性诊断）；
+  \item capacity；
+  \item refusal/timeout；
+  \item dynamic \(k\)；
+  \item unresolved；
+  \item delivery-adjusted quality；
+  \item policy\(\times\)risk interaction。
+\end{itemize}
+
+\subsection{Cross-fitted replay}
+
+按 \texttt{image/base\_task} 划 fold。
+
+评价 fold 不得参与：
+\begin{itemize}
+  \item Global selection
+  \item risk feature selection
+  \item weight selection
+  \item support threshold
+  \item fallback
+  \item stopping
+\end{itemize}
+
+Replay 用于开发、消融和功效，不替代前瞻 V1。
+
+\subsection{多重终点层级}
+
+\subsubsection{T1 确认性}
+
+\begin{enumerate}
+  \item delivery-adjusted quality 非劣，并通过 structural-validity safety gate；
+  \item owner-valid active time；
+  \item risk interaction。
+\end{enumerate}
+
+T1 的质量非劣 margin、结构安全门和 active-time 差值尺度在结果可见前写入冻结的
+Statistical Analysis Plan 与 analysis manifest；active time 主尺度为
+\(\Delta_T=T_{\mathrm{Semi}}-T_{\mathrm{Manual}}\)，log-ratio 仅作敏感性分析。
+总体 active-time coverage 以及 Manual/Semi、ordinary/stress 的差异性缺失必须同时
+不超过冻结容忍度，否则 active time 降级为 descriptive/missingness sensitivity。
+
+\subsubsection{V1 确认性}
+
+\begin{enumerate}
+  \item severe failure 非劣；
+  \item unresolved＋severe failure 非劣；
+  \item delivery-adjusted policy quality；
+  \item 标注数量或成本。
+\end{enumerate}
+
+resolved-only quality、\(k_{used}\)、过程时间和 policy\(\times\)risk interaction 为次级
+结果。V1 两个安全门和质量非劣 margin 来自冻结的 Statistical Analysis Plan 与
+policy analysis manifest，按上述顺序执行，不在观察到结果后改变。
+
+\subsubsection{RQ2}
+
+以预测关联、效应量、方向、支持范围和预测性能为主，不要求每阶段分别达到传统显著性。
+
+\subsubsection{V2}
+
+可选的外部支持与安全退化审计，不作为主要因果结果。
+
+\subsection{C1 variable-k、rolling enrollment 与学习效应}
+
+C1 所有分母按 task--condition--estimand 的 final unique-worker support 计算，并分别报告 target、
+original、authorized、late-entry、outside、deficit 与 pooled excess。W034 的 timing 主分析只使用
+sentinel 后 owner-valid 的 17 条授权任务；原始缺失 timing 不插补。W034 profile 必须报告
+original-only 与 original+authorized sensitivity。
+
+若 rolling enrollment 未激活，pooled 分析与 original-cohort 分析完全相同；若激活，主分析使用
+预冻结规则形成的 pooled cohort，并同时报告 original-only sensitivity、late-entry 数量、版本、
+窗口和 task exposure。学习效应只进行 completion order、instruction/interface version 与 provenance
+的描述性/敏感性分析，不建立结果可见后选择的复杂主模型。所有选择在 Stage 3 gate 前冻结。
+
+\subsection{可识别跨阶段模型与双 margin}
+
+跨 C1/C2 阶段最终模型使用 building random intercept 与 task-within-building random intercept，
+并保留 stage fixed effect；不同时放入吸收 stage 的 task fixed effects。聚类同时报告
+\(m^{all}=(n_1-n_2)/k\) 与 \(m^{top2}=(n_1-n_2)/(n_1+n_2)\)，并分别报告
+\(k_{\mathrm{LOO,medoid}}\) 和 \(k_{\mathrm{LOO,strict}}\)。

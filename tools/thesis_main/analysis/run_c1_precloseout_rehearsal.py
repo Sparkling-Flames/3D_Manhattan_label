@@ -54,6 +54,7 @@ from tools.thesis_main.analysis.c1_task_adjusted_quality import _BootstrapSuppor
 from tools.thesis_main.analysis.geometry_consensus.materialize import materialize_geometry_consensus
 from tools.thesis_main.analysis.materialize_c1_estimand_specific_task_support import materialize as materialize_estimand_specific_task_support
 from tools.thesis_main.analysis.materialize_c1_three_state_task_tags import materialize as materialize_three_state_task_tags
+from tools.thesis_main.analysis.materialize_w034_authorized_extension_sensitivity import materialize as materialize_w034_sensitivity
 from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import build_source as build_p1_c1_source, materialize as materialize_predictive_association
 from tools.thesis_main.analysis.c2b_static_evidence import validate_p1_integrity_bundle
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
@@ -206,6 +207,70 @@ def _copy_alias(source: Path, destination: Path) -> None:
     shutil.copy2(source, destination)
 
 
+def _is_w034(value: Any) -> bool:
+    return str(value or "").strip().upper().lstrip("W0") == "34"
+
+
+def _materialize_w034_original_only_profile(output_dir: Path, *, formal: bool, adjust_building: bool) -> Path:
+    branch = output_dir / "w034_original_only_branch"
+    branch.mkdir(parents=True, exist_ok=True)
+    eligibility_path = output_dir / "c1_row_analysis_eligibility.csv"
+    eligibility = read_csv(eligibility_path)
+    by_annotation = {str(row.get("canonical_annotation_id", "")): row for row in eligibility}
+    original_w034 = {
+        annotation for annotation, row in by_annotation.items()
+        if _is_w034(row.get("worker_id")) and row.get("assignment_provenance") == "original_assignment"
+    }
+    authorized_w034 = {
+        annotation for annotation, row in by_annotation.items()
+        if _is_w034(row.get("worker_id")) and row.get("assignment_provenance") == "authorized_replacement_assignment"
+    }
+    if not original_w034 or not authorized_w034:
+        raise ValueError("W034 original-only branch requires both original and authorized canonical identities")
+
+    def filtered(source: Path, name: str) -> Path:
+        rows = read_csv(source)
+        kept = []
+        for row in rows:
+            annotation = str(row.get("canonical_annotation_id") or row.get("annotation_id") or "")
+            if _is_w034(row.get("worker_id")) and annotation in authorized_w034:
+                continue
+            kept.append(row)
+        target = branch / name
+        write_csv(target, kept, list(rows[0]) if rows else ["worker_id"])
+        return target
+
+    quality_path = filtered(output_dir / "c1_gt_quality_analysis.csv", "c1_gt_quality_original_only.csv")
+    loo_path = filtered(output_dir / "geometry_worker_task_loo_analysis.csv", "geometry_loo_original_only.csv")
+    peer_path = filtered(output_dir / "geometry_worker_task_peer_analysis.csv", "geometry_peer_original_only.csv")
+    structural_path = filtered(output_dir / "structural_validation_analysis.csv", "structural_original_only.csv")
+    eligibility_original = filtered(eligibility_path, "eligibility_original_only.csv")
+
+    quality_rows = read_csv(quality_path)
+    globals_, task_effects, audit = estimate_task_adjusted_qgt(
+        quality_rows,
+        estimator_contract={"bootstrap_replicates": 200 if formal else 80, "bootstrap_seed": 20260726, "adjust_stage": False, "adjust_building": adjust_building},
+    )
+    qgt_path = branch / "qgt_original_only.csv"
+    write_csv(qgt_path, globals_, list(globals_[0]) if globals_ else ["worker_id", "Q_GT_task_adjusted"])
+    write_csv(branch / "qgt_task_effects_original_only.csv", task_effects, list(task_effects[0]) if task_effects else ["base_task_id"])
+    write_json(branch / "qgt_original_only_audit.json", audit)
+    structural_eb_path = branch / "structural_eb_original_only.csv"
+    materialize_structural_eb(
+        structural_path, structural_eb_path,
+        _PROJECT_ROOT / "docs" / "thesis_main" / "GLOBAL_POLICY_THRESHOLDS.json",
+    )
+    materialize_three_track_worker_state(
+        qgt_path, loo_path, structural_path, output_dir / "c1_worker_completion_audit.csv", branch,
+        quality_csv=quality_path, eligibility_csv=eligibility_original, peer_csv=peer_path,
+        structural_eb_csv=structural_eb_path, formal=False,
+    )
+    profile = branch / "c1_three_track_worker_state.csv"
+    if not profile.is_file():
+        raise RuntimeError("W034 original-only profile was not materialized")
+    return profile
+
+
 def _derived_worker_gates(quality_rows: list[dict[str, str]], workers: list[dict[str, str]]) -> list[dict[str, Any]]:
     by_worker: dict[str, list[dict[str, str]]] = defaultdict(list)
     for row in quality_rows:
@@ -251,6 +316,8 @@ def materialize(
     authorized_reassignment_manifest: Path | None = None, building_registry: Path | None = None,
     late_entry_assignment_manifest: Path | None = None,
     w034_active_time_validation_manifest: Path | None = None,
+    w034_original_profile_csv: Path | None = None,
+    w034_sensitivity_thresholds: Path | None = None,
     collection_closure_manifest: Path | None = None,
     p1_integrity_dir: Path | None = None,
     active_log_snapshot_bound: bool = False,
@@ -299,6 +366,8 @@ def materialize(
         "authorized_reassignment_manifest": authorized_reassignment_manifest,
         "late_entry_assignment_manifest": late_entry_assignment_manifest,
         "w034_active_time_validation_manifest": w034_active_time_validation_manifest,
+        "w034_original_profile_csv": w034_original_profile_csv,
+        "w034_sensitivity_thresholds": w034_sensitivity_thresholds,
         "c1_active_log_freeze_manifest": c1_active_log_freeze_manifest,
         "collection_closure_manifest": collection_closure_manifest,
     }.items() if path is not None}
@@ -608,6 +677,21 @@ def materialize(
     )
     predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"
     worker_state_path = output_dir / ("c1_three_track_worker_state_formal.csv" if formal else "c1_three_track_worker_state.csv")
+    sensitivity_original = review_snapshots.get("w034_original_profile_csv")
+    sensitivity_thresholds = review_snapshots.get("w034_sensitivity_thresholds")
+    if sensitivity_original is None and authorized_reassignment_manifest is not None:
+        sensitivity_original = _materialize_w034_original_only_profile(
+            output_dir, formal=formal, adjust_building=bool(fixed_snapshots.get("building_registry")),
+        )
+    if sensitivity_original and sensitivity_thresholds:
+        w034_sensitivity_summary = materialize_w034_sensitivity(
+            sensitivity_original, worker_state_path, sensitivity_thresholds,
+            output_dir / "w034_original_vs_authorized_sensitivity.json",
+        )
+    elif formal and authorized_reassignment_manifest is not None:
+        raise ValueError("formal W034 authorized extension requires frozen sensitivity thresholds")
+    else:
+        w034_sensitivity_summary = {"status": "not_evaluable", "reason": "original_profile_or_thresholds_not_provided"}
     if p1_integrity_validation["valid"]:
         predictive_source = build_p1_c1_source(
             snapshots / "p1_closeout", worker_state_path, predictive_path,
@@ -703,6 +787,7 @@ def materialize(
         "c1_preannotation_feature_summary": preannotation_summary,
         "c1_measurement_readiness": readiness,
         "three_track_worker_state_summary": three_track_summary,
+        "w034_authorized_extension_sensitivity": w034_sensitivity_summary,
         "c2_candidate_pool_summary": {
             "n_inventory_tasks": len(read_csv(fixed_snapshots["candidate_inventory"])),
             "n_tasks": 0,

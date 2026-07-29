@@ -1,5 +1,9 @@
 # Test suite classification
 
+`pytest.ini` 将正式 pytest 收集根限定为本目录。仓库根目录的
+`test_depth.py`、`test_layout.py`、`test_sem.py` 是模型运行脚本，
+不属于合同测试，也不应因缺少 Torch/natsort 阻断方法链 CI。
+
 `tests/` 保持扁平布局，以兼容 `AGENTS.md`、CI 和本地定向 `pytest` 命令；分类通过文件名前缀和本索引完成，不为整理目录而移动仍在使用的测试。
 
 ## Categories

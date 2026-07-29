@@ -1,4 +1,4 @@
-from __future__ import annotations
+﻿from __future__ import annotations
 
 import csv
 import json
@@ -15,6 +15,7 @@ from tools.thesis_main.analysis.routing.v1_policy import (
     run_v1_trial,
 )
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT
 
 
 def _manifest() -> dict:
@@ -62,12 +63,34 @@ def _manifest() -> dict:
     }
 
 
+def _write_stage3(tmp_path):
+    from tools.thesis_main.analysis.materialize_stage3_freeze_gate import REQUIRED_GATES, build_gate
+    child_items = []
+    for child_role in ("C1_ROW_ELIGIBILITY_FROZEN", "C1_PEER_EVIDENCE_FROZEN", "C1_STRUCTURAL_EB_FROZEN", "W034_SENSITIVITY_FROZEN"):
+        child = tmp_path / f"{child_role}.json"
+        child.write_text(json.dumps({"schema_version": "test_dependency_v2", "formal_ready": True, "profile_version": "p", "cohort_id": "c", "blockers": [], "dependencies": []}), encoding="utf-8")
+        child_items.append({"role": child_role, "frozen": True, "path": child.name, "sha256": sha256_file(child), "expected_schema": "test_dependency_v2", "required_status_field": "formal_ready", "required_status_value": True, "profile_version": "p", "cohort_id": "c"})
+    state = {}
+    for role in REQUIRED_GATES:
+        dependency = tmp_path / f"{role}.json"
+        payload = {"schema_version": "test_dependency_v2", "formal_ready": True, "profile_version": "p", "cohort_id": "c", "blockers": [], "dependencies": child_items if role == "C1_EVIDENCE_FROZEN" else []}
+        if role == "C1_EVIDENCE_FROZEN": payload["method_contract_sha256"] = sha256_file(METHOD_CONTRACT)
+        dependency.write_text(json.dumps(payload), encoding="utf-8")
+        state[role] = {"frozen": True, "path": dependency.name, "sha256": sha256_file(dependency), "expected_schema": "test_dependency_v2", "required_status_field": "formal_ready", "required_status_value": True, "profile_version": "p", "cohort_id": "c"}
+    gate = build_gate(state, "r" * 64, "e" * 64, base_dir=tmp_path)
+    path = tmp_path / "stage3.json"
+    path.write_text(json.dumps(gate), encoding="utf-8")
+    return path
+
+
 def _candidate(worker: str, score: float, *, boost: float = 0.0) -> dict:
     return {
+        "schema_version": "policy_candidate_v2",
         "worker_id": worker,
-        "eligible": True,
-        "available": True,
-        "global_lcb": score,
+        "global_policy_eligible": True,
+        "S_G": score,
+        "R_peer_stable": .9,
+        "R_LOO_medoid": .8,
         "B_u_risk": boost,
         "B_u_routing_eligible": True,
         "p1_supported_families": ["undercoverage"],
@@ -198,7 +221,7 @@ def test_formal_scheduler_ignores_prepopulated_arm() -> None:
 def test_gt_fields_do_not_change_routing_or_aggregation() -> None:
     manifest = _manifest()
     candidates = [_candidate("w1", 1.0), _candidate("w2", 0.9)]
-    base = [_valid(worker_id="w1", global_lcb=1.0), _valid(worker_id="w2", global_lcb=0.9)]
+    base = [_valid(worker_id="w1", S_G=1.0), _valid(worker_id="w2", S_G=0.9)]
     poisoned = [{**row, "gt_iou": 1.0 - index, "gold_geometry": {"malicious": True}} for index, row in enumerate(base)]
     assert rank_candidates(candidates, _task("t1"), manifest) == rank_candidates(
         [{**row, "gt_iou": -999} for row in candidates], {**_task("t1"), "gt_quality": 999}, manifest
@@ -210,11 +233,11 @@ def test_gt_blind_medoid_tie_break_does_not_consume_global_quality() -> None:
     manifest = _manifest()
     geometry = _geometry()
     base = [
-        _valid(geometry, worker_id="w1", annotation_id="a1", global_lcb=0.1),
-        _valid(geometry, worker_id="w2", annotation_id="a2", global_lcb=0.9),
-        _valid(geometry, worker_id="w3", annotation_id="a3", global_lcb=0.5),
+        _valid(geometry, worker_id="w1", annotation_id="a1", S_G=0.1),
+        _valid(geometry, worker_id="w2", annotation_id="a2", S_G=0.9),
+        _valid(geometry, worker_id="w3", annotation_id="a3", S_G=0.5),
     ]
-    changed = [{**row, "global_lcb": 1.0 - float(row["global_lcb"])} for row in base]
+    changed = [{**row, "S_G": 1.0 - float(row["S_G"])} for row in base]
     first = aggregate_submissions(base, manifest, at_cap=True, seed_key="task-1")
     second = aggregate_submissions(changed, manifest, at_cap=True, seed_key="task-1")
     assert first["terminal_status"] == second["terminal_status"] == "resolved"
@@ -236,10 +259,10 @@ def test_multimodal_is_unresolved_and_no_legal_submission_is_severe() -> None:
     first = _geometry()
     second = _geometry(250)
     rows = [
-        _valid(first, worker_id="w1", global_lcb=1.0),
-        _valid(first, worker_id="w2", global_lcb=0.9),
-        _valid(second, worker_id="w3", global_lcb=0.8),
-        _valid(second, worker_id="w4", global_lcb=0.7),
+        _valid(first, worker_id="w1", S_G=1.0),
+        _valid(first, worker_id="w2", S_G=0.9),
+        _valid(second, worker_id="w3", S_G=0.8),
+        _valid(second, worker_id="w4", S_G=0.7),
     ]
     result = aggregate_submissions(rows, manifest, at_cap=True)
     assert result["terminal_status"] == "unresolved"
@@ -261,8 +284,7 @@ def test_formal_manifest_requires_sha_dependencies_and_rejects_dry_run(tmp_path)
     dependency = tmp_path / "profile.csv"
     dependency.write_text("worker_id\nw1\n", encoding="utf-8")
     manifest = _manifest()
-    stage3 = tmp_path / "stage3.json"
-    stage3.write_text(json.dumps({"schema_version": "paper_a_stage3_freeze_gate_v2", "STAGE3_LAUNCH_ALLOWED": True}), encoding="utf-8")
+    stage3 = _write_stage3(tmp_path)
     manifest["dependencies"] = [
         {"path": dependency.name, "sha256": sha256_file(dependency)},
         {"path": stage3.name, "sha256": sha256_file(stage3), "role": "stage3_freeze_gate"},
@@ -287,8 +309,7 @@ def test_csv_materializer_parses_geometry_json_and_writes_formal_outputs(tmp_pat
 
     manifest_path = tmp_path / "freeze.json"
     manifest = _manifest()
-    stage3 = tmp_path / "stage3.json"
-    stage3.write_text(json.dumps({"schema_version": "paper_a_stage3_freeze_gate_v2", "STAGE3_LAUNCH_ALLOWED": True}), encoding="utf-8")
+    stage3 = _write_stage3(tmp_path)
     manifest["dependencies"] = [{"path": stage3.name, "sha256": sha256_file(stage3), "role": "stage3_freeze_gate"}]
     manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
     tasks = tmp_path / "tasks.csv"
@@ -320,7 +341,8 @@ def test_csv_materializer_parses_geometry_json_and_writes_formal_outputs(tmp_pat
             input_status="formal",
             capacity_manifest_csv=capacity,
         )
-    assert audit["formal_assignment_generated"] is True
+    assert audit["formal_assignment_generated"] is False
+    assert audit["artifact_role"] == "deterministic_replay_audit"
     assert (output / "v1_policy_offer_ledger.csv").exists()
     with (output / "v1_policy_task_summary.csv").open(encoding="utf-8") as handle:
         row = list(csv.DictReader(handle))[0]

@@ -37,8 +37,9 @@ T1_FIELDS = [
     "original_row_failure_attribution", "original_incident_id",
     "pair_analysis_disposition", "source_pair_id", "source_task_id", "rerun_sequence",
     "original_task_id", "rerun_task_id", "frozen_rule_version", "freeze_version",
-    "iou_to_gt", "structurally_valid",
+    "delivery_status", "failure_attribution", "iou_to_gt", "structurally_valid",
     "delivery_adjusted_quality", "quality_evaluable", "risk_assist",
+    "usable_pair_sensitivity_eligible", "usable_pair_sensitivity_delivery_adjusted_quality",
     "active_time_integrity_status", "active_time_source", "active_time_source_file",
     "active_time_annotation_id", "owner_valid_active_time", "active_time_seconds",
     "inference_cluster_id",
@@ -350,8 +351,10 @@ def materialize_t1_rows(source_rows: list[dict[str, Any]]) -> tuple[list[dict[st
                     "analysis_disposition": disposition, "structurally_valid": "",
                     "delivery_adjusted_quality": "", "quality_evaluable": False,
                 }
+            delivery_status = "valid" if fields.get("quality_evaluable") else "invalid" if attribution == "worker_caused_structural_failure" else "unavailable"
             output.append({
                 **row, **fields,
+                "delivery_status": delivery_status, "failure_attribution": "worker" if attribution == "worker_caused_structural_failure" else "external" if attribution == "external_system_failure" else "unknown" if attribution == "not_evaluable" else "none",
                 "analysis_unit_pair_id": pair_id,
                 "row_failure_attribution": attribution,
                 "pair_analysis_disposition": disposition,
@@ -364,10 +367,23 @@ def materialize_t1_rows(source_rows: list[dict[str, Any]]) -> tuple[list[dict[st
                 ),
                 "original_incident_id": text(original_by_condition[condition].get("incident_id")),
             })
+    censored_images = {str(row.get("image_id", "")) for row in output if row.get("pair_analysis_disposition") != "included"}
+    for row in output:
+        if str(row.get("image_id", "")) in censored_images:
+            sensitivity_eligible = row.get("pair_analysis_disposition") == "included" and bool(row.get("quality_evaluable"))
+            row.update({
+                "usable_pair_sensitivity_eligible": sensitivity_eligible,
+                "usable_pair_sensitivity_delivery_adjusted_quality": row.get("delivery_adjusted_quality") if sensitivity_eligible else "",
+                "pair_analysis_disposition": "administrative_censor", "analysis_disposition": "administrative_censor",
+                "delivery_adjusted_quality": "", "quality_evaluable": False,
+            })
+        else:
+            row.update({"usable_pair_sensitivity_eligible": False, "usable_pair_sensitivity_delivery_adjusted_quality": ""})
     return output, {
         "n_analysis_pairs": sum(pair_counts.values()),
         "pair_disposition_counts": dict(sorted(pair_counts.items())),
-        "resolved_rerun_pairs": len(resolved_originals),
+        "resolved_rerun_pairs": len(resolved_originals), "administratively_censored_images": len(censored_images),
+        "usable_pair_sensitivity_rows": sum(bool(row.get("usable_pair_sensitivity_eligible")) for row in output),
     }
 
 

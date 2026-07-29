@@ -27,7 +27,7 @@ def _timestamp(value: Any) -> datetime:
     return parsed.astimezone(timezone.utc)
 
 
-def validate_sentinel(spec: dict[str, Any], active_rows: list[dict[str, str]], runtime_rows: list[dict[str, str]], *, log_sha256: str) -> dict[str, Any]:
+def validate_sentinel(spec: dict[str, Any], active_rows: list[dict[str, str]], runtime_rows: list[dict[str, str]], *, raw_log_bundle_sha256: str, derived_audit_sha256: str) -> dict[str, Any]:
     required = ("worker_id", "project_id", "runtime_task_id", "annotation_id", "validation_timestamp", "reviewed_by")
     missing = [field for field in required if not str(spec.get(field, "")).strip()]
     if missing:
@@ -35,8 +35,9 @@ def validate_sentinel(spec: dict[str, Any], active_rows: list[dict[str, str]], r
     if str(spec["worker_id"]).lstrip("W0") not in {"34", ""}:
         raise ValueError("W034 sentinel must bind worker 34")
     validation_timestamp = _timestamp(spec["validation_timestamp"])
-    if len(str(log_sha256)) != 64 or any(char not in "0123456789abcdefABCDEF" for char in str(log_sha256)):
-        raise ValueError("W034 sentinel requires a SHA-256-bound active-time source")
+    for label, digest in (("raw bundle", raw_log_bundle_sha256), ("derived audit", derived_audit_sha256)):
+        if len(str(digest)) != 64 or any(char not in "0123456789abcdefABCDEF" for char in str(digest)):
+            raise ValueError(f"W034 sentinel requires a SHA-256-bound {label}")
     runtime = [row for row in runtime_rows if str(row.get("project_id", "")) == str(spec["project_id"]) and str(row.get("ls_runtime_task_id") or row.get("runtime_task_id") or "") == str(spec["runtime_task_id"])]
     active = [row for row in active_rows if str(row.get("project_id", "")) == str(spec["project_id"]) and str(row.get("ls_runtime_task_id") or row.get("runtime_task_id") or row.get("task_id") or "") == str(spec["runtime_task_id"]) and str(row.get("worker_id") or row.get("annotator_id") or "").lstrip("W0") == "34" and str(row.get("annotation_id") or row.get("canonical_annotation_id") or "") == str(spec["annotation_id"])]
     row = active[0] if len(active) == 1 else {}
@@ -53,19 +54,23 @@ def validate_sentinel(spec: dict[str, Any], active_rows: list[dict[str, str]], r
     }
     passed = all(checks.values())
     return {
-        "schema_version": "w034_active_time_validation_manifest_v1",
+        "schema_version": "w034_active_time_validation_manifest_v2",
         "sentinel_task_identity": {key: str(spec[key]) for key in ("project_id", "runtime_task_id", "annotation_id")},
         "worker_id": "34", "validation_timestamp": validation_timestamp.isoformat(),
-        "log_source_sha256": log_sha256, "reviewed_by": spec["reviewed_by"],
+        "raw_active_log_bundle_sha256": raw_log_bundle_sha256,
+        "derived_active_time_audit_sha256": derived_audit_sha256,
+        "sentinel_annotation_identity": f"{spec['project_id']}|{spec['runtime_task_id']}|34|{spec['annotation_id']}",
+        "reviewed_by": spec["reviewed_by"],
         "validation_checks": checks, "validation_result": "passed" if passed else "failed",
         "active_time_expected_disposition": "authorized_rows_after_validation_only" if passed else "fail_closed",
     }
 
 
-def materialize(spec_json: Path, active_csv: Path, runtime_csv: Path, output_json: Path) -> dict[str, Any]:
+def materialize(spec_json: Path, active_csv: Path, runtime_csv: Path, raw_log_bundle: Path, output_json: Path) -> dict[str, Any]:
     result = validate_sentinel(
         json.loads(spec_json.read_text(encoding="utf-8")), _read(active_csv), _read(runtime_csv),
-        log_sha256=hashlib.sha256(active_csv.read_bytes()).hexdigest(),
+        raw_log_bundle_sha256=hashlib.sha256(raw_log_bundle.read_bytes()).hexdigest(),
+        derived_audit_sha256=hashlib.sha256(active_csv.read_bytes()).hexdigest(),
     )
     output_json.parent.mkdir(parents=True, exist_ok=True)
     output_json.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -77,9 +82,10 @@ def main() -> None:
     parser.add_argument("--sentinel-spec", type=Path, required=True)
     parser.add_argument("--active-time-audit", type=Path, required=True)
     parser.add_argument("--runtime-mapping", type=Path, required=True)
+    parser.add_argument("--raw-active-log-bundle", type=Path, required=True)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    print(json.dumps(materialize(args.sentinel_spec, args.active_time_audit, args.runtime_mapping, args.output), indent=2))
+    print(json.dumps(materialize(args.sentinel_spec, args.active_time_audit, args.runtime_mapping, args.raw_active_log_bundle, args.output), indent=2))
 
 
 if __name__ == "__main__":

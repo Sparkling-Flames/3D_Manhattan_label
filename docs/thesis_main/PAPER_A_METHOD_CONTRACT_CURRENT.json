@@ -1,0 +1,87 @@
+{
+  "schema_version": "paper_a_method_contract_v2",
+  "contract_version": "paper_a_method_20260729_v2",
+  "status": "current_normative_source",
+  "formal_launch_default": false,
+  "stages": ["Pilot", "PreScreen", "C1", "C2-B", "C2-A-RP", "T1", "V1"],
+  "c2": {
+    "candidate_designs": ["D8", "D10", "D12"],
+    "c2_a_rp_max_tasks_per_worker": 4,
+    "roster_required_axes": ["Q_GT", "R_peer", "F_struct"],
+    "loo_is_global_roster_gate": false
+  },
+  "worker_axes": {
+    "primary": ["Q_GT", "R_peer", "F_struct"],
+    "sensitivity": ["R_LOO_medoid", "R_LOO_strict"]
+  },
+  "strong_global": {
+    "score": "S_G=z(Q_GT_EB)",
+    "quality_lcb_role": "safety_gate_and_sensitivity_only",
+    "static_order": ["S_G_desc", "R_peer_stable_desc", "R_LOO_medoid_desc", "frozen_random"],
+    "runtime_scheduler_fields": ["available", "capacity"]
+  },
+  "peer": {
+    "task_statistic": "median_pairwise_similarity_within_worker_task",
+    "worker_aggregate": "task_equal_median",
+    "stable_excludes": ["supported_multimodal"]
+  },
+  "geometry_cluster": {
+    "definition": "complete_link",
+    "ambiguous_partition_primary_status": "not_evaluable",
+    "medoid": "max_median_then_mean_pairwise_similarity_then_geometry_sha",
+    "margins": ["cluster_margin_all", "cluster_margin_top2"]
+  },
+  "rolling_enrollment": {
+    "default_activated": false,
+    "decision_information_set": [
+      "C1 partially executed",
+      "W014 and W034 operational status known",
+      "final worker profiles not visible",
+      "C2 outcomes not visible",
+      "T1 and V1 outcomes not visible"
+    ],
+    "assignment_forbidden_inputs": ["C1 quality", "peer", "ranking", "component activation", "policy divergence"]
+  },
+  "stage3": {
+    "required_roles": [
+      "CALIBRATION_ENROLLMENT_CLOSED",
+      "ALL_CALIBRATION_WORKERS_TERMINAL",
+      "C1_EVIDENCE_FROZEN",
+      "C2_B_FROZEN",
+      "C2_A_RP_CLOSED",
+      "FINAL_POOLED_PROFILE_FROZEN",
+      "STRONG_GLOBAL_FROZEN",
+      "FULL_POLICY_FROZEN",
+      "VALIDATION_ROSTER_FROZEN",
+      "SAP_FROZEN"
+    ],
+    "required_child_roles": {
+      "C1_EVIDENCE_FROZEN": [
+        "C1_ROW_ELIGIBILITY_FROZEN",
+        "C1_PEER_EVIDENCE_FROZEN",
+        "C1_STRUCTURAL_EB_FROZEN",
+        "W034_SENSITIVITY_FROZEN"
+      ]
+    },
+    "c1_requires_current_method_contract_sha": true,
+    "recursive_dependency_validation": true
+  },
+  "t1": {
+    "delivery_status_values": ["valid", "invalid", "unavailable"],
+    "failure_attribution_values": ["worker", "external", "unknown", "none"],
+    "primary_pair_rule": "whole_image_administrative_censor_after_one_failed_complete_pair_rerun",
+    "available_pair_analysis_role": "sensitivity_only"
+  },
+  "v1": {
+    "execution": "online_next_decision_with_append_only_ledger",
+    "batch_module_role": "deterministic_replay_audit",
+    "candidate_schema": "policy_candidate_v2"
+  },
+  "artifact_schemas": [
+    "assignment_evidence_v2",
+    "peer_worker_task_v2",
+    "worker_profile_v2",
+    "policy_candidate_v2",
+    "geometry_cluster_v2"
+  ]
+}

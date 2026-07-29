@@ -13,6 +13,7 @@ from tools.thesis_main.registry.hohonet_feature_backend import aggregate_orbit
 
 
 def test_full_checkpoint_constructor_disables_all_pretrained_download_paths(monkeypatch) -> None:
+    pytest.importorskip("torch")
     from lib.model.backbone import resnet as backbone_module
 
     calls = {}

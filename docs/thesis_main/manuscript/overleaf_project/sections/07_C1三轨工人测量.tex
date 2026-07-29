@@ -1,0 +1,146 @@
+% Paper A: C1 separates computability from formal analysis eligibility.
+% Normative source: PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260729_v2 SHA-256 d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44
+\section{C1：三轴工人测量与设计参数}
+
+\subsection{C1 目标}
+
+C1 提供基础外部质量、同行结构、任务差异和结构失败机会，并为 C2-B、T1 和 V1
+提供预注册设计参数。C1 不把未通过正式资格门的可计算分数升级为 Global 支持。
+
+\subsection{外部正确性与资格}
+
+\[
+Q^{GT}_{t,u}=IoU(A_{t,u},G_t).
+\]
+
+将原来的单一 \texttt{quality\_evaluable} 拆分为：
+
+\begin{verbatim}
+gt_score_computable
+gt_primary_analysis_eligible
+\end{verbatim}
+
+前者只表示 IoU 可以计算；后者还必须通过 process、independence、Scope、reference、
+Manual condition 和 geometry computability。结果表不得把前者称为正式 Global 支持。
+
+\subsection{Task-adjusted GT quality 与经验贝叶斯收缩}
+
+在 C1 阶段，先使用不含 stage effect 的 provisional 模型：
+
+\[
+Q^{GT}_{t,u}=\mu+\alpha_u+\delta_t+\epsilon_{t,u}.
+\]
+
+C1 与 C2 合并后，才估计含阶段效应的最终模型：
+
+\[
+Q^{GT}_{t,u,s}=\mu+\alpha_u+\delta_t+\eta_s+\epsilon_{t,u,s}.
+\]
+
+在 task-adjusted fixed-effect 估计之外，使用正常--正常经验贝叶斯收缩，报告：
+
+\begin{verbatim}
+Q_GT_task_adjusted_FE
+Q_GT_EB
+Q_GT_EB_interval
+Q_GT_LCB
+\end{verbatim}
+
+正式 Global 默认使用收缩后的 \(Q^{GT,EB}_u\)；LCB 是最低质量安全门、
+不确定性标记和保守敏感性排序，不再是唯一的正式排序值。
+
+\subsection{同行兼容性的双指标}
+
+两条几何通道先分别计算，再定义同行相似度：
+
+\[
+S(A_{t,u},A_{t,v})
+=\min\left\{S_{\mathrm{boundary}}(A_{t,u},A_{t,v}),
+S_{\mathrm{wall}}(A_{t,u},A_{t,v})\right\}.
+\]
+
+这一定义对应“任一关键几何通道明显不兼容时，不用另一通道的高分掩盖”的合同。
+
+主要连续指标为：
+
+\[
+R^{peer}_{t,u}=\operatorname{median}_{v\neq u}
+S(A_{t,u},A_{t,v}),
+\]
+
+回答工人与同行总体的兼容程度。高置信参考指标为：
+
+\[
+R^{peer\_all}_u=\operatorname{median}\{S(A_{t,u},A_{t,v}):
+v\neq u,\ v\text{ eligible}\},
+\]
+
+\[
+R^{peer\_nonmultimodal}_u=\operatorname{median}\{S(A_{t,u},A_{t,v}):
+v\neq u,\ v\text{ eligible},\
+t\notin\texttt{supported\_multimodal}\}.
+\]
+
+\texttt{R\_peer\_all} 用于描述性报告；Global 的 tie-break 与 stable-compatibility
+判断只能使用 \texttt{R\_peer\_nonmultimodal}。支持多峰任务只进入 discrepancy 与
+敏感性分析，不进入 Global 的稳定兼容性证据。
+
+\[
+R^{LOO}_{t,u}=S(A_{t,u},M_t^{(-u)}),
+\]
+
+其中 \(M_t^{(-u)}\) 只有在排除工人后存在唯一稳定主簇时才定义。论文明确区分：
+
+\begin{verbatim}
+R_peer_median       主要同行兼容指标
+R_LOO_medoid        高置信参考、聚合稳定性与 tie-break
+R_LOO_strict_stable 保守敏感性分析
+\end{verbatim}
+
+三者不得机械平均，也不得用 LOO 填充 GT quality。
+
+\subsection{结构失败与收缩}
+
+原始结构失败比例保留为：
+
+\[
+F^{struct}_{u,raw}=\frac{n_{\mathrm{worker\text{-}caused\ failure}}}
+{n_{\mathrm{structural\text{-}evaluable\ opportunities}}}.
+\]
+
+同时报告：
+
+\begin{verbatim}
+F_struct_raw
+F_struct_EB
+F_struct_interval
+recurrent_serious_failure_flag
+\end{verbatim}
+
+external system failure、parser/export failure、reference failure、OOS 和未知归因不进入
+worker-caused 分母。正式安全门由独立 policy manifest 冻结，本文不写死任意固定数值阈值。
+
+\subsection{三轴基础状态}
+
+\[
+Q^{GT}_u,\qquad R^{peer}_u,\qquad F^{struct}_u
+\]
+
+分别代表外部正确性、同行兼容性和结构可靠性。三轴分开估计；同行指标只用于 tie-break、
+discrepancy worker、聚合稳定性和敏感性分析，不作为外部质量的替代物。
+
+\subsection{Estimand-specific support 与 profile 版本}
+
+每个 worker profile 必须携带 GT、peer、LOO、structural 与 timing 的独立 task support、deficit
+和 excess；不得用一个全局 (k=5) 或 annotation row 数替代。W034 同时物化 original-only 与
+original+authorized profile，W001 对应 original+authorized profile；rolling enrollment 激活时再增加
+original-cohort 与 pooled-cohort 版本。所有 profile 都绑定 assignment、canonical evidence、row
+eligibility、active-time sentinel 和 estimator manifest 的 SHA，缺失任一依赖时只能输出
+not-evaluable/candidate，不能形成正式 routing state。
+
+\subsection{三轴用途级资格合同}
+
+正式 worker profile 分别报告 \(Q_{GT}\)、\(R_{peer}\)、\(F_{struct}\)、
+\(R_{LOO,medoid}\) 与 \(R_{LOO,strict}\) 的状态。C2-B roster 只要求前三个基础轴可评价；
+strict/medoid LOO 不构成全局 roster 硬门。同行轴先在 worker--task 内取 pairwise similarity
+中位数，再在 worker 层对 task 等权取中位数，不直接汇总全部 pairwise edge。

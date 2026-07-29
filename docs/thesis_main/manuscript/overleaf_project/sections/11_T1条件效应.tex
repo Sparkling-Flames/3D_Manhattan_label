@@ -1,0 +1,136 @@
+% Normative source: PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260729_v2 SHA-256 d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44
+\section{T1：Semi-Auto 条件效应}
+
+\subsection{设计}
+
+\[
+2\times2:
+\quad
+Manual/Semi
+\times
+ordinary/stress_{\text{assist}}.
+\]
+
+50:50 是实验设计分布，不代表生产分布。
+
+\subsection{工人随机分配}
+
+每图：
+
+\begin{verbatim}
+2 Manual
+2 Semi
+\end{verbatim}
+
+四个 slot 在合格工人中约束随机分配：
+
+\begin{itemize}
+  \item 同一工人不看同图两种模式；
+  \item 每名工人 Manual/Semi 平衡；
+  \item ordinary/stress 平衡；
+  \item workload cap；
+  \item 保存 candidate set、seed 和 assignment probability。
+\end{itemize}
+
+\subsection{结构有效性}
+
+每条提交先判：
+
+\begin{verbatim}
+structurally_valid
+worker_caused_structural_failure
+external_system_failure
+not_evaluable
+\end{verbatim}
+
+worker-caused structural failure 取 \texttt{structurally\_valid=0}，且在其原 Manual/Semi 条件内保留。external system failure 不归责工人或条件；仅在冻结证据规则确认、结果尚不可见时，才触发第 4.6 节的处置。其他无法归因异常为 not evaluable，不静默并入任一失败类别。
+
+\subsection{Primary quality estimand}
+
+对每条提交：
+
+\[
+U_{t,u}
+=
+I(\text{structurally valid})\times IoU(A_{t,u},G_t).
+\]
+
+worker-caused structural failure 的 submission-level delivery-adjusted quality 取 0。确认的 external system failure 不进入该提交质量分母：必须重跑同一 image 的完整 Manual/Semi 配对一次，且保持原条件、冻结版本和 worker-image 隔离；无法完成完整配对重跑时，整对行政删失。行政删失不是零值，也不得只删去某一条件的不利结果。
+
+图片--条件层：
+
+\[
+\bar U_{t,c}
+=
+\frac{1}{2}\sum_{u\in c}U_{t,u}.
+\]
+
+图片内差：
+
+\[
+D_t=\bar U_{t,Semi}-\bar U_{t,Manual}.
+\]
+
+这是主要 image-level paired quality estimand。
+
+\texttt{pair\_id} 只用于随机化平衡、事故重跑和 provenance，不是正式独立统计单位。
+每图预先冻结两个 pair；pair-level 重跑结束后仍映射回原 image，两个 pair 合并成唯一
+image-level outcome。主要推断以 image 为单位，并按 building/image 及重复 worker
+结构采用冻结的聚类方法。
+
+每个 T1 条件及其配对结果同时报告原始提交/配对数、worker-caused structural failure 数、external incident 重跑数、行政删失数和原因。所有这些处理在结果不可见时冻结，不能根据质量差异重分类。
+
+\subsection{Secondary outcomes}
+
+\begin{verbatim}
+structurally valid rate
+valid-only GT IoU
+pairwise agreement
+worst individual GT quality
+blind trust
+correction failure
+over-correction
+Model Issue recognition
+\end{verbatim}
+
+两人没有天然多数，因此除非预先冻结双标注融合算法，否则不把“两人聚合 GT IoU”作为正式主结果。
+
+\subsection{Active time}
+
+使用完整 owner-valid active time。
+
+active-time 的确认性效应以 Semi 减 Manual 的条件差
+\(\Delta_T=T_{\mathrm{Semi}}-T_{\mathrm{Manual}}\) 报告，负值表示 Semi 更快；
+log-ratio 作为偏态分布下的敏感性尺度。只有同时满足总体 coverage 门槛、且
+Manual/Semi 与 ordinary/stress 的差异性缺失不超过 SAP 预先冻结的容忍度时，
+active time 才进入确认性检验；否则仅作 descriptive 与 missingness sensitivity。
+
+不进行：
+
+\begin{itemize}
+  \item 固定减去估算的 Model Issue 时间；
+  \item 给 Manual 增加无意义对称表单。
+\end{itemize}
+
+\subsection{统计层级}
+
+\begin{enumerate}
+  \item delivery-adjusted quality 的非劣，并同时通过 structural-validity safety gate；
+  \item owner-valid active time 的预定义差值尺度，log-ratio 为敏感性分析；
+  \item mode\(\times\)risk\_assist 交互；
+  \item blind trust、correction failure、over-correction 和 Model Issue recognition 等机制。
+\end{enumerate}
+
+质量非劣 margin、结构安全门和 active-time 的确认性尺度均来自结果可见前冻结的
+Statistical Analysis Plan 与 analysis manifest；正文只报告其预先冻结的方向和判定规则，
+不得根据观察到的效应回调 margin。
+
+行为机制不替代前述确认性结果；若 owner-valid active-time coverage 未达到冻结门槛，
+active time 降级为 descriptive/sensitivity，不影响质量与结构主分析。
+
+\subsection{不可评价与整图行政删失}
+
+交付状态与失败归因分开保存：\texttt{delivery\_status} 取 valid/invalid/unavailable，
+\texttt{failure\_attribution} 取 worker/external/unknown/none。唯一允许的完整 pair 重跑后，
+只要任一预冻结 Manual/Semi pair 仍不可评价，整张 image 从主要 image-level paired estimand
+行政删失；不可评价不编码为 0，也不使用剩余 pair 改写主要 estimand。可用 pair 只作 sensitivity。

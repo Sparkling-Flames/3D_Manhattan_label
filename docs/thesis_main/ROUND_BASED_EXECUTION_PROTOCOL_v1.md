@@ -1,5 +1,7 @@
 # Round-Based Execution Protocol v1
 
+> 本协议只消费 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（`paper_a_method_20260729_v2`）及其 SHA，不再另建方法真源。
+
 ## 0. 定位与效力
 
 本文是论文主线 `Pilot -> PreScreen -> Calibration -> Main(Test + Validation)` 的正式执行协议。

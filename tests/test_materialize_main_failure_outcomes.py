@@ -182,6 +182,20 @@ def test_t1_one_sided_external_reruns_whole_pair_without_mislabeling_other_row()
     assert audit["resolved_rerun_pairs"] == 1
 
 
+def test_t1_whole_image_censor_preserves_only_predeclared_usable_pair_sensitivity() -> None:
+    usable = _t1_pair("p1", disposition="included", workers=("w1", "w2"))
+    failed = _t1_pair("p2", disposition="rerun", workers=("w3", "w4"))
+    failed[0].update({"row_failure_attribution": "external_system_failure", "incident_id": "inc-2", "incident_evidence_status": "verified"})
+    rows, audit = materialize_t1_rows(usable + failed)
+    assert {row["analysis_disposition"] for row in rows} == {"administrative_censor"}
+    usable_rows = [row for row in rows if row["analysis_unit_pair_id"] == "p1"]
+    failed_rows = [row for row in rows if row["analysis_unit_pair_id"] == "p2"]
+    assert all(row["usable_pair_sensitivity_eligible"] for row in usable_rows)
+    assert {row["usable_pair_sensitivity_delivery_adjusted_quality"] for row in usable_rows} == {0.6, 0.8}
+    assert not any(row["usable_pair_sensitivity_eligible"] for row in failed_rows)
+    assert audit["usable_pair_sensitivity_rows"] == 2
+
+
 def test_t1_worker_failure_is_zero_only_in_its_condition() -> None:
     rows = _t1_pair("p1", disposition="included")
     rows[0]["row_failure_attribution"] = "worker_caused_structural_failure"

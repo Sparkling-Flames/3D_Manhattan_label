@@ -13,6 +13,7 @@ from typing import Any
 
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
 from tools.thesis_main.analysis.failure_disposition import c1_failure_fields
+from tools.thesis_main.analysis.paper_a_contracts import validate_record, validate_serialized_record
 from tools.thesis_main.analysis.quality_core.active_time import (
     _parse_active_log_event_time,
     cumulative_active_intervals,
@@ -1083,14 +1084,16 @@ def materialize_row_analysis_eligibility(
         if loo_row.get("task_crowd_structure_status") not in {"unimodal", "dominant_with_dissent"}: medoid_reasons.append("task_crowd_structure_not_primary")
         if _truth(loo_row.get("medoid_tie_sensitive")): medoid_reasons.append("medoid_tie_sensitive")
         if loo_row.get("q_LOO_tu", "") in {"", None}: medoid_reasons.append("medoid_score_not_evaluable")
-        structural_reasons = [*process_reasons]
+        structural_reasons = [*process_reasons, *primary_assignment_reasons]
         if not independence_eligible: structural_reasons.append("independence_not_evaluable")
         if not scope_eligible: structural_reasons.append("scope_not_resolved_in_scope")
         if not structural_attribution_eligible: structural_reasons.append("structural_attribution_not_evaluable")
-        output.append({
-            "canonical_annotation_id": identity, "annotation_id": row.get("annotation_id", ""), "worker_id": row.get("worker_id", ""),
+        record = {
+            "schema_version": "assignment_evidence_v2", "canonical_annotation_id": identity, "annotation_id": row.get("annotation_id", ""), "worker_id": row.get("worker_id", ""),
             "base_task_id": row.get("base_task_id", ""), "condition": row.get("condition", ""), "canonical_eligible": True,
+            "assignment_provenance": row.get("assignment_provenance") or row.get("assignment_source") or row.get("assignment_classification") or "",
             "outside_assignment_disposition_applied": _truth(outside.get(identity, {}).get("outside_assignment_disposition_applied")), "outside_assignment_process_override": outside_override,
+            "formal_assignment_eligible": not primary_assignment_reasons,
             "process_eligible": process_eligible, "process_exclusion_reason": ";".join(process_reasons),
             "independence_eligible": independence_eligible, "independence_exclusion_reason": "" if independence_eligible else "independence_not_evaluable",
             "scope_eligible": scope_eligible, "scope_exclusion_reason": "" if scope_eligible else "scope_not_resolved_in_scope",
@@ -1112,7 +1115,9 @@ def materialize_row_analysis_eligibility(
             "legacy_role": "strict_sensitivity", "formal_use_allowed": False,
             "structural_opportunity_eligible": not structural_reasons, "structural_opportunity_exclusion_reason": ";".join(structural_reasons),
             "rule_version": rule_version, "source_sha256": source_sha,
-        })
+        }
+        validate_record("assignment_evidence_v2", record)
+        output.append(record)
     write_csv(output_dir / "c1_row_analysis_eligibility.csv", output)
     def waterfall(path: str, stages: list[tuple[str, str]]) -> None:
         remaining = list(output); rows = []
@@ -1338,10 +1343,14 @@ def materialize_c2_eligible_roster(
         if not independence_valid: blockers.append("no_independence_valid_support")
         if structural_evaluable == 0: blockers.append("structural_profile_not_evaluable")
         if quality[worker] < min_gt_support: blockers.append("insufficient_gt_support")
-        if loo[worker] < min_loo_support: blockers.append("insufficient_loo_support")
+        peer_support = sum(
+            1 for row in read_csv(geometry_loo_csv)
+            if row.get("worker_id", "") == worker and int(float(row.get("peer_count_excluding_self") or 0)) > 0
+        )
+        if peer_support == 0: blockers.append("insufficient_peer_support")
         eligible = not blockers
         output.append({
-            **completed, "gt_quality_support": quality[worker], "loo_support": loo[worker],
+            **completed, "gt_quality_support": quality[worker], "peer_support": peer_support, "loo_support": loo[worker],
             "process_valid_support": len(process_valid), "independence_valid_support": len(independence_valid),
             "process_eligible": bool(process_valid), "independence_eligible": bool(independence_valid),
             "structural_profile_evaluable_count": structural_evaluable,
@@ -1381,21 +1390,22 @@ def materialize_three_track_worker_state(
     structural_eb_csv: Path | None = None, formal: bool = False,
 ) -> dict[str, Any]:
     globals_ = {row.get("worker_id", ""): row for row in read_csv(global_csv)}
-    loo_by_worker: dict[str, list[tuple[str, float]]] = defaultdict(list)
-    medoid_by_worker: dict[str, list[tuple[str, float]]] = defaultdict(list)
+    loo_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    medoid_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in read_csv(geometry_loo_csv):
         if _truth(row.get("loo_medoid_analysis_eligible")):
-            try: medoid_by_worker[row.get("worker_id", "")].append((row.get("base_task_id", ""), float(row["q_LOO_tu"])))
+            try: medoid_by_worker[row.get("worker_id", "")].append({"task_id": row.get("base_task_id", ""), "value": float(row["q_LOO_tu"])})
             except (TypeError, ValueError): pass
         if not _truth(row.get("loo_analysis_eligible")):
             continue
         try:
-            loo_by_worker[row.get("worker_id", "")].append((row.get("base_task_id", ""), float(row["q_LOO_tu"])))
+            loo_by_worker[row.get("worker_id", "")].append({"task_id": row.get("base_task_id", ""), "value": float(row["q_LOO_tu"])})
         except (TypeError, ValueError):
             pass
-    peer_by_worker: dict[str, list[tuple[str, float, str, str]]] = defaultdict(list)
+    peer_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in read_csv(peer_csv) if peer_csv and peer_csv.exists() else []:
-        try: peer_by_worker[row.get("worker_id", "")].append((row.get("base_task_id", ""), float(row["R_peer_median"]), row.get("dataset_group") or row.get("pool", ""), row.get("task_crowd_structure_status", "")))
+        validate_serialized_record("peer_worker_task_v2", row)
+        try: peer_by_worker[row.get("worker_id", "")].append({"task_id": row.get("base_task_id", ""), "value": float(row["R_peer_task"]), "dataset_group": row.get("dataset_group", ""), "crowd_status": row.get("task_crowd_structure_status", "")})
         except (TypeError, ValueError): pass
     structural_eb = {row.get("worker_id", ""): row for row in read_csv(structural_eb_csv)} if structural_eb_csv and structural_eb_csv.exists() else {}
     struct = defaultdict(lambda: {"opportunity": 0, "failure": 0})
@@ -1419,6 +1429,7 @@ def materialize_three_track_worker_state(
         lambda: {"process": set(), "independence": set(), "scope_reference": set()}
     )
     for row in read_csv(eligibility_csv) if eligibility_csv and eligibility_csv.exists() else []:
+        row = validate_serialized_record("assignment_evidence_v2", row)
         worker, task = row.get("worker_id", ""), row.get("base_task_id", "")
         if not worker or not task:
             continue
@@ -1434,8 +1445,8 @@ def materialize_three_track_worker_state(
         worker = completion["worker_id"]
         task_values = loo_by_worker[worker]
         by_task = defaultdict(list)
-        for task, value in task_values:
-            by_task[task].append(value)
+        for item in task_values:
+            by_task[item["task_id"]].append(item["value"])
         task_means = {task: sum(items) / len(items) for task, items in by_task.items()}
         values = list(task_means.values())
         bootstrap = []
@@ -1447,16 +1458,15 @@ def materialize_three_track_worker_state(
                 bootstrap.append(sum(task_means[task] for task in sampled) / len(sampled))
             bootstrap.sort()
         opportunity = struct[worker]["opportunity"]
-        def aggregate(items: list[tuple]) -> tuple[float | str, int]:
+        def aggregate(items: list[dict[str, Any]]) -> tuple[float | str, int]:
             by = defaultdict(list)
             for item in items:
-                task, value = item[0], item[1]
-                by[task].append(value)
+                by[item["task_id"]].append(item["value"])
             values_ = [__import__("statistics").median(group) for group in by.values()]
             return (__import__("statistics").median(values_) if values_ else "", len(values_))
-        def interval(items: list[tuple[str, float]], label: str) -> tuple[float | str, float | str]:
+        def interval(items: list[dict[str, Any]], label: str) -> tuple[float | str, float | str]:
             by = defaultdict(list)
-            for task, value in items: by[task].append(value)
+            for item in items: by[item["task_id"]].append(item["value"])
             means = {task: sum(group) / len(group) for task, group in by.items()}
             if len(means) < 3: return "", ""
             rng = random.Random(f"c1-{label}-{worker}-20260728"); tasks = sorted(means); draws = []
@@ -1464,10 +1474,10 @@ def materialize_three_track_worker_state(
                 sample = [rng.choice(tasks) for _task in tasks]; draws.append(sum(means[task] for task in sample) / len(sample))
             draws.sort(); return draws[int(.025 * (len(draws) - 1))], draws[int(.975 * (len(draws) - 1))]
         peer_value, peer_support = aggregate(peer_by_worker[worker])
-        peer_anchor, _ = aggregate([item for item in peer_by_worker[worker] if "anchor" in item[2].lower()])
-        peer_core, _ = aggregate([item for item in peer_by_worker[worker] if "core" in item[2].lower()])
-        peer_semi, _ = aggregate([item for item in peer_by_worker[worker] if "semi" in item[2].lower()])
-        peer_stable, _ = aggregate([item for item in peer_by_worker[worker] if item[3] != "supported_multimodal"])
+        peer_anchor, _ = aggregate([item for item in peer_by_worker[worker] if "anchor" in item["dataset_group"].lower()])
+        peer_core, _ = aggregate([item for item in peer_by_worker[worker] if "core" in item["dataset_group"].lower()])
+        peer_semi, _ = aggregate([item for item in peer_by_worker[worker] if "semi" in item["dataset_group"].lower()])
+        peer_stable, _ = aggregate([item for item in peer_by_worker[worker] if item["crowd_status"] != "supported_multimodal"])
         medoid_value, medoid_support = aggregate(medoid_by_worker[worker])
         peer_lower, peer_upper = interval(peer_by_worker[worker], "peer")
         medoid_lower, medoid_upper = interval(medoid_by_worker[worker], "medoid")
@@ -1476,16 +1486,16 @@ def materialize_three_track_worker_state(
         global_row = globals_.get(worker, {})
         gt_support = int(float(global_row.get("GT_support") or 0))
         loo_support = len(values)
-        if completion.get("completion_status") == "nonstarter":
-            state_status = "nonstarter"
-        elif not gt_support and not loo_support and not opportunity:
-            state_status = "not_evaluable_pending_independence"
-        elif not gt_support or not loo_support or not opportunity:
-            state_status = "insufficient_support"
-        else:
-            state_status = "estimated"
-        rows.append({
-            "worker_id": worker, "completion_status": completion.get("completion_status", ""),
+        administratively_eligible = completion.get("completion_status") != "nonstarter"
+        q_gt_estimable = bool(gt_support and str(global_row.get("Q_GT_EB", "")).strip())
+        reference_evaluable = bool(gate_support[worker]["scope_reference"])
+        three_axes_ready = q_gt_estimable and peer_status == "estimated" and opportunity > 0
+        profile_status = "nonstarter" if not administratively_eligible else "estimated" if three_axes_ready else "insufficient_support"
+        f_struct_raw = struct[worker]["failure"] / opportunity if opportunity else ""
+        f_struct_eb = structural_eb.get(worker, {}).get("F_struct_EB", "")
+        record = {
+            "schema_version": "worker_profile_v2", "profile_version": "paper_a_worker_profile_v2", "worker_id": worker, "completion_status": completion.get("completion_status", ""),
+            "administratively_eligible": administratively_eligible, "Q_GT_estimable": q_gt_estimable, "reference_evaluable": reference_evaluable,
             "Q_GT_raw_median": __import__("statistics").median(raw_quality[worker]) if raw_quality[worker] else global_row.get("Q_GT_raw", ""), "Q_GT_task_adjusted": global_row.get("Q_GT_task_adjusted", ""),
             "Q_GT_EB": global_row.get("Q_GT_EB", ""), "Q_GT_EB_LCB": global_row.get("Q_GT_EB_LCB", ""),
             "standard_error": global_row.get("Q_GT_standard_error", ""), "CI_lower": global_row.get("Q_GT_CI_lower", ""),
@@ -1502,29 +1512,31 @@ def materialize_three_track_worker_state(
             "R_peer_CI_lower": peer_lower, "R_peer_CI_upper": peer_upper, "R_peer_support": peer_support,
             "R_LOO_medoid": medoid_value, "R_LOO_medoid_CI_lower": medoid_lower, "R_LOO_medoid_CI_upper": medoid_upper, "R_LOO_medoid_support": medoid_support,
             "R_LOO_strict": sum(values) / len(values) if values else "", "R_LOO_strict_support": loo_support,
-            "peer_profile_status": peer_status, "medoid_loo_status": medoid_status,
-            "strict_loo_status": "insufficient_support" if loo_support < 3 else "weak_descriptive" if loo_support < 5 else "estimated",
-            "Q_GT_status": "estimated" if gt_support else "not_evaluable",
-            "R_peer_status": peer_status,
-            "F_struct_status": "estimated" if opportunity else "not_evaluable",
-            "R_LOO_medoid_status": medoid_status,
-            "R_LOO_strict_status": "insufficient_support" if loo_support < 3 else "weak_descriptive" if loo_support < 5 else "estimated",
+            "Q_GT_profile_status": "estimated" if q_gt_estimable else "not_evaluable",
+            "R_peer_profile_status": peer_status, "F_struct_profile_status": "estimated" if opportunity else "not_evaluable",
+            "LOO_medoid_status": medoid_status, "LOO_strict_status": "insufficient_support" if loo_support < 3 else "weak_descriptive" if loo_support < 5 else "estimated",
+            "global_policy_eligible": bool(administratively_eligible and q_gt_estimable and reference_evaluable),
+            "c2_risk_model_eligible": bool(administratively_eligible and three_axes_ready),
+            "peer_tiebreak_eligible": peer_status == "estimated", "structural_gate_eligible": opportunity > 0,
             "peer_decision_usable": peer_status == "estimated", "medoid_loo_decision_usable": medoid_status == "estimated",
-            "F_struct": struct[worker]["failure"] / opportunity if opportunity else "",
-            "F_struct_EB": structural_eb.get(worker, {}).get("F_struct_EB", ""),
+            "F_struct_raw": f_struct_raw, "F_struct_EB": f_struct_eb,
+            "F_struct_interval_lower": structural_eb.get(worker, {}).get("F_struct_interval_lower", ""),
+            "F_struct_interval_upper": structural_eb.get(worker, {}).get("F_struct_interval_upper", ""),
             "serious_recurrent_failure_flag": structural_eb.get(worker, {}).get("serious_recurrent_failure_flag", False),
             "F_struct_numerator": struct[worker]["failure"], "F_struct_denominator": opportunity,
             "process_eligible_support": len(gate_support[worker]["process"]),
             "independence_support": len(gate_support[worker]["independence"]),
             "scope_reference_support": len(gate_support[worker]["scope_reference"]),
-            "worker_state_status": state_status,
+            "worker_profile_status": profile_status,
             "formal_frozen": False,
             "freeze_owner": "finalize-c1",
-        })
+        }
+        validate_record("worker_profile_v2", record)
+        rows.append(record)
     output_name = "c1_three_track_worker_state_formal.csv" if formal else "c1_three_track_worker_state.csv"
     output_csv = output_dir / output_name
     write_csv(output_csv, rows)
-    status_counts = dict(Counter(row["worker_state_status"] for row in rows))
+    status_counts = dict(Counter(row["worker_profile_status"] for row in rows))
     summary = {"n_workers": len(rows), "n_profile_rows": status_counts.get("estimated", 0), "status_counts": status_counts, "formal_frozen": False, "freeze_owner": "finalize-c1"}
     (output_dir / "c1_three_track_worker_state.summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     if formal:

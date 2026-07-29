@@ -466,7 +466,7 @@ def build_canonicalization(
         }
     if w034_active_time_validation_manifest is not None:
         w034_time_validation = json.loads(w034_active_time_validation_manifest.read_text(encoding="utf-8"))
-        if w034_time_validation.get("schema_version") != "w034_active_time_validation_manifest_v1":
+        if w034_time_validation.get("schema_version") != "w034_active_time_validation_manifest_v2":
             raise ValueError("unsupported W034 active-time validation manifest")
         if _worker_number(w034_time_validation.get("worker_id")) != "34":
             raise ValueError("W034 active-time validation manifest is bound to the wrong worker")
@@ -477,11 +477,15 @@ def build_canonicalization(
         if w034_time_validation.get("validation_result") != "passed" and input_status == "formal":
             raise ValueError("formal W034 active-time validation did not pass")
         _utc_timestamp(w034_time_validation.get("validation_timestamp"))
-        log_sha = safe(w034_time_validation.get("log_source_sha256"))
-        if len(log_sha) != 64 or any(char not in "0123456789abcdefABCDEF" for char in log_sha):
-            raise ValueError("W034 active-time validation is not SHA-bound")
-        if active_log is not None and active_log.is_file() and sha256_file(active_log) != log_sha:
-            raise ValueError("W034 active-time validation source SHA does not match active log")
+        raw_sha = safe(w034_time_validation.get("raw_active_log_bundle_sha256"))
+        derived_sha = safe(w034_time_validation.get("derived_active_time_audit_sha256"))
+        for label, digest in (("raw bundle", raw_sha), ("derived audit", derived_sha)):
+            if len(digest) != 64 or any(char not in "0123456789abcdefABCDEF" for char in digest):
+                raise ValueError(f"W034 active-time validation {label} is not SHA-bound")
+        if not safe(w034_time_validation.get("sentinel_annotation_identity")):
+            raise ValueError("W034 active-time validation lacks sentinel annotation identity")
+        if active_log is not None and active_log.is_file() and sha256_file(active_log) != raw_sha:
+            raise ValueError("W034 raw active-log bundle SHA does not match active log")
         w034_time_validation["manifest_sha256"] = sha256_file(w034_active_time_validation_manifest)
     active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths), policy="calibration") if active_log else {}
     raw_manifest = snapshot_inputs_unique(

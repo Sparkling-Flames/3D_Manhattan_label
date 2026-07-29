@@ -1,3 +1,5 @@
+import pytest
+
 from tools.thesis_main.analysis.geometry_consensus.stability import crowd_structure
 from tools.thesis_main.analysis.geometry_consensus.pairwise import peer_similarity_profiles
 
@@ -28,7 +30,8 @@ def test_crowd_structure_3_2_is_supported_multimodal(monkeypatch):
     assert result["task_crowd_structure_status"] == "supported_multimodal"
     assert result["largest_cluster_share"] == .6
     assert result["second_cluster_share"] == .4
-    assert result["normalized_cluster_margin"] == .2
+    assert result["cluster_margin_all"] == .2
+    assert result["cluster_margin_top2"] == .2
 
 
 def test_crowd_structure_3_1_1_has_no_supported_second_mode(monkeypatch):

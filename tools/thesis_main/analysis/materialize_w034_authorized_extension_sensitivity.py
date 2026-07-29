@@ -53,12 +53,23 @@ def compare_w034_profiles(original: dict[str, Any], augmented: dict[str, Any], t
     return output
 
 
-def _one_w034(path: Path) -> dict[str, str]:
+def _one_w034(path: Path) -> dict[str, Any]:
     with path.open(encoding="utf-8-sig", newline="") as stream:
-        rows = [row for row in csv.DictReader(stream) if str(row.get("worker_id", "")).lstrip("W0") == "34"]
+        all_rows = list(csv.DictReader(stream))
+    rows = [row for row in all_rows if str(row.get("worker_id", "")).lstrip("W0") == "34"]
     if len(rows) != 1:
         raise ValueError(f"expected exactly one W034 profile row:{path}")
-    return rows[0]
+    row = dict(rows[0])
+    score_field = "S_G" if _number(row, "S_G") is not None else "Q_GT_EB"
+    ranked = sorted(
+        ((candidate, _number(candidate, score_field)) for candidate in all_rows),
+        key=lambda item: (item[1] is None, -(item[1] or 0.0), str(item[0].get("worker_id", ""))),
+    )
+    rank = next((index for index, (candidate, value) in enumerate(ranked, 1) if value is not None and str(candidate.get("worker_id", "")).lstrip("W0") == "34"), None)
+    if rank is None:
+        raise ValueError(f"W034 profile has no finite {score_field}:{path}")
+    row["global_rank"] = rank
+    return row
 
 
 def materialize(original_csv: Path, augmented_csv: Path, thresholds_json: Path, output_json: Path) -> dict[str, Any]:

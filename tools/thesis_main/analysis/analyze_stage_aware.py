@@ -1054,7 +1054,7 @@ def write_route_attribution(
     candidates["reliability_source"] = np.where(
         candidates["used_scene_specific_reliability"],
         "scene_specific_lcb",
-        "global_lcb",
+        "global_reliability_lcb",
     )
     candidates["reliability_score"] = np.where(
         candidates["used_scene_specific_reliability"],

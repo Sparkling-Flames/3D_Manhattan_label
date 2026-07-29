@@ -85,6 +85,8 @@ def build_global(
             "anchor_support": sum("anchor" in str(row.get("dataset_group", "")).lower() for row in subset),
             "core_support": sum("core" in str(row.get("dataset_group", "")).lower() for row in subset),
             "LOO_support": state.get("LOO_support", ""),
+            "R_peer_stable": state.get("R_peer_stable", ""),
+            "R_LOO_medoid": state.get("R_LOO_medoid") or state.get("R_LOO_compatible", ""),
             "process_eligible": process, "independence_eligible": independence,
             "reference_evaluable": reference_ok,
             "administratively_eligible": administratively_eligible,
@@ -112,7 +114,7 @@ def build_global(
         row["global_rank"] = row["global_rank_S_G"] if input_status == "formal" else ""
         row["provisional_rank"] = row["global_rank_S_G"] if input_status != "formal" else ""
         if input_status != "formal":
-            row["global_rank_EB"] = row["global_rank_FE"] = row["global_rank_LCB"] = ""
+            row["global_rank_EB"] = row["global_rank_FE"] = ""
     audit = {**audit, "ranking_materialized": input_status == "formal", "ranking_owner": "routing_profile_freeze"}
     return output, task_rows, audit
 

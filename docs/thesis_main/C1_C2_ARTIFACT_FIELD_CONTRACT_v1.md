@@ -608,3 +608,4 @@ Formal C1 runs must bind `c1_active_log_freeze_manifest.json` and a collection-c
 peer/crowd 工件须输出 task-level statistic、equal-task-weight worker aggregate、cluster absolute support、share、normalized margin、cluster count、stable/multimodal status。structural 工件须区分 `F_struct_raw`、`F_struct_EB`、interval 与 serious/recurrent flag。active-time 工件须携带 W034 sentinel validation manifest SHA、owner-valid status、validation time 与 `timing_not_evaluable_reason`；不得以缺失补零。
 
 冻结 manifest 必须声明 `rolling_enrollment_activated`。为 false 时 late-entry registry/manifest/closure 可空且结果等价于无新人流程；为 true 时三者及 P1/version/window/seed/exposure binding 为必填。Stage 3 manifest 必须绑定 profile、Strong Global/Full 参数、V1 minimum worker/cluster rule、roster 和全部依赖 SHA；冻结后任何变更 fail closed。
+> 正式生产者和消费者共同验证 `assignment_evidence_v2.json`、`peer_worker_task_v2.json`、`worker_profile_v2.json`、`policy_candidate_v2.json` 与 `geometry_cluster_v2.json`。本 v1 文档仅保留历史审计语境。

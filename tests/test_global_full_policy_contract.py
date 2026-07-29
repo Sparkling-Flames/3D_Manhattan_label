@@ -9,7 +9,8 @@ def _manifest(status="candidate"):
 
 
 def _workers():
-    return [{"worker_id": "w1", "administratively_eligible": True, "Q_GT_estimable": True, "reference_evaluable": True, "Q_GT_EB": .8, "Q_GT_EB_LCB": .7, "Q_GT_task_adjusted_FE": .79, "Q_GT_support": 3, "task_support": 3, "building_support": 2, "F_struct_EB": 0, "process_eligible": True, "independence_eligible": True}, {"worker_id": "w2", "administratively_eligible": True, "Q_GT_estimable": True, "reference_evaluable": True, "Q_GT_EB": .6, "Q_GT_EB_LCB": .5, "Q_GT_task_adjusted_FE": .61, "Q_GT_support": 3, "task_support": 3, "building_support": 2, "F_struct_EB": 0, "process_eligible": True, "independence_eligible": True}]
+    common = {"schema_version": "worker_profile_v2", "profile_version": "p", "administratively_eligible": True, "Q_GT_estimable": True, "reference_evaluable": True, "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated", "F_struct_profile_status": "estimated", "LOO_medoid_status": "estimated", "LOO_strict_status": "estimated", "global_policy_eligible": True, "c2_risk_model_eligible": True, "peer_tiebreak_eligible": True, "structural_gate_eligible": True, "F_struct_raw": 0, "F_struct_EB": 0, "F_struct_interval_lower": 0, "F_struct_interval_upper": .1, "R_peer_stable": .8, "R_LOO_medoid": .8, "process_eligible": True, "independence_eligible": True}
+    return [{**common, "worker_id": "w1", "Q_GT_EB": .8, "Q_GT_EB_LCB": .7, "Q_GT_task_adjusted_FE": .79, "Q_GT_support": 3, "task_support": 3, "building_support": 2}, {**common, "worker_id": "w2", "Q_GT_EB": .6, "Q_GT_EB_LCB": .5, "Q_GT_task_adjusted_FE": .61, "Q_GT_support": 3, "task_support": 3, "building_support": 2}]
 
 
 def test_candidate_manifest_cannot_materialize_formal_global():
@@ -24,7 +25,7 @@ def test_candidate_manifest_cannot_materialize_formal_global():
 def test_missing_formal_global_eligibility_fields_fail_closed():
     rows = _workers()
     del rows[0]["administratively_eligible"]
-    with pytest.raises(ValueError, match="at least two administratively eligible"):
+    with pytest.raises(ValueError, match="missing fields"):
         build_global_policy(rows, _manifest("approved"), formal=True)
 
 
@@ -89,9 +90,9 @@ def test_formal_full_requires_explicit_routing_contract_fields():
     global_rows = build_global_policy(_workers(), _manifest("approved"), formal=True)
     policy = {"status": "approved", "interpretation_allowed": True, "approved_by": "x", "approved_at": "now", "input_sha256": {"global_csv": "x", "task_json": "x", "components_csv": "x"}, "allowed_family_whitelist": ["undercoverage"], "allowed_component_weights": [1.0], "minimum_component_worker_support": 1, "minimum_component_task_support": 1, "symmetric_adjustment_cap": .2, "activation_threshold": .5, "activation_margin": .1}
     profile = {"status": "approved", "interpretation_allowed": True, "approved_by": "x", "approved_at": "now", "input_sha256": {"x": "x"}, "profile_version": "p1"}
-    component = {"status": "approved", "interpretation_allowed": True, "approved_by": "x", "approved_at": "now", "input_sha256": {"x": "x"}, "required_component_fields": ["component_status", "full_component_eligible", "worker_support", "task_support", "weight", "profile_version", "adjustment_lower", "adjustment_upper"]}
-    components = [{"worker_id": worker, "component_family": "undercoverage", "component_status": "cross_stage_supported", "full_component_eligible": "true", "worker_support": 1, "task_support": 1, "weight": 1.0, "profile_version": "p1", "adjustment": 0, "adjustment_lower": 0, "adjustment_upper": 0} for worker in ("w1", "w2")]
-    task = {"calibration_support": True, "activated_failure_family": "undercoverage", "activation_score": .9}
+    component = {"status": "approved", "interpretation_allowed": True, "approved_by": "x", "approved_at": "now", "input_sha256": {"x": "x"}, "required_component_fields": ["component_status", "full_component_eligible", "combined_effect", "worker_support", "task_support", "shrinkage", "weight", "profile_version", "adjustment_lower", "adjustment_upper"]}
+    components = [{"worker_id": worker, "component_family": "undercoverage", "component_status": "cross_stage_supported", "full_component_eligible": "true", "combined_effect": 0, "worker_support": 1, "task_support": 1, "shrinkage": 1, "weight": 1.0, "profile_version": "p1", "adjustment": 0, "adjustment_lower": 0, "adjustment_upper": 0} for worker in ("w1", "w2")]
+    task = {"calibration_support": True, "activated_failure_family": "undercoverage", "family_scores": {"undercoverage": .9, "other": .1}}
     result = build_full_policy(global_rows, task, components, policy_manifest=policy, profile_manifest=profile, component_manifest=component, formal=True)
     assert result[0]["S_F"] == pytest.approx(result[0]["S_G"])
     del policy["activation_margin"]

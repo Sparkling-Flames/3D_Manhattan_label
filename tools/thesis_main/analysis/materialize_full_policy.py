@@ -38,6 +38,28 @@ def _interval(row: dict[str, Any]) -> tuple[float | None, float | None]:
     return _finite(_first(row, "component_interval_lower", "adjustment_lower")), _finite(_first(row, "component_interval_upper", "adjustment_upper"))
 
 
+def _validated_family_activation(task: dict[str, Any], threshold: float, margin: float, *, formal: bool) -> tuple[str, bool]:
+    raw = task.get("family_scores")
+    if not isinstance(raw, dict) or not raw:
+        if formal:
+            raise ValueError("formal Full requires all family_scores")
+        declared = str(task.get("activated_failure_family", ""))
+        return declared, bool(declared)
+    scores = []
+    for family, value in raw.items():
+        score = _finite(value)
+        if score is None:
+            raise ValueError("Full family_scores must be finite")
+        scores.append((str(family), score))
+    scores.sort(key=lambda item: (-item[1], item[0]))
+    second = scores[1][1] if len(scores) > 1 else float("-inf")
+    active = scores[0][1] >= threshold and scores[0][1] - second >= margin
+    declared = str(task.get("activated_failure_family", ""))
+    if formal and declared != (scores[0][0] if active else ""):
+        raise ValueError("activated_failure_family conflicts with frozen family_scores")
+    return (scores[0][0] if active else ""), active
+
+
 def _validate_formal_contract(policy_manifest, profile_manifest, component_manifest, task, components):
     errors = []
     if not _approved(policy_manifest): errors.append("policy_manifest")
@@ -58,11 +80,11 @@ def _validate_formal_contract(policy_manifest, profile_manifest, component_manif
         errors.append("required_component_fields")
         required = []
     required_set = set(required)
-    for field in ("component_status", "full_component_eligible", "worker_support", "task_support", "weight", "profile_version"):
+    for field in ("component_status", "full_component_eligible", "combined_effect", "worker_support", "task_support", "shrinkage", "weight", "profile_version"):
         if field not in required_set: errors.append(f"component_contract:{field}")
     if not (({"component_interval_lower", "component_interval_upper"} <= required_set) or ({"adjustment_lower", "adjustment_upper"} <= required_set)):
         errors.append("component_contract:interval")
-    if "activation_score" not in task: errors.append("activation_score")
+    if not isinstance(task.get("family_scores"), dict): errors.append("family_scores")
     for index, row in enumerate(components):
         for field in required_set:
             if field in {"component_interval_lower", "component_interval_upper", "adjustment_lower", "adjustment_upper"}: continue
@@ -100,7 +122,7 @@ def build_full_policy(
         cap = float(policy.get("symmetric_adjustment_cap", task.get("symmetric_adjustment_cap", float("inf"))))
         activation_threshold = float(policy.get("activation_threshold", task.get("activation_threshold", 0)))
         activation_margin = float(policy.get("activation_margin", task.get("activation_margin", 0)))
-    activated_family = str(task.get("activated_failure_family", ""))
+    activated_family, family_active = _validated_family_activation(task, activation_threshold, activation_margin, formal=formal)
     supported = [row for row in components if row.get("component_status") == "cross_stage_supported" and _truth(row.get("full_component_eligible", True)) and str(row.get("component_family", "")) == activated_family and (not formal or activated_family in whitelist) and str(row.get("worker_id", "")) and int(float(row.get("worker_support") or min_worker_support)) >= min_worker_support and int(float(row.get("task_support") or min_task_support)) >= min_task_support]
     if allowed_weights:
         supported = [row for row in supported if _finite(row.get("weight")) in allowed_weights]
@@ -109,16 +131,7 @@ def build_full_policy(
     by_worker = {str(row["worker_id"]): row for row in supported}
     in_support = _truth(task.get("calibration_support", False))
     conditional_workers = {str(row.get("worker_id", "")) for row in supported if str(row.get("worker_id", ""))}
-    ambiguity = _truth(task.get("activation_ambiguous")) or (_truth(task.get("family_margin_required")) and not _truth(task.get("family_margin_passed")))
-    try:
-        activation_score = float(task["activation_score"])
-        task_threshold = _finite(task.get("activation_threshold"))
-        task_margin = _finite(task.get("activation_margin"))
-        if formal and ((task_threshold is not None and task_threshold != activation_threshold) or (task_margin is not None and task_margin != activation_margin)):
-            raise ValueError("formal Full activation threshold or margin conflicts with frozen manifest")
-        ambiguity = ambiguity or abs(activation_score - activation_threshold) <= activation_margin
-    except (KeyError, TypeError, ValueError):
-        ambiguity = ambiguity or bool(formal and activated_family)
+    ambiguity = bool(task.get("family_scores")) and not family_active
     profile_version = str((profile_manifest or {}).get("profile_version", ""))
     version_conflict = bool(profile_version and any(str(row.get("profile_version", profile_version)) != profile_version for row in supported))
     global_fallback = not in_support or ambiguity or version_conflict or (bool(activated_family) and len(conditional_workers) < 2)
@@ -129,6 +142,11 @@ def build_full_policy(
         base = 0.0 if base is None else base
         worker_global_eligible = _truth(row.get("global_policy_eligible", row.get("global_eligible", False)))
         risk_supported = not global_fallback and str(row.get("risk_activation_status", "")) == "supported"
+        if formal and risk_supported:
+            required_risk = ("risk_estimate", "risk_support", "risk_shrinkage", "risk_adjustment_lower", "risk_adjustment_upper", "risk_weight", "risk_profile_version")
+            missing_risk = [field for field in required_risk if str(row.get(field, "")).strip() == "" or (_finite(row.get(field)) is None and field != "risk_profile_version")]
+            if missing_risk:
+                raise ValueError("formal Full risk component incomplete:" + ",".join(missing_risk))
         risk_adjustment = float(row.get("risk_adjustment") or 0) if risk_supported else 0.0
         component = by_worker.get(worker, {}) if not global_fallback else {}
         family_adjustment = float(component.get("adjustment") or 0) if component else 0.0

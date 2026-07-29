@@ -19,7 +19,8 @@ from typing import Any, Iterable
 ESTIMANDS: dict[str, tuple[str, ...]] = {
     "GT": ("gt_primary_analysis_eligible", "global_analysis_eligible"),
     "peer": ("peer_analysis_eligible",),
-    "LOO": ("loo_analysis_eligible", "strict_loo_analysis_eligible"),
+    "LOO_medoid": ("loo_medoid_analysis_eligible",),
+    "LOO_strict": ("strict_loo_analysis_eligible", "loo_analysis_eligible"),
     "structural": ("structural_opportunity_eligible",),
     "time": ("time_analysis_eligible",),
     "semi_correction": ("semi_correction_analysis_eligible",),
@@ -155,7 +156,10 @@ def build_task_support_rows(
             row[f"k_original_{estimand}"] = k0
             row[f"k_authorized_{estimand}"] = kr
             row[f"k_late_{estimand}"] = kl
-            row[f"k_final_{estimand}"] = final
+            if estimand in {"LOO_medoid", "LOO_strict"}:
+                row[f"k_{estimand}"] = final
+            else:
+                row[f"k_final_{estimand}"] = final
             row[f"support_deficit_after_authorized_{estimand}"] = max(0, len(a0) - k0 - kr)
             row[f"pooled_support_excess_{estimand}"] = max(0, final - len(a0))
         row["support_deficit_after_authorized"] = row["support_deficit_after_authorized_GT"]
@@ -174,7 +178,7 @@ def materialize(
     output = output_dir / "c1_estimand_specific_task_support.csv"
     _write(output, rows)
     summary = {
-        "schema_version": "c1_estimand_specific_task_support_v1",
+        "schema_version": "c1_estimand_specific_task_support_v2",
         "n_task_conditions": len(rows),
         "estimands": list(ESTIMANDS),
         "output_sha256": hashlib.sha256(output.read_bytes()).hexdigest(),

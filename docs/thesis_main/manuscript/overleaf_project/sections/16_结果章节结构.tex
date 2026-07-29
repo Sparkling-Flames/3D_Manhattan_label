@@ -1,0 +1,116 @@
+% Source: Paper_A_新版完整论文提纲_vFinal_Draft.md §16
+\section{结果章节结构}
+
+\subsection{数据完整性与参考组成}
+
+报告：
+\begin{itemize}
+  \item 公开原始 GT 数量
+  \item 极少量纠错 GT 数量
+  \item pending/OOS 数量
+  \item 各 estimand eligible 数量
+\end{itemize}
+
+同时报告 cohort 与 deviation：
+\begin{itemize}
+  \item C1 assigned cohort：23；\texttt{administratively excluded}：1（W014）；
+  \item \texttt{administratively eligible capability cohort}：最多 22；
+  \item active-time analytic cohort：按 owner-valid 行级资格和缺失情况进一步减少，
+  不因 W034 接手替补任务而整名排除；
+  \item 按 estimand 分别报告 \(n_{\mathrm{workers},Q^{GT}}\)、
+  \(n_{\mathrm{workers},R^{peer}}\)、\(n_{\mathrm{workers},F^{struct}}\) 和
+  \(n_{\mathrm{workers},\mathrm{StrongGlobal\ eligible}}\)，不使用一个总的 capability
+  analytic cohort 替代这些分母；
+  \item 原始 assignment manifest 与 authorized reassignment addendum 的数量、时间和 SHA。
+\end{itemize}
+
+\subsection{P1 的诊断与预测价值}
+
+报告：
+\begin{itemize}
+  \item P1\(\rightarrow\)C1；
+  \item P1\(\rightarrow\)C2-B；
+  \item P1\(\rightarrow\)T1；
+  \item failure-family discrepancy workers。
+\end{itemize}
+
+\subsection{C1 三轨工人状态}
+
+报告：
+\begin{itemize}
+  \item task-adjusted GT quality 与 EB 收缩估计；
+  \item \texttt{R\_peer\_median}、\texttt{R\_LOO\_medoid} 与 strict LOO 的角色区分；
+  \item raw/EB structural failure；
+  \item 三者相关与分歧。
+\end{itemize}
+
+\subsection{C2 风险韧性与支持}
+
+报告：
+\begin{itemize}
+  \item 群体 stress effect；
+  \item 个体收缩斜率；
+  \item C2-A-RP 补测；
+  \item eligible/uncertain/fallback。
+\end{itemize}
+
+\subsection{T1}
+
+报告：
+\begin{itemize}
+  \item structurally valid rate；
+  \item delivery-adjusted quality；
+  \item valid-only GT IoU；
+  \item active time；
+  \item mode\(\times\)\texttt{risk\_assist}；
+  \item blind trust/correction。
+\end{itemize}
+
+\subsection{V1}
+
+报告：
+\begin{itemize}
+  \item policy activation/divergence；
+  \item scheduling flow；
+  \item resolved/unresolved/severe；
+  \item delivery-adjusted quality；
+  \item resolved-only quality；
+  \item \(k\)/time；
+  \item policy\(\times\)\texttt{risk\_route}。
+\end{itemize}
+
+\subsection{V2}
+
+可选报告 coverage--risk 与 false-safe，不作为主要结果章节。
+
+\subsection{Failure-family 与反例库审计}
+
+报告：
+\begin{itemize}
+  \item 各触发来源数量、对应来源分母和富集规则；
+  \item candidate、已裁决代表案例与未来候选队列的数量；
+  \item 各裁决状态数量与 \texttt{unresolved} 数量；
+  \item 代表性 \texttt{confirmed\_failure}、\texttt{confirmed\_ambiguity}、protocol/system issue 案例；
+  \item 哪些少量代表案例进入正文、附录或未来回归测试。
+\end{itemize}
+
+本节明确声明：反例库不是 prevalence 估计样本，且不会自动导致 GT 修订、画像训练、
+C2 阈值或 Full 权重选择。每个 candidate 必须同时报告触发来源、对应分母、候选身份、
+裁决状态与 evidence SHA；任一必需 provenance 缺失时，该 candidate 只能进入完整性审计，
+不得进入反例富集率或失败率的正式分母。完整 challenge/regression bank 不是本轮必要结果。
+
+\subsection{C1 variable-k 与 enrollment flow}
+
+结果表必须逐 task--condition--estimand 报告 \(k_{target}\)、\(k_{original}\)、\(k_{authorized}\)、
+\(k_{late}\)、\(k_{final}\)、outside count、deficit 与 pooled excess，并给出 peer cluster absolute
+support/share、cluster margin all 与 cluster margin top2。另行报告 W014 排除、W034 original+17、W001 original+3、
+W034 B-004/B-022 outside、W034 sentinel validation 和 timing not-evaluable 数量。
+
+Rolling enrollment 未激活时报告新增人数 0；激活时报告 eligible、admitted、assigned、terminal、
+进入 pooled profile 和进入 Validation roster 的人数与 SHA-bound flow，同时并列展示 original-only
+和 pooled worker profile、Strong Global/Full activation 及 sensitivity。Stage 3 gate 的十项依赖、
+roster SHA 和 enrollment registry SHA 作为结果完整性表的一部分公开。
+
+original cohort 的 administratively eligible 上限为 22；late-entry eligible 另记为
+\(N_{late}\)，final pooled cohort 的上界为 \(22+N_{late}\)，再按各 estimand eligibility 减少。
+% Normative source: PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260729_v2 SHA-256 d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44
