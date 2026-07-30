@@ -81,6 +81,6 @@ W031 的 4 条无可绑定 active-time 行保持 canonical，但必须是 `time_
 
 产物：`c2b_runtime_task_mapping.csv`、`c2b_worker_task_binding_audit.json`。audit 通过前不得开放任务。
 
-## Deprecated global entry
+## Global pooled closeout
 
-`close-c1-and-plan-c2b` 已 deprecated：它走全局 pooled finalize 路径，不能作为 Batch A 正式入口。全局 `finalize-c1` 仅用于所有 calibration worker terminal 后的 pooled closeout 与 Stage 3 gate。
+?? `finalize-c1` ????? calibration worker terminal ?? pooled closeout ? Stage 3 gate?C1-A ? C2-B ???? runbook ??? batch ???

@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, build_c2b, close_c1_and_plan_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1, validate_runbook_command_contract
+from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, build_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1, validate_runbook_command_contract
 from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _aggregate_sha, _c1_closeout_blockers
 from tools.thesis_main.analysis.derive_c2b_design_thresholds import derive_threshold_manifest
 
@@ -40,7 +40,7 @@ def test_public_cli_exposes_the_auditable_and_thin_entry_commands(capsys):
     for command in (
         "rehearse-c1", "prepare-c2b-static", "preflight-calibration", "freeze-c1",
         "audit-c1", "finalize-c1", "design-c2b", "build-c2b",
-        "expand-building-registry", "check-command-contract", "close-c1-and-plan-c2b",
+        "expand-building-registry", "check-command-contract",
     ):
         assert command in help_text
     for removed in ("day1-canonical-audit", "day1-formal-audit", "day2-c2b-build", "freeze-c1-active-log"):
@@ -235,17 +235,7 @@ def test_runbook_command_contract_matches_real_artifact_names() -> None:
     assert result["valid"] is True
     assert result["violations"] == []
     runbook = Path("docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md").read_text(encoding="utf-8")
-    assert "deprecated" in runbook and "close-c1-and-plan-c2b" in runbook
-
-
-def test_close_entry_requires_every_resume_phase_config(tmp_path) -> None:
-    config = tmp_path / "run.json"
-    config.write_text(json.dumps({
-        "schema_version": "paper_a_close_c1_plan_c2b_run_config_v1",
-        "audit_c1": {}, "finalize_c1": {}, "design_c2b": {},
-    }), encoding="utf-8")
-    with pytest.raises(ValueError, match="deprecated close-c1-and-plan-c2b"):
-        close_c1_and_plan_c2b(argparse.Namespace(run_config=config, state_output=tmp_path / "state.json"))
+    assert "close-c1-and-plan-c2b" not in runbook
 
 
 def test_freeze_c1_atomically_creates_active_log_and_collection_contracts(tmp_path):

@@ -1452,126 +1452,6 @@ def bind_c2b_runtime_mapping(args: argparse.Namespace) -> dict[str, Any]:
     return audit
 
 
-def _namespace_from_run_config(section: dict[str, Any]) -> argparse.Namespace:
-    values: dict[str, Any] = {}
-    for key, value in section.items():
-        if key == "device" or value is None:
-            values[key] = value
-        elif isinstance(value, list):
-            values[key] = [Path(item) for item in value]
-        else:
-            values[key] = Path(value)
-    return argparse.Namespace(**values)
-
-
-def close_c1_and_plan_c2b(args: argparse.Namespace) -> dict[str, Any]:
-    """Deprecated global-closeout entry retained only for a clear migration error."""
-    raise ValueError(
-        "deprecated close-c1-and-plan-c2b: use rehearse-c1 -> freeze-c1-batch -> design-c2b -> "
-        "build-c2b --assignment-batch C2B_BATCH_A -> bind-c2b-runtime-mapping"
-    )
-    config = json.loads(args.run_config.read_text(encoding="utf-8"))
-    if config.get("schema_version") != "paper_a_close_c1_plan_c2b_run_config_v1":
-        raise ValueError("unsupported close-c1-and-plan-c2b run config")
-    for section in ("audit_c1", "finalize_c1", "design_c2b", "build_c2b"):
-        if not isinstance(config.get(section), dict):
-            raise ValueError(f"close-c1-and-plan-c2b run config missing object section: {section}")
-    runbook = Path(config.get("runbook") or (_PROJECT_ROOT / "docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md"))
-    contract = validate_runbook_command_contract(runbook)
-    if not contract["valid"]:
-        raise ValueError("runbook command contract invalid:" + ";".join(contract["violations"]))
-    state = json.loads(args.state_output.read_text(encoding="utf-8")) if args.state_output.exists() else {
-        "schema_version": "paper_a_close_c1_plan_c2b_state_v1", "phase": "not_started",
-    }
-    if state.get("schema_version") != "paper_a_close_c1_plan_c2b_state_v1":
-        raise ValueError("unsupported close-c1-and-plan-c2b state")
-    run_config_sha = sha256_file(args.run_config)
-    if state.get("run_config_sha256") and state.get("run_config_sha256") != run_config_sha:
-        raise ValueError("resume state is bound to a different run config SHA")
-    python_executable = Path(sys.executable).resolve()
-    rerun = (
-        f'"{python_executable}" tools/thesis_main/analysis/run_c1_closeout_launch.py close-c1-and-plan-c2b '
-        f'--run-config "{args.run_config}" --state-output "{args.state_output}"'
-    )
-
-    def build_preview() -> str:
-        build_config = config.get("build_c2b", {})
-        design_config = config.get("design_c2b", {})
-        design_root = Path(design_config["output_dir"])
-        values = {
-            "c1-closeout-summary": state.get("c1_evidence_freeze_manifest", "<c1-evidence-freeze>"),
-            "risk-summary": design_root / "c2_task_risk.summary.json",
-            "task-pool": design_root / "c2_task_risk_inventory.csv",
-            "task-eligibility-evidence": design_root / "c2b_task_eligibility_evidence.csv",
-            "candidate-dir": design_root / "c2_candidates",
-            "design-manifest": design_root / "c2b_candidate_design_manifest.json",
-            "threshold-manifest": design_config["threshold_manifest"],
-            "source-split-evidence": design_config["source_split_evidence"],
-            "source-split-approval": design_config["source_split_approval"],
-            "future-holdout-evidence": design_config["future_holdout_evidence"],
-            "future-holdout-approval": design_config["future_holdout_approval"],
-            "reference-registry": design_config["reference_registry"],
-            "selected-task-reference-manifest": build_config["selected_task_reference_manifest"],
-            "selected-design-approval": build_config["selected_design_approval"],
-            "capacity-manifest": build_config["capacity_manifest"],
-            "output-dir": build_config["output_dir"],
-        }
-        flags = " ".join(f'--{name} "{value}"' for name, value in values.items())
-        return f'"{python_executable}" tools/thesis_main/analysis/run_c1_closeout_launch.py build-c2b {flags}'
-
-    def persist(**updates: Any) -> dict[str, Any]:
-        state.update(updates)
-        state["run_config_sha256"] = run_config_sha
-        state["runbook_contract"] = contract
-        args.state_output.parent.mkdir(parents=True, exist_ok=True)
-        args.state_output.write_text(json.dumps(state, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-        return state
-
-    if state.get("phase") == "formal_audit_blocked":
-        state["phase"] = "not_started"
-    if state.get("phase") == "not_started":
-        audit_args = _namespace_from_run_config(config.get("audit_c1", {}))
-        audit_result = audit_c1(audit_args)
-        formal_output = Path(audit_result["output_dir"])
-        if not audit_result["formal_closeout_ready"]:
-            return persist(
-                phase="formal_audit_blocked", formal_output_dir=formal_output.resolve().as_posix(),
-                blockers=audit_result["blockers"], next_command=rerun,
-            )
-        persist(phase="awaiting_c1_closeout_adjudication", formal_output_dir=formal_output.resolve().as_posix(), blockers=[])
-
-    if state.get("phase") in {"awaiting_c1_closeout_adjudication", "c1_evidence_freeze_blocked"}:
-        adjudication_raw = config.get("finalize_c1", {}).get("adjudication_manifest")
-        if not adjudication_raw or not Path(adjudication_raw).exists():
-            return persist(phase="awaiting_c1_closeout_adjudication", next_command=rerun)
-        finalize_args = _namespace_from_run_config({
-            **config.get("finalize_c1", {}), "output_dir": state["formal_output_dir"],
-        })
-        finalized = finalize_c1(finalize_args)
-        if not finalized["formal_closeout_ready"]:
-            return persist(phase="c1_evidence_freeze_blocked", blockers=finalized["blockers"], next_command=rerun)
-        persist(
-            phase="c1_evidence_frozen", blockers=[], next_command=rerun,
-            c1_evidence_freeze_manifest=(Path(state["formal_output_dir"]) / "c1_evidence_freeze_manifest.json").resolve().as_posix(),
-        )
-
-    if state.get("phase") in {"c1_evidence_frozen", "awaiting_split_approvals", "c2b_design_blocked"}:
-        design_config = config.get("design_c2b", {})
-        approvals = [design_config.get("source_split_approval"), design_config.get("future_holdout_approval")]
-        if not all(value and Path(value).exists() for value in approvals):
-            return persist(phase="awaiting_split_approvals", next_command=rerun)
-        design_args = _namespace_from_run_config({
-            **design_config, "c1_closeout_summary": state["c1_evidence_freeze_manifest"],
-        })
-        design = design_c2b(design_args)
-        candidates_ready = bool(design.get("risk_pool_formal_ready")) and int(design.get("design", {}).get("n_feasible_candidate_designs") or 0) > 0
-        return persist(
-            phase="c2b_candidates_materialized" if candidates_ready else "c2b_design_blocked",
-            design_result=design, next_command=build_preview() if candidates_ready else rerun,
-        )
-    return persist(next_command=state.get("next_command", ""))
-
-
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="Paper A C1 closeout and C2-B launch")
     sub = parser.add_subparsers(dest="command", required=True)
@@ -1663,9 +1543,6 @@ def main(argv: list[str] | None = None) -> int:
     runtime = sub.add_parser("bind-c2b-runtime-mapping")
     for name in ("launch-report", "worker-distribution", "planned-import", "runtime-export", "output-dir"):
         runtime.add_argument(f"--{name}", type=Path, required=True)
-    close = sub.add_parser("close-c1-and-plan-c2b")
-    close.add_argument("--run-config", type=Path, required=True)
-    close.add_argument("--state-output", type=Path, required=True)
     args = parser.parse_args(argv)
     command = {
         "prepare-c2b-static": prepare_c2b_static,
@@ -1680,7 +1557,6 @@ def main(argv: list[str] | None = None) -> int:
         "design-c2b": design_c2b,
         "build-c2b": build_c2b,
         "bind-c2b-runtime-mapping": bind_c2b_runtime_mapping,
-        "close-c1-and-plan-c2b": close_c1_and_plan_c2b,
     }[args.command]
     print(json.dumps(command(args), ensure_ascii=False, indent=2))
     return 0

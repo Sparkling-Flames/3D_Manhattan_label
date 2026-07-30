@@ -21,7 +21,6 @@
 - [PRESCREEN_STAGE1_OPERATIONAL_GUIDE_20260327.md](thesis_main/PRESCREEN_STAGE1_OPERATIONAL_GUIDE_20260327.md)
 - [PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md](thesis_main/PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md)锛欳1 鏃ュ織鍐荤粨銆佷笁杞磋瘉鎹€丆2-B 椋庨櫓/妯℃嫙/瀹℃壒/assignment 鐨勫崟涓€鐢熶骇 DAG 涓庣姸鎬?owner
 - [PAPER_A_C1_C2B_FORMAL_RUNBOOK.md](thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md)锛欸PU 闈欐€佺壒寰佸噯澶囥€丆1 collection freeze 涓?C2-B 姝ｅ紡鍛戒护椤哄簭
-- 鍘嗗彶鏍瑰洜涓?peer/GT amendment 宸插綊妗ｈ嚦 `legacy/paper_a_method_contract_superseded_20260730/`锛屼笉鍐嶅畾涔夋寮忓瓧娈垫垨鎵ц璇箟銆?- [PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json](thesis_main/PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json)锛歚close-c1-and-plan-c2b` 鍙仮澶嶈杽鍏ュ彛閰嶇疆妯℃澘
 - [C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md](thesis_main/C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md)
 - [WORKER_PROFILE_ARTIFACT_MIGRATION_AMENDMENT_v1.md](thesis_main/WORKER_PROFILE_ARTIFACT_MIGRATION_AMENDMENT_v1.md)
 - [WORKER_PROFILE_AND_THESIS_OUTLINE_AMENDMENT_v1.md](thesis_main/WORKER_PROFILE_AND_THESIS_OUTLINE_AMENDMENT_v1.md)
@@ -93,7 +92,6 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 
 鍘嗗彶鏉愭枡榛樿涓嶈縼绉汇€佷笉淇銆傝矾寰勬鏌ュ拰涔辩爜淇榛樿鎺掗櫎璇ョ洰褰曘€?## 2026-07-24 浠ｇ爜鍏ュ彛琛ュ厖
 
-- C1鈫扖2-B 鍏紑鍏ュ彛锛歚tools/thesis_main/analysis/run_c1_closeout_launch.py`锛堜繚鐣欑粏绮掑害瀹¤鍛戒护锛屽苟鎻愪緵 `close-c1-and-plan-c2b` 钖勫叆鍙ｃ€乻cene-building 灞曞紑涓庡懡浠ゅ悎鍚屾鏌ワ級
 - C1 鍞竴 task-adjusted Q_GT 浼拌鍣細`tools/thesis_main/analysis/c1_task_adjusted_quality.py`锛坵orker fixed effect銆乼ask random intercept銆乼ask/building cluster bootstrap锛涗笉鐢熸垚鎺掑悕锛?- C2-B 闈欐€?evidence/leakage/split 宸ュ叿锛歚tools/thesis_main/analysis/c2b_static_evidence.py`锛圥1 integrity銆乺eference/candidate SHA audit銆乭istory 鎺ㄥ銆侀潪鏀厤 split 鍊欓€変笌闈欐€佸喕缁擄級
 - C1 浜哄伐 task outcome / 鍗曚竴 GT reference锛歚tools/thesis_main/analysis/materialize_c1_operational_reference.py`
 - P1鈫扖1鈫扖2-B component evidence锛歚tools/thesis_main/analysis/materialize_routing_component_evidence.py`
