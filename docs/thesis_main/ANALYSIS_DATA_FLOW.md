@@ -84,8 +84,9 @@ C2-A-RP 只缩窄已定义 component 的不确定性；不搜索新风险或新 
 
 ```text
 Q_u_GT_task_adjusted
-R_u_LOO_compatible
+R_u_peer
 F_u_struct
+R_u_LOO_medoid / R_u_LOO_strict  # sensitivity only
 B_u_risk_shrunk
 P1 supported components
 d_cal_F

@@ -20,6 +20,8 @@ FORBIDDEN_NORMATIVE_PATTERNS = (
     "global_lcb",
     "global_rank_LCB",
     "normalized_cluster_margin",
+    "R_u_LOO_compatible",
+    "R_LOO_FREEZE_STATUS",
 )
 
 
@@ -27,6 +29,8 @@ def render(contract_path: Path = METHOD_CONTRACT) -> str:
     data = json.loads(contract_path.read_text(encoding="utf-8"))
     digest = sha256_file(contract_path)
     peer = data["peer"]
+    measurement = data["measurement_status"]
+    launch = data["c2b_launch"]
     return f"""# Paper A 当前方法合同（自动生成）
 
 > 本文档由 `PAPER_A_METHOD_CONTRACT_CURRENT.json` 自动生成，不得手工定义规范性方法字段。
@@ -40,10 +44,12 @@ def render(contract_path: Path = METHOD_CONTRACT) -> str:
 - C2 候选：`D8, D10, D12`；C2-A-RP 每人最多 `4` 张。
 - 基础工人轴：`Q_GT, R_peer, F_struct`；LOO 只作可用时的 tie-break/sensitivity。
 - R_peer：少于 `{peer['weak_descriptive_min']}` 个 task 为不足，`3-4` 为描述性，至少 `{peer['formal_estimated_min']}` 个 task 才是正式 estimated。
+- Q_GT/F_struct：support 为 `1-2` 时仅 `weak_descriptive`，至少 `3` 且 estimator status 为 `estimated` 才是正式 estimated。
 - C2-B roster 只消费 `worker_profile_v2.c2_risk_model_eligible`。
-- Strong Global：`S_G=z(Q_GT_EB)`；静态顺序为 `S_G -> R_peer_stable -> available R_LOO_medoid -> frozen random`。
+- Strong Global：`S_G=z(Q_GT_EB)`；peer/LOO 仅在当前并列组全员可评价时使用，否则整层跳过，最后使用 frozen random。
 - 非唯一 complete-link partition 的主分析状态为 `not_evaluable`，并保存全部候选 partition。
-- rolling enrollment 的主画像为 pooled，同时必须生成 original-only sensitivity。
+- rolling enrollment 必须绑定 `calibration_enrollment_registry.csv`；主画像为 pooled，同时必须生成 original-only sensitivity。
+- 规划入口：`{launch['planning_entrypoint']}`；最终构建入口：`{launch['final_build_entrypoint']}`。规划入口不自动构建启动包。
 - 本轮只允许生成 C2-B 启动包；不自动导入 Label Studio，Stage 3/T1/V1 保持关闭。
 
 ## 机器合同

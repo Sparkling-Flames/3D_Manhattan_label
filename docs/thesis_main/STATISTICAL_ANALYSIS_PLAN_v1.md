@@ -1,6 +1,6 @@
 # Statistical Analysis Plan v1
 
-> 规范性方法字段只来自 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v3`；SHA-256 `fe001e51ccf02baf45cb5a2929d8d9350781d5c3fe30a821d73c44ad7d57efce`）。执行时必须核对自动生成 MD 所列 JSON SHA；本文不再独立定义冲突字段。
+> 规范性方法字段只来自 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v4`；SHA-256 `fcf264fe1ef131da4df393f50faae4b364c5779a5df0931957e7275713036144`）。执行时必须核对自动生成 MD 所列 JSON SHA；本文不再独立定义冲突字段。
 
 ## 0. 适用范围与替代声明
 
@@ -52,19 +52,21 @@ C1 closeout 后使用 worker/image/building 方差、结构有效率、active-ti
 
 ```text
 Q_u_GT_task_adjusted
-R_u_LOO_compatible
+R_u_peer
 F_u_struct
 ```
 
 GT quality 使用交叉分类模型校正 worker 的任务组成，例如：
 
 ```text
-Q_GT(t,u) = mu + worker_u + task_t + stage + error
+Q_GT(t,u) = mu + worker_u + task_t + error
 ```
 
 报告 raw 中位数、task-adjusted estimate、CI/LCB、support 和 worker-task 图审计。
 
-LOO 使用排除工人自身的 reference，报告 peer support、medoid margin、最大/第二簇、leave-one/two-out sensitivity 和 `stable/weak/multimodal/insufficient/metric_incompatible` 状态。LOO 是一致性审计和 tie-break，不替代外部 GT quality。
+R_peer 使用 task-equal 聚合，并按方法合同的 support 阈值输出 `not_evaluable/weak_descriptive/estimated`。LOO 使用排除工人自身的 reference，报告 medoid/strict 状态与 sensitivity；LOO 仅是一致性审计和可用时的 tie-break，不属于正式三轴，也不替代外部 GT quality。
+
+C1-only 模型使用 task effect 且不同时估计 stage effect。合并 C1+C2 时使用 building/task random intercept 与 stage fixed effect；若没有跨阶段共同 anchor 或支持该随机效应结构的数据，stage effect 标为不可识别，不从 task 与 stage 完全混淆的数据中解释。
 
 结构失败率为：
 

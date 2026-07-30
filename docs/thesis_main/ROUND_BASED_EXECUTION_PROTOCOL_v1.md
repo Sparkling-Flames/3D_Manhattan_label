@@ -172,7 +172,7 @@ canonicalization
 
 ```text
 Q_u_GT_task_adjusted
-R_u_LOO_compatible
+R_u_peer
 F_u_struct
 ```
 

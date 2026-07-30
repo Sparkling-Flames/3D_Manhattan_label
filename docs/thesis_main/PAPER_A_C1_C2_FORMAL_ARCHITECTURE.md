@@ -50,7 +50,7 @@ C1 exports + assignments + active_logs/new_server
 | C1 active-log frozen | `c1_active_log_freeze_manifest.json` | 只校验路径、cutoff 和 SHA |
 | `collection_window_closed` | collection closure manifest | 不从完成率推断 |
 | `C1_CANONICAL_CLOSED` | formal C1 audit | 只反映 identity/version/disposition closure |
-| `Q_GT_FREEZE_STATUS` / `R_LOO_FREEZE_STATUS` / `F_STRUCT_FREEZE_STATUS` | C1 measurement owner | 每轴独立为 `frozen`、`support_limited` 或 `pending_collection_close`，不互相替代 |
+| `Q_GT_FREEZE_STATUS` / `R_PEER_FREEZE_STATUS` / `F_STRUCT_FREEZE_STATUS` | C1 measurement owner | 正式三轴各自为 `frozen`、`support_limited` 或 `pending_collection_close`；LOO medoid/strict 另列 sensitivity status，不参与三轴完成判定 |
 | `C1_EVIDENCE_BUNDLE_FROZEN` | C1 evidence freeze envelope | collection close 后三轴均已到达终态；不表示三轴都可估计 |
 | `C2B_BASELINE_INPUT_FROZEN` | C1 evidence freeze envelope | 只要求 Q_GT frozen 及合格 process/independence/Q_GT worker support |
 | `C1_MEASUREMENT_FROZEN` | C1 evidence freeze envelope | 兼容别名，等于 evidence bundle 终态，不再表示三轴全局 AND |

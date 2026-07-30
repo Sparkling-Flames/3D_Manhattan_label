@@ -590,14 +590,16 @@ Q^{GT}_{t,u}=IoU(A_{t,u},G_t)
 \[
 Q^{GT}_{t,u}
 =
-\mu+\alpha_u+\delta_t+\eta_{\text{stage}}+\epsilon_{t,u}.
+\mu+\alpha_u+b_{\text{building}(t)}+b_t+\eta_{\text{stage}}+\epsilon_{t,u}.
 \]
 
 其中：
 
 - \(\alpha_u\)：工人全局质量；
-- \(\delta_t\)：任务难度；
-- \(\eta_{\text{stage}}\)：阶段效应。
+- \(b_{\text{building}(t)}\) 与 \(b_t\)：building/task random intercept；
+- \(\eta_{\text{stage}}\)：阶段固定效应，仅在跨阶段共同 anchor 或随机效应结构可识别时解释。
+
+C1-only 分析使用 task effect 且不同时估计 stage effect。若 task 与 stage 完全嵌套且缺少共同 anchor，则合并模型中的 stage effect 标为不可识别，禁止把被 task effect 吸收的差异解释为阶段效应。
 
 输出：
 
@@ -696,7 +698,7 @@ unknown attribution
 
 ```text
 Q_u_GT_task_adjusted
-R_u_LOO_compatible
+R_u_peer
 F_u_struct
 ```
 
@@ -1803,4 +1805,4 @@ W034 的 17 条任务仅在 owner-valid active-time sentinel 通过后提供 tim
 Strong Global 在冻结的 administratively eligible、Q_GT-estimable cohort 上以 `S_G=z(Q_GT_EB)` 排序；LCB 仅用于 safety gate 和 sensitivity。Structural 同时报 raw、EB 与区间；Full/V1 的正式 manifest 必须完整绑定 component、support、threshold、weight、fallback、输入 SHA 和 formal minimum worker/cluster rule，缺失即 fail closed，GT-blind aggregation 不读取政策质量分数。
 # SUPERSEDED：历史设计提纲
 
-> 当前唯一规范性方法真源为 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（`paper_a_method_20260730_v3`）及其 SHA。本文件不得再作为设计真源。
+> 当前唯一规范性方法真源为 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（`paper_a_method_20260730_v4`；SHA-256 `fcf264fe1ef131da4df393f50faae4b364c5779a5df0931957e7275713036144`）。本文件不得再作为设计真源。

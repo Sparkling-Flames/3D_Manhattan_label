@@ -12,9 +12,11 @@
 
 ```text
 Q_u_GT_task_adjusted  # task-adjusted external GT quality
-R_u_LOO_compatible    # worker-excluded Geometry LOO compatibility
+R_u_peer              # task-equal peer reliability
 F_u_struct            # worker-caused structural failure rate
 ```
+
+`R_u_LOO_compatible`、medoid/strict 状态与区间继续作为 sensitivity/tie-break evidence 输出，但不属于正式三轴，也不参与 C2-B roster 硬门。
 
 现有实现尚输出的 `r_u_calib`、`r_u_calib_lcb`、`r_u_calib_ci_*` 是 `R_u_LOO` 的兼容别名，不是 `Q_u_GT_task_adjusted`，不得直接作为 Strong Global 主分数。
 

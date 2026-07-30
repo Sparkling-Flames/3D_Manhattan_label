@@ -32,26 +32,28 @@ def test_row_eligibility_is_sidecar_only_and_upstream_sha_is_immutable(tmp_path:
 
 
 def test_measurement_freeze_requires_three_axes_but_not_active_time(tmp_path: Path) -> None:
-    completion, quality, loo, structural = [tmp_path / name for name in ("completion.csv", "quality.csv", "loo.csv", "structural.csv")]
+    completion, quality, peer, structural, profile = [tmp_path / name for name in ("completion.csv", "quality.csv", "peer.csv", "structural.csv", "profile.csv")]
     _write(completion, [{"worker_id": "w", "completion_status": "completed"}])
     common = {"worker_id": "w", "base_task_id": "b", "building_id": "house"}
     _write(quality, [{**common, "global_analysis_eligible": "true"}])
-    _write(loo, [{**common, "loo_analysis_eligible": "true"}])
+    _write(peer, [{**common, "schema_version": "peer_worker_task_v2", "R_peer_task": ".8"}])
     _write(structural, [{**common, "structural_opportunity_eligible": "true"}])
-    result = materialize_measurement_readiness(completion, quality, loo, structural, tmp_path, canonical_closed=True, preannotation_feature_ready=True)
+    _write(profile, [{"worker_id": "w", "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated", "F_struct_profile_status": "estimated", "LOO_medoid_status": "not_evaluable", "LOO_strict_status": "not_evaluable"}])
+    result = materialize_measurement_readiness(completion, quality, peer, structural, tmp_path, canonical_closed=True, worker_profile_csv=profile, preannotation_feature_ready=True)
     assert result["C1_MEASUREMENT_FROZEN"] is True
     assert result["C2B_DESIGN_READY"] is True
 
 
 def test_measurement_bundle_closes_without_requiring_every_estimand_for_c2b(tmp_path: Path) -> None:
-    completion, quality, loo, structural = [tmp_path / name for name in ("completion.csv", "quality.csv", "loo.csv", "structural.csv")]
+    completion, quality, peer, structural, profile = [tmp_path / name for name in ("completion.csv", "quality.csv", "peer.csv", "structural.csv", "profile.csv")]
     _write(completion, [{"worker_id": "w", "completion_status": "completed"}])
     _write(quality, [{"worker_id": "w", "base_task_id": "b", "global_analysis_eligible": "true"}])
-    _write(loo, [{"worker_id": "w", "base_task_id": "b", "loo_analysis_eligible": "false"}])
+    _write(peer, [{"worker_id": "w", "base_task_id": "b", "peer_analysis_eligible": "false"}])
     _write(structural, [{"worker_id": "w", "base_task_id": "b", "structural_opportunity_eligible": "false"}])
-    result = materialize_measurement_readiness(completion, quality, loo, structural, tmp_path, canonical_closed=True, collection_window_closed=True)
-    assert result["estimand_freeze"] == {"Q_GT": True, "R_LOO": False, "F_struct": False}
-    assert result["estimand_status"] == {"Q_GT": "frozen", "R_LOO": "support_limited", "F_struct": "support_limited"}
+    _write(profile, [{"worker_id": "w", "Q_GT_profile_status": "estimated", "R_peer_profile_status": "not_evaluable", "F_struct_profile_status": "not_evaluable", "LOO_medoid_status": "not_evaluable", "LOO_strict_status": "not_evaluable"}])
+    result = materialize_measurement_readiness(completion, quality, peer, structural, tmp_path, canonical_closed=True, collection_window_closed=True, worker_profile_csv=profile)
+    assert result["estimand_freeze"] == {"Q_GT": True, "R_peer": False, "F_struct": False}
+    assert result["estimand_status"] == {"Q_GT": "frozen", "R_peer": "support_limited", "F_struct": "support_limited"}
     assert result["C1_EVIDENCE_BUNDLE_FROZEN"] is True
     assert result["C2B_BASELINE_INPUT_FROZEN"] is True
     assert result["C1_MEASUREMENT_FROZEN"] is True

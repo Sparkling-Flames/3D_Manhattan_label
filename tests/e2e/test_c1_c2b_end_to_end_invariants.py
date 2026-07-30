@@ -170,22 +170,23 @@ def test_c1_risk_reference_keeps_channels_on_same_base_task(tmp_path: Path) -> N
 def test_partial_worker_does_not_block_estimand_specific_freeze(tmp_path: Path) -> None:
     completion = tmp_path / "completion.csv"
     write_csv(completion, [{"worker_id": "w1", "completion_status": "closed_partial_usable", "completion_disposition_valid": "true"}])
-    quality, loo, structural, eligibility = [tmp_path / name for name in ("q.csv", "loo.csv", "s.csv", "elig.csv")]
+    quality, peer, structural, eligibility, worker_profile = [tmp_path / name for name in ("q.csv", "peer.csv", "s.csv", "elig.csv", "worker_profile.csv")]
     write_csv(quality, [{"canonical_annotation_id": "q", "worker_id": "w1", "base_task_id": "tq", "building_id": "b1", "global_analysis_eligible": "true"}])
-    write_csv(loo, [{"canonical_annotation_id": "l", "worker_id": "w1", "base_task_id": "tl", "building_id": "b2", "loo_analysis_eligible": "true"}])
+    write_csv(peer, [{"schema_version": "peer_worker_task_v2", "canonical_annotation_id": "l", "worker_id": "w1", "base_task_id": "tl", "building_id": "b2", "R_peer_task": ".8"}])
     write_csv(structural, [{"canonical_annotation_id": "s", "worker_id": "w1", "base_task_id": "ts", "building_id": "b3", "structural_opportunity_eligible": "true"}])
     write_csv(eligibility, [
         {"canonical_annotation_id": "q", "worker_id": "w1", "base_task_id": "tq", "process_eligible": "true", "independence_eligible": "true", "scope_reference_eligible": "true", "global_analysis_eligible": "true", "loo_analysis_eligible": "false", "structural_opportunity_eligible": "false"},
         {"canonical_annotation_id": "l", "worker_id": "w1", "base_task_id": "tl", "process_eligible": "true", "independence_eligible": "true", "scope_reference_eligible": "true", "global_analysis_eligible": "false", "loo_analysis_eligible": "true", "structural_opportunity_eligible": "false"},
         {"canonical_annotation_id": "s", "worker_id": "w1", "base_task_id": "ts", "process_eligible": "true", "independence_eligible": "true", "scope_reference_eligible": "true", "global_analysis_eligible": "false", "loo_analysis_eligible": "false", "structural_opportunity_eligible": "true"},
     ])
+    write_csv(worker_profile, [{"worker_id": "w1", "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated", "F_struct_profile_status": "estimated", "LOO_medoid_status": "estimated", "LOO_strict_status": "estimated"}])
     result = materialize_measurement_readiness(
-        completion, quality, loo, structural, tmp_path, canonical_closed=True,
-        collection_window_closed=True, eligibility_csv=eligibility,
+        completion, quality, peer, structural, tmp_path, canonical_closed=True,
+        collection_window_closed=True, eligibility_csv=eligibility, worker_profile_csv=worker_profile,
     )
     assert result["C1_MEASUREMENT_FROZEN"] is True
     assert result["estimand_freeze"]["Q_GT"] is True
-    assert result["estimand_freeze"]["R_LOO"] is True
+    assert result["estimand_freeze"]["R_peer"] is True
     assert result["estimand_freeze"]["F_struct"] is True
 
 

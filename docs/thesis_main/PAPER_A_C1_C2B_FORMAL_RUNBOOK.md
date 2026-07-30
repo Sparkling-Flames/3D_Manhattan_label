@@ -122,6 +122,7 @@ feature audit 阈值获批后，先用同一 `prepare-c2b-static` 命令复用�
   --c1-active-log-freeze-manifest <formal-root>/c1_active_log_freeze_manifest.json `
   --collection-closure-manifest <formal-root>/c1_collection_closure_manifest.json `
   --authorized-reassignment-manifest <formal-root>/authorized_reassignment_manifest.csv `
+  --calibration-enrollment-registry <formal-root>/calibration_enrollment_registry.csv `
   --w034-active-time-validation-manifest <formal-root>/w034_active_time_validation_manifest.json `
   --building-registry <evidence-root>/authoritative_building_registry.csv `
   --duplicate-adjudication <review-root>/duplicate_adjudication.csv `
@@ -221,11 +222,11 @@ feature、机械派生 threshold、selected-task/reference、selected-design 与
 - PreScreen active time 只绑定 `active_logs/prescreen` 或 P1 immutable snapshot；不得用 C1 日志替代。
 - rehearsal 可以读取 live C1 日志但 `collection_window_closed=false`；正式分析只能读取 `active_logs/c1/<cutoff>_<sha>`。
 - 原始 `v3_1` assignment/distribution 不回写；W034 17 行与 W001 3 行只通过独立 `authorized_reassignment_manifest.csv` 增量承认。
-- rolling enrollment 未激活时不传 `--late-entry-assignment-manifest`；激活时必须传入 Stage 3 前冻结且 SHA 绑定的 manifest。
+- `audit-c1` 始终要求 `--calibration-enrollment-registry <...>/calibration_enrollment_registry.csv`。rolling 未激活时 registry 必须明确 `rolling_activated=false` 且无 late-entry 行；激活时 registry 覆盖全部原始/新增 worker，并与 completion terminal status 完全一致。`--late-entry-assignment-manifest` 只证明新增任务来源，不再决定 enrollment batch。
 - W034 sentinel 未通过或验证晚于任务开始时，相应补充任务 timing fail closed，但不影响合资格 capability evidence。
 - `valid_authorized_exception` 只改变 process audit disposition，不能把普通 outside submission 提升为正式分析证据。
 - `VALIDATION_ROSTER_FROZEN=true` 后，新增 worker 或 enrollment/roster SHA 变化必须拒绝启动 Stage 3。
 - `support_limited` 不是失败，也不是成功估计；它只表示该 estimand 已终止但证据不足。
 - threshold 公式合同、SHA 绑定 input approval、机械派生数值 manifest、feature、source/holdout、selected design 或 selected task approval 任一缺失时，assignment 必须为 0。
 - `P1_INTEGRITY_BUNDLE_FROZEN=true` 只表示文件及 SHA 已冻结；`P1_PREDICTIVE_EVIDENCE_READY=false` 时禁用 P1 predictive component，但不阻断 risk-only C2-B。
-> Formal run 前必须校验 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v3`；SHA-256 `fe001e51ccf02baf45cb5a2929d8d9350781d5c3fe30a821d73c44ad7d57efce`）。旧字段或生成 MD、SAP、SOP 与 JSON 不一致时一律 fail closed。
+> Formal run 前必须校验 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v4`；SHA-256 `fcf264fe1ef131da4df393f50faae4b364c5779a5df0931957e7275713036144`）。`close-c1-and-plan-c2b` 是规划入口，只生成候选与 `build-c2b` 命令；`build-c2b` 才是最终启动包构建入口。旧字段或生成 MD、SAP、SOP 与 JSON 不一致时一律 fail closed。

@@ -86,6 +86,7 @@ def build_global(
             "core_support": sum("core" in str(row.get("dataset_group", "")).lower() for row in subset),
             "LOO_support": state.get("LOO_support", ""),
             "R_peer_stable": state.get("R_peer_stable", ""),
+            "R_peer_profile_status": state.get("R_peer_profile_status", "not_evaluable"),
             "R_LOO_medoid": state.get("R_LOO_medoid") or state.get("R_LOO_compatible", ""),
             "process_eligible": process, "independence_eligible": independence,
             "reference_evaluable": reference_ok,

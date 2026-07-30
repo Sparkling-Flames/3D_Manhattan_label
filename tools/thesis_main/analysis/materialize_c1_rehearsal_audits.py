@@ -1383,16 +1383,102 @@ def materialize_analysis_rosters(completion_csv: Path, canonical_csv: Path, outp
     return {"assigned": len(assigned), "observed": len(observed), "analysis": len(analysis)}
 
 
+_CALIBRATION_TERMINAL_STATUSES = {
+    "completed", "closed_partial_usable", "closed_partial_insufficient",
+    "nonstarter", "administrative_exclusion",
+}
+_ENROLLMENT_FIELDS = (
+    "worker_id", "enrollment_batch", "rolling_activated", "admission_status",
+    "terminal_status", "enrolled_at",
+)
+
+
+def _materialize_enrollment_registry(
+    enrollment_registry_csv: Path | None, completion_rows: list[dict[str, Any]],
+    output_dir: Path, *, formal: bool,
+) -> tuple[dict[str, dict[str, Any]], dict[str, Any], Path]:
+    if formal and (enrollment_registry_csv is None or not enrollment_registry_csv.is_file()):
+        raise ValueError("formal C1 requires calibration_enrollment_registry.csv")
+    if enrollment_registry_csv is None:
+        registry_rows = [{
+            "worker_id": row.get("worker_id", ""), "enrollment_batch": "original",
+            "rolling_activated": False, "admission_status": "existing_cohort",
+            "terminal_status": row.get("completion_status", ""), "enrolled_at": "preexisting",
+        } for row in completion_rows]
+        source_sha = ""
+    else:
+        registry_rows = read_csv(enrollment_registry_csv)
+        source_sha = hashlib.sha256(enrollment_registry_csv.read_bytes()).hexdigest()
+    if not registry_rows:
+        raise ValueError("calibration enrollment registry is empty")
+    missing_columns = [field for field in _ENROLLMENT_FIELDS if field not in registry_rows[0]]
+    if missing_columns:
+        raise ValueError("calibration enrollment registry missing fields:" + ",".join(missing_columns))
+    by_worker: dict[str, dict[str, Any]] = {}
+    activation_values: set[bool] = set()
+    for row in registry_rows:
+        worker = str(row.get("worker_id", "")).strip()
+        if not worker or worker in by_worker:
+            raise ValueError(f"calibration enrollment registry has blank/duplicate worker:{worker}")
+        token = str(row.get("rolling_activated", "")).strip().lower()
+        if token not in {"true", "false"} and type(row.get("rolling_activated")) is not bool:
+            raise ValueError(f"rolling_activated must be canonical boolean:{worker}")
+        activated = row.get("rolling_activated") if type(row.get("rolling_activated")) is bool else token == "true"
+        batch = str(row.get("enrollment_batch", "")).strip()
+        if batch not in {"original", "late_entry"}:
+            raise ValueError(f"invalid enrollment_batch:{worker}:{batch}")
+        if not str(row.get("admission_status", "")).strip() or not str(row.get("enrolled_at", "")).strip():
+            raise ValueError(f"enrollment registry admission/enrolled_at missing:{worker}")
+        terminal_status = str(row.get("terminal_status", "")).strip()
+        if terminal_status not in _CALIBRATION_TERMINAL_STATUSES:
+            raise ValueError(f"nonterminal enrollment registry row:{worker}:{terminal_status}")
+        normalized = {**row, "worker_id": worker, "enrollment_batch": batch, "rolling_activated": activated, "terminal_status": terminal_status}
+        by_worker[worker] = normalized
+        activation_values.add(activated)
+    if len(activation_values) != 1:
+        raise ValueError("rolling_activated must be cohort-wide and immutable")
+    rolling_activated = next(iter(activation_values))
+    late_workers = sorted(worker for worker, row in by_worker.items() if row["enrollment_batch"] == "late_entry")
+    if not rolling_activated and late_workers:
+        raise ValueError("rolling disabled registry contains late_entry workers")
+    completion_by_worker = {str(row.get("worker_id", "")): row for row in completion_rows}
+    if set(by_worker) != set(completion_by_worker):
+        missing_completion = sorted(set(by_worker) - set(completion_by_worker))
+        missing_registry = sorted(set(completion_by_worker) - set(by_worker))
+        raise ValueError(f"enrollment/completion worker mismatch:missing_completion={missing_completion};missing_registry={missing_registry}")
+    for worker, row in by_worker.items():
+        if str(completion_by_worker[worker].get("completion_status", "")) != row["terminal_status"]:
+            raise ValueError(f"enrollment/completion terminal status mismatch:{worker}")
+    output_path = output_dir / "calibration_enrollment_registry.csv"
+    write_csv(output_path, [by_worker[worker] for worker in sorted(by_worker)], list(_ENROLLMENT_FIELDS))
+    summary = {
+        "schema_version": "calibration_enrollment_registry_v1", "status": "validated",
+        "rolling_activated": rolling_activated, "N_total": len(by_worker), "N_late": len(late_workers),
+        "all_registered_workers_terminal": True, "late_entry_workers": late_workers,
+        "source_sha256": source_sha, "registry_sha256": hashlib.sha256(output_path.read_bytes()).hexdigest(),
+    }
+    (output_dir / "calibration_enrollment_registry.summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return by_worker, summary, output_path
+
+
 def materialize_three_track_worker_state(
     global_csv: Path, geometry_loo_csv: Path, structural_csv: Path,
     completion_csv: Path, output_dir: Path, quality_csv: Path | None = None, *,
     eligibility_csv: Path | None = None, peer_csv: Path | None = None,
-    structural_eb_csv: Path | None = None, formal: bool = False,
+    structural_eb_csv: Path | None = None, enrollment_registry_csv: Path | None = None,
+    qgt_audit_json: Path | None = None, structural_eb_audit_json: Path | None = None,
+    formal: bool = False,
 ) -> dict[str, Any]:
     from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file
     method = load_method_contract()
     peer_weak_min = int(method["peer"]["weak_descriptive_min"])
     peer_formal_min = int(method["peer"]["formal_estimated_min"])
+    qgt_formal_min = int(method["measurement_status"]["Q_GT"]["formal_estimated_min"])
+    f_struct_formal_min = int(method["measurement_status"]["F_struct"]["formal_estimated_min"])
+    qgt_audit = json.loads(qgt_audit_json.read_text(encoding="utf-8")) if qgt_audit_json and qgt_audit_json.exists() else {}
+    structural_audit = json.loads(structural_eb_audit_json.read_text(encoding="utf-8")) if structural_eb_audit_json and structural_eb_audit_json.exists() else {}
+    if formal and (qgt_audit.get("status") != "estimated" or structural_audit.get("status") != "estimated"):
+        raise ValueError("formal worker profile requires estimated Q_GT and structural estimator audits")
     globals_ = {row.get("worker_id", ""): row for row in read_csv(global_csv)}
     loo_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
     medoid_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -1432,14 +1518,11 @@ def materialize_three_track_worker_state(
     gate_support: dict[str, dict[str, set[str]]] = defaultdict(
         lambda: {"process": set(), "independence": set(), "scope_reference": set()}
     )
-    enrollment_batches: dict[str, set[str]] = defaultdict(set)
     for row in read_csv(eligibility_csv) if eligibility_csv and eligibility_csv.exists() else []:
         row = validate_serialized_record("assignment_evidence_v2", row)
         worker, task = row.get("worker_id", ""), row.get("base_task_id", "")
         if not worker or not task:
             continue
-        provenance = str(row.get("assignment_provenance") or row.get("assignment_origin") or "").lower()
-        enrollment_batches[worker].add("late_entry" if "late" in provenance or _truth(row.get("late_entry_assignment")) else "original")
         for field, key in (
             ("process_eligible", "process"),
             ("independence_eligible", "independence"),
@@ -1447,8 +1530,12 @@ def materialize_three_track_worker_state(
         ):
             if _truth(row.get(field)):
                 gate_support[worker][key].add(task)
+    completion_rows = read_csv(completion_csv)
+    enrollment, enrollment_summary, enrollment_output = _materialize_enrollment_registry(
+        enrollment_registry_csv, completion_rows, output_dir, formal=formal,
+    )
     rows = []
-    for completion in read_csv(completion_csv):
+    for completion in completion_rows:
         worker = completion["worker_id"]
         task_values = loo_by_worker[worker]
         by_task = defaultdict(list)
@@ -1497,14 +1584,18 @@ def materialize_three_track_worker_state(
         administratively_eligible = completion_status not in set(method["administrative_eligibility"]["ineligible_completion_statuses"]) and str(worker).lstrip("W0") not in set(method["administrative_eligibility"]["permanently_ineligible_workers"])
         process_eligible = bool(gate_support[worker]["process"])
         independence_eligible = bool(gate_support[worker]["independence"])
-        q_gt_estimable = bool(gt_support and str(global_row.get("Q_GT_EB", "")).strip())
+        qgt_estimator_ok = qgt_audit.get("status", "estimated" if not formal else "") == "estimated"
+        structural_estimator_ok = structural_audit.get("status", "estimated" if not formal else "") == "estimated"
+        q_gt_profile_status = "not_evaluable" if not gt_support or not str(global_row.get("Q_GT_EB", "")).strip() or not qgt_estimator_ok else "weak_descriptive" if gt_support < qgt_formal_min else "estimated"
+        f_struct_profile_status = "not_evaluable" if not opportunity or not str(structural_eb.get(worker, {}).get("F_struct_EB", "")).strip() or not structural_estimator_ok else "weak_descriptive" if opportunity < f_struct_formal_min else "estimated"
+        q_gt_estimable = q_gt_profile_status == "estimated"
         reference_evaluable = bool(gate_support[worker]["scope_reference"])
-        three_axes_ready = administratively_eligible and process_eligible and independence_eligible and q_gt_estimable and peer_status == "estimated" and opportunity > 0
+        three_axes_ready = administratively_eligible and process_eligible and independence_eligible and q_gt_profile_status == "estimated" and peer_status == "estimated" and f_struct_profile_status == "estimated"
         profile_status = "administratively_ineligible" if not administratively_eligible else "estimated" if three_axes_ready else "insufficient_support"
         f_struct_raw = struct[worker]["failure"] / opportunity if opportunity else ""
         f_struct_eb = structural_eb.get(worker, {}).get("F_struct_EB", "")
         record = {
-            "schema_version": "worker_profile_v2", "profile_version": "paper_a_worker_profile_v2", "cohort_id": "paper_a_calibration_pooled", "enrollment_batch": "late_entry" if "late_entry" in enrollment_batches[worker] else "original", "worker_id": worker, "completion_status": completion_status,
+            "schema_version": "worker_profile_v2", "profile_version": "paper_a_worker_profile_v2", "cohort_id": "paper_a_calibration_pooled", "enrollment_batch": enrollment[worker]["enrollment_batch"], "worker_id": worker, "completion_status": completion_status,
             "administratively_eligible": administratively_eligible, "process_eligible": process_eligible, "independence_eligible": independence_eligible, "Q_GT_estimable": q_gt_estimable, "reference_evaluable": reference_evaluable,
             "Q_GT_raw_median": __import__("statistics").median(raw_quality[worker]) if raw_quality[worker] else global_row.get("Q_GT_raw", ""), "Q_GT_task_adjusted": global_row.get("Q_GT_task_adjusted", ""),
             "Q_GT_EB": global_row.get("Q_GT_EB", ""), "Q_GT_EB_LCB": global_row.get("Q_GT_EB_LCB", ""),
@@ -1522,12 +1613,12 @@ def materialize_three_track_worker_state(
             "R_peer_CI_lower": peer_lower, "R_peer_CI_upper": peer_upper, "R_peer_support": peer_support, "peer_task_support": peer_support,
             "R_LOO_medoid": medoid_value, "R_LOO_medoid_CI_lower": medoid_lower, "R_LOO_medoid_CI_upper": medoid_upper, "R_LOO_medoid_support": medoid_support,
             "R_LOO_strict": sum(values) / len(values) if values else "", "R_LOO_strict_support": loo_support,
-            "Q_GT_profile_status": "estimated" if q_gt_estimable else "not_evaluable",
-            "R_peer_profile_status": peer_status, "F_struct_profile_status": "estimated" if opportunity else "not_evaluable",
+            "Q_GT_profile_status": q_gt_profile_status,
+            "R_peer_profile_status": peer_status, "F_struct_profile_status": f_struct_profile_status,
             "LOO_medoid_status": medoid_status, "LOO_strict_status": "insufficient_support" if loo_support < 3 else "weak_descriptive" if loo_support < 5 else "estimated",
             "global_policy_eligible": bool(administratively_eligible and process_eligible and independence_eligible and q_gt_estimable and reference_evaluable),
             "c2_risk_model_eligible": bool(three_axes_ready),
-            "peer_tiebreak_eligible": bool(administratively_eligible and process_eligible and independence_eligible and peer_status == "estimated"), "structural_gate_eligible": bool(administratively_eligible and process_eligible and independence_eligible and opportunity > 0),
+            "peer_tiebreak_eligible": bool(administratively_eligible and process_eligible and independence_eligible and peer_status == "estimated"), "structural_gate_eligible": bool(administratively_eligible and process_eligible and independence_eligible and f_struct_profile_status == "estimated"),
             "peer_decision_usable": peer_status == "estimated", "medoid_loo_decision_usable": medoid_status == "estimated",
             "F_struct_raw": f_struct_raw, "F_struct_EB": f_struct_eb,
             "F_struct_interval_lower": structural_eb.get(worker, {}).get("F_struct_interval_lower", ""),
@@ -1547,7 +1638,7 @@ def materialize_three_track_worker_state(
     output_csv = output_dir / output_name
     write_csv(output_csv, rows)
     status_counts = dict(Counter(row["worker_profile_status"] for row in rows))
-    summary = {"n_workers": len(rows), "n_profile_rows": status_counts.get("estimated", 0), "n_c2b_eligible": sum(_truth(row["c2_risk_model_eligible"]) for row in rows), "profile_version": "paper_a_worker_profile_v2", "cohort_id": "paper_a_calibration_pooled", "status_counts": status_counts, "formal_frozen": False, "freeze_owner": "finalize-c1"}
+    summary = {"n_workers": len(rows), "n_profile_rows": status_counts.get("estimated", 0), "n_c2b_eligible": sum(_truth(row["c2_risk_model_eligible"]) for row in rows), "profile_version": "paper_a_worker_profile_v2", "cohort_id": "paper_a_calibration_pooled", "status_counts": status_counts, "enrollment": enrollment_summary, "formal_frozen": False, "freeze_owner": "finalize-c1"}
     (output_dir / "c1_three_track_worker_state.summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     if formal:
         manifest = {
@@ -1567,6 +1658,9 @@ def materialize_three_track_worker_state(
                     ("STRUCTURAL_ROWS", structural_csv), ("COMPLETION", completion_csv),
                     ("Q_GT_ROWS", quality_csv), ("CANONICAL_ELIGIBILITY", eligibility_csv),
                     ("PEER_WORKER_TASK", peer_csv), ("STRUCTURAL_EB", structural_eb_csv),
+                    ("Q_GT_ESTIMATOR_AUDIT", qgt_audit_json), ("STRUCTURAL_EB_AUDIT", structural_eb_audit_json),
+                    ("ENROLLMENT_REGISTRY_SOURCE", enrollment_registry_csv),
+                    ("ENROLLMENT_REGISTRY", enrollment_output),
                     ("METHOD_CONTRACT", METHOD_CONTRACT),
                 ) if path and path.exists()
             ],

@@ -45,7 +45,7 @@ def _record_examples() -> dict[str, dict]:
         },
         "policy_candidate_v2": {
             "schema_version": "policy_candidate_v2", "worker_id": "1", "S_G": 1.0,
-            "global_policy_eligible": True, "R_peer_stable": .9, "R_LOO_medoid": .8,
+            "global_policy_eligible": True, "R_peer_stable": .9, "R_peer_profile_status": "estimated", "R_LOO_medoid": .8,
             "LOO_medoid_status": "estimated", "profile_version": "p",
         },
         "geometry_cluster_v2": {

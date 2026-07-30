@@ -59,6 +59,19 @@ def test_global_fails_closed_for_insufficient_or_zero_variance_cohort():
         build_global_policy(same, _manifest("approved"), formal=True)
 
 
+def test_global_skips_incomplete_peer_layer_for_entire_sg_tie_group():
+    rows = _workers()
+    rows[1]["Q_GT_EB"] = rows[0]["Q_GT_EB"]
+    rows[1]["Q_GT_task_adjusted_FE"] = rows[0]["Q_GT_task_adjusted_FE"]
+    rows[1]["R_peer_stable"] = None
+    rows[1]["R_peer_profile_status"] = "not_evaluable"
+    rows[0]["R_LOO_medoid"], rows[1]["R_LOO_medoid"] = .1, .9
+    rows.append({**rows[0], "worker_id": "w3", "Q_GT_EB": .4, "Q_GT_EB_LCB": .3, "Q_GT_task_adjusted_FE": .4})
+    output = build_global_policy(rows, _manifest("approved"), formal=True)
+    ranks = {row["worker_id"]: row["global_rank_S_G"] for row in output}
+    assert ranks["w2"] < ranks["w1"]
+
+
 def test_full_false_support_and_unstable_endpoint_fall_back_global():
     global_rows = build_global_policy(_workers(), _manifest("approved"), formal=True)
     components = [

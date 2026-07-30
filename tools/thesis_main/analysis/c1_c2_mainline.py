@@ -145,31 +145,36 @@ def materialize_analysis_views(
 
 
 def materialize_measurement_readiness(
-    completion_csv: Path, quality_analysis_csv: Path, loo_analysis_csv: Path,
+    completion_csv: Path, quality_analysis_csv: Path, peer_analysis_csv: Path,
     structural_analysis_csv: Path, output_dir: Path, *, canonical_closed: bool,
     collection_window_closed: bool | None = None, eligibility_csv: Path | None = None,
+    worker_profile_csv: Path, loo_analysis_csv: Path | None = None,
     preannotation_feature_ready: bool = False,
 ) -> dict[str, Any]:
-    """Freeze three estimands separately; C2-B admission is not their intersection."""
+    """Freeze the authoritative Q_GT/R_peer/F_struct axes from worker_profile_v2."""
     completion = {row.get("worker_id", ""): row for row in read_csv(completion_csv)}
+    profiles = {row.get("worker_id", ""): row for row in read_csv(worker_profile_csv)}
+    if set(profiles) != set(completion):
+        raise ValueError("worker_profile_v2 and completion worker sets differ")
     eligibility = {row.get("canonical_annotation_id", ""): row for row in read_csv(eligibility_csv)} if eligibility_csv and eligibility_csv.exists() else {}
     if collection_window_closed is None:
         collection_window_closed = canonical_closed
     quality = read_csv(quality_analysis_csv)
-    loo = read_csv(loo_analysis_csv)
+    peer = read_csv(peer_analysis_csv)
+    loo = read_csv(loo_analysis_csv) if loo_analysis_csv and loo_analysis_csv.exists() else []
     structural = read_csv(structural_analysis_csv)
-    support: dict[str, dict[str, set[str]]] = defaultdict(lambda: {"gt": set(), "loo": set(), "struct": set(), "task": set(), "building": set()})
-    task_support: dict[str, dict[str, set[str]]] = defaultdict(lambda: {"gt": set(), "loo": set(), "struct": set(), "workers": set(), "buildings": set()})
+    support: dict[str, dict[str, set[str]]] = defaultdict(lambda: {"gt": set(), "peer": set(), "struct": set(), "task": set(), "building": set()})
+    task_support: dict[str, dict[str, set[str]]] = defaultdict(lambda: {"gt": set(), "peer": set(), "struct": set(), "workers": set(), "buildings": set()})
     source_rows = {
         "gt": (quality, "global_analysis_eligible", "gt"),
-        "loo": (loo, "peer_analysis_eligible", "loo"),
+        "peer": (peer, "peer_analysis_eligible", "peer"),
         "structural": (structural, "structural_opportunity_eligible", "struct"),
     }
     channels: dict[str, set[tuple[str, str, str]]] = {}
     axis_graphs: dict[str, dict[str, Any]] = {}
     graph_files = {
         "gt": output_dir / "c1_gt_worker_task_graph.csv",
-        "loo": output_dir / "c1_loo_worker_task_graph.csv",
+        "peer": output_dir / "c1_peer_worker_task_graph.csv",
         "structural": output_dir / "c1_structural_worker_task_graph.csv",
     }
     for axis, (rows, gate, support_key) in source_rows.items():
@@ -178,8 +183,8 @@ def materialize_measurement_readiness(
         for row in rows:
             identity_row = eligibility.get(str(row.get("canonical_annotation_id", "")), {})
             gate_value = identity_row.get(gate, row.get(gate))
-            if axis == "loo" and str(gate_value or "").strip() == "":
-                gate_value = identity_row.get("loo_analysis_eligible", row.get("loo_analysis_eligible"))
+            if axis == "peer" and row.get("schema_version") == "peer_worker_task_v2":
+                gate_value = True
             if not _truth(gate_value):
                 continue
             identity, worker, task = _edge(row)
@@ -218,24 +223,31 @@ def materialize_measurement_readiness(
     worker_rows: list[dict[str, Any]] = []
     for worker, completion_row in sorted(completion.items()):
         values = support[worker]
+        profile = profiles[worker]
         completion_status = completion_row.get("completion_status", "")
         nonstarter = completion_status == "nonstarter"
-        statuses = {"gt": "estimated" if values["gt"] else "insufficient_support", "loo": "estimated" if values["loo"] else "insufficient_support", "struct": "estimated" if values["struct"] else "insufficient_support"}
+        statuses = {
+            "gt": profile.get("Q_GT_profile_status", "not_evaluable"),
+            "peer": profile.get("R_peer_profile_status", "not_evaluable"),
+            "struct": profile.get("F_struct_profile_status", "not_evaluable"),
+        }
         three_axis_complete = not nonstarter and all(status == "estimated" for status in statuses.values())
         completion_valid = _truth(completion_row.get("completion_disposition_valid")) if "completion_disposition_valid" in completion_row else completion_status in {"completed", "partial_noncompletion", "nonstarter"}
         worker_rows.append({
             "worker_id": worker, "completion_status": completion_status, "completion_disposition_valid": completion_valid,
-            "Q_GT_support": len(values["gt"]), "R_LOO_support": len(values["loo"]),
+            "Q_GT_support": len(values["gt"]), "R_peer_support": len(values["peer"]),
             "F_struct_opportunity_support": len(values["struct"]), "task_coverage": len(values["task"]),
-            "building_coverage": len(values["building"]), "Q_GT_status": statuses["gt"], "R_LOO_status": statuses["loo"], "F_struct_status": statuses["struct"],
+            "building_coverage": len(values["building"]), "Q_GT_status": statuses["gt"], "R_peer_status": statuses["peer"], "F_struct_status": statuses["struct"],
+            "R_LOO_MEDOID_STATUS": profile.get("LOO_medoid_status", "not_evaluable"),
+            "R_LOO_STRICT_STATUS": profile.get("LOO_strict_status", "not_evaluable"),
             "process_support": len(process_support_by_worker[worker]) if eligibility else "", "independence_support": len(independence_support_by_worker[worker]) if eligibility else "", "scope_reference_support": len(scope_reference_support_by_worker[worker]) if eligibility else "",
             "three_axis_complete": three_axis_complete, "measurement_ready": three_axis_complete,
             "measurement_exclusion_reason": "nonstarter" if nonstarter else "" if three_axis_complete else "estimand_specific_support_incomplete",
         })
     task_rows = []
     for task, values in sorted(task_support.items()):
-        ready = all(values[channel] for channel in ("gt", "loo", "struct"))
-        task_rows.append({"base_task_id": task, "Q_GT_worker_support": len(values["gt"]), "R_LOO_worker_support": len(values["loo"]), "F_struct_worker_support": len(values["struct"]), "worker_coverage": len(values["workers"]), "building_coverage": len(values["buildings"]), "measurement_ready": ready, "measurement_exclusion_reason": "" if ready else "estimand_specific_support_incomplete"})
+        ready = all(values[channel] for channel in ("gt", "peer", "struct"))
+        task_rows.append({"base_task_id": task, "Q_GT_worker_support": len(values["gt"]), "R_peer_worker_support": len(values["peer"]), "F_struct_worker_support": len(values["struct"]), "worker_coverage": len(values["workers"]), "building_coverage": len(values["buildings"]), "measurement_ready": ready, "measurement_exclusion_reason": "" if ready else "estimand_specific_support_incomplete"})
     buildings: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in task_rows:
         task = row["base_task_id"]
@@ -245,7 +257,7 @@ def materialize_measurement_readiness(
     building_rows = [{"building_id": building, "task_coverage": len(rows), "three_axis_ready_task_count": sum(_truth(row["measurement_ready"]) for row in rows), "measurement_ready": any(_truth(row["measurement_ready"]) for row in rows)} for building, rows in sorted(buildings.items())]
     estimand_freeze = {
         "Q_GT": bool(canonical_closed and collection_window_closed and axis_graphs["gt"]["edge_count"] and axis_graphs["gt"]["connected"]),
-        "R_LOO": bool(canonical_closed and collection_window_closed and axis_graphs["loo"]["edge_count"] and axis_graphs["loo"]["connected"]),
+        "R_peer": bool(canonical_closed and collection_window_closed and axis_graphs["peer"]["edge_count"] and axis_graphs["peer"]["connected"]),
         "F_struct": bool(canonical_closed and collection_window_closed and axis_graphs["structural"]["edge_count"] and axis_graphs["structural"]["connected"]),
     }
     terminal = bool(canonical_closed and collection_window_closed)
@@ -276,8 +288,10 @@ def materialize_measurement_readiness(
         "C1_EVIDENCE_BUNDLE_FROZEN": evidence_bundle_frozen,
         "C2B_BASELINE_INPUT_FROZEN": c2b_baseline_frozen,
         "Q_GT_FREEZE_STATUS": estimand_status["Q_GT"],
-        "R_LOO_FREEZE_STATUS": estimand_status["R_LOO"],
+        "R_PEER_FREEZE_STATUS": estimand_status["R_peer"],
         "F_STRUCT_FREEZE_STATUS": estimand_status["F_struct"],
+        "R_LOO_MEDOID_STATUS": "frozen" if terminal and any(row.get("LOO_medoid_status") == "estimated" for row in profiles.values()) else "support_limited" if terminal else "pending_collection_close",
+        "R_LOO_STRICT_STATUS": "frozen" if terminal and any(row.get("LOO_strict_status") == "estimated" for row in profiles.values()) else "support_limited" if terminal else "pending_collection_close",
         "C2B_DESIGN_READY": c2b_ready,
         "C2B_RISK_DESIGN_FROZEN": False,
         "C2B_DESIGN_FROZEN": False,
@@ -290,7 +304,7 @@ def materialize_measurement_readiness(
         "estimand_status": estimand_status,
         "c2b_baseline_worker_count": len(baseline_workers),
         "C1_COLLECTION_INCOMPLETE": not bool(collection_window_closed),
-        "inputs": {name: sha256_file(path) for name, path in {"completion": completion_csv, "quality_analysis": quality_analysis_csv, "loo_analysis": loo_analysis_csv, "structural_analysis": structural_analysis_csv}.items()},
+        "inputs": {name: sha256_file(path) for name, path in {"completion": completion_csv, "quality_analysis": quality_analysis_csv, "peer_analysis": peer_analysis_csv, "loo_analysis": loo_analysis_csv, "structural_analysis": structural_analysis_csv, "worker_profile": worker_profile_csv}.items() if path is not None},
         "axis_graphs": axis_graphs,
     }
     manifest["state_machine"] = {

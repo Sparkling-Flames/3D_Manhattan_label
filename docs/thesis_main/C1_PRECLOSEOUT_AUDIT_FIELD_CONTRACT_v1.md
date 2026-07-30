@@ -41,7 +41,7 @@
 - `c1_final_canonical_closeout_summary.json` 必须在 completion、version、independence、structural、Scope/reference 和 row eligibility 全部应用后重算；reviewed estimand-specific exclusion 不是全局 blocker。
 # C1→C2-B estimand-specific freeze 补充
 
-- `Q_GT_FREEZE_STATUS`、`R_LOO_FREEZE_STATUS`、`F_STRUCT_FREEZE_STATUS` 分别记录 `frozen`、`support_limited` 或 `pending_collection_close`。
+- 正式三轴只由 `Q_GT_FREEZE_STATUS`、`R_PEER_FREEZE_STATUS`、`F_STRUCT_FREEZE_STATUS` 记录；`R_LOO_MEDOID_STATUS` 与 `R_LOO_STRICT_STATUS` 是独立 sensitivity 状态，不参与 `three_axis_complete`。
 - `C1_EVIDENCE_BUNDLE_FROZEN=true` 仅表示 collection 已关闭且三轴均到达终态；不得解释为所有轴均可估计。
 - `C2B_BASELINE_INPUT_FROZEN=true` 只由 Q_GT、process、independence 与对应 worker support 产生。
 - `c2b_baseline_eligible` 是 C2-B 参数模型和 simulation 的唯一 worker inclusion gate；nonstarter、行政排除和 `closed_partial_insufficient` 仍保留审计行但不参与模型。

@@ -256,14 +256,17 @@ def _materialize_w034_original_only_profile(output_dir: Path, *, formal: bool, a
     write_csv(branch / "qgt_task_effects_original_only.csv", task_effects, list(task_effects[0]) if task_effects else ["base_task_id"])
     write_json(branch / "qgt_original_only_audit.json", audit)
     structural_eb_path = branch / "structural_eb_original_only.csv"
-    materialize_structural_eb(
+    structural_eb_audit = materialize_structural_eb(
         structural_path, structural_eb_path,
         _PROJECT_ROOT / "docs" / "thesis_main" / "GLOBAL_POLICY_THRESHOLDS.json",
     )
+    structural_eb_audit_path = branch / "structural_eb_original_only.audit.json"
+    write_json(structural_eb_audit_path, structural_eb_audit)
     materialize_three_track_worker_state(
         qgt_path, loo_path, structural_path, output_dir / "c1_worker_completion_audit.csv", branch,
         quality_csv=quality_path, eligibility_csv=eligibility_original, peer_csv=peer_path,
-        structural_eb_csv=structural_eb_path, formal=False,
+        structural_eb_csv=structural_eb_path, structural_eb_audit_json=structural_eb_audit_path,
+        formal=False,
     )
     profile = branch / "c1_three_track_worker_state.csv"
     if not profile.is_file():
@@ -315,6 +318,7 @@ def materialize(
     completion_disposition: Path | None = None, c1_active_log_freeze_manifest: Path | None = None,
     authorized_reassignment_manifest: Path | None = None, building_registry: Path | None = None,
     late_entry_assignment_manifest: Path | None = None,
+    calibration_enrollment_registry: Path | None = None,
     w034_active_time_validation_manifest: Path | None = None,
     w034_original_profile_csv: Path | None = None,
     w034_sensitivity_thresholds: Path | None = None,
@@ -327,6 +331,8 @@ def materialize(
     if input_status not in {"precloseout_rehearsal", "formal"}:
         raise ValueError("input_status must be precloseout_rehearsal or formal")
     formal = input_status == "formal"
+    if formal and (calibration_enrollment_registry is None or not calibration_enrollment_registry.is_file()):
+        raise ValueError("formal C1 requires calibration_enrollment_registry.csv")
     git_state = formal_git_state(_PROJECT_ROOT)
     if formal and not git_state["clean"]:
         raise ValueError("formal mode requires a committed clean worktree")
@@ -348,6 +354,8 @@ def materialize(
         fixed_sources["c1_preannotation_feature"] = c1_preannotation_feature_csv
     if building_registry is not None:
         fixed_sources["building_registry"] = building_registry
+    if calibration_enrollment_registry is not None:
+        fixed_sources["calibration_enrollment_registry"] = calibration_enrollment_registry
     p1_source_files = sorted((path for path in p1_closeout_dir.iterdir() if path.is_file()), key=lambda path: path.name.lower())
     p1_integrity_files = sorted((path for path in p1_integrity_dir.iterdir() if path.is_file()), key=lambda path: path.name.lower()) if p1_integrity_dir else []
     p1_integrity_validation = _validate_p1_integrity_for_mode(input_status, p1_integrity_dir)
@@ -578,11 +586,13 @@ def materialize(
         output_dir / "c1_gt_quality_evidence.csv", output_dir,
         reference_csv=output_dir / "c1_task_outcome_reference.csv", input_status=input_status,
     )
-    materialize_structural_eb(
+    structural_eb_audit = materialize_structural_eb(
         output_dir / "structural_validation_analysis.csv",
         output_dir / "c1_structural_reliability_eb.csv",
         Path("docs/thesis_main/GLOBAL_POLICY_THRESHOLDS.json"),
     )
+    structural_eb_audit_path = output_dir / "c1_structural_reliability_eb.audit.json"
+    write_json(structural_eb_audit_path, structural_eb_audit)
     counterexample_events = [
         {"stage": "C1", "base_task_id": row.get("base_task_id", ""), "trigger": "gt_conflict", "trigger_rule_version": row.get("rule_version", ""), "source_artifact": "c1_gt_conflict_review_queue.csv", "source_artifact_sha256": sha256_file(output_dir / "c1_gt_conflict_review_queue.csv"), "evidence_identity": f"{row.get('base_task_id', '')}|{row.get('trigger', '')}", "evidence_sha256": row.get("source_sha256", ""), "denominator_definition": "GT conflict trigger over eligible task crowd"}
         for row in read_csv(output_dir / "c1_gt_conflict_review_queue.csv")
@@ -673,6 +683,9 @@ def materialize(
         eligibility_csv=output_dir / "c1_row_analysis_eligibility.csv",
         peer_csv=output_dir / "geometry_worker_task_peer_analysis.csv",
         structural_eb_csv=output_dir / "c1_structural_reliability_eb.csv",
+        enrollment_registry_csv=fixed_snapshots.get("calibration_enrollment_registry"),
+        qgt_audit_json=output_dir / "c1_task_adjusted_qgt_model_audit.json",
+        structural_eb_audit_json=structural_eb_audit_path,
         formal=formal,
     )
     predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"
@@ -735,10 +748,12 @@ def materialize(
     )
     readiness = materialize_measurement_readiness(
         output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_gt_quality_analysis.csv",
-        output_dir / "geometry_worker_task_loo_analysis.csv", output_dir / "structural_validation_analysis.csv", output_dir,
+        output_dir / "geometry_worker_task_peer_analysis.csv", output_dir / "structural_validation_analysis.csv", output_dir,
         canonical_closed=bool(final_canonical_summary.get("C1_CANONICAL_CLOSED")),
         collection_window_closed=collection_window_closed,
         eligibility_csv=output_dir / "c1_row_analysis_eligibility.csv",
+        worker_profile_csv=worker_state_path,
+        loo_analysis_csv=output_dir / "geometry_worker_task_loo_analysis.csv",
         preannotation_feature_ready=bool(preannotation_summary.get("n_tasks")) and preannotation_summary.get("n_ready") == preannotation_summary.get("n_tasks"),
     )
     readiness["method_contract"] = "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1"

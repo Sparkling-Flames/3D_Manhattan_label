@@ -131,3 +131,5 @@
 ## 2026-07-29 Paper A 方法合同 v2
 
 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json` 是唯一规范方法真源；同目录保存生成 MD 和五个 v2 schema。共享验证、geometry、Stage 3、T1/V1 online/replay 工具位于 `tools/thesis_main/analysis/`。
+
+2026-07-30 v4 收敛 C1 三轴为 `Q_GT/R_peer/F_struct`，将 LOO 降为独立 sensitivity；正式 C1 必须输入并 SHA 绑定 `calibration_enrollment_registry.csv`，planning 与 final build 分别由 `close-c1-and-plan-c2b` 和 `build-c2b` 承担。

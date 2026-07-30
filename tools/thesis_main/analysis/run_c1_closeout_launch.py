@@ -642,8 +642,9 @@ def _materialize_rehearsal_root_cause_report(summary: dict[str, Any]) -> dict[st
         "collection": summary.get("completion_summary", {}),
         "three_axis_support_after_exclusion": closeout.get("support_after_exclusion", {}),
         "three_axis_freeze_status": {
-            "Q_GT": readiness.get("Q_GT_FREEZE_STATUS"), "R_LOO": readiness.get("R_LOO_FREEZE_STATUS"),
+            "Q_GT": readiness.get("Q_GT_FREEZE_STATUS"), "R_peer": readiness.get("R_PEER_FREEZE_STATUS"),
             "F_struct": readiness.get("F_STRUCT_FREEZE_STATUS"),
+            "R_LOO_medoid": readiness.get("R_LOO_MEDOID_STATUS"), "R_LOO_strict": readiness.get("R_LOO_STRICT_STATUS"),
         },
         "p1_integrity": summary.get("p1_integrity", {}),
         "independence": independence, "qgt_model": model,
@@ -676,6 +677,7 @@ def rehearse_c1(args: argparse.Namespace) -> dict[str, Any]:
         p1_integrity_dir=getattr(args, "p1_integrity_dir", None),
         authorized_reassignment_manifest=getattr(args, "authorized_reassignment_manifest", None),
         late_entry_assignment_manifest=getattr(args, "late_entry_assignment_manifest", None),
+        calibration_enrollment_registry=getattr(args, "calibration_enrollment_registry", None),
         w034_active_time_validation_manifest=getattr(args, "w034_active_time_validation_manifest", None),
         building_registry=getattr(args, "building_registry", None),
     )
@@ -728,8 +730,8 @@ def build_collection_closure(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def audit_c1(args: argparse.Namespace) -> dict[str, Any]:
-    if not getattr(args, "authorized_reassignment_manifest", None) or not getattr(args, "building_registry", None) or not getattr(args, "w034_active_time_validation_manifest", None):
-        raise ValueError("formal C1 requires authorized reassignment, W034 active-time validation, and authoritative building registry")
+    if not getattr(args, "authorized_reassignment_manifest", None) or not getattr(args, "building_registry", None) or not getattr(args, "w034_active_time_validation_manifest", None) or not getattr(args, "calibration_enrollment_registry", None):
+        raise ValueError("formal C1 requires authorized reassignment, W034 active-time validation, authoritative building registry, and calibration enrollment registry")
     validate_active_log_freeze_manifest(args.c1_active_log_freeze_manifest, args.active_log)
     summary = materialize_c1(
         args.export_dir, args.active_log, args.manual_assignment, args.semi_assignment,
@@ -748,6 +750,7 @@ def audit_c1(args: argparse.Namespace) -> dict[str, Any]:
         p1_integrity_dir=getattr(args, "p1_integrity_dir", None),
         authorized_reassignment_manifest=args.authorized_reassignment_manifest,
         late_entry_assignment_manifest=getattr(args, "late_entry_assignment_manifest", None),
+        calibration_enrollment_registry=args.calibration_enrollment_registry,
         w034_active_time_validation_manifest=args.w034_active_time_validation_manifest,
         building_registry=args.building_registry,
     )
@@ -769,6 +772,8 @@ def finalize_c1(args: argparse.Namespace) -> dict[str, Any]:
     method_sha = sha256_file(METHOD_CONTRACT)
     worker_manifest_path = args.output_dir / "c1_three_track_worker_state_manifest.json"
     worker_profile_path = args.output_dir / "c1_three_track_worker_state_formal.csv"
+    enrollment_registry_path = args.output_dir / "calibration_enrollment_registry.csv"
+    enrollment_summary_path = args.output_dir / "calibration_enrollment_registry.summary.json"
     w034_path = args.output_dir / "w034_original_vs_authorized_sensitivity.json"
     dependency_blockers: list[str] = []
 
@@ -796,7 +801,27 @@ def finalize_c1(args: argparse.Namespace) -> dict[str, Any]:
             dependency_blockers.append("worker_profile_sha_mismatch")
         if worker_manifest.get("method_contract_sha256") != method_sha:
             dependency_blockers.append("worker_profile_method_contract_sha_mismatch")
+        dependency_roles = {item.get("role") for item in worker_manifest.get("dependencies", [])}
+        if "ENROLLMENT_REGISTRY" not in dependency_roles:
+            dependency_blockers.append("worker_profile_enrollment_dependency_missing")
         validate_dependency_payload(worker_manifest, worker_manifest_path.parent, "worker_profile")
+    if not enrollment_registry_path.is_file() or not enrollment_summary_path.is_file():
+        dependency_blockers.append("calibration_enrollment_registry_missing")
+        enrollment_rows: list[dict[str, str]] = []
+        enrollment_summary: dict[str, Any] = {}
+    else:
+        enrollment_rows = _read(enrollment_registry_path)
+        enrollment_summary = json.loads(enrollment_summary_path.read_text(encoding="utf-8"))
+        registry_workers = {row.get("worker_id", "") for row in enrollment_rows}
+        profile_workers = {row.get("worker_id", "") for row in worker_rows}
+        if registry_workers != profile_workers:
+            dependency_blockers.append("enrollment_profile_worker_set_mismatch")
+        if enrollment_summary.get("status") != "validated" or enrollment_summary.get("all_registered_workers_terminal") is not True:
+            dependency_blockers.append("enrollment_registry_not_validated_or_nonterminal")
+        if enrollment_summary.get("registry_sha256") != sha256_file(enrollment_registry_path):
+            dependency_blockers.append("enrollment_registry_sha_mismatch")
+        if enrollment_summary.get("rolling_activated") is False and int(enrollment_summary.get("N_late") or 0) != 0:
+            dependency_blockers.append("rolling_disabled_with_late_workers")
     if not w034_path.is_file():
         dependency_blockers.append("w034_sensitivity_freeze_missing")
         w034: dict[str, Any] = {}
@@ -830,7 +855,7 @@ def finalize_c1(args: argparse.Namespace) -> dict[str, Any]:
     evidence_ready = canonical_ready and collection_closed and not blockers
     c2b_baseline_ready = bool(measurement.get("C2B_BASELINE_INPUT_FROZEN")) and evidence_ready and any(str(row.get("c2_risk_model_eligible", "")).lower() in {"true", "1"} for row in worker_rows)
     c2b_blockers = [] if c2b_baseline_ready else ["q_gt_baseline_support_limited_or_not_frozen"]
-    freeze = {"schema_version": "c1_evidence_freeze_manifest_v3", "method_contract": audit.get("method_contract", ""), "method_contract_version": method["contract_version"], "method_contract_sha256": method_sha, "profile_version": worker_manifest.get("profile_version", ""), "cohort_id": worker_manifest.get("cohort_id", ""), "git_commit_sha": audit.get("git_commit_sha", ""), "C1_COLLECTION_INCOMPLETE": not collection_closed, "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": evidence_ready, "C1_EVIDENCE_BUNDLE_FROZEN": bool(measurement.get("C1_EVIDENCE_BUNDLE_FROZEN")) and evidence_ready, "C2B_BASELINE_INPUT_FROZEN": c2b_baseline_ready, "Q_GT_FREEZE_STATUS": measurement.get("Q_GT_FREEZE_STATUS", "pending"), "R_LOO_FREEZE_STATUS": measurement.get("R_LOO_FREEZE_STATUS", "pending"), "F_STRUCT_FREEZE_STATUS": measurement.get("F_STRUCT_FREEZE_STATUS", "pending"), "C2B_DESIGN_READY": c2b_baseline_ready, "C2B_RISK_DESIGN_FROZEN": False, "C2B_DESIGN_FROZEN": False, "C2B_ASSIGNMENT_MATERIALIZED": False, "C2B_LAUNCH_READY": False, "routing_profile_frozen": False, "formal_closeout_ready": evidence_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers, "c2b_baseline_blockers": c2b_blockers, "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("FORMAL_AUDIT", audit_path), ("CANONICAL_CLOSEOUT", final_path), ("MEASUREMENT_FREEZE", measurement_path), ("WORKER_PROFILE_MANIFEST", worker_manifest_path), ("WORKER_PROFILE", worker_profile_path), ("W034_SENSITIVITY_FROZEN", w034_path), ("ADJUDICATION", args.adjudication_manifest), ("METHOD_CONTRACT", METHOD_CONTRACT)) if path.is_file()]}
+    freeze = {"schema_version": "c1_evidence_freeze_manifest_v4", "method_contract": audit.get("method_contract", ""), "method_contract_version": method["contract_version"], "method_contract_sha256": method_sha, "profile_version": worker_manifest.get("profile_version", ""), "cohort_id": worker_manifest.get("cohort_id", ""), "git_commit_sha": audit.get("git_commit_sha", ""), "C1_COLLECTION_INCOMPLETE": not collection_closed, "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": evidence_ready, "C1_EVIDENCE_BUNDLE_FROZEN": bool(measurement.get("C1_EVIDENCE_BUNDLE_FROZEN")) and evidence_ready, "C2B_BASELINE_INPUT_FROZEN": c2b_baseline_ready, "Q_GT_FREEZE_STATUS": measurement.get("Q_GT_FREEZE_STATUS", "pending"), "R_PEER_FREEZE_STATUS": measurement.get("R_PEER_FREEZE_STATUS", "pending"), "F_STRUCT_FREEZE_STATUS": measurement.get("F_STRUCT_FREEZE_STATUS", "pending"), "R_LOO_MEDOID_STATUS": measurement.get("R_LOO_MEDOID_STATUS", "pending"), "R_LOO_STRICT_STATUS": measurement.get("R_LOO_STRICT_STATUS", "pending"), "rolling_activated": enrollment_summary.get("rolling_activated"), "N_late": enrollment_summary.get("N_late"), "C2B_DESIGN_READY": c2b_baseline_ready, "C2B_RISK_DESIGN_FROZEN": False, "C2B_DESIGN_FROZEN": False, "C2B_ASSIGNMENT_MATERIALIZED": False, "C2B_LAUNCH_READY": False, "routing_profile_frozen": False, "formal_closeout_ready": evidence_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers, "c2b_baseline_blockers": c2b_blockers, "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("FORMAL_AUDIT", audit_path), ("CANONICAL_CLOSEOUT", final_path), ("MEASUREMENT_FREEZE", measurement_path), ("WORKER_PROFILE_MANIFEST", worker_manifest_path), ("WORKER_PROFILE", worker_profile_path), ("ENROLLMENT_REGISTRY", enrollment_registry_path), ("ENROLLMENT_REGISTRY_SUMMARY", enrollment_summary_path), ("W034_SENSITIVITY_FROZEN", w034_path), ("ADJUDICATION", args.adjudication_manifest), ("METHOD_CONTRACT", METHOD_CONTRACT)) if path.is_file()]}
     freeze["state_machine"] = {name: bool(freeze[name]) for name in ("C1_COLLECTION_INCOMPLETE", "C1_CANONICAL_CLOSED", "C1_MEASUREMENT_FROZEN", "C2B_RISK_DESIGN_FROZEN", "C2B_DESIGN_FROZEN", "C2B_ASSIGNMENT_MATERIALIZED", "C2B_LAUNCH_READY")}
     (args.output_dir / "c1_evidence_freeze_manifest.json").write_text(json.dumps(freeze, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return {"day": 1, "phase": "measurement-freeze", "formal_closeout_ready": evidence_ready, "C1_CANONICAL_CLOSED": freeze["C1_CANONICAL_CLOSED"], "C1_MEASUREMENT_FROZEN": freeze["C1_MEASUREMENT_FROZEN"], "C2B_DESIGN_READY": freeze["C2B_DESIGN_READY"], "routing_profile_frozen": False, "blockers": blockers, "c2b_baseline_blockers": c2b_blockers}
@@ -1204,6 +1229,7 @@ def main(argv: list[str] | None = None) -> int:
         command.add_argument("--c1-preannotation-feature-csv", type=Path)
         command.add_argument("--authorized-reassignment-manifest", type=Path)
         command.add_argument("--late-entry-assignment-manifest", type=Path)
+        command.add_argument("--calibration-enrollment-registry", type=Path)
         command.add_argument("--w034-active-time-validation-manifest", type=Path)
         command.add_argument("--building-registry", type=Path)
 

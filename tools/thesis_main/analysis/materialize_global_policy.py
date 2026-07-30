@@ -105,12 +105,36 @@ def build_global_policy(rows: list[dict[str, Any]], manifest: dict[str, Any], *,
         if _truth(row.get("serious_recurrent_failure_flag")):
             reasons.append("serious_recurrent_failure")
         static_row = {key: value for key, value in row.items() if key not in {"available", "availability", "capacity", "capacity_available"}}
-        output.append({**static_row, "schema_version": "policy_candidate_v2", "S_G": "" if s_g is None else s_g, "LOO_medoid_status": row.get("LOO_medoid_status") or ("estimated" if _number(row, "R_LOO_medoid") is not None else "not_evaluable"), "S_G_z_center": z_center, "S_G_z_scale": z_spread, "S_G_z_cohort_n": z_n, "S_G_z_parameters_frozen_before_gates": True, "global_policy_eligible": not reasons, "global_exclusion_reason": ";".join(reasons), "policy_status": "formal" if formal else "candidate", "formal_use_allowed": bool(formal and approved), "_random_key": random_keys[str(row.get("worker_id", ""))]})
+        peer_value = _number(row, "R_peer_stable")
+        loo_value = _number(row, "R_LOO_medoid")
+        output.append({**static_row, "schema_version": "policy_candidate_v2", "S_G": "" if s_g is None else s_g, "R_peer_stable": peer_value, "R_peer_profile_status": row.get("R_peer_profile_status") or ("estimated" if peer_value is not None else "not_evaluable"), "R_LOO_medoid": loo_value, "LOO_medoid_status": row.get("LOO_medoid_status") or ("estimated" if loo_value is not None else "not_evaluable"), "S_G_z_center": z_center, "S_G_z_scale": z_spread, "S_G_z_cohort_n": z_n, "S_G_z_parameters_frozen_before_gates": True, "global_policy_eligible": not reasons, "global_exclusion_reason": ";".join(reasons), "policy_status": "formal" if formal else "candidate", "formal_use_allowed": bool(formal and approved), "_random_key": random_keys[str(row.get("worker_id", ""))]})
 
     def rank(field: str, target: str) -> None:
         eligible = [row for row in output if row["global_policy_eligible"] and _number(row, field) is not None]
-        eligible.sort(key=lambda row: (-float(row[field]), -float(row.get("R_peer_stable") or -1), -(float(row["R_LOO_medoid"]) if row.get("LOO_medoid_status") == "estimated" and str(row.get("R_LOO_medoid", "")).strip() else -1), row["_random_key"]))
-        for index, row in enumerate(eligible, 1):
+        primary_groups: dict[float, list[dict[str, Any]]] = {}
+        for row in eligible:
+            primary_groups.setdefault(float(row[field]), []).append(row)
+
+        def apply_loo(group: list[dict[str, Any]]) -> list[dict[str, Any]]:
+            use_loo = all(row.get("LOO_medoid_status") == "estimated" and _number(row, "R_LOO_medoid") is not None for row in group)
+            return sorted(group, key=lambda row: (-float(row["R_LOO_medoid"]), row["_random_key"])) if use_loo else sorted(group, key=lambda row: row["_random_key"])
+
+        def order_tie_group(group: list[dict[str, Any]]) -> list[dict[str, Any]]:
+            use_peer = all(row.get("R_peer_profile_status") == "estimated" and _number(row, "R_peer_stable") is not None for row in group)
+            if not use_peer:
+                return apply_loo(group)
+            peer_groups: dict[float, list[dict[str, Any]]] = {}
+            for row in group:
+                peer_groups.setdefault(float(row["R_peer_stable"]), []).append(row)
+            ordered: list[dict[str, Any]] = []
+            for value in sorted(peer_groups, reverse=True):
+                ordered.extend(apply_loo(peer_groups[value]))
+            return ordered
+
+        ranked: list[dict[str, Any]] = []
+        for value in sorted(primary_groups, reverse=True):
+            ranked.extend(order_tie_group(primary_groups[value]))
+        for index, row in enumerate(ranked, 1):
             row[target] = index
 
     rank("Q_GT_EB", "global_rank_EB")
