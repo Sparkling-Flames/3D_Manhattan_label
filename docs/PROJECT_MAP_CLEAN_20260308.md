@@ -1,137 +1,49 @@
-# HOHONET 项目地图
+<!-- PAPER_A_MACHINE_STATUS: normative -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v7 SHA-256 e2621e20af8afeb31139b0da81cfb8f740de065d83f5f4d587586d041256dc1a -->
+# HOHONET 椤圭洰鍦板浘
 
-> 2026-07-18 vFinal 更新：Paper A 正式主线已改为 C1 设计 C2-B
->（common anchor + diverse bridge）、C2-A-RP 精度补测、T1 2×2 条件试验，
-> 以及 Strong Global 对 Full-Integrated 的 V1 前瞻双臂政策试验。
-> `docs/thesis_main/manuscript/overleaf_project/main.tex` 是唯一论文入口；
-> 已删除该工程内未引用的旧版重复章节。C1 原始 export、assignment 和标注界面未改变。
-> 新正式实现位于 `tools/thesis_main/analysis/materialize_main_failure_outcomes.py`、
-> `build_c2_assignment_manifest_from_c1_gaps.py`、`c1_materialize_c2_gap_audits.py`
-> 和 `routing/v1_policy.py`；分别负责完整事故处置与 resolver、C2-B、C2-A-RP
-> 以及 Strong Global/Full-Integrated 的 V1 前瞻执行。
-> `tools/thesis_main/analysis/materialize_vfinal_main_analysis.py` 只消费 resolver
-> 最终表，生成 T1 pair estimand 与 V1 ITT/设计和生产标准化结果。
+> 2026-07-18 vFinal 鏇存柊锛歅aper A 姝ｅ紡涓荤嚎宸叉敼涓?C1 璁捐 C2-B
+>锛坈ommon anchor + diverse bridge锛夈€丆2-A-RP 绮惧害琛ユ祴銆乀1 2脳2 鏉′欢璇曢獙锛?> 浠ュ強 Strong Global 瀵?Full-Integrated 鐨?V1 鍓嶇灮鍙岃噦鏀跨瓥璇曢獙銆?> `docs/thesis_main/manuscript/overleaf_project/main.tex` 鏄敮涓€璁烘枃鍏ュ彛锛?> 宸插垹闄よ宸ョ▼鍐呮湭寮曠敤鐨勬棫鐗堥噸澶嶇珷鑺傘€侰1 鍘熷 export銆乤ssignment 鍜屾爣娉ㄧ晫闈㈡湭鏀瑰彉銆?> 鏂版寮忓疄鐜颁綅浜?`tools/thesis_main/analysis/materialize_main_failure_outcomes.py`銆?> `build_c2_assignment_manifest_from_c1_gaps.py`銆乣c1_materialize_c2_gap_audits.py`
+> 鍜?`routing/v1_policy.py`锛涘垎鍒礋璐ｅ畬鏁翠簨鏁呭缃笌 resolver銆丆2-B銆丆2-A-RP
+> 浠ュ強 Strong Global/Full-Integrated 鐨?V1 鍓嶇灮鎵ц銆?> `tools/thesis_main/analysis/materialize_vfinal_main_analysis.py` 鍙秷璐?resolver
+> 鏈€缁堣〃锛岀敓鎴?T1 pair estimand 涓?V1 ITT/璁捐鍜岀敓浜ф爣鍑嗗寲缁撴灉銆?
+鏇存柊鏃堕棿锛?026-06-08
 
-更新时间：2026-06-08
+鏈湴鍥捐褰曞綋鍓嶄粨搴撶殑涓昏鐩綍杈圭晫銆傛柊澧炪€佸垹闄ゃ€佺Щ鍔ㄦ枃浠跺悗蹇呴』妫€鏌ユ湰鏂囨。鏄惁闇€瑕佸悓姝ャ€?
+## 椤跺眰鐩綍
 
-本地图记录当前仓库的主要目录边界。新增、删除、移动文件后必须检查本文档是否需要同步。
+- `tools/`锛氳剼鏈拰杩愯璧勬簮锛屾寜璁烘枃绾夸笌鍏变韩杩愯灞傛媶鍒嗐€?- `docs/`锛氬崗璁€丼OP銆佸瓧娈靛悎鍚屻€佽鏂囩嚎鏂囨。鍜?agent 瑙勫垯锛涜鏂囨ā鏉?鍙傝€冭祫鏂欑瓑澶у潡鍐欎綔璧勪骇榛樿鎸?`.gitignore` 鐣欏湪鏈湴銆?- `import_json/`锛歱lanned import / planned split 鐪熸簮銆?  - `stage1_prescreen_foreign_https_20260609/`锛歋tage 1 / P1 澶栧浗鏍囨敞鍛?HTTPS Label Studio 瀵煎叆鍖咃紱浠呭皢姝ｅ紡涓枃鍖呯殑 `data.vis_3d` base URL 鏀逛负 `https://label.sparkle0825.top`锛屼换鍔℃睜銆侀『搴忋€乵etadata銆乸roposal 涓庡浘鐗?URL 淇濇寔涓嶅彉銆?- `export_label/`锛歀abel Studio 杩愯鏃舵爣娉ㄥ鍑虹湡婧愶紝涓嶄綔涓鸿剼鏈啓鍏ョ洰鏍囥€?- `active_logs/`锛氬師濮?`active_time` 鏃ュ織鐪熸簮锛沗operational_incidents/` 淇濆瓨 C1 璧蜂笉鍙彉鐨勮繍琛屼簨鏁呰瘉鎹紝涓嶄笌鍒嗘瀽杈撳嚭娣风敤銆?- `analysis_results/`锛氱敓鎴愮粨鏋溿€佸璁°€乵anifest銆佸浘琛ㄥ拰涓棿鍒嗘瀽浜х墿銆?- `tests/`锛歵ools 涓庡瓧娈靛悎鍚岀殑 pytest 瑕嗙洊锛汸aper A 姝ｅ紡閾炬柊澧炴寜 `contracts/`銆乣c1/`銆乣c2b/`銆乣e2e/` 鍒嗙被锛屾湭鍒嗙被鍘嗗彶娴嬭瘯缁х画淇濈暀鍦ㄦ牴鐩綍銆?- `data/`锛氭暟鎹祫浜с€?- `output/`锛欻oHoNet 鎺ㄧ悊涓庝腑闂翠骇鐗┿€?- `trap闆?`锛歵rap / manual 鍊欓€夌礌鏉愬眰銆?
+## tools 甯冨眬
 
-## 顶层目录
+- `tools/README.md`锛歵ools 鎬诲叆鍙ｏ紱鏍圭洰褰曚笉鍐嶄繚鐣欐棫鑴氭湰 wrapper銆?- `tools/thesis_main/`
+  - 璁烘枃涓荤嚎宸ュ叿銆?  - `analysis/`锛氳川閲忓垎鏋愩€乤ctive-time audit銆乻tage-aware 鍒嗘瀽銆佸浘琛ㄣ€佺粺璁℃眹鎬汇€?    - `c1_live_collection_monitor.py`銆乣c1_canonicalize_exports.py`銆乣failure_disposition.py`銆乣materialize_main_failure_outcomes.py`銆乣c1_materialize_quality_table.py`銆乣c1_materialize_worker_state.py`銆乣c1_materialize_worker_profile_sidecar.py`銆乣c1_materialize_c2_gap_audits.py`銆乣build_c2_assignment_manifest_from_c1_gaps.py`銆乣materialize_c2b_task_eligibility.py`銆乣materialize_p1_post_closeout_evidence_correction.py` 涓?`materialize_p1_post_closeout_geometry_scores.py`锛欳1 live 鐩戞帶銆乧anonicalization銆佸け璐ュ綊鍥犮€侀€愯酱璇佹嵁銆丆2-B 涓ユ牸浠诲姟璧勬牸銆佸€欓€夎璁′笌鍐荤粨 assignment 娑堣垂锛屼互鍙婂彧璇?P1 post-closeout evidence/geometry correction銆?    - `rebuild_stage1_chinese_completion_excel.py`锛氭寜鏈€鏂?`鏍囨敞浜哄憳.xlsx`銆乣閫€鍑烘爣娉?xlsx`銆丼tage 1 涓枃 LS JSON 瀵煎嚭鍜?active logs 閲嶇畻涓枃 P1 瀹屾垚鎯呭喌宸ヤ綔绨裤€?  - `registry/`锛歳egistry銆乵anifest銆乫reeze銆乫inal-gold銆乼rap/materialization銆乺isk-rule銆丆2 failure-disposition manifest銆乣d_t/g_t` dry-run銆乪xport inventory銆?  - `data_prep/`锛氭暟鎹泦鍑嗗鍜?MP3D smoke/import 鐢熸垚銆?  - `foreign_recruitment/`锛歅1/PreScreen 澶栧浗鏍囨敞鍛?HTTPS 鑻辨枃閫傞厤鍖呫€?- `tools/paper_b/`
+  - Paper B 宸ュ叿銆傚綋鍓嶅寘鎷?`validate_b0_relabel_audit.py`锛涘悗缁?B0/B1/B2 璁粌銆乧ue銆乥ilayout銆佸璁¤剼鏈彧杩涙湰鐩綍銆?- `tools/label_studio/`
+  - 涓夋潯绾垮叡浜殑 Label Studio XML銆?D viewer銆乻erver/CORS銆丆OS/upload銆乮mport/build helper 鍜?`official/`銆傚巻鍙?C1 XML 淇濇寔鍘熻涔夛紱C2/Stage3 鏈潵璇箟浣跨敤 `label_studio_view_config_c2_future.xml` 涓庤嫳鏂囧搴旀枃浠讹紱鍐荤粨 SHA 璁板綍鍦?`tools/label_studio/label_studio_c1_xml_freeze_manifest_v1.json`銆?  - `vis_3d_pre_m15_19_2_backup.html`锛歝ommit `f6d53b0` 鐨?viewer 鍘熸牱澶囦唤锛屼粎鐢ㄤ簬鍥炴粴/瀵圭収锛屼笉鏄繍琛屾椂鍏ュ彛銆?  - 浜戞湇鍔″櫒杩愯鏃?URL `/tools/vis_3d.html` 淇濇寔鍏煎锛岃繖鏄儴缃茶矾鐢憋紝涓嶄唬琛ㄦ簮鐮佷粛鍦?`tools/` 鏍圭洰褰曘€?- `tools/legacy/`銆乣tools/legacy_server/`銆乣tools/backups/`
+  - 鍘嗗彶鎴栧浠界洰褰曪紝榛樿涓嶈縼绉汇€佷笉淇銆?
+## docs 甯冨眬
 
-- `tools/`：脚本和运行资源，按论文线与共享运行层拆分。
-- `docs/`：协议、SOP、字段合同、论文线文档和 agent 规则；论文模板/参考资料等大块写作资产默认按 `.gitignore` 留在本地。
-- `import_json/`：planned import / planned split 真源。
-  - `stage1_prescreen_foreign_https_20260609/`：Stage 1 / P1 外国标注员 HTTPS Label Studio 导入包；仅将正式中文包的 `data.vis_3d` base URL 改为 `https://label.sparkle0825.top`，任务池、顺序、metadata、proposal 与图片 URL 保持不变。
-- `export_label/`：Label Studio 运行时标注导出真源，不作为脚本写入目标。
-- `active_logs/`：原始 `active_time` 日志真源；`operational_incidents/` 保存 C1 起不可变的运行事故证据，不与分析输出混用。
-- `analysis_results/`：生成结果、审计、manifest、图表和中间分析产物。
-- `tests/`：tools 与字段合同的 pytest 覆盖；Paper A 正式链新增按 `contracts/`、`c1/`、`c2b/`、`e2e/` 分类，未分类历史测试继续保留在根目录。
-- `data/`：数据资产。
-- `output/`：HoHoNet 推理与中间产物。
-- `trap集/`：trap / manual 候选素材层。
+- `docs/README_INDEX.md`锛歞ocs 鎬荤储寮曘€?- `docs/PROJECT_MAP_CLEAN_20260308.md`锛氭湰鏂囦欢锛屼粨搴撳湴鍥俱€?- `docs/thesis_main/`
+  - 姝ｅ紡鎵ц涓荤嚎鏂囨。銆?  - 鍖呮嫭 protocol銆乤ssignment SOP銆丳reScreen銆丆alibration銆丮ain(Test + Validation)銆佺粺璁¤鍒掋€佸瓧娈靛悎鍚屻€亀orker-profile sidecar contract銆乫inal-gold銆乺egistry銆佽鏂囦富绾垮啓浣滄潗鏂欍€?  - Paper A 鍞竴瑙勮寖鏂规硶鐪熸簮涓?`PAPER_A_METHOD_CONTRACT_CURRENT.json`锛沗Paper_A_鏂扮増瀹屾暣璁烘枃鎻愮翰_vFinal_Draft.md` 宸叉爣涓?superseded 鐨勯潪瑙勮寖鎬у啓浣滆儗鏅€倂3-v5 鎻愮翰銆佽縼绉?map/audit 涓?standalone `.tex` 宸插綊妗ｅ埌 `docs/legacy/paper_a_pre_vfinal_20260724/`锛沗WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 绛夊瓧娈靛悎鍚岀户缁繚鐣欍€?  - `manuscript/` 鍙繚瀛?Overleaf 椤圭洰鍜屼富绾胯鏂囧啓浣滆祫浜э紝浣嗘寜鐜版湁 `.gitignore` 榛樿涓嶆彁浜ゃ€?  - `tools/thesis_main/analysis/materialize_c2b_closeout.py` 缁戝畾 C2-B submissions銆乸ost-C2-B profile銆乸rofile manifest 涓?design summary锛屽舰鎴?C2-A-RP formal 鎵€闇€鐨勭湡瀹?SHA closeout銆?  - `tools/thesis_main/analysis/materialize_frozen_routing_profiles.py` 浠?Manual GT submission銆佸喕缁?worker state 鍜岃法闃舵 component evidence 鐢熸垚 Strong Global 涓?Full component 鍐荤粨琛ㄣ€?  - Paper A vFinal 浠ｇ爜杩佺Щ鍚堝悓銆佸洓涓€欓€?rule manifest 涓庡璁¤褰曚繚瀛樺湪璇ョ洰褰曪紱杩欎簺鏂囦欢鍙畾涔夊彲瀹¤鐨勭粨鏋勫拰鍊欓€夎鍒欙紝涓嶆妸 dry-run 浜х墿鍗囩骇涓烘寮?C1 鏁版嵁銆傚搴旂殑 canonical鈫抍oncrete-tag銆丟eometry LOO 涓?temporal replay 浠ｇ爜浣嶄簬 `tools/thesis_main/analysis/`锛屼笖鏃犳寮?export 鏃跺彧鑳借緭鍑?dry-run/not-evaluable銆?  - Paper A vFinal 浠ｇ爜杩佺Щ鍚堝悓銆佸洓涓€欓€?rule manifest 涓庡璁¤褰曚繚瀛樺湪璇ョ洰褰曪紱杩欎簺鏂囦欢鍙畾涔夊彲瀹¤鐨勭粨鏋勫拰鍊欓€夎鍒欙紝涓嶆妸 dry-run 浜х墿鍗囩骇涓烘寮?C1 鏁版嵁銆?- `docs/paper_b/`
+  - Paper B 鏀嚎鏂囨。銆?  - 鍖呮嫭 ambiguity-aware HoHoNet銆乑InD mapping銆丅-line freeze/audit銆佹ā鍨嬫灦鏋勫拰鍚庣画璁粌璁″垝銆?- `docs/label_studio/`
+  - Label Studio CE-only銆乤ctive-time銆佷簯绔儴缃层€丆OS銆佹爣娉ㄥ憳/寮€鍙戣€呰鏄庛€?- `docs/agent/`
+  - Agent 涓婁笅鏂囥€乸laybook銆佸啓鍏ヨ鍒欏拰缁?Codex 鐨勮ˉ鍏呰鏄庛€?  - 鍏抽敭鍏ュ彛锛歚AGENT_CONTEXT_INDEX.md`銆乣REPO_PATH_MAP.md`銆乣WRITE_RULES.md`銆乣playbooks/`銆?- `docs/shared/`
+  - 璁烘枃妯℃澘銆佸弬鑰冭祫鏂欍€佸叡浜啓浣滆祫浜э紱鎸夌幇鏈?`.gitignore` 榛樿涓嶆彁浜ゃ€?- `docs/legacy/`
+  - 鍘嗗彶鏉愭枡锛岄粯璁や笉杩佺Щ銆佷笉淇銆?
+## 鐪熸簮涓庤緭鍑哄眰
 
-## tools 布局
+- `import_json/` 鏄?planned import / planned split 鐪熸簮銆?- `export_label/` 鏄?Label Studio 杩愯鏃跺鍑虹湡婧愶紱鏈 tools/docs 杩佺Щ涓嶅啓鍏ャ€佷笉绉诲姩銆佷笉閲嶅懡鍚嶃€?- `active_logs/` 鏄師濮?active-time 鏃ュ織鐪熸簮锛沗active_logs/operational_incidents/` 鏄?C1 璧峰閮ㄧ郴缁熶簨鏁呯殑鍘熷璇佹嵁婧愩€?  - 浜戞湇鍔″櫒绔粛搴斾綅浜庝粨搴撴牴涓嬶紝渚嬪 `/home/ubuntu/workspace/HoHoNet/active_logs/`銆?  - 鑻ヤ簯绔缃?`ACTIVE_LOG_DIR="active_logs/new_server"`锛屾柊鏃ュ織搴旇繘鍏?`/home/ubuntu/workspace/HoHoNet/active_logs/new_server/`銆?  - `tools/label_studio/cors_server.py` 鐨勬簮鐮佽縼绉讳笉搴旀敼鍙樻棩蹇楀瓨鍌ㄦ牴鐩綍銆?- `analysis_results/` 鏄緭鍑恒€佸璁″拰鍥捐〃钀界洏鍖猴紝涓嶆槸杈撳叆鐪熸簮銆?
+## 鍐欏叆涓庤縼绉昏鍒?
+- 鏂板 `tools/` 鑴氭湰蹇呴』杩涘叆瀵瑰簲璁烘枃绾挎垨鍏变韩 Label Studio 鐩綍锛屼笉寰楃洿鎺ユ斁鍦?`tools/` 鏍圭洰褰曘€?- 鏂板 `docs/` 涓婚鏂囨。蹇呴』杩涘叆瀵瑰簲鍒嗙被鐩綍锛屼笉寰楃洿鎺ユ斁鍦?`docs/` 鏍圭洰褰曘€?- 涓荤嚎宸ュ叿鍜屾枃妗ｅ垎鍒繘鍏?`tools/thesis_main/` 涓?`docs/thesis_main/`銆?- Paper B 宸ュ叿鍜屾枃妗ｅ垎鍒繘鍏?`tools/paper_b/` 涓?`docs/paper_b/`銆?- Label Studio 鍏变韩璧勬簮鍜岃鏄庡垎鍒繘鍏?`tools/label_studio/` 涓?`docs/label_studio/`銆?- Agent 瑙勫垯鍜?playbook 杩涘叆 `docs/agent/`銆?- legacy 榛樿涓嶈縼绉汇€佷笉淇銆?- 涓嶆敼鍙?protocol銆乻chema銆乺outing銆丼OP 璇箟銆?## 2026-07-24 Paper A 鍒嗘瀽閾炬敹鍙ｈˉ鍏?
+- `tools/thesis_main/analysis/run_c1_closeout_launch.py`锛歅aper A C1鈫扖2-B 鍏紑鍏ュ彛锛涗繚鐣?`rehearse-c1`銆乣freeze-c1`銆乣audit-c1`銆乣finalize-c1`銆乣design-c2b`銆乣build-c2b` 绛夌粏绮掑害瀹¤鍛戒护锛屽苟鎻愪緵鍙仮澶嶇殑 `close-c1-and-plan-c2b` 钖勫叆鍙ｃ€乻cene-building 灞曞紑涓?runbook 鍛戒护鍚堝悓妫€鏌ャ€俙design-c2b` 鍦ㄤ换浣曞€欓€夋灇涓惧墠璋冪敤 `derive_c2b_design_thresholds.py`锛屽彧娑堣垂 SHA 缁戝畾鐨勫叕寮忓悎鍚屻€丆1 design parameters銆乧apacity 涓?reviewer approval銆俙run_c1_precloseout_rehearsal.py` 浠呬繚鐣欎负鍏跺唴閮?C1 璇佹嵁鐗╁寲鍣紱姝ｅ紡 C2-B 璧勬牸鐢?`materialize_c2b_task_eligibility.py` 鐩存帴杩炴帴鍐荤粨璇佹嵁銆?- `tools/thesis_main/analysis/c1_task_adjusted_quality.py`锛欳1 鍞竴 task-adjusted Q_GT 浼拌鍣紝鍥哄畾 worker effect銆乼ask random intercept 涓?task/building cluster bootstrap锛屽悓鏃惰緭鍑?FE 鏁忔劅鎬у拰 normal-normal EB 娴嬮噺璇佹嵁锛涙帓鍚嶄粎鐢卞悗缁?policy materializer 鐢熸垚锛孍B 澶辫触涓嶅緱鍥為€€ raw mean銆?- `tools/thesis_main/analysis/c2b_static_evidence.py`锛欳2-B P1 integrity銆乺eference/candidate path/content SHA 娉勬紡瀹¤銆乺esolved P1/C1 identity history 鎺ㄥ銆乻cene-building 鏄惧紡鏄犲皠灞曞紑銆侀潪鏀厤 source/holdout 鍊欓€変笌 `c2b_static_freeze_manifest.json` 鐗╁寲宸ュ叿锛汸1 鏂囦欢鍐荤粨涓?predictive evidence ready 鍒嗗紑鎶ュ憡銆?- `tools/thesis_main/analysis/materialize_c1_operational_reference.py`锛氭妸鍐荤粨 candidate inventory 涓凡瀛樺湪鐨?  浜哄伐 scope 鏍囩鍜?`groudTruth.json` 鍗曚竴鍑犱綍 reference 鎺ュ叆 C1锛涙湭澶嶆牳/鍐茬獊浠诲姟淇濇寔 pending銆?- `tools/thesis_main/analysis/materialize_routing_component_evidence.py`锛歅1鈫扖1鈫扖2-B component evidence
+  鍒嗗眰鐗╁寲锛涚己 C2-B 鏃?Full 鑷姩绂佺敤銆?- `tools/thesis_main/analysis/materialize_main_inference.py`锛歍1 image-level 涓?V1 ITT 鐨?manifest/SHA 缁戝畾
+  cluster bootstrap 鎺ㄦ柇鍏ュ彛銆?- `tools/thesis_main/analysis/materialize_c2_task_risk.py`锛氬浐瀹?HoHoNet/LHFeat銆佺粨鏋勮緭鍑恒€佺粺涓€ `risk_design_vector_A`/`risk_design_score_A` 鐨勫€欓€変换鍔￠闄╁叆鍙ｏ紱缂哄皯 feature/C1 鍐荤粨渚濊禆鏃?assignment fail-closed銆?- `tools/thesis_main/analysis/freeze_c2_feature_reference.py` 涓?`tools/thesis_main/registry/hohonet_feature_backend.py`锛氫竴娆℃€ф彁鍙栬缁冨弬鑰冨簱鍜屽€欓€夋睜 LHFeat锛屽喕缁?PCA/whitening cache銆乷ff-grid rotation reinference circular audit 涓庣嫭绔?seam audit锛涘洓鐩镐綅缃崲浠呬负鎭掔瓑鎬?diagnostic锛宮anifest 涓彧鏈夊０鏄庤€屾棤鍖归厤 cache/leakage evidence 鏃朵笉寰?ready銆?- `tools/thesis_main/analysis/materialize_c1_c2_design_parameters.py`锛氫粠 C1 涓夎建 eligibility銆乼ask-level risk 涓?completion 鎷熷悎 worker fixed-intercept銆亀orker random-slope銆乥uilding 涓?task-within-building risk model锛屽苟鎸夐娉ㄥ唽鍗曡竟鐣岄摼鐢熸垚 C2-B 妯℃嫙鍙傛暟锛涗笉鐢熸垚 routing profile銆?- `tools/thesis_main/analysis/derive_c2b_design_thresholds.py`锛氶獙璇佸喕缁撳叕寮忕櫧鍚嶅崟涓?reviewer SHA approval锛屼粠 C1 design parameters 鍜?capacity 鏈烘娲剧敓姝ｅ紡 design threshold manifest锛涗笉璇诲彇 candidate/simulation/feasibility銆?- `tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`锛歅1鈫扖1 Spearman/Kendall銆亀orker bootstrap 涓?range-restriction 瀹¤鍏ュ彛銆?- `tools/thesis_main/analysis/geometry_consensus/`锛氬悓鏃剁墿鍖?worker-specific peer median銆佷换鍔?crowd structure銆乵edoid LOO 涓?strict LOO锛?:2 澶氬嘲鍙綔瀹¤锛屼笉鑷姩閫夊鏁扮皣銆?- `tools/thesis_main/analysis/c1_structural_reliability_eb.py`銆乣materialize_global_policy.py`銆乣materialize_full_policy.py`銆乣materialize_counterexample_bank.py`锛氱粨鏋勫け璐?Beta-binomial EB銆佸€欓€?Global/Full 鎺掑悕鍚堝悓涓庝笉杩涘叆鐢诲儚/GT/璁捐鐨勮交閲忓弽渚嬪簱銆?- 鏃╂湡 peer/GT amendment 涓?root-cause 璇存槑宸插綊妗ｈ嚦 `docs/legacy/paper_a_method_contract_superseded_20260730/`锛涘畠浠笉寰楃敓鎴愭寮?policy銆乤ssignment 鎴栧瓧娈靛畾涔夈€?- `docs/thesis_main/PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md`锛歅aper A C1鈫扖2-B 鍗曚竴鐢熶骇 DAG銆乻tage active-log freeze銆佺姸鎬?owner銆侀闄?妯℃嫙鍜屼汉宸ュ鎵硅竟鐣岋紱涓?vFinal/Protocol/SOP/SAP 閰嶅锛屼笉鏀瑰彉鍏惰璁¤涔夈€?- `docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md`锛氶殧绂?GPU 鐜銆侀潤鎬?feature/P1 integrity 鍑嗗銆丆1 freeze/audit/finalize 鍜?C2-B design/build 鐨勬寮忓懡浠わ紱瑙勮寖杈圭晫鍙敱褰撳墠鏂规硶鍚堝悓瀹氫箟銆?- `docs/thesis_main/PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json`锛歚close-c1-and-plan-c2b` 鍙仮澶嶈杽鍏ュ彛鐨勮矾寰勯厤缃ā鏉匡紱鍗犱綅绗︿笉寰楃洿鎺ョ敤浜庢寮忚繍琛屻€?- `config/paper_a_analysis_requirements.lock.txt`銆乣config/paper_a_torch_requirements.lock.txt` 涓?`docs/thesis_main/C2B_FEATURE_AUDIT_THRESHOLDS.json`锛歅aper A 闅旂杩愯鐜鍜?feature audit 瀹℃壒鐪熸簮锛涙湰鍦?`.venv-paper-a-gpu` 涓庨潤鎬佺紦瀛樹笉鎻愪氦銆?- `import_json/paper_a_c2b/legacy_reverse_v3_1_manifest.csv`锛?0260702 v3.1 13 寮犱汉宸?reverse 鍥剧殑鍙 provenance锛涗笉鎺堜簣 eligibility 鎴栨帓搴忎紭鍏堟潈銆?- `tools/thesis_main/analysis/c1_c2_mainline.py` 涓?`materialize_c1_preannotation_task_features.py`锛氫笉鍙彉 C1 row-eligibility sidecar join銆乪stimand-specific worker/task/building/graph gates銆佸敮涓€ C2-B worker design input锛屼互鍙婁笉璇诲彇 crowd geometry 鐨勯鏍囨敞 C1 task feature 鍚堝悓锛涙寮忔柟娉曞拰 DAG 鐢?`docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json` 鍥哄畾锛岄闄?exposure 鐢?`docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json` 鍥哄畾锛岃璁￠槇鍊煎叕寮忕敱 `docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json` 鍥哄畾锛屾寮忔暟鍊肩敱 SHA 缁戝畾杈撳叆鏈烘娲剧敓銆?- `tools/thesis_main/analysis/materialize_c1_estimand_specific_task_support.py`锛氭寜 task-condition 涓?GT/peer/LOO/structural/time 绛?estimand 鍒嗗眰鐗╁寲 original銆乤uthorized銆乴ate銆乷utside 鍜?final unique-worker support銆?- `tools/thesis_main/analysis/materialize_w034_active_time_validation.py`锛歐034 琛ュ厖浠诲姟寮€濮嬪墠鐨?owner/runtime/session/duration sentinel 楠岃瘉涓?SHA 缁戝畾 manifest銆?- `tools/thesis_main/analysis/materialize_c1_authorized_reassignment_addendum.py` 涓?`materialize_w034_authorized_extension_sensitivity.py`锛氫粠 W014 鍘熷垎閰嶃€佹巿鏉冭鍒掑拰 runtime mapping 鏈烘鐢熸垚 17+3 addendum锛屽苟姣旇緝 W034 original-only/augmented profile銆?- `tools/thesis_main/analysis/materialize_stage3_freeze_gate.py`锛氱粺涓€楠岃瘉 Calibration closure銆乸ooled profile銆丼trong Global/Full銆乂alidation roster 涓?SAP 鐨?Stage 3 fail-closed 闂ㄣ€?- `tools/thesis_main/analysis/materialize_c1_three_state_task_tags.py`锛氭寜 task-tag 鐗╁寲 positive銆乪xplicit negative銆乽nasserted 涓?not-evaluable 璁℃暟鍜屾瘮渚嬨€?- `tools/thesis_main/registry/build_c1_late_entry_assignment_manifest.py`锛氶粯璁ゅ叧闂€佺粨鏋滅洸銆乪xposure-aware 鐨?late-entry C1 澧為噺 assignment generator锛屼笉閲嶆帓鍘?cohort銆?- `docs/thesis_main/PAPER_A_C1_ROLLING_ENROLLMENT_CONFIG.template.json`锛歳olling enrollment 榛樿鍏抽棴閰嶇疆妯℃澘锛涙縺娲绘椂鎵€鏈夌獥鍙ｃ€佺増鏈€乻eed 鍜?workload 瀛楁蹇呴』鏄惧紡鍐荤粨銆?## 2026-07-30 Paper A 鏂规硶鍚堝悓 v6
 
-- `tools/README.md`：tools 总入口；根目录不再保留旧脚本 wrapper。
-- `tools/thesis_main/`
-  - 论文主线工具。
-  - `analysis/`：质量分析、active-time audit、stage-aware 分析、图表、统计汇总。
-    - `c1_live_collection_monitor.py`、`c1_canonicalize_exports.py`、`failure_disposition.py`、`materialize_main_failure_outcomes.py`、`c1_materialize_quality_table.py`、`c1_materialize_worker_state.py`、`c1_materialize_worker_profile_sidecar.py`、`c1_materialize_c2_gap_audits.py`、`build_c2_assignment_manifest_from_c1_gaps.py`、`materialize_c2b_task_eligibility.py`、`materialize_p1_post_closeout_evidence_correction.py` 与 `materialize_p1_post_closeout_geometry_scores.py`：C1 live 监控、canonicalization、失败归因、逐轴证据、C2-B 严格任务资格、候选设计与冻结 assignment 消费，以及只读 P1 post-closeout evidence/geometry correction。
-    - `rebuild_stage1_chinese_completion_excel.py`：按最新 `标注人员.xlsx`、`退出标注.xlsx`、Stage 1 中文 LS JSON 导出和 active logs 重算中文 P1 完成情况工作簿。
-  - `registry/`：registry、manifest、freeze、final-gold、trap/materialization、risk-rule、C2 failure-disposition manifest、`d_t/g_t` dry-run、export inventory。
-  - `data_prep/`：数据集准备和 MP3D smoke/import 生成。
-  - `foreign_recruitment/`：P1/PreScreen 外国标注员 HTTPS 英文适配包。
-- `tools/paper_b/`
-  - Paper B 工具。当前包括 `validate_b0_relabel_audit.py`；后续 B0/B1/B2 训练、cue、bilayout、审计脚本只进本目录。
-- `tools/label_studio/`
-  - 三条线共享的 Label Studio XML、3D viewer、server/CORS、COS/upload、import/build helper 和 `official/`。历史 C1 XML 保持原语义；C2/Stage3 未来语义使用 `label_studio_view_config_c2_future.xml` 与英文对应文件；冻结 SHA 记录在 `tools/label_studio/label_studio_c1_xml_freeze_manifest_v1.json`。
-  - `vis_3d_pre_m15_19_2_backup.html`：commit `f6d53b0` 的 viewer 原样备份，仅用于回滚/对照，不是运行时入口。
-  - 云服务器运行时 URL `/tools/vis_3d.html` 保持兼容，这是部署路由，不代表源码仍在 `tools/` 根目录。
-- `tools/legacy/`、`tools/legacy_server/`、`tools/backups/`
-  - 历史或备份目录，默认不迁移、不修订。
+`docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json` 鏄敮涓€瑙勮寖鏂规硶鐪熸簮锛涘悓鐩綍淇濆瓨鐢熸垚 MD 鍜屼簲涓?v2 schema銆傚叡浜獙璇併€乬eometry銆丼tage 3銆乀1/V1 online/replay 宸ュ叿浣嶄簬 `tools/thesis_main/analysis/`銆?
+2026-07-30 v6 褰掓。绔炰簤鎬?VFINAL/Protocol 鍚堝悓锛屾寮?C1 閫掑綊缁戝畾 enrollment銆乺eference銆乥uilding 涓?task-binding SHA锛沺lanning 涓?final build 鍒嗗埆鐢?`close-c1-and-plan-c2b` 鍜?`build-c2b` 鎵挎媴銆?
+- docs/thesis_main/PAPER_A_REFERENCES_NEEDED_CHECKLIST.md锛氱浉鍏冲伐浣滀笌寮曠敤鏍搁獙寰呭姙锛涗笉鏋勬垚鏂规硶鍚堝悓銆?
 
-## docs 布局
+## 2026-07-30 Paper A C1-A/C2-B batch boundary
 
-- `docs/README_INDEX.md`：docs 总索引。
-- `docs/PROJECT_MAP_CLEAN_20260308.md`：本文件，仓库地图。
-- `docs/thesis_main/`
-  - 正式执行主线文档。
-  - 包括 protocol、assignment SOP、PreScreen、Calibration、Main(Test + Validation)、统计计划、字段合同、worker-profile sidecar contract、final-gold、registry、论文主线写作材料。
-  - Paper A 唯一规范方法真源为 `PAPER_A_METHOD_CONTRACT_CURRENT.json`；`Paper_A_新版完整论文提纲_vFinal_Draft.md` 已标为 superseded 的非规范性写作背景。v3-v5 提纲、迁移 map/audit 与 standalone `.tex` 已归档到 `docs/legacy/paper_a_pre_vfinal_20260724/`；`WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 等字段合同继续保留。
-  - `manuscript/` 可保存 Overleaf 项目和主线论文写作资产，但按现有 `.gitignore` 默认不提交。
-  - `tools/thesis_main/analysis/materialize_c2b_closeout.py` 绑定 C2-B submissions、post-C2-B profile、profile manifest 与 design summary，形成 C2-A-RP formal 所需的真实 SHA closeout。
-  - `tools/thesis_main/analysis/materialize_frozen_routing_profiles.py` 从 Manual GT submission、冻结 worker state 和跨阶段 component evidence 生成 Strong Global 与 Full component 冻结表。
-  - Paper A vFinal 代码迁移合同、四个候选 rule manifest 与审计记录保存在该目录；这些文件只定义可审计的结构和候选规则，不把 dry-run 产物升级为正式 C1 数据。对应的 canonical→concrete-tag、Geometry LOO 与 temporal replay 代码位于 `tools/thesis_main/analysis/`，且无正式 export 时只能输出 dry-run/not-evaluable。
-  - Paper A vFinal 代码迁移合同、四个候选 rule manifest 与审计记录保存在该目录；这些文件只定义可审计的结构和候选规则，不把 dry-run 产物升级为正式 C1 数据。
-- `docs/paper_b/`
-  - Paper B 支线文档。
-  - 包括 ambiguity-aware HoHoNet、ZInD mapping、B-line freeze/audit、模型架构和后续训练计划。
-- `docs/label_studio/`
-  - Label Studio CE-only、active-time、云端部署、COS、标注员/开发者说明。
-- `docs/agent/`
-  - Agent 上下文、playbook、写入规则和给 Codex 的补充说明。
-  - 关键入口：`AGENT_CONTEXT_INDEX.md`、`REPO_PATH_MAP.md`、`WRITE_RULES.md`、`playbooks/`。
-- `docs/shared/`
-  - 论文模板、参考资料、共享写作资产；按现有 `.gitignore` 默认不提交。
-- `docs/legacy/`
-  - 历史材料，默认不迁移、不修订。
-
-## 真源与输出层
-
-- `import_json/` 是 planned import / planned split 真源。
-- `export_label/` 是 Label Studio 运行时导出真源；本次 tools/docs 迁移不写入、不移动、不重命名。
-- `active_logs/` 是原始 active-time 日志真源；`active_logs/operational_incidents/` 是 C1 起外部系统事故的原始证据源。
-  - 云服务器端仍应位于仓库根下，例如 `/home/ubuntu/workspace/HoHoNet/active_logs/`。
-  - 若云端设置 `ACTIVE_LOG_DIR="active_logs/new_server"`，新日志应进入 `/home/ubuntu/workspace/HoHoNet/active_logs/new_server/`。
-  - `tools/label_studio/cors_server.py` 的源码迁移不应改变日志存储根目录。
-- `analysis_results/` 是输出、审计和图表落盘区，不是输入真源。
-
-## 写入与迁移规则
-
-- 新增 `tools/` 脚本必须进入对应论文线或共享 Label Studio 目录，不得直接放在 `tools/` 根目录。
-- 新增 `docs/` 主题文档必须进入对应分类目录，不得直接放在 `docs/` 根目录。
-- 主线工具和文档分别进入 `tools/thesis_main/` 与 `docs/thesis_main/`。
-- Paper B 工具和文档分别进入 `tools/paper_b/` 与 `docs/paper_b/`。
-- Label Studio 共享资源和说明分别进入 `tools/label_studio/` 与 `docs/label_studio/`。
-- Agent 规则和 playbook 进入 `docs/agent/`。
-- legacy 默认不迁移、不修订。
-- 不改变 protocol、schema、routing、SOP 语义。
-## 2026-07-24 Paper A 分析链收口补充
-
-- `tools/thesis_main/analysis/run_c1_closeout_launch.py`：Paper A C1→C2-B 公开入口；保留 `rehearse-c1`、`freeze-c1`、`audit-c1`、`finalize-c1`、`design-c2b`、`build-c2b` 等细粒度审计命令，并提供可恢复的 `close-c1-and-plan-c2b` 薄入口、scene-building 展开与 runbook 命令合同检查。`design-c2b` 在任何候选枚举前调用 `derive_c2b_design_thresholds.py`，只消费 SHA 绑定的公式合同、C1 design parameters、capacity 与 reviewer approval。`run_c1_precloseout_rehearsal.py` 仅保留为其内部 C1 证据物化器；正式 C2-B 资格由 `materialize_c2b_task_eligibility.py` 直接连接冻结证据。
-- `tools/thesis_main/analysis/c1_task_adjusted_quality.py`：C1 唯一 task-adjusted Q_GT 估计器，固定 worker effect、task random intercept 与 task/building cluster bootstrap，同时输出 FE 敏感性和 normal-normal EB 测量证据；排名仅由后续 policy materializer 生成，EB 失败不得回退 raw mean。
-- `tools/thesis_main/analysis/c2b_static_evidence.py`：C2-B P1 integrity、reference/candidate path/content SHA 泄漏审计、resolved P1/C1 identity history 推导、scene-building 显式映射展开、非支配 source/holdout 候选与 `c2b_static_freeze_manifest.json` 物化工具；P1 文件冻结与 predictive evidence ready 分开报告。
-- `tools/thesis_main/analysis/materialize_c1_operational_reference.py`：把冻结 candidate inventory 中已存在的
-  人工 scope 标签和 `groudTruth.json` 单一几何 reference 接入 C1；未复核/冲突任务保持 pending。
-- `tools/thesis_main/analysis/materialize_routing_component_evidence.py`：P1→C1→C2-B component evidence
-  分层物化；缺 C2-B 时 Full 自动禁用。
-- `tools/thesis_main/analysis/materialize_main_inference.py`：T1 image-level 与 V1 ITT 的 manifest/SHA 绑定
-  cluster bootstrap 推断入口。
-- `tools/thesis_main/analysis/materialize_c2_task_risk.py`：固定 HoHoNet/LHFeat、结构输出、统一 `risk_design_vector_A`/`risk_design_score_A` 的候选任务风险入口；缺少 feature/C1 冻结依赖时 assignment fail-closed。
-- `tools/thesis_main/analysis/freeze_c2_feature_reference.py` 与 `tools/thesis_main/registry/hohonet_feature_backend.py`：一次性提取训练参考库和候选池 LHFeat，冻结 PCA/whitening cache、off-grid rotation reinference circular audit 与独立 seam audit；四相位置换仅为恒等性 diagnostic，manifest 中只有声明而无匹配 cache/leakage evidence 时不得 ready。
-- `tools/thesis_main/analysis/materialize_c1_c2_design_parameters.py`：从 C1 三轨 eligibility、task-level risk 与 completion 拟合 worker fixed-intercept、worker random-slope、building 与 task-within-building risk model，并按预注册单边界链生成 C2-B 模拟参数；不生成 routing profile。
-- `tools/thesis_main/analysis/derive_c2b_design_thresholds.py`：验证冻结公式白名单与 reviewer SHA approval，从 C1 design parameters 和 capacity 机械派生正式 design threshold manifest；不读取 candidate/simulation/feasibility。
-- `tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`：P1→C1 Spearman/Kendall、worker bootstrap 与 range-restriction 审计入口。
-- `tools/thesis_main/analysis/geometry_consensus/`：同时物化 worker-specific peer median、任务 crowd structure、medoid LOO 与 strict LOO；3:2 多峰只作审计，不自动选多数簇。
-- `tools/thesis_main/analysis/c1_structural_reliability_eb.py`、`materialize_global_policy.py`、`materialize_full_policy.py`、`materialize_counterexample_bank.py`：结构失败 Beta-binomial EB、候选 Global/Full 排名合同与不进入画像/GT/设计的轻量反例库。
-- 早期 peer/GT amendment 与 root-cause 说明已归档至 `docs/legacy/paper_a_method_contract_superseded_20260730/`；它们不得生成正式 policy、assignment 或字段定义。
-- `docs/thesis_main/PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md`：Paper A C1→C2-B 单一生产 DAG、stage active-log freeze、状态 owner、风险/模拟和人工审批边界；与 vFinal/Protocol/SOP/SAP 配套，不改变其设计语义。
-- `docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md`：隔离 GPU 环境、静态 feature/P1 integrity 准备、C1 freeze/audit/finalize 和 C2-B design/build 的正式命令；规范边界只由当前方法合同定义。
-- `docs/thesis_main/PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json`：`close-c1-and-plan-c2b` 可恢复薄入口的路径配置模板；占位符不得直接用于正式运行。
-- `config/paper_a_analysis_requirements.lock.txt`、`config/paper_a_torch_requirements.lock.txt` 与 `docs/thesis_main/C2B_FEATURE_AUDIT_THRESHOLDS.json`：Paper A 隔离运行环境和 feature audit 审批真源；本地 `.venv-paper-a-gpu` 与静态缓存不提交。
-- `import_json/paper_a_c2b/legacy_reverse_v3_1_manifest.csv`：20260702 v3.1 13 张人工 reverse 图的只读 provenance；不授予 eligibility 或排序优先权。
-- `tools/thesis_main/analysis/c1_c2_mainline.py` 与 `materialize_c1_preannotation_task_features.py`：不可变 C1 row-eligibility sidecar join、estimand-specific worker/task/building/graph gates、唯一 C2-B worker design input，以及不读取 crowd geometry 的预标注 C1 task feature 合同；正式方法和 DAG 由 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json` 固定，风险 exposure 由 `docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json` 固定，设计阈值公式由 `docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json` 固定，正式数值由 SHA 绑定输入机械派生。
-- `tools/thesis_main/analysis/materialize_c1_estimand_specific_task_support.py`：按 task-condition 与 GT/peer/LOO/structural/time 等 estimand 分层物化 original、authorized、late、outside 和 final unique-worker support。
-- `tools/thesis_main/analysis/materialize_w034_active_time_validation.py`：W034 补充任务开始前的 owner/runtime/session/duration sentinel 验证与 SHA 绑定 manifest。
-- `tools/thesis_main/analysis/materialize_c1_authorized_reassignment_addendum.py` 与 `materialize_w034_authorized_extension_sensitivity.py`：从 W014 原分配、授权计划和 runtime mapping 机械生成 17+3 addendum，并比较 W034 original-only/augmented profile。
-- `tools/thesis_main/analysis/materialize_stage3_freeze_gate.py`：统一验证 Calibration closure、pooled profile、Strong Global/Full、Validation roster 与 SAP 的 Stage 3 fail-closed 门。
-- `tools/thesis_main/analysis/materialize_c1_three_state_task_tags.py`：按 task-tag 物化 positive、explicit negative、unasserted 与 not-evaluable 计数和比例。
-- `tools/thesis_main/registry/build_c1_late_entry_assignment_manifest.py`：默认关闭、结果盲、exposure-aware 的 late-entry C1 增量 assignment generator，不重排原 cohort。
-- `docs/thesis_main/PAPER_A_C1_ROLLING_ENROLLMENT_CONFIG.template.json`：rolling enrollment 默认关闭配置模板；激活时所有窗口、版本、seed 和 workload 字段必须显式冻结。
-## 2026-07-30 Paper A 方法合同 v6
-
-`docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json` 是唯一规范方法真源；同目录保存生成 MD 和五个 v2 schema。共享验证、geometry、Stage 3、T1/V1 online/replay 工具位于 `tools/thesis_main/analysis/`。
-
-2026-07-30 v6 归档竞争性 VFINAL/Protocol 合同，正式 C1 递归绑定 enrollment、reference、building 与 task-binding SHA；planning 与 final build 分别由 `close-c1-and-plan-c2b` 和 `build-c2b` 承担。
-
-- docs/thesis_main/PAPER_A_REFERENCES_NEEDED_CHECKLIST.md：相关工作与引用核验待办；不构成方法合同。
+- un_c1_closeout_launch.py 统一提供 reeze-c1-batch、design-c2b、uild-c2b --assignment-batch 和 ind-c2b-runtime-mapping；它们不连接 Label Studio API。
+- PAPER_A_C1_BATCH_SCOPE.template.json 定义 C1-A scope：original cohort、W034 17 张、W001 3 张，以及如 W011 漏交任务的显式 completion exception。
+- Stage 3 只读取全局 enrollment closed、all terminal 和 final pooled profile 状态；C1-A snapshot 不可替代该门。

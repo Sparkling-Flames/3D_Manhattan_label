@@ -1,6 +1,6 @@
 {
-    "schema_version":  "paper_a_method_contract_v6",
-    "contract_version":  "paper_a_method_20260730_v6",
+    "schema_version":  "paper_a_method_contract_v7",
+    "contract_version":  "paper_a_method_20260730_v7",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
     "stages":  [
@@ -226,8 +226,8 @@
                                                        ]
                     },
     "c2b_launch":  {
-                       "planning_entrypoint":  "run_c1_closeout_launch.py close-c1-and-plan-c2b",
-                       "final_build_entrypoint":  "run_c1_closeout_launch.py build-c2b",
+                       "planning_entrypoint":  "run_c1_closeout_launch.py freeze-c1-batch then design-c2b",
+                       "final_build_entrypoint":  "run_c1_closeout_launch.py build-c2b --assignment-batch C2B_BATCH_A|C2B_BATCH_B",
                        "completion_field":  "C2B_LAUNCH_READY",
                        "automatic_label_studio_import":  false,
                        "required_outputs":  [
@@ -235,7 +235,13 @@
                                                 "worker_distribution_C2B.csv",
                                                 "label_studio_import_C2B.json",
                                                 "c2b_launch_ready_report.json"
-                                            ]
+                                            ],
+                       "runtime_mapping_entrypoint":  "run_c1_closeout_launch.py bind-c2b-runtime-mapping",
+                       "batch_identity_fields":  [
+                                                     "planned_task_id",
+                                                     "assignment_batch_id",
+                                                     "selected_design_sha"
+                                                 ]
                    },
     "stage3":  {
                    "required_roles":  [
@@ -324,5 +330,24 @@
                              "worker_profile_v2",
                              "policy_candidate_v2",
                              "geometry_cluster_v2"
-                         ]
+                         ],
+    "c1_batch_execution":  {
+                               "c1_a_snapshot_schema":  "paper_a_c1_batch_analysis_snapshot_v1",
+                               "c1_a_scope":  "original_cohort_plus_w034_17_and_w001_3_authorized_repairs",
+                               "c1_a_statuses":  [
+                                                     "provisional",
+                                                     "formal_design_eligible"
+                                                 ],
+                               "c2b_design_input_state":  "C2B_DESIGN_INPUT_FROZEN_FROM_C1_A",
+                               "assignment_states":  [
+                                                         "C2B_ASSIGNMENT_BATCH_A_MATERIALIZED",
+                                                         "C2B_ASSIGNMENT_BATCH_B_MATERIALIZED"
+                                                     ],
+                               "batch_b_rule":  "P1_passed_and_C1_B_completed_workers_append_rows_using_batch_A_selected_design_sha_task_pool_common_anchor_and_bridge_generator",
+                               "final_pooled_states":  [
+                                                           "CALIBRATION_ENROLLMENT_CLOSED",
+                                                           "ALL_CALIBRATION_WORKERS_TERMINAL",
+                                                           "FINAL_POOLED_PROFILE_FROZEN"
+                                                       ]
+                           }
 }

@@ -1371,8 +1371,8 @@ def materialize_c2_eligible_roster(
             "worker_wide_blocker": completed.get("completion_status") == "nonstarter",
             "component_specific_blocker": bool(blockers) and completed.get("completion_status") != "nonstarter",
         })
-    write_csv(output_dir / "c2_eligible_roster_C1.csv", output)
-    return {"n_workers": len(output), "n_eligible": sum(_truth(row["c2_candidate_eligible"]) for row in output), "n_excluded": sum(not _truth(row["c2_candidate_eligible"]) for row in output)}
+    write_csv(output_dir / "legacy_c2_eligibility_diagnostic.csv", output)
+    return {"n_workers": len(output), "n_eligible": sum(_truth(row["c2_candidate_eligible"]) for row in output), "n_excluded": sum(not _truth(row["c2_candidate_eligible"]) for row in output), "artifact_role": "legacy_diagnostic_only"}
 
 
 def materialize_analysis_rosters(completion_csv: Path, canonical_csv: Path, output_dir: Path) -> dict[str, Any]:

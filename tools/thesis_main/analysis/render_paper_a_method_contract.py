@@ -15,6 +15,10 @@ NORMATIVE_REFERENCES = (
     PROJECT_ROOT / "docs/thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md",
     PROJECT_ROOT / "docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md",
     PROJECT_ROOT / "docs/thesis_main/ANALYSIS_DATA_FLOW.md",
+    PROJECT_ROOT / "docs/README_INDEX.md",
+    PROJECT_ROOT / "docs/PROJECT_MAP_CLEAN_20260308.md",
+    PROJECT_ROOT / "docs/agent/AGENT_CONTEXT_INDEX.md",
+    PROJECT_ROOT / "docs/agent/playbooks/protocol_guard.md",
     PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/main.tex",
     PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/07_C1三轨工人测量.tex",
     PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/10_StrongGlobal与FullIntegrated.tex",
@@ -42,6 +46,10 @@ FORBIDDEN_NORMATIVE_PATTERNS = (
     "loo_analysis_eligible",
     "R_LOO_compatible",
     "Paper A current unique outline source",
+    "0-3 blocks",
+    "0–3 blocks",
+    "maximum 6",
+    "pair-level administrative censor",
 )
 
 
@@ -108,8 +116,12 @@ def check_references(contract_path: Path = METHOD_CONTRACT) -> None:
             stale.append(str(path))
         conflicts.extend(f"{path}:{pattern}" for pattern in FORBIDDEN_NORMATIVE_PATTERNS if pattern in content)
     formal_dir = PROJECT_ROOT / "docs/thesis_main"
-    for path in formal_dir.iterdir():
-        if not path.is_file() or not FORMAL_DOCUMENT_PATTERN.search(path.name):
+    status_documents = [path for path in formal_dir.iterdir() if path.is_file() and FORMAL_DOCUMENT_PATTERN.search(path.name)] + [
+        PROJECT_ROOT / "docs/README_INDEX.md", PROJECT_ROOT / "docs/PROJECT_MAP_CLEAN_20260308.md",
+        PROJECT_ROOT / "docs/agent/AGENT_CONTEXT_INDEX.md", PROJECT_ROOT / "docs/agent/playbooks/protocol_guard.md",
+    ]
+    for path in status_documents:
+        if not path.is_file():
             continue
         content = path.read_text(encoding="utf-8")
         if path.suffix.lower() == ".json":
@@ -121,6 +133,8 @@ def check_references(contract_path: Path = METHOD_CONTRACT) -> None:
                 stale.append(f"missing_machine_status:{path}")
         elif not re.search(r"PAPER_A_MACHINE_STATUS:\s*(normative|generated|superseded)\b", content):
             stale.append(f"missing_machine_status:{path}")
+        if path.name == "ANALYSIS_DATA_FLOW.md" and "-->" not in "\n".join(content.splitlines()[:2]):
+            stale.append(f"unclosed_machine_comment:{path}")
     if not SOURCE_OUTLINE.is_file() or "STATUS: superseded_non_normative_outline" not in SOURCE_OUTLINE.read_text(encoding="utf-8"):
         stale.append(f"source_outline_not_superseded:{SOURCE_OUTLINE}")
     if stale:

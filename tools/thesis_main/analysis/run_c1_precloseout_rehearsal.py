@@ -224,8 +224,8 @@ def _materialize_w034_original_only_profile(output_dir: Path, *, formal: bool) -
         annotation for annotation, row in by_annotation.items()
         if _is_w034(row.get("worker_id")) and row.get("assignment_provenance") == "authorized_replacement_assignment"
     }
-    if not original_w034 or not authorized_w034:
-        raise ValueError("W034 original-only branch requires both original and authorized canonical identities")
+    if not original_w034:
+        raise ValueError("W034 original-only branch requires original canonical identities")
 
     def filtered(source: Path, name: str) -> Path:
         rows = read_csv(source)
@@ -664,9 +664,12 @@ def materialize(
         )
         model_audit["building_registry_sha256"] = building_summary.get("registry_sha256", "")
         model_audit["building_binding_sha256"] = building_summary.get("output_sha256", "")
+        reference_approval = review_snapshots.get("reference_amendment")
+        model_audit["reference_approval_status"] = "frozen" if reference_approval else "not_provided"
+        model_audit["reference_approval_sha256"] = sha256_file(reference_approval) if reference_approval else ""
         model_audit["dependency_sha256"] = {
             "reference_registry": sha256_file(output_dir / "c1_task_outcome_reference.csv"),
-            "reference_approval": sha256_file(review_snapshots["reference_amendment"]),
+            "reference_approval": sha256_file(reference_approval) if reference_approval else "",
             "building_registry": building_summary.get("registry_sha256", ""),
             "task_building_binding": building_summary.get("output_sha256", ""),
         }
@@ -728,17 +731,32 @@ def materialize(
     write_json(output_dir / "c1_rolling_profile_sensitivity.json", rolling_profile_summary)
     sensitivity_original = review_snapshots.get("w034_original_profile_csv")
     sensitivity_thresholds = review_snapshots.get("w034_sensitivity_thresholds")
+    authorized_w034_completed = sum(
+        _is_w034(row.get("worker_id"))
+        and row.get("assignment_provenance") == "authorized_replacement_assignment"
+        and str(row.get("formal_assignment_eligible", "")).lower() in {"true", "1"}
+        for row in read_csv(output_dir / "c1_row_analysis_eligibility.csv")
+    )
     if sensitivity_original is None and authorized_reassignment_manifest is not None:
         sensitivity_original = _materialize_w034_original_only_profile(
             output_dir, formal=formal,
         )
-    if sensitivity_original and sensitivity_thresholds:
+    if authorized_reassignment_manifest is None:
+        w034_status = "pending_authorized_completion"
+    elif authorized_w034_completed == 0:
+        w034_status = "pending_authorized_completion"
+    elif authorized_w034_completed < 17:
+        w034_status = "provisional_augmented"
+    else:
+        w034_status = "frozen"
+    if sensitivity_original:
         w034_sensitivity_summary = materialize_w034_sensitivity(
             sensitivity_original, worker_state_path, sensitivity_thresholds,
             output_dir / "w034_original_vs_authorized_sensitivity.json",
+            status=w034_status, authorized_completed_count=authorized_w034_completed,
         )
     elif formal and authorized_reassignment_manifest is not None:
-        raise ValueError("formal W034 authorized extension requires frozen sensitivity thresholds")
+        raise ValueError("formal W034 authorized extension requires original W034 evidence")
     else:
         w034_sensitivity_summary = {"status": "not_evaluable", "reason": "original_profile_or_thresholds_not_provided"}
     # P1 is frozen input evidence. Its historical predictive diagnostic is not
@@ -781,8 +799,7 @@ def materialize(
     dependency_contracts = [
         Path("docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json"),
         Path("docs/thesis_main/c1_geometry_parser_amendment_v1.json"),
-        Path("docs/thesis_main/C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md"),
-        Path("docs/thesis_main/C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md"),
+        Path("docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json"),
     ]
     dependency_rows = _manifest_rows([
         *pipeline_files, *fixed_snapshots.values(), *snapshot_exports, *snapshot_active,

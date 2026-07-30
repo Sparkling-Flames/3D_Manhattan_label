@@ -1,32 +1,16 @@
-# 协议护栏
+<!-- PAPER_A_MACHINE_STATUS: normative -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v7 SHA-256 e2621e20af8afeb31139b0da81cfb8f740de065d83f5f4d587586d041256dc1a -->
+# 鍗忚鎶ゆ爮
 
-## 触发条件
+## 瑙﹀彂鏉′欢
 
-- 修改 P1、C1、C2-B、C2-A-RP、T1、V1；
-- 修改 admission、worker state、risk、routing、capacity、failure disposition 或 Validation；
-- 修改 protocol、SOP 或 thesis-facing 解释。
+- 淇敼 P1銆丆1銆丆2-B銆丆2-A-RP銆乀1銆乂1锛?- 淇敼 admission銆亀orker state銆乺isk銆乺outing銆乧apacity銆乫ailure disposition 鎴?Validation锛?- 淇敼 protocol銆丼OP 鎴?thesis-facing 瑙ｉ噴銆?
+## 蹇呴』妫€鏌?
+- 闃呰 `PAPER_A_METHOD_CONTRACT_CURRENT.json` 涓?`ROUND_BASED_ASSIGNMENT_SOP_v1.md`銆?- 淇濇寔 RPilot -> PreScreen -> Calibration -> Main(Test + Validation)R 鍜?  RP1/C1/C2/T1/V1R 杈圭晫锛汣2 鍐呴儴鍒嗕负 C2-B 涓?C2-A-RP銆?- C1 鍘熷 export銆乤ssignment 鍜屾鍦ㄨ繘琛岀殑鏍囨敞涓嶅緱鍥犳淳鐢熼摼鍙樺寲鑰岃繑宸ャ€?- P1 component 鍙湁閫氳繃 C1 predictive validation 涓?C2-B confirmation 鎵嶅彲杩涘叆 Full銆?- T1/V1 outcome 涓嶅緱鍥炴祦淇敼 admission銆丆1/C2銆亀orker state銆乺isk 鎴?freeze 鍙傛暟銆?- OOS銆佸閮ㄤ簨鏁呫€佸伐浜虹粨鏋勫け璐ュ拰鏀跨瓥澶辫触淇濇寔鍒嗙銆?- external incident 蹇呴』楠岃瘉璇佹嵁 SHA銆佹椂闂寸獥銆佽寖鍥村拰缁撴灉鍙鍓嶇櫥璁般€?
+## 绂佹浜嬮」
 
-## 必须检查
+- 涓嶆仮澶?reserve-only C2 姝ｅ紡鍚堝悓銆?- 涓嶆妸 P1 鍘熷琛ㄧ幇鐩存帴鍗囩骇涓烘寮?routing profile銆?- 涓嶇敤鏃?Random/Global/Full 绂荤嚎 replay 鏇夸唬 Strong Global 涓?Full-Integrated 鐨勫墠鐬?V1銆?- 涓嶈涓よ噦璺ㄨ噦鍊熷閲忔垨浣跨敤涓嶅悓 offer/replacement/aggregation 瑙勫垯銆?- 涓嶇敤 T1/V1 缁撴灉閲嶈闃堝€笺€佹潈閲嶃€佸姩鎬佸啑浣欐垨澶辫触褰掑洜銆?
+## 浜や粯
 
-- 阅读 `PAPER_A_METHOD_CONTRACT_CURRENT.json` 与 `ROUND_BASED_ASSIGNMENT_SOP_v1.md`。
-- 保持 RPilot -> PreScreen -> Calibration -> Main(Test + Validation)R 和
-  RP1/C1/C2/T1/V1R 边界；C2 内部分为 C2-B 与 C2-A-RP。
-- C1 原始 export、assignment 和正在进行的标注不得因派生链变化而返工。
-- P1 component 只有通过 C1 predictive validation 与 C2-B confirmation 才可进入 Full。
-- T1/V1 outcome 不得回流修改 admission、C1/C2、worker state、risk 或 freeze 参数。
-- OOS、外部事故、工人结构失败和政策失败保持分离。
-- external incident 必须验证证据 SHA、时间窗、范围和结果可见前登记。
+- 鎶ュ憡 protocol guard pass/fail銆?- 鍒楀嚭妫€鏌ョ殑姝ｅ紡鍚堝悓涓?freeze 杈圭晫銆?- 璇存槑 C1 鍘熷鏁版嵁鏄惁淇濇寔涓嶅彉銆?
 
-## 禁止事项
-
-- 不恢复 reserve-only C2 正式合同。
-- 不把 P1 原始表现直接升级为正式 routing profile。
-- 不用旧 Random/Global/Full 离线 replay 替代 Strong Global 与 Full-Integrated 的前瞻 V1。
-- 不让两臂跨臂借容量或使用不同 offer/replacement/aggregation 规则。
-- 不用 T1/V1 结果重设阈值、权重、动态冗余或失败归因。
-
-## 交付
-
-- 报告 protocol guard pass/fail。
-- 列出检查的正式合同与 freeze 边界。
-- 说明 C1 原始数据是否保持不变。

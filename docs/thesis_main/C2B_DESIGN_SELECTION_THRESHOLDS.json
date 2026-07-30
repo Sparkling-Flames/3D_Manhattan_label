@@ -1,63 +1,162 @@
 {
-  "schema_version": "paper_a_c2b_design_threshold_formula_contract_v1",
-  "status": "frozen_before_c1_closeout",
-  "formula_contract_frozen": true,
-  "frozen_by": "Paper_A_method_amendment_v1",
-  "frozen_at": "2026-07-26T00:00:00+08:00",
-  "constants": {
-    "max_blocks_per_worker": 2,
-    "tasks_per_block": 2,
-    "max_additional_tasks": 4,
-    "normal_95_multiplier": 1.96,
-    "minimum_worker_support_cap": 4,
-    "minimum_worker_rank_spearman": 0.8,
-    "minimum_top_k_overlap": 0.6666666666666666,
-    "maximum_mean_rank_displacement": 1,
-    "minimum_task_support": 2,
-    "graph_connectivity_probability": 0.9,
-    "minimum_building_coverage": 2,
-    "building_coverage_probability": 0.9,
-    "ordinary_coverage_probability": 0.9,
-    "stress_coverage_probability": 0.9,
-    "minimum_eligible_task_count": 8,
-    "minimum_eligible_building_count": 3,
-    "minimum_ordinary_task_count": 4,
-    "minimum_stress_task_count": 4
-  },
-  "threshold_rules": {
-    "q_gt_ci_half_width": {"formula_id": "normal_95_max_worker_se", "direction": "maximum"},
-    "risk_slope_ci_half_width": {"formula_id": "normal_95_max_unified_slope_sd", "direction": "maximum"},
-    "minimum_worker_rank_spearman": {"formula_id": "frozen_constant", "constant_key": "minimum_worker_rank_spearman", "direction": "minimum"},
-    "minimum_top_k_overlap": {"formula_id": "frozen_constant", "constant_key": "minimum_top_k_overlap", "direction": "minimum"},
-    "maximum_mean_rank_displacement": {"formula_id": "frozen_constant", "constant_key": "maximum_mean_rank_displacement", "direction": "maximum"},
-    "minimum_worker_support": {"formula_id": "min_constant_and_min_capacity", "constant_key": "minimum_worker_support_cap", "direction": "minimum"},
-    "minimum_task_support": {"formula_id": "frozen_constant", "constant_key": "minimum_task_support", "direction": "minimum"},
-    "graph_connectivity_probability": {"formula_id": "frozen_constant", "constant_key": "graph_connectivity_probability", "direction": "minimum"},
-    "minimum_building_coverage": {"formula_id": "frozen_constant", "constant_key": "minimum_building_coverage", "direction": "minimum"},
-    "building_coverage_probability": {"formula_id": "frozen_constant", "constant_key": "building_coverage_probability", "direction": "minimum"},
-    "ordinary_coverage_probability": {"formula_id": "frozen_constant", "constant_key": "ordinary_coverage_probability", "direction": "minimum"},
-    "stress_coverage_probability": {"formula_id": "frozen_constant", "constant_key": "stress_coverage_probability", "direction": "minimum"},
-    "minimum_eligible_task_count": {"formula_id": "frozen_constant", "constant_key": "minimum_eligible_task_count", "direction": "minimum"},
-    "minimum_eligible_building_count": {"formula_id": "frozen_constant", "constant_key": "minimum_eligible_building_count", "direction": "minimum"},
-    "minimum_ordinary_task_count": {"formula_id": "frozen_constant", "constant_key": "minimum_ordinary_task_count", "direction": "minimum"},
-    "minimum_stress_task_count": {"formula_id": "frozen_constant", "constant_key": "minimum_stress_task_count", "direction": "minimum"}
-  },
-  "common_anchor_requirements": {
-    "minimum_count": 2,
-    "required_strata": ["ordinary", "stress"]
-  },
-  "candidate_designs": [
-    {"design_id": "D8", "common_anchor_count": 4, "bridge_per_worker": 4},
-    {"design_id": "D10", "common_anchor_count": 6, "bridge_per_worker": 4},
-    {"design_id": "D12", "common_anchor_count": 6, "bridge_per_worker": 6}
-  ],
-  "c2a_rp": {"max_blocks_per_worker": 2, "tasks_per_block": 2, "max_additional_tasks": 4, "allowed_goals": ["top_k_boundary_precision", "risk_slope_precision", "component_eligibility_precision"]},
-  "required_c1_input_fields": [
-    "worker_id", "c2b_baseline_eligible", "Q_GT_baseline_se", "risk_slope_for_simulation",
-    "risk_slope_se", "risk_support", "group_slope_mean", "group_slope_se",
-    "between_worker_slope_sd", "slope_model_form"
-  ],
-  "required_capacity_input_fields": ["worker_id", "c2b_capacity"],
-  "selection_rule": "select only a reviewer-approved non-dominated feasible design; never tune thresholds after candidate enumeration",
-  "fail_closed_rule": "unsupported formula IDs, stale SHA bindings, missing inputs, or nonfinite derived values forbid candidate enumeration"
+    "schema_version":  "paper_a_c2b_design_threshold_formula_contract_v1",
+    "status":  "frozen_before_c1_closeout",
+    "formula_contract_frozen":  true,
+    "frozen_by":  "Paper_A_method_amendment_v1",
+    "frozen_at":  "2026-07-26T00:00:00+08:00",
+    "constants":  {
+                      "max_blocks_per_worker":  2,
+                      "tasks_per_block":  2,
+                      "max_additional_tasks":  4,
+                      "normal_95_multiplier":  1.96,
+                      "minimum_worker_support_cap":  4,
+                      "minimum_worker_rank_spearman":  0.8,
+                      "minimum_top_k_overlap":  0.6666666666666666,
+                      "maximum_mean_rank_displacement":  1,
+                      "minimum_task_support":  2,
+                      "graph_connectivity_probability":  0.9,
+                      "minimum_building_coverage":  2,
+                      "building_coverage_probability":  0.9,
+                      "ordinary_coverage_probability":  0.9,
+                      "stress_coverage_probability":  0.9,
+                      "minimum_eligible_task_count":  8,
+                      "minimum_eligible_building_count":  3,
+                      "minimum_ordinary_task_count":  4,
+                      "minimum_stress_task_count":  4
+                  },
+    "threshold_rules":  {
+                            "q_gt_ci_half_width":  {
+                                                       "formula_id":  "normal_95_max_worker_se",
+                                                       "direction":  "maximum"
+                                                   },
+                            "risk_slope_ci_half_width":  {
+                                                             "formula_id":  "normal_95_max_unified_slope_sd",
+                                                             "direction":  "maximum"
+                                                         },
+                            "minimum_worker_rank_spearman":  {
+                                                                 "formula_id":  "frozen_constant",
+                                                                 "constant_key":  "minimum_worker_rank_spearman",
+                                                                 "direction":  "minimum"
+                                                             },
+                            "minimum_top_k_overlap":  {
+                                                          "formula_id":  "frozen_constant",
+                                                          "constant_key":  "minimum_top_k_overlap",
+                                                          "direction":  "minimum"
+                                                      },
+                            "maximum_mean_rank_displacement":  {
+                                                                   "formula_id":  "frozen_constant",
+                                                                   "constant_key":  "maximum_mean_rank_displacement",
+                                                                   "direction":  "maximum"
+                                                               },
+                            "minimum_worker_support":  {
+                                                           "formula_id":  "min_constant_and_min_capacity",
+                                                           "constant_key":  "minimum_worker_support_cap",
+                                                           "direction":  "minimum"
+                                                       },
+                            "minimum_task_support":  {
+                                                         "formula_id":  "frozen_constant",
+                                                         "constant_key":  "minimum_task_support",
+                                                         "direction":  "minimum"
+                                                     },
+                            "graph_connectivity_probability":  {
+                                                                   "formula_id":  "frozen_constant",
+                                                                   "constant_key":  "graph_connectivity_probability",
+                                                                   "direction":  "minimum"
+                                                               },
+                            "minimum_building_coverage":  {
+                                                              "formula_id":  "frozen_constant",
+                                                              "constant_key":  "minimum_building_coverage",
+                                                              "direction":  "minimum"
+                                                          },
+                            "building_coverage_probability":  {
+                                                                  "formula_id":  "frozen_constant",
+                                                                  "constant_key":  "building_coverage_probability",
+                                                                  "direction":  "minimum"
+                                                              },
+                            "ordinary_coverage_probability":  {
+                                                                  "formula_id":  "frozen_constant",
+                                                                  "constant_key":  "ordinary_coverage_probability",
+                                                                  "direction":  "minimum"
+                                                              },
+                            "stress_coverage_probability":  {
+                                                                "formula_id":  "frozen_constant",
+                                                                "constant_key":  "stress_coverage_probability",
+                                                                "direction":  "minimum"
+                                                            },
+                            "minimum_eligible_task_count":  {
+                                                                "formula_id":  "frozen_constant",
+                                                                "constant_key":  "minimum_eligible_task_count",
+                                                                "direction":  "minimum"
+                                                            },
+                            "minimum_eligible_building_count":  {
+                                                                    "formula_id":  "frozen_constant",
+                                                                    "constant_key":  "minimum_eligible_building_count",
+                                                                    "direction":  "minimum"
+                                                                },
+                            "minimum_ordinary_task_count":  {
+                                                                "formula_id":  "frozen_constant",
+                                                                "constant_key":  "minimum_ordinary_task_count",
+                                                                "direction":  "minimum"
+                                                            },
+                            "minimum_stress_task_count":  {
+                                                              "formula_id":  "frozen_constant",
+                                                              "constant_key":  "minimum_stress_task_count",
+                                                              "direction":  "minimum"
+                                                          }
+                        },
+    "common_anchor_requirements":  {
+                                       "minimum_count":  2,
+                                       "required_strata":  [
+                                                               "ordinary",
+                                                               "stress"
+                                                           ]
+                                   },
+    "candidate_designs":  [
+                              {
+                                  "design_id":  "D8",
+                                  "common_anchor_count":  4,
+                                  "bridge_per_worker":  4
+                              },
+                              {
+                                  "design_id":  "D10",
+                                  "common_anchor_count":  6,
+                                  "bridge_per_worker":  4
+                              },
+                              {
+                                  "design_id":  "D12",
+                                  "common_anchor_count":  6,
+                                  "bridge_per_worker":  6
+                              }
+                          ],
+    "c2a_rp":  {
+                   "max_blocks_per_worker":  2,
+                   "tasks_per_block":  2,
+                   "max_additional_tasks":  4,
+                   "allowed_goals":  [
+                                         "top_k_boundary_precision",
+                                         "risk_slope_precision",
+                                         "component_eligibility_precision"
+                                     ]
+               },
+    "required_c1_input_fields":  [
+                                     "worker_id",
+                                     "c2b_baseline_eligible",
+                                     "Q_GT_baseline_se",
+                                     "risk_slope_for_simulation",
+                                     "risk_slope_se",
+                                     "risk_support",
+                                     "group_slope_mean",
+                                     "group_slope_se",
+                                     "between_worker_slope_sd",
+                                     "slope_model_form"
+                                 ],
+    "required_capacity_input_fields":  [
+                                           "worker_id",
+                                           "c2b_capacity"
+                                       ],
+    "selection_rule":  "select only a reviewer-approved non-dominated feasible design; never tune thresholds after candidate enumeration",
+    "fail_closed_rule":  "unsupported formula IDs, stale SHA bindings, missing inputs, or nonfinite derived values forbid candidate enumeration",
+    "contract_role":  "generated_subordinate",
+    "method_contract_version":  "paper_a_method_20260730_v7",
+    "method_contract_sha256":  "e2621e20af8afeb31139b0da81cfb8f740de065d83f5f4d587586d041256dc1a"
 }

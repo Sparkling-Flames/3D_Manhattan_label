@@ -74,7 +74,13 @@ def _write_stage3(tmp_path):
     for role in REQUIRED_GATES:
         dependency = tmp_path / f"{role}.json"
         payload = {"schema_version": "test_dependency_v2", "formal_ready": True, "profile_version": "p", "cohort_id": "c", "blockers": [], "dependencies": child_items if role == "C1_EVIDENCE_FROZEN" else []}
-        if role == "C1_EVIDENCE_FROZEN": payload["method_contract_sha256"] = sha256_file(METHOD_CONTRACT)
+        if role == "C1_EVIDENCE_FROZEN":
+            payload.update({
+                "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+                "CALIBRATION_ENROLLMENT_CLOSED": True,
+                "ALL_CALIBRATION_WORKERS_TERMINAL": True,
+                "FINAL_POOLED_PROFILE_FROZEN": True,
+            })
         dependency.write_text(json.dumps(payload), encoding="utf-8")
         state[role] = {"frozen": True, "path": dependency.name, "sha256": sha256_file(dependency), "expected_schema": "test_dependency_v2", "required_status_field": "formal_ready", "required_status_value": True, "profile_version": "p", "cohort_id": "c"}
     gate = build_gate(state, "r" * 64, "e" * 64, base_dir=tmp_path)

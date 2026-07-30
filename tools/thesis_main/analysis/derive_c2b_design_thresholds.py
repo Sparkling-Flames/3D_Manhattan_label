@@ -11,6 +11,7 @@ from typing import Any
 
 from tools.thesis_main.analysis.build_c2_assignment_manifest_from_c1_gaps import _resolve_slope_distribution
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 
 
 REQUIRED_THRESHOLDS = (
@@ -151,6 +152,9 @@ def derive_threshold_manifest(
 
     payload = {
         "schema_version": "paper_a_c2b_design_selection_thresholds_v2",
+        "contract_role": "generated_subordinate",
+        "method_contract_version": load_method_contract()["contract_version"],
+        "method_contract_sha256": sha256_file(METHOD_CONTRACT),
         "status": "approved", "formal_selection_allowed": True,
         "approved_by": approval["reviewed_by"], "approved_at": approval["reviewed_at"],
         "thresholds": values,

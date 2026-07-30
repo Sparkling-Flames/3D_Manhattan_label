@@ -1,8 +1,8 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v6 SHA-256 4682e3b4401952837abdd53928c267dab372dc74e17a87a545cfd942892595e8 -->
-# Paper A C1→C2-B 正式运行手册
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v7 SHA-256 e2621e20af8afeb31139b0da81cfb8f740de065d83f5f4d587586d041256dc1a -->
+# Paper A C1鈫扖2-B 姝ｅ紡杩愯鎵嬪唽
 
-## 1. 隔离环境
+## 1. 闅旂鐜
 
 ```powershell
 D:\anaconda\python.exe -m venv .venv-paper-a-gpu
@@ -10,10 +10,8 @@ D:\anaconda\python.exe -m venv .venv-paper-a-gpu
 .\.venv-paper-a-gpu\Scripts\python.exe -m pip install -r config\paper_a_torch_requirements.lock.txt --index-url https://download.pytorch.org/whl/cu128
 ```
 
-正式环境为 Python 3.11、CUDA PyTorch、float32、`cuda:0`、physical batch 4。特征推理不允许自动 CPU、AMP 或 batch fallback。
-
-## 2. C1 结束前完成的静态准备
-
+姝ｅ紡鐜涓?Python 3.11銆丆UDA PyTorch銆乫loat32銆乣cuda:0`銆乸hysical batch 4銆傜壒寰佹帹鐞嗕笉鍏佽鑷姩 CPU銆丄MP 鎴?batch fallback銆?
+## 2. C1 缁撴潫鍓嶅畬鎴愮殑闈欐€佸噯澶?
 ```powershell
 $py = ".\.venv-paper-a-gpu\Scripts\python.exe"
 & $py tools/thesis_main/analysis/run_c1_closeout_launch.py prepare-c2b-static `
@@ -34,10 +32,7 @@ $py = ".\.venv-paper-a-gpu\Scripts\python.exe"
   --device cuda:0
 ```
 
-首次尚无正式 building registry 时省略 `--building-registry`。入口只生成最多 15 个 scene key 的
-`authoritative_building_scene_mapping_pilot.review_queue.csv`；history 直接从 P1/C1 真源推导，
-scope/reference 只为缺失或冲突项生成最小队列。人工批准 scene 映射后再批量展开：
-
+棣栨灏氭棤姝ｅ紡 building registry 鏃剁渷鐣?`--building-registry`銆傚叆鍙ｅ彧鐢熸垚鏈€澶?15 涓?scene key 鐨?`authoritative_building_scene_mapping_pilot.review_queue.csv`锛沨istory 鐩存帴浠?P1/C1 鐪熸簮鎺ㄥ锛?scope/reference 鍙负缂哄け鎴栧啿绐侀」鐢熸垚鏈€灏忛槦鍒椼€備汉宸ユ壒鍑?scene 鏄犲皠鍚庡啀鎵归噺灞曞紑锛?
 ```powershell
 & $py tools/thesis_main/analysis/run_c1_closeout_launch.py expand-building-registry `
   --inventory-csv analysis_results/calibration_rebuild_20260702/calibration_full_candidate_inventory_v3.csv `
@@ -45,19 +40,14 @@ scope/reference 只为缺失或冲突项生成最小队列。人工批准 scene 
   --output-csv <evidence-root>/authoritative_building_registry.csv
 ```
 
-只有 `formal_registry_ready=true` 的展开结果可用于重新运行 `prepare-c2b-static`。静态冻结产物为
-`c2b_static_freeze_manifest.json`，并绑定 P1 integrity、feature cache、reference/candidate image/layout
-清单、leakage audit、split proposals、环境与代码 SHA。split proposals 永远保持 `candidate_only`，
-代码不得自动选择或生成 approval；候选摘要固定为 `c2b_source_holdout_split_proposals.summary.json`。
-
-同一路径再次运行时，入口会先校验 reference listing、candidate inventory、checkpoint、config、cache 和 audit SHA；全部匹配时只刷新审批状态与环境 manifest，不重复运行 HoHoNet。
-
-review queue 不是正式证据，不得直接改名冒充 approval。building_id 只能由人工批准的 scene mapping
-精确展开；禁止从 image/task 前缀推断。source/holdout 必须由静态候选方案经人工选定后生成，并由两个独立
-approval 文件分别绑定同一 `selected_proposal_id`、proposal summary SHA 与各自 evidence SHA。
-
-随后运行静态 preflight：
-
+鍙湁 `formal_registry_ready=true` 鐨勫睍寮€缁撴灉鍙敤浜庨噸鏂拌繍琛?`prepare-c2b-static`銆傞潤鎬佸喕缁撲骇鐗╀负
+`c2b_static_freeze_manifest.json`锛屽苟缁戝畾 P1 integrity銆乫eature cache銆乺eference/candidate image/layout
+娓呭崟銆乴eakage audit銆乻plit proposals銆佺幆澧冧笌浠ｇ爜 SHA銆俿plit proposals 姘歌繙淇濇寔 `candidate_only`锛?浠ｇ爜涓嶅緱鑷姩閫夋嫨鎴栫敓鎴?approval锛涘€欓€夋憳瑕佸浐瀹氫负 `c2b_source_holdout_split_proposals.summary.json`銆?
+鍚屼竴璺緞鍐嶆杩愯鏃讹紝鍏ュ彛浼氬厛鏍￠獙 reference listing銆乧andidate inventory銆乧heckpoint銆乧onfig銆乧ache 鍜?audit SHA锛涘叏閮ㄥ尮閰嶆椂鍙埛鏂板鎵圭姸鎬佷笌鐜 manifest锛屼笉閲嶅杩愯 HoHoNet銆?
+review queue 涓嶆槸姝ｅ紡璇佹嵁锛屼笉寰楃洿鎺ユ敼鍚嶅啋鍏?approval銆俠uilding_id 鍙兘鐢变汉宸ユ壒鍑嗙殑 scene mapping
+绮剧‘灞曞紑锛涚姝粠 image/task 鍓嶇紑鎺ㄦ柇銆俿ource/holdout 蹇呴』鐢遍潤鎬佸€欓€夋柟妗堢粡浜哄伐閫夊畾鍚庣敓鎴愶紝骞剁敱涓や釜鐙珛
+approval 鏂囦欢鍒嗗埆缁戝畾鍚屼竴 `selected_proposal_id`銆乸roposal summary SHA 涓庡悇鑷?evidence SHA銆?
+闅忓悗杩愯闈欐€?preflight锛?
 ```powershell
 & $py tools/thesis_main/analysis/run_c1_closeout_launch.py preflight-calibration `
   --static-dir analysis_results/c2b_static_<sha> `
@@ -66,11 +56,9 @@ approval 文件分别绑定同一 `selected_proposal_id`、proposal summary SHA 
   --output analysis_results/c2b_static_<sha>/preflight_calibration.json
 ```
 
-此处的 `C2B_DESIGN_SELECTION_THRESHOLDS.json` 是 C1 结束前冻结的公式、常数、输入字段与方向合同，
-不是最终数值 manifest。feature audit 的数值阈值、最小 audit support 与 missing/nonfinite fail-closed
-规则也已在 C1 结束前冻结；任何合同缺项时 preflight 必须失败。
-
-feature audit 阈值获批后，先用同一 `prepare-c2b-static` 命令复用缓存并刷新 manifest，再从缓存生成 C1 任务侧特征：
+姝ゅ鐨?`C2B_DESIGN_SELECTION_THRESHOLDS.json` 鏄?C1 缁撴潫鍓嶅喕缁撶殑鍏紡銆佸父鏁般€佽緭鍏ュ瓧娈典笌鏂瑰悜鍚堝悓锛?涓嶆槸鏈€缁堟暟鍊?manifest銆俧eature audit 鐨勬暟鍊奸槇鍊笺€佹渶灏?audit support 涓?missing/nonfinite fail-closed
+瑙勫垯涔熷凡鍦?C1 缁撴潫鍓嶅喕缁擄紱浠讳綍鍚堝悓缂洪」鏃?preflight 蹇呴』澶辫触銆?
+feature audit 闃堝€艰幏鎵瑰悗锛屽厛鐢ㄥ悓涓€ `prepare-c2b-static` 鍛戒护澶嶇敤缂撳瓨骞跺埛鏂?manifest锛屽啀浠庣紦瀛樼敓鎴?C1 浠诲姟渚х壒寰侊細
 
 ```powershell
 & $py tools/thesis_main/analysis/materialize_c1_preannotation_task_features.py `
@@ -86,8 +74,7 @@ feature audit 阈值获批后，先用同一 `prepare-c2b-static` 命令复用�
   --device cuda:0
 ```
 
-该命令只读取缓存和模型输出，不读取 crowd geometry；输出 `<static-root>/c1_preannotation_task_features.csv`。
-
+璇ュ懡浠ゅ彧璇诲彇缂撳瓨鍜屾ā鍨嬭緭鍑猴紝涓嶈鍙?crowd geometry锛涜緭鍑?`<static-root>/c1_preannotation_task_features.csv`銆?
 ## 3. C1 collection freeze
 
 ```powershell
@@ -105,10 +92,8 @@ feature audit 阈值获批后，先用同一 `prepare-c2b-static` 命令复用�
   --semi-assignment analysis_results/calibration_rebuild_20260702/assignment_manifest_C1_semi_draft_v3_1.csv
 ```
 
-## 4. 五步正式链
-
-以下命令中的 `<formal-root>`、`<static-root>`、`<audit-root>`、`<c2b-design-root>` 和审批文件必须替换为冻结后的真实路径。`audit-c1` 只能读取 `freeze-c1` 生成的 frozen root 和 manifest。
-
+## 4. 浜旀姝ｅ紡閾?
+浠ヤ笅鍛戒护涓殑 `<formal-root>`銆乣<static-root>`銆乣<audit-root>`銆乣<c2b-design-root>` 鍜屽鎵规枃浠跺繀椤绘浛鎹负鍐荤粨鍚庣殑鐪熷疄璺緞銆俙audit-c1` 鍙兘璇诲彇 `freeze-c1` 鐢熸垚鐨?frozen root 鍜?manifest銆?
 ```powershell
 & $py tools/thesis_main/analysis/run_c1_closeout_launch.py audit-c1 `
   --export-dir export_label/stage2_Chinese `
@@ -163,13 +148,11 @@ feature audit 阈值获批后，先用同一 `prepare-c2b-static` 命令复用�
   --output-dir <c2b-design-root> `
   --device cuda:0
 
-# 第一次运行若尚无 threshold input approval，只物化 C1 design parameters 和下列审核请求，绝不枚举候选：
+# 绗竴娆¤繍琛岃嫢灏氭棤 threshold input approval锛屽彧鐗╁寲 C1 design parameters 鍜屼笅鍒楀鏍歌姹傦紝缁濅笉鏋氫妇鍊欓€夛細
 # <c2b-design-root>/c2b_threshold_input_review_request.json
-# reviewer 仅核对其中 formula contract、C1 design parameters、capacity 三个 SHA，按
-# paper_a_c2b_threshold_input_approval_v1 写入 approval 后，原样重跑 design-c2b。
-
-# 人工审批后才允许执行；审批文件必须绑定实际 selected design/task set SHA。
-& $py tools/thesis_main/analysis/run_c1_closeout_launch.py build-c2b `
+# reviewer 浠呮牳瀵瑰叾涓?formula contract銆丆1 design parameters銆乧apacity 涓変釜 SHA锛屾寜
+# paper_a_c2b_threshold_input_approval_v1 鍐欏叆 approval 鍚庯紝鍘熸牱閲嶈窇 design-c2b銆?
+# 浜哄伐瀹℃壒鍚庢墠鍏佽鎵ц锛涘鎵规枃浠跺繀椤荤粦瀹氬疄闄?selected design/task set SHA銆?& $py tools/thesis_main/analysis/run_c1_closeout_launch.py build-c2b `
   --c1-closeout-summary <audit-root>/c1_evidence_freeze_manifest.json `
   --risk-summary <c2b-design-root>/c2_task_risk.summary.json `
   --task-pool <c2b-design-root>/c2_task_risk_inventory.csv `
@@ -188,28 +171,15 @@ feature audit 阈值获批后，先用同一 `prepare-c2b-static` 命令复用�
   --output-dir <c2b-build-root>
 ```
 
-正式产物所有权固定如下：`audit-c1` 只写 `formal_audit_summary.json`、
-`c1_measurement_freeze_manifest.json` 与待冻结 worker state；只有 `finalize-c1` 可以写
-`c1_evidence_freeze_manifest.json`。`design-c2b` 写 `c2_task_risk.summary.json`、
-`c2b_evidence_freeze_envelope.json`、`c2b_threshold_input_review_request.json`、
-`c2b_design_selection_thresholds.derived.json`、`c2b_candidate_design_manifest.json`，并在
-`c2_candidates/c2b_design.summary.json` 保存候选设计摘要。`build-c2b` 仅在 threshold、split、
-feature、机械派生 threshold、selected-task/reference、selected-design 与 capacity 审批均有效时写
-`assignment_manifest_C2B.csv`；否则 assignment 必须为 0 行。
-成功构建后的独立启动审计为 `c2b_launch_ready_report.json`。只有该报告同时满足方法合同 SHA、assignment/distribution identity、worker-facing GT 隔离、图片路径、capacity、审批和全部依赖 SHA 校验时，`C2B_LAUNCH_READY=true`；本入口只生成启动包，不连接或写入 Label Studio。
-
-交付前运行命令合同检查，防止手册输入引用不存在的上游产物：
-
+姝ｅ紡浜х墿鎵€鏈夋潈鍥哄畾濡備笅锛歚audit-c1` 鍙啓 `formal_audit_summary.json`銆?`c1_measurement_freeze_manifest.json` 涓庡緟鍐荤粨 worker state锛涘彧鏈?`finalize-c1` 鍙互鍐?`c1_evidence_freeze_manifest.json`銆俙design-c2b` 鍐?`c2_task_risk.summary.json`銆?`c2b_evidence_freeze_envelope.json`銆乣c2b_threshold_input_review_request.json`銆?`c2b_design_selection_thresholds.derived.json`銆乣c2b_candidate_design_manifest.json`锛屽苟鍦?`c2_candidates/c2b_design.summary.json` 淇濆瓨鍊欓€夎璁℃憳瑕併€俙build-c2b` 浠呭湪 threshold銆乻plit銆?feature銆佹満姊版淳鐢?threshold銆乻elected-task/reference銆乻elected-design 涓?capacity 瀹℃壒鍧囨湁鏁堟椂鍐?`assignment_manifest_C2B.csv`锛涘惁鍒?assignment 蹇呴』涓?0 琛屻€?鎴愬姛鏋勫缓鍚庣殑鐙珛鍚姩瀹¤涓?`c2b_launch_ready_report.json`銆傚彧鏈夎鎶ュ憡鍚屾椂婊¤冻鏂规硶鍚堝悓 SHA銆乤ssignment/distribution identity銆亀orker-facing GT 闅旂銆佸浘鐗囪矾寰勩€乧apacity銆佸鎵瑰拰鍏ㄩ儴渚濊禆 SHA 鏍￠獙鏃讹紝`C2B_LAUNCH_READY=true`锛涙湰鍏ュ彛鍙敓鎴愬惎鍔ㄥ寘锛屼笉杩炴帴鎴栧啓鍏?Label Studio銆?
+浜や粯鍓嶈繍琛屽懡浠ゅ悎鍚屾鏌ワ紝闃叉鎵嬪唽杈撳叆寮曠敤涓嶅瓨鍦ㄧ殑涓婃父浜х墿锛?
 ```powershell
 & $py tools/thesis_main/analysis/run_c1_closeout_launch.py check-command-contract `
   --runbook docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md
 ```
 
-保留上述细粒度命令用于审计。正式操作者也可准备
-`paper_a_close_c1_plan_c2b_run_config_v1` JSON（从
-`PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json` 复制并替换占位符）后使用可恢复薄入口；它会依次验证 collection、
-运行 formal audit、冻结 C1 evidence、校验 static/evidence envelope、生成 C2-B candidate designs，
-并在 C1 adjudication、split approval 或 threshold input approval 缺失时停止，只返回一条重跑命令：
+淇濈暀涓婅堪缁嗙矑搴﹀懡浠ょ敤浜庡璁°€傛寮忔搷浣滆€呬篃鍙噯澶?`paper_a_close_c1_plan_c2b_run_config_v1` JSON锛堜粠
+`PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json` 澶嶅埗骞舵浛鎹㈠崰浣嶇锛夊悗浣跨敤鍙仮澶嶈杽鍏ュ彛锛涘畠浼氫緷娆￠獙璇?collection銆?杩愯 formal audit銆佸喕缁?C1 evidence銆佹牎楠?static/evidence envelope銆佺敓鎴?C2-B candidate designs锛?骞跺湪 C1 adjudication銆乻plit approval 鎴?threshold input approval 缂哄け鏃跺仠姝紝鍙繑鍥炰竴鏉￠噸璺戝懡浠わ細
 
 ```powershell
 & $py tools/thesis_main/analysis/run_c1_closeout_launch.py close-c1-and-plan-c2b `
@@ -217,22 +187,17 @@ feature、机械派生 threshold、selected-task/reference、selected-design 与
   --state-output <formal-root>/close_c1_and_plan_c2b_state.json
 ```
 
-该入口将状态与运行配置 SHA 绑定：在 C1 审批或 split 审批缺失时只返回同一条可重入命令；候选设计正式就绪后，`next_command` 只返回一条使用当前 Python 解释器的 `build-c2b` 命令。
+璇ュ叆鍙ｅ皢鐘舵€佷笌杩愯閰嶇疆 SHA 缁戝畾锛氬湪 C1 瀹℃壒鎴?split 瀹℃壒缂哄け鏃跺彧杩斿洖鍚屼竴鏉″彲閲嶅叆鍛戒护锛涘€欓€夎璁℃寮忓氨缁悗锛宍next_command` 鍙繑鍥炰竴鏉′娇鐢ㄥ綋鍓?Python 瑙ｉ噴鍣ㄧ殑 `build-c2b` 鍛戒护銆?
+## 5. Fail-closed 鍙ｅ緞
 
-## 5. Fail-closed 口径
+- PreScreen active time 鍙粦瀹?`active_logs/prescreen` 鎴?P1 immutable snapshot锛涗笉寰楃敤 C1 鏃ュ織鏇夸唬銆?- rehearsal 鍙互璇诲彇 live C1 鏃ュ織浣?`collection_window_closed=false`锛涙寮忓垎鏋愬彧鑳借鍙?`active_logs/c1/<cutoff>_<sha>`銆?- 鍘熷 `v3_1` assignment/distribution 涓嶅洖鍐欙紱W034 17 琛屼笌 W001 3 琛屽彧閫氳繃鐙珛 `authorized_reassignment_manifest.csv` 澧為噺鎵胯銆?- `audit-c1` 濮嬬粓瑕佹眰 `--calibration-enrollment-registry <...>/calibration_enrollment_registry.csv`銆俽olling 鏈縺娲绘椂 registry 蹇呴』鏄庣‘ `rolling_activated=false` 涓旀棤 late-entry 琛岋紱婵€娲绘椂 registry 瑕嗙洊鍏ㄩ儴鍘熷/鏂板 worker锛屽苟涓?completion terminal status 瀹屽叏涓€鑷淬€俙--late-entry-assignment-manifest` 鍙瘉鏄庢柊澧炰换鍔℃潵婧愶紝涓嶅啀鍐冲畾 enrollment batch銆?- W034 sentinel 鏈€氳繃鎴栭獙璇佹櫄浜庝换鍔″紑濮嬫椂锛岀浉搴旇ˉ鍏呬换鍔?timing fail closed锛屼絾涓嶅奖鍝嶅悎璧勬牸 capability evidence銆?- `valid_authorized_exception` 鍙敼鍙?process audit disposition锛屼笉鑳芥妸鏅€?outside submission 鎻愬崌涓烘寮忓垎鏋愯瘉鎹€?- `VALIDATION_ROSTER_FROZEN=true` 鍚庯紝鏂板 worker 鎴?enrollment/roster SHA 鍙樺寲蹇呴』鎷掔粷鍚姩 Stage 3銆?- `support_limited` 涓嶆槸澶辫触锛屼篃涓嶆槸鎴愬姛浼拌锛涘畠鍙〃绀鸿 estimand 宸茬粓姝絾璇佹嵁涓嶈冻銆?- threshold 鍏紡鍚堝悓銆丼HA 缁戝畾 input approval銆佹満姊版淳鐢熸暟鍊?manifest銆乫eature銆乻ource/holdout銆乻elected design 鎴?selected task approval 浠讳竴缂哄け鏃讹紝assignment 蹇呴』涓?0銆?- `P1_INTEGRITY_BUNDLE_FROZEN=true` 鍙〃绀烘枃浠跺強 SHA 宸插喕缁擄紱`P1_PREDICTIVE_EVIDENCE_READY=false` 鏃剁鐢?P1 predictive component锛屼絾涓嶉樆鏂?risk-only C2-B銆?> Formal run 鍓嶅繀椤绘牎楠?`PAPER_A_METHOD_CONTRACT_CURRENT.json`锛堢増鏈?`paper_a_method_20260730_v6`锛汼HA-256 `bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b`锛夈€俙close-c1-and-plan-c2b` 鏄鍒掑叆鍙ｏ紝鍙敓鎴愬€欓€変笌 `build-c2b` 鍛戒护锛沗build-c2b` 鎵嶆槸鏈€缁堝惎鍔ㄥ寘鏋勫缓鍏ュ彛銆傛棫瀛楁鎴栫敓鎴?MD銆丼AP銆丼OP 涓?JSON 涓嶄竴鑷存椂涓€寰?fail closed銆?
+## v5 closeout 涓嶅彉閲?
+rehearsal 鍙湪 `collection_window_closed=false` 鏃朵繚鐣?registry 涓殑 `in_progress` 绛夐潪缁堟€侊紝骞惰緭鍑?`status=provisional` 涓?`all_registered_workers_terminal=false`锛涜繖涓嶆槸 closeout銆俧ormal `audit-c1`銆乣finalize-c1` 涓?C1 closure 鍙帴鍙楃粓鎬?registry锛屽苟閫掑綊缁戝畾鍏?SHA銆乺eference registry freeze銆亀orker profile銆乄034 sensitivity 鍜屾柟娉曞悎鍚?SHA銆?
 
-- PreScreen active time 只绑定 `active_logs/prescreen` 或 P1 immutable snapshot；不得用 C1 日志替代。
-- rehearsal 可以读取 live C1 日志但 `collection_window_closed=false`；正式分析只能读取 `active_logs/c1/<cutoff>_<sha>`。
-- 原始 `v3_1` assignment/distribution 不回写；W034 17 行与 W001 3 行只通过独立 `authorized_reassignment_manifest.csv` 增量承认。
-- `audit-c1` 始终要求 `--calibration-enrollment-registry <...>/calibration_enrollment_registry.csv`。rolling 未激活时 registry 必须明确 `rolling_activated=false` 且无 late-entry 行；激活时 registry 覆盖全部原始/新增 worker，并与 completion terminal status 完全一致。`--late-entry-assignment-manifest` 只证明新增任务来源，不再决定 enrollment batch。
-- W034 sentinel 未通过或验证晚于任务开始时，相应补充任务 timing fail closed，但不影响合资格 capability evidence。
-- `valid_authorized_exception` 只改变 process audit disposition，不能把普通 outside submission 提升为正式分析证据。
-- `VALIDATION_ROSTER_FROZEN=true` 后，新增 worker 或 enrollment/roster SHA 变化必须拒绝启动 Stage 3。
-- `support_limited` 不是失败，也不是成功估计；它只表示该 estimand 已终止但证据不足。
-- threshold 公式合同、SHA 绑定 input approval、机械派生数值 manifest、feature、source/holdout、selected design 或 selected task approval 任一缺失时，assignment 必须为 0。
-- `P1_INTEGRITY_BUNDLE_FROZEN=true` 只表示文件及 SHA 已冻结；`P1_PREDICTIVE_EVIDENCE_READY=false` 时禁用 P1 predictive component，但不阻断 risk-only C2-B。
-> Formal run 前必须校验 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v6`；SHA-256 `bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b`）。`close-c1-and-plan-c2b` 是规划入口，只生成候选与 `build-c2b` 命令；`build-c2b` 才是最终启动包构建入口。旧字段或生成 MD、SAP、SOP 与 JSON 不一致时一律 fail closed。
+## C1-A batch snapshot and manual runtime binding
 
-## v5 closeout 不变量
+reeze-c1-batch writes c1_a_analysis_snapshot.json. It may be provisional while W034/W001 repairs are unfinished; only ormal_design_eligible opens design-c2b and does not close rolling enrollment. uild-c2b --assignment-batch C2B_BATCH_A writes the Batch A package. uild-c2b --assignment-batch C2B_BATCH_B only appends P1-passed, C1-B-completed workers under the Batch A selected_design_sha. After manual import, ind-c2b-runtime-mapping writes c2b_runtime_task_mapping.csv and c2b_worker_task_binding_audit.json; no task may be opened until this audit passes.
 
-rehearsal 可在 `collection_window_closed=false` 时保留 registry 中的 `in_progress` 等非终态，并输出 `status=provisional` 与 `all_registered_workers_terminal=false`；这不是 closeout。formal `audit-c1`、`finalize-c1` 与 C1 closure 只接受终态 registry，并递归绑定其 SHA、reference registry freeze、worker profile、W034 sensitivity 和方法合同 SHA。
+## Batch commands
+
+freeze-c1-batch writes c1_a_analysis_snapshot.json. A provisional snapshot supports analysis only; formal_design_eligible opens design-c2b without closing rolling enrollment. build-c2b --assignment-batch C2B_BATCH_A writes the current-worker package. build-c2b --assignment-batch C2B_BATCH_B only appends P1-passed, C1-B-completed workers under the frozen selected_design_sha. bind-c2b-runtime-mapping writes c2b_runtime_task_mapping.csv and c2b_worker_task_binding_audit.json after manual import; no task may be opened before this audit passes.

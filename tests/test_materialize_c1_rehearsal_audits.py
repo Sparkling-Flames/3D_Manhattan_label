@@ -156,7 +156,7 @@ def test_c2_roster_fails_closed_on_unknown_independence(tmp_path: Path) -> None:
     summary = materialize_c2_eligible_roster(completion, canonical, quality, loo, tmp_path)
 
     assert summary["n_eligible"] == 0
-    row = next(csv.DictReader((tmp_path / "c2_eligible_roster_C1.csv").open(encoding="utf-8")))
+    row = next(csv.DictReader((tmp_path / "legacy_c2_eligibility_diagnostic.csv").open(encoding="utf-8")))
     assert row["c2_candidate_eligible"] == "False"
     assert "no_independence_valid_support" in row["candidate_exclusion_reason"]
 

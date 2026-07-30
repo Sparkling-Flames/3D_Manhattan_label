@@ -74,14 +74,29 @@ def _one_w034(path: Path) -> dict[str, Any]:
     return row
 
 
-def materialize(original_csv: Path, augmented_csv: Path, thresholds_json: Path, output_json: Path, *, profile_version: str | None = None, cohort_id: str | None = None) -> dict[str, Any]:
-    thresholds = json.loads(thresholds_json.read_text(encoding="utf-8"))
+def materialize(original_csv: Path, augmented_csv: Path, thresholds_json: Path | None, output_json: Path, *, profile_version: str | None = None, cohort_id: str | None = None, status: str = "frozen", authorized_completed_count: int = 17, expected_authorized_count: int = 17) -> dict[str, Any]:
+    if status not in {"pending_authorized_completion", "provisional_augmented", "frozen"}:
+        raise ValueError("unsupported W034 sensitivity status")
+    if expected_authorized_count != 17 or not 0 <= authorized_completed_count <= expected_authorized_count:
+        raise ValueError("W034 authorized completion count must be within the frozen 17-row repair set")
+    if status == "pending_authorized_completion" and authorized_completed_count != 0:
+        raise ValueError("pending W034 sensitivity requires zero authorized completions")
+    if status == "provisional_augmented" and not 0 < authorized_completed_count < expected_authorized_count:
+        raise ValueError("provisional W034 sensitivity requires partial authorized completion")
+    if status == "frozen" and authorized_completed_count != expected_authorized_count:
+        raise ValueError("frozen W034 sensitivity requires all authorized rows")
     original, augmented = _one_w034(original_csv), _one_w034(augmented_csv)
-    result = compare_w034_profiles(original, augmented, thresholds)
+    thresholds = json.loads(thresholds_json.read_text(encoding="utf-8")) if thresholds_json else None
+    result = compare_w034_profiles(original, augmented, thresholds) if thresholds else {
+        "worker_id": "34", "profile_comparison": "original_only_vs_current_augmented",
+        "comparison_status": "thresholds_not_provided",
+    }
     result.update({
         "schema_version": "w034_authorized_extension_sensitivity_freeze_v1",
-        "status": "frozen",
-        "artifact_role": "W034_SENSITIVITY_FROZEN",
+        "status": status,
+        "artifact_role": "W034_SENSITIVITY_FROZEN" if status == "frozen" else "W034_SENSITIVITY_PROVISIONAL",
+        "authorized_completed_count": authorized_completed_count,
+        "expected_authorized_count": expected_authorized_count,
         "profile_version": profile_version or augmented.get("profile_version") or "paper_a_worker_profile_v2",
         "cohort_id": cohort_id or augmented.get("cohort_id") or "paper_a_calibration_pooled",
         "method_contract_sha256": sha256_file(METHOD_CONTRACT),
@@ -89,14 +104,15 @@ def materialize(original_csv: Path, augmented_csv: Path, thresholds_json: Path, 
     result["input_sha256"] = {
         "original_profile": sha256_file(original_csv),
         "augmented_profile": sha256_file(augmented_csv),
-        "thresholds": sha256_file(thresholds_json),
+        "thresholds": sha256_file(thresholds_json) if thresholds_json else "",
     }
     result["dependencies"] = [
         {"role": "W034_ORIGINAL_PROFILE", "path": str(original_csv.resolve()), "sha256": sha256_file(original_csv)},
         {"role": "W034_AUTHORIZED_PROFILE", "path": str(augmented_csv.resolve()), "sha256": sha256_file(augmented_csv)},
-        {"role": "W034_SENSITIVITY_THRESHOLDS", "path": str(thresholds_json.resolve()), "sha256": sha256_file(thresholds_json)},
         {"role": "METHOD_CONTRACT", "path": str(METHOD_CONTRACT.resolve()), "sha256": sha256_file(METHOD_CONTRACT)},
     ]
+    if thresholds_json:
+        result["dependencies"].append({"role": "W034_SENSITIVITY_THRESHOLDS", "path": str(thresholds_json.resolve()), "sha256": sha256_file(thresholds_json)})
     output_json.parent.mkdir(parents=True, exist_ok=True)
     output_json.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return result

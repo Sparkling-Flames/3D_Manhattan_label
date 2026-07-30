@@ -18,6 +18,7 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 from tools.thesis_main.registry.hohonet_feature_backend import extract_orbit_descriptors, pool_lhfeat
 
 
@@ -34,6 +35,9 @@ def _risk_contract(path: Path | None) -> tuple[dict[str, Any], Path]:
         raise ValueError("unsupported C2-B risk design contract")
     if contract.get("stratum_rule", {}).get("forbid_legacy_proxies") is None:
         raise ValueError("C2-B risk design contract lacks legacy-proxy guard")
+    method = load_method_contract()
+    if contract.get("contract_role") != "generated_subordinate" or contract.get("method_contract_version") != method["contract_version"] or contract.get("method_contract_sha256") != sha256_file(METHOD_CONTRACT):
+        raise ValueError("C2-B risk design contract has a stale method contract binding")
     return contract, contract_path
 
 
@@ -550,7 +554,7 @@ def materialize(
     # feature materializer.  This summary therefore never promotes it.
     formal_ready = False
     summary = {
-        "input_status": input_status, "method_contract": contract["method_contract"], "n_tasks": len(rows), "n_c1_calibration_tasks": len(reference_rows),
+        "input_status": input_status, "method_contract": contract["method_contract"], "contract_role": "generated_subordinate", "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": sha256_file(METHOD_CONTRACT), "n_tasks": len(rows), "n_c1_calibration_tasks": len(reference_rows),
         "n_risk_design_ready": len(eligible_rows), "n_assignment_eligible": 0, "eligible_building_count": len(eligible_buildings),
         "feature_status": feature_status, "formal_ready": formal_ready,
         "C2_TASK_FEATURES_FROZEN": task_features_frozen,

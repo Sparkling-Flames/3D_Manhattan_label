@@ -205,11 +205,17 @@ def build_candidate_design_manifest(
     risk_summary: Path | None = None, seed: int = 20260724, draws: int = 1000,
 ) -> Path:
     task_pool_rows = read_csv(task_pool_csv)
+    c1_snapshot = json.loads(c1_closeout_summary.read_text(encoding="utf-8")) if c1_closeout_summary else {}
+    c1_eligible_base_tasks = {safe(value) for value in c1_snapshot.get("eligible_base_task_ids", [])}
+    c1_reference_sha = safe(c1_snapshot.get("reference_registry_sha256"))
     cross_stage_anchor_base_task_ids = sorted({
         safe(row.get("base_task_id"))
         for row in task_pool_rows
         if safe(row.get("base_task_id"))
-        and (truthy(row.get("cross_stage_anchor")) or "anchor" in safe(row.get("selection_role")).lower())
+        and truthy(row.get("cross_stage_anchor"))
+        and safe(row.get("base_task_id")) in c1_eligible_base_tasks
+        and c1_reference_sha
+        and safe(row.get("reference_registry_sha256")) == c1_reference_sha
     })
     """Enumerate designs from the realized frozen pool; never select one."""
     tasks = [row for row in read_csv(task_pool_csv) if truthy(row.get("assignment_eligible"))]
@@ -225,6 +231,9 @@ def build_candidate_design_manifest(
     } for design_id, common, per_worker in fixed]
     manifest = {
         "manifest_version": "c2_design_v1",
+        "contract_role": "generated_subordinate",
+        "method_contract_version": __import__("tools.thesis_main.analysis.paper_a_contracts", fromlist=["load_method_contract"]).load_method_contract()["contract_version"],
+        "method_contract_sha256": __import__("tools.thesis_main.analysis.paper_a_contracts", fromlist=["METHOD_CONTRACT", "sha256_file"]).sha256_file(__import__("tools.thesis_main.analysis.paper_a_contracts", fromlist=["METHOD_CONTRACT"]).METHOD_CONTRACT),
         "artifact_role": "formal_candidate_enumeration_only",
         "input_sha256": {
             "worker_profile_csv": sha256_file(worker_profile_csv),
@@ -1409,5 +1418,6 @@ def materialize_approved_assignment(
         },
     }
     write_json(output_dir / "c2b_design.summary.json", summary)
-    write_json(output_dir / "c2b_selected_design.json", {"design_id": selected_id, "n_assignments": len(candidate_edges), "formal": True})
+    from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
+    write_json(output_dir / "c2b_selected_design.json", {"design_id": selected_id, "n_assignments": len(candidate_edges), "formal": True, "contract_role": "generated_subordinate", "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": sha256_file(METHOD_CONTRACT)})
     return summary

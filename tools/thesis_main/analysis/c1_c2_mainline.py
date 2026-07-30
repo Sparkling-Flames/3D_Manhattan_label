@@ -321,7 +321,7 @@ def materialize_measurement_readiness(
 
 
 def materialize_c2b_design_worker_profile(
-    completion_csv: Path, three_axis_csv: Path, parameter_csv: Path, readiness_csv: Path, output_dir: Path,
+    completion_csv: Path, three_axis_csv: Path, parameter_csv: Path, readiness_csv: Path, output_dir: Path, *, c1_batch_snapshot: Path | None = None,
 ) -> dict[str, Any]:
     """Materialize the only worker input consumed by C2-B design/build.
 
@@ -378,6 +378,20 @@ def materialize_c2b_design_worker_profile(
     roster_path = output_dir / "c2_eligible_roster_C1.csv"
     write_csv(profile_path, rows)
     write_csv(roster_path, [row for row in rows if _truth(row["c2b_baseline_eligible"])])
+    from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file
+    method = load_method_contract()
+    roster_manifest = {
+        "schema_version": "paper_a_c2b_formal_roster_v1",
+        "artifact_role": "FORMAL_C2B_ROSTER",
+        "contract_role": "generated_subordinate",
+        "method_contract_version": method["contract_version"],
+        "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+        "worker_profile_sha256": sha256_file(three_axis_csv),
+        "design_worker_profile_sha256": sha256_file(profile_path),
+        "eligible_roster_sha256": sha256_file(roster_path),
+        "c1_batch_snapshot_sha256": sha256_file(c1_batch_snapshot) if c1_batch_snapshot else "",
+    }
+    write_json(output_dir / "c2_eligible_roster_C1.manifest.json", roster_manifest)
     graph_source = readiness_csv.parent / "c1_gt_worker_task_graph.csv"
     if graph_source.exists():
         eligible_workers = {row["worker_id"] for row in rows if _truth(row["c2b_baseline_eligible"])}
@@ -388,6 +402,7 @@ def materialize_c2b_design_worker_profile(
         "n_eligible": sum(_truth(row["c2_candidate_eligible"]) for row in rows),
         "worker_profile_sha256": sha256_file(profile_path),
         "eligible_roster_sha256": sha256_file(roster_path),
+        "eligible_roster_manifest_sha256": sha256_file(output_dir / "c2_eligible_roster_C1.manifest.json"),
     }
 
 
