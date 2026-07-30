@@ -17,6 +17,7 @@ from typing import Any
 
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, write_csv, write_json
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
+from tools.thesis_main.analysis.worker_identity import normalize_worker_id
 
 
 def _truth(value: Any) -> bool:
@@ -34,8 +35,28 @@ def _building(row: dict[str, Any]) -> str:
     return str(row.get("building_id") or "").strip()
 
 
+def _normalize_worker_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    return [{**row, "worker_id": normalize_worker_id(row.get("worker_id", ""))} for row in rows]
+
+
+def _worker_keyed(rows: list[dict[str, str]]) -> dict[str, dict[str, str]]:
+    keyed: dict[str, dict[str, str]] = {}
+    for row in _normalize_worker_rows(rows):
+        worker = row.get("worker_id", "")
+        if worker in keyed:
+            raise ValueError(f"duplicate worker identity after normalization:{worker}")
+        if worker:
+            keyed[worker] = row
+    return keyed
+
+
 def _join(rows: list[dict[str, str]], eligibility: dict[str, dict[str, str]]) -> list[dict[str, Any]]:
-    return [{**row, **eligibility.get(str(row.get("canonical_annotation_id", "")), {})} for row in rows]
+    output = []
+    for row in rows:
+        merged = {**row, **eligibility.get(str(row.get("canonical_annotation_id", "")), {})}
+        merged["worker_id"] = normalize_worker_id(merged.get("worker_id", ""))
+        output.append(merged)
+    return output
 
 
 def materialize_task_building_binding(
@@ -69,7 +90,7 @@ def materialize_task_building_binding(
 
 def _edge(row: dict[str, str]) -> tuple[str, str, str]:
     """Use a canonical row when present; otherwise retain the worker/task edge."""
-    worker, task = str(row.get("worker_id", "")), str(row.get("base_task_id", ""))
+    worker, task = normalize_worker_id(row.get("worker_id", "")), str(row.get("base_task_id", ""))
     return (str(row.get("canonical_annotation_id", "")) or f"{worker}|{task}", worker, task)
 
 
@@ -152,17 +173,17 @@ def materialize_measurement_readiness(
     preannotation_feature_ready: bool = False,
 ) -> dict[str, Any]:
     """Freeze the authoritative Q_GT/R_peer/F_struct axes from worker_profile_v2."""
-    completion = {row.get("worker_id", ""): row for row in read_csv(completion_csv)}
-    profiles = {row.get("worker_id", ""): row for row in read_csv(worker_profile_csv)}
+    completion = _worker_keyed(read_csv(completion_csv))
+    profiles = _worker_keyed(read_csv(worker_profile_csv))
     if set(profiles) != set(completion):
         raise ValueError("worker_profile_v2 and completion worker sets differ")
     eligibility = {row.get("canonical_annotation_id", ""): row for row in read_csv(eligibility_csv)} if eligibility_csv and eligibility_csv.exists() else {}
     if collection_window_closed is None:
         collection_window_closed = canonical_closed
-    quality = read_csv(quality_analysis_csv)
-    peer = read_csv(peer_analysis_csv)
-    loo = read_csv(loo_analysis_csv) if loo_analysis_csv and loo_analysis_csv.exists() else []
-    structural = read_csv(structural_analysis_csv)
+    quality = _normalize_worker_rows(read_csv(quality_analysis_csv))
+    peer = _normalize_worker_rows(read_csv(peer_analysis_csv))
+    loo = _normalize_worker_rows(read_csv(loo_analysis_csv)) if loo_analysis_csv and loo_analysis_csv.exists() else []
+    structural = _normalize_worker_rows(read_csv(structural_analysis_csv))
     support: dict[str, dict[str, set[str]]] = defaultdict(lambda: {"gt": set(), "peer": set(), "struct": set(), "task": set(), "building": set()})
     task_support: dict[str, dict[str, set[str]]] = defaultdict(lambda: {"gt": set(), "peer": set(), "struct": set(), "workers": set(), "buildings": set()})
     source_rows = {
@@ -329,10 +350,10 @@ def materialize_c2b_design_worker_profile(
     function may enrich the design table, but it must never re-derive roster
     eligibility from support counts or LOO/timing diagnostics.
     """
-    completion = {row.get("worker_id", ""): row for row in read_csv(completion_csv)}
-    state = {row.get("worker_id", ""): row for row in read_csv(three_axis_csv)}
-    parameter = {row.get("worker_id", ""): row for row in read_csv(parameter_csv)}
-    readiness = {row.get("worker_id", ""): row for row in read_csv(readiness_csv)}
+    completion = _worker_keyed(read_csv(completion_csv))
+    state = _worker_keyed(read_csv(three_axis_csv))
+    parameter = _worker_keyed(read_csv(parameter_csv))
+    readiness = _worker_keyed(read_csv(readiness_csv))
     rows = []
     for worker in sorted(set(completion) | set(state) | set(parameter) | set(readiness)):
         c, s, p, r = completion.get(worker, {}), state.get(worker, {}), parameter.get(worker, {}), readiness.get(worker, {})
@@ -395,7 +416,7 @@ def materialize_c2b_design_worker_profile(
     graph_source = readiness_csv.parent / "c1_gt_worker_task_graph.csv"
     if graph_source.exists():
         eligible_workers = {row["worker_id"] for row in rows if _truth(row["c2b_baseline_eligible"])}
-        graph_rows = [{**row, "c2b_baseline_eligible": True} for row in read_csv(graph_source) if row.get("worker_id") in eligible_workers]
+        graph_rows = [{**row, "worker_id": normalize_worker_id(row.get("worker_id", "")), "c2b_baseline_eligible": True} for row in read_csv(graph_source) if normalize_worker_id(row.get("worker_id", "")) in eligible_workers]
         write_csv(output_dir / "c1_c2b_design_usable_graph.csv", graph_rows, ["axis", "canonical_annotation_id", "worker_id", "base_task_id", "building_id", "edge_evaluable", "c2b_baseline_eligible"])
     return {
         "n_workers": len(rows),

@@ -48,6 +48,7 @@ from tools.thesis_main.analysis.c2b_static_evidence import (
 )
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 from tools.thesis_main.registry.hohonet_feature_backend import extract_orbit_descriptors
+from tools.thesis_main.analysis.worker_identity import normalize_worker_id
 
 
 COMMAND_ARTIFACT_CONTRACT = {
@@ -140,10 +141,14 @@ def _truth(value: Any) -> bool:
 
 def _identity_key(row: dict[str, Any]) -> tuple[str, str, str]:
     return (
-        str(row.get("worker_id", "")).strip(),
+        normalize_worker_id(row.get("worker_id", "")),
         str(row.get("base_task_id", "")).strip(),
         str(row.get("condition", "")).strip().lower(),
     )
+
+
+def _normalize_worker_rows(rows: list[dict[str, str]]) -> list[dict[str, str]]:
+    return [{**row, "worker_id": normalize_worker_id(row.get("worker_id", ""))} for row in rows]
 
 
 def _repair_scope(scope: dict[str, Any]) -> dict[str, list[dict[str, str]]]:
@@ -161,11 +166,11 @@ def _repair_scope(scope: dict[str, Any]) -> dict[str, list[dict[str, str]]]:
             if not isinstance(entry, dict):
                 raise ValueError(f"{group} repair identity is not an object")
             item = {name: str(entry.get(name, "")).strip() for name in ("worker_id", "base_task_id", "condition", "authorized_addendum_row_identity", "authorized_addendum_row_sha256")}
+            item["worker_id"] = normalize_worker_id(item["worker_id"])
             item["condition"] = item["condition"].lower()
             key = _identity_key(item)
             expected_worker = "34" if group == "w034" else "1"
-            worker_number = key[0].upper().removeprefix("W").lstrip("0") or "0"
-            if not all(key) or key in seen or worker_number != expected_worker:
+            if not all(key) or key in seen or key[0] != expected_worker:
                 raise ValueError(f"{group} repair identities must be complete and unique by worker/base-task/condition")
             seen.add(key); normalized[group].append(item)
     return normalized
@@ -198,7 +203,7 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
     if scope.get("schema_version") != "paper_a_c1_batch_scope_v1" or scope.get("batch_id") != "C1_A":
         raise ValueError("freeze-c1-batch requires a C1_A batch-scope manifest")
     cutoff = str(scope.get("data_cutoff_server_time", "")).strip()
-    originals = {str(value) for value in scope.get("original_worker_ids", []) if str(value)}
+    originals = {normalize_worker_id(value) for value in scope.get("original_worker_ids", []) if normalize_worker_id(value)}
     repairs = _repair_scope(scope)
     completion_exceptions = {str(value) for value in scope.get("original_completion_exception_task_ids", []) if str(value)}
     if not cutoff or not originals:
@@ -224,14 +229,14 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
         "MEASUREMENT_READINESS": readiness_path,
     }
     blockers = [f"missing:{role}" for role, path in required.items() if not path.is_file()]
-    profile_rows = _read(profile_path) if profile_path.is_file() else []
+    profile_rows = _normalize_worker_rows(_read(profile_path)) if profile_path.is_file() else []
     repair_workers = {entry["worker_id"] for values in repairs.values() for entry in values}
     included_workers = originals | repair_workers
     if not originals <= {row.get("worker_id", "") for row in profile_rows if row.get("enrollment_batch") == "original"}:
         blockers.append("original_roster_not_bound_to_worker_profile")
     if any(row.get("enrollment_batch") == "late_entry" for row in profile_rows):
         blockers.append("late_entry_profile_present_in_c1_a_source")
-    eligibility_rows = _read(eligibility_path) if eligibility_path.is_file() else []
+    eligibility_rows = _normalize_worker_rows(_read(eligibility_path)) if eligibility_path.is_file() else []
     repair_rows: list[dict[str, str]] = []
     addendum_rows = _read(args.authorized_reassignment_manifest) if getattr(args, "authorized_reassignment_manifest", None) else []
     for group, entries in repairs.items():
@@ -1223,8 +1228,8 @@ def _build_c2b_batch_b(args: argparse.Namespace) -> dict[str, Any]:
     roster = _require_current_subordinate(args.c2b_roster_manifest, "batch_b_roster")
     if roster.get("worker_profile_sha256") != sha256_file(args.batch_worker_profile):
         raise ValueError("Batch B roster is not bound to the submitted C1-B worker profile")
-    profiles = _read(args.batch_worker_profile)
-    p1 = {row.get("worker_id", ""): row for row in _read(args.p1_admission_evidence)}
+    profiles = _normalize_worker_rows(_read(args.batch_worker_profile))
+    p1 = {normalize_worker_id(row.get("worker_id", "")): row for row in _read(args.p1_admission_evidence)}
     workers = []
     for row in profiles:
         worker = row.get("worker_id", "")
@@ -1237,7 +1242,7 @@ def _build_c2b_batch_b(args: argparse.Namespace) -> dict[str, Any]:
         workers.append(worker)
     if not workers:
         raise ValueError("Batch B has no P1-passed, completed C1-B formal roster workers")
-    base = _read(args.batch_a_assignment)
+    base = _normalize_worker_rows(_read(args.batch_a_assignment))
     if not base or any(row.get("assignment_batch_id") not in {"", "C2B_BATCH_A"} for row in base):
         raise ValueError("Batch A assignment is not a stable C2B_BATCH_A artifact")
     design_sha = str(batch_a.get("selected_design_sha", ""))
@@ -1564,4 +1569,3 @@ def main(argv: list[str] | None = None) -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

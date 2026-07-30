@@ -9,6 +9,7 @@ import pytest
 from tools.thesis_main.analysis.materialize_w034_authorized_extension_sensitivity import materialize as materialize_w034
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file
 from tools.thesis_main.analysis.run_c1_closeout_launch import _snapshot_dependencies, bind_c2b_runtime_mapping, design_c2b, freeze_c1_batch
+from tools.thesis_main.analysis.worker_identity import normalize_worker_id
 
 
 def _write_csv(path: Path, rows: list[dict[str, object]]) -> None:
@@ -63,6 +64,22 @@ def test_c1_a_snapshot_is_formal_without_global_enrollment_close(tmp_path: Path)
     assert result["FINAL_POOLED_PROFILE_FROZEN"] is False
 
 
+def test_worker_id_formats_are_normalized_across_scope_and_eligibility(tmp_path: Path) -> None:
+    assert normalize_worker_id("W034") == "34"
+    assert normalize_worker_id("034") == "34"
+    assert normalize_worker_id("34") == "34"
+    c1_dir = tmp_path / "c1"; _batch_artifacts(c1_dir)
+    for path in (c1_dir / "c1_three_track_worker_state.csv", c1_dir / "c1_row_analysis_eligibility.csv"):
+        rows = list(csv.DictReader(path.open(encoding="utf-8")))
+        for row in rows:
+            if row.get("worker_id") == "W034": row["worker_id"] = "034"
+            if row.get("worker_id") == "W001": row["worker_id"] = "001"
+        _write_csv(path, rows)
+    scope = tmp_path / "scope.json"; scope.write_text(json.dumps(_batch_scope()), encoding="utf-8")
+    result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot.json"})())
+    assert result["status"] == "formal_design_eligible"
+
+
 def test_c1_a_snapshot_stays_provisional_when_w034_repairs_are_not_frozen(tmp_path: Path) -> None:
     c1_dir = tmp_path / "c1"; _batch_artifacts(c1_dir, w034_status="pending_authorized_completion")
     scope = tmp_path / "scope.json"; scope.write_text(json.dumps(_batch_scope()), encoding="utf-8")
@@ -88,12 +105,12 @@ def test_authorized_repair_requires_exact_worker_task_and_condition_identity(tmp
     _write_csv(c1_dir / "c1_row_analysis_eligibility.csv", rows)
     result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot.json"})())
     assert result["status"] == "provisional"
-    assert any(item.startswith("authorized_repair_identity_unresolved:w034:W034:w034-0:manual") for item in result["blockers"])
+    assert any(item.startswith("authorized_repair_identity_unresolved:w034:34:w034-0:manual") for item in result["blockers"])
     rows[0]["worker_id"] = "W034"; rows[0]["condition"] = "semi"
     _write_csv(c1_dir / "c1_row_analysis_eligibility.csv", rows)
     result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot-2.json"})())
     assert result["status"] == "provisional"
-    assert any(item.startswith("authorized_repair_identity_unresolved:w034:W034:w034-0:manual") for item in result["blockers"])
+    assert any(item.startswith("authorized_repair_identity_unresolved:w034:34:w034-0:manual") for item in result["blockers"])
 
 
 def test_repair_scope_cannot_relabel_another_worker_as_w034(tmp_path: Path) -> None:

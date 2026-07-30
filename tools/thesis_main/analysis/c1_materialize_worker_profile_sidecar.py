@@ -15,6 +15,7 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, safe, truthy, write_csv, write_json
 from tools.thesis_main.analysis.vfinal_artifact_utils import eligible_independent_evidence
+from tools.thesis_main.analysis.worker_identity import normalize_worker_id
 
 DEFAULT_OUTPUT_DIR = Path("analysis_results/calibration_c1_closeout")
 DEFAULT_QUALITY = DEFAULT_OUTPUT_DIR / "c1_quality_annotations.csv"
@@ -598,7 +599,7 @@ def family_in_denominator(row: dict[str, Any]) -> bool:
 def build_evidence_rows(quality_rows: list[dict[str, str]]) -> list[dict[str, Any]]:
     out = []
     for row in quality_rows:
-        worker = safe(row.get("worker_id"))
+        worker = normalize_worker_id(row.get("worker_id"))
         if not worker:
             continue
         family = family_for(row)
@@ -742,7 +743,7 @@ def _load_geometry_scores(path: Path | None) -> dict[tuple[str, str, str], dict[
         return {}
     rows = read_csv(path)
     return {
-        (safe(row.get("worker_id")), safe(row.get("task_id")), safe(row.get("annotation_id"))): row
+        (normalize_worker_id(row.get("worker_id")), safe(row.get("task_id")), safe(row.get("annotation_id"))): row
         for row in rows
     }
 
@@ -754,7 +755,7 @@ def build_p1_evidence_rows(
     geometry_scores = geometry_scores or {}
     out: list[dict[str, Any]] = []
     for row in correction_rows:
-        worker = safe(row.get("worker_id"))
+        worker = normalize_worker_id(row.get("worker_id"))
         if not worker:
             continue
         key = (worker, safe(row.get("task_id")), safe(row.get("annotation_id")))
@@ -930,7 +931,7 @@ def build_p1_evidence_rows(
 
 
 def _worker_state_lookup(path: Path) -> dict[str, dict[str, str]]:
-    return {safe(row.get("worker_id")): row for row in read_csv(path)}
+    return {normalize_worker_id(row.get("worker_id")): row for row in read_csv(path)}
 
 
 def _geometry_metric_summary_with_reason(group: list[dict[str, Any]]) -> tuple[str, str]:
@@ -1000,7 +1001,7 @@ def _timing_summary(group: list[dict[str, Any]]) -> tuple[int, int, int, int, st
 
 def _task_evidence_key(row: dict[str, Any]) -> tuple[str, str, str, str]:
     return (
-        safe(row.get("worker_id")),
+        normalize_worker_id(row.get("worker_id")),
         safe(row.get("stage")),
         safe(row.get("task_id")),
         safe(row.get("canonical_annotation_id")),
@@ -1276,7 +1277,7 @@ def load_p1_artifacts(paths: list[Path] | None) -> tuple[dict[str, dict[str, str
         else:
             continue
         for row in rows:
-            worker = safe(row.get("worker_id") or row.get("annotator_id"))
+            worker = normalize_worker_id(row.get("worker_id") or row.get("annotator_id"))
             if not worker:
                 continue
             for key, value in row.items():
@@ -1420,7 +1421,7 @@ def _interpretation_level_counts(rows: list[dict[str, Any]]) -> dict[str, int]:
 def _optional_worker_lookup(path: Path | None) -> dict[str, dict[str, str]]:
     if not path or not path.exists():
         return {}
-    return {safe(row.get("worker_id")): row for row in read_csv(path) if safe(row.get("worker_id"))}
+    return {normalize_worker_id(row.get("worker_id")): row for row in read_csv(path) if normalize_worker_id(row.get("worker_id"))}
 
 
 def _sum_numeric_field(rows: list[dict[str, Any]], field: str) -> float:
@@ -1434,11 +1435,11 @@ def _sum_numeric_field(rows: list[dict[str, Any]], field: str) -> float:
 
 
 def build_p1_worker_dimension_readiness(task_rows: list[dict[str, str]], score_rows: list[dict[str, str]], available: dict[str, bool]) -> list[dict[str, Any]]:
-    score_lookup = {(safe(row.get("worker_id")), safe(row.get("task_id")), safe(row.get("annotation_id"))): row for row in score_rows}
+    score_lookup = {(normalize_worker_id(row.get("worker_id")), safe(row.get("task_id")), safe(row.get("annotation_id"))): row for row in score_rows}
     dimensions = ("geometry", "scope", "semi_issue_recognition", "semi_geometry_correction", "undercoverage", "process")
     output: list[dict[str, Any]] = []
-    for worker in sorted({safe(row.get("worker_id")) for row in task_rows if safe(row.get("worker_id"))}):
-        worker_rows = [row for row in task_rows if safe(row.get("worker_id")) == worker]
+    for worker in sorted({normalize_worker_id(row.get("worker_id")) for row in task_rows if normalize_worker_id(row.get("worker_id"))}):
+        worker_rows = [row for row in task_rows if normalize_worker_id(row.get("worker_id")) == worker]
         worker_output: list[dict[str, Any]] = []
         for name in dimensions:
             expected = evaluable = pending = 0
@@ -1629,7 +1630,7 @@ def materialize(
             if disposition not in {"worker_process_failure", "no_process_penalty"}:
                 continue
             evidence.append({
-                **row, "stage": "C1", "family": "process_failure", "subfamily": "duplicate_review_process_only",
+                **row, "worker_id": normalize_worker_id(row.get("worker_id")), "stage": "C1", "family": "process_failure", "subfamily": "duplicate_review_process_only",
                 "canonical_annotation_id": "process-only:" + safe(row.get("duplicate_version_set_sha256")),
                 "process_only_evidence": True, "process_evaluable": True, "included_in_process_reliability": True,
                 "family_evaluable": True, "family_included_in_denominator": True,
