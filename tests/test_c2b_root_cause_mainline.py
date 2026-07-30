@@ -102,8 +102,13 @@ def test_unique_qgt_estimator_emits_measurement_evidence_without_rank(tmp_path: 
     )
     assert audit["status"] == "estimated" and audit["ranking_materialized"] is False
     assert len(tasks) == 6
+    assert audit["task_effect"] == "fixed_effect"
+    assert {"base_task_id", "task_fixed_effect", "model_version"}.issubset(tasks[0])
+    assert len({row["task_fixed_effect"] for row in tasks}) > 1
     assert all(row["global_rank"] == "" and row["provisional_rank"] == "" for row in workers)
     assert all(set(json.loads(row["Q_GT_contrast_covariance_row_json"])) == {"w1", "w2"} for row in workers)
+    with pytest.raises(ValueError, match="legacy Q_GT building toggle"):
+        estimate_task_adjusted_qgt(rows, estimator_contract={"bootstrap_replicates": 20, "adjust_building": True})
 
 
 def test_qgt_bootstrap_missing_worker_is_a_failed_replicate_not_a_model_abort(monkeypatch) -> None:

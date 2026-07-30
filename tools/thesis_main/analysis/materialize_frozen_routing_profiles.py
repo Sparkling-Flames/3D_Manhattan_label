@@ -72,8 +72,7 @@ def build_global(
         subset = [row for row in submissions if str(row.get("worker_id", "")) == worker and str(row.get("condition", "")).lower() == "manual"]
         candidates.append({
             **state, **evidence,
-            "R_peer_median": state.get("R_peer_median", ""), "R_LOO_medoid": state.get("R_LOO_medoid", ""),
-            "R_LOO_compatible": state.get("R_LOO_compatible", ""),
+            "R_peer_all": state.get("R_peer_all", ""), "R_LOO_medoid": state.get("R_LOO_medoid", ""),
             "F_struct": "" if struct_raw is None else struct_raw,
             "F_struct_raw": "" if struct_raw is None else struct_raw,
             "F_struct_EB": "" if struct_eb is None else struct_eb,
@@ -87,7 +86,8 @@ def build_global(
             "LOO_support": state.get("LOO_support", ""),
             "R_peer_stable": state.get("R_peer_stable", ""),
             "R_peer_profile_status": state.get("R_peer_profile_status", "not_evaluable"),
-            "R_LOO_medoid": state.get("R_LOO_medoid") or state.get("R_LOO_compatible", ""),
+            "R_LOO_medoid_status": state.get("LOO_medoid_status", "not_evaluable"),
+            "R_LOO_strict_status": state.get("LOO_strict_status", "not_evaluable"),
             "process_eligible": process, "independence_eligible": independence,
             "reference_evaluable": reference_ok,
             "administratively_eligible": administratively_eligible,

@@ -18,8 +18,8 @@ def sha256_file(path: Path) -> str:
 
 def load_method_contract(path: Path = METHOD_CONTRACT) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if payload.get("schema_version") != "paper_a_method_contract_v4":
-        raise ValueError("Paper A method contract is not v4")
+    if payload.get("schema_version") != "paper_a_method_contract_v5":
+        raise ValueError("Paper A method contract is not v5")
     if payload.get("status") != "current_normative_source":
         raise ValueError("Paper A method contract is not normative")
     return payload
@@ -48,6 +48,17 @@ def validate_record(name: str, row: dict[str, Any]) -> None:
     invalid_booleans = [field for field in schema.get("boolean", []) if field in row and type(row[field]) is not bool]
     if invalid_booleans:
         raise ValueError(f"{name} boolean fields must be bool:{','.join(sorted(invalid_booleans))}")
+    invalid_positive_integers = []
+    for field in schema.get("positive_integer", []):
+        try:
+            value = float(row.get(field))
+        except (TypeError, ValueError):
+            invalid_positive_integers.append(field)
+            continue
+        if not math.isfinite(value) or value <= 0 or not value.is_integer():
+            invalid_positive_integers.append(field)
+    if invalid_positive_integers:
+        raise ValueError(f"{name} positive integer fields must be positive integers:{','.join(sorted(invalid_positive_integers))}")
     nonfinite = []
     for field in schema.get("finite", []):
         if field in nullable and row.get(field) in {None, ""}:

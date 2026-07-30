@@ -89,6 +89,7 @@ def _candidate(worker: str, score: float, *, boost: float = 0.0) -> dict:
         "worker_id": worker,
         "global_policy_eligible": True,
         "S_G": score,
+        "global_rank_S_G": {"w1": 1, "w2": 2, "w3": 3}[worker],
         "R_peer_stable": .9,
         "R_peer_profile_status": "estimated",
         "R_LOO_medoid": .8,
@@ -145,6 +146,15 @@ def test_full_uses_only_supported_adjustments_and_fallback_is_exact_global() -> 
     assert fallback["full_fallback"] is True
     assert fallback["full_integrated"] == fallback["strong_global"]
     assert "d_cal_F_out_of_support" in fallback["fallback_reasons"]
+
+
+def test_v1_consumes_frozen_global_rank_not_peer_or_loo() -> None:
+    manifest = _manifest()
+    candidates = [_candidate("w1", .9), _candidate("w2", .8)]
+    candidates[0].update(R_peer_stable=None, R_peer_profile_status="not_evaluable", R_LOO_medoid=None, LOO_medoid_status="not_evaluable")
+    candidates[1].update(R_peer_stable=.99, R_LOO_medoid=.99)
+    ranked = rank_candidates(candidates, {**_task("t1"), "risk_route": False, "family_scores": {}}, manifest)
+    assert ranked["strong_global"] == ["w1", "w2"]
 
 
 def test_scheduler_rules_are_arm_symmetric_and_capacity_is_not_borrowed() -> None:
@@ -285,12 +295,19 @@ def test_feasibility_gate_blocks_indistinguishable_policy() -> None:
 def test_formal_manifest_requires_sha_dependencies_and_rejects_dry_run(tmp_path) -> None:
     dependency = tmp_path / "profile.csv"
     dependency.write_text("worker_id\nw1\n", encoding="utf-8")
+    policy = tmp_path / "strong_global_policy.json"
+    policy.write_text("{}", encoding="utf-8")
+    roster = tmp_path / "candidate_roster.csv"
+    roster.write_text("worker_id\nw1\n", encoding="utf-8")
     manifest = _manifest()
     stage3 = _write_stage3(tmp_path)
     manifest["dependencies"] = [
         {"path": dependency.name, "sha256": sha256_file(dependency)},
+        {"path": policy.name, "sha256": sha256_file(policy), "role": "strong_global_policy_manifest"},
+        {"path": roster.name, "sha256": sha256_file(roster), "role": "candidate_roster"},
         {"path": stage3.name, "sha256": sha256_file(stage3), "role": "stage3_freeze_gate"},
     ]
+    manifest.update(method_contract_sha256=sha256_file(METHOD_CONTRACT), policy_manifest_sha256=sha256_file(policy), candidate_roster_sha256=sha256_file(roster))
     path = tmp_path / "freeze.json"
     path.write_text(json.dumps(manifest), encoding="utf-8")
     loaded = load_frozen_manifest(path, sha256_file(path), input_status="formal")
@@ -312,8 +329,8 @@ def test_csv_materializer_parses_geometry_json_and_writes_formal_outputs(tmp_pat
     manifest_path = tmp_path / "freeze.json"
     manifest = _manifest()
     stage3 = _write_stage3(tmp_path)
-    manifest["dependencies"] = [{"path": stage3.name, "sha256": sha256_file(stage3), "role": "stage3_freeze_gate"}]
-    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
+    policy = tmp_path / "strong_global_policy.json"
+    policy.write_text("{}", encoding="utf-8")
     tasks = tmp_path / "tasks.csv"
     candidates = tmp_path / "candidates.csv"
     outcomes = tmp_path / "outcomes.csv"
@@ -335,6 +352,13 @@ def test_csv_materializer_parses_geometry_json_and_writes_formal_outputs(tmp_pat
          "total_capacity": "2", "strong_global_quota": "1", "full_integrated_quota": "1"}
         for worker in ("w1", "w2", "w3")
     ])
+    manifest["dependencies"] = [
+        {"path": stage3.name, "sha256": sha256_file(stage3), "role": "stage3_freeze_gate"},
+        {"path": policy.name, "sha256": sha256_file(policy), "role": "strong_global_policy_manifest"},
+        {"path": candidates.name, "sha256": sha256_file(candidates), "role": "candidate_roster"},
+    ]
+    manifest.update(method_contract_sha256=sha256_file(METHOD_CONTRACT), policy_manifest_sha256=sha256_file(policy), candidate_roster_sha256=sha256_file(candidates))
+    manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
     output = tmp_path / "out"
     audit = materialize_v1_policy(
         tasks, candidates, outcomes, output,

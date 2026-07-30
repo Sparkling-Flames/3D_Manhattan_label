@@ -55,7 +55,6 @@ from tools.thesis_main.analysis.geometry_consensus.materialize import materializ
 from tools.thesis_main.analysis.materialize_c1_estimand_specific_task_support import materialize as materialize_estimand_specific_task_support
 from tools.thesis_main.analysis.materialize_c1_three_state_task_tags import materialize as materialize_three_state_task_tags
 from tools.thesis_main.analysis.materialize_w034_authorized_extension_sensitivity import materialize as materialize_w034_sensitivity
-from tools.thesis_main.analysis.materialize_p1_c1_predictive_association import build_source as build_p1_c1_source, materialize as materialize_predictive_association
 from tools.thesis_main.analysis.c2b_static_evidence import validate_p1_integrity_bundle
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
@@ -211,7 +210,7 @@ def _is_w034(value: Any) -> bool:
     return str(value or "").strip().upper().lstrip("W0") == "34"
 
 
-def _materialize_w034_original_only_profile(output_dir: Path, *, formal: bool, adjust_building: bool) -> Path:
+def _materialize_w034_original_only_profile(output_dir: Path, *, formal: bool) -> Path:
     branch = output_dir / "w034_original_only_branch"
     branch.mkdir(parents=True, exist_ok=True)
     eligibility_path = output_dir / "c1_row_analysis_eligibility.csv"
@@ -249,7 +248,7 @@ def _materialize_w034_original_only_profile(output_dir: Path, *, formal: bool, a
     quality_rows = read_csv(quality_path)
     globals_, task_effects, audit = estimate_task_adjusted_qgt(
         quality_rows,
-        estimator_contract={"bootstrap_replicates": 200 if formal else 80, "bootstrap_seed": 20260726, "adjust_stage": False, "adjust_building": adjust_building},
+        estimator_contract={"bootstrap_replicates": 200 if formal else 80, "bootstrap_seed": 20260726, "adjust_stage": False},
     )
     qgt_path = branch / "qgt_original_only.csv"
     write_csv(qgt_path, globals_, list(globals_[0]) if globals_ else ["worker_id", "Q_GT_task_adjusted"])
@@ -657,7 +656,6 @@ def materialize(
                 "bootstrap_replicates": 200 if formal else 80,
                 "bootstrap_seed": 20260726,
                 "adjust_stage": False,
-                "adjust_building": bool(fixed_snapshots.get("building_registry")),
             },
         )
         model_audit["building_registry_sha256"] = building_summary.get("registry_sha256", "")
@@ -686,7 +684,7 @@ def materialize(
         enrollment_registry_csv=fixed_snapshots.get("calibration_enrollment_registry"),
         qgt_audit_json=output_dir / "c1_task_adjusted_qgt_model_audit.json",
         structural_eb_audit_json=structural_eb_audit_path,
-        formal=formal,
+        formal=formal, collection_window_closed=collection_window_closed,
     )
     predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"
     worker_state_path = output_dir / ("c1_three_track_worker_state_formal.csv" if formal else "c1_three_track_worker_state.csv")
@@ -718,7 +716,7 @@ def materialize(
     sensitivity_thresholds = review_snapshots.get("w034_sensitivity_thresholds")
     if sensitivity_original is None and authorized_reassignment_manifest is not None:
         sensitivity_original = _materialize_w034_original_only_profile(
-            output_dir, formal=formal, adjust_building=bool(fixed_snapshots.get("building_registry")),
+            output_dir, formal=formal,
         )
     if sensitivity_original and sensitivity_thresholds:
         w034_sensitivity_summary = materialize_w034_sensitivity(
@@ -729,19 +727,16 @@ def materialize(
         raise ValueError("formal W034 authorized extension requires frozen sensitivity thresholds")
     else:
         w034_sensitivity_summary = {"status": "not_evaluable", "reason": "original_profile_or_thresholds_not_provided"}
-    if p1_integrity_validation["valid"]:
-        predictive_source = build_p1_c1_source(
-            snapshots / "p1_closeout", worker_state_path, predictive_path,
-            correction_dir=snapshots / "p1_integrity",
-        )
-        predictive_summary = {**materialize_predictive_association(predictive_path, output_dir), **predictive_source, "p1_integrity": p1_integrity_validation}
-    else:
-        write_csv(predictive_path, [], ["worker_id", "check_name", "p1_metric_value", "c1_metric_value"])
-        predictive_summary = {
-            "status": "not_evaluable_missing_p1_integrity", "n_join_rows": 0,
-            "n_evaluable_rows": 0, "p1_integrity": p1_integrity_validation,
-            "legacy_p1_summary_fallback_used": False,
-        }
+    # P1 is frozen input evidence. Its historical predictive diagnostic is not
+    # a C1 estimand and must not pull legacy P1 fields into the C1 evidence DAG.
+    write_csv(predictive_path, [], ["worker_id", "check_name", "p1_metric_value", "c1_metric_value"])
+    predictive_summary = {
+        "status": "out_of_scope_frozen_p1_predictive_diagnostic",
+        "n_join_rows": 0,
+        "n_evaluable_rows": 0,
+        "p1_integrity": p1_integrity_validation,
+        "legacy_p1_summary_fallback_used": False,
+    }
     preannotation_summary = materialize_preannotation_features(
         [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]], fixed_snapshots["candidate_inventory"], output_dir,
         frozen_feature_csv=fixed_snapshots.get("c1_preannotation_feature"),

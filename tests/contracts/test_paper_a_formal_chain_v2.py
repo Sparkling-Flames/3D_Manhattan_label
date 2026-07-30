@@ -11,7 +11,8 @@ import pytest
 from tools.thesis_main.analysis.geometry_cluster_v2 import cluster_geometry_records
 from tools.thesis_main.analysis.materialize_stage3_freeze_gate import REQUIRED_GATES, build_gate, validate_gate_file
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file, validate_record
-from tools.thesis_main.analysis.routing.v1_decision_engine import append_decision, decide_next_offer
+from tools.thesis_main.analysis.routing.v1_decision_engine import append_decision, decide_next_offer, replay_next_offer
+from tools.thesis_main.analysis.routing.v1_policy import RULE_VERSION
 from tools.thesis_main.analysis.routing.v1_replay_auditor import audit_ledger
 from tools.thesis_main.analysis.run_stage3_t1_launch import launch
 from tools.thesis_main.analysis import run_c1_precloseout_rehearsal as rehearsal
@@ -44,7 +45,7 @@ def _record_examples() -> dict[str, dict]:
             "F_struct_interval_lower": 0.0, "F_struct_interval_upper": .2,
         },
         "policy_candidate_v2": {
-            "schema_version": "policy_candidate_v2", "worker_id": "1", "S_G": 1.0,
+            "schema_version": "policy_candidate_v2", "worker_id": "1", "S_G": 1.0, "global_rank_S_G": 1,
             "global_policy_eligible": True, "R_peer_stable": .9, "R_peer_profile_status": "estimated", "R_LOO_medoid": .8,
             "LOO_medoid_status": "estimated", "profile_version": "p",
         },
@@ -155,20 +156,33 @@ def test_stage3_requires_c1_children_and_revalidates_method_sha(tmp_path: Path) 
 def test_online_v1_requires_stage3_and_replay_is_consistent(tmp_path: Path) -> None:
     gate, roster, enrollment, _ = _formal_gate(tmp_path)
     candidate = _record_examples()["policy_candidate_v2"]
-    manifest = {"profile_version": "p", "scheduler": {"seed": 1}, "scoring": {"d_cal_F_min": 0, "d_cal_F_max": 1, "family_activation_threshold": .5, "family_activation_margin": .1, "min_conditional_supported": 1, "lambda_B": 0, "lambda_P": 0, "max_total_adjustment": 0, "ranking_stability_margin": 0}}
+    candidate_roster = tmp_path / "candidate_roster.csv"
+    with candidate_roster.open("w", newline="", encoding="utf-8") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(candidate))
+        writer.writeheader()
+        writer.writerow({key: json.dumps(value) if isinstance(value, (dict, list)) else value for key, value in candidate.items()})
+    policy_manifest = tmp_path / "strong_global_policy_manifest.json"
+    policy_manifest.write_text("{}", encoding="utf-8")
+    manifest = {"manifest_version": RULE_VERSION, "freeze_version": "f", "profile_version": "p", "scoring": {"d_cal_F_min": 0, "d_cal_F_max": 1, "family_activation_threshold": .5, "family_activation_margin": .1, "min_conditional_supported": 1, "lambda_B": 0, "lambda_P": 0, "max_total_adjustment": 0, "ranking_stability_margin": 0}, "scheduler": {"seed": 1, "formal_structure_min_k": 3, "offer_timeout": 1, "completion_timeout": 1, "max_offer_attempts": 1, "k_initial": 1, "standard_cap": 1, "exceptional_cap": 1}, "aggregation": {}, "feasibility": {}, "method_contract_sha256": sha256_file(METHOD_CONTRACT), "policy_manifest_sha256": sha256_file(policy_manifest), "candidate_roster_sha256": sha256_file(candidate_roster), "dependencies": [{"role": "stage3_freeze_gate", "path": str(gate), "sha256": sha256_file(gate)}, {"role": "strong_global_policy_manifest", "path": str(policy_manifest), "sha256": sha256_file(policy_manifest)}, {"role": "candidate_roster", "path": str(candidate_roster), "sha256": sha256_file(candidate_roster)}]}
+    freeze_manifest = tmp_path / "v1_freeze_manifest.json"
+    freeze_manifest.write_text(json.dumps(manifest), encoding="utf-8")
     state = {"task": {"task_id": "t", "d_cal_F": .5}, "policy_arm": "strong_global", "available_worker_ids": ["1"], "remaining_capacity": {"1": 1}, "next_sequence": 1}
-    kwargs = {"stage3_gate": gate, "validation_roster": roster, "enrollment_registry": enrollment}
+    replay_kwargs = {"stage3_gate": gate, "validation_roster": roster, "enrollment_registry": enrollment, "freeze_manifest": freeze_manifest, "freeze_manifest_sha256": sha256_file(freeze_manifest), "candidate_roster_csv": candidate_roster}
+    ledger = tmp_path / "ledger.jsonl"
+    kwargs = {**replay_kwargs, "ledger": ledger}
     with pytest.raises(ValueError, match="non-contract fields"):
-        decide_next_offer({**state, "outcomes": {}}, [candidate], manifest, decision_time="2026-07-29T00:00:00Z", **kwargs)
+        decide_next_offer({**state, "outcomes": {}}, decision_time="2026-07-29T00:00:00Z", **kwargs)
     with pytest.raises(ValueError, match="future or outcome"):
-        decide_next_offer({**state, "task": {**state["task"], "realized_outcome": .9}}, [candidate], manifest, decision_time="2026-07-29T00:00:00Z", **kwargs)
-    decision = decide_next_offer(state, [candidate], manifest, decision_time="2026-07-29T00:00:00Z", **kwargs)
-    ledger = tmp_path / "ledger.jsonl"; append_decision(ledger, decision)
+        decide_next_offer({**state, "task": {**state["task"], "realized_outcome": .9}}, decision_time="2026-07-29T00:00:00Z", **kwargs)
+    with pytest.raises(ValueError, match="freeze manifest SHA mismatch"):
+        decide_next_offer(state, decision_time="2026-07-29T00:00:00Z", **{**kwargs, "freeze_manifest_sha256": "0" * 64})
+    decision = decide_next_offer(state, decision_time="2026-07-29T00:00:00Z", **kwargs)
+    assert ledger.is_file()
     with pytest.raises(ValueError, match="strictly increasing"):
         append_decision(ledger, decision)
     audit = audit_ledger(
         ledger, lambda sequence: state,
-        lambda replay_state, at: decide_next_offer(replay_state, [candidate], manifest, decision_time=at, **kwargs),
+        lambda replay_state, at: replay_next_offer(replay_state, decision_time=at, **replay_kwargs),
     )
     assert audit["replay_passed"] is True
 
@@ -216,5 +230,5 @@ def test_w034_original_only_branch_is_derived_from_canonical_provenance(tmp_path
     monkeypatch.setattr(rehearsal, "estimate_task_adjusted_qgt", fake_qgt)
     monkeypatch.setattr(rehearsal, "materialize_structural_eb", fake_structural)
     monkeypatch.setattr(rehearsal, "materialize_three_track_worker_state", fake_profile)
-    profile = rehearsal._materialize_w034_original_only_profile(tmp_path, formal=False, adjust_building=False)
+    profile = rehearsal._materialize_w034_original_only_profile(tmp_path, formal=False)
     assert profile.is_file()

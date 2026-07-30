@@ -21,7 +21,7 @@ import statsmodels.formula.api as smf
 from scipy.optimize import minimize_scalar
 
 
-MODEL_VERSION = "c1_worker_fe_task_random_intercept_cluster_bootstrap_v3"
+MODEL_VERSION = "c1_worker_fe_task_fixed_effect_cluster_bootstrap_v4"
 
 
 def normal_normal_empirical_bayes(
@@ -107,24 +107,78 @@ def _prepare_frame(rows: list[dict[str, Any]], contract: dict[str, Any]) -> pd.D
     frame = pd.DataFrame(usable)
     if frame.empty or frame.worker_id.nunique() < 2 or frame.base_task_id.nunique() < 2:
         raise ValueError("task-adjusted Q_GT requires at least two workers and two base tasks")
-    if contract.get("adjust_building") and (frame.building_id.eq("").any() or frame.building_id.nunique() < 2):
-        raise ValueError("frozen building adjustment requires complete multi-building support")
-    if contract.get("adjust_stage") and frame.stage.nunique() < 2:
-        raise ValueError("frozen stage adjustment requires at least two stages")
+    model_mode = contract.get("model_mode", "c1_only")
+    if model_mode not in {"c1_only", "c1_c2_final"}:
+        raise ValueError("unknown Q_GT model_mode")
+    if model_mode == "c1_only" and contract.get("adjust_stage"):
+        raise ValueError("C1-only Q_GT forbids a stage effect")
+    if model_mode == "c1_c2_final":
+        if frame.building_id.eq("").any() or frame.building_id.nunique() < 2:
+            raise ValueError("final C1+C2 Q_GT requires complete multi-building support")
+        identifiability = assess_stage_effect_identifiability(frame)
+        if identifiability["status"] != "identifiable":
+            raise ValueError("stage effect not identifiable:" + identifiability["reason"])
+        frame.attrs["stage_effect_identifiability"] = identifiability
     return frame
 
 
+def assess_stage_effect_identifiability(frame: pd.DataFrame) -> dict[str, Any]:
+    """Require a frozen cross-stage anchor before interpreting a stage effect."""
+    stages = sorted(str(value) for value in frame.stage.dropna().unique() if str(value))
+    shared_tasks = sorted(
+        str(task)
+        for task, values in frame.groupby("base_task_id").stage
+        if len({str(value) for value in values if str(value)}) >= 2
+    )
+    if len(stages) < 2:
+        return {"status": "not_identifiable", "reason": "fewer_than_two_stages", "shared_task_anchors": []}
+    if not shared_tasks:
+        return {"status": "not_identifiable", "reason": "no_cross_stage_task_anchor", "shared_task_anchors": []}
+    return {"status": "identifiable", "reason": "cross_stage_task_anchor_present", "shared_task_anchors": shared_tasks}
+
+
 def _formula(contract: dict[str, Any]) -> str:
-    terms = ["0 + C(worker_id)"]
-    if contract.get("adjust_stage"):
-        terms.append("C(stage)")
-    if contract.get("adjust_building"):
-        terms.append("C(building_id)")
+    if contract.get("model_mode", "c1_only") == "c1_only":
+        return "quality ~ 0 + C(worker_id) + C(base_task_id)"
+    terms = ["0 + C(worker_id)", "C(stage)"]
     return "quality ~ " + " + ".join(terms)
 
 
 def _fit_once(frame: pd.DataFrame, contract: dict[str, Any]) -> dict[str, Any]:
     formula = _formula(contract)
+    if contract.get("model_mode", "c1_only") == "c1_only":
+        fitted = smf.ols(formula, frame).fit()
+        fixed_names = list(fitted.params.index)
+        fixed_cov = fitted.cov_params().loc[fixed_names, fixed_names]
+        from patsy import build_design_matrices
+        design_info = fitted.model.data.design_info
+        reference = frame.copy()
+        workers = sorted(frame.worker_id.unique())
+        estimates: dict[str, float] = {}
+        contrasts: dict[str, np.ndarray] = {}
+        for worker in workers:
+            reference["worker_id"] = worker
+            matrix = build_design_matrices([design_info], reference, return_type="dataframe")[0]
+            contrast = matrix.mean(axis=0).reindex(fixed_names, fill_value=0.0).to_numpy(dtype=float)
+            estimates[worker] = float(contrast @ fitted.params.to_numpy())
+            contrasts[worker] = contrast
+        task_effects: dict[str, float] = {}
+        for task in sorted(frame.base_task_id.unique()):
+            task_reference = reference.copy()
+            task_reference["base_task_id"] = task
+            task_matrix = build_design_matrices([design_info], task_reference, return_type="dataframe")[0]
+            task_effects[str(task)] = float(
+                task_matrix.mean(axis=0).reindex(fixed_names, fill_value=0.0).to_numpy(dtype=float)
+                @ fitted.params.to_numpy()
+            )
+        return {
+            "formula": formula, "optimizer": "ols_task_fixed_effect", "fitted": fitted,
+            "estimates": estimates, "contrasts": contrasts,
+            "fixed_covariance": fixed_cov.to_numpy(dtype=float),
+            "task_effects": task_effects,
+            "warnings": [], "residual_variance": float(fitted.scale), "task_intercept_variance": 0.0,
+            "task_effect_role": "fixed_effect",
+        }
     caught_all: list[warnings.WarningMessage] = []
     fitted = None
     optimizer = ""
@@ -133,7 +187,10 @@ def _fit_once(frame: pd.DataFrame, contract: dict[str, Any]) -> dict[str, Any]:
         try:
             with warnings.catch_warnings(record=True) as caught:
                 warnings.simplefilter("always")
-                candidate = smf.mixedlm(formula, frame, groups=frame["base_task_id"], re_formula="1").fit(
+                candidate = smf.mixedlm(
+                    formula, frame, groups=frame["building_id"], re_formula="1",
+                    vc_formula={"task_within_building": "0 + C(base_task_id)"},
+                ).fit(
                     reml=True, method=method, maxiter=1000, disp=False,
                 )
             caught_all.extend(caught)
@@ -169,10 +226,10 @@ def _fit_once(frame: pd.DataFrame, contract: dict[str, Any]) -> dict[str, Any]:
         contrast = matrix.mean(axis=0).reindex(fixed_names, fill_value=0.0).to_numpy(dtype=float)
         estimates[worker] = float(contrast @ fitted.fe_params.to_numpy())
         contrasts[worker] = contrast
-    task_effects = {
-        str(task): float(np.asarray(effect).reshape(-1)[0])
-        for task, effect in fitted.random_effects.items()
-    }
+    # The final model includes task-within-building as a variance component;
+    # individual task BLUPs are not a primary estimand and are not exposed as
+    # if they were fixed task effects.
+    task_effects = {str(task): 0.0 for task in sorted(frame.base_task_id.unique())}
     warning_text = [f"{item.category.__name__}:{item.message}" for item in caught_all]
     return {
         "formula": formula,
@@ -185,6 +242,7 @@ def _fit_once(frame: pd.DataFrame, contract: dict[str, Any]) -> dict[str, Any]:
         "warnings": warning_text,
         "residual_variance": float(fitted.scale),
         "task_intercept_variance": float(np.asarray(fitted.cov_re).reshape(-1)[0]),
+        "task_effect_role": "random_intercept",
     }
 
 
@@ -218,9 +276,10 @@ def estimate_task_adjusted_qgt(
     rows: list[dict[str, Any]], *, estimator_contract: dict[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     """Return worker evidence, task effects and a fail-closed model audit."""
+    if estimator_contract and "adjust_building" in estimator_contract:
+        raise ValueError("legacy Q_GT building toggle is not supported")
     contract = {
-        "adjust_stage": False,
-        "adjust_building": False,
+        "model_mode": "c1_only",
         "bootstrap_replicates": 200,
         "bootstrap_seed": 20260726,
         "confidence_level": 0.95,
@@ -313,8 +372,9 @@ def estimate_task_adjusted_qgt(
             "model_version": MODEL_VERSION,
             "evidence_role": "c1_measurement_only",
         })
+    task_field = "task_fixed_effect" if point.get("task_effect_role", "fixed_effect") == "fixed_effect" else "task_random_intercept"
     task_rows = [
-        {"base_task_id": task, "task_random_intercept": value, "model_version": MODEL_VERSION}
+        {"base_task_id": task, task_field: value, "model_version": MODEL_VERSION}
         for task, value in sorted(point["task_effects"].items())
     ]
     audit = {
@@ -323,9 +383,10 @@ def estimate_task_adjusted_qgt(
         "formula": point["formula"],
         "optimizer": point["optimizer"],
         "worker_effect": "fixed",
-        "task_effect": "random_intercept",
-        "stage_adjustment": bool(contract["adjust_stage"]),
-        "building_adjustment": bool(contract["adjust_building"]),
+        "task_effect": point.get("task_effect_role", "fixed_effect" if contract["model_mode"] == "c1_only" else "random_intercept"),
+        "stage_adjustment": contract["model_mode"] == "c1_c2_final",
+        "stage_effect_identifiability": frame.attrs.get("stage_effect_identifiability", {"status": "not_fit", "reason": "c1_only_task_fixed_effect", "shared_task_anchors": []}),
+        "building_adjustment": contract["model_mode"] == "c1_c2_final",
         "bootstrap_cluster": resampling,
         "bootstrap_identifiability_condition": "at_least_two_distinct_outer_clusters",
         "bootstrap_replicates_requested": draws,

@@ -1,3 +1,4 @@
+<!-- STATUS: superseded_non_normative_outline; normative method source: PAPER_A_METHOD_CONTRACT_CURRENT.json -->
 # Paper A 新版完整论文提纲与方法合同草案
 
 ## 可审计的全景布局标注：高信息 PreScreen、双波 Calibration、Semi-Auto 条件效应与支持度感知路由

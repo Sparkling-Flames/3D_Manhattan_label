@@ -1,5 +1,5 @@
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v5 SHA-256 bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b
 % Paper A: Strong Global is the EB external-quality baseline.
-% Normative source: PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260729_v2 SHA-256 d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44
 \section{Strong Global 与 Support-aware Full}
 
 \subsection{Global 候选审计}
@@ -100,3 +100,6 @@ Strong Global 的唯一静态顺序为
 \(S_G\rightarrow R_{\mathrm{peer,stable}}\rightarrow R_{\mathrm{LOO,medoid}}\rightarrow\)
 frozen random。availability 与 capacity 只在运行时 scheduler 过滤候选，不进入冻结画像或
 质量排序。V1 formal candidate 只消费 \(S_G\)，旧 \texttt{global\_lcb} 字段必须拒绝。
+
+\paragraph{Contract v5 clarification.}
+Strong Global is frozen once, with order \(S_G\rightarrow R_{peer,stable}\rightarrow R_{LOO,medoid}\rightarrow\) frozen random; a tie-break layer is used only when every candidate in the current tie group is evaluable. An unsupported risk/family component, ambiguous family activation, or insufficient conditional support sets only that component to zero. Overall Full fallback is reserved for out-of-support tasks, profile-version conflict, or endpoint ranking instability.

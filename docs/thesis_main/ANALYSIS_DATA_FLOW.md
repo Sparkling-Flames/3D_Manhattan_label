@@ -1,3 +1,4 @@
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v5 SHA-256 bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b -->
 # Paper A 正式分析数据流
 
 > 更新：2026-07-18
@@ -232,6 +233,10 @@ downgrade / warning / not-evaluable counts
 
 ## 9. C1 provenance、variable-k 与滚动招募流
 
-`original_assignment`、SHA-bound `authorized_replacement_assignment` 与 registered `late_entry_calibration_assignment` 先经 canonicalization、duplicate resolution 和 estimand eligibility，再分别进入 GT/peer/LOO/structural/time；`outside_assignment_submission` 仅流向 raw/export、exposure 与 process audit。W014 永久在 primary 分支前排除；W034 的 17 条与 W001 的 3 条只在授权、提交及资格均齐备后加入，W034 B-004/B-022 仍停留 outside 分支。每个分析分支按 task-condition-estimand 形成 final unique-worker k，peer 先 task-level 后等权汇总，并输出 crowd support/share/normalized margin。
+`original_assignment`、SHA-bound `authorized_replacement_assignment` 与 registered `late_entry_calibration_assignment` 先经 canonicalization、duplicate resolution 和 estimand eligibility，再分别进入 GT/peer/LOO/structural/time；`outside_assignment_submission` 仅流向 raw/export、exposure 与 process audit。W014 永久在 primary 分支前排除；W034 的 17 条与 W001 的 3 条只在授权、提交及资格均齐备后加入，W034 B-004/B-022 仍停留 outside 分支。每个分析分支按 task-condition-estimand 形成 final unique-worker k，peer 先 task-level 后等权汇总，并输出 crowd support/share/cluster_margin_all and cluster_margin_top2。
 
 W034 active-time 分支必须先消费 owner-valid sentinel validation manifest；未通过、早于验证或缺失的行只标为 timing not-evaluable，不得污染其他 capability 分支。rolling enrollment 默认关闭；启用时从 P1 pass 和冻结 workload template 生成独立 late-entry branch，不修改原 roster，并输出 original-only 与 pooled profile。最终将 quality、peer、LOO、row eligibility、structural EB、completion、building、provenance、active-time、enrollment 的 SHA 一并输入 Stage 3 freeze；V1 仅消费该冻结 roster/parameters，GT-blind aggregation 不读取政策质量分数。
+
+## v5 规范性数据流
+
+唯一方法真源是 `PAPER_A_METHOD_CONTRACT_CURRENT.json`；历史 outline 只作非规范性写作背景。正式流为 canonical export -> assignment evidence (estimand-specific eligibility) -> frozen reference registry -> Q_GT / peer / geometry LOO / structural EB -> `worker_profile_v2` -> frozen Global `global_rank_S_G` -> Full -> Stage 3/V1。任何缺少 formal assignment gate、registry/reference/contract SHA 或冻结 Global rank 的输入均在对应正式边界 fail closed。

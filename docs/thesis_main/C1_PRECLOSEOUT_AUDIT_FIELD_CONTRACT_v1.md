@@ -37,7 +37,7 @@
 - `c1_geometry_anomaly_root_cause_audit.csv` 分离检测、验证状态、归因和 estimand inclusion；系统、解析、转换、seam、reference、OOS 与未知归因不得进入工人结构失败分子或分母。
 - `c1_active_time_event_ledger.csv`、`c1_active_time_session_ledger.csv` 与 `c1_active_time_annotation_summary.csv` 只消费显式通过 page gate 且绑定 canonical server annotation ID 的累计事件，并合并 session 重叠区间。旧版 unknown/mixed 仅保留 forensic audit；新版仅当同一 session 的 `project+task+worker` 唯一 late-bind 到一个 server annotation ID，且 alias/page-gate 证据完整时，才可形成 `eligible_late_bound_session`。
 - `C1_assigned_roster.csv`、`C1_observed_roster.csv`、`C1_analysis_roster.csv` 与 `c2_eligible_roster_C1.csv` 分开保存。partial 按局部有效 support 判断，nonstarter 不生成画像。
-- `c1_three_track_worker_state.csv`（rehearsal）与 `c1_three_track_worker_state_formal.csv`（formal）的唯一三轨为 `Q_GT_task_adjusted`、`R_LOO_compatible`、`F_struct`；状态仅允许 `estimated`、`insufficient_support`、`not_evaluable_pending_independence`、`nonstarter`。active time 不属于三轨，也不阻断 C2。
+- 当前正式 `worker_profile_v2` 的唯一三轴为 `Q_GT`、`R_peer`、`F_struct`；`R_LOO_medoid` 与 `R_LOO_strict` 仅为独立 sensitivity/tie-break 状态，绝不参与 `three_axis_complete` 或 C2-B roster。active time 不属于三轴，也不阻断 C2。
 - `c1_final_canonical_closeout_summary.json` 必须在 completion、version、independence、structural、Scope/reference 和 row eligibility 全部应用后重算；reviewed estimand-specific exclusion 不是全局 blocker。
 # C1→C2-B estimand-specific freeze 补充
 
@@ -55,3 +55,4 @@
 - `prepare-c2b-static` 输出 `authoritative_building_registry.review_queue.csv`、`source_split_evidence.review_queue.csv`、`future_holdout_evidence.review_queue.csv`、`history_overlap_audit.review_queue.csv`、`scope_registry.review_queue.csv` 和 `reference_registry.review_queue.csv`。
 - 六份 queue 以 `image_id + base_task_id` 唯一，包含 inventory identity、source path、legacy reverse membership 与明确标记为 diagnostic 的旧 inventory 字段；正式 gate 字段保持空值或 `pending_review`。
 - queue 的 `formal_evidence_ready=false`。正式证据必须另存于 evidence root，包含显式 reviewer/time/status，并由对应 approval manifest 绑定 SHA；仅改名或从 task/image 前缀推断 building 均不成立。
+# STATUS: superseded_non_normative; current formal method fields are defined only by PAPER_A_METHOD_CONTRACT_CURRENT.json.

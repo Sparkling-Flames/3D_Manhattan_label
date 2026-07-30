@@ -36,7 +36,7 @@ def peer_similarity_profiles(
             "R_peer_boundary_median": statistics.median(boundary_values) if boundary_values else None,
             "R_peer_wall_median": statistics.median(wall_values) if wall_values else None,
             "R_peer_conservative_median": statistics.median(values) if values else None,
-            "R_peer_median": statistics.median(values) if values else None,
+            "R_peer_task": statistics.median(values) if values else None,
             "R_peer_mean": float(np.mean(values)) if values else None,
             "peer_count": len([peer for peer in records if str(peer.get("worker_id", "")) != worker]),
             "peer_metric_compatible_count": compatible,

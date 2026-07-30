@@ -1,4 +1,4 @@
-"""Render and semantically check the human references to the Paper A contract."""
+"""Render and semantically check Paper A's single normative method contract."""
 
 from __future__ import annotations
 
@@ -8,20 +8,33 @@ from pathlib import Path
 
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, PROJECT_ROOT, sha256_file
 
+
 NORMATIVE_REFERENCES = (
     PROJECT_ROOT / "docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md",
     PROJECT_ROOT / "docs/thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md",
     PROJECT_ROOT / "docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md",
+    PROJECT_ROOT / "docs/thesis_main/ANALYSIS_DATA_FLOW.md",
+    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/main.tex",
+    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/07_C1三轨工人测量.tex",
+    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/10_StrongGlobal与FullIntegrated.tex",
+    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/11_T1条件效应.tex",
+    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/12_V1政策试验.tex",
+    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/15_统计分析与功效.tex",
+    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/16_结果章节结构.tex",
+    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/A3_启用门槛保守估计表.tex",
+    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/A4_测度与统计方法速查.tex",
 )
+SOURCE_OUTLINE = PROJECT_ROOT / "docs/thesis_main/Paper_A_新版完整论文提纲_vFinal_Draft.md"
 
 FORBIDDEN_NORMATIVE_PATTERNS = (
-    "Paper_A_新版完整论文提纲_vFinal_Draft.md` 为设计真源",
     "S_Global(u) = LCB(Q_u_GT_task_adjusted)",
     "global_lcb",
     "global_rank_LCB",
     "normalized_cluster_margin",
+    "normalized margin",
     "R_u_LOO_compatible",
     "R_LOO_FREEZE_STATUS",
+    "Paper A current unique outline source",
 )
 
 
@@ -29,36 +42,47 @@ def render(contract_path: Path = METHOD_CONTRACT) -> str:
     data = json.loads(contract_path.read_text(encoding="utf-8"))
     digest = sha256_file(contract_path)
     peer = data["peer"]
-    measurement = data["measurement_status"]
-    launch = data["c2b_launch"]
+    enrollment = data["rolling_enrollment"]
     return f"""# Paper A 当前方法合同（自动生成）
 
-> 本文档由 `PAPER_A_METHOD_CONTRACT_CURRENT.json` 自动生成，不得手工定义规范性方法字段。
+> 本文档只由 `PAPER_A_METHOD_CONTRACT_CURRENT.json` 渲染；不得手工定义规范性字段。
 
 - 合同版本：`{data['contract_version']}`
 - JSON SHA-256：`{digest}`
-- Formal launch 默认：`{str(data['formal_launch_default']).lower()}`
+- 正式启动默认值：`{str(data['formal_launch_default']).lower()}`
 
-## 冻结方法
+## 画像、质量与同行
 
-- C2 候选：`D8, D10, D12`；C2-A-RP 每人最多 `4` 张。
-- 基础工人轴：`Q_GT, R_peer, F_struct`；LOO 只作可用时的 tie-break/sensitivity。
-- R_peer：少于 `{peer['weak_descriptive_min']}` 个 task 为不足，`3-4` 为描述性，至少 `{peer['formal_estimated_min']}` 个 task 才是正式 estimated。
-- Q_GT/F_struct：support 为 `1-2` 时仅 `weak_descriptive`，至少 `3` 且 estimator status 为 `estimated` 才是正式 estimated。
-- C2-B roster 只消费 `worker_profile_v2.c2_risk_model_eligible`。
-- Strong Global：`S_G=z(Q_GT_EB)`；peer/LOO 仅在当前并列组全员可评价时使用，否则整层跳过，最后使用 frozen random。
-- 非唯一 complete-link partition 的主分析状态为 `not_evaluable`，并保存全部候选 partition。
-- rolling enrollment 必须绑定 `calibration_enrollment_registry.csv`；主画像为 pooled，同时必须生成 original-only sensitivity。
-- 规划入口：`{launch['planning_entrypoint']}`；最终构建入口：`{launch['final_build_entrypoint']}`。规划入口不自动构建启动包。
-- 本轮只允许生成 C2-B 启动包；不自动导入 Label Studio，Stage 3/T1/V1 保持关闭。
+- 正式三轴唯一为 `Q_GT`、`R_peer`、`F_struct`；`R_LOO_medoid` 与 `R_LOO_strict` 仅为独立 sensitivity/tie-break 状态。
+- C1-only Q_GT：`{data['q_gt_models']['c1_only']['formula']}`；C1+C2 final：`{data['q_gt_models']['c1_c2_final']['formula']}`。没有冻结的跨阶段 anchor 或等价支持结构时，stage effect 为 `{data['q_gt_models']['c1_c2_final']['not_identifiable_status']}`。
+- `R_peer_task` 是 worker-task 内 pairwise similarity 中位数；`R_peer_all` 是其 task-equal 中位数；`R_peer_stable` 排除 supported-multimodal task。
+- R_peer 的 support 状态：`<= {peer['insufficient_support_max']}` 为 `insufficient_support`，`{peer['weak_descriptive_min']}-{peer['weak_descriptive_max']}` 为 `weak_descriptive`，`>= {peer['formal_estimated_min']}` 才为 `estimated`。C2-B 需要 `estimated`。
+- 历史同行字段不构成规范字段，也不能被正式生产者或消费者读取。
 
-## 机器合同
+## 行级 eligibility
 
-- `assignment_evidence_v2`
-- `peer_worker_task_v2`
-- `worker_profile_v2`
-- `policy_candidate_v2`
-- `geometry_cluster_v2`
+所有 primary estimand 先通过 `formal_assignment_eligible`；outside 永不进入 primary estimand。规范字段为：
+
+| 用途 | 唯一字段 |
+|---|---|
+| GT quality | `{data['estimand_eligibility']['GT_quality']}` |
+| peer | `{data['estimand_eligibility']['peer']}` |
+| LOO medoid / strict | `{data['estimand_eligibility']['LOO_medoid']}` / `{data['estimand_eligibility']['LOO_strict']}` |
+| structural / time | `{data['estimand_eligibility']['structural']}` / `{data['estimand_eligibility']['time']}` |
+| Semi correction / predictive / routing feature | `{data['estimand_eligibility']['Semi_correction']}` |
+
+## Global、Full 与 C2-B
+
+- C2-B roster 只消费 `worker_profile_v2.c2_risk_model_eligible`，并要求 Q_GT、R_peer、F_struct 三轴；LOO 和 timing 不是 roster 硬门。
+- Strong Global 的静态顺序是 `S_G -> R_peer_stable -> R_LOO_medoid -> frozen_random`。peer 或 LOO 仅在当前并列组全部可评价时使用，否则整层跳过；availability/capacity 只属于运行时 scheduler。
+- Full 中 unsupported、family ambiguity 或 conditional support 不足只使相应局部 component 为零；超出 calibration support、profile version conflict 或 endpoint instability 才整体回退 Strong Global。
+
+## rolling、reference、T1 与 V1
+
+- rolling registry：`{enrollment['registry_filename']}`；主画像为 pooled，必须同时提供 original-only sensitivity。amendment 时只可见 C1 部分执行和 W014/W034 运营状态，不能读取 final profile、C2、T1/V1 outcome、quality、peer、rank、activation 或 policy divergence。
+- reference registry 必须在 formal C1 Q_GT 前冻结；任何 submission 不能用其触发的 reference revision 为自身计分；Stage 3 前再冻结 final reference registry。
+- T1：一个预冻结 pair 在唯一合法 rerun 后仍不可评价，则整个 image 从主要 paired estimand 行政删失；可用 pair 只作 sensitivity。
+- V1：在线引擎只消费当前可见状态并追加 ledger；batch 模块只做 replay/audit。它只消费 `policy_candidate_v2.global_rank_S_G`，并校验 method contract、policy manifest、candidate roster SHA 和 profile version。层级是 severe failure、unresolved+severe、delivery-adjusted quality superiority、count/cost。
 """
 
 
@@ -75,6 +99,8 @@ def check_references(contract_path: Path = METHOD_CONTRACT) -> None:
         if version not in content or digest not in content:
             stale.append(str(path))
         conflicts.extend(f"{path}:{pattern}" for pattern in FORBIDDEN_NORMATIVE_PATTERNS if pattern in content)
+    if not SOURCE_OUTLINE.is_file() or "STATUS: superseded_non_normative_outline" not in SOURCE_OUTLINE.read_text(encoding="utf-8"):
+        stale.append(f"source_outline_not_superseded:{SOURCE_OUTLINE}")
     if stale:
         raise ValueError("Paper A normative references are stale: " + ";".join(stale))
     if conflicts:
@@ -96,7 +122,7 @@ def main() -> None:
         except ValueError as exc:
             raise SystemExit(str(exc)) from exc
         return
-    args.output.write_text(expected, encoding="utf-8")
+    args.output.write_bytes(expected.encode("utf-8"))
 
 
 if __name__ == "__main__":

@@ -34,7 +34,7 @@ def test_task_adjusted_global_and_full_gates_are_frozen(tmp_path):
          "administratively_eligible": "true", "Q_GT_estimable": "true", "reference_evaluable": "true",
          "F_struct_raw": raw, "F_struct_EB": eb, "F_struct_interval_lower": ".1",
          "F_struct_interval_upper": ".3", "serious_recurrent_failure_flag": "false",
-             "R_LOO_compatible": loo, "R_LOO_medoid": loo, "R_peer_stable": ".8", "LOO_support": "2"}
+             "R_LOO_medoid": loo, "R_peer_stable": ".8", "LOO_support": "2"}
         for worker, loo, raw, eb in (("w1", ".8", ".4", ".2"), ("w2", ".9", ".1", ".05"))
     ])
     common = {

@@ -1,6 +1,7 @@
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v5 SHA-256 bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b -->
 # Statistical Analysis Plan v1
 
-> 规范性方法字段只来自 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v4`；SHA-256 `fcf264fe1ef131da4df393f50faae4b364c5779a5df0931957e7275713036144`）。执行时必须核对自动生成 MD 所列 JSON SHA；本文不再独立定义冲突字段。
+> 规范性方法字段只来自 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v5`；SHA-256 `bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b`）。执行时必须核对自动生成 MD 所列 JSON SHA；本文不再独立定义冲突字段。
 
 ## 0. 适用范围与替代声明
 
@@ -305,6 +306,15 @@ V_prod = p_ordinary * V_ordinary + p_stress * V_stress
 
 Stage 1=P1，Stage 2=C1/C2-B/C2-A-RP，Stage 3=T1/V1。C1 正式分析仅使用 original、SHA-bound authorized replacement 或 registered late-entry calibration assignment 的 canonical evidence；outside submission（包括 W034 B-004/B-022）保留审计但排除 primary。W014 永久 excluded；W034=original+17、W001=original+3，尚未形成 canonical eligible submission 的补充任务不得提前贡献证据。
 
-所有 support、eligibility 与 k 按 `base_task_id × condition × estimand` 计算 final unique worker。GT、peer、LOO、structural 与 active-time 可有不同 k；duplicate 不重复计数。peer 先计算 task-level statistic，再对 task 等权汇总；cluster 同时报 absolute support、share、normalized margin，supported multimodal 不进入 stable peer。active-time 的 W034 补充任务须在 sentinel 后 owner-valid；旧缺失保持 timing ineligible，不得补零或影响其他 capability estimand。
+所有 support、eligibility 与 k 按 `base_task_id × condition × estimand` 计算 final unique worker。GT、peer、LOO、structural 与 active-time 可有不同 k；duplicate 不重复计数。peer 先计算 task-level statistic，再对 task 等权汇总；cluster 同时报 absolute support、share、cluster_margin_all and cluster_margin_top2，supported multimodal 不进入 stable peer。active-time 的 W034 补充任务须在 sentinel 后 owner-valid；旧缺失保持 timing ineligible，不得补零或影响其他 capability estimand。
 
 Strong Global 的正式 rank score 为冻结 cohort 内 `S_G=z(Q_GT_EB)`；`Q_GT_EB_LCB` 仅作 quality gate、区间和 sensitivity。Structural 正式解释使用 EB 及其区间，不得以 raw failure rate 冒充 EB。Full/V1 必须在 Stage 3 global freeze 前固定 whitelist、weights、support、cap、threshold、margin、profile/version、component status/interval、input SHA 及 formal minimum worker/cluster rule；GT-blind medoid tie 不读取 worker quality。rolling enrollment 默认关闭；激活时新人按既定 P1/C1/C2 规则进入并报告 pooled 与 original-only sensitivity。学习效应只报告顺序/版本/provenance，不加入复杂主模型。
+
+## v5 方法合同闭环
+
+- `PAPER_A_METHOD_CONTRACT_CURRENT.json` 是唯一规范性方法真源；本 SAP 只解释其冻结的字段与 SHA，不能自行新增同义字段或公式。
+- C1-only 的 Q_GT 使用 worker 与 task fixed effects，且不估计 stage effect。C1+C2 final 只在存在冻结跨阶段 anchor 或等价支持结构时使用 building/task-within-building random intercept 与 stage fixed effect；否则 stage effect 的状态是 `not_identifiable`。
+- `R_peer_task` 先在 worker-task 内取同行相似度中位数；`R_peer_all` 再对 eligible task 等权取中位数；`R_peer_stable` 排除 supported-multimodal task。旧 `R_peer_median` 和 `R_peer_nonmultimodal` 不得作为正式字段。
+- 行级 eligibility 按 GT、peer、LOO medoid、LOO strict、structural、time、Semi correction、predictive 与 routing feature 分开消费，且全部先通过 `formal_assignment_eligible`。outside 永不进入主要 estimand。
+- reference registry 必须在 formal C1 Q_GT 前冻结；由某 submission 触发的 revision 不能反过来为该 submission 计分；Stage 3 前冻结最终 registry。
+- V1 的确认层级固定为 severe failure、unresolved+severe、delivery-adjusted quality superiority、count/cost；quality 不使用含混的 non-inferiority margin。

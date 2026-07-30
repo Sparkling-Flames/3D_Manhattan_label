@@ -84,6 +84,20 @@ def test_full_false_support_and_unstable_endpoint_fall_back_global():
     assert all(row["full_exclusion_reason"] == "ranking_unstable_endpoint" for row in unstable)
 
 
+def test_full_ambiguous_family_disables_only_family_component() -> None:
+    global_rows = build_global_policy(_workers(), _manifest("approved"), formal=True)
+    global_rows[0].update(risk_activation_status="supported", risk_adjustment=.1)
+    global_rows[1].update(risk_activation_status="supported", risk_adjustment=0)
+    output = build_full_policy(
+        global_rows,
+        {"calibration_support": True, "family_scores": {"undercoverage": .7, "topology": .65}},
+        [],
+    )
+    assert output[0]["family_component_disabled"] is True
+    assert output[0]["overall_global_fallback"] is False
+    assert output[0]["risk_adjustment_applied"] == pytest.approx(.1)
+
+
 def test_full_caps_adjustment_and_formal_requires_bound_manifests():
     global_rows = build_global_policy(_workers(), _manifest("approved"), formal=True)
     components = [

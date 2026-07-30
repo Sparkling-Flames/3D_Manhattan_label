@@ -1,5 +1,5 @@
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v5 SHA-256 bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b
 % Paper A: C1 separates computability from formal analysis eligibility.
-% Normative source: PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260729_v2 SHA-256 d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44
 \section{C1：三轴工人测量与设计参数}
 
 \subsection{C1 目标}
@@ -92,7 +92,7 @@ R^{LOO}_{t,u}=S(A_{t,u},M_t^{(-u)}),
 其中 \(M_t^{(-u)}\) 只有在排除工人后存在唯一稳定主簇时才定义。论文明确区分：
 
 \begin{verbatim}
-R_peer_median       主要同行兼容指标
+R_peer_stable       主要同行兼容指标
 R_LOO_medoid        高置信参考、聚合稳定性与 tie-break
 R_LOO_strict_stable 保守敏感性分析
 \end{verbatim}
@@ -144,3 +144,6 @@ not-evaluable/candidate，不能形成正式 routing state。
 \(R_{LOO,medoid}\) 与 \(R_{LOO,strict}\) 的状态。C2-B roster 只要求前三个基础轴可评价；
 strict/medoid LOO 不构成全局 roster 硬门。同行轴先在 worker--task 内取 pairwise similarity
 中位数，再在 worker 层对 task 等权取中位数，不直接汇总全部 pairwise edge。
+
+\paragraph{Contract v5 clarification.}
+The authoritative C1-only model is \(Q^{GT}_{t,u}=\mu+\alpha_u+\delta_t+\epsilon_{t,u}\), where \(\delta_t\) is a task fixed effect and no stage effect is fit. The C1+C2 final model is \(Q^{GT}_{t,u,s}=\mu+\alpha_u+\eta_s+b_{\mathrm{building}(t)}+b_{\mathrm{task}(t)}+\epsilon_{t,u,s}\); it is reported as \texttt{not\_identifiable} without a frozen cross-stage anchor or equivalent supported structure. Define \(R^{peer}_{t,u}=\operatorname{median}_{v\ne u}S(A_{t,u},A_{t,v})\), \(R^{peer\_all}_u=\operatorname{median}_{t\in\mathcal T_u}R^{peer}_{t,u}\), and \(R^{peer\_stable}_u=\operatorname{median}_{t\in\mathcal T_u\setminus\mathrm{supported\_multimodal}}R^{peer}_{t,u}\). These definitions replace any earlier all-edge aggregation wording in this section.

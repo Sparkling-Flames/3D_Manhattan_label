@@ -134,21 +134,25 @@ def build_full_policy(
     ambiguity = bool(task.get("family_scores")) and not family_active
     profile_version = str((profile_manifest or {}).get("profile_version", ""))
     version_conflict = bool(profile_version and any(str(row.get("profile_version", profile_version)) != profile_version for row in supported))
-    global_fallback = not in_support or ambiguity or version_conflict or (bool(activated_family) and len(conditional_workers) < 2)
+    family_component_disabled = ambiguity or (bool(activated_family) and len(conditional_workers) < 2)
+    # Family ambiguity is local to the family component.  It must not erase a
+    # separately supported risk adjustment.
+    global_fallback = not in_support or version_conflict
     output = []
     for row in global_rows:
         worker = str(row.get("worker_id", "")); base = _finite(row.get("S_G"))
         if formal and base is None: raise ValueError("formal Full requires finite S_G for every global worker")
         base = 0.0 if base is None else base
         worker_global_eligible = _truth(row.get("global_policy_eligible", row.get("global_eligible", False)))
-        risk_supported = not global_fallback and str(row.get("risk_activation_status", "")) == "supported"
+        risk_component_disabled = str(row.get("risk_activation_status", "")) != "supported"
+        risk_supported = not global_fallback and not risk_component_disabled
         if formal and risk_supported:
             required_risk = ("risk_estimate", "risk_support", "risk_shrinkage", "risk_adjustment_lower", "risk_adjustment_upper", "risk_weight", "risk_profile_version")
             missing_risk = [field for field in required_risk if str(row.get(field, "")).strip() == "" or (_finite(row.get(field)) is None and field != "risk_profile_version")]
             if missing_risk:
                 raise ValueError("formal Full risk component incomplete:" + ",".join(missing_risk))
         risk_adjustment = float(row.get("risk_adjustment") or 0) if risk_supported else 0.0
-        component = by_worker.get(worker, {}) if not global_fallback else {}
+        component = by_worker.get(worker, {}) if not global_fallback and not family_component_disabled else {}
         family_adjustment = float(component.get("adjustment") or 0) if component else 0.0
         raw_adjustment = risk_adjustment + family_adjustment
         capped_adjustment = max(-cap, min(cap, raw_adjustment)) if cap != float("inf") else raw_adjustment
@@ -160,9 +164,9 @@ def build_full_policy(
         lower = max(-cap, min(cap, risk_lower + family_lower)) if cap != float("inf") else risk_lower + family_lower
         upper = max(-cap, min(cap, risk_upper + family_upper)) if cap != float("inf") else risk_upper + family_upper
         if lower > upper: lower, upper = upper, lower
-        fallback_reason = "global_policy_ineligible" if not worker_global_eligible else "outside_calibration_support" if not in_support else "activation_ambiguous" if ambiguity else "profile_version_conflict" if version_conflict else "conditional_supported_workers_lt_2" if global_fallback else ""
+        fallback_reason = "global_policy_ineligible" if not worker_global_eligible else "outside_calibration_support" if not in_support else "profile_version_conflict" if version_conflict else ""
         score = base if global_fallback or not worker_global_eligible else base + capped_adjustment
-        output.append({**row, "S_F": score, "raw_adjustment": raw_adjustment, "capped_adjustment": capped_adjustment, "adjustment_interval_lower": lower, "adjustment_interval_upper": upper, "risk_component_id": row.get("risk_component_id", "risk_route"), "risk_estimate": row.get("risk_estimate", ""), "risk_support": row.get("risk_support", ""), "risk_shrinkage": row.get("risk_shrinkage", ""), "risk_activation_status": "supported" if risk_supported else "inactive", "risk_adjustment_applied": risk_adjustment if not global_fallback else 0.0, "family_component_id": component.get("component_family", ""), "family_estimate": component.get("combined_effect", ""), "family_support": component.get("worker_support", ""), "family_shrinkage": component.get("shrinkage", ""), "family_activation_status": "supported" if component else "inactive", "family_adjustment_applied": family_adjustment if not global_fallback else 0.0, "full_fallback_global": bool(global_fallback or not worker_global_eligible), "full_exclusion_reason": fallback_reason})
+        output.append({**row, "S_F": score, "raw_adjustment": raw_adjustment, "capped_adjustment": capped_adjustment, "adjustment_interval_lower": lower, "adjustment_interval_upper": upper, "risk_component_id": row.get("risk_component_id", "risk_route"), "risk_estimate": row.get("risk_estimate", ""), "risk_support": row.get("risk_support", ""), "risk_shrinkage": row.get("risk_shrinkage", ""), "risk_activation_status": "supported" if risk_supported else "inactive", "risk_component_disabled": risk_component_disabled, "risk_adjustment_applied": risk_adjustment if not global_fallback else 0.0, "family_component_id": component.get("component_family", ""), "family_estimate": component.get("combined_effect", ""), "family_support": component.get("worker_support", ""), "family_shrinkage": component.get("shrinkage", ""), "family_activation_status": "supported" if component else "inactive", "family_component_disabled": family_component_disabled, "family_adjustment_applied": family_adjustment if not global_fallback else 0.0, "overall_global_fallback": bool(global_fallback or not worker_global_eligible), "full_fallback_global": bool(global_fallback or not worker_global_eligible), "full_exclusion_reason": fallback_reason})
     eligible = [row for row in output if _truth(row.get("global_policy_eligible", row.get("global_eligible", False)))]
     if eligible and not global_fallback:
         nominal_winner = max(eligible, key=lambda row: (float(row["S_F"]), -int(row.get("global_rank_S_G") or row.get("global_rank_EB") or 10**9)))
@@ -174,6 +178,7 @@ def build_full_policy(
                 row["S_F"] = float(row.get("S_G") or 0)
                 row["risk_adjustment_applied"] = 0.0
                 row["family_adjustment_applied"] = 0.0
+                row["overall_global_fallback"] = True
                 row["full_fallback_global"] = True
                 row["full_exclusion_reason"] = "ranking_unstable_endpoint"
     ranked = sorted((row for row in output if _truth(row.get("global_policy_eligible", row.get("global_eligible", False)))), key=lambda row: (-float(row["S_F"]), int(row.get("global_rank_S_G") or row.get("global_rank_EB") or 10**9)))

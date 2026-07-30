@@ -12,7 +12,7 @@ from typing import Any, Iterable
 
 from tools.thesis_main.analysis.geometry_consensus.pairwise import pairwise_similarity
 from tools.thesis_main.analysis.geometry_cluster_v2 import cluster_geometry_records
-from tools.thesis_main.analysis.paper_a_contracts import validate_serialized_record
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, sha256_file as method_contract_sha256, validate_serialized_record
 from tools.thesis_main.analysis.materialize_stage3_freeze_gate import validate_gate_file
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file, write_csv_rows
@@ -79,7 +79,7 @@ def load_frozen_manifest(path: Path, declared_sha256: str, *, input_status: str)
     if not path.exists() or sha256_file(path) != str(declared_sha256).lower():
         raise ValueError("freeze manifest SHA mismatch")
     manifest = json.loads(path.read_text(encoding="utf-8"))
-    required = {"manifest_version", "freeze_version", "profile_version", "scoring", "scheduler", "aggregation", "feasibility", "dependencies"}
+    required = {"manifest_version", "freeze_version", "profile_version", "scoring", "scheduler", "aggregation", "feasibility", "dependencies", "method_contract_sha256", "policy_manifest_sha256", "candidate_roster_sha256"}
     if not required.issubset(manifest) or manifest["manifest_version"] != RULE_VERSION:
         raise ValueError("freeze manifest contract is incomplete")
     for dependency in manifest["dependencies"]:
@@ -93,6 +93,13 @@ def load_frozen_manifest(path: Path, declared_sha256: str, *, input_status: str)
             validate_gate_file(dependency_path)
     if not any(item.get("role") == "stage3_freeze_gate" for item in manifest["dependencies"]):
         raise ValueError("formal V1 requires a SHA-bound Stage 3 freeze gate")
+    if manifest["method_contract_sha256"] != method_contract_sha256(METHOD_CONTRACT):
+        raise ValueError("formal V1 method contract SHA mismatch")
+    dependency_roles = {str(item.get("role", "")): str(item.get("sha256", "")).lower() for item in manifest["dependencies"]}
+    if dependency_roles.get("strong_global_policy_manifest") != str(manifest["policy_manifest_sha256"]).lower():
+        raise ValueError("formal V1 policy manifest SHA is not dependency-bound")
+    if dependency_roles.get("candidate_roster") != str(manifest["candidate_roster_sha256"]).lower():
+        raise ValueError("formal V1 candidate roster SHA is not dependency-bound")
     if "formal_structure_min_k" not in manifest["scheduler"] or int(manifest["scheduler"]["formal_structure_min_k"]) < FORMAL_STRUCTURE_MIN_K:
         raise ValueError("formal V1 requires a frozen formal_structure_min_k >= 3")
     scheduler = manifest["scheduler"]
@@ -107,6 +114,42 @@ def load_frozen_manifest(path: Path, declared_sha256: str, *, input_status: str)
     return manifest
 
 
+def load_online_frozen_manifest(
+    freeze_manifest: Path,
+    freeze_manifest_sha256: str,
+    candidate_roster_csv: Path,
+    stage3_gate: Path,
+) -> dict[str, Any]:
+    """Load the only manifest an online V1 decision may consume.
+
+    An unbound in-memory policy dictionary would bypass the SHA closure that
+    protects the offline launcher, so it is deliberately not an accepted input.
+    """
+    manifest = load_frozen_manifest(
+        freeze_manifest,
+        freeze_manifest_sha256,
+        input_status="formal",
+    )
+    if sha256_file(candidate_roster_csv) != str(manifest["candidate_roster_sha256"]).lower():
+        raise ValueError("online V1 candidate roster SHA mismatch")
+    gate_dependencies = [
+        dependency
+        for dependency in manifest["dependencies"]
+        if dependency.get("role") == "stage3_freeze_gate"
+    ]
+    if len(gate_dependencies) != 1:
+        raise ValueError("online V1 requires exactly one Stage 3 freeze-gate dependency")
+    dependency = gate_dependencies[0]
+    dependency_path = Path(str(dependency.get("path", "")))
+    if not dependency_path.is_absolute():
+        dependency_path = (freeze_manifest.parent / dependency_path).resolve()
+    if dependency_path.resolve() != stage3_gate.resolve():
+        raise ValueError("online V1 Stage 3 gate is not the frozen dependency")
+    if sha256_file(stage3_gate) != str(dependency.get("sha256", "")).lower():
+        raise ValueError("online V1 Stage 3 gate SHA mismatch")
+    return manifest
+
+
 def _family_activation(task: dict[str, Any], scoring: dict[str, Any]) -> tuple[str, bool]:
     scores = sorted(
         ((str(family), _number(score)) for family, score in _mapping(task.get("family_scores")).items()),
@@ -117,6 +160,22 @@ def _family_activation(task: dict[str, Any], scoring: dict[str, Any]) -> tuple[s
     second = scores[1][1] if len(scores) > 1 else float("-inf")
     active = scores[0][1] >= _number(scoring["family_activation_threshold"]) and scores[0][1] - second >= _number(scoring["family_activation_margin"])
     return (scores[0][0], True) if active else ("", False)
+
+
+def _frozen_global_order(rows: list[dict[str, Any]], *, formal: bool) -> list[dict[str, Any]]:
+    """Consume the frozen Global rank; V1 never reimplements peer/LOO ordering."""
+    ranks: dict[int, dict[str, Any]] = {}
+    for row in rows:
+        try:
+            rank = int(row.get("global_rank_S_G"))
+        except (TypeError, ValueError):
+            if formal:
+                raise ValueError("formal V1 candidate lacks frozen global_rank_S_G")
+            rank = 10**9
+        if rank <= 0 or rank in ranks:
+            raise ValueError("V1 frozen Global ranks must be positive and unique")
+        ranks[rank] = row
+    return [ranks[rank] for rank in sorted(ranks)]
 
 
 def rank_candidates(
@@ -135,16 +194,7 @@ def rank_candidates(
         if "global_lcb" in candidate or "global_rank_LCB" in candidate:
             raise ValueError("V1 rejects legacy Global fields")
         candidate["_global"] = _number(candidate.get("S_G"), float("-inf"))
-    tie_hash = lambda row: hashlib.sha256(f"{manifest['scheduler']['seed']}|{task.get('task_id')}|{row.get('worker_id')}".encode()).hexdigest()
-    global_rank = sorted(
-        eligible,
-        key=lambda row: (
-            -row["_global"],
-            -_number(row.get("R_peer_stable")),
-            -_number(row.get("R_LOO_medoid")),
-            tie_hash(row),
-        ),
-    )
+    global_rank = _frozen_global_order(eligible, formal=bool(manifest.get("_formal_input")))
     fallback_reasons: list[str] = []
     d_cal_f = _number(task.get("d_cal_F"), float("nan"))
     if not (_number(scoring["d_cal_F_min"]) <= d_cal_f <= _number(scoring["d_cal_F_max"])):
@@ -152,31 +202,24 @@ def rank_candidates(
     if any(str(row.get("profile_version", "")) != profile_version for row in eligible):
         fallback_reasons.append("profile_version_incompatible")
     family, family_active = _family_activation(task, scoring)
-    if _mapping(task.get("family_scores")) and not family_active:
-        fallback_reasons.append("task_family_activation_ambiguous")
+    family_component_disabled = bool(_mapping(task.get("family_scores")) and not family_active)
 
     minimum_supported = int(scoring["min_conditional_supported"])
-    if (
-        _truth(task.get("risk_route"))
-        and sum(_truth(row.get("B_u_routing_eligible")) for row in eligible) < minimum_supported
-    ) or (
-        family_active
-        and sum(family in set(_items(row.get("p1_supported_families"))) for row in eligible) < minimum_supported
-    ):
-        fallback_reasons.append("conditional_supported_workers_below_minimum")
+    risk_component_disabled = _truth(task.get("risk_route")) and sum(_truth(row.get("B_u_routing_eligible")) for row in eligible) < minimum_supported
+    family_component_disabled = family_component_disabled or (family_active and sum(family in set(_items(row.get("p1_supported_families"))) for row in eligible) < minimum_supported)
 
     full_rank = []
     for candidate in eligible:
         adjustment = 0.0
-        if _truth(task.get("risk_route")) and _truth(candidate.get("B_u_routing_eligible")):
+        if not risk_component_disabled and _truth(task.get("risk_route")) and _truth(candidate.get("B_u_routing_eligible")):
             adjustment += _number(scoring["lambda_B"]) * _number(candidate.get("B_u_risk"))
         family_profiles = _mapping(candidate.get("p1_family_scores"))
-        if family_active and family in set(_items(candidate.get("p1_supported_families"))) and family in family_profiles:
+        if not family_component_disabled and family_active and family in set(_items(candidate.get("p1_supported_families"))) and family in family_profiles:
             adjustment += _number(scoring["lambda_P"]) * _number(family_profiles[family])
         cap = abs(_number(scoring["max_total_adjustment"]))
         candidate["_full"] = candidate["_global"] + max(-cap, min(cap, adjustment))
         full_rank.append(candidate)
-    full_rank.sort(key=lambda row: (-row["_full"], -row["_global"], -_number(row.get("R_peer_stable")), -_number(row.get("R_LOO_medoid")), tie_hash(row)))
+    full_rank.sort(key=lambda row: (-row["_full"], int(row.get("global_rank_S_G") or 10**9)))
     if len(full_rank) > 1 and full_rank[0]["_full"] - full_rank[1]["_full"] < _number(scoring["ranking_stability_margin"]):
         fallback_reasons.append("ranking_unstable")
     fallback = bool(fallback_reasons)
@@ -186,9 +229,12 @@ def rank_candidates(
         "strong_global": [str(row["worker_id"]) for row in global_rank],
         "full_integrated": [str(row["worker_id"]) for row in full_rank],
         "full_fallback": fallback,
+        "overall_global_fallback": fallback,
         "fallback_reasons": fallback_reasons,
         "active_family": family,
         "risk_route_active": _truth(task.get("risk_route")),
+        "risk_component_disabled": risk_component_disabled,
+        "family_component_disabled": family_component_disabled,
     }
 
 
@@ -616,6 +662,8 @@ def materialize_v1_policy(
     capacity_manifest_csv: Path | None = None,
 ) -> dict[str, Any]:
     manifest = load_frozen_manifest(freeze_manifest, freeze_manifest_sha256, input_status=input_status)
+    if input_status == "formal" and sha256_file(candidates_csv) != str(manifest["candidate_roster_sha256"]).lower():
+        raise ValueError("formal V1 candidate roster SHA mismatch")
     tasks = _read_csv(tasks_csv)
     candidates_by_task: dict[str, list[dict[str, Any]]] = defaultdict(list)
     for row in _read_csv(candidates_csv):

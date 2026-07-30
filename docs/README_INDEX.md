@@ -1,4 +1,4 @@
-﻿# docs 目录索引
+# docs 目录索引
 
 > 2026-07-18：Paper A 正式文本已迁移到 vFinal。当前正文入口为
 > `thesis_main/manuscript/overleaf_project/main.tex`；正式执行合同为
@@ -42,7 +42,7 @@
 - [PAPER_A_VFINAL_EXECUTION_CONTRACT.json](thesis_main/PAPER_A_VFINAL_EXECUTION_CONTRACT.json)：C1→C2 主线 DAG、三段 freeze gate、风险通道与 legacy 隔离合同
 - [C2B_RISK_DESIGN_CONTRACT_v1.json](thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json)：C2-B 唯一风险通道、分层、模拟与冻结状态合同
 - [C2B_DESIGN_SELECTION_THRESHOLDS.json](thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json)：C1 closeout 前冻结的 C2-B design threshold 公式、常数、输入字段与方向合同；正式数值由 SHA 绑定输入机械派生
-- `Paper_A_新版完整论文提纲_vFinal_Draft.md`：当前唯一 vFinal 提纲真源，包含 C1→C2→T1/V1 的 failure-disposition、重跑与行政删失合同。
+- `PAPER_A_METHOD_CONTRACT_CURRENT.json`：Paper A 唯一规范方法真源；`Paper_A_新版完整论文提纲_vFinal_Draft.md` 已 superseded，仅作非规范性写作背景。
 - [meta_label_three_state_rule_manifest_v1.json](thesis_main/meta_label_three_state_rule_manifest_v1.json)：三状态 meta-label 候选规则
 - [geometry_loo_candidate_rule_manifest_v1.json](thesis_main/geometry_loo_candidate_rule_manifest_v1.json)：Geometry LOO 候选规则
 - [geometry_peer_candidate_rule_manifest_v1.json](thesis_main/geometry_peer_candidate_rule_manifest_v1.json)、[GLOBAL_POLICY_THRESHOLDS.json](thesis_main/GLOBAL_POLICY_THRESHOLDS.json)、[P1_COMPONENT_SUPPORT_THRESHOLDS.json](thesis_main/P1_COMPONENT_SUPPORT_THRESHOLDS.json)、[GT_CONFLICT_REVIEW_RULES.json](thesis_main/GT_CONFLICT_REVIEW_RULES.json)：同行、Global、P1 component 与 GT 冲突的 candidate-only 数值合同
@@ -51,6 +51,7 @@
 - [model_issue_harmonization_rule_manifest_v1.json](thesis_main/model_issue_harmonization_rule_manifest_v1.json)：model issue 抖动容忍与 harmonization 候选规则
 - [RQ3_MINIMAL_EVIDENCE_CHAIN_CONTRACT_v1.md](thesis_main/RQ3_MINIMAL_EVIDENCE_CHAIN_CONTRACT_v1.md)
 - [STATISTICAL_ANALYSIS_PLAN_v1.md](thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md)
+- [PAPER_A_REFERENCES_NEEDED_CHECKLIST.md](thesis_main/PAPER_A_REFERENCES_NEEDED_CHECKLIST.md)：相关工作与引用核验待办
 - [ANALYSIS_DATA_FLOW.md](thesis_main/ANALYSIS_DATA_FLOW.md)
 - [PRESCREEN_STEP4_5_CLOSEOUT_NOTE.md](thesis_main/PRESCREEN_STEP4_5_CLOSEOUT_NOTE.md)
 

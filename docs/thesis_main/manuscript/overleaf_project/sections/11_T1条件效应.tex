@@ -1,4 +1,4 @@
-% Normative source: PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260729_v2 SHA-256 d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v5 SHA-256 bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b
 \section{T1：Semi-Auto 条件效应}
 
 \subsection{设计}
@@ -134,3 +134,6 @@ active time 降级为 descriptive/sensitivity，不影响质量与结构主分�
 \texttt{failure\_attribution} 取 worker/external/unknown/none。唯一允许的完整 pair 重跑后，
 只要任一预冻结 Manual/Semi pair 仍不可评价，整张 image 从主要 image-level paired estimand
 行政删失；不可评价不编码为 0，也不使用剩余 pair 改写主要 estimand。可用 pair 只作 sensitivity。
+
+\paragraph{Contract v5 clarification.}
+After the single permitted complete-pair rerun, if any pre-frozen Manual/Semi pair for an image remains not evaluable, the entire image is administratively censored from the primary paired estimand. A usable pair may be reported only in the predeclared sensitivity analysis.

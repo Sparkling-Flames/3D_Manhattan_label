@@ -97,7 +97,7 @@ def leave_one_out(
                 "loo_boundary_values_json": boundary,
                 "loo_wallwall_values_json": wallwall,
                 # q_LOO_tu remains the compatibility alias; only the explicit
-                # primary field may enter R_LOO_compatible.
+                # Primary LOO is emitted only through its explicit medoid field.
                 "q_LOO_tu": q_loo,
                 "q_LOO_primary": q_loo,
                 "q_LOO_tie_min": min(tied_ious) if tied_ious else None,

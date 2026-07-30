@@ -1,4 +1,4 @@
-﻿# HOHONET 项目地图
+# HOHONET 项目地图
 
 > 2026-07-18 vFinal 更新：Paper A 正式主线已改为 C1 设计 C2-B
 >（common anchor + diverse bridge）、C2-A-RP 精度补测、T1 2×2 条件试验，
@@ -57,7 +57,7 @@
 - `docs/thesis_main/`
   - 正式执行主线文档。
   - 包括 protocol、assignment SOP、PreScreen、Calibration、Main(Test + Validation)、统计计划、字段合同、worker-profile sidecar contract、final-gold、registry、论文主线写作材料。
-  - Paper A 当前唯一提纲真源为 `Paper_A_新版完整论文提纲_vFinal_Draft.md`。v3-v5 提纲、迁移 map/audit 与 standalone `.tex` 已归档到 `docs/legacy/paper_a_pre_vfinal_20260724/`；`WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 等字段合同继续保留。
+  - Paper A 唯一规范方法真源为 `PAPER_A_METHOD_CONTRACT_CURRENT.json`；`Paper_A_新版完整论文提纲_vFinal_Draft.md` 已标为 superseded 的非规范性写作背景。v3-v5 提纲、迁移 map/audit 与 standalone `.tex` 已归档到 `docs/legacy/paper_a_pre_vfinal_20260724/`；`WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 等字段合同继续保留。
   - `manuscript/` 可保存 Overleaf 项目和主线论文写作资产，但按现有 `.gitignore` 默认不提交。
   - `tools/thesis_main/analysis/materialize_c2b_closeout.py` 绑定 C2-B submissions、post-C2-B profile、profile manifest 与 design summary，形成 C2-A-RP formal 所需的真实 SHA closeout。
   - `tools/thesis_main/analysis/materialize_frozen_routing_profiles.py` 从 Manual GT submission、冻结 worker state 和跨阶段 component evidence 生成 Strong Global 与 Full component 冻结表。
@@ -128,8 +128,10 @@
 - `tools/thesis_main/analysis/materialize_c1_three_state_task_tags.py`：按 task-tag 物化 positive、explicit negative、unasserted 与 not-evaluable 计数和比例。
 - `tools/thesis_main/registry/build_c1_late_entry_assignment_manifest.py`：默认关闭、结果盲、exposure-aware 的 late-entry C1 增量 assignment generator，不重排原 cohort。
 - `docs/thesis_main/PAPER_A_C1_ROLLING_ENROLLMENT_CONFIG.template.json`：rolling enrollment 默认关闭配置模板；激活时所有窗口、版本、seed 和 workload 字段必须显式冻结。
-## 2026-07-29 Paper A 方法合同 v2
+## 2026-07-30 Paper A 方法合同 v5
 
 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json` 是唯一规范方法真源；同目录保存生成 MD 和五个 v2 schema。共享验证、geometry、Stage 3、T1/V1 online/replay 工具位于 `tools/thesis_main/analysis/`。
 
 2026-07-30 v4 收敛 C1 三轴为 `Q_GT/R_peer/F_struct`，将 LOO 降为独立 sensitivity；正式 C1 必须输入并 SHA 绑定 `calibration_enrollment_registry.csv`，planning 与 final build 分别由 `close-c1-and-plan-c2b` 和 `build-c2b` 承担。
+
+- docs/thesis_main/PAPER_A_REFERENCES_NEEDED_CHECKLIST.md：相关工作与引用核验待办；不构成方法合同。

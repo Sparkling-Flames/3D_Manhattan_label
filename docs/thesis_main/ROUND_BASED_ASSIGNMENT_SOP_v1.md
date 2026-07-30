@@ -1,6 +1,7 @@
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v5 SHA-256 bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b -->
 # Round-Based Assignment SOP v1
 
-> 本 SOP 只消费 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v4`；SHA-256 `fcf264fe1ef131da4df393f50faae4b364c5779a5df0931957e7275713036144`）。旧 Global、C2、LOO 或 rolling 语义均为 superseded。
+> 本 SOP 只消费 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v5`；SHA-256 `bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b`）。旧 Global、C2、LOO 或 rolling 语义均为 superseded。
 
 ## 0. 适用范围
 
@@ -309,3 +310,7 @@ Main 开始后的任何修改只能作为不改变主要合同的勘误或在 ou
 C1 roster 的正式 assignment provenance 固定为 `original_assignment`、`authorized_replacement_assignment`、`late_entry_calibration_assignment`、`outside_assignment_submission`。授权 replacement 必须绑定 original manifest/row、授权记录、分发证据和 SHA；outside submission 只进入 raw/exposure ledger，不能因 generic authorized exception 进入 GT、peer、LOO、structural 或 time。W014 不生成 replacement；W034 仅接收 17 条 non-anchor 授权补充任务，W001 仅接收 3 条授权补充任务，W034 的 B-004/B-022 永不再次分配。
 
 每个 task-condition 按 estimand 计算 final unique-worker support；duplicate revision 只保留冻结 canonical row。active-time 仅在 owner-valid sentinel 和日志绑定通过后标记 expected/eligible，不回填既往缺失。rolling enrollment 无论启用与否都必须冻结 `calibration_enrollment_registry.csv`；关闭时明确记录 `rolling_activated=false`、`N_late=0`，启用时登记全部 original/late-entry worker 及 terminal status。assignment manifest 只证明任务来源，禁止用它推断 enrollment batch。Stage 3 roster freeze 后停止一切招募与 assignment 变更。
+
+## v5 方法合同执行约束
+
+`policy_candidate_v2.global_rank_S_G` 是 V1 唯一可消费的静态 Global 名次。启动前必须同时 SHA 绑定方法合同、Strong Global policy manifest、candidate roster 与 profile version；online engine 只读取当时可见状态并 append-only 写 ledger，batch 模块只做 replay/audit。容量和 availability 只能改变 scheduler offer，不能改写该静态 rank。

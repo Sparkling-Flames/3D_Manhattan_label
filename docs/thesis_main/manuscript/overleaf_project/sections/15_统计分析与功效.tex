@@ -1,4 +1,4 @@
-% Normative source: PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260729_v2 SHA-256 d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v5 SHA-256 bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b
 \section{统计分析与功效}
 
 \subsection{C1 后模拟 C2-B}
@@ -121,3 +121,6 @@ original-only 与 original+authorized sensitivity。
 并保留 stage fixed effect；不同时放入吸收 stage 的 task fixed effects。聚类同时报告
 \(m^{all}=(n_1-n_2)/k\) 与 \(m^{top2}=(n_1-n_2)/(n_1+n_2)\)，并分别报告
 \(k_{\mathrm{LOO,medoid}}\) 和 \(k_{\mathrm{LOO,strict}}\)。
+
+\paragraph{Contract v5 clarification.}
+No C1+C2 stage effect is interpreted without a frozen cross-stage anchor or equivalent supported structure. The final model uses building and task-within-building random intercepts with a stage fixed effect, whereas C1-only uses a task fixed effect and no stage effect. The V1 quality criterion is superiority after the two delivery hierarchy gates; it is not an outcome-selected quality margin.

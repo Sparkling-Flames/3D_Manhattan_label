@@ -1387,6 +1387,9 @@ _CALIBRATION_TERMINAL_STATUSES = {
     "completed", "closed_partial_usable", "closed_partial_insufficient",
     "nonstarter", "administrative_exclusion",
 }
+_CALIBRATION_PROVISIONAL_STATUSES = _CALIBRATION_TERMINAL_STATUSES | {
+    "in_progress", "pending", "partial_noncompletion", "withdrawn",
+}
 _ENROLLMENT_FIELDS = (
     "worker_id", "enrollment_batch", "rolling_activated", "admission_status",
     "terminal_status", "enrolled_at",
@@ -1395,7 +1398,7 @@ _ENROLLMENT_FIELDS = (
 
 def _materialize_enrollment_registry(
     enrollment_registry_csv: Path | None, completion_rows: list[dict[str, Any]],
-    output_dir: Path, *, formal: bool,
+    output_dir: Path, *, formal: bool, collection_window_closed: bool = False,
 ) -> tuple[dict[str, dict[str, Any]], dict[str, Any], Path]:
     if formal and (enrollment_registry_csv is None or not enrollment_registry_csv.is_file()):
         raise ValueError("formal C1 requires calibration_enrollment_registry.csv")
@@ -1430,8 +1433,9 @@ def _materialize_enrollment_registry(
         if not str(row.get("admission_status", "")).strip() or not str(row.get("enrolled_at", "")).strip():
             raise ValueError(f"enrollment registry admission/enrolled_at missing:{worker}")
         terminal_status = str(row.get("terminal_status", "")).strip()
-        if terminal_status not in _CALIBRATION_TERMINAL_STATUSES:
-            raise ValueError(f"nonterminal enrollment registry row:{worker}:{terminal_status}")
+        allowed_statuses = _CALIBRATION_TERMINAL_STATUSES if (formal or collection_window_closed) else _CALIBRATION_PROVISIONAL_STATUSES
+        if terminal_status not in allowed_statuses:
+            raise ValueError(f"invalid enrollment registry status for mode:{worker}:{terminal_status}")
         normalized = {**row, "worker_id": worker, "enrollment_batch": batch, "rolling_activated": activated, "terminal_status": terminal_status}
         by_worker[worker] = normalized
         activation_values.add(activated)
@@ -1451,10 +1455,11 @@ def _materialize_enrollment_registry(
             raise ValueError(f"enrollment/completion terminal status mismatch:{worker}")
     output_path = output_dir / "calibration_enrollment_registry.csv"
     write_csv(output_path, [by_worker[worker] for worker in sorted(by_worker)], list(_ENROLLMENT_FIELDS))
+    all_terminal = all(row["terminal_status"] in _CALIBRATION_TERMINAL_STATUSES for row in by_worker.values())
     summary = {
-        "schema_version": "calibration_enrollment_registry_v1", "status": "validated",
+        "schema_version": "calibration_enrollment_registry_v1", "status": "validated" if all_terminal else "provisional",
         "rolling_activated": rolling_activated, "N_total": len(by_worker), "N_late": len(late_workers),
-        "all_registered_workers_terminal": True, "late_entry_workers": late_workers,
+        "all_registered_workers_terminal": all_terminal, "late_entry_workers": late_workers,
         "source_sha256": source_sha, "registry_sha256": hashlib.sha256(output_path.read_bytes()).hexdigest(),
     }
     (output_dir / "calibration_enrollment_registry.summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -1467,7 +1472,7 @@ def materialize_three_track_worker_state(
     eligibility_csv: Path | None = None, peer_csv: Path | None = None,
     structural_eb_csv: Path | None = None, enrollment_registry_csv: Path | None = None,
     qgt_audit_json: Path | None = None, structural_eb_audit_json: Path | None = None,
-    formal: bool = False,
+    formal: bool = False, collection_window_closed: bool = False,
 ) -> dict[str, Any]:
     from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file
     method = load_method_contract()
@@ -1533,6 +1538,7 @@ def materialize_three_track_worker_state(
     completion_rows = read_csv(completion_csv)
     enrollment, enrollment_summary, enrollment_output = _materialize_enrollment_registry(
         enrollment_registry_csv, completion_rows, output_dir, formal=formal,
+        collection_window_closed=collection_window_closed,
     )
     rows = []
     for completion in completion_rows:
@@ -1604,12 +1610,12 @@ def materialize_three_track_worker_state(
             "Q_GT_contrast_covariance_row_json": global_row.get("Q_GT_contrast_covariance_row_json", ""),
             "GT_support": gt_support, "task_support": global_row.get("task_support", 0),
             "building_support": global_row.get("building_support", 0),
-            "R_LOO_compatible": sum(values) / len(values) if values else "", "LOO_support": loo_support,
+            "LOO_support": loo_support,
             "R_LOO_CI_lower": bootstrap[int(.025 * (len(bootstrap) - 1))] if bootstrap else "",
             "R_LOO_CI_upper": bootstrap[int(.975 * (len(bootstrap) - 1))] if bootstrap else "",
             "R_LOO_LCB": bootstrap[int(.025 * (len(bootstrap) - 1))] if bootstrap else "",
             "R_LOO_bootstrap_replicates": 2000 if bootstrap else 0,
-            "R_peer_median": peer_value, "R_peer_all": peer_value, "R_peer_anchor": peer_anchor, "R_peer_core": peer_core, "R_peer_semi": peer_semi, "R_peer_stable": peer_stable,
+            "R_peer_all": peer_value, "R_peer_anchor": peer_anchor, "R_peer_core": peer_core, "R_peer_semi": peer_semi, "R_peer_stable": peer_stable,
             "R_peer_CI_lower": peer_lower, "R_peer_CI_upper": peer_upper, "R_peer_support": peer_support, "peer_task_support": peer_support,
             "R_LOO_medoid": medoid_value, "R_LOO_medoid_CI_lower": medoid_lower, "R_LOO_medoid_CI_upper": medoid_upper, "R_LOO_medoid_support": medoid_support,
             "R_LOO_strict": sum(values) / len(values) if values else "", "R_LOO_strict_support": loo_support,

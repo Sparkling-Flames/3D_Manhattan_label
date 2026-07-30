@@ -13,10 +13,11 @@ GT、peer、medoid LOO、strict LOO 与 structural opportunity 分别计算资�
 ## 估计与政策角色
 
 - `Q_GT_task_adjusted_FE` 保留为敏感性；normal-normal EB 输出 `Q_GT_EB`。EB 失败时正式 Global fail closed。
-- `R_peer_median` 是主要同行画像；`R_LOO_medoid` 是单峰或唯一主峰任务的保守同行参照；`R_LOO_strict` 保留旧敏感性角色。
+- 本历史 amendment 不再定义任何当前同行字段或 eligibility；正式字段、状态与用途仅由 `PAPER_A_METHOD_CONTRACT_CURRENT.json` 定义。
 - `F_struct_EB` 与 raw rate 同时报告；先验不可识别时显式使用 Jeffreys Beta(0.5, 0.5)。
 - Strong Global 只在阈值 manifest 已批准且 EB 模型有效时物化正式排名。
 
 ## 多峰与 GT 冲突
 
 4:1 与 3:1:1 可标为 `dominant_with_dissent`；3:2 保持 `supported_multimodal`，不自动选择多数簇。少数簇更接近 GT 不改变 crowd structure，只生成候选审查事件。任何候选事件不得自动修改 GT、worker profile、C2 设计或 prevalence。
+# STATUS: superseded_non_normative; retained only as historical amendment context. Current formal method fields are defined only by PAPER_A_METHOD_CONTRACT_CURRENT.json.
