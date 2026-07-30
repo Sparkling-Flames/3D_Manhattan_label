@@ -9,6 +9,8 @@ import json
 from pathlib import Path
 from typing import Any
 
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, sha256_file
+
 METRICS = ("Q_GT_EB", "R_peer_all", "F_struct_EB")
 
 
@@ -72,14 +74,29 @@ def _one_w034(path: Path) -> dict[str, Any]:
     return row
 
 
-def materialize(original_csv: Path, augmented_csv: Path, thresholds_json: Path, output_json: Path) -> dict[str, Any]:
+def materialize(original_csv: Path, augmented_csv: Path, thresholds_json: Path, output_json: Path, *, profile_version: str | None = None, cohort_id: str | None = None) -> dict[str, Any]:
     thresholds = json.loads(thresholds_json.read_text(encoding="utf-8"))
-    result = compare_w034_profiles(_one_w034(original_csv), _one_w034(augmented_csv), thresholds)
+    original, augmented = _one_w034(original_csv), _one_w034(augmented_csv)
+    result = compare_w034_profiles(original, augmented, thresholds)
+    result.update({
+        "schema_version": "w034_authorized_extension_sensitivity_freeze_v1",
+        "status": "frozen",
+        "artifact_role": "W034_SENSITIVITY_FROZEN",
+        "profile_version": profile_version or augmented.get("profile_version") or "paper_a_worker_profile_v2",
+        "cohort_id": cohort_id or augmented.get("cohort_id") or "paper_a_calibration_pooled",
+        "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+    })
     result["input_sha256"] = {
-        "original_profile": hashlib.sha256(original_csv.read_bytes()).hexdigest(),
-        "augmented_profile": hashlib.sha256(augmented_csv.read_bytes()).hexdigest(),
-        "thresholds": hashlib.sha256(thresholds_json.read_bytes()).hexdigest(),
+        "original_profile": sha256_file(original_csv),
+        "augmented_profile": sha256_file(augmented_csv),
+        "thresholds": sha256_file(thresholds_json),
     }
+    result["dependencies"] = [
+        {"role": "W034_ORIGINAL_PROFILE", "path": str(original_csv.resolve()), "sha256": sha256_file(original_csv)},
+        {"role": "W034_AUTHORIZED_PROFILE", "path": str(augmented_csv.resolve()), "sha256": sha256_file(augmented_csv)},
+        {"role": "W034_SENSITIVITY_THRESHOLDS", "path": str(thresholds_json.resolve()), "sha256": sha256_file(thresholds_json)},
+        {"role": "METHOD_CONTRACT", "path": str(METHOD_CONTRACT.resolve()), "sha256": sha256_file(METHOD_CONTRACT)},
+    ]
     output_json.parent.mkdir(parents=True, exist_ok=True)
     output_json.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return result

@@ -12,9 +12,9 @@ import pytest
 from tools.thesis_main.analysis.materialize_c1_estimand_specific_task_support import build_task_support_rows
 from tools.thesis_main.analysis.materialize_c1_three_state_task_tags import aggregate_three_state_tags, build_observation_rows
 from tools.thesis_main.analysis.materialize_stage3_freeze_gate import REQUIRED_GATES, assert_frozen_roster, build_gate
-from tools.thesis_main.analysis.materialize_w034_active_time_validation import validate_sentinel
+from tools.thesis_main.analysis.materialize_w034_active_time_validation import sha256_bundle, validate_sentinel
 from tools.thesis_main.analysis.materialize_c1_authorized_reassignment_addendum import build_rows as build_authorized_rows
-from tools.thesis_main.analysis.materialize_w034_authorized_extension_sensitivity import compare_w034_profiles
+from tools.thesis_main.analysis.materialize_w034_authorized_extension_sensitivity import compare_w034_profiles, materialize as materialize_w034_sensitivity
 from tools.thesis_main.registry.build_c1_late_entry_assignment_manifest import build_rows
 
 
@@ -109,7 +109,27 @@ def test_w034_sentinel_and_stage3_gate_fail_closed(tmp_path: Path) -> None:
     assert build_gate({**state, "C2_A_RP_CLOSED": False}, "r", "e")["STAGE3_LAUNCH_ALLOWED"] is False
     assert_frozen_roster(gate, roster, enrollment)
     roster.write_text("x\n2\n", encoding="utf-8")
-    with pytest.raises(ValueError): assert_frozen_roster(gate, roster, enrollment)
+    with pytest.raises(ValueError):
+        assert_frozen_roster(gate, roster, enrollment)
+
+
+def test_w034_directory_bundle_and_sensitivity_are_sha_bound(tmp_path: Path) -> None:
+    left, right = tmp_path / "left", tmp_path / "right"
+    left.mkdir(); right.mkdir()
+    (left / "a.jsonl").write_text("a\n", encoding="utf-8")
+    (left / "b.jsonl").write_text("b\n", encoding="utf-8")
+    (right / "renamed-1.jsonl").write_text("b\n", encoding="utf-8")
+    (right / "renamed-2.jsonl").write_text("a\n", encoding="utf-8")
+    assert sha256_bundle(left) == sha256_bundle(right)
+    original, augmented = tmp_path / "original.csv", tmp_path / "augmented.csv"
+    _csv(original, [{"worker_id": "34", "profile_version": "p", "cohort_id": "c", "Q_GT_EB": .8, "R_peer_all": .7, "F_struct_EB": .1, "task_support": 5}])
+    _csv(augmented, [{"worker_id": "34", "profile_version": "p", "cohort_id": "c", "Q_GT_EB": .81, "R_peer_all": .71, "F_struct_EB": .09, "task_support": 8}])
+    thresholds = tmp_path / "thresholds.json"
+    thresholds.write_text(json.dumps({"version": "v", "maximum_rank_displacement": 1, "maximum_absolute_metric_change": .2}), encoding="utf-8")
+    result = materialize_w034_sensitivity(original, augmented, thresholds, tmp_path / "sensitivity.json")
+    assert result["status"] == "frozen"
+    assert result["artifact_role"] == "W034_SENSITIVITY_FROZEN"
+    assert len(result["dependencies"]) == 4
 
 
 def test_three_state_counts_unique_workers_and_excludes_not_evaluable_from_denominator() -> None:

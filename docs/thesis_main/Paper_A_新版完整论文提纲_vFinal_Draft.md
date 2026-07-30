@@ -1803,4 +1803,4 @@ W034 的 17 条任务仅在 owner-valid active-time sentinel 通过后提供 tim
 Strong Global 在冻结的 administratively eligible、Q_GT-estimable cohort 上以 `S_G=z(Q_GT_EB)` 排序；LCB 仅用于 safety gate 和 sensitivity。Structural 同时报 raw、EB 与区间；Full/V1 的正式 manifest 必须完整绑定 component、support、threshold、weight、fallback、输入 SHA 和 formal minimum worker/cluster rule，缺失即 fail closed，GT-blind aggregation 不读取政策质量分数。
 # SUPERSEDED：历史设计提纲
 
-> 当前唯一规范性方法真源为 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（`paper_a_method_20260729_v2`）及其 SHA。本文件不得再作为设计真源。
+> 当前唯一规范性方法真源为 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（`paper_a_method_20260730_v3`）及其 SHA。本文件不得再作为设计真源。

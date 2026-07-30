@@ -1389,6 +1389,10 @@ def materialize_three_track_worker_state(
     eligibility_csv: Path | None = None, peer_csv: Path | None = None,
     structural_eb_csv: Path | None = None, formal: bool = False,
 ) -> dict[str, Any]:
+    from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file
+    method = load_method_contract()
+    peer_weak_min = int(method["peer"]["weak_descriptive_min"])
+    peer_formal_min = int(method["peer"]["formal_estimated_min"])
     globals_ = {row.get("worker_id", ""): row for row in read_csv(global_csv)}
     loo_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
     medoid_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -1428,11 +1432,14 @@ def materialize_three_track_worker_state(
     gate_support: dict[str, dict[str, set[str]]] = defaultdict(
         lambda: {"process": set(), "independence": set(), "scope_reference": set()}
     )
+    enrollment_batches: dict[str, set[str]] = defaultdict(set)
     for row in read_csv(eligibility_csv) if eligibility_csv and eligibility_csv.exists() else []:
         row = validate_serialized_record("assignment_evidence_v2", row)
         worker, task = row.get("worker_id", ""), row.get("base_task_id", "")
         if not worker or not task:
             continue
+        provenance = str(row.get("assignment_provenance") or row.get("assignment_origin") or "").lower()
+        enrollment_batches[worker].add("late_entry" if "late" in provenance or _truth(row.get("late_entry_assignment")) else "original")
         for field, key in (
             ("process_eligible", "process"),
             ("independence_eligible", "independence"),
@@ -1481,21 +1488,24 @@ def materialize_three_track_worker_state(
         medoid_value, medoid_support = aggregate(medoid_by_worker[worker])
         peer_lower, peer_upper = interval(peer_by_worker[worker], "peer")
         medoid_lower, medoid_upper = interval(medoid_by_worker[worker], "medoid")
-        peer_status = "insufficient_support" if peer_support < 3 else "weak_descriptive" if peer_support < 5 else "estimated"
+        peer_status = "insufficient_support" if peer_support < peer_weak_min else "weak_descriptive" if peer_support < peer_formal_min else "estimated"
         medoid_status = "insufficient_support" if medoid_support < 3 else "weak_descriptive" if medoid_support < 5 else "estimated"
         global_row = globals_.get(worker, {})
         gt_support = int(float(global_row.get("GT_support") or 0))
         loo_support = len(values)
-        administratively_eligible = completion.get("completion_status") != "nonstarter"
+        completion_status = str(completion.get("completion_status", ""))
+        administratively_eligible = completion_status not in set(method["administrative_eligibility"]["ineligible_completion_statuses"]) and str(worker).lstrip("W0") not in set(method["administrative_eligibility"]["permanently_ineligible_workers"])
+        process_eligible = bool(gate_support[worker]["process"])
+        independence_eligible = bool(gate_support[worker]["independence"])
         q_gt_estimable = bool(gt_support and str(global_row.get("Q_GT_EB", "")).strip())
         reference_evaluable = bool(gate_support[worker]["scope_reference"])
-        three_axes_ready = q_gt_estimable and peer_status == "estimated" and opportunity > 0
-        profile_status = "nonstarter" if not administratively_eligible else "estimated" if three_axes_ready else "insufficient_support"
+        three_axes_ready = administratively_eligible and process_eligible and independence_eligible and q_gt_estimable and peer_status == "estimated" and opportunity > 0
+        profile_status = "administratively_ineligible" if not administratively_eligible else "estimated" if three_axes_ready else "insufficient_support"
         f_struct_raw = struct[worker]["failure"] / opportunity if opportunity else ""
         f_struct_eb = structural_eb.get(worker, {}).get("F_struct_EB", "")
         record = {
-            "schema_version": "worker_profile_v2", "profile_version": "paper_a_worker_profile_v2", "worker_id": worker, "completion_status": completion.get("completion_status", ""),
-            "administratively_eligible": administratively_eligible, "Q_GT_estimable": q_gt_estimable, "reference_evaluable": reference_evaluable,
+            "schema_version": "worker_profile_v2", "profile_version": "paper_a_worker_profile_v2", "cohort_id": "paper_a_calibration_pooled", "enrollment_batch": "late_entry" if "late_entry" in enrollment_batches[worker] else "original", "worker_id": worker, "completion_status": completion_status,
+            "administratively_eligible": administratively_eligible, "process_eligible": process_eligible, "independence_eligible": independence_eligible, "Q_GT_estimable": q_gt_estimable, "reference_evaluable": reference_evaluable,
             "Q_GT_raw_median": __import__("statistics").median(raw_quality[worker]) if raw_quality[worker] else global_row.get("Q_GT_raw", ""), "Q_GT_task_adjusted": global_row.get("Q_GT_task_adjusted", ""),
             "Q_GT_EB": global_row.get("Q_GT_EB", ""), "Q_GT_EB_LCB": global_row.get("Q_GT_EB_LCB", ""),
             "standard_error": global_row.get("Q_GT_standard_error", ""), "CI_lower": global_row.get("Q_GT_CI_lower", ""),
@@ -1509,15 +1519,15 @@ def materialize_three_track_worker_state(
             "R_LOO_LCB": bootstrap[int(.025 * (len(bootstrap) - 1))] if bootstrap else "",
             "R_LOO_bootstrap_replicates": 2000 if bootstrap else 0,
             "R_peer_median": peer_value, "R_peer_all": peer_value, "R_peer_anchor": peer_anchor, "R_peer_core": peer_core, "R_peer_semi": peer_semi, "R_peer_stable": peer_stable,
-            "R_peer_CI_lower": peer_lower, "R_peer_CI_upper": peer_upper, "R_peer_support": peer_support,
+            "R_peer_CI_lower": peer_lower, "R_peer_CI_upper": peer_upper, "R_peer_support": peer_support, "peer_task_support": peer_support,
             "R_LOO_medoid": medoid_value, "R_LOO_medoid_CI_lower": medoid_lower, "R_LOO_medoid_CI_upper": medoid_upper, "R_LOO_medoid_support": medoid_support,
             "R_LOO_strict": sum(values) / len(values) if values else "", "R_LOO_strict_support": loo_support,
             "Q_GT_profile_status": "estimated" if q_gt_estimable else "not_evaluable",
             "R_peer_profile_status": peer_status, "F_struct_profile_status": "estimated" if opportunity else "not_evaluable",
             "LOO_medoid_status": medoid_status, "LOO_strict_status": "insufficient_support" if loo_support < 3 else "weak_descriptive" if loo_support < 5 else "estimated",
-            "global_policy_eligible": bool(administratively_eligible and q_gt_estimable and reference_evaluable),
-            "c2_risk_model_eligible": bool(administratively_eligible and three_axes_ready),
-            "peer_tiebreak_eligible": peer_status == "estimated", "structural_gate_eligible": opportunity > 0,
+            "global_policy_eligible": bool(administratively_eligible and process_eligible and independence_eligible and q_gt_estimable and reference_evaluable),
+            "c2_risk_model_eligible": bool(three_axes_ready),
+            "peer_tiebreak_eligible": bool(administratively_eligible and process_eligible and independence_eligible and peer_status == "estimated"), "structural_gate_eligible": bool(administratively_eligible and process_eligible and independence_eligible and opportunity > 0),
             "peer_decision_usable": peer_status == "estimated", "medoid_loo_decision_usable": medoid_status == "estimated",
             "F_struct_raw": f_struct_raw, "F_struct_EB": f_struct_eb,
             "F_struct_interval_lower": structural_eb.get(worker, {}).get("F_struct_interval_lower", ""),
@@ -1537,19 +1547,28 @@ def materialize_three_track_worker_state(
     output_csv = output_dir / output_name
     write_csv(output_csv, rows)
     status_counts = dict(Counter(row["worker_profile_status"] for row in rows))
-    summary = {"n_workers": len(rows), "n_profile_rows": status_counts.get("estimated", 0), "status_counts": status_counts, "formal_frozen": False, "freeze_owner": "finalize-c1"}
+    summary = {"n_workers": len(rows), "n_profile_rows": status_counts.get("estimated", 0), "n_c2b_eligible": sum(_truth(row["c2_risk_model_eligible"]) for row in rows), "profile_version": "paper_a_worker_profile_v2", "cohort_id": "paper_a_calibration_pooled", "status_counts": status_counts, "formal_frozen": False, "freeze_owner": "finalize-c1"}
     (output_dir / "c1_three_track_worker_state.summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     if formal:
         manifest = {
             "schema_version": "c1_three_track_worker_state_manifest_v1",
+            "profile_version": "paper_a_worker_profile_v2",
+            "cohort_id": "paper_a_calibration_pooled",
+            "method_contract_version": method["contract_version"],
+            "method_contract_sha256": sha256_file(METHOD_CONTRACT),
             "worker_state_csv": output_csv.name,
             "worker_state_sha256": hashlib.sha256(output_csv.read_bytes()).hexdigest(),
             "c1_evidence_freeze_status": "pending_finalize_c1",
             "routing_profile_frozen": False,
             "dependencies": [
-                {"path": str(path.resolve()), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
-                for path in (global_csv, geometry_loo_csv, structural_csv, completion_csv, quality_csv)
-                if path and path.exists()
+                {"role": role, "path": str(path.resolve()), "sha256": hashlib.sha256(path.read_bytes()).hexdigest()}
+                for role, path in (
+                    ("Q_GT", global_csv), ("GEOMETRY_LOO", geometry_loo_csv),
+                    ("STRUCTURAL_ROWS", structural_csv), ("COMPLETION", completion_csv),
+                    ("Q_GT_ROWS", quality_csv), ("CANONICAL_ELIGIBILITY", eligibility_csv),
+                    ("PEER_WORKER_TASK", peer_csv), ("STRUCTURAL_EB", structural_eb_csv),
+                    ("METHOD_CONTRACT", METHOD_CONTRACT),
+                ) if path and path.exists()
             ],
         }
         (output_dir / "c1_three_track_worker_state_manifest.json").write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n", encoding="utf-8")

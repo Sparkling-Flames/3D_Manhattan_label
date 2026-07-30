@@ -71,7 +71,7 @@ def build_global(
         support, task_support = int(evidence["GT_support"]), int(evidence["task_support"])
         subset = [row for row in submissions if str(row.get("worker_id", "")) == worker and str(row.get("condition", "")).lower() == "manual"]
         candidates.append({
-            **evidence,
+            **state, **evidence,
             "R_peer_median": state.get("R_peer_median", ""), "R_LOO_medoid": state.get("R_LOO_medoid", ""),
             "R_LOO_compatible": state.get("R_LOO_compatible", ""),
             "F_struct": "" if struct_raw is None else struct_raw,

@@ -34,9 +34,10 @@ def _record_examples() -> dict[str, dict]:
         },
         "worker_profile_v2": {
             "schema_version": "worker_profile_v2", "worker_id": "1", "profile_version": "p",
-            "administratively_eligible": True, "Q_GT_estimable": True, "reference_evaluable": True,
+            "cohort_id": "c", "enrollment_batch": "original", "administratively_eligible": True,
+            "process_eligible": True, "independence_eligible": True, "Q_GT_estimable": True, "reference_evaluable": True,
             "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated",
-            "F_struct_profile_status": "estimated", "LOO_medoid_status": "estimated",
+            "peer_task_support": 5, "F_struct_profile_status": "estimated", "LOO_medoid_status": "estimated",
             "LOO_strict_status": "not_evaluable", "global_policy_eligible": True,
             "c2_risk_model_eligible": True, "peer_tiebreak_eligible": True,
             "structural_gate_eligible": True, "F_struct_raw": .1, "F_struct_EB": .1,
@@ -45,7 +46,7 @@ def _record_examples() -> dict[str, dict]:
         "policy_candidate_v2": {
             "schema_version": "policy_candidate_v2", "worker_id": "1", "S_G": 1.0,
             "global_policy_eligible": True, "R_peer_stable": .9, "R_LOO_medoid": .8,
-            "profile_version": "p",
+            "LOO_medoid_status": "estimated", "profile_version": "p",
         },
         "geometry_cluster_v2": {
             "schema_version": "geometry_cluster_v2", "base_task_id": "t", "condition": "manual",

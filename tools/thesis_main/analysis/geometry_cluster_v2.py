@@ -27,6 +27,19 @@ def _maximum_cliques(indices: tuple[int, ...], edges: set[tuple[int, int]]) -> l
     return []
 
 
+def _maximum_clique_partitions(indices: tuple[int, ...], edges: set[tuple[int, int]]) -> list[tuple[tuple[int, ...], ...]]:
+    """Enumerate every partition induced by successive maximum-clique choices."""
+    if not indices:
+        return [tuple()]
+    partitions: set[tuple[tuple[int, ...], ...]] = set()
+    for clique in _maximum_cliques(indices, edges):
+        remaining = tuple(index for index in indices if index not in clique)
+        for tail in _maximum_clique_partitions(remaining, edges):
+            canonical = tuple(sorted((tuple(sorted(clique)), *tail), key=lambda group: (-len(group), group)))
+            partitions.add(canonical)
+    return sorted(partitions)
+
+
 def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: float, min_q_wallwall: float, base_task_id: str = "", condition: str = "", minimum_valid_k: int = 3) -> dict[str, Any]:
     valid = [row for row in records if _geometry(row).get("valid")]
     scores: dict[tuple[int, int], float] = {}
@@ -43,18 +56,10 @@ def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: f
         scores[left, right] = score
         if float(boundary) >= min_q_boundary and float(wall) >= min_q_wallwall:
             edges.add((left, right))
-    remaining = tuple(range(len(valid)))
-    partition: list[tuple[int, ...]] = []
-    ambiguous_candidates: list[list[int]] = []
-    while remaining:
-        maxima = _maximum_cliques(remaining, edges)
-        if len(maxima) != 1:
-            ambiguous_candidates = [list(group) for group in maxima]
-            break
-        selected = maxima[0]
-        partition.append(selected)
-        remaining = tuple(index for index in remaining if index not in selected)
-    partition_unique = compatible and not ambiguous_candidates and bool(partition)
+    all_partitions = _maximum_clique_partitions(tuple(range(len(valid))), edges) if valid else []
+    partition_unique = compatible and len(all_partitions) == 1
+    partition = list(all_partitions[0]) if partition_unique else []
+    ambiguous_candidates = [list(group) for group in _maximum_cliques(tuple(range(len(valid))), edges)] if len(all_partitions) > 1 else []
     partition.sort(key=lambda group: (-len(group), tuple(_sha(valid[index]) for index in group)))
     largest = partition[0] if partition_unique else tuple()
     second = partition[1] if partition_unique and len(partition) > 1 else tuple()
@@ -70,17 +75,22 @@ def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: f
     medoid_index, medoid_sha = medoid(largest)
     n1, n2, k = len(largest), len(second), len(valid)
     status = "not_evaluable"
-    reason = "non_unique_complete_link_partition" if ambiguous_candidates else "minimum_valid_k_or_metric_compatibility"
+    reason = "non_unique_complete_link_partition" if len(all_partitions) > 1 else "minimum_valid_k_or_metric_compatibility"
     if partition_unique and k >= minimum_valid_k:
         status = "unimodal" if len(partition) == 1 else "dominant_with_dissent" if n2 <= 1 else "supported_multimodal"
         reason = "unique_complete_link_partition"
     selected = valid[medoid_index] if medoid_index is not None else {}
     memberships = [[str(valid[index].get("canonical_annotation_id") or valid[index].get("annotation_id") or "") for index in group] for group in partition]
+    candidate_partitions = [
+        [[str(valid[index].get("canonical_annotation_id") or valid[index].get("annotation_id") or "") for index in group] for group in candidate]
+        for candidate in all_partitions
+    ]
     result = {
         "schema_version": "geometry_cluster_v2", "base_task_id": base_task_id, "condition": condition,
         "valid_k": k, "partition_status": "unique" if partition_unique else "not_evaluable",
         "cluster_membership_json": json.dumps(memberships, sort_keys=True),
         "ambiguity_candidates_json": json.dumps(ambiguous_candidates, sort_keys=True),
+        "candidate_partitions_json": json.dumps(candidate_partitions, sort_keys=True),
         "cluster_count": len(partition) if partition_unique else "", "largest_cluster_support": n1,
         "second_cluster_support": n2, "largest_cluster_share": n1 / k if k else None,
         "second_cluster_share": n2 / k if k else None,

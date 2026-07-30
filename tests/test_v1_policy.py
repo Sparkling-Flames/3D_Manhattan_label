@@ -91,6 +91,7 @@ def _candidate(worker: str, score: float, *, boost: float = 0.0) -> dict:
         "S_G": score,
         "R_peer_stable": .9,
         "R_LOO_medoid": .8,
+        "LOO_medoid_status": "estimated",
         "B_u_risk": boost,
         "B_u_routing_eligible": True,
         "p1_supported_families": ["undercoverage"],

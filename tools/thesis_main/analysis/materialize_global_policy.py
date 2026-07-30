@@ -43,10 +43,8 @@ def _q_gt_estimable(row: dict[str, Any]) -> bool:
 
 
 def _gate_signal(row: dict[str, Any], flag: str, support: str) -> bool:
-    if flag in row and str(row.get(flag, "")).strip() != "":
-        return _truth(row.get(flag))
-    value = _number(row, support)
-    return value is not None and value > 0
+    del support
+    return flag in row and str(row.get(flag, "")).strip() != "" and _truth(row.get(flag))
 
 
 def _frozen_z_parameters(rows: list[dict[str, Any]]) -> tuple[float, float, int]:
@@ -107,11 +105,11 @@ def build_global_policy(rows: list[dict[str, Any]], manifest: dict[str, Any], *,
         if _truth(row.get("serious_recurrent_failure_flag")):
             reasons.append("serious_recurrent_failure")
         static_row = {key: value for key, value in row.items() if key not in {"available", "availability", "capacity", "capacity_available"}}
-        output.append({**static_row, "schema_version": "policy_candidate_v2", "S_G": "" if s_g is None else s_g, "S_G_z_center": z_center, "S_G_z_scale": z_spread, "S_G_z_cohort_n": z_n, "S_G_z_parameters_frozen_before_gates": True, "global_policy_eligible": not reasons, "global_exclusion_reason": ";".join(reasons), "policy_status": "formal" if formal else "candidate", "formal_use_allowed": bool(formal and approved), "_random_key": random_keys[str(row.get("worker_id", ""))]})
+        output.append({**static_row, "schema_version": "policy_candidate_v2", "S_G": "" if s_g is None else s_g, "LOO_medoid_status": row.get("LOO_medoid_status") or ("estimated" if _number(row, "R_LOO_medoid") is not None else "not_evaluable"), "S_G_z_center": z_center, "S_G_z_scale": z_spread, "S_G_z_cohort_n": z_n, "S_G_z_parameters_frozen_before_gates": True, "global_policy_eligible": not reasons, "global_exclusion_reason": ";".join(reasons), "policy_status": "formal" if formal else "candidate", "formal_use_allowed": bool(formal and approved), "_random_key": random_keys[str(row.get("worker_id", ""))]})
 
     def rank(field: str, target: str) -> None:
         eligible = [row for row in output if row["global_policy_eligible"] and _number(row, field) is not None]
-        eligible.sort(key=lambda row: (-float(row[field]), -float(row.get("R_peer_stable") or -1), -float(row.get("R_LOO_medoid") or -1), row["_random_key"]))
+        eligible.sort(key=lambda row: (-float(row[field]), -float(row.get("R_peer_stable") or -1), -(float(row["R_LOO_medoid"]) if row.get("LOO_medoid_status") == "estimated" and str(row.get("R_LOO_medoid", "")).strip() else -1), row["_random_key"]))
         for index, row in enumerate(eligible, 1):
             row[target] = index
 

@@ -1,4 +1,4 @@
-"""Render/check the human-readable mirror of the normative Paper A JSON contract."""
+"""Render and semantically check the human references to the Paper A contract."""
 
 from __future__ import annotations
 
@@ -12,17 +12,21 @@ NORMATIVE_REFERENCES = (
     PROJECT_ROOT / "docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md",
     PROJECT_ROOT / "docs/thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md",
     PROJECT_ROOT / "docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md",
-    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/07_C1三轨工人测量.tex",
-    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/10_StrongGlobal与FullIntegrated.tex",
-    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/11_T1条件效应.tex",
-    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/15_统计分析与功效.tex",
-    PROJECT_ROOT / "docs/thesis_main/manuscript/overleaf_project/sections/16_结果章节结构.tex",
+)
+
+FORBIDDEN_NORMATIVE_PATTERNS = (
+    "Paper_A_新版完整论文提纲_vFinal_Draft.md` 为设计真源",
+    "S_Global(u) = LCB(Q_u_GT_task_adjusted)",
+    "global_lcb",
+    "global_rank_LCB",
+    "normalized_cluster_margin",
 )
 
 
 def render(contract_path: Path = METHOD_CONTRACT) -> str:
     data = json.loads(contract_path.read_text(encoding="utf-8"))
     digest = sha256_file(contract_path)
+    peer = data["peer"]
     return f"""# Paper A 当前方法合同（自动生成）
 
 > 本文档由 `PAPER_A_METHOD_CONTRACT_CURRENT.json` 自动生成，不得手工定义规范性方法字段。
@@ -34,17 +38,13 @@ def render(contract_path: Path = METHOD_CONTRACT) -> str:
 ## 冻结方法
 
 - C2 候选：`D8, D10, D12`；C2-A-RP 每人最多 `4` 张。
-- 基础工人轴：`Q_GT, R_peer, F_struct`；LOO 只作用途级 tie-break/sensitivity。
-- Strong Global：`S_G=z(Q_GT_EB)`；静态顺序为 `S_G -> R_peer_stable -> R_LOO_medoid -> frozen random`。
-- 非唯一 complete-link partition 的主分析状态为 `not_evaluable`。
-- T1 唯一重跑后任一 pair 不可评价时整图行政删失。
-- V1 在线引擎只消费当前状态；批处理仅作 deterministic replay/audit。
-
-## Rolling amendment 信息集
-
-- C1 已部分执行，W014/W034 运营状态已知。
-- final worker profile、C2 outcome、T1/V1 outcome 尚不可见。
-- assignment 不得读取 C1 quality、peer、ranking、component activation 或 policy divergence。
+- 基础工人轴：`Q_GT, R_peer, F_struct`；LOO 只作可用时的 tie-break/sensitivity。
+- R_peer：少于 `{peer['weak_descriptive_min']}` 个 task 为不足，`3-4` 为描述性，至少 `{peer['formal_estimated_min']}` 个 task 才是正式 estimated。
+- C2-B roster 只消费 `worker_profile_v2.c2_risk_model_eligible`。
+- Strong Global：`S_G=z(Q_GT_EB)`；静态顺序为 `S_G -> R_peer_stable -> available R_LOO_medoid -> frozen random`。
+- 非唯一 complete-link partition 的主分析状态为 `not_evaluable`，并保存全部候选 partition。
+- rolling enrollment 的主画像为 pooled，同时必须生成 original-only sensitivity。
+- 本轮只允许生成 C2-B 启动包；不自动导入 Label Studio，Stage 3/T1/V1 保持关闭。
 
 ## 机器合同
 
@@ -59,7 +59,8 @@ def render(contract_path: Path = METHOD_CONTRACT) -> str:
 def check_references(contract_path: Path = METHOD_CONTRACT) -> None:
     data = json.loads(contract_path.read_text(encoding="utf-8"))
     version, digest = data["contract_version"], sha256_file(contract_path)
-    stale = []
+    stale: list[str] = []
+    conflicts: list[str] = []
     for path in NORMATIVE_REFERENCES:
         if not path.is_file():
             stale.append(f"missing:{path}")
@@ -67,8 +68,11 @@ def check_references(contract_path: Path = METHOD_CONTRACT) -> None:
         content = path.read_text(encoding="utf-8")
         if version not in content or digest not in content:
             stale.append(str(path))
+        conflicts.extend(f"{path}:{pattern}" for pattern in FORBIDDEN_NORMATIVE_PATTERNS if pattern in content)
     if stale:
         raise ValueError("Paper A normative references are stale: " + ";".join(stale))
+    if conflicts:
+        raise ValueError("Paper A normative references contain superseded semantics: " + ";".join(conflicts))
 
 
 def main() -> None:

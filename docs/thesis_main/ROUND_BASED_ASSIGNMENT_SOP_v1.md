@@ -1,6 +1,6 @@
 # Round-Based Assignment SOP v1
 
-> 本 SOP 只消费 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260729_v2`；SHA-256 `d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44`）。旧 Global、C2、LOO 或 rolling 语义均为 superseded。
+> 本 SOP 只消费 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v3`；SHA-256 `fe001e51ccf02baf45cb5a2929d8d9350781d5c3fe30a821d73c44ad7d57efce`）。旧 Global、C2、LOO 或 rolling 语义均为 superseded。
 
 ## 0. 适用范围
 

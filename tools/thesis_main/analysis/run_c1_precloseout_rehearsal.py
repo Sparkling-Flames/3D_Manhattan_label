@@ -677,6 +677,30 @@ def materialize(
     )
     predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"
     worker_state_path = output_dir / ("c1_three_track_worker_state_formal.csv" if formal else "c1_three_track_worker_state.csv")
+    pooled_profile_rows = read_csv(worker_state_path)
+    original_profile_rows = [row for row in pooled_profile_rows if row.get("enrollment_batch") == "original"]
+    original_profile_path = output_dir / "c1_three_track_worker_state_original_only.csv"
+    write_csv(original_profile_path, original_profile_rows, list(pooled_profile_rows[0]) if pooled_profile_rows else ["schema_version", "worker_id"])
+    def profile_ranks(rows: list[dict[str, Any]]) -> dict[str, int]:
+        ordered = sorted(
+            (row for row in rows if str(row.get("Q_GT_EB", "")).strip()),
+            key=lambda row: (-float(row["Q_GT_EB"]), str(row.get("worker_id", ""))),
+        )
+        return {str(row["worker_id"]): index for index, row in enumerate(ordered, 1)}
+    pooled_ranks, original_ranks = profile_ranks(pooled_profile_rows), profile_ranks(original_profile_rows)
+    rank_displacements = {worker: pooled_ranks[worker] - rank for worker, rank in original_ranks.items() if worker in pooled_ranks}
+    rolling_profile_summary = {
+        "schema_version": "paper_a_rolling_profile_sensitivity_v1",
+        "rolling_enrollment_activated": any(row.get("enrollment_batch") == "late_entry" for row in pooled_profile_rows),
+        "pooled_profile_sha256": sha256_file(worker_state_path),
+        "original_only_profile_sha256": sha256_file(original_profile_path),
+        "pooled_worker_count": len(pooled_profile_rows),
+        "original_worker_count": len(original_profile_rows),
+        "late_entry_worker_count": len(pooled_profile_rows) - len(original_profile_rows),
+        "rank_displacement_by_worker": rank_displacements,
+        "maximum_absolute_rank_displacement": max((abs(value) for value in rank_displacements.values()), default=0),
+    }
+    write_json(output_dir / "c1_rolling_profile_sensitivity.json", rolling_profile_summary)
     sensitivity_original = review_snapshots.get("w034_original_profile_csv")
     sensitivity_thresholds = review_snapshots.get("w034_sensitivity_thresholds")
     if sensitivity_original is None and authorized_reassignment_manifest is not None:
@@ -787,6 +811,7 @@ def materialize(
         "c1_preannotation_feature_summary": preannotation_summary,
         "c1_measurement_readiness": readiness,
         "three_track_worker_state_summary": three_track_summary,
+        "rolling_profile_sensitivity": rolling_profile_summary,
         "w034_authorized_extension_sensitivity": w034_sensitivity_summary,
         "c2_candidate_pool_summary": {
             "n_inventory_tasks": len(read_csv(fixed_snapshots["candidate_inventory"])),

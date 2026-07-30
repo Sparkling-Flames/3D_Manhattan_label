@@ -11,6 +11,21 @@ from pathlib import Path
 from typing import Any
 
 
+def sha256_bundle(path: Path) -> str:
+    """Hash one file or a directory as a deterministic immutable bundle."""
+    if path.is_file():
+        return hashlib.sha256(path.read_bytes()).hexdigest()
+    if not path.is_dir():
+        raise FileNotFoundError(path)
+    rows = []
+    for item in sorted((item for item in path.rglob("*") if item.is_file()), key=lambda item: item.relative_to(path).as_posix()):
+        rows.append({"size": item.stat().st_size, "sha256": hashlib.sha256(item.read_bytes()).hexdigest()})
+    if not rows:
+        raise ValueError("W034 raw active-log bundle is empty")
+    payload = json.dumps(sorted(rows, key=lambda row: (row["sha256"], row["size"])), sort_keys=True, separators=(",", ":")).encode("utf-8")
+    return hashlib.sha256(payload).hexdigest()
+
+
 def _truth(value: Any) -> bool:
     return str(value).strip().lower() in {"1", "true", "yes", "passed", "valid"}
 
@@ -27,7 +42,7 @@ def _timestamp(value: Any) -> datetime:
     return parsed.astimezone(timezone.utc)
 
 
-def validate_sentinel(spec: dict[str, Any], active_rows: list[dict[str, str]], runtime_rows: list[dict[str, str]], *, raw_log_bundle_sha256: str, derived_audit_sha256: str) -> dict[str, Any]:
+def validate_sentinel(spec: dict[str, Any], active_rows: list[dict[str, str]], runtime_rows: list[dict[str, str]], *, raw_log_bundle_sha256: str, derived_audit_sha256: str, raw_log_bundle_path: Path | None = None, derived_audit_path: Path | None = None) -> dict[str, Any]:
     required = ("worker_id", "project_id", "runtime_task_id", "annotation_id", "validation_timestamp", "reviewed_by")
     missing = [field for field in required if not str(spec.get(field, "")).strip()]
     if missing:
@@ -59,6 +74,8 @@ def validate_sentinel(spec: dict[str, Any], active_rows: list[dict[str, str]], r
         "worker_id": "34", "validation_timestamp": validation_timestamp.isoformat(),
         "raw_active_log_bundle_sha256": raw_log_bundle_sha256,
         "derived_active_time_audit_sha256": derived_audit_sha256,
+        "raw_active_log_bundle_path": str(raw_log_bundle_path.resolve()) if raw_log_bundle_path else "",
+        "derived_active_time_audit_path": str(derived_audit_path.resolve()) if derived_audit_path else "",
         "sentinel_annotation_identity": f"{spec['project_id']}|{spec['runtime_task_id']}|34|{spec['annotation_id']}",
         "reviewed_by": spec["reviewed_by"],
         "validation_checks": checks, "validation_result": "passed" if passed else "failed",
@@ -69,8 +86,9 @@ def validate_sentinel(spec: dict[str, Any], active_rows: list[dict[str, str]], r
 def materialize(spec_json: Path, active_csv: Path, runtime_csv: Path, raw_log_bundle: Path, output_json: Path) -> dict[str, Any]:
     result = validate_sentinel(
         json.loads(spec_json.read_text(encoding="utf-8")), _read(active_csv), _read(runtime_csv),
-        raw_log_bundle_sha256=hashlib.sha256(raw_log_bundle.read_bytes()).hexdigest(),
+        raw_log_bundle_sha256=sha256_bundle(raw_log_bundle),
         derived_audit_sha256=hashlib.sha256(active_csv.read_bytes()).hexdigest(),
+        raw_log_bundle_path=raw_log_bundle, derived_audit_path=active_csv,
     )
     output_json.parent.mkdir(parents=True, exist_ok=True)
     output_json.write_text(json.dumps(result, indent=2, sort_keys=True) + "\n", encoding="utf-8")

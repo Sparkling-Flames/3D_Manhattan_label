@@ -484,8 +484,12 @@ def build_canonicalization(
                 raise ValueError(f"W034 active-time validation {label} is not SHA-bound")
         if not safe(w034_time_validation.get("sentinel_annotation_identity")):
             raise ValueError("W034 active-time validation lacks sentinel annotation identity")
-        if active_log is not None and active_log.is_file() and sha256_file(active_log) != raw_sha:
+        from tools.thesis_main.analysis.materialize_w034_active_time_validation import sha256_bundle
+        if active_log is not None and sha256_bundle(active_log) != raw_sha:
             raise ValueError("W034 raw active-log bundle SHA does not match active log")
+        derived_path = Path(safe(w034_time_validation.get("derived_active_time_audit_path")))
+        if not derived_path.is_file() or sha256_file(derived_path) != derived_sha:
+            raise ValueError("W034 derived active-time audit SHA does not match the declared artifact")
         w034_time_validation["manifest_sha256"] = sha256_file(w034_active_time_validation_manifest)
     active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths), policy="calibration") if active_log else {}
     raw_manifest = snapshot_inputs_unique(
@@ -836,6 +840,13 @@ def build_canonicalization(
 
     outside_count = sum(row["outside_assignment_submission"] == "true" for row in canonical_rows)
     duplicate_count = sum(row["duplicate_worker_task_submission"] == "true" for row in canonical_rows)
+    if input_status == "formal" and w034_time_validation:
+        authorized_w034 = [
+            row for row in canonical_rows
+            if _worker_number(row.get("worker_id")) == "34" and row.get("assignment_provenance") == "authorized_replacement_assignment"
+        ]
+        if len(authorized_w034) != 17 or any(str(row.get("active_time_expected", "")).strip().lower() not in {"true", "1"} for row in authorized_w034):
+            raise ValueError("formal W034 requires exactly 17 authorized rows with active_time_expected=true")
     pending_duplicate_count = sum(safe(row.get("duplicate_review_status")) == "pending" for row in duplicate_rows)
     reserve_count = sum(row["reserve_realized_submission"] == "true" for row in canonical_rows)
     active_counts = _active_counts(canonical_rows)

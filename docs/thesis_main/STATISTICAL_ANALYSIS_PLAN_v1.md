@@ -1,10 +1,10 @@
 # Statistical Analysis Plan v1
 
-> 规范性方法字段只来自 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260729_v2`；SHA-256 `d628172fc04e24793839202520dd9633116ff7012e2d593789a7c04413014a44`）。执行时必须核对自动生成 MD 所列 JSON SHA；本文不再独立定义冲突字段。
+> 规范性方法字段只来自 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v3`；SHA-256 `fe001e51ccf02baf45cb5a2929d8d9350781d5c3fe30a821d73c44ad7d57efce`）。执行时必须核对自动生成 MD 所列 JSON SHA；本文不再独立定义冲突字段。
 
 ## 0. 适用范围与替代声明
 
-本文覆盖 P1/C1/C2、T1 和 V1 的正式分析。它以 `Paper_A_新版完整论文提纲_vFinal_Draft.md` 为设计真源，并替换旧的：
+本文覆盖 P1/C1/C2、T1 和 V1 的正式分析。规范性字段只由当前 JSON 方法合同定义；历史提纲仅作设计背景，并替换旧的：
 
 - Calibration_manual 上 Random/Global/Full 离线 replay 作为 RQ3 主比较；
 - reserve-only C2；
@@ -114,7 +114,7 @@ Q_GT(u,t)
 正式 Global 的 eligibility 基于 process/independence、GT support、结构失败 gate 和 task-adjusted GT quality floor。排序分数为：
 
 ```text
-S_Global(u) = LCB(Q_u_GT_task_adjusted)
+S_G(u) = z(Q_u_GT_EB)
 ```
 
 LOO 仅用于冻结 tie-break 或 compatibility 审计。

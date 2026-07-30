@@ -28,6 +28,7 @@ from tools.thesis_main.analysis.materialize_c2_task_risk import materialize_form
 from tools.thesis_main.analysis.c1_c2_mainline import formal_git_state
 from tools.thesis_main.analysis.c1_c2_mainline import materialize_c2b_design_worker_profile
 from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import materialize as materialize_design_parameters
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 from tools.thesis_main.analysis.derive_c2b_design_thresholds import derive_threshold_manifest, validate_formula_contract
 from tools.thesis_main.analysis.materialize_c2_task_risk import _feature_audit_passes, freeze_feature_reference, refresh_feature_freeze_approval
 from tools.thesis_main.analysis.materialize_c2b_legacy_provenance import materialize as materialize_legacy_provenance
@@ -763,11 +764,59 @@ def finalize_c1(args: argparse.Namespace) -> dict[str, Any]:
     if not all(path.exists() for path in (audit_path, final_path, measurement_path)):
         raise ValueError("finalize-c1 requires a complete formal audit bundle")
     audit, final, measurement = (json.loads(path.read_text(encoding="utf-8")) for path in (audit_path, final_path, measurement_path))
+    from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, validate_serialized_record
+    method = load_method_contract()
+    method_sha = sha256_file(METHOD_CONTRACT)
+    worker_manifest_path = args.output_dir / "c1_three_track_worker_state_manifest.json"
+    worker_profile_path = args.output_dir / "c1_three_track_worker_state_formal.csv"
+    w034_path = args.output_dir / "w034_original_vs_authorized_sensitivity.json"
+    dependency_blockers: list[str] = []
+
+    def validate_dependency_payload(payload: dict[str, Any], base: Path, trail: str) -> None:
+        for index, dependency in enumerate(payload.get("dependencies", [])):
+            path = Path(str(dependency.get("path", "")))
+            if not path.is_absolute():
+                path = base / path
+            if not path.is_file() or dependency.get("sha256") != sha256_file(path):
+                dependency_blockers.append(f"{trail}:{index}:stale_or_missing")
+                continue
+            if path.suffix.lower() == ".json":
+                child = json.loads(path.read_text(encoding="utf-8"))
+                if isinstance(child, dict) and child.get("dependencies"):
+                    validate_dependency_payload(child, path.parent, f"{trail}:{index}")
+
+    if not worker_manifest_path.is_file() or not worker_profile_path.is_file():
+        dependency_blockers.append("worker_profile_manifest_or_csv_missing")
+        worker_manifest: dict[str, Any] = {}
+        worker_rows: list[dict[str, str]] = []
+    else:
+        worker_manifest = json.loads(worker_manifest_path.read_text(encoding="utf-8"))
+        worker_rows = [validate_serialized_record("worker_profile_v2", row) for row in _read(worker_profile_path)]
+        if worker_manifest.get("worker_state_sha256") != sha256_file(worker_profile_path):
+            dependency_blockers.append("worker_profile_sha_mismatch")
+        if worker_manifest.get("method_contract_sha256") != method_sha:
+            dependency_blockers.append("worker_profile_method_contract_sha_mismatch")
+        validate_dependency_payload(worker_manifest, worker_manifest_path.parent, "worker_profile")
+    if not w034_path.is_file():
+        dependency_blockers.append("w034_sensitivity_freeze_missing")
+        w034: dict[str, Any] = {}
+    else:
+        w034 = json.loads(w034_path.read_text(encoding="utf-8"))
+        if w034.get("schema_version") != "w034_authorized_extension_sensitivity_freeze_v1" or w034.get("status") != "frozen":
+            dependency_blockers.append("w034_sensitivity_not_frozen")
+        if w034.get("method_contract_sha256") != method_sha:
+            dependency_blockers.append("w034_method_contract_sha_mismatch")
+        validate_dependency_payload(w034, w034_path.parent, "w034_sensitivity")
+    terminal_statuses = {"completed", "closed_partial_usable", "closed_partial_insufficient", "nonstarter", "administrative_exclusion"}
+    nonterminal_workers = [row.get("worker_id", "") for row in worker_rows if row.get("completion_status", "") not in terminal_statuses]
+    if nonterminal_workers:
+        dependency_blockers.append("nonterminal_enrollment:" + ",".join(sorted(nonterminal_workers)))
     adjudication = json.loads(args.adjudication_manifest.read_text(encoding="utf-8"))
     bundle_sha = audit.get("full_dependency_bundle_sha256", "")
     approved = adjudication.get("approved") is True and adjudication.get("input_bundle_sha256") == bundle_sha
     canonical_ready = bool(audit.get("C1_CANONICAL_CLOSED")) and bool(final.get("C1_CANONICAL_CLOSED", True))
     blockers = []
+    blockers.extend(dependency_blockers)
     if audit.get("input_status") != "formal": blockers.append("rehearsal_bundle_refused")
     if audit.get("method_contract") != "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1" or not audit.get("git_commit_sha") or not audit.get("worktree_clean"):
         blockers.append("formal_method_contract_or_clean_commit_missing")
@@ -779,9 +828,9 @@ def finalize_c1(args: argparse.Namespace) -> dict[str, Any]:
         blockers.append("formal_audit_or_closeout_blocked")
     if not approved: blockers.append("formal_closeout_adjudication_missing_invalid_or_stale")
     evidence_ready = canonical_ready and collection_closed and not blockers
-    c2b_baseline_ready = bool(measurement.get("C2B_BASELINE_INPUT_FROZEN")) and evidence_ready
+    c2b_baseline_ready = bool(measurement.get("C2B_BASELINE_INPUT_FROZEN")) and evidence_ready and any(str(row.get("c2_risk_model_eligible", "")).lower() in {"true", "1"} for row in worker_rows)
     c2b_blockers = [] if c2b_baseline_ready else ["q_gt_baseline_support_limited_or_not_frozen"]
-    freeze = {"schema_version": "c1_measurement_freeze_envelope_v2", "method_contract": audit.get("method_contract", ""), "git_commit_sha": audit.get("git_commit_sha", ""), "C1_COLLECTION_INCOMPLETE": not collection_closed, "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": evidence_ready, "C1_EVIDENCE_BUNDLE_FROZEN": bool(measurement.get("C1_EVIDENCE_BUNDLE_FROZEN")) and evidence_ready, "C2B_BASELINE_INPUT_FROZEN": c2b_baseline_ready, "Q_GT_FREEZE_STATUS": measurement.get("Q_GT_FREEZE_STATUS", "pending"), "R_LOO_FREEZE_STATUS": measurement.get("R_LOO_FREEZE_STATUS", "pending"), "F_STRUCT_FREEZE_STATUS": measurement.get("F_STRUCT_FREEZE_STATUS", "pending"), "C2B_DESIGN_READY": c2b_baseline_ready, "C2B_RISK_DESIGN_FROZEN": False, "C2B_DESIGN_FROZEN": False, "C2B_ASSIGNMENT_MATERIALIZED": False, "C2B_LAUNCH_READY": False, "routing_profile_frozen": False, "formal_closeout_ready": evidence_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers, "c2b_baseline_blockers": c2b_blockers}
+    freeze = {"schema_version": "c1_evidence_freeze_manifest_v3", "method_contract": audit.get("method_contract", ""), "method_contract_version": method["contract_version"], "method_contract_sha256": method_sha, "profile_version": worker_manifest.get("profile_version", ""), "cohort_id": worker_manifest.get("cohort_id", ""), "git_commit_sha": audit.get("git_commit_sha", ""), "C1_COLLECTION_INCOMPLETE": not collection_closed, "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": evidence_ready, "C1_EVIDENCE_BUNDLE_FROZEN": bool(measurement.get("C1_EVIDENCE_BUNDLE_FROZEN")) and evidence_ready, "C2B_BASELINE_INPUT_FROZEN": c2b_baseline_ready, "Q_GT_FREEZE_STATUS": measurement.get("Q_GT_FREEZE_STATUS", "pending"), "R_LOO_FREEZE_STATUS": measurement.get("R_LOO_FREEZE_STATUS", "pending"), "F_STRUCT_FREEZE_STATUS": measurement.get("F_STRUCT_FREEZE_STATUS", "pending"), "C2B_DESIGN_READY": c2b_baseline_ready, "C2B_RISK_DESIGN_FROZEN": False, "C2B_DESIGN_FROZEN": False, "C2B_ASSIGNMENT_MATERIALIZED": False, "C2B_LAUNCH_READY": False, "routing_profile_frozen": False, "formal_closeout_ready": evidence_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers, "c2b_baseline_blockers": c2b_blockers, "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("FORMAL_AUDIT", audit_path), ("CANONICAL_CLOSEOUT", final_path), ("MEASUREMENT_FREEZE", measurement_path), ("WORKER_PROFILE_MANIFEST", worker_manifest_path), ("WORKER_PROFILE", worker_profile_path), ("W034_SENSITIVITY_FROZEN", w034_path), ("ADJUDICATION", args.adjudication_manifest), ("METHOD_CONTRACT", METHOD_CONTRACT)) if path.is_file()]}
     freeze["state_machine"] = {name: bool(freeze[name]) for name in ("C1_COLLECTION_INCOMPLETE", "C1_CANONICAL_CLOSED", "C1_MEASUREMENT_FROZEN", "C2B_RISK_DESIGN_FROZEN", "C2B_DESIGN_FROZEN", "C2B_ASSIGNMENT_MATERIALIZED", "C2B_LAUNCH_READY")}
     (args.output_dir / "c1_evidence_freeze_manifest.json").write_text(json.dumps(freeze, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return {"day": 1, "phase": "measurement-freeze", "formal_closeout_ready": evidence_ready, "C1_CANONICAL_CLOSED": freeze["C1_CANONICAL_CLOSED"], "C1_MEASUREMENT_FROZEN": freeze["C1_MEASUREMENT_FROZEN"], "C2B_DESIGN_READY": freeze["C2B_DESIGN_READY"], "routing_profile_frozen": False, "blockers": blockers, "c2b_baseline_blockers": c2b_blockers}
@@ -984,6 +1033,11 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
     } for row in assignments]
     if any(not row.get("image_path") for row in distribution):
         raise ValueError("C2-B assigned task lacks a materializable image path")
+    def resolvable_image(value: str) -> bool:
+        value = str(value).strip()
+        return value.startswith(("http://", "https://", "/data/")) or Path(value).is_file() or (_PROJECT_ROOT / value).is_file()
+    if any(not resolvable_image(row["image_path"]) for row in distribution):
+        raise ValueError("C2-B assigned task image path is not resolvable")
     _write(args.output_dir / "worker_distribution_C2B.csv", distribution)
     worker_dir = args.output_dir / "worker_facing_distribution_C2B"; worker_dir.mkdir(parents=True, exist_ok=True)
     for worker in sorted({row["worker_id"] for row in distribution}):
@@ -993,16 +1047,28 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
     import_path = args.output_dir / "label_studio_import_C2B.json"
     import_path.write_text(json.dumps(imports, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     support = Counter(row["task_id"] for row in assignments)
+    assignment_identities = {(row["worker_id"], row["task_id"]) for row in assignments}
+    distribution_identities = {(row["worker_id"], row["task_id"]) for row in distribution}
+    explicit_gt_count = sum(_truth(tasks.get(row["task_id"], {}).get("is_gt")) or str(tasks.get(row["task_id"], {}).get("task_role", "")).upper() == "GT" or str(tasks.get(row["task_id"], {}).get("dataset_group", "")).upper() == "GT" for row in distribution)
+    worker_files = sorted(worker_dir.glob("worker_*_C2B.csv"))
+    method_sha = sha256_file(METHOD_CONTRACT)
     audit = {
-        "method_contract": risk["method_contract"], "git_commit_sha": risk["git_commit_sha"],
-        "assignment_sha256": sha256_file(assignment_path), "import_sha256": sha256_file(import_path),
+        "schema_version": "paper_a_c2b_launch_ready_report_v2", "method_contract": risk["method_contract"], "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": method_sha, "git_commit_sha": risk["git_commit_sha"],
+        "assignment_sha256": sha256_file(assignment_path), "worker_distribution_sha256": sha256_file(args.output_dir / "worker_distribution_C2B.csv"), "worker_distribution_bundle_sha256": _aggregate_sha(_manifest_rows(worker_files)), "import_sha256": sha256_file(import_path),
         "n_assignments": len(assignments), "n_workers": len({row["worker_id"] for row in assignments}),
         "n_tasks": len(support), "min_task_support": min(support.values(), default=0),
         "duplicate_worker_task_count": len(assignments) - len({(row["worker_id"], row["task_id"]) for row in assignments}),
         "import_smoke_passed": bool(imports) and all(item.get("data", {}).get("image") for item in json.loads(import_path.read_text(encoding="utf-8"))),
+        "assignment_distribution_consistent": assignment_identities == distribution_identities,
+        "gt_isolated_from_worker_import": explicit_gt_count == 0,
+        "image_paths_resolvable": all(resolvable_image(row["image_path"]) for row in distribution),
         "capacity_manifest_sha256": sha256_file(args.capacity_manifest),
+        "automatic_label_studio_import": False,
+        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("C1_EVIDENCE_FREEZE", args.c1_closeout_summary), ("C2_RISK", args.risk_summary), ("THRESHOLDS", args.threshold_manifest), ("CAPACITY", args.capacity_manifest), ("SELECTED_DESIGN_APPROVAL", args.selected_design_approval), ("METHOD_CONTRACT", METHOD_CONTRACT))],
     }
-    audit["launch_ready"] = bool(design.get("launch_ready")) and audit["duplicate_worker_task_count"] == 0 and audit["import_smoke_passed"]
+    audit["launch_ready"] = bool(design.get("launch_ready")) and audit["duplicate_worker_task_count"] == 0 and audit["import_smoke_passed"] and audit["assignment_distribution_consistent"] and audit["gt_isolated_from_worker_import"] and audit["image_paths_resolvable"]
+    audit["C2B_LAUNCH_READY"] = audit["launch_ready"]
+    audit["state_machine"] = {**design.get("state_machine", {}), "C2B_ASSIGNMENT_MATERIALIZED": bool(assignments), "C2B_LAUNCH_READY": audit["launch_ready"]}
     (args.output_dir / "c2b_launch_ready_report.json").write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return {"day": 2, "phase": "build", "state_machine": design.get("state_machine", {}), **audit}
 

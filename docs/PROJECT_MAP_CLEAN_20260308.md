@@ -25,7 +25,7 @@
 - `export_label/`：Label Studio 运行时标注导出真源，不作为脚本写入目标。
 - `active_logs/`：原始 `active_time` 日志真源；`operational_incidents/` 保存 C1 起不可变的运行事故证据，不与分析输出混用。
 - `analysis_results/`：生成结果、审计、manifest、图表和中间分析产物。
-- `tests/`：tools 与字段合同的 pytest 覆盖。
+- `tests/`：tools 与字段合同的 pytest 覆盖；Paper A 正式链新增按 `contracts/`、`c1/`、`c2b/`、`e2e/` 分类，未分类历史测试继续保留在根目录。
 - `data/`：数据资产。
 - `output/`：HoHoNet 推理与中间产物。
 - `trap集/`：trap / manual 候选素材层。

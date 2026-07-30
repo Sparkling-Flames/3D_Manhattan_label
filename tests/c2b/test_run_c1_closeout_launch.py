@@ -286,7 +286,29 @@ def test_day2_fails_closed_before_materializing_assignments(tmp_path, monkeypatc
         build_c2b(args)
 
 
+def _write_c1_dependency_closure(tmp_path):
+    from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, sha256_file
+    profile = tmp_path / "c1_three_track_worker_state_formal.csv"
+    profile.write_text(
+        "schema_version,worker_id,profile_version,cohort_id,enrollment_batch,administratively_eligible,process_eligible,independence_eligible,Q_GT_estimable,reference_evaluable,Q_GT_profile_status,R_peer_profile_status,peer_task_support,F_struct_profile_status,LOO_medoid_status,LOO_strict_status,global_policy_eligible,c2_risk_model_eligible,peer_tiebreak_eligible,structural_gate_eligible,F_struct_raw,F_struct_EB,F_struct_interval_lower,F_struct_interval_upper,completion_status\n"
+        "worker_profile_v2,w1,p,c,original,true,true,true,true,true,estimated,estimated,5,estimated,not_evaluable,not_evaluable,true,true,true,true,0,0,0,.1,completed\n",
+        encoding="utf-8",
+    )
+    method_dependency = {"role": "METHOD_CONTRACT", "path": str(METHOD_CONTRACT.resolve()), "sha256": sha256_file(METHOD_CONTRACT)}
+    (tmp_path / "c1_three_track_worker_state_manifest.json").write_text(json.dumps({
+        "schema_version": "c1_three_track_worker_state_manifest_v1", "profile_version": "p", "cohort_id": "c",
+        "worker_state_sha256": sha256_file(profile), "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+        "dependencies": [method_dependency],
+    }), encoding="utf-8")
+    (tmp_path / "w034_original_vs_authorized_sensitivity.json").write_text(json.dumps({
+        "schema_version": "w034_authorized_extension_sensitivity_freeze_v1", "status": "frozen",
+        "profile_version": "p", "cohort_id": "c", "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+        "dependencies": [method_dependency],
+    }), encoding="utf-8")
+
+
 def test_day1_finalize_freezes_c1_evidence_but_not_routing_profile(tmp_path):
+    _write_c1_dependency_closure(tmp_path)
     (tmp_path / "c1_measurement_freeze_manifest.json").write_text(json.dumps({"C1_MEASUREMENT_FROZEN": True, "C1_EVIDENCE_BUNDLE_FROZEN": True, "C2B_BASELINE_INPUT_FROZEN": True, "collection_window_closed": True, "Q_GT_FREEZE_STATUS": "frozen", "R_LOO_FREEZE_STATUS": "support_limited", "F_STRUCT_FREEZE_STATUS": "frozen"}), encoding="utf-8")
     (tmp_path / "c1_final_canonical_closeout_summary.json").write_text(json.dumps({"blockers": [], "formal_closeout_ready": True}), encoding="utf-8")
     (tmp_path / "formal_audit_summary.json").write_text(json.dumps({"input_status": "formal", "formal_closeout_ready": True, "blockers": [], "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1", "git_commit_sha": "a" * 40, "worktree_clean": True, "full_dependency_bundle_sha256": "bundle", "C1_CANONICAL_CLOSED": True, "collection_closure": {"status": "validated"}}), encoding="utf-8")
@@ -298,6 +320,7 @@ def test_day1_finalize_freezes_c1_evidence_but_not_routing_profile(tmp_path):
 
 
 def test_collection_stays_closed_when_qgt_is_support_limited_and_only_c2b_is_blocked(tmp_path):
+    _write_c1_dependency_closure(tmp_path)
     (tmp_path / "c1_measurement_freeze_manifest.json").write_text(json.dumps({
         "C1_EVIDENCE_BUNDLE_FROZEN": True, "C2B_BASELINE_INPUT_FROZEN": False,
         "collection_window_closed": True, "Q_GT_FREEZE_STATUS": "support_limited",

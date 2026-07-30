@@ -9,7 +9,7 @@ def _manifest(status="candidate"):
 
 
 def _workers():
-    common = {"schema_version": "worker_profile_v2", "profile_version": "p", "administratively_eligible": True, "Q_GT_estimable": True, "reference_evaluable": True, "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated", "F_struct_profile_status": "estimated", "LOO_medoid_status": "estimated", "LOO_strict_status": "estimated", "global_policy_eligible": True, "c2_risk_model_eligible": True, "peer_tiebreak_eligible": True, "structural_gate_eligible": True, "F_struct_raw": 0, "F_struct_EB": 0, "F_struct_interval_lower": 0, "F_struct_interval_upper": .1, "R_peer_stable": .8, "R_LOO_medoid": .8, "process_eligible": True, "independence_eligible": True}
+    common = {"schema_version": "worker_profile_v2", "profile_version": "p", "cohort_id": "c", "enrollment_batch": "original", "administratively_eligible": True, "Q_GT_estimable": True, "reference_evaluable": True, "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated", "peer_task_support": 5, "F_struct_profile_status": "estimated", "LOO_medoid_status": "estimated", "LOO_strict_status": "estimated", "global_policy_eligible": True, "c2_risk_model_eligible": True, "peer_tiebreak_eligible": True, "structural_gate_eligible": True, "F_struct_raw": 0, "F_struct_EB": 0, "F_struct_interval_lower": 0, "F_struct_interval_upper": .1, "R_peer_stable": .8, "R_LOO_medoid": .8, "process_eligible": True, "independence_eligible": True}
     return [{**common, "worker_id": "w1", "Q_GT_EB": .8, "Q_GT_EB_LCB": .7, "Q_GT_task_adjusted_FE": .79, "Q_GT_support": 3, "task_support": 3, "building_support": 2}, {**common, "worker_id": "w2", "Q_GT_EB": .6, "Q_GT_EB_LCB": .5, "Q_GT_task_adjusted_FE": .61, "Q_GT_support": 3, "task_support": 3, "building_support": 2}]
 
 
@@ -41,7 +41,6 @@ def test_full_has_at_most_risk_and_one_family_adjustment():
 
 def test_global_freezes_z_from_qgt_eb_and_uses_lcb_only_as_quality_gate():
     rows = _workers()
-    rows[0].update(process_eligible="", process_support="2", independence_eligible="", independence_support="1")
     rows[1]["serious_recurrent_failure_flag"] = "true"
     output = build_global_policy(rows, _manifest("approved"), formal=True)
     assert output[0]["S_G"] == pytest.approx(.70710678)

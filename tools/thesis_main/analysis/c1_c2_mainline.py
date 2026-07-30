@@ -311,10 +311,9 @@ def materialize_c2b_design_worker_profile(
 ) -> dict[str, Any]:
     """Materialize the only worker input consumed by C2-B design/build.
 
-    Admission deliberately uses the baseline Q_GT/process/independence evidence
-    only.  LOO, structural opportunities and individual slope precision remain
-    estimand-specific diagnostics for later confirmation, not a circular C2-B
-    prerequisite.
+    Admission is copied from worker_profile_v2.c2_risk_model_eligible. This
+    function may enrich the design table, but it must never re-derive roster
+    eligibility from support counts or LOO/timing diagnostics.
     """
     completion = {row.get("worker_id", ""): row for row in read_csv(completion_csv)}
     state = {row.get("worker_id", ""): row for row in read_csv(three_axis_csv)}
@@ -323,29 +322,33 @@ def materialize_c2b_design_worker_profile(
     rows = []
     for worker in sorted(set(completion) | set(state) | set(parameter) | set(readiness)):
         c, s, p, r = completion.get(worker, {}), state.get(worker, {}), parameter.get(worker, {}), readiness.get(worker, {})
+        from tools.thesis_main.analysis.paper_a_contracts import validate_serialized_record
+        if not s:
+            continue
+        s = validate_serialized_record("worker_profile_v2", s)
         completion_status = c.get("completion_status", "")
-        completion_valid = _truth(c.get("completion_disposition_valid")) if "completion_disposition_valid" in c else completion_status in {"completed", "partial_noncompletion", "nonstarter"}
+        completion_valid = _truth(c.get("completion_disposition_valid")) if "completion_disposition_valid" in c else completion_status not in {"nonstarter", "administrative_exclusion"}
         q_support = _int(r.get("Q_GT_support"))
-        process_support = _int(r.get("process_support")) if str(r.get("process_support", "")).strip() else _int(s.get("process_eligible_support"))
-        independence_support = _int(r.get("independence_support")) if str(r.get("independence_support", "")).strip() else _int(s.get("independence_support"))
-        administrative = _truth(c.get("administrative_exclusion")) or completion_status == "administrative_exclusion"
-        eligible = completion_status not in {"nonstarter", "closed_partial_insufficient"} and completion_valid and not administrative and q_support > 0 and process_support > 0 and independence_support > 0
+        process_support = _int(s.get("process_eligible_support"))
+        independence_support = _int(s.get("independence_support"))
+        administrative = not _truth(s.get("administratively_eligible"))
+        eligible = _truth(s.get("c2_risk_model_eligible"))
         reasons = []
-        if completion_status == "nonstarter": reasons.append("nonstarter")
-        if completion_status == "closed_partial_insufficient": reasons.append("closed_partial_support_insufficient")
-        if not completion_valid: reasons.append("completion_disposition_not_valid")
-        if administrative: reasons.append("administrative_or_safety_exclusion")
-        if not q_support: reasons.append("missing_q_gt_baseline_support")
-        if not process_support: reasons.append("missing_process_support")
-        if not independence_support: reasons.append("missing_independence_support")
+        if not _truth(s.get("administratively_eligible")): reasons.append("administratively_ineligible")
+        if not _truth(s.get("process_eligible")): reasons.append("process_ineligible")
+        if not _truth(s.get("independence_eligible")): reasons.append("independence_ineligible")
+        if s.get("Q_GT_profile_status") != "estimated": reasons.append("q_gt_not_estimated")
+        if s.get("R_peer_profile_status") != "estimated": reasons.append("r_peer_not_estimated")
+        if s.get("F_struct_profile_status") != "estimated": reasons.append("f_struct_not_estimated")
         slope_status = p.get("c1_risk_slope_status") or ("estimated_from_C1" if p.get("parameter_status") == "estimated" else "not_evaluable_but_C2B_eligible" if eligible else "group_prior_only")
         rows.append({
-            "worker_id": worker, "completion_status": completion_status, "C1_completion_status": completion_status,
+            "worker_id": worker, "profile_version": s.get("profile_version", ""), "cohort_id": s.get("cohort_id", ""), "enrollment_batch": s.get("enrollment_batch", ""), "completion_status": completion_status, "C1_completion_status": completion_status,
             "completion_disposition_valid": completion_valid, "c2b_baseline_eligible": eligible,
             "Q_GT_EB": s.get("Q_GT_EB", ""), "Q_GT_EB_LCB": s.get("Q_GT_EB_LCB", ""),
             "Q_GT_task_adjusted_FE": s.get("Q_GT_task_adjusted_FE", s.get("Q_GT_task_adjusted", "")),
             "Q_GT_task_adjusted": s.get("Q_GT_task_adjusted", ""), "Q_GT_CI_lower": s.get("CI_lower", ""), "Q_GT_CI_upper": s.get("CI_upper", ""), "Q_GT_LCB": s.get("LCB", ""), "Q_GT_support": q_support,
-            "R_LOO_compatible": s.get("R_LOO_compatible", ""), "R_LOO_CI_lower": s.get("R_LOO_CI_lower", ""), "R_LOO_CI_upper": s.get("R_LOO_CI_upper", ""), "R_LOO_support": s.get("LOO_support", r.get("R_LOO_support", "")), "R_LOO_status": r.get("R_LOO_status", "insufficient_support"),
+            "R_peer": s.get("R_peer_all", ""), "R_peer_support": s.get("peer_task_support", ""), "R_peer_status": s.get("R_peer_profile_status", "insufficient_support"),
+            "R_LOO_compatible": s.get("R_LOO_compatible", ""), "R_LOO_CI_lower": s.get("R_LOO_CI_lower", ""), "R_LOO_CI_upper": s.get("R_LOO_CI_upper", ""), "R_LOO_support": s.get("LOO_support", r.get("R_LOO_support", "")), "R_LOO_status": s.get("LOO_medoid_status", "not_evaluable"),
             "F_struct": s.get("F_struct", ""), "F_struct_numerator": s.get("F_struct_numerator", ""), "F_struct_denominator": s.get("F_struct_denominator", ""), "F_struct_status": r.get("F_struct_status", "insufficient_support"),
             "process_support": process_support, "independence_support": independence_support, "scope_reference_support": r.get("scope_reference_support", ""),
             "risk_slope": p.get("risk_slope", ""), "risk_slope_se": p.get("risk_slope_se", ""), "risk_slope_support": p.get("risk_support", ""), "c1_risk_slope_status": slope_status,

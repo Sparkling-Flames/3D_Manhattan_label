@@ -192,13 +192,13 @@ def test_partial_worker_does_not_block_estimand_specific_freeze(tmp_path: Path) 
 def test_support_axes_cannot_substitute_each_other(tmp_path: Path) -> None:
     completion, state, params, readiness = [tmp_path / name for name in ("c.csv", "state.csv", "p.csv", "r.csv")]
     write_csv(completion, [{"worker_id": "w1", "completion_status": "completed", "completion_disposition_valid": "true"}])
-    write_csv(state, [{"worker_id": "w1", "Q_GT_task_adjusted": ".8", "GT_support": "99", "process_eligible_support": "99", "independence_support": "99"}])
+    write_csv(state, [{"schema_version": "worker_profile_v2", "worker_id": "w1", "profile_version": "p", "cohort_id": "c", "enrollment_batch": "original", "administratively_eligible": True, "process_eligible": False, "independence_eligible": True, "Q_GT_estimable": True, "reference_evaluable": True, "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated", "peer_task_support": 5, "F_struct_profile_status": "estimated", "LOO_medoid_status": "not_evaluable", "LOO_strict_status": "not_evaluable", "global_policy_eligible": True, "c2_risk_model_eligible": False, "peer_tiebreak_eligible": True, "structural_gate_eligible": True, "F_struct_raw": 0, "F_struct_EB": 0, "F_struct_interval_lower": 0, "F_struct_interval_upper": .1, "Q_GT_task_adjusted": ".8", "GT_support": "99", "process_eligible_support": "99", "independence_support": "99"}])
     write_csv(params, [{"worker_id": "w1", "parameter_status": "estimated", "risk_slope": ".1", "risk_slope_se": ".1"}])
     write_csv(readiness, [{"worker_id": "w1", "Q_GT_support": "1", "process_support": "0", "independence_support": "1", "scope_reference_support": "1"}])
     materialize_c2b_design_worker_profile(completion, state, params, readiness, tmp_path)
     row = read_csv(tmp_path / "c2b_design_worker_profile.csv")[0]
-    assert row["process_support"] == "0"
     assert row["c2b_baseline_eligible"].lower() == "false"
+    assert "process_ineligible" in row["exclusion_reason"]
 
 
 def test_three_track_worker_state_counts_each_row_gate_instead_of_using_max_axis_support(tmp_path: Path) -> None:
@@ -223,13 +223,13 @@ def test_three_track_worker_state_counts_each_row_gate_instead_of_using_max_axis
 def test_closed_partial_insufficient_cannot_enter_c2b_even_with_some_support(tmp_path: Path) -> None:
     completion, state, params, readiness = [tmp_path / name for name in ("c.csv", "state.csv", "p.csv", "r.csv")]
     write_csv(completion, [{"worker_id": "w1", "completion_status": "closed_partial_insufficient", "completion_disposition_valid": "true"}])
-    write_csv(state, [{"worker_id": "w1", "Q_GT_task_adjusted": ".8"}])
+    write_csv(state, [{"schema_version": "worker_profile_v2", "worker_id": "w1", "profile_version": "p", "cohort_id": "c", "enrollment_batch": "original", "administratively_eligible": True, "process_eligible": True, "independence_eligible": True, "Q_GT_estimable": False, "reference_evaluable": True, "Q_GT_profile_status": "not_evaluable", "R_peer_profile_status": "estimated", "peer_task_support": 5, "F_struct_profile_status": "estimated", "LOO_medoid_status": "not_evaluable", "LOO_strict_status": "not_evaluable", "global_policy_eligible": False, "c2_risk_model_eligible": False, "peer_tiebreak_eligible": True, "structural_gate_eligible": True, "F_struct_raw": 0, "F_struct_EB": 0, "F_struct_interval_lower": 0, "F_struct_interval_upper": .1, "Q_GT_task_adjusted": ".8"}])
     write_csv(params, [{"worker_id": "w1", "parameter_status": "estimated"}])
     write_csv(readiness, [{"worker_id": "w1", "Q_GT_support": "2", "process_support": "2", "independence_support": "2"}])
     materialize_c2b_design_worker_profile(completion, state, params, readiness, tmp_path)
     row = read_csv(tmp_path / "c2b_design_worker_profile.csv")[0]
     assert row["c2b_baseline_eligible"].lower() == "false"
-    assert "closed_partial_support_insufficient" in row["exclusion_reason"]
+    assert "q_gt_not_estimated" in row["exclusion_reason"]
 
 
 def test_risk_vector_is_the_only_exposure_and_building_never_comes_from_prefix() -> None:
