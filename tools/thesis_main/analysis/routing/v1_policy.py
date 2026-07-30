@@ -3,16 +3,15 @@ from __future__ import annotations
 import argparse
 import csv
 import hashlib
-import itertools
 import json
 import random
 from collections import defaultdict
 from pathlib import Path
 from typing import Any, Iterable
 
-from tools.thesis_main.analysis.geometry_consensus.pairwise import pairwise_similarity
+from tools.thesis_main.analysis.geometry_consensus.medoid import frozen_geometry_tie_key
 from tools.thesis_main.analysis.geometry_cluster_v2 import cluster_geometry_records
-from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, sha256_file as method_contract_sha256, validate_serialized_record
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file as method_contract_sha256, validate_serialized_record
 from tools.thesis_main.analysis.materialize_stage3_freeze_gate import validate_gate_file
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file, write_csv_rows
@@ -65,12 +64,8 @@ def _geometry_sha256(row: dict[str, Any]) -> str:
 
 def _geometry_tie_key(row: dict[str, Any], *, seed: Any, seed_key: str) -> tuple[str, str, str]:
     """Return a GT- and worker-quality-blind medoid tie-break key."""
-    geometry_sha = _geometry_sha256(row)
-    annotation_id = str(row.get("canonical_annotation_id") or row.get("annotation_id") or "")
-    frozen_seed = hashlib.sha256(
-        f"{seed}|{seed_key}|{geometry_sha}|{annotation_id}".encode()
-    ).hexdigest()
-    return geometry_sha, annotation_id, frozen_seed
+    del seed
+    return frozen_geometry_tie_key(row, task_id=seed_key)
 
 
 def load_frozen_manifest(path: Path, declared_sha256: str, *, input_status: str) -> dict[str, Any]:
@@ -238,38 +233,6 @@ def rank_candidates(
     }
 
 
-def _components(records: list[dict[str, Any]], aggregation: dict[str, Any]) -> tuple[list[list[int]], dict[tuple[int, int], float]]:
-    adjacency = {index: set() for index in range(len(records))}
-    similarities: dict[tuple[int, int], float] = {}
-    for left in range(len(records)):
-        for right in range(left + 1, len(records)):
-            similarity = pairwise_similarity(records[left]["_geometry"], records[right]["_geometry"])
-            score = min(
-                _number(similarity.get("q_boundary"), -1.0),
-                _number(similarity.get("q_wallwall"), -1.0),
-            )
-            similarities[left, right] = score
-            if (
-                similarity["metric_compatible"]
-                and _number(similarity["q_boundary"]) >= _number(aggregation["min_q_boundary"])
-                and _number(similarity["q_wallwall"]) >= _number(aggregation["min_q_wallwall"])
-            ):
-                adjacency[left].add(right)
-                adjacency[right].add(left)
-    components: list[list[int]] = []
-    unseen = set(adjacency)
-    while unseen:
-        clique = next(
-            list(group)
-            for size in range(len(unseen), 0, -1)
-            for group in itertools.combinations(sorted(unseen), size)
-            if all(right in adjacency[left] for left, right in itertools.combinations(group, 2))
-        )
-        components.append(clique)
-        unseen.difference_update(clique)
-    return sorted(components, key=lambda value: (-len(value), value)), similarities
-
-
 def aggregate_submissions(
     submissions: Iterable[dict[str, Any]],
     manifest: dict[str, Any],
@@ -333,7 +296,15 @@ def aggregate_submissions(
             "valid_k": len(legal), "largest_cluster_support": len(legal),
             "second_cluster_support": 0, "medoid_margin": "", "multimodal": False,
         }
-    cluster = cluster_geometry_records(legal, min_q_boundary=_number(aggregation["min_q_boundary"]), min_q_wallwall=_number(aggregation["min_q_wallwall"]), minimum_valid_k=formal_structure_min_k)
+    geometry_limits = load_method_contract()["geometry_cluster"]
+    cluster = cluster_geometry_records(
+        legal,
+        min_q_boundary=_number(aggregation["min_q_boundary"]),
+        min_q_wallwall=_number(aggregation["min_q_wallwall"]),
+        minimum_valid_k=formal_structure_min_k,
+        maximum_partition_count=int(geometry_limits["maximum_partition_count"]),
+        maximum_search_nodes=int(geometry_limits["maximum_search_nodes"]),
+    )
     if cluster["partition_status"] != "unique":
         return {"terminal_status": "unresolved" if at_cap else "needs_more", "selected_worker_id": "", "selected_annotation_id": "", "selected_geometry_sha256": "", "multimodal": True, **cluster}
     largest_size = int(cluster["largest_cluster_support"])

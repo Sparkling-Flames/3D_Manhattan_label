@@ -114,13 +114,13 @@
 - `tools/thesis_main/analysis/materialize_p1_c1_predictive_association.py`：P1→C1 Spearman/Kendall、worker bootstrap 与 range-restriction 审计入口。
 - `tools/thesis_main/analysis/geometry_consensus/`：同时物化 worker-specific peer median、任务 crowd structure、medoid LOO 与 strict LOO；3:2 多峰只作审计，不自动选多数簇。
 - `tools/thesis_main/analysis/c1_structural_reliability_eb.py`、`materialize_global_policy.py`、`materialize_full_policy.py`、`materialize_counterexample_bank.py`：结构失败 Beta-binomial EB、候选 Global/Full 排名合同与不进入画像/GT/设计的轻量反例库。
-- `docs/thesis_main/PAPER_A_METHOD_AMENDMENT_PEER_GT_SHRINKAGE_v1.md` 及四个配套 manifest：登记 estimand gate、同行/GT/EB 方法候选；当前 `status=candidate`、`interpretation_allowed=false`，不得生成正式 policy 或 assignment。
+- 早期 peer/GT amendment 与 root-cause 说明已归档至 `docs/legacy/paper_a_method_contract_superseded_20260730/`；它们不得生成正式 policy、assignment 或字段定义。
 - `docs/thesis_main/PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md`：Paper A C1→C2-B 单一生产 DAG、stage active-log freeze、状态 owner、风险/模拟和人工审批边界；与 vFinal/Protocol/SOP/SAP 配套，不改变其设计语义。
-- `docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md`：隔离 GPU 环境、静态 feature/P1 integrity 准备、C1 freeze/audit/finalize 和 C2-B design/build 的正式命令。根因收口方法边界见 `docs/thesis_main/PAPER_A_C1_C2B_ROOT_CAUSE_AMENDMENT_v1.md`。
+- `docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md`：隔离 GPU 环境、静态 feature/P1 integrity 准备、C1 freeze/audit/finalize 和 C2-B design/build 的正式命令；规范边界只由当前方法合同定义。
 - `docs/thesis_main/PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json`：`close-c1-and-plan-c2b` 可恢复薄入口的路径配置模板；占位符不得直接用于正式运行。
 - `config/paper_a_analysis_requirements.lock.txt`、`config/paper_a_torch_requirements.lock.txt` 与 `docs/thesis_main/C2B_FEATURE_AUDIT_THRESHOLDS.json`：Paper A 隔离运行环境和 feature audit 审批真源；本地 `.venv-paper-a-gpu` 与静态缓存不提交。
 - `import_json/paper_a_c2b/legacy_reverse_v3_1_manifest.csv`：20260702 v3.1 13 张人工 reverse 图的只读 provenance；不授予 eligibility 或排序优先权。
-- `tools/thesis_main/analysis/c1_c2_mainline.py` 与 `materialize_c1_preannotation_task_features.py`：不可变 C1 row-eligibility sidecar join、estimand-specific worker/task/building/graph gates、唯一 C2-B worker design input，以及不读取 crowd geometry 的预标注 C1 task feature 合同；正式 DAG 由 `docs/thesis_main/PAPER_A_VFINAL_EXECUTION_CONTRACT.json` 固定，风险 exposure 由 `docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json` 固定，设计阈值公式由 `docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json` 固定，正式数值由 SHA 绑定输入机械派生。
+- `tools/thesis_main/analysis/c1_c2_mainline.py` 与 `materialize_c1_preannotation_task_features.py`：不可变 C1 row-eligibility sidecar join、estimand-specific worker/task/building/graph gates、唯一 C2-B worker design input，以及不读取 crowd geometry 的预标注 C1 task feature 合同；正式方法和 DAG 由 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json` 固定，风险 exposure 由 `docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json` 固定，设计阈值公式由 `docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json` 固定，正式数值由 SHA 绑定输入机械派生。
 - `tools/thesis_main/analysis/materialize_c1_estimand_specific_task_support.py`：按 task-condition 与 GT/peer/LOO/structural/time 等 estimand 分层物化 original、authorized、late、outside 和 final unique-worker support。
 - `tools/thesis_main/analysis/materialize_w034_active_time_validation.py`：W034 补充任务开始前的 owner/runtime/session/duration sentinel 验证与 SHA 绑定 manifest。
 - `tools/thesis_main/analysis/materialize_c1_authorized_reassignment_addendum.py` 与 `materialize_w034_authorized_extension_sensitivity.py`：从 W014 原分配、授权计划和 runtime mapping 机械生成 17+3 addendum，并比较 W034 original-only/augmented profile。
@@ -128,10 +128,10 @@
 - `tools/thesis_main/analysis/materialize_c1_three_state_task_tags.py`：按 task-tag 物化 positive、explicit negative、unasserted 与 not-evaluable 计数和比例。
 - `tools/thesis_main/registry/build_c1_late_entry_assignment_manifest.py`：默认关闭、结果盲、exposure-aware 的 late-entry C1 增量 assignment generator，不重排原 cohort。
 - `docs/thesis_main/PAPER_A_C1_ROLLING_ENROLLMENT_CONFIG.template.json`：rolling enrollment 默认关闭配置模板；激活时所有窗口、版本、seed 和 workload 字段必须显式冻结。
-## 2026-07-30 Paper A 方法合同 v5
+## 2026-07-30 Paper A 方法合同 v6
 
 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json` 是唯一规范方法真源；同目录保存生成 MD 和五个 v2 schema。共享验证、geometry、Stage 3、T1/V1 online/replay 工具位于 `tools/thesis_main/analysis/`。
 
-2026-07-30 v4 收敛 C1 三轴为 `Q_GT/R_peer/F_struct`，将 LOO 降为独立 sensitivity；正式 C1 必须输入并 SHA 绑定 `calibration_enrollment_registry.csv`，planning 与 final build 分别由 `close-c1-and-plan-c2b` 和 `build-c2b` 承担。
+2026-07-30 v6 归档竞争性 VFINAL/Protocol 合同，正式 C1 递归绑定 enrollment、reference、building 与 task-binding SHA；planning 与 final build 分别由 `close-c1-and-plan-c2b` 和 `build-c2b` 承担。
 
 - docs/thesis_main/PAPER_A_REFERENCES_NEEDED_CHECKLIST.md：相关工作与引用核验待办；不构成方法合同。

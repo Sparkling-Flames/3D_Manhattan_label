@@ -1,3 +1,4 @@
+<!-- PAPER_A_MACHINE_STATUS: superseded -->
 # C1 Pre-closeout 审计字段合同
 
 ## 2026-07-24 SHA 处置与 LOO 修订

@@ -1,3 +1,4 @@
+<!-- PAPER_A_MACHINE_STATUS: superseded -->
 # Final Gold Rebinding Contract v1
 
 本说明只定义一件事：当项目自己的 `final adjudicated gold` 到位后，如何把当前已经冻结的 Stage 1 selection manifest 重新绑定到 final gold，而不是重做 selection 设计。

@@ -134,16 +134,19 @@ def build_full_policy(
     ambiguity = bool(task.get("family_scores")) and not family_active
     profile_version = str((profile_manifest or {}).get("profile_version", ""))
     version_conflict = bool(profile_version and any(str(row.get("profile_version", profile_version)) != profile_version for row in supported))
-    family_component_disabled = ambiguity or (bool(activated_family) and len(conditional_workers) < 2)
+    family_component_disabled = ambiguity or (bool(activated_family) and len(conditional_workers) < min_worker_support)
     # Family ambiguity is local to the family component.  It must not erase a
     # separately supported risk adjustment.
     global_fallback = not in_support or version_conflict
     output = []
     for row in global_rows:
         worker = str(row.get("worker_id", "")); base = _finite(row.get("S_G"))
-        if formal and base is None: raise ValueError("formal Full requires finite S_G for every global worker")
-        base = 0.0 if base is None else base
         worker_global_eligible = _truth(row.get("global_policy_eligible", row.get("global_eligible", False)))
+        if formal and worker_global_eligible and base is None: raise ValueError("formal Full requires finite S_G for every eligible global worker")
+        if not worker_global_eligible:
+            output.append({**row, "S_F": "", "full_rank": "", "raw_adjustment": "", "capped_adjustment": "", "adjustment_interval_lower": "", "adjustment_interval_upper": "", "full_status": "not_eligible", "overall_global_fallback": True, "full_fallback_global": True, "full_exclusion_reason": "global_policy_ineligible"})
+            continue
+        base = 0.0 if base is None else base
         risk_component_disabled = str(row.get("risk_activation_status", "")) != "supported"
         risk_supported = not global_fallback and not risk_component_disabled
         if formal and risk_supported:
@@ -175,6 +178,8 @@ def build_full_policy(
         if winner_min <= competing_max:
             global_fallback = True
             for row in output:
+                if not _truth(row.get("global_policy_eligible", row.get("global_eligible", False))):
+                    continue
                 row["S_F"] = float(row.get("S_G") or 0)
                 row["risk_adjustment_applied"] = 0.0
                 row["family_adjustment_applied"] = 0.0

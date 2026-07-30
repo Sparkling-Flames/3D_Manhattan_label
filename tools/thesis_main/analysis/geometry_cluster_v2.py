@@ -9,6 +9,7 @@ import statistics
 from typing import Any
 
 from tools.thesis_main.analysis.geometry_consensus.pairwise import pairwise_similarity
+from tools.thesis_main.analysis.geometry_consensus.medoid import select_medoid
 
 
 def _geometry(row: dict[str, Any]) -> dict[str, Any]:
@@ -19,28 +20,46 @@ def _sha(row: dict[str, Any]) -> str:
     return hashlib.sha256(json.dumps(_geometry(row), sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
-def _maximum_cliques(indices: tuple[int, ...], edges: set[tuple[int, int]]) -> list[tuple[int, ...]]:
+def _maximum_cliques(indices: tuple[int, ...], edges: set[tuple[int, int]], *, maximum_search_nodes: int = 10000) -> tuple[list[tuple[int, ...]], bool, int]:
+    search_nodes = 0
     for size in range(len(indices), 0, -1):
-        found = [group for group in itertools.combinations(indices, size) if all(tuple(sorted(pair)) in edges for pair in itertools.combinations(group, 2))]
+        found = []
+        for group in itertools.combinations(indices, size):
+            search_nodes += 1
+            if search_nodes > maximum_search_nodes:
+                return [], True, search_nodes
+            if all(tuple(sorted(pair)) in edges for pair in itertools.combinations(group, 2)):
+                found.append(group)
         if found:
-            return found
-    return []
+            return found, False, search_nodes
+    return [], False, search_nodes
 
 
-def _maximum_clique_partitions(indices: tuple[int, ...], edges: set[tuple[int, int]]) -> list[tuple[tuple[int, ...], ...]]:
+def _maximum_clique_partitions(indices: tuple[int, ...], edges: set[tuple[int, int]], *, maximum_partition_count: int = 256, maximum_search_nodes: int = 10000) -> tuple[list[tuple[tuple[int, ...], ...]], bool, int]:
     """Enumerate every partition induced by successive maximum-clique choices."""
-    if not indices:
-        return [tuple()]
     partitions: set[tuple[tuple[int, ...], ...]] = set()
-    for clique in _maximum_cliques(indices, edges):
-        remaining = tuple(index for index in indices if index not in clique)
-        for tail in _maximum_clique_partitions(remaining, edges):
-            canonical = tuple(sorted((tuple(sorted(clique)), *tail), key=lambda group: (-len(group), group)))
-            partitions.add(canonical)
-    return sorted(partitions)
+    search_nodes = 0
+    truncated = False
+    def visit(remaining: tuple[int, ...], chosen: tuple[tuple[int, ...], ...]) -> None:
+        nonlocal search_nodes, truncated
+        search_nodes += 1
+        if search_nodes > maximum_search_nodes or len(partitions) >= maximum_partition_count:
+            truncated = True
+            return
+        if not remaining:
+            partitions.add(tuple(sorted(chosen, key=lambda group: (-len(group), group))))
+            return
+        cliques, cap_hit, _ = _maximum_cliques(remaining, edges, maximum_search_nodes=maximum_search_nodes)
+        if cap_hit:
+            truncated = True
+            return
+        for clique in cliques:
+            visit(tuple(index for index in remaining if index not in clique), (*chosen, tuple(sorted(clique))))
+    visit(indices, tuple())
+    return sorted(partitions), truncated, search_nodes
 
 
-def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: float, min_q_wallwall: float, base_task_id: str = "", condition: str = "", minimum_valid_k: int = 3) -> dict[str, Any]:
+def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: float, min_q_wallwall: float, base_task_id: str = "", condition: str = "", minimum_valid_k: int = 3, maximum_partition_count: int = 256, maximum_search_nodes: int = 10000) -> dict[str, Any]:
     valid = [row for row in records if _geometry(row).get("valid")]
     scores: dict[tuple[int, int], float] = {}
     edges: set[tuple[int, int]] = set()
@@ -56,26 +75,23 @@ def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: f
         scores[left, right] = score
         if float(boundary) >= min_q_boundary and float(wall) >= min_q_wallwall:
             edges.add((left, right))
-    all_partitions = _maximum_clique_partitions(tuple(range(len(valid))), edges) if valid else []
-    partition_unique = compatible and len(all_partitions) == 1
+    all_partitions, enumeration_truncated, partition_search_nodes = _maximum_clique_partitions(tuple(range(len(valid))), edges, maximum_partition_count=maximum_partition_count, maximum_search_nodes=maximum_search_nodes) if valid else ([], False, 0)
+    partition_unique = compatible and not enumeration_truncated and len(all_partitions) == 1
     partition = list(all_partitions[0]) if partition_unique else []
-    ambiguous_candidates = [list(group) for group in _maximum_cliques(tuple(range(len(valid))), edges)] if len(all_partitions) > 1 else []
+    maxima, clique_truncated, clique_search_nodes = _maximum_cliques(tuple(range(len(valid))), edges, maximum_search_nodes=maximum_search_nodes) if valid else ([], False, 0)
+    enumeration_truncated = enumeration_truncated or clique_truncated
+    ambiguous_candidates = [list(group) for group in maxima] if len(all_partitions) > 1 else []
     partition.sort(key=lambda group: (-len(group), tuple(_sha(valid[index]) for index in group)))
     largest = partition[0] if partition_unique else tuple()
     second = partition[1] if partition_unique and len(partition) > 1 else tuple()
 
     def medoid(group: tuple[int, ...]) -> tuple[int | None, str]:
-        candidates = []
-        for index in group:
-            peer = [scores[tuple(sorted((index, other)))] for other in group if other != index]
-            candidates.append((statistics.median(peer) if peer else 1.0, statistics.mean(peer) if peer else 1.0, _sha(valid[index]), index))
-        candidates.sort(key=lambda item: (-item[0], -item[1], item[2]))
-        return (candidates[0][3], candidates[0][2]) if candidates else (None, "")
+        return select_medoid(valid, group, scores, task_id=base_task_id)[:2]
 
     medoid_index, medoid_sha = medoid(largest)
     n1, n2, k = len(largest), len(second), len(valid)
     status = "not_evaluable"
-    reason = "non_unique_complete_link_partition" if len(all_partitions) > 1 else "minimum_valid_k_or_metric_compatibility"
+    reason = "partition_enumeration_truncated" if enumeration_truncated else "non_unique_complete_link_partition" if len(all_partitions) > 1 else "minimum_valid_k_or_metric_compatibility"
     if partition_unique and k >= minimum_valid_k:
         status = "unimodal" if len(partition) == 1 else "dominant_with_dissent" if n2 <= 1 else "supported_multimodal"
         reason = "unique_complete_link_partition"
@@ -91,6 +107,9 @@ def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: f
         "cluster_membership_json": json.dumps(memberships, sort_keys=True),
         "ambiguity_candidates_json": json.dumps(ambiguous_candidates, sort_keys=True),
         "candidate_partitions_json": json.dumps(candidate_partitions, sort_keys=True),
+        "enumeration_truncated": enumeration_truncated, "maximum_partition_count": maximum_partition_count,
+        "maximum_search_nodes": maximum_search_nodes, "clique_search_nodes": clique_search_nodes,
+        "partition_search_nodes": partition_search_nodes,
         "cluster_count": len(partition) if partition_unique else "", "largest_cluster_support": n1,
         "second_cluster_support": n2, "largest_cluster_share": n1 / k if k else None,
         "second_cluster_share": n2 / k if k else None,

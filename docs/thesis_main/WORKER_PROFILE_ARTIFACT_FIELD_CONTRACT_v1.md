@@ -1,3 +1,4 @@
+<!-- PAPER_A_MACHINE_STATUS: superseded -->
 # Worker profile 工件字段合同 v1
 
 > 状态：Paper A vFinal 正式工件合同

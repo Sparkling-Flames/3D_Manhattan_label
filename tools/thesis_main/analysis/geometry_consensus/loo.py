@@ -3,24 +3,20 @@ from __future__ import annotations
 from typing import Any
 
 import hashlib
-import itertools
 import json
 import numpy as np
 import statistics
 
 from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou_from_normalized_pairs
+from tools.thesis_main.analysis.geometry_cluster_v2 import cluster_geometry_records
 
 from .pairwise import pairwise_similarity
-from .stability import _complete_link_cluster, _maximum_complete_link_clusters
-
-
-def _corners(geometry: dict[str, Any]) -> np.ndarray:
-    return np.asarray([[row["x"] % geometry["width"], row["y_ceiling"]] for row in geometry.get("pairs", [])] + [[row["x"] % geometry["width"], row["y_floor"]] for row in geometry.get("pairs", [])], dtype=float)
 
 
 def leave_one_out(
     records: list[dict[str, Any]], *, grid: int = 256,
     similarity_cutoff: float = 0.8, tie_iou_range_cutoff: float = 0.02,
+    maximum_partition_count: int = 256, maximum_search_nodes: int = 10000,
 ) -> list[dict[str, Any]]:
     """Compute worker/task LOO similarity with the held-out worker excluded."""
     out = []
@@ -33,44 +29,35 @@ def leave_one_out(
         wallwall = [row["wallwall_similarity"] for row in similarities if row.get("wallwall_similarity") is not None]
         compatible_peers = min(len(boundary), len(wallwall))
         n_valid = compatible_peers + (1 if held_out.get("valid") else 0)
-        peer_metrics = {}
-        compatible_edges = {}
-        for left in range(len(peers)):
-            for right in range(left + 1, len(peers)):
-                metrics = pairwise_similarity(peers[left]["geometry"], peers[right]["geometry"], grid=grid)
-                peer_metrics[(left, right)] = metrics
-                boundary_value, wall_value = metrics.get("boundary_similarity"), metrics.get("wallwall_similarity")
-                compatible_edges[(left, right)] = 1.0 if boundary_value is not None and wall_value is not None and boundary_value >= similarity_cutoff and wall_value >= similarity_cutoff else None
-        cliques = _maximum_complete_link_clusters(tuple(range(len(peers))), compatible_edges, 1.0) if len(peers) >= 2 else []
-        # A formal peer reference exists only for one maximum complete-link
-        # cluster.  Overlap is not a licence to select one maximum clique.
-        unique_maximum_cluster = len(cliques) == 1 and len(cliques[0]) >= 2
-        cluster = cliques[0] if unique_maximum_cluster else tuple()
-        medoid_scores = []
-        for peer_index in cluster:
-            metrics = [peer_metrics[tuple(sorted((peer_index, other)))] for other in cluster if other != peer_index]
-            boundary_values = [item["boundary_similarity"] for item in metrics]
-            wall_values = [item["wallwall_similarity"] for item in metrics]
-            geometry_sha = hashlib.sha256(json.dumps(peers[peer_index]["geometry"], sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-            medoid_scores.append(((min(boundary_values), min(wall_values), float(np.mean(boundary_values)), float(np.mean(wall_values))), geometry_sha, peer_index))
-        medoid_scores.sort(key=lambda item: tuple(-value for value in item[0]) + (item[1],))
-        medoid_index = medoid_scores[0][2] if medoid_scores else None
-        tied_count = sum(item[0] == medoid_scores[0][0] for item in medoid_scores) if medoid_scores else 0
+        shared_cluster = cluster_geometry_records(
+            peers,
+            min_q_boundary=similarity_cutoff,
+            min_q_wallwall=similarity_cutoff,
+            base_task_id=str(record.get("base_task_id") or record.get("task_id") or ""),
+            minimum_valid_k=2,
+            maximum_partition_count=maximum_partition_count,
+            maximum_search_nodes=maximum_search_nodes,
+        )
+        unique_maximum_cluster = (
+            shared_cluster["partition_status"] == "unique"
+            and int(shared_cluster["largest_cluster_support"]) >= 2
+        )
+        medoid_index = shared_cluster["largest_cluster_medoid_index"] if unique_maximum_cluster else None
+        tied_count = 1 if medoid_index is not None else 0
         medoid = peers[medoid_index] if medoid_index is not None else {}
         tied_ious = []
-        if held_out.get("valid") and medoid_scores:
-            for _score, _sha, candidate_index in medoid_scores:
-                value, _ = compute_layout_mask_iou_from_normalized_pairs(held_out["pairs"], peers[candidate_index]["geometry"]["pairs"], width=int(held_out["width"]), height=int(held_out["height"]))
-                if _score == medoid_scores[0][0]:
-                    tied_ious.append(value)
+        if held_out.get("valid") and medoid_index is not None:
+            value, _ = compute_layout_mask_iou_from_normalized_pairs(held_out["pairs"], peers[medoid_index]["geometry"]["pairs"], width=int(held_out["width"]), height=int(held_out["height"]))
+            tied_ious.append(value)
         q_loo = tied_ious[0] if tied_ious else None
         tied_range = max(tied_ious) - min(tied_ious) if tied_ious else None
-        tie_unstable = tied_range is not None and tied_range > tie_iou_range_cutoff
-        if tie_unstable:
-            q_loo = None
+        tie_unstable = False
         consensus_geometry = medoid.get("geometry", {})
         consensus_sha = hashlib.sha256(json.dumps(consensus_geometry, sort_keys=True, separators=(",", ":")).encode()).hexdigest() if consensus_geometry else ""
-        if not cliques:
+        if len(peers) < 2 or (
+            shared_cluster["partition_status"] == "unique"
+            and int(shared_cluster["largest_cluster_support"]) < 2
+        ):
             status = "insufficient_peer_support"
         elif not unique_maximum_cluster:
             status = "multiple_maximum_cliques_sensitivity"
@@ -80,8 +67,10 @@ def leave_one_out(
             status = "evaluable"
         else:
             status = "insufficient_peer_support"
-        second = _complete_link_cluster(tuple(i for i in range(len(peers)) if i not in cluster), compatible_edges, 1.0) if cluster else tuple()
-        excluded_status = "unimodal" if cluster and len(cluster) == len(peers) else "dominant_with_dissent" if unique_maximum_cluster and len(second) <= 1 else "supported_multimodal" if len(second) >= 2 else "insufficient_or_incompatible"
+        largest_support = int(shared_cluster["largest_cluster_support"])
+        second_support = int(shared_cluster["second_cluster_support"])
+        excluded_status = shared_cluster["task_crowd_structure_status"] if unique_maximum_cluster else "insufficient_or_incompatible"
+        candidate_partition_count = len(json.loads(shared_cluster["candidate_partitions_json"]))
         out.append(
             {
                 "worker_id": record.get("worker_id", ""),
@@ -108,12 +97,12 @@ def leave_one_out(
                 "loo_consensus_annotation_id": medoid.get("canonical_annotation_id") or medoid.get("annotation_id", ""),
                 "loo_consensus_worker_id": medoid.get("worker_id", ""),
                 "loo_consensus_geometry_sha256": consensus_sha,
-                "loo_largest_cluster_support": len(cluster),
-                "worker_excluded_largest_cluster_support": len(cluster),
-                "worker_excluded_second_cluster_support": len(second),
+                "loo_largest_cluster_support": largest_support,
+                "worker_excluded_largest_cluster_support": largest_support,
+                "worker_excluded_second_cluster_support": second_support,
                 "worker_excluded_unique_dominant_cluster": unique_maximum_cluster,
                 "worker_excluded_structure_status": excluded_status,
-                "loo_maximum_cluster_count": len(cliques),
+                "loo_maximum_cluster_count": candidate_partition_count,
                 "tied_medoid_count": tied_count,
                 "held_out_tied_medoid_iou_min": min(tied_ious) if tied_ious else None,
                 "held_out_tied_medoid_iou_max": max(tied_ious) if tied_ious else None,

@@ -35,7 +35,7 @@ def test_measurement_freeze_requires_three_axes_but_not_active_time(tmp_path: Pa
     completion, quality, peer, structural, profile = [tmp_path / name for name in ("completion.csv", "quality.csv", "peer.csv", "structural.csv", "profile.csv")]
     _write(completion, [{"worker_id": "w", "completion_status": "completed"}])
     common = {"worker_id": "w", "base_task_id": "b", "building_id": "house"}
-    _write(quality, [{**common, "global_analysis_eligible": "true"}])
+    _write(quality, [{**common, "gt_primary_analysis_eligible": "true"}])
     _write(peer, [{**common, "schema_version": "peer_worker_task_v2", "R_peer_task": ".8"}])
     _write(structural, [{**common, "structural_opportunity_eligible": "true"}])
     _write(profile, [{"worker_id": "w", "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated", "F_struct_profile_status": "estimated", "LOO_medoid_status": "not_evaluable", "LOO_strict_status": "not_evaluable"}])
@@ -47,7 +47,7 @@ def test_measurement_freeze_requires_three_axes_but_not_active_time(tmp_path: Pa
 def test_measurement_bundle_closes_without_requiring_every_estimand_for_c2b(tmp_path: Path) -> None:
     completion, quality, peer, structural, profile = [tmp_path / name for name in ("completion.csv", "quality.csv", "peer.csv", "structural.csv", "profile.csv")]
     _write(completion, [{"worker_id": "w", "completion_status": "completed"}])
-    _write(quality, [{"worker_id": "w", "base_task_id": "b", "global_analysis_eligible": "true"}])
+    _write(quality, [{"worker_id": "w", "base_task_id": "b", "gt_primary_analysis_eligible": "true"}])
     _write(peer, [{"worker_id": "w", "base_task_id": "b", "peer_analysis_eligible": "false"}])
     _write(structural, [{"worker_id": "w", "base_task_id": "b", "structural_opportunity_eligible": "false"}])
     _write(profile, [{"worker_id": "w", "Q_GT_profile_status": "estimated", "R_peer_profile_status": "not_evaluable", "F_struct_profile_status": "not_evaluable", "LOO_medoid_status": "not_evaluable", "LOO_strict_status": "not_evaluable"}])

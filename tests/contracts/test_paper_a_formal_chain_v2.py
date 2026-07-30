@@ -27,6 +27,9 @@ def _record_examples() -> dict[str, dict]:
             "peer_analysis_eligible": True, "loo_medoid_analysis_eligible": True,
             "strict_loo_analysis_eligible": False, "structural_opportunity_eligible": True,
             "time_analysis_eligible": True,
+            "semi_correction_analysis_eligible": True,
+            "predictive_validity_analysis_eligible": True,
+            "routing_feature_analysis_eligible": True,
         },
         "peer_worker_task_v2": {
             "schema_version": "peer_worker_task_v2", "base_task_id": "t", "condition": "manual",
@@ -110,6 +113,8 @@ def test_all_record_contracts_reject_wrong_version_missing_and_nonfinite() -> No
     candidate = _record_examples()["policy_candidate_v2"]
     with pytest.raises(ValueError, match="legacy fields"):
         validate_record("policy_candidate_v2", {**candidate, "global_lcb": 1.0})
+    with pytest.raises(ValueError, match="legacy fields"):
+        validate_record("assignment_evidence_v2", {**_record_examples()["assignment_evidence_v2"], "global_analysis_eligible": True})
     with pytest.raises(ValueError, match="non-finite"):
         validate_record("policy_candidate_v2", {**candidate, "S_G": float("nan")})
     for name, field, value in (
@@ -166,7 +171,7 @@ def test_online_v1_requires_stage3_and_replay_is_consistent(tmp_path: Path) -> N
     manifest = {"manifest_version": RULE_VERSION, "freeze_version": "f", "profile_version": "p", "scoring": {"d_cal_F_min": 0, "d_cal_F_max": 1, "family_activation_threshold": .5, "family_activation_margin": .1, "min_conditional_supported": 1, "lambda_B": 0, "lambda_P": 0, "max_total_adjustment": 0, "ranking_stability_margin": 0}, "scheduler": {"seed": 1, "formal_structure_min_k": 3, "offer_timeout": 1, "completion_timeout": 1, "max_offer_attempts": 1, "k_initial": 1, "standard_cap": 1, "exceptional_cap": 1}, "aggregation": {}, "feasibility": {}, "method_contract_sha256": sha256_file(METHOD_CONTRACT), "policy_manifest_sha256": sha256_file(policy_manifest), "candidate_roster_sha256": sha256_file(candidate_roster), "dependencies": [{"role": "stage3_freeze_gate", "path": str(gate), "sha256": sha256_file(gate)}, {"role": "strong_global_policy_manifest", "path": str(policy_manifest), "sha256": sha256_file(policy_manifest)}, {"role": "candidate_roster", "path": str(candidate_roster), "sha256": sha256_file(candidate_roster)}]}
     freeze_manifest = tmp_path / "v1_freeze_manifest.json"
     freeze_manifest.write_text(json.dumps(manifest), encoding="utf-8")
-    state = {"task": {"task_id": "t", "d_cal_F": .5}, "policy_arm": "strong_global", "available_worker_ids": ["1"], "remaining_capacity": {"1": 1}, "next_sequence": 1}
+    state = {"task": {"task_id": "t", "d_cal_F": .5, "family_scores": {}, "risk_route": False}, "policy_arm": "strong_global", "available_worker_ids": ["1"], "remaining_capacity": {"1": 1}, "next_sequence": 1}
     replay_kwargs = {"stage3_gate": gate, "validation_roster": roster, "enrollment_registry": enrollment, "freeze_manifest": freeze_manifest, "freeze_manifest_sha256": sha256_file(freeze_manifest), "candidate_roster_csv": candidate_roster}
     ledger = tmp_path / "ledger.jsonl"
     kwargs = {**replay_kwargs, "ledger": ledger}
@@ -202,8 +207,8 @@ def test_w034_original_only_branch_is_derived_from_canonical_provenance(tmp_path
             writer = csv.DictWriter(stream, fieldnames=list(rows[0])); writer.writeheader(); writer.writerows(rows)
         return path
     eligibility = [
-        {"schema_version": "assignment_evidence_v2", "canonical_annotation_id": "a0", "annotation_id": "a0", "worker_id": "34", "base_task_id": "t0", "condition": "manual", "assignment_provenance": "original_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": True, "peer_analysis_eligible": True, "loo_medoid_analysis_eligible": True, "strict_loo_analysis_eligible": True, "structural_opportunity_eligible": True, "time_analysis_eligible": True},
-        {"schema_version": "assignment_evidence_v2", "canonical_annotation_id": "a1", "annotation_id": "a1", "worker_id": "34", "base_task_id": "t1", "condition": "manual", "assignment_provenance": "authorized_replacement_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": True, "peer_analysis_eligible": True, "loo_medoid_analysis_eligible": True, "strict_loo_analysis_eligible": True, "structural_opportunity_eligible": True, "time_analysis_eligible": True},
+        {"schema_version": "assignment_evidence_v2", "canonical_annotation_id": "a0", "annotation_id": "a0", "worker_id": "34", "base_task_id": "t0", "condition": "manual", "assignment_provenance": "original_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": True, "peer_analysis_eligible": True, "loo_medoid_analysis_eligible": True, "strict_loo_analysis_eligible": True, "structural_opportunity_eligible": True, "time_analysis_eligible": True, "semi_correction_analysis_eligible": True, "predictive_validity_analysis_eligible": True, "routing_feature_analysis_eligible": True},
+        {"schema_version": "assignment_evidence_v2", "canonical_annotation_id": "a1", "annotation_id": "a1", "worker_id": "34", "base_task_id": "t1", "condition": "manual", "assignment_provenance": "authorized_replacement_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": True, "peer_analysis_eligible": True, "loo_medoid_analysis_eligible": True, "strict_loo_analysis_eligible": True, "structural_opportunity_eligible": True, "time_analysis_eligible": True, "semi_correction_analysis_eligible": True, "predictive_validity_analysis_eligible": True, "routing_feature_analysis_eligible": True},
     ]
     write("c1_row_analysis_eligibility.csv", eligibility)
     base_rows = [{"canonical_annotation_id": annotation, "annotation_id": annotation, "worker_id": "34", "base_task_id": task, "value": "1"} for annotation, task in (("a0", "t0"), ("a1", "t1"))]

@@ -19,7 +19,7 @@ def test_peer_five_is_formal_c2_axis_loo_missing_is_not_gate_and_w014_is_exclude
     peer_csv, eligibility_csv, structural_eb_csv, enrollment_csv = [tmp_path / name for name in ("peer.csv", "eligibility.csv", "structural_eb.csv", "calibration_enrollment_registry.csv")]
     workers = ("1", "14")
     _csv(global_csv, [{"worker_id": worker, "GT_support": 5, "Q_GT_EB": .8, "task_support": 5} for worker in workers])
-    _csv(loo_csv, [], ["worker_id", "base_task_id", "loo_analysis_eligible", "loo_medoid_analysis_eligible", "q_LOO_tu"])
+    _csv(loo_csv, [], ["worker_id", "base_task_id", "strict_loo_analysis_eligible", "loo_medoid_analysis_eligible", "q_LOO_tu"])
     _csv(structural_csv, [{"worker_id": worker, "base_task_id": f"s{index}", "structural_opportunity_eligible": "true", "failure_attribution": "none"} for worker in workers for index in range(3)])
     _csv(completion_csv, [{"worker_id": "1", "completion_status": "completed"}, {"worker_id": "14", "completion_status": "administrative_exclusion"}])
     _csv(enrollment_csv, [{"worker_id": "1", "enrollment_batch": "original", "rolling_activated": "false", "admission_status": "admitted", "terminal_status": "completed", "enrolled_at": "2026-07-01"}, {"worker_id": "14", "enrollment_batch": "original", "rolling_activated": "false", "admission_status": "excluded", "terminal_status": "administrative_exclusion", "enrolled_at": "2026-07-01"}])
@@ -30,7 +30,7 @@ def test_peer_five_is_formal_c2_axis_loo_missing_is_not_gate_and_w014_is_exclude
         for index in range(5):
             task = f"t{index}"
             peer_rows.append({"schema_version": "peer_worker_task_v2", "base_task_id": task, "condition": "manual", "dataset_group": "core", "task_crowd_structure_status": "unimodal", "worker_id": worker, "canonical_annotation_id": f"{worker}-{task}", "R_peer_task": .8, "peer_count": 4})
-            eligibility_rows.append({"schema_version": "assignment_evidence_v2", "canonical_annotation_id": f"{worker}-{task}", "worker_id": worker, "base_task_id": task, "condition": "manual", "assignment_provenance": "original_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": True, "peer_analysis_eligible": True, "loo_medoid_analysis_eligible": False, "strict_loo_analysis_eligible": False, "structural_opportunity_eligible": True, "time_analysis_eligible": False, "process_eligible": True, "independence_eligible": True, "scope_reference_eligible": True})
+            eligibility_rows.append({"schema_version": "assignment_evidence_v2", "canonical_annotation_id": f"{worker}-{task}", "worker_id": worker, "base_task_id": task, "condition": "manual", "assignment_provenance": "original_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": True, "peer_analysis_eligible": True, "loo_medoid_analysis_eligible": False, "strict_loo_analysis_eligible": False, "structural_opportunity_eligible": True, "time_analysis_eligible": False, "semi_correction_analysis_eligible": False, "predictive_validity_analysis_eligible": False, "routing_feature_analysis_eligible": False, "process_eligible": True, "independence_eligible": True, "scope_reference_eligible": True})
     _csv(peer_csv, peer_rows)
     _csv(eligibility_csv, eligibility_rows)
     materialize_three_track_worker_state(global_csv, loo_csv, structural_csv, completion_csv, tmp_path, eligibility_csv=eligibility_csv, peer_csv=peer_csv, structural_eb_csv=structural_eb_csv, enrollment_registry_csv=enrollment_csv)
@@ -55,7 +55,7 @@ def test_peer_four_is_descriptive_and_not_c2_eligible(tmp_path: Path) -> None:
 def test_enrollment_registry_owns_batch_even_without_assignment_rows(tmp_path: Path) -> None:
     global_csv, loo_csv, structural_csv, completion_csv, registry = [tmp_path / name for name in ("global.csv", "loo.csv", "structural.csv", "completion.csv", "calibration_enrollment_registry.csv")]
     _csv(global_csv, [], ["worker_id", "GT_support", "Q_GT_EB"])
-    _csv(loo_csv, [], ["worker_id", "base_task_id", "loo_analysis_eligible", "loo_medoid_analysis_eligible", "q_LOO_tu"])
+    _csv(loo_csv, [], ["worker_id", "base_task_id", "strict_loo_analysis_eligible", "loo_medoid_analysis_eligible", "q_LOO_tu"])
     _csv(structural_csv, [], ["worker_id", "structural_opportunity_eligible", "failure_attribution"])
     _csv(completion_csv, [{"worker_id": "late", "completion_status": "nonstarter"}])
     _csv(registry, [{"worker_id": "late", "enrollment_batch": "late_entry", "rolling_activated": "true", "admission_status": "admitted", "terminal_status": "nonstarter", "enrolled_at": "2026-07-30"}])

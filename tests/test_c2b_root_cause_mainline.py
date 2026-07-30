@@ -60,7 +60,7 @@ def _simulation_worker(worker: str, *, baseline: float, structural: float) -> di
 def test_three_axes_are_independent_and_qgt_baseline_admission_does_not_need_loo_or_slope(tmp_path: Path) -> None:
     completion, quality, peer, structural, worker_profile = [tmp_path / name for name in ("completion.csv", "quality.csv", "peer.csv", "structural.csv", "worker_profile.csv")]
     _write(completion, [{"worker_id": "w", "completion_status": "completed", "completion_disposition_valid": "true"}])
-    _write(quality, [{"canonical_annotation_id": "q", "worker_id": "w", "base_task_id": "q_task", "building_id": "b1", "global_analysis_eligible": "true"}])
+    _write(quality, [{"canonical_annotation_id": "q", "worker_id": "w", "base_task_id": "q_task", "building_id": "b1", "gt_primary_analysis_eligible": "true"}])
     _write(peer, [{"schema_version": "peer_worker_task_v2", "canonical_annotation_id": "l", "worker_id": "w", "base_task_id": "l_task", "building_id": "b2", "R_peer_task": ".8"}])
     _write(structural, [{"canonical_annotation_id": "s", "worker_id": "w", "base_task_id": "s_task", "building_id": "b3", "structural_opportunity_eligible": "true"}])
     _write(worker_profile, [{"worker_id": "w", "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated", "F_struct_profile_status": "estimated", "LOO_medoid_status": "not_evaluable", "LOO_strict_status": "not_evaluable"}])
@@ -89,7 +89,7 @@ def test_unique_qgt_estimator_emits_measurement_evidence_without_rank(tmp_path: 
         {
             "worker_id": worker, "base_task_id": task, "condition": "manual",
             "building_id": f"b{index % 3}", "Q_GT_raw": value,
-            "global_analysis_eligible": "true",
+            "gt_primary_analysis_eligible": "true",
         }
         for index, (task, w1, w2) in enumerate((
             ("t1", .90, .72), ("t2", .45, .61), ("t3", .82, .66),
@@ -115,7 +115,7 @@ def test_qgt_bootstrap_missing_worker_is_a_failed_replicate_not_a_model_abort(mo
     rows = [
         {
             "worker_id": worker, "base_task_id": task, "condition": "manual",
-            "building_id": "b1", "Q_GT_raw": value, "global_analysis_eligible": "true",
+            "building_id": "b1", "Q_GT_raw": value, "gt_primary_analysis_eligible": "true",
         }
         for task, values in (("t1", (.8, .7)), ("t2", (.6, .5)))
         for worker, value in zip(("w1", "w2"), values)
@@ -257,7 +257,7 @@ def test_cross_worker_exact_geometry_has_three_distinct_independence_classes(tmp
 def test_formal_audit_cannot_write_the_final_c1_freeze_owner_artifact(tmp_path: Path) -> None:
     global_csv, loo, structural, completion = [tmp_path / name for name in ("global.csv", "loo.csv", "structural.csv", "completion.csv")]
     _write(global_csv, [{"worker_id": "w1", "GT_support": 3, "Q_GT_task_adjusted": .8, "Q_GT_EB": .8}])
-    _write(loo, [{"worker_id": "w1", "base_task_id": "t", "q_LOO_tu": .7, "loo_analysis_eligible": "true"}])
+    _write(loo, [{"worker_id": "w1", "base_task_id": "t", "q_LOO_tu": .7, "strict_loo_analysis_eligible": "true"}])
     _write(structural, [{"worker_id": "w1", "base_task_id": f"s{i}", "structural_opportunity_eligible": "true", "failure_attribution": "passed"} for i in range(3)])
     _write(completion, [{"worker_id": "w1", "completion_status": "completed"}])
     structural_eb = tmp_path / "structural_eb.csv"
@@ -267,7 +267,12 @@ def test_formal_audit_cannot_write_the_final_c1_freeze_owner_artifact(tmp_path: 
     qgt_audit, structural_audit = tmp_path / "qgt_audit.json", tmp_path / "structural_audit.json"
     qgt_audit.write_text(json.dumps({"status": "estimated"}), encoding="utf-8")
     structural_audit.write_text(json.dumps({"status": "estimated"}), encoding="utf-8")
-    materialize_three_track_worker_state(global_csv, loo, structural, completion, tmp_path, structural_eb_csv=structural_eb, enrollment_registry_csv=registry, qgt_audit_json=qgt_audit, structural_eb_audit_json=structural_audit, formal=True)
+    dependencies = [tmp_path / name for name in ("reference_registry.csv", "reference_approval.csv", "building_registry.csv", "task_building_binding.csv")]
+    with pytest.raises(ValueError, match="frozen reference and building dependencies"):
+        materialize_three_track_worker_state(global_csv, loo, structural, completion, tmp_path, structural_eb_csv=structural_eb, enrollment_registry_csv=registry, qgt_audit_json=qgt_audit, structural_eb_audit_json=structural_audit, formal=True)
+    for path in dependencies:
+        path.write_text("evidence\nfrozen\n", encoding="utf-8")
+    materialize_three_track_worker_state(global_csv, loo, structural, completion, tmp_path, structural_eb_csv=structural_eb, enrollment_registry_csv=registry, qgt_audit_json=qgt_audit, structural_eb_audit_json=structural_audit, reference_registry_csv=dependencies[0], reference_approval_csv=dependencies[1], building_registry_csv=dependencies[2], task_building_binding_csv=dependencies[3], formal=True)
     assert not (tmp_path / "c1_evidence_freeze_manifest.json").exists()
     manifest = json.loads((tmp_path / "c1_three_track_worker_state_manifest.json").read_text(encoding="utf-8"))
     assert manifest["c1_evidence_freeze_status"] == "pending_finalize_c1"
@@ -337,8 +342,8 @@ def test_computed_completion_needs_only_exception_dispositions_and_partial_suppo
     assert all(row["completion_disposition_valid"].lower() == "true" for row in evidence)
     eligibility = tmp_path / "eligibility.csv"
     _write(eligibility, [{
-        "worker_id": "usable", "global_analysis_eligible": "true",
-        "loo_analysis_eligible": "false", "structural_opportunity_eligible": "false",
+        "worker_id": "usable", "gt_primary_analysis_eligible": "true",
+        "strict_loo_analysis_eligible": "false", "structural_opportunity_eligible": "false",
     }])
     finalized = finalize_partial_completion_support(
         tmp_path / "c1_worker_completion_disposition_evidence.csv", eligibility, tmp_path, {},

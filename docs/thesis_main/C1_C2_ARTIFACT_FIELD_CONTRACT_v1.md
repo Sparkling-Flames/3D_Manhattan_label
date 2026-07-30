@@ -1,3 +1,4 @@
+<!-- PAPER_A_MACHINE_STATUS: superseded -->
 # C1/C2 工件字段合同 v1
 
 ## 2026-07-24 风险与旧 Reserve 复用补充

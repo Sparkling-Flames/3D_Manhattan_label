@@ -171,13 +171,13 @@ def test_partial_worker_does_not_block_estimand_specific_freeze(tmp_path: Path) 
     completion = tmp_path / "completion.csv"
     write_csv(completion, [{"worker_id": "w1", "completion_status": "closed_partial_usable", "completion_disposition_valid": "true"}])
     quality, peer, structural, eligibility, worker_profile = [tmp_path / name for name in ("q.csv", "peer.csv", "s.csv", "elig.csv", "worker_profile.csv")]
-    write_csv(quality, [{"canonical_annotation_id": "q", "worker_id": "w1", "base_task_id": "tq", "building_id": "b1", "global_analysis_eligible": "true"}])
+    write_csv(quality, [{"canonical_annotation_id": "q", "worker_id": "w1", "base_task_id": "tq", "building_id": "b1", "gt_primary_analysis_eligible": "true"}])
     write_csv(peer, [{"schema_version": "peer_worker_task_v2", "canonical_annotation_id": "l", "worker_id": "w1", "base_task_id": "tl", "building_id": "b2", "R_peer_task": ".8"}])
     write_csv(structural, [{"canonical_annotation_id": "s", "worker_id": "w1", "base_task_id": "ts", "building_id": "b3", "structural_opportunity_eligible": "true"}])
     write_csv(eligibility, [
-        {"canonical_annotation_id": "q", "worker_id": "w1", "base_task_id": "tq", "process_eligible": "true", "independence_eligible": "true", "scope_reference_eligible": "true", "global_analysis_eligible": "true", "loo_analysis_eligible": "false", "structural_opportunity_eligible": "false"},
-        {"canonical_annotation_id": "l", "worker_id": "w1", "base_task_id": "tl", "process_eligible": "true", "independence_eligible": "true", "scope_reference_eligible": "true", "global_analysis_eligible": "false", "loo_analysis_eligible": "true", "structural_opportunity_eligible": "false"},
-        {"canonical_annotation_id": "s", "worker_id": "w1", "base_task_id": "ts", "process_eligible": "true", "independence_eligible": "true", "scope_reference_eligible": "true", "global_analysis_eligible": "false", "loo_analysis_eligible": "false", "structural_opportunity_eligible": "true"},
+        {"canonical_annotation_id": "q", "worker_id": "w1", "base_task_id": "tq", "process_eligible": "true", "independence_eligible": "true", "scope_reference_eligible": "true", "gt_primary_analysis_eligible": "true", "loo_medoid_analysis_eligible": "false", "strict_loo_analysis_eligible": "false", "structural_opportunity_eligible": "false"},
+        {"canonical_annotation_id": "l", "worker_id": "w1", "base_task_id": "tl", "process_eligible": "true", "independence_eligible": "true", "scope_reference_eligible": "true", "gt_primary_analysis_eligible": "false", "loo_medoid_analysis_eligible": "true", "strict_loo_analysis_eligible": "true", "structural_opportunity_eligible": "false"},
+        {"canonical_annotation_id": "s", "worker_id": "w1", "base_task_id": "ts", "process_eligible": "true", "independence_eligible": "true", "scope_reference_eligible": "true", "gt_primary_analysis_eligible": "false", "loo_medoid_analysis_eligible": "false", "strict_loo_analysis_eligible": "false", "structural_opportunity_eligible": "true"},
     ])
     write_csv(worker_profile, [{"worker_id": "w1", "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated", "F_struct_profile_status": "estimated", "LOO_medoid_status": "estimated", "LOO_strict_status": "estimated"}])
     result = materialize_measurement_readiness(
@@ -209,8 +209,8 @@ def test_three_track_worker_state_counts_each_row_gate_instead_of_using_max_axis
     write_csv(structural, [])
     write_csv(completion, [{"worker_id": "w1", "completion_status": "completed"}])
     write_csv(eligibility, [
-        {"schema_version": "assignment_evidence_v2", "canonical_annotation_id": "a-process", "worker_id": "w1", "base_task_id": "process_only", "condition": "manual", "assignment_provenance": "original_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": False, "peer_analysis_eligible": False, "loo_medoid_analysis_eligible": False, "strict_loo_analysis_eligible": False, "structural_opportunity_eligible": False, "time_analysis_eligible": False, "process_eligible": "true", "independence_eligible": "false", "scope_reference_eligible": "false"},
-        {"schema_version": "assignment_evidence_v2", "canonical_annotation_id": "a-independent", "worker_id": "w1", "base_task_id": "independent_only", "condition": "manual", "assignment_provenance": "original_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": False, "peer_analysis_eligible": False, "loo_medoid_analysis_eligible": False, "strict_loo_analysis_eligible": False, "structural_opportunity_eligible": False, "time_analysis_eligible": False, "process_eligible": "false", "independence_eligible": "true", "scope_reference_eligible": "false"},
+        {"schema_version": "assignment_evidence_v2", "canonical_annotation_id": "a-process", "worker_id": "w1", "base_task_id": "process_only", "condition": "manual", "assignment_provenance": "original_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": False, "peer_analysis_eligible": False, "loo_medoid_analysis_eligible": False, "strict_loo_analysis_eligible": False, "structural_opportunity_eligible": False, "time_analysis_eligible": False, "semi_correction_analysis_eligible": False, "predictive_validity_analysis_eligible": False, "routing_feature_analysis_eligible": False, "process_eligible": "true", "independence_eligible": "false", "scope_reference_eligible": "false"},
+        {"schema_version": "assignment_evidence_v2", "canonical_annotation_id": "a-independent", "worker_id": "w1", "base_task_id": "independent_only", "condition": "manual", "assignment_provenance": "original_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": False, "peer_analysis_eligible": False, "loo_medoid_analysis_eligible": False, "strict_loo_analysis_eligible": False, "structural_opportunity_eligible": False, "time_analysis_eligible": False, "semi_correction_analysis_eligible": False, "predictive_validity_analysis_eligible": False, "routing_feature_analysis_eligible": False, "process_eligible": "false", "independence_eligible": "true", "scope_reference_eligible": "false"},
     ])
     materialize_three_track_worker_state(
         global_csv, loo, structural, completion, tmp_path, eligibility_csv=eligibility,
@@ -508,7 +508,7 @@ def test_feature_freeze_sha_mismatch_keeps_risk_not_ready(tmp_path: Path) -> Non
 def test_slope_and_residual_sd_are_not_copied(tmp_path: Path) -> None:
     from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import materialize as materialize_parameters
     quality, risk, structural, completion = [tmp_path / name for name in ("q.csv", "r.csv", "s.csv", "c.csv")]
-    write_csv(quality, [{"worker_id": "w1", "base_task_id": f"b{i}", "Q_GT_raw": str(1 - i / 10), "global_analysis_eligible": "true"} for i in range(4)])
+    write_csv(quality, [{"worker_id": "w1", "base_task_id": f"b{i}", "Q_GT_raw": str(1 - i / 10), "gt_primary_analysis_eligible": "true"} for i in range(4)])
     write_csv(risk, [{"base_task_id": f"b{i}", "risk_design_score_A": str(i / 10), "building_id": "h1"} for i in range(4)])
     write_csv(structural, [{"worker_id": "w1", "structural_opportunity_eligible": "true", "failure_attribution": "none"}])
     write_csv(completion, [{"worker_id": "w1", "assigned_total_count": "4", "observed_total_count": "4", "completion_status": "completed"}])
@@ -529,7 +529,7 @@ def test_hierarchical_variance_components_are_separately_materialized(tmp_path: 
             x = building_index + task_index / 3
             risk_rows.append({"base_task_id": task, "risk_design_score_A": x, "building_id": building})
             for worker_index, worker in enumerate(("w1", "w2", "w3")):
-                quality_rows.append({"worker_id": worker, "base_task_id": task, "Q_GT_raw": .9 - .08 * x + .03 * worker_index + .01 * task_index, "global_analysis_eligible": "true"})
+                quality_rows.append({"worker_id": worker, "base_task_id": task, "Q_GT_raw": .9 - .08 * x + .03 * worker_index + .01 * task_index, "gt_primary_analysis_eligible": "true"})
     write_csv(quality, quality_rows); write_csv(risk, risk_rows)
     write_csv(structural, [{"worker_id": worker, "structural_opportunity_eligible": "true", "failure_attribution": "none"} for worker in ("w1", "w2", "w3")])
     write_csv(completion, [{"worker_id": worker, "assigned_total_count": "6", "observed_total_count": "6", "completion_status": "completed"} for worker in ("w1", "w2", "w3")])

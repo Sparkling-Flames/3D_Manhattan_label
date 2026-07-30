@@ -17,10 +17,10 @@ from typing import Any, Iterable
 
 
 ESTIMANDS: dict[str, tuple[str, ...]] = {
-    "GT": ("gt_primary_analysis_eligible", "global_analysis_eligible"),
+    "GT": ("gt_primary_analysis_eligible",),
     "peer": ("peer_analysis_eligible",),
     "LOO_medoid": ("loo_medoid_analysis_eligible",),
-    "LOO_strict": ("strict_loo_analysis_eligible", "loo_analysis_eligible"),
+    "LOO_strict": ("strict_loo_analysis_eligible",),
     "structural": ("structural_opportunity_eligible",),
     "time": ("time_analysis_eligible",),
     "semi_correction": ("semi_correction_analysis_eligible",),
@@ -156,10 +156,7 @@ def build_task_support_rows(
             row[f"k_original_{estimand}"] = k0
             row[f"k_authorized_{estimand}"] = kr
             row[f"k_late_{estimand}"] = kl
-            if estimand in {"LOO_medoid", "LOO_strict"}:
-                row[f"k_{estimand}"] = final
-            else:
-                row[f"k_final_{estimand}"] = final
+            row[f"k_final_{estimand}"] = final
             row[f"support_deficit_after_authorized_{estimand}"] = max(0, len(a0) - k0 - kr)
             row[f"pooled_support_excess_{estimand}"] = max(0, final - len(a0))
         row["support_deficit_after_authorized"] = row["support_deficit_after_authorized_GT"]

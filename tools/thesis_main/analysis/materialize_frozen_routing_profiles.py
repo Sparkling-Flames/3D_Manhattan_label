@@ -48,6 +48,13 @@ def build_global(
     approval_manifest: dict[str, Any] | None = None,
 ) -> tuple[list[dict[str, Any]], list[dict[str, Any]], dict[str, Any]]:
     config = estimator or {}
+    if input_status == "formal" and (
+        config.get("profile_purpose") != "post_c2_routing"
+        or config.get("model_mode") != "c1_c2_final"
+    ):
+        raise ValueError("formal routing requires post_c2_routing with model_mode=c1_c2_final")
+    if input_status == "formal":
+        config = {**config, "formal_eligibility": True}
     evidence_rows, task_rows, audit = estimate_task_adjusted_qgt(submissions, estimator_contract=config)
     min_gt = int(config.get("min_gt_support", 1))
     min_tasks = int(config.get("min_task_support", 1))
@@ -176,7 +183,7 @@ def materialize(
     worker_state_rows = _read(worker_state_csv)
     if input_status == "formal":
         required_structural = ("administratively_eligible", "Q_GT_estimable", "reference_evaluable", "F_struct_raw", "F_struct_EB", "F_struct_interval_lower", "F_struct_interval_upper", "serious_recurrent_failure_flag")
-        missing = [f"worker_state:{index}:{field}" for index, row in enumerate(worker_state_rows) for field in required_structural if str(row.get(field, "")).strip() == ""]
+        missing = [f"worker_state:{index}:{field}" for index, row in enumerate(worker_state_rows) if str(row.get("global_policy_eligible", "")).lower() in {"1", "true", "yes"} for field in required_structural if str(row.get(field, "")).strip() == ""]
         if missing:
             raise ValueError("formal routing profile requires real structural fields: " + ";".join(missing))
     global_rows, task_rows, model_audit = build_global(

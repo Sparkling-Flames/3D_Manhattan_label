@@ -1,3 +1,4 @@
+<!-- PAPER_A_MACHINE_STATUS: superseded -->
 # RQ3 Minimal Evidence-Chain Contract v1
 
 > Last updated: 2026-07-17

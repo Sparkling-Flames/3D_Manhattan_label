@@ -13,7 +13,7 @@ from .pairwise import pairwise_similarity, peer_similarity_profiles
 from .representation import normalize_geometry
 from .stability import stability_summary
 from tools.thesis_main.analysis.geometry_cluster_v2 import cluster_geometry_records
-from tools.thesis_main.analysis.paper_a_contracts import validate_records
+from tools.thesis_main.analysis.paper_a_contracts import load_method_contract, validate_records
 
 
 RULE_VERSION = "geometry_loo_heldout_consensus_v3"
@@ -42,6 +42,7 @@ def materialize_geometry_consensus(
     building_binding_csv: Path | None = None,
 ) -> dict[str, Any]:
     rules = json.loads(rule_manifest.read_text(encoding="utf-8"))
+    method = load_method_contract()
     thresholds = rules.get("thresholds", {})
     grid = int(thresholds.get("boundary_grid", rules.get("metrics", {}).get("boundary_grid")))
     cutoff = float(thresholds.get("similarity_cutoff", rules.get("metrics", {}).get("multimodal_similarity_cutoff")))
@@ -103,6 +104,8 @@ def materialize_geometry_consensus(
             records, min_q_boundary=cutoff, min_q_wallwall=cutoff,
             base_task_id=base_task_id, condition=condition,
             minimum_valid_k=int(rules.get("thresholds", {}).get("minimum_valid_k", rules.get("loo", {}).get("minimum_valid_k_for_candidate", 3))),
+            maximum_partition_count=int(method["geometry_cluster"]["maximum_partition_count"]),
+            maximum_search_nodes=int(method["geometry_cluster"]["maximum_search_nodes"]),
         )
         crowd_rows.append({
             **sidecar_common(source_artifact=str(geometry_jsonl), source_sha256=source_sha, condition=condition, validity_status="valid" if formal_allowed else "dry_run", rule_version=RULE_VERSION, interpretation_allowed=formal_allowed),
@@ -119,13 +122,16 @@ def materialize_geometry_consensus(
                 "task_crowd_structure_status": crowd["task_crowd_structure_status"],
                 "R_peer_task": peer.get("R_peer_task"),
             })
-        loo = leave_one_out(records, grid=grid, similarity_cutoff=cutoff, tie_iou_range_cutoff=tie_iou_range_cutoff)
-        if summary["consensus_status"] == "stable" and any(row.get("loo_consensus_status") in {"tied_medoid_sensitivity", "multiple_maximum_cliques_sensitivity"} for row in loo):
-            summary["consensus_status"] = "weak"
-            summary["primary_eligible"] = False
-            summary["sensitivity_eligible"] = True
+        loo = leave_one_out(
+            records,
+            grid=grid,
+            similarity_cutoff=cutoff,
+            tie_iou_range_cutoff=tie_iou_range_cutoff,
+            maximum_partition_count=int(method["geometry_cluster"]["maximum_partition_count"]),
+            maximum_search_nodes=int(method["geometry_cluster"]["maximum_search_nodes"]),
+        )
         for row in loo:
-            row["task_consensus_status"] = summary["consensus_status"]
+            row["task_consensus_status"] = crowd["task_crowd_structure_status"]
             row["task_crowd_structure_status"] = crowd["task_crowd_structure_status"]
             row["medoid_tie_sensitive"] = row.get("loo_consensus_status") == "tied_medoid_sensitivity"
             row["loo_medoid_analysis_eligible"] = (
@@ -134,7 +140,11 @@ def materialize_geometry_consensus(
                 and crowd["task_crowd_structure_status"] in {"unimodal", "dominant_with_dissent"}
                 and not row["medoid_tie_sensitive"]
             )
-            row["primary_loo_eligible"] = row.get("q_LOO_primary") is not None and summary["consensus_status"] == "stable" and row.get("loo_consensus_status") == "evaluable"
+            row["primary_loo_eligible"] = (
+                row.get("q_LOO_primary") is not None
+                and crowd["task_crowd_structure_status"] in {"unimodal", "dominant_with_dissent"}
+                and row.get("loo_consensus_status") == "evaluable"
+            )
             row["sensitivity_loo_eligible"] = bool(row.get("q_LOO_tie_mean") is not None) and not row["primary_loo_eligible"]
             loo_rows.append(
                 {

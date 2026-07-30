@@ -204,6 +204,13 @@ def build_candidate_design_manifest(
     output: Path, *, threshold_manifest: Path = DESIGN_THRESHOLDS,
     risk_summary: Path | None = None, seed: int = 20260724, draws: int = 1000,
 ) -> Path:
+    task_pool_rows = read_csv(task_pool_csv)
+    cross_stage_anchor_base_task_ids = sorted({
+        safe(row.get("base_task_id"))
+        for row in task_pool_rows
+        if safe(row.get("base_task_id"))
+        and (truthy(row.get("cross_stage_anchor")) or "anchor" in safe(row.get("selection_role")).lower())
+    })
     """Enumerate designs from the realized frozen pool; never select one."""
     tasks = [row for row in read_csv(task_pool_csv) if truthy(row.get("assignment_eligible"))]
     workers = _eligible_workers(read_csv(worker_profile_csv))
@@ -228,6 +235,8 @@ def build_candidate_design_manifest(
         "risk_contract_sha256": sha256_file(RISK_CONTRACT),
         "threshold_manifest_sha256": sha256_file(threshold_manifest),
         "candidate_designs": candidates,
+        "cross_stage_anchor_base_task_ids": cross_stage_anchor_base_task_ids,
+        "cross_stage_anchor_count": len(cross_stage_anchor_base_task_ids),
         "simulation": {"seed": seed, "draws": draws, "resampling": "C1 empirical building/task/worker bootstrap"},
         "selection_rule": "first_minimum_design_meeting_graph_coverage_precision_budget_then_sha_bound_human_approval",
     }

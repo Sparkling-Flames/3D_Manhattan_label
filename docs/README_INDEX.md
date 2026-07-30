@@ -2,7 +2,7 @@
 
 > 2026-07-18：Paper A 正式文本已迁移到 vFinal。当前正文入口为
 > `thesis_main/manuscript/overleaf_project/main.tex`；正式执行合同为
-> `ROUND_BASED_EXECUTION_PROTOCOL_v1.md`、`ROUND_BASED_ASSIGNMENT_SOP_v1.md`
+> `PAPER_A_METHOD_CONTRACT_CURRENT.json`
 > 与 `STATISTICAL_ANALYSIS_PLAN_v1.md`。旧提纲仅作历史审计，不再定义 C2/T1/V1。
 > 字段真源同步为 `C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md`、
 > `WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md` 与 `ANALYSIS_DATA_FLOW.md`。
@@ -22,15 +22,14 @@
 
 关键文件：
 
-- [ROUND_BASED_EXECUTION_PROTOCOL_v1.md](thesis_main/ROUND_BASED_EXECUTION_PROTOCOL_v1.md)
+- [PAPER_A_METHOD_CONTRACT_CURRENT.json](thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)
 - [ROUND_BASED_ASSIGNMENT_SOP_v1.md](thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md)
 - [P1_PRESCREEN_LAUNCH_CHECKLIST_v1.md](thesis_main/P1_PRESCREEN_LAUNCH_CHECKLIST_v1.md)
 - [PRESCREEN_STAGE1_OPERATIONAL_GUIDE_20260327.md](thesis_main/PRESCREEN_STAGE1_OPERATIONAL_GUIDE_20260327.md)
 - [C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md](thesis_main/C1_C2_ARTIFACT_FIELD_CONTRACT_v1.md)
 - [PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md](thesis_main/PAPER_A_C1_C2_FORMAL_ARCHITECTURE.md)：C1 日志冻结、三轴证据、C2-B 风险/模拟/审批/assignment 的单一生产 DAG 与状态 owner
 - [PAPER_A_C1_C2B_FORMAL_RUNBOOK.md](thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md)：GPU 静态特征准备、C1 collection freeze 与 C2-B 正式命令顺序
-- [PAPER_A_C1_C2B_ROOT_CAUSE_AMENDMENT_v1.md](thesis_main/PAPER_A_C1_C2B_ROOT_CAUSE_AMENDMENT_v1.md)：Q_GT bootstrap、risk boundary、联合 posterior、P1 integrity 与双层阈值的 dry-run 前置修订
-- [PAPER_A_METHOD_AMENDMENT_PEER_GT_SHRINKAGE_v1.md](thesis_main/PAPER_A_METHOD_AMENDMENT_PEER_GT_SHRINKAGE_v1.md)：estimand gate、同行结构、GT 冲突与 EB 收缩的候选方法修订；批准前禁止正式解释
+- 历史根因与 peer/GT amendment 已归档至 `legacy/paper_a_method_contract_superseded_20260730/`，不再定义正式字段或执行语义。
 - [PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json](thesis_main/PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json)：`close-c1-and-plan-c2b` 可恢复薄入口配置模板
 - [C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md](thesis_main/C1_PRECLOSEOUT_AUDIT_FIELD_CONTRACT_v1.md)
 - [WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md](thesis_main/WORKER_PROFILE_ARTIFACT_FIELD_CONTRACT_v1.md)
@@ -39,7 +38,7 @@
 - [WORKER_PROFILE_THESIS_DISPLAY_CONTRACT_v1.md](thesis_main/WORKER_PROFILE_THESIS_DISPLAY_CONTRACT_v1.md)
 - [WORKER_PROFILE_AMENDMENT_COMPATIBILITY_BRIDGE_v1.md](thesis_main/WORKER_PROFILE_AMENDMENT_COMPATIBILITY_BRIDGE_v1.md)
 - [PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md](thesis_main/PAPER_A_VFINAL_ANALYSIS_ARTIFACT_AMENDMENT_v1.md)：Paper A vFinal sidecar、dry-run 与正式数据边界
-- [PAPER_A_VFINAL_EXECUTION_CONTRACT.json](thesis_main/PAPER_A_VFINAL_EXECUTION_CONTRACT.json)：C1→C2 主线 DAG、三段 freeze gate、风险通道与 legacy 隔离合同
+- `PAPER_A_VFINAL_EXECUTION_CONTRACT.json`（已归档至 `docs/legacy/paper_a_method_contract_superseded_20260730/`，不再是正式合同）：C1→C2 主线 DAG、三段 freeze gate、风险通道与 legacy 隔离合同
 - [C2B_RISK_DESIGN_CONTRACT_v1.json](thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json)：C2-B 唯一风险通道、分层、模拟与冻结状态合同
 - [C2B_DESIGN_SELECTION_THRESHOLDS.json](thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json)：C1 closeout 前冻结的 C2-B design threshold 公式、常数、输入字段与方向合同；正式数值由 SHA 绑定输入机械派生
 - `PAPER_A_METHOD_CONTRACT_CURRENT.json`：Paper A 唯一规范方法真源；`Paper_A_新版完整论文提纲_vFinal_Draft.md` 已 superseded，仅作非规范性写作背景。

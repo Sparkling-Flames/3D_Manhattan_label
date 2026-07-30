@@ -1,43 +1,62 @@
 {
-  "schema_version": "paper_a_c2b_risk_design_contract_v1",
-  "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1",
-  "risk_channels": {
-    "d_model_feat": "frozen HoHoNet LHFeat global distance",
-    "g_model_struct": "frozen pre-annotation layout structural flag score",
-    "d_cal_A": "candidate distance to frozen C1 risk-design feature space; C1-only reference",
-    "d_cal_F": "post-C2 confirmation distance; forbidden from C2-B selection",
-    "risk_design_vector_A": "ordered frozen vector [d_model_feat, d_model_feat_local_max, g_model_struct, d_cal_A]",
-    "risk_design_score_A": "frozen continuous score derived only from risk_design_vector_A"
-  },
-  "channel_use": {
-    "risk_design_vector_A": "sole C2-B exposure; no proxy or alias is permitted",
-    "risk_design_score_A": "sole continuous exposure for stratum and worker slope",
-    "risk_assist": "T1 assistance analysis only",
-    "risk_route": "V1 only after confirmed C2-B evidence"
-  },
-  "stratum_rule": {
-    "name": "risk_design_score_A_q75",
-    "stress_quantile": 0.75,
-    "allowed_values": ["ordinary", "stress"],
-    "forbid_legacy_proxies": ["pair_count", "gt_pair_count", "task_stratum", "risk_assist"]
-  },
-  "feature_freeze": {
-    "checkpoint": "ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth",
-    "config": "config/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34.yaml",
-    "preprocess": "RGB/255, HoHoNet.extract_feat(), frozen reference PCA/whitening cache",
-    "required_freeze_flags": ["pca_frozen", "whitening_frozen", "circular_shift_invariant", "seam_invariant"],
-    "layout_requirements": ["ceiling_floor_curve_present", "topology_valid", "seam_stability", "postprocess_valid"]
-  },
-  "simulation": {
-    "minimum_draws": 200,
-    "top_k": 3,
-    "minimum_task_support": 2,
-    "max_q_gt_ci_half_width": null,
-    "selection": "non-dominated candidates only until C2B_DESIGN_SELECTION_THRESHOLDS.json is approved"
-  },
-  "threshold_manifest": "docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json",
-  "states": {
-    "incomplete_c1": "risk_design_A_status=pending_complete_C1; risk_design_stratum_status=provisional_not_frozen",
-    "closed_c1": "risk_design_A_status=frozen_from_C1; risk_design_stratum_status=frozen_from_C1"
-  }
+    "schema_version":  "paper_a_c2b_risk_design_contract_v1",
+    "method_contract":  "Pilot-\u003eP1-\u003eC1-\u003eC2-B-\u003eC2-A-RP-\u003eT1-\u003eV1",
+    "risk_channels":  {
+                          "d_model_feat":  "frozen HoHoNet LHFeat global distance",
+                          "g_model_struct":  "frozen pre-annotation layout structural flag score",
+                          "d_cal_A":  "candidate distance to frozen C1 risk-design feature space; C1-only reference",
+                          "d_cal_F":  "post-C2 confirmation distance; forbidden from C2-B selection",
+                          "risk_design_vector_A":  "ordered frozen vector [d_model_feat, d_model_feat_local_max, g_model_struct, d_cal_A]",
+                          "risk_design_score_A":  "frozen continuous score derived only from risk_design_vector_A"
+                      },
+    "channel_use":  {
+                        "risk_design_vector_A":  "sole C2-B exposure; no proxy or alias is permitted",
+                        "risk_design_score_A":  "sole continuous exposure for stratum and worker slope",
+                        "risk_assist":  "T1 assistance analysis only",
+                        "risk_route":  "V1 only after confirmed C2-B evidence"
+                    },
+    "stratum_rule":  {
+                         "name":  "risk_design_score_A_q75",
+                         "stress_quantile":  0.75,
+                         "allowed_values":  [
+                                                "ordinary",
+                                                "stress"
+                                            ],
+                         "forbid_legacy_proxies":  [
+                                                       "pair_count",
+                                                       "gt_pair_count",
+                                                       "task_stratum",
+                                                       "risk_assist"
+                                                   ]
+                     },
+    "feature_freeze":  {
+                           "checkpoint":  "ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth",
+                           "config":  "config/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34.yaml",
+                           "preprocess":  "RGB/255, HoHoNet.extract_feat(), frozen reference PCA/whitening cache",
+                           "required_freeze_flags":  [
+                                                         "pca_frozen",
+                                                         "whitening_frozen",
+                                                         "circular_shift_invariant",
+                                                         "seam_invariant"
+                                                     ],
+                           "layout_requirements":  [
+                                                       "ceiling_floor_curve_present",
+                                                       "topology_valid",
+                                                       "seam_stability",
+                                                       "postprocess_valid"
+                                                   ]
+                       },
+    "simulation":  {
+                       "minimum_draws":  200,
+                       "top_k":  3,
+                       "minimum_task_support":  2,
+                       "max_q_gt_ci_half_width":  null,
+                       "selection":  "non-dominated candidates only until C2B_DESIGN_SELECTION_THRESHOLDS.json is approved"
+                   },
+    "threshold_manifest":  "docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json",
+    "states":  {
+                   "incomplete_c1":  "risk_design_A_status=pending_complete_C1; risk_design_stratum_status=provisional_not_frozen",
+                   "closed_c1":  "risk_design_A_status=frozen_from_C1; risk_design_stratum_status=frozen_from_C1"
+               },
+    "status":  "generated"
 }

@@ -1,9 +1,10 @@
+<!-- PAPER_A_MACHINE_STATUS: generated -->
 # Paper A 当前方法合同（自动生成）
 
 > 本文档只由 `PAPER_A_METHOD_CONTRACT_CURRENT.json` 渲染；不得手工定义规范性字段。
 
-- 合同版本：`paper_a_method_20260730_v5`
-- JSON SHA-256：`bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b`
+- 合同版本：`paper_a_method_20260730_v6`
+- JSON SHA-256：`4682e3b4401952837abdd53928c267dab372dc74e17a87a545cfd942892595e8`
 - 正式启动默认值：`false`
 
 ## 画像、质量与同行
@@ -24,7 +25,7 @@
 | peer | `peer_analysis_eligible` |
 | LOO medoid / strict | `loo_medoid_analysis_eligible` / `strict_loo_analysis_eligible` |
 | structural / time | `structural_opportunity_eligible` / `time_analysis_eligible` |
-| Semi correction / predictive / routing feature | `formal_assignment_eligible` |
+| Semi correction / predictive / routing feature | `semi_correction_analysis_eligible` |
 
 ## Global、Full 与 C2-B
 

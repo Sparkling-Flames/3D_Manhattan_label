@@ -8,6 +8,7 @@ import json
 import numpy as np
 
 from .pairwise import pairwise_similarity
+from .medoid import select_medoid
 from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou_from_normalized_pairs
 
 
@@ -128,24 +129,14 @@ def crowd_structure(
                 values.append(min(float(item["boundary_similarity"]), float(item["wallwall_similarity"])))
         return float(np.mean(values)) if values else None
     def medoid(indices: tuple[int, ...]) -> dict[str, str]:
-        candidates = []
-        for index in indices:
-            peer_metrics = [channels[tuple(sorted((index, other)))] for other in indices if other != index]
-            boundary = [float(item["boundary_similarity"]) for item in peer_metrics]
-            wall = [float(item["wallwall_similarity"]) for item in peer_metrics]
-            score = (
-                min(boundary, default=1.0), min(wall, default=1.0),
-                float(np.mean(boundary)) if boundary else 1.0,
-                float(np.mean(wall)) if wall else 1.0,
-            )
-            geometry_sha = hashlib.sha256(json.dumps(valid[index].get("geometry", {}), sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-            candidates.append((score, geometry_sha, index))
-        candidates.sort(key=lambda item: tuple(-value for value in item[0]) + (item[1],))
-        selected = valid[candidates[0][2]] if candidates else {}
+        scores = {key: min(float(value["boundary_similarity"]), float(value["wallwall_similarity"])) for key, value in channels.items() if value.get("boundary_similarity") is not None and value.get("wallwall_similarity") is not None}
+        task_id = str(valid[0].get("base_task_id") or valid[0].get("task_id") or "") if valid else ""
+        index, geometry_sha, _ = select_medoid(valid, indices, scores, task_id=task_id)
+        selected = valid[index] if index is not None else {}
         return {
             "annotation_id": str(selected.get("canonical_annotation_id") or selected.get("annotation_id") or ""),
             "worker_id": str(selected.get("worker_id") or ""),
-            "geometry_sha256": candidates[0][1] if candidates else "",
+            "geometry_sha256": geometry_sha,
         }
     largest_medoid, second_medoid = medoid(largest), medoid(second)
     valid_k = len(valid)
@@ -196,23 +187,18 @@ def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimo
     result["peer_support"] = len(valid)
     result["largest_cluster_support"] = len(largest)
     result["second_mode_support"] = second_support
-    medoid_index = None
-    medoid_scores = []
-    for index in largest:
-        peers = [channel_metrics[tuple(sorted((index, other)))] for other in largest if other != index]
-        boundary_values = [item["boundary_similarity"] for item in peers]
-        wall_values = [item["wallwall_similarity"] for item in peers]
-        score = (min(boundary_values, default=1.0), min(wall_values, default=1.0), float(np.mean(boundary_values)) if boundary_values else 1.0, float(np.mean(wall_values)) if wall_values else 1.0)
-        geometry_sha = hashlib.sha256(json.dumps(valid[index].get("geometry", {}), sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-        medoid_scores.append((score, geometry_sha, index))
-    medoid_scores.sort(key=lambda item: tuple(-value for value in item[0]) + (item[1],))
-    if medoid_scores:
-        medoid_index = medoid_scores[0][2]
+    task_id = str(valid[0].get("base_task_id") or valid[0].get("task_id") or "") if valid else ""
+    medoid_pair_scores = {
+        key: min(float(value["boundary_similarity"]), float(value["wallwall_similarity"]))
+        for key, value in channel_metrics.items()
+        if value.get("boundary_similarity") is not None and value.get("wallwall_similarity") is not None
+    }
+    medoid_index, medoid_sha, medoid_scores = select_medoid(valid, largest, medoid_pair_scores, task_id=task_id)
     medoid = valid[medoid_index] if medoid_index is not None else {}
     result["medoid_annotation_id"] = medoid.get("canonical_annotation_id") or medoid.get("annotation_id", "")
-    result["medoid_geometry_sha256"] = hashlib.sha256(json.dumps(medoid.get("geometry", {}), sort_keys=True, separators=(",", ":")).encode()).hexdigest() if medoid else ""
+    result["medoid_geometry_sha256"] = medoid_sha
     result["medoid_worker_id"] = medoid.get("worker_id", "")
-    result["medoid_margin"] = medoid_scores[0][0][0] - medoid_scores[1][0][0] if len(medoid_scores) > 1 else None
+    result["medoid_margin"] = medoid_scores[0][0] - medoid_scores[1][0] if len(medoid_scores) > 1 else None
     result["primary_eligible"] = result["consensus_status"] == "stable"
     result["sensitivity_eligible"] = result["consensus_status"] in {"stable", "weak"}
     def subset_signature(indices: tuple[int, ...]) -> tuple[str, str, int, float | None, float | None]:
@@ -222,18 +208,9 @@ def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimo
         sub_remainder = tuple(index for index in indices if index not in sub_largest)
         sub_second = len(_complete_link_cluster(sub_remainder, sub_pairs, multimodal_cutoff)) if len(sub_remainder) >= 2 else 0
         sub_status = "insufficient" if len(indices) < 3 else "metric_incompatible" if not sub_compatible else "multimodal" if sub_second >= 2 else "stable" if len(sub_largest) == len(indices) else "weak"
-        scores = []
-        for index in sub_largest:
-            peers = [channel_metrics[tuple(sorted((index, other)))] for other in sub_largest if other != index]
-            boundary_values = [item["boundary_similarity"] for item in peers]
-            wall_values = [item["wallwall_similarity"] for item in peers]
-            score = (min(boundary_values, default=1.0), min(wall_values, default=1.0), float(np.mean(boundary_values)) if boundary_values else 1.0, float(np.mean(wall_values)) if wall_values else 1.0)
-            geometry_sha = hashlib.sha256(json.dumps(valid[index].get("geometry", {}), sort_keys=True, separators=(",", ":")).encode()).hexdigest()
-            scores.append((score, geometry_sha, index))
-        scores.sort(key=lambda item: tuple(-value for value in item[0]) + (item[1],))
-        medoid_index = scores[0][2] if scores else None
+        medoid_index, _sub_medoid_sha, scores = select_medoid(valid, sub_largest, medoid_pair_scores, task_id=task_id)
         medoid_id = (valid[medoid_index].get("canonical_annotation_id") or valid[medoid_index].get("annotation_id", "")) if medoid_index is not None else ""
-        margin = scores[0][0][0] - scores[1][0][0] if len(scores) > 1 else None
+        margin = scores[0][0] - scores[1][0] if len(scores) > 1 else None
         geometry_iou = None
         if medoid_index is not None and medoid:
             try:

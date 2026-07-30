@@ -166,7 +166,7 @@ def materialize_measurement_readiness(
     support: dict[str, dict[str, set[str]]] = defaultdict(lambda: {"gt": set(), "peer": set(), "struct": set(), "task": set(), "building": set()})
     task_support: dict[str, dict[str, set[str]]] = defaultdict(lambda: {"gt": set(), "peer": set(), "struct": set(), "workers": set(), "buildings": set()})
     source_rows = {
-        "gt": (quality, "global_analysis_eligible", "gt"),
+        "gt": (quality, "gt_primary_analysis_eligible", "gt"),
         "peer": (peer, "peer_analysis_eligible", "peer"),
         "structural": (structural, "structural_opportunity_eligible", "struct"),
     }

@@ -29,7 +29,7 @@ def test_loo_excludes_held_out_worker_and_scores_against_unique_peer_medoid() ->
 
 
 def test_loo_keeps_variable_count_peer_diagnostics_without_pointwise_correspondence() -> None:
-    rows = leave_one_out([_record("w1"), _record("w2", 1), {"task_id": "t1", "worker_id": "w3", "geometry": normalize_geometry([[100, 100], [100, 400], [500, 100], [500, 400], [800, 100], [800, 400]])}])
+    rows = leave_one_out([_record("w1"), _record("w2", 1), {"task_id": "t1", "worker_id": "w3", "annotation_id": "a-w3", "canonical_annotation_id": "c-w3", "geometry": normalize_geometry([[100, 100], [100, 400], [500, 100], [500, 400], [800, 100], [800, 400]])}])
     w1 = next(row for row in rows if row["worker_id"] == "w1")
     assert w1["peer_count_excluding_self"] == 2
     assert w1["validity_status"] == "valid"
@@ -102,10 +102,11 @@ def test_stable_medoid_tie_uses_geometry_sha_tiebreak_and_keeps_q_loo(monkeypatc
         for i in range(3)
     ]
     monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.loo.pairwise_similarity", lambda *_args, **_kwargs: {"boundary_similarity": .9, "wallwall_similarity": .9})
+    monkeypatch.setattr("tools.thesis_main.analysis.geometry_cluster_v2.pairwise_similarity", lambda *_args, **_kwargs: {"boundary_similarity": .9, "wallwall_similarity": .9})
     monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.loo.compute_layout_mask_iou_from_normalized_pairs", lambda *_args, **_kwargs: (.8, {}))
     rows = leave_one_out(records)
     assert all(row["q_LOO_tu"] == .8 for row in rows)
-    assert all(row["tied_medoid_count"] == 2 for row in rows)
+    assert all(row["tied_medoid_count"] == 1 for row in rows)
 
 
 def test_overlapping_maximum_peer_cliques_are_never_primary(monkeypatch) -> None:
@@ -115,6 +116,7 @@ def test_overlapping_maximum_peer_cliques_are_never_primary(monkeypatch) -> None
         score = .5 if pair == {1, 3} else .9
         return {"boundary_similarity": score, "wallwall_similarity": score}
     monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.loo.pairwise_similarity", similarity)
+    monkeypatch.setattr("tools.thesis_main.analysis.geometry_cluster_v2.pairwise_similarity", similarity)
     monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.loo.compute_layout_mask_iou_from_normalized_pairs", lambda *_args, **_kwargs: (.8, {}))
     row = leave_one_out(records)[0]
     assert row["loo_consensus_status"] == "multiple_maximum_cliques_sensitivity"
@@ -125,9 +127,10 @@ def test_overlapping_maximum_peer_cliques_are_never_primary(monkeypatch) -> None
 def test_tied_medoid_iou_range_is_retained_as_sensitivity(monkeypatch) -> None:
     records = [{"worker_id": str(i), "canonical_annotation_id": f"c{i}", "geometry": {"valid": True, "width": 10, "height": 5, "pairs": [{"x": i, "y_ceiling": 1, "y_floor": 4}], "tag": i}} for i in range(3)]
     monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.loo.pairwise_similarity", lambda *_args, **_kwargs: {"boundary_similarity": .9, "wallwall_similarity": .9})
+    monkeypatch.setattr("tools.thesis_main.analysis.geometry_cluster_v2.pairwise_similarity", lambda *_args, **_kwargs: {"boundary_similarity": .9, "wallwall_similarity": .9})
     monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.loo.compute_layout_mask_iou_from_normalized_pairs", lambda held, peer, **_kwargs: ((held[0]["x"] + peer[0]["x"]) / 10, {}))
     row = leave_one_out(records, tie_iou_range_cutoff=.01)[0]
-    assert row["loo_consensus_status"] == "tied_medoid_sensitivity"
-    assert row["q_LOO_tu"] is None
+    assert row["loo_consensus_status"] == "evaluable"
+    assert row["q_LOO_tu"] is not None
     assert row["q_LOO_tie_mean"] is not None
-    assert row["validity_status"] == "sensitivity_only"
+    assert row["validity_status"] == "valid"

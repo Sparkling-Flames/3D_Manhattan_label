@@ -21,7 +21,7 @@ import statsmodels.formula.api as smf
 from scipy.optimize import minimize_scalar
 
 
-MODEL_VERSION = "c1_worker_fe_task_fixed_effect_cluster_bootstrap_v4"
+MODEL_VERSION = "paper_a_qgt_profile_purpose_v5"
 
 
 def normal_normal_empirical_bayes(
@@ -91,7 +91,17 @@ def _prepare_frame(rows: list[dict[str, Any]], contract: dict[str, Any]) -> pd.D
             continue
         if "quality_evaluable" in row and not _truth(row.get("quality_evaluable")):
             continue
-        if "global_analysis_eligible" in row and not _truth(row.get("global_analysis_eligible")):
+        if "global_analysis_eligible" in row or "loo_analysis_eligible" in row:
+            if contract.get("formal_eligibility", False):
+                if "gt_primary_analysis_eligible" in row and _truth(row.get("global_analysis_eligible")) != _truth(row.get("gt_primary_analysis_eligible")):
+                    raise ValueError("legacy global_analysis_eligible conflicts with gt_primary_analysis_eligible")
+                raise ValueError("formal Q_GT input contains a legacy eligibility alias")
+        if contract.get("formal_eligibility", False):
+            if "gt_primary_analysis_eligible" not in row:
+                raise ValueError("formal Q_GT input missing gt_primary_analysis_eligible")
+            if not _truth(row.get("gt_primary_analysis_eligible")):
+                continue
+        elif "gt_primary_analysis_eligible" in row and not _truth(row.get("gt_primary_analysis_eligible")):
             continue
         quality = next(
             (value for field in ("Q_GT_raw", "iou_to_gt", "iou_2d", "iou") if (value := _number(row.get(field))) is not None),
@@ -116,9 +126,10 @@ def _prepare_frame(rows: list[dict[str, Any]], contract: dict[str, Any]) -> pd.D
         if frame.building_id.eq("").any() or frame.building_id.nunique() < 2:
             raise ValueError("final C1+C2 Q_GT requires complete multi-building support")
         identifiability = assess_stage_effect_identifiability(frame)
-        if identifiability["status"] != "identifiable":
-            raise ValueError("stage effect not identifiable:" + identifiability["reason"])
         frame.attrs["stage_effect_identifiability"] = identifiability
+        contract["stage_effect_included"] = identifiability["status"] == "identifiable"
+    else:
+        contract["stage_effect_included"] = False
     return frame
 
 
@@ -140,7 +151,9 @@ def assess_stage_effect_identifiability(frame: pd.DataFrame) -> dict[str, Any]:
 def _formula(contract: dict[str, Any]) -> str:
     if contract.get("model_mode", "c1_only") == "c1_only":
         return "quality ~ 0 + C(worker_id) + C(base_task_id)"
-    terms = ["0 + C(worker_id)", "C(stage)"]
+    terms = ["0 + C(worker_id)"]
+    if contract.get("stage_effect_included", False):
+        terms.append("C(stage)")
     return "quality ~ " + " + ".join(terms)
 
 
@@ -280,12 +293,18 @@ def estimate_task_adjusted_qgt(
         raise ValueError("legacy Q_GT building toggle is not supported")
     contract = {
         "model_mode": "c1_only",
+        "profile_purpose": "c1_measurement",
+        "formal_eligibility": False,
         "bootstrap_replicates": 200,
         "bootstrap_seed": 20260726,
         "confidence_level": 0.95,
         "minimum_successful_bootstrap_fraction": 0.75,
         **(estimator_contract or {}),
     }
+    purpose = str(contract.get("profile_purpose", ""))
+    expected_mode = {"c1_measurement": "c1_only", "post_c2_routing": "c1_c2_final"}.get(purpose)
+    if expected_mode is None or contract["model_mode"] != expected_mode:
+        raise ValueError("Q_GT profile_purpose and model_mode must match the formal method contract")
     frame = _prepare_frame(rows, contract)
     point = _fit_once(frame, contract)
     workers = sorted(point["estimates"])
@@ -384,7 +403,8 @@ def estimate_task_adjusted_qgt(
         "optimizer": point["optimizer"],
         "worker_effect": "fixed",
         "task_effect": point.get("task_effect_role", "fixed_effect" if contract["model_mode"] == "c1_only" else "random_intercept"),
-        "stage_adjustment": contract["model_mode"] == "c1_c2_final",
+        "profile_purpose": purpose,
+        "stage_adjustment": bool(contract.get("stage_effect_included", False)),
         "stage_effect_identifiability": frame.attrs.get("stage_effect_identifiability", {"status": "not_fit", "reason": "c1_only_task_fixed_effect", "shared_task_anchors": []}),
         "building_adjustment": contract["model_mode"] == "c1_c2_final",
         "bootstrap_cluster": resampling,

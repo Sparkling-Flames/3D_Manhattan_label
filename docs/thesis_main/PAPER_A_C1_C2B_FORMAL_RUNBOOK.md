@@ -1,4 +1,5 @@
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v5 SHA-256 bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b -->
+<!-- PAPER_A_MACHINE_STATUS: normative -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v6 SHA-256 4682e3b4401952837abdd53928c267dab372dc74e17a87a545cfd942892595e8 -->
 # Paper A C1→C2-B 正式运行手册
 
 ## 1. 隔离环境
@@ -230,7 +231,7 @@ feature、机械派生 threshold、selected-task/reference、selected-design 与
 - `support_limited` 不是失败，也不是成功估计；它只表示该 estimand 已终止但证据不足。
 - threshold 公式合同、SHA 绑定 input approval、机械派生数值 manifest、feature、source/holdout、selected design 或 selected task approval 任一缺失时，assignment 必须为 0。
 - `P1_INTEGRITY_BUNDLE_FROZEN=true` 只表示文件及 SHA 已冻结；`P1_PREDICTIVE_EVIDENCE_READY=false` 时禁用 P1 predictive component，但不阻断 risk-only C2-B。
-> Formal run 前必须校验 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v5`；SHA-256 `bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b`）。`close-c1-and-plan-c2b` 是规划入口，只生成候选与 `build-c2b` 命令；`build-c2b` 才是最终启动包构建入口。旧字段或生成 MD、SAP、SOP 与 JSON 不一致时一律 fail closed。
+> Formal run 前必须校验 `PAPER_A_METHOD_CONTRACT_CURRENT.json`（版本 `paper_a_method_20260730_v6`；SHA-256 `bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b`）。`close-c1-and-plan-c2b` 是规划入口，只生成候选与 `build-c2b` 命令；`build-c2b` 才是最终启动包构建入口。旧字段或生成 MD、SAP、SOP 与 JSON 不一致时一律 fail closed。
 
 ## v5 closeout 不变量
 

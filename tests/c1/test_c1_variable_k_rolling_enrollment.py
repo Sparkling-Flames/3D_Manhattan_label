@@ -38,7 +38,7 @@ def test_estimand_specific_k_separates_original_authorized_late_outside_and_dupl
     for row in canonical:
         eligibility.append({
             "canonical_annotation_id": row["canonical_annotation_id"],
-            "global_analysis_eligible": row["worker_id"] != "outside",
+            "gt_primary_analysis_eligible": row["worker_id"] != "outside",
             "peer_analysis_eligible": row["worker_id"] not in {"outside", "w4"},
                 "loo_medoid_analysis_eligible": row["worker_id"] in {"w1", "w2", "w34"},
                 "strict_loo_analysis_eligible": row["worker_id"] in {"w1", "w2", "w34"},
@@ -49,7 +49,7 @@ def test_estimand_specific_k_separates_original_authorized_late_outside_and_dupl
     assert row["k_target"] == 5 and row["k_outside_observed"] == 1
     assert row["k_original_GT"] == 4 and row["k_authorized_GT"] == 1 and row["k_late_GT"] == 1
     assert row["k_final_GT"] == 6 and row["pooled_support_excess_GT"] == 1
-    assert row["k_final_peer"] == 5 and row["k_LOO_medoid"] == 3 and row["k_LOO_strict"] == 3 and row["k_final_time"] == 2
+    assert row["k_final_peer"] == 5 and row["k_final_LOO_medoid"] == 3 and row["k_final_LOO_strict"] == 3 and row["k_final_time"] == 2
     with pytest.raises(ValueError, match="duplicate canonical"):
         build_task_support_rows([original], authorized, late, canonical + [{**canonical[0], "canonical_annotation_id": "revision"}], eligibility)
 

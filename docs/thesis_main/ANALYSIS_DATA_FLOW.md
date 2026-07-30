@@ -1,9 +1,10 @@
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v5 SHA-256 bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b -->
+<!-- PAPER_A_MACHINE_STATUS: normative -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v6 SHA-256 4682e3b4401952837abdd53928c267dab372dc74e17a87a545cfd942892595e8 -- 
 # Paper A 正式分析数据流
 
-> 更新：2026-07-18
-> 真源：Paper A vFinal、正式 protocol/SOP/SAP 与字段合同。
-> `export_label/`、`import_json/`、`active_logs/` 是输入真源；`analysis_results/` 仅存派生和审计。
+  更新：2026-07-18
+  真源：Paper A vFinal、正式 protocol/SOP/SAP 与字段合同。
+  `export_label/`、`import_json/`、`active_logs/` 是输入真源；`analysis_results/` 仅存派生和审计。
 
 ## 1. 不变的 C1 原始层
 
@@ -23,27 +24,27 @@ active_time raw logs
 raw export
 + assignment manifest
 + active logs
--> selected annotation registry
--> c1_canonical_annotations.csv
+-  selected annotation registry
+-  c1_canonical_annotations.csv
 
 canonical roster
 + sparse incident_registry.csv
 + structural/policy adjudication
 + frozen failure rule manifest
--> complete failure_disposition.csv
+-  complete failure_disposition.csv
 
 canonical annotations
 + complete disposition
 + external GT/reference registry
--> Q_u_GT_raw / Q_u_GT_task_adjusted / CI / LCB
+-  Q_u_GT_raw / Q_u_GT_task_adjusted / CI / LCB
 
 canonical geometry
 + worker-excluded LOO reference
--> R_u_LOO / compatibility / stability audit
+-  R_u_LOO / compatibility / stability audit
 
 canonical submissions
 + complete disposition
--> F_u_struct numerator / structural-evaluable denominator
+-  F_u_struct numerator / structural-evaluable denominator
 ```
 
 三条测量链不得互相代填：
@@ -57,14 +58,14 @@ canonical submissions
 
 ```text
 P1 candidate components
--> C1 predictive validation
--> C1 variance/graph/power simulation
--> freeze C2-B design
--> C2-B common anchor + diverse bridge
--> C2-B confirmation + hierarchical shrinkage B_u
--> C2-B submissions -> post-C2-B worker profile -> profile manifest -> C2-B closeout SHA
--> C2-A-RP precision-adaptive completion
--> C2 final worker/policy freeze
+-  C1 predictive validation
+-  C1 variance/graph/power simulation
+-  freeze C2-B design
+-  C2-B common anchor + diverse bridge
+-  C2-B confirmation + hierarchical shrinkage B_u
+-  C2-B submissions -  post-C2-B worker profile -  profile manifest -  C2-B closeout SHA
+-  C2-A-RP precision-adaptive completion
+-  C2 final worker/policy freeze
 ```
 
 C1 simulation 决定：
@@ -99,13 +100,13 @@ d_cal_F
 
 ```text
 frozen T1 pair manifest
--> Manual/Semi × ordinary/stress_assist execution
--> canonical row outcomes
--> row_failure_attribution
--> pair_analysis_disposition
--> original/rerun pair resolver
--> final analysis pair
--> RQ1 paired analysis
+-  Manual/Semi × ordinary/stress_assist execution
+-  canonical row outcomes
+-  row_failure_attribution
+-  pair_analysis_disposition
+-  original/rerun pair resolver
+-  final analysis pair
+-  RQ1 paired analysis
 ```
 
 每个 `pair_run_id` 必须恰好一条 Manual、一条 Semi。external 影响一行时，另一行仍可为 `none`；pair 整体最多重跑一次。不能合法完整重跑则整对行政删失；关系或证据失败则 `not_evaluable`。
@@ -128,15 +129,15 @@ C2 frozen worker profile
 + frozen task pre-annotation features
 + availability snapshot
 + shared worker roster
--> block randomization: Strong Global vs Full-Integrated
--> independent symmetric capacity ledgers
--> recommendation
--> offer / accept / timeout / replacement
--> dynamic redundancy
--> GT-blind aggregation
--> resolved | unresolved | severe_failure
--> original/rerun ITT resolver
--> RQ3 analysis
+-  block randomization: Strong Global vs Full-Integrated
+-  independent symmetric capacity ledgers
+-  recommendation
+-  offer / accept / timeout / replacement
+-  dynamic redundancy
+-  GT-blind aggregation
+-  resolved | unresolved | severe_failure
+-  original/rerun ITT resolver
+-  RQ3 analysis
 ```
 
 Strong Global：
@@ -164,22 +165,22 @@ S_u,t_F = S_u_G
 
 ```text
 worker-caused invalid submission
--> worker event
--> 按两臂相同 replacement rule 继续
--> 若最终 resolved，不把任务最终质量强制置 0
+-  worker event
+-  按两臂相同 replacement rule 继续
+-  若最终 resolved，不把任务最终质量强制置 0
 
 policy-caused failure
--> 保留原随机化臂 ITT
--> policy failure
--> 无交付时 delivery-adjusted quality = 0
+-  保留原随机化臂 ITT
+-  policy failure
+-  无交付时 delivery-adjusted quality = 0
 
 verified external incident
--> 同臂、同 freeze version、对称预留容量下最多重跑一次
--> resolver 以合法 rerun outcome 替代 original
--> 仍归 original randomized arm
+-  同臂、同 freeze version、对称预留容量下最多重跑一次
+-  resolver 以合法 rerun outcome 替代 original
+-  仍归 original randomized arm
 
 external 无法合法重跑
--> administrative censor
+-  administrative censor
 ```
 
 必须关系验证：
@@ -239,4 +240,4 @@ W034 active-time 分支必须先消费 owner-valid sentinel validation manifest�
 
 ## v5 规范性数据流
 
-唯一方法真源是 `PAPER_A_METHOD_CONTRACT_CURRENT.json`；历史 outline 只作非规范性写作背景。正式流为 canonical export -> assignment evidence (estimand-specific eligibility) -> frozen reference registry -> Q_GT / peer / geometry LOO / structural EB -> `worker_profile_v2` -> frozen Global `global_rank_S_G` -> Full -> Stage 3/V1。任何缺少 formal assignment gate、registry/reference/contract SHA 或冻结 Global rank 的输入均在对应正式边界 fail closed。
+唯一方法真源是 `PAPER_A_METHOD_CONTRACT_CURRENT.json`；历史 outline 只作非规范性写作背景。正式流为 canonical export -  assignment evidence (estimand-specific eligibility) -  frozen reference registry -  Q_GT / peer / geometry LOO / structural EB -  `worker_profile_v2` -  frozen Global `global_rank_S_G` -  Full -  Stage 3/V1。任何缺少 formal assignment gate、registry/reference/contract SHA 或冻结 Global rank 的输入均在对应正式边界 fail closed。

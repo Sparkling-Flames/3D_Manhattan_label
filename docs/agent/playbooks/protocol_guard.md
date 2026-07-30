@@ -8,9 +8,9 @@
 
 ## 必须检查
 
-- 阅读 `ROUND_BASED_EXECUTION_PROTOCOL_v1.md` 与 `ROUND_BASED_ASSIGNMENT_SOP_v1.md`。
-- 保持 `Pilot -> PreScreen -> Calibration -> Main(Test + Validation)` 和
-  `P1/C1/C2/T1/V1` 边界；C2 内部分为 C2-B 与 C2-A-RP。
+- 阅读 `PAPER_A_METHOD_CONTRACT_CURRENT.json` 与 `ROUND_BASED_ASSIGNMENT_SOP_v1.md`。
+- 保持 RPilot -> PreScreen -> Calibration -> Main(Test + Validation)R 和
+  RP1/C1/C2/T1/V1R 边界；C2 内部分为 C2-B 与 C2-A-RP。
 - C1 原始 export、assignment 和正在进行的标注不得因派生链变化而返工。
 - P1 component 只有通过 C1 predictive validation 与 C2-B confirmation 才可进入 Full。
 - T1/V1 outcome 不得回流修改 admission、C1/C2、worker state、risk 或 freeze 参数。

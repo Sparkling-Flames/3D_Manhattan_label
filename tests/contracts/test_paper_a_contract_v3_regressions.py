@@ -11,7 +11,8 @@ def test_policy_candidate_allows_unavailable_medoid_loo() -> None:
 
 
 def test_geometry_enumerates_overlapping_maximum_clique_partitions() -> None:
-    partitions = _maximum_clique_partitions((0, 1, 2), {(0, 1), (1, 2)})
+    partitions, truncated, _ = _maximum_clique_partitions((0, 1, 2), {(0, 1), (1, 2)})
+    assert truncated is False
     assert len(partitions) == 2
     assert {tuple(tuple(group) for group in partition) for partition in partitions} == {
         ((0, 1), (2,)), ((1, 2), (0,)),

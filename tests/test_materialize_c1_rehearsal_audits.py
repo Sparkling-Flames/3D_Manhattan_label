@@ -67,7 +67,7 @@ def test_completion_adds_replacement_load_without_expanding_original_task_target
 
 def test_final_closeout_does_not_block_nonstarter_or_reviewed_local_exclusion(tmp_path: Path) -> None:
     _csv(tmp_path / "structural_validation_audit.csv", [{"structural_validation_status": "not_evaluable", "failure_attribution": "not_evaluable", "structural_disposition_applied": "true"}])
-    _csv(tmp_path / "c1_row_analysis_eligibility.csv", [{"global_analysis_eligible": "true", "loo_analysis_eligible": "true", "structural_opportunity_eligible": "true", "global_analysis_exclusion_reason": ""}])
+    _csv(tmp_path / "c1_row_analysis_eligibility.csv", [{"gt_primary_analysis_eligible": "true", "loo_medoid_analysis_eligible": "true", "strict_loo_analysis_eligible": "true", "structural_opportunity_eligible": "true", "gt_primary_analysis_exclusion_reason": ""}])
     _csv(tmp_path / "c1_annotation_version_disposition.csv", [{"version_disposition": "selected_canonical"}])
     _csv(tmp_path / "c1_task_outcome_reference.csv", [{"final_scope": "in_scope"}])
     summary = materialize_final_canonical_closeout_summary(tmp_path, {
@@ -82,7 +82,7 @@ def test_final_closeout_does_not_block_nonstarter_or_reviewed_local_exclusion(tm
 
 def test_final_closeout_blocks_unclassified_missing(tmp_path: Path) -> None:
     _csv(tmp_path / "structural_validation_audit.csv", [{"structural_validation_status": "passed"}])
-    _csv(tmp_path / "c1_row_analysis_eligibility.csv", [{"global_analysis_eligible": "true", "loo_analysis_eligible": "true", "structural_opportunity_eligible": "true", "global_analysis_exclusion_reason": ""}])
+    _csv(tmp_path / "c1_row_analysis_eligibility.csv", [{"gt_primary_analysis_eligible": "true", "loo_medoid_analysis_eligible": "true", "strict_loo_analysis_eligible": "true", "structural_opportunity_eligible": "true", "gt_primary_analysis_exclusion_reason": ""}])
     _csv(tmp_path / "c1_annotation_version_disposition.csv", [{"version_disposition": "selected_canonical"}])
     _csv(tmp_path / "c1_task_outcome_reference.csv", [{"final_scope": "in_scope"}])
     summary = materialize_final_canonical_closeout_summary(tmp_path, {"missing_other_count": 1})
@@ -303,7 +303,7 @@ def test_partial_worker_uses_local_valid_support(tmp_path: Path) -> None:
         {"worker_id": "1", "independence_status": "independent", "structural_validation_status": "passed", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"},
         {"worker_id": "1", "independence_status": "not_evaluable", "structural_validation_status": "not_evaluable", "outside_assignment_submission": "true", "duplicate_worker_task_submission": "false"},
     ])
-    _csv(quality, [{"worker_id": "1", "quality_evaluable": "true"}] * 3)
+    _csv(quality, [{"worker_id": "1", "quality_evaluable": "true", "gt_primary_analysis_eligible": "true"}] * 3)
     _csv(loo, [{"worker_id": "1", "peer_count_excluding_self": "2"}] * 3)
     summary = materialize_c2_eligible_roster(completion, canonical, quality, loo, tmp_path)
     assert summary["n_eligible"] == 1
@@ -318,7 +318,7 @@ def test_c2_roster_accepts_frozen_project_provenance_status(tmp_path: Path) -> N
         "structural_validation_status": "passed", "outside_assignment_submission": "false",
         "duplicate_worker_task_submission": "false",
     }])
-    _csv(quality, [{"worker_id": "34", "quality_evaluable": "true"}] * 3)
+    _csv(quality, [{"worker_id": "34", "quality_evaluable": "true", "gt_primary_analysis_eligible": "true"}] * 3)
     _csv(loo, [{"worker_id": "34", "peer_count_excluding_self": "2"}] * 3)
     summary = materialize_c2_eligible_roster(completion, canonical, quality, loo, tmp_path)
     assert summary["n_eligible"] == 1
@@ -335,8 +335,9 @@ def test_row_eligibility_excludes_outside_assignment_from_all_tracks(tmp_path: P
     _csv(reference, [{"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "final_scope": "in_scope", "geometry_reference_ready": "true"}])
     materialize_row_analysis_eligibility(canonical, versions, quality, loo, structural, reference, tmp_path)
     result = next(csv.DictReader((tmp_path / "c1_row_analysis_eligibility.csv").open(encoding="utf-8")))
-    assert result["global_analysis_eligible"] == "False"
-    assert result["loo_analysis_eligible"] == "False"
+    assert result["gt_primary_analysis_eligible"] == "False"
+    assert result["loo_medoid_analysis_eligible"] == "False"
+    assert result["strict_loo_analysis_eligible"] == "False"
     assert result["structural_opportunity_eligible"] == "False"
 
 
@@ -356,8 +357,9 @@ def test_row_eligibility_excludes_administratively_removed_worker_from_all_track
 
     result = next(csv.DictReader((tmp_path / "c1_row_analysis_eligibility.csv").open(encoding="utf-8")))
     assert result["process_exclusion_reason"] == "administrative_exclusion"
-    assert result["global_analysis_eligible"] == "False"
-    assert result["loo_analysis_eligible"] == "False"
+    assert result["gt_primary_analysis_eligible"] == "False"
+    assert result["loo_medoid_analysis_eligible"] == "False"
+    assert result["strict_loo_analysis_eligible"] == "False"
     assert result["structural_opportunity_eligible"] == "False"
 
 

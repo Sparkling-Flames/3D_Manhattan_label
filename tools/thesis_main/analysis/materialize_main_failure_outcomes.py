@@ -40,6 +40,7 @@ T1_FIELDS = [
     "delivery_status", "failure_attribution", "iou_to_gt", "structurally_valid",
     "delivery_adjusted_quality", "quality_evaluable", "risk_assist",
     "usable_pair_sensitivity_eligible", "usable_pair_sensitivity_delivery_adjusted_quality",
+    "image_primary_disposition", "image_primary_censor_reason",
     "active_time_integrity_status", "active_time_source", "active_time_source_file",
     "active_time_annotation_id", "owner_valid_active_time", "active_time_seconds",
     "inference_cluster_id",
@@ -379,11 +380,18 @@ def materialize_t1_rows(source_rows: list[dict[str, Any]]) -> tuple[list[dict[st
             })
         else:
             row.update({"usable_pair_sensitivity_eligible": False, "usable_pair_sensitivity_delivery_adjusted_quality": ""})
+        censored = str(row.get("image_id", "")) in censored_images
+        row["image_primary_disposition"] = "administrative_censor" if censored else "included"
+        row["image_primary_censor_reason"] = "pre_frozen_pair_not_evaluable_after_single_rerun" if censored else ""
     return output, {
         "n_analysis_pairs": sum(pair_counts.values()),
         "pair_disposition_counts": dict(sorted(pair_counts.items())),
         "resolved_rerun_pairs": len(resolved_originals), "administratively_censored_images": len(censored_images),
         "usable_pair_sensitivity_rows": sum(bool(row.get("usable_pair_sensitivity_eligible")) for row in output),
+        "image_primary_censor_audit": [
+            {"image_id": image_id, "image_primary_disposition": "administrative_censor" if image_id in censored_images else "included", "image_primary_censor_reason": "pre_frozen_pair_not_evaluable_after_single_rerun" if image_id in censored_images else ""}
+            for image_id in sorted({str(row.get("image_id", "")) for row in output})
+        ],
     }
 
 
@@ -635,12 +643,21 @@ def materialize(
             if evidence.is_file():
                 dependencies[f"incident_evidence:{text(incident.get('incident_id'))}"] = _sha256(evidence)
     _write_csv(output_csv, output_rows, fields)
+    image_censor_audit_path: Path | None = None
+    if normalized_stage == "T1":
+        image_censor_audit_path = output_dir / "t1_image_primary_censor_audit.csv"
+        _write_csv(
+            image_censor_audit_path,
+            list(audit.get("image_primary_censor_audit", [])),
+            ["image_id", "image_primary_disposition", "image_primary_censor_reason"],
+        )
     summary = {
         "stage": normalized_stage,
         "rule_version": manifest["meta"]["rule_version"],
         "rule_manifest": str(rule_manifest),
         "dependency_sha256": dependencies,
         "output_csv": str(output_csv),
+        **({"image_primary_censor_audit_csv": str(image_censor_audit_path)} if image_censor_audit_path else {}),
         "audit": audit,
     }
     output_dir.mkdir(parents=True, exist_ok=True)

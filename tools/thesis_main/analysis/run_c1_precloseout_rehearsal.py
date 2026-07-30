@@ -332,6 +332,8 @@ def materialize(
     formal = input_status == "formal"
     if formal and (calibration_enrollment_registry is None or not calibration_enrollment_registry.is_file()):
         raise ValueError("formal C1 requires calibration_enrollment_registry.csv")
+    if formal and (reference_amendment is None or not reference_amendment.is_file() or building_registry is None or not building_registry.is_file()):
+        raise ValueError("formal C1 requires frozen reference approval and building registry")
     git_state = formal_git_state(_PROJECT_ROOT)
     if formal and not git_state["clean"]:
         raise ValueError("formal mode requires a committed clean worktree")
@@ -656,10 +658,18 @@ def materialize(
                 "bootstrap_replicates": 200 if formal else 80,
                 "bootstrap_seed": 20260726,
                 "adjust_stage": False,
+                "profile_purpose": "c1_measurement",
+                "formal_eligibility": formal,
             },
         )
         model_audit["building_registry_sha256"] = building_summary.get("registry_sha256", "")
         model_audit["building_binding_sha256"] = building_summary.get("output_sha256", "")
+        model_audit["dependency_sha256"] = {
+            "reference_registry": sha256_file(output_dir / "c1_task_outcome_reference.csv"),
+            "reference_approval": sha256_file(review_snapshots["reference_amendment"]),
+            "building_registry": building_summary.get("registry_sha256", ""),
+            "task_building_binding": building_summary.get("output_sha256", ""),
+        }
         write_csv(qgt_evidence_path, globals_, list(globals_[0]))
         write_csv(output_dir / "c1_task_adjusted_qgt_task_effects.csv", task_effects, list(task_effects[0]))
         write_json(output_dir / "c1_task_adjusted_qgt_model_audit.json", model_audit)
@@ -684,6 +694,10 @@ def materialize(
         enrollment_registry_csv=fixed_snapshots.get("calibration_enrollment_registry"),
         qgt_audit_json=output_dir / "c1_task_adjusted_qgt_model_audit.json",
         structural_eb_audit_json=structural_eb_audit_path,
+        reference_registry_csv=output_dir / "c1_task_outcome_reference.csv",
+        reference_approval_csv=review_snapshots.get("reference_amendment"),
+        building_registry_csv=fixed_snapshots.get("building_registry"),
+        task_building_binding_csv=output_dir / "c1_task_building_binding.csv",
         formal=formal, collection_window_closed=collection_window_closed,
     )
     predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"

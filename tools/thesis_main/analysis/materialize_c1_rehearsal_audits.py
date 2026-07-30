@@ -271,8 +271,8 @@ def finalize_partial_completion_support(
         worker = row.get("worker_id", "")
         if not worker:
             continue
-        support[worker]["Q_GT"] += int(str(row.get("global_analysis_eligible", "")).lower() in {"true", "1"})
-        support[worker]["R_LOO"] += int(str(row.get("loo_analysis_eligible", "")).lower() in {"true", "1"})
+        support[worker]["Q_GT"] += int(str(row.get("gt_primary_analysis_eligible", "")).lower() in {"true", "1"})
+        support[worker]["R_LOO"] += int(str(row.get("strict_loo_analysis_eligible", "")).lower() in {"true", "1"})
         support[worker]["F_struct"] += int(str(row.get("structural_opportunity_eligible", "")).lower() in {"true", "1"})
     for row in rows:
         worker_support = support[row.get("worker_id", "")]
@@ -1103,11 +1103,11 @@ def materialize_row_analysis_eligibility(
             "geometry_structurally_computable": structural_computable, "gt_score_computable": gt_score_computable,
             "scope_reference_eligible": gt_reference_eligible, "scope_reference_exclusion_reason": "" if gt_reference_eligible else "scope_or_reference_not_ready",
             "gt_primary_analysis_eligible": not global_reasons,
-            "global_analysis_eligible": not global_reasons, "global_analysis_exclusion_reason": ";".join(global_reasons),
+            "gt_primary_analysis_exclusion_reason": ";".join(global_reasons),
             "peer_analysis_eligible": peer_eligible, "peer_analysis_exclusion_reason": ";".join(peer_reasons),
             "loo_medoid_analysis_eligible": not medoid_reasons, "loo_medoid_analysis_exclusion_reason": ";".join(medoid_reasons),
             "strict_loo_analysis_eligible": strict_loo_eligible,
-            "loo_analysis_eligible": strict_loo_eligible, "loo_analysis_exclusion_reason": ";".join(loo_reasons),
+            "strict_loo_analysis_exclusion_reason": ";".join(loo_reasons),
             "time_analysis_eligible": not common_reasons and _truth(row.get("active_time_expected")) and _truth(row.get("primary_active_time_eligible")),
             "semi_correction_analysis_eligible": not common_reasons and row.get("condition", "").lower() == "semi",
             "predictive_validity_analysis_eligible": not common_reasons,
@@ -1136,10 +1136,10 @@ def materialize_row_analysis_eligibility(
         groups: dict[str, list[dict[str, Any]]] = defaultdict(list)
         for row in output: groups[str(row.get(grouping, ""))].append(row)
         write_csv(output_dir / path, [{grouping: key, "input_count": len(rows), "passed_count": sum(_truth(row.get("gt_primary_analysis_eligible")) for row in rows), "failed_count": sum(not _truth(row.get("gt_primary_analysis_eligible")) for row in rows), "failure_reason": "gt_primary_ineligible", "rule_version": rule_version, "source_sha256": source_sha} for key, rows in sorted(groups.items())])
-    stored_ok = all(_truth(row["global_analysis_eligible"]) == _truth(row["gt_primary_analysis_eligible"]) and _truth(row["loo_analysis_eligible"]) == _truth(row["strict_loo_analysis_eligible"]) for row in output)
+    stored_ok = all("global_analysis_eligible" not in row and "loo_analysis_eligible" not in row for row in output)
     if formal and not stored_ok:
         raise ValueError("stored eligibility differs from recomputed eligibility")
-    return {**{field: sum(_truth(row[field]) for row in output) for field in ("global_analysis_eligible", "peer_analysis_eligible", "loo_medoid_analysis_eligible", "loo_analysis_eligible", "structural_opportunity_eligible")}, "stored_eligibility_matches_recomputed": stored_ok}
+    return {**{field: sum(_truth(row[field]) for row in output) for field in ("gt_primary_analysis_eligible", "peer_analysis_eligible", "loo_medoid_analysis_eligible", "strict_loo_analysis_eligible", "structural_opportunity_eligible")}, "stored_eligibility_matches_recomputed": stored_ok}
 
 
 def materialize_final_canonical_closeout_summary(
@@ -1166,7 +1166,7 @@ def materialize_final_canonical_closeout_summary(
     )
     supports = {
         field: sum(_truth(row.get(field)) for row in eligibility)
-        for field in ("global_analysis_eligible", "loo_analysis_eligible", "structural_opportunity_eligible")
+        for field in ("gt_primary_analysis_eligible", "strict_loo_analysis_eligible", "structural_opportunity_eligible")
     }
     canonical_blockers = []
     if int(completion_summary.get("missing_other_count") or 0): canonical_blockers.append("unclassified_missing")
@@ -1310,18 +1310,23 @@ def materialize_c2_eligible_roster(
     geometry_loo_csv: Path, output_dir: Path, *, min_observed_support: int = 5,
     min_gt_support: int = 3, min_loo_support: int = 3,
 ) -> dict[str, Any]:
-    """Build the strict, explicit roster consumed by candidate-only C2 design."""
+    """Materialize a legacy C1 support audit, never a formal C2-B roster.
+
+    The formal C2-B roster is derived only from the frozen ``worker_profile_v2``
+    path in ``materialize_c2b_design_worker_profile``.  This retained helper is
+    audit-only and must not be wired into a formal launch manifest.
+    """
     completion = {row["worker_id"]: row for row in read_csv(completion_csv)}
     by_worker: dict[str, list[dict[str, str]]] = defaultdict(list)
     for row in read_csv(canonical_csv):
         by_worker[row.get("worker_id", "")].append(row)
     quality = Counter(
         row.get("worker_id", "") for row in read_csv(quality_csv)
-        if (_truth(row.get("global_analysis_eligible")) if "global_analysis_eligible" in row else _truth(row.get("quality_evaluable")))
+        if _truth(row.get("gt_primary_analysis_eligible"))
     )
     loo = Counter(
         row.get("worker_id", "") for row in read_csv(geometry_loo_csv)
-        if (_truth(row.get("loo_analysis_eligible")) if "loo_analysis_eligible" in row else int(float(row.get("peer_count_excluding_self") or 0)) > 0)
+        if _truth(row.get("strict_loo_analysis_eligible"))
     )
     output = []
     for worker, completed in sorted(completion.items(), key=lambda item: (0, int(item[0])) if item[0].isdigit() else (1, item[0])):
@@ -1472,6 +1477,8 @@ def materialize_three_track_worker_state(
     eligibility_csv: Path | None = None, peer_csv: Path | None = None,
     structural_eb_csv: Path | None = None, enrollment_registry_csv: Path | None = None,
     qgt_audit_json: Path | None = None, structural_eb_audit_json: Path | None = None,
+    reference_registry_csv: Path | None = None, reference_approval_csv: Path | None = None,
+    building_registry_csv: Path | None = None, task_building_binding_csv: Path | None = None,
     formal: bool = False, collection_window_closed: bool = False,
 ) -> dict[str, Any]:
     from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file
@@ -1484,6 +1491,14 @@ def materialize_three_track_worker_state(
     structural_audit = json.loads(structural_eb_audit_json.read_text(encoding="utf-8")) if structural_eb_audit_json and structural_eb_audit_json.exists() else {}
     if formal and (qgt_audit.get("status") != "estimated" or structural_audit.get("status") != "estimated"):
         raise ValueError("formal worker profile requires estimated Q_GT and structural estimator audits")
+    formal_dependency_paths = {
+        "REFERENCE_REGISTRY": reference_registry_csv,
+        "REFERENCE_APPROVAL": reference_approval_csv,
+        "BUILDING_REGISTRY": building_registry_csv,
+        "TASK_BUILDING_BINDING": task_building_binding_csv,
+    }
+    if formal and any(path is None or not path.is_file() for path in formal_dependency_paths.values()):
+        raise ValueError("formal worker profile requires frozen reference and building dependencies")
     globals_ = {row.get("worker_id", ""): row for row in read_csv(global_csv)}
     loo_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
     medoid_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -1491,7 +1506,7 @@ def materialize_three_track_worker_state(
         if _truth(row.get("loo_medoid_analysis_eligible")):
             try: medoid_by_worker[row.get("worker_id", "")].append({"task_id": row.get("base_task_id", ""), "value": float(row["q_LOO_tu"])})
             except (TypeError, ValueError): pass
-        if not _truth(row.get("loo_analysis_eligible")):
+        if not _truth(row.get("strict_loo_analysis_eligible")):
             continue
         try:
             loo_by_worker[row.get("worker_id", "")].append({"task_id": row.get("base_task_id", ""), "value": float(row["q_LOO_tu"])})
@@ -1512,7 +1527,7 @@ def materialize_three_track_worker_state(
             struct[worker]["failure"] += 1
     raw_quality: dict[str, list[float]] = defaultdict(list)
     for row in read_csv(quality_csv) if quality_csv else []:
-        if not _truth(row.get("global_analysis_eligible")):
+        if not _truth(row.get("gt_primary_analysis_eligible")):
             continue
         for field in ("Q_GT_raw", "iou_2d", "iou"):
             try:
@@ -1648,7 +1663,7 @@ def materialize_three_track_worker_state(
     (output_dir / "c1_three_track_worker_state.summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     if formal:
         manifest = {
-            "schema_version": "c1_three_track_worker_state_manifest_v1",
+            "schema_version": "c1_three_track_worker_state_manifest_v2",
             "profile_version": "paper_a_worker_profile_v2",
             "cohort_id": "paper_a_calibration_pooled",
             "method_contract_version": method["contract_version"],
@@ -1667,6 +1682,7 @@ def materialize_three_track_worker_state(
                     ("Q_GT_ESTIMATOR_AUDIT", qgt_audit_json), ("STRUCTURAL_EB_AUDIT", structural_eb_audit_json),
                     ("ENROLLMENT_REGISTRY_SOURCE", enrollment_registry_csv),
                     ("ENROLLMENT_REGISTRY", enrollment_output),
+                    *formal_dependency_paths.items(),
                     ("METHOD_CONTRACT", METHOD_CONTRACT),
                 ) if path and path.exists()
             ],

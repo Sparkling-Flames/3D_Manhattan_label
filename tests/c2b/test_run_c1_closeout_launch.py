@@ -299,10 +299,20 @@ def _write_c1_dependency_closure(tmp_path):
     enrollment_summary = tmp_path / "calibration_enrollment_registry.summary.json"
     enrollment_summary.write_text(json.dumps({"schema_version": "calibration_enrollment_registry_v1", "status": "validated", "rolling_activated": False, "N_total": 1, "N_late": 0, "all_registered_workers_terminal": True, "registry_sha256": sha256_file(enrollment)}), encoding="utf-8")
     method_dependency = {"role": "METHOD_CONTRACT", "path": str(METHOD_CONTRACT.resolve()), "sha256": sha256_file(METHOD_CONTRACT)}
+    frozen_dependencies = []
+    for role, name in (
+        ("REFERENCE_REGISTRY", "reference_registry.csv"),
+        ("REFERENCE_APPROVAL", "reference_approval.csv"),
+        ("BUILDING_REGISTRY", "building_registry.csv"),
+        ("TASK_BUILDING_BINDING", "task_building_binding.csv"),
+    ):
+        path = tmp_path / name
+        path.write_text("evidence\nfrozen\n", encoding="utf-8")
+        frozen_dependencies.append({"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)})
     (tmp_path / "c1_three_track_worker_state_manifest.json").write_text(json.dumps({
         "schema_version": "c1_three_track_worker_state_manifest_v1", "profile_version": "p", "cohort_id": "c",
         "worker_state_sha256": sha256_file(profile), "method_contract_sha256": sha256_file(METHOD_CONTRACT),
-        "dependencies": [method_dependency, {"role": "ENROLLMENT_REGISTRY", "path": str(enrollment.resolve()), "sha256": sha256_file(enrollment)}],
+        "dependencies": [method_dependency, {"role": "ENROLLMENT_REGISTRY", "path": str(enrollment.resolve()), "sha256": sha256_file(enrollment)}, *frozen_dependencies],
     }), encoding="utf-8")
     (tmp_path / "w034_original_vs_authorized_sensitivity.json").write_text(json.dumps({
         "schema_version": "w034_authorized_extension_sensitivity_freeze_v1", "status": "frozen",

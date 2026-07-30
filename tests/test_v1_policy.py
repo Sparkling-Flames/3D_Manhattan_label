@@ -271,10 +271,10 @@ def test_multimodal_is_unresolved_and_no_legal_submission_is_severe() -> None:
     first = _geometry()
     second = _geometry(250)
     rows = [
-        _valid(first, worker_id="w1", S_G=1.0),
-        _valid(first, worker_id="w2", S_G=0.9),
-        _valid(second, worker_id="w3", S_G=0.8),
-        _valid(second, worker_id="w4", S_G=0.7),
+        _valid(first, worker_id="w1", annotation_id="a1", S_G=1.0),
+        _valid(first, worker_id="w2", annotation_id="a2", S_G=0.9),
+        _valid(second, worker_id="w3", annotation_id="a3", S_G=0.8),
+        _valid(second, worker_id="w4", annotation_id="a4", S_G=0.7),
     ]
     result = aggregate_submissions(rows, manifest, at_cap=True)
     assert result["terminal_status"] == "unresolved"

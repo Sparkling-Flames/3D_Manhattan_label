@@ -247,7 +247,7 @@ def materialize(
     records: list[dict[str, Any]] = []
     for row in _read(quality_csv):
         worker, task = row.get("worker_id", ""), row.get("base_task_id", "")
-        if not worker or not task or not _truth(row.get("global_analysis_eligible")) or not _completion_usable(completion.get(worker, {})):
+        if not worker or not task or not _truth(row.get("gt_primary_analysis_eligible")) or not _completion_usable(completion.get(worker, {})):
             continue
         qgt_support[worker] += 1
         risk_row = risk.get(task, {})

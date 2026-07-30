@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import csv
+import math
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
@@ -20,16 +21,34 @@ def _time(value: str) -> datetime:
 
 
 VISIBLE_STATE_FIELDS = {"task", "policy_arm", "available_worker_ids", "remaining_capacity", "already_offered_worker_ids", "next_sequence"}
-FORBIDDEN_VISIBLE_TOKENS = ("outcome", "result", "realized", "post_decision", "completed_quality")
+PREDECISION_TASK_FIELDS = {"task_id", "d_cal_F", "family_scores", "risk_route"}
 
 
 def _validate_visible_state(state: dict[str, Any]) -> None:
     unknown = sorted(set(state) - VISIBLE_STATE_FIELDS)
     if unknown:
         raise ValueError(f"online V1 state contains non-contract fields:{','.join(unknown)}")
-    serialized_keys = " ".join(str(key).lower() for key in state.get("task", {}))
-    if any(token in serialized_keys for token in FORBIDDEN_VISIBLE_TOKENS):
-        raise ValueError("online V1 task contains future or outcome fields")
+    task = state.get("task")
+    if not isinstance(task, dict):
+        raise ValueError("online V1 task must be a mapping")
+    if set(task) != PREDECISION_TASK_FIELDS:
+        unexpected = sorted(set(task) - PREDECISION_TASK_FIELDS)
+        if any(
+            any(token in field.lower() for token in ("outcome", "result", "gold", "consensus", "iou"))
+            for field in unexpected
+        ):
+            raise ValueError(
+                "online V1 task contains future or outcome fields; "
+                "v1_predecision_task_v1 rejects them"
+            )
+        raise ValueError("online V1 task must satisfy v1_predecision_task_v1")
+    if not isinstance(task["task_id"], str) or not task["task_id"]:
+        raise ValueError("online V1 task_id must be a non-empty string")
+    if not isinstance(task["risk_route"], bool) or not isinstance(task["family_scores"], dict):
+        raise ValueError("online V1 task has invalid v1_predecision_task_v1 types")
+    scores = [task["d_cal_F"], *task["family_scores"].values()]
+    if not all(isinstance(value, (int, float)) and math.isfinite(float(value)) for value in scores):
+        raise ValueError("online V1 task scores must be finite")
 
 
 def _calculate_next_offer(

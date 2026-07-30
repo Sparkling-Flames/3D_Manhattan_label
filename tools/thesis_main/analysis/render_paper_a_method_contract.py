@@ -5,6 +5,7 @@ from __future__ import annotations
 import argparse
 import json
 from pathlib import Path
+import re
 
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, PROJECT_ROOT, sha256_file
 
@@ -26,6 +27,9 @@ NORMATIVE_REFERENCES = (
 )
 SOURCE_OUTLINE = PROJECT_ROOT / "docs/thesis_main/Paper_A_新版完整论文提纲_vFinal_Draft.md"
 
+NORMATIVE_REFERENCES = tuple(path for path in NORMATIVE_REFERENCES if path.suffix.lower() != ".tex")
+FORMAL_DOCUMENT_PATTERN = re.compile(r"(contract|protocol|sop|sap)", re.IGNORECASE)
+
 FORBIDDEN_NORMATIVE_PATTERNS = (
     "S_Global(u) = LCB(Q_u_GT_task_adjusted)",
     "global_lcb",
@@ -34,6 +38,9 @@ FORBIDDEN_NORMATIVE_PATTERNS = (
     "normalized margin",
     "R_u_LOO_compatible",
     "R_LOO_FREEZE_STATUS",
+    "global_analysis_eligible",
+    "loo_analysis_eligible",
+    "R_LOO_compatible",
     "Paper A current unique outline source",
 )
 
@@ -43,7 +50,8 @@ def render(contract_path: Path = METHOD_CONTRACT) -> str:
     digest = sha256_file(contract_path)
     peer = data["peer"]
     enrollment = data["rolling_enrollment"]
-    return f"""# Paper A 当前方法合同（自动生成）
+    return f"""<!-- PAPER_A_MACHINE_STATUS: generated -->
+# Paper A 当前方法合同（自动生成）
 
 > 本文档只由 `PAPER_A_METHOD_CONTRACT_CURRENT.json` 渲染；不得手工定义规范性字段。
 
@@ -99,6 +107,20 @@ def check_references(contract_path: Path = METHOD_CONTRACT) -> None:
         if version not in content or digest not in content:
             stale.append(str(path))
         conflicts.extend(f"{path}:{pattern}" for pattern in FORBIDDEN_NORMATIVE_PATTERNS if pattern in content)
+    formal_dir = PROJECT_ROOT / "docs/thesis_main"
+    for path in formal_dir.iterdir():
+        if not path.is_file() or not FORMAL_DOCUMENT_PATTERN.search(path.name):
+            continue
+        content = path.read_text(encoding="utf-8")
+        if path.suffix.lower() == ".json":
+            try:
+                status = str(json.loads(content).get("status", ""))
+            except json.JSONDecodeError:
+                status = ""
+            if status not in {"current_normative_source", "normative", "generated", "superseded"}:
+                stale.append(f"missing_machine_status:{path}")
+        elif not re.search(r"PAPER_A_MACHINE_STATUS:\s*(normative|generated|superseded)\b", content):
+            stale.append(f"missing_machine_status:{path}")
     if not SOURCE_OUTLINE.is_file() or "STATUS: superseded_non_normative_outline" not in SOURCE_OUTLINE.read_text(encoding="utf-8"):
         stale.append(f"source_outline_not_superseded:{SOURCE_OUTLINE}")
     if stale:
