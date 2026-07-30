@@ -60,9 +60,11 @@ def test_completion_adds_replacement_load_without_expanding_original_task_target
     summary = materialize_completion_support([export], [assignment], mapping, canonical, geometry, tmp_path, authorized_reassignment_csv=replacement)
     rows = {row["worker_id"]: row for row in csv.DictReader((tmp_path / "c1_worker_completion_audit.csv").open(encoding="utf-8"))}
     assert rows["34"]["assigned_total_count"] == "2"
+    assert rows["14"]["completion_status"] == "administrative_exclusion"
     task = next(csv.DictReader((tmp_path / "c1_task_support_deficit.csv").open(encoding="utf-8")))
     assert task["planned_support"] == "1"
     assert summary["authorized_reassignment_count"] == 1
+    assert summary["administrative_exclusion_worker_ids"] == ["14"]
 
 
 def test_final_closeout_does_not_block_nonstarter_or_reviewed_local_exclusion(tmp_path: Path) -> None:

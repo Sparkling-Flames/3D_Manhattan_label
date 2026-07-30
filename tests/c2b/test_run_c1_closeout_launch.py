@@ -234,9 +234,8 @@ def test_runbook_command_contract_matches_real_artifact_names() -> None:
     result = validate_runbook_command_contract(Path("docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md"))
     assert result["valid"] is True
     assert result["violations"] == []
-    template = json.loads(Path("docs/thesis_main/PAPER_A_CLOSE_C1_PLAN_C2B_RUN_CONFIG.template.json").read_text(encoding="utf-8"))
-    assert template["schema_version"] == "paper_a_close_c1_plan_c2b_run_config_v1"
-    assert set(template) >= {"audit_c1", "finalize_c1", "design_c2b", "build_c2b"}
+    runbook = Path("docs/thesis_main/PAPER_A_C1_C2B_FORMAL_RUNBOOK.md").read_text(encoding="utf-8")
+    assert "deprecated" in runbook and "close-c1-and-plan-c2b" in runbook
 
 
 def test_close_entry_requires_every_resume_phase_config(tmp_path) -> None:
@@ -245,7 +244,7 @@ def test_close_entry_requires_every_resume_phase_config(tmp_path) -> None:
         "schema_version": "paper_a_close_c1_plan_c2b_run_config_v1",
         "audit_c1": {}, "finalize_c1": {}, "design_c2b": {},
     }), encoding="utf-8")
-    with pytest.raises(ValueError, match="build_c2b"):
+    with pytest.raises(ValueError, match="deprecated close-c1-and-plan-c2b"):
         close_c1_and_plan_c2b(argparse.Namespace(run_config=config, state_output=tmp_path / "state.json"))
 
 

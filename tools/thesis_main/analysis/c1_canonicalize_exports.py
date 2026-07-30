@@ -684,7 +684,7 @@ def build_canonicalization(
             "known_unknown_oscillation_flag": bool_text(bool(active_override.get("known_unknown_oscillation_flag"))),
             "unassigned_audit_present": bool_text(bool(active_override.get("unassigned_audit_present"))),
             "unassigned_active_time_exclusion_reason": active_override.get("unassigned_active_time_exclusion_reason", ""),
-            "active_time_integrity_status": active_override.get("active_time_integrity_status", "missing"),
+            "active_time_integrity_status": active_override.get("active_time_integrity_status", "missing" if primary else "not_evaluable"),
             "system_collection_issue": bool_text(bool(active_override.get("system_collection_issue"))),
             "active_time_exclusion_reason": active_override.get("active_time_exclusion_reason", ""),
             "audit_only": bool_text(bool(active_override.get("audit_only"))),

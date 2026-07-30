@@ -149,7 +149,7 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
     assert summary["active_time_log_missing_count"] == 2
     assert summary["active_time_task_level_fallback_count"] == 0
     assert summary["active_time_lead_time_fallback_count"] == 1
-    assert summary["active_time_sensitivity_eligible_count"] == 1
+    assert summary["active_time_sensitivity_eligible_count"] == 0
     assert summary["structural_integrity_passed"] is False
     assert summary["collection_completeness_passed"] is False
     assert summary["passed_semantics"] == "structural_only_not_collection_complete"
@@ -167,7 +167,9 @@ def test_c1_canonicalization_materializes_required_fields_and_active_policy(tmp_
     assert by_runtime["201"]["primary_active_time_eligible"] == "false"
     assert by_runtime["202"]["active_time_source"] == "lead_time_fallback"
     assert by_runtime["202"]["primary_active_time_eligible"] == "false"
-    assert by_runtime["202"]["sensitivity_active_time_eligible"] == "true"
+    assert by_runtime["202"]["sensitivity_active_time_eligible"] == "false"
+    assert by_runtime["202"]["active_time"] == ""
+    assert by_runtime["202"]["active_time_integrity_status"] == "not_evaluable"
     assert "203" not in by_runtime
     assert summary["canonical_evidence_sidecars"]["n_meta_observations"] == 3
     dispositions = _read_csv(out / "c1_annotation_version_disposition.csv")

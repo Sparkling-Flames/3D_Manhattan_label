@@ -1,6 +1,6 @@
 {
-    "schema_version":  "paper_a_method_contract_v7",
-    "contract_version":  "paper_a_method_20260730_v7",
+    "schema_version":  "paper_a_method_contract_v8",
+    "contract_version":  "paper_a_method_20260730_v8",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
     "stages":  [
@@ -226,7 +226,7 @@
                                                        ]
                     },
     "c2b_launch":  {
-                       "planning_entrypoint":  "run_c1_closeout_launch.py freeze-c1-batch then design-c2b",
+                       "planning_entrypoint":  "run_c1_closeout_launch.py rehearse-c1 then freeze-c1-batch then design-c2b",
                        "final_build_entrypoint":  "run_c1_closeout_launch.py build-c2b --assignment-batch C2B_BATCH_A|C2B_BATCH_B",
                        "completion_field":  "C2B_LAUNCH_READY",
                        "automatic_label_studio_import":  false,
@@ -241,6 +241,13 @@
                                                      "planned_task_id",
                                                      "assignment_batch_id",
                                                      "selected_design_sha"
+                                                 ],
+                       "local_formal_workflow":  [
+                                                     "rehearse-c1",
+                                                     "freeze-c1-batch",
+                                                     "design-c2b",
+                                                     "build-c2b --assignment-batch C2B_BATCH_A",
+                                                     "bind-c2b-runtime-mapping"
                                                  ]
                    },
     "stage3":  {
@@ -333,7 +340,6 @@
                          ],
     "c1_batch_execution":  {
                                "c1_a_snapshot_schema":  "paper_a_c1_batch_analysis_snapshot_v1",
-                               "c1_a_scope":  "original_cohort_plus_w034_17_and_w001_3_authorized_repairs",
                                "c1_a_statuses":  [
                                                      "provisional",
                                                      "formal_design_eligible"
@@ -348,6 +354,38 @@
                                                            "CALIBRATION_ENROLLMENT_CLOSED",
                                                            "ALL_CALIBRATION_WORKERS_TERMINAL",
                                                            "FINAL_POOLED_PROFILE_FROZEN"
-                                                       ]
+                                                       ],
+                               "c1_a_scope":  "original_cohort_plus_exact_w034_17_and_w001_3_authorized_repairs",
+                               "authorized_repair_required_fields":  [
+                                                                         "worker_id",
+                                                                         "base_task_id",
+                                                                         "condition",
+                                                                         "assignment_provenance",
+                                                                         "canonical_annotation_id"
+                                                                     ],
+                               "authorized_repair_identity_key":  [
+                                                                      "worker_id",
+                                                                      "base_task_id",
+                                                                      "condition"
+                                                                  ],
+                               "authorized_addendum_rule":  "when an authorized addendum row identity or SHA is supplied, bind it to the frozen addendum manifest row",
+                               "snapshot_dependency_roles":  [
+                                                                 "WORKER_PROFILE",
+                                                                 "COMPLETION",
+                                                                 "Q_GT",
+                                                                 "STRUCTURAL_EB",
+                                                                 "MEASUREMENT_READINESS",
+                                                                 "CANONICAL_ELIGIBILITY",
+                                                                 "REFERENCE",
+                                                                 "BUILDING"
+                                                             ],
+                               "provisional_rule":  "provisional snapshots are materialized but must set C1_A_ANALYSIS_SNAPSHOT_FROZEN and C2B_DESIGN_INPUT_FROZEN_FROM_C1_A false",
+                               "snapshot_state_fields":  [
+                                                             "C1_A_ANALYSIS_SNAPSHOT_MATERIALIZED",
+                                                             "C1_A_ANALYSIS_SNAPSHOT_FROZEN",
+                                                             "C2B_DESIGN_INPUT_FROZEN_FROM_C1_A"
+                                                         ],
+                               "authorized_repair_assignment_provenance":  "authorized_replacement_assignment",
+                               "c1_a_included_evidence":  "original cohort original assignments plus the exact 20 resolved authorized repair canonical annotation identities; exclude late-entry, outside, undeclared-worker, and other-batch evidence"
                            }
 }

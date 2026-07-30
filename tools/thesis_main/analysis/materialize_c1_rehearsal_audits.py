@@ -74,7 +74,17 @@ def materialize_completion_support(
                 raise ValueError(f"duplicate assignment identity: {key}")
             assignments[key] = {**row, "condition": condition}
     original_assignments = dict(assignments)
-    for row in read_csv(authorized_reassignment_csv) if authorized_reassignment_csv and authorized_reassignment_csv.exists() else []:
+    authorized_rows = read_csv(authorized_reassignment_csv) if authorized_reassignment_csv and authorized_reassignment_csv.exists() else []
+    # W014 is permanently administratively excluded.  Its original assignment
+    # edges are evidence of what was replaced, not analysis/support edges.
+    administrative_workers = {"14"} if any(str(row.get("displaced_worker_id", "")).strip() == "14" for row in authorized_rows) else set()
+    excluded_original_assignments = {
+        key: row for key, row in original_assignments.items() if key[0] in administrative_workers
+    }
+    assignments = {
+        key: row for key, row in assignments.items() if key[0] not in administrative_workers
+    }
+    for row in authorized_rows:
         key = (
             str(row.get("replacement_worker_id", "")).strip(), str(row.get("task_id", "")).strip(),
             str(row.get("base_task_id", "")).strip(), str(row.get("dataset_group", "")).strip(),
@@ -139,6 +149,21 @@ def materialize_completion_support(
             "missing_semi_count": assigned_counts["semi"] - observed_counts["semi"], "missing_total_count": total - complete,
             "completion_rate": complete / total if total else 0, "completion_status": status,
         })
+    for worker in sorted(administrative_workers, key=lambda value: int(value) if value.isdigit() else value):
+        rows = [(key, row) for key, row in excluded_original_assignments.items() if key[0] == worker]
+        assigned_counts = Counter(row["condition"] for _key, row in rows)
+        observed_counts = Counter(row["condition"] for key, _row in rows if key in observed)
+        total, complete = len(rows), sum(key in observed for key, _row in rows)
+        worker_status[worker] = "administrative_exclusion"
+        completion_rows.append({
+            "worker_id": worker,
+            "assigned_manual_count": assigned_counts["manual"], "assigned_semi_count": assigned_counts["semi"], "assigned_total_count": total,
+            "observed_manual_count": observed_counts["manual"], "observed_semi_count": observed_counts["semi"], "observed_total_count": complete,
+            "canonical_selected_total_count": sum(key in canonical_keys for key, _row in rows),
+            "missing_manual_count": assigned_counts["manual"] - observed_counts["manual"],
+            "missing_semi_count": assigned_counts["semi"] - observed_counts["semi"], "missing_total_count": total - complete,
+            "completion_rate": complete / total if total else 0, "completion_status": "administrative_exclusion",
+        })
     for key, row in sorted(assignments.items()):
         raw_seen, selected = key in observed, key in canonical_keys
         status = worker_status[key[0]]
@@ -161,7 +186,7 @@ def materialize_completion_support(
 
     task_rows = []
     by_task: dict[tuple[str, str, str, str], list[tuple[str, str, str, str]]] = defaultdict(list)
-    for key, row in original_assignments.items():
+    for key, row in assignments.items():
         by_task[(key[1], key[2], row["condition"], key[3])].append(key)
     for (task, base, condition, group), keys in sorted(by_task.items()):
         planned = len(keys); seen = sum(key in observed for key in keys); valid = sum(key in geometry_valid for key in keys)
@@ -178,7 +203,7 @@ def materialize_completion_support(
     completion_source_sha = hashlib.sha256(preliminary_completion.read_bytes()).hexdigest()
     write_csv(output_dir / "c1_completion_disposition_template.csv", [{
         "worker_id": row["worker_id"], "computed_completion_status": row["completion_status"],
-        "final_completion_disposition": row["completion_status"] if row["completion_status"] in {"completed", "partial_noncompletion", "closed_partial_usable", "closed_partial_insufficient", "nonstarter"} else "",
+        "final_completion_disposition": row["completion_status"] if row["completion_status"] in {"completed", "partial_noncompletion", "closed_partial_usable", "closed_partial_insufficient", "nonstarter", "administrative_exclusion"} else "",
         "source_completion_audit_sha256": completion_source_sha, "reviewed_by": "", "reviewed_at": "", "reason": "",
     } for row in completion_rows])
     disposition_summary = apply_completion_disposition(preliminary_completion, completion_disposition_csv, output_dir)
@@ -200,7 +225,7 @@ def materialize_completion_support(
         "closed_partial_insufficient_worker_count": counts["closed_partial_insufficient"],
         "nonstarter_worker_count": counts["nonstarter"],
         "administrative_exclusion_worker_count": counts["administrative_exclusion"],
-        "authorized_reassignment_count": len(assignments) - len(original_assignments),
+        "authorized_reassignment_count": len(authorized_rows),
         "completed_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] == "completed"],
         "partial_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] in {"partial_noncompletion", "closed_partial_usable", "closed_partial_insufficient"}],
         "nonstarter_worker_ids": [row["worker_id"] for row in completion_rows if row["completion_status"] == "nonstarter"],

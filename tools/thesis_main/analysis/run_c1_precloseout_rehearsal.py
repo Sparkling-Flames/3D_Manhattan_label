@@ -210,7 +210,7 @@ def _is_w034(value: Any) -> bool:
     return str(value or "").strip().upper().lstrip("W0") == "34"
 
 
-def _materialize_w034_original_only_profile(output_dir: Path, *, formal: bool) -> Path:
+def _materialize_w034_original_only_profile(output_dir: Path, *, formal: bool) -> Path | None:
     branch = output_dir / "w034_original_only_branch"
     branch.mkdir(parents=True, exist_ok=True)
     eligibility_path = output_dir / "c1_row_analysis_eligibility.csv"
@@ -246,10 +246,16 @@ def _materialize_w034_original_only_profile(output_dir: Path, *, formal: bool) -
     eligibility_original = filtered(eligibility_path, "eligibility_original_only.csv")
 
     quality_rows = read_csv(quality_path)
-    globals_, task_effects, audit = estimate_task_adjusted_qgt(
-        quality_rows,
-        estimator_contract={"bootstrap_replicates": 200 if formal else 80, "bootstrap_seed": 20260726, "adjust_stage": False},
-    )
+    try:
+        globals_, task_effects, audit = estimate_task_adjusted_qgt(
+            quality_rows,
+            estimator_contract={"bootstrap_replicates": 200 if formal else 80, "bootstrap_seed": 20260726, "adjust_stage": False},
+        )
+    except ValueError as error:
+        if str(error) != "task-adjusted Q_GT requires at least two workers and two base tasks":
+            raise
+        write_json(branch / "qgt_original_only_audit.json", {"status": "not_evaluable", "reason": str(error)})
+        return None
     qgt_path = branch / "qgt_original_only.csv"
     write_csv(qgt_path, globals_, list(globals_[0]) if globals_ else ["worker_id", "Q_GT_task_adjusted"])
     write_csv(branch / "qgt_task_effects_original_only.csv", task_effects, list(task_effects[0]) if task_effects else ["base_task_id"])
@@ -759,6 +765,7 @@ def materialize(
         raise ValueError("formal W034 authorized extension requires original W034 evidence")
     else:
         w034_sensitivity_summary = {"status": "not_evaluable", "reason": "original_profile_or_thresholds_not_provided"}
+        write_json(output_dir / "w034_original_vs_authorized_sensitivity.json", w034_sensitivity_summary)
     # P1 is frozen input evidence. Its historical predictive diagnostic is not
     # a C1 estimand and must not pull legacy P1 fields into the C1 evidence DAG.
     write_csv(predictive_path, [], ["worker_id", "check_name", "p1_metric_value", "c1_metric_value"])

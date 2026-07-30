@@ -18,8 +18,8 @@ def sha256_file(path: Path) -> str:
 
 def load_method_contract(path: Path = METHOD_CONTRACT) -> dict[str, Any]:
     payload = json.loads(path.read_text(encoding="utf-8"))
-    if payload.get("schema_version") != "paper_a_method_contract_v7":
-        raise ValueError("Paper A method contract is not v7")
+    if payload.get("schema_version") != "paper_a_method_contract_v8":
+        raise ValueError("Paper A method contract is not v8")
     if payload.get("status") != "current_normative_source":
         raise ValueError("Paper A method contract is not normative")
     return payload

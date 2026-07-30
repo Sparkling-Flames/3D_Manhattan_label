@@ -51,6 +51,7 @@ from tools.thesis_main.registry.hohonet_feature_backend import extract_orbit_des
 
 
 COMMAND_ARTIFACT_CONTRACT = {
+    "rehearse-c1": {"outputs": ("analysis_dependency_manifest.json",)},
     "expand-building-registry": {
         "outputs": ("authoritative_building_registry.csv",),
     },
@@ -78,18 +79,17 @@ COMMAND_ARTIFACT_CONTRACT = {
         "outputs": ("assignment_manifest_C2B.csv", "c2b_launch_ready_report.json"),
     },
     "bind-c2b-runtime-mapping": {"outputs": ("c2b_runtime_task_mapping.csv", "c2b_worker_task_binding_audit.json")},
-    "close-c1-and-plan-c2b": {
-        "requires": (("finalize-c1", "c1_evidence_freeze_manifest.json"), ("prepare-c2b-static", "c2b_static_freeze_manifest.json")),
-        "outputs": ("close_c1_and_plan_c2b_state.json",),
-    },
     "check-command-contract": {"outputs": ()},
 }
+
+FORMAL_BATCH_COMMANDS = ("rehearse-c1", "freeze-c1-batch", "design-c2b", "build-c2b", "bind-c2b-runtime-mapping")
 
 
 def validate_runbook_command_contract(runbook: Path) -> dict[str, Any]:
     text = runbook.read_text(encoding="utf-8")
     missing = []
-    for command, contract in COMMAND_ARTIFACT_CONTRACT.items():
+    for command in FORMAL_BATCH_COMMANDS:
+        contract = COMMAND_ARTIFACT_CONTRACT[command]
         if command not in text:
             missing.append(f"missing_command:{command}")
         for artifact in contract.get("outputs", ()):
@@ -138,6 +138,59 @@ def _truth(value: Any) -> bool:
     return str(value).strip().lower() in {"true", "1", "yes"}
 
 
+def _identity_key(row: dict[str, Any]) -> tuple[str, str, str]:
+    return (
+        str(row.get("worker_id", "")).strip(),
+        str(row.get("base_task_id", "")).strip(),
+        str(row.get("condition", "")).strip().lower(),
+    )
+
+
+def _repair_scope(scope: dict[str, Any]) -> dict[str, list[dict[str, str]]]:
+    repairs = scope.get("authorized_repair_identities")
+    if not isinstance(repairs, dict):
+        raise ValueError("C1_A scope requires authorized_repair_identities grouped by w034 and w001")
+    normalized: dict[str, list[dict[str, str]]] = {}
+    for group, expected_count in (("w034", 17), ("w001", 3)):
+        entries = repairs.get(group)
+        if not isinstance(entries, list) or len(entries) != expected_count:
+            raise ValueError(f"C1_A scope requires exactly {expected_count} {group} authorized repair identities")
+        normalized[group] = []
+        seen: set[tuple[str, str, str]] = set()
+        for entry in entries:
+            if not isinstance(entry, dict):
+                raise ValueError(f"{group} repair identity is not an object")
+            item = {name: str(entry.get(name, "")).strip() for name in ("worker_id", "base_task_id", "condition", "authorized_addendum_row_identity", "authorized_addendum_row_sha256")}
+            item["condition"] = item["condition"].lower()
+            key = _identity_key(item)
+            expected_worker = "34" if group == "w034" else "1"
+            worker_number = key[0].upper().removeprefix("W").lstrip("0") or "0"
+            if not all(key) or key in seen or worker_number != expected_worker:
+                raise ValueError(f"{group} repair identities must be complete and unique by worker/base-task/condition")
+            seen.add(key); normalized[group].append(item)
+    return normalized
+
+
+def _snapshot_dependencies(snapshot: dict[str, Any], *roles: str) -> dict[str, Path]:
+    resolved: dict[str, Path] = {}
+    dependencies = snapshot.get("dependencies", [])
+    if not isinstance(dependencies, list):
+        raise ValueError("C1_A snapshot dependencies are invalid")
+    for role in roles:
+        matches = [item for item in dependencies if isinstance(item, dict) and item.get("role") == role]
+        if len(matches) != 1:
+            raise ValueError(f"C1_A snapshot dependency is missing or ambiguous:{role}")
+        path = Path(str(matches[0].get("path", "")))
+        if not path.is_file() or matches[0].get("sha256") != sha256_file(path):
+            raise ValueError(f"C1_A snapshot dependency is stale or unavailable:{role}")
+        resolved[role] = path
+    return resolved
+
+
+def _addendum_row_sha256(row: dict[str, str]) -> str:
+    return hashlib.sha256(json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
 def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
     """Freeze C1-A analysis/design inputs without closing future enrollment."""
     c1_dir = args.c1_output_dir.resolve()
@@ -146,12 +199,10 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("freeze-c1-batch requires a C1_A batch-scope manifest")
     cutoff = str(scope.get("data_cutoff_server_time", "")).strip()
     originals = {str(value) for value in scope.get("original_worker_ids", []) if str(value)}
-    w034_repairs = {str(value) for value in scope.get("w034_authorized_repair_task_ids", []) if str(value)}
-    w001_repairs = {str(value) for value in scope.get("w001_authorized_repair_task_ids", []) if str(value)}
-    repairs = w034_repairs | w001_repairs
+    repairs = _repair_scope(scope)
     completion_exceptions = {str(value) for value in scope.get("original_completion_exception_task_ids", []) if str(value)}
-    if not cutoff or not originals or len(w034_repairs) != 17 or len(w001_repairs) != 3 or len(repairs) != 20:
-        raise ValueError("C1_A scope must bind cutoff, original roster, 17 W034 and 3 W001 repair identities")
+    if not cutoff or not originals:
+        raise ValueError("C1_A scope must bind cutoff and original roster")
     profile_path = c1_dir / "c1_three_track_worker_state.csv"
     eligibility_path = c1_dir / "c1_row_analysis_eligibility.csv"
     readiness_path = c1_dir / "c1_measurement_freeze_manifest.json"
@@ -161,8 +212,10 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
         "VARIABLE_K": c1_dir / "c1_estimand_specific_task_support.csv",
         "PEER": c1_dir / "geometry_worker_task_peer_analysis.csv",
         "LOO": c1_dir / "geometry_worker_task_loo_analysis.csv",
-        "Q_GT": c1_dir / "c1_task_adjusted_qgt_model_audit.json",
-        "STRUCTURAL_EB": c1_dir / "c1_structural_reliability_eb.csv",
+        "Q_GT": c1_dir / "c1_gt_quality_analysis.csv",
+        "Q_GT_MODEL_AUDIT": c1_dir / "c1_task_adjusted_qgt_model_audit.json",
+        "STRUCTURAL_EB": c1_dir / "structural_validation_analysis.csv",
+        "STRUCTURAL_EB_AUDIT": c1_dir / "c1_structural_reliability_eb.csv",
         "COMPLETION": c1_dir / "c1_worker_completion_audit.csv",
         "REFERENCE": c1_dir / "c1_task_outcome_reference.csv",
         "BUILDING": c1_dir / "c1_task_building_binding.csv",
@@ -172,33 +225,81 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
     }
     blockers = [f"missing:{role}" for role, path in required.items() if not path.is_file()]
     profile_rows = _read(profile_path) if profile_path.is_file() else []
+    repair_workers = {entry["worker_id"] for values in repairs.values() for entry in values}
+    included_workers = originals | repair_workers
     if not originals <= {row.get("worker_id", "") for row in profile_rows if row.get("enrollment_batch") == "original"}:
         blockers.append("original_roster_not_bound_to_worker_profile")
+    if any(row.get("enrollment_batch") == "late_entry" for row in profile_rows):
+        blockers.append("late_entry_profile_present_in_c1_a_source")
     eligibility_rows = _read(eligibility_path) if eligibility_path.is_file() else []
-    eligible_base_task_ids = sorted({str(row.get("base_task_id", "")) for row in eligibility_rows if _truth(row.get("formal_assignment_eligible")) and row.get("base_task_id")})
-    repair_rows = {str(row.get("task_id") or row.get("planned_task_id") or row.get("canonical_annotation_id") or ""): row for row in eligibility_rows}
-    required_completed_tasks = repairs | completion_exceptions
-    missing_repairs = sorted(required_completed_tasks - set(repair_rows))
-    if missing_repairs:
-        blockers.append("repair_or_completion_exception_missing:" + ",".join(missing_repairs))
-    nonterminal_repairs = sorted(task for task in required_completed_tasks & set(repair_rows) if not (_truth(repair_rows[task].get("formal_assignment_eligible")) or str(repair_rows[task].get("completion_status", "")) in _TERMINAL_CALIBRATION_STATUSES))
-    if nonterminal_repairs:
-        blockers.append("repair_or_completion_exception_not_terminal:" + ",".join(nonterminal_repairs))
+    repair_rows: list[dict[str, str]] = []
+    addendum_rows = _read(args.authorized_reassignment_manifest) if getattr(args, "authorized_reassignment_manifest", None) else []
+    for group, entries in repairs.items():
+        for entry in entries:
+            label = ":".join((group, *(_identity_key(entry))))
+            candidates = [
+                row for row in eligibility_rows
+                if _identity_key(row) == _identity_key(entry)
+                and row.get("assignment_provenance") == "authorized_replacement_assignment"
+                and _truth(row.get("formal_assignment_eligible"))
+                and str(row.get("canonical_annotation_id", "")).strip()
+            ]
+            if len(candidates) != 1:
+                blockers.append(f"authorized_repair_identity_unresolved:{label}")
+                continue
+            if entry["authorized_addendum_row_identity"] or entry["authorized_addendum_row_sha256"]:
+                matching_addenda = [row for row in addendum_rows if _identity_key(row) == _identity_key(entry)]
+                if len(matching_addenda) != 1:
+                    blockers.append(f"authorized_addendum_identity_unresolved:{label}")
+                    continue
+                addendum = matching_addenda[0]
+                row_identity = next((str(addendum.get(name, "")).strip() for name in ("authorized_addendum_row_identity", "authorized_reassignment_row_id", "row_id", "id") if str(addendum.get(name, "")).strip()), "")
+                if (entry["authorized_addendum_row_identity"] and entry["authorized_addendum_row_identity"] != row_identity) or (entry["authorized_addendum_row_sha256"] and entry["authorized_addendum_row_sha256"] != _addendum_row_sha256(addendum)):
+                    blockers.append(f"authorized_addendum_identity_mismatch:{label}")
+                    continue
+            repair_rows.append({**candidates[0], "repair_group": group})
+    canonical_repair_ids = {row["canonical_annotation_id"] for row in repair_rows}
+    if len(canonical_repair_ids) != 20:
+        blockers.append("authorized_repair_count_not_exactly_20")
+    completion_rows = {str(row.get("task_id") or row.get("planned_task_id") or row.get("canonical_annotation_id") or ""): row for row in eligibility_rows if row.get("worker_id") in originals}
+    missing_completion = sorted(completion_exceptions - set(completion_rows))
+    if missing_completion:
+        blockers.append("original_completion_exception_missing:" + ",".join(missing_completion))
+    nonterminal_completion = sorted(task for task in completion_exceptions & set(completion_rows) if not (_truth(completion_rows[task].get("formal_assignment_eligible")) or str(completion_rows[task].get("completion_status", "")) in _TERMINAL_CALIBRATION_STATUSES))
+    if nonterminal_completion:
+        blockers.append("original_completion_exception_not_terminal:" + ",".join(nonterminal_completion))
+    included_rows = [
+        row for row in eligibility_rows
+        if (row.get("worker_id") in originals and row.get("assignment_provenance") == "original_assignment")
+        or row.get("canonical_annotation_id") in canonical_repair_ids
+    ]
+    eligible_base_task_ids = sorted({str(row.get("base_task_id", "")) for row in included_rows if _truth(row.get("formal_assignment_eligible")) and row.get("base_task_id")})
+    identity_rows = [{
+        "canonical_annotation_id": row.get("canonical_annotation_id", ""), "worker_id": row.get("worker_id", ""),
+        "base_task_id": row.get("base_task_id", ""), "condition": row.get("condition", ""),
+        "assignment_provenance": row.get("assignment_provenance", ""),
+        "included_in_c1_a": str(row in included_rows).lower(),
+    } for row in eligibility_rows]
+    identity_manifest = args.output.parent / "c1_a_canonical_annotation_identity_manifest.csv"
+    _write(identity_manifest, identity_rows)
     w034 = json.loads(required["W034_SENSITIVITY"].read_text(encoding="utf-8")) if required["W034_SENSITIVITY"].is_file() else {}
     if w034.get("status") != "frozen": blockers.append("w034_sensitivity_not_frozen")
     readiness = json.loads(readiness_path.read_text(encoding="utf-8")) if readiness_path.is_file() else {}
     if readiness.get("C1_CANONICAL_CLOSED") is not True: blockers.append("c1_a_canonical_evidence_not_closed")
-    if not any(_truth(row.get("c2_risk_model_eligible")) for row in profile_rows if row.get("worker_id") in originals): blockers.append("no_c2b_eligible_original_worker")
+    if not any(_truth(row.get("c2_risk_model_eligible")) for row in profile_rows if row.get("worker_id") in included_workers): blockers.append("no_c2b_eligible_original_worker")
+    frozen = not blockers
     snapshot = {
-        "schema_version": "paper_a_c1_batch_analysis_snapshot_v1", "artifact_role": "C1_A_ANALYSIS_SNAPSHOT_FROZEN", "batch_id": "C1_A",
-        "status": "formal_design_eligible" if not blockers else "provisional", "data_cutoff_server_time": cutoff,
-        "original_worker_ids": sorted(originals), "authorized_repair_set": {"w034_task_ids": sorted(w034_repairs), "w001_task_ids": sorted(w001_repairs), "expected_count": 20}, "original_completion_exception_task_ids": sorted(completion_exceptions),
+        "schema_version": "paper_a_c1_batch_analysis_snapshot_v1", "artifact_role": "C1_A_ANALYSIS_SNAPSHOT", "batch_id": "C1_A",
+        "status": "formal_design_eligible" if frozen else "provisional", "data_cutoff_server_time": cutoff,
+        "source_c1_output_dir": str(c1_dir), "source_c1_output_manifest_sha256": sha256_file(required["ANALYSIS_DEPENDENCY_BUNDLE"]) if required["ANALYSIS_DEPENDENCY_BUNDLE"].is_file() else "",
+        "original_worker_ids": sorted(originals), "authorized_repair_set": {"w034": [entry for entry in repairs["w034"]], "w001": [entry for entry in repairs["w001"]], "resolved_canonical_annotation_ids": sorted(canonical_repair_ids), "expected_count": 20}, "original_completion_exception_task_ids": sorted(completion_exceptions),
+        "included_canonical_annotation_identity_manifest_sha256": sha256_file(identity_manifest),
         "eligible_base_task_ids": eligible_base_task_ids, "reference_registry_sha256": sha256_file(required["REFERENCE"]) if required["REFERENCE"].is_file() else "",
-        "C1_A_ANALYSIS_SNAPSHOT_FROZEN": True, "C2B_BASELINE_INPUT_FROZEN": not blockers, "C2B_DESIGN_INPUT_FROZEN_FROM_C1_A": not blockers,
+        "C1_A_ANALYSIS_SNAPSHOT_MATERIALIZED": True, "C1_A_ANALYSIS_SNAPSHOT_FROZEN": frozen, "C2B_BASELINE_INPUT_FROZEN": frozen, "C2B_DESIGN_INPUT_FROZEN_FROM_C1_A": frozen,
         "C2B_ASSIGNMENT_BATCH_A_MATERIALIZED": False, "C2B_ASSIGNMENT_BATCH_B_MATERIALIZED": False,
         "CALIBRATION_ENROLLMENT_CLOSED": False, "ALL_CALIBRATION_WORKERS_TERMINAL": False, "FINAL_POOLED_PROFILE_FROZEN": False,
         "blockers": blockers, **_method_identity(),
-        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in required.items() if path.is_file()] + [{"role": "BATCH_SCOPE", "path": str(args.batch_scope_manifest.resolve()), "sha256": sha256_file(args.batch_scope_manifest)}, {"role": "METHOD_CONTRACT", "path": str(METHOD_CONTRACT.resolve()), "sha256": sha256_file(METHOD_CONTRACT)}],
+        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in required.items() if path.is_file()] + ([{"role": "AUTHORIZED_REASSIGNMENT_MANIFEST", "path": str(args.authorized_reassignment_manifest.resolve()), "sha256": sha256_file(args.authorized_reassignment_manifest)}] if getattr(args, "authorized_reassignment_manifest", None) else []) + [{"role": "BATCH_SCOPE", "path": str(args.batch_scope_manifest.resolve()), "sha256": sha256_file(args.batch_scope_manifest)}, {"role": "CANONICAL_IDENTITY_MANIFEST", "path": str(identity_manifest.resolve()), "sha256": sha256_file(identity_manifest)}, {"role": "METHOD_CONTRACT", "path": str(METHOD_CONTRACT.resolve()), "sha256": sha256_file(METHOD_CONTRACT)}],
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
@@ -976,6 +1077,10 @@ def design_c2b(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("C1_A batch snapshot method contract is stale")
     if closeout.get("C2B_DESIGN_INPUT_FROZEN_FROM_C1_A") is not True:
         raise ValueError("C1_A design input is not frozen")
+    c1_inputs = _snapshot_dependencies(
+        closeout, "WORKER_PROFILE", "COMPLETION", "Q_GT", "STRUCTURAL_EB",
+        "MEASUREMENT_READINESS", "CANONICAL_ELIGIBILITY", "REFERENCE", "BUILDING",
+    )
     evidence_envelope = _materialize_c2b_evidence_envelope(args)
     if not evidence_envelope["C2B_EVIDENCE_FROZEN"]:
         return {
@@ -1014,18 +1119,15 @@ def design_c2b(args: argparse.Namespace) -> dict[str, Any]:
     pool_gate: dict[str, Any] = {"frozen": False, "approved_thresholds": False, "observed": {}, "failures": ["design_inputs_not_ready"]}
     design_input_blocker = ""
     if preliminary_ready:
-        c1_dir = args.c1_closeout_summary.parent
-        worker_profile_path = c1_dir / "c1_three_track_worker_state_formal.csv"
-        if not worker_profile_path.is_file():
-            worker_profile_path = c1_dir / "c1_three_track_worker_state.csv"
+        worker_profile_path = c1_inputs["WORKER_PROFILE"]
         parameter_summary = materialize_design_parameters(
-            c1_dir / "c1_gt_quality_analysis.csv", args.output_dir / "c1_task_risk_reference.csv",
-            c1_dir / "structural_validation_analysis.csv", c1_dir / "c1_worker_completion_audit.csv",
+            c1_inputs["Q_GT"], args.output_dir / "c1_task_risk_reference.csv",
+            c1_inputs["STRUCTURAL_EB"], c1_inputs["COMPLETION"],
             args.output_dir, worker_state_csv=worker_profile_path,
         )
         profile_summary = materialize_c2b_design_worker_profile(
-            c1_dir / "c1_worker_completion_audit.csv", worker_profile_path,
-            args.output_dir / "c1_c2_design_parameters.csv", c1_dir / "c1_measurement_readiness_by_worker.csv",
+            c1_inputs["COMPLETION"], worker_profile_path,
+            args.output_dir / "c1_c2_design_parameters.csv", c1_inputs["MEASUREMENT_READINESS"],
             args.output_dir, c1_batch_snapshot=args.c1_closeout_summary,
         )
         if parameter_summary["formal_design_input_ready"] and profile_summary["n_eligible"]:
@@ -1363,7 +1465,11 @@ def _namespace_from_run_config(section: dict[str, Any]) -> argparse.Namespace:
 
 
 def close_c1_and_plan_c2b(args: argparse.Namespace) -> dict[str, Any]:
-    """Resume-safe thin entry; stop at manual approvals and print one rerun command."""
+    """Deprecated global-closeout entry retained only for a clear migration error."""
+    raise ValueError(
+        "deprecated close-c1-and-plan-c2b: use rehearse-c1 -> freeze-c1-batch -> design-c2b -> "
+        "build-c2b --assignment-batch C2B_BATCH_A -> bind-c2b-runtime-mapping"
+    )
     config = json.loads(args.run_config.read_text(encoding="utf-8"))
     if config.get("schema_version") != "paper_a_close_c1_plan_c2b_run_config_v1":
         raise ValueError("unsupported close-c1-and-plan-c2b run config")
@@ -1538,6 +1644,7 @@ def main(argv: list[str] | None = None) -> int:
     batch_freeze = sub.add_parser("freeze-c1-batch")
     batch_freeze.add_argument("--c1-output-dir", type=Path, required=True)
     batch_freeze.add_argument("--batch-scope-manifest", type=Path, required=True)
+    batch_freeze.add_argument("--authorized-reassignment-manifest", type=Path)
     batch_freeze.add_argument("--output", type=Path, required=True)
 
     plan = sub.add_parser("design-c2b")

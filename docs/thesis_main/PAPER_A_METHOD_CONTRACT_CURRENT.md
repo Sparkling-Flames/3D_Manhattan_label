@@ -3,8 +3,8 @@
 
 > 本文档只由 `PAPER_A_METHOD_CONTRACT_CURRENT.json` 渲染；不得手工定义规范性字段。
 
-- 合同版本：`paper_a_method_20260730_v7`
-- JSON SHA-256：`e2621e20af8afeb31139b0da81cfb8f740de065d83f5f4d587586d041256dc1a`
+- 合同版本：`paper_a_method_20260730_v8`
+- JSON SHA-256：`a74ea709ec4a0a3a35f724521b8b2deb0f69f6b0e36191bac8b99c3517ae30df`
 - 正式启动默认值：`false`
 
 ## 画像、质量与同行

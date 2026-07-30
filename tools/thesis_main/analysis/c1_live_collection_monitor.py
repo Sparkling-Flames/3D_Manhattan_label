@@ -331,7 +331,7 @@ def assignment_sets(manual_path: Path, semi_path: Path, internal_path: Path) -> 
 def active_time_policy(source: str, status: str, session_count: int = 0, duplicate_time_ambiguous: bool = False) -> tuple[bool, bool]:
     if source == "log" and status == PRIMARY_ACTIVE_TIME_STATUS_ANNOTATION:
         return True, True
-    if source in {"log", "lead_time_fallback"}:
+    if source == "log":
         return False, True
     return False, False
 
@@ -358,7 +358,6 @@ def active_time_for_annotation(
         event_count = int(entry.get("active_time_event_count", 0) or 0)
     elif lead_time_seconds > 0 and not unknown_annotation:
         source = "lead_time_fallback"
-        value = float(lead_time_seconds)
         source_file = ""
         event_count = 0
     else:
@@ -371,7 +370,7 @@ def active_time_for_annotation(
     elif source == "log" and status == PRIMARY_ACTIVE_TIME_STATUS_TASK:
         integrity_status = "task_level_fallback"
     elif source == "lead_time_fallback":
-        integrity_status = "lead_time_fallback"
+        integrity_status = "not_evaluable"
     elif audit_present and source == "missing":
         integrity_status = "unknown_audit_only"
     elif "ambiguous" in status:
@@ -397,7 +396,7 @@ def active_time_for_annotation(
         "unassigned_active_time_exclusion_reason": audit.get("unassigned_active_time_exclusion_reason", "unknown_annotation_audit_only" if unknown_annotation else ""),
         "active_time_integrity_status": integrity_status,
         "system_collection_issue": audit_present,
-        "active_time_exclusion_reason": "unknown_annotation_audit_only" if integrity_status == "unknown_audit_only" else "",
+        "active_time_exclusion_reason": "unknown_annotation_audit_only" if integrity_status == "unknown_audit_only" else "annotation_level_active_time_unavailable" if integrity_status == "not_evaluable" else "",
         "audit_only": audit_present and source == "missing",
     }
 

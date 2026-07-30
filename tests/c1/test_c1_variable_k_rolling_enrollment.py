@@ -54,6 +54,33 @@ def test_estimand_specific_k_separates_original_authorized_late_outside_and_dupl
         build_task_support_rows([original], authorized, late, canonical + [{**canonical[0], "canonical_annotation_id": "revision"}], eligibility)
 
 
+def test_w031_missing_active_time_is_timing_only_and_never_a_roster_gate(tmp_path: Path) -> None:
+    original = tmp_path / "w031.csv"
+    _csv(original, [
+        {"worker_id": "W031", "base_task_id": f"b{index}", "task_id": f"t{index}", "dataset_group": "Calibration_core", "condition": "manual"}
+        for index in range(5)
+    ])
+    canonical = [
+        {"canonical_annotation_id": f"w031-{index}", "worker_id": "W031", "base_task_id": f"b{index}",
+         "condition": "manual", "assignment_provenance": "original_assignment",
+         "active_time_integrity_status": "exact_annotation_valid" if index == 0 else "not_evaluable"}
+        for index in range(5)
+    ]
+    eligibility = [
+        {"canonical_annotation_id": row["canonical_annotation_id"], "gt_primary_analysis_eligible": True,
+         "peer_analysis_eligible": True, "structural_opportunity_eligible": True,
+         "time_analysis_eligible": index == 0}
+        for index, row in enumerate(canonical)
+    ]
+    support = build_task_support_rows([original], None, None, canonical, eligibility)
+    assert sum(row["k_final_time"] for row in support) == 1
+    assert sum(row["k_final_GT"] for row in support) == 5
+    assert sum(row["k_final_peer"] for row in support) == 5
+    assert sum(row["k_final_structural"] for row in support) == 5
+    from tools.thesis_main.analysis.paper_a_contracts import load_method_contract
+    assert load_method_contract()["c2"]["timing_is_roster_gate"] is False
+
+
 def test_rolling_enrollment_disabled_is_empty_and_active_is_additive(tmp_path: Path) -> None:
     source = tmp_path / "manual.csv"
     tasks = [

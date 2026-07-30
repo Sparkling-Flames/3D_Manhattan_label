@@ -243,3 +243,9 @@ def test_w034_original_only_branch_is_derived_from_canonical_provenance(tmp_path
     monkeypatch.setattr(rehearsal, "materialize_three_track_worker_state", fake_profile)
     profile = rehearsal._materialize_w034_original_only_profile(tmp_path, formal=False)
     assert profile.is_file()
+    monkeypatch.setattr(
+        rehearsal, "estimate_task_adjusted_qgt",
+        lambda *_args, **_kwargs: (_ for _ in ()).throw(ValueError("task-adjusted Q_GT requires at least two workers and two base tasks")),
+    )
+    assert rehearsal._materialize_w034_original_only_profile(tmp_path, formal=False) is None
+    assert '"status": "not_evaluable"' in (tmp_path / "w034_original_only_branch" / "qgt_original_only_audit.json").read_text(encoding="utf-8")
