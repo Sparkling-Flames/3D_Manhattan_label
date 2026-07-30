@@ -1,6 +1,6 @@
 {
-    "schema_version":  "paper_a_method_contract_v8",
-    "contract_version":  "paper_a_method_20260730_v8",
+    "schema_version":  "paper_a_method_contract_v9",
+    "contract_version":  "paper_a_method_20260731_v9",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
     "stages":  [
@@ -202,6 +202,13 @@
                            },
     "c1_evidence":  {
                         "worker_profile_schema":  "worker_profile_v2",
+                        "artifact_schema":  "c1_evidence_freeze_manifest_v6",
+                        "artifact_role":  "C1_EVIDENCE_FROZEN",
+                        "excludes_global_pooled_states":  [
+                                                              "CALIBRATION_ENROLLMENT_CLOSED",
+                                                              "ALL_CALIBRATION_WORKERS_TERMINAL",
+                                                              "FINAL_POOLED_PROFILE_FROZEN"
+                                                          ],
                         "required_dependencies":  [
                                                       "canonical_eligibility",
                                                       "peer_worker_task",
@@ -251,6 +258,7 @@
                                                  ]
                    },
     "stage3":  {
+                   "final_pooled_profile_schema":  "paper_a_final_pooled_profile_freeze_v1",
                    "required_roles":  [
                                           "CALIBRATION_ENROLLMENT_CLOSED",
                                           "ALL_CALIBRATION_WORKERS_TERMINAL",
@@ -336,7 +344,8 @@
                              "peer_worker_task_v2",
                              "worker_profile_v2",
                              "policy_candidate_v2",
-                             "geometry_cluster_v2"
+                             "geometry_cluster_v2",
+                             "paper_a_final_pooled_profile_freeze_v1"
                          ],
     "c1_batch_execution":  {
                                "c1_a_snapshot_schema":  "paper_a_c1_batch_analysis_snapshot_v1",

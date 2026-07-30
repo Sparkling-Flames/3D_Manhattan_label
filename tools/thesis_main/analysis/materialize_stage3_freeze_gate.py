@@ -61,8 +61,16 @@ def _validate_dependency(item: dict[str, Any], base: Path, trail: str) -> tuple[
         blockers.append(f"{trail}:missing_required_children:{','.join(missing_children)}")
     if str(item.get("role")) == "C1_EVIDENCE_FROZEN" and payload.get("method_contract_sha256") != sha256_file(METHOD_CONTRACT):
         blockers.append(f"{trail}:method_contract_sha_mismatch")
-    if str(item.get("role")) == "C1_EVIDENCE_FROZEN":
-        for state in ("CALIBRATION_ENROLLMENT_CLOSED", "ALL_CALIBRATION_WORKERS_TERMINAL", "FINAL_POOLED_PROFILE_FROZEN"):
+    if str(item.get("role")) == "FINAL_POOLED_PROFILE_FROZEN":
+        if payload.get("artifact_role") != "FINAL_POOLED_PROFILE_FROZEN":
+            blockers.append(f"{trail}:artifact_role_mismatch")
+        for state in (
+            "C1_EVIDENCE_FROZEN",
+            "C2B_BATCH_A_CLOSEOUT_FROZEN",
+            "C2A_RP_CLOSEOUT_FROZEN",
+            "FINAL_C1_C2_Q_GT_MODEL_FROZEN",
+            "POOLED_WORKER_PROFILE_FROZEN",
+        ):
             if payload.get(state) is not True:
                 blockers.append(f"{trail}:{state.lower()}_not_met")
     return {**item, "resolved_path": str(path), "dependencies": children}, blockers

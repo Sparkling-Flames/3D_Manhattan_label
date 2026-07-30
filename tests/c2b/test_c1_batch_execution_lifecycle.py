@@ -173,8 +173,9 @@ def test_runtime_mapping_binds_only_the_frozen_batch_and_design(tmp_path: Path) 
         "selected_design_sha": design_sha,
     }), encoding="utf-8")
     distribution = tmp_path / "distribution.csv"; _write_csv(distribution, [{"worker_id": "W001", "task_id": "planned-1"}])
+    assignment = tmp_path / "assignment.csv"; _write_csv(assignment, [{"worker_id": "W001", "task_id": "planned-1"}])
     planned = tmp_path / "planned.json"; planned.write_text(json.dumps([{"data": {"planned_task_id": "planned-1"}}]), encoding="utf-8")
     runtime = tmp_path / "runtime.json"; runtime.write_text(json.dumps([{"id": 7, "data": {"planned_task_id": "planned-1", "c2b_batch_id": "C2B_BATCH_A", "selected_design_sha": design_sha}}]), encoding="utf-8")
-    result = bind_c2b_runtime_mapping(type("Args", (), {"launch_report": report, "worker_distribution": distribution, "planned_import": planned, "runtime_export": runtime, "output_dir": tmp_path / "out"})())
+    result = bind_c2b_runtime_mapping(type("Args", (), {"launch_report": report, "assignment_manifest": assignment, "worker_distribution": distribution, "planned_import": planned, "runtime_export": runtime, "output_dir": tmp_path / "out"})())
     assert result["one_to_one"] is True
     assert (tmp_path / "out" / "c2b_runtime_task_mapping.csv").is_file()

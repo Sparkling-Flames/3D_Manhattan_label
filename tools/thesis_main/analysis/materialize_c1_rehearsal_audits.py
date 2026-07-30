@@ -692,12 +692,27 @@ def materialize_active_log_audits(canonical_csv: Path, active_log_dir: Path, out
     exact_count = sum(row["binding_reason"] == "exact_match" for row in reason_rows)
     contextual_count = sum(row["binding_reason"] in {"exact_match", "multiple_candidate_logs", "annotation_id_missing_in_log"} for row in reason_rows)
     inside = sum(row["inside_c1_window_count"] for row in source_rows)
+    export_project_ids = sorted({str(row.get("project_id", "")).strip() for row in canonical if str(row.get("project_id", "")).strip()})
+    active_log_project_ids = sorted({str(event.get("project_id", "")).strip() for event in events if str(event.get("project_id", "")).strip()})
+    overlapping_project_ids = sorted(set(export_project_ids) & set(active_log_project_ids))
+    project_mismatch_count = sum(
+        bool(active_log_project_ids) and row["project_id"] not in set(active_log_project_ids)
+        for row in reason_rows
+    )
+    project_overlap_warning = "active_log_project_ids_do_not_overlap_export_project_ids" if not overlapping_project_ids else ""
     return {
         "c1_expected_time_window": {"start": window_min.isoformat() if window_min else "", "end": window_max.isoformat() if window_max else ""},
         "observed_log_time_min": min(timestamps).isoformat() if timestamps else "", "observed_log_time_max": max(timestamps).isoformat() if timestamps else "",
         "logs_inside_c1_window": inside, "logs_outside_c1_window": len(events) - inside,
         "active_time_exact_count": exact_count,
+        "exact_annotation_join_count": exact_count,
         "active_time_contextual_count": contextual_count,
+        "export_project_ids": export_project_ids,
+        "active_log_project_ids": active_log_project_ids,
+        "overlapping_project_ids": overlapping_project_ids,
+        "project_mismatch_count": project_mismatch_count,
+        "project_overlap_warning": project_overlap_warning,
+        "active_time_input_status": "project_mismatch" if not overlapping_project_ids else "overlap_present",
         "active_log_source_valid_for_c1": bool(inside and contextual_count),
         "active_log_source_invalid_for_c1": not bool(inside and contextual_count),
         "primary_exact_binding_ready": bool(exact_count),

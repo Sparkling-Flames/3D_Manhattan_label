@@ -79,7 +79,7 @@ COMMAND_ARTIFACT_CONTRACT = {
         "requires": (("design-c2b", "c2_task_risk.summary.json"), ("design-c2b", "c2b_design.summary.json")),
         "outputs": ("assignment_manifest_C2B.csv", "c2b_launch_ready_report.json"),
     },
-    "bind-c2b-runtime-mapping": {"outputs": ("c2b_runtime_task_mapping.csv", "c2b_worker_task_binding_audit.json")},
+    "bind-c2b-runtime-mapping": {"outputs": ("c2b_runtime_task_mapping.csv", "c2b_worker_task_binding_audit.json", "c2b_private_assignment_list_audit.json")},
     "check-command-contract": {"outputs": ()},
 }
 
@@ -1065,7 +1065,7 @@ def finalize_c1(args: argparse.Namespace) -> dict[str, Any]:
     evidence_ready = canonical_ready and collection_closed and not blockers
     c2b_baseline_ready = bool(measurement.get("C2B_BASELINE_INPUT_FROZEN")) and evidence_ready and any(str(row.get("c2_risk_model_eligible", "")).lower() in {"true", "1"} for row in worker_rows)
     c2b_blockers = [] if c2b_baseline_ready else ["q_gt_baseline_support_limited_or_not_frozen"]
-    freeze = {"schema_version": "c1_evidence_freeze_manifest_v5", "method_contract": audit.get("method_contract", ""), "method_contract_version": method["contract_version"], "method_contract_sha256": method_sha, "profile_version": worker_manifest.get("profile_version", ""), "cohort_id": worker_manifest.get("cohort_id", ""), "git_commit_sha": audit.get("git_commit_sha", ""), "CALIBRATION_ENROLLMENT_CLOSED": collection_closed, "ALL_CALIBRATION_WORKERS_TERMINAL": not nonterminal_workers, "FINAL_POOLED_PROFILE_FROZEN": evidence_ready, "C1_COLLECTION_INCOMPLETE": not collection_closed, "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": evidence_ready, "C1_EVIDENCE_BUNDLE_FROZEN": bool(measurement.get("C1_EVIDENCE_BUNDLE_FROZEN")) and evidence_ready, "C2B_BASELINE_INPUT_FROZEN": c2b_baseline_ready, "Q_GT_FREEZE_STATUS": measurement.get("Q_GT_FREEZE_STATUS", "pending"), "R_PEER_FREEZE_STATUS": measurement.get("R_PEER_FREEZE_STATUS", "pending"), "F_STRUCT_FREEZE_STATUS": measurement.get("F_STRUCT_FREEZE_STATUS", "pending"), "R_LOO_MEDOID_STATUS": measurement.get("R_LOO_MEDOID_STATUS", "pending"), "R_LOO_STRICT_STATUS": measurement.get("R_LOO_STRICT_STATUS", "pending"), "rolling_activated": enrollment_summary.get("rolling_activated"), "N_late": enrollment_summary.get("N_late"), "C2B_DESIGN_READY": c2b_baseline_ready, "C2B_RISK_DESIGN_FROZEN": False, "C2B_DESIGN_FROZEN": False, "C2B_ASSIGNMENT_MATERIALIZED": False, "C2B_LAUNCH_READY": False, "routing_profile_frozen": False, "formal_closeout_ready": evidence_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers, "c2b_baseline_blockers": c2b_blockers, "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("FORMAL_AUDIT", audit_path), ("CANONICAL_CLOSEOUT", final_path), ("MEASUREMENT_FREEZE", measurement_path), ("WORKER_PROFILE_MANIFEST", worker_manifest_path), ("WORKER_PROFILE", worker_profile_path), ("ENROLLMENT_REGISTRY", enrollment_registry_path), ("ENROLLMENT_REGISTRY_SUMMARY", enrollment_summary_path), ("W034_SENSITIVITY_FROZEN", w034_path), *profile_dependency_paths, ("ADJUDICATION", args.adjudication_manifest), ("METHOD_CONTRACT", METHOD_CONTRACT)) if path.is_file()]}
+    freeze = {"schema_version": "c1_evidence_freeze_manifest_v6", "artifact_role": "C1_EVIDENCE_FROZEN", "formal_ready": evidence_ready, "method_contract": audit.get("method_contract", ""), "method_contract_version": method["contract_version"], "method_contract_sha256": method_sha, "profile_version": worker_manifest.get("profile_version", ""), "cohort_id": worker_manifest.get("cohort_id", ""), "git_commit_sha": audit.get("git_commit_sha", ""), "C1_COLLECTION_INCOMPLETE": not collection_closed, "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": evidence_ready, "C1_EVIDENCE_BUNDLE_FROZEN": bool(measurement.get("C1_EVIDENCE_BUNDLE_FROZEN")) and evidence_ready, "C1_EVIDENCE_FROZEN": evidence_ready, "C2B_BASELINE_INPUT_FROZEN": c2b_baseline_ready, "Q_GT_FREEZE_STATUS": measurement.get("Q_GT_FREEZE_STATUS", "pending"), "R_PEER_FREEZE_STATUS": measurement.get("R_PEER_FREEZE_STATUS", "pending"), "F_STRUCT_FREEZE_STATUS": measurement.get("F_STRUCT_FREEZE_STATUS", "pending"), "R_LOO_MEDOID_STATUS": measurement.get("R_LOO_MEDOID_STATUS", "pending"), "R_LOO_STRICT_STATUS": measurement.get("R_LOO_STRICT_STATUS", "pending"), "rolling_activated": enrollment_summary.get("rolling_activated"), "N_late": enrollment_summary.get("N_late"), "C2B_DESIGN_READY": c2b_baseline_ready, "C2B_RISK_DESIGN_FROZEN": False, "C2B_DESIGN_FROZEN": False, "C2B_ASSIGNMENT_MATERIALIZED": False, "C2B_LAUNCH_READY": False, "routing_profile_frozen": False, "formal_closeout_ready": evidence_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers, "c2b_baseline_blockers": c2b_blockers, "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("FORMAL_AUDIT", audit_path), ("CANONICAL_CLOSEOUT", final_path), ("MEASUREMENT_FREEZE", measurement_path), ("WORKER_PROFILE_MANIFEST", worker_manifest_path), ("WORKER_PROFILE", worker_profile_path), ("ENROLLMENT_REGISTRY", enrollment_registry_path), ("ENROLLMENT_REGISTRY_SUMMARY", enrollment_summary_path), ("W034_SENSITIVITY_FROZEN", w034_path), *profile_dependency_paths, ("ADJUDICATION", args.adjudication_manifest), ("METHOD_CONTRACT", METHOD_CONTRACT)) if path.is_file()]}
     freeze["state_machine"] = {name: bool(freeze[name]) for name in ("C1_COLLECTION_INCOMPLETE", "C1_CANONICAL_CLOSED", "C1_MEASUREMENT_FROZEN", "C2B_RISK_DESIGN_FROZEN", "C2B_DESIGN_FROZEN", "C2B_ASSIGNMENT_MATERIALIZED", "C2B_LAUNCH_READY")}
     (args.output_dir / "c1_evidence_freeze_manifest.json").write_text(json.dumps(freeze, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return {"day": 1, "phase": "measurement-freeze", "formal_closeout_ready": evidence_ready, "C1_CANONICAL_CLOSED": freeze["C1_CANONICAL_CLOSED"], "C1_MEASUREMENT_FROZEN": freeze["C1_MEASUREMENT_FROZEN"], "C2B_DESIGN_READY": freeze["C2B_DESIGN_READY"], "routing_profile_frozen": False, "blockers": blockers, "c2b_baseline_blockers": c2b_blockers}
@@ -1219,6 +1219,35 @@ def _write_c2b_import(output_dir: Path, distribution: list[dict[str, Any]], *, b
     return path
 
 
+def _selected_design_inputs(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, dict[str, str]]]:
+    manifest_path = getattr(args, "selected_design_manifest", None)
+    if not manifest_path:
+        raise ValueError("selected design manifest is required for every C2-B batch")
+    manifest = _require_current_subordinate(manifest_path, "selected_design_manifest")
+    if manifest.get("schema_version") != "paper_a_selected_c2b_design_manifest_v1":
+        raise ValueError("selected design manifest schema is invalid")
+    if manifest.get("selected_design_id") not in {"D8", "D10", "D12"}:
+        raise ValueError("selected design manifest has an invalid design ID")
+    if manifest.get("design_manifest_sha256") != sha256_file(args.design_manifest):
+        raise ValueError("selected design manifest is not bound to the candidate design manifest")
+    if manifest.get("task_pool_sha256") != sha256_file(args.task_pool):
+        raise ValueError("selected design manifest task pool SHA drift")
+    anchors = [str(value) for value in manifest.get("selected_common_anchor_task_ids", [])]
+    bridges = [str(value) for value in manifest.get("selected_bridge_task_ids", [])]
+    if len(anchors) != int(manifest.get("common_anchor_count", -1)) or len(bridges) < int(manifest.get("bridge_per_worker", 0)):
+        raise ValueError("selected design manifest task counts are inconsistent")
+    if set(anchors) & set(bridges):
+        raise ValueError("selected design manifest anchor and bridge pools overlap")
+    tasks = {str(row.get("task_id", "")): row for row in _read(args.task_pool)}
+    selected = anchors + bridges
+    if any(task_id not in tasks for task_id in selected):
+        raise ValueError("selected design manifest references a task outside the frozen task pool")
+    bridge_pool_sha = hashlib.sha256(json.dumps(sorted(bridges), separators=(",", ":")).encode("utf-8")).hexdigest()
+    if manifest.get("selected_bridge_pool_sha256") != bridge_pool_sha:
+        raise ValueError("selected bridge pool SHA drift")
+    return manifest, tasks
+
+
 def _build_c2b_batch_b(args: argparse.Namespace) -> dict[str, Any]:
     if not all(getattr(args, name, None) for name in ("batch_a_launch_report", "batch_a_assignment", "batch_worker_profile", "p1_admission_evidence")):
         raise ValueError("C2B_BATCH_B requires Batch A report/assignment, C1-B worker profile, and P1 admission evidence")
@@ -1245,22 +1274,24 @@ def _build_c2b_batch_b(args: argparse.Namespace) -> dict[str, Any]:
     base = _normalize_worker_rows(_read(args.batch_a_assignment))
     if not base or any(row.get("assignment_batch_id") not in {"", "C2B_BATCH_A"} for row in base):
         raise ValueError("Batch A assignment is not a stable C2B_BATCH_A artifact")
-    design_sha = str(batch_a.get("selected_design_sha", ""))
-    if not design_sha:
-        raise ValueError("Batch A launch report lacks selected design SHA")
-    anchors = {row["task_id"]: row for row in base if row.get("c2_component") == "common_anchor"}
-    bridges = {row["task_id"]: row for row in base if row.get("c2_component") == "diverse_bridge"}
-    bridge_per_worker = max((sum(row.get("c2_component") == "diverse_bridge" for row in base if row.get("worker_id") == worker) for worker in {row.get("worker_id") for row in base}), default=0)
-    if not anchors or not bridges or bridge_per_worker < 1:
-        raise ValueError("Batch A does not contain a frozen common-anchor and bridge generator")
-    bridge_ids = sorted(bridges)
+    selected, task_pool = _selected_design_inputs(args)
+    design_sha = str(selected["selected_design_sha"])
+    if batch_a.get("selected_design_sha") != design_sha or batch_a.get("selected_design_manifest_sha256") != sha256_file(args.selected_design_manifest):
+        raise ValueError("Batch A and selected design manifest do not match")
+    base_by_task = {str(row.get("task_id", "")): row for row in base}
+    anchor_ids = [str(value) for value in selected["selected_common_anchor_task_ids"]]
+    bridge_ids = [str(value) for value in selected["selected_bridge_task_ids"]]
+    bridge_per_worker = int(selected["bridge_per_worker"])
     rows: list[dict[str, Any]] = []
     for worker in sorted(set(workers)):
-        for row in anchors.values(): rows.append({**row, "worker_id": worker, "assignment_batch_id": "C2B_BATCH_B"})
+        for task_id in anchor_ids:
+            row = {**task_pool[task_id], **base_by_task.get(task_id, {})}
+            rows.append({**row, "task_id": task_id, "c2_component": "common_anchor", "worker_id": worker, "assignment_batch_id": "C2B_BATCH_B"})
         start = int(hashlib.sha256(f"{design_sha}:{worker}".encode("utf-8")).hexdigest(), 16) % len(bridge_ids)
         for offset in range(bridge_per_worker):
-            row = bridges[bridge_ids[(start + offset) % len(bridge_ids)]]
-            rows.append({**row, "worker_id": worker, "assignment_batch_id": "C2B_BATCH_B"})
+            task_id = bridge_ids[(start + offset) % len(bridge_ids)]
+            row = {**task_pool[task_id], **base_by_task.get(task_id, {})}
+            rows.append({**row, "task_id": task_id, "c2_component": "diverse_bridge", "worker_id": worker, "assignment_batch_id": "C2B_BATCH_B"})
     if len({(row["worker_id"], row["task_id"]) for row in rows}) != len(rows):
         raise ValueError("Batch B bridge replay generated duplicate worker-task rows")
     capacities = {row.get("worker_id", ""): int(float(row.get("c2b_capacity", "0"))) for row in _read(args.capacity_manifest)}
@@ -1274,10 +1305,10 @@ def _build_c2b_batch_b(args: argparse.Namespace) -> dict[str, Any]:
     import_path = _write_c2b_import(args.output_dir, rows, batch_id="C2B_BATCH_B", selected_design_sha=design_sha)
     report = {
         "schema_version": "paper_a_c2b_launch_ready_report_v3", "contract_role": "generated_subordinate", **_method_identity(),
-        "assignment_batch_id": "C2B_BATCH_B", "selected_design_sha": design_sha, "assignment_sha256": sha256_file(assignment_path), "import_sha256": sha256_file(import_path),
+        "assignment_batch_id": "C2B_BATCH_B", "selected_design_id": selected["selected_design_id"], "selected_design_sha": design_sha, "selected_design_manifest_sha256": sha256_file(args.selected_design_manifest), "task_pool_sha256": selected["task_pool_sha256"], "common_anchor_count": selected["common_anchor_count"], "bridge_per_worker": selected["bridge_per_worker"], "selected_bridge_pool_sha256": selected["selected_bridge_pool_sha256"], "assignment_sha256": sha256_file(assignment_path), "import_sha256": sha256_file(import_path),
         "C2B_ASSIGNMENT_BATCH_A_MATERIALIZED": True, "C2B_ASSIGNMENT_BATCH_B_MATERIALIZED": True, "C2B_LAUNCH_READY": True,
         "automatic_label_studio_import": False, "n_assignments": len(rows), "n_workers": len(workers),
-        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("BATCH_A_LAUNCH_REPORT", args.batch_a_launch_report), ("BATCH_A_ASSIGNMENT", args.batch_a_assignment), ("BATCH_B_ROSTER", args.c2b_roster_manifest), ("BATCH_B_PROFILE", args.batch_worker_profile), ("P1_ADMISSION", args.p1_admission_evidence), ("METHOD_CONTRACT", METHOD_CONTRACT))],
+        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("BATCH_A_LAUNCH_REPORT", args.batch_a_launch_report), ("BATCH_A_ASSIGNMENT", args.batch_a_assignment), ("BATCH_B_ROSTER", args.c2b_roster_manifest), ("BATCH_B_PROFILE", args.batch_worker_profile), ("P1_ADMISSION", args.p1_admission_evidence), ("SELECTED_DESIGN_MANIFEST", args.selected_design_manifest), ("DESIGN_MANIFEST", args.design_manifest), ("TASK_POOL", args.task_pool), ("METHOD_CONTRACT", METHOD_CONTRACT))],
     }
     (args.output_dir / "c2b_launch_ready_report.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return {"day": 2, "phase": "build", **report}
@@ -1337,7 +1368,12 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
     if not capacities or len(capacities) != len(_read(args.capacity_manifest)):
         raise ValueError("C2-B capacity manifest requires unique worker rows")
     _require_current_subordinate(args.design_manifest, "candidate_design")
-    _require_current_subordinate(args.selected_design_approval, "selected_design_approval")
+    approval = _require_current_subordinate(args.selected_design_approval, "selected_design_approval")
+    selected_manifest, _ = _selected_design_inputs(args)
+    if approval.get("selected_design_id") not in (None, selected_manifest["selected_design_id"]):
+        raise ValueError("selected design approval ID does not match selected design manifest")
+    if approval.get("selected_design_sha") not in (None, selected_manifest["selected_design_sha"]):
+        raise ValueError("selected design approval SHA does not match selected design manifest")
     design = c2b.materialize_approved_assignment(
         args.candidate_dir, args.design_manifest, args.threshold_manifest,
         args.selected_design_approval, args.selected_task_reference_manifest,
@@ -1371,7 +1407,7 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
     worker_dir = args.output_dir / "worker_facing_distribution_C2B"; worker_dir.mkdir(parents=True, exist_ok=True)
     for worker in sorted({row["worker_id"] for row in distribution}):
         _write(worker_dir / f"worker_{worker}_C2B.csv", [row for row in distribution if row["worker_id"] == worker])
-    selected_design_sha = sha256_file(args.selected_design_approval)
+    selected_design_sha = str(selected_manifest["selected_design_sha"])
     import_path = _write_c2b_import(args.output_dir, distribution, batch_id="C2B_BATCH_A", selected_design_sha=selected_design_sha)
     imports = json.loads(import_path.read_text(encoding="utf-8"))
     support = Counter(row["task_id"] for row in assignments)
@@ -1381,7 +1417,7 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
     worker_files = sorted(worker_dir.glob("worker_*_C2B.csv"))
     method_sha = sha256_file(METHOD_CONTRACT)
     audit = {
-        "schema_version": "paper_a_c2b_launch_ready_report_v3", "contract_role": "generated_subordinate", "method_contract": risk["method_contract"], "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": method_sha, "git_commit_sha": risk["git_commit_sha"], "assignment_batch_id": "C2B_BATCH_A", "selected_design_sha": selected_design_sha,
+        "schema_version": "paper_a_c2b_launch_ready_report_v3", "contract_role": "generated_subordinate", "method_contract": risk["method_contract"], "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": method_sha, "git_commit_sha": risk["git_commit_sha"], "assignment_batch_id": "C2B_BATCH_A", "selected_design_id": selected_manifest["selected_design_id"], "selected_design_sha": selected_design_sha, "selected_design_manifest_sha256": sha256_file(args.selected_design_manifest), "task_pool_sha256": selected_manifest["task_pool_sha256"], "common_anchor_count": selected_manifest["common_anchor_count"], "bridge_per_worker": selected_manifest["bridge_per_worker"], "selected_bridge_pool_sha256": selected_manifest["selected_bridge_pool_sha256"],
         "assignment_sha256": sha256_file(assignment_path), "worker_distribution_sha256": sha256_file(args.output_dir / "worker_distribution_C2B.csv"), "worker_distribution_bundle_sha256": _aggregate_sha(_manifest_rows(worker_files)), "import_sha256": sha256_file(import_path),
         "n_assignments": len(assignments), "n_workers": len({row["worker_id"] for row in assignments}),
         "n_tasks": len(support), "min_task_support": min(support.values(), default=0),
@@ -1392,7 +1428,7 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
         "image_paths_resolvable": all(resolvable_image(row["image_path"]) for row in distribution),
         "capacity_manifest_sha256": sha256_file(args.capacity_manifest),
         "automatic_label_studio_import": False,
-        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("C1_A_SNAPSHOT", args.c1_closeout_summary), ("C2B_ROSTER", args.c2b_roster_manifest), ("C2_RISK", args.risk_summary), ("THRESHOLDS", args.threshold_manifest), ("CAPACITY", args.capacity_manifest), ("SELECTED_DESIGN_APPROVAL", args.selected_design_approval), ("METHOD_CONTRACT", METHOD_CONTRACT))],
+        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("C1_A_SNAPSHOT", args.c1_closeout_summary), ("C2B_ROSTER", args.c2b_roster_manifest), ("C2_RISK", args.risk_summary), ("THRESHOLDS", args.threshold_manifest), ("CAPACITY", args.capacity_manifest), ("SELECTED_DESIGN_APPROVAL", args.selected_design_approval), ("SELECTED_DESIGN_MANIFEST", args.selected_design_manifest), ("DESIGN_MANIFEST", args.design_manifest), ("TASK_POOL", args.task_pool), ("METHOD_CONTRACT", METHOD_CONTRACT))],
     }
     audit["launch_ready"] = bool(design.get("launch_ready")) and audit["duplicate_worker_task_count"] == 0 and audit["import_smoke_passed"] and audit["assignment_distribution_consistent"] and audit["gt_isolated_from_worker_import"] and audit["image_paths_resolvable"]
     audit["C2B_LAUNCH_READY"] = audit["launch_ready"]
@@ -1406,7 +1442,12 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
 def bind_c2b_runtime_mapping(args: argparse.Namespace) -> dict[str, Any]:
     """Bind a manual Label Studio import export to the frozen planned task IDs."""
     report = _require_current_subordinate(args.launch_report, "c2b_launch_report")
+    assignment_rows = _read(args.assignment_manifest)
     assignments = _read(args.worker_distribution)
+    assignment_ids = {(row.get("worker_id", ""), row.get("task_id", "")) for row in assignment_rows}
+    distribution_ids = {(row.get("worker_id", ""), row.get("task_id", "")) for row in assignments}
+    if assignment_ids != distribution_ids or len(assignment_ids) != len(assignment_rows):
+        raise ValueError("assignment manifest and worker distribution are not a complete unique match")
     imports = json.loads(args.planned_import.read_text(encoding="utf-8"))
     expected = {
         str(item.get("data", {}).get("planned_task_id", "")): item
@@ -1450,10 +1491,27 @@ def bind_c2b_runtime_mapping(args: argparse.Namespace) -> dict[str, Any]:
         "schema_version": "paper_a_c2b_runtime_mapping_audit_v1", "contract_role": "generated_subordinate", **_method_identity(),
         "assignment_batch_id": report["assignment_batch_id"], "selected_design_sha": report["selected_design_sha"],
         "runtime_mapping_sha256": sha256_file(mapping), "runtime_task_count": len(runtime_by_planned), "worker_task_binding_count": len(bindings),
-        "one_to_one": True, "gt_isolated": True, "open_tasks_allowed": True,
-        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("LAUNCH_REPORT", args.launch_report), ("WORKER_DISTRIBUTION", args.worker_distribution), ("PLANNED_IMPORT", args.planned_import), ("RUNTIME_EXPORT", args.runtime_export), ("METHOD_CONTRACT", METHOD_CONTRACT))],
+        "one_to_one": True, "gt_isolated": True,
+        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("LAUNCH_REPORT", args.launch_report), ("ASSIGNMENT_MANIFEST", args.assignment_manifest), ("WORKER_DISTRIBUTION", args.worker_distribution), ("PLANNED_IMPORT", args.planned_import), ("RUNTIME_EXPORT", args.runtime_export), ("METHOD_CONTRACT", METHOD_CONTRACT))],
     }
     (args.output_dir / "c2b_worker_task_binding_audit.json").write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    worker_bundle = args.worker_distribution.parent / "worker_facing_distribution_C2B"
+    worker_files = sorted(worker_bundle.glob("worker_*_C2B.csv")) if worker_bundle.is_dir() else []
+    private_audit = {
+        "schema_version": "paper_a_c2b_private_assignment_list_audit_v1",
+        "contract_role": "generated_subordinate",
+        **_method_identity(),
+        "assignment_manifest_sha256": sha256_file(args.assignment_manifest),
+        "worker_distribution_sha256": sha256_file(args.worker_distribution),
+        "per_worker_list_bundle_sha256": _aggregate_sha(_manifest_rows(worker_files)) if worker_files else "",
+        "all_assignment_rows_covered": assignment_ids == distribution_ids and len(assignment_ids) == len(assignment_rows) == len(assignments),
+        "duplicate_worker_task_count": max(len(assignment_rows) - len(assignment_ids), len(assignments) - len(distribution_ids)),
+        "outside_submission_policy": "exclude_from_primary_and_audit",
+        "assignment_batch_id": report["assignment_batch_id"],
+        "selected_design_sha": report["selected_design_sha"],
+        "dependencies": audit["dependencies"],
+    }
+    (args.output_dir / "c2b_private_assignment_list_audit.json").write_text(json.dumps(private_audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return audit
 
 
@@ -1538,7 +1596,7 @@ def main(argv: list[str] | None = None) -> int:
     plan.add_argument("--device", default="auto")
 
     build = sub.add_parser("build-c2b")
-    for name in ("c1-closeout-summary", "risk-summary", "task-pool", "task-eligibility-evidence", "candidate-dir", "design-manifest", "threshold-manifest", "source-split-evidence", "source-split-approval", "future-holdout-evidence", "future-holdout-approval", "reference-registry", "selected-task-reference-manifest", "selected-design-approval", "capacity-manifest", "output-dir"):
+    for name in ("c1-closeout-summary", "risk-summary", "task-pool", "task-eligibility-evidence", "candidate-dir", "design-manifest", "selected-design-manifest", "threshold-manifest", "source-split-evidence", "source-split-approval", "future-holdout-evidence", "future-holdout-approval", "reference-registry", "selected-task-reference-manifest", "selected-design-approval", "capacity-manifest", "output-dir"):
         build.add_argument(f"--{name}", type=Path, required=True)
     build.add_argument("--c2b-roster-manifest", type=Path, required=True)
     build.add_argument("--assignment-batch", choices=("C2B_BATCH_A", "C2B_BATCH_B"), default="C2B_BATCH_A")
@@ -1546,7 +1604,7 @@ def main(argv: list[str] | None = None) -> int:
         build.add_argument(f"--{name}", type=Path)
 
     runtime = sub.add_parser("bind-c2b-runtime-mapping")
-    for name in ("launch-report", "worker-distribution", "planned-import", "runtime-export", "output-dir"):
+    for name in ("launch-report", "assignment-manifest", "worker-distribution", "planned-import", "runtime-export", "output-dir"):
         runtime.add_argument(f"--{name}", type=Path, required=True)
     args = parser.parse_args(argv)
     command = {

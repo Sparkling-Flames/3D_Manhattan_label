@@ -131,10 +131,9 @@ def test_w034_sentinel_and_stage3_gate_fail_closed(tmp_path: Path) -> None:
         if name == "C1_EVIDENCE_FROZEN":
             payload.update({
                 "method_contract_sha256": sha256_file(METHOD_CONTRACT),
-                "CALIBRATION_ENROLLMENT_CLOSED": True,
-                "ALL_CALIBRATION_WORKERS_TERMINAL": True,
-                "FINAL_POOLED_PROFILE_FROZEN": True,
             })
+        if name == "FINAL_POOLED_PROFILE_FROZEN":
+            payload.update({"artifact_role": "FINAL_POOLED_PROFILE_FROZEN", "C1_EVIDENCE_FROZEN": True, "C2B_BATCH_A_CLOSEOUT_FROZEN": True, "C2A_RP_CLOSEOUT_FROZEN": True, "FINAL_C1_C2_Q_GT_MODEL_FROZEN": True, "POOLED_WORKER_PROFILE_FROZEN": True})
         dependency.write_text(json.dumps(payload), encoding="utf-8")
         state[name] = {"frozen": True, "path": dependency.name, "sha256": hashlib.sha256(dependency.read_bytes()).hexdigest(), "expected_schema": "test_dependency_v2", "required_status_field": "formal_ready", "required_status_value": True, "profile_version": "p", "cohort_id": "c"}
     gate = build_gate(state, hashlib.sha256(roster.read_bytes()).hexdigest(), hashlib.sha256(enrollment.read_bytes()).hexdigest(), base_dir=tmp_path)

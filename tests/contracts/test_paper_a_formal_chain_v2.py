@@ -95,7 +95,12 @@ def _formal_gate(tmp_path: Path) -> tuple[Path, Path, Path, dict]:
         if role == "C1_EVIDENCE_FROZEN":
             path = Path(item["path"])
             payload = json.loads(path.read_text(encoding="utf-8"))
-            payload.update({"CALIBRATION_ENROLLMENT_CLOSED": True, "ALL_CALIBRATION_WORKERS_TERMINAL": True, "FINAL_POOLED_PROFILE_FROZEN": True})
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            item["sha256"] = sha256_file(path)
+        if role == "FINAL_POOLED_PROFILE_FROZEN":
+            path = Path(item["path"])
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            payload.update({"artifact_role": "FINAL_POOLED_PROFILE_FROZEN", "C1_EVIDENCE_FROZEN": True, "C2B_BATCH_A_CLOSEOUT_FROZEN": True, "C2A_RP_CLOSEOUT_FROZEN": True, "FINAL_C1_C2_Q_GT_MODEL_FROZEN": True, "POOLED_WORKER_PROFILE_FROZEN": True})
             path.write_text(json.dumps(payload), encoding="utf-8")
             item["sha256"] = sha256_file(path)
         state[role] = item

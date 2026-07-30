@@ -50,10 +50,14 @@ FORBIDDEN_NORMATIVE_PATTERNS = (
     "0–3 blocks",
     "maximum 6",
     "pair-level administrative censor",
+    "D:/Work/HOHONET",
+    "worker isolation passed",
+    "CE worker visibility",
+    "Label Studio UI visibility passed",
 )
 
 
-def render(contract_path: Path = METHOD_CONTRACT) -> str:
+def _legacy_render(contract_path: Path = METHOD_CONTRACT) -> str:
     data = json.loads(contract_path.read_text(encoding="utf-8"))
     digest = sha256_file(contract_path)
     peer = data["peer"]
@@ -99,6 +103,32 @@ def render(contract_path: Path = METHOD_CONTRACT) -> str:
 - reference registry 必须在 formal C1 Q_GT 前冻结；任何 submission 不能用其触发的 reference revision 为自身计分；Stage 3 前再冻结 final reference registry。
 - T1：一个预冻结 pair 在唯一合法 rerun 后仍不可评价，则整个 image 从主要 paired estimand 行政删失；可用 pair 只作 sensitivity。
 - V1：在线引擎只消费当前可见状态并追加 ledger；batch 模块只做 replay/audit。它只消费 `policy_candidate_v2.global_rank_S_G`，并校验 method contract、policy manifest、candidate roster SHA 和 profile version。层级是 severe failure、unresolved+severe、delivery-adjusted quality superiority、count/cost。
+"""
+
+
+def render(contract_path: Path = METHOD_CONTRACT) -> str:
+    data = json.loads(contract_path.read_text(encoding="utf-8"))
+    digest = sha256_file(contract_path)
+    return f"""<!-- PAPER_A_MACHINE_STATUS: generated -->
+# Paper A current method contract (generated)
+
+This file is generated from `PAPER_A_METHOD_CONTRACT_CURRENT.json`; normative fields are not defined by hand.
+- contract_version: `{data['contract_version']}`
+- JSON SHA-256: `{digest}`
+- formal_launch_default: `{str(data['formal_launch_default']).lower()}`
+
+## Formal measurement and freeze roles
+
+- The three formal axes are `Q_GT`, `R_peer`, and `F_struct`. `R_LOO_medoid` and `R_LOO_strict` are separate sensitivity/tie-break states.
+- `C1_EVIDENCE_FROZEN` contains C1 canonical evidence, eligibility, peer evidence, structural EB, W034 sensitivity, and this method binding only.
+- `FINAL_POOLED_PROFILE_FROZEN` is an independent artifact binding C1, C2-B, C2-A-RP, the final C1+C2 Q_GT model, pooled worker profile, enrollment, and this method binding.
+- Stage 3 validates C1 evidence, final pooled profile, enrollment closure, and terminal-worker closure as separate roles.
+
+## C2-B and runtime
+
+- C2-B consumes `worker_profile_v2.c2_risk_model_eligible` and the selected design manifest.
+- Batch B reuses the selected design ID, common anchors, bridge pool, task pool, and method SHA; it never infers bridge count from Batch A rows.
+- Runtime mapping is a local planned/runtime audit. It does not claim Label Studio UI visibility.
 """
 
 

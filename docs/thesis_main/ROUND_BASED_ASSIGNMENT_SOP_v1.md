@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260730_v8 SHA-256 a74ea709ec4a0a3a35f724521b8b2deb0f69f6b0e36191bac8b99c3517ae30df -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260731_v9 SHA-256 de7d99f4d119a87a48cfaa4e5c30c9d11161da43f8c1c37e34a6550c8b68f86c -->
 # Paper A Round-Based Assignment SOP v1
 
 本 SOP 只消费当前方法合同，不定义独立的机器字段、eligibility 或统计语义。正式机器真源为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`。
@@ -28,7 +28,7 @@ C1-A Batch A 的正式范围是 original cohort 加冻结的授权 repair set。
 
 C2-B 正式任务设计固定消费 D8、D10、D12。C2-B roster 只来自 `worker_profile_v2.c2_risk_model_eligible`，正式三轴为 `Q_GT`、`R_peer`、`F_struct`；LOO 和 timing 只作为独立 sensitivity/tie-break 状态。
 
-设计、审批、assignment manifest 和 runtime mapping 必须绑定方法合同版本与 SHA。任务包只在本地产生，不自动调用 Label Studio API；人工导入后必须完成一对一 runtime mapping 和 worker isolation audit。
+设计、审批、assignment manifest 和 runtime mapping 必须绑定方法合同版本与 SHA。任务包只在本地产生，不自动调用 Label Studio API；人工导入后必须完成一对一 runtime mapping 和 private assignment list audit。该本地审计不声称已验证 Label Studio UI 的 worker visibility。
 
 ## 4. C2-A-RP
 
