@@ -124,6 +124,50 @@ def _source_identity_aggregate(rows: list[dict[str, Any]]) -> str:
 _TERMINAL_CALIBRATION_STATUSES = {"completed", "closed_partial_usable", "closed_partial_insufficient", "nonstarter", "administrative_exclusion"}
 
 
+def _materialize_c1_child_freeze(
+    output_dir: Path,
+    role: str,
+    source_role: str,
+    source: Path,
+    *,
+    formal_ready: bool,
+    profile_version: str,
+    cohort_id: str,
+    method_version: str,
+    method_sha: str,
+) -> dict[str, Any]:
+    source_sha = sha256_file(source) if source.is_file() else ""
+    child_ready = bool(formal_ready and source_sha)
+    payload = {
+        "schema_version": "paper_a_c1_child_evidence_freeze_v1",
+        "artifact_role": role,
+        "contract_role": "generated_subordinate",
+        "formal_ready": child_ready,
+        "profile_version": profile_version,
+        "cohort_id": cohort_id,
+        "method_contract_version": method_version,
+        "method_contract_sha256": method_sha,
+        "source_role": source_role,
+        "source_path": str(source.resolve()),
+        "source_sha256": source_sha,
+        "blockers": [] if child_ready else [f"missing_or_unfrozen:{source_role}"],
+        "dependencies": [],
+    }
+    path = output_dir / f"{role.lower()}.json"
+    path.write_text(json.dumps(payload, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return {
+        "role": role,
+        "path": str(path.resolve()),
+        "sha256": sha256_file(path),
+        "expected_schema": payload["schema_version"],
+        "required_status_field": "formal_ready",
+        "required_status_value": True,
+        "profile_version": profile_version,
+        "cohort_id": cohort_id,
+        "frozen": child_ready,
+    }
+
+
 def _method_identity() -> dict[str, str]:
     method = load_method_contract()
     return {"method_contract_version": method["contract_version"], "method_contract_sha256": sha256_file(METHOD_CONTRACT)}
@@ -1065,7 +1109,57 @@ def finalize_c1(args: argparse.Namespace) -> dict[str, Any]:
     evidence_ready = canonical_ready and collection_closed and not blockers
     c2b_baseline_ready = bool(measurement.get("C2B_BASELINE_INPUT_FROZEN")) and evidence_ready and any(str(row.get("c2_risk_model_eligible", "")).lower() in {"true", "1"} for row in worker_rows)
     c2b_blockers = [] if c2b_baseline_ready else ["q_gt_baseline_support_limited_or_not_frozen"]
-    freeze = {"schema_version": "c1_evidence_freeze_manifest_v6", "artifact_role": "C1_EVIDENCE_FROZEN", "formal_ready": evidence_ready, "method_contract": audit.get("method_contract", ""), "method_contract_version": method["contract_version"], "method_contract_sha256": method_sha, "profile_version": worker_manifest.get("profile_version", ""), "cohort_id": worker_manifest.get("cohort_id", ""), "git_commit_sha": audit.get("git_commit_sha", ""), "C1_COLLECTION_INCOMPLETE": not collection_closed, "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": evidence_ready, "C1_EVIDENCE_BUNDLE_FROZEN": bool(measurement.get("C1_EVIDENCE_BUNDLE_FROZEN")) and evidence_ready, "C1_EVIDENCE_FROZEN": evidence_ready, "C2B_BASELINE_INPUT_FROZEN": c2b_baseline_ready, "Q_GT_FREEZE_STATUS": measurement.get("Q_GT_FREEZE_STATUS", "pending"), "R_PEER_FREEZE_STATUS": measurement.get("R_PEER_FREEZE_STATUS", "pending"), "F_STRUCT_FREEZE_STATUS": measurement.get("F_STRUCT_FREEZE_STATUS", "pending"), "R_LOO_MEDOID_STATUS": measurement.get("R_LOO_MEDOID_STATUS", "pending"), "R_LOO_STRICT_STATUS": measurement.get("R_LOO_STRICT_STATUS", "pending"), "rolling_activated": enrollment_summary.get("rolling_activated"), "N_late": enrollment_summary.get("N_late"), "C2B_DESIGN_READY": c2b_baseline_ready, "C2B_RISK_DESIGN_FROZEN": False, "C2B_DESIGN_FROZEN": False, "C2B_ASSIGNMENT_MATERIALIZED": False, "C2B_LAUNCH_READY": False, "routing_profile_frozen": False, "formal_closeout_ready": evidence_ready, "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest), "blockers": blockers, "c2b_baseline_blockers": c2b_blockers, "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("FORMAL_AUDIT", audit_path), ("CANONICAL_CLOSEOUT", final_path), ("MEASUREMENT_FREEZE", measurement_path), ("WORKER_PROFILE_MANIFEST", worker_manifest_path), ("WORKER_PROFILE", worker_profile_path), ("ENROLLMENT_REGISTRY", enrollment_registry_path), ("ENROLLMENT_REGISTRY_SUMMARY", enrollment_summary_path), ("W034_SENSITIVITY_FROZEN", w034_path), *profile_dependency_paths, ("ADJUDICATION", args.adjudication_manifest), ("METHOD_CONTRACT", METHOD_CONTRACT)) if path.is_file()]}
+    profile_version = str(worker_manifest.get("profile_version", ""))
+    cohort_id = str(worker_manifest.get("cohort_id", ""))
+    child_dependencies = [
+        _materialize_c1_child_freeze(
+            args.output_dir, role, source_role, source,
+            formal_ready=evidence_ready, profile_version=profile_version,
+            cohort_id=cohort_id, method_version=method["contract_version"], method_sha=method_sha,
+        )
+        for role, source_role, source in (
+            ("C1_ROW_ELIGIBILITY_FROZEN", "CANONICAL_ELIGIBILITY", worker_profile_path.parent / "c1_row_analysis_eligibility.csv"),
+            ("C1_PEER_EVIDENCE_FROZEN", "PEER", worker_profile_path.parent / "geometry_worker_task_peer_analysis.csv"),
+            ("C1_STRUCTURAL_EB_FROZEN", "STRUCTURAL_EB", worker_profile_path.parent / "c1_structural_reliability_eb.csv"),
+            ("W034_SENSITIVITY_FROZEN", "W034_SENSITIVITY", w034_path),
+        )
+    ]
+    freeze_dependencies = [
+        {"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)}
+        for role, path in (
+            ("FORMAL_AUDIT", audit_path), ("CANONICAL_CLOSEOUT", final_path),
+            ("MEASUREMENT_FREEZE", measurement_path), ("WORKER_PROFILE_MANIFEST", worker_manifest_path),
+            ("WORKER_PROFILE", worker_profile_path), ("ENROLLMENT_REGISTRY", enrollment_registry_path),
+            ("ENROLLMENT_REGISTRY_SUMMARY", enrollment_summary_path), *profile_dependency_paths,
+            ("ADJUDICATION", args.adjudication_manifest), ("METHOD_CONTRACT", METHOD_CONTRACT),
+        ) if path.is_file()
+    ] + child_dependencies
+    freeze = {
+        "schema_version": "c1_evidence_freeze_manifest_v6", "artifact_role": "C1_EVIDENCE_FROZEN",
+        "contract_role": "generated_subordinate", "formal_ready": evidence_ready,
+        "method_contract": audit.get("method_contract", ""), "method_contract_version": method["contract_version"],
+        "method_contract_sha256": method_sha, "profile_version": profile_version, "cohort_id": cohort_id,
+        "git_commit_sha": audit.get("git_commit_sha", ""), "C1_COLLECTION_INCOMPLETE": not collection_closed,
+        "C1_CANONICAL_CLOSED": canonical_ready, "C1_MEASUREMENT_FROZEN": evidence_ready,
+        "C1_EVIDENCE_BUNDLE_FROZEN": bool(measurement.get("C1_EVIDENCE_BUNDLE_FROZEN")) and evidence_ready,
+        "C1_EVIDENCE_FROZEN": evidence_ready, "C2B_BASELINE_INPUT_FROZEN": c2b_baseline_ready,
+        "Q_GT_FREEZE_STATUS": measurement.get("Q_GT_FREEZE_STATUS", "pending"),
+        "R_PEER_FREEZE_STATUS": measurement.get("R_PEER_FREEZE_STATUS", "pending"),
+        "F_STRUCT_FREEZE_STATUS": measurement.get("F_STRUCT_FREEZE_STATUS", "pending"),
+        "R_LOO_MEDOID_STATUS": measurement.get("R_LOO_MEDOID_STATUS", "pending"),
+        "R_LOO_STRICT_STATUS": measurement.get("R_LOO_STRICT_STATUS", "pending"),
+        "rolling_activated": enrollment_summary.get("rolling_activated"), "N_late": enrollment_summary.get("N_late"),
+        "C2B_DESIGN_READY": c2b_baseline_ready, "C2B_RISK_DESIGN_FROZEN": False,
+        "C2B_DESIGN_FROZEN": False, "C2B_ASSIGNMENT_MATERIALIZED": False, "C2B_LAUNCH_READY": False,
+        "routing_profile_frozen": False, "formal_closeout_ready": evidence_ready,
+        "full_dependency_bundle_sha256": bundle_sha, "adjudication_sha256": sha256_file(args.adjudication_manifest),
+        "blockers": blockers, "c2b_baseline_blockers": c2b_blockers,
+        "dependencies": freeze_dependencies,
+    }
+    freeze.update({
+        "expected_schema": freeze["schema_version"], "required_status_field": "C1_EVIDENCE_FROZEN",
+        "required_status_value": True, "frozen": evidence_ready,
+    })
     freeze["state_machine"] = {name: bool(freeze[name]) for name in ("C1_COLLECTION_INCOMPLETE", "C1_CANONICAL_CLOSED", "C1_MEASUREMENT_FROZEN", "C2B_RISK_DESIGN_FROZEN", "C2B_DESIGN_FROZEN", "C2B_ASSIGNMENT_MATERIALIZED", "C2B_LAUNCH_READY")}
     (args.output_dir / "c1_evidence_freeze_manifest.json").write_text(json.dumps(freeze, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return {"day": 1, "phase": "measurement-freeze", "formal_closeout_ready": evidence_ready, "C1_CANONICAL_CLOSED": freeze["C1_CANONICAL_CLOSED"], "C1_MEASUREMENT_FROZEN": freeze["C1_MEASUREMENT_FROZEN"], "C2B_DESIGN_READY": freeze["C2B_DESIGN_READY"], "routing_profile_frozen": False, "blockers": blockers, "c2b_baseline_blockers": c2b_blockers}
@@ -1287,14 +1381,17 @@ def _build_c2b_batch_b(args: argparse.Namespace) -> dict[str, Any]:
         for task_id in anchor_ids:
             row = {**task_pool[task_id], **base_by_task.get(task_id, {})}
             rows.append({**row, "task_id": task_id, "c2_component": "common_anchor", "worker_id": worker, "assignment_batch_id": "C2B_BATCH_B"})
-        start = int(hashlib.sha256(f"{design_sha}:{worker}".encode("utf-8")).hexdigest(), 16) % len(bridge_ids)
+        generator = selected.get("bridge_generator")
+        if not isinstance(generator, dict) or not all(str(generator.get(field, "")).strip() for field in ("rule_version", "frozen_seed", "ordinary_stress_quota", "stratum_balance_rule")):
+            raise ValueError("Batch B requires the frozen bridge generator contract in selected design")
+        start = int(hashlib.sha256(f"{generator['frozen_seed']}:{worker}".encode("utf-8")).hexdigest(), 16) % len(bridge_ids)
         for offset in range(bridge_per_worker):
             task_id = bridge_ids[(start + offset) % len(bridge_ids)]
             row = {**task_pool[task_id], **base_by_task.get(task_id, {})}
             rows.append({**row, "task_id": task_id, "c2_component": "diverse_bridge", "worker_id": worker, "assignment_batch_id": "C2B_BATCH_B"})
     if len({(row["worker_id"], row["task_id"]) for row in rows}) != len(rows):
         raise ValueError("Batch B bridge replay generated duplicate worker-task rows")
-    capacities = {row.get("worker_id", ""): int(float(row.get("c2b_capacity", "0"))) for row in _read(args.capacity_manifest)}
+    capacities = {normalize_worker_id(row.get("worker_id", "")): int(float(row.get("c2b_capacity", "0"))) for row in _read(args.capacity_manifest)}
     if any(sum(row["worker_id"] == worker for row in rows) > capacities.get(worker, 0) for worker in workers):
         raise ValueError("Batch B assignment exceeds frozen capacity")
     args.output_dir.mkdir(parents=True, exist_ok=True)
@@ -1497,6 +1594,31 @@ def bind_c2b_runtime_mapping(args: argparse.Namespace) -> dict[str, Any]:
     (args.output_dir / "c2b_worker_task_binding_audit.json").write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     worker_bundle = args.worker_distribution.parent / "worker_facing_distribution_C2B"
     worker_files = sorted(worker_bundle.glob("worker_*_C2B.csv")) if worker_bundle.is_dir() else []
+    expected_private_workers = {normalize_worker_id(row.get("worker_id", "")) for row in assignments if normalize_worker_id(row.get("worker_id", ""))}
+    private_file_workers: set[str] = set()
+    private_rows: list[dict[str, str]] = []
+    private_file_errors: list[str] = []
+    if not worker_files:
+        private_file_errors.append("worker_facing_distribution_C2B_missing_or_empty")
+    for path in worker_files:
+        stem = path.stem
+        worker = normalize_worker_id(stem[len("worker_"):-len("_C2B")] if stem.startswith("worker_") and stem.endswith("_C2B") else "")
+        rows = _read(path)
+        if not worker or worker in private_file_workers:
+            private_file_errors.append(f"invalid_or_duplicate_worker_file:{path.name}")
+        private_file_workers.add(worker)
+        if any(normalize_worker_id(row.get("worker_id", "")) != worker for row in rows):
+            private_file_errors.append(f"worker_isolation_failed:{path.name}")
+        private_rows.extend({**row, "worker_id": normalize_worker_id(row.get("worker_id", ""))} for row in rows)
+    private_ids = {(row.get("worker_id", ""), row.get("task_id", "")) for row in private_rows}
+    private_duplicate_count = len(private_rows) - len(private_ids)
+    distribution_ids_normalized = {(normalize_worker_id(worker), task) for worker, task in distribution_ids}
+    private_lists_complete = (
+        private_file_workers == expected_private_workers
+        and not private_file_errors
+        and private_duplicate_count == 0
+        and private_ids == distribution_ids_normalized
+    )
     private_audit = {
         "schema_version": "paper_a_c2b_private_assignment_list_audit_v1",
         "contract_role": "generated_subordinate",
@@ -1504,11 +1626,17 @@ def bind_c2b_runtime_mapping(args: argparse.Namespace) -> dict[str, Any]:
         "assignment_manifest_sha256": sha256_file(args.assignment_manifest),
         "worker_distribution_sha256": sha256_file(args.worker_distribution),
         "per_worker_list_bundle_sha256": _aggregate_sha(_manifest_rows(worker_files)) if worker_files else "",
-        "all_assignment_rows_covered": assignment_ids == distribution_ids and len(assignment_ids) == len(assignment_rows) == len(assignments),
+        "worker_file_count": len(worker_files), "expected_worker_count": len(expected_private_workers),
+        "private_file_workers": sorted(private_file_workers), "expected_workers": sorted(expected_private_workers),
+        "private_file_errors": private_file_errors, "private_duplicate_worker_task_count": private_duplicate_count,
+        "private_lists_complete": private_lists_complete,
+        "all_assignment_rows_covered": assignment_ids == distribution_ids and len(assignment_ids) == len(assignment_rows) == len(assignments) and private_lists_complete,
         "duplicate_worker_task_count": max(len(assignment_rows) - len(assignment_ids), len(assignments) - len(distribution_ids)),
         "outside_submission_policy": "exclude_from_primary_and_audit",
         "assignment_batch_id": report["assignment_batch_id"],
         "selected_design_sha": report["selected_design_sha"],
+        "formal_ready": private_lists_complete,
+        "private_assignment_list_audit_passed": private_lists_complete,
         "dependencies": audit["dependencies"],
     }
     (args.output_dir / "c2b_private_assignment_list_audit.json").write_text(json.dumps(private_audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")

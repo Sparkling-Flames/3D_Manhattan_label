@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
@@ -34,6 +35,8 @@ def materialize(
     input_status: str = "formal",
 ) -> dict[str, Any]:
     manifest = json.loads(profile_manifest.read_text(encoding="utf-8"))
+    method = load_method_contract()
+    method_sha = sha256_file(METHOD_CONTRACT)
     if manifest.get("manifest_version") != "c2b_post_profile_v1":
         raise ValueError("unsupported C2-B post-profile manifest")
     design = json.loads(design_summary.read_text(encoding="utf-8"))
@@ -107,7 +110,15 @@ def materialize(
     if min(task_support.values(), default=0) < min_task:
         raise ValueError("C2-B task support is below threshold")
 
+    batch_id = "C2B_BATCH_B" if any(row.get("assignment_batch_id") == "C2B_BATCH_B" or row.get("assignment_batch") == "C2B_BATCH_B" for row in assignments) else "C2B_BATCH_A"
     summary = {
+        "schema_version": "c2b_closeout_v2",
+        "artifact_role": f"{batch_id}_CLOSEOUT_FROZEN",
+        "contract_role": "generated_subordinate",
+        "method_contract_version": method["contract_version"],
+        "method_contract_sha256": method_sha,
+        "profile_version": manifest.get("profile_version", ""),
+        "cohort_id": manifest.get("cohort_id", ""),
         "closeout_version": "c2b_closeout_v2",
         "c2b_design_ready": True,
         "c2b_closeout_ready": True,

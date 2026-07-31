@@ -667,10 +667,8 @@ def materialize_active_log_audits(canonical_csv: Path, active_log_dir: Path, out
     for row in canonical:
         key = tuple(str(row.get(field, "")).strip() for field in ("project_id", "ls_runtime_task_id", "worker_id", "annotation_id"))
         candidates = exact.get(key, [])
-        if len(candidates) == 1:
+        if candidates:
             reason = "exact_match"
-        elif len(candidates) > 1:
-            reason = "multiple_candidate_logs"
         elif contexts.get(key[:3]):
             reason = "annotation_id_missing_in_log"
         elif by_task_worker.get((key[1], key[2])):
@@ -690,7 +688,9 @@ def materialize_active_log_audits(canonical_csv: Path, active_log_dir: Path, out
     write_csv(output_dir / "c1_active_time_worker_coverage.csv", worker_rows)
     timestamps = [event["_timestamp"] for event in events if event["_timestamp"]]
     exact_count = sum(row["binding_reason"] == "exact_match" for row in reason_rows)
-    contextual_count = sum(row["binding_reason"] in {"exact_match", "multiple_candidate_logs", "annotation_id_missing_in_log"} for row in reason_rows)
+    exact_event_count = sum(row["candidate_event_count"] for row in reason_rows if row["binding_reason"] == "exact_match")
+    multiple_event_annotation_count = sum(row["binding_reason"] == "exact_match" and row["candidate_event_count"] > 1 for row in reason_rows)
+    contextual_count = sum(row["binding_reason"] in {"exact_match", "annotation_id_missing_in_log"} for row in reason_rows)
     inside = sum(row["inside_c1_window_count"] for row in source_rows)
     export_project_ids = sorted({str(row.get("project_id", "")).strip() for row in canonical if str(row.get("project_id", "")).strip()})
     active_log_project_ids = sorted({str(event.get("project_id", "")).strip() for event in events if str(event.get("project_id", "")).strip()})
@@ -706,6 +706,8 @@ def materialize_active_log_audits(canonical_csv: Path, active_log_dir: Path, out
         "logs_inside_c1_window": inside, "logs_outside_c1_window": len(events) - inside,
         "active_time_exact_count": exact_count,
         "exact_annotation_join_count": exact_count,
+        "exact_annotation_event_count": exact_event_count,
+        "multiple_event_annotation_count": multiple_event_annotation_count,
         "active_time_contextual_count": contextual_count,
         "export_project_ids": export_project_ids,
         "active_log_project_ids": active_log_project_ids,
