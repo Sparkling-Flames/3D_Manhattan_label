@@ -21,7 +21,7 @@ def _write_csv(path: Path, rows: list[dict[str, object]]) -> None:
 def _batch_scope() -> dict[str, object]:
     return {
         "schema_version": "paper_a_c1_batch_scope_v1", "batch_id": "C1_A",
-        "data_cutoff_server_time": "2026-07-30T00:00:00Z", "original_worker_ids": ["W001"],
+        "data_cutoff_server_time": "2026-07-30T00:00:00Z", "original_worker_ids": ["W001", "W034"],
         "authorized_repair_identities": {
             "w034": [{"worker_id": "W034", "base_task_id": f"w034-{index}", "condition": "manual"} for index in range(17)],
             "w001": [{"worker_id": "W001", "base_task_id": f"w001-{index}", "condition": "manual"} for index in range(3)],
@@ -81,11 +81,24 @@ def test_c1_a_snapshot_scopes_out_late_entry_inputs(tmp_path: Path) -> None:
     readiness.append({"worker_id": "W099", "Q_GT_support": "9"})
     _write_csv(c1_dir / "c1_measurement_readiness_by_worker.csv", readiness)
     scope = tmp_path / "scope.json"; scope.write_text(json.dumps(_batch_scope()), encoding="utf-8")
-    result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot.json"})())
-    assert result["status"] == "formal_design_eligible"
-    assert result["excluded_late_entry_worker_ids"] == ["99"]
-    profile_dependency = _snapshot_dependencies(result, "WORKER_PROFILE")["WORKER_PROFILE"]
-    assert {row["worker_id"] for row in csv.DictReader(profile_dependency.open(encoding="utf-8"))} == {"1", "34"}
+    with pytest.raises(ValueError, match="cohort-specific C1 estimates"):
+        freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot.json"})())
+
+
+def test_c1_a_snapshot_requires_the_exact_original_roster_and_preserves_task_level_k(tmp_path: Path) -> None:
+    c1_dir = tmp_path / "c1"; _batch_artifacts(c1_dir)
+    support = c1_dir / "c1_estimand_specific_task_support.csv"
+    _write_csv(support, [{"base_task_id": "b1", "condition": "manual", "k_final_GT": "3", "k_final_peer": "3", "k_final_structural": "3", "k_final_LOO_medoid": "2", "k_final_LOO_strict": "2", "k_final_time": "3"}])
+    scope = _batch_scope(); scope["original_worker_ids"] = ["W001"]
+    scope_path = tmp_path / "scope.json"; scope_path.write_text(json.dumps(scope), encoding="utf-8")
+    result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope_path, "output": tmp_path / "snapshot.json"})())
+    assert result["status"] == "provisional"
+    assert any(blocker.startswith("original_roster_scope_mismatch") for blocker in result["blockers"])
+    scope["original_worker_ids"] = ["W001", "W034"]
+    scope_path.write_text(json.dumps(scope), encoding="utf-8")
+    result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope_path, "output": tmp_path / "snapshot.json"})())
+    variable_k = _snapshot_dependencies(result, "VARIABLE_K")["VARIABLE_K"]
+    assert list(csv.DictReader(variable_k.open(encoding="utf-8")))[0]["k_final_GT"] == "3"
 
 
 def test_worker_id_formats_are_normalized_across_scope_and_eligibility(tmp_path: Path) -> None:
@@ -216,8 +229,29 @@ def test_runtime_mapping_binds_only_the_frozen_batch_and_design(tmp_path: Path) 
     }), encoding="utf-8")
     distribution = tmp_path / "distribution.csv"; _write_csv(distribution, [{"worker_id": "W001", "task_id": "planned-1"}])
     assignment = tmp_path / "assignment.csv"; _write_csv(assignment, [{"worker_id": "W001", "task_id": "planned-1"}])
+    private = tmp_path / "worker_facing_distribution_C2B"; private.mkdir()
+    _write_csv(private / "worker_001_C2B.csv", [{"worker_id": "W001", "task_id": "planned-1"}])
     planned = tmp_path / "planned.json"; planned.write_text(json.dumps([{"data": {"planned_task_id": "planned-1"}}]), encoding="utf-8")
     runtime = tmp_path / "runtime.json"; runtime.write_text(json.dumps([{"id": 7, "data": {"planned_task_id": "planned-1", "c2b_batch_id": "C2B_BATCH_A", "selected_design_sha": design_sha}}]), encoding="utf-8")
     result = bind_c2b_runtime_mapping(type("Args", (), {"launch_report": report, "assignment_manifest": assignment, "worker_distribution": distribution, "planned_import": planned, "runtime_export": runtime, "output_dir": tmp_path / "out"})())
     assert result["one_to_one"] is True
+    assert result["C2B_RUNTIME_BINDING_READY"] is True
     assert (tmp_path / "out" / "c2b_runtime_task_mapping.csv").is_file()
+
+
+def test_runtime_mapping_rejects_missing_private_worker_lists(tmp_path: Path) -> None:
+    method = load_method_contract(); design_sha = "d" * 64
+    report = tmp_path / "launch.json"; report.write_text(json.dumps({
+        "contract_role": "generated_subordinate", "method_contract_version": method["contract_version"],
+        "method_contract_sha256": sha256_file(METHOD_CONTRACT), "assignment_batch_id": "C2B_BATCH_A",
+        "selected_design_sha": design_sha,
+    }), encoding="utf-8")
+    distribution = tmp_path / "distribution.csv"; _write_csv(distribution, [{"worker_id": "W001", "task_id": "planned-1"}])
+    assignment = tmp_path / "assignment.csv"; _write_csv(assignment, [{"worker_id": "W001", "task_id": "planned-1"}])
+    planned = tmp_path / "planned.json"; planned.write_text(json.dumps([{"data": {"planned_task_id": "planned-1"}}]), encoding="utf-8")
+    runtime = tmp_path / "runtime.json"; runtime.write_text(json.dumps([{"id": 7, "data": {"planned_task_id": "planned-1", "c2b_batch_id": "C2B_BATCH_A", "selected_design_sha": design_sha}}]), encoding="utf-8")
+    output = tmp_path / "out"
+    with pytest.raises(ValueError, match="private assignment lists"):
+        bind_c2b_runtime_mapping(type("Args", (), {"launch_report": report, "assignment_manifest": assignment, "worker_distribution": distribution, "planned_import": planned, "runtime_export": runtime, "output_dir": output})())
+    audit = json.loads((output / "c2b_private_assignment_list_audit.json").read_text(encoding="utf-8"))
+    assert audit["formal_ready"] is False

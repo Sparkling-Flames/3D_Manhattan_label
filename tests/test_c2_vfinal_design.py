@@ -27,24 +27,34 @@ def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
-def _closeout_dependencies(tmp_path: Path, manifest_data: dict) -> tuple[Path, Path, Path, Path]:
+def _closeout_dependencies(tmp_path: Path, manifest_data: dict) -> tuple[Path, Path, Path, Path, Path, Path, Path]:
     paths = [
         tmp_path / "c1_closeout.json", tmp_path / "c2b_assignment.csv",
-        tmp_path / "worker_roster.csv", tmp_path / "rule_config.json",
+        tmp_path / "worker_roster.csv", tmp_path / "rule_config.json", tmp_path / "launch.json",
+        tmp_path / "runtime.json", tmp_path / "private.json",
     ]
+    paths[1].write_text("task_id,worker_id,c2_component,assignment_batch_id\nt1,w1,common_anchor,C2B_BATCH_A\n", encoding="utf-8")
+    assignment_sha = _sha(paths[1])
     contents = [
-        json.dumps({"formal_closeout_ready": True, "profile_freeze_status": "C1_frozen"}),
-        "task_id,worker_id,c2_component\nt1,w1,common_anchor\n",
+        json.dumps({"schema_version": "paper_a_c1_batch_analysis_snapshot_v1", "status": "formal_design_eligible", "C2B_DESIGN_INPUT_FROZEN_FROM_C1_A": True}),
+        None,
         "worker_id\nw1\n",
         json.dumps({"min_common_anchor_per_worker": 1, "min_bridge_per_worker": 0, "min_task_support": 1}),
+        json.dumps({"C2B_LAUNCH_READY": True, "assignment_batch_id": "C2B_BATCH_A", "assignment_sha256": assignment_sha}),
+        json.dumps({"formal_ready": True, "C2B_RUNTIME_BINDING_READY": True, "assignment_batch_id": "C2B_BATCH_A"}),
+        json.dumps({"formal_ready": True, "private_assignment_list_audit_passed": True, "assignment_batch_id": "C2B_BATCH_A", "assignment_manifest_sha256": assignment_sha}),
     ]
     for path, content in zip(paths, contents):
-        path.write_text(content, encoding="utf-8")
+        if content is not None:
+            path.write_text(content, encoding="utf-8")
     manifest_data.setdefault("input_sha256", {}).update({
-        "c1_closeout_summary": _sha(paths[0]),
+        "c1_a_snapshot": _sha(paths[0]),
         "c2b_assignment_csv": _sha(paths[1]),
         "worker_roster_csv": _sha(paths[2]),
         "rule_config": _sha(paths[3]),
+        "c2b_launch_report": _sha(paths[4]),
+        "c2b_runtime_mapping_audit": _sha(paths[5]),
+        "c2b_private_assignment_audit": _sha(paths[6]),
     })
     return tuple(paths)
 

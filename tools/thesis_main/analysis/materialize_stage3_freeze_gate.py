@@ -46,6 +46,14 @@ def _validate_dependency(item: dict[str, Any], base: Path, trail: str) -> tuple[
         blockers.append(f"{trail}:profile_mismatch")
     if "cohort_id" not in payload or str(payload["cohort_id"]) != str(item["cohort_id"]):
         blockers.append(f"{trail}:cohort_mismatch")
+    if payload.get("contract_role") == "generated_subordinate" and payload.get("method_contract_sha256") != sha256_file(METHOD_CONTRACT):
+        blockers.append(f"{trail}:method_contract_sha_mismatch")
+    source_path = payload.get("source_path")
+    source_sha = payload.get("source_sha256")
+    if source_path is not None or source_sha is not None:
+        source = _resolve(source_path, path.parent) if source_path else None
+        if not source_sha or source is None or not source.is_file() or sha256_file(source) != str(source_sha):
+            blockers.append(f"{trail}:source_missing_or_stale_sha")
     children = []
     child_roles: list[str] = []
     for index, child in enumerate(payload.get("dependencies", [])):

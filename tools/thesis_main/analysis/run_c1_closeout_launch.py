@@ -296,8 +296,30 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
     profile_rows = _normalize_worker_rows(_read(profile_path)) if profile_path.is_file() else []
     repair_workers = {entry["worker_id"] for values in repairs.values() for entry in values}
     included_workers = originals | repair_workers
-    if not originals <= {row.get("worker_id", "") for row in profile_rows if row.get("enrollment_batch") == "original"}:
-        blockers.append("original_roster_not_bound_to_worker_profile")
+    late_workers = {
+        row.get("worker_id", "") for row in profile_rows
+        if row.get("enrollment_batch") == "late_entry"
+    }
+    if late_workers:
+        raise ValueError(
+            "C1_A snapshot requires cohort-specific C1 estimates; source rehearsal contains late-entry workers:"
+            + ",".join(sorted(late_workers))
+        )
+    expected_originals = {
+        row.get("worker_id", "") for row in profile_rows
+        if row.get("enrollment_batch") == "original"
+        and not (
+            str(row.get("completion_status", "")).strip().lower() in {"nonstarter", "administrative_exclusion"}
+            or str(row.get("administratively_eligible", "")).strip().lower() in {"false", "0", "no"}
+        )
+    }
+    if originals != expected_originals:
+        blockers.append(
+            "original_roster_scope_mismatch:expected="
+            + ",".join(sorted(expected_originals))
+            + ";actual="
+            + ",".join(sorted(originals))
+        )
     completion_by_worker = {
         row.get("worker_id", ""): row for row in _normalize_worker_rows(_read(required["COMPLETION"]))
     } if required["COMPLETION"].is_file() else {}
@@ -369,8 +391,11 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
     scoped_dependencies = {
         role: _write_c1_a_scoped_input(path, scoped_dir, workers=included_workers)
         for role, path in required.items()
-        if role in {"VARIABLE_K", "PEER", "LOO", "Q_GT", "STRUCTURAL_EB", "COMPLETION", "WORKER_PROFILE", "MEASUREMENT_READINESS"} and path.is_file()
+        if role in {"PEER", "LOO", "Q_GT", "STRUCTURAL_EB", "COMPLETION", "WORKER_PROFILE", "MEASUREMENT_READINESS"} and path.is_file()
     }
+    if required["VARIABLE_K"].is_file():
+        # variable-k is task-level, so filtering it by worker_id would erase its rows.
+        scoped_dependencies["VARIABLE_K"] = _write_c1_a_scoped_input(required["VARIABLE_K"], scoped_dir)
     canonical_scoped = scoped_dir / eligibility_path.name
     _write(canonical_scoped, included_rows)
     scoped_dependencies["CANONICAL_ELIGIBILITY"] = canonical_scoped
@@ -385,7 +410,7 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
         "source_c1_output_dir": str(c1_dir), "source_c1_output_manifest_sha256": sha256_file(required["ANALYSIS_DEPENDENCY_BUNDLE"]) if required["ANALYSIS_DEPENDENCY_BUNDLE"].is_file() else "",
         "original_worker_ids": sorted(originals), "authorized_repair_set": {"w034": [entry for entry in repairs["w034"]], "w001": [entry for entry in repairs["w001"]], "resolved_canonical_annotation_ids": sorted(canonical_repair_ids), "expected_count": 20}, "original_completion_exception_task_ids": sorted(completion_exceptions),
         "included_canonical_annotation_identity_manifest_sha256": sha256_file(identity_manifest),
-        "eligible_base_task_ids": eligible_base_task_ids, "excluded_late_entry_worker_ids": sorted({row.get("worker_id", "") for row in profile_rows if row.get("enrollment_batch") == "late_entry"}), "reference_registry_sha256": sha256_file(required["REFERENCE"]) if required["REFERENCE"].is_file() else "",
+        "eligible_base_task_ids": eligible_base_task_ids, "excluded_late_entry_worker_ids": [], "reference_registry_sha256": sha256_file(required["REFERENCE"]) if required["REFERENCE"].is_file() else "",
         "C1_A_ANALYSIS_SNAPSHOT_MATERIALIZED": True, "C1_A_ANALYSIS_SNAPSHOT_FROZEN": frozen, "C2B_BASELINE_INPUT_FROZEN": frozen, "C2B_DESIGN_INPUT_FROZEN_FROM_C1_A": frozen,
         "C2B_ASSIGNMENT_BATCH_A_MATERIALIZED": False, "C2B_ASSIGNMENT_BATCH_B_MATERIALIZED": False,
         "CALIBRATION_ENROLLMENT_CLOSED": False, "ALL_CALIBRATION_WORKERS_TERMINAL": False, "FINAL_POOLED_PROFILE_FROZEN": False,
@@ -1650,7 +1675,7 @@ def bind_c2b_runtime_mapping(args: argparse.Namespace) -> dict[str, Any]:
             private_file_errors.append(f"invalid_or_duplicate_worker_file:{path.name}")
         private_file_workers.add(worker)
         if any(normalize_worker_id(row.get("worker_id", "")) != worker for row in rows):
-            private_file_errors.append(f"worker_isolation_failed:{path.name}")
+            private_file_errors.append(f"private_list_worker_identity_mismatch:{path.name}")
         private_rows.extend({**row, "worker_id": normalize_worker_id(row.get("worker_id", ""))} for row in rows)
     private_ids = {(row.get("worker_id", ""), row.get("task_id", "")) for row in private_rows}
     private_duplicate_count = len(private_rows) - len(private_ids)
@@ -1682,6 +1707,11 @@ def bind_c2b_runtime_mapping(args: argparse.Namespace) -> dict[str, Any]:
         "dependencies": audit["dependencies"],
     }
     (args.output_dir / "c2b_private_assignment_list_audit.json").write_text(json.dumps(private_audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    audit["formal_ready"] = private_lists_complete
+    audit["C2B_RUNTIME_BINDING_READY"] = private_lists_complete
+    (args.output_dir / "c2b_worker_task_binding_audit.json").write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    if not private_lists_complete:
+        raise ValueError("private assignment lists are incomplete or inconsistent")
     return audit
 
 

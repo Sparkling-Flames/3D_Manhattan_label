@@ -48,7 +48,7 @@ def _dependency(path: Path, role: str, method_sha: str, profile_version: str, co
         raise ValueError(f"{role} is not formally ready")
     return {
         "role": role,
-        "path": str(path),
+        "path": str(path.resolve()),
         "sha256": sha256_file(path),
         "expected_schema": expected_schema,
         "required_status_field": "formal_ready",

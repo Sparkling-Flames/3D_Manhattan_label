@@ -10,6 +10,7 @@ from typing import Any
 
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
+from tools.thesis_main.analysis.worker_identity import normalize_worker_id
 
 
 def _rows(path: Path) -> list[dict[str, str]]:
@@ -30,6 +31,9 @@ def materialize(
     assignment_csv: Path,
     worker_roster_csv: Path,
     rule_config: Path,
+    launch_report: Path,
+    runtime_mapping_audit: Path,
+    private_assignment_audit: Path,
     output_summary: Path,
     *,
     input_status: str = "formal",
@@ -47,10 +51,13 @@ def materialize(
         "c2b_submissions_csv": sha256_file(submissions_csv),
         "post_c2b_worker_profile_csv": sha256_file(post_profile_csv),
         "c2b_design_summary": sha256_file(design_summary),
-        "c1_closeout_summary": sha256_file(c1_closeout_summary),
+        "c1_a_snapshot": sha256_file(c1_closeout_summary),
         "c2b_assignment_csv": sha256_file(assignment_csv),
         "worker_roster_csv": sha256_file(worker_roster_csv),
         "rule_config": sha256_file(rule_config),
+        "c2b_launch_report": sha256_file(launch_report),
+        "c2b_runtime_mapping_audit": sha256_file(runtime_mapping_audit),
+        "c2b_private_assignment_audit": sha256_file(private_assignment_audit),
     }
     declared = {
         **(manifest.get("input_sha256") or {}),
@@ -71,14 +78,16 @@ def materialize(
         output_summary.write_text(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
         return summary
 
-    closeout = json.loads(c1_closeout_summary.read_text(encoding="utf-8"))
-    if not closeout.get("formal_closeout_ready") or closeout.get("profile_freeze_status") != "C1_frozen":
-        raise ValueError("C1 closeout is not formal-ready and frozen")
+    snapshot = json.loads(c1_closeout_summary.read_text(encoding="utf-8"))
+    if (snapshot.get("schema_version") != "paper_a_c1_batch_analysis_snapshot_v1"
+            or snapshot.get("status") != "formal_design_eligible"
+            or snapshot.get("C2B_DESIGN_INPUT_FROZEN_FROM_C1_A") is not True):
+        raise ValueError("C2-B closeout requires a frozen C1_A batch snapshot")
     if design.get("candidate_only") or not design.get("launch_ready", True):
         raise ValueError("C2-B assignment is not a formal frozen design")
     assignments, submissions, roster, profiles = (_rows(path) for path in (assignment_csv, submissions_csv, worker_roster_csv, post_profile_csv))
-    assigned = [(row.get("worker_id", ""), row.get("task_id", "")) for row in assignments]
-    submitted = [(row.get("worker_id", ""), row.get("task_id", "")) for row in submissions]
+    assigned = [(normalize_worker_id(row.get("worker_id", "")), row.get("task_id", "")) for row in assignments]
+    submitted = [(normalize_worker_id(row.get("worker_id", "")), row.get("task_id", "")) for row in submissions]
     if not assigned or any(not all(key) for key in assigned) or len(assigned) != len(set(assigned)):
         raise ValueError("C2-B assignment requires unique worker-task rows")
     if any(key not in set(assigned) for key in submitted):
@@ -88,8 +97,8 @@ def materialize(
     missing = set(assigned) - set(submitted)
     if missing:
         raise ValueError("C2-B required submissions are missing")
-    roster_ids = {row.get("worker_id", "") for row in roster}
-    profile_ids = {row.get("worker_id", "") for row in profiles}
+    roster_ids = {normalize_worker_id(row.get("worker_id", "")) for row in roster}
+    profile_ids = {normalize_worker_id(row.get("worker_id", "")) for row in profiles}
     assignment_ids = {worker for worker, _task in assigned}
     if not roster_ids or "" in roster_ids or roster_ids != assignment_ids or profile_ids != roster_ids:
         raise ValueError("C2-B worker roster/profile coverage mismatch")
@@ -103,14 +112,30 @@ def materialize(
         component = row.get("c2_component", "")
         if component not in {"common_anchor", "diverse_bridge"}:
             raise ValueError("C2-B assignment has invalid component")
-        by_worker[row["worker_id"]][component] += 1
+        by_worker[normalize_worker_id(row.get("worker_id", ""))][component] += 1
         task_support[row["task_id"]] = task_support.get(row["task_id"], 0) + 1
     if any(counts["common_anchor"] < min_anchor or counts["diverse_bridge"] < min_bridge for counts in by_worker.values()):
         raise ValueError("C2-B worker anchor/bridge support is below threshold")
     if min(task_support.values(), default=0) < min_task:
         raise ValueError("C2-B task support is below threshold")
 
-    batch_id = "C2B_BATCH_B" if any(row.get("assignment_batch_id") == "C2B_BATCH_B" or row.get("assignment_batch") == "C2B_BATCH_B" for row in assignments) else "C2B_BATCH_A"
+    batch_ids = {row.get("assignment_batch_id", row.get("assignment_batch", "")) for row in assignments}
+    if len(batch_ids) != 1 or not batch_ids <= {"C2B_BATCH_A", "C2B_BATCH_B"}:
+        raise ValueError("C2-B closeout requires exactly one assignment batch")
+    batch_id = next(iter(batch_ids))
+    launch = json.loads(launch_report.read_text(encoding="utf-8"))
+    runtime = json.loads(runtime_mapping_audit.read_text(encoding="utf-8"))
+    private = json.loads(private_assignment_audit.read_text(encoding="utf-8"))
+    if (launch.get("C2B_LAUNCH_READY") is not True or launch.get("assignment_batch_id") != batch_id
+            or launch.get("assignment_sha256") != actual["c2b_assignment_csv"]):
+        raise ValueError("C2-B launch report is stale or bound to another batch")
+    if (runtime.get("formal_ready") is not True or runtime.get("C2B_RUNTIME_BINDING_READY") is not True
+            or runtime.get("assignment_batch_id") != batch_id):
+        raise ValueError("C2-B runtime mapping audit is not formally ready for this batch")
+    if (private.get("formal_ready") is not True or private.get("private_assignment_list_audit_passed") is not True
+            or private.get("assignment_batch_id") != batch_id
+            or private.get("assignment_manifest_sha256") != actual["c2b_assignment_csv"]):
+        raise ValueError("C2-B private assignment audit is not formally ready for this batch")
     summary = {
         "schema_version": "c2b_closeout_v2",
         "artifact_role": f"{batch_id}_CLOSEOUT_FROZEN",
@@ -126,7 +151,7 @@ def materialize(
         "design_manifest_sha256": design.get("design_manifest_sha256"),
         "c2b_design_summary_path": str(design_summary),
         "c2b_design_summary_sha256": actual["c2b_design_summary"],
-        "c1_closeout_sha256": actual["c1_closeout_summary"],
+        "c1_a_snapshot_sha256": actual["c1_a_snapshot"],
         "c2b_assignment_sha256": actual["c2b_assignment_csv"],
         "worker_roster_sha256": actual["worker_roster_csv"],
         "rule_config_sha256": actual["rule_config"],
@@ -136,6 +161,15 @@ def materialize(
         "post_c2b_worker_profile_sha256": actual["post_c2b_worker_profile_csv"],
         "post_c2b_profile_manifest_path": str(profile_manifest),
         "post_c2b_profile_manifest_sha256": sha256_file(profile_manifest),
+        "formal_ready": True,
+        "blockers": [],
+        "dependencies": [
+            {"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)}
+            for role, path in (("C1_A_SNAPSHOT", c1_closeout_summary), ("C2B_ASSIGNMENT", assignment_csv),
+                               ("C2B_LAUNCH_REPORT", launch_report), ("C2B_RUNTIME_MAPPING_AUDIT", runtime_mapping_audit),
+                               ("C2B_PRIVATE_ASSIGNMENT_AUDIT", private_assignment_audit),
+                               ("POST_C2B_PROFILE", post_profile_csv), ("METHOD_CONTRACT", METHOD_CONTRACT))
+        ],
     }
     output_summary.parent.mkdir(parents=True, exist_ok=True)
     output_summary.write_text(
@@ -155,13 +189,18 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--assignment-csv", type=Path, required=True)
     parser.add_argument("--worker-roster-csv", type=Path, required=True)
     parser.add_argument("--rule-config", type=Path, required=True)
+    parser.add_argument("--launch-report", type=Path, required=True)
+    parser.add_argument("--runtime-mapping-audit", type=Path, required=True)
+    parser.add_argument("--private-assignment-audit", type=Path, required=True)
     parser.add_argument("--output-summary", type=Path, required=True)
     parser.add_argument("--input-status", choices=("dry_run", "precloseout_rehearsal", "formal"), default="formal")
     args = parser.parse_args(argv)
     print(json.dumps(materialize(
         args.submissions_csv, args.post_profile_csv, args.profile_manifest,
         args.design_summary, args.c1_closeout_summary, args.assignment_csv,
-        args.worker_roster_csv, args.rule_config, args.output_summary, input_status=args.input_status,
+        args.worker_roster_csv, args.rule_config, args.launch_report,
+        args.runtime_mapping_audit, args.private_assignment_audit,
+        args.output_summary, input_status=args.input_status,
     ), ensure_ascii=False, indent=2))
     return 0
 
