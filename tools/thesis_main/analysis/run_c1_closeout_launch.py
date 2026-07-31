@@ -240,6 +240,27 @@ def _addendum_row_sha256(row: dict[str, str]) -> str:
     return hashlib.sha256(json.dumps(row, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
 
 
+def _addendum_identity_key(row: dict[str, Any]) -> tuple[str, str, str]:
+    return (
+        normalize_worker_id(row.get("replacement_worker_id", row.get("worker_id", ""))),
+        str(row.get("base_task_id", "")).strip(),
+        str(row.get("condition", "")).strip().lower(),
+    )
+
+
+def _write_c1_a_scoped_input(source: Path, output_dir: Path, *, workers: set[str] | None = None, base_task_ids: set[str] | None = None) -> Path:
+    """Copy only the frozen C1-A rows consumed by downstream C2-B materializers."""
+    rows = _read(source)
+    if workers is not None:
+        rows = _normalize_worker_rows(rows)
+        rows = [row for row in rows if row.get("worker_id", "") in workers]
+    if base_task_ids is not None:
+        rows = [row for row in rows if str(row.get("base_task_id") or row.get("task_id") or "") in base_task_ids]
+    target = output_dir / source.name
+    _write(target, rows)
+    return target
+
+
 def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
     """Freeze C1-A analysis/design inputs without closing future enrollment."""
     c1_dir = args.c1_output_dir.resolve()
@@ -254,7 +275,6 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("C1_A scope must bind cutoff and original roster")
     profile_path = c1_dir / "c1_three_track_worker_state.csv"
     eligibility_path = c1_dir / "c1_row_analysis_eligibility.csv"
-    readiness_path = c1_dir / "c1_measurement_freeze_manifest.json"
     required = {
         "ANALYSIS_DEPENDENCY_BUNDLE": c1_dir / "analysis_dependency_manifest.json",
         "CANONICAL_ELIGIBILITY": eligibility_path,
@@ -270,7 +290,7 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
         "BUILDING": c1_dir / "c1_task_building_binding.csv",
         "W034_SENSITIVITY": c1_dir / "w034_original_vs_authorized_sensitivity.json",
         "WORKER_PROFILE": profile_path,
-        "MEASUREMENT_READINESS": readiness_path,
+        "MEASUREMENT_READINESS": c1_dir / "c1_measurement_readiness_by_worker.csv",
     }
     blockers = [f"missing:{role}" for role, path in required.items() if not path.is_file()]
     profile_rows = _normalize_worker_rows(_read(profile_path)) if profile_path.is_file() else []
@@ -278,8 +298,19 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
     included_workers = originals | repair_workers
     if not originals <= {row.get("worker_id", "") for row in profile_rows if row.get("enrollment_batch") == "original"}:
         blockers.append("original_roster_not_bound_to_worker_profile")
-    if any(row.get("enrollment_batch") == "late_entry" for row in profile_rows):
-        blockers.append("late_entry_profile_present_in_c1_a_source")
+    completion_by_worker = {
+        row.get("worker_id", ""): row for row in _normalize_worker_rows(_read(required["COMPLETION"]))
+    } if required["COMPLETION"].is_file() else {}
+    missing_completion_workers = sorted(originals - set(completion_by_worker))
+    nonterminal_completion_workers = sorted(
+        worker for worker in originals
+        if worker in completion_by_worker
+        and completion_by_worker[worker].get("completion_status", "") not in _TERMINAL_CALIBRATION_STATUSES
+    )
+    if missing_completion_workers:
+        blockers.append("c1_a_completion_audit_missing:" + ",".join(missing_completion_workers))
+    if nonterminal_completion_workers:
+        blockers.append("c1_a_nonterminal_worker:" + ",".join(nonterminal_completion_workers))
     eligibility_rows = _normalize_worker_rows(_read(eligibility_path)) if eligibility_path.is_file() else []
     repair_rows: list[dict[str, str]] = []
     addendum_rows = _read(args.authorized_reassignment_manifest) if getattr(args, "authorized_reassignment_manifest", None) else []
@@ -297,7 +328,7 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
                 blockers.append(f"authorized_repair_identity_unresolved:{label}")
                 continue
             if entry["authorized_addendum_row_identity"] or entry["authorized_addendum_row_sha256"]:
-                matching_addenda = [row for row in addendum_rows if _identity_key(row) == _identity_key(entry)]
+                matching_addenda = [row for row in addendum_rows if _addendum_identity_key(row) == _identity_key(entry)]
                 if len(matching_addenda) != 1:
                     blockers.append(f"authorized_addendum_identity_unresolved:{label}")
                     continue
@@ -333,9 +364,20 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
     _write(identity_manifest, identity_rows)
     w034 = json.loads(required["W034_SENSITIVITY"].read_text(encoding="utf-8")) if required["W034_SENSITIVITY"].is_file() else {}
     if w034.get("status") != "frozen": blockers.append("w034_sensitivity_not_frozen")
-    readiness = json.loads(readiness_path.read_text(encoding="utf-8")) if readiness_path.is_file() else {}
-    if readiness.get("C1_CANONICAL_CLOSED") is not True: blockers.append("c1_a_canonical_evidence_not_closed")
     if not any(_truth(row.get("c2_risk_model_eligible")) for row in profile_rows if row.get("worker_id") in included_workers): blockers.append("no_c2b_eligible_original_worker")
+    scoped_dir = args.output.parent / "c1_a_batch_inputs"
+    scoped_dependencies = {
+        role: _write_c1_a_scoped_input(path, scoped_dir, workers=included_workers)
+        for role, path in required.items()
+        if role in {"VARIABLE_K", "PEER", "LOO", "Q_GT", "STRUCTURAL_EB", "COMPLETION", "WORKER_PROFILE", "MEASUREMENT_READINESS"} and path.is_file()
+    }
+    canonical_scoped = scoped_dir / eligibility_path.name
+    _write(canonical_scoped, included_rows)
+    scoped_dependencies["CANONICAL_ELIGIBILITY"] = canonical_scoped
+    scoped_dependencies.update({
+        role: _write_c1_a_scoped_input(required[role], scoped_dir, base_task_ids=set(eligible_base_task_ids))
+        for role in ("REFERENCE", "BUILDING") if required[role].is_file()
+    })
     frozen = not blockers
     snapshot = {
         "schema_version": "paper_a_c1_batch_analysis_snapshot_v1", "artifact_role": "C1_A_ANALYSIS_SNAPSHOT", "batch_id": "C1_A",
@@ -343,12 +385,12 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
         "source_c1_output_dir": str(c1_dir), "source_c1_output_manifest_sha256": sha256_file(required["ANALYSIS_DEPENDENCY_BUNDLE"]) if required["ANALYSIS_DEPENDENCY_BUNDLE"].is_file() else "",
         "original_worker_ids": sorted(originals), "authorized_repair_set": {"w034": [entry for entry in repairs["w034"]], "w001": [entry for entry in repairs["w001"]], "resolved_canonical_annotation_ids": sorted(canonical_repair_ids), "expected_count": 20}, "original_completion_exception_task_ids": sorted(completion_exceptions),
         "included_canonical_annotation_identity_manifest_sha256": sha256_file(identity_manifest),
-        "eligible_base_task_ids": eligible_base_task_ids, "reference_registry_sha256": sha256_file(required["REFERENCE"]) if required["REFERENCE"].is_file() else "",
+        "eligible_base_task_ids": eligible_base_task_ids, "excluded_late_entry_worker_ids": sorted({row.get("worker_id", "") for row in profile_rows if row.get("enrollment_batch") == "late_entry"}), "reference_registry_sha256": sha256_file(required["REFERENCE"]) if required["REFERENCE"].is_file() else "",
         "C1_A_ANALYSIS_SNAPSHOT_MATERIALIZED": True, "C1_A_ANALYSIS_SNAPSHOT_FROZEN": frozen, "C2B_BASELINE_INPUT_FROZEN": frozen, "C2B_DESIGN_INPUT_FROZEN_FROM_C1_A": frozen,
         "C2B_ASSIGNMENT_BATCH_A_MATERIALIZED": False, "C2B_ASSIGNMENT_BATCH_B_MATERIALIZED": False,
         "CALIBRATION_ENROLLMENT_CLOSED": False, "ALL_CALIBRATION_WORKERS_TERMINAL": False, "FINAL_POOLED_PROFILE_FROZEN": False,
         "blockers": blockers, **_method_identity(),
-        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in required.items() if path.is_file()] + ([{"role": "AUTHORIZED_REASSIGNMENT_MANIFEST", "path": str(args.authorized_reassignment_manifest.resolve()), "sha256": sha256_file(args.authorized_reassignment_manifest)}] if getattr(args, "authorized_reassignment_manifest", None) else []) + [{"role": "BATCH_SCOPE", "path": str(args.batch_scope_manifest.resolve()), "sha256": sha256_file(args.batch_scope_manifest)}, {"role": "CANONICAL_IDENTITY_MANIFEST", "path": str(identity_manifest.resolve()), "sha256": sha256_file(identity_manifest)}, {"role": "METHOD_CONTRACT", "path": str(METHOD_CONTRACT.resolve()), "sha256": sha256_file(METHOD_CONTRACT)}],
+        "dependencies": [{"role": role, "path": str(scoped_dependencies.get(role, path).resolve()), "sha256": sha256_file(scoped_dependencies.get(role, path))} for role, path in required.items() if path.is_file()] + ([{"role": "AUTHORIZED_REASSIGNMENT_MANIFEST", "path": str(args.authorized_reassignment_manifest.resolve()), "sha256": sha256_file(args.authorized_reassignment_manifest)}] if getattr(args, "authorized_reassignment_manifest", None) else []) + [{"role": "BATCH_SCOPE", "path": str(args.batch_scope_manifest.resolve()), "sha256": sha256_file(args.batch_scope_manifest)}, {"role": "CANONICAL_IDENTITY_MANIFEST", "path": str(identity_manifest.resolve()), "sha256": sha256_file(identity_manifest)}, {"role": "METHOD_CONTRACT", "path": str(METHOD_CONTRACT.resolve()), "sha256": sha256_file(METHOD_CONTRACT)}],
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(snapshot, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")

@@ -8,7 +8,7 @@ import pytest
 
 from tools.thesis_main.analysis.materialize_w034_authorized_extension_sensitivity import materialize as materialize_w034
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file
-from tools.thesis_main.analysis.run_c1_closeout_launch import _snapshot_dependencies, bind_c2b_runtime_mapping, design_c2b, freeze_c1_batch
+from tools.thesis_main.analysis.run_c1_closeout_launch import _addendum_row_sha256, _snapshot_dependencies, bind_c2b_runtime_mapping, design_c2b, freeze_c1_batch
 from tools.thesis_main.analysis.worker_identity import normalize_worker_id
 
 
@@ -46,15 +46,23 @@ def _batch_artifacts(root: Path, *, w034_status: str = "frozen") -> None:
     for name in (
         "analysis_dependency_manifest.json", "c1_estimand_specific_task_support.csv", "geometry_worker_task_peer_analysis.csv",
         "geometry_worker_task_loo_analysis.csv", "c1_task_adjusted_qgt_model_audit.json", "c1_gt_quality_analysis.csv", "structural_validation_analysis.csv", "c1_structural_reliability_eb.csv",
-        "c1_worker_completion_audit.csv", "c1_task_outcome_reference.csv", "c1_task_building_binding.csv",
+        "c1_task_outcome_reference.csv", "c1_task_building_binding.csv",
     ):
         (root / name).write_text("{}" if name.endswith(".json") else "status\nok\n", encoding="utf-8")
+    _write_csv(root / "c1_worker_completion_audit.csv", [
+        {"worker_id": "W001", "completion_status": "completed"},
+        {"worker_id": "W034", "completion_status": "completed"},
+    ])
+    _write_csv(root / "c1_measurement_readiness_by_worker.csv", [
+        {"worker_id": "W001", "Q_GT_support": "1"}, {"worker_id": "W034", "Q_GT_support": "1"},
+    ])
     (root / "c1_measurement_freeze_manifest.json").write_text(json.dumps({"C1_CANONICAL_CLOSED": True}), encoding="utf-8")
     (root / "w034_original_vs_authorized_sensitivity.json").write_text(json.dumps({"status": w034_status}), encoding="utf-8")
 
 
 def test_c1_a_snapshot_is_formal_without_global_enrollment_close(tmp_path: Path) -> None:
     c1_dir = tmp_path / "c1"; _batch_artifacts(c1_dir)
+    (c1_dir / "c1_measurement_freeze_manifest.json").write_text(json.dumps({"C1_CANONICAL_CLOSED": False}), encoding="utf-8")
     scope = tmp_path / "scope.json"; scope.write_text(json.dumps(_batch_scope()), encoding="utf-8")
     output = tmp_path / "c1_a_analysis_snapshot.json"
     result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": output})())
@@ -62,6 +70,22 @@ def test_c1_a_snapshot_is_formal_without_global_enrollment_close(tmp_path: Path)
     assert result["C2B_DESIGN_INPUT_FROZEN_FROM_C1_A"] is True
     assert result["CALIBRATION_ENROLLMENT_CLOSED"] is False
     assert result["FINAL_POOLED_PROFILE_FROZEN"] is False
+
+
+def test_c1_a_snapshot_scopes_out_late_entry_inputs(tmp_path: Path) -> None:
+    c1_dir = tmp_path / "c1"; _batch_artifacts(c1_dir)
+    profile = list(csv.DictReader((c1_dir / "c1_three_track_worker_state.csv").open(encoding="utf-8")))
+    profile.append({"worker_id": "W099", "enrollment_batch": "late_entry", "c2_risk_model_eligible": "true"})
+    _write_csv(c1_dir / "c1_three_track_worker_state.csv", profile)
+    readiness = list(csv.DictReader((c1_dir / "c1_measurement_readiness_by_worker.csv").open(encoding="utf-8")))
+    readiness.append({"worker_id": "W099", "Q_GT_support": "9"})
+    _write_csv(c1_dir / "c1_measurement_readiness_by_worker.csv", readiness)
+    scope = tmp_path / "scope.json"; scope.write_text(json.dumps(_batch_scope()), encoding="utf-8")
+    result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot.json"})())
+    assert result["status"] == "formal_design_eligible"
+    assert result["excluded_late_entry_worker_ids"] == ["99"]
+    profile_dependency = _snapshot_dependencies(result, "WORKER_PROFILE")["WORKER_PROFILE"]
+    assert {row["worker_id"] for row in csv.DictReader(profile_dependency.open(encoding="utf-8"))} == {"1", "34"}
 
 
 def test_worker_id_formats_are_normalized_across_scope_and_eligibility(tmp_path: Path) -> None:
@@ -113,6 +137,24 @@ def test_authorized_repair_requires_exact_worker_task_and_condition_identity(tmp
     assert any(item.startswith("authorized_repair_identity_unresolved:w034:34:w034-0:manual") for item in result["blockers"])
 
 
+def test_authorized_addendum_uses_replacement_worker_id(tmp_path: Path) -> None:
+    c1_dir = tmp_path / "c1"; _batch_artifacts(c1_dir)
+    scope_data = _batch_scope()
+    addendum_rows = []
+    for group in ("w034", "w001"):
+        for index, entry in enumerate(scope_data["authorized_repair_identities"][group], start=1):
+            row = {
+                "replacement_worker_id": entry["worker_id"], "base_task_id": entry["base_task_id"], "condition": entry["condition"],
+                "authorized_addendum_row_identity": f"{group}-{index}",
+            }
+            entry["authorized_addendum_row_identity"] = row["authorized_addendum_row_identity"]
+            entry["authorized_addendum_row_sha256"] = _addendum_row_sha256(row)
+            addendum_rows.append(row)
+    addendum = tmp_path / "authorized.csv"; _write_csv(addendum, addendum_rows)
+    scope = tmp_path / "scope.json"; scope.write_text(json.dumps(scope_data), encoding="utf-8")
+    result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "authorized_reassignment_manifest": addendum, "output": tmp_path / "snapshot.json"})())
+    assert result["authorized_repair_set"]["expected_count"] == 20
+    assert len(result["authorized_repair_set"]["resolved_canonical_annotation_ids"]) == 20
 def test_repair_scope_cannot_relabel_another_worker_as_w034(tmp_path: Path) -> None:
     c1_dir = tmp_path / "c1"; _batch_artifacts(c1_dir)
     scope_data = _batch_scope()
