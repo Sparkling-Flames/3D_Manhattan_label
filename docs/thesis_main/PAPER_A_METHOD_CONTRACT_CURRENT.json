@@ -1,6 +1,6 @@
 {
     "schema_version":  "paper_a_method_contract_v9",
-    "contract_version":  "paper_a_method_20260802_v13",
+    "contract_version":  "paper_a_method_20260802_v14",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
     "stages":  [
@@ -154,8 +154,23 @@
                                                        "routing",
                                                        "C2B_roster"
                                                    ],
-                    "w034_authorized_replacement_rule":  "requires_passed_preassignment_sentinel_validation_and_authorized_task_start_after_sentinel",
-                    "w034_missing_validation_manifest":  "timing_not_evaluable_only",
+                    "w034_authorized_replacement_rule":  "requires_passed_preassignment_sentinel_manifest_or_SHA_bound_preassignment_operator_attestation_and_task_worker_log_audit",
+                    "w034_preassignment_operator_attestation_schema":  "w034_preassignment_timing_verification_attestation_v1",
+                    "w034_preassignment_operator_attestation_required_fields":  [
+                                                                                      "worker_id",
+                                                                                      "verified_by",
+                                                                                      "operator_verified_before_authorized_tasks",
+                                                                                      "time_basis=operator_recollection",
+                                                                                      "timestamp_precision=unavailable|date|second",
+                                                                                      "authorized_reassignment_manifest_sha256",
+                                                                                      "timing_validation_basis=preassignment_operator_verification",
+                                                                                      "timing_protocol_deviation=retrospective_manifest_documentation",
+                                                                                      "annotation_exact_validated=false"
+                                                                                  ],
+                    "w034_observed_timestamp_rule":  "observed_task_timestamp_before_known_validation_time_excludes; unavailable_timestamp_uses_operator_recollection_and_is_eligible_with_protocol_deviation",
+                    "w034_retrospective_timing_status":  "eligible_with_protocol_deviation_not_fully_verified",
+                    "w034_original_assignment_timing_rule":  "legacy_task_worker_rules_only; retrospective_attestation_does_not_extend_to_original_assignment",
+                    "w034_missing_validation_manifest":  "valid_preassignment_operator_attestation_may_substitute; otherwise_timing_not_evaluable_only",
                     "w034_manifest_if_provided":  "all_SHA_identity_and_validation_checks_must_pass",
                     "active_time_expected_is_collection_intent_not_observed_success":  true,
                     "active_time_expected_is_not_task_worker_eligibility_gate":  true
@@ -335,7 +350,14 @@
                                                                              "raw_active_log_bundle",
                                                                              "derived_active_time_audit",
                                                                              "sentinel_annotation"
-                                                                         ]
+                                                                         ],
+                        "w034_retrospective_timing_attestation_required_dependencies":  [
+                                                                                              "authorized_reassignment_manifest_sha256",
+                                                                                              "preassignment_operator_verification",
+                                                                                              "retrospective_manifest_documentation",
+                                                                                              "annotation_exact_validated=false",
+                                                                                              "task_worker_active_log_audit"
+                                                                                          ]
                     },
     "c2b_launch":  {
                        "planning_entrypoint":  "run_c1_closeout_launch.py rehearse-c1 then freeze-c1-batch then design-c2b",

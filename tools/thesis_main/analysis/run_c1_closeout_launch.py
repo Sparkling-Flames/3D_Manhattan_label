@@ -992,6 +992,7 @@ def rehearse_c1(args: argparse.Namespace) -> dict[str, Any]:
         late_entry_assignment_manifest=getattr(args, "late_entry_assignment_manifest", None),
         calibration_enrollment_registry=getattr(args, "calibration_enrollment_registry", None),
         w034_active_time_validation_manifest=getattr(args, "w034_active_time_validation_manifest", None),
+        w034_preassignment_timing_verification_attestation=getattr(args, "w034_preassignment_timing_verification_attestation", None),
         building_registry=getattr(args, "building_registry", None),
         independence_disposition=getattr(args, "independence_disposition", None),
         project_independence_disposition=getattr(args, "project_independence_disposition", None),
@@ -1075,6 +1076,7 @@ def audit_c1(args: argparse.Namespace) -> dict[str, Any]:
         late_entry_assignment_manifest=getattr(args, "late_entry_assignment_manifest", None),
         calibration_enrollment_registry=args.calibration_enrollment_registry,
         w034_active_time_validation_manifest=args.w034_active_time_validation_manifest,
+        w034_preassignment_timing_verification_attestation=getattr(args, "w034_preassignment_timing_verification_attestation", None),
         building_registry=args.building_registry,
     )
     return {
@@ -1742,6 +1744,7 @@ def main(argv: list[str] | None = None) -> int:
         command.add_argument("--late-entry-assignment-manifest", type=Path)
         command.add_argument("--calibration-enrollment-registry", type=Path)
         command.add_argument("--w034-active-time-validation-manifest", type=Path)
+        command.add_argument("--w034-preassignment-timing-verification-attestation", type=Path)
         command.add_argument("--building-registry", type=Path)
 
     rehearsal = sub.add_parser("rehearse-c1")

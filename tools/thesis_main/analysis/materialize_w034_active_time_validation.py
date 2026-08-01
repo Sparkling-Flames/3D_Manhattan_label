@@ -83,6 +83,56 @@ def validate_sentinel(spec: dict[str, Any], active_rows: list[dict[str, str]], r
     }
 
 
+def validate_preassignment_operator_attestation(
+    attestation: dict[str, Any], *, authorized_reassignment_manifest_sha256: str,
+) -> dict[str, Any]:
+    """Validate retrospective documentation without representing it as a sentinel."""
+    required = (
+        "worker_id", "verified_by", "time_basis", "timestamp_precision",
+        "authorized_reassignment_manifest_sha256", "timing_validation_basis",
+        "timing_protocol_deviation",
+    )
+    missing = [field for field in required if not str(attestation.get(field, "")).strip()]
+    if missing:
+        raise ValueError("W034 preassignment timing attestation missing:" + ",".join(missing))
+    if attestation.get("schema_version") != "w034_preassignment_timing_verification_attestation_v1":
+        raise ValueError("unsupported W034 preassignment timing attestation")
+    if str(attestation["worker_id"]).strip().upper().removeprefix("W").lstrip("0") != "34":
+        raise ValueError("W034 preassignment timing attestation is bound to the wrong worker")
+    timestamp_precision = str(attestation["timestamp_precision"]).strip().lower()
+    if timestamp_precision not in {"unavailable", "date", "second"}:
+        raise ValueError("W034 preassignment timing attestation has unsupported timestamp precision")
+    verification_timestamp = ""
+    if timestamp_precision != "unavailable":
+        if not str(attestation.get("verification_timestamp", "")).strip():
+            raise ValueError("W034 preassignment timing attestation lacks the declared timestamp")
+        verification_timestamp = _timestamp(attestation["verification_timestamp"]).isoformat()
+    declared_sha = str(attestation["authorized_reassignment_manifest_sha256"]).strip()
+    expected_sha = str(authorized_reassignment_manifest_sha256).strip()
+    checks = {
+        "operator_verified_before_authorized_tasks": _truth(attestation.get("operator_verified_before_authorized_tasks")),
+        "operator_recollection_basis": str(attestation.get("time_basis", "")) == "operator_recollection",
+        "authorized_reassignment_manifest_sha256_matches": declared_sha == expected_sha and len(expected_sha) == 64,
+        "timing_validation_basis": str(attestation.get("timing_validation_basis", "")) == "preassignment_operator_verification",
+        "retrospective_documentation": str(attestation.get("timing_protocol_deviation", "")) == "retrospective_manifest_documentation",
+        "annotation_exact_not_claimed": str(attestation.get("annotation_exact_validated", "")).lower() in {"false", "0"},
+    }
+    return {
+        "schema_version": "w034_preassignment_timing_verification_attestation_v1",
+        "worker_id": "34",
+        "verification_timestamp": verification_timestamp,
+        "time_basis": "operator_recollection",
+        "timestamp_precision": timestamp_precision,
+        "verified_by": str(attestation["verified_by"]).strip(),
+        "authorized_reassignment_manifest_sha256": declared_sha,
+        "timing_validation_basis": "preassignment_operator_verification",
+        "timing_protocol_deviation": "retrospective_manifest_documentation",
+        "annotation_exact_validated": False,
+        "attestation_checks": checks,
+        "attestation_valid": all(checks.values()),
+    }
+
+
 def materialize(spec_json: Path, active_csv: Path, runtime_csv: Path, raw_log_bundle: Path, output_json: Path) -> dict[str, Any]:
     result = validate_sentinel(
         json.loads(spec_json.read_text(encoding="utf-8")), _read(active_csv), _read(runtime_csv),

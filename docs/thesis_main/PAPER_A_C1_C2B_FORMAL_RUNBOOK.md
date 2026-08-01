@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v13 SHA-256 ca9c2788261266744b88e7bbd69d253c509a154e8291ddc0cfc3de771eb4232a -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v14 SHA-256 182ec9e22ed9c17f5f565bfa42a36da597720d5bdb0ccb53f6237dc512143439 -->
 # Paper A C1-A -> C2-B 本地运行手册
 
 本手册只描述本地 batch workflow，不调用 Label Studio API，不证明 Label Studio UI 可见性。机器规范字段只来自当前 JSON 方法合同。
@@ -31,7 +31,7 @@
   --building-registry $building
 ```
 
-人工处置文件可缺省；传入时必须被 rehearsal 实际消费。没有 reference amendment 时记录 `reference_approval_status=not_provided`，继续只做 provisional 分析。C1 timing 按 formal-assignment `(project_id, runtime_task_id, worker_id)` 聚合：每 session 取最大正累计秒数，再对合格 session 求和；annotation-level identity 仅用于 forensic audit。无合格 task-worker context 的行统一为 `task_worker_time_analysis_eligible=false`、`timing_status=not_evaluable`，不补零、不使用 lead time 作为逐行 fallback。Timing 不影响 `Q_GT`、`R_peer`、`F_struct`、C1-A snapshot、C2-B roster、正式排序、T1 分配或 V1 路由。`--w034-active-time-validation-manifest` 可缺省；W034 17 条 authorized replacement 只有在已通过完整身份、时间顺序和 SHA 校验的 sentinel 后才可 timing-evaluable。统一定义的 lead time 只允许另行输出为 post-hoc exploratory elapsed-time，不得与 active time 混合或进入画像、资格、排名和路由。summary 必须报告 export project IDs、active-log project IDs、overlap IDs、annotation-exact audit coverage、task-worker timing coverage 和 project mismatch count，并生成 `analysis_dependency_manifest.json`。
+人工处置文件可缺省；传入时必须被 rehearsal 实际消费。没有 reference amendment 时记录 `reference_approval_status=not_provided`，继续只做 provisional 分析。C1 timing 按 formal-assignment `(project_id, runtime_task_id, worker_id)` 聚合：每 session 取最大正累计秒数，再对合格 session 求和；annotation-level identity 仅用于 forensic audit。无合格 task-worker context 的行统一为 `task_worker_time_analysis_eligible=false`、`timing_status=not_evaluable`，不补零、不使用 lead time 作为逐行 fallback。Timing 不影响 `Q_GT`、`R_peer`、`F_struct`、C1-A snapshot、C2-B roster、正式排序、T1 分配或 V1 路由。W034 的 17 条 authorized replacement 可由通过的原 sentinel，或 SHA 绑定的事前人工确认回溯声明加逐 task-worker 日志审计获得 timing 资格；后一条路径必须记录 `eligible_with_protocol_deviation`、`time_basis=operator_recollection`、`timestamp_precision=unavailable`（无同时期日期证据时）及 `annotation_exact_validated=false`，不得表述为 fully verified。统一定义的 lead time 只允许另行输出为 post-hoc exploratory elapsed-time，不得与 active time 混合或进入画像、资格、排名和路由。summary 必须报告 export project IDs、active-log project IDs、overlap IDs、annotation-exact audit coverage、task-worker timing coverage 和 project mismatch count，并生成 `analysis_dependency_manifest.json`。
 
 ### Scope two-pass closeout
 

@@ -1,8 +1,8 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v13 SHA-256 ca9c2788261266744b88e7bbd69d253c509a154e8291ddc0cfc3de771eb4232a -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v14 SHA-256 182ec9e22ed9c17f5f565bfa42a36da597720d5bdb0ccb53f6237dc512143439 -->
 # Statistical Analysis Plan v1
 
-> 2026-08-02 timing amendment: C1 timing uses the formal-assignment `project_id`–`runtime_task_id`–`worker_id` context and cumulative-session rule in the current method contract, not annotation-pk identity. It is an auxiliary operational measurement; it does not alter Q_GT, R_peer, F_struct, worker eligibility/rank, C2-B roster, T1 assignment, or V1 routing. This supersedes earlier owner-valid/exact-annotation timing wording in this legacy-encoding document; W034 authorized replacements still require the separately specified passed sentinel.
+> 2026-08-02 timing amendment: C1 timing uses the formal-assignment `project_id`–`runtime_task_id`–`worker_id` context and cumulative-session rule in the current method contract, not annotation-pk identity. It is an auxiliary operational measurement; it does not alter Q_GT, R_peer, F_struct, worker eligibility/rank, C2-B roster, T1 assignment, or V1 routing. This supersedes earlier owner-valid/exact-annotation timing wording in this legacy-encoding document. W034 authorized replacements require either the original passed sentinel, or a SHA-bound preassignment operator-verification attestation plus task-worker log audit; the retrospective path is `eligible_with_protocol_deviation`, never fully verified.
 
 > 瑙勮寖鎬ф柟娉曞瓧娈靛彧鏉ヨ嚜 `PAPER_A_METHOD_CONTRACT_CURRENT.json`锛堢増鏈?`paper_a_method_20260730_v6`锛汼HA-256 `bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b`锛夈€傛墽琛屾椂蹇呴』鏍稿鑷姩鐢熸垚 MD 鎵€鍒?JSON SHA锛涙湰鏂囦笉鍐嶇嫭绔嬪畾涔夊啿绐佸瓧娈点€?
 ## 0. 閫傜敤鑼冨洿涓庢浛浠ｅ０鏄?

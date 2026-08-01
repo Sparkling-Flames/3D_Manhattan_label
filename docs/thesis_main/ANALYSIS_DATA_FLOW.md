@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v13 SHA-256 ca9c2788261266744b88e7bbd69d253c509a154e8291ddc0cfc3de771eb4232a -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v14 SHA-256 182ec9e22ed9c17f5f565bfa42a36da597720d5bdb0ccb53f6237dc512143439 -->
 # Paper A 本地分析数据流
 
 ## C1-A -> C2-B Batch A

@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v13 SHA-256 ca9c2788261266744b88e7bbd69d253c509a154e8291ddc0cfc3de771eb4232a -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v14 SHA-256 182ec9e22ed9c17f5f565bfa42a36da597720d5bdb0ccb53f6237dc512143439 -->
 # Paper A Round-Based Assignment SOP v1
 
 本 SOP 只消费当前方法合同，不定义独立的机器字段、eligibility 或统计语义。正式机器真源为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`。
@@ -45,7 +45,7 @@ task_worker_time_analysis_eligible=false
 timing_status=not_evaluable
 ```
 
-W034 的 17 张 authorized replacement 仍须先通过 sentinel 及开始时间顺序校验。Timing 是 worker profile 的辅助 operational 字段，不影响 `Q_GT`、`R_peer`、`F_struct`、正式 worker eligibility/rank、C2-B roster、T1 分配或 V1 路由；不得补零、估算或以 `lead_time` 作逐行 fallback。每次 rehearsal 的具体 worker、行数和原因以当次 audit 输出为准，不在 SOP 中硬编码。
+W034 的 17 张 authorized replacement 须通过原 sentinel，或通过 SHA 绑定的事前人工确认回溯声明并逐项通过统一 task-worker 日志审计。回溯路径只能标为 `eligible_with_protocol_deviation`，不得伪装成 fully verified sentinel；无日期证据时记录 `time_basis=operator_recollection`、`timestamp_precision=unavailable`。Timing 是 worker profile 的辅助 operational 字段，不影响 `Q_GT`、`R_peer`、`F_struct`、正式 worker eligibility/rank、C2-B roster、T1 分配或 V1 路由；不得补零、估算或以 `lead_time` 作逐行 fallback。每次 rehearsal 的具体 worker、行数和原因以当次 audit 输出为准，不在 SOP 中硬编码。
 
 ## 6. closeout 与 Stage 3
 

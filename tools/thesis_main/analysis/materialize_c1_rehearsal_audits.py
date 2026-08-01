@@ -854,12 +854,13 @@ def _task_worker_contexts(
             timing_context_reasons.append("test_or_sentinel_task")
         if _normalized_worker_id(key[2]) in _TIMING_ADMINISTRATIVELY_EXCLUDED_WORKERS:
             timing_context_reasons.append("administratively_excluded_worker")
-        # The general timing estimand is task-worker level, but the 17 W034
-        # replacements retain their pre-assignment sentinel requirement.
+        # The general timing estimand is task-worker level. W034 replacements
+        # require either the original sentinel or a SHA-bound retrospective
+        # operator attestation; neither path is annotation-time attribution.
         if provenance == "authorized_replacement_assignment" and _normalized_worker_id(key[2]) == "34":
             sentinel_reason = str(first.get("timing_not_evaluable_reason", "")).strip()
             if (
-                str(first.get("w034_active_time_validation_status", "")).strip().lower() != "passed"
+                str(first.get("w034_active_time_validation_status", "")).strip().lower() not in {"passed", "preassignment_operator_verified"}
                 or not _truth(first.get("active_time_expected"))
                 or sentinel_reason
             ):
@@ -877,6 +878,13 @@ def _task_worker_contexts(
             "revision_count": revision_count,
             "multiple_annotation_versions": bool(revision_count),
             "revision_audit_status": "version_disposition_bound" if version_rows else "canonical_only",
+            "timing_validation_basis": first.get("timing_validation_basis", ""),
+            "time_basis": first.get("time_basis", ""),
+            "timestamp_precision": first.get("timestamp_precision", ""),
+            "timing_validation_strength": first.get("timing_validation_strength", ""),
+            "timing_protocol_deviation": first.get("timing_protocol_deviation", ""),
+            "annotation_exact_validated": first.get("annotation_exact_validated", ""),
+            "timing_preassignment_order_status": first.get("timing_preassignment_order_status", ""),
             "formal_assignment_eligible": not formal_reasons,
             "formal_assignment_exclusion_reason": ";".join(dict.fromkeys(formal_reasons)),
             "timing_context_eligible": not timing_context_reasons,
@@ -1015,7 +1023,7 @@ def _materialize_task_worker_active_time(
         reasons = [reason for reason in dict.fromkeys(";".join(reasons).split(";")) if reason]
         eligible = not reasons and bool(eligible_sessions)
         active_seconds = sum(float(row["session_active_seconds"]) for row in eligible_sessions) if eligible else ""
-        status = "eligible" if eligible and len(eligible_sessions) == len(context_sessions) else "eligible_partial_session_coverage" if eligible else "not_evaluable"
+        status = "eligible_with_protocol_deviation" if eligible and context.get("timing_protocol_deviation") else "eligible" if eligible and len(eligible_sessions) == len(context_sessions) else "eligible_partial_session_coverage" if eligible else "not_evaluable"
         rows.append({
             **context,
             "raw_event_count": sum(_int(row["raw_event_count"]) for row in context_sessions),
@@ -1424,6 +1432,8 @@ def materialize_independence(
             exact_classification[row.get("canonical_annotation_id", "")] = (classification, group_id, len(workers))
     project_counts = Counter((item.get("project_id", ""), item.get("condition", "")) for item in meta_rows)
     rows, queue = [], []
+    project_disposition_valid: dict[tuple[str, str], bool] = {}
+    project_clearance: dict[tuple[str, str], bool] = {}
     independent_statuses = {"independent", "independent_by_project_provenance", "independent_by_annotation_disposition"}
     for row in meta_rows:
         disposition = dispositions.get(row.get("canonical_annotation_id", ""), {})
@@ -1452,6 +1462,8 @@ def materialize_independence(
         project_clear = project_valid and str(project.get("provenance_status", "")).strip() == "complete" and str(project.get("copy_risk_status", "")).strip() == "cleared" and _int(project.get("cross_owner_parent_count")) == 0 and _int(project.get("unresolved_parent_count")) == 0 and str(project.get("parent_field_coverage_complete", "true")).lower() in {"true", "1"}
         if project_evidence_csv and project_clear:
             project_clear = _int(project.get("annotation_count")) == project_counts[project_key]
+        project_disposition_valid[project_key] = project_valid
+        project_clearance[project_key] = project_clear
         effective = {**project, **row, **disposition} if disposition_valid else {**project, **row} if project_valid else row
         identity_complete = all(str(row.get(field, "")).strip() for field in ("project_id", "ls_runtime_task_id", "worker_id", "annotation_id", "canonical_annotation_id"))
         cross_owner = _truth(row.get("parent_cross_owner")) or _truth(effective.get("parent_cross_owner"))
@@ -1476,7 +1488,7 @@ def materialize_independence(
         if disposition_valid and disposition.get("independence_status") not in {status, "independent", "independent_by_annotation_disposition", "non_independent_confirmed"}:
             status, basis, disposition_valid = "not_evaluable", "disposition_fields_status_mismatch", False
         evidence = {
-            "project_id": row.get("project_id", ""), "runtime_task_id": row.get("ls_runtime_task_id", ""), "task_id": row.get("task_id", ""),
+            "project_id": row.get("project_id", ""), "condition": row.get("condition", ""), "runtime_task_id": row.get("ls_runtime_task_id", ""), "task_id": row.get("task_id", ""),
             "worker_id": row.get("worker_id", ""), "annotation_id": row.get("annotation_id", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""),
             "parent_annotation_id": effective.get("parent_annotation_id", ""), "parent_owner_id": effective.get("parent_owner_id", ""),
             "parent_cross_owner": cross_owner, "copy_risk_status": effective.get("copy_risk_status", ""),
@@ -1498,7 +1510,9 @@ def materialize_independence(
             queue.append(evidence)
     write_csv(output_dir / "c1_independence_evidence.csv", rows)
     write_csv(output_dir / "c1_independence_review_queue.csv", queue)
-    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "exact_geometry_match_classification_counts": dict(Counter(row["exact_geometry_match_classification"] for row in rows)), "n_review": len(queue), "project_expansion_count": sum(row["independence_status"] == "independent_by_project_provenance" for row in rows), "row_adverse_override_count": sum(row["independence_basis"] == "row_adverse_evidence_overrides_project_clearance" for row in rows), "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "project_disposition_manifest_sha256": hashlib.sha256(project_disposition_csv.read_bytes()).hexdigest() if project_disposition_csv and project_disposition_csv.exists() else "", "project_evidence_sha256": project_evidence_sha, "model_provenance_sha256": hashlib.sha256(model_provenance_csv.read_bytes()).hexdigest() if model_provenance_csv and model_provenance_csv.exists() else "", "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
+    project_keys = set(project_counts) | set(project_evidence_rows)
+    project_rows_present = set(projects)
+    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "exact_geometry_match_classification_counts": dict(Counter(row["exact_geometry_match_classification"] for row in rows)), "n_review": len(queue), "pending_annotation_review_count": sum(row["independence_status"] == "not_evaluable" for row in rows), "project_expansion_count": sum(row["independence_status"] == "independent_by_project_provenance" for row in rows), "project_expansion_project_count": len({(row["project_id"], row.get("condition", "")) for row in rows if row["independence_status"] == "independent_by_project_provenance"}), "project_disposition_missing_count": len(project_keys - project_rows_present), "invalid_project_disposition_count": sum(key in project_rows_present and not project_disposition_valid.get(key, False) for key in project_keys), "uncleared_project_disposition_count": sum(project_disposition_valid.get(key, False) and not project_clearance.get(key, False) for key in project_keys), "project_provenance_pending_count": sum(not project_clearance.get(key, False) for key in project_keys), "project_provenance_is_formal_blocker": False, "row_adverse_override_count": sum(row["independence_basis"] == "row_adverse_evidence_overrides_project_clearance" for row in rows), "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "project_disposition_manifest_sha256": hashlib.sha256(project_disposition_csv.read_bytes()).hexdigest() if project_disposition_csv and project_disposition_csv.exists() else "", "project_evidence_sha256": project_evidence_sha, "model_provenance_sha256": hashlib.sha256(model_provenance_csv.read_bytes()).hexdigest() if model_provenance_csv and model_provenance_csv.exists() else "", "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
     (output_dir / "c1_independence_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
 
@@ -1537,7 +1551,7 @@ def materialize_project_independence_provenance(meta_csv: Path, output_dir: Path
     for row in template:
         row["source_project_evidence_sha256"] = evidence_file_sha
     write_csv(output_dir / "c1_project_independence_provenance_template.csv", template)
-    summary = {"project_condition_count": len(evidence), "annotation_count": len(rows), "source_meta_sha256": source_sha, "project_evidence_sha256": evidence_file_sha, "pending_project_count": len(evidence)}
+    summary = {"project_condition_count": len(evidence), "template_project_count": len(template), "annotation_count": len(rows), "source_meta_sha256": source_sha, "project_evidence_sha256": evidence_file_sha, "project_disposition_status": "not_assessed_by_template_generation"}
     (output_dir / "c1_project_independence_provenance_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
 

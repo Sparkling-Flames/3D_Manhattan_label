@@ -85,6 +85,14 @@ CANONICAL_FIELDS = [
     "active_time_expected",
     "w034_active_time_validation_manifest_sha256",
     "w034_active_time_validation_status",
+    "timing_validation_basis",
+    "timing_validation_artifact_sha256",
+    "time_basis",
+    "timestamp_precision",
+    "timing_validation_strength",
+    "timing_protocol_deviation",
+    "annotation_exact_validated",
+    "timing_preassignment_order_status",
     "timing_not_evaluable_reason",
     "appears_in_internal_distribution",
     "outside_assignment_submission",
@@ -386,6 +394,7 @@ def build_canonicalization(
     authorized_reassignment_manifest: Path | None = None,
     late_entry_assignment_manifest: Path | None = None,
     w034_active_time_validation_manifest: Path | None = None,
+    w034_preassignment_timing_verification_attestation: Path | None = None,
     candidate_inventory_csv: Path | None = None,
     p1_canonical_csv: Path | None = None,
     p1_admission_csv: Path | None = None,
@@ -399,6 +408,7 @@ def build_canonicalization(
     late_entry_planned_assignments: dict[tuple[str, str, str], dict[str, str]] = {}
     late_entry_summary = {"status": "not_provided", "valid": True, "row_count": 0}
     w034_time_validation: dict[str, Any] = {}
+    w034_preassignment_attestation: dict[str, Any] = {}
     duplicate_decisions: dict[tuple[str, str, str], dict[str, str]] = {}
     if duplicate_adjudication_csv and duplicate_adjudication_csv.exists():
         for decision in read_csv(duplicate_adjudication_csv):
@@ -491,9 +501,20 @@ def build_canonicalization(
         if not derived_path.is_file() or sha256_file(derived_path) != derived_sha:
             raise ValueError("W034 derived active-time audit SHA does not match the declared artifact")
         w034_time_validation["manifest_sha256"] = sha256_file(w034_active_time_validation_manifest)
+    if w034_preassignment_timing_verification_attestation is not None:
+        if authorized_reassignment_manifest is None:
+            raise ValueError("W034 preassignment timing attestation requires authorized reassignment manifest")
+        from tools.thesis_main.analysis.materialize_w034_active_time_validation import validate_preassignment_operator_attestation
+        w034_preassignment_attestation = validate_preassignment_operator_attestation(
+            json.loads(w034_preassignment_timing_verification_attestation.read_text(encoding="utf-8")),
+            authorized_reassignment_manifest_sha256=sha256_file(authorized_reassignment_manifest),
+        )
+        if not w034_preassignment_attestation["attestation_valid"]:
+            raise ValueError("W034 preassignment timing attestation checks did not all pass")
+        w034_preassignment_attestation["artifact_sha256"] = sha256_file(w034_preassignment_timing_verification_attestation)
     active_times = load_active_logs(str(active_log), annotation_owner_map=build_annotation_owner_map(export_paths), policy="calibration") if active_log else {}
     raw_manifest = snapshot_inputs_unique(
-        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []) + ([duplicate_adjudication_csv] if duplicate_adjudication_csv else []) + ([failure_disposition_csv] if failure_disposition_csv else []) + ([authorized_reassignment_manifest] if authorized_reassignment_manifest else []) + ([late_entry_assignment_manifest] if late_entry_assignment_manifest else []) + ([w034_active_time_validation_manifest] if w034_active_time_validation_manifest else []),
+        export_paths + ([active_log] if active_log else []) + [manual_assignment, semi_assignment, worker_distribution, planned_task_mapping] + ([independence_audit_csv] if independence_audit_csv else []) + ([retrospective_provenance_amendment_csv] if retrospective_provenance_amendment_csv else []) + ([duplicate_adjudication_csv] if duplicate_adjudication_csv else []) + ([failure_disposition_csv] if failure_disposition_csv else []) + ([authorized_reassignment_manifest] if authorized_reassignment_manifest else []) + ([late_entry_assignment_manifest] if late_entry_assignment_manifest else []) + ([w034_active_time_validation_manifest] if w034_active_time_validation_manifest else []) + ([w034_preassignment_timing_verification_attestation] if w034_preassignment_timing_verification_attestation else []),
         output_dir,
         completion_basis="c1_closeout_canonicalization_snapshot",
     )
@@ -581,22 +602,64 @@ def build_canonicalization(
         assignment_detail = replacement or late_entry
         active_time_expected = not (authorized_assignment or late_entry_assignment) or str(assignment_detail.get("active_time_expected", "")).lower() in {"true", "1", "yes"}
         timing_not_evaluable_reason = ""
+        timing_validation_basis = "not_applicable"
+        time_basis = ""
+        timestamp_precision = ""
+        timing_validation_strength = "not_applicable"
+        timing_protocol_deviation = ""
+        annotation_exact_validated = ""
+        timing_preassignment_order_status = "not_applicable"
+        w034_validation_status = "not_applicable"
+        w034_validation_artifact_sha256 = ""
         if authorized_assignment and _worker_number(worker_id) == "34":
             validation_passed = w034_time_validation.get("validation_result") == "passed"
-            validated_at = safe(w034_time_validation.get("validation_timestamp"))
+            attestation_passed = bool(w034_preassignment_attestation.get("attestation_valid"))
+            if validation_passed:
+                timing_validation_basis = "passed_sentinel_manifest"
+                time_basis = "preassignment_sentinel"
+                timestamp_precision = "second"
+                timing_validation_strength = "fully_verified"
+                annotation_exact_validated = "true"
+                w034_validation_status = "passed"
+                w034_validation_artifact_sha256 = safe(w034_time_validation.get("manifest_sha256"))
+                validated_at = safe(w034_time_validation.get("validation_timestamp"))
+            elif attestation_passed:
+                timing_validation_basis = "preassignment_operator_verification"
+                time_basis = safe(w034_preassignment_attestation.get("time_basis"))
+                timestamp_precision = safe(w034_preassignment_attestation.get("timestamp_precision"))
+                timing_validation_strength = "protocol_deviation"
+                timing_protocol_deviation = "retrospective_manifest_documentation"
+                annotation_exact_validated = "false"
+                w034_validation_status = "preassignment_operator_verified"
+                w034_validation_artifact_sha256 = safe(w034_preassignment_attestation.get("artifact_sha256"))
+                validated_at = safe(w034_preassignment_attestation.get("verification_timestamp"))
+            else:
+                timing_validation_basis = "not_validated"
+                timing_validation_strength = "not_verified"
+                annotation_exact_validated = "false"
+                w034_validation_status = "not_provided"
+                validated_at = ""
             task_started_at = safe(row.get("started_at") or row.get("created_at") or row.get("completed_at"))
-            timestamp_order_valid = False
+            timestamp_order_valid = None
             if task_started_at and validated_at:
                 try:
                     timestamp_order_valid = _utc_timestamp(task_started_at) >= _utc_timestamp(validated_at)
                 except ValueError:
                     timestamp_order_valid = False
-            active_time_expected = bool(active_time_expected and validation_passed and timestamp_order_valid)
-            if not validation_passed:
+            if attestation_passed and timestamp_precision == "unavailable":
+                timing_preassignment_order_status = "operator_recollection_timestamp_unavailable"
+            elif timestamp_order_valid is True:
+                timing_preassignment_order_status = "timestamp_confirmed"
+            elif timestamp_order_valid is False:
+                timing_preassignment_order_status = "timestamp_contradiction"
+            elif validation_passed or attestation_passed:
+                timing_preassignment_order_status = "attested_preassignment_task_start_unobserved"
+            else:
+                timing_preassignment_order_status = "not_validated"
+            active_time_expected = bool(active_time_expected and (validation_passed or attestation_passed) and timestamp_order_valid is not False)
+            if not (validation_passed or attestation_passed):
                 timing_not_evaluable_reason = "w034_sentinel_not_passed"
-            elif not task_started_at:
-                timing_not_evaluable_reason = "w034_authorized_task_start_missing"
-            elif not timestamp_order_valid:
+            elif timestamp_order_valid is False:
                 timing_not_evaluable_reason = "w034_authorized_task_not_after_sentinel"
         if not active_time_expected:
             primary = sensitivity = False
@@ -639,8 +702,16 @@ def build_canonicalization(
             "assignment_provenance": "authorized_replacement_assignment" if authorized_assignment else "late_entry_calibration_assignment" if late_entry_assignment else "original_assignment" if original_assignment else "outside_assignment_submission",
             "displaced_worker_id": replacement.get("displaced_worker_id", ""),
             "active_time_expected": bool_text(active_time_expected),
-            "w034_active_time_validation_manifest_sha256": w034_time_validation.get("manifest_sha256", "") if _worker_number(worker_id) == "34" else "",
-            "w034_active_time_validation_status": w034_time_validation.get("validation_result", "not_provided") if _worker_number(worker_id) == "34" else "not_applicable",
+            "w034_active_time_validation_manifest_sha256": w034_time_validation.get("manifest_sha256", "") if timing_validation_basis == "passed_sentinel_manifest" else "",
+            "w034_active_time_validation_status": w034_validation_status if _worker_number(worker_id) == "34" else "not_applicable",
+            "timing_validation_basis": timing_validation_basis,
+            "timing_validation_artifact_sha256": w034_validation_artifact_sha256,
+            "time_basis": time_basis,
+            "timestamp_precision": timestamp_precision,
+            "timing_validation_strength": timing_validation_strength,
+            "timing_protocol_deviation": timing_protocol_deviation,
+            "annotation_exact_validated": annotation_exact_validated,
+            "timing_preassignment_order_status": timing_preassignment_order_status,
             "timing_not_evaluable_reason": timing_not_evaluable_reason,
             "appears_in_internal_distribution": bool_text(key in internal),
             "outside_assignment_submission": bool_text(not (original_assignment or authorized_assignment or late_entry_assignment)),
@@ -840,7 +911,7 @@ def build_canonicalization(
 
     outside_count = sum(row["outside_assignment_submission"] == "true" for row in canonical_rows)
     duplicate_count = sum(row["duplicate_worker_task_submission"] == "true" for row in canonical_rows)
-    if input_status == "formal" and w034_time_validation:
+    if input_status == "formal" and (w034_time_validation or w034_preassignment_attestation):
         authorized_w034 = [
             row for row in canonical_rows
             if _worker_number(row.get("worker_id")) == "34" and row.get("assignment_provenance") == "authorized_replacement_assignment"
@@ -906,7 +977,7 @@ def build_canonicalization(
         "retrospective_amendment_source_sha256": amendment_snapshot.get("sha256", ""),
         "retrospective_amendment_snapshot_path": amendment_snapshot.get("snapshot_path", ""),
         "retrospective_amendment_snapshot_sha256": sha256_file(Path(amendment_snapshot["snapshot_path"])) if amendment_snapshot.get("snapshot_path") else "",
-        "primary_active_time_policy": "owner-validated project+task+worker+annotation exact log match only; task fallback and lead_time never primary",
+        "primary_active_time_policy": "annotation-exact identity is forensic only; formal timing is materialized downstream at project+runtime-task+worker level; task fallback and lead_time never primary",
         "structural_integrity_passed": structural_integrity_passed,
         "collection_completeness_passed": collection_completeness_passed,
         "require_complete": require_complete,
@@ -918,6 +989,7 @@ def build_canonicalization(
         "authorized_reassignment": reassignment_summary,
         "late_entry_assignment": late_entry_summary,
         "w034_active_time_validation": w034_time_validation,
+        "w034_preassignment_timing_verification_attestation": w034_preassignment_attestation,
         "model_issue_harmonization": harmonization_summary,
         "formal_c1_annotation_data_present": bool(input_status == "formal" and canonical_rows),
         "failure_disposition_csv": str(failure_disposition_csv or ""),

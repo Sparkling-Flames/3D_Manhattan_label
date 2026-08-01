@@ -12,7 +12,7 @@ import pytest
 from tools.thesis_main.analysis.materialize_c1_estimand_specific_task_support import build_task_support_rows, materialize as materialize_task_support
 from tools.thesis_main.analysis.materialize_c1_three_state_task_tags import aggregate_three_state_tags, build_observation_rows
 from tools.thesis_main.analysis.materialize_stage3_freeze_gate import REQUIRED_GATES, assert_frozen_roster, build_gate
-from tools.thesis_main.analysis.materialize_w034_active_time_validation import sha256_bundle, validate_sentinel
+from tools.thesis_main.analysis.materialize_w034_active_time_validation import sha256_bundle, validate_preassignment_operator_attestation, validate_sentinel
 from tools.thesis_main.analysis.materialize_c1_authorized_reassignment_addendum import build_rows as build_authorized_rows
 from tools.thesis_main.analysis.materialize_w034_authorized_extension_sensitivity import compare_w034_profiles, materialize as materialize_w034_sensitivity
 from tools.thesis_main.registry.build_c1_late_entry_assignment_manifest import build_rows
@@ -180,6 +180,26 @@ def test_w034_sentinel_and_stage3_gate_fail_closed(tmp_path: Path) -> None:
     roster.write_text("x\n2\n", encoding="utf-8")
     with pytest.raises(ValueError):
         assert_frozen_roster(gate, roster, enrollment)
+
+
+def test_w034_retrospective_attestation_is_protocol_deviation_not_sentinel() -> None:
+    manifest_sha = "a" * 64
+    result = validate_preassignment_operator_attestation({
+        "schema_version": "w034_preassignment_timing_verification_attestation_v1",
+        "worker_id": "W034",
+        "verified_by": "operator",
+        "operator_verified_before_authorized_tasks": True,
+        "time_basis": "operator_recollection",
+        "timestamp_precision": "unavailable",
+        "authorized_reassignment_manifest_sha256": manifest_sha,
+        "timing_validation_basis": "preassignment_operator_verification",
+        "timing_protocol_deviation": "retrospective_manifest_documentation",
+        "annotation_exact_validated": False,
+    }, authorized_reassignment_manifest_sha256=manifest_sha)
+
+    assert result["attestation_valid"] is True
+    assert result["verification_timestamp"] == ""
+    assert result["annotation_exact_validated"] is False
 
 
 def test_w034_directory_bundle_and_sensitivity_are_sha_bound(tmp_path: Path) -> None:

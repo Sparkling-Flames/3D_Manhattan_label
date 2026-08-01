@@ -368,12 +368,13 @@ def test_task_worker_timing_excludes_cross_worker_context_and_unbridged_new_scri
 def test_task_worker_timing_keeps_w034_authorized_sentinel_fail_closed(tmp_path: Path) -> None:
     meta = tmp_path / "meta.csv"; logs = tmp_path / "logs"; logs.mkdir()
     _csv(meta, [
-        {"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "34", "annotation_id": "a1", "canonical_annotation_id": "c1", "canonical_eligibility_status": "valid", "assigned_expected": "true", "assignment_provenance": "authorized_replacement_assignment", "w034_active_time_validation_status": "not_provided", "active_time_expected": "false", "timing_not_evaluable_reason": "w034_sentinel_not_passed"},
-        {"project_id": "66", "ls_runtime_task_id": "11", "worker_id": "34", "annotation_id": "a2", "canonical_annotation_id": "c2", "canonical_eligibility_status": "valid", "assigned_expected": "true", "assignment_provenance": "authorized_replacement_assignment", "w034_active_time_validation_status": "passed", "active_time_expected": "true"},
+        {"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "34", "annotation_id": "a1", "canonical_annotation_id": "c1", "canonical_eligibility_status": "valid", "assigned_expected": "true", "assignment_provenance": "authorized_replacement_assignment", "w034_active_time_validation_status": "not_provided", "active_time_expected": "false", "timing_not_evaluable_reason": "w034_sentinel_not_passed", "timing_validation_basis": "", "time_basis": "", "timestamp_precision": "", "timing_protocol_deviation": "", "annotation_exact_validated": ""},
+        {"project_id": "66", "ls_runtime_task_id": "11", "worker_id": "34", "annotation_id": "a2", "canonical_annotation_id": "c2", "canonical_eligibility_status": "valid", "assigned_expected": "true", "assignment_provenance": "authorized_replacement_assignment", "w034_active_time_validation_status": "passed", "active_time_expected": "true", "timing_not_evaluable_reason": "", "timing_validation_basis": "passed_sentinel_manifest", "time_basis": "preassignment_sentinel", "timestamp_precision": "second", "timing_protocol_deviation": "", "annotation_exact_validated": "true"},
+        {"project_id": "66", "ls_runtime_task_id": "12", "worker_id": "34", "annotation_id": "a3", "canonical_annotation_id": "c3", "canonical_eligibility_status": "valid", "assigned_expected": "true", "assignment_provenance": "authorized_replacement_assignment", "w034_active_time_validation_status": "preassignment_operator_verified", "active_time_expected": "true", "timing_validation_basis": "preassignment_operator_verification", "time_basis": "operator_recollection", "timestamp_precision": "unavailable", "timing_protocol_deviation": "retrospective_manifest_documentation", "annotation_exact_validated": "false"},
     ])
     events = [
         {"project_id": "66", "task_id": task, "annotator_id": "34", "annotation_id": annotation, "selected_annotation_owner_id": "34", "session_id": task, "script_version": "stage1_active_time_annotation_hardening_20260701_v1", "page_type": "annotation", "active_seconds": 8, "timestamp": 1}
-        for task, annotation in (("10", "draft1"), ("11", "draft2"))
+        for task, annotation in (("10", "draft1"), ("11", "draft2"), ("12", "draft3"))
     ]
     (logs / "active.jsonl").write_text("\n".join(json.dumps(row) for row in events), encoding="utf-8")
 
@@ -383,6 +384,8 @@ def test_task_worker_timing_keeps_w034_authorized_sentinel_fail_closed(tmp_path:
     assert rows["10"]["task_worker_time_analysis_eligible"] == "False"
     assert "w034_sentinel_not_passed" in rows["10"]["timing_exclusion_reason"]
     assert rows["11"]["task_worker_time_analysis_eligible"] == "True"
+    assert rows["12"]["task_worker_time_analysis_eligible"] == "True"
+    assert rows["12"]["timing_status"] == "eligible_with_protocol_deviation"
 
 
 def test_task_worker_timing_excludes_permanently_administrative_worker(tmp_path: Path) -> None:
@@ -484,6 +487,7 @@ def test_sha_bound_independence_disposition_can_clear_a_row(tmp_path: Path) -> N
     _csv(project, [{"project_id": "66", "condition": "manual", "source_project_evidence_sha256": "evidence", "project_evidence_sha256": "evidence", "raw_export_sha256_set": "a" * 64, "project_config_sha256": "b" * 64, "annotation_visibility_contract": "restricted", "prior_annotation_visibility": "none", "raw_parent_schema_coverage": "1", "cross_owner_parent_count": "0", "unresolved_parent_count": "0", "reviewed_by": "reviewer", "reviewed_at": "2026"}])
     summary = materialize_independence(meta, tmp_path, disposition_csv=disposition, project_disposition_csv=project)
     assert summary["status_counts"] == {"independent": 1}
+    assert summary["project_provenance_is_formal_blocker"] is False
     assert summary["disposition_manifest_sha256"] == __import__("hashlib").sha256(disposition.read_bytes()).hexdigest()
 
 
@@ -511,6 +515,9 @@ def test_project_independence_evidence_is_grouped_by_project_condition(tmp_path:
     _csv(meta, [{"project_id": "66", "condition": "manual", "parent_annotation_id": "", "parent_owner_id": "", "source_sha256": "a" * 64}, {"project_id": "66", "condition": "manual", "parent_annotation_id": "a", "parent_owner_id": "1", "source_sha256": "a" * 64}])
     summary = materialize_project_independence_provenance(meta, tmp_path)
     assert summary["project_condition_count"] == 1
+    assert summary["template_project_count"] == 1
+    assert "pending_project_count" not in summary
+    assert summary["project_disposition_status"] == "not_assessed_by_template_generation"
     assert next(csv.DictReader((tmp_path / "c1_project_independence_provenance_evidence.csv").open(encoding="utf-8")))["annotation_count"] == "2"
 
 
