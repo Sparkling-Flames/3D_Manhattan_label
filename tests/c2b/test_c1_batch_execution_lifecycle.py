@@ -7,6 +7,7 @@ from pathlib import Path
 import pytest
 
 from tools.thesis_main.analysis.materialize_w034_authorized_extension_sensitivity import materialize as materialize_w034
+from tools.thesis_main.analysis.materialize_c1_operational_reference import materialize as materialize_operational_reference
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file
 from tools.thesis_main.analysis.run_c1_closeout_launch import _addendum_row_sha256, _snapshot_dependencies, bind_c2b_runtime_mapping, design_c2b, freeze_c1_batch
 from tools.thesis_main.analysis.worker_identity import normalize_worker_id
@@ -139,6 +140,33 @@ def test_c1_a_snapshot_requires_terminal_scope_disposition(tmp_path: Path) -> No
     result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot.json"})())
     assert result["status"] == "provisional"
     assert "c1_a_scope_not_terminal:w034-0" in result["blockers"]
+
+
+def test_materialized_final_scope_disposition_freezes_c1_a(tmp_path: Path) -> None:
+    c1_dir = tmp_path / "c1"; _batch_artifacts(c1_dir)
+    workflow = tmp_path / "scope_workflow"; workflow.mkdir()
+    tasks = [f"w034-{index}" for index in range(17)] + [f"w001-{index}" for index in range(3)]
+    canonical, meta, independence, inventory, geometry, gt = [workflow / name for name in ("canonical.csv", "meta.csv", "independence.csv", "inventory.csv", "geometry.jsonl", "gt.json")]
+    canonical_rows, meta_rows, independence_rows = [], [], []
+    for task in tasks:
+        for worker in ("w1", "w2", "w3"):
+            annotation = f"{task}-{worker}"
+            canonical_rows.append({"canonical_annotation_id": annotation, "worker_id": worker, "base_task_id": task, "task_id": task, "condition": "manual", "project_id": "66", "ls_runtime_task_id": task, "assignment_provenance": "original_assignment", "outside_assignment_submission": "false", "duplicate_review_status": "resolved"})
+            meta_rows.append({"canonical_annotation_id": annotation, "choice_map_json": '{"scope":"normal"}', "schema_interpretable": "true"})
+            independence_rows.append({"canonical_annotation_id": annotation, "independence_status": "independent"})
+    _write_csv(canonical, canonical_rows); _write_csv(meta, meta_rows); _write_csv(independence, independence_rows)
+    _write_csv(inventory, [{"base_task_id": task, "expert_review_status": "", "expert_scope_confirmed": ""} for task in tasks])
+    _write_csv(workflow / "initial.csv", [{"base_task_id": task, "initial_researcher_scope": "in_scope", "initial_reviewed_by": "researcher", "initial_reviewed_at": "2026-08-01T00:00:00Z", "initial_protocol_version": "scope-v1", "initial_review_source_sha256": "a" * 64, "initial_notes": ""} for task in tasks])
+    geometry.write_text("", encoding="utf-8"); gt.write_text("[]", encoding="utf-8")
+    candidate = workflow / "candidate"
+    materialize_operational_reference(canonical, geometry, inventory, gt, candidate, scope_initial_review_csv=workflow / "initial.csv", scope_meta_csv=meta, scope_independence_csv=independence)
+    formal = workflow / "formal"
+    materialize_operational_reference(canonical, geometry, inventory, gt, formal, scope_initial_review_csv=workflow / "initial.csv", scope_adjudication_csv=candidate / "c1_scope_adjudication_template.csv", scope_meta_csv=meta, scope_independence_csv=independence, formal=True)
+    (c1_dir / "c1_task_scope_final_disposition.csv").write_bytes((formal / "c1_task_scope_final_disposition.csv").read_bytes())
+    scope = tmp_path / "scope.json"; scope.write_text(json.dumps(_batch_scope()), encoding="utf-8")
+    result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot.json"})())
+    assert result["status"] == "formal_design_eligible"
+    assert not any(blocker.startswith("c1_a_scope_not_terminal:") for blocker in result["blockers"])
 
 
 def test_c1_a_snapshot_keeps_w011_completion_exception_visible(tmp_path: Path) -> None:

@@ -356,7 +356,7 @@ def materialize(
                 "secondary_review_required": str(not direct).lower(),
                 "secondary_scope": "",
                 "task_final_scope": row["initial_researcher_scope"] if direct else "",
-                "scope_resolution_status": "worker_researcher_concordant" if direct else "awaiting_secondary_review",
+                "scope_resolution_status": "resolved" if direct else "pending",
                 "final_scope_source": "worker_researcher_concordant" if direct else "",
                 "reviewed_by": row["initial_reviewed_by"] if direct else "",
                 "reviewed_at": row["initial_reviewed_at"] if direct else "",
@@ -445,7 +445,8 @@ def materialize(
                 "reference_identity": reference.get("identity", ""),
                 "reference_sha256": reference.get("sha256", ""),
                 "reference_worker_excluded": "false", "reference_evidence_status": "evaluable" if reference and final_scope == "in_scope" else "not_required" if final_scope == "oos" else "scope_unresolved_excluded" if final_scope == "unresolved" else "not_evaluable",
-                "adjudication_status": status, "reviewed_by": amendment.get("reviewed_by", reviewer),
+                "adjudication_status": status,
+                "reviewed_by": amendment.get("reviewed_by") or decision.get("reviewed_by") or reviewer,
                 "operational_reference_status": reference_status,
                 "submission_informed_reference_revision": bool(amendment.get("triggers")),
                 "geometry_reference_ready": geometry_ready if final_scope == "in_scope" else final_scope == "oos",
@@ -453,7 +454,8 @@ def materialize(
                 "estimand_specific_closeout_ready": (geometry_ready if final_scope == "in_scope" else final_scope in {"oos", "unresolved"}),
                 "scope_terminal": status != "pending",
                 "primary_geometry_eligible": final_scope == "in_scope" and geometry_ready,
-                "reviewed_at": amendment.get("reviewed_at", ""), "notes": amendment.get("notes", "review time absent in frozen candidate inventory; formal mode must fail closed"),
+                "reviewed_at": amendment.get("reviewed_at") or decision.get("reviewed_at") or "",
+                "notes": amendment.get("notes", "review time absent in frozen candidate inventory; formal mode must fail closed"),
             }
     quality = []
     outcomes_by_key = contexts
@@ -501,7 +503,7 @@ def materialize(
             candidate = dict(candidate_by_base[base])
             if base in scope_decisions:
                 candidate.update(scope_decisions[base])
-                candidate["scope_resolution_status"] = "secondary_review_unresolved" if candidate["task_final_scope"].lower() == "unresolved" else "secondary_protocol_review" if _truth(candidate["secondary_review_required"]) else "worker_researcher_concordant"
+                candidate["scope_resolution_status"] = "terminal_unresolved" if candidate["task_final_scope"].lower() == "unresolved" else "resolved" if candidate["task_final_scope"].lower() in {"in_scope", "oos"} else "pending"
                 candidate["final_scope_source"] = "secondary_review_unresolved" if candidate["task_final_scope"].lower() == "unresolved" else "secondary_protocol_review" if _truth(candidate["secondary_review_required"]) else "worker_researcher_concordant"
             final_dispositions.append(candidate)
         _write(output_dir / "c1_task_scope_final_disposition.csv", final_dispositions, SCOPE_FINAL_FIELDS)

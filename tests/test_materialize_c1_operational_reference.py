@@ -129,6 +129,13 @@ def test_scope_workflow_uses_group_direction_and_allows_terminal_unresolved(tmp_
     summary = materialize(canonical, geometry, inventory, gt, tmp_path / "formal", scope_adjudication_csv=decision_path, scope_initial_review_csv=initial, scope_meta_csv=meta, scope_independence_csv=independence, formal=True)
     assert summary["formal_ready"] is True
     outcomes = {row["base_task_id"]: row for row in csv.DictReader((tmp_path / "formal" / "c1_task_outcome_reference.csv").open(encoding="utf-8"))}
+    dispositions = {row["base_task_id"]: row for row in csv.DictReader((tmp_path / "formal" / "c1_task_scope_final_disposition.csv").open(encoding="utf-8"))}
+    assert dispositions["b1"]["scope_resolution_status"] == "resolved"
+    assert dispositions["b1"]["final_scope_source"] == "worker_researcher_concordant"
+    assert outcomes["b1"]["reviewed_by"] == "researcher"
+    assert outcomes["b1"]["reviewed_at"] == "2026-08-01T00:00:00Z"
     assert outcomes["b2"]["scope_resolution_status"] == "terminal_unresolved"
+    assert dispositions["b2"]["scope_resolution_status"] == "terminal_unresolved"
+    assert dispositions["b2"]["final_scope_source"] == "secondary_review_unresolved"
     quality = {row["worker_id"]: row for row in csv.DictReader((tmp_path / "formal" / "c1_gt_quality_evidence.csv").open(encoding="utf-8"))}
     assert quality["w4"]["gt_primary_analysis_eligible"] == "True"
