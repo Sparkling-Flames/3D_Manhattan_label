@@ -11,5 +11,18 @@
   ],
   "changes_raw_export": false,
   "changes_derived_structural_status": true,
-  "changes_derived_failure_attribution": true
+  "changes_derived_failure_attribution": true,
+  "c1_calculation_orphan_point_repair": {
+    "rule_version": "c1_recoverable_orphan_point_removed_v1",
+    "scope": "C1 derived Q_GT, peer, and LOO geometry calculations only",
+    "rule": "For an odd-point submission, enumerate every single-point deletion using only submitted geometry. Apply the repair only if exactly one deletion yields an even-point, uniquely paired, topologically valid, non-self-intersecting geometry. Retain the raw submission and an audit of point counts, dropped index, rule version, and raw/repaired hashes.",
+    "not_allowed": [
+      "using GT, worker identity, worker ranking, peer geometry, or outcome values to choose the dropped point",
+      "repairing incomplete pairs, multiple extra points, or ambiguous candidate deletions",
+      "erasing a confirmed worker-caused structural failure from F_struct",
+      "changing T1 or V1 delivery-adjusted failure handling"
+    ],
+    "nonunique_or_invalid_result": "not_evaluable_for_geometry_calculation; retain raw structural audit",
+    "output_audit": "c1_geometry_repair_audit.csv"
+  }
 }

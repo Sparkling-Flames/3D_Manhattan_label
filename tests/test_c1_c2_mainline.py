@@ -31,6 +31,18 @@ def test_row_eligibility_is_sidecar_only_and_upstream_sha_is_immutable(tmp_path:
     assert (tmp_path / "c1_gt_quality_analysis.csv").exists()
 
 
+def test_peer_analysis_view_preserves_peer_schema_when_joining_eligibility(tmp_path: Path) -> None:
+    quality, loo, structural, eligibility, peer = [tmp_path / name for name in ("quality.csv", "loo.csv", "structural.csv", "eligibility.csv", "peer.csv")]
+    _write(quality, [{"canonical_annotation_id": "c"}]); _write(loo, [{"canonical_annotation_id": "c"}]); _write(structural, [{"canonical_annotation_id": "c"}])
+    _write(eligibility, [{"canonical_annotation_id": "c", "schema_version": "assignment_evidence_v2", "peer_analysis_eligible": "true"}])
+    _write(peer, [{"canonical_annotation_id": "c", "schema_version": "peer_worker_task_v2", "worker_id": "1", "base_task_id": "b", "R_peer_task": ".8"}])
+
+    materialize_analysis_views(quality, loo, structural, eligibility, tmp_path / "out", peer_csv=peer)
+
+    row = next(csv.DictReader((tmp_path / "out" / "geometry_worker_task_peer_analysis.csv").open(encoding="utf-8")))
+    assert row["schema_version"] == "peer_worker_task_v2"
+
+
 def test_measurement_freeze_requires_three_axes_but_not_active_time(tmp_path: Path) -> None:
     completion, quality, peer, structural, profile = [tmp_path / name for name in ("completion.csv", "quality.csv", "peer.csv", "structural.csv", "profile.csv")]
     _write(completion, [{"worker_id": "w", "completion_status": "completed"}])

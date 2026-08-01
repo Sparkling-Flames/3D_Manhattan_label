@@ -54,6 +54,8 @@ def _join(rows: list[dict[str, str]], eligibility: dict[str, dict[str, str]]) ->
     output = []
     for row in rows:
         merged = {**row, **eligibility.get(str(row.get("canonical_annotation_id", "")), {})}
+        if row.get("schema_version"):
+            merged["schema_version"] = row["schema_version"]
         merged["worker_id"] = normalize_worker_id(merged.get("worker_id", ""))
         output.append(merged)
     return output

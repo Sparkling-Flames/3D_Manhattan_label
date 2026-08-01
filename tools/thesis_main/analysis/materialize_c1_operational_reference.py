@@ -17,7 +17,7 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou
-from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
+from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry, normalize_geometry_for_c1_calculation
 
 
 OUTCOME_FIELDS = [
@@ -175,6 +175,18 @@ def _worker_scope_response(value: str) -> str:
     return ""
 
 
+def _initial_scope_review_base_ids(canonical: list[dict[str, str]], inventory_scopes: dict[str, tuple[str, str, str, str]]) -> set[str]:
+    """Use the formal C1 core mapping when it is present, not inventory labels."""
+    mapped = {
+        row.get("base_task_id", "")
+        for row in canonical
+        if row.get("condition", "").strip().lower() == "manual"
+        and row.get("planned_project_name", "").strip() == "C1_core_all"
+        and row.get("base_task_id", "")
+    }
+    return mapped or {base for base, scope in inventory_scopes.items() if not scope[0]}
+
+
 def _load_initial_scope_reviews(path: Path | None, base_ids: set[str]) -> tuple[dict[str, dict[str, str]], int, str]:
     if not path or not path.exists():
         return {}, 0, ""
@@ -201,10 +213,8 @@ def _scope_consensus(
     initial_reviews: dict[str, dict[str, str]],
 ) -> list[dict[str, Any]]:
     meta_rows = _read_csv(meta_csv) if meta_csv and meta_csv.exists() else []
-    independence_rows = _read_csv(independence_csv) if independence_csv and independence_csv.exists() else []
     outside_rows = _read_csv(outside_csv) if outside_csv and outside_csv.exists() else []
     meta = {row.get("canonical_annotation_id", ""): row for row in meta_rows}
-    independence = {row.get("canonical_annotation_id", ""): row for row in independence_rows}
     outside = {row.get("canonical_annotation_id", ""): row for row in outside_rows}
     responses: dict[str, dict[str, set[str]]] = {}
     excluded: dict[str, int] = {}
@@ -213,7 +223,6 @@ def _scope_consensus(
         base = row.get("base_task_id", "")
         annotation_id = row.get("canonical_annotation_id", "")
         observation = meta.get(annotation_id, {})
-        independence_status = independence.get(annotation_id, {}).get("independence_status", row.get("independence_status", "")).strip().lower()
         duplicate_status = row.get("duplicate_review_status", "").strip().lower()
         provenance = row.get("assignment_provenance", observation.get("assignment_provenance", "")).strip()
         eligible = (
@@ -221,7 +230,6 @@ def _scope_consensus(
             and provenance in {"original_assignment", "authorized_replacement_assignment", "late_entry_calibration_assignment"}
             and not _truth(row.get("outside_assignment_submission", observation.get("outside_assignment_submission", "")))
             and not _truth(outside.get(annotation_id, {}).get("outside_assignment_disposition_applied", ""))
-            and independence_status.startswith("independent")
             and duplicate_status not in {"pending", "unresolved", "needs_review"}
             and _worker_key(row.get("worker_id", observation.get("worker_id", ""))) != "14"
             and _truth(observation.get("schema_interpretable", "true"))
@@ -333,7 +341,11 @@ def materialize(
     contexts = {}
     audit = []
     base_ids = {row.get("base_task_id", "") for row in canonical if row.get("base_task_id", "")}
-    initial_reviews, invalid_initial_reviews, initial_sha = _load_initial_scope_reviews(scope_initial_review_csv, base_ids)
+    inventory_scopes = {base: _scope(inventory.get(base, {})) for base in base_ids}
+    initial_review_base_ids = _initial_scope_review_base_ids(canonical, inventory_scopes)
+    initial_reviews, invalid_initial_reviews, initial_sha = _load_initial_scope_reviews(
+        scope_initial_review_csv, initial_review_base_ids,
+    )
     use_scope_workflow = scope_initial_review_csv is not None
     raw_scope_decisions = _read_csv(scope_adjudication_csv) if scope_adjudication_csv and scope_adjudication_csv.exists() else []
     scope_decisions: dict[str, dict[str, str]] = {}
@@ -341,7 +353,26 @@ def materialize(
     consensus_sha = ""
     invalid_scope_decisions = 0
     if use_scope_workflow:
-        consensus = _scope_consensus(canonical, scope_meta_csv, scope_independence_csv, scope_outside_csv, initial_reviews)
+        has_formal_core_mapping = any(
+            row.get("planned_project_name", "").strip() == "C1_core_all"
+            and row.get("condition", "").strip().lower() == "manual"
+            for row in canonical
+        )
+        scope_canonical = [
+            row for row in canonical
+            if row.get("base_task_id", "") in initial_review_base_ids
+            and (
+                not has_formal_core_mapping
+                or (
+                    row.get("planned_project_name", "").strip() == "C1_core_all"
+                    and row.get("condition", "").strip().lower() == "manual"
+                )
+            )
+        ]
+        consensus = _scope_consensus(
+            scope_canonical,
+            scope_meta_csv, scope_independence_csv, scope_outside_csv, initial_reviews,
+        )
         consensus_path = output_dir / "c1_scope_consensus_audit.csv"
         _write(consensus_path, consensus, SCOPE_CONSENSUS_FIELDS)
         consensus_sha = hashlib.sha256(consensus_path.read_bytes()).hexdigest()
@@ -364,28 +395,35 @@ def materialize(
                 "source_initial_review_sha256": initial_sha,
                 "source_scope_consensus_sha256": consensus_sha,
             }
-        _write(output_dir / "c1_scope_initial_review_template.csv", [{"base_task_id": base, **{field: "" for field in SCOPE_INITIAL_FIELDS if field != "base_task_id"}} for base in sorted(base_ids)], SCOPE_INITIAL_FIELDS)
+        _write(output_dir / "c1_scope_initial_review_template.csv", [{"base_task_id": base, **{field: "" for field in SCOPE_INITIAL_FIELDS if field != "base_task_id"}} for base in sorted(initial_review_base_ids)], SCOPE_INITIAL_FIELDS)
         _write(output_dir / "c1_scope_adjudication_template.csv", list(candidate_by_base.values()), SCOPE_FINAL_FIELDS)
         supplied = {row.get("base_task_id", ""): row for row in raw_scope_decisions}
-        valid_supplied = (
-            len(supplied) == len(raw_scope_decisions) == len(base_ids)
-            and set(supplied) == base_ids
-            and all(
+        def valid_scope_decision(row: dict[str, str]) -> bool:
+            candidate = candidate_by_base.get(row.get("base_task_id", ""), {})
+            terminal = row.get("task_final_scope", "").strip().lower() in {"in_scope", "oos", "unresolved"}
+            common = (
                 row.get("source_initial_review_sha256") == initial_sha
                 and row.get("source_scope_consensus_sha256") == consensus_sha
-                and row.get("task_final_scope", "").strip().lower() in {"in_scope", "oos", "unresolved"}
+                and terminal
                 and all(row.get(field, "").strip() for field in ("reviewed_by", "reviewed_at"))
-                and (
-                    not _truth(candidate_by_base[row["base_task_id"]]["secondary_review_required"])
-                    or row.get("secondary_scope", "").strip().lower() == row.get("task_final_scope", "").strip().lower()
-                )
-                for row in raw_scope_decisions
             )
+            if _truth(candidate.get("secondary_review_required")):
+                return common and _truth(row.get("secondary_review_required")) and row.get("secondary_scope", "").strip().lower() == row.get("task_final_scope", "").strip().lower()
+            return common and not _truth(row.get("secondary_review_required")) and not row.get("secondary_scope", "").strip() and row.get("task_final_scope", "").strip().lower() == candidate.get("initial_researcher_scope", "").strip().lower()
+
+        valid_rows = {
+            row["base_task_id"]: row
+            for row in raw_scope_decisions
+            if row.get("base_task_id", "") in initial_review_base_ids and valid_scope_decision(row)
+        }
+        valid_supplied = (
+            len(supplied) == len(raw_scope_decisions) == len(initial_review_base_ids)
+            and set(supplied) == initial_review_base_ids
+            and len(valid_rows) == len(initial_review_base_ids)
         )
-        if valid_supplied:
-            scope_decisions = supplied
-        elif raw_scope_decisions:
-            invalid_scope_decisions = len(raw_scope_decisions)
+        scope_decisions = valid_rows
+        if raw_scope_decisions:
+            invalid_scope_decisions = len(raw_scope_decisions) - len(valid_rows)
     else:
         scope_queue_by_base = {}
         for row in canonical:
@@ -403,6 +441,10 @@ def materialize(
         _write(output_dir / "c1_scope_review_queue.csv", scope_queue, ["base_task_id", "pending_reason", "inventory_review_status"])
         _write(queue_path, scope_queue, ["base_task_id", "pending_reason", "inventory_review_status"])
         queue_sha = hashlib.sha256(queue_path.read_bytes()).hexdigest()
+        _write(output_dir / "c1_scope_initial_review_template.csv", [
+            {"base_task_id": base, **{field: "" for field in SCOPE_INITIAL_FIELDS if field != "base_task_id"}}
+            for base in sorted(initial_review_base_ids)
+        ], SCOPE_INITIAL_FIELDS)
         _write(output_dir / "c1_scope_adjudication_template.csv", [
             {**row, "final_scope": "", "oos_subtype": "", "reviewed_by": "", "reviewed_at": "", "source_queue_sha256": queue_sha}
             for row in scope_queue
@@ -415,10 +457,15 @@ def materialize(
         if key in contexts:
             continue
         item = inventory.get(row.get("base_task_id", ""), {})
-        final_scope, oos_subtype, scope_mode, reviewer = ("", "", "", "") if use_scope_workflow else _scope(item)
-        decision = scope_decisions.get(key[3], {})
-        if use_scope_workflow and not decision and not formal:
-            decision = candidate_by_base.get(key[3], {})
+        workflow_subject = use_scope_workflow and key[3] in initial_review_base_ids
+        if workflow_subject:
+            # A pending or stale C1-Core disposition must never fall back to the
+            # legacy inventory: that would silently turn a review queue into data.
+            final_scope, oos_subtype, scope_mode, reviewer = "", "", "", ""
+            decision = scope_decisions.get(key[3], candidate_by_base.get(key[3], {}))
+        else:
+            final_scope, oos_subtype, scope_mode, reviewer = _scope(item)
+            decision = scope_decisions.get(key[3], {})
         if decision and decision.get("task_final_scope", decision.get("final_scope", "")).lower() in {"in_scope", "oos", "unresolved"} and all(decision.get(field) for field in ("reviewed_by", "reviewed_at")):
             final_scope = decision.get("task_final_scope", decision.get("final_scope", "")).lower()
             oos_subtype = decision.get("oos_subtype", "")
@@ -466,14 +513,19 @@ def materialize(
         reference = references.get(row.get("base_task_id", ""), {})
         amendment = amendments.get(row.get("base_task_id", ""), {})
         score, meta = None, {"reason": "reference_geometry_missing"}
-        structural_status = row.get("structural_validation_status", "")
-        structurally_valid = structural_status == "passed" or (not structural_status and bool(geom.get("corners_px")))
+        calculation_geometry = normalize_geometry_for_c1_calculation(
+            geom.get("corners_px") or [], width=int(geom.get("width") or 1024), height=int(geom.get("height") or 512),
+        )
+        calculation_points = calculation_geometry["canonical_points"] if calculation_geometry["geometry_repair_applied"] else geom.get("corners_px") or []
+        # Preserve the legacy scorer's handling of all non-repair rows.  This
+        # amendment changes only the uniquely repaired orphan-point input.
+        structurally_valid = bool(calculation_points)
         if row.get("canonical_annotation_id", "") in amendment.get("triggers", set()):
             meta = {"reason": "submission_informed_reference_revision"}
         elif not structurally_valid:
             meta = {"reason": "annotation_geometry_invalid"}
-        elif outcome.get("final_scope") == "in_scope" and geom.get("corners_px") and reference.get("points") and reference.get("structural_status") == "valid":
-            score, meta = compute_layout_mask_iou(np.asarray(geom["corners_px"], dtype=float), np.asarray(reference["points"], dtype=float))
+        elif outcome.get("final_scope") == "in_scope" and calculation_points and reference.get("points") and reference.get("structural_status") == "valid":
+            score, meta = compute_layout_mask_iou(np.asarray(calculation_points, dtype=float), np.asarray(reference["points"], dtype=float))
         quality.append({
             "project_id": row.get("project_id", ""), "ls_runtime_task_id": row.get("ls_runtime_task_id", ""),
             "task_id": row.get("task_id", ""), "base_task_id": row.get("base_task_id", ""),
@@ -485,6 +537,14 @@ def materialize(
             "public_gt_structural_status": reference.get("structural_status", "not_evaluable"),
             "gt_primary_analysis_eligible": bool(score is not None and row.get("condition", "").lower() == "manual" and outcome.get("final_scope") == "in_scope" and outcome.get("adjudication_status") == "resolved" and row.get("canonical_annotation_id", "") not in amendment.get("triggers", set())),
             "structurally_valid": structurally_valid,
+            "geometry_repair_applied": calculation_geometry["geometry_repair_applied"],
+            "geometry_repair_status": calculation_geometry["geometry_repair_status"],
+            "geometry_repair_rule_version": calculation_geometry["geometry_repair_rule_version"],
+            "raw_point_count": calculation_geometry["raw_point_count"],
+            "repaired_point_count": calculation_geometry["repaired_point_count"],
+            "dropped_point_index": calculation_geometry["dropped_point_index"],
+            "raw_geometry_sha256": calculation_geometry["raw_geometry_sha256"],
+            "repaired_geometry_sha256": calculation_geometry["repaired_geometry_sha256"],
             "independence_status": row.get("independence_status", ""),
             "failure_attribution": row.get("failure_attribution", ""),
             "outside_assignment_submission": row.get("outside_assignment_submission", ""),
@@ -500,7 +560,21 @@ def materialize(
     if use_scope_workflow:
         final_dispositions = []
         for base in sorted(base_ids):
-            candidate = dict(candidate_by_base[base])
+            if base not in candidate_by_base:
+                final_scope, oos_subtype, scope_mode, reviewer = inventory_scopes[base]
+                candidate = {
+                    "base_task_id": base,
+                    **{field: "" for field in SCOPE_INITIAL_FIELDS if field != "base_task_id"},
+                    **{field: "" for field in SCOPE_CONSENSUS_FIELDS if field not in SCOPE_INITIAL_FIELDS},
+                    "secondary_review_required": "false", "secondary_scope": "",
+                    "task_final_scope": final_scope,
+                    "scope_resolution_status": "resolved" if final_scope else "pending",
+                    "final_scope_source": "inventory_latest_human_reviewed" if final_scope else "",
+                    "reviewed_by": reviewer, "reviewed_at": "", "secondary_notes": "",
+                    "source_initial_review_sha256": "", "source_scope_consensus_sha256": "",
+                }
+            else:
+                candidate = dict(candidate_by_base[base])
             if base in scope_decisions:
                 candidate.update(scope_decisions[base])
                 candidate["scope_resolution_status"] = "terminal_unresolved" if candidate["task_final_scope"].lower() == "unresolved" else "resolved" if candidate["task_final_scope"].lower() in {"in_scope", "oos"} else "pending"
@@ -533,7 +607,7 @@ def materialize(
     status_counts = {status: sum(row.get("operational_reference_status") == status for row in outcome_rows) for status in ("reference_ready", "reference_corrected", "pending_adjudication", "oos_geometry_not_applicable", "scope_unresolved_excluded")}
     terminal_ready = bool(outcome_rows) and all(bool(row["scope_terminal"]) for row in outcome_rows)
     estimand_ready = bool(outcome_rows) and all(bool(row["estimand_specific_closeout_ready"]) for row in outcome_rows)
-    scope_disposition_frozen = not use_scope_workflow or bool(scope_decisions)
+    scope_disposition_frozen = not use_scope_workflow or valid_supplied
     summary = {
         "n_task_contexts": len(audit), "n_resolved_contexts": sum(row["adjudication_status"] == "resolved" for row in outcome_rows),
         "n_pending_contexts": sum(row["task_outcome_status"] == "pending" for row in audit),

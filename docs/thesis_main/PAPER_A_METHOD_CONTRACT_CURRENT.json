@@ -1,6 +1,6 @@
 {
     "schema_version":  "paper_a_method_contract_v9",
-    "contract_version":  "paper_a_method_20260801_v10",
+    "contract_version":  "paper_a_method_20260801_v11",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
     "stages":  [
@@ -60,9 +60,15 @@
                         "three_axis_authority":  "worker_profile_v2_only"
                     },
     "scope_adjudication":  {
-                               "initial_review_source":  "complete_single_researcher_review_67_tasks",
-                               "worker_evidence_role":  "independent_group_direction_and_secondary_review_triage",
-                               "eligible_worker_evidence":  "canonical_formal_assignment_independent_nonoutside_duplicate_resolved",
+                               "initial_review_source":  "complete_single_researcher_review_75_tasks",
+                               "initial_review_counts":  {
+                                                             "in_scope":  67,
+                                                             "oos":  8,
+                                                             "pending":  0
+                                                         },
+                               "worker_evidence_role":  "descriptive_group_direction_and_secondary_review_triage",
+                               "eligible_worker_evidence":  "canonical_formal_assignment_nonoutside_duplicate_resolved_scope_interpretable",
+                               "worker_evidence_independence_role":  "not_a_scope_consensus_gate; formal independence gates for Q_GT_peer_LOO_F_struct remain unchanged",
                                "worker_direction_rule":  "relative_majority_with_minimum_three_eligible_responses",
                                "no_consensus_rule":  "tie_or_fewer_than_3_eligible_responses",
                                "secondary_review_triggers":  [

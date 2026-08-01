@@ -1,10 +1,15 @@
 from __future__ import annotations
 
+import hashlib
+import json
 from typing import Any
 
 import numpy as np
 
 from tools.thesis_main.analysis.quality_core.geometry_metrics import analyze_layout_pairing
+
+
+C1_ORPHAN_POINT_REPAIR_RULE_VERSION = "c1_recoverable_orphan_point_removed_v1"
 
 
 def _orientation(a: tuple[float, float], b: tuple[float, float], c: tuple[float, float]) -> float:
@@ -186,3 +191,67 @@ def normalize_geometry(
         }
     )
     return result
+
+
+def _geometry_sha256(points: Any) -> str:
+    """Hash the exact numeric point list retained in a derived geometry audit."""
+    return hashlib.sha256(json.dumps(points, ensure_ascii=False, separators=(",", ":")).encode("utf-8")).hexdigest()
+
+
+def normalize_geometry_for_c1_calculation(
+    corners: Any,
+    *,
+    width: int = 1024,
+    height: int = 512,
+    threshold_ratio: float = 0.05,
+) -> dict[str, Any]:
+    """Return C1 calculation geometry, repairing only one uniquely removable orphan point.
+
+    The raw submission is never changed.  Candidate selection depends solely on
+    the submitted points and the public geometry validator; it never reads GT,
+    peer geometry, worker identity, or any scored outcome.
+    """
+    raw = normalize_geometry(corners, width=width, height=height, threshold_ratio=threshold_ratio)
+    raw_points = raw["raw_points"]
+    audit = {
+        "geometry_repair_rule_version": C1_ORPHAN_POINT_REPAIR_RULE_VERSION,
+        "geometry_repair_applied": False,
+        "geometry_repair_status": "not_needed" if raw["valid"] else "not_eligible",
+        "raw_point_count": raw["n_points"],
+        "repaired_point_count": raw["n_points"],
+        "dropped_point_index": None,
+        "orphan_candidate_count": 0,
+        "raw_geometry_sha256": _geometry_sha256(raw_points),
+        "repaired_geometry_sha256": "",
+        "raw_structural_failure_reason": raw["reason"],
+        "raw_geometry_valid": raw["valid"],
+    }
+    if raw["valid"]:
+        return {**raw, **audit}
+    if raw["reason"] != "odd_keypoint_count" or raw["n_points"] < 5:
+        return {**raw, **audit}
+
+    candidates: list[tuple[int, dict[str, Any]]] = []
+    for index in range(len(raw_points)):
+        repaired_points = raw_points[:index] + raw_points[index + 1 :]
+        candidate = normalize_geometry(repaired_points, width=width, height=height, threshold_ratio=threshold_ratio)
+        if candidate["valid"] and candidate["pairing_valid"] and candidate["topology_valid"] and candidate["polygon_simple"]:
+            candidates.append((index, candidate))
+    audit["orphan_candidate_count"] = len(candidates)
+    if len(candidates) != 1:
+        audit["geometry_repair_status"] = "ambiguous_extra_or_missing_pair" if candidates else "not_recoverable_odd_keypoint_count"
+        return {**raw, **audit}
+
+    dropped_index, repaired = candidates[0]
+    return {
+        **repaired,
+        **audit,
+        "geometry_repair_applied": True,
+        "geometry_repair_status": "recoverable_orphan_point_removed",
+        "repaired_point_count": repaired["n_points"],
+        "dropped_point_index": dropped_index,
+        "repaired_geometry_sha256": _geometry_sha256(repaired["canonical_points"]),
+        "raw_points": raw_points,
+        "raw_structural_failure_reason": raw["reason"],
+        "raw_geometry_valid": raw["valid"],
+    }

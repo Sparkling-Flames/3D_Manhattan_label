@@ -47,6 +47,22 @@ def test_geometry_pool_excluded_row_cannot_be_peer_reference(tmp_path):
     assert summary["n_eligible"] == 1 and summary["n_excluded"] == 1
 
 
+def test_geometry_pool_accepts_only_c1_repaired_calculation_geometry(tmp_path):
+    canonical = tmp_path / "canonical.csv"
+    base = {"project_id": "p", "ls_runtime_task_id": "t", "task_id": "T", "base_task_id": "b", "condition": "manual", "assigned_expected": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"}
+    _csv(canonical, [{**base, "canonical_annotation_id": "repaired", "annotation_id": "1", "worker_id": "w1"}])
+    version = tmp_path / "version.csv"; _csv(version, [{"annotation_id": "1", "version_disposition": "selected_canonical"}])
+    structural = tmp_path / "struct.csv"; _csv(structural, [{"canonical_annotation_id": "repaired", "structural_validation_status": "failed_confirmed_worker_submission", "geometry_calculation_eligible": "true"}])
+    reference = tmp_path / "ref.csv"; _csv(reference, [{**base, "final_scope": "in_scope"}])
+    independence = tmp_path / "ind.csv"; _csv(independence, [{"canonical_annotation_id": "repaired", "independence_status": "independent"}])
+    outside = tmp_path / "outside.csv"; _csv(outside, [{"canonical_annotation_id": "repaired", "process_eligible_override": "false"}])
+    completion = tmp_path / "completion.csv"; _csv(completion, [{"worker_id": "w1", "completion_status": "completed"}])
+
+    summary = materialize_geometry_pool_eligibility(canonical, version, structural, reference, tmp_path, independence_csv=independence, outside_disposition_csv=outside, completion_csv=completion)
+
+    assert summary["n_eligible"] == 1
+
+
 def test_formal_building_binding_and_candidate_geometry_manifest_fail_closed(tmp_path):
     canonical = tmp_path / "canonical.csv"; _csv(canonical, [{"base_task_id": "b"}])
     registry = tmp_path / "registry.csv"; _csv(registry, [{"base_task_id": "b", "building_id": "B1", "registry_status": "approved", "reviewed_by": "r", "reviewed_at": "t"}])

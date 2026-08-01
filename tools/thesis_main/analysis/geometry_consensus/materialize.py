@@ -10,7 +10,7 @@ from tools.thesis_main.analysis.vfinal_artifact_utils import COMMON_SIDEcar_FIEL
 
 from .loo import leave_one_out
 from .pairwise import pairwise_similarity, peer_similarity_profiles
-from .representation import normalize_geometry
+from .representation import normalize_geometry, normalize_geometry_for_c1_calculation
 from .stability import stability_summary
 from tools.thesis_main.analysis.geometry_cluster_v2 import cluster_geometry_records
 from tools.thesis_main.analysis.paper_a_contracts import load_method_contract, validate_records
@@ -40,6 +40,7 @@ def materialize_geometry_consensus(
     excluded_worker_ids: set[str] | None = None,
     eligible_annotation_ids: set[str] | None = None,
     building_binding_csv: Path | None = None,
+    c1_orphan_point_repair: bool = False,
 ) -> dict[str, Any]:
     rules = json.loads(rule_manifest.read_text(encoding="utf-8"))
     method = load_method_contract()
@@ -68,7 +69,8 @@ def materialize_geometry_consensus(
         if str(row.get("worker_id", "")).strip() in excluded_worker_ids:
             excluded_geometry_rows += 1
             continue
-        geometry = normalize_geometry(row.get("corners_px") or [], width=width, height=height)
+        normalizer = normalize_geometry_for_c1_calculation if c1_orphan_point_repair else normalize_geometry
+        geometry = normalizer(row.get("corners_px") or [], width=width, height=height)
         record = {**row, "geometry": geometry}
         if str(row.get("eligible_for_geometry_loo", "true")).lower() not in {"true", "1"} or not str(row.get("base_task_id", "")).strip():
             record["geometry"]["valid"] = False

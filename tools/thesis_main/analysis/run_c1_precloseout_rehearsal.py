@@ -555,6 +555,7 @@ def materialize(
         input_status=input_status, excluded_worker_ids=administratively_excluded_workers,
         eligible_annotation_ids=eligible_geometry_ids,
         building_binding_csv=output_dir / "c1_task_building_binding.csv",
+        c1_orphan_point_repair=True,
     )
     canonical_summary["geometry_sidecars"] = geometry_summary
     canonical_summary["geometry_pool"] = geometry_pool_summary
@@ -567,6 +568,7 @@ def materialize(
         independence_csv=output_dir / "c1_independence_evidence.csv",
         outside_disposition_csv=output_dir / "c1_outside_assignment_disposition_evidence.csv",
         completion_csv=output_dir / "c1_worker_completion_audit.csv",
+        formal=formal,
     )
     completion_summary = finalize_partial_completion_support(
         output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_row_analysis_eligibility.csv",
@@ -586,7 +588,8 @@ def materialize(
         output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_canonical_annotations.csv", output_dir,
     )
     final_canonical_summary = materialize_final_canonical_closeout_summary(
-        output_dir, completion_summary, outside_summary=outside_summary, formal=formal,
+        output_dir, completion_summary, outside_summary=outside_summary,
+        operational_reference_summary=reference_summary, formal=formal,
     )
     analysis_views = materialize_analysis_views(
         output_dir / "c1_gt_quality_evidence.csv", output_dir / "geometry_worker_task_loo_C1.csv",
@@ -659,7 +662,7 @@ def materialize(
 
     loo_rows = read_csv(output_dir / "geometry_worker_task_loo_C1.csv")
     pairwise_rows = read_csv(output_dir / "geometry_pairwise_similarity_C1.csv")
-    valid_geometry = sum(row.get("structural_validation_status") == "passed" for row in canonical)
+    valid_geometry = sum(str(row.get("geometry_calculation_eligible", "")).lower() in {"true", "1"} for row in read_csv(output_dir / "structural_validation_audit.csv"))
     if valid_geometry >= 2 and not pairwise_rows:
         raise RuntimeError("geometry LOO pipeline produced zero pairwise rows despite valid geometry")
 

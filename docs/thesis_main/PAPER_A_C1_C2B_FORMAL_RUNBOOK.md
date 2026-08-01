@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v10 SHA-256 139ceb825480bab7ecf86de4500f1884af9a89f7c2ac6690680b228138747e38 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v11 SHA-256 5d16888e4bec060039a9aed03732bf6c3d527cdb5be553a0dc78b5be01f8ac48 -->
 # Paper A C1-A -> C2-B 本地运行手册
 
 本手册只描述本地 batch workflow，不调用 Label Studio API，不证明 Label Studio UI 可见性。机器规范字段只来自当前 JSON 方法合同。

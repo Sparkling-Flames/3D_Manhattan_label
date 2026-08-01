@@ -1,5 +1,5 @@
 from tools.thesis_main.analysis.geometry_consensus.pairwise import pairwise_similarity
-from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
+from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry, normalize_geometry_for_c1_calculation
 
 
 def _rectangle(offset: int = 0):
@@ -20,6 +20,19 @@ def test_representation_is_seam_aware_and_pairwise_metric_is_compatible() -> Non
 def test_representation_rejects_odd_or_out_of_range_points() -> None:
     assert normalize_geometry([[0, 10], [0, 400], [500, 10]])["valid"] is False
     assert normalize_geometry([[0, 10], [0, 400], [1025, 10], [1025, 400]])["reason"] == "out_of_range"
+
+
+def test_c1_calculation_repair_requires_one_unique_orphan_point() -> None:
+    repaired = normalize_geometry_for_c1_calculation([[100, 100], [100, 400], [500, 100], [500, 400], [800, 250]])
+    ambiguous = normalize_geometry_for_c1_calculation([[100, 100], [100, 400], [500, 100], [500, 400], [510, 120]])
+
+    assert repaired["valid"] is True
+    assert repaired["geometry_repair_applied"] is True
+    assert repaired["dropped_point_index"] == 4
+    assert repaired["raw_point_count"] == 5 and repaired["repaired_point_count"] == 4
+    assert repaired["raw_geometry_sha256"] and repaired["repaired_geometry_sha256"]
+    assert ambiguous["valid"] is False
+    assert ambiguous["geometry_repair_status"] == "ambiguous_extra_or_missing_pair"
 
 
 def test_legal_seam_polygon_is_not_planar_self_intersection() -> None:

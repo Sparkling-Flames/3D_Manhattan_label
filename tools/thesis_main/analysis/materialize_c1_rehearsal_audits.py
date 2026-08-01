@@ -11,7 +11,7 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
-from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry
+from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry, normalize_geometry_for_c1_calculation
 from tools.thesis_main.analysis.failure_disposition import c1_failure_fields
 from tools.thesis_main.analysis.paper_a_contracts import validate_record, validate_serialized_record
 from tools.thesis_main.analysis.quality_core.active_time import (
@@ -45,6 +45,28 @@ def _int(value: Any) -> int:
         return int(float(value or 0))
     except (TypeError, ValueError):
         return 0
+
+
+_INDEPENDENCE_META_IDENTITY_FIELDS = (
+    "project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition",
+    "worker_id", "annotation_id", "canonical_annotation_id", "source_sha256",
+    "source_export_sha256", "raw_export_sha256", "response_hash", "raw_annotation_sha256",
+    "annotation_version_id", "assignment_provenance", "assigned_expected",
+    "outside_assignment_submission", "duplicate_worker_task_submission", "parent_annotation_id",
+    "parent_owner_id", "parent_cross_owner", "parent_derived", "copy_risk_status",
+    "provenance_status", "raw_parent_field_present", "raw_parent_annotation_id",
+    "raw_parent_owner_id", "raw_annotation_owner_id", "geometry_hash",
+)
+
+
+def independence_meta_identity_sha(rows: list[dict[str, str]]) -> str:
+    """Bind dispositions to stable independence evidence, not run-specific paths."""
+    payload = [
+        {field: str(row.get(field, "")) for field in _INDEPENDENCE_META_IDENTITY_FIELDS}
+        for row in rows
+    ]
+    payload.sort(key=lambda row: json.dumps(row, sort_keys=True, separators=(",", ":")))
+    return hashlib.sha256(json.dumps(payload, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
 def _worker(annotation: dict[str, Any]) -> str:
@@ -124,7 +146,7 @@ def materialize_completion_support(
         if not line.strip():
             continue
         row = json.loads(line)
-        if normalize_geometry(row.get("corners_px") or [], width=int(row.get("width") or 1024), height=int(row.get("height") or 512))["valid"]:
+        if normalize_geometry_for_c1_calculation(row.get("corners_px") or [], width=int(row.get("width") or 1024), height=int(row.get("height") or 512))["valid"]:
             geometry_valid.add((str(row.get("worker_id", "")), str(row.get("task_id", "")), str(row.get("base_task_id", "")), str(row.get("pool", ""))))
 
     by_worker: dict[str, list[tuple[tuple[str, str, str, str], dict[str, Any]]]] = defaultdict(list)
@@ -374,16 +396,16 @@ def materialize_structural_validation(
 ) -> dict[str, Any]:
     canonical = {row["canonical_annotation_id"]: row for row in read_csv(canonical_csv)}
     amendment_sha = hashlib.sha256(parser_amendment.read_bytes()).hexdigest()
-    rows = []
+    rows, repair_audit_rows = [], []
     for line in geometry_jsonl.read_text(encoding="utf-8").splitlines():
         if not line.strip():
             continue
         geometry = json.loads(line); annotation = canonical.get(geometry.get("canonical_annotation_id", ""), {})
-        parsed = normalize_geometry(geometry.get("corners_px") or [], width=int(geometry.get("width") or 1024), height=int(geometry.get("height") or 512))
-        reason = parsed["reason"]
+        parsed = normalize_geometry_for_c1_calculation(geometry.get("corners_px") or [], width=int(geometry.get("width") or 1024), height=int(geometry.get("height") or 512))
+        reason = parsed["raw_structural_failure_reason"]
         worker_reason = reason in {"duplicate_event_positions", "top_floor_order_invalid", "self_intersecting_or_open_topology"}
         system_reason = reason in {"shape_invalid", "non_finite", "out_of_range", "ambiguous_pairing"} or bool(annotation.get("parse_error"))
-        status = "passed" if parsed["valid"] else "failed_confirmed_worker_submission" if worker_reason else "failed_system_or_parser" if system_reason else "not_evaluable"
+        status = "passed" if parsed["raw_geometry_valid"] else "failed_confirmed_worker_submission" if worker_reason else "failed_system_or_parser" if system_reason else "not_evaluable"
         rows.append({
             "project_id": annotation.get("project_id", ""), "ls_runtime_task_id": annotation.get("ls_runtime_task_id", ""),
             "annotation_id": annotation.get("annotation_id", ""), "canonical_annotation_id": geometry.get("canonical_annotation_id", ""),
@@ -397,20 +419,48 @@ def materialize_structural_validation(
             "polygon_valid": parsed["polygon_closed"] and parsed["polygon_simple"],
             "pairing_method": parsed.get("pairing_method", ""), "parser_amendment_sha256": amendment_sha,
             "unordered_pairing_ambiguous": parsed.get("pairing_stats", {}).get("unordered_pairing_ambiguous", False),
-            "structural_validation_status": status, "structural_failure_reason": parsed["reason"],
-            "detected_structural_issue": not parsed["valid"],
+            "raw_geometry_valid": parsed["raw_geometry_valid"], "geometry_calculation_eligible": parsed["valid"],
+            "geometry_repair_applied": parsed["geometry_repair_applied"], "geometry_repair_status": parsed["geometry_repair_status"],
+            "geometry_repair_rule_version": parsed["geometry_repair_rule_version"], "raw_point_count": parsed["raw_point_count"],
+            "repaired_point_count": parsed["repaired_point_count"], "dropped_point_index": parsed["dropped_point_index"],
+            "orphan_candidate_count": parsed["orphan_candidate_count"], "raw_geometry_sha256": parsed["raw_geometry_sha256"],
+            "repaired_geometry_sha256": parsed["repaired_geometry_sha256"],
+            "structural_validation_status": status, "structural_failure_reason": reason,
+            "detected_structural_issue": not parsed["raw_geometry_valid"],
             "worker_attributable": status == "failed_confirmed_worker_submission",
             "independence_status": annotation.get("independence_status", "not_evaluable"),
             "failure_attribution": "none" if status == "passed" else "worker_caused_structural_failure" if status == "failed_confirmed_worker_submission" else "not_evaluable",
-            "analysis_inclusion": "geometry_and_structural" if status == "passed" else "structural_only" if status == "failed_confirmed_worker_submission" else "excluded_with_reason",
+            "analysis_inclusion": "geometry_and_structural" if status == "passed" else "geometry_repaired_pending_structural_disposition" if parsed["geometry_repair_applied"] else "structural_only" if status == "failed_confirmed_worker_submission" else "excluded_with_reason",
             "worker_reliability_eligibility": status == "passed" and annotation.get("independence_status") == "independent",
             "structural_denominator_eligible": status in {"passed", "failed_confirmed_worker_submission"},
             "worker_failure_numerator": status == "failed_confirmed_worker_submission",
             "worker_structural_failure_numerator": status == "failed_confirmed_worker_submission",
         })
+        worker_id = str(geometry.get("worker_id", ""))
+        repair_audit_rows.append({
+            "canonical_annotation_id": geometry.get("canonical_annotation_id", ""), "annotation_id": annotation.get("annotation_id", geometry.get("annotation_id", "")), "project_id": annotation.get("project_id", ""),
+            "ls_runtime_task_id": annotation.get("ls_runtime_task_id", ""), "planned_project_name": annotation.get("planned_project_name", ""),
+            "planned_inner_id": annotation.get("planned_inner_id", ""), "task_code": annotation.get("task_code", ""),
+            "task_id": geometry.get("task_id", ""), "base_task_id": annotation.get("base_task_id", geometry.get("base_task_id", "")),
+            "condition": annotation.get("condition", geometry.get("condition", "")), "worker_id": worker_id,
+            "worker_code": f"W{int(worker_id):03d}" if worker_id.isdigit() else worker_id,
+            "raw_point_count": parsed["raw_point_count"], "repaired_point_count": parsed["repaired_point_count"],
+            "dropped_point_index": parsed["dropped_point_index"], "orphan_candidate_count": parsed["orphan_candidate_count"],
+            "geometry_repair_rule_version": parsed["geometry_repair_rule_version"], "geometry_repair_applied": parsed["geometry_repair_applied"],
+            "geometry_repair_status": parsed["geometry_repair_status"], "raw_geometry_sha256": parsed["raw_geometry_sha256"],
+            "repaired_geometry_sha256": parsed["repaired_geometry_sha256"], "raw_structural_failure_reason": reason,
+            "raw_points_json": json.dumps(parsed["raw_points"], ensure_ascii=False, separators=(",", ":")),
+            "repaired_points_json": json.dumps(parsed["canonical_points"], ensure_ascii=False, separators=(",", ":")) if parsed["geometry_repair_applied"] else "",
+        })
     preliminary = output_dir / "c1_structural_validation_pre_disposition.csv"
     write_csv(preliminary, rows)
     source_sha = hashlib.sha256(preliminary.read_bytes()).hexdigest()
+    for row in rows:
+        row.update({
+            "final_scope": "", "structural_disposition_applied": False,
+            "structural_disposition_source_sha256": "", "structural_disposition_reviewed_by": "",
+            "structural_disposition_reviewed_at": "", "structural_disposition_reason": "",
+        })
     write_csv(output_dir / "c1_structural_disposition_template.csv", [{
         "canonical_annotation_id": row["canonical_annotation_id"], "source_structural_audit_sha256": source_sha,
         "final_scope": "", "detected_issue": row["structural_failure_reason"], "final_failure_attribution": "",
@@ -450,7 +500,7 @@ def materialize_structural_validation(
             "final_scope": disposition["final_scope"], "failure_attribution": attribution,
             "structural_validation_status": "failed_confirmed_worker_submission" if attribution == "worker_caused_structural_failure" else "not_evaluable",
             "worker_attributable": attribution == "worker_caused_structural_failure",
-            "analysis_inclusion": "structural_only" if attribution == "worker_caused_structural_failure" else "excluded_with_reason",
+            "analysis_inclusion": "geometry_repaired_and_structural_failure" if attribution == "worker_caused_structural_failure" and _truth(row.get("geometry_repair_applied")) else "structural_only" if attribution == "worker_caused_structural_failure" else "excluded_with_reason",
             "structural_denominator_eligible": _truth(disposition["structural_denominator_eligible"]),
             "worker_failure_numerator": _truth(disposition["worker_failure_numerator"]),
             "worker_structural_failure_numerator": _truth(disposition["worker_failure_numerator"]),
@@ -460,13 +510,24 @@ def materialize_structural_validation(
         })
         applied += 1
     write_csv(output_dir / "structural_validation_audit.csv", rows)
+    validations = {row["canonical_annotation_id"]: row for row in rows}
+    for repair in repair_audit_rows:
+        validation = validations[repair["canonical_annotation_id"]]
+        repair.update({
+            "geometry_calculation_eligible": validation["geometry_calculation_eligible"],
+            "structural_validation_status": validation["structural_validation_status"],
+            "failure_attribution": validation["failure_attribution"], "final_scope": validation.get("final_scope", ""),
+            "structural_denominator_eligible": validation["structural_denominator_eligible"],
+            "worker_failure_numerator": validation["worker_failure_numerator"],
+        })
+    write_csv(output_dir / "c1_geometry_repair_audit.csv", repair_audit_rows)
     write_csv(output_dir / "c1_parser_amendment_application_audit.csv", [
         {**row, "regression_identity": ":".join(str(row.get(field, "")) for field in ("project_id", "ls_runtime_task_id", "task_id", "worker_id", "annotation_id"))}
         for row in rows if row.get("pairing_method") == "raw_order_pairing" and _truth(row.get("unordered_pairing_ambiguous"))
     ])
     counts = Counter(row["structural_validation_status"] for row in rows)
     failures = Counter(row["failure_attribution"] for row in rows)
-    return {"n_rows": len(rows), "structural_status_counts": dict(counts), "failure_attribution_counts": dict(failures), "parser_amendment_sha256": amendment_sha, "parser_amendment_application_count": sum(row.get("pairing_method") == "raw_order_pairing" and _truth(row.get("unordered_pairing_ambiguous")) for row in rows), "structural_pre_disposition_sha256": source_sha, "applied_disposition_count": applied, "invalid_disposition_count": invalid}
+    return {"n_rows": len(rows), "structural_status_counts": dict(counts), "failure_attribution_counts": dict(failures), "parser_amendment_sha256": amendment_sha, "parser_amendment_application_count": sum(row.get("pairing_method") == "raw_order_pairing" and _truth(row.get("unordered_pairing_ambiguous")) for row in rows), "geometry_repair_application_count": sum(_truth(row.get("geometry_repair_applied")) for row in rows), "structural_pre_disposition_sha256": source_sha, "applied_disposition_count": applied, "invalid_disposition_count": invalid}
 
 
 def _raw_points(raw_result: Any) -> list[list[float]]:
@@ -856,7 +917,8 @@ def materialize_independence(
     project_disposition_csv: Path | None = None, project_evidence_csv: Path | None = None,
     model_provenance_csv: Path | None = None,
 ) -> dict[str, Any]:
-    source_sha = hashlib.sha256(meta_csv.read_bytes()).hexdigest()
+    meta_rows = read_csv(meta_csv)
+    source_sha = independence_meta_identity_sha(meta_rows)
     project_evidence_sha = hashlib.sha256(project_evidence_csv.read_bytes()).hexdigest() if project_evidence_csv and project_evidence_csv.exists() else ""
     project_evidence_rows = {
         (row.get("project_id", ""), row.get("condition", "")): row
@@ -866,7 +928,6 @@ def materialize_independence(
     dispositions = {row.get("canonical_annotation_id", ""): row for row in disposition_rows}
     project_rows = read_csv(project_disposition_csv) if project_disposition_csv and project_disposition_csv.exists() else []
     projects = {(row.get("project_id", ""), row.get("condition", "")): row for row in project_rows}
-    meta_rows = read_csv(meta_csv)
     provenance_rows = read_csv(model_provenance_csv) if model_provenance_csv and model_provenance_csv.exists() else []
     provenance_by_task = {
         (row.get("project_id", ""), row.get("ls_runtime_task_id", "")): row
@@ -977,7 +1038,7 @@ def materialize_independence(
 
 def materialize_project_independence_provenance(meta_csv: Path, output_dir: Path) -> dict[str, Any]:
     rows = read_csv(meta_csv)
-    source_sha = hashlib.sha256(meta_csv.read_bytes()).hexdigest()
+    source_sha = independence_meta_identity_sha(rows)
     grouped: dict[tuple[str, str], list[dict[str, str]]] = defaultdict(list)
     for row in rows:
         grouped[(row.get("project_id", ""), row.get("condition", ""))].append(row)
@@ -1080,6 +1141,7 @@ def materialize_row_analysis_eligibility(
         reference = references.get(tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition")), {})
         structural_row = structural.get(identity, {})
         structural_status = structural_row.get("structural_validation_status", "not_evaluable")
+        geometry_calculation_eligible = _truth(structural_row.get("geometry_calculation_eligible")) if "geometry_calculation_eligible" in structural_row else structural_status == "passed"
         independence_status = independence.get(identity, {}).get("independence_status", "not_evaluable")
         outside_override = _truth(outside.get(identity, {}).get("process_eligible_override"))
         primary_assignment_reasons = []
@@ -1097,8 +1159,8 @@ def materialize_row_analysis_eligibility(
         independence_eligible = independence_status in {"independent", "independent_by_project_provenance", "independent_by_annotation_disposition"}
         scope_eligible = reference.get("final_scope") == "in_scope"
         gt_reference_eligible = scope_eligible and _truth(reference.get("geometry_reference_ready"))
-        structural_computable = structural_status in {"passed", "failed_confirmed_worker_submission"}
-        structural_attribution_eligible = structural_computable
+        structural_computable = geometry_calculation_eligible
+        structural_attribution_eligible = _truth(structural_row.get("structural_denominator_eligible")) if "structural_denominator_eligible" in structural_row else structural_status in {"passed", "failed_confirmed_worker_submission"}
         quality_row = quality.get(identity, {})
         gt_score_computable = _truth(quality_row.get("gt_score_computable", quality_row.get("quality_evaluable"))) and structural_computable
         loo_row = loo.get(identity, {})
@@ -1117,7 +1179,7 @@ def materialize_row_analysis_eligibility(
         if not peer_reference_eligible: peer_reasons.append("insufficient_compatible_peer_support")
         peer_eligible = not peer_reasons
         loo_reasons = [*common_reasons]
-        if structural_status != "passed": loo_reasons.append("structural_not_passed")
+        if not geometry_calculation_eligible: loo_reasons.append("geometry_not_computable")
         if loo.get(identity, {}).get("q_LOO_primary", loo.get(identity, {}).get("q_LOO_tu", "")) in {"", None}: loo_reasons.append("loo_consensus_not_evaluable")
         if not _truth(loo.get(identity, {}).get("primary_loo_eligible")): loo_reasons.append("loo_consensus_not_primary")
         strict_loo_eligible = not loo_reasons
@@ -1129,6 +1191,7 @@ def materialize_row_analysis_eligibility(
         structural_reasons = [*process_reasons, *primary_assignment_reasons]
         if not independence_eligible: structural_reasons.append("independence_not_evaluable")
         if not scope_eligible: structural_reasons.append("scope_not_resolved_in_scope")
+        if structural_row.get("final_scope", "").strip().lower() and structural_row.get("final_scope", "").strip().lower() != reference.get("final_scope", "").strip().lower(): structural_reasons.append("structural_scope_conflict")
         if not structural_attribution_eligible: structural_reasons.append("structural_attribution_not_evaluable")
         record = {
             "schema_version": "assignment_evidence_v2", "canonical_annotation_id": identity, "annotation_id": row.get("annotation_id", ""), "worker_id": row.get("worker_id", ""),
@@ -1189,6 +1252,7 @@ def materialize_final_canonical_closeout_summary(
     completion_summary: dict[str, Any],
     *,
     outside_summary: dict[str, Any] | None = None,
+    operational_reference_summary: dict[str, Any] | None = None,
     formal: bool = False,
 ) -> dict[str, Any]:
     """Separate immutable canonical closure from later measurement readiness."""
@@ -1196,6 +1260,10 @@ def materialize_final_canonical_closeout_summary(
     eligibility = read_csv(output_dir / "c1_row_analysis_eligibility.csv")
     versions = read_csv(output_dir / "c1_annotation_version_disposition.csv")
     references = read_csv(output_dir / "c1_task_outcome_reference.csv")
+    reference_scope = {
+        tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition")): row.get("final_scope", "").strip().lower()
+        for row in references
+    }
     unreviewed_structural = sum(
         row.get("structural_validation_status") != "passed"
         and not _truth(row.get("structural_disposition_applied"))
@@ -1220,6 +1288,18 @@ def materialize_final_canonical_closeout_summary(
         canonical_blockers.append("completion_exception_disposition_invalid_or_orphan")
     if formal and any(int(outside_disposition.get(field) or 0) for field in ("pending_count", "invalid_count", "unmatched_count")):
         canonical_blockers.append("outside_assignment_disposition_missing_invalid_or_orphan")
+    operational_reference_formal_ready = bool((operational_reference_summary or {}).get("formal_ready"))
+    if formal and not operational_reference_formal_ready:
+        canonical_blockers.append("operational_reference_not_formal_ready")
+    structural_scope_conflicts = sum(
+        _truth(row.get("structural_disposition_applied"))
+        and row.get("final_scope", "").strip().lower() in {"in_scope", "oos", "unresolved"}
+        and reference_scope.get(tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition")), "") in {"in_scope", "oos", "unresolved"}
+        and row.get("final_scope", "").strip().lower() != reference_scope[tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"))]
+        for row in structural
+    )
+    if formal and structural_scope_conflicts:
+        canonical_blockers.append("structural_scope_conflict")
     measurement_blockers = [*canonical_blockers]
     if unreviewed_structural: measurement_blockers.append("unreviewed_structural_rows")
     terminal_scopes = {"in_scope", "oos", "unresolved"}
@@ -1243,6 +1323,8 @@ def materialize_final_canonical_closeout_summary(
         "outside_assignment_disposition": outside_disposition,
         "unreviewed_structural_rows": unreviewed_structural,
         "reviewed_local_exclusions": reviewed_local_exclusions,
+        "operational_reference_formal_ready": operational_reference_formal_ready,
+        "structural_scope_conflict_rows": structural_scope_conflicts,
         "support_after_exclusion": supports,
         "independence_pending_rows": sum("independence_not_evaluable" in row.get("global_analysis_exclusion_reason", "") for row in eligibility),
         "pending_scope_base_tasks": len(pending_scope_base_tasks),
@@ -1291,7 +1373,9 @@ def materialize_geometry_pool_eligibility(
         if independence.get(identity, {}).get("independence_status", "") not in {"independent", "independent_by_project_provenance", "independent_by_annotation_disposition"}: reasons.append("independence_not_evaluable")
         key = tuple(row.get(field, "") for field in ("project_id", "ls_runtime_task_id", "task_id", "base_task_id", "condition"))
         if references.get(key, {}).get("final_scope") != "in_scope": reasons.append("scope_not_resolved_in_scope")
-        if structural.get(identity, {}).get("structural_validation_status") != "passed": reasons.append("structural_not_passed")
+        validation = structural.get(identity, {})
+        geometry_calculation_eligible = _truth(validation.get("geometry_calculation_eligible")) if "geometry_calculation_eligible" in validation else validation.get("structural_validation_status") == "passed"
+        if not geometry_calculation_eligible: reasons.append("geometry_not_computable")
         reasons = list(dict.fromkeys(reasons))
         output.append({
             "canonical_annotation_id": identity, "worker_id": row.get("worker_id", ""),
