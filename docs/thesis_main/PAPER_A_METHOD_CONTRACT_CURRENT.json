@@ -1,6 +1,6 @@
 {
     "schema_version":  "paper_a_method_contract_v9",
-    "contract_version":  "paper_a_method_20260801_v12",
+    "contract_version":  "paper_a_method_20260802_v13",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
     "stages":  [
@@ -87,8 +87,54 @@
                                "scope_is_stage3_gate":  false
                            },
     "timing":  {
-                    "primary_estimand_source":  "owner_valid_project_task_worker_annotation_exact_active_log_only",
-                    "missing_exact_binding":  "time_analysis_eligible_false_and_active_time_integrity_status_not_evaluable",
+                    "primary_estimand_source":  "formal_assignment_project_runtime_task_worker_cumulative_active_log",
+                    "primary_identity_level":  "task_worker",
+                    "task_worker_rule_version":  "c1_task_worker_active_time_v1",
+                    "task_worker_eligibility_field":  "task_worker_time_analysis_eligible",
+                    "annotation_exact_role":  "forensic_identity_audit_only",
+                    "annotation_exact_not_required_for_task_worker_time":  true,
+                    "formal_assignment_provenance":  [
+                                                          "original_assignment",
+                                                          "authorized_replacement_assignment",
+                                                          "late_entry_calibration_assignment"
+                                                      ],
+                    "legacy_task_worker_script_versions":  [
+                                                                    "0.24-official",
+                                                                    "stage1_helper_ordercache_hotfix_20260617_v1",
+                                                                    "stage1_active_time_annotation_hardening_20260701_v1"
+                                                                ],
+                    "bridged_task_worker_script_versions":  [
+                                                                     "stage3_active_time_page_gate_20260711_v2"
+                                                                 ],
+                    "legacy_session_rule":  "annotation_page_or_no_contrary_page_evidence",
+                    "bridged_session_rule":  "page_gate_eligible_and_submission_bridge_verified",
+                    "session_aggregation":  "per_project_runtime_task_worker_session_max_positive_cumulative_active_seconds_then_sum_eligible_sessions",
+                    "active_seconds_fragment_rule":  "never_sum_or_use_as_primary_task_worker_time",
+                    "cross_worker_selection_rule":  "exclude_explicit_selected_other_owner_events; exclude_a_session_only_when_no_usable_same_worker_event_remains",
+                    "multiple_annotation_versions_rule":  "retain_revision_audit_and_use_canonical_task_worker_context_without_annotation_pk_attribution",
+                    "task_adjusted_model":  "log1p(task_worker_active_seconds)~worker_fixed_effect+runtime_task_fixed_effect; runtime_task_cluster_bootstrap",
+                    "profile_fields":  [
+                                            "T_active_raw_median",
+                                            "T_active_task_adjusted",
+                                            "T_active_CI_lower",
+                                            "T_active_CI_upper",
+                                            "T_active_support",
+                                            "T_active_profile_status"
+                                        ],
+                    "profile_role":  "auxiliary_operational_measure_not_capability_axis",
+                    "timing_must_not_change":  [
+                                                     "Q_GT",
+                                                     "R_peer",
+                                                     "F_struct",
+                                                     "global_policy_eligible",
+                                                     "c2_risk_model_eligible",
+                                                     "C2B_roster",
+                                                     "Strong_Global_score",
+                                                     "Full_score",
+                                                     "formal_worker_rank",
+                                                     "T1_assignment",
+                                                     "V1_routing"
+                                                 ],
                     "missing_timing_does_not_gate":  [
                                                            "Q_GT",
                                                            "R_peer",
@@ -108,9 +154,11 @@
                                                        "routing",
                                                        "C2B_roster"
                                                    ],
+                    "w034_authorized_replacement_rule":  "requires_passed_preassignment_sentinel_validation_and_authorized_task_start_after_sentinel",
                     "w034_missing_validation_manifest":  "timing_not_evaluable_only",
                     "w034_manifest_if_provided":  "all_SHA_identity_and_validation_checks_must_pass",
-                    "active_time_expected_is_collection_intent_not_observed_success":  true
+                    "active_time_expected_is_collection_intent_not_observed_success":  true,
+                    "active_time_expected_is_not_task_worker_eligibility_gate":  true
                 },
     "q_gt_models":  {
                         "c1_only":  {
@@ -243,7 +291,7 @@
                                  "LOO_medoid":  "loo_medoid_analysis_eligible",
                                  "LOO_strict":  "strict_loo_analysis_eligible",
                                  "structural":  "structural_opportunity_eligible",
-                                 "time":  "time_analysis_eligible",
+                                 "time":  "task_worker_time_analysis_eligible",
                                  "Semi_correction":  "semi_correction_analysis_eligible",
                                  "predictive":  "predictive_validity_analysis_eligible",
                                  "routing_feature":  "routing_feature_analysis_eligible",

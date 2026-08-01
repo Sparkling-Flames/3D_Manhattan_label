@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v12 SHA-256 115ba6eaf771b4fa079289f17d1f491498d9cea910d12aeb4e66d192817c7ee8 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v13 SHA-256 ca9c2788261266744b88e7bbd69d253c509a154e8291ddc0cfc3de771eb4232a -->
 # Paper A 本地分析数据流
 
 ## C1-A -> C2-B Batch A
@@ -17,9 +17,9 @@ C1 exports + active_logs/c1 + assignment/disposition evidence
   -> bind-c2b-runtime-mapping audit
 ```
 
-C1-A identity matching uses `(worker_id, base_task_id, condition)` plus `authorized_replacement_assignment` and one canonical annotation. Outside, duplicate/revision, late-entry, undeclared-worker and other-batch evidence are excluded. Any row without an annotation-level active-time join is `time_analysis_eligible=false` and `active_time_integrity_status=not_evaluable`; timing never gates Q_GT, R_peer, F_struct or C2-B roster.
+C1-A identity matching uses `(worker_id, base_task_id, condition)` plus `authorized_replacement_assignment` and one canonical annotation. Outside, duplicate/revision, late-entry, undeclared-worker and other-batch evidence are excluded. C1 active time is separately aggregated at formal-assignment `(project_id, runtime_task_id, worker_id)` level: max positive cumulative seconds per eligible session, then sum sessions. Annotation-exact identity remains forensic audit only. A context failing the task-worker log rules is `task_worker_time_analysis_eligible=false`; timing never gates Q_GT, R_peer, F_struct, eligibility/rank, C2-B roster, T1 assignment or V1 routing.
 
-The rehearsal summary reports export project IDs, active-log project IDs, overlapping project IDs, exact annotation join count and project mismatch count. With no overlap, timing stays not evaluable and no lead_time proxy is used.
+The rehearsal summary reports export project IDs, active-log project IDs, overlapping project IDs, annotation-exact audit coverage, task-worker eligibility, and project mismatch count. With no usable formal task-worker context, timing stays not evaluable and no lead_time proxy is used. W034 authorized replacements additionally require their passed pre-assignment sentinel.
 
 A provisional snapshot is materialized evidence only and must set `C1_A_ANALYSIS_SNAPSHOT_FROZEN=false`. A formal snapshot binds worker profile, completion, Q_GT, structural EB, measurement readiness, canonical eligibility, reference and building dependencies by path and SHA.
 

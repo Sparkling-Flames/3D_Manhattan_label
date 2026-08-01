@@ -99,9 +99,15 @@ def _eligible(row: dict[str, Any], estimand: str) -> bool:
 def build_task_support_rows(
     original_paths: list[Path], authorized_path: Path | None, late_path: Path | None,
     canonical_rows: list[dict[str, str]], eligibility_rows: list[dict[str, str]],
+    task_worker_timing_rows: list[dict[str, str]] | None = None,
 ) -> list[dict[str, Any]]:
     original, authorized, late, groups = _assignment_sets(original_paths, authorized_path, late_path)
     eligibility = {row.get("canonical_annotation_id", ""): row for row in eligibility_rows}
+    task_worker_time_contexts = {
+        (str(row.get("project_id", "")).strip(), str(row.get("runtime_task_id", "")).strip(), str(row.get("worker_id", "")).strip())
+        for row in task_worker_timing_rows or []
+        if _truth(row.get("task_worker_time_analysis_eligible"))
+    }
     observed: dict[tuple[str, str], set[str]] = defaultdict(set)
     eligible: dict[tuple[str, str], dict[str, set[str]]] = defaultdict(lambda: defaultdict(set))
     seen: dict[tuple[str, str, str], str] = {}
@@ -130,7 +136,12 @@ def build_task_support_rows(
             continue
         merged = {**canonical, **eligibility.get(annotation, {})}
         for estimand in ESTIMANDS:
-            if _eligible(merged, estimand):
+            time_eligible = (
+                (str(canonical.get("project_id", "")).strip(), str(canonical.get("ls_runtime_task_id", "")).strip(), worker)
+                in task_worker_time_contexts
+            )
+            eligible_for_estimand = time_eligible if estimand == "time" and task_worker_timing_rows is not None else _eligible(merged, estimand)
+            if eligible_for_estimand:
                 eligible[key][estimand].add(worker)
 
     keys = sorted(set(original) | set(authorized) | set(late) | set(observed))
@@ -168,9 +179,14 @@ def build_task_support_rows(
 def materialize(
     original_paths: list[Path], canonical_csv: Path, eligibility_csv: Path, output_dir: Path,
     *, authorized_path: Path | None = None, late_path: Path | None = None,
+    task_worker_timing_csv: Path | None = None,
 ) -> dict[str, Any]:
+    if task_worker_timing_csv is None or not task_worker_timing_csv.is_file():
+        raise ValueError("C1 task support requires the task-worker timing artifact")
+    timing_rows = _read(task_worker_timing_csv)
     rows = build_task_support_rows(
-        original_paths, authorized_path, late_path, _read(canonical_csv), _read(eligibility_csv)
+        original_paths, authorized_path, late_path, _read(canonical_csv), _read(eligibility_csv),
+        timing_rows,
     )
     output = output_dir / "c1_estimand_specific_task_support.csv"
     _write(output, rows)
@@ -181,6 +197,7 @@ def materialize(
         "output_sha256": hashlib.sha256(output.read_bytes()).hexdigest(),
         "authorized_manifest_sha256": hashlib.sha256(authorized_path.read_bytes()).hexdigest() if authorized_path and authorized_path.exists() else "",
         "late_entry_manifest_sha256": hashlib.sha256(late_path.read_bytes()).hexdigest() if late_path and late_path.exists() else "",
+        "task_worker_timing_sha256": hashlib.sha256(task_worker_timing_csv.read_bytes()).hexdigest() if task_worker_timing_csv and task_worker_timing_csv.exists() else "",
     }
     (output_dir / "c1_estimand_specific_task_support.summary.json").write_text(
         json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
@@ -195,11 +212,13 @@ def main() -> None:
     parser.add_argument("--late-entry-assignment", type=Path)
     parser.add_argument("--canonical-csv", type=Path, required=True)
     parser.add_argument("--eligibility-csv", type=Path, required=True)
+    parser.add_argument("--task-worker-timing-csv", type=Path, required=True)
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args()
     print(json.dumps(materialize(
         args.original_assignment, args.canonical_csv, args.eligibility_csv, args.output_dir,
         authorized_path=args.authorized_reassignment, late_path=args.late_entry_assignment,
+        task_worker_timing_csv=args.task_worker_timing_csv,
     ), indent=2))
 
 

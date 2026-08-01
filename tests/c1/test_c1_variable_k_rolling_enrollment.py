@@ -9,7 +9,7 @@ import json
 
 import pytest
 
-from tools.thesis_main.analysis.materialize_c1_estimand_specific_task_support import build_task_support_rows
+from tools.thesis_main.analysis.materialize_c1_estimand_specific_task_support import build_task_support_rows, materialize as materialize_task_support
 from tools.thesis_main.analysis.materialize_c1_three_state_task_tags import aggregate_three_state_tags, build_observation_rows
 from tools.thesis_main.analysis.materialize_stage3_freeze_gate import REQUIRED_GATES, assert_frozen_roster, build_gate
 from tools.thesis_main.analysis.materialize_w034_active_time_validation import sha256_bundle, validate_sentinel
@@ -54,6 +54,32 @@ def test_estimand_specific_k_separates_original_authorized_late_outside_and_dupl
         build_task_support_rows([original], authorized, late, canonical + [{**canonical[0], "canonical_annotation_id": "revision"}], eligibility)
 
 
+def test_time_support_uses_task_worker_timing_not_annotation_identity(tmp_path: Path) -> None:
+    original = tmp_path / "manual.csv"
+    _csv(original, [
+        {"worker_id": "w1", "base_task_id": "b", "task_id": "t", "dataset_group": "Calibration_core", "condition": "manual"},
+        {"worker_id": "w2", "base_task_id": "b", "task_id": "t", "dataset_group": "Calibration_core", "condition": "manual"},
+    ])
+    canonical = [
+        {"canonical_annotation_id": "a1", "project_id": "66", "ls_runtime_task_id": "10", "worker_id": "w1", "base_task_id": "b", "condition": "manual", "assignment_provenance": "original_assignment"},
+        {"canonical_annotation_id": "a2", "project_id": "66", "ls_runtime_task_id": "10", "worker_id": "w2", "base_task_id": "b", "condition": "manual", "assignment_provenance": "original_assignment"},
+    ]
+    eligibility = [{"canonical_annotation_id": row["canonical_annotation_id"], "time_analysis_eligible": False} for row in canonical]
+    timing = [
+        {"project_id": "66", "runtime_task_id": "10", "worker_id": "w1", "task_worker_time_analysis_eligible": "true"},
+        {"project_id": "66", "runtime_task_id": "10", "worker_id": "w2", "task_worker_time_analysis_eligible": "false"},
+    ]
+
+    row = build_task_support_rows([original], None, None, canonical, eligibility, timing)[0]
+
+    assert row["k_final_time"] == 1
+
+
+def test_task_support_materializer_requires_task_worker_timing_artifact(tmp_path: Path) -> None:
+    with pytest.raises(ValueError, match="task-worker timing"):
+        materialize_task_support([], tmp_path / "canonical.csv", tmp_path / "eligibility.csv", tmp_path)
+
+
 def test_w031_missing_active_time_is_timing_only_and_never_a_roster_gate(tmp_path: Path) -> None:
     original = tmp_path / "w031.csv"
     _csv(original, [
@@ -79,6 +105,17 @@ def test_w031_missing_active_time_is_timing_only_and_never_a_roster_gate(tmp_pat
     assert sum(row["k_final_structural"] for row in support) == 5
     from tools.thesis_main.analysis.paper_a_contracts import load_method_contract
     assert load_method_contract()["c2"]["timing_is_roster_gate"] is False
+
+
+def test_task_worker_timing_contract_remains_auxiliary_to_the_three_axes() -> None:
+    from tools.thesis_main.analysis.paper_a_contracts import load_method_contract
+
+    method = load_method_contract()
+    assert method["worker_axes"]["primary"] == ["Q_GT", "R_peer", "F_struct"]
+    assert method["timing"]["primary_identity_level"] == "task_worker"
+    assert method["timing"]["profile_role"] == "auxiliary_operational_measure_not_capability_axis"
+    assert {"global_policy_eligible", "c2_risk_model_eligible", "T1_assignment", "V1_routing"} <= set(method["timing"]["timing_must_not_change"])
+    assert method["c2"]["timing_is_roster_gate"] is False
 
 
 def test_rolling_enrollment_disabled_is_empty_and_active_is_additive(tmp_path: Path) -> None:

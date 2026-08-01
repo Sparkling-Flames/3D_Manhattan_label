@@ -16,7 +16,7 @@ def _csv(path: Path, rows: list[dict], fields: list[str] | None = None) -> None:
 
 def test_peer_five_is_formal_c2_axis_loo_missing_is_not_gate_and_w014_is_excluded(tmp_path: Path) -> None:
     global_csv, loo_csv, structural_csv, completion_csv = [tmp_path / name for name in ("global.csv", "loo.csv", "structural.csv", "completion.csv")]
-    peer_csv, eligibility_csv, structural_eb_csv, enrollment_csv = [tmp_path / name for name in ("peer.csv", "eligibility.csv", "structural_eb.csv", "calibration_enrollment_registry.csv")]
+    peer_csv, eligibility_csv, structural_eb_csv, enrollment_csv, timing_csv = [tmp_path / name for name in ("peer.csv", "eligibility.csv", "structural_eb.csv", "calibration_enrollment_registry.csv", "timing.csv")]
     workers = ("1", "14")
     _csv(global_csv, [{"worker_id": worker, "GT_support": 5, "Q_GT_EB": .8, "task_support": 5} for worker in workers])
     _csv(loo_csv, [], ["worker_id", "base_task_id", "strict_loo_analysis_eligible", "loo_medoid_analysis_eligible", "q_LOO_tu"])
@@ -24,6 +24,7 @@ def test_peer_five_is_formal_c2_axis_loo_missing_is_not_gate_and_w014_is_exclude
     _csv(completion_csv, [{"worker_id": "1", "completion_status": "completed"}, {"worker_id": "14", "completion_status": "administrative_exclusion"}])
     _csv(enrollment_csv, [{"worker_id": "1", "enrollment_batch": "original", "rolling_activated": "false", "admission_status": "admitted", "terminal_status": "completed", "enrolled_at": "2026-07-01"}, {"worker_id": "14", "enrollment_batch": "original", "rolling_activated": "false", "admission_status": "excluded", "terminal_status": "administrative_exclusion", "enrolled_at": "2026-07-01"}])
     _csv(structural_eb_csv, [{"worker_id": worker, "F_struct_EB": 0, "F_struct_interval_lower": 0, "F_struct_interval_upper": .1} for worker in workers])
+    _csv(timing_csv, [{"worker_id": "1", "T_active_raw_median": 12, "T_active_task_adjusted": 11, "T_active_CI_lower": 9, "T_active_CI_upper": 14, "T_active_support": 5, "T_active_profile_status": "estimated", "timing_identity_level": "task_worker", "timing_rule_version": "c1_task_worker_active_time_v1"}])
     peer_rows = []
     eligibility_rows = []
     for worker in workers:
@@ -33,12 +34,15 @@ def test_peer_five_is_formal_c2_axis_loo_missing_is_not_gate_and_w014_is_exclude
             eligibility_rows.append({"schema_version": "assignment_evidence_v2", "canonical_annotation_id": f"{worker}-{task}", "worker_id": worker, "base_task_id": task, "condition": "manual", "assignment_provenance": "original_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": True, "peer_analysis_eligible": True, "loo_medoid_analysis_eligible": False, "strict_loo_analysis_eligible": False, "structural_opportunity_eligible": True, "time_analysis_eligible": False, "semi_correction_analysis_eligible": False, "predictive_validity_analysis_eligible": False, "routing_feature_analysis_eligible": False, "process_eligible": True, "independence_eligible": True, "scope_reference_eligible": True})
     _csv(peer_csv, peer_rows)
     _csv(eligibility_csv, eligibility_rows)
-    materialize_three_track_worker_state(global_csv, loo_csv, structural_csv, completion_csv, tmp_path, eligibility_csv=eligibility_csv, peer_csv=peer_csv, structural_eb_csv=structural_eb_csv, enrollment_registry_csv=enrollment_csv)
+    materialize_three_track_worker_state(global_csv, loo_csv, structural_csv, completion_csv, tmp_path, eligibility_csv=eligibility_csv, peer_csv=peer_csv, structural_eb_csv=structural_eb_csv, enrollment_registry_csv=enrollment_csv, timing_profile_csv=timing_csv)
     with (tmp_path / "c1_three_track_worker_state.csv").open(encoding="utf-8", newline="") as stream:
         rows = {row["worker_id"]: row for row in csv.DictReader(stream)}
     assert rows["1"]["peer_task_support"] == "5"
     assert rows["1"]["R_peer_profile_status"] == "estimated"
     assert rows["1"]["LOO_medoid_status"] == "insufficient_support"
+    assert rows["1"]["T_active_task_adjusted"] == "11"
+    assert rows["1"]["timing_identity_level"] == "task_worker"
+    assert rows["1"]["global_policy_eligible"].lower() == "true"
     assert rows["1"]["c2_risk_model_eligible"].lower() == "true"
     assert rows["14"]["administratively_eligible"].lower() == "false"
     assert rows["14"]["c2_risk_model_eligible"].lower() == "false"

@@ -41,6 +41,7 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_outside_assignment,
     materialize_row_analysis_eligibility,
     materialize_structural_validation,
+    materialize_task_worker_timing_profile,
     materialize_three_track_worker_state,
 )
 from tools.thesis_main.analysis.c1_c2_mainline import (
@@ -578,12 +579,6 @@ def materialize(
         [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_geometry_pool_eligibility.csv", output_dir,
     )
-    completion_summary["estimand_specific_task_support"] = materialize_estimand_specific_task_support(
-        [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
-        output_dir / "c1_canonical_annotations.csv", output_dir / "c1_row_analysis_eligibility.csv", output_dir,
-        authorized_path=review_snapshots.get("authorized_reassignment_manifest"),
-        late_path=review_snapshots.get("late_entry_assignment_manifest"),
-    )
     roster_summary = materialize_analysis_rosters(
         output_dir / "c1_worker_completion_audit.csv", output_dir / "c1_canonical_annotations.csv", output_dir,
     )
@@ -636,6 +631,20 @@ def materialize(
     # event/session ledger only after that contract has been evaluated.
     active_ledger_summary = materialize_active_time_ledgers(
         output_dir / "c1_canonical_meta_observations.csv", snapshots / "active_logs", output_dir,
+        annotation_version_csv=output_dir / "c1_annotation_version_disposition.csv",
+        collection_window_closed=collection_window_closed, formal=formal,
+    )
+    timing_profile_summary = materialize_task_worker_timing_profile(
+        output_dir / "c1_task_worker_active_time.csv", output_dir,
+        bootstrap_replicates=200 if formal else 80,
+    )
+    active_ledger_summary["task_worker_timing_profile"] = timing_profile_summary
+    completion_summary["estimand_specific_task_support"] = materialize_estimand_specific_task_support(
+        [fixed_snapshots["manual_assignment"], fixed_snapshots["semi_assignment"]],
+        output_dir / "c1_canonical_annotations.csv", output_dir / "c1_row_analysis_eligibility.csv", output_dir,
+        authorized_path=review_snapshots.get("authorized_reassignment_manifest"),
+        late_path=review_snapshots.get("late_entry_assignment_manifest"),
+        task_worker_timing_csv=output_dir / "c1_task_worker_active_time.csv",
     )
     chain = {"canonicalization_summary": canonical_summary, "operational_reference_summary": reference_summary, "row_eligibility_summary": row_eligibility_summary, "analysis_views": analysis_views}
 
@@ -717,6 +726,7 @@ def materialize(
         reference_approval_csv=review_snapshots.get("reference_amendment"),
         building_registry_csv=fixed_snapshots.get("building_registry"),
         task_building_binding_csv=output_dir / "c1_task_building_binding.csv",
+        timing_profile_csv=output_dir / "c1_task_worker_timing_profile.csv",
         formal=formal, collection_window_closed=collection_window_closed,
     )
     predictive_path = output_dir / "p1_to_c1_descriptive_directional_check.csv"

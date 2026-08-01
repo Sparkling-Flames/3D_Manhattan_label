@@ -120,6 +120,8 @@ This file is generated from `PAPER_A_METHOD_CONTRACT_CURRENT.json`; normative fi
 ## Formal measurement and freeze roles
 
 - The three formal axes are `Q_GT`, `R_peer`, and `F_struct`. `R_LOO_medoid` and `R_LOO_strict` are separate sensitivity/tie-break states.
+- C1 active time is a `{data['timing']['primary_identity_level']}`-level auxiliary operational measurement (`{data['timing']['task_worker_eligibility_field']}`), not a fourth capability axis. It does not change Q_GT/R_peer/F_struct, eligibility, C2-B roster, formal rank, T1 assignment, or V1 routing.
+- Annotation-exact active-log identity is retained for forensic audit; it is not required for the task-worker timing measurement. W034 authorized replacements retain their pre-assignment sentinel requirement.
 - `C1_EVIDENCE_FROZEN` contains C1 canonical evidence, eligibility, peer evidence, structural EB, W034 sensitivity, and this method binding only.
 - `FINAL_POOLED_PROFILE_FROZEN` is an independent artifact binding C1, C2-B, C2-A-RP, the final C1+C2 Q_GT model, pooled worker profile, enrollment, and this method binding.
 - Stage 3 validates C1 evidence, final pooled profile, enrollment closure, and terminal-worker closure as separate roles.

@@ -5,21 +5,34 @@ from __future__ import annotations
 import csv
 import hashlib
 import json
+import math
 import random
+import statistics
 from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
+import numpy as np
+
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry, normalize_geometry_for_c1_calculation
 from tools.thesis_main.analysis.failure_disposition import c1_failure_fields
-from tools.thesis_main.analysis.paper_a_contracts import validate_record, validate_serialized_record
+from tools.thesis_main.analysis.paper_a_contracts import load_method_contract, validate_record, validate_serialized_record
 from tools.thesis_main.analysis.quality_core.active_time import (
     _parse_active_log_event_time,
     cumulative_active_intervals,
     is_unknown_annotation_id,
     merged_interval_seconds,
 )
+
+
+_TIMING_CONTRACT = load_method_contract()["timing"]
+_TASK_WORKER_TIMING_RULE_VERSION = str(_TIMING_CONTRACT["task_worker_rule_version"])
+_TASK_WORKER_TIMING_IDENTITY_LEVEL = str(_TIMING_CONTRACT["primary_identity_level"])
+_TASK_WORKER_TIME_ASSIGNMENTS = set(_TIMING_CONTRACT["formal_assignment_provenance"])
+_LEGACY_TASK_WORKER_TIME_SCRIPTS = set(_TIMING_CONTRACT["legacy_task_worker_script_versions"])
+_BRIDGED_TASK_WORKER_TIME_SCRIPTS = set(_TIMING_CONTRACT["bridged_task_worker_script_versions"])
+_TIMING_ADMINISTRATIVELY_EXCLUDED_WORKERS = set(load_method_contract()["administrative_eligibility"]["permanently_ineligible_workers"])
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -783,7 +796,264 @@ def materialize_active_log_audits(canonical_csv: Path, active_log_dir: Path, out
     }
 
 
-def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output_dir: Path) -> dict[str, Any]:
+def _normalized_worker_id(value: Any) -> str:
+    token = str(value or "").strip()
+    if token.lower().startswith("w"):
+        token = token[1:]
+    return str(int(token)) if token.isdigit() else token.lower()
+
+
+def _task_worker_is_test_or_sentinel(row: dict[str, Any]) -> bool:
+    if any(_truth(row.get(field)) for field in ("is_sentinel", "sentinel_task", "is_test_task", "test_task")):
+        return True
+    return any(
+        token in {"test", "sentinel"}
+        for field in ("task_role", "task_type", "dataset_group", "pool")
+        for token in str(row.get(field, "")).strip().lower().replace("-", "_").split("_")
+    )
+
+
+def _task_worker_contexts(
+    canonical: list[dict[str, str]], annotation_version_csv: Path | None, *, formal: bool,
+) -> dict[tuple[str, str, str], dict[str, Any]]:
+    versions: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
+    if annotation_version_csv and annotation_version_csv.exists():
+        for version in read_csv(annotation_version_csv):
+            key = (
+                str(version.get("project_id", "")).strip(),
+                str(version.get("ls_runtime_task_id") or version.get("task_id") or "").strip(),
+                str(version.get("worker_id", "")).strip(),
+            )
+            if all(key):
+                versions[key].append(version)
+    grouped: dict[tuple[str, str, str], list[dict[str, str]]] = defaultdict(list)
+    for row in canonical:
+        key = tuple(str(row.get(field, "")).strip() for field in ("project_id", "ls_runtime_task_id", "worker_id"))
+        if all(key):
+            grouped[key].append(row)
+    contexts: dict[tuple[str, str, str], dict[str, Any]] = {}
+    for key, rows in grouped.items():
+        formal_reasons: list[str] = []
+        timing_context_reasons: list[str] = []
+        first = rows[0]
+        provenance = str(first.get("assignment_provenance") or "original_assignment").strip()
+        if provenance not in _TASK_WORKER_TIME_ASSIGNMENTS:
+            formal_reasons.append("nonformal_assignment_provenance")
+        if any(_truth(row.get("outside_assignment_submission")) for row in rows) or provenance == "outside_assignment_submission":
+            formal_reasons.append("outside_assignment")
+        if any("assigned_expected" in row and not _truth(row.get("assigned_expected")) for row in rows):
+            formal_reasons.append("formal_assignment_not_expected")
+        if any(str(row.get("parse_error", "")).strip().lower() not in {"", "false", "0", "none", "null"} for row in rows):
+            timing_context_reasons.append("canonical_parse_error")
+        statuses = {str(row.get("canonical_eligibility_status", "")).strip().lower() for row in rows}
+        if formal and (not statuses or "" in statuses):
+            formal_reasons.append("canonical_eligibility_status_missing")
+        if any(status not in {"", "valid", "selected_canonical"} for status in statuses):
+            formal_reasons.append("canonical_submission_not_legal")
+        if any(_task_worker_is_test_or_sentinel(row) for row in rows):
+            timing_context_reasons.append("test_or_sentinel_task")
+        if _normalized_worker_id(key[2]) in _TIMING_ADMINISTRATIVELY_EXCLUDED_WORKERS:
+            timing_context_reasons.append("administratively_excluded_worker")
+        # The general timing estimand is task-worker level, but the 17 W034
+        # replacements retain their pre-assignment sentinel requirement.
+        if provenance == "authorized_replacement_assignment" and _normalized_worker_id(key[2]) == "34":
+            sentinel_reason = str(first.get("timing_not_evaluable_reason", "")).strip()
+            if (
+                str(first.get("w034_active_time_validation_status", "")).strip().lower() != "passed"
+                or not _truth(first.get("active_time_expected"))
+                or sentinel_reason
+            ):
+                timing_context_reasons.append(sentinel_reason or "w034_sentinel_not_passed")
+        version_rows = versions.get(key, [])
+        selected_versions = [row for row in version_rows if row.get("version_disposition") == "selected_canonical"]
+        annotation_ids = sorted({str(row.get("canonical_annotation_id") or row.get("annotation_id") or "").strip() for row in rows if str(row.get("canonical_annotation_id") or row.get("annotation_id") or "").strip()})
+        revision_count = max(0, len(version_rows) - len(selected_versions)) if version_rows else max(0, len(rows) - 1)
+        contexts[key] = {
+            "project_id": key[0], "runtime_task_id": key[1], "worker_id": key[2],
+            "base_task_id": first.get("base_task_id", ""), "condition": first.get("condition", ""),
+            "dataset_group": first.get("dataset_group", ""), "assignment_provenance": provenance,
+            "canonical_annotation_ids": annotation_ids,
+            "canonical_annotation_count": len(annotation_ids),
+            "revision_count": revision_count,
+            "multiple_annotation_versions": bool(revision_count),
+            "revision_audit_status": "version_disposition_bound" if version_rows else "canonical_only",
+            "formal_assignment_eligible": not formal_reasons,
+            "formal_assignment_exclusion_reason": ";".join(dict.fromkeys(formal_reasons)),
+            "timing_context_eligible": not timing_context_reasons,
+            "timing_context_exclusion_reason": ";".join(dict.fromkeys(timing_context_reasons)),
+        }
+    return contexts
+
+
+def _task_worker_submission_bridge_verified(row: dict[str, Any]) -> bool:
+    return (
+        _truth(row.get("submission_bridge_eligible"))
+        or _truth(row.get("submission_bridge_verified"))
+        or str(row.get("submission_bridge_status", "")).strip().lower() in {"eligible", "verified"}
+    )
+
+
+def _task_worker_legacy_page_context_invalid(row: dict[str, Any]) -> bool:
+    page_type = str(row.get("page_type", "")).strip().lower()
+    if page_type and page_type != "annotation":
+        return True
+    gate = str(row.get("page_gate_eligible", "")).strip()
+    reason = str(row.get("page_gate_reason", "")).strip().lower()
+    return bool(gate and not _truth(gate)) or bool(reason and reason != "eligible")
+
+
+def _materialize_task_worker_active_time(
+    canonical: list[dict[str, str]], all_events: list[dict[str, Any]], output_dir: Path, *,
+    annotation_version_csv: Path | None, collection_window_closed: bool, formal: bool,
+) -> dict[str, Any]:
+    """Materialize the formal C1 timing estimand at project-task-worker granularity."""
+    contexts = _task_worker_contexts(canonical, annotation_version_csv, formal=formal)
+    grouped: dict[tuple[str, str, str, str], list[dict[str, Any]]] = defaultdict(list)
+    for event in all_events:
+        key = (event["project_id"], event["runtime_task_id"], event["worker_id"])
+        if key in contexts:
+            grouped[(*key, event["session_id"])].append(event)
+    sessions: list[dict[str, Any]] = []
+    sessions_by_context: dict[tuple[str, str, str], list[dict[str, Any]]] = defaultdict(list)
+    for key, rows in sorted(grouped.items()):
+        context_key, session_id = key[:3], key[3]
+        context = contexts[context_key]
+        unique = [row for row in rows if not row["network_retry_duplicate"]]
+        cross_worker_rows = [
+            row for row in unique if (
+            str(row.get("annotation_id_source", "")).startswith("selected_annotation_not_owned")
+            or (
+                str(row.get("selected_annotation_owner_id", "")).strip()
+                and _normalized_worker_id(row.get("selected_annotation_owner_id")) != _normalized_worker_id(context_key[2])
+            )
+            )
+        ]
+        usable = [row for row in unique if row not in cross_worker_rows]
+        scripts = {str(row.get("script_version", "")).strip() for row in usable if str(row.get("script_version", "")).strip()}
+        positive_seconds = [float(row.get("active_seconds") or 0) for row in usable if float(row.get("active_seconds") or 0) > 0]
+        reasons: list[str] = []
+        if not context["formal_assignment_eligible"]:
+            reasons.append(context["formal_assignment_exclusion_reason"])
+        if not context["timing_context_eligible"]:
+            reasons.append(context["timing_context_exclusion_reason"])
+        if not collection_window_closed:
+            reasons.append("collection_window_not_closed")
+        if not unique:
+            reasons.append("network_retry_only")
+        if not usable:
+            reasons.append("cross_worker_only_session")
+        if any(not _truth(row.get("session_id_present")) for row in usable):
+            reasons.append("session_id_missing")
+        if any(not row.get("event_time") for row in usable):
+            reasons.append("event_timestamp_missing")
+        if any(row.get("event_schema") != "cumulative" for row in usable):
+            reasons.append("noncumulative_active_time")
+        if any(_truth(row.get("parent_derived")) for row in usable):
+            reasons.append("parent_derived_annotation_context")
+        if len(scripts) != 1:
+            reasons.append("mixed_or_missing_script_version")
+        elif scripts <= _LEGACY_TASK_WORKER_TIME_SCRIPTS:
+            if any(_task_worker_legacy_page_context_invalid(row) for row in usable):
+                reasons.append("legacy_nonannotation_page_evidence")
+        elif scripts <= _BRIDGED_TASK_WORKER_TIME_SCRIPTS:
+            if not all(
+                _truth(row.get("page_gate_eligible"))
+                and str(row.get("page_gate_reason", "")).strip().lower() == "eligible"
+                and _task_worker_submission_bridge_verified(row)
+                for row in usable
+            ):
+                reasons.append("page_gate_or_submission_bridge_missing")
+        else:
+            reasons.append("unapproved_task_worker_script_version")
+        if not positive_seconds:
+            reasons.append("no_positive_cumulative_active_time")
+        reasons = [reason for reason in dict.fromkeys(reasons) if reason]
+        active_seconds = max(positive_seconds) if not reasons else ""
+        if not reasons:
+            status = "eligible_task_worker_session"
+        elif "cross_worker_only_session" in reasons:
+            status = "not_evaluable_cross_worker_only_session"
+        elif "page_gate_or_submission_bridge_missing" in reasons:
+            status = "not_evaluable_page_gate_or_submission_bridge"
+        elif "collection_window_not_closed" in reasons:
+            status = "not_evaluable_collection_window"
+        else:
+            status = "not_evaluable_task_worker_session"
+        audit = {
+            "project_id": context_key[0], "runtime_task_id": context_key[1], "worker_id": context_key[2],
+            "session_id": session_id, "script_versions_json": json.dumps(sorted(scripts)),
+            "raw_event_count": len(rows), "deduplicated_event_count": len(unique),
+            "network_retry_duplicate_count": len(rows) - len(unique),
+            "session_max_cumulative_active_seconds": max(positive_seconds) if positive_seconds else "",
+            "session_active_seconds": active_seconds,
+            "known_client_annotation_ids_json": json.dumps(sorted({str(row.get("annotation_id", "")) for row in usable if not _truth(row.get("unknown_annotation"))})),
+            "unknown_client_annotation_event_count": sum(_truth(row.get("unknown_annotation")) for row in usable),
+            "cross_worker_selection_event_count": len(cross_worker_rows),
+            "cross_worker_selection_event_payload_sha256_json": json.dumps(sorted(row["payload_sha256"] for row in cross_worker_rows)),
+            "session_status": status, "session_exclusion_reason": ";".join(reasons),
+            "timing_identity_level": _TASK_WORKER_TIMING_IDENTITY_LEVEL,
+            "timing_rule_version": _TASK_WORKER_TIMING_RULE_VERSION,
+        }
+        sessions.append(audit)
+        sessions_by_context[context_key].append(audit)
+    write_csv(output_dir / "c1_task_worker_active_time_session_audit.csv", sessions)
+    rows: list[dict[str, Any]] = []
+    for key, context in sorted(contexts.items()):
+        context_sessions = sessions_by_context.get(key, [])
+        eligible_sessions = [row for row in context_sessions if row["session_status"] == "eligible_task_worker_session"]
+        reasons: list[str] = []
+        if not context["formal_assignment_eligible"]:
+            reasons.append(context["formal_assignment_exclusion_reason"])
+        if not context["timing_context_eligible"]:
+            reasons.append(context["timing_context_exclusion_reason"])
+        if not collection_window_closed:
+            reasons.append("collection_window_not_closed")
+        if not context_sessions:
+            reasons.append("no_active_log_session")
+        elif not eligible_sessions:
+            reasons.extend(row["session_exclusion_reason"] for row in context_sessions if row["session_exclusion_reason"])
+        reasons = [reason for reason in dict.fromkeys(";".join(reasons).split(";")) if reason]
+        eligible = not reasons and bool(eligible_sessions)
+        active_seconds = sum(float(row["session_active_seconds"]) for row in eligible_sessions) if eligible else ""
+        status = "eligible" if eligible and len(eligible_sessions) == len(context_sessions) else "eligible_partial_session_coverage" if eligible else "not_evaluable"
+        rows.append({
+            **context,
+            "raw_event_count": sum(_int(row["raw_event_count"]) for row in context_sessions),
+            "deduplicated_event_count": sum(_int(row["deduplicated_event_count"]) for row in context_sessions),
+            "session_count": len(context_sessions), "eligible_session_count": len(eligible_sessions),
+            "excluded_session_count": len(context_sessions) - len(eligible_sessions),
+            "cross_worker_selection_event_count": sum(_int(row["cross_worker_selection_event_count"]) for row in context_sessions),
+            "task_worker_active_seconds": active_seconds,
+            "task_worker_time_analysis_eligible": eligible,
+            "timing_identity_level": _TASK_WORKER_TIMING_IDENTITY_LEVEL,
+            "timing_rule_version": _TASK_WORKER_TIMING_RULE_VERSION,
+            "timing_status": status, "timing_exclusion_reason": ";".join(reasons),
+        })
+    path = output_dir / "c1_task_worker_active_time.csv"
+    write_csv(path, rows)
+    summary = {
+        "schema_version": "c1_task_worker_active_time_summary_v1",
+        "timing_identity_level": _TASK_WORKER_TIMING_IDENTITY_LEVEL,
+        "timing_rule_version": _TASK_WORKER_TIMING_RULE_VERSION,
+        "collection_window_closed": collection_window_closed,
+        "context_count": len(rows),
+        "formal_assignment_context_count": sum(_truth(row["formal_assignment_eligible"]) for row in rows),
+        "eligible_context_count": sum(_truth(row["task_worker_time_analysis_eligible"]) for row in rows),
+        "eligible_session_count": sum(_int(row["eligible_session_count"]) for row in rows),
+        "cross_worker_selection_event_context_count": sum(_int(row["cross_worker_selection_event_count"]) > 0 for row in rows),
+        "status_counts": dict(Counter(row["timing_status"] for row in rows)),
+        "output_sha256": hashlib.sha256(path.read_bytes()).hexdigest(),
+    }
+    (output_dir / "c1_task_worker_active_time.summary.json").write_text(
+        json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    return summary
+
+
+def materialize_active_time_ledgers(
+    meta_csv: Path, active_log_dir: Path, output_dir: Path, *, annotation_version_csv: Path | None = None,
+    collection_window_closed: bool = False, formal: bool = False,
+) -> dict[str, Any]:
     """Materialize cumulative event/session evidence; unknown time never binds."""
     canonical = read_csv(meta_csv)
     canonical_ids = {
@@ -813,7 +1083,8 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
             task = str(event.get("task_id") or "").strip()
             worker = str(event.get("annotator_id") or "").strip()
             annotation = str(event.get("annotation_id") or "").strip()
-            session = str(event.get("session_id") or "default")
+            raw_session = str(event.get("session_id") or "").strip()
+            session = raw_session or "default"
             script = str(event.get("script_version") or "")
             unknown = is_unknown_annotation_id(annotation)
             parent_derived = _truth(event.get("parent_derived")) or str(event.get("annotation_id_source", "")).startswith("parent")
@@ -827,16 +1098,24 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
             all_events.append({
                 "source_file": path.name, "source_line": line_number, "payload_sha256": payload_sha,
                 "network_retry_duplicate": duplicate_retry, "project_id": project, "runtime_task_id": task,
-                "worker_id": worker, "annotation_id": annotation or "unknown_annotation", "session_id": session, "script_version": script,
+                "worker_id": worker, "annotation_id": annotation or "unknown_annotation", "session_id": session,
+                "session_id_present": bool(raw_session), "script_version": script,
                 "c1_context_eligible": context_eligible, "context_exclusion_reason": "" if context_eligible else "project_task_worker_not_in_c1_canonical",
                 "active_seconds": seconds, "active_seconds_fragment": event.get("active_seconds_fragment", ""),
                 "event_schema": schema,
                 "unknown_annotation": unknown, "parent_derived": parent_derived,
                 "client_annotation_id": event.get("client_annotation_id", event.get("selected_annotation_id", "")),
-                "selected_annotation_id": event.get("selected_annotation_id", ""), "annotation_id_source": event.get("annotation_id_source", ""),
+                "selected_annotation_id": event.get("selected_annotation_id", ""),
+                "selected_annotation_owner_id": event.get("selected_annotation_owner_id", ""),
+                "server_annotation_id": event.get("server_annotation_id", event.get("server_annotation_pk", "")),
+                "annotation_id_source": event.get("annotation_id_source", ""),
                 "active_time_alias_from": event.get("active_time_alias_from", ""), "active_time_alias_reason": event.get("active_time_alias_reason", ""), "late_binding_status": event.get("late_binding_status", ""),
                 "annotation_match_status": event.get("annotation_match_status", ""), "page_gate_reason": event.get("page_gate_reason", ""),
                 "page_gate_eligible": event.get("page_gate_eligible", ""),
+                "page_type": event.get("page_type", ""),
+                "submission_bridge_eligible": event.get("submission_bridge_eligible", ""),
+                "submission_bridge_verified": event.get("submission_bridge_verified", ""),
+                "submission_bridge_status": event.get("submission_bridge_status", ""),
                 "event_time": event_dt.isoformat() if event_dt else "",
             })
     write_csv(output_dir / "c1_active_time_event_ledger.csv", all_events)
@@ -893,6 +1172,11 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
     write_csv(output_dir / "c1_active_time_binding_audit.csv", annotations)
     unknown_sessions = [row for row in sessions if row.get("duration_not_allocatable")]
     write_csv(output_dir / "c1_active_time_unknown_audit.csv", unknown_sessions)
+    task_worker_summary = _materialize_task_worker_active_time(
+        canonical, all_events, output_dir, annotation_version_csv=annotation_version_csv,
+        collection_window_closed=collection_window_closed, formal=formal,
+    )
+    annotation_exact_status = "available" if any(row["primary_active_time_eligible"] for row in annotations) else "unavailable"
     summary = {
         "raw_event_count": len(all_events), "parse_error_count": len(parse_errors), "c1_context_event_count": len(events), "excluded_event_count": len(excluded_events),
         "deduplicated_event_count": sum(not row["network_retry_duplicate"] for row in events),
@@ -905,11 +1189,194 @@ def materialize_active_time_ledgers(meta_csv: Path, active_log_dir: Path, output
         "unallocatable_session_count": len(unknown_sessions),
         "unknown_active_seconds": None,
         "parent_derived_session_count": sum(row["session_status"] == "forensic_parent_derived" for row in sessions),
-        "primary_active_time_status": "available" if any(row["primary_active_time_eligible"] for row in annotations) else "unavailable",
+        "annotation_exact_active_time_status": annotation_exact_status,
+        "primary_active_time_status": "available" if task_worker_summary["eligible_context_count"] else "unavailable",
+        "primary_active_time_identity_level": _TASK_WORKER_TIMING_IDENTITY_LEVEL,
+        "task_worker_active_time": task_worker_summary,
         "blocks_c2": False, "session_status_counts": dict(Counter(row["session_status"] for row in sessions)),
     }
     (output_dir / "c1_active_time_source_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
+
+
+def _task_worker_timing_components(rows: list[dict[str, Any]]) -> list[list[dict[str, Any]]]:
+    by_node: dict[str, set[str]] = defaultdict(set)
+    for row in rows:
+        worker, task = f"w:{row['worker_id']}", f"t:{row['task_key']}"
+        by_node[worker].add(task)
+        by_node[task].add(worker)
+    components: list[set[str]] = []
+    seen: set[str] = set()
+    for node in sorted(by_node):
+        if node in seen:
+            continue
+        queue, component = [node], {node}
+        seen.add(node)
+        while queue:
+            current = queue.pop()
+            for neighbour in by_node[current]:
+                if neighbour not in seen:
+                    seen.add(neighbour)
+                    component.add(neighbour)
+                    queue.append(neighbour)
+        components.append(component)
+    return [
+        [row for row in rows if f"w:{row['worker_id']}" in component]
+        for component in components
+    ]
+
+
+def _fit_task_worker_timing_fixed_effect(rows: list[dict[str, Any]]) -> dict[str, float]:
+    """Return task-standardized geometric mean seconds for one connected component."""
+    workers = sorted({str(row["worker_id"]) for row in rows})
+    tasks = sorted({str(row["task_key"]) for row in rows})
+    if len(workers) < 2 or len(tasks) < 2:
+        raise ValueError("timing_fixed_effect_requires_two_workers_and_two_tasks")
+    columns = 1 + (len(workers) - 1) + (len(tasks) - 1)
+    design = np.zeros((len(rows), columns), dtype=float)
+    outcome = np.zeros(len(rows), dtype=float)
+    worker_index = {worker: index for index, worker in enumerate(workers[1:], 1)}
+    task_offset = len(workers)
+    task_index = {task: task_offset + index for index, task in enumerate(tasks[1:])}
+    for index, row in enumerate(rows):
+        design[index, 0] = 1.0
+        if row["worker_id"] in worker_index:
+            design[index, worker_index[row["worker_id"]]] = 1.0
+        if row["task_key"] in task_index:
+            design[index, task_index[row["task_key"]]] = 1.0
+        outcome[index] = math.log1p(float(row["task_worker_active_seconds"]))
+    coefficients, _residuals, rank, _singular = np.linalg.lstsq(design, outcome, rcond=None)
+    if rank != columns:
+        raise ValueError("timing_fixed_effect_rank_deficient")
+    standardized: dict[str, float] = {}
+    for worker in workers:
+        predictions = []
+        for task in tasks:
+            vector = np.zeros(columns, dtype=float)
+            vector[0] = 1.0
+            if worker in worker_index:
+                vector[worker_index[worker]] = 1.0
+            if task in task_index:
+                vector[task_index[task]] = 1.0
+            predictions.append(float(vector @ coefficients))
+        standardized[worker] = max(0.0, math.expm1(sum(predictions) / len(predictions)))
+    return standardized
+
+
+def _task_worker_timing_quantile(values: list[float], quantile: float) -> float:
+    ordered = sorted(values)
+    return ordered[round((len(ordered) - 1) * quantile)]
+
+
+def materialize_task_worker_timing_profile(
+    task_worker_csv: Path, output_dir: Path, *, bootstrap_replicates: int = 200,
+) -> dict[str, Any]:
+    """Profile task-worker timing without coupling it to the three C1 axes."""
+    source_rows = read_csv(task_worker_csv)
+    all_workers = sorted({str(row.get("worker_id", "")) for row in source_rows if str(row.get("worker_id", ""))})
+    eligible_rows: list[dict[str, Any]] = []
+    for row in source_rows:
+        if not _truth(row.get("task_worker_time_analysis_eligible")):
+            continue
+        try:
+            seconds = float(row.get("task_worker_active_seconds", ""))
+        except (TypeError, ValueError):
+            continue
+        if not math.isfinite(seconds) or seconds < 0:
+            continue
+        eligible_rows.append({
+            **row,
+            "worker_id": str(row.get("worker_id", "")),
+            "task_key": f"{row.get('project_id', '')}|{row.get('runtime_task_id', '')}",
+            "task_worker_active_seconds": seconds,
+        })
+    components = _task_worker_timing_components(eligible_rows) if eligible_rows else []
+    adjusted: dict[str, float] = {}
+    component_by_worker: dict[str, str] = {}
+    bootstrap: dict[str, list[float]] = defaultdict(list)
+    model_failures: dict[str, str] = {}
+    for number, component in enumerate(components, 1):
+        component_id = f"timing_component_{number}"
+        component_workers = sorted({row["worker_id"] for row in component})
+        for worker in component_workers:
+            component_by_worker[worker] = component_id
+        try:
+            adjusted.update(_fit_task_worker_timing_fixed_effect(component))
+        except ValueError as exc:
+            for worker in component_workers:
+                model_failures[worker] = str(exc)
+            continue
+        by_task: dict[str, list[dict[str, Any]]] = defaultdict(list)
+        for row in component:
+            by_task[row["task_key"]].append(row)
+        task_keys = sorted(by_task)
+        rng = random.Random(f"c1-task-worker-timing-{component_id}-20260802")
+        for _ in range(bootstrap_replicates):
+            sampled: list[dict[str, Any]] = []
+            for draw, task in enumerate(task_keys):
+                selected = rng.choice(task_keys)
+                sampled.extend({**row, "task_key": f"{selected}#bootstrap{draw}"} for row in by_task[selected])
+            try:
+                draw_values = _fit_task_worker_timing_fixed_effect(sampled)
+            except ValueError:
+                continue
+            for worker, value in draw_values.items():
+                bootstrap[worker].append(value)
+    by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in eligible_rows:
+        by_worker[row["worker_id"]].append(row)
+    profile_rows: list[dict[str, Any]] = []
+    for worker in all_workers:
+        values = [float(row["task_worker_active_seconds"]) for row in by_worker[worker]]
+        support = len(values)
+        draws = bootstrap[worker]
+        model_value = adjusted.get(worker, "")
+        ci_lower = _task_worker_timing_quantile(draws, 0.025) if len(draws) >= max(20, bootstrap_replicates // 2) else ""
+        ci_upper = _task_worker_timing_quantile(draws, 0.975) if len(draws) >= max(20, bootstrap_replicates // 2) else ""
+        if not support:
+            status = "not_evaluable"
+        elif worker in model_failures:
+            status = "not_evaluable_model"
+        elif support < 3:
+            status = "insufficient_support"
+        elif support < 5 or not draws or ci_lower == "" or ci_upper == "":
+            status = "weak_descriptive"
+        else:
+            status = "estimated"
+        profile_rows.append({
+            "worker_id": worker,
+            "T_active_raw_median": statistics.median(values) if values else "",
+            "T_active_task_adjusted": model_value,
+            "T_active_CI_lower": ci_lower,
+            "T_active_CI_upper": ci_upper,
+            "T_active_support": support,
+            "T_active_profile_status": status,
+            "T_active_bootstrap_replicates": bootstrap_replicates if draws else 0,
+            "timing_identity_level": _TASK_WORKER_TIMING_IDENTITY_LEVEL,
+            "timing_rule_version": _TASK_WORKER_TIMING_RULE_VERSION,
+            "timing_model_component": component_by_worker.get(worker, ""),
+            "timing_interpretation": "efficiency_or_work_input_not_capability_rank",
+            "timing_model_failure_reason": model_failures.get(worker, ""),
+        })
+    profile_path = output_dir / "c1_task_worker_timing_profile.csv"
+    write_csv(profile_path, profile_rows)
+    audit = {
+        "schema_version": "c1_task_worker_timing_model_audit_v1",
+        "timing_identity_level": _TASK_WORKER_TIMING_IDENTITY_LEVEL,
+        "timing_rule_version": _TASK_WORKER_TIMING_RULE_VERSION,
+        "formula": "log1p(task_worker_active_seconds) ~ worker_fixed_effect + runtime_task_fixed_effect",
+        "condition_effect": "absorbed_by_runtime_task_fixed_effect",
+        "bootstrap_unit": "runtime_task_cluster",
+        "bootstrap_replicates": bootstrap_replicates,
+        "eligible_task_worker_rows": len(eligible_rows),
+        "component_count": len(components),
+        "status_counts": dict(Counter(row["T_active_profile_status"] for row in profile_rows)),
+        "output_sha256": hashlib.sha256(profile_path.read_bytes()).hexdigest(),
+    }
+    (output_dir / "c1_task_worker_timing_model_audit.json").write_text(
+        json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+    )
+    return audit
 
 
 def materialize_independence(
@@ -1608,6 +2075,7 @@ def materialize_three_track_worker_state(
     qgt_audit_json: Path | None = None, structural_eb_audit_json: Path | None = None,
     reference_registry_csv: Path | None = None, reference_approval_csv: Path | None = None,
     building_registry_csv: Path | None = None, task_building_binding_csv: Path | None = None,
+    timing_profile_csv: Path | None = None,
     formal: bool = False, collection_window_closed: bool = False,
 ) -> dict[str, Any]:
     from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file
@@ -1647,6 +2115,7 @@ def materialize_three_track_worker_state(
         try: peer_by_worker[row.get("worker_id", "")].append({"task_id": row.get("base_task_id", ""), "value": float(row["R_peer_task"]), "dataset_group": row.get("dataset_group", ""), "crowd_status": row.get("task_crowd_structure_status", "")})
         except (TypeError, ValueError): pass
     structural_eb = {row.get("worker_id", ""): row for row in read_csv(structural_eb_csv)} if structural_eb_csv and structural_eb_csv.exists() else {}
+    timing_by_worker = {row.get("worker_id", ""): row for row in read_csv(timing_profile_csv)} if timing_profile_csv and timing_profile_csv.exists() else {}
     struct = defaultdict(lambda: {"opportunity": 0, "failure": 0})
     for row in read_csv(structural_csv):
         worker = row.get("worker_id", "")
@@ -1744,6 +2213,19 @@ def materialize_three_track_worker_state(
         profile_status = "administratively_ineligible" if not administratively_eligible else "estimated" if three_axes_ready else "insufficient_support"
         f_struct_raw = struct[worker]["failure"] / opportunity if opportunity else ""
         f_struct_eb = structural_eb.get(worker, {}).get("F_struct_EB", "")
+        timing = timing_by_worker.get(worker, {})
+        timing_fields = {
+            "T_active_raw_median": timing.get("T_active_raw_median", ""),
+            "T_active_task_adjusted": timing.get("T_active_task_adjusted", ""),
+            "T_active_CI_lower": timing.get("T_active_CI_lower", ""),
+            "T_active_CI_upper": timing.get("T_active_CI_upper", ""),
+            "T_active_support": timing.get("T_active_support", 0),
+            "T_active_profile_status": timing.get("T_active_profile_status", "not_evaluable"),
+            "timing_identity_level": timing.get("timing_identity_level", _TASK_WORKER_TIMING_IDENTITY_LEVEL),
+            "timing_rule_version": timing.get("timing_rule_version", _TASK_WORKER_TIMING_RULE_VERSION),
+            "timing_model_component": timing.get("timing_model_component", ""),
+            "timing_interpretation": timing.get("timing_interpretation", "efficiency_or_work_input_not_capability_rank"),
+        }
         record = {
             "schema_version": "worker_profile_v2", "profile_version": "paper_a_worker_profile_v2", "cohort_id": "paper_a_calibration_pooled", "enrollment_batch": enrollment[worker]["enrollment_batch"], "worker_id": worker, "completion_status": completion_status,
             "administratively_eligible": administratively_eligible, "process_eligible": process_eligible, "independence_eligible": independence_eligible, "Q_GT_estimable": q_gt_estimable, "reference_evaluable": reference_evaluable,
@@ -1778,6 +2260,9 @@ def materialize_three_track_worker_state(
             "process_eligible_support": len(gate_support[worker]["process"]),
             "independence_support": len(gate_support[worker]["independence"]),
             "scope_reference_support": len(gate_support[worker]["scope_reference"]),
+            # Timing is a separately reported auxiliary measurement.  It never
+            # contributes to three_axes_ready or any C2-B eligibility field.
+            **timing_fields,
             "worker_profile_status": profile_status,
             "formal_frozen": False,
             "freeze_owner": "finalize-c1",
@@ -1788,7 +2273,7 @@ def materialize_three_track_worker_state(
     output_csv = output_dir / output_name
     write_csv(output_csv, rows)
     status_counts = dict(Counter(row["worker_profile_status"] for row in rows))
-    summary = {"n_workers": len(rows), "n_profile_rows": status_counts.get("estimated", 0), "n_c2b_eligible": sum(_truth(row["c2_risk_model_eligible"]) for row in rows), "profile_version": "paper_a_worker_profile_v2", "cohort_id": "paper_a_calibration_pooled", "status_counts": status_counts, "enrollment": enrollment_summary, "formal_frozen": False, "freeze_owner": "finalize-c1"}
+    summary = {"n_workers": len(rows), "n_profile_rows": status_counts.get("estimated", 0), "n_c2b_eligible": sum(_truth(row["c2_risk_model_eligible"]) for row in rows), "profile_version": "paper_a_worker_profile_v2", "cohort_id": "paper_a_calibration_pooled", "status_counts": status_counts, "timing_status_counts": dict(Counter(row["T_active_profile_status"] for row in rows)), "enrollment": enrollment_summary, "formal_frozen": False, "freeze_owner": "finalize-c1"}
     (output_dir / "c1_three_track_worker_state.summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     if formal:
         manifest = {
@@ -1811,6 +2296,7 @@ def materialize_three_track_worker_state(
                     ("Q_GT_ESTIMATOR_AUDIT", qgt_audit_json), ("STRUCTURAL_EB_AUDIT", structural_eb_audit_json),
                     ("ENROLLMENT_REGISTRY_SOURCE", enrollment_registry_csv),
                     ("ENROLLMENT_REGISTRY", enrollment_output),
+                    ("TASK_WORKER_TIMING_PROFILE", timing_profile_csv),
                     *formal_dependency_paths.items(),
                     ("METHOD_CONTRACT", METHOD_CONTRACT),
                 ) if path and path.exists()

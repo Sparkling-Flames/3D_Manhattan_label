@@ -10,6 +10,7 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     materialize_c2_eligible_roster,
     materialize_completion_support,
     materialize_active_time_ledgers,
+    materialize_task_worker_timing_profile,
     materialize_analysis_rosters,
     materialize_independence,
     independence_meta_identity_sha,
@@ -296,10 +297,130 @@ def test_v2_identity_tuple_is_primary_without_server_annotation_extension(tmp_pa
     summary = materialize_active_time_ledgers(meta, logs, tmp_path)
 
     assert summary["exact_annotation_count"] == 1
-    assert summary["primary_active_time_status"] == "available"
+    assert summary["annotation_exact_active_time_status"] == "available"
+    assert summary["primary_active_time_status"] == "unavailable"
     annotation = next(csv.DictReader((tmp_path / "c1_active_time_annotation_summary.csv").open(encoding="utf-8")))
     assert annotation["primary_active_time_eligible"] == "True"
     assert float(annotation["active_seconds"]) == 5.0
+
+
+def test_task_worker_timing_uses_session_max_and_retains_revision_audit(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"; logs = tmp_path / "logs"; versions = tmp_path / "versions.csv"; logs.mkdir()
+    _csv(meta, [{
+        "project_id": "66", "ls_runtime_task_id": "10", "worker_id": "1", "annotation_id": "a2",
+        "canonical_annotation_id": "c1", "canonical_eligibility_status": "valid", "assigned_expected": "true",
+        "assignment_provenance": "original_assignment", "base_task_id": "b1", "condition": "manual",
+    }])
+    _csv(versions, [
+        {"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "1", "annotation_id": "a1", "version_disposition": "unselected_forensic"},
+        {"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "1", "annotation_id": "a2", "version_disposition": "selected_canonical"},
+    ])
+    base = {"project_id": "66", "task_id": "10", "annotator_id": "1", "script_version": "stage1_active_time_annotation_hardening_20260701_v1", "page_type": "annotation", "selected_annotation_owner_id": "1"}
+    events = [
+        {**base, "annotation_id": "draft_a", "session_id": "s1", "active_seconds": 2, "timestamp": 1},
+        {**base, "annotation_id": "draft_b", "session_id": "s1", "active_seconds": 9, "timestamp": 2},
+        {**base, "annotation_id": "unknown_annotation", "session_id": "s1", "active_seconds": 4, "timestamp": 3},
+        {**base, "annotation_id": "draft_c", "session_id": "s2", "active_seconds": 3, "timestamp": 4},
+    ]
+    (logs / "active.jsonl").write_text("\n".join(json.dumps(row) for row in events), encoding="utf-8")
+
+    summary = materialize_active_time_ledgers(
+        meta, logs, tmp_path, annotation_version_csv=versions, collection_window_closed=True, formal=True,
+    )
+
+    row = next(csv.DictReader((tmp_path / "c1_task_worker_active_time.csv").open(encoding="utf-8")))
+    assert summary["primary_active_time_status"] == "available"
+    assert row["task_worker_time_analysis_eligible"] == "True"
+    assert float(row["task_worker_active_seconds"]) == 12.0
+    assert row["canonical_annotation_count"] == "1"
+    assert row["revision_count"] == "1"
+    assert row["timing_identity_level"] == "task_worker"
+
+
+def test_task_worker_timing_excludes_cross_worker_context_and_unbridged_new_script(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"; logs = tmp_path / "logs"; logs.mkdir()
+    _csv(meta, [
+        {"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1", "canonical_eligibility_status": "valid", "assigned_expected": "true", "assignment_provenance": "original_assignment"},
+        {"project_id": "66", "ls_runtime_task_id": "11", "worker_id": "1", "annotation_id": "a2", "canonical_annotation_id": "c2", "canonical_eligibility_status": "valid", "assigned_expected": "true", "assignment_provenance": "original_assignment"},
+        {"project_id": "66", "ls_runtime_task_id": "12", "worker_id": "1", "annotation_id": "a3", "canonical_annotation_id": "c3", "canonical_eligibility_status": "valid", "assigned_expected": "true", "assignment_provenance": "original_assignment"},
+    ])
+    events = [
+        {"project_id": "66", "task_id": "10", "annotator_id": "1", "annotation_id": "other", "annotation_id_source": "selected_annotation_not_owned_by_current_user", "selected_annotation_owner_id": "2", "session_id": "cross", "script_version": "stage1_active_time_annotation_hardening_20260701_v1", "page_type": "annotation", "active_seconds": 8, "timestamp": 1},
+        {"project_id": "66", "task_id": "11", "annotator_id": "1", "annotation_id": "draft", "selected_annotation_owner_id": "1", "session_id": "new", "script_version": "stage3_active_time_page_gate_20260711_v2", "page_gate_eligible": True, "page_gate_reason": "eligible", "active_seconds": 8, "timestamp": 2},
+        {"project_id": "66", "task_id": "12", "annotator_id": "1", "annotation_id": "other", "annotation_id_source": "selected_annotation_not_owned_by_current_user", "selected_annotation_owner_id": "2", "session_id": "mixed", "script_version": "stage1_active_time_annotation_hardening_20260701_v1", "page_type": "annotation", "active_seconds": 80, "timestamp": 3},
+        {"project_id": "66", "task_id": "12", "annotator_id": "1", "annotation_id": "own_draft", "selected_annotation_owner_id": "1", "session_id": "mixed", "script_version": "stage1_active_time_annotation_hardening_20260701_v1", "page_type": "annotation", "active_seconds": 5, "timestamp": 4},
+    ]
+    (logs / "active.jsonl").write_text("\n".join(json.dumps(row) for row in events), encoding="utf-8")
+
+    materialize_active_time_ledgers(meta, logs, tmp_path, collection_window_closed=True, formal=True)
+
+    rows = {row["runtime_task_id"]: row for row in csv.DictReader((tmp_path / "c1_task_worker_active_time.csv").open(encoding="utf-8"))}
+    assert rows["10"]["formal_assignment_eligible"] == "True"
+    assert rows["10"]["task_worker_time_analysis_eligible"] == "False"
+    assert "cross_worker_only_session" in rows["10"]["timing_exclusion_reason"]
+    assert rows["11"]["task_worker_time_analysis_eligible"] == "False"
+    assert "page_gate_or_submission_bridge_missing" in rows["11"]["timing_exclusion_reason"]
+    assert rows["12"]["task_worker_time_analysis_eligible"] == "True"
+    assert float(rows["12"]["task_worker_active_seconds"]) == 5.0
+    assert rows["12"]["cross_worker_selection_event_count"] == "1"
+
+
+def test_task_worker_timing_keeps_w034_authorized_sentinel_fail_closed(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"; logs = tmp_path / "logs"; logs.mkdir()
+    _csv(meta, [
+        {"project_id": "66", "ls_runtime_task_id": "10", "worker_id": "34", "annotation_id": "a1", "canonical_annotation_id": "c1", "canonical_eligibility_status": "valid", "assigned_expected": "true", "assignment_provenance": "authorized_replacement_assignment", "w034_active_time_validation_status": "not_provided", "active_time_expected": "false", "timing_not_evaluable_reason": "w034_sentinel_not_passed"},
+        {"project_id": "66", "ls_runtime_task_id": "11", "worker_id": "34", "annotation_id": "a2", "canonical_annotation_id": "c2", "canonical_eligibility_status": "valid", "assigned_expected": "true", "assignment_provenance": "authorized_replacement_assignment", "w034_active_time_validation_status": "passed", "active_time_expected": "true"},
+    ])
+    events = [
+        {"project_id": "66", "task_id": task, "annotator_id": "34", "annotation_id": annotation, "selected_annotation_owner_id": "34", "session_id": task, "script_version": "stage1_active_time_annotation_hardening_20260701_v1", "page_type": "annotation", "active_seconds": 8, "timestamp": 1}
+        for task, annotation in (("10", "draft1"), ("11", "draft2"))
+    ]
+    (logs / "active.jsonl").write_text("\n".join(json.dumps(row) for row in events), encoding="utf-8")
+
+    materialize_active_time_ledgers(meta, logs, tmp_path, collection_window_closed=True, formal=True)
+
+    rows = {row["runtime_task_id"]: row for row in csv.DictReader((tmp_path / "c1_task_worker_active_time.csv").open(encoding="utf-8"))}
+    assert rows["10"]["task_worker_time_analysis_eligible"] == "False"
+    assert "w034_sentinel_not_passed" in rows["10"]["timing_exclusion_reason"]
+    assert rows["11"]["task_worker_time_analysis_eligible"] == "True"
+
+
+def test_task_worker_timing_excludes_permanently_administrative_worker(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"; logs = tmp_path / "logs"; logs.mkdir()
+    _csv(meta, [{
+        "project_id": "66", "ls_runtime_task_id": "10", "worker_id": "14", "annotation_id": "a1",
+        "canonical_annotation_id": "c1", "canonical_eligibility_status": "valid", "assigned_expected": "true",
+        "assignment_provenance": "original_assignment",
+    }])
+    (logs / "active.jsonl").write_text(json.dumps({
+        "project_id": "66", "task_id": "10", "annotator_id": "14", "annotation_id": "draft",
+        "selected_annotation_owner_id": "14", "session_id": "s", "script_version": "stage1_active_time_annotation_hardening_20260701_v1",
+        "page_type": "annotation", "active_seconds": 8, "timestamp": 1,
+    }), encoding="utf-8")
+
+    materialize_active_time_ledgers(meta, logs, tmp_path, collection_window_closed=True, formal=True)
+
+    row = next(csv.DictReader((tmp_path / "c1_task_worker_active_time.csv").open(encoding="utf-8")))
+    assert row["formal_assignment_eligible"] == "True"
+    assert row["task_worker_time_analysis_eligible"] == "False"
+    assert "administratively_excluded_worker" in row["timing_exclusion_reason"]
+
+
+def test_task_worker_timing_profile_is_task_adjusted_auxiliary_measurement(tmp_path: Path) -> None:
+    source = tmp_path / "timing.csv"
+    rows = [
+        {"project_id": "66", "runtime_task_id": f"t{task}", "worker_id": worker, "task_worker_active_seconds": seconds, "task_worker_time_analysis_eligible": "true"}
+        for task in range(5) for worker, seconds in (("1", 10 + task), ("2", 20 + task))
+    ]
+    _csv(source, rows)
+
+    audit = materialize_task_worker_timing_profile(source, tmp_path, bootstrap_replicates=40)
+
+    profile = {row["worker_id"]: row for row in csv.DictReader((tmp_path / "c1_task_worker_timing_profile.csv").open(encoding="utf-8"))}
+    assert audit["eligible_task_worker_rows"] == 10
+    assert profile["1"]["T_active_profile_status"] == "estimated"
+    assert float(profile["1"]["T_active_task_adjusted"]) < float(profile["2"]["T_active_task_adjusted"])
+    assert profile["1"]["timing_interpretation"] == "efficiency_or_work_input_not_capability_rank"
 
 
 def test_self_declared_late_binding_stays_unavailable_without_frozen_alias_registry(tmp_path: Path) -> None:

@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v12 SHA-256 115ba6eaf771b4fa079289f17d1f491498d9cea910d12aeb4e66d192817c7ee8 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v13 SHA-256 ca9c2788261266744b88e7bbd69d253c509a154e8291ddc0cfc3de771eb4232a -->
 # Paper A Round-Based Assignment SOP v1
 
 本 SOP 只消费当前方法合同，不定义独立的机器字段、eligibility 或统计语义。正式机器真源为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`。
@@ -36,14 +36,16 @@ C2-B 正式任务设计固定消费 D8、D10、D12。C2-B roster 只来自 `work
 
 ## 5. active-time 与删失
 
-active-time 必须按 canonical annotation identity 绑定。所有无可绑定 annotation-level active-time 的行统一写入：
+C1 active time 的正式测量层级为 `project_id`–`runtime_task_id`–`worker_id`。它只接受 formal assignment 上的累计型日志：同一 session 取正的累计秒数最大值，再对合格 session 求和；`active_seconds_fragment` 不得相加。annotation-exact identity 仅保留为 forensic audit，不再是 task-worker timing 的前提。
+
+task-worker context 无日志、仅有明确的他人工人选中事件、页面/提交桥接不合格或其他合同排除原因时，统一写入：
 
 ```text
-time_analysis_eligible=false
-active_time_integrity_status=not_evaluable
+task_worker_time_analysis_eligible=false
+timing_status=not_evaluable
 ```
 
-该状态不影响 `Q_GT`、`R_peer`、`F_struct` 或 C2-B roster，且不得补零或估算。每次 rehearsal 的具体 worker、行数和原因以当次 audit 输出为准，不在 SOP 中硬编码。
+W034 的 17 张 authorized replacement 仍须先通过 sentinel 及开始时间顺序校验。Timing 是 worker profile 的辅助 operational 字段，不影响 `Q_GT`、`R_peer`、`F_struct`、正式 worker eligibility/rank、C2-B roster、T1 分配或 V1 路由；不得补零、估算或以 `lead_time` 作逐行 fallback。每次 rehearsal 的具体 worker、行数和原因以当次 audit 输出为准，不在 SOP 中硬编码。
 
 ## 6. closeout 与 Stage 3
 
