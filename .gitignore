@@ -203,6 +203,13 @@ active_logs/**
 !analysis_results/**
 !paper_figures/**
 
+# Local visual-review assets and non-formal timing preflight output.
+# Keep the three machine-readable building-registry audit artifacts tracked.
+analysis_results/c1_building_registry_review_20260801/*.jpg
+analysis_results/c1_building_registry_review_20260801/representative_images/
+analysis_results/c1_task_worker_timing_preflight_20260802_v13/
+tools/label_studio/official/ls_userscript_annotation_identity_probe.user.js
+
 # Re-ignore legacy subfolders inside the tracked project trees above
 active_logs/**/legacy/**
 analysis_results/**/legacy/**
