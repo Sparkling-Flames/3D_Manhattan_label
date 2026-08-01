@@ -49,6 +49,10 @@ def _batch_artifacts(root: Path, *, w034_status: str = "frozen") -> None:
         "c1_task_outcome_reference.csv", "c1_task_building_binding.csv",
     ):
         (root / name).write_text("{}" if name.endswith(".json") else "status\nok\n", encoding="utf-8")
+    _write_csv(root / "c1_task_scope_final_disposition.csv", [
+        {"base_task_id": task, "task_final_scope": "in_scope", "scope_resolution_status": "resolved"}
+        for task in tasks
+    ])
     _write_csv(root / "c1_worker_completion_audit.csv", [
         {"worker_id": "W001", "completion_status": "completed"},
         {"worker_id": "W034", "completion_status": "completed"},
@@ -81,8 +85,9 @@ def test_c1_a_snapshot_scopes_out_late_entry_inputs(tmp_path: Path) -> None:
     readiness.append({"worker_id": "W099", "Q_GT_support": "9"})
     _write_csv(c1_dir / "c1_measurement_readiness_by_worker.csv", readiness)
     scope = tmp_path / "scope.json"; scope.write_text(json.dumps(_batch_scope()), encoding="utf-8")
-    with pytest.raises(ValueError, match="cohort-specific C1 estimates"):
-        freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot.json"})())
+    result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot.json"})())
+    assert result["status"] == "formal_design_eligible"
+    assert result["excluded_late_entry_worker_ids"] == ["99"]
 
 
 def test_c1_a_snapshot_requires_the_exact_original_roster_and_preserves_task_level_k(tmp_path: Path) -> None:
@@ -123,6 +128,17 @@ def test_c1_a_snapshot_stays_provisional_when_w034_repairs_are_not_frozen(tmp_pa
     result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot.json"})())
     assert result["status"] == "provisional"
     assert "w034_sensitivity_not_frozen" in result["blockers"]
+
+
+def test_c1_a_snapshot_requires_terminal_scope_disposition(tmp_path: Path) -> None:
+    c1_dir = tmp_path / "c1"; _batch_artifacts(c1_dir)
+    scope_rows = list(csv.DictReader((c1_dir / "c1_task_scope_final_disposition.csv").open(encoding="utf-8")))
+    scope_rows[0]["scope_resolution_status"] = "pending"
+    _write_csv(c1_dir / "c1_task_scope_final_disposition.csv", scope_rows)
+    scope = tmp_path / "scope.json"; scope.write_text(json.dumps(_batch_scope()), encoding="utf-8")
+    result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot.json"})())
+    assert result["status"] == "provisional"
+    assert "c1_a_scope_not_terminal:w034-0" in result["blockers"]
 
 
 def test_c1_a_snapshot_keeps_w011_completion_exception_visible(tmp_path: Path) -> None:
@@ -188,7 +204,7 @@ def test_snapshot_dependencies_are_path_bound_after_snapshot_move(tmp_path: Path
 
 def test_design_reads_sha_bound_snapshot_dependencies_not_snapshot_parent(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     source = tmp_path / "c1_source"; source.mkdir()
-    roles = ("WORKER_PROFILE", "COMPLETION", "Q_GT", "STRUCTURAL_EB", "MEASUREMENT_READINESS", "CANONICAL_ELIGIBILITY", "REFERENCE", "BUILDING")
+    roles = ("WORKER_PROFILE", "COMPLETION", "Q_GT", "STRUCTURAL_EB", "MEASUREMENT_READINESS", "CANONICAL_ELIGIBILITY", "REFERENCE", "SCOPE_FINAL_DISPOSITION", "BUILDING")
     dependencies = []
     for role in roles:
         path = source / f"{role}.csv"; path.write_text("evidence\nok\n", encoding="utf-8")

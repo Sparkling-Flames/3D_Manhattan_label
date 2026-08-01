@@ -1,6 +1,6 @@
 {
     "schema_version":  "paper_a_method_contract_v9",
-    "contract_version":  "paper_a_method_20260731_v9",
+    "contract_version":  "paper_a_method_20260801_v10",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
     "stages":  [
@@ -59,6 +59,27 @@
                                         ],
                         "three_axis_authority":  "worker_profile_v2_only"
                     },
+    "scope_adjudication":  {
+                               "initial_review_source":  "complete_single_researcher_review_67_tasks",
+                               "worker_evidence_role":  "independent_group_direction_and_secondary_review_triage",
+                               "eligible_worker_evidence":  "canonical_formal_assignment_independent_nonoutside_duplicate_resolved",
+                               "worker_direction_rule":  "relative_majority_with_minimum_three_eligible_responses",
+                               "no_consensus_rule":  "tie_or_fewer_than_3_eligible_responses",
+                               "secondary_review_triggers":  [
+                                                                 "researcher_worker_direction_disagreement",
+                                                                 "worker_no_consensus"
+                                                             ],
+                               "mixed_same_direction_role":  "audit_only",
+                               "final_values":  [
+                                                    "in_scope",
+                                                    "oos",
+                                                    "unresolved"
+                                                ],
+                               "scope_is_primary_worker_axis":  false,
+                               "scope_is_c2_roster_gate":  false,
+                               "scope_is_full_component":  false,
+                               "scope_is_stage3_gate":  false
+                           },
     "q_gt_models":  {
                         "c1_only":  {
                                         "formula":  "Q_GT=worker_fixed_effect+task_fixed_effect+error",
@@ -159,7 +180,8 @@
                                                        "terminal_status",
                                                        "enrolled_at"
                                                    ],
-                               "all_registered_workers_terminal_before_c1_close":  true,
+                                "all_c1_a_snapshot_workers_terminal_before_freeze":  true,
+                                "all_registered_calibration_workers_terminal_before_final_pooled_freeze":  true,
                                "primary_profile":  "pooled",
                                "required_sensitivity_profile":  "original_only",
                                "amendment_decision_information_set":  {
@@ -384,9 +406,10 @@
                                                                  "Q_GT",
                                                                  "STRUCTURAL_EB",
                                                                  "MEASUREMENT_READINESS",
-                                                                 "CANONICAL_ELIGIBILITY",
-                                                                 "REFERENCE",
-                                                                 "BUILDING"
+                                                                  "CANONICAL_ELIGIBILITY",
+                                                                  "REFERENCE",
+                                                                  "SCOPE_FINAL_DISPOSITION",
+                                                                  "BUILDING"
                                                              ],
                                "provisional_rule":  "provisional snapshots are materialized but must set C1_A_ANALYSIS_SNAPSHOT_FROZEN and C2B_DESIGN_INPUT_FROZEN_FROM_C1_A false",
                                "snapshot_state_fields":  [

@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260731_v9 SHA-256 de7d99f4d119a87a48cfaa4e5c30c9d11161da43f8c1c37e34a6550c8b68f86c -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v10 SHA-256 139ceb825480bab7ecf86de4500f1884af9a89f7c2ac6690680b228138747e38 -->
 # Paper A C1-A -> C2-B 本地运行手册
 
 本手册只描述本地 batch workflow，不调用 Label Studio API，不证明 Label Studio UI 可见性。机器规范字段只来自当前 JSON 方法合同。
@@ -25,13 +25,17 @@
   --annotation-independence-disposition $independence `
   --project-independence-disposition $projectIndependence `
   --duplicate-adjudication $duplicate --structural-disposition $structural `
-  --scope-adjudication $scopeAdjudication --reference-amendment $reference `
+  --scope-initial-review $scopeInitialReview --scope-adjudication $scopeAdjudication --reference-amendment $reference `
   --outside-assignment-disposition $outside --completion-disposition $completion `
   --authorized-reassignment-manifest $authorized --calibration-enrollment-registry $enrollment `
   --building-registry $building --w034-active-time-validation-manifest $w034Active
 ```
 
 人工处置文件可缺省；传入时必须被 rehearsal 实际消费。没有 reference amendment 时记录 `reference_approval_status=not_provided`，继续只做 provisional 分析。无可绑定 annotation-level active-time 的行统一为 `time_analysis_eligible=false`、`active_time_integrity_status=not_evaluable`，不补零、不使用 lead_time 代理，也不影响 `Q_GT`、`R_peer`、`F_struct` 或 C2-B roster。summary 必须报告 export project IDs、active-log project IDs、overlap IDs、exact join count 和 project mismatch count，并生成 `analysis_dependency_manifest.json`。
+
+### Scope two-pass closeout
+
+`$scopeInitialReview` covers all 67 base tasks. The first rehearsal writes `c1_scope_consensus_audit.csv`, `c1_scope_secondary_review_queue.csv`, and `c1_scope_adjudication_template.csv`; complete only the conflict or `no_consensus` rows, then rerun with the complete `$scopeAdjudication`. The resulting `c1_task_scope_final_disposition.csv` is the only scope input that may freeze C1-A. `unresolved` is terminal and audit-retained, but excluded from primary geometry.
 
 ## 2. Freeze C1-A snapshot
 

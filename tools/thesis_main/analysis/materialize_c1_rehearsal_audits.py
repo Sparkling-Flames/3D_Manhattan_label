@@ -1222,8 +1222,10 @@ def materialize_final_canonical_closeout_summary(
         canonical_blockers.append("outside_assignment_disposition_missing_invalid_or_orphan")
     measurement_blockers = [*canonical_blockers]
     if unreviewed_structural: measurement_blockers.append("unreviewed_structural_rows")
-    pending_scope = [row for row in references if row.get("final_scope") not in {"in_scope", "oos"}]
+    terminal_scopes = {"in_scope", "oos", "unresolved"}
+    pending_scope = [row for row in references if row.get("final_scope") not in terminal_scopes]
     oos_contexts = [row for row in references if row.get("final_scope") == "oos"]
+    unresolved_contexts = [row for row in references if row.get("final_scope") == "unresolved"]
     pending_scope_base_tasks = {row.get("base_task_id", "") for row in pending_scope if row.get("base_task_id", "")}
     pending_scope_annotation_rows = sum(
         "scope_not_resolved_in_scope" in row.get("global_analysis_exclusion_reason", "")
@@ -1247,6 +1249,7 @@ def materialize_final_canonical_closeout_summary(
         "pending_scope_contexts": len(pending_scope),
         "pending_scope_annotation_rows": pending_scope_annotation_rows,
         "oos_contexts": len(oos_contexts),
+        "unresolved_scope_contexts": len(unresolved_contexts),
         "scope_pending_but_excluded": len(pending_scope),
         "scope_pending_leaking_to_estimand": 0,
         "C1_CANONICAL_CLOSED": not canonical_blockers,

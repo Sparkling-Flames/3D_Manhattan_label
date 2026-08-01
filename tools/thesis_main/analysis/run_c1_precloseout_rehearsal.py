@@ -318,7 +318,8 @@ def materialize(
     independence_disposition: Path | None = None,
     project_independence_disposition: Path | None = None,
     structural_disposition: Path | None = None,
-    duplicate_adjudication: Path | None = None, scope_adjudication: Path | None = None,
+    duplicate_adjudication: Path | None = None, scope_initial_review: Path | None = None,
+    scope_adjudication: Path | None = None,
     reference_amendment: Path | None = None, outside_assignment_disposition: Path | None = None,
     completion_disposition: Path | None = None, c1_active_log_freeze_manifest: Path | None = None,
     authorized_reassignment_manifest: Path | None = None, building_registry: Path | None = None,
@@ -375,7 +376,8 @@ def materialize(
     review_sources = {name: path for name, path in {
         "duplicate_adjudication": duplicate_adjudication, "structural_disposition": structural_disposition,
         "project_independence_disposition": project_independence_disposition,
-        "annotation_independence_disposition": independence_disposition, "scope_adjudication": scope_adjudication,
+        "annotation_independence_disposition": independence_disposition,
+        "scope_initial_review": scope_initial_review, "scope_adjudication": scope_adjudication,
         "reference_amendment": reference_amendment, "outside_assignment_disposition": outside_assignment_disposition,
         "completion_disposition": completion_disposition,
         "authorized_reassignment_manifest": authorized_reassignment_manifest,
@@ -526,7 +528,12 @@ def materialize(
         output_dir / "c1_canonical_annotations.csv", output_dir / "c1_canonical_geometry.jsonl",
         fixed_snapshots["candidate_inventory"], fixed_snapshots["gt_export"], output_dir,
         scope_adjudication_csv=review_snapshots.get("scope_adjudication"),
+        scope_initial_review_csv=review_snapshots.get("scope_initial_review"),
+        scope_meta_csv=output_dir / "c1_canonical_meta_observations.csv",
+        scope_independence_csv=output_dir / "c1_independence_evidence.csv",
+        scope_outside_csv=output_dir / "c1_outside_assignment_disposition_evidence.csv",
         reference_amendment=review_snapshots.get("reference_amendment"),
+        formal=formal,
     )
     building_summary = materialize_task_building_binding(
         output_dir / "c1_canonical_annotations.csv", fixed_snapshots.get("building_registry"), output_dir,

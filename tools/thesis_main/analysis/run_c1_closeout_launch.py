@@ -287,6 +287,7 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
         "STRUCTURAL_EB_AUDIT": c1_dir / "c1_structural_reliability_eb.csv",
         "COMPLETION": c1_dir / "c1_worker_completion_audit.csv",
         "REFERENCE": c1_dir / "c1_task_outcome_reference.csv",
+        "SCOPE_FINAL_DISPOSITION": c1_dir / "c1_task_scope_final_disposition.csv",
         "BUILDING": c1_dir / "c1_task_building_binding.csv",
         "W034_SENSITIVITY": c1_dir / "w034_original_vs_authorized_sensitivity.json",
         "WORKER_PROFILE": profile_path,
@@ -300,11 +301,6 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
         row.get("worker_id", "") for row in profile_rows
         if row.get("enrollment_batch") == "late_entry"
     }
-    if late_workers:
-        raise ValueError(
-            "C1_A snapshot requires cohort-specific C1 estimates; source rehearsal contains late-entry workers:"
-            + ",".join(sorted(late_workers))
-        )
     expected_originals = {
         row.get("worker_id", "") for row in profile_rows
         if row.get("enrollment_batch") == "original"
@@ -376,6 +372,18 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
         or row.get("canonical_annotation_id") in canonical_repair_ids
     ]
     eligible_base_task_ids = sorted({str(row.get("base_task_id", "")) for row in included_rows if _truth(row.get("formal_assignment_eligible")) and row.get("base_task_id")})
+    scope_rows = _read(required["SCOPE_FINAL_DISPOSITION"]) if required["SCOPE_FINAL_DISPOSITION"].is_file() else []
+    terminal_scope_by_task = {
+        str(row.get("base_task_id", "")): str(row.get("task_final_scope", "")).strip().lower()
+        for row in scope_rows
+        if str(row.get("scope_resolution_status", "")).strip().lower() in {"resolved", "terminal_unresolved"}
+    }
+    nonterminal_scope_tasks = sorted(
+        task for task in eligible_base_task_ids
+        if terminal_scope_by_task.get(task) not in {"in_scope", "oos", "unresolved"}
+    )
+    if nonterminal_scope_tasks:
+        blockers.append("c1_a_scope_not_terminal:" + ",".join(nonterminal_scope_tasks))
     identity_rows = [{
         "canonical_annotation_id": row.get("canonical_annotation_id", ""), "worker_id": row.get("worker_id", ""),
         "base_task_id": row.get("base_task_id", ""), "condition": row.get("condition", ""),
@@ -401,7 +409,7 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
     scoped_dependencies["CANONICAL_ELIGIBILITY"] = canonical_scoped
     scoped_dependencies.update({
         role: _write_c1_a_scoped_input(required[role], scoped_dir, base_task_ids=set(eligible_base_task_ids))
-        for role in ("REFERENCE", "BUILDING") if required[role].is_file()
+        for role in ("REFERENCE", "SCOPE_FINAL_DISPOSITION", "BUILDING") if required[role].is_file()
     })
     frozen = not blockers
     snapshot = {
@@ -410,7 +418,7 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
         "source_c1_output_dir": str(c1_dir), "source_c1_output_manifest_sha256": sha256_file(required["ANALYSIS_DEPENDENCY_BUNDLE"]) if required["ANALYSIS_DEPENDENCY_BUNDLE"].is_file() else "",
         "original_worker_ids": sorted(originals), "authorized_repair_set": {"w034": [entry for entry in repairs["w034"]], "w001": [entry for entry in repairs["w001"]], "resolved_canonical_annotation_ids": sorted(canonical_repair_ids), "expected_count": 20}, "original_completion_exception_task_ids": sorted(completion_exceptions),
         "included_canonical_annotation_identity_manifest_sha256": sha256_file(identity_manifest),
-        "eligible_base_task_ids": eligible_base_task_ids, "excluded_late_entry_worker_ids": [], "reference_registry_sha256": sha256_file(required["REFERENCE"]) if required["REFERENCE"].is_file() else "",
+        "eligible_base_task_ids": eligible_base_task_ids, "excluded_late_entry_worker_ids": sorted(late_workers), "reference_registry_sha256": sha256_file(required["REFERENCE"]) if required["REFERENCE"].is_file() else "",
         "C1_A_ANALYSIS_SNAPSHOT_MATERIALIZED": True, "C1_A_ANALYSIS_SNAPSHOT_FROZEN": frozen, "C2B_BASELINE_INPUT_FROZEN": frozen, "C2B_DESIGN_INPUT_FROZEN_FROM_C1_A": frozen,
         "C2B_ASSIGNMENT_BATCH_A_MATERIALIZED": False, "C2B_ASSIGNMENT_BATCH_B_MATERIALIZED": False,
         "CALIBRATION_ENROLLMENT_CLOSED": False, "ALL_CALIBRATION_WORKERS_TERMINAL": False, "FINAL_POOLED_PROFILE_FROZEN": False,
@@ -989,6 +997,7 @@ def rehearse_c1(args: argparse.Namespace) -> dict[str, Any]:
         project_independence_disposition=getattr(args, "project_independence_disposition", None),
         duplicate_adjudication=getattr(args, "duplicate_adjudication", None),
         structural_disposition=getattr(args, "structural_disposition", None),
+        scope_initial_review=getattr(args, "scope_initial_review", None),
         scope_adjudication=getattr(args, "scope_adjudication", None),
         reference_amendment=getattr(args, "reference_amendment", None),
         outside_assignment_disposition=getattr(args, "outside_assignment_disposition", None),
@@ -1052,6 +1061,7 @@ def audit_c1(args: argparse.Namespace) -> dict[str, Any]:
         input_status="formal", independence_disposition=args.independence_disposition,
         project_independence_disposition=args.project_independence_disposition,
         structural_disposition=args.structural_disposition,
+        scope_initial_review=getattr(args, "scope_initial_review", None),
         duplicate_adjudication=args.duplicate_adjudication,
         scope_adjudication=args.scope_adjudication,
         reference_amendment=args.reference_amendment,
@@ -1245,7 +1255,7 @@ def design_c2b(args: argparse.Namespace) -> dict[str, Any]:
         raise ValueError("C1_A design input is not frozen")
     c1_inputs = _snapshot_dependencies(
         closeout, "WORKER_PROFILE", "COMPLETION", "Q_GT", "STRUCTURAL_EB",
-        "MEASUREMENT_READINESS", "CANONICAL_ELIGIBILITY", "REFERENCE", "BUILDING",
+        "MEASUREMENT_READINESS", "CANONICAL_ELIGIBILITY", "REFERENCE", "SCOPE_FINAL_DISPOSITION", "BUILDING",
     )
     evidence_envelope = _materialize_c2b_evidence_envelope(args)
     if not evidence_envelope["C2B_EVIDENCE_FROZEN"]:
@@ -1737,6 +1747,7 @@ def main(argv: list[str] | None = None) -> int:
     rehearsal = sub.add_parser("rehearse-c1")
     add_c1_inputs(rehearsal, active_name="--active-log")
     rehearsal.add_argument("--annotation-independence-disposition", dest="independence_disposition", type=Path)
+    rehearsal.add_argument("--scope-initial-review", type=Path)
     for name in ("duplicate-adjudication", "structural-disposition", "project-independence-disposition", "scope-adjudication", "reference-amendment", "outside-assignment-disposition", "completion-disposition"):
         rehearsal.add_argument(f"--{name}", type=Path)
 
@@ -1777,6 +1788,7 @@ def main(argv: list[str] | None = None) -> int:
     audit.add_argument("--c1-active-log-freeze-manifest", type=Path, required=True)
     audit.add_argument("--collection-closure-manifest", type=Path, required=True)
     audit.add_argument("--annotation-independence-disposition", dest="independence_disposition", type=Path)
+    audit.add_argument("--scope-initial-review", type=Path, required=True)
     for name in ("duplicate-adjudication", "structural-disposition", "project-independence-disposition", "scope-adjudication", "reference-amendment", "outside-assignment-disposition", "completion-disposition"):
         audit.add_argument(f"--{name}", type=Path, required=True)
 

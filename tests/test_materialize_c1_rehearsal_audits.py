@@ -82,6 +82,17 @@ def test_final_closeout_does_not_block_nonstarter_or_reviewed_local_exclusion(tm
     assert "completion_exception_disposition_invalid_or_orphan" not in summary["blockers"]
 
 
+def test_final_closeout_records_unresolved_scope_as_terminal_exclusion(tmp_path: Path) -> None:
+    _csv(tmp_path / "structural_validation_audit.csv", [{"structural_validation_status": "passed"}])
+    _csv(tmp_path / "c1_row_analysis_eligibility.csv", [{"gt_primary_analysis_eligible": "false", "loo_medoid_analysis_eligible": "false", "strict_loo_analysis_eligible": "false", "structural_opportunity_eligible": "false", "gt_primary_analysis_exclusion_reason": "scope_not_resolved_in_scope"}])
+    _csv(tmp_path / "c1_annotation_version_disposition.csv", [{"version_disposition": "selected_canonical"}])
+    _csv(tmp_path / "c1_task_outcome_reference.csv", [{"base_task_id": "b1", "final_scope": "unresolved"}])
+    summary = materialize_final_canonical_closeout_summary(tmp_path, {"missing_other_count": 0}, formal=True)
+    assert summary["formal_closeout_ready"] is True
+    assert summary["pending_scope_base_tasks"] == 0
+    assert summary["unresolved_scope_contexts"] == 1
+
+
 def test_final_closeout_blocks_unclassified_missing(tmp_path: Path) -> None:
     _csv(tmp_path / "structural_validation_audit.csv", [{"structural_validation_status": "passed"}])
     _csv(tmp_path / "c1_row_analysis_eligibility.csv", [{"gt_primary_analysis_eligible": "true", "loo_medoid_analysis_eligible": "true", "strict_loo_analysis_eligible": "true", "structural_opportunity_eligible": "true", "gt_primary_analysis_exclusion_reason": ""}])
@@ -341,6 +352,20 @@ def test_row_eligibility_excludes_outside_assignment_from_all_tracks(tmp_path: P
     assert result["loo_medoid_analysis_eligible"] == "False"
     assert result["strict_loo_analysis_eligible"] == "False"
     assert result["structural_opportunity_eligible"] == "False"
+
+
+def test_row_eligibility_excludes_unresolved_scope_from_all_geometry_tracks(tmp_path: Path) -> None:
+    canonical = tmp_path / "canonical.csv"; versions = tmp_path / "versions.csv"; quality = tmp_path / "quality.csv"
+    loo = tmp_path / "loo.csv"; structural = tmp_path / "structural.csv"; reference = tmp_path / "reference.csv"
+    row = {"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1", "assignment_provenance": "original_assignment", "assigned_expected": "true", "outside_assignment_submission": "false", "duplicate_worker_task_submission": "false"}
+    _csv(canonical, [row]); _csv(versions, [{"annotation_id": "a1", "version_disposition": "selected_canonical"}])
+    _csv(quality, [{"canonical_annotation_id": "c1", "quality_evaluable": "true"}])
+    _csv(loo, [{"canonical_annotation_id": "c1", "q_LOO_tu": ".9", "primary_loo_eligible": "true"}])
+    _csv(structural, [{"canonical_annotation_id": "c1", "structural_validation_status": "passed"}])
+    _csv(reference, [{"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "final_scope": "unresolved", "geometry_reference_ready": "false"}])
+    materialize_row_analysis_eligibility(canonical, versions, quality, loo, structural, reference, tmp_path)
+    result = next(csv.DictReader((tmp_path / "c1_row_analysis_eligibility.csv").open(encoding="utf-8")))
+    assert all(result[field] == "False" for field in ("gt_primary_analysis_eligible", "peer_analysis_eligible", "loo_medoid_analysis_eligible", "strict_loo_analysis_eligible", "structural_opportunity_eligible"))
 
 
 def test_row_eligibility_excludes_administratively_removed_worker_from_all_tracks(tmp_path: Path) -> None:
