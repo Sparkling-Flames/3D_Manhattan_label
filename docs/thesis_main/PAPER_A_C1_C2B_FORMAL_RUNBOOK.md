@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v11 SHA-256 5d16888e4bec060039a9aed03732bf6c3d527cdb5be553a0dc78b5be01f8ac48 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v12 SHA-256 115ba6eaf771b4fa079289f17d1f491498d9cea910d12aeb4e66d192817c7ee8 -->
 # Paper A C1-A -> C2-B 本地运行手册
 
 本手册只描述本地 batch workflow，不调用 Label Studio API，不证明 Label Studio UI 可见性。机器规范字段只来自当前 JSON 方法合同。
@@ -28,10 +28,10 @@
   --scope-initial-review $scopeInitialReview --scope-adjudication $scopeAdjudication --reference-amendment $reference `
   --outside-assignment-disposition $outside --completion-disposition $completion `
   --authorized-reassignment-manifest $authorized --calibration-enrollment-registry $enrollment `
-  --building-registry $building --w034-active-time-validation-manifest $w034Active
+  --building-registry $building
 ```
 
-人工处置文件可缺省；传入时必须被 rehearsal 实际消费。没有 reference amendment 时记录 `reference_approval_status=not_provided`，继续只做 provisional 分析。无可绑定 annotation-level active-time 的行统一为 `time_analysis_eligible=false`、`active_time_integrity_status=not_evaluable`，不补零、不使用 lead_time 代理，也不影响 `Q_GT`、`R_peer`、`F_struct` 或 C2-B roster。summary 必须报告 export project IDs、active-log project IDs、overlap IDs、exact join count 和 project mismatch count，并生成 `analysis_dependency_manifest.json`。
+人工处置文件可缺省；传入时必须被 rehearsal 实际消费。没有 reference amendment 时记录 `reference_approval_status=not_provided`，继续只做 provisional 分析。无可绑定 annotation-level active-time 的行统一为 `time_analysis_eligible=false`、`active_time_integrity_status=not_evaluable`，不补零、不使用 lead time 作为逐行 fallback，也不影响 `Q_GT`、`R_peer`、`F_struct`、C1-A snapshot 或 C2-B roster。`--w034-active-time-validation-manifest` 可缺省；若提供则必须完整通过身份、时间顺序和 SHA 校验。统一定义的 lead time 只允许另行输出为 post-hoc exploratory elapsed-time，不得与 active time 混合或进入画像、资格、排名和路由。summary 必须报告 export project IDs、active-log project IDs、overlap IDs、exact join count 和 project mismatch count，并生成 `analysis_dependency_manifest.json`。
 
 ### Scope two-pass closeout
 

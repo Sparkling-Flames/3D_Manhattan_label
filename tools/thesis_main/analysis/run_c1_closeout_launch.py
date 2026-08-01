@@ -1052,8 +1052,8 @@ def build_collection_closure(args: argparse.Namespace) -> dict[str, Any]:
 
 
 def audit_c1(args: argparse.Namespace) -> dict[str, Any]:
-    if not getattr(args, "authorized_reassignment_manifest", None) or not getattr(args, "building_registry", None) or not getattr(args, "w034_active_time_validation_manifest", None) or not getattr(args, "calibration_enrollment_registry", None):
-        raise ValueError("formal C1 requires authorized reassignment, W034 active-time validation, authoritative building registry, and calibration enrollment registry")
+    if not getattr(args, "authorized_reassignment_manifest", None) or not getattr(args, "building_registry", None) or not getattr(args, "calibration_enrollment_registry", None):
+        raise ValueError("formal C1 requires authorized reassignment, authoritative building registry, and calibration enrollment registry")
     validate_active_log_freeze_manifest(args.c1_active_log_freeze_manifest, args.active_log)
     summary = materialize_c1(
         args.export_dir, args.active_log, args.manual_assignment, args.semi_assignment,

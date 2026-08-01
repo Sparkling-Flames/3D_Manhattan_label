@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v11 SHA-256 5d16888e4bec060039a9aed03732bf6c3d527cdb5be553a0dc78b5be01f8ac48 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v12 SHA-256 115ba6eaf771b4fa079289f17d1f491498d9cea910d12aeb4e66d192817c7ee8 -->
 # Paper A Round-Based Assignment SOP v1
 
 本 SOP 只消费当前方法合同，不定义独立的机器字段、eligibility 或统计语义。正式机器真源为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`。

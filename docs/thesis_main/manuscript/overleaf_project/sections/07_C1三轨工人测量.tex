@@ -1,4 +1,4 @@
-% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v11 SHA-256 5d16888e4bec060039a9aed03732bf6c3d527cdb5be553a0dc78b5be01f8ac48
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v12 SHA-256 115ba6eaf771b4fa079289f17d1f491498d9cea910d12aeb4e66d192817c7ee8
 % Paper A: C1 separates computability from formal analysis eligibility.
 \section{C1：三轴工人测量与设计参数}
 
@@ -135,8 +135,9 @@ discrepancy worker、聚合稳定性和敏感性分析，不作为外部质量�
 和 excess；不得用一个全局 (k=5) 或 annotation row 数替代。W034 同时物化 original-only 与
 original+authorized profile，W001 对应 original+authorized profile；rolling enrollment 激活时再增加
 original-cohort 与 pooled-cohort 版本。所有 profile 都绑定 assignment、canonical evidence、row
-eligibility、active-time sentinel 和 estimator manifest 的 SHA，缺失任一依赖时只能输出
-not-evaluable/candidate，不能形成正式 routing state。
+eligibility 和 estimator manifest 的 SHA。Active-time sentinel 仅约束 timing validation；其缺失使 timing
+not-evaluable，但不得阻断几何三轴、C1-A snapshot 或 C2-B roster。Label Studio lead time 不作为逐行
+fallback，也不与 active time 混合；若统一计算，只能报告为独立的 post-hoc exploratory elapsed-time。
 
 \subsection{三轴用途级资格合同}
 

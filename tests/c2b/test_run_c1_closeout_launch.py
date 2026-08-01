@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, build_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1, validate_runbook_command_contract
+from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, audit_c1, build_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1, validate_runbook_command_contract
 from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _aggregate_sha, _c1_closeout_blockers
 from tools.thesis_main.analysis.derive_c2b_design_thresholds import derive_threshold_manifest
 
@@ -31,6 +31,34 @@ def test_rehearsal_can_read_live_logs_but_cannot_be_formal(monkeypatch, tmp_path
     result = rehearse_c1(args)
     assert captured["input_status"] == "precloseout_rehearsal"
     assert result["formal_closeout_ready"] is False
+
+
+def test_formal_audit_allows_missing_w034_timing_manifest_without_relaxing_other_inputs(monkeypatch, tmp_path):
+    captured = {}
+    monkeypatch.setattr("tools.thesis_main.analysis.run_c1_closeout_launch.validate_active_log_freeze_manifest", lambda *_: None)
+    monkeypatch.setattr(
+        "tools.thesis_main.analysis.run_c1_closeout_launch.materialize_c1",
+        lambda *args, **kwargs: captured.update(kwargs) or {
+            "output_dir": str(tmp_path), "formal_closeout_ready": True, "blockers": [],
+        },
+    )
+    args = argparse.Namespace(
+        authorized_reassignment_manifest=tmp_path / "authorized.csv",
+        building_registry=tmp_path / "building.csv",
+        calibration_enrollment_registry=tmp_path / "enrollment.csv",
+        w034_active_time_validation_manifest=None,
+        c1_active_log_freeze_manifest=tmp_path / "active-freeze.json",
+        export_dir=[], active_log=tmp_path / "logs", manual_assignment=tmp_path / "manual.csv",
+        semi_assignment=tmp_path / "semi.csv", worker_distribution=tmp_path / "workers.csv",
+        gt_export=tmp_path / "gt.json", p1_closeout_dir=tmp_path / "p1", output_root=tmp_path,
+        independence_disposition=None, project_independence_disposition=None,
+        structural_disposition=None, duplicate_adjudication=None, scope_initial_review=None,
+        scope_adjudication=None, reference_amendment=None, outside_assignment_disposition=None,
+        completion_disposition=None, collection_closure_manifest=None,
+        c1_preannotation_feature_csv=None, p1_integrity_dir=None, late_entry_assignment_manifest=None,
+    )
+    assert audit_c1(args)["formal_closeout_ready"] is True
+    assert captured["w034_active_time_validation_manifest"] is None
 
 
 def test_public_cli_exposes_the_auditable_and_thin_entry_commands(capsys):

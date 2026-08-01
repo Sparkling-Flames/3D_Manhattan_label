@@ -1,6 +1,6 @@
 {
     "schema_version":  "paper_a_method_contract_v9",
-    "contract_version":  "paper_a_method_20260801_v11",
+    "contract_version":  "paper_a_method_20260801_v12",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
     "stages":  [
@@ -86,6 +86,32 @@
                                "scope_is_full_component":  false,
                                "scope_is_stage3_gate":  false
                            },
+    "timing":  {
+                    "primary_estimand_source":  "owner_valid_project_task_worker_annotation_exact_active_log_only",
+                    "missing_exact_binding":  "time_analysis_eligible_false_and_active_time_integrity_status_not_evaluable",
+                    "missing_timing_does_not_gate":  [
+                                                           "Q_GT",
+                                                           "R_peer",
+                                                           "R_LOO_medoid",
+                                                           "R_LOO_strict",
+                                                           "F_struct",
+                                                           "C2B_roster",
+                                                           "C1_A_snapshot"
+                                                       ],
+                    "lead_time_role":  "optional_post_hoc_exploratory_elapsed_time_only",
+                    "lead_time_row_fallback_for_primary_or_sensitivity":  false,
+                    "lead_time_must_not_be_mixed_with_active_time":  true,
+                    "lead_time_never_used_for":  [
+                                                       "worker_timing_profile",
+                                                       "eligibility",
+                                                       "ranking",
+                                                       "routing",
+                                                       "C2B_roster"
+                                                   ],
+                    "w034_missing_validation_manifest":  "timing_not_evaluable_only",
+                    "w034_manifest_if_provided":  "all_SHA_identity_and_validation_checks_must_pass",
+                    "active_time_expected_is_collection_intent_not_observed_success":  true
+                },
     "q_gt_models":  {
                         "c1_only":  {
                                         "formula":  "Q_GT=worker_fixed_effect+task_fixed_effect+error",
@@ -251,14 +277,17 @@
                                                       "task_building_binding",
                                                       "method_contract"
                                                   ],
-                        "w034_required_dependencies":  [
-                                                           "raw_active_log_bundle",
-                                                           "derived_active_time_audit",
-                                                           "sentinel_annotation",
-                                                           "original_profile",
-                                                           "authorized_profile",
-                                                           "thresholds"
-                                                       ]
+                        "w034_profile_sensitivity_required_dependencies":  [
+                                                                              "original_profile",
+                                                                              "authorized_profile",
+                                                                              "thresholds",
+                                                                              "method_contract"
+                                                                          ],
+                        "w034_timing_validation_required_dependencies":  [
+                                                                             "raw_active_log_bundle",
+                                                                             "derived_active_time_audit",
+                                                                             "sentinel_annotation"
+                                                                         ]
                     },
     "c2b_launch":  {
                        "planning_entrypoint":  "run_c1_closeout_launch.py rehearse-c1 then freeze-c1-batch then design-c2b",

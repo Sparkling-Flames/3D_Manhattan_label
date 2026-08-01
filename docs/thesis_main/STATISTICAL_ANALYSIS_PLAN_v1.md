@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v11 SHA-256 5d16888e4bec060039a9aed03732bf6c3d527cdb5be553a0dc78b5be01f8ac48 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v12 SHA-256 115ba6eaf771b4fa079289f17d1f491498d9cea910d12aeb4e66d192817c7ee8 -->
 # Statistical Analysis Plan v1
 
 > 瑙勮寖鎬ф柟娉曞瓧娈靛彧鏉ヨ嚜 `PAPER_A_METHOD_CONTRACT_CURRENT.json`锛堢増鏈?`paper_a_method_20260730_v6`锛汼HA-256 `bde2e7e20cb00fa4f67b377112fe6534e27e7938c34fb4f63b7987fd3c142e2b`锛夈€傛墽琛屾椂蹇呴』鏍稿鑷姩鐢熸垚 MD 鎵€鍒?JSON SHA锛涙湰鏂囦笉鍐嶇嫭绔嬪畾涔夊啿绐佸瓧娈点€?
