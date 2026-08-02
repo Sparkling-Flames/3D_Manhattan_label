@@ -341,8 +341,8 @@ def materialize(
     formal = input_status == "formal"
     if formal and (calibration_enrollment_registry is None or not calibration_enrollment_registry.is_file()):
         raise ValueError("formal C1 requires calibration_enrollment_registry.csv")
-    if formal and (reference_amendment is None or not reference_amendment.is_file() or building_registry is None or not building_registry.is_file()):
-        raise ValueError("formal C1 requires frozen reference approval and building registry")
+    if formal and (building_registry is None or not building_registry.is_file()):
+        raise ValueError("formal C1 requires an authoritative building registry")
     git_state = formal_git_state(_PROJECT_ROOT)
     if formal and not git_state["clean"]:
         raise ValueError("formal mode requires a committed clean worktree")

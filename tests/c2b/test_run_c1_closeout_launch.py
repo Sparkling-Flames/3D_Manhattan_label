@@ -87,6 +87,12 @@ def test_runner_materializes_geometry_once_after_final_pool_gate():
     assert canonicalizer.count("materialize_canonical_evidence(") == 1
 
 
+def test_formal_runner_does_not_require_an_empty_reference_amendment_file():
+    runner = Path("tools/thesis_main/analysis/run_c1_precloseout_rehearsal.py").read_text(encoding="utf-8")
+    assert "reference_amendment is None or" not in runner
+    assert "formal C1 requires frozen reference approval" not in runner
+
+
 def test_formal_stage_outputs_are_ignored_so_the_next_clean_git_gate_can_run():
     for path in (
         "analysis_results/c1_formal_audit_sha/result.csv",
