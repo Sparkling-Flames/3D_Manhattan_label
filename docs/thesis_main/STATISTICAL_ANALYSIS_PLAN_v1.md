@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v15 SHA-256 24d4dd64ba6d1cc7af0ea5fa34ecb2b03940059a3125e7a6c030d00dc3a594b6 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v16 SHA-256 ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265 -->
 # Statistical Analysis Plan v1
 
 > 2026-08-02 timing amendment: C1 timing uses the formal-assignment `project_id`–`runtime_task_id`–`worker_id` context and cumulative-session rule in the current method contract, not annotation-pk identity. It is an auxiliary operational measurement; it does not alter Q_GT, R_peer, F_struct, worker eligibility/rank, C2-B roster, T1 assignment, or V1 routing. This supersedes earlier owner-valid/exact-annotation timing wording in this legacy-encoding document. W034 authorized replacements require either the original passed sentinel, or a SHA-bound preassignment operator-verification attestation plus task-worker log audit; the retrospective path is `eligible_with_protocol_deviation`, never fully verified.

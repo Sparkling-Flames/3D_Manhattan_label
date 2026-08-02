@@ -4,8 +4,9 @@ import csv
 import hashlib
 import json
 from pathlib import Path
+from types import SimpleNamespace
 
-from tools.thesis_main.analysis.c1_c2_mainline import materialize_analysis_views, materialize_measurement_readiness
+from tools.thesis_main.analysis.c1_c2_mainline import formal_git_state, materialize_analysis_views, materialize_measurement_readiness
 from tools.thesis_main.analysis.materialize_c1_preannotation_task_features import extract_frozen_model_features, materialize as materialize_preannotation_features
 from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import materialize_row_analysis_eligibility
 
@@ -13,6 +14,18 @@ from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import materiali
 def _write(path: Path, rows: list[dict]) -> None:
     with path.open("w", encoding="utf-8", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=list(rows[0])); writer.writeheader(); writer.writerows(rows)
+
+
+def test_formal_git_state_decodes_chinese_paths_as_utf8(monkeypatch, tmp_path: Path) -> None:
+    outputs = iter(("a" * 40 + "\n", " M docs/中文.md\n"))
+    def fake_run(*_args, **kwargs):
+        assert kwargs["encoding"] == "utf-8"
+        assert kwargs["errors"] == "replace"
+        return SimpleNamespace(stdout=next(outputs))
+    monkeypatch.setattr("tools.thesis_main.analysis.c1_c2_mainline.subprocess.run", fake_run)
+    state = formal_git_state(tmp_path)
+    assert state["clean"] is False
+    assert "中文" in state["porcelain"]
 
 
 def test_row_eligibility_is_sidecar_only_and_upstream_sha_is_immutable(tmp_path: Path) -> None:

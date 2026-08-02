@@ -15,7 +15,7 @@ from .pairwise import pairwise_similarity
 
 def leave_one_out(
     records: list[dict[str, Any]], *, grid: int = 256,
-    similarity_cutoff: float = 0.8, tie_iou_range_cutoff: float = 0.02,
+    similarity_cutoff: float = 0.95,
     maximum_partition_count: int = 256, maximum_search_nodes: int = 10000,
 ) -> list[dict[str, Any]]:
     """Compute worker/task LOO similarity with the held-out worker excluded."""

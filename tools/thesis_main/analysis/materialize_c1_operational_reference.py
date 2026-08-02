@@ -16,8 +16,8 @@ _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
-from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou
-from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry, normalize_geometry_for_c1_calculation
+from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou, compute_layout_mask_iou_from_normalized_pairs
+from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry, normalize_geometry_for_c1_calculation, normalize_ordered_reference_geometry
 from tools.thesis_main.analysis.paper_a_contracts import load_method_contract
 
 
@@ -286,11 +286,14 @@ def _gt_references(path: Path) -> dict[str, dict[str, Any]]:
                 continue
             value = result.get("value") or {}
             points.append([float(value["x"]) * 10.24, float(value["y"]) * 5.12])
+        normalized = normalize_ordered_reference_geometry(points)
         references[stem] = {
             "identity": f"gt:{task.get('project')}:{task.get('id')}:{annotation.get('id')}",
             "points": points,
+            "pairs": normalized.get("pairs", []),
+            "geometry_mode": normalized.get("reference_geometry_mode", "not_evaluable"),
             "sha256": _sha_payload(annotation.get("result", [])),
-            "structural_status": "valid" if normalize_geometry(points)["valid"] else "invalid",
+            "structural_status": "valid" if normalized["valid"] else "invalid",
         }
     return references
 
@@ -528,7 +531,10 @@ def materialize(
         elif not structurally_valid:
             meta = {"reason": "annotation_geometry_invalid"}
         elif outcome.get("final_scope") == "in_scope" and calculation_points and reference.get("points") and reference.get("structural_status") == "valid":
-            score, meta = compute_layout_mask_iou(np.asarray(calculation_points, dtype=float), np.asarray(reference["points"], dtype=float))
+            if reference.get("geometry_mode") == "ordered_consecutive_pairs_with_duplicate_x":
+                score, meta = compute_layout_mask_iou_from_normalized_pairs(calculation_geometry["pairs"], reference["pairs"])
+            else:
+                score, meta = compute_layout_mask_iou(np.asarray(calculation_points, dtype=float), np.asarray(reference["points"], dtype=float))
         quality.append({
             "project_id": row.get("project_id", ""), "ls_runtime_task_id": row.get("ls_runtime_task_id", ""),
             "task_id": row.get("task_id", ""), "base_task_id": row.get("base_task_id", ""),
@@ -538,6 +544,7 @@ def materialize(
             "quality_evaluable": score is not None, "quality_evaluable_legacy_alias": score is not None,
             "gt_score_computable": score is not None, "gt_reference_resolved": bool(reference.get("points")) and reference.get("structural_status") == "valid",
             "public_gt_structural_status": reference.get("structural_status", "not_evaluable"),
+            "public_gt_geometry_mode": reference.get("geometry_mode", "not_evaluable"),
             "gt_primary_analysis_eligible": bool(score is not None and row.get("condition", "").lower() == "manual" and outcome.get("final_scope") == "in_scope" and outcome.get("adjudication_status") == "resolved" and row.get("canonical_annotation_id", "") not in amendment.get("triggers", set())),
             "structurally_valid": structurally_valid,
             "geometry_repair_applied": calculation_geometry["geometry_repair_applied"],

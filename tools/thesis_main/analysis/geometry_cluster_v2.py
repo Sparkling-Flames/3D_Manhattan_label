@@ -20,7 +20,48 @@ def _sha(row: dict[str, Any]) -> str:
     return hashlib.sha256(json.dumps(_geometry(row), sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
+def _connected_components(indices: tuple[int, ...], edges: set[tuple[int, int]]) -> list[tuple[int, ...]]:
+    allowed = set(indices)
+    remaining = set(indices)
+    components = []
+    while remaining:
+        pending = [min(remaining)]
+        component = set()
+        while pending:
+            current = pending.pop()
+            if current in component:
+                continue
+            component.add(current)
+            remaining.discard(current)
+            pending.extend(
+                right if left == current else left
+                for left, right in edges
+                if current in (left, right)
+                and (right if left == current else left) in allowed
+                and (right if left == current else left) not in component
+            )
+        components.append(tuple(sorted(component)))
+    return components
+
+
 def _maximum_cliques(indices: tuple[int, ...], edges: set[tuple[int, int]], *, maximum_search_nodes: int = 10000) -> tuple[list[tuple[int, ...]], bool, int]:
+    components = _connected_components(indices, edges)
+    if len(components) > 1:
+        maxima: list[tuple[int, ...]] = []
+        maximum_size = search_nodes = 0
+        for component in components:
+            cliques, truncated, nodes = _maximum_cliques(
+                component, edges, maximum_search_nodes=max(1, maximum_search_nodes - search_nodes),
+            )
+            search_nodes += nodes
+            if truncated:
+                return [], True, search_nodes
+            component_size = len(cliques[0]) if cliques else 0
+            if component_size > maximum_size:
+                maxima, maximum_size = cliques, component_size
+            elif component_size == maximum_size:
+                maxima.extend(cliques)
+        return sorted(maxima), False, search_nodes
     search_nodes = 0
     for size in range(len(indices), 0, -1):
         found = []
@@ -37,6 +78,26 @@ def _maximum_cliques(indices: tuple[int, ...], edges: set[tuple[int, int]], *, m
 
 def _maximum_clique_partitions(indices: tuple[int, ...], edges: set[tuple[int, int]], *, maximum_partition_count: int = 256, maximum_search_nodes: int = 10000) -> tuple[list[tuple[tuple[int, ...], ...]], bool, int]:
     """Enumerate every partition induced by successive maximum-clique choices."""
+    components = _connected_components(indices, edges)
+    if len(components) > 1:
+        choices = []
+        search_nodes = 0
+        for component in components:
+            partitions, truncated, nodes = _maximum_clique_partitions(
+                component, edges,
+                maximum_partition_count=maximum_partition_count,
+                maximum_search_nodes=max(1, maximum_search_nodes - search_nodes),
+            )
+            search_nodes += nodes
+            if truncated:
+                return [], True, search_nodes
+            choices.append(partitions)
+        combined = {
+            tuple(sorted((group for partition in selection for group in partition), key=lambda group: (-len(group), group)))
+            for selection in itertools.product(*choices)
+        }
+        truncated = len(combined) > maximum_partition_count
+        return sorted(combined)[:maximum_partition_count], truncated, search_nodes
     partitions: set[tuple[tuple[int, ...], ...]] = set()
     search_nodes = 0
     truncated = False
@@ -73,7 +134,7 @@ def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: f
             continue
         score = min(float(boundary), float(wall))
         scores[left, right] = score
-        if float(boundary) >= min_q_boundary and float(wall) >= min_q_wallwall:
+        if item.get("pointwise_correspondence_compatible") is True and float(boundary) >= min_q_boundary and float(wall) >= min_q_wallwall:
             edges.add((left, right))
     all_partitions, enumeration_truncated, partition_search_nodes = _maximum_clique_partitions(tuple(range(len(valid))), edges, maximum_partition_count=maximum_partition_count, maximum_search_nodes=maximum_search_nodes) if valid else ([], False, 0)
     partition_unique = compatible and not enumeration_truncated and len(all_partitions) == 1
@@ -93,8 +154,14 @@ def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: f
     status = "not_evaluable"
     reason = "partition_enumeration_truncated" if enumeration_truncated else "non_unique_complete_link_partition" if len(all_partitions) > 1 else "minimum_valid_k_or_metric_compatibility"
     if partition_unique and k >= minimum_valid_k:
-        status = "unimodal" if len(partition) == 1 else "dominant_with_dissent" if n2 <= 1 else "supported_multimodal"
-        reason = "unique_complete_link_partition"
+        if len(partition) == 1:
+            status, reason = "unimodal", "unique_complete_link_partition"
+        elif n1 > n2 and n2 <= 1:
+            status, reason = "dominant_with_dissent", "unique_complete_link_partition"
+        elif n2 >= 2:
+            status, reason = "supported_multimodal", "unique_complete_link_partition"
+        else:
+            reason = "no_dominant_or_supported_partition"
     selected = valid[medoid_index] if medoid_index is not None else {}
     memberships = [[str(valid[index].get("canonical_annotation_id") or valid[index].get("annotation_id") or "") for index in group] for group in partition]
     candidate_partitions = [

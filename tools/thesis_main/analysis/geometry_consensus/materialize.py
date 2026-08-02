@@ -13,7 +13,7 @@ from .pairwise import pairwise_similarity, peer_similarity_profiles
 from .representation import normalize_geometry, normalize_geometry_for_c1_calculation
 from .stability import stability_summary
 from tools.thesis_main.analysis.geometry_cluster_v2 import cluster_geometry_records
-from tools.thesis_main.analysis.paper_a_contracts import load_method_contract, validate_records
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, validate_records
 
 
 RULE_VERSION = "geometry_loo_heldout_consensus_v3"
@@ -47,11 +47,20 @@ def materialize_geometry_consensus(
     thresholds = rules.get("thresholds", {})
     grid = int(thresholds.get("boundary_grid", rules.get("metrics", {}).get("boundary_grid")))
     cutoff = float(thresholds.get("similarity_cutoff", rules.get("metrics", {}).get("multimodal_similarity_cutoff")))
-    tie_iou_range_cutoff = float(thresholds.get("tied_medoid_iou_range_cutoff", rules.get("loo", {}).get("tied_medoid_iou_range_cutoff")))
     source_sha = sha256_file(geometry_jsonl)
     approved = rules.get("status") == "approved" and rules.get("interpretation_allowed") is True and rules.get("approved_by") and rules.get("approved_at")
     if input_status == "formal" and not approved:
         raise ValueError("candidate geometry peer manifest cannot produce formal sidecars")
+    if input_status == "formal" and (
+        rules.get("method_contract_version") != method["contract_version"]
+        or rules.get("method_contract_sha256") != sha256_file(METHOD_CONTRACT)
+        or grid != int(method["geometry_cluster"]["boundary_grid"])
+        or cutoff != float(method["geometry_cluster"]["similarity_cutoff"])
+        or thresholds.get("require_pointwise_correspondence") is not method["geometry_cluster"]["require_pointwise_correspondence"]
+        or int(thresholds.get("minimum_peer_count", -1)) != int(method["geometry_cluster"]["minimum_peer_count"])
+        or int(thresholds.get("minimum_valid_k", -1)) != int(method["geometry_cluster"]["minimum_valid_k"])
+    ):
+        raise ValueError("formal geometry peer manifest does not match the current method contract")
     formal_allowed = bool(input_status == "formal" and approved)
     buildings = {}
     if building_binding_csv and building_binding_csv.exists():
@@ -128,7 +137,6 @@ def materialize_geometry_consensus(
             records,
             grid=grid,
             similarity_cutoff=cutoff,
-            tie_iou_range_cutoff=tie_iou_range_cutoff,
             maximum_partition_count=int(method["geometry_cluster"]["maximum_partition_count"]),
             maximum_search_nodes=int(method["geometry_cluster"]["maximum_search_nodes"]),
         )

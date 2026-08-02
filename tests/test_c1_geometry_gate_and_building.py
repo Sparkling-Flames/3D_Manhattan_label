@@ -72,3 +72,4 @@ def test_formal_building_binding_and_candidate_geometry_manifest_fail_closed(tmp
     geometry = tmp_path / "geometry.jsonl"; geometry.write_text("", encoding="utf-8")
     manifest = tmp_path / "rules.json"; manifest.write_text(json.dumps({"status": "candidate", "interpretation_allowed": False, "thresholds": {"boundary_grid": 16, "similarity_cutoff": .8, "tied_medoid_iou_range_cutoff": .1, "minimum_valid_k": 3}}), encoding="utf-8")
     with pytest.raises(ValueError): materialize_geometry_consensus(geometry, tmp_path, input_status="formal", rule_manifest=manifest)
+    assert materialize_geometry_consensus(geometry, tmp_path / "formal", input_status="formal")["dry_run"] is False

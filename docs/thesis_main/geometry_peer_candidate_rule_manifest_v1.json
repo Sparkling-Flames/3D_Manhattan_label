@@ -1,20 +1,22 @@
 {
   "schema_version": "paper_a_geometry_peer_rule_v1",
-  "rule_version": "geometry_peer_candidate_v1",
-  "status": "candidate",
-  "approved_by": "",
-  "approved_at": "",
+  "rule_version": "geometry_peer_rule_v2",
+  "status": "approved",
+  "approved_by": "researcher",
+  "approved_at": "2026-08-02T12:52:48.5419021+08:00",
+  "method_contract_version": "paper_a_method_20260802_v16",
+  "method_contract_sha256": "ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265",
   "source_evidence": ["Paper_A_method_amendment_peer_gt_shrinkage_v1"],
   "thresholds": {
     "boundary_grid": 256,
-    "similarity_cutoff": 0.8,
+    "similarity_cutoff": 0.95,
+    "sensitivity_cutoffs": [0.93, 0.97],
+    "require_pointwise_correspondence": true,
     "minimum_peer_count": 2,
     "minimum_valid_k": 3,
-    "moderate_independent_task_support": 5,
-    "tied_medoid_iou_range_cutoff": 0.02,
     "bootstrap_replicates": 2000,
     "bootstrap_seed": 20260728,
     "confidence_level": 0.95
   },
-  "interpretation_allowed": false
+  "interpretation_allowed": true
 }

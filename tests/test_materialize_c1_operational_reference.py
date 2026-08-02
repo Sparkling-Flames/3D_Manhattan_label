@@ -86,6 +86,24 @@ def test_c1_qgt_uses_uniquely_repaired_orphan_point_geometry(tmp_path: Path) -> 
     assert row["geometry_repair_applied"] == "True"
 
 
+def test_ordered_duplicate_x_public_gt_remains_evaluable(tmp_path: Path) -> None:
+    canonical, geometry, inventory, gt = [tmp_path / name for name in ("canonical.csv", "geometry.jsonl", "inventory.csv", "gt.json")]
+    _csv(canonical, [{"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "worker_id": "w1", "annotation_id": "a1", "canonical_annotation_id": "c1", "dataset_group": "Calibration_core"}])
+    worker_points = [[100, 100], [100, 400], [101, 120], [101, 380], [700, 100], [700, 400]]
+    reference_points = [[100, 100], [100, 400], [100, 120], [100, 380], [700, 100], [700, 400]]
+    geometry.write_text(json.dumps({"canonical_annotation_id": "c1", "corners_px": worker_points}), encoding="utf-8")
+    _csv(inventory, [{"base_task_id": "b1", "expert_review_status": "latest_human_reviewed", "expert_scope_confirmed": "inscope", "old_manual_scope_raw": ""}])
+    result = [{"type": "keypointlabels", "value": {"x": x / 10.24, "y": y / 5.12}} for x, y in reference_points]
+    gt.write_text(json.dumps([{"id": "g1", "project": 70, "data": {"title": "b1.jpg"}, "annotations": [{"id": "ga1", "ground_truth": True, "result": result}]}]), encoding="utf-8")
+
+    materialize(canonical, geometry, inventory, gt, tmp_path / "out")
+    row = next(csv.DictReader((tmp_path / "out" / "c1_gt_quality_evidence.csv").open(encoding="utf-8")))
+
+    assert row["quality_evaluable"].lower() == "true"
+    assert row["public_gt_structural_status"] == "valid"
+    assert row["public_gt_geometry_mode"] == "ordered_consecutive_pairs_with_duplicate_x"
+
+
 def test_scope_adjudication_must_bind_the_generated_base_task_queue(tmp_path: Path) -> None:
     canonical, geometry, inventory, gt = [tmp_path / name for name in ("canonical.csv", "geometry.jsonl", "inventory.csv", "gt.json")]
     _csv(canonical, [{"project_id": "66", "ls_runtime_task_id": "1", "task_id": "t1", "base_task_id": "b1", "condition": "manual", "worker_id": "w1", "annotation_id": "a1", "canonical_annotation_id": "c1", "dataset_group": "Calibration_core"}])

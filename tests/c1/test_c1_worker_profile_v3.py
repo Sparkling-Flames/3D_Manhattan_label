@@ -3,7 +3,10 @@ from __future__ import annotations
 import csv
 from pathlib import Path
 
-from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import materialize_three_track_worker_state
+from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
+    _task_equal_median_bootstrap_interval,
+    materialize_three_track_worker_state,
+)
 
 
 def _csv(path: Path, rows: list[dict], fields: list[str] | None = None) -> None:
@@ -30,7 +33,7 @@ def test_peer_five_is_formal_c2_axis_loo_missing_is_not_gate_and_w014_is_exclude
     for worker in workers:
         for index in range(5):
             task = f"t{index}"
-            peer_rows.append({"schema_version": "peer_worker_task_v2", "base_task_id": task, "condition": "manual", "dataset_group": "core", "task_crowd_structure_status": "unimodal", "worker_id": worker, "canonical_annotation_id": f"{worker}-{task}", "R_peer_task": .8, "peer_count": 4})
+            peer_rows.append({"schema_version": "peer_worker_task_v2", "base_task_id": task, "condition": "manual", "dataset_group": "core", "task_crowd_structure_status": "unimodal" if index < 2 else "not_evaluable", "worker_id": worker, "canonical_annotation_id": f"{worker}-{task}", "R_peer_task": .8 if index < 2 else .1, "peer_count": 4})
             eligibility_rows.append({"schema_version": "assignment_evidence_v2", "canonical_annotation_id": f"{worker}-{task}", "worker_id": worker, "base_task_id": task, "condition": "manual", "assignment_provenance": "original_assignment", "formal_assignment_eligible": True, "gt_primary_analysis_eligible": True, "peer_analysis_eligible": True, "loo_medoid_analysis_eligible": False, "strict_loo_analysis_eligible": False, "structural_opportunity_eligible": True, "time_analysis_eligible": False, "semi_correction_analysis_eligible": False, "predictive_validity_analysis_eligible": False, "routing_feature_analysis_eligible": False, "process_eligible": True, "independence_eligible": True, "scope_reference_eligible": True})
     _csv(peer_csv, peer_rows)
     _csv(eligibility_csv, eligibility_rows)
@@ -39,6 +42,8 @@ def test_peer_five_is_formal_c2_axis_loo_missing_is_not_gate_and_w014_is_exclude
         rows = {row["worker_id"]: row for row in csv.DictReader(stream)}
     assert rows["1"]["peer_task_support"] == "5"
     assert rows["1"]["R_peer_profile_status"] == "estimated"
+    assert rows["1"]["R_peer_all"] == "0.1"
+    assert rows["1"]["R_peer_stable"] == "0.8"
     assert rows["1"]["LOO_medoid_status"] == "insufficient_support"
     assert rows["1"]["T_active_task_adjusted"] == "11"
     assert rows["1"]["timing_identity_level"] == "task_worker"
@@ -54,6 +59,16 @@ def test_peer_four_is_descriptive_and_not_c2_eligible(tmp_path: Path) -> None:
     peer = load_method_contract()["peer"]
     assert peer["weak_descriptive_max"] == 4
     assert peer["formal_estimated_min"] == 5
+
+
+def test_peer_bootstrap_resamples_tasks_and_uses_task_equal_median() -> None:
+    items = [
+        {"task_id": "outlier", "value": value}
+        for value in (0.0, 100.0, 100.0)
+    ] + [{"task_id": f"t{index}", "value": 0.0} for index in range(8)]
+    assert _task_equal_median_bootstrap_interval(
+        items, seed="20260728|peer|w1", replicates=2000, confidence_level=.95,
+    ) == (0.0, 0.0)
 
 
 def test_enrollment_registry_owns_batch_even_without_assignment_rows(tmp_path: Path) -> None:

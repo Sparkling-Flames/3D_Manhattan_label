@@ -49,6 +49,25 @@ def write_csv(path: Path, rows: list[dict[str, Any]], fields: list[str] | None =
         writer.writerows(rows)
 
 
+def _task_equal_median_bootstrap_interval(
+    items: list[dict[str, Any]], *, seed: str, replicates: int, confidence_level: float,
+) -> tuple[float | str, float | str]:
+    by_task: dict[str, list[float]] = defaultdict(list)
+    for item in items:
+        by_task[str(item["task_id"])].append(float(item["value"]))
+    task_values = {task: statistics.median(values) for task, values in by_task.items()}
+    if len(task_values) < 3:
+        return "", ""
+    rng = random.Random(seed)
+    tasks = sorted(task_values)
+    draws = sorted(
+        statistics.median(task_values[rng.choice(tasks)] for _ in tasks)
+        for _ in range(replicates)
+    )
+    alpha = (1.0 - confidence_level) / 2.0
+    return draws[int(alpha * (len(draws) - 1))], draws[int((1.0 - alpha) * (len(draws) - 1))]
+
+
 def _truth(value: Any) -> bool:
     return str(value).strip().lower() in {"true", "1", "yes"}
 
@@ -2108,6 +2127,9 @@ def materialize_three_track_worker_state(
     method = load_method_contract()
     peer_weak_min = int(method["peer"]["weak_descriptive_min"])
     peer_formal_min = int(method["peer"]["formal_estimated_min"])
+    peer_bootstrap_replicates = int(method["peer"]["bootstrap_replicates"])
+    peer_bootstrap_seed = int(method["peer"]["bootstrap_seed"])
+    peer_confidence_level = float(method["peer"]["confidence_level"])
     qgt_formal_min = int(method["measurement_status"]["Q_GT"]["formal_estimated_min"])
     f_struct_formal_min = int(method["measurement_status"]["F_struct"]["formal_estimated_min"])
     qgt_audit = json.loads(qgt_audit_json.read_text(encoding="utf-8")) if qgt_audit_json and qgt_audit_json.exists() else {}
@@ -2120,7 +2142,10 @@ def materialize_three_track_worker_state(
         "BUILDING_REGISTRY": building_registry_csv,
         "TASK_BUILDING_BINDING": task_building_binding_csv,
     }
-    if formal and any(path is None or not path.is_file() for path in formal_dependency_paths.values()):
+    if formal and any(
+        formal_dependency_paths[role] is None or not formal_dependency_paths[role].is_file()
+        for role in ("REFERENCE_REGISTRY", "BUILDING_REGISTRY", "TASK_BUILDING_BINDING")
+    ):
         raise ValueError("formal worker profile requires frozen reference and building dependencies")
     globals_ = {row.get("worker_id", ""): row for row in read_csv(global_csv)}
     loo_by_worker: dict[str, list[dict[str, Any]]] = defaultdict(list)
@@ -2204,19 +2229,17 @@ def materialize_three_track_worker_state(
             values_ = [__import__("statistics").median(group) for group in by.values()]
             return (__import__("statistics").median(values_) if values_ else "", len(values_))
         def interval(items: list[dict[str, Any]], label: str) -> tuple[float | str, float | str]:
-            by = defaultdict(list)
-            for item in items: by[item["task_id"]].append(item["value"])
-            means = {task: sum(group) / len(group) for task, group in by.items()}
-            if len(means) < 3: return "", ""
-            rng = random.Random(f"c1-{label}-{worker}-20260728"); tasks = sorted(means); draws = []
-            for _ in range(2000):
-                sample = [rng.choice(tasks) for _task in tasks]; draws.append(sum(means[task] for task in sample) / len(sample))
-            draws.sort(); return draws[int(.025 * (len(draws) - 1))], draws[int(.975 * (len(draws) - 1))]
+            return _task_equal_median_bootstrap_interval(
+                items,
+                seed=f"{peer_bootstrap_seed}|{label}|{worker}",
+                replicates=peer_bootstrap_replicates,
+                confidence_level=peer_confidence_level,
+            )
         peer_value, peer_support = aggregate(peer_by_worker[worker])
         peer_anchor, _ = aggregate([item for item in peer_by_worker[worker] if "anchor" in item["dataset_group"].lower()])
         peer_core, _ = aggregate([item for item in peer_by_worker[worker] if "core" in item["dataset_group"].lower()])
         peer_semi, _ = aggregate([item for item in peer_by_worker[worker] if "semi" in item["dataset_group"].lower()])
-        peer_stable, _ = aggregate([item for item in peer_by_worker[worker] if item["crowd_status"] != "supported_multimodal"])
+        peer_stable, _ = aggregate([item for item in peer_by_worker[worker] if item["crowd_status"] in {"unimodal", "dominant_with_dissent"}])
         medoid_value, medoid_support = aggregate(medoid_by_worker[worker])
         peer_lower, peer_upper = interval(peer_by_worker[worker], "peer")
         medoid_lower, medoid_upper = interval(medoid_by_worker[worker], "medoid")

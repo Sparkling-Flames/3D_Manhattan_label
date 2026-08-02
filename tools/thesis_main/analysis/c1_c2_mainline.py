@@ -430,6 +430,7 @@ def materialize_c2b_design_worker_profile(
 
 
 def formal_git_state(project_root: Path) -> dict[str, Any]:
-    head = subprocess.run(["git", "rev-parse", "HEAD"], cwd=project_root, check=True, capture_output=True, text=True).stdout.strip()
-    status = subprocess.run(["git", "status", "--porcelain"], cwd=project_root, check=True, capture_output=True, text=True).stdout
+    options = {"cwd": project_root, "check": True, "capture_output": True, "text": True, "encoding": "utf-8", "errors": "replace"}
+    head = subprocess.run(["git", "rev-parse", "HEAD"], **options).stdout.strip()
+    status = subprocess.run(["git", "status", "--porcelain"], **options).stdout
     return {"git_commit_sha": head, "clean": not status.strip(), "porcelain": status}

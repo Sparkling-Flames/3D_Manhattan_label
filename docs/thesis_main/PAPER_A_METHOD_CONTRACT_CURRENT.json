@@ -1,6 +1,6 @@
 {
     "schema_version":  "paper_a_method_contract_v9",
-    "contract_version":  "paper_a_method_20260802_v15",
+    "contract_version":  "paper_a_method_20260802_v16",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
     "stages":  [
@@ -239,9 +239,15 @@
                                        "R_peer_all",
                                        "R_peer_stable"
                                    ],
-                 "stable_excludes":  [
-                                         "supported_multimodal"
+                 "stable_includes":  [
+                                         "unimodal",
+                                         "dominant_with_dissent"
                                      ],
+                 "bootstrap_unit":  "base_task",
+                 "bootstrap_statistic":  "task_equal_median",
+                 "bootstrap_replicates":  2000,
+                 "bootstrap_seed":  20260728,
+                 "confidence_level":  0.95,
                  "support_unit":  "eligible_task",
                  "insufficient_support_max":  2,
                  "weak_descriptive_min":  3,
@@ -270,6 +276,18 @@
                            },
     "geometry_cluster":  {
                              "definition":  "complete_link",
+                             "boundary_grid":  256,
+                             "similarity_cutoff":  0.95,
+                             "sensitivity_cutoffs":  [
+                                                          0.93,
+                                                          0.97
+                                                      ],
+                             "edge_rule":  "q_boundary_and_q_wallwall_and_pointwise_correspondence",
+                             "require_pointwise_correspondence":  true,
+                             "minimum_peer_count":  2,
+                             "minimum_valid_k":  3,
+                             "dominant_with_dissent_rule":  "n1_greater_than_n2_and_n2_at_most_1",
+                             "supported_multimodal_rule":  "n2_at_least_2",
                              "ambiguous_partition_primary_status":  "not_evaluable",
                              "ambiguous_partition_evidence":  "all_maximum_clique_partitions",
                              "medoid":  "max_median_then_mean_pairwise_similarity_then_geometry_sha_then_canonical_annotation_id_then_task_bound_frozen_seed",
@@ -343,6 +361,7 @@
                                "default_correction_count":  0,
                                "amend_only_when_researcher_explicitly_declares_gt_issue":  true,
                                "worker_gt_disagreement_does_not_trigger_amendment":  true,
+                               "ordered_public_gt_fallback":  "frozen_consecutive_ceiling_floor_pairs_with_duplicate_x_are_evaluable_without_worker_informed_repair",
                                "missing_or_unparseable_reference_status":  "reference_unavailable",
                                "submission_triggered_revision_rule":  "a_submission_cannot_score_against_its_own_triggering_reference_revision",
                                "final_reference_freeze_before_stage3":  true

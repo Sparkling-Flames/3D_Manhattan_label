@@ -123,21 +123,23 @@ def project_clearance(project: str = "p1", condition: str = "manual") -> dict[st
     }
 
 
-def test_project_clearance_expands_and_row_adverse_overrides(tmp_path: Path) -> None:
+def test_protocol_default_applies_and_machine_adverse_signal_requires_review(tmp_path: Path) -> None:
     meta = tmp_path / "meta.csv"
+    eligible = {"canonical_eligibility_status": "valid", "assignment_provenance": "original_assignment", "outside_assignment_submission": "false", "duplicate_review_status": "not_required"}
     write_csv(meta, [
-        {"project_id": "p1", "condition": "manual", "ls_runtime_task_id": "r1", "worker_id": "w1", "annotation_id": "a1", "canonical_annotation_id": "c1", "parent_cross_owner": "false", "copy_risk_status": "cleared"},
-        {"project_id": "p1", "condition": "manual", "ls_runtime_task_id": "r2", "worker_id": "w2", "annotation_id": "a2", "canonical_annotation_id": "c2", "parent_cross_owner": "true", "copy_risk_status": "cross_owner_parent"},
+        {"project_id": "p1", "condition": "manual", "ls_runtime_task_id": "r1", "worker_id": "w1", "annotation_id": "a1", "canonical_annotation_id": "c1", "parent_cross_owner": "false", "copy_risk_status": "cleared", **eligible},
+        {"project_id": "p1", "condition": "manual", "ls_runtime_task_id": "r2", "worker_id": "w2", "annotation_id": "a2", "canonical_annotation_id": "c2", "parent_cross_owner": "true", "copy_risk_status": "cross_owner_parent", **eligible},
     ])
     project = tmp_path / "project.csv"
     write_csv(project, [project_clearance()])
 
     summary = materialize_independence(meta, tmp_path, project_disposition_csv=project)
     rows = {row["canonical_annotation_id"]: row for row in read_csv(tmp_path / "c1_independence_evidence.csv")}
-    assert rows["c1"]["independence_status"] == "independent_by_project_provenance"
-    assert rows["c1"]["project_expansion_applied"] == "True"
-    assert rows["c2"]["independence_status"] == "non_independent_confirmed"
-    assert rows["c2"]["independence_basis"] == "row_adverse_evidence_overrides_project_clearance"
+    assert rows["c1"]["independence_status"] == "independent"
+    assert rows["c1"]["independence_basis"] == "protocol_assumption"
+    assert rows["c1"]["project_expansion_applied"] == "False"
+    assert rows["c2"]["independence_status"] == "pending_manual_review"
+    assert rows["c2"]["independence_basis"] == "machine_anomaly_signal"
     assert summary["n_review"] == 1
 
 

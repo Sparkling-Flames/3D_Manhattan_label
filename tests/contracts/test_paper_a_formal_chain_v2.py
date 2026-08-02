@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.geometry_cluster_v2 import cluster_geometry_records
+from tools.thesis_main.analysis.geometry_cluster_v2 import _maximum_clique_partitions, cluster_geometry_records
 from tools.thesis_main.analysis.materialize_stage3_freeze_gate import REQUIRED_GATES, build_gate, validate_gate_file
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file, validate_record
 from tools.thesis_main.analysis.routing.v1_decision_engine import append_decision, decide_next_offer, replay_next_offer
@@ -147,12 +147,44 @@ def test_shared_geometry_rejects_multiple_maximum_cliques(monkeypatch) -> None:
     def similarity(left, right):
         edge = tuple(sorted((left["tag"], right["tag"])))
         score = 1.0 if edge in {(0, 1), (1, 2)} else 0.0
-        return {"metric_compatible": True, "q_boundary": score, "q_wallwall": score}
+        return {"metric_compatible": True, "pointwise_correspondence_compatible": True, "q_boundary": score, "q_wallwall": score}
     monkeypatch.setattr("tools.thesis_main.analysis.geometry_cluster_v2.pairwise_similarity", similarity)
     result = cluster_geometry_records(rows, min_q_boundary=.8, min_q_wallwall=.8)
     assert result["partition_status"] == "not_evaluable"
     assert result["largest_cluster_medoid_annotation_id"] == ""
     assert len(json.loads(result["ambiguity_candidates_json"])) == 2
+
+
+def test_shared_geometry_requires_topology_compatible_edges(monkeypatch) -> None:
+    rows = [
+        {"worker_id": str(i), "canonical_annotation_id": f"a{i}", "geometry": {"valid": True, "tag": i}}
+        for i in range(3)
+    ]
+    monkeypatch.setattr(
+        "tools.thesis_main.analysis.geometry_cluster_v2.pairwise_similarity",
+        lambda *_args, **_kwargs: {
+            "metric_compatible": True,
+            "pointwise_correspondence_compatible": False,
+            "q_boundary": .99,
+            "q_wallwall": .99,
+        },
+    )
+    result = cluster_geometry_records(rows, min_q_boundary=.95, min_q_wallwall=.95)
+    assert result["task_crowd_structure_status"] == "not_evaluable"
+    assert result["largest_cluster_support"] == 1
+
+
+def test_variable_k_disconnected_components_do_not_exhaust_clique_search() -> None:
+    indices = tuple(range(22))
+    groups = (tuple(range(11)), tuple(range(11, 22)))
+    edges = {
+        tuple(sorted(pair))
+        for group in groups
+        for pair in __import__("itertools").combinations(group, 2)
+    }
+    partitions, truncated, _ = _maximum_clique_partitions(indices, edges, maximum_search_nodes=10000)
+    assert truncated is False
+    assert partitions == [(groups[0], groups[1])]
 
 
 def test_stage3_requires_c1_children_and_revalidates_method_sha(tmp_path: Path) -> None:

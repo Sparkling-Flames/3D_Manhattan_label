@@ -10,7 +10,7 @@ def _records(groups):
 
 def _similarity(left, right, **_kwargs):
     score = .95 if left["group"] == right["group"] else .2
-    return {"boundary_similarity": score, "wallwall_similarity": score}
+    return {"boundary_similarity": score, "wallwall_similarity": score, "pointwise_correspondence_compatible": True}
 
 
 def test_crowd_structure_4_1_and_peer_profiles(monkeypatch):
@@ -39,3 +39,22 @@ def test_crowd_structure_3_1_1_has_no_supported_second_mode(monkeypatch):
     result = crowd_structure(_records([0, 0, 0, 1, 2]))
     assert result["task_crowd_structure_status"] == "dominant_with_dissent"
     assert result["second_cluster_support"] == 1
+
+
+def test_crowd_structure_equal_singletons_are_not_dominant(monkeypatch):
+    monkeypatch.setattr("tools.thesis_main.analysis.geometry_consensus.stability.pairwise_similarity", _similarity)
+    result = crowd_structure(_records([0, 1, 2]))
+    assert result["task_crowd_structure_status"] == "insufficient_or_incompatible"
+
+
+def test_crowd_structure_does_not_join_topology_mismatch(monkeypatch):
+    monkeypatch.setattr(
+        "tools.thesis_main.analysis.geometry_consensus.stability.pairwise_similarity",
+        lambda *_args, **_kwargs: {
+            "boundary_similarity": .99,
+            "wallwall_similarity": .99,
+            "pointwise_correspondence_compatible": False,
+        },
+    )
+    result = crowd_structure(_records([0, 0, 0]), similarity_cutoff=.95)
+    assert result["largest_cluster_support"] == 1

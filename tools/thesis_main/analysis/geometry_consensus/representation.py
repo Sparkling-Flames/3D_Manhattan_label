@@ -193,6 +193,62 @@ def normalize_geometry(
     return result
 
 
+def normalize_ordered_reference_geometry(
+    corners: Any, *, width: int = 1024, height: int = 512, threshold_ratio: float = 0.05,
+) -> dict[str, Any]:
+    """Validate public GT from its frozen consecutive ceiling/floor order."""
+    strict = normalize_geometry(corners, width=width, height=height, threshold_ratio=threshold_ratio)
+    if strict["valid"]:
+        return {**strict, "reference_geometry_mode": "strict_normalized_geometry"}
+    try:
+        array = np.asarray(corners, dtype=np.float64)
+    except Exception:
+        return {**strict, "reference_geometry_mode": "not_evaluable"}
+    if (
+        array.ndim != 2 or array.shape[1:] != (2,) or len(array) < 4 or len(array) % 2
+        or not np.isfinite(array).all()
+        or (array[:, 0] < 0).any() or (array[:, 0] > width).any()
+        or (array[:, 1] < 0).any() or (array[:, 1] >= height).any()
+    ):
+        return {**strict, "reference_geometry_mode": "not_evaluable"}
+    threshold = float(width) * float(threshold_ratio)
+    pairs = []
+    for first, second in array.reshape(-1, 2, 2):
+        dx = abs(float(first[0]) - float(second[0])) % float(width)
+        if min(dx, float(width) - dx) >= threshold or abs(float(first[1]) - float(second[1])) < 1.0:
+            return {**strict, "reference_geometry_mode": "not_evaluable"}
+        x = (float(first[0]) + float(second[0])) / 2.0 % float(width)
+        pairs.append({"x": x, "y_ceiling": min(float(first[1]), float(second[1])), "y_floor": max(float(first[1]), float(second[1]))})
+    raw_xs = [pair["x"] for pair in pairs]
+    if len(set(round(x, 6) for x in raw_xs)) == len(raw_xs):
+        return {**strict, "reference_geometry_mode": "not_evaluable"}
+    for positions in (
+        [index for index, x in enumerate(raw_xs) if round(x, 6) == key]
+        for key in dict.fromkeys(round(x, 6) for x in raw_xs)
+    ):
+        if len(positions) < 2:
+            continue
+        base = raw_xs[positions[0]]
+        start = min(base, float(width) - 1e-3 * len(positions))
+        for offset, index in enumerate(positions):
+            pairs[index]["x"] = start + 1e-3 * offset
+    xs = [pair["x"] for pair in pairs]
+    return {
+        **strict,
+        "valid": True,
+        "validity_status": "valid",
+        "reason": "",
+        "n_pairs": len(pairs),
+        "pairs": pairs,
+        "x_event_positions": xs,
+        "ordered_reference_raw_x_event_positions": raw_xs,
+        "pair_count_valid": True,
+        "pairing_valid": True,
+        "top_bottom_order_valid": True,
+        "reference_geometry_mode": "ordered_consecutive_pairs_with_duplicate_x",
+    }
+
+
 def _geometry_sha256(points: Any) -> str:
     """Hash the exact numeric point list retained in a derived geometry audit."""
     return hashlib.sha256(json.dumps(points, ensure_ascii=False, separators=(",", ":")).encode("utf-8")).hexdigest()

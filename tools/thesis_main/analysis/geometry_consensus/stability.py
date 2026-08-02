@@ -9,6 +9,7 @@ import numpy as np
 
 from .pairwise import pairwise_similarity
 from .medoid import select_medoid
+from tools.thesis_main.analysis.geometry_cluster_v2 import _maximum_cliques
 from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou_from_normalized_pairs
 
 
@@ -76,15 +77,9 @@ def _core_stability(records: list[dict[str, Any]], *, grid: int = 256, gap_cutof
 
 
 def _maximum_complete_link_clusters(indices: tuple[int, ...], similarities: dict[tuple[int, int], float | None], cutoff: float) -> list[tuple[int, ...]]:
-    """Enumerate all maximum cliques; C1 peer groups are deliberately small."""
-    def compatible(left: int, right: int) -> bool:
-        value = similarities.get(tuple(sorted((left, right))))
-        return value is not None and value >= cutoff
-    for size in range(len(indices), 0, -1):
-        cliques = [group for group in itertools.combinations(indices, size) if all(compatible(left, right) for left, right in itertools.combinations(group, 2))]
-        if cliques:
-            return cliques
-    return []
+    edges = {pair for pair, value in similarities.items() if value is not None and value >= cutoff}
+    cliques, truncated, _ = _maximum_cliques(indices, edges)
+    return [] if truncated else cliques
 
 
 def _complete_link_cluster(indices: tuple[int, ...], similarities: dict[tuple[int, int], float | None], cutoff: float) -> tuple[int, ...]:
@@ -94,7 +89,7 @@ def _complete_link_cluster(indices: tuple[int, ...], similarities: dict[tuple[in
 
 def crowd_structure(
     records: list[dict[str, Any]], *, grid: int = 256,
-    similarity_cutoff: float = 0.8, minimum_valid_k: int = 3,
+    similarity_cutoff: float = 0.95, minimum_valid_k: int = 3,
 ) -> dict[str, Any]:
     """Describe task crowd shape without using GT or selecting a winning output."""
     valid = [row for row in records if (row.get("geometry") or {}).get("valid")]
@@ -104,7 +99,7 @@ def crowd_structure(
         metrics = pairwise_similarity(valid[left]["geometry"], valid[right]["geometry"], grid=grid)
         channels[(left, right)] = metrics
         boundary, wall = metrics.get("boundary_similarity"), metrics.get("wallwall_similarity")
-        similarities[(left, right)] = 1.0 if boundary is not None and wall is not None and boundary >= similarity_cutoff and wall >= similarity_cutoff else 0.0 if boundary is not None and wall is not None else None
+        similarities[(left, right)] = 1.0 if boundary is not None and wall is not None and metrics.get("pointwise_correspondence_compatible") is True and boundary >= similarity_cutoff and wall >= similarity_cutoff else 0.0 if boundary is not None and wall is not None else None
     compatible = len(valid) <= 1 or all(value is not None for value in similarities.values())
     maxima = _maximum_complete_link_clusters(tuple(range(len(valid))), similarities, 1.0) if compatible and valid else []
     unique_largest = len(maxima) == 1
@@ -115,7 +110,7 @@ def crowd_structure(
         status, reason = "insufficient_or_incompatible", "minimum_valid_k_or_metric_compatibility"
     elif len(largest) == len(valid):
         status, reason = "unimodal", "one_cluster_contains_all"
-    elif unique_largest and len(second) <= 1:
+    elif unique_largest and len(largest) > len(second) and len(second) <= 1:
         status, reason = "dominant_with_dissent", "unique_largest_and_no_supported_second_mode"
     elif len(second) >= 2:
         status, reason = "supported_multimodal", "second_cluster_support_at_least_two"
@@ -161,7 +156,7 @@ def crowd_structure(
     }
 
 
-def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimodal_cutoff: float = 0.8, _resample: bool = True) -> dict[str, Any]:
+def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimodal_cutoff: float = 0.95, _resample: bool = True) -> dict[str, Any]:
     valid = [record for record in records if (record.get("geometry") or {}).get("valid")]
     gap_cutoff = 1 - multimodal_cutoff
     result = _core_stability(valid, grid=grid, gap_cutoff=gap_cutoff)
@@ -172,7 +167,7 @@ def stability_summary(records: list[dict[str, Any]], *, grid: int = 256, multimo
         channel_metrics[(left, right)] = metrics
         boundary_value, wall_value = metrics.get("boundary_similarity"), metrics.get("wallwall_similarity")
         similarities[(left, right)] = (
-            1.0 if boundary_value >= multimodal_cutoff and wall_value >= multimodal_cutoff else 0.0
+            1.0 if metrics.get("pointwise_correspondence_compatible") is True and boundary_value >= multimodal_cutoff and wall_value >= multimodal_cutoff else 0.0
         ) if boundary_value is not None and wall_value is not None else None
 
     compatible = bool(similarities) and all(value is not None for value in similarities.values())
