@@ -1,0 +1,155 @@
+{
+  "C1_CANONICAL_CLOSED": true,
+  "C1_COLLECTION_INCOMPLETE": false,
+  "C1_EVIDENCE_BUNDLE_FROZEN": true,
+  "C1_EVIDENCE_FROZEN": true,
+  "C1_MEASUREMENT_FROZEN": true,
+  "C2B_ASSIGNMENT_MATERIALIZED": false,
+  "C2B_BASELINE_INPUT_FROZEN": true,
+  "C2B_DESIGN_FROZEN": false,
+  "C2B_DESIGN_READY": true,
+  "C2B_LAUNCH_READY": false,
+  "C2B_RISK_DESIGN_FROZEN": false,
+  "F_STRUCT_FREEZE_STATUS": "frozen",
+  "N_late": 0,
+  "Q_GT_FREEZE_STATUS": "frozen",
+  "R_LOO_MEDOID_STATUS": "frozen",
+  "R_LOO_STRICT_STATUS": "frozen",
+  "R_PEER_FREEZE_STATUS": "frozen",
+  "adjudication_sha256": "c15cbcf0d7977904066c7f43f3996968ed2dbde91c16153b48e3c8b8e544556d",
+  "artifact_role": "C1_EVIDENCE_FROZEN",
+  "blockers": [],
+  "c2b_baseline_blockers": [],
+  "cohort_id": "paper_a_calibration_pooled",
+  "contract_role": "generated_subordinate",
+  "dependencies": [
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\formal_audit_summary.json",
+      "role": "FORMAL_AUDIT",
+      "sha256": "948a6c2adf858f3d482b657e5de6166cabedd7d6035c7028e1c3b829deb2b231"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_final_canonical_closeout_summary.json",
+      "role": "CANONICAL_CLOSEOUT",
+      "sha256": "e513a5ccfd6321cbed081d6e04991005c8241761fcde7bff517049ef2d097111"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_measurement_freeze_manifest.json",
+      "role": "MEASUREMENT_FREEZE",
+      "sha256": "96487438a663230aa403035260cf14dc8517ee9f02abf1830d370fb5309aaca5"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_three_track_worker_state_manifest.json",
+      "role": "WORKER_PROFILE_MANIFEST",
+      "sha256": "860aba3670def109ce2b5a068dbe3f04c5ad8a96f94b7ed4543e10f47063f512"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_three_track_worker_state_formal.csv",
+      "role": "WORKER_PROFILE",
+      "sha256": "f1828ea7658252449a85d8a95af67e13b3b1ca011e199dba1d85cf67efbb8f33"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\calibration_enrollment_registry.csv",
+      "role": "ENROLLMENT_REGISTRY",
+      "sha256": "19bf564a3328ecb8db47478bc8654411e19c71d58679fe8613fee6270043896d"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\calibration_enrollment_registry.summary.json",
+      "role": "ENROLLMENT_REGISTRY_SUMMARY",
+      "sha256": "0876e2c08e31c876c7f626ad03f3f8b8e83b2b2c8f1fbf464ac39ab05f7b4a98"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_task_outcome_reference.csv",
+      "role": "REFERENCE_REGISTRY",
+      "sha256": "03cc8c97fef855682e7b5909a52f9ed62763616b26983e302da7613ab8ba666b"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\raw_snapshots\\contracts\\c9b34605edce_authoritative_building_registry.csv",
+      "role": "BUILDING_REGISTRY",
+      "sha256": "c9b34605edce30f7edfc725808607093d20e18ba8c8bf2496c11d0afac04df2b"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_task_building_binding.csv",
+      "role": "TASK_BUILDING_BINDING",
+      "sha256": "e95af0b12db496ad3f1cfdf4e6edef22597f550a51822a3a95103f0dc44cfa4b"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_formal_closeout_adjudication.json",
+      "role": "ADJUDICATION",
+      "sha256": "c15cbcf0d7977904066c7f43f3996968ed2dbde91c16153b48e3c8b8e544556d"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\docs\\thesis_main\\PAPER_A_METHOD_CONTRACT_CURRENT.json",
+      "role": "METHOD_CONTRACT",
+      "sha256": "ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265"
+    },
+    {
+      "cohort_id": "paper_a_calibration_pooled",
+      "expected_schema": "paper_a_c1_child_evidence_freeze_v1",
+      "frozen": true,
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_row_eligibility_frozen.json",
+      "profile_version": "paper_a_worker_profile_v2",
+      "required_status_field": "formal_ready",
+      "required_status_value": true,
+      "role": "C1_ROW_ELIGIBILITY_FROZEN",
+      "sha256": "2f08eca499c35c6a8e5de361eb927ca6f3711033a96eb210dee3144c5a17160b"
+    },
+    {
+      "cohort_id": "paper_a_calibration_pooled",
+      "expected_schema": "paper_a_c1_child_evidence_freeze_v1",
+      "frozen": true,
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_peer_evidence_frozen.json",
+      "profile_version": "paper_a_worker_profile_v2",
+      "required_status_field": "formal_ready",
+      "required_status_value": true,
+      "role": "C1_PEER_EVIDENCE_FROZEN",
+      "sha256": "2c74f6e3bffcea32ff25df97791ed54db038d4491b27efaeee4fea8735808dfc"
+    },
+    {
+      "cohort_id": "paper_a_calibration_pooled",
+      "expected_schema": "paper_a_c1_child_evidence_freeze_v1",
+      "frozen": true,
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_structural_eb_frozen.json",
+      "profile_version": "paper_a_worker_profile_v2",
+      "required_status_field": "formal_ready",
+      "required_status_value": true,
+      "role": "C1_STRUCTURAL_EB_FROZEN",
+      "sha256": "ebe1df5e0b5833651d17c73043b0c2b7313382d3a826e132b1a20b8ee9cf274f"
+    },
+    {
+      "cohort_id": "paper_a_calibration_pooled",
+      "expected_schema": "paper_a_c1_child_evidence_freeze_v1",
+      "frozen": true,
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\w034_sensitivity_frozen.json",
+      "profile_version": "paper_a_worker_profile_v2",
+      "required_status_field": "formal_ready",
+      "required_status_value": true,
+      "role": "W034_SENSITIVITY_FROZEN",
+      "sha256": "d657eb7f7b2b935f14cacaa247db1f4b8699d73b77111678b855467bbc739e8b"
+    }
+  ],
+  "expected_schema": "c1_evidence_freeze_manifest_v6",
+  "formal_closeout_ready": true,
+  "formal_ready": true,
+  "frozen": true,
+  "full_dependency_bundle_sha256": "ec970af90e37a3b82e45fa9eb31a21e90cfe548d4b60935a6543467384af6289",
+  "git_commit_sha": "6b2564c66295f4cd1a3b2516dee2feffb661896e",
+  "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1",
+  "method_contract_sha256": "ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265",
+  "method_contract_version": "paper_a_method_20260802_v16",
+  "profile_version": "paper_a_worker_profile_v2",
+  "required_status_field": "C1_EVIDENCE_FROZEN",
+  "required_status_value": true,
+  "rolling_activated": false,
+  "routing_profile_frozen": false,
+  "schema_version": "c1_evidence_freeze_manifest_v6",
+  "state_machine": {
+    "C1_CANONICAL_CLOSED": true,
+    "C1_COLLECTION_INCOMPLETE": false,
+    "C1_MEASUREMENT_FROZEN": true,
+    "C2B_ASSIGNMENT_MATERIALIZED": false,
+    "C2B_DESIGN_FROZEN": false,
+    "C2B_LAUNCH_READY": false,
+    "C2B_RISK_DESIGN_FROZEN": false
+  }
+}
