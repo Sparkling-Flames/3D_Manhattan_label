@@ -157,6 +157,18 @@
     "selection_rule":  "select only a reviewer-approved non-dominated feasible design; never tune thresholds after candidate enumeration",
     "fail_closed_rule":  "unsupported formula IDs, stale SHA bindings, missing inputs, or nonfinite derived values forbid candidate enumeration",
     "contract_role":  "generated_subordinate",
-    "method_contract_version":  "paper_a_method_20260801_v12",
-    "method_contract_sha256":  "115ba6eaf771b4fa079289f17d1f491498d9cea910d12aeb4e66d192817c7ee8"
+    "compatibility_rebind":  {
+                                    "previous_method_contract_version":  "paper_a_method_20260801_v12",
+                                    "previous_method_contract_sha256":  "115ba6eaf771b4fa079289f17d1f491498d9cea910d12aeb4e66d192817c7ee8",
+                                    "rebound_at":  "2026-08-02",
+                                    "semantic_change":  false,
+                                    "unchanged_components":  [
+                                                                  "constants",
+                                                                  "threshold_rules",
+                                                                  "candidate_designs",
+                                                                  "selection_rule"
+                                                              ]
+                                },
+    "method_contract_version":  "paper_a_method_20260802_v16",
+    "method_contract_sha256":  "ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265"
 }

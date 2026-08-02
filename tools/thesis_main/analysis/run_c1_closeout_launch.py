@@ -273,7 +273,8 @@ def freeze_c1_batch(args: argparse.Namespace) -> dict[str, Any]:
     completion_exceptions = {str(value) for value in scope.get("original_completion_exception_task_ids", []) if str(value)}
     if not cutoff or not originals:
         raise ValueError("C1_A scope must bind cutoff and original roster")
-    profile_path = c1_dir / "c1_three_track_worker_state.csv"
+    formal_profile_path = c1_dir / "c1_three_track_worker_state_formal.csv"
+    profile_path = formal_profile_path if formal_profile_path.is_file() else c1_dir / "c1_three_track_worker_state.csv"
     eligibility_path = c1_dir / "c1_row_analysis_eligibility.csv"
     required = {
         "ANALYSIS_DEPENDENCY_BUNDLE": c1_dir / "analysis_dependency_manifest.json",

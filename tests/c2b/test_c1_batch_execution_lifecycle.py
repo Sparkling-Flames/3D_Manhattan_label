@@ -77,6 +77,15 @@ def test_c1_a_snapshot_is_formal_without_global_enrollment_close(tmp_path: Path)
     assert result["FINAL_POOLED_PROFILE_FROZEN"] is False
 
 
+def test_c1_a_snapshot_consumes_the_formal_worker_profile_filename(tmp_path: Path) -> None:
+    c1_dir = tmp_path / "c1"; _batch_artifacts(c1_dir)
+    (c1_dir / "c1_three_track_worker_state.csv").rename(c1_dir / "c1_three_track_worker_state_formal.csv")
+    scope = tmp_path / "scope.json"; scope.write_text(json.dumps(_batch_scope()), encoding="utf-8")
+    result = freeze_c1_batch(type("Args", (), {"c1_output_dir": c1_dir, "batch_scope_manifest": scope, "output": tmp_path / "snapshot.json"})())
+    assert result["status"] == "formal_design_eligible"
+    assert _snapshot_dependencies(result, "WORKER_PROFILE")["WORKER_PROFILE"].name == "c1_three_track_worker_state_formal.csv"
+
+
 def test_c1_a_snapshot_scopes_out_late_entry_inputs(tmp_path: Path) -> None:
     c1_dir = tmp_path / "c1"; _batch_artifacts(c1_dir)
     profile = list(csv.DictReader((c1_dir / "c1_three_track_worker_state.csv").open(encoding="utf-8")))
