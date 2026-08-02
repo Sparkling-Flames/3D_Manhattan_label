@@ -62,18 +62,44 @@ def _maximum_cliques(indices: tuple[int, ...], edges: set[tuple[int, int]], *, m
             elif component_size == maximum_size:
                 maxima.extend(cliques)
         return sorted(maxima), False, search_nodes
-    search_nodes = 0
-    for size in range(len(indices), 0, -1):
-        found = []
-        for group in itertools.combinations(indices, size):
-            search_nodes += 1
-            if search_nodes > maximum_search_nodes:
-                return [], True, search_nodes
-            if all(tuple(sorted(pair)) in edges for pair in itertools.combinations(group, 2)):
-                found.append(group)
-        if found:
-            return found, False, search_nodes
-    return [], False, search_nodes
+    neighbors = {
+        vertex: {
+            other for other in indices
+            if other != vertex and tuple(sorted((vertex, other))) in edges
+        }
+        for vertex in indices
+    }
+    maxima: list[tuple[int, ...]] = []
+    maximum_size = search_nodes = 0
+    truncated = False
+
+    def visit(chosen: tuple[int, ...], candidates: set[int], excluded: set[int]) -> None:
+        nonlocal maximum_size, search_nodes, truncated
+        search_nodes += 1
+        if search_nodes > maximum_search_nodes:
+            truncated = True
+            return
+        if len(chosen) + len(candidates) < maximum_size:
+            return
+        if not candidates and not excluded:
+            group = tuple(sorted(chosen))
+            if len(group) > maximum_size:
+                maxima.clear()
+                maximum_size = len(group)
+            if len(group) == maximum_size:
+                maxima.append(group)
+            return
+        pivot_pool = candidates | excluded
+        pivot = min(pivot_pool, key=lambda vertex: (-len(candidates & neighbors[vertex]), vertex)) if pivot_pool else None
+        for vertex in sorted(candidates - (neighbors[pivot] if pivot is not None else set())):
+            visit((*chosen, vertex), candidates & neighbors[vertex], excluded & neighbors[vertex])
+            candidates.remove(vertex)
+            excluded.add(vertex)
+            if truncated:
+                return
+
+    visit(tuple(), set(indices), set())
+    return ([] if truncated else sorted(set(maxima))), truncated, search_nodes
 
 
 def _maximum_clique_partitions(indices: tuple[int, ...], edges: set[tuple[int, int]], *, maximum_partition_count: int = 256, maximum_search_nodes: int = 10000) -> tuple[list[tuple[tuple[int, ...], ...]], bool, int]:

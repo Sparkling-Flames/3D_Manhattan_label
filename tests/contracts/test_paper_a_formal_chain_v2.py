@@ -8,7 +8,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.geometry_cluster_v2 import _maximum_clique_partitions, cluster_geometry_records
+from tools.thesis_main.analysis.geometry_cluster_v2 import _maximum_clique_partitions, _maximum_cliques, cluster_geometry_records
 from tools.thesis_main.analysis.materialize_stage3_freeze_gate import REQUIRED_GATES, build_gate, validate_gate_file
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file, validate_record
 from tools.thesis_main.analysis.routing.v1_decision_engine import append_decision, decide_next_offer, replay_next_offer
@@ -185,6 +185,15 @@ def test_variable_k_disconnected_components_do_not_exhaust_clique_search() -> No
     partitions, truncated, _ = _maximum_clique_partitions(indices, edges, maximum_search_nodes=10000)
     assert truncated is False
     assert partitions == [(groups[0], groups[1])]
+
+
+def test_variable_k_connected_sparse_graph_does_not_exhaust_clique_search() -> None:
+    indices = tuple(range(22))
+    edges = {tuple(sorted((index, (index + 1) % len(indices)))) for index in indices}
+    cliques, truncated, nodes = _maximum_cliques(indices, edges, maximum_search_nodes=10000)
+    assert truncated is False
+    assert set(cliques) == edges
+    assert nodes < 10000
 
 
 def test_stage3_requires_c1_children_and_revalidates_method_sha(tmp_path: Path) -> None:
