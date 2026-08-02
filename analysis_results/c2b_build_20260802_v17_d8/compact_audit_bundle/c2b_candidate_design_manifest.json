@@ -1,0 +1,54 @@
+{
+  "manifest_version": "c2_design_v1",
+  "contract_role": "generated_subordinate",
+  "method_contract_version": "paper_a_method_20260802_v17",
+  "method_contract_sha256": "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c",
+  "artifact_role": "formal_candidate_enumeration_only",
+  "input_sha256": {
+    "worker_profile_csv": "51219601069a70b41a14d96dd1b309e9dea5b0b512afceea930c35ab3ae45bf3",
+    "task_pool_csv": "69be5b204f1661abfff818e42fc08744fb0720166452a86501b0eb02564ae762",
+    "c1_closeout_summary": "78bf51aadf7ec325da738fe1eff8a1d95480b8f95aebe16cff9be2386c312cba",
+    "risk_summary": "fb0cd5daa8879296183fd36bda7684b2c34f2e3ed50496de40c94efe91e4bb6c"
+  },
+  "risk_contract_sha256": "4b84d58f8795377a58dc9888d99e787880d4db628745e7b7f88bc49c8faa4c7a",
+  "predispatch_amendment_sha256": "330938460ffd779eba3beeeef361f300ff30befbfd38549e1c782d05358f99ba",
+  "threshold_manifest_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
+  "candidate_designs": [
+    {
+      "design_id": "D8",
+      "common_anchor_count": 4,
+      "bridge_per_worker": 4,
+      "unique_bridge_tasks": 44,
+      "unique_bridge_tasks_role": "upper_bound_search_downward",
+      "min_task_support": 2,
+      "max_worker_stratum_imbalance": 2
+    },
+    {
+      "design_id": "D10",
+      "common_anchor_count": 6,
+      "bridge_per_worker": 4,
+      "unique_bridge_tasks": 44,
+      "unique_bridge_tasks_role": "upper_bound_search_downward",
+      "min_task_support": 2,
+      "max_worker_stratum_imbalance": 2
+    },
+    {
+      "design_id": "D12",
+      "common_anchor_count": 6,
+      "bridge_per_worker": 6,
+      "unique_bridge_tasks": 66,
+      "unique_bridge_tasks_role": "upper_bound_search_downward",
+      "min_task_support": 2,
+      "max_worker_stratum_imbalance": 2
+    }
+  ],
+  "cross_stage_anchor_base_task_ids": [],
+  "cross_stage_anchor_count": 0,
+  "simulation": {
+    "seed": 20260724,
+    "draws": 1000,
+    "resampling": "C1 empirical building/task/worker bootstrap"
+  },
+  "bridge_task_count_policy": "search_downward_from_unique_bridge_tasks_upper_bound_and_maximize_unique_images_subject_to_deterministic_assignment_gates",
+  "selection_rule": "first_minimum_design_meeting_graph_coverage_precision_budget_then_sha_bound_human_approval"
+}

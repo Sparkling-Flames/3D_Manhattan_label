@@ -1,0 +1,37 @@
+{
+  "design_manifest": "analysis_results\\c2b_validation_design_20260802_v17\\output\\c2b_candidate_design_manifest.json",
+  "design_manifest_sha256": "92eb0b6a501a4af02b3379d10c01a6efa9e44153e9f44a748358dca50531d5ba",
+  "threshold_manifest_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
+  "predispatch_amendment_sha256": "330938460ffd779eba3beeeef361f300ff30befbfd38549e1c782d05358f99ba",
+  "input_sha256": {
+    "worker_profile_csv": "51219601069a70b41a14d96dd1b309e9dea5b0b512afceea930c35ab3ae45bf3",
+    "task_pool_csv": "69be5b204f1661abfff818e42fc08744fb0720166452a86501b0eb02564ae762",
+    "c1_closeout_summary": "78bf51aadf7ec325da738fe1eff8a1d95480b8f95aebe16cff9be2386c312cba",
+    "risk_summary": "fb0cd5daa8879296183fd36bda7684b2c34f2e3ed50496de40c94efe91e4bb6c",
+    "eligibility_evidence_csv": "69be5b204f1661abfff818e42fc08744fb0720166452a86501b0eb02564ae762"
+  },
+  "dependency_binding_valid": true,
+  "chosen_design_id": "",
+  "recommended_design_id": "D8",
+  "recommendation_rule": "first minimum ordered design satisfying graph coverage precision and budget gates",
+  "n_assignments": 0,
+  "c2b_design_ready": false,
+  "candidate_only": true,
+  "launch_ready": false,
+  "formal_selection_allowed": true,
+  "failure_reason": "candidate_only_no_selection",
+  "n_feasible_candidate_designs": 3,
+  "n_non_dominated_candidate_designs": 3,
+  "candidate_assignment_rows": 0,
+  "state_machine": {
+    "C1_COLLECTION_INCOMPLETE": false,
+    "C1_CANONICAL_CLOSED": false,
+    "C1_MEASUREMENT_FROZEN": false,
+    "C1_EVIDENCE_BUNDLE_FROZEN": false,
+    "C2B_BASELINE_INPUT_FROZEN": true,
+    "C2B_RISK_DESIGN_FROZEN": true,
+    "C2B_DESIGN_FROZEN": false,
+    "C2B_ASSIGNMENT_MATERIALIZED": false,
+    "C2B_LAUNCH_READY": false
+  }
+}

@@ -1,0 +1,75 @@
+{
+  "approved_at": "2026-08-02",
+  "approved_by": "researcher_explicit_user_approval",
+  "common_anchor_requirements": {
+    "minimum_count": 2,
+    "required_strata": [
+      "ordinary",
+      "stress"
+    ]
+  },
+  "contract_role": "generated_subordinate",
+  "derivation": {
+    "c1_design_parameters_sha256": "d7a639b4532ae35ad304721bedc3ce6f215d0689e75e8be6cee85748734c2fea",
+    "capacity_manifest_sha256": "bc5807b56017fb3b1787199648c60f007c683a11b77e3e67d8f8ace538714572",
+    "derived_before_candidate_enumeration": true,
+    "formula_contract_sha256": "c73231f32c19408373f498936122cd7875c3de540f5531bdc7f998c5a3a45966",
+    "formula_ids": {
+      "building_coverage_probability": "frozen_constant",
+      "graph_connectivity_probability": "frozen_constant",
+      "maximum_mean_rank_displacement": "frozen_constant",
+      "minimum_building_coverage": "frozen_constant",
+      "minimum_eligible_building_count": "frozen_constant",
+      "minimum_eligible_task_count": "frozen_constant",
+      "minimum_ordinary_task_count": "frozen_constant",
+      "minimum_stress_task_count": "frozen_constant",
+      "minimum_task_support": "frozen_constant",
+      "minimum_top_k_overlap": "frozen_constant",
+      "minimum_worker_rank_spearman": "frozen_constant",
+      "minimum_worker_support": "min_constant_and_min_capacity",
+      "ordinary_coverage_probability": "frozen_constant",
+      "q_gt_ci_half_width": "normal_95_max_worker_se",
+      "risk_slope_ci_half_width": "normal_95_max_unified_slope_sd",
+      "stress_coverage_probability": "frozen_constant"
+    },
+    "input_fields": [
+      "worker_id",
+      "c2b_baseline_eligible",
+      "Q_GT_baseline_se",
+      "risk_slope_for_simulation",
+      "risk_slope_se",
+      "risk_support",
+      "group_slope_mean",
+      "group_slope_se",
+      "between_worker_slope_sd",
+      "slope_model_form",
+      "c2b_capacity"
+    ],
+    "post_feasibility_inputs_consumed": false,
+    "reviewer_approval_sha256": "80b73c39182776bd62c3c0e917eb2f45f8744abafdc8bcc4e0e90c9d51de453b"
+  },
+  "formal_selection_allowed": true,
+  "method_contract_sha256": "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c",
+  "method_contract_version": "paper_a_method_20260802_v17",
+  "schema_version": "paper_a_c2b_design_selection_thresholds_v2",
+  "selection_rule": "select only a reviewer-approved non-dominated feasible design; never tune thresholds after candidate enumeration",
+  "status": "approved",
+  "thresholds": {
+    "building_coverage_probability": 0.9,
+    "graph_connectivity_probability": 0.9,
+    "maximum_mean_rank_displacement": 1,
+    "minimum_building_coverage": 2,
+    "minimum_eligible_building_count": 3,
+    "minimum_eligible_task_count": 8,
+    "minimum_ordinary_task_count": 4,
+    "minimum_stress_task_count": 4,
+    "minimum_task_support": 2,
+    "minimum_top_k_overlap": 0.6666666666666666,
+    "minimum_worker_rank_spearman": 0.8,
+    "minimum_worker_support": 4,
+    "ordinary_coverage_probability": 0.9,
+    "q_gt_ci_half_width": 0.07713282940141296,
+    "risk_slope_ci_half_width": 0.012607928483052961,
+    "stress_coverage_probability": 0.9
+  }
+}

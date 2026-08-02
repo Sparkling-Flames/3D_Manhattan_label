@@ -1,0 +1,52 @@
+{
+  "schema_version": "paper_a_c2b_prelaunch_provenance_supplement_v1",
+  "artifact_role": "C2B_PRELAUNCH_STATE_SEMANTICS",
+  "contract_role": "generated_subordinate",
+  "method_contract_version": "paper_a_method_20260802_v17",
+  "method_contract_sha256": "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c",
+  "selected_design_id": "D8",
+  "selected_design_sha": "f2b7cde8aadf29fb35a965ec49b434587feaa1c09863f74cf0e95e02e3462822",
+  "source_launch_report_sha256": "1cde0f1a71e524e158e9f2b9e6b2717a7e02ea4c04ba2586a603c7d55c802e79",
+  "source_c1_a_analysis_snapshot_sha256": "78bf51aadf7ec325da738fe1eff8a1d95480b8f95aebe16cff9be2386c312cba",
+  "state_semantics": {
+    "C1_A_ANALYSIS_SNAPSHOT_FROZEN": true,
+    "C2B_DESIGN_INPUT_FROZEN_FROM_C1_A": true,
+    "FINAL_POOLED_C1_EVIDENCE_FROZEN": false,
+    "interpretation": "C2-B Batch A consumes the frozen C1-A analysis snapshot. It does not require rolling enrollment closeout or the final pooled C1+C2 profile.",
+    "legacy_false_fields_are_not_batch_a_blockers": [
+      "C1_CANONICAL_CLOSED",
+      "C1_MEASUREMENT_FROZEN",
+      "C1_EVIDENCE_BUNDLE_FROZEN"
+    ]
+  },
+  "launch_ready_semantics": {
+    "C2B_LAUNCH_READY": true,
+    "meaning": "Local assignment, worker distribution and planned Label Studio import exist and passed static validation.",
+    "does_not_claim": [
+      "Label Studio tasks imported",
+      "runtime task IDs bound",
+      "private assignment lists deployed",
+      "worker isolation verified",
+      "CE/UI visibility verified",
+      "active-time reporting smoke passed"
+    ]
+  },
+  "operational_prelaunch_status": {
+    "label_studio_imported": false,
+    "runtime_task_mapping_bound": false,
+    "private_assignment_list_deployed": false,
+    "worker_isolation_verified": false,
+    "ce_ui_visibility_verified": false,
+    "active_time_reporting_smoke_passed": false,
+    "worker_start_authorized": false
+  },
+  "required_before_worker_start": [
+    "Manually import label_studio_import_C2B.json into the isolated C2-B Batch A project.",
+    "Export the runtime task list and run bind-c2b-runtime-mapping.",
+    "Verify c2b_runtime_task_mapping.csv, c2b_worker_task_binding_audit.json and c2b_private_assignment_list_audit.json.",
+    "Deploy the external private assignment list; Label Studio CE is not the assignment authority.",
+    "Run real Chinese and English worker-account visibility/isolation smoke tests.",
+    "Run an active-time reporting smoke test against the new C2 task-worker identity fields."
+  ],
+  "frozen_report_modified": false
+}
