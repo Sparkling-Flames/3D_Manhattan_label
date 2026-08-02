@@ -14,6 +14,7 @@ from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+from urllib.parse import quote
 
 import numpy as np
 
@@ -1382,14 +1383,54 @@ def design_c2b(args: argparse.Namespace) -> dict[str, Any]:
     return {"day": 2, "phase": "risk-plan", "risk_pool_formal_ready": ready, "assignment_materialized": False, "design": design_summary, "evidence_envelope": evidence_envelope, "state_machine": risk["state_machine"], "blockers": blockers}
 
 
-def _write_c2b_import(output_dir: Path, distribution: list[dict[str, Any]], *, batch_id: str, selected_design_sha: str) -> Path:
+def _write_c2b_import(output_dir: Path, distribution: list[dict[str, Any]], *, batch_id: str, selected_design_id: str, selected_design_sha: str, layout_dir: Path) -> Path:
+    def dump(path: Path, payload: object) -> None:
+        with path.open("w", encoding="utf-8", newline="\n") as stream:
+            stream.write(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
+
     selected = {row["task_id"]: row for row in distribution}
-    imports = [{
-        "data": {"image": row["image_path"], "title": task_id, "planned_task_id": task_id, "c2b_batch_id": batch_id, "selected_design_sha": selected_design_sha},
-        "meta": {"round_id": "C2-B", "batch_id": batch_id, "selected_design_sha": selected_design_sha},
-    } for task_id, row in sorted(selected.items())]
+    layouts = {}
+    for task_id, row in selected.items():
+        layout_path = layout_dir / f"{row.get('base_task_id') or task_id}.json"
+        if not layout_path.is_file():
+            raise ValueError(f"C2-B assigned task lacks model layout JSON:{task_id}")
+        payload = json.loads(layout_path.read_text(encoding="utf-8"))
+        corners = payload.get("layout", {}).get("corners", [])
+        if not corners:
+            raise ValueError(f"C2-B assigned task has empty model layout:{task_id}")
+        layouts[task_id] = [{key: corner[key] for key in ("x", "y_ceiling", "y_floor")} for corner in corners]
+
+    def worker_image(row: dict[str, Any]) -> str:
+        return str(row["image_path"]).replace("/valid_no_occ/img/", "/img_v/").removesuffix(".png") + ".jpg"
+
+    def tasks(vis_base: str) -> list[dict[str, Any]]:
+        return [{"data": {
+            "image": worker_image(row),
+            "vis_3d": f"{vis_base}/tools/vis_3d.html?w=1024&h=512&data={quote(json.dumps(layouts[task_id], separators=(',', ':')))}",
+            "title": Path(worker_image(row)).name,
+            "dataset_group": "C2-B",
+            "condition": "manual",
+            "task_id": task_id,
+            "planned_task_id": task_id,
+            "base_task_id": row.get("base_task_id") or task_id,
+            "image_id": row.get("image_id") or row.get("image_stem") or row.get("base_task_id") or task_id,
+            "calibration_version": "C2-B_v17",
+            "source_draft": f"approved_{selected_design_id}",
+            "artifact_status": "formal_c2b_import_json",
+            "launch_allowed": True,
+            "c2b_batch_id": batch_id,
+            "selected_design_sha": selected_design_sha,
+        }} for task_id, row in sorted(selected.items())]
+
+    imports = tasks("http://175.178.71.217:8000")
     path = output_dir / "label_studio_import_C2B.json"
-    path.write_text(json.dumps(imports, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    dump(path, imports)
+    release_dir = _PROJECT_ROOT / "import_json" / "c2b"
+    release_dir.mkdir(parents=True, exist_ok=True)
+    release_stem = f"c2b_{selected_design_id}_{batch_id.removeprefix('C2B_').lower()}_import"
+    dump(release_dir / f"{release_stem}_zh.json", imports)
+    foreign = tasks("https://label.sparkle0825.top")
+    dump(release_dir / f"{release_stem}_foreign_https.json", foreign)
     return path
 
 
@@ -1479,7 +1520,7 @@ def _build_c2b_batch_b(args: argparse.Namespace) -> dict[str, Any]:
     _write(args.output_dir / "worker_distribution_C2B.csv", rows)
     worker_dir = args.output_dir / "worker_facing_distribution_C2B"; worker_dir.mkdir(parents=True, exist_ok=True)
     for worker in sorted(set(workers)): _write(worker_dir / f"worker_{worker}_C2B.csv", [row for row in rows if row["worker_id"] == worker])
-    import_path = _write_c2b_import(args.output_dir, rows, batch_id="C2B_BATCH_B", selected_design_sha=design_sha)
+    import_path = _write_c2b_import(args.output_dir, rows, batch_id="C2B_BATCH_B", selected_design_id=str(selected["selected_design_id"]), selected_design_sha=design_sha, layout_dir=args.layout_dir)
     report = {
         "schema_version": "paper_a_c2b_launch_ready_report_v3", "contract_role": "generated_subordinate", **_method_identity(),
         "assignment_batch_id": "C2B_BATCH_B", "selected_design_id": selected["selected_design_id"], "selected_design_sha": design_sha, "selected_design_manifest_sha256": sha256_file(args.selected_design_manifest), "task_pool_sha256": selected["task_pool_sha256"], "common_anchor_count": selected["common_anchor_count"], "bridge_per_worker": selected["bridge_per_worker"], "selected_bridge_pool_sha256": selected["selected_bridge_pool_sha256"], "assignment_sha256": sha256_file(assignment_path), "import_sha256": sha256_file(import_path),
@@ -1585,7 +1626,7 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
     for worker in sorted({row["worker_id"] for row in distribution}):
         _write(worker_dir / f"worker_{worker}_C2B.csv", [row for row in distribution if row["worker_id"] == worker])
     selected_design_sha = str(selected_manifest["selected_design_sha"])
-    import_path = _write_c2b_import(args.output_dir, distribution, batch_id="C2B_BATCH_A", selected_design_sha=selected_design_sha)
+    import_path = _write_c2b_import(args.output_dir, distribution, batch_id="C2B_BATCH_A", selected_design_id=str(selected_manifest["selected_design_id"]), selected_design_sha=selected_design_sha, layout_dir=args.layout_dir)
     imports = json.loads(import_path.read_text(encoding="utf-8"))
     support = Counter(row["task_id"] for row in assignments)
     assignment_identities = {(row["worker_id"], row["task_id"]) for row in assignments}
@@ -1814,7 +1855,7 @@ def main(argv: list[str] | None = None) -> int:
     plan.add_argument("--device", default="auto")
 
     build = sub.add_parser("build-c2b")
-    for name in ("c1-closeout-summary", "risk-summary", "task-pool", "task-eligibility-evidence", "candidate-dir", "design-manifest", "selected-design-manifest", "threshold-manifest", "source-split-evidence", "source-split-approval", "future-holdout-evidence", "future-holdout-approval", "reference-registry", "selected-task-reference-manifest", "selected-design-approval", "capacity-manifest", "output-dir"):
+    for name in ("c1-closeout-summary", "risk-summary", "task-pool", "task-eligibility-evidence", "candidate-dir", "design-manifest", "selected-design-manifest", "threshold-manifest", "source-split-evidence", "source-split-approval", "future-holdout-evidence", "future-holdout-approval", "reference-registry", "selected-task-reference-manifest", "selected-design-approval", "capacity-manifest", "layout-dir", "output-dir"):
         build.add_argument(f"--{name}", type=Path, required=True)
     build.add_argument("--c2b-roster-manifest", type=Path, required=True)
     build.add_argument("--assignment-batch", choices=("C2B_BATCH_A", "C2B_BATCH_B"), default="C2B_BATCH_A")

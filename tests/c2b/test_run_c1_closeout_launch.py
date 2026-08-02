@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, audit_c1, build_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1, validate_runbook_command_contract
+from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, _write_c2b_import, audit_c1, build_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1, validate_runbook_command_contract
 from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _aggregate_sha, _c1_closeout_blockers
 from tools.thesis_main.analysis.derive_c2b_design_thresholds import derive_threshold_manifest
 
@@ -73,6 +73,30 @@ def test_public_cli_exposes_the_auditable_and_thin_entry_commands(capsys):
         assert command in help_text
     for removed in ("day1-canonical-audit", "day1-formal-audit", "day2-c2b-build", "freeze-c1-active-log"):
         assert removed not in help_text
+
+
+def test_c2b_import_matches_prior_formal_import_shape(monkeypatch, tmp_path):
+    monkeypatch.setattr("tools.thesis_main.analysis.run_c1_closeout_launch._PROJECT_ROOT", tmp_path)
+    layouts = tmp_path / "layouts"; layouts.mkdir()
+    (layouts / "base-1.json").write_text(json.dumps({"layout": {"corners": [
+        {"x": 1, "y_ceiling": 2, "y_floor": 3, "id": 0},
+        {"x": 4, "y_ceiling": 5, "y_floor": 6, "id": 1},
+    ]}}), encoding="utf-8")
+    output = tmp_path / "analysis"; output.mkdir()
+    path = _write_c2b_import(output, [{
+        "task_id": "task-1", "base_task_id": "base-1", "image_id": "image-1",
+        "image_path": "https://example.test/valid_no_occ/img/base-1.png",
+    }], batch_id="C2B_BATCH_A", selected_design_id="D8", selected_design_sha="abc", layout_dir=layouts)
+
+    zh = json.loads(path.read_text(encoding="utf-8"))
+    foreign = json.loads((tmp_path / "import_json/c2b/c2b_D8_batch_a_import_foreign_https.json").read_text(encoding="utf-8"))
+    assert set(zh[0]) == {"data"}
+    assert zh[0]["data"]["title"] == "base-1.jpg"
+    assert zh[0]["data"]["image"] == "https://example.test/img_v/base-1.jpg"
+    assert zh[0]["data"]["planned_task_id"] == "task-1"
+    assert zh[0]["data"]["vis_3d"].startswith("http://175.178.71.217:8000/tools/vis_3d.html?")
+    assert foreign[0]["data"]["vis_3d"].startswith("https://label.sparkle0825.top/tools/vis_3d.html?")
+    assert "predictions" not in zh[0]
 
 
 def test_runner_materializes_geometry_once_after_final_pool_gate():
