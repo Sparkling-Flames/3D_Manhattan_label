@@ -155,20 +155,35 @@
                                            "c2b_capacity"
                                        ],
     "selection_rule":  "select only a reviewer-approved non-dominated feasible design; never tune thresholds after candidate enumeration",
+    "gate_roles":  {
+                         "minimum_worker_support":  "deterministic_assignment_manifest_dispatch_hard_gate",
+                         "minimum_task_support":  "deterministic_assignment_manifest_dispatch_hard_gate",
+                         "monte_carlo_support_absolute_minimum":  "extreme_audit_only",
+                         "minimum_worker_rank_spearman":  "dispatch_hard_gate",
+                         "minimum_top_k_overlap":  "dispatch_hard_gate",
+                         "maximum_mean_rank_displacement":  "post_C2_diagnostic_not_dispatch_gate"
+                     },
+    "float_boundary_comparison":  {
+                                        "function":  "math.isclose",
+                                        "rel_tol":  1e-12,
+                                        "abs_tol":  1e-12
+                                    },
+    "predispatch_amendment_sha256":  "330938460ffd779eba3beeeef361f300ff30befbfd38549e1c782d05358f99ba",
     "fail_closed_rule":  "unsupported formula IDs, stale SHA bindings, missing inputs, or nonfinite derived values forbid candidate enumeration",
     "contract_role":  "generated_subordinate",
     "compatibility_rebind":  {
-                                    "previous_method_contract_version":  "paper_a_method_20260801_v12",
-                                    "previous_method_contract_sha256":  "115ba6eaf771b4fa079289f17d1f491498d9cea910d12aeb4e66d192817c7ee8",
+                                    "previous_method_contract_version":  "paper_a_method_20260802_v16",
+                                    "previous_method_contract_sha256":  "ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265",
                                     "rebound_at":  "2026-08-02",
-                                    "semantic_change":  false,
+                                    "semantic_change":  true,
                                     "unchanged_components":  [
                                                                   "constants",
-                                                                  "threshold_rules",
                                                                   "candidate_designs",
-                                                                  "selection_rule"
+                                                                  "numeric_threshold_values",
+                                                                  "minimum_worker_rank_spearman",
+                                                                  "minimum_top_k_overlap"
                                                               ]
                                 },
-    "method_contract_version":  "paper_a_method_20260802_v16",
-    "method_contract_sha256":  "ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265"
+    "method_contract_version":  "paper_a_method_20260802_v17",
+    "method_contract_sha256":  "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c"
 }

@@ -9,12 +9,17 @@ import pytest
 from tools.thesis_main.analysis.c1_c2_mainline import materialize_c2b_design_worker_profile, materialize_measurement_readiness
 from tools.thesis_main.analysis.build_c2_assignment_manifest_from_c1_gaps import (
     _anchor_pool,
+    _assign_bridges,
     _empirical_cluster_bootstrap,
+    _graph_audit,
     _joint_qgt_posterior,
     _projected_worker_intervals,
     _recompute_stability_audits,
     _resolve_slope_distribution,
+    _search_bridge_assignment,
     _select_anchors,
+    _select_bridges,
+    _threshold_failures,
 )
 from tools.thesis_main.analysis.materialize_c1_rehearsal_audits import (
     apply_completion_disposition,
@@ -367,11 +372,76 @@ def test_hierarchical_simulation_rebuilds_graph_after_delivery() -> None:
         "t2": {"task_id": "t2", "building_id": "b2", "risk_design_score_A": ".9", "risk_design_stratum": "stress"},
     }
     assignments = [{"worker_id": worker, "task_id": task} for worker in ("w1", "w2") for task in tasks]
-    result = _empirical_cluster_bootstrap("d", workers, assignments, tasks, {"worker_task_graph_connected": True}, seed=7, draws=30)
+    result = _empirical_cluster_bootstrap(
+        "d", workers, assignments, tasks, {"worker_task_graph_connected": True}, seed=7, draws=30,
+        minimum_worker_support_threshold=2, minimum_task_support_threshold=2,
+    )
     assert result["simulation_method"] == "hierarchical_building_task_resampling_with_joint_qgt_and_unified_slope_posterior_v2"
     assert result["graph_connectivity_probability"] == 0
     assert float(result["expected_assignment_count"]) < len(assignments)
     assert result["worker_rank_spearman"] != ""
+    assert result["minimum_worker_support_p05"] == 0
+    assert result["minimum_worker_support_threshold_probability"] == 0
+    assert result["minimum_task_support_threshold_probability"] == 0
+    assert result["support_extreme_minimum_role"] == "extreme_audit_only_not_dispatch_gate"
+
+
+def test_bridge_upper_bound_can_step_down_and_repeat_stress_support() -> None:
+    workers = [f"w{index}" for index in range(4)]
+    anchors = [
+        {"task_id": "anchor_o", "risk_design_stratum": "ordinary"},
+        {"task_id": "anchor_s", "risk_design_stratum": "stress"},
+    ]
+    bridges = [
+        {
+            "task_id": task_id,
+            "risk_design_stratum": "stress" if task_id == "a" else "ordinary",
+            "risk_design_vector_A": "[0,0,0,0]",
+            "building_id": task_id,
+        }
+        for task_id in ("a", "b", "c", "d", "e", "f", "g", "h")
+    ]
+    selected, selected_edges, selected_graph, attempts, failure = _search_bridge_assignment(
+        "D8", workers, bridges, anchors, 8, 4, 2, 2, 2,
+    )
+    assert failure == ""
+    assert len(selected) == 7 and attempts == 2
+    stress_support = sum(task["risk_design_stratum"] == "stress" for _worker, task in selected_edges)
+    assert stress_support == 4 > 2
+    assert selected_graph["max_worker_stratum_imbalance"] == 2
+
+
+def test_dispatch_thresholds_use_deterministic_support_and_keep_rank_displacement_diagnostic() -> None:
+    simulation = {
+        "q_gt_max_ci_half_width": .1000000000005,
+        "risk_slope_max_ci_half_width": .2000000000005,
+        "worker_rank_spearman": .7999999999995,
+        "top_k_overlap": .6666666666662,
+        "mean_rank_displacement": 99,
+        "minimum_worker_support": 0,
+        "minimum_task_support": 0,
+        "graph_connectivity_probability": .9,
+        "building_coverage": 2,
+        "building_coverage_probability": .9,
+        "ordinary_coverage_probability": .9,
+        "stress_coverage_probability": .9,
+    }
+    graph = {"minimum_worker_support": 8, "min_bridge_task_support": 2}
+    thresholds = {"thresholds": {
+        "q_gt_ci_half_width": .1,
+        "risk_slope_ci_half_width": .2,
+        "minimum_worker_rank_spearman": .8,
+        "minimum_top_k_overlap": 2 / 3,
+        "maximum_mean_rank_displacement": 1,
+        "minimum_worker_support": 4,
+        "minimum_task_support": 2,
+        "graph_connectivity_probability": .9,
+        "minimum_building_coverage": 2,
+        "building_coverage_probability": .9,
+        "ordinary_coverage_probability": .9,
+        "stress_coverage_probability": .9,
+    }}
+    assert _threshold_failures(simulation, graph, thresholds) == []
 
 
 def test_common_slope_simulation_uses_one_pooled_shared_posterior() -> None:

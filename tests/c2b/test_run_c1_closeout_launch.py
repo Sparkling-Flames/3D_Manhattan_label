@@ -111,14 +111,16 @@ def test_fresh_checkout_keeps_both_numeric_threshold_contracts():
         assert subprocess.run(["git", "check-ignore", "-q", path]).returncode != 0
 
 
-def test_c2b_threshold_formula_contract_binds_current_method_without_semantic_rewrite():
+def test_c2b_threshold_formula_contract_binds_current_predispatch_amendment():
     path = Path("docs/thesis_main/C2B_DESIGN_SELECTION_THRESHOLDS.json")
     payload = json.loads(path.read_text(encoding="utf-8"))
     method_path = Path("docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json")
     method = json.loads(method_path.read_text(encoding="utf-8"))
     assert payload["method_contract_version"] == method["contract_version"]
     assert payload["method_contract_sha256"] == hashlib.sha256(method_path.read_bytes()).hexdigest()
-    assert payload["compatibility_rebind"]["semantic_change"] is False
+    assert payload["compatibility_rebind"]["semantic_change"] is True
+    assert payload["gate_roles"]["maximum_mean_rank_displacement"] == "post_C2_diagnostic_not_dispatch_gate"
+    assert payload["gate_roles"]["minimum_worker_support"] == "deterministic_assignment_manifest_dispatch_hard_gate"
     assert [(row["design_id"], row["common_anchor_count"], row["bridge_per_worker"]) for row in payload["candidate_designs"]] == [
         ("D8", 4, 4), ("D10", 6, 4), ("D12", 6, 6),
     ]

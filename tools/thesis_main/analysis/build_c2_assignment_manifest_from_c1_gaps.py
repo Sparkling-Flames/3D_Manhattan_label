@@ -21,6 +21,7 @@ from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 RISK_CONTRACT = _PROJECT_ROOT / "docs" / "thesis_main" / "C2B_RISK_DESIGN_CONTRACT_v1.json"
 DESIGN_THRESHOLDS = _PROJECT_ROOT / "docs" / "thesis_main" / "C2B_DESIGN_SELECTION_THRESHOLDS.json"
+PREDISPATCH_AMENDMENT = _PROJECT_ROOT / "docs" / "thesis_main" / "C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json"
 
 
 def _load_risk_contract() -> tuple[dict[str, Any], str]:
@@ -43,6 +44,18 @@ def _load_thresholds(path: Path = DESIGN_THRESHOLDS) -> tuple[dict[str, Any], st
     return payload, sha256_file(path)
 
 
+def _load_predispatch_amendment() -> tuple[dict[str, Any], str]:
+    payload = json.loads(PREDISPATCH_AMENDMENT.read_text(encoding="utf-8"))
+    if (
+        payload.get("schema_version") != "paper_a_c2b_predispatch_method_amendment_v1"
+        or payload.get("status") != "normative"
+        or payload.get("effective_timing") != "before_any_C2_worker_outcome"
+        or payload.get("uniform_application") != ["D8", "D10", "D12"]
+    ):
+        raise ValueError("invalid C2-B pre-dispatch amendment")
+    return payload, sha256_file(PREDISPATCH_AMENDMENT)
+
+
 ASSIGNMENT_FIELDS = [
     "round_id", "worker_id", "task_id", "base_task_id", "task_stratum",
     "image_id", "dataset_group", "image_path", "risk_design_score_A",
@@ -50,10 +63,12 @@ ASSIGNMENT_FIELDS = [
     "selection_role", "selection_reason", "maximin_distance_at_selection", "building_gain", "legacy_curated_priority_used",
 ]
 DESIGN_AUDIT_FIELDS = [
-    "design_id", "common_anchor_count", "bridge_per_worker", "unique_bridge_tasks",
+    "design_id", "common_anchor_count", "bridge_per_worker", "unique_bridge_tasks_upper_bound", "unique_bridge_tasks",
+    "bridge_search_attempt_count", "stress_bridge_task_count", "stress_bridge_assignment_support",
+    "stress_bridge_repeat_support", "deterministic_min_worker_support", "deterministic_min_task_support",
     "min_task_support", "n_assignments", "projected_max_ci_half_width",
     "worker_task_graph_connected", "stratum_balance_valid", "design_method",
-    "feasible", "non_dominated", "failure_reason",
+    "rank_displacement_gate_role", "feasible", "non_dominated", "failure_reason", "all_failure_gates",
 ]
 WORKER_PROJECTION_FIELDS = [
     "design_id", "worker_id", "current_interval_half_width", "projected_interval_half_width",
@@ -66,8 +81,8 @@ WORKER_PROJECTION_FIELDS = [
 GRAPH_AUDIT_FIELDS = [
     "design_id", "n_workers", "n_tasks", "n_edges", "n_connected_components",
     "worker_task_graph_connected", "bridge_only_n_connected_components", "bridge_only_graph_connected",
-    "duplicate_worker_task_count", "min_bridge_task_support",
-    "max_worker_stratum_imbalance",
+    "duplicate_worker_task_count", "minimum_worker_support", "min_bridge_task_support",
+    "max_worker_stratum_imbalance", "stress_bridge_task_count", "stress_bridge_assignment_support",
 ]
 TASK_SELECTION_AUDIT_FIELDS = [
     "design_id", "selection_step", "task_id", "base_task_id", "selection_role",
@@ -79,6 +94,9 @@ SIMULATION_FIELDS = [
     "q_gt_max_ci_half_width", "risk_slope_max_ci_half_width",
     "rank_stability", "worker_rank_spearman", "top_k_overlap", "mean_rank_displacement",
     "risk_slope_direction_stability", "minimum_worker_support", "minimum_task_support",
+    "minimum_worker_support_p05", "minimum_task_support_p05",
+    "minimum_worker_support_threshold_probability", "minimum_task_support_threshold_probability",
+    "support_extreme_minimum_role",
     "graph_connectivity_probability", "bridge_only_connectivity_probability", "building_coverage", "building_coverage_probability",
     "ordinary_coverage_probability", "stress_coverage_probability", "ordinary_coverage_probability_per_worker", "stress_coverage_probability_per_worker", "expected_assignment_count",
     "uncertainty_fields_used", "known_c1_worker_intercept_sd_resampled", "population_worker_intercept_sd_recorded",
@@ -227,8 +245,10 @@ def build_candidate_design_manifest(
         "design_id": design_id, "common_anchor_count": common,
         "bridge_per_worker": per_worker,
         "unique_bridge_tasks": min(bridges, max(1, math.ceil(len(workers) * per_worker / 2))),
+        "unique_bridge_tasks_role": "upper_bound_search_downward",
         "min_task_support": 2, "max_worker_stratum_imbalance": 2,
     } for design_id, common, per_worker in fixed]
+    _amendment, amendment_sha = _load_predispatch_amendment()
     manifest = {
         "manifest_version": "c2_design_v1",
         "contract_role": "generated_subordinate",
@@ -242,40 +262,49 @@ def build_candidate_design_manifest(
             **({"risk_summary": sha256_file(risk_summary)} if risk_summary else {}),
         },
         "risk_contract_sha256": sha256_file(RISK_CONTRACT),
+        "predispatch_amendment_sha256": amendment_sha,
         "threshold_manifest_sha256": sha256_file(threshold_manifest),
         "candidate_designs": candidates,
         "cross_stage_anchor_base_task_ids": cross_stage_anchor_base_task_ids,
         "cross_stage_anchor_count": len(cross_stage_anchor_base_task_ids),
         "simulation": {"seed": seed, "draws": draws, "resampling": "C1 empirical building/task/worker bootstrap"},
+        "bridge_task_count_policy": "search_downward_from_unique_bridge_tasks_upper_bound_and_maximize_unique_images_subject_to_deterministic_assignment_gates",
         "selection_rule": "first_minimum_design_meeting_graph_coverage_precision_budget_then_sha_bound_human_approval",
     }
     write_json(output, manifest)
     return output
 
 
+def _float_le(actual: float, limit: float) -> bool:
+    return actual < limit or math.isclose(actual, limit, rel_tol=1e-12, abs_tol=1e-12)
+
+
+def _float_ge(actual: float, limit: float) -> bool:
+    return actual > limit or math.isclose(actual, limit, rel_tol=1e-12, abs_tol=1e-12)
+
+
 def _threshold_failures(simulation_row: dict[str, Any], graph: dict[str, Any], thresholds: dict[str, Any]) -> list[str]:
     values = thresholds.get("thresholds", thresholds)
     checks = {
-        "q_gt_ci_half_width": ("q_gt_max_ci_half_width", lambda actual, limit: actual <= limit),
-        "risk_slope_ci_half_width": ("risk_slope_max_ci_half_width", lambda actual, limit: actual <= limit),
-        "minimum_worker_rank_spearman": ("worker_rank_spearman", lambda actual, limit: actual >= limit),
-        "minimum_top_k_overlap": ("top_k_overlap", lambda actual, limit: actual >= limit),
-        "maximum_mean_rank_displacement": ("mean_rank_displacement", lambda actual, limit: actual <= limit),
-        "minimum_worker_support": ("minimum_worker_support", lambda actual, limit: actual >= limit),
-        "minimum_task_support": ("minimum_task_support", lambda actual, limit: actual >= limit),
-        "graph_connectivity_probability": ("graph_connectivity_probability", lambda actual, limit: actual >= limit),
-        "minimum_building_coverage": ("building_coverage", lambda actual, limit: actual >= limit),
-        "building_coverage_probability": ("building_coverage_probability", lambda actual, limit: actual >= limit),
-        "ordinary_coverage_probability": ("ordinary_coverage_probability", lambda actual, limit: actual >= limit),
-        "stress_coverage_probability": ("stress_coverage_probability", lambda actual, limit: actual >= limit),
+        "q_gt_ci_half_width": (simulation_row, "q_gt_max_ci_half_width", _float_le),
+        "risk_slope_ci_half_width": (simulation_row, "risk_slope_max_ci_half_width", _float_le),
+        "minimum_worker_rank_spearman": (simulation_row, "worker_rank_spearman", _float_ge),
+        "minimum_top_k_overlap": (simulation_row, "top_k_overlap", _float_ge),
+        "minimum_worker_support": (graph, "minimum_worker_support", _float_ge),
+        "minimum_task_support": (graph, "min_bridge_task_support", _float_ge),
+        "graph_connectivity_probability": (simulation_row, "graph_connectivity_probability", _float_ge),
+        "minimum_building_coverage": (simulation_row, "building_coverage", _float_ge),
+        "building_coverage_probability": (simulation_row, "building_coverage_probability", _float_ge),
+        "ordinary_coverage_probability": (simulation_row, "ordinary_coverage_probability", _float_ge),
+        "stress_coverage_probability": (simulation_row, "stress_coverage_probability", _float_ge),
     }
     failures = []
-    for name, (field, predicate) in checks.items():
+    for name, (source, field, predicate) in checks.items():
         limit = values.get(name)
         if limit in {None, ""}:
             continue
         try:
-            actual = float(simulation_row.get(field, graph.get(field, "")))
+            actual = float(source.get(field, ""))
             if not predicate(actual, float(limit)):
                 failures.append(name)
         except (TypeError, ValueError):
@@ -378,6 +407,48 @@ def _assign_bridges(
     return [(worker, task_by_id[task_id]) for worker, task_id in sorted(assigned)]
 
 
+def _search_bridge_assignment(
+    design_id: str,
+    workers: list[str],
+    bridge_pool: list[dict[str, str]],
+    anchor_rows: list[dict[str, str]],
+    upper_bound: int,
+    per_worker: int,
+    min_support: int,
+    max_imbalance: int,
+    minimum_building_coverage: int,
+) -> tuple[list[dict[str, str]], list[tuple[str, dict[str, str]]], dict[str, Any], int, str]:
+    """Maximize unique bridges while satisfying deterministic dispatch gates."""
+    last_selected: list[dict[str, str]] = []
+    last_edges: list[tuple[str, dict[str, str]]] = []
+    last_graph = _graph_audit(design_id, workers, [], set())
+    last_failures = ["bridge_support_or_worker_capacity_infeasible"]
+    attempts = 0
+    for count in range(min(upper_bound, len(bridge_pool)), per_worker - 1, -1):
+        attempts += 1
+        selected = _select_bridges(bridge_pool, count, anchor_rows)
+        edges = _assign_bridges(workers, selected, per_worker, min_support) or []
+        rows = [
+            {"worker_id": worker, "task_id": _task_id(task), "task_stratum": _task_stratum(task)}
+            for worker, task in edges
+        ]
+        graph = _graph_audit(design_id, workers, rows, {_task_id(task) for task in selected})
+        buildings = {safe(task.get("building_id") or task.get("building")) for task in [*anchor_rows, *selected]} - {""}
+        failures = []
+        if len(selected) != count or not edges:
+            failures.append("bridge_support_or_worker_capacity_infeasible")
+        if graph["min_bridge_task_support"] < min_support:
+            failures.append("minimum_task_support")
+        if graph["max_worker_stratum_imbalance"] > max_imbalance:
+            failures.append("worker_stratum_imbalance")
+        if len(buildings) < minimum_building_coverage:
+            failures.append("minimum_building_coverage")
+        last_selected, last_edges, last_graph, last_failures = selected, edges, graph, failures
+        if not failures:
+            return selected, edges, graph, attempts, ""
+    return last_selected, last_edges, last_graph, attempts, ";".join(last_failures)
+
+
 def _graph_audit(
     design_id: str,
     workers: list[str],
@@ -408,6 +479,7 @@ def _graph_audit(
     bridge_components, bridge_connected = components_for([(worker, task) for worker, task in edges if task in bridge_task_ids])
     duplicate_count = len(edges) - len(set(edges))
     support = Counter(task for _, task in edges if task in bridge_task_ids)
+    worker_support = Counter(worker for worker, _task in edges)
     by_worker_stratum: dict[str, Counter[str]] = defaultdict(Counter)
     task_strata = {safe(row["task_id"]): safe(row["task_stratum"]) for row in assignments}
     bridge_strata = {task_strata[task] for task in bridge_task_ids if task in task_strata}
@@ -429,8 +501,11 @@ def _graph_audit(
         "bridge_only_n_connected_components": bridge_components,
         "bridge_only_graph_connected": bridge_connected,
         "duplicate_worker_task_count": duplicate_count,
+        "minimum_worker_support": min((worker_support[worker] for worker in workers), default=0),
         "min_bridge_task_support": min(support.values()) if support else 0,
         "max_worker_stratum_imbalance": max(imbalances, default=0),
+        "stress_bridge_task_count": len({task for task in bridge_task_ids if task_strata.get(task) == "stress"}),
+        "stress_bridge_assignment_support": sum(count for task, count in support.items() if task_strata.get(task) == "stress"),
     }
 
 
@@ -658,6 +733,8 @@ def _recompute_stability_audits(
 def _empirical_cluster_bootstrap(
     design_id: str, worker_rows: list[dict[str, str]], assignments: list[dict[str, Any]],
     task_by_id: dict[str, dict[str, str]], graph: dict[str, Any], *, seed: int, draws: int,
+    minimum_worker_support_threshold: int | None = None,
+    minimum_task_support_threshold: int | None = None,
 ) -> dict[str, Any]:
     """Nested building/task resampling plus C1-prior outcome generation.
 
@@ -1000,6 +1077,10 @@ def _empirical_cluster_bootstrap(
         slope_half_widths.extend(value for value in draw_slope_widths if math.isfinite(value))
     finite_q = [value for value in q_half_widths if math.isfinite(value)]
     finite_slope = [value for value in slope_half_widths if math.isfinite(value)]
+    def p05(values: list[int]) -> int | str:
+        ordered = sorted(values)
+        return ordered[max(0, math.ceil(.05 * len(ordered)) - 1)] if ordered else ""
+
     return {
         "design_id": design_id, "seed": seed, "draws": draws,
         "max_ci_half_width": max(finite_q) if finite_q else "",
@@ -1010,6 +1091,16 @@ def _empirical_cluster_bootstrap(
         "top_k_overlap": sum(top_k_values) / len(top_k_values) if top_k_values else "", "mean_rank_displacement": sum(rank_displacements) / len(rank_displacements) if rank_displacements else "",
         "risk_slope_direction_stability": slope_stable / draws,
         "minimum_worker_support": min(min_worker_supports, default=0), "minimum_task_support": min(min_task_supports, default=0),
+        "minimum_worker_support_p05": p05(min_worker_supports), "minimum_task_support_p05": p05(min_task_supports),
+        "minimum_worker_support_threshold_probability": (
+            sum(value >= minimum_worker_support_threshold for value in min_worker_supports) / draws
+            if minimum_worker_support_threshold is not None else ""
+        ),
+        "minimum_task_support_threshold_probability": (
+            sum(value >= minimum_task_support_threshold for value in min_task_supports) / draws
+            if minimum_task_support_threshold is not None else ""
+        ),
+        "support_extreme_minimum_role": "extreme_audit_only_not_dispatch_gate",
         "graph_connectivity_probability": connected / draws, "bridge_only_connectivity_probability": bridge_connected / draws, "building_coverage": min(delivered_building_counts, default=0), "building_coverage_probability": full_building_coverage / draws,
         "ordinary_coverage_probability": ordinary / draws, "stress_coverage_probability": stress / draws,
         "ordinary_coverage_probability_per_worker": ordinary_per_worker / draws,
@@ -1077,6 +1168,7 @@ def enumerate_candidates(
     manifest_sha = sha256_file(design_manifest)
     risk_contract, risk_contract_sha = _load_risk_contract()
     threshold_payload, threshold_sha = _load_thresholds(threshold_manifest)
+    _amendment, amendment_sha = _load_predispatch_amendment()
     formal_thresholds_ready = _thresholds_allow_formal_selection(threshold_payload)
     designs = manifest.get("candidate_designs")
     design_ids = [safe(row.get("design_id")) for row in designs or []]
@@ -1089,6 +1181,8 @@ def enumerate_candidates(
     )
     if safe(manifest.get("threshold_manifest_sha256")) != threshold_sha:
         dependency_valid, dependency_reason = False, "stale_or_unbound:threshold_manifest"
+    if safe(manifest.get("predispatch_amendment_sha256")) != amendment_sha:
+        dependency_valid, dependency_reason = False, "stale_or_unbound:predispatch_amendment"
     upstream_state: dict[str, Any] = {}
     if c1_closeout_summary and c1_closeout_summary.exists():
         try:
@@ -1125,6 +1219,7 @@ def enumerate_candidates(
     anchors, bridges = _anchor_pool(pool), _bridge_pool(pool)
     audits: list[dict[str, Any]] = []
     candidates: list[tuple[int, str, list[dict[str, Any]], dict[str, Any], dict[str, Any]]] = []
+    evaluated: list[tuple[int, str, list[dict[str, Any]], dict[str, Any], dict[str, Any]]] = []
     worker_projections: list[dict[str, Any]] = []
     simulation_rows: list[dict[str, Any]] = []
     stability_rows: list[dict[str, Any]] = []
@@ -1132,21 +1227,33 @@ def enumerate_candidates(
     simulation = manifest.get("simulation") or {}
     simulation_seed = int(simulation.get("seed", 0))
     simulation_draws = int(simulation.get("draws", 1000))
+    threshold_values = threshold_payload.get("thresholds", threshold_payload)
 
     for raw in designs:
         design_id = safe(raw.get("design_id"))
         common_n = _int(raw, "common_anchor_count")
         bridge_per_worker = _int(raw, "bridge_per_worker")
-        unique_bridge_n = _int(raw, "unique_bridge_tasks")
+        unique_bridge_upper = _int(raw, "unique_bridge_tasks")
         min_support = _int(raw, "min_task_support", default=1)
         max_imbalance = _int(raw, "max_worker_stratum_imbalance", default=1)
-        if min(common_n, bridge_per_worker, unique_bridge_n, min_support) < 1 or max_imbalance < 0:
+        if min(common_n, bridge_per_worker, unique_bridge_upper, min_support) < 1 or max_imbalance < 0:
             raise ValueError(f"invalid positive design counts: {design_id}")
         if min_support < int(risk_contract["simulation"]["minimum_task_support"]):
             raise ValueError(f"C2-B min_task_support is below frozen contract: {design_id}")
         selected_anchors = _select_anchors(anchors, common_n)
         anchor_ids = {_task_id(task) for task in selected_anchors}
-        selected_bridges = _select_bridges([task for task in bridges if _task_id(task) not in anchor_ids], unique_bridge_n, selected_anchors)
+        selected_bridges, bridge_edges, search_graph, search_attempts, search_failure = _search_bridge_assignment(
+            design_id,
+            workers,
+            [task for task in bridges if _task_id(task) not in anchor_ids],
+            selected_anchors,
+            unique_bridge_upper,
+            bridge_per_worker,
+            min_support,
+            max_imbalance,
+            math.ceil(float(threshold_values.get("minimum_building_coverage", 0))),
+        )
+        unique_bridge_n = len(selected_bridges)
         anchor_center = {index: sum(_risk_vector(task)[index] for task in selected_anchors) / len(selected_anchors) for index in range(4)} if selected_anchors else {}
         prior = []
         for step, task in enumerate(selected_anchors, 1):
@@ -1165,18 +1272,15 @@ def enumerate_candidates(
                 "selection_distance": min((_risk_distance(task, item) for item in reference), default=""),
                 "building_gain": safe(task.get("building_id")) not in {safe(item.get("building_id")) for item in reference}, "legacy_curated_priority_used": False, "selection_reason": "continuous_risk_maximin_building_gain",
             })
-        bridge_edges = _assign_bridges(workers, selected_bridges, bridge_per_worker, min_support)
         rows: list[dict[str, Any]] = []
-        reason = dependency_reason
+        pre_failures = [dependency_reason] if dependency_reason else []
         if not workers:
-            reason = reason or "no_eligible_workers"
-        elif len(selected_anchors) != common_n:
-            reason = reason or "insufficient_common_anchor_tasks"
-        elif len(selected_bridges) != unique_bridge_n:
-            reason = reason or "insufficient_diverse_bridge_tasks"
-        elif bridge_edges is None:
-            reason = reason or "bridge_support_or_worker_capacity_infeasible"
-        if not reason:
+            pre_failures.append("no_eligible_workers")
+        if len(selected_anchors) != common_n:
+            pre_failures.append("insufficient_common_anchor_tasks")
+        if search_failure:
+            pre_failures.extend(search_failure.split(";"))
+        if workers and len(selected_anchors) == common_n and bridge_edges:
             for worker in workers:
                 for task in selected_anchors:
                     rows.append({
@@ -1213,6 +1317,8 @@ def enumerate_candidates(
         simulation_row = _empirical_cluster_bootstrap(
             design_id, workers_rows, rows, {_task_id(task): task for task in [*selected_anchors, *selected_bridges]}, graph,
             seed=simulation_seed, draws=simulation_draws,
+            minimum_worker_support_threshold=int(threshold_values["minimum_worker_support"]),
+            minimum_task_support_threshold=int(threshold_values["minimum_task_support"]),
         )
         simulation_rows.append(simulation_row)
         stability_rows.extend(_recompute_stability_audits(
@@ -1223,29 +1329,42 @@ def enumerate_candidates(
         target_raw = risk_contract["simulation"].get("max_q_gt_ci_half_width")
         target = float(target_raw) if target_raw not in {None, ""} else math.inf
         simulated_half_width = _float(simulation_row, "max_ci_half_width", default=projected)
-        if not reason and simulation_row.get("simulation_status") != "estimated":
-            reason = f"simulation_{simulation_row.get('simulation_status') or 'not_estimable'}"
-        if not reason and (projected > target or simulated_half_width > target):
-            reason = "projected_ci_half_width_above_target"
-        if not reason and not graph["worker_task_graph_connected"]:
-            reason = "worker_task_graph_disconnected"
-        if not reason and graph["max_worker_stratum_imbalance"] > max_imbalance:
-            reason = "worker_stratum_imbalance"
+        failures = list(pre_failures)
+        if simulation_row.get("simulation_status") != "estimated":
+            failures.append(f"simulation_{simulation_row.get('simulation_status') or 'not_estimable'}")
+        if not _float_le(projected, target) or not _float_le(simulated_half_width, target):
+            failures.append("projected_ci_half_width_above_target")
+        if not graph["worker_task_graph_connected"]:
+            failures.append("worker_task_graph_disconnected")
+        if graph["max_worker_stratum_imbalance"] > max_imbalance:
+            failures.append("worker_stratum_imbalance")
         threshold_failures = _threshold_failures(simulation_row, graph, threshold_payload)
-        if not reason and threshold_failures:
-            reason = "threshold_gate_failed:" + ";".join(threshold_failures)
+        failures.extend(f"threshold_gate_failed:{failure}" for failure in threshold_failures)
+        failures = list(dict.fromkeys(failures))
+        reason = failures[0] if failures else ""
+        stress_task_count = search_graph.get("stress_bridge_task_count", 0)
+        stress_support = search_graph.get("stress_bridge_assignment_support", 0)
         audit = {
             "design_id": design_id, "common_anchor_count": common_n,
-            "bridge_per_worker": bridge_per_worker, "unique_bridge_tasks": unique_bridge_n,
+            "bridge_per_worker": bridge_per_worker, "unique_bridge_tasks_upper_bound": unique_bridge_upper,
+            "unique_bridge_tasks": unique_bridge_n, "bridge_search_attempt_count": search_attempts,
+            "stress_bridge_task_count": stress_task_count,
+            "stress_bridge_assignment_support": stress_support,
+            "stress_bridge_repeat_support": max(0, stress_support - stress_task_count * min_support),
+            "deterministic_min_worker_support": graph["minimum_worker_support"],
+            "deterministic_min_task_support": graph["min_bridge_task_support"],
             "min_task_support": min_support, "n_assignments": len(rows),
             "projected_max_ci_half_width": "" if not math.isfinite(simulated_half_width) else simulated_half_width,
             "worker_task_graph_connected": graph["worker_task_graph_connected"],
             "stratum_balance_valid": graph["max_worker_stratum_imbalance"] <= max_imbalance,
-            "design_method": "c1_risk_slope_precision_projection_candidate",
-            "feasible": not reason, "non_dominated": False, "failure_reason": reason,
+            "design_method": "c1_risk_slope_precision_candidate_with_downward_unique_bridge_search",
+            "rank_displacement_gate_role": "post_C2_diagnostic_not_dispatch_gate",
+            "feasible": not failures, "non_dominated": False, "failure_reason": reason,
+            "all_failure_gates": ";".join(failures),
         }
         audits.append(audit)
-        if not reason:
+        evaluated.append((len(rows), design_id, rows, graph, simulation_row))
+        if not failures:
             candidates.append((len(rows), design_id, rows, graph, simulation_row))
 
     candidates.sort(key=lambda item: (item[0], item[1]))
@@ -1255,7 +1374,10 @@ def enumerate_candidates(
     def dominates(left: tuple, right: tuple) -> bool:
         left_values = [float(left[0]), *(_float(left[4], field) for field in costs), *(-_float(left[4], field, default=-math.inf) for field in benefits)]
         right_values = [float(right[0]), *(_float(right[4], field) for field in costs), *(-_float(right[4], field, default=-math.inf) for field in benefits)]
-        return all(a <= b for a, b in zip(left_values, right_values)) and any(a < b for a, b in zip(left_values, right_values))
+        return all(_float_le(a, b) for a, b in zip(left_values, right_values)) and any(
+            a < b and not math.isclose(a, b, rel_tol=1e-12, abs_tol=1e-12)
+            for a, b in zip(left_values, right_values)
+        )
 
     non_dominated = [candidate for candidate in candidates if not any(dominates(other, candidate) for other in candidates if other is not candidate)]
     non_dominated_ids = {item[1] for item in non_dominated}
@@ -1268,13 +1390,14 @@ def enumerate_candidates(
     write_csv(output_dir / "c2b_simulation_draw_summary.csv", simulation_rows, SIMULATION_FIELDS)
     write_csv(output_dir / "c2b_loto_lobo_anchor_stability_audit.csv", stability_rows)
     write_csv(output_dir / "c2b_policy_feasibility_audit.csv", audits, DESIGN_AUDIT_FIELDS)
-    candidate_edges = [row for _count, _design, rows, _graph, _simulation in candidates for row in rows]
+    candidate_edges = [row for _count, _design, rows, _graph, _simulation in evaluated for row in rows]
     write_csv(output_dir / "c2b_candidate_worker_task_edges.csv", candidate_edges, ASSIGNMENT_FIELDS)
-    write_csv(output_dir / "c2b_worker_task_graph_audit.csv", [item[3] for item in candidates], GRAPH_AUDIT_FIELDS)
+    write_csv(output_dir / "c2b_worker_task_graph_audit.csv", [item[3] for item in evaluated], GRAPH_AUDIT_FIELDS)
     summary = {
         "design_manifest": str(design_manifest),
         "design_manifest_sha256": manifest_sha,
         "threshold_manifest_sha256": threshold_sha,
+        "predispatch_amendment_sha256": amendment_sha,
         "input_sha256": {
             "worker_profile_csv": sha256_file(worker_profile_csv),
             "task_pool_csv": sha256_file(task_pool_csv),

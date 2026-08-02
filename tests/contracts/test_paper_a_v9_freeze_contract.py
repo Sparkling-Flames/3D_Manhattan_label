@@ -59,7 +59,8 @@ def test_final_pooled_profile_is_independent_from_c1_evidence(tmp_path: Path) ->
 def test_v9_contract_has_separate_pooled_schema() -> None:
     contract = load_method_contract()
     assert contract["schema_version"] == "paper_a_method_contract_v9"
-    assert contract["contract_version"] == "paper_a_method_20260802_v16"
+    assert contract["contract_version"] == "paper_a_method_20260802_v17"
+    assert contract["predispatch_amendment"]["candidate_specific_relaxation"] is False
     assert contract["geometry_cluster"]["similarity_cutoff"] == .95
     assert contract["geometry_cluster"]["sensitivity_cutoffs"] == [.93, .97]
     assert contract["geometry_cluster"]["require_pointwise_correspondence"] is True

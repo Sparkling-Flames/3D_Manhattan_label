@@ -1,4 +1,4 @@
-% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v16 SHA-256 ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v17 SHA-256 5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c
 \section{统计分析与功效}
 
 \subsection{C1 后模拟 C2-B}
@@ -9,6 +9,8 @@ D8  = 4 common anchors + 4 diverse bridges
 D10 = 6 common anchors + 4 diverse bridges
 D12 = 6 common anchors + 6 diverse bridges
 \end{verbatim}
+
+其中 \texttt{unique\_bridge\_tasks} 是上限而非必须取满的固定值。枚举器从该上限向下进行确定性搜索，在保持每人工任务数、worker stratum imbalance 不超过 2、最低 worker/task support、图连通与覆盖门不变的前提下，选择 unique image 数最大的可行结构；stress bridge 可获得高于最低 task support 的重复。派发硬门中的最低 support 由确定性 assignment manifest 计算。Monte Carlo 缺失和结构损耗后的绝对最小 support 仅作为极端审计，并另报门槛达标概率和第 5 百分位。Spearman 与 top-k overlap 仍为派发硬门，mean rank displacement 移至 post-C2 条件画像与 Full activation 诊断；若 post-C2 稳定性不足，条件调整置零并回退 Strong Global。所有浮点门槛边界采用 \texttt{math.isclose(rel\_tol=1e-12, abs\_tol=1e-12)}，不改变原阈值。该修订在任何 C2 worker outcome 产生前统一冻结。
 
 模拟：
 \begin{itemize}

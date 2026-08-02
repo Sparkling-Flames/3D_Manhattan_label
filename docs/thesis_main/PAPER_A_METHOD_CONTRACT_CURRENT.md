@@ -2,8 +2,8 @@
 # Paper A current method contract (generated)
 
 This file is generated from `PAPER_A_METHOD_CONTRACT_CURRENT.json`; normative fields are not defined by hand.
-- contract_version: `paper_a_method_20260802_v16`
-- JSON SHA-256: `ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265`
+- contract_version: `paper_a_method_20260802_v17`
+- JSON SHA-256: `5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c`
 - formal_launch_default: `false`
 
 ## Formal measurement and freeze roles

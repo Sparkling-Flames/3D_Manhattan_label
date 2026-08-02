@@ -1,0 +1,62 @@
+{
+  "schema_version": "paper_a_c2b_predispatch_method_amendment_v1",
+  "status": "normative",
+  "amendment_id": "C2B_PREDISPATCH_METHOD_AMENDMENT_v1",
+  "approved_by": "researcher",
+  "approved_at": "2026-08-02",
+  "effective_timing": "before_any_C2_worker_outcome",
+  "uniform_application": ["D8", "D10", "D12"],
+  "previous_method_contract_version": "paper_a_method_20260802_v16",
+  "previous_method_contract_sha256": "ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265",
+  "frozen_inputs": {
+    "dataset_policy": "validation_only",
+    "source_split": "split_candidate_01",
+    "capacity_ceiling": 12,
+    "candidate_worker_task_counts_unchanged": true,
+    "numeric_thresholds_unchanged": true,
+    "maximum_worker_stratum_imbalance": 2
+  },
+  "candidate_generation": {
+    "unique_bridge_tasks_role": "upper_bound",
+    "search_order": "descending",
+    "objective": "maximize_unique_images_subject_to_deterministic_dispatch_gates",
+    "stress_bridge_support_may_exceed_minimum_task_support": true,
+    "deterministic_gates": [
+      "minimum_worker_support",
+      "minimum_task_support",
+      "worker_task_graph_connected",
+      "ordinary_stress_coverage",
+      "building_coverage",
+      "maximum_worker_stratum_imbalance"
+    ]
+  },
+  "support_semantics": {
+    "dispatch_hard_gate_source": "deterministic_assignment_manifest",
+    "monte_carlo_absolute_minimum_role": "extreme_audit_only",
+    "required_simulation_outputs": [
+      "minimum_worker_support_p05",
+      "minimum_task_support_p05",
+      "minimum_worker_support_threshold_probability",
+      "minimum_task_support_threshold_probability"
+    ]
+  },
+  "rank_stability": {
+    "dispatch_hard_gates": ["minimum_worker_rank_spearman", "minimum_top_k_overlap"],
+    "maximum_mean_rank_displacement_role": "post_C2_diagnostic_for_conditional_profile_and_Full_activation",
+    "post_C2_instability_action": "set_conditional_adjustment_to_zero_and_fallback_Strong_Global"
+  },
+  "float_boundary_comparison": {
+    "function": "math.isclose",
+    "rel_tol": 1e-12,
+    "abs_tol": 1e-12,
+    "numeric_thresholds_changed": false
+  },
+  "anti_posthoc_statement": "This uniform correction was approved before any C2 worker outcome and is not candidate-specific threshold relaxation.",
+  "selection_boundary": {
+    "order": ["D8", "D10", "D12"],
+    "rule": "D8_if_feasible_else_smallest_feasible_design",
+    "automatic_design_selection": false,
+    "automatic_assignment_materialization": false,
+    "researcher_review_required_before_selection": true
+  }
+}

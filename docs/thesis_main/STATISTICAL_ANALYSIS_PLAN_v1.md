@@ -1,6 +1,10 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v16 SHA-256 ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v17 SHA-256 5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c -->
 # Statistical Analysis Plan v1
+
+## 2026-08-02 C2-B pre-dispatch amendment
+
+C2-B 的 `unique_bridge_tasks` 是候选上限。枚举器从上限向下进行确定性搜索，并在满足每工人分层不平衡、每任务最低支持、worker--task 图连通及覆盖门的前提下最大化 unique image 数；stress bridge 可以获得高于最低值的重复支持。`minimum_worker_support` 与 `minimum_task_support` 的派发硬门只读取确定性 assignment manifest。Monte Carlo 缺失与结构损耗后的绝对最小 support 仅作极端审计，并另报门槛达标概率及第 5 百分位。Spearman 与 top-k overlap 保持派发硬门；mean rank displacement 仅作 post-C2 条件画像与 Full activation 诊断。所有浮点门槛边界用 `math.isclose(rel_tol=1e-12, abs_tol=1e-12)`，原阈值不变。上述规则由 `C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json` 的 SHA 绑定，并在任何 C2 worker outcome 产生前统一冻结。
 
 > 2026-08-02 timing amendment: C1 timing uses the formal-assignment `project_id`–`runtime_task_id`–`worker_id` context and cumulative-session rule in the current method contract, not annotation-pk identity. It is an auxiliary operational measurement; it does not alter Q_GT, R_peer, F_struct, worker eligibility/rank, C2-B roster, T1 assignment, or V1 routing. This supersedes earlier owner-valid/exact-annotation timing wording in this legacy-encoding document. W034 authorized replacements require either the original passed sentinel, or a SHA-bound preassignment operator-verification attestation plus task-worker log audit; the retrospective path is `eligible_with_protocol_deviation`, never fully verified.
 

@@ -1,8 +1,21 @@
 {
     "schema_version":  "paper_a_method_contract_v9",
-    "contract_version":  "paper_a_method_20260802_v16",
+    "contract_version":  "paper_a_method_20260802_v17",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
+    "previous_contract_version":  "paper_a_method_20260802_v16",
+    "previous_contract_sha256":  "ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265",
+    "predispatch_amendment":  {
+                                    "path":  "docs/thesis_main/C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json",
+                                    "sha256":  "330938460ffd779eba3beeeef361f300ff30befbfd38549e1c782d05358f99ba",
+                                    "effective_timing":  "before_any_C2_worker_outcome",
+                                    "uniform_application":  [
+                                                                "D8",
+                                                                "D10",
+                                                                "D12"
+                                                            ],
+                                    "candidate_specific_relaxation":  false
+                                },
     "stages":  [
                    "Pilot",
                    "PreScreen",
@@ -70,7 +83,24 @@
                                             "F_struct"
                                         ],
                "loo_is_global_roster_gate":  false,
-               "timing_is_roster_gate":  false
+               "timing_is_roster_gate":  false,
+               "dataset_policy":  "validation_only",
+               "approved_source_split":  "split_candidate_01",
+               "unique_bridge_tasks_role":  "upper_bound_search_downward",
+               "bridge_search_objective":  "maximize_unique_images_subject_to_deterministic_dispatch_gates",
+               "minimum_support_dispatch_source":  "deterministic_assignment_manifest",
+               "monte_carlo_absolute_minimum_role":  "extreme_audit_only",
+               "maximum_mean_rank_displacement_role":  "post_C2_diagnostic_not_dispatch_gate",
+               "dispatch_rank_stability_gates":  [
+                                                       "minimum_worker_rank_spearman",
+                                                       "minimum_top_k_overlap"
+                                                   ],
+               "float_boundary_comparison":  {
+                                                   "function":  "math.isclose",
+                                                   "rel_tol":  1e-12,
+                                                   "abs_tol":  1e-12
+                                               },
+               "numeric_thresholds_changed_by_predispatch_amendment":  false
            },
     "worker_axes":  {
                         "primary":  [
@@ -430,7 +460,15 @@
                                                      "design-c2b",
                                                      "build-c2b --assignment-batch C2B_BATCH_A",
                                                      "bind-c2b-runtime-mapping"
-                                                 ]
+                                                 ],
+                       "candidate_review_order":  [
+                                                        "D8",
+                                                        "D10",
+                                                        "D12"
+                                                    ],
+                       "automatic_design_selection":  false,
+                       "automatic_assignment_materialization":  false,
+                       "researcher_review_required_before_selection":  true
                    },
     "stage3":  {
                    "final_pooled_profile_schema":  "paper_a_final_pooled_profile_freeze_v1",
@@ -467,9 +505,11 @@
                  "overall_global_fallback_rules":  [
                                                        "outside_calibration_support",
                                                        "profile_version_conflict",
-                                                       "ranking_endpoint_instability"
+                                                       "ranking_endpoint_instability",
+                                                       "post_C2_rank_stability_below_frozen_Spearman_or_top_k_gate"
                                                    ],
-                 "disabled_component_value":  0
+                 "disabled_component_value":  0,
+                 "post_C2_rank_stability_failure_action":  "conditional_adjustment_zero_and_fallback_Strong_Global"
              },
     "t1":  {
                "delivery_status_values":  [
