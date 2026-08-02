@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator HTTPS EN
 // @namespace    https://label.sparkle0825.top/
-// @version      c2plus_task_worker_active_time_20260802_v1
+// @version      c2plus_task_worker_active_time_20260802_v2
 // @description  Self-contained HTTPS helper for foreign HoHoNet Stage 1 annotators. Based on the official annotator helper; adds same-origin HTTPS defaults and optional CloudResearch worker-id metadata.
 // @author       HoHoNet
 // @match        https://label.sparkle0825.top/*
@@ -154,7 +154,7 @@
   const ACTIVE_TIME_STATUS_PANEL_ID = "hohonet-active-time-status-panel";
   const ACTIVE_TIME_PANEL_MODE_KEY = "HOHONET_ACTIVE_TIME_PANEL_MODE";
   const ACTIVE_TIME_RETRY_QUEUE_KEY = "HOHONET_ACTIVE_TIME_RETRY_QUEUE_V2_TASK_WORKER";
-  const ACTIVE_TIME_RETRY_TTL_MS = 72 * 60 * 60 * 1000;
+  const ACTIVE_TIME_RETRY_TTL_MS = 14 * 24 * 60 * 60 * 1000;
   const ACTIVE_TIME_RETRY_MAX_ITEMS = 200;
   const OVERLAY_ID = "hohonet-overlay";
   const TOGGLE_BTN_ID = "hohonet-toggle-labels-btn";
@@ -345,7 +345,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "c2plus_task_worker_active_time_20260802_v1";
+  const SCRIPT_VERSION = "c2plus_task_worker_active_time_20260802_v2";
   window.__HOHONET_HELPER_SCRIPT_VERSION__ = SCRIPT_VERSION;
   window.__HOHONET_HELPER_SCRIPT_FLAVOR__ = "foreign_https_en";
   console.log(`HoHoNet Helper: loaded (v${SCRIPT_VERSION})`);
@@ -658,6 +658,7 @@
     const tokenOk = Boolean(token);
     const pageGate = explicitPageGate || report?.pageGate || resolveAnnotationPageGate();
     const metadata = report || (pageGate.eligible ? resolveActiveTimeMetadata(pageGate.routeTaskId) : {});
+    const identityReady = !pageGate.eligible || activeTimeIdentityReady(metadata);
     const mode = getActiveTimePanelMode();
     const forcedOpen = isActiveTimePanelForcedOpen(lastActiveTimeUploadStatus, tokenOk);
     const showDetails = mode === "details" || forcedOpen;
@@ -676,29 +677,29 @@
     tokenPanel.style.width = "min(420px, calc(100vw - 24px))";
     tokenPanel.style.boxShadow = "0 6px 20px rgba(15,23,42,0.18)";
     let tokenState = getActiveTimeTokenUiState(lastActiveTimeUploadStatus, token);
-    if (tokenOk && pageGate.reason !== "eligible" && !["forbidden_403", "fetch_failed"].includes(lastActiveTimeUploadStatus) && !String(lastActiveTimeUploadStatus).startsWith("http_")) {
+    if (tokenOk && (pageGate.reason !== "eligible" || !identityReady) && !["forbidden_403", "fetch_failed"].includes(lastActiveTimeUploadStatus) && !String(lastActiveTimeUploadStatus).startsWith("http_")) {
       tokenState = {
         title: "Active-Time: Not counting",
-        body: "This is not a task labeling page.",
+        body: identityReady ? "This is not a task labeling page." : "Task, project, or worker identity is not ready.",
         border: "#94a3b8",
         action: "Change token",
         primary: false,
       };
     }
     tokenPanel.style.border = `1px solid ${tokenState.border}`;
-    const seconds = pageGate.eligible ? (report && report.reportSeconds !== undefined ? report.reportSeconds : activeSeconds) : 0;
+    const seconds = pageGate.eligible && identityReady ? (report && report.reportSeconds !== undefined ? report.reportSeconds : activeSeconds) : 0;
     if (minimized) {
       tokenPanel.style.padding = "6px";
       tokenPanel.style.width = "auto";
       tokenPanel.style.maxWidth = "none";
       const uploadFailed = ["missing_token", "forbidden_403", "fetch_failed"].includes(lastActiveTimeUploadStatus)
         || String(lastActiveTimeUploadStatus).startsWith("http_");
-      tokenPanel.style.border = `1px solid ${uploadFailed ? "#ef4444" : pageGate.eligible ? "#22c55e" : "#f59e0b"}`;
+      tokenPanel.style.border = `1px solid ${uploadFailed ? "#ef4444" : pageGate.eligible && identityReady ? "#22c55e" : "#f59e0b"}`;
       tokenPanel.style.boxShadow = "0 4px 14px rgba(15,23,42,0.14)";
       const compactStatus = document.createElement("span");
-      compactStatus.textContent = pageGate.eligible
+      compactStatus.textContent = pageGate.eligible && identityReady
         ? `Active-Time: Counting · Task ${pageGate.routeTaskId || "?"} · ${Math.round(seconds)}s · Upload ${lastActiveTimeUploadStatus}`
-        : `Active-Time: Not counting · ${pageGate.reason || "page not ready"}`;
+        : `Active-Time: Not counting · ${identityReady ? pageGate.reason || "page not ready" : "identity_not_ready"}`;
       compactStatus.style.cssText = "font-size: 12px; color: #475569; margin: 0 8px;";
       tokenPanel.appendChild(compactStatus);
       appendActiveTimePanelButton(tokenPanel, "Details", () => {
@@ -3011,6 +3012,15 @@
     return normalized.length > 0 && normalized !== "unknown";
   }
 
+  function activeTimeIdentityReady(metadata) {
+    return Boolean(
+      metadata &&
+      isKnownActiveTimeMetadataValue(metadata.taskId) &&
+      isKnownActiveTimeMetadataValue(metadata.projectId) &&
+      isKnownActiveTimeMetadataValue(metadata.annotatorId)
+    );
+  }
+
   function cacheLastKnownActiveTimeMetadata(partial = {}) {
     let changed = false;
     for (const key of ACTIVE_TIME_METADATA_KEYS) {
@@ -3030,13 +3040,11 @@
   function captureCurrentActiveTimeMetadata(preferredTaskId = null) {
     const taskIdentity = getTaskIdentity();
     const projectIdentity = getProjectIdentity();
-    const taskId =
-      preferredTaskId !== null && preferredTaskId !== undefined
-        ? preferredTaskId
-        : currentTaskId || taskIdentity.id;
+    const preferredTaskReady = preferredTaskId !== null && preferredTaskId !== undefined;
+    const taskId = preferredTaskReady ? preferredTaskId : currentTaskId || taskIdentity.id;
     return {
       taskId,
-      taskIdSource: taskIdentity.source,
+      taskIdSource: preferredTaskReady ? "page_gate.route+dom" : taskIdentity.source,
       projectId: projectIdentity.id,
       projectIdSource: projectIdentity.source,
       projectName: getProjectName(),
@@ -3095,6 +3103,7 @@
   ) {
     // fragment 表示“当前连续活动片段”，不是“自上次网络上报以来的增量”。
     const metadata = forceMetadata || resolveActiveTimeMetadata(forceTaskId);
+    if (!activeTimeIdentityReady(metadata)) return null;
     const reportTaskId = metadata.taskId;
     const currentFragment =
       forcedActiveSeconds !== null ? forcedActiveSeconds : activeSeconds;
@@ -3189,18 +3198,14 @@
       const item = queue[key] || {};
       const updatedAt = Number(item.updated_at || item.created_at || 0);
       if (updatedAt && now - updatedAt > ACTIVE_TIME_RETRY_TTL_MS) {
-        item.retry_status = "expired_orphaned";
-        queue[key] = item;
+        delete queue[key];
       }
     }
     const liveEntries = Object.entries(queue)
-      .filter(([, item]) => item.retry_status !== "expired_orphaned")
       .sort((a, b) => Number(b[1].updated_at || 0) - Number(a[1].updated_at || 0));
     const keep = new Set(liveEntries.slice(0, ACTIVE_TIME_RETRY_MAX_ITEMS).map(([key]) => key));
-    for (const [key, item] of Object.entries(queue)) {
-      if (item.retry_status !== "expired_orphaned" && !keep.has(key)) {
-        delete queue[key];
-      }
+    for (const key of Object.keys(queue)) {
+      if (!keep.has(key)) delete queue[key];
     }
     return queue;
   }
@@ -3212,12 +3217,11 @@
     const now = Date.now();
     if (
       !existing ||
-      existing.retry_status === "expired_orphaned" ||
       Number(payload.active_seconds || 0) >= Number(existing.payload?.active_seconds || 0)
     ) {
       queue[key] = {
         payload,
-        created_at: existing?.retry_status === "expired_orphaned" ? now : existing?.created_at || now,
+        created_at: existing?.created_at || now,
         updated_at: now,
         retry_status: "pending",
       };
@@ -3237,7 +3241,7 @@
     const queue = pruneActiveTimeRetryQueue(loadActiveTimeRetryQueue());
     const currentAnnotator = getAnnotatorId();
     for (const [key, item] of Object.entries(queue)) {
-      if (!item || item.retry_status === "expired_orphaned") continue;
+      if (!item) continue;
       const payload = item.payload || {};
       if (String(payload.annotator_id || "") !== String(currentAnnotator || "")) continue;
       try {
@@ -3411,9 +3415,14 @@
   setInterval(() => {
     const pageGate = resolveAnnotationPageGate();
     const onCountingPage = isActiveTimeCountingPage(pageGate);
-    if (onCountingPage) {
+    const metadata = onCountingPage ? resolveActiveTimeMetadata(pageGate.routeTaskId) : null;
+    const identityReady = onCountingPage && activeTimeIdentityReady(metadata);
+    if (identityReady) {
       annotationGateUnavailableTicks = 0;
-      handleActiveTimeKeyChange(resolveActiveTimeMetadata(pageGate.routeTaskId));
+      handleActiveTimeKeyChange(metadata);
+    } else if (onCountingPage) {
+      updateActiveTimePanels(metadata, "identity_not_ready", pageGate);
+      lastActivityTime = 0;
     } else {
       updateActiveTimePanels(null, lastActiveTimeUploadStatus, pageGate);
     }
@@ -3438,7 +3447,7 @@
     }
 
     if (
-      onCountingPage &&
+      identityReady &&
       lastActivityTime > 0 &&
       Date.now() - lastActivityTime < IDLE_THRESHOLD
     ) {
@@ -3448,9 +3457,9 @@
 
     // 更新 UI
     const totalForTask =
-      onCountingPage && currentActiveTimeKey && taskCumulativeSeconds.has(currentActiveTimeKey)
+      identityReady && currentActiveTimeKey && taskCumulativeSeconds.has(currentActiveTimeKey)
         ? taskCumulativeSeconds.get(currentActiveTimeKey) + activeSeconds
-        : onCountingPage ? activeSeconds : 0;
+        : identityReady ? activeSeconds : 0;
     if (isDebugPanelEnabled()) {
       const debugPanel = document.getElementById(DEBUG_ID);
       if (debugPanel) {
@@ -3604,19 +3613,12 @@
   }
 
   // 会话 ID (每个标签页) 用于区分并发客户端
-  const SESSION_STORAGE_KEY = "hohonet_ls_session_id";
   const sessionId = (() => {
     try {
-      let sid = window.sessionStorage.getItem(SESSION_STORAGE_KEY);
-      if (!sid) {
-        if (window.crypto && typeof window.crypto.randomUUID === "function") {
-          sid = window.crypto.randomUUID();
-        } else {
-          sid = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
-        }
-        window.sessionStorage.setItem(SESSION_STORAGE_KEY, sid);
+      if (window.crypto && typeof window.crypto.randomUUID === "function") {
+        return window.crypto.randomUUID();
       }
-      return sid;
+      return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
     } catch (e) {
       return `${Date.now()}-${Math.random().toString(16).slice(2)}`;
     }
@@ -3636,33 +3638,12 @@
       return;
     }
 
-    handleActiveTimeKeyChange(resolveActiveTimeMetadata(taskId));
-
-    cacheLastKnownActiveTimeMetadata(captureCurrentActiveTimeMetadata(taskId));
-
-    // 检测到任务切换：立即flush前一个任务
-    if (
-      currentTaskId !== undefined &&
-      currentTaskId !== null &&
-      taskId !== currentTaskId &&
-      activeSeconds > 0
-    ) {
-      const secondsToReport = activeSeconds;
-      const cumulativeTotal =
-        (taskCumulativeSeconds.get(currentTaskId) || 0) + secondsToReport;
-      console.log(
-        `[TASK_SWITCH] ${currentTaskId} -> ${taskId}，上报片段${secondsToReport}s (累积${cumulativeTotal}s)`,
-      );
-      flushActiveTime(currentTaskId, secondsToReport); // 传入当前片段值，flush内部会加上累积
-      activeSeconds = 0;
-      lastActivityTime = 0; // v0.21: 切换后需要新交互才开始计时
+    const metadata = resolveActiveTimeMetadata(taskId);
+    if (!activeTimeIdentityReady(metadata)) {
+      updateActiveTimePanels(metadata, "identity_not_ready", pageGate);
+      return;
     }
-
-    // 初始化或更新任务ID
-    if (currentTaskId === null && taskId !== "unknown") {
-      console.log(`[TASK_INIT] initialized task ID: ${taskId}`);
-    }
-    currentTaskId = taskId;
+    handleActiveTimeKeyChange(metadata);
   }, 1000); // 每秒检测一次，保证任务切换时立即响应
 
   // 每 30 秒发送一次日志 (从 10 秒修改以减少流量)

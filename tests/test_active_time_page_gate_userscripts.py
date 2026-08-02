@@ -4,7 +4,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL = ROOT / "tools" / "label_studio" / "official" / "ls_userscript_annotator.js"
 FOREIGN = ROOT / "tools" / "thesis_main" / "foreign_recruitment" / "ls_userscript_annotator_https_en.user.js"
-VERSION = "c2plus_task_worker_active_time_20260802_v1"
+VERSION = "c2plus_task_worker_active_time_20260802_v2"
 
 
 def _script(path: Path) -> str:
@@ -132,3 +132,43 @@ def test_v3_uses_task_worker_identity_without_annotation_ids():
 
     assert "Active-Time：计时中" in official
     assert "Active-Time: Counting" in foreign
+
+
+def test_active_time_session_id_is_fresh_for_every_page_load():
+    for path in (OFFICIAL, FOREIGN):
+        source = _script(path)
+        session = source[source.index("const sessionId = (() => {"):source.index("setInterval(() => {", source.index("const sessionId = (() => {"))]
+
+        assert "crypto.randomUUID" in session
+        assert "sessionStorage" not in session
+        assert "SESSION_STORAGE_KEY" not in source
+
+
+def test_active_time_requires_resolved_task_project_and_worker_identity():
+    for path in (OFFICIAL, FOREIGN):
+        source = _script(path)
+
+        assert "function activeTimeIdentityReady(metadata)" in source
+        assert "activeTimeIdentityReady(metadata)" in source
+        assert '"identity_not_ready"' in source
+        assert "if (!activeTimeIdentityReady(metadata)) return null;" in source
+
+
+def test_route_task_source_is_audited_and_duplicate_switch_branch_is_removed():
+    for path in (OFFICIAL, FOREIGN):
+        source = _script(path)
+        capture = source[source.index("function captureCurrentActiveTimeMetadata("):source.index("function buildActiveTimeKey(")]
+
+        assert '"page_gate.route+dom"' in capture
+        assert "taskCumulativeSeconds.get(currentTaskId)" not in source
+        assert "taskId !== currentTaskId" not in source
+
+
+def test_retry_queue_deletes_entries_after_fourteen_days():
+    for path in (OFFICIAL, FOREIGN):
+        source = _script(path)
+        prune = source[source.index("function pruneActiveTimeRetryQueue("):source.index("function upsertActiveTimeRetryPayload(")]
+
+        assert "14 * 24 * 60 * 60 * 1000" in source
+        assert "delete queue[key]" in prune
+        assert "expired_orphaned" not in source
