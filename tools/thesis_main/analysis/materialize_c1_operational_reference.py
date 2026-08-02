@@ -18,6 +18,7 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry, normalize_geometry_for_c1_calculation
+from tools.thesis_main.analysis.paper_a_contracts import load_method_contract
 
 
 OUTCOME_FIELDS = [
@@ -55,12 +56,14 @@ def materialize_gt_cluster_alignment(
 ) -> dict[str, Any]:
     """Audit crowd/GT disagreement; candidates never mutate the reference."""
     rules = json.loads(conflict_rule_manifest.read_text(encoding="utf-8"))
+    reference_policy = load_method_contract().get("reference_registry", {}).get("reference_policy", "")
+    retain_existing_reference = input_status == "formal" and reference_policy == "use_existing_public_gt_as_is"
     approved = rules.get("status") == "approved" and rules.get("interpretation_allowed") is True and rules.get("approved_by") and rules.get("approved_at")
     implemented_triggers = {"dominant_cluster_low_gt_alignment", "minority_cluster_better_gt_alignment", "public_gt_structurally_invalid"}
     undefined_triggers = sorted(set(rules.get("supported_triggers", [])) - implemented_triggers - {"known_reference_issue"})
-    if input_status == "formal" and not approved:
+    if input_status == "formal" and not retain_existing_reference and not approved:
         raise ValueError("candidate GT conflict manifest cannot produce formal sidecars")
-    if input_status == "formal" and undefined_triggers:
+    if input_status == "formal" and not retain_existing_reference and undefined_triggers:
         raise ValueError("GT conflict manifest contains triggers without executable definitions:" + ";".join(undefined_triggers))
     thresholds = rules["thresholds"]
     quality = {row.get("canonical_annotation_id", ""): row for row in _read_csv(quality_csv)}
@@ -106,13 +109,13 @@ def materialize_gt_cluster_alignment(
         if largest_score is not None and largest_score < float(thresholds["dominant_cluster_low_gt_alignment"]): triggers.append("dominant_cluster_low_gt_alignment")
         if margin is not None and margin < -float(thresholds["minority_cluster_better_gt_margin"]): triggers.append("minority_cluster_better_gt_alignment")
         if any(row["public_gt_status"] == "invalid" for row in cluster_rows): triggers.append("public_gt_structurally_invalid")
-        for trigger in triggers:
+        for trigger in ([] if retain_existing_reference else triggers):
             source_parts = [crowd_structure_csv, loo_csv, quality_csv, conflict_rule_manifest] + ([reference_csv] if reference_csv else [])
             evidence_sha = hashlib.sha256("".join(hashlib.sha256(path.read_bytes()).hexdigest() for path in source_parts if path and path.exists()).encode()).hexdigest()
             queue.append({"base_task_id": base, "trigger": trigger, "candidate_only": not approved, "interpretation_allowed": bool(input_status == "formal" and approved), "reference_modified": False, "rule_version": rules["rule_version"], "source_sha256": evidence_sha})
     _write(output_dir / "c1_gt_cluster_alignment.csv", alignment, list(alignment[0]) if alignment else ["base_task_id"])
     _write(output_dir / "c1_gt_conflict_review_queue.csv", queue, list(queue[0]) if queue else ["base_task_id", "trigger", "candidate_only", "reference_modified", "rule_version", "source_sha256"])
-    return {"alignment_rows": len(alignment), "conflict_candidates": len(queue), "reference_modified": False, "undefined_triggers": undefined_triggers, "interpretation_allowed": bool(input_status == "formal" and approved and not undefined_triggers)}
+    return {"alignment_rows": len(alignment), "conflict_candidates": len(queue), "reference_modified": False, "reference_policy": reference_policy, "gt_issue_declared": False, "undefined_triggers": undefined_triggers, "interpretation_allowed": bool(input_status == "formal" and approved and not undefined_triggers)}
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:
