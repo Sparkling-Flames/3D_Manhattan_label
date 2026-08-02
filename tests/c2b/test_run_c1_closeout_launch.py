@@ -325,7 +325,6 @@ def _write_c1_dependency_closure(tmp_path):
     frozen_dependencies = []
     for role, name in (
         ("REFERENCE_REGISTRY", "reference_registry.csv"),
-        ("REFERENCE_APPROVAL", "reference_approval.csv"),
         ("BUILDING_REGISTRY", "building_registry.csv"),
         ("TASK_BUILDING_BINDING", "task_building_binding.csv"),
     ):

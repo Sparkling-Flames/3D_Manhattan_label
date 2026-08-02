@@ -1130,11 +1130,11 @@ def finalize_c1(args: argparse.Namespace) -> dict[str, Any]:
         dependency_roles = {item.get("role") for item in worker_manifest.get("dependencies", [])}
         if "ENROLLMENT_REGISTRY" not in dependency_roles:
             dependency_blockers.append("worker_profile_enrollment_dependency_missing")
-        for role in ("REFERENCE_REGISTRY", "REFERENCE_APPROVAL", "BUILDING_REGISTRY", "TASK_BUILDING_BINDING"):
+        for role in ("REFERENCE_REGISTRY", "BUILDING_REGISTRY", "TASK_BUILDING_BINDING"):
             if role not in dependency_roles:
                 dependency_blockers.append(f"worker_profile_{role.lower()}_dependency_missing")
         for dependency in worker_manifest.get("dependencies", []):
-            if dependency.get("role") in {"REFERENCE_REGISTRY", "REFERENCE_APPROVAL", "BUILDING_REGISTRY", "TASK_BUILDING_BINDING"}:
+            if dependency.get("role") in {"REFERENCE_REGISTRY", "BUILDING_REGISTRY", "TASK_BUILDING_BINDING"}:
                 path = Path(str(dependency.get("path", "")))
                 profile_dependency_paths.append((str(dependency["role"]), path if path.is_absolute() else worker_manifest_path.parent / path))
         validate_dependency_payload(worker_manifest, worker_manifest_path.parent, "worker_profile")
