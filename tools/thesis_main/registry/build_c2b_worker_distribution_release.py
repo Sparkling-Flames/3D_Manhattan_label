@@ -83,7 +83,8 @@ def build_release(assignment: Path, planned_import: Path, c1_release: Path, outp
         })
 
     output.mkdir(parents=True, exist_ok=True)
-    _write_csv(output / "worker_distribution_internal_C2B_D8.csv", INTERNAL_FIELDS, internal)
+    internal_dir = output / "internal"
+    _write_csv(internal_dir / "worker_distribution_internal_C2B_D8.csv", INTERNAL_FIELDS, internal)
     zh_rows: list[dict[str, str]] = []
     index_rows: list[dict[str, str]] = []
     for public in sorted(workers, key=lambda value: int(value[1:])):
@@ -93,12 +94,12 @@ def build_release(assignment: Path, planned_import: Path, c1_release: Path, outp
             _write_csv(output / filename, ["task_code"], [{"task_code": row["task_code"]} for row in rows])
             language = "English"
         else:
-            filename = "worker_facing_distribution_zh_merged_C2B_D8.csv"
+            filename = "任务分发表_C2B_D8.xlsx"
             zh_rows.extend({"public_worker_code": public, "worker_name": zh_names[public], "task_code": row["zh_task_code"]} for row in rows)
             language = "Chinese"
         index_rows.append({"public_worker_code": public, "language_group": language, "task_count": str(len(rows)), "release_file": filename})
-    _write_csv(output / "worker_facing_distribution_zh_merged_C2B_D8.csv", ZH_FIELDS, zh_rows)
-    _write_csv(output / "worker_facing_distribution_index_C2B_D8.csv", ["public_worker_code", "language_group", "task_count", "release_file"], index_rows)
+    _write_csv(internal_dir / "worker_facing_distribution_zh_merged_C2B_D8.csv", ZH_FIELDS, zh_rows)
+    _write_csv(internal_dir / "worker_facing_distribution_index_C2B_D8.csv", ["public_worker_code", "language_group", "task_count", "release_file"], index_rows)
 
     public_pairs = {(row["public_worker_code"], row["task_code"]) for row in internal}
     zh_backlinks = {(row["public_worker_code"], row["task_code"].replace("任务4", "D", 1)) for row in zh_rows}
@@ -120,11 +121,12 @@ def build_release(assignment: Path, planned_import: Path, c1_release: Path, outp
         "assignment_sha256": assignment_sha,
         "planned_import_sha256": import_sha,
         "selected_design_sha": next(iter(design_shas)),
-        "worker_facing_fields": {"Chinese": ZH_FIELDS, "English": ["task_code"]},
+        "worker_facing_fields": {"Chinese_workbook": ["order", "task_code"], "English": ["task_code"]},
+        "internal_chinese_workbook_source_fields": ZH_FIELDS,
         "assignment_truth_source": "assignment_manifest_C2B.csv",
         "worker_facing_release_is_display_only": True,
     }
-    (output / "worker_facing_distribution_audit_C2B_D8.json").write_text(
+    (internal_dir / "worker_facing_distribution_audit_C2B_D8.json").write_text(
         json.dumps(audit, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8"
     )
     if not audit["passed"]:

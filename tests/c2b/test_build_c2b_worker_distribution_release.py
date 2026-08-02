@@ -56,13 +56,12 @@ def test_release_uses_d_and_task4_without_changing_assignment(tmp_path: Path) ->
     assert audit["passed"] is True
     assert audit["entry_mapping"] == {"D": "C2B_BATCH_A", "任务4": "C2B_BATCH_A"}
     assert _read_csv(output / "worker_W027.csv") == [{"task_code": "D-001"}, {"task_code": "D-002"}]
-    assert _read_csv(output / "worker_facing_distribution_zh_merged_C2B_D8.csv") == [
+    assert _read_csv(output / "internal" / "worker_facing_distribution_zh_merged_C2B_D8.csv") == [
         {"public_worker_code": "W001", "worker_name": "测试工人", "task_code": "任务4-002"},
         {"public_worker_code": "W001", "worker_name": "测试工人", "task_code": "任务4-001"},
     ]
-    internal = _read_csv(output / "worker_distribution_internal_C2B_D8.csv")
+    internal = _read_csv(output / "internal" / "worker_distribution_internal_C2B_D8.csv")
     assert {(row["public_worker_code"], row["task_id"]) for row in internal} == {
         ("W001", "t1"), ("W001", "t2"), ("W027", "t1"), ("W027", "t2")
     }
     assert all(row["selected_design_sha"] == "design-sha" for row in internal)
-
