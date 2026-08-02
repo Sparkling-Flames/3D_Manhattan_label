@@ -7,8 +7,9 @@
     "full_inventory": "d6d4a454e6a25a9e12e9142707598c3094509263f00fd3d6b912470ea049a244",
     "inventory": "e9a13f3ebb8f9ca792403bf8ff589a5e76f53c127426148a561832bfacfc05a0",
     "legacy_manifest": "80c42e17ce73e9e5f787a0912a1f54480c44335410744557d009e92ff793e4b6",
-    "reference_registry": "c2d6618cbb27e930a442464073ffe648dcb8d693679865d6602228e56db54758",
-    "scope_registry": "a60eb42302410eb66e71e6f7b9b5ee569e58e4748ca8fccb1bff6f6e778cba41"
+    "reference_normalizer_audit": "6e428414d1020a89c5811e3c08796e7cb511437646fceb85196444bc64c11f8e",
+    "reference_registry": "546744452a4ba26cff062c237128ef8324261e43b73018be82775287fb5fb3a9",
+    "scope_registry": "abb2c945e11f8ac0de458fd26e9d86aaf6e83a66163d3e01faf62ce56ba7c143"
   },
   "inventory_role_counts": {
     "c1_risk_reference_support_only": 87,
@@ -16,9 +17,16 @@
     "legacy_provenance_support_only": 13
   },
   "inventory_row_count": 290,
+  "reference_normalizer_all_passed": true,
+  "reference_normalizer_mode_counts": {
+    "ordered_consecutive_pairs_with_duplicate_x": 49,
+    "strict_normalized_geometry": 141
+  },
   "reference_registry_row_count": 190,
   "schema_version": "paper_a_c2b_validation_input_bundle_v1",
+  "scope_per_image_human_review": false,
   "scope_registry_row_count": 190,
+  "scope_review_level": "dataset_level_protocol_assumption",
   "worker_facing_candidate_count": 190,
   "worker_facing_dataset_splits": [
     "mp3d_validation"

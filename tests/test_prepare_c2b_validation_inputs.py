@@ -43,6 +43,8 @@ def test_validation_only_bundle_keeps_support_tasks_out_of_worker_facing_registr
     assert summary["inventory_role_counts"] == {"c1_risk_reference_support_only": 1, "formal_c2b_validation_candidate": 2, "legacy_provenance_support_only": 1}
     scope = list(csv.DictReader((tmp_path / "out/scope_registry.csv").open(encoding="utf-8")))
     assert {row["base_task_id"] for row in scope} == {"sceneA_one", "sceneB_two"}
+    assert {row["scope_review_level"] for row in scope} == {"dataset_level_protocol_assumption"}
+    assert {row["per_image_human_scope_review"] for row in scope} == {"false"}
     building = list(csv.DictReader((tmp_path / "out/authoritative_building_registry.csv").open(encoding="utf-8")))
     assert {row["base_task_id"] for row in building} == {"c1", "sceneA_one", "sceneB_two"}
     layout = json.loads((tmp_path / "out/model_layout_json/sceneA_one.json").read_text(encoding="utf-8"))
@@ -50,3 +52,5 @@ def test_validation_only_bundle_keeps_support_tasks_out_of_worker_facing_registr
         {"x": 10.0, "y_ceiling": 100.0, "y_floor": 400.0, "id": 0},
         {"x": 500.0, "y_ceiling": 120.0, "y_floor": 390.0, "id": 1},
     ]
+    assert summary["reference_normalizer_all_passed"] is True
+    assert sum(summary["reference_normalizer_mode_counts"].values()) == 2

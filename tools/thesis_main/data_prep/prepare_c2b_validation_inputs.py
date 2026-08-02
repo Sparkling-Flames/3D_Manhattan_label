@@ -7,10 +7,17 @@ import csv
 import hashlib
 import json
 import shutil
+import sys
 from collections import Counter
 from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
+
+PROJECT_ROOT = Path(__file__).resolve().parents[3]
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
+from tools.thesis_main.analysis.geometry_consensus.representation import normalize_ordered_reference_geometry
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:
@@ -73,7 +80,32 @@ def _prediction_to_layout(source: Path, destination: Path, stem: str) -> None:
             "coordinate_space": "hohonet_model_1024x512",
         },
     }
-    destination.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8")
+    destination.write_text(json.dumps(payload, indent=2) + "\n", encoding="utf-8", newline="\n")
+
+
+def _audit_references(reference_dir: Path, stems: set[str], output_dir: Path) -> tuple[Path, Counter[str]]:
+    rows = []
+    modes: Counter[str] = Counter()
+    for stem in sorted(stems):
+        path = reference_dir / f"{stem}.txt"
+        points = [[float(value) for value in line.split()] for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        result = normalize_ordered_reference_geometry(points)
+        mode = str(result.get("reference_geometry_mode", ""))
+        modes[mode] += 1
+        rows.append({
+            "image_id": stem, "base_task_id": stem, "task_id": stem,
+            "reference_normalizer_valid": result["valid"],
+            "reference_geometry_mode": mode,
+            "normalizer_reason": result.get("reason", ""),
+            "raw_point_count": len(points), "normalized_pair_count": result.get("n_pairs", 0),
+            "reference_path": _portable_path(path), "reference_sha256": _sha256(path),
+        })
+    audit_path = output_dir / "reference_normalizer_audit.csv"
+    _write_csv(audit_path, rows)
+    failed = [row for row in rows if not row["reference_normalizer_valid"]]
+    if failed:
+        raise ValueError(f"validation references rejected by current normalizer: {len(failed)}")
+    return audit_path, modes
 
 
 def prepare(
@@ -139,6 +171,8 @@ def prepare(
     inventory_path = output_dir / "c2b_validation_support_inventory.csv"
     _write_csv(inventory_path, rows)
 
+    reference_audit_path, reference_modes = _audit_references(validation_reference_dir, validation_ids, output_dir)
+
     c1_buildings = {row["base_task_id"]: row for row in _read_csv(c1_building_registry)}
     if c1_ids != c1_buildings.keys():
         raise ValueError("C1 building registry does not exactly cover the frozen C1 task identities")
@@ -163,6 +197,9 @@ def prepare(
         "registry_status": "approved_by_dataset_protocol_assumption",
         "reviewed_by": "protocol_execution_under_researcher_validation_only_directive",
         "reviewed_at": reviewed_at, "evidence_basis": "mp3d_layout_valid_no_occ_curated_task_pool",
+        "scope_review_level": "dataset_level_protocol_assumption",
+        "per_image_human_scope_review": "false",
+        "scope_assumption_disclosure": "not_individually_human_reviewed_for_C2B_scope",
     } for stem in sorted(validation_ids)]
     scope_path = output_dir / "scope_registry.csv"
     _write_csv(scope_path, scope_rows)
@@ -177,6 +214,7 @@ def prepare(
             "reviewed_by": "protocol_execution_under_researcher_validation_only_directive",
             "reviewed_at": reviewed_at, "reference_path": _portable_path(reference),
             "reference_sha256": _sha256(reference), "evidence_basis": "official_mp3d_validation_label_cor",
+            "reference_normalizer_status": "passed",
         })
     reference_path = output_dir / "reference_registry.csv"
     _write_csv(reference_path, reference_rows)
@@ -190,21 +228,25 @@ def prepare(
         "worker_facing_dataset_splits": ["mp3d_validation"],
         "building_registry_row_count": len(building_rows),
         "scope_registry_row_count": len(scope_rows), "reference_registry_row_count": len(reference_rows),
+        "scope_review_level": "dataset_level_protocol_assumption",
+        "scope_per_image_human_review": False,
+        "reference_normalizer_all_passed": True,
+        "reference_normalizer_mode_counts": dict(sorted(reference_modes.items())),
         "input_sha256": {
             "full_inventory": _sha256(full_inventory), "legacy_manifest": _sha256(legacy_manifest),
             "c1_building_registry": _sha256(c1_building_registry), "inventory": _sha256(inventory_path),
             "building_registry": _sha256(building_path), "scope_registry": _sha256(scope_path),
-            "reference_registry": _sha256(reference_path),
+            "reference_registry": _sha256(reference_path), "reference_normalizer_audit": _sha256(reference_audit_path),
         },
     }
     (output_dir / "c2b_validation_input_bundle.summary.json").write_text(
-        json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8"
+        json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n"
     )
     return summary
 
 
 def main() -> None:
-    root = Path(__file__).resolve().parents[3]
+    root = PROJECT_ROOT
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", type=Path, required=True)
     parser.add_argument("--validation-prediction-dir", type=Path, required=True)
