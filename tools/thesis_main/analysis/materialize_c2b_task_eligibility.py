@@ -84,7 +84,7 @@ def materialize(
         layout_leakage = leakage_layout_by_stem.get(key[1], {})
         reasons: list[str] = []
 
-        source_ok = bool(source_row) and str(source_row.get("allocation", source_row.get("source_split_allowed", ""))).lower() in {"c2", "true", "1", "allowed"}
+        source_ok = bool(source_row) and str(source_row.get("allocation", source_row.get("source_split_allowed", ""))).lower() in {"c2", "c2_source", "true", "1", "allowed"}
         holdout_ok = bool(holdout_row) and _truth(holdout_row.get("future_holdout_clear", holdout_row.get("clear")))
         history_overlap = bool(history_row) and _truth(history_row.get("history_overlap", history_row.get("overlap")))
         history_ok = bool(history_row) and _truth(history_row.get("history_clear")) and not history_overlap

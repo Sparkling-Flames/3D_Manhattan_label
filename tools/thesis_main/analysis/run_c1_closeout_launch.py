@@ -441,7 +441,7 @@ def _require_approval(path: Path, evidence: Path, sha_field: str) -> dict[str, A
 def _c2_source_images(rows: list[dict[str, str]]) -> set[str]:
     return {
         row.get("image_id", "") for row in rows
-        if str(row.get("allocation", row.get("source_split_allowed", ""))).lower() in {"c2", "true", "1", "allowed"}
+        if str(row.get("allocation", row.get("source_split_allowed", ""))).lower() in {"c2", "c2_source", "true", "1", "allowed"}
         and row.get("image_id")
     }
 

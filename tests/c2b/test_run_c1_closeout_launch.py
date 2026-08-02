@@ -408,7 +408,7 @@ def test_future_c2_confirmation_never_blocks_c1_closeout_owner():
 
 
 def test_holdout_clear_evidence_row_is_not_misread_as_a_heldout_image():
-    source = [{"image_id": "i1", "allocation": "C2"}]
+    source = [{"image_id": "i1", "allocation": "C2_SOURCE"}]
     holdout = [{"image_id": "i1", "future_holdout_clear": "true"}, {"image_id": "i2", "allocation": "future_holdout"}]
     assert _c2_source_images(source) == {"i1"}
     assert _future_heldout_images(holdout) == {"i2"}

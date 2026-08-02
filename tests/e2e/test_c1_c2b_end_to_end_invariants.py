@@ -328,7 +328,7 @@ def test_formal_task_eligibility_uses_joined_evidence_and_feature_sha(tmp_path: 
     materialize_c2b_task_eligibility(*inputs, tmp_path / "blocked.csv")
     assert read_csv(tmp_path / "blocked.csv")[0]["assignment_eligible"].lower() == "false"
 
-    write_csv(paths["source"], [{**identity, "source_split_allowed": "true"}])
+    write_csv(paths["source"], [{**identity, "allocation": "c2_source"}])
     materialize_c2b_task_eligibility(*inputs, tmp_path / "eligible.csv")
     assert read_csv(tmp_path / "eligible.csv")[0]["assignment_eligible"].lower() == "true"
 
