@@ -1,0 +1,100 @@
+{
+  "C2B_ASSIGNMENT_BATCH_A_MATERIALIZED": true,
+  "C2B_ASSIGNMENT_BATCH_B_MATERIALIZED": false,
+  "C2B_LAUNCH_READY": true,
+  "assignment_batch_id": "C2B_BATCH_A",
+  "assignment_distribution_consistent": true,
+  "assignment_sha256": "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c",
+  "automatic_label_studio_import": false,
+  "bridge_per_worker": 4,
+  "capacity_manifest_sha256": "bc5807b56017fb3b1787199648c60f007c683a11b77e3e67d8f8ace538714572",
+  "common_anchor_count": 4,
+  "contract_role": "generated_subordinate",
+  "dependencies": [
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c1_a_batch_freeze_20260802_v17\\c1_a_analysis_snapshot.json",
+      "role": "C1_A_SNAPSHOT",
+      "sha256": "78bf51aadf7ec325da738fe1eff8a1d95480b8f95aebe16cff9be2386c312cba"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c2_eligible_roster_C1.manifest.json",
+      "role": "C2B_ROSTER",
+      "sha256": "0a9488317e0f7b3f8276b2f1eff773268aaf45292be4faa3c17fada589db266d"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c2_task_risk.summary.json",
+      "role": "C2_RISK",
+      "sha256": "fb0cd5daa8879296183fd36bda7684b2c34f2e3ed50496de40c94efe91e4bb6c"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c2b_derived_threshold_manifest.json",
+      "role": "THRESHOLDS",
+      "sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v16\\inputs\\c2b_capacity_manifest.csv",
+      "role": "CAPACITY",
+      "sha256": "bc5807b56017fb3b1787199648c60f007c683a11b77e3e67d8f8ace538714572"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_build_20260802_v17_d8\\inputs\\c2b_selected_design_approval_D8.json",
+      "role": "SELECTED_DESIGN_APPROVAL",
+      "sha256": "16617e02bb0118523604f0ff0f8ae86b5ef78cd3a0467bd71708bc2f15fde2ee"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_build_20260802_v17_d8\\inputs\\c2b_selected_design_manifest_D8.json",
+      "role": "SELECTED_DESIGN_MANIFEST",
+      "sha256": "1dea583ae7131170611ea22ceb1a7f8887ea9e4754dd89297a7fa2235631615f"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c2b_candidate_design_manifest.json",
+      "role": "DESIGN_MANIFEST",
+      "sha256": "92eb0b6a501a4af02b3379d10c01a6efa9e44153e9f44a748358dca50531d5ba"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c2_task_risk_inventory.csv",
+      "role": "TASK_POOL",
+      "sha256": "211ea4260415918104685440b07ce72fc17113b1764913c9215c554df901c067"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\docs\\thesis_main\\PAPER_A_METHOD_CONTRACT_CURRENT.json",
+      "role": "METHOD_CONTRACT",
+      "sha256": "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c"
+    }
+  ],
+  "duplicate_worker_task_count": 0,
+  "git_commit_sha": "2b56de8f140a8480d337d74a2aec8c01c3fa87fd",
+  "gt_isolated_from_worker_import": true,
+  "image_paths_resolvable": true,
+  "import_sha256": "7e66c2aacc7929d11e98df3d918da6fa2cf1cd73c58f19bdd77eeea1e3a4021e",
+  "import_smoke_passed": true,
+  "launch_ready": true,
+  "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1",
+  "method_contract_sha256": "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c",
+  "method_contract_version": "paper_a_method_20260802_v17",
+  "min_task_support": 2,
+  "n_assignments": 176,
+  "n_tasks": 46,
+  "n_workers": 22,
+  "schema_version": "paper_a_c2b_launch_ready_report_v3",
+  "selected_bridge_pool_sha256": "79ffc8b2e004db24f49647eec2b27c76c65cc5e416f3e67faa4fce389c1a9dcc",
+  "selected_design_id": "D8",
+  "selected_design_manifest_sha256": "1dea583ae7131170611ea22ceb1a7f8887ea9e4754dd89297a7fa2235631615f",
+  "selected_design_sha": "f2b7cde8aadf29fb35a965ec49b434587feaa1c09863f74cf0e95e02e3462822",
+  "state_machine": {
+    "C1_CANONICAL_CLOSED": false,
+    "C1_COLLECTION_INCOMPLETE": false,
+    "C1_EVIDENCE_BUNDLE_FROZEN": false,
+    "C1_MEASUREMENT_FROZEN": false,
+    "C2B_ASSIGNMENT_BATCH_A_MATERIALIZED": true,
+    "C2B_ASSIGNMENT_BATCH_B_MATERIALIZED": false,
+    "C2B_ASSIGNMENT_MATERIALIZED": true,
+    "C2B_BASELINE_INPUT_FROZEN": true,
+    "C2B_DESIGN_FROZEN": true,
+    "C2B_LAUNCH_READY": true,
+    "C2B_RISK_DESIGN_FROZEN": true
+  },
+  "task_pool_sha256": "211ea4260415918104685440b07ce72fc17113b1764913c9215c554df901c067",
+  "worker_distribution_bundle_sha256": "7ea7d4373004f6ac8167be7b337a62889e4c69104a08e1abb686c6a72398a0aa",
+  "worker_distribution_sha256": "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c"
+}
