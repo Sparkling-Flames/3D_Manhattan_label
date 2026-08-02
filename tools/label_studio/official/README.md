@@ -4,7 +4,7 @@
 
 ## 当前入口
 
-- ls_userscript_annotator.js：正式标注员脚本。强制记录 active_time，不提供本地停计时开关。
+- ls_userscript_annotator.js：C2 及以后正式标注员脚本。强制记录 task-worker active_time，不采集 annotation ID，不提供本地停计时开关。
 - ls_userscript_debug.js：调试/巡检脚本。仅供开发者或管理员使用，保留 HOHONET_DISABLE_ACTIVE_TIME 开关。
 - analyze_quality_formal.py：正式分析入口。先调用上游 analyze_quality.py，再剔除兼容字段并输出 formal CSV。
 - start_log_server.sh：正式日志服务启动脚本，已改为按仓库相对路径启动 cors_server.py。

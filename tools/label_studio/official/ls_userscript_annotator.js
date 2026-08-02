@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         HoHoNet Helper Official Annotator
 // @namespace    http://tampermonkey.net/
-// @version      stage3_active_time_page_gate_20260711_v2
+// @version      c2plus_task_worker_active_time_20260802_v1
 // @description  正式标注版：连接 Label Studio 与 HoHoNet 3D 查看器，并强制记录 active_time
 // @author       HoHoNet
 // @match        http://175.178.71.217:8080/*
@@ -157,7 +157,7 @@
   const ACTIVE_TIME_TOKEN_PANEL_ID = "hohonet-active-time-token-panel";
   const ACTIVE_TIME_STATUS_PANEL_ID = "hohonet-active-time-status-panel";
   const ACTIVE_TIME_PANEL_MODE_KEY = "HOHONET_ACTIVE_TIME_PANEL_MODE";
-  const ACTIVE_TIME_RETRY_QUEUE_KEY = "HOHONET_ACTIVE_TIME_RETRY_QUEUE_V1";
+  const ACTIVE_TIME_RETRY_QUEUE_KEY = "HOHONET_ACTIVE_TIME_RETRY_QUEUE_V2_TASK_WORKER";
   const ACTIVE_TIME_RETRY_TTL_MS = 72 * 60 * 60 * 1000;
   const ACTIVE_TIME_RETRY_MAX_ITEMS = 200;
   const OVERLAY_ID = "hohonet-overlay";
@@ -269,7 +269,7 @@
   const existingPreviewPanelStyle = document.getElementById(PREVIEW_PANEL_STYLE_ID);
   if (existingPreviewPanelStyle) existingPreviewPanelStyle.remove();
 
-  const SCRIPT_VERSION = "stage3_active_time_page_gate_20260711_v2";
+  const SCRIPT_VERSION = "c2plus_task_worker_active_time_20260802_v1";
   console.log(`HoHoNet Helper: 已加载 (v${SCRIPT_VERSION})`);
   console.log(
     "HoHoNet viewer base: set localStorage.HOHONET_VIEWER_BASE_URL = location.origin when /tools is reverse-proxied on LS origin",
@@ -430,13 +430,12 @@
     } catch (e) {}
   }
 
-  function isActiveTimePanelForcedOpen(metadata, uploadStatus, tokenOk) {
+  function isActiveTimePanelForcedOpen(uploadStatus, tokenOk) {
     const status = String(uploadStatus || "");
     return (
       !tokenOk ||
       ["missing_token", "forbidden_403", "fetch_failed"].includes(status) ||
-      status.startsWith("http_") ||
-      (metadata && metadata.annotationMatchStatus === "unknown_annotation")
+      status.startsWith("http_")
     );
   }
 
@@ -503,16 +502,6 @@
     };
   }
 
-  function getActiveTimeAnnotationNotice(metadata) {
-    if (metadata?.annotationIdSource === "selected_annotation_not_owned_by_current_user") {
-      return "当前选中的 annotation 属于其他用户；在切换到你自己的 annotation 前，时间会暂存为未匹配。";
-    }
-    if (metadata?.annotationMatchStatus === "unknown_annotation") {
-      return "当前 annotation 尚未确认；除非后续能安全匹配，否则时间会保留为未分配审计记录。";
-    }
-    return "";
-  }
-
   function appendActiveTimePanelButton(container, label, onClick, { primary = false, danger = false } = {}) {
     const button = document.createElement("button");
     button.type = "button";
@@ -568,7 +557,7 @@
     const pageGate = explicitPageGate || report?.pageGate || resolveAnnotationPageGate();
     const metadata = report || (pageGate.eligible ? resolveActiveTimeMetadata(pageGate.routeTaskId) : {});
     const mode = getActiveTimePanelMode();
-    const forcedOpen = isActiveTimePanelForcedOpen(metadata, lastActiveTimeUploadStatus, tokenOk);
+    const forcedOpen = isActiveTimePanelForcedOpen(lastActiveTimeUploadStatus, tokenOk);
     const showDetails = mode === "details" || forcedOpen;
     const hidden = mode === "hidden" && !forcedOpen;
     const minimized = !showDetails;
@@ -624,13 +613,6 @@
     body.textContent = tokenState.body;
     body.style.cssText = "font-size: 12px; color: #4b5563; margin-bottom: 8px;";
     tokenPanel.appendChild(body);
-    const noticeText = getActiveTimeAnnotationNotice(metadata);
-    if (noticeText) {
-      const notice = document.createElement("div");
-      notice.textContent = noticeText;
-      notice.style.cssText = "font-size: 12px; color: #92400e; margin-bottom: 8px;";
-      tokenPanel.appendChild(notice);
-    }
     const actions = document.createElement("div");
     actions.style.cssText = "display: flex; gap: 8px; flex-wrap: wrap;";
     appendActiveTimePanelButton(actions, tokenState.action, setStoredLogTokenFromPrompt, { primary: tokenState.primary });
@@ -659,14 +641,11 @@
     statusPanel.appendChild(detailTitle);
     appendActiveTimeDetailRow(statusPanel, "状态", lastActiveTimeUploadStatus, { badge: lastActiveTimeUploadStatus === "ok" });
     appendActiveTimeDetailRow(statusPanel, "Key", metadata.activeTimeKey || "unknown");
-    appendActiveTimeDetailRow(statusPanel, "Annotation", `${metadata.annotationId || "unknown_annotation"} (${metadata.annotationMatchStatus || "unknown_annotation"})`);
     appendActiveTimeDetailRow(statusPanel, "Task 来源", metadata.taskIdSource || "unknown");
     appendActiveTimeDetailRow(statusPanel, "Project 来源", metadata.projectIdSource || "unknown");
-    appendActiveTimeDetailRow(statusPanel, "Annotation 来源", metadata.annotationIdSource || "unknown");
     appendActiveTimeDetailRow(statusPanel, "页面判定", pageGate.reason || "unknown");
-    appendActiveTimeDetailRow(statusPanel, "Late-binding", metadata.lateBindingStatus || "none");
     appendActiveTimeDetailRow(statusPanel, "秒数", seconds);
-    statusPanel.style.border = pageGate.eligible && metadata.annotationMatchStatus === "unknown_annotation" ? "1px solid #f59e0b" : "1px solid #e5e7eb";
+    statusPanel.style.border = "1px solid #e5e7eb";
   }
 
   function getLabelsVisible() {
@@ -1250,64 +1229,6 @@
       if (match) return { id: match[1], source: "url.path" };
     } catch (e) {}
     return { id: "unknown", source: "unknown" };
-  }
-
-  function getAnnotationIdentity() {
-    try {
-      const store = getStore();
-      const selected = store?.annotationStore?.selected;
-      let selectedJson = null;
-      try {
-        selectedJson = selected?.toJSON?.();
-      } catch (e) {}
-      const annotation = firstIdentityCandidate([
-        [selected?.id, "store.annotationStore.selected.id"],
-        [selected?.pk, "store.annotationStore.selected.pk"],
-        [selected?.annotation?.id, "store.annotationStore.selected.annotation.id"],
-        [selectedJson?.id, "store.annotationStore.selected.toJSON.id"],
-      ], "unknown_annotation", "unknown");
-      if (annotation.id === "unknown_annotation") return annotation;
-
-      const owner = firstIdentityCandidate([
-        [selected?.completed_by, "store.annotationStore.selected.completed_by"],
-        [selected?.completed_by?.id, "store.annotationStore.selected.completed_by.id"],
-        [selected?.user, "store.annotationStore.selected.user"],
-        [selected?.user?.id, "store.annotationStore.selected.user.id"],
-        [selected?.user_id, "store.annotationStore.selected.user_id"],
-        [selected?.createdBy, "store.annotationStore.selected.createdBy"],
-        [selected?.createdBy?.id, "store.annotationStore.selected.createdBy.id"],
-        [selected?.created_by, "store.annotationStore.selected.created_by"],
-        [selected?.created_by?.id, "store.annotationStore.selected.created_by.id"],
-        [selectedJson?.completed_by, "store.annotationStore.selected.toJSON.completed_by"],
-        [selectedJson?.completed_by?.id, "store.annotationStore.selected.toJSON.completed_by.id"],
-        [selectedJson?.user, "store.annotationStore.selected.toJSON.user"],
-        [selectedJson?.user?.id, "store.annotationStore.selected.toJSON.user.id"],
-        [selectedJson?.user_id, "store.annotationStore.selected.toJSON.user_id"],
-      ], "", "");
-      const currentAnnotator = getAnnotatorId();
-      if (owner.id && currentAnnotator !== "unknown" && owner.id !== String(currentAnnotator)) {
-        return {
-          id: "unknown_annotation",
-          source: "selected_annotation_not_owned_by_current_user",
-          selectedAnnotationId: annotation.id,
-          selectedAnnotationOwnerId: owner.id,
-          selectedAnnotationOwnerSource: owner.source,
-        };
-      }
-      return {
-        ...annotation,
-        selectedAnnotationId: annotation.id,
-        selectedAnnotationOwnerId: owner.id || "",
-        selectedAnnotationOwnerSource: owner.source || "",
-      };
-    } catch (e) {}
-    return { id: "unknown_annotation", source: "unknown" };
-  }
-
-  function getCurrentAnnotationId() {
-    const identity = getAnnotationIdentity();
-    if (identity.id !== "unknown") return identity.id;
-    return "unknown_annotation";
   }
 
   function getCornerOrderCacheContext() {
@@ -2921,7 +2842,6 @@
   let currentTaskId = null;
   let currentActiveTimeKey = null;
   let currentActiveTimeMetadata = null;
-  const lateBindingActualByContext = new Map();
 
   // v0.21: cumulative seconds per active_time_key within same session.
   const taskCumulativeSeconds = new Map();
@@ -2931,26 +2851,16 @@
     "projectId",
     "projectName",
     "annotatorId",
-    "annotationId",
     "taskIdSource",
     "projectIdSource",
-    "annotationIdSource",
-    "selectedAnnotationId",
-    "selectedAnnotationOwnerId",
-    "selectedAnnotationOwnerSource",
   ];
   const lastKnownActiveTimeMetadata = {
     taskId: null,
     projectId: null,
     projectName: null,
     annotatorId: null,
-    annotationId: null,
     taskIdSource: null,
     projectIdSource: null,
-    annotationIdSource: null,
-    selectedAnnotationId: null,
-    selectedAnnotationOwnerId: null,
-    selectedAnnotationOwnerSource: null,
     updatedAt: 0,
   };
 
@@ -3014,7 +2924,6 @@
   function captureCurrentActiveTimeMetadata(preferredTaskId = null) {
     const taskIdentity = getTaskIdentity();
     const projectIdentity = getProjectIdentity();
-    const annotationIdentity = getAnnotationIdentity();
     const taskId =
       preferredTaskId !== null && preferredTaskId !== undefined
         ? preferredTaskId
@@ -3026,18 +2935,7 @@
       projectIdSource: projectIdentity.source,
       projectName: getProjectName(),
       annotatorId: getAnnotatorId(),
-      annotationId: annotationIdentity.id,
-      annotationIdSource: annotationIdentity.source,
-      selectedAnnotationId: annotationIdentity.selectedAnnotationId || "",
-      selectedAnnotationOwnerId: annotationIdentity.selectedAnnotationOwnerId || "",
-      selectedAnnotationOwnerSource: annotationIdentity.selectedAnnotationOwnerSource || "",
     };
-  }
-
-  function annotationMatchStatus(annotationId) {
-    return isKnownActiveTimeMetadataValue(annotationId) && String(annotationId) !== "unknown_annotation"
-      ? "annotation_id_present"
-      : "unknown_annotation";
   }
 
   function buildActiveTimeKey(metadata) {
@@ -3045,44 +2943,7 @@
       metadata.projectId || "unknown",
       metadata.taskId || "unknown",
       metadata.annotatorId || "unknown",
-      metadata.annotationId || "unknown_annotation",
     ].join("|");
-  }
-
-  function activeTimeContextKey(metadata) {
-    return [
-      sessionId,
-      metadata.projectId || "unknown",
-      metadata.taskId || "unknown",
-      metadata.annotatorId || "unknown",
-    ].join("|");
-  }
-
-  function isUnknownAnnotationMetadata(metadata) {
-    return !metadata || metadata.annotationId === "unknown_annotation";
-  }
-
-  function noteActualAnnotationForContext(metadata) {
-    if (!metadata || isUnknownAnnotationMetadata(metadata)) return "unknown_annotation";
-    const contextKey = activeTimeContextKey(metadata);
-    const existing = lateBindingActualByContext.get(contextKey);
-    if (existing && existing !== metadata.annotationId) {
-      lateBindingActualByContext.set(contextKey, "__ambiguous__");
-      return "ambiguous_multiple_annotations";
-    }
-    if (existing === "__ambiguous__") return "ambiguous_multiple_annotations";
-    lateBindingActualByContext.set(contextKey, metadata.annotationId);
-    return "single_actual_annotation";
-  }
-
-  function getLateBindingStatusForSwitch(oldMetadata, nextMetadata) {
-    if (!isUnknownAnnotationMetadata(oldMetadata) || isUnknownAnnotationMetadata(nextMetadata)) {
-      return "";
-    }
-    if (activeTimeContextKey(oldMetadata) !== activeTimeContextKey(nextMetadata)) {
-      return "";
-    }
-    return noteActualAnnotationForContext(nextMetadata);
   }
 
   function resolveActiveTimeMetadata(preferredTaskId = null) {
@@ -3094,9 +2955,6 @@
       ? String(live.projectId).trim()
       : lastKnownActiveTimeMetadata.projectId || "unknown";
 
-    const annotationId = isKnownActiveTimeMetadataValue(live.annotationId)
-      ? String(live.annotationId).trim()
-      : "unknown_annotation";
     const resolved = {
       taskId: isKnownActiveTimeMetadataValue(live.taskId)
         ? String(live.taskId).trim()
@@ -3112,24 +2970,14 @@
       annotatorId: isKnownActiveTimeMetadataValue(live.annotatorId)
         ? String(live.annotatorId).trim()
         : lastKnownActiveTimeMetadata.annotatorId || "unknown",
-      annotationId,
-      annotationMatchStatus: annotationMatchStatus(annotationId),
       taskIdSource: isKnownActiveTimeMetadataValue(live.taskIdSource)
         ? String(live.taskIdSource).trim()
         : lastKnownActiveTimeMetadata.taskIdSource || "unknown",
       projectIdSource: isKnownActiveTimeMetadataValue(live.projectIdSource)
         ? String(live.projectIdSource).trim()
         : lastKnownActiveTimeMetadata.projectIdSource || "unknown",
-      annotationIdSource: isKnownActiveTimeMetadataValue(live.annotationIdSource)
-        ? String(live.annotationIdSource).trim()
-        : lastKnownActiveTimeMetadata.annotationIdSource || "unknown",
-      selectedAnnotationId: String(live.selectedAnnotationId || ""),
-      selectedAnnotationOwnerId: String(live.selectedAnnotationOwnerId || ""),
-      selectedAnnotationOwnerSource: String(live.selectedAnnotationOwnerSource || ""),
-      lateBindingStatus: "",
       pageGate,
     };
-    noteActualAnnotationForContext(resolved);
     resolved.activeTimeKey = buildActiveTimeKey(resolved);
     return resolved;
   }
@@ -3155,20 +3003,11 @@
 
     return {
       reportTaskId,
-      annotationId: metadata.annotationId,
-      annotationMatchStatus: metadata.annotationMatchStatus,
       activeTimeKey: metadata.activeTimeKey,
-      activeTimeAliasFrom: metadata.activeTimeAliasFrom || "",
-      activeTimeAliasReason: metadata.activeTimeAliasReason || "",
-      lateBindingStatus: metadata.lateBindingStatus || "",
       pageGate: metadata.pageGate || resolveAnnotationPageGate(),
       projectId: metadata.projectId,
       taskIdSource: metadata.taskIdSource || "unknown",
       projectIdSource: metadata.projectIdSource || "unknown",
-      annotationIdSource: metadata.annotationIdSource || "unknown",
-      selectedAnnotationId: metadata.selectedAnnotationId || "",
-      selectedAnnotationOwnerId: metadata.selectedAnnotationOwnerId || "",
-      selectedAnnotationOwnerSource: metadata.selectedAnnotationOwnerSource || "",
       projectName: metadata.projectName,
       annotatorId: metadata.annotatorId,
       currentFragment,
@@ -3184,16 +3023,9 @@
     return {
       task_id: report.reportTaskId,
       task_id_source: report.taskIdSource,
-      annotation_id: report.annotationId,
-      annotation_id_source: report.annotationIdSource,
-      selected_annotation_id: report.selectedAnnotationId,
-      selected_annotation_owner_id: report.selectedAnnotationOwnerId,
-      selected_annotation_owner_source: report.selectedAnnotationOwnerSource,
+      active_time_schema_version: "c2plus_task_worker_v1",
+      active_time_identity_level: "project_runtime_task_worker",
       active_time_key: report.activeTimeKey,
-      active_time_alias_from: report.activeTimeAliasFrom || "",
-      active_time_alias_reason: report.activeTimeAliasReason || "",
-      late_binding_status: report.lateBindingStatus || "",
-      annotation_match_status: report.annotationMatchStatus,
       project_id: report.projectId,
       project_id_source: report.projectIdSource,
       project_name: report.projectName,
@@ -3292,12 +3124,6 @@
     saveActiveTimeRetryQueue(queue);
   }
 
-  function deleteActiveTimeRetryKey(activeTimeKey) {
-    const queue = loadActiveTimeRetryQueue();
-    delete queue[`${sessionId}|${activeTimeKey}`];
-    saveActiveTimeRetryQueue(queue);
-  }
-
   async function retryQueuedActiveTime(logPrefix = "RETRY") {
     const tokenNow = getLogToken();
     if (!tokenNow) return;
@@ -3333,32 +3159,7 @@
       nextMetadata.activeTimeKey !== currentActiveTimeKey &&
       (activeSeconds > 0 || taskCumulativeSeconds.has(currentActiveTimeKey))
     ) {
-      const lateBindingStatus = getLateBindingStatusForSwitch(currentActiveTimeMetadata, nextMetadata);
-      let reportMetadata = currentActiveTimeMetadata;
-      let secondsForReport = activeSeconds;
-      const unknownCumulativeSeconds = (taskCumulativeSeconds.get(currentActiveTimeKey) || 0) + activeSeconds;
-      if (lateBindingStatus === "single_actual_annotation" && unknownCumulativeSeconds <= 5) {
-        reportMetadata = {
-          ...nextMetadata,
-          activeTimeAliasFrom: currentActiveTimeKey,
-          activeTimeAliasReason: "short_unknown_bootstrap",
-          lateBindingStatus: "short_unknown_bootstrap_merged",
-        };
-        secondsForReport = unknownCumulativeSeconds;
-        taskCumulativeSeconds.delete(currentActiveTimeKey);
-        deleteActiveTimeRetryKey(currentActiveTimeKey);
-      } else if (lateBindingStatus === "single_actual_annotation") {
-        reportMetadata = {
-          ...currentActiveTimeMetadata,
-          lateBindingStatus: "unknown_annotation_unassigned",
-        };
-      } else if (lateBindingStatus === "ambiguous_multiple_annotations") {
-        reportMetadata = {
-          ...currentActiveTimeMetadata,
-          lateBindingStatus: "unknown_annotation_ambiguous",
-        };
-      }
-      const report = buildActiveTimeReport(null, secondsForReport, reportMetadata);
+      const report = buildActiveTimeReport(null, activeSeconds, currentActiveTimeMetadata);
       if (report) {
         taskCumulativeSeconds.set(report.activeTimeKey, report.reportSeconds);
         void postActiveTimeReport(report, {

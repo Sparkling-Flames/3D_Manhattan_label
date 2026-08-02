@@ -2,9 +2,19 @@
 
 本文件说明如何在现有 HoHoNet 工程中：
 
-- 精确采集标注者在 Label Studio 中的“活跃时间（Active Time）”，
+- 一致采集标注者在 Label Studio 中的“活跃时间（Active Time）”，
 - 日志如何存放、滚动与归档，
 - 如何用 `tools/thesis_main/analysis/lead_time_stats.py` 将 Label Studio 导出的 `lead_time` 与实测 `active` 时间对齐比较。
+
+## 分阶段日志合同
+
+- P1 保留旧 userscript 与旧日志结构，不回写、不迁移。
+- C1 保留已经冻结的历史日志与分析链；其中 annotation 身份字段不稳定，正式 timing 已按 task-worker 口径降级处理。
+- C2 及以后使用 `active_time_schema_version=c2plus_task_worker_v1`：`active_time_key=project_id|runtime_task_id|worker_id`，不再采集客户端或服务端 `annotation_id`、selected annotation 或 annotation owner 字段。
+- 新版浏览器脚本使用独立重试队列 `HOHONET_ACTIVE_TIME_RETRY_QUEUE_V2_TASK_WORKER`，不会把旧阶段遗留 payload 重传到 C2+ 日志。
+- 各阶段分析消费者按各自日志合同实现；不得为了统一 schema 改写已经冻结的 P1/C1 数据或结果。
+
+本次切换只需在标注浏览器中更新 userscript。`cors_server.py`、Nginx、`/log_time` 路径和 token 配置均不变，不需要更新或重启云端日志服务。
 
 **概览**
 

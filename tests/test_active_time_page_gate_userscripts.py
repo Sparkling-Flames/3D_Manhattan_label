@@ -4,14 +4,14 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL = ROOT / "tools" / "label_studio" / "official" / "ls_userscript_annotator.js"
 FOREIGN = ROOT / "tools" / "thesis_main" / "foreign_recruitment" / "ls_userscript_annotator_https_en.user.js"
-VERSION = "stage3_active_time_page_gate_20260711_v2"
+VERSION = "c2plus_task_worker_active_time_20260802_v1"
 
 
 def _script(path: Path) -> str:
     return path.read_text(encoding="utf-8")
 
 
-def test_formal_userscripts_use_the_stage3_page_gate_version():
+def test_formal_userscripts_use_the_c2plus_task_worker_version():
     for path in (OFFICIAL, FOREIGN):
         source = _script(path)
         assert f"// @version      {VERSION}" in source
@@ -97,18 +97,38 @@ def test_formal_scripts_keep_deployment_and_localized_non_counting_ui():
     assert "currentActiveTimeMetadata = null" in foreign
 
 
-def test_v2_identity_and_compact_status_remain_auditable_without_server_change():
+def test_v3_uses_task_worker_identity_without_annotation_ids():
     official = _script(OFFICIAL)
     foreign = _script(FOREIGN)
 
     for source in (official, foreign):
-        key = source[source.index("function buildActiveTimeKey("):source.index("function activeTimeContextKey(")]
-        for field in ("projectId", "taskId", "annotatorId", "annotationId"):
+        key = source[source.index("function buildActiveTimeKey("):source.index("function resolveActiveTimeMetadata(")]
+        for field in ("projectId", "taskId", "annotatorId"):
             assert field in key
+        assert "annotationId" not in key
+
+        payload = source[source.index("function buildActiveTimePayload("):source.index("function loadActiveTimeRetryQueue(")]
+        assert 'active_time_schema_version: "c2plus_task_worker_v1"' in payload
+        assert 'active_time_identity_level: "project_runtime_task_worker"' in payload
+        for field in (
+            "annotation_id:",
+            "annotation_id_source:",
+            "selected_annotation_id:",
+            "selected_annotation_owner_id:",
+            "selected_annotation_owner_source:",
+            "annotation_match_status:",
+            "late_binding_status:",
+        ):
+            assert field not in payload
+
+        capture = source[source.index("function captureCurrentActiveTimeMetadata("):source.index("function buildActiveTimeKey(")]
+        assert "getAnnotationIdentity()" not in capture
+        assert "annotationId" not in capture
         assert "session_id: sessionId" in source
         assert "server_annotation_id" not in source
         assert "Math.round(seconds)" in source
         assert "lastActiveTimeUploadStatus" in source
+        assert 'const ACTIVE_TIME_RETRY_QUEUE_KEY = "HOHONET_ACTIVE_TIME_RETRY_QUEUE_V2_TASK_WORKER";' in source
 
     assert "Active-Time：计时中" in official
     assert "Active-Time: Counting" in foreign
