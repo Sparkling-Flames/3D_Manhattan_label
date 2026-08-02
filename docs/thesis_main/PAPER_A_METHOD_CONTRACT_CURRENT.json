@@ -1,6 +1,6 @@
 {
     "schema_version":  "paper_a_method_contract_v9",
-    "contract_version":  "paper_a_method_20260802_v14",
+    "contract_version":  "paper_a_method_20260802_v15",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
     "stages":  [
@@ -21,6 +21,31 @@
                                                             "process_integrity"
                                                         ]
                           },
+    "independence":  {
+                           "default_status":  "independent",
+                           "default_basis":  "protocol_assumption",
+                           "default_eligibility":  "formal_assignment_and_canonical_valid_and_nonoutside_and_non_w014_and_duplicate_resolved",
+                           "machine_anomaly_status":  "pending_manual_review",
+                           "machine_must_not_set":  [
+                                                        "non_independent_confirmed",
+                                                        "confirmed_copy",
+                                                        "exclude_from_analysis"
+                                                    ],
+                           "manual_decisions":  [
+                                                    "confirmed_independent",
+                                                    "confirmed_non_independent",
+                                                    "unresolved"
+                                                ],
+                           "exact_geometry_match_role":  "diagnostic_only_not_copy_evidence_by_itself",
+                           "project_level_disposition_is_formal_blocker":  false
+                       },
+    "completion":  {
+                         "ordinary_status_basis":  "computed_from_frozen_assignment_and_export",
+                         "ordinary_completed_requires_manual_approval":  false,
+                         "w014_status":  "administrative_exclusion",
+                         "w014_basis":  "researcher_administrative_disposition",
+                         "completion_is_capability_eligibility":  false
+                     },
     "administrative_eligibility":  {
                                        "ineligible_completion_statuses":  [
                                                                               "nonstarter",
@@ -314,6 +339,11 @@
                              },
     "reference_registry":  {
                                "freeze_before_formal_c1_q_gt":  true,
+                               "reference_policy":  "use_existing_public_gt_as_is",
+                               "default_correction_count":  0,
+                               "amend_only_when_researcher_explicitly_declares_gt_issue":  true,
+                               "worker_gt_disagreement_does_not_trigger_amendment":  true,
+                               "missing_or_unparseable_reference_status":  "reference_unavailable",
                                "submission_triggered_revision_rule":  "a_submission_cannot_score_against_its_own_triggering_reference_revision",
                                "final_reference_freeze_before_stage3":  true
                            },
@@ -335,7 +365,6 @@
                                                       "completion",
                                                       "enrollment",
                                                       "reference_registry",
-                                                      "reference_approval",
                                                       "building_registry",
                                                       "task_building_binding",
                                                       "method_contract"

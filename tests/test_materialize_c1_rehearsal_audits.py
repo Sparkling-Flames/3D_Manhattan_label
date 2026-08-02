@@ -64,10 +64,12 @@ def test_completion_adds_replacement_load_without_expanding_original_task_target
     rows = {row["worker_id"]: row for row in csv.DictReader((tmp_path / "c1_worker_completion_audit.csv").open(encoding="utf-8"))}
     assert rows["34"]["assigned_total_count"] == "2"
     assert rows["14"]["completion_status"] == "administrative_exclusion"
+    assert rows["14"]["completion_disposition_basis"] == "researcher_administrative_disposition"
     task = next(csv.DictReader((tmp_path / "c1_task_support_deficit.csv").open(encoding="utf-8")))
     assert task["planned_support"] == "1"
     assert summary["authorized_reassignment_count"] == 1
     assert summary["administrative_exclusion_worker_ids"] == ["14"]
+    assert summary["completion_disposition"]["pending_count"] == 0
 
 
 def test_final_closeout_does_not_block_nonstarter_or_reviewed_local_exclusion(tmp_path: Path) -> None:
@@ -468,12 +470,12 @@ def test_active_time_malformed_json_is_audited_not_silently_dropped(tmp_path: Pa
     assert len(error["line_sha256"]) == 64
 
 
-def test_independence_requires_explicit_cleared_provenance(tmp_path: Path) -> None:
+def test_independence_machine_signal_requires_manual_review_not_conviction(tmp_path: Path) -> None:
     meta = tmp_path / "meta.csv"
     base = {"project_id": "66", "ls_runtime_task_id": "10", "task_id": "t1", "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1", "provenance_status": "", "copy_risk_status": "", "parent_cross_owner": ""}
     _csv(meta, [base, {**base, "annotation_id": "a2", "canonical_annotation_id": "c2", "provenance_status": "complete", "copy_risk_status": "cleared"}, {**base, "annotation_id": "a3", "canonical_annotation_id": "c3", "parent_cross_owner": "true"}])
     summary = materialize_independence(meta, tmp_path)
-    assert summary["status_counts"] == {"not_evaluable": 2, "non_independent_confirmed": 1}
+    assert summary["status_counts"] == {"not_evaluable": 2, "pending_manual_review": 1}
 
 
 def test_sha_bound_independence_disposition_can_clear_a_row(tmp_path: Path) -> None:
@@ -501,13 +503,54 @@ def test_project_provenance_manifest_does_not_clear_rows_without_annotation_disp
     assert summary["status_counts"] == {"not_evaluable": 2}
 
 
-def test_project_clearance_does_not_override_adverse_row_evidence(tmp_path: Path) -> None:
+def test_project_clearance_does_not_convict_adverse_row_without_manual_decision(tmp_path: Path) -> None:
     meta = tmp_path / "meta.csv"; project = tmp_path / "project.csv"
     _csv(meta, [{"project_id": "66", "condition": "manual", "ls_runtime_task_id": "1", "task_id": "t", "worker_id": "1", "annotation_id": "a", "canonical_annotation_id": "c", "parent_cross_owner": "true", "copy_risk_status": "confirmed_copy"}])
     source_sha = independence_meta_identity_sha(list(csv.DictReader(meta.open(encoding="utf-8"))))
     _csv(project, [{"project_id": "66", "condition": "manual", "source_meta_sha256": source_sha, "provenance_status": "complete", "copy_risk_status": "cleared", "parent_field_coverage_complete": "true", "cross_owner_parent_count": "0", "reviewed_by": "r", "reviewed_at": "2026"}])
     summary = materialize_independence(meta, tmp_path, project_disposition_csv=project)
-    assert summary["status_counts"] == {"non_independent_confirmed": 1}
+    assert summary["status_counts"] == {"pending_manual_review": 1}
+
+
+def test_formal_canonical_row_defaults_independent_and_exact_match_is_diagnostic_only(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"
+    common = {
+        "project_id": "66", "condition": "manual", "ls_runtime_task_id": "1", "task_id": "t",
+        "base_task_id": "b", "canonical_eligibility_status": "valid",
+        "assignment_provenance": "original_assignment", "outside_assignment_submission": "false",
+        "duplicate_review_status": "not_required", "geometry_hash": "same",
+    }
+    _csv(meta, [
+        {**common, "worker_id": "1", "annotation_id": "a1", "canonical_annotation_id": "c1"},
+        {**common, "worker_id": "2", "annotation_id": "a2", "canonical_annotation_id": "c2"},
+    ])
+
+    summary = materialize_independence(meta, tmp_path)
+
+    assert summary["status_counts"] == {"independent": 2}
+    assert summary["basis_counts"] == {"protocol_assumption": 2}
+    assert summary["pending_annotation_review_count"] == 0
+    assert summary["n_review"] == 0
+
+
+def test_outside_and_w014_are_not_applicable_not_independence_review_items(tmp_path: Path) -> None:
+    meta = tmp_path / "meta.csv"
+    common = {
+        "project_id": "66", "condition": "manual", "ls_runtime_task_id": "1", "task_id": "t",
+        "base_task_id": "b", "canonical_eligibility_status": "valid",
+        "assignment_provenance": "original_assignment", "duplicate_review_status": "not_required",
+    }
+    _csv(meta, [
+        {**common, "worker_id": "31", "annotation_id": "a1", "canonical_annotation_id": "c1", "outside_assignment_submission": "true"},
+        {**common, "worker_id": "14", "annotation_id": "a2", "canonical_annotation_id": "c2", "outside_assignment_submission": "false"},
+    ])
+
+    summary = materialize_independence(meta, tmp_path)
+
+    assert summary["status_counts"] == {"not_applicable": 2}
+    assert summary["basis_counts"] == {"outside_or_administrative_exclusion": 2}
+    assert summary["pending_annotation_review_count"] == 0
+    assert summary["n_review"] == 0
 
 
 def test_project_independence_evidence_is_grouped_by_project_condition(tmp_path: Path) -> None:

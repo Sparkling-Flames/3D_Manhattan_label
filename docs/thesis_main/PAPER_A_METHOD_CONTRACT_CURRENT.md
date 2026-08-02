@@ -2,13 +2,15 @@
 # Paper A current method contract (generated)
 
 This file is generated from `PAPER_A_METHOD_CONTRACT_CURRENT.json`; normative fields are not defined by hand.
-- contract_version: `paper_a_method_20260802_v14`
-- JSON SHA-256: `182ec9e22ed9c17f5f565bfa42a36da597720d5bdb0ccb53f6237dc512143439`
+- contract_version: `paper_a_method_20260802_v15`
+- JSON SHA-256: `24d4dd64ba6d1cc7af0ea5fa34ecb2b03940059a3125e7a6c030d00dc3a594b6`
 - formal_launch_default: `false`
 
 ## Formal measurement and freeze roles
 
 - The three formal axes are `Q_GT`, `R_peer`, and `F_struct`. `R_LOO_medoid` and `R_LOO_strict` are separate sensitivity/tie-break states.
+- Formal canonical non-outside, non-W014 rows default to independence by protocol assumption. Machine anomaly signals require manual review and never establish non-independence by themselves; exact geometry equality is diagnostic only.
+- Ordinary completion is computed from frozen assignment and export. Existing public GT is used as-is unless the researcher explicitly declares a GT issue.
 - C1 active time is a `task_worker`-level auxiliary operational measurement (`task_worker_time_analysis_eligible`), not a fourth capability axis. It does not change Q_GT/R_peer/F_struct, eligibility, C2-B roster, formal rank, T1 assignment, or V1 routing.
 - Annotation-exact active-log identity is retained for forensic audit; it is not required for the task-worker timing measurement. W034 authorized replacements require either the original sentinel or a SHA-bound retrospective operator attestation, plus the same task-worker log audit.
 - `C1_EVIDENCE_FROZEN` contains C1 canonical evidence, eligibility, peer evidence, structural EB, W034 sensitivity, and this method binding only.

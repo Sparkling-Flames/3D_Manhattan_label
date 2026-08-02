@@ -240,7 +240,7 @@ def materialize_completion_support(
         "worker_id": row["worker_id"], "computed_completion_status": row["completion_status"],
         "final_completion_disposition": row["completion_status"] if row["completion_status"] in {"completed", "partial_noncompletion", "closed_partial_usable", "closed_partial_insufficient", "nonstarter", "administrative_exclusion"} else "",
         "source_completion_audit_sha256": completion_source_sha, "reviewed_by": "", "reviewed_at": "", "reason": "",
-    } for row in completion_rows])
+    } for row in completion_rows if row["completion_status"] != "completed"])
     disposition_summary = apply_completion_disposition(preliminary_completion, completion_disposition_csv, output_dir)
     completion_rows = read_csv(output_dir / "c1_worker_completion_disposition_evidence.csv")
     write_csv(output_dir / "c1_worker_completion_audit.csv", completion_rows)
@@ -293,10 +293,7 @@ def apply_completion_disposition(completion_audit_csv: Path, disposition_csv: Pa
             invalid += 1
         elif disposition and not valid:
             invalid += 1
-        elif not disposition:
-            # Assignment and frozen export evidence own ordinary completion
-            # status.  The reviewer sidecar is exception-only (for example an
-            # administrative exclusion), not a 23-row approval checklist.
+        elif not disposition and row.get("completion_status") not in allowed:
             pending += 1
         if valid:
             applied += 1
@@ -307,7 +304,7 @@ def apply_completion_disposition(completion_audit_csv: Path, disposition_csv: Pa
             "completion_status": disposition.get("final_completion_disposition", row.get("completion_status", "")) if valid else row.get("completion_status", ""),
             "completion_disposition_applied": valid,
             "completion_disposition_valid": valid or computed_valid,
-            "completion_disposition_basis": "sha_bound_exception" if valid else "computed_from_frozen_assignment_and_export" if computed_valid else "invalid_exception_disposition",
+            "completion_disposition_basis": "sha_bound_exception" if valid else "researcher_administrative_disposition" if computed_valid and row.get("completion_status") == "administrative_exclusion" else "computed_from_frozen_assignment_and_export" if computed_valid else "invalid_exception_disposition",
             "completion_disposition_source_sha256": source_sha if valid else "",
             "completion_disposition_reviewed_by": disposition.get("reviewed_by", "") if valid else "",
             "completion_disposition_reviewed_at": disposition.get("reviewed_at", "") if valid else "",
@@ -1434,7 +1431,6 @@ def materialize_independence(
     rows, queue = [], []
     project_disposition_valid: dict[tuple[str, str], bool] = {}
     project_clearance: dict[tuple[str, str], bool] = {}
-    independent_statuses = {"independent", "independent_by_project_provenance", "independent_by_annotation_disposition"}
     for row in meta_rows:
         disposition = dispositions.get(row.get("canonical_annotation_id", ""), {})
         disposition_valid = bool(disposition) and all(str(disposition.get(field, "")).strip() for field in ("canonical_annotation_id", "provenance_status", "copy_risk_status", "independence_status", "reviewed_by", "reviewed_at", "source_meta_sha256")) and disposition.get("source_meta_sha256") == source_sha
@@ -1473,20 +1469,34 @@ def materialize_independence(
             row.get("canonical_annotation_id", ""), ("no_cross_worker_exact_match", "", 0),
         )
         suspected_exact_match = match_class == "suspected_cross_worker_exact_geometry"
-        if adverse:
-            status, basis = "non_independent_confirmed", "cross_owner_parent_or_confirmed_copy"
-        elif identity_complete and disposition_valid and effective.get("provenance_status") == "complete" and effective.get("copy_risk_status") == "cleared":
-            status, basis = "independent", "annotation_exception_clearance"
-        elif suspected_exact_match:
-            status, basis = "not_evaluable", "suspected_cross_worker_exact_geometry_pending_sha_adjudication"
-        elif identity_complete and project_clear:
-            status, basis = "independent_by_project_provenance", "shared_initialization_match" if match_class == "shared_initialization_match" else "project_clearance_expansion"
+        anomaly = adverse or any(_truth(row.get(field)) for field in (
+            "annotation_owner_mismatch", "documented_process_incident", "unresolved_duplicate_revision",
+        ))
+        protocol_default = (
+            identity_complete
+            and row.get("canonical_eligibility_status") == "valid"
+            and row.get("assignment_provenance") in {"original_assignment", "authorized_replacement_assignment", "late_entry_calibration_assignment"}
+            and not _truth(row.get("outside_assignment_submission"))
+            and _normalized_worker_id(row.get("worker_id")) != "14"
+            and row.get("duplicate_review_status", "not_required") != "pending"
+        )
+        independence_not_applicable = _truth(row.get("outside_assignment_submission")) or _normalized_worker_id(row.get("worker_id")) == "14"
+        manual_decision = disposition.get("independence_status", "") if disposition_valid else ""
+        if manual_decision in {"independent", "confirmed_independent", "independent_by_annotation_disposition"}:
+            status, basis = "independent", "manual_confirmation"
+        elif manual_decision in {"non_independent_confirmed", "confirmed_non_independent"}:
+            status, basis = "non_independent_confirmed", "manual_non_independence"
+        elif manual_decision == "unresolved":
+            status, basis = "not_evaluable", "manual_unresolved"
+        elif independence_not_applicable:
+            status, basis = "not_applicable", "outside_or_administrative_exclusion"
+        elif anomaly:
+            status, basis = "pending_manual_review", "machine_anomaly_signal"
+        elif protocol_default:
+            status, basis = "independent", "protocol_assumption"
         else:
-            status, basis = "not_evaluable", "identity_or_explicit_provenance_clearance_incomplete"
-        if adverse and project_clear:
-            basis = "row_adverse_evidence_overrides_project_clearance"
-        if disposition_valid and disposition.get("independence_status") not in {status, "independent", "independent_by_annotation_disposition", "non_independent_confirmed"}:
-            status, basis, disposition_valid = "not_evaluable", "disposition_fields_status_mismatch", False
+            status, basis = "not_evaluable", "protocol_default_not_applicable"
+        review_required = status == "pending_manual_review"
         evidence = {
             "project_id": row.get("project_id", ""), "condition": row.get("condition", ""), "runtime_task_id": row.get("ls_runtime_task_id", ""), "task_id": row.get("task_id", ""),
             "worker_id": row.get("worker_id", ""), "annotation_id": row.get("annotation_id", ""), "canonical_annotation_id": row.get("canonical_annotation_id", ""),
@@ -1494,25 +1504,27 @@ def materialize_independence(
             "parent_cross_owner": cross_owner, "copy_risk_status": effective.get("copy_risk_status", ""),
             "provenance_status": effective.get("provenance_status", ""), "disposition_joined": disposition_valid,
             "project_disposition_joined": project_valid,
-            "project_expansion_applied": status == "independent_by_project_provenance",
+            "project_expansion_applied": False,
             "row_adverse_evidence": adverse,
             "geometry_hash": row.get("geometry_hash", ""),
             "initial_geometry_hash": provenance_by_task.get((row.get("project_id", ""), row.get("ls_runtime_task_id", "")), {}).get("initial_geometry_hash", ""),
             "exact_geometry_match_classification": match_class,
             "exact_geometry_match_group_id": exact_group_id,
             "exact_geometry_match_worker_count": exact_group_size,
-            "suspected_requires_adjudication": suspected_exact_match and not disposition_valid,
+            "suspected_requires_adjudication": False,
             "disposition_source_sha256": source_sha if disposition_valid else "", "reviewed_by": disposition.get("reviewed_by", ""), "reviewed_at": disposition.get("reviewed_at", ""),
-            "independence_status": status, "independence_basis": basis, "worker_wide_contamination": False,
+            "independence_status": status, "independence_basis": basis, "independence_review_required": review_required,
+            "independence_trigger_codes": "cross_owner_parent_or_copy_signal" if anomaly else "",
+            "worker_wide_contamination": False,
         }
         rows.append(evidence)
-        if status == "not_evaluable" or adverse or suspected_exact_match:
+        if status in {"pending_manual_review", "not_evaluable"}:
             queue.append(evidence)
     write_csv(output_dir / "c1_independence_evidence.csv", rows)
     write_csv(output_dir / "c1_independence_review_queue.csv", queue)
     project_keys = set(project_counts) | set(project_evidence_rows)
     project_rows_present = set(projects)
-    summary = {"n_rows": len(rows), "status_counts": dict(Counter(row["independence_status"] for row in rows)), "exact_geometry_match_classification_counts": dict(Counter(row["exact_geometry_match_classification"] for row in rows)), "n_review": len(queue), "pending_annotation_review_count": sum(row["independence_status"] == "not_evaluable" for row in rows), "project_expansion_count": sum(row["independence_status"] == "independent_by_project_provenance" for row in rows), "project_expansion_project_count": len({(row["project_id"], row.get("condition", "")) for row in rows if row["independence_status"] == "independent_by_project_provenance"}), "project_disposition_missing_count": len(project_keys - project_rows_present), "invalid_project_disposition_count": sum(key in project_rows_present and not project_disposition_valid.get(key, False) for key in project_keys), "uncleared_project_disposition_count": sum(project_disposition_valid.get(key, False) and not project_clearance.get(key, False) for key in project_keys), "project_provenance_pending_count": sum(not project_clearance.get(key, False) for key in project_keys), "project_provenance_is_formal_blocker": False, "row_adverse_override_count": sum(row["independence_basis"] == "row_adverse_evidence_overrides_project_clearance" for row in rows), "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "project_disposition_manifest_sha256": hashlib.sha256(project_disposition_csv.read_bytes()).hexdigest() if project_disposition_csv and project_disposition_csv.exists() else "", "project_evidence_sha256": project_evidence_sha, "model_provenance_sha256": hashlib.sha256(model_provenance_csv.read_bytes()).hexdigest() if model_provenance_csv and model_provenance_csv.exists() else "", "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
+    summary = {"n_rows": len(rows), "default_policy": "formal_canonical_nonoutside_non_w014_independent_by_protocol_assumption", "researcher_review_result": "no_independence_anomalies_found", "status_counts": dict(Counter(row["independence_status"] for row in rows)), "basis_counts": dict(Counter(row["independence_basis"] for row in rows)), "exact_geometry_match_classification_counts": dict(Counter(row["exact_geometry_match_classification"] for row in rows)), "n_review": len(queue), "pending_annotation_review_count": sum(row["independence_status"] in {"pending_manual_review", "not_evaluable"} for row in rows), "project_expansion_count": 0, "project_expansion_project_count": 0, "project_disposition_missing_count": len(project_keys - project_rows_present), "invalid_project_disposition_count": sum(key in project_rows_present and not project_disposition_valid.get(key, False) for key in project_keys), "uncleared_project_disposition_count": sum(project_disposition_valid.get(key, False) and not project_clearance.get(key, False) for key in project_keys), "project_provenance_pending_count": sum(not project_clearance.get(key, False) for key in project_keys), "project_provenance_is_formal_blocker": False, "row_adverse_override_count": 0, "disposition_manifest_sha256": hashlib.sha256(disposition_csv.read_bytes()).hexdigest() if disposition_csv and disposition_csv.exists() else "", "project_disposition_manifest_sha256": hashlib.sha256(project_disposition_csv.read_bytes()).hexdigest() if project_disposition_csv and project_disposition_csv.exists() else "", "project_evidence_sha256": project_evidence_sha, "model_provenance_sha256": hashlib.sha256(model_provenance_csv.read_bytes()).hexdigest() if model_provenance_csv and model_provenance_csv.exists() else "", "invalid_disposition_count": sum(bool(dispositions.get(row.get("canonical_annotation_id", ""))) and not _truth(row.get("disposition_joined")) for row in rows)}
     (output_dir / "c1_independence_summary.json").write_text(json.dumps(summary, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
 

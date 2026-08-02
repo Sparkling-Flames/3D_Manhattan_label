@@ -1792,8 +1792,10 @@ def main(argv: list[str] | None = None) -> int:
     audit.add_argument("--collection-closure-manifest", type=Path, required=True)
     audit.add_argument("--annotation-independence-disposition", dest="independence_disposition", type=Path)
     audit.add_argument("--scope-initial-review", type=Path, required=True)
-    for name in ("duplicate-adjudication", "structural-disposition", "project-independence-disposition", "scope-adjudication", "reference-amendment", "outside-assignment-disposition", "completion-disposition"):
+    for name in ("duplicate-adjudication", "structural-disposition", "scope-adjudication", "outside-assignment-disposition"):
         audit.add_argument(f"--{name}", type=Path, required=True)
+    for name in ("project-independence-disposition", "reference-amendment", "completion-disposition"):
+        audit.add_argument(f"--{name}", type=Path)
 
     finalize = sub.add_parser("finalize-c1")
     finalize.add_argument("--output-dir", type=Path, required=True)

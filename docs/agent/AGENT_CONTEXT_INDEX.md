@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v14 SHA-256 182ec9e22ed9c17f5f565bfa42a36da597720d5bdb0ccb53f6237dc512143439 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v15 SHA-256 24d4dd64ba6d1cc7af0ea5fa34ecb2b03940059a3125e7a6c030d00dc3a594b6 -->
 # Agent 上下文索引
 
 本索引用于快速定位 Codex 工作时应先读的上下文。路径已经按论文主线、论文 A 线 Manhattan、论文 B 线和共享 Label Studio 层拆分。

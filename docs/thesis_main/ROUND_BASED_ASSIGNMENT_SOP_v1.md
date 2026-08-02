@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v14 SHA-256 182ec9e22ed9c17f5f565bfa42a36da597720d5bdb0ccb53f6237dc512143439 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v15 SHA-256 24d4dd64ba6d1cc7af0ea5fa34ecb2b03940059a3125e7a6c030d00dc3a594b6 -->
 # Paper A Round-Based Assignment SOP v1
 
 本 SOP 只消费当前方法合同，不定义独立的机器字段、eligibility 或统计语义。正式机器真源为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`。
@@ -46,6 +46,8 @@ timing_status=not_evaluable
 ```
 
 W034 的 17 张 authorized replacement 须通过原 sentinel，或通过 SHA 绑定的事前人工确认回溯声明并逐项通过统一 task-worker 日志审计。回溯路径只能标为 `eligible_with_protocol_deviation`，不得伪装成 fully verified sentinel；无日期证据时记录 `time_basis=operator_recollection`、`timestamp_precision=unavailable`。Timing 是 worker profile 的辅助 operational 字段，不影响 `Q_GT`、`R_peer`、`F_struct`、正式 worker eligibility/rank、C2-B roster、T1 分配或 V1 路由；不得补零、估算或以 `lead_time` 作逐行 fallback。每次 rehearsal 的具体 worker、行数和原因以当次 audit 输出为准，不在 SOP 中硬编码。
+
+Independence 按异常例外审计：正式 assignment、canonical 有效、非 outside、非 W014 且 duplicate 已解决的行默认 `independent` / `protocol_assumption`。机器只能生成 `pending_manual_review`，不得自动判定复制或排除；几何完全相同单独只是诊断标记。普通 completion 直接由冻结 assignment/export 计算，仅例外需人工处置。Public GT 默认按现有 SHA 版本使用，只在研究者明确声明 GT 问题时启动 amendment。
 
 ## 6. closeout 与 Stage 3
 

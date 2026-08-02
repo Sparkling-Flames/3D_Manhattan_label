@@ -609,6 +609,10 @@ def materialize(
     estimand_ready = bool(outcome_rows) and all(bool(row["estimand_specific_closeout_ready"]) for row in outcome_rows)
     scope_disposition_frozen = not use_scope_workflow or valid_supplied
     summary = {
+        "reference_policy": "use_existing_public_gt_as_is",
+        "gt_issue_declared": bool(reference_amendment and amendments),
+        "correction_count": len(amendments),
+        "review_policy": "amend_only_when_researcher_explicitly_declares_gt_issue",
         "n_task_contexts": len(audit), "n_resolved_contexts": sum(row["adjudication_status"] == "resolved" for row in outcome_rows),
         "n_pending_contexts": sum(row["task_outcome_status"] == "pending" for row in audit),
         "n_gt_quality_evaluable": sum(bool(row["quality_evaluable"]) for row in quality),

@@ -474,6 +474,7 @@ def materialize(
         active_log=snapshots / "active_logs", output_dir=output_dir,
         require_complete=False, input_status=input_status,
         duplicate_adjudication_csv=review_snapshots.get("duplicate_adjudication"),
+        independence_audit_csv=review_snapshots.get("annotation_independence_disposition"),
         authorized_reassignment_manifest=review_snapshots.get("authorized_reassignment_manifest"),
         late_entry_assignment_manifest=review_snapshots.get("late_entry_assignment_manifest"),
         w034_active_time_validation_manifest=review_snapshots.get("w034_active_time_validation_manifest"),

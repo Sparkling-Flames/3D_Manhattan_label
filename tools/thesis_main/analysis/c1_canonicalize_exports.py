@@ -589,6 +589,13 @@ def build_canonicalization(
         original_assignment = key in assigned
         authorized_assignment = bool(replacement)
         late_entry_assignment = bool(late_entry)
+        if (
+            not audit and not group_risk and identity not in independence_duplicates
+            and (original_assignment or authorized_assignment or late_entry_assignment)
+            and _worker_number(worker_id) != "14"
+            and safe(row.get("duplicate_review_status")) != "pending"
+        ):
+            audit_status, audit_reason = "independent", "protocol_assumption"
         try:
             session_count = int(row.get("active_time_session_count") or 0)
         except (TypeError, ValueError):
