@@ -42,6 +42,10 @@
 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json` 鏄敮涓€瑙勮寖鏂规硶鐪熸簮锛涘悓鐩綍淇濆瓨鐢熸垚 MD 鍜屼簲涓?v2 schema銆傚叡浜獙璇併€乬eometry銆丼tage 3銆乀1/V1 online/replay 宸ュ叿浣嶄簬 `tools/thesis_main/analysis/`銆?
 - docs/thesis_main/PAPER_A_REFERENCES_NEEDED_CHECKLIST.md锛氱浉鍏冲伐浣滀笌寮曠敤鏍搁獙寰呭姙锛涗笉鏋勬垚鏂规硶鍚堝悓銆?
 
+## 2026-08-02 C2 closeout repair
+
+- `tools/thesis_main/analysis/materialize_c2a_rp_closeout.py`：C2-A-RP 正式零任务/追加任务 closeout 与方法合同、输入工件 SHA 绑定。
+
 ## 2026-08-02 C2-B pre-dispatch amendment
 
 - `docs/thesis_main/C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json`：v17 绑定的 D8/D10/D12 统一候选生成与 gate 语义修订；不改变数值阈值。

@@ -14,6 +14,7 @@ if str(_PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(_PROJECT_ROOT))
 
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, safe, truthy, write_csv, write_json
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
@@ -34,6 +35,30 @@ C2A_ASSIGNMENT_FIELDS = [
 ]
 
 
+def _c2a_rp_limits() -> tuple[int, int, str]:
+    method = load_method_contract()
+    max_tasks = int(method["c2"]["c2_a_rp_max_tasks_per_worker"])
+    if max_tasks != 4 or max_tasks < 0 or max_tasks % 2:
+        raise ValueError(f"invalid normative C2-A-RP cap:{max_tasks}")
+    return max_tasks, max_tasks // 2, sha256_file(METHOD_CONTRACT)
+
+
+def _validate_c2a_rp_counts(
+    additional_blocks: int,
+    ordinary_tasks: int,
+    stress_tasks: int,
+    *,
+    max_tasks: int,
+    max_additional_blocks: int,
+) -> None:
+    if not 0 <= additional_blocks <= max_additional_blocks:
+        raise ValueError("C2-A-RP additional blocks exceed the normative cap")
+    if ordinary_tasks != stress_tasks or ordinary_tasks != additional_blocks:
+        raise ValueError("C2-A-RP requires one ordinary and one stress task per block")
+    if 2 * additional_blocks > max_tasks:
+        raise ValueError("C2-A-RP tasks exceed the normative per-worker cap")
+
+
 def _number(row: dict[str, str], *fields: str) -> float | None:
     for field in fields:
         value = safe(row.get(field))
@@ -49,6 +74,9 @@ def build_precision_plan(
     max_additional_blocks: int,
     manifest_sha: str,
 ) -> list[dict[str, Any]]:
+    max_tasks, contract_max_blocks, _method_sha = _c2a_rp_limits()
+    if max_additional_blocks < 0 or max_additional_blocks > contract_max_blocks:
+        raise ValueError("design manifest max_additional_blocks exceeds the normative C2-A-RP cap")
     out = []
     for row in sorted(worker_rows, key=lambda value: safe(value.get("worker_id"))):
         worker = safe(row.get("worker_id"))
@@ -70,6 +98,10 @@ def build_precision_plan(
             if projected > target_half_width:
                 reason = "target_not_met_at_frozen_cap"
         met = not reason and projected is not None and projected <= target_half_width
+        _validate_c2a_rp_counts(
+            blocks, blocks, blocks,
+            max_tasks=max_tasks, max_additional_blocks=contract_max_blocks,
+        )
         out.append({
             "worker_id": worker,
             "target_component": safe(row.get("target_component") or row.get("component_id")) or "risk_slope",
@@ -101,6 +133,14 @@ def build_precision_assignments(
     selection_seed: int = 0,
     require_explicit_eligibility: bool = False,
 ) -> list[dict[str, Any]]:
+    max_tasks, contract_max_blocks, _method_sha = _c2a_rp_limits()
+    if max_task_support < 1:
+        raise ValueError("C2-A-RP max_task_support must be positive")
+    for plan in precision_rows:
+        _validate_c2a_rp_counts(
+            int(plan["additional_blocks"]), int(plan["ordinary_tasks"]), int(plan["stress_tasks"]),
+            max_tasks=max_tasks, max_additional_blocks=contract_max_blocks,
+        )
     pools: dict[str, list[dict[str, str]]] = {"ordinary": [], "stress": []}
     for task in task_rows:
         stratum = safe(task.get("task_stratum") or task.get("risk_bucket")).lower()
@@ -119,6 +159,10 @@ def build_precision_assignments(
             safe(history.get("task_id")), safe(history.get("base_task_id")),
         )))
     task_support: dict[str, int] = defaultdict(int)
+    for history in history_rows or []:
+        task_id = safe(history.get("task_id"))
+        if task_id:
+            task_support[task_id] += 1
     for plan in precision_rows:
         worker = safe(plan.get("worker_id"))
         sequence = 0
@@ -139,13 +183,15 @@ def build_precision_assignments(
                 eligible_count = len(eligible)
                 task = eligible.pop(rng.randrange(eligible_count))
                 task_id = safe(task.get("task_id"))
+                base_task_id = safe(task.get("base_task_id")) or task_id
                 support_before = task_support[task_id]
                 task_support[task_id] += 1
+                seen_by_worker[worker].update((task_id, base_task_id))
                 sequence += 1
                 assignments.append({
                     "round_id": "C2-A-RP", "worker_id": worker,
                     "task_id": safe(task.get("task_id")),
-                    "base_task_id": safe(task.get("base_task_id")) or safe(task.get("task_id")),
+                    "base_task_id": base_task_id,
                     "task_stratum": stratum, "assignment_sequence": sequence,
                     "c2_component": "precision_completion",
                     "target_component": plan["target_component"],
@@ -213,6 +259,9 @@ def materialize(
     max_blocks = int(precision["max_additional_blocks"])
     if target <= 0 or max_blocks < 0:
         raise ValueError("precision target must be positive and max_additional_blocks non-negative")
+    max_tasks, contract_max_blocks, method_sha = _c2a_rp_limits()
+    if max_blocks > contract_max_blocks:
+        raise ValueError("design manifest max_additional_blocks exceeds the normative C2-A-RP cap")
     if not binding_valid or not c2b_valid:
         if input_status == "formal":
             raise ValueError("stale_or_unbound_c2a_rp_dependency")
@@ -252,6 +301,11 @@ def materialize(
         "dependency_binding_valid": binding_valid and c2b_valid and task_pool_valid and history_valid,
         "c2b_summary_sha256": c2b_sha,
         "task_pool_sha256": sha256_file(task_pool_csv) if task_pool_csv else "",
+        "method_contract_version": load_method_contract()["contract_version"],
+        "method_contract_sha256": method_sha,
+        "c2_a_rp_max_tasks_per_worker": max_tasks,
+        "max_additional_blocks": max_blocks,
+        "max_task_support": int(precision.get("max_task_support", 2)),
         "n_workers": len(rows),
         "n_workers_with_precision_additions": sum(int(row["additional_blocks"]) > 0 for row in rows),
         "n_workers_unmet_at_cap": sum(bool(row["unmet_reason"]) for row in rows),

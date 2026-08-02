@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import materialize as materialize_c2a
+from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import build_precision_assignments, materialize as materialize_c2a
 from tools.thesis_main.analysis.materialize_c2b_closeout import materialize as materialize_c2b_closeout
 
 
@@ -70,7 +70,7 @@ def test_precision_adds_only_needed_paired_blocks_and_caps_uncertain(tmp_path: P
     design.write_text(json.dumps({
         "manifest_version": "c2_design_v1",
         "input_sha256": {"worker_profile_csv": _sha(profile)},
-        "precision": {"target_ci_half_width": 0.15, "max_additional_blocks": 3},
+        "precision": {"target_ci_half_width": 0.15, "max_additional_blocks": 2},
     }), encoding="utf-8")
     pool = tmp_path / "c2a_pool.csv"
     _csv(pool, ["task_id", "base_task_id", "task_stratum", "c2a_rp_eligible"], [
@@ -84,10 +84,10 @@ def test_precision_adds_only_needed_paired_blocks_and_caps_uncertain(tmp_path: P
 
     assert rows["met"]["additional_blocks"] == "0"
     assert rows["fillable"]["ordinary_tasks"] == rows["fillable"]["stress_tasks"] == "2"
-    assert rows["capped"]["additional_blocks"] == "3"
+    assert rows["capped"]["additional_blocks"] == "2"
     assert rows["capped"]["routing_eligibility"] == "uncertain_fallback_global"
     assert rows["capped"]["unmet_reason"] == "target_not_met_at_frozen_cap"
-    assert len(assignments) == 10
+    assert len(assignments) == 8
     assert {(row["worker_id"], row["task_stratum"]) for row in assignments} == {
         ("fillable", "ordinary"), ("fillable", "stress"),
         ("capped", "ordinary"), ("capped", "stress"),
@@ -97,10 +97,64 @@ def test_precision_adds_only_needed_paired_blocks_and_caps_uncertain(tmp_path: P
     assert summary["modifies_c1"] is False
 
 
+def test_c2a_rp_manifest_cannot_override_four_task_contract_cap(tmp_path: Path) -> None:
+    profile = tmp_path / "post_c2b.csv"
+    _csv(profile, ["worker_id", "support", "ci_half_width"], [{"worker_id": "w1", "support": 8, "ci_half_width": 0.4}])
+    design = tmp_path / "design.json"
+    design.write_text(json.dumps({
+        "manifest_version": "c2_design_v1",
+        "input_sha256": {"worker_profile_csv": _sha(profile)},
+        "precision": {"target_ci_half_width": 0.15, "max_additional_blocks": 3},
+    }), encoding="utf-8")
+    with pytest.raises(ValueError, match="normative C2-A-RP cap"):
+        materialize_c2a(profile, design, tmp_path / "out")
+
+
+def test_c2a_task_support_cap_counts_prior_assignment_history() -> None:
+    with pytest.raises(ValueError, match="insufficient C2-A-RP ordinary tasks"):
+        build_precision_assignments(
+            [{"worker_id": "w1", "additional_blocks": 1, "ordinary_tasks": 1, "stress_tasks": 1, "current_ci_half_width": .2, "current_support": 8, "target_component": "risk_slope", "gap_reason": "target_not_met"}],
+            [{"task_id": "o1", "base_task_id": "o1", "task_stratum": "ordinary"}, {"task_id": "s1", "base_task_id": "s1", "task_stratum": "stress"}],
+            manifest_sha="m", c2b_sha="c", profile_sha="p",
+            history_rows=[{"worker_id": "w9", "task_id": "o1", "base_task_id": "o1"}],
+            max_task_support=1,
+        )
+
+
+def test_c2a_assignment_rejects_current_cross_stratum_base_reuse() -> None:
+    with pytest.raises(ValueError, match="insufficient C2-A-RP stress tasks"):
+        build_precision_assignments(
+            [{"worker_id": "w1", "additional_blocks": 1, "ordinary_tasks": 1, "stress_tasks": 1, "current_ci_half_width": .2, "current_support": 8, "target_component": "risk_slope", "gap_reason": "target_not_met"}],
+            [{"task_id": "o1", "base_task_id": "same", "task_stratum": "ordinary"}, {"task_id": "s1", "base_task_id": "same", "task_stratum": "stress"}],
+            manifest_sha="m", c2b_sha="c", profile_sha="p",
+        )
+
+
+@pytest.mark.parametrize("blocks", [0, 1, 2])
+def test_c2a_rp_legal_block_counts_materialize_paired_tasks(blocks: int) -> None:
+    plan = [{
+        "worker_id": "w1", "additional_blocks": blocks,
+        "ordinary_tasks": blocks, "stress_tasks": blocks,
+        "current_ci_half_width": .2, "current_support": 8,
+        "target_component": "risk_slope", "gap_reason": "target_not_met",
+    }]
+    tasks = [
+        {"task_id": f"ordinary-{index}", "base_task_id": f"ordinary-{index}", "task_stratum": "ordinary"}
+        for index in range(2)
+    ] + [
+        {"task_id": f"stress-{index}", "base_task_id": f"stress-{index}", "task_stratum": "stress"}
+        for index in range(2)
+    ]
+    assignments = build_precision_assignments(plan, tasks, manifest_sha="m", c2b_sha="c", profile_sha="p")
+    assert len(assignments) == 2 * blocks
+    assert sum(row["task_stratum"] == "ordinary" for row in assignments) == blocks
+    assert sum(row["task_stratum"] == "stress" for row in assignments) == blocks
+
+
 def test_formal_c2a_requires_bound_c2b_sha_and_real_task_pool(tmp_path: Path) -> None:
     profile = tmp_path / "post_c2b.csv"
-    _csv(profile, ["worker_id", "support", "ci_half_width"], [
-        {"worker_id": "w1", "support": 8, "ci_half_width": 0.18},
+    _csv(profile, ["worker_id", "support", "ci_half_width", "profile_version", "cohort_id", "Q_GT_profile_status", "R_peer_profile_status", "F_struct_profile_status", "c1_risk_slope_status", "completion_status"], [
+        {"worker_id": "w1", "support": 8, "ci_half_width": 0.18, "profile_version": "p1", "cohort_id": "c1", "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated", "F_struct_profile_status": "estimated", "c1_risk_slope_status": "estimated", "completion_status": "completed"},
     ])
     pool = tmp_path / "pool.csv"
     _csv(pool, ["task_id", "base_task_id", "task_stratum", "c2a_rp_eligible"], [
@@ -170,7 +224,7 @@ def test_c2b_closeout_materializes_real_post_profile_sha_chain(tmp_path: Path) -
     design = tmp_path / "c2b_design.summary.json"
     manifest = tmp_path / "post_profile.manifest.json"
     submissions.write_text("task_id,worker_id\nt1,w1\n", encoding="utf-8")
-    profile.write_text("worker_id,risk_slope_se\nw1,0.1\n", encoding="utf-8")
+    profile.write_text("worker_id,risk_slope_se,profile_version,cohort_id,Q_GT_profile_status,R_peer_profile_status,F_struct_profile_status,c1_risk_slope_status,completion_status\nw1,0.1,p1,c1,estimated,estimated,estimated,estimated,completed\n", encoding="utf-8")
     design.write_text(json.dumps({
         "c2b_design_ready": True, "launch_ready": True, "candidate_only": False,
         "design_manifest_sha256": "a" * 64
