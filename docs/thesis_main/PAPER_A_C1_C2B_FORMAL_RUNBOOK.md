@@ -84,6 +84,35 @@ Current closeout policy: independence defaults from the formal protocol and only
 
 Formal C2-B binding supplies one planned import and one runtime export per frozen deployment; repeat the append-style arguments for every deployment and pass the frozen deployment manifest.
 
+## 4A. D8 v17 to v18 repackage (migration only)
+
+The historical D8 v17 single-deployment launch report and the two v17 imports are
+source evidence only. Do not run `build-c2b` for this migration and do not
+overwrite any v17 file. Supply an explicit deployment configuration containing
+the actual Label Studio project IDs and server instances:
+
+```powershell
+& $py tools/thesis_main/analysis/run_c1_closeout_launch.py repackage-c2b-v17-to-v18 `
+  --legacy-root analysis_results/c2b_build_20260802_v17_d8 `
+  --worker-language-source <FROZEN_WORKER_LANGUAGE_ROSTER.csv> `
+  --deployment-config <C2B_MIGRATION_DEPLOYMENT_CONFIG.json> `
+  --output-dir analysis_results/c2b_migration_20260803_v17_to_v18_d8 `
+  --target-import-dir import_json/c2b
+```
+
+This command preserves D8, the frozen task pool, `planned_task_id`, and all 176
+assignment rows. It creates `c2b_selected_design_manifest_D8_v18.json`,
+`c2b_worker_language_registry_v1.json`,
+`c2b_worker_deployment_manifest_v1.json`,
+`c2b_v17_to_v18_assignment_mapping.csv`,
+`c2b_v17_to_v18_repackage_envelope_v1.json`, and the v4
+`c2b_launch_ready_report.json`, together with the new
+`c2b_D8_batch_a_import_zh_v18.json` and
+`c2b_D8_batch_a_import_foreign_https_v18.json`. A static
+`launch_ready=true` report is not runtime/formal ready; after manual import and
+export, the binder must additionally produce
+`c2b_v17_to_v18_runtime_evidence_v1.json`.
+
 ## 5. Bind runtime mapping after manual import
 
 ```powershell

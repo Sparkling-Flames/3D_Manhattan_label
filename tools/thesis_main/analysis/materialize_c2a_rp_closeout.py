@@ -329,15 +329,25 @@ def materialize(
     expected_workers = {worker for worker, row in plan_by_worker.items() if _int(row, "additional_blocks")}
     if set(assignment_by_worker) != expected_workers:
         raise ValueError("C2-A-RP assignments do not match the precision plan")
+    dispatched_blocks_by_worker = {
+        worker: max((_int(item, "block_index") for item in rows), default=0)
+        for worker, rows in assignment_by_worker.items()
+    }
     for worker, row in plan_by_worker.items():
         rows = assignment_by_worker.get(worker, [])
-        expected = 2 * _int(row, "additional_blocks")
+        planned_blocks = _int(row, "additional_blocks")
+        dispatched_blocks = dispatched_blocks_by_worker.get(worker, 0)
+        if planned_blocks == 0 and rows:
+            raise ValueError(f"C2-A-RP zero-block worker received assignments:{worker}")
+        if planned_blocks and (not rows or dispatched_blocks < 1 or dispatched_blocks > planned_blocks):
+            raise ValueError(f"C2-A-RP assignment block sequence is incomplete:{worker}")
+        expected = 2 * dispatched_blocks
         if len(rows) != expected:
             raise ValueError(f"C2-A-RP assignment count mismatch:{worker}")
         counts = Counter(_text(item.get("task_stratum") or item.get("risk_bucket")).lower() for item in rows)
-        if counts["ordinary"] != counts["stress"] or counts["ordinary"] != _int(row, "additional_blocks"):
+        if counts["ordinary"] != counts["stress"] or counts["ordinary"] != dispatched_blocks:
             raise ValueError(f"C2-A-RP ordinary/stress pairing mismatch:{worker}")
-        for block_index in range(1, _int(row, "additional_blocks") + 1):
+        for block_index in range(1, dispatched_blocks + 1):
             block_counts = assignment_strata.get((worker, block_index), Counter())
             if block_counts["ordinary"] != 1 or block_counts["stress"] != 1:
                 raise ValueError(f"C2-A-RP block pairing mismatch:{worker}:{block_index}")
@@ -374,7 +384,6 @@ def materialize(
     plan_workers = set(plan_by_worker)
     evidence_records: list[dict[str, Any]] = []
     evidence_keys: set[tuple[str, str]] = set()
-    actual_slopes: dict[str, dict[str, Any]] = {}
     block_reestimates: dict[int, dict[str, dict[str, Any]]] = {}
     complete_nonzero_workers = [
         worker for worker, row in plan_by_worker.items()
@@ -408,7 +417,6 @@ def materialize(
                 if c2a_task_blocks.get((row["worker_id"], row["task_id"]), 0) <= block_index
             ]
             block_reestimates[block_index] = _actual_worker_slope(cumulative)
-        actual_slopes = block_reestimates.get(max_observed_block, {})
     elif risk_slope_evidence_csv is not None:
         evidence_records, evidence_keys = _risk_slope_evidence(risk_slope_evidence_csv, plan_workers)
         evidence_records = [
@@ -422,10 +430,12 @@ def materialize(
     n_workers_target_met = 0
     n_workers_fallback = 0
     n_workers_not_evaluable = 0
+    n_workers_pending = 0
     for worker in sorted(plan_workers):
         plan_row = plan_by_worker[worker]
         profile = profile_by_worker[worker]
-        blocks = _int(plan_row, "additional_blocks")
+        planned_blocks = _int(plan_row, "additional_blocks")
+        blocks = dispatched_blocks_by_worker.get(worker, 0)
         target = _float(plan_row, "target_ci_half_width")
         declared_support = _float(plan_row, "declared_support_after", "support_after", "current_support")
         assigned_rows = assignment_by_worker.get(worker, [])
@@ -454,7 +464,7 @@ def materialize(
         elif any(key not in evidence_keys for key in assigned_keys):
             reason = "submitted_task_not_canonical_risk_eligible"
         else:
-            actual = actual_slopes.get(worker, {})
+            actual = block_reestimates.get(blocks, {}).get(worker, {})
             estimate, se, ci_half_width = actual.get("estimate"), actual.get("se"), actual.get("ci_half_width")
             for block_index in range(1, blocks + 1):
                 block = block_reestimates.get(block_index, {}).get(worker, {})
@@ -471,9 +481,10 @@ def materialize(
                 n_workers_target_met += 1
             else:
                 reason = "target_not_met_at_actual_reestimate" if ci_half_width is not None else "risk_slope_reestimate_not_evaluable"
-                if blocks < max_blocks and ci_half_width is not None:
-                    raise ValueError("C2-A-RP requires another block after the actual re-estimate")
-        if state != "target_met":
+                if blocks < planned_blocks and ci_half_width is not None:
+                    state = "awaiting_next_block"
+                    n_workers_pending += 1
+        if state != "target_met" and state != "awaiting_next_block":
             if reason in {"incomplete_block_terminalized", "risk_slope_reestimate_not_evaluable", "zero_block_not_evaluable"} or "not_evaluable" in reason or "terminalized" in reason:
                 state = "not_evaluable"
                 n_workers_not_evaluable += 1
@@ -487,6 +498,7 @@ def materialize(
         worker_outcomes.append({
             "worker_id": worker,
             "additional_blocks": blocks,
+            "planned_additional_blocks": planned_blocks,
             "terminal_state": state,
             "target_component": "risk_slope",
             "target_ci_half_width": target,
@@ -506,8 +518,8 @@ def materialize(
             "reestimate_history": reestimate_history,
         })
 
-    if n_workers_target_met + n_workers_fallback + n_workers_not_evaluable != len(plan_workers):
-        raise ValueError("C2-A-RP worker terminal states are not mutually exclusive or complete")
+    if n_workers_target_met + n_workers_fallback + n_workers_not_evaluable + n_workers_pending != len(plan_workers):
+        raise ValueError("C2-A-RP worker states are not mutually exclusive or complete")
 
     summary = {
         "schema_version": "c2a_rp_closeout_v2",
@@ -529,6 +541,7 @@ def materialize(
         "n_workers_target_met": n_workers_target_met,
         "n_workers_fallback": n_workers_fallback,
         "n_workers_not_evaluable": n_workers_not_evaluable,
+        "n_workers_pending": n_workers_pending,
         "worker_outcomes": worker_outcomes,
         "support_discrepancies": support_discrepancies,
         "risk_slope_evidence_path": str(risk_slope_evidence_csv or ""),
@@ -541,7 +554,7 @@ def materialize(
             {"worker_id": worker, "task_id": task, **missing_dispositions[(worker, task)]}
             for worker, task in sorted(missing)
         ],
-        "closure_reason": "all_precision_targets_met_or_unsupported_adjustments_fallback" if not assignments else "all_assigned_tasks_completed_or_terminalized_at_frozen_cap",
+        "closure_reason": "awaiting_next_block" if n_workers_pending else "all_precision_targets_met_or_unsupported_adjustments_fallback" if not assignments else "all_assigned_tasks_completed_or_terminalized_at_frozen_cap",
         "precision_plan_path": str(precision_plan_csv),
         "precision_plan_sha256": sha256_file(precision_plan_csv),
         "assignment_manifest_path": str(assignment_manifest_csv),
@@ -556,7 +569,9 @@ def materialize(
         "c2b_closeout_sha256": sha256_file(c2b_closeout),
         "terminal_disposition_path": str(terminal_disposition_csv or ""),
         "terminal_disposition_sha256": sha256_file(terminal_disposition_csv) if terminal_disposition_csv else "",
-        "blockers": [],
+        "dispatch_status": "awaiting_next_block" if n_workers_pending else "closed",
+        "next_block_index": min((blocks + 1 for worker, blocks in dispatched_blocks_by_worker.items() if blocks < _int(plan_by_worker[worker], "additional_blocks")), default=0),
+        "blockers": ["awaiting_next_block"] if n_workers_pending else [],
         "dependencies": [
             _dependency("C2A_PRECISION_PLAN", precision_plan_csv),
             _dependency("C2A_ASSIGNMENT_MANIFEST", assignment_manifest_csv),
@@ -572,6 +587,9 @@ def materialize(
     if risk_slope_evidence_csv:
         summary["dependencies"].append(_dependency("C2A_RISK_SLOPE_EVIDENCE", risk_slope_evidence_csv))
     output_json.parent.mkdir(parents=True, exist_ok=True)
+    if n_workers_pending:
+        summary["formal_ready"] = False
+        summary["C2_A_RP_CLOSED"] = False
     output_json.write_text(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return summary
 

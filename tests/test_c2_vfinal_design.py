@@ -9,6 +9,7 @@ import pytest
 
 from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import build_precision_assignments, materialize as materialize_c2a
 from tools.thesis_main.analysis.materialize_c2b_closeout import materialize as materialize_c2b_closeout
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 
 
 def _csv(path: Path, fields: list[str], rows: list[dict]) -> None:
@@ -36,23 +37,29 @@ def _closeout_dependencies(tmp_path: Path, manifest_data: dict) -> tuple[Path, P
     paths[1].write_text("task_id,worker_id,c2_component,assignment_batch_id\nt1,w1,common_anchor,C2B_BATCH_A\n", encoding="utf-8")
     assignment_sha = _sha(paths[1])
     planned = tmp_path / "planned.json"
-    planned.write_text(json.dumps([{"data": {"planned_task_id": "t1"}}]), encoding="utf-8")
+    planned.write_text(json.dumps([{"data": {"planned_task_id": "t1", "deployment_id": "zh", "language_group": "Chinese", "server_instance_id": "server-zh", "project_id": "project-zh", "c2b_batch_id": "C2B_BATCH_A", "selected_design_sha": "design-sha"}}]), encoding="utf-8")
     deployment_manifest = tmp_path / "deployment_manifest.json"
     deployment_manifest.write_text(json.dumps({
-        "schema_version": "c2b_worker_deployment_manifest_v1", "deployments": [{
+        "schema_version": "c2b_worker_deployment_manifest_v1", "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": _sha(METHOD_CONTRACT), "assignment_batch_id": "C2B_BATCH_A", "assignment_sha256": assignment_sha, "deployments": [{
             "deployment_id": "zh", "language_group": "Chinese", "server_instance_id": "server-zh",
-            "project_id": "project-zh", "worker_ids": ["w1"],
+            "project_id": "project-zh", "server_url": "https://example.test", "worker_registry_sha256": "r" * 64, "worker_ids": ["w1"],
+            "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": _sha(METHOD_CONTRACT),
+            "assignment_sha256": assignment_sha, "selected_design_sha": "design-sha",
             "planned_import_path": str(planned), "planned_import_sha256": _sha(planned),
         }],
     }), encoding="utf-8")
+    runtime_export = tmp_path / "runtime-export.json"
+    runtime_export.write_text(json.dumps([{"id": "runtime-t1", "data": {"planned_task_id": "t1", "deployment_id": "zh", "language_group": "Chinese", "server_instance_id": "server-zh", "project_id": "project-zh", "c2b_batch_id": "C2B_BATCH_A", "selected_design_sha": "design-sha"}}]), encoding="utf-8")
+    runtime_mapping = tmp_path / "runtime_mapping.csv"
+    runtime_mapping.write_text("worker_id,planned_task_id,runtime_task_id\n", encoding="utf-8")
     contents = [
         json.dumps({"schema_version": "paper_a_c1_batch_analysis_snapshot_v1", "status": "formal_design_eligible", "C2B_DESIGN_INPUT_FROZEN_FROM_C1_A": True}),
         None,
         "worker_id\nw1\n",
         json.dumps({"min_common_anchor_per_worker": 1, "min_bridge_per_worker": 0, "min_task_support": 1}),
-        json.dumps({"schema_version": "paper_a_c2b_launch_ready_report_v4", "C2B_LAUNCH_READY": True, "assignment_batch_id": "C2B_BATCH_A", "assignment_sha256": assignment_sha, "deployment_manifest_path": str(deployment_manifest), "deployment_manifest_sha256": _sha(deployment_manifest), "deployments": [{"deployment_id": "zh", "language_group": "Chinese", "server_instance_id": "server-zh", "project_id": "project-zh", "planned_import_path": str(planned), "planned_import_sha256": _sha(planned)}]}),
-        json.dumps({"formal_ready": True, "C2B_RUNTIME_BINDING_READY": True, "assignment_batch_id": "C2B_BATCH_A"}),
-        json.dumps({"formal_ready": True, "private_assignment_list_audit_passed": True, "assignment_batch_id": "C2B_BATCH_A", "assignment_manifest_sha256": assignment_sha}),
+        json.dumps({"schema_version": "paper_a_c2b_launch_ready_report_v4", "C2B_LAUNCH_READY": True, "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": _sha(METHOD_CONTRACT), "assignment_batch_id": "C2B_BATCH_A", "assignment_sha256": assignment_sha, "selected_design_sha": "design-sha", "deployment_manifest_path": str(deployment_manifest), "deployment_manifest_sha256": _sha(deployment_manifest), "deployments": [{"deployment_id": "zh", "language_group": "Chinese", "server_instance_id": "server-zh", "server_url": "https://example.test", "project_id": "project-zh", "worker_registry_sha256": "r" * 64, "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": _sha(METHOD_CONTRACT), "assignment_sha256": assignment_sha, "selected_design_sha": "design-sha", "planned_import_path": str(planned), "planned_import_sha256": _sha(planned)}]}),
+        json.dumps({"schema_version": "paper_a_c2b_runtime_mapping_audit_v2", "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": _sha(METHOD_CONTRACT), "formal_ready": True, "C2B_RUNTIME_BINDING_READY": True, "assignment_batch_id": "C2B_BATCH_A", "selected_design_sha": "design-sha", "deployment_manifest_sha256": _sha(deployment_manifest), "deployment_ids": ["zh"], "planned_import_sha256": {"zh": _sha(planned)}, "runtime_export_sha256": {"zh": _sha(runtime_export)}, "runtime_mapping_sha256": _sha(runtime_mapping), "runtime_task_count": 1, "runtime_task_count_by_deployment": {"zh": 1}, "worker_task_binding_count": 1, "dependencies": [{"role": "RUNTIME_MAPPING", "path": str(runtime_mapping), "sha256": _sha(runtime_mapping)}, {"role": "PLANNED_IMPORT_zh", "path": str(planned), "sha256": _sha(planned)}, {"role": "RUNTIME_EXPORT_zh", "path": str(runtime_export), "sha256": _sha(runtime_export)}]}),
+        json.dumps({"schema_version": "paper_a_c2b_private_assignment_list_audit_v2", "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": _sha(METHOD_CONTRACT), "formal_ready": True, "private_assignment_list_audit_passed": True, "assignment_batch_id": "C2B_BATCH_A", "assignment_manifest_sha256": assignment_sha, "worker_distribution_sha256": assignment_sha, "dependencies": [{"role": "ASSIGNMENT_MANIFEST", "path": str(paths[1]), "sha256": assignment_sha}, {"role": "WORKER_DISTRIBUTION", "path": str(paths[1]), "sha256": assignment_sha}]}),
     ]
     for path, content in zip(paths, contents):
         if content is not None:
@@ -138,6 +145,28 @@ def test_c2a_assignment_rejects_current_cross_stratum_base_reuse() -> None:
             [{"task_id": "o1", "base_task_id": "same", "task_stratum": "ordinary"}, {"task_id": "s1", "base_task_id": "same", "task_stratum": "stress"}],
             manifest_sha="m", c2b_sha="c", profile_sha="p",
         )
+
+
+def test_c2a_formal_dispatch_is_append_only_one_paired_block_at_a_time() -> None:
+    plan = [{
+        "worker_id": "w1", "additional_blocks": 2,
+        "ordinary_tasks": 2, "stress_tasks": 2,
+        "current_ci_half_width": .2, "current_support": 8,
+        "target_component": "risk_slope", "gap_reason": "target_not_met",
+    }]
+    tasks = [
+        {"task_id": f"ordinary-{index}", "base_task_id": f"ordinary-{index}", "task_stratum": "ordinary"}
+        for index in range(2)
+    ] + [
+        {"task_id": f"stress-{index}", "base_task_id": f"stress-{index}", "task_stratum": "stress"}
+        for index in range(2)
+    ]
+    first = build_precision_assignments(plan, tasks, manifest_sha="m", c2b_sha="c", profile_sha="p", dispatch_block_index=1, formal=True)
+    second = build_precision_assignments(plan, tasks, manifest_sha="m", c2b_sha="c", profile_sha="p", history_rows=first, dispatch_block_index=2, formal=True)
+    assert len(first) == len(second) == 2
+    assert {row["block_index"] for row in first} == {1}
+    assert {row["block_index"] for row in second} == {2}
+    assert not {(row["worker_id"], row["task_id"]) for row in first} & {(row["worker_id"], row["task_id"]) for row in second}
 
 
 @pytest.mark.parametrize("blocks", [0, 1, 2])

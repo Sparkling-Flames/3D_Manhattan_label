@@ -8,6 +8,7 @@ import hashlib
 import importlib.metadata
 import json
 import platform
+import shutil
 import subprocess
 import sys
 from collections import Counter
@@ -80,17 +81,39 @@ COMMAND_ARTIFACT_CONTRACT = {
         "requires": (("design-c2b", "c2_task_risk.summary.json"), ("design-c2b", "c2b_design.summary.json")),
         "outputs": ("assignment_manifest_C2B.csv", "c2b_launch_ready_report.json"),
     },
+    "repackage-c2b-v17-to-v18": {
+        "outputs": (
+            "c2b_selected_design_manifest_D8_v18.json",
+            "c2b_worker_language_registry_v1.json",
+            "c2b_worker_deployment_manifest_v1.json",
+            "c2b_v17_to_v18_assignment_mapping.csv",
+            "c2b_v17_to_v18_repackage_envelope_v1.json",
+            "c2b_launch_ready_report.json",
+        ),
+    },
     "bind-c2b-runtime-mapping": {"outputs": ("c2b_runtime_task_mapping.csv", "c2b_worker_task_binding_audit.json", "c2b_private_assignment_list_audit.json")},
     "check-command-contract": {"outputs": ()},
 }
 
 FORMAL_BATCH_COMMANDS = ("rehearse-c1", "freeze-c1-batch", "design-c2b", "build-c2b", "bind-c2b-runtime-mapping")
+MIGRATION_COMMANDS = ("repackage-c2b-v17-to-v18",)
+
+C2B_V17_METHOD_VERSION = "paper_a_method_20260802_v17"
+C2B_V17_METHOD_SHA256 = "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c"
+C2B_V17_D8_LAUNCH_SHA256 = "3429e45061b2dba8af314495b6286c2ea38db6e9574aefd77253d8ae4334ec88"
+C2B_V17_D8_ASSIGNMENT_SHA256 = "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c"
+C2B_V17_D8_SELECTED_MANIFEST_SHA256 = "1dea583ae7131170611ea22ceb1a7f8887ea9e4754dd89297a7fa2235631615f"
+C2B_D8_DESIGN_SHA256 = "f2b7cde8aadf29fb35a965ec49b434587feaa1c09863f74cf0e95e02e3462822"
+C2B_D8_DESIGN_MANIFEST_SHA256 = "92eb0b6a501a4af02b3379d10c01a6efa9e44153e9f44a748358dca50531d5ba"
+C2B_D8_TASK_POOL_SHA256 = "211ea4260415918104685440b07ce72fc17113b1764913c9215c554df901c067"
+C2B_V17_D8_IMPORT_ZH_SHA256 = "3a30a85eb541edc6f2ab12d3999b95b989e717a4bca5870a0de08b51b67069c1"
+C2B_V17_D8_IMPORT_FOREIGN_SHA256 = "037c1ed748c359c6a4a54deef377b7432f4c53f957c55a934c670ceb36678c53"
 
 
 def validate_runbook_command_contract(runbook: Path) -> dict[str, Any]:
     text = runbook.read_text(encoding="utf-8")
     missing = []
-    for command in FORMAL_BATCH_COMMANDS:
+    for command in (*FORMAL_BATCH_COMMANDS, *MIGRATION_COMMANDS):
         contract = COMMAND_ARTIFACT_CONTRACT[command]
         if command not in text:
             missing.append(f"missing_command:{command}")
@@ -189,6 +212,14 @@ def _write_worker_deployment_manifest(
     selected_design_sha: str,
     batch_id: str,
 ) -> Path:
+    method_identity = _method_identity()
+    for deployment in deployments:
+        deployment.update({
+            "method_contract_version": method_identity["method_contract_version"],
+            "method_contract_sha256": method_identity["method_contract_sha256"],
+            "assignment_sha256": sha256_file(assignment_path),
+            "selected_design_sha": selected_design_sha,
+        })
     payload = {
         "schema_version": "c2b_worker_deployment_manifest_v1",
         "artifact_role": "C2B_WORKER_DEPLOYMENT_MANIFEST_FROZEN",
@@ -262,6 +293,630 @@ def _materialize_c1_child_freeze(
 def _method_identity() -> dict[str, str]:
     method = load_method_contract()
     return {"method_contract_version": method["contract_version"], "method_contract_sha256": sha256_file(METHOD_CONTRACT)}
+
+
+def _canonical_payload_sha(payload: Any) -> str:
+    return hashlib.sha256(
+        json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest()
+
+
+def _read_json_object(path: Path) -> dict[str, Any]:
+    if not path.is_file():
+        raise FileNotFoundError(path)
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError(f"expected JSON object:{path}")
+    return payload
+
+
+def _write_json_new(path: Path, payload: dict[str, Any]) -> Path:
+    if path.exists():
+        raise ValueError(f"target artifact already exists:{path}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("x", encoding="utf-8", newline="\n") as stream:
+        stream.write(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
+    return path
+
+
+def _write_text_new(path: Path, text: str) -> Path:
+    if path.exists():
+        raise ValueError(f"target artifact already exists:{path}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("x", encoding="utf-8", newline="\n") as stream:
+        stream.write(text)
+    return path
+
+
+def _guard_repackage_targets(output_dir: Path, target_paths: list[Path]) -> None:
+    if output_dir.exists() and any(output_dir.iterdir()):
+        raise ValueError(f"target artifact already exists:{output_dir}")
+    existing = [str(path) for path in target_paths if path.exists()]
+    if existing:
+        raise ValueError("target artifact already exists:" + ",".join(existing))
+
+
+def _migration_language_group(value: Any) -> str:
+    token = str(value or "").strip().lower().replace("_", "-")
+    if token in {"chinese", "zh", "cn", "中文"}:
+        return "Chinese"
+    if token in {"english", "en", "foreign", "foreign-https", "海外", "英文"}:
+        return "English"
+    raise ValueError(f"unsupported C2-B language group:{value}")
+
+
+def _migration_source_rows(path: Path) -> list[dict[str, Any]]:
+    if path.suffix.lower() == ".json":
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        rows = payload.get("workers", payload.get("rows", payload)) if isinstance(payload, dict) else payload
+        if not isinstance(rows, list):
+            raise ValueError("C2-B worker language source JSON must contain workers")
+        return [row for row in rows if isinstance(row, dict)]
+    return [dict(row) for row in _read(path)]
+
+
+def _materialize_c2b_worker_language_registry(
+    assignment_rows: list[dict[str, str]],
+    source_path: Path,
+    *,
+    method_contract_version: str,
+    method_contract_sha256: str,
+) -> tuple[dict[str, Any], dict[str, str]]:
+    assigned_workers = {
+        normalize_worker_id(row.get("worker_id", ""))
+        for row in assignment_rows
+        if normalize_worker_id(row.get("worker_id", ""))
+    }
+    if not assigned_workers:
+        raise ValueError("C2-B assignment has no workers")
+    declared: dict[str, str] = {}
+    for row in _migration_source_rows(source_path):
+        worker = normalize_worker_id(row.get("worker_id") or row.get("public_worker_code") or row.get("worker"))
+        if not worker:
+            raise ValueError("C2-B language source contains an empty worker identity")
+        if worker in declared:
+            raise ValueError(f"C2-B language source contains duplicate worker:{worker}")
+        declared[worker] = _migration_language_group(row.get("language_group") or row.get("language"))
+    if not declared:
+        raise ValueError("C2-B language source is empty")
+    if not set(declared) <= assigned_workers:
+        raise ValueError("C2-B language source contains an unassigned worker")
+    chinese = {worker for worker, group in declared.items() if group == "Chinese"}
+    foreign_declared = {worker for worker, group in declared.items() if group == "English"}
+    foreign = assigned_workers - chinese
+    if foreign_declared and foreign_declared != foreign:
+        raise ValueError("C2-B language source disagrees with the assigned-worker complement")
+    if not chinese or not foreign:
+        raise ValueError("C2-B migration requires both Chinese and English assigned workers")
+    worker_groups = {
+        worker: ("Chinese" if worker in chinese else "English")
+        for worker in sorted(assigned_workers)
+    }
+    registry = {
+        "schema_version": "c2b_worker_language_registry_v1",
+        "artifact_role": "C2B_WORKER_LANGUAGE_REGISTRY_FROZEN",
+        "contract_role": "generated_subordinate",
+        "formal_ready": True,
+        "method_contract_version": method_contract_version,
+        "method_contract_sha256": method_contract_sha256,
+        "assignment_sha256": "",
+        "source_path": str(source_path.resolve()),
+        "source_sha256": sha256_file(source_path),
+        "language_assignment_rule": "Chinese source roster; assigned-worker complement is English",
+        "workers": [
+            {"worker_id": worker, "language_group": group}
+            for worker, group in worker_groups.items()
+        ],
+        "language_groups": sorted(set(worker_groups.values())),
+        "dependencies": [],
+    }
+    return registry, worker_groups
+
+
+def _load_migration_deployment_config(
+    path: Path,
+    worker_groups: dict[str, str],
+    source_imports: dict[str, Path],
+) -> list[dict[str, Any]]:
+    payload = _read_json_object(path)
+    if payload.get("schema_version") != "c2b_migration_deployment_config_v1":
+        raise ValueError("C2-B migration deployment config schema is invalid")
+    raw_deployments = payload.get("deployments")
+    if not isinstance(raw_deployments, list) or not raw_deployments:
+        raise ValueError("C2-B migration deployment config requires deployments")
+    normalized: list[dict[str, Any]] = []
+    seen_ids: set[str] = set()
+    seen_groups: set[str] = set()
+    seen_import_filenames: set[str] = set()
+    for raw in raw_deployments:
+        if not isinstance(raw, dict):
+            raise ValueError("C2-B migration deployment config contains a non-object")
+        deployment_id = str(raw.get("deployment_id", "")).strip()
+        language_group = _migration_language_group(raw.get("language_group"))
+        server_instance_id = str(raw.get("server_instance_id", "")).strip()
+        server_url = str(raw.get("server_url", "")).strip().rstrip("/")
+        project_id = str(raw.get("project_id", "")).strip()
+        if not deployment_id or not server_instance_id or not server_url or not project_id:
+            raise ValueError("C2-B migration deployment identity is incomplete")
+        if deployment_id in seen_ids or language_group in seen_groups:
+            raise ValueError("C2-B migration deployment IDs or language groups are duplicated")
+        seen_ids.add(deployment_id)
+        seen_groups.add(language_group)
+        source_path_value = raw.get("source_import_path")
+        source_path = source_imports[language_group]
+        if source_path_value:
+            candidate = Path(str(source_path_value))
+            if not candidate.is_absolute():
+                candidate = (_PROJECT_ROOT / candidate).resolve()
+            if candidate.resolve() != source_path.resolve():
+                raise ValueError(f"C2-B deployment source import disagrees with explicit source:{deployment_id}")
+        filename = str(raw.get("planned_import_filename", "")).strip()
+        if not filename:
+            suffix = "zh" if language_group == "Chinese" else "foreign_https"
+            filename = f"c2b_D8_batch_a_import_{suffix}_v18.json"
+        if Path(filename).name != filename or not filename.endswith(".json"):
+            raise ValueError(f"C2-B target import filename is unsafe:{filename}")
+        if filename in seen_import_filenames:
+            raise ValueError("C2-B migration target import filenames are duplicated")
+        seen_import_filenames.add(filename)
+        normalized.append({
+            "deployment_id": deployment_id,
+            "language_group": language_group,
+            "server_instance_id": server_instance_id,
+            "server_url": server_url,
+            "project_id": project_id,
+            "source_import_path": str(source_path.resolve()),
+            "planned_import_filename": filename,
+            "worker_ids": sorted(worker for worker, group in worker_groups.items() if group == language_group),
+        })
+    if seen_groups != set(worker_groups.values()) or seen_groups != {"Chinese", "English"}:
+        raise ValueError("C2-B migration deployment set does not cover the frozen language registry")
+    return normalized
+
+
+def _validate_v17_d8_sources(
+    launch_report_path: Path,
+    assignment_path: Path,
+    selected_manifest_path: Path,
+    import_paths: dict[str, Path],
+) -> tuple[dict[str, Any], list[dict[str, str]], dict[str, Any], dict[str, dict[str, Any]]]:
+    source_hashes = {
+        "launch_report": sha256_file(launch_report_path),
+        "assignment": sha256_file(assignment_path),
+        "selected_design_manifest": sha256_file(selected_manifest_path),
+        "import_zh": sha256_file(import_paths["Chinese"]),
+        "import_foreign": sha256_file(import_paths["English"]),
+    }
+    expected_hashes = {
+        "launch_report": C2B_V17_D8_LAUNCH_SHA256,
+        "assignment": C2B_V17_D8_ASSIGNMENT_SHA256,
+        "selected_design_manifest": C2B_V17_D8_SELECTED_MANIFEST_SHA256,
+        "import_zh": C2B_V17_D8_IMPORT_ZH_SHA256,
+        "import_foreign": C2B_V17_D8_IMPORT_FOREIGN_SHA256,
+    }
+    if source_hashes != expected_hashes:
+        raise ValueError(f"C2-B v17 D8 source SHA mismatch:{source_hashes}")
+    launch = _read_json_object(launch_report_path)
+    if any((launch.get(field) != value) for field, value in {
+        "schema_version": "paper_a_c2b_launch_ready_report_v3",
+        "method_contract_version": C2B_V17_METHOD_VERSION,
+        "method_contract_sha256": C2B_V17_METHOD_SHA256,
+        "assignment_batch_id": "C2B_BATCH_A",
+        "selected_design_id": "D8",
+        "selected_design_sha": C2B_D8_DESIGN_SHA256,
+        "selected_design_manifest_sha256": C2B_V17_D8_SELECTED_MANIFEST_SHA256,
+        "task_pool_sha256": C2B_D8_TASK_POOL_SHA256,
+        "assignment_sha256": C2B_V17_D8_ASSIGNMENT_SHA256,
+        "n_assignments": 176,
+        "n_workers": 22,
+        "n_tasks": 46,
+    }.items()):
+        raise ValueError("C2-B v17 launch report is not the frozen D8 source")
+    assignments = _read(assignment_path)
+    if any(not normalize_worker_id(row.get("worker_id", "")) or not str(row.get("task_id", "")).strip() for row in assignments):
+        raise ValueError("C2-B v17 D8 assignment contains an empty worker/task identity")
+    pairs = {(normalize_worker_id(row.get("worker_id", "")), str(row.get("task_id", "")).strip()) for row in assignments}
+    task_ids = {task for _worker, task in pairs if task}
+    workers = {worker for worker, _task in pairs if worker}
+    if len(assignments) != 176 or len(pairs) != 176 or len(workers) != 22 or len(task_ids) != 46:
+        raise ValueError("C2-B v17 D8 assignment cardinality changed")
+    if any(str(row.get("assignment_batch_id", "")).strip() != "C2B_BATCH_A" for row in assignments):
+        raise ValueError("C2-B v17 D8 assignment batch identity changed")
+    selected_manifest = _read_json_object(selected_manifest_path)
+    if any((selected_manifest.get(field) != value) for field, value in {
+        "schema_version": "paper_a_selected_c2b_design_manifest_v1",
+        "method_contract_version": C2B_V17_METHOD_VERSION,
+        "method_contract_sha256": C2B_V17_METHOD_SHA256,
+        "selected_design_id": "D8",
+        "selected_design_sha": C2B_D8_DESIGN_SHA256,
+        "design_manifest_sha256": C2B_D8_DESIGN_MANIFEST_SHA256,
+        "task_pool_sha256": C2B_D8_TASK_POOL_SHA256,
+        "common_anchor_count": 4,
+        "bridge_per_worker": 4,
+    }.items()):
+        raise ValueError("C2-B v17 D8 selected design identity changed")
+    imports: dict[str, dict[str, Any]] = {}
+    for group, path in import_paths.items():
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        if not isinstance(payload, list) or len(payload) != 46:
+            raise ValueError(f"C2-B v17 import does not contain the frozen 46-task collection:{group}")
+        task_map: dict[str, Any] = {}
+        for item in payload:
+            if not isinstance(item, dict) or not isinstance(item.get("data"), dict):
+                raise ValueError(f"C2-B v17 import contains an invalid task:{group}")
+            data = item["data"]
+            planned = str(data.get("planned_task_id") or data.get("task_id") or "").strip()
+            if not planned or planned in task_map:
+                raise ValueError(f"C2-B v17 import contains duplicate planned task:{group}")
+            if any(data.get(field) != value for field, value in {
+                "calibration_version": "C2-B_v17",
+                "selected_design_sha": C2B_D8_DESIGN_SHA256,
+                "c2b_batch_id": "C2B_BATCH_A",
+            }.items()):
+                raise ValueError(f"C2-B v17 import has stale D8 identity:{group}")
+            if str(data.get("dataset_group", "")).upper() == "GT" or str(data.get("task_role", "")).upper() == "GT":
+                raise ValueError("C2-B v17 import contains GT task")
+            task_map[planned] = item
+        if set(task_map) != task_ids:
+            raise ValueError(f"C2-B v17 import task collection differs from D8 assignment:{group}")
+        imports[group] = {"path": path, "sha256": sha256_file(path), "tasks": task_map}
+    if launch.get("import_sha256") != imports["Chinese"]["sha256"]:
+        raise ValueError("C2-B v17 single import envelope does not identify the historical Chinese import")
+    return launch, assignments, selected_manifest, imports
+
+
+def _migration_import_text(payload: list[dict[str, Any]]) -> str:
+    return json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n"
+
+
+def repackage_c2b_v17_to_v18(args: argparse.Namespace) -> dict[str, Any]:
+    """Rebind the frozen D8 assignment from the historical v17 envelope to v18.
+
+    This path deliberately does not call ``build_c2b``: the latter is allowed to
+    materialize a new assignment, while this migration is only a byte-preserving
+    repackage of an already frozen D8 batch.
+    """
+    legacy_root = Path(getattr(args, "legacy_root", "analysis_results/c2b_build_20260802_v17_d8"))
+    launch_report_path = Path(getattr(args, "legacy_launch_report", None) or legacy_root / "c2b_launch_ready_report.json")
+    assignment_path = Path(getattr(args, "legacy_assignment", None) or legacy_root / "assignment_manifest_C2B.csv")
+    selected_manifest_path = Path(
+        getattr(args, "legacy_selected_design_manifest", None)
+        or legacy_root / "inputs/c2b_selected_design_manifest_D8.json"
+    )
+    import_paths = {
+        "Chinese": Path(getattr(args, "legacy_import_zh", None) or _PROJECT_ROOT / "import_json/c2b/c2b_D8_batch_a_import_zh.json"),
+        "English": Path(getattr(args, "legacy_import_foreign", None) or _PROJECT_ROOT / "import_json/c2b/c2b_D8_batch_a_import_foreign_https.json"),
+    }
+    language_source_value = getattr(args, "worker_language_source", None)
+    if not language_source_value:
+        raise ValueError("C2-B migration requires an explicit frozen worker language source")
+    language_source = Path(language_source_value)
+    deployment_config = Path(getattr(args, "deployment_config", ""))
+    if not deployment_config.is_file():
+        raise ValueError("C2-B v17 to v18 migration requires an explicit deployment config with project IDs")
+    output_dir = Path(getattr(args, "output_dir", "analysis_results/c2b_migration_20260803_v17_to_v18_d8"))
+    target_import_dir = Path(getattr(args, "target_import_dir", _PROJECT_ROOT / "import_json/c2b"))
+    target_method_path = Path(getattr(args, "target_method_contract", None) or METHOD_CONTRACT)
+    target_method = load_method_contract(target_method_path)
+    target_method_sha = sha256_file(target_method_path)
+    current_method = load_method_contract()
+    current_method_sha = sha256_file(METHOD_CONTRACT)
+    if target_method.get("contract_version") != current_method.get("contract_version") or target_method_sha != current_method_sha:
+        raise ValueError("C2-B migration target method contract is not the current frozen v18 contract")
+    _launch, assignments, selected_manifest, source_imports = _validate_v17_d8_sources(
+        launch_report_path, assignment_path, selected_manifest_path, import_paths,
+    )
+    registry, worker_groups = _materialize_c2b_worker_language_registry(
+        assignments, language_source,
+        method_contract_version=target_method["contract_version"], method_contract_sha256=target_method_sha,
+    )
+    registry["assignment_sha256"] = sha256_file(assignment_path)
+    registry["assignment_path"] = str(assignment_path.resolve())
+    registry["dependencies"] = [{
+        "role": "ASSIGNMENT_MANIFEST",
+        "path": str(assignment_path.resolve()),
+        "sha256": sha256_file(assignment_path),
+    }]
+    deployment_specs = _load_migration_deployment_config(deployment_config, worker_groups, import_paths)
+    target_import_paths = {
+        item["deployment_id"]: (target_import_dir / item["planned_import_filename"]).resolve()
+        for item in deployment_specs
+    }
+    selected_rebind_path = output_dir / "c2b_selected_design_manifest_D8_v18.json"
+    target_assignment_path = output_dir / "assignment_manifest_C2B.csv"
+    target_distribution_path = output_dir / "worker_distribution_C2B.csv"
+    mapping_path = output_dir / "c2b_v17_to_v18_assignment_mapping.csv"
+    registry_path = output_dir / "c2b_worker_language_registry_v1.json"
+    deployment_manifest_path = output_dir / "c2b_worker_deployment_manifest_v1.json"
+    launch_path = output_dir / "c2b_launch_ready_report.json"
+    envelope_path = output_dir / "c2b_v17_to_v18_repackage_envelope_v1.json"
+    target_paths = [
+        selected_rebind_path, target_assignment_path, target_distribution_path, mapping_path,
+        registry_path, deployment_manifest_path, launch_path, envelope_path,
+        *target_import_paths.values(),
+    ]
+    _guard_repackage_targets(output_dir, target_paths)
+    deployment_by_group = {item["language_group"]: item for item in deployment_specs}
+    worker_to_deployment: dict[str, str] = {}
+    for item in deployment_specs:
+        for worker in item["worker_ids"]:
+            if worker in worker_to_deployment:
+                raise ValueError("C2-B migration maps a worker to multiple deployments")
+            worker_to_deployment[worker] = item["deployment_id"]
+    if set(worker_to_deployment) != set(worker_groups):
+        raise ValueError("C2-B migration deployment set does not cover the language registry")
+    mapping_rows: list[dict[str, Any]] = []
+    for row_number, row in enumerate(assignments, 1):
+        worker = normalize_worker_id(row.get("worker_id", ""))
+        task_id = str(row.get("task_id", "")).strip()
+        planned_task_id = str(row.get("planned_task_id") or task_id).strip()
+        deployment_id = worker_to_deployment.get(worker, "")
+        if not deployment_id or not planned_task_id:
+            raise ValueError("C2-B migration assignment row lacks a deployment or planned task identity")
+        group = next(group for group, item in deployment_by_group.items() if item["deployment_id"] == deployment_id)
+        source_task = source_imports[group]["tasks"].get(planned_task_id)
+        if source_task is None:
+            raise ValueError(f"C2-B migration assignment task is absent from its source import:{planned_task_id}")
+        mapping_rows.append({
+            "schema_version": "c2b_v17_to_v18_assignment_mapping_v1",
+            "source_assignment_row_number": row_number,
+            "worker_id": worker,
+            "task_id": task_id,
+            "planned_task_id": planned_task_id,
+            "deployment_id": deployment_id,
+            "source_assignment_sha256": sha256_file(assignment_path),
+            "target_assignment_sha256": sha256_file(assignment_path),
+            "source_import_path": str(source_imports[group]["path"].resolve()),
+            "source_import_sha256": source_imports[group]["sha256"],
+            "target_import_path": str(target_import_paths[deployment_id]),
+            "source_task_payload_sha256": _canonical_payload_sha(source_task["data"]),
+            "source_method_contract_version": C2B_V17_METHOD_VERSION,
+            "source_method_contract_sha256": C2B_V17_METHOD_SHA256,
+            "target_method_contract_version": target_method["contract_version"],
+            "target_method_contract_sha256": target_method_sha,
+            "source_selected_design_id": "D8",
+            "target_selected_design_id": "D8",
+            "source_selected_design_sha": C2B_D8_DESIGN_SHA256,
+            "target_selected_design_sha": C2B_D8_DESIGN_SHA256,
+            "source_design_manifest_sha256": C2B_D8_DESIGN_MANIFEST_SHA256,
+            "target_design_manifest_sha256": C2B_D8_DESIGN_MANIFEST_SHA256,
+            "source_task_pool_sha256": C2B_D8_TASK_POOL_SHA256,
+            "target_task_pool_sha256": C2B_D8_TASK_POOL_SHA256,
+            "source_assignment_batch_id": "C2B_BATCH_A",
+            "target_assignment_batch_id": "C2B_BATCH_A",
+            "selected_design_id": "D8",
+            "selected_design_sha": C2B_D8_DESIGN_SHA256,
+            "assignment_batch_id": "C2B_BATCH_A",
+        })
+    if len(mapping_rows) != 176 or len({(row["worker_id"], row["task_id"]) for row in mapping_rows}) != 176:
+        raise ValueError("C2-B migration mapping does not cover the frozen 176 assignments")
+    target_import_texts: dict[str, str] = {}
+    for deployment in deployment_specs:
+        group = deployment["language_group"]
+        source_info = source_imports[group]
+        transformed: list[dict[str, Any]] = []
+        for source_item in source_info["tasks"].values():
+            source_data = source_item["data"]
+            target_data = dict(source_data)
+            target_data.update({
+                "calibration_version": "C2-B_v18",
+                "deployment_id": deployment["deployment_id"],
+                "language_group": deployment["language_group"],
+                "server_instance_id": deployment["server_instance_id"],
+                "project_id": deployment["project_id"],
+                "method_contract_version": target_method["contract_version"],
+                "method_contract_sha256": target_method_sha,
+                "migration_source_method_contract_version": C2B_V17_METHOD_VERSION,
+                "migration_source_method_contract_sha256": C2B_V17_METHOD_SHA256,
+                "migration_source_import_sha256": source_info["sha256"],
+            })
+            if target_data.get("vis_3d") != source_data.get("vis_3d"):
+                raise ValueError("C2-B migration changed vis_3d without an explicit rewrite map")
+            transformed.append({**source_item, "data": target_data})
+        target_import_texts[deployment["deployment_id"]] = _migration_import_text(transformed)
+        target_sha = hashlib.sha256(target_import_texts[deployment["deployment_id"]].encode("utf-8")).hexdigest()
+        for mapping in mapping_rows:
+            if mapping["deployment_id"] == deployment["deployment_id"]:
+                target_item = next(
+                    item for item in transformed
+                    if str(item["data"].get("planned_task_id") or item["data"].get("task_id")) == mapping["planned_task_id"]
+                )
+                mapping["target_import_sha256"] = target_sha
+                mapping["target_task_payload_sha256"] = _canonical_payload_sha(target_item["data"])
+        expected_tasks = {str(row.get("task_id", "")).strip() for row in assignments if str(row.get("task_id", "")).strip()}
+        actual_tasks = {
+            str(item["data"].get("planned_task_id") or item["data"].get("task_id"))
+            for item in transformed
+        }
+        if actual_tasks != set(source_info["tasks"]) or expected_tasks != actual_tasks:
+            raise ValueError(f"C2-B migration import task collection differs from deployment assignment:{deployment['deployment_id']}")
+        source_url_prefix = deployment["server_url"] + "/tools/vis_3d.html?"
+        if any(not str(item["data"].get("vis_3d", "")).startswith(source_url_prefix) for item in transformed):
+            raise ValueError(f"C2-B migration vis_3d URL origin disagrees with deployment:{deployment['deployment_id']}")
+        deployment["planned_import_path"] = str(target_import_paths[deployment["deployment_id"]])
+        deployment["planned_import_sha256"] = target_sha
+        deployment["source_import_sha256"] = source_info["sha256"]
+        deployment["task_count"] = len(transformed)
+    rebind = dict(selected_manifest)
+    rebind.update({
+        "contract_role": "generated_subordinate",
+        "method_contract_version": target_method["contract_version"],
+        "method_contract_sha256": target_method_sha,
+        "source_method_contract_version": C2B_V17_METHOD_VERSION,
+        "source_method_contract_sha256": C2B_V17_METHOD_SHA256,
+        "source_path": str(selected_manifest_path.resolve()),
+        "source_sha256": sha256_file(selected_manifest_path),
+        "migration_role": "v17_to_v18_rebind",
+    })
+    registry_path.parent.mkdir(parents=True, exist_ok=True)
+    _write_json_new(selected_rebind_path, rebind)
+    _write_json_new(registry_path, registry)
+    target_assignment_path.parent.mkdir(parents=True, exist_ok=True)
+    shutil.copyfile(assignment_path, target_assignment_path)
+    shutil.copyfile(assignment_path, target_distribution_path)
+    worker_dir = output_dir / "worker_facing_distribution_C2B"
+    for worker in sorted(worker_groups):
+        _write(worker_dir / f"worker_{worker}_C2B.csv", [row for row in assignments if normalize_worker_id(row.get("worker_id", "")) == worker])
+    for deployment in deployment_specs:
+        _write_text_new(target_import_paths[deployment["deployment_id"]], target_import_texts[deployment["deployment_id"]])
+    _write(mapping_path, mapping_rows)
+    registry_sha = sha256_file(registry_path)
+    for deployment in deployment_specs:
+        deployment.update({
+            "method_contract_version": target_method["contract_version"],
+            "method_contract_sha256": target_method_sha,
+            "assignment_sha256": sha256_file(target_assignment_path),
+            "selected_design_id": "D8",
+            "selected_design_sha": C2B_D8_DESIGN_SHA256,
+            "design_manifest_sha256": C2B_D8_DESIGN_MANIFEST_SHA256,
+            "task_pool_sha256": C2B_D8_TASK_POOL_SHA256,
+            "worker_registry_sha256": registry_sha,
+        })
+    deployment_manifest = {
+        "schema_version": "c2b_worker_deployment_manifest_v1",
+        "artifact_role": "C2B_WORKER_DEPLOYMENT_MANIFEST_FROZEN",
+        "contract_role": "generated_subordinate",
+        "formal_ready": True,
+        **_method_identity(),
+        "assignment_batch_id": "C2B_BATCH_A",
+        "assignment_sha256": sha256_file(target_assignment_path),
+        "selected_design_id": "D8",
+        "selected_design_sha": C2B_D8_DESIGN_SHA256,
+        "design_manifest_sha256": C2B_D8_DESIGN_MANIFEST_SHA256,
+        "task_pool_sha256": C2B_D8_TASK_POOL_SHA256,
+        "selected_design_manifest_path": str(selected_rebind_path.resolve()),
+        "selected_design_manifest_sha256": sha256_file(selected_rebind_path),
+        "worker_registry_path": str(registry_path.resolve()),
+        "worker_registry_sha256": registry_sha,
+        "source_config_path": str(deployment_config.resolve()),
+        "source_config_sha256": sha256_file(deployment_config),
+        "deployments": deployment_specs,
+        "frozen": True,
+    }
+    _write_json_new(deployment_manifest_path, deployment_manifest)
+    deployment_manifest_sha = sha256_file(deployment_manifest_path)
+    deployment_assignment_counts = {
+        item["deployment_id"]: sum(
+            worker_to_deployment.get(normalize_worker_id(row.get("worker_id", ""))) == item["deployment_id"]
+            for row in assignments
+        )
+        for item in deployment_specs
+    }
+    report = {
+        "schema_version": "paper_a_c2b_launch_ready_report_v4",
+        "artifact_role": "C2B_LAUNCH_READY",
+        "contract_role": "generated_subordinate",
+        "method_contract": "Pilot->P1->C1->C2-B->C2-A-RP->T1->V1",
+        "method_contract_version": target_method["contract_version"],
+        "method_contract_sha256": target_method_sha,
+        "source_method_contract_version": C2B_V17_METHOD_VERSION,
+        "source_method_contract_sha256": C2B_V17_METHOD_SHA256,
+        "assignment_batch_id": "C2B_BATCH_A",
+        "selected_design_id": "D8",
+        "selected_design_sha": C2B_D8_DESIGN_SHA256,
+        "selected_design_manifest_path": str(selected_rebind_path.resolve()),
+        "selected_design_manifest_sha256": sha256_file(selected_rebind_path),
+        "design_manifest_sha256": C2B_D8_DESIGN_MANIFEST_SHA256,
+        "task_pool_sha256": C2B_D8_TASK_POOL_SHA256,
+        "assignment_sha256": sha256_file(target_assignment_path),
+        "deployment_manifest_path": str(deployment_manifest_path.resolve()),
+        "deployment_manifest_sha256": deployment_manifest_sha,
+        "deployments": deployment_specs,
+        "n_assignments": len(assignments),
+        "n_workers": len(worker_groups),
+        "n_tasks": len({str(row.get("task_id", "")) for row in assignments}),
+        "deployment_assignment_counts": deployment_assignment_counts,
+        "assignment_distribution_consistent": True,
+        "import_smoke_passed": True,
+        "gt_isolated_from_worker_import": True,
+        "automatic_label_studio_import": False,
+        "launch_ready": True,
+        "C2B_LAUNCH_READY": True,
+        "formal_ready": False,
+        "runtime_binding_status": "not_bound",
+        "migration_envelope_path": str(envelope_path.resolve()),
+        "source_historical_launch_report_path": str(launch_report_path.resolve()),
+        "source_historical_launch_report_sha256": sha256_file(launch_report_path),
+        "dependencies": [
+            {"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)}
+            for role, path in (
+                ("SOURCE_V17_LAUNCH_REPORT", launch_report_path),
+                ("SOURCE_V17_ASSIGNMENT", assignment_path),
+                ("SOURCE_V17_SELECTED_DESIGN_MANIFEST", selected_manifest_path),
+                ("WORKER_LANGUAGE_SOURCE", language_source),
+                ("DEPLOYMENT_CONFIG", deployment_config),
+                ("TARGET_SELECTED_DESIGN_MANIFEST", selected_rebind_path),
+                ("TARGET_ASSIGNMENT", target_assignment_path),
+                ("TARGET_DEPLOYMENT_MANIFEST", deployment_manifest_path),
+                ("METHOD_CONTRACT", METHOD_CONTRACT),
+            )
+        ],
+    }
+    _write_json_new(launch_path, report)
+    target_artifacts = [
+        {"role": "TARGET_SELECTED_DESIGN_MANIFEST_V18", "path": str(selected_rebind_path.resolve()), "sha256": sha256_file(selected_rebind_path)},
+        {"role": "TARGET_WORKER_LANGUAGE_REGISTRY", "path": str(registry_path.resolve()), "sha256": registry_sha},
+        {"role": "TARGET_ASSIGNMENT", "path": str(target_assignment_path.resolve()), "sha256": sha256_file(target_assignment_path)},
+        {"role": "TARGET_WORKER_DISTRIBUTION", "path": str(target_distribution_path.resolve()), "sha256": sha256_file(target_distribution_path)},
+        {"role": "TARGET_ASSIGNMENT_MAPPING", "path": str(mapping_path.resolve()), "sha256": sha256_file(mapping_path)},
+        {"role": "TARGET_DEPLOYMENT_MANIFEST", "path": str(deployment_manifest_path.resolve()), "sha256": deployment_manifest_sha},
+        {"role": "TARGET_LAUNCH_REPORT_V4", "path": str(launch_path.resolve()), "sha256": sha256_file(launch_path)},
+        *[
+            {"role": f"TARGET_PLANNED_IMPORT_{item['deployment_id']}", "path": item["planned_import_path"], "sha256": item["planned_import_sha256"]}
+            for item in deployment_specs
+        ],
+    ]
+    source_artifacts = [
+        {"role": "SOURCE_V17_LAUNCH_REPORT_SINGLE_DEPLOYMENT", "path": str(launch_report_path.resolve()), "sha256": sha256_file(launch_report_path)},
+        {"role": "SOURCE_V17_ASSIGNMENT", "path": str(assignment_path.resolve()), "sha256": sha256_file(assignment_path)},
+        {"role": "SOURCE_V17_SELECTED_DESIGN_MANIFEST", "path": str(selected_manifest_path.resolve()), "sha256": sha256_file(selected_manifest_path)},
+        {"role": "SOURCE_V17_PLANNED_IMPORT_CHINESE", "path": str(import_paths["Chinese"].resolve()), "sha256": source_imports["Chinese"]["sha256"]},
+        {"role": "SOURCE_V17_PLANNED_IMPORT_ENGLISH", "path": str(import_paths["English"].resolve()), "sha256": source_imports["English"]["sha256"]},
+        {"role": "SOURCE_WORKER_LANGUAGE_DISTRIBUTION", "path": str(language_source.resolve()), "sha256": sha256_file(language_source)},
+        {"role": "SOURCE_DEPLOYMENT_CONFIG", "path": str(deployment_config.resolve()), "sha256": sha256_file(deployment_config)},
+    ]
+    envelope = {
+        "schema_version": "paper_a_c2b_v17_to_v18_repackage_envelope_v1",
+        "artifact_role": "C2B_V17_TO_V18_REPACKAGE_ENVELOPE_FROZEN",
+        "contract_role": "generated_subordinate",
+        "formal_ready": False,
+        "launch_ready": True,
+        "status": "prospective_repackage",
+        "runtime_binding_status": "not_bound",
+        "method_contract_mapping": {
+            "source": {
+                "contract_version": C2B_V17_METHOD_VERSION,
+                "sha256": C2B_V17_METHOD_SHA256,
+            },
+            "target": {
+                "contract_version": target_method["contract_version"],
+                "sha256": target_method_sha,
+                "path": str(target_method_path.resolve()),
+            },
+        },
+        "source_method_contract_version": C2B_V17_METHOD_VERSION,
+        "source_method_contract_sha256": C2B_V17_METHOD_SHA256,
+        "target_method_contract_version": target_method["contract_version"],
+        "target_method_contract_sha256": target_method_sha,
+        "selected_design_id": "D8",
+        "selected_design_sha": C2B_D8_DESIGN_SHA256,
+        "design_manifest_sha256": C2B_D8_DESIGN_MANIFEST_SHA256,
+        "assignment_batch_id": "C2B_BATCH_A",
+        "source_assignment_sha256": C2B_V17_D8_ASSIGNMENT_SHA256,
+        "target_assignment_sha256": sha256_file(target_assignment_path),
+        "n_assignments": 176,
+        "n_workers": 22,
+        "n_tasks": 46,
+        "source_artifacts": source_artifacts,
+        "target_artifacts": target_artifacts,
+        "assignment_mapping_path": str(mapping_path.resolve()),
+        "assignment_mapping_sha256": sha256_file(mapping_path),
+        "unchanged_fields": ["selected_design_id", "selected_design_sha", "design_manifest_sha256", "task_pool_sha256", "assignment_batch_id", "task_id", "planned_task_id", "task_collection", "vis_3d"],
+        "changed_fields": ["method_contract_version", "method_contract_sha256", "calibration_version", "deployment_id", "language_group", "server_instance_id", "project_id", "launch_report_schema", "planned_import_filename"],
+        "dependencies": target_artifacts,
+    }
+    _write_json_new(envelope_path, envelope)
+    return report
 
 
 def _require_current_subordinate(path: Path, role: str) -> dict[str, Any]:
@@ -1506,12 +2161,10 @@ def _write_c2b_imports(
 
     def tasks(deployment: dict[str, Any]) -> list[dict[str, Any]]:
         vis_base = str(deployment["server_url"])
-        deployment_workers = {normalize_worker_id(worker) for worker in deployment.get("worker_ids", []) if normalize_worker_id(worker)}
-        deployment_rows = [
-            row for row in distribution
-            if not deployment_workers or normalize_worker_id(row.get("worker_id", "")) in deployment_workers
-        ]
-        selected_for_deployment = {row["task_id"]: row for row in deployment_rows}
+        # A deployment imports the frozen task collection.  Worker language
+        # identity controls private assignment lists and runtime joins; it
+        # must not silently shrink the planned import task pool.
+        selected_for_deployment = selected
         return [{"data": {
             "image": worker_image(row),
             "vis_3d": f"{vis_base}/tools/vis_3d.html?w=1024&h=512&data={quote(json.dumps(layouts[task_id], separators=(',', ':')))}",
@@ -1824,8 +2477,12 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
         "n_tasks": len(support), "min_task_support": min(support.values(), default=0),
         "duplicate_worker_task_count": len(assignments) - len({(row["worker_id"], row["task_id"]) for row in assignments}),
         "deployment_assignment_counts": deployment_assignment_counts,
+        "deployment_task_counts": {
+            item["deployment_id"]: item.get("task_count", 0)
+            for item in deployment_outputs.values()
+        },
         "import_smoke_passed": bool(deployment_outputs) and all(
-            item.get("task_count", 0) == deployment_assignment_counts.get(item.get("deployment_id"), -1)
+            item.get("task_count", 0) == len(support)
             for item in deployment_outputs.values()
         ),
         "assignment_distribution_consistent": assignment_identities == distribution_identities,
@@ -1859,14 +2516,36 @@ def _bind_c2b_runtime_mapping_multi(args: argparse.Namespace, report: dict[str, 
     manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
     if manifest.get("schema_version") != "c2b_worker_deployment_manifest_v1" or sha256_file(manifest_path) != report.get("deployment_manifest_sha256"):
         raise ValueError("C2-B deployment manifest is stale or not bound to the launch report")
-    deployments = {str(item.get("deployment_id")): item for item in report.get("deployments", [])}
-    manifest_deployments = {str(item.get("deployment_id")): item for item in manifest.get("deployments", [])}
+    method_identity = _method_identity()
+    if any(report.get(field) != value for field, value in method_identity.items()):
+        raise ValueError("C2-B launch report method contract is stale")
+    if any(manifest.get(field) != value for field, value in method_identity.items()):
+        raise ValueError("C2-B deployment manifest method contract is stale")
+    if (report.get("assignment_sha256") != sha256_file(args.assignment_manifest)
+            or manifest.get("assignment_batch_id") != report.get("assignment_batch_id")
+            or manifest.get("assignment_sha256") != sha256_file(args.assignment_manifest)
+            or manifest.get("selected_design_sha") != report.get("selected_design_sha")):
+        raise ValueError("C2-B deployment manifest batch/design/assignment identity is stale")
+    report_deployment_rows = report.get("deployments", [])
+    manifest_deployment_rows = manifest.get("deployments", [])
+    if not isinstance(report_deployment_rows, list) or not isinstance(manifest_deployment_rows, list):
+        raise ValueError("C2-B deployment evidence must contain deployment lists")
+    report_deployment_ids = [str(item.get("deployment_id", "")).strip() for item in report_deployment_rows if isinstance(item, dict)]
+    manifest_deployment_ids = [str(item.get("deployment_id", "")).strip() for item in manifest_deployment_rows if isinstance(item, dict)]
+    if (len(report_deployment_ids) != len(report_deployment_rows)
+            or len(manifest_deployment_ids) != len(manifest_deployment_rows)
+            or not all(report_deployment_ids) or not all(manifest_deployment_ids)
+            or len(set(report_deployment_ids)) != len(report_deployment_ids)
+            or len(set(manifest_deployment_ids)) != len(manifest_deployment_ids)):
+        raise ValueError("C2-B deployment evidence has missing or duplicate deployment IDs")
+    deployments = {str(item["deployment_id"]): item for item in report_deployment_rows}
+    manifest_deployments = {str(item["deployment_id"]): item for item in manifest_deployment_rows}
     if not deployments or set(deployments) != set(manifest_deployments):
         raise ValueError("C2-B deployment set is incomplete or inconsistent")
     for deployment_id in deployments:
         report_item = deployments[deployment_id]
         manifest_item = manifest_deployments[deployment_id]
-        if any(str(report_item.get(field, "")) != str(manifest_item.get(field, "")) for field in ("language_group", "server_instance_id", "project_id")):
+        if any(str(report_item.get(field, "")) != str(manifest_item.get(field, "")) for field in ("language_group", "server_instance_id", "project_id", "server_url", "planned_import_path", "planned_import_sha256", "worker_registry_sha256")):
             raise ValueError(f"C2-B deployment identity disagrees with the frozen manifest:{deployment_id}")
     assignment_rows = _read(args.assignment_manifest)
     distribution_rows = _read(args.worker_distribution)
@@ -1874,6 +2553,8 @@ def _bind_c2b_runtime_mapping_multi(args: argparse.Namespace, report: dict[str, 
     distribution_ids = {(normalize_worker_id(row.get("worker_id", "")), row.get("task_id", "")) for row in distribution_rows}
     if assignment_ids != distribution_ids or len(assignment_ids) != len(assignment_rows):
         raise ValueError("assignment manifest and worker distribution are not a complete unique match")
+    if manifest.get("assignment_sha256") != sha256_file(args.assignment_manifest):
+        raise ValueError("C2-B deployment manifest assignment SHA is stale")
     worker_deployment: dict[str, str] = {}
     for deployment_id, item in manifest_deployments.items():
         for worker in item.get("worker_ids", []):
@@ -1898,8 +2579,8 @@ def _bind_c2b_runtime_mapping_multi(args: argparse.Namespace, report: dict[str, 
             or len(runtime_paths) != len(deployments)
             or len({path.resolve() for path in runtime_paths}) != len(runtime_paths)):
         raise ValueError("C2-B runtime binding requires exactly one planned import and runtime export per deployment")
-    planned_by_deployment = {}
-    runtime_by_deployment = {}
+    planned_by_deployment: dict[str, Path] = {}
+    runtime_by_deployment: dict[str, Path] = {}
     for item in deployments.values():
         deployment_id = str(item["deployment_id"])
         planned = next((path for path in planned_paths if path.resolve() == Path(str(item.get("planned_import_path", ""))).resolve()), None)
@@ -1907,11 +2588,30 @@ def _bind_c2b_runtime_mapping_multi(args: argparse.Namespace, report: dict[str, 
             planned = Path(str(item.get("planned_import_path", "")))
         if not planned.is_file() or sha256_file(planned) != item.get("planned_import_sha256"):
             raise ValueError(f"C2-B planned import is missing or stale:{deployment_id}")
-        candidates = [path for path in runtime_paths if path.stem.endswith(deployment_id) or deployment_id in path.name]
-        if len(candidates) != 1:
-            raise ValueError(f"C2-B runtime export must identify exactly one deployment:{deployment_id}")
         planned_by_deployment[deployment_id] = planned
-        runtime_by_deployment[deployment_id] = candidates[0]
+    for path in runtime_paths:
+        if not path.is_file():
+            raise ValueError(f"C2-B runtime export is missing:{path}")
+        payload = json.loads(path.read_text(encoding="utf-8"))
+        rows = payload if isinstance(payload, list) else payload.get("tasks", payload.get("data", []))
+        if not isinstance(rows, list):
+            raise ValueError(f"C2-B runtime export must contain a task list:{path}")
+        declared = set()
+        if isinstance(payload, dict) and str(payload.get("deployment_id", "")).strip():
+            declared.add(str(payload["deployment_id"]).strip())
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+            data = row.get("data", {}) if isinstance(row.get("data", {}), dict) else {}
+            deployment_id = str(row.get("deployment_id") or data.get("deployment_id") or "").strip()
+            if deployment_id:
+                declared.add(deployment_id)
+        if len(declared) != 1 or next(iter(declared)) not in deployments:
+            raise ValueError(f"C2-B runtime export must carry exactly one known deployment identity:{path.name}")
+        deployment_id = next(iter(declared))
+        if deployment_id in runtime_by_deployment:
+            raise ValueError(f"C2-B runtime binding has duplicate runtime export for deployment:{deployment_id}")
+        runtime_by_deployment[deployment_id] = path
     bindings_by_deployment: dict[tuple[str, str], dict[str, Any]] = {}
     # Runtime IDs are only safe after project identity is included.  A reuse
     # of the same project/runtime pair on another server is still ambiguous;
@@ -1937,18 +2637,23 @@ def _bind_c2b_runtime_mapping_multi(args: argparse.Namespace, report: dict[str, 
                     or str(data.get("task_role", "")).upper() == "GT"):
                 raise ValueError("GT task leaked into planned C2-B import")
             expected[planned_id] = row
-        worker_ids = {normalize_worker_id(row.get("worker_id", "")) for row in distribution_rows if worker_deployment[normalize_worker_id(row.get("worker_id", ""))] == deployment_id}
-        expected_tasks = {row.get("task_id", "") for row in distribution_rows if normalize_worker_id(row.get("worker_id", "")) in worker_ids}
+        # Each deployment receives the complete frozen task collection.  The
+        # worker-to-deployment map is private-assignment identity, not an
+        # import-pool filter.
+        expected_tasks = {str(row.get("task_id", "")).strip() for row in distribution_rows if str(row.get("task_id", "")).strip()}
+        if not expected_tasks:
+            raise ValueError("C2-B worker distribution has no planned tasks")
         if set(expected) != expected_tasks:
             raise ValueError(f"C2-B planned import does not cover deployment assignment:{deployment_id}")
         runtime_rows = _payload_tasks(runtime_by_deployment[deployment_id])
         bound: dict[str, str] = {}
+        runtime_ids_in_deployment: set[str] = set()
         for row in runtime_rows:
             data = row.get("data", {}) if isinstance(row.get("data", {}), dict) else {}
             planned_id = str(data.get("planned_task_id", ""))
-            runtime_id = str(row.get("id", row.get("task_id", "")))
-            project_id = str(row.get("project", row.get("project_id", data.get("project_id", ""))))
-            if not planned_id or not runtime_id or planned_id in bound or (project_id, runtime_id) in runtime_identity_seen:
+            runtime_id = str(row.get("id") or row.get("task_id") or "")
+            project_id = str(row.get("project") or row.get("project_id") or data.get("project_id") or "")
+            if not planned_id or not runtime_id or planned_id in bound or runtime_id in runtime_ids_in_deployment or (project_id, runtime_id) in runtime_identity_seen:
                 raise ValueError(f"C2-B runtime export has duplicate identity:{deployment_id}")
             if (data.get("deployment_id") != deployment_id
                     or data.get("language_group") != item.get("language_group")
@@ -1962,6 +2667,7 @@ def _bind_c2b_runtime_mapping_multi(args: argparse.Namespace, report: dict[str, 
             if str(data.get("dataset_group", "")).upper() == "GT" or str(data.get("task_role", "")).upper() == "GT":
                 raise ValueError("GT task leaked into runtime C2-B import")
             bound[planned_id] = runtime_id
+            runtime_ids_in_deployment.add(runtime_id)
             runtime_identity_seen.add((project_id, runtime_id))
         if set(bound) != set(expected):
             raise ValueError(f"C2-B runtime export is missing or adds planned tasks:{deployment_id}")
@@ -1983,8 +2689,44 @@ def _bind_c2b_runtime_mapping_multi(args: argparse.Namespace, report: dict[str, 
             }
     if {path.resolve() for path in runtime_by_deployment.values()} != {path.resolve() for path in runtime_paths}:
         raise ValueError("C2-B runtime binding does not consume exactly the supplied deployment exports")
-    if len({(row["deployment_id"], row["project_id"], row["runtime_task_id"]) for row in bindings_by_deployment.values()}) != len(bindings_by_deployment):
+    if len({(row["deployment_id"], row["project_id"], row["runtime_task_id"], row["worker_id"]) for row in bindings_by_deployment.values()}) != len(bindings_by_deployment):
         raise ValueError("C2-B runtime mapping is not one-to-one within deployment")
+    runtime_task_counts_by_deployment = {
+        deployment_id: len(_payload_tasks(runtime_path))
+        for deployment_id, runtime_path in runtime_by_deployment.items()
+    }
+    migration_envelope_path = Path(str(report.get("migration_envelope_path", ""))) if report.get("migration_envelope_path") else None
+    migration_envelope: dict[str, Any] | None = None
+    if migration_envelope_path is not None:
+        if not migration_envelope_path.is_file():
+            raise ValueError("C2-B migration envelope is missing")
+        migration_envelope = _read_json_object(migration_envelope_path)
+        if migration_envelope.get("schema_version") != "paper_a_c2b_v17_to_v18_repackage_envelope_v1":
+            raise ValueError("C2-B migration envelope schema is invalid")
+        if (migration_envelope.get("target_method_contract_version") != report.get("method_contract_version")
+                or migration_envelope.get("target_method_contract_sha256") != report.get("method_contract_sha256")
+                or migration_envelope.get("selected_design_id") != report.get("selected_design_id")
+                or migration_envelope.get("selected_design_sha") != report.get("selected_design_sha")
+                or migration_envelope.get("assignment_batch_id") != report.get("assignment_batch_id")
+                or migration_envelope.get("target_assignment_sha256") != report.get("assignment_sha256")):
+            raise ValueError("C2-B migration envelope identity disagrees with the launch report")
+        envelope_artifacts = {
+            str(item.get("path", "")).strip(): item
+            for item in migration_envelope.get("target_artifacts", [])
+            if isinstance(item, dict) and str(item.get("path", "")).strip()
+        }
+        for path, expected_sha in ((args.launch_report, sha256_file(args.launch_report)), (manifest_path, sha256_file(manifest_path))):
+            item = envelope_artifacts.get(str(path.resolve()))
+            if not isinstance(item, dict) or item.get("sha256") != expected_sha:
+                raise ValueError("C2-B migration envelope does not bind the static launch artifacts")
+    binding_outputs = [
+        args.output_dir / "c2b_runtime_task_mapping.csv",
+        args.output_dir / "c2b_worker_task_binding_audit.json",
+        args.output_dir / "c2b_private_assignment_list_audit.json",
+    ]
+    runtime_evidence_path = args.output_dir / "c2b_v17_to_v18_runtime_evidence_v1.json"
+    if migration_envelope is not None and any(path.exists() for path in [*binding_outputs, runtime_evidence_path]):
+        raise ValueError("C2-B runtime evidence target already exists")
     args.output_dir.mkdir(parents=True, exist_ok=True)
     mapping = args.output_dir / "c2b_runtime_task_mapping.csv"
     _write(mapping, list(bindings_by_deployment.values()))
@@ -1992,6 +2734,7 @@ def _bind_c2b_runtime_mapping_multi(args: argparse.Namespace, report: dict[str, 
         ("LAUNCH_REPORT", args.launch_report), ("ASSIGNMENT_MANIFEST", args.assignment_manifest),
         ("WORKER_DISTRIBUTION", args.worker_distribution), ("DEPLOYMENT_MANIFEST", manifest_path),
         ("METHOD_CONTRACT", METHOD_CONTRACT),
+        ("RUNTIME_MAPPING", mapping),
         *[(f"PLANNED_IMPORT_{key}", value) for key, value in planned_by_deployment.items()],
         *[(f"RUNTIME_EXPORT_{key}", value) for key, value in runtime_by_deployment.items()],
     ]
@@ -2002,8 +2745,10 @@ def _bind_c2b_runtime_mapping_multi(args: argparse.Namespace, report: dict[str, 
         "deployment_manifest_sha256": sha256_file(manifest_path),
         "deployment_ids": sorted(deployments),
         "project_ids": sorted({str(item.get("project_id")) for item in deployments.values()}),
+        "planned_import_sha256": {key: sha256_file(value) for key, value in planned_by_deployment.items()},
         "runtime_export_sha256": {key: sha256_file(value) for key, value in runtime_by_deployment.items()},
-        "runtime_mapping_sha256": sha256_file(mapping), "runtime_task_count": len({row["runtime_task_id"] for row in bindings_by_deployment.values()}),
+        "runtime_mapping_sha256": sha256_file(mapping), "runtime_task_count": sum(runtime_task_counts_by_deployment.values()),
+        "runtime_task_count_by_deployment": runtime_task_counts_by_deployment,
         "worker_task_binding_count": len(bindings_by_deployment), "one_to_one": True, "gt_isolated": True,
         "formal_ready": True, "C2B_RUNTIME_BINDING_READY": True,
         "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in dependencies],
@@ -2042,6 +2787,64 @@ def _bind_c2b_runtime_mapping_multi(args: argparse.Namespace, report: dict[str, 
     (args.output_dir / "c2b_worker_task_binding_audit.json").write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     if not private_complete:
         raise ValueError("private assignment lists are incomplete or inconsistent")
+    if migration_envelope is not None:
+        envelope_artifacts = {
+            str(item.get("path", "")).strip(): item
+            for item in migration_envelope.get("target_artifacts", [])
+            if isinstance(item, dict) and str(item.get("path", "")).strip()
+        }
+        assignment_mapping_path = Path(str(migration_envelope.get("assignment_mapping_path", "")))
+        mapping_item = envelope_artifacts.get(str(assignment_mapping_path.resolve()))
+        if (not assignment_mapping_path.is_file() or not isinstance(mapping_item, dict)
+                or mapping_item.get("sha256") != migration_envelope.get("assignment_mapping_sha256")
+                or sha256_file(assignment_mapping_path) != mapping_item.get("sha256")):
+            raise ValueError("C2-B migration envelope assignment mapping path/SHA is stale")
+        runtime_evidence = {
+            "schema_version": "paper_a_c2b_v17_to_v18_runtime_evidence_v1",
+            "artifact_role": "C2B_V17_TO_V18_RUNTIME_EVIDENCE",
+            "contract_role": "generated_subordinate",
+            "formal_ready": True,
+            "runtime_binding_status": "bound",
+            "method_contract_version": report["method_contract_version"],
+            "method_contract_sha256": report["method_contract_sha256"],
+            "source_method_contract_version": report.get("source_method_contract_version", ""),
+            "source_method_contract_sha256": report.get("source_method_contract_sha256", ""),
+            "selected_design_id": report["selected_design_id"],
+            "selected_design_sha": report["selected_design_sha"],
+            "assignment_batch_id": report["assignment_batch_id"],
+            "assignment_sha256": sha256_file(args.assignment_manifest),
+            "worker_task_binding_count": len(bindings_by_deployment),
+            "deployment_ids": sorted(deployments),
+            "project_ids": {key: str(item.get("project_id", "")) for key, item in deployments.items()},
+            "server_instance_ids": {key: str(item.get("server_instance_id", "")) for key, item in deployments.items()},
+            "planned_import_sha256": {key: sha256_file(value) for key, value in planned_by_deployment.items()},
+            "runtime_export_sha256": {key: sha256_file(value) for key, value in runtime_by_deployment.items()},
+            "runtime_task_count": sum(runtime_task_counts_by_deployment.values()),
+            "runtime_task_count_by_deployment": runtime_task_counts_by_deployment,
+            "runtime_mapping_path": str(mapping.resolve()),
+            "runtime_mapping_sha256": sha256_file(mapping),
+            "private_assignment_audit_path": str((args.output_dir / "c2b_private_assignment_list_audit.json").resolve()),
+            "private_assignment_audit_sha256": sha256_file(args.output_dir / "c2b_private_assignment_list_audit.json"),
+            "launch_report_path": str(args.launch_report.resolve()),
+            "launch_report_sha256": sha256_file(args.launch_report),
+            "deployment_manifest_path": str(manifest_path.resolve()),
+            "deployment_manifest_sha256": sha256_file(manifest_path),
+            "migration_envelope_path": str(migration_envelope_path.resolve()),
+            "migration_envelope_sha256": sha256_file(migration_envelope_path),
+            "runtime_export_paths": {key: str(value.resolve()) for key, value in runtime_by_deployment.items()},
+            "dependencies": [
+                {"role": "MIGRATION_ENVELOPE", "path": str(migration_envelope_path.resolve()), "sha256": sha256_file(migration_envelope_path)},
+                {"role": "LAUNCH_REPORT", "path": str(args.launch_report.resolve()), "sha256": sha256_file(args.launch_report)},
+                {"role": "DEPLOYMENT_MANIFEST", "path": str(manifest_path.resolve()), "sha256": sha256_file(manifest_path)},
+                {"role": "RUNTIME_MAPPING", "path": str(mapping.resolve()), "sha256": sha256_file(mapping)},
+                {"role": "PRIVATE_ASSIGNMENT_AUDIT", "path": str((args.output_dir / "c2b_private_assignment_list_audit.json").resolve()), "sha256": sha256_file(args.output_dir / "c2b_private_assignment_list_audit.json")},
+                {"role": "METHOD_CONTRACT", "path": str(METHOD_CONTRACT.resolve()), "sha256": sha256_file(METHOD_CONTRACT)},
+            ],
+        }
+        _write_json_new(runtime_evidence_path, runtime_evidence)
+        audit["runtime_evidence_path"] = str(runtime_evidence_path.resolve())
+        audit["runtime_evidence_sha256"] = sha256_file(runtime_evidence_path)
+        (args.output_dir / "c2b_worker_task_binding_audit.json").write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return audit
 
 
@@ -2261,6 +3064,19 @@ def main(argv: list[str] | None = None) -> int:
     for name in ("batch-a-launch-report", "batch-a-assignment", "batch-worker-profile", "p1-admission-evidence"):
         build.add_argument(f"--{name}", type=Path)
 
+    migration = sub.add_parser("repackage-c2b-v17-to-v18")
+    migration.add_argument("--legacy-root", type=Path, default=Path("analysis_results/c2b_build_20260802_v17_d8"))
+    migration.add_argument("--legacy-launch-report", type=Path)
+    migration.add_argument("--legacy-assignment", type=Path)
+    migration.add_argument("--legacy-selected-design-manifest", type=Path)
+    migration.add_argument("--legacy-import-zh", type=Path)
+    migration.add_argument("--legacy-import-foreign", type=Path)
+    migration.add_argument("--worker-language-source", type=Path, required=True)
+    migration.add_argument("--deployment-config", type=Path, required=True)
+    migration.add_argument("--output-dir", type=Path, required=True)
+    migration.add_argument("--target-import-dir", type=Path, default=Path("import_json/c2b"))
+    migration.add_argument("--target-method-contract", type=Path)
+
     runtime = sub.add_parser("bind-c2b-runtime-mapping")
     for name in ("launch-report", "assignment-manifest", "worker-distribution", "output-dir"):
         runtime.add_argument(f"--{name}", type=Path, required=True)
@@ -2280,6 +3096,7 @@ def main(argv: list[str] | None = None) -> int:
         "finalize-c1": finalize_c1,
         "design-c2b": design_c2b,
         "build-c2b": build_c2b,
+        "repackage-c2b-v17-to-v18": repackage_c2b_v17_to_v18,
         "bind-c2b-runtime-mapping": bind_c2b_runtime_mapping,
     }[args.command]
     print(json.dumps(command(args), ensure_ascii=False, indent=2))

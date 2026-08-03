@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, _write_c2b_import, audit_c1, build_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1, validate_runbook_command_contract
+from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, _write_c2b_import, audit_c1, bind_c2b_runtime_mapping, build_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1, repackage_c2b_v17_to_v18, validate_runbook_command_contract
 from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _aggregate_sha, _c1_closeout_blockers
 from tools.thesis_main.analysis.derive_c2b_design_thresholds import derive_threshold_manifest
 
@@ -68,7 +68,7 @@ def test_public_cli_exposes_the_auditable_and_thin_entry_commands(capsys):
     for command in (
         "rehearse-c1", "prepare-c2b-static", "preflight-calibration", "freeze-c1",
         "audit-c1", "finalize-c1", "design-c2b", "build-c2b",
-        "expand-building-registry", "check-command-contract",
+        "expand-building-registry", "repackage-c2b-v17-to-v18", "check-command-contract",
     ):
         assert command in help_text
     for removed in ("day1-canonical-audit", "day1-formal-audit", "day2-c2b-build", "freeze-c1-active-log"):
@@ -97,6 +97,132 @@ def test_c2b_import_matches_prior_formal_import_shape(monkeypatch, tmp_path):
     assert zh[0]["data"]["vis_3d"].startswith("http://175.178.71.217:8000/tools/vis_3d.html?")
     assert foreign[0]["data"]["vis_3d"].startswith("https://label.sparkle0825.top/tools/vis_3d.html?")
     assert "predictions" not in zh[0]
+
+
+def test_d8_v17_to_v18_repackage_preserves_assignment_and_records_dual_deployment_sha(tmp_path):
+    legacy = Path("analysis_results/c2b_build_20260802_v17_d8")
+    zh_import = Path("import_json/c2b/c2b_D8_batch_a_import_zh.json")
+    foreign_import = Path("import_json/c2b/c2b_D8_batch_a_import_foreign_https.json")
+    config = tmp_path / "deployment_config.json"
+    config.write_text(json.dumps({
+        "schema_version": "c2b_migration_deployment_config_v1",
+        "deployments": [
+            {
+                "deployment_id": "c2b_zh",
+                "language_group": "Chinese",
+                "server_instance_id": "labelstudio_http_175_178_71_217",
+                "server_url": "http://175.178.71.217:8000",
+                "project_id": "project-zh",
+                "source_import_path": str(zh_import),
+                "planned_import_filename": "c2b_D8_batch_a_import_zh_v18.json",
+            },
+            {
+                "deployment_id": "c2b_en",
+                "language_group": "English",
+                "server_instance_id": "labelstudio_https_sparkle0825",
+                "server_url": "https://label.sparkle0825.top",
+                "project_id": "project-en",
+                "source_import_path": str(foreign_import),
+                "planned_import_filename": "c2b_D8_batch_a_import_foreign_https_v18.json",
+            },
+        ],
+    }), encoding="utf-8")
+    args = argparse.Namespace(
+        legacy_root=legacy,
+        legacy_launch_report=legacy / "c2b_launch_ready_report.json",
+        legacy_assignment=legacy / "assignment_manifest_C2B.csv",
+        legacy_selected_design_manifest=legacy / "inputs/c2b_selected_design_manifest_D8.json",
+        legacy_import_zh=zh_import,
+        legacy_import_foreign=foreign_import,
+        worker_language_source=legacy / "worker_facing_release_C2B_D8/internal/worker_facing_distribution_index_C2B_D8.csv",
+        deployment_config=config,
+        output_dir=tmp_path / "migration",
+        target_import_dir=tmp_path / "target_imports",
+        target_method_contract=None,
+    )
+
+    result = repackage_c2b_v17_to_v18(args)
+
+    assert result["launch_ready"] is True
+    assert result["formal_ready"] is False
+    assert result["selected_design_id"] == "D8"
+    assert result["n_assignments"] == 176
+    assert result["n_workers"] == 22
+    assert result["n_tasks"] == 46
+    assert "import_sha256" not in result
+    assert result["method_contract_version"] == "paper_a_method_20260803_v18"
+    assert len(result["deployments"]) == 2
+
+    assignment = args.output_dir / "assignment_manifest_C2B.csv"
+    mapping = args.output_dir / "c2b_v17_to_v18_assignment_mapping.csv"
+    registry = json.loads((args.output_dir / "c2b_worker_language_registry_v1.json").read_text(encoding="utf-8"))
+    envelope = json.loads((args.output_dir / "c2b_v17_to_v18_repackage_envelope_v1.json").read_text(encoding="utf-8"))
+    assert hashlib.sha256(assignment.read_bytes()).hexdigest() == "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c"
+    assert len(list(csv.DictReader(mapping.open(encoding="utf-8", newline="")))) == 176
+    assert {row["language_group"] for row in registry["workers"]} == {"Chinese", "English"}
+    assert len(registry["workers"]) == 22
+    assert envelope["source_method_contract_sha256"] == "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c"
+    assert envelope["target_method_contract_sha256"] == "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87"
+    assert envelope["runtime_binding_status"] == "not_bound"
+
+    for deployment in result["deployments"]:
+        planned = Path(deployment["planned_import_path"])
+        tasks = json.loads(planned.read_text(encoding="utf-8"))
+        assert len(tasks) == 46
+        assert {item["data"]["calibration_version"] for item in tasks} == {"C2-B_v18"}
+        assert {item["data"]["deployment_id"] for item in tasks} == {deployment["deployment_id"]}
+        assert {item["data"]["project_id"] for item in tasks} == {deployment["project_id"]}
+
+    with pytest.raises(ValueError, match="target artifact already exists"):
+        repackage_c2b_v17_to_v18(args)
+
+
+def test_d8_v18_repackage_binds_runtime_by_content_and_writes_formal_evidence(tmp_path):
+    legacy = Path("analysis_results/c2b_build_20260802_v17_d8")
+    zh_import = Path("import_json/c2b/c2b_D8_batch_a_import_zh.json")
+    foreign_import = Path("import_json/c2b/c2b_D8_batch_a_import_foreign_https.json")
+    config = tmp_path / "deployment_config.json"
+    config.write_text(json.dumps({
+        "schema_version": "c2b_migration_deployment_config_v1",
+        "deployments": [
+            {"deployment_id": "c2b_zh", "language_group": "Chinese", "server_instance_id": "http-server", "server_url": "http://175.178.71.217:8000", "project_id": "project-zh", "source_import_path": str(zh_import), "planned_import_filename": "d8_v18_zh.json"},
+            {"deployment_id": "c2b_en", "language_group": "English", "server_instance_id": "https-server", "server_url": "https://label.sparkle0825.top", "project_id": "project-en", "source_import_path": str(foreign_import), "planned_import_filename": "d8_v18_en.json"},
+        ],
+    }), encoding="utf-8")
+    output_dir = tmp_path / "migration"
+    repackage_c2b_v17_to_v18(argparse.Namespace(
+        legacy_root=legacy, legacy_launch_report=legacy / "c2b_launch_ready_report.json",
+        legacy_assignment=legacy / "assignment_manifest_C2B.csv",
+        legacy_selected_design_manifest=legacy / "inputs/c2b_selected_design_manifest_D8.json",
+        legacy_import_zh=zh_import, legacy_import_foreign=foreign_import,
+        worker_language_source=legacy / "worker_facing_release_C2B_D8/internal/worker_facing_distribution_index_C2B_D8.csv",
+        deployment_config=config, output_dir=output_dir, target_import_dir=tmp_path / "imports", target_method_contract=None,
+    ))
+    runtime_paths = []
+    for deployment in json.loads((output_dir / "c2b_launch_ready_report.json").read_text(encoding="utf-8"))["deployments"]:
+        planned = Path(deployment["planned_import_path"])
+        tasks = json.loads(planned.read_text(encoding="utf-8"))
+        runtime = tmp_path / f"runtime_export_{len(runtime_paths)}_arbitrary_name.json"
+        runtime.write_text(json.dumps([
+            {"id": f"runtime-{deployment['deployment_id']}-{index}", "data": item["data"]}
+            for index, item in enumerate(tasks)
+        ]), encoding="utf-8")
+        runtime_paths.append(runtime)
+    audit = bind_c2b_runtime_mapping(argparse.Namespace(
+        launch_report=output_dir / "c2b_launch_ready_report.json",
+        assignment_manifest=output_dir / "assignment_manifest_C2B.csv",
+        worker_distribution=output_dir / "worker_distribution_C2B.csv",
+        deployment_manifest=output_dir / "c2b_worker_deployment_manifest_v1.json",
+        planned_import=[Path(item["planned_import_path"]) for item in json.loads((output_dir / "c2b_launch_ready_report.json").read_text(encoding="utf-8"))["deployments"]],
+        runtime_export=runtime_paths, output_dir=output_dir,
+    ))
+    evidence = json.loads((output_dir / "c2b_v17_to_v18_runtime_evidence_v1.json").read_text(encoding="utf-8"))
+    assert audit["formal_ready"] is True
+    assert audit["runtime_task_count"] == 92
+    assert audit["worker_task_binding_count"] == 176
+    assert evidence["formal_ready"] is True
+    assert evidence["runtime_binding_status"] == "bound"
+    assert json.loads((output_dir / "c2b_worker_task_binding_audit.json").read_text(encoding="utf-8"))["runtime_evidence_sha256"] == hashlib.sha256((output_dir / "c2b_v17_to_v18_runtime_evidence_v1.json").read_bytes()).hexdigest()
 
 
 def test_runner_materializes_geometry_once_after_final_pool_gate():

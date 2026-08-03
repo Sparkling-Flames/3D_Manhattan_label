@@ -362,13 +362,19 @@ def _multi_deployment_args(tmp_path: Path, *, runtime_en_updates: dict[str, obje
         })
     manifest = tmp_path / "c2b_worker_deployment_manifest_v1.json"
     manifest.write_text(json.dumps({
-        "schema_version": "c2b_worker_deployment_manifest_v1", "deployments": manifest_deployments,
+        "schema_version": "c2b_worker_deployment_manifest_v1",
+        "method_contract_version": method["contract_version"],
+        "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+        "assignment_sha256": sha256_file(assignment),
+        "assignment_batch_id": batch_id,
+        "selected_design_sha": design_sha,
+        "deployments": manifest_deployments,
     }), encoding="utf-8")
     report = tmp_path / "launch.json"
     report.write_text(json.dumps({
         "schema_version": "paper_a_c2b_launch_ready_report_v4", "contract_role": "generated_subordinate",
         "method_contract_version": method["contract_version"], "method_contract_sha256": sha256_file(METHOD_CONTRACT),
-        "assignment_batch_id": batch_id, "selected_design_sha": design_sha,
+        "assignment_batch_id": batch_id, "assignment_sha256": sha256_file(assignment), "selected_design_sha": design_sha,
         "deployment_manifest_path": str(manifest.resolve()), "deployment_manifest_sha256": sha256_file(manifest),
         "deployments": report_deployments,
     }), encoding="utf-8")
@@ -387,8 +393,8 @@ def test_multi_deployment_binding_allows_same_planned_task_id_with_namespaced_ru
 
 
 @pytest.mark.parametrize(("updates", "runtime_id", "match"), [
-    ({"deployment_id": ""}, "runtime-en", "wrong deployment identity"),
-    ({"language_group": "Chinese"}, "runtime-en", "wrong deployment identity"),
+    ({"deployment_id": ""}, "runtime-en", "deployment identity"),
+    ({"language_group": "Chinese"}, "runtime-en", "deployment identity"),
     ({"project_id": "project-other"}, "runtime-en", "wrong project identity"),
     ({}, "runtime-zh", "duplicate identity"),
 ])

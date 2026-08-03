@@ -37,31 +37,82 @@ def _case(tmp_path: Path, *, assignments: list[dict[str, str]], submissions: lis
         "design_manifest_sha256": "d" * 64,
     }), encoding="utf-8")
     planned = tmp_path / "planned.json"
-    planned.write_text(json.dumps([{"data": {"planned_task_id": row["task_id"]}} for row in assignments]), encoding="utf-8")
+    planned_rows = []
+    for task_id in sorted({row["task_id"] for row in assignments}):
+        planned_rows.append({"data": {
+            "planned_task_id": task_id, "deployment_id": "zh", "language_group": "Chinese",
+            "server_instance_id": "server-zh", "project_id": "project-zh",
+            "c2b_batch_id": "C2B_BATCH_A", "selected_design_sha": "design-sha",
+        }})
+    planned.write_text(json.dumps(planned_rows), encoding="utf-8")
+    distribution = tmp_path / "distribution.csv"
+    _csv(distribution, fields, assignments)
     deployment_manifest = tmp_path / "deployment_manifest.json"
+    worker_registry_sha = "r" * 64
     deployment_manifest.write_text(json.dumps({
-        "schema_version": "c2b_worker_deployment_manifest_v1", "deployments": [{
+        "schema_version": "c2b_worker_deployment_manifest_v1",
+        "method_contract_version": load_method_contract()["contract_version"],
+        "method_contract_sha256": sha256_file(METHOD_CONTRACT), "assignment_batch_id": "C2B_BATCH_A",
+        "assignment_sha256": sha256_file(assignment), "deployments": [{
             "deployment_id": "zh", "language_group": "Chinese", "server_instance_id": "server-zh",
             "project_id": "project-zh", "worker_ids": [row["worker_id"] for row in profiles],
+            "server_url": "https://example.test", "worker_registry_sha256": worker_registry_sha,
+            "method_contract_version": load_method_contract()["contract_version"],
+            "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+            "assignment_sha256": sha256_file(assignment),
+            "selected_design_sha": "design-sha",
             "planned_import_path": str(planned), "planned_import_sha256": sha256_file(planned),
         }],
     }), encoding="utf-8")
+    runtime_export = tmp_path / "runtime-with-arbitrary-name.json"
+    runtime_export.write_text(json.dumps([{
+        "id": f"runtime-{task_id}", "data": {
+            "planned_task_id": task_id, "deployment_id": "zh", "language_group": "Chinese",
+            "server_instance_id": "server-zh", "project_id": "project-zh",
+            "c2b_batch_id": "C2B_BATCH_A", "selected_design_sha": "design-sha",
+        },
+    } for task_id in sorted({row["task_id"] for row in assignments})]), encoding="utf-8")
+    runtime_mapping = tmp_path / "c2b_runtime_task_mapping.csv"
+    runtime_mapping.write_text("worker_id,planned_task_id,runtime_task_id\n", encoding="utf-8")
     launch = (tmp_path / "launch.json"); launch.write_text(json.dumps({
         "schema_version": "paper_a_c2b_launch_ready_report_v4", "C2B_LAUNCH_READY": True,
+        "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": sha256_file(METHOD_CONTRACT),
         "assignment_batch_id": "C2B_BATCH_A", "assignment_sha256": sha256_file(assignment),
+        "selected_design_sha": "design-sha",
         "deployment_manifest_path": str(deployment_manifest), "deployment_manifest_sha256": sha256_file(deployment_manifest),
         "deployments": [{
             "deployment_id": "zh", "language_group": "Chinese", "server_instance_id": "server-zh",
-            "project_id": "project-zh", "planned_import_path": str(planned),
+            "project_id": "project-zh", "server_url": "https://example.test", "worker_registry_sha256": worker_registry_sha,
+            "method_contract_version": load_method_contract()["contract_version"],
+            "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+            "assignment_sha256": sha256_file(assignment),
+            "selected_design_sha": "design-sha",
+            "planned_import_path": str(planned),
             "planned_import_sha256": sha256_file(planned),
         }],
     }), encoding="utf-8")
     runtime = (tmp_path / "runtime.json"); runtime.write_text(json.dumps({
-        "formal_ready": True, "C2B_RUNTIME_BINDING_READY": True, "assignment_batch_id": "C2B_BATCH_A",
+        "schema_version": "paper_a_c2b_runtime_mapping_audit_v2", "method_contract_version": load_method_contract()["contract_version"],
+        "method_contract_sha256": sha256_file(METHOD_CONTRACT), "formal_ready": True, "C2B_RUNTIME_BINDING_READY": True,
+        "assignment_batch_id": "C2B_BATCH_A", "selected_design_sha": "design-sha", "deployment_manifest_sha256": sha256_file(deployment_manifest),
+        "deployment_ids": ["zh"], "planned_import_sha256": {"zh": sha256_file(planned)},
+        "runtime_export_sha256": {"zh": sha256_file(runtime_export)}, "runtime_mapping_sha256": sha256_file(runtime_mapping),
+        "runtime_task_count": len(planned_rows), "runtime_task_count_by_deployment": {"zh": len(planned_rows)},
+        "worker_task_binding_count": len(assignments), "dependencies": [
+            {"role": "RUNTIME_MAPPING", "path": str(runtime_mapping), "sha256": sha256_file(runtime_mapping)},
+            {"role": "PLANNED_IMPORT_zh", "path": str(planned), "sha256": sha256_file(planned)},
+            {"role": "RUNTIME_EXPORT_zh", "path": str(runtime_export), "sha256": sha256_file(runtime_export)},
+        ],
     }), encoding="utf-8")
     private = (tmp_path / "private.json"); private.write_text(json.dumps({
-        "formal_ready": True, "private_assignment_list_audit_passed": True,
+        "schema_version": "paper_a_c2b_private_assignment_list_audit_v2", "method_contract_version": load_method_contract()["contract_version"],
+        "method_contract_sha256": sha256_file(METHOD_CONTRACT), "formal_ready": True, "private_assignment_list_audit_passed": True,
         "assignment_batch_id": "C2B_BATCH_A", "assignment_manifest_sha256": sha256_file(assignment),
+        "worker_distribution_sha256": sha256_file(distribution),
+        "dependencies": [
+            {"role": "ASSIGNMENT_MANIFEST", "path": str(assignment), "sha256": sha256_file(assignment)},
+            {"role": "WORKER_DISTRIBUTION", "path": str(distribution), "sha256": sha256_file(distribution)},
+        ],
     }), encoding="utf-8")
     manifest = tmp_path / "profile.manifest.json"
     actual = {

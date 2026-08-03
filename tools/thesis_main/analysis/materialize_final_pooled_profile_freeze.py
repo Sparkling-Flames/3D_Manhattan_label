@@ -23,7 +23,7 @@ EXPECTED_SCHEMAS = {
     "C1_EVIDENCE_FROZEN": "c1_evidence_freeze_manifest_v6",
     "C2B_BATCH_A_CLOSEOUT_FROZEN": "c2b_closeout_v2",
     "C2B_BATCH_B_CLOSEOUT_FROZEN": "c2b_closeout_v2",
-    "C2A_RP_CLOSEOUT_FROZEN": "c2a_rp_closeout_v1",
+    "C2A_RP_CLOSEOUT_FROZEN": "c2a_rp_closeout_v2",
     "FINAL_C1_C2_Q_GT_MODEL_FROZEN": "final_c1_c2_qgt_model_v1",
     "POOLED_WORKER_PROFILE_FROZEN": "worker_profile_v2",
 }

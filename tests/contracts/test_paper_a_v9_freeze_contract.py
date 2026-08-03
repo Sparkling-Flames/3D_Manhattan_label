@@ -31,7 +31,7 @@ def test_final_pooled_profile_is_independent_from_c1_evidence(tmp_path: Path) ->
     inputs = {
         "c1_evidence": c1,
         "c2b_batch_a": _artifact(tmp_path / "batch_a.json", "c2b_closeout_v2", "C2B_BATCH_A_CLOSEOUT_FROZEN"),
-        "c2a_rp": _artifact(tmp_path / "c2a.json", "c2a_rp_closeout_v1", "C2A_RP_CLOSEOUT_FROZEN"),
+        "c2a_rp": _artifact(tmp_path / "c2a.json", "c2a_rp_closeout_v2", "C2A_RP_CLOSEOUT_FROZEN"),
         "final_qgt": _artifact(tmp_path / "qgt.json", "final_c1_c2_qgt_model_v1", "FINAL_C1_C2_Q_GT_MODEL_FROZEN"),
         "pooled_profile": _artifact(tmp_path / "profile.json", "worker_profile_v2", "POOLED_WORKER_PROFILE_FROZEN"),
         "enrollment_registry": tmp_path / "enrollment.csv",

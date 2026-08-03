@@ -231,10 +231,13 @@ def build_precision_assignments(
     selection_seed: int = 0,
     require_explicit_eligibility: bool = False,
     formal: bool = False,
+    dispatch_block_index: int | None = None,
 ) -> list[dict[str, Any]]:
     max_tasks, contract_max_blocks, _method_sha = _c2a_rp_limits()
     if max_task_support < 1:
         raise ValueError("C2-A-RP max_task_support must be positive")
+    if dispatch_block_index is not None and not 1 <= int(dispatch_block_index) <= contract_max_blocks:
+        raise ValueError("C2-A-RP dispatch block is outside the normative cap")
     _precision_schema, assignment_schema = _c2a_rp_csv_schemas()
     for plan in precision_rows:
         if formal and safe(plan.get("target_component")) != "risk_slope":
@@ -267,7 +270,14 @@ def build_precision_assignments(
             task_support[task_id] += 1
     for plan in precision_rows:
         worker = safe(plan.get("worker_id"))
-        sequence = 0
+        prior_c2a_rows = [
+            row for row in history_rows or []
+            if safe(row.get("worker_id")) == worker and (
+                safe(row.get("round_id")) == "C2-A-RP"
+                or safe(row.get("schema_version")) == assignment_schema
+            )
+        ]
+        sequence = len(prior_c2a_rows)
         eligible_by_stratum: dict[str, list[dict[str, str]]] = {}
         rng_by_stratum: dict[str, random.Random] = {}
         for stratum in ("ordinary", "stress"):
@@ -277,11 +287,16 @@ def build_precision_assignments(
                 and safe(task.get("base_task_id")) not in seen_by_worker[worker]
                 and task_support[safe(task.get("task_id"))] < max_task_support
             ]
-            count = int(plan[f"{stratum}_tasks"])
+            count = 1 if dispatch_block_index is not None else int(plan[f"{stratum}_tasks"])
             if count > len(eligible_by_stratum[stratum]):
                 raise ValueError(f"insufficient C2-A-RP {stratum} tasks for worker {worker}")
             rng_by_stratum[stratum] = random.Random(f"{selection_seed}|{worker}|{stratum}")
-        for block_index in range(1, max(int(plan["ordinary_tasks"]), int(plan["stress_tasks"])) + 1):
+        first_block = int(dispatch_block_index or 1)
+        planned_last_block = max(int(plan["ordinary_tasks"]), int(plan["stress_tasks"]))
+        if dispatch_block_index is not None and first_block > planned_last_block:
+            raise ValueError(f"C2-A-RP dispatch block exceeds worker plan:{worker}")
+        last_block = int(dispatch_block_index or planned_last_block)
+        for block_index in range(first_block, last_block + 1):
             for stratum in ("ordinary", "stress"):
                 if block_index > int(plan[f"{stratum}_tasks"]):
                     continue
@@ -328,9 +343,9 @@ def build_precision_assignments(
                     "task_support_before": support_before,
                     "task_support_after": support_before + 1,
                     "paired_block_support_before": int(plan.get("paired_block_support_before") or 0),
-                    "paired_block_support_after": int(plan.get("paired_block_support_before") or 0) + int(plan["additional_blocks"]),
+                    "paired_block_support_after": int(plan.get("paired_block_support_before") or 0) + block_index,
                     "effective_risk_slope_support_before": int(plan["current_support"]),
-                    "effective_risk_slope_support_after": int(plan["current_support"]) + int(plan["additional_blocks"]),
+                    "effective_risk_slope_support_after": int(plan["current_support"]) + block_index,
                     "design_manifest_sha256": manifest_sha,
                     "c2b_summary_sha256": c2b_sha,
                     "post_c2b_worker_profile_sha256": profile_sha,
@@ -347,6 +362,9 @@ def materialize(
     c2b_summary_sha256: str | None = None,
     task_pool_csv: Path | None = None,
     assignment_history_csv: Path | None = None,
+    existing_assignment_manifest_csv: Path | None = None,
+    dispatch_state_json: Path | None = None,
+    dispatch_block_index: int | None = None,
     threshold_manifest: Path | None = None,
     input_status: str = "dry_run",
 ) -> dict[str, Any]:
@@ -414,6 +432,55 @@ def materialize(
         plan_workers = {normalize_worker_id(row.get("worker_id")) for row in rows if normalize_worker_id(row.get("worker_id"))}
         if len(c2b_workers) != len(c2b["worker_summaries"]) or c2b_workers != plan_workers or len(plan_workers) != len(rows):
             raise ValueError("C2-A-RP precision plan does not cover the complete C2-B roster")
+    history_rows = read_csv(assignment_history_csv) if assignment_history_csv else []
+    existing_assignments: list[dict[str, str]] = []
+    if existing_assignment_manifest_csv:
+        existing_assignments = read_csv(existing_assignment_manifest_csv)
+        if any(safe(row.get("schema_version")) != assignment_schema for row in existing_assignments):
+            raise ValueError("C2-A-RP existing assignment manifest schema is stale")
+        existing_ids = {(safe(row.get("worker_id")), safe(row.get("task_id"))) for row in existing_assignments}
+        if any(not worker or not task for worker, task in existing_ids) or len(existing_ids) != len(existing_assignments):
+            raise ValueError("C2-A-RP existing assignment manifest is not unique")
+    history_valid = input_status != "formal"
+    if assignment_history_csv:
+        history_valid = input_status != "formal" or safe(expected.get("assignment_history_csv")) == sha256_file(assignment_history_csv)
+    dispatch_state_workers: set[str] = set()
+    if dispatch_state_json:
+        state = json.loads(dispatch_state_json.read_text(encoding="utf-8"))
+        if state.get("schema_version") != "c2a_rp_closeout_v2" or state.get("method_contract_sha256") != method_sha:
+            raise ValueError("C2-A-RP dispatch state is stale")
+        outcomes = state.get("worker_outcomes")
+        if not isinstance(outcomes, list):
+            raise ValueError("C2-A-RP dispatch state lacks worker outcomes")
+        dispatch_state_workers = {
+            normalize_worker_id(row.get("worker_id", ""))
+            for row in outcomes
+            if row.get("terminal_state") in {"target_met", "fallback_strong_global", "not_evaluable"}
+        }
+    if input_status == "formal" and (not assignment_history_csv or not history_valid):
+        raise ValueError("stale_or_unbound_c2a_rp_task_pool")
+    if input_status == "formal":
+        if max_blocks > 0:
+            if dispatch_block_index is None:
+                dispatch_block_index = 1
+            if dispatch_block_index < 1 or dispatch_block_index > contract_max_blocks:
+                raise ValueError("C2-A-RP dispatch block is outside the normative cap")
+        else:
+            dispatch_block_index = None
+        if dispatch_block_index is not None and dispatch_block_index > 1 and not existing_assignment_manifest_csv:
+            raise ValueError("C2-A-RP later dispatch requires the prior assignment manifest")
+        if existing_assignments:
+            existing_max = max(int(row.get("block_index", 0) or 0) for row in existing_assignments)
+            if dispatch_block_index is None or existing_max != dispatch_block_index - 1:
+                raise ValueError("C2-A-RP dispatch is not append-only by block")
+            if any(int(row.get("block_index", 0) or 0) >= dispatch_block_index for row in existing_assignments):
+                raise ValueError("C2-A-RP existing assignment contains a future block")
+    dispatch_history_rows = [*history_rows, *existing_assignments]
+    dispatch_rows = [
+        row for row in rows
+        if (input_status != "formal" or int(row.get("additional_blocks", 0) or 0) > 0)
+        and (not dispatch_state_workers or normalize_worker_id(row.get("worker_id", "")) not in dispatch_state_workers)
+    ]
     assignments: list[dict[str, Any]] = []
     task_pool_valid = input_status != "formal"
     if task_pool_csv:
@@ -421,19 +488,17 @@ def materialize(
         task_pool_valid = input_status != "formal" or expected_task_sha == sha256_file(task_pool_csv)
         if task_pool_valid:
             assignments = build_precision_assignments(
-                rows, read_csv(task_pool_csv), manifest_sha=manifest_sha,
+                dispatch_rows, read_csv(task_pool_csv), manifest_sha=manifest_sha,
                 c2b_sha=c2b_sha, profile_sha=actual_profile_sha,
-                history_rows=read_csv(assignment_history_csv) if assignment_history_csv else None,
+                history_rows=dispatch_history_rows,
                 max_task_support=int(precision.get("max_task_support", 2)),
                 selection_seed=int(precision.get("selection_seed", 0)),
                 require_explicit_eligibility=input_status == "formal",
                 formal=input_status == "formal",
+                dispatch_block_index=dispatch_block_index if input_status == "formal" else None,
             )
-    history_valid = input_status != "formal"
-    if assignment_history_csv:
-        history_valid = input_status != "formal" or (
-            safe(expected.get("assignment_history_csv")) == sha256_file(assignment_history_csv)
-        )
+    if existing_assignments:
+        assignments = [*existing_assignments, *assignments]
     if input_status == "formal" and (not task_pool_csv or not task_pool_valid or not assignment_history_csv or not history_valid):
         raise ValueError("stale_or_unbound_c2a_rp_task_pool")
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -462,8 +527,15 @@ def materialize(
         },
         "threshold_manifest_path": str(threshold_path or ""),
         "threshold_manifest_sha256": threshold_sha,
+        "dispatch_block_index": dispatch_block_index or 0,
+        "dispatch_mode": "append_only_sequential" if input_status == "formal" else "planned",
+        "existing_assignment_manifest_path": str(existing_assignment_manifest_csv or ""),
+        "existing_assignment_manifest_sha256": sha256_file(existing_assignment_manifest_csv) if existing_assignment_manifest_csv else "",
+        "dispatch_state_path": str(dispatch_state_json or ""),
+        "dispatch_state_sha256": sha256_file(dispatch_state_json) if dispatch_state_json else "",
         "n_workers": len(rows),
-        "n_workers_with_precision_additions": sum(int(row["additional_blocks"]) > 0 for row in rows),
+        "n_workers_with_precision_additions": sum(int(row["additional_blocks"]) > 0 for row in dispatch_rows),
+        "n_workers_planned_with_precision_additions": sum(int(row["additional_blocks"]) > 0 for row in rows),
         "n_workers_unmet_at_cap": sum(bool(row["unmet_reason"]) for row in rows),
         "n_assignments": len(assignments),
         "c2a_rp_ready": binding_valid and c2b_valid and task_pool_valid and history_valid and bool(rows) and (formal_goal == _formal_goal() if input_status == "formal" else True),
@@ -485,6 +557,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--c2b-summary-sha256")
     parser.add_argument("--task-pool-csv", type=Path)
     parser.add_argument("--assignment-history-csv", type=Path)
+    parser.add_argument("--existing-assignment-manifest-csv", type=Path)
+    parser.add_argument("--dispatch-state-json", type=Path)
+    parser.add_argument("--dispatch-block-index", type=int)
     parser.add_argument("--threshold-manifest", type=Path)
     parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
     args = parser.parse_args(argv)
@@ -494,6 +569,9 @@ def main(argv: list[str] | None = None) -> int:
             c2b_summary=args.c2b_summary, c2b_summary_sha256=args.c2b_summary_sha256,
             task_pool_csv=args.task_pool_csv, input_status=args.input_status,
             assignment_history_csv=args.assignment_history_csv,
+            existing_assignment_manifest_csv=args.existing_assignment_manifest_csv,
+            dispatch_state_json=args.dispatch_state_json,
+            dispatch_block_index=args.dispatch_block_index,
             threshold_manifest=args.threshold_manifest,
         )
     except (OSError, KeyError, TypeError, ValueError) as exc:

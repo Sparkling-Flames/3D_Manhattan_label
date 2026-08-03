@@ -348,6 +348,9 @@ def materialize(
     private = json.loads(private_assignment_audit.read_text(encoding="utf-8"))
     if launch.get("schema_version") != "paper_a_c2b_launch_ready_report_v4":
         raise ValueError("C2-B formal closeout requires the multi-deployment launch report")
+    if (launch.get("method_contract_version") != method["contract_version"]
+            or launch.get("method_contract_sha256") != method_sha):
+        raise ValueError("C2-B launch report method contract is stale")
     deployments = launch.get("deployments")
     if not isinstance(deployments, list) or not deployments or "import_sha256" in launch:
         raise ValueError("C2-B launch report must provide per-deployment planned import evidence")
@@ -358,6 +361,11 @@ def materialize(
     deployment_manifest = json.loads(deployment_manifest_path.read_text(encoding="utf-8"))
     if deployment_manifest.get("schema_version") != "c2b_worker_deployment_manifest_v1":
         raise ValueError("C2-B deployment manifest schema is invalid")
+    if (deployment_manifest.get("method_contract_version") != method["contract_version"]
+            or deployment_manifest.get("method_contract_sha256") != method_sha
+            or deployment_manifest.get("assignment_batch_id") != batch_id
+            or deployment_manifest.get("assignment_sha256") != actual["c2b_assignment_csv"]):
+        raise ValueError("C2-B deployment manifest is stale or bound to another assignment")
     manifest_deployments = {
         str(item.get("deployment_id", "")): item
         for item in deployment_manifest.get("deployments", [])
@@ -378,7 +386,11 @@ def materialize(
         manifest_item = manifest_deployments.get(deployment_id)
         if not isinstance(manifest_item, dict) or any(
             str(manifest_item.get(field, "")) != str(deployment.get(field, ""))
-            for field in ("language_group", "server_instance_id", "project_id")
+            for field in (
+                "language_group", "server_instance_id", "project_id", "server_url",
+                "method_contract_version", "method_contract_sha256", "assignment_sha256",
+                "selected_design_sha", "worker_registry_sha256",
+            )
         ):
             raise ValueError("C2-B launch report deployment identity disagrees with the frozen manifest")
         manifest_planned = Path(str(manifest_item.get("planned_import_path", "")))
@@ -386,19 +398,118 @@ def materialize(
                 or str(manifest_item.get("planned_import_sha256", "")) != planned_sha
                 or sha256_file(manifest_planned) != planned_sha):
             raise ValueError("C2-B deployment manifest planned import is missing or stale")
+        if str(manifest_item.get("server_url", "")).strip() != str(deployment.get("server_url", "")).strip():
+            raise ValueError("C2-B deployment server URL disagrees with the frozen manifest")
+        if str(manifest_item.get("worker_registry_sha256", "")).strip() != str(deployment.get("worker_registry_sha256", "")).strip():
+            raise ValueError("C2-B deployment worker registry identity disagrees with the frozen manifest")
+        planned_payload = json.loads(planned_path.read_text(encoding="utf-8"))
+        planned_rows = planned_payload if isinstance(planned_payload, list) else planned_payload.get("tasks", planned_payload.get("data", []))
+        expected_task_ids = {task for _worker, task in assigned}
+        if not isinstance(planned_rows, list) or len(planned_rows) != len(expected_task_ids):
+            raise ValueError("C2-B planned import task count is not bound to the frozen task pool")
+        seen_planned: set[str] = set()
+        for item in planned_rows:
+            data = item.get("data", {}) if isinstance(item, dict) and isinstance(item.get("data", {}), dict) else {}
+            planned_task_id = str(data.get("planned_task_id", "")).strip()
+            if (not planned_task_id or planned_task_id in seen_planned or planned_task_id not in expected_task_ids
+                    or data.get("deployment_id") != deployment_id
+                    or data.get("language_group") != deployment.get("language_group")
+                    or data.get("server_instance_id") != deployment.get("server_instance_id")
+                    or data.get("project_id") != deployment.get("project_id")
+                    or data.get("c2b_batch_id") != batch_id):
+                raise ValueError("C2-B planned import identity is incomplete or stale")
+            if launch.get("selected_design_sha") and data.get("selected_design_sha") != launch.get("selected_design_sha"):
+                raise ValueError("C2-B planned import selected design identity is stale")
+            seen_planned.add(planned_task_id)
+        if seen_planned != expected_task_ids:
+            raise ValueError("C2-B planned import does not cover the frozen task pool")
         deployment_ids.add(deployment_id)
     if deployment_ids != set(manifest_deployments):
         raise ValueError("C2-B launch report does not cover the frozen deployment set")
     if (launch.get("C2B_LAUNCH_READY") is not True or launch.get("assignment_batch_id") != batch_id
             or launch.get("assignment_sha256") != actual["c2b_assignment_csv"]):
         raise ValueError("C2-B launch report is stale or bound to another batch")
-    if (runtime.get("formal_ready") is not True or runtime.get("C2B_RUNTIME_BINDING_READY") is not True
-            or runtime.get("assignment_batch_id") != batch_id):
+    if (runtime.get("schema_version") != "paper_a_c2b_runtime_mapping_audit_v2"
+            or runtime.get("method_contract_version") != method["contract_version"]
+            or runtime.get("method_contract_sha256") != method_sha
+            or runtime.get("formal_ready") is not True or runtime.get("C2B_RUNTIME_BINDING_READY") is not True
+            or runtime.get("assignment_batch_id") != batch_id
+            or runtime.get("selected_design_sha") != launch.get("selected_design_sha")
+            or set(runtime.get("deployment_ids", [])) != deployment_ids
+            or runtime.get("deployment_manifest_sha256") != launch.get("deployment_manifest_sha256")
+            or int(runtime.get("worker_task_binding_count", -1)) != len(assigned)):
         raise ValueError("C2-B runtime mapping audit is not formally ready for this batch")
+    runtime_export_hashes = runtime.get("runtime_export_sha256")
+    planned_import_hashes = runtime.get("planned_import_sha256")
+    runtime_counts = runtime.get("runtime_task_count_by_deployment")
+    if (not isinstance(runtime_export_hashes, dict) or set(runtime_export_hashes) != deployment_ids
+            or not isinstance(planned_import_hashes, dict) or set(planned_import_hashes) != deployment_ids
+            or not isinstance(runtime_counts, dict) or set(runtime_counts) != deployment_ids
+            or sum(int(value) for value in runtime_counts.values()) != int(runtime.get("runtime_task_count", -1))):
+        raise ValueError("C2-B runtime mapping audit deployment evidence is incomplete")
+    runtime_dependencies = {
+        str(item.get("role", "")): item
+        for item in runtime.get("dependencies", [])
+        if isinstance(item, dict)
+    }
+    mapping_dependency = runtime_dependencies.get("RUNTIME_MAPPING")
+    if (not isinstance(mapping_dependency, dict)
+            or mapping_dependency.get("sha256") != runtime.get("runtime_mapping_sha256")
+            or not Path(str(mapping_dependency.get("path", ""))).is_file()
+            or sha256_file(Path(str(mapping_dependency.get("path", "")))) != runtime.get("runtime_mapping_sha256")):
+        raise ValueError("C2-B runtime mapping audit lacks a valid mapping SHA binding")
+    for deployment_id in deployment_ids:
+        planned_dependency = runtime_dependencies.get(f"PLANNED_IMPORT_{deployment_id}")
+        runtime_dependency = runtime_dependencies.get(f"RUNTIME_EXPORT_{deployment_id}")
+        if (not isinstance(planned_dependency, dict) or planned_dependency.get("sha256") != planned_import_hashes[deployment_id]
+                or not isinstance(runtime_dependency, dict) or runtime_dependency.get("sha256") != runtime_export_hashes[deployment_id]):
+            raise ValueError("C2-B runtime mapping audit lacks per-deployment import/export evidence")
+        for dependency, declared_sha in ((planned_dependency, planned_import_hashes[deployment_id]), (runtime_dependency, runtime_export_hashes[deployment_id])):
+            path = Path(str(dependency.get("path", "")))
+            if not path.is_file() or sha256_file(path) != declared_sha:
+                raise ValueError("C2-B runtime mapping audit contains a stale deployment file SHA")
+    private_dependencies = {
+        str(item.get("role", "")): item
+        for item in private.get("dependencies", [])
+        if isinstance(item, dict)
+    }
+    private_assignment_dependency = private_dependencies.get("ASSIGNMENT_MANIFEST")
+    private_distribution_dependency = private_dependencies.get("WORKER_DISTRIBUTION")
     if (private.get("formal_ready") is not True or private.get("private_assignment_list_audit_passed") is not True
             or private.get("assignment_batch_id") != batch_id
-            or private.get("assignment_manifest_sha256") != actual["c2b_assignment_csv"]):
+            or private.get("method_contract_version") != method["contract_version"]
+            or private.get("method_contract_sha256") != method_sha
+            or private.get("assignment_manifest_sha256") != actual["c2b_assignment_csv"]
+            or not isinstance(private_assignment_dependency, dict)
+            or private_assignment_dependency.get("sha256") != actual["c2b_assignment_csv"]
+            or not isinstance(private_distribution_dependency, dict)
+            or private_distribution_dependency.get("sha256") != private.get("worker_distribution_sha256")
+            or any(
+                not Path(str(item.get("path", ""))).is_file()
+                or sha256_file(Path(str(item.get("path", "")))) != item.get("sha256")
+                for item in (private_assignment_dependency, private_distribution_dependency)
+            )):
         raise ValueError("C2-B private assignment audit is not formally ready for this batch")
+    runtime_evidence_path = Path(str(runtime.get("runtime_evidence_path", ""))) if runtime.get("runtime_evidence_path") else None
+    if launch.get("migration_envelope_path"):
+        if runtime_evidence_path is None or not runtime_evidence_path.is_file():
+            raise ValueError("C2-B migration runtime evidence is missing")
+        runtime_evidence = json.loads(runtime_evidence_path.read_text(encoding="utf-8"))
+        if (runtime_evidence.get("schema_version") != "paper_a_c2b_v17_to_v18_runtime_evidence_v1"
+                or runtime_evidence.get("formal_ready") is not True
+                or runtime_evidence.get("runtime_binding_status") != "bound"
+                or runtime_evidence.get("method_contract_sha256") != method_sha
+                or runtime_evidence.get("assignment_sha256") != actual["c2b_assignment_csv"]
+                or set(runtime_evidence.get("deployment_ids", [])) != deployment_ids
+                or runtime_evidence.get("worker_task_binding_count") != len(assigned)):
+            raise ValueError("C2-B migration runtime evidence is incomplete or stale")
+        if (runtime_evidence.get("launch_report_sha256") != sha256_file(launch_report)
+                or runtime_evidence.get("deployment_manifest_sha256") != launch.get("deployment_manifest_sha256")
+                or runtime_evidence.get("runtime_mapping_sha256") != runtime.get("runtime_mapping_sha256")
+                or runtime_evidence.get("private_assignment_audit_sha256") != sha256_file(private_assignment_audit)):
+            raise ValueError("C2-B migration runtime evidence hash chain is inconsistent")
+        if runtime_evidence.get("planned_import_sha256") != planned_import_hashes or runtime_evidence.get("runtime_export_sha256") != runtime_export_hashes:
+            raise ValueError("C2-B migration runtime evidence per-deployment hashes are inconsistent")
     summary = {
         "schema_version": "c2b_closeout_v2",
         "artifact_role": f"{batch_id}_CLOSEOUT_FROZEN",
@@ -411,6 +522,8 @@ def materialize(
         "deployments": deployments,
         "deployment_manifest_path": str(deployment_manifest_path),
         "deployment_manifest_sha256": launch.get("deployment_manifest_sha256", ""),
+        "runtime_evidence_path": str(runtime_evidence_path or ""),
+        "runtime_evidence_sha256": sha256_file(runtime_evidence_path) if runtime_evidence_path else "",
         "closeout_version": "c2b_closeout_v2",
         "c2b_design_ready": True,
         "c2b_closeout_ready": True,
