@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v17 SHA-256 5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260803_v18 SHA-256 694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87 -->
 # HOHONET 椤圭洰鍦板浘
 
 > 2026-07-18 vFinal 鏇存柊锛歅aper A 姝ｅ紡涓荤嚎宸叉敼涓?C1 璁捐 C2-B

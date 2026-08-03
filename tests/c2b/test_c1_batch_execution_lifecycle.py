@@ -308,3 +308,92 @@ def test_runtime_mapping_rejects_missing_private_worker_lists(tmp_path: Path) ->
         bind_c2b_runtime_mapping(type("Args", (), {"launch_report": report, "assignment_manifest": assignment, "worker_distribution": distribution, "planned_import": planned, "runtime_export": runtime, "output_dir": output})())
     audit = json.loads((output / "c2b_private_assignment_list_audit.json").read_text(encoding="utf-8"))
     assert audit["formal_ready"] is False
+
+
+def _multi_deployment_args(tmp_path: Path, *, runtime_en_updates: dict[str, object] | None = None, runtime_en_id: str = "runtime-en"):
+    method = load_method_contract()
+    batch_id = "C2B_BATCH_A"
+    design_sha = "d" * 64
+    assignment = tmp_path / "assignment.csv"
+    distribution = tmp_path / "distribution.csv"
+    rows = [{"worker_id": "W001", "task_id": "shared-task"}, {"worker_id": "W002", "task_id": "shared-task"}]
+    _write_csv(assignment, rows)
+    _write_csv(distribution, rows)
+    private = distribution.parent / "worker_facing_distribution_C2B"
+    private.mkdir()
+    _write_csv(private / "worker_001_C2B.csv", [rows[0]])
+    _write_csv(private / "worker_002_C2B.csv", [rows[1]])
+    deployment_rows = (
+        ("zh", "Chinese", "server-zh", "project-shared", "W001", "runtime-zh"),
+        ("en", "English", "server-en", "project-shared", "W002", runtime_en_id),
+    )
+    planned_paths = []
+    runtime_paths = []
+    manifest_deployments = []
+    report_deployments = []
+    for deployment_id, language, server, project, worker, runtime_id in deployment_rows:
+        planned = tmp_path / f"planned_{deployment_id}.json"
+        planned.write_text(json.dumps([{"data": {
+            "planned_task_id": "shared-task", "deployment_id": deployment_id,
+            "language_group": language, "server_instance_id": server, "project_id": project,
+            "selected_design_sha": design_sha, "c2b_batch_id": batch_id,
+        }}]), encoding="utf-8")
+        runtime_data = {
+            "planned_task_id": "shared-task", "deployment_id": deployment_id,
+            "language_group": language, "server_instance_id": server, "project_id": project,
+            "selected_design_sha": design_sha, "c2b_batch_id": batch_id, "task_role": "ordinary",
+        }
+        if deployment_id == "en" and runtime_en_updates:
+            runtime_data.update(runtime_en_updates)
+        runtime = tmp_path / f"runtime_{deployment_id}.json"
+        runtime_project = runtime_data.get("project_id", project)
+        runtime.write_text(json.dumps([{"id": runtime_id, "project": runtime_project, "data": runtime_data}]), encoding="utf-8")
+        planned_paths.append(planned)
+        runtime_paths.append(runtime)
+        manifest_deployments.append({
+            "deployment_id": deployment_id, "language_group": language, "server_instance_id": server,
+            "project_id": project, "worker_ids": [worker], "planned_import_path": str(planned.resolve()),
+            "planned_import_sha256": sha256_file(planned),
+        })
+        report_deployments.append({
+            "deployment_id": deployment_id, "language_group": language, "server_instance_id": server,
+            "project_id": project, "planned_import_path": str(planned.resolve()),
+            "planned_import_sha256": sha256_file(planned),
+        })
+    manifest = tmp_path / "c2b_worker_deployment_manifest_v1.json"
+    manifest.write_text(json.dumps({
+        "schema_version": "c2b_worker_deployment_manifest_v1", "deployments": manifest_deployments,
+    }), encoding="utf-8")
+    report = tmp_path / "launch.json"
+    report.write_text(json.dumps({
+        "schema_version": "paper_a_c2b_launch_ready_report_v4", "contract_role": "generated_subordinate",
+        "method_contract_version": method["contract_version"], "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+        "assignment_batch_id": batch_id, "selected_design_sha": design_sha,
+        "deployment_manifest_path": str(manifest.resolve()), "deployment_manifest_sha256": sha256_file(manifest),
+        "deployments": report_deployments,
+    }), encoding="utf-8")
+    return type("Args", (), {
+        "launch_report": report, "assignment_manifest": assignment, "worker_distribution": distribution,
+        "planned_import": planned_paths, "runtime_export": runtime_paths, "deployment_manifest": manifest,
+        "output_dir": tmp_path / "out",
+    })()
+
+
+def test_multi_deployment_binding_allows_same_planned_task_id_with_namespaced_runtime_identity(tmp_path: Path) -> None:
+    result = bind_c2b_runtime_mapping(_multi_deployment_args(tmp_path))
+    assert result["C2B_RUNTIME_BINDING_READY"] is True
+    mapping = list(csv.DictReader((tmp_path / "out" / "c2b_runtime_task_mapping.csv").open(encoding="utf-8")))
+    assert {(row["deployment_id"], row["planned_task_id"]) for row in mapping} == {("zh", "shared-task"), ("en", "shared-task")}
+
+
+@pytest.mark.parametrize(("updates", "runtime_id", "match"), [
+    ({"deployment_id": ""}, "runtime-en", "wrong deployment identity"),
+    ({"language_group": "Chinese"}, "runtime-en", "wrong deployment identity"),
+    ({"project_id": "project-other"}, "runtime-en", "wrong project identity"),
+    ({}, "runtime-zh", "duplicate identity"),
+])
+def test_multi_deployment_binding_rejects_identity_drift_and_cross_server_collision(
+    tmp_path: Path, updates: dict[str, object], runtime_id: str, match: str,
+) -> None:
+    with pytest.raises(ValueError, match=match):
+        bind_c2b_runtime_mapping(_multi_deployment_args(tmp_path, runtime_en_updates=updates, runtime_en_id=runtime_id))

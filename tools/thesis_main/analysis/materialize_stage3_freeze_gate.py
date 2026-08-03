@@ -11,11 +11,24 @@ from typing import Any
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file
 
 METHOD = load_method_contract()
-REQUIRED_GATES = tuple(METHOD["stage3"]["required_roles"])
+T1_REQUIRED_GATES = tuple(METHOD["stage3"]["required_roles"])
+V1_REQUIRED_GATES = tuple(METHOD["stage3"]["v1_required_roles"])
+# Backward-compatible import for callers that build the operational T1 gate.
+REQUIRED_GATES = T1_REQUIRED_GATES
 REQUIRED_CHILD_ROLES = {
     role: frozenset(children)
     for role, children in METHOD["stage3"].get("required_child_roles", {}).items()
 }
+GATE_SCHEMA = "paper_a_stage3_freeze_gate_v4"
+
+
+def required_gates(gate_kind: str) -> tuple[str, ...]:
+    normalized = str(gate_kind or "T1").upper()
+    if normalized == "T1":
+        return T1_REQUIRED_GATES
+    if normalized == "V1":
+        return V1_REQUIRED_GATES
+    raise ValueError(f"unsupported Stage 3 gate kind:{gate_kind}")
 
 
 def _resolve(path_value: Any, base: Path) -> Path:
@@ -81,14 +94,25 @@ def _validate_dependency(item: dict[str, Any], base: Path, trail: str) -> tuple[
         ):
             if payload.get(state) is not True:
                 blockers.append(f"{trail}:{state.lower()}_not_met")
+    role = str(item.get("role", ""))
+    if role.startswith(("T1_", "V1_")) and payload.get("artifact_role") != role:
+        blockers.append(f"{trail}:artifact_role_mismatch")
     return {**item, "resolved_path": str(path), "dependencies": children}, blockers
 
 
-def build_gate(state: dict[str, Any], roster_sha256: str, enrollment_sha256: str, *, base_dir: Path = Path(".")) -> dict[str, Any]:
+def build_gate(
+    state: dict[str, Any],
+    roster_sha256: str,
+    enrollment_sha256: str,
+    *,
+    base_dir: Path = Path("."),
+    gate_kind: str = "T1",
+) -> dict[str, Any]:
     blockers: list[str] = []
     dependencies: list[dict[str, Any]] = []
     gate_values: dict[str, bool] = {}
-    for role in REQUIRED_GATES:
+    roles = required_gates(gate_kind)
+    for role in roles:
         item = state.get(role)
         if not isinstance(item, dict):
             gate_values[role] = False
@@ -101,20 +125,34 @@ def build_gate(state: dict[str, Any], roster_sha256: str, enrollment_sha256: str
     if not roster_sha256 or not enrollment_sha256:
         blockers.append("roster_or_enrollment_sha_missing")
     return {
-        "schema_version": "paper_a_stage3_freeze_gate_v3", "formal_ready": not blockers,
+        "schema_version": GATE_SCHEMA, "gate_kind": str(gate_kind).upper(), "required_roles": list(roles),
+        "formal_ready": not blockers,
         **gate_values, "dependencies": dependencies,
-        "validation_roster_sha256": roster_sha256, "enrollment_registry_sha256": enrollment_sha256,
+        "roster_sha256": roster_sha256,
+        "t1_roster_sha256": roster_sha256 if str(gate_kind).upper() == "T1" else "",
+        "validation_roster_sha256": roster_sha256 if str(gate_kind).upper() == "V1" else "",
+        "enrollment_registry_sha256": enrollment_sha256,
         "method_contract_version": METHOD["contract_version"],
         "method_contract_sha256": sha256_file(METHOD_CONTRACT),
         "STAGE3_LAUNCH_ALLOWED": not blockers, "blockers": blockers,
     }
 
 
-def validate_gate_file(path: Path) -> dict[str, Any]:
+def validate_gate_file(path: Path, *, expected_gate_kind: str | None = None) -> dict[str, Any]:
+    return _validate_gate_file(path, expected_gate_kind=expected_gate_kind)
+
+
+def _validate_gate_file(path: Path, *, expected_gate_kind: str | None = None) -> dict[str, Any]:
     gate = json.loads(path.read_text(encoding="utf-8"))
-    if gate.get("schema_version") != "paper_a_stage3_freeze_gate_v3" or gate.get("STAGE3_LAUNCH_ALLOWED") is not True:
+    gate_kind = str(gate.get("gate_kind", "T1")).upper()
+    if expected_gate_kind and gate_kind != str(expected_gate_kind).upper():
+        raise ValueError(f"Stage 3 gate kind mismatch:{gate_kind}")
+    roles = required_gates(gate_kind)
+    if gate.get("schema_version") != GATE_SCHEMA or gate.get("STAGE3_LAUNCH_ALLOWED") is not True:
         raise ValueError("Stage 3 freeze gate is missing or closed")
-    if any(gate.get(role) is not True for role in REQUIRED_GATES) or len(gate.get("dependencies", [])) != len(REQUIRED_GATES):
+    if tuple(gate.get("required_roles", ())) != roles:
+        raise ValueError("Stage 3 freeze gate required role set is stale")
+    if any(gate.get(role) is not True for role in roles) or len(gate.get("dependencies", [])) != len(roles):
         raise ValueError("Stage 3 freeze gate does not contain all required roles")
     if gate.get("method_contract_version") != METHOD["contract_version"] or gate.get("method_contract_sha256") != sha256_file(METHOD_CONTRACT):
         raise ValueError("Stage 3 method contract version or SHA is stale")
@@ -130,13 +168,23 @@ def validate_gate_file(path: Path) -> dict[str, Any]:
 def assert_frozen_roster(gate: dict[str, Any], roster_path: Path, enrollment_path: Path) -> None:
     if gate.get("STAGE3_LAUNCH_ALLOWED") is not True:
         raise ValueError("Stage 3 freeze gate is not open")
-    if gate.get("validation_roster_sha256") != sha256_file(roster_path) or gate.get("enrollment_registry_sha256") != sha256_file(enrollment_path):
-        raise ValueError("validation roster or enrollment registry changed after freeze")
+    if gate.get("roster_sha256") != sha256_file(roster_path) or gate.get("enrollment_registry_sha256") != sha256_file(enrollment_path):
+        raise ValueError("stage-specific roster or enrollment registry changed after freeze")
 
 
-def materialize(state_json: Path, roster_csv: Path, enrollment_csv: Path, output_json: Path) -> dict[str, Any]:
+def materialize(
+    state_json: Path,
+    roster_csv: Path,
+    enrollment_csv: Path,
+    output_json: Path,
+    *,
+    gate_kind: str = "T1",
+) -> dict[str, Any]:
     raw = json.loads(state_json.read_text(encoding="utf-8"))
-    gate = build_gate(raw.get("gates", raw), sha256_file(roster_csv), sha256_file(enrollment_csv), base_dir=state_json.parent)
+    gate = build_gate(
+        raw.get("gates", raw), sha256_file(roster_csv), sha256_file(enrollment_csv),
+        base_dir=state_json.parent, gate_kind=gate_kind,
+    )
     output_json.parent.mkdir(parents=True, exist_ok=True)
     output_json.write_text(json.dumps(gate, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return gate
@@ -146,7 +194,8 @@ def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--state", type=Path, required=True); parser.add_argument("--validation-roster", type=Path, required=True)
     parser.add_argument("--enrollment-registry", type=Path, required=True); parser.add_argument("--output", type=Path, required=True)
-    args = parser.parse_args(); result = materialize(args.state, args.validation_roster, args.enrollment_registry, args.output)
+    parser.add_argument("--gate-kind", choices=("T1", "V1"), default="T1")
+    args = parser.parse_args(); result = materialize(args.state, args.validation_roster, args.enrollment_registry, args.output, gate_kind=args.gate_kind)
     if not result["STAGE3_LAUNCH_ALLOWED"]: raise SystemExit("Stage 3 gate blocked:" + ";".join(result["blockers"]))
 
 

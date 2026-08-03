@@ -109,6 +109,12 @@ def _legacy_render(contract_path: Path = METHOD_CONTRACT) -> str:
 def render(contract_path: Path = METHOD_CONTRACT) -> str:
     data = json.loads(contract_path.read_text(encoding="utf-8"))
     digest = sha256_file(contract_path)
+    c2 = data["c2"]
+    c2b_launch = data["c2b_launch"]
+    stage3 = data["stage3"]
+    csv_schema = c2["c2_a_rp_csv_schema"]
+    t1_roles = ", ".join(stage3["required_roles"])
+    v1_roles = ", ".join(stage3["v1_required_roles"])
     return f"""<!-- PAPER_A_MACHINE_STATUS: generated -->
 # Paper A current method contract (generated)
 
@@ -133,7 +139,17 @@ This file is generated from `PAPER_A_METHOD_CONTRACT_CURRENT.json`; normative fi
 
 - C2-B consumes `worker_profile_v2.c2_risk_model_eligible` and the selected design manifest.
 - Batch B reuses the selected design ID, common anchors, bridge pool, task pool, and method SHA; it never infers bridge count from Batch A rows.
-- Runtime mapping is a local planned/runtime audit. It does not claim Label Studio UI visibility.
+- C2-A-RP's only formal dispatch goal is `{c2['c2_a_rp_formal_target']}`; `{', '.join(c2['c2_a_rp_diagnostic_goals'])}` remain diagnostic-only and cannot be dispatched.
+- The formal interval is `{c2['c2_a_rp_interval']['formula_id']}` at level `{c2['c2_a_rp_interval']['level']}`, with its target read from the `{c2['c2_a_rp_interval']['target_source']}` field `{c2['c2_a_rp_interval']['target_field']}`. Each block is refit from canonical eligible risk-slope evidence before another block is assigned.
+- A C2-A-RP block contains one ordinary and one stress task; the legal totals are `{', '.join(map(str, c2['c2_a_rp_block']['allowed_additional_tasks']))}`. Terminal states are `{', '.join(c2['c2_a_rp_terminal_states'])}`; cap fallback sets risk adjustment to `{c2['c2_a_rp_fallback']['risk_adjustment']}` and uses `{c2['c2_a_rp_fallback']['policy']}`.
+- C2-A-RP CSV schemas are `{csv_schema['precision_plan']}` for the precision plan and `{csv_schema['assignment_manifest']}` for the assignment manifest; formal closeout rejects legacy schemas and requires `target_component`/`gap_reason` in the CSV headers.
+- Runtime mapping is a local planned/runtime audit. Its identity fields are `{', '.join(c2b_launch['runtime_identity_fields'])}`; it does not claim Label Studio UI visibility.
+
+## Stage 3 gate separation
+
+- T1 requires exactly: `{t1_roles}`. It does not require `STRONG_GLOBAL_FROZEN`, `FULL_POLICY_FROZEN`, or `VALIDATION_ROSTER_FROZEN`.
+- V1 requires exactly: `{v1_roles}`.
+- Gate dependencies must bind the declared artifact role, method SHA, and recursive child dependencies; adding a role string without its frozen artifact is invalid.
 """
 
 

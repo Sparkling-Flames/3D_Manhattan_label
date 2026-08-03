@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v17 SHA-256 5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260803_v18 SHA-256 694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87 -->
 # Paper A C1-A -> C2-B 本地运行手册
 
 本手册只描述本地 batch workflow，不调用 Label Studio API，不证明 Label Studio UI 可见性。机器规范字段只来自当前 JSON 方法合同。
@@ -82,13 +82,18 @@ Current closeout policy: independence defaults from the formal protocol and only
 
 本地生成 planned import 和 assignment CSV，不自动写入 Label Studio。
 
+Formal C2-B binding supplies one planned import and one runtime export per frozen deployment; repeat the append-style arguments for every deployment and pass the frozen deployment manifest.
+
 ## 5. Bind runtime mapping after manual import
 
 ```powershell
 & $py tools/thesis_main/analysis/run_c1_closeout_launch.py bind-c2b-runtime-mapping `
   --launch-report <c2b_launch_ready_report.json> --assignment-manifest <assignment_manifest_C2B.csv> `
-  --worker-distribution <worker_distribution_C2B.csv> --planned-import <label_studio_import_C2B.json> `
-  --runtime-export <MANUAL_LABEL_STUDIO_EXPORT.json> --output-dir <C2B_RUNTIME_AUDIT_DIR>
+  --worker-distribution <worker_distribution_C2B.csv> `
+  --planned-import <label_studio_import_C2B_<deployment_id>.json> `
+  --runtime-export <MANUAL_LABEL_STUDIO_EXPORT_<deployment_id>.json> `
+  --deployment-manifest <c2b_worker_deployment_manifest_v1.json> `
+  --output-dir <C2B_RUNTIME_AUDIT_DIR>
 ```
 
 必须通过 `c2b_runtime_task_mapping.csv`、`c2b_worker_task_binding_audit.json` 和 `c2b_private_assignment_list_audit.json`。它们只证明 planned assignment、runtime mapping、batch/design SHA、GT 隔离、private list 完整性和重复行；不声称 worker isolation 或 CE UI visibility 已验证。

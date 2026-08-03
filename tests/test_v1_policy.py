@@ -63,17 +63,20 @@ def _manifest() -> dict:
     }
 
 
-def _write_stage3(tmp_path):
-    from tools.thesis_main.analysis.materialize_stage3_freeze_gate import REQUIRED_GATES, build_gate
+def _write_stage3(tmp_path, *, gate_kind: str = "V1"):
+    from tools.thesis_main.analysis.materialize_stage3_freeze_gate import build_gate, required_gates
+    tmp_path.mkdir(parents=True, exist_ok=True)
     child_items = []
     for child_role in ("C1_ROW_ELIGIBILITY_FROZEN", "C1_PEER_EVIDENCE_FROZEN", "C1_STRUCTURAL_EB_FROZEN", "W034_SENSITIVITY_FROZEN"):
         child = tmp_path / f"{child_role}.json"
         child.write_text(json.dumps({"schema_version": "test_dependency_v2", "formal_ready": True, "profile_version": "p", "cohort_id": "c", "blockers": [], "dependencies": []}), encoding="utf-8")
         child_items.append({"role": child_role, "frozen": True, "path": child.name, "sha256": sha256_file(child), "expected_schema": "test_dependency_v2", "required_status_field": "formal_ready", "required_status_value": True, "profile_version": "p", "cohort_id": "c"})
     state = {}
-    for role in REQUIRED_GATES:
+    for role in required_gates(gate_kind):
         dependency = tmp_path / f"{role}.json"
         payload = {"schema_version": "test_dependency_v2", "formal_ready": True, "profile_version": "p", "cohort_id": "c", "blockers": [], "dependencies": child_items if role == "C1_EVIDENCE_FROZEN" else []}
+        if role.startswith(("T1_", "V1_")):
+            payload["artifact_role"] = role
         if role == "C1_EVIDENCE_FROZEN":
             payload.update({
                 "method_contract_sha256": sha256_file(METHOD_CONTRACT),
@@ -82,10 +85,24 @@ def _write_stage3(tmp_path):
             payload.update({"artifact_role": "FINAL_POOLED_PROFILE_FROZEN", "C1_EVIDENCE_FROZEN": True, "C2B_BATCH_A_CLOSEOUT_FROZEN": True, "C2A_RP_CLOSEOUT_FROZEN": True, "FINAL_C1_C2_Q_GT_MODEL_FROZEN": True, "POOLED_WORKER_PROFILE_FROZEN": True})
         dependency.write_text(json.dumps(payload), encoding="utf-8")
         state[role] = {"frozen": True, "path": dependency.name, "sha256": sha256_file(dependency), "expected_schema": "test_dependency_v2", "required_status_field": "formal_ready", "required_status_value": True, "profile_version": "p", "cohort_id": "c"}
-    gate = build_gate(state, "r" * 64, "e" * 64, base_dir=tmp_path)
+    gate = build_gate(state, "r" * 64, "e" * 64, base_dir=tmp_path, gate_kind=gate_kind)
     path = tmp_path / "stage3.json"
     path.write_text(json.dumps(gate), encoding="utf-8")
     return path
+
+
+def test_v1_gate_rejects_t1_kind_and_missing_v1_policy_roles(tmp_path) -> None:
+    from tools.thesis_main.analysis.materialize_stage3_freeze_gate import validate_gate_file
+
+    t1_gate = _write_stage3(tmp_path / "t1", gate_kind="T1")
+    with pytest.raises(ValueError, match="gate kind mismatch"):
+        validate_gate_file(t1_gate, expected_gate_kind="V1")
+    v1_gate = _write_stage3(tmp_path / "v1", gate_kind="V1")
+    payload = json.loads(v1_gate.read_text(encoding="utf-8"))
+    payload["STRONG_GLOBAL_FROZEN"] = False
+    v1_gate.write_text(json.dumps(payload), encoding="utf-8")
+    with pytest.raises(ValueError, match="does not contain all required roles"):
+        validate_gate_file(v1_gate, expected_gate_kind="V1")
 
 
 def _candidate(worker: str, score: float, *, boost: float = 0.0) -> dict:

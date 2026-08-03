@@ -44,6 +44,7 @@ PRIMARY_ACTIVE_TIME_STATUS_TASK = "project+task+annotator"
 
 RUNTIME_MAPPING_FIELDS = [
     "source_export",
+    "deployment_id",
     "project_id",
     "ls_runtime_task_id",
     "planned_project_name",
@@ -60,6 +61,7 @@ RUNTIME_MAPPING_FIELDS = [
 ]
 
 RUNTIME_COLLISION_FIELDS = [
+    "deployment_id",
     "project_id",
     "ls_runtime_task_id",
     "first_source_export",
@@ -75,6 +77,7 @@ RUNTIME_COLLISION_FIELDS = [
 
 REALIZED_FIELDS = [
     "source_export",
+    "deployment_id",
     "project_id",
     "ls_runtime_task_id",
     "planned_project_name",
@@ -233,6 +236,7 @@ def _runtime_key(row: dict[str, Any]) -> tuple[str, str]:
 
 def _runtime_collision_row(first: dict[str, str], collision: dict[str, str]) -> dict[str, str]:
     return {
+        "deployment_id": safe(first.get("deployment_id")),
         "project_id": safe(first.get("project_id")),
         "ls_runtime_task_id": safe(first.get("ls_runtime_task_id")),
         "first_source_export": safe(first.get("source_export")),
@@ -250,18 +254,40 @@ def _runtime_collision_row(first: dict[str, str], collision: dict[str, str]) -> 
 def build_runtime_task_mapping(
     export_paths: list[Path],
     planned_mapping_path: Path | None = None,
-) -> tuple[list[dict[str, str]], dict[tuple[str, str], dict[str, str]], list[dict[str, str]]]:
+    deployment_manifest_path: Path | None = None,
+) -> tuple[list[dict[str, str]], dict[tuple[str, str] | tuple[str, str, str], dict[str, str]], list[dict[str, str]]]:
     planned = load_planned_mapping(planned_mapping_path)
+    deployment_by_project: dict[str, set[str]] = {}
+    deployment_projects: dict[str, str] = {}
+    if deployment_manifest_path:
+        manifest = json.loads(deployment_manifest_path.read_text(encoding="utf-8"))
+        for item in manifest.get("deployments", []):
+            project = safe(item.get("project_id")); deployment = safe(item.get("deployment_id"))
+            if project and deployment:
+                deployment_by_project.setdefault(project, set()).add(deployment)
+                deployment_projects[deployment] = project
     rows: list[dict[str, str]] = []
-    lookup: dict[tuple[str, str], dict[str, str]] = {}
+    lookup: dict[tuple[str, str] | tuple[str, str, str], dict[str, str]] = {}
     collisions: list[dict[str, str]] = []
-    seen: set[tuple[str, str]] = set()
+    seen: set[tuple[str, str, str]] = set()
+    legacy_namespace: dict[tuple[str, str], tuple[str, str, str]] = {}
     for export_path in export_paths:
         for index, task in enumerate(load_export(export_path), start=1):
             data = task_data(task)
             project_id = safe(task.get("project") or task.get("project_id"))
             runtime_task_id = safe(task.get("id") or task.get("task_id")) or f"task_index_{index}"
             dataset_group, planned_project_name, prefix = normalize_group(data)
+            deployment_id = safe(data.get("deployment_id"))
+            if deployment_manifest_path:
+                if deployment_id:
+                    if deployment_id not in deployment_projects:
+                        raise ValueError("runtime export names an unknown deployment")
+                    if project_id and deployment_projects[deployment_id] != project_id:
+                        raise ValueError("runtime export deployment/project identity disagrees")
+                elif len(deployment_by_project.get(project_id, set())) == 1:
+                    deployment_id = next(iter(deployment_by_project[project_id]))
+                elif len(deployment_by_project.get(project_id, set())) > 1:
+                    raise ValueError("runtime export must identify deployment when a project is shared")
             task_id = safe(data.get("task_id") or task.get("task_id") or runtime_task_id)
             base_task_id = safe(data.get("base_task_id") or task_id)
             planned_row = planned.get((dataset_group, base_task_id)) or planned.get((dataset_group, task_id)) or {}
@@ -269,6 +295,7 @@ def build_runtime_task_mapping(
             planned_status = safe(planned_row.get("mapping_status")) or ("planned_mapping_missing" if planned_mapping_path else "planned_mapping_not_provided")
             row = {
                 "source_export": str(export_path),
+                "deployment_id": deployment_id,
                 "project_id": project_id,
                 "ls_runtime_task_id": runtime_task_id,
                 "planned_project_name": safe(planned_row.get("planned_project_name")) or planned_project_name,
@@ -283,14 +310,22 @@ def build_runtime_task_mapping(
                 "planned_mapping_status": planned_status,
                 "runtime_binding_status": "bound_from_export_and_planned_mapping" if planned_row else "bound_from_export_planned_missing",
             }
-            key = (project_id, runtime_task_id)
-            if key in lookup:
-                collisions.append(_runtime_collision_row(lookup[key], row))
+            namespaced_key = (deployment_id, project_id, runtime_task_id)
+            if namespaced_key in lookup:
+                collisions.append(_runtime_collision_row(lookup[namespaced_key], row))
                 continue
-            lookup[key] = row
-            if key not in seen:
+            lookup[namespaced_key] = row
+            legacy_key = (project_id, runtime_task_id)
+            previous_namespace = legacy_namespace.get(legacy_key)
+            if previous_namespace and previous_namespace != namespaced_key:
+                collisions.append(_runtime_collision_row(lookup[previous_namespace], row))
+            else:
+                legacy_namespace[legacy_key] = namespaced_key
+            if legacy_key not in lookup:
+                lookup[legacy_key] = row
+            if namespaced_key not in seen:
                 rows.append(row)
-                seen.add(key)
+                seen.add(namespaced_key)
     return rows, lookup, collisions
 
 
@@ -414,7 +449,7 @@ def is_reserve(row: dict[str, str]) -> bool:
 
 def build_realized_rows(
     export_paths: list[Path],
-    runtime_lookup: dict[tuple[str, str], dict[str, str]],
+    runtime_lookup: dict[tuple[str, str] | tuple[str, str, str], dict[str, str]],
     active_log_path: Path | None,
     assigned: set[tuple[str, str, str, str]],
     internal: set[tuple[str, str, str, str]],
@@ -425,7 +460,8 @@ def build_realized_rows(
         for task_index, task in enumerate(load_export(export_path), start=1):
             project_id = safe(task.get("project") or task.get("project_id"))
             runtime_task_id = safe(task.get("id") or task.get("task_id")) or f"task_index_{task_index}"
-            info = runtime_lookup.get((project_id, runtime_task_id), {})
+            deployment_id = safe(task_data(task).get("deployment_id"))
+            info = runtime_lookup.get((deployment_id, project_id, runtime_task_id), runtime_lookup.get((project_id, runtime_task_id), {}))
             annotations = task.get("annotations") or []
             if not isinstance(annotations, list):
                 continue
@@ -450,9 +486,9 @@ def build_realized_rows(
                     "reserve_realized_submission": is_reserve(info),
                 }
                 rows.append(row)
-    counts = Counter((row["project_id"], row["ls_runtime_task_id"], row["worker_id"]) for row in rows)
+    counts = Counter((row["deployment_id"], row["project_id"], row["ls_runtime_task_id"], row["worker_id"]) for row in rows)
     for row in rows:
-        duplicate = counts[(row["project_id"], row["ls_runtime_task_id"], row["worker_id"])] > 1
+        duplicate = counts[(row["deployment_id"], row["project_id"], row["ls_runtime_task_id"], row["worker_id"])] > 1
         row["duplicate_worker_task_submission"] = duplicate
         if duplicate and row["active_time_match_status"] == PRIMARY_ACTIVE_TIME_STATUS_TASK:
             primary, sensitivity = active_time_policy(
@@ -478,6 +514,7 @@ def realized_vs_assigned_rows(
         rows.append(
             {
                 "source_export": "",
+                "deployment_id": "",
                 "project_id": "",
                 "ls_runtime_task_id": "",
                 "planned_project_name": "",
@@ -687,12 +724,13 @@ def build_monitor(
     semi_assignment: Path = SEMI_ASSIGNMENT_DEFAULT,
     worker_distribution: Path = WORKER_DISTRIBUTION_DEFAULT,
     planned_task_mapping: Path = PLANNED_TASK_MAPPING_DEFAULT,
+    deployment_manifest: Path | None = None,
     active_log: Path | None = ACTIVE_LOG_DEFAULT,
     output_dir: Path = DEFAULT_OUTPUT_DIR,
 ) -> dict[str, Any]:
     output_dir.mkdir(parents=True, exist_ok=True)
     assigned, internal = assignment_sets(manual_assignment, semi_assignment, worker_distribution)
-    runtime_rows, runtime_lookup, collision_rows = build_runtime_task_mapping(export_paths, planned_task_mapping)
+    runtime_rows, runtime_lookup, collision_rows = build_runtime_task_mapping(export_paths, planned_task_mapping, deployment_manifest)
     realized_rows = build_realized_rows(export_paths, runtime_lookup, active_log, assigned, internal)
     realized_audit_rows = realized_vs_assigned_rows(realized_rows, assigned, internal)
     snapshot_rows = snapshot_manifest(export_paths, active_log, output_dir)

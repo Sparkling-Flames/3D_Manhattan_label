@@ -263,6 +263,7 @@ def build_candidate_design_manifest(
         },
         "risk_contract_sha256": sha256_file(RISK_CONTRACT),
         "predispatch_amendment_sha256": amendment_sha,
+        "threshold_manifest_path": str(threshold_manifest.resolve()),
         "threshold_manifest_sha256": sha256_file(threshold_manifest),
         "candidate_designs": candidates,
         "cross_stage_anchor_base_task_ids": cross_stage_anchor_base_task_ids,

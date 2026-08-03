@@ -117,6 +117,96 @@ def _write(path: Path, rows: list[dict[str, Any]]) -> None:
         writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore"); writer.writeheader(); writer.writerows(rows)
 
 
+DEFAULT_C2B_DEPLOYMENTS = (
+    {
+        "deployment_id": "c2b_zh",
+        "language_group": "Chinese",
+        "server_instance_id": "labelstudio_http_175_178_71_217",
+        "server_url": "http://175.178.71.217:8000",
+        "project_id": "",
+    },
+    {
+        "deployment_id": "c2b_en",
+        "language_group": "English",
+        "server_instance_id": "labelstudio_https_sparkle0825",
+        "server_url": "https://label.sparkle0825.top",
+        "project_id": "",
+    },
+)
+
+
+def _deployment_specs(path: Path | None, workers: set[str]) -> tuple[list[dict[str, Any]], str]:
+    """Load the external deployment truth; never infer project identity from a display index."""
+    if path is None:
+        return [dict(item, worker_ids=sorted(workers), worker_registry_sha256="") for item in DEFAULT_C2B_DEPLOYMENTS], ""
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("schema_version") not in {"c2b_worker_deployment_manifest_v1", "c2b_runtime_project_manifest_v1"}:
+        raise ValueError("C2-B deployment manifest schema is invalid")
+    deployments = payload.get("deployments")
+    if not isinstance(deployments, list) or not deployments:
+        raise ValueError("C2-B deployment manifest requires a non-empty deployments list")
+    seen_ids: set[str] = set()
+    mapped: dict[str, str] = {}
+    normalized: list[dict[str, Any]] = []
+    for raw in deployments:
+        if not isinstance(raw, dict):
+            raise ValueError("C2-B deployment manifest contains a non-object deployment")
+        deployment_id = str(raw.get("deployment_id", "")).strip()
+        language = str(raw.get("language_group", "")).strip()
+        server = str(raw.get("server_instance_id", "")).strip()
+        url = str(raw.get("server_url", "")).strip()
+        project_id = str(raw.get("project_id", "")).strip()
+        worker_ids = [normalize_worker_id(value) for value in raw.get("worker_ids", raw.get("workers", []))]
+        if not deployment_id or not language or not server or not url or not project_id or not worker_ids:
+            raise ValueError("C2-B deployment manifest has incomplete deployment identity")
+        if deployment_id in seen_ids:
+            raise ValueError("C2-B deployment manifest has duplicate deployment_id")
+        seen_ids.add(deployment_id)
+        for worker in worker_ids:
+            if not worker or worker in mapped:
+                raise ValueError("C2-B worker maps to zero or multiple deployments")
+            mapped[worker] = deployment_id
+        normalized.append({
+            "deployment_id": deployment_id, "language_group": language,
+            "server_instance_id": server, "server_url": url, "project_id": project_id,
+            "worker_ids": sorted(set(worker_ids)),
+            "worker_registry_sha256": str(raw.get("worker_registry_sha256", payload.get("worker_registry_sha256", ""))).strip(),
+        })
+    if set(mapped) != workers:
+        raise ValueError("C2-B deployment manifest does not cover exactly the assigned workers")
+    if any(not item["worker_registry_sha256"] for item in normalized):
+        raise ValueError("C2-B deployment manifest lacks worker registry SHA")
+    return normalized, sha256_file(path)
+
+
+def _write_worker_deployment_manifest(
+    output_dir: Path,
+    source_path: Path,
+    source_sha: str,
+    deployments: list[dict[str, Any]],
+    *,
+    assignment_path: Path,
+    selected_design_sha: str,
+    batch_id: str,
+) -> Path:
+    payload = {
+        "schema_version": "c2b_worker_deployment_manifest_v1",
+        "artifact_role": "C2B_WORKER_DEPLOYMENT_MANIFEST_FROZEN",
+        "contract_role": "generated_subordinate",
+        **_method_identity(),
+        "assignment_batch_id": batch_id,
+        "assignment_sha256": sha256_file(assignment_path),
+        "selected_design_sha": selected_design_sha,
+        "source_manifest_path": str(source_path.resolve()),
+        "source_manifest_sha256": source_sha,
+        "deployments": deployments,
+        "frozen": True,
+    }
+    path = output_dir / "c2b_worker_deployment_manifest_v1.json"
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    return path
+
+
 def _source_identity_aggregate(rows: list[dict[str, Any]]) -> str:
     """Hash source identity only; raw-snapshot bookkeeping must not change it."""
     return _aggregate_sha([{name: row[name] for name in ("path", "size", "sha256")} for row in rows])
@@ -1383,7 +1473,16 @@ def design_c2b(args: argparse.Namespace) -> dict[str, Any]:
     return {"day": 2, "phase": "risk-plan", "risk_pool_formal_ready": ready, "assignment_materialized": False, "design": design_summary, "evidence_envelope": evidence_envelope, "state_machine": risk["state_machine"], "blockers": blockers}
 
 
-def _write_c2b_import(output_dir: Path, distribution: list[dict[str, Any]], *, batch_id: str, selected_design_id: str, selected_design_sha: str, layout_dir: Path) -> Path:
+def _write_c2b_imports(
+    output_dir: Path,
+    distribution: list[dict[str, Any]],
+    *,
+    batch_id: str,
+    selected_design_id: str,
+    selected_design_sha: str,
+    layout_dir: Path,
+    deployments: list[dict[str, Any]] | None = None,
+) -> dict[str, dict[str, Any]]:
     def dump(path: Path, payload: object) -> None:
         with path.open("w", encoding="utf-8", newline="\n") as stream:
             stream.write(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
@@ -1403,7 +1502,16 @@ def _write_c2b_import(output_dir: Path, distribution: list[dict[str, Any]], *, b
     def worker_image(row: dict[str, Any]) -> str:
         return str(row["image_path"]).replace("/valid_no_occ/img/", "/img_v/").removesuffix(".png") + ".jpg"
 
-    def tasks(vis_base: str) -> list[dict[str, Any]]:
+    deployment_specs = deployments or [dict(item, worker_ids=[], worker_registry_sha256="") for item in DEFAULT_C2B_DEPLOYMENTS]
+
+    def tasks(deployment: dict[str, Any]) -> list[dict[str, Any]]:
+        vis_base = str(deployment["server_url"])
+        deployment_workers = {normalize_worker_id(worker) for worker in deployment.get("worker_ids", []) if normalize_worker_id(worker)}
+        deployment_rows = [
+            row for row in distribution
+            if not deployment_workers or normalize_worker_id(row.get("worker_id", "")) in deployment_workers
+        ]
+        selected_for_deployment = {row["task_id"]: row for row in deployment_rows}
         return [{"data": {
             "image": worker_image(row),
             "vis_3d": f"{vis_base}/tools/vis_3d.html?w=1024&h=512&data={quote(json.dumps(layouts[task_id], separators=(',', ':')))}",
@@ -1414,24 +1522,85 @@ def _write_c2b_import(output_dir: Path, distribution: list[dict[str, Any]], *, b
             "planned_task_id": task_id,
             "base_task_id": row.get("base_task_id") or task_id,
             "image_id": row.get("image_id") or row.get("image_stem") or row.get("base_task_id") or task_id,
-            "calibration_version": "C2-B_v17",
+            "calibration_version": "C2-B_v18",
             "source_draft": f"approved_{selected_design_id}",
             "artifact_status": "formal_c2b_import_json",
             "launch_allowed": True,
             "c2b_batch_id": batch_id,
             "selected_design_sha": selected_design_sha,
-        }} for task_id, row in sorted(selected.items())]
+            "deployment_id": deployment["deployment_id"],
+            "language_group": deployment["language_group"],
+            "server_instance_id": deployment["server_instance_id"],
+            "project_id": deployment.get("project_id", ""),
+        }} for task_id, row in sorted(selected_for_deployment.items())]
 
-    imports = tasks("http://175.178.71.217:8000")
-    path = output_dir / "label_studio_import_C2B.json"
-    dump(path, imports)
     release_dir = _PROJECT_ROOT / "import_json" / "c2b"
     release_dir.mkdir(parents=True, exist_ok=True)
     release_stem = f"c2b_{selected_design_id}_{batch_id.removeprefix('C2B_').lower()}_import"
-    dump(release_dir / f"{release_stem}_zh.json", imports)
-    foreign = tasks("https://label.sparkle0825.top")
-    dump(release_dir / f"{release_stem}_foreign_https.json", foreign)
-    return path
+    outputs: dict[str, dict[str, Any]] = {}
+    for index, deployment in enumerate(deployment_specs):
+        payload = tasks(deployment)
+        if index == 0:
+            local_path = output_dir / "label_studio_import_C2B.json"
+            dump(local_path, payload)
+        else:
+            local_path = output_dir / f"label_studio_import_C2B_{deployment['deployment_id']}.json"
+            dump(local_path, payload)
+        language = str(deployment["language_group"]).lower()
+        suffix = "zh" if language == "chinese" else "foreign_https" if language == "english" else str(deployment["deployment_id"])
+        release_path = release_dir / f"{release_stem}_{suffix}.json"
+        dump(release_path, payload)
+        outputs[str(deployment["deployment_id"])] = {
+            **deployment,
+            "planned_import_path": str(release_path.resolve()),
+            "local_import_path": str(local_path.resolve()),
+            "planned_import_sha256": sha256_file(release_path),
+            "local_import_sha256": sha256_file(local_path),
+            "task_count": len(payload),
+        }
+    return outputs
+
+
+def _write_c2b_import(
+    output_dir: Path,
+    distribution: list[dict[str, Any]],
+    *,
+    batch_id: str,
+    selected_design_id: str,
+    selected_design_sha: str,
+    layout_dir: Path,
+) -> Path:
+    """Compatibility wrapper for the historical single-file test/helper API."""
+    outputs = _write_c2b_imports(
+        output_dir, distribution, batch_id=batch_id, selected_design_id=selected_design_id,
+        selected_design_sha=selected_design_sha, layout_dir=layout_dir,
+    )
+    return Path(outputs["c2b_zh"]["local_import_path"])
+
+
+def _materialize_c2b_deployments(
+    args: argparse.Namespace,
+    distribution: list[dict[str, Any]],
+    assignment_path: Path,
+    *,
+    batch_id: str,
+    selected_design_id: str,
+    selected_design_sha: str,
+) -> tuple[Path, dict[str, dict[str, Any]]]:
+    source = getattr(args, "deployment_manifest", None)
+    if not source:
+        raise ValueError("formal C2-B build requires an explicit deployment manifest with project IDs")
+    specs, source_sha = _deployment_specs(source, {normalize_worker_id(row.get("worker_id", "")) for row in distribution})
+    outputs = _write_c2b_imports(
+        args.output_dir, distribution, batch_id=batch_id, selected_design_id=selected_design_id,
+        selected_design_sha=selected_design_sha, layout_dir=args.layout_dir, deployments=specs,
+    )
+    frozen_specs = [outputs[item["deployment_id"]] for item in specs]
+    manifest_path = _write_worker_deployment_manifest(
+        args.output_dir, source, source_sha, frozen_specs,
+        assignment_path=assignment_path, selected_design_sha=selected_design_sha, batch_id=batch_id,
+    )
+    return manifest_path, outputs
 
 
 def _selected_design_inputs(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, dict[str, str]]]:
@@ -1520,13 +1689,18 @@ def _build_c2b_batch_b(args: argparse.Namespace) -> dict[str, Any]:
     _write(args.output_dir / "worker_distribution_C2B.csv", rows)
     worker_dir = args.output_dir / "worker_facing_distribution_C2B"; worker_dir.mkdir(parents=True, exist_ok=True)
     for worker in sorted(set(workers)): _write(worker_dir / f"worker_{worker}_C2B.csv", [row for row in rows if row["worker_id"] == worker])
-    import_path = _write_c2b_import(args.output_dir, rows, batch_id="C2B_BATCH_B", selected_design_id=str(selected["selected_design_id"]), selected_design_sha=design_sha, layout_dir=args.layout_dir)
+    deployment_manifest_path, deployment_outputs = _materialize_c2b_deployments(
+        args, rows, assignment_path, batch_id="C2B_BATCH_B",
+        selected_design_id=str(selected["selected_design_id"]), selected_design_sha=design_sha,
+    )
     report = {
-        "schema_version": "paper_a_c2b_launch_ready_report_v3", "contract_role": "generated_subordinate", **_method_identity(),
-        "assignment_batch_id": "C2B_BATCH_B", "selected_design_id": selected["selected_design_id"], "selected_design_sha": design_sha, "selected_design_manifest_sha256": sha256_file(args.selected_design_manifest), "task_pool_sha256": selected["task_pool_sha256"], "common_anchor_count": selected["common_anchor_count"], "bridge_per_worker": selected["bridge_per_worker"], "selected_bridge_pool_sha256": selected["selected_bridge_pool_sha256"], "assignment_sha256": sha256_file(assignment_path), "import_sha256": sha256_file(import_path),
+        "schema_version": "paper_a_c2b_launch_ready_report_v4", "contract_role": "generated_subordinate", **_method_identity(),
+        "assignment_batch_id": "C2B_BATCH_B", "selected_design_id": selected["selected_design_id"], "selected_design_sha": design_sha, "selected_design_manifest_sha256": sha256_file(args.selected_design_manifest), "task_pool_sha256": selected["task_pool_sha256"], "common_anchor_count": selected["common_anchor_count"], "bridge_per_worker": selected["bridge_per_worker"], "selected_bridge_pool_sha256": selected["selected_bridge_pool_sha256"], "assignment_sha256": sha256_file(assignment_path),
+        "deployment_manifest_path": str(deployment_manifest_path), "deployment_manifest_sha256": sha256_file(deployment_manifest_path),
+        "deployments": list(deployment_outputs.values()),
         "C2B_ASSIGNMENT_BATCH_A_MATERIALIZED": True, "C2B_ASSIGNMENT_BATCH_B_MATERIALIZED": True, "C2B_LAUNCH_READY": True,
         "automatic_label_studio_import": False, "n_assignments": len(rows), "n_workers": len(workers),
-        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("BATCH_A_LAUNCH_REPORT", args.batch_a_launch_report), ("BATCH_A_ASSIGNMENT", args.batch_a_assignment), ("BATCH_B_ROSTER", args.c2b_roster_manifest), ("BATCH_B_PROFILE", args.batch_worker_profile), ("P1_ADMISSION", args.p1_admission_evidence), ("SELECTED_DESIGN_MANIFEST", args.selected_design_manifest), ("DESIGN_MANIFEST", args.design_manifest), ("TASK_POOL", args.task_pool), ("METHOD_CONTRACT", METHOD_CONTRACT))],
+        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("BATCH_A_LAUNCH_REPORT", args.batch_a_launch_report), ("BATCH_A_ASSIGNMENT", args.batch_a_assignment), ("BATCH_B_ROSTER", args.c2b_roster_manifest), ("BATCH_B_PROFILE", args.batch_worker_profile), ("P1_ADMISSION", args.p1_admission_evidence), ("SELECTED_DESIGN_MANIFEST", args.selected_design_manifest), ("DESIGN_MANIFEST", args.design_manifest), ("TASK_POOL", args.task_pool), ("DEPLOYMENT_MANIFEST", deployment_manifest_path), ("METHOD_CONTRACT", METHOD_CONTRACT))],
     }
     (args.output_dir / "c2b_launch_ready_report.json").write_text(json.dumps(report, indent=2, sort_keys=True) + "\n", encoding="utf-8")
     return {"day": 2, "phase": "build", **report}
@@ -1626,27 +1800,40 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
     for worker in sorted({row["worker_id"] for row in distribution}):
         _write(worker_dir / f"worker_{worker}_C2B.csv", [row for row in distribution if row["worker_id"] == worker])
     selected_design_sha = str(selected_manifest["selected_design_sha"])
-    import_path = _write_c2b_import(args.output_dir, distribution, batch_id="C2B_BATCH_A", selected_design_id=str(selected_manifest["selected_design_id"]), selected_design_sha=selected_design_sha, layout_dir=args.layout_dir)
-    imports = json.loads(import_path.read_text(encoding="utf-8"))
+    deployment_manifest_path, deployment_outputs = _materialize_c2b_deployments(
+        args, distribution, assignment_path, batch_id="C2B_BATCH_A",
+        selected_design_id=str(selected_manifest["selected_design_id"]), selected_design_sha=selected_design_sha,
+    )
     support = Counter(row["task_id"] for row in assignments)
     assignment_identities = {(row["worker_id"], row["task_id"]) for row in assignments}
     distribution_identities = {(row["worker_id"], row["task_id"]) for row in distribution}
     explicit_gt_count = sum(_truth(tasks.get(row["task_id"], {}).get("is_gt")) or str(tasks.get(row["task_id"], {}).get("task_role", "")).upper() == "GT" or str(tasks.get(row["task_id"], {}).get("dataset_group", "")).upper() == "GT" for row in distribution)
     worker_files = sorted(worker_dir.glob("worker_*_C2B.csv"))
     method_sha = sha256_file(METHOD_CONTRACT)
+    deployment_assignment_counts = {
+        item["deployment_id"]: sum(
+            normalize_worker_id(row.get("worker_id", "")) in {normalize_worker_id(worker) for worker in item.get("worker_ids", [])}
+            for row in assignments
+        )
+        for item in deployment_outputs.values()
+    }
     audit = {
-        "schema_version": "paper_a_c2b_launch_ready_report_v3", "contract_role": "generated_subordinate", "method_contract": risk["method_contract"], "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": method_sha, "git_commit_sha": risk["git_commit_sha"], "assignment_batch_id": "C2B_BATCH_A", "selected_design_id": selected_manifest["selected_design_id"], "selected_design_sha": selected_design_sha, "selected_design_manifest_sha256": sha256_file(args.selected_design_manifest), "task_pool_sha256": selected_manifest["task_pool_sha256"], "common_anchor_count": selected_manifest["common_anchor_count"], "bridge_per_worker": selected_manifest["bridge_per_worker"], "selected_bridge_pool_sha256": selected_manifest["selected_bridge_pool_sha256"],
-        "assignment_sha256": sha256_file(assignment_path), "worker_distribution_sha256": sha256_file(args.output_dir / "worker_distribution_C2B.csv"), "worker_distribution_bundle_sha256": _aggregate_sha(_manifest_rows(worker_files)), "import_sha256": sha256_file(import_path),
+        "schema_version": "paper_a_c2b_launch_ready_report_v4", "contract_role": "generated_subordinate", "method_contract": risk["method_contract"], "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": method_sha, "git_commit_sha": risk["git_commit_sha"], "assignment_batch_id": "C2B_BATCH_A", "selected_design_id": selected_manifest["selected_design_id"], "selected_design_sha": selected_design_sha, "selected_design_manifest_sha256": sha256_file(args.selected_design_manifest), "task_pool_sha256": selected_manifest["task_pool_sha256"], "common_anchor_count": selected_manifest["common_anchor_count"], "bridge_per_worker": selected_manifest["bridge_per_worker"], "selected_bridge_pool_sha256": selected_manifest["selected_bridge_pool_sha256"],
+        "deployment_manifest_path": str(deployment_manifest_path), "deployment_manifest_sha256": sha256_file(deployment_manifest_path), "deployments": list(deployment_outputs.values()),
         "n_assignments": len(assignments), "n_workers": len({row["worker_id"] for row in assignments}),
         "n_tasks": len(support), "min_task_support": min(support.values(), default=0),
         "duplicate_worker_task_count": len(assignments) - len({(row["worker_id"], row["task_id"]) for row in assignments}),
-        "import_smoke_passed": bool(imports) and all(item.get("data", {}).get("image") for item in json.loads(import_path.read_text(encoding="utf-8"))),
+        "deployment_assignment_counts": deployment_assignment_counts,
+        "import_smoke_passed": bool(deployment_outputs) and all(
+            item.get("task_count", 0) == deployment_assignment_counts.get(item.get("deployment_id"), -1)
+            for item in deployment_outputs.values()
+        ),
         "assignment_distribution_consistent": assignment_identities == distribution_identities,
         "gt_isolated_from_worker_import": explicit_gt_count == 0,
         "image_paths_resolvable": all(resolvable_image(row["image_path"]) for row in distribution),
         "capacity_manifest_sha256": sha256_file(args.capacity_manifest),
         "automatic_label_studio_import": False,
-        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("C1_A_SNAPSHOT", args.c1_closeout_summary), ("C2B_ROSTER", args.c2b_roster_manifest), ("C2_RISK", args.risk_summary), ("THRESHOLDS", args.threshold_manifest), ("CAPACITY", args.capacity_manifest), ("SELECTED_DESIGN_APPROVAL", args.selected_design_approval), ("SELECTED_DESIGN_MANIFEST", args.selected_design_manifest), ("DESIGN_MANIFEST", args.design_manifest), ("TASK_POOL", args.task_pool), ("METHOD_CONTRACT", METHOD_CONTRACT))],
+        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in (("C1_A_SNAPSHOT", args.c1_closeout_summary), ("C2B_ROSTER", args.c2b_roster_manifest), ("C2_RISK", args.risk_summary), ("THRESHOLDS", args.threshold_manifest), ("CAPACITY", args.capacity_manifest), ("SELECTED_DESIGN_APPROVAL", args.selected_design_approval), ("SELECTED_DESIGN_MANIFEST", args.selected_design_manifest), ("DESIGN_MANIFEST", args.design_manifest), ("TASK_POOL", args.task_pool), ("DEPLOYMENT_MANIFEST", deployment_manifest_path), ("METHOD_CONTRACT", METHOD_CONTRACT))],
     }
     audit["launch_ready"] = bool(design.get("launch_ready")) and audit["duplicate_worker_task_count"] == 0 and audit["import_smoke_passed"] and audit["assignment_distribution_consistent"] and audit["gt_isolated_from_worker_import"] and audit["image_paths_resolvable"]
     audit["C2B_LAUNCH_READY"] = audit["launch_ready"]
@@ -1657,9 +1844,220 @@ def build_c2b(args: argparse.Namespace) -> dict[str, Any]:
     return {"day": 2, "phase": "build", "state_machine": design.get("state_machine", {}), **audit}
 
 
+def _payload_tasks(path: Path) -> list[dict[str, Any]]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    rows = payload if isinstance(payload, list) else payload.get("tasks", payload.get("data", []))
+    if not isinstance(rows, list):
+        raise ValueError("C2-B runtime/planned JSON must contain a task list")
+    return [row for row in rows if isinstance(row, dict)]
+
+
+def _bind_c2b_runtime_mapping_multi(args: argparse.Namespace, report: dict[str, Any]) -> dict[str, Any]:
+    manifest_path = getattr(args, "deployment_manifest", None)
+    if not manifest_path or not manifest_path.is_file():
+        raise ValueError("formal C2-B runtime binding requires the frozen deployment manifest")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if manifest.get("schema_version") != "c2b_worker_deployment_manifest_v1" or sha256_file(manifest_path) != report.get("deployment_manifest_sha256"):
+        raise ValueError("C2-B deployment manifest is stale or not bound to the launch report")
+    deployments = {str(item.get("deployment_id")): item for item in report.get("deployments", [])}
+    manifest_deployments = {str(item.get("deployment_id")): item for item in manifest.get("deployments", [])}
+    if not deployments or set(deployments) != set(manifest_deployments):
+        raise ValueError("C2-B deployment set is incomplete or inconsistent")
+    for deployment_id in deployments:
+        report_item = deployments[deployment_id]
+        manifest_item = manifest_deployments[deployment_id]
+        if any(str(report_item.get(field, "")) != str(manifest_item.get(field, "")) for field in ("language_group", "server_instance_id", "project_id")):
+            raise ValueError(f"C2-B deployment identity disagrees with the frozen manifest:{deployment_id}")
+    assignment_rows = _read(args.assignment_manifest)
+    distribution_rows = _read(args.worker_distribution)
+    assignment_ids = {(normalize_worker_id(row.get("worker_id", "")), row.get("task_id", "")) for row in assignment_rows}
+    distribution_ids = {(normalize_worker_id(row.get("worker_id", "")), row.get("task_id", "")) for row in distribution_rows}
+    if assignment_ids != distribution_ids or len(assignment_ids) != len(assignment_rows):
+        raise ValueError("assignment manifest and worker distribution are not a complete unique match")
+    worker_deployment: dict[str, str] = {}
+    for deployment_id, item in manifest_deployments.items():
+        for worker in item.get("worker_ids", []):
+            normalized_worker = normalize_worker_id(worker)
+            if not normalized_worker or normalized_worker in worker_deployment:
+                raise ValueError("C2-B deployment manifest maps a worker to multiple deployments")
+            worker_deployment[normalized_worker] = deployment_id
+    if set(worker_deployment) != {normalize_worker_id(row.get("worker_id", "")) for row in distribution_rows}:
+        raise ValueError("C2-B deployment manifest does not cover the worker distribution")
+    planned_paths = getattr(args, "planned_import", None) or []
+    runtime_paths = getattr(args, "runtime_export", None) or []
+    if isinstance(planned_paths, Path):
+        planned_paths = [planned_paths]
+    if isinstance(runtime_paths, Path):
+        runtime_paths = [runtime_paths]
+    manifest_planned_paths = {
+        Path(str(item.get("planned_import_path", ""))).resolve()
+        for item in manifest_deployments.values()
+    }
+    if (len(planned_paths) != len(deployments)
+            or {path.resolve() for path in planned_paths} != manifest_planned_paths
+            or len(runtime_paths) != len(deployments)
+            or len({path.resolve() for path in runtime_paths}) != len(runtime_paths)):
+        raise ValueError("C2-B runtime binding requires exactly one planned import and runtime export per deployment")
+    planned_by_deployment = {}
+    runtime_by_deployment = {}
+    for item in deployments.values():
+        deployment_id = str(item["deployment_id"])
+        planned = next((path for path in planned_paths if path.resolve() == Path(str(item.get("planned_import_path", ""))).resolve()), None)
+        if planned is None:
+            planned = Path(str(item.get("planned_import_path", "")))
+        if not planned.is_file() or sha256_file(planned) != item.get("planned_import_sha256"):
+            raise ValueError(f"C2-B planned import is missing or stale:{deployment_id}")
+        candidates = [path for path in runtime_paths if path.stem.endswith(deployment_id) or deployment_id in path.name]
+        if len(candidates) != 1:
+            raise ValueError(f"C2-B runtime export must identify exactly one deployment:{deployment_id}")
+        planned_by_deployment[deployment_id] = planned
+        runtime_by_deployment[deployment_id] = candidates[0]
+    bindings_by_deployment: dict[tuple[str, str], dict[str, Any]] = {}
+    # Runtime IDs are only safe after project identity is included.  A reuse
+    # of the same project/runtime pair on another server is still ambiguous;
+    # deployment_id namespaces the canonical join, but does not legitimize a
+    # cross-server collision in the formal export.
+    runtime_identity_seen: set[tuple[str, str]] = set()
+    for deployment_id, item in deployments.items():
+        planned_rows = _payload_tasks(planned_by_deployment[deployment_id])
+        expected = {}
+        for row in planned_rows:
+            data = row.get("data", {}) if isinstance(row.get("data", {}), dict) else {}
+            planned_id = str(data.get("planned_task_id", ""))
+            if not planned_id or planned_id in expected or data.get("deployment_id") != deployment_id:
+                raise ValueError(f"C2-B planned import has duplicate or wrong deployment identity:{deployment_id}")
+            if data.get("language_group") != item.get("language_group") or data.get("server_instance_id") != item.get("server_instance_id"):
+                raise ValueError(f"C2-B planned import has wrong server/language identity:{deployment_id}")
+            if data.get("project_id") != item.get("project_id"):
+                raise ValueError(f"C2-B planned import has wrong project identity:{deployment_id}")
+            if (data.get("selected_design_sha") != report.get("selected_design_sha")
+                    or data.get("c2b_batch_id") != report.get("assignment_batch_id")):
+                raise ValueError(f"C2-B planned import is outside frozen batch/design:{deployment_id}")
+            if (str(data.get("dataset_group", "")).upper() == "GT"
+                    or str(data.get("task_role", "")).upper() == "GT"):
+                raise ValueError("GT task leaked into planned C2-B import")
+            expected[planned_id] = row
+        worker_ids = {normalize_worker_id(row.get("worker_id", "")) for row in distribution_rows if worker_deployment[normalize_worker_id(row.get("worker_id", ""))] == deployment_id}
+        expected_tasks = {row.get("task_id", "") for row in distribution_rows if normalize_worker_id(row.get("worker_id", "")) in worker_ids}
+        if set(expected) != expected_tasks:
+            raise ValueError(f"C2-B planned import does not cover deployment assignment:{deployment_id}")
+        runtime_rows = _payload_tasks(runtime_by_deployment[deployment_id])
+        bound: dict[str, str] = {}
+        for row in runtime_rows:
+            data = row.get("data", {}) if isinstance(row.get("data", {}), dict) else {}
+            planned_id = str(data.get("planned_task_id", ""))
+            runtime_id = str(row.get("id", row.get("task_id", "")))
+            project_id = str(row.get("project", row.get("project_id", data.get("project_id", ""))))
+            if not planned_id or not runtime_id or planned_id in bound or (project_id, runtime_id) in runtime_identity_seen:
+                raise ValueError(f"C2-B runtime export has duplicate identity:{deployment_id}")
+            if (data.get("deployment_id") != deployment_id
+                    or data.get("language_group") != item.get("language_group")
+                    or data.get("server_instance_id") != item.get("server_instance_id")
+                    or not project_id):
+                raise ValueError(f"C2-B runtime export has wrong deployment identity:{deployment_id}")
+            if planned_id not in expected or data.get("selected_design_sha") != report.get("selected_design_sha") or data.get("c2b_batch_id") != report.get("assignment_batch_id"):
+                raise ValueError(f"C2-B runtime export is outside frozen batch/design:{deployment_id}")
+            if project_id and project_id != str(item.get("project_id")):
+                raise ValueError(f"C2-B runtime export has wrong project identity:{deployment_id}")
+            if str(data.get("dataset_group", "")).upper() == "GT" or str(data.get("task_role", "")).upper() == "GT":
+                raise ValueError("GT task leaked into runtime C2-B import")
+            bound[planned_id] = runtime_id
+            runtime_identity_seen.add((project_id, runtime_id))
+        if set(bound) != set(expected):
+            raise ValueError(f"C2-B runtime export is missing or adds planned tasks:{deployment_id}")
+        for row in distribution_rows:
+            worker = normalize_worker_id(row.get("worker_id", ""))
+            if worker_deployment[worker] != deployment_id:
+                continue
+            planned_id = str(row.get("task_id", ""))
+            bindings_by_deployment[(worker, planned_id)] = {
+                "deployment_id": deployment_id,
+                "language_group": item.get("language_group", ""),
+                "server_instance_id": item.get("server_instance_id", ""),
+                "project_id": item.get("project_id", ""),
+                "worker_id": worker,
+                "planned_task_id": planned_id,
+                "runtime_task_id": bound[planned_id],
+                "assignment_batch_id": report["assignment_batch_id"],
+                "selected_design_sha": report["selected_design_sha"],
+            }
+    if {path.resolve() for path in runtime_by_deployment.values()} != {path.resolve() for path in runtime_paths}:
+        raise ValueError("C2-B runtime binding does not consume exactly the supplied deployment exports")
+    if len({(row["deployment_id"], row["project_id"], row["runtime_task_id"]) for row in bindings_by_deployment.values()}) != len(bindings_by_deployment):
+        raise ValueError("C2-B runtime mapping is not one-to-one within deployment")
+    args.output_dir.mkdir(parents=True, exist_ok=True)
+    mapping = args.output_dir / "c2b_runtime_task_mapping.csv"
+    _write(mapping, list(bindings_by_deployment.values()))
+    dependencies = [
+        ("LAUNCH_REPORT", args.launch_report), ("ASSIGNMENT_MANIFEST", args.assignment_manifest),
+        ("WORKER_DISTRIBUTION", args.worker_distribution), ("DEPLOYMENT_MANIFEST", manifest_path),
+        ("METHOD_CONTRACT", METHOD_CONTRACT),
+        *[(f"PLANNED_IMPORT_{key}", value) for key, value in planned_by_deployment.items()],
+        *[(f"RUNTIME_EXPORT_{key}", value) for key, value in runtime_by_deployment.items()],
+    ]
+    audit = {
+        "schema_version": "paper_a_c2b_runtime_mapping_audit_v2",
+        "contract_role": "generated_subordinate", **_method_identity(),
+        "assignment_batch_id": report["assignment_batch_id"], "selected_design_sha": report["selected_design_sha"],
+        "deployment_manifest_sha256": sha256_file(manifest_path),
+        "deployment_ids": sorted(deployments),
+        "project_ids": sorted({str(item.get("project_id")) for item in deployments.values()}),
+        "runtime_export_sha256": {key: sha256_file(value) for key, value in runtime_by_deployment.items()},
+        "runtime_mapping_sha256": sha256_file(mapping), "runtime_task_count": len({row["runtime_task_id"] for row in bindings_by_deployment.values()}),
+        "worker_task_binding_count": len(bindings_by_deployment), "one_to_one": True, "gt_isolated": True,
+        "formal_ready": True, "C2B_RUNTIME_BINDING_READY": True,
+        "dependencies": [{"role": role, "path": str(path.resolve()), "sha256": sha256_file(path)} for role, path in dependencies],
+    }
+    (args.output_dir / "c2b_worker_task_binding_audit.json").write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    worker_bundle = args.worker_distribution.parent / "worker_facing_distribution_C2B"
+    worker_files = sorted(worker_bundle.glob("worker_*_C2B.csv")) if worker_bundle.is_dir() else []
+    expected_workers = set(worker_deployment)
+    private_workers = set()
+    private_rows: list[dict[str, str]] = []
+    private_errors: list[str] = []
+    for path in worker_files:
+        stem = path.stem
+        worker = normalize_worker_id(stem[len("worker_"):-len("_C2B")] if stem.startswith("worker_") and stem.endswith("_C2B") else "")
+        rows = _read(path)
+        if not worker or worker in private_workers:
+            private_errors.append(f"invalid_or_duplicate_worker_file:{path.name}")
+        private_workers.add(worker)
+        if any(normalize_worker_id(row.get("worker_id", "")) != worker for row in rows):
+            private_errors.append(f"private_list_worker_identity_mismatch:{path.name}")
+        private_rows.extend({**row, "worker_id": worker} for row in rows)
+    private_ids = {(row.get("worker_id", ""), row.get("task_id", "")) for row in private_rows}
+    private_complete = private_workers == expected_workers and not private_errors and len(private_rows) == len(private_ids) and private_ids == assignment_ids
+    private_audit = {
+        "schema_version": "paper_a_c2b_private_assignment_list_audit_v2", "contract_role": "generated_subordinate", **_method_identity(),
+        "assignment_manifest_sha256": sha256_file(args.assignment_manifest), "worker_distribution_sha256": sha256_file(args.worker_distribution),
+        "private_file_workers": sorted(private_workers), "expected_workers": sorted(expected_workers), "private_file_errors": private_errors,
+        "private_lists_complete": private_complete, "all_assignment_rows_covered": private_complete,
+        "outside_submission_policy": "exclude_from_primary_and_audit", "assignment_batch_id": report["assignment_batch_id"],
+        "formal_ready": private_complete, "private_assignment_list_audit_passed": private_complete,
+        "dependencies": audit["dependencies"],
+    }
+    (args.output_dir / "c2b_private_assignment_list_audit.json").write_text(json.dumps(private_audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    audit["formal_ready"] = private_complete
+    audit["C2B_RUNTIME_BINDING_READY"] = private_complete
+    (args.output_dir / "c2b_worker_task_binding_audit.json").write_text(json.dumps(audit, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    if not private_complete:
+        raise ValueError("private assignment lists are incomplete or inconsistent")
+    return audit
+
+
 def bind_c2b_runtime_mapping(args: argparse.Namespace) -> dict[str, Any]:
     """Bind a manual Label Studio import export to the frozen planned task IDs."""
     report = _require_current_subordinate(args.launch_report, "c2b_launch_report")
+    if report.get("schema_version") == "paper_a_c2b_launch_ready_report_v4" or report.get("deployments"):
+        return _bind_c2b_runtime_mapping_multi(args, report)
+    if isinstance(getattr(args, "planned_import", None), list):
+        if len(args.planned_import) != 1:
+            raise ValueError("legacy C2-B runtime binding accepts exactly one planned import")
+        args.planned_import = args.planned_import[0]
+    if isinstance(getattr(args, "runtime_export", None), list):
+        if len(args.runtime_export) != 1:
+            raise ValueError("legacy C2-B runtime binding accepts exactly one runtime export")
+        args.runtime_export = args.runtime_export[0]
     assignment_rows = _read(args.assignment_manifest)
     assignments = _read(args.worker_distribution)
     assignment_ids = {(row.get("worker_id", ""), row.get("task_id", "")) for row in assignment_rows}
@@ -1858,13 +2256,17 @@ def main(argv: list[str] | None = None) -> int:
     for name in ("c1-closeout-summary", "risk-summary", "task-pool", "task-eligibility-evidence", "candidate-dir", "design-manifest", "selected-design-manifest", "threshold-manifest", "source-split-evidence", "source-split-approval", "future-holdout-evidence", "future-holdout-approval", "reference-registry", "selected-task-reference-manifest", "selected-design-approval", "capacity-manifest", "layout-dir", "output-dir"):
         build.add_argument(f"--{name}", type=Path, required=True)
     build.add_argument("--c2b-roster-manifest", type=Path, required=True)
+    build.add_argument("--deployment-manifest", type=Path)
     build.add_argument("--assignment-batch", choices=("C2B_BATCH_A", "C2B_BATCH_B"), default="C2B_BATCH_A")
     for name in ("batch-a-launch-report", "batch-a-assignment", "batch-worker-profile", "p1-admission-evidence"):
         build.add_argument(f"--{name}", type=Path)
 
     runtime = sub.add_parser("bind-c2b-runtime-mapping")
-    for name in ("launch-report", "assignment-manifest", "worker-distribution", "planned-import", "runtime-export", "output-dir"):
+    for name in ("launch-report", "assignment-manifest", "worker-distribution", "output-dir"):
         runtime.add_argument(f"--{name}", type=Path, required=True)
+    runtime.add_argument("--deployment-manifest", type=Path)
+    runtime.add_argument("--planned-import", action="append", type=Path)
+    runtime.add_argument("--runtime-export", action="append", type=Path)
     args = parser.parse_args(argv)
     command = {
         "prepare-c2b-static": prepare_c2b_static,

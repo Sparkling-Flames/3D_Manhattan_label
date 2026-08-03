@@ -6,12 +6,14 @@ import hashlib
 import json
 from pathlib import Path
 
+from tools.thesis_main.analysis.worker_identity import normalize_worker_id
+
 
 INTERNAL_FIELDS = [
     "worker_id", "public_worker_code", "task_id", "task_code", "zh_task_code",
     "inner_id", "planned_project_code", "assignment_batch_id",
     "expected_completion_order", "selected_design_sha", "source_assignment_sha256",
-    "source_import_sha256", "internal_only",
+    "source_import_sha256", "deployment_id", "language_group", "deployment_manifest_sha256", "internal_only",
 ]
 ZH_FIELDS = ["public_worker_code", "worker_name", "task_code"]
 
@@ -37,7 +39,13 @@ def _public(worker_id: str) -> str:
     return f"W{int(worker_id):03d}"
 
 
-def build_release(assignment: Path, planned_import: Path, c1_release: Path, output: Path) -> dict:
+def build_release(
+    assignment: Path,
+    planned_import: Path,
+    c1_release: Path,
+    output: Path,
+    deployment_manifest: Path | None = None,
+) -> dict:
     assignments = _read_csv(assignment)
     imports = json.loads(planned_import.read_text(encoding="utf-8"))
     import_rows = [item.get("data", {}) for item in imports if isinstance(item, dict)]
@@ -51,11 +59,31 @@ def build_release(assignment: Path, planned_import: Path, c1_release: Path, outp
     if len(design_shas) != 1 or batch_ids != {"C2B_BATCH_A"}:
         raise ValueError("planned import lacks one frozen D8 design/batch identity")
 
+    deployment_by_worker: dict[str, dict[str, str]] = {}
+    deployment_manifest_sha = ""
+    if deployment_manifest:
+        payload = json.loads(deployment_manifest.read_text(encoding="utf-8"))
+        if payload.get("schema_version") != "c2b_worker_deployment_manifest_v1":
+            raise ValueError("deployment manifest schema is invalid")
+        deployment_manifest_sha = _sha(deployment_manifest)
+        for item in payload.get("deployments", []):
+            deployment_id = str(item.get("deployment_id", "")).strip()
+            for worker in item.get("worker_ids", []):
+                normalized = normalize_worker_id(worker)
+                if not normalized or normalized in deployment_by_worker:
+                    raise ValueError("deployment manifest maps a worker more than once")
+                deployment_by_worker[normalized] = {
+                    "deployment_id": deployment_id,
+                    "language_group": str(item.get("language_group", "")).strip(),
+                }
+        if set(deployment_by_worker) != {normalize_worker_id(row.get("worker_id", "")) for row in assignments}:
+            raise ValueError("deployment manifest does not cover the assignment")
+
     overseas = {path.stem.removeprefix("worker_W") for path in c1_release.glob("worker_W*.csv")}
     zh_source = _read_csv(c1_release / "worker_facing_distribution_zh_merged_v3_1.csv")
     zh_names = {row["public_worker_code"]: row["worker_name"] for row in zh_source}
     workers = {_public(row["worker_id"]) for row in assignments}
-    if any((worker[1:] in overseas) == (worker in zh_names) for worker in workers):
+    if not deployment_by_worker and any((worker[1:] in overseas) == (worker in zh_names) for worker in workers):
         raise ValueError("every assigned worker must map to exactly one C1 language release group")
 
     assignment_sha, import_sha = _sha(assignment), _sha(planned_import)
@@ -79,6 +107,9 @@ def build_release(assignment: Path, planned_import: Path, c1_release: Path, outp
             "selected_design_sha": next(iter(design_shas)),
             "source_assignment_sha256": assignment_sha,
             "source_import_sha256": import_sha,
+            "deployment_id": deployment_by_worker.get(str(int(row["worker_id"])), {}).get("deployment_id", ""),
+            "language_group": deployment_by_worker.get(str(int(row["worker_id"])), {}).get("language_group", ""),
+            "deployment_manifest_sha256": deployment_manifest_sha,
             "internal_only": "true",
         })
 
@@ -120,6 +151,8 @@ def build_release(assignment: Path, planned_import: Path, c1_release: Path, outp
         "task_count_per_worker": sorted({sum(row["public_worker_code"] == worker for row in internal) for worker in workers}),
         "assignment_sha256": assignment_sha,
         "planned_import_sha256": import_sha,
+        "deployment_manifest_sha256": deployment_manifest_sha,
+        "worker_deployment_source": "c2b_worker_deployment_manifest_v1" if deployment_manifest else "legacy_c1_release_fallback",
         "selected_design_sha": next(iter(design_shas)),
         "worker_facing_fields": {"Chinese_workbook": ["order", "task_code"], "English": ["task_code"]},
         "internal_chinese_workbook_source_fields": ZH_FIELDS,
@@ -139,9 +172,10 @@ def main() -> None:
     parser.add_argument("--assignment", type=Path, required=True)
     parser.add_argument("--planned-import", type=Path, required=True)
     parser.add_argument("--c1-release", type=Path, required=True)
+    parser.add_argument("--deployment-manifest", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args()
-    print(json.dumps(build_release(args.assignment, args.planned_import, args.c1_release, args.output), ensure_ascii=False, indent=2))
+    print(json.dumps(build_release(args.assignment, args.planned_import, args.c1_release, args.output, args.deployment_manifest), ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":

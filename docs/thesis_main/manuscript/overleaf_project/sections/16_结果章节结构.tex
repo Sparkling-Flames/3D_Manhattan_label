@@ -1,4 +1,4 @@
-% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v17 SHA-256 5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260803_v18 SHA-256 694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87
 \section{结果章节结构}
 
 \subsection{数据完整性与参考组成}
@@ -108,8 +108,9 @@ W034 B-004/B-022 outside、W034 sentinel validation 和 timing not-evaluable 数
 
 Rolling enrollment 未激活时报告新增人数 0；激活时报告 eligible、admitted、assigned、terminal、
 进入 pooled profile 和进入 Validation roster 的人数与 SHA-bound flow，同时并列展示 original-only
-和 pooled worker profile、Strong Global/Full activation 及 sensitivity。Stage 3 gate 的十项依赖、
-roster SHA 和 enrollment registry SHA 作为结果完整性表的一部分公开。
+和 pooled worker profile、Strong Global/Full activation 及 sensitivity。T1 与 V1 分别公开各自
+gate kind、required roles、roster SHA、enrollment registry SHA 及递归依赖 closure；T1 不把
+Strong Global、Full 或 Validation roster 当作启动前置条件，V1 则必须显式报告这些依赖。
 
 original cohort 的 administratively eligible 上限为 22；late-entry eligible 另记为
 \(N_{late}\)，final pooled cohort 的上界为 \(22+N_{late}\)，再按各 estimand eligibility 减少。

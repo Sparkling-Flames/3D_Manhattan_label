@@ -85,7 +85,9 @@ def load_frozen_manifest(path: Path, declared_sha256: str, *, input_status: str)
             raise ValueError(f"frozen dependency is missing or stale: {dependency_path}")
         if dependency.get("role") == "stage3_freeze_gate":
             gate = json.loads(dependency_path.read_text(encoding="utf-8"))
-            validate_gate_file(dependency_path)
+            if str(manifest.get("stage3_gate_kind", "V1")).upper() != "V1":
+                raise ValueError("formal V1 requires a V1 Stage 3 freeze gate")
+            validate_gate_file(dependency_path, expected_gate_kind="V1")
     if not any(item.get("role") == "stage3_freeze_gate" for item in manifest["dependencies"]):
         raise ValueError("formal V1 requires a SHA-bound Stage 3 freeze gate")
     if manifest["method_contract_sha256"] != method_contract_sha256(METHOD_CONTRACT):

@@ -9,7 +9,7 @@ from pathlib import Path
 import pytest
 
 from tools.thesis_main.analysis.geometry_cluster_v2 import _maximum_clique_partitions, _maximum_cliques, cluster_geometry_records
-from tools.thesis_main.analysis.materialize_stage3_freeze_gate import REQUIRED_GATES, build_gate, validate_gate_file
+from tools.thesis_main.analysis.materialize_stage3_freeze_gate import REQUIRED_GATES, build_gate, required_gates, validate_gate_file
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file, validate_record
 from tools.thesis_main.analysis.routing.v1_decision_engine import append_decision, decide_next_offer, replay_next_offer
 from tools.thesis_main.analysis.routing.v1_policy import RULE_VERSION
@@ -77,7 +77,7 @@ def _write_artifact(path: Path, schema: str, *, dependencies: list[dict] | None 
     }
 
 
-def _formal_gate(tmp_path: Path) -> tuple[Path, Path, Path, dict]:
+def _formal_gate(tmp_path: Path, *, gate_kind: str = "T1") -> tuple[Path, Path, Path, dict]:
     roster, enrollment = tmp_path / "roster.csv", tmp_path / "enrollment.csv"
     roster.write_text("worker_id\n1\n", encoding="utf-8")
     enrollment.write_text("worker_id\n1\n", encoding="utf-8")
@@ -86,12 +86,18 @@ def _formal_gate(tmp_path: Path) -> tuple[Path, Path, Path, dict]:
         item = _write_artifact(tmp_path / f"{role}.json", f"{role.lower()}_v2")
         child_items.append({"role": role, **item})
     state = {}
-    for role in REQUIRED_GATES:
+    for role in required_gates(gate_kind):
         item = _write_artifact(
             tmp_path / f"{role}.json", f"{role.lower()}_v2",
             dependencies=child_items if role == "C1_EVIDENCE_FROZEN" else [],
             method_sha=sha256_file(METHOD_CONTRACT) if role == "C1_EVIDENCE_FROZEN" else None,
         )
+        if role.startswith(("T1_", "V1_")):
+            path = Path(item["path"])
+            payload = json.loads(path.read_text(encoding="utf-8"))
+            payload["artifact_role"] = role
+            path.write_text(json.dumps(payload), encoding="utf-8")
+            item["sha256"] = sha256_file(path)
         if role == "C1_EVIDENCE_FROZEN":
             path = Path(item["path"])
             payload = json.loads(path.read_text(encoding="utf-8"))
@@ -106,7 +112,7 @@ def _formal_gate(tmp_path: Path) -> tuple[Path, Path, Path, dict]:
         state[role] = item
     gate = build_gate(
         state, hashlib.sha256(roster.read_bytes()).hexdigest(),
-        hashlib.sha256(enrollment.read_bytes()).hexdigest(), base_dir=tmp_path,
+        hashlib.sha256(enrollment.read_bytes()).hexdigest(), base_dir=tmp_path, gate_kind=gate_kind,
     )
     gate_path = tmp_path / "gate.json"
     gate_path.write_text(json.dumps(gate), encoding="utf-8")
@@ -211,7 +217,7 @@ def test_stage3_requires_c1_children_and_revalidates_method_sha(tmp_path: Path) 
 
 
 def test_online_v1_requires_stage3_and_replay_is_consistent(tmp_path: Path) -> None:
-    gate, roster, enrollment, _ = _formal_gate(tmp_path)
+    gate, roster, enrollment, _ = _formal_gate(tmp_path, gate_kind="V1")
     candidate = _record_examples()["policy_candidate_v2"]
     candidate_roster = tmp_path / "candidate_roster.csv"
     with candidate_roster.open("w", newline="", encoding="utf-8") as stream:

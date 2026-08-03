@@ -16,17 +16,21 @@ if str(_PROJECT_ROOT) not in sys.path:
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, safe, truthy, write_csv, write_json
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
+from tools.thesis_main.analysis.worker_identity import normalize_worker_id
 
 
 PRECISION_FIELDS = [
-    "worker_id", "current_support", "current_ci_half_width", "target_ci_half_width",
+    "schema_version", "worker_id", "target_component", "gap_reason", "formal_goal",
+    "current_support", "current_ci_half_width", "target_ci_half_width", "interval_level", "ci_method",
     "additional_blocks", "ordinary_tasks", "stress_tasks", "projected_ci_half_width",
-    "precision_target_met", "routing_eligibility", "unmet_reason", "design_manifest_sha256",
+    "precision_target_met", "routing_eligibility", "unmet_reason", "terminal_state", "fallback_action",
+    "declared_support_after", "observed_support_after", "ordinary_support_observed_after", "stress_support_observed_after",
+    "threshold_manifest_sha256", "design_manifest_sha256",
 ]
 C2A_ASSIGNMENT_FIELDS = [
-    "round_id", "worker_id", "task_id", "base_task_id", "task_stratum",
-    "assignment_sequence", "c2_component", "target_component", "gap_reason",
-    "precision_before", "support_before", "support_after", "selection_probability",
+    "schema_version", "round_id", "worker_id", "task_id", "base_task_id", "task_stratum",
+    "assignment_sequence", "block_index", "c2_component", "target_component", "gap_reason",
+    "formal_goal", "precision_before", "support_before", "support_after", "declared_support_after", "selection_probability",
     "conditional_inclusion_probability", "selection_seed", "selection_draw_id", "eligible_count_at_draw",
     "task_support_before", "task_support_after", "paired_block_support_before", "paired_block_support_after",
     "effective_risk_slope_support_before", "effective_risk_slope_support_after",
@@ -41,6 +45,72 @@ def _c2a_rp_limits() -> tuple[int, int, str]:
     if max_tasks != 4 or max_tasks < 0 or max_tasks % 2:
         raise ValueError(f"invalid normative C2-A-RP cap:{max_tasks}")
     return max_tasks, max_tasks // 2, sha256_file(METHOD_CONTRACT)
+
+
+def _formal_goal(method: dict[str, Any] | None = None) -> str:
+    contract = method or load_method_contract()
+    return safe(contract.get("c2", {}).get("c2_a_rp_formal_target")) or "risk_slope_precision"
+
+
+def _c2a_rp_csv_schemas(method: dict[str, Any] | None = None) -> tuple[str, str]:
+    contract = method or load_method_contract()
+    schema = contract.get("c2", {}).get("c2_a_rp_csv_schema", {})
+    precision = safe(schema.get("precision_plan"))
+    assignment = safe(schema.get("assignment_manifest"))
+    if not precision or not assignment or schema.get("schema_field") != "schema_version" or schema.get("formal_reject_legacy") is not True:
+        raise ValueError("C2-A-RP CSV schema contract is incomplete")
+    return precision, assignment
+
+
+def _write_blocked_summary(output_dir: Path, reason: str, hashes: dict[str, str] | None = None) -> Path:
+    method = load_method_contract()
+    output_dir.mkdir(parents=True, exist_ok=True)
+    path = output_dir / "c2a_rp_blocked_summary.json"
+    write_json(path, {
+        "schema_version": "c2a_rp_blocked_summary_v1",
+        "artifact_role": "C2A_RP_BLOCKED_SUMMARY",
+        "method_contract_version": method["contract_version"],
+        "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+        "formal_ready": False,
+        "launch_ready": False,
+        "reason_code": reason,
+        "input_hashes": hashes or {},
+    })
+    return path
+
+
+def _resolve_formal_threshold(
+    design_manifest: Path,
+    manifest: dict[str, Any],
+    precision: dict[str, Any],
+    explicit_path: Path | None,
+) -> tuple[float, Path, str]:
+    path_value = explicit_path or precision.get("threshold_manifest_path") or manifest.get("threshold_manifest_path")
+    declared_sha = safe(precision.get("threshold_manifest_sha256") or manifest.get("threshold_manifest_sha256"))
+    if not path_value or not declared_sha:
+        raise ValueError("C2-A-RP formal input lacks frozen threshold manifest binding")
+    path = Path(path_value)
+    if not path.is_absolute():
+        path = (design_manifest.parent / path).resolve()
+    if not path.is_file() or sha256_file(path) != declared_sha:
+        raise ValueError("C2-A-RP frozen threshold manifest is missing or stale")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if payload.get("status") != "approved" or payload.get("formal_selection_allowed") is not True:
+        raise ValueError("C2-A-RP frozen threshold manifest is not formally approved")
+    formula_id = (payload.get("derivation", {}).get("formula_ids", {})
+                  .get("risk_slope_ci_half_width"))
+    if formula_id != "normal_95_max_unified_slope_sd":
+        raise ValueError("C2-A-RP threshold manifest uses an unsupported risk-slope formula")
+    try:
+        target = float(payload["thresholds"]["risk_slope_ci_half_width"])
+    except (KeyError, TypeError, ValueError) as exc:
+        raise ValueError("C2-A-RP threshold manifest lacks risk_slope_ci_half_width") from exc
+    if not math.isfinite(target) or target <= 0:
+        raise ValueError("C2-A-RP risk-slope target is nonfinite or nonpositive")
+    declared_target = precision.get("target_ci_half_width")
+    if declared_target not in {None, ""} and not math.isclose(float(declared_target), target, rel_tol=1e-12, abs_tol=1e-12):
+        raise ValueError("C2-A-RP design target disagrees with the frozen threshold manifest")
+    return target, path, declared_sha
 
 
 def _validate_c2a_rp_counts(
@@ -73,15 +143,21 @@ def build_precision_plan(
     target_half_width: float,
     max_additional_blocks: int,
     manifest_sha: str,
+    threshold_sha: str = "",
+    formal: bool = False,
 ) -> list[dict[str, Any]]:
     max_tasks, contract_max_blocks, _method_sha = _c2a_rp_limits()
     if max_additional_blocks < 0 or max_additional_blocks > contract_max_blocks:
         raise ValueError("design manifest max_additional_blocks exceeds the normative C2-A-RP cap")
+    precision_schema, _assignment_schema = _c2a_rp_csv_schemas()
     out = []
     for row in sorted(worker_rows, key=lambda value: safe(value.get("worker_id"))):
         worker = safe(row.get("worker_id"))
         support_raw = _number(row, "support", "n_support", "n_calib_completed")
-        half_width = _number(row, "ci_half_width", "r_u_h")
+        target_component = safe(row.get("target_component") or row.get("component_id")) or "risk_slope"
+        if formal and target_component != "risk_slope":
+            raise ValueError("C2-A-RP formal target must be risk_slope")
+        half_width = _number(row, "risk_slope_ci_half_width", "ci_half_width", "r_u_h")
         blocked = truthy(row.get("process_blocker")) or truthy(row.get("independence_blocker"))
         blocks = 0
         projected = half_width
@@ -91,31 +167,53 @@ def build_precision_plan(
         elif not worker or support_raw is None or support_raw <= 0 or half_width is None:
             reason = "precision_not_evaluable"
         else:
-            support = int(support_raw)
-            while projected > target_half_width and blocks < max_additional_blocks:
-                blocks += 1
-                projected = half_width * math.sqrt(support / (support + 2 * blocks))
-            if projected > target_half_width:
-                reason = "target_not_met_at_frozen_cap"
-        met = not reason and projected is not None and projected <= target_half_width
+            if formal:
+                # Formal C2-A-RP decisions use the frozen width only.  The
+                # observed risk-slope fit after each block, not a support
+                # scaling projection, decides the terminal state.
+                if half_width > target_half_width:
+                    blocks = max_additional_blocks
+                    projected = None
+                    if blocks == 0:
+                        reason = "candidate_cap_requires_actual_reestimate"
+            else:
+                support = int(support_raw)
+                while projected > target_half_width and blocks < max_additional_blocks:
+                    blocks += 1
+                    projected = half_width * math.sqrt(support / (support + 2 * blocks))
+                if projected > target_half_width:
+                    reason = "target_not_met_at_frozen_cap"
+        met = not reason and projected is not None and projected <= target_half_width and blocks == 0
+        terminal_state = "target_met" if met else "pending_actual_reestimate" if formal and blocks else "fallback_strong_global" if reason else "target_met"
         _validate_c2a_rp_counts(
             blocks, blocks, blocks,
             max_tasks=max_tasks, max_additional_blocks=contract_max_blocks,
         )
         out.append({
+            "schema_version": precision_schema,
             "worker_id": worker,
-            "target_component": safe(row.get("target_component") or row.get("component_id")) or "risk_slope",
+            "target_component": target_component,
             "gap_reason": safe(row.get("gap_reason")) or ("target_not_met" if blocks else "target_already_met"),
+            "formal_goal": _formal_goal() if formal else safe(row.get("formal_goal")) or target_component,
             "current_support": "" if support_raw is None else int(support_raw),
             "current_ci_half_width": "" if half_width is None else half_width,
             "target_ci_half_width": target_half_width,
+            "interval_level": 0.95,
+            "ci_method": "normal_95_max_unified_slope_sd",
             "additional_blocks": blocks,
             "ordinary_tasks": blocks,
             "stress_tasks": blocks,
             "projected_ci_half_width": "" if projected is None else projected,
             "precision_target_met": met,
-            "routing_eligibility": "eligible" if met else "uncertain_fallback_global",
+            "routing_eligibility": "eligible" if met else "pending_actual_reestimate" if formal and blocks else "uncertain_fallback_global",
             "unmet_reason": reason,
+            "terminal_state": terminal_state,
+            "fallback_action": "STRONG_GLOBAL" if terminal_state == "fallback_strong_global" else "",
+            "declared_support_after": int(support_raw) + int(blocks) if support_raw is not None else "",
+            "observed_support_after": "",
+            "ordinary_support_observed_after": "",
+            "stress_support_observed_after": "",
+            "threshold_manifest_sha256": threshold_sha,
             "design_manifest_sha256": manifest_sha,
         })
     return out
@@ -132,11 +230,15 @@ def build_precision_assignments(
     max_task_support: int = 2,
     selection_seed: int = 0,
     require_explicit_eligibility: bool = False,
+    formal: bool = False,
 ) -> list[dict[str, Any]]:
     max_tasks, contract_max_blocks, _method_sha = _c2a_rp_limits()
     if max_task_support < 1:
         raise ValueError("C2-A-RP max_task_support must be positive")
+    _precision_schema, assignment_schema = _c2a_rp_csv_schemas()
     for plan in precision_rows:
+        if formal and safe(plan.get("target_component")) != "risk_slope":
+            raise ValueError("C2-A-RP formal assignment target must be risk_slope")
         _validate_c2a_rp_counts(
             int(plan["additional_blocks"]), int(plan["ordinary_tasks"]), int(plan["stress_tasks"]),
             max_tasks=max_tasks, max_additional_blocks=contract_max_blocks,
@@ -166,22 +268,38 @@ def build_precision_assignments(
     for plan in precision_rows:
         worker = safe(plan.get("worker_id"))
         sequence = 0
-        for stratum, count_field in (("ordinary", "ordinary_tasks"), ("stress", "stress_tasks")):
-            count = int(plan[count_field])
-            eligible = [
+        eligible_by_stratum: dict[str, list[dict[str, str]]] = {}
+        rng_by_stratum: dict[str, random.Random] = {}
+        for stratum in ("ordinary", "stress"):
+            eligible_by_stratum[stratum] = [
                 task for task in pools[stratum]
                 if safe(task.get("task_id")) not in seen_by_worker[worker]
                 and safe(task.get("base_task_id")) not in seen_by_worker[worker]
                 and task_support[safe(task.get("task_id"))] < max_task_support
             ]
-            if count > len(eligible):
+            count = int(plan[f"{stratum}_tasks"])
+            if count > len(eligible_by_stratum[stratum]):
                 raise ValueError(f"insufficient C2-A-RP {stratum} tasks for worker {worker}")
-            if not count:
-                continue
-            rng = random.Random(f"{selection_seed}|{worker}|{stratum}")
-            for draw in range(count):
+            rng_by_stratum[stratum] = random.Random(f"{selection_seed}|{worker}|{stratum}")
+        for block_index in range(1, max(int(plan["ordinary_tasks"]), int(plan["stress_tasks"])) + 1):
+            for stratum in ("ordinary", "stress"):
+                if block_index > int(plan[f"{stratum}_tasks"]):
+                    continue
+                # Recompute the live candidate set after the paired draw.  The
+                # same base task may occur in both strata; precomputing both
+                # lists before the ordinary draw would silently allow reuse.
+                for candidate_stratum in ("ordinary", "stress"):
+                    eligible_by_stratum[candidate_stratum] = [
+                        task for task in eligible_by_stratum[candidate_stratum]
+                        if safe(task.get("task_id")) not in seen_by_worker[worker]
+                        and safe(task.get("base_task_id")) not in seen_by_worker[worker]
+                        and task_support[safe(task.get("task_id"))] < max_task_support
+                    ]
+                eligible = eligible_by_stratum[stratum]
                 eligible_count = len(eligible)
-                task = eligible.pop(rng.randrange(eligible_count))
+                if not eligible_count:
+                    raise ValueError(f"insufficient C2-A-RP {stratum} tasks for worker {worker}")
+                task = eligible.pop(rng_by_stratum[stratum].randrange(eligible_count))
                 task_id = safe(task.get("task_id"))
                 base_task_id = safe(task.get("base_task_id")) or task_id
                 support_before = task_support[task_id]
@@ -189,16 +307,19 @@ def build_precision_assignments(
                 seen_by_worker[worker].update((task_id, base_task_id))
                 sequence += 1
                 assignments.append({
+                    "schema_version": assignment_schema,
                     "round_id": "C2-A-RP", "worker_id": worker,
                     "task_id": safe(task.get("task_id")),
                     "base_task_id": base_task_id,
-                    "task_stratum": stratum, "assignment_sequence": sequence,
+                    "task_stratum": stratum, "assignment_sequence": sequence, "block_index": block_index,
                     "c2_component": "precision_completion",
                     "target_component": plan["target_component"],
                     "gap_reason": plan["gap_reason"],
+                    "formal_goal": plan.get("formal_goal", ""),
                     "precision_before": plan["current_ci_half_width"],
                     "support_before": plan["current_support"],
                     "support_after": int(plan["current_support"]) + sequence,
+                    "declared_support_after": int(plan["current_support"]) + sequence,
                     "selection_probability": 1 / eligible_count,
                     "conditional_inclusion_probability": 1 / eligible_count,
                     "selection_seed": selection_seed,
@@ -226,8 +347,11 @@ def materialize(
     c2b_summary_sha256: str | None = None,
     task_pool_csv: Path | None = None,
     assignment_history_csv: Path | None = None,
+    threshold_manifest: Path | None = None,
     input_status: str = "dry_run",
 ) -> dict[str, Any]:
+    method = load_method_contract()
+    precision_schema, assignment_schema = _c2a_rp_csv_schemas(method)
     manifest = json.loads(design_manifest.read_text(encoding="utf-8"))
     if manifest.get("manifest_version") != "c2_design_v1":
         raise ValueError("unsupported C2 design manifest version")
@@ -255,7 +379,17 @@ def materialize(
     if input_status == "formal" and (not c2b_summary or not c2b_summary_sha256):
         c2b_valid = False
     precision = manifest.get("precision") or {}
-    target = float(precision["target_ci_half_width"])
+    formal_goal = safe(precision.get("formal_goal") or precision.get("target_goal") or "risk_slope_precision")
+    if input_status == "formal" and formal_goal != _formal_goal():
+        raise ValueError(f"C2-A-RP formal goal is not allowed:{formal_goal}")
+    threshold_path = None
+    threshold_sha = ""
+    if input_status == "formal":
+        target, threshold_path, threshold_sha = _resolve_formal_threshold(
+            design_manifest, manifest, precision, threshold_manifest,
+        )
+    else:
+        target = float(precision["target_ci_half_width"])
     max_blocks = int(precision["max_additional_blocks"])
     if target <= 0 or max_blocks < 0:
         raise ValueError("precision target must be positive and max_additional_blocks non-negative")
@@ -270,7 +404,16 @@ def materialize(
         target_half_width=target,
         max_additional_blocks=max_blocks,
         manifest_sha=manifest_sha,
+        threshold_sha=threshold_sha,
+        formal=input_status == "formal",
     )
+    if input_status == "formal":
+        if not isinstance(c2b.get("worker_summaries"), list) or not c2b["worker_summaries"]:
+            raise ValueError("C2-A-RP formal input lacks the complete C2-B worker roster")
+        c2b_workers = {normalize_worker_id(row.get("worker_id")) for row in c2b["worker_summaries"] if normalize_worker_id(row.get("worker_id"))}
+        plan_workers = {normalize_worker_id(row.get("worker_id")) for row in rows if normalize_worker_id(row.get("worker_id"))}
+        if len(c2b_workers) != len(c2b["worker_summaries"]) or c2b_workers != plan_workers or len(plan_workers) != len(rows):
+            raise ValueError("C2-A-RP precision plan does not cover the complete C2-B roster")
     assignments: list[dict[str, Any]] = []
     task_pool_valid = input_status != "formal"
     if task_pool_csv:
@@ -284,6 +427,7 @@ def materialize(
                 max_task_support=int(precision.get("max_task_support", 2)),
                 selection_seed=int(precision.get("selection_seed", 0)),
                 require_explicit_eligibility=input_status == "formal",
+                formal=input_status == "formal",
             )
     history_valid = input_status != "formal"
     if assignment_history_csv:
@@ -306,13 +450,25 @@ def materialize(
         "c2_a_rp_max_tasks_per_worker": max_tasks,
         "max_additional_blocks": max_blocks,
         "max_task_support": int(precision.get("max_task_support", 2)),
+        "formal_goal": formal_goal,
+        "precision_plan_schema_version": precision_schema,
+        "assignment_manifest_schema_version": assignment_schema,
+        "diagnostic_goals_not_dispatchable": ["top_k_boundary_precision", "component_eligibility_precision"],
+        "interval_definition": {
+            "level": 0.95,
+            "multiplier": 1.96,
+            "formula_id": "normal_95_max_unified_slope_sd",
+            "reestimate_after_each_block": True,
+        },
+        "threshold_manifest_path": str(threshold_path or ""),
+        "threshold_manifest_sha256": threshold_sha,
         "n_workers": len(rows),
         "n_workers_with_precision_additions": sum(int(row["additional_blocks"]) > 0 for row in rows),
         "n_workers_unmet_at_cap": sum(bool(row["unmet_reason"]) for row in rows),
         "n_assignments": len(assignments),
-        "c2a_rp_ready": binding_valid and c2b_valid and task_pool_valid and history_valid and bool(rows),
+        "c2a_rp_ready": binding_valid and c2b_valid and task_pool_valid and history_valid and bool(rows) and (formal_goal == _formal_goal() if input_status == "formal" else True),
         "candidate_only": input_status != "formal",
-        "launch_ready": input_status == "formal" and binding_valid and c2b_valid and task_pool_valid and history_valid and bool(rows),
+        "launch_ready": input_status == "formal" and binding_valid and c2b_valid and task_pool_valid and history_valid and bool(rows) and formal_goal == _formal_goal(),
         "searches_new_risk_family": False,
         "modifies_c1": False,
     }
@@ -329,14 +485,35 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--c2b-summary-sha256")
     parser.add_argument("--task-pool-csv", type=Path)
     parser.add_argument("--assignment-history-csv", type=Path)
+    parser.add_argument("--threshold-manifest", type=Path)
     parser.add_argument("--input-status", choices=("dry_run", "formal"), default="dry_run")
     args = parser.parse_args(argv)
-    print(json.dumps(materialize(
-        args.worker_profile_csv, args.design_manifest, args.output_dir,
-        c2b_summary=args.c2b_summary, c2b_summary_sha256=args.c2b_summary_sha256,
-        task_pool_csv=args.task_pool_csv, input_status=args.input_status,
-        assignment_history_csv=args.assignment_history_csv,
-    ), ensure_ascii=False, indent=2))
+    try:
+        result = materialize(
+            args.worker_profile_csv, args.design_manifest, args.output_dir,
+            c2b_summary=args.c2b_summary, c2b_summary_sha256=args.c2b_summary_sha256,
+            task_pool_csv=args.task_pool_csv, input_status=args.input_status,
+            assignment_history_csv=args.assignment_history_csv,
+            threshold_manifest=args.threshold_manifest,
+        )
+    except (OSError, KeyError, TypeError, ValueError) as exc:
+        if args.input_status == "formal":
+            blocked = _write_blocked_summary(
+                args.output_dir, f"{type(exc).__name__}:{exc}",
+                {
+                    "worker_profile_csv": sha256_file(args.worker_profile_csv),
+                    "design_manifest": sha256_file(args.design_manifest),
+                    "c2b_summary": sha256_file(args.c2b_summary),
+                    "task_pool_csv": sha256_file(args.task_pool_csv),
+                    "assignment_history_csv": sha256_file(args.assignment_history_csv),
+                    "threshold_manifest": sha256_file(args.threshold_manifest),
+                    "declared_c2b_summary": args.c2b_summary_sha256 or "",
+                },
+            )
+            print(json.dumps({"formal_ready": False, "launch_ready": False, "blocked_summary": str(blocked), "reason_code": str(exc)}, ensure_ascii=False), file=sys.stderr)
+            return 2
+        raise
+    print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
 

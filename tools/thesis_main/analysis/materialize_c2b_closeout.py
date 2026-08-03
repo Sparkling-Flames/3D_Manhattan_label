@@ -10,7 +10,7 @@ from collections import Counter
 from pathlib import Path
 from typing import Any
 
-from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, validate_serialized_record
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 from tools.thesis_main.analysis.worker_identity import normalize_worker_id
 
@@ -235,6 +235,9 @@ def materialize(
     profile_axis_statuses: dict[str, dict[str, str]] = {}
     profile_terminal_statuses: dict[str, str] = {}
     for worker, row in profile_by_worker.items():
+        if row.get("schema_version") != "worker_profile_v2":
+            raise ValueError("C2-B post-profile requires worker_profile_v2")
+        validate_serialized_record("worker_profile_v2", row)
         profile_axis_statuses[worker], _ = _profile_axis_statuses(row)
         profile_terminal_statuses[worker] = _profile_terminal_status(row)
     missing = assigned_set - submitted_set
@@ -301,9 +304,12 @@ def materialize(
                 raise ValueError(f"C2-B worker has mixed missing terminal statuses without worker disposition:{worker}")
         else:
             terminal_status = profile_terminal or "completed"
-        global_field = _first_value(profile, ("global_policy_eligible", "strong_global_eligible"))
-        global_eligible = (_truth(global_field) if global_field else statuses["Q_GT_status"] == "estimated")
-        global_eligible = bool(global_eligible and statuses["Q_GT_status"] == "estimated" and terminal_status not in {"nonstarter", "administrative_exclusion"})
+        global_field = _first_value(profile, ("global_policy_eligible",))
+        if not global_field:
+            raise ValueError(f"C2-B post-profile lacks explicit global_policy_eligible:{worker}")
+        # Global eligibility is a frozen worker-profile field.  Q_GT status is
+        # reported separately and must not be used as a fallback inference.
+        global_eligible = _truth(global_field)
         administratively_profile_eligible = terminal_status not in {"nonstarter", "administrative_exclusion"}
         risk_eligible = administratively_profile_eligible and statuses["risk_slope_status"] in {"estimated", "estimated_crossed_model", "estimated_from_C1"}
         component_fallback = administratively_profile_eligible and statuses["conditional_component_status"] not in {"estimated", "available", "valid"}
@@ -325,6 +331,8 @@ def materialize(
             "missing_reasons": sorted({missing_dispositions[(worker, str(row.get("task_id", "")).strip())]["missing_reason"] for row in missing_rows}),
             "fully_evaluable": fully_evaluable,
             "global_eligible": global_eligible,
+            "global_policy_eligible": global_eligible,
+            "global_eligibility_source": "explicit_worker_profile_field",
             "risk_adjustment_eligible": risk_eligible,
             "component_fallback": component_fallback,
             "risk_adjustment": 0 if not risk_eligible else profile.get("risk_adjustment", ""),
@@ -338,6 +346,49 @@ def materialize(
     launch = json.loads(launch_report.read_text(encoding="utf-8"))
     runtime = json.loads(runtime_mapping_audit.read_text(encoding="utf-8"))
     private = json.loads(private_assignment_audit.read_text(encoding="utf-8"))
+    if launch.get("schema_version") != "paper_a_c2b_launch_ready_report_v4":
+        raise ValueError("C2-B formal closeout requires the multi-deployment launch report")
+    deployments = launch.get("deployments")
+    if not isinstance(deployments, list) or not deployments or "import_sha256" in launch:
+        raise ValueError("C2-B launch report must provide per-deployment planned import evidence")
+    deployment_manifest_path = Path(str(launch.get("deployment_manifest_path", "")))
+    if (not deployment_manifest_path.is_file()
+            or sha256_file(deployment_manifest_path) != launch.get("deployment_manifest_sha256")):
+        raise ValueError("C2-B deployment manifest is missing or stale")
+    deployment_manifest = json.loads(deployment_manifest_path.read_text(encoding="utf-8"))
+    if deployment_manifest.get("schema_version") != "c2b_worker_deployment_manifest_v1":
+        raise ValueError("C2-B deployment manifest schema is invalid")
+    manifest_deployments = {
+        str(item.get("deployment_id", "")): item
+        for item in deployment_manifest.get("deployments", [])
+        if isinstance(item, dict)
+    }
+    deployment_ids = set()
+    for deployment in deployments:
+        deployment_id = str(deployment.get("deployment_id", "")).strip()
+        planned_path = Path(str(deployment.get("planned_import_path", "")))
+        planned_sha = str(deployment.get("planned_import_sha256", "")).strip()
+        if (not deployment_id or deployment_id in deployment_ids
+                or not str(deployment.get("language_group", "")).strip()
+                or not str(deployment.get("server_instance_id", "")).strip()
+                or not str(deployment.get("project_id", "")).strip()
+                or not planned_path.is_file() or not planned_sha
+                or sha256_file(planned_path) != planned_sha):
+            raise ValueError("C2-B deployment planned import identity is incomplete or stale")
+        manifest_item = manifest_deployments.get(deployment_id)
+        if not isinstance(manifest_item, dict) or any(
+            str(manifest_item.get(field, "")) != str(deployment.get(field, ""))
+            for field in ("language_group", "server_instance_id", "project_id")
+        ):
+            raise ValueError("C2-B launch report deployment identity disagrees with the frozen manifest")
+        manifest_planned = Path(str(manifest_item.get("planned_import_path", "")))
+        if (not manifest_planned.is_file()
+                or str(manifest_item.get("planned_import_sha256", "")) != planned_sha
+                or sha256_file(manifest_planned) != planned_sha):
+            raise ValueError("C2-B deployment manifest planned import is missing or stale")
+        deployment_ids.add(deployment_id)
+    if deployment_ids != set(manifest_deployments):
+        raise ValueError("C2-B launch report does not cover the frozen deployment set")
     if (launch.get("C2B_LAUNCH_READY") is not True or launch.get("assignment_batch_id") != batch_id
             or launch.get("assignment_sha256") != actual["c2b_assignment_csv"]):
         raise ValueError("C2-B launch report is stale or bound to another batch")
@@ -356,6 +407,10 @@ def materialize(
         "method_contract_sha256": method_sha,
         "profile_version": manifest.get("profile_version", ""),
         "cohort_id": manifest.get("cohort_id", ""),
+        "global_policy_eligibility_source": "explicit_worker_profile_v2.global_policy_eligible",
+        "deployments": deployments,
+        "deployment_manifest_path": str(deployment_manifest_path),
+        "deployment_manifest_sha256": launch.get("deployment_manifest_sha256", ""),
         "closeout_version": "c2b_closeout_v2",
         "c2b_design_ready": True,
         "c2b_closeout_ready": True,

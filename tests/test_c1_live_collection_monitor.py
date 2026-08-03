@@ -4,7 +4,9 @@ import csv
 import json
 from pathlib import Path
 
-from tools.thesis_main.analysis.c1_live_collection_monitor import build_monitor
+import pytest
+
+from tools.thesis_main.analysis.c1_live_collection_monitor import build_monitor, build_runtime_task_mapping
 
 
 def _csv(path: Path, fields: list[str], rows: list[dict]) -> None:
@@ -196,6 +198,35 @@ def test_runtime_key_collision_is_blocker(tmp_path: Path) -> None:
     assert summary["runtime_key_collision_count"] == 1
     assert "runtime_key_collision_detected" in summary["blockers"]
     assert _read_csv(out / "c1_runtime_key_collision_audit.csv")[0]["collision_task_id"] == "t2"
+
+
+def test_shared_project_requires_deployment_namespace_and_cross_server_collision_is_audit_failure(tmp_path: Path) -> None:
+    manifest = tmp_path / "deployment_manifest.json"
+    manifest.write_text(json.dumps({"deployments": [
+        {"deployment_id": "zh", "project_id": "shared", "worker_ids": ["w1"]},
+        {"deployment_id": "en", "project_id": "shared", "worker_ids": ["w2"]},
+    ]}), encoding="utf-8")
+    exports = []
+    for deployment in ("zh", "en"):
+        path = tmp_path / f"{deployment}.json"
+        path.write_text(json.dumps([{
+            "id": "same-runtime-id", "project": "shared",
+            "data": {"deployment_id": deployment, "task_id": f"task-{deployment}", "base_task_id": f"base-{deployment}", "source_draft": "core"},
+            "annotations": [],
+        }]), encoding="utf-8")
+        exports.append(path)
+    rows, _lookup, collisions = build_runtime_task_mapping(exports, deployment_manifest_path=manifest)
+    assert len(rows) == 2
+    assert len(collisions) == 1
+
+    missing_deployment = tmp_path / "missing.json"
+    missing_deployment.write_text(json.dumps([{
+        "id": "another-runtime-id", "project": "shared",
+        "data": {"task_id": "task-missing", "base_task_id": "base-missing", "source_draft": "core"},
+        "annotations": [],
+    }]), encoding="utf-8")
+    with pytest.raises(ValueError, match="must identify deployment"):
+        build_runtime_task_mapping([missing_deployment], deployment_manifest_path=manifest)
 
 
 def test_planned_mapping_missing_is_not_silent(tmp_path: Path) -> None:

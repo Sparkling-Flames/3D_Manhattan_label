@@ -35,12 +35,22 @@ def _closeout_dependencies(tmp_path: Path, manifest_data: dict) -> tuple[Path, P
     ]
     paths[1].write_text("task_id,worker_id,c2_component,assignment_batch_id\nt1,w1,common_anchor,C2B_BATCH_A\n", encoding="utf-8")
     assignment_sha = _sha(paths[1])
+    planned = tmp_path / "planned.json"
+    planned.write_text(json.dumps([{"data": {"planned_task_id": "t1"}}]), encoding="utf-8")
+    deployment_manifest = tmp_path / "deployment_manifest.json"
+    deployment_manifest.write_text(json.dumps({
+        "schema_version": "c2b_worker_deployment_manifest_v1", "deployments": [{
+            "deployment_id": "zh", "language_group": "Chinese", "server_instance_id": "server-zh",
+            "project_id": "project-zh", "worker_ids": ["w1"],
+            "planned_import_path": str(planned), "planned_import_sha256": _sha(planned),
+        }],
+    }), encoding="utf-8")
     contents = [
         json.dumps({"schema_version": "paper_a_c1_batch_analysis_snapshot_v1", "status": "formal_design_eligible", "C2B_DESIGN_INPUT_FROZEN_FROM_C1_A": True}),
         None,
         "worker_id\nw1\n",
         json.dumps({"min_common_anchor_per_worker": 1, "min_bridge_per_worker": 0, "min_task_support": 1}),
-        json.dumps({"C2B_LAUNCH_READY": True, "assignment_batch_id": "C2B_BATCH_A", "assignment_sha256": assignment_sha}),
+        json.dumps({"schema_version": "paper_a_c2b_launch_ready_report_v4", "C2B_LAUNCH_READY": True, "assignment_batch_id": "C2B_BATCH_A", "assignment_sha256": assignment_sha, "deployment_manifest_path": str(deployment_manifest), "deployment_manifest_sha256": _sha(deployment_manifest), "deployments": [{"deployment_id": "zh", "language_group": "Chinese", "server_instance_id": "server-zh", "project_id": "project-zh", "planned_import_path": str(planned), "planned_import_sha256": _sha(planned)}]}),
         json.dumps({"formal_ready": True, "C2B_RUNTIME_BINDING_READY": True, "assignment_batch_id": "C2B_BATCH_A"}),
         json.dumps({"formal_ready": True, "private_assignment_list_audit_passed": True, "assignment_batch_id": "C2B_BATCH_A", "assignment_manifest_sha256": assignment_sha}),
     ]
@@ -153,8 +163,8 @@ def test_c2a_rp_legal_block_counts_materialize_paired_tasks(blocks: int) -> None
 
 def test_formal_c2a_requires_bound_c2b_sha_and_real_task_pool(tmp_path: Path) -> None:
     profile = tmp_path / "post_c2b.csv"
-    _csv(profile, ["worker_id", "support", "ci_half_width", "profile_version", "cohort_id", "Q_GT_profile_status", "R_peer_profile_status", "F_struct_profile_status", "c1_risk_slope_status", "completion_status"], [
-        {"worker_id": "w1", "support": 8, "ci_half_width": 0.18, "profile_version": "p1", "cohort_id": "c1", "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated", "F_struct_profile_status": "estimated", "c1_risk_slope_status": "estimated", "completion_status": "completed"},
+    _csv(profile, ["schema_version", "worker_id", "support", "ci_half_width", "profile_version", "cohort_id", "enrollment_batch", "administratively_eligible", "process_eligible", "independence_eligible", "Q_GT_estimable", "reference_evaluable", "Q_GT_profile_status", "R_peer_profile_status", "peer_task_support", "F_struct_profile_status", "LOO_medoid_status", "LOO_strict_status", "global_policy_eligible", "c2_risk_model_eligible", "peer_tiebreak_eligible", "structural_gate_eligible", "F_struct_raw", "F_struct_EB", "F_struct_interval_lower", "F_struct_interval_upper", "c1_risk_slope_status", "completion_status"], [
+        {"schema_version": "worker_profile_v2", "worker_id": "w1", "support": 8, "ci_half_width": 0.18, "profile_version": "p1", "cohort_id": "c1", "enrollment_batch": "original", "administratively_eligible": "true", "process_eligible": "true", "independence_eligible": "true", "Q_GT_estimable": "true", "reference_evaluable": "true", "Q_GT_profile_status": "estimated", "R_peer_profile_status": "estimated", "peer_task_support": 5, "F_struct_profile_status": "estimated", "LOO_medoid_status": "not_evaluable", "LOO_strict_status": "not_evaluable", "global_policy_eligible": "true", "c2_risk_model_eligible": "true", "peer_tiebreak_eligible": "true", "structural_gate_eligible": "true", "F_struct_raw": 0, "F_struct_EB": 0, "F_struct_interval_lower": 0, "F_struct_interval_upper": .1, "c1_risk_slope_status": "estimated", "completion_status": "completed"},
     ])
     pool = tmp_path / "pool.csv"
     _csv(pool, ["task_id", "base_task_id", "task_stratum", "c2a_rp_eligible"], [
@@ -168,6 +178,8 @@ def test_formal_c2a_requires_bound_c2b_sha_and_real_task_pool(tmp_path: Path) ->
         {"worker_id": "w1", "task_id": "o1", "base_task_id": "o1"},
     ])
     design = tmp_path / "design.json"
+    threshold = tmp_path / "threshold.json"
+    threshold.write_text(json.dumps({"status": "approved", "formal_selection_allowed": True, "thresholds": {"risk_slope_ci_half_width": 0.17}, "derivation": {"formula_ids": {"risk_slope_ci_half_width": "normal_95_max_unified_slope_sd"}}}), encoding="utf-8")
     design.write_text(json.dumps({
         "manifest_version": "c2_design_v1",
         "input_sha256": {
@@ -175,6 +187,7 @@ def test_formal_c2a_requires_bound_c2b_sha_and_real_task_pool(tmp_path: Path) ->
             "c2a_task_pool_csv": _sha(pool),
             "assignment_history_csv": _sha(history),
         },
+        "threshold_manifest_path": str(threshold), "threshold_manifest_sha256": _sha(threshold),
         "precision": {"target_ci_half_width": 0.17, "max_additional_blocks": 1},
     }), encoding="utf-8")
     submissions = tmp_path / "c2b_submissions.csv"
@@ -213,6 +226,9 @@ def test_formal_c2a_requires_bound_c2b_sha_and_real_task_pool(tmp_path: Path) ->
     )
     assert summary["launch_ready"] is True
     assert summary["n_assignments"] == 2
+    precision = _rows(tmp_path / "good" / "precision_plan_C2A_RP.csv")[0]
+    assert precision["projected_ci_half_width"] == ""
+    assert precision["formal_goal"] == "risk_slope_precision"
     assigned = _rows(tmp_path / "good" / "assignment_manifest_C2A_RP.csv")
     assert "o1" not in {row["task_id"] for row in assigned}
     assert all(row["target_component"] and row["gap_reason"] for row in assigned)
@@ -224,7 +240,7 @@ def test_c2b_closeout_materializes_real_post_profile_sha_chain(tmp_path: Path) -
     design = tmp_path / "c2b_design.summary.json"
     manifest = tmp_path / "post_profile.manifest.json"
     submissions.write_text("task_id,worker_id\nt1,w1\n", encoding="utf-8")
-    profile.write_text("worker_id,risk_slope_se,profile_version,cohort_id,Q_GT_profile_status,R_peer_profile_status,F_struct_profile_status,c1_risk_slope_status,completion_status\nw1,0.1,p1,c1,estimated,estimated,estimated,estimated,completed\n", encoding="utf-8")
+    profile.write_text("schema_version,worker_id,risk_slope_se,profile_version,cohort_id,enrollment_batch,administratively_eligible,process_eligible,independence_eligible,Q_GT_estimable,reference_evaluable,Q_GT_profile_status,R_peer_profile_status,peer_task_support,F_struct_profile_status,LOO_medoid_status,LOO_strict_status,global_policy_eligible,c2_risk_model_eligible,peer_tiebreak_eligible,structural_gate_eligible,F_struct_raw,F_struct_EB,F_struct_interval_lower,F_struct_interval_upper,c1_risk_slope_status,completion_status\nworker_profile_v2,w1,0.1,p1,c1,original,true,true,true,true,true,estimated,estimated,5,estimated,not_evaluable,not_evaluable,true,true,true,true,0,0,0,0.1,estimated,completed\n", encoding="utf-8")
     design.write_text(json.dumps({
         "c2b_design_ready": True, "launch_ready": True, "candidate_only": False,
         "design_manifest_sha256": "a" * 64

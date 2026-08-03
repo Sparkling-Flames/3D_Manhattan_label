@@ -169,6 +169,8 @@ def test_w034_sentinel_and_stage3_gate_fail_closed(tmp_path: Path) -> None:
             payload.update({
                 "method_contract_sha256": sha256_file(METHOD_CONTRACT),
             })
+        if name.startswith("T1_"):
+            payload["artifact_role"] = name
         if name == "FINAL_POOLED_PROFILE_FROZEN":
             payload.update({"artifact_role": "FINAL_POOLED_PROFILE_FROZEN", "C1_EVIDENCE_FROZEN": True, "C2B_BATCH_A_CLOSEOUT_FROZEN": True, "C2A_RP_CLOSEOUT_FROZEN": True, "FINAL_C1_C2_Q_GT_MODEL_FROZEN": True, "POOLED_WORKER_PROFILE_FROZEN": True})
         dependency.write_text(json.dumps(payload), encoding="utf-8")

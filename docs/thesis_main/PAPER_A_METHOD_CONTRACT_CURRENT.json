@@ -1,10 +1,10 @@
 {
     "schema_version":  "paper_a_method_contract_v9",
-    "contract_version":  "paper_a_method_20260802_v17",
+    "contract_version":  "paper_a_method_20260803_v18",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
-    "previous_contract_version":  "paper_a_method_20260802_v16",
-    "previous_contract_sha256":  "ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265",
+    "previous_contract_version":  "paper_a_method_20260802_v17",
+    "previous_contract_sha256":  "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c",
     "predispatch_amendment":  {
                                     "path":  "docs/thesis_main/C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json",
                                     "sha256":  "330938460ffd779eba3beeeef361f300ff30befbfd38549e1c782d05358f99ba",
@@ -75,6 +75,56 @@
                                          "D12"
                                      ],
                "c2_a_rp_max_tasks_per_worker":  4,
+               "c2_a_rp_formal_target":  "risk_slope_precision",
+               "c2_a_rp_diagnostic_goals":  [
+                                                    "top_k_boundary_precision",
+                                                    "component_eligibility_precision"
+                                                ],
+               "c2_a_rp_interval":  {
+                                         "level":  0.95,
+                                         "multiplier":  1.96,
+                                         "formula_id":  "normal_95_max_unified_slope_sd",
+                                         "target_source":  "frozen_pre_c2b_threshold_manifest",
+                                         "target_field":  "thresholds.risk_slope_ci_half_width",
+                                         "reestimate_after_each_block":  true
+                                     },
+               "c2_a_rp_block":  {
+                                      "tasks_per_block":  2,
+                                      "required_strata":  [
+                                                               "ordinary",
+                                                               "stress"
+                                                           ],
+                                      "allowed_additional_tasks":  [
+                                                                        0,
+                                                                        2,
+                                                                        4
+                                                                    ]
+                                  },
+               "c2_a_rp_terminal_states":  [
+                                                 "target_met",
+                                                 "fallback_strong_global",
+                                                 "not_evaluable"
+                                             ],
+               "c2_a_rp_fallback":  {
+                                         "risk_adjustment":  0,
+                                         "policy":  "STRONG_GLOBAL",
+                                         "cap_failure_is_fallback":  true
+                                     },
+               "c2_a_rp_required_formal_inputs":  [
+                                                       "C2B_CLOSEOUT",
+                                                       "worker_profile_v2",
+                                                       "frozen_threshold_manifest",
+                                                       "C2A_PRECISION_PLAN",
+                                                       "C2A_ASSIGNMENT_MANIFEST",
+                                                       "canonical_risk_slope_evidence",
+                                                       "C2A_SUBMISSIONS"
+                                                   ],
+               "c2_a_rp_csv_schema":  {
+                                            "schema_field":  "schema_version",
+                                            "precision_plan":  "c2a_rp_precision_plan_v2",
+                                            "assignment_manifest":  "c2a_rp_assignment_manifest_v2",
+                                            "formal_reject_legacy":  true
+                                        },
                "roster_source_schema":  "worker_profile_v2",
                "roster_eligibility_field":  "c2_risk_model_eligible",
                "roster_required_axes":  [
@@ -445,9 +495,22 @@
                        "required_outputs":  [
                                                 "assignment_manifest_C2B.csv",
                                                 "worker_distribution_C2B.csv",
-                                                "label_studio_import_C2B.json",
+                             "label_studio_import_C2B_<deployment_id>.json (one per deployment)",
+                                                "c2b_worker_deployment_manifest_v1.json",
                                                 "c2b_launch_ready_report.json"
                                             ],
+                       "runtime_identity_schema":  "c2b_worker_deployment_manifest_v1",
+                       "runtime_identity_fields":  [
+                                                       "deployment_id",
+                                                       "language_group",
+                                    "server_instance_id",
+                                    "planned_import_path",
+                                    "project_id",
+                                                       "planned_import_sha256",
+                                                       "assignment_sha256",
+                                                       "selected_design_sha",
+                                                       "worker_registry_sha256"
+                                                   ],
                        "runtime_mapping_entrypoint":  "run_c1_closeout_launch.py bind-c2b-runtime-mapping",
                        "batch_identity_fields":  [
                                                      "planned_task_id",
@@ -479,11 +542,25 @@
                                           "C2_B_FROZEN",
                                           "C2_A_RP_CLOSED",
                                           "FINAL_POOLED_PROFILE_FROZEN",
-                                          "STRONG_GLOBAL_FROZEN",
-                                          "FULL_POLICY_FROZEN",
-                                          "VALIDATION_ROSTER_FROZEN",
-                                          "SAP_FROZEN"
+                                          "T1_ROSTER_FROZEN",
+                                          "T1_TASK_POOL_FROZEN",
+                                          "T1_RANDOMIZATION_PLAN_FROZEN",
+                                          "T1_SAP_FROZEN"
                                       ],
+                   "v1_required_roles":  [
+                                             "CALIBRATION_ENROLLMENT_CLOSED",
+                                             "ALL_CALIBRATION_WORKERS_TERMINAL",
+                                             "C1_EVIDENCE_FROZEN",
+                                             "C2_B_FROZEN",
+                                             "C2_A_RP_CLOSED",
+                                             "FINAL_POOLED_PROFILE_FROZEN",
+                                             "STRONG_GLOBAL_FROZEN",
+                                             "FULL_POLICY_FROZEN",
+                                             "VALIDATION_ROSTER_FROZEN",
+                                             "V1_SAP_FROZEN"
+                                         ],
+                   "t1_gate_kind":  "T1",
+                   "v1_gate_kind":  "V1",
                    "required_child_roles":  {
                                                 "C1_EVIDENCE_FROZEN":  [
                                                                            "C1_ROW_ELIGIBILITY_FROZEN",
@@ -512,6 +589,7 @@
                  "post_C2_rank_stability_failure_action":  "conditional_adjustment_zero_and_fallback_Strong_Global"
              },
     "t1":  {
+               "required_gate_kind":  "T1",
                "delivery_status_values":  [
                                               "valid",
                                               "invalid",
@@ -528,6 +606,7 @@
                "image_rule":  "if_any_pre_frozen_pair_remains_not_evaluable_after_its_single_rerun_then_censor_entire_image_primary_estimand"
            },
     "v1":  {
+               "required_gate_kind":  "V1",
                "execution":  "online_next_decision_with_append_only_ledger",
                "batch_module_role":  "deterministic_replay_audit",
                "candidate_schema":  "policy_candidate_v2",

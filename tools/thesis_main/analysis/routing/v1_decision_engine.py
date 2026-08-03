@@ -62,7 +62,7 @@ def _calculate_next_offer(
         candidate_roster_csv,
         stage3_gate,
     )
-    gate = validate_gate_file(stage3_gate)
+    gate = validate_gate_file(stage3_gate, expected_gate_kind="V1")
     assert_frozen_roster(gate, validation_roster, enrollment_registry)
     _validate_visible_state(state)
     with candidate_roster_csv.open("r", encoding="utf-8", newline="") as stream:

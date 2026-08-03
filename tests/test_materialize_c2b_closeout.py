@@ -36,8 +36,25 @@ def _case(tmp_path: Path, *, assignments: list[dict[str, str]], submissions: lis
         "c2b_design_ready": True, "launch_ready": True, "candidate_only": False,
         "design_manifest_sha256": "d" * 64,
     }), encoding="utf-8")
+    planned = tmp_path / "planned.json"
+    planned.write_text(json.dumps([{"data": {"planned_task_id": row["task_id"]}} for row in assignments]), encoding="utf-8")
+    deployment_manifest = tmp_path / "deployment_manifest.json"
+    deployment_manifest.write_text(json.dumps({
+        "schema_version": "c2b_worker_deployment_manifest_v1", "deployments": [{
+            "deployment_id": "zh", "language_group": "Chinese", "server_instance_id": "server-zh",
+            "project_id": "project-zh", "worker_ids": [row["worker_id"] for row in profiles],
+            "planned_import_path": str(planned), "planned_import_sha256": sha256_file(planned),
+        }],
+    }), encoding="utf-8")
     launch = (tmp_path / "launch.json"); launch.write_text(json.dumps({
-        "C2B_LAUNCH_READY": True, "assignment_batch_id": "C2B_BATCH_A", "assignment_sha256": sha256_file(assignment),
+        "schema_version": "paper_a_c2b_launch_ready_report_v4", "C2B_LAUNCH_READY": True,
+        "assignment_batch_id": "C2B_BATCH_A", "assignment_sha256": sha256_file(assignment),
+        "deployment_manifest_path": str(deployment_manifest), "deployment_manifest_sha256": sha256_file(deployment_manifest),
+        "deployments": [{
+            "deployment_id": "zh", "language_group": "Chinese", "server_instance_id": "server-zh",
+            "project_id": "project-zh", "planned_import_path": str(planned),
+            "planned_import_sha256": sha256_file(planned),
+        }],
     }), encoding="utf-8")
     runtime = (tmp_path / "runtime.json"); runtime.write_text(json.dumps({
         "formal_ready": True, "C2B_RUNTIME_BINDING_READY": True, "assignment_batch_id": "C2B_BATCH_A",
@@ -68,9 +85,15 @@ def _case(tmp_path: Path, *, assignments: list[dict[str, str]], submissions: lis
 
 def _profile(worker: str, *, completion: str = "completed", risk: str = "estimated", qgt: str = "estimated") -> dict[str, str]:
     return {
-        "worker_id": worker, "profile_version": "p1", "cohort_id": "c1",
+        "schema_version": "worker_profile_v2", "worker_id": worker, "profile_version": "p1", "cohort_id": "c1",
+        "enrollment_batch": "original", "administratively_eligible": "true", "process_eligible": "true",
+        "independence_eligible": "true", "Q_GT_estimable": "true", "reference_evaluable": "true",
         "Q_GT_profile_status": qgt, "R_peer_profile_status": "estimated",
-        "F_struct_profile_status": "estimated", "c1_risk_slope_status": risk,
+        "peer_task_support": "5", "F_struct_profile_status": "estimated", "LOO_medoid_status": "not_evaluable",
+        "LOO_strict_status": "not_evaluable", "global_policy_eligible": "true", "c2_risk_model_eligible": "true",
+        "peer_tiebreak_eligible": "true", "structural_gate_eligible": "true", "F_struct_raw": "0",
+        "F_struct_EB": "0", "F_struct_interval_lower": "0", "F_struct_interval_upper": "0.1",
+        "c1_risk_slope_status": risk,
         "conditional_component_status": "not_evaluable", "completion_status": completion,
     }
 
@@ -140,7 +163,7 @@ def test_profile_without_any_legal_axis_status_fails_closed(tmp_path: Path) -> N
     profile = _profile("w1")
     for field in ("Q_GT_profile_status", "R_peer_profile_status", "F_struct_profile_status", "c1_risk_slope_status", "conditional_component_status"):
         profile.pop(field)
-    with pytest.raises(ValueError, match="no legal axis status"):
+    with pytest.raises(ValueError, match="missing fields"):
         _case(
             tmp_path,
             assignments=[{"worker_id": "w1", "task_id": "t1", "c2_component": "common_anchor", "assignment_batch_id": "C2B_BATCH_A", "task_stratum": "ordinary"}],

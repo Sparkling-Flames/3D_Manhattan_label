@@ -1,4 +1,4 @@
-% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v17 SHA-256 5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260803_v18 SHA-256 694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87
 % Paper A: C1 separates computability from formal analysis eligibility.
 \section{C1：三轴工人测量与设计参数}
 
@@ -82,7 +82,7 @@ t\notin\texttt{supported\_multimodal}\}.
 \]
 
 \texttt{R\_peer\_all} 用于描述性报告；Global 的 tie-break 与 stable-compatibility
-判断只能使用 \texttt{R\_peer\_nonmultimodal}。支持多峰任务只进入 discrepancy 与
+判断只能使用 \texttt{R\_peer\_stable}。支持多峰任务只进入 discrepancy 与
 敏感性分析，不进入 Global 的稳定兼容性证据。
 
 \[
@@ -94,7 +94,7 @@ R^{LOO}_{t,u}=S(A_{t,u},M_t^{(-u)}),
 \begin{verbatim}
 R_peer_stable       主要同行兼容指标
 R_LOO_medoid        高置信参考、聚合稳定性与 tie-break
-R_LOO_strict_stable 保守敏感性分析
+R_LOO_strict       保守敏感性分析
 \end{verbatim}
 
 三者不得机械平均，也不得用 LOO 填充 GT quality。

@@ -132,11 +132,23 @@
                    "max_blocks_per_worker":  2,
                    "tasks_per_block":  2,
                    "max_additional_tasks":  4,
+                   "formal_allowed_goals":  [
+                                                   "risk_slope_precision"
+                                               ],
+                   "diagnostic_goals":  [
+                                             "top_k_boundary_precision",
+                                             "component_eligibility_precision"
+                                         ],
                    "allowed_goals":  [
-                                         "top_k_boundary_precision",
-                                         "risk_slope_precision",
-                                         "component_eligibility_precision"
-                                     ]
+                                         "risk_slope_precision"
+                                     ],
+                   "interval_definition":  {
+                                                "level":  0.95,
+                                                "multiplier":  1.96,
+                                                "formula_id":  "normal_95_max_unified_slope_sd",
+                                                "target_field":  "thresholds.risk_slope_ci_half_width",
+                                                "reestimate_after_each_block":  true
+                                            }
                },
     "required_c1_input_fields":  [
                                      "worker_id",
@@ -184,6 +196,6 @@
                                                                   "minimum_top_k_overlap"
                                                               ]
                                 },
-    "method_contract_version":  "paper_a_method_20260802_v17",
-    "method_contract_sha256":  "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c"
+    "method_contract_version":  "paper_a_method_20260803_v18",
+    "method_contract_sha256":  "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87"
 }

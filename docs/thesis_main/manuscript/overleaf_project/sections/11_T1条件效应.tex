@@ -1,4 +1,4 @@
-% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260802_v17 SHA-256 5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260803_v18 SHA-256 694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87
 \section{T1：Semi-Auto 条件效应}
 
 \subsection{设计}
@@ -12,6 +12,15 @@ ordinary/stress_{\text{assist}}.
 \]
 
 50:50 是实验设计分布，不代表生产分布。
+
+T1 使用独立的 T1 gate：\texttt{CALIBRATION\_ENROLLMENT\_CLOSED}、
+\texttt{ALL\_CALIBRATION\_WORKERS\_TERMINAL}、\texttt{C1\_EVIDENCE\_FROZEN}、
+\texttt{C2\_B\_FROZEN}、\texttt{C2\_A\_RP\_CLOSED}、\texttt{FINAL\_POOLED\_PROFILE\_FROZEN}、
+\texttt{T1\_ROSTER\_FROZEN}、\texttt{T1\_TASK\_POOL\_FROZEN}、
+\texttt{T1\_RANDOMIZATION\_PLAN\_FROZEN} 和 \texttt{T1\_SAP\_FROZEN}。
+T1 不要求 \texttt{STRONG\_GLOBAL\_FROZEN}、\texttt{FULL\_POLICY\_FROZEN} 或
+\texttt{VALIDATION\_ROSTER\_FROZEN}，也不以 Global 排名替代本节预先冻结的 2$\times$2 条件设计。
+每个 role 必须有可验证的冻结 artifact、SHA 和依赖关系。
 
 \subsection{工人随机分配}
 
