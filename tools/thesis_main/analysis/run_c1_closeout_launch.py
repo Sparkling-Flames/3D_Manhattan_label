@@ -7,14 +7,16 @@ import csv
 import hashlib
 import importlib.metadata
 import json
+import math
 import platform
 import shutil
 import subprocess
 import sys
-from collections import Counter
+import tempfile
+from collections import Counter, defaultdict
 from datetime import datetime, timezone
 from pathlib import Path
-from typing import Any
+from typing import Any, Iterable
 from urllib.parse import quote
 
 import numpy as np
@@ -25,7 +27,6 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from tools.thesis_main.analysis import build_c2_assignment_manifest_from_c1_gaps as c2b
 from tools.thesis_main.analysis.active_log_utils import freeze_active_log_snapshot, validate_active_log_freeze_manifest
-from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _aggregate_sha, _manifest_rows, materialize as materialize_c1
 from tools.thesis_main.analysis.materialize_c2b_task_eligibility import materialize as materialize_c2b_task_eligibility
 from tools.thesis_main.analysis.materialize_c2_task_risk import materialize_formal as materialize_task_risk
 from tools.thesis_main.analysis.c1_c2_mainline import formal_git_state
@@ -33,7 +34,15 @@ from tools.thesis_main.analysis.c1_c2_mainline import materialize_c2b_design_wor
 from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import materialize as materialize_design_parameters
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, validate_generated_subordinate
 from tools.thesis_main.analysis.derive_c2b_design_thresholds import derive_threshold_manifest, validate_formula_contract
-from tools.thesis_main.analysis.materialize_c2_task_risk import _feature_audit_passes, freeze_feature_reference, refresh_feature_freeze_approval
+from tools.thesis_main.analysis.materialize_c2_task_risk import (
+    _feature_audit_passes,
+    _knn,
+    _layout_features,
+    freeze_feature_reference,
+    load_frozen_c1_risk_reference,
+    refresh_feature_freeze_approval,
+    score_frozen_c1_risk_candidate,
+)
 from tools.thesis_main.analysis.materialize_c2b_legacy_provenance import materialize as materialize_legacy_provenance
 from tools.thesis_main.analysis.materialize_p1_post_closeout_evidence_correction import materialize as materialize_p1_correction
 from tools.thesis_main.analysis.materialize_p1_post_closeout_geometry_scores import materialize_scores as materialize_p1_geometry
@@ -51,6 +60,25 @@ from tools.thesis_main.analysis.c2b_static_evidence import (
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 from tools.thesis_main.registry.hohonet_feature_backend import extract_orbit_descriptors
 from tools.thesis_main.analysis.worker_identity import normalize_worker_id
+
+
+def _manifest_rows(paths: Iterable[Path]) -> list[dict[str, Any]]:
+    return [
+        {"path": path.as_posix(), "size": path.stat().st_size, "sha256": sha256_file(path)}
+        for path in sorted({item.resolve() for item in paths}, key=lambda item: item.as_posix().lower())
+    ]
+
+
+def _aggregate_sha(rows: list[dict[str, Any]]) -> str:
+    payload = json.dumps(rows, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def materialize_c1(*args: Any, **kwargs: Any) -> Any:
+    """Load the full C1 pipeline only for commands that actually execute it."""
+    from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import materialize
+
+    return materialize(*args, **kwargs)
 
 
 COMMAND_ARTIFACT_CONTRACT = {
@@ -92,6 +120,14 @@ COMMAND_ARTIFACT_CONTRACT = {
         ),
     },
     "bind-c2b-runtime-mapping": {"outputs": ("c2b_runtime_task_mapping.csv", "c2b_worker_task_binding_audit.json", "c2b_private_assignment_list_audit.json")},
+    "prepare-stage3-test-candidate": {
+        "outputs": (
+            "stage3_test_inventory_candidate.csv",
+            "stage3_test_overlap_audit.csv",
+            "test_task_risk_candidate.csv",
+            "test_task_risk_candidate.summary.json",
+        ),
+    },
     "check-command-contract": {"outputs": ()},
 }
 
@@ -1581,6 +1617,594 @@ def prepare_c2b_static(args: argparse.Namespace) -> dict[str, Any]:
     }
 
 
+_STAGE3_EXPOSURE_STAGES = ("P1", "C1", "C2B", "C2A_RP", "T1")
+_STAGE3_SOURCE_METHOD_VERSION = "paper_a_method_20260802_v17"
+_STAGE3_SOURCE_METHOD_SHA256 = "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c"
+_STAGE3_EXPOSURE_FLAG_FIELDS = {
+    "P1": ("P1_exposed", "p1_exposed", "used_in_prescreen"),
+    "C1": ("C1_exposed", "c1_exposed", "used_in_random_c1", "used_in_random_c1_deprecated"),
+    "C2B": ("C2B_exposed", "c2b_exposed"),
+    "C2A_RP": ("C2A_RP_exposed", "c2a_rp_exposed"),
+    "T1": ("T1_exposed", "t1_exposed"),
+}
+_STAGE3_INVENTORY_FIELDS = (
+    "schema_version", "task_id", "base_task_id", "image_id", "source_split", "source_pool",
+    "building_id_candidate", "building_id", "building_registry_status",
+    "image_path", "image_sha256", "gt_path", "gt_sha256", "gt_present",
+    "layout_path", "layout_sha256", "layout_present", "model_input_status",
+    "P1_exposed", "C1_exposed", "C2B_exposed", "C2A_RP_exposed", "T1_exposed",
+    "P1_exposure_status", "C1_exposure_status", "C2B_exposure_status",
+    "C2A_RP_exposure_status", "T1_exposure_status", "validation_overlap_status",
+    "duplicate_test_content_status", "v1_candidate_eligible", "candidate_blockers_json",
+)
+_STAGE3_OVERLAP_FIELDS = (
+    "schema_version", "audit_type", "stage", "image_id", "base_task_id", "test_image_sha256",
+    "source_manifest_path", "source_manifest_sha256", "source_path", "source_sha256",
+    "match_type", "status", "reason",
+)
+_STAGE3_RISK_FIELDS = (
+    "schema_version", "task_id", "base_task_id", "image_id", "source_split",
+    "building_id", "building_registry_status", "d_model_feat", "d_model_feat_local_max",
+    "g_model_struct", "d_cal_A", "risk_design_vector_A", "risk_design_score_A",
+    "risk_design_score_A_percentile", "risk_design_q75", "risk_design_stratum",
+    "risk_design_stratum_source", "risk_status", "risk_missing_reason", "layout_status",
+    "feature_status", "feature_audit_status", "postprocess_valid", "risk_route",
+    "risk_route_status", "d_cal_F", "family_scores", "P1_exposed", "C1_exposed",
+    "C2B_exposed", "C2A_RP_exposed", "T1_exposed", "v1_candidate_eligible",
+    "candidate_only", "candidate_blockers_json",
+)
+
+
+def _stage3_resolve(path: Path | None) -> Path | None:
+    if path is None:
+        return None
+    candidate = Path(path)
+    return candidate.resolve() if candidate.is_absolute() else (_PROJECT_ROOT / candidate).resolve()
+
+
+def _stage3_write_csv(path: Path, rows: list[dict[str, Any]], fields: tuple[str, ...]) -> None:
+    allowed = set(fields)
+    unknown = sorted({key for row in rows for key in row if key not in allowed})
+    if unknown:
+        raise ValueError(f"stage3 candidate CSV has undeclared fields:{unknown}")
+    path.parent.mkdir(parents=True, exist_ok=True)
+    with path.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(fields), extrasaction="raise")
+        writer.writeheader()
+        writer.writerows({field: row.get(field, "") for field in fields} for row in rows)
+
+
+def _stage3_file_index(directory: Path, suffixes: tuple[str, ...]) -> dict[str, Path]:
+    if not directory.is_dir():
+        raise ValueError(f"stage3 source directory is missing:{directory}")
+    index: dict[str, Path] = {}
+    for path in sorted(directory.iterdir(), key=lambda item: item.name.lower()):
+        if not path.is_file() or path.suffix.lower() not in suffixes:
+            continue
+        stem = path.stem
+        if stem in index:
+            raise ValueError(f"stage3 source has duplicate image stem:{stem}")
+        index[stem] = path.resolve()
+    if not index:
+        raise ValueError(f"stage3 source directory is empty:{directory}")
+    return index
+
+
+def _stage3_load_test_list(path: Path) -> list[dict[str, str]]:
+    if not path.is_file():
+        raise ValueError(f"stage3 test list is missing:{path}")
+    rows: list[dict[str, str]] = []
+    seen: set[str] = set()
+    for line_number, raw in enumerate(path.read_text(encoding="utf-8-sig").splitlines(), start=1):
+        line = raw.strip()
+        if not line or line.startswith("#"):
+            continue
+        parts = line.split()
+        if len(parts) != 2:
+            raise ValueError(f"stage3 test list requires building_id_candidate and image_id:{path}:{line_number}")
+        building, image = parts
+        if image in seen:
+            raise ValueError(f"stage3 test list has duplicate image_id:{image}")
+        seen.add(image)
+        rows.append({"building_id_candidate": building, "image_id": image})
+    if not rows:
+        raise ValueError("stage3 test list is empty")
+    return rows
+
+
+def _stage3_approved_buildings(path: Path | None) -> tuple[dict[str, dict[str, str]], str]:
+    if path is None:
+        return {}, ""
+    if not path.is_file():
+        raise ValueError(f"stage3 building registry is missing:{path}")
+    mapping: dict[str, dict[str, str]] = {}
+    for row in _read(path):
+        approved = (
+            str(row.get("registry_status", "")).lower() == "approved"
+            and all(str(row.get(field, "")).strip() for field in ("building_id", "reviewed_by", "reviewed_at"))
+        )
+        if not approved:
+            continue
+        keys = {str(row.get(field, "")).strip() for field in ("image_id", "base_task_id", "task_id") if str(row.get(field, "")).strip()}
+        for key in keys:
+            previous = mapping.get(key)
+            if previous and previous.get("building_id") != row.get("building_id"):
+                raise ValueError(f"stage3 building registry has conflicting approved mapping:{key}")
+            mapping[key] = row
+    return mapping, sha256_file(path)
+
+
+def _stage3_make_inventory(args: argparse.Namespace) -> list[dict[str, Any]]:
+    test_list = _stage3_load_test_list(_stage3_resolve(args.test_list))
+    images = _stage3_file_index(_stage3_resolve(args.image_dir), (".png",))
+    gt = _stage3_file_index(_stage3_resolve(args.gt_dir), (".txt",))
+    layouts = _stage3_file_index(_stage3_resolve(args.layout_dir), (".json",))
+    for item in test_list:
+        token = item["image_id"]
+        prefixed = f"{item['building_id_candidate']}_{token}"
+        if token not in images and prefixed in images:
+            item["image_id"] = prefixed
+    if len({row["image_id"] for row in test_list}) != len(test_list):
+        raise ValueError("stage3 test list has duplicate resolved image_id")
+    expected = {row["image_id"] for row in test_list}
+    for label, index in (("image", images), ("GT", gt), ("layout", layouts)):
+        missing = sorted(expected - set(index))
+        extra = sorted(set(index) - expected)
+        if missing or extra:
+            raise ValueError(f"stage3 {label} identity mismatch:missing={missing[:5]} extra={extra[:5]}")
+    buildings, _registry_sha = _stage3_approved_buildings(_stage3_resolve(args.building_registry))
+    rows: list[dict[str, Any]] = []
+    for item in test_list:
+        image_id = item["image_id"]
+        image_path, gt_path, layout_path = images[image_id], gt[image_id], layouts[image_id]
+        registry = buildings.get(image_id, {})
+        building_id = str(registry.get("building_id", "")).strip()
+        rows.append({
+            "schema_version": "paper_a_stage3_test_inventory_candidate_v1",
+            "task_id": image_id, "base_task_id": image_id, "image_id": image_id,
+            "source_split": "test", "source_pool": "data/mp3d_layout/test",
+            "building_id_candidate": item["building_id_candidate"], "building_id": building_id,
+            "building_registry_status": "approved" if building_id else "unresolved_scene_mapping",
+            "image_path": image_path.as_posix(), "image_sha256": sha256_file(image_path),
+            "gt_path": gt_path.as_posix(), "gt_sha256": sha256_file(gt_path), "gt_present": "true",
+            "layout_path": layout_path.as_posix(), "layout_sha256": sha256_file(layout_path),
+            "layout_present": "true", "model_input_status": "ready",
+            "P1_exposed": "", "C1_exposed": "", "C2B_exposed": "", "C2A_RP_exposed": "", "T1_exposed": "",
+            "P1_exposure_status": "not_proven", "C1_exposure_status": "not_proven",
+            "C2B_exposure_status": "not_proven", "C2A_RP_exposure_status": "not_proven",
+            "T1_exposure_status": "not_proven", "validation_overlap_status": "not_checked",
+            "duplicate_test_content_status": "not_checked", "v1_candidate_eligible": "false",
+            "candidate_blockers_json": "[]",
+        })
+    return rows
+
+
+def _stage3_flatten_source_row(row: dict[str, Any]) -> dict[str, Any]:
+    data = row.get("data") if isinstance(row.get("data"), dict) else {}
+    return {**data, **row}
+
+
+def _stage3_local_source_path(value: Any, source_path: Path) -> str:
+    text = str(value or "").strip()
+    if not text or "://" in text:
+        return ""
+    candidate = Path(text)
+    if not candidate.is_absolute():
+        for base in (source_path.parent, _PROJECT_ROOT):
+            resolved = (base / candidate).resolve()
+            if resolved.is_file():
+                return resolved.as_posix()
+        return ""
+    return candidate.resolve().as_posix() if candidate.is_file() else ""
+
+
+def _stage3_parse_exposure_sources(specs: list[str] | None) -> tuple[dict[str, list[dict[str, Any]]], dict[str, dict[str, str]]]:
+    sources: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    source_meta: dict[str, dict[str, str]] = {}
+    for spec in specs or []:
+        if "=" not in spec:
+            raise ValueError("--exposure-source must use STAGE=PATH")
+        stage_raw, path_raw = spec.split("=", 1)
+        stage = stage_raw.strip().upper().replace("-", "_")
+        if stage not in _STAGE3_EXPOSURE_STAGES:
+            raise ValueError(f"unsupported stage3 exposure stage:{stage_raw}")
+        path = _stage3_resolve(Path(path_raw.strip()))
+        if not path or not path.is_file():
+            raise ValueError(f"stage3 exposure source is missing:{path}")
+        rows = _migration_source_rows(path)
+        if not rows:
+            raise ValueError(f"stage3 exposure source is empty:{path}")
+        flag_fields = _STAGE3_EXPOSURE_FLAG_FIELDS[stage]
+        has_stage_flag = any(field in _stage3_flatten_source_row(row) for row in rows for field in flag_fields)
+        for raw_row in rows:
+            row = _stage3_flatten_source_row(raw_row)
+            if has_stage_flag and not any(_truth(row.get(field)) for field in flag_fields if field in row):
+                continue
+            identifiers = {
+                str(row.get(field, "")).strip()
+                for field in ("image_id", "base_task_id", "task_id", "planned_task_id")
+                if str(row.get(field, "")).strip()
+            }
+            hashes = {
+                str(row.get(field, "")).strip().lower()
+                for field in ("image_sha256", "candidate_image_sha256", "source_image_sha256")
+                if len(str(row.get(field, "")).strip()) == 64
+            }
+            local_paths = {
+                local for field in ("source_path", "image_path", "image", "image_url")
+                if (local := _stage3_local_source_path(row.get(field), path))
+            }
+            if not identifiers and not hashes and not local_paths:
+                continue
+            sources[stage].append({
+                "identifiers": identifiers, "hashes": hashes, "paths": local_paths,
+                "source_path": str(path.resolve()), "source_sha256": sha256_file(path),
+            })
+        source_meta[f"{stage}:{path.resolve().as_posix()}"] = {
+            "stage": stage, "path": str(path.resolve()), "sha256": sha256_file(path),
+            "rows": str(len(rows)), "flagged_rows": str(len(sources[stage])),
+        }
+    return dict(sources), source_meta
+
+
+def _stage3_source_matches(row: dict[str, Any], source: dict[str, Any]) -> list[str]:
+    matches: list[str] = []
+    identifiers = {str(row.get(field, "")).strip() for field in ("image_id", "base_task_id", "task_id") if str(row.get(field, "")).strip()}
+    if identifiers & source["identifiers"]:
+        matches.append("identity")
+    if str(row.get("image_sha256", "")).strip().lower() in source["hashes"]:
+        matches.append("content_sha256")
+    if str(row.get("image_path", "")).strip() in source["paths"]:
+        matches.append("path")
+    return sorted(set(matches))
+
+
+def _stage3_audit_inventory(args: argparse.Namespace, inventory: list[dict[str, Any]]) -> tuple[list[dict[str, Any]], dict[str, dict[str, str]]]:
+    sources, source_meta = _stage3_parse_exposure_sources(getattr(args, "exposure_source", None))
+    audit_rows: list[dict[str, Any]] = []
+    for stage in _STAGE3_EXPOSURE_STAGES:
+        stage_sources = sources.get(stage, [])
+        for row in inventory:
+            matches = [(source, _stage3_source_matches(row, source)) for source in stage_sources]
+            matches = [(source, types) for source, types in matches if types]
+            if matches:
+                status, reason = "overlap", "source_identity_or_content_match"
+                match_type = ";".join(sorted({value for _source, types in matches for value in types}))
+                source_paths = ";".join(sorted({source["source_path"] for source, _types in matches}))
+                source_shas = ";".join(sorted({source["source_sha256"] for source, _types in matches}))
+                source_manifest_path = source_paths
+                source_manifest_sha = source_shas
+                row[f"{stage}_exposed"] = "true"
+            elif stage_sources:
+                status, reason, match_type = "clear", "source_checked_no_match", ""
+                source_manifest_path = ";".join(sorted({source["source_path"] for source in stage_sources}))
+                source_manifest_sha = ";".join(sorted({source["source_sha256"] for source in stage_sources}))
+                source_paths = source_shas = ""
+                row[f"{stage}_exposed"] = "false"
+            else:
+                status, reason, match_type = "not_proven", "source_not_provided", ""
+                source_manifest_path = source_manifest_sha = source_paths = source_shas = ""
+                row[f"{stage}_exposed"] = ""
+            row[f"{stage}_exposure_status"] = status
+            audit_rows.append({
+                "schema_version": "paper_a_stage3_test_overlap_audit_v1", "audit_type": "stage_exposure",
+                "stage": stage, "image_id": row["image_id"], "base_task_id": row["base_task_id"],
+                "test_image_sha256": row["image_sha256"], "source_manifest_path": source_manifest_path,
+                "source_manifest_sha256": source_manifest_sha, "source_path": source_paths,
+                "source_sha256": source_shas, "match_type": match_type, "status": status, "reason": reason,
+            })
+
+    validation_dir = _stage3_resolve(args.validation_image_dir)
+    validation_files = _stage3_file_index(validation_dir, (".png", ".jpg", ".jpeg"))
+    validation_listing = [{"path": path.as_posix(), "size": path.stat().st_size, "sha256": sha256_file(path)} for path in validation_files.values()]
+    validation_sha = _aggregate_sha(sorted(validation_listing, key=lambda item: item["path"]))
+    validation_by_hash = {item["sha256"]: item["path"] for item in validation_listing}
+    validation_ids = set(validation_files)
+    for row in inventory:
+        match_type = []
+        if row["image_id"] in validation_ids:
+            match_type.append("identity")
+        if row["image_sha256"] in validation_by_hash:
+            match_type.append("content_sha256")
+        status = "overlap" if match_type else "clear"
+        row["validation_overlap_status"] = status
+        audit_rows.append({
+            "schema_version": "paper_a_stage3_test_overlap_audit_v1", "audit_type": "split_overlap",
+            "stage": "VALIDATION", "image_id": row["image_id"], "base_task_id": row["base_task_id"],
+            "test_image_sha256": row["image_sha256"], "source_manifest_path": str(validation_dir.resolve()),
+            "source_manifest_sha256": validation_sha,
+            "source_path": validation_by_hash.get(row["image_sha256"], ""),
+            "source_sha256": row["image_sha256"] if row["image_sha256"] in validation_by_hash else "",
+            "match_type": ";".join(match_type), "status": status,
+            "reason": "test_validation_overlap" if match_type else "test_validation_disjoint",
+        })
+
+    by_hash: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in inventory:
+        by_hash[row["image_sha256"]].append(row)
+    for digest, rows in by_hash.items():
+        duplicate = len(rows) > 1
+        for row in rows:
+            row["duplicate_test_content_status"] = "overlap" if duplicate else "clear"
+            if duplicate:
+                audit_rows.append({
+                    "schema_version": "paper_a_stage3_test_overlap_audit_v1", "audit_type": "duplicate_test_content",
+                    "stage": "TEST", "image_id": row["image_id"], "base_task_id": row["base_task_id"],
+                    "test_image_sha256": digest, "source_manifest_path": "", "source_manifest_sha256": "",
+                    "source_path": ";".join(item["image_path"] for item in rows), "source_sha256": digest,
+                    "match_type": "content_sha256", "status": "overlap", "reason": "duplicate_test_image_content",
+                })
+    return audit_rows, source_meta
+
+
+def _stage3_candidate_blockers(row: dict[str, Any]) -> list[str]:
+    blockers = []
+    for stage in _STAGE3_EXPOSURE_STAGES:
+        if row.get(f"{stage}_exposure_status") != "clear":
+            blockers.append(f"{stage}_exposure_{row.get(f'{stage}_exposure_status') or 'unknown'}")
+    if row.get("validation_overlap_status") != "clear":
+        blockers.append("validation_overlap")
+    if row.get("duplicate_test_content_status") != "clear":
+        blockers.append("duplicate_test_content")
+    if row.get("building_registry_status") != "approved":
+        blockers.append("building_registry_unresolved")
+    return sorted(set(blockers))
+
+
+def _stage3_load_feature_reference(args: argparse.Namespace) -> tuple[dict[str, Any], dict[str, Any], Path]:
+    manifest_path = _stage3_resolve(args.feature_freeze_manifest)
+    checkpoint = _stage3_resolve(args.checkpoint)
+    config = _stage3_resolve(args.config)
+    payload = _read_json_object(manifest_path)
+    if payload.get("schema_version") != "paper_a_c2_feature_freeze_v2":
+        raise ValueError("stage3 feature freeze manifest schema is invalid")
+    if payload.get("feature_audit_status") != "approved" or not all(payload.get(flag) is True for flag in ("pca_frozen", "whitening_frozen", "circular_shift_invariant", "seam_invariant")):
+        raise ValueError("stage3 requires an approved frozen feature reference")
+    if payload.get("checkpoint_sha256") != sha256_file(checkpoint) or payload.get("config_sha256") != sha256_file(config):
+        raise ValueError("stage3 feature reference checkpoint/config identity mismatch")
+    cache = Path(str(payload.get("feature_cache_path", "")))
+    if not cache.is_absolute():
+        cache = (manifest_path.parent / cache).resolve()
+    if not cache.is_file() or sha256_file(cache) != payload.get("reference_feature_sha256"):
+        raise ValueError("stage3 frozen reference feature cache is missing or stale")
+    with np.load(cache) as values:
+        required = ("global_mean", "global_components", "global_scale", "local_mean", "local_components", "local_scale", "reference_global", "reference_local")
+        if any(name not in values for name in required):
+            raise ValueError("stage3 frozen reference feature cache is incomplete")
+        cache_payload = {name: np.asarray(values[name]).copy() for name in required}
+    return payload, cache_payload, cache
+
+
+def _stage3_source_method_binding(args: argparse.Namespace, reference_csv: Path) -> dict[str, Any]:
+    summary_path = _stage3_resolve(args.c1_risk_summary)
+    summary = _read_json_object(summary_path)
+    reference_sha = sha256_file(reference_csv)
+    if summary.get("c1_task_risk_reference_sha256") != reference_sha:
+        raise ValueError("stage3 C1 risk reference does not match its source summary")
+    target = _method_identity()
+    source_version = str(summary.get("method_contract_version", "")).strip()
+    source_sha = str(summary.get("method_contract_sha256", "")).strip()
+    if source_version != _STAGE3_SOURCE_METHOD_VERSION or source_sha != _STAGE3_SOURCE_METHOD_SHA256:
+        raise ValueError("stage3 source risk summary is not the frozen v17 input")
+    return {
+        "source_method_contract_version": source_version,
+        "source_method_contract_sha256": source_sha,
+        "target_method_contract_version": target["method_contract_version"],
+        "target_method_contract_sha256": target["method_contract_sha256"],
+        "source_risk_summary_path": str(summary_path),
+        "source_risk_summary_sha256": sha256_file(summary_path),
+        "source_c1_risk_reference_path": str(reference_csv),
+        "source_c1_risk_reference_sha256": reference_sha,
+    }
+
+
+def _stage3_materialize_risk(
+    args: argparse.Namespace, inventory: list[dict[str, Any]], staging: Path,
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    reference_csv = _stage3_resolve(args.c1_risk_reference)
+    risk_contract_path = _stage3_resolve(args.risk_contract)
+    risk_contract = _read_json_object(risk_contract_path)
+    if risk_contract.get("schema_version") != "paper_a_c2b_risk_design_contract_v1":
+        raise ValueError("stage3 risk contract schema is invalid")
+    if risk_contract.get("method_contract_sha256") != _method_identity()["method_contract_sha256"]:
+        raise ValueError("stage3 risk contract is not bound to current method contract")
+    stress_quantile = float(risk_contract["stratum_rule"]["stress_quantile"])
+    frozen_reference = load_frozen_c1_risk_reference(reference_csv, stress_quantile=stress_quantile)
+    feature_manifest, reference_cache, reference_cache_path = _stage3_load_feature_reference(args)
+    threshold_path = _stage3_resolve(args.feature_audit_threshold_manifest)
+    thresholds = _read_json_object(threshold_path)
+    threshold_sha = sha256_file(threshold_path)
+    if feature_manifest.get("feature_audit_threshold_manifest_sha256") != threshold_sha:
+        raise ValueError("stage3 feature threshold manifest is not bound to the frozen feature manifest")
+    checkpoint, config = _stage3_resolve(args.checkpoint), _stage3_resolve(args.config)
+    output_dir = _stage3_resolve(args.output_dir)
+    image_paths = [Path(row["image_path"]) for row in inventory]
+    descriptors, extraction_audit = extract_orbit_descriptors(
+        image_paths, checkpoint, config, device=args.device, batch_size=4, audit_seam=True,
+    )
+    ordered_paths = [path.resolve().as_posix() for path in image_paths]
+    candidate_cache_path = staging / "stage3_test_candidate_lhfeat_cache.npz"
+    np.savez_compressed(
+        candidate_cache_path,
+        paths=np.asarray(ordered_paths),
+        global_descriptors=np.stack([descriptors[path][0] for path in ordered_paths]),
+        local_descriptors=np.stack([descriptors[path][1] for path in ordered_paths]),
+    )
+    circular_ready, seam_ready = _feature_audit_passes(extraction_audit, extraction_audit, thresholds)
+    feature_audit_status = "approved" if circular_ready and seam_ready else "pending_threshold_approval_or_failed"
+    candidate_feature_manifest = {
+        "schema_version": "paper_a_stage3_test_feature_candidate_v1",
+        "artifact_role": "STAGE3_TEST_FEATURE_CANDIDATE",
+        "contract_role": "generated_subordinate",
+        **_method_identity(), "candidate_only": True, "formal_ready": False,
+        "source_feature_freeze_manifest_path": str(_stage3_resolve(args.feature_freeze_manifest)),
+        "source_feature_freeze_manifest_sha256": sha256_file(_stage3_resolve(args.feature_freeze_manifest)),
+        "reference_feature_cache_path": str(reference_cache_path),
+        "reference_feature_cache_sha256": sha256_file(reference_cache_path),
+        "candidate_descriptor_cache_path": str(output_dir / candidate_cache_path.name),
+        "candidate_descriptor_cache_sha256": sha256_file(candidate_cache_path),
+        "feature_audit_threshold_manifest_path": str(threshold_path),
+        "feature_audit_threshold_manifest_sha256": threshold_sha,
+        "candidate_descriptor_count": len(ordered_paths),
+        "candidate_extraction_audit": extraction_audit,
+        "candidate_circular_robustness": circular_ready,
+        "candidate_seam_robustness": seam_ready,
+        "feature_audit_status": feature_audit_status,
+        "checkpoint_sha256": sha256_file(checkpoint), "config_sha256": sha256_file(config),
+    }
+    feature_manifest_path = staging / "stage3_test_feature_candidate_manifest.json"
+    feature_manifest_path.write_text(json.dumps(candidate_feature_manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    source_binding = _stage3_source_method_binding(args, reference_csv)
+    risk_rows: list[dict[str, Any]] = []
+    for item in inventory:
+        layout_status = "missing"
+        layout: dict[str, Any] = {}
+        try:
+            layout = _layout_features(Path(item["layout_path"]))
+            layout_status = str(layout.get("layout_status", "missing"))
+        except (OSError, ValueError, TypeError, KeyError, json.JSONDecodeError):
+            layout = {"layout_status": "invalid", "postprocess_valid": False, "g_model_struct": ""}
+            layout_status = "invalid"
+        descriptor = descriptors.get(Path(item["image_path"]).resolve().as_posix())
+        reasons: list[str] = []
+        global_distance = local_distance = d_cal = ""
+        if descriptor is None:
+            reasons.append("feature_descriptor_missing")
+        if layout_status != "ready":
+            reasons.append(f"layout_{layout_status}")
+        if layout.get("postprocess_valid") is not True:
+            reasons.append("layout_postprocess_invalid")
+        if descriptor is not None:
+            global_vector = ((descriptor[0] - reference_cache["global_mean"]) @ reference_cache["global_components"].T) / reference_cache["global_scale"]
+            local_vector = ((descriptor[1] - reference_cache["local_mean"]) @ reference_cache["local_components"].T) / reference_cache["local_scale"]
+            global_distance = _knn(global_vector, reference_cache["reference_global"])
+            local_distance = _knn(local_vector, reference_cache["reference_local"])
+        g_model_struct = layout.get("g_model_struct", "")
+        try:
+            if global_distance != "" and local_distance != "" and g_model_struct != "":
+                candidate_vector = np.asarray([float(global_distance), float(local_distance), float(g_model_struct)], dtype=float) / frozen_reference["support_scale"]
+                d_cal = _knn(candidate_vector, frozen_reference["support_matrix"] / frozen_reference["support_scale"])
+            else:
+                reasons.append("risk_channel_missing")
+        except (TypeError, ValueError, FloatingPointError):
+            reasons.append("risk_channel_invalid")
+        scored = score_frozen_c1_risk_candidate({
+            "d_model_feat": global_distance, "d_model_feat_local_max": local_distance,
+            "g_model_struct": g_model_struct, "d_cal_A": d_cal,
+        }, frozen_reference)
+        if scored["risk_status"] != "ready":
+            reasons.append(scored["risk_status"])
+        if feature_audit_status != "approved":
+            reasons.append("candidate_feature_audit_not_approved")
+        row_blockers = json.loads(item["candidate_blockers_json"])
+        risk_rows.append({
+            "schema_version": "paper_a_stage3_test_risk_candidate_v1",
+            "task_id": item["task_id"], "base_task_id": item["base_task_id"], "image_id": item["image_id"],
+            "source_split": item["source_split"], "building_id": item["building_id"],
+            "building_registry_status": item["building_registry_status"],
+            "d_model_feat": global_distance, "d_model_feat_local_max": local_distance,
+            "g_model_struct": g_model_struct, "d_cal_A": d_cal,
+            "risk_design_vector_A": scored.get("risk_design_vector_A", ""),
+            "risk_design_score_A": scored.get("risk_design_score_A", ""),
+            "risk_design_score_A_percentile": scored.get("risk_design_score_A_percentile", ""),
+            "risk_design_q75": scored.get("risk_design_q75", frozen_reference["q75"]),
+            "risk_design_stratum": scored.get("risk_design_stratum", ""),
+            "risk_design_stratum_source": "frozen_c1_reference_q75",
+            "risk_status": "ready" if not reasons else ";".join(sorted(set(reasons))),
+            "risk_missing_reason": ";".join(sorted(set(reasons))), "layout_status": layout_status,
+            "feature_status": "ready" if descriptor is not None else "missing",
+            "feature_audit_status": feature_audit_status,
+            "postprocess_valid": layout.get("postprocess_valid", False),
+            "risk_route": "", "risk_route_status": "deferred_until_post_c2_profile",
+            "d_cal_F": "", "family_scores": "",
+            "P1_exposed": item["P1_exposed"], "C1_exposed": item["C1_exposed"],
+            "C2B_exposed": item["C2B_exposed"], "C2A_RP_exposed": item["C2A_RP_exposed"],
+            "T1_exposed": item["T1_exposed"], "v1_candidate_eligible": item["v1_candidate_eligible"],
+            "candidate_only": "true", "candidate_blockers_json": json.dumps(sorted(set(row_blockers + reasons)), ensure_ascii=False),
+        })
+    risk_summary = {
+        "schema_version": "paper_a_stage3_test_risk_candidate_summary_v1",
+        "artifact_role": "STAGE3_TEST_RISK_CANDIDATE",
+        "contract_role": "generated_subordinate", **_method_identity(),
+        "candidate_only": True, "formal_ready": False, "outcome_blind": True,
+        "source_split": "test", "risk_design_stratum_rule": "frozen_c1_reference_q75",
+        "risk_contract_path": str(risk_contract_path), "risk_contract_sha256": sha256_file(risk_contract_path),
+        "c1_reference_path": str(reference_csv), "c1_reference_sha256": sha256_file(reference_csv),
+        "c1_reference_q75": frozen_reference["q75"], "c1_reference_support_count": len(frozen_reference["reference_scores"]),
+        "feature_candidate_manifest_path": str(output_dir / feature_manifest_path.name),
+        "feature_candidate_manifest_sha256": sha256_file(feature_manifest_path),
+        "candidate_descriptor_cache_path": str(output_dir / candidate_cache_path.name),
+        "candidate_descriptor_cache_sha256": sha256_file(candidate_cache_path),
+        "feature_audit_threshold_manifest_path": str(threshold_path),
+        "feature_audit_threshold_manifest_sha256": threshold_sha,
+        "feature_audit_status": feature_audit_status,
+        "test_task_count": len(risk_rows),
+        "ordinary_count": sum(row["risk_design_stratum"] == "ordinary" for row in risk_rows),
+        "stress_count": sum(row["risk_design_stratum"] == "stress" for row in risk_rows),
+        "risk_ready_count": sum(row["risk_status"] == "ready" for row in risk_rows),
+        "risk_missing_count": sum(row["risk_status"] != "ready" for row in risk_rows),
+        "structural_not_ready_count": sum(
+            row["layout_status"] != "ready" or row["postprocess_valid"] is not True for row in risk_rows
+        ),
+        "reference_unavailable_count": 0 if reference_cache else len(risk_rows),
+        "source_method_binding": source_binding,
+    }
+    return risk_rows, {"summary": risk_summary, "feature_manifest": candidate_feature_manifest, "feature_manifest_path": feature_manifest_path, "candidate_cache_path": candidate_cache_path}
+
+
+def prepare_stage3_test_candidate(args: argparse.Namespace) -> dict[str, Any]:
+    output_dir = _stage3_resolve(args.output_dir)
+    if output_dir.exists():
+        raise ValueError(f"target artifact already exists:{output_dir}")
+    output_dir.parent.mkdir(parents=True, exist_ok=True)
+    staging = Path(tempfile.mkdtemp(prefix=f".{output_dir.name}.", dir=str(output_dir.parent)))
+    try:
+        inventory = _stage3_make_inventory(args)
+        audit_rows, source_meta = _stage3_audit_inventory(args, inventory)
+        for row in inventory:
+            blockers = _stage3_candidate_blockers(row)
+            row["candidate_blockers_json"] = json.dumps(blockers, ensure_ascii=False)
+            row["v1_candidate_eligible"] = "true" if not blockers else "false"
+        inventory_path = staging / "stage3_test_inventory_candidate.csv"
+        audit_path = staging / "stage3_test_overlap_audit.csv"
+        _stage3_write_csv(inventory_path, inventory, _STAGE3_INVENTORY_FIELDS)
+        _stage3_write_csv(audit_path, audit_rows, _STAGE3_OVERLAP_FIELDS)
+        risk_rows, risk_meta = _stage3_materialize_risk(args, inventory, staging)
+        risk_path = staging / "test_task_risk_candidate.csv"
+        _stage3_write_csv(risk_path, risk_rows, _STAGE3_RISK_FIELDS)
+        risk_summary = dict(risk_meta["summary"])
+        risk_summary.update({
+            "inventory_path": str((output_dir / inventory_path.name).resolve()),
+            "inventory_sha256": sha256_file(inventory_path),
+            "overlap_audit_path": str((output_dir / audit_path.name).resolve()),
+            "overlap_audit_sha256": sha256_file(audit_path),
+            "risk_candidate_path": str((output_dir / risk_path.name).resolve()),
+            "risk_candidate_sha256": sha256_file(risk_path),
+            "approved_building_registry_path": str(_stage3_resolve(args.building_registry)) if args.building_registry else "",
+            "approved_building_registry_sha256": sha256_file(_stage3_resolve(args.building_registry)) if args.building_registry else "",
+            "source_exposure_manifests": source_meta,
+            "validation_overlap_count": sum(row["validation_overlap_status"] != "clear" for row in inventory),
+            "unresolved_building_count": sum(row["building_registry_status"] != "approved" for row in inventory),
+            "v1_candidate_eligible_count": sum(row["v1_candidate_eligible"] == "true" for row in inventory),
+            "blocked_row_count": sum(row["v1_candidate_eligible"] != "true" for row in inventory),
+            "formal_launch_allowed": False,
+            "stage_usage_policy": {
+                "C2B_C2A_RP": "validation_only",
+                "T1": "validation_remainder_only",
+                "V1": "test_candidate_only_until_post_C2_profile",
+            },
+        })
+        summary_path = staging / "test_task_risk_candidate.summary.json"
+        summary_path.write_text(json.dumps(risk_summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+        if output_dir.exists():
+            raise ValueError(f"target artifact already exists:{output_dir}")
+        staging.replace(output_dir)
+        return {**risk_summary, "phase": "prepare-stage3-test-candidate", "output_dir": str(output_dir)}
+    finally:
+        if staging.exists():
+            shutil.rmtree(staging, ignore_errors=True)
+
+
 def expand_building_registry(args: argparse.Namespace) -> dict[str, Any]:
     return materialize_building_registry_from_scene_mapping(
         args.inventory_csv, args.approved_scene_mapping, args.output_csv,
@@ -3005,6 +3629,24 @@ def main(argv: list[str] | None = None) -> int:
     static.add_argument("--building-registry", type=Path)
     static.add_argument("--device", default="cuda:0")
 
+    stage3 = sub.add_parser("prepare-stage3-test-candidate")
+    stage3.add_argument("--test-list", type=Path, default=Path("data/mp3d_test.txt"))
+    stage3.add_argument("--image-dir", type=Path, default=Path("data/mp3d_layout/test/img"))
+    stage3.add_argument("--gt-dir", type=Path, default=Path("data/mp3d_layout/test/label_cor"))
+    stage3.add_argument("--layout-dir", type=Path, default=Path("output/layout_json"))
+    stage3.add_argument("--validation-image-dir", type=Path, default=Path("data/mp3d_layout/valid/img"))
+    stage3.add_argument("--building-registry", type=Path, default=Path("analysis_results/c2b_validation_static_20260802_v16/inputs/authoritative_building_registry.csv"))
+    stage3.add_argument("--c1-risk-reference", type=Path, default=Path("analysis_results/c2b_validation_design_20260802_v17/output/c1_task_risk_reference.csv"))
+    stage3.add_argument("--c1-risk-summary", type=Path, default=Path("analysis_results/c2b_validation_design_20260802_v17/output/c2_task_risk.summary.json"))
+    stage3.add_argument("--feature-freeze-manifest", type=Path, default=Path("analysis_results/c2b_validation_static_20260802_v16/static/c2_feature_freeze_manifest.json"))
+    stage3.add_argument("--feature-audit-threshold-manifest", type=Path, default=Path("docs/thesis_main/C2B_FEATURE_AUDIT_THRESHOLDS.json"))
+    stage3.add_argument("--risk-contract", type=Path, default=Path("docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json"))
+    stage3.add_argument("--checkpoint", type=Path, default=Path("ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth"))
+    stage3.add_argument("--config", type=Path, default=Path("config/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34.yaml"))
+    stage3.add_argument("--exposure-source", action="append", default=[], metavar="STAGE=PATH")
+    stage3.add_argument("--output-dir", type=Path, default=Path("analysis_results/stage3_test_preparation_20260804_v1"))
+    stage3.add_argument("--device", default="cuda:0")
+
     expand = sub.add_parser("expand-building-registry")
     expand.add_argument("--inventory-csv", type=Path, required=True)
     expand.add_argument("--approved-scene-mapping", type=Path, required=True)
@@ -3086,6 +3728,7 @@ def main(argv: list[str] | None = None) -> int:
     args = parser.parse_args(argv)
     command = {
         "prepare-c2b-static": prepare_c2b_static,
+        "prepare-stage3-test-candidate": prepare_stage3_test_candidate,
         "expand-building-registry": expand_building_registry,
         "check-command-contract": check_command_contract,
         "preflight-calibration": preflight_calibration,

@@ -5,9 +5,10 @@ import json
 import subprocess
 from pathlib import Path
 
+import numpy as np
 import pytest
 
-from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, _write_c2b_import, audit_c1, bind_c2b_runtime_mapping, build_c2b, finalize_c1, freeze_c1, main, preflight_calibration, rehearse_c1, repackage_c2b_v17_to_v18, validate_runbook_command_contract
+from tools.thesis_main.analysis.run_c1_closeout_launch import _c2_source_images, _final_risk_pool_gate, _future_heldout_images, _materialize_static_evidence_review_queues, _source_identity_aggregate, _write_c2b_import, audit_c1, bind_c2b_runtime_mapping, build_c2b, finalize_c1, freeze_c1, main, preflight_calibration, prepare_stage3_test_candidate, rehearse_c1, repackage_c2b_v17_to_v18, validate_runbook_command_contract
 from tools.thesis_main.analysis.run_c1_precloseout_rehearsal import _aggregate_sha, _c1_closeout_blockers
 from tools.thesis_main.analysis.derive_c2b_design_thresholds import derive_threshold_manifest
 
@@ -68,11 +69,109 @@ def test_public_cli_exposes_the_auditable_and_thin_entry_commands(capsys):
     for command in (
         "rehearse-c1", "prepare-c2b-static", "preflight-calibration", "freeze-c1",
         "audit-c1", "finalize-c1", "design-c2b", "build-c2b",
-        "expand-building-registry", "repackage-c2b-v17-to-v18", "check-command-contract",
+        "expand-building-registry", "repackage-c2b-v17-to-v18", "prepare-stage3-test-candidate", "check-command-contract",
     ):
         assert command in help_text
     for removed in ("day1-canonical-audit", "day1-formal-audit", "day2-c2b-build", "freeze-c1-active-log"):
         assert removed not in help_text
+
+
+def test_stage3_test_candidate_preserves_rows_records_exposure_and_is_candidate_only(monkeypatch, tmp_path):
+    test_list = tmp_path / "test.txt"
+    test_list.write_text("scene-a image-0\nscene-b image-1\n", encoding="utf-8")
+    image_dir = tmp_path / "test_img"; image_dir.mkdir()
+    gt_dir = tmp_path / "test_gt"; gt_dir.mkdir()
+    layout_dir = tmp_path / "layouts"; layout_dir.mkdir()
+    for index in range(2):
+        (image_dir / f"image-{index}.png").write_bytes(f"image-{index}".encode())
+        (gt_dir / f"image-{index}.txt").write_text("gt", encoding="utf-8")
+        (layout_dir / f"image-{index}.json").write_text(json.dumps({"layout": {"corners": [
+            {"x": 10, "y_ceiling": 100, "y_floor": 400}, {"x": 180, "y_ceiling": 100, "y_floor": 400},
+            {"x": 350, "y_ceiling": 100, "y_floor": 400}, {"x": 520, "y_ceiling": 100, "y_floor": 400},
+            {"x": 690, "y_ceiling": 100, "y_floor": 400}, {"x": 860, "y_ceiling": 100, "y_floor": 400},
+        ]}}), encoding="utf-8")
+    validation_dir = tmp_path / "valid_img"; validation_dir.mkdir(); (validation_dir / "validation-only.png").write_bytes(b"validation")
+
+    registry = tmp_path / "building.csv"
+    registry.write_text("image_id,building_id,registry_status,reviewed_by,reviewed_at\nimage-0,scene-a,approved,researcher,2026-08-04\n", encoding="utf-8")
+    reference = tmp_path / "c1_reference.csv"
+    reference.write_text(
+        "base_task_id,d_model_feat,d_model_feat_local_max,g_model_struct,d_cal_A\n"
+        "r0,1,1,0.1,0.1\n"
+        "r1,2,2,0.2,0.2\n"
+        "r2,3,3,0.3,0.3\n"
+        "r3,4,4,0.4,0.4\n", encoding="utf-8",
+    )
+    source_summary = tmp_path / "c1_risk.summary.json"
+    source_summary.write_text(json.dumps({
+        "method_contract_version": "paper_a_method_20260802_v17",
+        "method_contract_sha256": "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c",
+        "c1_task_risk_reference_sha256": hashlib.sha256(reference.read_bytes()).hexdigest(),
+    }), encoding="utf-8")
+    checkpoint = tmp_path / "checkpoint.pth"; checkpoint.write_bytes(b"checkpoint")
+    config = tmp_path / "config.yaml"; config.write_text("model: test\n", encoding="utf-8")
+    reference_cache = tmp_path / "reference.npz"
+    np.savez_compressed(
+        reference_cache,
+        global_mean=np.zeros(2), global_components=np.eye(2), global_scale=np.ones(2),
+        local_mean=np.zeros(2), local_components=np.eye(2), local_scale=np.ones(2),
+        reference_global=np.asarray([[0., 0.], [1., 1.], [2., 2.]]),
+        reference_local=np.asarray([[0., 0.], [1., 1.], [2., 2.]]),
+    )
+    thresholds = tmp_path / "feature_thresholds.json"
+    thresholds.write_text(json.dumps({
+        "status": "approved", "formal_feature_freeze_allowed": True, "approved_by": "researcher", "approved_at": "2026-08-04",
+        "thresholds": {"circular_relative_l2_max": 1, "seam_relative_l2_q95": 1, "minimum_circular_audited_image_count": 1, "minimum_seam_audited_image_count": 1},
+    }), encoding="utf-8")
+    feature_manifest = tmp_path / "feature.json"
+    feature_manifest.write_text(json.dumps({
+        "schema_version": "paper_a_c2_feature_freeze_v2", "feature_audit_status": "approved",
+        "pca_frozen": True, "whitening_frozen": True, "circular_shift_invariant": True, "seam_invariant": True,
+        "checkpoint_sha256": hashlib.sha256(checkpoint.read_bytes()).hexdigest(),
+        "config_sha256": hashlib.sha256(config.read_bytes()).hexdigest(),
+        "feature_cache_path": str(reference_cache), "reference_feature_sha256": hashlib.sha256(reference_cache.read_bytes()).hexdigest(),
+        "feature_audit_threshold_manifest_sha256": hashlib.sha256(thresholds.read_bytes()).hexdigest(),
+    }), encoding="utf-8")
+    p1 = tmp_path / "p1.csv"; p1.write_text("image_id,used_in_prescreen\nimage-0,true\nimage-1,false\n", encoding="utf-8")
+    c1 = tmp_path / "c1.csv"; c1.write_text("image_id,used_in_random_c1_deprecated\nimage-0,false\nimage-1,true\n", encoding="utf-8")
+    c2b = tmp_path / "c2b.csv"; c2b.write_text("image_id\nimage-1\n", encoding="utf-8")
+
+    def fake_extract(paths, _checkpoint, _config, *, device, batch_size, audit_seam):
+        descriptors = {path.resolve().as_posix(): (np.asarray([float(index + 1), float(index + 1)]), np.asarray([float(index + 1), float(index + 1)])) for index, path in enumerate(paths)}
+        return descriptors, {"circular_relative_l2_max": .1, "circular_audited_image_count": len(paths), "seam_relative_l2_q95": .1, "seam_audited_image_count": len(paths)}
+
+    monkeypatch.setattr("tools.thesis_main.analysis.run_c1_closeout_launch.extract_orbit_descriptors", fake_extract)
+    output = tmp_path / "stage3"
+    result = prepare_stage3_test_candidate(argparse.Namespace(
+        test_list=test_list, image_dir=image_dir, gt_dir=gt_dir, layout_dir=layout_dir,
+        validation_image_dir=validation_dir, building_registry=registry, c1_risk_reference=reference,
+        c1_risk_summary=source_summary, feature_freeze_manifest=feature_manifest,
+        feature_audit_threshold_manifest=thresholds, risk_contract=Path("docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json"),
+        checkpoint=checkpoint, config=config, exposure_source=[f"P1={p1}", f"C1={c1}", f"C2B={c2b}"],
+        output_dir=output, device="cpu",
+    ))
+
+    inventory = list(csv.DictReader((output / "stage3_test_inventory_candidate.csv").open(encoding="utf-8")))
+    risk = list(csv.DictReader((output / "test_task_risk_candidate.csv").open(encoding="utf-8")))
+    summary = json.loads((output / "test_task_risk_candidate.summary.json").read_text(encoding="utf-8"))
+    assert result["candidate_only"] is True and result["formal_ready"] is False
+    assert len(inventory) == len(risk) == 2
+    assert "P1_exposed" in inventory[0] and "candidate_blockers_json" in inventory[0]
+    assert all("img_v" not in row["image_path"] for row in inventory)
+    assert inventory[0]["P1_exposed"] == "true" and inventory[1]["C1_exposed"] == "true"
+    assert all(row["risk_design_stratum"] in {"ordinary", "stress"} for row in risk)
+    assert all(row["risk_route"] == "" and row["candidate_only"] == "true" for row in risk)
+    assert summary["source_method_binding"]["source_method_contract_version"] == "paper_a_method_20260802_v17"
+    assert summary["source_method_binding"]["target_method_contract_version"] == "paper_a_method_20260803_v18"
+    assert summary["feature_audit_threshold_manifest_sha256"] == hashlib.sha256(thresholds.read_bytes()).hexdigest()
+    with pytest.raises(ValueError, match="target artifact already exists"):
+        prepare_stage3_test_candidate(argparse.Namespace(
+            test_list=test_list, image_dir=image_dir, gt_dir=gt_dir, layout_dir=layout_dir,
+            validation_image_dir=validation_dir, building_registry=registry, c1_risk_reference=reference,
+            c1_risk_summary=source_summary, feature_freeze_manifest=feature_manifest,
+            feature_audit_threshold_manifest=thresholds, risk_contract=Path("docs/thesis_main/C2B_RISK_DESIGN_CONTRACT_v1.json"),
+            checkpoint=checkpoint, config=config, exposure_source=[f"P1={p1}"], output_dir=output, device="cpu",
+        ))
 
 
 def test_c2b_import_matches_prior_formal_import_shape(monkeypatch, tmp_path):

@@ -267,6 +267,90 @@ def _score(vector: list[float] | None) -> float | None:
     return float(np.linalg.norm(np.asarray(vector, dtype=float))) if vector is not None else None
 
 
+def load_frozen_c1_risk_reference(
+    reference_csv: Path, *, stress_quantile: float = .75,
+) -> dict[str, Any]:
+    """Load the already-materialized C1 risk reference without recomputing it."""
+    rows = _read(reference_csv)
+    if not rows:
+        raise ValueError("frozen C1 risk reference is empty")
+    seen_tasks: set[str] = set()
+    complete: list[dict[str, Any]] = []
+    for row in rows:
+        task = str(row.get("base_task_id") or row.get("task_id") or "").strip()
+        if not task or task in seen_tasks:
+            raise ValueError("frozen C1 risk reference requires unique base_task_id")
+        seen_tasks.add(task)
+        try:
+            values = {name: float(row[name]) for name in RISK_VECTOR_FIELDS}
+        except (KeyError, TypeError, ValueError) as exc:
+            raise ValueError("frozen C1 risk reference has incomplete risk channels") from exc
+        if not all(math.isfinite(value) for value in values.values()):
+            raise ValueError("frozen C1 risk reference contains non-finite risk channels")
+        complete.append({"base_task_id": task, **values})
+    if len(complete) < 2:
+        raise ValueError("frozen C1 risk reference requires at least two complete rows")
+    channel_scales = {
+        name: (float(np.std([row[name] for row in complete])) or 1.0)
+        for name in RISK_VECTOR_FIELDS
+    }
+    reference_scores = [
+        float(np.linalg.norm(np.asarray([row[name] / channel_scales[name] for name in RISK_VECTOR_FIELDS], dtype=float)))
+        for row in complete
+    ]
+    q75 = float(np.quantile(reference_scores, stress_quantile))
+    for row, score in zip(rows, reference_scores):
+        declared_score = str(row.get("risk_design_score_A", "")).strip()
+        if declared_score and not math.isclose(float(declared_score), score, rel_tol=1e-9, abs_tol=1e-9):
+            raise ValueError("frozen C1 risk reference score does not match its channels")
+        declared_stratum = str(row.get("risk_design_stratum", "")).strip()
+        if declared_stratum and declared_stratum != ("stress" if score >= q75 else "ordinary"):
+            raise ValueError("frozen C1 risk reference stratum does not match its Q75")
+    support_names = ("d_model_feat", "d_model_feat_local_max", "g_model_struct")
+    support_matrix = np.asarray([[row[name] for name in support_names] for row in complete], dtype=float)
+    support_scale = support_matrix.std(axis=0)
+    support_scale[support_scale == 0] = 1.0
+    return {
+        "reference_csv": reference_csv,
+        "reference_rows": rows,
+        "channel_scales": channel_scales,
+        "reference_scores": reference_scores,
+        "q75": q75,
+        "stress_quantile": float(stress_quantile),
+        "support_matrix": support_matrix,
+        "support_scale": support_scale,
+    }
+
+
+def score_frozen_c1_risk_candidate(
+    values: dict[str, Any], reference: dict[str, Any],
+) -> dict[str, Any]:
+    """Score one candidate against the immutable C1 risk distribution."""
+    numeric: dict[str, float] = {}
+    for name in RISK_VECTOR_FIELDS:
+        try:
+            value = float(values[name])
+        except (KeyError, TypeError, ValueError):
+            return {"risk_design_vector_A": "", "risk_design_score_A": "", "risk_design_stratum": "", "risk_status": "missing_channel"}
+        if not math.isfinite(value):
+            return {"risk_design_vector_A": "", "risk_design_score_A": "", "risk_design_stratum": "", "risk_status": "nonfinite_channel"}
+        numeric[name] = value
+    vector = _frozen_vector(numeric, reference["channel_scales"])
+    score = _score(vector)
+    if vector is None or score is None:
+        return {"risk_design_vector_A": "", "risk_design_score_A": "", "risk_design_stratum": "", "risk_status": "missing_channel"}
+    percentile = sum(value <= score for value in reference["reference_scores"]) / len(reference["reference_scores"])
+    bucket = "stress" if percentile >= float(reference["stress_quantile"]) else "ordinary"
+    return {
+        "risk_design_vector_A": json.dumps(vector, separators=(",", ":")),
+        "risk_design_score_A": score,
+        "risk_design_stratum": bucket,
+        "risk_design_score_A_percentile": percentile,
+        "risk_design_q75": reference["q75"],
+        "risk_status": "ready",
+    }
+
+
 def _feature_freeze_ready(
     path: Path | None, *, checkpoint: Path | None = None, config: Path | None = None,
     reference_feature: Path | None = None,

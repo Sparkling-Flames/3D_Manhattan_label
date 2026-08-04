@@ -1,0 +1,81 @@
+{
+  "approved_building_registry_path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_static_20260802_v16\\inputs\\authoritative_building_registry.csv",
+  "approved_building_registry_sha256": "46b942210eba4a534592d2c78a57bc2afe9f9a04cc6deb292fbbae8098fee24f",
+  "artifact_role": "STAGE3_TEST_RISK_CANDIDATE",
+  "blocked_row_count": 458,
+  "c1_reference_path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c1_task_risk_reference.csv",
+  "c1_reference_q75": 5.735232700942473,
+  "c1_reference_sha256": "a2bc7053c1ffc1f8ebf9e46192b574ee56875e5200633943d8b4ac5261fa0ae6",
+  "c1_reference_support_count": 87,
+  "candidate_descriptor_cache_path": "D:\\Work\\HOHONET\\analysis_results\\stage3_test_preparation_20260804_v1\\stage3_test_candidate_lhfeat_cache.npz",
+  "candidate_descriptor_cache_sha256": "95564b45162e0011da1a3debf2b659f72dc1c431530715947a1aa8f12de8e14a",
+  "candidate_only": true,
+  "contract_role": "generated_subordinate",
+  "feature_audit_status": "approved",
+  "feature_candidate_manifest_path": "D:\\Work\\HOHONET\\analysis_results\\stage3_test_preparation_20260804_v1\\stage3_test_feature_candidate_manifest.json",
+  "feature_candidate_manifest_sha256": "53babcd5fa88adb71b547db41941838472f9287e3774e91653a7b2bd06e00e86",
+  "formal_launch_allowed": false,
+  "formal_ready": false,
+  "inventory_path": "D:\\Work\\HOHONET\\analysis_results\\stage3_test_preparation_20260804_v1\\stage3_test_inventory_candidate.csv",
+  "inventory_sha256": "78d54af9e4519197d1e45b21a446e5a42e10c660c50f9867e0aba4ccb74e617a",
+  "method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+  "method_contract_version": "paper_a_method_20260803_v18",
+  "ordinary_count": 366,
+  "outcome_blind": true,
+  "overlap_audit_path": "D:\\Work\\HOHONET\\analysis_results\\stage3_test_preparation_20260804_v1\\stage3_test_overlap_audit.csv",
+  "overlap_audit_sha256": "3ae9f1e6f85341e12f8d4fa3b43ccca36d58adb18f0d45d97282a0f020c20d8c",
+  "reference_unavailable_count": 0,
+  "risk_candidate_path": "D:\\Work\\HOHONET\\analysis_results\\stage3_test_preparation_20260804_v1\\test_task_risk_candidate.csv",
+  "risk_candidate_sha256": "8092f7969ba4122322a0917abf40c68d57ba95566875130fd27a9a338180e4ad",
+  "risk_contract_path": "D:\\Work\\HOHONET\\docs\\thesis_main\\C2B_RISK_DESIGN_CONTRACT_v1.json",
+  "risk_contract_sha256": "a087c57faaf9330dd26b45f6bb38caf419a36499148c4530f61d61bee381af8e",
+  "risk_design_stratum_rule": "frozen_c1_reference_q75",
+  "risk_missing_count": 0,
+  "risk_ready_count": 458,
+  "schema_version": "paper_a_stage3_test_risk_candidate_summary_v1",
+  "source_exposure_manifests": {
+    "C1:D:/Work/HOHONET/analysis_results/calibration_rebuild_20260702/calibration_full_candidate_inventory_v3.csv": {
+      "flagged_rows": "100",
+      "path": "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\calibration_full_candidate_inventory_v3.csv",
+      "rows": "458",
+      "sha256": "d6d4a454e6a25a9e12e9142707598c3094509263f00fd3d6b912470ea049a244",
+      "stage": "C1"
+    },
+    "C2B:D:/Work/HOHONET/analysis_results/c2b_build_20260802_v17_d8/assignment_manifest_C2B.csv": {
+      "flagged_rows": "176",
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_build_20260802_v17_d8\\assignment_manifest_C2B.csv",
+      "rows": "176",
+      "sha256": "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c",
+      "stage": "C2B"
+    },
+    "P1:D:/Work/HOHONET/analysis_results/calibration_rebuild_20260702/calibration_full_candidate_inventory_v3.csv": {
+      "flagged_rows": "57",
+      "path": "D:\\Work\\HOHONET\\analysis_results\\calibration_rebuild_20260702\\calibration_full_candidate_inventory_v3.csv",
+      "rows": "458",
+      "sha256": "d6d4a454e6a25a9e12e9142707598c3094509263f00fd3d6b912470ea049a244",
+      "stage": "P1"
+    }
+  },
+  "source_method_binding": {
+    "source_c1_risk_reference_path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c1_task_risk_reference.csv",
+    "source_c1_risk_reference_sha256": "a2bc7053c1ffc1f8ebf9e46192b574ee56875e5200633943d8b4ac5261fa0ae6",
+    "source_method_contract_sha256": "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c",
+    "source_method_contract_version": "paper_a_method_20260802_v17",
+    "source_risk_summary_path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c2_task_risk.summary.json",
+    "source_risk_summary_sha256": "fb0cd5daa8879296183fd36bda7684b2c34f2e3ed50496de40c94efe91e4bb6c",
+    "target_method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+    "target_method_contract_version": "paper_a_method_20260803_v18"
+  },
+  "source_split": "test",
+  "stage_usage_policy": {
+    "C2B_C2A_RP": "validation_only",
+    "T1": "validation_remainder_only",
+    "V1": "test_candidate_only_until_post_C2_profile"
+  },
+  "stress_count": 92,
+  "structural_not_ready_count": 0,
+  "test_task_count": 458,
+  "unresolved_building_count": 371,
+  "v1_candidate_eligible_count": 0,
+  "validation_overlap_count": 0
+}

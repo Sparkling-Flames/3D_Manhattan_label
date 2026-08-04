@@ -1,0 +1,55 @@
+{
+  "artifact_role": "STAGE3_TEST_FEATURE_CANDIDATE",
+  "candidate_circular_robustness": true,
+  "candidate_descriptor_cache_path": "D:\\Work\\HOHONET\\analysis_results\\stage3_test_preparation_20260804_v1\\stage3_test_candidate_lhfeat_cache.npz",
+  "candidate_descriptor_cache_sha256": "95564b45162e0011da1a3debf2b659f72dc1c431530715947a1aa8f12de8e14a",
+  "candidate_descriptor_count": 458,
+  "candidate_extraction_audit": {
+    "batch_size": 4,
+    "circular_audited_image_count": 32,
+    "circular_relative_l2_max": 0.2806922197341919,
+    "device": "cuda:0",
+    "dtype": "float32",
+    "four_phase_permutation_diagnostic_image_count": 458,
+    "four_phase_permutation_diagnostic_relative_l2_max": 6.103793737111118e-08,
+    "off_grid_circular_audited_image_count": 32,
+    "off_grid_circular_relative_l2_max": 0.2806922197341919,
+    "off_grid_circular_relative_l2_median": 0.1042717956006527,
+    "off_grid_circular_relative_l2_q95": 0.18771250173449516,
+    "off_grid_rotation_fractions": [
+      0.14285714285714285,
+      0.2857142857142857,
+      0.42857142857142855
+    ],
+    "orbit_fractions": [
+      0.0,
+      0.25,
+      0.5,
+      0.75
+    ],
+    "seam_audited_image_count": 32,
+    "seam_offsets_pixels": [
+      -16,
+      -8,
+      8,
+      16
+    ],
+    "seam_relative_l2_max": 0.06859134137630463,
+    "seam_relative_l2_median": 0.019978209398686886,
+    "seam_relative_l2_q95": 0.03577898629009723
+  },
+  "candidate_only": true,
+  "candidate_seam_robustness": true,
+  "checkpoint_sha256": "9f2522c0311064a863e838fa345e9b49dc14f95cb1608ba19e942a875344efa9",
+  "config_sha256": "38a446c15e568286be92bab758f24be025f1f2a960bbd8be237757ad6eec9cd5",
+  "contract_role": "generated_subordinate",
+  "feature_audit_status": "approved",
+  "formal_ready": false,
+  "method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+  "method_contract_version": "paper_a_method_20260803_v18",
+  "reference_feature_cache_path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_static_20260802_v16\\static\\c2_feature_reference_cache.npz",
+  "reference_feature_cache_sha256": "93ed3be770c13ad3df27f76803dfa023df1262fe831f5afad720a9778f3ac6f7",
+  "schema_version": "paper_a_stage3_test_feature_candidate_v1",
+  "source_feature_freeze_manifest_path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_static_20260802_v16\\static\\c2_feature_freeze_manifest.json",
+  "source_feature_freeze_manifest_sha256": "a0d49772e7c81007423856f475b87a4e7f9ba5a9c78cff937834d8a7ec214c48"
+}

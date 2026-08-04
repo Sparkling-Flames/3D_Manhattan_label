@@ -8,7 +8,7 @@ from pathlib import Path
 import pytest
 
 from tools.thesis_main.analysis import run_c2b_c2a_rp_chain as chain
-from tools.thesis_main.analysis.materialize_t1_static_assignment import bind_t1_runtime, materialize as materialize_t1
+from tools.thesis_main.analysis.materialize_t1_static_assignment import _load_task_pool, bind_t1_runtime, materialize as materialize_t1
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
@@ -104,6 +104,37 @@ def test_t1_static_assignment_enforces_2x2_isolation_and_records_randomization(t
 
     with pytest.raises(ValueError, match="stage3_state_json"):
         materialize_t1(pool, roster, deployment, sap, tmp_path / "formal_without_gate", seed=20260803, mode="formal")
+
+
+def test_formal_t1_pool_rejects_test_candidate_and_accepts_clear_validation_remainder(tmp_path: Path) -> None:
+    pool, _roster, _deployment, _sap = _make_t1_inputs(tmp_path)
+    with pytest.raises(ValueError, match="source_split=validation"):
+        _load_task_pool(pool, formal=True)
+    rows = list(csv.DictReader(pool.open(encoding="utf-8")))
+    exposure_audit = tmp_path / "exposure_audit.json"
+    exposure_audit.write_text(json.dumps({"schema_version": "stage3_exposure_audit_v1", "status": "clear"}), encoding="utf-8")
+    exposure_sha = _sha(exposure_audit)
+    for row in rows:
+        row.update({
+            "source_split": "validation", "pool_role": "t1_validation_remainder", "candidate_only": "false",
+            "exposure_audit_path": str(exposure_audit), "exposure_audit_sha256": exposure_sha,
+            "P1_exposed": "false", "C1_exposed": "false",
+            "C2B_exposed": "false", "C2A_RP_exposed": "false", "T1_exposed": "false",
+        })
+    valid_pool = tmp_path / "validation_remainder.csv"
+    _write_csv(valid_pool, rows)
+    assert len(_load_task_pool(valid_pool, formal=True)) == len(rows)
+    rows[0]["candidate_only"] = "true"
+    candidate_pool = tmp_path / "candidate_pool.csv"
+    _write_csv(candidate_pool, rows)
+    with pytest.raises(ValueError, match="candidate_only"):
+        _load_task_pool(candidate_pool, formal=True)
+    rows[0]["candidate_only"] = "false"
+    rows[0]["exposure_audit_sha256"] = "a" * 64
+    stale_pool = tmp_path / "stale_audit.csv"
+    _write_csv(stale_pool, rows)
+    with pytest.raises(ValueError, match="SHA is stale"):
+        _load_task_pool(stale_pool, formal=True)
 
 
 def test_t1_runtime_binding_uses_deployment_identity_and_private_lists(tmp_path: Path) -> None:

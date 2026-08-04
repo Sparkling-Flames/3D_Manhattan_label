@@ -127,10 +127,47 @@ def _load_sap(path: Path) -> dict[str, Any]:
     }
 
 
-def _load_task_pool(path: Path) -> dict[str, dict[str, Any]]:
+def _validate_formal_pool_provenance(rows: list[dict[str, str]], path: Path) -> None:
+    required_flags = ("P1_exposed", "C1_exposed", "C2B_exposed", "C2A_RP_exposed", "T1_exposed")
+    for row in rows:
+        if _text(row.get("source_split")).lower() != "validation":
+            raise ValueError("formal T1 task pool requires source_split=validation")
+        if _text(row.get("pool_role")) != "t1_validation_remainder":
+            raise ValueError("formal T1 task pool requires pool_role=t1_validation_remainder")
+        candidate_only = _text(row.get("candidate_only")).lower()
+        if _truth(row.get("candidate_only")):
+            raise ValueError("formal T1 task pool rejects candidate_only input")
+        if candidate_only not in {"false", "0", "no"}:
+            raise ValueError("formal T1 task pool requires candidate_only=false")
+        if any(_text(row.get(field)).lower() not in {"false", "0", "no"} for field in required_flags):
+            raise ValueError(f"formal T1 task pool has non-clear exposure:{path}")
+    bindings: set[tuple[str, str]] = set()
+    audited: dict[Path, str] = {}
+    for row in rows:
+        audit_path_value = _text(row.get("exposure_audit_path"))
+        if not audit_path_value:
+            raise ValueError("formal T1 task pool requires exposure_audit_path")
+        audit_path = Path(audit_path_value)
+        audit_path = audit_path.resolve() if audit_path.is_absolute() else (path.parent / audit_path).resolve()
+        if not audit_path.is_file():
+            raise ValueError(f"formal T1 exposure audit is missing:{audit_path}")
+        declared_sha = _text(row.get("exposure_audit_sha256")).lower()
+        if not _valid_sha(declared_sha):
+            raise ValueError("formal T1 task pool requires exposure_audit_sha256")
+        actual_sha = audited.setdefault(audit_path, _sha(audit_path))
+        if declared_sha != actual_sha:
+            raise ValueError(f"formal T1 exposure audit SHA is stale:{audit_path}")
+        bindings.add((audit_path.as_posix(), actual_sha))
+    if len(bindings) != 1:
+        raise ValueError("formal T1 task pool requires one consistent exposure audit binding")
+
+
+def _load_task_pool(path: Path, *, formal: bool = False) -> dict[str, dict[str, Any]]:
     rows = _read_csv(path)
     if not rows:
         raise ValueError("T1 frozen task pool is empty")
+    if formal:
+        _validate_formal_pool_provenance(rows, path)
     by_image: dict[str, dict[str, Any]] = {}
     for row in rows:
         image = _text(row.get("image_id"))
@@ -283,7 +320,7 @@ def materialize(
     if output_dir.exists():
         raise ValueError(f"T1 output directory already exists:{output_dir}")
     sap = _load_sap(sap_json)
-    task_pool = _load_task_pool(task_pool_csv)
+    task_pool = _load_task_pool(task_pool_csv, formal=mode == "formal")
     roster, deployments, worker_to_deployment = _load_roster(roster_csv, deployment_manifest)
     workers = sorted(row["worker_id"] for row in roster)
     if len(workers) < 4:
