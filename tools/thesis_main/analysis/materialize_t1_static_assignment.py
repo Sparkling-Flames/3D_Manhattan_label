@@ -50,6 +50,34 @@ def _valid_sha(value: Any) -> bool:
     return len(text) == 64 and all(char in "0123456789abcdef" for char in text)
 
 
+_T1_EXPOSURE_AUDIT_SHA_FIELDS = (
+    "source_validation_inventory_sha256", "t1_candidate_pool_sha256", "audited_image_ids_sha256",
+    "P1_manifest_sha256", "C1_manifest_sha256", "C2B_assignment_sha256", "C2A_RP_assignment_sha256",
+)
+
+
+def _t1_pool_identity_sha(rows: list[dict[str, str]]) -> str:
+    records = []
+    for row in rows:
+        records.append({
+            "image_id": _text(row.get("image_id")),
+            "task_id": _text(row.get("task_id")),
+            "building_id": _text(row.get("building_id")),
+            "risk_assist": _text(row.get("risk_assist")),
+            "image": _text(row.get("image") or row.get("image_path") or row.get("image_url")),
+            "image_sha256": _text(row.get("image_sha256")).lower(),
+            "vis_3d": _text(row.get("vis_3d")),
+            "model_layout_sha256": _text(row.get("model_layout_sha256")).lower(),
+            "model_layout_source_sha256": _text(row.get("model_layout_source_sha256")).lower(),
+        })
+    records.sort(key=lambda item: json.dumps(item, ensure_ascii=False, sort_keys=True, separators=(",", ":")))
+    return _canonical_sha(records)
+
+
+def _t1_image_ids_sha(rows: list[dict[str, str]]) -> str:
+    return _canonical_sha(sorted({_text(row.get("image_id")) for row in rows}))
+
+
 def _model_payload(row: dict[str, str], pool_path: Path) -> tuple[list[dict[str, Any]], str, str]:
     source_path_value = _text(row.get("model_layout_path") or row.get("model_layout_source_path") or row.get("preannotation_source_path"))
     source_sha = ""
@@ -143,6 +171,11 @@ def _validate_formal_pool_provenance(rows: list[dict[str, str]], path: Path) -> 
             raise ValueError(f"formal T1 task pool has non-clear exposure:{path}")
     bindings: set[tuple[str, str]] = set()
     audited: dict[Path, str] = {}
+    image_ids = [_text(row.get("image_id")) for row in rows]
+    if any(not image_id for image_id in image_ids):
+        raise ValueError("formal T1 task pool requires image_id for exposure audit binding")
+    if len(set(image_ids)) != len(image_ids):
+        raise ValueError("formal T1 task pool has duplicate image_id")
     for row in rows:
         audit_path_value = _text(row.get("exposure_audit_path"))
         if not audit_path_value:
@@ -160,6 +193,34 @@ def _validate_formal_pool_provenance(rows: list[dict[str, str]], path: Path) -> 
         bindings.add((audit_path.as_posix(), actual_sha))
     if len(bindings) != 1:
         raise ValueError("formal T1 task pool requires one consistent exposure audit binding")
+    audit_path, _audit_sha = next(iter(bindings))
+    audit_file = Path(audit_path)
+    try:
+        audit = json.loads(audit_file.read_text(encoding="utf-8"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise ValueError(f"formal T1 exposure audit is not valid JSON:{audit_file}") from exc
+    if not isinstance(audit, dict):
+        raise ValueError("formal T1 exposure audit must be a JSON object")
+    if _text(audit.get("schema_version")) != "stage3_exposure_audit_v1":
+        raise ValueError("formal T1 exposure audit has unsupported schema_version")
+    if _text(audit.get("status")) != "clear":
+        raise ValueError("formal T1 exposure audit status must be clear")
+    for field in _T1_EXPOSURE_AUDIT_SHA_FIELDS:
+        if not _valid_sha(audit.get(field)):
+            raise ValueError(f"formal T1 exposure audit requires valid {field}")
+    try:
+        audited_image_count = int(audit.get("audited_image_count"))
+        overlap_count = int(audit.get("overlap_count"))
+    except (TypeError, ValueError) as exc:
+        raise ValueError("formal T1 exposure audit counts must be integers") from exc
+    if audited_image_count != len(image_ids):
+        raise ValueError("formal T1 exposure audit image count does not cover task pool")
+    if audit["audited_image_ids_sha256"].lower() != _t1_image_ids_sha(rows):
+        raise ValueError("formal T1 exposure audit image IDs do not cover task pool")
+    if audit["t1_candidate_pool_sha256"].lower() != _t1_pool_identity_sha(rows):
+        raise ValueError("formal T1 exposure audit task pool binding is stale")
+    if overlap_count != 0:
+        raise ValueError("formal T1 exposure audit reports overlap")
 
 
 def _load_task_pool(path: Path, *, formal: bool = False) -> dict[str, dict[str, Any]]:

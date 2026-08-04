@@ -8,7 +8,13 @@ from pathlib import Path
 import pytest
 
 from tools.thesis_main.analysis import run_c2b_c2a_rp_chain as chain
-from tools.thesis_main.analysis.materialize_t1_static_assignment import _load_task_pool, bind_t1_runtime, materialize as materialize_t1
+from tools.thesis_main.analysis.materialize_t1_static_assignment import (
+    _load_task_pool,
+    _t1_image_ids_sha,
+    _t1_pool_identity_sha,
+    bind_t1_runtime,
+    materialize as materialize_t1,
+)
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
@@ -112,7 +118,15 @@ def test_formal_t1_pool_rejects_test_candidate_and_accepts_clear_validation_rema
         _load_task_pool(pool, formal=True)
     rows = list(csv.DictReader(pool.open(encoding="utf-8")))
     exposure_audit = tmp_path / "exposure_audit.json"
-    exposure_audit.write_text(json.dumps({"schema_version": "stage3_exposure_audit_v1", "status": "clear"}), encoding="utf-8")
+    exposure_audit.write_text(json.dumps({
+        "schema_version": "stage3_exposure_audit_v1", "status": "clear",
+        "source_validation_inventory_sha256": "a" * 64,
+        "t1_candidate_pool_sha256": _t1_pool_identity_sha(rows),
+        "audited_image_count": len(rows), "audited_image_ids_sha256": _t1_image_ids_sha(rows),
+        "P1_manifest_sha256": "b" * 64, "C1_manifest_sha256": "c" * 64,
+        "C2B_assignment_sha256": "d" * 64, "C2A_RP_assignment_sha256": "e" * 64,
+        "overlap_count": 0,
+    }), encoding="utf-8")
     exposure_sha = _sha(exposure_audit)
     for row in rows:
         row.update({
@@ -124,6 +138,16 @@ def test_formal_t1_pool_rejects_test_candidate_and_accepts_clear_validation_rema
     valid_pool = tmp_path / "validation_remainder.csv"
     _write_csv(valid_pool, rows)
     assert len(_load_task_pool(valid_pool, formal=True)) == len(rows)
+    dummy_audit = tmp_path / "dummy_exposure_audit.json"
+    dummy_audit.write_text(json.dumps({"schema_version": "stage3_exposure_audit_v1", "status": "clear"}), encoding="utf-8")
+    dummy_rows = [dict(row) for row in rows]
+    dummy_sha = _sha(dummy_audit)
+    for row in dummy_rows:
+        row.update({"exposure_audit_path": str(dummy_audit), "exposure_audit_sha256": dummy_sha})
+    dummy_pool = tmp_path / "dummy_audit_pool.csv"
+    _write_csv(dummy_pool, dummy_rows)
+    with pytest.raises(ValueError, match="requires valid source_validation_inventory_sha256"):
+        _load_task_pool(dummy_pool, formal=True)
     rows[0]["candidate_only"] = "true"
     candidate_pool = tmp_path / "candidate_pool.csv"
     _write_csv(candidate_pool, rows)
