@@ -24,7 +24,7 @@ PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
-from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import materialize as materialize_c2a_rp
+from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import C2A_ASSIGNMENT_FIELDS, materialize as materialize_c2a_rp
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry, normalize_ordered_reference_geometry
 from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import _fit_crossed_model
 from tools.thesis_main.analysis.materialize_c2b_closeout import materialize as materialize_c2b_closeout
@@ -70,6 +70,91 @@ def _write_csv(path: Path, rows: list[dict[str, Any]], fields: Iterable[str] | N
 def _write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+
+
+def _relocate_paths(value: Any, source_root: Path, target_root: Path) -> Any:
+    source_root = source_root.resolve()
+    target_root = target_root.resolve()
+    if isinstance(value, dict):
+        return {key: _relocate_paths(item, source_root, target_root) for key, item in value.items()}
+    if isinstance(value, list):
+        return [_relocate_paths(item, source_root, target_root) for item in value]
+    if isinstance(value, str):
+        try:
+            relative = Path(value).resolve().relative_to(source_root)
+        except (OSError, ValueError):
+            return value
+        return str((target_root / relative).resolve())
+    return value
+
+
+def _prepare_c2a_decision_manifest(
+    source_path: Path,
+    worker_profile_path: Path,
+    task_pool_path: Path,
+    assignment_history_path: Path,
+    threshold_path: Path,
+    output_path: Path,
+    *,
+    bound_input_paths: dict[str, Path],
+) -> dict[str, Any]:
+    """Bind post-C2 inputs without mutating the frozen source manifest."""
+    source = json.loads(source_path.read_text(encoding="utf-8"))
+    if not isinstance(source, dict) or source.get("manifest_version") != "c2_design_v1":
+        raise ValueError("unsupported C2 design manifest version")
+    source_inputs = source.get("input_sha256") or {}
+    if not isinstance(source_inputs, dict):
+        raise ValueError("C2 design manifest input_sha256 must be an object")
+    method = _method_identity()
+    target_inputs = {str(key): value for key, value in source_inputs.items()}
+    target_inputs.update({
+        "worker_profile_csv": _sha(worker_profile_path),
+        "c2a_task_pool_csv": _sha(task_pool_path),
+        "assignment_history_csv": _sha(assignment_history_path),
+        "threshold_manifest": _sha(threshold_path),
+    })
+    precision = dict(source.get("precision") or {})
+    source_threshold_sha = _text(precision.get("threshold_manifest_sha256") or source.get("threshold_manifest_sha256"))
+    precision["threshold_manifest_path"] = str(threshold_path.resolve())
+    precision["threshold_manifest_sha256"] = _sha(threshold_path)
+    bound = {
+        **source,
+        **method,
+        "precision": precision,
+        "input_sha256": target_inputs,
+        "source_manifest_sha256": _sha(source_path),
+        "source_input_sha256": dict(source_inputs),
+        "source_method_contract_version": _text(source.get("method_contract_version")),
+        "source_method_contract_sha256": _text(source.get("method_contract_sha256")),
+        "binding_mode": "post_c2b_profile_bound",
+        "bound_input_paths": {key: str(path.resolve()) for key, path in bound_input_paths.items()},
+        "threshold_manifest_path": str(threshold_path.resolve()),
+        "threshold_manifest_sha256": _sha(threshold_path),
+        "binding_map": {
+            "method_contract_sha256": {
+                "source_sha256": _text(source.get("method_contract_sha256")),
+                "target_sha256": method["method_contract_sha256"],
+            },
+            "worker_profile_csv": {
+                "source_sha256": _text(source_inputs.get("worker_profile_csv")),
+                "target_sha256": target_inputs["worker_profile_csv"],
+            },
+            "c2a_task_pool_csv": {
+                "source_sha256": _text(source_inputs.get("c2a_task_pool_csv")),
+                "target_sha256": target_inputs["c2a_task_pool_csv"],
+            },
+            "assignment_history_csv": {
+                "source_sha256": _text(source_inputs.get("assignment_history_csv")),
+                "target_sha256": target_inputs["assignment_history_csv"],
+            },
+            "threshold_manifest": {
+                "source_sha256": source_threshold_sha,
+                "target_sha256": target_inputs["threshold_manifest"],
+            },
+        },
+    }
+    _write_json(output_path, bound)
+    return bound
 
 
 def _sha(path: Path) -> str:
@@ -275,7 +360,7 @@ def _load_export_payload(path: Path) -> list[dict[str, Any]]:
 
 def _canonicalize_deployments(
     exports: dict[str, Path],
-    active_logs: dict[str, Path],
+    active_logs: dict[str, Path | None],
     mapping_rows: list[dict[str, str]],
     assignment_by_id: dict[tuple[str, str], dict[str, str]],
     deployments: dict[str, dict[str, Any]],
@@ -317,7 +402,12 @@ def _canonicalize_deployments(
         canonical, duplicate, summary = build_canonical_tables(
             [export_path], active_logs.get(deployment_id), duplicate_review_mode=True, round_id="C2-B",
         )
-        summaries[deployment_id] = {**summary, "n_duplicate_rows": len(duplicate)}
+        timing_status = "auxiliary_available" if active_logs.get(deployment_id) is not None else "not_evaluable"
+        summaries[deployment_id] = {
+            **summary, "n_duplicate_rows": len(duplicate),
+            "active_log_present": active_logs.get(deployment_id) is not None,
+            "timing_status": timing_status,
+        }
         for row in canonical:
             worker = normalize_worker_id(row.get("annotator_id", ""))
             project = _text(row.get("project_id"))
@@ -352,6 +442,7 @@ def _canonicalize_deployments(
                 "ordered_geometry": ordered_geometry_by_annotation.get(
                     (project, runtime_task, worker, _text(row.get("annotation_id"))), ""
                 ),
+                "timing_status": timing_status if active_logs.get(deployment_id) is None else "auxiliary_available",
             })
     keys = [(row["worker_id"], row["planned_task_id"]) for row in rows]
     if len(keys) != len(set(keys)):
@@ -456,6 +547,8 @@ def _risk_slope_evidence(
             reason = reason or "building_id_missing_from_frozen_evidence"
         evidence.append({
             "schema_version": RISK_EVIDENCE_SCHEMA,
+            "evidence_stage": "C2B",
+            "risk_model_scope": "C2B_CONFIRMATORY_CANONICAL_ONLY_FOR_C2A_RP",
             "canonical_annotation_id": _text(row.get("canonical_annotation_id")),
             "deployment_id": _text(row.get("deployment_id")),
             "project_id": _text(row.get("project_id")),
@@ -479,7 +572,13 @@ def _risk_slope_evidence(
             "design_manifest_sha256": _text(row.get("design_manifest_sha256")),
         })
     eligible = [row for row in evidence if _truth(row.get("risk_slope_estimand_eligible"))]
-    return evidence, {"n_rows": len(evidence), "n_estimand_eligible": len(eligible), "support_workers": len({row["worker_id"] for row in eligible}), "support_tasks": len({row["base_task_id"] for row in eligible})}
+    return evidence, {
+        "n_rows": len(evidence), "n_estimand_eligible": len(eligible),
+        "support_workers": len({row["worker_id"] for row in eligible}),
+        "support_tasks": len({row["base_task_id"] for row in eligible}),
+        "evidence_stage": "C2B",
+        "risk_model_scope": "C2B_CONFIRMATORY_CANONICAL_ONLY_FOR_C2A_RP",
+    }
 
 
 def _merge_post_profile(
@@ -528,6 +627,8 @@ def _merge_post_profile(
             "c1_risk_slope_status": "estimated_from_C2B" if worker in slopes else str(fit.get("status", "not_evaluable")),
             "support": len(support_rows),
             "ci_half_width": "" if not math.isfinite(unified_sd) else 1.96 * unified_sd,
+            "risk_model_scope": "C2B_CONFIRMATORY_CANONICAL_ONLY_FOR_C2A_RP",
+            "profile_purpose": "post_c2b_c2a_rp_input",
         })
     _write_csv(output_path, rows)
     return fit, rows
@@ -554,6 +655,8 @@ def _profile_manifest(
         "output_sha256": {"post_c2b_worker_profile_csv": _sha(profile_path)},
         "post_c2b_worker_profile_path": str(profile_path.resolve()),
         "post_c2b_worker_profile_sha256": _sha(profile_path),
+        "risk_model_scope": "C2B_CONFIRMATORY_CANONICAL_ONLY_FOR_C2A_RP",
+        "profile_purpose": "post_c2b_c2a_rp_input",
         "frozen": True,
     }
     _write_json(output_path, payload)
@@ -711,14 +814,17 @@ def _resolve_active_logs(
     *,
     shared: Path | None,
     explicit: dict[str, Path],
-) -> dict[str, Path]:
+) -> dict[str, Path | None]:
     result = dict(explicit)
+    unknown = set(result) - set(deployments)
+    if unknown:
+        raise ValueError("active log binding has unknown deployments:" + ",".join(sorted(unknown)))
     for deployment_id in deployments:
         if deployment_id not in result and shared is not None:
             result[deployment_id] = shared
         if deployment_id not in result:
-            raise ValueError(f"active log input is missing:{deployment_id}")
-        if not result[deployment_id].exists():
+            result[deployment_id] = None
+        if result[deployment_id] is not None and not result[deployment_id].exists():
             raise ValueError(f"active log input is missing:{result[deployment_id]}")
     return result
 
@@ -751,6 +857,7 @@ def run_chain(
     existing_assignment_manifest: Path | None = None,
     dispatch_state: Path | None = None,
     dispatch_block_index: int | None = None,
+    terminal_disposition: Path | None = None,
 ) -> dict[str, Any]:
     if input_status not in FORMAL_MODES:
         raise ValueError(f"unsupported input_status:{input_status}")
@@ -792,6 +899,7 @@ def run_chain(
         "assignment_history": assignment_history,
         "existing_assignment_manifest": existing_assignment_manifest,
         "dispatch_state": dispatch_state,
+        "terminal_disposition": terminal_disposition,
     }
     missing_optional = [str(path) for path in optional_inputs.values() if path is not None and not path.is_file()]
     if missing_optional:
@@ -815,7 +923,7 @@ def run_chain(
         "c2a_task_pool": c2a_task_pool,
     }
     chain_input_paths.update({f"export:{deployment_id}": path for deployment_id, path in export_paths.items()})
-    chain_input_paths.update({f"active_log:{deployment_id}": path for deployment_id, path in active_paths.items()})
+    chain_input_paths.update({f"active_log:{deployment_id}": path for deployment_id, path in active_paths.items() if path is not None})
     chain_input_paths.update({name: path for name, path in optional_inputs.items() if path is not None})
 
     parent = output_dir.parent.resolve()
@@ -838,6 +946,25 @@ def run_chain(
         _write_csv(risk_path, risk_evidence)
         profile_path = staging / "post_c2b_worker_profile.csv"
         fit, profile_rows = _merge_post_profile(worker_profile, risk_evidence, output_path=profile_path)
+        block_index = int(dispatch_block_index or 1)
+        history_path = assignment_history
+        if history_path is None:
+            if block_index != 1:
+                raise ValueError("C2-A-RP later dispatch requires an explicit assignment history")
+            history_path = staging / "c2a_assignment_history_block_0.csv"
+            _write_csv(history_path, [], fields=C2A_ASSIGNMENT_FIELDS)
+        history_display_path = history_path if assignment_history is not None else output_dir / history_path.name
+        bound_manifest_path = staging / "c2a_decision_manifest_bound.json"
+        bound_manifest = _prepare_c2a_decision_manifest(
+            c2a_design_manifest, profile_path, c2a_task_pool, history_path, threshold_manifest,
+            bound_manifest_path,
+            bound_input_paths={
+                "worker_profile_csv": output_dir / profile_path.name,
+                "c2a_task_pool_csv": c2a_task_pool,
+                "assignment_history_csv": history_display_path,
+                "threshold_manifest": threshold_manifest,
+            },
+        )
         input_bindings = {
             "c2b_submissions_csv": canonical_path,
             "c2b_design_summary": design_summary,
@@ -851,18 +978,22 @@ def run_chain(
         }
         profile_manifest_path = staging / "c2b_post_profile_manifest.json"
         _profile_manifest(profile_manifest_path, profile_path, input_paths=input_bindings, profile_rows=profile_rows)
+        _write_json(profile_manifest_path, _relocate_paths(json.loads(profile_manifest_path.read_text(encoding="utf-8")), staging, output_dir))
 
         closeout_path = staging / "c2b_closeout_v2.json"
         closeout = materialize_c2b_closeout(
             canonical_path, profile_path, profile_manifest_path, design_summary, c1_snapshot,
             assignment, worker_roster, rule_config, launch_report, runtime_mapping,
             private_assignment_audit, closeout_path, input_status=input_status,
+            terminal_disposition_csv=terminal_disposition,
         )
         # Candidate closeout intentionally lacks formal fields in the shared
         # materializer.  Add only chain binding fields to the generated output;
         # this does not change the normative closeout implementation.
         closeout["schema_version"] = "c2b_closeout_v2"
-        closeout["design_manifest_sha256"] = _sha(c2a_design_manifest)
+        closeout["source_c2a_design_manifest_sha256"] = _sha(c2a_design_manifest)
+        closeout["design_manifest_sha256"] = _sha(bound_manifest_path)
+        closeout["c2a_decision_manifest_sha256"] = _sha(bound_manifest_path)
         closeout["c2b_submissions_sha256"] = _sha(canonical_path)
         closeout["post_c2b_worker_profile_sha256"] = _sha(profile_path)
         closeout["post_c2b_profile_manifest_sha256"] = _sha(profile_manifest_path)
@@ -870,19 +1001,25 @@ def run_chain(
         closeout["task_pool_sha256"] = task_pool_sha256
         closeout["formal_ready"] = bool(input_status == "formal" and closeout.get("formal_ready"))
         closeout["candidate_only"] = not closeout["formal_ready"]
+        closeout = _relocate_paths(closeout, staging, output_dir)
         _write_json(closeout_path, closeout)
 
         c2a_dir = staging / "c2a_rp"
         c2a_summary = materialize_c2a_rp(
-            profile_path, c2a_design_manifest, c2a_dir,
+            profile_path, bound_manifest_path, c2a_dir,
             c2b_summary=closeout_path, c2b_summary_sha256=_sha(closeout_path),
-            task_pool_csv=c2a_task_pool, assignment_history_csv=assignment_history,
+            task_pool_csv=c2a_task_pool, assignment_history_csv=history_path,
             existing_assignment_manifest_csv=existing_assignment_manifest,
-            dispatch_state_json=dispatch_state, dispatch_block_index=dispatch_block_index or 1,
+            dispatch_state_json=dispatch_state,
+            dispatch_block_index=dispatch_block_index if input_status == "formal" else block_index,
             threshold_manifest=threshold_manifest, input_status=input_status,
         )
+        c2a_summary = _relocate_paths(
+            json.loads((c2a_dir / "precision_plan_C2A_RP.summary.json").read_text(encoding="utf-8")), staging, output_dir,
+        )
+        _write_json(c2a_dir / "precision_plan_C2A_RP.summary.json", c2a_summary)
         c2a_assignment_path = c2a_dir / "assignment_manifest_C2A_RP.csv"
-        block_index = int(dispatch_block_index or 1)
+        block_index = int(c2a_summary.get("dispatch_block_index") or dispatch_block_index or 1)
         all_c2a_assignments = _read_csv(c2a_assignment_path)
         block_rows = [
             row for row in all_c2a_assignments
@@ -896,6 +1033,7 @@ def run_chain(
             block_index=block_index,
             c2a_summary_path=c2a_dir / "precision_plan_C2A_RP.summary.json",
         )
+        package = _relocate_paths(package, staging, output_dir)
         result = {
             "schema_version": CHAIN_SCHEMA,
             "artifact_role": "C2B_TO_C2A_RP_CHAIN",
@@ -914,12 +1052,19 @@ def run_chain(
             "deployment_ids": sorted(deployments),
             "canonical_summary": canonical_summary,
             "risk_slope_summary": risk_summary,
+            "risk_model_scope": "C2B_CONFIRMATORY_CANONICAL_ONLY_FOR_C2A_RP",
             "risk_model": fit,
+            "c2a_decision_manifest_sha256": _sha(bound_manifest_path),
+            "source_c2a_design_manifest_sha256": _sha(c2a_design_manifest),
+            "c2a_assignment_history_sha256": _sha(history_path),
+            "c2a_decision_binding_map": bound_manifest["binding_map"],
             "outputs": {
                 "canonical_submissions": str((output_dir / canonical_path.name).resolve()),
                 "risk_slope_evidence": str((output_dir / risk_path.name).resolve()),
                 "post_profile": str((output_dir / profile_path.name).resolve()),
                 "post_profile_manifest": str((output_dir / profile_manifest_path.name).resolve()),
+                "c2a_decision_manifest": str((output_dir / bound_manifest_path.name).resolve()),
+                "c2a_assignment_history": str(history_display_path.resolve()),
                 "c2b_closeout": str((output_dir / closeout_path.name).resolve()),
                 "c2a_rp": str((output_dir / "c2a_rp").resolve()),
                 "c2a_block_assignment": str((output_dir / block_assignment_path.name).resolve()),
@@ -929,7 +1074,7 @@ def run_chain(
             "c2a_operational_package": package,
             "input_sha256": {name: _sha(path) for name, path in chain_input_paths.items()},
         }
-        _write_json(staging / "c2b_c2a_rp_chain_manifest.json", result)
+        _write_json(staging / "c2b_c2a_rp_chain_manifest.json", _relocate_paths(result, staging, output_dir))
         staging.rename(output_dir)
         return result
     except Exception:
@@ -965,6 +1110,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--existing-assignment-manifest", type=Path)
     parser.add_argument("--dispatch-state", type=Path)
     parser.add_argument("--dispatch-block-index", type=int)
+    parser.add_argument("--terminal-disposition", type=Path)
     return parser
 
 
@@ -982,6 +1128,7 @@ def main(argv: list[str] | None = None) -> int:
             input_status=args.input_status, assignment_history=_path(args.assignment_history) if args.assignment_history else None,
             existing_assignment_manifest=_path(args.existing_assignment_manifest) if args.existing_assignment_manifest else None,
             dispatch_state=_path(args.dispatch_state) if args.dispatch_state else None, dispatch_block_index=args.dispatch_block_index,
+            terminal_disposition=_path(args.terminal_disposition) if args.terminal_disposition else None,
         )
     except Exception as exc:
         print(json.dumps({"schema_version": CHAIN_SCHEMA, "formal_ready": False, "launch_ready": False, "reason_code": f"blocked:{type(exc).__name__}", "reason": str(exc)}, ensure_ascii=False, indent=2))

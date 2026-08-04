@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import argparse
 import csv
+import hashlib
 import json
 import random
 import shutil
@@ -20,7 +21,7 @@ if str(PROJECT_ROOT) not in sys.path:
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 from tools.thesis_main.analysis.worker_identity import normalize_worker_id
-from tools.thesis_main.analysis.run_c2b_c2a_rp_chain import _load_deployments, _write_csv, _write_json
+from tools.thesis_main.analysis.run_c2b_c2a_rp_chain import _load_deployments, _parse_bindings, _write_csv, _write_json
 
 
 SCHEMA = "paper_a_t1_static_assignment_v1"
@@ -37,6 +38,56 @@ def _truth(value: Any) -> bool:
 
 def _sha(path: Path) -> str:
     return sha256_file(path)
+
+
+def _canonical_sha(value: Any) -> str:
+    payload = json.dumps(value, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return hashlib.sha256(payload.encode("utf-8")).hexdigest()
+
+
+def _valid_sha(value: Any) -> bool:
+    text = _text(value).lower()
+    return len(text) == 64 and all(char in "0123456789abcdef" for char in text)
+
+
+def _model_payload(row: dict[str, str], pool_path: Path) -> tuple[list[dict[str, Any]], str, str]:
+    source_path_value = _text(row.get("model_layout_path") or row.get("model_layout_source_path") or row.get("preannotation_source_path"))
+    source_sha = ""
+    raw_sha = ""
+    if source_path_value:
+        source_path = Path(source_path_value)
+        if not source_path.is_absolute():
+            source_path = (pool_path.parent / source_path).resolve()
+        if not source_path.is_file():
+            raise ValueError(f"T1 model/preannotation source is missing:{source_path}")
+        value = json.loads(source_path.read_text(encoding="utf-8"))
+        source_sha = _sha(source_path)
+    else:
+        raw = row.get("model_layout") or row.get("preannotation") or row.get("predictions")
+        if raw in {None, ""}:
+            raise ValueError("T1 task pool requires frozen Semi preannotation")
+        if isinstance(raw, str):
+            raw_sha = hashlib.sha256(raw.encode("utf-8")).hexdigest()
+        value = json.loads(raw) if isinstance(raw, str) else raw
+    if isinstance(value, dict) and isinstance(value.get("predictions"), list):
+        value = value["predictions"]
+    elif isinstance(value, dict) and "result" in value:
+        value = [value]
+    if not isinstance(value, list) or not value or any(not isinstance(item, dict) for item in value):
+        raise ValueError("T1 Semi preannotation must be a non-empty prediction list")
+    payload_sha = _canonical_sha(value)
+    declared_payload_sha = _text(row.get("model_layout_sha256"))
+    if not _valid_sha(declared_payload_sha) or declared_payload_sha.lower() not in {payload_sha, source_sha, raw_sha}:
+        raise ValueError("T1 task pool model_layout_sha256 is missing or stale")
+    declared_source_sha = _text(row.get("model_layout_source_sha256"))
+    if declared_source_sha:
+        if not _valid_sha(declared_source_sha):
+            raise ValueError("T1 task pool model_layout_source_sha256 is invalid")
+        if not source_sha:
+            source_sha = raw_sha or payload_sha
+        if declared_source_sha.lower() != source_sha:
+            raise ValueError("T1 task pool model_layout_source_sha256 is stale")
+    return value, payload_sha, source_sha or payload_sha
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:
@@ -76,19 +127,40 @@ def _load_sap(path: Path) -> dict[str, Any]:
     }
 
 
-def _load_task_pool(path: Path) -> dict[str, dict[str, str]]:
+def _load_task_pool(path: Path) -> dict[str, dict[str, Any]]:
     rows = _read_csv(path)
     if not rows:
         raise ValueError("T1 frozen task pool is empty")
-    by_image: dict[str, dict[str, str]] = {}
+    by_image: dict[str, dict[str, Any]] = {}
     for row in rows:
         image = _text(row.get("image_id"))
         risk = _text(row.get("risk_assist"))
         if not image or risk not in {"ordinary", "stress_assist"}:
             raise ValueError("T1 task pool requires image_id and risk_assist ordinary/stress_assist")
-        if image in by_image and any(_text(by_image[image].get(field)) != _text(row.get(field)) for field in ("risk_assist", "building_id", "image_path", "vis_3d")):
+        image_ref = _text(row.get("image") or row.get("image_path") or row.get("image_url"))
+        image_sha = _text(row.get("image_sha256"))
+        if not image_ref or not _valid_sha(image_sha):
+            raise ValueError("T1 task pool requires image and image_sha256")
+        image_path = Path(image_ref)
+        if not image_path.is_absolute():
+            image_path = (path.parent / image_path).resolve()
+        if image_path.is_file() and _sha(image_path) != image_sha.lower():
+            raise ValueError(f"T1 image_sha256 is stale:{image}")
+        predictions, model_sha, model_source_sha = _model_payload(row, path)
+        normalized = {
+            **row,
+            "_image": image_ref,
+            "_image_sha256": image_sha.lower(),
+            "_semi_predictions": predictions,
+            "_model_layout_sha256": model_sha,
+            "_model_layout_source_sha256": model_source_sha,
+        }
+        if image in by_image and any(
+            _text(by_image[image].get(field)) != _text(normalized.get(field))
+            for field in ("risk_assist", "building_id", "task_id", "image_path", "vis_3d", "_image", "_image_sha256", "_model_layout_sha256", "_model_layout_source_sha256")
+        ):
             raise ValueError(f"T1 task pool has conflicting rows for image:{image}")
-        by_image.setdefault(image, row)
+        by_image.setdefault(image, normalized)
     return dict(sorted(by_image.items()))
 
 
@@ -285,12 +357,19 @@ def materialize(
                 data = {
                     **identity,
                     "planned_task_id": row["planned_task_id"], "task_id": row["task_id"], "image_id": row["image_id"],
-                    "vis_3d": task.get("vis_3d", task.get("image_path", "")), "round_id": "T1", "block_id": row["block_id"],
+                    "image": task["_image"], "image_sha256": task["_image_sha256"],
+                    "model_layout_sha256": task["_model_layout_sha256"],
+                    "model_layout_source_sha256": task["_model_layout_source_sha256"],
+                    "vis_3d": task.get("vis_3d", task.get("image_path", task["_image"])), "round_id": "T1", "block_id": row["block_id"],
                     "condition": row["condition"], "risk_assist": row["risk_assist"], "deployment_id": deployment_id,
                     "language_group": deployment["language_group"], "server_instance_id": deployment["server_instance_id"],
                     "server_url": deployment["server_url"], "project_id": deployment["project_id"],
+                    "preannotation_policy": "frozen_model_prediction" if row["condition"] == "Semi" else "manual_no_preannotation",
                 }
-                payload.append({"data": data})
+                entry: dict[str, Any] = {"data": data}
+                if row["condition"] == "Semi":
+                    entry["predictions"] = json.loads(json.dumps(task["_semi_predictions"], ensure_ascii=False))
+                payload.append(entry)
                 mapping_rows.append({
                     **identity,
                     "round_id": "T1", "block_id": row["block_id"], "worker_id": row["worker_id"],
@@ -298,13 +377,16 @@ def materialize(
                     "server_instance_id": deployment["server_instance_id"], "server_url": deployment["server_url"],
                     "project_id": deployment["project_id"], "planned_task_id": row["planned_task_id"],
                     "runtime_task_id": "", "runtime_binding_status": "pending_manual_runtime_binding",
+                    "image": task["_image"], "image_sha256": task["_image_sha256"],
+                    "model_layout_sha256": task["_model_layout_sha256"], "condition": row["condition"],
                 })
             import_path = imports_dir / f"t1_import_{deployment_id}.json"
             _write_json(import_path, payload)
             import_outputs[deployment_id] = {
                 **{key: deployment[key] for key in ("deployment_id", "language_group", "server_instance_id", "server_url", "project_id")},
                 **identity,
-                "planned_import_path": str(import_path.resolve()), "planned_import_sha256": _sha(import_path), "task_count": len(payload),
+                "planned_import_path": str((output_dir / "imports" / import_path.name).resolve()),
+                "planned_import_sha256": _sha(import_path), "task_count": len(payload),
             }
         private_outputs = {}
         for worker in workers:
@@ -394,6 +476,143 @@ def materialize(
         raise
 
 
+def _runtime_tasks(path: Path) -> list[dict[str, Any]]:
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if isinstance(payload, list):
+        rows = payload
+    elif isinstance(payload, dict):
+        rows = payload.get("tasks", payload.get("data", []))
+    else:
+        rows = []
+    if not isinstance(rows, list):
+        raise ValueError(f"T1 runtime export must contain a task list:{path}")
+    return [row for row in rows if isinstance(row, dict)]
+
+
+def bind_t1_runtime(
+    assignment_manifest: Path,
+    deployment_manifest: Path,
+    planned_imports: dict[str, Path],
+    runtime_exports: dict[str, Path],
+    output_dir: Path,
+    *,
+    private_lists_dir: Path | None = None,
+) -> dict[str, Any]:
+    """Bind manually exported T1 tasks to the frozen static assignment."""
+    assignment_rows = _read_csv(assignment_manifest)
+    if not assignment_rows:
+        raise ValueError("T1 assignment manifest is empty")
+    deployments, worker_to_deployment = _load_deployments(deployment_manifest, assignment_rows)
+    method = _method_identity()
+    manifest = json.loads(deployment_manifest.read_text(encoding="utf-8"))
+    if any(manifest.get(field) != value for field, value in method.items()):
+        raise ValueError("T1 deployment manifest method contract is stale")
+    if set(planned_imports) != set(deployments) or set(runtime_exports) != set(deployments):
+        raise ValueError("T1 runtime binding requires exactly one import and export per deployment")
+    if any(not path.is_file() for path in [*planned_imports.values(), *runtime_exports.values()]):
+        raise ValueError("T1 runtime import/export is missing")
+    expected_by_deployment: dict[str, dict[str, dict[str, str]]] = defaultdict(dict)
+    for row in assignment_rows:
+        planned = _text(row.get("planned_task_id"))
+        worker = normalize_worker_id(row.get("worker_id", ""))
+        deployment_id = _text(row.get("deployment_id")) or worker_to_deployment.get(worker, "")
+        if not planned or not worker or deployment_id not in deployments or planned in expected_by_deployment[deployment_id]:
+            raise ValueError("T1 assignment has empty or duplicate runtime identity")
+        expected_by_deployment[deployment_id][planned] = {**row, "worker_id": worker, "deployment_id": deployment_id}
+    seen_project_runtime: set[tuple[str, str]] = set()
+    mapping_rows: list[dict[str, Any]] = []
+    import_shas: dict[str, str] = {}
+    export_shas: dict[str, str] = {}
+    for deployment_id, deployment in deployments.items():
+        planned_path = planned_imports[deployment_id]
+        runtime_path = runtime_exports[deployment_id]
+        import_shas[deployment_id] = _sha(planned_path)
+        export_shas[deployment_id] = _sha(runtime_path)
+        planned_rows = _runtime_tasks(planned_path)
+        planned_by_id: dict[str, dict[str, Any]] = {}
+        for item in planned_rows:
+            data = item.get("data") if isinstance(item.get("data"), dict) else {}
+            planned = _text(data.get("planned_task_id"))
+            if not planned or planned in planned_by_id:
+                raise ValueError(f"T1 planned import has duplicate task identity:{deployment_id}")
+            if any(_text(data.get(field)) != _text(deployment.get(field)) for field in ("project_id", "server_instance_id", "server_url", "language_group")):
+                raise ValueError(f"T1 planned import deployment identity mismatch:{deployment_id}")
+            if _text(data.get("method_contract_sha256")) != method["method_contract_sha256"]:
+                raise ValueError(f"T1 planned import method contract is stale:{deployment_id}")
+            if planned not in expected_by_deployment[deployment_id]:
+                raise ValueError(f"T1 planned import contains an unassigned task:{planned}")
+            planned_by_id[planned] = item
+        if set(planned_by_id) != set(expected_by_deployment[deployment_id]):
+            raise ValueError(f"T1 planned import does not cover the frozen assignment:{deployment_id}")
+        runtime_rows = _runtime_tasks(runtime_path)
+        bound_planned: set[str] = set()
+        bound_runtime: set[str] = set()
+        for item in runtime_rows:
+            data = item.get("data") if isinstance(item.get("data"), dict) else {}
+            planned = _text(data.get("planned_task_id"))
+            runtime_id = _text(item.get("id") or item.get("task_id"))
+            project = _text(item.get("project") or item.get("project_id") or data.get("project_id"))
+            if not planned or planned in bound_planned or not runtime_id or runtime_id in bound_runtime:
+                raise ValueError(f"T1 runtime export has duplicate identity:{deployment_id}")
+            if planned not in planned_by_id or project != _text(deployment.get("project_id")):
+                raise ValueError(f"T1 runtime export has wrong project or planned task:{deployment_id}")
+            planned_data = planned_by_id[planned].get("data", {})
+            if any(_text(data.get(field)) != _text(planned_data.get(field)) for field in ("deployment_id", "language_group", "server_instance_id", "server_url", "condition", "image_id", "image_sha256", "model_layout_sha256")):
+                raise ValueError(f"T1 runtime export task identity disagrees with planned import:{planned}")
+            project_runtime = (project, runtime_id)
+            if project_runtime in seen_project_runtime:
+                raise ValueError("T1 runtime export has a cross-server project/runtime collision")
+            seen_project_runtime.add(project_runtime)
+            bound_planned.add(planned)
+            bound_runtime.add(runtime_id)
+            expected = expected_by_deployment[deployment_id][planned]
+            mapping_rows.append({
+                "schema_version": "t1_runtime_mapping_v1", **method,
+                "assignment_sha256": _sha(assignment_manifest), "deployment_manifest_sha256": _sha(deployment_manifest),
+                "deployment_id": deployment_id, "language_group": deployment["language_group"],
+                "server_instance_id": deployment["server_instance_id"], "server_url": deployment["server_url"],
+                "project_id": project, "worker_id": expected["worker_id"], "planned_task_id": planned,
+                "task_id": _text(expected.get("task_id")), "image_id": _text(expected.get("image_id")),
+                "condition": _text(expected.get("condition")), "runtime_task_id": runtime_id,
+                "runtime_binding_status": "bound",
+            })
+        if bound_planned != set(planned_by_id):
+            raise ValueError(f"T1 runtime export is missing or adds planned tasks:{deployment_id}")
+    if private_lists_dir is not None:
+        private_ids: set[tuple[str, str]] = set()
+        for worker in sorted(worker_to_deployment):
+            path = private_lists_dir / f"worker_{worker}_T1.csv"
+            if not path.is_file():
+                raise ValueError(f"T1 private worker list is missing:{worker}")
+            private_ids.update((normalize_worker_id(row.get("worker_id", "")), _text(row.get("planned_task_id"))) for row in _read_csv(path))
+        expected_ids = {(normalize_worker_id(row.get("worker_id", "")), _text(row.get("planned_task_id"))) for row in assignment_rows}
+        if private_ids != expected_ids:
+            raise ValueError("T1 private worker lists do not cover the frozen assignment")
+    mapping_path = output_dir / "t1_runtime_mapping_bound.csv"
+    evidence_path = output_dir / "t1_runtime_evidence_v1.json"
+    if mapping_path.exists() or evidence_path.exists():
+        raise ValueError("T1 runtime evidence target already exists")
+    _write_csv(mapping_path, mapping_rows)
+    evidence = {
+        "schema_version": "t1_runtime_evidence_v1", "artifact_role": "T1_RUNTIME_EVIDENCE",
+        "contract_role": "generated_subordinate", **method, "formal_ready": True,
+        "runtime_binding_status": "bound", "assignment_sha256": _sha(assignment_manifest),
+        "deployment_manifest_sha256": _sha(deployment_manifest), "deployment_ids": sorted(deployments),
+        "planned_import_sha256": import_shas, "runtime_export_sha256": export_shas,
+        "runtime_mapping_path": str(mapping_path.resolve()), "runtime_mapping_sha256": _sha(mapping_path),
+        "worker_task_binding_count": len(mapping_rows), "one_to_one": True,
+        "dependencies": [
+            {"role": "ASSIGNMENT_MANIFEST", "path": str(assignment_manifest.resolve()), "sha256": _sha(assignment_manifest)},
+            {"role": "DEPLOYMENT_MANIFEST", "path": str(deployment_manifest.resolve()), "sha256": _sha(deployment_manifest)},
+            {"role": "RUNTIME_MAPPING", "path": str(mapping_path.resolve()), "sha256": _sha(mapping_path)},
+            *[{"role": f"PLANNED_IMPORT_{key}", "path": str(planned_imports[key].resolve()), "sha256": import_shas[key]} for key in sorted(planned_imports)],
+            *[{"role": f"RUNTIME_EXPORT_{key}", "path": str(runtime_exports[key].resolve()), "sha256": export_shas[key]} for key in sorted(runtime_exports)],
+        ],
+    }
+    _write_json(evidence_path, evidence)
+    return {"formal_ready": True, "runtime_mapping_path": str(mapping_path.resolve()), "runtime_evidence_path": str(evidence_path.resolve()), "runtime_mapping_sha256": _sha(mapping_path), "runtime_evidence_sha256": _sha(evidence_path), "worker_task_binding_count": len(mapping_rows)}
+
+
 def _parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Materialize the static T1 assignment and CE-only operator package.")
     parser.add_argument("--task-pool", type=Path, required=True)
@@ -408,7 +627,33 @@ def _parser() -> argparse.ArgumentParser:
     return parser
 
 
+def _binding_parser() -> argparse.ArgumentParser:
+    parser = argparse.ArgumentParser(description="Bind manually exported T1 runtime tasks to the frozen assignment.")
+    parser.add_argument("--assignment", type=Path, required=True)
+    parser.add_argument("--deployment-manifest", type=Path, required=True)
+    parser.add_argument("--planned-import", action="append", default=[], metavar="DEPLOYMENT_ID=PATH")
+    parser.add_argument("--runtime-export", action="append", default=[], metavar="DEPLOYMENT_ID=PATH")
+    parser.add_argument("--output-dir", type=Path, required=True)
+    parser.add_argument("--private-lists-dir", type=Path)
+    return parser
+
+
 def main(argv: list[str] | None = None) -> int:
+    argv = list(sys.argv[1:] if argv is None else argv)
+    if argv and argv[0] == "bind-runtime":
+        args = _binding_parser().parse_args(argv[1:])
+        try:
+            result = bind_t1_runtime(
+                args.assignment, args.deployment_manifest,
+                _parse_bindings(args.planned_import, option="--planned-import"),
+                _parse_bindings(args.runtime_export, option="--runtime-export"),
+                args.output_dir, private_lists_dir=args.private_lists_dir,
+            )
+        except Exception as exc:
+            print(json.dumps({"formal_ready": False, "reason_code": f"blocked:{type(exc).__name__}", "reason": str(exc)}, ensure_ascii=False, indent=2))
+            return 2
+        print(json.dumps(result, ensure_ascii=False, indent=2, sort_keys=True))
+        return 0
     args = _parser().parse_args(argv)
     try:
         result = materialize(args.task_pool, args.roster, args.deployment_manifest, args.sap, args.output_dir, seed=args.seed, mode=args.mode, stage3_state_json=args.stage3_state, enrollment_registry_csv=args.enrollment_registry)

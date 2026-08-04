@@ -1,13 +1,14 @@
 from __future__ import annotations
 
 import csv
+import hashlib
 import json
 from pathlib import Path
 
 import pytest
 
 from tools.thesis_main.analysis import run_c2b_c2a_rp_chain as chain
-from tools.thesis_main.analysis.materialize_t1_static_assignment import materialize as materialize_t1
+from tools.thesis_main.analysis.materialize_t1_static_assignment import bind_t1_runtime, materialize as materialize_t1
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
@@ -49,7 +50,18 @@ def _make_t1_inputs(tmp_path: Path) -> tuple[Path, Path, Path, Path]:
         ],
     })
     pool = tmp_path / "t1_task_pool.csv"
-    _write_csv(pool, [{"image_id": f"image-{i}", "task_id": f"task-{i}", "building_id": f"building-{i % 2}", "risk_assist": "ordinary" if i % 2 == 0 else "stress_assist", "vis_3d": f"https://img/{i}.png"} for i in range(8)])
+    pool_rows = []
+    for i in range(8):
+        image = f"https://img/{i}.png"
+        prediction = [{"model_version": "mock-layout-v1", "result": [{"from_name": "layout", "type": "keypointlabels", "value": {"x": 1, "y": 2}}]}]
+        model_sha = hashlib.sha256(json.dumps(prediction, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")).hexdigest()
+        pool_rows.append({
+            "image_id": f"image-{i}", "task_id": f"task-{i}", "building_id": f"building-{i % 2}",
+            "risk_assist": "ordinary" if i % 2 == 0 else "stress_assist", "image": image,
+            "image_sha256": hashlib.sha256(image.encode("utf-8")).hexdigest(), "vis_3d": image,
+            "model_layout": json.dumps(prediction, ensure_ascii=False, separators=(",", ":")), "model_layout_sha256": model_sha,
+        })
+    _write_csv(pool, pool_rows)
     sap = tmp_path / "sap.json"
     _write_json(sap, {"t1_randomization": {"workload_cap": 8, "max_mode_imbalance": 1, "max_risk_imbalance": 1, "profile_version": "p1", "cohort_id": "c1"}})
     return pool, roster, deployment, sap
@@ -78,6 +90,13 @@ def test_t1_static_assignment_enforces_2x2_isolation_and_records_randomization(t
     import_payload = json.loads((output / "imports" / "t1_import_zh.json").read_text(encoding="utf-8"))
     assert import_payload[0]["data"]["assignment_sha256"] == result["assignment_sha256"]
     assert import_payload[0]["data"]["method_contract_sha256"] == _sha(METHOD_CONTRACT)
+    all_imports = []
+    for item in result["deployments"].values():
+        all_imports.extend(json.loads(Path(item["planned_import_path"]).read_text(encoding="utf-8")))
+    assert {item["data"]["condition"] for item in all_imports} == {"Manual", "Semi"}
+    assert all("predictions" not in item for item in all_imports if item["data"]["condition"] == "Manual")
+    assert all(item.get("predictions") for item in all_imports if item["data"]["condition"] == "Semi")
+    assert all(item["data"]["image"] and item["data"]["image_sha256"] for item in all_imports)
     assert set(item["payload"]["artifact_role"] for item in result["artifacts"].values()) == {
         "T1_ROSTER_FROZEN", "T1_TASK_POOL_FROZEN", "T1_RANDOMIZATION_PLAN_FROZEN", "T1_SAP_FROZEN"
     }
@@ -85,6 +104,31 @@ def test_t1_static_assignment_enforces_2x2_isolation_and_records_randomization(t
 
     with pytest.raises(ValueError, match="stage3_state_json"):
         materialize_t1(pool, roster, deployment, sap, tmp_path / "formal_without_gate", seed=20260803, mode="formal")
+
+
+def test_t1_runtime_binding_uses_deployment_identity_and_private_lists(tmp_path: Path) -> None:
+    pool, roster, deployment, sap = _make_t1_inputs(tmp_path)
+    output = tmp_path / "t1_out"
+    result = materialize_t1(pool, roster, deployment, sap, output, seed=20260803)
+    planned: dict[str, Path] = {}
+    runtime: dict[str, Path] = {}
+    for deployment_id in result["deployments"]:
+        planned_path = output / "imports" / f"t1_import_{deployment_id}.json"
+        planned[deployment_id] = planned_path
+        payload = json.loads(planned_path.read_text(encoding="utf-8"))
+        for index, item in enumerate(payload, start=1):
+            item["id"] = f"runtime-{deployment_id}-{index}"
+            item["project"] = item["data"]["project_id"]
+        runtime_path = tmp_path / f"runtime_{deployment_id}.json"
+        _write_json(runtime_path, payload)
+        runtime[deployment_id] = runtime_path
+    evidence = bind_t1_runtime(
+        output / "assignment_manifest_T1.csv", deployment, planned, runtime,
+        tmp_path / "runtime_evidence", private_lists_dir=output / "private_lists",
+    )
+    assert evidence["formal_ready"] is True
+    assert evidence["worker_task_binding_count"] == 32
+    assert len(list(csv.DictReader((tmp_path / "runtime_evidence" / "t1_runtime_mapping_bound.csv").open(encoding="utf-8")))) == 32
 
 
 def _make_c2b_fixture(tmp_path: Path) -> dict[str, Path]:
@@ -189,6 +233,9 @@ def test_d8_identity_is_unchanged_and_c2b_to_c2a_rehearsal_is_replaceable(monkey
     assert first["formal_ready"] is False
     assert first["assignment_count"] == 176 and first["task_count"] == 46 and first["worker_count"] == 22
     assert first["risk_slope_summary"]["n_estimand_eligible"] == 176
+    bound = json.loads((tmp_path / "chain_1" / "c2a_decision_manifest_bound.json").read_text(encoding="utf-8"))
+    assert bound["source_manifest_sha256"] == _sha(fixture["design"])
+    assert bound["binding_map"]["worker_profile_csv"]["target_sha256"] == _sha(tmp_path / "chain_1" / "post_c2b_worker_profile.csv")
     assert first["c2a_operational_package"]["assignment_count"] > 0
     assert first["task_pool_sha256"] == "211ea4260415918104685440b07ce72fc17113b1764913c9215c554df901c067"
     assert first["c2a_operational_package"]["append_only"]["block_index"] == 1
@@ -209,6 +256,7 @@ def test_d8_identity_is_unchanged_and_c2b_to_c2a_rehearsal_is_replaceable(monkey
     assert all(row["active_time_source"] == "log" and row["active_time"] == "12.0" for row in first_rows)
     assert {row["planned_task_id"] for row in first_rows} == {row["planned_task_id"] for row in second_rows}
     assert first_rows[0]["source_export_sha256"] != second_rows[0]["source_export_sha256"]
+    assert chain._resolve_active_logs({"zh": {"language_token": "zh"}, "foreign": {"language_token": "foreign"}}, shared=None, explicit={}) == {"zh": None, "foreign": None}
 
 
 def test_runtime_mapping_namespaces_planned_tasks_but_rejects_internal_and_cross_server_collisions(tmp_path: Path) -> None:
