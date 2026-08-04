@@ -242,6 +242,7 @@ def analyze_layout_pairing(
     min_vertical_separation: float = 1.0,
     ambiguity_abs_epsilon: float = 1e-6,
     ambiguity_relative_margin: float = 0.01,
+    maximum_search_nodes: int = 10_000,
 ) -> tuple[list[dict[str, float]], dict[str, object]]:
     """Return a strict, seam-aware pairing and diagnostics for formal scoring."""
     try:
@@ -284,8 +285,15 @@ def analyze_layout_pairing(
         for i in range(n_points)
     }
     matchings: list[tuple[float, list[tuple[int, int]]]] = []
+    search_nodes = 0
+    search_exhausted = False
 
     def search(remaining: tuple[int, ...], pairs: list[tuple[int, int]], cost: float) -> None:
+        nonlocal search_nodes, search_exhausted
+        search_nodes += 1
+        if search_nodes > maximum_search_nodes:
+            search_exhausted = True
+            return
         if not remaining:
             matchings.append((cost, list(pairs)))
             return
@@ -299,6 +307,9 @@ def analyze_layout_pairing(
             search(next_remaining, pairs + [(i, j)], cost + circular_dx(i, j))
 
     search(tuple(range(n_points)), [], 0.0)
+    if search_exhausted:
+        base.update(pairing_search_exhausted=True, pairing_search_nodes=search_nodes)
+        return [], base
     if not matchings:
         greedy, greedy_stats = _pair_keypoints_to_layout(array, width=width, threshold_ratio=threshold_ratio, return_stats=True)
         base.update(
@@ -334,6 +345,8 @@ def analyze_layout_pairing(
         second_best_cost=second_cost,
         optimal_matching_count=len(optimal),
         ambiguity_reason=reason,
+        pairing_search_exhausted=False,
+        pairing_search_nodes=search_nodes,
     )
     return pairs, base
 

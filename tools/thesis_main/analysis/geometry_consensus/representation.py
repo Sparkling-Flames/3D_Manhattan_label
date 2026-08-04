@@ -141,9 +141,39 @@ def normalize_geometry(
     array[:, 0] %= float(width)
     result["canonical_points"] = array.tolist()
     result["coordinate_transform"] = "x_modulo_panorama_width_only"
-    unordered_pairs, stats = analyze_layout_pairing(array, width=width, height=height, threshold_ratio=threshold_ratio)
     raw_pairs = _raw_order_pairs(array, width, threshold_ratio)
-    stats = {**stats, "raw_order_pairing_valid": bool(raw_pairs), "unordered_pairing_ambiguous": bool(stats.get("pairing_ambiguous"))}
+    if raw_pairs:
+        # Label Studio exports preserve the consecutive ceiling/floor pair
+        # order.  Avoid the exponential unordered matching search when the
+        # submitted representation is already unambiguously paired.
+        unordered_ambiguity = False
+        if len(array) <= 8:
+            # Keep the historical diagnostic for small geometries; this is
+            # bounded and preserves the existing representation contract.
+            _unordered_pairs, unordered_stats = analyze_layout_pairing(
+                array, width=width, height=height, threshold_ratio=threshold_ratio,
+            )
+            unordered_ambiguity = bool(unordered_stats.get("pairing_ambiguous"))
+        stats = {
+            "n_points": len(array),
+            "n_pairs": len(raw_pairs),
+            "coverage": 1.0,
+            "unpaired_point_count": 0,
+            "pairing_ambiguous": False,
+            "best_cost": None,
+            "second_best_cost": None,
+            "optimal_matching_count": 1,
+            "raw_order_pairing_valid": True,
+            "unordered_pairing_ambiguous": unordered_ambiguity,
+        }
+        unordered_pairs = []
+    else:
+        unordered_pairs, stats = analyze_layout_pairing(array, width=width, height=height, threshold_ratio=threshold_ratio)
+        stats = {**stats, "raw_order_pairing_valid": False, "unordered_pairing_ambiguous": bool(stats.get("pairing_ambiguous"))}
+        if stats.get("pairing_search_exhausted"):
+            result["pairing_stats"] = stats
+            result["reason"] = "pairing_search_exhausted"
+            return result
     pairs = raw_pairs or unordered_pairs
     if raw_pairs:
         stats.update(n_pairs=len(raw_pairs), coverage=1.0, unpaired_point_count=0, pairing_ambiguous=False, ambiguity_reason="")

@@ -402,7 +402,7 @@ def materialize(
         raise ValueError(f"C2-A-RP formal goal is not allowed:{formal_goal}")
     threshold_path = None
     threshold_sha = ""
-    if input_status == "formal":
+    if threshold_manifest is not None or input_status == "formal":
         target, threshold_path, threshold_sha = _resolve_formal_threshold(
             design_manifest, manifest, precision, threshold_manifest,
         )
@@ -495,7 +495,10 @@ def materialize(
                 selection_seed=int(precision.get("selection_seed", 0)),
                 require_explicit_eligibility=input_status == "formal",
                 formal=input_status == "formal",
-                dispatch_block_index=dispatch_block_index if input_status == "formal" else None,
+                # An explicit block is also useful for a non-formal rehearsal:
+                # it must exercise the same one-block operator path without
+                # planning future tasks that have not yet been re-estimated.
+                dispatch_block_index=dispatch_block_index,
             )
     if existing_assignments:
         assignments = [*existing_assignments, *assignments]
