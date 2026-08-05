@@ -28,7 +28,8 @@ def _closed_reference_review(path: Path) -> Path:
     fields = [
         "schema_version", "base_task_id", "registry_status_before_review", "reference_status_before_review",
         "reference_normalizer_status_before_review", "geometry_reference_ready_before_review",
-        "review_status", "review_disposition", "reviewer_blinding", "original_reference_sha256", "method_contract_sha256",
+        "review_status", "review_disposition", "reviewer_blinding", "review_evidence", "reviewed_by", "reviewed_at",
+        "original_reference_sha256", "method_contract_sha256",
     ]
     with path.open("w", encoding="utf-8", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=fields)
@@ -43,6 +44,9 @@ def _closed_reference_review(path: Path) -> Path:
             "review_status": "closed",
             "review_disposition": "retain_original",
             "reviewer_blinding": "worker_and_analysis_metric_blinded",
+            "review_evidence": "manual_scene_review_record",
+            "reviewed_by": "reviewer-1",
+            "reviewed_at": "2026-08-05T12:00:00Z",
             "original_reference_sha256": "a" * 64,
             "method_contract_sha256": sha256_file(METHOD_CONTRACT),
         })

@@ -64,7 +64,7 @@ REFERENCE_REVIEW_FIELDS_V2 = {
     "schema_version", "base_task_id", "review_status", "review_disposition",
     "registry_status_before_review", "reference_status_before_review",
     "reference_normalizer_status_before_review", "geometry_reference_ready_before_review",
-    "method_contract_sha256",
+    "method_contract_sha256", "review_evidence", "reviewed_by", "reviewed_at",
 }
 
 
@@ -269,6 +269,8 @@ def validate_reference_review_closure(
         status = str(row.get("review_status", "")).strip().lower()
         if disposition not in REFERENCE_REVIEW_DISPOSITIONS or status in {"", "pending_review", "open"}:
             pending.append(row.get("base_task_id", ""))
+        elif any(not str(row.get(field, "")).strip() for field in ("review_evidence", "reviewed_by", "reviewed_at")):
+            raise ValueError("reference_conflict_review_terminal_metadata_missing:" + str(row.get("base_task_id", "")))
     affected = {str(item).strip() for item in (affected_base_task_ids or set())}
     blocked = sorted(item for item in pending if not affected or item in affected)
     if blocked:

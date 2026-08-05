@@ -61,7 +61,8 @@ def _review_record(path: Path, *, status: str, disposition: str) -> Path:
     fields = [
         "schema_version", "base_task_id", "registry_status_before_review", "reference_status_before_review",
         "reference_normalizer_status_before_review", "geometry_reference_ready_before_review",
-        "review_status", "review_disposition", "reviewer_blinding", "original_reference_sha256", "method_contract_sha256",
+        "review_status", "reviewer_blinding", "review_evidence", "review_disposition", "reviewed_by", "reviewed_at",
+        "original_reference_sha256", "method_contract_sha256",
     ]
     with path.open("w", encoding="utf-8", newline="") as stream:
         writer = csv.DictWriter(stream, fieldnames=fields)
@@ -75,6 +76,9 @@ def _review_record(path: Path, *, status: str, disposition: str) -> Path:
             "geometry_reference_ready_before_review": "true",
             "review_status": status,
             "review_disposition": disposition,
+            "review_evidence": "manual_scene_review_record" if disposition else "",
+            "reviewed_by": "reviewer-1" if disposition else "",
+            "reviewed_at": "2026-08-05T12:00:00Z" if disposition else "",
             "reviewer_blinding": "worker_and_analysis_metric_blinded",
             "original_reference_sha256": "a" * 64,
             "method_contract_sha256": sha256_file(METHOD_CONTRACT),
