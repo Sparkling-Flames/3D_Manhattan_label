@@ -1,0 +1,100 @@
+{
+  "schema_version": "paper_a_reference_conflict_sensitivity_audit_manifest_v1",
+  "artifact_role": "REFERENCE_CONFLICT_SENSITIVITY_AUDIT_MANIFEST",
+  "candidate_only": true,
+  "formal_ready": false,
+  "final_reference_freeze_allowed": false,
+  "method_contract": {
+    "version": "paper_a_method_20260803_v18",
+    "sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87"
+  },
+  "protocol": {
+    "path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/reference_conflict_review_protocol_v1.json",
+    "sha256": "e338822a5c870a2f4d4e17ea4619f2ee9e0c7993ee3fc59db0265072fe2ef010",
+    "review_policy": "amend_only_when_researcher_explicitly_declares_gt_issue",
+    "primary_reference_policy": "use_existing_public_gt_as_is"
+  },
+  "known_researcher_declared_issues": {
+    "count": 1,
+    "review_record_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/reference_conflict_review_record.csv",
+    "review_record_sha256": "862df5d6f14272e7e579e3a94bbd42e7492cae90dadf1012095927b4f12ee62a",
+    "pending_base_task_ids": [
+      "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d"
+    ],
+    "operational_reference_mutated": false
+  },
+  "spot_check_selection": {
+    "path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/reference_conflict_spot_check_selection.csv",
+    "sha256": "cba7de952048d90b1e793f7ab5fcac2c98a576bec4150ded0792a83c3474ea9c",
+    "sampling_seed": 20260805,
+    "count_by_stage": {
+      "C1": 5,
+      "C2-B": 5
+    },
+    "c2b_selection_status": "preselected_pending_canonical_screen"
+  },
+  "c1_candidate_screen": {
+    "status": "completed_implemented_triggers_only",
+    "alignment_rows": 202,
+    "candidate_count": 0,
+    "interpretation_allowed": false,
+    "interpretation": "No implemented candidate trigger fired; this is not evidence that all C1 references are error-free.",
+    "undefined_triggers_not_activated": [
+      "high_worker_rank_influence"
+    ],
+    "outputs": {
+      "alignment_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/c1_candidate_screen/c1_gt_cluster_alignment.csv",
+      "alignment_sha256": "eea8479ff95a89cdea09b4fb35cdbb919e86dd333a7beab91b4d6284e4ad2fd7",
+      "queue_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/c1_candidate_screen/c1_gt_conflict_review_queue.csv",
+      "queue_sha256": "70ea62f83622d22aaff8c8b341800ce0d846a1290a9cd94a0b98d816c5c054f0"
+    },
+    "inputs": [
+      {
+        "role": "C1_CROWD_STRUCTURE",
+        "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_task_crowd_structure_C1.csv",
+        "sha256": "5aa04db57efd9606a27d94d7718a62df52302854d5bc5de7d89d5edca0c2f090"
+      },
+      {
+        "role": "C1_LOO",
+        "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_worker_task_loo_C1.csv",
+        "sha256": "d7ea8cfd5acf96895ff148ffa00dde3b0926ebf178d8d632e46bcd076bf8baf4"
+      },
+      {
+        "role": "C1_GT_QUALITY",
+        "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_gt_quality_analysis.csv",
+        "sha256": "68c6d64cad77e09e21e5689d5bc20b26ad6484ba1fd63e1fbf00466ab9b23e5e"
+      },
+      {
+        "role": "REFERENCE_REGISTRY",
+        "path": "analysis_results/c2b_validation_static_20260802_v16/inputs/reference_registry.csv",
+        "sha256": "546744452a4ba26cff062c237128ef8324261e43b73018be82775287fb5fb3a9"
+      }
+    ]
+  },
+  "c2b_candidate_screen": {
+    "status": "pending_canonical_c2b_evidence",
+    "reason": "The available export is a foreign-language partial export, not the complete dual-deployment canonical input.",
+    "partial_export_reference_only": {
+      "path": "export_label/project-76-at-2026-08-05-06-28-325d087a.json",
+      "sha256": "bbba675f8ba209af89ccd421f05037403d507708601b26f4af604f26cebd0c66",
+      "language_group": "foreign",
+      "project_id": 76,
+      "task_count": 23,
+      "contains_known_issue_task": true,
+      "final_export": false,
+      "screening_use": "reference_only_not_a_gt_conflict_result"
+    },
+    "required_before_closeout": [
+      "canonical C2-B submissions from every deployment",
+      "all flagged candidates plus the frozen non-flagged spot-check",
+      "worker-and-analysis-metric-blinded review records"
+    ]
+  },
+  "preserved_boundaries": {
+    "method_contract_changed": false,
+    "d8_assignment_changed": false,
+    "c2b_task_set_changed": false,
+    "primary_reference_registry_changed": false,
+    "new_stage3_hard_gate_added": false
+  }
+}

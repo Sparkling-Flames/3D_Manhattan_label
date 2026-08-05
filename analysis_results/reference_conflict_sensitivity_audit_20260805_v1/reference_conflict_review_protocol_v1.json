@@ -1,0 +1,52 @@
+{
+  "schema_version": "paper_a_reference_conflict_sensitivity_audit_protocol_v1",
+  "artifact_role": "REFERENCE_CONFLICT_SENSITIVITY_AUDIT_PROTOCOL",
+  "status": "frozen_for_execution",
+  "method_contract_version": "paper_a_method_20260803_v18",
+  "method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+  "primary_reference_policy": "use_existing_public_gt_as_is",
+  "review_policy": "amend_only_when_researcher_explicitly_declares_gt_issue",
+  "review_scope": {
+    "stages": ["C1", "C2-B"],
+    "unit": "base_task_id",
+    "all_flagged_candidates": true,
+    "known_researcher_declared_issues": "always_include",
+    "non_flagged_spot_check": {
+      "count_per_stage": 5,
+      "sampling_seed": 20260805,
+      "selection": "uniform_without_replacement",
+      "freeze_before_review": true,
+      "interpretation": "spot_check_only_not_a_population_error_rate"
+    }
+  },
+  "reviewer_information_boundary": {
+    "visible": ["scene_image", "public_reference_geometry", "annotation_protocol", "independent_scene_geometry_evidence"],
+    "hidden": ["worker_id", "worker_rank", "Q_GT", "R_peer", "cluster_size", "cluster_medoid_score", "global_policy_eligibility", "routing_or_policy_candidate"],
+    "reviewer_blinding": "worker_and_analysis_metric_blinded"
+  },
+  "allowed_review_dispositions": [
+    "retain_original",
+    "amended_by_independent_evidence",
+    "reference_unavailable"
+  ],
+  "disposition_rules": {
+    "review_disposition_is_separate_from_reference_registry_status": true,
+    "audit_does_not_auto_mutate_primary_reference": true,
+    "pending_issue_blocks_final_reference_clearance_for_affected_task": true,
+    "amendment_requires_versioned_reference_and_registry": true,
+    "reference_unavailable_requires_estimand_specific_closeout": true,
+    "c2a_rp_worker_identity_handoff_forbidden": true
+  },
+  "candidate_rule_source": {
+    "path": "docs/thesis_main/GT_CONFLICT_REVIEW_RULES.json",
+    "sha256": "cee48b367ebd1f3c79cb0dcaf5eff33ebc1f38ac2bcb8ef6c5055bd6380dc50e",
+    "status": "candidate",
+    "interpretation_allowed": false,
+    "undefined_triggers_not_activated": ["high_worker_rank_influence"]
+  },
+  "source_reference_registry": {
+    "path": "analysis_results/c2b_validation_static_20260802_v16/inputs/reference_registry.csv",
+    "sha256": "546744452a4ba26cff062c237128ef8324261e43b73018be82775287fb5fb3a9",
+    "mutation_policy": "unchanged_until_terminal_disposition"
+  }
+}
