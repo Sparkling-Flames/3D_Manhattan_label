@@ -6,6 +6,7 @@ import argparse
 import csv
 import hashlib
 import json
+import random
 import sys
 from pathlib import Path
 from typing import Any
@@ -18,7 +19,8 @@ if str(_PROJECT_ROOT) not in sys.path:
 
 from tools.thesis_main.analysis.quality_core.geometry_metrics import compute_layout_mask_iou, compute_layout_mask_iou_from_normalized_pairs
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry, normalize_geometry_for_c1_calculation, normalize_ordered_reference_geometry
-from tools.thesis_main.analysis.paper_a_contracts import load_method_contract
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
+from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
 OUTCOME_FIELDS = [
@@ -48,6 +50,23 @@ SCOPE_FINAL_FIELDS = [
     "source_initial_review_sha256", "source_scope_consensus_sha256",
 ]
 
+IMPLEMENTED_CONFLICT_TRIGGERS = (
+    "dominant_cluster_low_gt_alignment",
+    "minority_cluster_better_gt_alignment",
+    "public_gt_structurally_invalid",
+)
+REFERENCE_REVIEW_DISPOSITIONS = {
+    "retain_original",
+    "amended_by_independent_evidence",
+    "reference_unavailable",
+}
+REFERENCE_REVIEW_FIELDS_V2 = {
+    "schema_version", "base_task_id", "review_status", "review_disposition",
+    "registry_status_before_review", "reference_status_before_review",
+    "reference_normalizer_status_before_review", "geometry_reference_ready_before_review",
+    "method_contract_sha256",
+}
+
 
 def materialize_gt_cluster_alignment(
     crowd_structure_csv: Path, loo_csv: Path, quality_csv: Path,
@@ -57,23 +76,24 @@ def materialize_gt_cluster_alignment(
     """Audit crowd/GT disagreement; candidates never mutate the reference."""
     rules = json.loads(conflict_rule_manifest.read_text(encoding="utf-8"))
     reference_policy = load_method_contract().get("reference_registry", {}).get("reference_policy", "")
-    retain_existing_reference = input_status == "formal" and reference_policy == "use_existing_public_gt_as_is"
+    formal_reference_policy_fallback = input_status == "formal" and reference_policy == "use_existing_public_gt_as_is"
     approved = rules.get("status") == "approved" and rules.get("interpretation_allowed") is True and rules.get("approved_by") and rules.get("approved_at")
-    implemented_triggers = {"dominant_cluster_low_gt_alignment", "minority_cluster_better_gt_alignment", "public_gt_structurally_invalid"}
+    implemented_triggers = set(IMPLEMENTED_CONFLICT_TRIGGERS)
     undefined_triggers = sorted(set(rules.get("supported_triggers", [])) - implemented_triggers - {"known_reference_issue"})
-    if input_status == "formal" and not retain_existing_reference and not approved:
+    if input_status == "formal" and not approved and not formal_reference_policy_fallback:
         raise ValueError("candidate GT conflict manifest cannot produce formal sidecars")
-    if input_status == "formal" and not retain_existing_reference and undefined_triggers:
+    if input_status == "formal" and undefined_triggers and not formal_reference_policy_fallback:
         raise ValueError("GT conflict manifest contains triggers without executable definitions:" + ";".join(undefined_triggers))
     thresholds = rules["thresholds"]
     quality = {row.get("canonical_annotation_id", ""): row for row in _read_csv(quality_csv)}
-    loo_by_task: dict[str, list[dict[str, str]]] = {}
-    for row in _read_csv(loo_csv):
-        loo_by_task.setdefault(row.get("base_task_id", ""), []).append(row)
     alignment: list[dict[str, Any]] = []
-    queue: list[dict[str, Any]] = []
+    context_evidence: list[dict[str, Any]] = []
+    source_parts = [crowd_structure_csv, loo_csv, quality_csv, conflict_rule_manifest] + ([reference_csv] if reference_csv else [])
+    evidence_sha = hashlib.sha256("".join(hashlib.sha256(path.read_bytes()).hexdigest() for path in source_parts if path and path.exists()).encode()).hexdigest()
     for crowd in _read_csv(crowd_structure_csv):
         base = crowd.get("base_task_id", "")
+        condition = crowd.get("condition", "")
+        task_context_id = crowd.get("task_context_id") or (f"{base}|{condition}" if condition else base)
         clusters = [("largest", crowd.get("largest_cluster_worker_ids", "")), ("second", crowd.get("second_cluster_worker_ids", ""))]
         cluster_rows = []
         for cluster_id, worker_text in clusters:
@@ -81,12 +101,17 @@ def materialize_gt_cluster_alignment(
             medoid_id = crowd.get(f"{cluster_id}_cluster_medoid_annotation_id", "")
             medoid_worker = crowd.get(f"{cluster_id}_cluster_medoid_worker_id", "")
             medoid_geometry_sha = crowd.get(f"{cluster_id}_cluster_medoid_geometry_sha256", "")
+            try:
+                support = int(float(crowd.get(f"{cluster_id}_cluster_support", "")))
+            except (TypeError, ValueError):
+                support = len(workers)
             q = quality.get(medoid_id, {})
             try: medoid_score = float(q.get("iou_to_gt", ""))
             except (TypeError, ValueError): medoid_score = None
-            public_gt_status = q.get("public_gt_structural_status", "not_evaluable")
+            public_gt_status = str(q.get("public_gt_structural_status", "not_evaluable")).strip().lower() or "not_evaluable"
             row = {
-                "base_task_id": base, "cluster_id": cluster_id, "cluster_support": len(workers),
+                "base_task_id": base, "condition": condition, "task_context_id": task_context_id,
+                "cluster_id": cluster_id, "cluster_support": support,
                 "cluster_medoid_annotation_id": medoid_id,
                 "cluster_medoid_worker_id": medoid_worker,
                 "cluster_medoid_geometry_sha256": medoid_geometry_sha,
@@ -97,25 +122,158 @@ def materialize_gt_cluster_alignment(
             alignment.append(row); cluster_rows.append(row)
         largest, second = cluster_rows
         try:
-            largest_score, second_score = float(largest["cluster_medoid_gt_iou"]), float(second["cluster_medoid_gt_iou"])
-            margin = largest_score - second_score
+            largest_score = float(largest["cluster_medoid_gt_iou"])
         except (TypeError, ValueError):
-            largest_score = second_score = margin = None
+            largest_score = None
+        try:
+            second_score = float(second["cluster_medoid_gt_iou"])
+        except (TypeError, ValueError):
+            second_score = None
+        margin = largest_score - second_score if largest_score is not None and second_score is not None else None
         for row in cluster_rows:
             row["largest_cluster_gt_iou"] = "" if largest_score is None else largest_score
             row["second_cluster_gt_iou"] = "" if second_score is None else second_score
             row["gt_alignment_margin"] = "" if margin is None else margin
+        statuses = {
+            "dominant_cluster_low_gt_alignment": "evaluable" if largest_score is not None else "not_evaluable",
+            "minority_cluster_better_gt_alignment": (
+                "not_applicable" if second["cluster_support"] == 0 else "evaluable" if margin is not None else "not_evaluable"
+            ),
+            "public_gt_structurally_invalid": (
+                "evaluable" if any(row["public_gt_status"] in {"valid", "invalid"} for row in cluster_rows) else "not_evaluable"
+            ),
+        }
         triggers = []
-        if largest_score is not None and largest_score < float(thresholds["dominant_cluster_low_gt_alignment"]): triggers.append("dominant_cluster_low_gt_alignment")
-        if margin is not None and margin < -float(thresholds["minority_cluster_better_gt_margin"]): triggers.append("minority_cluster_better_gt_alignment")
-        if any(row["public_gt_status"] == "invalid" for row in cluster_rows): triggers.append("public_gt_structurally_invalid")
-        for trigger in ([] if retain_existing_reference else triggers):
-            source_parts = [crowd_structure_csv, loo_csv, quality_csv, conflict_rule_manifest] + ([reference_csv] if reference_csv else [])
-            evidence_sha = hashlib.sha256("".join(hashlib.sha256(path.read_bytes()).hexdigest() for path in source_parts if path and path.exists()).encode()).hexdigest()
-            queue.append({"base_task_id": base, "trigger": trigger, "candidate_only": not approved, "interpretation_allowed": bool(input_status == "formal" and approved), "reference_modified": False, "rule_version": rules["rule_version"], "source_sha256": evidence_sha})
+        if largest_score is not None and largest_score < float(thresholds["dominant_cluster_low_gt_alignment"]):
+            triggers.append("dominant_cluster_low_gt_alignment")
+        if margin is not None and margin < -float(thresholds["minority_cluster_better_gt_margin"]):
+            triggers.append("minority_cluster_better_gt_alignment")
+        if any(row["public_gt_status"] == "invalid" for row in cluster_rows):
+            triggers.append("public_gt_structurally_invalid")
+        context_evidence.append({
+            "base_task_id": base,
+            "condition": condition,
+            "task_context_id": task_context_id,
+            "trigger_status": statuses,
+            "triggered": sorted(triggers),
+            "largest_cluster_gt_iou": largest_score,
+            "second_cluster_gt_iou": second_score,
+            "gt_alignment_margin": margin,
+        })
+    summary_sets = {
+        trigger: {key: set() for key in ("evaluable", "not_evaluable", "not_applicable", "triggered")}
+        for trigger in IMPLEMENTED_CONFLICT_TRIGGERS
+    }
+    for evidence in context_evidence:
+        base, context = evidence["base_task_id"], evidence["task_context_id"]
+        for trigger, status in evidence["trigger_status"].items():
+            summary_sets[trigger][status].add(context)
+        for trigger in evidence["triggered"]:
+            summary_sets[trigger]["triggered"].add(context)
+    trigger_summary = {}
+    for trigger, values in summary_sets.items():
+        trigger_summary[trigger] = {
+            "evaluable_count": len(values["evaluable"]),
+            "not_evaluable_count": len(values["not_evaluable"]),
+            "not_applicable_count": len(values["not_applicable"]),
+            "triggered_count": len(values["triggered"]),
+            "unique_task_evaluable_count": len({item["base_task_id"] for item in context_evidence if item["task_context_id"] in values["evaluable"]}),
+            "unique_task_triggered_count": len({item["base_task_id"] for item in context_evidence if item["task_context_id"] in values["triggered"]}),
+        }
+    queue_by_key: dict[tuple[str, str], dict[str, Any]] = {}
+    for evidence in context_evidence:
+        for trigger in evidence["triggered"]:
+            item = queue_by_key.setdefault((evidence["base_task_id"], trigger), {
+                "base_task_id": evidence["base_task_id"], "trigger": trigger,
+                "candidate_only": not approved, "interpretation_allowed": False,
+                "reference_modified": False, "rule_version": rules["rule_version"],
+                "source_sha256": evidence_sha, "context_count": 0, "context_ids": [],
+            })
+            item["context_count"] += 1
+            item["context_ids"].append(evidence["task_context_id"])
+    queue = []
+    for item in queue_by_key.values():
+        item["context_ids_json"] = json.dumps(sorted(item.pop("context_ids")), ensure_ascii=False, separators=(",", ":"))
+        queue.append(item)
+    queue.sort(key=lambda row: (row["base_task_id"], row["trigger"]))
+    incomplete = bool(undefined_triggers) or any(item["not_evaluable_count"] for item in trigger_summary.values())
+    screen_status = "incomplete_not_evaluable" if any(item["not_evaluable_count"] for item in trigger_summary.values()) else "incomplete_undefined_trigger" if undefined_triggers else "completed_implemented_triggers_only"
     _write(output_dir / "c1_gt_cluster_alignment.csv", alignment, list(alignment[0]) if alignment else ["base_task_id"])
     _write(output_dir / "c1_gt_conflict_review_queue.csv", queue, list(queue[0]) if queue else ["base_task_id", "trigger", "candidate_only", "reference_modified", "rule_version", "source_sha256"])
-    return {"alignment_rows": len(alignment), "conflict_candidates": len(queue), "reference_modified": False, "reference_policy": reference_policy, "gt_issue_declared": False, "undefined_triggers": undefined_triggers, "interpretation_allowed": bool(input_status == "formal" and approved and not undefined_triggers)}
+    summary = {
+        "schema_version": "paper_a_gt_conflict_trigger_summary_v2",
+        "screen_status": screen_status,
+        "candidate_count": len({row["base_task_id"] for row in queue}),
+        "alignment_context_count": len(context_evidence),
+        "undefined_triggers": undefined_triggers,
+        "trigger_summary": trigger_summary,
+    }
+    _write_json(output_dir / "c1_gt_conflict_trigger_summary.json", summary)
+    return {
+        "alignment_rows": len(alignment), "conflict_candidates": len(queue),
+        "candidate_count": summary["candidate_count"], "reference_modified": False,
+        "reference_policy": reference_policy, "gt_issue_declared": False,
+        "undefined_triggers": undefined_triggers, "screen_status": screen_status,
+        "trigger_summary": trigger_summary,
+        "interpretation_allowed": bool(input_status == "formal" and approved and not incomplete),
+    }
+
+
+def freeze_spot_check_reserve_order(task_ids: list[str] | set[str], *, stage: str, seed: int = 20260805, count: int = 5) -> dict[str, Any]:
+    """Freeze the full deterministic order; final selection can skip later flags mechanically."""
+    population = sorted({str(task_id).strip() for task_id in task_ids if str(task_id).strip()})
+    order = list(population)
+    random.Random(seed).shuffle(order)
+    return {
+        "stage": stage,
+        "sampling_algorithm": "python_random.Random(seed).shuffle(sorted(unique_task_ids))",
+        "python_version": sys.version.split()[0],
+        "sampling_seed": seed,
+        "requested_count": count,
+        "population_count": len(population),
+        "candidate_population_sha256": _sha_payload(population),
+        "reserve_order": order,
+    }
+
+
+def select_final_nonflagged_spot_check(reserve_order: list[str], *, flagged_task_ids: set[str], known_issue_ids: set[str], count: int = 5) -> list[str]:
+    excluded = {str(item).strip() for item in flagged_task_ids | known_issue_ids}
+    selected = [task_id for task_id in reserve_order if task_id not in excluded][:count]
+    if len(selected) != count:
+        raise ValueError("not_enough_nonflagged_spot_check")
+    return selected
+
+
+def validate_reference_review_closure(
+    review_record_csv: Path,
+    *,
+    affected_base_task_ids: set[str] | None = None,
+    method_contract_sha256: str | None = None,
+) -> dict[str, Any]:
+    rows = _read_csv(review_record_csv)
+    if not rows:
+        raise ValueError("reference_conflict_review_record_empty")
+    required = REFERENCE_REVIEW_FIELDS_V2 | {"reviewer_blinding", "original_reference_sha256"}
+    if any(not required <= set(row) for row in rows):
+        raise ValueError("reference_conflict_review_record_schema_mismatch")
+    if len({row.get("base_task_id", "") for row in rows}) != len(rows):
+        raise ValueError("reference_conflict_review_record_duplicate_task")
+    expected_sha = method_contract_sha256 or sha256_file(METHOD_CONTRACT)
+    pending = []
+    for row in rows:
+        if row.get("schema_version") != "paper_a_reference_conflict_review_record_v2":
+            raise ValueError("reference_conflict_review_record_legacy_schema")
+        if row.get("method_contract_sha256") != expected_sha:
+            raise ValueError("reference_conflict_review_record_method_sha_mismatch")
+        disposition = str(row.get("review_disposition", "")).strip()
+        status = str(row.get("review_status", "")).strip().lower()
+        if disposition not in REFERENCE_REVIEW_DISPOSITIONS or status in {"", "pending_review", "open"}:
+            pending.append(row.get("base_task_id", ""))
+    affected = {str(item).strip() for item in (affected_base_task_ids or set())}
+    blocked = sorted(item for item in pending if not affected or item in affected)
+    if blocked:
+        raise ValueError("reference_conflict_pending_review:" + ",".join(blocked))
+    return {"record_count": len(rows), "pending_count": len(pending), "checked_sha256": sha256_file(review_record_csv)}
 
 
 def _read_csv(path: Path) -> list[dict[str, str]]:
@@ -129,6 +287,11 @@ def _write(path: Path, rows: list[dict[str, Any]], fields: list[str]) -> None:
         writer = csv.DictWriter(stream, fieldnames=fields, extrasaction="ignore")
         writer.writeheader()
         writer.writerows(rows)
+
+
+def _write_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
 
 
 def _sha_payload(value: Any) -> str:

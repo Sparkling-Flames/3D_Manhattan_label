@@ -1,0 +1,175 @@
+{
+  "artifact_role": "REFERENCE_CONFLICT_SENSITIVITY_AUDIT_MANIFEST",
+  "c1_candidate_screen": {
+    "alignment_rows": 202,
+    "candidate_count": 13,
+    "inputs": [
+      {
+        "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_task_crowd_structure_C1.csv",
+        "role": "C1_CROWD_STRUCTURE",
+        "sha256": "5aa04db57efd9606a27d94d7718a62df52302854d5bc5de7d89d5edca0c2f090"
+      },
+      {
+        "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_worker_task_loo_C1.csv",
+        "role": "C1_LOO",
+        "sha256": "d7ea8cfd5acf96895ff148ffa00dde3b0926ebf178d8d632e46bcd076bf8baf4"
+      },
+      {
+        "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_gt_quality_analysis.csv",
+        "role": "C1_GT_QUALITY",
+        "sha256": "68c6d64cad77e09e21e5689d5bc20b26ad6484ba1fd63e1fbf00466ab9b23e5e"
+      },
+      {
+        "path": "analysis_results/c2b_validation_static_20260802_v16/inputs/reference_registry.csv",
+        "role": "REFERENCE_REGISTRY",
+        "sha256": "546744452a4ba26cff062c237128ef8324261e43b73018be82775287fb5fb3a9"
+      }
+    ],
+    "interpretation_allowed": false,
+    "outputs": {
+      "alignment_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_gt_cluster_alignment.csv",
+      "alignment_sha256": "4bafd169cdee9445817ec504999a873bc4d32d91da007902fa9fc26c7d7fa4f3",
+      "crowd_structure_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_geometry_consensus/geometry_task_crowd_structure_C1.csv",
+      "crowd_structure_sha256": "1f5b1a2058e2855a0a676463c0a12a74d9aee74555bc639e9fa6fb111f698c58",
+      "queue_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_gt_conflict_review_queue.csv",
+      "queue_sha256": "352a3bbdaeec7cd34c6f83a28f3f924555e52e57122ee5dbd0d5b52678792093",
+      "trigger_summary_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_gt_conflict_trigger_summary.json",
+      "trigger_summary_sha256": "ccad134f465c19b991b4c84097abf55bf5a837506c6271731ad55b4b954a1040"
+    },
+    "status": "incomplete_not_evaluable",
+    "trigger_summary": {
+      "dominant_cluster_low_gt_alignment": {
+        "evaluable_count": 98,
+        "not_applicable_count": 0,
+        "not_evaluable_count": 3,
+        "triggered_count": 0,
+        "unique_task_evaluable_count": 76,
+        "unique_task_triggered_count": 0
+      },
+      "minority_cluster_better_gt_alignment": {
+        "evaluable_count": 67,
+        "not_applicable_count": 34,
+        "not_evaluable_count": 0,
+        "triggered_count": 13,
+        "unique_task_evaluable_count": 61,
+        "unique_task_triggered_count": 13
+      },
+      "public_gt_structurally_invalid": {
+        "evaluable_count": 98,
+        "not_applicable_count": 0,
+        "not_evaluable_count": 3,
+        "triggered_count": 0,
+        "unique_task_evaluable_count": 76,
+        "unique_task_triggered_count": 0
+      }
+    },
+    "undefined_triggers_not_activated": [
+      "high_worker_rank_influence"
+    ]
+  },
+  "c2b_candidate_screen": {
+    "partial_export_reference_only": {
+      "final_export": false,
+      "included_in_gt_screen": false,
+      "language_group": "foreign",
+      "local_snapshot_name": "project-76-at-2026-08-05-06-28-325d087a.json",
+      "local_snapshot_sha256": "bbba675f8ba209af89ccd421f05037403d507708601b26f4af604f26cebd0c66",
+      "project_id": 76,
+      "role": "partial_export_reference_only",
+      "schema_version": "paper_a_partial_export_reference_summary_v1",
+      "task_count": 23,
+      "tracked_raw_export_removed": true
+    },
+    "reason": "The available export is a foreign-language partial export, not the complete dual-deployment canonical input.",
+    "required_before_closeout": [
+      "canonical C2-B submissions from every deployment",
+      "all flagged candidates plus the frozen non-flagged spot-check",
+      "worker-and-analysis-metric-blinded review records"
+    ],
+    "status": "pending_canonical_c2b_evidence"
+  },
+  "candidate_only": true,
+  "final_reference_freeze_allowed": false,
+  "formal_ready": false,
+  "known_researcher_declared_issues": {
+    "count": 1,
+    "operational_reference_mutated": false,
+    "pending_base_task_ids": [
+      "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d"
+    ],
+    "review_record_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/reference_conflict_review_record_v2.csv",
+    "review_record_sha256": "2d7bb97ff220739d9b404be9dcf454a4929f5dbbac7dbc32564ad705064909bf"
+  },
+  "method_contract": {
+    "sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+    "version": "paper_a_method_20260803_v18"
+  },
+  "preserved_boundaries": {
+    "c2b_task_set_changed": false,
+    "d8_assignment_changed": false,
+    "method_contract_changed": false,
+    "new_stage3_hard_gate_added": false,
+    "primary_reference_registry_changed": false
+  },
+  "protocol": {
+    "context_evidence_key": "task_context_id",
+    "minority_missing_medoid_status": "not_evaluable",
+    "path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/reference_conflict_review_protocol_v1.json",
+    "primary_reference_policy": "use_existing_public_gt_as_is",
+    "review_policy": "amend_only_when_researcher_explicitly_declares_gt_issue",
+    "review_unit": "base_task_id",
+    "sha256": "e338822a5c870a2f4d4e17ea4619f2ee9e0c7993ee3fc59db0265072fe2ef010"
+  },
+  "schema_version": "paper_a_reference_conflict_sensitivity_audit_manifest_v2",
+  "source_to_target_mapping": [
+    {
+      "source_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/c1_candidate_screen/c1_gt_cluster_alignment.csv",
+      "source_sha256": "eea8479ff95a89cdea09b4fb35cdbb919e86dd333a7beab91b4d6284e4ad2fd7",
+      "target_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_gt_cluster_alignment.csv",
+      "target_sha256": "4bafd169cdee9445817ec504999a873bc4d32d91da007902fa9fc26c7d7fa4f3"
+    },
+    {
+      "source_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/c1_candidate_screen/c1_gt_conflict_review_queue.csv",
+      "source_sha256": "70ea62f83622d22aaff8c8b341800ce0d846a1290a9cd94a0b98d816c5c054f0",
+      "target_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_gt_conflict_review_queue.csv",
+      "target_sha256": "352a3bbdaeec7cd34c6f83a28f3f924555e52e57122ee5dbd0d5b52678792093"
+    },
+    {
+      "source_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/reference_conflict_review_record.csv",
+      "source_sha256": "862df5d6f14272e7e579e3a94bbd42e7492cae90dadf1012095927b4f12ee62a",
+      "target_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/reference_conflict_review_record_v2.csv",
+      "target_sha256": "2d7bb97ff220739d9b404be9dcf454a4929f5dbbac7dbc32564ad705064909bf"
+    },
+    {
+      "source_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/reference_conflict_spot_check_selection.csv",
+      "source_sha256": "cba7de952048d90b1e793f7ab5fcac2c98a576bec4150ded0792a83c3474ea9c",
+      "target_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/reference_conflict_spot_check_reserve_order_v2.csv",
+      "target_sha256": "75a34048947c55a58143ca6ce8cc8364a85b6d98422da5a3f5f2935387b30b15"
+    },
+    {
+      "source_path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_task_crowd_structure_C1.csv",
+      "source_sha256": "5aa04db57efd9606a27d94d7718a62df52302854d5bc5de7d89d5edca0c2f090",
+      "target_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_geometry_consensus/geometry_task_crowd_structure_C1.csv",
+      "target_sha256": "1f5b1a2058e2855a0a676463c0a12a74d9aee74555bc639e9fa6fb111f698c58"
+    }
+  ],
+  "spot_check_selection": {
+    "c2b_selection_status": "preselected_pending_canonical_screen",
+    "final_selection_rule": "sort unique population, apply frozen Python Random shuffle, exclude known issue and final flagged tasks, take first five; insufficient population is an explicit blocked outcome",
+    "reserve_order_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/reference_conflict_spot_check_reserve_order_v2.csv",
+    "reserve_order_sha256": "75a34048947c55a58143ca6ce8cc8364a85b6d98422da5a3f5f2935387b30b15",
+    "sampling_seed": 20260805,
+    "stages": {
+      "C1": {
+        "candidate_population_sha256": "d529b2f208af48b58430b65229fc8d15c163c643ca6addab27cbfde5448a6010",
+        "population_count": 79
+      },
+      "C2-B": {
+        "candidate_population_sha256": "84cf9f5274437cdff4b476d1860ee64e4b18116394ac2e11a44d111ca76ecd6d",
+        "population_count": 46
+      }
+    }
+  },
+  "supersedes_manifest_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/reference_conflict_sensitivity_audit_manifest_v1.json",
+  "supersedes_manifest_sha256": "61971627cc5e597c92b7499191af687fe3449f9c83dcb31bfbcfc74dd997b69d"
+}

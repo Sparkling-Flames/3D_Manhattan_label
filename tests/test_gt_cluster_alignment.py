@@ -28,7 +28,7 @@ def test_minority_better_gt_creates_candidate_without_mutating_structure(tmp_pat
     assert "supported_multimodal" in crowd.read_text(encoding="utf-8")
 
 
-def test_formal_public_gt_policy_does_not_auto_create_amendment_queue(tmp_path):
+def test_formal_public_gt_policy_exposes_audit_candidates_without_amendment(tmp_path):
     crowd, loo, quality = tmp_path/"crowd.csv", tmp_path/"loo.csv", tmp_path/"quality.csv"
     _write(crowd, [{
         "base_task_id": "b", "largest_cluster_worker_ids": "w1;w2;w3", "second_cluster_worker_ids": "w4;w5",
@@ -44,5 +44,57 @@ def test_formal_public_gt_policy_does_not_auto_create_amendment_queue(tmp_path):
     result = materialize_gt_cluster_alignment(crowd, loo, quality, tmp_path, input_status="formal")
 
     assert result["reference_policy"] == "use_existing_public_gt_as_is"
-    assert result["conflict_candidates"] == 0
+    assert result["conflict_candidates"] == 2
+    assert result["candidate_count"] == 1
+    assert result["interpretation_allowed"] is False
     assert result["reference_modified"] is False
+
+
+def test_missing_second_medoid_is_not_evaluable_not_not_triggered(tmp_path):
+    crowd, loo, quality = tmp_path/"crowd.csv", tmp_path/"loo.csv", tmp_path/"quality.csv"
+    _write(crowd, [{
+        "base_task_id": "b", "condition": "manual", "largest_cluster_worker_ids": "w1;w2;w3",
+        "second_cluster_worker_ids": "w4;w5", "largest_cluster_medoid_annotation_id": "cw1",
+        "largest_cluster_medoid_worker_id": "w1", "largest_cluster_medoid_geometry_sha256": "g1",
+        "second_cluster_medoid_annotation_id": "", "second_cluster_medoid_worker_id": "",
+        "second_cluster_medoid_geometry_sha256": "",
+    }])
+    _write(loo, [{"base_task_id": "b", "condition": "manual", "worker_id": "w1"}])
+    _write(quality, [{"canonical_annotation_id": "cw1", "iou_to_gt": .9, "public_gt_structural_status": "valid"}])
+
+    result = materialize_gt_cluster_alignment(crowd, loo, quality, tmp_path)
+
+    minority = result["trigger_summary"]["minority_cluster_better_gt_alignment"]
+    assert minority["not_evaluable_count"] == 1
+    assert minority["triggered_count"] == 0
+    assert result["screen_status"] == "incomplete_not_evaluable"
+
+
+def test_review_queue_is_task_level_but_alignment_keeps_context(tmp_path):
+    crowd, loo, quality = tmp_path/"crowd.csv", tmp_path/"loo.csv", tmp_path/"quality.csv"
+    rows = []
+    for condition in ("manual", "semi"):
+        rows.append({
+            "base_task_id": "b", "condition": condition, "task_context_id": f"b|{condition}",
+            "largest_cluster_worker_ids": "w1;w2;w3", "second_cluster_worker_ids": "w4;w5",
+            "largest_cluster_medoid_annotation_id": "cw1", "largest_cluster_medoid_worker_id": "w1",
+            "largest_cluster_medoid_geometry_sha256": "g1", "second_cluster_medoid_annotation_id": "cw4",
+            "second_cluster_medoid_worker_id": "w4", "second_cluster_medoid_geometry_sha256": "g4",
+        })
+    _write(crowd, rows)
+    _write(loo, [{"base_task_id": "b", "worker_id": "w1"}])
+    _write(quality, [
+        {"canonical_annotation_id": "cw1", "iou_to_gt": .4, "public_gt_structural_status": "valid"},
+        {"canonical_annotation_id": "cw4", "iou_to_gt": .9, "public_gt_structural_status": "valid"},
+    ])
+
+    result = materialize_gt_cluster_alignment(crowd, loo, quality, tmp_path)
+
+    assert result["candidate_count"] == 1
+    with (tmp_path / "c1_gt_conflict_review_queue.csv").open(encoding="utf-8") as stream:
+        queue = list(csv.DictReader(stream))
+    assert len(queue) == 2
+    assert all(row["base_task_id"] == "b" and row["context_count"] == "2" for row in queue)
+    with (tmp_path / "c1_gt_cluster_alignment.csv").open(encoding="utf-8") as stream:
+        alignment = list(csv.DictReader(stream))
+    assert {row["task_context_id"] for row in alignment} == {"b|manual", "b|semi"}

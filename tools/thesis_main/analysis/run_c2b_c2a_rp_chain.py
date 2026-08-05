@@ -858,10 +858,15 @@ def run_chain(
     dispatch_state: Path | None = None,
     dispatch_block_index: int | None = None,
     terminal_disposition: Path | None = None,
+    reference_conflict_review_record: Path | None = None,
 ) -> dict[str, Any]:
     if input_status not in FORMAL_MODES:
         raise ValueError(f"unsupported input_status:{input_status}")
+    if input_status == "formal" and reference_conflict_review_record is None:
+        raise ValueError("formal C2-B chain requires reference_conflict_review_record")
     source_paths = [assignment, deployment_manifest, launch_report, runtime_mapping, private_assignment_audit, worker_profile, design_summary, c1_snapshot, worker_roster, rule_config, task_eligibility, reference_registry, c2a_design_manifest, threshold_manifest, c2a_task_pool]
+    if reference_conflict_review_record is not None:
+        source_paths.append(reference_conflict_review_record)
     if any(not path.is_file() for path in source_paths):
         missing = [str(path) for path in source_paths if not path.is_file()]
         raise ValueError("missing chain input:" + ",".join(missing))
@@ -922,6 +927,8 @@ def run_chain(
         "threshold_manifest": threshold_manifest,
         "c2a_task_pool": c2a_task_pool,
     }
+    if reference_conflict_review_record is not None:
+        chain_input_paths["reference_conflict_review_record"] = reference_conflict_review_record
     chain_input_paths.update({f"export:{deployment_id}": path for deployment_id, path in export_paths.items()})
     chain_input_paths.update({f"active_log:{deployment_id}": path for deployment_id, path in active_paths.items() if path is not None})
     chain_input_paths.update({name: path for name, path in optional_inputs.items() if path is not None})
@@ -986,6 +993,7 @@ def run_chain(
             assignment, worker_roster, rule_config, launch_report, runtime_mapping,
             private_assignment_audit, closeout_path, input_status=input_status,
             terminal_disposition_csv=terminal_disposition,
+            reference_conflict_review_record=reference_conflict_review_record,
         )
         # Candidate closeout intentionally lacks formal fields in the shared
         # materializer.  Add only chain binding fields to the generated output;
@@ -1053,6 +1061,7 @@ def run_chain(
             "canonical_summary": canonical_summary,
             "risk_slope_summary": risk_summary,
             "risk_model_scope": "C2B_CONFIRMATORY_CANONICAL_ONLY_FOR_C2A_RP",
+            "reference_conflict_review_closed": closeout.get("reference_conflict_review_closed", False),
             "risk_model": fit,
             "c2a_decision_manifest_sha256": _sha(bound_manifest_path),
             "source_c2a_design_manifest_sha256": _sha(c2a_design_manifest),
@@ -1111,6 +1120,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--dispatch-state", type=Path)
     parser.add_argument("--dispatch-block-index", type=int)
     parser.add_argument("--terminal-disposition", type=Path)
+    parser.add_argument("--reference-conflict-review-record", type=Path)
     return parser
 
 
@@ -1129,6 +1139,7 @@ def main(argv: list[str] | None = None) -> int:
             existing_assignment_manifest=_path(args.existing_assignment_manifest) if args.existing_assignment_manifest else None,
             dispatch_state=_path(args.dispatch_state) if args.dispatch_state else None, dispatch_block_index=args.dispatch_block_index,
             terminal_disposition=_path(args.terminal_disposition) if args.terminal_disposition else None,
+            reference_conflict_review_record=_path(args.reference_conflict_review_record) if args.reference_conflict_review_record else None,
         )
     except Exception as exc:
         print(json.dumps({"schema_version": CHAIN_SCHEMA, "formal_ready": False, "launch_ready": False, "reason_code": f"blocked:{type(exc).__name__}", "reason": str(exc)}, ensure_ascii=False, indent=2))

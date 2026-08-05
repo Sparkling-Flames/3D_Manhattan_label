@@ -1,4 +1,5 @@
 import json
+import csv
 from pathlib import Path
 
 import pytest
@@ -23,6 +24,31 @@ def _artifact(path: Path, schema: str, role: str) -> Path:
     return path
 
 
+def _closed_reference_review(path: Path) -> Path:
+    fields = [
+        "schema_version", "base_task_id", "registry_status_before_review", "reference_status_before_review",
+        "reference_normalizer_status_before_review", "geometry_reference_ready_before_review",
+        "review_status", "review_disposition", "reviewer_blinding", "original_reference_sha256", "method_contract_sha256",
+    ]
+    with path.open("w", encoding="utf-8", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=fields)
+        writer.writeheader()
+        writer.writerow({
+            "schema_version": "paper_a_reference_conflict_review_record_v2",
+            "base_task_id": "known",
+            "registry_status_before_review": "approved_by_frozen_reference_policy",
+            "reference_status_before_review": "use_existing_public_gt_as_is",
+            "reference_normalizer_status_before_review": "passed",
+            "geometry_reference_ready_before_review": "true",
+            "review_status": "closed",
+            "review_disposition": "retain_original",
+            "reviewer_blinding": "worker_and_analysis_metric_blinded",
+            "original_reference_sha256": "a" * 64,
+            "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+        })
+    return path
+
+
 def test_final_pooled_profile_is_independent_from_c1_evidence(tmp_path: Path) -> None:
     c1 = _artifact(tmp_path / "c1.json", "c1_evidence_freeze_manifest_v6", "C1_EVIDENCE_FROZEN")
     payload = json.loads(c1.read_text(encoding="utf-8"))
@@ -37,6 +63,7 @@ def test_final_pooled_profile_is_independent_from_c1_evidence(tmp_path: Path) ->
         "enrollment_registry": tmp_path / "enrollment.csv",
         "profile_version": "p1",
         "cohort_id": "c1",
+        "reference_conflict_review_record": _closed_reference_review(tmp_path / "reference_review.csv"),
     }
     inputs["enrollment_registry"].write_text(
         "worker_id,enrollment_batch,rolling_activated,admission_status,terminal_status,enrolled_at\n"

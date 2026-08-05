@@ -7,6 +7,7 @@ import csv
 import json
 from pathlib import Path
 
+from tools.thesis_main.analysis.materialize_c1_operational_reference import validate_reference_review_closure
 from tools.thesis_main.analysis.paper_a_contracts import load_method_contract, sha256_file
 
 
@@ -110,10 +111,17 @@ def materialize(
     cohort_id: str,
     c2b_batch_b: Path | None = None,
     method_contract: Path | None = None,
+    reference_conflict_review_record: Path | None = None,
 ) -> dict:
     method_path = method_contract or Path(__file__).resolve().parents[3] / "docs" / "thesis_main" / "PAPER_A_METHOD_CONTRACT_CURRENT.json"
     method = load_method_contract(method_path)
     method_sha = sha256_file(method_path)
+    if reference_conflict_review_record is None:
+        raise ValueError("final pooled freeze requires reference_conflict_review_record")
+    reference_review = validate_reference_review_closure(
+        reference_conflict_review_record,
+        method_contract_sha256=method_sha,
+    )
     evidence = _read_json(c1_evidence)
     if evidence.get("C1_EVIDENCE_FROZEN") is not True:
         raise ValueError("C1 evidence is not frozen")
@@ -131,6 +139,7 @@ def materialize(
         _dependency(final_qgt, "FINAL_C1_C2_Q_GT_MODEL_FROZEN", method_sha, profile_version, cohort_id),
         _dependency(pooled_profile, "POOLED_WORKER_PROFILE_FROZEN", method_sha, profile_version, cohort_id),
         {"role": "CALIBRATION_ENROLLMENT_REGISTRY_FROZEN", "path": str(enrollment_freeze), "sha256": sha256_file(enrollment_freeze), "expected_schema": enrollment_state["schema_version"], "required_status_field": "formal_ready", "required_status_value": True, "profile_version": profile_version, "cohort_id": cohort_id, "frozen": True},
+        {"role": "REFERENCE_CONFLICT_REVIEW_CLOSED", "path": str(reference_conflict_review_record.resolve()), "sha256": sha256_file(reference_conflict_review_record), "expected_schema": "paper_a_reference_conflict_review_record_v2", "required_status_field": "review_status", "required_status_value": "non_pending_with_allowed_disposition", "frozen": True},
     ]
     if c2b_batch_b is not None:
         dependencies.append(_dependency(c2b_batch_b, "C2B_BATCH_B_CLOSEOUT_FROZEN", method_sha, profile_version, cohort_id))
@@ -153,6 +162,8 @@ def materialize(
         "ALL_CALIBRATION_WORKERS_TERMINAL": enrollment_state["all_registered_workers_terminal"],
         "N_late": enrollment_state["N_late"],
         "enrollment_registry_sha256": enrollment_state["registry_sha256"],
+        "reference_conflict_review_closed": True,
+        "reference_conflict_review_record_sha256": reference_review["checked_sha256"],
         "dependencies": dependencies,
     }
     output.parent.mkdir(parents=True, exist_ok=True)
@@ -166,6 +177,7 @@ def main() -> int:
         parser.add_argument(f"--{name}", type=Path, required=True)
     parser.add_argument("--c2b-batch-b", type=Path)
     parser.add_argument("--method-contract", type=Path)
+    parser.add_argument("--reference-conflict-review-record", type=Path, required=True)
     parser.add_argument("--profile-version", required=True)
     parser.add_argument("--cohort-id", required=True)
     args = parser.parse_args()
@@ -174,6 +186,7 @@ def main() -> int:
         c2a_rp=args.c2a_rp, final_qgt=args.final_qgt, pooled_profile=args.pooled_profile,
         enrollment_registry=args.enrollment_registry, profile_version=args.profile_version,
         cohort_id=args.cohort_id, c2b_batch_b=args.c2b_batch_b, method_contract=args.method_contract,
+        reference_conflict_review_record=args.reference_conflict_review_record,
     )
     return 0
 

@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, validate_serialized_record
+from tools.thesis_main.analysis.materialize_c1_operational_reference import validate_reference_review_closure
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 from tools.thesis_main.analysis.worker_identity import normalize_worker_id
 
@@ -157,6 +158,7 @@ def materialize(
     *,
     input_status: str = "formal",
     terminal_disposition_csv: Path | None = None,
+    reference_conflict_review_record: Path | None = None,
 ) -> dict[str, Any]:
     manifest = json.loads(profile_manifest.read_text(encoding="utf-8"))
     method = load_method_contract()
@@ -216,6 +218,17 @@ def materialize(
         raise ValueError("C2-B contains unassigned submission")
     if len(submitted) != len(submitted_set):
         raise ValueError("C2-B duplicate/revision disposition is unresolved")
+    reference_review = None
+    if input_status == "formal" and reference_conflict_review_record is not None:
+        affected_base_task_ids = {
+            str(row.get("base_task_id") or row.get("task_id") or "").strip()
+            for row in assignments
+        }
+        reference_review = validate_reference_review_closure(
+            reference_conflict_review_record,
+            affected_base_task_ids=affected_base_task_ids,
+            method_contract_sha256=method_sha,
+        )
     roster_ids = {normalize_worker_id(row.get("worker_id", "")) for row in roster}
     profile_ids = {normalize_worker_id(row.get("worker_id", "")) for row in profiles}
     assignment_ids = {worker for worker, _task in assigned}
@@ -559,6 +572,9 @@ def materialize(
         "per_axis_status_counts": {axis: dict(counts) for axis, counts in axis_status_counts.items()},
         "terminal_disposition_path": str(terminal_disposition_csv or ""),
         "terminal_disposition_sha256": sha256_file(terminal_disposition_csv) if terminal_disposition_csv else "",
+        "reference_conflict_review_record_path": str(reference_conflict_review_record or ""),
+        "reference_conflict_review_record_sha256": sha256_file(reference_conflict_review_record) if reference_conflict_review_record else "",
+        "reference_conflict_review_closed": reference_review is not None,
         "formal_ready": True,
         "blockers": [],
         "dependencies": [
@@ -578,6 +594,12 @@ def materialize(
         summary["dependencies"].append({
             "role": "C2B_TERMINAL_DISPOSITION", "path": str(terminal_disposition_csv.resolve()),
             "sha256": sha256_file(terminal_disposition_csv),
+        })
+    if reference_conflict_review_record:
+        summary["dependencies"].append({
+            "role": "REFERENCE_CONFLICT_REVIEW_CLOSED",
+            "path": str(reference_conflict_review_record.resolve()),
+            "sha256": sha256_file(reference_conflict_review_record),
         })
     output_summary.parent.mkdir(parents=True, exist_ok=True)
     output_summary.write_text(
@@ -602,6 +624,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--private-assignment-audit", type=Path, required=True)
     parser.add_argument("--output-summary", type=Path, required=True)
     parser.add_argument("--terminal-disposition-csv", type=Path)
+    parser.add_argument("--reference-conflict-review-record", type=Path)
     parser.add_argument("--input-status", choices=("dry_run", "precloseout_rehearsal", "formal"), default="formal")
     args = parser.parse_args(argv)
     print(json.dumps(materialize(
@@ -611,6 +634,7 @@ def main(argv: list[str] | None = None) -> int:
         args.runtime_mapping_audit, args.private_assignment_audit,
         args.output_summary, input_status=args.input_status,
         terminal_disposition_csv=args.terminal_disposition_csv,
+        reference_conflict_review_record=args.reference_conflict_review_record,
     ), ensure_ascii=False, indent=2))
     return 0
 

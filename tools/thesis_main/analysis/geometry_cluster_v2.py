@@ -176,6 +176,7 @@ def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: f
         return select_medoid(valid, group, scores, task_id=base_task_id)[:2]
 
     medoid_index, medoid_sha = medoid(largest)
+    second_medoid_index, second_medoid_sha = medoid(second)
     n1, n2, k = len(largest), len(second), len(valid)
     status = "not_evaluable"
     reason = "partition_enumeration_truncated" if enumeration_truncated else "non_unique_complete_link_partition" if len(all_partitions) > 1 else "minimum_valid_k_or_metric_compatibility"
@@ -189,6 +190,7 @@ def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: f
         else:
             reason = "no_dominant_or_supported_partition"
     selected = valid[medoid_index] if medoid_index is not None else {}
+    selected_second = valid[second_medoid_index] if second_medoid_index is not None else {}
     memberships = [[str(valid[index].get("canonical_annotation_id") or valid[index].get("annotation_id") or "") for index in group] for group in partition]
     candidate_partitions = [
         [[str(valid[index].get("canonical_annotation_id") or valid[index].get("annotation_id") or "") for index in group] for group in candidate]
@@ -214,6 +216,10 @@ def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: f
         "largest_cluster_medoid_worker_id": str(selected.get("worker_id") or ""),
         "largest_cluster_medoid_geometry_sha256": medoid_sha,
         "largest_cluster_medoid_index": medoid_index,
+        "second_cluster_medoid_annotation_id": str(selected_second.get("canonical_annotation_id") or selected_second.get("annotation_id") or ""),
+        "second_cluster_medoid_worker_id": str(selected_second.get("worker_id") or ""),
+        "second_cluster_medoid_geometry_sha256": second_medoid_sha,
+        "second_cluster_medoid_index": second_medoid_index,
         "task_crowd_structure_status": status, "structure_reason": reason,
     }
     return result
