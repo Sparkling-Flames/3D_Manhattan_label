@@ -29,6 +29,7 @@ def _case(
     history: list[dict[str, str]] | None = None,
     terminal_rows: list[dict[str, str]] | None = None,
     legacy_schema: bool = False,
+    reference_review_closed: bool = True,
 ) -> tuple[Path, Path]:
     tmp_path.mkdir(parents=True, exist_ok=True)
     threshold = tmp_path / "threshold.json"
@@ -63,13 +64,16 @@ def _case(
         "worker_id": "w1", "profile_version": "p1", "cohort_id": "c1", "completion_status": profile_status,
     }])
     c2b = tmp_path / "c2b.json"
-    c2b.write_text(json.dumps({
+    c2b_payload = {
         "schema_version": "c2b_closeout_v2", "artifact_role": "C2B_BATCH_A_CLOSEOUT_FROZEN",
         "contract_role": "generated_subordinate", "formal_ready": True, "c2b_closeout_ready": True,
         "method_contract_version": load_method_contract()["contract_version"],
         "method_contract_sha256": sha256_file(METHOD_CONTRACT), "profile_version": "p1", "cohort_id": "c1",
         "worker_summaries": [{"worker_id": "w1"}],
-    }), encoding="utf-8")
+    }
+    if reference_review_closed:
+        c2b_payload.update({"reference_conflict_review_closed": True, "reference_conflict_review_record_sha256": "r" * 64})
+    c2b.write_text(json.dumps(c2b_payload), encoding="utf-8")
     terminal = None
     if terminal_rows is not None:
         terminal = _csv(tmp_path / "terminal.csv", ["worker_id", "task_id", "terminal_status", "missing_reason"], terminal_rows)
@@ -93,6 +97,11 @@ def test_zero_task_c2a_rp_closeout_is_formal(tmp_path: Path) -> None:
 def test_c2a_rp_closeout_rejects_legacy_csv_schema(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match="CSV schema is stale"):
         _case(tmp_path, blocks=0, assignments=[], submissions=[], legacy_schema=True)
+
+
+def test_c2a_rp_requires_closed_reference_review(tmp_path: Path) -> None:
+    with pytest.raises(ValueError, match="closed reference conflict review"):
+        _case(tmp_path, blocks=0, assignments=[], submissions=[], reference_review_closed=False)
 
 
 def test_partial_c2a_rp_missing_with_profile_terminal_status_closes(tmp_path: Path) -> None:
@@ -197,6 +206,7 @@ def test_c2a_rp_refits_each_block_and_counts_only_observed_eligible_support(
     c2b.write_text(json.dumps({
         "schema_version": "c2b_closeout_v2", "artifact_role": "C2B_BATCH_A_CLOSEOUT_FROZEN",
         "contract_role": "generated_subordinate", "formal_ready": True, "c2b_closeout_ready": True,
+        "reference_conflict_review_closed": True, "reference_conflict_review_record_sha256": "r" * 64,
         "method_contract_version": load_method_contract()["contract_version"], "method_contract_sha256": sha256_file(METHOD_CONTRACT),
         "profile_version": "p1", "cohort_id": "c1", "worker_summaries": [{"worker_id": "w1"}, {"worker_id": "w2"}],
     }), encoding="utf-8")

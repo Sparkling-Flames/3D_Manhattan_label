@@ -232,7 +232,13 @@ def _make_c2b_fixture(tmp_path: Path) -> dict[str, Path]:
     active_log.mkdir()
     with (active_log / "active_times_c2b.jsonl").open("w", encoding="utf-8") as stream:
         for row in mapping_rows:
-            stream.write(json.dumps({"project_id": row["project_id"], "task_id": row["runtime_task_id"], "annotator_id": row["worker_id"], "annotation_id": f"ann-{row['deployment_id']}-{row['worker_id']}-{row['planned_task_id']}", "session_id": "s1", "active_seconds": 12}) + "\n")
+            stream.write(json.dumps({
+                "project_id": row["project_id"], "task_id": row["runtime_task_id"], "annotator_id": row["worker_id"],
+                "annotation_id": f"ann-{row['deployment_id']}-{row['worker_id']}-{row['planned_task_id']}", "session_id": "s1", "active_seconds": 12,
+                "script_version": chain.C2PLUS_ACTIVE_TIME_SCRIPT_VERSION,
+                "active_time_schema_version": chain.C2PLUS_ACTIVE_TIME_SCHEMA_VERSION,
+                "active_time_identity_level": chain.C2PLUS_ACTIVE_TIME_IDENTITY_LEVEL,
+            }) + "\n")
 
     manifest = tmp_path / "deployment.json"
     _write_json(manifest, {
@@ -279,6 +285,7 @@ def test_d8_identity_is_unchanged_and_c2b_to_c2a_rehearsal_is_replaceable(monkey
     rows = list(csv.DictReader((D8 / "assignment_manifest_C2B.csv").open(encoding="utf-8")))
     identity, tasks, workers = chain._validate_assignment_identity(D8 / "assignment_manifest_C2B.csv", rows)
     assert len(identity) == 176 and len(tasks) == 46 and len(workers) == 22
+    assert {"30", "37"} <= workers
     fixture = _make_c2b_fixture(tmp_path)
     monkeypatch.setattr(chain, "_fit_crossed_model", lambda records: {"status": "estimated", "support": {"worker_id": 22, "base_task_id": 46, "building_id": 10, "risk": 20}, "worker_slopes": {worker: 0.1 for worker in workers}, "worker_slope_ses": {worker: 0.01 for worker in workers}, "group_slope_se": 0.01, "between_worker_slope_sd": 0.01})
     monkeypatch.setattr(chain, "compute_layout_mask_iou_from_normalized_pairs", lambda _pred, _ref: (0.8, {}))
@@ -292,6 +299,11 @@ def test_d8_identity_is_unchanged_and_c2b_to_c2a_rehearsal_is_replaceable(monkey
     assert bound["source_manifest_sha256"] == _sha(fixture["design"])
     assert bound["binding_map"]["worker_profile_csv"]["target_sha256"] == _sha(tmp_path / "chain_1" / "post_c2b_worker_profile.csv")
     assert first["c2a_operational_package"]["assignment_count"] > 0
+    assert all(item["timing_status"] == "auxiliary_available" for item in first["canonical_summary"].values())
+    assert first["input_sha256"]["active_log:zh"] == first["timing_provenance"]["zh"]["source_aggregate_sha256"]
+    assert first["input_sha256"]["active_log:zh"]
+    assert first["timing_provenance"]["zh"]["worker_provenance"]["30"]["current_c2plus_event_count"] > 0
+    assert first["timing_provenance"]["zh"]["worker_provenance"]["37"]["current_c2plus_event_count"] > 0
     assert first["task_pool_sha256"] == "211ea4260415918104685440b07ce72fc17113b1764913c9215c554df901c067"
     assert first["c2a_operational_package"]["append_only"]["block_index"] == 1
     assert (tmp_path / "chain_1" / "c2a_rp_operational" / "imports" / "c2a_rp_block_1_zh.json").is_file()
@@ -312,6 +324,33 @@ def test_d8_identity_is_unchanged_and_c2b_to_c2a_rehearsal_is_replaceable(monkey
     assert {row["planned_task_id"] for row in first_rows} == {row["planned_task_id"] for row in second_rows}
     assert first_rows[0]["source_export_sha256"] != second_rows[0]["source_export_sha256"]
     assert chain._resolve_active_logs({"zh": {"language_token": "zh"}, "foreign": {"language_token": "foreign"}}, shared=None, explicit={}) == {"zh": None, "foreign": None}
+
+
+def test_c2_active_time_provenance_is_auxiliary_and_mixed_legacy_does_not_block(tmp_path: Path) -> None:
+    log = tmp_path / "active_times_c2plus.jsonl"
+    current = {
+        "annotator_id": "W030",
+        "script_version": chain.C2PLUS_ACTIVE_TIME_SCRIPT_VERSION,
+        "active_time_schema_version": chain.C2PLUS_ACTIVE_TIME_SCHEMA_VERSION,
+        "active_time_identity_level": chain.C2PLUS_ACTIVE_TIME_IDENTITY_LEVEL,
+    }
+    current_37 = {**current, "annotator_id": "37"}
+    log.write_text(json.dumps(current) + "\n" + json.dumps(current_37) + "\n", encoding="utf-8")
+    available = chain._active_time_provenance(log)
+    assert available["status"] == "auxiliary_available"
+    assert available["raw_event_count"] == 2
+    assert available["worker_provenance"]["30"]["status"] == "auxiliary_available"
+    assert available["worker_provenance"]["37"]["status"] == "auxiliary_available"
+
+    with log.open("a", encoding="utf-8") as stream:
+        stream.write(json.dumps({"annotator_id": "37", "script_version": "stage1_legacy"}) + "\n")
+    mixed = chain._active_time_provenance(log)
+    assert mixed["status"] == "auxiliary_mixed_or_legacy"
+    assert mixed["observed"]["active_time_schema_version"]["<missing>"] == 1
+    assert mixed["worker_provenance"]["30"]["status"] == "auxiliary_available"
+    assert mixed["worker_provenance"]["37"]["status"] == "auxiliary_mixed_or_legacy"
+    assert mixed["source_aggregate_sha256"] != available["source_aggregate_sha256"]
+    assert chain._active_time_provenance(None)["status"] == "not_evaluable"
 
 
 def test_runtime_mapping_namespaces_planned_tasks_but_rejects_internal_and_cross_server_collisions(tmp_path: Path) -> None:

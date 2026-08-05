@@ -219,7 +219,9 @@ def materialize(
     if len(submitted) != len(submitted_set):
         raise ValueError("C2-B duplicate/revision disposition is unresolved")
     reference_review = None
-    if input_status == "formal" and reference_conflict_review_record is not None:
+    if input_status == "formal":
+        if reference_conflict_review_record is None:
+            raise ValueError("formal C2-B closeout requires reference_conflict_review_record")
         affected_base_task_ids = {
             str(row.get("base_task_id") or row.get("task_id") or "").strip()
             for row in assignments

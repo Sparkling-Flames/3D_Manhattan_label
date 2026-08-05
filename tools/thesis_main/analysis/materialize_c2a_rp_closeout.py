@@ -178,6 +178,9 @@ def materialize(
     if (c2b.get("method_contract_version") != method["contract_version"]
             or c2b.get("method_contract_sha256") != method_sha):
         raise ValueError("C2-B closeout method contract SHA is stale")
+    if (c2b.get("reference_conflict_review_closed") is not True
+            or not _text(c2b.get("reference_conflict_review_record_sha256"))):
+        raise ValueError("C2-A-RP requires closed reference conflict review")
 
     plan = _rows(precision_plan_csv)
     assignments = _rows(assignment_manifest_csv)

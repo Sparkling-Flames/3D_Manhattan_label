@@ -18,7 +18,14 @@ def _csv(path: Path, fields: list[str], rows: list[dict[str, str]]) -> Path:
     return path
 
 
-def _case(tmp_path: Path, *, assignments: list[dict[str, str]], submissions: list[dict[str, str]], profiles: list[dict[str, str]]) -> Path:
+def _case(
+    tmp_path: Path,
+    *,
+    assignments: list[dict[str, str]],
+    submissions: list[dict[str, str]],
+    profiles: list[dict[str, str]],
+    reference_review: bool = True,
+) -> Path:
     tmp_path.mkdir(parents=True, exist_ok=True)
     fields = ["worker_id", "task_id", "c2_component", "assignment_batch_id", "task_stratum"]
     assignment = _csv(tmp_path / "assignment.csv", fields, assignments)
@@ -126,10 +133,36 @@ def _case(tmp_path: Path, *, assignments: list[dict[str, str]], submissions: lis
         "manifest_version": "c2b_post_profile_v1", "profile_version": "p1", "cohort_id": "c1",
         "input_sha256": actual, "output_sha256": {},
     }), encoding="utf-8")
+    review = None
+    if reference_review:
+        review = tmp_path / "reference_review.csv"
+        review_fields = [
+            "schema_version", "base_task_id", "registry_status_before_review", "reference_status_before_review",
+            "reference_normalizer_status_before_review", "geometry_reference_ready_before_review", "review_status",
+            "review_disposition", "reviewer_blinding", "review_evidence", "reviewed_by", "reviewed_at",
+            "original_reference_sha256", "method_contract_sha256",
+        ]
+        with review.open("w", encoding="utf-8", newline="") as stream:
+            writer = csv.DictWriter(stream, fieldnames=review_fields)
+            writer.writeheader()
+            for row in assignments:
+                writer.writerow({
+                    "schema_version": "paper_a_reference_conflict_review_record_v2",
+                    "base_task_id": row["task_id"],
+                    "registry_status_before_review": "approved_by_frozen_reference_policy",
+                    "reference_status_before_review": "use_existing_public_gt_as_is",
+                    "reference_normalizer_status_before_review": "passed",
+                    "geometry_reference_ready_before_review": "true",
+                    "review_status": "closed", "review_disposition": "retain_original",
+                    "reviewer_blinding": "worker_and_analysis_metric_blinded",
+                    "review_evidence": "manual_scene_review_record", "reviewed_by": "reviewer-1",
+                    "reviewed_at": "2026-08-05T12:00:00Z", "original_reference_sha256": "a" * 64,
+                    "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+                })
     output = tmp_path / "closeout.json"
     materialize(
         submission, profile, manifest, design, snapshot, assignment, roster, rules,
-        launch, runtime, private, output,
+        launch, runtime, private, output, reference_conflict_review_record=review,
     )
     return output
 
@@ -228,3 +261,14 @@ def test_unassigned_or_duplicate_submission_fails(tmp_path: Path) -> None:
         _case(tmp_path / "unassigned", assignments=assignment, submissions=[{"worker_id": "w1", "task_id": "other"}], profiles=[_profile("w1")])
     with pytest.raises(ValueError, match="duplicate/revision"):
         _case(tmp_path / "duplicate", assignments=assignment, submissions=[{"worker_id": "w1", "task_id": "t1"}, {"worker_id": "w1", "task_id": "t1"}], profiles=[_profile("w1")])
+
+
+def test_formal_closeout_requires_reference_review_record(tmp_path: Path) -> None:
+    with pytest.raises(ValueError, match="formal C2-B closeout requires reference_conflict_review_record"):
+        _case(
+            tmp_path,
+            assignments=[{"worker_id": "w1", "task_id": "t1", "c2_component": "common_anchor", "assignment_batch_id": "C2B_BATCH_A", "task_stratum": "ordinary"}],
+            submissions=[{"worker_id": "w1", "task_id": "t1"}],
+            profiles=[_profile("w1")],
+            reference_review=False,
+        )

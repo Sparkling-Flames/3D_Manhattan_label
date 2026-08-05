@@ -25,6 +25,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import C2A_ASSIGNMENT_FIELDS, materialize as materialize_c2a_rp
+from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry, normalize_ordered_reference_geometry
 from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import _fit_crossed_model
 from tools.thesis_main.analysis.materialize_c2b_closeout import materialize as materialize_c2b_closeout
@@ -39,6 +40,9 @@ from tools.thesis_main.analysis.worker_identity import normalize_worker_id
 CHAIN_SCHEMA = "paper_a_c2b_c2a_rp_chain_v1"
 RISK_EVIDENCE_SCHEMA = "c2b_canonical_risk_slope_evidence_v1"
 FORMAL_MODES = {"precloseout_rehearsal", "formal"}
+C2PLUS_ACTIVE_TIME_SCRIPT_VERSION = "c2plus_task_worker_active_time_20260802_v2"
+C2PLUS_ACTIVE_TIME_SCHEMA_VERSION = "c2plus_task_worker_v1"
+C2PLUS_ACTIVE_TIME_IDENTITY_LEVEL = "project_runtime_task_worker"
 
 
 def _text(value: Any) -> str:
@@ -159,6 +163,107 @@ def _prepare_c2a_decision_manifest(
 
 def _sha(path: Path) -> str:
     return sha256_file(path)
+
+
+def _active_time_provenance(active_log: Path | None) -> dict[str, Any]:
+    """Summarize C2 timing input without making it part of primary analysis."""
+    expected = {
+        "script_version": C2PLUS_ACTIVE_TIME_SCRIPT_VERSION,
+        "active_time_schema_version": C2PLUS_ACTIVE_TIME_SCHEMA_VERSION,
+        "active_time_identity_level": C2PLUS_ACTIVE_TIME_IDENTITY_LEVEL,
+    }
+    if active_log is None:
+        return {"status": "not_evaluable", "reason": "no_active_log", "expected": expected, "worker_provenance": {}}
+
+    root, files = resolve_active_log_files(active_log)
+    file_manifest: list[dict[str, Any]] = []
+    for path in files:
+        try:
+            relative = path.resolve().relative_to(root.resolve()).as_posix() if root else path.name
+        except (OSError, ValueError):
+            relative = path.name
+        file_manifest.append({
+            "relative_path": relative,
+            "size": path.stat().st_size,
+            "sha256": _sha(path),
+        })
+    file_manifest.sort(key=lambda row: row["relative_path"])
+    aggregate = hashlib.sha256(
+        json.dumps(file_manifest, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
+    ).hexdigest() if file_manifest else ""
+
+    counters = {key: Counter() for key in expected}
+    worker_event_counts: Counter[str] = Counter()
+    worker_current_event_counts: Counter[str] = Counter()
+    worker_counters: dict[str, dict[str, Counter[str]]] = {}
+    event_count = 0
+    parse_error_count = 0
+    for path in files:
+        try:
+            lines = path.open(encoding="utf-8", errors="replace")
+        except OSError:
+            parse_error_count += 1
+            continue
+        with lines:
+            for line in lines:
+                if not line.strip():
+                    continue
+                try:
+                    event = json.loads(line)
+                except json.JSONDecodeError:
+                    parse_error_count += 1
+                    continue
+                if not isinstance(event, dict):
+                    parse_error_count += 1
+                    continue
+                event_count += 1
+                for key in expected:
+                    counters[key][_text(event.get(key)) or "<missing>"] += 1
+                worker = normalize_worker_id(event.get("annotator_id"))
+                if worker:
+                    worker_event_counts[worker] += 1
+                    worker_counters.setdefault(worker, {key: Counter() for key in expected})
+                    current_payload = True
+                    for key in expected:
+                        value = _text(event.get(key)) or "<missing>"
+                        worker_counters[worker][key][value] += 1
+                        current_payload = current_payload and value == expected[key]
+                    if current_payload:
+                        worker_current_event_counts[worker] += 1
+
+    observed = {key: dict(sorted(counter.items())) for key, counter in counters.items()}
+    if not files or event_count == 0:
+        status, reason = "not_evaluable", "no_parseable_events"
+    elif parse_error_count or any(set(counters[key]) != {expected[key]} for key in expected):
+        status, reason = "auxiliary_mixed_or_legacy", "legacy_unknown_or_mixed_payload"
+    else:
+        status, reason = "auxiliary_available", "current_c2plus_payload"
+    worker_provenance = {}
+    for worker in sorted(worker_event_counts):
+        total = worker_event_counts[worker]
+        current = worker_current_event_counts[worker]
+        worker_provenance[worker] = {
+            "status": "auxiliary_available" if current == total else "auxiliary_mixed_or_legacy",
+            "reason": "current_c2plus_payload" if current == total else "worker_has_legacy_or_mixed_payload",
+            "raw_event_count": total,
+            "current_c2plus_event_count": current,
+            "legacy_or_mixed_event_count": total - current,
+            "observed": {key: dict(sorted(counter.items())) for key, counter in worker_counters[worker].items()},
+        }
+    return {
+        "status": status,
+        "reason": reason,
+        "source_path": str(Path(active_log).resolve()),
+        "source_root": str(root.resolve()) if root else "",
+        "source_file_count": len(files),
+        "source_files": file_manifest,
+        "source_aggregate_sha256": aggregate,
+        "raw_event_count": event_count,
+        "parse_error_count": parse_error_count,
+        "observed": observed,
+        "expected": expected,
+        "worker_provenance": worker_provenance,
+    }
 
 
 def _method_identity() -> dict[str, str]:
@@ -372,6 +477,7 @@ def _canonicalize_deployments(
     rows: list[dict[str, Any]] = []
     summaries: dict[str, Any] = {}
     for deployment_id, export_path in exports.items():
+        timing_provenance = _active_time_provenance(active_logs.get(deployment_id))
         raw_tasks = _load_export_payload(export_path)
         data_by_runtime = {
             (_text(task.get("project") or task.get("project_id")), _text(task.get("id") or task.get("task_id"))): task.get("data", {})
@@ -402,11 +508,12 @@ def _canonicalize_deployments(
         canonical, duplicate, summary = build_canonical_tables(
             [export_path], active_logs.get(deployment_id), duplicate_review_mode=True, round_id="C2-B",
         )
-        timing_status = "auxiliary_available" if active_logs.get(deployment_id) is not None else "not_evaluable"
+        timing_status = timing_provenance["status"]
         summaries[deployment_id] = {
             **summary, "n_duplicate_rows": len(duplicate),
             "active_log_present": active_logs.get(deployment_id) is not None,
             "timing_status": timing_status,
+            "timing_provenance": timing_provenance,
         }
         for row in canonical:
             worker = normalize_worker_id(row.get("annotator_id", ""))
@@ -442,7 +549,7 @@ def _canonicalize_deployments(
                 "ordered_geometry": ordered_geometry_by_annotation.get(
                     (project, runtime_task, worker, _text(row.get("annotation_id"))), ""
                 ),
-                "timing_status": timing_status if active_logs.get(deployment_id) is None else "auxiliary_available",
+                "timing_status": timing_status,
             })
     keys = [(row["worker_id"], row["planned_task_id"]) for row in rows]
     if len(keys) != len(set(keys)):
@@ -1042,6 +1149,11 @@ def run_chain(
             c2a_summary_path=c2a_dir / "precision_plan_C2A_RP.summary.json",
         )
         package = _relocate_paths(package, staging, output_dir)
+        input_sha256 = {name: _sha(path) for name, path in chain_input_paths.items()}
+        for deployment_id, summary in canonical_summary.items():
+            key = f"active_log:{deployment_id}"
+            if key in input_sha256:
+                input_sha256[key] = _text((summary.get("timing_provenance") or {}).get("source_aggregate_sha256"))
         result = {
             "schema_version": CHAIN_SCHEMA,
             "artifact_role": "C2B_TO_C2A_RP_CHAIN",
@@ -1059,6 +1171,7 @@ def run_chain(
             "worker_count": len(workers),
             "deployment_ids": sorted(deployments),
             "canonical_summary": canonical_summary,
+            "timing_provenance": {deployment_id: summary.get("timing_provenance", {}) for deployment_id, summary in canonical_summary.items()},
             "risk_slope_summary": risk_summary,
             "risk_model_scope": "C2B_CONFIRMATORY_CANONICAL_ONLY_FOR_C2A_RP",
             "reference_conflict_review_closed": closeout.get("reference_conflict_review_closed", False),
@@ -1081,7 +1194,7 @@ def run_chain(
             },
             "c2a_rp_summary": c2a_summary,
             "c2a_operational_package": package,
-            "input_sha256": {name: _sha(path) for name, path in chain_input_paths.items()},
+            "input_sha256": input_sha256,
         }
         _write_json(staging / "c2b_c2a_rp_chain_manifest.json", _relocate_paths(result, staging, output_dir))
         staging.rename(output_dir)

@@ -3,6 +3,8 @@
   "c1_candidate_screen": {
     "alignment_rows": 202,
     "candidate_count": 13,
+    "candidate_only": true,
+    "formal_ready": false,
     "inputs": [
       {
         "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_task_crowd_structure_C1.csv",
@@ -17,7 +19,7 @@
       {
         "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_gt_quality_analysis.csv",
         "role": "C1_GT_QUALITY",
-        "sha256": "68c6d64cad77e09e21e5689d5bc20b26ad6484ba1fd63e1fbf00466ab9b23e5e"
+        "sha256": "68c6d64cad77e09a21e5689d5bc20b26ad6484ba1fd63e1fbf00466ab9b23e5e"
       },
       {
         "path": "analysis_results/c2b_validation_static_20260802_v16/inputs/reference_registry.csv",
@@ -30,9 +32,9 @@
       "alignment_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_gt_cluster_alignment.csv",
       "alignment_sha256": "4bafd169cdee9445817ec504999a873bc4d32d91da007902fa9fc26c7d7fa4f3",
       "crowd_structure_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_geometry_consensus/geometry_task_crowd_structure_C1.csv",
-      "crowd_structure_sha256": "1f5b1a2058e2855a0a676463c0a12a74d9aee74555bc639e9fa6fb111f698c58",
+      "crowd_structure_sha256": "a59f2d9a369a3d225b4413bc6160b09c5bdfbdfa91a2475c1d95ae2d2aaec119",
       "queue_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_gt_conflict_review_queue.csv",
-      "queue_sha256": "352a3bbdaeec7cd34c6f83a28f3f924555e52e57122ee5dbd0d5b52678792093",
+      "queue_sha256": "f0cf3a40b7ef38ca60072fc91f677eaca0b61ad0f399a32433af51f4d49e7703",
       "trigger_summary_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_gt_conflict_trigger_summary.json",
       "trigger_summary_sha256": "ccad134f465c19b991b4c84097abf55bf5a837506c6271731ad55b4b954a1040"
     },
@@ -132,7 +134,7 @@
       "source_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/c1_candidate_screen/c1_gt_conflict_review_queue.csv",
       "source_sha256": "70ea62f83622d22aaff8c8b341800ce0d846a1290a9cd94a0b98d816c5c054f0",
       "target_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_gt_conflict_review_queue.csv",
-      "target_sha256": "352a3bbdaeec7cd34c6f83a28f3f924555e52e57122ee5dbd0d5b52678792093"
+      "target_sha256": "f0cf3a40b7ef38ca60072fc91f677eaca0b61ad0f399a32433af51f4d49e7703"
     },
     {
       "source_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v1/reference_conflict_review_record.csv",
@@ -150,7 +152,7 @@
       "source_path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_task_crowd_structure_C1.csv",
       "source_sha256": "5aa04db57efd9606a27d94d7718a62df52302854d5bc5de7d89d5edca0c2f090",
       "target_path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_geometry_consensus/geometry_task_crowd_structure_C1.csv",
-      "target_sha256": "1f5b1a2058e2855a0a676463c0a12a74d9aee74555bc639e9fa6fb111f698c58"
+      "target_sha256": "a59f2d9a369a3d225b4413bc6160b09c5bdfbdfa91a2475c1d95ae2d2aaec119"
     }
   ],
   "spot_check_selection": {

@@ -28,6 +28,27 @@ def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def _reference_review(tmp_path: Path) -> Path:
+    path = tmp_path / "reference_review.csv"
+    fields = [
+        "schema_version", "base_task_id", "registry_status_before_review", "reference_status_before_review",
+        "reference_normalizer_status_before_review", "geometry_reference_ready_before_review", "review_status",
+        "review_disposition", "reviewer_blinding", "review_evidence", "reviewed_by", "reviewed_at",
+        "original_reference_sha256", "method_contract_sha256",
+    ]
+    _csv(path, fields, [{
+        "schema_version": "paper_a_reference_conflict_review_record_v2", "base_task_id": "t1",
+        "registry_status_before_review": "approved_by_frozen_reference_policy",
+        "reference_status_before_review": "use_existing_public_gt_as_is",
+        "reference_normalizer_status_before_review": "passed", "geometry_reference_ready_before_review": "true",
+        "review_status": "closed", "review_disposition": "retain_original",
+        "reviewer_blinding": "worker_and_analysis_metric_blinded", "review_evidence": "manual_scene_review_record",
+        "reviewed_by": "reviewer-1", "reviewed_at": "2026-08-05T12:00:00Z",
+        "original_reference_sha256": "a" * 64, "method_contract_sha256": _sha(METHOD_CONTRACT),
+    }])
+    return path
+
+
 def _closeout_dependencies(tmp_path: Path, manifest_data: dict) -> tuple[Path, Path, Path, Path, Path, Path, Path]:
     paths = [
         tmp_path / "c1_closeout.json", tmp_path / "c2b_assignment.csv",
@@ -238,8 +259,10 @@ def test_formal_c2a_requires_bound_c2b_sha_and_real_task_pool(tmp_path: Path) ->
     closeout_deps = _closeout_dependencies(tmp_path, profile_manifest_data)
     profile_manifest.write_text(json.dumps(profile_manifest_data), encoding="utf-8")
     c2b = tmp_path / "c2b_closeout.summary.json"
+    review = _reference_review(tmp_path)
     materialize_c2b_closeout(
-        submissions, profile, profile_manifest, design_summary, *closeout_deps, c2b
+        submissions, profile, profile_manifest, design_summary, *closeout_deps, c2b,
+        reference_conflict_review_record=review,
     )
 
     with pytest.raises(ValueError, match="stale_or_unbound"):
@@ -285,8 +308,10 @@ def test_c2b_closeout_materializes_real_post_profile_sha_chain(tmp_path: Path) -
     closeout_deps = _closeout_dependencies(tmp_path, manifest_data)
     manifest.write_text(json.dumps(manifest_data), encoding="utf-8")
     output = tmp_path / "c2b_closeout.summary.json"
+    review = _reference_review(tmp_path)
     summary = materialize_c2b_closeout(
-        submissions, profile, manifest, design, *closeout_deps, output
+        submissions, profile, manifest, design, *closeout_deps, output,
+        reference_conflict_review_record=review,
     )
     assert summary["c2b_closeout_ready"] is True
     assert summary["post_c2b_worker_profile_sha256"] == _sha(profile)
@@ -295,5 +320,6 @@ def test_c2b_closeout_materializes_real_post_profile_sha_chain(tmp_path: Path) -
     profile.write_text("tampered", encoding="utf-8")
     with pytest.raises(ValueError, match="stale_or_unbound"):
         materialize_c2b_closeout(
-            submissions, profile, manifest, design, *closeout_deps, output
+            submissions, profile, manifest, design, *closeout_deps, output,
+            reference_conflict_review_record=review,
         )
