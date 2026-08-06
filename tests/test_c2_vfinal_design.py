@@ -122,6 +122,7 @@ def test_precision_adds_only_needed_paired_blocks_and_caps_uncertain(tmp_path: P
 
     assert rows["met"]["additional_blocks"] == "0"
     assert rows["fillable"]["ordinary_tasks"] == rows["fillable"]["stress_tasks"] == "2"
+    assert rows["fillable"]["declared_support_after"] == "12"
     assert rows["capped"]["additional_blocks"] == "2"
     assert rows["capped"]["routing_eligibility"] == "uncertain_fallback_global"
     assert rows["capped"]["unmet_reason"] == "target_not_met_at_frozen_cap"
@@ -183,11 +184,16 @@ def test_c2a_formal_dispatch_is_append_only_one_paired_block_at_a_time() -> None
         for index in range(2)
     ]
     first = build_precision_assignments(plan, tasks, manifest_sha="m", c2b_sha="c", profile_sha="p", dispatch_block_index=1, formal=True)
-    second = build_precision_assignments(plan, tasks, manifest_sha="m", c2b_sha="c", profile_sha="p", history_rows=first, dispatch_block_index=2, formal=True)
+    reestimated_plan = [{**plan[0], "current_support": 10}]
+    second = build_precision_assignments(reestimated_plan, tasks, manifest_sha="m", c2b_sha="c", profile_sha="p", history_rows=first, dispatch_block_index=2, formal=True)
     assert len(first) == len(second) == 2
     assert {row["block_index"] for row in first} == {1}
     assert {row["block_index"] for row in second} == {2}
     assert not {(row["worker_id"], row["task_id"]) for row in first} & {(row["worker_id"], row["task_id"]) for row in second}
+    assert [row["support_after"] for row in second] == [11, 12]
+    assert {row["paired_block_support_before"] for row in second} == {1}
+    assert {row["paired_block_support_after"] for row in second} == {2}
+    assert {row["effective_risk_slope_support_after"] for row in second} == {12}
 
 
 @pytest.mark.parametrize("blocks", [0, 1, 2])

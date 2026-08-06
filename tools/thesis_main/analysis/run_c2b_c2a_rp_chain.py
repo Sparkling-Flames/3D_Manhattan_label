@@ -165,7 +165,11 @@ def _sha(path: Path) -> str:
     return sha256_file(path)
 
 
-def _active_time_provenance(active_log: Path | None) -> dict[str, Any]:
+def _active_time_provenance(
+    active_log: Path | None,
+    *,
+    eligible_contexts: set[tuple[str, str, str]] | None = None,
+) -> dict[str, Any]:
     """Summarize C2 timing input without making it part of primary analysis."""
     expected = {
         "script_version": C2PLUS_ACTIVE_TIME_SCRIPT_VERSION,
@@ -173,7 +177,12 @@ def _active_time_provenance(active_log: Path | None) -> dict[str, Any]:
         "active_time_identity_level": C2PLUS_ACTIVE_TIME_IDENTITY_LEVEL,
     }
     if active_log is None:
-        return {"status": "not_evaluable", "reason": "no_active_log", "expected": expected, "worker_provenance": {}}
+        return {
+            "status": "not_evaluable", "reason": "no_active_log", "expected": expected,
+            "source_raw_event_count": 0, "raw_event_count": 0,
+            "forensic_excluded_event_count": 0, "forensic_excluded_reasons": {},
+            "worker_provenance": {},
+        }
 
     root, files = resolve_active_log_files(active_log)
     file_manifest: list[dict[str, Any]] = []
@@ -193,6 +202,14 @@ def _active_time_provenance(active_log: Path | None) -> dict[str, Any]:
     ).hexdigest() if file_manifest else ""
 
     counters = {key: Counter() for key in expected}
+    normalized_contexts = None if eligible_contexts is None else {
+        (_text(project), _text(task), normalize_worker_id(worker))
+        for project, task, worker in eligible_contexts
+    }
+    eligible_projects = {project for project, _task, _worker in normalized_contexts or set()}
+    eligible_workers = {worker for _project, _task, worker in normalized_contexts or set()}
+    forensic_excluded_reasons: Counter[str] = Counter()
+    source_event_count = 0
     worker_event_counts: Counter[str] = Counter()
     worker_current_event_counts: Counter[str] = Counter()
     worker_counters: dict[str, dict[str, Counter[str]]] = {}
@@ -216,6 +233,20 @@ def _active_time_provenance(active_log: Path | None) -> dict[str, Any]:
                 if not isinstance(event, dict):
                     parse_error_count += 1
                     continue
+                source_event_count += 1
+                if normalized_contexts is not None:
+                    project = _text(event.get("project_id"))
+                    task = _text(event.get("task_id"))
+                    worker = normalize_worker_id(event.get("annotator_id"))
+                    if (project, task, worker) not in normalized_contexts:
+                        if project not in eligible_projects:
+                            exclusion_reason = "unexpected_project"
+                        elif worker not in eligible_workers:
+                            exclusion_reason = "unexpected_worker"
+                        else:
+                            exclusion_reason = "unassigned_worker_task"
+                        forensic_excluded_reasons[exclusion_reason] += 1
+                        continue
                 event_count += 1
                 for key in expected:
                     counters[key][_text(event.get(key)) or "<missing>"] += 1
@@ -259,6 +290,9 @@ def _active_time_provenance(active_log: Path | None) -> dict[str, Any]:
         "source_files": file_manifest,
         "source_aggregate_sha256": aggregate,
         "raw_event_count": event_count,
+        "source_raw_event_count": source_event_count,
+        "forensic_excluded_event_count": sum(forensic_excluded_reasons.values()),
+        "forensic_excluded_reasons": dict(sorted(forensic_excluded_reasons.items())),
         "parse_error_count": parse_error_count,
         "observed": observed,
         "expected": expected,
@@ -477,7 +511,18 @@ def _canonicalize_deployments(
     rows: list[dict[str, Any]] = []
     summaries: dict[str, Any] = {}
     for deployment_id, export_path in exports.items():
-        timing_provenance = _active_time_provenance(active_logs.get(deployment_id))
+        deployment_contexts = {
+            (
+                _text(row.get("project_id")),
+                _text(row.get("runtime_task_id")),
+                normalize_worker_id(row.get("worker_id", "")),
+            )
+            for row in mapping_rows
+            if _text(row.get("deployment_id")) == deployment_id
+        }
+        timing_provenance = _active_time_provenance(
+            active_logs.get(deployment_id), eligible_contexts=deployment_contexts,
+        )
         raw_tasks = _load_export_payload(export_path)
         data_by_runtime = {
             (_text(task.get("project") or task.get("project_id")), _text(task.get("id") or task.get("task_id"))): task.get("data", {})
@@ -688,6 +733,70 @@ def _risk_slope_evidence(
     }
 
 
+def _build_observed_support_audit(
+    assignments: list[dict[str, Any]],
+    canonical_rows: list[dict[str, Any]],
+    evidence_rows: list[dict[str, Any]],
+) -> tuple[list[dict[str, Any]], dict[str, Any]]:
+    """Compare frozen planned support with observed estimand support per task."""
+    planned: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for row in assignments:
+        planned[_text(row.get("task_id"))].append(row)
+    submitted = {
+        (normalize_worker_id(row.get("worker_id", "")), _text(row.get("planned_task_id")))
+        for row in canonical_rows
+    }
+    valid = {
+        (normalize_worker_id(row.get("worker_id", "")), _text(row.get("planned_task_id")))
+        for row in canonical_rows if _truth(row.get("canonical_valid"))
+    }
+    qgt_eligible = {
+        (normalize_worker_id(row.get("worker_id", "")), _text(row.get("planned_task_id")))
+        for row in evidence_rows
+        if _truth(row.get("canonical_valid")) and _text(row.get("quality"))
+    }
+    risk_eligible = {
+        (normalize_worker_id(row.get("worker_id", "")), _text(row.get("planned_task_id")))
+        for row in evidence_rows if _truth(row.get("risk_slope_estimand_eligible"))
+    }
+    output: list[dict[str, Any]] = []
+    for task_id, task_rows in sorted(planned.items()):
+        workers = {normalize_worker_id(row.get("worker_id", "")) for row in task_rows}
+        task_keys = {(worker, task_id) for worker in workers}
+        submitted_count = len(task_keys & submitted)
+        valid_count = len(task_keys & valid)
+        risk_count = len(task_keys & risk_eligible)
+        first = task_rows[0]
+        output.append({
+            "schema_version": "c2b_observed_support_audit_v1",
+            "task_id": task_id,
+            "base_task_id": _text(first.get("base_task_id")) or task_id,
+            "c2_component": _text(first.get("c2_component")),
+            "task_stratum": _text(first.get("task_stratum")),
+            "planned_worker_support": len(workers),
+            "submitted_worker_support": submitted_count,
+            "canonical_valid_support": valid_count,
+            "Q_GT_eligible_support": len(task_keys & qgt_eligible),
+            "risk_slope_eligible_support": risk_count,
+            "missing_worker_ids": ";".join(sorted(workers - {worker for worker, task in submitted if task == task_id})),
+            "support_deficit": len(workers) - submitted_count,
+            "peer_support_status": "observed" if submitted_count >= 2 else "support_limited",
+            "risk_model_support_status": "observed" if risk_count else "not_evaluable",
+        })
+    summary = {
+        "schema_version": "c2b_observed_support_audit_v1",
+        "task_count": len(output),
+        "planned_worker_support_total": sum(row["planned_worker_support"] for row in output),
+        "submitted_worker_support_total": sum(row["submitted_worker_support"] for row in output),
+        "canonical_valid_support_total": sum(row["canonical_valid_support"] for row in output),
+        "risk_slope_eligible_support_total": sum(row["risk_slope_eligible_support"] for row in output),
+        "zero_submitted_support_task_count": sum(row["submitted_worker_support"] == 0 for row in output),
+        "one_submitted_support_task_count": sum(row["submitted_worker_support"] == 1 for row in output),
+        "support_deficit_task_count": sum(row["support_deficit"] > 0 for row in output),
+    }
+    return output, summary
+
+
 def _merge_post_profile(
     profile_path: Path,
     evidence: list[dict[str, Any]],
@@ -717,21 +826,24 @@ def _merge_post_profile(
     for row in rows:
         worker = normalize_worker_id(row.get("worker_id", ""))
         support_rows = by_worker.get(worker, [])
+        worker_slope = float(slopes.get(worker, math.nan)) if worker in slopes else math.nan
         worker_se = float(ses.get(worker, math.nan)) if worker in ses else math.nan
-        unified_sd = max((value for value in (worker_se, group_se, between) if math.isfinite(value)), default=math.nan)
+        estimated = bool(support_rows) and math.isfinite(worker_slope) and math.isfinite(worker_se)
+        unified_sd = max((value for value in (worker_se, group_se, between) if estimated and math.isfinite(value)), default=math.nan)
+        status = "estimated_crossed_model" if estimated else ("support_limited" if support_rows else "not_evaluable")
         row.update({
             "schema_version": "worker_profile_v2",
             "worker_id": worker,
-            "risk_slope": "" if worker not in slopes else slopes[worker],
-            "risk_slope_for_simulation": "" if worker not in slopes else slopes[worker],
-            "risk_slope_se": "" if not math.isfinite(worker_se) else worker_se,
+            "risk_slope": worker_slope if estimated else "",
+            "risk_slope_for_simulation": worker_slope if estimated else "",
+            "risk_slope_se": worker_se if estimated else "",
             "risk_slope_ci_half_width": "" if not math.isfinite(unified_sd) else 1.96 * unified_sd,
             "risk_slope_support": len(support_rows),
             "observed_risk_slope_support": len(support_rows),
             "ordinary_support_observed": sum(_text(item.get("task_stratum")) == "ordinary" for item in support_rows),
             "stress_support_observed": sum(_text(item.get("task_stratum")) == "stress" for item in support_rows),
-            "risk_slope_status": "estimated_crossed_model" if worker in slopes else str(fit.get("status", "not_evaluable")),
-            "c1_risk_slope_status": "estimated_from_C2B" if worker in slopes else str(fit.get("status", "not_evaluable")),
+            "risk_slope_status": status,
+            "c1_risk_slope_status": "estimated_from_C2B" if estimated else status,
             "support": len(support_rows),
             "ci_half_width": "" if not math.isfinite(unified_sd) else 1.96 * unified_sd,
             "risk_model_scope": "C2B_CONFIRMATORY_CANONICAL_ONLY_FOR_C2A_RP",
@@ -1058,6 +1170,11 @@ def run_chain(
         risk_evidence, risk_summary = _risk_slope_evidence(canonical, task_index, reference_index, reference_registry=reference_registry)
         risk_path = staging / "c2b_canonical_risk_slope_evidence.csv"
         _write_csv(risk_path, risk_evidence)
+        support_rows, support_summary = _build_observed_support_audit(assignment_rows, canonical, risk_evidence)
+        support_path = staging / "c2b_observed_support_audit.csv"
+        support_summary_path = staging / "c2b_observed_support_audit.summary.json"
+        _write_csv(support_path, support_rows)
+        _write_json(support_summary_path, support_summary)
         profile_path = staging / "post_c2b_worker_profile.csv"
         fit, profile_rows = _merge_post_profile(worker_profile, risk_evidence, output_path=profile_path)
         block_index = int(dispatch_block_index or 1)
@@ -1112,8 +1229,15 @@ def run_chain(
         closeout["c2b_submissions_sha256"] = _sha(canonical_path)
         closeout["post_c2b_worker_profile_sha256"] = _sha(profile_path)
         closeout["post_c2b_profile_manifest_sha256"] = _sha(profile_manifest_path)
+        closeout["observed_support_audit_sha256"] = _sha(support_path)
+        closeout["observed_support_audit_summary_sha256"] = _sha(support_summary_path)
+        closeout["observed_support_summary"] = support_summary
         closeout["method_contract_sha256"] = _sha(METHOD_CONTRACT)
         closeout["task_pool_sha256"] = task_pool_sha256
+        closeout.setdefault("dependencies", []).extend([
+            {"role": "C2B_OBSERVED_SUPPORT_AUDIT", "path": str(support_path.resolve()), "sha256": _sha(support_path)},
+            {"role": "C2B_OBSERVED_SUPPORT_AUDIT_SUMMARY", "path": str(support_summary_path.resolve()), "sha256": _sha(support_summary_path)},
+        ])
         closeout["formal_ready"] = bool(input_status == "formal" and closeout.get("formal_ready"))
         closeout["candidate_only"] = not closeout["formal_ready"]
         closeout = _relocate_paths(closeout, staging, output_dir)
@@ -1173,6 +1297,7 @@ def run_chain(
             "canonical_summary": canonical_summary,
             "timing_provenance": {deployment_id: summary.get("timing_provenance", {}) for deployment_id, summary in canonical_summary.items()},
             "risk_slope_summary": risk_summary,
+            "observed_support_summary": support_summary,
             "risk_model_scope": "C2B_CONFIRMATORY_CANONICAL_ONLY_FOR_C2A_RP",
             "reference_conflict_review_closed": closeout.get("reference_conflict_review_closed", False),
             "risk_model": fit,
@@ -1183,6 +1308,8 @@ def run_chain(
             "outputs": {
                 "canonical_submissions": str((output_dir / canonical_path.name).resolve()),
                 "risk_slope_evidence": str((output_dir / risk_path.name).resolve()),
+                "observed_support_audit": str((output_dir / support_path.name).resolve()),
+                "observed_support_audit_summary": str((output_dir / support_summary_path.name).resolve()),
                 "post_profile": str((output_dir / profile_path.name).resolve()),
                 "post_profile_manifest": str((output_dir / profile_manifest_path.name).resolve()),
                 "c2a_decision_manifest": str((output_dir / bound_manifest_path.name).resolve()),

@@ -209,7 +209,7 @@ def build_precision_plan(
             "unmet_reason": reason,
             "terminal_state": terminal_state,
             "fallback_action": "STRONG_GLOBAL" if terminal_state == "fallback_strong_global" else "",
-            "declared_support_after": int(support_raw) + int(blocks) if support_raw is not None else "",
+            "declared_support_after": int(support_raw) + 2 * int(blocks) if support_raw is not None else "",
             "observed_support_after": "",
             "ordinary_support_observed_after": "",
             "stress_support_observed_after": "",
@@ -278,6 +278,7 @@ def build_precision_assignments(
             )
         ]
         sequence = len(prior_c2a_rows)
+        new_sequence = 0
         eligible_by_stratum: dict[str, list[dict[str, str]]] = {}
         rng_by_stratum: dict[str, random.Random] = {}
         for stratum in ("ordinary", "stress"):
@@ -321,6 +322,8 @@ def build_precision_assignments(
                 task_support[task_id] += 1
                 seen_by_worker[worker].update((task_id, base_task_id))
                 sequence += 1
+                new_sequence += 1
+                block_offset = block_index - first_block
                 assignments.append({
                     "schema_version": assignment_schema,
                     "round_id": "C2-A-RP", "worker_id": worker,
@@ -333,8 +336,8 @@ def build_precision_assignments(
                     "formal_goal": plan.get("formal_goal", ""),
                     "precision_before": plan["current_ci_half_width"],
                     "support_before": plan["current_support"],
-                    "support_after": int(plan["current_support"]) + sequence,
-                    "declared_support_after": int(plan["current_support"]) + sequence,
+                    "support_after": int(plan["current_support"]) + new_sequence,
+                    "declared_support_after": int(plan["current_support"]) + new_sequence,
                     "selection_probability": 1 / eligible_count,
                     "conditional_inclusion_probability": 1 / eligible_count,
                     "selection_seed": selection_seed,
@@ -342,10 +345,10 @@ def build_precision_assignments(
                     "eligible_count_at_draw": eligible_count,
                     "task_support_before": support_before,
                     "task_support_after": support_before + 1,
-                    "paired_block_support_before": int(plan.get("paired_block_support_before") or 0),
-                    "paired_block_support_after": int(plan.get("paired_block_support_before") or 0) + block_index,
-                    "effective_risk_slope_support_before": int(plan["current_support"]),
-                    "effective_risk_slope_support_after": int(plan["current_support"]) + block_index,
+                    "paired_block_support_before": block_index - 1,
+                    "paired_block_support_after": block_index,
+                    "effective_risk_slope_support_before": int(plan["current_support"]) + 2 * block_offset,
+                    "effective_risk_slope_support_after": int(plan["current_support"]) + 2 * (block_offset + 1),
                     "design_manifest_sha256": manifest_sha,
                     "c2b_summary_sha256": c2b_sha,
                     "post_c2b_worker_profile_sha256": profile_sha,

@@ -302,8 +302,14 @@ def test_d8_identity_is_unchanged_and_c2b_to_c2a_rehearsal_is_replaceable(monkey
     assert all(item["timing_status"] == "auxiliary_available" for item in first["canonical_summary"].values())
     assert first["input_sha256"]["active_log:zh"] == first["timing_provenance"]["zh"]["source_aggregate_sha256"]
     assert first["input_sha256"]["active_log:zh"]
-    assert first["timing_provenance"]["zh"]["worker_provenance"]["30"]["current_c2plus_event_count"] > 0
-    assert first["timing_provenance"]["zh"]["worker_provenance"]["37"]["current_c2plus_event_count"] > 0
+    assert any(
+        item.get("worker_provenance", {}).get("30", {}).get("current_c2plus_event_count", 0) > 0
+        for item in first["timing_provenance"].values()
+    )
+    assert any(
+        item.get("worker_provenance", {}).get("37", {}).get("current_c2plus_event_count", 0) > 0
+        for item in first["timing_provenance"].values()
+    )
     assert first["task_pool_sha256"] == "211ea4260415918104685440b07ce72fc17113b1764913c9215c554df901c067"
     assert first["c2a_operational_package"]["append_only"]["block_index"] == 1
     assert (tmp_path / "chain_1" / "c2a_rp_operational" / "imports" / "c2a_rp_block_1_zh.json").is_file()
@@ -351,6 +357,87 @@ def test_c2_active_time_provenance_is_auxiliary_and_mixed_legacy_does_not_block(
     assert mixed["worker_provenance"]["37"]["status"] == "auxiliary_mixed_or_legacy"
     assert mixed["source_aggregate_sha256"] != available["source_aggregate_sha256"]
     assert chain._active_time_provenance(None)["status"] == "not_evaluable"
+
+
+def test_c2_active_time_provenance_scopes_to_frozen_worker_task_contexts(tmp_path: Path) -> None:
+    log = tmp_path / "active_times.jsonl"
+    current = {
+        "project_id": "76", "task_id": "3406", "annotator_id": "30",
+        "script_version": chain.C2PLUS_ACTIVE_TIME_SCRIPT_VERSION,
+        "active_time_schema_version": chain.C2PLUS_ACTIVE_TIME_SCHEMA_VERSION,
+        "active_time_identity_level": chain.C2PLUS_ACTIVE_TIME_IDENTITY_LEVEL,
+    }
+    rows = [
+        current,
+        {**current, "project_id": "66", "script_version": "legacy", "active_time_schema_version": "", "active_time_identity_level": ""},
+        {**current, "task_id": "3407"},
+        {**current, "annotator_id": "99"},
+    ]
+    log.write_text("\n".join(json.dumps(row) for row in rows) + "\n", encoding="utf-8")
+
+    result = chain._active_time_provenance(log, eligible_contexts={("76", "3406", "30")})
+
+    assert result["status"] == "auxiliary_available"
+    assert result["raw_event_count"] == 1
+    assert result["forensic_excluded_event_count"] == 3
+    assert result["forensic_excluded_reasons"] == {
+        "unexpected_project": 1,
+        "unexpected_worker": 1,
+        "unassigned_worker_task": 1,
+    }
+
+
+def test_post_profile_zero_support_worker_is_not_marked_estimated(monkeypatch, tmp_path: Path) -> None:
+    profile = tmp_path / "profile.csv"
+    _write_csv(profile, [
+        {"schema_version": "worker_profile_v2", "worker_id": "1", "global_policy_eligible": "true"},
+        {"schema_version": "worker_profile_v2", "worker_id": "27", "global_policy_eligible": "true"},
+    ])
+    evidence = [{
+        "worker_id": "1", "base_task_id": "t1", "building_id": "b1", "risk": 1,
+        "quality": 0.8, "task_stratum": "stress", "risk_slope_estimand_eligible": True,
+    }]
+    monkeypatch.setattr(chain, "_fit_crossed_model", lambda _records: {
+        "status": "estimated", "worker_slopes": {"1": 0.2}, "worker_slope_ses": {"1": 0.05},
+        "group_slope_se": 0.04, "between_worker_slope_sd": 0.03,
+    })
+
+    _fit, rows = chain._merge_post_profile(profile, evidence, output_path=tmp_path / "post.csv")
+    by_worker = {row["worker_id"]: row for row in rows}
+
+    assert by_worker["1"]["risk_slope_status"] == "estimated_crossed_model"
+    assert by_worker["27"]["risk_slope_status"] == "not_evaluable"
+    assert by_worker["27"]["risk_slope_support"] == 0
+    assert by_worker["27"]["risk_slope"] == ""
+    assert by_worker["27"]["risk_slope_se"] == ""
+    assert by_worker["27"]["risk_slope_ci_half_width"] == ""
+
+
+def test_observed_support_audit_separates_planned_submitted_valid_and_estimand_support() -> None:
+    assignments = [
+        {"worker_id": "1", "task_id": "t1", "base_task_id": "b1", "c2_component": "common_anchor", "task_stratum": "ordinary"},
+        {"worker_id": "2", "task_id": "t1", "base_task_id": "b1", "c2_component": "common_anchor", "task_stratum": "ordinary"},
+        {"worker_id": "1", "task_id": "t2", "base_task_id": "b2", "c2_component": "diverse_bridge", "task_stratum": "stress"},
+    ]
+    canonical = [
+        {"worker_id": "1", "planned_task_id": "t1", "canonical_valid": "true"},
+        {"worker_id": "2", "planned_task_id": "t1", "canonical_valid": "false"},
+    ]
+    evidence = [
+        {"worker_id": "1", "planned_task_id": "t1", "risk_slope_estimand_eligible": True},
+        {"worker_id": "2", "planned_task_id": "t1", "risk_slope_estimand_eligible": False},
+    ]
+
+    rows, summary = chain._build_observed_support_audit(assignments, canonical, evidence)
+    by_task = {row["task_id"]: row for row in rows}
+
+    assert by_task["t1"]["planned_worker_support"] == 2
+    assert by_task["t1"]["submitted_worker_support"] == 2
+    assert by_task["t1"]["canonical_valid_support"] == 1
+    assert by_task["t1"]["risk_slope_eligible_support"] == 1
+    assert by_task["t2"]["missing_worker_ids"] == "1"
+    assert by_task["t2"]["support_deficit"] == 1
+    assert summary["zero_submitted_support_task_count"] == 1
 
 
 def test_runtime_mapping_namespaces_planned_tasks_but_rejects_internal_and_cross_server_collisions(tmp_path: Path) -> None:
