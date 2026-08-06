@@ -1,0 +1,38 @@
+{
+  "artifact_role": "generated_subordinate",
+  "empirical_majority_oos_task_count": 7,
+  "empirical_scope_signal_task_count": 16,
+  "formal_scope_registry_conflict_count": 0,
+  "geometry_normalization_failure_count": 3,
+  "geometry_normalization_failures": [
+    {
+      "base_task_id": "S9hNv5qa7GM_0c2a97f049db4a429776940850fedf2e",
+      "reason": "geometry_normalization_failed",
+      "worker_id": "2"
+    },
+    {
+      "base_task_id": "pRbA3pwrgk9_8b07a4b08cf447abb246769d8dce8494",
+      "reason": "geometry_normalization_failed",
+      "worker_id": "12"
+    },
+    {
+      "base_task_id": "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+      "reason": "geometry_normalization_failed",
+      "worker_id": "28"
+    }
+  ],
+  "gt_reference_conflict_count": 1,
+  "gt_reference_pending_count": 1,
+  "gt_reference_pending_task_ids": [
+    "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d"
+  ],
+  "interpretation": {
+    "geometry": "three worker-submission geometry failures are excluded rows, not automatically GT conflicts",
+    "gt": "one declared reference conflict requires terminal blinded review",
+    "scope": "worker scope labels show disagreement, but the frozen registry has no scope conflict and the labels do not automatically override it"
+  },
+  "schema_version": "paper_a_c2b_gt_scope_resolution_audit_v1",
+  "scope_signals_are_formal_blocker": false,
+  "selected_scope_ready_count": 46,
+  "selected_task_count": 46
+}
