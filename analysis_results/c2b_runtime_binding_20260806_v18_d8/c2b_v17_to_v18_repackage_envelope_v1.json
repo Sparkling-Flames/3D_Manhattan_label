@@ -1,0 +1,188 @@
+{
+  "artifact_role": "C2B_V17_TO_V18_REPACKAGE_ENVELOPE_FROZEN",
+  "assignment_batch_id": "C2B_BATCH_A",
+  "assignment_mapping_path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\c2b_v17_to_v18_assignment_mapping.csv",
+  "assignment_mapping_sha256": "3785d045870761d65c996616876eb3bc6f6252462fe7d435017e25e7de36f9eb",
+  "changed_fields": [
+    "method_contract_version",
+    "method_contract_sha256",
+    "calibration_version",
+    "deployment_id",
+    "language_group",
+    "server_instance_id",
+    "project_id",
+    "launch_report_schema",
+    "planned_import_filename"
+  ],
+  "contract_role": "generated_subordinate",
+  "dependencies": [
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\c2b_selected_design_manifest_D8_v18.json",
+      "role": "TARGET_SELECTED_DESIGN_MANIFEST_V18",
+      "sha256": "9990cb38ebff8242af6c7a2f9aac2a89be20eeabec8347920837375c7e1d4ed7"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\c2b_worker_language_registry_v1.json",
+      "role": "TARGET_WORKER_LANGUAGE_REGISTRY",
+      "sha256": "2dd4e450ae5166d41b7f1fb7d00cffb8650dada76eebaa5d5a7504e21bb161e0"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\assignment_manifest_C2B.csv",
+      "role": "TARGET_ASSIGNMENT",
+      "sha256": "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\worker_distribution_C2B.csv",
+      "role": "TARGET_WORKER_DISTRIBUTION",
+      "sha256": "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\c2b_v17_to_v18_assignment_mapping.csv",
+      "role": "TARGET_ASSIGNMENT_MAPPING",
+      "sha256": "3785d045870761d65c996616876eb3bc6f6252462fe7d435017e25e7de36f9eb"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\c2b_worker_deployment_manifest_v1.json",
+      "role": "TARGET_DEPLOYMENT_MANIFEST",
+      "sha256": "978de459e617d2a19ee8a4f31b9e9d50d0c7241f49d09236dba22d52bbfee831"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\c2b_launch_ready_report.json",
+      "role": "TARGET_LAUNCH_REPORT_V4",
+      "sha256": "57c7a51087a60ff4c02f125ecdec91eeefe420c79eccc2b1e4361c0b161058b9"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\planned_imports\\c2b_D8_batch_a_import_zh_v18.json",
+      "role": "TARGET_PLANNED_IMPORT_c2b_zh",
+      "sha256": "1959ff80e0844f3f95989de246d44a28f35930d1f21f4e66734e33e960655643"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\planned_imports\\c2b_D8_batch_a_import_foreign_https_v18.json",
+      "role": "TARGET_PLANNED_IMPORT_c2b_en",
+      "sha256": "57c522cf8eccf761015f5a68ad261fd487ffb3fb35083e40ab8590bb56087456"
+    }
+  ],
+  "design_manifest_sha256": "92eb0b6a501a4af02b3379d10c01a6efa9e44153e9f44a748358dca50531d5ba",
+  "formal_ready": false,
+  "launch_ready": true,
+  "method_contract_mapping": {
+    "source": {
+      "contract_version": "paper_a_method_20260802_v17",
+      "sha256": "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c"
+    },
+    "target": {
+      "contract_version": "paper_a_method_20260803_v18",
+      "path": "D:\\Work\\HOHONET\\docs\\thesis_main\\PAPER_A_METHOD_CONTRACT_CURRENT.json",
+      "sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87"
+    }
+  },
+  "n_assignments": 176,
+  "n_tasks": 46,
+  "n_workers": 22,
+  "runtime_binding_status": "not_bound",
+  "schema_version": "paper_a_c2b_v17_to_v18_repackage_envelope_v1",
+  "selected_design_id": "D8",
+  "selected_design_sha": "f2b7cde8aadf29fb35a965ec49b434587feaa1c09863f74cf0e95e02e3462822",
+  "source_artifacts": [
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_build_20260802_v17_d8\\c2b_launch_ready_report.json",
+      "role": "SOURCE_V17_LAUNCH_REPORT_SINGLE_DEPLOYMENT",
+      "sha256": "3429e45061b2dba8af314495b6286c2ea38db6e9574aefd77253d8ae4334ec88"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_build_20260802_v17_d8\\assignment_manifest_C2B.csv",
+      "role": "SOURCE_V17_ASSIGNMENT",
+      "sha256": "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_build_20260802_v17_d8\\inputs\\c2b_selected_design_manifest_D8.json",
+      "role": "SOURCE_V17_SELECTED_DESIGN_MANIFEST",
+      "sha256": "1dea583ae7131170611ea22ceb1a7f8887ea9e4754dd89297a7fa2235631615f"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\import_json\\c2b\\c2b_D8_batch_a_import_zh.json",
+      "role": "SOURCE_V17_PLANNED_IMPORT_CHINESE",
+      "sha256": "3a30a85eb541edc6f2ab12d3999b95b989e717a4bca5870a0de08b51b67069c1"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\import_json\\c2b\\c2b_D8_batch_a_import_foreign_https.json",
+      "role": "SOURCE_V17_PLANNED_IMPORT_ENGLISH",
+      "sha256": "037c1ed748c359c6a4a54deef377b7432f4c53f957c55a934c670ceb36678c53"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_build_20260802_v17_d8\\worker_facing_release_C2B_D8\\internal\\worker_facing_distribution_index_C2B_D8.csv",
+      "role": "SOURCE_WORKER_LANGUAGE_DISTRIBUTION",
+      "sha256": "c330cba42a99aa92e72e5ba716bac4a947d33d7d3f24fdad2ab377615a7256ec"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_closeout_20260806_inputs\\c2b_migration_deployment_config_v1.json",
+      "role": "SOURCE_DEPLOYMENT_CONFIG",
+      "sha256": "cc7af580fdaa76b98d79e2138fe8a7c4b1dfc0479cab85c922beef6fa9bbf8c5"
+    }
+  ],
+  "source_assignment_sha256": "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c",
+  "source_method_contract_sha256": "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c",
+  "source_method_contract_version": "paper_a_method_20260802_v17",
+  "status": "prospective_repackage",
+  "target_artifacts": [
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\c2b_selected_design_manifest_D8_v18.json",
+      "role": "TARGET_SELECTED_DESIGN_MANIFEST_V18",
+      "sha256": "9990cb38ebff8242af6c7a2f9aac2a89be20eeabec8347920837375c7e1d4ed7"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\c2b_worker_language_registry_v1.json",
+      "role": "TARGET_WORKER_LANGUAGE_REGISTRY",
+      "sha256": "2dd4e450ae5166d41b7f1fb7d00cffb8650dada76eebaa5d5a7504e21bb161e0"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\assignment_manifest_C2B.csv",
+      "role": "TARGET_ASSIGNMENT",
+      "sha256": "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\worker_distribution_C2B.csv",
+      "role": "TARGET_WORKER_DISTRIBUTION",
+      "sha256": "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\c2b_v17_to_v18_assignment_mapping.csv",
+      "role": "TARGET_ASSIGNMENT_MAPPING",
+      "sha256": "3785d045870761d65c996616876eb3bc6f6252462fe7d435017e25e7de36f9eb"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\c2b_worker_deployment_manifest_v1.json",
+      "role": "TARGET_DEPLOYMENT_MANIFEST",
+      "sha256": "978de459e617d2a19ee8a4f31b9e9d50d0c7241f49d09236dba22d52bbfee831"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\c2b_launch_ready_report.json",
+      "role": "TARGET_LAUNCH_REPORT_V4",
+      "sha256": "57c7a51087a60ff4c02f125ecdec91eeefe420c79eccc2b1e4361c0b161058b9"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\planned_imports\\c2b_D8_batch_a_import_zh_v18.json",
+      "role": "TARGET_PLANNED_IMPORT_c2b_zh",
+      "sha256": "1959ff80e0844f3f95989de246d44a28f35930d1f21f4e66734e33e960655643"
+    },
+    {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2b_runtime_binding_20260806_v18_d8\\planned_imports\\c2b_D8_batch_a_import_foreign_https_v18.json",
+      "role": "TARGET_PLANNED_IMPORT_c2b_en",
+      "sha256": "57c522cf8eccf761015f5a68ad261fd487ffb3fb35083e40ab8590bb56087456"
+    }
+  ],
+  "target_assignment_sha256": "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c",
+  "target_method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+  "target_method_contract_version": "paper_a_method_20260803_v18",
+  "unchanged_fields": [
+    "selected_design_id",
+    "selected_design_sha",
+    "design_manifest_sha256",
+    "task_pool_sha256",
+    "assignment_batch_id",
+    "task_id",
+    "planned_task_id",
+    "task_collection",
+    "vis_3d"
+  ]
+}

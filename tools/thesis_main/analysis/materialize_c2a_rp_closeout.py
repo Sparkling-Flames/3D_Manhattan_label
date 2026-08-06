@@ -287,7 +287,10 @@ def materialize(
         history_seen.add(key)
         history_worker_tasks.add((worker, task))
         history_worker_bases.add((worker, base))
-        history_task_support[task] += 1
+        round_id = _text(row.get("round_id"))
+        if (not round_id or round_id == "C2-A-RP"
+                or _text(row.get("schema_version")) == assignment_schema):
+            history_task_support[task] += 1
     if any(count > 2 for count in history_task_support.values()):
         raise ValueError("C2-A-RP assignment history exceeds the frozen task support cap")
 

@@ -58,7 +58,7 @@ def _case(
     assignment = _csv(tmp_path / "assignment.csv", ["schema_version", "worker_id", "task_id", "base_task_id", "task_stratum", "block_index", "target_component", "gap_reason", "formal_goal", "task_support_after"], [
         {"schema_version": assignment_schema, "target_component": "risk_slope", "gap_reason": "target_not_met", "formal_goal": "risk_slope_precision", **row, "block_index": row.get("block_index", "1")} for row in assignments
     ])
-    history_path = _csv(tmp_path / "history.csv", ["worker_id", "task_id", "base_task_id"], history or [])
+    history_path = _csv(tmp_path / "history.csv", ["round_id", "worker_id", "task_id", "base_task_id"], history or [])
     submission = _csv(tmp_path / "submissions.csv", ["worker_id", "task_id"], submissions)
     profile = _csv(tmp_path / "profile.csv", ["worker_id", "profile_version", "cohort_id", "completion_status"], [{
         "worker_id": "w1", "profile_version": "p1", "cohort_id": "c1", "completion_status": profile_status,
@@ -165,6 +165,22 @@ def test_c2a_rp_rejects_six_tasks_and_support_over_cap(tmp_path: Path) -> None:
                 {"worker_id": "w3", "task_id": "new", "base_task_id": "old-2"},
             ],
         )
+
+
+def test_c2a_rp_prior_round_seen_history_does_not_consume_support_cap(tmp_path: Path) -> None:
+    output, _ = _case(
+        tmp_path, blocks=1,
+        assignments=[
+            {"worker_id": "w1", "task_id": "o1", "base_task_id": "o1", "task_stratum": "ordinary", "task_support_after": "1"},
+            {"worker_id": "w1", "task_id": "s1", "base_task_id": "s1", "task_stratum": "stress", "task_support_after": "1"},
+        ],
+        submissions=[], profile_status="closed_partial_usable",
+        history=[
+            {"round_id": "C2-B", "worker_id": "w2", "task_id": "o1", "base_task_id": "o1"},
+            {"round_id": "C2-B", "worker_id": "w3", "task_id": "o1", "base_task_id": "o1"},
+        ],
+    )
+    assert json.loads(output.read_text(encoding="utf-8"))["C2_A_RP_CLOSED"] is True
 
 
 def test_c2a_rp_refits_each_block_and_counts_only_observed_eligible_support(

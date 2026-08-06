@@ -267,10 +267,17 @@ def build_precision_assignments(
     task_support: dict[str, int] = defaultdict(int)
     for history in history_rows or []:
         task_id = safe(history.get("task_id"))
-        if task_id:
+        round_id = safe(history.get("round_id"))
+        if task_id and (
+            not round_id
+            or round_id == "C2-A-RP"
+            or safe(history.get("schema_version")) == assignment_schema
+        ):
             task_support[task_id] += 1
     for plan in precision_rows:
         worker = safe(plan.get("worker_id"))
+        if int(plan["additional_blocks"]) == 0:
+            continue
         prior_c2a_rows = [
             row for row in history_rows or []
             if safe(row.get("worker_id")) == worker and (

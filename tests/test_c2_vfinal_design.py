@@ -174,6 +174,20 @@ def test_c2a_task_support_cap_counts_prior_assignment_history() -> None:
         )
 
 
+def test_c2a_prior_round_seen_history_does_not_consume_c2a_support_cap() -> None:
+    assignments = build_precision_assignments(
+        [{"worker_id": "w1", "additional_blocks": 1, "ordinary_tasks": 1, "stress_tasks": 1, "current_ci_half_width": .2, "current_support": 8, "target_component": "risk_slope", "gap_reason": "target_not_met"}],
+        [{"task_id": "o1", "base_task_id": "o1", "task_stratum": "ordinary"}, {"task_id": "s1", "base_task_id": "s1", "task_stratum": "stress"}],
+        manifest_sha="m", c2b_sha="c", profile_sha="p",
+        history_rows=[
+            {"round_id": "C2-B", "worker_id": "w2", "task_id": "o1", "base_task_id": "o1"},
+            {"round_id": "C2-B", "worker_id": "w3", "task_id": "o1", "base_task_id": "o1"},
+        ],
+        max_task_support=2,
+    )
+    assert {row["task_id"] for row in assignments} == {"o1", "s1"}
+
+
 def test_c2a_assignment_rejects_current_cross_stratum_base_reuse() -> None:
     with pytest.raises(ValueError, match="insufficient C2-A-RP stress tasks"):
         build_precision_assignments(
@@ -208,6 +222,16 @@ def test_c2a_formal_dispatch_is_append_only_one_paired_block_at_a_time() -> None
     assert {row["paired_block_support_before"] for row in second} == {1}
     assert {row["paired_block_support_after"] for row in second} == {2}
     assert {row["effective_risk_slope_support_after"] for row in second} == {12}
+
+
+def test_c2a_block_dispatch_skips_zero_block_workers() -> None:
+    assignments = build_precision_assignments(
+        [{"worker_id": "w1", "additional_blocks": 0, "ordinary_tasks": 0, "stress_tasks": 0, "current_ci_half_width": "", "current_support": 0, "target_component": "risk_slope", "gap_reason": "precision_not_evaluable"}],
+        [{"task_id": "o1", "base_task_id": "o1", "task_stratum": "ordinary"}, {"task_id": "s1", "base_task_id": "s1", "task_stratum": "stress"}],
+        manifest_sha="m", c2b_sha="c", profile_sha="p",
+        dispatch_block_index=1, formal=True,
+    )
+    assert assignments == []
 
 
 @pytest.mark.parametrize("blocks", [0, 1, 2])

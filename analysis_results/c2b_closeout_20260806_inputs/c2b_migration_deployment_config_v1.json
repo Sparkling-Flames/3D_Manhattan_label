@@ -1,0 +1,23 @@
+{
+  "schema_version": "c2b_migration_deployment_config_v1",
+  "deployments": [
+    {
+      "deployment_id": "c2b_zh",
+      "language_group": "Chinese",
+      "server_instance_id": "labelstudio_http_175_178_71_217",
+      "server_url": "http://175.178.71.217:8000",
+      "project_id": "77",
+      "source_import_path": "import_json/c2b/c2b_D8_batch_a_import_zh.json",
+      "planned_import_filename": "c2b_D8_batch_a_import_zh_v18.json"
+    },
+    {
+      "deployment_id": "c2b_en",
+      "language_group": "English",
+      "server_instance_id": "labelstudio_https_sparkle0825",
+      "server_url": "https://label.sparkle0825.top",
+      "project_id": "76",
+      "source_import_path": "import_json/c2b/c2b_D8_batch_a_import_foreign_https.json",
+      "planned_import_filename": "c2b_D8_batch_a_import_foreign_https_v18.json"
+    }
+  ]
+}
