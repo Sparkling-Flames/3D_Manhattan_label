@@ -281,6 +281,96 @@ def _make_c2b_fixture(tmp_path: Path) -> dict[str, Path]:
     return {"assignment": assignment_path, "exports_zh": export_paths["zh"], "exports_foreign": export_paths["foreign"], "active": active_log, "deployment": manifest, "launch": launch, "mapping": mapping, "private": private_audit, "profile": profile, "c1": c1_snapshot, "roster": roster, "rule": rule, "eligibility": TASK_EVIDENCE, "reference": REFERENCE, "design": c2a_design, "threshold": threshold, "c2a_pool": c2a_pool, "design_summary": design_summary}
 
 
+def _make_formal_c2b_bindings(fixture: dict[str, Path], tmp_path: Path) -> None:
+    assignment_sha = _sha(fixture["assignment"])
+    method = load_method_contract()
+    method_sha = _sha(METHOD_CONTRACT)
+    selected_design_sha = "design-sha"
+    manifest = json.loads(fixture["deployment"].read_text(encoding="utf-8"))
+    launch = json.loads(fixture["launch"].read_text(encoding="utf-8"))
+    launch_by_id = {row["deployment_id"]: row for row in launch["deployments"]}
+    planned_hashes, runtime_hashes, runtime_counts, dependencies = {}, {}, {}, []
+    for deployment in manifest["deployments"]:
+        deployment_id = deployment["deployment_id"]
+        planned_path = Path(launch_by_id[deployment_id]["planned_import_path"])
+        planned = json.loads(planned_path.read_text(encoding="utf-8"))
+        for item in planned:
+            item["data"]["selected_design_sha"] = selected_design_sha
+        _write_json(planned_path, planned)
+        planned_sha = _sha(planned_path)
+        runtime_path = tmp_path / f"runtime_{deployment_id}.json"
+        _write_json(runtime_path, [
+            {**item, "id": f"runtime-{deployment_id}-{index}", "project": item["data"]["project_id"]}
+            for index, item in enumerate(planned, start=1)
+        ])
+        worker_registry_sha = hashlib.sha256((deployment_id + "-workers").encode()).hexdigest()
+        deployment.update({
+            "worker_registry_sha256": worker_registry_sha,
+            "method_contract_version": method["contract_version"], "method_contract_sha256": method_sha,
+            "assignment_sha256": assignment_sha, "selected_design_sha": selected_design_sha,
+            "planned_import_path": str(planned_path), "planned_import_sha256": planned_sha,
+        })
+        launch_by_id[deployment_id].update({
+            **{key: deployment[key] for key in (
+                "worker_registry_sha256", "method_contract_version", "method_contract_sha256",
+                "assignment_sha256", "selected_design_sha", "planned_import_path", "planned_import_sha256",
+            )},
+        })
+        planned_hashes[deployment_id] = planned_sha
+        runtime_hashes[deployment_id] = _sha(runtime_path)
+        runtime_counts[deployment_id] = len(planned)
+        dependencies.extend([
+            {"role": f"PLANNED_IMPORT_{deployment_id}", "path": str(planned_path), "sha256": planned_sha},
+            {"role": f"RUNTIME_EXPORT_{deployment_id}", "path": str(runtime_path), "sha256": _sha(runtime_path)},
+        ])
+    manifest.update({
+        "method_contract_version": method["contract_version"], "method_contract_sha256": method_sha,
+        "assignment_batch_id": "C2B_BATCH_A", "assignment_sha256": assignment_sha,
+    })
+    _write_json(fixture["deployment"], manifest)
+    launch.update({
+        "assignment_batch_id": "C2B_BATCH_A", "selected_design_sha": selected_design_sha,
+        "deployment_manifest_path": str(fixture["deployment"]),
+        "deployment_manifest_sha256": _sha(fixture["deployment"]),
+    })
+    _write_json(fixture["launch"], launch)
+    mapping_csv = fixture["mapping"]
+    runtime_audit = tmp_path / "runtime_audit.json"
+    _write_json(runtime_audit, {
+        "schema_version": "paper_a_c2b_runtime_mapping_audit_v2",
+        "method_contract_version": method["contract_version"], "method_contract_sha256": method_sha,
+        "formal_ready": True, "C2B_RUNTIME_BINDING_READY": True,
+        "assignment_batch_id": "C2B_BATCH_A", "selected_design_sha": selected_design_sha,
+        "deployment_manifest_sha256": _sha(fixture["deployment"]),
+        "deployment_ids": sorted(planned_hashes), "planned_import_sha256": planned_hashes,
+        "runtime_export_sha256": runtime_hashes, "runtime_mapping_path": str(mapping_csv),
+        "runtime_mapping_sha256": _sha(mapping_csv), "runtime_task_count": sum(runtime_counts.values()),
+        "runtime_task_count_by_deployment": runtime_counts, "worker_task_binding_count": 176,
+        "dependencies": [{"role": "RUNTIME_MAPPING", "path": str(mapping_csv), "sha256": _sha(mapping_csv)}, *dependencies],
+    })
+    fixture["mapping"] = runtime_audit
+    _write_json(fixture["private"], {
+        "schema_version": "paper_a_c2b_private_assignment_list_audit_v2",
+        "method_contract_version": method["contract_version"], "method_contract_sha256": method_sha,
+        "formal_ready": True, "private_assignment_list_audit_passed": True,
+        "assignment_batch_id": "C2B_BATCH_A", "assignment_manifest_sha256": assignment_sha,
+        "worker_distribution_sha256": assignment_sha,
+        "dependencies": [
+            {"role": "ASSIGNMENT_MANIFEST", "path": str(fixture["assignment"]), "sha256": assignment_sha},
+            {"role": "WORKER_DISTRIBUTION", "path": str(fixture["assignment"]), "sha256": assignment_sha},
+        ],
+    })
+    profile_rows = list(csv.DictReader(fixture["profile"].open(encoding="utf-8")))
+    for row in profile_rows:
+        row.update({
+            "enrollment_batch": "original", "Q_GT_estimable": "true", "reference_evaluable": "true",
+            "peer_task_support": "5", "LOO_medoid_status": "not_evaluable", "LOO_strict_status": "not_evaluable",
+            "peer_tiebreak_eligible": "true", "structural_gate_eligible": "true",
+            "F_struct_raw": "0", "F_struct_EB": "0", "F_struct_interval_lower": "0", "F_struct_interval_upper": "0.1",
+        })
+    _write_csv(fixture["profile"], profile_rows)
+
+
 def test_d8_identity_is_unchanged_and_c2b_to_c2a_rehearsal_is_replaceable(monkeypatch, tmp_path: Path) -> None:
     rows = list(csv.DictReader((D8 / "assignment_manifest_C2B.csv").open(encoding="utf-8")))
     identity, tasks, workers = chain._validate_assignment_identity(D8 / "assignment_manifest_C2B.csv", rows)
@@ -330,6 +420,72 @@ def test_d8_identity_is_unchanged_and_c2b_to_c2a_rehearsal_is_replaceable(monkey
     assert {row["planned_task_id"] for row in first_rows} == {row["planned_task_id"] for row in second_rows}
     assert first_rows[0]["source_export_sha256"] != second_rows[0]["source_export_sha256"]
     assert chain._resolve_active_logs({"zh": {"language_token": "zh"}, "foreign": {"language_token": "foreign"}}, shared=None, explicit={}) == {"zh": None, "foreign": None}
+
+
+def test_formal_chain_terminalizes_w027_eight_missing_and_excludes_it_from_block1(monkeypatch, tmp_path: Path) -> None:
+    fixture = _make_c2b_fixture(tmp_path)
+    _make_formal_c2b_bindings(fixture, tmp_path)
+    for key in ("exports_zh", "exports_foreign"):
+        payload = json.loads(fixture[key].read_text(encoding="utf-8"))
+        for task in payload:
+            task["annotations"] = [
+                annotation for annotation in task["annotations"]
+                if str(annotation.get("completed_by", {}).get("id")) != "27"
+            ]
+        _write_json(fixture[key], payload)
+    disposition = tmp_path / "terminal_disposition.csv"
+    _write_csv(disposition, [{
+        "worker_id": "27", "task_id": "", "terminal_status": "closed_partial_insufficient",
+        "missing_reason": "lost_to_followup_after_C1_before_C2B_completion",
+    }])
+    review = tmp_path / "reference_review.csv"
+    _write_csv(review, [{
+        "schema_version": "paper_a_reference_conflict_review_record_v2",
+        "base_task_id": "VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d",
+        "registry_status_before_review": "approved_by_frozen_reference_policy",
+        "reference_status_before_review": "use_existing_public_gt_as_is",
+        "reference_normalizer_status_before_review": "passed", "geometry_reference_ready_before_review": "true",
+        "review_status": "closed", "review_disposition": "retain_original",
+        "reviewer_blinding": "worker_and_analysis_metric_blinded", "review_evidence": "synthetic_test_fixture",
+        "reviewed_by": "test-reviewer", "reviewed_at": "2026-08-06T12:00:00Z",
+        "original_reference_sha256": "a" * 64, "method_contract_sha256": _sha(METHOD_CONTRACT),
+    }])
+    workers = {row["worker_id"] for row in csv.DictReader(fixture["profile"].open(encoding="utf-8"))}
+    active_workers = workers - {"27"}
+    monkeypatch.setattr(chain, "_fit_crossed_model", lambda records: {
+        "status": "estimated", "support": {"worker_id": 21, "base_task_id": 46, "building_id": 10, "risk": 20},
+        "worker_slopes": {worker: 0.1 for worker in active_workers},
+        "worker_slope_ses": {worker: 0.01 for worker in active_workers},
+        "group_slope_se": 0.01, "between_worker_slope_sd": 0.01,
+    })
+    monkeypatch.setattr(chain, "compute_layout_mask_iou_from_normalized_pairs", lambda _pred, _ref: (0.8, {}))
+
+    result = chain.run_chain(
+        zh_export=fixture["exports_zh"], foreign_export=fixture["exports_foreign"], exports={},
+        active_log=fixture["active"], deployment_active_logs={}, assignment=fixture["assignment"],
+        deployment_manifest=fixture["deployment"], launch_report=fixture["launch"], runtime_mapping=fixture["mapping"],
+        private_assignment_audit=fixture["private"], worker_profile=fixture["profile"], design_summary=fixture["design_summary"],
+        c1_snapshot=fixture["c1"], worker_roster=fixture["roster"], rule_config=fixture["rule"],
+        task_eligibility=fixture["eligibility"], reference_registry=fixture["reference"],
+        c2a_design_manifest=fixture["design"], threshold_manifest=fixture["threshold"], c2a_task_pool=fixture["c2a_pool"],
+        output_dir=tmp_path / "formal_chain", input_status="formal", terminal_disposition=disposition,
+        reference_conflict_review_record=review,
+    )
+
+    closeout = json.loads((tmp_path / "formal_chain" / "c2b_closeout_v2.json").read_text(encoding="utf-8"))
+    plan = {row["worker_id"]: row for row in csv.DictReader((tmp_path / "formal_chain" / "c2a_rp" / "precision_plan_C2A_RP.csv").open(encoding="utf-8"))}
+    block1 = list(csv.DictReader((tmp_path / "formal_chain" / "assignment_manifest_C2A_RP_block_1.csv").open(encoding="utf-8")))
+    operational = tmp_path / "formal_chain" / "c2a_rp_operational"
+    import_paths = list((operational / "imports").glob("*.json"))
+    runtime_rows = list(csv.DictReader((operational / "c2a_rp_runtime_mapping.csv").open(encoding="utf-8")))
+    w027_private = list(csv.DictReader((operational / "private_lists" / "worker_27_C2A_RP_block_1.csv").open(encoding="utf-8")))
+    assert result["formal_ready"] is True
+    assert (closeout["assigned_count"], closeout["submitted_count"], closeout["missing_count"]) == (176, 168, 8)
+    assert len(plan) == 22 and plan["27"]["terminal_state"] == "not_evaluable" and plan["27"]["additional_blocks"] == "0"
+    assert all(row["worker_id"] != "27" for row in block1)
+    assert len(import_paths) == 2 and all(json.loads(path.read_text(encoding="utf-8")) for path in import_paths)
+    assert all(row["worker_id"] != "27" for row in runtime_rows)
+    assert w027_private == []
 
 
 def test_c2_active_time_provenance_is_auxiliary_and_mixed_legacy_does_not_block(tmp_path: Path) -> None:
@@ -434,6 +590,7 @@ def test_observed_support_audit_separates_planned_submitted_valid_and_estimand_s
     assert by_task["t1"]["planned_worker_support"] == 2
     assert by_task["t1"]["submitted_worker_support"] == 2
     assert by_task["t1"]["canonical_valid_support"] == 1
+    assert by_task["t1"]["peer_support_status"] == "support_limited"
     assert by_task["t1"]["risk_slope_eligible_support"] == 1
     assert by_task["t2"]["missing_worker_ids"] == "1"
     assert by_task["t2"]["support_deficit"] == 1

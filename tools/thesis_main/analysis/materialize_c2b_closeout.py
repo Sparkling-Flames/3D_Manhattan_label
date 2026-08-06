@@ -264,6 +264,9 @@ def materialize(
             raise ValueError("C2-B missing disposition references a submitted task")
     if any(worker not in roster_ids for worker in worker_dispositions):
         raise ValueError("C2-B worker terminal disposition references an unknown worker")
+    missing_workers = {worker for worker, _task in missing}
+    if any(worker not in missing_workers for worker in worker_dispositions):
+        raise ValueError("C2-B worker terminal disposition covers no missing assignment")
     missing_dispositions: dict[tuple[str, str], dict[str, str]] = {}
     for worker, task in sorted(missing):
         disposition = exact_dispositions.get((worker, task)) or worker_dispositions.get(worker)

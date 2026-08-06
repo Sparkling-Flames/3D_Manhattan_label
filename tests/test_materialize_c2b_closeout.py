@@ -25,6 +25,7 @@ def _case(
     submissions: list[dict[str, str]],
     profiles: list[dict[str, str]],
     reference_review: bool = True,
+    terminal_dispositions: list[dict[str, str]] | None = None,
 ) -> Path:
     tmp_path.mkdir(parents=True, exist_ok=True)
     fields = ["worker_id", "task_id", "c2_component", "assignment_batch_id", "task_stratum"]
@@ -160,9 +161,17 @@ def _case(
                     "method_contract_sha256": sha256_file(METHOD_CONTRACT),
                 })
     output = tmp_path / "closeout.json"
+    terminal_disposition = None
+    if terminal_dispositions is not None:
+        terminal_disposition = _csv(
+            tmp_path / "terminal_disposition.csv",
+            ["worker_id", "task_id", "terminal_status", "missing_reason"],
+            terminal_dispositions,
+        )
     materialize(
         submission, profile, manifest, design, snapshot, assignment, roster, rules,
-        launch, runtime, private, output, reference_conflict_review_record=review,
+        launch, runtime, private, output, terminal_disposition_csv=terminal_disposition,
+        reference_conflict_review_record=review,
     )
     return output
 
@@ -206,6 +215,19 @@ def test_missing_without_terminal_disposition_still_fails(tmp_path: Path) -> Non
             tmp_path,
             assignments=[{"worker_id": "w1", "task_id": "t1", "c2_component": "common_anchor", "assignment_batch_id": "C2B_BATCH_A", "task_stratum": "ordinary"}],
             submissions=[], profiles=[_profile("w1", completion="in_progress")],
+        )
+
+
+def test_worker_terminal_disposition_must_cover_a_real_missing_assignment(tmp_path: Path) -> None:
+    with pytest.raises(ValueError, match="no missing assignment"):
+        _case(
+            tmp_path,
+            assignments=[{"worker_id": "w1", "task_id": "t1", "c2_component": "common_anchor", "assignment_batch_id": "C2B_BATCH_A", "task_stratum": "ordinary"}],
+            submissions=[{"worker_id": "w1", "task_id": "t1"}], profiles=[_profile("w1")],
+            terminal_dispositions=[{
+                "worker_id": "w1", "task_id": "", "terminal_status": "closed_partial_insufficient",
+                "missing_reason": "lost_to_followup_after_C1_before_C2B_completion",
+            }],
         )
 
 

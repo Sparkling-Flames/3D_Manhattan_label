@@ -184,7 +184,8 @@ def build_precision_plan(
                 if projected > target_half_width:
                     reason = "target_not_met_at_frozen_cap"
         met = not reason and projected is not None and projected <= target_half_width and blocks == 0
-        terminal_state = "target_met" if met else "pending_actual_reestimate" if formal and blocks else "fallback_strong_global" if reason else "target_met"
+        not_evaluable = reason in {"precision_not_evaluable", "process_or_independence_blocker"}
+        terminal_state = "target_met" if met else "not_evaluable" if not_evaluable else "pending_actual_reestimate" if formal and blocks else "fallback_strong_global" if reason else "target_met"
         _validate_c2a_rp_counts(
             blocks, blocks, blocks,
             max_tasks=max_tasks, max_additional_blocks=contract_max_blocks,
@@ -193,7 +194,7 @@ def build_precision_plan(
             "schema_version": precision_schema,
             "worker_id": worker,
             "target_component": target_component,
-            "gap_reason": safe(row.get("gap_reason")) or ("target_not_met" if blocks else "target_already_met"),
+            "gap_reason": safe(row.get("gap_reason")) or reason or ("target_not_met" if blocks else "target_already_met"),
             "formal_goal": _formal_goal() if formal else safe(row.get("formal_goal")) or target_component,
             "current_support": "" if support_raw is None else int(support_raw),
             "current_ci_half_width": "" if half_width is None else half_width,
@@ -205,10 +206,10 @@ def build_precision_plan(
             "stress_tasks": blocks,
             "projected_ci_half_width": "" if projected is None else projected,
             "precision_target_met": met,
-            "routing_eligibility": "eligible" if met else "pending_actual_reestimate" if formal and blocks else "uncertain_fallback_global",
+            "routing_eligibility": "eligible" if met else "not_evaluable" if not_evaluable else "pending_actual_reestimate" if formal and blocks else "uncertain_fallback_global",
             "unmet_reason": reason,
             "terminal_state": terminal_state,
-            "fallback_action": "STRONG_GLOBAL" if terminal_state == "fallback_strong_global" else "",
+            "fallback_action": "STRONG_GLOBAL" if terminal_state in {"fallback_strong_global", "not_evaluable"} else "",
             "declared_support_after": int(support_raw) + 2 * int(blocks) if support_raw is not None else "",
             "observed_support_after": "",
             "ordinary_support_observed_after": "",

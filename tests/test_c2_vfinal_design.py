@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import build_precision_assignments, materialize as materialize_c2a
+from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import build_precision_assignments, build_precision_plan, materialize as materialize_c2a
 from tools.thesis_main.analysis.materialize_c2b_closeout import materialize as materialize_c2b_closeout
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 
@@ -134,6 +134,20 @@ def test_precision_adds_only_needed_paired_blocks_and_caps_uncertain(tmp_path: P
     assert all(row["task_id"] for row in assignments)
     assert summary["searches_new_risk_family"] is False
     assert summary["modifies_c1"] is False
+
+
+def test_precision_plan_marks_zero_support_worker_not_evaluable() -> None:
+    row = build_precision_plan(
+        [{"worker_id": "27", "support": 0, "risk_slope_ci_half_width": ""}],
+        target_half_width=0.15, max_additional_blocks=2, manifest_sha="m", formal=True,
+    )[0]
+
+    assert row["gap_reason"] == "precision_not_evaluable"
+    assert row["unmet_reason"] == "precision_not_evaluable"
+    assert row["terminal_state"] == "not_evaluable"
+    assert row["routing_eligibility"] == "not_evaluable"
+    assert row["fallback_action"] == "STRONG_GLOBAL"
+    assert row["additional_blocks"] == row["ordinary_tasks"] == row["stress_tasks"] == 0
 
 
 def test_c2a_rp_manifest_cannot_override_four_task_contract_cap(tmp_path: Path) -> None:

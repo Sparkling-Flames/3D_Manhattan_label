@@ -582,6 +582,7 @@ def _canonicalize_deployments(
                 "server_url": deployments[deployment_id]["server_url"],
                 "runtime_task_id": runtime_task,
                 "planned_task_id": planned,
+                "task_id": planned,
                 "worker_id": worker,
                 "canonical_valid": str(bool(row.get("eligible_for_primary_analysis") and not row.get("parse_error"))).lower(),
                 "formal_assignment_eligible": "true",
@@ -780,7 +781,7 @@ def _build_observed_support_audit(
             "risk_slope_eligible_support": risk_count,
             "missing_worker_ids": ";".join(sorted(workers - {worker for worker, task in submitted if task == task_id})),
             "support_deficit": len(workers) - submitted_count,
-            "peer_support_status": "observed" if submitted_count >= 2 else "support_limited",
+            "peer_support_status": "observed" if valid_count >= 2 else "support_limited",
             "risk_model_support_status": "observed" if risk_count else "not_evaluable",
         })
     summary = {
