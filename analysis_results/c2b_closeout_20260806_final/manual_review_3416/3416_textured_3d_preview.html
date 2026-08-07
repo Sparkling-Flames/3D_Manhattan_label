@@ -1,0 +1,23 @@
+<!doctype html>
+<meta charset="utf-8">
+<title>3416 textured GT preview</title>
+<style>
+  html, body, iframe { width: 100%; height: 100%; margin: 0; border: 0; background: #111; }
+</style>
+<iframe id="viewer" src="/tools/label_studio/vis_3d.html"></iframe>
+<script>
+  const corners = [
+    {x:78,y_ceiling:191,y_floor:333}, {x:101,y_ceiling:176,y_floor:349},
+    {x:175,y_ceiling:207,y_floor:315}, {x:378,y_ceiling:214,y_floor:305},
+    {x:417,y_ceiling:206,y_floor:316}, {x:432,y_ceiling:213,y_floor:308},
+    {x:444,y_ceiling:211,y_floor:309}, {x:444.001,y_ceiling:200,y_floor:322},
+    {x:450,y_ceiling:199,y_floor:323}, {x:466,y_ceiling:212,y_floor:308},
+    {x:529,y_ceiling:211,y_floor:310}, {x:536,y_ceiling:196,y_floor:327},
+    {x:543,y_ceiling:196,y_floor:326}, {x:972,y_ceiling:164,y_floor:362},
+    {x:992,y_ceiling:162,y_floor:364}, {x:1001,y_ceiling:184,y_floor:340}
+  ];
+  viewer.addEventListener('load', () => viewer.contentWindow.postMessage({
+    type: 'update_layout', width: 1024, height: 512, corners,
+    imageUrl: location.origin + '/data/mp3d_layout/valid_no_occ/img/VFuaQ6m2Qom_ad4c387f8175498491966703c8441e0d.png'
+  }, '*'));
+</script>
