@@ -625,6 +625,24 @@ def _load_reference_index(path: Path) -> dict[str, dict[str, str]]:
     return {_text(row.get("base_task_id")) or _text(row.get("task_id")): row for row in rows if _text(row.get("base_task_id")) or _text(row.get("task_id"))}
 
 
+def _load_scope_index(path: Path | None) -> dict[str, dict[str, str]]:
+    if path is None:
+        return {}
+    rows = _read_csv(path)
+    if not rows:
+        raise ValueError(f"scope disposition is empty:{path}")
+    index: dict[str, dict[str, str]] = {}
+    for row in rows:
+        key = _text(row.get("base_task_id") or row.get("task_id"))
+        scope = _text(row.get("final_scope") or row.get("task_final_scope")).lower()
+        if not key or scope not in {"in_scope", "oos", "unresolved"}:
+            raise ValueError("scope disposition requires base_task_id and final_scope")
+        if key in index:
+            raise ValueError(f"scope disposition has duplicate task:{key}")
+        index[key] = row
+    return index
+
+
 def _points(path: Path) -> list[list[float]]:
     output = []
     for line in path.read_text(encoding="utf-8").splitlines():
@@ -642,6 +660,7 @@ def _risk_slope_evidence(
     reference_index: dict[str, dict[str, str]],
     *,
     reference_registry: Path,
+    scope_index: dict[str, dict[str, str]] | None = None,
 ) -> tuple[list[dict[str, Any]], dict[str, Any]]:
     evidence: list[dict[str, Any]] = []
     for row in canonical_rows:
@@ -656,7 +675,12 @@ def _risk_slope_evidence(
         quality = ""
         status = "not_evaluable"
         reason = ""
+        scope = (scope_index or {}).get(base_task) or (scope_index or {}).get(planned)
+        final_scope = _text((scope or {}).get("final_scope") or (scope or {}).get("task_final_scope")).lower()
         try:
+            if final_scope in {"oos", "unresolved"}:
+                reason = f"scope_{final_scope}"
+                raise LookupError(reason)
             pred_points = json.loads(_text(row.get("ordered_geometry") or row.get("canonical_geometry")))
             pred = normalize_geometry(pred_points)
             ref_path = _resolve_relative(reference.get("reference_path"), bases=(PROJECT_ROOT, reference_registry.parent))
@@ -685,6 +709,8 @@ def _risk_slope_evidence(
                 else:
                     quality = value
                     status = "eligible"
+        except LookupError:
+            pass
         except (OSError, TypeError, ValueError, json.JSONDecodeError) as exc:
             reason = f"geometry_or_reference_error:{type(exc).__name__}"
         try:
@@ -1079,6 +1105,7 @@ def run_chain(
     dispatch_block_index: int | None = None,
     terminal_disposition: Path | None = None,
     reference_conflict_review_record: Path | None = None,
+    scope_disposition: Path | None = None,
 ) -> dict[str, Any]:
     if input_status not in FORMAL_MODES:
         raise ValueError(f"unsupported input_status:{input_status}")
@@ -1087,6 +1114,8 @@ def run_chain(
     source_paths = [assignment, deployment_manifest, launch_report, runtime_mapping, private_assignment_audit, worker_profile, design_summary, c1_snapshot, worker_roster, rule_config, task_eligibility, reference_registry, c2a_design_manifest, threshold_manifest, c2a_task_pool]
     if reference_conflict_review_record is not None:
         source_paths.append(reference_conflict_review_record)
+    if scope_disposition is not None:
+        source_paths.append(scope_disposition)
     if any(not path.is_file() for path in source_paths):
         missing = [str(path) for path in source_paths if not path.is_file()]
         raise ValueError("missing chain input:" + ",".join(missing))
@@ -1149,6 +1178,8 @@ def run_chain(
     }
     if reference_conflict_review_record is not None:
         chain_input_paths["reference_conflict_review_record"] = reference_conflict_review_record
+    if scope_disposition is not None:
+        chain_input_paths["scope_disposition"] = scope_disposition
     chain_input_paths.update({f"export:{deployment_id}": path for deployment_id, path in export_paths.items()})
     chain_input_paths.update({f"active_log:{deployment_id}": path for deployment_id, path in active_paths.items() if path is not None})
     chain_input_paths.update({name: path for name, path in optional_inputs.items() if path is not None})
@@ -1168,7 +1199,11 @@ def run_chain(
         if not task_ids <= set(task_index):
             raise ValueError("D8 assignment contains a task outside the frozen C2-B task pool")
         reference_index = _load_reference_index(reference_registry)
-        risk_evidence, risk_summary = _risk_slope_evidence(canonical, task_index, reference_index, reference_registry=reference_registry)
+        scope_index = _load_scope_index(scope_disposition)
+        risk_evidence, risk_summary = _risk_slope_evidence(
+            canonical, task_index, reference_index,
+            reference_registry=reference_registry, scope_index=scope_index,
+        )
         risk_path = staging / "c2b_canonical_risk_slope_evidence.csv"
         _write_csv(risk_path, risk_evidence)
         support_rows, support_summary = _build_observed_support_audit(assignment_rows, canonical, risk_evidence)
@@ -1362,6 +1397,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--dispatch-block-index", type=int)
     parser.add_argument("--terminal-disposition", type=Path)
     parser.add_argument("--reference-conflict-review-record", type=Path)
+    parser.add_argument("--scope-disposition", type=Path)
     return parser
 
 
@@ -1381,6 +1417,7 @@ def main(argv: list[str] | None = None) -> int:
             dispatch_state=_path(args.dispatch_state) if args.dispatch_state else None, dispatch_block_index=args.dispatch_block_index,
             terminal_disposition=_path(args.terminal_disposition) if args.terminal_disposition else None,
             reference_conflict_review_record=_path(args.reference_conflict_review_record) if args.reference_conflict_review_record else None,
+            scope_disposition=_path(args.scope_disposition) if args.scope_disposition else None,
         )
     except Exception as exc:
         print(json.dumps({"schema_version": CHAIN_SCHEMA, "formal_ready": False, "launch_ready": False, "reason_code": f"blocked:{type(exc).__name__}", "reason": str(exc)}, ensure_ascii=False, indent=2))

@@ -364,6 +364,38 @@ def build_precision_assignments(
     return assignments
 
 
+def build_assignments_with_capacity_fallback(
+    precision_rows: list[dict[str, Any]],
+    task_rows: list[dict[str, str]],
+    **kwargs: Any,
+) -> tuple[list[dict[str, Any]], list[str]]:
+    """Dispatch the largest deterministic prefix that fits; fallback is normative."""
+    selected: list[dict[str, Any]] = []
+    fallback_workers: list[str] = []
+    for plan in precision_rows:
+        if int(plan.get("additional_blocks", 0) or 0) == 0:
+            continue
+        try:
+            build_precision_assignments([*selected, plan], task_rows, **kwargs)
+        except ValueError as exc:
+            if not str(exc).startswith("insufficient C2-A-RP "):
+                raise
+            worker = safe(plan.get("worker_id"))
+            fallback_workers.append(worker)
+            plan.update({
+                "additional_blocks": 0, "ordinary_tasks": 0, "stress_tasks": 0,
+                "declared_support_after": plan.get("current_support", ""),
+                "gap_reason": "pool_capacity_exhausted",
+                "routing_eligibility": "uncertain_fallback_global",
+                "unmet_reason": "pool_capacity_exhausted",
+                "terminal_state": "fallback_strong_global",
+                "fallback_action": "STRONG_GLOBAL",
+            })
+        else:
+            selected.append(plan)
+    return build_precision_assignments(selected, task_rows, **kwargs), fallback_workers
+
+
 def materialize(
     worker_profile_csv: Path,
     design_manifest: Path,
@@ -493,12 +525,13 @@ def materialize(
         and (not dispatch_state_workers or normalize_worker_id(row.get("worker_id", "")) not in dispatch_state_workers)
     ]
     assignments: list[dict[str, Any]] = []
+    capacity_fallback_workers: list[str] = []
     task_pool_valid = input_status != "formal"
     if task_pool_csv:
         expected_task_sha = safe(expected.get("c2a_task_pool_csv"))
         task_pool_valid = input_status != "formal" or expected_task_sha == sha256_file(task_pool_csv)
         if task_pool_valid:
-            assignments = build_precision_assignments(
+            assignments, capacity_fallback_workers = build_assignments_with_capacity_fallback(
                 dispatch_rows, read_csv(task_pool_csv), manifest_sha=manifest_sha,
                 c2b_sha=c2b_sha, profile_sha=actual_profile_sha,
                 history_rows=dispatch_history_rows,
@@ -551,6 +584,8 @@ def materialize(
         "n_workers_with_precision_additions": sum(int(row["additional_blocks"]) > 0 for row in dispatch_rows),
         "n_workers_planned_with_precision_additions": sum(int(row["additional_blocks"]) > 0 for row in rows),
         "n_workers_unmet_at_cap": sum(bool(row["unmet_reason"]) for row in rows),
+        "n_workers_capacity_fallback": len(capacity_fallback_workers),
+        "capacity_fallback_workers": capacity_fallback_workers,
         "n_assignments": len(assignments),
         "c2a_rp_ready": binding_valid and c2b_valid and task_pool_valid and history_valid and bool(rows) and (formal_goal == _formal_goal() if input_status == "formal" else True),
         "candidate_only": input_status != "formal",

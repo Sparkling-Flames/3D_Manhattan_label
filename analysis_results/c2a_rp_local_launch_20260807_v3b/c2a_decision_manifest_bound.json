@@ -1,0 +1,57 @@
+{
+  "artifact_role": "C2A_RP_PRECISION_DECISION_SOURCE",
+  "binding_map": {
+    "assignment_history_csv": {
+      "source_sha256": "",
+      "target_sha256": "6aaa0c91b4380f739ae0bf85e8e224902ed1d47489bb963043991f734446e424"
+    },
+    "c2a_task_pool_csv": {
+      "source_sha256": "",
+      "target_sha256": "ea9395a033830d44b27b37f127e871bcf64037ddebeb2bda5ecedd5ebe75bae4"
+    },
+    "method_contract_sha256": {
+      "source_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+      "target_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87"
+    },
+    "threshold_manifest": {
+      "source_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
+      "target_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f"
+    },
+    "worker_profile_csv": {
+      "source_sha256": "",
+      "target_sha256": "97bba6492b6e09316186f7f339d6a711ed83fa64294aec1e92d1d7964f7122a4"
+    }
+  },
+  "binding_mode": "post_c2b_profile_bound",
+  "bound_input_paths": {
+    "assignment_history_csv": "D:\\Work\\HOHONET\\analysis_results\\c2b_closeout_20260806_inputs\\c2a_rp_seen_history_through_c2b.csv",
+    "c2a_task_pool_csv": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_inputs_v2\\c2a_rp_task_pool_post_c2_local.csv",
+    "threshold_manifest": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c2b_derived_threshold_manifest.json",
+    "worker_profile_csv": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\post_c2b_worker_profile.csv"
+  },
+  "contract_role": "generated_subordinate",
+  "input_sha256": {
+    "assignment_history_csv": "6aaa0c91b4380f739ae0bf85e8e224902ed1d47489bb963043991f734446e424",
+    "c2a_task_pool_csv": "ea9395a033830d44b27b37f127e871bcf64037ddebeb2bda5ecedd5ebe75bae4",
+    "threshold_manifest": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
+    "worker_profile_csv": "97bba6492b6e09316186f7f339d6a711ed83fa64294aec1e92d1d7964f7122a4"
+  },
+  "manifest_version": "c2_design_v1",
+  "method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+  "method_contract_version": "paper_a_method_20260803_v18",
+  "precision": {
+    "formal_goal": "risk_slope_precision",
+    "max_additional_blocks": 2,
+    "max_task_support": 2,
+    "selection_seed": 20260724,
+    "target_ci_half_width": 0.012607928483052961,
+    "threshold_manifest_path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c2b_derived_threshold_manifest.json",
+    "threshold_manifest_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f"
+  },
+  "source_input_sha256": {},
+  "source_manifest_sha256": "9c0fb041d1536a3df81446999c62e488c28603343c94759d34241e4719d01f62",
+  "source_method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+  "source_method_contract_version": "paper_a_method_20260803_v18",
+  "threshold_manifest_path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c2b_derived_threshold_manifest.json",
+  "threshold_manifest_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f"
+}

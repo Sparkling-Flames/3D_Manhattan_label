@@ -597,6 +597,23 @@ def test_observed_support_audit_separates_planned_submitted_valid_and_estimand_s
     assert summary["zero_submitted_support_task_count"] == 1
 
 
+def test_risk_evidence_excludes_oos_before_reference_scoring(tmp_path: Path) -> None:
+    canonical = [{
+        "planned_task_id": "task-oos", "base_task_id": "task-oos", "worker_id": "1",
+        "canonical_annotation_id": "a1", "canonical_valid": "true", "ordered_geometry": "not-json",
+    }]
+    task = {"task-oos": {"building_id": "b1", "risk_design_score_A": "2", "risk_design_stratum": "stress"}}
+    reference = {"task-oos": {"geometry_reference_ready": "false"}}
+    rows, summary = chain._risk_slope_evidence(
+        canonical, task, reference, reference_registry=tmp_path / "reference.csv",
+        scope_index={"task-oos": {"final_scope": "oos"}},
+    )
+
+    assert summary["n_estimand_eligible"] == 0
+    assert rows[0]["eligibility_status"] == "not_evaluable"
+    assert rows[0]["ineligibility_reason"] == "scope_oos"
+
+
 def test_runtime_mapping_namespaces_planned_tasks_but_rejects_internal_and_cross_server_collisions(tmp_path: Path) -> None:
     fields = ["deployment_id", "project_id", "runtime_task_id", "planned_task_id", "worker_id", "server_instance_id"]
     allowed = tmp_path / "allowed.csv"

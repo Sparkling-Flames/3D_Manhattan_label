@@ -1,0 +1,52 @@
+{
+  "assignment_manifest_schema_version": "c2a_rp_assignment_manifest_v2",
+  "c2_a_rp_max_tasks_per_worker": 4,
+  "c2a_rp_ready": false,
+  "c2b_summary_sha256": "f2a6e65c175bb9b62de55b60b74d4c8a20ae1c64f8cba38947da602a614e2729",
+  "candidate_only": true,
+  "capacity_fallback_workers": [
+    "34",
+    "35",
+    "36",
+    "37",
+    "6",
+    "8"
+  ],
+  "dependency_binding_valid": false,
+  "design_manifest_sha256": "4edf5a39f38e6eb01a814dad6f728bb91be27f2162e33e3df6d4d5deffd5272c",
+  "diagnostic_goals_not_dispatchable": [
+    "top_k_boundary_precision",
+    "component_eligibility_precision"
+  ],
+  "dispatch_block_index": 1,
+  "dispatch_mode": "planned",
+  "dispatch_state_path": "",
+  "dispatch_state_sha256": "",
+  "existing_assignment_manifest_path": "",
+  "existing_assignment_manifest_sha256": "",
+  "formal_goal": "risk_slope_precision",
+  "interval_definition": {
+    "formula_id": "normal_95_max_unified_slope_sd",
+    "level": 0.95,
+    "multiplier": 1.96,
+    "reestimate_after_each_block": true
+  },
+  "launch_ready": false,
+  "max_additional_blocks": 2,
+  "max_task_support": 2,
+  "method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+  "method_contract_version": "paper_a_method_20260803_v18",
+  "modifies_c1": false,
+  "n_assignments": 28,
+  "n_workers": 22,
+  "n_workers_capacity_fallback": 6,
+  "n_workers_planned_with_precision_additions": 14,
+  "n_workers_unmet_at_cap": 8,
+  "n_workers_with_precision_additions": 14,
+  "precision_plan_schema_version": "c2a_rp_precision_plan_v2",
+  "searches_new_risk_family": false,
+  "task_pool_sha256": "ea9395a033830d44b27b37f127e871bcf64037ddebeb2bda5ecedd5ebe75bae4",
+  "threshold_manifest_path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c2b_derived_threshold_manifest.json",
+  "threshold_manifest_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
+  "worker_profile_sha256": "97bba6492b6e09316186f7f339d6a711ed83fa64294aec1e92d1d7964f7122a4"
+}

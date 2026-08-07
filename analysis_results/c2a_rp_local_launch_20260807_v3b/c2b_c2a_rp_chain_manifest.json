@@ -1,0 +1,1360 @@
+{
+  "artifact_role": "C2B_TO_C2A_RP_CHAIN",
+  "assignment_count": 176,
+  "assignment_sha256": "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c",
+  "c2a_assignment_history_sha256": "6aaa0c91b4380f739ae0bf85e8e224902ed1d47489bb963043991f734446e424",
+  "c2a_decision_binding_map": {
+    "assignment_history_csv": {
+      "source_sha256": "",
+      "target_sha256": "6aaa0c91b4380f739ae0bf85e8e224902ed1d47489bb963043991f734446e424"
+    },
+    "c2a_task_pool_csv": {
+      "source_sha256": "",
+      "target_sha256": "ea9395a033830d44b27b37f127e871bcf64037ddebeb2bda5ecedd5ebe75bae4"
+    },
+    "method_contract_sha256": {
+      "source_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+      "target_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87"
+    },
+    "threshold_manifest": {
+      "source_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
+      "target_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f"
+    },
+    "worker_profile_csv": {
+      "source_sha256": "",
+      "target_sha256": "97bba6492b6e09316186f7f339d6a711ed83fa64294aec1e92d1d7964f7122a4"
+    }
+  },
+  "c2a_decision_manifest_sha256": "4edf5a39f38e6eb01a814dad6f728bb91be27f2162e33e3df6d4d5deffd5272c",
+  "c2a_operational_package": {
+    "append_only": {
+      "block_assignment_sha256": "7151553b9a4d7985674f5c97baa1c0473141cab8a28c3887be2f7f68ec4d4f85",
+      "block_index": 1,
+      "full_assignment_manifest_sha256": "7151553b9a4d7985674f5c97baa1c0473141cab8a28c3887be2f7f68ec4d4f85",
+      "mode": "planned",
+      "prior_assignment_manifest_sha256": ""
+    },
+    "assignment_count": 28,
+    "assignment_sha256": "7151553b9a4d7985674f5c97baa1c0473141cab8a28c3887be2f7f68ec4d4f85",
+    "block_index": 1,
+    "c2a_assignment_manifest_sha256": "7151553b9a4d7985674f5c97baa1c0473141cab8a28c3887be2f7f68ec4d4f85",
+    "c2a_block_assignment_sha256": "7151553b9a4d7985674f5c97baa1c0473141cab8a28c3887be2f7f68ec4d4f85",
+    "c2a_precision_plan_sha256": "d0cc5fe7ee36cfbd8ecef627709e02b46ff6bedb63ba2c164c2347187ea7a2ad",
+    "c2a_task_pool_sha256": "ea9395a033830d44b27b37f127e871bcf64037ddebeb2bda5ecedd5ebe75bae4",
+    "c2b_summary_sha256": "f2a6e65c175bb9b62de55b60b74d4c8a20ae1c64f8cba38947da602a614e2729",
+    "deployments": {
+      "c2b_en": {
+        "deployment_id": "c2b_en",
+        "language_group": "English",
+        "planned_import_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\c2a_rp_operational\\imports\\c2a_rp_block_1_c2b_en.json",
+        "planned_import_sha256": "29c504e9570026006a08d4e2c6c4341a34ab8dc0d9c36def811315ac11a8a493",
+        "project_id": "76",
+        "server_instance_id": "labelstudio_https_sparkle0825",
+        "server_url": "https://label.sparkle0825.top",
+        "task_count": 10
+      },
+      "c2b_zh": {
+        "deployment_id": "c2b_zh",
+        "language_group": "Chinese",
+        "planned_import_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\c2a_rp_operational\\imports\\c2a_rp_block_1_c2b_zh.json",
+        "planned_import_sha256": "0538af44688eccbd847b8cc125e95baf564d12c531432f0819da81a876ac7073",
+        "project_id": "77",
+        "server_instance_id": "labelstudio_http_175_178_71_217",
+        "server_url": "http://175.178.71.217:8000",
+        "task_count": 13
+      }
+    },
+    "design_manifest_sha256": "4edf5a39f38e6eb01a814dad6f728bb91be27f2162e33e3df6d4d5deffd5272c",
+    "method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+    "method_contract_version": "paper_a_method_20260803_v18",
+    "post_c2b_worker_profile_sha256": "97bba6492b6e09316186f7f339d6a711ed83fa64294aec1e92d1d7964f7122a4",
+    "private_list_worker_count": 22,
+    "round_id": "C2-A-RP",
+    "runtime_mapping_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\c2a_rp_operational\\c2a_rp_runtime_mapping.csv",
+    "runtime_mapping_sha256": "4193359485e0b8f4d554d133669d66817ad7e3633de869048002d2605d3f699e",
+    "schema_version": "c2a_rp_operational_package_v1",
+    "task_pool_sha256": "ea9395a033830d44b27b37f127e871bcf64037ddebeb2bda5ecedd5ebe75bae4",
+    "threshold_manifest_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f"
+  },
+  "c2a_rp_summary": {
+    "assignment_manifest_schema_version": "c2a_rp_assignment_manifest_v2",
+    "c2_a_rp_max_tasks_per_worker": 4,
+    "c2a_rp_ready": false,
+    "c2b_summary_sha256": "f2a6e65c175bb9b62de55b60b74d4c8a20ae1c64f8cba38947da602a614e2729",
+    "candidate_only": true,
+    "capacity_fallback_workers": [
+      "34",
+      "35",
+      "36",
+      "37",
+      "6",
+      "8"
+    ],
+    "dependency_binding_valid": false,
+    "design_manifest_sha256": "4edf5a39f38e6eb01a814dad6f728bb91be27f2162e33e3df6d4d5deffd5272c",
+    "diagnostic_goals_not_dispatchable": [
+      "top_k_boundary_precision",
+      "component_eligibility_precision"
+    ],
+    "dispatch_block_index": 1,
+    "dispatch_mode": "planned",
+    "dispatch_state_path": "",
+    "dispatch_state_sha256": "",
+    "existing_assignment_manifest_path": "",
+    "existing_assignment_manifest_sha256": "",
+    "formal_goal": "risk_slope_precision",
+    "interval_definition": {
+      "formula_id": "normal_95_max_unified_slope_sd",
+      "level": 0.95,
+      "multiplier": 1.96,
+      "reestimate_after_each_block": true
+    },
+    "launch_ready": false,
+    "max_additional_blocks": 2,
+    "max_task_support": 2,
+    "method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+    "method_contract_version": "paper_a_method_20260803_v18",
+    "modifies_c1": false,
+    "n_assignments": 28,
+    "n_workers": 22,
+    "n_workers_capacity_fallback": 6,
+    "n_workers_planned_with_precision_additions": 14,
+    "n_workers_unmet_at_cap": 8,
+    "n_workers_with_precision_additions": 14,
+    "precision_plan_schema_version": "c2a_rp_precision_plan_v2",
+    "searches_new_risk_family": false,
+    "task_pool_sha256": "ea9395a033830d44b27b37f127e871bcf64037ddebeb2bda5ecedd5ebe75bae4",
+    "threshold_manifest_path": "D:\\Work\\HOHONET\\analysis_results\\c2b_validation_design_20260802_v17\\output\\c2b_derived_threshold_manifest.json",
+    "threshold_manifest_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
+    "worker_profile_sha256": "97bba6492b6e09316186f7f339d6a711ed83fa64294aec1e92d1d7964f7122a4"
+  },
+  "canonical_summary": {
+    "c2b_en": {
+      "active_log_present": true,
+      "n_canonical_rows": 80,
+      "n_duplicate_groups": 0,
+      "n_duplicate_rows": 0,
+      "n_duplicate_same_geometry_groups": 0,
+      "n_exports": 1,
+      "n_input_duplicate_rows": 0,
+      "n_pending_duplicate_review_groups": 0,
+      "n_raw_annotation_rows": 80,
+      "n_revision_groups": 0,
+      "n_tasks_seen": 23,
+      "timing_provenance": {
+        "expected": {
+          "active_time_identity_level": "project_runtime_task_worker",
+          "active_time_schema_version": "c2plus_task_worker_v1",
+          "script_version": "c2plus_task_worker_active_time_20260802_v2"
+        },
+        "forensic_excluded_event_count": 1009,
+        "forensic_excluded_reasons": {
+          "unassigned_worker_task": 161,
+          "unexpected_project": 826,
+          "unexpected_worker": 22
+        },
+        "observed": {
+          "active_time_identity_level": {
+            "<missing>": 263,
+            "project_runtime_task_worker": 1120
+          },
+          "active_time_schema_version": {
+            "<missing>": 263,
+            "c2plus_task_worker_v1": 1120
+          },
+          "script_version": {
+            "c2plus_task_worker_active_time_20260802_v2": 1120,
+            "stage1_active_time_annotation_hardening_20260701_v1": 16,
+            "stage1_helper_ordercache_hotfix_20260617_v1": 247
+          }
+        },
+        "parse_error_count": 0,
+        "raw_event_count": 1383,
+        "reason": "legacy_unknown_or_mixed_payload",
+        "source_aggregate_sha256": "dc099f254f7dd295e7a9a8c41bbf380034f270de61cf38b689218418d080d77d",
+        "source_file_count": 5,
+        "source_files": [
+          {
+            "relative_path": "active_times_2026-08-02.jsonl",
+            "sha256": "bcd20c1c4413f8cd0af643265a97ca22a4136f32ce2597d4fb20d8cd7ed0d91b",
+            "size": 69754
+          },
+          {
+            "relative_path": "active_times_2026-08-03.jsonl",
+            "sha256": "5db8741fcb5a13cfc045de22061f65f4c77406584b9dce04eec2bd8c3bb74831",
+            "size": 1083906
+          },
+          {
+            "relative_path": "active_times_2026-08-04.jsonl",
+            "sha256": "bbf9336843eae4e657ffd8e2c2bdaf08edd4ac93bcd429cfc0dcd96d15239b0e",
+            "size": 1083265
+          },
+          {
+            "relative_path": "active_times_2026-08-05.jsonl",
+            "sha256": "0d91160a8199e2ba305ce7bb7ef55e6b67e01cf91bf6b1c5ae308f0126906968",
+            "size": 196705
+          },
+          {
+            "relative_path": "active_times_2026-08-06.jsonl",
+            "sha256": "6cb0a2a8209bc6d12eae0595657943354febc4c74aa465e108637f02c13ab4f0",
+            "size": 282869
+          }
+        ],
+        "source_path": "D:\\Work\\HOHONET\\active_logs\\c2b",
+        "source_raw_event_count": 2392,
+        "source_root": "D:\\Work\\HOHONET\\active_logs\\c2b",
+        "status": "auxiliary_mixed_or_legacy",
+        "worker_provenance": {
+          "28": {
+            "current_c2plus_event_count": 71,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 71
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 71
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 71
+              }
+            },
+            "raw_event_count": 71,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "29": {
+            "current_c2plus_event_count": 120,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 120
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 120
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 120
+              }
+            },
+            "raw_event_count": 120,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "30": {
+            "current_c2plus_event_count": 215,
+            "legacy_or_mixed_event_count": 16,
+            "observed": {
+              "active_time_identity_level": {
+                "<missing>": 16,
+                "project_runtime_task_worker": 215
+              },
+              "active_time_schema_version": {
+                "<missing>": 16,
+                "c2plus_task_worker_v1": 215
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 215,
+                "stage1_active_time_annotation_hardening_20260701_v1": 16
+              }
+            },
+            "raw_event_count": 231,
+            "reason": "worker_has_legacy_or_mixed_payload",
+            "status": "auxiliary_mixed_or_legacy"
+          },
+          "31": {
+            "current_c2plus_event_count": 96,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 96
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 96
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 96
+              }
+            },
+            "raw_event_count": 96,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "32": {
+            "current_c2plus_event_count": 85,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 85
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 85
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 85
+              }
+            },
+            "raw_event_count": 85,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "33": {
+            "current_c2plus_event_count": 105,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 105
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 105
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 105
+              }
+            },
+            "raw_event_count": 105,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "34": {
+            "current_c2plus_event_count": 80,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 80
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 80
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 80
+              }
+            },
+            "raw_event_count": 80,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "35": {
+            "current_c2plus_event_count": 136,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 136
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 136
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 136
+              }
+            },
+            "raw_event_count": 136,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "36": {
+            "current_c2plus_event_count": 212,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 212
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 212
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 212
+              }
+            },
+            "raw_event_count": 212,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "37": {
+            "current_c2plus_event_count": 0,
+            "legacy_or_mixed_event_count": 247,
+            "observed": {
+              "active_time_identity_level": {
+                "<missing>": 247
+              },
+              "active_time_schema_version": {
+                "<missing>": 247
+              },
+              "script_version": {
+                "stage1_helper_ordercache_hotfix_20260617_v1": 247
+              }
+            },
+            "raw_event_count": 247,
+            "reason": "worker_has_legacy_or_mixed_payload",
+            "status": "auxiliary_mixed_or_legacy"
+          }
+        }
+      },
+      "timing_status": "auxiliary_mixed_or_legacy"
+    },
+    "c2b_zh": {
+      "active_log_present": true,
+      "n_canonical_rows": 80,
+      "n_duplicate_groups": 0,
+      "n_duplicate_rows": 0,
+      "n_duplicate_same_geometry_groups": 0,
+      "n_exports": 1,
+      "n_input_duplicate_rows": 0,
+      "n_pending_duplicate_review_groups": 0,
+      "n_raw_annotation_rows": 80,
+      "n_revision_groups": 0,
+      "n_tasks_seen": 27,
+      "timing_provenance": {
+        "expected": {
+          "active_time_identity_level": "project_runtime_task_worker",
+          "active_time_schema_version": "c2plus_task_worker_v1",
+          "script_version": "c2plus_task_worker_active_time_20260802_v2"
+        },
+        "forensic_excluded_event_count": 1645,
+        "forensic_excluded_reasons": {
+          "unassigned_worker_task": 13,
+          "unexpected_project": 1632
+        },
+        "observed": {
+          "active_time_identity_level": {
+            "<missing>": 301,
+            "project_runtime_task_worker": 446
+          },
+          "active_time_schema_version": {
+            "<missing>": 301,
+            "c2plus_task_worker_v1": 446
+          },
+          "script_version": {
+            "0.24-official": 165,
+            "c2plus_task_worker_active_time_20260802_v2": 446,
+            "stage1_active_time_annotation_hardening_20260701_v1": 135,
+            "stage1_helper_ordercache_hotfix_20260617_v1": 1
+          }
+        },
+        "parse_error_count": 0,
+        "raw_event_count": 747,
+        "reason": "legacy_unknown_or_mixed_payload",
+        "source_aggregate_sha256": "dc099f254f7dd295e7a9a8c41bbf380034f270de61cf38b689218418d080d77d",
+        "source_file_count": 5,
+        "source_files": [
+          {
+            "relative_path": "active_times_2026-08-02.jsonl",
+            "sha256": "bcd20c1c4413f8cd0af643265a97ca22a4136f32ce2597d4fb20d8cd7ed0d91b",
+            "size": 69754
+          },
+          {
+            "relative_path": "active_times_2026-08-03.jsonl",
+            "sha256": "5db8741fcb5a13cfc045de22061f65f4c77406584b9dce04eec2bd8c3bb74831",
+            "size": 1083906
+          },
+          {
+            "relative_path": "active_times_2026-08-04.jsonl",
+            "sha256": "bbf9336843eae4e657ffd8e2c2bdaf08edd4ac93bcd429cfc0dcd96d15239b0e",
+            "size": 1083265
+          },
+          {
+            "relative_path": "active_times_2026-08-05.jsonl",
+            "sha256": "0d91160a8199e2ba305ce7bb7ef55e6b67e01cf91bf6b1c5ae308f0126906968",
+            "size": 196705
+          },
+          {
+            "relative_path": "active_times_2026-08-06.jsonl",
+            "sha256": "6cb0a2a8209bc6d12eae0595657943354febc4c74aa465e108637f02c13ab4f0",
+            "size": 282869
+          }
+        ],
+        "source_path": "D:\\Work\\HOHONET\\active_logs\\c2b",
+        "source_raw_event_count": 2392,
+        "source_root": "D:\\Work\\HOHONET\\active_logs\\c2b",
+        "status": "auxiliary_mixed_or_legacy",
+        "worker_provenance": {
+          "1": {
+            "current_c2plus_event_count": 27,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 27
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 27
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 27
+              }
+            },
+            "raw_event_count": 27,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "10": {
+            "current_c2plus_event_count": 54,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 54
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 54
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 54
+              }
+            },
+            "raw_event_count": 54,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "11": {
+            "current_c2plus_event_count": 109,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 109
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 109
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 109
+              }
+            },
+            "raw_event_count": 109,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "12": {
+            "current_c2plus_event_count": 34,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 34
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 34
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 34
+              }
+            },
+            "raw_event_count": 34,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "13": {
+            "current_c2plus_event_count": 0,
+            "legacy_or_mixed_event_count": 64,
+            "observed": {
+              "active_time_identity_level": {
+                "<missing>": 64
+              },
+              "active_time_schema_version": {
+                "<missing>": 64
+              },
+              "script_version": {
+                "stage1_active_time_annotation_hardening_20260701_v1": 64
+              }
+            },
+            "raw_event_count": 64,
+            "reason": "worker_has_legacy_or_mixed_payload",
+            "status": "auxiliary_mixed_or_legacy"
+          },
+          "15": {
+            "current_c2plus_event_count": 0,
+            "legacy_or_mixed_event_count": 165,
+            "observed": {
+              "active_time_identity_level": {
+                "<missing>": 165
+              },
+              "active_time_schema_version": {
+                "<missing>": 165
+              },
+              "script_version": {
+                "0.24-official": 165
+              }
+            },
+            "raw_event_count": 165,
+            "reason": "worker_has_legacy_or_mixed_payload",
+            "status": "auxiliary_mixed_or_legacy"
+          },
+          "17": {
+            "current_c2plus_event_count": 0,
+            "legacy_or_mixed_event_count": 71,
+            "observed": {
+              "active_time_identity_level": {
+                "<missing>": 71
+              },
+              "active_time_schema_version": {
+                "<missing>": 71
+              },
+              "script_version": {
+                "stage1_active_time_annotation_hardening_20260701_v1": 71
+              }
+            },
+            "raw_event_count": 71,
+            "reason": "worker_has_legacy_or_mixed_payload",
+            "status": "auxiliary_mixed_or_legacy"
+          },
+          "2": {
+            "current_c2plus_event_count": 75,
+            "legacy_or_mixed_event_count": 1,
+            "observed": {
+              "active_time_identity_level": {
+                "<missing>": 1,
+                "project_runtime_task_worker": 75
+              },
+              "active_time_schema_version": {
+                "<missing>": 1,
+                "c2plus_task_worker_v1": 75
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 75,
+                "stage1_helper_ordercache_hotfix_20260617_v1": 1
+              }
+            },
+            "raw_event_count": 76,
+            "reason": "worker_has_legacy_or_mixed_payload",
+            "status": "auxiliary_mixed_or_legacy"
+          },
+          "6": {
+            "current_c2plus_event_count": 57,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 57
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 57
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 57
+              }
+            },
+            "raw_event_count": 57,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          },
+          "8": {
+            "current_c2plus_event_count": 90,
+            "legacy_or_mixed_event_count": 0,
+            "observed": {
+              "active_time_identity_level": {
+                "project_runtime_task_worker": 90
+              },
+              "active_time_schema_version": {
+                "c2plus_task_worker_v1": 90
+              },
+              "script_version": {
+                "c2plus_task_worker_active_time_20260802_v2": 90
+              }
+            },
+            "raw_event_count": 90,
+            "reason": "current_c2plus_payload",
+            "status": "auxiliary_available"
+          }
+        }
+      },
+      "timing_status": "auxiliary_mixed_or_legacy"
+    }
+  },
+  "contract_role": "generated_subordinate",
+  "deployment_ids": [
+    "c2b_en",
+    "c2b_zh"
+  ],
+  "formal_ready": false,
+  "input_sha256": {
+    "active_log:c2b_en": "dc099f254f7dd295e7a9a8c41bbf380034f270de61cf38b689218418d080d77d",
+    "active_log:c2b_zh": "dc099f254f7dd295e7a9a8c41bbf380034f270de61cf38b689218418d080d77d",
+    "assignment": "5e43e682a46211fb35ed5588b0f22b2853997236bff814f14f1306246907a07c",
+    "assignment_history": "6aaa0c91b4380f739ae0bf85e8e224902ed1d47489bb963043991f734446e424",
+    "c1_snapshot": "78bf51aadf7ec325da738fe1eff8a1d95480b8f95aebe16cff9be2386c312cba",
+    "c2a_design_manifest": "9c0fb041d1536a3df81446999c62e488c28603343c94759d34241e4719d01f62",
+    "c2a_task_pool": "ea9395a033830d44b27b37f127e871bcf64037ddebeb2bda5ecedd5ebe75bae4",
+    "deployment_manifest": "978de459e617d2a19ee8a4f31b9e9d50d0c7241f49d09236dba22d52bbfee831",
+    "design_summary": "b636cc6809e794097cb19c6e5f4c28dbe8a4209b46e537b8319fee8c0f12b56f",
+    "export:c2b_en": "1f0bd8f88e82c6c65de2a585c9e99a2d4f8bf1e1a42376fbb2d0471597c1c93e",
+    "export:c2b_zh": "faca85af24fd27dbcebf01d99d1f12fa4dd85c369f733895bce6583b91a2e208",
+    "launch_report": "57c7a51087a60ff4c02f125ecdec91eeefe420c79eccc2b1e4361c0b161058b9",
+    "private_assignment_audit": "9ba4d8ee1923a1c99bc1074e22699ad6f2bf8b76878e18d3df8251c6c768e891",
+    "reference_conflict_review_record": "520d38ad96e65ada4c1caf40dcbf001d1d86aa7ad6e78ba1a4419b5c0a6e2194",
+    "reference_registry": "21063fbe53113714db92ab1ef46117a712faf5de37245f01d8898d44d44e2c6a",
+    "rule_config": "b1b8fda2f9e8ef63e369a30b38134bb2ac97bb681dcc2c9e276bb0da6f86d77a",
+    "runtime_mapping": "d9e4c56232c666aa0a25329eafb5690fc82f77422e34270d39e8410ba9fc1b8e",
+    "runtime_mapping_resolved": "d9e4c56232c666aa0a25329eafb5690fc82f77422e34270d39e8410ba9fc1b8e",
+    "task_eligibility": "69be5b204f1661abfff818e42fc08744fb0720166452a86501b0eb02564ae762",
+    "terminal_disposition": "0e3c92814223aa48ba328bfc52a128219e40f28daa1eeb597292991171fdae0d",
+    "threshold_manifest": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
+    "worker_profile": "975e62cb7d0020887cff9c7912e4c9864215eccf463cfa12c28db9a9d1df2a18",
+    "worker_roster": "51219601069a70b41a14d96dd1b309e9dea5b0b512afceea930c35ab3ae45bf3"
+  },
+  "input_status": "precloseout_rehearsal",
+  "launch_ready": false,
+  "method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+  "method_contract_version": "paper_a_method_20260803_v18",
+  "observed_support_summary": {
+    "canonical_valid_support_total": 160,
+    "one_submitted_support_task_count": 7,
+    "planned_worker_support_total": 176,
+    "risk_slope_eligible_support_total": 153,
+    "schema_version": "c2b_observed_support_audit_v1",
+    "submitted_worker_support_total": 160,
+    "support_deficit_task_count": 12,
+    "task_count": 46,
+    "zero_submitted_support_task_count": 0
+  },
+  "operational_preview_ready": true,
+  "outputs": {
+    "c2a_assignment_history": "D:\\Work\\HOHONET\\analysis_results\\c2b_closeout_20260806_inputs\\c2a_rp_seen_history_through_c2b.csv",
+    "c2a_block_assignment": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\assignment_manifest_C2A_RP_block_1.csv",
+    "c2a_decision_manifest": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\c2a_decision_manifest_bound.json",
+    "c2a_operational_package": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\c2a_rp_operational",
+    "c2a_rp": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\c2a_rp",
+    "c2b_closeout": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\c2b_closeout_v2.json",
+    "canonical_submissions": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\c2b_canonical_submissions.csv",
+    "observed_support_audit": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\c2b_observed_support_audit.csv",
+    "observed_support_audit_summary": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\c2b_observed_support_audit.summary.json",
+    "post_profile": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\post_c2b_worker_profile.csv",
+    "post_profile_manifest": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\c2b_post_profile_manifest.json",
+    "risk_slope_evidence": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_local_launch_20260807_v3b\\c2b_canonical_risk_slope_evidence.csv"
+  },
+  "reference_conflict_review_closed": false,
+  "risk_model": {
+    "between_worker_slope_sd": 0.0,
+    "boundary_components": [
+      "worker_slope"
+    ],
+    "boundary_rule_version": "worker_slope_or_single_cluster_component_boundary_v2",
+    "boundary_tolerance": 3.544829581109303e-09,
+    "building_sd": 0.01657037706408855,
+    "converged": true,
+    "downstream_cluster_uncertainty": "building_then_task_hierarchical_resampling",
+    "fixed_worker_intercept_count": 20,
+    "formula": "quality ~ 0 + C(worker_id) + risk_centered",
+    "group_slope_mean": -0.018930628313364728,
+    "group_slope_se": 0.007266634237270961,
+    "optimizer": "powell",
+    "optimizer_attempts": [
+      {
+        "converged": false,
+        "optimizer": "lbfgs",
+        "warnings": [
+          "Maximum Likelihood optimization failed to converge. Check mle_retvals",
+          "MixedLM optimization failed, trying a different optimizer may help.",
+          "Gradient optimization failed, |grad| = 4.862963",
+          "The MLE may be on the boundary of the parameter space."
+        ]
+      },
+      {
+        "converged": true,
+        "optimizer": "powell",
+        "warnings": [
+          "The MLE may be on the boundary of the parameter space."
+        ]
+      },
+      {
+        "converged": false,
+        "optimizer": "lbfgs",
+        "warnings": [
+          "Maximum Likelihood optimization failed to converge. Check mle_retvals",
+          "MixedLM optimization failed, trying a different optimizer may help.",
+          "Gradient optimization failed, |grad| = 0.404842",
+          "The MLE may be on the boundary of the parameter space."
+        ]
+      },
+      {
+        "converged": true,
+        "optimizer": "powell",
+        "warnings": [
+          "The MLE may be on the boundary of the parameter space."
+        ]
+      }
+    ],
+    "outcome_residual_sd": 0.05953847143746053,
+    "removed_variance_components": [
+      "worker_slope"
+    ],
+    "slope_model_form": "crossed_common_worker_slope",
+    "status": "estimated",
+    "support": {
+      "base_task_id": 44,
+      "building_id": 8,
+      "risk": 44,
+      "worker_id": 20
+    },
+    "task_identity": "task_within_building",
+    "task_sd": 0.0708836389861268,
+    "warnings": [
+      "Maximum Likelihood optimization failed to converge. Check mle_retvals",
+      "MixedLM optimization failed, trying a different optimizer may help.",
+      "Gradient optimization failed, |grad| = 4.862963",
+      "The MLE may be on the boundary of the parameter space.",
+      "The MLE may be on the boundary of the parameter space.",
+      "Maximum Likelihood optimization failed to converge. Check mle_retvals",
+      "MixedLM optimization failed, trying a different optimizer may help.",
+      "Gradient optimization failed, |grad| = 0.404842",
+      "The MLE may be on the boundary of the parameter space.",
+      "The MLE may be on the boundary of the parameter space."
+    ],
+    "worker_intercept_control": "fixed_effect",
+    "worker_intercept_sd": "",
+    "worker_slope_ses": {
+      "1": 0.007266634237270961,
+      "10": 0.007266634237270961,
+      "11": 0.007266634237270961,
+      "12": 0.007266634237270961,
+      "13": 0.007266634237270961,
+      "15": 0.007266634237270961,
+      "17": 0.007266634237270961,
+      "2": 0.007266634237270961,
+      "28": 0.007266634237270961,
+      "29": 0.007266634237270961,
+      "30": 0.007266634237270961,
+      "31": 0.007266634237270961,
+      "32": 0.007266634237270961,
+      "33": 0.007266634237270961,
+      "34": 0.007266634237270961,
+      "35": 0.007266634237270961,
+      "36": 0.007266634237270961,
+      "37": 0.007266634237270961,
+      "6": 0.007266634237270961,
+      "8": 0.007266634237270961
+    },
+    "worker_slopes": {
+      "1": -0.018930628313364728,
+      "10": -0.018930628313364728,
+      "11": -0.018930628313364728,
+      "12": -0.018930628313364728,
+      "13": -0.018930628313364728,
+      "15": -0.018930628313364728,
+      "17": -0.018930628313364728,
+      "2": -0.018930628313364728,
+      "28": -0.018930628313364728,
+      "29": -0.018930628313364728,
+      "30": -0.018930628313364728,
+      "31": -0.018930628313364728,
+      "32": -0.018930628313364728,
+      "33": -0.018930628313364728,
+      "34": -0.018930628313364728,
+      "35": -0.018930628313364728,
+      "36": -0.018930628313364728,
+      "37": -0.018930628313364728,
+      "6": -0.018930628313364728,
+      "8": -0.018930628313364728
+    }
+  },
+  "risk_model_scope": "C2B_CONFIRMATORY_CANONICAL_ONLY_FOR_C2A_RP",
+  "risk_slope_summary": {
+    "evidence_stage": "C2B",
+    "n_estimand_eligible": 153,
+    "n_rows": 160,
+    "risk_model_scope": "C2B_CONFIRMATORY_CANONICAL_ONLY_FOR_C2A_RP",
+    "support_tasks": 44,
+    "support_workers": 20
+  },
+  "schema_version": "paper_a_c2b_c2a_rp_chain_v1",
+  "selected_design_id": "D8",
+  "source_c2a_design_manifest_sha256": "9c0fb041d1536a3df81446999c62e488c28603343c94759d34241e4719d01f62",
+  "task_count": 46,
+  "task_pool_sha256": "211ea4260415918104685440b07ce72fc17113b1764913c9215c554df901c067",
+  "timing_provenance": {
+    "c2b_en": {
+      "expected": {
+        "active_time_identity_level": "project_runtime_task_worker",
+        "active_time_schema_version": "c2plus_task_worker_v1",
+        "script_version": "c2plus_task_worker_active_time_20260802_v2"
+      },
+      "forensic_excluded_event_count": 1009,
+      "forensic_excluded_reasons": {
+        "unassigned_worker_task": 161,
+        "unexpected_project": 826,
+        "unexpected_worker": 22
+      },
+      "observed": {
+        "active_time_identity_level": {
+          "<missing>": 263,
+          "project_runtime_task_worker": 1120
+        },
+        "active_time_schema_version": {
+          "<missing>": 263,
+          "c2plus_task_worker_v1": 1120
+        },
+        "script_version": {
+          "c2plus_task_worker_active_time_20260802_v2": 1120,
+          "stage1_active_time_annotation_hardening_20260701_v1": 16,
+          "stage1_helper_ordercache_hotfix_20260617_v1": 247
+        }
+      },
+      "parse_error_count": 0,
+      "raw_event_count": 1383,
+      "reason": "legacy_unknown_or_mixed_payload",
+      "source_aggregate_sha256": "dc099f254f7dd295e7a9a8c41bbf380034f270de61cf38b689218418d080d77d",
+      "source_file_count": 5,
+      "source_files": [
+        {
+          "relative_path": "active_times_2026-08-02.jsonl",
+          "sha256": "bcd20c1c4413f8cd0af643265a97ca22a4136f32ce2597d4fb20d8cd7ed0d91b",
+          "size": 69754
+        },
+        {
+          "relative_path": "active_times_2026-08-03.jsonl",
+          "sha256": "5db8741fcb5a13cfc045de22061f65f4c77406584b9dce04eec2bd8c3bb74831",
+          "size": 1083906
+        },
+        {
+          "relative_path": "active_times_2026-08-04.jsonl",
+          "sha256": "bbf9336843eae4e657ffd8e2c2bdaf08edd4ac93bcd429cfc0dcd96d15239b0e",
+          "size": 1083265
+        },
+        {
+          "relative_path": "active_times_2026-08-05.jsonl",
+          "sha256": "0d91160a8199e2ba305ce7bb7ef55e6b67e01cf91bf6b1c5ae308f0126906968",
+          "size": 196705
+        },
+        {
+          "relative_path": "active_times_2026-08-06.jsonl",
+          "sha256": "6cb0a2a8209bc6d12eae0595657943354febc4c74aa465e108637f02c13ab4f0",
+          "size": 282869
+        }
+      ],
+      "source_path": "D:\\Work\\HOHONET\\active_logs\\c2b",
+      "source_raw_event_count": 2392,
+      "source_root": "D:\\Work\\HOHONET\\active_logs\\c2b",
+      "status": "auxiliary_mixed_or_legacy",
+      "worker_provenance": {
+        "28": {
+          "current_c2plus_event_count": 71,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 71
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 71
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 71
+            }
+          },
+          "raw_event_count": 71,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "29": {
+          "current_c2plus_event_count": 120,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 120
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 120
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 120
+            }
+          },
+          "raw_event_count": 120,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "30": {
+          "current_c2plus_event_count": 215,
+          "legacy_or_mixed_event_count": 16,
+          "observed": {
+            "active_time_identity_level": {
+              "<missing>": 16,
+              "project_runtime_task_worker": 215
+            },
+            "active_time_schema_version": {
+              "<missing>": 16,
+              "c2plus_task_worker_v1": 215
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 215,
+              "stage1_active_time_annotation_hardening_20260701_v1": 16
+            }
+          },
+          "raw_event_count": 231,
+          "reason": "worker_has_legacy_or_mixed_payload",
+          "status": "auxiliary_mixed_or_legacy"
+        },
+        "31": {
+          "current_c2plus_event_count": 96,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 96
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 96
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 96
+            }
+          },
+          "raw_event_count": 96,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "32": {
+          "current_c2plus_event_count": 85,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 85
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 85
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 85
+            }
+          },
+          "raw_event_count": 85,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "33": {
+          "current_c2plus_event_count": 105,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 105
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 105
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 105
+            }
+          },
+          "raw_event_count": 105,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "34": {
+          "current_c2plus_event_count": 80,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 80
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 80
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 80
+            }
+          },
+          "raw_event_count": 80,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "35": {
+          "current_c2plus_event_count": 136,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 136
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 136
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 136
+            }
+          },
+          "raw_event_count": 136,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "36": {
+          "current_c2plus_event_count": 212,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 212
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 212
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 212
+            }
+          },
+          "raw_event_count": 212,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "37": {
+          "current_c2plus_event_count": 0,
+          "legacy_or_mixed_event_count": 247,
+          "observed": {
+            "active_time_identity_level": {
+              "<missing>": 247
+            },
+            "active_time_schema_version": {
+              "<missing>": 247
+            },
+            "script_version": {
+              "stage1_helper_ordercache_hotfix_20260617_v1": 247
+            }
+          },
+          "raw_event_count": 247,
+          "reason": "worker_has_legacy_or_mixed_payload",
+          "status": "auxiliary_mixed_or_legacy"
+        }
+      }
+    },
+    "c2b_zh": {
+      "expected": {
+        "active_time_identity_level": "project_runtime_task_worker",
+        "active_time_schema_version": "c2plus_task_worker_v1",
+        "script_version": "c2plus_task_worker_active_time_20260802_v2"
+      },
+      "forensic_excluded_event_count": 1645,
+      "forensic_excluded_reasons": {
+        "unassigned_worker_task": 13,
+        "unexpected_project": 1632
+      },
+      "observed": {
+        "active_time_identity_level": {
+          "<missing>": 301,
+          "project_runtime_task_worker": 446
+        },
+        "active_time_schema_version": {
+          "<missing>": 301,
+          "c2plus_task_worker_v1": 446
+        },
+        "script_version": {
+          "0.24-official": 165,
+          "c2plus_task_worker_active_time_20260802_v2": 446,
+          "stage1_active_time_annotation_hardening_20260701_v1": 135,
+          "stage1_helper_ordercache_hotfix_20260617_v1": 1
+        }
+      },
+      "parse_error_count": 0,
+      "raw_event_count": 747,
+      "reason": "legacy_unknown_or_mixed_payload",
+      "source_aggregate_sha256": "dc099f254f7dd295e7a9a8c41bbf380034f270de61cf38b689218418d080d77d",
+      "source_file_count": 5,
+      "source_files": [
+        {
+          "relative_path": "active_times_2026-08-02.jsonl",
+          "sha256": "bcd20c1c4413f8cd0af643265a97ca22a4136f32ce2597d4fb20d8cd7ed0d91b",
+          "size": 69754
+        },
+        {
+          "relative_path": "active_times_2026-08-03.jsonl",
+          "sha256": "5db8741fcb5a13cfc045de22061f65f4c77406584b9dce04eec2bd8c3bb74831",
+          "size": 1083906
+        },
+        {
+          "relative_path": "active_times_2026-08-04.jsonl",
+          "sha256": "bbf9336843eae4e657ffd8e2c2bdaf08edd4ac93bcd429cfc0dcd96d15239b0e",
+          "size": 1083265
+        },
+        {
+          "relative_path": "active_times_2026-08-05.jsonl",
+          "sha256": "0d91160a8199e2ba305ce7bb7ef55e6b67e01cf91bf6b1c5ae308f0126906968",
+          "size": 196705
+        },
+        {
+          "relative_path": "active_times_2026-08-06.jsonl",
+          "sha256": "6cb0a2a8209bc6d12eae0595657943354febc4c74aa465e108637f02c13ab4f0",
+          "size": 282869
+        }
+      ],
+      "source_path": "D:\\Work\\HOHONET\\active_logs\\c2b",
+      "source_raw_event_count": 2392,
+      "source_root": "D:\\Work\\HOHONET\\active_logs\\c2b",
+      "status": "auxiliary_mixed_or_legacy",
+      "worker_provenance": {
+        "1": {
+          "current_c2plus_event_count": 27,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 27
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 27
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 27
+            }
+          },
+          "raw_event_count": 27,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "10": {
+          "current_c2plus_event_count": 54,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 54
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 54
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 54
+            }
+          },
+          "raw_event_count": 54,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "11": {
+          "current_c2plus_event_count": 109,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 109
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 109
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 109
+            }
+          },
+          "raw_event_count": 109,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "12": {
+          "current_c2plus_event_count": 34,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 34
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 34
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 34
+            }
+          },
+          "raw_event_count": 34,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "13": {
+          "current_c2plus_event_count": 0,
+          "legacy_or_mixed_event_count": 64,
+          "observed": {
+            "active_time_identity_level": {
+              "<missing>": 64
+            },
+            "active_time_schema_version": {
+              "<missing>": 64
+            },
+            "script_version": {
+              "stage1_active_time_annotation_hardening_20260701_v1": 64
+            }
+          },
+          "raw_event_count": 64,
+          "reason": "worker_has_legacy_or_mixed_payload",
+          "status": "auxiliary_mixed_or_legacy"
+        },
+        "15": {
+          "current_c2plus_event_count": 0,
+          "legacy_or_mixed_event_count": 165,
+          "observed": {
+            "active_time_identity_level": {
+              "<missing>": 165
+            },
+            "active_time_schema_version": {
+              "<missing>": 165
+            },
+            "script_version": {
+              "0.24-official": 165
+            }
+          },
+          "raw_event_count": 165,
+          "reason": "worker_has_legacy_or_mixed_payload",
+          "status": "auxiliary_mixed_or_legacy"
+        },
+        "17": {
+          "current_c2plus_event_count": 0,
+          "legacy_or_mixed_event_count": 71,
+          "observed": {
+            "active_time_identity_level": {
+              "<missing>": 71
+            },
+            "active_time_schema_version": {
+              "<missing>": 71
+            },
+            "script_version": {
+              "stage1_active_time_annotation_hardening_20260701_v1": 71
+            }
+          },
+          "raw_event_count": 71,
+          "reason": "worker_has_legacy_or_mixed_payload",
+          "status": "auxiliary_mixed_or_legacy"
+        },
+        "2": {
+          "current_c2plus_event_count": 75,
+          "legacy_or_mixed_event_count": 1,
+          "observed": {
+            "active_time_identity_level": {
+              "<missing>": 1,
+              "project_runtime_task_worker": 75
+            },
+            "active_time_schema_version": {
+              "<missing>": 1,
+              "c2plus_task_worker_v1": 75
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 75,
+              "stage1_helper_ordercache_hotfix_20260617_v1": 1
+            }
+          },
+          "raw_event_count": 76,
+          "reason": "worker_has_legacy_or_mixed_payload",
+          "status": "auxiliary_mixed_or_legacy"
+        },
+        "6": {
+          "current_c2plus_event_count": 57,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 57
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 57
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 57
+            }
+          },
+          "raw_event_count": 57,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        },
+        "8": {
+          "current_c2plus_event_count": 90,
+          "legacy_or_mixed_event_count": 0,
+          "observed": {
+            "active_time_identity_level": {
+              "project_runtime_task_worker": 90
+            },
+            "active_time_schema_version": {
+              "c2plus_task_worker_v1": 90
+            },
+            "script_version": {
+              "c2plus_task_worker_active_time_20260802_v2": 90
+            }
+          },
+          "raw_event_count": 90,
+          "reason": "current_c2plus_payload",
+          "status": "auxiliary_available"
+        }
+      }
+    }
+  },
+  "worker_count": 22
+}
