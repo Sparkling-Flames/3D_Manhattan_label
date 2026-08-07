@@ -1,0 +1,38 @@
+{
+  "schema_version": "c2a_rp_capacity_amendment_v1",
+  "status": "preview_not_dispatch_authorization",
+  "c2b_collection": {
+    "status": "closed",
+    "cutoff": "2026-08-06",
+    "planned": 176,
+    "submitted": 160,
+    "terminal_missing": 16,
+    "no_further_c2b_worker_outcomes": true
+  },
+  "decision_timing": "after_C2B_collection_closure_before_any_C2A_RP_outcome",
+  "selection_rule": "frozen_risk_score_desc_then_task_id; no worker performance or outcome fields",
+  "primary_task_ids": [
+    "S9hNv5qa7GM_53d54b73e58940019b731673e65c1902",
+    "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+    "zsNo4HB9uLZ_aabf649f606a48a1b16d5bdcd5970602"
+  ],
+  "backup_task_ids": [
+    "jtcxE69GiFV_67790605390f4d439c3c59395967ec84"
+  ],
+  "future_holdout_consumed": 3,
+  "future_holdout_backup_unexposed": 1,
+  "t1_retired_task_ids": [
+    "S9hNv5qa7GM_53d54b73e58940019b731673e65c1902",
+    "jh4fc5c5qoQ_30cdb6fe9aa6449788e271f2e24d76ec",
+    "zsNo4HB9uLZ_aabf649f606a48a1b16d5bdcd5970602"
+  ],
+  "v1_test_overlap_count": 0,
+  "maximum_block1_workers": 20,
+  "input_sha256": {
+    "task_pool": "ea9395a033830d44b27b37f127e871bcf64037ddebeb2bda5ecedd5ebe75bae4",
+    "task_inventory": "211ea4260415918104685440b07ce72fc17113b1764913c9215c554df901c067",
+    "eligibility": "69be5b204f1661abfff818e42fc08744fb0720166452a86501b0eb02564ae762",
+    "seen_history": "6aaa0c91b4380f739ae0bf85e8e224902ed1d47489bb963043991f734446e424",
+    "v1_candidate_tasks": "8092f7969ba4122322a0917abf40c68d57ba95566875130fd27a9a338180e4ad"
+  }
+}

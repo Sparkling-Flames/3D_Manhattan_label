@@ -5,6 +5,7 @@ import csv
 import json
 import math
 import sys
+from collections import Counter, defaultdict
 from pathlib import Path
 from statistics import NormalDist
 
@@ -16,8 +17,11 @@ ROOT = Path(__file__).resolve().parents[3]
 if str(ROOT) not in sys.path:
     sys.path.insert(0, str(ROOT))
 
-from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, truthy, write_json
-from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import _maximum_complete_block_count
+from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, truthy
+from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import (
+    _maximum_complete_block_count,
+    build_assignments_with_capacity_fallback,
+)
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
 
@@ -179,6 +183,56 @@ def _write_csv(path: Path, rows: list[dict]) -> None:
         writer.writerows(rows)
 
 
+def _write_text(path: Path, value: str) -> None:
+    with path.open("w", encoding="utf-8", newline="\n") as handle:
+        handle.write(value)
+
+
+def _write_json(path: Path, value: dict) -> None:
+    _write_text(path, json.dumps(value, ensure_ascii=False, indent=2) + "\n")
+
+
+def select_real_reserve(
+    tasks: list[dict], inventory: list[dict], eligibility: list[dict], stage3: list[dict], *, primary_count: int = 3,
+) -> list[dict]:
+    used = {row["base_task_id"] for row in tasks}
+    test = {row["base_task_id"] for row in stage3}
+    evidence = {row["base_task_id"]: row for row in eligibility}
+    candidates = []
+    for row in inventory:
+        task_id = row.get("base_task_id", "")
+        gate = evidence.get(task_id, {})
+        if (
+            task_id and task_id not in used and task_id not in test
+            and row.get("formal_dataset_split") == "mp3d_validation"
+            and row.get("risk_design_stratum") == "stress"
+            and all(truthy(gate.get(field)) for field in (
+                "history_clear", "scope_ready", "reference_ready", "feature_ready", "risk_ready", "leakage_clear",
+            ))
+            and "future_holdout_not_clear" in gate.get("exclusion_reason", "")
+        ):
+            candidates.append({
+                "task_id": task_id, "base_task_id": task_id, "image_id": task_id,
+                "building_id": row["building_id"], "source_split": "mp3d_validation",
+                "task_stratum": "stress", "c2a_rp_eligible": "true",
+                "vis_3d": row["image_path"], "image_path": row["image_path"],
+                "risk_design_score_A": row["risk_design_score_A"], "task_risk_sha256": gate["task_risk_sha256"],
+                "reference_review_status": "not_flagged", "formal_use_blocked_until_review": "false",
+                "history_clear": "true", "scope_ready": "true", "reference_ready": "true",
+            })
+    candidates.sort(key=lambda row: (-float(row["risk_design_score_A"]), row["task_id"]))
+    for rank, row in enumerate(candidates, 1):
+        primary = rank <= primary_count
+        row.update({
+            "selection_rank": rank,
+            "capacity_role": "block1_primary" if primary else "reserve_backup",
+            "future_holdout_action": "consume_for_c2a_rp" if primary else "remain_unexposed_reserve",
+            "C2A_RP_exposed_after_dispatch": str(primary).lower(),
+            "T1_eligible_after_dispatch": str(not primary).lower(),
+        })
+    return candidates
+
+
 def materialize(output_dir: Path) -> dict:
     workers_all = read_csv(ROOT / "analysis_results/c2a_rp_local_launch_20260807_v4/post_c2b_worker_profile.csv")
     workers = [
@@ -191,6 +245,8 @@ def materialize(output_dir: Path) -> dict:
     decision = json.loads((ROOT / "analysis_results/c2b_closeout_20260806_inputs/c2a_rp_decision_source_manifest.json").read_text(encoding="utf-8"))
     prior = json.loads((ROOT / "analysis_results/c2b_closeout_20260806_final/c2b_c2a_rp_analysis_manifest.json").read_text(encoding="utf-8"))
     stage3 = read_csv(ROOT / "analysis_results/stage3_test_preparation_20260804_v1/test_task_risk_candidate.csv")
+    inventory = read_csv(ROOT / "analysis_results/c2b_validation_design_20260802_v17/output/c2_task_risk_inventory.csv")
+    eligibility = read_csv(ROOT / "analysis_results/c2b_validation_design_20260802_v17/output/c2b_task_eligibility_evidence.csv")
     target = float(threshold["thresholds"]["risk_slope_ci_half_width"])
     max_support = int(decision["precision"]["max_task_support"])
     curve = capacity_curve(workers, tasks, history, max_task_support=max_support, max_new_stress=12)
@@ -238,6 +294,70 @@ def materialize(output_dir: Path) -> dict:
                     force_no_adjustment=disabled,
                 ),
             })
+    output_dir.mkdir(parents=True, exist_ok=True)
+    reserve = select_real_reserve(tasks, inventory, eligibility, stage3)
+    primary = [row for row in reserve if row["capacity_role"] == "block1_primary"]
+    backup = [row for row in reserve if row["capacity_role"] == "reserve_backup"]
+    if len(primary) != 3 or len(backup) != 1:
+        raise ValueError(f"expected 3 primary + 1 backup, found {len(primary)} + {len(backup)}")
+    pool_fields = list(tasks[0])
+    amended_tasks = tasks + [{key: row.get(key, "") for key in pool_fields} for row in primary]
+    real_capacity = _maximum_complete_block_count(
+        workers, amended_tasks, history_rows=history, max_task_support=max_support, require_explicit_eligibility=True,
+    )
+    amendment = {
+        "schema_version": "c2a_rp_capacity_amendment_v1",
+        "status": "preview_not_dispatch_authorization",
+        "c2b_collection": {"status": "closed", "cutoff": "2026-08-06", "planned": 176, "submitted": 160, "terminal_missing": 16, "no_further_c2b_worker_outcomes": True},
+        "decision_timing": "after_C2B_collection_closure_before_any_C2A_RP_outcome",
+        "selection_rule": "frozen_risk_score_desc_then_task_id; no worker performance or outcome fields",
+        "primary_task_ids": [row["task_id"] for row in primary],
+        "backup_task_ids": [row["task_id"] for row in backup],
+        "future_holdout_consumed": 3, "future_holdout_backup_unexposed": 1,
+        "t1_retired_task_ids": [row["task_id"] for row in primary],
+        "v1_test_overlap_count": 0, "maximum_block1_workers": real_capacity,
+        "input_sha256": {
+            "task_pool": sha256_file(ROOT / "analysis_results/c2a_rp_local_launch_20260807_inputs_v2/c2a_rp_task_pool_post_c2_local.csv"),
+            "task_inventory": sha256_file(ROOT / "analysis_results/c2b_validation_design_20260802_v17/output/c2_task_risk_inventory.csv"),
+            "eligibility": sha256_file(ROOT / "analysis_results/c2b_validation_design_20260802_v17/output/c2b_task_eligibility_evidence.csv"),
+            "seen_history": sha256_file(ROOT / "analysis_results/c2b_closeout_20260806_inputs/c2a_rp_seen_history_through_c2b.csv"),
+            "v1_candidate_tasks": sha256_file(ROOT / "analysis_results/stage3_test_preparation_20260804_v1/test_task_risk_candidate.csv"),
+        },
+    }
+    amendment_path = output_dir / "c2a_rp_capacity_amendment_v1.json"
+    _write_json(amendment_path, amendment)
+    plans = []
+    for row in read_csv(ROOT / "analysis_results/c2a_rp_local_launch_20260807_v4/c2a_rp/precision_plan_C2A_RP.csv"):
+        if row.get("current_ci_half_width"):
+            row.update({"additional_blocks": 1, "ordinary_tasks": 1, "stress_tasks": 1, "gap_reason": "target_not_met", "formal_goal": "risk_slope_precision"})
+            plans.append(row)
+    assignments, fallback = build_assignments_with_capacity_fallback(
+        plans, amended_tasks,
+        manifest_sha=sha256_file(amendment_path),
+        c2b_sha=sha256_file(ROOT / "analysis_results/c2a_rp_local_launch_20260807_v4/c2b_closeout_v2.json"),
+        profile_sha=sha256_file(ROOT / "analysis_results/c2a_rp_local_launch_20260807_v4/post_c2b_worker_profile.csv"),
+        history_rows=history, max_task_support=max_support, selection_seed=20260724,
+        require_explicit_eligibility=True, formal=False, dispatch_block_index=1,
+    )
+    worker_counts = Counter(row["worker_id"] for row in assignments)
+    worker_strata = defaultdict(Counter)
+    task_counts = Counter(row["task_id"] for row in assignments)
+    for row in assignments:
+        worker_strata[row["worker_id"]][row["task_stratum"]] += 1
+    primary_counts = {row["task_id"]: task_counts[row["task_id"]] for row in primary}
+    if (
+        fallback or len(assignments) != 40 or len(worker_counts) != 20
+        or any(count != 2 for count in worker_counts.values())
+        or any(counts != {"ordinary": 1, "stress": 1} for counts in worker_strata.values())
+        or max(task_counts.values()) > max_support or any(count != 2 for count in primary_counts.values())
+    ):
+        raise ValueError("amended Block 1 preview failed the 20x2 paired-capacity audit")
+    exposure_rows = [{
+        "task_id": row["task_id"], "base_task_id": row["base_task_id"], "capacity_role": row["capacity_role"],
+        "future_holdout_action": row["future_holdout_action"],
+        "C2A_RP_exposed_after_dispatch": row["C2A_RP_exposed_after_dispatch"],
+        "T1_eligible_after_dispatch": row["T1_eligible_after_dispatch"], "V1_test_overlap": "false",
+    } for row in reserve]
     result = {
         "schema_version": "c2a_rp_capacity_power_amendment_audit_v1",
         "status": "audit_only_not_launch_authorization",
@@ -255,6 +375,10 @@ def materialize(output_dir: Path) -> dict:
         "minimum_new_stress_tasks_for_block1_20_of_20": block1_min,
         "workers_projected_to_need_block2": sum(value == 2 for value in required_blocks.values()),
         "minimum_total_new_stress_tasks_for_projected_two_round_plan": two_round_min,
+        "real_reserve_candidate_count": len(reserve),
+        "real_primary_task_count": len(primary),
+        "real_backup_task_count": len(backup),
+        "real_amended_block1_assignment_count": len(assignments),
         "stress_task_support_cap": max_support,
         "v1_candidate_task_count": len(stage3),
         "v1_stress_task_count": stress_count,
@@ -263,10 +387,13 @@ def materialize(output_dir: Path) -> dict:
         "capacity_curve": curve,
         "power_scenarios": power_rows,
     }
-    output_dir.mkdir(parents=True, exist_ok=True)
-    write_json(output_dir / "c2a_rp_capacity_power_amendment.json", result)
+    _write_json(output_dir / "c2a_rp_capacity_power_amendment.json", result)
     _write_csv(output_dir / "capacity_scenarios.csv", curve)
     _write_csv(output_dir / "v1_power_scenarios.csv", power_rows)
+    _write_csv(output_dir / "c2a_rp_new_stress_candidate_registry.csv", reserve)
+    _write_csv(output_dir / "c2a_rp_task_pool_amended.csv", amended_tasks)
+    _write_csv(output_dir / "c2a_rp_exposure_amendment.csv", exposure_rows)
+    _write_csv(output_dir / "assignment_manifest_C2A_RP_block_1_amended_preview.csv", assignments)
     report = f"""# C2-A-RP 显著性优先 capacity / power amendment（本地审计）
 
 ## 决策结论
@@ -288,7 +415,7 @@ def materialize(output_dir: Path) -> dict:
     for row in power_rows:
         if row["scenario"] == "prior_nonzero_heterogeneity_sensitivity":
             report += f"| Block {row['blocks']} | {row['risk_adjustment_active_workers']}/20 | {row['stress_policy_divergence_probability']:.3f} | {row['policy_divergence']:.3f} | {row['expected_quality_difference']:.5f} | {row['quality_proxy_power']:.3f} |\n"
-    report += """
+    report += f"""
 
 功效假定 458 个 V1 candidate task、1:1 分配、单侧 0.05 正态近似；只覆盖 delivery-adjusted quality 代理，不覆盖 V1 层级中的 severe failure、unresolved+severe failure、动态容量或聚合效应。
 
@@ -298,7 +425,20 @@ def materialize(output_dir: Path) -> dict:
 
 容量结论以新增图均为 validation-only、对 20 人全部未见、通过 scope/reference 审核且每图支持上限为 2 为条件；本审计不负责选择或导入这些图片。
 """
-    (output_dir / "C2A_RP_CAPACITY_POWER_AMENDMENT_REPORT.md").write_text(report, encoding="utf-8")
+    report += f"""
+
+## 实际 capacity amendment
+
+- 已冻结 3 张 primary 与 1 张未暴露 backup；前三张从 future-holdout 永久退出 T1。
+- amended pool 的精确容量为 {real_capacity}/20。
+- Block 1 preview 为 {len(assignments)} 行、20 名工人，每人恰好 1 ordinary + 1 stress；单 task support 不超过 {max_support}。
+- 当前产物仅供本地审核，不是导入或发放授权。
+"""
+    _write_text(output_dir / "C2A_RP_CAPACITY_POWER_AMENDMENT_REPORT.md", report)
+    _write_text(
+        output_dir / "PREVIEW_NOT_FOR_DISPATCH.md",
+        "# NOT FOR DISPATCH\n\n该目录仅为 C2-A-RP Block 1 本地 preview；未生成正式导入授权，未导入 Label Studio，未发放。\n",
+    )
     return result
 
 

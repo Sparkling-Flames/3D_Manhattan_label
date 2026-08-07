@@ -1,4 +1,5 @@
 from tools.thesis_main.analysis.audit_c2a_capacity_power_amendment import (
+    select_real_reserve,
     capacity_curve,
     power_scenario,
 )
@@ -34,3 +35,13 @@ def test_boundary_model_has_no_policy_divergence_or_quality_effect():
     assert result["policy_divergence"] == 0
     assert result["expected_quality_difference"] == 0
 
+
+def test_real_reserve_uses_frozen_validation_holdout_only():
+    rows = select_real_reserve(
+        [],
+        [{"base_task_id": "a", "formal_dataset_split": "mp3d_validation", "risk_design_stratum": "stress", "risk_design_score_A": "2", "building_id": "b", "image_path": "u"}],
+        [{"base_task_id": "a", "history_clear": "true", "scope_ready": "true", "reference_ready": "true", "feature_ready": "true", "risk_ready": "true", "leakage_clear": "true", "exclusion_reason": "source_split_not_clear;future_holdout_not_clear", "task_risk_sha256": "s"}],
+        [],
+        primary_count=1,
+    )
+    assert rows[0]["capacity_role"] == "block1_primary"
