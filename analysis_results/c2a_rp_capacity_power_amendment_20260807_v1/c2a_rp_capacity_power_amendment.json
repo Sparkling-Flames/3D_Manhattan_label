@@ -1,0 +1,162 @@
+{
+  "schema_version": "c2a_rp_capacity_power_amendment_audit_v1",
+  "status": "audit_only_not_launch_authorization",
+  "current_v4_dispatch_status": "frozen_not_dispatched",
+  "input_sha256": {
+    "worker_profile": "97bba6492b6e09316186f7f339d6a711ed83fa64294aec1e92d1d7964f7122a4",
+    "task_pool": "ea9395a033830d44b27b37f127e871bcf64037ddebeb2bda5ecedd5ebe75bae4",
+    "seen_history": "6aaa0c91b4380f739ae0bf85e8e224902ed1d47489bb963043991f734446e424",
+    "threshold_manifest": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
+    "sensitivity_model": "28c82a15f2978fc548674d78de9e69535ec258b54b7c0e40cd881d92e82bdfb5",
+    "v1_candidate_tasks": "8092f7969ba4122322a0917abf40c68d57ba95566875130fd27a9a338180e4ad"
+  },
+  "active_workers": 20,
+  "current_maximum_block1_workers": 14,
+  "minimum_new_stress_tasks_for_block1_20_of_20": 3,
+  "workers_projected_to_need_block2": 16,
+  "minimum_total_new_stress_tasks_for_projected_two_round_plan": 11,
+  "stress_task_support_cap": 2,
+  "v1_candidate_task_count": 458,
+  "v1_stress_task_count": 92,
+  "v1_stress_fraction": 0.20087336244541484,
+  "v1_power_scope": "quality_only_proxy; policy divergence diagnostic; severe/unresolved endpoints not identifiable",
+  "capacity_curve": [
+    {
+      "new_stress_tasks": 0,
+      "new_stress_slots": 0,
+      "maximum_block1_workers": 14,
+      "block1_20_of_20_feasible": false,
+      "projected_two_round_plan_feasible": false
+    },
+    {
+      "new_stress_tasks": 1,
+      "new_stress_slots": 2,
+      "maximum_block1_workers": 16,
+      "block1_20_of_20_feasible": false,
+      "projected_two_round_plan_feasible": false
+    },
+    {
+      "new_stress_tasks": 2,
+      "new_stress_slots": 4,
+      "maximum_block1_workers": 18,
+      "block1_20_of_20_feasible": false,
+      "projected_two_round_plan_feasible": false
+    },
+    {
+      "new_stress_tasks": 3,
+      "new_stress_slots": 6,
+      "maximum_block1_workers": 20,
+      "block1_20_of_20_feasible": true,
+      "projected_two_round_plan_feasible": false
+    },
+    {
+      "new_stress_tasks": 4,
+      "new_stress_slots": 8,
+      "maximum_block1_workers": 20,
+      "block1_20_of_20_feasible": true,
+      "projected_two_round_plan_feasible": false
+    },
+    {
+      "new_stress_tasks": 5,
+      "new_stress_slots": 10,
+      "maximum_block1_workers": 20,
+      "block1_20_of_20_feasible": true,
+      "projected_two_round_plan_feasible": false
+    },
+    {
+      "new_stress_tasks": 6,
+      "new_stress_slots": 12,
+      "maximum_block1_workers": 20,
+      "block1_20_of_20_feasible": true,
+      "projected_two_round_plan_feasible": false
+    },
+    {
+      "new_stress_tasks": 7,
+      "new_stress_slots": 14,
+      "maximum_block1_workers": 20,
+      "block1_20_of_20_feasible": true,
+      "projected_two_round_plan_feasible": false
+    },
+    {
+      "new_stress_tasks": 8,
+      "new_stress_slots": 16,
+      "maximum_block1_workers": 20,
+      "block1_20_of_20_feasible": true,
+      "projected_two_round_plan_feasible": false
+    },
+    {
+      "new_stress_tasks": 9,
+      "new_stress_slots": 18,
+      "maximum_block1_workers": 20,
+      "block1_20_of_20_feasible": true,
+      "projected_two_round_plan_feasible": false
+    },
+    {
+      "new_stress_tasks": 10,
+      "new_stress_slots": 20,
+      "maximum_block1_workers": 20,
+      "block1_20_of_20_feasible": true,
+      "projected_two_round_plan_feasible": false
+    },
+    {
+      "new_stress_tasks": 11,
+      "new_stress_slots": 22,
+      "maximum_block1_workers": 20,
+      "block1_20_of_20_feasible": true,
+      "projected_two_round_plan_feasible": true
+    },
+    {
+      "new_stress_tasks": 12,
+      "new_stress_slots": 24,
+      "maximum_block1_workers": 20,
+      "block1_20_of_20_feasible": true,
+      "projected_two_round_plan_feasible": true
+    }
+  ],
+  "power_scenarios": [
+    {
+      "scenario": "current_boundary_primary",
+      "blocks": 1,
+      "precision_active_workers": 4,
+      "risk_adjustment_active_workers": 0,
+      "stress_policy_divergence_probability": 0.0,
+      "policy_divergence": 0.0,
+      "expected_quality_difference": 0.0,
+      "quality_proxy_power": 0.050000000000000155
+    },
+    {
+      "scenario": "current_boundary_primary",
+      "blocks": 2,
+      "precision_active_workers": 20,
+      "risk_adjustment_active_workers": 0,
+      "stress_policy_divergence_probability": 0.0,
+      "policy_divergence": 0.0,
+      "expected_quality_difference": 0.0,
+      "quality_proxy_power": 0.050000000000000155
+    },
+    {
+      "scenario": "prior_nonzero_heterogeneity_sensitivity",
+      "blocks": 1,
+      "precision_active_workers": 4,
+      "risk_adjustment_active_workers": 4,
+      "stress_policy_divergence_probability": 0.9992,
+      "policy_divergence": 0.20071266375545851,
+      "expected_quality_difference": 0.0007717453939272478,
+      "quality_effect_p05": 0.0007684873871219859,
+      "quality_effect_p95": 0.0007684873871219859,
+      "quality_proxy_power": 0.058776076626273266
+    },
+    {
+      "scenario": "prior_nonzero_heterogeneity_sensitivity",
+      "blocks": 2,
+      "precision_active_workers": 20,
+      "risk_adjustment_active_workers": 20,
+      "stress_policy_divergence_probability": 0.9911,
+      "policy_divergence": 0.19908558951965064,
+      "expected_quality_difference": 0.0020391270217914397,
+      "quality_effect_p05": 0.0007421396120797738,
+      "quality_effect_p95": 0.0028597198675001027,
+      "quality_proxy_power": 0.07575634599411041
+    }
+  ]
+}

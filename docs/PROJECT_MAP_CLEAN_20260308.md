@@ -45,6 +45,7 @@
 ## 2026-08-02 C2 closeout repair
 
 - `tools/thesis_main/analysis/materialize_c2a_rp_closeout.py`：C2-A-RP 正式零任务/追加任务 closeout 与方法合同、输入工件 SHA 绑定。
+- `tools/thesis_main/analysis/audit_c2a_capacity_power_amendment.py`：C2-A-RP 本地 capacity / V1 power 敏感性审计；不生成或授权正式派发。
 
 ## 2026-08-02 C2-B pre-dispatch amendment
 
