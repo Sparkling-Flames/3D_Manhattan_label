@@ -4,6 +4,7 @@ import argparse
 import csv
 import json
 import math
+import shutil
 import sys
 from collections import Counter, defaultdict
 from pathlib import Path
@@ -23,6 +24,7 @@ from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import (
     build_assignments_with_capacity_fallback,
 )
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
+from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
 
 
 def _reserve(tasks: list[dict], count: int) -> list[dict]:
@@ -231,6 +233,115 @@ def select_real_reserve(
             "T1_eligible_after_dispatch": str(not primary).lower(),
         })
     return candidates
+
+
+def materialize_distribution(output_dir: Path, source_dir: Path) -> dict:
+    from tools.thesis_main.analysis.run_c2b_c2a_rp_chain import _package_c2a_rp
+
+    source_assignment = source_dir / "assignment_manifest_C2A_RP_block_1_amended_preview.csv"
+    task_pool = source_dir / "c2a_rp_task_pool_amended.csv"
+    capacity_amendment = source_dir / "c2a_rp_capacity_amendment_v1.json"
+    cap_extension = ROOT / "docs/thesis_main/C2A_RP_PRECISION_CAP_EXTENSION_20260807_v1.json"
+    deployment_manifest = ROOT / "analysis_results/c2b_runtime_binding_20260806_v18_d8/c2b_worker_deployment_manifest_v1.json"
+    old_plan = ROOT / "analysis_results/c2a_rp_local_launch_20260807_v4/c2a_rp/precision_plan_C2A_RP.csv"
+    model_layout_dir = ROOT / "analysis_results/c2b_validation_static_20260802_v16/inputs/model_layout_json"
+    required = (source_assignment, task_pool, capacity_amendment, cap_extension, deployment_manifest, old_plan, model_layout_dir)
+    if any(not path.exists() for path in required):
+        raise ValueError("C2-A-RP Block 1 distribution input is missing")
+    cap = json.loads(cap_extension.read_text(encoding="utf-8"))
+    if cap["change"]["maximum_blocks_per_worker_after"] != 5:
+        raise ValueError("C2-A-RP precision-cap extension is not the approved five-block rule")
+    assignments = read_csv(source_assignment)
+    workers = {str(row["worker_id"]) for row in assignments}
+    if len(assignments) != 40 or len(workers) != 20 or any(sum(row["worker_id"] == worker for row in assignments) != 2 for worker in workers):
+        raise ValueError("approved Block 1 assignment is not 20 workers x 2 tasks")
+
+    output_dir.mkdir(parents=True, exist_ok=False)
+    c2a_dir = output_dir / "c2a_rp"
+    c2a_dir.mkdir()
+    assignment_path = output_dir / "assignment_manifest_C2A_RP_block_1.csv"
+    full_assignment_path = c2a_dir / "assignment_manifest_C2A_RP.csv"
+    shutil.copyfile(source_assignment, assignment_path)
+    shutil.copyfile(source_assignment, full_assignment_path)
+    amendment_sha = sha256_file(capacity_amendment)
+    plan_rows = []
+    for row in read_csv(old_plan):
+        if row.get("worker_id") not in workers:
+            continue
+        support = int(float(row["current_support"]))
+        half_width = float(row["current_ci_half_width"])
+        row.update({
+            "formal_goal": "risk_slope_precision", "additional_blocks": 1,
+            "ordinary_tasks": 1, "stress_tasks": 1,
+            "projected_ci_half_width": half_width * math.sqrt(support / (support + 2)),
+            "precision_target_met": "false", "routing_eligibility": "pending_block_1_reestimate",
+            "unmet_reason": "", "terminal_state": "", "fallback_action": "",
+            "declared_support_after": support + 2, "design_manifest_sha256": amendment_sha,
+        })
+        plan_rows.append(row)
+    if len(plan_rows) != 20:
+        raise ValueError("Block 1 precision plan does not cover the 20 assigned workers")
+    plan_path = c2a_dir / "precision_plan_C2A_RP.csv"
+    _write_csv(plan_path, plan_rows)
+    first = assignments[0]
+    summary_path = c2a_dir / "precision_plan_C2A_RP.summary.json"
+    _write_json(summary_path, {
+        "schema_version": "c2a_rp_precision_plan_summary_v2",
+        "status": "planned_not_imported_not_dispatched",
+        "dispatch_mode": "planned", "dispatch_block_index": 1,
+        "design_manifest_sha256": amendment_sha,
+        "c2b_summary_sha256": first["c2b_summary_sha256"],
+        "worker_profile_sha256": first["post_c2b_worker_profile_sha256"],
+        "threshold_manifest_sha256": plan_rows[0]["threshold_manifest_sha256"],
+        "existing_assignment_manifest_sha256": "",
+        "max_additional_blocks": 5,
+    })
+    deployment_payload = json.loads(deployment_manifest.read_text(encoding="utf-8"))
+    deployments = {row["deployment_id"]: row for row in deployment_payload["deployments"]}
+    worker_to_deployment = {
+        str(worker): deployment_id
+        for deployment_id, deployment in deployments.items()
+        for worker in deployment["worker_ids"]
+        if str(worker) in workers
+    }
+    if set(worker_to_deployment) != workers:
+        raise ValueError("deployment manifest does not cover the 20 assigned workers")
+    package = _package_c2a_rp(
+        output_dir / "c2a_rp_operational", assignment_path, task_pool,
+        deployments, worker_to_deployment, block_index=1,
+        c2a_summary_path=summary_path, model_layout_dir=model_layout_dir,
+    )
+    package["status"] = "planned_not_imported_not_dispatched"
+    mapping_rows = read_csv(Path(package["runtime_mapping_path"]))
+    if {
+        (row["worker_id"], row["planned_task_id"]) for row in mapping_rows
+    } != {
+        (row["worker_id"], row["task_id"]) for row in assignments
+    }:
+        raise ValueError("runtime mapping does not preserve assignment worker-task identity")
+    private_files = sorted((output_dir / "c2a_rp_operational/private_lists").glob("*.csv"))
+    manifest = {
+        "schema_version": "c2a_rp_block1_distribution_manifest_v1",
+        "status": "planned_not_imported_not_dispatched",
+        "method_contract_version": load_method_contract()["contract_version"],
+        "method_contract_sha256": sha256_file(METHOD_CONTRACT),
+        "precision_cap_extension_path": str(cap_extension.resolve()),
+        "precision_cap_extension_sha256": sha256_file(cap_extension),
+        "capacity_amendment_path": str(capacity_amendment.resolve()),
+        "capacity_amendment_sha256": amendment_sha,
+        "assignment_source_sha256": sha256_file(source_assignment),
+        "assignment_unchanged": sha256_file(source_assignment) == sha256_file(assignment_path),
+        "worker_count": 20, "assignment_count": 40,
+        "maximum_blocks_per_worker": 5,
+        "future_blocks_preassigned": False,
+        "operational_package": package,
+        "private_list_sha256": {path.name: sha256_file(path) for path in private_files},
+    }
+    if not manifest["assignment_unchanged"] or len(private_files) != 20:
+        raise ValueError("Block 1 distribution identity check failed")
+    _write_json(output_dir / "C2A_RP_BLOCK1_DISTRIBUTION_MANIFEST.json", manifest)
+    _write_text(output_dir / "READY_FOR_MANUAL_IMPORT.md", "# C2-A-RP Block 1\n\n状态：待人工导入，尚未导入、尚未发放。请分别导入 Project 76 英文 JSON 与 Project 77 中文 JSON；导入后回填 runtime mapping，再通知工人。Block 2--5 不得提前分配。\n")
+    return manifest
 
 
 def materialize(output_dir: Path) -> dict:
@@ -445,5 +556,8 @@ def materialize(output_dir: Path) -> dict:
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", type=Path, default=ROOT / "analysis_results/c2a_rp_capacity_power_amendment_20260807_v1")
+    parser.add_argument("--distribution-output-dir", type=Path)
     args = parser.parse_args()
     materialize(args.output_dir)
+    if args.distribution_output_dir:
+        materialize_distribution(args.distribution_output_dir, args.output_dir)

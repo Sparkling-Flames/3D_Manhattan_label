@@ -47,7 +47,8 @@ C2A_ASSIGNMENT_FIELDS = [
 def _c2a_rp_limits() -> tuple[int, int, str]:
     method = load_method_contract()
     max_tasks = int(method["c2"]["c2_a_rp_max_tasks_per_worker"])
-    if max_tasks != 4 or max_tasks < 0 or max_tasks % 2:
+    allowed = [int(value) for value in method["c2"]["c2_a_rp_block"]["allowed_additional_tasks"]]
+    if max_tasks != 10 or allowed != list(range(0, max_tasks + 1, 2)):
         raise ValueError(f"invalid normative C2-A-RP cap:{max_tasks}")
     return max_tasks, max_tasks // 2, sha256_file(METHOD_CONTRACT)
 

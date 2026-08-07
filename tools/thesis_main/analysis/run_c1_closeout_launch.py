@@ -331,6 +331,19 @@ def _method_identity() -> dict[str, str]:
     return {"method_contract_version": method["contract_version"], "method_contract_sha256": sha256_file(METHOD_CONTRACT)}
 
 
+def _current_or_cap_only_previous_binding(payload: dict[str, Any]) -> bool:
+    current = _method_identity()
+    if all(payload.get(key) == value for key, value in current.items()):
+        return True
+    method = load_method_contract()
+    extension = method.get("c2a_rp_precision_cap_extension", {})
+    return (
+        extension.get("significance_seeking") is False
+        and payload.get("method_contract_version") == method.get("previous_contract_version")
+        and payload.get("method_contract_sha256") == method.get("previous_contract_sha256")
+    )
+
+
 def _canonical_payload_sha(payload: Any) -> str:
     return hashlib.sha256(
         json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":")).encode("utf-8")
@@ -2006,7 +2019,7 @@ def _stage3_materialize_risk(
     risk_contract = _read_json_object(risk_contract_path)
     if risk_contract.get("schema_version") != "paper_a_c2b_risk_design_contract_v1":
         raise ValueError("stage3 risk contract schema is invalid")
-    if risk_contract.get("method_contract_sha256") != _method_identity()["method_contract_sha256"]:
+    if not _current_or_cap_only_previous_binding(risk_contract):
         raise ValueError("stage3 risk contract is not bound to current method contract")
     stress_quantile = float(risk_contract["stratum_rule"]["stress_quantile"])
     frozen_reference = load_frozen_c1_risk_reference(reference_csv, stress_quantile=stress_quantile)

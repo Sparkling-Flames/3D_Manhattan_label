@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260803_v18 SHA-256 694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260807_v19 SHA-256 60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38 -->
 # Paper A Round-Based Assignment SOP v1
 
 本 SOP 只消费当前方法合同，不定义独立的机器字段、eligibility 或统计语义。正式机器真源为 `docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json`。
@@ -32,7 +32,7 @@ C2-B 正式任务设计固定消费 D8、D10、D12。C2-B roster 只来自 `work
 
 ## 4. C2-A-RP
 
-每个 C2-A-RP block 固定包含 1 张 ordinary task 和 1 张 stress task。每名 worker 最多 2 个 block，即最多 4 张图。
+每个 C2-A-RP block 固定包含 1 张 ordinary task 和 1 张 stress task。每名 worker 最多 5 个 block，即最多 10 张图；只有上一 block 完成并按正式证据重估后，才可决定是否派发下一 block，不得预分配 Block 2--5。
 
 ## 5. active-time 与删失
 

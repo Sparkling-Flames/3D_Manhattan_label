@@ -1,0 +1,42 @@
+{
+  "schema_version": "paper_a_c2a_rp_precision_cap_extension_v1",
+  "status": "normative",
+  "decision_timing": "after_C2B_collection_closure_before_any_C2A_RP_outcome",
+  "previous_method_contract_version": "paper_a_method_20260803_v18",
+  "previous_method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+  "reason": "C2B closure showed that the former four-task cap may leave worker-specific risk-slope precision incomplete; this extension is frozen before C2A-RP outcomes and is not a significance-seeking rule.",
+  "change": {
+    "maximum_blocks_per_worker_before": 2,
+    "maximum_blocks_per_worker_after": 5,
+    "maximum_additional_tasks_before": 4,
+    "maximum_additional_tasks_after": 10,
+    "allowed_additional_tasks_after": [
+      0,
+      2,
+      4,
+      6,
+      8,
+      10
+    ]
+  },
+  "unchanged_rules": {
+    "tasks_per_block": 2,
+    "required_strata": [
+      "ordinary",
+      "stress"
+    ],
+    "reestimate_after_each_block": true,
+    "formal_target": "risk_slope_precision",
+    "risk_definition_changed": false,
+    "ci_target_changed": false,
+    "task_support_cap_changed": false,
+    "worker_ranking_changed": false,
+    "full_weights_changed": false
+  },
+  "dispatch_rule": "Only the next block may be assigned after the prior block is complete and refit; workers at target, not evaluable, or without a legal unseen ordinary-stress pair stop.",
+  "block1_binding": {
+    "assignment_manifest_path": "analysis_results/c2a_rp_capacity_power_amendment_20260807_v1/assignment_manifest_C2A_RP_block_1_amended_preview.csv",
+    "assignment_manifest_sha256": "4ac63b351aba1e4a11187daf1e975255593eb3bbb02ee484bddd6b99ee8028ec",
+    "assignment_rows_unchanged": true
+  }
+}

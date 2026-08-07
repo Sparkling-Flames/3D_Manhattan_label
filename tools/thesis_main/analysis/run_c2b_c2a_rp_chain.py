@@ -973,6 +973,7 @@ def _package_c2a_rp(
     for deployment_id, deployment in deployments.items():
         task_payloads: dict[str, dict[str, Any]] = {}
         for row in by_deployment.get(deployment_id, []):
+            worker = normalize_worker_id(row.get("worker_id", ""))
             task_id = _text(row.get("task_id"))
             task = tasks[task_id]
             image = _text(task.get("image") or task.get("image_path") or task.get("vis_3d"))

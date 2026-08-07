@@ -1,10 +1,10 @@
 {
     "schema_version":  "paper_a_method_contract_v9",
-    "contract_version":  "paper_a_method_20260803_v18",
+    "contract_version":  "paper_a_method_20260807_v19",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
-    "previous_contract_version":  "paper_a_method_20260802_v17",
-    "previous_contract_sha256":  "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c",
+    "previous_contract_version":  "paper_a_method_20260803_v18",
+    "previous_contract_sha256":  "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
     "predispatch_amendment":  {
                                     "path":  "docs/thesis_main/C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json",
                                     "sha256":  "330938460ffd779eba3beeeef361f300ff30befbfd38549e1c782d05358f99ba",
@@ -16,6 +16,13 @@
                                                             ],
                                     "candidate_specific_relaxation":  false
                                 },
+    "c2a_rp_precision_cap_extension":  {
+                                               "path":  "docs/thesis_main/C2A_RP_PRECISION_CAP_EXTENSION_20260807_v1.json",
+                                               "sha256":  "c909f7e5008f57bfc7f634b2e0a78edd54061c9f8060cca889008f99c8c8cf54",
+                                               "effective_timing":  "after_C2B_collection_closure_before_any_C2A_RP_outcome",
+                                               "maximum_blocks_per_worker":  5,
+                                               "significance_seeking":  false
+                                           },
     "stages":  [
                    "Pilot",
                    "PreScreen",
@@ -74,7 +81,7 @@
                                          "D10",
                                          "D12"
                                      ],
-               "c2_a_rp_max_tasks_per_worker":  4,
+               "c2_a_rp_max_tasks_per_worker":  10,
                "c2_a_rp_formal_target":  "risk_slope_precision",
                "c2_a_rp_diagnostic_goals":  [
                                                     "top_k_boundary_precision",
@@ -97,7 +104,10 @@
                                       "allowed_additional_tasks":  [
                                                                         0,
                                                                         2,
-                                                                        4
+                                                                        4,
+                                                                        6,
+                                                                        8,
+                                                                        10
                                                                     ]
                                   },
                "c2_a_rp_terminal_states":  [

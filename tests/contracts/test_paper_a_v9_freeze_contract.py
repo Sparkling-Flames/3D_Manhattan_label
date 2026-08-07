@@ -90,7 +90,7 @@ def test_final_pooled_profile_is_independent_from_c1_evidence(tmp_path: Path) ->
 def test_v9_contract_has_separate_pooled_schema() -> None:
     contract = load_method_contract()
     assert contract["schema_version"] == "paper_a_method_contract_v9"
-    assert contract["contract_version"] == "paper_a_method_20260803_v18"
+    assert contract["contract_version"] == "paper_a_method_20260807_v19"
     assert contract["predispatch_amendment"]["candidate_specific_relaxation"] is False
     assert contract["geometry_cluster"]["similarity_cutoff"] == .95
     assert contract["geometry_cluster"]["sensitivity_cutoffs"] == [.93, .97]
@@ -100,5 +100,7 @@ def test_v9_contract_has_separate_pooled_schema() -> None:
     assert "paper_a_final_pooled_profile_freeze_v1" in contract["artifact_schemas"]
     assert "FINAL_POOLED_PROFILE_FROZEN" in contract["stage3"]["required_roles"]
     assert contract["c2"]["c2_a_rp_formal_target"] == "risk_slope_precision"
+    assert contract["c2"]["c2_a_rp_max_tasks_per_worker"] == 10
+    assert contract["c2"]["c2_a_rp_block"]["allowed_additional_tasks"] == [0, 2, 4, 6, 8, 10]
     assert "STRONG_GLOBAL_FROZEN" not in contract["stage3"]["required_roles"]
     assert "STRONG_GLOBAL_FROZEN" in contract["stage3"]["v1_required_roles"]

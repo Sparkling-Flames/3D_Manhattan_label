@@ -150,14 +150,14 @@ def test_precision_plan_marks_zero_support_worker_not_evaluable() -> None:
     assert row["additional_blocks"] == row["ordinary_tasks"] == row["stress_tasks"] == 0
 
 
-def test_c2a_rp_manifest_cannot_override_four_task_contract_cap(tmp_path: Path) -> None:
+def test_c2a_rp_manifest_cannot_override_ten_task_contract_cap(tmp_path: Path) -> None:
     profile = tmp_path / "post_c2b.csv"
     _csv(profile, ["worker_id", "support", "ci_half_width"], [{"worker_id": "w1", "support": 8, "ci_half_width": 0.4}])
     design = tmp_path / "design.json"
     design.write_text(json.dumps({
         "manifest_version": "c2_design_v1",
         "input_sha256": {"worker_profile_csv": _sha(profile)},
-        "precision": {"target_ci_half_width": 0.15, "max_additional_blocks": 3},
+        "precision": {"target_ci_half_width": 0.15, "max_additional_blocks": 6},
     }), encoding="utf-8")
     with pytest.raises(ValueError, match="normative C2-A-RP cap"):
         materialize_c2a(profile, design, tmp_path / "out")
