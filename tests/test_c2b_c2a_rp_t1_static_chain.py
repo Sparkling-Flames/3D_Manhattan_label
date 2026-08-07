@@ -276,9 +276,13 @@ def _make_c2b_fixture(tmp_path: Path) -> dict[str, Path]:
     _write_json(c2a_design, {"manifest_version": "c2_design_v1", "input_sha256": {}, "threshold_manifest_path": str(threshold), "threshold_manifest_sha256": _sha(threshold), "precision": {"target_ci_half_width": 0.01, "max_additional_blocks": 2, "max_task_support": 2}})
     c2a_pool = tmp_path / "c2a_pool.csv"
     _write_csv(c2a_pool, [{"task_id": f"o-{i}", "base_task_id": f"o-{i}", "task_stratum": "ordinary", "c2a_rp_eligible": "true", "vis_3d": f"https://img/o-{i}.png"} for i in range(22)] + [{"task_id": f"s-{i}", "base_task_id": f"s-{i}", "task_stratum": "stress", "c2a_rp_eligible": "true", "vis_3d": f"https://img/s-{i}.png"} for i in range(22)])
+    model_layout = tmp_path / "model_layout"
+    model_layout.mkdir()
+    for task_id in [f"o-{i}" for i in range(22)] + [f"s-{i}" for i in range(22)]:
+        _write_json(model_layout / f"{task_id}.json", {"layout": {"corners": [{"x": 1, "y_ceiling": 2, "y_floor": 3}]}})
     design_summary = tmp_path / "design_summary.json"
     _write_json(design_summary, {"c2b_design_ready": True, "launch_ready": True, "candidate_only": False})
-    return {"assignment": assignment_path, "exports_zh": export_paths["zh"], "exports_foreign": export_paths["foreign"], "active": active_log, "deployment": manifest, "launch": launch, "mapping": mapping, "private": private_audit, "profile": profile, "c1": c1_snapshot, "roster": roster, "rule": rule, "eligibility": TASK_EVIDENCE, "reference": REFERENCE, "design": c2a_design, "threshold": threshold, "c2a_pool": c2a_pool, "design_summary": design_summary}
+    return {"assignment": assignment_path, "exports_zh": export_paths["zh"], "exports_foreign": export_paths["foreign"], "active": active_log, "deployment": manifest, "launch": launch, "mapping": mapping, "private": private_audit, "profile": profile, "c1": c1_snapshot, "roster": roster, "rule": rule, "eligibility": TASK_EVIDENCE, "reference": REFERENCE, "design": c2a_design, "threshold": threshold, "c2a_pool": c2a_pool, "model_layout": model_layout, "design_summary": design_summary}
 
 
 def _make_formal_c2b_bindings(fixture: dict[str, Path], tmp_path: Path) -> None:
@@ -380,7 +384,7 @@ def test_d8_identity_is_unchanged_and_c2b_to_c2a_rehearsal_is_replaceable(monkey
     monkeypatch.setattr(chain, "_fit_crossed_model", lambda records: {"status": "estimated", "support": {"worker_id": 22, "base_task_id": 46, "building_id": 10, "risk": 20}, "worker_slopes": {worker: 0.1 for worker in workers}, "worker_slope_ses": {worker: 0.01 for worker in workers}, "group_slope_se": 0.01, "between_worker_slope_sd": 0.01})
     monkeypatch.setattr(chain, "compute_layout_mask_iou_from_normalized_pairs", lambda _pred, _ref: (0.8, {}))
 
-    kwargs = dict(zh_export=fixture["exports_zh"], foreign_export=fixture["exports_foreign"], exports={}, active_log=fixture["active"], deployment_active_logs={}, assignment=fixture["assignment"], deployment_manifest=fixture["deployment"], launch_report=fixture["launch"], runtime_mapping=fixture["mapping"], private_assignment_audit=fixture["private"], worker_profile=fixture["profile"], design_summary=fixture["design_summary"], c1_snapshot=fixture["c1"], worker_roster=fixture["roster"], rule_config=fixture["rule"], task_eligibility=fixture["eligibility"], reference_registry=fixture["reference"], c2a_design_manifest=fixture["design"], threshold_manifest=fixture["threshold"], c2a_task_pool=fixture["c2a_pool"], input_status="precloseout_rehearsal")
+    kwargs = dict(zh_export=fixture["exports_zh"], foreign_export=fixture["exports_foreign"], exports={}, active_log=fixture["active"], deployment_active_logs={}, assignment=fixture["assignment"], deployment_manifest=fixture["deployment"], launch_report=fixture["launch"], runtime_mapping=fixture["mapping"], private_assignment_audit=fixture["private"], worker_profile=fixture["profile"], design_summary=fixture["design_summary"], c1_snapshot=fixture["c1"], worker_roster=fixture["roster"], rule_config=fixture["rule"], task_eligibility=fixture["eligibility"], reference_registry=fixture["reference"], c2a_design_manifest=fixture["design"], threshold_manifest=fixture["threshold"], c2a_task_pool=fixture["c2a_pool"], model_layout_dir=fixture["model_layout"], input_status="precloseout_rehearsal")
     first = chain.run_chain(output_dir=tmp_path / "chain_1", **kwargs)
     assert first["formal_ready"] is False
     assert first["assignment_count"] == 176 and first["task_count"] == 46 and first["worker_count"] == 22
@@ -406,7 +410,9 @@ def test_d8_identity_is_unchanged_and_c2b_to_c2a_rehearsal_is_replaceable(monkey
     import_payload = json.loads((tmp_path / "chain_1" / "c2a_rp_operational" / "imports" / "c2a_rp_block_1_zh.json").read_text(encoding="utf-8"))
     assert import_payload[0]["data"]["method_contract_sha256"] == _sha(METHOD_CONTRACT)
     assert import_payload[0]["data"]["c2a_block_assignment_sha256"] == _sha(tmp_path / "chain_1" / "assignment_manifest_C2A_RP_block_1.csv")
-    assert import_payload[0]["data"]["vis_3d"]
+    assert import_payload[0]["data"]["image"].endswith(".jpg")
+    assert import_payload[0]["data"]["vis_3d"].startswith("http://c2b-zh/tools/vis_3d.html?")
+    assert import_payload[0]["data"]["model_layout_sha256"]
 
     replacement = tmp_path / "replacement_zh.json"
     payload = json.loads(fixture["exports_zh"].read_text(encoding="utf-8"))

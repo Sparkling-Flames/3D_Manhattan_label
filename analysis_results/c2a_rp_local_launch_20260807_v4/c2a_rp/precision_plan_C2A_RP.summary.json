@@ -2,18 +2,21 @@
   "assignment_manifest_schema_version": "c2a_rp_assignment_manifest_v2",
   "c2_a_rp_max_tasks_per_worker": 4,
   "c2a_rp_ready": false,
-  "c2b_summary_sha256": "f2a6e65c175bb9b62de55b60b74d4c8a20ae1c64f8cba38947da602a614e2729",
+  "c2b_summary_sha256": "5e44a28e5e632a4c3dd7ecd999fdf6443c150e21520e55812431f3a080d4785d",
   "candidate_only": true,
   "capacity_fallback_workers": [
-    "34",
+    "29",
+    "32",
     "35",
     "36",
-    "37",
     "6",
     "8"
   ],
+  "capacity_selection_algorithm": "maximum_complete_blocks_seeded_feasible_subset",
+  "capacity_selection_seed": 20260724,
+  "capacity_selection_uses_performance_fields": false,
   "dependency_binding_valid": false,
-  "design_manifest_sha256": "4edf5a39f38e6eb01a814dad6f728bb91be27f2162e33e3df6d4d5deffd5272c",
+  "design_manifest_sha256": "50d62be3733861b7086da48dc28a1052b4b650c77dbc41cc99c506fd7eb7b236",
   "diagnostic_goals_not_dispatchable": [
     "top_k_boundary_precision",
     "component_eligibility_precision"
@@ -34,6 +37,7 @@
   "launch_ready": false,
   "max_additional_blocks": 2,
   "max_task_support": 2,
+  "maximum_complete_blocks": 14,
   "method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
   "method_contract_version": "paper_a_method_20260803_v18",
   "modifies_c1": false,

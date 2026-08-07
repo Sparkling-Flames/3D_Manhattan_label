@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import math
 import random
@@ -8,6 +9,10 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 from typing import Any
+
+import numpy as np
+from scipy.optimize import Bounds, LinearConstraint, milp
+from scipy.sparse import lil_matrix
 
 _PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(_PROJECT_ROOT) not in sys.path:
@@ -364,24 +369,124 @@ def build_precision_assignments(
     return assignments
 
 
+def _maximum_complete_block_count(
+    precision_rows: list[dict[str, Any]],
+    task_rows: list[dict[str, str]],
+    *,
+    history_rows: list[dict[str, Any]] | None,
+    max_task_support: int,
+    require_explicit_eligibility: bool,
+) -> int:
+    workers = [safe(row.get("worker_id")) for row in precision_rows]
+    pools: list[tuple[str, str, str]] = []
+    for task in task_rows:
+        stratum = safe(task.get("task_stratum") or task.get("risk_bucket")).lower()
+        task_id = safe(task.get("task_id"))
+        eligible = task.get("c2a_rp_eligible")
+        if task_id and stratum in {"ordinary", "stress"} and (
+            truthy(eligible) if require_explicit_eligibility
+            else eligible is None or safe(eligible) == "" or truthy(eligible)
+        ):
+            pools.append((task_id, safe(task.get("base_task_id")) or task_id, stratum))
+    seen_by_worker: dict[str, set[str]] = defaultdict(set)
+    task_support: dict[str, int] = defaultdict(int)
+    for history in history_rows or []:
+        worker = safe(history.get("worker_id"))
+        task_id = safe(history.get("task_id"))
+        seen_by_worker[worker].update(filter(None, (task_id, safe(history.get("base_task_id")))))
+        if task_id and (
+            not safe(history.get("round_id"))
+            or safe(history.get("round_id")) == "C2-A-RP"
+            or safe(history.get("schema_version")) == _c2a_rp_csv_schemas()[1]
+        ):
+            task_support[task_id] += 1
+    edges = [
+        (worker, task_id, base_task_id, stratum)
+        for worker in workers
+        for task_id, base_task_id, stratum in pools
+        if task_id not in seen_by_worker[worker]
+        and base_task_id not in seen_by_worker[worker]
+        and task_support[task_id] < max_task_support
+    ]
+    worker_var = {worker: index for index, worker in enumerate(workers)}
+    edge_var = {edge: index + len(workers) for index, edge in enumerate(edges)}
+    constraints: list[tuple[dict[int, int], float, float]] = []
+    for worker in workers:
+        for stratum in ("ordinary", "stress"):
+            row = {worker_var[worker]: -1}
+            row.update({edge_var[edge]: 1 for edge in edges if edge[0] == worker and edge[3] == stratum})
+            constraints.append((row, 0, 0))
+    for task_id in sorted({edge[1] for edge in edges}):
+        constraints.append((
+            {edge_var[edge]: 1 for edge in edges if edge[1] == task_id},
+            -np.inf, max_task_support - task_support[task_id],
+        ))
+    for worker in workers:
+        for base_task_id in {edge[2] for edge in edges if edge[0] == worker}:
+            same_base = [edge for edge in edges if edge[0] == worker and edge[2] == base_task_id]
+            if len(same_base) > 1:
+                constraints.append(({edge_var[edge]: 1 for edge in same_base}, -np.inf, 1))
+    n_variables = len(workers) + len(edges)
+    matrix = lil_matrix((len(constraints), n_variables), dtype=float)
+    for row_index, (values, _lower, _upper) in enumerate(constraints):
+        for column_index, value in values.items():
+            matrix[row_index, column_index] = value
+    objective = np.zeros(n_variables)
+    objective[:len(workers)] = -1
+    result = milp(
+        objective,
+        integrality=np.ones(n_variables),
+        bounds=Bounds(np.zeros(n_variables), np.ones(n_variables)),
+        constraints=LinearConstraint(
+            matrix.tocsr(),
+            np.array([lower for _row, lower, _upper in constraints]),
+            np.array([upper for _row, _lower, upper in constraints]),
+        ),
+    )
+    if not result.success:
+        raise ValueError("C2-A-RP complete-block capacity matching failed")
+    return int(round(-result.fun))
+
+
 def build_assignments_with_capacity_fallback(
     precision_rows: list[dict[str, Any]],
     task_rows: list[dict[str, str]],
     **kwargs: Any,
 ) -> tuple[list[dict[str, Any]], list[str]]:
-    """Dispatch the largest deterministic prefix that fits; fallback is normative."""
-    selected: list[dict[str, Any]] = []
-    fallback_workers: list[str] = []
-    for plan in precision_rows:
-        if int(plan.get("additional_blocks", 0) or 0) == 0:
-            continue
+    """Maximize complete blocks, then use the frozen seed to choose a feasible worker subset."""
+    candidates = [row for row in precision_rows if int(row.get("additional_blocks", 0) or 0) > 0]
+    candidates.sort(key=lambda row: safe(row.get("worker_id")))
+    maximum = _maximum_complete_block_count(
+        candidates, task_rows,
+        history_rows=kwargs.get("history_rows"),
+        max_task_support=int(kwargs.get("max_task_support", 2)),
+        require_explicit_eligibility=bool(kwargs.get("require_explicit_eligibility", False)),
+    )
+    # ponytail: exact subset enumeration is intentionally capped for the 20-worker C2 cohort;
+    # replace it with integrated matching if a future cohort makes this search large.
+    if math.comb(len(candidates), maximum) > 250_000:
+        raise ValueError("C2-A-RP seeded maximum-subset search exceeds the local cohort ceiling")
+    combinations = list(itertools.combinations(candidates, maximum))
+    random.Random(int(kwargs.get("selection_seed", 0))).shuffle(combinations)
+    assignments: list[dict[str, Any]] | None = None
+    selected_workers: set[str] = set()
+    for subset in combinations:
         try:
-            build_precision_assignments([*selected, plan], task_rows, **kwargs)
+            assignments = build_precision_assignments(list(subset), task_rows, **kwargs)
         except ValueError as exc:
-            if not str(exc).startswith("insufficient C2-A-RP "):
-                raise
-            worker = safe(plan.get("worker_id"))
-            fallback_workers.append(worker)
+            if str(exc).startswith("insufficient C2-A-RP "):
+                continue
+            raise
+        selected_workers = {safe(row.get("worker_id")) for row in subset}
+        break
+    if assignments is None:
+        raise ValueError("C2-A-RP maximum worker subset is incompatible with the frozen task draw")
+    fallback_workers = [
+        safe(plan.get("worker_id")) for plan in candidates
+        if safe(plan.get("worker_id")) not in selected_workers
+    ]
+    for plan in candidates:
+        if safe(plan.get("worker_id")) in fallback_workers:
             plan.update({
                 "additional_blocks": 0, "ordinary_tasks": 0, "stress_tasks": 0,
                 "declared_support_after": plan.get("current_support", ""),
@@ -391,9 +496,7 @@ def build_assignments_with_capacity_fallback(
                 "terminal_state": "fallback_strong_global",
                 "fallback_action": "STRONG_GLOBAL",
             })
-        else:
-            selected.append(plan)
-    return build_precision_assignments(selected, task_rows, **kwargs), fallback_workers
+    return assignments, fallback_workers
 
 
 def materialize(
@@ -586,6 +689,10 @@ def materialize(
         "n_workers_unmet_at_cap": sum(bool(row["unmet_reason"]) for row in rows),
         "n_workers_capacity_fallback": len(capacity_fallback_workers),
         "capacity_fallback_workers": capacity_fallback_workers,
+        "maximum_complete_blocks": len({safe(row.get("worker_id")) for row in assignments}),
+        "capacity_selection_algorithm": "maximum_complete_blocks_seeded_feasible_subset",
+        "capacity_selection_seed": int(precision.get("selection_seed", 0)),
+        "capacity_selection_uses_performance_fields": False,
         "n_assignments": len(assignments),
         "c2a_rp_ready": binding_valid and c2b_valid and task_pool_valid and history_valid and bool(rows) and (formal_goal == _formal_goal() if input_status == "formal" else True),
         "candidate_only": input_status != "formal",

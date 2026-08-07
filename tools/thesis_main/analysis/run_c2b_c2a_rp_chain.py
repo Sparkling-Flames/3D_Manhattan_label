@@ -19,6 +19,7 @@ import tempfile
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any, Iterable
+from urllib.parse import quote
 
 PROJECT_ROOT = Path(__file__).resolve().parents[3]
 if str(PROJECT_ROOT) not in sys.path:
@@ -918,6 +919,7 @@ def _package_c2a_rp(
     *,
     block_index: int,
     c2a_summary_path: Path,
+    model_layout_dir: Path | None = None,
 ) -> dict[str, Any]:
     assignments = _read_csv(assignment_path)
     tasks = _load_task_index(task_pool_path)
@@ -973,8 +975,31 @@ def _package_c2a_rp(
         for row in by_deployment.get(deployment_id, []):
             task_id = _text(row.get("task_id"))
             task = tasks[task_id]
+            image = _text(task.get("image") or task.get("image_path") or task.get("vis_3d"))
+            if not image:
+                raise ValueError(f"C2-A-RP task lacks an image URL:{task_id}")
+            image = image.replace("/valid_no_occ/img/", "/img_v/")
+            if image.endswith(".png"):
+                image = image[:-4] + ".jpg"
+            viewer = _text(task.get("vis_3d"))
+            model_layout_sha256 = ""
+            if model_layout_dir is not None:
+                layout_path = model_layout_dir / f"{_text(task.get('base_task_id')) or task_id}.json"
+                if not layout_path.is_file():
+                    raise ValueError(f"C2-A-RP task lacks frozen model layout JSON:{task_id}")
+                layout = json.loads(layout_path.read_text(encoding="utf-8"))
+                corners = layout.get("layout", {}).get("corners", [])
+                if not corners:
+                    raise ValueError(f"C2-A-RP task has an empty frozen model layout:{task_id}")
+                points = [{key: corner[key] for key in ("x", "y_ceiling", "y_floor")} for corner in corners]
+                viewer = f"{str(deployment['server_url']).rstrip('/')}/tools/vis_3d.html?w=1024&h=512&data={quote(json.dumps(points, separators=(',', ':')))}"
+                model_layout_sha256 = _sha(layout_path)
             data = {
                 **identity,
+                "image": image,
+                "title": Path(image).name,
+                "dataset_group": "C2-A-RP",
+                "condition": "manual",
                 "planned_task_id": task_id,
                 "task_id": task_id,
                 "base_task_id": _text(row.get("base_task_id")) or _text(task.get("base_task_id")) or task_id,
@@ -988,8 +1013,10 @@ def _package_c2a_rp(
                 "server_instance_id": deployment["server_instance_id"],
                 "server_url": deployment["server_url"],
                 "project_id": deployment["project_id"],
-                "vis_3d": task.get("vis_3d", task.get("image_path", "")),
+                "vis_3d": viewer,
             }
+            if model_layout_sha256:
+                data["model_layout_sha256"] = model_layout_sha256
             if _text(task.get("image_id")):
                 data["image_id"] = task["image_id"]
             task_payloads.setdefault(task_id, {"data": data})
@@ -1106,11 +1133,14 @@ def run_chain(
     terminal_disposition: Path | None = None,
     reference_conflict_review_record: Path | None = None,
     scope_disposition: Path | None = None,
+    model_layout_dir: Path | None = None,
 ) -> dict[str, Any]:
     if input_status not in FORMAL_MODES:
         raise ValueError(f"unsupported input_status:{input_status}")
     if input_status == "formal" and reference_conflict_review_record is None:
         raise ValueError("formal C2-B chain requires reference_conflict_review_record")
+    if model_layout_dir is not None and not model_layout_dir.is_dir():
+        raise ValueError(f"missing C2-A-RP model layout directory:{model_layout_dir}")
     source_paths = [assignment, deployment_manifest, launch_report, runtime_mapping, private_assignment_audit, worker_profile, design_summary, c1_snapshot, worker_roster, rule_config, task_eligibility, reference_registry, c2a_design_manifest, threshold_manifest, c2a_task_pool]
     if reference_conflict_review_record is not None:
         source_paths.append(reference_conflict_review_record)
@@ -1307,6 +1337,7 @@ def run_chain(
             deployments, worker_to_deployment,
             block_index=block_index,
             c2a_summary_path=c2a_dir / "precision_plan_C2A_RP.summary.json",
+            model_layout_dir=model_layout_dir,
         )
         package = _relocate_paths(package, staging, output_dir)
         input_sha256 = {name: _sha(path) for name, path in chain_input_paths.items()}
@@ -1398,6 +1429,7 @@ def _parser() -> argparse.ArgumentParser:
     parser.add_argument("--terminal-disposition", type=Path)
     parser.add_argument("--reference-conflict-review-record", type=Path)
     parser.add_argument("--scope-disposition", type=Path)
+    parser.add_argument("--model-layout-dir", type=Path)
     return parser
 
 
@@ -1418,6 +1450,7 @@ def main(argv: list[str] | None = None) -> int:
             terminal_disposition=_path(args.terminal_disposition) if args.terminal_disposition else None,
             reference_conflict_review_record=_path(args.reference_conflict_review_record) if args.reference_conflict_review_record else None,
             scope_disposition=_path(args.scope_disposition) if args.scope_disposition else None,
+            model_layout_dir=_path(args.model_layout_dir) if args.model_layout_dir else None,
         )
     except Exception as exc:
         print(json.dumps({"schema_version": CHAIN_SCHEMA, "formal_ready": False, "launch_ready": False, "reason_code": f"blocked:{type(exc).__name__}", "reason": str(exc)}, ensure_ascii=False, indent=2))

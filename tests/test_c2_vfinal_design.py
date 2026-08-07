@@ -190,10 +190,32 @@ def test_c2a_capacity_shortfall_falls_back_locally_without_partial_blocks() -> N
     )
 
     assert len(assignments) == 2
-    assert {row["worker_id"] for row in assignments} == {"w1"}
-    assert fallback == ["w2"]
-    assert plans[1]["additional_blocks"] == plans[1]["ordinary_tasks"] == plans[1]["stress_tasks"] == 0
-    assert plans[1]["terminal_state"] == "fallback_strong_global"
+    assigned = {row["worker_id"] for row in assignments}
+    assert len(assigned) == len(fallback) == 1
+    assert assigned.isdisjoint(fallback)
+    fallback_plan = next(plan for plan in plans if plan["worker_id"] in fallback)
+    assert fallback_plan["additional_blocks"] == fallback_plan["ordinary_tasks"] == fallback_plan["stress_tasks"] == 0
+    assert fallback_plan["terminal_state"] == "fallback_strong_global"
+
+
+def test_c2a_capacity_fallback_is_seeded_and_not_input_order_dependent() -> None:
+    def run(worker_order: tuple[str, ...]) -> tuple[set[str], list[str]]:
+        plans = [
+            {"worker_id": worker, "additional_blocks": 1, "ordinary_tasks": 1, "stress_tasks": 1,
+             "current_ci_half_width": .2, "current_support": 8, "target_component": "risk_slope",
+             "gap_reason": "target_not_met", "terminal_state": "pending_actual_reestimate"}
+            for worker in worker_order
+        ]
+        assignments, fallback = build_assignments_with_capacity_fallback(
+            plans,
+            [{"task_id": "o1", "base_task_id": "o1", "task_stratum": "ordinary"},
+             {"task_id": "s1", "base_task_id": "s1", "task_stratum": "stress"}],
+            manifest_sha="m", c2b_sha="c", profile_sha="p", max_task_support=1,
+            selection_seed=20260724, dispatch_block_index=1, formal=True,
+        )
+        return {row["worker_id"] for row in assignments}, fallback
+
+    assert run(("w1", "w2")) == run(("w2", "w1"))
 
 
 def test_c2a_prior_round_seen_history_does_not_consume_c2a_support_cap() -> None:
@@ -344,6 +366,9 @@ def test_formal_c2a_requires_bound_c2b_sha_and_real_task_pool(tmp_path: Path) ->
     )
     assert summary["launch_ready"] is True
     assert summary["n_assignments"] == 2
+    assert summary["maximum_complete_blocks"] == 1
+    assert summary["capacity_selection_algorithm"] == "maximum_complete_blocks_seeded_feasible_subset"
+    assert summary["capacity_selection_uses_performance_fields"] is False
     precision = _rows(tmp_path / "good" / "precision_plan_C2A_RP.csv")[0]
     assert precision["projected_ci_half_width"] == ""
     assert precision["formal_goal"] == "risk_slope_precision"
