@@ -9,11 +9,12 @@
   - `analysis/`：质量分析、active-time audit、stage-aware 分析、图表与汇总。
   - `registry/`：registry、manifest、freeze、final-gold、trap/materialization、risk-rule、`d_t/g_t` dry-run 和 export inventory。
   - `data_prep/`：数据集准备和 MP3D smoke/import 生成。
-  - `tools/thesis_main/tools/thesis_main/foreign_recruitment/`：P1/PreScreen 外国标注员 HTTPS 英文适配包。
+  - `foreign_recruitment/`：海外招募、安装、legacy 与私有运营说明；Label Studio 英文运行资产不放在此目录。
 - `tools/paper_b/`
   - Paper B 相关工具。当前包括 `validate_b0_relabel_audit.py`。
 - `tools/label_studio/`
   - 三条线共享的 Label Studio 配置、viewer、server、COS/upload、import/build helper 和 `official/` 运行入口。
+  - `localized/en/` 保存英文 XML 与 HTTPS userscript；`config_history/` 保存 SHA 冻结的历史 XML 快照。
   - 仓库源码在本目录；云服务器运行时 URL `/tools/vis_3d.html` 继续作为部署兼容路径保留。
 - 保持不动：`tools/legacy/`、`tools/legacy_server/`、`tools/backups/`。
 

@@ -27,55 +27,50 @@
         <!-- 选项卡片化设计 -->
         <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
           <Header value="1. 范围判定 (Scope)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
-          <Text name="scope_rule_text" value="总规则：先判断相机所在主房间的外包络，能否在不猜测的情况下形成唯一、可复现的闭合；若不能，再判断属于哪一类 OOS。"/>
+          <Text name="scope_rule_text" value="请标注相机所在的当前空间。沿属于当前空间的围护墙连续标注，包括属于当前空间的墙面转角。当开口通向相邻空间时，只在门框、两侧墙垛或墙端、拱口等能够明确区分两个空间的结构边界处封闭，不继续进入相邻空间。只要该空间能形成唯一、可复现的单层 Manhattan 墙—顶—地外包络，就选 In-scope。局部遮挡、开口、楼梯或天花凹凸本身不等于 OOS；只有符合下列具体原因时才选 OOS。"/>
           <Choices name="scope" toName="img" showInLine="true" choice="single" required="true" requiredMessage="Scope 必须选择 1 项">
-          <Choice value="In-scope：只标相机房间 (Normal / Camera room only)" alias="normal" hint="主指标纳入。
-只标相机所在主房间，不跨门洞或相邻空间。
-只要当前主房间的墙-顶/墙-地外包络仍唯一、可复现，就选本项。
-看到楼梯、开口或天花内凹，并不自动构成 OOS；若可在清晰边界处停止，仍选本项。"/>
-            <Choice value="OOS：几何假设不成立 (Out-of-scope / Non-Manhattan)" alias="oos_geometry" hint="主指标剔除。
-当前主房间本身无法用单个 Manhattan / cuboid 风格包络稳定表示。
-典型情况：弧形墙、连续曲面、明显斜墙、非 Manhattan 主结构。"/>
-          <Choice value="OOS：边界不可判定 (Open Boundary / Ambiguous camera-room boundary)" alias="oos_open_boundary" hint="主指标剔除。
-空间可见，但无法确定当前主房间应在何处闭合或停止。
-典型情况：缺少清晰门框、墙垛、转角或其他可靠停止点；两种及以上闭合方式都合理。
+          <Choice value="In-scope：相机所在的当前空间" alias="normal" hint="沿属于当前空间的围护墙连续标注，包括普通 L/T 形墙面转角；当开口通向相邻空间时，只在门框、两侧墙垛或墙端、拱口等清晰结构分界处封闭。
+只要当前空间能形成唯一、可复现的单层 Manhattan 墙—顶—地外包络，就选本项。
+L/T 形、局部遮挡、开口、可在清晰边界排除的楼梯或天花凹凸仍可选本项。"/>
+            <Choice value="OOS：几何假设不成立 (Out-of-scope / Non-Manhattan)" alias="oos_geometry" hint="当前空间主体无法用单个 Manhattan / cuboid 风格包络稳定表示。
+典型情况：弧形墙、连续曲面、明显斜墙或其他主导性非 Manhattan 结构；仅呈 L/T 形不属于本项。"/>
+          <Choice value="OOS：当前空间边界开放或不可判定" alias="oos_open_boundary" hint="通向相邻空间的开口缺少可复现的结构分界，或存在多个同等合理的闭合方式。
+单纯通过开口看到相邻空间不属于本项；若可在门框、两侧墙垛或墙端、拱口等清晰边界处封闭，仍选 normal。
 若主要问题是证据缺失或看不见，优先选 oos_insufficient。"/>
-          <Choice value="OOS：错层/多平面 (Split-level / Multi-level)" alias="oos_split_level" hint="主指标剔除。
-当前主房间外包络不再满足单一地面 + 单一天花假设。
-典型情况：楼梯井、下沉区、多层地面或分层天花直接进入主包络，导致出现多个竞争平面。
-若楼梯/下沉区可在清晰边缘处排除，且主包络仍唯一，则仍选 normal。"/>
-          <Choice value="OOS：证据不足 (Insufficient evidence)" alias="oos_insufficient" hint="主指标剔除。
-关键几何证据本身缺失，无法给出可复现的包络。
-典型情况：严重遮挡、过曝、模糊、贴图缺失、黑边/遮罩。
-局部角点被挡但主包络仍能稳定闭合时，不应升格为 OOS。"/>
+          <Choice value="OOS：错层/多平面 (Split-level / Multi-level)" alias="oos_split_level" hint="当前空间的同一外包络必须包含竞争性的多层地面或天花，无法满足单一地面 + 单一天花假设。
+典型情况：楼梯井、下沉区、多层地面或分层天花直接进入当前外包络。
+若楼梯或下沉区可在清晰边界排除，且当前空间仍能唯一闭合，则仍选 normal。"/>
+          <Choice value="OOS：关键几何证据不足" alias="oos_insufficient" hint="关键结构证据确实缺失，无法形成可复现的闭合外包络。
+典型情况：严重遮挡、过曝、模糊、贴图缺失、黑边或大面积遮罩。
+局部遮挡、单个角点难定位或图像抽象，但当前空间仍能稳定闭合时，不应升格为 OOS。"/>
         </Choices>
         </View>
 
         <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
           <Header value="2. 困难因素 (Difficulty)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
-          <Text name="difficulty_rule_text" value="填写规则：是因为以下的困难导致角点很难标注，而不是图片有这种问题但是对角点没任何影响。必须至少选择 1 项。若选择 &quot;trivial&quot;（非常简单），则不得同时选择其它困难标签；若存在任意困难因素，请不要选 trivial。" />
+          <Text name="difficulty_rule_text" value="请选择在本任务中确实增加布局或角点标注难度的因素。Difficulty 描述标注难度，不决定 Scope，也不评价模型是否错误。多个不同因素分别增加难度时可以多选；同一个底层原因不要因为多种视觉表现重复选择。必须至少选择 1 项；仅当其他因素均未实质增加难度时选择 trivial，且不得与其他标签同时选择。" />
           <Choices name="difficulty" toName="img" showInLine="true" choice="multiple" required="true" requiredMessage="Difficulty 必须至少选择 1 项">
-            <Choice value="非常简单 (Trivial)" alias="trivial" hint="场景简单、几何清晰、无遮挡无干扰，标注几乎无困难"/>
-            <Choice value="遮挡明显 (Occlusion)" alias="occlusion" hint="局部关键几何证据被挡住。家具、门扇、墙垛、前景墙体或其他结构都可造成遮挡。若只是局部被挡、但主房间外包络仍唯一闭合，归入本项；只有当主包络本身无法可复现闭合时，才考虑 oos_insufficient。"/>
-            <Choice value="纹理弱/纯色墙 (Low texture)" alias="low_texture" hint="局部纹理或颜色变化弱，导致边界/角点主要依赖弱几何线索，而非明显外观变化。若主要困难来自遮挡、拼接缝、反光或低画质，不选本项。"/>
+            <Choice value="非常简单 (Trivial)" alias="trivial" hint="没有其他因素实质增加布局或角点标注难度时选择；与其他困难标签互斥。"/>
+            <Choice value="遮挡明显 (Occlusion)" alias="occlusion" hint="前景物体或前景结构遮挡了本应判断的后方墙角、墙线或边界证据。当前空间的围护墙本身不能仅因出现在画面中就视为遮挡；若当前外包络因此无法可复现闭合，再考虑 oos_insufficient。"/>
+            <Choice value="纹理弱/纯色墙 (Low texture)" alias="low_texture" hint="图像完整，但局部纹理、颜色或对比度不足，使边界或角点主要依赖微弱几何线索。若同一现象已有更明确的遮挡、拼接、反射或低画质原因，不要重复选择。"/>
             <Choice value="拼接缝/拉伸明显 (Seam/Stretch)" alias="seam" hint="全景拼接/重投影导致直线断裂、错位或局部强拉伸/几何扭曲，使真实角点难以定位；它常表现为局部看似 corner drift 或墙线弯折，但根因仍是 seam/stretch（不一定只发生在一条明显拼接缝上）。"/>
-            <Choice value="反光/玻璃干扰 (Reflection/Glass)" alias="reflection" hint="镜面/玻璃反射造成伪边界"/>
-            <Choice value="画质差/被遮罩严重影响 (Blur/Masked/Low quality)" alias="low_quality" hint="模糊/噪声/压缩或大面积遮罩/黑边使关键几何证据（墙-地/墙-顶交界、门框停止点等）整体上无法可靠判定、对齐显著受损。说明：若只是局部遮挡、拼接或单个角点附近难定位，优先选 occlusion 或 seam，而不是本项。"/>
+            <Choice value="反光/玻璃干扰 (Reflection/Glass)" alias="reflection" hint="镜面或玻璃反射造成伪边界、重复结构或深度混淆，并实际增加布局或角点判断难度。仅出现玻璃或镜面但不影响标注时不要选择。"/>
+            <Choice value="画质差/被遮罩严重影响 (Blur/Masked/Low quality)" alias="low_quality" hint="模糊、噪声、压缩、大面积遮罩、黑边或缺失像素使关键墙—地—顶或开口边界证据不可靠。若同一现象已有更明确的局部遮挡或拼接原因，不要重复选择。"/>
           </Choices>
         </View>
 
         <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
           <Header value="3. 模型初始化问题 (Model Issue)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
-          <Text name="model_issue_rule_text" value="填写规则：必须至少选择 1 项。若选择 &quot;acceptable&quot;（模型质量好），则不得同时选择其它 issue；若存在任意 issue，请不要选 acceptable。" />
+          <Text name="model_issue_rule_text" value="请判断编辑前的初始模型结果。只选择初始模型中实际存在的问题，不根据最终修改结果或修复难度判断。若初始几何无需调整、可以原样提交，选择 acceptable；只要任何角点、边界或拓扑需要调整，就选择对应的具体问题，不要选择 acceptable。必须至少选择 1 项。" />
           <Choices name="model_issue" toName="img" showInLine="true" choice="multiple" required="true" requiredMessage="Model Issue 必须至少选择 1 项">
-            <Choice value="模型标注质量好 (Model quality acceptable)" alias="acceptable" hint="预测结果质量高，无需显著修改或仅需微调"/>
-            <Choice value="跨门扩张：包含相邻空间 (Over-extend to adjacent room)" alias="overextend_adjacent" hint="模型把门后或开口后的相邻空间当作同一 camera room 的一部分；人工按门框/墙垛停止后可修正。"/>
-            <Choice value="漏标：只标了局部 (Under-extend / missing parts)" alias="underextend" hint="模型没有覆盖完整 camera room（漏掉部分墙角/边界）"/>
+            <Choice value="模型标注质量好 (Model quality acceptable)" alias="acceptable" hint="初始模型几何无需调整，可以原样提交；与所有具体 issue 互斥。"/>
+            <Choice value="跨门扩张：包含相邻空间 (Over-extend to adjacent room)" alias="overextend_adjacent" hint="模型越过门框、两侧墙垛或墙端、拱口等结构分界，把相邻空间纳入相机所在的当前空间。"/>
+            <Choice value="漏标：只标了局部 (Under-extend / missing parts)" alias="underextend" hint="模型没有覆盖相机所在的完整当前空间，漏掉部分墙角或边界。"/>
             <Choice value="过度解析：非结构细节误判 (Over-parsing / ghost geometry)" alias="over_parsing" hint="模型把柱体、墙面凸起、家具边缘或装饰凹凸等非布局结构误判为真实拐角/边界，导致角点冗余、需要人工做‘减法’。注意：若只是同一物理拐角附近一团点，请优先选 corner_duplicate。"/>
-            <Choice value="角点错位/漂移 (Corner drift)" alias="corner_drift" hint="一个或少量角点/局部边界没有正好落在真实墙角上，但仍靠近正确位置、拓扑基本正确，通常通过小幅拖拽即可修正。"/>
+            <Choice value="角点错位/漂移 (Corner drift)" alias="corner_drift" hint="一个或少量角点或局部边界的位置需要调整，但角点数量和拓扑基本正确。无论调整幅度大小，只要存在真实的位置修正需求，就选本项。"/>
             <Choice value="角点重复/一角多点 (Duplicate corner points)" alias="corner_duplicate" hint="同一物理拐角附近被标了多个点（例如某个拐角出现 3 个点/一团点）。这会导致配对与闭合不稳定；人工应删掉多余点，仅保留最符合几何证据的一个角点位置。"/>
-            <Choice value="拓扑崩溃：配对/闭合失败 (Topological failure)" alias="topology_failure" hint="上下角点无法成对、闭合失败、出现自交或其他非法拓扑。注意：若虽然整体很错但仍更像‘需要从零重画的错误包络’，优先选 fail；若主要问题是点数偏多/偏少，优先选 over_parsing 或 underextend。"/>
-            <Choice value="模型预标注失效 (Prediction Failure)" alias="fail" hint="初始化结果整体严重误导、几乎需要从零重画，且无法由跨门扩张、漏标、过度解析、局部漂移、重复点或拓扑崩溃更准确概括时选本项。"/>
+            <Choice value="拓扑崩溃：配对/闭合失败 (Topological failure)" alias="topology_failure" hint="上下角点对应、顺序或闭合关系错误，出现自交或其他非法结构。单纯位置偏差选 corner_drift；同一物理角点附近的冗余点选 corner_duplicate。"/>
+            <Choice value="模型预标注失效 (Prediction Failure)" alias="fail" hint="仅当初始预测整体缺失、不可用，或无法由上述具体问题充分描述时选择。若上述具体问题已能充分描述错误，不要额外选择 fail。"/>
           </Choices>
         </View>
 

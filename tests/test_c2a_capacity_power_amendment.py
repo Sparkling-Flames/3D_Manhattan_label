@@ -1,4 +1,5 @@
 import json
+import csv
 from pathlib import Path
 
 from tools.thesis_main.analysis.audit_c2a_capacity_power_amendment import (
@@ -53,13 +54,20 @@ def test_real_reserve_uses_frozen_validation_holdout_only():
 
 def test_distribution_preserves_approved_20_by_2_assignment(tmp_path: Path):
     source = Path("analysis_results/c2a_rp_capacity_power_amendment_20260807_v1")
-    result = materialize_distribution(tmp_path / "distribution", source)
+    result = materialize_distribution(tmp_path / "distribution", source, tmp_path / "import_json")
     assert result["assignment_unchanged"] is True
     assert result["worker_count"] == 20
     assert result["assignment_count"] == 40
     assert result["maximum_blocks_per_worker"] == 5
     assert result["future_blocks_preassigned"] is False
     assert len(result["private_list_sha256"]) == 20
+    with (tmp_path / "distribution/c2a_rp/precision_plan_C2A_RP.csv").open(encoding="utf-8-sig", newline="") as handle:
+        plan = list(csv.DictReader(handle))
+    assert len(plan) == 20
+    assert {row["gap_reason"] for row in plan} == {"target_not_met"}
+    assert sum(row["gap_reason"] == "pool_capacity_exhausted" for row in plan) == 0
+    assert set(result["import_json_outputs"]) == {"c2b_en", "c2b_zh"}
+    assert all(Path(row["path"]).is_file() for row in result["import_json_outputs"].values())
     mapping = Path(result["operational_package"]["runtime_mapping_path"]).read_text(encoding="utf-8-sig")
     assert len({line.split(",")[12] for line in mapping.splitlines()[1:]}) == 20
     for deployment in result["operational_package"]["deployments"].values():

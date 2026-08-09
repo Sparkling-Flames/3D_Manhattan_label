@@ -1,0 +1,116 @@
+{
+  "schema_version": "label_studio_xml_instruction_manifest_v2",
+  "manifest_id": "paper_a_annotation_instruction_v2_20260809",
+  "instruction_semantic_version": "paper_a_annotation_instruction_v2",
+  "status": "frozen_local_artifacts",
+  "deployment_status": "local_artifacts_ready_not_deployed",
+  "historical_snapshot": {
+    "instruction_version": "scope_instruction_v1",
+    "effective_through": "C2-A-RP Block 1",
+    "snapshot_root": "tools/label_studio/config_history/scope_instruction_v1_pre_block2",
+    "legacy_freeze_manifest_path": "tools/label_studio/config_history/scope_instruction_v1_pre_block2/label_studio_c1_xml_freeze_manifest_v1.json",
+    "legacy_freeze_manifest_sha256": "7d1a5f6ab19adf067ca3b8ed9db2d4da816ca6e15f60e6a7941ff89b2cdc601e",
+    "files": [
+      {
+        "artifact_id": "zh_semi",
+        "original_path": "tools/label_studio/label_studio_view_config.xml",
+        "snapshot_path": "tools/label_studio/config_history/scope_instruction_v1_pre_block2/zh/label_studio_view_config.xml",
+        "sha256": "200cbe629c5c7d0cb57d75146b785728c29a2970fc52c5c84ed0973d0c2668d5"
+      },
+      {
+        "artifact_id": "zh_manual",
+        "original_path": "tools/label_studio/label_studio_view_config_manual.xml",
+        "snapshot_path": "tools/label_studio/config_history/scope_instruction_v1_pre_block2/zh/label_studio_view_config_manual.xml",
+        "sha256": "8fe11f32798789911fccdd59394c69e61ec2048adbb66a2c977fdfa44c0a9164"
+      },
+      {
+        "artifact_id": "zh_future",
+        "original_path": "tools/label_studio/label_studio_view_config_c2_future.xml",
+        "snapshot_path": "tools/label_studio/config_history/scope_instruction_v1_pre_block2/zh/label_studio_view_config_c2_future.xml",
+        "sha256": "4e6df3d0f61e5a87345f20f53ade99de62e35e09e7d701e1fa4d24fcc30eba4e"
+      },
+      {
+        "artifact_id": "en_semi",
+        "original_path": "tools/thesis_main/foreign_recruitment/label_studio_view_config_en.xml",
+        "snapshot_path": "tools/label_studio/config_history/scope_instruction_v1_pre_block2/en/label_studio_view_config_en.xml",
+        "sha256": "0418d4a241ce178375c6616d9f52371a64b117e99e137981ce27875fac94abce"
+      },
+      {
+        "artifact_id": "en_manual",
+        "original_path": "tools/thesis_main/foreign_recruitment/label_studio_view_config_manual_en.xml",
+        "snapshot_path": "tools/label_studio/config_history/scope_instruction_v1_pre_block2/en/label_studio_view_config_manual_en.xml",
+        "sha256": "b7b0e269193a09bb3e78991b371601ecf480599047389963866e8748d9ab0c3f"
+      },
+      {
+        "artifact_id": "en_future",
+        "original_path": "tools/thesis_main/foreign_recruitment/label_studio_view_config_c2_future_en.xml",
+        "snapshot_path": "tools/label_studio/config_history/scope_instruction_v1_pre_block2/en/label_studio_view_config_c2_future_en.xml",
+        "sha256": "ee71dfe951eaa2f78af37d7cac2a9a888f95da11ab5d21c6832a6076afaf07df"
+      }
+    ]
+  },
+  "active_scope_v2": {
+    "instruction_version": "scope_instruction_v2",
+    "annotation_instruction_version": "paper_a_annotation_instruction_v2",
+    "effective_from": "C2-A-RP Block 2",
+    "applies_to": [
+      "C2-A-RP Block 2-5",
+      "T1",
+      "V1"
+    ],
+    "researcher_definition": "camera-anchored current structural unit",
+    "worker_term_zh": "相机所在的当前空间",
+    "worker_term_en": "current space containing the camera",
+    "alias_schema_unchanged": true,
+    "analysis_role": "audit_provenance_only_not_primary_covariate_or_routing_input",
+    "files": [
+      {
+        "artifact_id": "zh_semi",
+        "path": "tools/label_studio/label_studio_view_config.xml",
+        "sha256": "2ba3605c90723bee05252736e47d805f48ae2e01bea024bc452bcb6362fb1baf"
+      },
+      {
+        "artifact_id": "zh_manual",
+        "path": "tools/label_studio/label_studio_view_config_manual.xml",
+        "sha256": "94f88108534e53153ced3a02b555045905cb8ec887b0cf5f5adba11b3132585c"
+      },
+      {
+        "artifact_id": "zh_future",
+        "path": "tools/label_studio/label_studio_view_config_c2_future.xml",
+        "sha256": "d2ddb0bcc5409ad2e0dc4e1f4f45e9f69ee1d4d360ebb4a279175df159162d8f"
+      },
+      {
+        "artifact_id": "en_semi",
+        "path": "tools/label_studio/localized/en/label_studio_view_config_en.xml",
+        "sha256": "4567d9b9d04522cb4b97466d29d0c90295e299d30710f894abbc0582b4fb1826"
+      },
+      {
+        "artifact_id": "en_manual",
+        "path": "tools/label_studio/localized/en/label_studio_view_config_manual_en.xml",
+        "sha256": "9f25ce8add6b8ebb5ccf4ac7b5dbd344b2a1e45cb1358aaf28dfcf3e6ad1e234"
+      },
+      {
+        "artifact_id": "en_future",
+        "path": "tools/label_studio/localized/en/label_studio_view_config_c2_future_en.xml",
+        "sha256": "5a006ebd66071a26aeb832c976c61ab865eab2dbf17b571a2757ebb7eefdd380"
+      }
+    ]
+  },
+  "userscript_relocation": {
+    "content_changed": false,
+    "formal_en_sha256": "d6a358a688111ed2634264447c5666f5a61700d984f17c90902e8864b6e92f08",
+    "debug_en_sha256": "08f496e14e2732166196772c1910122de14de4ce642ff04bf396ec0914ec87d1"
+  },
+  "method_boundaries": {
+    "scope_aliases_changed": false,
+    "difficulty_aliases_changed": false,
+    "model_issue_aliases_changed": false,
+    "export_schema_changed": false,
+    "analysis_parser_changed": false,
+    "task_scope_adjudication_changed": false,
+    "gt_reference_disposition_changed": false,
+    "paper_a_method_contract_changed": false,
+    "paper_b_changed": false,
+    "retroactive_block_1_reclassification": false
+  }
+}

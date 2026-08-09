@@ -215,3 +215,17 @@ GT 项目允许继续存在于同一实例，但只按**管理员维护项目**�
 当前最稳的 CE-only 运营方案是：
 
 > **继续单实例，把 LS 固定为展示与采集前端；P1 用三项目切分，C1/C2/V1 用按轮次/批次拆项目；GT 留在同实例但只走管理员维护路径；真正的分发合同全部外置到 manifest。**
+
+---
+
+## 9. Paper A Annotation v2 文案切换
+
+- C2-A-RP Block 1 保留原始 UI 语义，不追溯修改或重分类。
+- 从 Block 2 开始，Block 2--5、T1、V1 统一使用 `scope_instruction_v2` 和 `paper_a_annotation_instruction_v2`。
+- Worker-facing 术语为“相机所在的当前空间 / current space containing the camera”；研究者侧定义为“相机锚定的当前结构单元”。
+- 普通 L/T 形墙面转角继续沿墙标注；只有通向相邻空间的开口具有清晰结构分界时，才在该边界处封闭。
+- Difficulty 保持多选：独立原因可多选，同一底层原因不重复选择；`trivial` 与所有具体困难互斥。
+- Semi 的 `acceptable` 仅表示初始几何无需调整、可以原样提交；任何真实位置修正归入 `corner_drift`，`fail` 仅作为具体 issue 无法充分描述时的 fallback 提示。
+- Scope、Difficulty、Model Issue 的字段名与 alias 不变；真实 Label Studio 导出继续保存 alias。
+- instruction version 只作审计 provenance，不进入主要模型、worker routing 或自适应选择。
+- 本地 XML、历史 SHA 和部署状态以 `tools/label_studio/label_studio_xml_instruction_manifest_v2.json` 为准；只有 Block 1 关闭后才可人工更新 Project 76/77 的 Labeling Config。

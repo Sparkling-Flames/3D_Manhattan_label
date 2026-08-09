@@ -235,7 +235,7 @@ def select_real_reserve(
     return candidates
 
 
-def materialize_distribution(output_dir: Path, source_dir: Path) -> dict:
+def materialize_distribution(output_dir: Path, source_dir: Path, import_json_dir: Path | None = None) -> dict:
     from tools.thesis_main.analysis.run_c2b_c2a_rp_chain import _package_c2a_rp
 
     source_assignment = source_dir / "assignment_manifest_C2A_RP_block_1_amended_preview.csv"
@@ -271,7 +271,7 @@ def materialize_distribution(output_dir: Path, source_dir: Path) -> dict:
         support = int(float(row["current_support"]))
         half_width = float(row["current_ci_half_width"])
         row.update({
-            "formal_goal": "risk_slope_precision", "additional_blocks": 1,
+            "formal_goal": "risk_slope_precision", "gap_reason": "target_not_met", "additional_blocks": 1,
             "ordinary_tasks": 1, "stress_tasks": 1,
             "projected_ci_half_width": half_width * math.sqrt(support / (support + 2)),
             "precision_target_met": "false", "routing_eligibility": "pending_block_1_reestimate",
@@ -337,6 +337,21 @@ def materialize_distribution(output_dir: Path, source_dir: Path) -> dict:
         "operational_package": package,
         "private_list_sha256": {path.name: sha256_file(path) for path in private_files},
     }
+    if import_json_dir:
+        import_json_dir.mkdir(parents=True, exist_ok=True)
+        import_names = {
+            "c2b_en": "c2a_rp_block_1_import_foreign_https.json",
+            "c2b_zh": "c2a_rp_block_1_import_zh.json",
+        }
+        manifest["import_json_outputs"] = {}
+        for deployment_id, filename in import_names.items():
+            source = Path(package["deployments"][deployment_id]["planned_import_path"])
+            target = import_json_dir / filename
+            shutil.copyfile(source, target)
+            manifest["import_json_outputs"][deployment_id] = {
+                "path": str(target.resolve()), "sha256": sha256_file(target),
+            }
+        _write_text(import_json_dir / "README.md", "# C2-A-RP Block 1 planned imports\n\n- `c2a_rp_block_1_import_foreign_https.json`: Project 76 / Project E\n- `c2a_rp_block_1_import_zh.json`: Project 77 / 任务5\n- 仅为计划导入包；导入后再回填 runtime task ID。\n")
     if not manifest["assignment_unchanged"] or len(private_files) != 20:
         raise ValueError("Block 1 distribution identity check failed")
     _write_json(output_dir / "C2A_RP_BLOCK1_DISTRIBUTION_MANIFEST.json", manifest)
@@ -557,7 +572,8 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--output-dir", type=Path, default=ROOT / "analysis_results/c2a_rp_capacity_power_amendment_20260807_v1")
     parser.add_argument("--distribution-output-dir", type=Path)
+    parser.add_argument("--import-json-dir", type=Path)
     args = parser.parse_args()
     materialize(args.output_dir)
     if args.distribution_output_dir:
-        materialize_distribution(args.distribution_output_dir, args.output_dir)
+        materialize_distribution(args.distribution_output_dir, args.output_dir, args.import_json_dir)

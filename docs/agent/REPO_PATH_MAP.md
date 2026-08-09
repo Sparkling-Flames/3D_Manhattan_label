@@ -21,12 +21,12 @@
 - `tools/thesis_main/analysis/quality_core/`：分析核心 helper，例如 active-time loader。
 - `tools/thesis_main/registry/`：registry、assignment manifest、freeze、final-gold、risk-rule、`d_t/g_t` 相关工具。
 - `tools/thesis_main/data_prep/`：数据准备、import 生成、dataset helper。
-- `tools/thesis_main/foreign_recruitment/`：外国标注员 HTTPS 英文适配包和说明。
+- `tools/thesis_main/foreign_recruitment/`：海外招募、安装、legacy 与私有运营说明。
 
 ## Label Studio 共享运行层
 
 - `docs/label_studio/`：CE-only SOP、active-time、云端部署、COS、标注员/开发者说明。
-- `tools/label_studio/`：共享 Label Studio XML、3D viewer、server/CORS、COS/upload、import/build helper。
+- `tools/label_studio/`：共享 Label Studio XML、英文 localized 运行资产、历史配置快照、3D viewer、server/CORS、COS/upload、import/build helper。
 - `tools/label_studio/official/`：正式中文 annotator userscript。
 - 云端兼容 URL `/tools/vis_3d.html` 是部署路由，不代表源码仍在 `tools/` 根目录。
 

@@ -3,26 +3,26 @@
   <KeyPointLabels name="kp" toName="img"><Label value="Corner" background="#FF4D4F"/></KeyPointLabels>
   <BrushLabels name="wall_brush" toName="img"><Label value="Wall" background="#52C41A"/></BrushLabels>
   <Choices name="scope" toName="img" choice="single" required="true">
-    <Choice value="In-scope: camera room only" alias="normal"/>
+    <Choice value="In-scope：相机所在的当前空间" alias="normal"/>
     <Choice value="OOS: geometric assumption invalid / non-Manhattan" alias="oos_geometry"/>
-    <Choice value="OOS: open or ambiguous camera-room boundary" alias="oos_open_boundary"/>
+    <Choice value="OOS：当前空间边界开放或不可判定" alias="oos_open_boundary"/>
     <Choice value="OOS: split-level or multi-level layout" alias="oos_split_level"/>
     <Choice value="OOS: insufficient geometric evidence" alias="oos_insufficient"/>
   </Choices>
-  <Text name="scope_rule_text" value="未来 C2/Stage3 规则：Scope 字段是 OOS 的唯一权威信号；不得从几何或其它回答推断 OOS。"/>
+  <Text name="scope_rule_text" value="请标注相机所在的当前空间。沿属于当前空间的围护墙连续标注，包括属于当前空间的墙面转角；当开口通向相邻空间时，只在门框、两侧墙垛或墙端、拱口等清晰结构分界处封闭。局部遮挡、开口、楼梯或天花凹凸本身不等于 OOS；Scope 字段仍是 OOS 的唯一权威信号。"/>
   <Choices name="difficulty" toName="img" choice="multiple" required="true">
-    <Choice value="Trivial / very easy" alias="trivial" hint="Choose only when no concrete difficulty applies."/>
-    <Choice value="Occlusion" alias="occlusion"/><Choice value="Low texture or plain walls" alias="low_texture"/>
-    <Choice value="Panorama seam or stretch distortion" alias="seam"/><Choice value="Reflection or glass interference" alias="reflection"/>
-    <Choice value="Blur, mask, or low image quality" alias="low_quality"/>
+  <Choice value="Trivial / very easy" alias="trivial" hint="仅当其他因素均未实质增加布局或角点标注难度时选择；与其他困难标签互斥。"/>
+  <Choice value="Occlusion" alias="occlusion" hint="前景物体或前景结构遮挡了本应判断的后方墙角、墙线或边界证据。"/><Choice value="Low texture or plain walls" alias="low_texture" hint="图像完整，但局部纹理、颜色或对比度不足，使结构边界难以定位。"/>
+  <Choice value="Panorama seam or stretch distortion" alias="seam" hint="全景拼接、重投影或拉伸造成直线断裂、错位、弯折或角点漂移。"/><Choice value="Reflection or glass interference" alias="reflection" hint="镜面或玻璃造成伪边界、重复结构或深度混淆，并实际增加标注难度。"/>
+  <Choice value="Blur, mask, or low image quality" alias="low_quality" hint="模糊、噪声、压缩、遮罩、黑边或缺失像素使关键结构证据不可靠。"/>
   </Choices>
-  <Text name="difficulty_rule_text" value="选择所有确实增加标注难度的具体因素；trivial 与所有具体困难标签互斥。"/>
+  <Text name="difficulty_rule_text" value="请选择在本任务中确实增加布局或角点标注难度的因素。Difficulty 不决定 Scope，也不评价模型是否错误；不同独立因素可以多选，同一个底层原因不要重复选择。trivial 与所有具体困难标签互斥。"/>
   <Choices name="model_issue" toName="img" choice="multiple" required="true">
-    <Choice value="模型质量可接受" alias="acceptable" hint="显式回答：acceptable 与所有具体 issue 互斥。"/>
-    <Choice value="Over-extend to adjacent room" alias="overextend_adjacent"/><Choice value="Under-extend / missing room parts" alias="underextend"/>
-    <Choice value="Over-parsing / ghost geometry" alias="over_parsing"/><Choice value="Corner drift" alias="corner_drift"/>
-    <Choice value="Duplicate corner points" alias="corner_duplicate"/><Choice value="Topological failure" alias="topology_failure"/><Choice value="Prediction failure" alias="fail"/>
+    <Choice value="模型质量可接受" alias="acceptable" hint="初始模型几何无需调整，可以原样提交；与所有具体 issue 互斥。"/>
+    <Choice value="Over-extend to adjacent room" alias="overextend_adjacent" hint="模型越过清晰结构分界，把相邻空间纳入当前空间。"/><Choice value="Under-extend / missing room parts" alias="underextend" hint="模型遗漏当前空间的一部分墙面、角点或边界。"/>
+    <Choice value="Over-parsing / ghost geometry" alias="over_parsing" hint="模型把非布局细节误当成真实结构。"/><Choice value="Corner drift" alias="corner_drift" hint="角点或局部边界位置需要调整，但点数和拓扑基本正确。"/>
+    <Choice value="Duplicate corner points" alias="corner_duplicate" hint="同一物理角点附近存在重复或冗余角点。"/><Choice value="Topological failure" alias="topology_failure" hint="角点对应、顺序、闭合关系或整体结构配置错误。"/><Choice value="Prediction failure" alias="fail" hint="仅当初始预测整体缺失、不可用或无法由具体 issue 充分描述时选择；具体 issue 已能描述时不要额外选择 fail。"/>
   </Choices>
-  <Text name="model_issue_rule_text" value="未来 C2/Stage3 规则：acceptable 是与所有具体 issue 互斥的显式回答；不得用基于几何的推断替换它。"/>
+  <Text name="model_issue_rule_text" value="请判断编辑前的初始模型结果。acceptable 仅表示初始几何无需调整、可以原样提交，并与所有具体 issue 互斥；只要任何角点、边界或拓扑需要调整，就选择对应的具体问题。不得用基于几何的推断替换 worker 的显式回答。"/>
   <HyperText name="vis_3d" value="$vis_3d" valueType="url" inline="false"/>
 </View>

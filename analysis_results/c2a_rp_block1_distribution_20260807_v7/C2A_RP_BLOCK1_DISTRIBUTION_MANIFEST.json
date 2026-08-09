@@ -23,7 +23,7 @@
     "c2b_summary_sha256": "5e44a28e5e632a4c3dd7ecd999fdf6443c150e21520e55812431f3a080d4785d",
     "post_c2b_worker_profile_sha256": "97bba6492b6e09316186f7f339d6a711ed83fa64294aec1e92d1d7964f7122a4",
     "threshold_manifest_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
-    "c2a_precision_plan_sha256": "6a6108fbeb8dc1e9092b21af86990fb3694670e3149fcbfa3101bc26420ce24c",
+    "c2a_precision_plan_sha256": "b4aa54ddfd22494c2d72fe89ce94fed1957403de71f9704cdffb62de869a9cc1",
     "c2a_assignment_manifest_sha256": "4ac63b351aba1e4a11187daf1e975255593eb3bbb02ee484bddd6b99ee8028ec",
     "c2a_block_assignment_sha256": "4ac63b351aba1e4a11187daf1e975255593eb3bbb02ee484bddd6b99ee8028ec",
     "c2a_task_pool_sha256": "173e807bb2f3797a7dc6c072316d392b4597921cc1bd3ec10ec3c3074e9b5cd3",
@@ -43,8 +43,8 @@
         "server_instance_id": "labelstudio_http_175_178_71_217",
         "server_url": "http://175.178.71.217:8000",
         "project_id": "77",
-        "planned_import_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block1_distribution_20260807_v6\\c2a_rp_operational\\imports\\c2a_rp_block_1_c2b_zh.json",
-        "planned_import_sha256": "d1b1f01c11bc70274f9809f73b27fee064defd9bd15a450fdc5a7cdc36e3c7bc",
+        "planned_import_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block1_distribution_20260807_v7\\c2a_rp_operational\\imports\\c2a_rp_block_1_c2b_zh.json",
+        "planned_import_sha256": "7ec323c10539ca47dd3dab2e9e43f6795cf9345a231ad6423fe16c314514da19",
         "task_count": 18
       },
       "c2b_en": {
@@ -53,13 +53,13 @@
         "server_instance_id": "labelstudio_https_sparkle0825",
         "server_url": "https://label.sparkle0825.top",
         "project_id": "76",
-        "planned_import_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block1_distribution_20260807_v6\\c2a_rp_operational\\imports\\c2a_rp_block_1_c2b_en.json",
-        "planned_import_sha256": "4ec6ee7c86058e5095e79eac86ce9ac49bda0cf9c10f15eefebde2182f21ca70",
+        "planned_import_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block1_distribution_20260807_v7\\c2a_rp_operational\\imports\\c2a_rp_block_1_c2b_en.json",
+        "planned_import_sha256": "016a36414ac824d24c53e9f474705aa1c50cc1824f8f7c05a7d0d346c9f59b11",
         "task_count": 17
       }
     },
-    "runtime_mapping_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block1_distribution_20260807_v6\\c2a_rp_operational\\c2a_rp_runtime_mapping.csv",
-    "runtime_mapping_sha256": "bb5579d0f1ec58f1bdc6225706959d9e3a06da6d71c5c2d46a71d174927dc596",
+    "runtime_mapping_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block1_distribution_20260807_v7\\c2a_rp_operational\\c2a_rp_runtime_mapping.csv",
+    "runtime_mapping_sha256": "63e15854c515364413c1ff53270793ff959fd474e04bc077f1f24995ca50aaea",
     "assignment_count": 40,
     "private_list_worker_count": 20,
     "status": "planned_not_imported_not_dispatched"
@@ -86,16 +86,26 @@
     "worker_6_C2A_RP_block_1.csv": "fadc1cf11b5ba1df9553f49c051e7bf1dce8a23844b1fcbdda23297854718361",
     "worker_8_C2A_RP_block_1.csv": "10565cee662cd571e6c1ad29842f6e9d4cdc99324d63bdb6e654d12504ac1b07"
   },
+  "import_json_outputs": {
+    "c2b_en": {
+      "path": "D:\\Work\\HOHONET\\import_json\\c2a_rp\\c2a_rp_block_1_import_foreign_https.json",
+      "sha256": "016a36414ac824d24c53e9f474705aa1c50cc1824f8f7c05a7d0d346c9f59b11"
+    },
+    "c2b_zh": {
+      "path": "D:\\Work\\HOHONET\\import_json\\c2a_rp\\c2a_rp_block_1_import_zh.json",
+      "sha256": "7ec323c10539ca47dd3dab2e9e43f6795cf9345a231ad6423fe16c314514da19"
+    }
+  },
   "worker_facing_workbooks": {
     "Task_Assignments_C2A_RP_Block1_English.xlsx": {
-      "path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block1_distribution_20260807_v6\\worker_facing_release\\Task_Assignments_C2A_RP_Block1_English.xlsx",
-      "sha256": "2287090b1ca3369029cade3ddadcdb02bb75a5c3e41c8221e23bd2326b8aad95",
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block1_distribution_20260807_v7\\worker_facing_release\\Task_Assignments_C2A_RP_Block1_English.xlsx",
+      "sha256": "0d5609a8dc50dfff92a5f59458700ede5dcb130db721054643f709c94dd9d5ad",
       "worker_count": 10,
       "assignment_count": 20
     },
     "任务分发表_C2A_RP_Block1_中文.xlsx": {
-      "path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block1_distribution_20260807_v6\\worker_facing_release\\任务分发表_C2A_RP_Block1_中文.xlsx",
-      "sha256": "c3320efeb5e8eaeb397973994fc331629000365a9115ef3ccd48e1eb14f38a35",
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block1_distribution_20260807_v7\\worker_facing_release\\任务分发表_C2A_RP_Block1_中文.xlsx",
+      "sha256": "51b34c866e950b7370a9bcbcbcb65061d0b23f99e61cf27b45fe38b581c9c6e6",
       "worker_count": 10,
       "assignment_count": 20
     }

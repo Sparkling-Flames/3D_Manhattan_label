@@ -1,0 +1,79 @@
+<View>
+  <View style="display: flex; height: 100vh; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
+    <!-- 左侧：2D 标注与分类 -->
+    <View style="flex: 60%; margin-right: 12px; display: flex; flex-direction: column; background: #fafafa; border-right: 1px solid #ddd; height: 100%;">
+      
+      <!-- 图像区：自适应紧凑布局 (约占 40% 比例的核心部分) -->
+      <View style="flex: 0 0 40%; min-height: 330px; max-height: 42vh; display: flex; flex-direction: column; padding: 8px; background: #fff; overflow: visible; position: relative; z-index: 2;">
+        <Header value="2D Panorama Annotation" size="6" style="margin-top: 0; margin-bottom: 2px; font-weight: 600; color: #333;"/>
+        <Image name="img" value="$image" zoom="true" zoomControl="true" style="flex: 1; border-radius: 4px; border: 1px solid #eee;"/>
+      </View>
+
+      <!-- 标签工具栏：紧凑并排，放在图像区下方以确保显示（不要放在 image 容器内） -->
+      <View style="flex: 0 0 auto; display: flex; gap: 8px; margin-top: 8px; padding: 6px 12px; background: #fff; border-top: 1px solid #f0f0f0; align-items: center;">
+        <View style="flex: 0 0 auto; color: #666; font-size: 11px;">Tools:</View>
+        <KeyPointLabels name="kp" toName="img" strokeWidth="2">
+          <Label value="Corner" background="#FF4D4F"/>
+        </KeyPointLabels>
+        <BrushLabels name="wall_brush" toName="img">
+          <Label value="Wall" background="#52C41A"/>
+        </BrushLabels>
+      </View>
+
+      <!-- 可滚动的反馈区：占据剩余约 60% 空间 -->
+      <View style="flex: 1; overflow-y: auto; padding: 12px 16px; background: #fff; border-top: 1px solid #eee; box-shadow: inset 0 2px 4px rgba(0,0,0,0.02);">
+        <Header value="标注反馈与分层 (Feedback &amp; Stratification)" size="5" style="margin-bottom: 12px; padding-bottom: 4px; border-bottom: 2px solid #1890ff; display: inline-block;"/>
+
+        <!-- 选项卡片化设计 -->
+        <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <Header value="1. 范围判定 (Scope)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
+          <Text name="scope_rule_text" value="总规则：先判断相机所在主房间的外包络，能否在不猜测的情况下形成唯一、可复现的闭合；若不能，再判断属于哪一类 OOS。"/>
+          <Choices name="scope" toName="img" showInLine="true" choice="single" required="true" requiredMessage="Scope 必须选择 1 项">
+          <Choice value="In-scope：只标相机房间 (Normal / Camera room only)" alias="normal" hint="主指标纳入。
+只标相机所在主房间，不跨门洞或相邻空间。
+只要当前主房间的墙-顶/墙-地外包络仍唯一、可复现，就选本项。
+看到楼梯、开口或天花内凹，并不自动构成 OOS；若可在清晰边界处停止，仍选本项。"/>
+            <Choice value="OOS：几何假设不成立 (Out-of-scope / Non-Manhattan)" alias="oos_geometry" hint="主指标剔除。
+当前主房间本身无法用单个 Manhattan / cuboid 风格包络稳定表示。
+典型情况：弧形墙、连续曲面、明显斜墙、非 Manhattan 主结构。"/>
+          <Choice value="OOS：边界不可判定 (Open Boundary / Ambiguous camera-room boundary)" alias="oos_open_boundary" hint="主指标剔除。
+空间可见，但无法确定当前主房间应在何处闭合或停止。
+典型情况：缺少清晰门框、墙垛、转角或其他可靠停止点；两种及以上闭合方式都合理。
+若主要问题是证据缺失或看不见，优先选 oos_insufficient。"/>
+          <Choice value="OOS：错层/多平面 (Split-level / Multi-level)" alias="oos_split_level" hint="主指标剔除。
+当前主房间外包络不再满足单一地面 + 单一天花假设。
+典型情况：楼梯井、下沉区、多层地面或分层天花直接进入主包络，导致出现多个竞争平面。
+若楼梯/下沉区可在清晰边缘处排除，且主包络仍唯一，则仍选 normal。"/>
+          <Choice value="OOS：证据不足 (Insufficient evidence)" alias="oos_insufficient" hint="主指标剔除。
+关键几何证据本身缺失，无法给出可复现的包络。
+典型情况：严重遮挡、过曝、模糊、贴图缺失、黑边/遮罩。
+局部角点被挡但主包络仍能稳定闭合时，不应升格为 OOS。"/>
+        </Choices>
+        </View>
+
+        <View style="margin-bottom: 16px; padding: 12px; background: #fdfdfd; border: 1px solid #f0f0f0; border-radius: 6px; box-shadow: 0 2px 4px rgba(0,0,0,0.02);">
+          <Header value="2. 困难因素 (Difficulty)" size="6" style="color: #1890ff; margin-bottom: 8px;"/>
+          <Text name="difficulty_rule_text" value="填写规则：必须至少选择 1 项。若选择 &quot;trivial&quot;（非常简单），则不得同时选择其它困难标签；若存在任意困难因素，请不要选 trivial。 " />
+          <Choices name="difficulty" toName="img" showInLine="true" choice="multiple" required="true" requiredMessage="Difficulty 必须至少选择 1 项">
+            <Choice value="非常简单 (Trivial)" alias="trivial" hint="场景简单、几何清晰、无遮挡无干扰，标注几乎无困难"/>
+            <Choice value="遮挡明显 (Occlusion)" alias="occlusion" hint="局部关键几何证据被挡住。家具、门扇、墙垛、前景墙体或其他结构都可造成遮挡。若只是局部被挡、但主房间外包络仍唯一闭合，归入本项；只有当主包络本身无法可复现闭合时，才考虑 oos_insufficient。"/>
+            <Choice value="纹理弱/纯色墙 (Low texture)" alias="low_texture" hint="局部纹理或颜色变化弱，导致边界/角点主要依赖弱几何线索，而非明显外观变化。若主要困难来自遮挡、拼接缝、反光或低画质，不选本项。"/>
+            <Choice value="拼接缝/拉伸明显 (Seam/Stretch)" alias="seam" hint="全景拼接/重投影导致直线断裂、错位或局部强拉伸/几何扭曲，使真实角点难以定位；它常表现为局部看似 corner drift 或墙线弯折，但根因仍是 seam/stretch（不一定只发生在一条明显拼接缝上）。"/>
+            <Choice value="反光/玻璃干扰 (Reflection/Glass)" alias="reflection" hint="镜面/玻璃反射造成伪边界"/>
+            <Choice value="画质差/被遮罩严重影响 (Blur/Masked/Low quality)" alias="low_quality" hint="模糊/噪声/压缩或大面积遮罩/黑边使关键几何证据（墙-地/墙-顶交界、门框停止点等）整体上无法可靠判定、对齐显著受损。说明：若只是局部遮挡、拼接或单个角点附近难定位，优先选 occlusion 或 seam，而不是本项。"/>
+          </Choices>
+        </View>
+
+
+      </View>
+      <!-- ================================================== -->
+
+    </View>
+
+    <!-- 右侧：3D 预览 -->
+    <View style="flex: 40%; border-left: 1px solid #ccc; padding-left: 10px;">
+      <Header value="3D Layout Preview"/>
+      <HyperText name="vis_3d" value="$vis_3d" valueType="url" inline="false"/>
+    </View>
+  </View>
+</View>

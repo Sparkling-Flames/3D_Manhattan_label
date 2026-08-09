@@ -1,14 +1,25 @@
 from pathlib import Path
+import hashlib
+import json
 
 
 ROOT = Path(__file__).resolve().parents[1]
 OFFICIAL = ROOT / "tools" / "label_studio" / "official" / "ls_userscript_annotator.js"
-FOREIGN = ROOT / "tools" / "thesis_main" / "foreign_recruitment" / "ls_userscript_annotator_https_en.user.js"
+FOREIGN = ROOT / "tools" / "label_studio" / "localized" / "en" / "ls_userscript_annotator_https_en.user.js"
+FOREIGN_DEBUG = ROOT / "tools" / "label_studio" / "localized" / "en" / "ls_userscript_annotator_https_en_debug.user.js"
+INSTRUCTION_MANIFEST = ROOT / "tools" / "label_studio" / "label_studio_xml_instruction_manifest_v2.json"
 VERSION = "c2plus_task_worker_active_time_20260802_v2"
 
 
 def _script(path: Path) -> str:
     return path.read_text(encoding="utf-8")
+
+
+def test_english_userscript_relocation_preserves_frozen_sha() -> None:
+    manifest = json.loads(INSTRUCTION_MANIFEST.read_text(encoding="utf-8"))["userscript_relocation"]
+    assert hashlib.sha256(FOREIGN.read_bytes()).hexdigest() == manifest["formal_en_sha256"]
+    assert hashlib.sha256(FOREIGN_DEBUG.read_bytes()).hexdigest() == manifest["debug_en_sha256"]
+    assert manifest["content_changed"] is False
 
 
 def test_formal_userscripts_use_the_c2plus_task_worker_version():

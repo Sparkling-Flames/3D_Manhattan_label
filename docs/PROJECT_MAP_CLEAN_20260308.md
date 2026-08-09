@@ -21,7 +21,7 @@
 - `tools/README.md`锛歵ools 鎬诲叆鍙ｏ紱鏍圭洰褰曚笉鍐嶄繚鐣欐棫鑴氭湰 wrapper銆?- `tools/thesis_main/`
   - 璁烘枃涓荤嚎宸ュ叿銆?  - `analysis/`锛氳川閲忓垎鏋愩€乤ctive-time audit銆乻tage-aware 鍒嗘瀽銆佸浘琛ㄣ€佺粺璁℃眹鎬汇€?    - `c1_live_collection_monitor.py`銆乣c1_canonicalize_exports.py`銆乣failure_disposition.py`銆乣materialize_main_failure_outcomes.py`銆乣c1_materialize_quality_table.py`銆乣c1_materialize_worker_state.py`銆乣c1_materialize_worker_profile_sidecar.py`銆乣c1_materialize_c2_gap_audits.py`銆乣build_c2_assignment_manifest_from_c1_gaps.py`銆乣materialize_c2b_task_eligibility.py`銆乣materialize_p1_post_closeout_evidence_correction.py` 涓?`materialize_p1_post_closeout_geometry_scores.py`锛欳1 live 鐩戞帶銆乧anonicalization銆佸け璐ュ綊鍥犮€侀€愯酱璇佹嵁銆丆2-B 涓ユ牸浠诲姟璧勬牸銆佸€欓€夎璁′笌鍐荤粨 assignment 娑堣垂锛屼互鍙婂彧璇?P1 post-closeout evidence/geometry correction銆?    - `rebuild_stage1_chinese_completion_excel.py`锛氭寜鏈€鏂?`鏍囨敞浜哄憳.xlsx`銆乣閫€鍑烘爣娉?xlsx`銆丼tage 1 涓枃 LS JSON 瀵煎嚭鍜?active logs 閲嶇畻涓枃 P1 瀹屾垚鎯呭喌宸ヤ綔绨裤€?  - `registry/`锛歳egistry銆乵anifest銆乫reeze銆乫inal-gold銆乼rap/materialization銆乺isk-rule銆丆2 failure-disposition manifest銆乣d_t/g_t` dry-run銆乪xport inventory銆?  - `data_prep/`锛氭暟鎹泦鍑嗗鍜?MP3D smoke/import 鐢熸垚銆?  - `foreign_recruitment/`锛歅1/PreScreen 澶栧浗鏍囨敞鍛?HTTPS 鑻辨枃閫傞厤鍖呫€?- `tools/paper_b/`
   - Paper B 宸ュ叿銆傚綋鍓嶅寘鎷?`validate_b0_relabel_audit.py`锛涘悗缁?B0/B1/B2 璁粌銆乧ue銆乥ilayout銆佸璁¤剼鏈彧杩涙湰鐩綍銆?- `tools/label_studio/`
-  - 涓夋潯绾垮叡浜殑 Label Studio XML銆?D viewer銆乻erver/CORS銆丆OS/upload銆乮mport/build helper 鍜?`official/`銆傚巻鍙?C1 XML 淇濇寔鍘熻涔夛紱C2/Stage3 鏈潵璇箟浣跨敤 `label_studio_view_config_c2_future.xml` 涓庤嫳鏂囧搴旀枃浠讹紱鍐荤粨 SHA 璁板綍鍦?`tools/label_studio/label_studio_c1_xml_freeze_manifest_v1.json`銆?  - `vis_3d_pre_m15_19_2_backup.html`锛歝ommit `f6d53b0` 鐨?viewer 鍘熸牱澶囦唤锛屼粎鐢ㄤ簬鍥炴粴/瀵圭収锛屼笉鏄繍琛屾椂鍏ュ彛銆?  - 浜戞湇鍔″櫒杩愯鏃?URL `/tools/vis_3d.html` 淇濇寔鍏煎锛岃繖鏄儴缃茶矾鐢憋紝涓嶄唬琛ㄦ簮鐮佷粛鍦?`tools/` 鏍圭洰褰曘€?- `tools/legacy/`銆乣tools/legacy_server/`銆乣tools/backups/`
+  - 涓夋潯绾垮叡浜殑 Label Studio XML銆?D viewer銆乻erver/CORS銆丆OS/upload銆乮mport/build helper 鍜?`official/`銆傚巻鍙?C1 XML 淇濇寔鍘熻涔夛紱C2/Stage3 鏈潵璇箟浣跨敤 `label_studio_view_config_c2_future.xml` 涓庤嫳鏂囧搴旀枃浠讹紱鍐荤粨 SHA 璁板綍鍦?`tools/label_studio/label_studio_xml_instruction_manifest_v2.json`銆?  - `vis_3d_pre_m15_19_2_backup.html`锛歝ommit `f6d53b0` 鐨?viewer 鍘熸牱澶囦唤锛屼粎鐢ㄤ簬鍥炴粴/瀵圭収锛屼笉鏄繍琛屾椂鍏ュ彛銆?  - 浜戞湇鍔″櫒杩愯鏃?URL `/tools/vis_3d.html` 淇濇寔鍏煎锛岃繖鏄儴缃茶矾鐢憋紝涓嶄唬琛ㄦ簮鐮佷粛鍦?`tools/` 鏍圭洰褰曘€?- `tools/legacy/`銆乣tools/legacy_server/`銆乣tools/backups/`
   - 鍘嗗彶鎴栧浠界洰褰曪紝榛樿涓嶈縼绉汇€佷笉淇銆?
 ## docs 甯冨眬
 
@@ -57,3 +57,10 @@
 - un_c1_closeout_launch.py 统一提供 reeze-c1-batch、design-c2b、uild-c2b --assignment-batch 和 ind-c2b-runtime-mapping；它们不连接 Label Studio API。
 - PAPER_A_C1_BATCH_SCOPE.template.json 定义 C1-A scope：original cohort、W034 17 张、W001 3 张，以及如 W011 漏交任务的显式 completion exception。
 - Stage 3 只读取全局 enrollment closed、all terminal 和 final pooled profile 状态；C1-A snapshot 不可替代该门。
+
+## 2026-08-09 Paper A Scope v2 与 Label Studio 英文资产归位
+
+- `tools/label_studio/localized/en/`：英文 XML 与 HTTPS userscript 的现行运行路径。
+- `tools/label_studio/config_history/scope_instruction_v1_pre_block2/`：Block 2 前六份中英文 XML 与旧 freeze manifest 的 SHA 冻结快照。
+- `tools/label_studio/label_studio_xml_instruction_manifest_v2.json`：v1/v2 路径、SHA、生效边界与“本地就绪/尚未部署”状态真源。
+- `tools/thesis_main/foreign_recruitment/`：仅保留海外招募、安装、legacy 与私有运营说明，不再保存 Label Studio 活运行资产。
