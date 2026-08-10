@@ -1,0 +1,216 @@
+{
+  "schema_version": "c2a_rp_block1_reestimate_v2",
+  "artifact_role": "C2A_RP_BLOCK1_REESTIMATE_FROZEN",
+  "formal_ready": true,
+  "c2b_collection_status": "closed_historical_collection",
+  "c2b_input_acceptance_scope": "C2A_RP_reestimate_only",
+  "historical_c2b_closeout_candidate_only": true,
+  "corrected_c2b_evidence_frozen": true,
+  "interval_formula_id": "normal_95_max_unified_slope_sd",
+  "interval_formula": "1.96 * max(worker_slope_se, group_slope_se, between_worker_slope_sd)",
+  "target_ci_half_width": 0.012607928483052961,
+  "reference_excluded_task_ids": [
+    "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b"
+  ],
+  "input_sha256": {
+    "c2b_canonical_risk_slope_evidence.csv": "e7fcdc28c762e8058060db997972a1e797b33616a6d5a1b4bebc8363e3d02020",
+    "c2a_rp_block1_risk_slope_evidence.csv": "9143a8c13fd4dad75f46ed02928256c7f5810cf548f5f998a5e7a7c21c268adc",
+    "post_c2b_worker_profile.csv": "6da53747227c291e3307f8a813a74d62d59220c60c4deb993b20836d7b9d1903",
+    "c2b_derived_threshold_manifest.json": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
+    "c2b_closeout_v2.json": "5e44a28e5e632a4c3dd7ecd999fdf6443c150e21520e55812431f3a080d4785d"
+  },
+  "combined_evidence_rows": 200,
+  "eligible_model_rows": 187,
+  "excluded_rows_by_stage": {
+    "C2B": 2,
+    "C2A_RP_BLOCK1": 2
+  },
+  "model_diagnostics": {
+    "status": "estimated",
+    "formula": "quality ~ 0 + C(worker_id) + risk_centered",
+    "optimizer": "lbfgs",
+    "optimizer_attempts": [
+      {
+        "optimizer": "lbfgs",
+        "converged": true,
+        "warnings": [
+          "The MLE may be on the boundary of the parameter space.",
+          "The Hessian matrix at the estimated parameter values is not positive definite."
+        ]
+      }
+    ],
+    "converged": true,
+    "warnings": [
+      "The MLE may be on the boundary of the parameter space.",
+      "The Hessian matrix at the estimated parameter values is not positive definite."
+    ],
+    "support": {
+      "worker_id": 20,
+      "base_task_id": 57,
+      "building_id": 9,
+      "risk": 57
+    },
+    "group_slope_mean": -0.025061397562327108,
+    "group_slope_se": 0.007084293771211776,
+    "between_worker_slope_sd": 0.01006186991730254,
+    "worker_intercept_sd": "",
+    "task_sd": 0.07669024567459637,
+    "building_sd": 0.02473630486138642,
+    "outcome_residual_sd": 0.0602892471971516,
+    "slope_model_form": "crossed_random_worker_slope",
+    "boundary_components": [],
+    "boundary_tolerance": 3.634793327599251e-09,
+    "removed_variance_components": [],
+    "worker_intercept_control": "fixed_effect",
+    "fixed_worker_intercept_count": 20,
+    "task_identity": "task_within_building",
+    "downstream_cluster_uncertainty": "building_then_task_hierarchical_resampling",
+    "boundary_rule_version": "worker_slope_or_single_cluster_component_boundary_v2"
+  },
+  "workers": {
+    "1": {
+      "estimate": -0.019224095133392995,
+      "worker_se": 0.009058008964723592,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 9,
+      "target_met": false
+    },
+    "2": {
+      "estimate": -0.024966194361213372,
+      "worker_se": 0.008286045733696507,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 8,
+      "target_met": false
+    },
+    "6": {
+      "estimate": -0.02482497557287675,
+      "worker_se": 0.008110652120603993,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 10,
+      "target_met": false
+    },
+    "8": {
+      "estimate": -0.027889310516910362,
+      "worker_se": 0.00760947568942384,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 10,
+      "target_met": false
+    },
+    "10": {
+      "estimate": -0.023195378085779445,
+      "worker_se": 0.006769253740697716,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 9,
+      "target_met": false
+    },
+    "11": {
+      "estimate": -0.014833293914234469,
+      "worker_se": 0.008378629986336974,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 10,
+      "target_met": false
+    },
+    "12": {
+      "estimate": -0.024470744226283165,
+      "worker_se": 0.008529473118675333,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 9,
+      "target_met": false
+    },
+    "13": {
+      "estimate": -0.021656544279848915,
+      "worker_se": 0.009302740521684009,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 9,
+      "target_met": false
+    },
+    "15": {
+      "estimate": -0.022563375268770725,
+      "worker_se": 0.00824694897902806,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 9,
+      "target_met": false
+    },
+    "17": {
+      "estimate": -0.02535828147224089,
+      "worker_se": 0.009207221597570986,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 10,
+      "target_met": false
+    },
+    "28": {
+      "estimate": -0.023548755631846843,
+      "worker_se": 0.00683502789718618,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 8,
+      "target_met": false
+    },
+    "29": {
+      "estimate": -0.03051629657973001,
+      "worker_se": 0.009248211826128835,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 9,
+      "target_met": false
+    },
+    "30": {
+      "estimate": -0.020099541740500423,
+      "worker_se": 0.009056392229987265,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 8,
+      "target_met": false
+    },
+    "31": {
+      "estimate": -0.027081185219685475,
+      "worker_se": 0.008783557882833293,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 10,
+      "target_met": false
+    },
+    "32": {
+      "estimate": -0.02520078087898525,
+      "worker_se": 0.008298644898343104,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 10,
+      "target_met": false
+    },
+    "33": {
+      "estimate": -0.029820844177319197,
+      "worker_se": 0.008579561130597825,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 10,
+      "target_met": false
+    },
+    "34": {
+      "estimate": -0.02914771149615878,
+      "worker_se": 0.008840653913753311,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 10,
+      "target_met": false
+    },
+    "35": {
+      "estimate": -0.028083964653337203,
+      "worker_se": 0.00890584318091955,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 9,
+      "target_met": false
+    },
+    "36": {
+      "estimate": -0.026073945987627262,
+      "worker_se": 0.008835850135838293,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 10,
+      "target_met": false
+    },
+    "37": {
+      "estimate": -0.03267273204980106,
+      "worker_se": 0.008540455388246269,
+      "unified_ci_half_width": 0.01972126503791298,
+      "support": 10,
+      "target_met": false
+    }
+  },
+  "output_sha256": {
+    "c2b_plus_c2a_rp_block1_risk_slope_evidence.csv": "044bd35663f6fe8a64dfb04c0e550e30de466c42062ce8244c002ab7505750d2",
+    "post_c2a_rp_block1_worker_profile.csv": "a7508c7f4c60825b735479f58564ec43aa4750817183d15ce9a41baaa6b4fe67"
+  }
+}

@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260810_v20 SHA-256 085fd9ec0f14a93c986e9f7dda7883173d9ec64959188139a25012d0e6d36b9d -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260810_v21 SHA-256 125ed1248ae88eecdf0a08e7ba32296194b4bb2f66f69b18be40b360abaed2a9 -->
 # HOHONET 椤圭洰鍦板浘
 
 > 2026-07-18 vFinal 鏇存柊锛歅aper A 姝ｅ紡涓荤嚎宸叉敼涓?C1 璁捐 C2-B
@@ -45,13 +45,14 @@
 ## 2026-08-02 C2 closeout repair
 
 - `tools/thesis_main/analysis/materialize_c2a_rp_closeout.py`：C2-A-RP 正式零任务/追加任务 closeout 与方法合同、输入工件 SHA 绑定。
+- `tools/thesis_main/analysis/materialize_c2a_rp_block1_reestimate.py`：统一应用终态 reference exclusion、重拟合 Block 1 后 risk slope，并输出 SHA 绑定的 Block 2 routing 输入。
 - `tools/thesis_main/analysis/audit_c2a_capacity_power_amendment.py`：C2-A-RP 本地 capacity / V1 power 敏感性审计；不生成或授权正式派发。
 
 ## 2026-08-02 C2-B pre-dispatch amendment
 
 - `docs/thesis_main/C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json`：v17 绑定的 D8/D10/D12 统一候选生成与 gate 语义修订；不改变数值阈值。
 - `docs/thesis_main/C2A_RP_PRECISION_CAP_EXTENSION_20260807_v1.json`：C2-A-RP outcome 可见前冻结的最多 5 个平衡 block 精度上限修订；不改变风险或 CI 阈值。
-- `docs/thesis_main/C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v1.json`：Block 1 收轮后冻结 Block 2--5 的 `max_task_support=4` capacity-only 规则；未来 block 仍须逐轮重估且不预分配。
+- `docs/thesis_main/C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v2.json`：Block 1 收轮后冻结 Block 2--5 的 `max_task_support=4` 和修正后 20 人 roster；未来 block 仍须逐轮重估且不预分配。
 - `docs/thesis_main/FULL_MATERIALIZATION_PROCEDURE_v1.json`：Full 的 risk/family shrinkage、同量纲转换、Calibration-only 权重/cap 选择和 task activation 时点规范；不含由未完成 C2-A 结果决定的最终数值。
 
 ## 2026-07-30 Paper A C1-A/C2-B batch boundary

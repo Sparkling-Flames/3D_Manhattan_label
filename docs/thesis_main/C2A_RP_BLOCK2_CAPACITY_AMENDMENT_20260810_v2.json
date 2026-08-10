@@ -1,0 +1,64 @@
+{
+  "schema_version": "paper_a_c2a_rp_block2_capacity_amendment_v2",
+  "status": "normative",
+  "supersedes": "C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v1.json",
+  "decision_timing": "after_Block1_closeout_before_any_Block2_outcome",
+  "reason": "The SHA-bound corrected Block 1 reestimate uniformly excludes the confirmed bad-GT task and applies the frozen unified CI formula. No active worker meets the target; cap 4 supports 18 of 20 without the already frozen unexposed validation stress backup and 20 of 20 with it.",
+  "block1_reestimate": {
+    "path": "analysis_results/c2a_rp_block1_reestimate_20260810_v2/c2a_rp_block1_reestimate_summary.json",
+    "sha256": "b2889670b9a6e574078e38f7bd3067b9fa821ee1337c55a1680290eab5c353fd",
+    "eligible_model_rows": 187,
+    "interval_formula_id": "normal_95_max_unified_slope_sd"
+  },
+  "change": {
+    "effective_from_block": 2,
+    "effective_through_block": 5,
+    "max_task_support_before": 2,
+    "max_task_support_after": 4,
+    "scope": "C2A_RP_Blocks2_to_5",
+    "expires_after_c2a_rp_closeout": true,
+    "activated_validation_stress_backup_task_ids": [
+      "jtcxE69GiFV_67790605390f4d439c3c59395967ec84"
+    ],
+    "retired_from_future_t1_task_ids": [
+      "jtcxE69GiFV_67790605390f4d439c3c59395967ec84"
+    ]
+  },
+  "block2_roster_rule": {
+    "prior_block_must_be_complete": true,
+    "exclude_workers_at_precision_target": true,
+    "expected_target_met_worker_ids": [],
+    "block2_candidate_worker_count": 20,
+    "dispatchable_worker_count_without_backup": 18,
+    "expected_block2_worker_count": 20
+  },
+  "reference_exclusions": [
+    {
+      "task_id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "reason": "researcher_confirmed_bad_gt",
+      "eligible_for_risk_reestimate": false,
+      "eligible_for_block2_assignment": false
+    }
+  ],
+  "unchanged_rules": {
+    "maximum_blocks_per_worker": 5,
+    "tasks_per_block": 2,
+    "required_strata": ["ordinary", "stress"],
+    "reestimate_after_each_block": true,
+    "formal_target": "risk_slope_precision",
+    "risk_definition_changed": false,
+    "ci_target_changed": false,
+    "worker_eligibility_changed": false,
+    "selection_seed": 20260724,
+    "task_selection_uses_worker_performance": false,
+    "v1_tasks_consumed": false,
+    "new_external_tasks_added": false,
+    "validation_stress_backup_tasks_activated": 1,
+    "block1_historical_max_task_support": 2,
+    "blocks2_to_5_max_task_support": 4,
+    "future_blocks_preassigned": false,
+    "future_block_requires_prior_block_closeout_and_real_reestimate": true
+  },
+  "researcher_decision": "approved_activate_frozen_backup",
+  "interpretation": "This correction does not reopen C2-B or change its outcomes. It freezes the corrected evidence input and unified interval calculation used solely for post-Block1 C2-A-RP routing. Runtime IDs remain pending until manual import."
+}

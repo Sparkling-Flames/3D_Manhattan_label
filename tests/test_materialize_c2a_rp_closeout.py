@@ -146,9 +146,9 @@ def test_c2a_rp_rejects_orphan_terminal_disposition(tmp_path: Path) -> None:
         )
 
 
-def test_c2a_rp_rejects_six_tasks_and_support_over_cap(tmp_path: Path) -> None:
+def test_c2a_rp_rejects_twelve_tasks_and_support_over_cap(tmp_path: Path) -> None:
     with pytest.raises(ValueError, match="normative cap"):
-        _case(tmp_path / "six", blocks=3, assignments=[], submissions=[])
+        _case(tmp_path / "twelve", blocks=6, assignments=[], submissions=[])
 
     case = tmp_path / "support"
     case.mkdir()
