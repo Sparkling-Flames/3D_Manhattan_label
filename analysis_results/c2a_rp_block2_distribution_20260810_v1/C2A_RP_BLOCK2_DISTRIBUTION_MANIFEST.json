@@ -1,0 +1,141 @@
+{
+  "schema_version": "c2a_rp_block2_distribution_manifest_v1",
+  "status": "ready_for_manual_import_not_dispatched",
+  "method_contract_version": "paper_a_method_20260807_v19",
+  "method_contract_sha256": "60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38",
+  "block2_capacity_amendment_path": "D:\\Work\\HOHONET\\docs\\thesis_main\\C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v1.json",
+  "block2_capacity_amendment_sha256": "0b926ddf97db4c02ee51a58b157de121748491c07353fe8996a33a0693b6d4cd",
+  "amendment_scope": "Block2_only",
+  "block1_closed": true,
+  "block1_assignment_sha256": "4ac63b351aba1e4a11187daf1e975255593eb3bbb02ee484bddd6b99ee8028ec",
+  "post_block1_profile_sha256": "f73caa7a865e71efed2d73077261daa918b0d87e7e6efb9441b3bf9dc3946aea",
+  "worker_count": 19,
+  "assignment_count": 38,
+  "target_met_not_assigned_workers": [
+    "10"
+  ],
+  "not_evaluable_not_assigned_workers": [
+    "18",
+    "27"
+  ],
+  "max_task_support_block2_only": 4,
+  "reference_excluded_task_ids": [
+    "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b"
+  ],
+  "activated_validation_stress_backup_task_ids": [
+    "jtcxE69GiFV_67790605390f4d439c3c59395967ec84"
+  ],
+  "retired_from_future_t1_task_ids": [
+    "jtcxE69GiFV_67790605390f4d439c3c59395967ec84"
+  ],
+  "future_blocks_preassigned": false,
+  "operational_package": {
+    "schema_version": "c2a_rp_operational_package_v1",
+    "round_id": "C2-A-RP",
+    "block_index": 2,
+    "method_contract_version": "paper_a_method_20260807_v19",
+    "method_contract_sha256": "60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38",
+    "design_manifest_sha256": "0b926ddf97db4c02ee51a58b157de121748491c07353fe8996a33a0693b6d4cd",
+    "c2b_summary_sha256": "5e44a28e5e632a4c3dd7ecd999fdf6443c150e21520e55812431f3a080d4785d",
+    "post_c2b_worker_profile_sha256": "f73caa7a865e71efed2d73077261daa918b0d87e7e6efb9441b3bf9dc3946aea",
+    "threshold_manifest_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
+    "c2a_precision_plan_sha256": "db88d92a997e340eb54f036c77b8d22ec5f843ee401690eccd3d594233467efd",
+    "c2a_assignment_manifest_sha256": "10278e0e3ec805438313fb03a02bfc79842122eb3f584ece274dca30f34fc7df",
+    "c2a_block_assignment_sha256": "4725f70a4e9a2556a11ad93259d6bebd8c0e7f6a258528ecbaff0677faa5f33c",
+    "c2a_task_pool_sha256": "410e6695e5dc4a2a114442df25f10847b6fb08ea34bdbc4e4671ee2da4ef5a6f",
+    "assignment_sha256": "4725f70a4e9a2556a11ad93259d6bebd8c0e7f6a258528ecbaff0677faa5f33c",
+    "task_pool_sha256": "410e6695e5dc4a2a114442df25f10847b6fb08ea34bdbc4e4671ee2da4ef5a6f",
+    "append_only": {
+      "mode": "append_only_sequential",
+      "block_index": 2,
+      "block_assignment_sha256": "4725f70a4e9a2556a11ad93259d6bebd8c0e7f6a258528ecbaff0677faa5f33c",
+      "full_assignment_manifest_sha256": "10278e0e3ec805438313fb03a02bfc79842122eb3f584ece274dca30f34fc7df",
+      "prior_assignment_manifest_sha256": "4ac63b351aba1e4a11187daf1e975255593eb3bbb02ee484bddd6b99ee8028ec"
+    },
+    "deployments": {
+      "c2b_zh": {
+        "deployment_id": "c2b_zh",
+        "language_group": "Chinese",
+        "server_instance_id": "labelstudio_http_175_178_71_217",
+        "server_url": "http://175.178.71.217:8000",
+        "project_id": "79",
+        "planned_import_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block2_distribution_20260810_v1\\c2a_rp_operational\\imports\\c2a_rp_block_2_c2b_zh.json",
+        "planned_import_sha256": "e7f15dcfbbc963259fa8e023358ad2d52a5e3c9dbec9f8f2e8c52da00c98eab8",
+        "task_count": 15
+      },
+      "c2b_en": {
+        "deployment_id": "c2b_en",
+        "language_group": "English",
+        "server_instance_id": "labelstudio_https_sparkle0825",
+        "server_url": "https://label.sparkle0825.top",
+        "project_id": "78",
+        "planned_import_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block2_distribution_20260810_v1\\c2a_rp_operational\\imports\\c2a_rp_block_2_c2b_en.json",
+        "planned_import_sha256": "452d01128c48c8b94df8f1871e4d306cfa30333c276284e794795e0f79d639fd",
+        "task_count": 15
+      }
+    },
+    "runtime_mapping_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block2_distribution_20260810_v1\\c2a_rp_operational\\c2a_rp_runtime_mapping.csv",
+    "runtime_mapping_sha256": "a4d642aec0d5de1664aa9e51216ec1a5edfa3db60983c87b8e67f8ea4c80424f",
+    "assignment_count": 38,
+    "private_list_worker_count": 19,
+    "status": "planned_not_imported_not_dispatched",
+    "active_time_freeze_required_after_collection": true,
+    "active_time_expected_project_ids": [
+      "78",
+      "79"
+    ]
+  },
+  "import_json_outputs": {
+    "c2b_en": {
+      "path": "D:\\Work\\HOHONET\\import_json\\c2a_rp\\c2a_rp_block_2_import_foreign_https.json",
+      "sha256": "452d01128c48c8b94df8f1871e4d306cfa30333c276284e794795e0f79d639fd"
+    },
+    "c2b_zh": {
+      "path": "D:\\Work\\HOHONET\\import_json\\c2a_rp\\c2a_rp_block_2_import_zh.json",
+      "sha256": "e7f15dcfbbc963259fa8e023358ad2d52a5e3c9dbec9f8f2e8c52da00c98eab8"
+    }
+  },
+  "task_support_histogram_cumulative": {
+    "1": 23,
+    "2": 6,
+    "3": 5,
+    "4": 7
+  },
+  "worker_facing_workbooks": {
+    "Task_Assignments_C2A_RP_Block2_English.xlsx": {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block2_distribution_20260810_v1\\worker_facing_release\\Task_Assignments_C2A_RP_Block2_English.xlsx",
+      "sha256": "17cf28ddf0583f82fe7629ec03c880ee66ec6aaba62e249bf0c2f0f32844ca0b",
+      "worker_count": 10,
+      "assignment_count": 20,
+      "openability_verified": true
+    },
+    "任务分发表_C2A_RP_Block2_中文.xlsx": {
+      "path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block2_distribution_20260810_v1\\worker_facing_release\\任务分发表_C2A_RP_Block2_中文.xlsx",
+      "sha256": "0f390f384345acb12a474b41a39491f152c2e275e8ad0e84f035432ca32cd94b",
+      "worker_count": 9,
+      "assignment_count": 18,
+      "openability_verified": true
+    }
+  },
+  "private_list_sha256": {
+    "worker_11_C2A_RP_block_2.csv": "a807b44274ff63f73d29c3475bf3fb9404ba6ebe2668c083f27fa19a5bf9fa65",
+    "worker_12_C2A_RP_block_2.csv": "d46b6454c5b99e37c4ce109ab306ecf9ddecdf1fc15e1a5b701a45e878c159c1",
+    "worker_13_C2A_RP_block_2.csv": "d2b0292473b423cc07b7c47635c50fb4d856acb585fee582a98851e44c04424a",
+    "worker_15_C2A_RP_block_2.csv": "8d95cecd132a63504c6607f78919c8e32e1ae3c3a9d3c69e6e3e16bb323e43e4",
+    "worker_17_C2A_RP_block_2.csv": "2358aadb3aa5536bc2b0d1e2e084f3f764e932c66cbab32903c1393d124d5964",
+    "worker_1_C2A_RP_block_2.csv": "dca51f2ec8b57874a03e5ebcd771fef4a46c04c5a1143f20de330d2282ddebd6",
+    "worker_28_C2A_RP_block_2.csv": "ccd08fb6e1f8a3eab11804045b259822e6fd149eac4499e3f1264cc8ad6f071d",
+    "worker_29_C2A_RP_block_2.csv": "d6b054f4ba66930cc9ec9637e4f948f08549ff522cc43b183c2bb88e224497fe",
+    "worker_2_C2A_RP_block_2.csv": "bb26cfb72edf3af8960ec8796e3ad3eebfa512301840307a686e8d19cc3b9602",
+    "worker_30_C2A_RP_block_2.csv": "e059845708c145c15c10a329d8dfbd90fc4c5a1aa6b0c70808db852927d454e1",
+    "worker_31_C2A_RP_block_2.csv": "ab8d66518b41b64c3306508e2ccf1223234b3d0a3dc5258499269b96fa2a1444",
+    "worker_32_C2A_RP_block_2.csv": "b9e130f371bb2694db0fb69d1f5f5e945f9f7451629015670d67e09c729f8106",
+    "worker_33_C2A_RP_block_2.csv": "40a6ded9f5af2584ee2d2ba5b02a93a4eab1901eb63fa9b55a01bc8f3033ce4d",
+    "worker_34_C2A_RP_block_2.csv": "255640cfe456b6732c997c190ddabee494adc4c1d9ee65485f2eb167ccc82b42",
+    "worker_35_C2A_RP_block_2.csv": "308c0e0c2455d92a63bf9c4ba5bb239ddd6c6717fbc9857317da0a1b6431cc6a",
+    "worker_36_C2A_RP_block_2.csv": "6d1fb9398102f509586d3d0ac0d92663480efa0c7b0917a2e96986139e8aac9d",
+    "worker_37_C2A_RP_block_2.csv": "3c891f5ee5b82f66f0549a7f4deccb72196463fdeb72522f73240d3c6cb84656",
+    "worker_6_C2A_RP_block_2.csv": "a9d1e81d823cf21463c75c7caa82cb198ca83239abfe99fb9cf432394e59854e",
+    "worker_8_C2A_RP_block_2.csv": "912109e2e588a29902978c7b2c60b33883a3edfea47ed33228bc873a3e0138f9"
+  }
+}

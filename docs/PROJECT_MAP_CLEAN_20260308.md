@@ -51,6 +51,7 @@
 
 - `docs/thesis_main/C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json`：v17 绑定的 D8/D10/D12 统一候选生成与 gate 语义修订；不改变数值阈值。
 - `docs/thesis_main/C2A_RP_PRECISION_CAP_EXTENSION_20260807_v1.json`：C2-A-RP outcome 可见前冻结的最多 5 个平衡 block 精度上限修订；不改变风险或 CI 阈值。
+- `docs/thesis_main/C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v1.json`：仅对 Block 2 生效的一次性任务支持容量修订；不预分配或授权 Block 3--5。
 
 ## 2026-07-30 Paper A C1-A/C2-B batch boundary
 

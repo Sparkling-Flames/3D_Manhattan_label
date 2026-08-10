@@ -1,0 +1,57 @@
+{
+  "schema_version": "paper_a_c2a_rp_block2_capacity_amendment_v1",
+  "status": "normative",
+  "decision_timing": "after_Block1_closeout_before_any_Block2_outcome",
+  "reason": "Block 1 closed with 20 of 20 workers complete. Exact unseen-task matching shows that the former cap of 2 supports only 2 of the 19 candidates and cap 4 alone supports 18 of 19 because spare capacity on a shared stress anchor is not reusable by workers who already saw it. The researcher authorized activation of the frozen unexposed validation stress backup so that Block 2 can cover 19 of 19.",
+  "change": {
+    "effective_block": 2,
+    "max_task_support_before": 2,
+    "max_task_support_after": 4,
+    "scope": "C2A_RP_Block2_only",
+    "expires_after_block2_closeout": true,
+    "activated_validation_stress_backup_task_ids": [
+      "jtcxE69GiFV_67790605390f4d439c3c59395967ec84"
+    ],
+    "retired_from_future_t1_task_ids": [
+      "jtcxE69GiFV_67790605390f4d439c3c59395967ec84"
+    ]
+  },
+  "block2_roster_rule": {
+    "prior_block_must_be_complete": true,
+    "exclude_workers_at_precision_target": true,
+    "expected_target_met_worker_ids": [
+      "10"
+    ],
+    "block2_candidate_worker_count": 19,
+    "dispatchable_worker_count_without_backup": 18,
+    "expected_block2_worker_count": 19
+  },
+  "reference_exclusions": [
+    {
+      "task_id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "reason": "researcher_confirmed_bad_gt",
+      "eligible_for_block2_assignment": false
+    }
+  ],
+  "unchanged_rules": {
+    "maximum_blocks_per_worker": 5,
+    "tasks_per_block": 2,
+    "required_strata": [
+      "ordinary",
+      "stress"
+    ],
+    "reestimate_after_each_block": true,
+    "formal_target": "risk_slope_precision",
+    "risk_definition_changed": false,
+    "ci_target_changed": false,
+    "worker_eligibility_changed": false,
+    "selection_seed": 20260724,
+    "task_selection_uses_worker_performance": false,
+    "v1_tasks_consumed": false,
+    "new_external_tasks_added": false,
+    "validation_stress_backup_tasks_activated": 1,
+    "block3_to_5_support_cap_changed": false
+  },
+  "researcher_decision": "approved_activate_frozen_backup",
+  "interpretation": "This post-Block1 amendment authorizes Block 2 only. It does not reinterpret Block 1 and must not use T1/V1 outcomes, p-values, worker rank, or policy divergence."
+}
