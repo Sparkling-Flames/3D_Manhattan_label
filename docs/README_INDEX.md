@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260807_v19 SHA-256 60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260810_v20 SHA-256 085fd9ec0f14a93c986e9f7dda7883173d9ec64959188139a25012d0e6d36b9d -->
 # docs 鐩綍绱㈠紩
 
 > 2026-07-18锛歅aper A 姝ｅ紡鏂囨湰宸茶縼绉诲埌 vFinal銆傚綋鍓嶆鏂囧叆鍙ｄ负
@@ -18,7 +18,8 @@
 - [PAPER_A_METHOD_CONTRACT_CURRENT.json](thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json)
 - [C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json](thesis_main/C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json)：C2-B 在任何工人结果产生前批准的统一候选生成与 gate 语义修订。
 - [C2A_RP_PRECISION_CAP_EXTENSION_20260807_v1.json](thesis_main/C2A_RP_PRECISION_CAP_EXTENSION_20260807_v1.json)：C2-A-RP outcome 可见前冻结的最多 5 个平衡 block 精度上限修订。
-- [C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v1.json](thesis_main/C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v1.json)：Block 1 关闭后、Block 2 outcome 可见前冻结的一次性 `max_task_support=4` 容量修订；Block 2 结束后失效。
+- [C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v1.json](thesis_main/C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v1.json)：Block 1 收轮后、Block 2 outcome 前冻结的 Block 2--5 `max_task_support=4` capacity-only 修订；不预分配未来 block。
+- [FULL_MATERIALIZATION_PROCEDURE_v1.json](thesis_main/FULL_MATERIALIZATION_PROCEDURE_v1.json)：Block 2 outcome 前冻结的 Full 数值物化程序；最终数值仅在 C2-A-RP 终态后由 Calibration 数据机械产生。
 - [ROUND_BASED_ASSIGNMENT_SOP_v1.md](thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md)
 - [P1_PRESCREEN_LAUNCH_CHECKLIST_v1.md](thesis_main/P1_PRESCREEN_LAUNCH_CHECKLIST_v1.md)
 - [PRESCREEN_STAGE1_OPERATIONAL_GUIDE_20260327.md](thesis_main/PRESCREEN_STAGE1_OPERATIONAL_GUIDE_20260327.md)

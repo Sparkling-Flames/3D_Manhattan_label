@@ -1,10 +1,10 @@
 {
     "schema_version":  "paper_a_method_contract_v9",
-    "contract_version":  "paper_a_method_20260807_v19",
+    "contract_version":  "paper_a_method_20260810_v20",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
-    "previous_contract_version":  "paper_a_method_20260803_v18",
-    "previous_contract_sha256":  "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+    "previous_contract_version":  "paper_a_method_20260807_v19",
+    "previous_contract_sha256":  "60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38",
     "predispatch_amendment":  {
                                     "path":  "docs/thesis_main/C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json",
                                     "sha256":  "330938460ffd779eba3beeeef361f300ff30befbfd38549e1c782d05358f99ba",
@@ -23,6 +23,22 @@
                                                "maximum_blocks_per_worker":  5,
                                                "significance_seeking":  false
                                            },
+    "c2a_rp_capacity_amendment":  {
+                                           "path":  "docs/thesis_main/C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v1.json",
+                                           "sha256":  "c2d4ee251d86826410969b2f37ba115295d920c5822f3169edf70a6bd6d15c26",
+                                           "effective_from_block":  2,
+                                           "effective_through_block":  5,
+                                           "block1_historical_max_task_support":  2,
+                                           "blocks2_to_5_max_task_support":  4,
+                                           "future_blocks_preassigned":  false
+                                       },
+    "full_materialization_procedure":  {
+                                                "path":  "docs/thesis_main/FULL_MATERIALIZATION_PROCEDURE_v1.json",
+                                                "sha256":  "9fab69f9a36a7866295ef63836b1a70a7061c6deedbb772f23a292368639d9e3",
+                                                "decision_timing":  "before_any_C2A_Block2_outcome",
+                                                "final_numeric_materialization":  "after_C2A_RP_terminal_closeout_before_T1_or_V1_outcome",
+                                                "calibration_only":  true
+                                            },
     "stages":  [
                    "Pilot",
                    "PreScreen",
@@ -107,9 +123,20 @@
                                                                         4,
                                                                         6,
                                                                         8,
-                                                                        10
+                                                                       10
                                                                     ]
                                   },
+               "c2_a_rp_task_support_cap":  {
+                                                   "block1_historical":  2,
+                                                   "blocks2_to_5":  4,
+                                                   "future_blocks_preassigned":  false,
+                                                   "future_block_requires_prior_closeout_and_real_reestimate":  true
+                                               },
+               "c2_a_rp_instruction":  {
+                                              "blocks1_to_5":  "scope_instruction_v1",
+                                              "v2_effective_from":  "T1",
+                                              "retroactive_reclassification":  false
+                                          },
                "c2_a_rp_terminal_states":  [
                                                  "target_met",
                                                  "fallback_strong_global",
@@ -584,6 +611,16 @@
                    "launch_allowed_in_this_contract_amendment":  false
                },
     "full":  {
+                 "materialization_procedure":  "docs/thesis_main/FULL_MATERIALIZATION_PROCEDURE_v1.json",
+                 "numeric_inputs":  "Calibration_only",
+                 "final_numeric_timing":  "after_C2A_RP_terminal_closeout_before_T1_or_V1_outcome",
+                 "prohibited_optimization_targets":  [
+                                                           "T1_outcome",
+                                                           "V1_outcome",
+                                                           "V1_p_value",
+                                                           "predicted_significance",
+                                                           "policy_divergence"
+                                                       ],
                  "local_component_disable_rules":  [
                                                        "unsupported_component",
                                                        "ambiguous_family_activation",

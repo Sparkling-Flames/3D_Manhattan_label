@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260807_v19 SHA-256 60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260810_v20 SHA-256 085fd9ec0f14a93c986e9f7dda7883173d9ec64959188139a25012d0e6d36b9d -->
 # HOHONET 椤圭洰鍦板浘
 
 > 2026-07-18 vFinal 鏇存柊锛歅aper A 姝ｅ紡涓荤嚎宸叉敼涓?C1 璁捐 C2-B
@@ -51,7 +51,8 @@
 
 - `docs/thesis_main/C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json`：v17 绑定的 D8/D10/D12 统一候选生成与 gate 语义修订；不改变数值阈值。
 - `docs/thesis_main/C2A_RP_PRECISION_CAP_EXTENSION_20260807_v1.json`：C2-A-RP outcome 可见前冻结的最多 5 个平衡 block 精度上限修订；不改变风险或 CI 阈值。
-- `docs/thesis_main/C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v1.json`：仅对 Block 2 生效的一次性任务支持容量修订；不预分配或授权 Block 3--5。
+- `docs/thesis_main/C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v1.json`：Block 1 收轮后冻结 Block 2--5 的 `max_task_support=4` capacity-only 规则；未来 block 仍须逐轮重估且不预分配。
+- `docs/thesis_main/FULL_MATERIALIZATION_PROCEDURE_v1.json`：Full 的 risk/family shrinkage、同量纲转换、Calibration-only 权重/cap 选择和 task activation 时点规范；不含由未完成 C2-A 结果决定的最终数值。
 
 ## 2026-07-30 Paper A C1-A/C2-B batch boundary
 

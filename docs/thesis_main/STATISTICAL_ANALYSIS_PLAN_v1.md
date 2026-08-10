@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260807_v19 SHA-256 60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38 -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260810_v20 SHA-256 085fd9ec0f14a93c986e9f7dda7883173d9ec64959188139a25012d0e6d36b9d -->
 # Statistical Analysis Plan v1
 
 ## 2026-08-02 C2-B pre-dispatch amendment
@@ -10,7 +10,7 @@ C2-B 的 `unique_bridge_tasks` 是候选上限。枚举器从上限向下进行�
 
 > 2026-08-02 closeout amendment: formal canonical, assigned, non-outside and non-W014 rows default to `independent` with `independence_basis=protocol_assumption`. Machine signals create `pending_manual_review` only and exact geometry equality is diagnostic by itself. Ordinary completion is computed from frozen assignment/export; W014 remains a researcher administrative exclusion. Public GT is retained as-is unless the researcher explicitly declares a GT issue; worker/peer disagreement never automatically amends GT.
 
-> Current normative method contract: `PAPER_A_METHOD_CONTRACT_CURRENT.json` `paper_a_method_20260807_v19`, SHA-256 `60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38`. This SAP consumes the generated contract and does not define duplicate normative fields.
+> Current normative method contract: `PAPER_A_METHOD_CONTRACT_CURRENT.json` `paper_a_method_20260810_v20`, SHA-256 `085fd9ec0f14a93c986e9f7dda7883173d9ec64959188139a25012d0e6d36b9d`. This SAP consumes the generated contract and does not define duplicate normative fields.
 ## 0. 閫傜敤鑼冨洿涓庢浛浠ｅ０鏄?
 鏈枃瑕嗙洊 P1/C1/C2銆乀1 鍜?V1 鐨勬寮忓垎鏋愩€傝鑼冩€у瓧娈靛彧鐢卞綋鍓?JSON 鏂规硶鍚堝悓瀹氫箟锛涘巻鍙叉彁绾蹭粎浣滆璁¤儗鏅紝骞舵浛鎹㈡棫鐨勶細
 

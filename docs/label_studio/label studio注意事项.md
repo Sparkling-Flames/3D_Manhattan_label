@@ -221,7 +221,8 @@ GT 项目允许继续存在于同一实例，但只按**管理员维护项目**�
 ## 9. Paper A Annotation v2 文案切换
 
 - C2-A-RP Block 1 保留原始 UI 语义，不追溯修改或重分类。
-- 从 Block 2 开始，Block 2--5、T1、V1 统一使用 `scope_instruction_v2` 和 `paper_a_annotation_instruction_v2`。
+- C2-A-RP Block 1--5 全程沿用 `scope_instruction_v1`，避免在同一 risk-slope estimand 的顺序补精度过程中改变 measurement protocol。
+- `scope_instruction_v2` 和 `paper_a_annotation_instruction_v2` 从 T1/V1 开始启用；本地 v2 XML 在 C2-A-RP 期间只作为待部署工件保留。
 - Worker-facing 术语为“相机所在的当前空间 / current space containing the camera”；研究者侧定义为“相机锚定的当前结构单元”。
 - 普通 L/T 形墙面转角继续沿墙标注；只有通向相邻空间的开口具有清晰结构分界时，才在该边界处封闭。
 - Difficulty 保持多选：独立原因可多选，同一底层原因不重复选择；`trivial` 与所有具体困难互斥。

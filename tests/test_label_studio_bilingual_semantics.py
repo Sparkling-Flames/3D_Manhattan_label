@@ -137,7 +137,10 @@ def test_historical_and_active_xml_sha_are_frozen_in_v2_manifest() -> None:
     assert manifest["historical_snapshot"]["instruction_version"] == "scope_instruction_v1"
     assert manifest["active_scope_v2"]["instruction_version"] == "scope_instruction_v2"
     assert manifest["active_scope_v2"]["annotation_instruction_version"] == "paper_a_annotation_instruction_v2"
-    assert manifest["active_scope_v2"]["effective_from"] == "C2-A-RP Block 2"
+    assert manifest["historical_snapshot"]["effective_through"] == "C2-A-RP Block 5"
+    assert manifest["active_scope_v2"]["effective_from"] == "T1"
+    assert manifest["active_scope_v2"]["applies_to"] == ["T1", "V1"]
+    assert manifest["method_boundaries"]["c2a_instruction_version_changed"] is False
     assert manifest["active_scope_v2"]["alias_schema_unchanged"] is True
     assert manifest["deployment_status"] == "local_artifacts_ready_not_deployed"
 

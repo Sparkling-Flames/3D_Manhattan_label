@@ -2,8 +2,8 @@
 # Paper A current method contract (generated)
 
 This file is generated from `PAPER_A_METHOD_CONTRACT_CURRENT.json`; normative fields are not defined by hand.
-- contract_version: `paper_a_method_20260807_v19`
-- JSON SHA-256: `60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38`
+- contract_version: `paper_a_method_20260810_v20`
+- JSON SHA-256: `085fd9ec0f14a93c986e9f7dda7883173d9ec64959188139a25012d0e6d36b9d`
 - formal_launch_default: `false`
 
 ## Formal measurement and freeze roles
@@ -25,6 +25,9 @@ This file is generated from `PAPER_A_METHOD_CONTRACT_CURRENT.json`; normative fi
 - C2-A-RP's only formal dispatch goal is `risk_slope_precision`; `top_k_boundary_precision, component_eligibility_precision` remain diagnostic-only and cannot be dispatched.
 - The formal interval is `normal_95_max_unified_slope_sd` at level `0.95`, with its target read from the `frozen_pre_c2b_threshold_manifest` field `thresholds.risk_slope_ci_half_width`. Each block is refit from canonical eligible risk-slope evidence before another block is assigned.
 - A C2-A-RP block contains one ordinary and one stress task; the legal totals are `0, 2, 4, 6, 8, 10`. Terminal states are `target_met, fallback_strong_global, not_evaluable`; cap fallback sets risk adjustment to `0` and uses `STRONG_GLOBAL`.
+- Historical Block 1 keeps task support cap `2`; Blocks 2--5 use cap `4`. Future blocks are never preassigned and require the preceding block's real closeout and refit.
+- C2-A-RP Blocks 1--5 keep `scope_instruction_v1`. Annotation v2 begins at `T1`.
+- Full numeric inputs follow `docs/thesis_main/FULL_MATERIALIZATION_PROCEDURE_v1.json`, use Calibration only, and are materialized `after_C2A_RP_terminal_closeout_before_T1_or_V1_outcome`.
 - C2-A-RP CSV schemas are `c2a_rp_precision_plan_v2` for the precision plan and `c2a_rp_assignment_manifest_v2` for the assignment manifest; formal closeout rejects legacy schemas and requires `target_component`/`gap_reason` in the CSV headers.
 - Runtime mapping is a local planned/runtime audit. Its identity fields are `deployment_id, language_group, server_instance_id, planned_import_path, project_id, planned_import_sha256, assignment_sha256, selected_design_sha, worker_registry_sha256`; it does not claim Label Studio UI visibility.
 

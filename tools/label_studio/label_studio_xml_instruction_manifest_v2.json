@@ -6,7 +6,7 @@
   "deployment_status": "local_artifacts_ready_not_deployed",
   "historical_snapshot": {
     "instruction_version": "scope_instruction_v1",
-    "effective_through": "C2-A-RP Block 1",
+    "effective_through": "C2-A-RP Block 5",
     "snapshot_root": "tools/label_studio/config_history/scope_instruction_v1_pre_block2",
     "legacy_freeze_manifest_path": "tools/label_studio/config_history/scope_instruction_v1_pre_block2/label_studio_c1_xml_freeze_manifest_v1.json",
     "legacy_freeze_manifest_sha256": "7d1a5f6ab19adf067ca3b8ed9db2d4da816ca6e15f60e6a7941ff89b2cdc601e",
@@ -52,9 +52,8 @@
   "active_scope_v2": {
     "instruction_version": "scope_instruction_v2",
     "annotation_instruction_version": "paper_a_annotation_instruction_v2",
-    "effective_from": "C2-A-RP Block 2",
+    "effective_from": "T1",
     "applies_to": [
-      "C2-A-RP Block 2-5",
       "T1",
       "V1"
     ],
@@ -109,7 +108,9 @@
     "analysis_parser_changed": false,
     "task_scope_adjudication_changed": false,
     "gt_reference_disposition_changed": false,
-    "paper_a_method_contract_changed": false,
+    "paper_a_method_contract_changed": true,
+    "c2a_instruction_version_changed": false,
+    "instruction_transition_after_c2a_closeout": true,
     "paper_b_changed": false,
     "retroactive_block_1_reclassification": false
   }

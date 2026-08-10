@@ -67,14 +67,15 @@ def _write_csv(path: Path, rows: list[dict[str, Any]], fields: Iterable[str] | N
             if key not in names:
                 names.append(key)
     with path.open("w", encoding="utf-8", newline="") as stream:
-        writer = csv.DictWriter(stream, fieldnames=names, extrasaction="raise")
+        writer = csv.DictWriter(stream, fieldnames=names, extrasaction="raise", lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
 
 def _write_json(path: Path, payload: Any) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    with path.open("w", encoding="utf-8", newline="\n") as stream:
+        stream.write(json.dumps(payload, ensure_ascii=False, indent=2, sort_keys=True) + "\n")
 
 
 def _relocate_paths(value: Any, source_root: Path, target_root: Path) -> Any:

@@ -144,14 +144,15 @@ def write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str] | No
         if not fields:
             f.write("")
             return
-        writer = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore")
+        writer = csv.DictWriter(f, fieldnames=fields, extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         writer.writerows({key: csv_value(value) for key, value in row.items()} for row in rows)
 
 
 def write_json(path: Path, payload: dict[str, Any]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    with path.open("w", encoding="utf-8", newline="\n") as f:
+        f.write(json.dumps(payload, ensure_ascii=False, indent=2) + "\n")
 
 
 def sha256_file(path: Path) -> str:

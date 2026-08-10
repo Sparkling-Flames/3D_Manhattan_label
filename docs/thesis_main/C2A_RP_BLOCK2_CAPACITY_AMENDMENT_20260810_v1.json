@@ -4,11 +4,12 @@
   "decision_timing": "after_Block1_closeout_before_any_Block2_outcome",
   "reason": "Block 1 closed with 20 of 20 workers complete. Exact unseen-task matching shows that the former cap of 2 supports only 2 of the 19 candidates and cap 4 alone supports 18 of 19 because spare capacity on a shared stress anchor is not reusable by workers who already saw it. The researcher authorized activation of the frozen unexposed validation stress backup so that Block 2 can cover 19 of 19.",
   "change": {
-    "effective_block": 2,
+    "effective_from_block": 2,
+    "effective_through_block": 5,
     "max_task_support_before": 2,
     "max_task_support_after": 4,
-    "scope": "C2A_RP_Block2_only",
-    "expires_after_block2_closeout": true,
+    "scope": "C2A_RP_Blocks2_to_5",
+    "expires_after_c2a_rp_closeout": true,
     "activated_validation_stress_backup_task_ids": [
       "jtcxE69GiFV_67790605390f4d439c3c59395967ec84"
     ],
@@ -50,8 +51,11 @@
     "v1_tasks_consumed": false,
     "new_external_tasks_added": false,
     "validation_stress_backup_tasks_activated": 1,
-    "block3_to_5_support_cap_changed": false
+    "block1_historical_max_task_support": 2,
+    "blocks2_to_5_max_task_support": 4,
+    "future_blocks_preassigned": false,
+    "future_block_requires_prior_block_closeout_and_real_reestimate": true
   },
   "researcher_decision": "approved_activate_frozen_backup",
-  "interpretation": "This post-Block1 amendment authorizes Block 2 only. It does not reinterpret Block 1 and must not use T1/V1 outcomes, p-values, worker rank, or policy divergence."
+  "interpretation": "This post-Block1 capacity-only amendment freezes max_task_support=4 for Blocks 2 through 5. It does not reinterpret Block 1, preassign a future block, or permit use of T1/V1 outcomes, p-values, worker rank, or policy divergence. Every future block still requires the preceding block to close and the canonical precision model to be re-estimated."
 }

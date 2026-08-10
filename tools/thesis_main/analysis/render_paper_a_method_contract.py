@@ -142,6 +142,9 @@ This file is generated from `PAPER_A_METHOD_CONTRACT_CURRENT.json`; normative fi
 - C2-A-RP's only formal dispatch goal is `{c2['c2_a_rp_formal_target']}`; `{', '.join(c2['c2_a_rp_diagnostic_goals'])}` remain diagnostic-only and cannot be dispatched.
 - The formal interval is `{c2['c2_a_rp_interval']['formula_id']}` at level `{c2['c2_a_rp_interval']['level']}`, with its target read from the `{c2['c2_a_rp_interval']['target_source']}` field `{c2['c2_a_rp_interval']['target_field']}`. Each block is refit from canonical eligible risk-slope evidence before another block is assigned.
 - A C2-A-RP block contains one ordinary and one stress task; the legal totals are `{', '.join(map(str, c2['c2_a_rp_block']['allowed_additional_tasks']))}`. Terminal states are `{', '.join(c2['c2_a_rp_terminal_states'])}`; cap fallback sets risk adjustment to `{c2['c2_a_rp_fallback']['risk_adjustment']}` and uses `{c2['c2_a_rp_fallback']['policy']}`.
+- Historical Block 1 keeps task support cap `{c2['c2_a_rp_task_support_cap']['block1_historical']}`; Blocks 2--5 use cap `{c2['c2_a_rp_task_support_cap']['blocks2_to_5']}`. Future blocks are never preassigned and require the preceding block's real closeout and refit.
+- C2-A-RP Blocks 1--5 keep `{c2['c2_a_rp_instruction']['blocks1_to_5']}`. Annotation v2 begins at `{c2['c2_a_rp_instruction']['v2_effective_from']}`.
+- Full numeric inputs follow `{data['full']['materialization_procedure']}`, use Calibration only, and are materialized `{data['full']['final_numeric_timing']}`.
 - C2-A-RP CSV schemas are `{csv_schema['precision_plan']}` for the precision plan and `{csv_schema['assignment_manifest']}` for the assignment manifest; formal closeout rejects legacy schemas and requires `target_component`/`gap_reason` in the CSV headers.
 - Runtime mapping is a local planned/runtime audit. Its identity fields are `{', '.join(c2b_launch['runtime_identity_fields'])}`; it does not claim Label Studio UI visibility.
 

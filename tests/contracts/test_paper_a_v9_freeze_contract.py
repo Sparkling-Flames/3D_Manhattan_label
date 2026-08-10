@@ -90,7 +90,20 @@ def test_final_pooled_profile_is_independent_from_c1_evidence(tmp_path: Path) ->
 def test_v9_contract_has_separate_pooled_schema() -> None:
     contract = load_method_contract()
     assert contract["schema_version"] == "paper_a_method_contract_v9"
-    assert contract["contract_version"] == "paper_a_method_20260807_v19"
+    assert contract["contract_version"] == "paper_a_method_20260810_v20"
+    assert contract["c2"]["c2_a_rp_task_support_cap"] == {
+        "block1_historical": 2,
+        "blocks2_to_5": 4,
+        "future_blocks_preassigned": False,
+        "future_block_requires_prior_closeout_and_real_reestimate": True,
+    }
+    assert contract["c2"]["c2_a_rp_instruction"]["blocks1_to_5"] == "scope_instruction_v1"
+    assert contract["full_materialization_procedure"]["calibration_only"] is True
+    procedure = METHOD_CONTRACT.parents[2] / contract["full_materialization_procedure"]["path"]
+    assert sha256_file(procedure) == contract["full_materialization_procedure"]["sha256"]
+    procedure_payload = json.loads(procedure.read_text(encoding="utf-8"))
+    assert procedure_payload["weight_and_cap_selection"]["eligible_data"] == "Calibration_only"
+    assert "V1_p_value" in procedure_payload["prohibited_inputs"]
     assert contract["predispatch_amendment"]["candidate_specific_relaxation"] is False
     assert contract["geometry_cluster"]["similarity_cutoff"] == .95
     assert contract["geometry_cluster"]["sensitivity_cutoffs"] == [.93, .97]

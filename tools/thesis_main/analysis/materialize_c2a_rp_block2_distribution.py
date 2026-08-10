@@ -68,7 +68,7 @@ def materialize(output_dir: Path = DEFAULT_OUTPUT, import_dir: Path = DEFAULT_IM
         raise ValueError(f"output directory already exists:{output_dir}")
 
     amendment = json.loads(AMENDMENT.read_text(encoding="utf-8"))
-    if amendment.get("status") != "normative" or amendment.get("change", {}).get("effective_block") != 2:
+    if amendment.get("status") != "normative" or amendment.get("change", {}).get("effective_from_block") != 2 or amendment.get("change", {}).get("effective_through_block") != 5:
         raise ValueError("Block 2 capacity amendment is not approved")
     max_support = int(amendment["change"]["max_task_support_after"])
     seed = int(amendment["unchanged_rules"]["selection_seed"])
@@ -185,7 +185,7 @@ def materialize(output_dir: Path = DEFAULT_OUTPUT, import_dir: Path = DEFAULT_IM
 
 - Block 1: `c2a_rp_block_1_import_foreign_https.json` / `c2a_rp_block_1_import_zh.json`
 - Block 2: `c2a_rp_block_2_import_foreign_https.json` -> Project 78 (Project E); `c2a_rp_block_2_import_zh.json` -> Project 79 (任务5)
-- Block 2 导入前先部署 `paper_a_annotation_instruction_v2`；导入后回填 runtime task ID，再通知工人。
+- C2-A-RP Block 1--5 保持同一套 `scope_instruction_v1`；不要在 Project 78/79 部署本地 v2 XML。导入后回填 runtime task ID，再通知工人。
 """)
 
     worker_rows = []
@@ -206,7 +206,7 @@ def materialize(output_dir: Path = DEFAULT_OUTPUT, import_dir: Path = DEFAULT_IM
         "method_contract_sha256": sha256_file(METHOD_CONTRACT),
         "block2_capacity_amendment_path": str(AMENDMENT.resolve()),
         "block2_capacity_amendment_sha256": amendment_sha,
-        "amendment_scope": "Block2_only",
+        "amendment_scope": "Blocks2_to_5",
         "block1_closed": True,
         "block1_assignment_sha256": sha256_file(BLOCK1),
         "post_block1_profile_sha256": sha256_file(PROFILE),
@@ -214,7 +214,7 @@ def materialize(output_dir: Path = DEFAULT_OUTPUT, import_dir: Path = DEFAULT_IM
         "assignment_count": 38,
         "target_met_not_assigned_workers": ["10"],
         "not_evaluable_not_assigned_workers": ["18", "27"],
-        "max_task_support_block2_only": max_support,
+        "max_task_support_blocks2_to_5": max_support,
         "reference_excluded_task_ids": sorted(excluded),
         "activated_validation_stress_backup_task_ids": sorted(activated_backup_ids),
         "retired_from_future_t1_task_ids": sorted(activated_backup_ids),
@@ -232,7 +232,7 @@ def materialize(output_dir: Path = DEFAULT_OUTPUT, import_dir: Path = DEFAULT_IM
 
 状态：19 人、38 个 worker-task assignment 已冻结，尚未导入、尚未发放。
 
-1. 将 Project 78 / 79 的 Labeling Config 更新为 `paper_a_annotation_instruction_v2`。
+1. Project 78 / 79 继续使用 Block 1 的 `scope_instruction_v1`；不要部署本地 v2 XML。
 2. 英文 JSON 导入 Project 78（Project E），中文 JSON 导入 Project 79（任务5）。
 3. 从 Label Studio task list 回填 38 行 runtime mapping，核对 private list 后再通知工人。
 4. 收轮后按实际日期冻结 `active_logs/c2a_rp_block2_<date>`；Block 3 不得预分配。

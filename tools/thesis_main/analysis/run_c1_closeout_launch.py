@@ -336,11 +336,16 @@ def _current_or_cap_only_previous_binding(payload: dict[str, Any]) -> bool:
     if all(payload.get(key) == value for key, value in current.items()):
         return True
     method = load_method_contract()
-    extension = method.get("c2a_rp_precision_cap_extension", {})
+    extension_ref = method.get("c2a_rp_precision_cap_extension", {})
+    extension_path = _PROJECT_ROOT / str(extension_ref.get("path", ""))
+    if not extension_path.is_file() or sha256_file(extension_path) != extension_ref.get("sha256"):
+        return False
+    extension = json.loads(extension_path.read_text(encoding="utf-8"))
     return (
-        extension.get("significance_seeking") is False
-        and payload.get("method_contract_version") == method.get("previous_contract_version")
-        and payload.get("method_contract_sha256") == method.get("previous_contract_sha256")
+        extension.get("status") == "normative"
+        and extension.get("unchanged_rules", {}).get("risk_definition_changed") is False
+        and payload.get("method_contract_version") == extension.get("previous_method_contract_version")
+        and payload.get("method_contract_sha256") == extension.get("previous_method_contract_sha256")
     )
 
 

@@ -1,0 +1,82 @@
+{
+  "schema_version": "paper_a_full_materialization_procedure_v1",
+  "status": "normative",
+  "decision_timing": "after_C2A_Block1_closeout_before_any_C2A_Block2_outcome",
+  "purpose": "Freeze how Full numeric inputs are produced without choosing their final values from incomplete C2-A data.",
+  "materialization_timing": {
+    "final_numeric_materialization": "after_C2A_RP_terminal_closeout_before_T1_or_V1_outcome",
+    "calibration_only": true,
+    "future_c2a_blocks_must_be_sequentially_reestimated": true
+  },
+  "risk_component": {
+    "source_model": "existing_REML_crossed_random_worker_slope_with_frozen_boundary_chain",
+    "source_estimate": "worker_slope_BLUP",
+    "source_uncertainty": "worker_slope_posterior_se",
+    "eligibility": "terminal_C2A_risk_slope_status_estimated_and_precision_target_met",
+    "fallback_if_ineligible": "B_u_risk_shrunk=0_and_B_u_routing_eligible=false",
+    "scale_transform": "B_u_risk_shrunk=(worker_slope_BLUP-group_slope_mean)/between_worker_slope_sd",
+    "zero_variance_rule": "if_between_worker_slope_sd_is_nonfinite_or_zero_set_B_u_risk_shrunk=0_and_disable_risk_component",
+    "orientation": "larger_is_better_quality_retention_as_risk_increases"
+  },
+  "family_component": {
+    "families": [
+      "undercoverage",
+      "adjacent_space_overextension",
+      "corner_topology_instability"
+    ],
+    "required_chain": [
+      "P1_integrity_eligible",
+      "C1_predictive_validated",
+      "C2B_confirmed",
+      "direction_consistent",
+      "leave_one_task_out_stable",
+      "leave_one_block_out_stable",
+      "routing_activation_allowed"
+    ],
+    "estimator": "inverse_variance_pool_C1_and_C2B_worker_family_effects_then_normal_normal_empirical_bayes_within_family",
+    "scale_transform": "H_u_f=(shrunk_worker_family_effect-family_EB_mean)/family_EB_tau",
+    "zero_variance_rule": "if_family_EB_tau_is_nonfinite_or_zero_set_H_u_f=0_and_disable_that_family_component",
+    "negative_or_missing_evidence_rule": "not_eligible_not_zero_effect_evidence"
+  },
+  "weight_and_cap_selection": {
+    "eligible_data": "Calibration_only",
+    "validation_scheme": "leave_one_calibration_task_out_and_leave_one_calibration_block_out",
+    "objective_order": [
+      "minimum_held_out_predictive_loss",
+      "stability_across_both_validation_schemes",
+      "smaller_absolute_weight",
+      "smaller_cap"
+    ],
+    "lambda_B_candidate_grid": [0.0, 0.25, 0.5],
+    "lambda_P_candidate_grid": [0.0, 0.25, 0.5],
+    "symmetric_total_adjustment_cap_candidate_grid_in_S_G_z_units": [0.25, 0.5, 1.0],
+    "no_supported_improvement_rule": "select_lambda_B=0_lambda_P=0_and_smallest_cap",
+    "final_values_are_not_frozen_in_this_procedure": true
+  },
+  "task_activation": {
+    "finalization_timing": "after_C2A_RP_terminal_closeout_before_T1_or_V1_outcome",
+    "risk_route_source": "frozen_calibration_task_risk_rule",
+    "family_activation_source": "frozen_family_scores_threshold_and_margin",
+    "d_cal_F_support_source": "Calibration_only",
+    "at_most_one_family_per_task": true,
+    "unsupported_component_action": "local_component_zero",
+    "overall_fallback_conditions": [
+      "outside_calibration_support",
+      "profile_version_conflict",
+      "ranking_unstable_endpoint"
+    ]
+  },
+  "prohibited_inputs": [
+    "T1_outcome",
+    "V1_outcome",
+    "V1_p_value",
+    "predicted_significance",
+    "policy_divergence_maximization"
+  ],
+  "required_final_artifacts": [
+    "FULL_PROFILE_MANIFEST",
+    "FULL_COMPONENT_MANIFEST",
+    "FULL_POLICY_MANIFEST"
+  ],
+  "required_binding": "Every final artifact must bind all Calibration input SHA256 values, this procedure SHA256, and the current Paper A method contract SHA256."
+}
