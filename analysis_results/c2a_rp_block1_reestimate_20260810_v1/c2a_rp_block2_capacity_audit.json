@@ -1,0 +1,49 @@
+{
+  "schema_version": "c2a_rp_block2_capacity_audit_v1",
+  "status": "planning_only_not_dispatched",
+  "target_met_workers": [
+    "10"
+  ],
+  "block2_candidate_workers": [
+    "1",
+    "2",
+    "6",
+    "8",
+    "11",
+    "12",
+    "13",
+    "15",
+    "17",
+    "28",
+    "29",
+    "30",
+    "31",
+    "32",
+    "33",
+    "34",
+    "35",
+    "36",
+    "37"
+  ],
+  "block2_candidate_count": 19,
+  "frozen_max_task_support": 2,
+  "unused_validation_stress_backup_task_ids": [
+    "jtcxE69GiFV_67790605390f4d439c3c59395967ec84"
+  ],
+  "maximum_complete_block2_workers_at_frozen_cap": 2,
+  "missing_complete_worker_slots": 17,
+  "minimum_additional_two-use_stress_tasks": 9,
+  "validation_stress_remainder_available": 1,
+  "capacity_sensitivity_by_task_support_cap": {
+    "2": 2,
+    "3": 13,
+    "4": 19
+  },
+  "block2_dispatch_ready": false,
+  "reason": "validation_only_stress_pool_exhausted_at_frozen_task_support_cap",
+  "non_authorized_options": {
+    "raise_task_support_cap_to_4": "capacity_19_of_19_without_test_leakage_but_changes_frozen_concentration_cap",
+    "consume_9_test_stress_tasks": "capacity_19_of_19_but changes task-source boundary and retires those tasks from T1/V1",
+    "dispatch_partial_2": "feasible but not recommended for the significance-first plan"
+  }
+}
