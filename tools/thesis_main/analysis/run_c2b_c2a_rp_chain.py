@@ -26,6 +26,7 @@ if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))
 
 from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import C2A_ASSIGNMENT_FIELDS, materialize as materialize_c2a_rp
+from tools.thesis_main.analysis.build_c2_assignment_manifest_from_c1_gaps import _resolve_fitted_worker_slope_distribution
 from tools.thesis_main.analysis.active_log_utils import resolve_active_log_files
 from tools.thesis_main.analysis.geometry_consensus.representation import normalize_geometry, normalize_ordered_reference_geometry
 from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import _fit_crossed_model
@@ -850,15 +851,14 @@ def _merge_post_profile(
         by_worker[row["worker_id"]].append(row)
     slopes = fit.get("worker_slopes", {}) if fit.get("status") == "estimated" else {}
     ses = fit.get("worker_slope_ses", {}) if fit.get("status") == "estimated" else {}
-    group_se = float(fit.get("group_slope_se", math.nan)) if fit.get("status") == "estimated" else math.nan
-    between = float(fit.get("between_worker_slope_sd", math.nan)) if fit.get("status") == "estimated" else math.nan
     for row in rows:
         worker = normalize_worker_id(row.get("worker_id", ""))
         support_rows = by_worker.get(worker, [])
         worker_slope = float(slopes.get(worker, math.nan)) if worker in slopes else math.nan
         worker_se = float(ses.get(worker, math.nan)) if worker in ses else math.nan
         estimated = bool(support_rows) and math.isfinite(worker_slope) and math.isfinite(worker_se)
-        unified_sd = max((value for value in (worker_se, group_se, between) if estimated and math.isfinite(value)), default=math.nan)
+        distribution = _resolve_fitted_worker_slope_distribution(fit, worker, len(support_rows)) if estimated else {"valid": False}
+        unified_sd = float(distribution["total_sd"]) if distribution.get("valid") else math.nan
         status = "estimated_crossed_model" if estimated else ("support_limited" if support_rows else "not_evaluable")
         row.update({
             "schema_version": "worker_profile_v2",

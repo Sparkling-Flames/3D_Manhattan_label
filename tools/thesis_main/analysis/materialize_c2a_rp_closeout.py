@@ -11,6 +11,7 @@ from pathlib import Path
 from typing import Any
 
 from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import _c2a_rp_csv_schemas, _c2a_rp_limits
+from tools.thesis_main.analysis.build_c2_assignment_manifest_from_c1_gaps import _resolve_fitted_worker_slope_distribution
 from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import _fit_crossed_model
 from tools.thesis_main.analysis.materialize_c2b_closeout import (
     NONCOMPLETED_TERMINAL_STATUSES,
@@ -113,10 +114,15 @@ def _actual_worker_slope(records: list[dict[str, Any]]) -> dict[str, dict[str, A
     for worker in sorted({str(row["worker_id"]) for row in records}):
         estimate = _float({"value": slopes.get(worker)}, "value")
         se = _float({"value": ses.get(worker)}, "value")
+        distribution = _resolve_fitted_worker_slope_distribution(
+            model, worker, sum(row["worker_id"] == worker for row in records),
+        ) if model.get("status") == "estimated" else {"valid": False}
+        unified_sd = float(distribution["total_sd"]) if distribution.get("valid") else None
         out[worker] = {
             "estimate": estimate,
             "se": se,
-            "ci_half_width": 1.96 * se if se is not None else None,
+            "unified_slope_sd": unified_sd,
+            "ci_half_width": 1.96 * unified_sd if unified_sd is not None else None,
             "support": sum(row["worker_id"] == worker for row in records),
             "model_status": model.get("status", "not_evaluable"),
             "model_form": model.get("slope_model_form", ""),

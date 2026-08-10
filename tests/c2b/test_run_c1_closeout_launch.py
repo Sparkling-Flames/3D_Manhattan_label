@@ -162,7 +162,7 @@ def test_stage3_test_candidate_preserves_rows_records_exposure_and_is_candidate_
     assert all(row["risk_design_stratum"] in {"ordinary", "stress"} for row in risk)
     assert all(row["risk_route"] == "" and row["candidate_only"] == "true" for row in risk)
     assert summary["source_method_binding"]["source_method_contract_version"] == "paper_a_method_20260802_v17"
-    assert summary["source_method_binding"]["target_method_contract_version"] == "paper_a_method_20260810_v21"
+    assert summary["source_method_binding"]["target_method_contract_version"] == "paper_a_method_20260811_v22"
     assert summary["feature_audit_threshold_manifest_sha256"] == hashlib.sha256(thresholds.read_bytes()).hexdigest()
     with pytest.raises(ValueError, match="target artifact already exists"):
         prepare_stage3_test_candidate(argparse.Namespace(
@@ -249,7 +249,7 @@ def test_d8_v17_to_v18_repackage_preserves_assignment_and_records_dual_deploymen
     assert result["n_workers"] == 22
     assert result["n_tasks"] == 46
     assert "import_sha256" not in result
-    assert result["method_contract_version"] == "paper_a_method_20260810_v21"
+    assert result["method_contract_version"] == "paper_a_method_20260811_v22"
     assert len(result["deployments"]) == 2
 
     assignment = args.output_dir / "assignment_manifest_C2B.csv"
@@ -261,7 +261,7 @@ def test_d8_v17_to_v18_repackage_preserves_assignment_and_records_dual_deploymen
     assert {row["language_group"] for row in registry["workers"]} == {"Chinese", "English"}
     assert len(registry["workers"]) == 22
     assert envelope["source_method_contract_sha256"] == "5068e08ade8d1f2013b5ed66af04761c210acf74ef522229ffd39ad8f6b17b4c"
-    assert envelope["target_method_contract_sha256"] == "125ed1248ae88eecdf0a08e7ba32296194b4bb2f66f69b18be40b360abaed2a9"
+    assert envelope["target_method_contract_sha256"] == "1aa447e48edfdcf3b2c61a304a7ae37e69c9cb1bfdc1b09ec0acf952a1ac899f"
     assert envelope["runtime_binding_status"] == "not_bound"
 
     for deployment in result["deployments"]:

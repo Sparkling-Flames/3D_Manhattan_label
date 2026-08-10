@@ -4,12 +4,12 @@ from __future__ import annotations
 
 import argparse
 import json
-import math
 from collections import Counter
 from pathlib import Path
 from typing import Any, Callable
 
 from tools.thesis_main.analysis.c1_live_collection_monitor import read_csv, write_csv, write_json
+from tools.thesis_main.analysis.build_c2_assignment_manifest_from_c1_gaps import _resolve_fitted_worker_slope_distribution
 from tools.thesis_main.analysis.materialize_c1_c2_design_parameters import _fit_crossed_model
 from tools.thesis_main.analysis.vfinal_artifact_utils import sha256_file
 
@@ -21,6 +21,7 @@ DEFAULT_BLOCK1_EVIDENCE = ROOT / "analysis_results/c2a_rp_block1_reestimate_2026
 DEFAULT_PROFILE = ROOT / "analysis_results/c2b_closeout_20260806_final/post_c2b_worker_profile.csv"
 DEFAULT_THRESHOLD = ROOT / "analysis_results/c2b_validation_design_20260802_v17/output/c2b_derived_threshold_manifest.json"
 DEFAULT_C2B_CLOSEOUT = ROOT / "analysis_results/c2a_rp_local_launch_20260807_v4/c2b_closeout_v2.json"
+DEFAULT_REFERENCE_REVIEW = ROOT / "analysis_results/c2a_rp_reference_review_20260811_v1/reference_review_provenance.json"
 DEFAULT_OUTPUT = ROOT / "analysis_results/c2a_rp_block1_reestimate_20260810_v2"
 
 
@@ -36,15 +37,27 @@ def materialize(
     base_profile: Path = DEFAULT_PROFILE,
     threshold_path: Path = DEFAULT_THRESHOLD,
     c2b_closeout: Path = DEFAULT_C2B_CLOSEOUT,
+    reference_review: Path = DEFAULT_REFERENCE_REVIEW,
     excluded_task_ids: set[str] | None = None,
     fit_model: Callable[[list[dict[str, Any]]], dict[str, Any]] = _fit_crossed_model,
 ) -> dict[str, Any]:
-    inputs = (c2b_evidence, block1_evidence, base_profile, threshold_path, c2b_closeout)
+    inputs = (c2b_evidence, block1_evidence, base_profile, threshold_path, c2b_closeout, reference_review)
     if any(not path.exists() for path in inputs):
         raise ValueError("post-Block1 reestimate input is missing")
     if output_dir.exists():
         raise ValueError(f"output directory already exists:{output_dir}")
     excluded = excluded_task_ids or {BAD_GT}
+    review = json.loads(reference_review.read_text(encoding="utf-8"))
+    decisions = {row["base_task_id"]: row for row in review.get("tasks", [])}
+    if any(task not in decisions
+           or decisions[task].get("decision") != "reference_unavailable_for_geometry_estimand"
+           or not decisions[task].get("reviewed_by")
+           or "reviewed_at" not in decisions[task]
+           or not decisions[task].get("review_basis")
+           or decisions[task].get("worker_outcomes_used") is not False
+           or decisions[task].get("worker_disagreement_used") is not False
+           for task in excluded):
+        raise ValueError("reference exclusion lacks an independent terminal review record")
     threshold = json.loads(threshold_path.read_text(encoding="utf-8"))
     formula_id = threshold.get("derivation", {}).get("formula_ids", {}).get("risk_slope_ci_half_width")
     if formula_id != "normal_95_max_unified_slope_sd":
@@ -69,8 +82,6 @@ def materialize(
     fit = fit_model(records)
     if fit.get("status") != "estimated":
         raise ValueError(f"post-Block1 risk model is not estimated:{fit.get('status')}")
-    group_se = float(fit["group_slope_se"])
-    between_sd = float(fit["between_worker_slope_sd"])
     support = Counter(row["worker_id"] for row in eligible)
     strata = Counter((row["worker_id"], row.get("task_stratum", "")) for row in eligible)
 
@@ -80,8 +91,11 @@ def materialize(
         worker = str(row.get("worker_id", ""))
         if worker not in fit["worker_slopes"]:
             continue
+        distribution = _resolve_fitted_worker_slope_distribution(fit, worker, support[worker])
+        if not distribution["valid"] or distribution["source"] != "individual_posterior" and not distribution["common"]:
+            raise ValueError(f"worker slope distribution is not identified:{worker}")
         worker_se = float(fit["worker_slope_ses"][worker])
-        half_width = 1.96 * max(worker_se, group_se, between_sd)
+        half_width = 1.96 * float(distribution["total_sd"])
         row.update({
             "risk_slope": fit["worker_slopes"][worker],
             "risk_slope_for_simulation": fit["worker_slopes"][worker],
@@ -100,6 +114,8 @@ def materialize(
         workers[worker] = {
             "estimate": float(fit["worker_slopes"][worker]),
             "worker_se": worker_se,
+            "unified_slope_sd": distribution["total_sd"],
+            "unified_slope_source": distribution["source"],
             "unified_ci_half_width": half_width,
             "support": support[worker],
             "target_met": half_width <= target,
@@ -119,7 +135,7 @@ def materialize(
         "historical_c2b_closeout_candidate_only": True,
         "corrected_c2b_evidence_frozen": True,
         "interval_formula_id": formula_id,
-        "interval_formula": "1.96 * max(worker_slope_se, group_slope_se, between_worker_slope_sd)",
+        "interval_formula": "1.96 * frozen_worker_unified_slope_sd",
         "target_ci_half_width": target,
         "reference_excluded_task_ids": sorted(excluded),
         "input_sha256": {path.name: sha256_file(path) for path in inputs},

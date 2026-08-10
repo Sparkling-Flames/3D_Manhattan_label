@@ -1,0 +1,27 @@
+{
+  "schema_version": "c2a_rp_reference_review_provenance_v1",
+  "artifact_role": "C2A_RP_REFERENCE_REVIEW_PROVENANCE",
+  "review_scope": "post_Block1_local_reference_adjudication",
+  "tasks": [
+    {
+      "base_task_id": "zsNo4HB9uLZ_4c0aab63a4434cf4878e6f5b3ce9a70b",
+      "reviewed_by": "researcher",
+      "reviewed_at": null,
+      "reviewed_at_status": "not_recorded_not_invented",
+      "decision": "reference_unavailable_for_geometry_estimand",
+      "review_basis": "researcher direct panorama/reference-coordinate review; existing Block1 evidence records researcher_confirmed_reference_issue_after_block1",
+      "worker_outcomes_used": false,
+      "worker_disagreement_used": false
+    }
+  ],
+  "source_records": [
+    {
+      "path": "analysis_results/c2a_rp_block1_reestimate_20260810_v1/c2a_rp_block1_risk_slope_evidence.csv",
+      "sha256": "9143a8c13fd4dad75f46ed02928256c7f5810cf548f5f998a5e7a7c21c268adc"
+    },
+    {
+      "path": "docs/thesis_main/C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260810_v2.json",
+      "sha256": "df48a2af47a9ece7f4a48127eba9ad8735a188ea875ca3d559863c53277bde4e"
+    }
+  ]
+}

@@ -90,7 +90,7 @@ def test_final_pooled_profile_is_independent_from_c1_evidence(tmp_path: Path) ->
 def test_v9_contract_has_separate_pooled_schema() -> None:
     contract = load_method_contract()
     assert contract["schema_version"] == "paper_a_method_contract_v9"
-    assert contract["contract_version"] == "paper_a_method_20260810_v21"
+    assert contract["contract_version"] == "paper_a_method_20260811_v22"
     assert contract["c2"]["c2_a_rp_task_support_cap"] == {
         "block1_historical": 2,
         "blocks2_to_5": 4,
@@ -98,6 +98,8 @@ def test_v9_contract_has_separate_pooled_schema() -> None:
         "future_block_requires_prior_closeout_and_real_reestimate": True,
     }
     assert contract["c2"]["c2_a_rp_instruction"]["blocks1_to_5"] == "scope_instruction_v1"
+    assert contract["c2"]["c2_a_rp_interval"]["identified_random_slope_unified_sd"] == "sqrt(group_slope_se^2 + posterior_worker_slope_se^2)"
+    assert contract["c2"]["c2_a_rp_interval"]["between_worker_slope_sd_role"] == "prior_scale_for_unidentified_worker_only"
     amendment = METHOD_CONTRACT.parents[2] / contract["c2a_rp_capacity_amendment"]["path"]
     assert sha256_file(amendment) == contract["c2a_rp_capacity_amendment"]["sha256"]
     amendment_payload = json.loads(amendment.read_text(encoding="utf-8"))

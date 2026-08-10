@@ -545,6 +545,21 @@ def _resolve_slope_distribution(row: dict[str, Any]) -> dict[str, Any]:
     }
 
 
+def _resolve_fitted_worker_slope_distribution(
+    model: dict[str, Any], worker: str, support: int,
+) -> dict[str, Any]:
+    """Adapt one fitted worker to the sole frozen slope-distribution rule."""
+    return _resolve_slope_distribution({
+        "group_slope_mean": model.get("group_slope_mean", ""),
+        "group_slope_se": model.get("group_slope_se", ""),
+        "between_worker_slope_sd": model.get("between_worker_slope_sd", ""),
+        "slope_model_form": model.get("slope_model_form", ""),
+        "risk_slope": model.get("worker_slopes", {}).get(worker, ""),
+        "risk_slope_se": model.get("worker_slope_ses", {}).get(worker, ""),
+        "risk_slope_support": support,
+    })
+
+
 def _joint_qgt_posterior(
     prior_mean: np.ndarray,
     prior_covariance: np.ndarray,
