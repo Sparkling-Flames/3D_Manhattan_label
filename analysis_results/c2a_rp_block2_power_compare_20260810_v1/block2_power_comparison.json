@@ -1,0 +1,129 @@
+{
+  "schema_version": "c2a_rp_block2_power_compare_v1",
+  "status": "post_block1_diagnostic_not_dispatch_authorization",
+  "draws": 100000,
+  "seed": 20260810,
+  "power_model": "existing_quality_only_normal_proxy_with_actual_block1_worker_slopes",
+  "global_worker": "2",
+  "block2_candidate_workers": 19,
+  "projected_precision_active_workers_after_block2": 2,
+  "outcome_sd": 0.10358483670308066,
+  "v1_mde_one_sided_80pct_at_n458": 0.02407007896625009,
+  "scenarios": [
+    {
+      "scenario": "cap3_plus3_external_non_test",
+      "support_cap": 3,
+      "new_stress_tasks": 3,
+      "block2_workers": 19,
+      "projected_precision_active_workers_after_block2": 2,
+      "block2_unique_stress_images": 12,
+      "v1_total_tasks": 458,
+      "v1_stress_tasks": 92,
+      "v1_stress_fraction": 0.20087336244541484,
+      "stress_policy_divergence_probability": 0.00303,
+      "policy_divergence": 0.000608646288209607,
+      "expected_quality_difference": 1.5155300419004203e-06,
+      "quality_effect_p05": 0.0,
+      "quality_effect_p95": 0.0,
+      "quality_proxy_power_one_sided": 0.050016148634101754,
+      "task_source_cost": "hypothetical_external_or_new_validation"
+    },
+    {
+      "scenario": "cap3_plus3_retired_from_v1",
+      "support_cap": 3,
+      "new_stress_tasks": 3,
+      "block2_workers": 19,
+      "projected_precision_active_workers_after_block2": 2,
+      "block2_unique_stress_images": 12,
+      "v1_total_tasks": 455,
+      "v1_stress_tasks": 89,
+      "v1_stress_fraction": 0.1956043956043956,
+      "stress_policy_divergence_probability": 0.00303,
+      "policy_divergence": 0.0005926813186813187,
+      "expected_quality_difference": 1.4757772472036533e-06,
+      "quality_effect_p05": 0.0,
+      "quality_effect_p95": 0.0,
+      "quality_proxy_power_one_sided": 0.05001567336761337,
+      "task_source_cost": "retire_3_stress_from_v1"
+    },
+    {
+      "scenario": "cap4_existing_pool",
+      "support_cap": 4,
+      "new_stress_tasks": 0,
+      "block2_workers": 19,
+      "projected_precision_active_workers_after_block2": 2,
+      "block2_unique_stress_images": 10,
+      "v1_total_tasks": 458,
+      "v1_stress_tasks": 92,
+      "v1_stress_fraction": 0.20087336244541484,
+      "stress_policy_divergence_probability": 0.00303,
+      "policy_divergence": 0.000608646288209607,
+      "expected_quality_difference": 1.5155300419004203e-06,
+      "quality_effect_p05": 0.0,
+      "quality_effect_p95": 0.0,
+      "quality_proxy_power_one_sided": 0.050016148634101754,
+      "task_source_cost": "no_v1_consumption"
+    },
+    {
+      "scenario": "cap2_plus9_retired_from_v1",
+      "support_cap": 2,
+      "new_stress_tasks": 9,
+      "block2_workers": 19,
+      "projected_precision_active_workers_after_block2": 2,
+      "block2_unique_stress_images": 10,
+      "v1_total_tasks": 449,
+      "v1_stress_tasks": 83,
+      "v1_stress_fraction": 0.18485523385300667,
+      "stress_policy_divergence_probability": 0.00303,
+      "policy_divergence": 0.0005601113585746103,
+      "expected_quality_difference": 1.3946780045706057e-06,
+      "quality_effect_p05": 0.0,
+      "quality_effect_p95": 0.0,
+      "quality_proxy_power_one_sided": 0.05001471396042301,
+      "task_source_cost": "retire_9_stress_from_v1"
+    }
+  ],
+  "full_v1_progression": [
+    {
+      "completed_through_block": 1,
+      "precision_active_workers": 1,
+      "stress_policy_divergence_probability": 0.00205,
+      "expected_quality_difference": 1.3362305074231466e-06,
+      "quality_proxy_power_one_sided": 0.05001423790241821
+    },
+    {
+      "completed_through_block": 2,
+      "precision_active_workers": 2,
+      "stress_policy_divergence_probability": 0.00269,
+      "expected_quality_difference": 1.4111265863631758e-06,
+      "quality_proxy_power_one_sided": 0.050015036036346494
+    },
+    {
+      "completed_through_block": 3,
+      "precision_active_workers": 2,
+      "stress_policy_divergence_probability": 0.00255,
+      "expected_quality_difference": 1.3526920935773537e-06,
+      "quality_proxy_power_one_sided": 0.05001441332528933
+    },
+    {
+      "completed_through_block": 4,
+      "precision_active_workers": 3,
+      "stress_policy_divergence_probability": 0.05044,
+      "expected_quality_difference": 0.00010543887045439994,
+      "quality_proxy_power_one_sided": 0.051133453234917914
+    },
+    {
+      "completed_through_block": 5,
+      "precision_active_workers": 4,
+      "stress_policy_divergence_probability": 0.05078,
+      "expected_quality_difference": 0.00010613205104474842,
+      "quality_proxy_power_one_sided": 0.05114097192302314
+    }
+  ],
+  "limitations": [
+    "Future Block 2 outcomes are unknown; SE uses frozen support scaling.",
+    "The existing proxy does not reward unique-task diversity except through future observed SE.",
+    "The cap3 new-task scenarios are hypothetical because no additional validation stress reserve exists locally.",
+    "This post-Block1 diagnostic must not redefine the primary V1 analysis or significance threshold."
+  ]
+}

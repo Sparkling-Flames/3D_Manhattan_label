@@ -1,0 +1,38 @@
+{
+  "schema_version": "full_materialization_pre_v1_audit_v1",
+  "status": "blocked_before_full_ranking_replay",
+  "active_worker_count": 20,
+  "formal_p1_family_count": 3,
+  "worker_family_cells": 60,
+  "full_component_eligible_count": 0,
+  "full_component_not_evaluable_count": 60,
+  "full_component_negative_evidence_count": 0,
+  "risk_precision_gate_pass_count": 1,
+  "formal_risk_component_eligible_count": 0,
+  "v1_predecision_task_count": 458,
+  "task_activation_evaluable_count": 0,
+  "task_activation_not_evaluable_count": 458,
+  "approved_building_count": 87,
+  "unresolved_building_count": 371,
+  "ranking_replay_evaluable_count": 0,
+  "risk_only_power_role": "diagnostic_only_not_formal_v1_power",
+  "formal_v1_power_status": "not_evaluable_until_full_materialized",
+  "blocking_findings": [
+    "P1 component threshold manifest is candidate/unapproved and interpretation_allowed=false.",
+    "No family-level P1 integrity, C1 predictive validation, or C2-B confirmatory component tables are materialized.",
+    "All 458 V1 tasks retain deferred risk_route and missing d_cal_F/family_scores.",
+    "No frozen numeric Full scoring manifest was found.",
+    "The engine consumes B_u_risk while the field contract names B_u_risk_shrunk; scale provenance is not closed."
+  ],
+  "input_sha256": {
+    "post_c2a_rp_block1_worker_profile.csv": "f73caa7a865e71efed2d73077261daa918b0d87e7e6efb9441b3bf9dc3946aea",
+    "c2a_rp_block1_reestimate_summary.json": "b6a366aedb16f659736e88fd020aef219034618949a8b252981547c466feb8ec",
+    "test_task_risk_candidate.csv": "8092f7969ba4122322a0917abf40c68d57ba95566875130fd27a9a338180e4ad",
+    "P1_COMPONENT_SUPPORT_THRESHOLDS.json": "8175fa2c0c285138b36640441b1512373ff940c1ebee4ee6049f0a92b01f1006",
+    "p1_integrity_bundle_manifest.json": "a2f792a1460e16470cd2eec3d350641a8889f7b58164b5339155991a5de18ed5",
+    "p1_worker_evidence_status_v1.csv": "4fab891e64148d3060de4de6694efff9832673dbbf7e122eb7b766825823569f",
+    "p1_to_c1_descriptive_directional_check.csv": "9504a6cb507d03cca5482b10ae54ade1fa832b33a3b0913078a1d14dfc53eaec",
+    "PAPER_A_METHOD_CONTRACT_CURRENT.json": "60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38",
+    "policy_candidate_v2.json": "9166221abcf40e06592cd8b01827b3634ea42b4982af69e3b7b88885e19fb7d3"
+  }
+}
