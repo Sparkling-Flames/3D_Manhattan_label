@@ -59,7 +59,7 @@ Do not preassign future blocks. Keep each assigned block paired as one ordinary 
 ## Guard Label Studio deployment
 
 - Never infer a new LS numeric project ID, Project letter, or Chinese `任务N` label from the previous block.
-- If the next round needs newly imported images and its LS projects do not yet exist, set/report `pending_new_project_binding`; do not point the package at an old project.
+- If the next round needs newly imported images and its LS projects do not yet exist, preserve the canonical artifact field `project_binding_status=pending_post_import` and report the user-facing state as `pending_new_project_binding`; do not invent a new artifact enum or point the package at an old project.
 - Bind deployment labels only from the user's confirmed projects or verifiable LS/repository state.
 - Generate display task codes from the current import order within the newly bound project, starting at `001`. Do not expose raw task IDs to workers.
 - For example, after the user confirms `Project F` and `任务6`, generate `Project F-001...` and `任务6-001...`; never derive those labels merely because the prior projects were `Project E` and `任务5`.
