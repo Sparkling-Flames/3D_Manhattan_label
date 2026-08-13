@@ -1,0 +1,18 @@
+\section{阶段与数据用途}
+
+\begin{table}[ht]
+\centering
+\begin{tabular}{lll}
+\toprule
+阶段 & 主要用途 & 禁止回流 \\
+\midrule
+P1 & 准入与候选诊断画像 & 不直接形成正式路由画像 \\
+C1 & 独立校准、C2 设计模拟 & 不因后续结果重标 \\
+C2-B & anchor/bridge 与风险确认 & 不读取 T1/V1 结果 \\
+C2-A-RP & 精度自适应补测 & 不搜索新风险族 \\
+T1 & Semi 条件效应 & 不修改 C2 freeze \\
+V1 & Strong Global/Full 前瞻比较 & 不事后调参 \\
+\bottomrule
+\end{tabular}
+\end{table}
+

@@ -1,0 +1,61 @@
+% Source: Paper_A_新版完整论文提纲_vFinal_Draft.md §17
+\section{讨论}
+
+\subsection{P1 为何不仅是准入}
+
+讨论高信息挑战对后续自然任务行为的预测价值，以及 admission 后 range restriction。
+
+\subsection{外部正确性、同行一致性和结构有效性的差异}
+
+解释为什么：
+\begin{itemize}
+  \item 高 LOO 不一定高 GT
+  \item 高 GT 不一定高同行一致性
+  \item valid-only IoU 会忽略结构失败
+\end{itemize}
+
+\subsection{条件画像的价值与边界}
+
+Full 的价值不在于所有任务都个体化，而在于：
+\begin{itemize}
+  \item 有支持时有限调整
+  \item 无支持时明确 fallback
+\end{itemize}
+
+因此，论文主张的是“有支持时有限调整、无支持时安全退化”，而不是个体化必然优于
+全局策略。P1 预测、多峰共识和 GT 冲突审查提供解释性与可信度证据，但不替代三项一级贡献。
+
+\subsection{平衡试验与生产分布}
+
+解释 50:50 设计用于识别交互，生产结论需标准化。
+
+\subsection{单一 operational reference 的协议性质}
+
+说明本文只保留一个 operational reference，但不把该协议性选择夸大为不可争议的客观真理。
+
+\subsection{共享工人池中的政策干扰}
+
+讨论对称 quota 和独立容量账本如何定义本文的目标部署制度。
+
+\subsection{局限}
+
+\begin{itemize}
+  \item C1 assigned cohort 为 23 人，其中 W014 行政排除后，行政上具备 capability 分析
+  资格的 cohort 最多为 22；各 estimand 仍需按 worker-level eligibility 与行级缺失分别
+  报告，不能把 W034 因接手替补任务而整名排除；
+  \item 条件画像支持有限；
+  \item P1 admission 造成范围限制；
+  \item 外部域 V2 样本有限；
+  \item 部分任务最终 unresolved；
+  \item 跨阶段 component 只有在方向、支持和收缩估计均稳定时才进入 Full；不满足时安全
+  退化为 component adjustment=0 或 Strong Global；
+  \item Full 的增量依赖任务侧 risk activation 的准确性；
+  \item 反例库是富集的机制性审计样本，不应被解释为总体失败率；缺失 provenance 的
+  candidate 只能保留在完整性审计中。
+  \item C1 的 (k) 是 task--condition--estimand-specific；授权替补与 rolling enrollment 改变的
+  是可用支持而非原始 assignment target，小 (k) 和 cohort composition 仍限制个体画像精度；
+  \item W034 的 17 条授权任务不能修复 sentinel 前的历史 timing missingness，original-only 与
+  augmented sensitivity 必须共同解释；
+  \item rolling enrollment 若激活会引入 calendar time、instruction exposure 和 completion-order
+  差异，因此 pooled 结论必须与 original-only sensitivity 并列，学习效应仅作预先限定的描述。
+\end{itemize}

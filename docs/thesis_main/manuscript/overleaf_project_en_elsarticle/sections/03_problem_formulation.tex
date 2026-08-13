@@ -1,0 +1,65 @@
+\section{Problem Setup and Study Design}
+\label{sec:setup}
+
+\subsection{Annotation task and unit of delivery}
+
+Let $i$ index panoramic images, $w$ workers, and $s$ study stages. Each image is an indoor equirectangular panorama accompanied by a layout-editing task. In a manual condition the worker constructs the layout from the image and interface cues. In a semi-automatic condition a model-generated layout is loaded as an editable proposal. The worker may move, add, or remove geometric elements before submission. A submitted annotation is transformed into a canonical geometry and checked for evaluability before quality is calculated.
+
+The primary object is a delivered layout, not a sequence of clicks. A task can therefore end in one of three policy-relevant states: \emph{resolved}, when an evaluable formal layout is delivered; \emph{unresolved}, when the prescribed process finishes without an evaluable delivery; or \emph{severe failure}, when a predeclared high-severity incident prevents acceptable completion. Failures are also attributed as worker, external, unknown, or none. Attribution is kept separate from terminal state so that an infrastructure outage is not silently converted into low worker performance.
+
+Workers are recruited specifically for the study and complete the same task interface under controlled instructions. Participation requires informed consent. \ethicsverify{} The approval-or-exemption authority, identifier, and applicable consent statement must replace this marker before submission. No participant-level operational identifier appears in the article; such identifiers remain confined to access-controlled audit artefacts.
+
+\subsection{Operational reference and eligibility}
+
+Reference-based accuracy uses a frozen \emph{operational reference}. The term is deliberate. A single panorama can hide boundaries or admit more than one defensible geometric interpretation, so the reference is the scoring target selected through a versioned review process, not an ontological claim of unique ground truth. The reference registry is frozen before it scores formal calibration evidence and is frozen again before prospective policy outcomes. A revision triggered by a submission cannot retroactively score that same submission.
+
+Canonical task--worker rows must first pass the formal assignment and provenance rules. Separate consumers then apply outcome-specific eligibility: reference scoring, peer analysis, structural analysis, time analysis, semi-automatic correction analysis, and routing features do not share one permissive ``eligible'' flag. Missing sources, schema drift, or conflicting provenance fail closed for the affected consumer and are reported. This separation prevents a valid reference score from implying valid time evidence, or a valid peer comparison from implying valid failure attribution.
+
+Table~\ref{tab:outcomes} summarizes the measurement roles used in the article. Active time is an auxiliary operational outcome only. It does not define profile components, admission, eligibility, rank, or routing.
+
+\begin{table}[t]
+\centering
+\caption{Primary measurement roles. Higher is better for $Q_{GT}$ and $R_{peer}$; lower is better for $F_{struct}$.}
+\label{tab:outcomes}
+\begin{tabular}{p{0.20\linewidth}p{0.31\linewidth}p{0.38\linewidth}}
+\toprule
+Quantity & Operational meaning & Guardrail \\
+\midrule
+$Q_{GT}$ & Reference-based accuracy of an evaluable canonical layout & Uses only a frozen operational reference and outcome-specific eligibility \\
+$R_{peer}$ & Compatibility with stable peer geometry on the same task & Does not treat peer consensus as truth; excludes supported multimodality from the stable summary \\
+$F_{struct}$ & Worker-attributable structural invalidity & Requires both structural failure evidence and supported attribution \\
+Active time & Validated engaged time in the interface & Auxiliary efficiency outcome; never a profile, qualification, or routing input \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Independent calibration and prospective evaluation}
+
+The study follows an ordered Calibration$\rightarrow$T1$\rightarrow$V1 design (Fig.~\ref{fig:studyflow}). The Calibration stage is the only numeric source for the final worker profiles and policies. Its first component establishes common tasks and baseline profile evidence. A bridge component connects evidence across stages. A subsequent precision-recovery component allocates small blocks only where a predeclared profile component remains insufficiently precise. Each precision-recovery block contains one ordinary and one stress task; it is re-estimated after closeout, and later blocks are not preassigned. This sequential rule collects evidence for unresolved components without turning calibration into unrestricted repeated testing.
+
+The cross-stage bridge serves two functions. It provides shared tasks or an equivalent supported structure for estimating stage differences, and it distinguishes a persistent worker component from a stage-specific change. If the required bridge is absent, the stage effect is reported as not identifiable rather than absorbed into the worker estimate. All calibration values, component statuses, support diagnostics, profile versions, and routing parameters are frozen before either prospective outcome can update them.
+
+T1 is a supporting experiment about model assistance. It compares manual and semi-automatic annotation across ordinary and stress tasks and asks whether assistance changes quality, active time, correction behaviour, or failure patterns. Because T1 manipulates the annotation interface rather than the worker-routing policy, it cannot directly validate V1. It can reveal the kinds of risk or correction heterogeneity that a later routing policy must handle.
+
+V1 is the main policy experiment. Eligible tasks or blocks are randomized 50:50 between calibrated global ranking and calibration-supported conditional routing. Both arms draw from the same frozen roster and face the same availability, capacity, retry, deadline, and incident rules. V1 outcomes cannot alter a profile, support threshold, weight, cap, or fallback decision. This outcome blindness is essential: otherwise the policy would be evaluated on choices tuned to its own result.
+
+\begin{figure}[t]
+\centering
+\fbox{\begin{minipage}{0.91\linewidth}
+\centering
+\textbf{Independent evidence chain}\\[4pt]
+Common-task calibration $\rightarrow$ bridge calibration $\rightarrow$
+precision recovery\\
+$\downarrow$ freeze profiles, support and both policies\\
+T1: model-assistance heterogeneity \hspace{1.5em}|
+\hspace{1.5em} V1: prospective routing policy test
+\end{minipage}}
+\caption{Study flow. T1 and V1 consume frozen calibration evidence; neither feeds back into profile estimation or policy materialization.}
+\label{fig:studyflow}
+\end{figure}
+
+\subsection{Research estimands and evidence boundary}
+
+RQ1 concerns measurement: the estimands are the three worker components, their uncertainty, their pairwise association, and their cross-stage stability. RQ2 concerns support: the estimands are conditional worker effects within predeclared risk or failure families, together with activation status and calibration-support distance. RQ3 concerns policy: the estimands compare V1 assignment arms on ordered terminal-state, delivery-adjusted quality, and resource outcomes. These levels are not interchangeable. A predictive conditional component can fail to produce a useful routing difference because capacity or fallback dominates; a policy can preserve safety even when few conditional components activate.
+
+At the time of manuscript restructuring, prospective T1 and V1 results are unavailable. Section~\ref{sec:results} therefore contains only explicitly marked expected-result scaffolding. No placeholder paragraph is evidence, and no numerical value is imputed.

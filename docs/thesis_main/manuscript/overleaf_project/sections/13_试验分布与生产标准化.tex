@@ -1,0 +1,50 @@
+% Source: Paper_A_新版完整论文提纲_vFinal_Draft.md §13
+\section{试验分布与生产标准化}
+
+\subsection{分层结果}
+
+分别报告：
+\[
+V_{\pi,o},\qquad V_{\pi,s}.
+\]
+
+\subsection{50:50 设计平均}
+
+\[
+V_\pi^{\mathrm{design}}
+=
+0.5V_{\pi,o}+0.5V_{\pi,s}.
+\]
+
+只能解释为 balanced experimental mixture。
+
+\subsection{生产标准化}
+
+若目标生产池比例为 \(p_o,p_s\)：
+\[
+V_\pi^{\mathrm{prod}}
+=
+p_oV_{\pi,o}+p_sV_{\pi,s}.
+\]
+
+比例来自独立自然任务池，不从 50:50 试验样本估计。
+
+上式只直接适用于 delivery-adjusted quality、non-delivery/severe rate 和平均成本等
+无条件指标。resolved-only quality 必须按分子与分母标准化：
+
+\[
+Q_{\pi,\mathrm{resolved}}^{prod}
+=
+\frac{p_o r_o q_o+p_s r_s q_s}{p_o r_o+p_s r_s},
+\]
+
+其中 \(r_o,r_s\) 为各层 resolved rate，不能机械加权两个条件性均值。
+
+若没有唯一比例，报告：
+\begin{itemize}
+  \item \texttt{80:20}
+  \item \texttt{60:40}
+  \item \texttt{50:50}
+  \item \texttt{30:70}
+\end{itemize}
+情景分析。

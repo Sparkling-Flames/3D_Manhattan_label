@@ -1,0 +1,27 @@
+% Source: Paper_A_新版完整论文提纲_vFinal_Draft.md §14
+\section{V2：外部支持与安全退化审计（可选扩展）}
+
+\subsection{目的}
+
+V2 不属于主要贡献，也不再次比较 Global/Full 因果效应；它只检验：
+\begin{itemize}
+  \item profile 是否支持；
+  \item fallback 是否正确；
+  \item supported subset 是否低风险；
+  \item unsupported subset 是否富集失败；
+  \item 是否存在 false-safe。
+\end{itemize}
+
+\subsection{指标}
+
+\begin{itemize}
+  \item \texttt{supported coverage}
+  \item \texttt{risk among supported}
+  \item \texttt{unsupported failure enrichment}
+  \item \texttt{false-safe rate}
+  \item \texttt{catastrophic supported failure}
+  \item \texttt{coverage--risk curve}
+  \item \texttt{refresh\_required rate}
+\end{itemize}
+
+高 fallback 本身不等于成功。

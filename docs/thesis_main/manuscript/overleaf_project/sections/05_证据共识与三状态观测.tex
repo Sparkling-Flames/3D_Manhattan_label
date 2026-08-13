@@ -1,0 +1,82 @@
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260807_v19 SHA-256 60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38
+\section{同行结构、GT 解释与三状态观测}
+
+\subsection{四类证据}
+
+\begin{verbatim}
+Scope/OOS
+Difficulty
+Model Issue
+Geometry
+\end{verbatim}
+
+四类证据进入不同的资格、风险和解释 gate。GT 只用于外部正确性评价与冲突解释，
+不能反向定义 crowd structure，也不能把多数提交自动替换为 GT。
+
+\subsection{GT-blind crowd structure}
+
+在查看 GT 解释之前，先对所有合法提交按冻结几何相似度形成兼容簇。任务级结构标签为：
+
+\begin{verbatim}
+unimodal
+dominant_with_dissent
+supported_multimodal
+insufficient_or_incompatible
+\end{verbatim}
+
+定义如下：
+\begin{itemize}
+  \item \texttt{unimodal}：所有合法提交形成同一兼容簇；
+  \item \texttt{dominant\_with\_dissent}：存在唯一主簇，第二簇支持不超过 1；
+  \item \texttt{supported\_multimodal}：至少两个各有两名或以上支持的兼容簇；
+  \item \texttt{insufficient\_or\_incompatible}：支持不足或几何不可比较。
+\end{itemize}
+
+因此，4:1 和 3:1:1 通常属于 \texttt{dominant\_with\_dissent}；真正的 3:2 属于
+\texttt{supported\_multimodal}，前提是两个簇各自内部一致。若 3:2 中两人簇内部也不一致，
+则标为 \texttt{dominant\_with\_dissent} 或 \texttt{insufficient\_or\_incompatible}。
+
+\subsection{三类共识的职责}
+
+\begin{itemize}
+  \item 任务描述共识：描述场景或问题是否被多名工人主张；
+  \item 几何同行结构：形成兼容簇、medoid、margin 和多峰状态；
+  \item 停止共识：决定是否追加和是否形成 resolved 输出。
+\end{itemize}
+
+三者不共用一个多数阈值。3:2 不生成唯一 crowd truth；所有工人仍可计算
+\texttt{R\_peer\_task}，并按 task 等权汇总为 \texttt{R\_peer\_all}，稳定敏感性使用
+\texttt{R\_peer\_stable}；两个簇分别与 GT 比较，少数簇不自动定义为错误。
+
+\subsection{三状态任务观测及 \texttt{not-evaluable} 状态}
+
+对 task--tag 保存三种任务观测，并将 \texttt{not-evaluable} 作为独立的分析状态：
+
+\begin{verbatim}
+positive assertion
+explicit negative
+unasserted
+not evaluable
+\end{verbatim}
+
+以及 \(a=\) positive count、\(e=\) explicit negative count 和
+\(u=\) unasserted count。若 \(a\geq2\) 且 \(e\geq2\)，记为显式冲突，
+不转成普通 positive/negative truth。\texttt{not-evaluable} 不属于第四种任务标签，
+而表示证据不足、协议不适用或归因未决时的分析排除状态；它不进入相应标签的分母，
+也不被静默编码为 negative。
+
+\subsection{Scope/OOS、undercoverage 与 Model Issue}
+
+OOS 表示任务是否适合当前协议；undercoverage 表示任务可标但工人未完整覆盖相机所在空间，
+二者不得混淆。Model Issue 进一步区分 \texttt{issue recognition}、\texttt{geometry correction}、
+\texttt{blind trust} 和 \texttt{over-correction}。反馈栏耗时不单独扣除，完整任务 active time
+仍是 T1 的真实使用成本。
+
+\subsection{任务级同行统计与 crowd support}
+
+pairwise edge 只用于构造每个 worker--task 的同行兼容度，不作为额外独立样本。论文先计算
+\(R^{peer}_{t,u}\)，再在 worker 层对 task 等权汇总，避免高 \(k\) 任务因边数较多获得更高统计权重。
+每个任务报告最大簇和次大簇的 absolute support、share、cluster count，以及当前字段合同的
+\texttt{cluster\_margin\_all} 与 \texttt{cluster\_margin\_top2}；不再生成名为
+\texttt{normalized\_cluster\_margin} 的字段。supported multimodal 任务保留 peer 描述与 GT
+对齐审计，但不进入 stable-peer tie-break。

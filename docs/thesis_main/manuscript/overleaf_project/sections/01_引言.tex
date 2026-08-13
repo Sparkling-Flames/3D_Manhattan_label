@@ -1,0 +1,23 @@
+\section{引言}
+
+全景室内布局标注同时受到任务难度、模型初始化、工人能力、平台运行状态和有限容量约束。
+仅比较平均标注时间或有效样本上的 IoU，会把结构无效提交、未交付任务和选择性缺失排除在外；
+仅依据同行一致性选择工人，又可能奖励一个稳定但偏离外部真值的群体。
+因此，标注系统不仅要产生几何结果，还必须保存任务、工人、调度、失败和分析纳入过程的证据链。
+
+本文研究三个问题：
+\begin{enumerate}
+  \item RQ1：Semi-Auto 是否在不同 \texttt{risk\_assist} 条件下改善交付质量与 active time？
+  \item RQ2：P1 诊断特征能否预测 C1、C2-B 与 T1 的后续行为，且哪些 failure-family component 获得跨阶段支持？
+  \item RQ3：在共享工人池和对称容量约束下，Full-Integrated 是否相对 Strong Global 改善前瞻政策结果？
+\end{enumerate}
+
+本文的贡献是：
+\begin{itemize}
+  \item 将任务调整后的 GT 正确性、Geometry LOO 一致性和工人结构失败分成三个画像轴；
+  \item 由 C1 模拟决定 C2-B 的共同锚点和异质桥接结构，并以 C2-A-RP 完成精度自适应补测；
+  \item 区分服务 T1 的 \texttt{risk\_assist} 与服务 V1 的 \texttt{risk\_route}；
+  \item 在 V1 中前瞻比较 Strong Global 与 Full-Integrated，而非用后见之明离线回放替代政策试验；
+  \item 将工人失败、政策失败和外部系统事故纳入可验证、结果盲态的处置合同。
+\end{itemize}
+

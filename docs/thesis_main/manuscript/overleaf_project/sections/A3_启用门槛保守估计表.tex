@@ -1,0 +1,16 @@
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v12 SHA-256 115ba6eaf771b4fa079289f17d1f491498d9cea910d12aeb4e66d192817c7ee8
+\section{画像启用与退化条件}
+
+\begin{longtable}{p{0.28\linewidth}p{0.30\linewidth}p{0.32\linewidth}}
+\toprule
+对象 & 启用证据 & 不满足时 \\
+\midrule
+\endhead
+P1 component & C1 predictive validation、C2-B confirmation、support 与方向稳定 & 关闭单项 \\
+Full-Integrated & task family 明确、至少两名受支持候选、版本兼容、排序稳定 & 退化为 Strong Global \\
+V1 & 冻结后的政策决策差异达到可行性门槛 & 不启动无信息试验 \\
+external incident & 时间窗、范围、证据 SHA、结果可见前登记均通过 & \texttt{not\_evaluable} \\
+\bottomrule
+\end{longtable}
+
+\paragraph{Contract v5 clarification.} Unsupported or ambiguous Full components are disabled locally; only support-range, profile-version, or endpoint-instability failures require overall Strong Global fallback.

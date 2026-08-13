@@ -1,0 +1,114 @@
+% Source: Paper_A_新版完整论文提纲_vFinal_Draft.md §4
+\section{数据来源与单一 operational reference}
+
+\subsection{GT 组成}
+
+正式参考池由以下构成：
+
+\begin{verbatim}
+绝大多数：
+公开数据集原始 GT
+
+极少数：
+经人工复核后纠错的 GT
+\end{verbatim}
+
+论文不得声称大规模重建 GT。
+
+\subsection{Reference 状态}
+
+\begin{verbatim}
+reference_ready
+reference_corrected
+pending_adjudication
+oos_geometry_not_applicable
+\end{verbatim}
+
+\subsubsection{\texttt{reference\_ready}}
+
+直接使用公开原始 GT。
+
+\subsubsection{\texttt{reference\_corrected}}
+
+极少量明确问题经复核后冻结修订版本。
+
+\subsubsection{\texttt{pending\_adjudication}}
+
+单一 operational reference 尚未形成冻结裁决时，该任务不进入几何主分母。
+
+\subsubsection{\texttt{oos\_geometry\_not\_applicable}}
+
+当前相机房间协议无法形成合法单一布局，不进入普通几何评价。
+
+\subsection{单一 operational reference}
+
+正式表述为：
+
+\begin{quote}
+每张 in-scope、geometry-evaluable 任务，在冻结的 enclosed camera-room 协议下只保留一个 operational reference；无法唯一收口的任务进入 pending adjudication 或 OOS。
+\end{quote}
+
+不使用：
+
+\begin{itemize}
+  \item hard-multi；
+  \item soft ambiguous reference；
+  \item max-over-reference。
+\end{itemize}
+
+\subsection{GT 冲突两步审查}
+
+\subsubsection{第一步：盲法初步裁决}
+
+只查看：
+
+\begin{verbatim}
+原始全景图
+公开 GT
+冻结协议
+\end{verbatim}
+
+不查看工人身份、支持人数和工人等级。
+
+\subsubsection{第二步：冲突解释}
+
+初步裁决冻结后，再查看匿名提交，用于：
+
+\begin{itemize}
+  \item 解释 undercoverage；
+  \item 解释 overextension；
+  \item 识别协议误解；
+  \item 建立反例类别。
+\end{itemize}
+
+裁决状态只允许：
+\begin{verbatim}
+retain_public_gt
+correct_reference
+oos_or_protocol_mismatch
+unresolved_reference
+\end{verbatim}
+
+crowd cluster 必须先于 GT 判断形成；第一阶段只看图像、公开 GT 和冻结协议，
+第二阶段才查看匿名 crowd submission。不得把 crowd majority 自动替换为 GT。
+
+若第二步揭示明确遗漏并导致重新修订，标记：
+
+\begin{verbatim}
+submission_informed_reference_revision = true
+\end{verbatim}
+
+触发修订的原提交不使用该修订 GT 进入自身 primary GT-quality 评价，只进入敏感性或后续独立评价。
+同时报告公开 GT、修订 GT 和排除修订任务的敏感性结果。
+
+\subsection{数据切分}
+
+硬要求：
+
+\begin{itemize}
+  \item C2、T1、V1 image-disjoint；
+  \item 同一 image 的 Manual/Semi 在同一 T1 任务内；
+  \item 同一 worker 不看同一 image 两种模式；
+  \item T1/V1 尽量 building-disjoint；
+  \item ZInD 仅用于 V2。
+\end{itemize}

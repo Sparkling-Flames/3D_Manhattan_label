@@ -1,0 +1,87 @@
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260807_v19 SHA-256 60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38
+\section{C2：共同桥接、层级收缩与精度补齐}
+
+\subsection{C2-B 的有限候选设计}
+
+C2 只保留三个正式候选：
+
+\begin{verbatim}
+D8  = 4 common anchors + 4 diverse bridges
+D10 = 6 common anchors + 4 diverse bridges
+D12 = 6 common anchors + 6 diverse bridges
+\end{verbatim}
+
+选择满足以下要求的最小设计：
+\begin{itemize}
+  \item worker--task 图连通；
+  \item common anchor 足够且 ordinary/stress 均有支持；
+  \item task/building 多样性达标；
+  \item Global 排名达到预定稳定性；
+  \item 风险斜率达到预定精度；
+  \item 总预算可接受。
+\end{itemize}
+
+政策差异率只作为 V1 可识别性诊断，不作为 C2 设计的主要优化目标。
+
+\subsection{共同 anchor 与 diverse bridge}
+
+common anchor 用于横向可比和波次校正；diverse bridge 用于恢复 task/building 外推能力、
+ordinary/stress 支持和 worker--task 图连通性。候选设计、模拟输入和最终选择必须在
+Calibration 结果可见的边界内预先冻结，不从反例库或 V1 outcome 反推。
+
+\subsection{风险韧性层级模型}
+
+\[
+Q^{GT}_{u,t}=\alpha_u+\gamma I_t^{risk}
++b_uI_t^{risk}+\eta_{\mathrm{stage}}+r_t+\epsilon_{u,t},
+\qquad b_u\sim N(0,\tau_b^2).
+\]
+
+输出收缩后的 risk slope、interval、leave-one-task/block-out stability 和 routing eligibility。
+不确定性大时调整趋近零，不发布不稳定的高维 worker\(\times\)scene 画像。
+
+\subsection{C2-A-RP：精度自适应补测}
+
+C2-A-RP 的正式派发目标只有 \texttt{risk\_slope\_precision}。top-$k$ 边界与 component
+eligibility 只保留为诊断字段，不得作为正式派发目标：
+
+\begin{itemize}
+  \item 每次补测固定为 1 ordinary + 1 stress；
+  \item 每人最多五个 block；
+  \item 最多增加 10 张任务；
+  \item 只更新已声明的条件分量，不搜索新风险族。
+\end{itemize}
+
+正式区间统一使用冻结的 \texttt{normal\_95\_max\_unified\_slope\_sd} 规则和 95\% 正态区间；
+目标宽度只从 C2-B 结果可见前冻结的 threshold manifest 读取，并绑定其 SHA，不使用硬编码值
+或简单支持量缩放公式。选择依据是预期减少决策不确定性，而不是制造政策差异或提高显著性。
+每次补测保存 target component、gap reason、候选池、历史排除、随机种子、declared/projected
+support 和实际 observed support。每个 block 固定为 1 ordinary + 1 stress，最多五个 block，
+因此每人正式任务数只能是 0、2、4、6、8 或 10；每个 block 完成后，从实际 canonical、valid 且
+risk-slope-estimand-eligible 的提交重新拟合同一模型，更新 estimate、SE、CI、half-width 和
+ordinary/stress support。达到目标即停止；五块后仍未达标时 risk adjustment=0 并记录
+\texttt{fallback\_action=STRONG\_GLOBAL}。target-met、fallback 与 not-evaluable 互斥，
+所有 plan worker 必须有终态；0-task closeout 只有在所有 worker 已终态时才合法。
+
+若 D8、D10、D12 均未同时通过图连通、Global 稳定性或风险精度门，不扩展候选设计，
+不追加未经预声明的新 component；所有未通过的 component adjustment 置零。若 Strong
+Global 仍可冻结，则保留 Global/T1 并不启动 Full/V1；若 Global 本身不稳定，则不启动
+V1。该规则优先于追求政策差异或补救性扩大样本。
+
+\subsection{C2-S：可选诊断}
+
+C2-S 仅可作为 Semi correction support 的可选诊断，不是正式主线阶段，不进入 Manual Global
+或 V1 的主要 Full 设计。
+
+\subsection{C2 冻结门}
+
+正式 C2-A-RP 输入缺失、formal goal 非法、任一 SHA 不一致或 C2-B roster 不完整时，
+只生成带 reason code 与 hashes 的 blocked summary，以非零状态结束，不生成
+\texttt{launch\_ready=true} assignment。closeout 同时保留 declared/projected support 与
+observed support；计划值不得被实际值静默覆盖。C2-B closeout 只作为审计证据，不能直接
+替代 Full Policy。
+
+T1 只要求 Calibration、pooled 与 T1-specific 的十项 freeze roles；V1 才另外要求 Strong Global、
+Full、Validation roster 与 V1 SAP。T1 的 2$\times$2 条件试验不以 Global 排名替代；启动 V1
+前则必须确认 C2-B 设计、C2-A-RP、Strong Global、Full 和 Validation roster 的各自 artifact
+均已按 V1 gate 冻结。

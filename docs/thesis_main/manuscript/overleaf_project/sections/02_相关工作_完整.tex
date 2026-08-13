@@ -1,0 +1,87 @@
+% Source: Paper_A_新版完整论文提纲_vFinal_Draft.md §2
+\section{相关工作}
+
+\subsection{全景布局估计与一维布局表示}
+
+介绍 HorizonNet 的 ceiling--wall、floor--wall、wall--wall 一维表示，以及 HoHoNet 的 Latent Horizontal Feature。说明本文使用这些表示构造标注前模型风险，而非改进模型本身。
+
+这一脉络还包括全景室内数据集、跨数据集布局评测和几何表示的域偏移问题。本文将模型输出
+视为任务侧风险信号，并把模型不确定性与人工标注质量分开估计。
+
+\subsection{模型辅助标注与 automation bias}
+
+区分：
+
+\begin{itemize}
+  \item issue recognition；
+  \item geometry correction；
+  \item blind trust；
+  \item over-correction。
+\end{itemize}
+
+说明工人勾选 Model Issue 不等于已成功纠正。
+
+\subsection{众包工人建模与共识}
+
+讨论：
+
+\begin{itemize}
+  \item 工人全局能力；
+  \item 条件能力；
+  \item 小样本收缩；
+  \item disagreement；
+  \item LOO independence；
+  \item 多峰共识。
+\end{itemize}
+
+相关方法链还包括 worker--task difficulty 分解、任务难度建模、独立留一验证、经验贝叶斯
+与层级收缩。本文沿用“工人能力、任务难度和观测噪声分离”的思想，但不把收缩后的能力
+分数解释为外部正确性本身。
+
+\subsection{分歧、多峰结构与外部真值}
+
+众包研究表明，disagreement 可能来自任务本身的多解、工人策略差异或参考标准冲突；
+因此多数票、单一 consensus 和 external GT 并不等价。本文先用 GT-blind 几何结构区分
+unimodal、dominant-with-dissent 与 supported-multimodal，再将 GT 作为外部解释证据。
+
+\subsection{自适应任务分配与动态冗余}
+
+讨论：
+
+\begin{itemize}
+  \item worker selection；
+  \item capacity；
+  \item offer/acceptance；
+  \item stopping；
+  \item unresolved；
+  \item policy evaluation。
+\end{itemize}
+
+动态冗余与自适应 worker selection 的研究还涉及 stopping、追加成本、候选池可用性、
+容量约束、失败替补和政策级评价。本文把这些因素纳入前瞻状态机，并将 policy-caused
+non-delivery 与 worker-caused structural failure 分开。
+
+\subsection{人机协同、automation bias 与纠错}
+
+人机标注工作通常区分 decision aid、automation bias、issue recognition、corrective
+editing 与 over-correction。本文把模型辅助效果拆成 delivery-adjusted quality、结构
+安全、active time 和机制性纠错结果，避免仅以 valid-only accuracy 评价协同系统。
+
+\subsection{政策评价与数据中心的质量审计}
+
+contextual routing、policy evaluation 和有限支持下的安全退化强调：路由规则必须在结果
+可见前冻结，支持不足时回退到可解释基线，并以 ITT 与完整失败分母报告政策效果。数据中心
+AI 与 annotation failure analysis 则要求记录 provenance、分母、审计证据和可复现版本；
+本文的反例库、GT 冲突审查和结构失败事件均服务于这一可审计链条，而不是事后修改 GT 或
+重新训练路由画像。
+
+\subsection{可审计证据与信息时序}
+
+强调：
+
+\begin{itemize}
+  \item 决策时只能读取当时已到达信息；
+  \item 任务结果不能回填首次路由；
+  \item 同一 submission 对不同 estimand 可以具有不同资格；
+  \item 旧数据、修订 GT 和 worker state 必须版本化。
+\end{itemize}

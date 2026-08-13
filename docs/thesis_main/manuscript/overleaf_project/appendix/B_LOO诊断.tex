@@ -1,0 +1,29 @@
+% Appendix B: peer compatibility is not external GT quality.
+\section{Geometry LOO 与同行兼容性}
+
+\[
+S(A_u,A_v)=\min\{S_{\mathrm{boundary}}(A_u,A_v),
+S_{\mathrm{wall}}(A_u,A_v)\}.
+\]
+
+\begin{align*}
+R^{peer}_{t,u}&=\operatorname{median}_{v\neq u}S(A_{t,u},A_{t,v}),\\
+R^{peer\_all}_{u}&=\operatorname{median}\{S(A_{t,u},A_{t,v}):v\neq u,\ v\text{ eligible}\},\\
+R^{peer\_nonmultimodal}_{u}&=\operatorname{median}\{S(A_{t,u},A_{t,v}):v\neq u,\ v\text{ eligible},\
+t\notin\texttt{supported\_multimodal}\},\\
+R^{LOO}_{t,u}&=S(A_{t,u},M_t^{(-u)}).
+\end{align*}
+
+报告：
+\begin{itemize}
+  \item \texttt{R\_peer\_all}：全任务描述性同行兼容指标；
+  \item \texttt{R\_peer\_nonmultimodal}：Global tie-break 与 stable-compatibility 的正式同行指标；
+  \item \texttt{R\_LOO\_medoid}：唯一稳定主簇存在时的高置信参考；
+  \item \texttt{R\_LOO\_strict\_stable}：保守敏感性分析；
+  \item similarity、medoid、margin、最大/第二簇支持、多峰状态和 structural failure attribution。
+\end{itemize}
+
+3:2 任务标记为 \texttt{supported\_multimodal}，不生成唯一 crowd truth；两个簇分别与 GT
+比较。LOO 只用于兼容性、聚合稳定性、tie-break 和敏感性分析，不替代外部正确性，也不与
+同行 median 机械平均。支持多峰任务不进入 Global 的稳定兼容性证据，仅进入 discrepancy
+与敏感性分析。

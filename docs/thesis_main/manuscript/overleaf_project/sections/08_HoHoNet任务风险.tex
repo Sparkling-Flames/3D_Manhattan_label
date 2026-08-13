@@ -1,0 +1,72 @@
+% Source: Paper_A_新版完整论文提纲_vFinal_Draft.md §8
+\section{HoHoNet/HorizonNet 任务风险}
+
+\subsection{三个变量}
+
+\begin{verbatim}
+d_model_feat
+g_model_struct
+d_cal_support
+\end{verbatim}
+
+\subsection{\texttt{d\_model\_feat}}
+
+基于 HoHoNet LHFeat：
+
+\[
+d^{feat}_t
+=
+kNNDist\left(
+\phi(H_t),
+\{\phi(H_i):i\in B_{\text{train-ref}}\}
+\right).
+\]
+
+处理：
+
+\begin{itemize}
+  \item checkpoint 固定；
+  \item preprocess 固定；
+  \item PCA/whitening 只在参考库拟合；
+  \item 处理 circular shift 和 seam；
+  \item 保存 global 与 local-max 距离。
+\end{itemize}
+
+\subsection{\texttt{g\_model\_struct}}
+
+基于一维布局输出：
+
+\begin{verbatim}
+ceiling/floor curve
+wall-wall peaks
+corner/pair count
+topology
+seam stability
+postprocess validity
+\end{verbatim}
+
+保存可解释 flags，不只保留单一风险分。
+
+\subsection{\texttt{d\_cal\_support}}
+
+\subsubsection{\texorpdfstring{\(d_{\text{cal}}^A\)}{dcal-A}}
+
+只基于 C1，用于设计 C2。
+
+\subsubsection{\texorpdfstring{\(d_{\text{cal}}^F\)}{dcal-F}}
+
+C2 后计算，用于 V1 激活和 fallback。
+
+不得用最终版本反向解释 C2 选择。
+
+\subsection{两类风险}
+
+\subsubsection{\texttt{risk\_assist}}
+
+服务 T1，预测模型初始化与纠正风险。
+
+\subsubsection{\texttt{risk\_route}}
+
+服务 V1，预测 Manual 外部质量下降、LOO disagreement、结构失败或 worker ranking instability。
+
+C1 用于候选筛选，C2-B 用于共同确认，C2-A 只补精度，不重新搜索新风险。

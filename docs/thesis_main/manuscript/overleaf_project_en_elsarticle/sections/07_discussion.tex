@@ -1,0 +1,55 @@
+\section{Discussion}
+\label{sec:discussion}
+
+The discussion below preserves the same evidence status as Section~\ref{sec:results}. Interpretations that depend on the anticipated pattern begin with \expectedresult{} and must be rewritten if the observed data differ.
+
+\subsection{Scientific interpretation}
+
+% 中文论点—证据—理由草稿：
+% 论点：科学贡献不是“能力多维”本身，而是证明哪些可解释分量能够跨独立校准并合法进入路由。
+% 证据：非冗余、跨阶段稳定、支持链、前瞻 V1 层级结果。
+% 理由：测量—支持—政策三层都成立时，才能把条件画像解释为部署信息，而非事后相关。
+
+\expectedresult{} The anticipated profile pattern would support a narrow view of worker heterogeneity. Reference accuracy, peer compatibility, and structural invalidity would be complementary operational outcomes, but not interchangeable estimates of a single innate capacity. This matters because the consequences of each component differ. Lower reference accuracy affects geometric fidelity; lower stable peer compatibility signals disagreement with reproducible peer structure; higher worker-attributable invalidity threatens deliverability. A global quality rank can still be the best default while these additional components diagnose where that default may be insufficient.
+
+\expectedresult{} Cross-stage stability and selective activation would make independent calibration more than a qualification exercise. They would show that calibration can delimit where conditional worker performance is estimable. The relevant scientific object is therefore not an arbitrary worker-by-scene surface but the pair of an estimate and its support state. This reading is consistent with earlier findings that expertise can vary by instance \cite{yan2010expertise} and that constant worker-accuracy assumptions can be empirically implausible \cite{burrell2023conventional}, while adding a deployment criterion specific to structured panoramic correction.
+
+\expectedresult{} A favourable V1 hierarchy would supply the key link that descriptive profiling alone cannot establish. Passing both failure gates before improving delivery-adjusted quality would indicate that the conditional information changed worker ordering without trading away deliverability. Because assignment, capacity, retry, and aggregation rules are symmetric, the remaining policy contrast would be the frozen recommendation order. The conclusion would remain local to the tested roster, task pool, calibration boundary, and operational reference.
+
+\subsection{Model assistance as supporting evidence}
+
+% 中文论点—证据—理由草稿：
+% 论点：T1 解释模型辅助何时节省操作、何时暴露纠错风险，但不能替代 V1。
+% 证据：质量非劣、active-time 下降、mode×risk 和行为机制。
+% 理由：T1 操纵界面条件，V1 操纵路由政策，因果问题不同。
+
+\expectedresult{} The expected T1 pattern would refine the common claim that model initialization saves annotation effort. A lower active-time estimate coupled with preserved delivery quality would support efficiency under the tested interface. A mode-by-risk interaction and correction-related failures would show why average efficiency is incomplete: a proposal can reduce construction effort yet increase the need to recognize and repair model errors. This complements prior work on human--machine annotation efficiency \cite{branson2017lean,vanhorn2018leanmulticlass,liao2021goodpractices} without claiming that the present geometry task obeys the same error model as image classification.
+
+\expectedresult{} Even under this positive pattern, T1 would not directly validate conditional routing. T1 randomizes manual versus semi-automatic work within an annotation design; V1 randomizes two worker recommendation policies. T1 can motivate risk families, check whether active-time savings coexist with correction heterogeneity, and expose failure mechanisms. Only V1 can estimate the incremental value of changing worker order under shared capacity.
+
+\subsection{Deployment implications}
+
+% 中文论点—证据—理由草稿：
+% 论点：工程价值来自可退化、可审计，而不是复杂度本身。
+% 证据：局部禁用、总体 fallback、append-only 决策账本、支持域外正确回退。
+% 理由：生产系统必然遇到缺失、版本冲突和分布外任务，预先定义退化路径可限制失败半径。
+
+\expectedresult{} Correct fallback on out-of-support tasks would demonstrate the principal engineering property of the framework: added personalization has a bounded failure surface. Local disablement preserves supported evidence when one component is unavailable, whereas policy-level fallback removes all conditional adjustment when the evidence context or version is invalid. This is preferable to treating a missing component as an average effect or extrapolating from the nearest available task without a declared rule.
+
+The fallback idea has precedents in safe policy improvement and support-aware offline learning \cite{laroche2019spibb,sachdeva2020support}. The contribution here is its placement in an annotation evidence chain. The ledger exposes whether a task was unsupported, which component was disabled, which worker was recommended, whether that worker was offered the task, and how capacity affected delivery. A scientific effect can therefore be separated from an operational failure or an implementation mismatch.
+
+Active time should remain outside the routing score even if T1 shows large savings. Time is vulnerable to interface version, logging coverage, pauses, and work style. Using it for eligibility or ranking would change the target from quality-supported routing to speed selection and could reward rushed work. Its proper role is an auxiliary policy outcome, validated and reported with its own missingness audit.
+
+\subsection{Limitations and generalization boundary}
+
+The operational reference is a practical scoring target. Occlusion and panoramic distortion can make more than one layout defensible, so reference agreement cannot be interpreted as complete geometric truth. Stable peer compatibility partially exposes alternative modes but cannot certify them. Expert review and counterexamples should accompany aggregate scores, especially where peer and reference outcomes diverge.
+
+Conditional effects are estimated from a dedicated study roster and a bounded set of ordinary, stress, risk, and failure-family tasks. Partial pooling controls sparse extremes but does not create coverage. A component that fails its support rule may still exist; the study can only say that it is not routable under the frozen evidence. Likewise, global fallback limits extrapolation but does not guarantee that the global ordering is optimal outside the observed domain.
+
+The three-component profile omits constructs that might matter in other deployments, such as learning rate, interface accessibility, fatigue, or domain-specific architectural knowledge. This omission is intentional: adding axes without independent support would weaken auditability. Future applications should re-establish the measurement and support chain rather than importing the weights or thresholds unchanged.
+
+Finally, the V1 estimand is a policy effect under a shared finite roster. Availability, capacity, non-response, and replacement are part of that policy environment. Results may not transport to an unlimited marketplace or a different compensation system. Production standardization addresses the ordinary--stress mixture, but it cannot correct unmeasured shifts in workers, interfaces, reference policy, or panorama distribution.
+
+\subsection{What would falsify the intended account}
+
+The framework is informative even if the positive scaffold fails. Near-perfect redundancy among profile components would favour a simpler global characterization. Unstable conditional effects or zero supported held-out improvement would require zero conditional weights. A V1 failure at either safety gate would block the quality claim, regardless of a favourable resolved-only mean. High fallback rates could make the conditional policy operationally indistinguishable from the global policy. These are not editing problems; they are outcomes that narrow or reject the intended account.
