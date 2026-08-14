@@ -1,0 +1,52 @@
+{
+  "schema_version": "c2a_rp_block2_diagnostics_v1",
+  "artifact_role": "DIAGNOSTIC_ONLY_NOT_FORMAL_C2_REESTIMATE",
+  "formal_model_status_unchanged": "multiple_variance_components_unidentifiable",
+  "formal_next_block_generated": false,
+  "cumulative": {
+    "rows": 240,
+    "eligible_rows": 225,
+    "workers": 20,
+    "tasks_total": 70,
+    "tasks_eligible": 67,
+    "buildings_total": 9,
+    "buildings_eligible": 9
+  },
+  "block2": {
+    "rows": 40,
+    "eligible_rows": 38,
+    "meta_rows": 40,
+    "active_time_rows": 40
+  },
+  "bootstrap": {
+    "seed": 20260814,
+    "replicates": 1000
+  },
+  "reference_crosswalk": {
+    "eligible_rows_current_registry_not_public_gt_as_is": 4,
+    "tasks_current_registry_not_public_gt_as_is": 2
+  },
+  "checks_passed": true,
+  "output_sha256": {
+    "stage_summary.csv": "50c4011514cec3a2b9891f19c3030db27402f06839934466c5d0bfed77638ea1",
+    "worker_diagnostics.csv": "e4c29c94673d2dd04e1b7a555367e93484113edb648b1ff96e3dafdb47b56459",
+    "block_pair_diagnostics.csv": "1b06950c7da7a6b213da0ad9a194b4d400aec08c2330f2f2d59e8d3749b1e274",
+    "block_pair_summary.csv": "c7a6e2410e6bc312541a98567be9939820e47038d6466a4be3e43ab5f9d60264",
+    "task_diagnostics.csv": "ba17de63faff0e228b564d6e98a2f9018bcb48d14df4fc1f5a3999a409c370e2",
+    "building_diagnostics.csv": "f9eb8c3514ac846033879de283258fdc42135a233cd8c8ec5f2d08b439364f2c",
+    "block2_meta_rows.csv": "b3305a15158e6c8d57c5a26403ccf4ba4b238e943a9906bd4f83a04a5af2ff76",
+    "block2_meta_relation_summary.csv": "1e315e437fbd1d35bf3cc6f406f858f87bfbbe30e0fe1377b056aff79454c3a3",
+    "block2_meta_task_agreement.csv": "b9e74de3ebefe9485470cbe13c4e28b76473e8b031c84e38524f034fd89cc47e",
+    "block2_meta_agreement_summary.csv": "4a8befe5da9a8a9c7e2101f760f7dbaadd5c6d038761f8ff240d1b7f09dd4583",
+    "block2_active_time_summary.csv": "41507f9f676ea2fd379247d9cb56f7593e8597d7148caca577ff13337b949cdd",
+    "block2_scope_summary.csv": "8d546d02e9010704b0209ed09795bd9ad74af0635be9c3edcfc99ad46bf0d035",
+    "formal_model_diagnostics.csv": "019c6706d177b1ebb18abfa57d5c2dedb4216d395014cba6545711ce74062b92",
+    "risk_sensitivity_summary.csv": "bd642a219c9f3700e921abead79eeb93e0dddfaf0d61ec5c300adb541a8b6c9d",
+    "leave_one_building_out.csv": "29a296d35e6af87712359a412bcb597896d4813fc3453b8355aef622854ea6e3",
+    "leave_one_task_out.csv": "e30792bb4dfed0fb60407df50845e3378d4ae89e5347327894f248b3b1fddf40",
+    "source_manifest.csv": "4869a87413523ee33b4d56aead600ae91dfc0b1e3f97105ad18ebf9cf85596b8",
+    "reference_registry_crosswalk.csv": "52d64840f187b10d9dac1204521f8b8d0fb01d68d71f45035db0f853511a73c8",
+    "checks.csv": "718d55fa4c2c36daf7cc7872c7dc823b5a56a5e847a7fe283373d7fc4edc7b82",
+    "source_evidence_snapshot.csv": "0b56a4821896ac2248e93091518dc056b3fe6fe1fe222c80e1dc53a800d26e37"
+  }
+}

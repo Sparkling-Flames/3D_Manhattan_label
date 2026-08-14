@@ -7,9 +7,11 @@ from pathlib import Path
 
 import pytest
 
+import tools.thesis_main.analysis.materialize_c2a_rp_block2_distribution as block2_distribution
 from tools.thesis_main.analysis.c1_materialize_c2_gap_audits import build_assignments_with_capacity_fallback, build_precision_assignments, build_precision_plan, materialize as materialize_c2a
 from tools.thesis_main.analysis.materialize_c2b_closeout import materialize as materialize_c2b_closeout
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract
+from tools.thesis_main.analysis.run_c2b_c2a_rp_chain import _package_c2a_rp
 
 
 def _csv(path: Path, fields: list[str], rows: list[dict]) -> None:
@@ -26,6 +28,58 @@ def _rows(path: Path) -> list[dict[str, str]]:
 
 def _sha(path: Path) -> str:
     return hashlib.sha256(path.read_bytes()).hexdigest()
+
+
+def test_block2_uses_named_projects_with_post_import_id_binding(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    deployments = tmp_path / "deployments.json"
+    deployments.write_text(json.dumps({"deployments": [
+        {"deployment_id": "c2b_en", "language_group": "English", "server_instance_id": "en", "server_url": "https://en.test", "project_id": "76", "worker_ids": ["28"]},
+        {"deployment_id": "c2b_zh", "language_group": "Chinese", "server_instance_id": "zh", "server_url": "https://zh.test", "project_id": "77", "worker_ids": ["1"]},
+    ]}), encoding="utf-8")
+    monkeypatch.setattr(block2_distribution, "DEPLOYMENTS", deployments)
+
+    result, worker_map = block2_distribution._block2_deployments({"1", "28"})
+
+    assert worker_map == {"1": "c2b_zh", "28": "c2b_en"}
+    assert result["c2b_en"]["project_id"] == ""
+    assert result["c2b_en"]["planned_project_name"] == "Project F"
+    assert result["c2b_zh"]["project_id"] == ""
+    assert result["c2b_zh"]["planned_project_name"] == "任务6"
+    assert {row["project_binding_status"] for row in result.values()} == {"pending_post_import"}
+
+
+def test_c2a_package_preserves_named_pending_project_binding(tmp_path: Path) -> None:
+    assignment = tmp_path / "assignment.csv"
+    _csv(assignment, ["round_id", "block_index", "worker_id", "task_id", "base_task_id", "task_stratum", "target_component", "gap_reason"], [{
+        "round_id": "C2-A-RP", "block_index": 2, "worker_id": "1", "task_id": "t1",
+        "base_task_id": "t1", "task_stratum": "ordinary", "target_component": "risk_slope", "gap_reason": "target_not_met",
+    }])
+    pool = tmp_path / "pool.csv"
+    _csv(pool, ["task_id", "base_task_id", "image"], [{"task_id": "t1", "base_task_id": "t1", "image": "https://example.test/img_v/t1.jpg"}])
+    _csv(tmp_path / "precision_plan_C2A_RP.csv", ["worker_id"], [{"worker_id": "1"}])
+    _csv(tmp_path / "assignment_manifest_C2A_RP.csv", ["worker_id", "task_id"], [{"worker_id": "1", "task_id": "t1"}])
+    summary = tmp_path / "precision_plan_C2A_RP.summary.json"
+    summary.write_text(json.dumps({
+        "design_manifest_sha256": "d", "c2b_summary_sha256": "c", "worker_profile_sha256": "p",
+        "threshold_manifest_sha256": "t", "dispatch_mode": "append_only_sequential",
+    }), encoding="utf-8")
+    deployments = {"zh": {
+        "deployment_id": "zh", "language_group": "Chinese", "server_instance_id": "zh-server",
+        "server_url": "https://example.test", "project_id": "", "planned_project_name": "任务6",
+        "project_binding_status": "pending_post_import",
+    }}
+
+    package = _package_c2a_rp(
+        tmp_path / "operational", assignment, pool, deployments, {"1": "zh"},
+        block_index=2, c2a_summary_path=summary,
+    )
+
+    assert package["deployments"]["zh"]["project_id"] == ""
+    assert package["deployments"]["zh"]["planned_project_name"] == "任务6"
+    imported = json.loads(Path(package["deployments"]["zh"]["planned_import_path"]).read_text(encoding="utf-8"))
+    assert imported[0]["data"]["project_binding_status"] == "pending_post_import"
+    runtime = _rows(Path(package["runtime_mapping_path"]))
+    assert runtime[0]["project_id"] == "" and runtime[0]["planned_project_name"] == "任务6"
 
 
 def _reference_review(tmp_path: Path) -> Path:
@@ -243,8 +297,8 @@ def test_c2a_assignment_rejects_current_cross_stratum_base_reuse() -> None:
 
 def test_c2a_formal_dispatch_is_append_only_one_paired_block_at_a_time() -> None:
     plan = [{
-        "worker_id": "w1", "additional_blocks": 2,
-        "ordinary_tasks": 2, "stress_tasks": 2,
+        "worker_id": "w1", "additional_blocks": 1,
+        "ordinary_tasks": 1, "stress_tasks": 1,
         "current_ci_half_width": .2, "current_support": 8,
         "target_component": "risk_slope", "gap_reason": "target_not_met",
     }]

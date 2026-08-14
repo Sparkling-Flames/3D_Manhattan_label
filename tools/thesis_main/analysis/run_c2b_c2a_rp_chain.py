@@ -972,6 +972,11 @@ def _package_c2a_rp(
             raise ValueError(f"C2-A-RP worker has no deployment:{worker}")
         by_deployment[deployment_id].append(row)
     for deployment_id, deployment in deployments.items():
+        project_id = _text(deployment.get("project_id"))
+        planned_project_name = _text(deployment.get("planned_project_name"))
+        project_binding_status = _text(deployment.get("project_binding_status")) or ("bound" if project_id else "")
+        if not project_id and (project_binding_status != "pending_post_import" or not planned_project_name):
+            raise ValueError(f"C2-A-RP deployment lacks a bound or named pending project:{deployment_id}")
         task_payloads: dict[str, dict[str, Any]] = {}
         for row in by_deployment.get(deployment_id, []):
             worker = normalize_worker_id(row.get("worker_id", ""))
@@ -1014,9 +1019,12 @@ def _package_c2a_rp(
                 "language_group": deployment["language_group"],
                 "server_instance_id": deployment["server_instance_id"],
                 "server_url": deployment["server_url"],
-                "project_id": deployment["project_id"],
+                "project_id": project_id,
                 "vis_3d": viewer,
             }
+            if planned_project_name:
+                data["planned_project_name"] = planned_project_name
+                data["project_binding_status"] = project_binding_status
             if model_layout_sha256:
                 data["model_layout_sha256"] = model_layout_sha256
             if _text(task.get("image_id")):
@@ -1027,7 +1035,8 @@ def _package_c2a_rp(
                 "round_id": "C2-A-RP", "block_index": block_index, "worker_id": worker,
                 "deployment_id": deployment_id, "language_group": deployment["language_group"],
                 "server_instance_id": deployment["server_instance_id"], "server_url": deployment["server_url"],
-                "project_id": deployment["project_id"], "planned_task_id": task_id,
+                "project_id": project_id, "planned_project_name": planned_project_name,
+                "project_binding_status": project_binding_status, "planned_task_id": task_id,
                 "runtime_task_id": "", "runtime_binding_status": "pending_manual_runtime_binding",
                 "target_component": _text(row.get("target_component")),
             })
@@ -1035,7 +1044,9 @@ def _package_c2a_rp(
         payload = list(task_payloads.values())
         _write_json(import_path, payload)
         import_outputs[deployment_id] = {
-            **{key: deployment[key] for key in ("deployment_id", "language_group", "server_instance_id", "server_url", "project_id")},
+            **{key: deployment[key] for key in ("deployment_id", "language_group", "server_instance_id", "server_url")},
+            "project_id": project_id, "planned_project_name": planned_project_name,
+            "project_binding_status": project_binding_status,
             "planned_import_path": str(import_path.resolve()), "planned_import_sha256": _sha(import_path), "task_count": len(payload),
         }
     for worker in sorted(worker_to_deployment):

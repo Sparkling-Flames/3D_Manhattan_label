@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v22 SHA-256 1aa447e48edfdcf3b2c61a304a7ae37e69c9cb1bfdc1b09ec0acf952a1ac899f -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v23 SHA-256 f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588 -->
 # docs 鐩綍绱㈠紩
 
 > 2026-07-18锛歅aper A 姝ｅ紡鏂囨湰宸茶縼绉诲埌 vFinal銆傚綋鍓嶆鏂囧叆鍙ｄ负
@@ -19,6 +19,7 @@
 - [C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json](thesis_main/C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json)：C2-B 在任何工人结果产生前批准的统一候选生成与 gate 语义修订。
 - [C2A_RP_PRECISION_CAP_EXTENSION_20260807_v1.json](thesis_main/C2A_RP_PRECISION_CAP_EXTENSION_20260807_v1.json)：C2-A-RP outcome 可见前冻结的最多 5 个平衡 block 精度上限修订。
 - [C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260811_v3.json](thesis_main/C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260811_v3.json)：统一冻结 slope uncertainty 实现后确认 Block 2--5 `max_task_support=4` 与 20 人 roster；不预分配未来 block。
+- [C2B_HISTORICAL_EVIDENCE_ACCEPTANCE_20260811_v1.json](thesis_main/C2B_HISTORICAL_EVIDENCE_ACCEPTANCE_20260811_v1.json)：以 SHA 接管已结束的 v18 C2-B，供 C2-A-RP closeout 与 final profile 使用；不重开数据采集或改写历史结果。
 - [FULL_MATERIALIZATION_PROCEDURE_v1.json](thesis_main/FULL_MATERIALIZATION_PROCEDURE_v1.json)：Block 2 outcome 前冻结的 Full 数值物化程序；最终数值仅在 C2-A-RP 终态后由 Calibration 数据机械产生。
 - [ROUND_BASED_ASSIGNMENT_SOP_v1.md](thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md)
 - [P1_PRESCREEN_LAUNCH_CHECKLIST_v1.md](thesis_main/P1_PRESCREEN_LAUNCH_CHECKLIST_v1.md)

@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v22 SHA-256 1aa447e48edfdcf3b2c61a304a7ae37e69c9cb1bfdc1b09ec0acf952a1ac899f -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v23 SHA-256 f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588 -->
 # HOHONET 椤圭洰鍦板浘
 
 > 2026-07-18 vFinal 鏇存柊锛歅aper A 姝ｅ紡涓荤嚎宸叉敼涓?C1 璁捐 C2-B
@@ -53,6 +53,7 @@
 - `docs/thesis_main/C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json`：v17 绑定的 D8/D10/D12 统一候选生成与 gate 语义修订；不改变数值阈值。
 - `docs/thesis_main/C2A_RP_PRECISION_CAP_EXTENSION_20260807_v1.json`：C2-A-RP outcome 可见前冻结的最多 5 个平衡 block 精度上限修订；不改变风险或 CI 阈值。
 - `docs/thesis_main/C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260811_v3.json`：统一 slope uncertainty 实现后冻结 Block 2--5 的 `max_task_support=4` 和 20 人 roster；未来 block 仍须逐轮重估且不预分配。
+- `docs/thesis_main/C2B_HISTORICAL_EVIDENCE_ACCEPTANCE_20260811_v1.json`：SHA 绑定已经结束的 v18 C2-B、修正后 Block 1 重估和 reference review，供后续 closeout/final profile 消费，不重开历史阶段。
 - `docs/thesis_main/FULL_MATERIALIZATION_PROCEDURE_v1.json`：Full 的 risk/family shrinkage、同量纲转换、Calibration-only 权重/cap 选择和 task activation 时点规范；不含由未完成 C2-A 结果决定的最终数值。
 
 ## 2026-07-30 Paper A C1-A/C2-B batch boundary

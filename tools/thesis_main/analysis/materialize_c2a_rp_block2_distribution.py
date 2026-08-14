@@ -46,10 +46,12 @@ def _write_text(path: Path, text: str) -> None:
 def _block2_deployments(worker_ids: set[str]) -> tuple[dict[str, dict[str, Any]], dict[str, str]]:
     payload = json.loads(DEPLOYMENTS.read_text(encoding="utf-8"))
     deployments = {row["deployment_id"]: dict(row) for row in payload["deployments"]}
-    # Block 1 was actually collected in Projects 78/79; Block 2 must preserve
-    # that runtime identity even though the older C2-B manifest names 76/77.
-    deployments["c2b_en"]["project_id"] = "78"
-    deployments["c2b_zh"]["project_id"] = "79"
+    for deployment_id, project_name in (("c2b_en", "Project F"), ("c2b_zh", "任务6")):
+        deployments[deployment_id].update({
+            "project_id": "",
+            "planned_project_name": project_name,
+            "project_binding_status": "pending_post_import",
+        })
     worker_to_deployment = {
         str(worker): deployment_id
         for deployment_id, deployment in deployments.items()
@@ -99,7 +101,7 @@ def materialize(output_dir: Path = DEFAULT_OUTPUT, import_dir: Path = DEFAULT_IM
     plan_rows = build_precision_plan(
         profile_rows,
         target_half_width=float(json.loads(THRESHOLD.read_text(encoding="utf-8"))["thresholds"]["risk_slope_ci_half_width"]),
-        max_additional_blocks=4,
+        max_additional_blocks=1,
         manifest_sha=amendment_sha,
         threshold_sha=threshold_sha,
         formal=True,
@@ -159,7 +161,10 @@ def materialize(output_dir: Path = DEFAULT_OUTPUT, import_dir: Path = DEFAULT_IM
         "worker_profile_sha256": sha256_file(PROFILE),
         "threshold_manifest_sha256": threshold_sha,
         "existing_assignment_manifest_sha256": sha256_file(BLOCK1),
-        "max_additional_blocks": 4,
+        "blocks_completed_before_dispatch": 1,
+        "authorized_blocks_in_current_plan": 1,
+        "max_total_blocks": 5,
+        "remaining_block_cap_after_dispatch": 3,
         "max_task_support": max_support,
         "n_workers": len(plan_rows),
         "n_workers_at_target": 0,
@@ -181,7 +186,9 @@ def materialize(output_dir: Path = DEFAULT_OUTPUT, import_dir: Path = DEFAULT_IM
     )
     package["status"] = "planned_not_imported_not_dispatched"
     package["active_time_freeze_required_after_collection"] = True
-    package["active_time_expected_project_ids"] = ["78", "79"]
+    package["active_time_expected_project_ids"] = []
+    package["active_time_expected_project_names"] = ["Project F", "任务6"]
+    package["active_time_project_binding_status"] = "pending_post_import"
 
     import_dir.mkdir(parents=True, exist_ok=True)
     import_names = {
@@ -197,8 +204,8 @@ def materialize(output_dir: Path = DEFAULT_OUTPUT, import_dir: Path = DEFAULT_IM
     _write_text(import_dir / "README.md", """# C2-A-RP planned imports
 
 - Block 1: `c2a_rp_block_1_import_foreign_https.json` / `c2a_rp_block_1_import_zh.json`
-- Block 2: `c2a_rp_block_2_import_foreign_https.json` -> Project 78 (Project E); `c2a_rp_block_2_import_zh.json` -> Project 79 (任务5)
-- C2-A-RP Block 1--5 保持同一套 `scope_instruction_v1`；不要在 Project 78/79 部署本地 v2 XML。导入后回填 runtime task ID，再通知工人。
+- Block 2: 新建英文 `Project F` 和中文 `任务6`，再分别导入对应 JSON；数字 project ID 在创建/导入后回填。
+- C2-A-RP Block 1--5 保持同一套 `scope_instruction_v1`；不要部署本地 v2 XML。导入后回填 project ID 与 runtime task ID，再通知工人。
 """)
 
     worker_rows = []
@@ -245,9 +252,9 @@ def materialize(output_dir: Path = DEFAULT_OUTPUT, import_dir: Path = DEFAULT_IM
 
 状态：20 人、40 个 worker-task assignment 已冻结，尚未导入、尚未发放。
 
-1. Project 78 / 79 继续使用 Block 1 的 `scope_instruction_v1`；不要部署本地 v2 XML。
-2. 英文 JSON 导入 Project 78（Project E），中文 JSON 导入 Project 79（任务5）。
-3. 从 Label Studio task list 回填 40 行 runtime mapping，核对 private list 后再通知工人。
+1. 新建英文项目 `Project F` 和中文项目 `任务6`，两者继续使用 Block 1 的 `scope_instruction_v1`；不要部署本地 v2 XML。
+2. 英文 JSON 导入 `Project F`，中文 JSON 导入 `任务6`；数字 project ID 在创建/导入后才能确定。
+3. 导入后回填两项 project ID 与 40 行 runtime mapping，核对 private list 后再通知工人。
 4. 收轮后按实际日期冻结 `active_logs/c2a_rp_block2_<date>`；Block 3 不得预分配。
 """)
     return manifest
