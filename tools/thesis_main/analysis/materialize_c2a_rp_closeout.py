@@ -22,6 +22,9 @@ from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_m
 from tools.thesis_main.analysis.worker_identity import normalize_worker_id
 
 
+ROOT = METHOD_CONTRACT.parents[2]
+
+
 def _rows(path: Path) -> list[dict[str, str]]:
     with path.open(encoding="utf-8-sig", newline="") as stream:
         return list(csv.DictReader(stream))
@@ -145,6 +148,31 @@ def _safe_sha(path: Path | None) -> str:
         return ""
 
 
+def _validate_historical_c2b_acceptance(method: dict[str, Any], c2b_closeout: Path) -> Path:
+    binding = method.get("c2b_historical_evidence_acceptance", {})
+    path = Path(_text(binding.get("path")))
+    path = path if path.is_absolute() else ROOT / path
+    if not path.is_file() or sha256_file(path) != _text(binding.get("sha256")):
+        raise ValueError("historical C2-B acceptance is missing or stale")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    source = payload.get("source_c2b", {})
+    if (payload.get("schema_version") != "paper_a_c2b_historical_evidence_acceptance_v1"
+            or payload.get("status") != "normative"
+            or payload.get("collection_closed") is not True
+            or payload.get("outcome_reopening_allowed") is not False
+            or not {"C2A_RP_closeout", "final_pooled_profile"}.issubset(payload.get("accepted_for", []))
+            or source.get("candidate_only") is not True
+            or sha256_file(c2b_closeout) != _text(source.get("sha256"))):
+        raise ValueError("historical C2-B acceptance does not authorize this closeout")
+    for role in ("corrected_reestimate", "reference_review"):
+        item = payload.get(role, {})
+        dependency = Path(_text(item.get("path")))
+        dependency = dependency if dependency.is_absolute() else ROOT / dependency
+        if not dependency.is_file() or sha256_file(dependency) != _text(item.get("sha256")):
+            raise ValueError(f"historical C2-B acceptance {role} dependency is stale")
+    return path
+
+
 def _write_blocked_summary(output_json: Path, reason: str, hashes: dict[str, str] | None = None) -> Path:
     method = load_method_contract()
     path = output_json.with_name("c2a_rp_closeout_blocked_summary.json")
@@ -179,14 +207,18 @@ def materialize(
     max_tasks, max_blocks, method_sha = _c2a_rp_limits()
     precision_schema, assignment_schema = _c2a_rp_csv_schemas(method)
     c2b = json.loads(c2b_closeout.read_text(encoding="utf-8"))
-    if c2b.get("schema_version") != "c2b_closeout_v2" or c2b.get("c2b_closeout_ready") is not True or c2b.get("formal_ready") is not True:
-        raise ValueError("C2-A-RP requires a formally ready C2-B closeout")
-    if (c2b.get("method_contract_version") != method["contract_version"]
-            or c2b.get("method_contract_sha256") != method_sha):
-        raise ValueError("C2-B closeout method contract SHA is stale")
-    if (c2b.get("reference_conflict_review_closed") is not True
-            or not _text(c2b.get("reference_conflict_review_record_sha256"))):
-        raise ValueError("C2-A-RP requires closed reference conflict review")
+    current_c2b = (c2b.get("schema_version") == "c2b_closeout_v2"
+                   and c2b.get("c2b_closeout_ready") is True
+                   and c2b.get("formal_ready") is True
+                   and c2b.get("method_contract_version") == method["contract_version"]
+                   and c2b.get("method_contract_sha256") == method_sha)
+    historical_acceptance = None
+    if current_c2b:
+        if (c2b.get("reference_conflict_review_closed") is not True
+                or not _text(c2b.get("reference_conflict_review_record_sha256"))):
+            raise ValueError("C2-A-RP requires closed reference conflict review")
+    else:
+        historical_acceptance = _validate_historical_c2b_acceptance(method, c2b_closeout)
 
     plan = _rows(precision_plan_csv)
     assignments = _rows(assignment_manifest_csv)
@@ -279,6 +311,7 @@ def materialize(
     history_worker_tasks: set[tuple[str, str]] = set()
     history_worker_bases: set[tuple[str, str]] = set()
     history_task_support: Counter[str] = Counter()
+    block1_task_support: Counter[str] = Counter()
     for row in history:
         worker = normalize_worker_id(row.get("worker_id", ""))
         task = _text(row.get("task_id"))
@@ -297,7 +330,11 @@ def materialize(
         if (not round_id or round_id == "C2-A-RP"
                 or _text(row.get("schema_version")) == assignment_schema):
             history_task_support[task] += 1
-    if any(count > 2 for count in history_task_support.values()):
+            if not _text(row.get("block_index")) or _int(row, "block_index") == 1:
+                block1_task_support[task] += 1
+    block1_cap = int(method["c2"]["c2_a_rp_task_support_cap"]["block1_historical"])
+    later_cap = int(method["c2"]["c2_a_rp_task_support_cap"]["blocks2_to_5"])
+    if any(count > block1_cap for count in block1_task_support.values()):
         raise ValueError("C2-A-RP assignment history exceeds the frozen task support cap")
 
     assignment_keys: set[tuple[str, str]] = set()
@@ -315,9 +352,8 @@ def materialize(
         if worker not in plan_by_worker:
             raise ValueError("C2-A-RP assignment references a worker outside the precision plan")
         block_index = _int(row, "block_index")
-        planned_blocks = _int(plan_by_worker[worker], "additional_blocks")
-        if block_index < 1 or block_index > planned_blocks:
-            raise ValueError("C2-A-RP assignment block index is outside the precision plan")
+        if block_index < 1 or block_index > max_blocks:
+            raise ValueError("C2-A-RP assignment block index is outside the normative cap")
         if (_text(row.get("target_component")) != "risk_slope"
                 or _text(row.get("formal_goal")) != method["c2"]["c2_a_rp_formal_target"]):
             raise ValueError("C2-A-RP assignment target contract is invalid")
@@ -330,17 +366,26 @@ def materialize(
         assignment_keys.add(key)
         assignment_bases.add(base_key)
         assignment_task_support[task] += 1
-        if assignment_task_support[task] > 2:
-            raise ValueError("C2-A-RP task support exceeds the frozen cap")
+        if block_index == 1:
+            block1_task_support[task] += 1
         declared_after = _text(row.get("task_support_after"))
-        if declared_after and _int(row, "task_support_after") > 2:
+        row_cap = block1_cap if block_index == 1 else later_cap
+        if declared_after and _int(row, "task_support_after") > row_cap:
             raise ValueError("C2-A-RP declared task support exceeds the frozen cap")
         assignment_by_worker.setdefault(worker, []).append(row)
         assignment_strata.setdefault((worker, block_index), Counter())[stratum] += 1
 
+    if any(count > block1_cap for count in block1_task_support.values()) or any(count > later_cap for count in assignment_task_support.values()):
+        raise ValueError("C2-A-RP task support exceeds the block-specific frozen cap")
     expected_workers = {worker for worker, row in plan_by_worker.items() if _int(row, "additional_blocks")}
-    if set(assignment_by_worker) != expected_workers:
-        raise ValueError("C2-A-RP assignments do not match the precision plan")
+    current_block = max((_int(row, "block_index") for row in assignments), default=0)
+    current_block_workers = {
+        normalize_worker_id(row.get("worker_id", ""))
+        for row in assignments
+        if _int(row, "block_index") == current_block
+    }
+    if expected_workers != current_block_workers:
+        raise ValueError("C2-A-RP current precision plan does not match the current block roster")
     dispatched_blocks_by_worker = {
         worker: max((_int(item, "block_index") for item in rows), default=0)
         for worker, rows in assignment_by_worker.items()
@@ -349,9 +394,7 @@ def materialize(
         rows = assignment_by_worker.get(worker, [])
         planned_blocks = _int(row, "additional_blocks")
         dispatched_blocks = dispatched_blocks_by_worker.get(worker, 0)
-        if planned_blocks == 0 and rows:
-            raise ValueError(f"C2-A-RP zero-block worker received assignments:{worker}")
-        if planned_blocks and (not rows or dispatched_blocks < 1 or dispatched_blocks > planned_blocks):
+        if planned_blocks and (not rows or dispatched_blocks < 1 or dispatched_blocks > max_blocks):
             raise ValueError(f"C2-A-RP assignment block sequence is incomplete:{worker}")
         expected = 2 * dispatched_blocks
         if len(rows) != expected:
@@ -493,7 +536,7 @@ def materialize(
                 n_workers_target_met += 1
             else:
                 reason = "target_not_met_at_actual_reestimate" if ci_half_width is not None else "risk_slope_reestimate_not_evaluable"
-                if blocks < planned_blocks and ci_half_width is not None:
+                if blocks < max_blocks and ci_half_width is not None:
                     state = "awaiting_next_block"
                     n_workers_pending += 1
         if state != "target_met" and state != "awaiting_next_block":
@@ -510,7 +553,10 @@ def materialize(
         worker_outcomes.append({
             "worker_id": worker,
             "additional_blocks": blocks,
+            "blocks_completed": blocks,
             "planned_additional_blocks": planned_blocks,
+            "authorized_blocks_in_current_plan": planned_blocks,
+            "max_total_blocks": max_blocks,
             "terminal_state": state,
             "target_component": "risk_slope",
             "target_ci_half_width": target,
@@ -554,6 +600,10 @@ def materialize(
         "n_workers_fallback": n_workers_fallback,
         "n_workers_not_evaluable": n_workers_not_evaluable,
         "n_workers_pending": n_workers_pending,
+        "block_closed": True,
+        "stage_closed": n_workers_pending == 0,
+        "next_block_required": n_workers_pending > 0,
+        "current_block_index": current_block,
         "worker_outcomes": worker_outcomes,
         "support_discrepancies": support_discrepancies,
         "risk_slope_evidence_path": str(risk_slope_evidence_csv or ""),
@@ -579,10 +629,12 @@ def materialize(
         "post_c2a_rp_profile_sha256": sha256_file(post_c2a_profile_csv),
         "c2b_closeout_path": str(c2b_closeout),
         "c2b_closeout_sha256": sha256_file(c2b_closeout),
+        "historical_c2b_acceptance_path": str(historical_acceptance or ""),
+        "historical_c2b_acceptance_sha256": sha256_file(historical_acceptance) if historical_acceptance else "",
         "terminal_disposition_path": str(terminal_disposition_csv or ""),
         "terminal_disposition_sha256": sha256_file(terminal_disposition_csv) if terminal_disposition_csv else "",
         "dispatch_status": "awaiting_next_block" if n_workers_pending else "closed",
-        "next_block_index": min((blocks + 1 for worker, blocks in dispatched_blocks_by_worker.items() if blocks < _int(plan_by_worker[worker], "additional_blocks")), default=0),
+        "next_block_index": min((row["blocks_completed"] + 1 for row in worker_outcomes if row["terminal_state"] == "awaiting_next_block"), default=0),
         "blockers": ["awaiting_next_block"] if n_workers_pending else [],
         "dependencies": [
             _dependency("C2A_PRECISION_PLAN", precision_plan_csv),
@@ -594,12 +646,15 @@ def materialize(
             _dependency("METHOD_CONTRACT", METHOD_CONTRACT),
         ],
     }
+    if historical_acceptance:
+        summary["dependencies"].append(_dependency("C2B_HISTORICAL_EVIDENCE_ACCEPTANCE", historical_acceptance))
     if terminal_disposition_csv:
         summary["dependencies"].append(_dependency("C2A_TERMINAL_DISPOSITION", terminal_disposition_csv))
     if risk_slope_evidence_csv:
         summary["dependencies"].append(_dependency("C2A_RISK_SLOPE_EVIDENCE", risk_slope_evidence_csv))
     output_json.parent.mkdir(parents=True, exist_ok=True)
     if n_workers_pending:
+        summary["artifact_role"] = "C2A_RP_BLOCK_CLOSEOUT_FROZEN"
         summary["formal_ready"] = False
         summary["C2_A_RP_CLOSED"] = False
     output_json.write_text(json.dumps(summary, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")

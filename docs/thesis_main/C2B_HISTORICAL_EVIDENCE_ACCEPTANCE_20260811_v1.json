@@ -1,0 +1,37 @@
+{
+  "schema_version": "paper_a_c2b_historical_evidence_acceptance_v1",
+  "status": "normative",
+  "decision_timing": "after_C2B_and_Block1_collection_closed_before_Block2_dispatch",
+  "collection_closed": true,
+  "outcome_reopening_allowed": false,
+  "source_c2b": {
+    "path": "analysis_results/c2a_rp_local_launch_20260807_v4/c2b_closeout_v2.json",
+    "sha256": "5e44a28e5e632a4c3dd7ecd999fdf6443c150e21520e55812431f3a080d4785d",
+    "source_method_contract_version": "paper_a_method_20260803_v18",
+    "source_method_contract_sha256": "694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87",
+    "candidate_only": true
+  },
+  "corrected_reestimate": {
+    "path": "analysis_results/c2a_rp_block1_reestimate_20260810_v2/c2a_rp_block1_reestimate_summary.json",
+    "sha256": "1e67f8df2774dfaae41cc791c4df8cd2a6da629472bad05c3a5a234d7bc4572f",
+    "formal_ready": true,
+    "eligible_model_rows": 187
+  },
+  "reference_review": {
+    "path": "analysis_results/c2a_rp_reference_review_20260811_v1/reference_review_provenance.json",
+    "sha256": "c44de79070d145ac10fa1a5f4ccb016b16eaec20418794cd6032a77b56bffc07"
+  },
+  "accepted_for": [
+    "C2A_RP_reestimate",
+    "C2A_RP_closeout",
+    "final_pooled_profile"
+  ],
+  "amendment_chain_through_acceptance_decision": [
+    "paper_a_method_20260803_v18",
+    "paper_a_method_20260807_v19",
+    "paper_a_method_20260810_v20",
+    "paper_a_method_20260810_v21",
+    "paper_a_method_20260811_v22"
+  ],
+  "interpretation": "This accepts the already closed historical C2-B evidence through SHA-bound corrected consumers. It does not reopen C2-B, rewrite its outcome, or treat the historical candidate artifact as a current-contract closeout."
+}

@@ -1,5 +1,5 @@
 <!-- PAPER_A_MACHINE_STATUS: normative -->
-<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v22 SHA-256 1aa447e48edfdcf3b2c61a304a7ae37e69c9cb1bfdc1b09ec0acf952a1ac899f -->
+<!-- PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260811_v23 SHA-256 f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588 -->
 # 鍗忚鎶ゆ爮
 
 ## 瑙﹀彂鏉′欢

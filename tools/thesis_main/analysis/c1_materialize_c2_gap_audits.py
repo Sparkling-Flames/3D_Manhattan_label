@@ -253,6 +253,8 @@ def build_precision_assignments(
             int(plan["additional_blocks"]), int(plan["ordinary_tasks"]), int(plan["stress_tasks"]),
             max_tasks=max_tasks, max_additional_blocks=contract_max_blocks,
         )
+        if dispatch_block_index is not None and int(plan["additional_blocks"]) not in {0, 1}:
+            raise ValueError("sequential C2-A-RP plan may authorize only the current block")
     pools: dict[str, list[dict[str, str]]] = {"ordinary": [], "stress": []}
     for task in task_rows:
         stratum = safe(task.get("task_stratum") or task.get("risk_bucket")).lower()
@@ -308,12 +310,10 @@ def build_precision_assignments(
             rng_by_stratum[stratum] = random.Random(f"{selection_seed}|{worker}|{stratum}")
         first_block = int(dispatch_block_index or 1)
         planned_last_block = max(int(plan["ordinary_tasks"]), int(plan["stress_tasks"]))
-        if dispatch_block_index is not None and first_block > planned_last_block:
-            raise ValueError(f"C2-A-RP dispatch block exceeds worker plan:{worker}")
         last_block = int(dispatch_block_index or planned_last_block)
         for block_index in range(first_block, last_block + 1):
             for stratum in ("ordinary", "stress"):
-                if block_index > int(plan[f"{stratum}_tasks"]):
+                if dispatch_block_index is None and block_index > int(plan[f"{stratum}_tasks"]):
                     continue
                 # Recompute the live candidate set after the paired draw.  The
                 # same base task may occur in both strata; precomputing both
@@ -564,10 +564,11 @@ def materialize(
     if not binding_valid or not c2b_valid:
         if input_status == "formal":
             raise ValueError("stale_or_unbound_c2a_rp_dependency")
+    authorized_blocks = 1 if max_blocks > 0 and (dispatch_block_index is not None or input_status == "formal") else max_blocks
     rows = build_precision_plan(
         read_csv(worker_profile_csv),
         target_half_width=target,
-        max_additional_blocks=max_blocks,
+        max_additional_blocks=authorized_blocks,
         manifest_sha=manifest_sha,
         threshold_sha=threshold_sha,
         formal=input_status == "formal",
@@ -664,7 +665,10 @@ def materialize(
         "method_contract_version": load_method_contract()["contract_version"],
         "method_contract_sha256": method_sha,
         "c2_a_rp_max_tasks_per_worker": max_tasks,
-        "max_additional_blocks": max_blocks,
+        "max_additional_blocks": authorized_blocks,
+        "authorized_blocks_in_current_plan": authorized_blocks,
+        "max_total_blocks": contract_max_blocks,
+        "remaining_block_cap_after_dispatch": max(0, contract_max_blocks - int(dispatch_block_index or 0)),
         "max_task_support": int(precision.get("max_task_support", 2)),
         "formal_goal": formal_goal,
         "precision_plan_schema_version": precision_schema,

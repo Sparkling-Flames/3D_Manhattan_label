@@ -7,7 +7,7 @@ from pathlib import Path
 import pytest
 
 import tools.thesis_main.analysis.materialize_c2a_rp_closeout as c2a_closeout
-from tools.thesis_main.analysis.materialize_c2a_rp_closeout import materialize
+from tools.thesis_main.analysis.materialize_c2a_rp_closeout import _validate_historical_c2b_acceptance, materialize
 from tools.thesis_main.analysis.paper_a_contracts import METHOD_CONTRACT, load_method_contract, sha256_file
 
 
@@ -104,6 +104,30 @@ def test_c2a_rp_requires_closed_reference_review(tmp_path: Path) -> None:
         _case(tmp_path, blocks=0, assignments=[], submissions=[], reference_review_closed=False)
 
 
+def test_historical_c2b_acceptance_is_sha_bound(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
+    monkeypatch.setattr(c2a_closeout, "ROOT", tmp_path)
+    c2b = tmp_path / "c2b.json"
+    c2b.write_text('{"candidate_only":true}', encoding="utf-8")
+    reestimate = tmp_path / "reestimate.json"
+    reestimate.write_text('{"formal_ready":true}', encoding="utf-8")
+    review = tmp_path / "review.json"
+    review.write_text('{"status":"closed"}', encoding="utf-8")
+    acceptance = tmp_path / "acceptance.json"
+    acceptance.write_text(json.dumps({
+        "schema_version": "paper_a_c2b_historical_evidence_acceptance_v1", "status": "normative",
+        "collection_closed": True, "outcome_reopening_allowed": False,
+        "source_c2b": {"sha256": sha256_file(c2b), "candidate_only": True},
+        "corrected_reestimate": {"path": reestimate.name, "sha256": sha256_file(reestimate)},
+        "reference_review": {"path": review.name, "sha256": sha256_file(review)},
+        "accepted_for": ["C2A_RP_closeout", "final_pooled_profile"],
+    }), encoding="utf-8")
+    method = {"c2b_historical_evidence_acceptance": {"path": acceptance.name, "sha256": sha256_file(acceptance)}}
+    assert _validate_historical_c2b_acceptance(method, c2b) == acceptance
+    c2b.write_text('{"candidate_only":false}', encoding="utf-8")
+    with pytest.raises(ValueError, match="does not authorize"):
+        _validate_historical_c2b_acceptance(method, c2b)
+
+
 def test_partial_c2a_rp_missing_with_profile_terminal_status_closes(tmp_path: Path) -> None:
     output, _ = _case(
         tmp_path, blocks=1,
@@ -183,6 +207,28 @@ def test_c2a_rp_prior_round_seen_history_does_not_consume_support_cap(tmp_path: 
     assert json.loads(output.read_text(encoding="utf-8"))["C2_A_RP_CLOSED"] is True
 
 
+def test_c2a_rp_block2_uses_relative_plan_count_and_amended_support_cap(tmp_path: Path) -> None:
+    output, _ = _case(
+        tmp_path, blocks=1,
+        assignments=[
+            {"worker_id": "w1", "task_id": "b1-o", "base_task_id": "b1-o", "task_stratum": "ordinary", "block_index": "1", "task_support_after": "1"},
+            {"worker_id": "w1", "task_id": "b1-s", "base_task_id": "b1-s", "task_stratum": "stress", "block_index": "1", "task_support_after": "1"},
+            {"worker_id": "w1", "task_id": "shared", "base_task_id": "shared", "task_stratum": "ordinary", "block_index": "2", "task_support_after": "3"},
+            {"worker_id": "w1", "task_id": "b2-s", "base_task_id": "b2-s", "task_stratum": "stress", "block_index": "2", "task_support_after": "1"},
+        ],
+        submissions=[{"worker_id": "w1", "task_id": task} for task in ("b1-o", "b1-s", "shared")],
+        profile_status="closed_partial_usable",
+        history=[
+            {"round_id": "C2-A-RP", "worker_id": "w2", "task_id": "shared", "base_task_id": "shared-2"},
+            {"round_id": "C2-A-RP", "worker_id": "w3", "task_id": "shared", "base_task_id": "shared-3"},
+        ],
+        terminal_rows=[{"worker_id": "w1", "task_id": "b2-s", "terminal_status": "closed_partial_usable", "missing_reason": "worker_absent"}],
+    )
+    payload = json.loads(output.read_text(encoding="utf-8"))
+    assert payload["C2_A_RP_CLOSED"] is True
+    assert payload["n_assignments"] == 4
+
+
 def test_c2a_rp_refits_each_block_and_counts_only_observed_eligible_support(
     tmp_path: Path, monkeypatch: pytest.MonkeyPatch,
 ) -> None:
@@ -200,7 +246,7 @@ def test_c2a_rp_refits_each_block_and_counts_only_observed_eligible_support(
         "threshold_manifest_sha256", "declared_support_after",
     ], [
         {"schema_version": csv_schema["precision_plan"], "worker_id": "w1", "additional_blocks": "2", "ordinary_tasks": "2", "stress_tasks": "2", "precision_target_met": "false", "routing_eligibility": "pending_actual_reestimate", "target_component": "risk_slope", "gap_reason": "target_not_met", "formal_goal": "risk_slope_precision", "interval_level": "0.95", "target_ci_half_width": "0.15", "ci_method": "normal_95_max_unified_slope_sd", "threshold_manifest_sha256": threshold_sha, "declared_support_after": "6"},
-        {"schema_version": csv_schema["precision_plan"], "worker_id": "w2", "additional_blocks": "1", "ordinary_tasks": "1", "stress_tasks": "1", "precision_target_met": "false", "routing_eligibility": "pending_actual_reestimate", "target_component": "risk_slope", "gap_reason": "target_not_met", "formal_goal": "risk_slope_precision", "interval_level": "0.95", "target_ci_half_width": "0.15", "ci_method": "normal_95_max_unified_slope_sd", "threshold_manifest_sha256": threshold_sha, "declared_support_after": "3"},
+        {"schema_version": csv_schema["precision_plan"], "worker_id": "w2", "additional_blocks": "0", "ordinary_tasks": "0", "stress_tasks": "0", "precision_target_met": "false", "routing_eligibility": "not_evaluable", "target_component": "risk_slope", "gap_reason": "precision_not_evaluable", "formal_goal": "risk_slope_precision", "interval_level": "0.95", "target_ci_half_width": "0.15", "ci_method": "normal_95_max_unified_slope_sd", "threshold_manifest_sha256": threshold_sha, "declared_support_after": "1"},
     ])
     assignments = _csv(tmp_path / "assignment.csv", ["schema_version", "worker_id", "task_id", "base_task_id", "task_stratum", "block_index", "target_component", "gap_reason", "formal_goal", "task_support_after"], [
         {"schema_version": csv_schema["assignment_manifest"], "worker_id": "w1", "task_id": "o1", "base_task_id": "o1", "task_stratum": "ordinary", "block_index": "1", "target_component": "risk_slope", "gap_reason": "target_not_met", "formal_goal": "risk_slope_precision", "task_support_after": "1"},
@@ -245,17 +291,21 @@ def test_c2a_rp_refits_each_block_and_counts_only_observed_eligible_support(
 
     def fake_fit(records: list[dict[str, object]]) -> dict[str, dict[str, object]]:
         calls.append(records)
-        return {"1": {"estimate": 0.1, "se": 0.02, "ci_half_width": 0.04, "support": sum(row["worker_id"] == "1" for row in records), "model_status": "estimated"}}
+        return {"1": {"estimate": 0.1, "se": 0.02, "ci_half_width": 0.2, "support": sum(row["worker_id"] == "1" for row in records), "model_status": "estimated"}}
 
     monkeypatch.setattr(c2a_closeout, "_actual_worker_slope", fake_fit)
     output = tmp_path / "closeout.json"
     materialize(plan, assignments, history, submissions, profiles, c2b, output, terminal_disposition_csv=terminal, risk_slope_evidence_csv=evidence, threshold_manifest=threshold)
     payload = json.loads(output.read_text(encoding="utf-8"))
     outcomes = {row["worker_id"]: row for row in payload["worker_outcomes"]}
-    assert outcomes["1"]["terminal_state"] == "target_met"
+    assert outcomes["1"]["terminal_state"] == "awaiting_next_block"
     assert outcomes["1"]["observed_support_after"] == 6
     assert outcomes["2"]["observed_support_after"] == 2
     assert outcomes["2"]["terminal_state"] == "not_evaluable"
     assert len(outcomes["1"]["reestimate_history"]) == 2
+    assert payload["artifact_role"] == "C2A_RP_BLOCK_CLOSEOUT_FROZEN"
+    assert payload["formal_ready"] is payload["C2_A_RP_CLOSED"] is payload["stage_closed"] is False
+    assert payload["block_closed"] is payload["next_block_required"] is True
+    assert payload["next_block_index"] == 3
     assert len(calls) == 2
     assert all("invalid" not in {row["task_id"] for row in records} and "s3" not in {row["task_id"] for row in records} for records in calls)

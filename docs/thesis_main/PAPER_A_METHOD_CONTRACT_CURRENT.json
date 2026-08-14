@@ -1,10 +1,10 @@
 {
     "schema_version":  "paper_a_method_contract_v9",
-    "contract_version":  "paper_a_method_20260811_v22",
+    "contract_version":  "paper_a_method_20260811_v23",
     "status":  "current_normative_source",
     "formal_launch_default":  false,
-    "previous_contract_version":  "paper_a_method_20260810_v21",
-    "previous_contract_sha256":  "125ed1248ae88eecdf0a08e7ba32296194b4bb2f66f69b18be40b360abaed2a9",
+    "previous_contract_version":  "paper_a_method_20260811_v22",
+    "previous_contract_sha256":  "1aa447e48edfdcf3b2c61a304a7ae37e69c9cb1bfdc1b09ec0acf952a1ac899f",
     "predispatch_amendment":  {
                                     "path":  "docs/thesis_main/C2B_PREDISPATCH_METHOD_AMENDMENT_v1.json",
                                     "sha256":  "330938460ffd779eba3beeeef361f300ff30befbfd38549e1c782d05358f99ba",
@@ -32,6 +32,17 @@
                                            "blocks2_to_5_max_task_support":  4,
                                            "future_blocks_preassigned":  false
                                        },
+    "c2b_historical_evidence_acceptance":  {
+                                                    "path":  "docs/thesis_main/C2B_HISTORICAL_EVIDENCE_ACCEPTANCE_20260811_v1.json",
+                                                    "sha256":  "41a2db4a481d16d9ffea105dbe2322f58952f05712025e2716b9a754c8cf2d84",
+                                                    "collection_closed":  true,
+                                                    "outcome_reopening_allowed":  false,
+                                                    "accepted_for":  [
+                                                                         "C2A_RP_reestimate",
+                                                                         "C2A_RP_closeout",
+                                                                         "final_pooled_profile"
+                                                                     ]
+                                                },
     "full_materialization_procedure":  {
                                                 "path":  "docs/thesis_main/FULL_MATERIALIZATION_PROCEDURE_v1.json",
                                                 "sha256":  "9fab69f9a36a7866295ef63836b1a70a7061c6deedbb772f23a292368639d9e3",
