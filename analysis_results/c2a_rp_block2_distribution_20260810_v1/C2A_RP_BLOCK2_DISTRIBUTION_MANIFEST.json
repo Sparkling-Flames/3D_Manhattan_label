@@ -1,8 +1,8 @@
 {
   "schema_version": "c2a_rp_block2_distribution_manifest_v1",
   "status": "ready_for_manual_import_not_dispatched",
-  "method_contract_version": "paper_a_method_20260811_v23",
-  "method_contract_sha256": "f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588",
+  "method_contract_version": "paper_a_method_20260811_v22",
+  "method_contract_sha256": "1aa447e48edfdcf3b2c61a304a7ae37e69c9cb1bfdc1b09ec0acf952a1ac899f",
   "block2_capacity_amendment_path": "D:\\Work\\HOHONET\\docs\\thesis_main\\C2A_RP_BLOCK2_CAPACITY_AMENDMENT_20260811_v3.json",
   "block2_capacity_amendment_sha256": "7d81fb746f476d9143e88c174b4f6002a8887d486ff7571879e67f690f7b8c1b",
   "amendment_scope": "Blocks2_to_5",
@@ -31,13 +31,13 @@
     "schema_version": "c2a_rp_operational_package_v1",
     "round_id": "C2-A-RP",
     "block_index": 2,
-    "method_contract_version": "paper_a_method_20260811_v23",
-    "method_contract_sha256": "f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588",
+    "method_contract_version": "paper_a_method_20260811_v22",
+    "method_contract_sha256": "1aa447e48edfdcf3b2c61a304a7ae37e69c9cb1bfdc1b09ec0acf952a1ac899f",
     "design_manifest_sha256": "7d81fb746f476d9143e88c174b4f6002a8887d486ff7571879e67f690f7b8c1b",
     "c2b_summary_sha256": "5e44a28e5e632a4c3dd7ecd999fdf6443c150e21520e55812431f3a080d4785d",
     "post_c2b_worker_profile_sha256": "66f2b0e72d9d75e6ecfce4d8e7d1b89eac85cb61875769b7c31261d4042c4c79",
     "threshold_manifest_sha256": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f",
-    "c2a_precision_plan_sha256": "90613aabb780d3f0427d8e3bd11980936cc3be3feb6fbe100e113969756e2724",
+    "c2a_precision_plan_sha256": "a98ba1cce4c63f7b5688d38cffb5cc991b97bb0138322d5affc0398cb4723bdf",
     "c2a_assignment_manifest_sha256": "5da997a97a68a272d44c171873f055b1c3e85dcb25dfd258c28dbe0474878d66",
     "c2a_block_assignment_sha256": "438f2ae05355a04469dc246361e807d1f4ab0e6db34fc6a31ab2fb20dd059eef",
     "c2a_task_pool_sha256": "6181202ec56dc8262c655fbd83ecc33a9092977486871ca1ee1c3110a915d981",
@@ -56,11 +56,9 @@
         "language_group": "Chinese",
         "server_instance_id": "labelstudio_http_175_178_71_217",
         "server_url": "http://175.178.71.217:8000",
-        "project_id": "",
-        "planned_project_name": "任务6",
-        "project_binding_status": "pending_post_import",
+        "project_id": "79",
         "planned_import_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block2_distribution_20260810_v1\\c2a_rp_operational\\imports\\c2a_rp_block_2_c2b_zh.json",
-        "planned_import_sha256": "d521cf5a5b470d72b724d705ac623f30c64616946ef2851823eeb2bf6ee24abd",
+        "planned_import_sha256": "0540f86a67979893e3c7497ed949db3d3d3c020ed0d1d0cfcd9233e4a39e08a3",
         "task_count": 17
       },
       "c2b_en": {
@@ -68,35 +66,31 @@
         "language_group": "English",
         "server_instance_id": "labelstudio_https_sparkle0825",
         "server_url": "https://label.sparkle0825.top",
-        "project_id": "",
-        "planned_project_name": "Project F",
-        "project_binding_status": "pending_post_import",
+        "project_id": "78",
         "planned_import_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block2_distribution_20260810_v1\\c2a_rp_operational\\imports\\c2a_rp_block_2_c2b_en.json",
-        "planned_import_sha256": "ff76a1d0ddb607243666eee758ac70434b9d4ab76cf3ed6712070ba0b2be2b09",
+        "planned_import_sha256": "774ef0eebc22af0adc9a904243982fa7d3b3a3d9d145646e3fc4acb09a4faa08",
         "task_count": 15
       }
     },
     "runtime_mapping_path": "D:\\Work\\HOHONET\\analysis_results\\c2a_rp_block2_distribution_20260810_v1\\c2a_rp_operational\\c2a_rp_runtime_mapping.csv",
-    "runtime_mapping_sha256": "e5ba83500c85b79360cb5b38fc6f88740a1a070554a05d7b57265a8c1a0d6688",
+    "runtime_mapping_sha256": "94645586dad2680755d744989eead851adb5d7656e92763f39f92a177f712b5d",
     "assignment_count": 40,
     "private_list_worker_count": 20,
     "status": "planned_not_imported_not_dispatched",
     "active_time_freeze_required_after_collection": true,
-    "active_time_expected_project_ids": [],
-    "active_time_expected_project_names": [
-      "Project F",
-      "任务6"
-    ],
-    "active_time_project_binding_status": "pending_post_import"
+    "active_time_expected_project_ids": [
+      "78",
+      "79"
+    ]
   },
   "import_json_outputs": {
     "c2b_en": {
       "path": "D:\\Work\\HOHONET\\import_json\\c2a_rp\\c2a_rp_block_2_import_foreign_https.json",
-      "sha256": "ff76a1d0ddb607243666eee758ac70434b9d4ab76cf3ed6712070ba0b2be2b09"
+      "sha256": "774ef0eebc22af0adc9a904243982fa7d3b3a3d9d145646e3fc4acb09a4faa08"
     },
     "c2b_zh": {
       "path": "D:\\Work\\HOHONET\\import_json\\c2a_rp\\c2a_rp_block_2_import_zh.json",
-      "sha256": "d521cf5a5b470d72b724d705ac623f30c64616946ef2851823eeb2bf6ee24abd"
+      "sha256": "0540f86a67979893e3c7497ed949db3d3d3c020ed0d1d0cfcd9233e4a39e08a3"
     }
   },
   "task_support_histogram_cumulative": {
