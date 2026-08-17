@@ -46,6 +46,9 @@
 
 - `tools/thesis_main/analysis/materialize_c2a_rp_closeout.py`：C2-A-RP 正式零任务/追加任务 closeout 与方法合同、输入工件 SHA 绑定。
 - `tools/thesis_main/analysis/materialize_c2a_rp_block1_reestimate.py`：统一应用终态 reference exclusion、重拟合 Block 1 后 risk slope，并输出 SHA 绑定的 Block 2 routing 输入。
+- `tools/thesis_main/analysis/materialize_c2a_rp_block2_evidence.py`：将 Block 2 原始导出、正式 GT、assignment、task pool 与冻结 active-time 绑定为可审计 evidence。
+- `tools/thesis_main/analysis/materialize_c2a_rp_terminal_reestimate.py`：合并 C2-B、Block 1 与 Block 2 evidence，生成 C2-A-RP 终态 risk re-estimation。
+- `tools/thesis_main/analysis/materialize_final_calibration_profile.py`：在 C2-A-RP 终止声明与 closeout 后生成最终 Calibration Q_GT 与 pooled worker profile 物化工件。
 - `tools/thesis_main/analysis/audit_c2a_capacity_power_amendment.py`：C2-A-RP 本地 capacity / V1 power 敏感性审计；不生成或授权正式派发。
 
 ## 2026-08-02 C2-B pre-dispatch amendment

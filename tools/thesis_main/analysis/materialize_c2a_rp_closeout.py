@@ -173,6 +173,20 @@ def _validate_historical_c2b_acceptance(method: dict[str, Any], c2b_closeout: Pa
     return path
 
 
+def _historical_c2b_worker_summaries(acceptance_path: Path) -> list[dict[str, str]]:
+    acceptance = json.loads(acceptance_path.read_text(encoding="utf-8"))
+    item = acceptance.get("corrected_reestimate", {})
+    source = Path(_text(item.get("path")))
+    source = source if source.is_absolute() else ROOT / source
+    if not source.is_file() or sha256_file(source) != _text(item.get("sha256")):
+        raise ValueError("historical C2-B corrected reestimate roster is missing or stale")
+    payload = json.loads(source.read_text(encoding="utf-8"))
+    workers = payload.get("workers")
+    if not isinstance(workers, dict) or not workers:
+        raise ValueError("historical C2-B corrected reestimate lacks worker roster")
+    return [{"worker_id": normalize_worker_id(worker)} for worker in workers if normalize_worker_id(worker)]
+
+
 def _write_blocked_summary(output_json: Path, reason: str, hashes: dict[str, str] | None = None) -> Path:
     method = load_method_contract()
     path = output_json.with_name("c2a_rp_closeout_blocked_summary.json")
@@ -202,6 +216,7 @@ def materialize(
     terminal_disposition_csv: Path | None = None,
     risk_slope_evidence_csv: Path | None = None,
     threshold_manifest: Path | None = None,
+    stage_terminal_declaration: Path | None = None,
 ) -> dict[str, Any]:
     method = load_method_contract()
     max_tasks, max_blocks, method_sha = _c2a_rp_limits()
@@ -293,6 +308,8 @@ def materialize(
         raise ValueError("C2-A-RP closeout target differs from the threshold manifest")
 
     c2b_worker_summaries = c2b.get("worker_summaries")
+    if (not isinstance(c2b_worker_summaries, list) or not c2b_worker_summaries) and historical_acceptance:
+        c2b_worker_summaries = _historical_c2b_worker_summaries(historical_acceptance)
     if not isinstance(c2b_worker_summaries, list) or not c2b_worker_summaries:
         raise ValueError("C2-A-RP requires the complete C2-B worker roster")
     if any(not isinstance(row, dict) for row in c2b_worker_summaries):
@@ -302,10 +319,26 @@ def materialize(
         for row in c2b_worker_summaries
         if normalize_worker_id(row.get("worker_id", ""))
     }
-    if (len(c2b_workers) != len(c2b_worker_summaries)
-            or c2b_workers != set(plan_by_worker)
-            or set(profile_by_worker) != c2b_workers):
+    plan_workers = set(plan_by_worker)
+    if len(c2b_workers) != len(c2b_worker_summaries) or set(profile_by_worker) != plan_workers:
         raise ValueError("C2-A-RP precision plan/profile does not cover the complete C2-B roster")
+    if historical_acceptance:
+        if not c2b_workers.issubset(plan_workers):
+            raise ValueError("historical C2-B fitted roster is outside the precision plan")
+        for worker in plan_workers - c2b_workers:
+            row = plan_by_worker[worker]
+            zero_block_target_met = (_int(row, "additional_blocks") == 0
+                                     and _truth(row.get("precision_target_met")))
+            zero_block_not_evaluable = (
+                _int(row, "additional_blocks") == 0
+                and _text(row.get("terminal_state")) == "not_evaluable"
+                and _text(row.get("routing_eligibility")) == "not_evaluable"
+                and _text(row.get("fallback_action")) == "STRONG_GLOBAL"
+            )
+            if not (zero_block_target_met or zero_block_not_evaluable):
+                raise ValueError("historical C2-B roster omission lacks a frozen zero-block terminal state")
+    elif c2b_workers != plan_workers:
+        raise ValueError("C2-A-RP precision plan does not match the current C2-B roster")
 
     history_seen: set[tuple[str, str, str]] = set()
     history_worker_tasks: set[tuple[str, str]] = set()
@@ -377,8 +410,21 @@ def materialize(
 
     if any(count > block1_cap for count in block1_task_support.values()) or any(count > later_cap for count in assignment_task_support.values()):
         raise ValueError("C2-A-RP task support exceeds the block-specific frozen cap")
-    expected_workers = {worker for worker, row in plan_by_worker.items() if _int(row, "additional_blocks")}
     current_block = max((_int(row, "block_index") for row in assignments), default=0)
+    expected_workers = set() if current_block == 0 else {
+        worker for worker, row in plan_by_worker.items()
+        if _int(row, "additional_blocks") >= current_block
+    }
+    terminal_declaration: dict[str, Any] | None = None
+    if stage_terminal_declaration is not None:
+        terminal_declaration = json.loads(stage_terminal_declaration.read_text(encoding="utf-8"))
+        if (terminal_declaration.get("schema_version") != "c2a_rp_stage_terminal_declaration_v1"
+                or terminal_declaration.get("status") != "authorized"
+                or terminal_declaration.get("stage_closed") is not True
+                or terminal_declaration.get("future_blocks_allowed") is not False
+                or int(terminal_declaration.get("last_completed_block", -1)) != current_block
+                or terminal_declaration.get("fallback_action") != "STRONG_GLOBAL"):
+            raise ValueError("C2-A-RP stage terminal declaration is invalid")
     current_block_workers = {
         normalize_worker_id(row.get("worker_id", ""))
         for row in assignments
@@ -509,7 +555,12 @@ def materialize(
         estimate = se = ci_half_width = None
         reestimate_history: list[dict[str, Any]] = []
         if blocks == 0:
-            if _truth(plan_row.get("precision_target_met")) and current_half_width is not None and target is not None and current_half_width <= target:
+            withdrawn_workers = {
+                normalize_worker_id(value) for value in (terminal_declaration or {}).get("withdrawn_worker_ids", [])
+            }
+            if worker in withdrawn_workers:
+                reason = "researcher_confirmed_withdrawal_not_evaluable"
+            elif _truth(plan_row.get("precision_target_met")) and current_half_width is not None and target is not None and current_half_width <= target:
                 state = "target_met"
                 n_workers_target_met += 1
             else:
@@ -539,6 +590,10 @@ def materialize(
                 if blocks < max_blocks and ci_half_width is not None:
                     state = "awaiting_next_block"
                     n_workers_pending += 1
+        if state == "awaiting_next_block" and terminal_declaration is not None:
+            state = "fallback_strong_global"
+            n_workers_pending -= 1
+            reason = "researcher_declared_terminal_after_completed_block"
         if state != "target_met" and state != "awaiting_next_block":
             if reason in {"incomplete_block_terminalized", "risk_slope_reestimate_not_evaluable", "zero_block_not_evaluable"} or "not_evaluable" in reason or "terminalized" in reason:
                 state = "not_evaluable"
@@ -616,7 +671,12 @@ def materialize(
             {"worker_id": worker, "task_id": task, **missing_dispositions[(worker, task)]}
             for worker, task in sorted(missing)
         ],
-        "closure_reason": "awaiting_next_block" if n_workers_pending else "all_precision_targets_met_or_unsupported_adjustments_fallback" if not assignments else "all_assigned_tasks_completed_or_terminalized_at_frozen_cap",
+        "closure_reason": (
+            "awaiting_next_block" if n_workers_pending
+            else "researcher_declared_terminal_after_completed_block" if terminal_declaration is not None
+            else "all_precision_targets_met_or_unsupported_adjustments_fallback" if not assignments
+            else "all_assigned_tasks_completed_or_terminalized_at_frozen_cap"
+        ),
         "precision_plan_path": str(precision_plan_csv),
         "precision_plan_sha256": sha256_file(precision_plan_csv),
         "assignment_manifest_path": str(assignment_manifest_csv),
@@ -633,6 +693,8 @@ def materialize(
         "historical_c2b_acceptance_sha256": sha256_file(historical_acceptance) if historical_acceptance else "",
         "terminal_disposition_path": str(terminal_disposition_csv or ""),
         "terminal_disposition_sha256": sha256_file(terminal_disposition_csv) if terminal_disposition_csv else "",
+        "stage_terminal_declaration_path": str(stage_terminal_declaration or ""),
+        "stage_terminal_declaration_sha256": sha256_file(stage_terminal_declaration) if stage_terminal_declaration else "",
         "dispatch_status": "awaiting_next_block" if n_workers_pending else "closed",
         "next_block_index": min((row["blocks_completed"] + 1 for row in worker_outcomes if row["terminal_state"] == "awaiting_next_block"), default=0),
         "blockers": ["awaiting_next_block"] if n_workers_pending else [],
@@ -650,6 +712,8 @@ def materialize(
         summary["dependencies"].append(_dependency("C2B_HISTORICAL_EVIDENCE_ACCEPTANCE", historical_acceptance))
     if terminal_disposition_csv:
         summary["dependencies"].append(_dependency("C2A_TERMINAL_DISPOSITION", terminal_disposition_csv))
+    if stage_terminal_declaration:
+        summary["dependencies"].append(_dependency("C2A_STAGE_TERMINAL_DECLARATION", stage_terminal_declaration))
     if risk_slope_evidence_csv:
         summary["dependencies"].append(_dependency("C2A_RISK_SLOPE_EVIDENCE", risk_slope_evidence_csv))
     output_json.parent.mkdir(parents=True, exist_ok=True)
@@ -672,6 +736,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--terminal-disposition", type=Path)
     parser.add_argument("--risk-slope-evidence", type=Path)
     parser.add_argument("--threshold-manifest", type=Path)
+    parser.add_argument("--stage-terminal-declaration", type=Path)
     parser.add_argument("--output", type=Path, required=True)
     args = parser.parse_args(argv)
     try:
@@ -681,6 +746,7 @@ def main(argv: list[str] | None = None) -> int:
             terminal_disposition_csv=args.terminal_disposition,
             risk_slope_evidence_csv=args.risk_slope_evidence,
             threshold_manifest=args.threshold_manifest,
+            stage_terminal_declaration=args.stage_terminal_declaration,
         )
     except (OSError, KeyError, TypeError, ValueError) as exc:
         blocked = _write_blocked_summary(
@@ -695,6 +761,7 @@ def main(argv: list[str] | None = None) -> int:
                 "terminal_disposition": _safe_sha(args.terminal_disposition),
                 "risk_slope_evidence": _safe_sha(args.risk_slope_evidence),
                 "threshold_manifest": _safe_sha(args.threshold_manifest),
+                "stage_terminal_declaration": _safe_sha(args.stage_terminal_declaration),
             },
         )
         print(json.dumps({"formal_ready": False, "C2_A_RP_CLOSED": False, "blocked_summary": str(blocked), "reason_code": str(exc)}, ensure_ascii=False), file=sys.stderr)
