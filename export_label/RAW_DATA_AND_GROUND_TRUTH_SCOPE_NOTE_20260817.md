@@ -28,8 +28,8 @@ C2-A-RP Block 1/2 的 `ACTIVE_TIME_FREEZE_MANIFEST.json` 已逐文件核验，ma
 
 ## Ground Truth 验证边界
 
-- 人工验证的 test/fine-annotation 真源是 `export_label/人工精标/` 系列快照；仓库现有说明将 `project-20-at-2026-03-27-14-57-e66c6481.json` 标记为当前 authoritative verified snapshot。
-- Validation 集不能整体声称为“已人工验证”。当前可确认的 Validation 几何来源只有既有 MP3D validation reference/import 工件与 HoHoNet 自带参考数据。
+- Test/fine-annotation 数据位于 `export_label/人工精标/` 系列快照。研究者仅对其中很小一部分 GT 做过局部修正；不得把该目录、某个快照或整个 test 集称为“全量人工验证”。仓库现有说明所指的 `project-20-at-2026-03-27-14-57-e66c6481.json` 只表示当前采用的快照版本，不扩大人工复核覆盖范围。
+- Validation 集没有研究者自己的 GT 修正，也不能整体声称为“已人工验证”。当前可确认的 Validation 几何来源只有既有 MP3D validation reference/import 工件与 HoHoNet 自带参考数据。
 - 本次上传不对 MP3D 或 HoHoNet Validation GT 进行新的人工裁决，也不把来源存在等同于人工验证。
 - 文件名含“错误”的 `groudTruth` 快照是显式错误/历史快照，不得作为 authoritative GT。
 - `groudTruth_2(61_84_194双标注).json` 含替代/双标注信息，不代表已完成统一裁决。
@@ -40,4 +40,3 @@ C2-A-RP Block 1/2 的 `ACTIVE_TIME_FREEZE_MANIFEST.json` 已逐文件核验，ma
 ## 数据披露
 
 目标仓库为公开仓库。Active Time 含 annotator/session/task/project/timestamp/route 等运行时字段；用户已于 2026-08-17 明确授权公开上传未脱敏原始日志。实名 Excel 文件仍未纳入。
-

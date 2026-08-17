@@ -49,6 +49,8 @@
 - `tools/thesis_main/analysis/materialize_c2a_rp_block2_evidence.py`：将 Block 2 原始导出、正式 GT、assignment、task pool 与冻结 active-time 绑定为可审计 evidence。
 - `tools/thesis_main/analysis/materialize_c2a_rp_terminal_reestimate.py`：合并 C2-B、Block 1 与 Block 2 evidence，生成 C2-A-RP 终态 risk re-estimation。
 - `tools/thesis_main/analysis/materialize_final_calibration_profile.py`：在 C2-A-RP 终止声明与 closeout 后生成最终 Calibration Q_GT 与 pooled worker profile 物化工件。
+- `tools/thesis_main/data_prep/build_post_block2_analysis_pack_v3.py`：在终态 profile 可用后重建 QA-approved post-Block2 pack，并补齐 uncertainty 与 empirical variance 输入。
+- `tools/thesis_main/analysis/analyze_post_block2_opportunities.py`：运行 post-Block2 aggregation、matched routing、clustered power 与 estimand 候选矩阵的 retrospective/development 审计。
 - `tools/thesis_main/analysis/audit_c2a_capacity_power_amendment.py`：C2-A-RP 本地 capacity / V1 power 敏感性审计；不生成或授权正式派发。
 
 ## 2026-08-02 C2-B pre-dispatch amendment
