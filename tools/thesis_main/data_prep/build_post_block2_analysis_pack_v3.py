@@ -15,6 +15,10 @@ from tools.thesis_main.data_prep import build_post_block2_analysis_pack_v2 as v2
 ROOT = Path(__file__).resolve().parents[3]
 OUT = ROOT / "analysis_results" / "post_block2_analysis_pack_20260817_v3"
 PROFILE = ROOT / "analysis_results" / "final_calibration_profile_20260817_v1" / "pooled_worker_profile_v2.csv"
+PACK_VERSION = "post_block2_analysis_pack_20260817_v3"
+PACK_LABEL = "2026-08-17 v3"
+PROVENANCE_SCHEMA = "post_block2_analysis_pack_provenance_v3"
+MANIFEST_SCHEMA = "post_block2_artifact_hash_manifest_v3"
 
 
 def sha256(path: Path) -> str:
@@ -51,6 +55,13 @@ def sample_variance(values: list[float]) -> dict[str, object]:
     if len(values) < 2:
         return {"status": "not_identifiable", "reason": "fewer_than_two_evaluable_values", "n": len(values)}
     return {"status": "computed", "value": statistics.variance(values), "n": len(values)}
+
+
+def non_profile_p0_findings(provenance: dict[str, object]) -> list[dict[str, object]]:
+    return [
+        item for item in provenance.get("p0_findings", [])
+        if item.get("id") != "post_block2_final_pooled_profile_source_absent"
+    ]
 
 
 def repair_profile_and_inputs() -> None:
@@ -148,14 +159,15 @@ def repair_qa_and_manifest() -> None:
     write_csv(OUT / "post_block2_exclusion_provenance.csv", exclusions)
     provenance_path = OUT / "POST_BLOCK2_DATA_PROVENANCE.json"
     provenance = json.loads(provenance_path.read_text(encoding="utf-8"))
+    remaining_p0 = non_profile_p0_findings(provenance)
     provenance.update({
-        "schema_version": "post_block2_analysis_pack_provenance_v3",
-        "pack_version": "post_block2_analysis_pack_20260817_v3",
-        "status": "GO",
-        "prompt_2_entry_allowed": True,
+        "schema_version": PROVENANCE_SCHEMA,
+        "pack_version": PACK_VERSION,
+        "status": "NO-GO" if remaining_p0 else "GO",
+        "prompt_2_entry_allowed": not remaining_p0,
         "profile_p0_inventory_count": 0,
         "combined_exclusion_inventory_count": len(exclusions),
-        "p0_findings": [],
+        "p0_findings": remaining_p0,
     })
     provenance["profile_status"] = {
         "final_pooled_profile": "formal_ready",
@@ -164,16 +176,31 @@ def repair_qa_and_manifest() -> None:
         "sha256": sha256(PROFILE),
         "post_c2b_substitution_allowed": False,
     }
+    if PACK_VERSION.endswith("_v4"):
+        provenance["building_identity_correction"] = {
+            "status": "corrected",
+            "supersedes_pack": "post_block2_analysis_pack_20260817_v3",
+            "reason": "v3 building_support_summary and worker_building_incidence used base_task_id as building_id",
+            "authoritative_sources": [
+                "C1_TASK_BUILDING_BINDING_FROZEN",
+                "C2B_CANONICAL_RISK_SLOPE_EVIDENCE",
+                "C2A_RP_BLOCK1_RISK_SLOPE_EVIDENCE",
+                "C2A_RP_BLOCK2_TASK_POOL",
+            ],
+        }
     provenance["formal_sources"].append({
         "path": str(PROFILE.relative_to(ROOT)).replace("\\", "/"),
         "role": "FINAL_CALIBRATION_POOLED_WORKER_PROFILE",
         "sha256": sha256(PROFILE),
     })
+    for finding in provenance.get("p1_findings", []):
+        if finding.get("id") == "estimand_exclusions_present":
+            finding["detail"] = f"submission_exclusions={len(exclusions)};profile_p0_inventory=0;combined_inventory={len(exclusions)}"
     provenance_path.write_text(json.dumps(provenance, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     p1 = provenance.get("p1_findings", [])
     qa = [
-        "# post-Block2 analysis pack v3 QA", "", "- 状态：**GO**", "- Prompt 2：**允许**", "- Block 3：未生成", "",
-        "## P0 findings", "", "- none", "", "## P1 findings", "",
+        f"# post-Block2 analysis pack {PACK_LABEL} QA", "", f"- 状态：**{provenance['status']}**", f"- Prompt 2：**{'允许' if provenance['prompt_2_entry_allowed'] else '禁止'}**", "- Block 3：未生成", "",
+        "## P0 findings", "", *([f"- {item['id']} [{item['stage']}]: {item['detail']}" for item in remaining_p0] or ["- none"]), "", "## P1 findings", "",
         *([f"- {item['id']} [{item['stage']}]: {item['detail']}" for item in p1] or ["- none"]), "",
         "## Profile and uncertainty binding", "",
         f"- final profile: `{PROFILE.relative_to(ROOT).as_posix()}`", f"- SHA-256: `{sha256(PROFILE)}`",
@@ -183,15 +210,16 @@ def repair_qa_and_manifest() -> None:
     ]
     (OUT / "POST_BLOCK2_DATA_QA_REPORT.md").write_text("\n".join(qa), encoding="utf-8")
     (OUT / "README.md").write_text(
-        "# post-Block2 analysis pack 2026-08-17 v3\n\n"
-        "v3 从原始/冻结真源重新生成，并在 C2-A-RP 终态 closeout 后绑定 final Calibration profile。\n\n"
-        "- QA：GO；Prompt 2 可进入。\n- v1/v2 未覆盖。\n- 未生成 Block 3。\n"
-        "- GT 边界：test 仅有少量局部研究者修正；validation 没有研究者自己的修正。\n"
-        "- 无历史随机 routing counterfactual，因此 routing replay 只能输出不可识别状态和设计功效输入。\n",
+        f"# post-Block2 analysis pack {PACK_LABEL}\n\n"
+        f"{PACK_LABEL} 从原始/冻结真源重新生成，并在 C2-A-RP 终态 closeout 后绑定 final Calibration profile。\n\n"
+        f"- QA：{provenance['status']}；Prompt 2 {'可进入' if provenance['prompt_2_entry_allowed'] else '不可进入'}。\n- 旧版本未覆盖。\n- 未生成 Block 3。\n"
+        + ("- v4 修复了 v3 将 base_task_id 写入 building_id 的问题；building 字段只来自冻结身份真源。\n" if PACK_VERSION.endswith("_v4") else "")
+        + "- GT 边界：test 仅有少量局部研究者修正；validation 没有研究者自己的修正。\n"
+        + "- 无历史随机 routing counterfactual，因此 routing replay 只能输出不可识别状态和设计功效输入。\n",
         encoding="utf-8",
     )
     artifacts = {path.name: sha256(path) for path in sorted(OUT.iterdir()) if path.is_file() and path.name != "ARTIFACT_HASH_MANIFEST.json"}
-    manifest = {"schema_version": "post_block2_artifact_hash_manifest_v3", "pack_version": "post_block2_analysis_pack_20260817_v3", "manifest_self_sha256": "not_bound_recursive", "artifact_count": len(artifacts), "artifacts": artifacts}
+    manifest = {"schema_version": MANIFEST_SCHEMA, "pack_version": PACK_VERSION, "manifest_self_sha256": "not_bound_recursive", "artifact_count": len(artifacts), "artifacts": artifacts}
     (OUT / "ARTIFACT_HASH_MANIFEST.json").write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
 
 
@@ -200,7 +228,8 @@ def main() -> int:
     v2.main()
     repair_profile_and_inputs()
     repair_qa_and_manifest()
-    print(json.dumps({"output_dir": str(OUT), "status": "GO", "manifest_sha256": sha256(OUT / "ARTIFACT_HASH_MANIFEST.json")}, indent=2))
+    status = json.loads((OUT / "POST_BLOCK2_DATA_PROVENANCE.json").read_text(encoding="utf-8"))["status"]
+    print(json.dumps({"output_dir": str(OUT), "status": status, "manifest_sha256": sha256(OUT / "ARTIFACT_HASH_MANIFEST.json")}, indent=2))
     return 0
 
 

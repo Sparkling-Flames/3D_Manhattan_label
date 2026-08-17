@@ -95,6 +95,60 @@ def truthy(value: Any) -> bool:
     return str(value).strip().lower() in {"true", "1", "yes"}
 
 
+def bind_authoritative_buildings(
+    rows: list[dict[str, Any]],
+    sources: dict[str, tuple[list[dict[str, Any]], str]],
+) -> None:
+    lookups: dict[str, tuple[dict[str, str], str]] = {}
+    for stage, (source_rows, source_name) in sources.items():
+        lookup: dict[str, str] = {}
+        for source_row in source_rows:
+            base = str(source_row.get("base_task_id") or "").strip()
+            building = str(source_row.get("building_id") or "").strip()
+            if not base or not building:
+                continue
+            if base in lookup and lookup[base] != building:
+                raise ValueError(f"conflicting building_id for {stage}:{base}: {lookup[base]} != {building}")
+            lookup[base] = building
+        lookups[stage] = lookup, source_name
+
+    for row in rows:
+        lookup, source_name = lookups.get(str(row.get("stage")), ({}, "source_absent"))
+        building = lookup.get(str(row.get("base_task_id") or "").strip(), "")
+        row["building_id"] = building or NOT_IDENTIFIABLE
+        row["building_id_source"] = source_name if building else "source_absent_not_identifiable"
+
+
+def identified_building(row: dict[str, Any]) -> str:
+    building = str(row.get("building_id") or "").strip()
+    return "" if building in {"", NOT_IDENTIFIABLE, NOT_APPLICABLE} else building
+
+
+def worker_building_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    return [{
+        "worker_id": text(row.get("worker_id")),
+        "stage": row["stage"],
+        "building_id": identified_building(row),
+        "task_count": 1,
+        "source_artifact": text(row.get("source_artifact")),
+        "source_sha256": text(row.get("source_sha256")),
+    } for row in rows if identified_building(row)]
+
+
+def building_support_rows(rows: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    groups: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
+    for row in rows:
+        if building := identified_building(row):
+            groups[(str(row.get("stage")), building)].append(row)
+    return [{
+        "stage": stage,
+        "building_id": building,
+        "support_count": len(group),
+        "source_artifact": ";".join(sorted({text(row.get("source_artifact")) for row in group})),
+        "source_sha256": ";".join(sorted({text(row.get("source_sha256")) for row in group})),
+    } for (stage, building), group in sorted(groups.items())]
+
+
 def finite(value: Any) -> bool:
     try:
         return math.isfinite(float(value))
@@ -135,6 +189,7 @@ def find_c1_sources() -> dict[str, Path]:
             "geometry": "c1_canonical_geometry.jsonl",
             "pairwise": "geometry_pairwise_similarity_C1.csv",
             "crowd": "geometry_task_crowd_structure_C1.csv",
+            "building_binding": "c1_task_building_binding.csv",
             "gt_evidence": "c1_gt_quality_evidence.csv",
             "gt_analysis": "c1_gt_quality_analysis.csv",
             "views_manifest": "c1_analysis_views_manifest.json",
@@ -746,13 +801,16 @@ def main() -> int:
     p1_path = ROOT / "analysis_results" / "prescreen_closeout_final_gold_v2_20260701" / "prescreen_canonical_annotations.csv"
     c1_sources = find_c1_sources()
     c2b_path = ROOT / "analysis_results" / "c2b_closeout_20260806_final" / "c2b_canonical_submissions.csv"
+    c2b_building_path = ROOT / "analysis_results" / "c2b_closeout_20260806_final" / "c2b_canonical_risk_slope_evidence.csv"
     block1_path = ROOT / "analysis_results" / "c2a_rp_block1_reestimate_20260810_v1" / "c2a_rp_block1_canonical_submissions.csv"
+    block1_building_path = ROOT / "analysis_results" / "c2a_rp_block1_reestimate_20260810_v1" / "c2a_rp_block1_risk_slope_evidence.csv"
     block2_exports = [
         ROOT / "export_label" / "c2arp_block2" / "project-84-at-2026-08-14-08-36-31615637.json",
         ROOT / "export_label" / "c2arp_block2" / "project-85-at-2026-08-14-08-36-71fffb37.json",
     ]
     block2_active_dir = ROOT / "active_logs" / "c2a_rp_block2_20260814"
     block2_assignment_path = ROOT / "analysis_results" / "c2a_rp_block2_distribution_20260810_v1" / "assignment_manifest_C2A_RP_block_2.csv"
+    block2_task_pool_path = ROOT / "analysis_results" / "c2a_rp_block2_distribution_20260810_v1" / "c2a_rp_task_pool_block2.csv"
     stale_mapping_path = ROOT / "analysis_results" / "c2a_rp_block2_distribution_20260810_v1" / "c2a_rp_operational" / "c2a_rp_runtime_mapping.csv"
     profile_producer = ROOT / "tools" / "thesis_main" / "analysis" / "materialize_final_pooled_profile_freeze.py"
     cluster_producer = ROOT / "tools" / "thesis_main" / "analysis" / "geometry_cluster_v2.py"
@@ -767,6 +825,12 @@ def main() -> int:
     block1_rows = load_canonical_rows(block1_path, "C2A-RP-B1")
     block2_rows, block2_stats = load_block2_rows(block2_exports)
     all_rows = p1_rows + c1_rows + c2b_rows + block1_rows + block2_rows
+    bind_authoritative_buildings(all_rows, {
+        "C1": (read_csv(c1_sources["building_binding"]), "C1_TASK_BUILDING_BINDING_FROZEN"),
+        "C2-B": (read_csv(c2b_building_path), "C2B_CANONICAL_RISK_SLOPE_EVIDENCE"),
+        "C2A-RP-B1": (read_csv(block1_building_path), "C2A_RP_BLOCK1_RISK_SLOPE_EVIDENCE"),
+        "C2A-RP-B2": (read_csv(block2_task_pool_path), "C2A_RP_BLOCK2_TASK_POOL"),
+    })
     enrich_gt_validation(all_rows, scope_note)
     active_manifest_checks = active_time_block2(block2_rows, block2_active_dir)
 
@@ -887,14 +951,7 @@ def main() -> int:
         "source_artifact": text(row.get("source_artifact")),
         "source_sha256": text(row.get("source_sha256")),
     } for row in all_rows])
-    write_csv(OUT / "worker_building_incidence.csv", [{
-        "worker_id": text(row.get("worker_id")),
-        "stage": row["stage"],
-        "building_id": text(row.get("base_task_id")),
-        "task_count": 1,
-        "source_artifact": text(row.get("source_artifact")),
-        "source_sha256": text(row.get("source_sha256")),
-    } for row in all_rows])
+    write_csv(OUT / "worker_building_incidence.csv", worker_building_rows(all_rows))
     write_csv(OUT / "task_worker_support_summary.csv", [{
         "stage": stage,
         "base_task_id": base,
@@ -904,13 +961,7 @@ def main() -> int:
         "source_artifact": text(group[0].get("source_artifact")),
         "source_sha256": text(group[0].get("source_sha256")),
     } for (stage, base, condition), group in sorted(task_groups.items())])
-    write_csv(OUT / "building_support_summary.csv", [{
-        "stage": stage,
-        "building_id": base,
-        "support_count": len(group),
-        "source_artifact": text(group[0].get("source_artifact")),
-        "source_sha256": text(group[0].get("source_sha256")),
-    } for (stage, base, _), group in sorted(task_groups.items())])
+    write_csv(OUT / "building_support_summary.csv", building_support_rows(all_rows))
     write_csv(OUT / "aggregation_candidate_geometries.csv", [{
         "stage": row["stage"],
         "base_task_id": text(row.get("base_task_id")),
@@ -942,6 +993,12 @@ def main() -> int:
     for stage, expected in EXPECTED_STAGE_COUNTS.items():
         if stage_counts.get(stage, 0) != expected:
             p0.append({"id": "stage_count_mismatch", "stage": stage, "detail": f"expected={expected};observed={stage_counts.get(stage, 0)}"})
+    missing_buildings = Counter(
+        row["stage"] for row in all_rows
+        if row["stage"] != "P1" and not identified_building(row)
+    )
+    if missing_buildings:
+        p0.append({"id": "authoritative_building_binding_missing", "stage": "Calibration", "detail": js(dict(missing_buildings))})
     if block2_stats["runtime_task_count"] != 32 or block2_stats["annotation_count"] != 40:
         p0.append({"id": "block2_runtime_count_mismatch", "stage": "C2A-RP-B2", "detail": js(block2_stats)})
     if len(assignments) != 40 or any(row["reconciliation_status"] != "exact_observed_match" for row in reconciliation):
@@ -999,6 +1056,7 @@ def main() -> int:
             source(c1_sources["geometry"], "C1_CANONICAL_GEOMETRY_FROZEN"),
             source(c1_sources["pairwise"], "C1_PAIRWISE_FROZEN"),
             source(c1_sources["crowd"], "C1_CROWD_STRUCTURE_FROZEN"),
+            source(c1_sources["building_binding"], "C1_TASK_BUILDING_BINDING_FROZEN"),
             source(c1_sources["gt_evidence"], "C1_GT_QUALITY_EVIDENCE_FROZEN"),
             source(c1_sources["gt_analysis"], "C1_GT_QUALITY_ANALYSIS_FROZEN"),
             source(c1_sources["views_manifest"], "C1_ANALYSIS_VIEWS_MANIFEST"),
@@ -1008,8 +1066,11 @@ def main() -> int:
             source(c1_sources["raw_input_manifest"], "C1_RAW_INPUT_MANIFEST"),
             source(ROOT / historical_binding["historical_rule_path"], "C1_HISTORICAL_RULE_MANIFEST"),
             source(c2b_path, "C2B_CANONICAL_CLOSEOUT"),
+            source(c2b_building_path, "C2B_CANONICAL_RISK_SLOPE_EVIDENCE"),
             source(block1_path, "C2A_RP_BLOCK1_CANONICAL_CLOSEOUT"),
+            source(block1_building_path, "C2A_RP_BLOCK1_RISK_SLOPE_EVIDENCE"),
             source(block2_assignment_path, "C2A_RP_BLOCK2_ASSIGNMENT_MANIFEST"),
+            source(block2_task_pool_path, "C2A_RP_BLOCK2_TASK_POOL"),
             source(block2_active_dir / "ACTIVE_TIME_FREEZE_MANIFEST.json", "C2A_RP_BLOCK2_ACTIVE_TIME_FREEZE_MANIFEST"),
             source(scope_note, "GT_SCOPE_NOTE"),
         ] + [source(path, "C2A_RP_BLOCK2_RAW_EXPORT") for path in block2_exports],
