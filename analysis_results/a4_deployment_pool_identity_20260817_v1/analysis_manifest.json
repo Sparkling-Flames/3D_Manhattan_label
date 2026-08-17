@@ -1,0 +1,102 @@
+{
+  "appears_in_internal_distribution_is_eligibility_source": false,
+  "eligibility_status": "A4_ELIGIBILITY_SPEC_INCOMPLETE",
+  "generator": {
+    "path": "tools/thesis_main/analysis/build_a4_deployment_pool_identity.py",
+    "sha256": "f29d4c15685f23d0932ba1d12e287b2a202562590e1a6b93699288cf9dc3fff8"
+  },
+  "identity_status": "A4_POOL_IDENTITY_READY",
+  "inputs": {
+    "assignment_realization": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_assignment_realization_audit.csv",
+      "sha256": "aa69e43b411247cb2a639ae0650b717e387a63c54132caa0e4e9e95f16d6c942"
+    },
+    "candidate_descriptors": {
+      "path": "analysis_results/a4_image_evidence_substrate_20260817_v2/DEVELOPMENT_CANDIDATE_GEOMETRY_DESCRIPTORS.csv",
+      "sha256": "a118056a615e3630147cdaad210e3283df419d4f7733b3bd8c2125b53f5f3f43"
+    },
+    "canonical_annotations": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_canonical_annotations.csv",
+      "sha256": "c6160151a1be468d16f83bb4397e7d09f8e8d43a2ce8725d35bb19d5c1bea724"
+    },
+    "collection_closure_manifest": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_snapshots/dispositions/3d0276fadf4a_c1_collection_closure_manifest.json",
+      "sha256": "3d0276fadf4a40696a67a619c81e2505890d85830d047ce81d46e93fcc2591d6"
+    },
+    "export_merge_manifest": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_export_merge_manifest.csv",
+      "sha256": "b6384387a19779c438d95e421a8230857b6b0718b612d5120a73d4411afa8cb3"
+    },
+    "project_provenance_summary": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_project_independence_provenance_summary.json",
+      "sha256": "fb7cf3fd1ac0492556673ca84036304a89bbeee7f543614c8bd24c620f0281d9"
+    },
+    "raw_snapshot_manifest": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_inputs/raw_input_snapshot_manifest.csv",
+      "sha256": "be10eb338552af81e68a518f48b07c1795c0b45e97460f2d1581a56001caa686"
+    },
+    "runtime_collision_audit": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_runtime_key_collision_audit.csv",
+      "sha256": "68bbba8df1253996539d0844842b81ceba962dd263ec6ff7dbfe23494aaa3427"
+    },
+    "runtime_mapping": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_runtime_task_mapping.csv",
+      "sha256": "7afb41a9bc08524cc4177b2002869a5a15f381fcc05fd53520fcfa47174718a9"
+    }
+  },
+  "join_counts": {
+    "mapped": 580,
+    "total": 580
+  },
+  "observed_valid_support_distribution": {
+    "1": 18,
+    "2": 41,
+    "3": 32,
+    "4": 15,
+    "5": 9,
+    "11": 12,
+    "12": 12
+  },
+  "output_sha256": {
+    "analysis_results/a4_deployment_pool_identity_20260817_v1/A4_CANDIDATE_DEPLOYMENT_POOL_IDENTITY_C1_v1.csv": "920f713057018ebdde3b4bfbd524f565f5d03fa8223987da54acd9ea0698e6e0",
+    "analysis_results/a4_deployment_pool_identity_20260817_v1/A4_DEPLOYMENT_POOL_IDENTITY_REPORT.md": "5ff5682476271dc1ecf424bda49155f0399d1a21cfb765a5d52664957bc6ae0f",
+    "analysis_results/a4_deployment_pool_identity_20260817_v1/A4_DEPLOYMENT_POOL_SUPPORT_SUMMARY.csv": "f4a92464f7296fb27ca1d7beadd6a761e8a16798583b460e1b179a51402f7ee1",
+    "analysis_results/a4_deployment_pool_identity_20260817_v1/INPUT_ACCESS_AND_PROVENANCE.json": "80e35d01eb39665614cfa377611ceda44d419b38f66be80ccaa94857e554d9af"
+  },
+  "pool_key_fields": [
+    "stage",
+    "round_id",
+    "condition",
+    "base_task_id",
+    "task_id",
+    "project_id",
+    "ls_runtime_task_id"
+  ],
+  "read_only_boundaries": {
+    "contract_modified": false,
+    "frozen_inputs_modified": false,
+    "holdout_effect_read": false,
+    "routing_modified": false,
+    "sap_modified": false,
+    "selector_implemented": false,
+    "v2_modified": false
+  },
+  "row_counts": {
+    "candidate_identity": 580,
+    "identity_pools": 139,
+    "observed_geometry_valid_candidates": 577,
+    "realization_matched_geometry_valid_candidates": 547
+  },
+  "schema_version": "a4_deployment_pool_identity_manifest_v1",
+  "source_export_sha_in_pool_key": false,
+  "status": "A4_POOL_IDENTITY_READY",
+  "strict_realization_sensitivity_support_distribution": {
+    "0": 2,
+    "1": 19,
+    "2": 42,
+    "3": 34,
+    "4": 12,
+    "5": 6,
+    "11": 24
+  }
+}

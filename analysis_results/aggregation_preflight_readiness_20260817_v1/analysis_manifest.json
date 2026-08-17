@@ -1,0 +1,154 @@
+{
+  "audit_version": "aggregation_preflight_readiness_20260817_v1",
+  "classification": "A4_DEVELOPMENT_NOT_READY",
+  "generator_sha256": "bb9580b3de438199f339eed39af038944254c9f94ec3d3dd14dfa5fccca735c5",
+  "hash_mismatches": [],
+  "input_sha256": {
+    "aggregation_required_N": {
+      "path": "analysis_results/post_block2_opportunity_analysis_20260817_v1/POST_BLOCK2_CLUSTERED_POWER/aggregation_required_N.csv",
+      "sha256": "34723021bfc51f7abc6af0cd900fde77a9b160f87fbca3bd14392197d362a16c"
+    },
+    "c1_crowd_structure": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_task_crowd_structure_C1.csv",
+      "sha256": "5aa04db57efd9606a27d94d7718a62df52302854d5bc5de7d89d5edca0c2f090"
+    },
+    "c1_preannotation_feature_manifest": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_preannotation_task_features_manifest.json",
+      "sha256": "4f98b081aef5cefb53c4999b7bcc034ee28c18251d539d058eeda75f6855b54e"
+    },
+    "c1_preannotation_features": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_preannotation_task_features.csv",
+      "sha256": "17d2cb16b77681f1c863bc822c2dcef447699b88582e9871ebb84b522794c70f"
+    },
+    "c2_feature_freeze_manifest": {
+      "path": "analysis_results/c2b_validation_static_20260802_v16/static/c2_feature_freeze_manifest.json",
+      "sha256": "a0d49772e7c81007423856f475b87a4e7f9ba5a9c78cff937834d8a7ec214c48"
+    },
+    "c2b_scope_audit": {
+      "path": "analysis_results/c2b_closeout_20260806_final/c2b_gt_scope_resolution_audit.json",
+      "sha256": "c9d66cccacd561edc6a316a911c1d10c03e5afaeaf252820d4ae4f93ec2fddc8"
+    },
+    "calibration_evidence_long": {
+      "path": "analysis_results/calibration_dual_track_processing_20260815_v2/calibration_evidence_long.csv",
+      "sha256": "77ebd0200242ff4118ec8cce0f835eed74ddf2ca5c34323f741e042f831c8478"
+    },
+    "calibration_task_feature_matrix": {
+      "path": "analysis_results/calibration_dual_track_processing_20260815_v2/task_feature_matrix.csv",
+      "sha256": "c46370d048fe848779043b6c40867929d86f8b7d068fd3a13f37efea8f3c638a"
+    },
+    "cross_fitted_selector_results": {
+      "path": "analysis_results/post_block2_opportunity_analysis_20260817_v1/POST_BLOCK2_AGGREGATION_OPPORTUNITY_AUDIT/cross_fitted_selector_results.csv",
+      "sha256": "43583e6681328e3bca3257d89245ccb501edf7a335b45f7c28e7bbe56abf0071"
+    },
+    "final_pooled_profile_csv": {
+      "path": "analysis_results/final_calibration_profile_20260817_v1/pooled_worker_profile_v2.csv",
+      "sha256": "11f7e30fd00ec388bc0b5798846002ba7d6c77033011987e0ff4f27d251c8574"
+    },
+    "final_pooled_profile_frozen": {
+      "path": "analysis_results/final_calibration_profile_20260817_v1/pooled_worker_profile_frozen.json",
+      "sha256": "716f6592afd49bb745392e44896316395315b44f8c1d50eba2af5d46e6d4b3be"
+    },
+    "final_profile_manifest": {
+      "path": "analysis_results/final_calibration_profile_20260817_v1/analysis_manifest.json",
+      "sha256": "4f1961574a1d3468b8eb5ffab658b6f43b536aca37c742932fb032201c9a62e5"
+    },
+    "final_qgt_model": {
+      "path": "analysis_results/final_calibration_profile_20260817_v1/final_c1_c2_qgt_model_v1.json",
+      "sha256": "a6877cae2a9c1f475fdf9da60df303eb35dc8be5b84782f274901cf03236802b"
+    },
+    "leave_one_building_out": {
+      "path": "analysis_results/post_block2_opportunity_analysis_20260817_v1/POST_BLOCK2_AGGREGATION_OPPORTUNITY_AUDIT/leave_one_building_out.csv",
+      "sha256": "daec20f74d52b245857b4e8d34ab1d76540eec030a5d5738680d245e67082cad"
+    },
+    "reference_conflict_queue": {
+      "path": "analysis_results/reference_conflict_sensitivity_audit_20260805_v2/c1_candidate_screen/c1_gt_conflict_review_queue.csv",
+      "sha256": "f0cf3a40b7ef38ca60072fc91f677eaca0b61ad0f399a32433af51f4d49e7703"
+    },
+    "reference_registry_post_c2": {
+      "path": "analysis_results/c2a_rp_local_launch_20260807_inputs_v2/reference_registry_post_c2_local.csv",
+      "sha256": "21063fbe53113714db92ab1ef46117a712faf5de37245f01d8898d44d44e2c6a"
+    },
+    "scope_note": {
+      "path": "export_label/RAW_DATA_AND_GROUND_TRUTH_SCOPE_NOTE_20260817.md",
+      "sha256": "c8b422755e75619798c053d5185b77606bce56c525b4d039642aa1feac30393c"
+    },
+    "selected_pack_aggregation_candidates": {
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v3/aggregation_candidate_geometries.csv",
+      "sha256": "4ce529409da2c539896d78af36b7c2deef2ebfd8cd9bd2fec03549c462ce1d9d"
+    },
+    "selected_pack_building_support_summary_raw": {
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v3/building_support_summary.csv",
+      "sha256": "cdfe284f2dae92f18a6db1be3bf1067221e00691b89cb2e1ede6cb7735f6da69"
+    },
+    "selected_pack_manifest": {
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v3/ARTIFACT_HASH_MANIFEST.json",
+      "sha256": "abffc3dc4f28582d8a8d8818e5166aa5040af7a50a2a53995cf109da5efe7d04"
+    },
+    "selected_pack_provenance": {
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v3/POST_BLOCK2_DATA_PROVENANCE.json",
+      "sha256": "2cf10a76182a27724105d1c2a1185feae39b4d7ffa5687568474d6dab91ef785"
+    },
+    "selected_pack_submission_master": {
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v3/post_block2_submission_master.csv",
+      "sha256": "3bdaf95ec8f642a1fde4b93994cb6de88316152a69f9c53cb97dd419c7984033"
+    },
+    "selected_pack_task_context_master": {
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v3/post_block2_task_context_master.csv",
+      "sha256": "d16b8990b036099e0a501591ba8162b114e84bb82b22213100b89c67e3b8840e"
+    },
+    "stage3_candidate_feature_manifest": {
+      "path": "analysis_results/stage3_test_preparation_20260804_v1/stage3_test_feature_candidate_manifest.json",
+      "sha256": "53babcd5fa88adb71b547db41941838472f9287e3774e91653a7b2bd06e00e86"
+    },
+    "v2_manifest_for_version_comparison": {
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v2/ARTIFACT_HASH_MANIFEST.json",
+      "sha256": "f63bb6fd4df7e9d57db1bb28d980fb30b2c6c1262417bd734dc532f19cd59e4b"
+    },
+    "v2_provenance_for_version_comparison": {
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v2/POST_BLOCK2_DATA_PROVENANCE.json",
+      "sha256": "c2f469c178ea24a2263f7ed42108369b4394f5ea89ebfccfd2c7b00246305a56"
+    },
+    "variable_corner_count_audit": {
+      "path": "analysis_results/post_block2_opportunity_analysis_20260817_v1/POST_BLOCK2_AGGREGATION_OPPORTUNITY_AUDIT/variable_corner_count_audit.csv",
+      "sha256": "948ebb3b044be3e4dbd38a56c825c1c0cf65ecd8cd1e3256904b636c5e1d2e43"
+    }
+  },
+  "manifest_self_sha256": "not_bound_recursive",
+  "missing_inputs": [],
+  "output_sha256": {
+    "A2_A0_UNCERTAINTY_AND_LOBO.json": "a029b33d0cc6a202aaf49c89ae3fb1176268609bbcefc732ddbbb030bb539a46",
+    "A4_DEPLOYABILITY_MATRIX.csv": "5b2bc687218a4274cb1074a0e09040eb9b5c1fdf88980ff37b1def0cb5f09e30",
+    "AGGREGATION_METHOD_DENOMINATOR.csv": "3db30272ef61f78e1dcfecd48939ff493aea5ce2c10db4f05a51577dee85f051",
+    "AGGREGATION_PREFLIGHT_REPORT.md": "92771e6c050153d09e70f2cdfd22c06958c28ebd1992ecc03444b32db4a4e3fd",
+    "CLEAN_A2_A0_COMMON_DENOMINATOR.csv": "074fb5914647c4c76969490a31e8e5dd8a2a708d7e6b8d597da9f5b2a01ddc1e",
+    "CONSERVATIVE_CLUSTERED_POWER.csv": "e119dfaf0f85a93048364a3aa4c9e835f062fa045f5c96198016c01a84ad0993",
+    "DATA_HIERARCHY_AND_DENOMINATOR.csv": "526249504c2fcdb3d1a54a777770b9d323d79a06ca902806d7fce49c431ba133",
+    "DEVELOPMENT_HOLDOUT_SPLIT_MANIFEST.csv": "5f5fe4bf84e88b89834e1c31ca07892a87f881fa6e30ffbf97170a39e6f33bed",
+    "PACK_VERSION_COMPARISON.json": "4e40d51c04d655829ca75131432ea3ab2c41fdc2ee30ae64fd7e26db146a0e25",
+    "POWER_ASSUMPTIONS_AND_AUDIT.json": "8857dff1634dc451061f50c67bee3eea23e77549a2121a4485e6ac6b3a728b39",
+    "POWER_REGRESSION_TESTS.json": "fae937b7c76e4f52a927bbb89f847b0247be60717abef0f2143fce2c55db0d1d",
+    "README.md": "6fa84894d8cf6268f31dbe82c50808bc2b2f1895dfcedb6ac06f6806f0922666",
+    "REFERENCE_READINESS.csv": "f659cec540d54ecb5e6d0b93b4a265475fd0f8975edc0579007686a842c6242a",
+    "aggregation_preflight_readiness.py": "bb9580b3de438199f339eed39af038944254c9f94ec3d3dd14dfa5fccca735c5"
+  },
+  "read_only_boundaries": {
+    "a4_implemented": false,
+    "active_logs_modified": false,
+    "block3_generated": false,
+    "formal_analysis_dirs_modified": false,
+    "historical_freeze_modified": false,
+    "method_contract_modified": false,
+    "oracle_as_performance": false,
+    "prospective_annotation_started": false,
+    "raw_export_modified": false,
+    "routing_modified": false,
+    "sap_modified": false
+  },
+  "schema_version": "aggregation_preflight_readiness_manifest_v1",
+  "selected_pack": {
+    "selected_pack": "post_block2_analysis_pack_20260817_v3",
+    "selection_rule": "v3 has formal current-v23 calibration profile binding; v2 declares final pooled profile source_absent",
+    "v2_not_silently_joined": true,
+    "v3_manifest_verified": true
+  }
+}

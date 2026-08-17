@@ -1,0 +1,232 @@
+{
+  "allowed_inputs": {
+    "assignment_realization": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_assignment_realization_audit.csv",
+      "sha256": "aa69e43b411247cb2a639ae0650b717e387a63c54132caa0e4e9e95f16d6c942"
+    },
+    "candidate_descriptors": {
+      "path": "analysis_results/a4_image_evidence_substrate_20260817_v2/DEVELOPMENT_CANDIDATE_GEOMETRY_DESCRIPTORS.csv",
+      "sha256": "a118056a615e3630147cdaad210e3283df419d4f7733b3bd8c2125b53f5f3f43"
+    },
+    "canonical_annotations": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_canonical_annotations.csv",
+      "sha256": "c6160151a1be468d16f83bb4397e7d09f8e8d43a2ce8725d35bb19d5c1bea724"
+    },
+    "collection_closure_manifest": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_snapshots/dispositions/3d0276fadf4a_c1_collection_closure_manifest.json",
+      "sha256": "3d0276fadf4a40696a67a619c81e2505890d85830d047ce81d46e93fcc2591d6"
+    },
+    "export_merge_manifest": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_export_merge_manifest.csv",
+      "sha256": "b6384387a19779c438d95e421a8230857b6b0718b612d5120a73d4411afa8cb3"
+    },
+    "project_provenance_summary": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_project_independence_provenance_summary.json",
+      "sha256": "fb7cf3fd1ac0492556673ca84036304a89bbeee7f543614c8bd24c620f0281d9"
+    },
+    "raw_snapshot_manifest": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_inputs/raw_input_snapshot_manifest.csv",
+      "sha256": "be10eb338552af81e68a518f48b07c1795c0b45e97460f2d1581a56001caa686"
+    },
+    "runtime_collision_audit": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_runtime_key_collision_audit.csv",
+      "sha256": "68bbba8df1253996539d0844842b81ceba962dd263ec6ff7dbfe23494aaa3427"
+    },
+    "runtime_mapping": {
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_runtime_task_mapping.csv",
+      "sha256": "7afb41a9bc08524cc4177b2002869a5a15f381fcc05fd53520fcfa47174718a9"
+    }
+  },
+  "assignment_realization_count": 739,
+  "candidate_count": 580,
+  "closure_schema_version": "paper_a_c1_collection_closure_v1",
+  "closure_window_closed": true,
+  "collision_count": 0,
+  "consumed_gt_reference_quality_outcome_values": false,
+  "deny_columns": [
+    "cluster",
+    "cluster_correctness",
+    "consensus",
+    "difficulty",
+    "gt",
+    "iou",
+    "medoid",
+    "outcome",
+    "quality",
+    "reference",
+    "score",
+    "worker_outcome"
+  ],
+  "deny_paths": [
+    "export_label/",
+    "active_logs/",
+    "analysis_results/post_block2_analysis_pack_20260817_v3/"
+  ],
+  "export_merge_count": 6,
+  "formal_canonical_count": 780,
+  "formal_runtime_count": 216,
+  "project_summary_annotation_count": 780,
+  "schema_version": "a4_deployment_pool_identity_input_access_v1",
+  "trace": [
+    {
+      "input_kind": "source_sha256",
+      "path": "analysis_results/a4_image_evidence_substrate_20260817_v2/DEVELOPMENT_CANDIDATE_GEOMETRY_DESCRIPTORS.csv",
+      "projected_columns": []
+    },
+    {
+      "input_kind": "source_sha256",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_canonical_annotations.csv",
+      "projected_columns": []
+    },
+    {
+      "input_kind": "source_sha256",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_runtime_task_mapping.csv",
+      "projected_columns": []
+    },
+    {
+      "input_kind": "source_sha256",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_assignment_realization_audit.csv",
+      "projected_columns": []
+    },
+    {
+      "input_kind": "source_sha256",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_runtime_key_collision_audit.csv",
+      "projected_columns": []
+    },
+    {
+      "input_kind": "source_sha256",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_export_merge_manifest.csv",
+      "projected_columns": []
+    },
+    {
+      "input_kind": "source_sha256",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_project_independence_provenance_summary.json",
+      "projected_columns": []
+    },
+    {
+      "input_kind": "source_sha256",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_inputs/raw_input_snapshot_manifest.csv",
+      "projected_columns": []
+    },
+    {
+      "input_kind": "source_sha256",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_snapshots/dispositions/3d0276fadf4a_c1_collection_closure_manifest.json",
+      "projected_columns": []
+    },
+    {
+      "input_kind": "csv_projection",
+      "path": "analysis_results/a4_image_evidence_substrate_20260817_v2/DEVELOPMENT_CANDIDATE_GEOMETRY_DESCRIPTORS.csv",
+      "projected_columns": [
+        "candidate_annotation_id",
+        "worker_id",
+        "stage",
+        "panorama_identity",
+        "building_scene_id",
+        "parse_status",
+        "layout_corner_count"
+      ]
+    },
+    {
+      "input_kind": "csv_projection",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_canonical_annotations.csv",
+      "projected_columns": [
+        "canonical_annotation_id",
+        "worker_id",
+        "round_id",
+        "condition",
+        "base_task_id",
+        "task_id",
+        "project_id",
+        "ls_runtime_task_id",
+        "dataset_group",
+        "source_export",
+        "source_export_sha256",
+        "assignment_provenance",
+        "duplicate_worker_task_submission",
+        "duplicate_group_size",
+        "duplicate_annotation_ids",
+        "duplicate_decision",
+        "process_disposition",
+        "appears_in_internal_distribution"
+      ]
+    },
+    {
+      "input_kind": "csv_projection",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_runtime_task_mapping.csv",
+      "projected_columns": [
+        "project_id",
+        "ls_runtime_task_id",
+        "task_id",
+        "base_task_id",
+        "condition",
+        "planned_project_name",
+        "source_export"
+      ]
+    },
+    {
+      "input_kind": "csv_projection",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_assignment_realization_audit.csv",
+      "projected_columns": [
+        "worker_id",
+        "task_id",
+        "base_task_id",
+        "condition",
+        "canonical_selected_submission",
+        "missing_submission",
+        "assignment_provenance"
+      ]
+    },
+    {
+      "input_kind": "csv_projection",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_runtime_key_collision_audit.csv",
+      "projected_columns": [
+        "project_id",
+        "ls_runtime_task_id",
+        "first_task_id",
+        "collision_task_id",
+        "first_base_task_id",
+        "collision_base_task_id",
+        "first_dataset_group",
+        "collision_dataset_group",
+        "collision_reason"
+      ]
+    },
+    {
+      "input_kind": "csv_projection",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_export_merge_manifest.csv",
+      "projected_columns": [
+        "source_export",
+        "runtime_task_count",
+        "sha256",
+        "bytes"
+      ]
+    },
+    {
+      "input_kind": "csv_projection",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_inputs/raw_input_snapshot_manifest.csv",
+      "projected_columns": [
+        "source_path",
+        "snapshot_path",
+        "source_kind",
+        "exists",
+        "bytes",
+        "sha256",
+        "completion_basis"
+      ]
+    },
+    {
+      "input_kind": "json_identity_metadata",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_project_independence_provenance_summary.json",
+      "projected_columns": [
+        "allowlisted_manifest_keys"
+      ]
+    },
+    {
+      "input_kind": "json_identity_metadata",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_snapshots/dispositions/3d0276fadf4a_c1_collection_closure_manifest.json",
+      "projected_columns": [
+        "allowlisted_manifest_keys"
+      ]
+    }
+  ]
+}
