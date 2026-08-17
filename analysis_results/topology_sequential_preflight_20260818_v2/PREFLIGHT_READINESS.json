@@ -1,0 +1,141 @@
+{
+  "actual_expert_reference_harm": {
+    "code": "actual_harm_source_absent",
+    "confidence_or_upper_bound": "not_reported",
+    "status": "source_absent"
+  },
+  "actual_live_stops_main_readiness": {
+    "reason": "no live assignment/availability proof and actual harm source absent",
+    "status": "not_ready"
+  },
+  "availability_and_main_candidate_inventory": {
+    "budget": "20x50=1000",
+    "code": "live_feasibility_inputs_absent",
+    "status": "not_identifiable"
+  },
+  "block3": false,
+  "cost_estimand": {
+    "excluded_costs": [
+      "future invalid/replacement attempts",
+      "expert fallback",
+      "availability",
+      "scheduling"
+    ],
+    "production_cost_claim_allowed": false,
+    "scope": "47 tasks already having at least five valid candidates",
+    "status": "conditional_diagnostic_only"
+  },
+  "denominator": {
+    "historical_counterfactual_support_shortfall_tasks": 31,
+    "historical_inventory_base_tasks": 78,
+    "interpretation": "47-task common support is the only F0/M0/M1 comparison; 78 tasks are historical support inventory only",
+    "normalization_version_conflict_count": 1,
+    "operational_geometry_and_structural_pool_distribution": {
+      "4": 31,
+      "5": 35,
+      "20": 12
+    },
+    "primary_common_buildings": 12,
+    "primary_common_fixed_k5_tasks": 47,
+    "status": "ready",
+    "structural_passed_distribution": {
+      "4": 30,
+      "5": 36,
+      "20": 12
+    },
+    "topology_distribution": {
+      "4": 28,
+      "5": 38,
+      "20": 12
+    }
+  },
+  "development_only": true,
+  "diagnostic_pre_stage3": true,
+  "formal_policy_frozen": false,
+  "formal_profile_frozen": false,
+  "gt_reference_conflict": {
+    "caveat": "does not establish absence of all upstream GT error and is not actual expert delivery harm",
+    "code": "ready_current_operational_audit_zero_declared",
+    "gt_issue_declared": false,
+    "pending": 0,
+    "review_queue_rows": 0,
+    "status": "ready"
+  },
+  "live_workers": {
+    "count": 20,
+    "excluded": {
+      "14": "administrative_exclusion",
+      "18": "withdrawn",
+      "27": "withdrawn"
+    },
+    "status": "ready",
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      11,
+      12,
+      13,
+      15,
+      17,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ]
+  },
+  "m0_corner_count_gate_geometry_medoid": {
+    "reason": "stopping reads repaired point count/2; selected output uses full geometry-medoid similarity, so timing and resolution both differ from F0",
+    "status": "development_descriptive_only"
+  },
+  "m1_conservative_development_gate": {
+    "rule": {
+      "k3": "3:0",
+      "k4": "4:0 or 3:1",
+      "k5": "5:0 or 4:1; otherwise unresolved/expert escalation"
+    },
+    "status": "recomputed_not_formal_policy"
+  },
+  "m2_worker_portrait": {
+    "risk_slope": "disabled",
+    "status": "not_evaluated_leakage_safe_estimator_absent"
+  },
+  "m3_posttask_meta": {
+    "causal_routing_effect": "not_claimed",
+    "first_route_meta": "excluded",
+    "status": "pending_pre_peer_timing_binding"
+  },
+  "prospective_shadow_development_readiness": {
+    "formal_policy_frozen": false,
+    "reason": "shadow may record autonomous stops and expert-escalation triggers; expert fallback quality/cost and formal Stage 3 amendment remain absent",
+    "scope": "simulation_only",
+    "status": "conditional_go_shadow_only"
+  },
+  "quality_estimand": {
+    "autonomous_delivery_sensitivity": "unresolved/autonomous no-output=0; resolved output with unavailable eligible reference remains missing, so this is reference-evaluable mITT rather than full ITT",
+    "complete_case": "diagnostic only",
+    "expert_fallback_workflow": "not_identifiable_without_expert_output_quality",
+    "formal_rule": "superiority",
+    "ni_margin": "not_created_or_selected",
+    "status": "ready_descriptive"
+  },
+  "replicates": 1000,
+  "scientific_conclusion_prohibited": true,
+  "seed": 20260818,
+  "supersedes": {
+    "artifact": "analysis_results/topology_sequential_preflight_20260818_v1",
+    "status": "superseded_development_descriptive_only"
+  },
+  "topology_sequential_f0_m0_m1": {
+    "reason": "47 common tasks, identical task-replicate-order rows, shared structural/metric admission and task-equal aggregation",
+    "status": "development_descriptive_only"
+  }
+}
