@@ -12,7 +12,6 @@ import argparse
 import csv
 import hashlib
 import json
-import os
 from pathlib import Path
 from typing import Any
 
@@ -26,6 +25,22 @@ KEYWORDS = {
     "assignment": ["assignment", "condition", "stage", "mode", "manual", "semi"],
 }
 
+FOCUS_PATHS = [
+    "analysis_results/post_block2_analysis_pack_20260817_v4/post_block2_submission_master.csv",
+    "analysis_results/post_block2_analysis_pack_20260817_v4/post_block2_task_context_master.csv",
+    "analysis_results/post_block2_analysis_pack_20260817_v4/post_block2_worker_profile_master.csv",
+    "analysis_results/final_calibration_profile_20260817_v1/pooled_worker_profile_v2.csv",
+    "analysis_results/final_calibration_profile_20260817_v1/final_c1_c2_qgt_worker_evidence.csv",
+    "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_geometry_pool_eligibility.csv",
+    "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_gt_quality_evidence.csv",
+    "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_three_track_worker_state_formal.csv",
+    "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/structural_validation_analysis.csv",
+    "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_geometry_loo_task_crowd_structure.csv",
+    "analysis_results/topology_sequential_preflight_20260818_v4_audit/TG_EF5_TASK_METRICS.csv",
+    "analysis_results/topology_sequential_preflight_20260818_v4_audit/TG_EF5_OPERATING_CHARACTERISTICS.csv",
+    "analysis_results/topology_sequential_preflight_20260818_v4_audit/REVIEWER_AVAILABILITY_SENSITIVITY.csv",
+]
+
 
 def sha256(path: Path) -> str:
     h = hashlib.sha256()
@@ -35,19 +50,29 @@ def sha256(path: Path) -> str:
     return h.hexdigest()
 
 
-def inspect_csv(path: Path, root: Path) -> dict[str, Any]:
+def inspect_csv(path: Path, root: Path, sample_limit: int = 2) -> dict[str, Any]:
     header: list[str] = []
     row_count = 0
     sample_rows: list[dict[str, str]] = []
+    nonempty: dict[str, int] = {}
+    examples: dict[str, list[str]] = {}
     error = ""
     try:
         with path.open("r", encoding="utf-8-sig", newline="", errors="replace") as f:
             reader = csv.DictReader(f)
             header = list(reader.fieldnames or [])
+            nonempty = {c: 0 for c in header}
+            examples = {c: [] for c in header}
             for row in reader:
                 row_count += 1
-                if len(sample_rows) < 2:
+                if len(sample_rows) < sample_limit:
                     sample_rows.append({k: (v or "")[:300] for k, v in row.items()})
+                for c in header:
+                    value = (row.get(c) or "").strip()
+                    if value:
+                        nonempty[c] += 1
+                        if len(examples[c]) < 4 and value not in examples[c]:
+                            examples[c].append(value[:200])
     except Exception as exc:  # inventory must continue across malformed legacy files
         error = f"{type(exc).__name__}: {exc}"
     lower = [c.lower() for c in header]
@@ -63,6 +88,8 @@ def inspect_csv(path: Path, root: Path) -> dict[str, Any]:
         "rows": row_count,
         "columns": header,
         "column_count": len(header),
+        "column_nonempty": nonempty,
+        "column_examples": examples,
         "keyword_groups": groups,
         "relevance_score": score,
         "sample_rows": sample_rows,
@@ -160,6 +187,43 @@ def main() -> None:
     with (out / "CANDIDATE_ANALYSIS_TABLES.json").open("w", encoding="utf-8") as f:
         json.dump(candidates, f, ensure_ascii=False, indent=2)
 
+    inventory_by_path = {i["path"]: i for i in csv_inventory}
+    focused = []
+    for rel in FOCUS_PATHS:
+        if rel in inventory_by_path:
+            item = inventory_by_path[rel]
+            focused.append({
+                "path": rel,
+                "rows": item["rows"],
+                "bytes": item["bytes"],
+                "sha256": item["sha256"],
+                "columns": item["columns"],
+                "column_nonempty": item["column_nonempty"],
+                "column_examples": item["column_examples"],
+                "sample_rows": item["sample_rows"],
+            })
+        else:
+            focused.append({"path": rel, "missing": True})
+    with (out / "FOCUS_SCHEMA_REPORT.json").open("w", encoding="utf-8") as f:
+        json.dump(focused, f, ensure_ascii=False, indent=2)
+
+    # Compact row-per-column catalogue so connector reads do not need to load a large JSON.
+    with (out / "FOCUS_COLUMN_CATALOG.csv").open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=["path", "rows", "column", "nonempty", "examples"])
+        writer.writeheader()
+        for item in focused:
+            if item.get("missing"):
+                writer.writerow({"path": item["path"], "rows": "", "column": "__MISSING__", "nonempty": "", "examples": ""})
+                continue
+            for column in item["columns"]:
+                writer.writerow({
+                    "path": item["path"],
+                    "rows": item["rows"],
+                    "column": column,
+                    "nonempty": item["column_nonempty"].get(column, 0),
+                    "examples": " || ".join(item["column_examples"].get(column, [])),
+                })
+
     summary = {
         "status": "inventory_complete",
         "root": str(root),
@@ -167,9 +231,11 @@ def main() -> None:
         "json_files_scanned": len(json_inventory),
         "csv_rows_total": sum(i["rows"] for i in csv_inventory),
         "csv_errors": [i["path"] for i in csv_inventory if i["error"]],
+        "focused_tables_present": sum(1 for i in focused if not i.get("missing")),
+        "focused_tables_missing": [i["path"] for i in focused if i.get("missing")],
         "top_candidates": {k: [x["path"] for x in v[:10]] for k, v in candidates.items()},
         "limitations": [
-            "This first pass inventories schemas only; it does not interpret post-outcome fields as pre-assignment predictors.",
+            "This pass inventories schemas only; it does not interpret post-outcome fields as pre-assignment predictors.",
             "Reviewer availability is not reviewer efficacy; actual review-role transfer requires a randomized role experiment.",
             "Public-GT and frozen-F5 outputs are development comparators, not expert delivery-harm ground truth.",
         ],
