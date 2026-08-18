@@ -5,6 +5,10 @@
   "json_files_scanned": 349,
   "csv_rows_total": 119917,
   "csv_errors": [],
+  "focused_tables_present": 12,
+  "focused_tables_missing": [
+    "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_geometry_loo_task_crowd_structure.csv"
+  ],
   "top_candidates": {
     "worker": [
       "analysis_results/post_block2_analysis_pack_20260817_v3/post_block2_worker_profile_master.csv",
@@ -80,7 +84,7 @@
     ]
   },
   "limitations": [
-    "This first pass inventories schemas only; it does not interpret post-outcome fields as pre-assignment predictors.",
+    "This pass inventories schemas only; it does not interpret post-outcome fields as pre-assignment predictors.",
     "Reviewer availability is not reviewer efficacy; actual review-role transfer requires a randomized role experiment.",
     "Public-GT and frozen-F5 outputs are development comparators, not expert delivery-harm ground truth."
   ]
