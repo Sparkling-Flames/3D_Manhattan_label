@@ -140,8 +140,6 @@ def load_frozen_inputs(root: Path = ROOT) -> dict[str, Any]:
     if reference_audit.get("gt_issue_declared") is not False or reference_audit.get("n_pending_contexts") != 0 or conflict_queue:
         raise AssertionError("current operational GT/reference audit is not the expected zero-declared, zero-pending state")
 
-    annotation_rows = _read_csv(base / "c1_canonical_annotations.csv")
-    annotation_by_id = {_key(row): row for row in annotation_rows if _key(row)}
     geometry_rows = _read_jsonl(base / "c1_canonical_geometry.jsonl")
     candidates: dict[str, list[dict[str, Any]]] = defaultdict(list)
     raw_counts: Counter[str] = Counter()
@@ -155,7 +153,6 @@ def load_frozen_inputs(root: Path = ROOT) -> dict[str, Any]:
         raw_counts[task] += 1
         annotation = _key(geometry)
         gt = gt_by_annotation.get(annotation, {})
-        annotation_row = annotation_by_id.get(annotation, {})
         structural_row = structural_by_annotation.get(annotation, {})
         repaired = _int(structural_row.get("repaired_point_count"))
         topology_signature_from_structural = _topology_signature_from_structural(structural_row, gt)
@@ -191,7 +188,6 @@ def load_frozen_inputs(root: Path = ROOT) -> dict[str, Any]:
             item["structural_validation_status"] = str(structural)
             item["structurally_valid"] = str(structural).lower() == "passed"
             item["gt"] = gt
-            item["annotation"] = annotation_row
             candidates[task].append(item)
 
     topology_distribution = Counter(len(rows) for rows in candidates.values())
