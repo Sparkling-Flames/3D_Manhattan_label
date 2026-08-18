@@ -53,19 +53,30 @@ def _cluster_with_support(records, largest, second, count):
     }
 
 
-def test_frozen_denominator_live_filter_and_exhaustion_facts():
+def test_frozen_denominator_historical_replay_and_sensitivity_facts():
     data = load_frozen_inputs(ROOT)
-    assert len(data["tasks"]) == 78
+    assert len(data["historical_candidates"]) == 78
+    assert sum(len(rows) for rows in data["historical_candidates"].values()) == 594
     assert LIVE_WORKERS == {1, 2, 6, 8, 10, 11, 12, 13, 15, 17, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37}
-    assert {worker for rows in data["candidates"].values() for worker in (row["worker_id"] for row in rows)} <= LIVE_WORKERS
-    assert {size: sum(len(rows) == size for rows in data["candidates"].values()) for size in (4, 5, 20)} == {4: 28, 5: 38, 20: 12}
-    assert {size: sum(data["tasks"][task]["structural_candidate_count"] == size for task in data["tasks"]) for size in (4, 5, 20)} == {4: 30, 5: 36, 20: 12}
+    historical_workers = {row["worker_id"] for rows in data["historical_candidates"].values() for row in rows}
+    assert {18, 27} <= historical_workers
+    assert not historical_workers <= LIVE_WORKERS
+    assert data["support_counts"]["historical"] == {
+        "frozen_geometry_pool": 78,
+        "current_normalizer": 77,
+        "structural_passed": 76,
+        "normalizer_and_structural": 75,
+    }
+    assert data["support_counts"]["current20"] == {
+        "frozen_geometry_pool": 50,
+        "current_normalizer": 49,
+        "structural_passed": 48,
+        "normalizer_and_structural": 47,
+    }
     assert data["reference_audit"]["gt_issue_declared"] is False
     assert data["reference_audit"]["n_pending_contexts"] == 0
     assert data["conflict_queue_rows"] == []
-    assert sum(count for size, count in data["operational_distribution"].items() if size >= 5) == 47
-    assert sum(count for size, count in data["operational_distribution"].items() if size < 5) == 31
-    conflicts = [row for rows in data["candidates"].values() for row in rows if not row["geometry_metric_evaluable"]]
+    conflicts = [row for rows in data["historical_candidates"].values() for row in rows if not row["current_normalizer_evaluable"]]
     assert len(conflicts) == 1
     assert conflicts[0]["canonical_annotation_id"] == "370095f69c5b170678fa"
     assert conflicts[0]["structurally_valid"] is True
@@ -103,35 +114,35 @@ def test_task_equal_averages_replicates_within_task_first():
     for task, values in {"a1": [3, 3], "a2": [3], "b1": [5]}.items():
         for replicate, value in enumerate(values):
             rows.append({
-                "estimand_scope": "primary_common47", "policy": "M0_corner_count_gate_geometry_medoid",
+                "estimand_scope": "historical_population_replay_78", "policy": "M0_corner_count_gate_geometry_medoid",
                 "base_task_id": task, "building_id": tasks[task]["building_id"],
-                "mean_paid_valid_submissions": value, "mean_raw_paid_attempts": 9,
+                "mean_frozen_geometry_submissions_used": value, "mean_historical_candidates_examined": 9,
                 "paid_valid_replicate_support": 1, "raw_attempt_replicate_support": 1,
                 "replicate_support": 1,
             })
-    metric = next(row for row in operating_rows(rows, tasks, 20260818) if row["policy"] == "M0_corner_count_gate_geometry_medoid" and row["metric"] == "conditional mean paid valid submissions on common valid-candidate support")
+    metric = next(row for row in operating_rows(rows, tasks, 20260818) if row["policy"] == "M0_corner_count_gate_geometry_medoid" and row["metric"] == "mean frozen geometry submissions used")
     assert metric["estimate"] == 11 / 3
     assert metric["task_support"] == 3
-    paid = next(row for row in operating_rows(rows, tasks, 20260818) if row["policy"] == "M0_corner_count_gate_geometry_medoid" and row["metric"] == "conditional mean raw paid attempts on common valid-candidate support")
-    assert paid["estimate"] == 9.0
+    examined = next(row for row in operating_rows(rows, tasks, 20260818) if row["policy"] == "M0_corner_count_gate_geometry_medoid" and row["metric"] == "mean historical candidates examined")
+    assert examined["estimate"] == 9.0
 
 
-def test_summary_outcomes_are_unconditional_and_historical_shortfall_is_not_prospective_exhaustion():
-    statuses = ["stop@3", "stop@4", "cap_reached_output", "historical_counterfactual_support_shortfall"]
+def test_summary_outcomes_are_unconditional_for_historical_replay():
+    statuses = ["stop@3", "stop@4", "cap_reached_output", "fixed_k5"]
     rows = [{
         "base_task_id": "t", "building_id": "b", "policy": "M0_corner_count_gate_geometry_medoid", "order_signature": str(i), "candidate_permutation_n": 5,
         "status": status, "K_attempts": 3 if status == "stop@3" else 4 if status == "stop@4" else 5,
-        "K_valid": 3 if status == "stop@3" else 4 if status == "stop@4" else 5 if status == "cap_reached_output" else 4,
+        "K_valid": 3 if status == "stop@3" else 4 if status == "stop@4" else 5,
         "invalid_attempts": 0, "replacement_attempts": 0, "metric_invalid_attempts": 0,
-        "stop_at_3": status == "stop@3", "incremental_stop_at_4": status == "stop@4", "reach5": status == "cap_reached_output",
-        "historical_counterfactual_support_shortfall": status == "historical_counterfactual_support_shortfall", "supported_multimodal_encountered": False,
-        "selected_annotation_id": "a" if status != "historical_counterfactual_support_shortfall" else None,
+        "stop_at_3": status == "stop@3", "incremental_stop_at_4": status == "stop@4", "reach5": status in {"cap_reached_output", "fixed_k5"},
+        "historical_counterfactual_support_shortfall": False, "supported_multimodal_encountered": False,
+        "selected_annotation_id": "a",
         "public_gt_quality": None, "paired_quality_delta_vs_f0": None, "paid_valid_savings_vs_f0": None,
         "paid_submission_savings": None, "prefix_full5_selected_output_instability": None, "selected_structural_invalidity": None,
     } for i, status in enumerate(statuses)]
     summary = summarize_rows(rows, {"t": {"building_id": "b"}}, 4)[0]
     outcomes = [summary["stop_at_3_probability"], summary["incremental_stop_at_4_probability"], summary["reach5_probability"], summary["historical_counterfactual_support_shortfall_probability"]]
-    assert outcomes == [0.25, 0.25, 0.25, 0.25]
+    assert outcomes == [0.25, 0.25, 0.5, 0.0]
     assert sum(outcomes) == 1.0
     assert "candidate exhaustion" not in {label for _, label, _, _ in PRIMARY_METRICS}
 
@@ -232,7 +243,8 @@ def test_no_output_keeps_cost_and_enters_reference_evaluable_autonomous_mitt_as_
         "reference_evaluable_autonomous_delivery_quality": 0.0,
     }
     attach_pair_metrics(unresolved, f0)
-    assert unresolved["raw_paid_attempt_savings_vs_f0"] == 0
+    assert unresolved["historical_candidates_examined_savings_vs_f0"] == 0
+    assert unresolved["frozen_geometry_submission_savings_vs_f0"] == 0
     assert unresolved["reference_evaluable_autonomous_delivery_quality"] == 0.0
     assert unresolved["reference_evaluable_autonomous_delivery_mitt_delta_vs_f0"] == pytest.approx(-.8)
     assert unresolved["paired_complete_case_quality_delta_vs_f0"] is None
@@ -252,51 +264,50 @@ def test_no_output_keeps_cost_and_enters_reference_evaluable_autonomous_mitt_as_
     f0_no_output = dict(f0, status="policy_failure_no_output", selected_annotation_id=None, public_gt_quality=None, reference_evaluable_autonomous_delivery_quality=0.0)
     resolved = dict(unresolved, status="stop@3", paid_valid_submissions=3, raw_paid_attempts=3, selected_annotation_id="prefix", public_gt_quality=.7, reference_evaluable_autonomous_delivery_quality=.7)
     attach_pair_metrics(resolved, f0_no_output)
-    assert resolved["paid_valid_savings_vs_f0"] == 2
-    assert resolved["raw_paid_attempt_savings_vs_f0"] == 2
+    assert resolved["frozen_geometry_submission_savings_vs_f0"] == 2
+    assert resolved["historical_candidates_examined_savings_vs_f0"] == 2
     assert resolved["reference_evaluable_autonomous_delivery_mitt_delta_vs_f0"] == pytest.approx(.7)
     assert resolved["paired_complete_case_quality_delta_vs_f0"] is None
 
 
-def test_primary_comparison_is_the_same_47_tasks_and_orders():
+def test_primary_comparison_is_all_78_frozen_tasks_and_orders():
     data = load_frozen_inputs(ROOT)
-    common = {
-        task for task, rows in data["candidates"].items()
-        if sum(row["structurally_valid"] and row["geometry_metric_evaluable"] for row in rows) >= 5
-    }
-    assert len(common) == 47
-    for task in common:
-        order = _stable_order(data["candidates"][task], task, 0, 20260818)
+    assert set(data["historical_candidates"]) == set(data["tasks"])
+    assert len(data["historical_candidates"]) == 78
+    for task, candidates in data["historical_candidates"].items():
+        order = _stable_order(candidates, task, 0, 20260818)
         results = [run_f0(order, task), run_m0(order, task), run_m1(order, task)]
         assert results[0]["K_valid"] == 5
         assert {_order_signature(result["order"]) for result in results} == {_order_signature(order)}
     summaries = [{
-        "estimand_scope": "primary_common47" if task in common else "historical_support_all78",
+        "estimand_scope": "historical_population_replay_78",
         "policy": policy, "base_task_id": task, "building_id": data["tasks"][task]["building_id"],
-        "paired_rows_status": "paired_same_order" if task in common else "historical_f0_support_shortfall",
-        "mean_paid_valid_submissions": 5, "paid_valid_replicate_support": 1, "replicate_support": 1,
-        "historical_counterfactual_support_shortfall_probability": 0 if task in common else 1,
+        "paired_rows_status": "paired_same_task_replicate_order",
+        "mean_frozen_geometry_submissions_used": 5,
+        "mean_historical_candidates_examined": 5,
+        "paid_valid_replicate_support": 1, "raw_attempt_replicate_support": 1, "replicate_support": 1,
+        "historical_counterfactual_support_shortfall_probability": 0,
     } for task in data["tasks"] for policy in ("F0", "M0_corner_count_gate_geometry_medoid", "M1")]
     primary = [
         row for row in operating_rows(summaries, data["tasks"], 20260818)
-        if row["cohort"] == "primary_common47" and row["metric"] == "conditional mean paid valid submissions on common valid-candidate support"
+        if row["cohort"] == "historical_population_replay_78" and row["metric"] == "mean frozen geometry submissions used"
     ]
     assert {row["policy"] for row in primary} == {"F0", "M0_corner_count_gate_geometry_medoid", "M1"}
-    assert all(row["task_total"] == row["task_support"] == 47 for row in primary)
+    assert all(row["task_total"] == row["task_support"] == 78 for row in primary)
 
 
-def test_rule_defined_zero_has_no_zero_width_bootstrap_interval():
+def test_raw_structural_failure_lane_is_empirical_not_zero_by_admission_rule():
     tasks = {"t": {"building_id": "b"}}
     rows = [{
-        "estimand_scope": "primary_common47", "policy": "M1", "base_task_id": "t", "building_id": "b",
+        "estimand_scope": "historical_population_replay_78", "policy": "M1", "base_task_id": "t", "building_id": "b",
         "selected_structural_invalidity_probability": 0.0, "selected_structural_invalidity_replicate_support": 1,
         "replicate_support": 1,
     }]
     operating = operating_rows(rows, tasks, 20260818)
-    metric = next(row for row in operating if row["policy"] == "M1" and row["metric"] == "selected structural invalidity")
-    assert metric["status"] == "zero_by_admission_rule"
-    assert metric["ci_low"] is None
-    assert metric["ci_high"] is None
+    metric = next(row for row in operating if row["policy"] == "M1" and row["metric"] == "raw structural-failure probability among selected outputs")
+    assert metric["status"] == "ready_development_descriptive"
+    assert metric["ci_low"] == 0.0
+    assert metric["ci_high"] == 0.0
     workflow = [row for row in operating if row.get("policy") == "M1_with_expert_fallback"]
     assert {row["metric"] for row in workflow} == {"final delivery quality after expert fallback", "total deployment cost including expert fallback"}
     assert all(row["status"] == "not_identifiable" for row in workflow)
@@ -312,3 +323,101 @@ def test_missing_and_fail_closed_lanes_are_explicit():
     assert FLAGS["block3"] is False
     assert FLAGS["formal_policy_frozen"] is False
     assert FLAGS["formal_profile_frozen"] is False
+
+
+def test_v3_historical_replay_uses_frozen_geometry_pool_and_exact_support_chain():
+    data = load_frozen_inputs(ROOT)
+    historical = data["historical_candidates"]
+
+    assert len(historical) == 78
+    assert sum(len(rows) for rows in historical.values()) == 594
+    assert data["support_counts"] == {
+        "historical": {
+            "frozen_geometry_pool": 78,
+            "current_normalizer": 77,
+            "structural_passed": 76,
+            "normalizer_and_structural": 75,
+        },
+        "current20": {
+            "frozen_geometry_pool": 50,
+            "current_normalizer": 49,
+            "structural_passed": 48,
+            "normalizer_and_structural": 47,
+        },
+    }
+    assert data["historical_replay_filters"] == {
+        "live_roster": False,
+        "current_normalizer": False,
+        "structural_status": False,
+    }
+
+
+def test_v3_historical_pool_retains_completed_workers_repairs_and_normalizer_lane():
+    data = load_frozen_inputs(ROOT)
+    historical_rows = [row for rows in data["historical_candidates"].values() for row in rows]
+    assert sum(row["worker_id"] == 18 for row in historical_rows) == 26
+    assert sum(row["worker_id"] == 27 for row in historical_rows) == 26
+
+    by_annotation = {row["canonical_annotation_id"]: row for row in historical_rows}
+    for annotation_id in ("9e5409147dcedaf906b7", "63001f819a4a6b408ae2"):
+        row = by_annotation[annotation_id]
+        assert row["frozen_geometry_pool_member"] is True
+        assert row["historical_replay_admitted"] is True
+        assert row["frozen_geometry_valid"] is True
+        assert row["raw_structural_failure"] is True
+        assert row["repair_applied"] is True
+        assert row["repair_required_attempt"] is True
+        assert row["current_normalizer_evaluable"] is True
+
+    drift = by_annotation["370095f69c5b170678fa"]
+    assert drift["frozen_geometry_pool_member"] is True
+    assert drift["historical_replay_admitted"] is True
+    assert drift["frozen_geometry_valid"] is True
+    assert drift["raw_structural_failure"] is False
+    assert drift["current_normalizer_evaluable"] is False
+    assert drift["current_normalizer_status"] == "pairing_search_exhausted"
+
+
+def test_v3_assignment_lanes_keep_formal_replacements_and_exclude_outside_assignments():
+    data = load_frozen_inputs(ROOT)
+    audit = data["assignment_audit"]
+    assert audit["formal_replacement_count"] == 15
+    assert audit["formal_replacement_by_worker"] == {"1": 1, "34": 14}
+    assert audit["outside_assignment_count"] == 7
+
+    historical_rows = [row for rows in data["historical_candidates"].values() for row in rows]
+    assert all(row["assignment_provenance"] != "outside_assignment_submission" for row in historical_rows)
+
+
+def test_v3_three_policies_share_task_replicate_order_on_historical_pool():
+    data = load_frozen_inputs(ROOT)
+    for task_id, candidates in data["historical_candidates"].items():
+        for replicate in (0, 1, 999):
+            order = _stable_order(candidates, task_id, replicate, 20260818)
+            results = [run_f0(order, task_id), run_m0(order, task_id), run_m1(order, task_id)]
+            assert {_order_signature(result["order"]) for result in results} == {_order_signature(order)}
+
+
+def test_v3_expert_escalation_is_not_policy_failure_and_zero_mitt_is_observed_support(monkeypatch):
+    records = [_candidate(index) for index in range(1, 6)]
+
+    def unresolved_cluster(rows, task):
+        if len(rows) < 5:
+            return _cluster_with_support(rows, 2, 1, 2)
+        return _cluster_with_support(rows, 3, 2, 2)
+
+    monkeypatch.setattr(
+        "tools.thesis_main.analysis.run_topology_sequential_preflight._cluster",
+        unresolved_cluster,
+    )
+    result = run_m1(records, "task")
+    row = _result_row({"base_task_id": "task", "building_id": "b"}, 0, "order", result)
+    assert result["status"] == "unresolved_expert_escalation_required"
+    assert row["expert_escalation_required"] is True
+    assert "policy_failure" not in row
+    assert row["autonomous_non_delivery"] is True
+    assert row["reference_evaluable_autonomous_delivery_quality"] == 0.0
+
+    summary = summarize_rows([row], {"task": {"building_id": "b"}}, 1)[0]
+    assert summary["reference_evaluable_autonomous_delivery_replicate_support"] == 1
+    assert summary["mean_reference_evaluable_autonomous_delivery_quality"] == 0.0

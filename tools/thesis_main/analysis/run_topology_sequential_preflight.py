@@ -16,6 +16,8 @@ from typing import Any, Iterable
 
 ROOT = Path(__file__).resolve().parents[3]
 LIVE_WORKERS = {1, 2, 6, 8, 10, 11, 12, 13, 15, 17, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37}
+REPLAY_REPAIR_IDS = {"63001f819a4a6b408ae2", "9e5409147dcedaf906b7"}
+NORMALIZER_DRIFT_ID = "370095f69c5b170678fa"
 SEED = 20260818
 DEFAULT_REPLICATES = 1000
 Q_BOUNDARY = 0.95
@@ -105,7 +107,7 @@ def _key(row: dict[str, Any]) -> str:
 
 
 def load_frozen_inputs(root: Path = ROOT) -> dict[str, Any]:
-    """Load only frozen C1 geometry, structural evidence and task-building binding."""
+    """Load the frozen C1 geometry pool; later roster/parser versions are diagnostics only."""
     base = c1_root(root)
     sidecar = _read_csv(base / "geometry_task_crowd_structure_C1.csv")
     tasks = {
@@ -140,72 +142,214 @@ def load_frozen_inputs(root: Path = ROOT) -> dict[str, Any]:
     if reference_audit.get("gt_issue_declared") is not False or reference_audit.get("n_pending_contexts") != 0 or conflict_queue:
         raise AssertionError("current operational GT/reference audit is not the expected zero-declared, zero-pending state")
 
+    pool_rows = _read_csv(base / "c1_geometry_pool_eligibility.csv")
+    pool_ids = {
+        _key(row)
+        for row in pool_rows
+        if str(row.get("base_task_id")) in tasks
+        and row.get("condition") == "manual"
+        and _truth(row.get("geometry_pool_eligible"))
+    }
+    if len(pool_ids) != 594:
+        raise AssertionError(f"frozen geometry-pool candidate count drifted: {len(pool_ids)} != 594")
+
+    repair_by_annotation = {
+        _key(row): row for row in _read_csv(base / "c1_geometry_repair_audit.csv") if _key(row)
+    }
     geometry_rows = _read_jsonl(base / "c1_canonical_geometry.jsonl")
     candidates: dict[str, list[dict[str, Any]]] = defaultdict(list)
-    raw_counts: Counter[str] = Counter()
     for geometry in geometry_rows:
+        annotation = _key(geometry)
         task = str(geometry.get("base_task_id") or "")
-        if task not in tasks or str(geometry.get("condition") or "") != "manual":
+        if annotation not in pool_ids:
             continue
         worker = _int(geometry.get("worker_id"))
-        if worker not in LIVE_WORKERS:
-            continue
-        raw_counts[task] += 1
-        annotation = _key(geometry)
+        if task not in tasks or worker is None:
+            raise AssertionError(f"frozen geometry-pool identity is incomplete: {annotation}")
         gt = gt_by_annotation.get(annotation, {})
         structural_row = structural_by_annotation.get(annotation, {})
+        repair_row = repair_by_annotation.get(annotation, {})
         repaired = _int(structural_row.get("repaired_point_count"))
         topology_signature_from_structural = _topology_signature_from_structural(structural_row, gt)
+        repair_applied = _truth(repair_row.get("geometry_repair_applied"))
+        calculation_points = (
+            json.loads(str(repair_row.get("repaired_points_json") or "[]"))
+            if repair_applied
+            else geometry.get("corners_px") or []
+        )
         normalized = normalize_geometry_for_c1_calculation(
-            geometry.get("corners_px") or [],
+            calculation_points,
             width=_int(geometry.get("width")) or 1024,
             height=_int(geometry.get("height")) or 512,
         )
-        topology_evaluable = (
-            str(geometry.get("validity_status") or "").lower() == "valid"
-            and _truth(geometry.get("eligible_for_geometry_loo"))
-            and repaired is not None
-            and repaired > 0
-            and topology_signature_from_structural is not None
-        )
+        if repaired is None or repaired <= 0 or topology_signature_from_structural is None:
+            raise AssertionError(f"frozen geometry-pool topology is incomplete: {annotation}")
         structural = structural_row.get("structural_validation_status", "not_evaluable")
-        if topology_evaluable:
-            normalized_pairs = _int(normalized.get("n_pairs"))
-            normalization_conflict = ""
-            if normalized_pairs not in {None, 0} and normalized_pairs != repaired // 2:
-                raise AssertionError(f"normalized topology conflict for {annotation}: {normalized_pairs} != {repaired // 2}")
-            if normalized_pairs in {None, 0}:
-                normalization_conflict = "normalized_geometry_n_pairs_missing_or_invalid; fell back to frozen repaired_point_count/2"
-            item = dict(geometry)
-            item["_geometry"] = normalized
-            item["canonical_annotation_id"] = annotation
-            item["worker_id"] = worker
-            item["repaired_point_count"] = repaired
-            item["normalized_n_pairs"] = normalized_pairs
-            item["topology_normalization_conflict"] = normalization_conflict
-            item["geometry_metric_evaluable"] = normalized.get("valid") is True
-            item["topology_signature"] = topology_signature_from_structural
-            item["structural_validation_status"] = str(structural)
-            item["structurally_valid"] = str(structural).lower() == "passed"
-            item["gt"] = gt
-            candidates[task].append(item)
+        normalized_pairs = _int(normalized.get("n_pairs"))
+        current_normalizer_evaluable = normalized.get("valid") is True
+        if current_normalizer_evaluable and normalized_pairs != repaired // 2:
+            raise AssertionError(f"current normalizer topology conflict for {annotation}: {normalized_pairs} != {repaired // 2}")
+        frozen_sha = str(repair_row.get("repaired_geometry_sha256") or repair_row.get("raw_geometry_sha256") or "")
+        if not frozen_sha:
+            raise AssertionError(f"frozen geometry hash is missing: {annotation}")
+        item = dict(geometry)
+        item.update({
+            "_geometry": {
+                "valid": True,
+                "base_task_id": task,
+                "worker_id": worker,
+                "canonical_annotation_id": annotation,
+                "frozen_geometry_sha256": frozen_sha,
+            },
+            "canonical_annotation_id": annotation,
+            "worker_id": worker,
+            "repaired_point_count": repaired,
+            "topology_signature": topology_signature_from_structural,
+            "frozen_geometry_sha256": frozen_sha,
+            "frozen_geometry_pool_member": True,
+            "frozen_geometry_valid": True,
+            "replay_geometry_admissible": True,
+            "historical_replay_admitted": True,
+            "geometry_metric_evaluable": True,
+            "current_normalizer_evaluable": current_normalizer_evaluable,
+            "current_normalizer_status": str(normalized.get("reason") or ("valid" if current_normalizer_evaluable else "not_evaluable")),
+            "current_roster_member": worker in LIVE_WORKERS,
+            "structural_validation_status": str(structural),
+            "structurally_valid": str(structural).lower() == "passed",
+            "raw_structural_failure": str(structural).lower() != "passed",
+            "formal_structural_eligible": str(structural).lower() == "passed",
+            "repair_applied": repair_applied,
+            "repair_required_attempt": repair_applied,
+            "preflight_development_repair_binding": repair_applied,
+            "formal_c1_derivation": not repair_applied,
+            "formal_replacement_candidate": structural_row.get("assignment_provenance") == "authorized_replacement_assignment",
+            "assignment_provenance": str(structural_row.get("assignment_provenance") or ""),
+            "gt": gt,
+        })
+        candidates[task].append(item)
 
-    topology_distribution = Counter(len(rows) for rows in candidates.values())
-    if topology_distribution != Counter({4: 28, 5: 38, 20: 12}):
-        raise AssertionError(f"topology-evaluable distribution drifted: {dict(topology_distribution)}")
-    structural_distribution = Counter(sum(row["structurally_valid"] for row in candidates[task]) for task in tasks)
-    if structural_distribution != Counter({4: 30, 5: 36, 20: 12}):
-        raise AssertionError(f"structural-passed distribution drifted: {dict(structural_distribution)}")
-    normalization_conflict_count = sum(not row["geometry_metric_evaluable"] for task in tasks for row in candidates[task])
-    if normalization_conflict_count != 1:
-        raise AssertionError(f"normalization version conflict count drifted: {normalization_conflict_count} != 1")
-    operational_distribution = Counter(sum(row["structurally_valid"] and row["geometry_metric_evaluable"] for row in candidates[task]) for task in tasks)
+    if {_key(row) for rows in candidates.values() for row in rows} != pool_ids:
+        raise AssertionError("canonical geometry does not bind one-to-one to the frozen geometry pool")
+    frozen_distribution = Counter(len(candidates[task]) for task in tasks)
+    if frozen_distribution != Counter({5: 66, 22: 12}):
+        raise AssertionError(f"frozen geometry-pool distribution drifted: {dict(frozen_distribution)}")
+
+    pairwise_by_key: dict[tuple[str, int, int], dict[str, Any]] = {}
+    for row in _read_csv(base / "geometry_pairwise_similarity_C1.csv"):
+        task = str(row.get("base_task_id") or "")
+        if task not in tasks or row.get("condition") != "manual":
+            continue
+        left, right = _int(row.get("worker_id_left")), _int(row.get("worker_id_right"))
+        if left is None or right is None:
+            raise AssertionError("frozen pairwise worker identity is incomplete")
+        key = (task, *sorted((left, right)))
+        if key in pairwise_by_key:
+            raise AssertionError(f"duplicate frozen pairwise row: {key}")
+        pairwise_by_key[key] = {
+            "metric_compatible": _truth(row.get("metric_compatible")),
+            "pointwise_correspondence_compatible": _truth(row.get("pointwise_correspondence_compatible")),
+            "q_boundary": _float(row.get("q_boundary")),
+            "q_wallwall": _float(row.get("q_wallwall")),
+        }
+    expected_pairs = 0
+    for task, rows in candidates.items():
+        workers = [int(row["worker_id"]) for row in rows]
+        if len(workers) != len(set(workers)):
+            raise AssertionError(f"frozen geometry pool has duplicate task-worker candidates: {task}")
+        expected_pairs += len(rows) * (len(rows) - 1) // 2
+        for row in rows:
+            worker = int(row["worker_id"])
+            row["_geometry"]["_frozen_pairwise_by_worker"] = {
+                other: pairwise_by_key[(task, *sorted((worker, other)))]
+                for other in workers if other != worker
+            }
+    if len(pairwise_by_key) != expected_pairs:
+        raise AssertionError(f"frozen pairwise coverage drifted: {len(pairwise_by_key)} != {expected_pairs}")
+
+    all_candidates = [row for task in tasks for row in candidates[task]]
+    repair_ids = {_key(row) for row in all_candidates if row["repair_applied"]}
+    normalizer_invalid_ids = {_key(row) for row in all_candidates if not row["current_normalizer_evaluable"]}
+    replacement_workers = Counter(row["worker_id"] for row in all_candidates if row["formal_replacement_candidate"])
+    outside_rows = [
+        row for row in structural_rows
+        if row.get("condition") == "manual"
+        and str(row.get("base_task_id")) in tasks
+        and row.get("assignment_provenance") == "outside_assignment_submission"
+    ]
+    if repair_ids != REPLAY_REPAIR_IDS or normalizer_invalid_ids != {NORMALIZER_DRIFT_ID}:
+        raise AssertionError(f"repair/normalizer binding drifted: {repair_ids}, {normalizer_invalid_ids}")
+    if replacement_workers != Counter({34: 14, 1: 1}) or len(outside_rows) != 7:
+        raise AssertionError(f"replacement/outside-assignment inventory drifted: {replacement_workers}, {len(outside_rows)}")
+    worker_counts = Counter(row["worker_id"] for row in all_candidates)
+    if worker_counts[18] != 26 or worker_counts[27] != 26 or worker_counts[14] != 0:
+        raise AssertionError("historical worker retention inventory drifted")
+
+    def supported(predicate) -> int:
+        return sum(sum(bool(predicate(row)) for row in candidates[task]) >= 5 for task in tasks)
+
+    sensitivity_counts = {
+        "frozen_geometry_pool": supported(lambda row: True),
+        "current_normalizer": supported(lambda row: row["current_normalizer_evaluable"]),
+        "raw_structural_pass": supported(lambda row: row["structurally_valid"]),
+        "raw_structural_and_current_normalizer": supported(lambda row: row["structurally_valid"] and row["current_normalizer_evaluable"]),
+        "current20_frozen_geometry_pool": supported(lambda row: row["current_roster_member"]),
+        "current20_current_normalizer": supported(lambda row: row["current_roster_member"] and row["current_normalizer_evaluable"]),
+        "current20_raw_structural_pass": supported(lambda row: row["current_roster_member"] and row["structurally_valid"]),
+        "current20_raw_structural_and_current_normalizer": supported(lambda row: row["current_roster_member"] and row["structurally_valid"] and row["current_normalizer_evaluable"]),
+    }
+    expected_sensitivity = {
+        "frozen_geometry_pool": 78,
+        "current_normalizer": 77,
+        "raw_structural_pass": 76,
+        "raw_structural_and_current_normalizer": 75,
+        "current20_frozen_geometry_pool": 50,
+        "current20_current_normalizer": 49,
+        "current20_raw_structural_pass": 48,
+        "current20_raw_structural_and_current_normalizer": 47,
+    }
+    if sensitivity_counts != expected_sensitivity:
+        raise AssertionError(f"sensitivity inventory drifted: {sensitivity_counts}")
+
     for task in tasks:
         tasks[task]["building_id"] = bindings[task].get("building_id", "")
-        tasks[task]["raw_candidate_count"] = raw_counts[task]
-        tasks[task]["topology_candidate_count"] = len(candidates[task])
+        tasks[task]["frozen_geometry_candidate_count"] = len(candidates[task])
         tasks[task]["structural_candidate_count"] = sum(row["structurally_valid"] for row in candidates[task])
-    return {"base": base, "tasks": tasks, "candidates": dict(candidates), "bindings": bindings, "reference_audit": reference_audit, "conflict_queue_rows": conflict_queue, "normalization_conflict_count": normalization_conflict_count, "operational_distribution": dict(operational_distribution)}
+    support_counts = {
+        "historical": {
+            "frozen_geometry_pool": sensitivity_counts["frozen_geometry_pool"],
+            "current_normalizer": sensitivity_counts["current_normalizer"],
+            "structural_passed": sensitivity_counts["raw_structural_pass"],
+            "normalizer_and_structural": sensitivity_counts["raw_structural_and_current_normalizer"],
+        },
+        "current20": {
+            "frozen_geometry_pool": sensitivity_counts["current20_frozen_geometry_pool"],
+            "current_normalizer": sensitivity_counts["current20_current_normalizer"],
+            "structural_passed": sensitivity_counts["current20_raw_structural_pass"],
+            "normalizer_and_structural": sensitivity_counts["current20_raw_structural_and_current_normalizer"],
+        },
+    }
+    historical_candidates = dict(candidates)
+    return {
+        "base": base,
+        "tasks": tasks,
+        "candidates": historical_candidates,
+        "historical_candidates": historical_candidates,
+        "bindings": bindings,
+        "reference_audit": reference_audit,
+        "conflict_queue_rows": conflict_queue,
+        "sensitivity_counts": sensitivity_counts,
+        "support_counts": support_counts,
+        "historical_replay_filters": {"live_roster": False, "current_normalizer": False, "structural_status": False},
+        "repair_ids": sorted(repair_ids),
+        "normalizer_invalid_ids": sorted(normalizer_invalid_ids),
+        "outside_assignment_rows": len(outside_rows),
+        "formal_replacement_workers": dict(replacement_workers),
+        "assignment_audit": {
+            "formal_replacement_count": sum(replacement_workers.values()),
+            "formal_replacement_by_worker": {str(worker): count for worker, count in sorted(replacement_workers.items())},
+            "outside_assignment_count": len(outside_rows),
+        },
+    }
 
 
 def topology_status(records: list[dict[str, Any]]) -> tuple[str, list[list[dict[str, Any]]]]:
@@ -228,6 +372,16 @@ def topology_status(records: list[dict[str, Any]]) -> tuple[str, list[list[dict[
     return "not_evaluable", ordered
 
 
+def _pairwise_metric(left: dict[str, Any], right: dict[str, Any]) -> dict[str, Any]:
+    frozen = left.get("_frozen_pairwise_by_worker")
+    if frozen is not None:
+        worker = _int(right.get("worker_id"))
+        if worker not in frozen:
+            raise AssertionError("frozen pairwise metric is missing for an admitted candidate pair")
+        return frozen[worker]
+    return pairwise_similarity(left, right)
+
+
 def _medoid(records: list[dict[str, Any]]) -> dict[str, Any] | None:
     records = [row for row in records if row.get("geometry_metric_evaluable", True)]
     if not records:
@@ -235,7 +389,7 @@ def _medoid(records: list[dict[str, Any]]) -> dict[str, Any] | None:
     scores: dict[tuple[int, int], float] = {}
     for left in range(len(records)):
         for right in range(left + 1, len(records)):
-            item = pairwise_similarity(records[left]["_geometry"], records[right]["_geometry"])
+            item = _pairwise_metric(records[left]["_geometry"], records[right]["_geometry"])
             boundary = item.get("q_boundary", item.get("boundary_similarity"))
             wall = item.get("q_wallwall", item.get("wallwall_similarity"))
             if boundary is not None and wall is not None:
@@ -252,6 +406,7 @@ def _cluster(records: list[dict[str, Any]], task: str) -> dict[str, Any]:
         base_task_id=task,
         condition="manual",
         minimum_valid_k=3,
+        pairwise_fn=_pairwise_metric,
     )
 
 
@@ -263,7 +418,10 @@ def _admitted_prefixes(order: list[dict[str, Any]], limit: int = 5) -> dict[str,
     metric_invalid_attempts = 0
     for attempt, row in enumerate(order, 1):
         metric_valid = bool(row.get("geometry_metric_evaluable"))
-        if not row.get("structurally_valid") or not metric_valid:
+        replay_admissible = row.get("replay_geometry_admissible")
+        if replay_admissible is None:
+            replay_admissible = bool(row.get("structurally_valid")) and metric_valid
+        if not replay_admissible:
             invalid_attempts += 1
             metric_invalid_attempts += not metric_valid
             continue
@@ -282,7 +440,7 @@ def _admitted_prefixes(order: list[dict[str, Any]], limit: int = 5) -> dict[str,
 
 
 def m1_conservative_gate(cluster: dict[str, Any], k: int) -> bool:
-    """Development-only pre-outcome gate chosen for v2; not a formal policy."""
+    """Development-only pre-outcome gate; not a formal policy."""
     largest = _int(cluster.get("largest_cluster_support")) or 0
     second = _int(cluster.get("second_cluster_support")) or 0
     return (largest, second) in {
@@ -485,7 +643,9 @@ def _quality(row: dict[str, Any] | None) -> float | None:
 def _continuous_geometry_delta(left: dict[str, Any] | None, right: dict[str, Any] | None) -> float | None:
     if not left or not right:
         return None
-    pair = pairwise_similarity(left["_geometry"], right["_geometry"])
+    if _key(left) == _key(right):
+        return 0.0
+    pair = _pairwise_metric(left["_geometry"], right["_geometry"])
     boundary = _float(pair.get("q_boundary", pair.get("boundary_similarity")))
     wall = _float(pair.get("q_wallwall", pair.get("wallwall_similarity")))
     return 1.0 - min(boundary, wall) if boundary is not None and wall is not None else None
@@ -496,6 +656,8 @@ def _result_row(task: dict[str, Any], replicate: int, order_signature: str, resu
     quality = _quality(selected)
     autonomous_non_delivery = result.get("status") in {"policy_failure_no_output", "unresolved_expert_escalation_required"}
     expert_escalation_required = result.get("status") == "unresolved_expert_escalation_required"
+    accepted = _admitted_prefixes(result["order"])["accepted"]
+    used = accepted[: int(result.get("K_valid") or 0)]
     return {
         "replicate_id": replicate,
         "base_task_id": task["base_task_id"],
@@ -511,9 +673,15 @@ def _result_row(task: dict[str, Any], replicate: int, order_signature: str, resu
         "stop_k": result.get("stop_k"),
         "raw_paid_attempts": result.get("K_attempts"),
         "paid_valid_submissions": result.get("K_valid"),
+        "historical_candidates_examined": result.get("K_attempts"),
+        "frozen_geometry_submissions_used": result.get("K_valid"),
         "invalid_attempts": result.get("invalid_attempts"),
         "replacement_attempts": result.get("replacement_attempts"),
         "metric_invalid_attempts": result.get("metric_invalid_attempts"),
+        "raw_structural_failure_attempts": sum(row.get("raw_structural_failure") is True for row in used),
+        "repair_required_attempts": sum(row.get("repair_required_attempt") is True for row in used),
+        "current_normalizer_invalid_attempts": sum(row.get("current_normalizer_evaluable") is False for row in used),
+        "formal_replacement_candidates_used": sum(row.get("formal_replacement_candidate") is True for row in used),
         "historical_counterfactual_support_shortfall": result.get("historical_counterfactual_support_shortfall"),
         "unresolved": result.get("unresolved"),
         "autonomous_non_delivery": autonomous_non_delivery,
@@ -524,6 +692,9 @@ def _result_row(task: dict[str, Any], replicate: int, order_signature: str, resu
         "selected_worker_id": selected.get("worker_id") if selected else None,
         "selected_geometry_hash": selected.get("geometry_hash") if selected else None,
         "selected_structural_invalidity": (not selected.get("structurally_valid")) if selected else None,
+        "selected_repair_applied": selected.get("repair_applied") if selected else None,
+        "selected_current_normalizer_evaluable": selected.get("current_normalizer_evaluable") if selected else None,
+        "selected_formal_replacement_candidate": selected.get("formal_replacement_candidate") if selected else None,
         "public_gt_quality": quality,
         "public_gt_quality_status": "eligible" if quality is not None else "not_evaluable",
         "reference_evaluable_autonomous_delivery_quality": 0.0 if autonomous_non_delivery else quality,
@@ -531,6 +702,8 @@ def _result_row(task: dict[str, Any], replicate: int, order_signature: str, resu
         "reference_evaluable_autonomous_delivery_mitt_delta_vs_f0": None,
         "paid_valid_savings_vs_f0": None,
         "raw_paid_attempt_savings_vs_f0": None,
+        "frozen_geometry_submission_savings_vs_f0": None,
+        "historical_candidates_examined_savings_vs_f0": None,
         "prefix_full5_selected_output_instability": None,
         "corner_count_changed_vs_f0": None,
         "continuous_geometry_delta_vs_f0": None,
@@ -556,8 +729,10 @@ def attach_pair_metrics(row: dict[str, Any], f0: dict[str, Any]) -> dict[str, An
     row["paired_rows_status"] = "paired_same_task_replicate_order" if f0_cost_supported else "historical_f0_support_shortfall"
     if f0_cost_supported and row.get("paid_valid_submissions") is not None:
         row["paid_valid_savings_vs_f0"] = f0["paid_valid_submissions"] - row["paid_valid_submissions"]
+        row["frozen_geometry_submission_savings_vs_f0"] = row["paid_valid_savings_vs_f0"]
     if f0_cost_supported and f0.get("raw_paid_attempts") is not None and row.get("raw_paid_attempts") is not None:
         row["raw_paid_attempt_savings_vs_f0"] = f0["raw_paid_attempts"] - row["raw_paid_attempts"]
+        row["historical_candidates_examined_savings_vs_f0"] = row["raw_paid_attempt_savings_vs_f0"]
     if f0.get("public_gt_quality") is not None and row.get("public_gt_quality") is not None:
         row["paired_complete_case_quality_delta_vs_f0"] = row["public_gt_quality"] - f0["public_gt_quality"]
     if f0.get("reference_evaluable_autonomous_delivery_quality") is not None and row.get("reference_evaluable_autonomous_delivery_quality") is not None:
@@ -594,7 +769,7 @@ def _na(value: Any) -> str:
 
 def _write_csv(path: Path, rows: list[dict[str, Any]], fieldnames: list[str]) -> None:
     with path.open("w", newline="", encoding="utf-8") as handle:
-        writer = csv.DictWriter(handle, fieldnames=fieldnames, extrasaction="ignore")
+        writer = csv.DictWriter(handle, fieldnames=fieldnames, extrasaction="ignore", lineterminator="\n")
         writer.writeheader()
         for row in rows:
             writer.writerow({field: _na(row.get(field)) for field in fieldnames})
@@ -604,12 +779,14 @@ PRIMARY_METRICS = (
     ("stop_at_3_probability", "stop@3", "replicate_support", "policy_development_simulation"),
     ("incremental_stop_at_4_probability", "incremental_stop@4", "replicate_support", "policy_development_simulation"),
     ("reach5_probability", "reach5", "replicate_support", "policy_development_simulation"),
-    ("mean_paid_valid_submissions", "conditional mean paid valid submissions on common valid-candidate support", "paid_valid_replicate_support", "conditional_cost_diagnostic"),
-    ("mean_raw_paid_attempts", "conditional mean raw paid attempts on common valid-candidate support", "raw_attempt_replicate_support", "conditional_cost_diagnostic"),
-    ("mean_paid_valid_savings_vs_f0", "conditional paid-valid savings vs F0", "paired_cost_replicate_support", "conditional_cost_diagnostic"),
-    ("mean_raw_paid_attempt_savings_vs_f0", "conditional raw paid-attempt savings vs F0", "paired_cost_replicate_support", "conditional_cost_diagnostic"),
-    ("mean_invalid_attempts", "invalid/replacement attempts", "replicate_support", "policy_development_simulation"),
-    ("mean_metric_invalid_attempts", "metric-invalid attempts", "replicate_support", "policy_development_simulation"),
+    ("mean_frozen_geometry_submissions_used", "mean frozen geometry submissions used", "paid_valid_replicate_support", "historical_replay_count"),
+    ("mean_historical_candidates_examined", "mean historical candidates examined", "raw_attempt_replicate_support", "historical_replay_count"),
+    ("mean_frozen_geometry_submission_savings_vs_f0", "frozen geometry submission-count delta vs F0", "paired_cost_replicate_support", "historical_replay_count"),
+    ("mean_historical_candidates_examined_savings_vs_f0", "historical candidates-examined delta vs F0", "paired_cost_replicate_support", "historical_replay_count"),
+    ("mean_raw_structural_failure_attempts", "raw structural-failure candidates used", "replicate_support", "structural_audit_lane"),
+    ("mean_repair_required_attempts", "frozen repair-required candidates used", "replicate_support", "repair_audit_lane"),
+    ("mean_current_normalizer_invalid_attempts", "current-normalizer-invalid frozen candidates used", "replicate_support", "parser_version_sensitivity"),
+    ("mean_formal_replacement_candidates_used", "formal replacement candidates used", "replicate_support", "assignment_audit_lane"),
     ("historical_counterfactual_support_shortfall_probability", "historical counterfactual support shortfall", "replicate_support", "historical_support_diagnostic"),
     ("selected_output_probability", "selected-output probability", "replicate_support", "policy_development_simulation"),
     ("autonomous_non_delivery_probability", "autonomous non-delivery probability", "autonomous_non_delivery_replicate_support", "autonomous_delivery_sensitivity"),
@@ -621,7 +798,10 @@ PRIMARY_METRICS = (
     ("instability_probability", "prefix-vs-full5 selected-output instability", "paired_instability_replicate_support", "diagnostic_complete_case"),
     ("corner_count_change_probability", "corner-count change vs F0", "paired_corner_count_replicate_support", "diagnostic_complete_case"),
     ("mean_continuous_geometry_delta_vs_f0", "continuous geometry delta vs F0", "paired_geometry_delta_replicate_support", "diagnostic_complete_case"),
-    ("selected_structural_invalidity_probability", "selected structural invalidity", "selected_structural_invalidity_replicate_support", "zero_by_admission_rule"),
+    ("selected_structural_invalidity_probability", "raw structural-failure probability among selected outputs", "selected_structural_invalidity_replicate_support", "structural_audit_lane"),
+    ("selected_repair_probability", "frozen-repair probability among selected outputs", "selected_output_replicate_support", "repair_audit_lane"),
+    ("selected_current_normalizer_evaluable_probability", "current-normalizer evaluable probability among selected outputs", "selected_output_replicate_support", "parser_version_sensitivity"),
+    ("selected_formal_replacement_probability", "formal-replacement probability among selected outputs", "selected_output_replicate_support", "assignment_audit_lane"),
     ("supported_multimodality_probability", "supported multimodality encountered", "replicate_support", "separate_harm_lane"),
 )
 
@@ -656,9 +836,9 @@ def _bootstrap(task_values: dict[str, float], building_by_task: dict[str, str], 
     return estimates[int(0.025 * (success - 1))], estimates[int(0.975 * (success - 1))], success, failed
 
 
-def operating_rows(rows: list[dict[str, Any]], tasks: dict[str, dict[str, Any]], seed: int) -> list[dict[str, Any]]:
+def operating_rows(rows: list[dict[str, Any]], tasks: dict[str, dict[str, Any]], seed: int, sensitivity_counts: dict[str, int] | None = None) -> list[dict[str, Any]]:
     output: list[dict[str, Any]] = []
-    primary = [row for row in rows if row["estimand_scope"] == "primary_common47"]
+    primary = [row for row in rows if row["estimand_scope"] == "historical_population_replay_78"]
     primary_tasks = {str(row["base_task_id"]) for row in primary}
     primary_buildings = {str(row["building_id"]) for row in primary}
     for policy in ("F0", "M0_corner_count_gate_geometry_medoid", "M1"):
@@ -674,19 +854,16 @@ def operating_rows(rows: list[dict[str, Any]], tasks: dict[str, dict[str, Any]],
             task_values = {task: value for task, value in task_values.items() if value is not None}
             estimate = _mean(task_values.values())
             by_building = {task: tasks[task].get("building_id", "") for task in task_values}
-            rule_zero = summary_field == "selected_structural_invalidity_probability"
-            if rule_zero and any(value != 0 for value in task_values.values()):
-                raise AssertionError("admission-filtered selected structural invalidity must be zero")
-            if task_values and not rule_zero:
+            if task_values:
                 low, high, bootstrap_success, bootstrap_fail = _bootstrap(task_values, by_building, seed)
             else:
                 low, high, bootstrap_success, bootstrap_fail = None, None, 0, 0
             metric_support = sum(int(row.get(support_field) or 0) for row in policy_rows)
             replicate_total = sum(int(row.get("replicate_support") or 0) for row in policy_rows)
-            status = "zero_by_admission_rule" if rule_zero else "ready" if estimate is not None else "not_identifiable"
-            reason = "zero is imposed by shared admission; no empirical risk interval" if rule_zero else "47-task common valid-candidate support; excludes future invalid/replacement, expert fallback, availability and scheduling cost" if role == "conditional_cost_diagnostic" else "reference-evaluable autonomous-delivery sensitivity; not the full expert-fallback workflow" if role == "autonomous_delivery_sensitivity" else "12-building block sensitivity after task-equal aggregation" if task_values else "no estimable task values"
+            status = "ready_development_descriptive" if estimate is not None else "not_identifiable"
+            reason = "historical frozen-pool submission-count replay; not paid deployment cost" if role == "historical_replay_count" else "reference-evaluable autonomous-delivery sensitivity; not the full expert-fallback workflow" if role == "autonomous_delivery_sensitivity" else "13-building block sensitivity after task-equal aggregation" if task_values else "no estimable task values"
             output.append({
-                "cohort": "primary_common47",
+                "cohort": "historical_population_replay_78",
                 "policy": policy,
                 "comparator": "F0" if "vs F0" in label else "",
                 "metric": label,
@@ -698,47 +875,44 @@ def operating_rows(rows: list[dict[str, Any]], tasks: dict[str, dict[str, Any]],
                 "building_support": len({by_building[task] for task in task_values}),
                 "building_total": len(primary_buildings),
                 "estimand_role": role,
-                "bootstrap_unit": "building" if task_values and not rule_zero else "not_applicable",
-                "bootstrap_draws": 1000 if task_values and not rule_zero else None,
-                "bootstrap_seed": seed if task_values and not rule_zero else None,
-                "bootstrap_success_draws": bootstrap_success if task_values and not rule_zero else None,
-                "bootstrap_fail_draws": bootstrap_fail if task_values and not rule_zero else None,
+                "bootstrap_unit": "building" if task_values else "not_applicable",
+                "bootstrap_draws": 1000 if task_values else None,
+                "bootstrap_seed": seed if task_values else None,
+                "bootstrap_success_draws": bootstrap_success if task_values else None,
+                "bootstrap_fail_draws": bootstrap_fail if task_values else None,
                 "ci_low": low,
                 "ci_high": high,
                 "status": status,
                 "reason": reason,
             })
 
-    supported = sum(
-        row["policy"] == "F0" and row["estimand_scope"] == "historical_support_all78" and not row["historical_counterfactual_support_shortfall_probability"]
-        for row in rows
-    )
-    for label, count in (("historical fixed-k5 support available", supported), ("historical counterfactual support shortfall", 78 - supported)):
+    for label, count in (sensitivity_counts or {}).items():
         output.append({
-            "cohort": "historical_support_all78",
-            "policy": "SUPPORT_INVENTORY",
+            "cohort": "admission_sensitivity_inventory",
+            "policy": "NOT_A_POLICY_COMPARISON",
             "comparator": "",
-            "metric": label,
+            "metric": f"tasks_with_k>=5__{label}",
             "estimate": count / 78,
-            "task_support": 78,
+            "task_support": count,
             "task_total": 78,
             "replicate_support": None,
             "replicate_total": None,
             "building_support": 13,
             "building_total": 13,
-            "estimand_role": "historical_support_diagnostic",
+            "estimand_role": "admission_version_or_roster_sensitivity",
             "bootstrap_unit": "not_applicable",
             "status": "development_descriptive_only",
-            "reason": f"deterministic inventory: {count}/78; not prospective candidate exhaustion",
+            "reason": f"deterministic inventory: {count}/78; not the primary historical replay and not prospective candidate exhaustion",
         })
     output.extend([
         {"cohort": "harm_lane", "policy": "ALL", "metric": "actual_expert_reference_harm", "estimand_role": "actual_harm", "status": "source_absent", "reason": "actual expert/reference delivery-harm source absent; no exact or building interval is estimable"},
-        {"cohort": "harm_lane", "policy": "F0/M0_corner_count_gate_geometry_medoid/M1", "metric": "selected_structural_invalidity", "estimand_role": "structural_invalidity", "status": "zero_by_admission_rule", "reason": "selected records pass shared structural admission; zero is not empirical safety evidence and has no [0,0] interval"},
+        {"cohort": "harm_lane", "policy": "F0/M0_corner_count_gate_geometry_medoid/M1", "metric": "selected_raw_structural_failure", "estimand_role": "structural_audit_lane", "status": "ready_development_descriptive", "reason": "raw failure is retained even when frozen repaired geometry is admitted; this is not expert delivery harm"},
         {"cohort": "harm_lane", "policy": "M0_corner_count_gate_geometry_medoid/M1", "metric": "material_geometry_delta", "estimand_role": "geometry", "status": "source_absent", "reason": "continuous geometry delta is reported; no frozen materiality tolerance exists"},
         {"cohort": "model_status", "policy": "M2", "metric": "worker_portrait", "status": M2_STATUS, "reason": "leakage-safe training-fold estimator not implemented in this correction"},
         {"cohort": "model_status", "policy": "M3", "metric": "posttask_meta", "status": M3_STATUS, "reason": "canonical join exists; pre-peer-view timing remains unbound and first-route use is prohibited"},
         {"cohort": "workflow_identifiability", "policy": "M1_with_expert_fallback", "metric": "final delivery quality after expert fallback", "estimand_role": "full_workflow_quality", "status": "not_identifiable", "reason": "expert fallback outputs and their reference-evaluable quality are absent"},
         {"cohort": "workflow_identifiability", "policy": "M1_with_expert_fallback", "metric": "total deployment cost including expert fallback", "estimand_role": "full_workflow_cost", "status": "not_identifiable", "reason": "expert minutes, expert output cost, future invalid/replacement, availability and scheduling cost are absent"},
+        {"cohort": "workflow_identifiability", "policy": "ALL", "metric": "paid deployment cost or savings", "estimand_role": "production_cost", "status": "not_identifiable", "reason": "historical replay counts frozen geometry candidates; it does not estimate live invalid, repair, replacement, availability, scheduling or expert cost"},
         {"cohort": "harm_lane", "policy": "ALL", "metric": "GT_reference_conflict", "estimand_role": "reference_conflict", "status": "ready_current_operational_audit_zero_declared", "reason": "separate lane; not actual expert delivery harm and not proof of zero upstream GT error"},
     ])
     return output
@@ -749,7 +923,7 @@ def summarize_rows(
     tasks: dict[str, dict[str, Any]],
     replicates: int,
     *,
-    estimand_scope: str = "historical_support_all78",
+    estimand_scope: str = "historical_population_replay_78",
 ) -> list[dict[str, Any]]:
     """Collapse replicate rows before writing: one auditable row per task and policy."""
     grouped: dict[tuple[str, str], list[dict[str, Any]]] = defaultdict(list)
@@ -790,16 +964,25 @@ def summarize_rows(
             "cap_resolved_probability": probability("status", "cap_resolved"),
             "historical_counterfactual_support_shortfall_probability": outcome_probabilities["historical_shortfall"],
             "unresolved_probability": probability("unresolved"),
+            "policy_failure_probability": probability("status", "policy_failure_no_output"),
             "autonomous_non_delivery_probability": probability("autonomous_non_delivery"),
             "expert_escalation_probability": probability("expert_escalation_required"),
             "status_probability_fixed_k5": probability("status", "fixed_k5"),
             "mean_raw_paid_attempts": mean_field("raw_paid_attempts"),
             "mean_paid_valid_submissions": mean_field("paid_valid_submissions"),
+            "mean_historical_candidates_examined": mean_field("historical_candidates_examined"),
+            "mean_frozen_geometry_submissions_used": mean_field("frozen_geometry_submissions_used"),
             "mean_invalid_attempts": mean_field("invalid_attempts"),
             "mean_replacement_attempts": mean_field("replacement_attempts"),
             "mean_metric_invalid_attempts": mean_field("metric_invalid_attempts"),
+            "mean_raw_structural_failure_attempts": mean_field("raw_structural_failure_attempts"),
+            "mean_repair_required_attempts": mean_field("repair_required_attempts"),
+            "mean_current_normalizer_invalid_attempts": mean_field("current_normalizer_invalid_attempts"),
+            "mean_formal_replacement_candidates_used": mean_field("formal_replacement_candidates_used"),
             "mean_paid_valid_savings_vs_f0": mean_field("paid_valid_savings_vs_f0"),
             "mean_raw_paid_attempt_savings_vs_f0": mean_field("raw_paid_attempt_savings_vs_f0"),
+            "mean_frozen_geometry_submission_savings_vs_f0": mean_field("frozen_geometry_submission_savings_vs_f0"),
+            "mean_historical_candidates_examined_savings_vs_f0": mean_field("historical_candidates_examined_savings_vs_f0"),
             "mean_public_gt_quality": mean_field("public_gt_quality"),
             "mean_reference_evaluable_autonomous_delivery_quality": mean_field("reference_evaluable_autonomous_delivery_quality"),
             "mean_paired_complete_case_quality_delta_vs_f0": mean_field("paired_complete_case_quality_delta_vs_f0"),
@@ -808,6 +991,9 @@ def summarize_rows(
             "corner_count_change_probability": probability("corner_count_changed_vs_f0"),
             "mean_continuous_geometry_delta_vs_f0": mean_field("continuous_geometry_delta_vs_f0"),
             "selected_structural_invalidity_probability": probability("selected_structural_invalidity"),
+            "selected_repair_probability": probability("selected_repair_applied"),
+            "selected_current_normalizer_evaluable_probability": probability("selected_current_normalizer_evaluable"),
+            "selected_formal_replacement_probability": probability("selected_formal_replacement_candidate"),
             "selected_output_probability": sum(bool(row.get("selected_annotation_id")) for row in group) / len(group),
             "supported_multimodality_probability": probability("supported_multimodal_encountered"),
             "selected_output_replicate_support": sum(bool(row.get("selected_annotation_id")) for row in group),
@@ -834,7 +1020,7 @@ def run(root: Path = ROOT, output_dir: Path | None = None, *, replicates: int = 
     if replicates < 1000:
         raise ValueError("at least 1000 replicates are required")
     data = load_frozen_inputs(root)
-    output_dir = output_dir or root / "analysis_results" / "topology_sequential_preflight_20260818_v2"
+    output_dir = output_dir or root / "analysis_results" / "topology_sequential_preflight_20260818_v3"
     if output_dir.exists():
         raise FileExistsError(f"refusing to overwrite output directory: {output_dir}")
     output_dir.mkdir(parents=True)
@@ -857,15 +1043,15 @@ def run(root: Path = ROOT, output_dir: Path | None = None, *, replicates: int = 
                 replicate_rows.append(row)
             assert len({row["order_signature"] for row in converted}) == 1
 
-    primary_task_ids = {
-        task_id
-        for task_id, candidates in data["candidates"].items()
-        if len(_admitted_prefixes(candidates)["accepted"]) >= 5
+    primary_task_ids = set(data["tasks"])
+    unsupported = {
+        task_id for task_id, candidates in data["candidates"].items()
+        if len(_admitted_prefixes(candidates)["accepted"]) < 5
     }
-    if len(primary_task_ids) != 47:
-        raise AssertionError(f"common fixed-k5 historical support drifted: {len(primary_task_ids)} != 47")
+    if len(primary_task_ids) != 78 or unsupported:
+        raise AssertionError(f"frozen-pool historical replay support drifted: {len(primary_task_ids)}, {sorted(unsupported)}")
     primary_tasks = {task_id: data["tasks"][task_id] for task_id in primary_task_ids}
-    primary_replicates = [row for row in replicate_rows if row["base_task_id"] in primary_task_ids]
+    primary_replicates = replicate_rows
     expected_per_policy = len(primary_task_ids) * replicates
     counts = Counter(row["policy"] for row in primary_replicates)
     if counts != Counter({"F0": expected_per_policy, "M0_corner_count_gate_geometry_medoid": expected_per_policy, "M1": expected_per_policy}):
@@ -876,13 +1062,11 @@ def run(root: Path = ROOT, output_dir: Path | None = None, *, replicates: int = 
     if len(paired_orders) != expected_per_policy or any(len(signatures) != 1 for signatures in paired_orders.values()):
         raise AssertionError("primary F0/M0/M1 rows are not exactly paired on task, replicate and order")
 
-    summary_rows = summarize_rows(primary_replicates, primary_tasks, replicates, estimand_scope="primary_common47")
-    support_rows = [row for row in replicate_rows if row["policy"] == "F0"]
-    summary_rows.extend(summarize_rows(support_rows, data["tasks"], replicates, estimand_scope="historical_support_all78"))
+    summary_rows = summarize_rows(primary_replicates, primary_tasks, replicates, estimand_scope="historical_population_replay_78")
     _write_csv(output_dir / "PREFIX_POLICY_METRICS.csv", summary_rows, [
-        "estimand_scope", "fold", "base_task_id", "building_id", "condition", "policy", "replicate_support", "order_signature_support", "candidate_permutation_n", "stop_at_3_probability", "incremental_stop_at_4_probability", "reach5_probability", "cap_resolved_probability", "historical_counterfactual_support_shortfall_probability", "unresolved_probability", "autonomous_non_delivery_probability", "expert_escalation_probability", "status_probability_fixed_k5", "mean_raw_paid_attempts", "mean_paid_valid_submissions", "mean_invalid_attempts", "mean_replacement_attempts", "mean_metric_invalid_attempts", "mean_paid_valid_savings_vs_f0", "mean_raw_paid_attempt_savings_vs_f0", "mean_public_gt_quality", "mean_reference_evaluable_autonomous_delivery_quality", "mean_paired_complete_case_quality_delta_vs_f0", "mean_reference_evaluable_autonomous_delivery_mitt_delta_vs_f0", "instability_probability", "corner_count_change_probability", "mean_continuous_geometry_delta_vs_f0", "selected_structural_invalidity_probability", "selected_output_probability", "supported_multimodality_probability", "selected_output_replicate_support", "raw_attempt_replicate_support", "paid_valid_replicate_support", "complete_case_quality_replicate_support", "reference_evaluable_autonomous_delivery_replicate_support", "paired_cost_replicate_support", "paired_complete_case_quality_replicate_support", "paired_reference_evaluable_autonomous_delivery_replicate_support", "paired_instability_replicate_support", "paired_corner_count_replicate_support", "paired_geometry_delta_replicate_support", "selected_structural_invalidity_replicate_support", "autonomous_non_delivery_replicate_support", "expert_escalation_replicate_support", "paired_rows_status", "status",
+        "estimand_scope", "fold", "base_task_id", "building_id", "condition", "policy", "replicate_support", "order_signature_support", "candidate_permutation_n", "stop_at_3_probability", "incremental_stop_at_4_probability", "reach5_probability", "cap_resolved_probability", "historical_counterfactual_support_shortfall_probability", "unresolved_probability", "policy_failure_probability", "autonomous_non_delivery_probability", "expert_escalation_probability", "status_probability_fixed_k5", "mean_historical_candidates_examined", "mean_frozen_geometry_submissions_used", "mean_raw_structural_failure_attempts", "mean_repair_required_attempts", "mean_current_normalizer_invalid_attempts", "mean_formal_replacement_candidates_used", "mean_frozen_geometry_submission_savings_vs_f0", "mean_historical_candidates_examined_savings_vs_f0", "mean_public_gt_quality", "mean_reference_evaluable_autonomous_delivery_quality", "mean_paired_complete_case_quality_delta_vs_f0", "mean_reference_evaluable_autonomous_delivery_mitt_delta_vs_f0", "instability_probability", "corner_count_change_probability", "mean_continuous_geometry_delta_vs_f0", "selected_structural_invalidity_probability", "selected_repair_probability", "selected_current_normalizer_evaluable_probability", "selected_formal_replacement_probability", "selected_output_probability", "supported_multimodality_probability", "selected_output_replicate_support", "raw_attempt_replicate_support", "paid_valid_replicate_support", "complete_case_quality_replicate_support", "reference_evaluable_autonomous_delivery_replicate_support", "paired_cost_replicate_support", "paired_complete_case_quality_replicate_support", "paired_reference_evaluable_autonomous_delivery_replicate_support", "paired_instability_replicate_support", "paired_corner_count_replicate_support", "paired_geometry_delta_replicate_support", "selected_structural_invalidity_replicate_support", "autonomous_non_delivery_replicate_support", "expert_escalation_replicate_support", "paired_rows_status", "status",
     ])
-    operating = operating_rows(summary_rows, data["tasks"], seed)
+    operating = operating_rows(summary_rows, data["tasks"], seed, data["sensitivity_counts"])
     _write_csv(output_dir / "PREFLIGHT_OPERATING_CHARACTERISTICS.csv", operating, ["cohort", "policy", "comparator", "metric", "estimate", "task_support", "task_total", "replicate_support", "replicate_total", "building_support", "building_total", "estimand_role", "bootstrap_unit", "bootstrap_draws", "bootstrap_seed", "bootstrap_success_draws", "bootstrap_fail_draws", "ci_low", "ci_high", "status", "reason"])
 
     topology_distribution = dict(Counter(len(data["candidates"][task]) for task in data["tasks"]))
@@ -891,25 +1075,28 @@ def run(root: Path = ROOT, output_dir: Path | None = None, *, replicates: int = 
         **FLAGS,
         "seed": seed,
         "replicates": replicates,
-        "supersedes": {"artifact": "analysis_results/topology_sequential_preflight_20260818_v1", "status": "superseded_development_descriptive_only"},
+        "supersedes": [
+            {"artifact": "analysis_results/topology_sequential_preflight_20260818_v1", "status": "superseded_development_descriptive_only"},
+            {"artifact": "analysis_results/topology_sequential_preflight_20260818_v2", "status": "superseded_development_descriptive_only"},
+        ],
         "denominator": {
             "status": "ready",
-            "historical_inventory_base_tasks": 78,
-            "primary_common_fixed_k5_tasks": len(primary_task_ids),
-            "primary_common_buildings": len({primary_tasks[task]["building_id"] for task in primary_tasks}),
-            "historical_counterfactual_support_shortfall_tasks": 78 - len(primary_task_ids),
-            "topology_distribution": topology_distribution,
-            "structural_passed_distribution": structural_distribution,
-            "operational_geometry_and_structural_pool_distribution": data["operational_distribution"],
-            "normalization_version_conflict_count": data["normalization_conflict_count"],
-            "interpretation": "47-task common support is the only F0/M0/M1 comparison; 78 tasks are historical support inventory only",
+            "primary_historical_replay_tasks": len(primary_task_ids),
+            "primary_historical_replay_buildings": len({primary_tasks[task]["building_id"] for task in primary_tasks}),
+            "frozen_geometry_pool_candidates": sum(len(rows) for rows in data["candidates"].values()),
+            "frozen_geometry_pool_distribution": topology_distribution,
+            "raw_structural_passed_distribution": structural_distribution,
+            "admission_sensitivity_tasks_with_k_ge_5": data["sensitivity_counts"],
+            "interpretation": "78 frozen C1 geometry-pool tasks are primary; current normalizer, raw structural pass and current20 roster are sensitivity inventories only",
         },
-        "live_workers": {"status": "ready", "count": len(LIVE_WORKERS), "worker_ids": sorted(LIVE_WORKERS), "excluded": {"14": "administrative_exclusion", "18": "withdrawn", "27": "withdrawn"}},
-        "topology_sequential_f0_m0_m1": {"status": "development_descriptive_only", "reason": "47 common tasks, identical task-replicate-order rows, shared structural/metric admission and task-equal aggregation"},
+        "current20_roster_sensitivity": {"status": "development_descriptive_only", "count": len(LIVE_WORKERS), "worker_ids": sorted(LIVE_WORKERS), "not_primary": {"14": "administrative_exclusion", "18": "later_withdrawn_but_retained_in_historical_C1_replay", "27": "later_withdrawn_but_retained_in_historical_C1_replay"}},
+        "topology_sequential_f0_m0_m1": {"status": "development_descriptive_only", "reason": "78 frozen-pool tasks, identical task-replicate-order rows and task-equal aggregation"},
         "m0_corner_count_gate_geometry_medoid": {"status": "development_descriptive_only", "reason": "stopping reads repaired point count/2; selected output uses full geometry-medoid similarity, so timing and resolution both differ from F0"},
         "m1_conservative_development_gate": {"status": "recomputed_not_formal_policy", "rule": {"k3": "3:0", "k4": "4:0 or 3:1", "k5": "5:0 or 4:1; otherwise unresolved/expert escalation"}},
         "quality_estimand": {"status": "ready_descriptive", "formal_rule": "superiority", "complete_case": "diagnostic only", "autonomous_delivery_sensitivity": "unresolved/autonomous no-output=0; resolved output with unavailable eligible reference remains missing, so this is reference-evaluable mITT rather than full ITT", "expert_fallback_workflow": "not_identifiable_without_expert_output_quality", "ni_margin": "not_created_or_selected"},
-        "cost_estimand": {"status": "conditional_diagnostic_only", "scope": "47 tasks already having at least five valid candidates", "excluded_costs": ["future invalid/replacement attempts", "expert fallback", "availability", "scheduling"], "production_cost_claim_allowed": False},
+        "cost_estimand": {"status": "historical_submission_count_only", "scope": "78 frozen C1 tasks already having at least five geometry-pool candidates", "excluded_costs": ["future invalid/repair/replacement attempts", "expert fallback", "availability", "scheduling"], "production_cost_claim_allowed": False},
+        "repair_binding": {"status": "development_replay_only", "canonical_annotation_ids": data["repair_ids"], "raw_structural_failure_retained": True, "formal_c1_derivation": False},
+        "parser_version_sensitivity": {"status": "development_descriptive_only", "current_normalizer_invalid_ids": data["normalizer_invalid_ids"], "changes_primary_admission": False},
         "m2_worker_portrait": {"status": M2_STATUS, "risk_slope": "disabled"},
         "m3_posttask_meta": {"status": M3_STATUS, "first_route_meta": "excluded", "causal_routing_effect": "not_claimed"},
         "actual_expert_reference_harm": {"status": "source_absent", "code": "actual_harm_source_absent", "confidence_or_upper_bound": "not_reported"},
@@ -918,11 +1105,14 @@ def run(root: Path = ROOT, output_dir: Path | None = None, *, replicates: int = 
         "prospective_shadow_development_readiness": {"status": "conditional_go_shadow_only", "scope": "simulation_only", "formal_policy_frozen": False, "reason": "shadow may record autonomous stops and expert-escalation triggers; expert fallback quality/cost and formal Stage 3 amendment remain absent"},
         "actual_live_stops_main_readiness": {"status": "not_ready", "reason": "no live assignment/availability proof and actual harm source absent"},
     }
-    (output_dir / "PREFLIGHT_READINESS.json").write_text(json.dumps(readiness, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
+    (output_dir / "PREFLIGHT_READINESS.json").write_text(json.dumps(readiness, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
 
     input_paths = [
         c1_root(root) / "geometry_task_crowd_structure_C1.csv",
+        c1_root(root) / "c1_geometry_pool_eligibility.csv",
         c1_root(root) / "c1_canonical_geometry.jsonl",
+        c1_root(root) / "geometry_pairwise_similarity_C1.csv",
+        c1_root(root) / "c1_geometry_repair_audit.csv",
         c1_root(root) / "c1_gt_quality_evidence.csv",
         c1_root(root) / "structural_validation_analysis.csv",
         c1_root(root) / "c1_task_building_binding.csv",
@@ -931,20 +1121,69 @@ def run(root: Path = ROOT, output_dir: Path | None = None, *, replicates: int = 
     ]
     manifest = {
         "artifact_role": "TOPOLOGY_SEQUENTIAL_PREFLIGHT",
-        "schema_version": "topology_sequential_preflight_v2",
+        "schema_version": "topology_sequential_preflight_v3",
         **FLAGS,
         "seed": seed,
         "replicates": replicates,
         "input_sha256": {str(path.relative_to(root)): _sha256(path) for path in input_paths},
         "code_sha256": _sha256(Path(__file__).resolve()),
-        "asserted_frozen_facts": {"historical_inventory_tasks": 78, "primary_common_tasks": 47, "primary_common_buildings": 12, "historical_support_shortfall_tasks": 31, "live_workers": 20, "topology_k4_k5_k20": [28, 38, 12], "structural_k4_k5_k20": [30, 36, 12], "normalization_version_conflict_count": data["normalization_conflict_count"], "operational_geometry_and_structural_pool_distribution": data["operational_distribution"]},
-        "estimands": {"primary": "task-equal F0/M0_corner_count_gate_geometry_medoid/M1 paired comparison on the same 47 tasks and task-replicate-order rows", "support_sensitivity": "78-task historical counterfactual inventory only", "quality": {"complete_case_public_gt": "diagnostic", "reference_evaluable_autonomous_delivery_mitt": "autonomous unresolved/no-output=0; resolved output with unavailable eligible reference=missing", "full_m1_expert_fallback_workflow": "not_identifiable", "formal_rule": "superiority"}, "cost": "conditional on 47 tasks with at least five valid candidates; not total deployment cost"},
-        "supersedes": {"path": "analysis_results/topology_sequential_preflight_20260818_v1", "status": "superseded_development_descriptive_only"},
+        "asserted_frozen_facts": {
+            "primary_historical_replay_tasks": 78,
+            "primary_historical_replay_buildings": 13,
+            "frozen_geometry_pool_candidates": 594,
+            "frozen_geometry_pool_distribution": {"5": 66, "22": 12},
+            "admission_sensitivity_tasks_with_k_ge_5": data["sensitivity_counts"],
+            "historical_worker_candidate_counts": {"W18": 26, "W27": 26, "W14": 0},
+            "formal_replacements": {"W34": 14, "W1": 1},
+            "outside_assignment_excluded": data["outside_assignment_rows"],
+            "repair_ids": data["repair_ids"],
+            "current_normalizer_invalid_ids": data["normalizer_invalid_ids"],
+        },
+        "estimands": {
+            "primary": "task-equal F0/M0_corner_count_gate_geometry_medoid/M1 paired historical replay on the same 78 frozen geometry-pool tasks and task-replicate-order rows",
+            "admission_sensitivity": "current normalizer, raw structural pass and current20 roster are deterministic support inventories only",
+            "quality": {"complete_case_public_gt": "diagnostic", "reference_evaluable_autonomous_delivery_mitt": "autonomous unresolved/no-output=0; resolved output with unavailable eligible reference=missing", "full_m1_expert_fallback_workflow": "not_identifiable", "formal_rule": "superiority"},
+            "cost": "historical frozen-geometry submission count only; paid deployment cost is not identifiable",
+        },
+        "supersedes": [
+            {"path": "analysis_results/topology_sequential_preflight_20260818_v1", "status": "superseded_development_descriptive_only"},
+            {"path": "analysis_results/topology_sequential_preflight_20260818_v2", "status": "superseded_development_descriptive_only"},
+        ],
         "output_files": ["PREFLIGHT_DATA_AND_PROVENANCE.md", "PREFIX_POLICY_METRICS.csv", "PREFLIGHT_OPERATING_CHARACTERISTICS.csv", "PREFLIGHT_READINESS.json", "analysis_manifest.json"],
     }
-    (output_dir / "analysis_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8")
-    provenance = f"""# HOHONET topology sequential preflight v2\n\n开发诊断工件；不构成科学结论、正式政策冻结或 Main 启动依据。v1 状态为 `superseded_development_descriptive_only`。\n\n- development_only: true\n- diagnostic_pre_stage3: true\n- scientific_conclusion_prohibited: true\n- block3: false\n- formal_policy_frozen: false\n- formal_profile_frozen: false\n\n## 输入、人数与支持\n\n真源为冻结 C1 geometry、structural validation、task-building binding、operational reference audit 与 manual k>=5 crowd-structure sidecar。历史 inventory 为78个 base task；live worker 固定20人（W14行政排除，W18/W27 withdrawn）。按共同 admission（structurally valid 且 geometry metric evaluable），47个任务具有固定k=5历史反事实支持，覆盖12个building；其余31个任务只标记 `historical_counterfactual_support_shortfall`。该31/78不是未来候选池耗尽率，也不用于政策质量或部署成本比较。\n\n## 主 estimand 与顺序\n\nseed={seed}，replicates={replicates}。主比较严格限定共同47任务；F0、M0_corner_count_gate_geometry_medoid、M1在每个task/replicate使用完全相同的无放回order，共141000个政策行，并先在task内汇总再做task-equal平均。每项指标分别报告实际task、replicate和building support。building bootstrap为12-block敏感性，不外推至缺失的第13个building。\n\nF0/M0/M1共用结构/metric admission、invalid/replacement和attempt ledger。M0停止门只使用repaired point count/2，但最终选择使用完整geometry medoid；因此M0与F0同时存在停止时机和解析规则差异，不能把质量差全部归因于节省提交。M1的开发性保守门为：k=3仅3:0；k=4仅4:0或3:1；k=5仅5:0或4:1；其他k=5状态为`unresolved_expert_escalation_required`，不得强制选择medoid。该门尚非正式政策。\n\n## 质量、成本与harm lanes\n\npublic-GT complete-case质量只作诊断。将自主部分未交付记0的结果明确标为`reference-evaluable autonomous-delivery mITT sensitivity`：成功输出若缺少合格reference仍保持missing，因此它不是完整ITT；M1包含expert fallback后的最终质量和总成本均为not_identifiable。47任务上的paid valid submissions和savings是已有至少5个有效候选条件下的成本诊断，不包含未来invalid/replacement、expert fallback、availability或调度成本，不允许解释为生产总成本降幅。正式质量规则仍为superiority；未创建或从结果选择NI margin。continuous geometry delta与corner-count change分开报告；因无冻结material tolerance，不二值化material geometry。selected structural invalidity为shared admission造成的rule-defined zero，不给[0,0]经验风险区间。actual expert/reference delivery harm为source_absent。\n\nM2状态为`{M2_STATUS}`；M3状态为`{M3_STATUS}`。post-task meta禁止首次路由，且不声称causal routing effect。readiness仅为`conditional_go_shadow_only`，不冻结M1；actual live/Main为not_ready。\n"""
-    (output_dir / "PREFLIGHT_DATA_AND_PROVENANCE.md").write_text(provenance + f"\nnormalization_version_conflict_count={data['normalization_conflict_count']}\noperational_geometry_and_structural_pool_distribution={data['operational_distribution']}\n", encoding="utf-8")
+    (output_dir / "analysis_manifest.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2, sort_keys=True) + "\n", encoding="utf-8", newline="\n")
+    provenance = f"""# HOHONET topology sequential preflight v3
+
+开发诊断工件；不构成科学结论、正式政策冻结或 Main 启动依据。v1/v2 均为 `superseded_development_descriptive_only`。
+
+- development_only: true
+- diagnostic_pre_stage3: true
+- scientific_conclusion_prohibited: true
+- block3: false
+- formal_policy_frozen: false
+- formal_profile_frozen: false
+
+## 冻结历史 replay 准入
+
+主分析使用78个 frozen C1 manual geometry-pool task、594条正式候选和13个building。`frozen_geometry_pool_member=true` 是本次 development replay 的准入条件，不等同正式 C1 analysis eligibility。W18/W27 后续退出不追溯删除其已完成的 C1 记录；W14、7条 outside-assignment 以及未进入冻结pool的记录继续排除。15条正式 replacement 已包含在冻结pool中。
+
+两条 owner-confirmed 偶发多点提交使用既有冻结 repaired geometry，标记 `preflight_development_repair_binding=true`、`formal_c1_derivation=false`；原始 structural failure、repair requirement 和 attribution 均保留。该处置不扩展 parser amendment 对正式 Q_GT/peer/LOO 或未来 live delivery 的授权。冻结有效但当前 normalizer 失败的 `{NORMALIZER_DRIFT_ID}` 保留在主 replay，并单独标记版本漂移。
+
+## 主 estimand、顺序与敏感性
+
+seed={seed}，replicates={replicates}。F0、M0_corner_count_gate_geometry_medoid、M1在每个task/replicate使用完全相同的无放回order，共{78 * replicates * 3}个政策行；先在task内汇总，再做78个task等权平均。cluster和medoid读取冻结 pairwise similarity，不重跑旧 parser。
+
+主口径为 frozen pool 78任务。current normalizer、raw structural pass、二者交集以及current20 roster仅报告确定性support敏感性：`{json.dumps(data['sensitivity_counts'], ensure_ascii=False, sort_keys=True)}`。这些口径不是独立政策比较，不估计未来 candidate exhaustion 或 transportability。
+
+M0停止门只读取corner count，最终输出使用geometry medoid，因此其准确名称是 `corner-count stopping gate with geometry-medoid selection`。M1开发门仍为k=3仅3:0，k=4仅4:0或3:1，k=5仅5:0或4:1；其他k=5状态为`unresolved_expert_escalation_required`，不是`policy_failure`。
+
+## 质量、成本与边界
+
+public-GT complete-case质量仅作诊断。自主未交付记0的结果只称 `reference-evaluable autonomous-delivery mITT sensitivity`；成功输出若缺少合格reference仍保持missing。包含expert fallback的最终质量和总成本均为`not_identifiable`。E[K]及其差值只表示冻结历史几何候选的submission-count replay，不代表paid production cost或生产节省。
+
+raw structural failure、repair、formal replacement、current-normalizer drift、prefix instability、multimodality、GT conflict和actual expert harm分 lane 报告；actual expert/reference delivery harm仍为`source_absent`。M2状态为`{M2_STATUS}`；M3状态为`{M3_STATUS}`。post-task meta不进入首次路由，不声称causal routing effect。
+"""
+    (output_dir / "PREFLIGHT_DATA_AND_PROVENANCE.md").write_text(provenance, encoding="utf-8", newline="\n")
     return output_dir
 
 
