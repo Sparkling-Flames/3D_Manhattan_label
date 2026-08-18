@@ -1,0 +1,31 @@
+{
+  "artifact_role": "TOPOLOGY_SEQUENTIAL_PREFLIGHT_V4_AUDIT",
+  "development_only": true,
+  "formal_policy_frozen": false,
+  "input_sha256": {
+    "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_canonical_geometry.jsonl": "d3054e9c1fb9869a8a0a7ad114de16e6c30952ab4948261cfac58df25ef82799",
+    "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_geometry_pool_eligibility.csv": "8f59ad72cd794e14772cb4e85d7f55526a5c285053f925ce369d8d98816a48a2",
+    "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_geometry_repair_audit.csv": "7110378f1fac25da76a658c2969d17f88c522a4fec8a9580c9622dd3e472c83d",
+    "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_gt_quality_evidence.csv": "7b32a7f4a273b26064c3308368cef45aa2c71efb8bde390abf75a92634a3da3a",
+    "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_pairwise_similarity_C1.csv": "997860626fdf50ea5667986a8f04df0183c8f78f617c49fd5682394c7092f1a7",
+    "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_task_crowd_structure_C1.csv": "5aa04db57efd9606a27d94d7718a62df52302854d5bc5de7d89d5edca0c2f090",
+    "analysis_results/final_calibration_profile_20260817_v1/pooled_worker_profile_v2.csv": "11f7e30fd00ec388bc0b5798846002ba7d6c77033011987e0ff4f27d251c8574",
+    "tools/thesis_main/analysis/audit_topology_preflight_v4.py": "71d7568570ab6bce025b8577071ed27f79668f99506b7abba349c2e3768eb82c"
+  },
+  "output_files": [
+    "AUDIT_SUMMARY.json",
+    "MEDOID_CONSISTENCY_AUDIT.csv",
+    "REVIEWER_AVAILABILITY_SENSITIVITY.csv",
+    "REVIEWER_PROFILE_ORDERING_SENSITIVITY.csv",
+    "TG_EF5_OPERATING_CHARACTERISTICS.csv",
+    "TG_EF5_POWER_AND_SAFETY_SCENARIOS.csv",
+    "TG_EF5_TASK_METRICS.csv"
+  ],
+  "replicates": 1000,
+  "schema_version": "topology_sequential_preflight_v4_audit",
+  "scientific_conclusion_prohibited": true,
+  "seed": 20260818,
+  "supersedes_v3": false,
+  "v3_medoid_dependent_metrics_status": "invalid_pending_repair",
+  "v3_stop_path_metrics_status": "retained_development_descriptive"
+}
