@@ -18,9 +18,14 @@ from __future__ import annotations
 import argparse
 import csv
 import json
+import sys
 from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
+
+ROOT = Path(__file__).resolve().parents[3]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
 
 from tools.thesis_main.analysis import audit_topology_preflight_v4 as audit
 from tools.thesis_main.analysis import run_topology_sequential_preflight as v3
