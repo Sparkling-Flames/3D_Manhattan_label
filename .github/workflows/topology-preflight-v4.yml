@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - codex/paper
+      - codex/topogate-preflight-validation-20260819
     paths:
       - tools/thesis_main/analysis/audit_topology_preflight_v4.py
       - .github/workflows/topology-preflight-v4.yml
+      - .github/topology-preflight-v4-trigger.txt
   pull_request:
     branches:
       - codex/paper
