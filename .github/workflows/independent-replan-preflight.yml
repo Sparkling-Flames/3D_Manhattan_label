@@ -1,0 +1,56 @@
+name: Independent experiment replan preflight
+
+on:
+  push:
+    branches:
+      - codex/independent-replan-preflight-20260819
+    paths:
+      - tools/thesis_main/analysis/independent_replan_preflight.py
+      - .github/workflows/independent-replan-preflight.yml
+      - .github/independent-replan-preflight-trigger.txt
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out tested ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Run data inventory
+        run: |
+          python tools/thesis_main/analysis/independent_replan_preflight.py \
+            --root "$GITHUB_WORKSPACE" \
+            --output-dir "$GITHUB_WORKSPACE/analysis_results/independent_replan_preflight_20260819"
+
+      - name: Upload outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-replan-preflight
+          path: analysis_results/independent_replan_preflight_20260819
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commit append-only outputs
+        if: success() && github.event_name == 'push' && github.ref_name == 'codex/independent-replan-preflight-20260819'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis_results/independent_replan_preflight_20260819
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "analysis: materialize independent replan preflight inventory"
+          git push origin HEAD:codex/independent-replan-preflight-20260819
