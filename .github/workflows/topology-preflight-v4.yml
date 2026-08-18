@@ -7,17 +7,24 @@ on:
     paths:
       - tools/thesis_main/analysis/audit_topology_preflight_v4.py
       - .github/workflows/topology-preflight-v4.yml
+  pull_request:
+    branches:
+      - codex/paper
+    paths:
+      - tools/thesis_main/analysis/audit_topology_preflight_v4.py
+      - .github/workflows/topology-preflight-v4.yml
+      - .github/topology-preflight-v4-trigger.txt
   workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
 
 jobs:
   audit:
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
-      - name: Check out paper branch
+      - name: Check out tested ref
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
@@ -39,10 +46,11 @@ jobs:
             --output-dir "$GITHUB_WORKSPACE/analysis_results/topology_sequential_preflight_20260818_v4_audit" \
             --replicates 1000
 
-      - name: Commit materialized audit outputs
-        run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add analysis_results/topology_sequential_preflight_20260818_v4_audit
-          git commit -m "analysis: materialize topology preflight v4 audit"
-          git push origin HEAD:codex/paper
+      - name: Upload audit outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: topology-preflight-v4-audit
+          path: analysis_results/topology_sequential_preflight_20260818_v4_audit
+          if-no-files-found: warn
+          retention-days: 7
