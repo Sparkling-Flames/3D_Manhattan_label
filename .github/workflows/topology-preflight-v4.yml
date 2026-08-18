@@ -7,6 +7,7 @@ on:
     paths:
       - tools/thesis_main/analysis/audit_topology_preflight_v4.py
       - tools/thesis_main/analysis/run_topology_preflight_v4_audit_ci.py
+      - tools/thesis_main/analysis/materialize_missing_c1_repair_sidecar_for_v4.py
       - .github/workflows/topology-preflight-v4.yml
   pull_request:
     branches:
@@ -14,6 +15,7 @@ on:
     paths:
       - tools/thesis_main/analysis/audit_topology_preflight_v4.py
       - tools/thesis_main/analysis/run_topology_preflight_v4_audit_ci.py
+      - tools/thesis_main/analysis/materialize_missing_c1_repair_sidecar_for_v4.py
       - .github/workflows/topology-preflight-v4.yml
       - .github/topology-preflight-v4-trigger.txt
   workflow_dispatch:
@@ -47,6 +49,11 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           python -m pip install numpy scipy shapely
+
+      - name: Reconstruct unavailable repair sidecar in ephemeral checkout
+        run: |
+          python tools/thesis_main/analysis/materialize_missing_c1_repair_sidecar_for_v4.py \
+            --root "$GITHUB_WORKSPACE"
 
       - name: Run append-only v4 audit
         run: |
