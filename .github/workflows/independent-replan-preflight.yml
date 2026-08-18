@@ -6,6 +6,7 @@ on:
       - codex/independent-replan-preflight-20260819
     paths:
       - tools/thesis_main/analysis/independent_replan_preflight.py
+      - tools/thesis_main/analysis/independent_replan_stage2.py
       - .github/workflows/independent-replan-preflight.yml
       - .github/independent-replan-preflight-trigger.txt
   workflow_dispatch:
@@ -28,9 +29,20 @@ jobs:
         with:
           python-version: '3.11'
 
+      - name: Install focused analysis dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy pandas scipy scikit-learn statsmodels
+
       - name: Run data inventory
         run: |
           python tools/thesis_main/analysis/independent_replan_preflight.py \
+            --root "$GITHUB_WORKSPACE" \
+            --output-dir "$GITHUB_WORKSPACE/analysis_results/independent_replan_preflight_20260819"
+
+      - name: Run focused descriptive preflight
+        run: |
+          python tools/thesis_main/analysis/independent_replan_stage2.py \
             --root "$GITHUB_WORKSPACE" \
             --output-dir "$GITHUB_WORKSPACE/analysis_results/independent_replan_preflight_20260819"
 
@@ -52,5 +64,5 @@ jobs:
           if git diff --cached --quiet; then
             exit 0
           fi
-          git commit -m "analysis: materialize independent replan preflight inventory"
+          git commit -m "analysis: materialize independent replan preflight"
           git push origin HEAD:codex/independent-replan-preflight-20260819
