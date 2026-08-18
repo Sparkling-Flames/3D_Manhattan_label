@@ -2,19 +2,22 @@
 
 Two v3 input sidecars are not committed on ``codex/paper``:
 ``c1_geometry_pool_eligibility.csv`` and
-``geometry_pairwise_similarity_C1.csv``.  The frozen task crowd-structure
-sidecar does contain the complete 594 candidate identities.  This runner:
+``geometry_pairwise_similarity_C1.csv``.  This runner reconstructs only the
+missing development substrate from committed frozen C1 records:
 
-1. reconstructs the geometry-pool identity allowlist by flattening the frozen
-   cluster membership of the 78 manual tasks with ``valid_k >= 5``;
-2. binds those identities one-to-one to frozen canonical geometry;
-3. recomputes a temporary pairwise sidecar with the currently committed C1
-   normalizer and pairwise code;
-4. validates current cluster status and membership against the frozen C1
-   task sidecar before running the append-only v4 audit.
+1. the 78 manual tasks with ``valid_k >= 5`` are taken from the frozen crowd-
+   structure sidecar;
+2. the 594 candidate identities are reconstructed from the frozen structural
+   ledger using the same task, assignment, process, canonical and geometry-
+   calculation admission fields;
+3. those identities are bound one-to-one to frozen canonical geometry;
+4. a temporary pairwise sidecar is recomputed with the currently committed C1
+   normalizer and pairwise implementation;
+5. current cluster status and memberships are audited against frozen C1 before
+   the append-only v4 replay is run.
 
-The temporary pairwise scores are *not* represented as the missing historical
-frozen sidecar.  Their provenance and every resulting mismatch are emitted.
+The temporary pairwise scores are not represented as the unavailable historical
+frozen sidecar. Their provenance and all cluster/medoid mismatches are emitted.
 No original artifact is overwritten in Git history.
 """
 
@@ -75,10 +78,7 @@ def _serialise(value: Any) -> Any:
     return value
 
 
-def _normalised_geometry(
-    canonical: dict[str, Any],
-    repair: dict[str, Any],
-) -> dict[str, Any]:
+def _normalised_geometry(canonical: dict[str, Any], repair: dict[str, Any]) -> dict[str, Any]:
     repair_applied = _truth(repair.get("geometry_repair_applied"))
     points = (
         json.loads(str(repair.get("repaired_points_json") or "[]"))
@@ -98,12 +98,16 @@ def _normalised_geometry(
     return result
 
 
-def _flatten_membership(row: dict[str, str]) -> list[str]:
-    membership = json.loads(str(row.get("cluster_membership_json") or "[]"))
-    identities = [str(annotation) for group in membership for annotation in group]
-    if len(identities) != len(set(identities)):
-        raise AssertionError(f"duplicate frozen membership identity: {row.get('base_task_id')}")
-    return identities
+def _structural_pool_row(row: dict[str, str], task_ids: set[str]) -> bool:
+    """Reconstruct the missing identity allowlist, not outcome eligibility."""
+    return (
+        str(row.get("base_task_id") or "") in task_ids
+        and row.get("condition") == "manual"
+        and _truth(row.get("canonical_eligible"))
+        and _truth(row.get("formal_assignment_eligible"))
+        and _truth(row.get("process_eligible"))
+        and _truth(row.get("geometry_calculation_eligible"))
+    )
 
 
 def materialize_missing_sidecars(root: Path) -> dict[str, Any]:
@@ -120,23 +124,41 @@ def materialize_missing_sidecars(root: Path) -> dict[str, Any]:
     task_by_id = {str(row["base_task_id"]): row for row in task_rows}
     if len(task_by_id) != len(task_rows):
         raise AssertionError("duplicate manual k>=5 task rows")
+    task_ids = set(task_by_id)
 
-    identities_by_task: dict[str, list[str]] = {}
+    structural_rows = _read_csv(base / "structural_validation_analysis.csv")
+    admitted_structural_rows = [row for row in structural_rows if _structural_pool_row(row, task_ids)]
+    identities_by_task: dict[str, list[str]] = defaultdict(list)
+    structural_by_id: dict[str, dict[str, str]] = {}
+    for row in admitted_structural_rows:
+        annotation = _key(row)
+        task = str(row.get("base_task_id") or "")
+        if not annotation:
+            raise AssertionError(f"admitted structural row lacks canonical identity: {task}")
+        if annotation in structural_by_id:
+            raise AssertionError(f"duplicate admitted structural identity: {annotation}")
+        structural_by_id[annotation] = row
+        identities_by_task[task].append(annotation)
+
+    if set(identities_by_task) != task_ids:
+        missing = sorted(task_ids - set(identities_by_task))
+        raise AssertionError(f"structural ledger does not cover all 78 tasks: {missing}")
     for task, row in task_by_id.items():
-        identities = _flatten_membership(row)
-        valid_k = _int(row.get("valid_k"))
-        if valid_k != len(identities):
+        expected = _int(row.get("valid_k"))
+        observed = len(identities_by_task[task])
+        if expected != observed:
             raise AssertionError(
-                f"frozen membership does not cover valid_k for {task}: "
-                f"{len(identities)} != {valid_k}"
+                f"structural-ledger pool does not match frozen valid_k for {task}: "
+                f"{observed} != {expected}"
             )
-        identities_by_task[task] = identities
+        if len(identities_by_task[task]) != len(set(identities_by_task[task])):
+            raise AssertionError(f"duplicate task candidate identity: {task}")
 
     distribution = Counter(len(values) for values in identities_by_task.values())
     if distribution != Counter({5: 66, 22: 12}):
-        raise AssertionError(f"frozen membership distribution drifted: {dict(distribution)}")
+        raise AssertionError(f"structural-ledger distribution drifted: {dict(distribution)}")
     if sum(map(len, identities_by_task.values())) != 594:
-        raise AssertionError("frozen membership candidate total is not 594")
+        raise AssertionError("structural-ledger candidate total is not 594")
 
     canonical_rows = _read_jsonl(base / "c1_canonical_geometry.jsonl")
     canonical_by_id: dict[str, dict[str, Any]] = {}
@@ -157,12 +179,12 @@ def materialize_missing_sidecars(root: Path) -> dict[str, Any]:
     normalised_by_id: dict[str, dict[str, Any]] = {}
     workers_by_task: dict[str, set[int]] = defaultdict(set)
     for task in sorted(identities_by_task):
-        for annotation in identities_by_task[task]:
+        for annotation in sorted(identities_by_task[task]):
             canonical = canonical_by_id.get(annotation)
             if canonical is None:
-                raise AssertionError(f"frozen membership has no canonical geometry: {annotation}")
+                raise AssertionError(f"structural-ledger identity has no canonical geometry: {annotation}")
             if str(canonical.get("base_task_id") or "") != task:
-                raise AssertionError(f"frozen membership/canonical task conflict: {annotation}")
+                raise AssertionError(f"structural-ledger/canonical task conflict: {annotation}")
             worker = _int(canonical.get("worker_id"))
             if worker is None or worker in workers_by_task[task]:
                 raise AssertionError(f"non-unique task-worker candidate: {task}/{worker}")
@@ -174,12 +196,12 @@ def materialize_missing_sidecars(root: Path) -> dict[str, Any]:
                 "canonical_annotation_id": annotation,
                 "annotation_id": annotation,
                 "geometry_pool_eligible": True,
-                "identity_derivation": "flattened_frozen_cluster_membership",
+                "identity_derivation": "frozen_structural_ledger_admission",
             })
-            normalised_by_id[annotation] = _normalised_geometry(
-                canonical,
-                repair_by_id.get(annotation, {}),
-            )
+            normalised = _normalised_geometry(canonical, repair_by_id.get(annotation, {}))
+            if normalised.get("valid") is not True:
+                raise AssertionError(f"current normalizer cannot evaluate admitted candidate: {annotation}")
+            normalised_by_id[annotation] = normalised
 
     with pool_target.open("w", encoding="utf-8", newline="") as stream:
         fields = list(pool_rows[0])
@@ -190,7 +212,7 @@ def materialize_missing_sidecars(root: Path) -> dict[str, Any]:
 
     pairwise_rows: list[dict[str, Any]] = []
     for task in sorted(identities_by_task):
-        identities = identities_by_task[task]
+        identities = sorted(identities_by_task[task])
         for left_id, right_id in itertools.combinations(identities, 2):
             left = canonical_by_id[left_id]
             right = canonical_by_id[right_id]
@@ -198,10 +220,7 @@ def materialize_missing_sidecars(root: Path) -> dict[str, Any]:
             right_worker = _int(right.get("worker_id"))
             if left_worker is None or right_worker is None:
                 raise AssertionError("pairwise worker identity is incomplete")
-            metric = v3.pairwise_similarity(
-                normalised_by_id[left_id],
-                normalised_by_id[right_id],
-            )
+            metric = v3.pairwise_similarity(normalised_by_id[left_id], normalised_by_id[right_id])
             pairwise_rows.append({
                 "base_task_id": task,
                 "condition": "manual",
@@ -232,10 +251,17 @@ def materialize_missing_sidecars(root: Path) -> dict[str, Any]:
         "pool_row_count": len(pool_rows),
         "pairwise_row_count": len(pairwise_rows),
         "candidate_distribution": {str(key): value for key, value in sorted(distribution.items())},
-        "pool_identity_source": "frozen geometry_task_crowd_structure_C1 cluster_membership_json",
+        "pool_identity_source": "frozen structural_validation_analysis admission fields",
+        "pool_identity_filters": [
+            "condition=manual",
+            "canonical_eligible=true",
+            "formal_assignment_eligible=true",
+            "process_eligible=true",
+            "geometry_calculation_eligible=true",
+        ],
         "pairwise_source": "current committed normalizer and pairwise implementation",
         "pairwise_is_historical_frozen_sidecar": False,
-        "permitted_interpretation": "current-code development replay with frozen terminal medoid binding; not exact source-level replay of the missing historical pairwise sidecar",
+        "permitted_interpretation": "current-code development replay with frozen terminal medoid binding; not exact source-level replay of the unavailable historical pairwise sidecar",
     }
 
 
@@ -246,17 +272,26 @@ def validate_current_clusters(data: dict[str, Any]) -> list[dict[str, Any]]:
         current = v3._cluster(candidates, task)
         frozen_members = audit._normalise_membership(frozen.get("cluster_membership_json"))
         current_members = audit._normalise_membership(current.get("cluster_membership_json"))
+        frozen_partition_unique = str(frozen.get("partition_status") or "") == "unique"
+        membership_comparable = frozen_partition_unique and bool(frozen_members)
         rows.append({
             "base_task_id": task,
             "building_id": frozen.get("building_id", ""),
             "candidate_n": len(candidates),
+            "frozen_partition_status": frozen.get("partition_status"),
+            "current_partition_status": current.get("partition_status"),
             "cluster_status_match": str(frozen.get("task_crowd_structure_status") or "") == str(current.get("task_crowd_structure_status") or ""),
-            "cluster_membership_match": frozen_members == current_members,
+            "cluster_membership_comparable": membership_comparable,
+            "cluster_membership_match": (frozen_members == current_members) if membership_comparable else None,
             "frozen_status": frozen.get("task_crowd_structure_status"),
             "current_status": current.get("task_crowd_structure_status"),
             "frozen_medoid_annotation_id": frozen.get("largest_cluster_medoid_annotation_id"),
             "current_medoid_annotation_id": current.get("largest_cluster_medoid_annotation_id"),
-            "medoid_match": str(frozen.get("largest_cluster_medoid_annotation_id") or "") == str(current.get("largest_cluster_medoid_annotation_id") or ""),
+            "medoid_comparable": bool(frozen.get("largest_cluster_medoid_annotation_id")),
+            "medoid_match": (
+                str(frozen.get("largest_cluster_medoid_annotation_id") or "")
+                == str(current.get("largest_cluster_medoid_annotation_id") or "")
+            ) if frozen.get("largest_cluster_medoid_annotation_id") else None,
         })
     return rows
 
@@ -275,19 +310,23 @@ def main() -> None:
     validation_rows = validate_current_clusters(data)
 
     result = audit.run(root, output, args.replicates)
+    comparable_members = [row for row in validation_rows if row["cluster_membership_comparable"]]
+    comparable_medoids = [row for row in validation_rows if row["medoid_comparable"]]
     provenance["cluster_validation"] = {
         "task_count": len(validation_rows),
         "status_mismatch_count": sum(not row["cluster_status_match"] for row in validation_rows),
-        "membership_mismatch_count": sum(not row["cluster_membership_match"] for row in validation_rows),
-        "medoid_mismatch_count": sum(not row["medoid_match"] for row in validation_rows),
+        "membership_comparable_task_count": len(comparable_members),
+        "membership_mismatch_count": sum(row["cluster_membership_match"] is False for row in comparable_members),
+        "medoid_comparable_task_count": len(comparable_medoids),
+        "medoid_mismatch_count": sum(row["medoid_match"] is False for row in comparable_medoids),
         "exact_k5_status_mismatch_count": sum(
             row["candidate_n"] == 5 and not row["cluster_status_match"] for row in validation_rows
         ),
         "exact_k5_membership_mismatch_count": sum(
-            row["candidate_n"] == 5 and not row["cluster_membership_match"] for row in validation_rows
+            row["candidate_n"] == 5 and row["cluster_membership_match"] is False for row in validation_rows
         ),
         "exact_k5_medoid_mismatch_count": sum(
-            row["candidate_n"] == 5 and not row["medoid_match"] for row in validation_rows
+            row["candidate_n"] == 5 and row["medoid_match"] is False for row in validation_rows
         ),
     }
     (result / "DERIVED_SIDECAR_PROVENANCE.json").write_text(
