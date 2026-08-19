@@ -5,10 +5,16 @@ on:
     branches:
       - codex/paper
       - codex/topogate-preflight-validation-20260819
+      - codex/independent-replan-preflight-20260819
     paths:
       - tools/thesis_main/analysis/audit_topology_preflight_v4.py
+      - tools/thesis_main/analysis/independent_replan_preflight.py
+      - tools/thesis_main/analysis/independent_replan_stage2.py
+      - tools/thesis_main/analysis/independent_replan_stage3_probe.py
+      - tools/thesis_main/analysis/independent_replan_stage3.py
       - .github/workflows/topology-preflight-v4.yml
       - .github/topology-preflight-v4-trigger.txt
+      - .github/independent-replan-preflight-trigger.txt
   pull_request:
     branches:
       - codex/paper
@@ -23,6 +29,7 @@ permissions:
 
 jobs:
   audit:
+    if: github.ref_name != 'codex/independent-replan-preflight-20260819'
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
@@ -68,3 +75,73 @@ jobs:
           fi
           git commit -m "analysis: materialize topology preflight v4 validation"
           git push origin HEAD:codex/topogate-preflight-validation-20260819
+
+  replan:
+    if: github.ref_name == 'codex/independent-replan-preflight-20260819'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out tested ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install focused analysis dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy pandas scipy scikit-learn statsmodels
+
+      - name: Run data inventory
+        continue-on-error: true
+        run: |
+          python tools/thesis_main/analysis/independent_replan_preflight.py \
+            --root "$GITHUB_WORKSPACE" \
+            --output-dir "$GITHUB_WORKSPACE/analysis_results/independent_replan_preflight_20260819"
+
+      - name: Run focused descriptive preflight
+        continue-on-error: true
+        run: |
+          python tools/thesis_main/analysis/independent_replan_stage2.py \
+            --root "$GITHUB_WORKSPACE" \
+            --output-dir "$GITHUB_WORKSPACE/analysis_results/independent_replan_preflight_20260819"
+
+      - name: Probe prescreen, semi, and reviewer schemas
+        continue-on-error: true
+        run: |
+          python tools/thesis_main/analysis/independent_replan_stage3_probe.py \
+            --root "$GITHUB_WORKSPACE" \
+            --output-dir "$GITHUB_WORKSPACE/analysis_results/independent_replan_preflight_20260819"
+
+      - name: Run formal stage-3 preflight when present
+        continue-on-error: true
+        if: ${{ hashFiles('tools/thesis_main/analysis/independent_replan_stage3.py') != '' }}
+        run: |
+          python tools/thesis_main/analysis/independent_replan_stage3.py \
+            --root "$GITHUB_WORKSPACE" \
+            --output-dir "$GITHUB_WORKSPACE/analysis_results/independent_replan_preflight_20260819"
+
+      - name: Upload replan outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: independent-replan-preflight
+          path: analysis_results/independent_replan_preflight_20260819
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Commit append-only replan outputs
+        if: always() && github.event_name == 'push'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis_results/independent_replan_preflight_20260819
+          if git diff --cached --quiet; then
+            exit 0
+          fi
+          git commit -m "analysis: materialize independent replan preflight"
+          git push origin HEAD:codex/independent-replan-preflight-20260819
