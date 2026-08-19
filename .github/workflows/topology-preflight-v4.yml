@@ -6,12 +6,16 @@ on:
       - codex/paper
     paths:
       - tools/thesis_main/analysis/audit_topology_preflight_v4.py
+      - tools/thesis_main/analysis/run_topology_preflight_v4_audit_ci.py
+      - tools/thesis_main/analysis/materialize_missing_c1_repair_sidecar_for_v4.py
       - .github/workflows/topology-preflight-v4.yml
   pull_request:
     branches:
       - codex/paper
     paths:
       - tools/thesis_main/analysis/audit_topology_preflight_v4.py
+      - tools/thesis_main/analysis/run_topology_preflight_v4_audit_ci.py
+      - tools/thesis_main/analysis/materialize_missing_c1_repair_sidecar_for_v4.py
       - .github/workflows/topology-preflight-v4.yml
       - .github/topology-preflight-v4-trigger.txt
   workflow_dispatch:
@@ -28,6 +32,13 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+          sparse-checkout: |
+            .github
+            tools
+            lib
+            analysis_results/c1_formal_audit_20260802_v16_final
+            analysis_results/final_calibration_profile_20260817_v1
+          sparse-checkout-cone-mode: true
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -39,9 +50,14 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install numpy scipy shapely
 
+      - name: Reconstruct unavailable repair sidecar in ephemeral checkout
+        run: |
+          python tools/thesis_main/analysis/materialize_missing_c1_repair_sidecar_for_v4.py \
+            --root "$GITHUB_WORKSPACE"
+
       - name: Run append-only v4 audit
         run: |
-          python tools/thesis_main/analysis/audit_topology_preflight_v4.py \
+          python tools/thesis_main/analysis/run_topology_preflight_v4_audit_ci.py \
             --root "$GITHUB_WORKSPACE" \
             --output-dir "$GITHUB_WORKSPACE/analysis_results/topology_sequential_preflight_20260818_v4_audit" \
             --replicates 1000
