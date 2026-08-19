@@ -8,4 +8,4 @@
 
 Public GT 共 458 项：456 项走严格解析，2 项使用只依赖冻结点序的 ordered duplicate-x reference fallback；没有利用工人结果修订 GT。W034 的 17 项授权 replacement timing 均为 `eligible_with_protocol_deviation`，基于 task-worker 日志与事前人工确认回溯声明，`annotation_exact_validated=false`。
 
-本目录只跟踪正式摘要、freeze manifest、worker profile、三轴证据、crowd 分类、task-worker timing、scope/eligibility 和 canonical geometry。未上传 Label Studio 原始导出、active logs、原图、raw snapshots 或其他中间缓存。
+本目录只跟踪正式摘要、freeze manifest、worker profile、三轴证据、crowd 分类、task-worker timing、scope/eligibility、canonical geometry，以及 topology sequential preflight 直接消费的 GT quality evidence、task-building binding、operational reference audit 和空 conflict queue。未在本目录重复上传 Label Studio 原始导出、active logs、原图、raw snapshots 或其他中间缓存。

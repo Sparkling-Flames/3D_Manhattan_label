@@ -1,0 +1,37 @@
+{
+  "schema_version": "post_block2_empirical_variance_inputs_v2",
+  "source_artifacts": {
+    "submission_master": "7b299a7910c5296ea7eac547471d6bd1ea43e2c012d765c72f3dd1a57498571a",
+    "final_profile": "11f7e30fd00ec388bc0b5798846002ba7d6c77033011987e0ff4f27d251c8574"
+  },
+  "components": {
+    "task_level_public_gt_quality_variance": {
+      "status": "computed",
+      "value": 0.007656424957581134,
+      "n": 101
+    },
+    "worker_level_public_gt_quality_variance": {
+      "status": "computed",
+      "value": 0.0007677595426599885,
+      "n": 23
+    },
+    "active_time_variance": {
+      "status": "computed",
+      "value": 359090.5025641026,
+      "n": 40
+    },
+    "building_level_algorithm_delta_variance": {
+      "status": "deferred_to_aggregation_audit",
+      "reason": "requires paired algorithm outputs"
+    },
+    "routing_counterfactual_variance": {
+      "status": "not_identifiable",
+      "reason": "no randomized historical routing counterfactual"
+    }
+  },
+  "counts": {
+    "c1_evaluable_rows": 717,
+    "task_contexts": 101,
+    "workers": 23
+  }
+}

@@ -1,0 +1,40 @@
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260803_v18 SHA-256 694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87
+\section{Strong Global/Full policy specification}
+
+\subsection{Strong Global}
+
+正式分数为
+\[
+S^G_u=z(\widehat Q^{GT,EB}_u),
+\]
+并受 process、independence、GT support、building/task coverage、结构失败安全门和
+production quality floor 约束。LOO 只作 tie-break、discrepancy、聚合稳定性和敏感性分析。
+
+\subsection{Support-aware Full}
+
+\[
+S^F_{u,t}=S^G_u+I_{\mathrm{risk},t}B_u+I_{f,t}H_{u,f}.
+\]
+
+最多两个条件调整：ordinary/stress 风险韧性和一个已激活 failure-family component。
+正式 family 仅为 undercoverage/underextension、adjacent-space overextension、
+corner/topology instability。每任务最多激活一个 family；总调整有上限；不确定性大时
+向群体均值收缩；无支持或超出支持范围时 adjustment=0 或整体 fallback Strong Global。
+
+\subsection{证据门}
+
+component 必须通过 P1 integrity、C1 predictive validation、C2-B confirmation，具备足够
+worker/task support、稳定方向、收缩估计和标注前 activation。T1/V1 outcome 不得用于修改
+这些规则、阈值或权重。stage-stacked 回归/层级模型必须包含 P1 worker component、
+stage、P1\(\times\)stage interaction 以及 task/worker 聚类或随机效应，并输出方向、
+stage interaction、worker/task support 和收缩估计。若 C2 出现清晰方向反转、支持不足
+或收缩不稳定，component adjustment=0，不得进入正式 Full。
+
+\subsection{Formal freeze requirements}
+
+Strong Global 正式主分数固定为 \(z(\widehat Q^{GT,EB}_u)\)，z 参数使用 gate 前冻结 cohort；
+administrative、estimability、reference、process、independence、support、structural EB 或 LCB floor
+缺失时 fail closed。Full 必须绑定 risk/family estimate、support、shrinkage、interval、weight、cap、
+threshold、margin、profile version、fallback、minimum worker/cluster rule 和 input SHA。T1 assignment
+消费 T1 gate；V1 manifest 只消费独立且 SHA 匹配的 V1 gate。相应 gate 未开放、依赖 SHA 变化或
+manifest 未声明该 gate 时，禁止产生正式 assignment。

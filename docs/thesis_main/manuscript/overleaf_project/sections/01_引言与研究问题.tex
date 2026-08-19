@@ -1,0 +1,115 @@
+% Source: Paper_A_新版完整论文提纲_vFinal_Draft.md §1
+\section{引言}
+
+\subsection{研究背景}
+
+全景房间布局标注需要工人同时处理：
+
+\begin{itemize}
+  \item 相机所在空间的识别；
+  \item Scope/OOS 判断；
+  \item 房间边界和角点几何；
+  \item 模型初始化的识别与纠正；
+  \item 遮挡、开放边界和邻接空间；
+  \item 任务过程与完整性。
+\end{itemize}
+
+Semi-Auto 初始化可能降低操作负担，但也可能诱发：
+
+\begin{itemize}
+  \item blind trust；
+  \item correction failure；
+  \item over-correction；
+  \item undercoverage；
+  \item 结构性无效提交。
+\end{itemize}
+
+不同工人在一般任务、高风险任务和模型错误条件下的表现并不一定相同。单一的全局工人排名可能无法充分利用这种差异，但高维个人画像又容易受到小样本和支持不足影响。
+
+\subsection{研究缺口}
+
+现有方案通常存在以下不足：
+
+\begin{enumerate}
+  \item 把 PreScreen 仅视为准入，而没有检验其跨阶段预测价值；
+  \item 将工人与同行一致性等同于外部正确性；
+  \item 忽略结构性无效提交导致的选择性可计算问题；
+  \item 在不同难度任务分发下直接按原始平均质量排名工人；
+  \item 在小样本下无条件发布个体条件画像；
+  \item 将路由简化为一个评分公式，而未定义 offer、容量、追加、聚合和终态；
+  \item 只在 resolved 子集评价质量，忽视 unresolved 的选择性分母；
+  \item 使用平衡试验分布替代真实生产任务分布。
+\end{enumerate}
+
+\subsection{方法路线}
+
+本文采用：
+
+\begin{verbatim}
+高信息 P1
+→ C1 基础测量
+→ C2-B 共同桥接与风险确认
+→ C2-A-RP 精度补测
+→ T1 Semi 条件效应
+→ Strong Global 对比 Support-aware Full V1
+\end{verbatim}
+
+并始终分离：
+
+\begin{verbatim}
+公开/纠错 GT 外部正确性
+Geometry LOO 同行一致性
+worker-caused structural failure
+模型辅助风险
+Calibration 支持范围
+\end{verbatim}
+
+\subsection{一级贡献}
+
+\subsubsection{贡献一：三轴工人测量}
+
+本文分别估计：
+
+\begin{itemize}
+  \item $Q^{GT}_u$：相对 operational GT 的外部正确性；
+  \item $R^{peer}_u$：与独立同行的几何兼容性；
+  \item $F^{struct}_u$：可归责于工人的结构失败倾向。
+\end{itemize}
+
+三者不压缩为单一总可靠度；P1 预测链和多峰共识作为次级效度证据。
+
+\subsubsection{贡献二：双波 Calibration 与部分收缩}
+
+C1 提供基础外部质量、同行结构和任务差异；C2-B 通过 common anchor 与 diverse
+bridge 恢复横向可比性并确认风险差异，C2-A-RP 只补关键估计精度。
+小样本工人使用部分收缩，不发布不稳定的高维画像。
+
+\subsubsection{贡献三：支持度感知的前瞻政策试验}
+
+V1 比较 Strong Global 与 Support-aware Full。Full 只能使用获得跨阶段支持的条件分量，
+并在支持不足时局部或整体退化为 Global。两臂共享容量、替补、动态追加和 GT-blind 聚合条件；
+完整工程合同放入方法附录。
+
+P1 跨阶段预测、多峰共识、GT 冲突解释和反例库是次级创新或可信度基础设施，
+不是替代三项核心贡献的主叙事。
+
+\subsection{研究问题}
+
+\subsubsection{RQ1：模型辅助效应}
+
+Semi-Auto 是否在不降低交付质量的前提下降低 active time，其效应是否随任务风险和工人纠错能力变化？
+确认性层级为 delivery-adjusted quality 非劣、active time 优势和
+\texttt{mode} $\times$ \texttt{risk\_assist} 交互；blind trust、correction failure、
+over-correction 和 Model Issue recognition 为机制性次级结果。
+
+\subsubsection{RQ2：画像测量和跨阶段效度}
+
+P1 诊断和 C1/C2 三轴工人状态是否具有跨阶段预测价值，哪些有限的 failure-family
+component 能获得可复现支持？RQ2 以效应量、方向、支持范围和预测性能为主，
+不要求每阶段分别达到传统显著性。
+
+\subsubsection{RQ3：路由增量价值}
+
+在相同工人池、容量、替补、追加和聚合规则下，Support-aware Full 是否相对
+Strong Global 改善交付调整质量、非交付率或标注成本？V2 外部支持审计是可选扩展，
+不作为第四个主要研究问题。

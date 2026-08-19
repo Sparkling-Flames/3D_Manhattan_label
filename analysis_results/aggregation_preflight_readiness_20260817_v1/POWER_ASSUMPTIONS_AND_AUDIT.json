@@ -1,0 +1,70 @@
+{
+  "clustered_power_audit": {
+    "alpha": 0.05,
+    "critical_value_formula": "t_(1-alpha/2, J-1)",
+    "empirical_icc": 0.0,
+    "empirical_icc_status": "small_cluster_noisy_estimate_J_12",
+    "icc_sensitivity_grid": {
+      "icc_0": 0.0,
+      "icc_0.05": 0.05,
+      "icc_0.10": 0.1,
+      "icc_0.20": 0.2,
+      "icc_empirical": 0.0
+    },
+    "implied_conservative_alpha_by_buildings": {
+      "10": 0.02368769490089573,
+      "12": 0.027737074421678942,
+      "15": 0.03196990604678085
+    },
+    "nominal_alpha": 0.05,
+    "random_effects_components": {
+      "c_unbalanced": 4.900149031296572,
+      "cluster_sizes": {
+        "7y3sRwLe3Va": 6,
+        "B6ByNegPMKs": 7,
+        "UwV83HsGsw3": 2,
+        "X7HyMhZNoso": 3,
+        "Z6MFQCViBuw": 4,
+        "b8cTxDM8gDG": 1,
+        "q9vSo1VnCiC": 9,
+        "rPc6DW4iMge": 2,
+        "uNb9QFRL6hY": 12,
+        "wc2JMjhGNzB": 7,
+        "x8F5xyUWy9e": 2,
+        "yqstnuAEVhm": 6
+      },
+      "empirical_icc_clipped": 0.0,
+      "empirical_icc_raw": 0.0,
+      "icc_status": "small_cluster_noisy_estimate_J_12",
+      "ms_between": 0.0009472889095432194,
+      "ms_within": 0.0011870060136982428,
+      "n_paired_buildings": 12,
+      "n_paired_tasks": 61,
+      "sigma_e2_raw_nonnegative": 0.0011870060136982428,
+      "sigma_u2_raw_nonnegative": 0.0,
+      "ss_between": 0.010420178004975413,
+      "ss_within": 0.0581632946712139,
+      "truncation_rule": "MSW=max(0,MSW); sigma_u2=max(0,(MSB-MSW)/C); ICC clipped to [0,0.95] only for scenario input"
+    },
+    "replicates": 5000,
+    "seed": 20260817,
+    "simulation_residual_formula": "sum_i e_i ~ Normal(0, sigma_e2*N), simulated as rng.gauss(0,sqrt(sigma_e2*N)); not sigma_e2*sum(n_j^2)",
+    "task_delta_variance_central": 0.0011430578779364888,
+    "true_delta_is_simulation_assumption": true,
+    "variance_component_formula": "MSB=SSB/(J-1); MSW=SSW/(N-J); C=(N-sum(n_j^2)/N)/(J-1); sigma_u2=max(0,(MSB-MSW)/C); sigma_e2=max(0,MSW); ICC=sigma_u2/(sigma_u2+sigma_e2)",
+    "variance_scenarios": {
+      "central": 0.0011430578779364888,
+      "pessimistic_2x": 0.0022861157558729775
+    }
+  },
+  "required_N_audit": {
+    "central_variance": 0.0011430578779364879,
+    "cluster_design_effect_in_source_file": false,
+    "interpretation": "normal approximation is internally consistent for independent-task variance but does not include building clustering; clustered table is conservative design-only evidence",
+    "max_abs_MDE_difference": 0.0028053410758776647,
+    "max_abs_required_N_difference": 126,
+    "normal_formula": "(z_(1-alpha/2)+z_power)*sqrt(empirical_task_delta_variance/N)",
+    "source_path": "analysis_results/post_block2_opportunity_analysis_20260817_v1/POST_BLOCK2_CLUSTERED_POWER/aggregation_required_N.csv",
+    "source_sha256": "34723021bfc51f7abc6af0cd900fde77a9b160f87fbca3bd14392197d362a16c"
+  }
+}

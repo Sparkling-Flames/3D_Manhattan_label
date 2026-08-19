@@ -10,6 +10,9 @@ from typing import Any
 
 def geometry_sha256(row: dict[str, Any]) -> str:
     geometry = row.get("_geometry") or row.get("geometry") or {}
+    frozen = row.get("frozen_geometry_sha256") or geometry.get("frozen_geometry_sha256")
+    if frozen:
+        return str(frozen)
     return hashlib.sha256(json.dumps(geometry, sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 

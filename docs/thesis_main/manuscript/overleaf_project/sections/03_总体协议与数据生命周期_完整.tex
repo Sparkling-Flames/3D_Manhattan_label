@@ -1,0 +1,177 @@
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260807_v19 SHA-256 60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38
+\section{总体协议与数据生命周期}
+
+\subsection{阶段职责}
+
+\begin{longtable}{@{}p{0.08\textwidth}p{0.23\textwidth}p{0.31\textwidth}p{0.28\textwidth}@{}}
+\toprule
+阶段 & 核心职责 & 允许用途 & 禁止用途 \\
+\midrule
+\endhead
+P1 & 准入、高信息诊断、预测因子 & admission、failure-family、P1$\rightarrow$后续预测 & 正式 Global、未经验证的路由画像 \\
+C1 & 基础能力、风险发现、方差估计 & provisional worker state、C2 设计、功效模拟 & 最终政策、Main 结论 \\
+C2 & 共同桥接、支持补齐、正式冻结 & Strong Global/Full、risk、support、fallback & 根据 Main 结果回调 \\
+T1 & Semi 条件效应 & RQ1 & 修改 worker state \\
+V1 & 路由前瞻验证 & RQ3 & 重新调权重和阈值 \\
+V2 & 外部支持审计（可选） & 外部支持与安全退化 & 回流修改 V1 \\
+\bottomrule
+\end{longtable}
+
+\subsection{冻结边界}
+
+P1、C1 已发生的 admission、assignment 和 raw submission 不回改。
+
+C2 后冻结：
+
+\begin{verbatim}
+reference registry
+Global policy
+Support-aware Full
+risk_assist
+risk_route
+support thresholds
+capacity
+offer/replacement
+dynamic redundancy
+aggregation
+terminal states
+statistical analysis
+\end{verbatim}
+
+\subsection{C1 protocol deviations and authorized replacement}
+
+原始 C1 assignment manifest、原始任务分配和 raw submission 保持不可变。现实执行中的
+行政处置不覆盖原 manifest，而是通过独立的、带时间戳和 SHA 的
+\texttt{authorized reassignment addendum} 追加：
+
+\begin{itemize}
+  \item W014 因 process-integrity failure 被行政排除；
+  \item W034 与 W001 接手的替补任务只记录在授权替补 addendum 中；
+  \item addendum 至少保存原 assignment manifest SHA、原任务/工人、替补任务/工人、
+  授权人、授权时间、变更原因、addendum SHA 和生效时间。
+\end{itemize}
+
+因此，替补不是对原分配的静默重写。C1 assigned cohort 仍按原始 assignment 报告；
+行政排除和替补任务分别进入 deviation、completion 和 analytic eligibility 字段，
+并在结果中同时报告原始 assignment 与授权后实际执行状态。
+
+对每一个基础任务 \(t\)，替补与追加的正式资格数定义为
+\[
+k_{t,\mathrm{eligible}}
+=\#\{\text{unique eligible worker IDs on base task }t\},
+\]
+而不是 annotation rows 或 runtime IDs 的数量。替补工人不得此前提交过同一
+\texttt{base\_task\_id}；该约束在 addendum 和最终任务级审计中同时核验。通过核验的
+W034/W001 替补行不因其替补身份整体删除：只要满足对应资格，就可进入 GT、peer、LOO
+和 structural-failure 分析；active-time 仅在该行同时满足 owner binding 与 active-time
+资格时纳入。合法替补行也可进入主任务支持和终态聚合，并额外报告纳入与排除替补行的
+profile sensitivity。
+
+\subsection{信息时序}
+
+\subsubsection{首次路由可读取}
+
+\begin{verbatim}
+公开任务 metadata
+HoHoNet feature/output risk
+Calibration worker state
+availability
+capacity
+历史 process eligibility
+\end{verbatim}
+
+\subsubsection{响应到达后才可读取}
+
+\begin{verbatim}
+当前任务的合法提交
+几何相似度
+结构有效性
+Scope state
+冲突状态
+已到达响应数
+\end{verbatim}
+
+\subsubsection{禁止回填首次路由}
+
+\begin{verbatim}
+当前任务 Difficulty
+当前任务 Model Issue 票
+最终 crowd consensus
+最终 GT 评价
+事后专家裁决
+\end{verbatim}
+
+\subsection{Estimand-specific inclusion}
+
+同一 submission 分别保存：
+
+\begin{verbatim}
+eligible_for_active_time
+eligible_for_GT_quality
+eligible_for_LOO
+eligible_for_structural_failure
+eligible_for_semi_correction
+eligible_for_predictive_validity
+eligible_for_routing_feature
+\end{verbatim}
+
+不存在一个全局 \texttt{valid} 字段替代所有分析。
+
+\subsection{失败归因、外部事故与重跑合同}
+
+所有阶段将异常先按冻结证据规则区分为：
+
+\begin{verbatim}
+worker_caused_structural_failure
+policy_caused_failure
+external_system_failure
+not_evaluable
+\end{verbatim}
+
+worker-caused structural failure 是可归责于提交的重复角点、非法 pair 数、自交、拓扑坍塌等；它进入对应 worker/condition 的结构机会分母。policy-caused failure 包括 candidate exhaustion、替补规则失败和容量耗尽，归责于原政策臂而非工人。external system failure 仅限有时间窗、服务端/平台/导出证据和影响范围记录支持的整站宕机、平台不可用或导出损坏；缺少该证据的异常为 not evaluable，不得事后改称系统事故。
+
+C2 freeze 前必须锁定事故类别词表、证据要求、判定人/时间、每任务最多一次重跑、T1 配对重跑、V1 同臂同版本对称容量重跑和行政删失规则。分类、重跑或删失决定必须在查看受影响 T1 条件结果或 V1 政策结果前完成，保留 incident ID、原任务、重跑任务、证据 SHA 和 disposition。外部事故不降低 worker reliability，也不计为 policy failure；若无法按冻结规则重跑，则行政删失并按条件/臂报告原始、重跑、删失数量及原因。
+
+\subsection{C1 assignment provenance、variable-k 与补充任务}
+
+正式 C1 provenance 仅允许 \texttt{original\_assignment}、
+\texttt{authorized\_replacement\_assignment}、\texttt{late\_entry\_calibration\_assignment}
+与 \texttt{outside\_assignment\_submission}。前三类只有在 canonical identity、assignment binding
+与对应 estimand eligibility 同时通过后才进入正式分析；outside 永远只进入 raw、exposure 和
+process-integrity 审计。W014 永久行政排除。W034 的正式 capability set 是 original 与 17 条授权
+任务的并集，W001 是 original 与 3 条授权任务的并集；W034 的 B-004/B-022 固定为 outside。
+
+任务支持按 task--condition--estimand 定义：
+\[
+k_{t,c,e}=\#\{u:\text{worker }u\text{ 在 }(t,c,e)\text{ 上具有唯一 canonical eligible evidence}\}.
+\]
+GT、peer、LOO、structural、active-time、semi-correction、predictive-validity 与 routing-feature
+可以具有不同的 \(k_{t,c,e}\)。原始 assignment 数只定义 target；授权替补恢复缺口，late entry
+增加 pooled support，outside 和 duplicate revision 不增加正式支持。
+
+W034 的 17 条授权任务只有在 owner-valid active-time sentinel 通过后、且任务开始时间不早于
+sentinel validation time 时才贡献 timing evidence。sentinel manifest 必须绑定 worker、project、
+runtime task、annotation、active-log SHA、reviewer 和 validation time。旧缺失日志不回填；sentinel
+失败使相应 timing 分支 not-evaluable，不能伪造为零，也不能污染其他 capability 轴。
+
+\subsection{Rolling enrollment 与 Stage 3 freeze}
+
+Rolling enrollment 默认 \texttt{activated=false}，实际新增人数允许为 0。若在 Stage 3 前激活，
+必须在结果不可见时冻结 \(N_{\max}\)、recruitment/P1/C1/C2 时间窗、P1/instruction/interface
+版本、seed、workload template、task pool 与 exposure ledger。新人通过同版本 P1 后以独立 late-entry
+manifest 追加，不替换 W014、不改写原 roster、不按结果选任务，并同时保留 original-only 与 pooled
+profile。Stage 3 的启动由两套相互独立的 gate 控制，而不是一个等待所有后续政策工件的总门。
+T1 仅要求 enrollment closed、全部 Calibration worker terminal、C1/C2-B/C2-A-RP、pooled profile
+以及 T1 roster、task pool、randomization plan 和 SAP 的 SHA-bound freeze；因此 T1 不等待
+Strong Global、Full 或 Validation roster。V1 在上述 Calibration/pooled 基础上另外要求
+Strong Global、Full、Validation roster 和 V1 SAP 的 SHA-bound freeze。冻结后新增 worker 或修改
+profile、threshold、weight、fallback、roster 均 fail closed。
+
+T1 的正式 roles 为 \texttt{CALIBRATION\_ENROLLMENT\_CLOSED}、
+\texttt{ALL\_CALIBRATION\_WORKERS\_TERMINAL}、\texttt{C1\_EVIDENCE\_FROZEN}、
+\texttt{C2\_B\_FROZEN}、\texttt{C2\_A\_RP\_CLOSED}、\texttt{FINAL\_POOLED\_PROFILE\_FROZEN}、
+\texttt{T1\_ROSTER\_FROZEN}、\texttt{T1\_TASK\_POOL\_FROZEN}、
+\texttt{T1\_RANDOMIZATION\_PLAN\_FROZEN} 和 \texttt{T1\_SAP\_FROZEN}；V1 roles 在此基础上
+替换为另外要求 \texttt{STRONG\_GLOBAL\_FROZEN}、\texttt{FULL\_POLICY\_FROZEN}、
+\texttt{VALIDATION\_ROSTER\_FROZEN} 和 \texttt{V1\_SAP\_FROZEN} 的集合。每个 role 都必须
+绑定对应冻结 artifact、method SHA 与递归依赖；仅增加角色字符串不能放行。

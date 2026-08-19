@@ -1,0 +1,67 @@
+{
+  "artifact_role": "TOPOLOGY_SEQUENTIAL_PREFLIGHT",
+  "asserted_frozen_facts": {
+    "historical_inventory_tasks": 78,
+    "historical_support_shortfall_tasks": 31,
+    "live_workers": 20,
+    "normalization_version_conflict_count": 1,
+    "operational_geometry_and_structural_pool_distribution": {
+      "4": 31,
+      "5": 35,
+      "20": 12
+    },
+    "primary_common_buildings": 12,
+    "primary_common_tasks": 47,
+    "structural_k4_k5_k20": [
+      30,
+      36,
+      12
+    ],
+    "topology_k4_k5_k20": [
+      28,
+      38,
+      12
+    ]
+  },
+  "block3": false,
+  "code_sha256": "3132b234b6e37fecadb740e39eaeddc3d98cc7967a9511fec9479e22659c52f4",
+  "development_only": true,
+  "diagnostic_pre_stage3": true,
+  "estimands": {
+    "cost": "conditional on 47 tasks with at least five valid candidates; not total deployment cost",
+    "primary": "task-equal F0/M0_corner_count_gate_geometry_medoid/M1 paired comparison on the same 47 tasks and task-replicate-order rows",
+    "quality": {
+      "complete_case_public_gt": "diagnostic",
+      "formal_rule": "superiority",
+      "full_m1_expert_fallback_workflow": "not_identifiable",
+      "reference_evaluable_autonomous_delivery_mitt": "autonomous unresolved/no-output=0; resolved output with unavailable eligible reference=missing"
+    },
+    "support_sensitivity": "78-task historical counterfactual inventory only"
+  },
+  "formal_policy_frozen": false,
+  "formal_profile_frozen": false,
+  "input_sha256": {
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_canonical_geometry.jsonl": "d3054e9c1fb9869a8a0a7ad114de16e6c30952ab4948261cfac58df25ef82799",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_gt_conflict_review_queue.csv": "70ea62f83622d22aaff8c8b341800ce0d846a1290a9cd94a0b98d816c5c054f0",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_gt_quality_evidence.csv": "7b32a7f4a273b26064c3308368cef45aa2c71efb8bde390abf75a92634a3da3a",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_operational_reference_audit.json": "545df464ceca9344a5531d2a619c6951c39954569548db055f59ac9d34fe30f8",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_task_building_binding.csv": "e95af0b12db496ad3f1cfdf4e6edef22597f550a51822a3a95103f0dc44cfa4b",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\geometry_task_crowd_structure_C1.csv": "5aa04db57efd9606a27d94d7718a62df52302854d5bc5de7d89d5edca0c2f090",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\structural_validation_analysis.csv": "c35edf087be6c1440aac9504de9dca43222ef12bf4b4f4d4774c5d32b04d2f41"
+  },
+  "output_files": [
+    "PREFLIGHT_DATA_AND_PROVENANCE.md",
+    "PREFIX_POLICY_METRICS.csv",
+    "PREFLIGHT_OPERATING_CHARACTERISTICS.csv",
+    "PREFLIGHT_READINESS.json",
+    "analysis_manifest.json"
+  ],
+  "replicates": 1000,
+  "schema_version": "topology_sequential_preflight_v2",
+  "scientific_conclusion_prohibited": true,
+  "seed": 20260818,
+  "supersedes": {
+    "path": "analysis_results/topology_sequential_preflight_20260818_v1",
+    "status": "superseded_development_descriptive_only"
+  }
+}

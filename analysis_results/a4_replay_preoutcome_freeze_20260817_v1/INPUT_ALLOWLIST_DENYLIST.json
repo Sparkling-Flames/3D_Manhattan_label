@@ -1,0 +1,112 @@
+{
+  "allowlist": [
+    "analysis_results\\a4_deployment_pool_identity_20260817_v1\\A4_CANDIDATE_DEPLOYMENT_POOL_IDENTITY_C1_v1.csv",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_canonical_geometry.jsonl",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_canonicalization_summary.json",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\geometry_pairwise_similarity_C1.csv",
+    "analysis_results\\a4_image_evidence_substrate_20260817_v2\\DEVELOPMENT_CANDIDATE_IMAGE_ALIGNMENT.csv",
+    "docs\\thesis_main\\geometry_peer_candidate_rule_manifest_v1.json",
+    "docs\\thesis_main\\PAPER_A_METHOD_CONTRACT_CURRENT.json",
+    "analysis_results\\aggregation_preflight_readiness_20260817_v1\\DEVELOPMENT_HOLDOUT_SPLIT_MANIFEST.csv"
+  ],
+  "deny_column_tokens": [
+    "active_time",
+    "delivery_adjusted_quality",
+    "difficulty",
+    "gt",
+    "iou",
+    "lead_time",
+    "outcome",
+    "public_gt_quality",
+    "quality",
+    "reference",
+    "worker_quality"
+  ],
+  "deny_paths": [
+    "post_block2_opportunity_analysis_20260817_v1",
+    "cross_fitted_selector_results.csv",
+    "c1_gt_quality",
+    "public_gt_quality",
+    "active_logs",
+    "holdout_effect"
+  ],
+  "projection_semantics": "CSV physical rows may be parsed, but only allowlisted columns are consumed; denied values are not accessed.",
+  "trace": [
+    {
+      "path": "analysis_results\\a4_deployment_pool_identity_20260817_v1\\A4_CANDIDATE_DEPLOYMENT_POOL_IDENTITY_C1_v1.csv",
+      "projected_columns": [
+        "candidate_annotation_id",
+        "worker_id",
+        "stage",
+        "round_id",
+        "condition",
+        "base_task_id",
+        "task_id",
+        "project_id",
+        "ls_runtime_task_id",
+        "deployment_pool_id",
+        "assignment_realization_status",
+        "assignment_provenance",
+        "observed_canonical_runtime_source_status",
+        "identity_mapping_status",
+        "formal_duplicate_status",
+        "appears_in_internal_distribution",
+        "candidate_parse_status",
+        "building_scene_id"
+      ]
+    },
+    {
+      "path": "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_canonical_geometry.jsonl",
+      "projected_columns": [
+        "canonical_annotation_id",
+        "worker_id",
+        "base_task_id",
+        "condition",
+        "corners_px",
+        "width",
+        "height",
+        "eligible_for_geometry_loo",
+        "geometry_hash"
+      ]
+    },
+    {
+      "path": "analysis_results\\a4_image_evidence_substrate_20260817_v2\\DEVELOPMENT_CANDIDATE_IMAGE_ALIGNMENT.csv",
+      "projected_columns": [
+        "candidate_annotation_id",
+        "vertical_edge_support",
+        "ceiling_boundary_support",
+        "floor_boundary_support",
+        "seam_segment_boundary_support"
+      ]
+    },
+    {
+      "path": "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\geometry_pairwise_similarity_C1.csv",
+      "projected_columns": [
+        "base_task_id",
+        "condition",
+        "worker_id_left",
+        "worker_id_right",
+        "metric_compatible"
+      ]
+    },
+    {
+      "path": "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_canonicalization_summary.json",
+      "projected_columns": []
+    },
+    {
+      "path": "docs\\thesis_main\\geometry_peer_candidate_rule_manifest_v1.json",
+      "projected_columns": []
+    },
+    {
+      "path": "docs\\thesis_main\\PAPER_A_METHOD_CONTRACT_CURRENT.json",
+      "projected_columns": []
+    },
+    {
+      "path": "analysis_results\\aggregation_preflight_readiness_20260817_v1\\DEVELOPMENT_HOLDOUT_SPLIT_MANIFEST.csv",
+      "projected_columns": [
+        "building_scene_id",
+        "split"
+      ]
+    }
+  ]
+}

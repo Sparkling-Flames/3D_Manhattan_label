@@ -1,0 +1,39 @@
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260803_v18 SHA-256 694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87
+\section{Machine-readable evidence schema}
+
+正式 C2-A-RP 仅接受 \texttt{c2a\_rp\_precision\_plan\_v2} 与 \texttt{c2a\_rp\_assignment\_manifest\_v2} 两个 CSV schema；旧 schema 在 closeout 阶段拒绝。
+
+至少包括：
+\begin{itemize}
+  \item \texttt{task/reference}、\texttt{worker state}、\texttt{Q\_GT\_EB}、\texttt{F\_struct\_EB}；
+  \item \texttt{R\_peer\_task}、\texttt{R\_peer\_all}、\texttt{R\_peer\_stable}、
+  \texttt{R\_LOO\_medoid}、\texttt{R\_LOO\_strict}；
+  \item \texttt{risk}、\texttt{assignment}、\texttt{offer}、\texttt{capacity}、\texttt{response}；
+  \item \texttt{aggregation}、\texttt{terminal outcome}、\texttt{analysis inclusion}、\texttt{freeze version}；
+  \item \texttt{gt\_score\_computable}、\texttt{gt\_primary\_analysis\_eligible}；
+  \item \texttt{candidate\_id}、\texttt{trigger\_source}、\texttt{trigger\_rule\_version}、\texttt{source\_denominator\_definition}；
+  \item \texttt{adjudication\_status}、\texttt{adjudicator}、\texttt{adjudicated\_at}、\texttt{evidence\_sha}；
+  \item \texttt{future\_use\_status}，但不把反例库字段用于当前画像、阈值或 Full 权重学习；
+  \item 反例字段是目标合同，若 provenance、分母或 evidence SHA 不齐全，结果状态必须为
+  \texttt{incomplete}，不得写成完整 bank。
+  \item \texttt{assignment\_provenance} 四值、\texttt{late\_entry\_calibration\_assignment}、
+  \texttt{outside\_primary\_excluded}、original/authorization/distribution SHA；
+  \item 每个 estimand 的 \texttt{k\_original}、\texttt{k\_authorized}、\texttt{k\_late}、
+  \texttt{k\_final}、support deficit 与 pooled excess；
+  \item peer task statistic、equal-task-weight aggregate、\texttt{cluster\_margin\_all}、
+  \texttt{cluster\_margin\_top2}、cluster absolute support/share、cluster count 与
+  stable/multimodal status；不得生成已废止的 \texttt{normalized\_cluster\_margin}；
+  \item \texttt{F\_struct\_raw}、\texttt{F\_struct\_EB}、interval 与 recurrent serious flag；
+  \item W034 sentinel manifest SHA、owner-valid status、validation time、log-source SHA 和
+  \texttt{timing\_not\_evaluable\_reason}；
+  \item rolling activation、enrollment batch/window/version/seed/workload、original/pooled cohort、
+  Stage 3 gate dependency SHA、Validation roster SHA 与 formal minimum worker/cluster rule；
+  \item C2-A-RP 的 \texttt{target\_component}、\texttt{gap\_reason}、\texttt{formal\_goal}、
+  \texttt{target\_ci\_half\_width}、\texttt{declared\_support\_after}、
+  \texttt{observed\_support\_after}、\texttt{terminal\_state}、\texttt{fallback\_action} 与
+  \texttt{threshold\_manifest\_sha256}；
+  \item C2-B deployment 的 \texttt{deployment\_id}、语言、server/project identity、planned
+  import/assignment/design/worker-registry SHA；canonical runtime join 使用
+  \texttt{(deployment\_id, project\_id, runtime\_task\_id, worker\_id)}，原始 active-time key 保持兼容；
+  \item T1 与 V1 的独立 gate kind、required roles、artifact role、artifact SHA 与递归依赖 closure。
+\end{itemize}

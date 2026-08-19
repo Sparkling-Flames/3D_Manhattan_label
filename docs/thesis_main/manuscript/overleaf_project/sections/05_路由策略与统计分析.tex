@@ -1,0 +1,69 @@
+\section{T1、路由政策与统计分析}
+
+\subsection{T1：Semi-Auto 条件效应}
+
+T1 采用
+\[
+\text{Manual/Semi}\times\text{ordinary/stress}_{assist}
+\]
+的 $2\times2$ 设计。每图分配两名 Manual 和两名 Semi 工人；
+预先形成的每个 analysis pair 恰含一条 Manual 和一条 Semi，
+同一工人不能看到同图两种模式。分配保存候选集、随机种子、概率和 workload cap。
+
+对 submission 定义
+\[
+U_{t,u}=I(\text{structurally valid})\,IoU(A_{t,u},G_t).
+\]
+工人结构失败保留在原条件且 $U_{t,u}=0$。
+外部事故按完整 analysis pair 重跑或删失，不得只删除不利条件。
+主要推断依次检验结构有效/交付质量非劣、owner-valid active time、
+mode 与 \texttt{risk\_assist} 交互及行为机制。
+
+\subsection{Strong Global 与 Full-Integrated}
+
+Strong Global 按任务调整 GT 质量的冻结下置信界排序。
+Full-Integrated 仅在任务 family 可明确激活且 component 获得跨阶段支持时，
+对 Strong Global 做有上限的条件调整。
+单项证据不足时关闭该 component；
+$d_{\mathrm{cal}}^F$ 越界、激活含糊、支持工人少于两名、排序不稳定或版本不兼容时，
+完整退化为 Strong Global。
+
+C2 freeze 后先报告 activation、fallback、首选差异、初始工人集合差异和容量约束后差异。
+若两政策几乎不产生不同决策，则不启动无信息的 V1。
+
+\subsection{V1：共享容量下的前瞻政策试验}
+
+V1 将任务前瞻随机到 Strong Global 或 Full-Integrated。
+每个 block 前冻结候选集、availability snapshot 和两臂对称 quota；
+两臂共享工人池但维护独立容量账本，不得跨臂借容量。
+两臂使用完全相同的 offer timeout、completion timeout、最大 offer 次数、
+拒绝/无响应替补、invalid submission 替补、candidate exhaustion 和动态冗余规则，
+唯一差异是推荐排序。
+
+聚合过程不读取 GT。合法提交经冻结几何相似度形成一致簇，
+依据最大簇、第二簇、medoid margin、结构有效性和多峰规则决定是否停止。
+形成稳定单一输出时为 \texttt{resolved}；
+有合法提交但到上限仍多峰时为 \texttt{unresolved}；
+到上限仍无可交付合法输出时为 \texttt{severe\_failure}。
+
+V1 的 ITT 单位是原始随机化任务。定义
+\[
+D_t^\pi=I(\text{unresolved or severe failure}),\qquad
+U_t^\pi=I(\text{resolved})IoU(O_t^\pi,G_t).
+\]
+政策导致的 candidate exhaustion、替补失败或容量耗尽保留在原臂；
+未交付任务的 $U_t^\pi=0$。工人 invalid submission 记录为 worker event；
+若合法替补后任务 resolved，不把最终任务质量改为零。
+
+\subsection{实验分布与生产标准化}
+
+普通/风险任务的 50:50 设计均值为
+\[
+V_\pi^{design}=0.5V_{\pi,o}+0.5V_{\pi,s}.
+\]
+若独立自然任务池给出比例 $(p_o,p_s)$，另报
+\[
+V_\pi^{prod}=p_oV_{\pi,o}+p_sV_{\pi,s}.
+\]
+生产比例不得由平衡试验样本反推；比例不可唯一确定时报告预注册情景分析。
+

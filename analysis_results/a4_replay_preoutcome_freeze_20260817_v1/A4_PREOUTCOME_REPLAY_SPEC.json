@@ -1,0 +1,96 @@
+{
+  "a0_prime": {
+    "cutoff": 0.95,
+    "maximum_partition_count": 256,
+    "maximum_search_nodes": 10000,
+    "minimum_valid_k": 3,
+    "producer": "geometry_cluster_v2.cluster_geometry_records",
+    "selected_statuses": [
+      "unimodal",
+      "dominant_with_dissent",
+      "supported_multimodal"
+    ],
+    "unresolved": [
+      "empty_pool",
+      "k_less_than_3",
+      "no_dominant_or_supported",
+      "non_unique_partition",
+      "pairwise_missing_or_incompatible"
+    ]
+  },
+  "candidate_layers": {
+    "assignment_realization": "provenance_only_not_eligibility",
+    "k_less_than_3": "retained_as_not_evaluable",
+    "observed_coverage": "577_diagnostic_only_not_performance_denominator"
+  },
+  "candidate_universe": {
+    "context_pooling": "forbidden",
+    "pool_key": "deployment_pool_id",
+    "primary": "candidate_parse_status=valid AND worker_id not in c1_canonicalization_summary.excluded_worker_ids AND eligible_for_geometry_loo=true AND normalize_geometry valid",
+    "primary_rows": 547,
+    "rows_preserved": 580
+  },
+  "development_replay": {
+    "buildings": "9 development buildings only",
+    "locked_subset": "4-building A4-specific locked subset is not a virgin confirmation set",
+    "outer_scheme": "building-disjoint nested/LOBO; estimate any variant choice only in outer-train; evaluate outer-test once",
+    "true_confirmation": "requires new task/building"
+  },
+  "formal_rule_binding": {
+    "contract_path": "docs\\thesis_main\\PAPER_A_METHOD_CONTRACT_CURRENT.json",
+    "development_buildings": [
+      "B6ByNegPMKs",
+      "UwV83HsGsw3",
+      "X7HyMhZNoso",
+      "b8cTxDM8gDG",
+      "rPc6DW4iMge",
+      "uNb9QFRL6hY",
+      "wc2JMjhGNzB",
+      "x8F5xyUWy9e",
+      "yqstnuAEVhm"
+    ],
+    "parameters": {
+      "maximum_partition_count": 256,
+      "maximum_search_nodes": 10000,
+      "min_q_boundary": 0.95,
+      "min_q_wallwall": 0.95,
+      "minimum_valid_k": 3
+    },
+    "rule_path": "docs\\thesis_main\\geometry_peer_candidate_rule_manifest_v1.json"
+  },
+  "future_effect_gates_not_evaluated": {
+    "conditional_delta": "0.011<=delta<0.015",
+    "direction_gate": "at least 6/9 buildings non-negative and at least 5/9 strictly positive",
+    "effect_sensitivity_only": "0.020",
+    "no_go_delta": "<0.011",
+    "selection_rule": "no max-observed selection; outer LOBO only; ties A4-S; A4-S retained as primary safety estimate",
+    "strong_go_delta": ">=0.015"
+  },
+  "read_only_boundaries": {
+    "active_time_read": false,
+    "experiment_started": false,
+    "holdout_effect_read": false,
+    "outcome_read": false,
+    "quality_read": false,
+    "reference_read": false,
+    "training_started": false
+  },
+  "schema_version": "a4_preoutcome_replay_spec_v1",
+  "variants": {
+    "A4-C": "A4-S cluster choice; highest candidate image score within cluster; image ties use full_cluster_formal_medoid_ranking; fallback A0",
+    "A4-L": "A0 largest cluster fixed; rerank candidates by image score; image ties use full_cluster_formal_medoid_ranking; fallback A0",
+    "A4-S": "unique partition; clusters support>=2; median of four per-pool normalized mid-ranks; median cluster score; ties support then formal medoid; fallback A0",
+    "excluded_alignment_fields": [
+      "seam_wrap_consistency",
+      "model_prediction",
+      "worker_quality"
+    ],
+    "normalized_midrank": "k=1 -> 1; otherwise (midrank(value)-1)/(k-1), midrank=(count_less+(count_equal+1)/2)",
+    "required_alignment_fields": [
+      "vertical_edge_support",
+      "ceiling_boundary_support",
+      "floor_boundary_support",
+      "seam_segment_boundary_support"
+    ]
+  }
+}

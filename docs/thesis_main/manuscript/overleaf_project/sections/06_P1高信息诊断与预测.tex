@@ -1,0 +1,88 @@
+% Paper A: P1 is a secondary predictive contribution and an audit layer.
+\section{P1：高信息准入、诊断与预测}
+
+\subsection{P1 的定位}
+
+P1 不仅用于准入，也用于形成可跨阶段检验的 failure-family 假设；但 P1 不承担正式
+Global 分数。完整诊断词表保留在审计层：
+
+\begin{verbatim}
+undercoverage
+adjacent-space overextension
+corner instability
+topology / over-parsing
+blind trust
+correction failure
+scope misunderstanding
+process-integrity risk
+\end{verbatim}
+
+其中 blind trust、correction failure 主要服务 T1 机制分析；Scope 是资格和协议审计；
+process-integrity 是安全门。它们不进入 V1 条件加权。
+
+\subsection{跨阶段预测链}
+
+\begin{verbatim}
+P1 → C1
+P1 → C2-B
+P1 → T1
+\end{verbatim}
+
+报告 Spearman/Kendall、worker bootstrap CI、方向一致性、discrepancy workers、support
+和 range restriction。RQ2 关注效应量、方向、支持范围和预测性能；不要求 P1、C1、C2
+每阶段分别达到传统显著性。
+
+\subsection{正式可路由 failure family}
+
+正式 Full 只考虑以下三个可由标注前任务特征激活的 family：
+
+\begin{enumerate}
+  \item undercoverage / underextension；
+  \item adjacent-space overextension；
+  \item corner / topology instability。
+\end{enumerate}
+
+component 必须同时通过 C1 predictive validation 与 C2-B confirmation，方向符合预设假设，
+工人和任务 support 足够，个体效应经过收缩，并且在任务侧可激活。证据不足时调整自动趋近零，
+C2-A-RP 只补已定义 component 的精度，不发现新 family。
+
+\subsection{P1 retrospective integrity amendment}
+
+\begin{itemize}
+  \item parent-derived 或其他 non-independent P1 submission 不进入 capability 或 timing 主证据；
+  \item 这些记录可保留为 process-integrity 负证据，但不回改已经完成的 admission；
+  \item P1 预测分析只使用 independent 且 estimand-eligible 的证据；
+  \item 未经 C1+C2-B 双门验证的 component 保持 diagnostic-only。
+\end{itemize}
+
+\subsection{轻量反例库}
+
+反例库由以下来源触发：
+
+\begin{verbatim}
+GT conflict
+supported multimodality
+structural failure
+blind trust / correction failure
+undercoverage / overextension
+V1 unresolved
+\end{verbatim}
+
+论文合同要求候选至少保存 \texttt{candidate\_id}、来源、触发规则版本、证据、分母定义和
+输入 SHA；候选不自动表示 failure、GT 错误或工人归责。若任一必需 provenance、分母
+定义或 evidence SHA 缺失，候选只能保留在完整性审计中，不进入正式失败率、富集率或
+代表性反例分母。
+独立裁决类别为：
+
+\begin{verbatim}
+confirmed_worker_failure
+confirmed_ambiguity
+reference_or_protocol_issue
+system_or_policy_issue
+not_counterexample
+unresolved
+\end{verbatim}
+
+本轮只选择少量代表案例用于正文图、结果解释、讨论和附录；完整 frozen challenge/regression
+bank 是未来可选用途，不是本轮硬交付。反例库不得用于当前画像、C2 阈值、Full 权重或总体
+prevalence，也不得自动转为修订 GT。

@@ -1,0 +1,52 @@
+{
+  "pack_comparison": {
+    "v2": {
+      "artifact_count": 16,
+      "generator": "tools/thesis_main/data_prep/build_post_block2_analysis_pack_v2.py",
+      "generator_sha256": "1ce32d9493e8f2e71198956972eb2a61fd4abe072e302edc88835ebebe88b511",
+      "manifest_mismatches": [],
+      "manifest_sha256": "f63bb6fd4df7e9d57db1bb28d980fb30b2c6c1262417bd734dc532f19cd59e4b",
+      "pack_version": "post_block2_analysis_pack_20260817_v2",
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v2",
+      "profile_p0_inventory_count": 1,
+      "profile_status": {
+        "final_pooled_profile": "source_absent",
+        "historical_post_c2b_sha256": "6da53747227c291e3307f8a813a74d62d59220c60c4deb993b20836d7b9d1903",
+        "historical_post_c2b_source": "analysis_results/c2b_closeout_20260806_final/post_c2b_worker_profile.csv",
+        "p0": true,
+        "post_c2b_substitution_allowed": false
+      },
+      "prompt_2_entry_allowed": false,
+      "provenance_sha256": "c2f469c178ea24a2263f7ed42108369b4394f5ea89ebfccfd2c7b00246305a56",
+      "qa_sha256": "cbb2213883c9661373a57ffd1407a2283cd3d87e6f9b3dc7067275f820abcb7d",
+      "status": "NO-GO"
+    },
+    "v3": {
+      "artifact_count": 18,
+      "generator": "tools/thesis_main/data_prep/build_post_block2_analysis_pack_v3.py",
+      "generator_sha256": "75ff69d7cc2e4594dd4a74a87eed45560083d5f5b5e64334d4342bd383e51e17",
+      "manifest_mismatches": [],
+      "manifest_sha256": "abffc3dc4f28582d8a8d8818e5166aa5040af7a50a2a53995cf109da5efe7d04",
+      "pack_version": "post_block2_analysis_pack_20260817_v3",
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v3",
+      "profile_p0_inventory_count": 0,
+      "profile_status": {
+        "final_pooled_profile": "formal_ready",
+        "p0": false,
+        "post_c2b_substitution_allowed": false,
+        "sha256": "11f7e30fd00ec388bc0b5798846002ba7d6c77033011987e0ff4f27d251c8574",
+        "source": "analysis_results/final_calibration_profile_20260817_v1/pooled_worker_profile_v2.csv"
+      },
+      "prompt_2_entry_allowed": true,
+      "provenance_sha256": "2cf10a76182a27724105d1c2a1185feae39b4d7ffa5687568474d6dab91ef785",
+      "qa_sha256": "182257251d0662d9d254dfba548c19432ab34fcebf611b0cc230633fe0abc5eb",
+      "status": "GO"
+    }
+  },
+  "selection": {
+    "selected_pack": "post_block2_analysis_pack_20260817_v3",
+    "selection_rule": "v3 has formal current-v23 calibration profile binding; v2 declares final pooled profile source_absent",
+    "v2_not_silently_joined": true,
+    "v3_manifest_verified": true
+  }
+}

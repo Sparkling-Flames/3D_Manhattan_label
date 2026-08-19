@@ -1,0 +1,81 @@
+%% System overview -- horizontal paper version for Figure 1
+%% Original diagram for this work; not copied from any external source.
+%% Latest alignment notes:
+%%   1) PreScreen_manual and PreScreen_semi are disjoint and play different roles.
+%%   2) PreScreen_semi uses dual-source misleading initialisations
+%%      (synthetic operators primary; natural-failure bank supplementary).
+%%   3) OOS stress / ambiguity cases are audited separately rather than merged
+%%      into the main geometric trap or consensus pipeline.
+
+flowchart LR
+  classDef data   fill:#e8f4f8,stroke:#2c5f73,stroke-width:2px
+  classDef model  fill:#fef3c7,stroke:#92400e,stroke-width:2px
+  classDef core   fill:#fdf2e9,stroke:#d97706,stroke-width:2.5px
+  classDef human  fill:#eff6ff,stroke:#2563eb,stroke-width:2px
+  classDef lock   fill:#fce7f3,stroke:#9d174d,stroke-width:1.5px,stroke-dasharray:4
+  classDef output fill:#ecfdf5,stroke:#059669,stroke-width:2px
+  classDef eval   fill:#f3f4f6,stroke:#4b5563,stroke-width:1.5px
+
+  %% ── Frozen protocol / stage-level inputs ─────────────────────────────────
+  LOCK["Pre-registered protocol<br/>Pilot → PreScreen → Main<br/>freeze thresholds, seeds, folds, quotas"]:::lock
+
+  subgraph PRE["Frozen Inputs and Stage Gates"]
+    direction TB
+    IMG["Panoramic image pool<br/>(candidate tasks)"]:::data
+    M0["ML model (HoHoNet)<br/>current round"]:::model
+    PROP["Model-assisted initialisation<br/>initial layout proposals P_t"]:::model
+    PMAN["PreScreen_manual<br/>anchor subset for baseline ability and r_w^(0)"]:::data
+    PSEM["PreScreen_semi<br/>synthetic operators + small natural-failure trap bank"]:::data
+    OOS["OOS stress / ambiguity audit bank<br/>reported separately; not a main geometric trap"]:::eval
+  end
+
+  %% ── Core annotation loop ─────────────────────────────────────────────────
+  subgraph LOOP["Annotation System (core internal loop)"]
+    direction LR
+    PI["1) Task distribution strategy π<br/>risk-aware routing + stress mode<br/>budget B"]:::core
+    ANN["Worker pool W (Label Studio)<br/>active effort e_wt; meta-label m_wt<br/>(scope / difficulty / model_issue)"]:::human
+    CAL["2) Calibration and audit C<br/>LOO reliability r_w, r_w(s)<br/>counter-examples + process evidence"]:::core
+    AGG["3) Aggregation A<br/>weighted consensus y_hat_t<br/>T / I / M auditable disclosure"]:::core
+
+    PI  -->|"assigned task + proposal"| ANN
+    ANN -->|"submissions + meta-labels"| CAL
+    ANN -->|"raw submissions"| AGG
+    CAL -->|"reliability weights r_w"| AGG
+    CAL -.->|"updated LCB(r_w) → re-routing"| PI
+  end
+
+  %% ── Outputs / evaluation / optional retraining ──────────────────────────
+  subgraph OUT["System Outputs"]
+    direction TB
+    LABEL["Consensus label set {y_hat_t}<br/>(high-quality)"]:::output
+    AUDIT["Audit evidence library<br/>counter-examples; strata; rates"]:::output
+  end
+
+  EVAL["Offline replay evaluation<br/>P1 Efficiency improvement<br/>P2 Annotation quality<br/>P3 Overall system efficiency"]:::eval
+  TRAIN["Model retraining<br/>(optional extension)"]:::model
+  M1["Updated ML model"]:::model
+
+  %% ── Edges ────────────────────────────────────────────────────────────────
+  IMG  --> PROP
+  M0   --> PROP
+  PROP -->|"tasks + initialised proposals"| PI
+
+  LOCK -.->|"lock routing rules and thresholds"| PI
+  LOCK -.->|"lock calibration folds and anchor protocol"| PMAN
+  LOCK -.->|"lock source mix, seeds, and trap quotas"| PSEM
+  LOCK -.->|"lock aggregation / disclosure policy"| AGG
+
+  PMAN -.->|"baseline anchors for calibration"| CAL
+  PSEM -.->|"misleading initialisations for blind-trust audit"| CAL
+  OOS  -.->|"scope-gate / ambiguity disclosure only"| AUDIT
+
+  AGG  --> LABEL
+  CAL  -->|"audit signals"| AUDIT
+
+  LABEL -->|"training data"| TRAIN
+  TRAIN --> M1
+  M1   -.->|"next-round initialisation"| M0
+
+  LABEL --> EVAL
+  AUDIT --> EVAL
+  PI    -.->|"strategy comparison (offline)"| EVAL

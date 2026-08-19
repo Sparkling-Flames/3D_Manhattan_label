@@ -1,0 +1,7 @@
+method,method_name,total_task_contexts,evaluable_quality_count,not_evaluable_or_source_absent_count,all_rows_retained,source_status
+A0,A0_current_largest_cluster_medoid,101,97,4,True,"Counter({'estimated': 97, 'not_evaluable_reference': 4})"
+A1,A1_global_medoid_over_all_legal_submissions,101,62,39,True,"Counter({'estimated': 62, 'not_evaluable_reference': 39})"
+A2,A2_cross_fitted_worker_quality_weighted_medoid,101,62,39,True,"Counter({'estimated': 62, 'not_evaluable_reference': 39})"
+A3,A3_cluster_support_plus_worker_quality_selector,101,98,3,True,"Counter({'estimated': 98, 'not_evaluable_reference': 3})"
+A4,A4_image_evidence_weighted_cluster_selector,101,0,101,True,Counter({'source_absent_no_frozen_preoutcome_image_evidence': 101})
+A5,A5_topology_preserving_variable_corner_selector,101,90,11,True,"Counter({'estimated': 90, 'not_evaluable_reference': 11})"

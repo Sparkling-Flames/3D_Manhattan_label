@@ -1,0 +1,105 @@
+\section{Results}
+\label{sec:results}
+
+No prospective T1 or V1 result was available when this manuscript was restructured. This section is a result-writing scaffold, not a report of observed evidence. Every anticipated finding begins with \expectedresult{}, and every unavailable number is written as \tbddata{}. The markers must be replaced by verified outputs or the corresponding prose must be removed before submission.
+
+\subsection{Expected claim 1: the three profile components are non-redundant and stable \expectedresult{}}
+
+% 中文论点—证据—理由草稿：
+% 论点：三个分量提供互补而非重复的工人表现信息，并在独立校准阶段保持可解释稳定性。
+% 证据：分量分布、相关矩阵、部分收缩区间、跨阶段相关、留一任务/区块稳定性。
+% 理由：若相关不完全且排序在独立阶段保持，单一质量分数会遗漏结构失败或同行兼容信息。
+
+\expectedresult{} The calibration cohort is expected to show material between-worker variation in reference-based accuracy, stable peer compatibility, and worker-attributable structural invalidity. The final report will give the eligible worker and task counts for each component (\tbddata{}), the partially pooled cohort distribution (\tbddata{}), and the number classified as estimated, weak descriptive, or not evaluable (\tbddata{}). Shrinkage is expected to attenuate extreme estimates with sparse support while retaining the broad ordering of workers with repeated calibration evidence.
+
+\expectedresult{} Pairwise associations are expected to be incomplete rather than interchangeable: reference-based accuracy versus stable peer compatibility, \tbddata{}; reference-based accuracy versus worker-attributable structural invalidity, \tbddata{}; and stable peer compatibility versus structural invalidity, \tbddata{}. Case-level inspection is expected to identify workers with similar $Q_{GT}^{EB}$ but different structural-failure intervals, and workers with comparable reference accuracy but different compatibility with stable peer modes. These contrasts would justify reporting the three outcomes separately; they would not establish three latent psychological traits.
+
+\expectedresult{} Cross-stage estimates are expected to preserve the direction and useful rank ordering of the principal components. The identified-stage model will report the stage coefficient and interval (\tbddata{}), worker-rank association across calibration sources (\tbddata{}), and leave-one-task- or leave-one-block-out stability (\tbddata{}). If the bridge does not identify a stage effect, this paragraph must instead report the frozen ``not identifiable'' status; it must not insert an unsupported stage-adjusted estimate.
+
+\begin{table}[t]
+\centering
+\caption{Expected profile summary. All entries are unavailable until the frozen calibration analysis is complete. \expectedresult{}}
+\label{tab:expectedprofile}
+\begin{tabular}{lccc}
+\toprule
+Component & Estimated support & Cohort estimate & Stability \\
+\midrule
+Reference-based accuracy & \tbddata{} & \tbddata{} & \tbddata{} \\
+Stable peer compatibility & \tbddata{} & \tbddata{} & \tbddata{} \\
+Structural invalidity & \tbddata{} & \tbddata{} & \tbddata{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Expected claim 2: calibration supports selected conditional components and rejects unsupported ones \expectedresult{}}
+
+% 中文论点—证据—理由草稿：
+% 论点：只有部分预声明风险/失败族获得足够支持，支持门同时保留可用异质性并阻止稀疏外推。
+% 证据：各分量支持人数、CI/精度目标、留一稳定性、激活率、局部禁用率、总体 fallback 率与支持距离。
+% 理由：有选择地激活而非“全有或全无”，说明支持边界实际改变了政策自由度。
+
+\expectedresult{} Multiple predeclared conditional components are expected to reach terminal precision and stability requirements, while others remain disabled. For the risk slope, the report will give the number estimated (\tbddata{}), number meeting the precision target (\tbddata{}), between-worker slope dispersion (\tbddata{}), and leave-one-block-out stability (\tbddata{}). For each failure family, it will report how many workers traverse the full validation chain (\tbddata{}) and why the remaining components stop. A missing or negative link will be described as ineligible, not as proof of no heterogeneity.
+
+\expectedresult{} The calibration-only choice of conditional weights and cap is expected to improve held-out predictive loss relative to the global score by \tbddata{} while remaining stable across both validation schemes. The selected risk weight, family weight, and symmetric cap will be \tbddata{}, \tbddata{}, and \tbddata{}, respectively. If no supported held-out improvement is observed, the correct result is zero conditional weights and global fallback; this expected positive paragraph must then be removed.
+
+\expectedresult{} Support diagnostics are expected to show that most in-domain tasks receive either a supported adjustment or a documented local disable, whereas tasks beyond the calibration-support boundary trigger the calibrated global fallback. The report will include task activation rates (\tbddata{}), local component-disable rates (\tbddata{}), overall fallback rates by reason (\tbddata{}), and the distribution of calibration-support distance (\tbddata{}). Out-of-support examples are expected to confirm deterministic fallback rather than unconstrained extrapolation.
+
+\begin{table}[t]
+\centering
+\caption{Expected support and routing diagnostics. \expectedresult{}}
+\label{tab:expectedsupport}
+\begin{tabular}{lcc}
+\toprule
+Diagnostic & Ordinary & Stress \\
+\midrule
+Supported risk activation & \tbddata{} & \tbddata{} \\
+Supported family activation & \tbddata{} & \tbddata{} \\
+Local component disable & \tbddata{} & \tbddata{} \\
+Overall global fallback & \tbddata{} & \tbddata{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\subsection{Expected claim 3: model assistance preserves delivery quality while reducing active time \expectedresult{}}
+
+% 中文论点—证据—理由草稿：
+% 论点：Semi 在质量/结构安全不受损的前提下减少 active time，但收益随 assistance risk 与纠错能力变化。
+% 证据：图像内 delivery-adjusted quality 差、结构有效率、active-time 比值、mode×risk 交互、blind-trust/correction 指标。
+% 理由：效率增益与异质性交互共同说明 T1 是模型辅助机制证据，但不是 V1 路由因果验证。
+
+\expectedresult{} T1 is expected to retain all randomized and rerun counts transparently: images randomized, \tbddata{}; complete primary images, \tbddata{}; confirmed external-incident reruns, \tbddata{}; administratively censored images, \tbddata{}; and worker-attributable structural failures by mode, \tbddata{}. The manual and semi-automatic groups are expected to satisfy the frozen balance checks for worker exposure, task stratum, and assignment probability (\tbddata{}).
+
+\expectedresult{} Semi-automatic annotation is expected to pass the structural-validity and delivery-quality safety specification. The paired image-level difference in delivery-adjusted quality will be \tbddata{} with interval \tbddata{}; the structural-validity contrast will be \tbddata{}; and the valid-only reference-quality contrast will be \tbddata{}. These results would support quality preservation under the tested conditions, not equivalence in every panorama family.
+
+\expectedresult{} Validated active time is expected to be lower in the semi-automatic condition. The task-adjusted time ratio will be \tbddata{} with interval \tbddata{}, with ordinary and stress estimates of \tbddata{} and \tbddata{}. The mode-by-assistance-risk interaction is expected to be non-zero (\tbddata{}), accompanied by differences in blind trust, failed correction, or over-correction (\tbddata{}). The anticipated pattern is that model initialization saves editing effort when the proposal is recoverable but offers less benefit, or creates additional correction demand, when proposal risk is high.
+
+\subsection{Expected claim 4: conditional routing passes safety gates and improves policy value \expectedresult{}}
+
+% 中文论点—证据—理由草稿：
+% 论点：V1 条件路由先通过两层安全门，再提高交付调整质量并降低失败/成本；域外任务正确回退。
+% 证据：mITT 流程、severe 与 unresolved+severe 差、delivery-adjusted quality、resolved-only quality、k/cost/time、fallback 子组。
+% 理由：对称容量与运营规则使差异可归因于推荐排序；分层检验防止用平均质量掩盖交付失败。
+
+\expectedresult{} The V1 flow is expected to remain balanced after randomization. Each arm will report \tbddata{} randomized tasks, \tbddata{} compliant reruns, \tbddata{} external administrative censors, and \tbddata{} mITT tasks. Availability, capacity, offer attempts, replacement reasons, and candidate exhaustion are expected to show no material operational asymmetry beyond recommendation order (diagnostic contrasts \tbddata{}).
+
+\expectedresult{} Calibration-supported conditional routing is expected to pass both safety gates in sequence. The conditional-minus-global severe-failure difference will be \tbddata{} with interval \tbddata{} against the frozen margin \tbddata{}. The corresponding unresolved-plus-severe difference will be \tbddata{} with interval \tbddata{} against margin \tbddata{}. These claims cannot be made if either ordered gate fails.
+
+\expectedresult{} After both safety gates, delivery-adjusted quality is expected to be superior under conditional routing by \tbddata{} (interval \tbddata{}). Resolved-only quality is expected to differ by \tbddata{}, the mean number of annotations by \tbddata{}, active or completion time by \tbddata{}, and cost by \tbddata{}. Failure rates are expected to be lower particularly for supported risk or family activations, with a policy-by-risk interaction of \tbddata{}. These later endpoints are interpreted only at the level permitted by the ordered hierarchy.
+
+\expectedresult{} Production-standardized estimates are expected to retain the direction of the balanced-design result under the independently measured ordinary--stress mix (\tbddata{}). Scenario estimates for alternative mixes will be \tbddata{}. Tasks outside the support domain are expected to use the global fallback and show no unintended conditional score; their outcomes and reasons will be reported separately rather than merged into a claim about supported routing.
+
+\begin{table}[t]
+\centering
+\caption{Expected V1 confirmatory hierarchy. No decision is available. \expectedresult{}}
+\label{tab:expectedv1}
+\begin{tabular}{p{0.36\linewidth}p{0.21\linewidth}p{0.27\linewidth}}
+\toprule
+Endpoint & Effect & Ordered decision \\
+\midrule
+Severe failure & \tbddata{} & \tbddata{} \\
+Unresolved + severe failure & \tbddata{} & \tbddata{} \\
+Delivery-adjusted quality & \tbddata{} & \tbddata{} \\
+Count/cost & \tbddata{} & Descriptive after hierarchy \\
+\bottomrule
+\end{tabular}
+\end{table}

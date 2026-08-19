@@ -1,0 +1,89 @@
+{
+  "artifact_role": "TOPOLOGY_SEQUENTIAL_PREFLIGHT",
+  "asserted_frozen_facts": {
+    "admission_sensitivity_tasks_with_k_ge_5": {
+      "current20_current_normalizer": 49,
+      "current20_frozen_geometry_pool": 50,
+      "current20_raw_structural_and_current_normalizer": 47,
+      "current20_raw_structural_pass": 48,
+      "current_normalizer": 77,
+      "frozen_geometry_pool": 78,
+      "raw_structural_and_current_normalizer": 75,
+      "raw_structural_pass": 76
+    },
+    "current_normalizer_invalid_ids": [
+      "370095f69c5b170678fa"
+    ],
+    "formal_replacements": {
+      "W1": 1,
+      "W34": 14
+    },
+    "frozen_geometry_pool_candidates": 594,
+    "frozen_geometry_pool_distribution": {
+      "22": 12,
+      "5": 66
+    },
+    "historical_worker_candidate_counts": {
+      "W14": 0,
+      "W18": 26,
+      "W27": 26
+    },
+    "outside_assignment_excluded": 7,
+    "primary_historical_replay_buildings": 13,
+    "primary_historical_replay_tasks": 78,
+    "repair_ids": [
+      "63001f819a4a6b408ae2",
+      "9e5409147dcedaf906b7"
+    ]
+  },
+  "block3": false,
+  "code_sha256": "5aa6c73b344075be7337fba9f5b9a09196cb98f72bd27092cc3974c9776ce9be",
+  "development_only": true,
+  "diagnostic_pre_stage3": true,
+  "estimands": {
+    "admission_sensitivity": "current normalizer, raw structural pass and current20 roster are deterministic support inventories only",
+    "cost": "historical frozen-geometry submission count only; paid deployment cost is not identifiable",
+    "primary": "task-equal F0/M0_corner_count_gate_geometry_medoid/M1 paired historical replay on the same 78 frozen geometry-pool tasks and task-replicate-order rows",
+    "quality": {
+      "complete_case_public_gt": "diagnostic",
+      "formal_rule": "superiority",
+      "full_m1_expert_fallback_workflow": "not_identifiable",
+      "reference_evaluable_autonomous_delivery_mitt": "autonomous unresolved/no-output=0; resolved output with unavailable eligible reference=missing"
+    }
+  },
+  "formal_policy_frozen": false,
+  "formal_profile_frozen": false,
+  "input_sha256": {
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_canonical_geometry.jsonl": "d3054e9c1fb9869a8a0a7ad114de16e6c30952ab4948261cfac58df25ef82799",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_geometry_pool_eligibility.csv": "8f59ad72cd794e14772cb4e85d7f55526a5c285053f925ce369d8d98816a48a2",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_geometry_repair_audit.csv": "7110378f1fac25da76a658c2969d17f88c522a4fec8a9580c9622dd3e472c83d",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_gt_conflict_review_queue.csv": "70ea62f83622d22aaff8c8b341800ce0d846a1290a9cd94a0b98d816c5c054f0",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_gt_quality_evidence.csv": "7b32a7f4a273b26064c3308368cef45aa2c71efb8bde390abf75a92634a3da3a",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_operational_reference_audit.json": "545df464ceca9344a5531d2a619c6951c39954569548db055f59ac9d34fe30f8",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_task_building_binding.csv": "e95af0b12db496ad3f1cfdf4e6edef22597f550a51822a3a95103f0dc44cfa4b",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\geometry_pairwise_similarity_C1.csv": "997860626fdf50ea5667986a8f04df0183c8f78f617c49fd5682394c7092f1a7",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\geometry_task_crowd_structure_C1.csv": "5aa04db57efd9606a27d94d7718a62df52302854d5bc5de7d89d5edca0c2f090",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\structural_validation_analysis.csv": "c35edf087be6c1440aac9504de9dca43222ef12bf4b4f4d4774c5d32b04d2f41"
+  },
+  "output_files": [
+    "PREFLIGHT_DATA_AND_PROVENANCE.md",
+    "PREFIX_POLICY_METRICS.csv",
+    "PREFLIGHT_OPERATING_CHARACTERISTICS.csv",
+    "PREFLIGHT_READINESS.json",
+    "analysis_manifest.json"
+  ],
+  "replicates": 1000,
+  "schema_version": "topology_sequential_preflight_v3",
+  "scientific_conclusion_prohibited": true,
+  "seed": 20260818,
+  "supersedes": [
+    {
+      "path": "analysis_results/topology_sequential_preflight_20260818_v1",
+      "status": "superseded_development_descriptive_only"
+    },
+    {
+      "path": "analysis_results/topology_sequential_preflight_20260818_v2",
+      "status": "superseded_development_descriptive_only"
+    }
+  ]
+}

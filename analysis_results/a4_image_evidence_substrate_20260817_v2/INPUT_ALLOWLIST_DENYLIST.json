@@ -1,0 +1,69 @@
+{
+  "allowlist": {
+    "candidate_geometry": [
+      "stage",
+      "base_task_id",
+      "canonical_annotation_id",
+      "worker_id",
+      "canonical_geometry"
+    ],
+    "image_listing": [
+      "role",
+      "path",
+      "normalized_path",
+      "size",
+      "sha256"
+    ],
+    "layout_prediction_path": [
+      "output/layout_json/{base_task_id}.json existence/hash only"
+    ],
+    "model_manifest": [
+      "manifest_json_only"
+    ],
+    "split": [
+      "building_scene_id",
+      "split"
+    ],
+    "task_identity": [
+      "base_task_id",
+      "condition",
+      "building_id"
+    ]
+  },
+  "allowlisted_paths": [
+    "analysis_results/c2b_validation_static_20260802_v16/static/c2b_candidate_image_file_listing.csv",
+    "analysis_results/post_block2_opportunity_analysis_20260817_v1/POST_BLOCK2_AGGREGATION_OPPORTUNITY_AUDIT/variable_corner_count_audit.csv",
+    "analysis_results/aggregation_preflight_readiness_20260817_v1/DEVELOPMENT_HOLDOUT_SPLIT_MANIFEST.csv",
+    "analysis_results/post_block2_analysis_pack_20260817_v3/aggregation_candidate_geometries.csv",
+    "analysis_results/c2b_validation_static_20260802_v16/static/c2_feature_freeze_manifest.json",
+    "analysis_results/stage3_test_preparation_20260804_v1/stage3_test_feature_candidate_manifest.json",
+    "docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json",
+    "tools/thesis_main/analysis/geometry_consensus/representation.py",
+    "output/layout_json/{base_task_id}.json (existence/hash only)"
+  ],
+  "deny_columns": [
+    "gt",
+    "reference",
+    "quality",
+    "iou",
+    "score",
+    "outcome",
+    "worker_outcome",
+    "consensus",
+    "medoid",
+    "cluster_correctness",
+    "difficulty"
+  ],
+  "deny_paths": [
+    "export_label/",
+    "active_logs/",
+    "analysis_results/post_block2_analysis_pack_20260817_v3/post_block2_submission_master.csv",
+    "analysis_results/post_block2_analysis_pack_20260817_v3/post_block2_task_context_master.csv",
+    "analysis_results/post_block2_analysis_pack_20260817_v3/post_block2_exclusion_provenance.csv",
+    "analysis_results/c2b_validation_static_20260802_v16/static/c2_feature_reference_cache.npz",
+    "analysis_results/stage3_test_preparation_20260804_v1/stage3_test_inventory_candidate.csv",
+    "analysis_results/aggregation_preflight_readiness_20260817_v1/CLEAN_A2_A0_COMMON_DENOMINATOR.csv"
+  ],
+  "holdout_rule": "image evidence may cover holdout; candidate alignment is development-only; holdout quality/outcome is not opened or emitted",
+  "trace_semantics": "CSV parser may physically parse complete rows, but only allowlisted projected values are consumed; JSON/model and image accesses are recorded by path and kind."
+}

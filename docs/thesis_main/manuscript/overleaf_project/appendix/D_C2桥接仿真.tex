@@ -1,0 +1,24 @@
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260803_v18 SHA-256 694a3126342d7c8de4a5ed788d7ac50b2fec4f104d0b77ace0e604d078c39a87
+\section{C2 design simulation}
+
+正式候选仅为：
+\begin{verbatim}
+D8  = 4 common anchors + 4 diverse bridges
+D10 = 6 common anchors + 4 diverse bridges
+D12 = 6 common anchors + 6 diverse bridges
+\end{verbatim}
+
+模拟并审计：
+\begin{itemize}
+  \item worker--task 图连通性、common anchor 和 ordinary/stress 支持；
+  \item task/building 多样性、Global 排名稳定性和风险斜率精度；
+  \item 预算与 policy divergence（仅作 V1 可识别性诊断）；
+  \item C2-A-RP 正式只派发 \texttt{risk\_slope\_precision}；top-$k$/component 仅作诊断；
+  \item 采用冻结 threshold manifest 的 \texttt{normal\_95\_max\_unified\_slope\_sd} 95\% 正态区间，
+  每个 block 为 1 ordinary + 1 stress，最多两个 block、0/2/4 张任务；
+  \item 每个 block 后从 canonical、valid、risk-slope-estimand-eligible submissions 重新拟合同一模型，
+  区分 declared/projected 与 observed support；达到目标即停，两块后仍不达标时 adjustment=0 与
+  Strong Global fallback。
+\end{itemize}
+
+C2-S 仅作为可选诊断，不是正式主线阶段。
