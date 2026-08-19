@@ -1,0 +1,17 @@
+% Source: Paper_A_新版完整论文提纲_vFinal_Draft.md Appendix G
+\section{V1 aggregation and terminal state}
+
+\begin{itemize}
+  \item valid submission；
+  \item largest cluster；
+  \item GT-blind medoid；
+  \item resolved；
+  \item unresolved；
+  \item severe/system failure。
+\end{itemize}
+
+medoid 只能读取合法提交、冻结几何相似度、兼容簇、结构有效性和冻结 tie-break，
+不得读取 GT、Global、Full 或 worker quality。tie-break 依次使用 geometry SHA、
+canonical annotation identity 和 task-bound frozen seed；正式 resolved 至少需要三名
+不同且合资格的 worker IDs。两名合法提交只构成追加状态，达到 cap 仍不足时记为
+\texttt{unresolved}。

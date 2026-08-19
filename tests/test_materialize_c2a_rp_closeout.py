@@ -309,3 +309,14 @@ def test_c2a_rp_refits_each_block_and_counts_only_observed_eligible_support(
     assert payload["next_block_index"] == 3
     assert len(calls) == 2
     assert all("invalid" not in {row["task_id"] for row in records} and "s3" not in {row["task_id"] for row in records} for records in calls)
+def test_historical_acceptance_reads_sha_bound_corrected_reestimate_roster(tmp_path: Path) -> None:
+    corrected = tmp_path / "corrected.json"
+    corrected.write_text(json.dumps({"workers": {"1": {}, "W002": {}}}), encoding="utf-8")
+    acceptance = tmp_path / "acceptance.json"
+    acceptance.write_text(json.dumps({
+        "corrected_reestimate": {"path": str(corrected), "sha256": c2a_closeout.sha256_file(corrected)},
+    }), encoding="utf-8")
+
+    assert c2a_closeout._historical_c2b_worker_summaries(acceptance) == [
+        {"worker_id": "1"}, {"worker_id": "2"},
+    ]

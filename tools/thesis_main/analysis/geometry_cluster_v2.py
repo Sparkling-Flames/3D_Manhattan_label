@@ -17,6 +17,9 @@ def _geometry(row: dict[str, Any]) -> dict[str, Any]:
 
 
 def _sha(row: dict[str, Any]) -> str:
+    frozen = row.get("frozen_geometry_sha256") or _geometry(row).get("frozen_geometry_sha256")
+    if frozen:
+        return str(frozen)
     return hashlib.sha256(json.dumps(_geometry(row), sort_keys=True, separators=(",", ":")).encode()).hexdigest()
 
 
@@ -146,13 +149,13 @@ def _maximum_clique_partitions(indices: tuple[int, ...], edges: set[tuple[int, i
     return sorted(partitions), truncated, search_nodes
 
 
-def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: float, min_q_wallwall: float, base_task_id: str = "", condition: str = "", minimum_valid_k: int = 3, maximum_partition_count: int = 256, maximum_search_nodes: int = 10000) -> dict[str, Any]:
+def cluster_geometry_records(records: list[dict[str, Any]], *, min_q_boundary: float, min_q_wallwall: float, base_task_id: str = "", condition: str = "", minimum_valid_k: int = 3, maximum_partition_count: int = 256, maximum_search_nodes: int = 10000, pairwise_fn=None) -> dict[str, Any]:
     valid = [row for row in records if _geometry(row).get("valid")]
     scores: dict[tuple[int, int], float] = {}
     edges: set[tuple[int, int]] = set()
     compatible = True
     for left, right in itertools.combinations(range(len(valid)), 2):
-        item = pairwise_similarity(_geometry(valid[left]), _geometry(valid[right]))
+        item = (pairwise_fn or pairwise_similarity)(_geometry(valid[left]), _geometry(valid[right]))
         boundary = item.get("q_boundary", item.get("boundary_similarity"))
         wall = item.get("q_wallwall", item.get("wallwall_similarity"))
         if boundary is None or wall is None or not item.get("metric_compatible", True):

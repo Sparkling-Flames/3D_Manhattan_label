@@ -1,0 +1,29 @@
+% Overview layer: concise scientific narrative; detailed contracts follow.
+\section{研究总览}
+
+本文的统一科学问题是：全景布局标注中的模型辅助收益是否具有可测量的任务--工人异质性，
+以及经 Calibration 支持的条件画像能否改善实际标注政策？统一逻辑为：
+
+\begin{verbatim}
+异质性存在
+→ 异质性可以测量
+→ 异质性可以由标注前任务信息激活
+→ 异质性具有路由价值
+\end{verbatim}
+
+正式执行链为：
+
+\begin{verbatim}
+Pilot → P1 → C1 → C2-B → C2-A-RP → T1 → V1
+\end{verbatim}
+
+正文突出三项一级贡献：
+\begin{enumerate}
+  \item 分离外部正确性 \(Q^{GT}_u\)、同行兼容性 \(R^{peer}_u\) 和结构可靠性 \(F^{struct}_u\)；
+  \item 以 common anchor、diverse bridge 和部分收缩建立双波 Calibration，避免发布不稳定的高维画像；
+  \item 在相同容量、替补、追加和 GT-blind 聚合条件下，前瞻比较 Strong Global 与 Support-aware Full。
+\end{enumerate}
+
+P1 跨阶段预测、多峰共识和 GT 冲突解释是次级创新；反例库、失败归因、容量与调度审计是
+可信度基础设施。V2 仅是可选的外部支持与安全退化审计。T1 与 V1 不是两个孤立实验：T1
+检验模型辅助效应及其风险交互，V1 检验经 Calibration 支持的条件画像是否具有政策增量。

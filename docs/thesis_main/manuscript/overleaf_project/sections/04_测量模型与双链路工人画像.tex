@@ -1,0 +1,37 @@
+\section{测量模型与工人画像}
+
+\subsection{三轴基础状态}
+
+对工人 $u$ 保存三个互不替代的量：
+\[
+Q^{GT,\mathrm{adj}}_u,\qquad R^{LOO}_u,\qquad F^{struct}_u.
+\]
+$Q^{GT,\mathrm{adj}}_u$ 是控制任务难度后的外部正确性；
+$R^{LOO}_u$ 描述与独立同行参考的兼容性；
+$F^{struct}_u$ 是可归责于工人的结构失败率。
+外部系统事故、导出/解析事故、OOS 和未知归因不进入结构失败分母。
+Strong Global 使用 $Q^{GT,\mathrm{adj}}_u$ 的保守估计，LOO 不替代外部正确性。
+
+\subsection{任务风险}
+
+任务侧保存三类量：
+\[
+d^{feat}_{model,t},\qquad g^{struct}_{model,t},\qquad d^{cal}_{support,t}.
+\]
+$d^{feat}_{model,t}$ 来自冻结 checkpoint 和预处理下的模型特征距离；
+$g^{struct}_{model,t}$ 保存角点数、拓扑、seam 和后处理有效性等可解释标志。
+$d_{\mathrm{cal}}^A$ 只使用 C1，用于设计 C2；
+$d_{\mathrm{cal}}^F$ 在 C2 后计算，用于 V1 激活和 fallback。
+
+\texttt{risk\_assist} 服务 T1，描述模型初始化和纠错风险；
+\texttt{risk\_route} 服务 V1，描述 Manual 外部质量下降、LOO disagreement、
+结构失败或 worker ranking instability 的风险。
+C1 只筛选候选，C2-B 共同确认，C2-A-RP 不搜索新风险。
+
+\subsection{P1 component 的进入条件}
+
+P1 failure-family 画像首先是候选预测因子。
+只有同时满足 C1 predictive validation、C2-B confirmation、最小 support、
+方向稳定和版本兼容的 component 才可进入 Full-Integrated。
+层级模型对个体风险斜率进行收缩；证据不足时标为 uncertain，而不是补零或强制个体化。
+

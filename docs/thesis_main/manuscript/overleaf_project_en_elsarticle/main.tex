@@ -1,0 +1,52 @@
+\documentclass[preprint,12pt]{elsarticle}
+
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\expectedresult}{\textcolor{red}{[EXPECTED\_RESULT\_NOT\_OBSERVED]}}
+\newcommand{\tbddata}{\textcolor{red}{TBD\_DATA}}
+\newcommand{\ethicsverify}{\textcolor{red}{[ETHICS\_STATUS\_TO\_VERIFY]}}
+
+\journal{Journal to be determined}
+
+\begin{document}
+
+\begin{frontmatter}
+
+\title{Auditable Adaptive Panoramic Layout Annotation: Calibration-Supported Worker Profiling and Conditional Routing}
+
+\author[inst1]{Author names withheld for drafting}
+\address[inst1]{Affiliation withheld for drafting}
+
+\begin{abstract}
+Panoramic room-layout annotation combines geometric judgement, interface operation, and correction of model-generated proposals. A worker who performs well overall may nevertheless fail predictably on a particular risk family, while a detailed conditional profile may be too weakly supported to guide deployment. We study when calibrated evidence about worker performance should influence task routing. The proposed framework separates three components---reference-based accuracy, stable peer compatibility, and worker-attributable structural invalidity---and estimates them from an independent calibration stage with partial pooling and explicit support diagnostics. It then constructs a calibrated global ranking and enables conditional routing only for routable failure modes that cross a predeclared calibration-support boundary; unsupported cases fall back to the global policy. A supporting T1 experiment evaluates model-assistance heterogeneity, whereas a prospective V1 experiment compares conditional and global routing under symmetric operations, two safety non-inferiority gates, and a delivery-adjusted quality hierarchy. \expectedresult{} The marked result scaffold anticipates non-redundant and cross-stage-stable profile components, supported conditional effects, preserved quality with reduced active time in T1, and safety followed by quality and cost gains in V1; all corresponding sample sizes, effects, and intervals remain \tbddata{}. The contribution is therefore an auditable evidence contract linking worker characterization, calibration support, fallback behaviour, and prospective policy evaluation rather than an unrestricted claim that finer personalization is always beneficial.
+\end{abstract}
+
+\begin{highlights}
+\item Separates three complementary components of panoramic-layout worker performance.
+\item Restricts conditional routing to effects supported by independent calibration evidence.
+\item Evaluates routing prospectively with symmetric operations and explicit safety gates.
+\end{highlights}
+
+\begin{keyword}
+panoramic layout annotation \sep worker profiling \sep adaptive routing \sep calibration \sep auditability \sep human--AI collaboration
+\end{keyword}
+
+\end{frontmatter}
+
+\input{sections/01_introduction}
+\input{sections/02_related_work}
+\input{sections/03_problem_formulation}
+\input{sections/04_system_design}
+\input{sections/05_report}
+\input{sections/06_results}
+\input{sections/07_discussion}
+\input{sections/08_conclusion}
+
+\bibliographystyle{elsarticle-num}
+\bibliography{refs/references}
+
+\end{document}

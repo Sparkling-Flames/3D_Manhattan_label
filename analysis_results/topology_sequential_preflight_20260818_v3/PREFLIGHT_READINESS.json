@@ -1,0 +1,165 @@
+{
+  "actual_expert_reference_harm": {
+    "code": "actual_harm_source_absent",
+    "confidence_or_upper_bound": "not_reported",
+    "status": "source_absent"
+  },
+  "actual_live_stops_main_readiness": {
+    "reason": "no live assignment/availability proof and actual harm source absent",
+    "status": "not_ready"
+  },
+  "availability_and_main_candidate_inventory": {
+    "budget": "20x50=1000",
+    "code": "live_feasibility_inputs_absent",
+    "status": "not_identifiable"
+  },
+  "block3": false,
+  "cost_estimand": {
+    "excluded_costs": [
+      "future invalid/repair/replacement attempts",
+      "expert fallback",
+      "availability",
+      "scheduling"
+    ],
+    "production_cost_claim_allowed": false,
+    "scope": "78 frozen C1 tasks already having at least five geometry-pool candidates",
+    "status": "historical_submission_count_only"
+  },
+  "current20_roster_sensitivity": {
+    "count": 20,
+    "not_primary": {
+      "14": "administrative_exclusion",
+      "18": "later_withdrawn_but_retained_in_historical_C1_replay",
+      "27": "later_withdrawn_but_retained_in_historical_C1_replay"
+    },
+    "status": "development_descriptive_only",
+    "worker_ids": [
+      1,
+      2,
+      6,
+      8,
+      10,
+      11,
+      12,
+      13,
+      15,
+      17,
+      28,
+      29,
+      30,
+      31,
+      32,
+      33,
+      34,
+      35,
+      36,
+      37
+    ]
+  },
+  "denominator": {
+    "admission_sensitivity_tasks_with_k_ge_5": {
+      "current20_current_normalizer": 49,
+      "current20_frozen_geometry_pool": 50,
+      "current20_raw_structural_and_current_normalizer": 47,
+      "current20_raw_structural_pass": 48,
+      "current_normalizer": 77,
+      "frozen_geometry_pool": 78,
+      "raw_structural_and_current_normalizer": 75,
+      "raw_structural_pass": 76
+    },
+    "frozen_geometry_pool_candidates": 594,
+    "frozen_geometry_pool_distribution": {
+      "5": 66,
+      "22": 12
+    },
+    "interpretation": "78 frozen C1 geometry-pool tasks are primary; current normalizer, raw structural pass and current20 roster are sensitivity inventories only",
+    "primary_historical_replay_buildings": 13,
+    "primary_historical_replay_tasks": 78,
+    "raw_structural_passed_distribution": {
+      "4": 2,
+      "5": 64,
+      "22": 12
+    },
+    "status": "ready"
+  },
+  "development_only": true,
+  "diagnostic_pre_stage3": true,
+  "formal_policy_frozen": false,
+  "formal_profile_frozen": false,
+  "gt_reference_conflict": {
+    "caveat": "does not establish absence of all upstream GT error and is not actual expert delivery harm",
+    "code": "ready_current_operational_audit_zero_declared",
+    "gt_issue_declared": false,
+    "pending": 0,
+    "review_queue_rows": 0,
+    "status": "ready"
+  },
+  "m0_corner_count_gate_geometry_medoid": {
+    "reason": "stopping reads repaired point count/2; selected output uses full geometry-medoid similarity, so timing and resolution both differ from F0",
+    "status": "development_descriptive_only"
+  },
+  "m1_conservative_development_gate": {
+    "rule": {
+      "k3": "3:0",
+      "k4": "4:0 or 3:1",
+      "k5": "5:0 or 4:1; otherwise unresolved/expert escalation"
+    },
+    "status": "recomputed_not_formal_policy"
+  },
+  "m2_worker_portrait": {
+    "risk_slope": "disabled",
+    "status": "not_evaluated_leakage_safe_estimator_absent"
+  },
+  "m3_posttask_meta": {
+    "causal_routing_effect": "not_claimed",
+    "first_route_meta": "excluded",
+    "status": "pending_pre_peer_timing_binding"
+  },
+  "parser_version_sensitivity": {
+    "changes_primary_admission": false,
+    "current_normalizer_invalid_ids": [
+      "370095f69c5b170678fa"
+    ],
+    "status": "development_descriptive_only"
+  },
+  "prospective_shadow_development_readiness": {
+    "formal_policy_frozen": false,
+    "reason": "shadow may record autonomous stops and expert-escalation triggers; expert fallback quality/cost and formal Stage 3 amendment remain absent",
+    "scope": "simulation_only",
+    "status": "conditional_go_shadow_only"
+  },
+  "quality_estimand": {
+    "autonomous_delivery_sensitivity": "unresolved/autonomous no-output=0; resolved output with unavailable eligible reference remains missing, so this is reference-evaluable mITT rather than full ITT",
+    "complete_case": "diagnostic only",
+    "expert_fallback_workflow": "not_identifiable_without_expert_output_quality",
+    "formal_rule": "superiority",
+    "ni_margin": "not_created_or_selected",
+    "status": "ready_descriptive"
+  },
+  "repair_binding": {
+    "canonical_annotation_ids": [
+      "63001f819a4a6b408ae2",
+      "9e5409147dcedaf906b7"
+    ],
+    "formal_c1_derivation": false,
+    "raw_structural_failure_retained": true,
+    "status": "development_replay_only"
+  },
+  "replicates": 1000,
+  "scientific_conclusion_prohibited": true,
+  "seed": 20260818,
+  "supersedes": [
+    {
+      "artifact": "analysis_results/topology_sequential_preflight_20260818_v1",
+      "status": "superseded_development_descriptive_only"
+    },
+    {
+      "artifact": "analysis_results/topology_sequential_preflight_20260818_v2",
+      "status": "superseded_development_descriptive_only"
+    }
+  ],
+  "topology_sequential_f0_m0_m1": {
+    "reason": "78 frozen-pool tasks, identical task-replicate-order rows and task-equal aggregation",
+    "status": "development_descriptive_only"
+  }
+}

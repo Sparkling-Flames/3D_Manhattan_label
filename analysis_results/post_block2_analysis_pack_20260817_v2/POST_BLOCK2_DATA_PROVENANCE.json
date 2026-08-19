@@ -1,0 +1,310 @@
+{
+  "schema_version": "post_block2_analysis_pack_provenance_v2",
+  "pack_version": "post_block2_analysis_pack_20260817_v2",
+  "created_at": "2026-08-16T17:38:18.136523+00:00",
+  "status": "NO-GO",
+  "prompt_2_entry_allowed": false,
+  "block3_generated": false,
+  "v1_preserved": true,
+  "v1_output_touched": false,
+  "git_cli_used": false,
+  "git_provenance": "not_collected_user_constraint",
+  "stage_counts": {
+    "P1": 1481,
+    "C1": 780,
+    "C2-B": 160,
+    "C2A-RP-B1": 40,
+    "C2A-RP-B2": 40
+  },
+  "expected_stage_counts": {
+    "P1": 1481,
+    "C1": 780,
+    "C2-B": 160,
+    "C2A-RP-B1": 40,
+    "C2A-RP-B2": 40
+  },
+  "block2_runtime_observed": {
+    "runtime_task_count": 32,
+    "annotation_count": 40,
+    "project_ids": [
+      "84",
+      "85"
+    ],
+    "export_count": 2
+  },
+  "block2_assignment_rows": 40,
+  "block2_assignment_reconciliation_exact": 40,
+  "block2_active_time_manifest_checks": [
+    {
+      "file": "active_logs/c2a_rp_block2_20260814/active_times_2026-08-11.jsonl",
+      "declared_sha256": "2d1cde94010977ea315b22d0ef27fe10bd7fc4a1e866e1c854edcb4902538629",
+      "observed_sha256": "2d1cde94010977ea315b22d0ef27fe10bd7fc4a1e866e1c854edcb4902538629",
+      "match": true
+    },
+    {
+      "file": "active_logs/c2a_rp_block2_20260814/active_times_2026-08-12.jsonl",
+      "declared_sha256": "37a329c1a152614bcefe6d7a6a7dc44cae866b32d13754992bf18d6c5d59a583",
+      "observed_sha256": "37a329c1a152614bcefe6d7a6a7dc44cae866b32d13754992bf18d6c5d59a583",
+      "match": true
+    },
+    {
+      "file": "active_logs/c2a_rp_block2_20260814/active_times_2026-08-13.jsonl",
+      "declared_sha256": "f7d449414c6537728bf6da70a18e5b347e87237991278c40c1f91935359d93b3",
+      "observed_sha256": "f7d449414c6537728bf6da70a18e5b347e87237991278c40c1f91935359d93b3",
+      "match": true
+    },
+    {
+      "file": "active_logs/c2a_rp_block2_20260814/active_times_2026-08-14.jsonl",
+      "declared_sha256": "74b563ed8a58fc952d4a1ef41eddba76dac2dd2e0bf44bd4ae9a6a9b9b5b8a6e",
+      "observed_sha256": "74b563ed8a58fc952d4a1ef41eddba76dac2dd2e0bf44bd4ae9a6a9b9b5b8a6e",
+      "match": true
+    }
+  ],
+  "submission_exclusion_count": 16,
+  "profile_p0_inventory_count": 1,
+  "combined_exclusion_inventory_count": 17,
+  "stale_runtime_mapping_excluded": {
+    "path": "analysis_results/c2a_rp_block2_distribution_20260810_v1/c2a_rp_operational/c2a_rp_runtime_mapping.csv",
+    "sha256": "94645586dad2680755d744989eead851adb5d7656e92763f39f92a177f712b5d",
+    "used_for_observed_mapping": false,
+    "reason": "distribution mapping contains stale pending runtime state"
+  },
+  "gt_scope_note": {
+    "role": "user_confirmed_gt_scope_note",
+    "path": "export_label/RAW_DATA_AND_GROUND_TRUTH_SCOPE_NOTE_20260817.md",
+    "sha256": "c8b422755e75619798c053d5185b77606bce56c525b4d039642aa1feac30393c"
+  },
+  "gt_provenance": {
+    "test": "partial_local_only; not_full_population_user_verified",
+    "validation": "mp3d_hohonet_source; no_researcher_correction; not_user_verified",
+    "source_note_sha256": "c8b422755e75619798c053d5185b77606bce56c525b4d039642aa1feac30393c"
+  },
+  "formal_sources": [
+    {
+      "role": "P1_CANONICAL_FINAL_GOLD",
+      "path": "analysis_results/prescreen_closeout_final_gold_v2_20260701/prescreen_canonical_annotations.csv",
+      "sha256": "ac216312875fd79a72efe0141a4a5dc88c3b0618e9720efdffe4b30331f8776d"
+    },
+    {
+      "role": "C1_CANONICAL_GEOMETRY_FROZEN",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_canonical_geometry.jsonl",
+      "sha256": "d3054e9c1fb9869a8a0a7ad114de16e6c30952ab4948261cfac58df25ef82799"
+    },
+    {
+      "role": "C1_PAIRWISE_FROZEN",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_pairwise_similarity_C1.csv",
+      "sha256": "997860626fdf50ea5667986a8f04df0183c8f78f617c49fd5682394c7092f1a7"
+    },
+    {
+      "role": "C1_CROWD_STRUCTURE_FROZEN",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/geometry_task_crowd_structure_C1.csv",
+      "sha256": "5aa04db57efd9606a27d94d7718a62df52302854d5bc5de7d89d5edca0c2f090"
+    },
+    {
+      "role": "C1_GT_QUALITY_EVIDENCE_FROZEN",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_gt_quality_evidence.csv",
+      "sha256": "7b32a7f4a273b26064c3308368cef45aa2c71efb8bde390abf75a92634a3da3a"
+    },
+    {
+      "role": "C1_GT_QUALITY_ANALYSIS_FROZEN",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_gt_quality_analysis.csv",
+      "sha256": "68c6d64cad77e09a21e5689d5bc20b26ad6484ba1fd63e1fbf00466ab9b23e5e"
+    },
+    {
+      "role": "C1_ANALYSIS_VIEWS_MANIFEST",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_analysis_views_manifest.json",
+      "sha256": "2ac27b72a88c1fd59950b8477003c5f8074334e1d5cecfb15f9c98171d482fdc"
+    },
+    {
+      "role": "C1_EVIDENCE_FREEZE_MANIFEST",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_evidence_freeze_manifest.json",
+      "sha256": "9ca7fee87cd07b2cdb4193a2c11916595b72409c6517e959c8f9ec206dc3a248"
+    },
+    {
+      "role": "C1_MEASUREMENT_FREEZE_MANIFEST",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_measurement_freeze_manifest.json",
+      "sha256": "96487438a663230aa403035260cf14dc8517ee9f02abf1830d370fb5309aaca5"
+    },
+    {
+      "role": "C1_ANALYSIS_DEPENDENCY_MANIFEST",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/analysis_dependency_manifest.json",
+      "sha256": "136c15f5e655fc91b173504bc0e1f797c73fb8774f1bee188b05d6424527b1cf"
+    },
+    {
+      "role": "C1_RAW_INPUT_MANIFEST",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_input_manifest.json",
+      "sha256": "b1c00e922abbc32d423817b9837f04cc201dbf048f3cbc1a61e682f0df02184c"
+    },
+    {
+      "role": "C1_HISTORICAL_RULE_MANIFEST",
+      "path": "docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json",
+      "sha256": "2ec80d15019ff76956fdeee214d6647ed9228708ea2b365439649c52ff10823f"
+    },
+    {
+      "role": "C2B_CANONICAL_CLOSEOUT",
+      "path": "analysis_results/c2b_closeout_20260806_final/c2b_canonical_submissions.csv",
+      "sha256": "aa156f97c0b30d7aed26fb14ddf8af62c79f9b1a79222f9e135ef7b39974116d"
+    },
+    {
+      "role": "C2A_RP_BLOCK1_CANONICAL_CLOSEOUT",
+      "path": "analysis_results/c2a_rp_block1_reestimate_20260810_v1/c2a_rp_block1_canonical_submissions.csv",
+      "sha256": "5c297463dabe20e6c05dcd41d08f305bd5a98648cfb9d761543455f49574042b"
+    },
+    {
+      "role": "C2A_RP_BLOCK2_ASSIGNMENT_MANIFEST",
+      "path": "analysis_results/c2a_rp_block2_distribution_20260810_v1/assignment_manifest_C2A_RP_block_2.csv",
+      "sha256": "438f2ae05355a04469dc246361e807d1f4ab0e6db34fc6a31ab2fb20dd059eef"
+    },
+    {
+      "role": "C2A_RP_BLOCK2_ACTIVE_TIME_FREEZE_MANIFEST",
+      "path": "active_logs/c2a_rp_block2_20260814/ACTIVE_TIME_FREEZE_MANIFEST.json",
+      "sha256": "17cd93a5ccf7cde7b38f8891ae904275bbe27df641d79beba2ddee9a10d00ee7"
+    },
+    {
+      "role": "GT_SCOPE_NOTE",
+      "path": "export_label/RAW_DATA_AND_GROUND_TRUTH_SCOPE_NOTE_20260817.md",
+      "sha256": "c8b422755e75619798c053d5185b77606bce56c525b4d039642aa1feac30393c"
+    },
+    {
+      "role": "C2A_RP_BLOCK2_RAW_EXPORT",
+      "path": "export_label/c2arp_block2/project-84-at-2026-08-14-08-36-31615637.json",
+      "sha256": "ed8c8652c7e6c7a2fc35fbd40c085dbcefa68b75f2803c82f7b265be7de98970"
+    },
+    {
+      "role": "C2A_RP_BLOCK2_RAW_EXPORT",
+      "path": "export_label/c2arp_block2/project-85-at-2026-08-14-08-36-71fffb37.json",
+      "sha256": "711fd7192849a4c466f661026a39e158848b9b2a3420499ff719efa9166b49a1"
+    }
+  ],
+  "producer_bindings": {
+    "method_contract": {
+      "role": "METHOD_CONTRACT",
+      "path": "docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json",
+      "sha256": "f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588"
+    },
+    "geometry_cluster_schema": {
+      "role": "GEOMETRY_CLUSTER_SCHEMA",
+      "path": "docs/thesis_main/geometry_cluster_v2.json",
+      "sha256": "f16bc2d637ad232d5ef33a9290ccbe81758bd4059dcfbccf9384cb2d25550564"
+    },
+    "geometry_cluster_producer": {
+      "role": "GEOMETRY_CLUSTER_PRODUCER",
+      "path": "tools/thesis_main/analysis/geometry_cluster_v2.py",
+      "sha256": "65bb427d163596eab4c7616d8b95ee457c1263ce7c856b9b1b5a93c1e48cfbf8"
+    },
+    "geometry_consensus_materializer": {
+      "role": "GEOMETRY_CONSENSUS_MATERIALIZER",
+      "path": "tools/thesis_main/analysis/geometry_consensus/materialize.py",
+      "sha256": "2bf2b9dc8ad7314dddfea364d65663ae9395c8b3780bf25638a19d51b032724a"
+    },
+    "final_pooled_profile_producer": {
+      "role": "FINAL_POOLED_PROFILE_PRODUCER",
+      "path": "tools/thesis_main/analysis/materialize_final_pooled_profile_freeze.py",
+      "sha256": "ff12279441023a3a44cc7a3a719fd30cc50fc279f03e16819d4f8929db4c2a69"
+    }
+  },
+  "c1_historical_binding": {
+    "status": "version-bound reconstruction_not_evaluable/source_absent",
+    "exact_historical_binding_available": false,
+    "historical_method_contract_version": "paper_a_method_20260802_v16",
+    "historical_method_contract_sha256": "ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265",
+    "historical_git_commit_sha": "6b2564c66295f4cd1a3b2516dee2feffb661896e",
+    "historical_code_pipeline_sha256": "6bc67c0300a4c689df7bde981c04b188856c32f2d7189bf8aeb992615dde5041",
+    "historical_full_dependency_bundle_sha256": "ec970af90e37a3b82e45fa9eb31a21e90cfe548d4b60935a6543467384af6289",
+    "historical_rule_version": "geometry_loo_candidate_v2",
+    "expected_sha": {
+      "method_contract": "ebedb421a1f73743380a0f58746e002c0f366031f7120473616a3efb4a010265",
+      "rule_manifest": "2ec80d15019ff76956fdeee214d6647ed9228708ea2b365439649c52ff10823f",
+      "geometry_cluster": "235cd906833965e75a09df85803aaaa630c30dd24c8fdc111c1824e01e45244c",
+      "materializer": "6bb57e686a6d53ca5fbb08dbcaeb1f123d7cef0dd9e1eb7f8990990868f7bfff",
+      "pairwise": "ac6eafc61647f519c46a31a38dde6cdd4a3081725525916de829b332a2a1fd96",
+      "representation": "0ab6896953c89750632d9fe9a458780e29ad5b71d78851ceed78a2a26ac5b4e1",
+      "medoid": "d9139833c7199b3481feb10fd706ec979851e055991018ffbbafe8f9ad5e313e"
+    },
+    "current_sha": {
+      "method_contract": "f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588",
+      "rule_manifest": "2ec80d15019ff76956fdeee214d6647ed9228708ea2b365439649c52ff10823f",
+      "geometry_cluster": "65bb427d163596eab4c7616d8b95ee457c1263ce7c856b9b1b5a93c1e48cfbf8",
+      "materializer": "2bf2b9dc8ad7314dddfea364d65663ae9395c8b3780bf25638a19d51b032724a",
+      "pairwise": "ac6eafc61647f519c46a31a38dde6cdd4a3081725525916de829b332a2a1fd96",
+      "representation": "56f84b839da7ebd677dee2c1b65f371422c1735a833aa24f8250e016b32b4917",
+      "medoid": "d9139833c7199b3481feb10fd706ec979851e055991018ffbbafe8f9ad5e313e"
+    },
+    "checks": {
+      "method_contract": false,
+      "rule_manifest": true,
+      "geometry_cluster": false,
+      "materializer": false,
+      "pairwise": true,
+      "representation": false,
+      "medoid": true
+    },
+    "unavailable_components": [
+      "method_contract",
+      "geometry_cluster",
+      "materializer",
+      "representation"
+    ],
+    "historical_rule_path": "docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json",
+    "historical_producer_paths": {
+      "rule_manifest": "docs/thesis_main/geometry_loo_candidate_rule_manifest_v1.json",
+      "geometry_cluster": "tools/thesis_main/analysis/geometry_cluster_v2.py",
+      "materializer": "tools/thesis_main/analysis/geometry_consensus/materialize.py",
+      "pairwise": "tools/thesis_main/analysis/geometry_consensus/pairwise.py",
+      "representation": "tools/thesis_main/analysis/geometry_consensus/representation.py",
+      "medoid": "tools/thesis_main/analysis/geometry_consensus/medoid.py"
+    },
+    "evidence_freeze_manifest": {
+      "role": "C1_EVIDENCE_FREEZE_MANIFEST",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_evidence_freeze_manifest.json",
+      "sha256": "9ca7fee87cd07b2cdb4193a2c11916595b72409c6517e959c8f9ec206dc3a248"
+    },
+    "measurement_freeze_manifest": {
+      "role": "C1_MEASUREMENT_FREEZE_MANIFEST",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/c1_measurement_freeze_manifest.json",
+      "sha256": "96487438a663230aa403035260cf14dc8517ee9f02abf1830d370fb5309aaca5"
+    },
+    "dependency_manifest": {
+      "role": "C1_ANALYSIS_DEPENDENCY_MANIFEST",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/analysis_dependency_manifest.json",
+      "sha256": "136c15f5e655fc91b173504bc0e1f797c73fb8774f1bee188b05d6424527b1cf"
+    },
+    "raw_input_manifest": {
+      "role": "C1_RAW_INPUT_MANIFEST",
+      "path": "analysis_results/c1_formal_audit_20260802_v16_final/c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03/raw_input_manifest.json",
+      "sha256": "b1c00e922abbc32d423817b9837f04cc201dbf048f3cbc1a61e682f0df02184c"
+    },
+    "measurement_freeze_status": true
+  },
+  "profile_status": {
+    "final_pooled_profile": "source_absent",
+    "p0": true,
+    "post_c2b_substitution_allowed": false,
+    "historical_post_c2b_source": "analysis_results/c2b_closeout_20260806_final/post_c2b_worker_profile.csv",
+    "historical_post_c2b_sha256": "6da53747227c291e3307f8a813a74d62d59220c60c4deb993b20836d7b9d1903"
+  },
+  "p0_findings": [
+    {
+      "id": "post_block2_final_pooled_profile_source_absent",
+      "stage": "post-Block2",
+      "detail": "producer searched: tools/thesis_main/analysis/materialize_final_pooled_profile_freeze.py; no formal post-Block2 snapshot exists"
+    }
+  ],
+  "p1_findings": [
+    {
+      "id": "c1_version_bound_reconstruction_not_evaluable_source_absent",
+      "stage": "C1",
+      "detail": "frozen sidecar reused; historical producer/rule source is unavailable for exact replay"
+    },
+    {
+      "id": "estimand_exclusions_present",
+      "stage": "all",
+      "detail": "submission_exclusions=16;profile_p0_inventory=1;combined_inventory=17"
+    }
+  ],
+  "source_conflict_status": {
+    "p1_canonical_vs_c1_raw_snapshot": "resolved_same_content_by_formal_manifest_chain",
+    "c1_frozen_geometry": "version-bound reconstruction_not_evaluable/source_absent",
+    "block2_runtime_mapping": "stale_distribution_mapping_excluded"
+  }
+}

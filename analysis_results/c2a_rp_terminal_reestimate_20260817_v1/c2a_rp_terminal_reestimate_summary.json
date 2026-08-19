@@ -1,0 +1,304 @@
+{
+  "schema_version": "c2a_rp_terminal_reestimate_v1",
+  "artifact_role": "C2A_RP_TERMINAL_REESTIMATE_FROZEN",
+  "formal_ready": true,
+  "method_contract_version": "paper_a_method_20260811_v23",
+  "method_contract_sha256": "f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588",
+  "interval_formula_id": "normal_95_max_unified_slope_sd",
+  "target_ci_half_width": 0.012607928483052961,
+  "combined_evidence_rows": 240,
+  "eligible_model_rows": 227,
+  "model_diagnostics": {
+    "status": "estimated",
+    "formula": "quality ~ 0 + C(worker_id) + risk_centered",
+    "optimizer": "powell",
+    "optimizer_attempts": [
+      {
+        "optimizer": "lbfgs",
+        "converged": false,
+        "warnings": [
+          "Maximum Likelihood optimization failed to converge. Check mle_retvals",
+          "MixedLM optimization failed, trying a different optimizer may help.",
+          "Gradient optimization failed, |grad| = 11.546285",
+          "The MLE may be on the boundary of the parameter space.",
+          "The Hessian matrix at the estimated parameter values is not positive definite."
+        ]
+      },
+      {
+        "optimizer": "powell",
+        "converged": true,
+        "warnings": [
+          "The MLE may be on the boundary of the parameter space."
+        ]
+      },
+      {
+        "optimizer": "lbfgs",
+        "converged": false,
+        "warnings": [
+          "Maximum Likelihood optimization failed to converge. Check mle_retvals",
+          "MixedLM optimization failed, trying a different optimizer may help.",
+          "Gradient optimization failed, |grad| = 17.328254",
+          "The MLE may be on the boundary of the parameter space."
+        ]
+      },
+      {
+        "optimizer": "powell",
+        "converged": true,
+        "warnings": [
+          "The MLE may be on the boundary of the parameter space."
+        ]
+      }
+    ],
+    "converged": true,
+    "warnings": [
+      "Maximum Likelihood optimization failed to converge. Check mle_retvals",
+      "MixedLM optimization failed, trying a different optimizer may help.",
+      "Gradient optimization failed, |grad| = 11.546285",
+      "The MLE may be on the boundary of the parameter space.",
+      "The Hessian matrix at the estimated parameter values is not positive definite.",
+      "The MLE may be on the boundary of the parameter space.",
+      "Maximum Likelihood optimization failed to converge. Check mle_retvals",
+      "MixedLM optimization failed, trying a different optimizer may help.",
+      "Gradient optimization failed, |grad| = 17.328254",
+      "The MLE may be on the boundary of the parameter space.",
+      "The MLE may be on the boundary of the parameter space."
+    ],
+    "support": {
+      "worker_id": 20,
+      "base_task_id": 67,
+      "building_id": 9,
+      "risk": 67
+    },
+    "group_slope_mean": -0.023203202491238098,
+    "group_slope_se": 0.00747571802211635,
+    "between_worker_slope_sd": 0.0034926107226072754,
+    "worker_intercept_sd": "",
+    "task_sd": 0.09470998266687951,
+    "building_sd": 0.0,
+    "outcome_residual_sd": 0.0805235682443812,
+    "slope_model_form": "crossed_random_worker_slope",
+    "boundary_components": [
+      "building"
+    ],
+    "boundary_tolerance": 6.484045042807516e-09,
+    "removed_variance_components": [
+      "building"
+    ],
+    "worker_intercept_control": "fixed_effect",
+    "fixed_worker_intercept_count": 20,
+    "task_identity": "task_within_building",
+    "downstream_cluster_uncertainty": "building_then_task_hierarchical_resampling",
+    "boundary_rule_version": "worker_slope_or_single_cluster_component_boundary_v2"
+  },
+  "workers": {
+    "1": {
+      "estimate": -0.022741701191497602,
+      "worker_se": 0.003459131804512964,
+      "unified_slope_sd": 0.008237229679157205,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.01614497017114812,
+      "support": 11,
+      "terminal_state": "fallback_strong_global"
+    },
+    "2": {
+      "estimate": -0.02245969126045459,
+      "worker_se": 0.003412150662737018,
+      "unified_slope_sd": 0.008217611093950106,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016106517744142207,
+      "support": 10,
+      "terminal_state": "fallback_strong_global"
+    },
+    "6": {
+      "estimate": -0.02255712341638745,
+      "worker_se": 0.0034130206185993225,
+      "unified_slope_sd": 0.008217972358750015,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016107225823150027,
+      "support": 12,
+      "terminal_state": "fallback_strong_global"
+    },
+    "8": {
+      "estimate": -0.02357238816979738,
+      "worker_se": 0.00339104689816822,
+      "unified_slope_sd": 0.008208870751313574,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016089386672574604,
+      "support": 12,
+      "terminal_state": "fallback_strong_global"
+    },
+    "10": {
+      "estimate": -0.02398693300197564,
+      "worker_se": 0.003288803503137319,
+      "unified_slope_sd": 0.008167165262711627,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016007643914914788,
+      "support": 11,
+      "terminal_state": "fallback_strong_global"
+    },
+    "11": {
+      "estimate": -0.022116221032364505,
+      "worker_se": 0.00342688988133218,
+      "unified_slope_sd": 0.008223742104721675,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016118534525254483,
+      "support": 12,
+      "terminal_state": "fallback_strong_global"
+    },
+    "12": {
+      "estimate": -0.023835788616024377,
+      "worker_se": 0.003397598584978193,
+      "unified_slope_sd": 0.008211579390765274,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016094695605899937,
+      "support": 11,
+      "terminal_state": "fallback_strong_global"
+    },
+    "13": {
+      "estimate": -0.023590509714278698,
+      "worker_se": 0.003424811386430488,
+      "unified_slope_sd": 0.008222876198680064,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016116837349412924,
+      "support": 11,
+      "terminal_state": "fallback_strong_global"
+    },
+    "15": {
+      "estimate": -0.022491697282243896,
+      "worker_se": 0.0034149889700403006,
+      "unified_slope_sd": 0.008218790033313425,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016108828465294312,
+      "support": 11,
+      "terminal_state": "fallback_strong_global"
+    },
+    "17": {
+      "estimate": -0.023449868775680404,
+      "worker_se": 0.003461836557231342,
+      "unified_slope_sd": 0.008238365875292171,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016147197115572654,
+      "support": 12,
+      "terminal_state": "fallback_strong_global"
+    },
+    "18": {
+      "estimate": null,
+      "worker_se": null,
+      "unified_slope_sd": null,
+      "unified_slope_source": "not_identified",
+      "unified_ci_half_width": null,
+      "support": 0,
+      "terminal_state": "not_evaluable"
+    },
+    "27": {
+      "estimate": null,
+      "worker_se": null,
+      "unified_slope_sd": null,
+      "unified_slope_source": "not_identified",
+      "unified_ci_half_width": null,
+      "support": 0,
+      "terminal_state": "not_evaluable"
+    },
+    "28": {
+      "estimate": -0.024344567576864977,
+      "worker_se": 0.0032836648536295927,
+      "unified_slope_sd": 0.008165097355032421,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016003590815863545,
+      "support": 10,
+      "terminal_state": "fallback_strong_global"
+    },
+    "29": {
+      "estimate": -0.023650251456193577,
+      "worker_se": 0.003455564845372664,
+      "unified_slope_sd": 0.008235732411071318,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016142035525699785,
+      "support": 11,
+      "terminal_state": "fallback_strong_global"
+    },
+    "30": {
+      "estimate": -0.02381048458718363,
+      "worker_se": 0.00328908409830514,
+      "unified_slope_sd": 0.008167278258509313,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.01600786538667825,
+      "support": 10,
+      "terminal_state": "fallback_strong_global"
+    },
+    "31": {
+      "estimate": -0.02354085574461295,
+      "worker_se": 0.003445653175068434,
+      "unified_slope_sd": 0.008231578569694538,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016133893996601294,
+      "support": 12,
+      "terminal_state": "fallback_strong_global"
+    },
+    "32": {
+      "estimate": -0.022850328747283967,
+      "worker_se": 0.00341943045215385,
+      "unified_slope_sd": 0.008220636505971558,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016112447551704254,
+      "support": 12,
+      "terminal_state": "fallback_strong_global"
+    },
+    "33": {
+      "estimate": -0.023986096168846317,
+      "worker_se": 0.0034327216273655516,
+      "unified_slope_sd": 0.00822617394158295,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.01612330092550258,
+      "support": 12,
+      "terminal_state": "fallback_strong_global"
+    },
+    "34": {
+      "estimate": -0.023635461985489922,
+      "worker_se": 0.003446748709641123,
+      "unified_slope_sd": 0.008232037209197242,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016134792930026596,
+      "support": 12,
+      "terminal_state": "fallback_strong_global"
+    },
+    "35": {
+      "estimate": -0.023312514036532058,
+      "worker_se": 0.0034484935409704407,
+      "unified_slope_sd": 0.008232767921441127,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016136225126024608,
+      "support": 11,
+      "terminal_state": "fallback_strong_global"
+    },
+    "36": {
+      "estimate": -0.023018165151641148,
+      "worker_se": 0.0034531453111988734,
+      "unified_slope_sd": 0.00823471751102914,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.016140046321617113,
+      "support": 12,
+      "terminal_state": "fallback_strong_global"
+    },
+    "37": {
+      "estimate": -0.021113401909408847,
+      "worker_se": 0.003274739833991808,
+      "unified_slope_sd": 0.008161512171560359,
+      "unified_slope_source": "individual_posterior",
+      "unified_ci_half_width": 0.015996563856258302,
+      "support": 12,
+      "terminal_state": "fallback_strong_global"
+    }
+  },
+  "input_sha256": {
+    "analysis_results\\c2a_rp_block1_reestimate_20260810_v2\\c2b_plus_c2a_rp_block1_risk_slope_evidence.csv": "044bd35663f6fe8a64dfb04c0e550e30de466c42062ce8244c002ab7505750d2",
+    "analysis_results\\c2a_rp_block2_reestimate_20260817_v2\\c2a_rp_block2_risk_slope_evidence.csv": "6905d09b50299c7063bf143d6da39f339b3c7301017224b2bc9a25bbd630d355",
+    "analysis_results\\c2a_rp_block1_reestimate_20260810_v2\\post_c2a_rp_block1_worker_profile.csv": "66f2b0e72d9d75e6ecfce4d8e7d1b89eac85cb61875769b7c31261d4042c4c79",
+    "analysis_results\\c2b_validation_design_20260802_v17\\output\\c2b_derived_threshold_manifest.json": "2f85e69d7f96ab63f71373329f2fefc818ddebe9557af726724ea493691d9a0f"
+  },
+  "output_sha256": {
+    "c2b_plus_c2a_rp_terminal_risk_slope_evidence.csv": "65ea96402b41b600920f311f7960ed0384606c88a0f5c6a37b56e1f748eb25bd",
+    "c2a_rp_terminal_canonical_submissions.csv": "a67b78c5d04d9b4d30b3fea6f863b256e0e1872dfc8dd19ff768ae739612a1df",
+    "post_c2a_rp_terminal_worker_profile.csv": "539483f8bd605ad33c92b37d28c4ddaf7c24c94a69da12de4d6e4793501b7bb9"
+  }
+}

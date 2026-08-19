@@ -1,0 +1,22 @@
+check_id,status,observed,expected,notes,diagnostic_pre_stage3,development_only,scientific_conclusion_prohibited,formal_profile_frozen,reviewer_policy_frozen,main_launch_authorized
+p1_canonical_denominator,pass,468,468,frozen Semi canonical rows,true,true,true,false,false,false
+p1_raw_reconciliation,pass,469->468,469->468,one superseded duplicate; no double count,true,true,true,false,false,false
+p1_extra_annotation_truth,warning,duplicate_same_geometry,user plan called it revision,"frozen duplicate audit shows same geometry, not a geometry revision",true,true,true,false,false,false
+p1_worker_task_matrix,pass,26x18,26x18,complete balanced Semi matrix,true,true,true,false,false,false
+p1_role_support,pass,trap=312;control=156,trap=312;control=156,frozen roles,true,true,true,false,false,false
+p1_planned_family_quota,pass,"{""corner_drift"": 3, ""corner_duplicate"": 3, ""over_parsing"": 3, ""overextend_adjacent"": 3}",3 planned tasks per family,planned operator quota only,true,true,true,false,false,false
+p1_reviewed_family_distribution,warning,"{""corner_drift"": 2, ""corner_duplicate"": 5, ""over_parsing"": 2, ""overextend_adjacent"": 3}",manual reviewed issue overrides planned operator,actual reviewed task allocation is 2/5/2/3; family-specific rates remain weak/support-gated,true,true,true,false,false,false
+p1_trap_quality_headroom,warning,initial_U_range=0.827842324011..0.999953764709,interpret delta_U with task baseline/headroom,failure to increase IoU is not evidence of absent correction ability; detection remains separately reported,true,true,true,false,false,false
+c1_denominators,pass,canonical=106;tasks=25;workers=23;formal=104;correction=88,106;25;23;104;88,consumed frozen eligibility,true,true,true,false,false,false
+c1_delta_u_row_support,warning,82/88,explicit complete-case support,initial-only missing=3;final-only missing=2;both missing=1;missing is never zero-filled,true,true,true,false,false,false
+cross_stage_worker_support,warning,22/23,explicit worker support,W14 has zero semi-correction support; correlations retain only evaluable workers,true,true,true,false,false,false
+c1_task_adjustment,warning,partial_task_centering,worker+task fixed effects or prespecified equivalent before formal use,one-step task centering remains sensitive to worker composition in the sparse unbalanced design; bootstrap re-estimates task means,true,true,true,false,false,false
+import_prediction_uniqueness,pass,P1=18/18 each;C1=25/25 each,one prediction per import task,cross-language geometry hashes exact,true,true,true,false,false,false
+observed_canonical_initialization_binding,pass,574/574 recovered,all observed canonical Semi rows,unique crosswalk plus embedded prediction payload SHA,true,true,true,false,false,false
+append_only_audit_history,warning,v2_separated_after_prior_v1_directory_overwrite,append-only versioned output directories,the original v1 manifest is not recoverable from this package; future revisions must use a new versioned directory,true,true,true,false,false,false
+c1_zh_import_runtime_coverage,warning,25 import;24 deployed runtime tasks,all observed canonical rows bound,one planned zh import task was not deployed and has no canonical row,true,true,true,false,false,false
+stage_separation,pass,P1 profile;C1 validation,no pooled estimator,C1 outcomes do not alter P1 thresholds or metrics,true,true,true,false,false,false
+cross_stage_construct_alignment,warning,behavioral mappings are non-equivalent constructs,no reviewer ability stability claim,blind-trust vs acceptable-unchanged and Youden vs issue/edit concordance remain behavioral diagnostics only,true,true,true,false,false,false
+cross_stage_reviewer_ability_validation,not_ready,partial task-centered diagnostic associations only,prospective supported validation before ability claim,do not claim cross-stage reviewer ability stability,true,true,true,false,false,false
+expert_or_m1_selection,no_go,not authorized,independent policy review/freeze,"do not select experts, freeze profiles, or activate M1 escalation",true,true,true,false,false,false
+policy_boundary,pass,no score/top-k/tier/dispatch,diagnostic only,Main launch remains unauthorized,true,true,true,false,false,false

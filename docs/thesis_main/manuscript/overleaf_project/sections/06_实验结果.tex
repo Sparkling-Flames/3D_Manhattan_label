@@ -1,0 +1,16 @@
+\section{结果报告结构}
+
+当前 C1 尚未 closeout，因此本节只冻结结果表结构，不填入数值。
+
+\begin{enumerate}
+  \item 数据完整性：原始任务、可分析任务、OOS、缺失、事故、重跑和行政删失；
+  \item C1 三轴画像：task-adjusted GT quality、LOO compatibility、structural failure；
+  \item P1 预测效度：P1 到 C1、C2-B 和 T1 的关联及 family discrepancy；
+  \item C2：anchor/bridge 覆盖、worker--task 图、层级收缩、support 与 fallback；
+  \item T1：结构有效率、交付调整质量、valid-only IoU、active time 和交互；
+  \item V1：政策激活与差异、调度流、resolved/unresolved/severe、质量、$k$ 与时间。
+\end{enumerate}
+
+所有表同时报告规则版本、输入依赖 SHA、estimand eligibility 和
+\texttt{not\_evaluable} 数量。任何 dry-run 或 fixture 输出不得进入正式结果表。
+

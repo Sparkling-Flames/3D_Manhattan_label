@@ -1,0 +1,235 @@
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260807_v19 SHA-256 60e60f01d762ee89d788979ad9ef243db1887f6ef81f4d5bb8ae2e6f29b5af38
+\section{V1：共享容量条件下的 Support-aware Full 政策试验}
+
+\subsection{试验臂}
+
+\begin{verbatim}
+Strong Global
+vs
+Support-aware Full
+\end{verbatim}
+
+主要使用 Manual。
+
+V1 使用独立的 V1 gate：\texttt{CALIBRATION\_ENROLLMENT\_CLOSED}、
+\texttt{ALL\_CALIBRATION\_WORKERS\_TERMINAL}、\texttt{C1\_EVIDENCE\_FROZEN}、
+\texttt{C2\_B\_FROZEN}、\texttt{C2\_A\_RP\_CLOSED}、\texttt{FINAL\_POOLED\_PROFILE\_FROZEN}、
+\texttt{STRONG\_GLOBAL\_FROZEN}、\texttt{FULL\_POLICY\_FROZEN}、
+\texttt{VALIDATION\_ROSTER\_FROZEN} 和 \texttt{V1\_SAP\_FROZEN}。
+这些 roles 都必须绑定对应冻结 artifact、SHA 和依赖关系；C2-B closeout 只提供审计证据，
+不能直接替代 Full Policy。
+
+\subsection{Block 级共享容量合同}
+
+每个 block 前冻结：
+
+\begin{verbatim}
+availability_snapshot
+worker_total_capacity
+global_quota_per_worker
+full_quota_per_worker
+candidate_roster
+offer_timeout
+completion_timeout
+max_offer_attempts
+replacement_rule
+invalid_submission_replacement_rule
+candidate_exhaustion_rule
+\end{verbatim}
+
+\subsection{两套独立容量账本}
+
+\begin{verbatim}
+capacity_global[u]
+capacity_full[u]
+\end{verbatim}
+
+主分析不允许跨臂借用。
+
+两臂必须共用：
+
+\begin{verbatim}
+offer timeout
+completion timeout
+maximum offer attempts
+decline/no-response replacement
+invalid submission replacement
+candidate exhaustion terminal rule
+\end{verbatim}
+
+唯一差异是推荐排序。
+
+\subsection{调度证据}
+
+记录：
+
+\begin{verbatim}
+block_id
+policy_arm
+candidate_set_at_decision
+availability_snapshot_id
+policy_recommended_worker
+recommendation_rank
+offered_worker
+offer_sequence
+accepted_worker
+completed_worker
+replacement_reason
+timeout
+capacity_before
+capacity_remaining
+candidate_exhausted
+\end{verbatim}
+
+区分：
+
+\begin{verbatim}
+recommended_not_offered
+offered_declined
+accepted_not_completed
+completed_invalid
+completed_valid
+\end{verbatim}
+
+\subsection{动态追加}
+
+初始与追加规则在两臂完全相同。
+
+可冻结候选：
+
+\begin{verbatim}
+k_initial = 2
+formal_structure_min_k = 3
+standard_cap = 4
+exceptional_cap = 5
+\end{verbatim}
+
+\(k_{\mathrm{initial}}=2\) 只表示首次 offer 数，不代表可以在两条合法提交时
+形成正式 resolved 输出。crowd structure 与 stopping 至少要求三名不同且合资格的
+worker IDs；未达到该数目时继续追加，至 cap 仍不足则记为 unresolved。实际 cap 与
+其他调度数值由 C1/C2 replay 与功效/预算模拟冻结。
+
+\subsection{GT-blind 聚合}
+
+medoid 选择必须只读取合法提交、
+冻结几何相似度、兼容簇、结构有效性和冻结 tie-break；不得读取 GT、公开 GT 评价或
+依赖政策分数来决定 GT-blind medoid。
+
+对合法提交：
+
+\begin{enumerate}
+  \item 将有冻结证据的 external system failure 移入重跑或行政删失处置，不作为工人或政策质量证据；
+  \item 将 worker-caused structural failure 记录为 worker failure event，不进入合法聚合候选；
+  \item 使用冻结几何相似度寻找最大内部一致簇；
+  \item 判断 largest cluster、second cluster、medoid margin 和结构有效性；
+  \item resolved 时选择主簇 medoid；
+  \item medoid tie 依次使用 geometry SHA、canonical annotation identity 和
+  task-bound frozen seed；这些 tie-break 不读取 Global、Full、GT 或 worker quality；
+  \item 稳定多峰不强行输出；
+  \item 到上限仍不稳定则 unresolved。
+\end{enumerate}
+
+\subsection{运行中间状态与最终政策终态}
+
+\begin{verbatim}
+external_system_failure_pending_disposition
+\end{verbatim}
+
+最终政策终态仅为：
+
+\begin{verbatim}
+resolved
+unresolved
+severe_failure
+\end{verbatim}
+
+\subsubsection{resolved}
+
+产生合法 GT-blind 输出 \(O_t^\pi\)。
+
+\subsubsection{unresolved}
+
+存在合法提交，但未形成稳定单一输出。
+
+\subsubsection{severe\_failure}
+
+到上限仍没有可交付合法输出。
+
+\subsubsection{external\_system\_failure\_pending\_disposition}
+
+外部事故确认后不直接成为可比较的政策终态：按第 3.5 节在盲态下同臂、同冻结版本、对称预留容量重跑一次；不满足任一条件则行政删失。重跑不得跨臂借容量、不得使用不同冻结版本，也不得由 V1 结果触发。
+
+\subsection{V1 outcomes}
+
+\subsubsection{非交付指标}
+
+\[
+D_t^\pi
+=
+I(\text{unresolved or severe failure}).
+\]
+
+\subsubsection{Severe failure}
+
+\[
+H_t^\pi
+=
+I(\text{severe failure}).
+\]
+
+\subsubsection{Resolved-only quality}
+
+\[
+Q_t^\pi=IoU(O_t^\pi,G_t).
+\]
+
+\subsubsection{交付调整质量}
+
+\[
+U_t^\pi
+=
+I(\text{resolved})\times IoU(O_t^\pi,G_t).
+\]
+
+unresolved/severe failure 的 \(U_t^\pi=0\)，表示没有交付正式布局，不表示真实几何 IoU 必然为 0。
+
+candidate exhaustion、替补规则失败和容量耗尽属于 policy-caused failure：保留在原政策臂 ITT，\texttt{policy\_failure=1}；若任务终态为 unresolved 或 severe failure，则交付调整质量为 0。worker invalid submission 作为 worker failure event 保留；若按冻结替补后任务 resolved，不把最终任务交付调整质量改写为 0。external system failure 的成功重跑以重跑任务保留在原臂 ITT；无法合规重跑的行政删失不进入质量分母，但必须单列原始、重跑、删失和事故原因的两臂分布。
+
+严格集合口径为：randomized set 包含全部随机化任务；primary modified-ITT（mITT）
+排除预注册且臂盲确认的 external administrative censor；unresolved、severe failure
+和 policy-caused failure 仍留在原臂 mITT，交付调整质量为 0。每臂同时报告
+randomized、rerun、administrative censor、mITT、resolved、unresolved 与 severe 数量。
+
+\subsection{检验层级与确认性 margin}
+
+\begin{enumerate}
+  \item severe failure 不劣；
+  \item unresolved＋severe failure 不劣；
+  \item 交付调整政策质量；
+  \item 标注数量或成本。
+\end{enumerate}
+
+resolved-only output quality、\(k_{used}\)、active time、完成时间和
+policy\(\times\)risk\_route interaction 为次级结果。severe failure margin、
+unresolved+severe margin、delivery-adjusted quality margin 及成本判定尺度均来自结果
+可见前冻结的 Statistical Analysis Plan 与 policy analysis manifest；四级层级和 margin
+不得由 V1 结果回调。容量、offer、replacement、dynamic redundancy、GT-blind aggregation
+和 ITT 状态机的完整字段合同见附录 F--G。
+
+\subsection{事后审查}
+
+事后人工审查只用于：
+
+\begin{itemize}
+  \item 解释 unresolved；
+  \item 识别 GT 冲突；
+  \item 形成反例；
+  \item 判断 OOS。
+\end{itemize}
+
+不能用人工修订后的输出替换政策输出重新计算 V1 主效应。
+
+也不得在查看 T1/V1 结果后把 worker 或 policy failure 重分类为 external system failure，或选择性重跑某一臂。事故证据、分类时间和重跑/删失决定是独立审计对象。
+
+\paragraph{Contract v5 clarification.}
+The online engine consumes only the frozen \texttt{policy\_candidate\_v2.global\_rank\_S\_G}; it does not recompute peer or LOO ordering. Every start validates the method-contract SHA, policy-manifest SHA, candidate-roster SHA, profile version, and Stage 3 closure. The primary hierarchy is severe-failure non-inferiority, unresolved-plus-severe non-inferiority, delivery-adjusted-quality superiority, then count/cost.

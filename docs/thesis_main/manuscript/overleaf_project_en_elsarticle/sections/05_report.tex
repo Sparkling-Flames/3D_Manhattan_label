@@ -1,0 +1,96 @@
+\section{Experimental Evaluation}
+\label{sec:evaluation}
+
+\subsection{Evaluation logic}
+
+The evaluation follows the causal order of the evidence chain. Calibration assesses whether the profile components and conditional effects are measurable without using prospective outcomes. T1 evaluates whether model assistance changes the annotation process and whether that change varies with assistance risk. V1 evaluates whether the frozen conditional routing policy improves outcomes relative to the frozen global ranking. Each stage answers a different question; a favourable T1 interaction cannot substitute for a V1 routing effect.
+
+All assignment pools, task strata, randomization seeds, candidate rosters, operational constraints, estimands, and analysis rules are frozen before the relevant outcomes are inspected. Replay is used for implementation checks, power calculations, and policy-divergence feasibility. It is not counted as prospective policy evidence.
+
+\subsection{T1: supporting model-assistance experiment}
+
+T1 uses a $2\times2$ design:
+\begin{equation}
+  \{	ext{manual},\text{semi-automatic}\}
+  \times
+  \{	ext{ordinary},\text{assistance-stress}\}.
+\end{equation}
+The task pool is balanced 50:50 between ordinary and stress strata for identification, not as an estimate of the production distribution. Each image receives two manual and two semi-automatic submissions. The four slots are assigned under worker eligibility, workload caps, balance across mode and risk, and worker--image isolation: a worker cannot see both interface modes for the same image. Candidate sets, seeds, and assignment probabilities are retained.
+
+The primary submission-level outcome is delivery-adjusted quality,
+\begin{equation}
+ U_{iw}=I(\text{structurally valid}_{iw})
+        \operatorname{IoU}(A_{iw},G_i),
+ \label{eq:t1utility}
+\end{equation}
+where $A_{iw}$ is the submitted layout and $G_i$ the frozen operational reference. A worker-attributable structural failure receives $U_{iw}=0$ in its assigned mode. For condition $c$, the two submissions are averaged within image, $\bar U_{ic}$, and the primary paired contrast is
+\begin{equation}
+ D_i=\bar U_{i,\mathrm{semi}}-\bar U_{i,\mathrm{manual}}.
+ \label{eq:t1contrast}
+\end{equation}
+The image, not an administrative pair identifier, is the inferential unit. Clustering accounts for building/image structure and repeated workers under the frozen analysis specification.
+
+Confirmed external incidents trigger at most one rerun of the complete manual--semi pair under the original conditions, frozen versions, and worker--image isolation. If the complete pair cannot be recovered, the pair is administratively censored; one adverse condition is never deleted alone. An incomplete rerun that leaves either predeclared pair non-evaluable censors the whole image in the primary estimand. Available-pair analysis is sensitivity-only. Unattributed anomalies remain not evaluable rather than being silently assigned to a favourable failure class.
+
+Secondary outcomes are structural validity, valid-only reference accuracy, pairwise agreement, worst individual reference quality, blind-trust or failed-correction indicators, over-correction, and recognition of a model issue. With two annotations per mode there is no natural majority; a two-worker aggregate is not promoted to a primary result unless an aggregation algorithm was frozen independently.
+
+Validated active time is the principal efficiency outcome. Session evidence is aggregated in the canonical project--runtime-task--worker context. For each eligible session, the maximum positive cumulative active-time observation is retained and eligible sessions are summed; fragments are not summed as if they were independent clocks. The task-adjusted model uses $\log(1+\text{active seconds})$ with worker and runtime-task fixed effects and a runtime-task cluster bootstrap. Elapsed lead time is not mixed with active time. Missing time does not invalidate quality evidence and never changes a profile or route.
+
+The T1 hierarchy first evaluates structural validity and delivery quality under the frozen non-inferiority specification, then active time, then the mode-by-assistance-risk interaction, and finally behavioural mechanisms. The interaction is interpreted as support for heterogeneous assistance response, not as proof that the V1 conditional ranking is beneficial.
+
+\subsection{V1: prospective routing policy experiment}
+
+V1 compares calibrated global ranking with calibration-supported conditional routing, primarily on manual annotation tasks. Randomization is performed 50:50 at the frozen task or operational-block unit. The randomized unit remains in its assigned policy arm regardless of the recommended, offered, accepting, or completing worker.
+
+Before each block, both arms receive a common availability snapshot, candidate roster, total worker capacity, timeouts, maximum offer attempts, replacement rules, invalid-submission handling, and candidate-exhaustion rule. Arm-specific capacity ledgers divide shared worker capacity symmetrically; primary analysis prohibits borrowing across arms. The only intended arm difference is recommendation order. The ledger distinguishes recommendation from delivery by recording the candidate set, recommended and offered worker, offer sequence, acceptance, completion, replacement reason, capacity before and after, and terminal exhaustion.
+
+Both arms use the same dynamic evidence-collection and ground-truth-blind aggregation contract. Structurally valid submissions are clustered with the frozen geometry rule. When a stable principal cluster forms, its medoid is the delivered policy output. A supported multimodal state is not forced into a single layout. If the frozen cap is reached without a stable output, the task is unresolved or a severe failure according to the predeclared terminal rules. Human review after the experiment may explain a case or identify a reference conflict, but it cannot replace the policy output in the primary analysis.
+
+For policy $\pi$, the terminal indicators and quality outcomes are
+\begin{align}
+ H_i^\pi &= I(\text{severe failure}),\\
+ D_i^\pi &= I(\text{unresolved or severe failure}),\\
+ Q_i^\pi &= \operatorname{IoU}(O_i^\pi,G_i)
+             \quad\text{for resolved tasks},\\
+ U_i^\pi &= I(\text{resolved})
+             \operatorname{IoU}(O_i^\pi,G_i),
+ \label{eq:v1outcomes}
+\end{align}
+where $O_i^\pi$ is the ground-truth-blind delivered output. Setting $U_i^\pi=0$ for unresolved or severe tasks means that no formal layout was delivered; it does not claim that the unobserved geometry has zero IoU.
+
+Policy-caused failures, including candidate exhaustion and failed replacement, remain in the assigned arm. A worker-invalid submission is recorded as an event; if symmetric replacement subsequently resolves the task, the final task utility is not overwritten to zero. A confirmed external incident is rerun at most once in the same arm, under the same frozen version and pre-reserved symmetric capacity. If a compliant rerun is impossible, the task is administratively censored.
+
+The randomized set contains every randomized unit. The primary modified intention-to-treat (mITT) set excludes only arm-blind, predeclared external administrative censoring. Unresolved, severe, and policy-caused failures remain in mITT with delivery-adjusted quality zero. For each arm we report randomized, rerun, censored, mITT, resolved, unresolved, and severe counts, making the denominator transition auditable.
+
+\subsection{Ordered V1 endpoints and statistical analysis}
+
+V1 follows a confirmatory hierarchy:
+
+\begin{enumerate}
+  \item non-inferiority of the severe-failure rate;
+  \item non-inferiority of the unresolved-plus-severe rate;
+  \item superiority of delivery-adjusted quality;
+  \item resolved-only quality, annotation count, and cost or time outcomes.
+\end{enumerate}
+
+Testing proceeds to the quality-superiority claim only after both safety gates pass. Delivery-adjusted quality uses superiority rather than an ambiguous non-inferiority margin. Effect estimates are accompanied by confidence intervals and the predeclared clustered randomization analysis. Policy-by-risk interaction is secondary and cannot rescue a failed primary hierarchy.
+
+Missingness is reported by source and arm. Confirmed external administrative censoring is distinguished from failure to deliver; other missing or contradictory evidence fails closed for its estimand. Complete-case and frozen missingness sensitivities are reported, but administrative deletion is never encoded as a zero outcome. Bootstrap and permutation procedures use frozen seeds and retain their cluster units, repetitions, and software provenance.
+
+The balanced design estimand for any unconditional stratum outcome $V$ is
+\begin{equation}
+ V_\pi^{design}=0.5V_{\pi,o}+0.5V_{\pi,s}.
+ \label{eq:designstandard}
+\end{equation}
+For deployment, independently measured production proportions $p_o$ and $p_s$ give
+\begin{equation}
+ V_\pi^{prod}=p_oV_{\pi,o}+p_sV_{\pi,s}.
+ \label{eq:prodstandard}
+\end{equation}
+The proportions are not estimated from the deliberately balanced experiment. If no single target mix is defensible, predeclared scenario mixes are reported. Resolved-only quality is standardized by its resolved numerator and denominator rather than by mechanically averaging conditional means.
+
+\subsection{Power, feasibility, and audit outputs}
+
+Calibration-task and block replay evaluates whether the conditional components reach their precision and stability targets. A separate policy replay verifies that the two policies differ often enough to make V1 informative under expected availability and capacity. Failure to cross the frozen distinguishability threshold stops V1 and is reported as policy non-distinguishability; the threshold is not relaxed using prospective outcomes.
+
+Power calculations vary sample size, cluster structure, failure rates, quality dispersion, missingness, and policy divergence under the frozen hierarchy. They inform task and block targets but do not supply effect estimates for Results. The audit package retains denominator flows, assignment probabilities, external incidents, reruns, censoring, fallback activation, component disablement, deviations, and version bindings. The article reports scientific summaries; the standalone Supplement points to the repository contracts for field-level detail.

@@ -1,0 +1,128 @@
+{
+  "counts": {
+    "a0_selected": 67,
+    "a0_unresolved": 72,
+    "formal_status": {
+      "dominant_with_dissent": 24,
+      "not_evaluable": 72,
+      "supported_multimodal": 17,
+      "unimodal": 26
+    },
+    "identity_rows": 580,
+    "pool_count": 139,
+    "primary_k_ge_3_pools": 76,
+    "primary_k_zero_pools": 2,
+    "primary_rows": 547
+  },
+  "generator": {
+    "path": "tools\\thesis_main\\analysis\\build_a4_replay_preoutcome_freeze.py",
+    "sha256": "7f6b54fd834e966c8d537ffe6fd58872bd18e44a45ddaed3484895831603d62d"
+  },
+  "input_access_trace": [
+    {
+      "path": "analysis_results\\a4_deployment_pool_identity_20260817_v1\\A4_CANDIDATE_DEPLOYMENT_POOL_IDENTITY_C1_v1.csv",
+      "projected_columns": [
+        "candidate_annotation_id",
+        "worker_id",
+        "stage",
+        "round_id",
+        "condition",
+        "base_task_id",
+        "task_id",
+        "project_id",
+        "ls_runtime_task_id",
+        "deployment_pool_id",
+        "assignment_realization_status",
+        "assignment_provenance",
+        "observed_canonical_runtime_source_status",
+        "identity_mapping_status",
+        "formal_duplicate_status",
+        "appears_in_internal_distribution",
+        "candidate_parse_status",
+        "building_scene_id"
+      ]
+    },
+    {
+      "path": "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_canonical_geometry.jsonl",
+      "projected_columns": [
+        "canonical_annotation_id",
+        "worker_id",
+        "base_task_id",
+        "condition",
+        "corners_px",
+        "width",
+        "height",
+        "eligible_for_geometry_loo",
+        "geometry_hash"
+      ]
+    },
+    {
+      "path": "analysis_results\\a4_image_evidence_substrate_20260817_v2\\DEVELOPMENT_CANDIDATE_IMAGE_ALIGNMENT.csv",
+      "projected_columns": [
+        "candidate_annotation_id",
+        "vertical_edge_support",
+        "ceiling_boundary_support",
+        "floor_boundary_support",
+        "seam_segment_boundary_support"
+      ]
+    },
+    {
+      "path": "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\geometry_pairwise_similarity_C1.csv",
+      "projected_columns": [
+        "base_task_id",
+        "condition",
+        "worker_id_left",
+        "worker_id_right",
+        "metric_compatible"
+      ]
+    },
+    {
+      "path": "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_canonicalization_summary.json",
+      "projected_columns": []
+    },
+    {
+      "path": "docs\\thesis_main\\geometry_peer_candidate_rule_manifest_v1.json",
+      "projected_columns": []
+    },
+    {
+      "path": "docs\\thesis_main\\PAPER_A_METHOD_CONTRACT_CURRENT.json",
+      "projected_columns": []
+    },
+    {
+      "path": "analysis_results\\aggregation_preflight_readiness_20260817_v1\\DEVELOPMENT_HOLDOUT_SPLIT_MANIFEST.csv",
+      "projected_columns": [
+        "building_scene_id",
+        "split"
+      ]
+    }
+  ],
+  "inputs": {
+    "analysis_results\\a4_deployment_pool_identity_20260817_v1\\A4_CANDIDATE_DEPLOYMENT_POOL_IDENTITY_C1_v1.csv": "920f713057018ebdde3b4bfbd524f565f5d03fa8223987da54acd9ea0698e6e0",
+    "analysis_results\\a4_image_evidence_substrate_20260817_v2\\DEVELOPMENT_CANDIDATE_IMAGE_ALIGNMENT.csv": "5a6ed3684a09d90b65eda8031c23a462eadb5179a536bdab13a192b6851e3ba7",
+    "analysis_results\\aggregation_preflight_readiness_20260817_v1\\DEVELOPMENT_HOLDOUT_SPLIT_MANIFEST.csv": "5f5fe4bf84e88b89834e1c31ca07892a87f881fa6e30ffbf97170a39e6f33bed",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_canonical_geometry.jsonl": "d3054e9c1fb9869a8a0a7ad114de16e6c30952ab4948261cfac58df25ef82799",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_canonicalization_summary.json": "9131d49959d91e424a5a22dcc3833377e43f55305e0bfcf352d530e292b4b07c",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\geometry_pairwise_similarity_C1.csv": "997860626fdf50ea5667986a8f04df0183c8f78f617c49fd5682394c7092f1a7",
+    "docs\\thesis_main\\PAPER_A_METHOD_CONTRACT_CURRENT.json": "f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588",
+    "docs\\thesis_main\\geometry_peer_candidate_rule_manifest_v1.json": "e097196e812d8d53bccb78f76aff241afea3bce3b4c7dbc0581d600d6c691bf8"
+  },
+  "manifest_self_hash_excluded": true,
+  "outputs": {
+    "A4_PREOUTCOME_POLICY_ACTIONS.csv": "092c86d1e8bd5e20cc62cc76b45e8e006244443f95ff90e5cf4b5de957209839",
+    "A4_PREOUTCOME_REPLAY_REPORT.md": "a6d002b82215d924cca86cdc357d528dd3c6657189531d379a4a546563acd9a6",
+    "A4_PREOUTCOME_REPLAY_SPEC.json": "c787ab73f585fc99c3c1d05121ea15e04296f3197195e06d00ad69ddbb9e12ed",
+    "A4_REPLAY_CANDIDATE_DENOMINATOR.csv": "3cb4d2381165f549a97d4f881fd239ad134cd2bf8214ed6854d123f046220bdb",
+    "A4_STRICT_POOL_PREOUTCOME_STATE.csv": "6250fcba6397a4f6c575e39eba280ef79fde2c4022c55e72eb9080b6a27076a3",
+    "INPUT_ALLOWLIST_DENYLIST.json": "4356a5814bbf6228fb363a18376fc4653e9bdaaa74e972b838cced7792365eec"
+  },
+  "read_only_boundaries": {
+    "active_time_read": false,
+    "experiment_started": false,
+    "holdout_effect_read": false,
+    "outcome_read": false,
+    "quality_read": false,
+    "reference_read": false,
+    "training_started": false
+  },
+  "schema_version": "a4_replay_preoutcome_manifest_v1"
+}

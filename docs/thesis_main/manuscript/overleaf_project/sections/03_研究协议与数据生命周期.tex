@@ -1,0 +1,41 @@
+\section{研究协议与数据生命周期}
+
+\subsection{阶段与冻结边界}
+
+执行主线固定为
+\[
+\text{Pilot}\rightarrow\text{P1}\rightarrow\text{C1}\rightarrow
+\text{C2-B}\rightarrow\text{C2-A-RP}\rightarrow\text{T1}\rightarrow\text{V1}.
+\]
+P1 负责准入和候选诊断画像；C1 负责独立校准、任务风险候选与 C2 设计模拟；
+C2-B 提供共同锚点和异质桥接，C2-A-RP 只补足估计精度；
+随后冻结工人画像、风险、政策和失败处置规则。
+T1/V1 的结果不得回流修改 P1 准入、C1/C2 assignment、画像、风险阈值或政策参数。
+
+正在采集的 C1 原始 Label Studio export 是不可改写真源。
+后续画像、事故处置和 C2 设计均由原始 export 可重复派生，不要求标注员返工。
+
+\subsection{C2 的两个部分}
+
+C1 closeout 后先通过模拟决定 C2-B 的每人工人数、共同 anchor 数、diverse bridge 数、
+unique image 数、每图 support 和 worker--task 图连通性，而不是预先固定机械配额。
+共同 anchor 用于横向比较和波次校正，diverse bridge 用于扩大任务覆盖。
+C2-A-RP 仅向精度不足的 worker/component 补派任务，不重新搜索新的风险族。
+
+\subsection{失败归因与分析处置}
+
+行级失败归因固定为
+\texttt{none}、\texttt{worker\_caused\_structural\_failure}、
+\texttt{policy\_caused\_failure}、\texttt{external\_system\_failure}
+或 \texttt{not\_evaluable}。
+分析处置与行级归因分开保存，避免把同一 T1 pair 中未受影响的条件伪标为外部事故。
+
+外部事故必须在结果可见前登记 incident ID、发生与恢复时间、影响范围、证据路径和 SHA-256。
+分析程序验证任务范围、提交时间窗和证据哈希；验证失败一律为
+\texttt{not\_evaluable}。T1 只允许完整 Manual/Semi analysis pair 在原条件和冻结版本下重跑一次，
+否则整对行政删失。V1 只允许同政策臂、同冻结版本和该臂预留容量内重跑一次，
+否则行政删失。行政删失不作为零值进入质量分母，但必须按条件或政策臂报告。
+
+\texttt{external\_system\_failure\_pending\_disposition} 只允许作为运行中间态；
+合法重跑后由重跑任务决定最终终态，不能重跑时转为行政删失。
+

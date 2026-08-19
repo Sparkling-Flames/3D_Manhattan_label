@@ -1,0 +1,19 @@
+% PAPER_A_METHOD_CONTRACT_CURRENT.json paper_a_method_20260801_v12 SHA-256 115ba6eaf771b4fa079289f17d1f491498d9cea910d12aeb4e66d192817c7ee8
+\section{测度与统计方法速查}
+
+\begin{longtable}{p{0.24\linewidth}p{0.28\linewidth}p{0.38\linewidth}}
+\toprule
+测度 & 单位 & 口径 \\
+\midrule
+\endhead
+Task-adjusted GT quality & worker & 控制任务难度后的外部正确性；Strong Global 主分数 \\
+Geometry LOO & worker/submission & 同行兼容性审计、聚合稳定性与 tie-break \\
+Structural failure & worker & 仅 worker-caused 且 structural-evaluable 的机会进入分母 \\
+T1 delivery-adjusted quality & submission & $I(\mathrm{structurally\ valid})\times IoU$ \\
+V1 delivery-adjusted quality & randomized task & $I(\mathrm{resolved})\times IoU$；policy failure 留在 ITT \\
+Active time & worker--task--annotation & owner-valid 原始日志；Label Studio lead time 不作 primary \\
+Administrative censor & T1 pair/V1 task & external incident 无法合法重跑；不作为零值进质量分母 \\
+\bottomrule
+\end{longtable}
+
+\paragraph{Contract v5 clarification.} Peer reporting uses \texttt{R\_peer\_task}, task-equal \texttt{R\_peer\_all}, and supported-multimodal-excluding \texttt{R\_peer\_stable}; LOO is a separate sensitivity/tie-break measure.

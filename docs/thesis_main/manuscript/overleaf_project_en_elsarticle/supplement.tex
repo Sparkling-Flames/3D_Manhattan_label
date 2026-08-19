@@ -1,0 +1,158 @@
+\documentclass[preprint,12pt]{elsarticle}
+
+\usepackage{amsmath,amssymb}
+\usepackage{booktabs}
+\usepackage{xcolor}
+\usepackage[hidelinks]{hyperref}
+
+\newcommand{\expectedresult}{\textcolor{red}{[EXPECTED\_RESULT\_NOT\_OBSERVED]}}
+\newcommand{\tbddata}{\textcolor{red}{TBD\_DATA}}
+\newcommand{\ethicsverify}{\textcolor{red}{[ETHICS\_STATUS\_TO\_VERIFY]}}
+
+\journal{Journal to be determined}
+
+\begin{document}
+
+\begin{frontmatter}
+\title{Supplementary Material for ``Auditable Adaptive Panoramic Layout Annotation''}
+\author{Author names withheld for drafting}
+\begin{abstract}
+This supplement expands the participant flow, operational-reference rules, calibration support diagnostics, prospective failure handling, missingness analysis, production standardization, worker-level deviation reporting, and repository audit index. It intentionally does not reproduce machine schemas, state machines, or dependency digests. The current machine-readable method contract remains normative.
+\end{abstract}
+\end{frontmatter}
+
+\section{Participant flow and analysis populations}
+\label{sup:flow}
+
+Participants are recruited for this study rather than drawn opportunistically from a public marketplace. The final report will describe recruitment channel, eligibility requirements, compensation, consent, training, withdrawals, and exclusion reasons. Participation requires informed consent. \ethicsverify{} The approving authority or exemption basis and identifier must replace this marker before submission.
+
+The participant flow is represented by nested but non-interchangeable populations:
+
+\begin{enumerate}
+  \item recruited and consented participants;
+  \item participants entering prescreening;
+  \item admitted calibration participants;
+  \item participants with at least one formally eligible calibration assignment;
+  \item participants reaching a terminal calibration state;
+  \item workers in the frozen prospective roster; and
+  \item workers who were recommended, offered, accepted, or completed a prospective task.
+\end{enumerate}
+
+The last four states are not collapsed into ``participated.'' A worker may be in the frozen roster but unavailable for a decision, recommended but not offered because capacity changed, or offered but decline. V1 policy accounting therefore operates at both randomized-task and worker-event levels.
+
+\begin{table}[h]
+\centering
+\caption{Participant-flow template. Counts are not yet observed. \expectedresult{}}
+\label{tab:supflow}
+\begin{tabular}{lr}
+\toprule
+Flow state & Count \\
+\midrule
+Consented & \tbddata{} \\
+Entered prescreening & \tbddata{} \\
+Admitted to Calibration & \tbddata{} \\
+Terminal Calibration profile & \tbddata{} \\
+Frozen T1 roster & \tbddata{} \\
+Frozen V1 roster & \tbddata{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Formal assignment provenance is evaluated before any outcome-specific analysis. Separate eligibility consumers are then applied for reference quality, peer geometry, leave-one-out summaries, structural opportunities, time, semi-automatic correction, predictive validation, and routing features. An ``outside'' record is retained for audit but never enters a primary estimand. The Supplement reports denominator transitions for each component instead of presenting one universal complete-case count.
+
+\section{Operational reference and geometric evaluability}
+\label{sup:reference}
+
+The operational reference registry uses the existing public layout reference as frozen, unless a researcher explicitly declares a reference problem through the versioned review process. Worker disagreement alone does not trigger a revision. A missing or unparseable reference yields ``reference unavailable'' for that scoring consumer. If a submission triggers a reference review, the revised reference cannot score that same submission. A final registry is frozen before prospective outcomes.
+
+Geometric evaluability precedes accuracy. Canonicalization validates the ceiling--floor ordering, wall--wall correspondences, closure requirements, and parser constraints specified by the current contract. It does not repair a worker output using knowledge of the worker's quality or the desired result. Parser sensitivities and confirmed reference issues are reported as deviations, not silently overwritten.
+
+Peer geometry is formed independently of the operational reference. Pairwise similarities are summarized within worker--task and then equally across tasks. Complete-link geometry clusters use frozen primary and sensitivity cut-offs. Stable peer compatibility includes supported unimodal and dominant-with-limited-dissent cases; supported multimodality remains a scientific finding but is not included in the stable worker aggregate.
+
+\section{Calibration design and support diagnostics}
+\label{sup:calibration}
+
+Calibration combines common evidence, a cross-stage bridge, and sequential precision recovery. The common component provides baseline task-adjusted reference evidence and peer overlap. The bridge provides shared tasks or an equivalent supported structure for stage estimation and validates predeclared failure families. Precision recovery targets uncertainty in the worker-specific risk component. Each recovery block contains one ordinary and one stress task. A worker receives at most five blocks, and a later block can be assigned only after the preceding block closes and the formal re-estimation remains eligible for continuation.
+
+For reference accuracy, the first-stage model contains worker and task fixed effects. The final pooled model contains worker and stage fixed effects plus building and task-within-building random intercepts only if the bridge identifies stage. Otherwise the stage effect is marked not identifiable and omitted. Structural invalidity is partially pooled across eligible opportunities. Peer compatibility is bootstrapped by base task with a task-equal median.
+
+Conditional support is audited separately for the risk component and each whitelisted failure family. The risk component requires an estimated terminal worker slope and a met precision target. A family component must pass eligibility, predictive validation, independent confirmation, direction, task-level stability, block-level stability, and routing permission. For each link we report pass, fail, not evaluable, and support count. Failure at one link disables that component; it does not change earlier observed values.
+
+\begin{table}[h]
+\centering
+\caption{Conditional-support reporting template. \expectedresult{}}
+\label{tab:supsupport}
+\begin{tabular}{lrrrr}
+\toprule
+Component & Pass & Fail & Not evaluable & Routable \\
+\midrule
+Risk slope & \tbddata{} & \tbddata{} & \tbddata{} & \tbddata{} \\
+Undercoverage & \tbddata{} & \tbddata{} & \tbddata{} & \tbddata{} \\
+Adjacent-space overextension & \tbddata{} & \tbddata{} & \tbddata{} & \tbddata{} \\
+Corner-topology instability & \tbddata{} & \tbddata{} & \tbddata{} & \tbddata{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+Support-distance diagnostics include the task distribution of distance from calibration support, activation margins, supported candidate counts, local component disables, and complete policy fallbacks. Results are stratified by ordinary versus stress task and by activated failure family. No threshold is changed after T1 or V1 outcomes become visible.
+
+\section{Replay, distinguishability, and power}
+\label{sup:power}
+
+Replay has three roles: deterministic software verification, calibration-only selection of conditional weights and cap, and feasibility or power planning. Leave-one-calibration-task-out and leave-one-calibration-block-out runs assess conditional prediction and ranking stability. A prospective-policy replay calculates how often the conditional and global recommendations differ under simulated availability and capacity. If the frozen distinguishability requirement is not met, V1 does not launch; replay is not relabelled as a prospective effect.
+
+The power study varies task count, block clustering, ordinary--stress mix, severe and unresolved rates, quality dispersion, external censoring, candidate availability, and policy divergence. The simulation respects the ordered V1 hierarchy: quality superiority is evaluated only in scenarios where both safety gates pass. Power output records assumptions and rejection probabilities, not expected empirical effect estimates. Numerical settings and results will be inserted from the frozen power artefact as \tbddata{}.
+
+\section{T1 failure attribution and missingness}
+\label{sup:t1failure}
+
+T1 records delivery status as valid, invalid, or unavailable and failure attribution as worker, external, unknown, or none. A worker-attributable invalid output remains in the assigned interface condition with delivery-adjusted quality zero. An external incident requires predeclared immutable evidence and can trigger one complete-pair rerun. An incomplete pair after the allowed rerun administratively censors the full image in the primary analysis. Unknown failures are not reclassified after viewing mode differences.
+
+The audit table reports original submissions, pair identifiers, reruns, final image status, worker failures, external incidents, unknown events, and administrative censoring by mode and risk stratum. Quality missingness and active-time missingness are separate. A task can contribute quality while lacking valid time, and missing active time does not change the worker profile or assignment.
+
+\section{V1 terminal states, mITT, and production standardization}
+\label{sup:v1failure}
+
+V1 terminal states are resolved, unresolved, and severe failure. Candidate exhaustion, capacity exhaustion, and replacement failure are policy events and remain in the randomized arm. A worker-invalid submission is retained as an event; the final task outcome depends on the complete symmetric replacement and aggregation path. Confirmed external incidents may receive one same-arm, same-version rerun with reserved capacity. Only an arm-blind, predeclared external administrative censor is excluded from mITT.
+
+For each arm, a flow table reports randomized, rerun, administratively censored, mITT, resolved, unresolved, and severe counts. A separate scheduling table reports recommendation-to-offer, offer-to-acceptance, acceptance-to-completion, invalid-completion replacement, and candidate exhaustion. These tables test whether the two arms differed operationally in a way other than worker ordering.
+
+The balanced design result weights ordinary and stress outcomes equally. Production-standardized unconditional outcomes use independently measured target proportions. Resolved-only quality uses standardized resolved numerators and denominators:
+\begin{equation}
+ Q_{\pi,resolved}^{prod}=
+ \frac{p_or_o q_o+p_sr_s q_s}{p_or_o+p_sr_s},
+\end{equation}
+where $p$ is target prevalence, $r$ resolved probability, and $q$ conditional resolved quality. If no single production mix is available, the frozen scenario grid is reported rather than inferred from the 50:50 experiment.
+
+\section{Worker-specific deviation summary}
+\label{sup:deviations}
+
+The scientific supplement reports pseudonymized worker-level deviations only when necessary to explain support or sensitivity. It does not publish operational worker identifiers. The summary contains profile measurement status, calibration support, deviation type, affected component, primary-analysis disposition, and whether the deviation changes only a sensitivity analysis. Examples include authorized replacement provenance, timing evidence that is valid only at task--worker level, missing bridge support, and precision-cap fallback.
+
+\begin{table}[h]
+\centering
+\caption{Worker-specific deviation template. No worker-level result is yet inserted. \expectedresult{}}
+\label{tab:supdeviation}
+\begin{tabular}{p{0.15\linewidth}p{0.27\linewidth}p{0.24\linewidth}p{0.22\linewidth}}
+\toprule
+Study code & Deviation & Primary disposition & Sensitivity role \\
+\midrule
+\tbddata{} & \tbddata{} & \tbddata{} & \tbddata{} \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+\section{Repository audit artefact index}
+\label{sup:audit}
+
+The manuscript is a scientific consumer of repository contracts, not a translated copy of them. At the current manuscript freeze, method facts are governed by contract version \texttt{paper\_a\_method\_20260811\_v23}. The exact current version and digest must always be read from
+\path{docs/thesis_main/PAPER_A_METHOD_CONTRACT_CURRENT.json}.
+
+Execution and analysis consumers are
+\path{docs/thesis_main/ROUND_BASED_ASSIGNMENT_SOP_v1.md} and
+\path{docs/thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md}. Conditional-policy materialization is specified by
+\path{docs/thesis_main/FULL_MATERIALIZATION_PROCEDURE_v1.json}. Field-level eligibility and generated artefacts are documented by the current profile and calibration field contracts under \path{docs/thesis_main/}. Runtime exports, raw active-time logs, planned imports, and analysis outputs retain their repository-defined truth-source hierarchy.
+
+The final audit index will identify, but not reproduce, the frozen participant registry, assignment manifests, reference registry, profile and component summaries, policy manifest, randomization records, append-only V1 decision ledger, incident evidence, denominator flows, power configuration, analysis outputs, and software revision. Full dependency digests and machine fields remain in those artefacts. This separation keeps the Supplement reviewable while preserving exact computational traceability.
+
+\end{document}

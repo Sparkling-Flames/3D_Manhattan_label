@@ -1,0 +1,104 @@
+% Method classification required by the writing contract:
+% Existing: IoU/similarity measures, mixed models, partial pooling, ITT.
+% Adapted: three-component characterization and cross-stage anchor/bridge calibration.
+% Proposed here: calibration-supported conditional routing and its prospective symmetric evaluation.
+\section{Calibrated Worker Profiling and Routing}
+\label{sec:profiling}
+
+\subsection{Method boundary}
+
+The framework combines existing statistical tools with a new deployment rule. Intersection-over-union and geometry similarity, mixed-effects models, empirical-Bayes shrinkage, and intention-to-treat analysis are established methods. We adapt them to a three-component characterization and an independent anchor-and-bridge calibration design. The method proposed in this paper is the complete routing rule: conditional worker performance can alter a calibrated global ranking only when a predeclared failure or risk component is estimable, stable, and supported for the current task; otherwise the adjustment is disabled or the whole decision falls back to the global policy.
+
+This distinction matters for interpretation. A fitted worker slope is not itself a routing policy, and a conditional association is not evidence that routing on it improves delivery. Profiling, support determination, policy materialization, and policy evaluation are separate frozen steps.
+
+\subsection{Three-component worker performance characterization}
+
+For worker $w$, the primary profile is
+\begin{equation}
+  \boldsymbol{P}_w = (Q_{GT,w}, R_{peer,w}, F_{struct,w}).
+  \label{eq:profile}
+\end{equation}
+The components have different denominators and are never averaged into one unrestricted ability score.
+
+\paragraph{Reference-based accuracy.}
+For an eligible task $i$, $q_{wi}$ is the geometric agreement between the worker's canonical layout and the frozen operational reference. The profile-purpose calibration model adjusts for task difficulty. In the first calibration stage,
+\begin{equation}
+  q_{wi}=\mu+\alpha_w+\gamma_i+\varepsilon_{wi},
+  \label{eq:qgtc1}
+\end{equation}
+where worker and task are fixed effects. The worker estimate is converted to an empirical-Bayes estimate $Q_{GT,w}^{EB}$ for ranking and uncertainty reporting. Once bridge and precision-recovery evidence are available, the final model includes a worker fixed effect, a stage fixed effect, a building random intercept, and a task-within-building random intercept. The stage term is fitted only when the frozen cross-stage bridge or an equivalent supported structure identifies it. Otherwise the pooled model omits that term and records the stage effect as not identifiable. This rule prevents stage imbalance from being silently recoded as worker performance.
+
+\paragraph{Stable peer compatibility.}
+Reference scoring and peer agreement answer different questions. For each eligible worker--task pair, we compute the median pairwise geometry similarity between the focal annotation and other eligible annotations on that task. The worker aggregate is the task-equal median, so a task with more peer annotations does not dominate. Geometry clusters are formed with a frozen similarity rule. Tasks whose evidence supports more than one substantive mode are retained for multimodality reporting but excluded from the stable peer summary. Thus $R_{peer,w}^{stable}$ measures compatibility with stable peer structure, not conformity to a majority and not accuracy against truth. A leave-one-out medoid statistic is used only as a sensitivity measure or a late tie-break, never as the principal global rank.
+
+\paragraph{Worker-attributable structural invalidity.}
+Let $y_{wi}=1$ when an eligible structural opportunity results in a predeclared invalid geometry attributable to the worker, and $0$ otherwise. Structural failures include output conditions that prevent an evaluable formal layout; attribution is established independently from terminal status. A partially pooled binomial estimate yields $F_{struct,w}^{EB}$ and its interval. Low raw failure counts are not interpreted as certainty: workers with sparse opportunities shrink toward the cohort distribution, and missing attribution is not recoded as absence of failure. External and unknown causes remain in the incident analysis but do not become worker-attributable structural events.
+
+Each component carries a measurement status. No eligible support is not evaluable; limited support is weak descriptive evidence; and only the predeclared minimum plus a successful estimator yields an estimated component. Peer compatibility uses a stricter task-support requirement than the other two axes because stable agreement cannot be inferred from a single comparison. A component that is not estimated can remain visible descriptively, but it cannot activate conditional routing.
+
+\subsection{Partial pooling and calibration stability}
+
+Partial pooling serves uncertainty control rather than cosmetic rank smoothing. It reduces extreme estimates driven by a few tasks while retaining supported between-worker variation. We report the raw task-level distribution, adjusted estimate, interval, support count, and measurement status together. For structural invalidity, the empirical-Bayes estimate and interval are the formal quantities; a raw failure proportion cannot substitute for them.
+
+Stability is evaluated by leaving out calibration tasks and, where applicable, sequential calibration blocks. Reference accuracy is re-estimated under the predeclared stage-identifiability rule. Peer compatibility is bootstrapped at the base-task level using the task-equal median. Conditional risk slopes and family effects must preserve their required direction and pass their task- or block-level stability checks. A result that changes sign or rank materially under these perturbations is not made routable merely because its full-sample point estimate is large.
+
+Calibration independence is enforced procedurally. Numeric profile inputs come only from Calibration; T1 and V1 outcomes are prohibited inputs. Precision-recovery tasks are assigned sequentially according to unresolved precision targets, not according to a desired routing divergence or prospective significance. Final estimates, support states, component weights, adjustment caps, task activations, and profile versions are frozen before prospective outcomes are visible.
+
+\subsection{Calibrated global ranking}
+
+The repository's internal \emph{Strong Global} policy maps in this paper to \emph{calibrated global ranking}. Its formal score is
+\begin{equation}
+  S_{G,w}=z\!\left(Q_{GT,w}^{EB}\right),
+  \label{eq:global}
+\end{equation}
+where standardization is within the frozen eligible cohort. The lower confidence bound for $Q_{GT,w}^{EB}$ is a safety and sensitivity quantity; it is not substituted for the ranking score. Ties are resolved in a fixed sequence: stable peer compatibility when complete for the entire tie group, then the leave-one-out medoid sensitivity when complete for the remaining tie group, then a frozen random order. If a tie-break layer is incomplete for any member of the current tie group, that layer is skipped for the whole group.
+
+At runtime, ranking and scheduling remain distinct. The policy considers only available workers with remaining capacity. Availability or capacity can change who receives a task, but it does not change the frozen evidence score. The global ranking is both a comparator and a safe degradation target for the conditional policy.
+
+\subsection{Calibration-supported conditional worker performance}
+
+Conditional evidence is confined to predeclared, interpretable components. The first component describes quality retention as calibrated task risk increases. A crossed mixed model estimates a worker-specific risk slope; the slope is centered and scaled across workers after shrinkage. A worker's risk component is eligible only if the terminal calibration estimate exists and its precision target is met.
+
+The second component describes performance for a small whitelist of routable failure families: undercoverage, adjacent-space overextension, and corner-topology instability. A family effect must pass the complete evidence chain: eligible early evidence, predictive validation, independent bridge confirmation, directional consistency, leave-one-task-out stability, leave-one-block-out stability, and permission for routing activation. Estimates from the two calibration sources are inverse-variance pooled and partially shrunk within family. Negative or missing evidence means ``not eligible,'' not evidence of a zero biological or behavioural effect.
+
+For task $i$, let $a_i^{risk}$ be the frozen risk activation and $a_{if}$ the activation for family $f$. At most one failure family activates on a task. Let $B_w$ be the standardized supported risk slope and $H_{wf}$ the standardized supported family effect. The conditional adjustment has the conceptual form
+\begin{equation}
+  A_{wi}=\operatorname{clip}\!\left(
+     \lambda_B a_i^{risk}B_w+
+     \lambda_P\sum_f a_{if}H_{wf},
+     -c,c\right),
+  \label{eq:adjustment}
+\end{equation}
+and the task-specific score is $S_{C,wi}=S_{G,w}+A_{wi}$. The weights $\lambda_B$ and $\lambda_P$ and symmetric cap $c$ are selected using Calibration only. Candidate values are evaluated by leave-one-calibration-task-out and leave-one-calibration-block-out prediction. Selection first minimizes held-out loss, then favours stability, smaller absolute weights, and a smaller cap. If supported improvement is absent, both weights are zero. Equation~\ref{eq:adjustment} summarizes the deployed calculation without reproducing the repository's machine schema.
+
+\subsection{Calibration-support boundary and distance}
+
+A conditional estimate and a supported task activation are both necessary. The \emph{calibration-support boundary} is the frozen set of task contexts for which calibration contains the required risk or family evidence under the versioned activation rules. The associated calibration-support distance, $d_{cal}(i)$, records how far task $i$ lies from supported calibration evidence under that rule. It is an audit diagnostic, not a tunable post-outcome threshold.
+
+The boundary has two levels of degradation. A \emph{local disable} sets one component of $A_{wi}$ to zero when that component is unsupported, ambiguously activated, or has insufficient conditional evidence. Other supported components may remain active. An \emph{overall fallback} sets $A_{wi}=0$ for all workers and uses calibrated global ranking when the task lies outside calibration support, the profile version conflicts with the policy, the ranking endpoint is unstable, or the post-calibration rank-stability requirement fails. These actions are deterministic and logged before assignment.
+
+This distinction avoids two common errors. It does not extrapolate a family effect merely because a similar label is present, and it does not discard all conditional evidence when only one component is unavailable. In either case, fallback is a deployment principle within this evidence chain, not a claim that baseline fallback is a new safety concept \cite{laroche2019spibb,sachdeva2020support}.
+
+\subsection{Auditable routing decision}
+
+The repository's internal \emph{Support-aware Full} policy maps to \emph{calibration-supported conditional routing}. For each incoming task, the policy validates the frozen profile and policy versions, computes task risk and at most one failure-family activation from pre-outcome inputs, evaluates support, constructs the conditional score only where allowed, and selects the highest-ranked available worker with capacity. Every prospective decision is written to an append-only ledger before the outcome is known. A deterministic batch implementation replays the same inputs for audit; it is not the online decision maker.
+
+Figure~\ref{fig:routing} condenses the decision path. The design is intentionally degradable: the most detailed rule is used only inside its evidence domain, while the global policy remains defined for every routable task.
+
+\begin{figure}[t]
+\centering
+\fbox{\begin{minipage}{0.91\linewidth}
+\centering
+Validate frozen versions $\rightarrow$ compute pre-outcome task activation\\
+$\downarrow$\\
+Inside support and stable?\\
+\begin{tabular}{c@{\hspace{3em}}c}
+Yes & No \\
+supported local adjustment & calibrated global fallback \\
+\end{tabular}\\
+$\downarrow$\\
+Apply common availability and capacity constraints $\rightarrow$ append decision record
+\end{minipage}}
+\caption{Conditional routing decision. Unsupported local components are zeroed; policy-level conflicts or out-of-support tasks trigger the global fallback.}
+\label{fig:routing}
+\end{figure}

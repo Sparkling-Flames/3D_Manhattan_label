@@ -1,0 +1,154 @@
+{
+  "counts": {
+    "conflict_pool_hits_all": 30,
+    "development_buildings": 9,
+    "locked_buildings": 4,
+    "paired_conflict_exclusions": 12,
+    "pools": 139,
+    "public_n": 58,
+    "quality_rows_consumed": 623,
+    "result_rows": 417,
+    "strict_n": 46
+  },
+  "generator": {
+    "path": "tools\\thesis_main\\analysis\\build_a4_development_outcome_replay.py",
+    "sha256": "48b58f521fc32ce5d597cda40d8632b6633ed63352f9819c101687dc3a839779"
+  },
+  "input_access_trace": [
+    {
+      "path": "analysis_results\\a4_replay_preoutcome_freeze_20260817_v1\\analysis_manifest.json",
+      "projected_columns": [
+        "inputs",
+        "outputs",
+        "counts",
+        "read_only_boundaries"
+      ]
+    },
+    {
+      "development_filter": null,
+      "path": "analysis_results\\aggregation_preflight_readiness_20260817_v1\\DEVELOPMENT_HOLDOUT_SPLIT_MANIFEST.csv",
+      "projected_columns": [
+        "building_scene_id",
+        "split"
+      ]
+    },
+    {
+      "development_filter": null,
+      "path": "analysis_results\\a4_replay_preoutcome_freeze_20260817_v1\\A4_STRICT_POOL_PREOUTCOME_STATE.csv",
+      "projected_columns": [
+        "deployment_pool_id",
+        "stage",
+        "round_id",
+        "condition",
+        "base_task_id",
+        "task_id",
+        "project_id",
+        "ls_runtime_task_id",
+        "building_scene_id",
+        "primary_candidate_k",
+        "a0_selection_disposition",
+        "a0_prime_medoid_candidate_annotation_id",
+        "a0_unresolved_reason",
+        "cluster_membership_json"
+      ]
+    },
+    {
+      "development_filter": null,
+      "path": "analysis_results\\a4_replay_preoutcome_freeze_20260817_v1\\A4_PREOUTCOME_POLICY_ACTIONS.csv",
+      "projected_columns": [
+        "deployment_pool_id",
+        "variant",
+        "action_disposition",
+        "selected_candidate_annotation_id",
+        "selected_worker_id",
+        "disagreement_with_a0"
+      ]
+    },
+    {
+      "development_filter": null,
+      "path": "analysis_results\\a4_replay_preoutcome_freeze_20260817_v1\\A4_REPLAY_CANDIDATE_DENOMINATOR.csv",
+      "projected_columns": [
+        "candidate_annotation_id",
+        "normalization_valid"
+      ]
+    },
+    {
+      "development_filter": null,
+      "path": "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_gt_quality_analysis.csv",
+      "projected_columns": [
+        "canonical_annotation_id",
+        "building_id"
+      ]
+    },
+    {
+      "development_filter": [
+        "B6ByNegPMKs",
+        "UwV83HsGsw3",
+        "X7HyMhZNoso",
+        "b8cTxDM8gDG",
+        "rPc6DW4iMge",
+        "uNb9QFRL6hY",
+        "wc2JMjhGNzB",
+        "x8F5xyUWy9e",
+        "yqstnuAEVhm"
+      ],
+      "path": "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_gt_quality_analysis.csv",
+      "projected_columns": [
+        "canonical_annotation_id",
+        "building_id",
+        "iou_to_gt",
+        "gt_primary_analysis_eligible",
+        "structurally_valid",
+        "worker_caused_structural_failure",
+        "failure_attribution",
+        "public_gt_structural_status",
+        "gt_reference_resolved",
+        "geometry_reference_status"
+      ]
+    },
+    {
+      "development_filter": null,
+      "path": "analysis_results\\reference_conflict_sensitivity_audit_20260805_v2\\c1_candidate_screen\\c1_gt_conflict_review_queue.csv",
+      "projected_columns": [
+        "base_task_id",
+        "candidate_only"
+      ]
+    }
+  ],
+  "inputs": {
+    "analysis_results\\a4_deployment_pool_identity_20260817_v1\\A4_CANDIDATE_DEPLOYMENT_POOL_IDENTITY_C1_v1.csv": "920f713057018ebdde3b4bfbd524f565f5d03fa8223987da54acd9ea0698e6e0",
+    "analysis_results\\a4_image_evidence_substrate_20260817_v2\\DEVELOPMENT_CANDIDATE_IMAGE_ALIGNMENT.csv": "5a6ed3684a09d90b65eda8031c23a462eadb5179a536bdab13a192b6851e3ba7",
+    "analysis_results\\a4_replay_preoutcome_freeze_20260817_v1\\A4_PREOUTCOME_POLICY_ACTIONS.csv": "092c86d1e8bd5e20cc62cc76b45e8e006244443f95ff90e5cf4b5de957209839",
+    "analysis_results\\a4_replay_preoutcome_freeze_20260817_v1\\A4_PREOUTCOME_REPLAY_REPORT.md": "a6d002b82215d924cca86cdc357d528dd3c6657189531d379a4a546563acd9a6",
+    "analysis_results\\a4_replay_preoutcome_freeze_20260817_v1\\A4_PREOUTCOME_REPLAY_SPEC.json": "c787ab73f585fc99c3c1d05121ea15e04296f3197195e06d00ad69ddbb9e12ed",
+    "analysis_results\\a4_replay_preoutcome_freeze_20260817_v1\\A4_REPLAY_CANDIDATE_DENOMINATOR.csv": "3cb4d2381165f549a97d4f881fd239ad134cd2bf8214ed6854d123f046220bdb",
+    "analysis_results\\a4_replay_preoutcome_freeze_20260817_v1\\A4_STRICT_POOL_PREOUTCOME_STATE.csv": "6250fcba6397a4f6c575e39eba280ef79fde2c4022c55e72eb9080b6a27076a3",
+    "analysis_results\\a4_replay_preoutcome_freeze_20260817_v1\\INPUT_ALLOWLIST_DENYLIST.json": "4356a5814bbf6228fb363a18376fc4653e9bdaaa74e972b838cced7792365eec",
+    "analysis_results\\a4_replay_preoutcome_freeze_20260817_v1\\analysis_manifest.json": "b8260d038581117f65be1a9da2d38133bcd3a8893b7e5813768e611e7f275257",
+    "analysis_results\\aggregation_preflight_readiness_20260817_v1\\DEVELOPMENT_HOLDOUT_SPLIT_MANIFEST.csv": "5f5fe4bf84e88b89834e1c31ca07892a87f881fa6e30ffbf97170a39e6f33bed",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_canonical_geometry.jsonl": "d3054e9c1fb9869a8a0a7ad114de16e6c30952ab4948261cfac58df25ef82799",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_canonicalization_summary.json": "9131d49959d91e424a5a22dcc3833377e43f55305e0bfcf352d530e292b4b07c",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\c1_gt_quality_analysis.csv": "68c6d64cad77e09a21e5689d5bc20b26ad6484ba1fd63e1fbf00466ab9b23e5e",
+    "analysis_results\\c1_formal_audit_20260802_v16_final\\c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03\\geometry_pairwise_similarity_C1.csv": "997860626fdf50ea5667986a8f04df0183c8f78f617c49fd5682394c7092f1a7",
+    "analysis_results\\reference_conflict_sensitivity_audit_20260805_v2\\c1_candidate_screen\\c1_gt_conflict_review_queue.csv": "f0cf3a40b7ef38ca60072fc91f677eaca0b61ad0f399a32433af51f4d49e7703",
+    "docs\\thesis_main\\PAPER_A_METHOD_CONTRACT_CURRENT.json": "f3c1ea58d0857a40aa2240b4680b674c76fe2cec8f048f61a643d9e4b74b0588",
+    "docs\\thesis_main\\geometry_peer_candidate_rule_manifest_v1.json": "e097196e812d8d53bccb78f76aff241afea3bce3b4c7dbc0581d600d6c691bf8"
+  },
+  "manifest_self_hash_excluded": true,
+  "outputs": {
+    "A4_DEVELOPMENT_DECISION.json": "17690707917e996fb21023f7b9db860faaa89423e9a9e52b188a3b597858fef5",
+    "A4_DEVELOPMENT_LOBO_SELECTOR.csv": "17b5c0b68038a756ccf72484eadbc2dab4c0fe6070673754cba13755f252ac92",
+    "A4_DEVELOPMENT_OUTCOME_REPLAY_REPORT.md": "a320efc28b0c39f325cba432e57c4b9dcb133d03eb78748e6eede36630a51031",
+    "A4_DEVELOPMENT_PAIRED_RESULTS.csv": "579d4d987d508df7d71482006ae73854b28244a2c33ddad355c48cd60e4ff5d8",
+    "A4_DEVELOPMENT_VARIANT_SUMMARY.csv": "059f7b1fc292eb459b54fa18cd411d7a96a8afc04b4736b10fab050272a14402"
+  },
+  "read_only_boundaries": {
+    "actions_recomputed": false,
+    "active_time_read": false,
+    "locked_building_effect_read": false,
+    "new_experiment_started": false,
+    "old_selector_outcome_read": false,
+    "t1_v1_outcome_read": false
+  },
+  "schema_version": "a4_development_outcome_replay_manifest_v1"
+}
