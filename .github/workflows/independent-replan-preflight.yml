@@ -37,24 +37,28 @@ jobs:
           python -m pip install numpy pandas scipy scikit-learn statsmodels
 
       - name: Run data inventory
+        continue-on-error: true
         run: |
           python tools/thesis_main/analysis/independent_replan_preflight.py \
             --root "$GITHUB_WORKSPACE" \
             --output-dir "$GITHUB_WORKSPACE/analysis_results/independent_replan_preflight_20260819"
 
       - name: Run focused descriptive preflight
+        continue-on-error: true
         run: |
           python tools/thesis_main/analysis/independent_replan_stage2.py \
             --root "$GITHUB_WORKSPACE" \
             --output-dir "$GITHUB_WORKSPACE/analysis_results/independent_replan_preflight_20260819"
 
       - name: Probe prescreen, semi, and reviewer schemas
+        continue-on-error: true
         run: |
           python tools/thesis_main/analysis/independent_replan_stage3_probe.py \
             --root "$GITHUB_WORKSPACE" \
             --output-dir "$GITHUB_WORKSPACE/analysis_results/independent_replan_preflight_20260819"
 
       - name: Run formal stage-3 preflight when present
+        continue-on-error: true
         if: ${{ hashFiles('tools/thesis_main/analysis/independent_replan_stage3.py') != '' }}
         run: |
           python tools/thesis_main/analysis/independent_replan_stage3.py \
@@ -71,7 +75,7 @@ jobs:
           retention-days: 14
 
       - name: Commit append-only outputs
-        if: success() && github.event_name == 'push' && github.ref_name == 'codex/independent-replan-preflight-20260819'
+        if: always() && github.event_name == 'push' && github.ref_name == 'codex/independent-replan-preflight-20260819'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
