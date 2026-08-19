@@ -1,0 +1,56 @@
+name: Topology v3 exact5 postprocess
+
+on:
+  pull_request:
+    branches:
+      - codex/paper
+    paths:
+      - tools/thesis_main/analysis/postprocess_topology_v3_exact5.py
+      - .github/workflows/topology-v3-postprocess.yml
+      - .github/topology-v3-postprocess-trigger.txt
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  postprocess:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Check out tested ref
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+          sparse-checkout: |
+            .github
+            tools/thesis_main/analysis/postprocess_topology_v3_exact5.py
+            analysis_results/topology_sequential_preflight_20260818_v3
+            analysis_results/c1_formal_audit_20260802_v16_final
+            analysis_results/final_calibration_profile_20260817_v1
+          sparse-checkout-cone-mode: false
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install scipy
+
+      - name: Run append-only postprocess
+        run: |
+          python tools/thesis_main/analysis/postprocess_topology_v3_exact5.py \
+            --root "$GITHUB_WORKSPACE" \
+            --output-dir "$GITHUB_WORKSPACE/analysis_results/topology_sequential_preflight_20260818_v4_postprocess"
+
+      - name: Upload outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: topology-v3-exact5-postprocess
+          path: analysis_results/topology_sequential_preflight_20260818_v4_postprocess
+          if-no-files-found: warn
+          retention-days: 7
