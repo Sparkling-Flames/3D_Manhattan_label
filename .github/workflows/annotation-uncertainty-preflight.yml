@@ -1,0 +1,50 @@
+name: Annotation uncertainty preflight
+
+on:
+  push:
+    branches:
+      - codex/annotation-uncertainty-preflight-20260820
+    paths:
+      - tools/thesis_main/analysis/annotation_uncertainty_preflight.py
+      - .github/workflows/annotation-uncertainty-preflight.yml
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  preflight:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - name: Check out analysis branch
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install analysis dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy scipy shapely
+
+      - name: Run uncertainty trajectory preflight
+        run: |
+          python tools/thesis_main/analysis/annotation_uncertainty_preflight.py \
+            --root "$GITHUB_WORKSPACE" \
+            --output-dir "$GITHUB_WORKSPACE/analysis_results/annotation_uncertainty_preflight_20260820_v1" \
+            --replicates 200 \
+            --permutations 5000
+
+      - name: Upload outputs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: annotation-uncertainty-preflight
+          path: analysis_results/annotation_uncertainty_preflight_20260820_v1
+          if-no-files-found: error
+          retention-days: 14
