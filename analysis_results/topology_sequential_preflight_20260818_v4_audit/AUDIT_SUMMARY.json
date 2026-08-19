@@ -1,0 +1,73 @@
+{
+  "f0_frozen_bound": {
+    "autonomous_non_delivery_probability": 0.007525641025641025,
+    "continuous_geometry_delta": null,
+    "corner_count_change_probability": null,
+    "expert_escalation_probability": 0.0,
+    "incremental_stop_at_4": 0.0,
+    "instability_probability": null,
+    "k_task_sd": 0.0,
+    "mean_k": 5.0,
+    "mean_savings_vs_f0": null,
+    "mitt_delta_vs_f0": null,
+    "public_gt_quality": 0.8804521799166198,
+    "quality_delta_task_sd": null,
+    "quality_delta_vs_f0": null,
+    "reach5": 1.0,
+    "selected_output_probability": 0.992474358974359,
+    "stop_at_3": 0.0
+  },
+  "medoid_audit": {
+    "cluster_membership_mismatch_count": 0,
+    "cluster_status_mismatch_count": 0,
+    "exact_k5_tasks": 66,
+    "medoid_mismatch_count": 9,
+    "mismatch_cause_counts": {
+      "frozen_medoid_not_in_current_largest_cluster": 6,
+      "medoid_score_contract_drift": 1,
+      "tie_break_contract_drift": 2
+    },
+    "mismatch_quality_delta_max": 0.15498174669002274,
+    "mismatch_quality_delta_mean": -0.013223285007844601,
+    "mismatch_quality_delta_min": -0.10366288623413433
+  },
+  "reference_contract_resolution": {
+    "acceptable_topology_set_in_confirmatory_main": "prohibited",
+    "expert_audit_roles": [
+      "candidate_matches_frozen_operational_topology",
+      "material_geometry_or_delivery_harm",
+      "protocol_contract_failure_or_scope_unresolved"
+    ],
+    "paper_a_reference_contract": "single_operational_reference",
+    "post_randomisation_multiple_protocol_consistent_interpretations": "retain in operational ITT; classify as scope-contract failure; exclude only from pre-specified geometry per-protocol denominator with worst-case and inclusive sensitivity"
+  },
+  "reviewer_feasibility": {
+    "active_profile_count": 20,
+    "historical_k22_task_count": 12,
+    "reason": "historical records contain independent full annotations, not blinded verification decisions after viewing candidate layouts",
+    "review_effect_status": "not_identifiable",
+    "selection_rule_role": "availability sensitivity only; not a frozen reviewer qualification gate"
+  },
+  "scenario_file": "TG_EF5_POWER_AND_SAFETY_SCENARIOS.csv",
+  "source_v3_status": "medoid_dependent_metrics_invalid_pending_binding_fix",
+  "status": "development_audit_only",
+  "success_probability_status": "full_success_not_identifiable_without_expert_harm_and_valid_NI_margin",
+  "tg_ef5": {
+    "autonomous_non_delivery_probability": 0.004884615384615385,
+    "continuous_geometry_delta": 0.0019423497284418573,
+    "corner_count_change_probability": 0.0,
+    "expert_escalation_probability": 0.0,
+    "incremental_stop_at_4": 0.2007179487179487,
+    "instability_probability": 0.2860213613058842,
+    "k_task_sd": 0.7832175990909599,
+    "mean_k": 3.9375641025641026,
+    "mean_savings_vs_f0": 1.0624358974358974,
+    "mitt_delta_vs_f0": 0.0016252466011916853,
+    "public_gt_quality": 0.8795245909600116,
+    "quality_delta_task_sd": 0.008568075346888629,
+    "quality_delta_vs_f0": -0.0008903714918769612,
+    "reach5": 0.3684230769230769,
+    "selected_output_probability": 0.9951153846153846,
+    "stop_at_3": 0.43085897435897436
+  }
+}
