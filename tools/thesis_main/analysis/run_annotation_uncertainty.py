@@ -36,6 +36,9 @@ def main() -> None:
     replay = equal_k_replay(pairwise, overlap, replicates=args.equal_k_replicates)
     write_csv(out / 'manual_semi_equal_k_replay_raw.csv', replay)
     paired, inference = paired_mode_analysis(task_metrics, replay, out)
+    if 'manual_task_crowd_structure_status' not in paired and 'task_crowd_structure_status' in paired:
+        paired = paired.rename(columns={'task_crowd_structure_status': 'manual_task_crowd_structure_status'})
+        write_csv(out / 'manual_semi_paired_task_metrics.csv', paired)
     status_transition_table(paired, out)
     uncertainty_quality_tradeoff(paired, out)
     fixed_effect_mode_models(c1_timing, quality, out)
