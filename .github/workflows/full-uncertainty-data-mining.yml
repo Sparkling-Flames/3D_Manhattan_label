@@ -8,6 +8,7 @@ on:
     paths:
       - "tools/thesis_main/analysis/full_uncertainty_*.py"
       - "tools/thesis_main/analysis/materialize_full_uncertainty_data_mining*.py"
+      - "tools/thesis_main/analysis/run_full_uncertainty_reviewed.py"
       - ".github/workflows/full-uncertainty-data-mining.yml"
       - ".github/full-uncertainty-data-mining-trigger.txt"
   pull_request:
@@ -16,6 +17,7 @@ on:
     paths:
       - "tools/thesis_main/analysis/full_uncertainty_*.py"
       - "tools/thesis_main/analysis/materialize_full_uncertainty_data_mining*.py"
+      - "tools/thesis_main/analysis/run_full_uncertainty_reviewed.py"
       - ".github/workflows/full-uncertainty-data-mining.yml"
       - ".github/full-uncertainty-data-mining-trigger.txt"
 
@@ -50,12 +52,13 @@ jobs:
             tools/thesis_main/analysis/full_uncertainty_geometry.py \
             tools/thesis_main/analysis/full_uncertainty_reviewed.py \
             tools/thesis_main/analysis/materialize_full_uncertainty_data_mining.py \
-            tools/thesis_main/analysis/materialize_full_uncertainty_data_mining_v2.py
+            tools/thesis_main/analysis/materialize_full_uncertainty_data_mining_v2.py \
+            tools/thesis_main/analysis/run_full_uncertainty_reviewed.py
 
       - name: Run reviewed full uncertainty data mining
         run: |
           rm -rf analysis_results/full_uncertainty_data_mining_20260821_v2
-          python -m tools.thesis_main.analysis.materialize_full_uncertainty_data_mining_v2 \
+          python -m tools.thesis_main.analysis.run_full_uncertainty_reviewed \
             --output-dir analysis_results/full_uncertainty_data_mining_20260821_v2
 
       - name: Commit reproducible outputs
