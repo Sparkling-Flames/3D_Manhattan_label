@@ -1,0 +1,106 @@
+{
+  "formal_eligibility_mapping": {
+    "C1": "c1_gt_primary_analysis_eligible",
+    "C2-B": "upstream_formal_assignment_eligible",
+    "C2A-RP-B1": "upstream_formal_assignment_eligible",
+    "C2A-RP-B2": "frozen_assignment_membership",
+    "P1": "upstream_eligible_for_primary_analysis"
+  },
+  "inputs": [
+    {
+      "deduplication": "frozen_SHA_plus_annotation_identity",
+      "included": "true",
+      "paper": "A",
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v4/post_block2_submission_master.csv",
+      "role": "formal_submission_spine",
+      "sha256": "7b299a7910c5296ea7eac547471d6bd1ea43e2c012d765c72f3dd1a57498571a"
+    },
+    {
+      "deduplication": "frozen_SHA_plus_annotation_identity",
+      "included": "true",
+      "paper": "A",
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v4/post_block2_task_context_master.csv",
+      "role": "formal_task_context",
+      "sha256": "d16b8990b036099e0a501591ba8162b114e84bb82b22213100b89c67e3b8840e"
+    },
+    {
+      "deduplication": "frozen_SHA_plus_annotation_identity",
+      "included": "true",
+      "paper": "A",
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v4/post_block2_worker_profile_master.csv",
+      "role": "formal_worker_profile",
+      "sha256": "dbdd1fcea255a82731cf4d50cf416f21de86451c9240772f11017ab8e5bef48f"
+    },
+    {
+      "deduplication": "frozen_SHA_plus_annotation_identity",
+      "included": "true",
+      "paper": "A",
+      "path": "analysis_results/reviewer_profile_dual_stage_processing_20260819_v2/SEMI_ROW_LEVEL_REVIEWER_EVIDENCE.csv",
+      "role": "semi_review",
+      "sha256": "e6489d41bcafec0455114eace5044418de9ea3ed34295104f9cdb5ecf540ab22"
+    },
+    {
+      "deduplication": "frozen_SHA_plus_annotation_identity",
+      "included": "true",
+      "paper": "A",
+      "path": "analysis_results/calibration_dual_track_processing_20260815_v3/task_feature_matrix.csv",
+      "role": "calibration_task_features",
+      "sha256": "c46370d048fe848779043b6c40867929d86f8b7d068fd3a13f37efea8f3c638a"
+    },
+    {
+      "deduplication": "frozen_SHA_plus_annotation_identity",
+      "included": "true",
+      "paper": "A",
+      "path": "import_json/groudTruth_458_tasks_import_from_updated_gt_20260701.json",
+      "role": "T1_candidate_coverage_only",
+      "sha256": "1b2a2d905f62d703a3e46a7a83e5dca6e90c6030988d6ca594d2eb69793b5cf6"
+    },
+    {
+      "deduplication": "recursive_path_and_SHA",
+      "included": "false",
+      "paper": "A",
+      "path": "export_label/",
+      "role": "raw_export_inventory_not_mixed",
+      "sha256": "a077d0645edfc8af3aead6a0c71ddf3f557dd615c1c8ffcbf742aa3a431297f9"
+    },
+    {
+      "deduplication": "recursive_path_and_SHA",
+      "included": "false",
+      "paper": "A",
+      "path": "analysis_results/stage_aware_analysis_freeze_v2_1_20260317/",
+      "role": "legacy_snapshot_inventory_not_mixed",
+      "sha256": "7d0798ce3acdb33f0058cd5d2d6b680bb13138e0515da980eb07d25310b69ced"
+    }
+  ],
+  "outputs": {
+    "PAPER_A_DATA_DISCOVERY_REPORT_ZH.md": "f820b7db4ba4a4d60451756c064af2ff846f321da88db114f13caa983be53c63",
+    "association_matrix.csv": "54a4ae18b98438374a15c0b0df4f6afa46f2433a666a2dc2bf686c24d449b31b",
+    "data_catalog.csv": "ef72f760e76fe64ff55971b8f3b541e33011df296c8526673b9c9c06bf49bef5",
+    "evidence_index.csv": "32593361eec8a603364fec22420f31cff305637ffead3878b26256c0b84e3a9d",
+    "join_coverage_audit.csv": "1fbee7a04a3d97c31e5d5fcab6c4a2ee47f7beae3b529da4b6be4f5d92644e6c",
+    "semi_review_fact.csv": "bd9523c917aada4a4026a7cf49ab28ba7d9b5199c6f72ebdb610c2d1a92390cf",
+    "stability_plot.svg": "2f7268c8df9c012837ddc9164add7a23d6450cc8de593b0a61713b4b17c0f442",
+    "submission_fact.csv": "25ded18454aa38da1eb210ed8db576d22f7ca2731ef8785ae11940e66bae2823",
+    "task_fact.csv": "0cf6a7ccdbc06163bf34622fb410621153a7ea5e9494c863060b74a9b1ab256c",
+    "worker_fact.csv": "a2fcb10ba5a08c43fb45a4e621c32ab63c80b66248350cd020bbeae4735bcaa8"
+  },
+  "paper_b_inputs": [],
+  "population_primary": "all_observed",
+  "population_sensitivity": "formal_eligible_parallel",
+  "rules": {
+    "E4": "unavailable_no_T1_V1_outcome",
+    "binary_min_events_each": 5,
+    "cluster_bootstraps": 1000,
+    "dyad": "weaker_of_worker_and_task_axes",
+    "fdr": "Benjamini-Hochberg within family",
+    "inference": "independent-group aggregate permutation p plus whole-cluster bootstrap CI",
+    "max_folds": 5,
+    "minimum_independent_groups": 3,
+    "minimum_task_support": 20,
+    "minimum_worker_support": 15,
+    "missing": "not_zero",
+    "permutations": 1999
+  },
+  "schema_version": "paper_a_data_discovery_v2",
+  "seed": 20260820
+}
