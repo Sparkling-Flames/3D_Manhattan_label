@@ -1,0 +1,62 @@
+name: Annotation uncertainty mining
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - analysis/annotation-uncertainty-20260820
+    paths:
+      - "tools/thesis_main/analysis/annotation_uncertainty_*.py"
+      - "tools/thesis_main/analysis/run_annotation_uncertainty.py"
+      - ".github/workflows/annotation-uncertainty-mining.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 90
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install analysis dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install numpy pandas scipy statsmodels matplotlib shapely
+
+      - name: Run raw-data uncertainty analysis
+        run: |
+          python -m tools.thesis_main.analysis.run_annotation_uncertainty \
+            --output-dir analysis_results/annotation_uncertainty_mining_20260820_v1 \
+            --equal-k-replicates 500
+
+      - name: Package outputs
+        if: always()
+        run: |
+          if [ -d analysis_results/annotation_uncertainty_mining_20260820_v1 ]; then
+            python - <<'PY'
+          from pathlib import Path
+          import shutil
+          root = Path("analysis_results/annotation_uncertainty_mining_20260820_v1")
+          shutil.make_archive("annotation_uncertainty_mining_20260820_v1", "zip", root.parent, root.name)
+          PY
+          fi
+
+      - name: Upload analysis artifact
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: annotation-uncertainty-mining-20260820-v1
+          path: |
+            analysis_results/annotation_uncertainty_mining_20260820_v1
+            annotation_uncertainty_mining_20260820_v1.zip
+          if-no-files-found: warn
+          retention-days: 30
