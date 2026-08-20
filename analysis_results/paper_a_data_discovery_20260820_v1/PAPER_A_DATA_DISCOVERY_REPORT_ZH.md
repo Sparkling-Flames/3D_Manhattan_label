@@ -1,21 +1,23 @@
-# Paper A 全量数据盘点与客观关联扫描
+# Paper A 原始实验数据盘点与客观关联扫描
 
-## 结论边界
+## 边界
 
-本报告只使用 Paper A；主总体为 `all_observed`，formal eligibility 按阶段合同统一后作为并列敏感性总体。没有 T1/V1 outcome，因此 E4 当前不可获得。阴性、反转及不可评价结果均保留。
+仅使用 Paper A。原始记录为主，派生表只用于 canonical 对账和既有固定关系扫描；不构造 T1/V1 outcome，不给结果分级或按价值排序，阴性、反转及不可评价结果全部保留。
 
-## 数据覆盖
+## 原始覆盖
 
-- submission：2,501（P1 1,481；C1 780；C2-B 160；C2-A-RP 80）。
-- worker：26；W14 的 32 条 C1 记录及 W19、W21、W26 均保留。
-- task：327 个 observed context；另有 458 个 T1 coverage-only 候选，不构造 outcome。
-- semi-review：574 条；U_initial=557、U_final=558、delta_U=555。
-- C1 Manual/Semi overlap：25 个 base task。
+- Label Studio annotation：2,513（P1 1,485；C1 788；C2-B 160；C2-A-RP B1/B2 各 40）。其中 2,501 条连接 canonical spine，12 条为原始重复/版本记录并保留。
+- active-log event：34,417；session group：3,735，固定键为 `project_id + task_id + annotator_id + session_id`（空 session_id 仍作为原始值保留）。
+- 原始字段账本：3,668 个 `source_path × record_type × field_path` 条目，扫描每条记录而非首行。
+- 阶段外日志事件：6,546，明确标记且不按目录静默归入正式阶段。
+- C1 active log 没有随当前 main 跟踪逐文件 SHA manifest；本次记录当前文件 SHA，不据此重算正式 active time。
 
-## 自动证据
+## 派生对账
 
-等级计数：`{'E1_descriptive': 16, 'E0_not_evaluable': 12}`。结果按等级、折方向率、q、支持量及稳定键机械排序。`pre_existing` 与 `systematic_scan` 已分开标记；结果派生字段没有进入预测变量。
+- canonical submission：2,501（P1 1,481；C1 780；C2-B 160；C2-A-RP 80）；worker 26；semi-review 574；C1 Manual/Semi overlap 25 个 base task。
+- C1 原始连接键使用 `project + ls_runtime_task_id + worker_id + annotation_id`，不使用派生表中含义不同的 planned task id。
+- active time 的正式分析值只取冻结 spine；Label Studio `lead_time` 与事件片段均独立保存，绝不混入 primary active time。
 
-## 推断与可复现性
+## 推断
 
-随机种子 20260820；最多五折，分组键不跨训练/验证。p 值来自独立组聚合后的 1,999 次确定性 permutation，区间来自整组重采样的 cluster bootstrap；dyad 同时进行 worker-held-out 与 task-held-out 并保留较弱结果。缺失不补零；族内 BH-FDR。active time 仅采用 spine 中正式 active-time 字段，lead time 未混入。
+随机种子 20260820；最多五折，分组键不跨训练/验证。p 值来自独立组聚合后的 1,999 次 permutation，区间来自整组 cluster bootstrap；缺失不补零，族内 BH-FDR。关系矩阵只按关系族、predictor、outcome、population、unit 字典序输出。
