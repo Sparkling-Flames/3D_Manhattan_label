@@ -4,6 +4,7 @@ from pathlib import Path
 
 import pytest
 
+from tools.thesis_main.analysis.build_paper_a_data_mining_package import collect_entries
 from tools.thesis_main.analysis.materialize_paper_a_data_discovery import (
     RESULT_FIELDS,
     cluster_inference,
@@ -14,6 +15,15 @@ from tools.thesis_main.analysis.materialize_paper_a_data_discovery import (
 def rows(path: Path):
     with path.open(encoding="utf-8", newline="") as handle:
         return list(csv.DictReader(handle))
+
+
+def test_data_mining_package_inventory_is_complete_and_unique():
+    entries = collect_entries()
+    assert len(entries) == 163
+    assert len({entry["package_path"] for entry in entries}) == 163
+    assert sum(entry["role"] == "original_raw_data" for entry in entries) == 142
+    assert sum(entry["category"] == "curated_output" for entry in entries) == 14
+    assert sum(entry["included_in_current_materialization"] == "true" and entry["role"] == "original_raw_data" for entry in entries) == 117
 
 
 @pytest.fixture(scope="module")
