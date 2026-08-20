@@ -11,7 +11,7 @@ on:
       - ".github/workflows/annotation-uncertainty-mining.yml"
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   analyze:
@@ -20,6 +20,9 @@ jobs:
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          ref: analysis/annotation-uncertainty-20260820
+          fetch-depth: 0
 
       - name: Set up Python
         uses: actions/setup-python@v5
@@ -37,6 +40,17 @@ jobs:
           python -m tools.thesis_main.analysis.run_annotation_uncertainty \
             --output-dir analysis_results/annotation_uncertainty_mining_20260820_v1 \
             --equal-k-replicates 500
+
+      - name: Commit reproducible outputs to analysis branch
+        if: success()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -- analysis_results/annotation_uncertainty_mining_20260820_v1
+          if ! git diff --cached --quiet; then
+            git commit -m "Materialize annotation uncertainty mining outputs"
+            git push origin HEAD:analysis/annotation-uncertainty-20260820
+          fi
 
       - name: Package outputs
         if: always()
