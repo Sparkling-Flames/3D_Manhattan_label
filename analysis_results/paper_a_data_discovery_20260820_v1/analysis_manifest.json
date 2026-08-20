@@ -1,0 +1,86 @@
+{
+  "inputs": [
+    {
+      "deduplication": "frozen_SHA_plus_annotation_identity",
+      "included": "true",
+      "paper": "A",
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v4/post_block2_submission_master.csv",
+      "role": "formal_submission_spine",
+      "sha256": "7b299a7910c5296ea7eac547471d6bd1ea43e2c012d765c72f3dd1a57498571a"
+    },
+    {
+      "deduplication": "frozen_SHA_plus_annotation_identity",
+      "included": "true",
+      "paper": "A",
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v4/post_block2_task_context_master.csv",
+      "role": "formal_task_context",
+      "sha256": "d16b8990b036099e0a501591ba8162b114e84bb82b22213100b89c67e3b8840e"
+    },
+    {
+      "deduplication": "frozen_SHA_plus_annotation_identity",
+      "included": "true",
+      "paper": "A",
+      "path": "analysis_results/post_block2_analysis_pack_20260817_v4/post_block2_worker_profile_master.csv",
+      "role": "formal_worker_profile",
+      "sha256": "dbdd1fcea255a82731cf4d50cf416f21de86451c9240772f11017ab8e5bef48f"
+    },
+    {
+      "deduplication": "frozen_SHA_plus_annotation_identity",
+      "included": "true",
+      "paper": "A",
+      "path": "analysis_results/reviewer_profile_dual_stage_processing_20260819_v2/SEMI_ROW_LEVEL_REVIEWER_EVIDENCE.csv",
+      "role": "semi_review",
+      "sha256": "e6489d41bcafec0455114eace5044418de9ea3ed34295104f9cdb5ecf540ab22"
+    },
+    {
+      "deduplication": "frozen_SHA_plus_annotation_identity",
+      "included": "true",
+      "paper": "A",
+      "path": "import_json/groudTruth_458_tasks_import_from_updated_gt_20260701.json",
+      "role": "T1_candidate_coverage_only",
+      "sha256": "1b2a2d905f62d703a3e46a7a83e5dca6e90c6030988d6ca594d2eb69793b5cf6"
+    },
+    {
+      "deduplication": "version_and_SHA",
+      "included": "false",
+      "paper": "A",
+      "path": "export_label/",
+      "role": "raw_export_inventory_not_mixed",
+      "sha256": "directory"
+    },
+    {
+      "deduplication": "version_and_SHA",
+      "included": "false",
+      "paper": "A",
+      "path": "analysis_results/stage_aware_analysis_freeze_v2_1_20260317/",
+      "role": "legacy_snapshot_inventory_not_mixed",
+      "sha256": "directory"
+    }
+  ],
+  "outputs": {
+    "PAPER_A_DATA_DISCOVERY_REPORT_ZH.md": "dda73a5f2e845b39292be0317d8a4a83c00135393fa41d5f6692702d4c07048d",
+    "association_matrix.csv": "d6c744d589ed49ffb558974cc6411a26ab38688898f28d9d964fa0f21bd66f24",
+    "data_catalog.csv": "26fbe8a96dddea78152a54163a78011382c96c3b379503836ae197daf12fcfc7",
+    "evidence_index.csv": "6d448ac628601140a72d7b1142c7b01fae701419ae295d117b7dea0f69dbdbac",
+    "join_coverage_audit.csv": "5b43ad2177f02761df77ca0347793e69940008e4c2ed753aad934fb27275af16",
+    "semi_review_fact.csv": "e6489d41bcafec0455114eace5044418de9ea3ed34295104f9cdb5ecf540ab22",
+    "stability_plot.svg": "0b7ce7299965293c507dfa938baa0cfb8cebabbb7d10181cb9f1f9d29fe5728f",
+    "submission_fact.csv": "8453aef72096ca3f14577d1b7beb358b3748cb873b27e53f862301d90a23f22e",
+    "task_fact.csv": "d16b8990b036099e0a501591ba8162b114e84bb82b22213100b89c67e3b8840e",
+    "worker_fact.csv": "dbdd1fcea255a82731cf4d50cf416f21de86451c9240772f11017ab8e5bef48f"
+  },
+  "paper_b_inputs": [],
+  "population_primary": "all_observed",
+  "population_sensitivity": "formal_eligible_parallel",
+  "rules": {
+    "E4": "unavailable_no_T1_V1_outcome",
+    "binary_min_events_each": 5,
+    "fdr": "Benjamini-Hochberg within family",
+    "max_folds": 5,
+    "minimum_task_groups": 20,
+    "minimum_worker_groups": 15,
+    "missing": "not_zero"
+  },
+  "schema_version": "paper_a_data_discovery_v1",
+  "seed": 20260820
+}
