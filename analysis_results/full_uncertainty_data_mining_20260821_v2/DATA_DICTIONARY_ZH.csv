@@ -1,0 +1,35 @@
+variable_en,variable_zh,meaning_zh,approximate_formula
+computable,可计算,该记录具有计算该变量所需的数值/几何；不等于原论文正式资格,required fields are present and numerically valid
+formal_use_allowed,原论文正式使用允许,旧方法合同下是否可进入正式 estimand；本报告不把它作为全局删除条件,legacy/formal eligibility flag
+shannon_entropy,Shannon 模式熵,模式分布越分散，值越大,-sum_m p_m * ln(p_m)
+gini_simpson,Gini–Simpson 分歧,随机抽两份标注落入不同模式的概率型指标,1 - sum_m p_m^2
+largest_mode_share,最大模式占比,最大几何/拓扑模式的支持人数除以有效人数,max_m n_m / sum_m n_m
+topology_shannon_entropy,拓扑熵,以角点数量/点数签名作为类别计算的跨阶段描述性熵,"-sum_j p_j * ln(p_j), j indexes n_corners signatures"
+same_topology_cyclic_rmse_median,同拓扑循环对齐 RMSE 中位数,相同角点数标注经循环位移/反向对齐后的坐标差，除以全景对角线,median min_shift sqrt(mean(dx_circular^2+dy^2))/sqrt(1024^2+512^2)
+pairwise_jaccard_mean,元标签集合平均 Jaccard,两名工人选择集合的交集/并集，再对工人对取均值,mean_{u<v} |S_u∩S_v|/|S_u∪S_v|
+mean_label_entropy,平均元标签熵,对每个二元标签计算 Bernoulli 熵，再在标签上取均值,mean_l[-p_l ln p_l-(1-p_l)ln(1-p_l)]
+active_time_observed_seconds,活跃操作时间（秒）,各阶段脚本记录的活跃交互时间；C1 按 task-worker-session 正式规则重建,within session max cumulative seconds; sum eligible sessions for C1
+lead_time_seconds,Label Studio 经过时间（秒）,从界面开始到提交的 elapsed time；与 active time 分开分析,Label Studio annotation.lead_time
+active_to_lead_ratio,活跃/经过时间比,活跃操作时间除以 lead time；仅两者均有值且 lead time>0时定义,active_time / lead_time
+delta_shannon_entropy,Semi−Manual 熵差,同图、等支持量下 Semi 的模式熵减 Manual 的模式熵；负值表示 Semi 更集中,H_semi - H_manual
+delta_iou_to_gt,Semi−Manual GT IoU 差,同图任务均值质量之差；资格口径需另行说明,mean_u IoU_semi - mean_u IoU_manual
+crowd_gt_gap_best_minus_largest,最佳 GT 对齐簇与最大簇差,与 GT 最接近簇的中位 IoU减最大人群簇的中位 IoU,max_m median(IoU_m) - median(IoU_largest)
+largest_mode_rate,工人进入最大模式比例,工人在具有唯一分区的重复任务中落入最大簇的比例,count(is_largest_mode)/task_count
+task_centered_n_pairs,任务中心化角点对偏差,工人角点对数减同任务条件中位数；正值表示相对更细分,n_pairs_worker - median_task(n_pairs)
+projected_95ci_half_width,预计 95% 区间半宽,按当前 building-level 方差和独立建筑数近似投影,1.96 * sd_building / sqrt(B)
+minimum_detectable_effect,约 80% 功效最小可检出效应,正态近似、双侧 alpha=.05,(z_.975+z_.80)*sd_building/sqrt(B)
+active_time_candidate_seconds,活跃时间候选值,阶段表原始提供的时间值；若来源是 lead_time fallback/proxy，仅保留审计，不进入 active-time 结果,source field before proxy exclusion
+active_time_measurement_class,活跃时间测量类别,formal_frozen、direct_observed_nonformal、lead_time_proxy_excluded 或 missing,classification from source and eligibility
+group_response_coverage,元标签组响应覆盖率,在同一任务条件下实际出现该元标签组的响应数除以全部响应数,group_response_count / total_response_count
+positive_share_among_group_responders,组内阳性选择比例,选择该标签的响应数除以明确回答该元标签组的响应数,positive_response_count / group_response_count
+unasserted_response_count,未声明响应数,该任务条件的全部响应中未出现相应元标签组的数量；不视为明确否定,total_response_count - group_response_count
+supported_cluster_count,受支持几何簇数量,成员数至少为 2 的几何簇数量,count_m(cluster_support_m >= 2)
+singleton_cluster_count,单例几何簇数量,只有 1 名工人支持的几何簇数量,count_m(cluster_support_m == 1)
+crowd_gt_relationship,人群簇与 GT 关系类别,根据簇支持量及簇内 GT IoU 描述最大簇、受支持非最大簇和单例异议的关系,descriptive rule; thresholds are displayed in table
+strong_persistent_split,强持续分裂,在最大已观察支持量下至少两个受支持簇，且最大簇占比低于 80%,supported_multimodal AND largest_cluster_share < 0.8
+strong_at_all_thresholds,跨阈值强分裂,在 0.90、0.925、0.95 三个几何阈值下均为强分裂,logical AND across three thresholds
+observed_worker_rate_variance,工人观点比例方差,各工人在重复任务中进入某模式的比例在工人间的方差,"Var_u(mean_t indicator_{u,t})"
+permutation_p_value,任务内置换 p 值,在每个 task-condition 内随机重排模式成员后，模拟得到不小于观测工人间方差的概率,(1 + extreme permutations)/(1 + permutations)
+median_split_half_spearman,随机任务半分可靠性中位数,随机将 Manual 任务分两半，比较工人最大模式率的 Spearman 相关并对重复分割取中位数,"median_b Spearman(rate_u,left_b, rate_u,right_b)"
+approximate_total_independent_buildings_for_80pct_power,约 80% 功效所需独立建筑总数,使用当前 building-level 效应标准差的正态近似,ceil(((z_.975+z_.80)*sd_building/effect)^2)
+probability_observe_at_least_two_minority,至少观察两名少数模式的概率,真实少数模式比例 p、独立抽样 k 人时得到至少两名少数模式,1-(1-p)^k-kp(1-p)^(k-1)
