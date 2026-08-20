@@ -7,7 +7,7 @@ on:
       - analysis/full-uncertainty-data-mining-20260821
     paths:
       - "tools/thesis_main/analysis/full_uncertainty_*.py"
-      - "tools/thesis_main/analysis/materialize_full_uncertainty_data_mining.py"
+      - "tools/thesis_main/analysis/materialize_full_uncertainty_data_mining*.py"
       - ".github/workflows/full-uncertainty-data-mining.yml"
       - ".github/full-uncertainty-data-mining-trigger.txt"
   pull_request:
@@ -15,7 +15,7 @@ on:
       - main
     paths:
       - "tools/thesis_main/analysis/full_uncertainty_*.py"
-      - "tools/thesis_main/analysis/materialize_full_uncertainty_data_mining.py"
+      - "tools/thesis_main/analysis/materialize_full_uncertainty_data_mining*.py"
       - ".github/workflows/full-uncertainty-data-mining.yml"
       - ".github/full-uncertainty-data-mining-trigger.txt"
 
@@ -48,34 +48,36 @@ jobs:
           python -m py_compile \
             tools/thesis_main/analysis/full_uncertainty_common.py \
             tools/thesis_main/analysis/full_uncertainty_geometry.py \
-            tools/thesis_main/analysis/materialize_full_uncertainty_data_mining.py
+            tools/thesis_main/analysis/full_uncertainty_reviewed.py \
+            tools/thesis_main/analysis/materialize_full_uncertainty_data_mining.py \
+            tools/thesis_main/analysis/materialize_full_uncertainty_data_mining_v2.py
 
-      - name: Run full uncertainty data mining
+      - name: Run reviewed full uncertainty data mining
         run: |
-          rm -rf analysis_results/full_uncertainty_data_mining_20260821_v1
-          python -m tools.thesis_main.analysis.materialize_full_uncertainty_data_mining \
-            --output-dir analysis_results/full_uncertainty_data_mining_20260821_v1
+          rm -rf analysis_results/full_uncertainty_data_mining_20260821_v2
+          python -m tools.thesis_main.analysis.materialize_full_uncertainty_data_mining_v2 \
+            --output-dir analysis_results/full_uncertainty_data_mining_20260821_v2
 
       - name: Commit reproducible outputs
         if: success()
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -- analysis_results/full_uncertainty_data_mining_20260821_v1
+          git add -- analysis_results/full_uncertainty_data_mining_20260821_v2
           if ! git diff --cached --quiet; then
-            git commit -m "Materialize full uncertainty data-mining outputs"
+            git commit -m "Materialize reviewed full uncertainty outputs"
             git push origin HEAD:analysis/full-uncertainty-data-mining-20260821
           fi
 
       - name: Package advisor evidence
         if: always()
         run: |
-          if [ -d analysis_results/full_uncertainty_data_mining_20260821_v1 ]; then
+          if [ -d analysis_results/full_uncertainty_data_mining_20260821_v2 ]; then
             python - <<'PY'
           from pathlib import Path
           import shutil
-          root = Path("analysis_results/full_uncertainty_data_mining_20260821_v1")
-          shutil.make_archive("full_uncertainty_data_mining_20260821_v1", "zip", root.parent, root.name)
+          root = Path("analysis_results/full_uncertainty_data_mining_20260821_v2")
+          shutil.make_archive("full_uncertainty_data_mining_20260821_v2", "zip", root.parent, root.name)
           PY
           fi
 
@@ -83,9 +85,9 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: full-uncertainty-data-mining-20260821-v1
+          name: full-uncertainty-data-mining-20260821-v2
           path: |
-            analysis_results/full_uncertainty_data_mining_20260821_v1
-            full_uncertainty_data_mining_20260821_v1.zip
+            analysis_results/full_uncertainty_data_mining_20260821_v2
+            full_uncertainty_data_mining_20260821_v2.zip
           if-no-files-found: warn
           retention-days: 30
