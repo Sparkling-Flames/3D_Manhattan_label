@@ -1,0 +1,24 @@
+{
+  "active_time_policy": "frozen_c1_task_worker_table_and_sha_manifest_only_no_raw_or_lead_time_fallback",
+  "bootstrap_replicates": 10000,
+  "bootstrap_seed": 20260820,
+  "building_count": 9,
+  "causal_claim_allowed": false,
+  "confirmatory_difficulty_status": "not_evaluable",
+  "input_manifest_sha256": "42b8ce584f2d5d186d852d63f420b588a9936ef4e18bc37598a3acdde488aa40",
+  "output_manifest_sha256": "1ad788982f215b009ad9bfa3de7d3c20d7351343bfb56434ac152ecc18ecaab5",
+  "primary_threshold": 0.95,
+  "rule_version": "annotation_uncertainty_manual_semi_building_cluster_v2",
+  "schema_version": "annotation_uncertainty_manual_semi_manifest_v2",
+  "script_path": "tools/thesis_main/analysis/materialize_annotation_uncertainty_manual_semi.py",
+  "script_sha256": "2bd4ae91905f4d8c1793f23467c719516ddb0351ba62cc3d29b76b72e57d2f02",
+  "source_branch_base_head": "59e697aa8dcc3d3c037ccfa6c5da47c102608c48",
+  "task_count": 22,
+  "test_path": "tests/test_materialize_annotation_uncertainty_manual_semi.py",
+  "test_sha256": "45413008f158314b6d43178b147da5646ee08703215bdf0a3f6543106a4b8dd7",
+  "thresholds": [
+    0.93,
+    0.95,
+    0.97
+  ]
+}
