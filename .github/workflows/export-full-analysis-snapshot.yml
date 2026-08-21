@@ -1,0 +1,67 @@
+name: Export full analysis branch snapshot
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - analysis/full-uncertainty-data-mining-20260821
+    paths:
+      - ".github/workflows/export-full-analysis-snapshot.yml"
+      - ".github/full-analysis-snapshot-trigger.txt"
+
+permissions:
+  contents: read
+
+jobs:
+  export:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Check out analysis branch
+        uses: actions/checkout@v4
+        with:
+          ref: analysis/full-uncertainty-data-mining-20260821
+          fetch-depth: 1
+
+      - name: Record snapshot metadata
+        run: |
+          mkdir -p _snapshot_metadata
+          git rev-parse HEAD > _snapshot_metadata/HEAD.txt
+          git status --porcelain=v1 > _snapshot_metadata/GIT_STATUS.txt
+          find analysis_results -type f -print0 | sort -z | xargs -0 sha256sum > _snapshot_metadata/ANALYSIS_RESULTS_SHA256.txt
+          find tools/thesis_main/analysis -type f -print0 | sort -z | xargs -0 sha256sum > _snapshot_metadata/ANALYSIS_CODE_SHA256.txt
+
+      - name: Package analysis-relevant repository snapshot
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+          import zipfile
+
+          include_roots = [
+              Path('analysis_results'),
+              Path('tools/thesis_main/analysis'),
+              Path('tests'),
+              Path('data'),
+              Path('active_logs'),
+              Path('exports'),
+              Path('docs'),
+              Path('paper'),
+              Path('_snapshot_metadata'),
+          ]
+          output = Path('analysis_branch_snapshot_20260821.zip')
+          with zipfile.ZipFile(output, 'w', compression=zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
+              for root in include_roots:
+                  if not root.exists():
+                      continue
+                  for path in sorted(p for p in root.rglob('*') if p.is_file()):
+                      archive.write(path, path.as_posix())
+          print(output, output.stat().st_size)
+          PY
+
+      - name: Upload full analysis snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: full-analysis-branch-snapshot-20260821
+          path: analysis_branch_snapshot_20260821.zip
+          if-no-files-found: error
+          retention-days: 30
