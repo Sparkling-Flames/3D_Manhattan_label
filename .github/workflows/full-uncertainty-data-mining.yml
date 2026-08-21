@@ -72,17 +72,53 @@ jobs:
             git push origin HEAD:analysis/full-uncertainty-data-mining-20260821
           fi
 
-      - name: Package advisor evidence
+      - name: Package advisor evidence and analysis snapshot
         if: always()
         run: |
-          if [ -d analysis_results/full_uncertainty_data_mining_20260821_v2 ]; then
-            python - <<'PY'
+          python - <<'PY'
           from pathlib import Path
           import shutil
-          root = Path("analysis_results/full_uncertainty_data_mining_20260821_v2")
-          shutil.make_archive("full_uncertainty_data_mining_20260821_v2", "zip", root.parent, root.name)
+          import subprocess
+          import zipfile
+
+          output_root = Path("analysis_results/full_uncertainty_data_mining_20260821_v2")
+          if output_root.is_dir():
+              shutil.make_archive(
+                  "full_uncertainty_data_mining_20260821_v2",
+                  "zip",
+                  output_root.parent,
+                  output_root.name,
+              )
+
+          metadata = Path("_snapshot_metadata")
+          metadata.mkdir(exist_ok=True)
+          metadata.joinpath("HEAD.txt").write_text(
+              subprocess.check_output(["git", "rev-parse", "HEAD"], text=True),
+              encoding="utf-8",
+          )
+          metadata.joinpath("GIT_STATUS.txt").write_text(
+              subprocess.check_output(["git", "status", "--porcelain=v1"], text=True),
+              encoding="utf-8",
+          )
+
+          include_roots = [
+              Path("analysis_results"),
+              Path("tools/thesis_main/analysis"),
+              Path("tests"),
+              Path("active_logs"),
+              Path("exports"),
+              Path("data"),
+              metadata,
+          ]
+          snapshot = Path("analysis_branch_snapshot_20260821.zip")
+          with zipfile.ZipFile(snapshot, "w", zipfile.ZIP_DEFLATED, compresslevel=6) as archive:
+              for root in include_roots:
+                  if not root.exists():
+                      continue
+                  for path in sorted(item for item in root.rglob("*") if item.is_file()):
+                      archive.write(path, path.as_posix())
+          print(snapshot, snapshot.stat().st_size)
           PY
-          fi
 
       - name: Upload analysis artifact
         if: always()
@@ -92,5 +128,6 @@ jobs:
           path: |
             analysis_results/full_uncertainty_data_mining_20260821_v2
             full_uncertainty_data_mining_20260821_v2.zip
+            analysis_branch_snapshot_20260821.zip
           if-no-files-found: warn
           retention-days: 30
