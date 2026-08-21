@@ -1,0 +1,9 @@
+stage,stage_zh,condition,condition_zh,task_count,geometry_computable_worker_count,geometry_missing_worker_count,multiple_topology_task_count,single_topology_task_count,not_evaluable_task_count,median_topology_entropy,median_largest_topology_share,median_same_topology_cyclic_rmse
+C1,校准一阶段,manual,纯人工,87,668,6,62,25,0,0.5004024235381879,0.8,0.0977835524445086
+C1,校准一阶段,semi,模型预标注辅助,25,105,1,16,9,0,0.5004024235381879,0.8,0.0136891260106596
+C2-A-RP-B1,校准二阶段风险精度块一,manual,纯人工,28,40,0,5,7,16,-0.0,1.0,0.1101941042423284
+C2-A-RP-B2,校准二阶段风险精度块二,manual,纯人工,27,39,1,4,7,16,-0.0,1.0,0.0952195058130569
+C2-B,校准二阶段B,manual,纯人工,46,160,0,17,22,7,-0.0,1.0,0.117635028884576
+P1,预筛,manual,纯人工,30,741,38,26,4,0,0.4498205618806877,0.88,0.1240996900954238
+P1,预筛,oos,原始码：oos,9,221,13,8,1,0,1.2326713884822265,0.56,0.0972076283960879
+P1,预筛,semi,模型预标注辅助,18,464,4,14,4,0,0.4603114979858529,0.8461538461538461,0.0446102304592221

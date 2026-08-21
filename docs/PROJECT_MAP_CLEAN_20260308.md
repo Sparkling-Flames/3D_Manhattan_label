@@ -77,5 +77,5 @@
 
 ## 2026-08-21 Paper A 全量不确定性审计工具归位
 
-- `tools/paper_a_manhattan/full_uncertainty/`：Paper A 的全阶段标注不确定性、Manual/Semi、Crowd–GT、proposal 与时间来源审计生成链；正式入口为 `materialize_full_uncertainty_data_mining_v4.py`。
-- `analysis_results/full_uncertainty_data_mining_20260821_v4/`：v4 生成交付目录；属于派生输出，不是输入真源，也不改变 C2-B/C2-A-RP 冻结状态。
+- `tools/paper_a_manhattan/full_uncertainty/`：Paper A 的全阶段标注不确定性、Manual/Semi、Crowd–GT、proposal 与时间来源审计生成链；v5 编排入口为 `materialize_full_uncertainty_data_mining_v5.py`，计算引擎复用 v4。
+- `analysis_results/full_uncertainty_data_mining_20260821_v5/`：当前全量生成交付目录；v4 交付只保留在 Git 历史中。该目录属于派生输出，不是输入真源，也不改变 C2-B/C2-A-RP 冻结状态。

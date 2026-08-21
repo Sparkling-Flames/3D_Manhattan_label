@@ -119,6 +119,6 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 
 ## Paper A 全量不确定性审计
 
-- 工具入口：`tools/paper_a_manhattan/full_uncertainty/materialize_full_uncertainty_data_mining_v4.py`
-- 生成目录：`analysis_results/full_uncertainty_data_mining_20260821_v4/`
+- 工具入口：`tools/paper_a_manhattan/full_uncertainty/materialize_full_uncertainty_data_mining_v5.py`（复用 v4 计算引擎）
+- 当前生成目录：`analysis_results/full_uncertainty_data_mining_20260821_v5/`；v4 交付只保留在 Git 历史中。
 - 该审计保留 Active time 与 Label Studio Lead time 的边界，不修改规范方法合同或已冻结阶段结果。

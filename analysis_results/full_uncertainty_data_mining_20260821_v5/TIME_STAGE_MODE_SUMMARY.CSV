@@ -1,0 +1,17 @@
+stage,stage_zh,condition,condition_zh,metric,total_record_count,missing_rate,formal_eligible_count,measurement_note,observed_count,mean_seconds,median_seconds,q25_seconds,q75_seconds,q90_seconds,q95_seconds,maximum_seconds,geometric_mean_seconds
+C1,校准一阶段,manual,纯人工,active_time,674,0.099406528189911,607.0,active engagement from stage-specific active-time evidence,607,188.4184514003295,119.0,65.0,219.0,373.0,496.69999999999993,4389.0,114.20452107921786
+C1,校准一阶段,manual,纯人工,lead_time,674,0.0,,Label Studio elapsed lead_time analysed separately,674,232.88188575667652,124.2125,62.1475,246.77775,449.0818,602.2921500000003,8969.691,109.84498546584288
+C1,校准一阶段,semi,模型预标注辅助,active_time,106,0.1132075471698113,94.0,active engagement from stage-specific active-time evidence,94,186.37234042553192,95.0,57.5,143.75,286.90000000000003,440.0999999999999,5522.0,94.41199814412184
+C1,校准一阶段,semi,模型预标注辅助,lead_time,106,0.0,,Label Studio elapsed lead_time analysed separately,106,181.4803679245283,89.90899999999999,56.932500000000005,145.60750000000002,305.6225,463.4965,5378.835999999999,86.12554328914656
+C2-A-RP-B1,校准二阶段风险精度块一,manual,纯人工,active_time,40,0.0,40.0,active engagement from stage-specific active-time evidence,40,285.55,196.0,139.5,332.75,391.6,534.9999999999993,2486.0,203.82556740301817
+C2-A-RP-B1,校准二阶段风险精度块一,manual,纯人工,lead_time,40,0.0,,Label Studio elapsed lead_time analysed separately,40,394.5806,182.772,132.4865,362.82025,766.0281000000003,1223.4871499999958,3047.55,225.9476802526307
+C2-A-RP-B2,校准二阶段风险精度块二,manual,纯人工,active_time,40,0.0,40.0,active engagement from stage-specific active-time evidence,40,302.95,167.5,112.5,208.0,312.40000000000015,966.8999999999972,3474.0,167.23685089606744
+C2-A-RP-B2,校准二阶段风险精度块二,manual,纯人工,lead_time,40,0.0,,Label Studio elapsed lead_time analysed separately,40,344.966025,158.49,109.796,283.11975,695.6709000000001,1020.4356999999968,3393.647,183.141502051186
+C2-B,校准二阶段B,manual,纯人工,active_time,160,0.0,160.0,active engagement from stage-specific active-time evidence,160,245.69375,176.5,102.25,297.25,546.2,673.3999999999995,2334.0,176.0444725430648
+C2-B,校准二阶段B,manual,纯人工,lead_time,160,0.0,,Label Studio elapsed lead_time analysed separately,160,646.5122750000002,146.95,87.387,297.2955,608.4187,829.8124999999999,48911.978,170.4437784047568
+P1,预筛,manual,纯人工,active_time,779,0.2310654685494223,599.0,active engagement from stage-specific active-time evidence,599,244.09682804674455,119.0,51.0,244.5,582.0000000000005,876.300000000001,4008.0,120.6924053132283
+P1,预筛,manual,纯人工,lead_time,779,0.0,,Label Studio elapsed lead_time analysed separately,779,219.2232618741977,79.816,25.466,193.575,426.528,739.9553999999985,19029.638,71.04898014633368
+P1,预筛,oos,原始码：oos,active_time,234,0.2307692307692307,180.0,active engagement from stage-specific active-time evidence,180,305.27777777777777,242.0,91.0,459.25,660.0,866.7499999999998,1514.0,186.3150031994174
+P1,预筛,oos,原始码：oos,lead_time,234,0.0,,Label Studio elapsed lead_time analysed separately,234,613.4082179487181,185.6305,63.052,388.7315,650.7701000000002,978.9762999999996,79323.603,141.35542928325793
+P1,预筛,semi,模型预标注辅助,active_time,468,0.2542735042735042,349.0,active engagement from stage-specific active-time evidence,349,161.54727793696276,91.0,39.0,223.0,370.4,494.19999999999993,1187.0,93.33733223946945
+P1,预筛,semi,模型预标注辅助,lead_time,468,0.0,,Label Studio elapsed lead_time analysed separately,468,141.11772435897436,71.67349999999999,26.553,178.065,330.43070000000006,459.81475,1796.292,68.54593941577106

@@ -369,13 +369,16 @@ def semi_mechanism_analysis() -> tuple[pd.DataFrame, pd.DataFrame]:
             frame[column] = pd.to_numeric(frame[column], errors="coerce")
     frame["worker_id"] = frame.get("worker_id", "").map(lambda value: clean(value).upper().lstrip("W0") or clean(value))
     frame["base_task_id"] = frame.get("base_task_id", "").map(clean)
-    frame["edited_binary_calc"] = frame.get("geometry_edit_rmse_px", pd.Series([np.nan] * len(frame))).fillna(0).gt(0)
-    frame["structural_zero"] = frame.get("geometry_edit_rmse_px", pd.Series([np.nan] * len(frame))).fillna(0).eq(0) & frame.get("delta_U", pd.Series([np.nan] * len(frame))).fillna(0).eq(0)
+    rmse = frame.get("geometry_edit_rmse_px", pd.Series([np.nan] * len(frame), index=frame.index))
+    delta_u = frame.get("delta_U", pd.Series([np.nan] * len(frame), index=frame.index))
+    frame["edited_binary_calc"] = rmse.gt(0)
+    frame["structural_zero"] = rmse.notna() & delta_u.notna() & rmse.eq(0) & delta_u.eq(0)
+    computable = frame.dropna(subset=["geometry_edit_rmse_px", "delta_U"])
     rows = []
     for population, subset in (
-        ("all_delta_u_computable", frame.dropna(subset=["geometry_edit_rmse_px", "delta_U"])),
-        ("exclude_structural_zero", frame.dropna(subset=["geometry_edit_rmse_px", "delta_U"])[~frame["structural_zero"]]),
-        ("edited_only", frame.dropna(subset=["geometry_edit_rmse_px", "delta_U"])[frame["edited_binary_calc"]]),
+        ("all_delta_u_computable", computable),
+        ("exclude_structural_zero", computable[~computable["structural_zero"]]),
+        ("edited_only", computable[computable["edited_binary_calc"]]),
     ):
         if len(subset) >= 3 and subset["geometry_edit_rmse_px"].nunique() > 1 and subset["delta_U"].nunique() > 1:
             row_rho = float(stats.spearmanr(subset["geometry_edit_rmse_px"], subset["delta_U"]).statistic)

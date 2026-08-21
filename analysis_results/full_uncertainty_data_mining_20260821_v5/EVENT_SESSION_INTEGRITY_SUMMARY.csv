@@ -1,0 +1,9 @@
+check,observed,expected,status,status_zh,calculation
+event_rows,34417,34417.0,pass,原始码：pass,raw event逐行计数
+session_rows,3735,3735.0,pass,原始码：pass,project+task+annotator+session分组
+out_of_scope_or_stage_mismatch,6546,,audit,原始码：audit,冻结阶段绑定外事件计数
+page_gate_eligible,2835,,audit,原始码：audit,page_gate_eligible为真
+store_mismatch_present,0,,audit,原始码：audit,store_mismatch_present为真
+fragment_seconds_computable,34413,,audit_only,原始码：audit_only,fragment仅审计，不回填active time
+timestamp_ms_parsed,34413,34413.0,pass,原始码：pass,"pd.to_datetime(..., unit='ms', utc=True)"
+client_server_lag_seconds,34413,,audit,原始码：audit,median=28800.205098;p95=28804.106848
