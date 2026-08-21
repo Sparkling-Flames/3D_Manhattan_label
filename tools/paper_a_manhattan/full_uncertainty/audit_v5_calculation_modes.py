@@ -251,7 +251,7 @@ def calculation_mode_audit() -> pd.DataFrame:
 
 
 def materialize(input_dir: Path, output_dir: Path) -> None:
-    output_dir.mkdir(parents=True, exist_ok=False)
+    output_dir.mkdir(parents=True, exist_ok=True)
     multiplicity = multiplicity_audit(input_dir / "IMAGE_FEATURE_VS_SEMI_ASSOCIATIONS.csv")
     aliases = feature_alias_audit(input_dir / "IMAGE_FEATURES_ALL_214.csv")
     power, required = semi_power_audit(
