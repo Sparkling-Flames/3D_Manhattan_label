@@ -74,3 +74,8 @@
 - `tools/label_studio/config_history/scope_instruction_v1_pre_block2/`：Block 2 前六份中英文 XML 与旧 freeze manifest 的 SHA 冻结快照。
 - `tools/label_studio/label_studio_xml_instruction_manifest_v2.json`：v1/v2 路径、SHA、生效边界与“本地就绪/尚未部署”状态真源。
 - `tools/thesis_main/foreign_recruitment/`：仅保留海外招募、安装、legacy 与私有运营说明，不再保存 Label Studio 活运行资产。
+
+## 2026-08-21 Paper A 全量不确定性审计工具归位
+
+- `tools/paper_a_manhattan/full_uncertainty/`：Paper A 的全阶段标注不确定性、Manual/Semi、Crowd–GT、proposal 与时间来源审计生成链；正式入口为 `materialize_full_uncertainty_data_mining_v4.py`。
+- `analysis_results/full_uncertainty_data_mining_20260821_v4/`：v4 生成交付目录；属于派生输出，不是输入真源，也不改变 C2-B/C2-A-RP 冻结状态。

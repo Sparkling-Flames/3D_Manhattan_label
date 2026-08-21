@@ -1,0 +1,7 @@
+field_group,recommended_fields,freeze_timing,purpose_zh
+identity,base_task_id; building_id; dataset_id; split,标注前,连接任务、building 与数据来源
+frozen_image_traits,occlusion; seam; reflection; low_texture; open_boundary; scope_risk,标注前独立评审并冻结,形成不依赖工人结果的图像特质
+proposal_diagnostics,proposal_topology; initial_validity; initial_IoU_if allowed; forced_fit_flags,工人看到 proposal 前冻结,区分 proposal 结构、强制拟合与后续响应
+assignment,condition; assignment_probability; pool_version; seed; worker_image_exposure,派发前冻结,支持图像级/worker 级设计审计
+responses,final_geometry; meta_tags; active_time; lead_time; edit_trace,标注后,作为 outcome 或 mechanism，不反标为标注前 predictor
+versions,script_version; event_schema; reference_sha; proposal_sha; code_commit,采集时写入,保证时间、GT 与 proposal 口径可追溯

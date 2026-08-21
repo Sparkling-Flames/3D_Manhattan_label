@@ -116,3 +116,9 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 
 
 - [PAPER_A_C1_BATCH_SCOPE.template.json](thesis_main/PAPER_A_C1_BATCH_SCOPE.template.json)：C1-A original roster、W034/W001 repair set 与 original cohort completion exception 的 SHA-bound 范围模板。
+
+## Paper A 全量不确定性审计
+
+- 工具入口：`tools/paper_a_manhattan/full_uncertainty/materialize_full_uncertainty_data_mining_v4.py`
+- 生成目录：`analysis_results/full_uncertainty_data_mining_20260821_v4/`
+- 该审计保留 Active time 与 Label Studio Lead time 的边界，不修改规范方法合同或已冻结阶段结果。
