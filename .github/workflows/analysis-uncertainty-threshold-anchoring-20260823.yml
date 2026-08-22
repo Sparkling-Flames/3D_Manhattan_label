@@ -2,12 +2,21 @@ name: Uncertainty threshold, anchoring, and worker-type audit
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py.xz.b64.part*
+      - tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py
+      - tools/paper_a_manhattan/full_uncertainty/patch_analysis_source_20260823.py
+      - .github/workflows/analysis-uncertainty-threshold-anchoring-20260823.yml
   push:
     branches:
       - analysis/uncertainty-threshold-anchoring-worker-types-20260823
     paths:
       - tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py.xz.b64.part*
       - tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py
+      - tools/paper_a_manhattan/full_uncertainty/patch_analysis_source_20260823.py
       - .github/workflows/analysis-uncertainty-threshold-anchoring-20260823.yml
 
 permissions:
@@ -18,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 90
     steps:
-      - name: Checkout branch
+      - name: Checkout analysis branch
         uses: actions/checkout@v4
         with:
           ref: analysis/uncertainty-threshold-anchoring-worker-types-20260823
@@ -34,7 +43,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install numpy pandas scipy scikit-learn matplotlib shapely
 
-      - name: Materialize and audit analysis source
+      - name: Materialize and validate analysis source
         run: |
           if compgen -G 'tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py.xz.b64.part*' > /dev/null; then
             cat tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py.xz.b64.part* \
@@ -42,101 +51,7 @@ jobs:
               | xz --decompress \
               > tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py
           fi
-          python - <<'PY'
-          from pathlib import Path
-
-          path = Path('tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py')
-          text = path.read_text(encoding='utf-8')
-
-          def replace_once(old: str, new: str) -> None:
-              global text
-              count = text.count(old)
-              if count == 1:
-                  text = text.replace(old, new)
-              elif count == 0 and new in text:
-                  return
-              else:
-                  raise SystemExit(f'patch cardinality failure: {count}: {old[:120]}')
-
-          def replace_many(old: str, new: str, expected: int) -> None:
-              global text
-              count = text.count(old)
-              if count == expected:
-                  text = text.replace(old, new)
-              elif count == 0 and text.count(new) == expected:
-                  return
-              else:
-                  raise SystemExit(f'patch cardinality failure: {count}/{expected}: {old[:120]}')
-
-          replace_once(
-              'THRESHOLDS = (0.90, 0.925, 0.93, 0.95, 0.97, 0.98)\n',
-              'THRESHOLDS = (0.90, 0.925, 0.93, 0.95, 0.97, 0.98)\nPREFIX_THRESHOLDS = (0.90, 0.925, 0.95, 0.98)\n',
-          )
-          replace_once(
-              '        for threshold in THRESHOLDS:\n            topology.Q_BOUNDARY = threshold\n',
-              '        for threshold in PREFIX_THRESHOLDS:\n            topology.Q_BOUNDARY = threshold\n',
-          )
-          replace_once(
-              'task_quality = task[["base_task_id", "initial_quality_mean", "building_id"]].copy()',
-              'task_quality = task[["base_task_id", "initial_quality_mean"]].copy()',
-          )
-          replace_once(
-              '        quality["proposal_correct_stratum"] = numeric(quality["initial_quality_mean"]) >= proposal_cutoff\n',
-              '        quality["proposal_correctness_observed"] = numeric(quality["initial_quality_mean"]).notna()\n'
-              '        quality["proposal_correct_stratum"] = numeric(quality["initial_quality_mean"]) >= proposal_cutoff\n',
-          )
-          replace_once(
-              '                sub = quality[quality["proposal_correct_stratum"].eq(stratum)].copy()\n',
-              '                sub = quality[quality["proposal_correctness_observed"] & quality["proposal_correct_stratum"].eq(stratum)].copy()\n',
-          )
-          replace_once(
-              '    response["initial_correct_095"] = response["U_initial"] >= 0.95\n'
-              '    response["final_correct_095"] = response["U_final"] >= 0.95\n'
-              '    response["correct_proposal_degraded_095"] = response["initial_correct_095"] & (~response["final_correct_095"])\n'
-              '    response["wrong_proposal_corrected_095"] = (~response["initial_correct_095"]) & response["final_correct_095"]\n'
-              '    response["wrong_proposal_retained_exact"] = (~response["initial_correct_095"]) & response["exact_geometry_equal_bool"]\n',
-              '    response["proposal_correctness_observed_095"] = response["U_initial"].notna() & response["U_final"].notna()\n'
-              '    response["initial_correct_095"] = response["proposal_correctness_observed_095"] & (response["U_initial"] >= 0.95)\n'
-              '    response["final_correct_095"] = response["proposal_correctness_observed_095"] & (response["U_final"] >= 0.95)\n'
-              '    response["correct_proposal_degraded_095"] = response["proposal_correctness_observed_095"] & response["initial_correct_095"] & (~response["final_correct_095"])\n'
-              '    response["wrong_proposal_corrected_095"] = response["proposal_correctness_observed_095"] & (~response["initial_correct_095"]) & response["final_correct_095"]\n'
-              '    response["wrong_proposal_retained_exact"] = response["proposal_correctness_observed_095"] & (~response["initial_correct_095"]) & response["exact_geometry_equal_bool"]\n',
-          )
-          replace_many(
-              '        wrong = group[~group["initial_correct_095"]]\n',
-              '        wrong = group[group["proposal_correctness_observed_095"] & (~group["initial_correct_095"])]\n',
-              2,
-          )
-          replace_many(
-              '        correct = group[group["initial_correct_095"]]\n',
-              '        correct = group[group["proposal_correctness_observed_095"] & group["initial_correct_095"]]\n',
-              2,
-          )
-          replace_once(
-              '    cause_cols = [c for c in cause.columns if c in {\n'
-              '        "base_task_id", "cause_code", "manual_review_priority", "GT_gap", "image_reference",\n'
-              '        "task_condition", "condition",\n'
-              '    }]\n'
-              '    if "base_task_id" in cause_cols:\n'
-              '        agg = cause[cause_cols].groupby("base_task_id", as_index=False).agg(\n'
-              '            observable_cause_codes=("cause_code", lambda s: ";".join(sorted(set(map(str, s.dropna()))))),\n'
-              '            cause_audit_rows=("cause_code", "size"),\n'
-              '        )\n'
-              '        result = result.merge(agg, on="base_task_id", how="left")\n',
-              '    cause_field = (\n'
-              '        "observable_geometric_difference_codes"\n'
-              '        if "observable_geometric_difference_codes" in cause.columns\n'
-              '        else "cause_code" if "cause_code" in cause.columns else None\n'
-              '    )\n'
-              '    if cause_field is not None and "base_task_id" in cause.columns:\n'
-              '        agg = cause[["base_task_id", cause_field]].groupby("base_task_id", as_index=False).agg(\n'
-              '            observable_cause_codes=(cause_field, lambda s: ";".join(sorted({code for value in s.dropna().astype(str) for code in value.split(";") if code}))),\n'
-              '            cause_audit_rows=(cause_field, "size"),\n'
-              '        )\n'
-              '        result = result.merge(agg, on="base_task_id", how="left")\n',
-          )
-          path.write_text(text, encoding='utf-8')
-          PY
+          python tools/paper_a_manhattan/full_uncertainty/patch_analysis_source_20260823.py
           rm -f tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py.xz.b64.part*
           python -m py_compile tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py
 
@@ -153,8 +68,10 @@ jobs:
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py \
+          git add -A \
+            tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py \
             tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py.xz.b64.part* \
+            tools/paper_a_manhattan/full_uncertainty/patch_analysis_source_20260823.py \
             analysis_results/uncertainty_threshold_anchoring_worker_types_20260823
           if git diff --cached --quiet; then
             echo "No output changes"
