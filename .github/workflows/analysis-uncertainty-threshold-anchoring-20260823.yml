@@ -52,6 +52,7 @@ jobs:
           PREFIX_REPLICATES: '100'
           BOOTSTRAP_REPLICATES: '4000'
           SPLIT_REPEATS: '300'
+          PYTHONPATH: .
         run: |
           python tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py
 
