@@ -8,7 +8,7 @@
 - `完整数据整理工作簿.xlsx`：同一内容的朴素工作簿。
 - `完整数据整理工作簿_第一册_原始事实.xlsx`：体量均衡后的原始事实分册。
 - `完整数据整理工作簿_第二册_派生审计与统计.xlsx`：其余派生审计与统计分册。
-- `WORKBOOK_QA_SUMMARY.json`：总册与两个分册的结构、公式、行数和导入检查结果。
-- `COVERAGE_AUDIT.csv`：明确列出按计划未物化的机制。
+- `COVERAGE_AUDIT.csv`：原始 v5 覆盖审计。
+- `COVERAGE_GAP_COMPUTABILITY_AUDIT.csv`：补充实现后的可计算性与缺口审计。
 
 边界：C2-B保持关闭；未改变正式eligibility、routing、GT freeze、active-time owner-valid规则或后续阶段设计。

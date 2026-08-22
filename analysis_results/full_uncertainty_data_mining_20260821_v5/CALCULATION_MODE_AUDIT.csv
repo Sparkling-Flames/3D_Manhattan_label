@@ -1,0 +1,9 @@
+component,status,status_zh,analysis_unit,correction
+image_association,supplement_primary,原始码：supplement_primary,task; building cluster,"rank effect, enumerated wild-cluster sign-flip, fixed-seed cluster bootstrap, BH"
+image_original_nominal,retained_for_provenance_only,原始码：retained_for_provenance_only,task rows,72 original tests retained; not used as primary inference
+image_alias,corrected,原始码：corrected,predictor family,vertical_edge_mean retained as x-gradient-family alias; 72 nominal tests -> 63 unique tests
+difficulty_join,corrected,原始码：corrected,matched task,22/25 matched; missing predictors remain NA; no zero imputation
+difficulty_proxy_scope,audited,原始码：audited,predictor,gt_keypoint_count is an exact 2x alias of gt_pair_count; vote counts are constant; confidence is provenance status; frozen n_ready is zero
+partition_failure,corrected,原始码：corrected,task_equal and building_equal,estimands reported separately with building sign-flip and cluster bootstrap
+semi_power,corrected,原始码：corrected,independent building,task-equal ratio influence and equal-building variance reported separately
+quality_risk,corrected,原始码：corrected,task; building cluster,risk and quality aggregated to task before building bootstrap

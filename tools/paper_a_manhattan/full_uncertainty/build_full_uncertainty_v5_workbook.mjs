@@ -128,7 +128,17 @@ function xmlElements(xml, name) {
 function attribute(xml, name) {
   const match = xml.match(new RegExp(`\\b${name}="([^"]*)"`));
   if (!match) throw new Error(`missing XML attribute ${name}`);
-  return match[1];
+  return match[1]
+    .replace(/&quot;/g, '"')
+    .replace(/&apos;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/&amp;/g, "&");
+}
+
+function optionalAttribute(xml, name) {
+  const match = xml.match(new RegExp(`\\b${name}="([^"]*)"`));
+  return match ? match[1].replace(/&quot;/g, '"').replace(/&apos;/g, "'").replace(/&lt;/g, "<").replace(/&gt;/g, ">").replace(/&amp;/g, "&") : undefined;
 }
 
 function resolveRelationshipPart(sourcePart, target) {
@@ -150,6 +160,113 @@ async function readZipText(zip, name) {
   const entry = zip.file(name);
   if (!entry) throw new Error(`missing XLSX part ${name}`);
   return entry.async("string");
+}
+
+function contentTypeEntries(contentTypesXml) {
+  return {
+    defaults: xmlElements(contentTypesXml, "Default").map((element) => [attribute(element, "Extension"), attribute(element, "ContentType")]).sort(),
+    overrides: xmlElements(contentTypesXml, "Override").map((element) => [attribute(element, "PartName"), attribute(element, "ContentType")]).sort(),
+  };
+}
+
+function isDynamicContentTypePart(partName) {
+  return /^\/?xl\/(?:worksheets|tables)\/[^/]+\.xml$/.test(partName);
+}
+
+function validateContentTypes(masterContentTypes, sourceContentTypes) {
+  const master = contentTypeEntries(masterContentTypes);
+  const source = contentTypeEntries(sourceContentTypes);
+  const staticOverrides = (entries) => entries.overrides.filter(([partName]) => !isDynamicContentTypePart(partName));
+  if (JSON.stringify(master.defaults) !== JSON.stringify(source.defaults) || JSON.stringify(staticOverrides(master)) !== JSON.stringify(staticOverrides(source))) {
+    throw new Error("segmented workbooks disagree on content types");
+  }
+}
+
+async function validateDynamicContentTypes(zip, workbookXml, workbookRels, contentTypesXml) {
+  const overrides = new Map(contentTypeEntries(contentTypesXml).overrides);
+  const relationships = new Map(xmlElements(workbookRels, "Relationship").map((element) => [attribute(element, "Id"), element]));
+  for (const sheetTag of xmlElements(workbookXml, "x:sheet")) {
+    const relationship = relationships.get(attribute(sheetTag, "r:id"));
+    if (!relationship || optionalAttribute(relationship, "TargetMode") === "External") continue;
+    const worksheetPart = resolveRelationshipPart("xl/workbook.xml", attribute(relationship, "Target"));
+    const contentType = overrides.get(`/${worksheetPart}`) ?? overrides.get(worksheetPart);
+    if (contentType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml") throw new Error(`invalid worksheet content type for ${worksheetPart}`);
+  }
+  for (const tablePart of Object.keys(zip.files).filter((name) => /^xl\/tables\/[^/]+\.xml$/.test(name))) {
+    const contentType = overrides.get(`/${tablePart}`) ?? overrides.get(tablePart);
+    if (contentType !== "application/vnd.openxmlformats-officedocument.spreadsheetml.table+xml") throw new Error(`invalid table content type for ${tablePart}`);
+  }
+}
+
+async function validateWorkbookRelationships(zip, workbookXml, workbookRels) {
+  const relationships = xmlElements(workbookRels, "Relationship");
+  const relationshipById = new Map();
+  for (const relationship of relationships) {
+    const id = attribute(relationship, "Id");
+    if (relationshipById.has(id)) throw new Error(`duplicate workbook relationship ${id}`);
+    relationshipById.set(id, relationship);
+    if (optionalAttribute(relationship, "TargetMode") === "External") continue;
+    const targetPart = resolveRelationshipPart("xl/workbook.xml", attribute(relationship, "Target"));
+    if (!zip.file(targetPart)) throw new Error(`missing workbook relationship target ${targetPart}`);
+  }
+  for (const sheetTag of xmlElements(workbookXml, "x:sheet")) {
+    const relationship = relationshipById.get(attribute(sheetTag, "r:id"));
+    if (!relationship || !attribute(relationship, "Type").endsWith("/worksheet")) throw new Error(`missing worksheet relationship ${attribute(sheetTag, "r:id")}`);
+    const sheetPart = resolveRelationshipPart("xl/workbook.xml", attribute(relationship, "Target"));
+    const sheetRelsPart = relationshipPart(sheetPart);
+    const sheetRelsEntry = zip.file(sheetRelsPart);
+    if (!sheetRelsEntry) continue;
+    const sheetRels = await sheetRelsEntry.async("string");
+    for (const sheetRelationship of xmlElements(sheetRels, "Relationship")) {
+      if (optionalAttribute(sheetRelationship, "TargetMode") === "External") continue;
+      const targetPart = resolveRelationshipPart(sheetPart, attribute(sheetRelationship, "Target"));
+      if (!zip.file(targetPart)) throw new Error(`missing worksheet relationship target ${targetPart}`);
+      if (!attribute(sheetRelationship, "Type").endsWith("/table")) throw new Error(`unsupported worksheet relationship ${attribute(sheetRelationship, "Type")}`);
+    }
+  }
+}
+
+function workbookSheetNames(workbookXml) {
+  return xmlElements(workbookXml, "x:sheet").map((sheet) => attribute(sheet, "name"));
+}
+
+async function tableNames(zip) {
+  const names = [];
+  for (const partName of Object.keys(zip.files).filter((name) => /^xl\/tables\/[^/]+\.xml$/.test(name)).sort()) {
+    const tableXml = await readZipText(zip, partName);
+    const tableTag = tableXml.match(/<x:table\b[^>]*>/);
+    if (!tableTag) throw new Error(`missing table element in ${partName}`);
+    const tableNamesForPart = new Set();
+    for (const nameAttribute of ["name", "displayName"]) {
+      const value = attribute(tableTag[0], nameAttribute);
+      if (!value) throw new Error(`empty table ${nameAttribute} in ${partName}`);
+      tableNamesForPart.add(value);
+    }
+    names.push(...tableNamesForPart);
+  }
+  return names;
+}
+
+async function validateUniqueWorkbookNames(master, source, masterWorkbookXml, sourceWorkbookXml) {
+  const seenSheets = new Set();
+  for (const name of [...workbookSheetNames(masterWorkbookXml), ...workbookSheetNames(sourceWorkbookXml)]) {
+    const key = name.toLowerCase();
+    if (seenSheets.has(key)) throw new Error(`duplicate worksheet name ${name}`);
+    seenSheets.add(key);
+  }
+  const seenTables = new Set();
+  for (const name of [...await tableNames(master), ...await tableNames(source)]) {
+    const key = name.toLowerCase();
+    if (seenTables.has(key)) throw new Error(`duplicate table name ${name}`);
+    seenTables.add(key);
+  }
+}
+
+async function validateUniqueNamesWithin(zip, workbookXml) {
+  const sheetNames = workbookSheetNames(workbookXml).map((name) => name.toLowerCase());
+  if (new Set(sheetNames).size !== sheetNames.length) throw new Error("duplicate worksheet name in merged workbook");
+  const names = (await tableNames(zip)).map((name) => name.toLowerCase());
+  if (new Set(names).size !== names.length) throw new Error("duplicate table name in merged workbook");
 }
 
 async function assertSamePart(master, source, name) {
@@ -224,8 +341,13 @@ async function mergeWorkbooks(partPaths, outputPath, expectedSheets) {
   let workbookXml = await readZipText(master, "xl/workbook.xml");
   let workbookRels = await readZipText(master, "xl/_rels/workbook.xml.rels");
   let contentTypes = await readZipText(master, "[Content_Types].xml");
+  await validateWorkbookRelationships(master, workbookXml, workbookRels);
+  await validateDynamicContentTypes(master, workbookXml, workbookRels, contentTypes);
   let sheetCount = xmlElements(workbookXml, "x:sheet").length;
   let tableCount = Object.keys(master.files).filter((name) => /^xl\/tables\/table\d+\.xml$/.test(name)).length;
+  let nextSheetNumber = Math.max(0, ...Object.keys(master.files).map((name) => /^xl\/worksheets\/sheet(\d+)\.xml$/.exec(name)?.[1]).filter(Boolean).map(Number));
+  let nextSheetId = Math.max(0, ...xmlElements(workbookXml, "x:sheet").map((sheet) => Number(attribute(sheet, "sheetId"))));
+  let nextTableNumber = Math.max(0, ...Object.keys(master.files).map((name) => /^xl\/tables\/table(\d+)\.xml$/.exec(name)?.[1]).filter(Boolean).map(Number));
   const masterShared = await readZipText(master, "xl/sharedStrings.xml");
   if (/<x:si\b/.test(masterShared)) throw new Error("shared string remapping is required but unsupported");
   let masterStylesXml = await readZipText(master, "xl/styles.xml");
@@ -234,6 +356,13 @@ async function mergeWorkbooks(partPaths, outputPath, expectedSheets) {
 
   for (const partPath of partPaths.slice(1)) {
     const source = await JSZip.loadAsync(await fsp.readFile(partPath));
+    const sourceWorkbook = await readZipText(source, "xl/workbook.xml");
+    const sourceWorkbookRels = await readZipText(source, "xl/_rels/workbook.xml.rels");
+    const sourceContentTypes = await readZipText(source, "[Content_Types].xml");
+    await validateWorkbookRelationships(source, sourceWorkbook, sourceWorkbookRels);
+    await validateDynamicContentTypes(source, sourceWorkbook, sourceWorkbookRels, sourceContentTypes);
+    validateContentTypes(contentTypes, sourceContentTypes);
+    await validateUniqueWorkbookNames(master, source, workbookXml, sourceWorkbook);
     await assertSamePart(master, source, "xl/theme/theme1.xml");
     let styleMap;
     try {
@@ -244,8 +373,6 @@ async function mergeWorkbooks(partPaths, outputPath, expectedSheets) {
     const sourceShared = await readZipText(source, "xl/sharedStrings.xml");
     if (/<x:si\b/.test(sourceShared)) throw new Error("shared string remapping is required but unsupported");
 
-    const sourceWorkbook = await readZipText(source, "xl/workbook.xml");
-    const sourceWorkbookRels = await readZipText(source, "xl/_rels/workbook.xml.rels");
     const sourceRelationships = new Map(
       xmlElements(sourceWorkbookRels, "Relationship").map((element) => [attribute(element, "Id"), element]),
     );
@@ -255,12 +382,13 @@ async function mergeWorkbooks(partPaths, outputPath, expectedSheets) {
       if (!worksheetRelationship || !attribute(worksheetRelationship, "Type").endsWith("/worksheet")) throw new Error(`missing worksheet relationship ${sourceRid}`);
       const sourceSheetPart = resolveRelationshipPart("xl/workbook.xml", attribute(worksheetRelationship, "Target"));
       const sourceSheetRelsPart = relationshipPart(sourceSheetPart);
-      const newSheetNumber = ++sheetCount;
+      const newSheetNumber = ++nextSheetNumber;
       const newSheetPart = `xl/worksheets/sheet${newSheetNumber}.xml`;
       const newRid = `Rv5sheet${String(newSheetNumber).padStart(4, "0")}`;
       const newSheetTag = sourceSheetTag
-        .replace(/\bsheetId="[^"]*"/, `sheetId="${newSheetNumber}"`)
+        .replace(/\bsheetId="[^"]*"/, `sheetId="${++nextSheetId}"`)
         .replace(/\br:id="[^"]*"/, `r:id="${newRid}"`);
+      sheetCount += 1;
       workbookXml = insertBefore(workbookXml, "</x:sheets>", newSheetTag);
       workbookRels = insertBefore(
         workbookRels,
@@ -279,7 +407,8 @@ async function mergeWorkbooks(partPaths, outputPath, expectedSheets) {
         let newSheetRels = await sourceSheetRelsEntry.async("string");
         for (const tableRelationship of xmlElements(newSheetRels, "Relationship").filter((element) => attribute(element, "Type").endsWith("/table"))) {
           const sourceTablePart = resolveRelationshipPart(sourceSheetPart, attribute(tableRelationship, "Target"));
-          const newTableNumber = ++tableCount;
+          const newTableNumber = ++nextTableNumber;
+          tableCount += 1;
           const newTablePart = `xl/tables/table${newTableNumber}.xml`;
           const sourceTableXml = await readZipText(source, sourceTablePart);
           const newTableXml = sourceTableXml.replace(/(<x:table\b[^>]*\bid=")\d+("[^>]*>)/, `$1${newTableNumber}$2`);
@@ -303,6 +432,9 @@ async function mergeWorkbooks(partPaths, outputPath, expectedSheets) {
   masterStylesXml = masterStylesXml.replace(fontsSection(masterStylesXml), `<x:fonts count="${masterFonts.length}">${masterFonts.join("")}</x:fonts>`);
   masterStylesXml = masterStylesXml.replace(cellXfsSection(masterStylesXml), `<x:cellXfs count="${masterXfs.length}">${masterXfs.join("")}</x:cellXfs>`);
   master.file("xl/styles.xml", masterStylesXml);
+  await validateWorkbookRelationships(master, workbookXml, workbookRels);
+  await validateDynamicContentTypes(master, workbookXml, workbookRels, contentTypes);
+  await validateUniqueNamesWithin(master, workbookXml);
   const output = await master.generateAsync({ type: "nodebuffer", compression: "DEFLATE", compressionOptions: { level: 6 }, streamFiles: true });
   await fsp.writeFile(outputPath, output);
   return { sheetCount, tableCount };
@@ -445,6 +577,26 @@ async function splitExisting(inputPath, firstOutput, secondOutput, splitAfter) {
   process.stdout.write(`${JSON.stringify({ inputPath, splitAfter, firstOutput, first, secondOutput, second })}\n`);
 }
 
+function samePath(left, right) {
+  return path.resolve(left).toLowerCase() === path.resolve(right).toLowerCase();
+}
+
+async function appendExisting(basePath, supplementPath, outputPath, expectedSheets) {
+  if (!Number.isInteger(expectedSheets) || expectedSheets < 1) throw new Error(`invalid expected sheet count ${expectedSheets}`);
+  if (samePath(outputPath, basePath) || samePath(outputPath, supplementPath)) throw new Error("append output must not overwrite an input workbook");
+  const resolvedOutput = path.resolve(outputPath);
+  const temporaryOutput = `${resolvedOutput}.tmp-${process.pid}-${Date.now()}`;
+  await fsp.mkdir(path.dirname(resolvedOutput), { recursive: true });
+  try {
+    const merged = await mergeWorkbooks([basePath, supplementPath], temporaryOutput, expectedSheets);
+    await fsp.rename(temporaryOutput, resolvedOutput);
+    process.stdout.write(`${JSON.stringify({ basePath, supplementPath, outputPath: resolvedOutput, merged })}\n`);
+  } catch (error) {
+    await fsp.rm(temporaryOutput, { force: true });
+    throw error;
+  }
+}
+
 const args = process.argv.slice(2);
 if (args[0] === "--batch") {
   if (!args[1] || !args[2]) throw new Error("usage: --batch payload.json output.xlsx [preview-dir]");
@@ -455,6 +607,9 @@ if (args[0] === "--batch") {
 } else if (args[0] === "--split-existing") {
   if (!args[1] || !args[2] || !args[3] || !args[4]) throw new Error("usage: --split-existing input.xlsx first.xlsx second.xlsx split-after-sheet");
   await splitExisting(args[1], args[2], args[3], Number(args[4]));
+} else if (args[0] === "--append-existing") {
+  if (!args[1] || !args[2] || !args[3] || !args[4]) throw new Error("usage: --append-existing base.xlsx supplement.xlsx output.xlsx expected-sheets");
+  await appendExisting(args[1], args[2], args[3], Number(args[4]));
 } else {
   if (!args[0] || !args[1]) throw new Error("usage: payload-directory output.xlsx [preview-dir]");
   await main(args[0], args[1], args[2]);

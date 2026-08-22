@@ -1,0 +1,29 @@
+feature_left,feature_right,row_count,spearman_rho,exact_value_identity,max_absolute_difference,alias_family,excluded_from_unique_multiplicity,note
+mean_luma,horizontal_gradient_mean_wrap,214,-0.6050805259972935,False,138.23562622070312,none,False,pairwise redundancy audit
+mean_luma,seam_gradient_mean,214,-0.26497778025942653,False,139.81817626953125,none,False,pairwise redundancy audit
+mean_luma,vertical_edge_mean,214,-0.6056533943937478,False,138.23679330863206,none,False,pairwise redundancy audit
+mean_luma,boundary_gradient_mean,214,-0.5485304786773237,False,138.2536253441037,none,False,pairwise redundancy audit
+mean_luma,edge_density_proxy,214,-0.5727461936441772,False,141.04400838216145,none,False,pairwise redundancy audit
+mean_luma,gt_pair_count,22,0.18927913359736057,False,132.64117431640625,none,False,pairwise redundancy audit
+mean_luma,proposal_initial_quality_mean,21,0.14770978917519928,False,138.96652221679688,none,False,pairwise redundancy audit
+horizontal_gradient_mean_wrap,seam_gradient_mean,214,0.4676136808990113,False,26.497314453125,none,False,pairwise redundancy audit
+horizontal_gradient_mean_wrap,vertical_edge_mean,214,0.9997652071244034,False,0.1039110370710783,horizontal_x_gradient,True,Both fields derive from the x-gradient family (wrap versus no-wrap); vertical_edge_mean is retained for provenance but is not an independent y-gradient test.
+horizontal_gradient_mean_wrap,boundary_gradient_mean,214,0.7863369525721821,False,3.943807767132135,none,False,pairwise redundancy audit
+horizontal_gradient_mean_wrap,edge_density_proxy,214,0.9126471742484811,False,10.106524538526347,none,False,pairwise redundancy audit
+horizontal_gradient_mean_wrap,gt_pair_count,22,-0.15095158318044954,False,5.99755859375,none,False,pairwise redundancy audit
+horizontal_gradient_mean_wrap,proposal_initial_quality_mean,21,-0.1846372364689991,False,8.83453369140625,none,False,pairwise redundancy audit
+seam_gradient_mean,vertical_edge_mean,214,0.45759911642365947,False,26.60122549019608,none,False,pairwise redundancy audit
+seam_gradient_mean,boundary_gradient_mean,214,0.4067206887547157,False,26.104792076771652,none,False,pairwise redundancy audit
+seam_gradient_mean,edge_density_proxy,214,0.451856713507943,False,30.41825980392157,none,False,pairwise redundancy audit
+seam_gradient_mean,gt_pair_count,22,-0.0035379277307917858,False,16.3984375,none,False,pairwise redundancy audit
+seam_gradient_mean,proposal_initial_quality_mean,21,0.03692744729379982,False,19.3984375,none,False,pairwise redundancy audit
+vertical_edge_mean,boundary_gradient_mean,214,0.7867995628629416,False,3.935871521344758,none,False,pairwise redundancy audit
+vertical_edge_mean,edge_density_proxy,214,0.9127436283698712,False,10.089001225490195,none,False,pairwise redundancy audit
+vertical_edge_mean,gt_pair_count,22,-0.15095158318044954,False,5.989950980392157,none,False,pairwise redundancy audit
+vertical_edge_mean,proposal_initial_quality_mean,21,-0.1846372364689991,False,8.810692401960784,none,False,pairwise redundancy audit
+boundary_gradient_mean,edge_density_proxy,214,0.9349304972871114,False,12.004323953991046,none,False,pairwise redundancy audit
+boundary_gradient_mean,gt_pair_count,22,-0.08844819326979465,False,6.260549950787402,none,False,pairwise redundancy audit
+boundary_gradient_mean,proposal_initial_quality_mean,21,-0.25849213105659874,False,9.260549950787402,none,False,pairwise redundancy audit
+edge_density_proxy,gt_pair_count,22,-0.07311717310303024,False,11.867723651960784,none,False,pairwise redundancy audit
+edge_density_proxy,proposal_initial_quality_mean,21,-0.22156468376279895,False,0.9740349264705883,none,False,pairwise redundancy audit
+gt_pair_count,proposal_initial_quality_mean,21,-0.23296213594470586,False,9.0,none,False,pairwise redundancy audit

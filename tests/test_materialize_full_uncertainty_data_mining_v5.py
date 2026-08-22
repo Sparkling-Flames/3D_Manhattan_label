@@ -85,3 +85,27 @@ def test_segmented_workbook_payload_keeps_all_rows_and_json_fields(tmp_path: Pat
     assert table["rowsOmitted"] == 0
     assert "task_data_json" in table["workbookColumns"]
     assert len(table["rows"]) == 501
+
+
+def test_supplement_workbook_payload_uses_nonconflicting_global_indexes(tmp_path: Path) -> None:
+    frame = pd.DataFrame([{"value": 1}])
+    payload_dir = v5._write_workbook_payload(
+        tmp_path,
+        {"SUPPLEMENT.csv": frame},
+        {"SUPPLEMENT.csv": v5._table_spec("SUPPLEMENT.csv", frame)},
+        start_index=127,
+    )
+    manifest = json.loads((payload_dir / "manifest.json").read_text(encoding="utf-8"))
+    payload = json.loads((payload_dir / manifest["batches"][0]["file"]).read_text(encoding="utf-8"))
+    table = payload["tables"][0]
+    assert manifest["start_index"] == 127
+    assert table["globalIndex"] == 127
+    assert table["tableName"] == "T128"
+    assert table["sheetName"].startswith("128_")
+
+
+def test_bilingual_is_idempotent_for_existing_translation_columns() -> None:
+    frame = pd.DataFrame([{"stage": "C1", "stage_zh": "校准一阶段"}])
+    result = v5._bilingual(frame)
+    assert list(result.columns) == ["stage", "stage_zh"]
+    assert result.loc[0, "stage_zh"] == "校准一阶段"

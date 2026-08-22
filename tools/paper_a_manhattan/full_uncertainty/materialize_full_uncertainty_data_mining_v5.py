@@ -10,6 +10,7 @@ import re
 import shutil
 import subprocess
 import tempfile
+import zipfile
 from itertools import combinations
 from pathlib import Path
 from typing import Any, Mapping
@@ -50,6 +51,20 @@ SEED = 20260821
 METHOD_CONTRACT = ROOT / "docs" / "thesis_main" / "PAPER_A_METHOD_CONTRACT_CURRENT.json"
 TERMINAL = ROOT / "analysis_results" / "c2a_rp_terminal_reestimate_20260817_v1"
 RESTRICTED_TOKENS = ("ad" + "visor", "\u5bfc\u5e08", "har" + "mful", "har" + "med")
+SUPPLEMENT_TABLES = (
+    "CALCULATION_MODE_AUDIT.csv",
+    "IMAGE_FEATURE_ALIAS_AUDIT.csv",
+    "IMAGE_FEATURE_ASSOCIATIONS_BUILDING_CLUSTERED.csv",
+    "DIFFICULTY_PROXY_OUTCOME_JOIN_AUDIT.csv",
+    "DIFFICULTY_PROXY_ASSOCIATIONS_BUILDING_CLUSTERED.csv",
+    "PARTITION_FAILURE_RATE_SENSITIVITY.csv",
+    "SEMI_POWER_ESTIMAND_SENSITIVITY.csv",
+    "QUALITY_RISK_TASK_BUILDING_CLUSTER_AUDIT.csv",
+    "ACTIVE_TIME_COMPUTABILITY_DESCRIPTIVE.csv",
+    "C1_ACTIVE_TIME_MISSINGNESS_AUDIT.csv",
+    "EVENT_SEQUENCE_OBSERVED_FACT.csv",
+    "COVERAGE_GAP_COMPUTABILITY_AUDIT.csv",
+)
 
 ENUM_ZH = {
     "P1": "预筛", "C1": "校准一阶段", "C2-B": "校准二阶段B", "C2-A-RP-B1": "校准二阶段风险精度块一",
@@ -85,6 +100,94 @@ FIELD_ZH = {
     "residual_variance": "交叉随机效应模型的残差方差", "source_table": "直接来源表或冻结工件",
     "calculation": "计算方法", "missing_meaning": "缺失值含义", "row_count": "记录行数", "task_count": "独立任务数",
     "worker_count": "标注员数", "building_count": "独立建筑数", "support": "可计算支持量",
+    "component": "审计组件", "analysis_unit": "分析单位", "correction": "补充计算或修正内容",
+    "status": "计算或可评价状态", "status_zh": "状态中文解释", "audit_level": "审计层级",
+    "feature_left": "成对审计的左侧特征", "feature_right": "成对审计的右侧特征",
+    "exact_value_identity": "共享记录上是否逐值完全相同", "max_absolute_difference": "共享记录上的最大绝对差",
+    "alias_family": "同源特征家族", "excluded_from_unique_multiplicity": "是否从独立检验家族中排除",
+    "note": "口径或解释边界备注", "predictor": "预测/关联变量", "outcome": "结局变量",
+    "predictor_duplicate_alias": "该预测变量是否为已审计的重复家族别名",
+    "rank_effect_spearman": "任务级 Spearman 等级效应", "effect_rank_transformed": "秩变换线性效应",
+    "effect": "本表定义的效应值", "cluster_bootstrap_rank_ci_lower": "建筑整群 bootstrap 等级效应区间下限",
+    "cluster_bootstrap_rank_ci_upper": "建筑整群 bootstrap 等级效应区间上限",
+    "wild_cluster_exact_or_mc_p": "建筑成组 wild sign-flip 双侧 p 值", "p_value": "双侧 p 值",
+    "inference_unit": "推断与重采样单位", "q_bh_global_unique": "去重后全局 BH 校正 q 值",
+    "q_bh_within_outcome_unique": "去重后同一结局内 BH 校正 q 值",
+    "q_bh_global_unique_predictors": "去重预测变量后的全局 BH q 值",
+    "q_bh_within_outcome_unique_predictors": "去重预测变量后的结局内 BH q 值",
+    "semi_task_count": "Semi 配对任务数", "proxy_task_count": "难度代理有记录任务数",
+    "matched_task_count": "成功连接任务数", "missing_proxy_task_count": "缺少代理变量任务数",
+    "missing_proxy_filled_as_zero": "是否把缺失代理错误填为零", "join_status": "任务连接状态",
+    "predictor_family": "预测变量证据家族", "predictor_timing": "变量相对结局的时间属性",
+    "group_0_count": "二元标签为零的任务数", "group_1_count": "二元标签为一的任务数",
+    "group_0_mean_delta_entropy": "标签为零组的平均熵变化", "group_1_mean_delta_entropy": "标签为一组的平均熵变化",
+    "group_mean_difference_1_minus_0": "标签一组减标签零组的平均熵变化差",
+    "cluster_bootstrap_rho_ci_lower": "建筑整群 bootstrap 相关区间下限",
+    "cluster_bootstrap_rho_ci_upper": "建筑整群 bootstrap 相关区间上限",
+    "missing_predictor_not_imputed": "缺失预测变量是否保持缺失而未插补",
+    "q_bh_within_predictor_family": "同一预测变量家族内 BH q 值", "q_bh_global": "全部可评价检验的全局 BH q 值",
+    "estimand": "目标估计量的加权口径", "metric": "统计指标", "estimate": "点估计",
+    "median_estimand_unit_value": "按该估计口径单位计算的中位数",
+    "cluster_bootstrap_ci_lower": "建筑整群 bootstrap 区间下限", "cluster_bootstrap_ci_upper": "建筑整群 bootstrap 区间上限",
+    "exact_building_signflip_p": "枚举建筑符号翻转的双侧 p 值", "definition": "指标定义或分子分母",
+    "current_task_count": "当前可计算任务数", "current_building_count": "当前独立建筑数",
+    "projected_independent_building_count": "情景中的独立建筑数", "assumed_true_absolute_effect": "条件功效假定的真实绝对效应",
+    "observed_effect": "当前样本点估计", "observed_cluster_scale_sd": "与估计口径一致的建筑尺度标准差",
+    "standard_error": "标准误", "approximate_two_sided_power": "近似双侧条件功效",
+    "independent_unit": "情景计算的独立抽样单位", "variance_basis": "方差估计依据", "estimand_note": "估计口径说明",
+    "population": "分析总体", "population_zh": "分析总体中文解释", "source_row_count": "进入聚合前的可计算源记录数",
+    "quality_per_risk_slope": "任务聚合后质量随风险变化的线性斜率", "task_level_spearman_rho": "任务级 Spearman 等级相关",
+    "rank_effect_exact_building_signflip_p": "等级效应的枚举建筑 sign-flip p 值",
+    "cluster_bootstrap_repetitions": "建筑整群 bootstrap 重复次数", "formal_row_level_p_reported": "是否报告形式不当的行级 p 值",
+    "fact": "事实类型", "grouping": "描述性分组维度", "group_value": "分组取值", "n": "该分组记录数",
+    "active_time_n": "冻结有效操作时间可计算记录数", "lead_time_proxy_n": "仅有 Lead time 代理且排除于 Active time 的记录数",
+    "missing_n": "Active time 缺失记录数", "other_n": "其他测量类别记录数",
+    "active_time_rate": "冻结 Active time 可计算率", "lead_time_proxy_rate": "Lead time 代理占比", "missing_rate": "缺失率",
+    "active_time_rule": "Active time 纳入口径", "lead_time_rule": "Lead time 与 Active time 分离规则",
+    "missing": "缺失记录数", "rate": "本组缺失比例", "jeffreys_lower": "Jeffreys 二项比例区间下限",
+    "jeffreys_upper": "Jeffreys 二项比例区间上限", "missing_definition": "缺失事件的操作性定义",
+    "fact_type": "观测事实记录类型", "project_id": "Label Studio 项目标识", "task_id": "运行时任务标识",
+    "annotator_id": "事件日志标注员标识", "session_id": "事件日志会话标识", "event_count": "排除 sandbox 后的观测事件数",
+    "raw_event_count": "该会话原始事件数", "sandbox_event_n": "sandbox 事件数", "timestamp_ms_n": "可按毫秒解析的客户端时间戳数",
+    "observed_start_timestamp_ms": "观测起始客户端毫秒时间戳", "observed_end_timestamp_ms": "观测结束客户端毫秒时间戳",
+    "observed_span_seconds": "首末观测事件时间跨度（秒）", "max_gap_seconds": "相邻观测事件最大间隔（秒）",
+    "gap_gt_60": "是否存在超过 60 秒的观测事件间隔", "max_events_per_60_seconds": "任意 60 秒窗口的最大观测事件数",
+    "multi_session_fact": "同一项目任务标注员是否观测到多个 session", "formal_event_n": "冻结正式阶段范围内事件数",
+    "outside_or_stage_mismatch_n": "任务外或阶段不匹配原始事件数",
+    "observed_outside_or_stage_mismatch_n": "排除 sandbox 后任务外或阶段不匹配事件数",
+    "clock_offset_median_seconds": "客户端与服务端时钟差中位数（秒）", "clock_offset_p95_seconds": "客户端与服务端时钟差第 95 百分位（秒）",
+    "clock_offset_audit_only": "时钟差是否仅限审计用途", "observed_behavior_event_fields": "可直接支持行为命名的事件字段",
+    "coverage_field": "字段覆盖类别", "field_name": "源字段名", "observed_n": "字段有观测值的记录数",
+    "coverage_rate": "字段观测覆盖率", "description": "客观口径说明", "computability_status": "可计算性状态",
+    "denominator_n": "可计算性审计分母", "gap": "当前证据缺口", "condition_zh": "标注条件中文解释", "stage_zh": "执行阶段中文解释",
+}
+
+FORMULA_ZH = {
+    "spearman_rho": "对成对非缺失值分别取平均秩后计算 Pearson 相关",
+    "rank_effect_spearman": "对任务级成对非缺失值计算 Spearman 等级相关",
+    "effect_rank_transformed": "对 x、y 分别取平均秩后拟合含截距线性斜率；同一完整样本下等于 Spearman rho",
+    "wild_cluster_exact_or_mc_p": "在零斜率受限模型下按 building 整组翻转残差符号；building≤12 时枚举全部符号组合",
+    "exact_building_signflip_p": "按 building 整组翻转差值符号并枚举全部 2^B 组合的双侧尾概率",
+    "rank_effect_exact_building_signflip_p": "对任务级秩变量按 building 整组符号翻转得到的双侧尾概率",
+    "cluster_bootstrap_rank_ci_lower": "固定种子整组重抽 building 10,000 次所得等级相关的 2.5% 分位数",
+    "cluster_bootstrap_rank_ci_upper": "固定种子整组重抽 building 10,000 次所得等级相关的 97.5% 分位数",
+    "cluster_bootstrap_rho_ci_lower": "固定种子整组重抽 building 10,000 次所得 rho 的 2.5% 分位数",
+    "cluster_bootstrap_rho_ci_upper": "固定种子整组重抽 building 10,000 次所得 rho 的 97.5% 分位数",
+    "cluster_bootstrap_ci_lower": "固定种子整组重抽 building 10,000 次所得估计量的 2.5% 分位数",
+    "cluster_bootstrap_ci_upper": "固定种子整组重抽 building 10,000 次所得估计量的 97.5% 分位数",
+    "q_bh_global": "对全局可评价 p 值执行 Benjamini–Hochberg 校正；NA 不进入分母",
+    "q_bh_global_unique": "排除 vertical_edge_mean 别名的 63 个可评价家族上执行全局 BH 校正",
+    "q_bh_global_unique_predictors": "与 q_bh_global_unique 相同的兼容字段",
+    "q_bh_within_outcome_unique": "在每个结局内对去重预测变量的 p 值执行 BH 校正",
+    "q_bh_within_outcome_unique_predictors": "与 q_bh_within_outcome_unique 相同的兼容字段",
+    "q_bh_within_predictor_family": "在同一证据/预测变量家族内对可评价 p 值执行 BH 校正",
+    "approximate_two_sided_power": "正态近似：P(|Z+|effect|/SE|>z_0.975)，条件于假定真实效应和当前方差",
+    "standard_error": "observed_cluster_scale_sd / sqrt(projected_independent_building_count)",
+    "quality_per_risk_slope": "先在 task 内分别平均 risk 与 quality，再对 task 聚合值拟合含截距线性斜率",
+    "active_time_rate": "active_time_n / n", "lead_time_proxy_rate": "lead_time_proxy_n / n", "missing_rate": "missing_n / n",
+    "rate": "missing / n", "coverage_rate": "observed_n / 对应事件总体数",
+    "jeffreys_lower": "Beta(missing+0.5, n-missing+0.5) 的 2.5% 分位数",
+    "jeffreys_upper": "Beta(missing+0.5, n-missing+0.5) 的 97.5% 分位数",
 }
 
 
@@ -138,7 +241,7 @@ def _neutral_frame(frame: pd.DataFrame) -> pd.DataFrame:
 def _bilingual(frame: pd.DataFrame) -> pd.DataFrame:
     result = _neutral_frame(frame)
     for column in list(result.columns):
-        if column not in ENUM_COLUMNS or column.endswith("_zh"):
+        if column not in ENUM_COLUMNS or column.endswith("_zh") or f"{column}_zh" in result.columns:
             continue
         position = result.columns.get_loc(column) + 1
         values = result[column].map(lambda value: "" if pd.isna(value) or str(value).strip() == "" else ENUM_ZH.get(str(value), f"原始码：{value}"))
@@ -705,7 +808,9 @@ def _table_spec(name: str, frame: pd.DataFrame) -> dict[str, Any]:
     fields = []
     for column in frame.columns:
         meaning = FIELD_ZH.get(column, f"{column}字段；稳定英文机器列名")
-        if column.endswith("_zh"):
+        if column in FORMULA_ZH:
+            calculation = FORMULA_ZH[column]
+        elif column.endswith("_zh"):
             calculation = "由相邻英文枚举码映射为中文解释"
         elif any(token in column for token in ("count", "support")):
             calculation = "按本表总体和分组键计数；缺失不计入可计算支持"
@@ -722,10 +827,10 @@ def _markdown_table(frame: pd.DataFrame, limit: int = 12) -> str:
     return (preview.iloc[:, :12] if len(preview.columns) > 12 else preview).to_markdown(index=False)
 
 
-def _workbook_sheet_names(names: list[str]) -> list[str]:
+def _workbook_sheet_names(names: list[str], *, start_index: int = 0) -> list[str]:
     used: set[str] = set()
     output = []
-    for index, raw in enumerate(names):
+    for index, raw in enumerate(names, start=start_index):
         stem = re.sub(r"[\\/?*:\[\]]", "_", re.sub(r"\.csv$", "", raw, flags=re.IGNORECASE))
         base = f"{index + 1:02d}_{stem}"[:31]
         candidate = base
@@ -738,11 +843,18 @@ def _workbook_sheet_names(names: list[str]) -> list[str]:
     return output
 
 
-def _write_workbook_payload(out: Path, frames: Mapping[str, pd.DataFrame], specs: Mapping[str, Any], batch_bytes: int = 12_000_000) -> Path:
+def _write_workbook_payload(
+    out: Path,
+    frames: Mapping[str, pd.DataFrame],
+    specs: Mapping[str, Any],
+    batch_bytes: int = 12_000_000,
+    *,
+    start_index: int = 0,
+) -> Path:
     payload_dir = out / "_workbook_payload"
     payload_dir.mkdir()
     names = list(frames)
-    sheet_names = _workbook_sheet_names(names)
+    sheet_names = _workbook_sheet_names(names, start_index=start_index)
     batches: list[dict[str, Any]] = []
     batch_tables: list[str] = []
     batch_size = 0
@@ -758,12 +870,13 @@ def _write_workbook_payload(out: Path, frames: Mapping[str, pd.DataFrame], specs
         batch_tables = []
         batch_size = 0
 
-    for index, (name, frame) in enumerate(frames.items()):
+    for local_index, (name, frame) in enumerate(frames.items()):
+        index = start_index + local_index
         workbook_frame = _bilingual(frame)
         clean = workbook_frame.astype(object).where(pd.notna(workbook_frame), None)
         table = {
             "name": name,
-            "sheetName": sheet_names[index],
+            "sheetName": sheet_names[local_index],
             "tableName": f"T{index + 1:03d}",
             "globalIndex": index,
             "spec": specs[name],
@@ -785,13 +898,125 @@ def _write_workbook_payload(out: Path, frames: Mapping[str, pd.DataFrame], specs
     _write_json(payload_dir / "manifest.json", {
         "format": "full_uncertainty_v5_segmented_workbook_payload",
         "table_count": len(names),
+        "start_index": start_index,
         "row_count": int(sum(len(frame) for frame in frames.values())),
         "batches": batches,
     })
     return payload_dir
 
 
-def _write_readable_outputs(out: Path, frames: Mapping[str, pd.DataFrame], validation: Mapping[str, Any]) -> None:
+def _render_objective_findings(frames: Mapping[str, pd.DataFrame], validation: Mapping[str, Any]) -> str:
+    directions = frames["SEMI_25_CONVERGENCE_EXPANSION_ALL_IMAGES.csv"]["exact_direction"].value_counts()
+
+    def table(name: str, limit: int = 12) -> str:
+        return f"来源：`{name}`\n\n{_markdown_table(frames[name], limit)}"
+
+    return "\n".join([
+        "# 数据与变量关系汇总",
+        "",
+        "本文件汇总当前 v5 全部可复现的客观发现。所有关联均不作因果解释；缺失不填零；同一 worker×task 的历史版本不当作独立标注员。",
+        "",
+        "## 1. 数据范围与冻结边界",
+        "",
+        f"- raw annotation versions：{validation['raw_annotation_count']:,}；selected/auditable contexts：{validation['selected_record_count']:,}；raw-only versions：{validation['raw_only_record_count']:,}。",
+        f"- Manual/Semi 配对任务：{validation['manual_semi_task_count']}；图像：{validation['image_count']}；事件：{validation['event_count']:,}；session：{validation['session_count']:,}。",
+        f"- Crowd–GT task-condition：{validation['crowd_gt_task_condition_count']}；双人任务：{validation['dual_task_count']}；C2 terminal eligible rows：{validation['c2_terminal_eligible_row_count']}。",
+        "- C2-B 保持关闭；这些结果不改变 eligibility、routing、GT/reference freeze、active-time owner-valid 或后续阶段设计。",
+        "",
+        "## 2. Manual/Semi 不确定性与分区可识别性",
+        "",
+        f"25 个任务中，Semi 收敛 {int(directions.get('semi_convergence', 0))} 个、扩散 {int(directions.get('semi_expansion', 0))} 个、不变 {int(directions.get('no_entropy_change', 0))} 个。主要口径为 task-equal、building-cluster；不同 estimand 分行报告。",
+        "",
+        table("CURRENT_MANUAL_SEMI_UNCERTAINTY_SUMMARY.CSV", 10),
+        "",
+        table("PARTITION_FAILURE_RATE_SENSITIVITY.csv", 10),
+        "",
+        "## 3. 质量、几何、Crowd–GT 与持续分歧",
+        "",
+        table("QUALITY_DATA_MINING_SUMMARY.CSV", 5),
+        "",
+        table("CROWD_GT_GEOMETRIC_CAUSE_SUMMARY.csv", 12),
+        "",
+        table("PERSISTENT_DISAGREEMENT_SUMMARY.CSV", 15),
+        "",
+        "双人任务只作为 pair sensitivity，不构造多数共识；完整逐任务结果见 `DUAL_ANNOTATOR_GEOMETRY_AND_GT_QUALITY.csv`。",
+        "",
+        "## 4. Proposal、元标签与结构零",
+        "",
+        table("SEMI_PROPOSAL_ASSOCIATIONS.CSV", 12),
+        "",
+        table("STRUCTURAL_ZERO_DUAL_AXIS_SENSITIVITY.csv", 20),
+        "",
+        "元标签 canonical/final 与 raw/history 使用不同分母；完整回答组合熵、Jaccard 分歧和众数占比见 `META_RESPONSE_UNCERTAINTY_CANONICAL_AND_RAW.csv`。",
+        "",
+        "## 5. 图像特征、难度代理与 risk",
+        "",
+        "正式冻结语义 risk 仍为 `n_ready=0`，因此正式难度关系不可评价。下表按 building 聚类，并对重复 predictor 去重后校正多重检验；legacy proxy 和工人作答后标签保持探索性。",
+        "",
+        table("IMAGE_FEATURE_ALIAS_AUDIT.csv", 12),
+        "",
+        table("IMAGE_FEATURE_ASSOCIATIONS_BUILDING_CLUSTERED.csv", 20),
+        "",
+        table("DIFFICULTY_PROXY_OUTCOME_JOIN_AUDIT.csv", 12),
+        "",
+        table("DIFFICULTY_PROXY_ASSOCIATIONS_BUILDING_CLUSTERED.csv", 20),
+        "",
+        table("QUALITY_RISK_TASK_BUILDING_CLUSTER_AUDIT.csv", 10),
+        "",
+        "## 6. Task/worker 异质性",
+        "",
+        table("CROSSED_TASK_WORKER_VARIANCE_COMPONENTS.csv", 10),
+        "",
+        "worker 模式归属只描述跨任务倾向，不解释为正确性或稳定几何学派；完整 split/leave-one-task-out 结果见 `WORKER_MODE_TESTS_AND_PAIRS_LANES.csv`。",
+        "",
+        "## 7. Active time、Lead time、缺失与事件序列",
+        "",
+        "Active time 只使用冻结 task-worker owner-valid 证据；Lead time 永不回填。事件 gap、span 和 multi-session 仅表示日志观测事实，不命名为暂停、返回、保存或提交行为。",
+        "",
+        table("ACTIVE_TIME_COMPUTABILITY_DESCRIPTIVE.csv", 20),
+        "",
+        table("C1_ACTIVE_TIME_MISSINGNESS_AUDIT.csv", 20),
+        "",
+        table("EVENT_SEQUENCE_OBSERVED_FACT.csv", 12),
+        "",
+        "## 8. 功效与精度情景",
+        "",
+        "task-equal 与 building-equal 是不同 estimand；条件功效不是效应为真的概率。",
+        "",
+        table("SEMI_POWER_ESTIMAND_SENSITIVITY.csv", 20),
+        "",
+        "## 9. 排除、连接与版本审计",
+        "",
+        table("EXCLUSION_REASON_SUMMARY.csv", 15),
+        "",
+        table("JOIN_COVERAGE_AUDIT.CSV", 15),
+        "",
+        "annotation revision chronology 已物化于 `REVISION_LINEAGE_ALL_2513.csv`，但它不是 reference/GT version trajectory。",
+        "",
+        "## 10. 计算口径修正与尚不可评价项目",
+        "",
+        table("CALCULATION_MODE_AUDIT.csv", 20),
+        "",
+        table("COVERAGE_GAP_COMPUTABILITY_AUDIT.csv", 20),
+        "",
+        "reference 历史和独立专家标签缺少版本事件、审核身份、盲审和几何字段时必须保持 `not_evaluable`；不使用 synthetic review 或 expert-anchor metadata 替代。",
+        "",
+        "## 附录：原 v5 逐任务 nominal 图像扫描",
+        "",
+        "以下结果保留作来源追溯；其逐任务 p 值不替代上面的 building-cluster 与多重比较校正结果。",
+        "",
+        table("IMAGE_FEATURE_VS_SEMI_ASSOCIATIONS.csv", 40),
+        "",
+    ])
+
+
+def _write_readable_outputs(
+    out: Path,
+    frames: Mapping[str, pd.DataFrame],
+    validation: Mapping[str, Any],
+    *,
+    write_workbook_payload: bool = True,
+) -> None:
     specs = {name: _table_spec(name, _bilingual(frame)) for name, frame in frames.items()}
     quick = pd.DataFrame([{"metric": key, "value": value, "meaning_zh": FIELD_ZH.get(key, key)} for key, value in validation.items() if isinstance(value, (int, float))])
     _write_csv(out / "关键数据速览.csv", quick)
@@ -800,22 +1025,18 @@ def _write_readable_outputs(out: Path, frames: Mapping[str, pd.DataFrame], valid
         spec = specs[name]
         lines += [f"## {name}", "", f"- 总体：{spec['population']}", f"- 分析单位：{spec['analysis_unit']}", f"- 筛选：{spec['filter_rule']}", f"- 分组：{spec['grouping']}", "", _markdown_table(_bilingual(frames[name])), "", "### 变量和计算说明", "", pd.DataFrame(spec["fields"]).to_markdown(index=False), ""]
     (out / "逐表数据与计算说明.md").write_text("\n".join(lines), encoding="utf-8", newline="\n")
-    (out / "数据与变量关系汇总.md").write_text(
-        "# 数据与变量关系汇总\n\n本文件只列客观关联，不作因果解释。正式冻结难度的 `n_ready=0`，因此正式口径不可评价；探索性代理另列。\n\n"
-        + _markdown_table(frames["IMAGE_FEATURE_VS_SEMI_ASSOCIATIONS.csv"], 40) + "\n\n## 结构零敏感性\n\n"
-        + _markdown_table(frames["STRUCTURAL_ZERO_DUAL_AXIS_SENSITIVITY.csv"], 40) + "\n\n## quality–risk slope\n\n"
-        + _markdown_table(frames["QUALITY_RISK_SLOPE_POPULATIONS.csv"], 20) + "\n", encoding="utf-8", newline="\n",
-    )
+    (out / "数据与变量关系汇总.md").write_text(_render_objective_findings(frames, validation), encoding="utf-8", newline="\n")
     (out / "README_先看这里.md").write_text(
         "# 全量不确定性数据整理 v5\n\n本目录只提供数据、变量定义、计算方法、统计结果、客观关联和不可评价原因。\n\n"
         "- `关键数据速览.csv`：冻结计数和核心覆盖。\n- `数据与变量关系汇总.md`：中性关联汇总。\n"
         "- `逐表数据与计算说明.md`：每张表后紧邻字段和公式说明。\n- `完整数据整理工作簿.xlsx`：同一内容的朴素工作簿。\n"
         "- `完整数据整理工作簿_第一册_原始事实.xlsx`：体量均衡后的原始事实分册。\n"
         "- `完整数据整理工作簿_第二册_派生审计与统计.xlsx`：其余派生审计与统计分册。\n"
-        "- `COVERAGE_AUDIT.csv`：明确列出按计划未物化的机制。\n\n边界：C2-B保持关闭；未改变正式eligibility、routing、GT freeze、active-time owner-valid规则或后续阶段设计。\n",
+        "- `COVERAGE_AUDIT.csv`：原始 v5 覆盖审计。\n- `COVERAGE_GAP_COMPUTABILITY_AUDIT.csv`：补充实现后的可计算性与缺口审计。\n\n边界：C2-B保持关闭；未改变正式eligibility、routing、GT freeze、active-time owner-valid规则或后续阶段设计。\n",
         encoding="utf-8", newline="\n",
     )
-    _write_workbook_payload(out, frames, specs)
+    if write_workbook_payload:
+        _write_workbook_payload(out, frames, specs)
 
 
 def _charts(out: Path, frames: Mapping[str, pd.DataFrame]) -> None:
@@ -833,6 +1054,137 @@ def _charts(out: Path, frames: Mapping[str, pd.DataFrame]) -> None:
 
 def _manifest(out: Path) -> pd.DataFrame:
     return pd.DataFrame([{"path": path.name, "size_bytes": path.stat().st_size, "sha256": _sha(path)} for path in sorted(item for item in out.iterdir() if item.is_file() and item.name != "OUTPUT_MANIFEST.csv")])
+
+
+def _supplement_frames(input_dir: Path, *, bootstrap_replicates: int) -> dict[str, pd.DataFrame]:
+    from tools.paper_a_manhattan.full_uncertainty import audit_v5_gaps
+    from tools.paper_a_manhattan.full_uncertainty import audit_v5_supplement
+
+    frames = {
+        **audit_v5_supplement.build_frames(input_dir, bootstrap_replicates=bootstrap_replicates),
+        **audit_v5_gaps.build_frames(input_dir),
+    }
+    missing = set(SUPPLEMENT_TABLES) - set(frames)
+    unexpected = set(frames) - set(SUPPLEMENT_TABLES)
+    if missing or unexpected:
+        raise AssertionError({"missing_supplement_tables": sorted(missing), "unexpected_supplement_tables": sorted(unexpected)})
+    return {name: frames[name] for name in SUPPLEMENT_TABLES}
+
+
+def _xlsx_sheet_count(path: Path) -> int:
+    with zipfile.ZipFile(path) as archive:
+        workbook = archive.read("xl/workbook.xml").decode("utf-8")
+    return len(re.findall(r"<(?:\w+:)?sheet\b", workbook))
+
+
+def augment_existing(
+    target: Path = DEFAULT_OUTPUT,
+    *,
+    bootstrap_replicates: int = 10_000,
+    workbook_script: Path | None = None,
+    workbook_preview_dir: Path | None = None,
+    node_executable: str = "node",
+    node_modules: Path | None = None,
+) -> dict[str, Any]:
+    target = target.resolve()
+    if not target.is_dir():
+        raise FileNotFoundError(target)
+    existing_supplements = [name for name in SUPPLEMENT_TABLES if (target / name).exists()]
+    if existing_supplements:
+        raise FileExistsError(f"supplement already present: {existing_supplements}")
+    required = [
+        target / "完整数据整理工作簿.xlsx",
+        target / "完整数据整理工作簿_第一册_原始事实.xlsx",
+        target / "完整数据整理工作簿_第二册_派生审计与统计.xlsx",
+        target / "VALIDATION_SUMMARY.json",
+        target / "WORKBOOK_QA_SUMMARY.json",
+    ]
+    missing = [str(path) for path in required if not path.is_file()]
+    if missing:
+        raise FileNotFoundError(missing)
+
+    frames = {
+        path.name: _read(path)
+        for path in sorted(target.iterdir())
+        if path.is_file() and path.suffix.lower() == ".csv" and path.name != "OUTPUT_MANIFEST.csv"
+    }
+    supplement = _supplement_frames(target, bootstrap_replicates=bootstrap_replicates)
+    frames.update(supplement)
+    validation = json.loads((target / "VALIDATION_SUMMARY.json").read_text(encoding="utf-8"))
+    validation.update({"audit_supplement_table_count": len(supplement), "audit_supplement_status": "pass"})
+
+    staging = Path(tempfile.mkdtemp(prefix=f".{target.name}_audit_", dir=target.parent))
+    try:
+        for name, frame in supplement.items():
+            _write_csv(staging / name, frame)
+        _write_readable_outputs(staging, frames, validation, write_workbook_payload=False)
+        _write_json(staging / "VALIDATION_SUMMARY.json", validation)
+
+        specs = {name: _table_spec(name, _bilingual(frame)) for name, frame in supplement.items()}
+        payload = _write_workbook_payload(staging, supplement, specs, start_index=_xlsx_sheet_count(required[0]))
+        script = (workbook_script or Path(__file__).with_name("build_full_uncertainty_v5_workbook.mjs")).resolve()
+        preview = (workbook_preview_dir or (staging / "workbook_previews")).resolve()
+        supplement_xlsx = staging / "audit_supplement.xlsx"
+        env = os.environ.copy()
+        if node_modules:
+            env["NODE_PATH"] = str(node_modules.resolve())
+        subprocess.run(
+            [node_executable, "--max-old-space-size=8192", str(script), str(payload), str(supplement_xlsx), str(preview)],
+            cwd=ROOT,
+            check=True,
+            env=env,
+        )
+
+        output_workbooks = {}
+        for name in ("完整数据整理工作簿.xlsx", "完整数据整理工作簿_第二册_派生审计与统计.xlsx"):
+            source = target / name
+            output = staging / name
+            expected = _xlsx_sheet_count(source) + len(supplement)
+            subprocess.run(
+                [node_executable, "--max-old-space-size=8192", str(script), "--append-existing", str(source), str(supplement_xlsx), str(output), str(expected)],
+                cwd=ROOT,
+                check=True,
+                env=env,
+            )
+            if _xlsx_sheet_count(output) != expected:
+                raise AssertionError(f"{name}: appended sheet count drift")
+            output_workbooks[name] = {"worksheet_count": expected, "table_count": expected, "size_bytes": output.stat().st_size}
+
+        workbook_qa = json.loads((target / "WORKBOOK_QA_SUMMARY.json").read_text(encoding="utf-8"))
+        workbook_qa["supplement"] = {
+            "sheet_count": len(supplement),
+            "row_count": int(sum(len(frame) for frame in supplement.values())),
+            "artifact_tool_render": "pass",
+            "formula_count": 0,
+        }
+        workbook_qa["full_workbook"].update(output_workbooks["完整数据整理工作簿.xlsx"])
+        workbook_qa["volume_2"].update(output_workbooks["完整数据整理工作簿_第二册_派生审计与统计.xlsx"])
+        supplement_rows = int(sum(len(frame) for frame in supplement.values()))
+        workbook_qa["full_workbook"]["data_row_count"] = int(workbook_qa["full_workbook"]["data_row_count"]) + supplement_rows
+        workbook_qa["volume_2"]["data_row_count"] = int(workbook_qa["volume_2"]["data_row_count"]) + supplement_rows
+        workbook_qa["volume_2"]["artifact_tool_import"] = "pending_post_append_verification"
+        workbook_qa["preview_count"] = int(workbook_qa.get("preview_count", 0)) + len(supplement)
+        workbook_qa["volume_1_unchanged"] = True
+        _write_json(staging / "WORKBOOK_QA_SUMMARY.json", workbook_qa)
+
+        replace_names = [
+            *SUPPLEMENT_TABLES,
+            "关键数据速览.csv",
+            "数据与变量关系汇总.md",
+            "逐表数据与计算说明.md",
+            "README_先看这里.md",
+            "VALIDATION_SUMMARY.json",
+            "WORKBOOK_QA_SUMMARY.json",
+            "完整数据整理工作簿.xlsx",
+            "完整数据整理工作簿_第二册_派生审计与统计.xlsx",
+        ]
+        for name in replace_names:
+            os.replace(staging / name, target / name)
+        _write_csv(staging / "OUTPUT_MANIFEST.csv", _manifest(target))
+        os.replace(staging / "OUTPUT_MANIFEST.csv", target / "OUTPUT_MANIFEST.csv")
+        return validation
+    finally:
+        shutil.rmtree(staging, ignore_errors=True)
 
 
 def materialize(
@@ -882,6 +1234,11 @@ def materialize(
         delivery = staging / "delivery"; delivery.mkdir()
         for name, frame in sorted(frames.items()):
             _write_csv(delivery / name, frame)
+        supplement = _supplement_frames(delivery, bootstrap_replicates=bootstrap_replicates)
+        frames.update(supplement)
+        for name, frame in supplement.items():
+            _write_csv(delivery / name, frame)
+        validation = {**validation, "audit_supplement_table_count": len(supplement), "audit_supplement_status": "pass"}
         _write_readable_outputs(delivery, frames, validation); _charts(delivery, frames); _write_json(delivery / "VALIDATION_SUMMARY.json", validation)
         if build_workbook:
             script = workbook_script or Path(__file__).with_name("build_full_uncertainty_v5_workbook.mjs")
@@ -915,14 +1272,27 @@ def materialize(
 def main() -> None:
     parser = argparse.ArgumentParser(); parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT)
     parser.add_argument("--bootstrap-replicates", type=int, default=10_000); parser.add_argument("--build-workbook", action="store_true")
-    parser.add_argument("--workbook-script", type=Path); parser.add_argument("--workbook-preview-dir", type=Path); args = parser.parse_args()
-    print(json.dumps(materialize(
-        args.output_dir,
-        bootstrap_replicates=args.bootstrap_replicates,
-        build_workbook=args.build_workbook,
-        workbook_script=args.workbook_script,
-        workbook_preview_dir=args.workbook_preview_dir,
-    ), ensure_ascii=False, indent=2))
+    parser.add_argument("--workbook-script", type=Path); parser.add_argument("--workbook-preview-dir", type=Path)
+    parser.add_argument("--augment-existing", action="store_true"); parser.add_argument("--node-executable", default="node")
+    parser.add_argument("--node-modules", type=Path); args = parser.parse_args()
+    if args.augment_existing:
+        result = augment_existing(
+            args.output_dir,
+            bootstrap_replicates=args.bootstrap_replicates,
+            workbook_script=args.workbook_script,
+            workbook_preview_dir=args.workbook_preview_dir,
+            node_executable=args.node_executable,
+            node_modules=args.node_modules,
+        )
+    else:
+        result = materialize(
+            args.output_dir,
+            bootstrap_replicates=args.bootstrap_replicates,
+            build_workbook=args.build_workbook,
+            workbook_script=args.workbook_script,
+            workbook_preview_dir=args.workbook_preview_dir,
+        )
+    print(json.dumps(result, ensure_ascii=False, indent=2))
 
 
 if __name__ == "__main__":
