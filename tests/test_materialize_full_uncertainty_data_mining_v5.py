@@ -60,6 +60,12 @@ def test_table_spec_covers_every_field() -> None:
     assert all(row["meaning_zh"] and row["source_or_formula"] and row["missing_meaning"] for row in spec["fields"])
 
 
+def test_csv_is_excel_compatible_utf8(tmp_path: Path) -> None:
+    output = tmp_path / "sample.csv"
+    v5._write_csv(output, pd.DataFrame([{"stage": "C1"}]))
+    assert output.read_bytes().startswith(b"\xef\xbb\xbf")
+
+
 def test_existing_semi_mechanism_does_not_turn_missing_rmse_into_zero(tmp_path: Path, monkeypatch: pytest.MonkeyPatch) -> None:
     pd.DataFrame([
         {"base_task_id": "t1", "worker_id": "w1", "geometry_edit_rmse_px": None, "U_initial": 0.2, "delta_U": 0},
@@ -100,7 +106,7 @@ def test_supplement_workbook_payload_uses_nonconflicting_global_indexes(tmp_path
     table = payload["tables"][0]
     assert manifest["start_index"] == 127
     assert table["globalIndex"] == 127
-    assert table["tableName"] == "T128"
+    assert table["tableName"] == "DataTable128"
     assert table["sheetName"].startswith("128_")
 
 

@@ -251,7 +251,7 @@ def _bilingual(frame: pd.DataFrame) -> pd.DataFrame:
 
 def _write_csv(path: Path, frame: pd.DataFrame) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
-    _bilingual(frame).to_csv(path, index=False, encoding="utf-8", lineterminator="\n")
+    _bilingual(frame).to_csv(path, index=False, encoding="utf-8-sig", lineterminator="\n")
 
 
 def _write_json(path: Path, payload: Any) -> None:
@@ -877,7 +877,7 @@ def _write_workbook_payload(
         table = {
             "name": name,
             "sheetName": sheet_names[local_index],
-            "tableName": f"T{index + 1:03d}",
+            "tableName": f"DataTable{index + 1:03d}",
             "globalIndex": index,
             "spec": specs[name],
             "workbookColumns": list(workbook_frame.columns),

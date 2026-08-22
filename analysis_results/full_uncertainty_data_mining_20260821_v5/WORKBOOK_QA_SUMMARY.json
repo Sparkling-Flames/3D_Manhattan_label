@@ -2,12 +2,14 @@
   "artifact_tool_formula_scan": "pass",
   "artifact_tool_full_workbook_import": "not_evaluable_due_runtime_memory_limit",
   "artifact_tool_volume_import": "pass",
+  "excel_read_only_open": "pass",
+  "excel_table_name_validation": "pass",
   "cell_xfs_count": 26,
   "formula_count": 0,
   "full_workbook": {
     "data_row_count": 130254,
     "file": "完整数据整理工作簿.xlsx",
-    "size_bytes": 20748468,
+    "size_bytes": 20744699,
     "table_count": 139,
     "worksheet_count": 139
   },
@@ -25,7 +27,7 @@
     "data_row_count": 44551,
     "file": "完整数据整理工作簿_第一册_原始事实.xlsx",
     "formula_count": 0,
-    "size_bytes": 6620035,
+    "size_bytes": 6621881,
     "table_count": 7,
     "worksheet_count": 7
   },
@@ -35,8 +37,13 @@
     "data_row_count": 85703,
     "file": "完整数据整理工作簿_第二册_派生审计与统计.xlsx",
     "formula_count": 0,
-    "size_bytes": 14132859,
+    "size_bytes": 14127111,
     "table_count": 132,
     "worksheet_count": 132
+  },
+  "in_place_compatibility_repairs": {
+    "csv_utf8_bom_added": 141,
+    "data_cells_modified": 0,
+    "excel_table_names_repaired_across_files": 278
   }
 }
