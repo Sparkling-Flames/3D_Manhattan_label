@@ -210,6 +210,24 @@ active_logs/**
 !analysis_results/**
 !paper_figures/**
 
+# Retained local snapshots/backups and delivery bundles; do not publish by default.
+/1E-10
+/analysis_results/_archive_superseded_20260817/
+/analysis_results/_archive_superseded_20260818/
+/analysis_results/_local_conflict_backup_main_before_259e96f_20260820/
+/analysis_results/a4_image_evidence_substrate_20260817_v1/
+/analysis_results/annotation-uncertainty-preflight/
+/analysis_results/calibration_decision_readiness_20260815_v1/
+/analysis_results/calibration_dual_track_processing_20260814_v1/
+/analysis_results/calibration_dual_track_processing_20260815_v2/
+/analysis_results/full_uncertainty_data_mining_20260821_v5.zip
+/analysis_results/persistent_disagreement_diagnostic_20260819_v1/PERSISTENT_DISAGREEMENT_SUMMARY.csv
+/analysis_results/persistent_disagreement_diagnostic_20260819_v1/PERSISTENT_DISAGREEMENT_THRESHOLD_ROBUSTNESS_SUMMARY.csv
+/analysis_results/persistent_disagreement_diagnostic_20260819_v1/analysis_manifest.json
+/analysis_results/reviewer_profile_dual_stage_processing_20260819_v1/
+/analysis_results/uncertainty_data_inventory_20260820_v1/
+/analysis_results/最新分析/
+
 # Local visual-review assets and non-formal timing preflight output.
 # Keep the three machine-readable building-registry audit artifacts tracked.
 analysis_results/c1_building_registry_review_20260801/*.jpg
