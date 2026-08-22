@@ -2,6 +2,12 @@ name: Uncertainty threshold, anchoring, and worker-type audit
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py.xz.b64.part*
+      - .github/workflows/analysis-uncertainty-threshold-anchoring-20260823.yml
   push:
     branches:
       - analysis/uncertainty-threshold-anchoring-worker-types-20260823
@@ -51,6 +57,7 @@ jobs:
           python tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py
 
       - name: Commit reproducible source and outputs
+        if: github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
