@@ -44,6 +44,16 @@ jobs:
             | base64 --decode \
             | xz --decompress \
             > tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py
+          python - <<'PY'
+          from pathlib import Path
+          path = Path('tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py')
+          text = path.read_text(encoding='utf-8')
+          old = 'task_quality = task[["base_task_id", "initial_quality_mean", "building_id"]].copy()'
+          new = 'task_quality = task[["base_task_id", "initial_quality_mean"]].copy()'
+          if old not in text:
+              raise SystemExit('expected source patch target not found')
+          path.write_text(text.replace(old, new), encoding='utf-8')
+          PY
           rm tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py.xz.b64.part*
           python -m py_compile tools/paper_a_manhattan/full_uncertainty/analyze_threshold_anchoring_worker_types_20260823.py
 
