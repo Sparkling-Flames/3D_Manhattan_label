@@ -2,6 +2,12 @@ name: Proposal correctness and Model Issue bridge
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - tools/thesis_main/analysis/full_uncertainty/materialize_proposal_correctness_model_issue_bridge_20260823.py
+      - .github/workflows/proposal-correctness-model-issue-bridge-20260823.yml
   push:
     branches:
       - analysis/proposal-correctness-model-issue-20260823
@@ -40,6 +46,7 @@ jobs:
           python -m tools.thesis_main.analysis.full_uncertainty.materialize_proposal_correctness_model_issue_bridge_20260823
 
       - name: Commit outputs
+        if: github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
