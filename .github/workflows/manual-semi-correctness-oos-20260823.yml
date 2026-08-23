@@ -8,6 +8,7 @@ on:
     paths:
       - tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823.py
       - tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823_v2.py
+      - tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823_v3.py
       - .github/workflows/manual-semi-correctness-oos-20260823.yml
   push:
     branches:
@@ -15,6 +16,7 @@ on:
     paths:
       - tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823.py
       - tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823_v2.py
+      - tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823_v3.py
       - .github/workflows/manual-semi-correctness-oos-20260823.yml
 
 permissions:
@@ -41,11 +43,11 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pandas numpy scipy
 
-      - name: Run strict analysis
+      - name: Run strict feasible-design analysis
         env:
           PYTHONPATH: .
         run: |
-          python -m tools.thesis_main.analysis.full_uncertainty.analyze_manual_semi_correctness_oos_20260823_v2
+          python -m tools.thesis_main.analysis.full_uncertainty.analyze_manual_semi_correctness_oos_20260823_v3
 
       - name: Commit outputs
         if: github.event_name != 'pull_request'
