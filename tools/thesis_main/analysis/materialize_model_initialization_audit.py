@@ -496,9 +496,11 @@ def _report(rows: list[dict[str, Any]], manifest: dict[str, Any]) -> str:
         metric_line("Validation 官方原始 GT", validation_rows),
     ]
     corner_bin_lines = bin_lines("Test 官方", test_rows, official_test=True) + bin_lines("Validation", validation_rows)
-    return f"""# HoHoNet 模型布局初始化代理全量审计（Test 混合 GT v3）
+    return f"""# HoHoNet 模型布局初始化代理全量审计（旧版 post-hoc v1 阈值保留版）
 
 ## 结论口径
+
+本文件完整保留旧报告的二元判定体系，供历史结果复核和纵向比较；它不是唯一主分析。角点对数量门保持不变，`.90/.80/.05`、图宽 1% 角点门和较宽松的 `.75/.65/2%` 仍按旧版原样计算，但后几组数值均属分析者定义的 post-hoc operational thresholds，不能解释为文献统一标准或独立校准的最佳阈值。另见同目录的 `MODEL_INITIALIZATION_AUDIT_TOPOLOGY_PRIMARY.md`，其中只把角点对数量一致作为硬二元门，其余误差按连续量和多阈值敏感性报告。
 
 本报告覆盖 Test 458 张与 Validation 190 张，共 {len(rows)} 张。Test 严格采用混合 GT：从 `export_label/groudTruth.json` 顺序无关识别出用户确认的 30 张实质修订并采用人工 GT，其余 428 张采用 `data/mp3d_layout/test/label_cor` 官方 GT；Validation 190 张全部采用 `data/mp3d_layout/valid/label_cor` 官方 GT。全程未使用 `test_no_occ` 或 `valid_no_occ`。30 张清单另见 `docs/thesis_main/TEST_MANUAL_GT_CORRECTIONS_20260823.md`。
 
@@ -590,8 +592,131 @@ Validation 相对 Test 的优势在 4、6、8、10+ 每个复杂度层都存在�
 - 运行清单：`{manifest['output_dir']}/run_manifest.json`
 - 坐标统一为 1024×512；仅可视化叠加到 2048×1024 原图时才放大 2 倍。
 - Validation 模型 txt 在 `output/` 中缺失；本次使用 `analysis_results/c2b_validation_static_20260802_v16/validation_prediction_txt`。已用 GPU、同一 config/checkpoint 和 190 张原图独立重跑到 `analysis_results/model_initialization_validation_ep300_replay_20260823_v1/prediction_txt`：旧/新 188/190 张角点对数量一致，174/190 张的全点最大偏差不超过 2 px；官方 evaluator 的连续指标分别为旧产物 92.58/91.64、新重跑 93.48/92.79（2D/3D IoU）。因此旧产物来源得到实证支持，但二元后处理在少数近阈值样本上有环境敏感性。
-- GPU 重跑命令、输入/输出聚合哈希与旧/新逐图对照：`{manifest['outputs'].get('gpu_replay_manifest', '未绑定')}`。
+- GPU 重跑命令、输入/输出聚合哈希与旧/新逐图对照：`{manifest.get('evidence', {}).get('gpu_replay_manifest', '未绑定')}`。
 - checkpoint SHA-256：`{manifest['checkpoint_sha256']}`。
+"""
+
+
+def _topology_primary_report(rows: list[dict[str, Any]], manifest: dict[str, Any]) -> str:
+    test_rows = [row for row in rows if row["split"] == "test"]
+    validation_rows = [row for row in rows if row["split"] == "validation"]
+
+    def official_topology(row: dict[str, Any]) -> bool:
+        classification = str(row.get("official_gt_sensitivity_initialization_class", ""))
+        return classification != "wrong_initialization_topology" if classification else bool(row["topology_exact"])
+
+    def topology_line(label: str, scope: list[dict[str, Any]], *, official_test: bool = False) -> str:
+        passed = sum(official_topology(row) if official_test else bool(row["topology_exact"]) for row in scope)
+        return f"| {label} | {len(scope)} | {passed} | {len(scope) - passed} | {100 * passed / len(scope):.2f} |"
+
+    def metric_line(label: str, scope: list[dict[str, Any]], *, official_test: bool = False) -> str:
+        def value(row: dict[str, Any], key: str) -> float:
+            sensitivity = row.get(f"official_gt_sensitivity_{key}", "") if official_test else ""
+            return float(sensitivity if sensitivity != "" else row[key])
+        return (
+            f"| {label} | {len(scope)} | "
+            f"{100 * np.mean([value(row, 'topdown_2d_iou') for row in scope]):.2f} | "
+            f"{100 * np.mean([value(row, 'layoutnetv2_style_3d_iou') for row in scope]):.2f} | "
+            f"{np.mean([value(row, 'layout_depth_rmse_proxy') for row in scope]):.2f} | "
+            f"{np.mean([value(row, 'layout_depth_delta1_proxy') for row in scope]):.2f} |"
+        )
+
+    topology_test = [row for row in test_rows if bool(row["topology_exact"])]
+    topology_validation = [row for row in validation_rows if bool(row["topology_exact"])]
+
+    def distribution_line(label: str, key: str, scale: float = 1.0) -> str:
+        def summary(scope: list[dict[str, Any]]) -> str:
+            values = np.asarray([float(row[key]) * scale for row in scope], dtype=np.float64)
+            q1, median, q3 = np.quantile(values, [.25, .50, .75])
+            return f"{median:.2f} [{q1:.2f}, {q3:.2f}]"
+        return f"| {label} | {summary(topology_test)} | {summary(topology_validation)} |"
+
+    def sensitivity_line(label: str, key: str, threshold: float, *, at_least: bool) -> str:
+        def summary(scope: list[dict[str, Any]]) -> str:
+            passed = sum(
+                float(row[key]) >= threshold if at_least else float(row[key]) <= threshold
+                for row in scope
+            )
+            return f"{passed}/{len(scope)} ({100 * passed / len(scope):.2f}%)"
+        return f"| {label} | {summary(topology_test)} | {summary(topology_validation)} |"
+
+    topology_lines = [
+        topology_line("Test 官方原始 GT（敏感性）", test_rows, official_test=True),
+        topology_line("Test 混合 GT（当前）", test_rows),
+        topology_line("Validation 官方原始 GT", validation_rows),
+    ]
+    continuous_lines = [
+        metric_line("Test 官方原始 GT（benchmark 对照）", test_rows, official_test=True),
+        metric_line("Test 混合 GT（30人工+428官方）", test_rows),
+        metric_line("Validation 官方原始 GT", validation_rows),
+    ]
+    distribution_lines = [
+        distribution_line("top-down 2D IoU (%)", "topdown_2d_iou", 100),
+        distribution_line("derived 3D IoU (%)", "layoutnetv2_style_3d_iou", 100),
+        distribution_line("平均角点误差 / 图像对角线 (%)", "corner_error_percent_diagonal"),
+        distribution_line("layout mask difference (%)", "layout_mask_difference", 100),
+    ]
+    sensitivity_lines = [
+        sensitivity_line(f"2D IoU ≥ {threshold:.2f}", "topdown_2d_iou", threshold, at_least=True)
+        for threshold in (.75, .80, .85, .90, .95)
+    ] + [
+        sensitivity_line(f"3D IoU ≥ {threshold:.2f}", "layoutnetv2_style_3d_iou", threshold, at_least=True)
+        for threshold in (.65, .70, .75, .80, .85)
+    ] + [
+        sensitivity_line(f"平均角点误差 ≤ {threshold:.0f}% 对角线", "corner_error_percent_diagonal", threshold, at_least=False)
+        for threshold in (1.0, 2.0, 3.0)
+    ] + [
+        sensitivity_line(f"mask difference ≤ {threshold:.2f}", "layout_mask_difference", threshold, at_least=False)
+        for threshold in (.01, .05, .10)
+    ]
+
+    return f"""# HoHoNet 模型布局初始化代理审计（角点数量主分析版）
+
+## 主结论
+
+本版只把**点对编码合法且模型/GT 角点对数量完全一致**作为硬二元门。它保留用户旧报告最关心的角点数量标准，同时不把尚未独立校准的 IoU、角点距离或 mask difference 数值强行合并成另一个“成功/失败”结论。
+
+当前对象仍是 HoHoNet ep300 保存的最终布局，即 `final_layout_as_initialization_proxy`，不是未保存的网络原始峰值。Test 采用 30 张人工校准 GT + 428 张官方 GT；Validation 190 张采用官方 GT；未使用 `test_no_occ` 或 `valid_no_occ`。
+
+| 口径 | N | 角点对数量一致 | 数量不一致 | 一致率 (%) |
+|---|---:|---:|---:|---:|
+{chr(10).join(topology_lines)}
+
+因此 Test 混合 GT 的角点数量主结果是 **{len(topology_test)}/{len(test_rows)}（{100 * len(topology_test) / len(test_rows):.2f}%）**；Validation 是 **{len(topology_validation)}/{len(validation_rows)}（{100 * len(topology_validation) / len(validation_rows):.2f}%）**。这是逐图拓扑代理通过率，不是官方 2D/3D IoU benchmark，也不等于“无需人工修改”。
+
+## 连续 benchmark 指标
+
+| 口径 | N | 2D IoU (%) | 3D IoU (%) | layout-depth RMSE | delta1 |
+|---|---:|---:|---:|---:|---:|
+{chr(10).join(continuous_lines)}
+
+Test 官方原始 GT 的 81.97% 2D IoU 是 458 个逐图 IoU 的均值；它与上面的角点数量一致率回答不同问题。`layout-depth` 两列由布局角点合成深度，只是 proxy，不是真实 Matterport depth 指标。
+
+## 数量一致样本中的误差分布
+
+以下均为“中位数 [Q1, Q3]”，不设置通过门槛。
+
+| 指标 | Test 混合 GT（N={len(topology_test)}） | Validation（N={len(topology_validation)}） |
+|---|---:|---:|
+{chr(10).join(distribution_lines)}
+
+## 非拓扑误差的多阈值敏感性
+
+各行仅单独应用一个阈值，分母均为本 split 中角点对数量一致的样本；这些行不能相加，也不代表推荐阈值。
+
+| 单项敏感性条件 | Test 混合 GT | Validation |
+|---|---:|---:|
+{chr(10).join(sensitivity_lines)}
+
+旧版 `.90/.80/.05` 联合门、图宽 1% 角点门和 `.75/.65/2%` 可用门仍完整保存在 `MODEL_INITIALIZATION_AUDIT_LEGACY_V1_THRESHOLDS.md` 及共享 CSV 的原字段中。若以后要把其他误差重新变成硬门，应使用独立人工“可编辑性/返工量”结局前瞻校准；不能依据当前 Test 结果反向挑阈值，也不应把已用于开发的 Validation 当独立校准集。
+
+## 数据与复现
+
+- 全量逐图 CSV：`{manifest['outputs']['csv']}`
+- 旧版阈值报告：`{manifest['output_dir']}/MODEL_INITIALIZATION_AUDIT_LEGACY_V1_THRESHOLDS.md`
+- 运行清单：`{manifest['output_dir']}/run_manifest.json`
+- GPU 重跑证据：`{manifest.get('evidence', {}).get('gpu_replay_manifest', '未绑定')}`
+- checkpoint SHA-256：`{manifest['checkpoint_sha256']}`
 """
 
 
@@ -666,7 +791,7 @@ def materialize(
     csv_path = output_dir / "model_initialization_metrics.csv"
     _write_csv(csv_path, rows, list(rows[0]))
     manifest = {
-        "schema_version": "model_initialization_audit_hybrid_gt_v3",
+        "schema_version": "model_initialization_audit_hybrid_gt_v4_two_report_views",
         "created_date": "2026-08-23",
         "row_count": len(rows),
         "split_counts": dict(Counter(row["split"] for row in rows)),
@@ -685,6 +810,9 @@ def materialize(
         "geometry_threshold_status": "analyst-defined post-hoc operational v1 after initial full-output semantic review; not literature-standard, preregistered, or independently calibrated",
         "initialization_correct_rule": "valid pair encoding AND exact pair count AND all ceiling/floor corners matched at 10.24px AND geometry_acceptable",
         "initialization_acceptable_rule": "valid pair encoding AND exact pair count AND topdown_2d_iou>=0.75 AND layoutnetv2_style_3d_iou>=0.65 AND corner_error_percent_diagonal<=2.0; analyst-defined operational aid, not literature-standard",
+        "primary_hard_gate": "valid pair encoding AND exact model/GT corner-pair count",
+        "non_topology_metric_policy": "continuous primary reporting plus independent multi-threshold sensitivity; no single calibrated cutoff claimed",
+        "legacy_posthoc_v1_status": "retained unchanged for historical comparison in a separate report; not the topology-primary conclusion",
         "near_identical_rule": "initialization_correct AND max_corner_error_px<=2.56 AND layout_mask_difference<=0.01",
         "depth_metric_note": "layout depth synthesized from model/GT corners; proxy only; no real Matterport depth GT bound",
         "layout_metric_order_rule": "preserve original consecutive-pair cyclic order; do not sort panorama corners by x before official-style 2D/3D/depth metrics",
@@ -694,15 +822,22 @@ def materialize(
         "validation_model_source_note": "verified ep300 frozen artifact; validation predictions are absent from output/",
         "outputs": {"csv": _repo_path(csv_path)},
     }
-    replay_manifest_path = output_dir / "GPU_REPLAY_MANIFEST.json"
-    replay_config_path = output_dir / "inference_replay_config.yaml"
+    replay_evidence_dir = ROOT / "analysis_results/model_initialization_audit_hybrid_gt_20260823_v3"
+    replay_manifest_path = replay_evidence_dir / "GPU_REPLAY_MANIFEST.json"
+    replay_config_path = replay_evidence_dir / "inference_replay_config.yaml"
+    manifest["evidence"] = {}
     if replay_manifest_path.is_file():
-        manifest["outputs"]["gpu_replay_manifest"] = _repo_path(replay_manifest_path)
+        manifest["evidence"]["gpu_replay_manifest"] = _repo_path(replay_manifest_path)
     if replay_config_path.is_file():
-        manifest["outputs"]["inference_replay_config"] = _repo_path(replay_config_path)
-    report_path = output_dir / "MODEL_INITIALIZATION_AUDIT_REPORT.md"
-    report_path.write_text(_report(rows, manifest), encoding="utf-8")
-    manifest["outputs"]["report"] = _repo_path(report_path)
+        manifest["evidence"]["inference_replay_config"] = _repo_path(replay_config_path)
+    legacy_report_path = output_dir / "MODEL_INITIALIZATION_AUDIT_LEGACY_V1_THRESHOLDS.md"
+    topology_report_path = output_dir / "MODEL_INITIALIZATION_AUDIT_TOPOLOGY_PRIMARY.md"
+    legacy_report_path.write_text(_report(rows, manifest), encoding="utf-8")
+    topology_report_path.write_text(_topology_primary_report(rows, manifest), encoding="utf-8")
+    manifest["outputs"].update({
+        "legacy_v1_threshold_report": _repo_path(legacy_report_path),
+        "topology_primary_report": _repo_path(topology_report_path),
+    })
     manifest["output_sha256"] = {
         name: _sha256(ROOT / path) for name, path in manifest["outputs"].items()
     }
@@ -722,7 +857,7 @@ def main() -> None:
     parser.add_argument("--test-image-dir", type=Path, default=ROOT / "data/mp3d_layout/test/img")
     parser.add_argument("--validation-image-dir", type=Path, default=ROOT / "data/mp3d_layout/valid/img")
     parser.add_argument("--checkpoint", type=Path, default=ROOT / "ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth")
-    parser.add_argument("--output-dir", type=Path, default=ROOT / "analysis_results/model_initialization_audit_hybrid_gt_20260823_v3")
+    parser.add_argument("--output-dir", type=Path, default=ROOT / "analysis_results/model_initialization_audit_hybrid_gt_20260823_v4")
     args = parser.parse_args()
     print(json.dumps(materialize(**vars(args)), ensure_ascii=False, indent=2))
 

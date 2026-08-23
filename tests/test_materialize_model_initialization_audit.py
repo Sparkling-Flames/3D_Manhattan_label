@@ -7,6 +7,7 @@ import pytest
 
 from tools.thesis_main.analysis.materialize_model_initialization_audit import (
     _metric_row,
+    _topology_primary_report,
     classify_initialization,
     exclusive_corner_match,
     identify_confirmed_manual_gt,
@@ -113,3 +114,32 @@ def test_layout_iou_preserves_official_cyclic_corner_order(tmp_path: Path) -> No
     row = _metric_row("test", "sample", model, gt, tmp_path / "sample.png")
 
     assert row["topdown_2d_iou"] == pytest.approx(0.837931, abs=1e-6)
+
+
+def test_topology_primary_report_keeps_other_metrics_as_sensitivity() -> None:
+    def row(split: str, topology_exact: bool) -> dict[str, object]:
+        return {
+            "split": split,
+            "topology_exact": topology_exact,
+            "official_gt_sensitivity_initialization_class": "",
+            "topdown_2d_iou": .9,
+            "layoutnetv2_style_3d_iou": .8,
+            "layout_depth_rmse_proxy": .1,
+            "layout_depth_delta1_proxy": .95,
+            "corner_error_percent_diagonal": 1.0,
+            "layout_mask_difference": .05,
+        }
+
+    report = _topology_primary_report(
+        [row("test", True), row("test", False), row("validation", True)],
+        {
+            "outputs": {"csv": "shared.csv"},
+            "output_dir": "out",
+            "evidence": {},
+            "checkpoint_sha256": "checkpoint",
+        },
+    )
+
+    assert "Test 混合 GT 的角点数量主结果是 **1/2（50.00%）**" in report
+    assert "各行仅单独应用一个阈值" in report
+    assert "旧版 `.90/.80/.05` 联合门" in report

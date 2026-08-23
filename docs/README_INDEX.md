@@ -127,5 +127,5 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 ## HoHoNet 初始化代理审计
 
 - 生成工具：`tools/thesis_main/analysis/materialize_model_initialization_audit.py`
-- 当前结果：`analysis_results/model_initialization_audit_hybrid_gt_20260823_v3/`
+- 当前结果：`analysis_results/model_initialization_audit_hybrid_gt_20260823_v4/`（共享逐图 CSV；分别提供旧版 v1 阈值保留报告与角点数量主分析报告）
 - v3 保留全景角点原始环序并与仓库 `eval_layout.py` 对齐；GPU 重跑、旧/新预测对照和完整解释见结果目录中的报告与 manifest。
