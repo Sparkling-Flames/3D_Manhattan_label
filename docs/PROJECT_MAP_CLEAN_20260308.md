@@ -79,6 +79,8 @@
 
 - `tools/thesis_main/analysis/full_uncertainty/`：论文主线的全阶段标注不确定性、Manual/Semi、Crowd–GT、proposal 与时间来源审计生成链；v5 编排入口为 `materialize_full_uncertainty_data_mining_v5.py`，计算引擎复用 v4。
 - `analysis_results/full_uncertainty_data_mining_20260821_v5/`：当前全量生成交付目录；v4 交付只保留在 Git 历史中。该目录属于派生输出，不是输入真源，也不改变 C2-B/C2-A-RP 冻结状态。
+- `tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823_v3.py`：Manual–Semi correctness、严格 observed-field 候选、OOS 缺口与条件功效的当前编排入口；v1/v2 是其顺序依赖层。
+- `analysis_results/manual_semi_correctness_oos_20260823/`：上述补充审计的唯一 canonical 派生结果目录。资源核算表中的两臂/三臂方案仅为未生成 worker–image assignment manifest 的探索性资源算术，不替代正式 T1 的 `Manual/Semi × ordinary/stress_assist`、每图 2+2 与 image-level paired estimand。
 
 ## 2026-08-23 官方 MP3D GT 模型初始化代理审计
 

@@ -5,6 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 
+from tools.thesis_main.analysis.full_uncertainty import analyze_manual_semi_correctness_oos_20260823 as v1
 from tools.thesis_main.analysis.full_uncertainty import analyze_manual_semi_correctness_oos_20260823_v2 as v2
 
 
@@ -15,7 +16,7 @@ OUT = ROOT / "analysis_results" / "manual_semi_correctness_oos_20260823"
 def main() -> None:
     v2.main()
 
-    # Feasible under the current 20-worker pool. No design below requires a worker to see the same image in multiple arms.
+    # Resource arithmetic only; no worker-image assignment manifest is materialized here.
     designs = [
         {
             "design": "A_60_image_three_arm_power_priority",
@@ -70,7 +71,11 @@ def main() -> None:
             "limitation": "proposal correctness is not randomized; weaker causal claim",
         },
     ]
-    pd.DataFrame(designs).to_csv(OUT / "DESIGN_OPTIONS_RESOURCE_ACCOUNTING.csv", index=False, encoding="utf-8-sig")
+    design_frame = pd.DataFrame(designs)
+    design_frame["formal_t1_eligible"] = False
+    design_frame["assignment_manifest_materialized"] = False
+    design_frame["status"] = "exploratory_alternative_study_not_frozen_t1"
+    v1.write_csv(design_frame, OUT / "DESIGN_OPTIONS_RESOURCE_ACCOUNTING.csv")
 
     validation_path = OUT / "VALIDATION.json"
     validation = json.loads(validation_path.read_text(encoding="utf-8"))
@@ -81,12 +86,19 @@ def main() -> None:
         & (measured["definition"] == "micro_same_topology_measured_negative_metric_change")
     ]
     validation.update({
-        "analysis_version": "strict_observed_fields_v3_feasible_designs",
+        "analysis_version": "strict_observed_fields_v3_feasible_designs_protocol_guard",
         "c1_formal_micro_candidate_rows": int(hit.iloc[0]["row_count"]) if len(hit) else 0,
         "design_options_require_no_repeat_image_exposure": True,
+        "design_assignment_manifest_materialized": False,
+        "design_feasibility_status": "resource_arithmetic_only",
         "invalid_k10_per_arm_designs_removed": True,
+        "formal_t1_contract_unchanged": True,
+        "formal_t1_design": "Manual/Semi x ordinary/stress_assist; 2 Manual + 2 Semi per image; image-level paired estimand",
+        "design_options_status": "exploratory_alternative_study_not_frozen_t1",
     })
-    validation_path.write_text(json.dumps(validation, ensure_ascii=False, indent=2), encoding="utf-8")
+    validation_path.write_text(
+        json.dumps(validation, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n",
+    )
 
 
 if __name__ == "__main__":

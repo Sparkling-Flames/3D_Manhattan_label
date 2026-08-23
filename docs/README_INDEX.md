@@ -123,6 +123,7 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - 工具入口：`tools/thesis_main/analysis/full_uncertainty/materialize_full_uncertainty_data_mining_v5.py`（复用 v4 计算引擎）
 - 当前生成目录：`analysis_results/full_uncertainty_data_mining_20260821_v5/`；v4 交付只保留在 Git 历史中。
 - 该审计保留 Active time 与 Label Studio Lead time 的边界，不修改规范方法合同或已冻结阶段结果。
+- Manual–Semi correctness/OOS 补充审计入口：`tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823_v3.py`；结果目录：`analysis_results/manual_semi_correctness_oos_20260823/`。其中资源方案仅为未生成 assignment manifest 的探索性资源算术，不改变正式 T1 的 2×2 设计。
 
 ## HoHoNet 初始化代理审计
 

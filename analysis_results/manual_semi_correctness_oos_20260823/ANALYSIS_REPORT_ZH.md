@@ -8,6 +8,10 @@
 4. Building 不是要加入的额外科学解释变量，但属于相关性单位：图内随机化可消除主要图片难度，仍应限制每 building 图片数并做 cluster sensitivity。
 5. 648 张模型审计没有正式 Scope/reference 字段，Main 前必须完成 OOS/unresolved/reference gate。
 
+## 协议边界
+
+`DESIGN_OPTIONS_RESOURCE_ACCOUNTING.csv` 中的两臂/三臂资源方案仅是未来独立研究的探索性资源算术，尚未生成 worker–image assignment manifest，**不是当前正式 T1**。正式 T1 仍遵循冻结合同：`Manual/Semi × ordinary/stress_assist`、每图 `2 Manual + 2 Semi`、image-level paired estimand；本审计不改变其分配、estimand、margin 或 gate。
+
 ## GT 指标下降候选
 
 C1、正式 analysis-eligible 且 task-level in-scope：

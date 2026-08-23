@@ -1,6 +1,5 @@
 {
   "seed": 20260823,
-  "source_commit_expected": "cad851812d72e4056c660bbac7f81000c0a19565",
   "tag_rows": 574,
   "c1_rows": 106,
   "p1_rows": 468,
@@ -12,9 +11,14 @@
   },
   "c1_micro_candidate_rows": 29,
   "all_required_outputs_nonempty": true,
-  "analysis_version": "strict_observed_fields_v3_feasible_designs",
+  "analysis_version": "strict_observed_fields_v3_feasible_designs_protocol_guard",
   "c1_formal_micro_candidate_rows": 0,
   "edit_measurement_coverage_output": "EDIT_MEASUREMENT_COVERAGE.csv",
   "design_options_require_no_repeat_image_exposure": true,
-  "invalid_k10_per_arm_designs_removed": true
+  "design_assignment_manifest_materialized": false,
+  "design_feasibility_status": "resource_arithmetic_only",
+  "invalid_k10_per_arm_designs_removed": true,
+  "formal_t1_contract_unchanged": true,
+  "formal_t1_design": "Manual/Semi x ordinary/stress_assist; 2 Manual + 2 Semi per image; image-level paired estimand",
+  "design_options_status": "exploratory_alternative_study_not_frozen_t1"
 }

@@ -106,7 +106,7 @@ def main() -> None:
                 summary_rows.append(summarize(rows, mask, stage, lane, name))
 
     summary = pd.DataFrame(summary_rows)
-    summary.to_csv(OUT / "MEASURED_CANDIDATE_COUNTS.csv", index=False, encoding="utf-8-sig")
+    v1.write_csv(summary, OUT / "MEASURED_CANDIDATE_COUNTS.csv")
 
     candidate_mask = (
         rows["stage"].eq("C1")
@@ -122,8 +122,9 @@ def main() -> None:
         "acceptable_tag", "corner_drift_reported", "U_initial", "U_final", "delta_U", "geometry_edit_rmse_px",
         "edit_magnitude_band", "topology_changed", "material_edit", "task_final_scope", "image_reference",
     ]
-    rows.loc[candidate_mask, [c for c in cols if c in rows.columns]].sort_values(["base_task_id", "worker_id"]).to_csv(
-        OUT / "C1_MICRO_EDIT_NEGATIVE_METRIC_CANDIDATES.csv", index=False, encoding="utf-8-sig"
+    v1.write_csv(
+        rows.loc[candidate_mask, [c for c in cols if c in rows.columns]].sort_values(["base_task_id", "worker_id"]),
+        OUT / "C1_MICRO_EDIT_NEGATIVE_METRIC_CANDIDATES.csv",
     )
 
     coverage_rows = []
@@ -138,7 +139,7 @@ def main() -> None:
             "edited_n": int(sub["edited_bool"].sum()),
             "micro_same_topology_measured_edit_n": int(sub["micro_same_topology_measured_edit"].sum()),
         })
-    pd.DataFrame(coverage_rows).to_csv(OUT / "EDIT_MEASUREMENT_COVERAGE.csv", index=False, encoding="utf-8-sig")
+    v1.write_csv(pd.DataFrame(coverage_rows), OUT / "EDIT_MEASUREMENT_COVERAGE.csv")
 
     transitions = []
     for stage in ["P1", "C1"]:
@@ -167,7 +168,7 @@ def main() -> None:
                         "mean_delta_U": float(sub["delta_U_num"].mean()) if len(sub) else np.nan,
                         "median_delta_U": float(sub["delta_U_num"].median()) if len(sub) else np.nan,
                     })
-    pd.DataFrame(transitions).to_csv(OUT / "PROPOSAL_CORRECTNESS_TRANSITIONS_RECOMPUTED.csv", index=False, encoding="utf-8-sig")
+    v1.write_csv(pd.DataFrame(transitions), OUT / "PROPOSAL_CORRECTNESS_TRANSITIONS_RECOMPUTED.csv")
 
     def get(stage: str, lane: str, definition: str) -> dict[str, object]:
         hit = summary[(summary.stage == stage) & (summary.lane == lane) & (summary.definition == definition)]
@@ -190,6 +191,10 @@ def main() -> None:
 3. 对方给出的 n=60 条件功效计算成立；由于当前没有真实 correctness-interaction 方差，显著结果概率不能定量称为高。
 4. Building 不是要加入的额外科学解释变量，但属于相关性单位：图内随机化可消除主要图片难度，仍应限制每 building 图片数并做 cluster sensitivity。
 5. 648 张模型审计没有正式 Scope/reference 字段，Main 前必须完成 OOS/unresolved/reference gate。
+
+## 协议边界
+
+`DESIGN_OPTIONS_RESOURCE_ACCOUNTING.csv` 中的两臂/三臂资源方案仅是未来独立研究的探索性资源算术，尚未生成 worker–image assignment manifest，**不是当前正式 T1**。正式 T1 仍遵循冻结合同：`Manual/Semi × ordinary/stress_assist`、每图 `2 Manual + 2 Semi`、image-level paired estimand；本审计不改变其分配、estimand、margin 或 gate。
 
 ## GT 指标下降候选
 
@@ -218,7 +223,7 @@ P1 开发数据：
 - Model Issue 必须在编辑前填写，并拆成：material issue yes/no/unsure、issue family、required correction severity、confidence。
 - Correct/Wrong treatment truth 必须来自独立、结果不可见的 researcher/expert stimulus manifest。
 """
-    (OUT / "ANALYSIS_REPORT_ZH.md").write_text(report, encoding="utf-8")
+    (OUT / "ANALYSIS_REPORT_ZH.md").write_text(report, encoding="utf-8", newline="\n")
 
     validation_path = OUT / "VALIDATION.json"
     validation = json.loads(validation_path.read_text(encoding="utf-8")) if validation_path.exists() else {}
@@ -227,7 +232,9 @@ P1 开发数据：
         "c1_formal_micro_candidate_rows": int(candidate_mask.sum()),
         "edit_measurement_coverage_output": "EDIT_MEASUREMENT_COVERAGE.csv",
     })
-    validation_path.write_text(json.dumps(validation, ensure_ascii=False, indent=2), encoding="utf-8")
+    validation_path.write_text(
+        json.dumps(validation, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n",
+    )
 
 
 if __name__ == "__main__":

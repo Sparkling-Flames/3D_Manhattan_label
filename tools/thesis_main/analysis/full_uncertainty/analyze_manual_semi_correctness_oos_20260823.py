@@ -22,6 +22,10 @@ def read_csv(path: Path) -> pd.DataFrame:
     return frame
 
 
+def write_csv(frame: pd.DataFrame, path: Path) -> None:
+    frame.to_csv(path, index=False, encoding="utf-8-sig", lineterminator="\n")
+
+
 def boolish(series: pd.Series) -> pd.Series:
     if series.dtype == bool:
         return series.fillna(False)
@@ -150,7 +154,7 @@ def main() -> None:
                 measured.append(summarize_mask(rows, mask, definition, stage, lane))
 
     measured_df = pd.DataFrame(measured)
-    measured_df.to_csv(OUT / "MEASURED_CANDIDATE_COUNTS.csv", index=False, encoding="utf-8-sig")
+    write_csv(measured_df, OUT / "MEASURED_CANDIDATE_COUNTS.csv")
 
     candidate_mask = (
         rows["stage"].eq("C1")
@@ -166,9 +170,12 @@ def main() -> None:
         "acceptable_tag", "corner_drift_reported", "U_initial", "U_final", "delta_U", "geometry_edit_rmse_px",
         "edit_magnitude_band", "topology_changed", "material_edit", "task_final_scope", "image_reference",
     ]
-    rows.loc[candidate_mask, [c for c in candidate_cols if c in rows.columns]].sort_values(
-        ["base_task_id", "worker_id"]
-    ).to_csv(OUT / "C1_MICRO_EDIT_NEGATIVE_METRIC_CANDIDATES.csv", index=False, encoding="utf-8-sig")
+    write_csv(
+        rows.loc[candidate_mask, [c for c in candidate_cols if c in rows.columns]].sort_values(
+            ["base_task_id", "worker_id"]
+        ),
+        OUT / "C1_MICRO_EDIT_NEGATIVE_METRIC_CANDIDATES.csv",
+    )
 
     transitions = []
     for stage in ["P1", "C1"]:
@@ -192,7 +199,7 @@ def main() -> None:
                     "median_delta_U": float(sub["delta_U__num"].median()) if len(sub) else np.nan,
                 })
     transitions_df = pd.DataFrame(transitions)
-    transitions_df.to_csv(OUT / "PROPOSAL_CORRECTNESS_TRANSITIONS_RECOMPUTED.csv", index=False, encoding="utf-8-sig")
+    write_csv(transitions_df, OUT / "PROPOSAL_CORRECTNESS_TRANSITIONS_RECOMPUTED.csv")
 
     # Difficulty and model-issue label coverage. These are response outcomes, not frozen pre-treatment predictors.
     difficulty_codes = ["trivial", "occlusion", "low_texture", "seam", "reflection", "low_image_quality"]
@@ -225,7 +232,7 @@ def main() -> None:
                 "worker_count": int(sub.loc[present, "worker_id"].nunique()),
                 "causal_predictor_allowed": False,
             })
-    pd.DataFrame(coverage).to_csv(OUT / "CURRENT_DIFFICULTY_AND_MODEL_ISSUE_COVERAGE.csv", index=False, encoding="utf-8-sig")
+    write_csv(pd.DataFrame(coverage), OUT / "CURRENT_DIFFICULTY_AND_MODEL_ISSUE_COVERAGE.csv")
 
     # Existing paired task variation: descriptive reference only, not a correctness-interaction variance estimate.
     effect_rows = []
@@ -238,12 +245,12 @@ def main() -> None:
             "outcome": outcome,
             "task_count": int(len(temp)),
             "building_count": int(temp["building_id"].nunique()),
-            "mean": float(temp[outcome].mean()),
-            "sample_sd": float(temp[outcome].std(ddof=1)),
-            "building_icc1_descriptive": icc.get("icc1"),
+            "mean": round(float(temp[outcome].mean()), 12),
+            "sample_sd": round(float(temp[outcome].std(ddof=1)), 12),
+            "building_icc1_descriptive": round(float(icc["icc1"]), 12) if icc.get("icc1") is not None else None,
             "interpretation": "descriptive single-effect variation; not the future correct-vs-wrong interaction variance",
         })
-    pd.DataFrame(effect_rows).to_csv(OUT / "CURRENT_TASK_EFFECT_VARIATION_REFERENCE.csv", index=False, encoding="utf-8-sig")
+    write_csv(pd.DataFrame(effect_rows), OUT / "CURRENT_TASK_EFFECT_VARIATION_REFERENCE.csv")
 
     # Model split and building composition.
     model["building_id"] = model["image_id"].astype(str).str.split("_").str[0]
@@ -262,8 +269,8 @@ def main() -> None:
         })
         for building, count in by_building.items():
             building_rows.append({"split": split, "building_id": building, "image_count": int(count)})
-    pd.DataFrame(split_rows).to_csv(OUT / "MODEL_SPLIT_BUILDING_SUMMARY.csv", index=False, encoding="utf-8-sig")
-    pd.DataFrame(building_rows).to_csv(OUT / "MODEL_SPLIT_BUILDING_COUNTS.csv", index=False, encoding="utf-8-sig")
+    write_csv(pd.DataFrame(split_rows), OUT / "MODEL_SPLIT_BUILDING_SUMMARY.csv")
+    write_csv(pd.DataFrame(building_rows), OUT / "MODEL_SPLIT_BUILDING_COUNTS.csv")
 
     # Conditional power only: no claim about the true effect or success probability.
     zsum = norm.ppf(0.975) + norm.ppf(0.80)
@@ -297,7 +304,7 @@ def main() -> None:
                         "conditional_power": two_sided_power(0.04, sigma, n, deff),
                         "status": "building_sensitivity_not_empirical_interaction_icc",
                     })
-    pd.DataFrame(power_rows).to_csv(OUT / "CONDITIONAL_INTERACTION_POWER.csv", index=False, encoding="utf-8-sig")
+    write_csv(pd.DataFrame(power_rows), OUT / "CONDITIONAL_INTERACTION_POWER.csv")
 
     designs = [
         {
@@ -353,7 +360,7 @@ def main() -> None:
             "uncertainty_resolution": "small high-k mechanism subset",
         },
     ]
-    pd.DataFrame(designs).to_csv(OUT / "DESIGN_OPTIONS_RESOURCE_ACCOUNTING.csv", index=False, encoding="utf-8-sig")
+    write_csv(pd.DataFrame(designs), OUT / "DESIGN_OPTIONS_RESOURCE_ACCOUNTING.csv")
 
     # Report selected exact numbers.
     def metric(stage: str, lane: str, definition: str) -> dict[str, object]:
@@ -410,11 +417,10 @@ P1 开发数据中：
 python -m tools.thesis_main.analysis.full_uncertainty.analyze_manual_semi_correctness_oos_20260823
 ```
 """
-    (OUT / "ANALYSIS_REPORT_ZH.md").write_text(report, encoding="utf-8")
+    (OUT / "ANALYSIS_REPORT_ZH.md").write_text(report, encoding="utf-8", newline="\n")
 
     validation = {
         "seed": SEED,
-        "source_commit_expected": "cad851812d72e4056c660bbac7f81000c0a19565",
         "tag_rows": int(len(rows)),
         "c1_rows": int(rows["stage"].eq("C1").sum()),
         "p1_rows": int(rows["stage"].eq("P1").sum()),
@@ -435,7 +441,9 @@ python -m tools.thesis_main.analysis.full_uncertainty.analyze_manual_semi_correc
             "ANALYSIS_REPORT_ZH.md",
         ]),
     }
-    (OUT / "VALIDATION.json").write_text(json.dumps(validation, ensure_ascii=False, indent=2), encoding="utf-8")
+    (OUT / "VALIDATION.json").write_text(
+        json.dumps(validation, ensure_ascii=False, indent=2), encoding="utf-8", newline="\n",
+    )
 
 
 if __name__ == "__main__":
