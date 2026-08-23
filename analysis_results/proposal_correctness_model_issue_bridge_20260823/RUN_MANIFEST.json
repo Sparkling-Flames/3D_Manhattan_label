@@ -1,0 +1,27 @@
+{
+  "schema_version": "proposal_correctness_model_issue_bridge_v1",
+  "created_date": "2026-08-23",
+  "source_commit": "780d439eafe0e07354f04f744bfadf71c4b552c4",
+  "seed": 20260823,
+  "input_sha256": {
+    "model_audit": "c2733abf33da26c88d456d2b55e57e3cc64f38a1fa9ba4d84ce45a06bc8fc8d8",
+    "semi_task_table": "2d5b7608b07b226caf43c8f7755281c0e1e562aa909d7819deb4f29ce8759b3f",
+    "semi_response_rows": "5ed41d431db58626142ca6103caf258922885acf041ad8dd4862d2aa4d3361db"
+  },
+  "counts": {
+    "model_audit_rows": 648,
+    "c1_task_rows": 25,
+    "c1_response_rows": 106,
+    "test_sampling_frame_rows": 458,
+    "unexposed_test_candidate_rows": 433
+  },
+  "assertions": {
+    "all_25_c1_tasks_joined": true,
+    "model_audit_648": true,
+    "split_counts": {
+      "test": 458,
+      "validation": 190
+    }
+  },
+  "interpretation_boundary": "descriptive bridge; no causal correct/wrong proposal effect estimated"
+}
