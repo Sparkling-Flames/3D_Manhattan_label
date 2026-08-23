@@ -2,6 +2,12 @@ name: Manual-Semi correctness, OOS, and conditional power audit
 
 on:
   workflow_dispatch:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823.py
+      - .github/workflows/manual-semi-correctness-oos-20260823.yml
   push:
     branches:
       - analysis/manual-semi-correctness-oos-20260823
@@ -40,6 +46,7 @@ jobs:
           python -m tools.thesis_main.analysis.full_uncertainty.analyze_manual_semi_correctness_oos_20260823
 
       - name: Commit outputs
+        if: github.event_name != 'pull_request'
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
