@@ -7,12 +7,14 @@ on:
       - main
     paths:
       - tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823.py
+      - tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823_v2.py
       - .github/workflows/manual-semi-correctness-oos-20260823.yml
   push:
     branches:
       - analysis/manual-semi-correctness-oos-20260823
     paths:
       - tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823.py
+      - tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823_v2.py
       - .github/workflows/manual-semi-correctness-oos-20260823.yml
 
 permissions:
@@ -39,11 +41,11 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install pandas numpy scipy
 
-      - name: Run analysis
+      - name: Run strict analysis
         env:
           PYTHONPATH: .
         run: |
-          python -m tools.thesis_main.analysis.full_uncertainty.analyze_manual_semi_correctness_oos_20260823
+          python -m tools.thesis_main.analysis.full_uncertainty.analyze_manual_semi_correctness_oos_20260823_v2
 
       - name: Commit outputs
         if: github.event_name != 'pull_request'
