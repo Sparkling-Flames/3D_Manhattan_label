@@ -13,8 +13,8 @@ from pathlib import Path
 
 import pandas as pd
 
-from tools.paper_a_manhattan.full_uncertainty import full_uncertainty_reviewed as reviewed
-from tools.paper_a_manhattan.full_uncertainty import materialize_full_uncertainty_data_mining_v2 as materializer
+from tools.thesis_main.analysis.full_uncertainty import full_uncertainty_reviewed as reviewed
+from tools.thesis_main.analysis.full_uncertainty import materialize_full_uncertainty_data_mining_v2 as materializer
 
 
 _ORIGINAL_CHOICE_GROUP = reviewed.choice_group

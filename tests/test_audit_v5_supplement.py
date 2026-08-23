@@ -3,7 +3,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from tools.paper_a_manhattan.full_uncertainty.audit_v5_supplement import (
+from tools.thesis_main.analysis.full_uncertainty.audit_v5_supplement import (
     SchemaError,
     bh_adjust,
     build_frames,

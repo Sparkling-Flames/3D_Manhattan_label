@@ -21,18 +21,18 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from tools.paper_a_manhattan.full_uncertainty import full_uncertainty_common as common
-from tools.paper_a_manhattan.full_uncertainty import full_uncertainty_geometry as geometry
-from tools.paper_a_manhattan.full_uncertainty import full_uncertainty_reviewed as reviewed
-from tools.paper_a_manhattan.full_uncertainty import materialize_full_uncertainty_data_mining as base
-from tools.paper_a_manhattan.full_uncertainty import materialize_full_uncertainty_data_mining_v2 as reviewed_materializer
-from tools.paper_a_manhattan.full_uncertainty import materialize_full_uncertainty_data_mining_v4 as legacy
-from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_prefix_replay_v5 import (
+from tools.thesis_main.analysis.full_uncertainty import full_uncertainty_common as common
+from tools.thesis_main.analysis.full_uncertainty import full_uncertainty_geometry as geometry
+from tools.thesis_main.analysis.full_uncertainty import full_uncertainty_reviewed as reviewed
+from tools.thesis_main.analysis.full_uncertainty import materialize_full_uncertainty_data_mining as base
+from tools.thesis_main.analysis.full_uncertainty import materialize_full_uncertainty_data_mining_v2 as reviewed_materializer
+from tools.thesis_main.analysis.full_uncertainty import materialize_full_uncertainty_data_mining_v4 as legacy
+from tools.thesis_main.analysis.full_uncertainty.full_uncertainty_prefix_replay_v5 import (
     load_frozen_c1_k22_tasks,
     replay_frozen_c1_k22_prefixes,
     summarize_prefix_replay,
 )
-from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_stats_v5 import (
+from tools.thesis_main.analysis.full_uncertainty.full_uncertainty_stats_v5 import (
     crossed_task_worker_variance_decomposition,
     filter_structural_zero_lane,
     mean_pairwise_jaccard_disagreement,
@@ -1057,8 +1057,8 @@ def _manifest(out: Path) -> pd.DataFrame:
 
 
 def _supplement_frames(input_dir: Path, *, bootstrap_replicates: int) -> dict[str, pd.DataFrame]:
-    from tools.paper_a_manhattan.full_uncertainty import audit_v5_gaps
-    from tools.paper_a_manhattan.full_uncertainty import audit_v5_supplement
+    from tools.thesis_main.analysis.full_uncertainty import audit_v5_gaps
+    from tools.thesis_main.analysis.full_uncertainty import audit_v5_supplement
 
     frames = {
         **audit_v5_supplement.build_frames(input_dir, bootstrap_replicates=bootstrap_replicates),

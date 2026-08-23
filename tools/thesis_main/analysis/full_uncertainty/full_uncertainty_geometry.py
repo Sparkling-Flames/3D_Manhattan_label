@@ -11,7 +11,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_common import (
+from tools.thesis_main.analysis.full_uncertainty.full_uncertainty_common import (
     C1,
     PERSISTENT,
     V2,

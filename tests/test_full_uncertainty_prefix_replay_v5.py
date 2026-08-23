@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_prefix_replay_v5 import (
+from tools.thesis_main.analysis.full_uncertainty.full_uncertainty_prefix_replay_v5 import (
     PREFIX_KS,
     frozen_c1_k22_tasks,
     replay_task_prefixes,

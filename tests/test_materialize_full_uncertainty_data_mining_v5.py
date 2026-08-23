@@ -7,7 +7,7 @@ from pathlib import Path
 import pandas as pd
 import pytest
 
-from tools.paper_a_manhattan.full_uncertainty import materialize_full_uncertainty_data_mining_v5 as v5
+from tools.thesis_main.analysis.full_uncertainty import materialize_full_uncertainty_data_mining_v5 as v5
 
 
 def test_default_output_and_overwrite_guard(tmp_path: Path) -> None:

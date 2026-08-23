@@ -6,7 +6,7 @@ from pathlib import Path
 import pytest
 
 
-SCRIPT = Path(__file__).parents[1] / "tools/paper_a_manhattan/full_uncertainty/build_full_uncertainty_v5_workbook.mjs"
+SCRIPT = Path(__file__).parents[1] / "tools/thesis_main/analysis/full_uncertainty/build_full_uncertainty_v5_workbook.mjs"
 NODE_PATH = Path(r"C:/Users/ASUS/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules")
 
 

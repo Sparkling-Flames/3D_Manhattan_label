@@ -52,7 +52,7 @@ from openpyxl.styles import Alignment, Font, PatternFill
 from openpyxl.utils import get_column_letter
 from scipy import stats
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4]
 V2 = ROOT / "analysis_results" / "full_uncertainty_data_mining_20260821_v2"
 C1_AUDIT = ROOT / "analysis_results" / "c1_formal_audit_20260802_v16_final" / "c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03"
 C1_MINING = ROOT / "analysis_results" / "annotation_uncertainty_manual_semi_20260820_v2"
@@ -2033,7 +2033,7 @@ def materialize(out: Path, derived_v2: Path | None = None) -> dict[str, Any]:
     V2 = (derived_v2 or out / "_derived_v2").resolve()
     if generated_derivative:
         subprocess.run([
-            sys.executable, "-m", "tools.paper_a_manhattan.full_uncertainty.run_full_uncertainty_reviewed",
+            sys.executable, "-m", "tools.thesis_main.analysis.full_uncertainty.run_full_uncertainty_reviewed",
             "--output-dir", str(V2),
         ], cwd=ROOT, check=True)
     if not (V2 / "UNIFIED_SUBMISSION_EVIDENCE_REVIEWED.csv").is_file():

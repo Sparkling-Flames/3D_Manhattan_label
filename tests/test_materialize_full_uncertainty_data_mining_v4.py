@@ -2,7 +2,7 @@ from __future__ import annotations
 
 import pandas as pd
 
-from tools.paper_a_manhattan.full_uncertainty.materialize_full_uncertainty_data_mining_v4 import (
+from tools.thesis_main.analysis.full_uncertainty.materialize_full_uncertainty_data_mining_v4 import (
     exact_building_sign_flip,
     raw_record_ledger,
     time_measurement_audit,

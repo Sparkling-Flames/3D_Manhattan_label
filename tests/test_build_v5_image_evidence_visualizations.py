@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from tools.paper_a_manhattan.full_uncertainty.build_v5_image_evidence_visualizations import ROOT, build
+from tools.thesis_main.analysis.full_uncertainty.build_v5_image_evidence_visualizations import ROOT, build
 
 
 def test_build_v5_image_evidence_visualizations(tmp_path: Path) -> None:

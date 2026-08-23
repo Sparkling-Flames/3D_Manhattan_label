@@ -2,7 +2,7 @@ from pathlib import Path
 
 import pandas as pd
 
-from tools.paper_a_manhattan.full_uncertainty.audit_v5_gaps import (
+from tools.thesis_main.analysis.full_uncertainty.audit_v5_gaps import (
     ACTIVE_TIME_COMPUTABILITY_DESCRIPTIVE,
     C1_ACTIVE_TIME_MISSINGNESS_AUDIT,
     COVERAGE_GAP_COMPUTABILITY_AUDIT,

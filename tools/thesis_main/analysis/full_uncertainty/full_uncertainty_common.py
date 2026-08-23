@@ -22,7 +22,7 @@ from typing import Any, Iterable
 import numpy as np
 import pandas as pd
 
-ROOT = Path(__file__).resolve().parents[3]
+ROOT = Path(__file__).resolve().parents[4]
 C1 = ROOT / "analysis_results" / "c1_formal_audit_20260802_v16_final" / "c1_formal_audit_20260802_7fcacc5c2d6c_bf5def46_6bc67c03"
 V2 = ROOT / "analysis_results" / "annotation_uncertainty_manual_semi_20260820_v2"
 PERSISTENT = ROOT / "analysis_results" / "persistent_disagreement_diagnostic_20260819_v1"

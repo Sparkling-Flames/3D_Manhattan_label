@@ -14,11 +14,11 @@ from typing import Any
 import pandas as pd
 from PIL import Image
 
-REPO_ROOT = Path(__file__).resolve().parents[3]
+REPO_ROOT = Path(__file__).resolve().parents[4]
 if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
-from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_common import cyclic_rmse
+from tools.thesis_main.analysis.full_uncertainty.full_uncertainty_common import cyclic_rmse
 from tools.thesis_main.registry.perturbation_operators import (
     canonical_corners_to_runtime_pairs,
     ls_keypoints_to_canonical_corners,

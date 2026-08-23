@@ -18,7 +18,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_common import (
+from tools.thesis_main.analysis.full_uncertainty.full_uncertainty_common import (
     C1,
     PACKAGE,
     PERSISTENT,
@@ -35,8 +35,8 @@ from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_common import (
     write_csv,
     write_json,
 )
-from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_geometry import cross_stage_geometry_uncertainty
-from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_reviewed import (
+from tools.thesis_main.analysis.full_uncertainty.full_uncertainty_geometry import cross_stage_geometry_uncertainty
+from tools.thesis_main.analysis.full_uncertainty.full_uncertainty_reviewed import (
     normalise_raw_stages,
     review_unified_timing,
     reviewed_crowd_gt_conflict,
@@ -46,7 +46,7 @@ from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_reviewed import (
     reviewed_worker_viewpoints,
     semi_required_sample_projection,
 )
-from tools.paper_a_manhattan.full_uncertainty.materialize_full_uncertainty_data_mining import (
+from tools.thesis_main.analysis.full_uncertainty.materialize_full_uncertainty_data_mining import (
     coverage_summary,
     data_dictionary,
     deep_associations,

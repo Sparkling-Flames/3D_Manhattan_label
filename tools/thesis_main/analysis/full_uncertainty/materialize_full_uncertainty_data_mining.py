@@ -19,7 +19,7 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
-from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_common import (
+from tools.thesis_main.analysis.full_uncertainty.full_uncertainty_common import (
     C1,
     PACKAGE,
     PERSISTENT,
@@ -38,7 +38,7 @@ from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_common import (
     write_csv,
     write_json,
 )
-from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_geometry import (
+from tools.thesis_main.analysis.full_uncertainty.full_uncertainty_geometry import (
     c1_crowd_gt_conflict,
     cross_stage_geometry_uncertainty,
     meta_label_uncertainty,

@@ -3,7 +3,7 @@ import math
 import pandas as pd
 import pytest
 
-from tools.paper_a_manhattan.full_uncertainty.full_uncertainty_stats_v5 import (
+from tools.thesis_main.analysis.full_uncertainty.full_uncertainty_stats_v5 import (
     crossed_task_worker_variance_decomposition,
     filter_structural_zero_lane,
     mean_pairwise_jaccard_disagreement,
