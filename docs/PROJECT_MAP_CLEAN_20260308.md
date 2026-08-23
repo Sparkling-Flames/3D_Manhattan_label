@@ -79,3 +79,9 @@
 
 - `tools/thesis_main/analysis/full_uncertainty/`：论文主线的全阶段标注不确定性、Manual/Semi、Crowd–GT、proposal 与时间来源审计生成链；v5 编排入口为 `materialize_full_uncertainty_data_mining_v5.py`，计算引擎复用 v4。
 - `analysis_results/full_uncertainty_data_mining_20260821_v5/`：当前全量生成交付目录；v4 交付只保留在 Git 历史中。该目录属于派生输出，不是输入真源，也不改变 C2-B/C2-A-RP 冻结状态。
+
+## 2026-08-23 官方 MP3D GT 模型初始化代理审计
+
+- `tools/thesis_main/analysis/materialize_model_initialization_audit.py`：以 Test 的“30 张确认人工 GT + 428 张官方原始 GT”和 Validation 的 190 张官方原始 GT（均排除 no-occ）评估 HoHoNet ep300 最终布局；角点对数量是拓扑硬门槛，ZInD-inspired 1% 图宽角点匹配与项目几何联合门共同定义初始化正确性。
+- `docs/thesis_main/TEST_MANUAL_GT_CORRECTIONS_20260823.md`：记录 `export_label/groudTruth.json` 相对官方 Test GT 的 30 张用户确认人工修订；不改写运行时导出，也不替代本次官方 GT 主分析。
+- `analysis_results/model_initialization_audit_hybrid_gt_20260823_v3/`：当前 648 张逐图 CSV、中文链路报告、GPU 重跑清单与运行清单；v3 修复了官方式 2D/3D 指标前错误按 x 重排全景角点的问题。`model_initialization_audit_hybrid_gt_20260823_v2/` 与 `model_initialization_audit_official_gt_20260823_v1/` 仅保留为已知旧口径对照。以上均属于派生审计输出，不改变 Paper A 正式协议或 T1/V1 estimand。

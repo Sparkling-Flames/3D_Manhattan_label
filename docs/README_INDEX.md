@@ -36,6 +36,7 @@
 - `PAPER_A_METHOD_CONTRACT_CURRENT.json`锛歅aper A 鍞竴瑙勮寖鏂规硶鐪熸簮锛沗Paper_A_鏂扮増瀹屾暣璁烘枃鎻愮翰_vFinal_Draft.md` 宸?superseded锛屼粎浣滈潪瑙勮寖鎬у啓浣滆儗鏅€?- [meta_label_three_state_rule_manifest_v1.json](thesis_main/meta_label_three_state_rule_manifest_v1.json)锛氫笁鐘舵€?meta-label 鍊欓€夎鍒?- [geometry_loo_candidate_rule_manifest_v1.json](thesis_main/geometry_loo_candidate_rule_manifest_v1.json)锛欸eometry LOO 鍊欓€夎鍒?- [geometry_peer_candidate_rule_manifest_v1.json](thesis_main/geometry_peer_candidate_rule_manifest_v1.json)銆乕GLOBAL_POLICY_THRESHOLDS.json](thesis_main/GLOBAL_POLICY_THRESHOLDS.json)銆乕P1_COMPONENT_SUPPORT_THRESHOLDS.json](thesis_main/P1_COMPONENT_SUPPORT_THRESHOLDS.json)銆乕GT_CONFLICT_REVIEW_RULES.json](thesis_main/GT_CONFLICT_REVIEW_RULES.json)锛氬悓琛屻€丟lobal銆丳1 component 涓?GT 鍐茬獊鐨?candidate-only 鏁板€煎悎鍚?- [sequential_routing_candidate_rule_manifest_v1.json](thesis_main/sequential_routing_candidate_rule_manifest_v1.json)锛氬巻鍙插喕缁撶殑鏃跺簭 routing 鍊欓€夎鍒?- [sequential_routing_candidate_rule_manifest_v2.json](thesis_main/sequential_routing_candidate_rule_manifest_v2.json)锛氱粺涓€ temporal replay 鐘舵€佹満涓庡€欓€夎鍒欏悎鍚?- [model_issue_harmonization_rule_manifest_v1.json](thesis_main/model_issue_harmonization_rule_manifest_v1.json)锛歮odel issue 鎶栧姩瀹瑰繊涓?harmonization 鍊欓€夎鍒?- [RQ3_MINIMAL_EVIDENCE_CHAIN_CONTRACT_v1.md](thesis_main/RQ3_MINIMAL_EVIDENCE_CHAIN_CONTRACT_v1.md)
 - [STATISTICAL_ANALYSIS_PLAN_v1.md](thesis_main/STATISTICAL_ANALYSIS_PLAN_v1.md)
 - [PAPER_A_REFERENCES_NEEDED_CHECKLIST.md](thesis_main/PAPER_A_REFERENCES_NEEDED_CHECKLIST.md)锛氱浉鍏冲伐浣滀笌寮曠敤鏍搁獙寰呭姙
+- [TEST_MANUAL_GT_CORRECTIONS_20260823.md](thesis_main/TEST_MANUAL_GT_CORRECTIONS_20260823.md)：Test 人工 GT 相对官方原始 GT 的 30 张实质修订、顺序与历史审计说明。
 - [ANALYSIS_DATA_FLOW.md](thesis_main/ANALYSIS_DATA_FLOW.md)
 - [PRESCREEN_STEP4_5_CLOSEOUT_NOTE.md](thesis_main/PRESCREEN_STEP4_5_CLOSEOUT_NOTE.md)
 
@@ -122,3 +123,9 @@ B-line covers ambiguity-aware HoHoNet, ZInD mapping, B0 relabel audit, later tra
 - 工具入口：`tools/thesis_main/analysis/full_uncertainty/materialize_full_uncertainty_data_mining_v5.py`（复用 v4 计算引擎）
 - 当前生成目录：`analysis_results/full_uncertainty_data_mining_20260821_v5/`；v4 交付只保留在 Git 历史中。
 - 该审计保留 Active time 与 Label Studio Lead time 的边界，不修改规范方法合同或已冻结阶段结果。
+
+## HoHoNet 初始化代理审计
+
+- 生成工具：`tools/thesis_main/analysis/materialize_model_initialization_audit.py`
+- 当前结果：`analysis_results/model_initialization_audit_hybrid_gt_20260823_v3/`
+- v3 保留全景角点原始环序并与仓库 `eval_layout.py` 对齐；GPU 重跑、旧/新预测对照和完整解释见结果目录中的报告与 manifest。

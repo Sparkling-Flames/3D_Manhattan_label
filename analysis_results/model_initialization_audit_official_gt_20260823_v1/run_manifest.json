@@ -1,0 +1,75 @@
+{
+  "schema_version": "model_initialization_audit_official_gt_v1",
+  "created_date": "2026-08-23",
+  "row_count": 648,
+  "split_counts": {
+    "test": 458,
+    "validation": 190
+  },
+  "coordinate_space": [
+    1024,
+    512
+  ],
+  "metric_object": "final_layout_as_initialization_proxy",
+  "gt_variant": "Test: 30 confirmed manual corrections + 428 official raw; Validation: 190 official raw; no no-occ",
+  "manual_test_gt_path": "export_label/groudTruth.json",
+  "manual_test_gt_sha256": "5ead984f15bdff3f08b31755a6017d007aa2fc33fbd0302b8cfcbc12a41604e0",
+  "manual_test_gt_count": 30,
+  "manual_test_gt_ids": [
+    "7y3sRwLe3Va_9bbf903d50da4ffd9e5d1fb7c9f4d69b",
+    "B6ByNegPMKs_48ee619d38b142f88914e7e2582bc1d8",
+    "B6ByNegPMKs_75327de9719945aa8b893a6404667884",
+    "UwV83HsGsw3_7482b1a2655e4655ae4ab58749f43f65",
+    "X7HyMhZNoso_28ada927582d4d6ea7cf44cabf31527a",
+    "b8cTxDM8gDG_298a2386166a43c8a04e1c24433f7d15",
+    "e9zR4mvMWw7_409f2a738bf54153b9b77c39e7a4ea45",
+    "e9zR4mvMWw7_4fb8c9be319e4784b4b66f9ca5d839ab",
+    "q9vSo1VnCiC_1cd414875b9b4311bc6a179d91e6270d",
+    "q9vSo1VnCiC_3e5aacbc10904d4b88660a3cb91efcb9",
+    "q9vSo1VnCiC_3e7f67e8969f434b9a4aec0c68668b20",
+    "q9vSo1VnCiC_69591068e5614642b710a8fb7733bdeb",
+    "q9vSo1VnCiC_9c9fb1fccf4e46a597a9510a1938c8b4",
+    "q9vSo1VnCiC_e74e843601574864a14517f990c748a0",
+    "rPc6DW4iMge_acbe920a0c5d4c018b1803ee9b1f331a",
+    "uNb9QFRL6hY_07a43087f1e54e3f828851d8e457a283",
+    "uNb9QFRL6hY_1096f195d3294cefa462add5ab0c342e",
+    "uNb9QFRL6hY_8b6f1b0b025848b482e747ab6a027b97",
+    "uNb9QFRL6hY_978d7a8eb0794936bd8fd092306e1dc5",
+    "uNb9QFRL6hY_aed830f085ee4ad88ef6bed7f66f1359",
+    "uNb9QFRL6hY_bcce4f23c12744c782c0b49b24a0331a",
+    "uNb9QFRL6hY_c1ebb8b34eb846ba9b5ce23b30b299a7",
+    "wc2JMjhGNzB_1d8917d25abb4a77a0da9583dc82c17c",
+    "wc2JMjhGNzB_40ea4145b9e946aab5d56de3ce179c8e",
+    "wc2JMjhGNzB_4884da3227464ab5b82f631ff22205bd",
+    "x8F5xyUWy9e_a51a0e2811f342a599ae4cdb9b84ff23",
+    "yqstnuAEVhm_26b2e92ccd314a2da1a4fc8dfc6e6f56",
+    "yqstnuAEVhm_c93bf298b1cb41a1b368a6ce8bcff53d",
+    "yqstnuAEVhm_e3face7b2196414d95ed97151aa13058",
+    "yqstnuAEVhm_e650c19e3eb34cc0b98374e5a23d1f65"
+  ],
+  "pair_encoding_rule": "even point count >=4; consecutive ceiling/floor x distance <=1px; nonzero vertical separation; not a full Manhattan polygon validity check",
+  "corner_match_rule": "ZInD-inspired 1%-width threshold with project-defined deterministic point-level greedy exclusive seam-aware Euclidean matching; not wall-pair-aware",
+  "corner_match_threshold_px": 10.24,
+  "geometry_acceptable_rule": "topdown_2d_iou>=0.90 AND layoutnetv2_style_3d_iou>=0.80 AND layout_mask_difference<=0.05",
+  "geometry_threshold_status": "analyst-defined post-hoc operational v1 after initial full-output semantic review; not literature-standard, preregistered, or independently calibrated",
+  "initialization_correct_rule": "valid pair encoding AND exact pair count AND all ceiling/floor corners matched at 10.24px AND geometry_acceptable",
+  "near_identical_rule": "initialization_correct AND max_corner_error_px<=2.56 AND layout_mask_difference<=0.01",
+  "depth_metric_note": "layout depth synthesized from model/GT corners; proxy only; no real Matterport depth GT bound",
+  "checkpoint_path": "ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth",
+  "checkpoint_sha256": "9f2522c0311064a863e838fa345e9b49dc14f95cb1608ba19e942a875344efa9",
+  "input_aggregate_sha256": {
+    "test_model": "9e48e4fc32febfe8b9a54b71c827bc1618aa1a2d1cc550df4d986563fee8feba",
+    "test_official_gt": "5995aaacda55910d0c47f5260c8c4bda63c854509f879dcc1f75d8b8bcb4185c",
+    "validation_model": "ce4a1b86cd5e539683af76dc278d7cfd627425b1ac5a74dabcb93f5069b7b3a5",
+    "validation_gt": "f05ffcc374166c2dd325ff76293492be49712b46ab4a3c913c2ce171d5379409"
+  },
+  "validation_model_source_note": "verified ep300 frozen artifact; validation predictions are absent from output/",
+  "outputs": {
+    "csv": "analysis_results/model_initialization_audit_official_gt_20260823_v1/model_initialization_metrics.csv",
+    "report": "analysis_results/model_initialization_audit_official_gt_20260823_v1/MODEL_INITIALIZATION_AUDIT_REPORT.md"
+  },
+  "output_sha256": {
+    "csv": "340dd3b3f2fcfef9af071fcab94c2fc68e3ae1a3f779b98bfaefbf7ea268822b",
+    "report": "72e2b46cc22163af534a9a6569f40a32795189878cf8456ec16a39648e079722"
+  }
+}

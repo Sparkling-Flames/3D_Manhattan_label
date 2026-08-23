@@ -1,0 +1,47 @@
+{
+  "schema_version": "hohonet_ep300_gpu_replay_audit_v1",
+  "created_date": "2026-08-23",
+  "device": "NVIDIA GeForce RTX 4060 Laptop GPU",
+  "python": "D:/Work/HOHONET/.venv-paper-a-gpu/Scripts/python.exe",
+  "torch": "2.11.0+cu128",
+  "checkpoint": {
+    "path": "ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth",
+    "sha256": "9f2522c0311064a863e838fa345e9b49dc14f95cb1608ba19e942a875344efa9"
+  },
+  "config": {
+    "original_path": "config/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34.yaml",
+    "original_sha256": "38a446c15e568286be92bab758f24be025f1f2a960bbd8be237757ad6eec9cd5",
+    "replay_path": "analysis_results/model_initialization_audit_hybrid_gt_20260823_v3/inference_replay_config.yaml",
+    "replay_sha256": "9ee2fc93600af85ea7e55093716a94960b25eada0d6613ef4c0e560a5306d1a0",
+    "difference_note": "replay only sets backbone pretrained=false to avoid downloading torchvision weights before loading the complete ep300 state_dict"
+  },
+  "commands": {
+    "test": "python infer_layout.py --cfg analysis_results/model_initialization_audit_hybrid_gt_20260823_v3/inference_replay_config.yaml --pth ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth --out analysis_results/model_initialization_test_ep300_replay_20260823_v1/prediction_txt --inp data/mp3d_layout/test/img/*.png",
+    "validation": "python infer_layout.py --cfg analysis_results/model_initialization_audit_hybrid_gt_20260823_v3/inference_replay_config.yaml --pth ckpt/mp3d_layout_HOHO_layout_aug_efficienthc_Transen1_resnet34/ep300.pth --out analysis_results/model_initialization_validation_ep300_replay_20260823_v1/prediction_txt --inp data/mp3d_layout/valid/img/*.png"
+  },
+  "aggregate_sha256": {
+    "test_images_458": "19c94c7e94075e554e1959677ca35ad4903f73e9742682e7f176c14934d16304",
+    "validation_images_190": "17228f6b756ee84554a1000e3e9730f20d2841e7ef2b8ae8bcc9e0e2c2d5ec48",
+    "test_legacy_458": "9e48e4fc32febfe8b9a54b71c827bc1618aa1a2d1cc550df4d986563fee8feba",
+    "validation_legacy_190": "ce4a1b86cd5e539683af76dc278d7cfd627425b1ac5a74dabcb93f5069b7b3a5",
+    "test_replay_458": "9fbc87726da83a8bc2fbf8ec8aef15020f6db03773c719a31dfe50c4636e3acc",
+    "validation_replay_190": "d3198f2edf75796747d3373b052436271eadef86110d64729a5dde580e3cf77f"
+  },
+  "legacy_vs_replay": {
+    "test": {
+      "same_pair_count": "440/458",
+      "same_pair_count_and_all_point_max_error_le_2px": "350/458"
+    },
+    "validation": {
+      "same_pair_count": "188/190",
+      "same_pair_count_and_all_point_max_error_le_2px": "174/190"
+    }
+  },
+  "official_style_metrics": {
+    "test_legacy": {"n": 458, "2d_iou_percent": 81.97, "3d_iou_percent": 79.52, "rmse": 0.22, "delta1": 0.94, "strict_posthoc_pass": 93, "acceptable_posthoc_pass": 233},
+    "test_replay": {"n": 458, "2d_iou_percent": 82.13, "3d_iou_percent": 79.72, "rmse": 0.22, "delta1": 0.94, "strict_posthoc_pass": 100, "acceptable_posthoc_pass": 235},
+    "validation_legacy": {"n": 190, "2d_iou_percent": 92.58, "3d_iou_percent": 91.64, "rmse": 0.09, "delta1": 0.98, "strict_posthoc_pass": 148, "acceptable_posthoc_pass": 156},
+    "validation_replay": {"n": 190, "2d_iou_percent": 93.48, "3d_iou_percent": 92.79, "rmse": 0.08, "delta1": 0.98, "strict_posthoc_pass": 148, "acceptable_posthoc_pass": 157}
+  },
+  "interpretation": "both legacy prediction sets are substantively reproduced; the binary post-hoc audit is less stable than continuous benchmark metrics near post-processing thresholds"
+}

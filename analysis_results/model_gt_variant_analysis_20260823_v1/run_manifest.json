@@ -1,0 +1,41 @@
+{
+  "schema_version": "model_gt_variant_comparison_v1",
+  "test_count": 458,
+  "validation_evaluable_count": 188,
+  "validation_reference_unavailable_count": 2,
+  "thresholds": [
+    0.05,
+    0.1,
+    0.2,
+    0.3
+  ],
+  "summary_counts": {
+    "test": {
+      "model_vs_adopted_topology_mismatch": 171,
+      "model_vs_mp3d_topology_mismatch": 168,
+      "model_vs_no_occ_topology_mismatch": 175,
+      "adopted_vs_mp3d_topology_mismatch": 21,
+      "adopted_vs_no_occ_topology_mismatch": 46,
+      "mp3d_vs_no_occ_topology_mismatch": 31,
+      "adopted_mismatch_resolved_by_mp3d_count": 8,
+      "adopted_mismatch_resolved_by_no_occ_count": 5
+    },
+    "validation": {
+      "model_vs_adopted_topology_mismatch": 24,
+      "model_vs_mp3d_topology_mismatch": 25,
+      "model_vs_no_occ_topology_mismatch": 24,
+      "adopted_vs_mp3d_topology_mismatch": 8,
+      "adopted_vs_no_occ_topology_mismatch": 0,
+      "mp3d_vs_no_occ_topology_mismatch": 8,
+      "adopted_mismatch_resolved_by_mp3d_count": 0,
+      "adopted_mismatch_resolved_by_no_occ_count": 0
+    }
+  },
+  "comparison_sheets": [
+    "analysis_results/model_gt_variant_analysis_20260823_v1/comparison_threshold_0_05.png",
+    "analysis_results/model_gt_variant_analysis_20260823_v1/comparison_threshold_0_1.png",
+    "analysis_results/model_gt_variant_analysis_20260823_v1/comparison_threshold_0_2.png",
+    "analysis_results/model_gt_variant_analysis_20260823_v1/comparison_threshold_0_3.png"
+  ],
+  "interpretation_limit": "pair-count equality attributes topology only; it does not prove geometric correctness"
+}

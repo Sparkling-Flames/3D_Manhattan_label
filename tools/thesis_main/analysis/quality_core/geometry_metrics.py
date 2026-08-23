@@ -90,6 +90,7 @@ def compute_layout_standard_metrics(
     height: int = 512,
     min_coverage: float = 0.9,
     threshold_ratio: float = 0.05,
+    ordered_source: bool = False,
 ) -> tuple:
     """Compute HoHoNet/HorizonNet-style metrics: 2D/3D IoU on floor plane + depth RMSE/delta_1.
 
@@ -98,8 +99,21 @@ def compute_layout_standard_metrics(
     """
     meta = {"gate_reason": ""}
 
-    pred_cor_id, pred_stats = _normalize_to_cor_id_pairs(pred_corners, width=width, threshold_ratio=threshold_ratio)
-    ann_cor_id, ann_stats = _normalize_to_cor_id_pairs(ann_corners, width=width, threshold_ratio=threshold_ratio)
+    if ordered_source:
+        pred_cor_id = np.asarray(pred_corners, dtype=np.float32)
+        ann_cor_id = np.asarray(ann_corners, dtype=np.float32)
+        valid = lambda value: (
+            value.ndim == 2 and value.shape[1:] == (2,) and value.shape[0] >= 4
+            and value.shape[0] % 2 == 0 and np.isfinite(value).all()
+            and np.allclose(value[0::2, 0], value[1::2, 0], atol=1e-3)
+        )
+        if not valid(pred_cor_id) or not valid(ann_cor_id):
+            meta["gate_reason"] = "invalid_ordered_cor_id"
+            return None, None, None, None, False, meta
+        pred_stats = ann_stats = {"odd_points": False, "coverage": 1.0}
+    else:
+        pred_cor_id, pred_stats = _normalize_to_cor_id_pairs(pred_corners, width=width, threshold_ratio=threshold_ratio)
+        ann_cor_id, ann_stats = _normalize_to_cor_id_pairs(ann_corners, width=width, threshold_ratio=threshold_ratio)
 
     if pred_cor_id is None or ann_cor_id is None:
         meta["gate_reason"] = "normalize_failed"

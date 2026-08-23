@@ -1,0 +1,52 @@
+{
+  "schema_version": "model_gt_threshold_screen_v1",
+  "coordinate_space": "1024x512",
+  "primary_metric": "layout_mask_difference = 1 - seam-aware layout_mask_iou",
+  "secondary_metrics": [
+    "boundary_rmse_px",
+    "pair_count_delta",
+    "topology_mismatch"
+  ],
+  "threshold_rule": "inclusive >=",
+  "mask_difference_thresholds": [
+    0.05,
+    0.1,
+    0.2,
+    0.3
+  ],
+  "boundary_rmse_thresholds_px": [
+    5.0,
+    10.0,
+    20.0,
+    40.0
+  ],
+  "counts": {
+    "test_total": 458,
+    "validation_total": 190,
+    "validation_evaluable": 188,
+    "reference_unavailable": 2,
+    "metric_not_evaluable": 2
+  },
+  "inputs": {
+    "test_gt": {
+      "path": "D:/Work/HOHONET/export_label/groudTruth.json",
+      "sha256": "5ead984f15bdff3f08b31755a6017d007aa2fc33fbd0302b8cfcbc12a41604e0"
+    },
+    "test_model_dir": {
+      "path": "D:/Work/HOHONET/output/mp3d_layout/HOHO_layout_aug_efficienthc_Transen1_resnet34",
+      "aggregate_sha256": "9e48e4fc32febfe8b9a54b71c827bc1618aa1a2d1cc550df4d986563fee8feba"
+    },
+    "validation_gt_dir": {
+      "path": "D:/Work/HOHONET/data/mp3d_layout/valid_no_occ/label_cor",
+      "aggregate_sha256": "d9e774fb7980cd73d4a3bdb6d92796c718bda9548c749dbf4ea718a43702edd1"
+    },
+    "validation_model_dir": {
+      "path": "D:/Work/HOHONET/analysis_results/c2b_validation_static_20260802_v16/validation_prediction_txt",
+      "aggregate_sha256": "ce4a1b86cd5e539683af76dc278d7cfd627425b1ac5a74dabcb93f5069b7b3a5"
+    },
+    "validation_registry": {
+      "path": "D:/Work/HOHONET/analysis_results/c2a_rp_local_launch_20260807_inputs_v2/reference_registry_post_c2_local.csv",
+      "sha256": "21063fbe53113714db92ab1ef46117a712faf5de37245f01d8898d44d44e2c6a"
+    }
+  }
+}
