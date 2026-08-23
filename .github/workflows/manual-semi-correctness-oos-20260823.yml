@@ -1,0 +1,59 @@
+name: Manual-Semi correctness, OOS, and conditional power audit
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - analysis/manual-semi-correctness-oos-20260823
+    paths:
+      - tools/thesis_main/analysis/full_uncertainty/analyze_manual_semi_correctness_oos_20260823.py
+      - .github/workflows/manual-semi-correctness-oos-20260823.yml
+
+permissions:
+  contents: write
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - name: Checkout analysis branch
+        uses: actions/checkout@v4
+        with:
+          ref: analysis/manual-semi-correctness-oos-20260823
+          fetch-depth: 0
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install pandas numpy scipy
+
+      - name: Run analysis
+        env:
+          PYTHONPATH: .
+        run: |
+          python -m tools.thesis_main.analysis.full_uncertainty.analyze_manual_semi_correctness_oos_20260823
+
+      - name: Commit outputs
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add analysis_results/manual_semi_correctness_oos_20260823
+          if git diff --cached --quiet; then
+            echo "No changes"
+          else
+            git commit -m "Materialize Manual-Semi correctness and OOS audit [skip ci]"
+            git push
+          fi
+
+      - name: Upload outputs
+        uses: actions/upload-artifact@v4
+        with:
+          name: manual-semi-correctness-oos-20260823
+          path: analysis_results/manual_semi_correctness_oos_20260823
+          if-no-files-found: error
