@@ -1,42 +1,36 @@
-# Manual–Semi、Proposal Correctness、OOS 与条件功效复核（2026-08-23）
+# Manual–Semi、Proposal Correctness、OOS 与条件功效复核（严格测量版）
 
-## 结论
+## 核心结论
 
-1. 未来主效应必须比较最终 Semi 与独立 Manual；initial-to-final 变化只属于机制与安全结果。
-2. `visual closer` 在现有数据中没有独立专家真值字段，不能由 `delta_U<0` 反推。当前只能给出候选数量。
-3. 对 60 张 primary images 的条件功效计算成立，但没有真实 correctness-interaction 方差，因此不得将显著结果概率写成“高”。
-4. Building 不应作为新的科学自变量堆入主模型，但相关性不能忽略；最简处理是图内随机化、限制每 building 图片数，并报告 building-cluster sensitivity。
-5. 648 张模型审计表没有 task-level Scope/reference 字段；正式刺激池必须先做独立 OOS/unresolved/reference audit。
+1. 正式 efficacy estimand 必须比较最终 Semi 与独立 Manual；model-initial-to-Semi-final 只属于机制和安全分析。
+2. 现有数据没有“视觉更接近真实”的独立专家变量，因此 `delta_U<0` 不能被解释成视觉更差，也不能被解释成视觉更好。
+3. 对方给出的 n=60 条件功效计算成立；由于当前没有真实 correctness-interaction 方差，显著结果概率不能定量称为高。
+4. Building 不是要加入的额外科学解释变量，但属于相关性单位：图内随机化可消除主要图片难度，仍应限制每 building 图片数并做 cluster sensitivity。
+5. 648 张模型审计没有正式 Scope/reference 字段，Main 前必须完成 OOS/unresolved/reference gate。
 
-## 现有候选计数
+## GT 指标下降候选
 
-C1、任务终态 in-scope 中：
+C1、正式 analysis-eligible 且 task-level in-scope：
 
-- 工人报告 proposal acceptable、发生编辑且 GT-based `delta_U<-0.01`：**20 行 / 14 张任务**。
-- 上述条件进一步限制为同 topology、非 material micro-edit：**10 行 / 9 张任务**。
-- 不要求 acceptable 标签的全部同 topology、非 material micro-edit 且指标下降：**30 行 / 13 张任务**。
+- proposal 被工人标为 acceptable、发生编辑、`delta_U<-0.01`：**18 行 / 14 张任务**。
+- 同一口径不限制 formal eligibility：**20 行 / 14 张任务**。
+- 进一步要求 topology_changed 和 material_edit 均有显式记录、同 topology、edit RMSE 可计算、且为非-material micro edit：**0 行 / 0 张任务**。
+- 不要求 acceptable 标签的全部 formal micro same-topology negative candidates：**0 行 / 0 张任务**。
 
-P1 开发数据中：
+P1 开发数据：
 
-- acceptable + edited + negative metric change：**72 行 / 15 张任务**。
-- acceptable + micro same-topology edit + negative metric change：**40 行 / 12 张任务**。
+- acceptable + edited + negative：**72 行 / 15 张任务**。
+- 严格可测的 acceptable + micro same-topology + negative：**6 行 / 4 张任务**。
 
-这些是“GT 指标下降但可能属于视觉/局部修订”的候选，不是视觉更接近真实的已确认案例。正式确认需要盲法 overlay 审查或独立 visual-boundary reference。
+这些只是“GT-based metric decline after editing”的可复核候选。要确认“Manhattan 强制拟合使 GT 偏离视觉墙角、人工微调视觉更合理”，必须对 candidate overlays 做 outcome-blind 双专家视觉边界审查，或建立独立 visual-boundary reference。
 
-## 数据域与 Building
+## Building 与数据域
 
 - Test：458 张，15 个 buildings；每 building 中位数 26.0 张。
 - Validation：190 张，10 个 buildings；每 building 中位数 16.5 张。
-- 模型审计表是否带正式 Scope/reference 字段：False。
 
-## 建议的标签角色
+## 标签角色
 
-- Difficulty：继续收集，但只作为 worker-perceived difficulty / mechanism outcome；不要作为 proposal correctness 真值或同任务首次分配变量。
-- Model Issue：必须在编辑前收集，拆分为 `material issue yes/no/unsure`、issue family、required correction severity、confidence。
-- Assignment truth：独立 researcher/expert manifest，不能由 worker 的 Model Issue 反推。
-
-## 复现
-
-```bash
-python -m tools.thesis_main.analysis.full_uncertainty.analyze_manual_semi_correctness_oos_20260823
-```
+- Difficulty 继续收集，但其正式名称应是 worker-perceived difficulty。它是 post-response mechanism/outcome，不能作为 proposal correctness truth，也不能用于同一任务首次分配。
+- Model Issue 必须在编辑前填写，并拆成：material issue yes/no/unsure、issue family、required correction severity、confidence。
+- Correct/Wrong treatment truth 必须来自独立、结果不可见的 researcher/expert stimulus manifest。
